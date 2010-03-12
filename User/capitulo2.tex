@@ -1,0 +1,130 @@
+\chapter{Trabalho relacionado}
+\label{cha:trabrelacionado}
+
+Este capítulo deve conter uma síntese inicial de trabalho relacionado (como resumo de estado da arte) e com foco nos objectivos e contribuições da dissertação. O capítulo deve demonstrar que o aluno procedeu e uma recolha bibliográfica para análise, tratamento e classificação preliminar, devendo esta ser suficientemente representativa das leituras preparatórias para o prosseguimento da elaboração da dissertação. Esta síntese deve ser apresentada com as respectivas referências bibliográficas (correctamente apresentadas na Bibliografia).
+
+Usar no capítulo fonte palatino 12 com um espaçamento e meio, esperando-se uma dimensão indicativa de cerca de 20 páginas.
+
+
+Para fazer citações, deverá usar-se a chave da referência no ficheiro BibTeX. Se for uma única referência~\cite{Artho04}, usar um ``\verb!~!'' para ligar o \verb!\cite{...}! à palavra que o precede (\ldots\verb!referência~\cite{Artho04}!).  Caso queira fazer múltiplas citações~\cite{Shavit95,Silberschatz06,Moss85}, deverá agrupá-las dentro de um úinico \verb!\cite{...}!.
+
+Note que o ficheiro de bibliografia pode ter tantas entradas quantas quiser. Apenas aquelas cuja chave seja referenciada no texto é que serão incluidas na listagem de bibliografia.
+
+
+Uma nota de rodapé~\footnote{Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots. Nota \ldots.}
+
+
+A Tabela~\ref{tab:hla:results} ilustra alguns conceitos importantes associados à contrução de tabelas:
+\begin{asparaenum}[i)]
+	\item Não usar linhas verticais;
+	\item A legenda deve ficar por cima da tabela;
+	\item Usar as macros \verb!\toprule!, \verb!\midrule! e \verb!\bottomrule! para fazer a linha horizontal superior, interiores e inferior, respectivamente.
+\end{asparaenum}
+ 
+\begin{table}[ht]
+	\caption{Test results summary.}
+	\label{tab:hla:results}
+\centering
+\begin{tabular}{lccccc}
+	\toprule
+	\multicolumn{1}{c}{\textbf{Test}} 	& \textbf{Anomalies}	& \textbf{Warnings}	& \textbf{Correct} 	& \textbf{Categories}		& \textbf{Missed} \\
+	\midrule
+\cite{Beckman08}~Connection 	& 2 & 2	& 1	& \emph{C}				& 1 \\
+\cite{Artho03}~Coordinates'03 	& 1	& 4	& 1	& \emph{2B, 1C}			& 0 \\
+\cite{Artho03}~Local Variable	& 1	& 2	& 1	& \emph{A}				& 0 \\
+\cite{Artho03}~NASA				& 1	& 1	& 1	& ---					& 0 \\
+\cite{Artho04}~Coordinates'04	& 1	& 4	& 1	& \emph{3C}				& 0 \\
+\cite{Artho04}~Buffer			& 0	& 7	& 0	& \emph{2A, 1B, 2C, 2D}	& 0 \\
+\cite{Artho04}~Double-Check		& 0	& 2	& 0	& \emph{1A, 1B}			& 0 \\
+\cite{Flanagan04}~StringBuffer	& 1	& 0	& 0	& ---					& 1 \\
+\cite{Praun03}~Account			& 1	& 1	& 1	& ---					& 0 \\
+\cite{Praun03}~Jigsaw			& 1	& 2	& 1	& \emph{C}				& 0 \\
+\cite{Praun03}~Over-reporting	& 0	& 2	& 0	& \emph{1A, 1C}			& 0 \\
+\cite{Praun03}~Under-reporting	& 1	& 1	& 1	& ---					& 0 \\
+\cite{IBM-Rep}~Allocate Vector	& 1	& 2	& 1	& \emph{C}				& 0 \\
+Knight Moves					& 1	& 3	& 1	& \emph{2B}				& 0 \\
+	\midrule
+	\textbf{Total}			& \textbf{12}		& \textbf{33}		& \textbf{10}			& \textbf{5A, 6B, 10C, 2D}	& \textbf{2} \\
+	\bottomrule
+\end{tabular}
+\end{table}
+
+
+As figuras a inserir no documento deverão ser de qualidade, preferencialmente em formato vectorial (PDF vectorial) e não em \emph{bitmap} (PNG, JPG, etc). As imagens \emph{bitmap} (Figura~\ref{fig:Figuras_Tree_silhouettes-bitmap}) não escalam bem e têm reflexos negativos na qualidade do seu docuemnto.  Pelo contrário, as imagens \emph{vectoriais} {Figura~\ref{fig:Figuras_Tree_silhouettes-vectorial}} escalam muito tanto quanto o necessário sem degradar a qualidade da imagem.
+
+Só deve usar \emph{screenshots} se não tive mesmo nenhuma alternativa.  Em vez e gerar um \emph{screenshot}, tente usar uma impressora virtual PDF e imprimir para um ficheiro PDF. Regra geral obterá um PDF vetorial. Mesmo que o seu PDF contenha imagens, elas terão sempre qualidade maior ou igual à que obteria com um \emph{screenshot}.
+
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=1in]{snowman-bitmap}
+	\includegraphics[height=3in]{snowman-bitmap}
+	\includegraphics[height=6in]{snowman-bitmap}
+	\caption{Imagem em formato \emph{bitmap} (JPG)}
+	\label{fig:Figuras_Tree_silhouettes-bitmap}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=1in]{snowman-vectorial}
+	\includegraphics[height=3in]{snowman-vectorial}
+	\includegraphics[height=6in]{snowman-vectorial}
+	\caption{Imagem em formato PDF vectorial}
+	\label{fig:Figuras_Tree_silhouettes-vectorial}
+\end{figure}
+
+Pode usar o pacote \emph{subfigure} para agragar várias figuras numa única. Poderá assim referenciar o conjunto~\ref{fig:figura-completa}, a priemira delas~\ref{fig:novelo} ou a segunda~\ref{fig:nuvem}.
+
+
+\begin{figure}[htbp]
+	\centering
+    \subfigure[Novelo de lã] {
+		\label{fig:novelo}
+		\includegraphics[height=1in]{knitting-vectorial}
+    }
+\qquad\qquad
+    \subfigure[Tempestade com neve] {
+		\label{fig:nuvem}
+		\includegraphics[height=1in]{snowstorm-vectorial}
+    }
+  \caption{Exemplo de utilização de \emph{subfigure}}
+  \label{fig:figura-completa}
+\end{figure}
+
+
+Para incluir listagens de código no seu documento, deverá incluir o pacote \emph{listings} e depois usar o ambiente \emph{lstlisting}, como exemplificado na Listagem~\ref{lst:HelloWorld}.
+
+\lstset{language=Java, caption=Hello World, label=lst:HelloWorld}
+\begin{lstlisting}
+/** 
+ * The HelloWorldApp class implements an application that
+ * simply prints "Hello World!" to standard output.
+ */
+class HelloWorldApp {
+    public static void main(String[] args) {
+        System.out.println("Hello World!"); // Display the string.
+    }
+}
+\end{lstlisting}
+
+\section{Equações}
+
+O LaTeX é uma ferramenta poderosa para escrever em estilo matemático. Permite inserir fórmulas no meio do texto como por exemplo esta: $ax^2 + bx + c = 0$. Também permite que as fórmulas sejam destacadas numa linha separada e centradas na página 
+$$x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$$
+\[x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}\]
+ou numeradas 
+\begin{equation}
+aaa
+\label{eq:1}
+\end{equation}
+que depois pode ser referida no texto como sendo a equação~\ref{eq:1}
+$$\begin{array}{l}
+aa
+\end{array}
+$$
+
+\begin{eqnarray}
+a\\
+b\\
+c\\
+\end{eqnarray}

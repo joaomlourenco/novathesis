@@ -1,0 +1,184 @@
+%% Template para dissertação/tese na classe thesisdifctunl  
+%%  Versão 2.0 (Fevereiro 2010)
+%% Departamento de Informática
+%% Faculdade de Ciências e Tecnologia
+%% Universidade Nova de Lisboa
+%%
+%% BUGS e SUGESTÕES: envie por email para "joao.lourenco@di.fct.unl.pt"
+%%
+%%==================================================================
+%% Carrega a classe thesisdifctunlpt
+%% Opções: 
+%% * Idiomas
+%%           pt   - português  (valor por omissão)
+%%           en   - inglês
+%% * Tipo de texto
+%%           lei     - trabalho de licenciatura
+%%           prepmei - preparação de dissertação
+%%           mei     - dissertação de mestrado (valor por omissão)
+%%           propphd - proposta de doutoramento
+%%           prephd  - preparação de tese de doutoramento
+%%           phd     - tese de doutoramento
+%%    * Páginas
+%%           oneside - para impressão em face única
+%%           twoside - para impressão em frente e verso
+%%    * Fonte
+%%           11pt - Usar fonte tamanho 11
+%%           12pt - Usar fonte tamanho 12 (valor por omissão)
+%%==================================================================
+\documentclass[pt,prepmei,twoside,12pt]{thesisdifctunl}
+
+%% Preâmbulo:
+%% coloque aqui o seu preâmbulo LaTeX, i.e., declaração de pacotes,
+%% (re)definições de macros, medidas, etc.
+
+\usepackage{paralist}	% Nice lists / enumerates / ...
+\usepackage{booktabs}		% Versão mais bonita das tabelas
+%\usepackage{colortbl}		% Sombreados nas tableas
+%\usepackage[sort]{cite}	% Sort citations if using "plain" style
+\usepackage{listings}		% Código fonte "bonito"
+\usepackage{subfigure}		% Para agregar várias figuras numa única
+%\usepackage{pdfsync}		% Para sincronização entre texto e PDF viewer
+\usepackage{todonotes}		% To register TODOs in text
+
+% Configuração dos pacotes incluídos
+\graphicspath{{Logo/}{User/Figures/}}	% Lista de directorias com figuras
+\lstset{	% Configuração do aspecto das listagens de código fonte
+	captionpos=t,	% Comentar se não incluir o pactote listings
+	basicstyle={\ttfamily\footnotesize},
+	numbers=left,
+    numberstyle={\ttfamily\tiny},
+    tabsize=2,
+    language=Java,
+    float,
+    frame=single,
+    % emph={atomic,retry,orElse,SELECT,FROM,WHERE,UPDATE,SET,
+    % TxStart,TxCommit,NULL,select,from,values,insert,where,
+    % into,TX_BEGIN,TX_END,TxDBStart,foreach,and,exists}, 
+    % emphstyle=\textbf, showstringspaces=false 
+}
+
+
+%%============================================================
+%%
+%%  INÍCIO DA COSTUMIZAÇÃO DA TESE PELO UTILIZADOR
+%%
+%%============================================================
+%% Identificação (estes são os valores por omissão, mas podem ser alterados):
+% Universidade
+%\university{Universidade Nova de Lisboa}
+% Faculdade
+%\faculty{Faculdade de Ciências e Tecnologia}
+% Departamento 
+%\department{Departamento de Informática}
+% Curso
+%\program{Mestrado em Engenharia Informática}
+% Área científica
+%\majorfield{Engenharia Informática}
+% Endereço (cidade).
+%\address{Lisboa}
+
+
+%%============================================================
+% Título da dissertação/tese
+\title{O título do trabalho}
+
+% Autor
+\author{Nome do Autor}
+\authornumber{12345}
+
+% Data 
+\date{2010}
+
+% Orientador(a)
+% Opção: [f] - para orientador do sexo feminino
+\adviser[f]{Profª.\ Doutora nome da orientadora}
+
+% Co-orientador(a) - não colocar nada para orientador do sexo masculino
+\coadviser{Prof.\ Doutor nome do co-orientador}
+
+
+%%------------------------------------------------------------
+%% Todos os ficheiros abaixo devem estar dentro da directoria/pasta "User"
+%%------------------------------------------------------------
+% Ficheiro com o texto da dedicatoria. Será ignorado para Preparação de MSc, e para Preparação e Proposta de PhD
+\dedicatoryfile{dedicatory} 
+
+% Ficheiro com o texto de agradecimentos. Será ignorado para Preparação de MSc, e para Preparação e Proposta de PhD
+\acknowledgementsfile{acknowledgements}
+
+% Ficheiros com o texto dos resumos em Português e Inglês
+\ptabstractfile{resumo}
+\enabstractfile{abstract}
+
+% Quais os índices a incluir
+\printlistoffigures   % Comentar para omitir
+\printlistoftables    % Comentar para omitir
+\printlistoflistings  % Comentar para omitir
+
+% Ficheiros com os capítulos -- sintaxe: \chapterfile[chapternumber]{file} 
+\chapterfile[1]{capitulo1}
+\chapterfile[2]{capitulo2}
+\chapterfile[3]{capitulo3}
+
+\appendixfile[1]{apendice1}
+
+% Ficheiros de bibliografia. Pode ser uma lista separada por vírgulas
+\bibliographyfile{bibliography}
+
+%%============================================================
+%%
+%%  FIM DA COSTUMIZAÇÃO PELO UTILIZADOR
+%%
+%%============================================================
+
+
+
+
+%%============================================================
+%% Por favor, não altere nada daqui para baixo... :)
+%%============================================================
+%% Inicio do documento
+\begin{document}
+
+%%------------------------------------------------------------
+%% Parte pré-textual
+\frontmatter
+
+% Folha de rosto. Comente para ocultar
+\frontpage
+% Página de apresentação. Comente para ocultar
+\presentationpage
+% Dedicatória, se apropriado
+\printdedicatory
+% Agradecimentos, se apropriado
+\printacknowledgements
+% Resumos em PT e EN, pela ordem correcta
+\printabstract
+
+%%------------------------------------------------------------
+% Índices
+\tableofcontents
+\printotherlists
+
+% Lista de figuras. Comente para ocultar
+% \listoffigures
+% Lista de tabelas. Comente para ocultar
+% \listoftables
+% Lista de listagens. Comente para ocultar
+% \lstlistoflistings
+
+%%------------------------------------------------------------
+% Os vários capítulos, tal como definidos acima
+\printchapters
+
+%%------------------------------------------------------------
+% Bibliografia. Deve utilizar o BibTeX a partir de um arquivo, ex: "bibliography.bib".
+\printbibliography
+
+%%------------------------------------------------------------
+% Apêndices.
+\printappendixes 
+
+%% Fim do documento
+\end{document}
