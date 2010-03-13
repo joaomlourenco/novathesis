@@ -1,50 +1,62 @@
-%% Template para dissertação/tese na classe thesisdifctunl  
-%%  Versão 2.0 (Fevereiro 2010)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Template for writing dissertations with ThesisDIFCTUNL
+%%  Versão 20100313 (March 2010)
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
 %%
-%% BUGS e SUGESTÕES: envie por email para "joao.lourenco@di.fct.unl.pt"
+%% Project web page at: http://code.google.com/p/thesisdifctunl/
 %%
+%% BUGS and SUGGESTIONS: please use the "Issue" feature in the project web page
+%%
+%% Contributors:
+%%     - Adriano Lopes (Adriano.Lopes@di.fct.unl.pt)
+%%     - João Lourenço (Joao.Lourenco@di.fct.unl.pt)
+%%     - João Seco (Joao.Seco@di.fct.unl.pt)
+%%     - Luís Russo (Luis.Russo@di.fct.unl.pt)
+%%     - Ricardo Dias (rjfd@di.fct.unl.pt)
+%%     - Vitor Duarte (Vitor.Duarte@di.fct.unl.pt)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Main options (please read the manual for further details)
+%% Options marked with (*) are the values by default
+%% - Languages
+%%           (*)pt   - português
+%%           en   - english
+%% - Class of text
+%%           lei     - BSc graduation report
+%%           (*)prepmei - Preparation of MSc dissertation
+%%           mei     - MSc dissertation
+%%           propphd - Proposal of PhD thesis
+%%           prephd  - Preparation of PhD thesis
+%%           phd     - PhD thesis
+%% - Single/double sided printing
+%%           oneside - single sided printing
+%%           (*)twoside - double sided printing
+%% - Font size
+%%           11pt - Use font size 11
+%%           (*)12pt - Use font size 12
 %%==================================================================
-%% Carrega a classe thesisdifctunlpt
-%% Opções: 
-%% * Idiomas
-%%           pt   - português  (valor por omissão)
-%%           en   - inglês
-%% * Tipo de texto
-%%           lei     - trabalho de licenciatura
-%%           prepmei - preparação de dissertação
-%%           mei     - dissertação de mestrado (valor por omissão)
-%%           propphd - proposta de doutoramento
-%%           prephd  - preparação de tese de doutoramento
-%%           phd     - tese de doutoramento
-%%    * Páginas
-%%           oneside - para impressão em face única
-%%           twoside - para impressão em frente e verso
-%%    * Fonte
-%%           11pt - Usar fonte tamanho 11
-%%           12pt - Usar fonte tamanho 12 (valor por omissão)
-%%==================================================================
-\documentclass[pt,prepmei,twoside,12pt]{thesisdifctunl}
+\documentclass[pt,prepmsc,twoside,12pt]{thesisdifctunl}
 
 %% Preâmbulo:
 %% coloque aqui o seu preâmbulo LaTeX, i.e., declaração de pacotes,
 %% (re)definições de macros, medidas, etc.
 
-\usepackage{paralist}	% Nice lists / enumerates / ...
-\usepackage{booktabs}		% Versão mais bonita das tabelas
-%\usepackage{colortbl}		% Sombreados nas tableas
+\usepackage{paralist}		% Nice lists / enumerates / ...
+\usepackage{booktabs}		% Nice tables
+%\usepackage{colortbl}		% Colors in tables
 %\usepackage[sort]{cite}	% Sort citations if using "plain" style
-\usepackage{listings}		% Código fonte "bonito"
-\usepackage{subfigure}		% Para agregar várias figuras numa única
-%\usepackage{pdfsync}		% Para sincronização entre texto e PDF viewer
+\usepackage{listings}		% Nice fontifying for code listings
+\usepackage{subfigure}		% To aggregate multiple figures in a single one with subfigures
+%\usepackage{pdfsync}		% For sychronization with PDF viewer (if possible, use synctex instead)
 \usepackage{todonotes}		% To register TODOs in text
 
-% Configuração dos pacotes incluídos
-\graphicspath{{Logo/}{User/Figures/}}	% Lista de directorias com figuras
-\lstset{	% Configuração do aspecto das listagens de código fonte
-	captionpos=t,	% Comentar se não incluir o pactote listings
+% Standard configuration for packages included by default
+\graphicspath{{Logo/}{User/Figures/}}	% Where to look for figures
+\lstset{			% Setup of listings
+	captionpos=t,
 	basicstyle={\ttfamily\footnotesize},
 	numbers=left,
     numberstyle={\ttfamily\tiny},
@@ -58,72 +70,75 @@
     % emphstyle=\textbf, showstringspaces=false 
 }
 
-
-%%============================================================
-%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  INÍCIO DA COSTUMIZAÇÃO DA TESE PELO UTILIZADOR
-%%
-%%============================================================
-%% Identificação (estes são os valores por omissão, mas podem ser alterados):
-% Universidade
-%\university{Universidade Nova de Lisboa}
-% Faculdade
-%\faculty{Faculdade de Ciências e Tecnologia}
-% Departamento 
-%\department{Departamento de Informática}
-% Curso
-%\program{Mestrado em Engenharia Informática}
-% Área científica
-%\majorfield{Engenharia Informática}
-% Endereço (cidade).
-%\address{Lisboa}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Identification: items prefixed with (*) are the default values, as defined in "defaults.tex"
+% (*)\university{Universidade Nova de Lisboa}
+% (*)\faculty{Faculdade de Ciências e Tecnologia}
+% (*)\department{Departamento de Informática}
+% (*)\program{Mestrado em Engenharia Informática}
+% (*)\majorfield{Engenharia Informática}
+% (*)\address{Lisboa}
+% (*)\universitylogo{logounl}
+% (*)\universitylogowidth{2.2cm}
+% \universitylogo{logofctunl}  -- alternative (is it allowed?)
+% \universitylogowidth{3.7cm}  -- alternative
 
 %%============================================================
-% Título da dissertação/tese
-\title{O título do trabalho}
+% Title of the dissertation/thesis
+\title{Título da tese}
 
 % Autor
-\author{Nome do Autor}
+\author{Nome do autor}
 \authornumber{12345}
 
 % Data 
 \date{2010}
 
-% Orientador(a)
-% Opção: [f] - para orientador do sexo feminino
+% Supervisor, use [f] for female and omit for male supervisors
+% Opção: [f] - for a female supervisor
 \adviser[f]{Profª.\ Doutora nome da orientadora}
 
-% Co-orientador(a) - não colocar nada para orientador do sexo masculino
+% Co-orientador(a) - omit the reference to gender
 \coadviser{Prof.\ Doutor nome do co-orientador}
 
 
 %%------------------------------------------------------------
-%% Todos os ficheiros abaixo devem estar dentro da directoria/pasta "User"
+%% All the names inside braces below sould correspond to a file
+%%     with extension ".tex" and located in the "User" folder
 %%------------------------------------------------------------
-% Ficheiro com o texto da dedicatoria. Será ignorado para Preparação de MSc, e para Preparação e Proposta de PhD
+% Dedicatory text. Will only be considered for final documents,
+% i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
 \dedicatoryfile{dedicatory} 
 
-% Ficheiro com o texto de agradecimentos. Será ignorado para Preparação de MSc, e para Preparação e Proposta de PhD
+% Acknowledgments text. Will only be considered for final documents,
+% i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
 \acknowledgementsfile{acknowledgements}
 
-% Ficheiros com o texto dos resumos em Português e Inglês
+% Resume/summary text in Portuguese
 \ptabstractfile{resumo}
+% Resume/summary text in English
 \enabstractfile{abstract}
 
-% Quais os índices a incluir
-\printlistoffigures   % Comentar para omitir
-\printlistoftables    % Comentar para omitir
-\printlistoflistings  % Comentar para omitir
+% The Table of Contents is always printed. The other lists may be omited.
+\printlistoffigures   % Comment to omit
+\printlistoftables    % Comment to omit
+\printlistoflistings  % Comment to omit
 
-% Ficheiros com os capítulos -- sintaxe: \chapterfile[chapternumber]{file} 
-\chapterfile[1]{capitulo1}
-\chapterfile[2]{capitulo2}
-\chapterfile[3]{capitulo3}
+% Text chapters
+% sintax: \chapterfile[chapternumber]{file}
+\chapterfile[1]{chapter1}
+\chapterfile[2]{chapter2}
+\chapterfile[3]{chapter3}
 
-\appendixfile[1]{apendice1}
+% Text appendixes
+% sintax: \appendixfile[appendixnumber]{file}
+\appendixfile[1]{appendix1}
 
-% Ficheiros de bibliografia. Pode ser uma lista separada por vírgulas
+% BibTeX bibiography files. Can be a comma separated list of files
 \bibliographyfile{bibliography}
 
 %%============================================================

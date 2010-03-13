@@ -43,13 +43,13 @@
 \DeclareOption{singlecover}{%
   \let\@singlecover=1}
 
-\DeclareOption{lei}{%
+\DeclareOption{bsc}{%
   \let\@degreetype=0}
 
-\DeclareOption{prepmei}{%
+\DeclareOption{prepmsc}{%
   \let\@degreetype=1}
   
-\DeclareOption{mei}{%
+\DeclareOption{msc}{%
   \let\@degreetype=2}
 
 \DeclareOption{propphd}{%
@@ -62,7 +62,7 @@
   \let\@degreetype=5}
  
 % Default options
-\ExecuteOptions{pt,twoside,mei}
+\ExecuteOptions{pt,twoside,prepmsc}
 \ProcessOptions
 
 \LoadClass[a4paper]{book}
@@ -148,15 +148,15 @@ grau de\@degree\ em\@majorfield.}
 \gdef\keywordsnamePT{Palavras-chave}
 \gdef\keywordsnameEN{Keywords}
 
-\gdef\@programlei{Licenciatura em \@enginformatica}
-\gdef\@programmei{Mestrado em \@enginformatica}
+\gdef\@programbsc{Licenciatura em \@enginformatica}
+\gdef\@programmsc{Mestrado em \@enginformatica}
 \gdef\@programphd{Doutoramento em \@informatica}
 
 \gdef\@enginformatica{Engenharia Informática}
 \gdef\@informatica{Informática}
 
-\gdef\@programleibox{20.5em}
-\gdef\@programmeibox{20em}
+\gdef\@programbscbox{20.5em}
+\gdef\@programmscbox{20em}
 \gdef\@programphdbox{21em}
 
 %% Language Dependent
@@ -211,6 +211,10 @@ grau de\@degree\ em\@majorfield.}
 \def\universitylogo#1{%
   \gdef\@universitylogo{#1}}
 \def\@universitylogo{~universitylogo \@notdefined}
+
+\def\universitylogowidth#1{%
+  \gdef\@universitylogowidth{#1}}
+\def\@universitylogowidth{2cm}
 
 \def\university#1{%
   \gdef\@university{#1}}
@@ -320,11 +324,11 @@ grau de\@degree\ em\@majorfield.}
 
 \def\@program{%
   \if\@degreetype0
-    \@programlei
+    \@programbsc
   \else\if\@degreetype1
-    \@programmei
+    \@programmsc
   \else\if\@degreetype2
-    \@programmei
+    \@programmsc
   \else\if\@degreetype3
     \@programphd
   \else\if\@degreetype4
@@ -335,11 +339,11 @@ grau de\@degree\ em\@majorfield.}
 
 \def\@programbox{%
   \if\@degreetype0
-    \@programleibox
+    \@programbscbox
   \else\if\@degreetype1
-    \@programmeibox
+    \@programmscbox
   \else\if\@degreetype2
-    \@programmeibox
+    \@programmscbox
   \else\if\@degreetype3
     \@programphdbox
   \else\if\@degreetype4
@@ -625,9 +629,9 @@ grau de\@degree\ em\@majorfield.}
   \if@openright\cleardoublepage\else\clearpage\fi
   \thispagestyle{empty}
   \begin{center}
-  \begin{minipage}[c]{2cm}
-    \includegraphics[width=2cm]{\@universitylogo}
-  \end{minipage}
+  \begin{minipage}[c]{\@universitylogowidth}
+    \includegraphics[width=\@universitylogowidth]{\@universitylogo}
+  \end{minipage}\hspace{2mm}
   \begin{minipage}[c]{7cm}
   \textbf{\@university}\\
   \@faculty\\
@@ -665,9 +669,9 @@ grau de\@degree\ em\@majorfield.}
   \if@openright\cleardoublepage\else\clearpage\fi
   \thispagestyle{empty}
   \begin{center}
-  \begin{minipage}[c]{2cm}
-    \includegraphics[width=2cm]{\@universitylogo}
-  \end{minipage}
+  \begin{minipage}[c]{\@universitylogowidth}
+    \includegraphics[width=\@universitylogowidth]{\@universitylogo}
+  \end{minipage}\hspace{2mm}
   \begin{minipage}[c]{7cm}
   \textbf{\@university}\\
   \@faculty\\
