@@ -22,12 +22,12 @@
 %% Main options (please read the manual for further details)
 %% Options marked with (*) are the values by default
 %% - Languages
-%%           (*)pt   - português
-%%           en   - english
+%%           pt   - português
+%%           (*)en   - english
 %% - Class of text
-%%           lei     - BSc graduation report
-%%           (*)prepmei - Preparation of MSc dissertation
-%%           mei     - MSc dissertation
+%%           bsc     - BSc graduation report
+%%           (*)prepmsc - Preparation of MSc dissertation
+%%           msc     - MSc dissertation
 %%           propphd - Proposal of PhD thesis
 %%           prephd  - Preparation of PhD thesis
 %%           phd     - PhD thesis
@@ -37,42 +37,46 @@
 %% - Font size
 %%           11pt - Use font size 11
 %%           (*)12pt - Use font size 12
-%%==================================================================
-\documentclass[pt,prepmsc,twoside,12pt]{thesisdifctunl}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[en,prepmsc,twoside,12pt]{thesisdifctunl}
 
 %% Preâmbulo:
 %% coloque aqui o seu preâmbulo LaTeX, i.e., declaração de pacotes,
 %% (re)definições de macros, medidas, etc.
 
-\usepackage{paralist}		% Nice lists / enumerates / ...
-\usepackage{booktabs}		% Nice tables
-%\usepackage{colortbl}		% Colors in tables
-%\usepackage[sort]{cite}	% Sort citations if using "plain" style
-\usepackage{listings}		% Nice fontifying for code listings
-\usepackage{subfigure}		% To aggregate multiple figures in a single one with subfigures
-%\usepackage{pdfsync}		% For sychronization with PDF viewer (if possible, use synctex instead)
-\usepackage{todonotes}		% To register TODOs in text
 
+\usepackage{paralist}	% Nice lists / enumerates / ...
+\usepackage{booktabs}	% Nice tables
+%\usepackage{colortbl}	% Colors in tables
+%\usepackage[sort]{cite}	% Sort citations if using "plain" style
+\usepackage{listings}	% Nice fontifying for code listings
+\usepackage{subfigure}	% To aggregate multiple figures in a single one with subfigures
+%\usepackage{pdfsync}	% For sychronization with PDF viewer (if possible, use synctex instead)
+\usepackage{todonotes}	% To register TODOs in text
+
+%====================================================================
 % Standard configuration for packages included by default
-\graphicspath{{Logo/}{User/Figures/}}	% Where to look for figures
-\lstset{			% Setup of listings
-	captionpos=t,
-	basicstyle={\ttfamily\footnotesize},
-	numbers=left,
+%====================================================================
+
+% Where to look for figures
+\graphicspath{{Logo/}{User/Figures/}} 
+
+% Setup of listings, for more information check package manual
+\lstset{
+    captionpos=t,
+    basicstyle={\ttfamily\footnotesize},
+    numbers=left,
     numberstyle={\ttfamily\tiny},
     tabsize=2,
     language=Java,
     float,
     frame=single,
-    % emph={atomic,retry,orElse,SELECT,FROM,WHERE,UPDATE,SET,
-    % TxStart,TxCommit,NULL,select,from,values,insert,where,
-    % into,TX_BEGIN,TX_END,TxDBStart,foreach,and,exists}, 
-    % emphstyle=\textbf, showstringspaces=false 
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  INÍCIO DA COSTUMIZAÇÃO DA TESE PELO UTILIZADOR
+%%  BEGINING OF USER COSTUMIZATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Identification: items prefixed with (*) are the default values, as defined in "defaults.tex"
@@ -86,13 +90,15 @@
 % (*)\universitylogowidth{2.2cm}
 % \universitylogo{logofctunl}  -- alternative (is it allowed?)
 % \universitylogowidth{3.7cm}  -- alternative
-
+% Uncomment to use double spacing (default is one-and-half spacing).
+% Nice for supervisor to inert revision notes and comments.
+%\doublespacing
 %%============================================================
 % Title of the dissertation/thesis
 \title{Título da tese}
 
 % Autor
-\author{Nome do autor}
+\author{Nome do autor} 
 \authornumber{12345}
 
 % Data 
@@ -104,7 +110,6 @@
 
 % Co-orientador(a) - omit the reference to gender
 \coadviser{Prof.\ Doutor nome do co-orientador}
-
 
 %%------------------------------------------------------------
 %% All the names inside braces below sould correspond to a file
@@ -120,18 +125,27 @@
 
 % Resume/summary text in Portuguese
 \ptabstractfile{resumo}
+
 % Resume/summary text in English
 \enabstractfile{abstract}
 
 % The Table of Contents is always printed. The other lists may be omited.
-\printlistoffigures   % Comment to omit
-\printlistoftables    % Comment to omit
-\printlistoflistings  % Comment to omit
+
+
+% The List of Figures. Comment to omit.
+\printlistoffigures 
+
+% The List of Tables. Comment to omit.
+\printlistoftables 
+
+% The List of Code Listings. Comment to omit.
+\printlistoflistings 
+
 
 % Text chapters
 % sintax: \chapterfile[chapternumber]{file}
-\chapterfile[1]{chapter1}
-\chapterfile[2]{chapter2}
+\chapterfile[1]{chapter1} 
+\chapterfile[2]{chapter2} 
 \chapterfile[3]{chapter3}
 
 % Text appendixes
@@ -143,57 +157,54 @@
 
 %%============================================================
 %%
-%%  FIM DA COSTUMIZAÇÃO PELO UTILIZADOR
+%%  END OF USER COSTUMIZAITON
 %%
 %%============================================================
-
-
-
-
 %%============================================================
-%% Por favor, não altere nada daqui para baixo... :)
+%% Please do not change below this point!!! :)
 %%============================================================
-%% Inicio do documento
+%% Begining of document
 \begin{document}
 
 %%------------------------------------------------------------
-%% Parte pré-textual
+%% Before main text
 \frontmatter
 
-% Folha de rosto. Comente para ocultar
+% The first front page
 \frontpage
-% Página de apresentação. Comente para ocultar
+
+% The second front page
 \presentationpage
-% Dedicatória, se apropriado
+
+% Dedicatory will only be printed if adequate for the document type
 \printdedicatory
-% Agradecimentos, se apropriado
+
+% Acknowledgments will only be printed if adequate for the document type
 \printacknowledgements
-% Resumos em PT e EN, pela ordem correcta
+
+% Abstracts/resumes/summaries in two languages. The first abstract will
+% use the document main language and second the foreign language
 \printabstract
 
 %%------------------------------------------------------------
-% Índices
-\tableofcontents
-\printotherlists
+% Tables/lists of contents
+\tableofcontents 
 
-% Lista de figuras. Comente para ocultar
-% \listoffigures
-% Lista de tabelas. Comente para ocultar
-% \listoftables
-% Lista de listagens. Comente para ocultar
-% \lstlistoflistings
+% Always print the table of contents
+\printotherlists 
 
+% Print other lists of contents according to instructions given above
 %%------------------------------------------------------------
-% Os vários capítulos, tal como definidos acima
+% Print document chapters
 \printchapters
 
 %%------------------------------------------------------------
-% Bibliografia. Deve utilizar o BibTeX a partir de um arquivo, ex: "bibliography.bib".
+% Print the bibliography
 \printbibliography
 
 %%------------------------------------------------------------
-% Apêndices.
+% Print appendixes, if any!
 \printappendixes 
 
-%% Fim do documento
-\end{document}
+%% End of document
+\end{document} 

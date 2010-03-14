@@ -1,23 +1,27 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% thesisdifctunl.cls
 %%% DI/FCT/UNL Dissertation document class
+%%% http://code.google.com/p/thesisdifctunl
 %%%
-%%% Version 2.0 (February 2010)
+%%% Version 2.1 (March 2010)
 %%% By João Lourenço (joao.lourenco@di.fct.unl.pt)
 %%%
 %%% This template is vaguely based on a template from the
-%%%      University of Pernambuco
+%%%     University of Pernambuco
 %%%
-%%% BUGS and SUGGETSIONS: please send email to "joao.lourenco@di.fct.unl.pt"
+%%% BUGS and SUGGETSIONS:
+%%%     Please report in the project web page at
+%%%     http://code.google.com/p/thesisdifctunl/issues/list
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{thesisdifctunl}[2007/12/30]
+\ProvidesClass{thesisdifctunl}[2010/03/10]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% OPTIONS 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% == Language ===
 \DeclareOption{pt}{%
   \let\@language=0%
   \PassOptionsToPackage{portuguese,english}{babel}}
@@ -26,12 +30,14 @@
   \let\@language=1%
   \PassOptionsToPackage{portuguese,english}{babel}}
 
+% == Printing ===
 \DeclareOption{oneside}{%
   \PassOptionsToClass{oneside}{book}}
 
 \DeclareOption{twoside}{%
   \PassOptionsToClass{twoside}{book}}
 
+% == Font Size ===
 \PassOptionsToClass{11pt}{book} % Default point size
 
 \DeclareOption{11pt}{%
@@ -40,9 +46,11 @@
 \DeclareOption{12pt}{%
 	\PassOptionsToClass{12pt}{book}}
 
+% == Unused for now ===
 \DeclareOption{singlecover}{%
   \let\@singlecover=1}
 
+% == Type of Document ===
 \DeclareOption{bsc}{%
   \let\@degreetype=0}
 
@@ -61,8 +69,8 @@
 \DeclareOption{phd}{%
   \let\@degreetype=5}
  
-% Default options
-\ExecuteOptions{pt,twoside,prepmsc}
+% == Default Options ===
+\ExecuteOptions{en,twoside,prepmsc}
 \ProcessOptions
 
 \LoadClass[a4paper]{book}
@@ -73,15 +81,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{amsmath,amsfonts,amssymb,amsthm}
 \RequirePackage{babel}
-\RequirePackage{calc}
-\RequirePackage{ifthen}
 \RequirePackage[utf8x]{inputenc}
-\RequirePackage{textcase}
-\RequirePackage{textcomp}
-\RequirePackage{url}
-\RequirePackage{xspace}
-\RequirePackage{boolexpr}
+\RequirePackage[T1]{fontenc}
 
+%\RequirePackage{calc}
+%\RequirePackage{ifthen}
+%\RequirePackage{textcase}
+%\RequirePackage{textcomp}
+%\RequirePackage{url}
+%\RequirePackage{xspace}
+%\RequirePackage{boolexpr}
 \usepackage{titlesec}           % To format the headings
 \usepackage{textfit}            % To scale fonts
 \usepackage{fancyhdr}           % Headings configuration
@@ -91,8 +100,6 @@
 \usepackage{setspace}           % One-and-half spacing
 \onehalfspacing
 
-
-\RequirePackage[T1]{fontenc}
 \RequirePackage{mathptmx}
 \RequirePackage[scaled=0.9]{helvet}
 \RequirePackage{courier}
@@ -100,8 +107,8 @@
 
 \RequirePackage[pdftex]{graphicx}
 \RequirePackage[pdftex,usenames]{color}
-\definecolor{myblue}{rgb}{0.39,0.69,1}
-\definecolor{myyellow}{rgb}{0.95,0.93,0.78}
+% \definecolor{myblue}{rgb}{0.39,0.69,1}
+% \definecolor{myyellow}{rgb}{0.95,0.93,0.78}
 \definecolor{mydarkblue}{rgb}{0.0,0.08,0.45}
 \RequirePackage[pdftex,breaklinks,colorlinks,pdfdisplaydoctitle,citecolor=mydarkblue,linkcolor=mydarkblue]{hyperref}
 
@@ -165,49 +172,15 @@ grau de\@degree\ em\@majorfield.}
 \if\@language0
   \gdef\@notdefined{NÃO DEFINIDO}
   \gdef\acknowledgementsname{Agradecimentos}
-  % \gdef\@axiomname{Axioma}
-  % \gdef\@conjecturename{Conjectura}
-  % \gdef\@defname{Definição}
-  % \gdef\@lemmaname{Lema}
-  % \gdef\@theoname{Teorema}
-  % \gdef\@propname{Proposição}
-  % \gdef\@corname{Corolário}
-  % \gdef\@proofname{Prova}
-  % \gdef\@figurename{Figura}
-  % \gdef\@tablename{Tabela}
-  % \gdef\@equationame{equação}
-  % \gdef\@chaptername{Capítulo}
-  % \gdef\@sectionname{Secção}
-  % \gdef\@appendixname{Apêndice}
-  % \gdef\@pagename{página}
 % English
 \else\if\@language1
   \gdef\@notdefined{UNDEFINED}
-  % \gdef\acknowledgementsname{Acknowledgements}
-  %   \gdef\@axiomname{Axiom}
-  %   \gdef\@conjecturename{Conjecture}
-  %   \gdef\@defname{Definition}
-  %   \gdef\@lemmaname{Lemma}
-  %   \gdef\@theoname{Theorem}
-  %   \gdef\@propname{Proposition}
-  %   \gdef\@corname{Corollary}
-  %   \gdef\@proofname{Proof}
-  %   \gdef\@figurename{Figure}
-  %   \gdef\@tablename{Table}
-  %   \gdef\@equationame{equation}
-  %   \gdef\@chaptername{Chapter}
-  %   \gdef\@sectionname{Section}
-  %   \gdef\@appendixname{Appendix}
-  %   \gdef\@pagename{page}
 \fi\fi
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% IDENTIFICATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% School identification
-
 \def\universitylogo#1{%
   \gdef\@universitylogo{#1}}
 \def\@universitylogo{~universitylogo \@notdefined}
@@ -367,42 +340,21 @@ grau de\@degree\ em\@majorfield.}
     \@informatica
   \fi\fi\fi\fi\fi\fi}
 
-\synctex=1 % Uase synctex
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PAGE LAYOUT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% \setlength{\topmargin}{1cm}
-% \setlength{\headheight}{1cm}
-% \setlength{\headsep}{0.5cm}
-% 
-% \setlength{\textheight}{21cm}
-% \setlength{\topskip}{0.5cm}
-% \setlength{\textwidth}{16cm}
-% \setlength{\footskip}{0.5cm}
-% 
-% \setlength{\oddsidemargin}{0cm}
-% \setlength{\evensidemargin}{0cm}
-% 
-% \setlength{\marginparwidth}{10mm}
-% \setlength{\marginparsep}{10mm}
-
+\synctex=1 % Uase synctex
 \brokenpenalty=10000
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Fonts
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \newcommand\quotefont{\normalfont\normalsize}
 \newcommand\quotefonti{\it\normalsize}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Including chapters and similars
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \def\dedicatoryfile#1{%
   \gdef\@dedicatoryfile{#1}}
 \def\@dedicatoryfile{~dedicatoryfile \@notdefined}
@@ -514,7 +466,6 @@ grau de\@degree\ em\@majorfield.}
 	\endthesismainmatter
 }
 
-
 \def\appendixfile[#1]#2{%
 	\ifnum #1=1\gdef\printappendixfileone{\noexpand{\appendix\@input@{User/#2}}}\fi
 	\ifnum #1=2\gdef\printappendixfiletwo{\noexpand{\@input@{User/#2}}}\fi
@@ -570,7 +521,6 @@ grau de\@degree\ em\@majorfield.}
 	\@printlistoflistings
 }
 
-
 \def\bibliographyfile#1{%
   \gdef\@bibliographyfile{#1}}
 \def\@bibliographyfile{~bibliographyfile \@notdefined}
@@ -583,44 +533,6 @@ grau de\@degree\ em\@majorfield.}
 	\fi\fi
 	\bibliography{User/\@bibliographyfile}
 }
-
-
-% \def\acknowledgementsfile#1{%
-%   \gdef\@acknowledgementsfile{#1}}
-% \def\@acknowledgementsfile{\@notdefined}
-% 
-% \def\printacknowledgements{
-% 	\if\@degreetype0
-% 		\@input@{\@acknowledgementsfile}\global\let\@acknowledgementsfile\@empty
-% 	\else\if\@degreetype1
-% 	\else\if\@degreetype2
-% 		\@input@{\@acknowledgementsfile}\global\let\@acknowledgementsfile\@empty
-% 	\else\if\@degreetype3
-% 	\else\if\@degreetype4
-% 	\else\if\@degreetype5
-% 		\@input@{\@acknowledgementsfile}\global\let\@acknowledgementsfile\@empty
-% 	\fi\fi\fi\fi\fi\fi
-% }
-
-
-% \newcounter{\chapcounter}
-% \setcounter{\chapcounter}{0}
-% \def\chapterfile#1{%
-% 	\if\@chapcounter0
-% 		\mainmatter
-% 		\pagestyle{fancy}
-% 		\fancyhead{}
-% 		\setlength{\headheight}{15pt}
-% 		\fancyhead[RO,LE]{\leftmark\hfill\rightmark}
-% 		\renewcommand{\chaptermark}[1]{%
-% 			\markboth{\fontfamily{phv}\selectfont\footnotesize\thechapter.\ \textsc{#1}}{}}
-% 		\renewcommand{\sectionmark}[1]{%
-% 			\markright{\fontfamily{phv}\selectfont\footnotesize\thesection.\ #1}}
-% 	\fi
-% 	\gdef\csname{\@enabstractfile\chapcounter}{#1}}
-% 	\def\csname{\@enabstractfile\chapcounter}{\@notdefined}
-% }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Frontpage
@@ -660,11 +572,9 @@ grau de\@degree\ em\@majorfield.}
   \end{center}
 }
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Presentation page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \def\presentationpage{%
   \if@openright\cleardoublepage\else\clearpage\fi
   \thispagestyle{empty}
@@ -714,11 +624,9 @@ grau de\@degree\ em\@majorfield.}
   \end{center}
 }
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Dedicatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \def\dedicatory{%
 	\if@openright\cleardoublepage\else\clearpage\fi
 	\thispagestyle{empty}
@@ -731,181 +639,58 @@ grau de\@degree\ em\@majorfield.}
 	\end{flushright}
     \normalfont
     \end{minipage}
-	\end{flushright}}
-
+	\end{flushright}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \def\acknowledgements{%
-  \chapter*{\acknowledgementsname}}
-
+  \chapter*{\acknowledgementsname}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Resumo
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \def\resumo{%
   \selectlanguage{portuguese}
   \gdef\@keywordsname{\keywordsnamePT}
   \chapter*{\resumoname}
    \rule{\textwidth}{0.2mm} ~\\
-  }
-
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \def\abstract{%
   \selectlanguage{english}
   \gdef\@keywordsname{\keywordsnameEN}
   \chapter*{\abstrname}
   \rule{\textwidth}{0.2mm} ~\\
-   }
-
+}
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Keywords
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \def\@keywordsname{\@defaultkeywordsname}
 \def\keywords{%
   \par\vskip\baselineskip\noindent{\bf\@keywordsname: }}
 \def\endkeywords{~\\[2ex]\rule{\textwidth}{0.2mm}}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Quotations
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \def\epigraph{%
-%   \if@openright\cleardoublepage\else\clearpage\fi
-%   \thispagestyle{empty}
-%   ~\\\vfill
-%   \begin{quotation}}
-% \def\endepigraph{\end{quotation}}
-% 
-% \def\quotation{%
-%   \@ifnextchar [%
-%     {\begin{pquot@tion}}%
-%     {\begin{pquot@tion}[\@empty]}}
-% \def\endquotation{\end{pquot@tion}\@afterindentfalse\@afterheading}
-% 
-% \def\pquot@tion[#1]#2{%
-%   \def\@qauthor{#2}
-%   \def\@qnote{#1}
-%   \begin{flushright}
-%     \begin{minipage}{0.8\textwidth}
-%       \begin{flushright}\quotefonti}
-% \def\endpquot@tion{%
-%         \vskip.2\baselineskip%
-%         \quotefont---\MakeTextUppercase{\@qauthor}
-%         \if\@qnote\@empty
-%           \relax
-%         \else
-%           \space(\@qnote)
-%         \fi
-%       \end{flushright}
-%     \end{minipage}
-%   \end{flushright}
-%   \normalfont\vskip2\baselineskip}
-
-  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Table of contents
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% \def\@plaintocline#1#2#3#4#5{%
-%   \ifnum #1>\c@tocdepth \else
-%     \vskip \z@ \@plus.2\p@
-%     {\leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
-%      \parindent #2\relax\@afterindenttrue
-%      \interlinepenalty\@M
-%      \leavevmode
-%      \@tempdima #3\relax
-%      \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
-%      {#4}\nobreak
-%      \leaders\hbox{$\m@th
-%         \mkern \@dotsep mu\hbox{}\mkern \@dotsep
-%         mu$}\hfill
-%      \nobreak
-%      \hb@xt@\@pnumwidth{\hfil\normalfont \normalcolor #5}%
-%      \par}%
-%   \fi}
-% 
-%  \renewcommand\tableofcontents{%
-%    \chapter*{\contentsname}
-%    \@starttoc{toc}}
-%  
-% 
-% \def\l@chapter#1#2{%
-%   \ifnum \c@tocdepth >\m@ne
-%     \addpenalty{-\@highpenalty}%
-%     \vskip .75em \@plus\p@
-%     \setlength\@tempdima{1.5em}%
-%     \begingroup
-%       \parindent \z@ \rightskip \@pnumwidth
-%       \parfillskip -\@pnumwidth
-%       \leavevmode \bfseries
-%       \advance\leftskip\@tempdima
-%       \hskip -\leftskip
-%       #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
-%       \penalty\@highpenalty
-%     \endgroup 
-%   \fi}
-% 
-% \let\@dottedtocline\@plaintocline
-
 \setcounter{tocdepth}{3}
-
-% 
-% \renewcommand\listoffigures{%
-%    \chapter*{\listfigurename}
-%    \@starttoc{lof}}
-% 
-% \renewcommand\listoftables{%
-%    \chapter*{\listtablename}
-%    \@starttoc{lot}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Sectioning
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \setcounter{secnumdepth}{3}
-
-% \def\part{%
-% \if@openright\cleardoublepage\else\clearpage\fi
-%   \thispagestyle{empty}%
-%   \secdef\@part\@spart}
-% \def\@part[#1]#2{%
-%     \ifnum \c@secnumdepth >-2\relax
-%       \refstepcounter{part}%
-%       \addcontentsline{toc}{part}{\thepart\hspace{1em}#1}%
-%     \else
-%       \addcontentsline{toc}{part}{#1}%
-%     \fi
-%     \markboth{}{}%
-%     {\centering
-%      \interlinepenalty \@M
-%      \normalfont
-%      \null\vfil
-%      \ifnum \c@secnumdepth >-2\relax
-%        {\sc\Large\partname\nobreakspace\thepart}
-%        \par
-%        \vskip 20\p@
-%      \fi
-%      {\huge\bfseries #2\par}}
-%      \vfil}
-% \def\@spart#1{%
-%     {\centering
-%      \interlinepenalty \@M
-%      \normalfont
-%      \null\vfil
-%      {\huge\bfseries #1\par}}
-%      \vfil}
-
 
 \definecolor{backGrayColor}{rgb}{0.7,0.7,0.7} % Background title color
 
@@ -918,178 +703,25 @@ grau de\@degree\ em\@majorfield.}
 %\colorbox{backGrayColor}{}
 [\vspace{1cm}					%\titlerule
 ]
-	
-% \def\chapter{\if@openright\cleardoublepage\else\clearpage\fi
-%              \thispagestyle{plain}%
-%              \global\@topnum\z@
-%              \@afterindentfalse
-%              \secdef\@chapter \@schapter
-%              }
-% 
-% \def\@chapter[#1]#2{
-%    \refstepcounter{chapter}%
-%    \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
-%    \chaptermark{#1}%
-%    \addtocontents{lof}{\protect\addvspace{10\p@}}%
-%    \addtocontents{lot}{\protect\addvspace{10\p@}}%
-%    \@lopcchapterspace%
-%     \@makechapterhead{#2}%
-%    \@afterheading}
-
-% \def\@makechapterhead#1{
-%   \relax
-%   \begingroup
-%   \Large\bfseries
-%      %\chaptername
-%      {\LARGE \thechapter}~.\hspace{0.3cm}~#1\par \endgroup
-%   \skip@3pc \advance\skip@-\normalbaselineskip
-%   \vskip\skip@ }  
-%   
-% \def\@schapter#1{%
-%   \schaptermark{#1}%
-%   \@makeschapterhead{#1}%
-%   \@afterheading}
-% 
-% \def\@makeschapterhead#1{
-% \relax
-%   \begingroup
-%   \Large \bfseries
-%   #1\par \endgroup
-%   \skip@3pc \advance\skip@-\normalbaselineskip
-%   \vskip\skip@ }
-
-% \def\appendix{%
-%    \setcounter{chapter}{0}%
-%    \renewcommand{\thechapter}{\Alph{chapter}}%
-%    \renewcommand{\chaptername}{\appendixname}}
-
-% \def\@startsection#1#2#3#4#5#6{%
-%  \if@noskipsec \leavevmode \fi
-%  \par \@tempskipa #4\relax
-%  \@afterindentfalse
-%  \ifdim \@tempskipa <\z@ \@tempskipa -\@tempskipa \@afterindentfalse\fi
-%  \if@nobreak \everypar{}\else
-%      \addpenalty\@secpenalty\addvspace\@tempskipa\fi
-%  \@ifstar{\@dblarg{\@sect{#1}{\@m}{#3}{#4}{#5}{#6}}}%
-%          {\@dblarg{\@sect{#1}{#2}{#3}{#4}{#5}{#6}}}%
-% }
-% 
-% \def\section{%
-%   \@startsection{section}{1}{0mm}{1.5\baselineskip}
-%     {\baselineskip}{\large\bfseries}}
-% 
-% \def\subsection{%
-%   \@startsection{subsection}{2}{0mm}{1.2\baselineskip}
-%     {.6\baselineskip}{\bfseries}}
-% 
-% \def\subsubsection{%
-%   \@startsection{subsubsection}{3}{0mm}{\baselineskip}
-%    {.6\baselineskip}{\normalfont}}
-% 
-% \def\paragraph{%
-%   \@startsection{paragraph}{4}{0mm}{\baselineskip}
-%    {-1em}{\itshape}}
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Headers & footers
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \def\@evenhead{\rlap{\thepage}\hfill{\leftmark}\hfill}%
-% \def\@oddhead{\hfill{\rightmark}\hfill\llap{\thepage}}%
-
-%% TO DO IN THE FUTURE
-% \def\chaptermark#1%
-% {\markboth{}{}}
-% 
-% \def\schaptermark#1%
-% {\markboth{}{}}
-% 
-% \def\sectionmark#1%
-% {\markboth{}{}}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \global\renewenvironment{thebibliography}[1]
-%      {\chapter*{\bibname}%
-%       \list{\@biblabel{\@arabic\c@enumiv}}%
-%            {\settowidth\labelwidth{\@biblabel{#1}}%
-%             \leftmargin\labelwidth
-%             \advance\leftmargin\labelsep
-%             \@openbib@code
-%             \usecounter{enumiv}%
-%             \let\p@enumiv\@empty
-%             \renewcommand\theenumiv{\@arabic\c@enumiv}}%
-%       \sloppy
-%       \clubpenalty4000
-%       \@clubpenalty \clubpenalty
-%       \widowpenalty4000%
-%       \sfcode`\.\@m}
-%      {\def\@noitemerr
-%        {\@latex@warning{Empty `thebibliography' environment}}%
-%       \endlist}
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Tables and figures
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% \long\def\@makecaption#1#2{%
-%   \vskip\abovecaptionskip
-%   \sbox\@tempboxa{\small\bf #1\rm\enskip #2}%
-%   \ifdim \wd\@tempboxa >\hsize
-%     {\small\bf#1\rm\enskip #2\par}
-%   \else
-%     \global \@minipagefalse
-%     \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
-%   \fi
-%   \vskip\belowcaptionskip}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Mathematics
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Equation numbering
-% \renewcommand{\theequation}{\rm\thechapter.\arabic{equation}}
-
-% Theorem-like environments
-% \newtheoremstyle{theo}%
-% {\topsep}{\topsep}% Space above and below
-% {\slshape}% Body style
-% {0pt}% Heading indent amount
-% {\bfseries}{.}% Heading font and punctuation after it
-% {1ex plus 0pt minus .2ex}% Space after heading 
-% {}% Head spec (empty = same as ëplainí style
-% \theoremstyle{definition}
-% \newtheorem{Def}{\@defname}[chapter]
-% \theoremstyle{theo}
-% \newtheorem{Axi}{\@axiomname}[chapter]
-% \newtheorem{Conj}{\@conjecturename}[chapter]
-% \newtheorem{Lem}{\@lemmaname}[chapter]
-% \newtheorem{Theo}{\@theoname}[chapter]
-% \newtheorem{Prop}{\@propname}[chapter]
-% \newtheorem{Cor}{\@corname}[chapter]
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Reference macros
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% \newcommand{\figref}[2][]{\@figurename~\ref{#2}#1\xspace}
-% \newcommand{\tabref}[1]{\@tablename~\ref{#1}\xspace}
-% \newcommand{\eqnref}[1]{\@equationame~\eqref{#1}\xspace}
-% \newcommand{\chapref}[1]{\@chaptername~\ref{#1}\xspace}
-% \newcommand{\secref}[1]{\@sectionname~\ref{#1}\xspace}
-% \newcommand{\appref}[1]{\@appendixname~\ref{#1}\xspace}
-% \newcommand{\axiref}[1]{\@axiomname~\ref{#1}\xspace}
-% \newcommand{\conjref}[1]{\@conjname~\ref{#1}\xspace}
-% \newcommand{\defref}[1]{\@defname~\ref{#1}\xspace}
-% \newcommand{\lemref}[1]{\@lemmaname~\ref{#1}\xspace}
-% \newcommand{\theoref}[1]{\@theoname~\ref{#1}\xspace}
-% \newcommand{\corref}[1]{\@corname~\ref{#1}\xspace}
-% \newcommand{\propref}[1]{\@propname~\ref{#1}\xspace}
-% \newcommand{\pgref}[1]{\@pagename~\pageref{#1}\xspace}
 
