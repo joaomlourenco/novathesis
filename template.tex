@@ -41,10 +41,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[en,prepmsc,twoside,12pt]{thesisdifctunl}
 
-%% Preâmbulo:
-%% coloque aqui o seu preâmbulo LaTeX, i.e., declaração de pacotes,
-%% (re)definições de macros, medidas, etc.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  BEGINING OF USER COSTUMIZATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%====================================================================
+% Additional package syou may ant to use (comment those not needed)
+%====================================================================
 
 \usepackage{paralist}	% Nice lists / enumerates / ...
 \usepackage{booktabs}	% Nice tables
@@ -54,9 +60,10 @@
 \usepackage{subfigure}	% To aggregate multiple figures in a single one with subfigures
 %\usepackage{pdfsync}	% For sychronization with PDF viewer (if possible, use synctex instead)
 \usepackage{todonotes}	% To register TODOs in text
+\usepackage{wrapfig}	% To have text wrapping figures
 
 %====================================================================
-% Standard configuration for packages included by default
+% Standard configuration for user included packages
 %====================================================================
 
 % Where to look for figures
@@ -74,11 +81,9 @@
     frame=single,
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  BEGINING OF USER COSTUMIZATION
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%====================================================================
+% Some default values that you may whish to override
+%====================================================================
 %% Identification: items prefixed with (*) are the default values, as defined in "defaults.tex"
 % (*)\university{Universidade Nova de Lisboa}
 % (*)\faculty{Faculdade de Ciências e Tecnologia}
@@ -90,10 +95,14 @@
 % (*)\universitylogowidth{2.2cm}
 % \universitylogo{logofctunl}  -- alternative (is it allowed?)
 % \universitylogowidth{3.7cm}  -- alternative
-% Uncomment to use double spacing (default is one-and-half spacing).
-% Nice for supervisor to inert revision notes and comments.
-%\doublespacing
+
+% Use double spacing (default is one-and-half spacing) is nice
+%     for supervisor to inert revision notes and comments.
+% (*)\onehalfspacing
+% \doublespacing
+
 %%============================================================
+
 % Title of the dissertation/thesis
 \title{Título da tese}
 

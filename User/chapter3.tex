@@ -1,10 +1,121 @@
-\chapter{LaTeX Examples}
-\label{cha:latex_examples}
+\chapter{A Short \LaTeX\ Tutorial with Examples}
+\label{cha:a_short_latex_tutorial_with_examples}
 
-Este capítulo deve conter uma síntese inicial de trabalho relacionado (como resumo de estado da arte) e com foco nos objectivos e contribuições da dissertação. O capítulo deve demonstrar que o aluno procedeu e uma recolha bibliográfica para análise, tratamento e classificação preliminar, devendo esta ser suficientemente representativa das leituras preparatórias para o prosseguimento da elaboração da dissertação. Esta síntese deve ser apresentada com as respectivas referências bibliográficas (correctamente apresentadas na Bibliografia).
+This Chapter aims at exemplifying how to do common stuff with \LaTeX. We also show some stuff which is not that common! ;)
 
-Usar no capítulo fonte palatino 12 com um espaçamento e meio, esperando-se uma dimensão indicativa de cerca de 20 páginas.
+Please, use these examples as a starting point, but you should always consider using the \emph{Big Oracle} (aka, Google, your best friend) to search for additional information or alternative ways for achieving similar results.
 
+\section{Document Structure} % (fold)
+\label{sec:document_structure}
+
+% section document_structure (end)
+
+
+\section{Dealing with Bibliogrpahy} % (fold)
+\label{sec:dealing_with_bibliogrpahy}
+
+% section dealing_with_bibliogrpahy (end)
+
+
+\section{Inserting Tables} % (fold)
+\label{sec:inserting_tables}
+
+% section inserting_tables (end)
+
+
+\section{Importing Images} % (fold)
+\label{sec:importing_images}
+
+% section importing_images (end)
+
+
+\section{Floats, Figures and Captions} % (fold)
+\label{sec:floats_figures_and_captions}
+
+\subsection{Inserting Figures Wrapped with text} % (fold)
+\label{ssec:inserting_images_wrapped_with_text}
+
+You should only use this feature is \emph{really} necessary. This means, you have a very small image, that will look lonely just with text above and below.
+
+In this case, you must use the \verb!wrapfiure! package.  To use \verb!wrapfig!, you must first add this to the preamble:
+
+\begin{wrapfigure}{l}{2.5cm}
+  \centering
+    \includegraphics[width=2cm]{snowman-vectorial}
+  \caption{A snow-man}
+\end{wrapfigure}	
+
+\noindent\verb!\usepackage{wrapfig}!\\
+This then gives you access to:\\
+\verb!\begin{wrapfigure}[lineheight]{alignment}{width}!\\
+Alignment can normally be either ``l'' for left, or ``r'' for right. Lowercase ``l'' or ``r'' forces the figure to start precisely where specified (and may cause it to run over page breaks), while capital ``L'' or ``R'' allows the figure to float. If you defined your document as twosided, the alignment can also be ``i'' for inside or ``o'' for outside, as well as ``I'' or ``O''. The width is obviously the width of the figure. The example above was introduced with:
+\lstset{language=TeX, morekeywords={\begin,\includegraphics,\caption}, caption=Wrapfig Example, label=lst:latex_example}
+\begin{lstlisting}
+	\begin{wrapfigure}{l}{2.5cm}
+	  \centering
+	    \includegraphics[width=2cm]{snowman-vectorial}
+	  \caption{A snow-man}
+	\end{wrapfigure}	
+\end{lstlisting}
+
+% subsection inserting_images_wrapped_with_text (end)
+
+% section floats_figures_and_captions (end)
+
+
+\section{Text Formatting} % (fold)
+\label{sec:text_formatting}
+
+% section text_formatting (end)
+
+
+\section{Generating PDFs from \LaTeX} % (fold)
+\label{sec:generating_pdfs_from_latex}
+
+\subsection{Generating PDFs with pdflatex} % (fold)
+\label{ssec:generating_pdfs_with_pdflatex}
+
+You may create PDF files either by using \verb!latex! to generate a DVI file, and then use one of the many DVI-2-PDF converters, such as \verb!dvipdfm!.
+
+Alternatively, you may use \verb!pdflatex!, which will immediately generate a PDF with no intermediate DVI or PS files. In some systems, such as Apple, PDF is already the default format for \LaTeX. I strongly recommend you to use this approach, unless you have a very good argument to go for \verb!latex! + \verb!dvipdfm!.
+
+A typical pass for a document with figures, cross-references and a bibliography would be:
+\begin{verbatim}
+$ pdflatex template
+$ bibtex template
+$ pdflatex template
+$ pdflatex template
+\end{verbatim}
+You will notice that there is a new PDF file in the working directory called \verb!template.pdf!. Simple :)
+
+Please note that, to be sure all table of contents, cross-references and bibliographic citations are up-to-date, you must run \verb!latex! once, then \verb!bibtex!, and then \verb!latex! twice.
+% section generating_pdfs_with_pdflatex (end)
+
+\subsection{Dealing with Images} % (fold)
+\label{sub:dealing_with_images}
+
+You may process the same source files with both \verb!latex! or \verb!pdflatex!. But, if your text include images, you must be careful. \verb!latex! and \verb!pdflatex! accept images in different (exclusive) formats.  For \verb!latex! you may use EPS ou PS figures. For \verb!pdflatex! you may use JPG, PNG or PDF figures.  I strongly recommend you to use PDF figures in vectorial format (do not use bitmap images unless you have no other choice).
+% subsection dealing_with_images (end)
+
+
+\subsection{Creating Source Files Compatible with both latex and pdflatex} % (fold)
+\label{ssec:creating_source_files_compatible_with_both_latex_and_pdflatex}
+
+Do not include the extension of the file in the \verb!\includegraphics! command. E.g., use\\
+\verb!\includegraphics{sonwman}!\\
+and not\\
+\verb!\includegraphics{sonwman.eps}!.\\
+If you use the first form, \verb!latex! or \verb!pdflatex! will add an appropriate file extension.
+
+This means that, if you plan to use only \verb!pdflatex!, you need only to keep (preferably) a PDF version of all the images. If you plan to use also \verb!latex!, then you also need an EPS version of each image.
+% subsection creating_source_files_compatible_with_both_latex_and_pdflatex (end)
+
+% section generating_pdfs_from_latex (end)
+
+
+\newpage
+
+{\Large To be included in the sections above}\\
 
 Para fazer citações, deverá usar-se a chave da referência no ficheiro BibTeX. Se for uma única referência~\cite{Artho04}, usar um ``\verb!~!'' para ligar o \verb!\cite{...}! à palavra que o precede (\ldots\verb!referência~\cite{Artho04}!).  Caso queira fazer múltiplas citações~\cite{Shavit95,Silberschatz06,Moss85}, deverá agrupá-las dentro de um úinico \verb!\cite{...}!.
 
