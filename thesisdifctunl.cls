@@ -361,14 +361,14 @@ grau de\@degree\ em\@majorfield.}
 
 \def\printdedicatory{
 	\if\@degreetype0
-		\@input@{User/\@dedicatoryfile}\global\let\@dedicatoryfile\@empty
+		\@input@{Chapters/\@dedicatoryfile}\global\let\@dedicatoryfile\@empty
 	\else\if\@degreetype1
 	\else\if\@degreetype2
-		\@input@{User/\@dedicatoryfile}\global\let\@dedicatoryfile\@empty
+		\@input@{Chapters/\@dedicatoryfile}\global\let\@dedicatoryfile\@empty
 	\else\if\@degreetype3
 	\else\if\@degreetype4
 	\else\if\@degreetype5
-		\@input@{User/\@dedicatoryfile}\global\let\@dedicatoryfile\@empty
+		\@input@{Chapters/\@dedicatoryfile}\global\let\@dedicatoryfile\@empty
 	\fi\fi\fi\fi\fi\fi
 }
 
@@ -378,14 +378,14 @@ grau de\@degree\ em\@majorfield.}
 
 \def\printacknowledgements{
 	\if\@degreetype0
-		\@input@{User/\@acknowledgementsfile}\global\let\@acknowledgementsfile\@empty
+		\@input@{Chapters/\@acknowledgementsfile}\global\let\@acknowledgementsfile\@empty
 	\else\if\@degreetype1
 	\else\if\@degreetype2
-		\@input@{User/\@acknowledgementsfile}\global\let\@acknowledgementsfile\@empty
+		\@input@{Chapters/\@acknowledgementsfile}\global\let\@acknowledgementsfile\@empty
 	\else\if\@degreetype3
 	\else\if\@degreetype4
 	\else\if\@degreetype5
-		\@input@{User/\@acknowledgementsfile}\global\let\@acknowledgementsfile\@empty
+		\@input@{Chapters/\@acknowledgementsfile}\global\let\@acknowledgementsfile\@empty
 	\fi\fi\fi\fi\fi\fi
 }
 
@@ -400,15 +400,15 @@ grau de\@degree\ em\@majorfield.}
 \def\printabstract{%
 	\if\@language0   % Sumário-PT + Abstract-EN para tese em Português
 		\selectlanguage{portuguese}
-		\@input@{User/\@ptabstractfile}\global\let\@ptabstractfile\@empty
+		\@input@{Chapters/\@ptabstractfile}\global\let\@ptabstractfile\@empty
 		\selectlanguage{english}
-		\@input@{User/\@enabstractfile}\global\let\@enabstractfile\@empty
+		\@input@{Chapters/\@enabstractfile}\global\let\@enabstractfile\@empty
 		\selectlanguage{portuguese}
 	\else\if\@language1   % Abstract-EN + Sumário-PT for thesis in English
 		\selectlanguage{english}
-		\@input@{User/\@enabstractfile}\global\let\@enabstractfile\@empty
+		\@input@{Chapters/\@enabstractfile}\global\let\@enabstractfile\@empty
 		\selectlanguage{portuguese}
-		\@input@{User/\@ptabstractfile}\global\let\@ptabstractfile\@empty
+		\@input@{Chapters/\@ptabstractfile}\global\let\@ptabstractfile\@empty
 		\selectlanguage{english}
 	\fi\fi
 }
@@ -432,15 +432,15 @@ grau de\@degree\ em\@majorfield.}
 }
 
 \def\chapterfile[#1]#2{%
-	\ifnum #1=1\gdef\printchapterfileone{\thesismainmatter\noexpand{\@input@{User/#2}}}\fi
-	\ifnum #1=2\gdef\printchapterfiletwo{\noexpand{\@input@{User/#2}}}\fi
-	\ifnum #1=3\def\printchapterfilethree{\noexpand{\@input@{User/#2}}}\fi
-	\ifnum #1=4\gdef\printchapterfilefour{\noexpand{\@input@{User/#2}}}\fi
-	\ifnum #1=5\gdef\printchapterfilefive{\noexpand{\@input@{User/#2}}}\fi
-	\ifnum #1=6\gdef\printchapterfilesix{\noexpand{\@input@{User/#2}}}\fi
-	\ifnum #1=7\gdef\printchapterfileseven{\noexpand{\@input@{User/#2}}}\fi
-	\ifnum #1=8\gdef\printchapterfileeight{\noexpand{\@input@{User/#2}}}\fi
-	\ifnum #1=9\gdef\printchapterfilenine{\noexpand{\@input@{User/#2}}}\fi
+	\ifnum #1=1\gdef\printchapterfileone{\thesismainmatter\noexpand{\@input@{Chapters/#2}}}\fi
+	\ifnum #1=2\gdef\printchapterfiletwo{\noexpand{\@input@{Chapters/#2}}}\fi
+	\ifnum #1=3\def\printchapterfilethree{\noexpand{\@input@{Chapters/#2}}}\fi
+	\ifnum #1=4\gdef\printchapterfilefour{\noexpand{\@input@{Chapters/#2}}}\fi
+	\ifnum #1=5\gdef\printchapterfilefive{\noexpand{\@input@{Chapters/#2}}}\fi
+	\ifnum #1=6\gdef\printchapterfilesix{\noexpand{\@input@{Chapters/#2}}}\fi
+	\ifnum #1=7\gdef\printchapterfileseven{\noexpand{\@input@{Chapters/#2}}}\fi
+	\ifnum #1=8\gdef\printchapterfileeight{\noexpand{\@input@{Chapters/#2}}}\fi
+	\ifnum #1=9\gdef\printchapterfilenine{\noexpand{\@input@{Chapters/#2}}}\fi
 }
 
 \def\printchapterfileone{}
@@ -467,15 +467,15 @@ grau de\@degree\ em\@majorfield.}
 }
 
 \def\appendixfile[#1]#2{%
-	\ifnum #1=1\gdef\printappendixfileone{\noexpand{\appendix\@input@{User/#2}}}\fi
-	\ifnum #1=2\gdef\printappendixfiletwo{\noexpand{\@input@{User/#2}}}\fi
-	\ifnum #1=3\def\printappendixfilethree{\noexpand{\@input@{User/#2}}}\fi
-	\ifnum #1=4\gdef\printappendixfilefour{\noexpand{\@input@{User/#2}}}\fi
-	\ifnum #1=5\gdef\printappendixfilefive{\noexpand{\@input@{User/#2}}}\fi
-	\ifnum #1=6\gdef\printappendixfilesix{\noexpand{\@input@{User/#2}}}\fi
-	\ifnum #1=7\gdef\printappendixfileseven{\noexpand{\@input@{User/#2}}}\fi
-	\ifnum #1=8\gdef\printappendixfileeight{\noexpand{\@input@{User/#2}}}\fi
-	\ifnum #1=9\gdef\printappendixfilenine{\noexpand{\@input@{User/#2}}}\fi
+	\ifnum #1=1\gdef\printappendixfileone{\noexpand{\appendix\@input@{Chapters/#2}}}\fi
+	\ifnum #1=2\gdef\printappendixfiletwo{\noexpand{\@input@{Chapters/#2}}}\fi
+	\ifnum #1=3\def\printappendixfilethree{\noexpand{\@input@{Chapters/#2}}}\fi
+	\ifnum #1=4\gdef\printappendixfilefour{\noexpand{\@input@{Chapters/#2}}}\fi
+	\ifnum #1=5\gdef\printappendixfilefive{\noexpand{\@input@{Chapters/#2}}}\fi
+	\ifnum #1=6\gdef\printappendixfilesix{\noexpand{\@input@{Chapters/#2}}}\fi
+	\ifnum #1=7\gdef\printappendixfileseven{\noexpand{\@input@{Chapters/#2}}}\fi
+	\ifnum #1=8\gdef\printappendixfileeight{\noexpand{\@input@{Chapters/#2}}}\fi
+	\ifnum #1=9\gdef\printappendixfilenine{\noexpand{\@input@{Chapters/#2}}}\fi
 }
 
 \def\printappendixfileone{}
@@ -531,7 +531,7 @@ grau de\@degree\ em\@majorfield.}
 	\else\if\@language1   % Bibliography in English
 		\bibliographystyle{alpha}
 	\fi\fi
-	\bibliography{User/\@bibliographyfile}
+	\bibliography{Chapters/\@bibliographyfile}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
