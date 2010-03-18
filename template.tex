@@ -39,7 +39,7 @@
 %%           (*)12pt - Use font size 12
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[en,prepmsc,twoside,12pt]{thesisdifctunl}
+\documentclass[pt,msc,twoside,12pt]{thesisdifctunl}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -58,7 +58,7 @@
 %\usepackage[sort]{cite}	% Sort citations if using "plain" style
 \usepackage{listings}	% Nice fontifying for code listings
 \usepackage{subfigure}	% To aggregate multiple figures in a single one with subfigures
-%\usepackage{pdfsync}	% For sychronization with PDF viewer (if possible, use synctex instead)
+\usepackage{pdfsync}	% For sychronization with PDF viewer (if possible, use synctex instead)
 \usepackage{todonotes}	% To register TODOs in text
 \usepackage{wrapfig}	% To have text wrapping figures
 
@@ -67,7 +67,7 @@
 %====================================================================
 
 % Where to look for figures
-\graphicspath{{Logo/}{User/Figures/}} 
+\graphicspath{{Logo/}{Chapters/Figures/}} 
 
 % Setup of listings, for more information check package manual
 \lstset{
@@ -122,7 +122,7 @@
 
 %%------------------------------------------------------------
 %% All the names inside braces below sould correspond to a file
-%%     with extension ".tex" and located in the "User" folder
+%%     with extension ".tex" and located in the "Chapters" folder
 %%------------------------------------------------------------
 % Dedicatory text. Will only be considered for final documents,
 % i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
