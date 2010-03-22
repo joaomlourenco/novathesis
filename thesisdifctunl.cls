@@ -236,11 +236,13 @@ grau de\@degree\ em\@majorfield.}
     {\@padviser}%
     {\@padviser[\@empty]}}
 \def\@padviser[#1]#2{%
-  \if#1\@empty
+  \ifx#1\@empty
     \gdef\@advisertitle{\@maleadvisertitle}
-  \else
+  \else\if#1f
     \gdef\@advisertitle{\@femaleadvisertitle}
-  \fi
+  \else
+    \gdef\@advisertitle{\@maleadvisertitle}
+  \fi\fi
   \gdef\@adviser{#2}}
 \def\@adviser{~adviser \@notdefined}
 
@@ -253,9 +255,11 @@ grau de\@degree\ em\@majorfield.}
   \let\@showcoadviser=1
   \ifx#1\@empty
     \gdef\@coadvisertitle{\@malecoadvisertitle}
-  \else
+  \else\if#1f
     \gdef\@coadvisertitle{\@femalecoadvisertitle}
-  \fi
+  \else
+    \gdef\@coadvisertitle{\@malecoadvisertitle}
+  \fi\fi
   \gdef\@coadviser{#2}}
 
 %% Work identification
