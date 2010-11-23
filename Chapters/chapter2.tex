@@ -4,7 +4,6 @@
 %  
 %  Created by João Lourenço on 2010-03-14.
 %  Copyright 2010 DI-FCT-UNL. All rights reserved.
-% $Id$
 %
 \chapter{ThesisDIFCTNL User's Manual}
 \label{cha:users_manual}
@@ -20,7 +19,7 @@ This chapter describes how to use the \LaTeX{} style thesis{}. This style file i
 \noindent%
 \fbox{%
 \begin{minipage}{\linewidth}
-	The first main rule you must know is that \textbf{you must} use the UTF8 encoding in your text files. All text editors do this nowadays, either by default or as an option available in the ``Save As'' command.
+	The first main rule you must know is that \textbf{you must} specify the encoding of your text files. A simple \emph{rule of thumb} is: if you are using Windows add ``latin1'' to the list of package options; if you are using other systems, such as Linux or Mac OSx, add ``utf8'' to the list of package options.
 \end{minipage}%
 }
 % section introduction (end)
@@ -112,10 +111,23 @@ You must choose how your document will be printed. The available options are:
 \subsection{Font Size} % (fold)
 \label{ssec:font_size}
 
-You must choose the font size for your document. The available options are:
+You must select the encoding for your text. The available options are:
 \begin{enumerate}
 	\item \textbf{11pt} --- Eleven (11) points font size.
 	\item \textbf{*12pt} --- Twelve (12) points font size. You should really stick to 12pt\ldots
+\end{enumerate}
+% subsection font_size (end)
+
+% =================
+% = Text encoding =
+% =================
+\subsection{Text Encoding} % (fold)
+\label{ssec:text_encoding}
+
+You must choose the font size for your document. The available options are:
+\begin{enumerate}
+	\item \textbf{latin1} --- Use Latin-1 (\href{http://en.wikipedia.org/wiki/ISO/IEC_8859-1}{ISO 8859-1}) encoding.  Most probably you should use this option if you use Windows;
+	\item \textbf{utf8} --- Use \href{http://en.wikipedia.org/wiki/UTF-8}{UTF8} encoding.    Most probably you should use this option if you are not using Windows.
 \end{enumerate}
 % subsection font_size (end)
 
@@ -129,9 +141,9 @@ Let's have a look at a couple of examples:
 
 \begin{itemize}
 	\item Preparation of PhD thesis, in portuguese, with 11pt size and to be printed single sided (I wonder why one would do this!)\\
-	\verb!\documentclass[prepphd,pt,11pt,oneside]{thesisdifctunl}!
+	\verb!\documentclass[prepphd,pt,11pt,oneside,latin1]{thesisdifctunl}!
 	\item MSc dissertation, in english, with 12pt size and to be printed double sided\\
-	\verb!\documentclass[msc,en,12pt,twoside]{thesisdifctunl}!
+	\verb!\documentclass[msc,en,12pt,twoside,utf8]{thesisdifctunl}!
 \end{itemize}
 % subsection examples (end)
 

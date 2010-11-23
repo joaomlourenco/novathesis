@@ -50,6 +50,13 @@
 \DeclareOption{singlecover}{%
   \let\@singlecover=1}
 
+% == Text Encoding ===
+\DeclareOption{latin1}{%
+  \let\@utf=0}
+
+\DeclareOption{utf8}{%
+  \let\@utf=1}
+
 % == Type of Document ===
 \DeclareOption{bsc}{%
   \let\@degreetype=0}
@@ -70,7 +77,7 @@
   \let\@degreetype=5}
  
 % == Default Options ===
-\ExecuteOptions{en,twoside,prepmsc}
+\ExecuteOptions{en,prepmsc}
 \ProcessOptions
 
 \LoadClass[a4paper]{book}
@@ -79,10 +86,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PACKAGES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{amsmath,amsfonts,amssymb,amsthm}
-\RequirePackage{babel}
+% Latin1
+\if\@utf0
+\RequirePackage[latin1]{inputenc}
+% UTF8
+\else\if\@utf1
 \RequirePackage[utf8]{inputenc}
+\fi\fi
+
+
+% \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
+
+% \RequirePackage{amsmath,amsfonts,amssymb,amsthm}
+
+\RequirePackage{babel}
 
 %\RequirePackage{calc}
 %\RequirePackage{ifthen}
@@ -112,7 +130,7 @@
 \definecolor{mydarkblue}{rgb}{0.0,0.08,0.45}
 \RequirePackage[pdftex,breaklinks,colorlinks,pdfdisplaydoctitle,citecolor=mydarkblue,linkcolor=mydarkblue]{hyperref}
 
-\RequirePackage[top=3cm,bottom=3cm,inner=3cm,outer=2cm,twoside]{geometry}
+\RequirePackage[top=3cm,bottom=3cm,inner=3cm,outer=2cm]{geometry}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -175,6 +193,7 @@ grau de\@degree\ em\@majorfield.}
 % English
 \else\if\@language1
   \gdef\@notdefined{UNDEFINED}
+  \gdef\acknowledgementsname{Acknowledgements}
 \fi\fi
 
 
