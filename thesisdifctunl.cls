@@ -128,7 +128,7 @@
 % \definecolor{myblue}{rgb}{0.39,0.69,1}
 % \definecolor{myyellow}{rgb}{0.95,0.93,0.78}
 \definecolor{mydarkblue}{rgb}{0.0,0.08,0.45}
-\RequirePackage[pdftex,breaklinks,colorlinks,pdfdisplaydoctitle,citecolor=mydarkblue,linkcolor=mydarkblue]{hyperref}
+\RequirePackage[pdftex,breaklinks,colorlinks,pdfdisplaydoctitle,citecolor=mydarkblue,linkcolor=mydarkblue,urlcolor=mydarkblue]{hyperref}
 
 \RequirePackage[top=3cm,bottom=3cm,inner=3cm,outer=2cm]{geometry}
 
