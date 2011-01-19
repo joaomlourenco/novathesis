@@ -51,6 +51,8 @@
   \let\@singlecover=1}
 
 % == Text Encoding ===
+\let\@utf=1
+
 \DeclareOption{latin1}{%
   \let\@utf=0}
 
@@ -707,7 +709,7 @@ grau de\@degree\ em\@majorfield.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Table of contents
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\setcounter{tocdepth}{3}
+\setcounter{tocdepth}{2}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Sectioning
