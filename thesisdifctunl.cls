@@ -4,7 +4,7 @@
 %%% http://code.google.com/p/thesisdifctunl
 %%%
 %%% Version 2.1 (March 2010)
-%%% By JoÃ£o LourenÃ§o (joao.lourenco@di.fct.unl.pt)
+%%% By João Lourenço (joao.lourenco@di.fct.unl.pt)
 %%%
 %%% This template is vaguely based on a template from the
 %%%     University of Pernambuco
@@ -158,17 +158,17 @@
 \gdef\@malecoadvisertitle{Co-orientador}
 \gdef\@femalecoadvisertitle{Co-orientadora}
 \gdef\@bachelordissertation{Trabalho de Licenciatura}
-\gdef\@mastersdissertation{DissertaÃ§Ã£o de Mestrado}
-\gdef\@mastersqualifying{PreparaÃ§Ã£o da DissertaÃ§Ã£o}
-\gdef\@phdqualifying{PreparaÃ§Ã£o da Tese}
+\gdef\@mastersdissertation{Dissertação de Mestrado}
+\gdef\@mastersqualifying{Preparação de Dissertação}
+\gdef\@phdqualifying{Preparação de Tese}
 \gdef\@phdproposal{Proposta de Tese de Doutoramento}
 \gdef\@phdthesis{Tese de Doutoramento}
 \gdef\@bachelordegree{Licenciado}
 \gdef\@mastersdegree{Mestre}
 \gdef\@phddegree{Doutor}
 \gdef\@presentationtext{%
-Trabalho apresentado no Ã¢mbito d\if\@degreetype0a\else o\fi
-\@program, como requisito parcial para obtenÃ§Ã£o do
+Trabalho apresentado no âmbito d\if\@degreetype0a\else o\fi
+\@program, como requisito parcial para obtenção do
 grau de\@degree\ em\@majorfield.}
 \gdef\resumoname{Resumo}
 \gdef\abstrname{Abstract}
@@ -179,8 +179,8 @@ grau de\@degree\ em\@majorfield.}
 \gdef\@programmsc{Mestrado em \@enginformatica}
 \gdef\@programphd{Doutoramento em \@informatica}
 
-\gdef\@enginformatica{Engenharia InformÃ¡tica}
-\gdef\@informatica{InformÃ¡tica}
+\gdef\@enginformatica{Engenharia Informática}
+\gdef\@informatica{Informática}
 
 \gdef\@programbscbox{20.5em}
 \gdef\@programmscbox{20em}
@@ -190,7 +190,7 @@ grau de\@degree\ em\@majorfield.}
 
 % Portuguese
 \if\@language0
-  \gdef\@notdefined{NÃƒO DEFINIDO}
+  \gdef\@notdefined{NÃO DEFINIDO}
   \gdef\acknowledgementsname{Agradecimentos}
 % English
 \else\if\@language1
@@ -423,13 +423,13 @@ grau de\@degree\ em\@majorfield.}
 \def\@enabstractfile{~enabstractfile \@notdefined}
 
 \def\printabstract{%
-	\if\@language0   % SumÃ¡rio-PT + Abstract-EN para tese em PortuguÃªs
+	\if\@language0   % Sumário-PT + Abstract-EN para tese em Português
 		\selectlanguage{portuguese}
 		\@input@{Chapters/\@ptabstractfile}\global\let\@ptabstractfile\@empty
 		\selectlanguage{english}
 		\@input@{Chapters/\@enabstractfile}\global\let\@enabstractfile\@empty
 		\selectlanguage{portuguese}
-	\else\if\@language1   % Abstract-EN + SumÃ¡rio-PT for thesis in English
+	\else\if\@language1   % Abstract-EN + Sumário-PT for thesis in English
 		\selectlanguage{english}
 		\@input@{Chapters/\@enabstractfile}\global\let\@enabstractfile\@empty
 		\selectlanguage{portuguese}
@@ -540,7 +540,7 @@ grau de\@degree\ em\@majorfield.}
 \def\printotherlists{%
 	\@printlistoffigures
 	\@printlistoftables
-	\if\@language0   % Estamos a usar o PortuguÃªs
+	\if\@language0   % Estamos a usar o Português
 		\def\lstlistlistingname{Listagens}
 	\fi
 	\@printlistoflistings
@@ -551,7 +551,7 @@ grau de\@degree\ em\@majorfield.}
 \def\@bibliographyfile{~bibliographyfile \@notdefined}
 
 \def\printbibliography{%
-	\if\@language0   % Bibliografia em PortuguÃªs
+	\if\@language0   % Bibliografia em Português
 		\bibliographystyle{alpha-pt}
 	\else\if\@language1   % Bibliography in English
 		\bibliographystyle{alpha}
@@ -638,7 +638,7 @@ grau de\@degree\ em\@majorfield.}
       \end{tabular}
     \end{center}
   \end{minipage}
-  \vskip 3.0cm
+  \vfill
   \hfill\begin{minipage}{\@programbox}
     \quotefonti %
     \@presentationtext
