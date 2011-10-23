@@ -1,33 +1,33 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Template for writing dissertations with ThesisDIFCTUNL
-%%  Versão 20100313 (March 2010)
+%%
+%% Version 20121014 (Oct 2011)
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
 %%
 %% Project web page at: http://code.google.com/p/thesisdifctunl/
 %%
-%% BUGS and SUGGESTIONS: please use the "Issue" feature in the project web page
+%% BUGS and SUGGESTIONS: please submit an issue at the project web page
 %%
 %% Contributors:
 %%     - Adriano Lopes (Adriano.Lopes@di.fct.unl.pt)
 %%     - João Lourenço (Joao.Lourenco@di.fct.unl.pt)
-%%     - João Seco (Joao.Seco@di.fct.unl.pt)
-%%     - Luís Russo (Luis.Russo@di.fct.unl.pt)
 %%     - Ricardo Dias (rjfd@di.fct.unl.pt)
-%%     - Vitor Duarte (Vitor.Duarte@di.fct.unl.pt)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Main options (please read the manual for further details)
 %% Options marked with (*) are the values by default
+%% See also file "defaults.tex"
+%%
 %% - Languages
 %%           pt			- português
 %%           (*)en		- english
 %% - Class of text
 %%           bsc		- BSc graduation report
-%%           (*)prepmsc	- Preparation of MSc dissertation
-%%           msc		- MSc dissertation
+%%           prepmsc	- Preparation of MSc dissertation
+%%           (*)msc		- MSc dissertation
 %%           propphd	- Proposal of PhD thesis
 %%           prepphd 	- Preparation of PhD thesis
 %%           phd		- PhD thesis
@@ -35,14 +35,19 @@
 %%           oneside	- single sided printing
 %%           (*)twoside	- double sided printing
 %% - Font size
-%%           11pt		- Use font size 11
-%%           (*)12pt	- Use font size 12
+%%           (*)11pt		- Use font size 11
+%%           12pt	- Use font size 12
 %% - Text encoding
 %%           latin1		- Windows
 %%           (*)utf8	- other systems (Linux, Mac)
+%%
+%% DON'T MIX TEXT ENCODINGS. All the files are saved using UTF8. 
+%% If you want to use latin1, you should first re-save all the text
+%% files (*.tex, *.cls, *.bst,  ...) using latin1 encoding first
+%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[en,msc,twoside,12pt,utf8]{thesisdifctunl}
+\documentclass[pt,phd,twoside,11pt,utf8,a4paper]{thesisdifctunl}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -50,27 +55,41 @@
 %%  BEGINING OF USER COSTUMIZATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %====================================================================
 % Additional package syou may ant to use (comment those not needed)
 %====================================================================
 
-\usepackage{paralist}	% Nice lists / enumerates / ...
-\usepackage{booktabs}	% Nice tables
-%\usepackage{colortbl}	% Colors in tables
-%\usepackage[sort]{cite}	% Sort citations if using "plain" style
-\usepackage{listings}	% Nice fontifying for code listings
-\usepackage{subfigure}	% To aggregate multiple figures in a single one with subfigures
-% \usepackage{pdfsync}	% For sychronization with PDF viewer (if possible, use synctex instead)
-\usepackage{todonotes}	% To register TODOs in text
-\usepackage{wrapfig}	% To have text wrapping figures
+% To enable customizble enumerates
+\usepackage{paralist}
+
+% Beautiful simple tables
+\usepackage{booktabs}
+
+% Use colors in background of table cells
+%\usepackage{colortbl}
+
+% Sort citations - ONLY if using "plain" style, otherwise keep commented
+%\usepackage[sort]{cite}
+
+% Fontification of source code listings
+\usepackage{listings}
+
+% To aggregate multiple figures in a single one with subfigures
+\usepackage{subfigure}
+
+% To register TODO notes in the text
+\usepackage[textsize=footnotesize]{todonotes}
+\setlength{\marginparwidth}{1.5cm}
+
+% To have text wrapping figures
+% \usepackage{wrapfig}
 
 %====================================================================
 % Standard configuration for user included packages
 %====================================================================
 
 % Where to look for figures
-\graphicspath{{Logo/}{Chapters/Figures/}} 
+\graphicspath{{Logo/}{Figures/}{Chapters/Figures/}} 
 
 % Setup of listings, for more information check package manual
 \lstset{
@@ -90,14 +109,11 @@
 %% Identification: items prefixed with (*) are the default values, as defined in "defaults.tex"
 % (*)\university{Universidade Nova de Lisboa}
 % (*)\faculty{Faculdade de Ciências e Tecnologia}
-% (*)\department{Departamento de Informática}
-% (*)\program{Mestrado em Engenharia Informática}
 % (*)\majorfield{Engenharia Informática}
-% (*)\address{Lisboa}
 % (*)\universitylogo{logounl}
-% (*)\universitylogowidth{2.2cm}
-% \universitylogo{logofctunl}  -- alternative (is it allowed?)
-% \universitylogowidth{3.7cm}  -- alternative
+% (*)\thesiscoverphd{cover-phd}
+% (*)\thesiscovermsc{cover-msc-round} -> there is an alternative with squre corners
+% (*)\thesiscoverplain{cover-plain}
 
 % Use double spacing (default is one-and-half spacing) is nice
 %     for supervisor to inert revision notes and comments.
@@ -107,20 +123,42 @@
 %%============================================================
 
 % Title of the dissertation/thesis
-\title{Título da tese}
+% USe "\\" to break the title into two or more lines
+\title{[Título da tese]}
 
 % Autor
-\author{Nome do autor} 
-\authornumber{12345}
+\author{[Nome completo do autor]} 
+\authordegree{[Habilitações académcias]}
 
-% Data 
-\date{2010}
+% Date
+\themonth{Outubro}
+\theyear{2012}
 
-% Supervisor, use [f] for female and [m] for male supervisors
-\adviser[f]{Profª.\ Doutora nome da orientadora}
 
-% Co-supervisor, use [f] for female and [m] for male supervisors
-\coadviser[m]{Prof.\ Doutor nome do co-orientador}
+% Supervisor
+% use [f] for female and [m] for male
+\adviser[f]{Nome da orientadora}
+% Co-supervisor
+% use [f] for female and [m] for male
+\coadviser[m]{Nome do co-orientador}
+
+% President of the juri
+% use [f] for female and [m] for male
+\juriname[1][m]{[Nome do presidente do júri]}
+% First referee
+% use [f] for female and [m] for male
+\juriname[2][f]{[Nome do primeiro arguente]}
+% Second referee - comment if just one referee
+% use [f] for female and [m] for male
+\juriname[3][m]{[Nome do segundo arguente]}
+% Other members of the juri - include the supervisor in this list
+% use [f] for female and [m] for male
+\juriname[4][f]{[Nome do primeiro vogal]}
+\juriname[5][m]{[Nome do segundo vogal]}
+\juriname[6][f]{[Nome do terceiro vogal]}
+\juriname[7][m]{[Nome do quarto vogal]}
+% \juriname[8][f]{[Nome do quinto vogal]}
+% \juriname[9][m]{[Nome do sexto vogal]}
 
 %%------------------------------------------------------------
 %% All the names inside braces below sould correspond to a file
@@ -184,8 +222,8 @@
 % The first front page
 \frontpage
 
-% The second front page
-\presentationpage
+% Print the copyright page for final versions	
+\printcopyright
 
 % Dedicatory will only be printed if adequate for the document type
 \printdedicatory

@@ -32,31 +32,31 @@ Please, use these examples as a starting point, but you should always consider u
 \section{Floats, Figures and Captions} % (fold)
 \label{sec:floats_figures_and_captions}
 
-\subsection{Inserting Figures Wrapped with text} % (fold)
-\label{ssec:inserting_images_wrapped_with_text}
-
-You should only use this feature is \emph{really} necessary. This means, you have a very small image, that will look lonely just with text above and below.
-
-In this case, you must use the \verb!wrapfiure! package.  To use \verb!wrapfig!, you must first add this to the preamble:
-
-\begin{wrapfigure}{l}{2.5cm}
-  \centering
-    \includegraphics[width=2cm]{snowman-vectorial}
-  \caption{A snow-man}
-\end{wrapfigure}	
-
-\noindent\verb!\usepackage{wrapfig}!\\
-This then gives you access to:\\
-\verb!\begin{wrapfigure}[lineheight]{alignment}{width}!\\
-Alignment can normally be either ``l'' for left, or ``r'' for right. Lowercase ``l'' or ``r'' forces the figure to start precisely where specified (and may cause it to run over page breaks), while capital ``L'' or ``R'' allows the figure to float. If you defined your document as twosided, the alignment can also be ``i'' for inside or ``o'' for outside, as well as ``I'' or ``O''. The width is obviously the width of the figure. The example above was introduced with:
-\lstset{language=TeX, morekeywords={\begin,\includegraphics,\caption}, caption=Wrapfig Example, label=lst:latex_example}
-\begin{lstlisting}
-	\begin{wrapfigure}{l}{2.5cm}
-	  \centering
-	    \includegraphics[width=2cm]{snowman-vectorial}
-	  \caption{A snow-man}
-	\end{wrapfigure}	
-\end{lstlisting}
+% \subsection{Inserting Figures Wrapped with text} % (fold)
+% \label{ssec:inserting_images_wrapped_with_text}
+% 
+% You should only use this feature is \emph{really} necessary. This means, you have a very small image, that will look lonely just with text above and below.
+% 
+% In this case, you must use the \verb!wrapfiure! package.  To use \verb!wrapfig!, you must first add this to the preamble:
+% 
+% \begin{wrapfigure}{l}{2.5cm}
+%   \centering
+%     \includegraphics[width=2cm]{snowman-vectorial}
+%   \caption{A snow-man}
+% \end{wrapfigure}	
+% 
+% \noindent\verb!\usepackage{wrapfig}!\\
+% This then gives you access to:\\
+% \verb!\begin{wrapfigure}[lineheight]{alignment}{width}!\\
+% Alignment can normally be either ``l'' for left, or ``r'' for right. Lowercase ``l'' or ``r'' forces the figure to start precisely where specified (and may cause it to run over page breaks), while capital ``L'' or ``R'' allows the figure to float. If you defined your document as twosided, the alignment can also be ``i'' for inside or ``o'' for outside, as well as ``I'' or ``O''. The width is obviously the width of the figure. The example above was introduced with:
+% \lstset{language=TeX, morekeywords={\begin,\includegraphics,\caption}, caption=Wrapfig Example, label=lst:latex_example}
+% \begin{lstlisting}
+% 	\begin{wrapfigure}{l}{2.5cm}
+% 	  \centering
+% 	    \includegraphics[width=2cm]{snowman-vectorial}
+% 	  \caption{A snow-man}
+% 	\end{wrapfigure}	
+% \end{lstlisting}
 
 % subsection inserting_images_wrapped_with_text (end)
 
