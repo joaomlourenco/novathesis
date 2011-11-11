@@ -2,7 +2,7 @@
 %%% thesisdifctunl.cls
 %%% DI/FCT/UNL Dissertation document class
 %%%
-%%% Version 2.1 (March 2010)
+%%% Version 2.0 (November 2011)
 %%% By João Lourenço (joao.lourenco@di.fct.unl.pt)
 %%%
 %%% This template is vaguely based on a template from the
@@ -14,7 +14,7 @@
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{thesisdifctunl}[2010/03/10]
+\ProvidesClass{thesisdifctunl}[2011/11/10]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% OPTIONS 
@@ -166,7 +166,7 @@
 % \definecolor{myblue}{rgb}{0.39,0.69,1}
 % \definecolor{myyellow}{rgb}{0.95,0.93,0.78}
 
-\RequirePackage[top=3cm,bottom=3cm,inner=3.5cm,outer=2.5cm]{geometry}
+\RequirePackage[top=3cm,bottom=3cm,inner=3.5cm,outer=2.5cm]{geometry}[2010/02/12]
 % \setlength{\marginparwidth}{2cm}
 
 
@@ -227,30 +227,11 @@ keepaspectratio]{#1}%
 \gdef\@prepphhdissertationtstr{Relatório intermédio para obtenção do Grau de \@degree\ em\\\@majorfield}
 \gdef\@phhdissertationtstr{Dissertação para obtenção do Grau de \@degree\ em\\\@majorfield}
 
-\gdef\profdoutjuri[#1]{%
-	\ifnum #1=1\gdef\@jsex{\@jurisexone}\fi
-	\ifnum #1=2\gdef\@jsex{\@jurisextwo}\fi
-	\ifnum #1=3\gdef\@jsex{\@jurisexthree}\fi
-	\ifnum #1=4\gdef\@jsex{\@jurisexfour}\fi
-	\ifnum #1=5\gdef\@jsex{\@jurisexfive}\fi
-	\ifnum #1=6\gdef\@jsex{\@jurisexsix}\fi
-	\ifnum #1=7\gdef\@jsex{\@jurisexseven}\fi
-	\ifnum #1=8\gdef\@jsex{\@jurisexeight}\fi
-	\ifnum #1=9\gdef\@jsex{\@jurisexnine}\fi
-
-	\if m\@jsex
-		\@maleprofdout
-	\else\if f\@jsex
-		\@femaleprofdout
-	\else
-		Sex undefined
-	\fi\fi
-}
 
 \gdef\@presentationtext{\@dissertationtype}
 
 
-\gdef\@juristr{Júri}
+\gdef\@jurystr{Júri}
 
 
 \gdef\thecopyrightstr{%
@@ -337,6 +318,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
   \gdef\@university{#1}}
 \def\@majorfield{~university \@notdefined}
 
+\@input@{repeat}
 
 \@input@{defaults}
 
@@ -351,7 +333,6 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 
 %% Authors identification
-
 \def\author#1{%
   \gdef\@author{#1}
   \hypersetup{pdfauthor={\@author}}}
@@ -362,42 +343,53 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \def\@authordegree{~authordegree \@notdefined}
 
 
-\def\adviser{%
-  \@ifnextchar [%
-    {\@padviser}%
-    {\@padviser[\@empty]}}
-\def\@padviser[#1]#2{%
-  \if#1\@empty
-    \gdef\@adviserstr{\@maleadviserstr}
-	\gdef\@advisertitle{\@maleprofdout}
-  \else\if#1f
-    \gdef\@adviserstr{\@femaleadviserstr}
-	\gdef\@advisertitle{\@femaleprofdout}
-  \else
-    \gdef\@adviserstr{\@maleadviserstr}
-	\gdef\@advisertitle{\@maleprofdout}
-  \fi\fi
-  \gdef\@adviser{#2}}
-\def\@adviser{~adviser \@notdefined}
+%% Advisors and Co-Advisers identification (at most 9 of each)
+%% \adviser[N][m|f]{Name}
+%% where N i a number from 1 to 9
+\repeat \for{i} \from{1} \to{9} \do {
+	\expandafter\let\csname @showadviser\number\i\endcsname=0
+	\expandafter\let\csname @showcoadviser\number\i\endcsname=0
+	\expandafter\let\csname @showjury\number\i\endcsname=0
+}
 
-\let\@showcoadviser=0
-\def\coadviser{%
+\def\adviser[#1]{%
   \@ifnextchar [%
-    {\@pcoadviser}%
-    {\@pcoadviser[\@empty]}}
-\def\@pcoadviser[#1]#2{%
-  \let\@showcoadviser=1
-  \if#1\@empty
-    \gdef\@coadviserstr{\@malecoadviserstr}
-	\gdef\@coadvisertitle{\@maleprofdout}
-  \else\if#1f
-    \gdef\@coadviserstr{\@femalecoadviserstr}
-	\gdef\@coadvisertitle{\@femaleprofdout}
+    {\@padviser[#1]}%
+    {\@padviser[#1][m]}}
+
+\def\@padviser[#1][#2]#3{%
+  \if#2m
+    \expandafter\gdef\csname @adviserstr#1\endcsname{\@maleadviserstr}
+	\expandafter\gdef\csname @advisertitle#1\endcsname{\@maleprofdout}
+  \else\if#2f
+    \expandafter\gdef\csname @adviserstr#1\endcsname{\@femaleadviserstr}
+	\expandafter\gdef\csname @advisertitle#1\endcsname{\@femaleprofdout}
   \else
-    \gdef\@coadviserstr{\@malecoadviserstr}
-	\gdef\@coadvisertitle{\@maleprofdout}
+    \ClassError{thesisdifctunl}{Wrong gender in adviser}{Gender must be "m" (male) of "f" (female)}
   \fi\fi
-  \gdef\@coadviser{#2}}
+  \expandafter\gdef\csname @adviser#1\endcsname{#3}
+  \expandafter\let\csname @showadviser#1\endcsname=1
+}
+
+\def\coadviser[#1]{%
+  \@ifnextchar [%
+    {\@pcoadviser[#1]}%
+    {\@pcoadviser[#1][m]}}
+
+\def\@pcoadviser[#1][#2]#3{%
+  \if#2m
+    \expandafter\gdef\csname @coadviserstr#1\endcsname{\@malecoadviserstr}
+	\expandafter\gdef\csname @coadvisertitle#1\endcsname{\@maleprofdout}
+  \else\if#2f
+    \expandafter\gdef\csname @coadviserstr#1\endcsname{\@femalecoadviserstr}
+	\expandafter\gdef\csname @coadvisertitle#1\endcsname{\@femaleprofdout}
+  \else
+    \ClassError{thesisdifctunl}{Wrong gender in coadviser}{Gender must be "m" (male) of "f" (female)}
+  \fi\fi
+  \expandafter\gdef\csname @coadviser#1\endcsname{#3}
+  \expandafter\let\csname @showcoadviser#1\endcsname=1
+}
+
 
 %% Work identification
 
@@ -438,75 +430,51 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 
 % Juri
-\def\juriname[#1][#2]#3{%
-	\ifnum #1=1\gdef\@jurisexone{#2}\gdef\@jurinameone{#3}\fi
-	\ifnum #1=2\gdef\@jurisextwo{#2}\gdef\@jurinametwo{#3}\fi
-	\ifnum #1=3\gdef\@jurisexthree{#2}\gdef\@jurinamethree{#3}\fi
-	\ifnum #1=4\gdef\@jurisexfour{#2}\gdef\@jurinamefour{#3}\fi
-	\ifnum #1=5\gdef\@jurisexfive{#2}\gdef\@jurinamefive{#3}\fi
-	\ifnum #1=6\gdef\@jurisexsix{#2}\gdef\@jurinamesix{#3}\fi
-	\ifnum #1=7\gdef\@jurisexseven{#2}\gdef\@jurinameseven{#3}\fi
-	\ifnum #1=8\gdef\@jurisexeight{#2}\gdef\@jurinameeight{#3}\fi
-	\ifnum #1=9\gdef\@jurisexnine{#2}\gdef\@jurinamenine{#3}\fi
-}
-\def\@jurisexone{}		\def\@jurinameone{}
-\def\@jurisextwo{}		\def\@jurinametwo{}
-\def\@jurisexthree{}	\def\@jurinamethree{}
-\def\@jurisexfour{}		\def\@jurinamefour{}
-\def\@jurisexfive{}		\def\@jurinamefive{}
-\def\@jurisexsix{}		\def\@jurinamesix{}
-\def\@jurisexseven{}	\def\@jurinameseven{}
-\def\@jurisexeight{}	\def\@jurinameeight{}
-\def\@jurisexnine{}		\def\@jurinamenine{}
+\def\jury[#1]{%
+  \@ifnextchar [%
+    {\@pjury[#1]}%
+    {\@pjury[#1][m]}}
 
-\def\printjuri[#1]{%
-	\profdoutjuri[#1]
-	\ifnum #1=1\@jurinameone\fi
-	\ifnum #1=2\@jurinametwo\fi
-	\ifnum #1=3\@jurinamethree\fi
-	\ifnum #1=4\@jurinamefour\fi
-	\ifnum #1=5\@jurinamefive\fi
-	\ifnum #1=6\@jurinamesix\fi
-	\ifnum #1=7\@jurinameseven\fi
-	\ifnum #1=8\@jurinameeight\fi
-	\ifnum #1=9\@jurinamenine\fi
+\def\@pjury[#1][#2]#3{%
+  \if#2m
+	\expandafter\gdef\csname @jurytitle#1\endcsname{\@maleprofdout}
+  \else\if#2f
+	\expandafter\gdef\csname @jurytitle#1\endcsname{\@femaleprofdout}
+  \else
+    \ClassError{thesisdifctunl}{Wrong gender in jury member #1}{Gender must be "m" (male) of "f" (female)}
+  \fi\fi
+  \expandafter\gdef\csname @juryname#1\endcsname{#3}
+  \expandafter\let\csname @showjury#1\endcsname=1
 }
 
-\def\printthejuri{%
+
+
+
+\def\printconditionaladv#1#2{
+	\if\csname @show#1#2\endcsname1\csname @#1str#2\endcsname: & \csname @#1title#2\endcsname\ \csname @#1#2\endcsname\\\fi
+}
+
+\def\printconditionaljury#1#2#3{
+	\if\csname @show#2#3\endcsname1 #1 & \csname @#2title#3\endcsname\ \csname @#2name#3\endcsname\\\fi
+}
+
+\def\printthejury{%
 \fontsize{10}{12}
 \selectfont
 \hfill\begin{tabular}{rl}
-	& \@juristr:\\
+	& \@jurystr:\\
 	& \\[-2ex]
-	Presidente: & \printjuri[1]\\
+	\printconditionaljury{Presidente:}{jury}{1}
 	& \\[-2ex]
-	Arguentes: & \printjuri[2]\\
-	\if\@jurinamethree\@empty
-	\else
- 		& \printjuri[3]\\
-	\fi
+	\printconditionaljury{Arguentes:}{jury}{2}
+	\printconditionaljury{}{jury}{3}
 	& \\[-2ex]
-	Vogais: & \printjuri[4]\\
-	\if\@jurinamefive\@empty
-	\else
-	& \printjuri[5]\\
-	\fi
-	\if\@jurinamesix\@empty
-	\else
-	& \printjuri[6]\\
-	\fi
-	\if\@jurinameseven\@empty
-	\else
-	& \printjuri[7]\\
-	\fi
-	\if\@jurinameeight\@empty
-	\else
-	& \printjuri[8]\\
-	\fi
-	\if\@jurinamenine\@empty
-	\else
-	& \printjuri[9]\\
-	\fi
+	\printconditionaljury{Vogais:}{jury}{4}
+	\printconditionaljury{}{jury}{5}
+	\printconditionaljury{}{jury}{6}
+	\printconditionaljury{}{jury}{7}
+	\printconditionaljury{}{jury}{8}
+	\printconditionaljury{}{jury}{9}
 \end{tabular}
 }
 
@@ -748,27 +716,27 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 \if\@degreetype0
 	\def\@defcoverbg{\@thesiscovermsc}
-	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=5.5cm,rmargin=4.5cm}
+	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=4.5cm,rmargin=3.5cm}
 \else\if\@degreetype1
 	\def\@defcoverbg{\@thesiscovermsc}
-	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=5.5cm,rmargin=4.5cm}
+	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=4.5cm,rmargin=3.5cm}
 \else\if\@degreetype2
 	\def\@defcoverbg{\@thesiscovermsc}
-	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=5.5cm,rmargin=4.5cm}
+	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=4.5cm,rmargin=3.5cm}
 \else\if\@degreetype3
 	\def\@defcoverbg{\@thesiscoverphd}
-	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=6.5cm,rmargin=3.5cm}
+	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=5.5cm,rmargin=2.5cm}
 \else\if\@degreetype4
 	\def\@defcoverbg{\@thesiscoverphd}
-	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=6.5cm,rmargin=3.5cm}
+	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=5.5cm,rmargin=2.5cm}
 \else\if\@degreetype5
 	\def\@defcoverbg{\@thesiscoverphd}
-	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=6.5cm,rmargin=3.5cm}
+	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=5.5cm,rmargin=2.5cm}
 \else
 	\def\@defcoverbg{\@thesiscoverplain}
 	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=5.5cm,rmargin=4.5cm}
 \fi\fi\fi\fi\fi\fi
-
+	
 \AddToShipoutPicture*{\BackgroundPic{\@defcoverbg}}
 
 \begin{center}
@@ -802,25 +770,42 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 	\fontsize{12}{14}
 	\selectfont
 	\hfill\begin{tabularx}{0.9\linewidth}{rX}
-	\@adviserstr: & \@advisertitle\ \@adviser\\
-    \if\@showcoadviser1\@coadviserstr: & \@coadvisertitle\ \@coadviser\\\fi
+	\printconditionaladv{adviser}{1}
+	\printconditionaladv{adviser}{2}
+	\printconditionaladv{adviser}{3}
+	\printconditionaladv{adviser}{4}
+	\printconditionaladv{adviser}{5}
+	\printconditionaladv{adviser}{6}
+	\printconditionaladv{adviser}{7}
+	\printconditionaladv{adviser}{8}
+	\printconditionaladv{adviser}{9}
+	\printconditionaladv{coadviser}{1}
+	\printconditionaladv{coadviser}{2}
+	\printconditionaladv{coadviser}{3}
+	\printconditionaladv{coadviser}{4}
+	\printconditionaladv{coadviser}{5}
+	\printconditionaladv{coadviser}{6}
+	\printconditionaladv{coadviser}{7}
+	\printconditionaladv{coadviser}{8}
+	\printconditionaladv{coadviser}{9}
 	\end{tabularx}
+	
 
 \vfill
 % Referee board
 \if\@degreetype0
-\printthejuri
+\printthejury
 \else\if\@degreetype1
 \else\if\@degreetype2
-\printthejuri
+\printthejury
 \else\if\@degreetype3
-\printthejuri
+\printthejury
 \else\if\@degreetype4
 \else\if\@degreetype5
-\printthejuri
+\printthejury
 \fi\fi\fi\fi\fi\fi
 
-\vfill\vfill
+\vfill\vfill\vfill
 % Title of Dissertation
 	\fontsize{11}{12}
 	\selectfont

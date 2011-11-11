@@ -2,7 +2,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Template for writing dissertations with ThesisDIFCTUNL
 %%
-%% Version 20121014 (Oct 2011)
+%% Version 20121110 (Nov 2011)
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -47,7 +47,7 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[pt,phd,twoside,11pt,utf8,a4paper]{thesisdifctunl}
+\documentclass[msc,pt,twoside,11pt,utf8,a4paper]{thesisdifctunl}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -135,30 +135,35 @@
 \theyear{2012}
 
 
-% Supervisor
+% Supervisors (maximum of 9)
 % use [f] for female and [m] for male
-\adviser[f]{Nome da orientadora}
-% Co-supervisor
-% use [f] for female and [m] for male
-\coadviser[m]{Nome do co-orientador}
+\adviser[1][f]{[Nome da orientadora]}
+% \adviser[2][m]{[Nome do segundo orientador]}
 
-% President of the juri
+% Co-supervisors (maximum of 9)
 % use [f] for female and [m] for male
-\juriname[1][m]{[Nome do presidente do júri]}
+\coadviser[1][m]{[Nome do co-orientador 1]}
+\coadviser[2][f]{[Nome da co-orientadora 2]}
+% \coadviser[3][m]{[Nome do co-orientador 3]}
+
+% Jury (maximum of 9 elements)
+% President of the jury
+% use [f] for female and [m] for male
+\jury[1][m]{[Nome do presidente do júri]}
 % First referee
 % use [f] for female and [m] for male
-\juriname[2][f]{[Nome do primeiro arguente]}
+\jury[2][f]{[Nome do primeiro arguente]}
 % Second referee - comment if just one referee
 % use [f] for female and [m] for male
-\juriname[3][m]{[Nome do segundo arguente]}
-% Other members of the juri - include the supervisor in this list
+\jury[3][m]{[Nome do segundo arguente]}
+% Other members of the jury - include the supervisor in this list
 % use [f] for female and [m] for male
-\juriname[4][f]{[Nome do primeiro vogal]}
-\juriname[5][m]{[Nome do segundo vogal]}
-\juriname[6][f]{[Nome do terceiro vogal]}
-\juriname[7][m]{[Nome do quarto vogal]}
-% \juriname[8][f]{[Nome do quinto vogal]}
-% \juriname[9][m]{[Nome do sexto vogal]}
+\jury[4][f]{[Nome do primeiro vogal]}
+\jury[5][m]{[Nome do segundo vogal]}
+\jury[6][f]{[Nome do terceiro vogal]}
+\jury[7][m]{[Nome do quarto vogal]}
+% \jury[8][f]{[Nome do quinto vogal]}
+% \jury[9][m]{[Nome do sexto vogal]}
 
 %%------------------------------------------------------------
 %% All the names inside braces below sould correspond to a file
