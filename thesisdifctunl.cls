@@ -133,8 +133,9 @@
 
 \RequirePackage{babel}
 
-
 \RequirePackage{tabularx}
+
+\RequirePackage{ifthen}
 
 \RequirePackage{titlesec}           % To format the headings
 \RequirePackage{fancyhdr}           % Headings configuration
@@ -199,40 +200,51 @@ keepaspectratio]{#1}%
 %% LABELS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% Language Independent
+%% Some relevant strings
 
-\gdef\@maleadviserstr{Orientador}
-\gdef\@femaleadviserstr{Orientadora}
-\gdef\@malecoadviserstr{Co-orientador}
-\gdef\@femalecoadviserstr{Co-orientadora}
+\gdef\@singlemadviserstr{Orientador}
+\gdef\@singlefadviserstr{Orientadora}
+\gdef\@manymadviserstr{Orientadores}
+\gdef\@manyfadviserstr{Orientadoras}
+\gdef\@singlemcoadviserstr{Co-orientador}
+\gdef\@singlefcoadviserstr{Co-orientadora}
+\gdef\@manymcoadviserstr{Co-orientadores}
+\gdef\@manyfcoadviserstr{Co-orientadoras}
 
-\gdef\@bachelordissertation{Trabalho de Licenciatura}
-\gdef\@mastersdissertation{Dissertação de Mestrado}
-\gdef\@mastersqualifying{Preparação de Dissertação}
-\gdef\@phdqualifying{Preparação de Tese}
-\gdef\@phdproposal{Proposta de Tese de Doutoramento}
-\gdef\@phdthesis{Tese de Doutoramento}
+\gdef\@mbachelordegreestr{Licenciado}
+\gdef\@fbachelordegreestr{Licenciada}
+\gdef\@mmastersdegreestr{Mestre}
+\gdef\@fmastersdegreestr{Mestre}
+\gdef\@mphddegreestr{Doutor}
+\gdef\@fphddegreestr{Doutora}
 
-\gdef\@bachelordegree{Licenciado}
-\gdef\@mastersdegree{Mestre}
-\gdef\@phddegree{Doutor}
+% \gdef\doutor{Dr.\ }
+% \gdef\doutora{Drª.\ }
+% \gdef\profdoutor{Prof.\ Dr.\ }
+% \gdef\profdoutora{Profª.\ Drª.\ }
 
-\gdef\@maleprofdout{Prof.\ Doutor}
-\gdef\@femaleprofdout{Profª.\ Doutora}
-
-\gdef\@bscdissertationtstr{Relatório para obtenção do Grau de \@degree\ em\\\@majorfield}
-\gdef\@prepmscdissertationtstr{Relatório intermédio para obtenção do Grau de \@degree\ em\\\@majorfield}
-\gdef\@mscdissertationtstr{Dissertação para obtenção do Grau de \@degree\ em\\\@majorfield}
-\gdef\@propphhdissertationtstr{Proposta de tese para obtenção do Grau de \@degree\ em\\\@majorfield}
-\gdef\@prepphhdissertationtstr{Relatório intermédio para obtenção do Grau de \@degree\ em\\\@majorfield}
-\gdef\@phhdissertationtstr{Dissertação para obtenção do Grau de \@degree\ em\\\@majorfield}
-
-
-\gdef\@presentationtext{\@dissertationtype}
-
+\gdef\@bachelordissertationstr{Trabalho de Licenciatura}
+\gdef\@mastersdissertationstr{Dissertação de Mestrado}
+\gdef\@mastersqualifyingstr{Preparação de Dissertação}
+\gdef\@phdqualifyingstr{Preparação de Tese}
+\gdef\@phdproposalstr{Proposta de Tese de Doutoramento}
+\gdef\@phdthesisstr{Tese de Doutoramento}
 
 \gdef\@jurystr{Júri}
 
+\gdef\@bscdissertationtstr{Relatório para obtenção do Grau 
+de\@degree em\\\@majorfield}
+\gdef\@prepmscdissertationtstr{Relatório intermédio para obtenção do Grau 
+de\@degree em\\\@majorfield}
+\gdef\@mscdissertationtstr{Dissertação para obtenção do Grau 
+de\@degree em\\\@majorfield}
+\gdef\@propphhdissertationtstr{Proposta de tese para obtenção do Grau 
+de \@degree em\\\@majorfield}
+\gdef\@prepphhdissertationtstr{Relatório intermédio para obtenção do Grau de\@degree em\\\@majorfield}
+\gdef\@phhdissertationtstr{Dissertação para obtenção do Grau 
+de\@degree em\\\@majorfield}
+
+\gdef\@presentationtext{\@dissertationtype}
 
 \gdef\thecopyrightstr{%
 \noindent
@@ -318,10 +330,9 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
   \gdef\@university{#1}}
 \def\@majorfield{~university \@notdefined}
 
-\@input@{repeat}
+% \@input@{repeat}
 
 \@input@{defaults}
-
 
 %% Date
 
@@ -333,9 +344,30 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 
 %% Authors identification
-\def\author#1{%
-  \gdef\@author{#1}
+\def\author{%
+  \@ifnextchar [%
+    {\@pauthor}%
+    {\@pauthor[m]}}
+
+\def\@pauthor[#1]#2{%
+  \if#1m
+  	\def\authorgender{m}
+  \else\if#1f
+	\def\authorgender{f}
+  \else
+  \typeout{^^J%
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
+!  Please specify author gender using [m] or [f] as the first^^J%
+!  argument of the "author" macro.  See the template! ;)^^J%
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
+}
+   \errhelp{Please be gentle and follow the template recommendations.}
+   \errmessage{Please specify author gender!}
+  \fi\fi
+
+  \gdef\@author{#2}
   \hypersetup{pdfauthor={\@author}}}
+
 \def\@author{~author \@notdefined}
 
 \def\authordegree#1{%
@@ -344,51 +376,94 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 
 %% Advisors and Co-Advisers identification (at most 9 of each)
-%% \adviser[N][m|f]{Name}
+%% \adviser[m|f]{Name}{Category/Position}{School}
 %% where N i a number from 1 to 9
-\repeat \for{i} \from{1} \to{9} \do {
-	\expandafter\let\csname @showadviser\number\i\endcsname=0
-	\expandafter\let\csname @showcoadviser\number\i\endcsname=0
-	\expandafter\let\csname @showjury\number\i\endcsname=0
-}
+\def\@theadvisergender{f}	% default for female advisers
+\newcount\@theadvisercount	% number of advisers
+\@theadvisercount 0\relax
+\def\@thecoadvisergender{f}	% default for female co-advisers
+\newcount\@thecoadvisercount	% number of co-advisers
+\@thecoadvisercount 0\relax
 
-\def\adviser[#1]{%
+% 
+% \newcount\@myi
+% \@myi 0\relax
+% \loop
+% 	\advance\@myi 1\relax
+% 	\expandafter\let\csname @showadviser\number\@myi\endcsname=0
+% 	\expandafter\let\csname @showcoadviser\number\@myi\endcsname=0
+% \ifnum \@myi < 10
+% \repeat
+
+% \repeat \for{i} \from{1} \to{9} \do {
+% 	\expandafter\let\csname @showadviser\number\i\endcsname=0
+% 	\expandafter\let\csname @showcoadviser\number\i\endcsname=0
+% 	\expandafter\let\csname @showjury\number\i\endcsname=0
+% }
+
+
+\def\adviser{%
   \@ifnextchar [%
-    {\@padviser[#1]}%
-    {\@padviser[#1][m]}}
+    {\@padviser[]}%
+    {\@padviser[][m]}}
 
-\def\@padviser[#1][#2]#3{%
-  \if#2m
-    \expandafter\gdef\csname @adviserstr#1\endcsname{\@maleadviserstr}
-	\expandafter\gdef\csname @advisertitle#1\endcsname{\@maleprofdout}
-  \else\if#2f
-    \expandafter\gdef\csname @adviserstr#1\endcsname{\@femaleadviserstr}
-	\expandafter\gdef\csname @advisertitle#1\endcsname{\@femaleprofdout}
-  \else
-    \ClassError{thesisdifctunl}{Wrong gender in adviser}{Gender must be "m" (male) of "f" (female)}
-  \fi\fi
-  \expandafter\gdef\csname @adviser#1\endcsname{#3}
-  \expandafter\let\csname @showadviser#1\endcsname=1
-}
-
-\def\coadviser[#1]{%
+\def\coadviser{%
   \@ifnextchar [%
-    {\@pcoadviser[#1]}%
-    {\@pcoadviser[#1][m]}}
+    {\@padviser[co]}%
+    {\@padviser[co][m]}}
 
-\def\@pcoadviser[#1][#2]#3{%
-  \if#2m
-    \expandafter\gdef\csname @coadviserstr#1\endcsname{\@malecoadviserstr}
-	\expandafter\gdef\csname @coadvisertitle#1\endcsname{\@maleprofdout}
-  \else\if#2f
-    \expandafter\gdef\csname @coadviserstr#1\endcsname{\@femalecoadviserstr}
-	\expandafter\gdef\csname @coadvisertitle#1\endcsname{\@femaleprofdout}
+% #1 = [] for adviser or [co] co co-adviser
+% #2 = [m] or [f]
+% #3 = {name}
+% #4 = {category}
+% #5 = {school/institution}
+\def\@padviser[#1][#2]#3#4#5{%
+  \expandafter\advance\csname @the#1advisercount\endcsname 1\relax
+  \ifx#2m
+  	\expandafter\def\csname @the#1advisergender\endcsname{m}
+  \else\ifx#2f
   \else
-    \ClassError{thesisdifctunl}{Wrong gender in coadviser}{Gender must be "m" (male) of "f" (female)}
-  \fi\fi
-  \expandafter\gdef\csname @coadviser#1\endcsname{#3}
-  \expandafter\let\csname @showcoadviser#1\endcsname=1
+  \typeout{^^J%
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
+!  Please specify #1adviser gender using [m] or [f] as the second^^J%
+!  argument of the "#1adviser" macro.  See the template! ;)^^J%
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
 }
+   \errhelp{Please be gentle and follow the template recommendations.}
+   \errmessage{Please specify adviser gender!}
+  \fi\fi
+  \expandafter\gdef\csname @#1advisername\expandafter\number\csname @the#1advisercount\endcsname\endcsname{#3}
+  \expandafter\gdef\csname @#1advisercat\expandafter\number\csname @the#1advisercount\endcsname\endcsname{#4}
+  \expandafter\gdef\csname @#1adviserschool\expandafter\number\csname @the#1advisercount\endcsname\endcsname{#5}
+}
+
+\def\@theadviserstr[#1]{%
+	\@ptheadviserstr[#1]{\expandafter\csname @the#1advisercount\endcsname}{\expandafter\csname @the#1advisergender\endcsname}
+}
+
+\def\@ptheadviserstr[#1]#2#3{%
+	\ifnum #2 > 1
+  		\expandafter\csname @many#3#1adviserstr\endcsname
+	\else
+  		\expandafter\csname @single#3#1adviserstr\endcsname
+	\fi
+}
+
+\def\printadviser[#1]#2{%
+	\ifcsname @#1advisername#2\endcsname
+		\ifnum #2 = 1
+			& \\[-2ex]
+			\@theadviserstr[#1]:
+		\fi
+		&
+		\expandafter\csname @#1advisername#2\endcsname,
+		\expandafter\csname @#1advisercat#2\endcsname,
+		\expandafter\csname @#1adviserschool#2\endcsname
+	\\
+	\fi
+}
+
+
 
 
 %% Work identification
@@ -400,82 +475,152 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 \def\@texttype{%
   \if\@degreetype0
-    \@bachelordissertation
+    \@bachelordissertationstr
   \else\if\@degreetype1
-    \@mastersqualifying
+    \@mastersqualifyingstr
   \else\if\@degreetype2
-  \@mastersdissertation 
+  \@mastersdissertationstr
   \else\if\@degreetype3
-    \@phdproposal
+    \@phdproposalstr
   \else\if\@degreetype4
-   \@phdqualifying
+   \@phdqualifyingstr
    \else\if\@degreetype5
-    \@phdthesis
+    \@phdthesisstr
   \fi\fi\fi\fi\fi\fi}
+
+\def\thedegree#1#2{%
+	\expandafter\csname @#1#2\endcsname}
 
 \def\@degree{%
   \if\@degreetype0
-    \@bachelordegree
+    \thedegree{\ader}{bachelordegreestr}
   \else\if\@degreetype1
-    \@mastersdegree
+    \thedegree{\authorgender}{mastersdegreestr}
   \else\if\@degreetype2
-    \@mastersdegree
+    \thedegree{\authorgender}{mastersdegreestr}
   \else\if\@degreetype3
-    \@phddegree
+    \thedegree{\authorgender}{phddegreestr}
   \else\if\@degreetype4
-    \@phddegree
+    \thedegree{\authorgender}{phddegreestr}
    \else\if\@degreetype5
-    \@phddegree
+    \thedegree{\authorgender}{phddegreestr}
   \fi\fi\fi\fi\fi\fi}
 
 
+
 % Juri
-\def\jury[#1]{%
+\newcount\@thejurypcount	% number of presidents (must be one)
+\@thejurypcount 0\relax
+\newcount\@thejuryacount	% number of referees
+\@thejuryacount 0\relax
+\newcount\@thejuryvcount	% number of other memebrs of the jury
+\@thejuryvcount 0\relax
+
+\def\jury{%
   \@ifnextchar [%
-    {\@pjury[#1]}%
-    {\@pjury[#1][m]}}
+    {\@pjury}%
+    {\@pjury[v]}}
 
-\def\@pjury[#1][#2]#3{%
-  \if#2m
-	\expandafter\gdef\csname @jurytitle#1\endcsname{\@maleprofdout}
-  \else\if#2f
-	\expandafter\gdef\csname @jurytitle#1\endcsname{\@femaleprofdout}
-  \else
-    \ClassError{thesisdifctunl}{Wrong gender in jury member #1}{Gender must be "m" (male) of "f" (female)}
-  \fi\fi
-  \expandafter\gdef\csname @juryname#1\endcsname{#3}
-  \expandafter\let\csname @showjury#1\endcsname=1
+
+% #1 = [p] for president, [a] for referee, [v] for others
+% #2 = {name}
+\def\@pjury[#1]#2{%
+	\expandafter\advance\csname @thejury#1count\endcsname 1\relax
+  	\expandafter\gdef\csname @jury#1name\expandafter\number\csname @thejury#1count\endcsname\endcsname{#2}
 }
 
-
-
-
-\def\printconditionaladv#1#2{
-	\if\csname @show#1#2\endcsname1\csname @#1str#2\endcsname: & \csname @#1title#2\endcsname\ \csname @#1#2\endcsname\\\fi
+\def\printthejuryp{%
+	\ifnum \@thejurypcount = 1
+		& \\[-2ex]
+		Presidente: & \csname @jurypname1\endcsname \\
+	\else
+  		\typeout{^^J%
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
+!  Please identify one and only one president of the jury with^^J%
+!  the [p] argument of the "jury" macro.  See the template! ;)^^J%
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
+}
+   		\errhelp{Please be gentle and follow the template recommendations.}
+   		\errmessage{Please specify president of the jury!}
+	\fi
 }
 
-\def\printconditionaljury#1#2#3{
-	\if\csname @show#2#3\endcsname1 #1 & \csname @#2title#3\endcsname\ \csname @#2name#3\endcsname\\\fi
+\def\@printthejurya[#1]{%
+	\ifcsname @juryaname#1\endcsname
+	\ifnum #1 = 1
+		& \\[-2ex]
+		Arguente\ifnum \@thejuryacount > 1 s\fi:
+	\fi
+	& \expandafter\csname @juryaname#1\endcsname\relax \\
+	\fi
+}
+
+\def\printthejurya{%
+	\ifnum \@thejuryacount > 0
+		\@printthejurya[1]
+		\@printthejurya[2]
+		\@printthejurya[3]
+		\@printthejurya[4]
+		\@printthejurya[5]
+		\@printthejurya[6]
+		\@printthejurya[7]
+		\@printthejurya[8]
+		\@printthejurya[9]
+	\else
+  		\typeout{^^J%
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
+!  Please identify at least one referee with the [a] argument ^^J%
+!  of the "jury" macro.  See the template! ;)^^J%
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
+}
+   		\errhelp{Please be gentle and follow the template recommendations.}
+   		\errmessage{Please specify referees of the jury!}
+	\fi
+}
+
+\def\@printthejuryv[#1]{%
+	\ifcsname @juryvname#1\endcsname
+	\ifnum #1 = 1
+		& \\[-2ex]
+		Voga\ifnum \@thejuryvcount = 1 l\else is\fi:
+	\fi
+	& \expandafter\csname @juryvname#1\endcsname\relax \\
+	\fi
+}
+
+\def\printthejuryv{%
+	\ifnum \@thejuryvcount > 0
+		\@printthejuryv[1]
+		\@printthejuryv[2]
+		\@printthejuryv[3]
+		\@printthejuryv[4]
+		\@printthejuryv[5]
+		\@printthejuryv[6]
+		\@printthejuryv[7]
+		\@printthejuryv[8]
+		\@printthejuryv[9]
+	\else
+  		\typeout{^^J%
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
+!  Please identify at least one jury with the [v] argument ^^J%
+!  of the "jury" macro.  See the template! ;)^^J%
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
+}
+   		\errhelp{Please be gentle and follow the template recommendations.}
+   		\errmessage{Please specify at least one element of the jury!}
+	\fi
 }
 
 \def\printthejury{%
-\fontsize{10}{12}
-\selectfont
-\hfill\begin{tabular}{rl}
+	\fontsize{10}{12}
+	\selectfont
+	\hfill	
+	\begin{tabular}{rl}
 	& \@jurystr:\\
-	& \\[-2ex]
-	\printconditionaljury{Presidente:}{jury}{1}
-	& \\[-2ex]
-	\printconditionaljury{Arguentes:}{jury}{2}
-	\printconditionaljury{}{jury}{3}
-	& \\[-2ex]
-	\printconditionaljury{Vogais:}{jury}{4}
-	\printconditionaljury{}{jury}{5}
-	\printconditionaljury{}{jury}{6}
-	\printconditionaljury{}{jury}{7}
-	\printconditionaljury{}{jury}{8}
-	\printconditionaljury{}{jury}{9}
-\end{tabular}
+ 	\printthejuryp
+	\printthejurya
+	\printthejuryv
+	\end{tabular}
 }
 
 
@@ -518,7 +663,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 \def\quotefile#1{%
   \gdef\@quotefile{#1}}
-\def\@quotefile{}
+\def\@quotefile{\@empty}
 
 \ifx\@quotefile\@empty
 \def\printquote{}
@@ -602,75 +747,49 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 }
 
 
-% Print Chapters
-\def\chapterfile[#1]#2{%
-	\ifnum #1=1\gdef\printchapterfileone{\thesismainmatter\noexpand{\@input@{Chapters/#2}}}\fi
-	\ifnum #1=2\gdef\printchapterfiletwo{\noexpand{\@input@{Chapters/#2}}}\fi
-	\ifnum #1=3\def\printchapterfilethree{\noexpand{\@input@{Chapters/#2}}}\fi
-	\ifnum #1=4\gdef\printchapterfilefour{\noexpand{\@input@{Chapters/#2}}}\fi
-	\ifnum #1=5\gdef\printchapterfilefive{\noexpand{\@input@{Chapters/#2}}}\fi
-	\ifnum #1=6\gdef\printchapterfilesix{\noexpand{\@input@{Chapters/#2}}}\fi
-	\ifnum #1=7\gdef\printchapterfileseven{\noexpand{\@input@{Chapters/#2}}}\fi
-	\ifnum #1=8\gdef\printchapterfileeight{\noexpand{\@input@{Chapters/#2}}}\fi
-	\ifnum #1=9\gdef\printchapterfilenine{\noexpand{\@input@{Chapters/#2}}}\fi
+% Chapters
+\newcount\@chapcount
+\@chapcount 0\relax
+
+\def\chapterfile#1{%
+	\advance\@chapcount 1\relax
+	\expandafter\gdef\csname @chapterfile\number\@chapcount\endcsname{Chapters/#1}
 }
 
-\def\printchapterfileone{}
-\def\printchapterfiletwo{}
-\def\printchapterfilethree{}
-\def\printchapterfilefour{}
-\def\printchapterfilefive{}
-\def\printchapterfilesix{}
-\def\printchapterfileseven{}
-\def\printchapterfileeight{}
-\def\printchapterfilenine{}
-
-\def\printchapters{%
-	\printchapterfileone
-	\printchapterfiletwo
-	\printchapterfilethree
-	\printchapterfilefour
-	\printchapterfilefive
-	\printchapterfilesix
-	\printchapterfileseven
-	\printchapterfileeight
-	\printchapterfilenine
+\def\printchapthers{%
+	\thesismainmatter
+	\newcount\@myi
+	\@myi 0\relax
+	\loop
+		\advance\@myi 1\relax
+		\def\@chapname{\expandafter\csname @chapterfile\number\@myi\endcsname}
+		\@input@{\@chapname}
+	\ifnum \@myi < \@chapcount
+	\repeat
 	\endthesismainmatter
 }
 
-\def\appendixfile[#1]#2{%
-	\ifnum #1=1\gdef\printappendixfileone{\noexpand{\appendix\@input@{Chapters/#2}}}\fi
-	\ifnum #1=2\gdef\printappendixfiletwo{\noexpand{\@input@{Chapters/#2}}}\fi
-	\ifnum #1=3\def\printappendixfilethree{\noexpand{\@input@{Chapters/#2}}}\fi
-	\ifnum #1=4\gdef\printappendixfilefour{\noexpand{\@input@{Chapters/#2}}}\fi
-	\ifnum #1=5\gdef\printappendixfilefive{\noexpand{\@input@{Chapters/#2}}}\fi
-	\ifnum #1=6\gdef\printappendixfilesix{\noexpand{\@input@{Chapters/#2}}}\fi
-	\ifnum #1=7\gdef\printappendixfileseven{\noexpand{\@input@{Chapters/#2}}}\fi
-	\ifnum #1=8\gdef\printappendixfileeight{\noexpand{\@input@{Chapters/#2}}}\fi
-	\ifnum #1=9\gdef\printappendixfilenine{\noexpand{\@input@{Chapters/#2}}}\fi
-}
 
-\def\printappendixfileone{}
-\def\printappendixfiletwo{}
-\def\printappendixfilethree{}
-\def\printappendixfilefour{}
-\def\printappendixfilefive{}
-\def\printappendixfilesix{}
-\def\printappendixfileseven{}
-\def\printappendixfileeight{}
-\def\printappendixfilenine{}
+% Appendixes
+\newcount\@appxcount
+\@appxcount 0\relax
+
+\def\appendixfile#1{%
+	\advance\@appxcount 1\relax
+	\expandafter\gdef\csname @appendixfile\number\@appxcount\endcsname{Chapters/#1}
+}
 
 \def\printappendixes{%
-	\printappendixfileone
-	\printappendixfiletwo
-	\printappendixfilethree
-	\printappendixfilefour
-	\printappendixfilefive
-	\printappendixfilesix
-	\printappendixfileseven
-	\printappendixfileeight
-	\printappendixfilenine
+	\newcount\@myi
+	\@myi 0\relax
+	\loop
+		\advance\@myi 1\relax
+		\def\@appxname{\expandafter\csname @appendixfile\number\@myi\endcsname}
+		\@input@{\@appxname}
+	\ifnum \@myi < \@appxcount
+	\repeat
 }
+
 
 \def\printlistoffigures{%
   \gdef\@printlistoffigures{\listoffigures}}
@@ -711,30 +830,30 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 %% Frontpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\frontpage}{
+\def\frontpage{
 \thispagestyle{empty}
 
 \if\@degreetype0
 	\def\@defcoverbg{\@thesiscovermsc}
-	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=4.5cm,rmargin=3.5cm}
+	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
 \else\if\@degreetype1
 	\def\@defcoverbg{\@thesiscovermsc}
-	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=4.5cm,rmargin=3.5cm}
+	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
 \else\if\@degreetype2
 	\def\@defcoverbg{\@thesiscovermsc}
-	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=4.5cm,rmargin=3.5cm}
+	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
 \else\if\@degreetype3
 	\def\@defcoverbg{\@thesiscoverphd}
-	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=5.5cm,rmargin=2.5cm}
+	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=5.5cm,rmargin=2.5cm}
 \else\if\@degreetype4
 	\def\@defcoverbg{\@thesiscoverphd}
-	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=5.5cm,rmargin=2.5cm}
+	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=5.5cm,rmargin=2.5cm}
 \else\if\@degreetype5
 	\def\@defcoverbg{\@thesiscoverphd}
-	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=5.5cm,rmargin=2.5cm}
+	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=5.5cm,rmargin=2.5cm}
 \else
 	\def\@defcoverbg{\@thesiscoverplain}
-	\newgeometry{tmargin=4cm,bmargin=2cm,lmargin=5.5cm,rmargin=4.5cm}
+	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
 \fi\fi\fi\fi\fi\fi
 	
 \AddToShipoutPicture*{\BackgroundPic{\@defcoverbg}}
@@ -747,51 +866,52 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 	\selectfont
 	\textbf{\@author}
 	
-\vspace{0.5cm}	
+\vspace{0.25cm}	
 % Academic qualifications
 	\fontsize{11}{12}
 	\selectfont
 	\@authordegree
 
-\vfill\vfill
+\vspace{4.25cm}
 % Title of Dissertation
-	\fontsize{16}{19}
+	\fontsize{17}{19}
 	\selectfont
 	\textbf{\@title}\\[0.75cm]
 
 \vspace{0.75cm}
-% Academic qualifications
+% Degree
 	\fontsize{11}{12}
 	\selectfont
 	\@presentationtext
 
+
 \vfill
-% Title of Dissertation
+% Advisers
 	\fontsize{12}{14}
 	\selectfont
-	\hfill\begin{tabularx}{0.9\linewidth}{rX}
-	\printconditionaladv{adviser}{1}
-	\printconditionaladv{adviser}{2}
-	\printconditionaladv{adviser}{3}
-	\printconditionaladv{adviser}{4}
-	\printconditionaladv{adviser}{5}
-	\printconditionaladv{adviser}{6}
-	\printconditionaladv{adviser}{7}
-	\printconditionaladv{adviser}{8}
-	\printconditionaladv{adviser}{9}
-	\printconditionaladv{coadviser}{1}
-	\printconditionaladv{coadviser}{2}
-	\printconditionaladv{coadviser}{3}
-	\printconditionaladv{coadviser}{4}
-	\printconditionaladv{coadviser}{5}
-	\printconditionaladv{coadviser}{6}
-	\printconditionaladv{coadviser}{7}
-	\printconditionaladv{coadviser}{8}
-	\printconditionaladv{coadviser}{9}
+	\begin{tabularx}{1\linewidth}{rX}
+		\printadviser[]{1}
+		\printadviser[]{2}
+		\printadviser[]{3}
+		\printadviser[]{4}
+		\printadviser[]{5}
+		\printadviser[]{6}
+		\printadviser[]{7}
+		\printadviser[]{8}
+		\printadviser[]{9}
+		\printadviser[co]{1}
+		\printadviser[co]{2}
+		\printadviser[co]{3}
+		\printadviser[co]{4}
+		\printadviser[co]{5}
+		\printadviser[co]{6}
+		\printadviser[co]{7}
+		\printadviser[co]{8}
+		\printadviser[co]{9}
 	\end{tabularx}
 	
 
-\vfill
+\vfill\vfill
 % Referee board
 \if\@degreetype0
 \printthejury
@@ -806,13 +926,16 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \fi\fi\fi\fi\fi\fi
 
 \vfill\vfill\vfill
-% Title of Dissertation
-	\fontsize{11}{12}
-	\selectfont
-	\textbf{\@themonth, \@theyear}
+
+% Date
+\fontsize{11}{12}
+\selectfont
+\textbf{\@themonth, \@theyear}
 	
 \end{center}
 \restoregeometry
+\newpage
+\thispagestyle{empty}
 }
 
 

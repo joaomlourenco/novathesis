@@ -127,7 +127,7 @@
 \title{[Título da tese]}
 
 % Autor
-\author{[Nome completo do autor]} 
+\author[f]{[Nome completo do autor]} 
 \authordegree{[Habilitações académcias]}
 
 % Date
@@ -137,33 +137,28 @@
 
 % Supervisors (maximum of 9)
 % use [f] for female and [m] for male
-\adviser[1][f]{[Nome da orientadora]}
-% \adviser[2][m]{[Nome do segundo orientador]}
+\adviser[m]{[Nome do orientador]}{[Cargo]}{[Instituição]}
+% \adviser[m]{[Nome do orientador 2]}{[Prof.\ Catedrático]}{[Universidade Nova de Lisboa]}
 
 % Co-supervisors (maximum of 9)
 % use [f] for female and [m] for male
-\coadviser[1][m]{[Nome do co-orientador 1]}
-\coadviser[2][f]{[Nome da co-orientadora 2]}
-% \coadviser[3][m]{[Nome do co-orientador 3]}
+\coadviser[f]{[Nome da co-orientadora 1]}{[Cargo]}{[Instituição]}
+% \coadviser[f]{[Nome da co-orientadora 2]}{[Profª.\ Auxiliar]}{[Universidade Nova de Lisboa]}
 
 % Jury (maximum of 9 elements)
+% Use [p] for president, [a] for referees, [v] or nothing for others
 % President of the jury
-% use [f] for female and [m] for male
-\jury[1][m]{[Nome do presidente do júri]}
-% First referee
-% use [f] for female and [m] for male
-\jury[2][f]{[Nome do primeiro arguente]}
-% Second referee - comment if just one referee
-% use [f] for female and [m] for male
-\jury[3][m]{[Nome do segundo arguente]}
+\jury[p]{[Nome do presidente do júri]}
+% Main referees
+\jury[a]{[Nome do primeiro arguente]}
+\jury[a]{[Nome do segundo arguente]}
 % Other members of the jury - include the supervisor in this list
-% use [f] for female and [m] for male
-\jury[4][f]{[Nome do primeiro vogal]}
-\jury[5][m]{[Nome do segundo vogal]}
-\jury[6][f]{[Nome do terceiro vogal]}
-\jury[7][m]{[Nome do quarto vogal]}
-% \jury[8][f]{[Nome do quinto vogal]}
-% \jury[9][m]{[Nome do sexto vogal]}
+\jury[v]{[Nome do primeiro vogal]}
+\jury[v]{[Nome do segundo vogal]}
+\jury[v]{[Nome do terceiro vogal]}
+\jury[v]{[Nome do quarto vogal]}
+% \jury{[Nome do quinto vogal]}
+% \jury{[Nome do sexto vogal]}
 
 %%------------------------------------------------------------
 %% All the names inside braces below sould correspond to a file
@@ -176,6 +171,9 @@
 % Acknowledgments text. Will only be considered for final documents,
 % i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
 \acknowledgementsfile{acknowledgements}
+
+% Quote
+% \quotefile{quote}
 
 % Resume/summary text in Portuguese
 \ptabstractfile{resumo}
@@ -197,14 +195,16 @@
 
 
 % Text chapters
-% sintax: \chapterfile[chapternumber]{file}
-\chapterfile[1]{chapter1} 
-\chapterfile[2]{chapter2} 
-\chapterfile[3]{chapter3}
+% syntax: \chapterfile{file}
+\chapterfile{chapter1} 
+\chapterfile{chapter2}
+\chapterfile{chapter3}
+
 
 % Text appendixes
-% sintax: \appendixfile[appendixnumber]{file}
-\appendixfile[1]{appendix1}
+% sintax: \appendixfile{file}
+% Comment if not needed
+\appendixfile{appendix1}
 
 % BibTeX bibiography files. Can be a comma separated list of files
 \bibliographyfile{bibliography}
@@ -236,6 +236,9 @@
 % Acknowledgments will only be printed if adequate for the document type
 \printacknowledgements
 
+% Print the quote if file exists
+\printquote
+
 % Abstracts/resumes/summaries in two languages. The first abstract will
 % use the document main language and second the foreign language
 \printabstract
@@ -250,7 +253,7 @@
 % Print other lists of contents according to instructions given above
 %%------------------------------------------------------------
 % Print document chapters
-\printchapters
+\printchapthers
 
 %%------------------------------------------------------------
 % Print the bibliography
