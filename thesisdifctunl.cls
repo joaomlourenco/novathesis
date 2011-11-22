@@ -133,7 +133,7 @@
 
 \RequirePackage{babel}
 
-\RequirePackage{tabularx}
+% \RequirePackage{tabularx}
 
 \RequirePackage{ifthen}
 
@@ -145,7 +145,7 @@
 \onehalfspacing
 
 %\RequirePackage{mathptmx}
-\RequirePackage[scaled=0.9]{helvet}
+\RequirePackage[scaled]{helvet}
 \RequirePackage{courier}
 \RequirePackage{palatino}
 
@@ -182,6 +182,9 @@
 keepaspectratio]{#1}%
 \vfill
 }}}
+
+
+\RequirePackage{ctable}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -612,15 +615,21 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 }
 
 \def\printthejury{%
-	\fontsize{10}{12}
+	\fontsize{11}{12}
 	\selectfont
-	\hfill	
-	\begin{tabular}{rl}
-	& \@jurystr:\\
+	\ctable[
+		cap=,
+		caption=,
+		label=,
+		pos=h,
+		maxwidth=1\linewidth,
+		right,
+	]{rX}{}{
+	& \@jurystr: \\
  	\printthejuryp
 	\printthejurya
 	\printthejuryv
-	\end{tabular}
+	}
 }
 
 
@@ -862,34 +871,39 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 	\fontfamily{phv}
 
 % Name of Candidate
-	\fontsize{14}{17}
+	\fontsize{15}{17}
 	\selectfont
 	\textbf{\@author}
 	
 \vspace{0.25cm}	
 % Academic qualifications
-	\fontsize{11}{12}
+	\fontsize{12}{13}
 	\selectfont
 	\@authordegree
 
 \vspace{4.25cm}
 % Title of Dissertation
-	\fontsize{17}{19}
+	\fontsize{18}{20}
 	\selectfont
 	\textbf{\@title}\\[0.75cm]
 
 \vspace{0.75cm}
 % Degree
-	\fontsize{11}{12}
+	\fontsize{12}{13}
 	\selectfont
 	\@presentationtext
-
-
-\vfill
-% Advisers
-	\fontsize{12}{14}
+	
+	\vfill
+	% Advisers
+	\fontsize{13}{14}
 	\selectfont
-	\begin{tabularx}{1\linewidth}{rX}
+	\ctable[
+		cap=,
+		caption=,
+		label=,
+		pos=h,
+		maxwidth=1\linewidth,
+	]{rX}{}{
 		\printadviser[]{1}
 		\printadviser[]{2}
 		\printadviser[]{3}
@@ -908,8 +922,8 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 		\printadviser[co]{7}
 		\printadviser[co]{8}
 		\printadviser[co]{9}
-	\end{tabularx}
-	
+}
+
 
 \vfill\vfill
 % Referee board
@@ -928,7 +942,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \vfill\vfill\vfill
 
 % Date
-\fontsize{11}{12}
+\fontsize{12}{13}
 \selectfont
 \textbf{\@themonth, \@theyear}
 	
