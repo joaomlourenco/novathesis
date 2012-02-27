@@ -710,25 +710,40 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 \def\ptabstractfile#1{%
   \gdef\@ptabstractfile{#1}}
-\def\@ptabstractfile{~ptabstractfile \@notdefined}
+\def\@ptabstractfile{\@empty}
+% \def\@ptabstractfile{~ptabstractfile \@notdefined}
 
 \def\enabstractfile#1{%
   \gdef\@enabstractfile{#1}}
+\def\@enabstractfile{\@empty}
+% \def\@enabstractfile{~enabstractfile \@notdefined}
+
+\if\@language0   % Sumário-PT + Abstract-EN para tese em Português
+\def\@ptabstractfile{~ptabstractfile \@notdefined}
+\else\if\@language1   % Abstract-EN + Sumário-PT for thesis in English
 \def\@enabstractfile{~enabstractfile \@notdefined}
+\fi\fi
+
 
 \def\printabstract{%
 	\if\@language0   % Sumário-PT + Abstract-EN para tese em Português
 		\selectlanguage{portuguese}
 		\@input@{Chapters/\@ptabstractfile}\global\let\@ptabstractfile\@empty
-		\selectlanguage{english}
-		\@input@{Chapters/\@enabstractfile}\global\let\@enabstractfile\@empty
-		\selectlanguage{portuguese}
+		\ifx\@enabstractfile\@empty
+		\else
+			\selectlanguage{english}
+			\@input@{Chapters/\@enabstractfile}\global\let\@enabstractfile\@empty
+			\selectlanguage{portuguese}
+		\fi
 	\else\if\@language1   % Abstract-EN + Sumário-PT for thesis in English
 		\selectlanguage{english}
 		\@input@{Chapters/\@enabstractfile}\global\let\@enabstractfile\@empty
-		\selectlanguage{portuguese}
-		\@input@{Chapters/\@ptabstractfile}\global\let\@ptabstractfile\@empty
-		\selectlanguage{english}
+		\ifx\@ptabstractfile\@empty
+		\else
+			\selectlanguage{portuguese}
+			\@input@{Chapters/\@ptabstractfile}\global\let\@ptabstractfile\@empty
+			\selectlanguage{english}
+		\fi
 	\fi\fi
 }
 
@@ -815,9 +830,9 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \def\printotherlists{%
 	\@printlistoffigures
 	\@printlistoftables
-	% \if\@language0   % Estamos a usar o Português
-	% 	\def\lstlistlistingname{Listagens}
-	% \fi
+	\if\@language0   % Estamos a usar o Português
+		\def\lstlistlistingname{Listagens}
+	\fi
 	\@printlistoflistings
 }
 
