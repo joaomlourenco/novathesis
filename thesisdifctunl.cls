@@ -2,15 +2,17 @@
 %%% thesisdifctunl.cls
 %%% DI/FCT/UNL Dissertation document class
 %%%
-%%% Version 2.0 (November 2011)
 %%% By João Lourenço (joao.lourenco@di.fct.unl.pt)
+%%% Version of February 2012
 %%%
 %%% This template is vaguely based on a template from the
 %%%     University of Pernambuco
 %%%
-%%% BUGS and SUGGETSIONS: please send email to "joao.lourenco@di.fct.unl.pt"
+%%% BUGS and SUGGETSIONS: please send email to "joao.lourenco@fct.unl.pt"
 %%%     or sumit a ticket in the the project web page at
 %%%     http://code.google.com/p/thesisdifctunl/
+%%%
+%%% CONTRIBUTERS are welcome. Please contact "joao.lourenco@fct.unl.pt"
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
