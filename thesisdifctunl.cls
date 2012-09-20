@@ -108,7 +108,14 @@
 	\def\@degree{\@pdhdegree}
 	\def\@dissertationtype{\@phhdissertationtstr}
 }
- 
+
+% == bibbychapter ===
+\let\@bibbychapter=0
+\DeclareOption{bibbychapter}{
+	\let\@bibbychapter=1	
+}
+
+
 % == Default Options ===
 \ExecuteOptions{en,msc}
 \ProcessOptions
@@ -133,7 +140,10 @@
 
 % \RequirePackage{amsmath,amsfonts,amssymb,amsthm}
 
+\RequirePackage{csquotes}
 \RequirePackage{babel}
+
+\RequirePackage[toc]{appendix}
 
 % \RequirePackage{tabularx}
 
@@ -143,7 +153,7 @@
 \RequirePackage{fancyhdr}           % Headings configuration
 
 % Set inter-line spacing
-\usepackage{setspace}           % One-and-half spacing
+\RequirePackage{setspace}           % One-and-half spacing
 \onehalfspacing
 
 %\RequirePackage{mathptmx}
@@ -187,6 +197,18 @@ keepaspectratio]{#1}%
 
 
 \RequirePackage{ctable}
+
+\RequirePackage[%
+	sorting=nyt,%
+	style=alphabetic,%
+% labelyear=false,%
+	defernumbers=true,%
+	maxnames=20,%
+	firstinits=true,%
+	uniquename=init,%
+% dashed=false,%
+% sortcites=true,
+	]{biblatex}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -789,7 +811,14 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 	\loop
 		\advance\@myi 1\relax
 		\def\@chapname{\expandafter\csname @chapterfile\number\@myi\endcsname}
+		\if\@bibbychapter1
+			\begin{refsegment}
+		\fi
 		\@input@{\@chapname}
+		\if\@bibbychapter1
+			\printbibliography[segment=\arabic{chapter},heading=subbibintoc]
+			\end{refsegment}
+		\fi
 	\ifnum \@myi < \@chapcount
 	\repeat
 	\endthesismainmatter
@@ -805,7 +834,8 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 	\expandafter\gdef\csname @appendixfile\number\@appxcount\endcsname{Chapters/#1}
 }
 
-\def\printappendixes{%
+\def\printappendixes{%	
+	\appendix
 	\newcount\@myi
 	\@myi 0\relax
 	\loop
@@ -838,17 +868,14 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 	\@printlistoflistings
 }
 
-\def\bibliographyfile#1{%
-  \gdef\@bibliographyfile{#1}}
-\def\@bibliographyfile{~bibliographyfile \@notdefined}
 
-\def\printbibliography{%
-	\if\@language0   % Bibliografia em Português
-		\bibliographystyle{alpha-pt}
-	\else\if\@language1   % Bibliography in English
-		\bibliographystyle{alpha}
-	\fi\fi
-	\bibliography{./\@bibliographyfile}
+\def\addbibfile#1{%
+  \addbibresource{#1}}
+
+\def\printbib{%
+	\if\@bibbychapter0
+		\printbibliography
+	\fi
 }
 
 

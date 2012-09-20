@@ -2,7 +2,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Template for writing dissertations with ThesisDIFCTUNL
 %%
-%% Version 20121110 (Nov 2011)
+%% Version 20120920 (Sep 2012)
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -11,19 +11,14 @@
 %%
 %% BUGS and SUGGESTIONS: please submit an issue at the project web page
 %%
-%% Contributors:
-%%     - Adriano Lopes (Adriano.Lopes@di.fct.unl.pt)
-%%     - João Lourenço (Joao.Lourenco@di.fct.unl.pt)
-%%     - Ricardo Dias (rjfd@di.fct.unl.pt)
+%% Authors / Contributors:
+%%     - João Lourenço (joao.lourenco@fct.unl.pt)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Main options (please read the manual for further details)
 %% Options marked with (*) are the values by default
 %% See also file "defaults.tex"
 %%
-%% - Languages
-%%           pt			- português
-%%           (*)en		- english
 %% - Class of text
 %%           bsc		- BSc graduation report
 %%           prepmsc	- Preparation of MSc dissertation
@@ -31,23 +26,32 @@
 %%           propphd	- Proposal of PhD thesis
 %%           prepphd 	- Preparation of PhD thesis
 %%           phd		- PhD thesis
+%% - Languages
+%%           pt			- português
+%%           (*)en		- english
 %% - Single/double sided printing
 %%           oneside	- single sided printing
 %%           (*)twoside	- double sided printing
 %% - Font size
-%%           (*)11pt		- Use font size 11
-%%           12pt	- Use font size 12
+%%           (*)11pt	- Use font size 11
+%%           12pt		- Use font size 12
 %% - Text encoding
 %%           latin1		- Windows
 %%           (*)utf8	- other systems (Linux, Mac)
+%% - Bibliography
+%%           bibbychapter	- Print the bibliography/references per chapter
+%%			
 %%
 %% DON'T MIX TEXT ENCODINGS. All the files are saved using UTF8. 
-%% If you want to use latin1, you should first re-save all the text
-%% files (*.tex, *.cls, *.bst,  ...) using latin1 encoding first
+%% If you want to use latin1, you should first re-save all these
+%% files (*.tex, *.cls,  ...) using latin1 encoding first
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[msc,pt,twoside,11pt,utf8,a4paper]{thesisdifctunl}
+	\documentclass[msc,en,
+twoside,11pt,utf8,a4paper,
+% bibbychapter
+]{thesisdifctunl}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -198,7 +202,7 @@
 
 % Text chapters
 % syntax: \chapterfile{file}
-\chapterfile{chapter1} 
+\chapterfile{chapter1}
 \chapterfile{chapter2}
 \chapterfile{chapter3}
 
@@ -208,8 +212,8 @@
 % Comment if not needed
 \appendixfile{appendix1}
 
-% BibTeX bibiography files. Can be a comma separated list of files
-\bibliographyfile{bibliography}
+% BibTeX bibiography files. Can be used multiple times with a single file nae each time.
+\addbibfile{bibliography}
 
 %%============================================================
 %%
@@ -259,7 +263,7 @@
 
 %%------------------------------------------------------------
 % Print the bibliography
-\printbibliography
+\printbib
 
 %%------------------------------------------------------------
 % Print appendixes, if any!
