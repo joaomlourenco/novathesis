@@ -199,6 +199,7 @@ keepaspectratio]{#1}%
 \RequirePackage{ctable}
 
 \RequirePackage[%
+	backend=bibtex,
 	sorting=nyt,%
 	style=alphabetic,%
 % labelyear=false,%
