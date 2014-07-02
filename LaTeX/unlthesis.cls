@@ -18,8 +18,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PROCESS KEY-VAL OPTIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{kvoptions-patch}%%%NEW
-\RequirePackage{xkeyval}%
+\RequirePackage{kvoptions-patch}
+\RequirePackage{xkeyval}
 \RequirePackage{xifthen}
 
 
@@ -254,7 +254,7 @@ keepaspectratio]{#1}%
 % \gdef\profdoutor{Prof.\ Dr.\ }
 % \gdef\profdoutora{Profª.\ Drª.\ }
 
-\gdef\@bachelordissertationstr{Trabalho de Licenciatura}
+\gdef\@bachelordissertationstr{Projeto de Licenciatura}
 \gdef\@mastersdissertationstr{Dissertação de Mestrado}
 \gdef\@mastersqualifyingstr{Preparação de Dissertação}
 \gdef\@phdqualifyingstr{Preparação de Tese}
@@ -263,19 +263,27 @@ keepaspectratio]{#1}%
 
 \gdef\@jurystr{Júri}
 
-\gdef\UNL@bscdissertationtstr{Relatório para obtenção do Grau 
-de\UNL@degree em\\\@majorfield}
-\gdef\@prepmscdissertationtstr{Relatório intermédio para obtenção do Grau 
-de\UNL@degree em\\\@majorfield}
-\gdef\UNL@mscdissertationtstr{Dissertação para obtenção do Grau 
-de\UNL@degree em\\\@majorfield}
-\gdef\@propphhdissertationtstr{Proposta de tese para obtenção do Grau 
-de \UNL@degree em\\\@majorfield}
-\gdef\@prepphhdissertationtstr{Relatório intermédio para obtenção do Grau de\UNL@degree em\\\@majorfield}
-\gdef\@phhdissertationtstr{Dissertação para obtenção do Grau 
-de\UNL@degree em\\\@majorfield}
+\gdef\UNL@bscdissertationtstr{Relatório para obtenção do Grau de \\\UNL@degree em \@majorfield}
+\gdef\UNL@prepmscdissertationtstr{Relatório intermédio para obtenção do Grau de \\\UNL@degree em \@majorfield}
+\gdef\UNL@mscdissertationtstr{Dissertação para obtenção do Grau de \\\UNL@degree em \@majorfield}
+\gdef\UNL@propphhdissertationtstr{Proposta de tese para obtenção do Grau de \\\UNL@degree em \@majorfield}
+\gdef\UNL@prepphhdissertationtstr{Relatório intermédio para obtenção do Grau de \\\UNL@degree em \@majorfield}
+\gdef\UNL@phhdissertationtstr{Dissertação para obtenção do Grau de \\\UNL@degree em \@majorfield}
 
-\gdef\@presentationtext{\UNL@doctype}
+
+\if\UNL@doctype0
+    \gdef\@presentationtext{\UNL@bscdissertationtstr}
+\else\if\UNL@doctype1
+    \gdef\@presentationtext{\@UNLprepmscdissertationtstr}
+\else\if\UNL@doctype2
+    \gdef\@presentationtext{\UNL@mscdissertationtstr}
+\else\if\UNL@doctype3
+    \gdef\@presentationtext{\UNL@propphhdissertationtstr}
+\else\if\UNL@doctype4
+    \gdef\@presentationtext{\UNL@prepphhdissertationtstr}
+\else\if\UNL@doctype5
+    \gdef\@presentationtext{\UNL@phhdissertationtstr}
+\fi\fi\fi\fi\fi\fi
 
 \gdef\thecopyrightstr{%
 \noindent
