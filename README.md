@@ -32,7 +32,7 @@ For more information please visit the discussion forum at https://groups.google.
 News
 ----
 
-2014-02-18 A discussion forum for users of this template is available at https://groups.google.com/forum/#!forum/thesisdifctunl. Please register… ask for help/support there and give help/support to your peers.
+2014-02-18 — A discussion forum for users of this template is available at https://groups.google.com/forum/#!forum/thesisdifctunl. Please register… ask for help/support there and give help/support to your peers.
 
 2011-02-27 — The LaTeX template is now fully compliant to the FCT and UNL formatting regulations.
 
