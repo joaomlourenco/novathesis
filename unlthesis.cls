@@ -1,22 +1,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% thesisdifctunl.cls
-%%% DI/FCT/UNL Dissertation document class
+%%% unlthesis.cls
+%%% UNL thesis document class
 %%%
 %%% By João Lourenço (joao.lourenco@di.fct.unl.pt)
-%%% Version of February 2012
-%%%
-%%% This template is vaguely based on a template from the
-%%%     University of Pernambuco
+%%% Version of July 2014
 %%%
 %%% BUGS and SUGGETSIONS: please send email to "joao.lourenco@fct.unl.pt"
-%%%     or sumit a ticket in the the project web page at
+%%%     or submit a ticket in the the project web page at
 %%%     http://code.google.com/p/thesisdifctunl/
 %%%
 %%% CONTRIBUTERS are welcome. Please contact "joao.lourenco@fct.unl.pt"
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{thesisdifctunl}[2011/11/10]
+\ProvidesClass{unlthesis}[2014/07/01]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PROCESS KEY-VAL OPTIONS
