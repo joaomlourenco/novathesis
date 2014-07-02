@@ -2,7 +2,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Template for writing dissertations with ThesisDIFCTUNL
 %%
-%% Version 20120920 (Sep 2012)
+%% Version 20140701 (Jul 2014)
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -19,26 +19,35 @@
 %% Options marked with (*) are the values by default
 %% See also file "defaults.tex"
 %%
-%% - Class of text
-%%           bsc		- BSc graduation report
+%% - Values for option 'doctype'
+%%           bsc	- BSc graduation report
 %%           prepmsc	- Preparation of MSc dissertation
-%%           (*)msc		- MSc dissertation
+%%           (*)msc	- MSc dissertation
 %%           propphd	- Proposal of PhD thesis
 %%           prepphd 	- Preparation of PhD thesis
-%%           phd		- PhD thesis
-%% - Languages
-%%           pt			- português
-%%           (*)en		- english
-%% - Single/double sided printing
-%%           oneside	- single sided printing
-%%           (*)twoside	- double sided printing
-%% - Font size
-%%           (*)11pt	- Use font size 11
-%%           12pt		- Use font size 12
-%% - Text encoding
-%%           latin1		- Windows
+%%           phd	- PhD thesis
+%% - Values for option 'lang'
+%%           pt		- português
+%%           (*)en	- english
+%% - Values for option 'enc'
+%%           latin1	- Windows   **** I STRONGLY recoomend you to use UTF8 ***
 %%           (*)utf8	- other systems (Linux, Mac)
-%% - Bibliography
+%% - Other options
+%%           biblatex={opt1=va1,opt2=val2,...}	- options for biblatex
+%%           		style=numeric
+%%           		style=alphabetic
+%%			style=authoryear
+%%           		sorting=none
+%%           		sorting=nyt
+%%           COMPATIBILITY WITH LEGACY BIB STYLES
+%%			style=numeric			 --> plain
+%%			style=numeric,firstinits=true	 --> abbrv
+%%			style=numeric,sorting=none	 --> unsrt
+%%			style=alphabetic		 --> alpha
+%%           book={opt1=va1,opt2=val2,...}	- options for book class
+%%           		(*)11pt	- Use font size 11
+%%           		12pt	- Use font size 12
+%% - Bibliography -- **** TEMPORARILY DISABLED ****
 %%           bibbychapter	- Print the bibliography/references per chapter
 %%			
 %%
@@ -48,20 +57,31 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\documentclass[msc,en,
-twoside,11pt,utf8,a4paper,
-% bibbychapter
+\documentclass[
+	doctype=msc,
+	lang=en,
+	enc=utf8,
+	book={a4paper,11pt},
+	biblatex={
+		style=authoryear,	% ALTERNATIVES: numeric, alphabetic, authoryear
+		sorting=ynt,		% ALTERNATIVES: none, nyt, ynt
+	},
 ]{thesisdifctunl}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%============================================================
+%%
 %%  BEGINING OF USER COSTUMIZATION
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%====================================================================
-% Additional package syou may ant to use (comment those not needed)
-%====================================================================
+%%
+%%============================================================
+
+
+
+%------------------------------------------------------------------
+% Additional packages you may ant to use (comment those not needed)
+%------------------------------------------------------------------
 
 % To enable customizble enumerates
 \usepackage{paralist}
@@ -85,12 +105,10 @@ twoside,11pt,utf8,a4paper,
 \usepackage[textsize=footnotesize]{todonotes}
 \setlength{\marginparwidth}{1.5cm}
 
-% To have text wrapping figures
-% \usepackage{wrapfig}
 
-%====================================================================
-% Standard configuration for user included packages
-%====================================================================
+%------------------------------------------------------------------
+% Costumization of user included packages
+%------------------------------------------------------------------
 
 % Where to look for figures
 \graphicspath{{Logo/}{Figures/}{Chapters/Figures/}} 
@@ -107,9 +125,9 @@ twoside,11pt,utf8,a4paper,
     frame=single,
 }
 
-%====================================================================
+%------------------------------------------------------------------
 % Some default values that you may whish to override
-%====================================================================
+%------------------------------------------------------------------
 %% Identification: items prefixed with (*) are the default values, as defined in "defaults.tex"
 % (*)\university{Universidade Nova de Lisboa}
 % (*)\faculty{Faculdade de Ciências e Tecnologia}
@@ -119,8 +137,8 @@ twoside,11pt,utf8,a4paper,
 % (*)\thesiscovermsc{cover-msc-round} -> there is an alternative with squre corners
 % (*)\thesiscoverplain{cover-plain}
 
-% Use double spacing (default is one-and-half spacing) is nice
-%     for supervisor to inert revision notes and comments.
+% Use double spacing (default is one-and-half spacing), which allows
+%     for the Adviser to insert revision notes and comments.
 % (*)\onehalfspacing
 % \doublespacing
 
@@ -128,9 +146,10 @@ twoside,11pt,utf8,a4paper,
 
 % Title of the dissertation/thesis
 % USe "\\" to break the title into two or more lines
-\title{[Título da tese]}
+\title{[Título da tese / Thesis Title]}
 
 % Autor
+% use [f] for female and [m] for male
 \author[f]{[Nome completo do autor]} 
 \authordegree{[Habilitações académcias]}
 
@@ -139,17 +158,19 @@ twoside,11pt,utf8,a4paper,
 \theyear{ANO}
 
 
-% Supervisors (maximum of 9)
+% Advisers (maximum of 9)
 % use [f] for female and [m] for male
 \adviser[m]{[Nome do orientador]}{[Cargo]}{[Instituição]}
-\adviser[m]{[Nome do orientadoror 2]}{[Prof.\ Catedrático]}{[Universidade Nova de Lisboa]}
+\adviser[m]{[Nome do orientador 2]}{[Prof.\ Catedrático]}{[Universidade Nova de Lisboa]}
 % A trick to force the University to go to the next line :)
 % \adviser[m]{João M. S. Lourenço}{Prof.\ Auxiliar}{\\&Universidade Nova de Lisboa}
 
-% Co-supervisors (maximum of 9)
+
+% Co-Advisers (maximum of 9)
 % use [f] for female and [m] for male
 % \coadviser[f]{[Nome da co-orientadora 1]}{[Cargo]}{[Instituição]}
 % \coadviser[f]{[Nome da co-orientadora 2]}{[Profª.\ Auxiliar]}{[Universidade Nova de Lisboa]}
+
 
 % Jury (maximum of 9 elements)
 % Use [p] for president, [a] for referees, [v] or nothing for others
@@ -158,7 +179,7 @@ twoside,11pt,utf8,a4paper,
 % Main referees
 \jury[a]{[Nome do primeiro arguente]}
 \jury[a]{[Nome do segundo arguente]}
-% Other members of the jury - include the supervisor in this list
+% Other members of the jury - include the Adviser in this list
 \jury[v]{[Nome do primeiro vogal]}
 \jury[v]{[Nome do segundo vogal]}
 \jury[v]{[Nome do terceiro vogal]}
@@ -170,6 +191,7 @@ twoside,11pt,utf8,a4paper,
 %% All the names inside braces below sould correspond to a file
 %%     with extension ".tex" and located in the "Chapters" folder
 %%------------------------------------------------------------
+
 % Dedicatory text. Will only be considered for final documents,
 % i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
 \dedicatoryfile{dedicatory} 
@@ -178,26 +200,17 @@ twoside,11pt,utf8,a4paper,
 % i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
 \acknowledgementsfile{acknowledgements}
 
-% Quote
-% \quotefile{quote}
 
-% Resume/summary text in Portuguese
-\ptabstractfile{resumo}
-
-% Resume/summary text in English
-\enabstractfile{abstract}
-
-% The Table of Contents is always printed. The other lists may be omited.
+% \quotefile{quote}		% Quote
+\ptabstractfile{resumo}		% Abstract in Portuguese
+\enabstractfile{abstract}	% Abstract in English
 
 
-% The List of Figures. Comment to omit.
-\printlistoffigures 
-
-% The List of Tables. Comment to omit.
-\printlistoftables 
-
-% The List of Code Listings. Comment to omit.
-\printlistoflistings 
+% The Table of Contents is always printed. 
+% The other lists may be commented and omitted.
+\printlistoffigures	% The List of Figures. Comment to omit.
+\printlistoftables 	% The List of Tables. Comment to omit.
+\printlistoflistings	% The List of Code Listings. Comment to omit.
 
 
 % Text chapters
@@ -212,62 +225,55 @@ twoside,11pt,utf8,a4paper,
 % Comment if not needed
 \appendixfile{appendix1}
 
+
 % BibTeX bibiography files. Can be used multiple times with a single file nae each time.
-\addbibfile{bibliography}
+\addbibfile{bibliography.bib}
 
 %%============================================================
 %%
 %%  END OF USER COSTUMIZAITON
+%% Please do not change below this point!!! :)
 %%
 %%============================================================
-%%============================================================
-%% Please do not change below this point!!! :)
-%%============================================================
+
+
+
+
+
+
+
+
+
+
 %% Begining of document
 \begin{document}
 
-%%------------------------------------------------------------
-%% Before main text
-\frontmatter
 
-% The first front page
-\frontpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thesisfrontmatter	% Before the main text (TOC, etc)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Print the copyright page for final versions	
-\printcopyright
+\frontpage		% The cover page
+\printcopyright		% Print the copyright page (will only be printed if adequate for the document type)
+\printdedicatory	% Print the dedicatory (will only be printed if adequate for the document type)
+\printacknowledgements	% Print the acknowledgments (will only be printed if adequate for the document type)
+\printquote		% Print the quote (if file exists and is adequate for the document type)
+\printabstract		% Print abstracts (in PT and EN). The abstract in the document main language will 
+			% be printed first, the abstract in the foreign language will be printed second
+\tableofcontents 	% Always print the table of contents
+\printotherlists 	% Print other lists of contents according to instructions given above
 
-% Dedicatory will only be printed if adequate for the document type
-\printdedicatory
 
-% Acknowledgments will only be printed if adequate for the document type
-\printacknowledgements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thesismainmatter	% The main text
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Print the quote if file exists
-\printquote
+\printchapthers		% Print document chapters
+\printbib		% Print the bibliography
+\printappendixes	% Print appendixes, if any!
 
-% Abstracts/resumes/summaries in two languages. The first abstract will
-% use the document main language and second the foreign language
-\printabstract
 
-%%------------------------------------------------------------
-% Tables/lists of contents
-\tableofcontents 
-
-% Always print the table of contents
-\printotherlists 
-
-% Print other lists of contents according to instructions given above
-%%------------------------------------------------------------
-% Print document chapters
-\printchapthers
-
-%%------------------------------------------------------------
-% Print the bibliography
-\printbib
-
-%%------------------------------------------------------------
-% Print appendixes, if any!
-\printappendixes 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% End of document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document} 

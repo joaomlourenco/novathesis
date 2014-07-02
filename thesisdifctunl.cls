@@ -19,168 +19,172 @@
 \ProvidesClass{thesisdifctunl}[2011/11/10]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% OPTIONS 
+%% PROCESS KEY-VAL OPTIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% == Languages ===
-\DeclareOption{pt}{%
-  \let\@language=0%
-  \PassOptionsToPackage{portuguese,english}{babel}}
-
-\DeclareOption{en}{%
-  \let\@language=1%
-  \PassOptionsToPackage{portuguese,english}{babel}}
-
-% == Printing ===
-\DeclareOption{oneside}{%
-  \PassOptionsToClass{oneside}{book}}
-
-\DeclareOption{twoside}{%
-  \PassOptionsToClass{twoside}{book}}
-
-% == Paper type/format (dfault A4) ===
-\PassOptionsToClass{a4paper}{book} % Default paper format
-
-\DeclareOption{a4}{%
-	\PassOptionsToClass{a4paper}{book}}
-
-\DeclareOption{a4paper}{%
-	\PassOptionsToClass{a4paper}{book}}
-
-\DeclareOption{letter}{%
-	\PassOptionsToClass{letterpaper}{book}}
-
-\DeclareOption{letterpaper}{%
-	\PassOptionsToClass{letterpaper}{book}}
+\RequirePackage{kvoptions-patch}%%%NEW
+\RequirePackage{xkeyval}%
+\RequirePackage{xifthen}
 
 
-% == Font Size ===
-\PassOptionsToClass{11pt}{book} % Default point size
-
-\DeclareOption{11pt}{%
-	\PassOptionsToClass{11pt}{book}}
-
-\DeclareOption{12pt}{%
-	\PassOptionsToClass{12pt}{book}}
 
 
-% == Text Encoding ===
-\let\@utf=1
-\DeclareOption{latin1}{\let\@utf=0}
-\DeclareOption{utf8}{\let\@utf=1}
+% --------------------------------------------------------
+% DOCUMENT TYPE		UNL@doctype=?
+%
+% BSc report			0
+% MSc preliminary report	1
+% MSc dissertation		2
+% PhD proposal			3
+% PhD preliminary report	4
+% PhD thesis			5
 
-
-% == Type of Document ===
-% \@degreetype=0	BSc report
-% \@degreetype=1	MSc preliminary report
-% \@degreetype=2	MSc dissertation
-% \@degreetype=3	PhD proposal
-% \@degreetype=4	PhD preliminary report
-% \@degreetype=5	PhD thesis
-\let\@degreetype=9
-\DeclareOption{bsc}{
-	\let\@degreetype=0
-	\def\@degree{\@bachelordegree}
-	\def\@dissertationtype{\@bscdissertationtstr}
-}
-\DeclareOption{prepmsc}{
-	\let\@degreetype=1
-	\def\@degree{\@mastersdegree}
-	\def\@dissertationtype{\@prepmscdissertationtstr}
-}
-\DeclareOption{msc}{
-	\let\@degreetype=2
-	\def\@degree{\@mastersdegree}
-	\def\@dissertationtype{\@mscdissertationtstr}
-}
-\DeclareOption{propphd}{
-	\let\@degreetype=3
-	\def\@degree{\@pdhdegree}
-	\def\@dissertationtype{\@propphhdissertationtstr}
-}
-\DeclareOption{prepphd}{
-	\let\@degreetype=4
-	\def\@degree{\@pdhdegree}
-	\def\@dissertationtype{\@prepphhdissertationtstr}
-}
-\DeclareOption{phd}{
-	\let\@degreetype=5
-	\def\@degree{\@pdhdegree}
-	\def\@dissertationtype{\@phhdissertationtstr}
+\DeclareOptionX{doctype}{
+	\typeout{'doctype'=#1}
+	\ifthenelse{\equal{#1}{bsc}}{\def\UNL@doctype{0}}
+	{\ifthenelse{\equal{#1}{prepmsc}}{\def\UNL@doctype{1}}
+	{\ifthenelse{\equal{#1}{msc}}{\def\UNL@doctype{2}}{
+	{\ifthenelse{\equal{#1}{propphd}}{\def\UNL@doctype{3}}{
+	}{\ifthenelse{\equal{#1}{prepphd}}{\def\UNL@doctype{4}}{
+	}{\ifthenelse{\equal{#1}{phd}}{\def\UNL@doctype{5}}{
+	\PackageError{thesisdifctunl}{Wrong value for option 'doctype': #1}{Please see the documentation}
+	\expandafter\endinput
+	}}}}}}}
 }
 
-% == bibbychapter ===
+
+% --------------------------------------------------------
+% MAIN LANGUAGE		UNL@lang=?
+%
+% Portuguese			0
+% English			1
+
+\DeclareOptionX{lang}{
+	\typeout{'lang'=#1}
+	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}{\def\UNL@lang{0}}
+	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}{\def\UNL@lang{1}}{
+	\PackageError{thesisdifctunl}{Wrong value for option 'lang'}{Please see the documentation}
+	\expandafter\endinput
+	}}
+}
+
+
+% --------------------------------------------------------
+% ENCODING		Anything valid for package "inputenc"
+%
+% utf8
+% latin1
+% ...
+
+\DeclareOptionX{enc}{
+	\typeout{'enc'=#1}
+	\PassOptionsToPackage{#1}{inputenc}
+}
+
+
+% --------------------------------------------------------
+% BIBLATEX OPTIONS		Are passed to the biblatex package
+%
+% style= numeric | alphabetic | 
+% ...
+%
+% \DeclareOptionX{style}{
+% 	\typeout{'biblatex style'=#1}
+% 	\PassOptionsToPackage{style=#1}{biblatex}
+% }
+% \DeclareOptionX{sorting}{
+% 	\typeout{'biblatex sorting'=#1}
+% 	\PassOptionsToPackage{sorting=#1}{biblatex}
+% }
+\DeclareOptionX{biblatex}{
+ 	\typeout{'biblatex'=#1}
+	\PassOptionsToPackage{#1}{biblatex}
+}
+
+
+% --------------------------------------------------------
+% BOOK OPTIONS		Are passed to the main class (book)
+%
+% twoside
+% a4paer
+% ...
+
+\DeclareOptionX{book}{
+	\typeout{'book'=#1}
+	\PassOptionsToClass{#1}{book}
+}
+
+
+% --------------------------------------------------------
+% DEFAULT OPTIONS
+\PassOptionsToPackage{portuguese,english}{babel}
+
+\ExecuteOptionsX{
+	doctype=msc,
+	lang=en,
+	enc=utf8,
+}
+
+
+
+% --------------------------------------------------------
+% BIBBYCHAPTER		Ignored for now
 \let\@bibbychapter=0
-\DeclareOption{bibbychapter}{
-	\let\@bibbychapter=1	
-}
+% \DeclareOption{bibbychapter}{
+% 	\let\@bibbychapter=1
+% }
 
 
-% == Default Options ===
-\ExecuteOptions{en,msc}
-\ProcessOptions
 
+% --------------------------------------------------------
+% PROCESSING OPTIONS
+\ProcessOptionsX\relax
+
+
+
+% --------------------------------------------------------
+% LOAD MAIN CLASS AND ADDITIONAL PACKAGES
 \LoadClass{book}
+\RequirePackage{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{babel}
+\RequirePackage{csquotes}
+\RequirePackage[toc]{appendix}
+\RequirePackage{titlesec}           % To format the headings
+\RequirePackage{fancyhdr}           % Headings configuration
+\RequirePackage{setspace}\onehalfspacing           % One-and-half spacing
+\RequirePackage[scaled]{helvet}
+\RequirePackage{courier}
+\RequirePackage{palatino}
+\RequirePackage{ifpdf}		% This is now the recommended way for checking for PDFLaTeX:
+\ifpdf
+	\RequirePackage[pdftex]{graphicx}
+	\DeclareGraphicsExtensions{.pdf, .png, .jpg, .tif}
+	\RequirePackage[pdftex,usenames]{color}
+	\definecolor{mydarkblue}{rgb}{0.0,0.08,0.45}
+	\RequirePackage[
+		pdftex,breaklinks,colorlinks,pdfdisplaydoctitle,citecolor=mydarkblue,
+		linkcolor=mydarkblue,urlcolor=mydarkblue
+		]{hyperref}
+\else
+	\RequirePackage{graphicx}
+	\DeclareGraphicsExtensions{.eps, .png, .jpg}
+	\RequirePackage[usenames]{color}
+	\definecolor{mydarkblue}{rgb}{0.0,0.08,0.45}
+	\RequirePackage[
+		breaklinks,colorlinks,pdfdisplaydoctitle,citecolor=mydarkblue,
+		linkcolor=mydarkblue,urlcolor=mydarkblue
+		]{hyperref}
+\fi
+\RequirePackage[top=3cm,bottom=3cm,inner=3.5cm,outer=2.5cm]{geometry}[2010/02/12]
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PACKAGES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Latin1
-\if\@utf0
-\RequirePackage[latin1]{inputenc}
-% UTF8
-\else\if\@utf1
-\RequirePackage[utf8]{inputenc}
-\fi\fi
 
 
 
-\RequirePackage[T1]{fontenc}
-
-% \RequirePackage{amsmath,amsfonts,amssymb,amsthm}
-
-\RequirePackage{csquotes}
-\RequirePackage{babel}
-
-\RequirePackage[toc]{appendix}
-
-% \RequirePackage{tabularx}
-
-\RequirePackage{ifthen}
-
-\RequirePackage{titlesec}           % To format the headings
-\RequirePackage{fancyhdr}           % Headings configuration
-
-% Set inter-line spacing
-\RequirePackage{setspace}           % One-and-half spacing
-\onehalfspacing
-
-%\RequirePackage{mathptmx}
-\RequirePackage[scaled]{helvet}
-\RequirePackage{courier}
-\RequirePackage{palatino}
-
-\usepackage{ifpdf}		% This is now the recommended way for checking for PDFLaTeX:
-\ifpdf
-\RequirePackage[pdftex]{graphicx}
-\DeclareGraphicsExtensions{.pdf, .png, .jpg, .tif}
-\RequirePackage[pdftex,usenames]{color}
-\definecolor{mydarkblue}{rgb}{0.0,0.08,0.45}
-\RequirePackage[pdftex,breaklinks,colorlinks,pdfdisplaydoctitle,citecolor=mydarkblue,linkcolor=mydarkblue,urlcolor=mydarkblue]{hyperref}
-\else
-\RequirePackage{graphicx}
-\DeclareGraphicsExtensions{.eps, .png, .jpg}
-\RequirePackage[usenames]{color}
-\definecolor{mydarkblue}{rgb}{0.0,0.08,0.45}
-\RequirePackage[breaklinks,colorlinks,pdfdisplaydoctitle,citecolor=mydarkblue,linkcolor=mydarkblue,urlcolor=mydarkblue]{hyperref}
-\fi
-
-% \definecolor{myblue}{rgb}{0.39,0.69,1}
-% \definecolor{myyellow}{rgb}{0.95,0.93,0.78}
-
-\RequirePackage[top=3cm,bottom=3cm,inner=3.5cm,outer=2.5cm]{geometry}[2010/02/12]
-% \setlength{\marginparwidth}{2cm}
 
 
 % AAdd an image to the backgroung
@@ -200,16 +204,18 @@ keepaspectratio]{#1}%
 
 \RequirePackage[%
 	backend=bibtex,
-	sorting=nyt,%
-	style=alphabetic,%
+% sorting=nyt,%
+% style=alphabetic,%
 % labelyear=false,%
+	maxalphanames=2,
 	defernumbers=true,%
+	maxcitenames=2,%
 	maxnames=20,%
-	firstinits=true,%
+	firstinits=true,% will render all first and middle names as initials
 	uniquename=init,%
 % dashed=false,%
-% sortcites=true,
-	]{biblatex}
+	sortcites=true,
+]{biblatex}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -260,19 +266,19 @@ keepaspectratio]{#1}%
 
 \gdef\@jurystr{Júri}
 
-\gdef\@bscdissertationtstr{Relatório para obtenção do Grau 
-de\@degree em\\\@majorfield}
+\gdef\UNL@bscdissertationtstr{Relatório para obtenção do Grau 
+de\UNL@degree em\\\@majorfield}
 \gdef\@prepmscdissertationtstr{Relatório intermédio para obtenção do Grau 
-de\@degree em\\\@majorfield}
-\gdef\@mscdissertationtstr{Dissertação para obtenção do Grau 
-de\@degree em\\\@majorfield}
+de\UNL@degree em\\\@majorfield}
+\gdef\UNL@mscdissertationtstr{Dissertação para obtenção do Grau 
+de\UNL@degree em\\\@majorfield}
 \gdef\@propphhdissertationtstr{Proposta de tese para obtenção do Grau 
-de \@degree em\\\@majorfield}
-\gdef\@prepphhdissertationtstr{Relatório intermédio para obtenção do Grau de\@degree em\\\@majorfield}
+de \UNL@degree em\\\@majorfield}
+\gdef\@prepphhdissertationtstr{Relatório intermédio para obtenção do Grau de\UNL@degree em\\\@majorfield}
 \gdef\@phhdissertationtstr{Dissertação para obtenção do Grau 
-de\@degree em\\\@majorfield}
+de\UNL@degree em\\\@majorfield}
 
-\gdef\@presentationtext{\@dissertationtype}
+\gdef\@presentationtext{\UNL@doctype}
 
 \gdef\thecopyrightstr{%
 \noindent
@@ -294,12 +300,12 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 %% Language Dependent
 
 % Portuguese
-\if\@language0
+\if\UNL@lang0
   \gdef\@notdefined{NÃO DEFINIDO}
   \gdef\acknowledgementsname{Agradecimentos}
   \def\lstlistlistingname{Listagens}
 % English
-\else\if\@language1
+\else\if\UNL@lang1
   \gdef\@notdefined{UNDEFINED}
   \gdef\acknowledgementsname{Acknowledgements}
 \fi\fi
@@ -466,7 +472,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 }
 
 \def\@theadviserstr[#1]{%
-	\@ptheadviserstr[#1]{\expandafter\csname @the#1advisercount\endcsname}{\expandafter\csname @the#1advisergender\endcsname}
+	\@ptheadviserstr[#1]{\expandafter\csname @the#1advisercount\endcsname}{\expandafter\csname @the#1advisergender\endcsname}%
 }
 
 \def\@ptheadviserstr[#1]#2#3{%
@@ -484,7 +490,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 			\@theadviserstr[#1]:
 		\fi
 		&
-		\expandafter\csname @#1advisername#2\endcsname,
+		\expandafter\csname @#1advisername#2\endcsname,\\&
 		\expandafter\csname @#1advisercat#2\endcsname,
 		\expandafter\csname @#1adviserschool#2\endcsname
 	\\
@@ -502,35 +508,35 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \def\@title{~title \@notdefined}
 
 \def\@texttype{%
-  \if\@degreetype0
+  \if\UNL@doctype0
     \@bachelordissertationstr
-  \else\if\@degreetype1
+  \else\if\UNL@doctype1
     \@mastersqualifyingstr
-  \else\if\@degreetype2
+  \else\if\UNL@doctype2
   \@mastersdissertationstr
-  \else\if\@degreetype3
+  \else\if\UNL@doctype3
     \@phdproposalstr
-  \else\if\@degreetype4
+  \else\if\UNL@doctype4
    \@phdqualifyingstr
-   \else\if\@degreetype5
+   \else\if\UNL@doctype5
     \@phdthesisstr
   \fi\fi\fi\fi\fi\fi}
 
 \def\thedegree#1#2{%
 	\expandafter\csname @#1#2\endcsname}
 
-\def\@degree{%
-  \if\@degreetype0
+\def\UNL@degree{%
+  \if\UNL@doctype0
     \thedegree{\ader}{bachelordegreestr}
-  \else\if\@degreetype1
+  \else\if\UNL@doctype1
     \thedegree{\authorgender}{mastersdegreestr}
-  \else\if\@degreetype2
+  \else\if\UNL@doctype2
     \thedegree{\authorgender}{mastersdegreestr}
-  \else\if\@degreetype3
+  \else\if\UNL@doctype3
     \thedegree{\authorgender}{phddegreestr}
-  \else\if\@degreetype4
+  \else\if\UNL@doctype4
     \thedegree{\authorgender}{phddegreestr}
-   \else\if\@degreetype5
+   \else\if\UNL@doctype5
     \thedegree{\authorgender}{phddegreestr}
   \fi\fi\fi\fi\fi\fi}
 
@@ -681,14 +687,14 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \def\printdedicatory{}
 \else
 \def\printdedicatory{
-	\if\@degreetype0
+	\if\UNL@doctype0
 		\@input@{Chapters/\@dedicatoryfile}\global\let\@dedicatoryfile\@empty
-	\else\if\@degreetype1
-	\else\if\@degreetype2
+	\else\if\UNL@doctype1
+	\else\if\UNL@doctype2
 		\@input@{Chapters/\@dedicatoryfile}\global\let\@dedicatoryfile\@empty
-	\else\if\@degreetype3
-	\else\if\@degreetype4
-	\else\if\@degreetype5
+	\else\if\UNL@doctype3
+	\else\if\UNL@doctype4
+	\else\if\UNL@doctype5
 		\@input@{Chapters/\@dedicatoryfile}\global\let\@dedicatoryfile\@empty
 	\fi\fi\fi\fi\fi\fi
 }
@@ -703,14 +709,14 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \def\printquote{}
 \else
 \def\printquote{
-	\if\@degreetype0
+	\if\UNL@doctype0
 		\@input@{Chapters/\@quotefile}\global\let\@quotefile\@empty
-	\else\if\@degreetype1
-	\else\if\@degreetype2
+	\else\if\UNL@doctype1
+	\else\if\UNL@doctype2
 		\@input@{Chapters/\@quotefile}\global\let\@quotefile\@empty
-	\else\if\@degreetype3
-	\else\if\@degreetype4
-	\else\if\@degreetype5
+	\else\if\UNL@doctype3
+	\else\if\UNL@doctype4
+	\else\if\UNL@doctype5
 		\@input@{Chapters/\@quotefile}\global\let\@quotefile\@empty
 	\fi\fi\fi\fi\fi\fi
 }
@@ -721,14 +727,14 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \def\@acknowledgementsfile{~acknowledgementsfile \@notdefined}
 
 \def\printacknowledgements{
-	\if\@degreetype0
+	\if\UNL@doctype0
 		\@input@{Chapters/\@acknowledgementsfile}\global\let\@acknowledgementsfile\@empty
-	\else\if\@degreetype1
-	\else\if\@degreetype2
+	\else\if\UNL@doctype1
+	\else\if\UNL@doctype2
 		\@input@{Chapters/\@acknowledgementsfile}\global\let\@acknowledgementsfile\@empty
-	\else\if\@degreetype3
-	\else\if\@degreetype4
-	\else\if\@degreetype5
+	\else\if\UNL@doctype3
+	\else\if\UNL@doctype4
+	\else\if\UNL@doctype5
 		\@input@{Chapters/\@acknowledgementsfile}\global\let\@acknowledgementsfile\@empty
 	\fi\fi\fi\fi\fi\fi
 }
@@ -743,15 +749,15 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \def\@enabstractfile{\@empty}
 % \def\@enabstractfile{~enabstractfile \@notdefined}
 
-\if\@language0   % Sumário-PT + Abstract-EN para tese em Português
+\if\UNL@lang0   % Sumário-PT + Abstract-EN para tese em Português
 \def\@ptabstractfile{~ptabstractfile \@notdefined}
-\else\if\@language1   % Abstract-EN + Sumário-PT for thesis in English
+\else\if\UNL@lang1   % Abstract-EN + Sumário-PT for thesis in English
 \def\@enabstractfile{~enabstractfile \@notdefined}
 \fi\fi
 
 
 \def\printabstract{%
-	\if\@language0   % Sumário-PT + Abstract-EN para tese em Português
+	\if\UNL@lang0   % Sumário-PT + Abstract-EN para tese em Português
 		\selectlanguage{portuguese}
 		\@input@{Chapters/\@ptabstractfile}\global\let\@ptabstractfile\@empty
 		\ifx\@enabstractfile\@empty
@@ -760,7 +766,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 			\@input@{Chapters/\@enabstractfile}\global\let\@enabstractfile\@empty
 			\selectlanguage{portuguese}
 		\fi
-	\else\if\@language1   % Abstract-EN + Sumário-PT for thesis in English
+	\else\if\UNL@lang1   % Abstract-EN + Sumário-PT for thesis in English
 		\selectlanguage{english}
 		\@input@{Chapters/\@enabstractfile}\global\let\@enabstractfile\@empty
 		\ifx\@ptabstractfile\@empty
@@ -772,9 +778,29 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 	\fi\fi
 }
 
+\def\thesisfrontmatter{%
+	\frontmatter
+	\pagestyle{fancy}
+	\pagenumbering{roman} 
+	\fancyhead{}
+	\setlength{\headheight}{15pt}
+	\fancyhead[RO,LE]{}
+	% \fancyhead[RO,LE]{\leftmark\hfill\rightmark}
+	% \def\chaptermark##1{\markboth{\fontfamily{phv}%
+	% 	\selectfont\footnotesize\thechapter.\ \textsc{##1}}{}}
+	% \def\sectionmark##1{\markright{\fontfamily{phv}%
+	%  	\selectfont\footnotesize\thesection.\ ##1}}
+	\if\UNL@lang0   % Tese em Português
+		\selectlanguage{portuguese}
+	\else\if\UNL@lang1   % Thesis in English
+		\selectlanguage{english}
+	\fi\fi
+}
+
 \def\thesismainmatter{%
 	\mainmatter
 	\pagestyle{fancy}
+	\pagenumbering{arabic} 
 	\fancyhead{}
 	\setlength{\headheight}{15pt}
 	\fancyhead[RO,LE]{\leftmark\hfill\rightmark}
@@ -782,9 +808,9 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 		\selectfont\footnotesize\thechapter.\ \textsc{##1}}{}}
 	\def\sectionmark##1{\markright{\fontfamily{phv}%
 	 	\selectfont\footnotesize\thesection.\ ##1}}
-	\if\@language0   % Tese em Português
+	\if\UNL@lang0   % Tese em Português
 		\selectlanguage{portuguese}
-	\else\if\@language1   % Thesis in English
+	\else\if\UNL@lang1   % Thesis in English
 		\selectlanguage{english}
 	\fi\fi
 }
@@ -806,7 +832,6 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 }
 
 \def\printchapthers{%
-	\thesismainmatter
 	\newcount\@myi
 	\@myi 0\relax
 	\loop
@@ -863,7 +888,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \def\printotherlists{%
 	\@printlistoffigures
 	\@printlistoftables
-	\if\@language0   % Estamos a usar o Português
+	\if\UNL@lang0   % Estamos a usar o Português
 		\def\lstlistlistingname{Listagens}
 	\fi
 	\@printlistoflistings
@@ -887,22 +912,22 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \def\frontpage{
 \thispagestyle{empty}
 
-\if\@degreetype0
+\if\UNL@doctype0
 	\def\@defcoverbg{\@thesiscovermsc}
 	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
-\else\if\@degreetype1
+\else\if\UNL@doctype1
 	\def\@defcoverbg{\@thesiscovermsc}
 	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
-\else\if\@degreetype2
+\else\if\UNL@doctype2
 	\def\@defcoverbg{\@thesiscovermsc}
 	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
-\else\if\@degreetype3
+\else\if\UNL@doctype3
 	\def\@defcoverbg{\@thesiscoverphd}
 	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=5.5cm,rmargin=2.5cm}
-\else\if\@degreetype4
+\else\if\UNL@doctype4
 	\def\@defcoverbg{\@thesiscoverphd}
 	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=5.5cm,rmargin=2.5cm}
-\else\if\@degreetype5
+\else\if\UNL@doctype5
 	\def\@defcoverbg{\@thesiscoverphd}
 	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=5.5cm,rmargin=2.5cm}
 \else
@@ -972,15 +997,15 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 \vfill\vfill
 % Referee board
-\if\@degreetype0
+\if\UNL@doctype0
 \printthejury
-\else\if\@degreetype1
-\else\if\@degreetype2
+\else\if\UNL@doctype1
+\else\if\UNL@doctype2
 \printthejury
-\else\if\@degreetype3
+\else\if\UNL@doctype3
 \printthejury
-\else\if\@degreetype4
-\else\if\@degreetype5
+\else\if\UNL@doctype4
+\else\if\UNL@doctype5
 \printthejury
 \fi\fi\fi\fi\fi\fi
 
@@ -1013,14 +1038,14 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 }
 
 \def\printcopyright{
-\if\@degreetype0
+\if\UNL@doctype0
 	\printcopyrightpage
-\else\if\@degreetype1
-\else\if\@degreetype2
+\else\if\UNL@doctype1
+\else\if\UNL@doctype2
 	\printcopyrightpage
-\else\if\@degreetype3
-\else\if\@degreetype4
-\else\if\@degreetype5
+\else\if\UNL@doctype3
+\else\if\UNL@doctype4
+\else\if\UNL@doctype5
 	\printcopyrightpage
 \fi\fi\fi\fi\fi\fi}
 

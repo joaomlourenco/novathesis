@@ -1,4 +1,11 @@
+VERSION 20140701
+— Reimplemented the processing of options at the class level to use the xkeyval package. See the file template.tex for more info on the new format/options
+— Fix: page numbers in front matter are now printed at the bottom center
+— Fix: removed headers in front matter
+— Bug: Disabled the "bibbychapter" option
+
 VERSION 20120920
 - Added support for partial (per chapter) bibliographies
 - Use of biblatex (instead of bibtex)
 - Fixed bug in headers of the appendixes
+
