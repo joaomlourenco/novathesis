@@ -3,6 +3,8 @@ unlthesis
 
 A LaTeX template for MSc and PhD thesis from Universidade Nova de Lisboa.
 
+Se [below](https://github.com/joaomlourenco/unlthesis#about) for the most recent news.
+
 
 About
 -----
