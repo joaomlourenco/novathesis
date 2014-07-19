@@ -31,6 +31,11 @@ For more information please visit the discussion forum at https://groups.google.
 
 News
 ----
+201-07-01 — A new version of the template is out.  
+— THe name of the clas in now "unlthesis" and is based in the book memoir class.  
+— Part of the class was rewritten to add support for other referencing types (e.g., numbers unsorted, numbers sorted, alpha, apa-like, etc)
+
+2014-07-01 — The repository moved out form GoogleCode to GitHub.
 
 2014-02-18 — A discussion forum for users of this template is available at https://groups.google.com/forum/#!forum/thesisdifctunl. Please register… ask for help/support there and give help/support to your peers.
 
