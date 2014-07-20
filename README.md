@@ -29,7 +29,7 @@ All contributors, both sporadic and regular, are welcome. :) Please contact "joa
 Help
 ----
 
-For more information please visit the discussion forum at https://groups.google.com/forum/#!forum/thesisdifctunl. Please register… ask for help/support there and give help/support to your peers.
+For more information please visit the [discussion forum](https://groups.google.com/forum/#!forum/thesisdifctunl) at https://groups.google.com/forum/#!forum/thesisdifctunl. Please register… ask for help/support there and give help/support to your peers.
 
 
 News
@@ -40,7 +40,7 @@ News
 
 2014-07-01 — The repository moved out form GoogleCode to GitHub.
 
-2014-02-18 — A discussion forum for users of this template is available at https://groups.google.com/forum/#!forum/thesisdifctunl. Please register… ask for help/support there and give help/support to your peers.
+2014-02-18 — A [discussion forum](https://groups.google.com/forum/#!forum/thesisdifctunl) for users of this template is available at https://groups.google.com/forum/#!forum/thesisdifctunl. Please register… ask for help/support there and give help/support to your peers.
 
 2011-02-27 — The LaTeX template is now fully compliant to the FCT and UNL formatting regulations.
 
