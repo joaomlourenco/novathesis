@@ -3,17 +3,17 @@ unlthesis
 
 A LaTeX template for MSc and PhD thesis from Universidade Nova de Lisboa.
 
-Se [below](https://github.com/joaomlourenco/unlthesis#about) for the most recent news.
+[See below](https://github.com/joaomlourenco/unlthesis#about) for the most recent [news](https://github.com/joaomlourenco/unlthesis#about).
 
 
 About
 -----
 
-This template was developed targeting the students from the MSc and PhD programs at DI-FCT-UNL (1).
+This template was intially developed as working basis for the students from the MSc and PhD programs at [DI-FCT-UNL](http://www.di.fct.unl.pt) (1) writing their thesis in LaTex (then I added a Word template as well).
 
-The LaTeX template is highly configurable and fits the requirements of other students at FCT-UNL with no changes at all. It should be easy to tweak the configuration parameters and make it fit for other institutions as well.
+The LaTeX template is highly configurable and foolows the thesis formatting rules for FCT-UNL, and can easily beused by students from other degrees with minor costumization. With a litle more of tweeking it is also possible to adapt the LaTeX template to other institutions as well.
 
-There is a folter with the Word template that is... well... is a Word document... with all associated the good and bad things. ;)
+There is a folder with the Word template that is... well... is a Word document... with all associated the good and bad things. ;)
 
 -- (1) Departamento de Informática (CS Department) of Faculdade de Ciências e Tecnologia of Universidade Nova de Lisboa (http://www.di.fct.unl.pt).
 
