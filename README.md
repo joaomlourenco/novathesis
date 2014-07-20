@@ -3,7 +3,7 @@ unlthesis
 
 A LaTeX template for MSc and PhD thesis from Universidade Nova de Lisboa.
 
-[See below](#about) for the most recent [news](#about).
+[See below](#news) for the most recent [news](#news).
 
 
 About
