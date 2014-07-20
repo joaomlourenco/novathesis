@@ -5,6 +5,8 @@ A LaTeX template for MSc and PhD thesis from Universidade Nova de Lisboa.
 
 [See below](#news) for the most recent [news](#news).
 
+For problems and/or suggestions, please [open an issue](./issues). Thanks.
+
 
 About
 -----
