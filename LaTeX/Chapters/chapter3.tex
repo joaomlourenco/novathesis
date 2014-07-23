@@ -184,23 +184,23 @@ Só deve usar \emph{screenshots} se não tive mesmo nenhuma alternativa.  Em vez
 	\label{fig:Figuras_Tree_silhouettes-vectorial}
 \end{figure}
 
-Pode usar o pacote \emph{subfigure} para agragar várias figuras numa única. Poderá assim referenciar o conjunto~\ref{fig:figura-completa}, a priemira delas~\ref{fig:novelo} ou a segunda~\ref{fig:nuvem}.
+Para agregar várias figuras numa única… Poderá assim referenciar o conjunto~\ref{fig:figura-completa}, a priemira delas~\ref{fig:novelo} ou a segunda~\ref{fig:nuvem}.
 
 
-\begin{figure}[htbp]
-	\centering
-    \subfigure[Novelo de lã] {
-		\label{fig:novelo}
-		\includegraphics[height=1in]{knitting-vectorial}
-    }
-\qquad\qquad
-    \subfigure[Tempestade com neve] {
-		\label{fig:nuvem}
-		\includegraphics[height=1in]{snowstorm-vectorial}
-    }
-  \caption{Exemplo de utilização de \emph{subfigure}}
-  \label{fig:figura-completa}
-\end{figure}
+% \begin{figure}[htbp]
+% 	\centering
+%     \subbottom[Novelo de lã] {
+% 		\label{fig:novelo}
+% 		\includegraphics[height=1in]{knitting-vectorial}
+%     }
+% \qquad\qquad
+%     \subbottom[Tempestade com neve] {
+% 		\label{fig:nuvem}
+% 		\includegraphics[height=1in]{snowstorm-vectorial}
+%     }
+%   \caption{Exemplo de utilização de \emph{subbottom}}
+%   \label{fig:figura-completa}
+% \end{figure}
 
 
 Para incluir listagens de código no seu documento, deverá incluir o pacote \emph{listings} e depois usar o ambiente \emph{lstlisting}, como exemplificado na Listagem~\ref{lst:HelloWorld}.

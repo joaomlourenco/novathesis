@@ -6,14 +6,14 @@
 %%% Version of July 2014
 %%%
 %%% BUGS and SUGGETSIONS: please send email to "joao.lourenco@fct.unl.pt"
-%%%     or submit a ticket in the the project web page at
-%%%     http://code.google.com/p/thesisdifctunl/
 %%%
 %%% CONTRIBUTERS are welcome. Please contact "joao.lourenco@fct.unl.pt"
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2014/07/01]
+\ProvidesClass{unlthesis}[2014/07/01 UNL Thesis Template]
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PROCESS KEY-VAL OPTIONS
@@ -21,7 +21,6 @@
 \RequirePackage{kvoptions-patch}
 \RequirePackage{xkeyval}
 \RequirePackage{xifthen}
-
 
 
 
@@ -37,12 +36,12 @@
 
 \DeclareOptionX{doctype}{
 	\typeout{'doctype'=#1}
-	\ifthenelse{\equal{#1}{bsc}}{\def\UNL@doctype{0}}
-	{\ifthenelse{\equal{#1}{prepmsc}}{\def\UNL@doctype{1}}
-	{\ifthenelse{\equal{#1}{msc}}{\def\UNL@doctype{2}}{
-	{\ifthenelse{\equal{#1}{propphd}}{\def\UNL@doctype{3}}{
-	}{\ifthenelse{\equal{#1}{prepphd}}{\def\UNL@doctype{4}}{
-	}{\ifthenelse{\equal{#1}{phd}}{\def\UNL@doctype{5}}{
+	\ifthenelse{\equal{#1}{bsc}}{\gdef\UNL@doctype{0}}
+	{\ifthenelse{\equal{#1}{prepmsc}}{\gdef\UNL@doctype{1}}
+	{\ifthenelse{\equal{#1}{msc}}{\gdef\UNL@doctype{2}}{
+	{\ifthenelse{\equal{#1}{propphd}}{\gdef\UNL@doctype{3}}{
+	}{\ifthenelse{\equal{#1}{prepphd}}{\gdef\UNL@doctype{4}}{
+	}{\ifthenelse{\equal{#1}{phd}}{\gdef\UNL@doctype{5}}{
 	\PackageError{thesisdifctunl}{Wrong value for option 'doctype': #1}{Please see the documentation}
 	\expandafter\endinput
 	}}}}}}}
@@ -50,8 +49,9 @@
 
 
 % --------------------------------------------------------
-% MAIN LANGUAGE		UNL@lang=?
+% MAIN LANGUAGE		Only PT and EN are accepted for now
 %
+%			    UNL@lang=?
 % Portuguese			0
 % English			1
 
@@ -62,6 +62,19 @@
 	\PackageError{thesisdifctunl}{Wrong value for option 'lang'}{Please see the documentation}
 	\expandafter\endinput
 	}}
+}
+
+
+% --------------------------------------------------------
+% linkscolor	COLOR
+%
+% black
+% blue
+% ...
+
+\DeclareOptionX{linkscolor}{
+	\typeout{'linkscolor'=#1}
+	\PassOptionsToPackage{allcolors=#1}{hyperref}
 }
 
 
@@ -105,9 +118,9 @@
 % a4paer
 % ...
 
-\DeclareOptionX{book}{
-	\typeout{'book'=#1}
-	\PassOptionsToClass{#1}{book}
+\DeclareOptionX{memoir}{
+	\typeout{'memoir'=#1}
+	\PassOptionsToClass{#1}{memoir}
 }
 
 
@@ -116,15 +129,30 @@
 \PassOptionsToPackage{portuguese,english}{babel}
 
 \ExecuteOptionsX{
-	doctype=msc,
+	doctype=phd,
 	lang=en,
 	enc=utf8,
+	biblatex={
+		% sorting=nyt,%
+		% style=alphabetic,%
+		% labelyear=false,%
+		maxalphanames=2,
+		defernumbers=true,%
+		maxbibnames=20,%
+		maxcitenames=2,%
+		mincitenames=1,%
+		firstinits=true,% will render all first and middle names as initials
+		uniquename=init,%
+		% dashed=false,%
+		sortcites=true,
+	},
+	memoir={a4paper, 11pt}
 }
 
 
 
 % --------------------------------------------------------
-% BIBBYCHAPTER		Ignored for now
+% BIBBYCHAPTER		Bibliography per chaper… Ignored for now!
 \let\@bibbychapter=0
 % \DeclareOption{bibbychapter}{
 % 	\let\@bibbychapter=1
@@ -140,40 +168,10 @@
 
 % --------------------------------------------------------
 % LOAD MAIN CLASS AND ADDITIONAL PACKAGES
-\LoadClass{book}
-\RequirePackage{inputenc}
-\RequirePackage[T1]{fontenc}
-\RequirePackage{babel}
-\RequirePackage{csquotes}
-\RequirePackage[toc]{appendix}
-\RequirePackage{titlesec}           % To format the headings
-\RequirePackage{fancyhdr}           % Headings configuration
-\RequirePackage{setspace}\onehalfspacing           % One-and-half spacing
-\RequirePackage[scaled]{helvet}
-\RequirePackage{courier}
-\RequirePackage{palatino}
-\RequirePackage{ifpdf}		% This is now the recommended way for checking for PDFLaTeX:
-\ifpdf
-	\RequirePackage[pdftex]{graphicx}
-	\DeclareGraphicsExtensions{.pdf, .png, .jpg, .tif}
-	\RequirePackage[pdftex,usenames]{color}
-	\definecolor{mydarkblue}{rgb}{0.0,0.08,0.45}
-	\RequirePackage[
-		pdftex,breaklinks,colorlinks,pdfdisplaydoctitle,citecolor=mydarkblue,
-		linkcolor=mydarkblue,urlcolor=mydarkblue
-		]{hyperref}
-\else
-	\RequirePackage{graphicx}
-	\DeclareGraphicsExtensions{.eps, .png, .jpg}
-	\RequirePackage[usenames]{color}
-	\definecolor{mydarkblue}{rgb}{0.0,0.08,0.45}
-	\RequirePackage[
-		breaklinks,colorlinks,pdfdisplaydoctitle,citecolor=mydarkblue,
-		linkcolor=mydarkblue,urlcolor=mydarkblue
-		]{hyperref}
-\fi
-\RequirePackage[top=3cm,bottom=3cm,inner=3.5cm,outer=2.5cm]{geometry}[2010/02/12]
+\LoadClass{memoir}
 
+
+\OnehalfSpacing           % One-and-half spacing
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -181,6 +179,72 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+%%%%% Configure input file format
+\RequirePackage{inputenc}		% Format for the input file(s), see the "enc" option
+
+%%%%% Configure fonts
+\RequirePackage[T1]{fontenc}		% Use new T1 fonts
+\RequirePackage{mathpazo}		% Font with fixes dor math support: Palatino
+\RequirePackage[scaled=.95]{helvet}
+\RequirePackage{courier}
+
+
+%%%%% Configure multilingual language support
+\RequirePackage{babel}			% Support for bilingual documents
+
+
+
+% \RequirePackage[toc]{appendix}		% Put appendix in Table of Contents
+
+% \RequirePackage{titlesec}		% To format the headings
+% \RequirePackage{fancyhdr}		% Headings configuration
+
+% \RequirePackage{setspace}
+
+
+
+
+% \usepackage[colorlinks=true, allcolors=black]{hyperref}	% Creates hyperlinks in cross references
+% \usepackage{memhfixc}					% Must be used on memoir document class after hyperref
+
+
+%%%%% Configure Graphics
+\RequirePackage[pdftex]{graphicx}
+\DeclareGraphicsExtensions{.pdf, .png, .jpg, .tif}
+
+%%%%% Configure HyperRefs
+\RequirePackage[pdftex,usenames]{color}
+\RequirePackage[pdftex]{xcolor}
+\definecolor{darkblue}{rgb}{0.0,0.08,0.45}
+\RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}
+\usepackage{memhfixc}		% Must be used on memoir document class after hyperref
+
+
+%%%%% Configure page geometry
+\RequirePackage[top=3cm,bottom=3cm,inner=3.5cm,outer=2.5cm]{geometry}[2010/02/12]
+
+
+%%%%% Condditional processing for PDF file
+\RequirePackage{ifpdf}		% This is now the recommended way for checking for PDFLaTeX:
+\ifpdf
+% \pdfinfo{
+%    /Author (Author's name)
+%    /Title (PhD Thesis)
+%    /Keywords (One; Two;Three)
+%    /CreationDate (D:\pdfdate)
+% }
+\else
+\fi
+
+
+%%%%% If draft option is on
+% \ifdraftdoc
+% 	\RequirePackage[firstpage]{draftwatermark}				%Sets watermarks up.
+% 	\SetWatermarkScale{0.2}
+% 	\SetWatermarkLightness{0.75}
+% 	\SetWatermarkText{\textbf{Draft: \today}}
+% 	% \SetWatermarkAngle{0.0}
+% \fi
 
 
 
@@ -199,20 +263,7 @@ keepaspectratio]{#1}%
 
 \RequirePackage{ctable}
 
-\RequirePackage[%
-	backend=bibtex,
-% sorting=nyt,%
-% style=alphabetic,%
-% labelyear=false,%
-	maxalphanames=2,
-	defernumbers=true,%
-	maxcitenames=2,%
-	maxnames=20,%
-	firstinits=true,% will render all first and middle names as initials
-	uniquename=init,%
-% dashed=false,%
-	sortcites=true,
-]{biblatex}
+\RequirePackage[backend=bibtex]{biblatex}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -286,6 +337,7 @@ keepaspectratio]{#1}%
 \fi\fi\fi\fi\fi\fi
 
 \gdef\thecopyrightstr{%
+\thispagestyle{empty}
 \noindent
 Copyright \copyright\ \@author, \@faculty, \@university
 
@@ -679,7 +731,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 %% Fonts
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\quotefont{\normalfont\normalsize}
-\newcommand\quotefonti{\it\normalsize}
+\newcommand\quotefonti{\itshape\normalsize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Including chapters and similars
@@ -702,6 +754,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 	\else\if\UNL@doctype5
 		\@input@{Chapters/\@dedicatoryfile}\global\let\@dedicatoryfile\@empty
 	\fi\fi\fi\fi\fi\fi
+	\clearemptydoublepage
 }
 \fi
 
@@ -724,6 +777,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 	\else\if\UNL@doctype5
 		\@input@{Chapters/\@quotefile}\global\let\@quotefile\@empty
 	\fi\fi\fi\fi\fi\fi
+	\clearemptydoublepage
 }
 \fi
 
@@ -781,15 +835,29 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 			\selectlanguage{english}
 		\fi
 	\fi\fi
+	\clearemptydoublepage
 }
 
 \def\thesisfrontmatter{%
 	\frontmatter
-	\pagestyle{fancy}
+	% \pagestyle{fancy}
 	\pagenumbering{roman} 
-	\fancyhead{}
+	% \fancyhead{}
 	\setlength{\headheight}{15pt}
-	\fancyhead[RO,LE]{}
+	% \fancyhead[RO,LE]{}
+	\if\UNL@lang0   % Tese em Português
+		\selectlanguage{portuguese}
+	\else\if\UNL@lang1   % Thesis in English
+		\selectlanguage{english}
+	\fi\fi
+}
+
+\def\thesismainmatter{%
+	\mainmatter
+	% \pagestyle{fancy}
+	\pagenumbering{arabic} 
+	% \fancyhead{}
+	\setlength{\headheight}{15pt}
 	% \fancyhead[RO,LE]{\leftmark\hfill\rightmark}
 	% \def\chaptermark##1{\markboth{\fontfamily{phv}%
 	% 	\selectfont\footnotesize\thechapter.\ \textsc{##1}}{}}
@@ -802,28 +870,10 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 	\fi\fi
 }
 
-\def\thesismainmatter{%
-	\mainmatter
-	\pagestyle{fancy}
-	\pagenumbering{arabic} 
-	\fancyhead{}
-	\setlength{\headheight}{15pt}
-	\fancyhead[RO,LE]{\leftmark\hfill\rightmark}
-	\def\chaptermark##1{\markboth{\fontfamily{phv}%
-		\selectfont\footnotesize\thechapter.\ \textsc{##1}}{}}
-	\def\sectionmark##1{\markright{\fontfamily{phv}%
-	 	\selectfont\footnotesize\thesection.\ ##1}}
-	\if\UNL@lang0   % Tese em Português
-		\selectlanguage{portuguese}
-	\else\if\UNL@lang1   % Thesis in English
-		\selectlanguage{english}
-	\fi\fi
-}
-
 \def\endthesismainmatter{%
-	\fancyhead{}
-	\lhead{\nouppercase{\textsc{\leftmark}}}
-	\rhead{}
+	% \fancyhead{}
+	% \lhead{\nouppercase{\textsc{\leftmark}}}
+	% \rhead{}
 }
 
 
@@ -879,18 +929,19 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 
 \def\printlistoffigures{%
-  \gdef\@printlistoffigures{\listoffigures}}
+  \gdef\@printlistoffigures{\listoffigures\clearemptydoublepage}}
 \def\@printlistoffigures{}
 
 \def\printlistoftables{%
-  \gdef\@printlistoftables{\listoftables}}
+  \gdef\@printlistoftables{\listoftables\clearemptydoublepage}}
 \def\@printlistoftables{}
 
 \def\printlistoflistings{%
-  \gdef\@printlistoflistings{\lstlistoflistings}}
+  \gdef\@printlistoflistings{\lstlistoflistings\clearemptydoublepage}}
 \def\@printlistoflistings{}
 
 \def\printotherlists{%
+	\clearemptydoublepage
 	\@printlistoffigures
 	\@printlistoftables
 	\if\UNL@lang0   % Estamos a usar o Português
@@ -1019,12 +1070,19 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 % Date
 \fontsize{12}{13}
 \selectfont
-\textbf{\@themonth, \@theyear}
-	
+\ifdraftdoc 
+	% \RequirePackage[firstpage]{draftwatermark}				%Sets watermarks up.
+	% \SetWatermarkScale{0.2}
+	% \SetWatermarkLightness{0.75}
+	% \SetWatermarkText{\textbf{Draft: \today}}
+	% \SetWatermarkAngle{0.0}
+	\textbf{DRAFT: \today}
+\else
+	\textbf{\@themonth, \@theyear}
+\fi	
 \end{center}
 \restoregeometry
-\newpage
-\thispagestyle{empty}
+\clearemptydoublepage
 }
 
 
@@ -1124,7 +1182,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\@keywordsname{\@defaultkeywordsname}
 \def\keywords{%
-  \par\vskip\baselineskip\noindent{\bf\@keywordsname: }}
+  \par\vskip\baselineskip\noindent{\bfseries\@keywordsname: }}
 \def\endkeywords{~\\[2ex]\rule{\textwidth}{0.2mm}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1140,21 +1198,21 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 %% Sectioning
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\setcounter{secnumdepth}{3}
+\maxsecnumdepth{subsubsection}
 
 \definecolor{backGrayColor}{rgb}{0.7,0.7,0.7} % Background title color
 
 
 
-\titleformat{\chapter}[display]
-{\bfseries\Huge}				% format
-{\hfill\colorbox{backGrayColor}{\fontsize{100}{120}\selectfont{\textcolor{white}{\thechapter}}}} % label
-{1ex}							% sep
-{%\titlerule
-  \vspace{2ex}\filleft}			% before
-%\colorbox{backGrayColor}{}
-[\vspace{1cm}					%\titlerule
-]
+% \titleformat{\chapter}[display]
+% {\bfseries\Huge}				% format
+% {\hfill\colorbox{backGrayColor}{\fontsize{100}{120}\selectfont{\textcolor{white}{\thechapter}}}} % label
+% {1ex}							% sep
+% {%\titlerule
+%   \vspace{2ex}\filleft}			% before
+% %\colorbox{backGrayColor}{}
+% [\vspace{1cm}					%\titlerule
+% ]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1177,3 +1235,53 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 % Reference macros
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\RequirePackage{calc,soul}
+% \RequirePackage{fourier}
+\newlength\dlf@normtxtw 
+\setlength\dlf@normtxtw{\textwidth} 
+\newsavebox{\feline@chapter} 
+\newcommand\feline@chapter@marker[1][4cm]{%
+	\sbox\feline@chapter{% 
+		\resizebox{!}{#1}{\fboxsep=1pt%
+			\colorbox{lightgray}{\color{white}\thechapter}% 
+		}}%
+		\rotatebox{90}{% 
+			\resizebox{%
+				\heightof{\usebox{\feline@chapter}}+\depthof{\usebox{\feline@chapter}}}% 
+			{!}{\scshape\so\@chapapp}}\quad%
+		\raisebox{\depthof{\usebox{\feline@chapter}}}{\usebox{\feline@chapter}}%
+} 
+\newcommand\feline@chm[1][4cm]{%
+	\sbox\feline@chapter{\feline@chapter@marker[#1]}% 
+	\makebox[0pt][c]{% aka \rlap
+		\makebox[1cm][r]{\usebox\feline@chapter}%
+	}}
+\makechapterstyle{daleifmodif}{
+	\renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so} 
+	\renewcommand\chaptitlefont{\normalfont\LARGE\bfseries\scshape} 
+	\renewcommand\chapternamenum{} \renewcommand\printchaptername{} 
+	\renewcommand\printchapternum{\null\hfill\feline@chm[2.5cm]\par} 
+	\renewcommand\afterchapternum{\par\vskip\midchapskip} 
+	\renewcommand\printchaptertitle[1]{\color{darkgray}\chaptitlefont\raggedleft ##1\par}
+} 
+\chapterstyle{daleifmodif}
+%
+% UoB guidelines:
+%
+% The pages should be numbered consecutively at the bottom centre of the
+% page.
+\makepagestyle{myvf} 
+\makeoddfoot{myvf}{}{\thepage}{} 
+\makeevenfoot{myvf}{}{\thepage}{} 
+\makeheadrule{myvf}{\textwidth}{\normalrulethickness} 
+\makeevenhead{myvf}{\small\textsc{\leftmark}}{}{} 
+\makeoddhead{myvf}{}{}{\small\textsc{\rightmark}}
+\pagestyle{myvf}
+%
+\frenchspacing
+% Fills blank pages until next odd-numbered page. Used to emulate single-sided
+% frontmatter. This will work for title, abstract and declaration. Though the
+% contents sections will each start on an odd-numbered page they will
+% spill over onto the even-numbered pages if extending beyond one page
+% (hopefully, this is ok).
+\newcommand{\clearemptydoublepage}{\newpage{\thispagestyle{empty}\cleardoublepage}}

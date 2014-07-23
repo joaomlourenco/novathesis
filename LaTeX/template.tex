@@ -44,7 +44,7 @@
 %%			style=numeric,firstinits=true	 --> abbrv
 %%			style=numeric,sorting=none	 --> unsrt
 %%			style=alphabetic		 --> alpha
-%%           book={opt1=va1,opt2=val2,...}	- options for book class
+%%           memoir={opt1=va1,opt2=val2,...}	- options for book class
 %%           		(*)11pt	- Use font size 11
 %%           		12pt	- Use font size 12
 %% - Bibliography -- **** TEMPORARILY DISABLED ****
@@ -58,17 +58,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[
-	doctype=msc,
-	lang=en,
-	enc=utf8,
-	book={a4paper,11pt},
+	doctype=msc,			% The type of document
+	lang=en,			% The main langage of the document
+	enc=utf8,			% You shouldn't mess with this one
+	linkscolor=darkblue,		% Switch to black for PRINTING
 	biblatex={
-		style=alphabetic,	% ALTERNATIVES: numeric, alphabetic, authoryear
+		style=bwl-FU,		% ALTERNATIVES: numeric, alphabetic, authoryear, bwl-FU
 		sorting=nyt,		% ALTERNATIVES: none, nyt, ynt
+		maxcitenames=2,
+		mincitenames=1,
 	},
+	memoir={a4paper,11pt,draft},	% Options for base sclass (memoir)
+					%	ALWAYS remove "draft" for final versions
 ]{unlthesis}
-
-
 
 
 %%============================================================
@@ -76,7 +78,6 @@
 %%  BEGINING OF USER COSTUMIZATION
 %%
 %%============================================================
-
 
 
 %------------------------------------------------------------------
@@ -99,7 +100,7 @@
 \usepackage{listings}
 
 % To aggregate multiple figures in a single one with subfigures
-\usepackage{subfigure}
+% \usepackage{subfigure}
 
 % To register TODO notes in the text
 \usepackage[textsize=footnotesize]{todonotes}

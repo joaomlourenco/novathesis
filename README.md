@@ -36,6 +36,17 @@ For more information please visit the [discussion forum](https://groups.google.c
 
 News
 ----
+
+201-07-01 — New major revison
+— Now the base class is “memoir”, which is much more flexible and configurable than “book”.
+— Added support for the “bwl-FU” bibliography style, i.e., “author (year)”.  If more than two authors, replace with just one and add “et al”.
+— Support for the “linkscolor=color” option
+— Support for sending options to the memoir base class with “memoir={list_of_options}”
+— Added support for the “draft” option in the memoir option list. If present, replaces the “YEAR, MONTH” by “Draft: TODAY’S_DATE”
+— Proper configuration of the “palatino” font
+— Removed many classes whose functionalities are now provided by the memoir base class
+— No more need of subfigure (direct support by memoir).
+
 201-07-01 — A new version of the template is out.  
 — THe name of the clas in now "unlthesis" and is based in the book memoir class.  
 — Part of the class was rewritten to add support for other referencing types (e.g., numbers unsorted, numbers sorted, alpha, apa-like, etc)
