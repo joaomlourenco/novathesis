@@ -153,9 +153,9 @@
 
 % --------------------------------------------------------
 % BIBBYCHAPTER		Bibliography per chaper… Ignored for now!
-\let\@bibbychapter=0
+\let\UNL@bibbychapter=0
 % \DeclareOption{bibbychapter}{
-% 	\let\@bibbychapter=1
+% 	\let\UNL@bibbychapter=1
 % }
 
 
@@ -193,21 +193,6 @@
 \RequirePackage{babel}			% Support for bilingual documents
 
 
-
-% \RequirePackage[toc]{appendix}		% Put appendix in Table of Contents
-
-% \RequirePackage{titlesec}		% To format the headings
-% \RequirePackage{fancyhdr}		% Headings configuration
-
-% \RequirePackage{setspace}
-
-
-
-
-% \usepackage[colorlinks=true, allcolors=black]{hyperref}	% Creates hyperlinks in cross references
-% \usepackage{memhfixc}					% Must be used on memoir document class after hyperref
-
-
 %%%%% Configure Graphics
 \RequirePackage[pdftex]{graphicx}
 \DeclareGraphicsExtensions{.pdf, .png, .jpg, .tif}
@@ -225,44 +210,37 @@
 
 
 %%%%% Condditional processing for PDF file
-\RequirePackage{ifpdf}		% This is now the recommended way for checking for PDFLaTeX:
-\ifpdf
-% \pdfinfo{
-%    /Author (Author's name)
-%    /Title (PhD Thesis)
-%    /Keywords (One; Two;Three)
-%    /CreationDate (D:\pdfdate)
-% }
-\else
-\fi
-
-
-%%%%% If draft option is on
-% \ifdraftdoc
-% 	\RequirePackage[firstpage]{draftwatermark}				%Sets watermarks up.
-% 	\SetWatermarkScale{0.2}
-% 	\SetWatermarkLightness{0.75}
-% 	\SetWatermarkText{\textbf{Draft: \today}}
-% 	% \SetWatermarkAngle{0.0}
+% \RequirePackage{ifpdf}		% This is now the recommended way for checking for PDFLaTeX:
+% \ifpdf
+% % \pdfinfo{
+% %    /Author (Author's name)
+% %    /Title (PhD Thesis)
+% %    /Keywords (One; Two;Three)
+% %    /CreationDate (D:\pdfdate)
+% % }
+% \else
 % \fi
 
 
-
 % AAdd an image to the backgroung
+% 	Used to inser the background image in the cover page
 \RequirePackage{eso-pic}
 \newcommand{\BackgroundPic}[1]{
-\put(0,0){
-\parbox[b][\paperheight]{\paperwidth}{%
-\vfill
-\centering
-\includegraphics[width=\paperwidth,height=\paperheight,
-keepaspectratio]{#1}%
-\vfill
+    \put(0,0){
+	\parbox[b][\paperheight]{\paperwidth}{%
+		\vfill
+		\centering
+		\includegraphics[width=\paperwidth,height=\paperheight,
+		keepaspectratio]{#1}%
+		\vfill
 }}}
 
 
+% Required to draw the cover page
 \RequirePackage{ctable}
 
+
+% To process the bibliography
 \RequirePackage[backend=bibtex]{biblatex}
 
 
@@ -274,9 +252,6 @@ keepaspectratio]{#1}%
 %   \newpage{\pagestyle{empty}\origcleardoublepage}
 % }
 
-%%
-% For use with the pseudocode package
-% \def\@lopcchapterspace{\relax}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LABELS
@@ -284,35 +259,35 @@ keepaspectratio]{#1}%
 
 %% Some relevant strings
 
-\gdef\@singlemadviserstr{Orientador}
-\gdef\@singlefadviserstr{Orientadora}
-\gdef\@manymadviserstr{Orientadores}
-\gdef\@manyfadviserstr{Orientadoras}
-\gdef\@singlemcoadviserstr{Co-orientador}
-\gdef\@singlefcoadviserstr{Co-orientadora}
-\gdef\@manymcoadviserstr{Co-orientadores}
-\gdef\@manyfcoadviserstr{Co-orientadoras}
+\gdef\UNL@singlemadviserstr{Orientador}
+\gdef\UNL@singlefadviserstr{Orientadora}
+\gdef\UNL@manymadviserstr{Orientadores}
+\gdef\UNL@manyfadviserstr{Orientadoras}
+\gdef\UNL@singlemcoadviserstr{Co-orientador}
+\gdef\UNL@singlefcoadviserstr{Co-orientadora}
+\gdef\UNL@manymcoadviserstr{Co-orientadores}
+\gdef\UNL@manyfcoadviserstr{Co-orientadoras}
 
-\gdef\@mbachelordegreestr{Licenciado}
-\gdef\@fbachelordegreestr{Licenciada}
-\gdef\@mmastersdegreestr{Mestre}
-\gdef\@fmastersdegreestr{Mestre}
-\gdef\@mphddegreestr{Doutor}
-\gdef\@fphddegreestr{Doutora}
+\gdef\UNL@mbachelordegreestr{Licenciado}
+\gdef\UNL@fbachelordegreestr{Licenciada}
+\gdef\UNL@mmastersdegreestr{Mestre}
+\gdef\UNL@fmastersdegreestr{Mestre}
+\gdef\UNL@mphddegreestr{Doutor}
+\gdef\UNL@fphddegreestr{Doutora}
 
 % \gdef\doutor{Dr.\ }
 % \gdef\doutora{Drª.\ }
 % \gdef\profdoutor{Prof.\ Dr.\ }
 % \gdef\profdoutora{Profª.\ Drª.\ }
 
-\gdef\@bachelordissertationstr{Projeto de Licenciatura}
-\gdef\@mastersdissertationstr{Dissertação de Mestrado}
-\gdef\@mastersqualifyingstr{Preparação de Dissertação}
-\gdef\@phdqualifyingstr{Preparação de Tese}
-\gdef\@phdproposalstr{Proposta de Tese de Doutoramento}
-\gdef\@phdthesisstr{Tese de Doutoramento}
+\gdef\UNL@bachelordissertationstr{Projeto de Licenciatura}
+\gdef\UNL@mastersdissertationstr{Dissertação de Mestrado}
+\gdef\UNL@mastersqualifyingstr{Preparação de Dissertação}
+\gdef\UNL@phdqualifyingstr{Preparação de Tese}
+\gdef\UNL@phdproposalstr{Proposta de Tese de Doutoramento}
+\gdef\UNL@phdthesisstr{Tese de Doutoramento}
 
-\gdef\@jurystr{Júri}
+\gdef\UNL@jurystr{Júri}
 
 \gdef\UNL@bscdissertationtstr{Relatório para obtenção do Grau de \\\UNL@degree em \@majorfield}
 \gdef\UNL@prepmscdissertationtstr{Relatório intermédio para obtenção do Grau de \\\UNL@degree em \@majorfield}
@@ -325,7 +300,7 @@ keepaspectratio]{#1}%
 \if\UNL@doctype0
     \gdef\@presentationtext{\UNL@bscdissertationtstr}
 \else\if\UNL@doctype1
-    \gdef\@presentationtext{\@UNLprepmscdissertationtstr}
+    \gdef\@presentationtext{\UNL@UNLprepmscdissertationtstr}
 \else\if\UNL@doctype2
     \gdef\@presentationtext{\UNL@mscdissertationtstr}
 \else\if\UNL@doctype3
@@ -347,8 +322,8 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 %% Language dependent
 
-\gdef\@abstrnamePT{Resumo}
-\gdef\@abstrnameEN{Abstract}
+\gdef\UNL@abstrnamePT{Resumo}
+\gdef\UNL@abstrnameEN{Abstract}
 
 \gdef\@keywordsnamePT{Palavras-chave}
 \gdef\@keywordsnameEN{Keywords}
@@ -470,26 +445,26 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 %% \adviser[m|f]{Name}{Category/Position}{School}
 %% where N i a number from 1 to 9
 \def\@theadvisergender{f}	% default for female advisers
-\newcount\@theadvisercount	% number of advisers
-\@theadvisercount 0\relax
-\def\@thecoadvisergender{f}	% default for female co-advisers
-\newcount\@thecoadvisercount	% number of co-advisers
-\@thecoadvisercount 0\relax
+\newcount\UNL@theadvisercount	% number of advisers
+\UNL@theadvisercount 0\relax
+\def\UNL@thecoadvisergender{f}	% default for female co-advisers
+\newcount\UNL@thecoadvisercount	% number of co-advisers
+\UNL@thecoadvisercount 0\relax
 
 % 
 % \newcount\@myi
 % \@myi 0\relax
 % \loop
 % 	\advance\@myi 1\relax
-% 	\expandafter\let\csname @showadviser\number\@myi\endcsname=0
-% 	\expandafter\let\csname @showcoadviser\number\@myi\endcsname=0
+% 	\expandafter\let\csname UNL@showadviser\number\@myi\endcsname=0
+% 	\expandafter\let\csname UNL@showcoadviser\number\@myi\endcsname=0
 % \ifnum \@myi < 10
 % \repeat
 
 % \repeat \for{i} \from{1} \to{9} \do {
-% 	\expandafter\let\csname @showadviser\number\i\endcsname=0
-% 	\expandafter\let\csname @showcoadviser\number\i\endcsname=0
-% 	\expandafter\let\csname @showjury\number\i\endcsname=0
+% 	\expandafter\let\csname UNL@showadviser\number\i\endcsname=0
+% 	\expandafter\let\csname UNL@showcoadviser\number\i\endcsname=0
+% 	\expandafter\let\csname UNL@showjury\number\i\endcsname=0
 % }
 
 
@@ -509,9 +484,9 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 % #4 = {category}
 % #5 = {school/institution}
 \def\@padviser[#1][#2]#3#4#5{%
-  \expandafter\advance\csname @the#1advisercount\endcsname 1\relax
+  \expandafter\advance\csname UNL@the#1advisercount\endcsname 1\relax
   \ifx#2m
-  	\expandafter\def\csname @the#1advisergender\endcsname{m}
+  	\expandafter\def\csname UNL@the#1advisergender\endcsname{m}
   \else\ifx#2f
   \else
   \typeout{^^J%
@@ -523,33 +498,33 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
    \errhelp{Please be gentle and follow the template recommendations.}
    \errmessage{Please specify adviser gender!}
   \fi\fi
-  \expandafter\gdef\csname @#1advisername\expandafter\number\csname @the#1advisercount\endcsname\endcsname{#3}
-  \expandafter\gdef\csname @#1advisercat\expandafter\number\csname @the#1advisercount\endcsname\endcsname{#4}
-  \expandafter\gdef\csname @#1adviserschool\expandafter\number\csname @the#1advisercount\endcsname\endcsname{#5}
+  \expandafter\gdef\csname UNL@#1advisername\expandafter\number\csname UNL@the#1advisercount\endcsname\endcsname{#3}
+  \expandafter\gdef\csname UNL@#1advisercat\expandafter\number\csname UNL@the#1advisercount\endcsname\endcsname{#4}
+  \expandafter\gdef\csname UNL@#1adviserschool\expandafter\number\csname UNL@the#1advisercount\endcsname\endcsname{#5}
 }
 
-\def\@theadviserstr[#1]{%
-	\@ptheadviserstr[#1]{\expandafter\csname @the#1advisercount\endcsname}{\expandafter\csname @the#1advisergender\endcsname}%
+\def\UNL@theadviserstr[#1]{%
+	\UNL@ptheadviserstr[#1]{\expandafter\csname UNL@the#1advisercount\endcsname}{\expandafter\csname UNL@the#1advisergender\endcsname}%
 }
 
-\def\@ptheadviserstr[#1]#2#3{%
+\def\UNL@ptheadviserstr[#1]#2#3{%
 	\ifnum #2 > 1
-  		\expandafter\csname @many#3#1adviserstr\endcsname
+  		\expandafter\csname UNL@many#3#1adviserstr\endcsname
 	\else
-  		\expandafter\csname @single#3#1adviserstr\endcsname
+  		\expandafter\csname UNL@single#3#1adviserstr\endcsname
 	\fi
 }
 
 \def\printadviser[#1]#2{%
-	\ifcsname @#1advisername#2\endcsname
+	\ifcsname UNL@#1advisername#2\endcsname
 		\ifnum #2 = 1
 			& \\[-2ex]
-			\@theadviserstr[#1]:
+			\UNL@theadviserstr[#1]:
 		\fi
 		&
-		\expandafter\csname @#1advisername#2\endcsname,\\&
-		\expandafter\csname @#1advisercat#2\endcsname,
-		\expandafter\csname @#1adviserschool#2\endcsname
+		\expandafter\csname UNL@#1advisername#2\endcsname,\\&
+		\expandafter\csname UNL@#1advisercat#2\endcsname,
+		\expandafter\csname UNL@#1adviserschool#2\endcsname
 	\\
 	\fi
 }
@@ -566,21 +541,21 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 \def\@texttype{%
   \if\UNL@doctype0
-    \@bachelordissertationstr
+    \UNL@bachelordissertationstr
   \else\if\UNL@doctype1
-    \@mastersqualifyingstr
+    \UNL@mastersqualifyingstr
   \else\if\UNL@doctype2
-  \@mastersdissertationstr
+  \UNL@mastersdissertationstr
   \else\if\UNL@doctype3
-    \@phdproposalstr
+    \UNL@phdproposalstr
   \else\if\UNL@doctype4
-   \@phdqualifyingstr
+   \UNL@phdqualifyingstr
    \else\if\UNL@doctype5
-    \@phdthesisstr
+    \UNL@phdthesisstr
   \fi\fi\fi\fi\fi\fi}
 
 \def\thedegree#1#2{%
-	\expandafter\csname @#1#2\endcsname}
+	\expandafter\csname UNL@#1#2\endcsname}
 
 \def\UNL@degree{%
   \if\UNL@doctype0
@@ -600,12 +575,12 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 
 % Juri
-\newcount\@thejurypcount	% number of presidents (must be one)
-\@thejurypcount 0\relax
-\newcount\@thejuryacount	% number of referees
-\@thejuryacount 0\relax
-\newcount\@thejuryvcount	% number of other memebrs of the jury
-\@thejuryvcount 0\relax
+\newcount\UNL@thejurypcount	% number of presidents (must be one)
+\UNL@thejurypcount 0\relax
+\newcount\UNL@thejuryacount	% number of referees
+\UNL@thejuryacount 0\relax
+\newcount\UNL@thejuryvcount	% number of other memebrs of the jury
+\UNL@thejuryvcount 0\relax
 
 \def\jury{%
   \@ifnextchar [%
@@ -616,14 +591,14 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 % #1 = [p] for president, [a] for referee, [v] for others
 % #2 = {name}
 \def\@pjury[#1]#2{%
-	\expandafter\advance\csname @thejury#1count\endcsname 1\relax
-  	\expandafter\gdef\csname @jury#1name\expandafter\number\csname @thejury#1count\endcsname\endcsname{#2}
+	\expandafter\advance\csname UNL@thejury#1count\endcsname 1\relax
+  	\expandafter\gdef\csname UNL@jury#1name\expandafter\number\csname UNL@thejury#1count\endcsname\endcsname{#2}
 }
 
 \def\printthejuryp{%
-	\ifnum \@thejurypcount = 1
+	\ifnum \UNL@thejurypcount = 1
 		& \\[-2ex]
-		Presidente: & \csname @jurypname1\endcsname \\
+		Presidente: & \csname UNL@jurypname1\endcsname \\
 	\else
   		\typeout{^^J%
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
@@ -636,27 +611,27 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 	\fi
 }
 
-\def\@printthejurya[#1]{%
-	\ifcsname @juryaname#1\endcsname
+\def\UNL@printthejurya[#1]{%
+	\ifcsname UNL@juryaname#1\endcsname
 	\ifnum #1 = 1
 		& \\[-2ex]
-		Arguente\ifnum \@thejuryacount > 1 s\fi:
+		Arguente\ifnum \UNL@thejuryacount > 1 s\fi:
 	\fi
-	& \expandafter\csname @juryaname#1\endcsname\relax \\
+	& \expandafter\csname UNL@juryaname#1\endcsname\relax \\
 	\fi
 }
 
 \def\printthejurya{%
-	\ifnum \@thejuryacount > 0
-		\@printthejurya[1]
-		\@printthejurya[2]
-		\@printthejurya[3]
-		\@printthejurya[4]
-		\@printthejurya[5]
-		\@printthejurya[6]
-		\@printthejurya[7]
-		\@printthejurya[8]
-		\@printthejurya[9]
+	\ifnum \UNL@thejuryacount > 0
+		\UNL@printthejurya[1]
+		\UNL@printthejurya[2]
+		\UNL@printthejurya[3]
+		\UNL@printthejurya[4]
+		\UNL@printthejurya[5]
+		\UNL@printthejurya[6]
+		\UNL@printthejurya[7]
+		\UNL@printthejurya[8]
+		\UNL@printthejurya[9]
 	\else
   		\typeout{^^J%
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
@@ -669,27 +644,27 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 	\fi
 }
 
-\def\@printthejuryv[#1]{%
+\def\UNL@printthejuryv[#1]{%
 	\ifcsname @juryvname#1\endcsname
 	\ifnum #1 = 1
 		& \\[-2ex]
 		Voga\ifnum \@thejuryvcount = 1 l\else is\fi:
 	\fi
-	& \expandafter\csname @juryvname#1\endcsname\relax \\
+	& \expandafter\csname UNL@juryvname#1\endcsname\relax \\
 	\fi
 }
 
 \def\printthejuryv{%
-	\ifnum \@thejuryvcount > 0
-		\@printthejuryv[1]
-		\@printthejuryv[2]
-		\@printthejuryv[3]
-		\@printthejuryv[4]
-		\@printthejuryv[5]
-		\@printthejuryv[6]
-		\@printthejuryv[7]
-		\@printthejuryv[8]
-		\@printthejuryv[9]
+	\ifnum \UNL@thejuryvcount > 0
+		\UNL@printthejuryv[1]
+		\UNL@printthejuryv[2]
+		\UNL@printthejuryv[3]
+		\UNL@printthejuryv[4]
+		\UNL@printthejuryv[5]
+		\UNL@printthejuryv[6]
+		\UNL@printthejuryv[7]
+		\UNL@printthejuryv[8]
+		\UNL@printthejuryv[9]
 	\else
   		\typeout{^^J%
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
@@ -713,7 +688,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 		maxwidth=1\linewidth,
 		right,
 	]{rX}{}{
-	& \@jurystr: \\
+	& \UNL@jurystr: \\
  	\printthejuryp
 	\printthejurya
 	\printthejuryv
@@ -799,39 +774,39 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 }
 
 \def\ptabstractfile#1{%
-  \gdef\@ptabstractfile{#1}}
-\def\@ptabstractfile{\@empty}
-% \def\@ptabstractfile{~ptabstractfile \@notdefined}
+  \gdef\UNL@ptabstractfile{#1}}
+\def\UNL@ptabstractfile{\@empty}
+% \def\UNL@ptabstractfile{~ptabstractfile \@notdefined}
 
 \def\enabstractfile#1{%
-  \gdef\@enabstractfile{#1}}
-\def\@enabstractfile{\@empty}
-% \def\@enabstractfile{~enabstractfile \@notdefined}
+  \gdef\UNL@enabstractfile{#1}}
+\def\UNL@enabstractfile{\@empty}
+% \def\UNL@enabstractfile{~enabstractfile \@notdefined}
 
 \if\UNL@lang0   % Sumário-PT + Abstract-EN para tese em Português
-\def\@ptabstractfile{~ptabstractfile \@notdefined}
+\def\UNL@ptabstractfile{~ptabstractfile \@notdefined}
 \else\if\UNL@lang1   % Abstract-EN + Sumário-PT for thesis in English
-\def\@enabstractfile{~enabstractfile \@notdefined}
+\def\UNL@enabstractfile{~enabstractfile \@notdefined}
 \fi\fi
 
 
 \def\printabstract{%
 	\if\UNL@lang0   % Sumário-PT + Abstract-EN para tese em Português
 		\selectlanguage{portuguese}
-		\@input@{Chapters/\@ptabstractfile}\global\let\@ptabstractfile\@empty
-		\ifx\@enabstractfile\@empty
+		\@input@{Chapters/\UNL@ptabstractfile}\global\let\UNL@ptabstractfile\@empty
+		\ifx\UNL@enabstractfile\@empty
 		\else
 			\selectlanguage{english}
-			\@input@{Chapters/\@enabstractfile}\global\let\@enabstractfile\@empty
+			\@input@{Chapters/\UNL@enabstractfile}\global\let\UNL@enabstractfile\@empty
 			\selectlanguage{portuguese}
 		\fi
 	\else\if\UNL@lang1   % Abstract-EN + Sumário-PT for thesis in English
 		\selectlanguage{english}
-		\@input@{Chapters/\@enabstractfile}\global\let\@enabstractfile\@empty
-		\ifx\@ptabstractfile\@empty
+		\@input@{Chapters/\UNL@enabstractfile}\global\let\UNL@enabstractfile\@empty
+		\ifx\UNL@ptabstractfile\@empty
 		\else
 			\selectlanguage{portuguese}
-			\@input@{Chapters/\@ptabstractfile}\global\let\@ptabstractfile\@empty
+			\@input@{Chapters/\UNL@ptabstractfile}\global\let\UNL@ptabstractfile\@empty
 			\selectlanguage{english}
 		\fi
 	\fi\fi
@@ -883,7 +858,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 \def\chapterfile#1{%
 	\advance\@chapcount 1\relax
-	\expandafter\gdef\csname @chapterfile\number\@chapcount\endcsname{Chapters/#1}
+	\expandafter\gdef\csname UNL@chapterfile\number\@chapcount\endcsname{Chapters/#1}
 }
 
 \def\printchapthers{%
@@ -891,12 +866,12 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 	\@myi 0\relax
 	\loop
 		\advance\@myi 1\relax
-		\def\@chapname{\expandafter\csname @chapterfile\number\@myi\endcsname}
-		\if\@bibbychapter1
+		\def\@chapname{\expandafter\csname UNL@chapterfile\number\@myi\endcsname}
+		\if\UNL@bibbychapter1
 			\begin{refsegment}
 		\fi
 		\@input@{\@chapname}
-		\if\@bibbychapter1
+		\if\UNL@bibbychapter1
 			\printbibliography[segment=\arabic{chapter},heading=subbibintoc]
 			\end{refsegment}
 		\fi
@@ -912,7 +887,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 \def\appendixfile#1{%
 	\advance\@appxcount 1\relax
-	\expandafter\gdef\csname @appendixfile\number\@appxcount\endcsname{Chapters/#1}
+	\expandafter\gdef\csname UNL@appendixfile\number\@appxcount\endcsname{Chapters/#1}
 }
 
 \def\printappendixes{%	
@@ -921,7 +896,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 	\@myi 0\relax
 	\loop
 		\advance\@myi 1\relax
-		\def\@appxname{\expandafter\csname @appendixfile\number\@myi\endcsname}
+		\def\@appxname{\expandafter\csname UNL@appendixfile\number\@myi\endcsname}
 		\@input@{\@appxname}
 	\ifnum \@myi < \@appxcount
 	\repeat
@@ -929,25 +904,25 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 
 \def\printlistoffigures{%
-  \gdef\@printlistoffigures{\listoffigures\clearemptydoublepage}}
-\def\@printlistoffigures{}
+  \gdef\UNL@printlistoffigures{\listoffigures\clearemptydoublepage}}
+\def\UNL@printlistoffigures{}
 
 \def\printlistoftables{%
-  \gdef\@printlistoftables{\listoftables\clearemptydoublepage}}
-\def\@printlistoftables{}
+  \gdef\UNL@printlistoftables{\listoftables\clearemptydoublepage}}
+\def\UNL@printlistoftables{}
 
 \def\printlistoflistings{%
-  \gdef\@printlistoflistings{\lstlistoflistings\clearemptydoublepage}}
-\def\@printlistoflistings{}
+  \gdef\UNL@printlistoflistings{\lstlistoflistings\clearemptydoublepage}}
+\def\UNL@printlistoflistings{}
 
 \def\printotherlists{%
 	\clearemptydoublepage
-	\@printlistoffigures
-	\@printlistoftables
+	\UNL@printlistoffigures
+	\UNL@printlistoftables
 	\if\UNL@lang0   % Estamos a usar o Português
 		\def\lstlistlistingname{Listagens}
 	\fi
-	\@printlistoflistings
+	\UNL@printlistoflistings
 }
 
 
@@ -955,7 +930,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
   \addbibresource{#1}}
 
 \def\printbib{%
-	\if\@bibbychapter0
+	\if\UNL@bibbychapter0
 		\printbibliography
 	\fi
 }
@@ -1163,7 +1138,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \def\abstractPT{%
   \selectlanguage{portuguese}
   \gdef\@keywordsname{\@keywordsnamePT}
-  \chapter*{\@abstrnamePT}
+  \chapter*{\UNL@abstrnamePT}
    \rule{\textwidth}{0.2mm} ~\\[-3.5ex]
 }
 
@@ -1173,7 +1148,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \def\abstractEN{%
   \selectlanguage{english}
   \gdef\@keywordsname{\@keywordsnameEN}
-  \chapter*{\@abstrnameEN}
+  \chapter*{\UNL@abstrnameEN}
   \rule{\textwidth}{0.2mm} ~\\[-3.5ex]
 }
   
