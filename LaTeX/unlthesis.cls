@@ -3,7 +3,7 @@
 %%% UNL thesis document class
 %%%
 %%% By João Lourenço (joao.lourenco@di.fct.unl.pt)
-%%% Version of July 2014
+%%% Version of July 25, 2014
 %%%
 %%% BUGS and SUGGETSIONS: please send email to "joao.lourenco@fct.unl.pt"
 %%%
@@ -11,7 +11,7 @@
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2014/07/01 UNL Thesis Template]
+\ProvidesClass{unlthesis}[2014/07/25 UNL Thesis Template]
 
 
 
@@ -182,6 +182,7 @@
 %%%%% Configure input file format
 \RequirePackage{inputenc}		% Format for the input file(s), see the "enc" option
 
+
 %%%%% Configure fonts
 \RequirePackage[T1]{fontenc}		% Use new T1 fonts
 \RequirePackage{mathpazo}		% Font with fixes dor math support: Palatino
@@ -197,6 +198,7 @@
 \RequirePackage[pdftex]{graphicx}
 \DeclareGraphicsExtensions{.pdf, .png, .jpg, .tif}
 
+
 %%%%% Configure HyperRefs
 \RequirePackage[pdftex,usenames]{color}
 \RequirePackage[pdftex]{xcolor}
@@ -207,6 +209,12 @@
 
 %%%%% Configure page geometry
 \RequirePackage[top=3cm,bottom=3cm,inner=3.5cm,outer=2.5cm]{geometry}[2010/02/12]
+
+
+%%%%% Configure gloassaries
+\RequirePackage[nonumberlist]{glossaries}
+\glsdisablehyper
+\makenoidxglossaries
 
 
 %%%%% Condditional processing for PDF file
@@ -300,7 +308,7 @@
 \if\UNL@doctype0
     \gdef\@presentationtext{\UNL@bscdissertationtstr}
 \else\if\UNL@doctype1
-    \gdef\@presentationtext{\UNL@UNLprepmscdissertationtstr}
+    \gdef\@presentationtext{\UNL@prepmscdissertationtstr}
 \else\if\UNL@doctype2
     \gdef\@presentationtext{\UNL@mscdissertationtstr}
 \else\if\UNL@doctype3
@@ -399,6 +407,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 % \@input@{repeat}
 
 \@input@{defaults}
+
 
 %% Date
 
@@ -719,17 +728,22 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \def\printdedicatory{}
 \else
 \def\printdedicatory{
-	\if\UNL@doctype0
-		\@input@{Chapters/\@dedicatoryfile}\global\let\@dedicatoryfile\@empty
-	\else\if\UNL@doctype1
-	\else\if\UNL@doctype2
-		\@input@{Chapters/\@dedicatoryfile}\global\let\@dedicatoryfile\@empty
-	\else\if\UNL@doctype3
-	\else\if\UNL@doctype4
-	\else\if\UNL@doctype5
-		\@input@{Chapters/\@dedicatoryfile}\global\let\@dedicatoryfile\@empty
-	\fi\fi\fi\fi\fi\fi
-	\clearemptydoublepage
+	\ifthenelse{%
+		\equal{\UNL@doctype}{0}	% bsc
+		\OR
+		\equal{\UNL@doctype}{2}	% msc
+		\OR
+		\equal{\UNL@doctype}{5}	% phd
+	}{% THEN
+		\InputIfFileExists{Chapters/\@dedicatoryfile}{%
+			% File glossary.tex exists and is read
+			\global\let\@dedicatoryfile\@empty
+			\clearemptydoublepage
+		}{%
+			% File glossary.tex is not found, ignore
+		}	
+	}{ % ELSE
+	}
 }
 \fi
 
@@ -742,36 +756,53 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \def\printquote{}
 \else
 \def\printquote{
-	\if\UNL@doctype0
-		\@input@{Chapters/\@quotefile}\global\let\@quotefile\@empty
-	\else\if\UNL@doctype1
-	\else\if\UNL@doctype2
-		\@input@{Chapters/\@quotefile}\global\let\@quotefile\@empty
-	\else\if\UNL@doctype3
-	\else\if\UNL@doctype4
-	\else\if\UNL@doctype5
-		\@input@{Chapters/\@quotefile}\global\let\@quotefile\@empty
-	\fi\fi\fi\fi\fi\fi
-	\clearemptydoublepage
+	\ifthenelse{%
+		\equal{\UNL@doctype}{0}	% bsc
+		\OR
+		\equal{\UNL@doctype}{2}	% msc
+		\OR
+		\equal{\UNL@doctype}{5}	% phd
+	}{% THEN
+		\InputIfFileExists{Chapters/\@quotefile}{%
+			% File glossary.tex exists and is read
+			\global\let\@quotefile\@empty
+			\clearemptydoublepage
+		}{%
+			% File glossary.tex is not found, ignore
+		}	
+	}{ % ELSE
+	}
 }
 \fi
 
+
 \def\acknowledgementsfile#1{%
   \gdef\@acknowledgementsfile{#1}}
-\def\@acknowledgementsfile{~acknowledgementsfile \@notdefined}
+\def\@acknowledgementsfile{\@empty}
 
+\ifx\@acknowledgementsfile\@empty
+\def\printacknowledgements{}
+\else
 \def\printacknowledgements{
-	\if\UNL@doctype0
-		\@input@{Chapters/\@acknowledgementsfile}\global\let\@acknowledgementsfile\@empty
-	\else\if\UNL@doctype1
-	\else\if\UNL@doctype2
-		\@input@{Chapters/\@acknowledgementsfile}\global\let\@acknowledgementsfile\@empty
-	\else\if\UNL@doctype3
-	\else\if\UNL@doctype4
-	\else\if\UNL@doctype5
-		\@input@{Chapters/\@acknowledgementsfile}\global\let\@acknowledgementsfile\@empty
-	\fi\fi\fi\fi\fi\fi
+	\ifthenelse{%
+		\equal{\UNL@doctype}{0}	% bsc
+		\OR
+		\equal{\UNL@doctype}{2}	% msc
+		\OR
+		\equal{\UNL@doctype}{5}	% phd
+	}{% THEN
+		\InputIfFileExists{Chapters/\@acknowledgementsfile}{%
+			% File glossary.tex exists and is read
+			\global\let\@acknowledgementsfile\@empty
+			\clearemptydoublepage
+		}{%
+			% File glossary.tex is not found, ignore
+		}	
+	}{ % ELSE
+	}
 }
+\fi
+
 
 \def\ptabstractfile#1{%
   \gdef\UNL@ptabstractfile{#1}}
@@ -903,17 +934,21 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 }
 
 
+\def\UNL@printlistoffigures{}
 \def\printlistoffigures{%
   \gdef\UNL@printlistoffigures{\listoffigures\clearemptydoublepage}}
-\def\UNL@printlistoffigures{}
 
+\def\UNL@printlistoftables{}
 \def\printlistoftables{%
   \gdef\UNL@printlistoftables{\listoftables\clearemptydoublepage}}
-\def\UNL@printlistoftables{}
 
+\def\UNL@printlistoflistings{}
 \def\printlistoflistings{%
   \gdef\UNL@printlistoflistings{\lstlistoflistings\clearemptydoublepage}}
-\def\UNL@printlistoflistings{}
+
+\def\UNL@printglossary{}
+\def\printglossary{%
+  \gdef\UNL@printglossary{\printnoidxglossary[]\clearemptydoublepage}}
 
 \def\printotherlists{%
 	\clearemptydoublepage
@@ -923,6 +958,7 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 		\def\lstlistlistingname{Listagens}
 	\fi
 	\UNL@printlistoflistings
+	\UNL@printglossary
 }
 
 
@@ -1260,3 +1296,17 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 % spill over onto the even-numbered pages if extending beyond one page
 % (hopefully, this is ok).
 \newcommand{\clearemptydoublepage}{\newpage{\thispagestyle{empty}\cleardoublepage}}
+
+
+
+% Add glossary / abbreviations
+\InputIfFileExists{Chapters/acronyms}{%
+  % File glossary.tex exists and is read
+}{%
+  % File glossary.tex is not found, ignore
+}
+\InputIfFileExists{Chapters/glossary}{%
+  % File glossary.tex exists and is read
+}{%
+  % File glossary.tex is not found, ignore
+}
