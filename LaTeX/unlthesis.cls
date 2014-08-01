@@ -207,6 +207,10 @@
 \RequirePackage{babel}			% Support for bilingual documents
 
 
+%%%%% Better support for calculations
+\RequirePackage{calc}
+
+
 %%%%% Configure Graphics
 \RequirePackage[pdftex]{graphicx}
 \DeclareGraphicsExtensions{.pdf, .png, .jpg, .tif}
@@ -1259,48 +1263,45 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 % Reference macros
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\RequirePackage{calc,soul}
-% \RequirePackage{fourier}
-\newlength\dlf@normtxtw 
-\setlength\dlf@normtxtw{\textwidth} 
-\newsavebox{\feline@chapter} 
-\newcommand\feline@chapter@marker[1][4cm]{%
-	\sbox\feline@chapter{% 
+\RequirePackage{soul}
+\newsavebox{\UNL@chapter} 
+\newcommand\UNL@chapter@marker[1][4cm]{%
+	\sbox\UNL@chapter{% 
 		\resizebox{!}{#1}{\fboxsep=1pt%
 			\colorbox{lightgray}{\color{white}\thechapter}% 
 		}}%
 		\rotatebox{90}{% 
 			\resizebox{%
-				\heightof{\usebox{\feline@chapter}}+\depthof{\usebox{\feline@chapter}}}% 
+				\heightof{\usebox{\UNL@chapter}}+\depthof{\usebox{\UNL@chapter}}}% 
 			{!}{\scshape\so\@chapapp}}\quad%
-		\raisebox{\depthof{\usebox{\feline@chapter}}}{\usebox{\feline@chapter}}%
+		\raisebox{\depthof{\usebox{\UNL@chapter}}}{\usebox{\UNL@chapter}}%
 } 
-\newcommand\feline@chm[1][4cm]{%
-	\sbox\feline@chapter{\feline@chapter@marker[#1]}% 
+\newcommand\UNL@chm[1][4cm]{%
+	\sbox\UNL@chapter{\UNL@chapter@marker[#1]}% 
 	\makebox[0pt][c]{% aka \rlap
-		\makebox[1cm][r]{\usebox\feline@chapter}%
+		\makebox[1cm][r]{\usebox\UNL@chapter}%
 	}}
-\makechapterstyle{daleifmodif}{
+\makechapterstyle{UNLchapstyle}{
 	\renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so} 
 	\renewcommand\chaptitlefont{\normalfont\LARGE\bfseries\scshape} 
 	\renewcommand\chapternamenum{} \renewcommand\printchaptername{} 
-	\renewcommand\printchapternum{\null\hfill\feline@chm[2.5cm]\par} 
+	\renewcommand\printchapternum{\null\hfill\UNL@chm[2.5cm]\hspace*{14pt}\par} 
 	\renewcommand\afterchapternum{\par\vskip\midchapskip} 
 	\renewcommand\printchaptertitle[1]{\color{darkgray}\chaptitlefont\raggedleft ##1\par}
 } 
-\chapterstyle{daleifmodif}
+\chapterstyle{UNLchapstyle}
 %
-% UoB guidelines:
+% UNL guidelines:
 %
 % The pages should be numbered consecutively at the bottom centre of the
 % page.
-\makepagestyle{myvf} 
-\makeoddfoot{myvf}{}{\thepage}{} 
-\makeevenfoot{myvf}{}{\thepage}{} 
-\makeheadrule{myvf}{\textwidth}{\normalrulethickness} 
-\makeevenhead{myvf}{\small\textsc{\leftmark}}{}{} 
-\makeoddhead{myvf}{}{}{\small\textsc{\rightmark}}
-\pagestyle{myvf}
+\makepagestyle{UNL@myvf} 
+\makeoddfoot{UNL@myvf}{}{\thepage}{} 
+\makeevenfoot{UNL@myvf}{}{\thepage}{} 
+\makeheadrule{UNL@myvf}{\textwidth}{\normalrulethickness} 
+\makeevenhead{UNL@myvf}{\small\textsc{\leftmark}}{}{} 
+\makeoddhead{UNL@myvf}{}{}{\small\textsc{\rightmark}}
+\pagestyle{UNL@myvf}
 %
 \frenchspacing
 % Fills blank pages until next odd-numbered page. Used to emulate single-sided

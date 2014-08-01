@@ -38,9 +38,11 @@ News
 ----
 
 *2014-08-01 — Support printing the book spine (“lonbada” in Portuguese).*
-+ Added a new option “spine=(true | false)” for printing (not printing) the book spine
-+ This option require “\shortauthor” to be defined for printing the spine
-+ Added a new chapter (chapter 4) with “lore ipsum” for trying out with larger documents
++ Added a new option “spine=(true | false)” for printing (not printing) the book spine.
++ This option require “\shortauthor” to be defined for printing the spine.
++ Added examples of *thin*, *medium* and *thick* book spines.
++ Added a new chapter (chapter 4) with “lore ipsum” for trying out with larger documents.
++ Fix of alighment of the (big) Chapter number with the text at the right margin.
 
 *2014-07-01 — Support for list of acronyms (glossary).*
 + Added support for a list of acronyms (glossary).
