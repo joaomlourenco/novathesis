@@ -2,7 +2,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Template for writing dissertations with ThesisDIFCTUNL
 %%
-%% Version 20140701 (Jul 2014)
+%% Version 20140801 (Aug 2014)
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -64,6 +64,7 @@
 	lang=en,			% The main langage of the document
 	enc=utf8,			% You shouldn't mess with this one
 	linkscolor=darkblue,		% Switch to black for PRINTING
+	spine=false,		% DO NOT print the book spine (set to true for final printing)
 	biblatex={
 		style=bwl-FU,		% ALTERNATIVES: numeric, alphabetic, authoryear, bwl-FU
 		sorting=nyt,		% ALTERNATIVES: none, nyt, ynt
@@ -85,6 +86,10 @@
 %------------------------------------------------------------------
 % Additional packages you may ant to use (comment those not needed)
 %------------------------------------------------------------------
+
+% FOR DEMO ONLY --- TO BE REMOVED by final users
+\usepackage{lipsum}
+
 
 % To enable customizble enumerates
 \usepackage{paralist}
@@ -154,6 +159,7 @@
 % Autor
 % use [f] for female and [m] for male
 \author[f]{[Nome completo do autor]} 
+\shortauthor{[Nome abreviado do autor]}
 \authordegree{[Habilitações académcias]}
 
 % Date
@@ -222,6 +228,7 @@
 \chapterfile{chapter1}
 \chapterfile{chapter2}
 \chapterfile{chapter3}
+\chapterfile{chapter4}
 
 
 % Text appendixes
@@ -275,7 +282,6 @@
 \printchapthers		% Print document chapters
 \printbib		% Print the bibliography
 \printappendixes	% Print appendixes, if any!
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% End of document

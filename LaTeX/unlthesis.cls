@@ -3,7 +3,7 @@
 %%% UNL thesis document class
 %%%
 %%% By João Lourenço (joao.lourenco@di.fct.unl.pt)
-%%% Version of July 25, 2014
+%%% Version of August 1, 2014
 %%%
 %%% BUGS and SUGGETSIONS: please send email to "joao.lourenco@fct.unl.pt"
 %%%
@@ -11,7 +11,7 @@
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2014/07/25 UNL Thesis Template]
+\ProvidesClass{unlthesis}[2014/08/01 UNL Thesis Template]
 
 
 
@@ -92,6 +92,18 @@
 
 
 % --------------------------------------------------------
+% PRINTSPINE		Print (don't print) the book spine
+%
+% true
+% false
+
+\DeclareOptionX{spine}{
+	\typeout{'spine'=#1}
+	\ifthenelse{\equal{#1}{true}}{\AtEndDocument{\printthespine}}{}
+}
+
+
+% --------------------------------------------------------
 % BIBLATEX OPTIONS		Are passed to the biblatex package
 %
 % style= numeric | alphabetic | 
@@ -132,6 +144,7 @@
 	doctype=phd,
 	lang=en,
 	enc=utf8,
+	spine=false,
 	biblatex={
 		% sorting=nyt,%
 		% style=alphabetic,%
@@ -1298,6 +1311,78 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \newcommand{\clearemptydoublepage}{\newpage{\thispagestyle{empty}\cleardoublepage}}
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Generate book spine
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \makepagestyle{UNL@spine@pagestyle}
+% \makeoddfoot{UNL@spine@pagestyle}{}{}{}
+% \makeevenfoot{UNL@spine@pagestyle}{}{}{}
+% \makeevenhead{UNL@spine@pagestyle}{}{}{}
+% \makeoddhead{UNL@spine@pagestyle}{}{}{}
+% \pagestyle{UNL@spine@pagestyle}
+
+\def\shortauthor#1{\gdef\UNL@shortauthor{#1}} % \spine is used to print the author short name (maybe there is a more elegant solution for this
+\def\UNL@shortauthor{~shot~author \@notdefined}
+
+\def\printthespine{%
+\newgeometry{left=0.1cm,right=0.1cm,top=0.1cm,bottom=0.1cm}
+\cleardoublepage
+\pagestyle{empty}
+\thispagestyle{empty}
+
+\newlength\UNL@spinewidth 
+\setlength\UNL@spinewidth{1mm * (\thelastpage + 19) / 20}
+\fontsize{11}{12}\selectfont
+
+\newlength\UNL@heighttwolines
+\setlength\UNL@heighttwolines{\heightof{\parbox{2cm}{m\\m}}}
+\newlength\UNL@thinkspineskip
+\setlength\UNL@thinkspineskip{(\UNL@spinewidth-\UNL@heighttwolines)/6}
+\newsavebox{\UNL@spine@thick}
+\sbox\UNL@spine@thick{%
+	\begin{tabular}{c}
+		\@title\\[\UNL@thinkspineskip]
+		\UNL@shortauthor
+	\end{tabular}
+}
+\newlength\UNL@thick@spineheight
+\setlength\UNL@thick@spineheight{\heightof{\usebox{\UNL@spine@thick}}}
+\addtolength\UNL@thick@spineheight{\depthof{\usebox{\UNL@spine@thick}}}
+
+% \newlength\UNL@thin@spineheight
+% \newlength\UNL@thin@spinewidth
+% \setlength\UNL@thin@spineheight{\heightof{\usebox{\UNL@spine@thin}}}
+% \setlength\UNL@thin@spinewidth{\widthof{\usebox{\UNL@spine@thin}}}
+
+\newsavebox{\UNL@spine@year}
+\sbox\UNL@spine@year{%
+	\@theyear
+}
+\newlength\UNL@spine@yearwidth
+\setlength\UNL@spine@yearwidth{\widthof{~\usebox{\UNL@spine@year}~}}
+\centering
+\framebox[\UNL@spinewidth]{\rotatebox{90}{%
+	\begin{tabularx}{\textheight-1em}{@{\hspace*{1.5em}}m{\UNL@spine@yearwidth}X@{}c@{}X@{}c@{}X@{}m{\UNL@spinewidth}@{\hspace*{1em}}}
+		\ifthenelse{\UNL@spinewidth > \UNL@spine@yearwidth}
+				{\rotatebox[origin=br]{-90}{\parbox{\UNL@spinewidth}
+						{\centering\hspace*{4pt}\@theyear}}}
+				{\@theyear}
+		& & \ifthenelse
+				{\UNL@spinewidth > \UNL@thick@spineheight}
+				{& \usebox{\UNL@spine@thick} &}
+				{\UNL@shortauthor & & \@title} 
+		& & \vspace*{4pt}\includegraphics[origin=c,angle=-90,height=0.9\UNL@spinewidth]{logoUNL}
+	\end{tabularx}
+}}
+\restoregeometry
+\cleardoublepage
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include acronym and glossary if files exsist
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Add glossary / abbreviations
 \InputIfFileExists{Chapters/acronyms}{%
