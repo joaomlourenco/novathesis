@@ -60,11 +60,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[
-	doctype=phd,			% The type of document
+	doctype=msc,			% The type of document
 	lang=en,			% The main langage of the document
 	enc=utf8,			% You shouldn't mess with this one
 	linkscolor=darkblue,		% Switch to black for PRINTING
-	spine=false,		% DO NOT print the book spine (set to true for final printing)
+	spine=true,			% Should be set to false until the final printing
 	biblatex={
 		style=bwl-FU,		% ALTERNATIVES: numeric, alphabetic, authoryear, bwl-FU
 		sorting=nyt,		% ALTERNATIVES: none, nyt, ynt
@@ -264,7 +264,7 @@
 \thesisfrontmatter	% Before the main text (TOC, etc)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\frontpage		% The cover page
+\coverpage		% The cover page
 \printcopyright		% Print the copyright page (will only be printed if adequate for the document type)
 \printdedicatory	% Print the dedicatory (will only be printed if adequate for the document type)
 \printacknowledgements	% Print the acknowledgments (will only be printed if adequate for the document type)
@@ -282,6 +282,7 @@
 \printchapthers		% Print document chapters
 \printbib		% Print the bibliography
 \printappendixes	% Print appendixes, if any!
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% End of document

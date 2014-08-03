@@ -37,6 +37,13 @@ For more information please visit the [discussion forum](https://groups.google.c
 News
 ----
 
+*2014-08-01 — Major rewrite of the code that prints the cover page.*
++ The option “spine” with no assigned value means “spine=true”
++ New file “cover strings.tex” with definition of strings in both Portuguese and English (translation to English is still incomplete)
++ Macro “\frontpage” in now “\coverpage”
++ Removed dependency from “ctable” package
++ Removed limits in the number of advisers or jury members (the page layout will impose some limits) by using “lists” and “iterators” over the lists.
+
 *2014-08-01 — Support printing the book spine (“lonbada” in Portuguese).*
 + Added a new option “spine=(true | false)” for printing (not printing) the book spine.
 + This option require “\shortauthor” to be defined for printing the spine.

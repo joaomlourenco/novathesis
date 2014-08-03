@@ -97,7 +97,7 @@
 % true
 % false
 
-\DeclareOptionX{spine}{
+\DeclareOptionX{spine}[true]{
 	\typeout{'spine'=#1}
 	\ifthenelse{\equal{#1}{true}}{\AtEndDocument{\printthespine}}{}
 }
@@ -261,10 +261,6 @@
 }}}
 
 
-% Required to draw the cover page
-\RequirePackage{ctable}
-
-
 % To process the bibliography
 \RequirePackage[backend=bibtex]{biblatex}
 
@@ -282,44 +278,8 @@
 %% LABELS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% Some relevant strings
-
-\gdef\UNL@singlemadviserstr{Orientador}
-\gdef\UNL@singlefadviserstr{Orientadora}
-\gdef\UNL@manymadviserstr{Orientadores}
-\gdef\UNL@manyfadviserstr{Orientadoras}
-\gdef\UNL@singlemcoadviserstr{Co-orientador}
-\gdef\UNL@singlefcoadviserstr{Co-orientadora}
-\gdef\UNL@manymcoadviserstr{Co-orientadores}
-\gdef\UNL@manyfcoadviserstr{Co-orientadoras}
-
-\gdef\UNL@mbachelordegreestr{Licenciado}
-\gdef\UNL@fbachelordegreestr{Licenciada}
-\gdef\UNL@mmastersdegreestr{Mestre}
-\gdef\UNL@fmastersdegreestr{Mestre}
-\gdef\UNL@mphddegreestr{Doutor}
-\gdef\UNL@fphddegreestr{Doutora}
-
-% \gdef\doutor{Dr.\ }
-% \gdef\doutora{Drª.\ }
-% \gdef\profdoutor{Prof.\ Dr.\ }
-% \gdef\profdoutora{Profª.\ Drª.\ }
-
-\gdef\UNL@bachelordissertationstr{Projeto de Licenciatura}
-\gdef\UNL@mastersdissertationstr{Dissertação de Mestrado}
-\gdef\UNL@mastersqualifyingstr{Preparação de Dissertação}
-\gdef\UNL@phdqualifyingstr{Preparação de Tese}
-\gdef\UNL@phdproposalstr{Proposta de Tese de Doutoramento}
-\gdef\UNL@phdthesisstr{Tese de Doutoramento}
-
-\gdef\UNL@jurystr{Júri}
-
-\gdef\UNL@bscdissertationtstr{Relatório para obtenção do Grau de \\\UNL@degree em \@majorfield}
-\gdef\UNL@prepmscdissertationtstr{Relatório intermédio para obtenção do Grau de \\\UNL@degree em \@majorfield}
-\gdef\UNL@mscdissertationtstr{Dissertação para obtenção do Grau de \\\UNL@degree em \@majorfield}
-\gdef\UNL@propphhdissertationtstr{Proposta de tese para obtenção do Grau de \\\UNL@degree em \@majorfield}
-\gdef\UNL@prepphhdissertationtstr{Relatório intermédio para obtenção do Grau de \\\UNL@degree em \@majorfield}
-\gdef\UNL@phhdissertationtstr{Dissertação para obtenção do Grau de \\\UNL@degree em \@majorfield}
+\def\coverlang{pt}
+\@input@{coverstrings}
 
 
 \if\UNL@doctype0
@@ -343,7 +303,7 @@ Copyright \copyright\ \@author, \@faculty, \@university
 
 \bigskip
 \noindent
-A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objectivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+\UNL@copyrighttext}
 
 %% Language dependent
 
@@ -424,8 +384,6 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 % \@input@{repeat}
 
 \@input@{defaults}
-
-
 %% Date
 
 \def\themonth#1{\gdef\@themonth{#1}}
@@ -465,97 +423,6 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 \def\authordegree#1{%
   \gdef\@authordegree{#1}}
 \def\@authordegree{~authordegree \@notdefined}
-
-
-%% Advisors and Co-Advisers identification (at most 9 of each)
-%% \adviser[m|f]{Name}{Category/Position}{School}
-%% where N i a number from 1 to 9
-\def\@theadvisergender{f}	% default for female advisers
-\newcount\UNL@theadvisercount	% number of advisers
-\UNL@theadvisercount 0\relax
-\def\UNL@thecoadvisergender{f}	% default for female co-advisers
-\newcount\UNL@thecoadvisercount	% number of co-advisers
-\UNL@thecoadvisercount 0\relax
-
-% 
-% \newcount\@myi
-% \@myi 0\relax
-% \loop
-% 	\advance\@myi 1\relax
-% 	\expandafter\let\csname UNL@showadviser\number\@myi\endcsname=0
-% 	\expandafter\let\csname UNL@showcoadviser\number\@myi\endcsname=0
-% \ifnum \@myi < 10
-% \repeat
-
-% \repeat \for{i} \from{1} \to{9} \do {
-% 	\expandafter\let\csname UNL@showadviser\number\i\endcsname=0
-% 	\expandafter\let\csname UNL@showcoadviser\number\i\endcsname=0
-% 	\expandafter\let\csname UNL@showjury\number\i\endcsname=0
-% }
-
-
-\def\adviser{%
-  \@ifnextchar [%
-    {\@padviser[]}%
-    {\@padviser[][m]}}
-
-\def\coadviser{%
-  \@ifnextchar [%
-    {\@padviser[co]}%
-    {\@padviser[co][m]}}
-
-% #1 = [] for adviser or [co] co co-adviser
-% #2 = [m] or [f]
-% #3 = {name}
-% #4 = {category}
-% #5 = {school/institution}
-\def\@padviser[#1][#2]#3#4#5{%
-  \expandafter\advance\csname UNL@the#1advisercount\endcsname 1\relax
-  \ifx#2m
-  	\expandafter\def\csname UNL@the#1advisergender\endcsname{m}
-  \else\ifx#2f
-  \else
-  \typeout{^^J%
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
-!  Please specify #1adviser gender using [m] or [f] as the second^^J%
-!  argument of the "#1adviser" macro.  See the template! ;)^^J%
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
-}
-   \errhelp{Please be gentle and follow the template recommendations.}
-   \errmessage{Please specify adviser gender!}
-  \fi\fi
-  \expandafter\gdef\csname UNL@#1advisername\expandafter\number\csname UNL@the#1advisercount\endcsname\endcsname{#3}
-  \expandafter\gdef\csname UNL@#1advisercat\expandafter\number\csname UNL@the#1advisercount\endcsname\endcsname{#4}
-  \expandafter\gdef\csname UNL@#1adviserschool\expandafter\number\csname UNL@the#1advisercount\endcsname\endcsname{#5}
-}
-
-\def\UNL@theadviserstr[#1]{%
-	\UNL@ptheadviserstr[#1]{\expandafter\csname UNL@the#1advisercount\endcsname}{\expandafter\csname UNL@the#1advisergender\endcsname}%
-}
-
-\def\UNL@ptheadviserstr[#1]#2#3{%
-	\ifnum #2 > 1
-  		\expandafter\csname UNL@many#3#1adviserstr\endcsname
-	\else
-  		\expandafter\csname UNL@single#3#1adviserstr\endcsname
-	\fi
-}
-
-\def\printadviser[#1]#2{%
-	\ifcsname UNL@#1advisername#2\endcsname
-		\ifnum #2 = 1
-			& \\[-2ex]
-			\UNL@theadviserstr[#1]:
-		\fi
-		&
-		\expandafter\csname UNL@#1advisername#2\endcsname,\\&
-		\expandafter\csname UNL@#1advisercat#2\endcsname,
-		\expandafter\csname UNL@#1adviserschool#2\endcsname
-	\\
-	\fi
-}
-
-
 
 
 %% Work identification
@@ -600,125 +467,237 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 
 
 
-% Juri
-\newcount\UNL@thejurypcount	% number of presidents (must be one)
-\UNL@thejurypcount 0\relax
-\newcount\UNL@thejuryacount	% number of referees
-\UNL@thejuryacount 0\relax
-\newcount\UNL@thejuryvcount	% number of other memebrs of the jury
-\UNL@thejuryvcount 0\relax
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% NEW definition for jury with lists
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% To process lists and other stuff
+\RequirePackage{etoolbox}
+
+
+% Find the size of a list
+\newcount\UNL@listsize@cnt
+\newcommand{\UNL@do@listfind@count}[1]{%
+	\advance\UNL@listsize@cnt 1\relax%
+}
+\def\listcssize#1{%
+	\UNL@listsize@cnt 0\relax%
+	\ifthenelse{\expandafter\isundefined\csname #1\endcsname}{%
+	}{%
+		\forlistcsloop{\UNL@do@listfind@count}{#1}%
+	}%
+}
+
 
 \def\jury{%
   \@ifnextchar [%
-    {\@pjury}%
-    {\@pjury[v]}}
+    {\UNL@jury}%
+    {\UNL@jury[v]}}
 
-
-% #1 = [p] for president, [a] for referee, [v] for others
-% #2 = {name}
-\def\@pjury[#1]#2{%
-	\expandafter\advance\csname UNL@thejury#1count\endcsname 1\relax
-  	\expandafter\gdef\csname UNL@jury#1name\expandafter\number\csname UNL@thejury#1count\endcsname\endcsname{#2}
+\def\UNL@jury[#1]#2{%
+	\listcsgadd{UNL@jury@#1@list}{#2}
 }
 
-\def\printthejuryp{%
-	\ifnum \UNL@thejurypcount = 1
-		& \\[-2ex]
-		Presidente: & \csname UNL@jurypname1\endcsname \\
-	\else
-  		\typeout{^^J%
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
-!  Please identify one and only one president of the jury with^^J%
-!  the [p] argument of the "jury" macro.  See the template! ;)^^J%
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
-}
-   		\errhelp{Please be gentle and follow the template recommendations.}
-   		\errmessage{Please specify president of the jury!}
-	\fi
-}
-
-\def\UNL@printthejurya[#1]{%
-	\ifcsname UNL@juryaname#1\endcsname
-	\ifnum #1 = 1
-		& \\[-2ex]
-		Arguente\ifnum \UNL@thejuryacount > 1 s\fi:
-	\fi
-	& \expandafter\csname UNL@juryaname#1\endcsname\relax \\
-	\fi
-}
-
-\def\printthejurya{%
-	\ifnum \UNL@thejuryacount > 0
-		\UNL@printthejurya[1]
-		\UNL@printthejurya[2]
-		\UNL@printthejurya[3]
-		\UNL@printthejurya[4]
-		\UNL@printthejurya[5]
-		\UNL@printthejurya[6]
-		\UNL@printthejurya[7]
-		\UNL@printthejurya[8]
-		\UNL@printthejurya[9]
-	\else
-  		\typeout{^^J%
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
-!  Please identify at least one referee with the [a] argument ^^J%
-!  of the "jury" macro.  See the template! ;)^^J%
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
-}
-   		\errhelp{Please be gentle and follow the template recommendations.}
-   		\errmessage{Please specify referees of the jury!}
-	\fi
-}
-
-\def\UNL@printthejuryv[#1]{%
-	\ifcsname @juryvname#1\endcsname
-	\ifnum #1 = 1
-		& \\[-2ex]
-		Voga\ifnum \@thejuryvcount = 1 l\else is\fi:
-	\fi
-	& \expandafter\csname UNL@juryvname#1\endcsname\relax \\
-	\fi
-}
-
-\def\printthejuryv{%
-	\ifnum \UNL@thejuryvcount > 0
-		\UNL@printthejuryv[1]
-		\UNL@printthejuryv[2]
-		\UNL@printthejuryv[3]
-		\UNL@printthejuryv[4]
-		\UNL@printthejuryv[5]
-		\UNL@printthejuryv[6]
-		\UNL@printthejuryv[7]
-		\UNL@printthejuryv[8]
-		\UNL@printthejuryv[9]
-	\else
-  		\typeout{^^J%
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
-!  Please identify at least one jury with the [v] argument ^^J%
-!  of the "jury" macro.  See the template! ;)^^J%
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^J%
-}
-   		\errhelp{Please be gentle and follow the template recommendations.}
-   		\errmessage{Please specify at least one element of the jury!}
-	\fi
+\newcommand{\UNL@do@jury@tabular}[1]{
+	& #1\\
 }
 
 \def\printthejury{%
-	\fontsize{11}{12}
-	\selectfont
-	\ctable[
-		cap=,
-		caption=,
-		label=,
-		pos=h,
-		maxwidth=1\linewidth,
-		right,
-	]{rX}{}{
-	& \UNL@jurystr: \\
- 	\printthejuryp
-	\printthejurya
-	\printthejuryv
+	\begin{tabular}{ll}
+	& \UNL@jurystr:\\
+	\ifthenelse{\isundefined\UNL@jury@p@list}{}{%
+			\listcssize{UNL@jury@p@list}%
+			\ifthenelse{\equal{\the\UNL@listsize@cnt}{1}}%
+				{\gdef\UNL@jury@n@p{single}}%
+				{\gdef\UNL@jury@n@p{many}}%
+			\csname UNL@\UNL@jury@n@p presidentstr\endcsname: %
+			\forlistcsloop{\UNL@do@jury@tabular}{UNL@jury@p@list}
 	}
+	\ifthenelse{\isundefined\UNL@jury@a@list}{}{%
+			\listcssize{UNL@jury@a@list}%
+			\ifthenelse{\equal{\the\UNL@listsize@cnt}{1}}%
+				{\gdef\UNL@jury@n@p{single}}%
+				{\gdef\UNL@jury@n@p{many}}%
+			\csname UNL@\UNL@jury@n@p refereestr\endcsname: %
+			\forlistcsloop{\UNL@do@jury@tabular}{UNL@jury@a@list}
+	}
+	\ifthenelse{\isundefined\UNL@jury@v@list}{}{%
+			\listcssize{UNL@jury@v@list}%
+			\ifthenelse{\equal{\the\UNL@listsize@cnt}{1}}%
+				{\gdef\UNL@jury@n@p{single}}%
+				{\gdef\UNL@jury@n@p{many}}%
+			\csname UNL@\UNL@jury@n@p memberstr\endcsname: %
+			\forlistcsloop{\UNL@do@jury@tabular}{UNL@jury@v@list}
+	}
+	\end{tabular}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% NEW definition for (co)advisers with lists
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\adviser{%
+  \@ifnextchar [%
+    {\UNL@adviser[]}%
+    {\UNL@adviser[][m]}}
+
+\def\coadviser{%
+  \@ifnextchar [%
+    {\UNL@adviser[co]}%
+    {\UNL@adviser[co][m]}}
+
+% #1 = [] for adviser or [co] co co-adviser
+% #2 = [m] or [f]
+% #3 = {name}
+% #4 = {category}
+% #5 = {school/institution}
+\def\UNL@adviser[#1][#2]#3#4#5{%
+	\listcsgadd{UNL@#1adviser@gender@list}{#2}
+	\listcsgadd{UNL@#1adviser@name@list}{#3}
+	\listcsgadd{UNL@#1adviser@category@list}{#4}
+	\listcsgadd{UNL@#1adviser@school@list}{#5}
+	\listcsgadd{UNL@#1adviser@list}{{#3},{#4},{#5}}
+}
+
+\newcount\UNL@listgenderf@cnt
+\newcommand{\UNL@do@listgenderf@count}[1]{%
+	\ifthenelse{\equal{#1}{f}}{\advance\UNL@listgenderf@cnt 1\relax}{}%
+}
+\def\listcsgenderf#1{%
+	\UNL@listgenderf@cnt 0\relax%
+	\ifthenelse{\expandafter\isundefined\csname #1\endcsname}{%
+	}{%
+	\forlistcsloop{\UNL@do@listgenderf@count}{#1}%
+	}%
+}
+
+
+\def\UNL@adviser@str#1{%
+	\listcssize{UNL@#1adviser@gender@list}%
+	\ifthenelse{\equal{\the\UNL@listsize@cnt}{1}}%
+		{\gdef\UNL@advisernprefix{single}}%
+		{\gdef\UNL@advisernprefix{many}}%
+	\listcsgenderf{UNL@#1adviser@gender@list}%
+	\ifthenelse{\equal{\the\UNL@listsize@cnt}{\the\UNL@listgenderf@cnt}}%
+		{\gdef\UNL@advisergprefix{f}}%
+		{\gdef\UNL@advisergprefix{m}}%
+	\csname UNL@\UNL@advisernprefix\UNL@advisergprefix #1adviserstr\endcsname%
+}
+
+
+\def\UNL@do@adviser@tabular@item#1,#2,#3{%
+	& #1, #2, \\
+	& #3\\
+}
+\def\UNL@do@adviser@tabular#1{%
+	\UNL@do@adviser@tabular@item#1
+}
+
+
+\def\printtheadvisers{%
+	\begin{tabular}{ll}
+	\ifthenelse{\isundefined\UNL@adviser@gender@list}{}{%
+			\UNL@adviser@str{}: %
+			\forlistcsloop{\UNL@do@adviser@tabular}{UNL@adviser@list}%
+	}
+	\ifthenelse{\isundefined\UNL@coadviser@gender@list}{}{%
+			\UNL@adviser@str{co}: %
+			\forlistcsloop{\UNL@do@adviser@tabular}{UNL@coadviser@list}%
+	}
+	\end{tabular}
+	\par
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\coverpage{
+\thispagestyle{empty}
+\pagestyle{empty}
+
+%% Define cover page margins
+\ifthenelse{%
+	\equal{\UNL@doctype}{0}%
+	\OR\equal{\UNL@doctype}{1}%
+	\OR\equal{\UNL@doctype}{2}}{% MSc
+		\def\@defcoverbg{\@thesiscovermsc}
+		\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
+	}{%
+\ifthenelse{%
+	\equal{\UNL@doctype}{3}%
+	\OR\equal{\UNL@doctype}{4}%
+	\OR\equal{\UNL@doctype}{5}}{% PhD
+		\def\@defcoverbg{\@thesiscoverphd}
+		\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=5.5cm,rmargin=2.5cm}
+	}
+{	% Plain
+	\def\@defcoverbg{\@thesiscoverplain}
+	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
+}}
+
+%% Add background image	
+\AddToShipoutPicture*{\BackgroundPic{\@defcoverbg}}
+
+\begin{center}
+	\fontfamily{phv}
+
+% Name of Candidate
+	\fontsize{15}{17}
+	\selectfont
+	\textbf{\@author}
+	
+\vspace{0.25cm}	
+% Academic qualifications
+	\fontsize{12}{13}
+	\selectfont
+	\@authordegree
+
+\vspace{4.25cm}
+% Title of Dissertation
+	\fontsize{18}{20}
+	\selectfont
+	\textbf{\@title}\\[0.75cm]
+
+\vspace{0.75cm}
+% Degree
+	\fontsize{12}{13}
+	\selectfont
+	\@presentationtext
+	
+	\vfill
+	% Advisers
+	\fontsize{13}{14}
+	\selectfont
+	\printtheadvisers
+
+\vfill\vfill
+% Referee board
+\ifthenelse{%
+	\equal{\UNL@doctype}{0}%
+	\OR\equal{\UNL@doctype}{2}%
+	\OR\equal{\UNL@doctype}{3}%
+	\OR\equal{\UNL@doctype}{5}}
+{\hfill\printthejury}
+{}
+
+\vfill\vfill\vfill
+
+% Date
+\fontsize{12}{13}
+\selectfont
+\ifdraftdoc 
+	\textbf{DRAFT: \today}
+\else
+	\textbf{\@themonth, \@theyear}
+\fi	
+\end{center}
+\restoregeometry
+\clearemptydoublepage
 }
 
 
@@ -988,130 +967,6 @@ A \@faculty\ e a \@university\ têm o direito, perpétuo e sem limites geográfi
 	\fi
 }
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Frontpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\def\frontpage{
-\thispagestyle{empty}
-
-\if\UNL@doctype0
-	\def\@defcoverbg{\@thesiscovermsc}
-	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
-\else\if\UNL@doctype1
-	\def\@defcoverbg{\@thesiscovermsc}
-	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
-\else\if\UNL@doctype2
-	\def\@defcoverbg{\@thesiscovermsc}
-	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
-\else\if\UNL@doctype3
-	\def\@defcoverbg{\@thesiscoverphd}
-	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=5.5cm,rmargin=2.5cm}
-\else\if\UNL@doctype4
-	\def\@defcoverbg{\@thesiscoverphd}
-	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=5.5cm,rmargin=2.5cm}
-\else\if\UNL@doctype5
-	\def\@defcoverbg{\@thesiscoverphd}
-	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=5.5cm,rmargin=2.5cm}
-\else
-	\def\@defcoverbg{\@thesiscoverplain}
-	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
-\fi\fi\fi\fi\fi\fi
-	
-\AddToShipoutPicture*{\BackgroundPic{\@defcoverbg}}
-
-\begin{center}
-	\fontfamily{phv}
-
-% Name of Candidate
-	\fontsize{15}{17}
-	\selectfont
-	\textbf{\@author}
-	
-\vspace{0.25cm}	
-% Academic qualifications
-	\fontsize{12}{13}
-	\selectfont
-	\@authordegree
-
-\vspace{4.25cm}
-% Title of Dissertation
-	\fontsize{18}{20}
-	\selectfont
-	\textbf{\@title}\\[0.75cm]
-
-\vspace{0.75cm}
-% Degree
-	\fontsize{12}{13}
-	\selectfont
-	\@presentationtext
-	
-	\vfill
-	% Advisers
-	\fontsize{13}{14}
-	\selectfont
-	\ctable[
-		cap=,
-		caption=,
-		label=,
-		pos=h,
-		maxwidth=1\linewidth,
-	]{rX}{}{
-		\printadviser[]{1}
-		\printadviser[]{2}
-		\printadviser[]{3}
-		\printadviser[]{4}
-		\printadviser[]{5}
-		\printadviser[]{6}
-		\printadviser[]{7}
-		\printadviser[]{8}
-		\printadviser[]{9}
-		\printadviser[co]{1}
-		\printadviser[co]{2}
-		\printadviser[co]{3}
-		\printadviser[co]{4}
-		\printadviser[co]{5}
-		\printadviser[co]{6}
-		\printadviser[co]{7}
-		\printadviser[co]{8}
-		\printadviser[co]{9}
-}
-
-
-\vfill\vfill
-% Referee board
-\if\UNL@doctype0
-\printthejury
-\else\if\UNL@doctype1
-\else\if\UNL@doctype2
-\printthejury
-\else\if\UNL@doctype3
-\printthejury
-\else\if\UNL@doctype4
-\else\if\UNL@doctype5
-\printthejury
-\fi\fi\fi\fi\fi\fi
-
-\vfill\vfill\vfill
-
-% Date
-\fontsize{12}{13}
-\selectfont
-\ifdraftdoc 
-	% \RequirePackage[firstpage]{draftwatermark}				%Sets watermarks up.
-	% \SetWatermarkScale{0.2}
-	% \SetWatermarkLightness{0.75}
-	% \SetWatermarkText{\textbf{Draft: \today}}
-	% \SetWatermarkAngle{0.0}
-	\textbf{DRAFT: \today}
-\else
-	\textbf{\@themonth, \@theyear}
-\fi	
-\end{center}
-\restoregeometry
-\clearemptydoublepage
-}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
