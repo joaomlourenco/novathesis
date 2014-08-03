@@ -37,7 +37,7 @@ For more information please visit the [discussion forum](https://groups.google.c
 News
 ----
 
-*2014-08-01 — Major rewrite of the code that prints the cover page.*
+*2014-08-03 — Major rewrite of the code that prints the cover page.*
 + The option “spine” with no assigned value means “spine=true”
 + New file “cover strings.tex” with definition of strings in both Portuguese and English (translation to English is still incomplete)
 + Macro “\frontpage” in now “\coverpage”

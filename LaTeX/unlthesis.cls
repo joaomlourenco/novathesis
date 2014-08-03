@@ -3,15 +3,22 @@
 %%% UNL thesis document class
 %%%
 %%% By João Lourenço (joao.lourenco@di.fct.unl.pt)
-%%% Version of August 1, 2014
+%%% Version of August 3, 2014
 %%%
 %%% BUGS and SUGGETSIONS: please send email to "joao.lourenco@fct.unl.pt"
 %%%
 %%% CONTRIBUTERS are welcome. Please contact "joao.lourenco@fct.unl.pt"
 %%%
+%%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
+%%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
+%%% 
+%%%   You SHOULD NOT change this file (you are playing with fire!)
+%%% 
+%%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
+%%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2014/08/01 UNL Thesis Template]
+\ProvidesClass{unlthesis}[2014/08/03 UNL Thesis Template]
 
 
 
