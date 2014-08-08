@@ -7,6 +7,7 @@ A LaTeX template for MSc and PhD thesis from Universidade Nova de Lisboa.
 
 For problems and/or suggestions, please [open an issue](https://github.com/joaomlourenco/unlthesis/issues). Thanks.
 
+What to DOWNLOAD???  Get the [latest realease](https://github.com/joaomlourenco/unlthesis/releases)!
 
 About
 -----
