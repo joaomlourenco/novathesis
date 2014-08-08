@@ -60,19 +60,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[
-	doctype=msc,			% The type of document
+	doctype=msc,		% The type of document
 	lang=en,			% The main langage of the document
 	enc=utf8,			% You shouldn't mess with this one
-	linkscolor=darkblue,		% Switch to black for PRINTING
+	linkscolor=darkblue,% Switch to black for PRINTING
 	spine=true,			% Should be set to false until the final printing
 	biblatex={
-		style=bwl-FU,		% ALTERNATIVES: numeric, alphabetic, authoryear, bwl-FU
-		sorting=nyt,		% ALTERNATIVES: none, nyt, ynt
+		style=bwl-FU,	% ALTERNATIVES: numeric, alphabetic, authoryear, bwl-FU
+		sorting=nyt,	% ALTERNATIVES: none, nyt, ynt
 		maxcitenames=2,
 		mincitenames=1,
 	},
-	memoir={a4paper,11pt,draft},	% Options for base sclass (memoir)
-					%	ALWAYS remove "draft" for final versions
+	memoir={a4paper,11pt, draft},	% Options for base sclass (memoir)
+							% "draft" prints the current date at the bottom of the cover page.
+							% ALWAYS replace "draft" by "final" for final version,
+							% With "final" the MONTH and YEAR will be printed
 ]{unlthesis}
 
 

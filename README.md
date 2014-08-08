@@ -37,6 +37,9 @@ For more information please visit the [discussion forum](https://groups.google.c
 News
 ----
 
+*2014-08-08 — Autoformating for the advisers.*
++ The template requires 3 pieces of info on the adviser(s): name, position and institution. Now if these 3 items will be printed in a single line if possible, otherwise splito into two or three lines as necessary.
+
 *2014-08-03 — Major rewrite of the code that prints the cover page.*
 + The option “spine” with no assigned value means “spine=true”
 + New file “cover strings.tex” with definition of strings in both Portuguese and English (translation to English is still incomplete)

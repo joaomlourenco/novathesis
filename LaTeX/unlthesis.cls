@@ -3,7 +3,7 @@
 %%% UNL thesis document class
 %%%
 %%% By João Lourenço (joao.lourenco@di.fct.unl.pt)
-%%% Version of August 3, 2014
+%%% Version of August 8, 2014
 %%%
 %%% BUGS and SUGGETSIONS: please send email to "joao.lourenco@fct.unl.pt"
 %%%
@@ -111,6 +111,31 @@
 
 
 % --------------------------------------------------------
+% DRAFT		Draft version, print the current date at the bottom of the cover page
+%
+% true
+% false
+
+% \DeclareOptionX{draft}[true]{
+% 	\typeout{'draft'=#1}
+% 	\PassOptionsToPackage{#1}{memoir}
+% }
+
+
+% --------------------------------------------------------
+% FINAL		Final version, print the MONTH and YEAR as defined by the user
+%                  at the bottom of the cover page
+%
+% true
+% false
+
+% \DeclareOptionX{draft}[true]{
+% 	\typeout{'draft'=#1}
+% 	\PassOptionsToClass{#1}{memoir}
+% }
+
+
+% --------------------------------------------------------
 % BIBLATEX OPTIONS		Are passed to the biblatex package
 %
 % style= numeric | alphabetic | 
@@ -166,7 +191,7 @@
 		% dashed=false,%
 		sortcites=true,
 	},
-	memoir={a4paper, 11pt}
+	memoir={a4paper, 11pt, draft}
 }
 
 
@@ -208,6 +233,10 @@
 \RequirePackage{mathpazo}		% Font with fixes dor math support: Palatino
 \RequirePackage[scaled=.95]{helvet}
 \RequirePackage{courier}
+
+
+%%%%% Fine tuning of typesetting
+\RequirePackage{microtype}
 
 
 %%%%% Configure multilingual language support
@@ -545,6 +574,8 @@ Copyright \copyright\ \@author, \@faculty, \@university
 %%% NEW definition for (co)advisers with lists
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\RequirePackage{tabu}
+
 \def\adviser{%
   \@ifnextchar [%
     {\UNL@adviser[]}%
@@ -594,9 +625,10 @@ Copyright \copyright\ \@author, \@faculty, \@university
 }
 
 
+% \newsavebox{\UNL@adviser@tabular@item@box}
+% \newlength{\UNL@adviser@tabular@item@box@w}
 \def\UNL@do@adviser@tabular@item#1,#2,#3{%
-	& #1, #2, \\
-	& #3\\
+		& \mbox{#1}, \mbox{#2}, \mbox{#3}\\%
 }
 \def\UNL@do@adviser@tabular#1{%
 	\UNL@do@adviser@tabular@item#1
@@ -604,7 +636,8 @@ Copyright \copyright\ \@author, \@faculty, \@university
 
 
 \def\printtheadvisers{%
-	\begin{tabular}{ll}
+	% \begin{tabularx}{\linewidth}{lX<{\raggedright}}
+	\begin{tabu} spread 0pt {lX[1,l,p]}
 	\ifthenelse{\isundefined\UNL@adviser@gender@list}{}{%
 			\UNL@adviser@str{}: %
 			\forlistcsloop{\UNL@do@adviser@tabular}{UNL@adviser@list}%
@@ -613,10 +646,10 @@ Copyright \copyright\ \@author, \@faculty, \@university
 			\UNL@adviser@str{co}: %
 			\forlistcsloop{\UNL@do@adviser@tabular}{UNL@coadviser@list}%
 	}
-	\end{tabular}
+	\end{tabu}
+	% \end{tabularx}
 	\par
 }
-
 
 
 
