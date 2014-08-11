@@ -34,24 +34,16 @@
 % --------------------------------------------------------
 % DOCUMENT TYPE		UNL@doctype=?
 %
-% BSc report			0
-% MSc preliminary report	1
-% MSc dissertation		2
-% PhD proposal			3
-% PhD preliminary report	4
-% PhD thesis			5
+% BSc report			bsc
+% MSc preliminary report	prepmsc
+% MSc dissertation		msc
+% PhD proposal			propphd
+% PhD preliminary report	prepphd
+% PhD thesis			phd
 
 \DeclareOptionX{doctype}{
 	\typeout{'doctype'=#1}
-	\ifthenelse{\equal{#1}{bsc}}{\gdef\UNL@doctype{0}}
-	{\ifthenelse{\equal{#1}{prepmsc}}{\gdef\UNL@doctype{1}}
-	{\ifthenelse{\equal{#1}{msc}}{\gdef\UNL@doctype{2}}{
-	{\ifthenelse{\equal{#1}{propphd}}{\gdef\UNL@doctype{3}}{
-	}{\ifthenelse{\equal{#1}{prepphd}}{\gdef\UNL@doctype{4}}{
-	}{\ifthenelse{\equal{#1}{phd}}{\gdef\UNL@doctype{5}}{
-	\PackageError{thesisdifctunl}{Wrong value for option 'doctype': #1}{Please see the documentation}
-	\expandafter\endinput
-	}}}}}}}
+	\gdef\UNL@doctype{#1}
 }
 
 
@@ -64,8 +56,8 @@
 
 \DeclareOptionX{lang}{
 	\typeout{'lang'=#1}
-	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}{\def\UNL@lang{0}}
-	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}{\def\UNL@lang{1}}{
+	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}{\def\UNL@lang{pt}}
+	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}{\def\UNL@lang{en}}{
 	\PackageError{thesisdifctunl}{Wrong value for option 'lang'}{Please see the documentation}
 	\expandafter\endinput
 	}}
@@ -241,6 +233,7 @@
 
 %%%%% Configure multilingual language support
 \RequirePackage{babel}			% Support for bilingual documents
+\RequirePackage{memory}		% To keep records to store strings
 
 
 %%%%% Better support for calculations
@@ -248,26 +241,24 @@
 
 
 %%%%% Configure Graphics
-\RequirePackage[pdftex]{graphicx}
+% \RequirePackage[pdftex]{graphicx}
+\RequirePackage{graphicx}
 \DeclareGraphicsExtensions{.pdf, .png, .jpg, .tif}
 
 
 %%%%% Configure HyperRefs
-\RequirePackage[pdftex,usenames]{color}
-\RequirePackage[pdftex]{xcolor}
+% \RequirePackage[pdftex,usenames]{color}
+% \RequirePackage[pdftex]{xcolor}
+% \RequirePackage[usenames]{color}
+\RequirePackage{xcolor}
 \definecolor{darkblue}{rgb}{0.0,0.08,0.45}
 \RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}
 \usepackage{memhfixc}		% Must be used on memoir document class after hyperref
 
 
 %%%%% Configure page geometry
+% Needs version equal or later to 2010/02/12, which support the "newgeometry" command
 \RequirePackage[top=3cm,bottom=3cm,inner=3.5cm,outer=2.5cm]{geometry}[2010/02/12]
-
-
-%%%%% Configure gloassaries
-\RequirePackage[nonumberlist]{glossaries}
-\glsdisablehyper
-\makenoidxglossaries
 
 
 %%%%% Condditional processing for PDF file
@@ -301,36 +292,68 @@
 \RequirePackage[backend=bibtex]{biblatex}
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \let\origcleardoublepage=\cleardoublepage
-% \def\cleardoublepage{%
-%   \newpage{\pagestyle{empty}\origcleardoublepage}
-% }
+% Redefine \cleardoublepage to use a really empty page…
+\let\origcleardoublepage=\cleardoublepage
+\def\cleardoublepage{%
+  \newpage{\pagestyle{empty}\origcleardoublepage}
+}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Multilingual support
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newdata*{UNL@abstractorder}
+\def\UNL@abstractorder[#1]=#2{
+	\expandafter\gdef\csname UNL@abstractorder@#1\endcsname{#2}}
+% \newdata*{UNL@abstractname}
+\def\UNL@abstractname[#1]=#2{
+	\expandafter\gdef\csname UNL@abstractname@#1\endcsname{#2}}
+% \newdata*{UNL@keywordsname}
+\def\UNL@keywordsname[#1]=#2{
+	\expandafter\gdef\csname UNL@keywordsname@#1\endcsname{#2}}
+% \newdata*{UNL@acknowledgementsname}
+\def\UNL@acknowledgementsname[#1]=#2{%
+	\expandafter\gdef\csname UNL@acknowledgementsname@#1\endcsname{#2}}
+% \newdata*{UNL@notdefined}
+\def\UNL@notdefined[#1]=#2{
+	\expandafter\gdef\csname UNL@notdefined@#1\endcsname{#2}}
+
+
+\newdata*{UNL@adviserstr}
+\newdata*{UNL@coadviserstr}
+\newdata*{UNL@degreestr}
+
+\newdata*{UNL@doctypestr}
+
+\newdata*{UNL@jurytitlestr}
+\newdata*{UNL@presidentstr}
+\newdata*{UNL@refereestr}
+\newdata*{UNL@memberstr}
+	
+
+\newdata*{UNL@dissertationstr}
+\newdata*{UNL@copyrighttext}
+
+% Input definitions for strings above in multiple languages
+\InputIfFileExists{langsupport}{}{}
+
+% Portuguese
+\ifthenelse{\equal{\UNL@lang}{pt}}
+	{\def\lstlistlistingname{Listagens}}
+	{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LABELS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\coverlang{pt}
-\@input@{coverstrings}
 
-
-\if\UNL@doctype0
-    \gdef\@presentationtext{\UNL@bscdissertationtstr}
-\else\if\UNL@doctype1
-    \gdef\@presentationtext{\UNL@prepmscdissertationtstr}
-\else\if\UNL@doctype2
-    \gdef\@presentationtext{\UNL@mscdissertationtstr}
-\else\if\UNL@doctype3
-    \gdef\@presentationtext{\UNL@propphhdissertationtstr}
-\else\if\UNL@doctype4
-    \gdef\@presentationtext{\UNL@prepphhdissertationtstr}
-\else\if\UNL@doctype5
-    \gdef\@presentationtext{\UNL@phhdissertationtstr}
-\fi\fi\fi\fi\fi\fi
+\gdef\UNL@presentationtext{%
+	\UNL@dissertationstr[\UNL@doctype,\UNL@cover@lang]
+}
 
 \gdef\thecopyrightstr{%
 \thispagestyle{empty}
@@ -339,83 +362,54 @@ Copyright \copyright\ \@author, \@faculty, \@university
 
 \bigskip
 \noindent
-\UNL@copyrighttext}
-
-%% Language dependent
-
-\gdef\UNL@abstrnamePT{Resumo}
-\gdef\UNL@abstrnameEN{Abstract}
-
-\gdef\@keywordsnamePT{Palavras-chave}
-\gdef\@keywordsnameEN{Keywords}
-
-
-%% Language Dependent
-
-% Portuguese
-\if\UNL@lang0
-  \gdef\@notdefined{NÃO DEFINIDO}
-  \gdef\acknowledgementsname{Agradecimentos}
-  \def\lstlistlistingname{Listagens}
-% English
-\else\if\UNL@lang1
-  \gdef\@notdefined{UNDEFINED}
-  \gdef\acknowledgementsname{Acknowledgements}
-\fi\fi
+\UNL@copyrighttext[\UNL@cover@lang]}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% IDENTIFICATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \def\universitylogo#1{%
-%   \gdef\@universitylogo{#1}}
-% \def\@universitylogo{~universitylogo \@notdefined}
-% 
-% \def\universitylogowidth#1{%
-%   \gdef\@universitylogowidth{#1}}
-% \def\@universitylogowidth{2cm}
 
 % Default cover background
 \def\thesiscoverphd#1{%
   \gdef\@thesiscoverphd{#1}}
-\def\@thesiscoverphd{~thesiscoverphd \@notdefined}
+\def\@thesiscoverphd{~thesiscoverphd \UNL@notdefined}
 
 \def\thesiscovermsc#1{%
   \gdef\@thesiscovermsc{#1}}
-\def\@thesiscovermsc{~thesiscovermsc \@notdefined}
+\def\@thesiscovermsc{~thesiscovermsc \UNL@notdefined}
 
 \def\thesiscoverplain#1{%
   \gdef\@thesiscoverplain{#1}}
-\def\@thesiscoverplain{~thesiscoverempty \@notdefined}
+\def\@thesiscoverplain{~thesiscoverempty \UNL@notdefined}
 
 
 % \def\university#1{%
 %   \gdef\@university{#1}}
-% \def\@university{~university \@notdefined}
+% \def\@university{~university \UNL@notdefined}
 % 
 % \def\faculty#1{%
 %   \gdef\@faculty{#1}}
-% \def\@faculty{~faculty\@notdefined}
+% \def\@faculty{~faculty\UNL@notdefined}
 % 
 % \def\department#1{%
 %   \gdef\@department{#1}}
-% \def\@department{~department \@notdefined}
+% \def\@department{~department \UNL@notdefined}
 
 \def\majorfield#1{%
   \gdef\@majorfield{#1}}
-\def\@majorfield{~majorfield \@notdefined}
+\def\@majorfield{~majorfield \UNL@notdefined}
 
 \def\address#1{%
   \gdef\@address{#1}}
-\def\@address{~address \@notdefined}
+\def\@address{~address \UNL@notdefined}
 
 \def\faculty#1{%
   \gdef\@faculty{#1}}
-\def\@majorfield{~faculty \@notdefined}
+\def\@majorfield{~faculty \UNL@notdefined}
 
 \def\university#1{%
   \gdef\@university{#1}}
-\def\@majorfield{~university \@notdefined}
+\def\@majorfield{~university \UNL@notdefined}
 
 % \@input@{repeat}
 
@@ -423,10 +417,10 @@ Copyright \copyright\ \@author, \@faculty, \@university
 %% Date
 
 \def\themonth#1{\gdef\@themonth{#1}}
-\def\@themonth{~themonth \@notdefined}
+\def\@themonth{~themonth \UNL@notdefined}
 
 \def\theyear#1{\gdef\@theyear{#1}}
-\def\@theyear{~theyear \@notdefined}
+\def\@theyear{~theyear \UNL@notdefined}
 
 
 %% Authors identification
@@ -454,52 +448,23 @@ Copyright \copyright\ \@author, \@faculty, \@university
   \gdef\@author{#2}
   \hypersetup{pdfauthor={\@author}}}
 
-\def\@author{~author \@notdefined}
+\def\@author{~author \UNL@notdefined}
 
 \def\authordegree#1{%
   \gdef\@authordegree{#1}}
-\def\@authordegree{~authordegree \@notdefined}
+\def\@authordegree{~authordegree \UNL@notdefined}
 
 
 %% Work identification
 
 \def\title#1{%
-  \gdef\@title{#1}
-  \hypersetup{pdftitle={\@title}}}
-\def\@title{~title \@notdefined}
-
-\def\@texttype{%
-  \if\UNL@doctype0
-    \UNL@bachelordissertationstr
-  \else\if\UNL@doctype1
-    \UNL@mastersqualifyingstr
-  \else\if\UNL@doctype2
-  \UNL@mastersdissertationstr
-  \else\if\UNL@doctype3
-    \UNL@phdproposalstr
-  \else\if\UNL@doctype4
-   \UNL@phdqualifyingstr
-   \else\if\UNL@doctype5
-    \UNL@phdthesisstr
-  \fi\fi\fi\fi\fi\fi}
-
-\def\thedegree#1#2{%
-	\expandafter\csname UNL@#1#2\endcsname}
+  \gdef\UNL@title{#1}
+  \hypersetup{pdftitle={\UNL@title}}}
+\def\UNL@title{~title \UNL@notdefined}
 
 \def\UNL@degree{%
-  \if\UNL@doctype0
-    \thedegree{\ader}{bachelordegreestr}
-  \else\if\UNL@doctype1
-    \thedegree{\authorgender}{mastersdegreestr}
-  \else\if\UNL@doctype2
-    \thedegree{\authorgender}{mastersdegreestr}
-  \else\if\UNL@doctype3
-    \thedegree{\authorgender}{phddegreestr}
-  \else\if\UNL@doctype4
-    \thedegree{\authorgender}{phddegreestr}
-   \else\if\UNL@doctype5
-    \thedegree{\authorgender}{phddegreestr}
-  \fi\fi\fi\fi\fi\fi}
+	\UNL@degreestr[\UNL@doctype,\authorgender,\UNL@cover@lang]%
+}
 
 
 
@@ -540,29 +505,29 @@ Copyright \copyright\ \@author, \@faculty, \@university
 
 \def\printthejury{%
 	\begin{tabular}{ll}
-	& \UNL@jurystr:\\
+	& \UNL@jurytitlestr[\UNL@cover@lang]:\\
 	\ifthenelse{\isundefined\UNL@jury@p@list}{}{%
 			\listcssize{UNL@jury@p@list}%
 			\ifthenelse{\equal{\the\UNL@listsize@cnt}{1}}%
-				{\gdef\UNL@jury@n@p{single}}%
-				{\gdef\UNL@jury@n@p{many}}%
-			\csname UNL@\UNL@jury@n@p presidentstr\endcsname: %
+				{\gdef\UNL@jury@n@p{1}}%
+				{\gdef\UNL@jury@n@p{2}}%
+			\UNL@presidentstr[\UNL@jury@n@p,\UNL@cover@lang]:
 			\forlistcsloop{\UNL@do@jury@tabular}{UNL@jury@p@list}
 	}
 	\ifthenelse{\isundefined\UNL@jury@a@list}{}{%
 			\listcssize{UNL@jury@a@list}%
 			\ifthenelse{\equal{\the\UNL@listsize@cnt}{1}}%
-				{\gdef\UNL@jury@n@p{single}}%
-				{\gdef\UNL@jury@n@p{many}}%
-			\csname UNL@\UNL@jury@n@p refereestr\endcsname: %
+				{\gdef\UNL@jury@n@p{1}}%
+				{\gdef\UNL@jury@n@p{2}}%
+			\UNL@refereestr[\UNL@jury@n@p,\UNL@cover@lang]:
 			\forlistcsloop{\UNL@do@jury@tabular}{UNL@jury@a@list}
 	}
 	\ifthenelse{\isundefined\UNL@jury@v@list}{}{%
 			\listcssize{UNL@jury@v@list}%
 			\ifthenelse{\equal{\the\UNL@listsize@cnt}{1}}%
-				{\gdef\UNL@jury@n@p{single}}%
-				{\gdef\UNL@jury@n@p{many}}%
-			\csname UNL@\UNL@jury@n@p memberstr\endcsname: %
+				{\gdef\UNL@jury@n@p{§}}%
+				{\gdef\UNL@jury@n@p{2}}%
+			\UNL@memberstr[\UNL@jury@n@p,\UNL@cover@lang]:
 			\forlistcsloop{\UNL@do@jury@tabular}{UNL@jury@v@list}
 	}
 	\end{tabular}
@@ -615,13 +580,14 @@ Copyright \copyright\ \@author, \@faculty, \@university
 \def\UNL@adviser@str#1{%
 	\listcssize{UNL@#1adviser@gender@list}%
 	\ifthenelse{\equal{\the\UNL@listsize@cnt}{1}}%
-		{\gdef\UNL@advisernprefix{single}}%
-		{\gdef\UNL@advisernprefix{many}}%
+		{\gdef\UNL@adviser@n{1}}%
+		{\gdef\UNL@adviser@n{2}}%
 	\listcsgenderf{UNL@#1adviser@gender@list}%
 	\ifthenelse{\equal{\the\UNL@listsize@cnt}{\the\UNL@listgenderf@cnt}}%
-		{\gdef\UNL@advisergprefix{f}}%
-		{\gdef\UNL@advisergprefix{m}}%
-	\csname UNL@\UNL@advisernprefix\UNL@advisergprefix #1adviserstr\endcsname%
+		{\gdef\UNL@adviser@g{f}}%
+		{\gdef\UNL@adviser@g{m}}%
+	\def\UNL@adv{\csname UNL@#1adviserstr\endcsname}
+	\UNL@adv[\UNL@adviser@n,\UNL@adviser@g,\UNL@cover@lang]
 }
 
 
@@ -656,22 +622,28 @@ Copyright \copyright\ \@author, \@faculty, \@university
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Set cover language to Portuguese.
+%% In the future this will be configurable, but not yet! :(
+\def\UNL@cover@lang{pt}
+
+
 \def\coverpage{
 \thispagestyle{empty}
 \pagestyle{empty}
 
 %% Define cover page margins
 \ifthenelse{%
-	\equal{\UNL@doctype}{0}%
-	\OR\equal{\UNL@doctype}{1}%
-	\OR\equal{\UNL@doctype}{2}}{% MSc
+	\equal{\UNL@doctype}{bsc}%
+	\OR\equal{\UNL@doctype}{prepmsc}%
+	\OR\equal{\UNL@doctype}{msc}}{% MSc
 		\def\@defcoverbg{\@thesiscovermsc}
 		\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
 	}{%
 \ifthenelse{%
-	\equal{\UNL@doctype}{3}%
-	\OR\equal{\UNL@doctype}{4}%
-	\OR\equal{\UNL@doctype}{5}}{% PhD
+	\equal{\UNL@doctype}{prepphd}%
+	\OR\equal{\UNL@doctype}{propphd}%
+	\OR\equal{\UNL@doctype}{phd}}{% PhD
 		\def\@defcoverbg{\@thesiscoverphd}
 		\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=5.5cm,rmargin=2.5cm}
 	}
@@ -682,6 +654,7 @@ Copyright \copyright\ \@author, \@faculty, \@university
 
 %% Add background image	
 \AddToShipoutPicture*{\BackgroundPic{\@defcoverbg}}
+
 
 \begin{center}
 	\fontfamily{phv}
@@ -701,13 +674,13 @@ Copyright \copyright\ \@author, \@faculty, \@university
 % Title of Dissertation
 	\fontsize{18}{20}
 	\selectfont
-	\textbf{\@title}\\[0.75cm]
+	\textbf{\UNL@title}\\[0.75cm]
 
 \vspace{0.75cm}
 % Degree
 	\fontsize{12}{13}
 	\selectfont
-	\@presentationtext
+	\UNL@presentationtext
 	
 	\vfill
 	% Advisers
@@ -717,27 +690,28 @@ Copyright \copyright\ \@author, \@faculty, \@university
 
 \vfill\vfill
 % Referee board
-\ifthenelse{%
-	\equal{\UNL@doctype}{0}%
-	\OR\equal{\UNL@doctype}{2}%
-	\OR\equal{\UNL@doctype}{3}%
-	\OR\equal{\UNL@doctype}{5}}
-{\hfill\printthejury}
-{}
+	\ifthenelse{%
+		\equal{\UNL@doctype}{bsc}%
+		\OR\equal{\UNL@doctype}{msc}%
+		% \OR\equal{\UNL@doctype}{propphd}%
+		\OR\equal{\UNL@doctype}{phd}}
+	{\hfill\fontsize{10}{11}\selectfont\printthejury}
+	{}
 
 \vfill\vfill\vfill
 
 % Date
-\fontsize{12}{13}
-\selectfont
-\ifdraftdoc 
-	\textbf{DRAFT: \today}
-\else
-	\textbf{\@themonth, \@theyear}
-\fi	
+	\fontsize{12}{13}
+	\selectfont
+	\ifdraftdoc 
+		\textbf{DRAFT: \today}
+	\else
+		\textbf{\@themonth, \@theyear}
+	\fi	
+
 \end{center}
 \restoregeometry
-\clearemptydoublepage
+\cleardoublepage
 }
 
 
@@ -765,18 +739,18 @@ Copyright \copyright\ \@author, \@faculty, \@university
 \else
 \def\printdedicatory{
 	\ifthenelse{%
-		\equal{\UNL@doctype}{0}	% bsc
+		\equal{\UNL@doctype}{bsc}	% bsc
 		\OR
-		\equal{\UNL@doctype}{2}	% msc
+		\equal{\UNL@doctype}{msc}	% msc
 		\OR
-		\equal{\UNL@doctype}{5}	% phd
+		\equal{\UNL@doctype}{phd}	% phd
 	}{% THEN
 		\InputIfFileExists{Chapters/\@dedicatoryfile}{%
-			% File glossary.tex exists and is read
+			% File dedicatory.tex exists and is read
 			\global\let\@dedicatoryfile\@empty
-			\clearemptydoublepage
+			\cleardoublepage
 		}{%
-			% File glossary.tex is not found, ignore
+			% File does not exist
 		}	
 	}{ % ELSE
 	}
@@ -793,18 +767,18 @@ Copyright \copyright\ \@author, \@faculty, \@university
 \else
 \def\printquote{
 	\ifthenelse{%
-		\equal{\UNL@doctype}{0}	% bsc
+		\equal{\UNL@doctype}{bsc}	% bsc
 		\OR
-		\equal{\UNL@doctype}{2}	% msc
+		\equal{\UNL@doctype}{msc}	% msc
 		\OR
-		\equal{\UNL@doctype}{5}	% phd
+		\equal{\UNL@doctype}{phd}	% phd
 	}{% THEN
 		\InputIfFileExists{Chapters/\@quotefile}{%
-			% File glossary.tex exists and is read
+			% File qualtefile.tex exists and is read
 			\global\let\@quotefile\@empty
-			\clearemptydoublepage
+			\cleardoublepage
 		}{%
-			% File glossary.tex is not found, ignore
+			% File quotefile.tex is not found, ignore
 		}	
 	}{ % ELSE
 	}
@@ -813,72 +787,64 @@ Copyright \copyright\ \@author, \@faculty, \@university
 
 
 \def\acknowledgementsfile#1{%
-  \gdef\@acknowledgementsfile{#1}}
-\def\@acknowledgementsfile{\@empty}
+  \gdef\UNL@acknowledgementsfile{#1}}
+\def\UNL@acknowledgementsfile{\@empty}
 
-\ifx\@acknowledgementsfile\@empty
-\def\printacknowledgements{}
-\else
-\def\printacknowledgements{
-	\ifthenelse{%
-		\equal{\UNL@doctype}{0}	% bsc
-		\OR
-		\equal{\UNL@doctype}{2}	% msc
-		\OR
-		\equal{\UNL@doctype}{5}	% phd
-	}{% THEN
-		\InputIfFileExists{Chapters/\@acknowledgementsfile}{%
-			% File glossary.tex exists and is read
-			\global\let\@acknowledgementsfile\@empty
-			\clearemptydoublepage
-		}{%
-			% File glossary.tex is not found, ignore
-		}	
-	}{ % ELSE
+\def\printacknowledgements{%
+	\IfFileExists{Chapters/\UNL@acknowledgementsfile}{%
+		\ifthenelse{%
+			\equal{\UNL@doctype}{bsc}	% bsc
+			\OR
+			\equal{\UNL@doctype}{msc}	% msc
+			\OR
+			\equal{\UNL@doctype}{phd}	% phd
+		}{% THEN
+			\input{Chapters/\UNL@acknowledgementsfile}
+			\cleardoublepage
+		}{ % ELSE
+		}
 	}
+	{}
 }
-\fi
 
 
-\def\ptabstractfile#1{%
-  \gdef\UNL@ptabstractfile{#1}}
-\def\UNL@ptabstractfile{\@empty}
-% \def\UNL@ptabstractfile{~ptabstractfile \@notdefined}
 
-\def\enabstractfile#1{%
-  \gdef\UNL@enabstractfile{#1}}
-\def\UNL@enabstractfile{\@empty}
-% \def\UNL@enabstractfile{~enabstractfile \@notdefined}
-
-\if\UNL@lang0   % Sumário-PT + Abstract-EN para tese em Português
-\def\UNL@ptabstractfile{~ptabstractfile \@notdefined}
-\else\if\UNL@lang1   % Abstract-EN + Sumário-PT for thesis in English
-\def\UNL@enabstractfile{~enabstractfile \@notdefined}
-\fi\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\def\printabstract{%
-	\if\UNL@lang0   % Sumário-PT + Abstract-EN para tese em Português
-		\selectlanguage{portuguese}
-		\@input@{Chapters/\UNL@ptabstractfile}\global\let\UNL@ptabstractfile\@empty
-		\ifx\UNL@enabstractfile\@empty
-		\else
-			\selectlanguage{english}
-			\@input@{Chapters/\UNL@enabstractfile}\global\let\UNL@enabstractfile\@empty
-			\selectlanguage{portuguese}
-		\fi
-	\else\if\UNL@lang1   % Abstract-EN + Sumário-PT for thesis in English
-		\selectlanguage{english}
-		\@input@{Chapters/\UNL@enabstractfile}\global\let\UNL@enabstractfile\@empty
-		\ifx\UNL@ptabstractfile\@empty
-		\else
-			\selectlanguage{portuguese}
-			\@input@{Chapters/\UNL@ptabstractfile}\global\let\UNL@ptabstractfile\@empty
-			\selectlanguage{english}
-		\fi
-	\fi\fi
-	\clearemptydoublepage
+\def\UNL@abstractfile@pt{\@empty}
+\def\UNL@abstractfile@en{\@empty}
+
+\def\abstractfile[#1]#2{%
+	\expandafter\gdef\csname UNL@abstractfile@#1\endcsname{#2}}
+
+\def\selectthelanguage#1{%
+	\ifthenelse{\equal{#1}{pt}}{\selectlanguage{portuguese}}{}
+	\ifthenelse{\equal{#1}{en}}{\selectlanguage{english}}{}
 }
+
+
+\def\UNL@printabstract@lang#1{%
+{ % Extra braces to force language changes to be local
+	\def\UNL@filetoinclude{Chapters/\csname UNL@abstractfile@#1\endcsname}
+	\selectthelanguage{#1}
+	\IfFileExists{\UNL@filetoinclude}{%
+		\input{\UNL@filetoinclude}
+		\cleardoublepage
+	}{}
+}
+}
+
+
+\def\printabstract{% 
+	\renewcommand*{\do}[1]{\UNL@printabstract@lang{##1}}
+	\xdef\UNL@tmp{\expandafter\csname UNL@abstractorder@en\endcsname}
+	\expandafter\docsvlist\expandafter{\UNL@tmp}
+}
+
+
 
 \def\thesisfrontmatter{%
 	\frontmatter
@@ -912,92 +878,73 @@ Copyright \copyright\ \@author, \@faculty, \@university
 	\fi\fi
 }
 
-\def\endthesismainmatter{%
-	% \fancyhead{}
-	% \lhead{\nouppercase{\textsc{\leftmark}}}
-	% \rhead{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Chapters
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\chapterfile#1{%
+	\listgadd{\UNL@chapter@list}{#1}
 }
 
-
-% Chapters
-\newcount\@chapcount
-\@chapcount 0\relax
-
-\def\chapterfile#1{%
-	\advance\@chapcount 1\relax
-	\expandafter\gdef\csname UNL@chapterfile\number\@chapcount\endcsname{Chapters/#1}
+\def\UNL@printchapter#1{%
+% 	\if\UNL@bibbychapter1
+% 		\begin{refsegment}
+% 	\fi
+	\InputIfFileExists{Chapters/#1}{}{ERROR: File '#1' does not exist!!!}
+%	\if\UNL@bibbychapter1
+%		\printbibliography[segment=\arabic{chapter},heading=subbibintoc]
+%		\end{refsegment}
+%	\fi
 }
 
 \def\printchapthers{%
-	\newcount\@myi
-	\@myi 0\relax
-	\loop
-		\advance\@myi 1\relax
-		\def\@chapname{\expandafter\csname UNL@chapterfile\number\@myi\endcsname}
-		\if\UNL@bibbychapter1
-			\begin{refsegment}
-		\fi
-		\@input@{\@chapname}
-		\if\UNL@bibbychapter1
-			\printbibliography[segment=\arabic{chapter},heading=subbibintoc]
-			\end{refsegment}
-		\fi
-	\ifnum \@myi < \@chapcount
-	\repeat
-	\endthesismainmatter
+	\forlistloop{\UNL@printchapter}{\UNL@chapter@list}
 }
 
 
-% Appendixes
-\newcount\@appxcount
-\@appxcount 0\relax
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Appendixes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\appendixfile#1{%
-	\advance\@appxcount 1\relax
-	\expandafter\gdef\csname UNL@appendixfile\number\@appxcount\endcsname{Chapters/#1}
+	\listgadd{\UNL@appendix@list}{#1}
 }
 
-\def\printappendixes{%	
-	\appendix
-	\newcount\@myi
-	\@myi 0\relax
-	\loop
-		\advance\@myi 1\relax
-		\def\@appxname{\expandafter\csname UNL@appendixfile\number\@myi\endcsname}
-		\@input@{\@appxname}
-	\ifnum \@myi < \@appxcount
-	\repeat
+\def\UNL@printappendix#1{%
+	\InputIfFileExists{Chapters/#1}{}{ERROR: File '#1' does not exist!!!}
+}
+
+\def\printappendixes{%
+	\forlistloop{\UNL@printappendix}{\UNL@appendix@list}
 }
 
 
-\def\UNL@printlistoffigures{}
-\def\printlistoffigures{%
-  \gdef\UNL@printlistoffigures{\listoffigures\clearemptydoublepage}}
 
-\def\UNL@printlistoftables{}
-\def\printlistoftables{%
-  \gdef\UNL@printlistoftables{\listoftables\clearemptydoublepage}}
 
-\def\UNL@printlistoflistings{}
-\def\printlistoflistings{%
-  \gdef\UNL@printlistoflistings{\lstlistoflistings\clearemptydoublepage}}
 
-\def\UNL@printglossary{}
-\def\printglossary{%
-  \gdef\UNL@printglossary{\printnoidxglossary[]\clearemptydoublepage}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Deal with optional lists in the frontmatter: listoftables, litoffigures, etc.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\UNL@printlist#1{%
+	#1\cleardoublepage
+}
+
+\def\addlisttofrontmatter#1{%
+	\listgadd{\UNL@frontmatter@list}{#1}
+}
 
 \def\printotherlists{%
-	\clearemptydoublepage
-	\UNL@printlistoffigures
-	\UNL@printlistoftables
-	\if\UNL@lang0   % Estamos a usar o Português
-		\def\lstlistlistingname{Listagens}
-	\fi
-	\UNL@printlistoflistings
-	\UNL@printglossary
+	\cleardoublepage
+	\forlistloop{\UNL@printlist}{\UNL@frontmatter@list}%
 }
 
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\addbibfile#1{%
   \addbibresource{#1}}
 
@@ -1014,26 +961,25 @@ Copyright \copyright\ \@author, \@faculty, \@university
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\printcopyrightpage{%
 	\cleardoublepage
-	\ 
-	\vfill
+	\null\vfill
 	\noindent
-	\textbf{\large \@title}
-
+	\textbf{\large \UNL@title}\par
 	\bigskip
 	\thecopyrightstr
 }
 
-\def\printcopyright{
-\if\UNL@doctype0
-	\printcopyrightpage
-\else\if\UNL@doctype1
-\else\if\UNL@doctype2
-	\printcopyrightpage
-\else\if\UNL@doctype3
-\else\if\UNL@doctype4
-\else\if\UNL@doctype5
-	\printcopyrightpage
-\fi\fi\fi\fi\fi\fi}
+\def\printcopyright{%
+	\ifthenelse{%
+		\equal{\UNL@doctype}{bsc}	% bsc
+		\OR
+		\equal{\UNL@doctype}{msc}	% msc
+		\OR
+		\equal{\UNL@doctype}{phd}	% phd
+	}{% THEN
+		\printcopyrightpage
+	}{ % ELSE
+	}
+}
 
 
 
@@ -1053,6 +999,7 @@ Copyright \copyright\ \@author, \@faculty, \@university
     \normalfont
     \end{minipage}
 	\end{flushright}
+\if@openright\cleardoublepage\else\clearpage\fi
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1077,35 +1024,26 @@ Copyright \copyright\ \@author, \@faculty, \@university
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\acknowledgements{%
-  \chapter*{\acknowledgementsname}
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Resumo
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\abstractPT{%
-  \selectlanguage{portuguese}
-  \gdef\@keywordsname{\@keywordsnamePT}
-  \chapter*{\UNL@abstrnamePT}
-   \rule{\textwidth}{0.2mm} ~\\[-3.5ex]
+  \def\UNL@ack{\csname UNL@acknowledgementsname@\UNL@lang\endcsname}
+  \chapter*{\UNL@ack}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\abstractEN{%
-  \selectlanguage{english}
-  \gdef\@keywordsname{\@keywordsnameEN}
-  \chapter*{\UNL@abstrnameEN}
-  \rule{\textwidth}{0.2mm} ~\\[-3.5ex]
+\newcommand{\abstractlang}[1]{%
+	\selectthelanguage{#1}
+	\gdef\UNL@keywordsstr{\csname UNL@keywordsname@#1\endcsname}
+	\expandafter\chapter*{\csname UNL@abstractname@#1\endcsname}
+	\rule{\textwidth}{0.2mm} ~\\[-3.5ex]
 }
+
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Keywords
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\@keywordsname{\@defaultkeywordsname}
 \def\keywords{%
-  \par\vskip\baselineskip\noindent{\bfseries\@keywordsname: }}
+  \par\vskip\baselineskip\noindent{\bfseries\UNL@keywordsstr: }}
 \def\endkeywords{~\\[2ex]\rule{\textwidth}{0.2mm}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1204,7 +1142,6 @@ Copyright \copyright\ \@author, \@faculty, \@university
 % contents sections will each start on an odd-numbered page they will
 % spill over onto the even-numbered pages if extending beyond one page
 % (hopefully, this is ok).
-\newcommand{\clearemptydoublepage}{\newpage{\thispagestyle{empty}\cleardoublepage}}
 
 
 
@@ -1219,7 +1156,7 @@ Copyright \copyright\ \@author, \@faculty, \@university
 % \pagestyle{UNL@spine@pagestyle}
 
 \def\shortauthor#1{\gdef\UNL@shortauthor{#1}} % \spine is used to print the author short name (maybe there is a more elegant solution for this
-\def\UNL@shortauthor{~shot~author \@notdefined}
+\def\UNL@shortauthor{~shot~author \UNL@notdefined}
 
 \def\printthespine{%
 \newgeometry{left=0.1cm,right=0.1cm,top=0.1cm,bottom=0.1cm}
@@ -1238,7 +1175,7 @@ Copyright \copyright\ \@author, \@faculty, \@university
 \newsavebox{\UNL@spine@thick}
 \sbox\UNL@spine@thick{%
 	\begin{tabular}{c}
-		\@title\\[\UNL@thinkspineskip]
+		\UNL@title\\[\UNL@thinkspineskip]
 		\UNL@shortauthor
 	\end{tabular}
 }
@@ -1246,10 +1183,7 @@ Copyright \copyright\ \@author, \@faculty, \@university
 \setlength\UNL@thick@spineheight{\heightof{\usebox{\UNL@spine@thick}}}
 \addtolength\UNL@thick@spineheight{\depthof{\usebox{\UNL@spine@thick}}}
 
-% \newlength\UNL@thin@spineheight
-% \newlength\UNL@thin@spinewidth
-% \setlength\UNL@thin@spineheight{\heightof{\usebox{\UNL@spine@thin}}}
-% \setlength\UNL@thin@spinewidth{\widthof{\usebox{\UNL@spine@thin}}}
+
 
 \newsavebox{\UNL@spine@year}
 \sbox\UNL@spine@year{%
@@ -1267,7 +1201,7 @@ Copyright \copyright\ \@author, \@faculty, \@university
 		& & \ifthenelse
 				{\UNL@spinewidth > \UNL@thick@spineheight}
 				{& \usebox{\UNL@spine@thick} &}
-				{\UNL@shortauthor & & \@title} 
+				{\UNL@shortauthor & & \UNL@title} 
 		& & \vspace*{4pt}\includegraphics[origin=c,angle=-90,height=0.9\UNL@spinewidth]{logoUNL}
 	\end{tabularx}
 }}
@@ -1276,18 +1210,3 @@ Copyright \copyright\ \@author, \@faculty, \@university
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Include acronym and glossary if files exsist
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Add glossary / abbreviations
-\InputIfFileExists{Chapters/acronyms}{%
-  % File glossary.tex exists and is read
-}{%
-  % File glossary.tex is not found, ignore
-}
-\InputIfFileExists{Chapters/glossary}{%
-  % File glossary.tex exists and is read
-}{%
-  % File glossary.tex is not found, ignore
-}

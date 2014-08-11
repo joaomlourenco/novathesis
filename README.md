@@ -38,6 +38,12 @@ For more information please visit the [discussion forum](https://groups.google.c
 News
 ----
 
+*2014-08-12 — Better support for multilingual documents.*
++ New file “langsupport.tex” with configuration for support of multiples languages
++ Added a flexible interface based in the macro "\addlisttofrontmatter{…}" to manage the different types of lists in the frontmatter (LOF, LOT, etc)
++ Extensive changes to "unlthesis.cls" to: i) use the info from file "langsupport.tex"; and ii) make internal use of lists to do repetitive processing.
++ The support for "glossaries" is not hardcoded into the class file anymore, now it is loaded in the template file and an alternative package may be used instead.
+
 *2014-08-08 — Autoformating for the advisers.*
 + The template requires 3 pieces of info on the adviser(s): name, position and institution. Now if these 3 items will be printed in a single line if possible, otherwise splito into two or three lines as necessary.
 

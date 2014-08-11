@@ -102,14 +102,25 @@
 % Use colors in background of table cells
 %\usepackage{colortbl}
 
-% Sort citations - ONLY if using "plain" style, otherwise keep commented
-%\usepackage[sort]{cite}
-
 % Fontification of source code listings
 \usepackage{listings}
 
-% To aggregate multiple figures in a single one with subfigures
-% \usepackage{subfigure}
+% To create gloassries
+\usepackage[nonumberlist]{glossaries}
+\glsdisablehyper
+\makenoidxglossaries
+
+% The contents of both files (acronyms and glossary) will be merged
+\InputIfFileExists{Chapters/acronyms}{%
+  % File glossary.tex exists and is read
+}{%
+  % File glossary.tex is not found, ignore
+}
+\InputIfFileExists{Chapters/glossary}{%
+  % File glossary.tex exists and is read
+}{%
+  % File glossary.tex is not found, ignore
+}
 
 % To register TODO notes in the text
 \usepackage[textsize=footnotesize]{todonotes}
@@ -135,10 +146,13 @@
     frame=single,
 }
 
+
+
 %------------------------------------------------------------------
 % Some default values that you may whish to override
 %------------------------------------------------------------------
-%% Identification: items prefixed with (*) are the default values, as defined in "defaults.tex"
+%% Identification: items prefixed with (*) are the default values, 
+%       as defined in the file "defaults.tex"
 % (*)\university{Universidade Nova de Lisboa}
 % (*)\faculty{Faculdade de Ciências e Tecnologia}
 % (*)\majorfield{Engenharia Informática}
@@ -146,11 +160,6 @@
 % (*)\thesiscoverphd{cover-phd}
 % (*)\thesiscovermsc{cover-msc-round} -> there is an alternative with squre corners
 % (*)\thesiscoverplain{cover-plain}
-
-% Use double spacing (default is one-and-half spacing), which allows
-%     for the Adviser to insert revision notes and comments.
-% (*)\onehalfspacing
-% \doublespacing
 
 %%============================================================
 
@@ -179,7 +188,7 @@
 
 % Co-Advisers (maximum of 9)
 % use [f] for female and [m] for male
-% \coadviser[f]{[Nome da co-orientadora 1]}{[Cargo]}{[Instituição]}
+\coadviser[f]{[Nome da co-orientadora 1]}{[Cargo]}{[Instituição]}
 % \coadviser[f]{[Nome da co-orientadora 2]}{[Profª.\ Auxiliar]}{[Universidade Nova de Lisboa]}
 
 
@@ -213,16 +222,16 @@
 
 
 % \quotefile{quote}		% Quote
-\ptabstractfile{resumo}		% Abstract in Portuguese
-\enabstractfile{abstract}	% Abstract in English
+\abstractfile[pt]{resumo}	% Abstract in Portuguese
+\abstractfile[en]{abstract}	% Abstract in English
 
 
 % The Table of Contents is always printed. 
-% The other lists may be commented and omitted.
-\printlistoffigures	% The List of Figures. Comment to omit.
-\printlistoftables 	% The List of Tables. Comment to omit.
-\printlistoflistings	% The List of Code Listings. Comment to omit.
-\printglossary		% The List if Abreviations / Glossary. Comment to omit.
+% The other lists below may be commented and omitted.
+\addlisttofrontmatter{\listoffigures}	% The List of Figures. Comment to omit.
+\addlisttofrontmatter{\listoftables} 	% The List of Tables. Comment to omit.
+\addlisttofrontmatter{\lstlistoflistings}	% The List of Code Listings. Comment to omit.
+\addlisttofrontmatter{\printnoidxglossary[]}	% The List if Abreviations / Glossary. Comment to omit.
 
 
 % Text chapters
