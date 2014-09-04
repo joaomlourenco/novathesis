@@ -54,7 +54,7 @@
 % Portuguese			0
 % English			1
 
-\gdef\UNL@lang{pt}
+\gdef\UNL@lang{en}
 \DeclareOptionX{lang}{
 	\typeout{'lang'=#1}
 	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}{\gdef\UNL@lang{pt}\PassOptionsToPackage{english,portuguese}{babel}}
@@ -167,8 +167,8 @@
 
 \ExecuteOptionsX{
 	doctype=phd,
-	lang=en,
 	enc=utf8,
+	lang=en,
 	spine=false,
 	biblatex={
 		% sorting=nyt,%
@@ -850,7 +850,7 @@ Copyright \copyright\ \@author, \@faculty, \@university
 
 \def\printabstract{% 
 	\renewcommand*{\do}[1]{\UNL@printabstract@lang{##1}}
-	\xdef\UNL@tmp{\expandafter\csname UNL@abstractorder@en\endcsname}
+	\xdef\UNL@tmp{\expandafter\csname UNL@abstractorder@\UNL@lang\endcsname}
 	\expandafter\docsvlist\expandafter{\UNL@tmp}
 }
 
