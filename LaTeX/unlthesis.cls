@@ -3,7 +3,7 @@
 %%% UNL thesis document class
 %%%
 %%% By João Lourenço (joao.lourenco@di.fct.unl.pt)
-%%% Version of August 8, 2014
+%%% Version of September 4, 2014
 %%%
 %%% BUGS and SUGGETSIONS: please send email to "joao.lourenco@fct.unl.pt"
 %%%
@@ -18,7 +18,7 @@
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2014/08/03 UNL Thesis Template]
+\ProvidesClass{unlthesis}[2014/09/04 UNL Thesis Template]
 
 
 
@@ -54,10 +54,11 @@
 % Portuguese			0
 % English			1
 
+\gdef\UNL@lang{pt}
 \DeclareOptionX{lang}{
 	\typeout{'lang'=#1}
-	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}{\def\UNL@lang{pt}}
-	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}{\def\UNL@lang{en}}{
+	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}{\gdef\UNL@lang{pt}\PassOptionsToPackage{english,portuguese}{babel}}
+	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}{\gdef\UNL@lang{en}\PassOptionsToPackage{portuguese,english}{babel}}{
 	\PackageError{thesisdifctunl}{Wrong value for option 'lang'}{Please see the documentation}
 	\expandafter\endinput
 	}}
@@ -162,7 +163,7 @@
 
 % --------------------------------------------------------
 % DEFAULT OPTIONS
-\PassOptionsToPackage{portuguese,english}{babel}
+% \PassOptionsToPackage{portuguese,english}{babel}
 
 \ExecuteOptionsX{
 	doctype=phd,
@@ -306,6 +307,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Multilingual support
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifthenelse{\equal{\UNL@lang}{pt}}%
+	{\selectlanguage{portuguese}}%
+{\ifthenelse{\equal{\UNL@lang}{en}}%
+	{\selectlanguage{english}}%
+	{\PackageError{thesisdifctunl}{Wrong value for option 'lang'}{Please see the documentation}%
+	\expandafter\endinput}}
+
+
+
 % \newdata*{UNL@abstractorder}
 \def\UNL@abstractorder[#1]=#2{
 	\expandafter\gdef\csname UNL@abstractorder@#1\endcsname{#2}}
@@ -853,11 +863,11 @@ Copyright \copyright\ \@author, \@faculty, \@university
 	% \fancyhead{}
 	\setlength{\headheight}{15pt}
 	% \fancyhead[RO,LE]{}
-	\if\UNL@lang0   % Tese em Português
-		\selectlanguage{portuguese}
-	\else\if\UNL@lang1   % Thesis in English
-		\selectlanguage{english}
-	\fi\fi
+	% \if\UNL@lang0   % Tese em Português
+	% 	\selectlanguage{portuguese}
+	% \else\if\UNL@lang1   % Thesis in English
+	% 	\selectlanguage{english}
+	% \fi\fi
 }
 
 \def\thesismainmatter{%
@@ -871,11 +881,11 @@ Copyright \copyright\ \@author, \@faculty, \@university
 	% 	\selectfont\footnotesize\thechapter.\ \textsc{##1}}{}}
 	% \def\sectionmark##1{\markright{\fontfamily{phv}%
 	%  	\selectfont\footnotesize\thesection.\ ##1}}
-	\if\UNL@lang0   % Tese em Português
-		\selectlanguage{portuguese}
-	\else\if\UNL@lang1   % Thesis in English
-		\selectlanguage{english}
-	\fi\fi
+	% \if\UNL@lang0   % Tese em Português
+	% 	\selectlanguage{portuguese}
+	% \else\if\UNL@lang1   % Thesis in English
+	% 	\selectlanguage{english}
+	% \fi\fi
 }
 
 

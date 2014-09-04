@@ -37,6 +37,8 @@ For more information please visit the [discussion forum](https://groups.google.c
 
 News
 ----
+*2014-08-12 — Even better support for multilingual documents.*
++ Fixed a bug in the multilingual support (the language paramenter was being ignored).
 
 *2014-08-12 — Better support for multilingual documents.*
 + New file “langsupport.tex” with configuration for support of multiples languages
