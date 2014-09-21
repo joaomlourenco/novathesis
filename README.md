@@ -1,15 +1,18 @@
 * unlthesis *
 ===============
 
-*A LaTeX template for MSc and PhD thesis from Universidade Nova de Lisboa.*
+A LaTeX template for MSc and PhD dissertations from Universidade Nova de Lisboa
+-------------------------------------------------------------------------------
 
-What to DOWNLOAD???  Get the latest realease from the [releases page](https://github.com/joaomlourenco/unlthesis/releases)!
+**DOWNLOAD???**  Get the latest realease from the [releases page](https://github.com/joaomlourenco/unlthesis/releases)!
 
-Problems? Check the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) and have some hope! :)
+**Sguggestions and/or recommendations?** Please add them to the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) and help other users!
 
-Still with problems?  *Please don't send me an email!*  Please ask for help in the [discussion forum](https://groups.google.com/forum/#!forum/thesisdifctunl) at https://groups.google.com/forum/#!forum/thesisdifctunl. That is the right place to ask for help!
+**Problems?** Check the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) and have some hope! :)
 
-Do you think you found a bug, please [open an issue](https://github.com/joaomlourenco/unlthesis/issues). Thanks!
+**Still with problems?**  *Please don't send me an email!*  Please ask for help in the [discussion forum](https://groups.google.com/forum/#!forum/thesisdifctunl) at https://groups.google.com/forum/#!forum/thesisdifctunl. That is the right place to ask for help!
+
+Do you think **you found a bug**, please [open an issue](https://github.com/joaomlourenco/unlthesis/issues). Thanks!
 
 [See below](#news) the most recent [news](#news).
 
