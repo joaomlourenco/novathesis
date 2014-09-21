@@ -1,13 +1,17 @@
 * unlthesis *
 ===============
 
-A LaTeX template for MSc and PhD thesis from Universidade Nova de Lisboa.
+*A LaTeX template for MSc and PhD thesis from Universidade Nova de Lisboa.*
 
-[See below](#news) for the most recent [news](#news).
+What to DOWNLOAD???  Get the latest realease from the [releases page](https://github.com/joaomlourenco/unlthesis/releases)!
 
-For problems and/or suggestions, please [open an issue](https://github.com/joaomlourenco/unlthesis/issues). Thanks.
+Problems? Check the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) and have some hope! :)
 
-What to DOWNLOAD???  Get the [latest realease](https://github.com/joaomlourenco/unlthesis/releases)!
+Still with problems?  *Please don't send me an email!*  Please ask for help in the [discussion forum](https://groups.google.com/forum/#!forum/thesisdifctunl) at https://groups.google.com/forum/#!forum/thesisdifctunl. That is the right place to ask for help!
+
+Do you think you found a bug, please [open an issue](https://github.com/joaomlourenco/unlthesis/issues). Thanks!
+
+[See below](#news) the most recent [news](#news).
 
 About
 -----
@@ -27,12 +31,6 @@ Disclaimer
 These are not official templates for FCT-UNL, although they are fully compliant to the FCT and UNL formatting regulations.
 
 All contributors, both sporadic and regular, are welcome. :) Please contact "joao.lourenco@nospamplease.fct.unl.pt" (remove the "nospamplease.") to join the team.
-
-
-Help
-----
-
-For more information please visit the [discussion forum](https://groups.google.com/forum/#!forum/thesisdifctunl) at https://groups.google.com/forum/#!forum/thesisdifctunl. Please register… ask for help/support there and give help/support to your peers.
 
 
 News
