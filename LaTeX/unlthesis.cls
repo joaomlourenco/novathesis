@@ -59,7 +59,7 @@
 	\typeout{'lang'=#1}
 	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}{\gdef\UNL@lang{pt}\PassOptionsToPackage{english,portuguese}{babel}}
 	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}{\gdef\UNL@lang{en}\PassOptionsToPackage{portuguese,english}{babel}}{
-	\PackageError{thesisdifctunl}{Wrong value for option 'lang'}{Please see the documentation}
+	\PackageError{unlthesis}{Wrong value for option 'lang'}{Please see the documentation}
 	\expandafter\endinput
 	}}
 }
@@ -101,6 +101,7 @@
 	\typeout{'spine'=#1}
 	\ifthenelse{\equal{#1}{true}}{\AtEndDocument{\printthespine}}{}
 }
+
 
 
 % --------------------------------------------------------
@@ -170,6 +171,7 @@
 	enc=utf8,
 	lang=en,
 	spine=false,
+	crossref=color,
 	biblatex={
 		% sorting=nyt,%
 		% style=alphabetic,%
@@ -311,7 +313,7 @@
 	{\selectlanguage{portuguese}}%
 {\ifthenelse{\equal{\UNL@lang}{en}}%
 	{\selectlanguage{english}}%
-	{\PackageError{thesisdifctunl}{Wrong value for option 'lang'}{Please see the documentation}%
+	{\PackageError{unlthesis}{Wrong value for option 'lang'}{Please see the documentation}%
 	\expandafter\endinput}}
 
 

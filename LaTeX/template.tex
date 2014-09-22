@@ -59,6 +59,10 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%
+%%%%%%%% NOTE: for final printing don't forget to set "linkscolor=black, spine=true" 
+%%%%%%%%       and replace "draft" for "final" in "memoir={a4paper,11pt, draft}".
+%%%%%%%%
 \documentclass[
 	doctype=msc,		% The type of document
 	lang=en,			% The main langage of the document
@@ -76,7 +80,6 @@
 							% ALWAYS replace "draft" by "final" for final version,
 							% With "final" the MONTH and YEAR will be printed
 ]{unlthesis}
-
 
 %%============================================================
 %%
@@ -106,7 +109,7 @@
 \usepackage{listings}
 
 % To create gloassries
-\usepackage[nonumberlist]{glossaries}
+\usepackage[nonumberlist,translate=babel]{glossaries}
 \glsdisablehyper
 \makenoidxglossaries
 
