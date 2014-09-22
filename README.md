@@ -21,7 +21,7 @@ About
 
 This template was intially developed as working basis for the students from the MSc and PhD programs at [DI-FCT-UNL](http://www.di.fct.unl.pt) (1) writing their thesis in LaTex (then I added a Word template as well).
 
-The LaTeX template is highly configurable and foolows the thesis formatting rules for FCT-UNL, and can easily beused by students from other degrees with minor costumization. With a litle more of tweeking it is also possible to adapt the LaTeX template to other institutions as well.
+The LaTeX template is highly configurable and foolows the thesis formatting rules for FCT-UNL, and can easily be used by students from other degrees with minor costumization. With a litle more of tweeking it is also possible to adapt the LaTeX template to other institutions as well.
 
 There is a folder with the Word template that is... well... is a Word document... with all associated the good and bad things. ;)
 
