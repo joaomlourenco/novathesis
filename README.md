@@ -38,6 +38,9 @@ All contributors, both sporadic and regular, are welcome. :) Please contact "joa
 
 News
 ----
+*2014-09-26 — Headers are back.*
++ Fixed some annoying bugs. The most visible was the absence of headers in text pages.
+
 *2014-08-12 — Even better support for multilingual documents.*
 + Fixed a bug in the multilingual support (the language paramenter was being ignored).
 

@@ -18,7 +18,7 @@
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2014/09/04 UNL Thesis Template]
+\ProvidesClass{unlthesis}[2014/09/26 UNL Thesis Template]
 
 
 
@@ -171,7 +171,6 @@
 	enc=utf8,
 	lang=en,
 	spine=false,
-	crossref=color,
 	biblatex={
 		% sorting=nyt,%
 		% style=alphabetic,%
@@ -256,7 +255,7 @@
 \RequirePackage{xcolor}
 \definecolor{darkblue}{rgb}{0.0,0.08,0.45}
 \RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}
-\usepackage{memhfixc}		% Must be used on memoir document class after hyperref
+\RequirePackage{memhfixc}		% Must be used on memoir document class after hyperref
 
 
 %%%%% Configure page geometry
@@ -537,7 +536,7 @@ Copyright \copyright\ \@author, \@faculty, \@university
 	\ifthenelse{\isundefined\UNL@jury@v@list}{}{%
 			\listcssize{UNL@jury@v@list}%
 			\ifthenelse{\equal{\the\UNL@listsize@cnt}{1}}%
-				{\gdef\UNL@jury@n@p{§}}%
+				{\gdef\UNL@jury@n@p{1}}%
 				{\gdef\UNL@jury@n@p{2}}%
 			\UNL@memberstr[\UNL@jury@n@p,\UNL@cover@lang]:
 			\forlistcsloop{\UNL@do@jury@tabular}{UNL@jury@v@list}
@@ -642,7 +641,7 @@ Copyright \copyright\ \@author, \@faculty, \@university
 
 \def\coverpage{
 \thispagestyle{empty}
-\pagestyle{empty}
+% \pagestyle{empty}
 
 %% Define cover page margins
 \ifthenelse{%
@@ -860,7 +859,7 @@ Copyright \copyright\ \@author, \@faculty, \@university
 
 \def\thesisfrontmatter{%
 	\frontmatter
-	% \pagestyle{fancy}
+	\pagestyle{UNL@myvf}
 	\pagenumbering{roman} 
 	% \fancyhead{}
 	\setlength{\headheight}{15pt}
