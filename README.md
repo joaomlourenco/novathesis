@@ -38,6 +38,9 @@ All contributors, both sporadic and regular, are welcome. :) Please contact "joa
 
 News
 ----
+*2014-10-16 — All documents are fine.*
++ Fixed a bug in the frontpage text in some classes of documents (prepmsc, prepphd, propphd).
+
 *2014-09-26 — Headers are back.*
 + Fixed some annoying bugs. The most visible was the absence of headers in text pages.
 
