@@ -38,6 +38,9 @@ All contributors, both sporadic and regular, are welcome. :) Please contact "joa
 
 News
 ----
+*2014-11-19 — Appendixes are fine.*
++ Fixed a bug with the numbering of the appendices.
+
 *2014-10-16 — All documents are fine.*
 + Fixed a bug in the frontpage text in some classes of documents (prepmsc, prepphd, propphd).
 

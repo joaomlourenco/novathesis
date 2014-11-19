@@ -18,7 +18,7 @@
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2014/09/26 UNL Thesis Template]
+\ProvidesClass{unlthesis}[2014/11/19 UNL Thesis Template]
 
 
 
@@ -927,6 +927,7 @@ Copyright \copyright\ \@author, \@faculty, \@university
 }
 
 \def\printappendixes{%
+	\appendix%
 	\forlistloop{\UNL@printappendix}{\UNL@appendix@list}
 }
 
