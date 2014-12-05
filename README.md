@@ -10,22 +10,21 @@ A LaTeX template for MSc and PhD dissertations from Universidade Nova de Lisboa
 
 **Problems?** Check the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) and have some hope! :)
 
-**Still with problems?**  *Please don't send me an email!*  Please ask for help in the [discussion forum](https://groups.google.com/forum/#!forum/thesisdifctunl) at https://groups.google.com/forum/#!forum/thesisdifctunl. That is the right place to ask for help!
+**Still with problems?**  Ask for help in the [discussion forum](https://groups.google.com/forum/#!forum/thesisdifctunl) at https://groups.google.com/forum/#!forum/thesisdifctunl. That is the right place to ask for help!  *Please don't send me an email! with problems/questions*
 
-Do you think **you found a bug**, please [open an issue](https://github.com/joaomlourenco/unlthesis/issues). Thanks!
+**Did you find a bug?**  Please [open an issue](https://github.com/joaomlourenco/unlthesis/issues). Thanks!
 
-[See below](#news) the most recent [news](#news).
+[See below](#news) for the most recent [news](#news).
+
 
 About
 -----
 
-This template was intially developed as working basis for the students from the MSc and PhD programs at [DI-FCT-UNL](http://www.di.fct.unl.pt) (1) writing their thesis in LaTex (then I added a Word template as well).
+Here you may find LaTeX and Word templates for MSc and PhD thesis at [FCT-UNL](http://www.fct.unl.pt).  Both templates conform to the formating regulations of [FCT-UNL](http://www.fct.unl.pt).
 
-The LaTeX template is highly configurable and foolows the thesis formatting rules for FCT-UNL, and can easily be used by students from other degrees with minor costumization. With a litle more of tweeking it is also possible to adapt the LaTeX template to other institutions as well.
+The LaTeX template is highly configurable and may be used by students from other degrees with minor costumizations.  With a litle more of tweeking it is also possible to adapt this template to be used in other institutions.  This template is being actively developed. 
 
-There is a folder with the Word template that is... well... is a Word document... with all associated the good and bad things. ;)
-
--- (1) Departamento de Informática (CS Department) of Faculdade de Ciências e Tecnologia of Universidade Nova de Lisboa (http://www.di.fct.unl.pt).
+The Word template is *frozen*.  The maintenance is very very limited.
 
 
 Disclaimer
