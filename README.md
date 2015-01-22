@@ -10,7 +10,7 @@ A LaTeX template for MSc and PhD dissertations from Universidade Nova de Lisboa
 
 **Problems?** Check the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) and have some hope! :)
 
-**Still with problems?**  Ask for help in the [discussion forum](https://groups.google.com/forum/#!forum/thesisdifctunl) at https://groups.google.com/forum/#!forum/thesisdifctunl. That is the right place to ask for help!  *Please don't send me an email! with problems/questions*
+**Still with problems?**  Ask for help in the [discussion forum](https://groups.google.com/forum/#!forum/unlthesis) at https://groups.google.com/forum/#!forum/unlthesis. That is the right place to ask for help!  *Please don't send me an email! with problems/questions*
 
 **Did you find a bug?**  Please [open an issue](https://github.com/joaomlourenco/unlthesis/issues). Thanks!
 
