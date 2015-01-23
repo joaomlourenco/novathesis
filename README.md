@@ -1,20 +1,20 @@
 * unlthesis *
 ===============
 
-A LaTeX template for MSc and PhD dissertations from Universidade Nova de Lisboa
--------------------------------------------------------------------------------
+The unlthesis LaTeX class is a PhD thesis template for the FCT Universidade Nova de Lisboa (FCT-UNL), Portugal. The class provides utilities to easily set up the cover page, the front matter pages, the page headers, etc. with respect to the official guidelines of the FCT-UNL for writing PhD dissertations.
 
-**DOWNLOAD???**  Get the latest realease from the [releases page](https://github.com/joaomlourenco/unlthesis/releases)!
+The template is easily costumizable for other institutions as well.  If you costumize this template for your institution, please [let me knwow](http://docentes.fct.unl.pt/joao-lourenco) about the hardest costumization tasks do that I can work a bit on them.  Thanks.
 
-**Sguggestions and/or recommendations?** Please add them to the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) and help other users!
 
-**Problems?** Check the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) and have some hope! :)
+Quick Guide
+-----------
 
-**Still with problems?**  Ask for help in the [discussion forum](https://groups.google.com/forum/#!forum/unlthesis) at https://groups.google.com/forum/#!forum/unlthesis. That is the right place to ask for help!  *Please don't send me an email! with problems/questions*
-
-**Did you find a bug?**  Please [open an issue](https://github.com/joaomlourenco/unlthesis/issues). Thanks!
-
-[See below](#news) for the most recent [news](#news).
++ **DOWNLOAD???**  Get the latest realease from the [releases page](https://github.com/joaomlourenco/unlthesis/releases)!
++ **Sguggestions and/or recommendations?** Please add them to the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) and help other users!
++ **Problems?** Check the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) and have some hope! :)
++ **Still with problems?**  Ask for help in the [discussion forum](https://groups.google.com/forum/#!forum/unlthesis) at https://groups.google.com/forum/#!forum/unlthesis. That is the right place to ask for help!  *Please don't send me an email! with problems/questions*
++ **Did you find a bug?**  Please [open an issue](https://github.com/joaomlourenco/unlthesis/issues). Thanks!
++ [See below](#news) for the most recent [news](#news).
 
 
 About
