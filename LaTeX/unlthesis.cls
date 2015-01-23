@@ -568,11 +568,11 @@ Copyright \copyright\ \@author, \@faculty, \@university
 % #4 = {category}
 % #5 = {school/institution}
 \def\UNL@adviser[#1][#2]#3#4#5{%
-	\listcsgadd{UNL@#1adviser@gender@list}{#2}
-	\listcsgadd{UNL@#1adviser@name@list}{#3}
-	\listcsgadd{UNL@#1adviser@category@list}{#4}
-	\listcsgadd{UNL@#1adviser@school@list}{#5}
-	\listcsgadd{UNL@#1adviser@list}{{#3},{#4},{#5}}
+	\listcsgadd{UNL@#1adviser@gender@list}{#2}%
+	\listcsgadd{UNL@#1adviser@name@list}{#3}%
+	\listcsgadd{UNL@#1adviser@category@list}{#4}%
+	\listcsgadd{UNL@#1adviser@school@list}{#5}%
+	\listcsgadd{UNL@#1adviser@list}{{#3},{#4},{#5}}%
 }
 
 \newcount\UNL@listgenderf@cnt
@@ -581,10 +581,8 @@ Copyright \copyright\ \@author, \@faculty, \@university
 }
 \def\listcsgenderf#1{%
 	\UNL@listgenderf@cnt 0\relax%
-	\ifthenelse{\expandafter\isundefined\csname #1\endcsname}{%
-	}{%
-	\forlistcsloop{\UNL@do@listgenderf@count}{#1}%
-	}%
+	\ifthenelse{\expandafter\isundefined\csname #1\endcsname}{}%
+		{\forlistcsloop{\UNL@do@listgenderf@count}{#1}}%
 }
 
 
@@ -597,32 +595,33 @@ Copyright \copyright\ \@author, \@faculty, \@university
 	\ifthenelse{\equal{\the\UNL@listsize@cnt}{\the\UNL@listgenderf@cnt}}%
 		{\gdef\UNL@adviser@g{f}}%
 		{\gdef\UNL@adviser@g{m}}%
-	\def\UNL@adv{\csname UNL@#1adviserstr\endcsname}
-	\UNL@adv[\UNL@adviser@n,\UNL@adviser@g,\UNL@cover@lang]
+	\def\UNL@adv{\csname UNL@#1adviserstr\endcsname}%
+	\UNL@adv[\UNL@adviser@n,\UNL@adviser@g,\UNL@cover@lang]%
 }
 
 
 % \newsavebox{\UNL@adviser@tabular@item@box}
 % \newlength{\UNL@adviser@tabular@item@box@w}
 \def\UNL@do@adviser@tabular@item#1,#2,#3{%
-		& \mbox{#1}, \mbox{#2}, \mbox{#3}\\%
+		& \mbox{#1}, \mbox{#2}, \mbox{#3}%
 }
 \def\UNL@do@adviser@tabular#1{%
-	\UNL@do@adviser@tabular@item#1
+	\UNL@do@adviser@tabular@item#1\\[0pt]%
 }
 
 
 \def\printtheadvisers{%
 	% \begin{tabularx}{\linewidth}{lX<{\raggedright}}
-	\begin{tabu} spread 0pt {lX[1,l,p]}
+	\begin{tabu} spread 0pt {lX[1,l,p]}%
 	\ifthenelse{\isundefined\UNL@adviser@gender@list}{}{%
 			\UNL@adviser@str{}: %
-			\forlistcsloop{\UNL@do@adviser@tabular}{UNL@adviser@list}%
-	}
+			\forlistcsloop{\UNL@do@adviser@tabular}{UNL@adviser@list}\ %
+	}%
 	\ifthenelse{\isundefined\UNL@coadviser@gender@list}{}{%
+			& \\[-1.5ex]%
 			\UNL@adviser@str{co}: %
 			\forlistcsloop{\UNL@do@adviser@tabular}{UNL@coadviser@list}%
-	}
+	}%
 	\end{tabu}
 	% \end{tabularx}
 	\par
@@ -861,32 +860,13 @@ Copyright \copyright\ \@author, \@faculty, \@university
 	\frontmatter
 	\pagestyle{UNL@myvf}
 	\pagenumbering{roman} 
-	% \fancyhead{}
 	\setlength{\headheight}{15pt}
-	% \fancyhead[RO,LE]{}
-	% \if\UNL@lang0   % Tese em Português
-	% 	\selectlanguage{portuguese}
-	% \else\if\UNL@lang1   % Thesis in English
-	% 	\selectlanguage{english}
-	% \fi\fi
 }
 
 \def\thesismainmatter{%
 	\mainmatter
-	% \pagestyle{fancy}
 	\pagenumbering{arabic} 
-	% \fancyhead{}
 	\setlength{\headheight}{15pt}
-	% \fancyhead[RO,LE]{\leftmark\hfill\rightmark}
-	% \def\chaptermark##1{\markboth{\fontfamily{phv}%
-	% 	\selectfont\footnotesize\thechapter.\ \textsc{##1}}{}}
-	% \def\sectionmark##1{\markright{\fontfamily{phv}%
-	%  	\selectfont\footnotesize\thesection.\ ##1}}
-	% \if\UNL@lang0   % Tese em Português
-	% 	\selectlanguage{portuguese}
-	% \else\if\UNL@lang1   % Thesis in English
-	% 	\selectlanguage{english}
-	% \fi\fi
 }
 
 
@@ -899,18 +879,12 @@ Copyright \copyright\ \@author, \@faculty, \@university
 }
 
 \def\UNL@printchapter#1{%
-% 	\if\UNL@bibbychapter1
-% 		\begin{refsegment}
-% 	\fi
 	\InputIfFileExists{Chapters/#1}{}{ERROR: File '#1' does not exist!!!}
-%	\if\UNL@bibbychapter1
-%		\printbibliography[segment=\arabic{chapter},heading=subbibintoc]
-%		\end{refsegment}
-%	\fi
 }
 
 \def\printchapthers{%
-	\forlistloop{\UNL@printchapter}{\UNL@chapter@list}
+	\ifthenelse{\isundefined\UNL@chapter@list}{}%
+		{\forlistloop{\UNL@printchapter}{\UNL@chapter@list}}
 }
 
 
@@ -927,8 +901,9 @@ Copyright \copyright\ \@author, \@faculty, \@university
 }
 
 \def\printappendixes{%
-	\appendix%
-	\forlistloop{\UNL@printappendix}{\UNL@appendix@list}
+	\ifthenelse{\isundefined\UNL@appendix@list}{}%
+		{\cleardoublepage\appendix%
+		 \forlistloop{\UNL@printappendix}{\UNL@appendix@list}}%
 }
 
 
@@ -947,8 +922,9 @@ Copyright \copyright\ \@author, \@faculty, \@university
 }
 
 \def\printotherlists{%
-	\cleardoublepage
-	\forlistloop{\UNL@printlist}{\UNL@frontmatter@list}%
+	\ifthenelse{\isundefined\UNL@frontmatter@list}{}%
+		{\cleardoublepage%
+		 \forlistloop{\UNL@printlist}{\UNL@frontmatter@list}}%
 }
 
 
@@ -1076,16 +1052,6 @@ Copyright \copyright\ \@author, \@faculty, \@university
 \definecolor{backGrayColor}{rgb}{0.7,0.7,0.7} % Background title color
 
 
-
-% \titleformat{\chapter}[display]
-% {\bfseries\Huge}				% format
-% {\hfill\colorbox{backGrayColor}{\fontsize{100}{120}\selectfont{\textcolor{white}{\thechapter}}}} % label
-% {1ex}							% sep
-% {%\titlerule
-%   \vspace{2ex}\filleft}			% before
-% %\colorbox{backGrayColor}{}
-% [\vspace{1cm}					%\titlerule
-% ]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
