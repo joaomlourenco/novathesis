@@ -24,7 +24,6 @@ Here you may find LaTeX and Word templates for MSc and PhD thesis at [FCT-UNL](h
 
 The LaTeX template is highly configurable and may be used by students from other degrees with minor costumizations.  With a litle more of tweeking it is also possible to adapt this template to be used in other institutions.  This template is being actively developed. 
 
-The Word template is *frozen*.  The maintenance is very very limited.
 
 
 Disclaimer
@@ -32,7 +31,9 @@ Disclaimer
 
 These are not official templates for FCT-UNL, although they are fully compliant to the FCT and UNL formatting regulations.
 
-All contributors, both sporadic and regular, are welcome. :) Please contact "joao.lourenco@nospamplease.fct.unl.pt" (remove the "nospamplease.") to join the team.
+The Word template is *frozen*.  The maintenance is very very limited.
+
+All contributors, both sporadic and regular, are welcome. :) Please [contact me](http://docentes.fct.unl.pt/joao-lourenco) to join the team.
 
 
 News
