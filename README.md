@@ -1,7 +1,7 @@
 * unlthesis *
 ===============
 
-The unlthesis LaTeX class is a PhD thesis template for the FCT Universidade Nova de Lisboa (FCT-UNL), Portugal. The class provides utilities to easily set up the cover page, the front matter pages, the page headers, etc. with respect to the official guidelines of the FCT-UNL for writing PhD dissertations.
+The unlthesis LaTeX class is a PhD thesis template for the [FCT Universidade Nova de Lisboa (FCT-UNL)](http://www.fct.unl.pt), Portugal. The class provides utilities to easily set up the cover page, the front matter pages, the page headers, etc. with respect to the official guidelines of the FCT-UNL for writing PhD dissertations.
 
 The template is easily costumizable for other institutions as well.  If you costumize this template for your institution, please [let me knwow](http://docentes.fct.unl.pt/joao-lourenco) about the hardest costumization tasks do that I can work a bit on them.  Thanks.
 
@@ -15,15 +15,6 @@ Quick Guide
 + **Still with problems?**  Ask for help in the [discussion forum](https://groups.google.com/forum/#!forum/unlthesis) at https://groups.google.com/forum/#!forum/unlthesis. That is the right place to ask for help!  *Please don't send me an email! with problems/questions*
 + **Did you find a bug?**  Please [open an issue](https://github.com/joaomlourenco/unlthesis/issues). Thanks!
 + [See below](#news) for the most recent [news](#news).
-
-
-About
------
-
-Here you may find LaTeX and Word templates for MSc and PhD thesis at [FCT-UNL](http://www.fct.unl.pt).  Both templates conform to the formating regulations of [FCT-UNL](http://www.fct.unl.pt).
-
-The LaTeX template is highly configurable and may be used by students from other degrees with minor costumizations.  With a litle more of tweeking it is also possible to adapt this template to be used in other institutions.  This template is being actively developed. 
-
 
 
 Disclaimer
