@@ -29,6 +29,11 @@ All contributors, both sporadic and regular, are welcome. :) Please [contact me]
 
 News
 ----
+
+*2015-01-23 — BSc reporting as well.*
++ Improved support for BSc report.
++ Included a MSc like cover but with round corners.
+
 *2015-01-23 — Cover looks nicer.*
 + Fixed a (minor) bug in the cover typesetting.
 + Example with sugfigures is working now!
