@@ -389,6 +389,10 @@ Copyright \copyright\ \@author, \@faculty, \@university
   \gdef\@thesiscovermsc{#1}}
 \def\@thesiscovermsc{~thesiscovermsc \UNL@notdefined}
 
+\def\thesiscoverbsc#1{%
+  \gdef\@thesiscoverbsc{#1}}
+\def\@thesiscoverbsc{~thesiscovermsc \UNL@notdefined}
+
 \def\thesiscoverplain#1{%
   \gdef\@thesiscoverplain{#1}}
 \def\@thesiscoverplain{~thesiscoverempty \UNL@notdefined}
@@ -647,7 +651,7 @@ Copyright \copyright\ \@author, \@faculty, \@university
 	\equal{\UNL@doctype}{bsc}%
 	\OR\equal{\UNL@doctype}{prepmsc}%
 	\OR\equal{\UNL@doctype}{msc}}{% MSc
-		\def\@defcoverbg{\@thesiscovermsc}
+		\def\@defcoverbg{\@thesiscoverbsc}
 		\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
 	}{%
 \ifthenelse{%

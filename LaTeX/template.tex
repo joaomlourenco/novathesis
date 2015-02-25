@@ -2,7 +2,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Template for writing dissertations with ThesisDIFCTUNL
 %%
-%% Version 20141119 (Nov 2014)
+%% Version 20150225 (Fev 2015)
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -64,21 +64,21 @@
 %%%%%%%%       and replace "draft" for "final" in "memoir={a4paper,11pt, draft}".
 %%%%%%%%
 \documentclass[
-	doctype=msc,		% The type of document
+	doctype=msc,			% The type of document
 	lang=en,			% The main langage of the document
 	enc=utf8,			% You shouldn't mess with this one
-	linkscolor=darkblue,% Switch to black for PRINTING
+	linkscolor=darkblue,		% Switch to black for PRINTING
 	spine=true,			% Should be set to false until the final printing
 	biblatex={
-		style=bwl-FU,	% ALTERNATIVES: numeric, alphabetic, authoryear, bwl-FU
-		sorting=nyt,	% ALTERNATIVES: none, nyt, ynt
+		style=numeric,		% ALTERNATIVES: numeric, alphabetic, authoryear, bwl-FU
+		sorting=nyt,		% ALTERNATIVES: none, nyt, ynt
 		maxcitenames=2,
 		mincitenames=1,
 	},
-	memoir={a4paper,11pt, draft},	% Options for base sclass (memoir)
-							% "draft" prints the current date at the bottom of the cover page.
-							% ALWAYS replace "draft" by "final" for final version,
-							% With "final" the MONTH and YEAR will be printed
+	memoir={a4paper, 11pt, final},	% Options for base sclass (memoir)
+					% "draft" prints the current date at the bottom of the cover page.
+					% ALWAYS replace "draft" by "final" for final version,
+					% With "final" the MONTH and YEAR will be printed
 ]{unlthesis}
 
 %%============================================================
@@ -175,7 +175,7 @@
 
 % Autor
 % use [f] for female and [m] for male
-\author[f]{[Nome completo do autor]} 
+\author[m]{[Nome completo do autor]} 
 \shortauthor{[Nome abreviado do autor]}
 \authordegree{[Habilitações académcias]}
 
@@ -195,7 +195,7 @@
 % Co-Advisers (maximum of 9)
 % use [f] for female and [m] for male
 \coadviser[f]{[Nome da co-orientadora 1]}{[Cargo]}{[Instituição]}
-\coadviser[f]{[Nome da co-orientadora 2]}{[Profª.\ Auxiliar]}{[Universidade Nova de Lisboa]}
+% \coadviser[f]{[Nome da co-orientadora 2]}{[Profª.\ Auxiliar]}{[Universidade Nova de Lisboa]}
 
 
 % Jury (maximum of 9 elements)
@@ -265,15 +265,6 @@
 %%============================================================
 
 
-
-
-
-
-
-
-
-
-
 %% Begining of document
 \begin{document}
 
@@ -288,7 +279,7 @@
 \printquote		% Print the quote (if file exists and is adequate for the document type)
 \printabstract		% Print abstracts (in PT and EN). The abstract in the document main language will 
 			% be printed first, the abstract in the foreign language will be printed second
-\tableofcontents 	% Always print the table of contents
+\tableofcontents* 	% Always print the table of contents
 \printotherlists 	% Print other lists of contents according to instructions given above
 
 
