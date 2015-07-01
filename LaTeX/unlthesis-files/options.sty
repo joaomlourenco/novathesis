@@ -1,0 +1,180 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PROCESS KEY-VAL OPTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{kvoptions-patch}
+\RequirePackage{xkeyval}
+\RequirePackage{xifthen}
+
+
+
+% --------------------------------------------------------
+% DOCUMENT TYPE		UNL@doctype=?
+%
+% BSc report			bsc
+% MSc preliminary report	prepmsc
+% MSc dissertation		msc
+% PhD proposal			propphd
+% PhD preliminary report	phdplan
+% PhD thesis			phd
+
+\DeclareOptionX{doctype}{
+	\typeout{'doctype'=#1}
+	\gdef\UNL@doctype{#1}
+}
+
+
+% --------------------------------------------------------
+% MAIN LANGUAGE		Only PT and EN are accepted for now
+%
+%			    UNL@lang=[en,pt]
+
+\gdef\UNL@lang{en}
+\DeclareOptionX{lang}{
+  % \typeout{'lang'=#1}
+	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}{\gdef\UNL@lang{pt}\PassOptionsToPackage{english,portuguese}{babel}}
+	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}{\gdef\UNL@lang{en}\PassOptionsToPackage{portuguese,english}{babel}}{
+	\PackageError{unlthesis}{Wrong value for option 'lang'}{Please see the documentation}
+	\expandafter\endinput
+	}}
+}
+
+
+% --------------------------------------------------------
+% COVER LANGUAGE		Only PT and EN are accepted for now
+%
+%			    UNL@cover@lang=[en,pt]
+% Defualts to the language of the thesis, but may be overriden by the option "coverlang"
+
+\gdef\UNL@cover@lang{\UNL@lang}
+\DeclareOptionX{coverlang}{
+  % \typeout{'coverlang'=#1}
+	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}{\gdef\UNL@cover@lang{pt}}
+	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}{\gdef\UNL@cover@lang{en}}{
+	\PackageError{unlthesis}{Wrong value for option 'coverlang'}{Please see the documentation}
+	\expandafter\endinput
+	}}
+}
+
+
+% --------------------------------------------------------
+% linkscolor	COLOR
+%
+% black
+% blue
+% ...
+
+\DeclareOptionX{linkscolor}{
+	\typeout{'linkscolor'=#1}
+	\PassOptionsToPackage{allcolors=#1}{hyperref}
+}
+
+
+% --------------------------------------------------------
+% ENCODING		Anything valid for package "inputenc"
+%
+% utf8
+% latin1
+% ...
+
+\DeclareOptionX{enc}{
+	\typeout{'enc'=#1}
+	\PassOptionsToPackage{#1}{inputenc}
+}
+
+
+% --------------------------------------------------------
+% PRINTSPINE		Print (don't print) the book spine
+%
+% true
+% false
+
+\DeclareOptionX{spine}[true]{
+	\typeout{'spine'=#1}
+	\ifthenelse{\equal{#1}{true}}{\AtEndDocument{\printthespine}}{}
+}
+
+
+
+% --------------------------------------------------------
+% DRAFT		Draft version, print the current date at the bottom of the cover page
+%
+% true
+% false
+
+% \DeclareOptionX{draft}[true]{
+% 	\typeout{'draft'=#1}
+% 	\PassOptionsToPackage{#1}{memoir}
+% }
+
+
+% --------------------------------------------------------
+% FINAL		Final version, print the MONTH and YEAR as defined by the user
+%                  at the bottom of the cover page
+%
+% true
+% false
+
+% \DeclareOptionX{draft}[true]{
+% 	\typeout{'draft'=#1}
+% 	\PassOptionsToClass{#1}{memoir}
+% }
+
+
+% --------------------------------------------------------
+% BIBLATEX OPTIONS		Are passed to the biblatex package
+%
+% style= numeric | alphabetic | 
+% ...
+%
+% \DeclareOptionX{style}{
+% 	\typeout{'biblatex style'=#1}
+% 	\PassOptionsToPackage{style=#1}{biblatex}
+% }
+% \DeclareOptionX{sorting}{
+% 	\typeout{'biblatex sorting'=#1}
+% 	\PassOptionsToPackage{sorting=#1}{biblatex}
+% }
+\DeclareOptionX{biblatex}{
+ 	\typeout{'biblatex'=#1}
+	\PassOptionsToPackage{#1}{biblatex}
+}
+
+
+% --------------------------------------------------------
+% BOOK OPTIONS		Are passed to the main class (book)
+%
+% twoside
+% a4paer
+% ...
+
+\DeclareOptionX{memoir}{
+	\typeout{'memoir'=#1}
+	\PassOptionsToClass{#1}{memoir}
+}
+
+
+% --------------------------------------------------------
+% DEFAULT OPTIONS
+% \PassOptionsToPackage{portuguese,english}{babel}
+
+\ExecuteOptionsX{
+	doctype=phd,
+	enc=utf8,
+	lang=en,
+	spine=false,
+	biblatex={
+		% sorting=nyt,%
+		% style=alphabetic,%
+		% labelyear=false,%
+		maxalphanames=2,
+		defernumbers=true,%
+		maxbibnames=20,%
+		maxcitenames=2,%
+		mincitenames=1,%
+		firstinits=true,% will render all first and middle names as initials
+		uniquename=init,%
+		% dashed=false,%
+		sortcites=true,
+	},
+	memoir={a4paper, 11pt, draft}
+}

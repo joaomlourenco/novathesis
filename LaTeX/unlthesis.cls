@@ -3,7 +3,7 @@
 %%% UNL thesis document class
 %%%
 %%% By João Lourenço (joao.lourenco@di.fct.unl.pt)
-%%% Version of September 4, 2014
+%%% Version of July 1, 2015
 %%%
 %%% BUGS and SUGGETSIONS: please send email to "joao.lourenco@fct.unl.pt"
 %%%
@@ -18,191 +18,10 @@
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2014/11/19 UNL Thesis Template]
+\ProvidesClass{unlthesis}[2015/01/01 UNL Thesis Template]
 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% PROCESS KEY-VAL OPTIONS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{kvoptions-patch}
-\RequirePackage{xkeyval}
-\RequirePackage{xifthen}
-
-
-
-% --------------------------------------------------------
-% DOCUMENT TYPE		UNL@doctype=?
-%
-% BSc report			bsc
-% MSc preliminary report	prepmsc
-% MSc dissertation		msc
-% PhD proposal			propphd
-% PhD preliminary report	phdplan
-% PhD thesis			phd
-
-\DeclareOptionX{doctype}{
-	\typeout{'doctype'=#1}
-	\gdef\UNL@doctype{#1}
-}
-
-
-% --------------------------------------------------------
-% MAIN LANGUAGE		Only PT and EN are accepted for now
-%
-%			    UNL@lang=[en,pt]
-
-\gdef\UNL@lang{en}
-\DeclareOptionX{lang}{
-  % \typeout{'lang'=#1}
-	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}{\gdef\UNL@lang{pt}\PassOptionsToPackage{english,portuguese}{babel}}
-	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}{\gdef\UNL@lang{en}\PassOptionsToPackage{portuguese,english}{babel}}{
-	\PackageError{unlthesis}{Wrong value for option 'lang'}{Please see the documentation}
-	\expandafter\endinput
-	}}
-}
-
-
-% --------------------------------------------------------
-% COVER LANGUAGE		Only PT and EN are accepted for now
-%
-%			    UNL@cover@lang=[en,pt]
-% Defualts to the language of the thesis, but may be overriden by the option "coverlang"
-
-\gdef\UNL@cover@lang{\UNL@lang}
-\DeclareOptionX{coverlang}{
-  % \typeout{'coverlang'=#1}
-	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}{\gdef\UNL@cover@lang{pt}}
-	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}{\gdef\UNL@cover@lang{en}}{
-	\PackageError{unlthesis}{Wrong value for option 'coverlang'}{Please see the documentation}
-	\expandafter\endinput
-	}}
-}
-
-
-% --------------------------------------------------------
-% linkscolor	COLOR
-%
-% black
-% blue
-% ...
-
-\DeclareOptionX{linkscolor}{
-	\typeout{'linkscolor'=#1}
-	\PassOptionsToPackage{allcolors=#1}{hyperref}
-}
-
-
-% --------------------------------------------------------
-% ENCODING		Anything valid for package "inputenc"
-%
-% utf8
-% latin1
-% ...
-
-\DeclareOptionX{enc}{
-	\typeout{'enc'=#1}
-	\PassOptionsToPackage{#1}{inputenc}
-}
-
-
-% --------------------------------------------------------
-% PRINTSPINE		Print (don't print) the book spine
-%
-% true
-% false
-
-\DeclareOptionX{spine}[true]{
-	\typeout{'spine'=#1}
-	\ifthenelse{\equal{#1}{true}}{\AtEndDocument{\printthespine}}{}
-}
-
-
-
-% --------------------------------------------------------
-% DRAFT		Draft version, print the current date at the bottom of the cover page
-%
-% true
-% false
-
-% \DeclareOptionX{draft}[true]{
-% 	\typeout{'draft'=#1}
-% 	\PassOptionsToPackage{#1}{memoir}
-% }
-
-
-% --------------------------------------------------------
-% FINAL		Final version, print the MONTH and YEAR as defined by the user
-%                  at the bottom of the cover page
-%
-% true
-% false
-
-% \DeclareOptionX{draft}[true]{
-% 	\typeout{'draft'=#1}
-% 	\PassOptionsToClass{#1}{memoir}
-% }
-
-
-% --------------------------------------------------------
-% BIBLATEX OPTIONS		Are passed to the biblatex package
-%
-% style= numeric | alphabetic | 
-% ...
-%
-% \DeclareOptionX{style}{
-% 	\typeout{'biblatex style'=#1}
-% 	\PassOptionsToPackage{style=#1}{biblatex}
-% }
-% \DeclareOptionX{sorting}{
-% 	\typeout{'biblatex sorting'=#1}
-% 	\PassOptionsToPackage{sorting=#1}{biblatex}
-% }
-\DeclareOptionX{biblatex}{
- 	\typeout{'biblatex'=#1}
-	\PassOptionsToPackage{#1}{biblatex}
-}
-
-
-% --------------------------------------------------------
-% BOOK OPTIONS		Are passed to the main class (book)
-%
-% twoside
-% a4paer
-% ...
-
-\DeclareOptionX{memoir}{
-	\typeout{'memoir'=#1}
-	\PassOptionsToClass{#1}{memoir}
-}
-
-
-% --------------------------------------------------------
-% DEFAULT OPTIONS
-% \PassOptionsToPackage{portuguese,english}{babel}
-
-\ExecuteOptionsX{
-	doctype=phd,
-	enc=utf8,
-	lang=en,
-	spine=false,
-	biblatex={
-		% sorting=nyt,%
-		% style=alphabetic,%
-		% labelyear=false,%
-		maxalphanames=2,
-		defernumbers=true,%
-		maxbibnames=20,%
-		maxcitenames=2,%
-		mincitenames=1,%
-		firstinits=true,% will render all first and middle names as initials
-		uniquename=init,%
-		% dashed=false,%
-		sortcites=true,
-	},
-	memoir={a4paper, 11pt, draft}
-}
-
+\input{unlthesis-files/options.sty}
 
 
 % --------------------------------------------------------
@@ -501,7 +320,7 @@ Copyright \copyright\ \@author, \faculty[\UNL@cover@lang], \university[\UNL@cove
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% NEW definition for jury with lists
+%%% NEW definition for committee with lists
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % To process lists and other stuff
@@ -522,45 +341,45 @@ Copyright \copyright\ \@author, \faculty[\UNL@cover@lang], \university[\UNL@cove
 }
 
 
-\def\jury{%
+\def\committee{%
   \@ifnextchar [%
-    {\UNL@jury}%
-    {\UNL@jury[v]}}
+    {\UNL@committee}%
+    {\UNL@committee[v]}}
 
-\def\UNL@jury[#1]#2{%
-	\listcsgadd{UNL@jury@#1@list}{#2}
+\def\UNL@committee[#1]#2{%
+	\listcsgadd{UNL@committee@#1@list}{#2}
 }
 
-\newcommand{\UNL@do@jury@tabular}[1]{
+\newcommand{\UNL@do@committee@tabular}[1]{
 	& #1\\
 }
 
-\def\printthejury{%
+\def\printthecommittee{%
 	\begin{tabular}{rl}
 	& \UNL@committeetitlestr[\UNL@cover@lang]:\\
-	\ifthenelse{\isundefined\UNL@jury@p@list}{}{%
-			\listcssize{UNL@jury@p@list}%
+	\ifthenelse{\isundefined\UNL@committee@p@list}{}{%
+			\listcssize{UNL@committee@p@list}%
 			\ifthenelse{\equal{\the\UNL@listsize@cnt}{1}}%
-				{\gdef\UNL@jury@n@p{1}}%
-				{\gdef\UNL@jury@n@p{2}}%
-			\UNL@chairstr[\UNL@jury@n@p,\UNL@cover@lang]:
-			\forlistcsloop{\UNL@do@jury@tabular}{UNL@jury@p@list}
+				{\gdef\UNL@committee@n@p{1}}%
+				{\gdef\UNL@committee@n@p{2}}%
+			\UNL@chairstr[\UNL@committee@n@p,\UNL@cover@lang]:
+			\forlistcsloop{\UNL@do@committee@tabular}{UNL@committee@p@list}
 	}
-	\ifthenelse{\isundefined\UNL@jury@a@list}{}{%
-			\listcssize{UNL@jury@a@list}%
+	\ifthenelse{\isundefined\UNL@committee@a@list}{}{%
+			\listcssize{UNL@committee@a@list}%
 			\ifthenelse{\equal{\the\UNL@listsize@cnt}{1}}%
-				{\gdef\UNL@jury@n@p{1}}%
-				{\gdef\UNL@jury@n@p{2}}%
-			\UNL@raporteurstr[\UNL@jury@n@p,\UNL@cover@lang]:
-			\forlistcsloop{\UNL@do@jury@tabular}{UNL@jury@a@list}
+				{\gdef\UNL@committee@n@p{1}}%
+				{\gdef\UNL@committee@n@p{2}}%
+			\UNL@raporteurstr[\UNL@committee@n@p,\UNL@cover@lang]:
+			\forlistcsloop{\UNL@do@committee@tabular}{UNL@committee@a@list}
 	}
-	\ifthenelse{\isundefined\UNL@jury@v@list}{}{%
-			\listcssize{UNL@jury@v@list}%
+	\ifthenelse{\isundefined\UNL@committee@v@list}{}{%
+			\listcssize{UNL@committee@v@list}%
 			\ifthenelse{\equal{\the\UNL@listsize@cnt}{1}}%
-				{\gdef\UNL@jury@n@p{1}}%
-				{\gdef\UNL@jury@n@p{2}}%
-			\UNL@memberstr[\UNL@jury@n@p,\UNL@cover@lang]:
-			\forlistcsloop{\UNL@do@jury@tabular}{UNL@jury@v@list}
+				{\gdef\UNL@committee@n@p{1}}%
+				{\gdef\UNL@committee@n@p{2}}%
+			\UNL@memberstr[\UNL@committee@n@p,\UNL@cover@lang]:
+			\forlistcsloop{\UNL@do@committee@tabular}{UNL@committee@v@list}
 	}
 	\end{tabular}
 }
@@ -726,7 +545,7 @@ Copyright \copyright\ \@author, \faculty[\UNL@cover@lang], \university[\UNL@cove
 		\OR\equal{\UNL@doctype}{msc}%
 		% \OR\equal{\UNL@doctype}{propphd}%
 		\OR\equal{\UNL@doctype}{phd}}
-	{\hfill\fontsize{10}{11}\selectfont\printthejury}
+	{\hfill\fontsize{10}{11}\selectfont\printthecommittee}
 	{}
 
 \vfill\vfill\vfill
