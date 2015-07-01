@@ -30,7 +30,13 @@ All contributors, both sporadic and regular, are welcome. :) Please [contact me]
 News
 ----
 
-*2015-01-23 — BSc reporting as well.*
+*2015-07-01 — Better multilingual support.*
++ Fixed some translations to Portuguese in Babel.
++ Fixed declaration of copyright in Portuguese to follow the new spelling rules.
++ Better multilingual support (more language related things moved to "langsupport.tex" file file).
++ Renamed PhD thesis plan from "prepphd" to "phdplan".
+
+*2015-02-23 — BSc reporting as well.*
 + Improved support for BSc report.
 + Included a MSc like cover but with round corners.
 

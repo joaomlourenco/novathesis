@@ -38,7 +38,7 @@
 % MSc preliminary report	prepmsc
 % MSc dissertation		msc
 % PhD proposal			propphd
-% PhD preliminary report	prepphd
+% PhD preliminary report	phdplan
 % PhD thesis			phd
 
 \DeclareOptionX{doctype}{
@@ -50,16 +50,31 @@
 % --------------------------------------------------------
 % MAIN LANGUAGE		Only PT and EN are accepted for now
 %
-%			    UNL@lang=?
-% Portuguese			0
-% English			1
+%			    UNL@lang=[en,pt]
 
 \gdef\UNL@lang{en}
 \DeclareOptionX{lang}{
-	\typeout{'lang'=#1}
+  % \typeout{'lang'=#1}
 	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}{\gdef\UNL@lang{pt}\PassOptionsToPackage{english,portuguese}{babel}}
 	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}{\gdef\UNL@lang{en}\PassOptionsToPackage{portuguese,english}{babel}}{
 	\PackageError{unlthesis}{Wrong value for option 'lang'}{Please see the documentation}
+	\expandafter\endinput
+	}}
+}
+
+
+% --------------------------------------------------------
+% COVER LANGUAGE		Only PT and EN are accepted for now
+%
+%			    UNL@cover@lang=[en,pt]
+% Defualts to the language of the thesis, but may be overriden by the option "coverlang"
+
+\gdef\UNL@cover@lang{\UNL@lang}
+\DeclareOptionX{coverlang}{
+  % \typeout{'coverlang'=#1}
+	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}{\gdef\UNL@cover@lang{pt}}
+	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}{\gdef\UNL@cover@lang{en}}{
+	\PackageError{unlthesis}{Wrong value for option 'coverlang'}{Please see the documentation}
 	\expandafter\endinput
 	}}
 }
@@ -294,6 +309,13 @@
 \RequirePackage[backend=bibtex]{biblatex}
 
 
+% To handle subfigures
+\newsubfloat{figure}
+
+% Fix babel translation
+\addto\captionsportuguese{\renewcommand{\contentsname}{Índice}}  		% Trocar "Conteúdo" por "Índice"
+\addto\captionsportuguese{\renewcommand{\indexname}{Índice Remissivo}}  % Trocar "Índice" por "Índice Remissivo"
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
@@ -340,9 +362,9 @@
 
 \newdata*{UNL@doctypestr}
 
-\newdata*{UNL@jurytitlestr}
-\newdata*{UNL@presidentstr}
-\newdata*{UNL@refereestr}
+\newdata*{UNL@committeetitlestr}
+\newdata*{UNL@chairstr}
+\newdata*{UNL@raporteurstr}
 \newdata*{UNL@memberstr}
 	
 
@@ -352,33 +374,10 @@
 % Input definitions for strings above in multiple languages
 \InputIfFileExists{langsupport}{}{}
 
-% Portuguese
-\ifthenelse{\equal{\UNL@lang}{pt}}
-	{\def\lstlistlistingname{Listagens}}
-	{}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% LABELS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\gdef\UNL@presentationtext{%
-	\UNL@dissertationstr[\UNL@doctype,\UNL@cover@lang]
-}
-
-\gdef\thecopyrightstr{%
-\thispagestyle{empty}
-\noindent
-Copyright \copyright\ \@author, \@faculty, \@university
-
-\bigskip
-\noindent
-\UNL@copyrighttext[\UNL@cover@lang]}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% IDENTIFICATION
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newdata*{university}
+\newdata*{faculty}
+\newdata*{majorfield}
 
 % Default cover background
 \def\thesiscoverphd#1{%
@@ -397,38 +396,56 @@ Copyright \copyright\ \@author, \@faculty, \@university
   \gdef\@thesiscoverplain{#1}}
 \def\@thesiscoverplain{~thesiscoverempty \UNL@notdefined}
 
+\InputIfFileExists{defaults}{}{}
 
-% \def\university#1{%
-%   \gdef\@university{#1}}
-% \def\@university{~university \UNL@notdefined}
-% 
+
+
+% Portuguese
+\ifthenelse{\equal{\UNL@lang}{pt}}
+	{\def\lstlistlistingname{Listagens}}
+	{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LABELS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\gdef\UNL@presentationtext{%
+	\UNL@dissertationstr[\UNL@doctype,\UNL@cover@lang]
+}
+
+\gdef\thecopyrightstr{%
+\thispagestyle{empty}
+\noindent
+Copyright \copyright\ \@author, \faculty[\UNL@cover@lang], \university[\UNL@cover@lang]
+
+\bigskip
+\noindent
+\UNL@copyrighttext[\UNL@cover@lang]}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% IDENTIFICATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%
+% \def\majorfield#1{%
+%   \gdef\@majorfield{#1}}
+% \def\@majorfield{~majorfield \UNL@notdefined}
+
+% \def\address#1{%
+%   \gdef\@address{#1}}
+% \def\@address{~address \UNL@notdefined}
+%
 % \def\faculty#1{%
 %   \gdef\@faculty{#1}}
-% \def\@faculty{~faculty\UNL@notdefined}
-% 
-% \def\department#1{%
-%   \gdef\@department{#1}}
-% \def\@department{~department \UNL@notdefined}
-
-\def\majorfield#1{%
-  \gdef\@majorfield{#1}}
-\def\@majorfield{~majorfield \UNL@notdefined}
-
-\def\address#1{%
-  \gdef\@address{#1}}
-\def\@address{~address \UNL@notdefined}
-
-\def\faculty#1{%
-  \gdef\@faculty{#1}}
-\def\@majorfield{~faculty \UNL@notdefined}
-
-\def\university#1{%
-  \gdef\@university{#1}}
-\def\@majorfield{~university \UNL@notdefined}
+% \def\@majorfield{~faculty \UNL@notdefined}
+%
+% \def\university#1{%
+%   \gdef\@university{#1}}
+% \def\@majorfield{~university \UNL@notdefined}
 
 % \@input@{repeat}
-
-\@input@{defaults}
 %% Date
 
 \def\themonth#1{\gdef\@themonth{#1}}
@@ -519,14 +536,14 @@ Copyright \copyright\ \@author, \@faculty, \@university
 }
 
 \def\printthejury{%
-	\begin{tabular}{ll}
-	& \UNL@jurytitlestr[\UNL@cover@lang]:\\
+	\begin{tabular}{rl}
+	& \UNL@committeetitlestr[\UNL@cover@lang]:\\
 	\ifthenelse{\isundefined\UNL@jury@p@list}{}{%
 			\listcssize{UNL@jury@p@list}%
 			\ifthenelse{\equal{\the\UNL@listsize@cnt}{1}}%
 				{\gdef\UNL@jury@n@p{1}}%
 				{\gdef\UNL@jury@n@p{2}}%
-			\UNL@presidentstr[\UNL@jury@n@p,\UNL@cover@lang]:
+			\UNL@chairstr[\UNL@jury@n@p,\UNL@cover@lang]:
 			\forlistcsloop{\UNL@do@jury@tabular}{UNL@jury@p@list}
 	}
 	\ifthenelse{\isundefined\UNL@jury@a@list}{}{%
@@ -534,7 +551,7 @@ Copyright \copyright\ \@author, \@faculty, \@university
 			\ifthenelse{\equal{\the\UNL@listsize@cnt}{1}}%
 				{\gdef\UNL@jury@n@p{1}}%
 				{\gdef\UNL@jury@n@p{2}}%
-			\UNL@refereestr[\UNL@jury@n@p,\UNL@cover@lang]:
+			\UNL@raporteurstr[\UNL@jury@n@p,\UNL@cover@lang]:
 			\forlistcsloop{\UNL@do@jury@tabular}{UNL@jury@a@list}
 	}
 	\ifthenelse{\isundefined\UNL@jury@v@list}{}{%
@@ -607,19 +624,20 @@ Copyright \copyright\ \@author, \@faculty, \@university
 % \newsavebox{\UNL@adviser@tabular@item@box}
 % \newlength{\UNL@adviser@tabular@item@box@w}
 \def\UNL@do@adviser@tabular@item#1,#2,#3{%
-		& \mbox{#1}, \mbox{#2}, \mbox{#3}%
+    & \parbox[t]{\linewidth}{\raggedright#1, #2, #3}
+    % & \mbox{#1}, \mbox{#2}, \parbox{\linewidth}{\mbox{}\\[-0.5ex]\raggedright#3}%
 }
 \def\UNL@do@adviser@tabular#1{%
-	\UNL@do@adviser@tabular@item#1\\[0pt]%
+	\UNL@do@adviser@tabular@item#1\\[5pt]%
 }
 
 
 \def\printtheadvisers{%
 	% \begin{tabularx}{\linewidth}{lX<{\raggedright}}
-	\begin{tabu} spread 0pt {lX[1,l,p]}%
+	\begin{tabu} spread 0pt {rX[1,l,p]}%
 	\ifthenelse{\isundefined\UNL@adviser@gender@list}{}{%
 			\UNL@adviser@str{}: %
-			\forlistcsloop{\UNL@do@adviser@tabular}{UNL@adviser@list}\ %
+			\forlistcsloop{\UNL@do@adviser@tabular}{UNL@adviser@list}%
 	}%
 	\ifthenelse{\isundefined\UNL@coadviser@gender@list}{}{%
 			& \\[-1.5ex]%
@@ -637,25 +655,24 @@ Copyright \copyright\ \@author, \@faculty, \@university
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% Set cover language to Portuguese.
-%% In the future this will be configurable, but not yet! :(
-\def\UNL@cover@lang{pt}
-
-
 \def\coverpage{
 \thispagestyle{empty}
 % \pagestyle{empty}
 
 %% Define cover page margins
 \ifthenelse{%
-	\equal{\UNL@doctype}{bsc}%
-	\OR\equal{\UNL@doctype}{prepmsc}%
-	\OR\equal{\UNL@doctype}{msc}}{% MSc
+	\equal{\UNL@doctype}{bsc}}{% BSc
 		\def\@defcoverbg{\@thesiscoverbsc}
 		\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
 	}{%
 \ifthenelse{%
-	\equal{\UNL@doctype}{prepphd}%
+	\equal{\UNL@doctype}{prepmsc}%
+	\OR\equal{\UNL@doctype}{msc}}{% MSc
+		\def\@defcoverbg{\@thesiscovermsc}
+		\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
+	}{%
+\ifthenelse{%
+	\equal{\UNL@doctype}{phdplan}%
 	\OR\equal{\UNL@doctype}{propphd}%
 	\OR\equal{\UNL@doctype}{phd}}{% PhD
 		\def\@defcoverbg{\@thesiscoverphd}
@@ -664,7 +681,7 @@ Copyright \copyright\ \@author, \@faculty, \@university
 {	% Plain
 	\def\@defcoverbg{\@thesiscoverplain}
 	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
-}}
+}}}
 
 %% Add background image	
 \AddToShipoutPicture*{\BackgroundPic{\@defcoverbg}}
@@ -703,7 +720,7 @@ Copyright \copyright\ \@author, \@faculty, \@university
 	\printtheadvisers
 
 \vfill\vfill
-% Referee board
+% raporteur board
 	\ifthenelse{%
 		\equal{\UNL@doctype}{bsc}%
 		\OR\equal{\UNL@doctype}{msc}%

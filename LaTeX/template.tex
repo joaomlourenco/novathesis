@@ -2,7 +2,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Template for writing dissertations with ThesisDIFCTUNL
 %%
-%% Version 20150225 (Fev 2015)
+%% Version 01072015 (Jul 2015)
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -23,8 +23,8 @@
 %%           bsc	- BSc graduation report
 %%           prepmsc	- Preparation of MSc dissertation
 %%           (*)msc	- MSc dissertation
-%%           propphd	- Proposal of PhD thesis
-%%           prepphd 	- Preparation of PhD thesis
+%%           phdplan 	- PhD thesis plan
+%%           propphd	- PhD thesis proposal
 %%           phd	- PhD thesis
 %% - Values for option 'lang'
 %%           pt		- português
@@ -64,11 +64,12 @@
 %%%%%%%%       and replace "draft" for "final" in "memoir={a4paper,11pt, draft}".
 %%%%%%%%
 \documentclass[
-	doctype=msc,			% The type of document
+	doctype=phd,			% The type of document
 	lang=en,			% The main langage of the document
+  coverlang=pt,
 	enc=utf8,			% You shouldn't mess with this one
 	linkscolor=darkblue,		% Switch to black for PRINTING
-	spine=true,			% Should be set to false until the final printing
+	spine=false,			% Should be set to false until the final printing
 	biblatex={
 		style=numeric,		% ALTERNATIVES: numeric, alphabetic, authoryear, bwl-FU
 		sorting=nyt,		% ALTERNATIVES: none, nyt, ynt
@@ -92,45 +93,25 @@
 % Additional packages you may ant to use (comment those not needed)
 %------------------------------------------------------------------
 
-% FOR DEMO ONLY --- TO BE REMOVED by final users
-\usepackage{lipsum}
-
-
-% To enable customizble enumerates
-\usepackage{paralist}
-
-% Beautiful simple tables
-\usepackage{booktabs}
-
-% Use colors in background of table cells
-%\usepackage{colortbl}
-
-% Fontification of source code listings
-\usepackage{listings}
-
-% To create gloassries
-\usepackage[nonumberlist,translate=babel]{glossaries}
+%% VERY IMPORTANT
+\usepackage{booktabs}		% Beautiful simple tables
+\usepackage{paralist}		% To enable customizble enumerates
+\usepackage[nonumberlist,translate=babel]{glossaries}	% To create gloassries
 \glsdisablehyper
 \makenoidxglossaries
+\InputIfFileExists{Chapters/acronyms}{}{}	% The contents of both files (acronyms and glossary) will be merged
+\InputIfFileExists{Chapters/glossary}{}{}	% The contents of both files (acronyms and glossary) will be merged
 
-% The contents of both files (acronyms and glossary) will be merged
-\InputIfFileExists{Chapters/acronyms}{%
-  % File glossary.tex exists and is read
-}{%
-  % File glossary.tex is not found, ignore
-}
-\InputIfFileExists{Chapters/glossary}{%
-  % File glossary.tex exists and is read
-}{%
-  % File glossary.tex is not found, ignore
-}
-
-% To register TODO notes in the text
-\usepackage[textsize=footnotesize]{todonotes}
+%% IMPORTANT (consider removing/commenting)
+\usepackage{listings}		% Fontification of source code listings
+%\usepackage{colortbl}		% Use colors in background of table cells
+\usepackage[textsize=footnotesize]{todonotes}	% To register TODO notes in the text
 \setlength{\marginparwidth}{1.5cm}
 
-% To handle subfigures
-\newsubfloat{figure}
+
+
+%% FOR DEMO PURPOSES ONLY --- TO BE REMOVED by final users
+\usepackage{lipsum}
 
 
 %------------------------------------------------------------------
@@ -157,61 +138,67 @@
 %------------------------------------------------------------------
 % Some default values that you may whish to override
 %------------------------------------------------------------------
-%% Identification: items prefixed with (*) are the default values, 
-%       as defined in the file "defaults.tex"
-% (*)\university{Universidade Nova de Lisboa}
-% (*)\faculty{Faculdade de Ciências e Tecnologia}
-% (*)\majorfield{Engenharia Informática}
-% (*)\universitylogo{logounl}
-% (*)\thesiscoverphd{cover-phd}
-% (*)\thesiscovermsc{cover-msc-round} -> there is an alternative with squre corners
-% (*)\thesiscoverplain{cover-plain}
+% Identification: defined in the file "defaults.tex"
+%
+% Univesity
+% \university[pt]={Universidade NOVA de Lisboa}
+% \university[en]={NOVA University of Lisbon}
+%
+% % Faculty / School
+% \faculty[pt]={Faculdade de Ciências e Tecnologia}
+% \faculty[en]={Faculty of Sciences and Technology}
+%
+% % Área científica
+% \majorfield[pt]={Engenharia Informática}
+% \majorfield[en]={Computer Science and Engineering}
+%
+% % Imagens de fundo na capa das teses
+% \thesiscoverphd{cover-phd-std}
+% \thesiscovermsc{cover-msc-std}
+% \thesiscoverbsc{cover-bsc-std}
+% \thesiscoverplain{cover-plain-std}
 
 %%============================================================
 
 % Title of the dissertation/thesis
 % USe "\\" to break the title into two or more lines
-\title{[Título da tese / Thesis Title]}
+\title{Impressive Thesis Title}
 
 % Autor
 % use [f] for female and [m] for male
-\author[m]{[Nome completo do autor]} 
-\shortauthor{[Nome abreviado do autor]}
-\authordegree{[Habilitações académcias]}
+\author[m]{John Longname Doe} 
+\shortauthor{John Doe}
+\authordegree{Master of Science}
 
 % Date
-\themonth{MÊS}
-\theyear{ANO}
+\themonth{June}
+\theyear{2015}
 
 
 % Advisers (maximum of 9)
 % use [f] for female and [m] for male
-\adviser[m]{[Nome do orientador]}{[Cargo]}{[Instituição]}
-\adviser[m]{[Nome do orientador 2]}{[Prof.\ Catedrático]}{[Universidade Nova de Lisboa]}
-% A trick to force the University to go to the next line :)
-% \adviser[m]{João M. S. Lourenço}{Prof.\ Auxiliar}{\\&Universidade Nova de Lisboa}
+\adviser[f]{John Doe Adviser Name}{Full Professor}{\newline NOVA University of Lisbon}
+\adviser[m]{John Doe Male Adviser Name}{Associate Professor}{Some University Somewhere}
 
 
 % Co-Advisers (maximum of 9)
 % use [f] for female and [m] for male
-\coadviser[f]{[Nome da co-orientadora 1]}{[Cargo]}{[Instituição]}
+\coadviser[f]{John Doe Co-Adviser Name}{Associate Professor}{Faculdade de Ciências e Tecnologia da Universidade Nova de Lisboa}
 % \coadviser[f]{[Nome da co-orientadora 2]}{[Profª.\ Auxiliar]}{[Universidade Nova de Lisboa]}
 
 
-% Jury (maximum of 9 elements)
-% Use [p] for president, [a] for referees, [v] or nothing for others
-% President of the jury
-\jury[p]{[Nome do presidente do júri]}
-% Main referees
-\jury[a]{[Nome do primeiro arguente]}
-% \jury[a]{[Nome do segundo arguente]}
-% Other members of the jury - include the Adviser in this list
-\jury[v]{[Nome do primeiro vogal]}
-\jury[v]{[Nome do segundo vogal]}
-% \jury[v]{[Nome do terceiro vogal]}
-% \jury[v]{[Nome do quarto vogal]}
-% \jury{[Nome do quinto vogal]}
-% \jury{[Nome do sexto vogal]}
+% committee (maximum of 9 elements)
+% Use [p] for chair, [a] for raporteurs, [v] or nothing for remaining members
+% President of the committee
+\committee[p]{Name of the committee chair}
+% Main raporteurs
+\committee[a]{Name of one of the main raporteurs}
+\committee[a]{Name of the other main raporteur}
+% Other members of the committee - include the Adviser in this list
+\committee[v]{Another member of the committee}
+\committee[v]{Yet another member of the committee}
+\committee[v]{Yet another member of the committee}
+\committee[v]{Yet another member of the committee}
 
 %%------------------------------------------------------------
 %% All the names inside braces below sould correspond to a file
@@ -245,7 +232,7 @@
 \chapterfile{chapter1}
 \chapterfile{chapter2}
 \chapterfile{chapter3}
-% \chapterfile{chapter4}
+%\chapterfile{chapter4}
 
 
 % Text appendixes
@@ -257,12 +244,18 @@
 % BibTeX bibiography files. Can be used multiple times with a single file nae each time.
 \addbibfile{bibliography.bib}
 
-%%============================================================
+
+
+%%==== DANGER ==== DANGER ==== DANGER ==== DANGER ==== DANGER ====
+%%==== DANGER ==== DANGER ==== DANGER ==== DANGER ==== DANGER ====
+%%==== DANGER ==== DANGER ==== DANGER ==== DANGER ==== DANGER ====
 %%
 %%  END OF USER COSTUMIZAITON
 %% Please do not change below this point!!! :)
 %%
-%%============================================================
+%%==== DANGER ==== DANGER ==== DANGER ==== DANGER ==== DANGER ====
+%%==== DANGER ==== DANGER ==== DANGER ==== DANGER ==== DANGER ====
+%%==== DANGER ==== DANGER ==== DANGER ==== DANGER ==== DANGER ====
 
 
 %% Begining of document
