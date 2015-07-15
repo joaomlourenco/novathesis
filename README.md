@@ -29,6 +29,19 @@ All contributors, both sporadic and regular, are welcome. :) Please [contact me]
 
 News
 ----
+*2015-07-15 — Towards multiple schools and multiple styles*
+
++ Renamed document types 'prepmsc'->'mscplan', 'prepphd'->'phdplan', 'propphd'->'phdprop'
++ Split the “unlthesis.cls” file into subfiles with specific contents and moved them to the 'unl-thesis' folder
++ Added support for multiple schools
+	- Added option “school” (defaults to “fctunl”, no more are available now)
+	- Moved the FCT-UNL support configuration file to the appropriate folder
+	- Renamed the “Logo” folder “Images” and moved it inside the “fctunl” configuration folder
++ Added support for multiple book styles
+	- Added option “style” (defaults to “elegant”, but others are available)
++ Added the new options to the “template.tex” file
++ Added example for subfigures in chapter 3
+
 
 *2015-07-01 — Better multilingual support.*
 + Fixed some translations to Portuguese in Babel.

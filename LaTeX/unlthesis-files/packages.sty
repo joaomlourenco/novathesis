@@ -1,0 +1,85 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PACKAGES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%% Configure input encoding
+\RequirePackage{inputenc}		% Format for the input file(s), see the "enc" option
+
+
+%%%%% Configure font encoding
+\RequirePackage[T1]{fontenc}		% Use new T1 fonts
+
+
+%%%%% Configure multilingual language support
+\RequirePackage{babel}			% Support for bilingual documents
+\RequirePackage{memory}		  % To keep records to store strings
+
+
+%%%%% Fine tuning of typesetting
+\RequirePackage[final, babel]{microtype}
+
+
+%%%%% Better support for calculations
+\RequirePackage{calc}
+
+
+%%%%% Configure Graphics
+\RequirePackage{graphicx}
+\graphicspath{{Chapters/Figures/}}
+\DeclareGraphicsExtensions{.pdf, .png, .jpg, .tif}
+\newcommand\appendtographicspath[1]{%
+  \gappto\Ginput@path{#1}%
+}
+\newcommand\prependtographicspath[1]{%
+  \gpreto\Ginput@path{#1}%
+}
+
+
+% To process lists and other stuff
+\RequirePackage{etoolbox}
+
+
+%%%%% Configure HyperRefs
+% \RequirePackage[pdftex,usenames]{color}
+% \RequirePackage[pdftex]{xcolor}
+% \RequirePackage[usenames]{color}
+\RequirePackage{xcolor}
+\definecolor{darkblue}{rgb}{0.0,0.08,0.45}
+\RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}
+\RequirePackage{memhfixc}		% Must be used on memoir document class after hyperref
+
+
+%%%%% Configure page geometry
+% Needs version equal or later to 2010/02/12, which support the "newgeometry" command
+\RequirePackage[top=3cm,bottom=3cm,inner=3.5cm,outer=2.5cm]{geometry}[2010/02/12]
+
+
+%%%%% Condditional processing for PDF file
+% \RequirePackage{ifpdf}		% This is now the recommended way for checking for PDFLaTeX:
+% \ifpdf
+% % \pdfinfo{
+% %    /Author (Author's name)
+% %    /Title (PhD Thesis)
+% %    /Keywords (One; Two;Three)
+% %    /CreationDate (D:\pdfdate)
+% % }
+% \else
+% \fi
+
+
+% AAdd an image to the backgroung
+% 	Used to inser the background image in the cover page
+\RequirePackage{eso-pic}
+\newcommand{\BackgroundPic}[1]{
+    \put(0,0){
+	\parbox[b][\paperheight]{\paperwidth}{%
+		\vfill
+		\centering
+		\includegraphics[width=\paperwidth,height=\paperheight,
+		keepaspectratio]{#1}%
+		\vfill
+}}}
+
+
+% To process the bibliography
+\RequirePackage[backend=bibtex]{biblatex}

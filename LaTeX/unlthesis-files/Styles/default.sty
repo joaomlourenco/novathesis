@@ -1,0 +1,44 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% STYLE: elegant
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%% Configure set of used fonts
+%%%% Set 1 -------------------------------
+\RequirePackage{kpfonts}
+%%%% Set 2 -------------------------------
+% \RequirePackage{fourier}
+%%%% Set 3 -------------------------------
+% \usepackage{bookman}
+%%%% Set 4 -------------------------------
+% \usepackage{charter}
+%%%% Set 5 -------------------------------
+% \usepackage{newcent}
+%%%% Set 6 -------------------------------
+% \usepackage[sc]{mathpazo}
+% \usepackage[scaled]{helvet}
+% \usepackage{eulervm}
+%%%% Set 7 -------------------------------
+% \usepackage{mathpazo}
+% \usepackage{avant}
+%%%%  END  -------------------------------
+
+
+
+
+%%%%% Configure chapters, headers, footers, and page numbering
+\chapterstyle{default}
+
+%
+% UNL guidelines:
+%
+% The pages should be numbered consecutively at the bottom centre of the
+% page.
+\makepagestyle{UNL@myvf} 
+\makeoddfoot{UNL@myvf}{}{\thepage}{} 
+\makeevenfoot{UNL@myvf}{}{\thepage}{} 
+\makeheadrule{UNL@myvf}{\textwidth}{\normalrulethickness} 
+\makeevenhead{UNL@myvf}{\small\textsc{\leftmark}}{}{} 
+\makeoddhead{UNL@myvf}{}{}{\small\textsc{\rightmark}}
+\pagestyle{UNL@myvf}
+%
+\frenchspacing

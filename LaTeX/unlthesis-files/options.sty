@@ -11,15 +11,39 @@
 % DOCUMENT TYPE		UNL@doctype=?
 %
 % BSc report			bsc
-% MSc preliminary report	prepmsc
+% MSc preliminary report	mscplan
 % MSc dissertation		msc
-% PhD proposal			propphd
+% PhD proposal			phdprop
 % PhD preliminary report	phdplan
 % PhD thesis			phd
 
 \DeclareOptionX{doctype}{
 	\typeout{'doctype'=#1}
 	\gdef\UNL@doctype{#1}
+}
+
+
+
+% --------------------------------------------------------
+% SCHOOL		UNL@school=?
+%
+% FCT Faculdade de Ciências e Tecnologia da Universidade Nova de Lisboa
+
+\DeclareOptionX{school}{
+	\typeout{'school'=#1}
+	\gdef\UNL@school{#1}
+}
+
+
+
+% --------------------------------------------------------
+% STYLE		UNL@docstyle=?
+%
+% elegant
+
+\DeclareOptionX{docstyle}{
+	\typeout{'docstyle'=#1}
+	\gdef\UNL@docstyle{#1}
 }
 
 
@@ -153,19 +177,35 @@
 }
 
 
+
+
+% --------------------------------------------------------
+% BIBBYCHAPTER		Bibliography per chaper… Ignored for now!
+\let\UNL@bibbychapter=0
+% \DeclareOption{bibbychapter}{
+% 	\let\UNL@bibbychapter=1
+% }
+
+
+
 % --------------------------------------------------------
 % DEFAULT OPTIONS
 % \PassOptionsToPackage{portuguese,english}{babel}
 
 \ExecuteOptionsX{
 	doctype=phd,
+  school=fctunl,
+  docstyle=elegant,
 	enc=utf8,
 	lang=en,
+  coverlang=pt,
+  linkscolor=darkblue,
 	spine=false,
 	biblatex={
 		% sorting=nyt,%
 		% style=alphabetic,%
 		% labelyear=false,%
+		style=numeric,
 		maxalphanames=2,
 		defernumbers=true,%
 		maxbibnames=20,%
@@ -178,3 +218,9 @@
 	},
 	memoir={a4paper, 11pt, draft}
 }
+
+
+
+% --------------------------------------------------------
+% PROCESSING OPTIONS
+\ProcessOptionsX\relax
