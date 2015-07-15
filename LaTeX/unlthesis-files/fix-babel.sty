@@ -1,0 +1,14 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FIX BABEL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Replace "Conteúdo" with "Índice"
+\addto\captionsportuguese{\renewcommand{\contentsname}{Índice}}
+
+% Replace "Índice" with "Índice Remissivo"
+\addto\captionsportuguese{\renewcommand{\indexname}{Índice Remissivo}}
+
+% Portuguese
+\ifthenelse{\equal{\UNL@lang}{pt}}
+	{\def\lstlistlistingname{Listagens}}
+	{}

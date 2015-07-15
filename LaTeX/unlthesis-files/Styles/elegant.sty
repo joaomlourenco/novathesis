@@ -1,0 +1,69 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% STYLE: elegant
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%% Configure set of used fonts
+%%%% Set 1 -------------------------------
+\RequirePackage{kpfonts}
+%%%% Set 2 -------------------------------
+% \RequirePackage{fourier}
+%%%% Set 3 -------------------------------
+% \usepackage{bookman}
+%%%% Set 4 -------------------------------
+% \usepackage{charter}
+%%%% Set 5 -------------------------------
+% \usepackage{newcent}
+%%%% Set 6 -------------------------------
+% \usepackage[sc]{mathpazo}
+% \usepackage[scaled]{helvet}
+% \usepackage{eulervm}
+%%%% Set 7 -------------------------------
+% \usepackage{mathpazo}
+% \usepackage{avant}
+%%%%  END  -------------------------------
+
+
+
+
+%%%%% Configure chapters, headers, footers, and page numbering
+\RequirePackage{soul}
+\newsavebox{\UNL@chapter} 
+\newcommand\UNL@chapter@marker[1][4cm]{%
+	\sbox\UNL@chapter{% 
+		\resizebox{!}{#1}{\fboxsep=1pt%
+			\colorbox{lightgray}{\color{white}\thechapter}% 
+		}}%
+		\rotatebox{90}{% 
+			\resizebox{%
+				\heightof{\usebox{\UNL@chapter}}+\depthof{\usebox{\UNL@chapter}}}% 
+			{!}{\scshape\so\@chapapp}}\quad%
+		\raisebox{\depthof{\usebox{\UNL@chapter}}}{\usebox{\UNL@chapter}}%
+} 
+\newcommand\UNL@chm[1][4cm]{%
+	\sbox\UNL@chapter{\UNL@chapter@marker[#1]}% 
+	\makebox[0pt][c]{% aka \rlap
+		\makebox[1cm][r]{\usebox\UNL@chapter}%
+	}}
+\makechapterstyle{UNLchapstyle}{
+	\renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so} 
+	\renewcommand\chaptitlefont{\normalfont\LARGE\bfseries\scshape} 
+	\renewcommand\chapternamenum{} \renewcommand\printchaptername{} 
+	\renewcommand\printchapternum{\null\hfill\UNL@chm[2.5cm]\hspace*{14pt}\par} 
+	\renewcommand\afterchapternum{\par\vskip\midchapskip} 
+	\renewcommand\printchaptertitle[1]{\color{darkgray}\chaptitlefont\raggedleft ##1\par}
+} 
+\chapterstyle{UNLchapstyle}
+%
+% UNL guidelines:
+%
+% The pages should be numbered consecutively at the bottom centre of the
+% page.
+\makepagestyle{UNL@myvf} 
+\makeoddfoot{UNL@myvf}{}{\thepage}{} 
+\makeevenfoot{UNL@myvf}{}{\thepage}{} 
+\makeheadrule{UNL@myvf}{\textwidth}{\normalrulethickness} 
+\makeevenhead{UNL@myvf}{\small\textsc{\leftmark}}{}{} 
+\makeoddhead{UNL@myvf}{}{}{\small\textsc{\rightmark}}
+\pagestyle{UNL@myvf}
+%
+\frenchspacing
