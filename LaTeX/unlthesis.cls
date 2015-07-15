@@ -1,14 +1,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% unlthesis.cls
-%%% UNL thesis document class
-%%%
-%%% By João Lourenço (joao.lourenco@di.fct.unl.pt)
-%%% Version of July 1, 2015
-%%%
-%%% BUGS and SUGGETSIONS: please send email to "joao.lourenco@fct.unl.pt"
-%%%
-%%% CONTRIBUTERS are welcome. Please contact "joao.lourenco@fct.unl.pt"
-%%%
+%% unlthesis.cls
+%% UNL thesis document class
+%%
+%% Version 15072015 (Jul 2015)
+%% Departamento de Informática
+%% Faculdade de Ciências e Tecnologia
+%% Universidade Nova de Lisboa
+%%
+%% BUGS and SUGGESTIONS: please submit an issue at the project web page
+%%      at: https://github.com/joaomlourenco/unlthesis/
+%%
+%% HELP: please ask for help at the unlthesis google group
+%%      at: https://groups.google.com/forum/#!forum/unlthesis
+%%
+%% Authors / Contributors:
+%%     - João Lourenço (joao.lourenco@fct.unl.pt)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%% 
@@ -17,123 +26,33 @@
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2015/01/01 UNL Thesis Template]
+\ProvidesClass{unlthesis}[2015/01/15 UNL Thesis Template]
 
 
+% --------------------------------------------------------
+% PROCESS PACKAGE OPTIONS
 \input{unlthesis-files/options.sty}
-
-
-% --------------------------------------------------------
-% BIBBYCHAPTER		Bibliography per chaper… Ignored for now!
-\let\UNL@bibbychapter=0
-% \DeclareOption{bibbychapter}{
-% 	\let\UNL@bibbychapter=1
-% }
-
-
-
-% --------------------------------------------------------
-% PROCESSING OPTIONS
-\ProcessOptionsX\relax
-
 
 
 % --------------------------------------------------------
 % LOAD MAIN CLASS AND ADDITIONAL PACKAGES
 \LoadClass{memoir}
-
-
 \OnehalfSpacing           % One-and-half spacing
+\newsubfloat{figure}      % To handle subfigures
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% PACKAGES
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% --------------------------------------------------------
+% LOAD ADDITIONAL PACKAGES
+\input{unlthesis-files/packages.sty}
 
 
-%%%%% Configure input file format
-\RequirePackage{inputenc}		% Format for the input file(s), see the "enc" option
+% --------------------------------------------------------
+% FIX BABEL TRANSLATION
+\input{unlthesis-files/fix-babel.sty}
 
 
-%%%%% Configure fonts
-\RequirePackage[T1]{fontenc}		% Use new T1 fonts
-\RequirePackage{mathpazo}		% Font with fixes dor math support: Palatino
-\RequirePackage[scaled=.95]{helvet}
-\RequirePackage{courier}
-
-
-%%%%% Fine tuning of typesetting
-\RequirePackage{microtype}
-
-
-%%%%% Configure multilingual language support
-\RequirePackage{babel}			% Support for bilingual documents
-\RequirePackage{memory}		% To keep records to store strings
-
-
-%%%%% Better support for calculations
-\RequirePackage{calc}
-
-
-%%%%% Configure Graphics
-% \RequirePackage[pdftex]{graphicx}
-\RequirePackage{graphicx}
-\DeclareGraphicsExtensions{.pdf, .png, .jpg, .tif}
-
-
-%%%%% Configure HyperRefs
-% \RequirePackage[pdftex,usenames]{color}
-% \RequirePackage[pdftex]{xcolor}
-% \RequirePackage[usenames]{color}
-\RequirePackage{xcolor}
-\definecolor{darkblue}{rgb}{0.0,0.08,0.45}
-\RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}
-\RequirePackage{memhfixc}		% Must be used on memoir document class after hyperref
-
-
-%%%%% Configure page geometry
-% Needs version equal or later to 2010/02/12, which support the "newgeometry" command
-\RequirePackage[top=3cm,bottom=3cm,inner=3.5cm,outer=2.5cm]{geometry}[2010/02/12]
-
-
-%%%%% Condditional processing for PDF file
-% \RequirePackage{ifpdf}		% This is now the recommended way for checking for PDFLaTeX:
-% \ifpdf
-% % \pdfinfo{
-% %    /Author (Author's name)
-% %    /Title (PhD Thesis)
-% %    /Keywords (One; Two;Three)
-% %    /CreationDate (D:\pdfdate)
-% % }
-% \else
-% \fi
-
-
-% AAdd an image to the backgroung
-% 	Used to inser the background image in the cover page
-\RequirePackage{eso-pic}
-\newcommand{\BackgroundPic}[1]{
-    \put(0,0){
-	\parbox[b][\paperheight]{\paperwidth}{%
-		\vfill
-		\centering
-		\includegraphics[width=\paperwidth,height=\paperheight,
-		keepaspectratio]{#1}%
-		\vfill
-}}}
-
-
-% To process the bibliography
-\RequirePackage[backend=bibtex]{biblatex}
-
-
-% To handle subfigures
-\newsubfloat{figure}
-
-% Fix babel translation
-\addto\captionsportuguese{\renewcommand{\contentsname}{Índice}}  		% Trocar "Conteúdo" por "Índice"
-\addto\captionsportuguese{\renewcommand{\indexname}{Índice Remissivo}}  % Trocar "Índice" por "Índice Remissivo"
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -157,7 +76,9 @@
 	\expandafter\endinput}}
 
 
-
+% --------------------------------------------------------
+% Fake the definition of the abstract array
+%
 % \newdata*{UNL@abstractorder}
 \def\UNL@abstractorder[#1]=#2{
 	\expandafter\gdef\csname UNL@abstractorder@#1\endcsname{#2}}
@@ -191,38 +112,33 @@
 \newdata*{UNL@copyrighttext}
 
 % Input definitions for strings above in multiple languages
-\InputIfFileExists{langsupport}{}{}
+\input{unlthesis-files/lang-text.sty}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Defaults for uniersity, faculty, degree, etc…
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newdata*{university}
 \newdata*{faculty}
 \newdata*{majorfield}
+% \newdata*{logo}
+% \newdata*{thesiscover}
 
-% Default cover background
-\def\thesiscoverphd#1{%
-  \gdef\@thesiscoverphd{#1}}
-\def\@thesiscoverphd{~thesiscoverphd \UNL@notdefined}
-
-\def\thesiscovermsc#1{%
-  \gdef\@thesiscovermsc{#1}}
-\def\@thesiscovermsc{~thesiscovermsc \UNL@notdefined}
-
-\def\thesiscoverbsc#1{%
-  \gdef\@thesiscoverbsc{#1}}
-\def\@thesiscoverbsc{~thesiscovermsc \UNL@notdefined}
-
-\def\thesiscoverplain#1{%
-  \gdef\@thesiscoverplain{#1}}
-\def\@thesiscoverplain{~thesiscoverempty \UNL@notdefined}
-
-\InputIfFileExists{defaults}{}{}
+% --------------------------------------------------------
+% Fake the definitions for the 'thesiscover' and 'logo' arrays
+%
+\def\thesiscover[#1]=#2{
+  \expandafter\gdef\csname UNL@thesiscover@#1\endcsname{#2}}
+\def\logo[#1]=#2{
+  \expandafter\gdef\csname UNL@logo@#1\endcsname{#2}}
 
 
+% --------------------------------------------------------
+% Include the file with the defaults
+%
+\InputIfFileExists{unlthesis-files/Schools/\UNL@school/defaults.sty}{}{ERROR: File 'unlthesis-files/\UNL@school/defaults.sty' does not exist!!!}
 
-% Portuguese
-\ifthenelse{\equal{\UNL@lang}{pt}}
-	{\def\lstlistlistingname{Listagens}}
-	{}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LABELS
@@ -246,26 +162,6 @@ Copyright \copyright\ \@author, \faculty[\UNL@cover@lang], \university[\UNL@cove
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% IDENTIFICATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%
-% \def\majorfield#1{%
-%   \gdef\@majorfield{#1}}
-% \def\@majorfield{~majorfield \UNL@notdefined}
-
-% \def\address#1{%
-%   \gdef\@address{#1}}
-% \def\@address{~address \UNL@notdefined}
-%
-% \def\faculty#1{%
-%   \gdef\@faculty{#1}}
-% \def\@majorfield{~faculty \UNL@notdefined}
-%
-% \def\university#1{%
-%   \gdef\@university{#1}}
-% \def\@majorfield{~university \UNL@notdefined}
-
-% \@input@{repeat}
-%% Date
 
 \def\themonth#1{\gdef\@themonth{#1}}
 \def\@themonth{~themonth \UNL@notdefined}
@@ -322,10 +218,6 @@ Copyright \copyright\ \@author, \faculty[\UNL@cover@lang], \university[\UNL@cove
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% NEW definition for committee with lists
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% To process lists and other stuff
-\RequirePackage{etoolbox}
-
 
 % Find the size of a list
 \newcount\UNL@listsize@cnt
@@ -470,99 +362,6 @@ Copyright \copyright\ \@author, \faculty[\UNL@cover@lang], \university[\UNL@cove
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\def\coverpage{
-\thispagestyle{empty}
-% \pagestyle{empty}
-
-%% Define cover page margins
-\ifthenelse{%
-	\equal{\UNL@doctype}{bsc}}{% BSc
-		\def\@defcoverbg{\@thesiscoverbsc}
-		\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
-	}{%
-\ifthenelse{%
-	\equal{\UNL@doctype}{prepmsc}%
-	\OR\equal{\UNL@doctype}{msc}}{% MSc
-		\def\@defcoverbg{\@thesiscovermsc}
-		\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
-	}{%
-\ifthenelse{%
-	\equal{\UNL@doctype}{phdplan}%
-	\OR\equal{\UNL@doctype}{propphd}%
-	\OR\equal{\UNL@doctype}{phd}}{% PhD
-		\def\@defcoverbg{\@thesiscoverphd}
-		\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=5.5cm,rmargin=2.5cm}
-	}
-{	% Plain
-	\def\@defcoverbg{\@thesiscoverplain}
-	\newgeometry{tmargin=4cm,bmargin=1.3cm,lmargin=4.5cm,rmargin=3.3cm}
-}}}
-
-%% Add background image	
-\AddToShipoutPicture*{\BackgroundPic{\@defcoverbg}}
-
-
-\begin{center}
-	\fontfamily{phv}
-
-% Name of Candidate
-	\fontsize{15}{17}
-	\selectfont
-	\textbf{\@author}
-	
-\vspace{0.25cm}	
-% Academic qualifications
-	\fontsize{12}{13}
-	\selectfont
-	\@authordegree
-
-\vspace{4.25cm}
-% Title of Dissertation
-	\fontsize{18}{20}
-	\selectfont
-	\textbf{\UNL@title}\\[0.75cm]
-
-\vspace{0.75cm}
-% Degree
-	\fontsize{12}{13}
-	\selectfont
-	\UNL@presentationtext
-	
-	\vfill
-	% Advisers
-	\fontsize{13}{14}
-	\selectfont
-	\printtheadvisers
-
-\vfill\vfill
-% raporteur board
-	\ifthenelse{%
-		\equal{\UNL@doctype}{bsc}%
-		\OR\equal{\UNL@doctype}{msc}%
-		% \OR\equal{\UNL@doctype}{propphd}%
-		\OR\equal{\UNL@doctype}{phd}}
-	{\hfill\fontsize{10}{11}\selectfont\printthecommittee}
-	{}
-
-\vfill\vfill\vfill
-
-% Date
-	\fontsize{12}{13}
-	\selectfont
-	\ifdraftdoc 
-		\textbf{DRAFT: \today}
-	\else
-		\textbf{\@themonth, \@theyear}
-	\fi	
-
-\end{center}
-\restoregeometry
-\cleardoublepage
-}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -697,10 +496,10 @@ Copyright \copyright\ \@author, \faculty[\UNL@cover@lang], \university[\UNL@cove
 
 
 \def\thesisfrontmatter{%
-	\frontmatter
-	\pagestyle{UNL@myvf}
-	\pagenumbering{roman} 
-	\setlength{\headheight}{15pt}
+  \frontmatter
+  % \pagestyle{UNL@myvf}
+  \pagenumbering{roman}
+  \setlength{\headheight}{15pt}
 }
 
 \def\thesismainmatter{%
@@ -893,87 +692,18 @@ Copyright \copyright\ \@author, \faculty[\UNL@cover@lang], \university[\UNL@cove
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Text style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\InputIfFileExists{unlthesis-files/Styles/\UNL@docstyle.sty}{}{ERROR: File 'unlthesis-files/Styles/\UNL@docstyle.sty' does not exist!!!}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Headers & footers
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Bibliography
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Tables and figures
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Mathematics
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Reference macros
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\RequirePackage{soul}
-\newsavebox{\UNL@chapter} 
-\newcommand\UNL@chapter@marker[1][4cm]{%
-	\sbox\UNL@chapter{% 
-		\resizebox{!}{#1}{\fboxsep=1pt%
-			\colorbox{lightgray}{\color{white}\thechapter}% 
-		}}%
-		\rotatebox{90}{% 
-			\resizebox{%
-				\heightof{\usebox{\UNL@chapter}}+\depthof{\usebox{\UNL@chapter}}}% 
-			{!}{\scshape\so\@chapapp}}\quad%
-		\raisebox{\depthof{\usebox{\UNL@chapter}}}{\usebox{\UNL@chapter}}%
-} 
-\newcommand\UNL@chm[1][4cm]{%
-	\sbox\UNL@chapter{\UNL@chapter@marker[#1]}% 
-	\makebox[0pt][c]{% aka \rlap
-		\makebox[1cm][r]{\usebox\UNL@chapter}%
-	}}
-\makechapterstyle{UNLchapstyle}{
-	\renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so} 
-	\renewcommand\chaptitlefont{\normalfont\LARGE\bfseries\scshape} 
-	\renewcommand\chapternamenum{} \renewcommand\printchaptername{} 
-	\renewcommand\printchapternum{\null\hfill\UNL@chm[2.5cm]\hspace*{14pt}\par} 
-	\renewcommand\afterchapternum{\par\vskip\midchapskip} 
-	\renewcommand\printchaptertitle[1]{\color{darkgray}\chaptitlefont\raggedleft ##1\par}
-} 
-\chapterstyle{UNLchapstyle}
-%
-% UNL guidelines:
-%
-% The pages should be numbered consecutively at the bottom centre of the
-% page.
-\makepagestyle{UNL@myvf} 
-\makeoddfoot{UNL@myvf}{}{\thepage}{} 
-\makeevenfoot{UNL@myvf}{}{\thepage}{} 
-\makeheadrule{UNL@myvf}{\textwidth}{\normalrulethickness} 
-\makeevenhead{UNL@myvf}{\small\textsc{\leftmark}}{}{} 
-\makeoddhead{UNL@myvf}{}{}{\small\textsc{\rightmark}}
-\pagestyle{UNL@myvf}
-%
-\frenchspacing
-% Fills blank pages until next odd-numbered page. Used to emulate single-sided
-% frontmatter. This will work for title, abstract and declaration. Though the
-% contents sections will each start on an odd-numbered page they will
-% spill over onto the even-numbered pages if extending beyond one page
-% (hopefully, this is ok).
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Generate book spine
+% Generate book spine (if otion "spine=true")
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \makepagestyle{UNL@spine@pagestyle}
-% \makeoddfoot{UNL@spine@pagestyle}{}{}{}
-% \makeevenfoot{UNL@spine@pagestyle}{}{}{}
-% \makeevenhead{UNL@spine@pagestyle}{}{}{}
-% \makeoddhead{UNL@spine@pagestyle}{}{}{}
-% \pagestyle{UNL@spine@pagestyle}
-
-\def\shortauthor#1{\gdef\UNL@shortauthor{#1}} % \spine is used to print the author short name (maybe there is a more elegant solution for this
+\def\shortauthor#1{\gdef\UNL@shortauthor{#1}}
 \def\UNL@shortauthor{~shot~author \UNL@notdefined}
 
 \def\printthespine{%
@@ -1020,7 +750,9 @@ Copyright \copyright\ \@author, \faculty[\UNL@cover@lang], \university[\UNL@cove
 				{\UNL@spinewidth > \UNL@thick@spineheight}
 				{& \usebox{\UNL@spine@thick} &}
 				{\UNL@shortauthor & & \UNL@title} 
-		& & \vspace*{4pt}\includegraphics[origin=c,angle=-90,height=0.9\UNL@spinewidth]{logoUNL}
+		& & 
+    \vspace*{4pt}
+    \includegraphics[origin=c,angle=-90,height=0.9\UNL@spinewidth]{\UNL@logo@spine}
 	\end{tabularx}
 }}
 \restoregeometry

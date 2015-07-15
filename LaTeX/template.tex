@@ -1,85 +1,39 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Template for writing dissertations with ThesisDIFCTUNL
+%% texplate.tex
+%% UNL thesis document template
 %%
-%% Version 01072015 (Jul 2015)
+%% Version 15072015 (Jul 2015)
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
 %%
-%% Project web page at: http://code.google.com/p/thesisdifctunl/
-%%
 %% BUGS and SUGGESTIONS: please submit an issue at the project web page
+%%      at: https://github.com/joaomlourenco/unlthesis/
+%%
+%% HELP: please ask for help at the unlthesis google group
+%%      at: https://groups.google.com/forum/#!forum/unlthesis
 %%
 %% Authors / Contributors:
 %%     - João Lourenço (joao.lourenco@fct.unl.pt)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Main options (please read the manual for further details)
-%% Options marked with (*) are the values by default
-%% See also file "defaults.tex"
-%%
-%% - Values for option 'doctype'
-%%           bsc	- BSc graduation report
-%%           prepmsc	- Preparation of MSc dissertation
-%%           (*)msc	- MSc dissertation
-%%           phdplan 	- PhD thesis plan
-%%           propphd	- PhD thesis proposal
-%%           phd	- PhD thesis
-%% - Values for option 'lang'
-%%           pt		- português
-%%           (*)en	- english
-%% - Values for option 'enc'
-%%           latin1	- Windows   **** I STRONGLY recoomend you to use UTF8 ***
-%%           (*)utf8	- other systems (Linux, Mac)
-%% - Other options
-%%           biblatex={opt1=va1,opt2=val2,...}	- options for biblatex
-%%           		style=numeric		[1]
-%%           		style=alphabetic	[Lou+04]
-%%			style=authoryear	Lourenco et al. 2004
-%%			style=bwl-FU		Lourenço et al. (2004)
-%%           		sorting=none
-%%           		sorting=nyt
-%%           COMPATIBILITY WITH LEGACY BIB STYLES
-%%			style=numeric			 --> plain
-%%			style=numeric,firstinits=true	 --> abbrv
-%%			style=numeric,sorting=none	 --> unsrt
-%%			style=alphabetic		 --> alpha
-%%			style=bwl-FU,firstinits=true	 --> apa (not really, but almost…)
-%%           memoir={opt1=va1,opt2=val2,...}	- options for book class
-%%           		(*)11pt	- Use font size 11
-%%           		12pt	- Use font size 12
-%% - Bibliography -- **** TEMPORARILY DISABLED ****
-%%           bibbychapter	- Print the bibliography/references per chapter
-%%			
-%%
-%% DON'T MIX TEXT ENCODINGS. All the files are saved using UTF8. 
-%% If you want to use latin1, you should first re-save all these
-%% files (*.tex, *.cls,  ...) using latin1 encoding first
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%
-%%%%%%%% NOTE: for final printing don't forget to set "linkscolor=black, spine=true" 
-%%%%%%%%       and replace "draft" for "final" in "memoir={a4paper,11pt, draft}".
-%%%%%%%%
+
 \documentclass[
-	doctype=phd,			% The type of document
-	lang=en,			% The main langage of the document
-  coverlang=pt,
-	enc=utf8,			% You shouldn't mess with this one
-	linkscolor=darkblue,		% Switch to black for PRINTING
-	spine=false,			% Should be set to false until the final printing
-	biblatex={
-		style=numeric,		% ALTERNATIVES: numeric, alphabetic, authoryear, bwl-FU
-		sorting=nyt,		% ALTERNATIVES: none, nyt, ynt
-		maxcitenames=2,
-		mincitenames=1,
+  doctype=phd,      % phd(*), phdplan, phdprop, msc, mscplan, bsc
+  school=fctunl,    % fctunl(*)
+  docstyle=elegant, % bianchi, default, elegant(*), ell, ger, veelo
+	lang=en,          % en(*), pt
+  coverlang=en,     % en, pt(*)
+	linkscolor=darkblue,  % darkblue, black (Set to 'black' for PRINTING)
+	spine=false,			% (Set to 'true' for PRINTING the book spine)
+	biblatex={        % Options for biblatex (see biblatex documentation)
+		style=numeric,  % numeric(*), alphabetic, authoryear, bwl-FU
+		sorting=nyt,		% none, nyt(*), ynt
+		firstinits=true,  % render all first and middle names as initials
+		sortcites=true, % If numeric, sort cites by crescent order
 	},
-	memoir={a4paper, 11pt, draft},	% Options for base sclass (memoir)
-					% "draft" prints the current date at the bottom of the cover page.
-					% ALWAYS replace "draft" by "final" for final version,
-					% With "final" the MONTH and YEAR will be printed
+	memoir={a4paper, 11pt, draft},	% See the 'memoir' documentation
+          % 10pt, 11pt(*), 12pt
+					% Replace 'draft' with 'final' for final version
 ]{unlthesis}
 
 %%============================================================
@@ -119,7 +73,7 @@
 %------------------------------------------------------------------
 
 % Where to look for figures
-\graphicspath{{Logo/}{Figures/}{Chapters/Figures/}} 
+% \prependtographicspath{{some-filder-here}}
 
 % Setup of listings, for more information check package manual
 \lstset{
@@ -166,7 +120,7 @@
 
 % Autor
 % use [f] for female and [m] for male
-\author[m]{John Longname Doe} 
+\author[m]{John Longname Doe}
 \shortauthor{John Doe}
 \authordegree{Master of Science}
 
@@ -207,7 +161,7 @@
 
 % Dedicatory text. Will only be considered for final documents,
 % i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
-\dedicatoryfile{dedicatory} 
+\dedicatoryfile{dedicatory}
 
 % Acknowledgments text. Will only be considered for final documents,
 % i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
@@ -219,7 +173,7 @@
 \abstractfile[en]{abstract}	% Abstract in English
 
 
-% The Table of Contents is always printed. 
+% The Table of Contents is always printed.
 % The other lists below may be commented and omitted.
 \addlisttofrontmatter{\listoffigures}	% The List of Figures. Comment to omit.
 \addlisttofrontmatter{\listoftables} 	% The List of Tables. Comment to omit.
@@ -270,7 +224,7 @@
 \printdedicatory	% Print the dedicatory (will only be printed if adequate for the document type)
 \printacknowledgements	% Print the acknowledgments (will only be printed if adequate for the document type)
 \printquote		% Print the quote (if file exists and is adequate for the document type)
-\printabstract		% Print abstracts (in PT and EN). The abstract in the document main language will 
+\printabstract		% Print abstracts (in PT and EN). The abstract in the document main language will
 			% be printed first, the abstract in the foreign language will be printed second
 \tableofcontents* 	% Always print the table of contents
 \printotherlists 	% Print other lists of contents according to instructions given above
@@ -280,11 +234,11 @@
 \thesismainmatter	% The main text
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\printchapthers		% Print document chapters 
-\printbib		% Print the bibliography 
+\printchapthers		% Print document chapters
+\printbib		% Print the bibliography
 \printappendixes	% Print appendixes, if any!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% End of document
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\end{document} 
+\end{document}
