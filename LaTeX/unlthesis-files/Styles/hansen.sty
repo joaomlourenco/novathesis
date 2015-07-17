@@ -1,0 +1,93 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% STYLE: elegant
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%% Configure set of used fonts
+%%%% Set 1 -------------------------------
+\RequirePackage{kpfonts}
+%%%% Set 2 -------------------------------
+% \RequirePackage{fourier}
+%%%% Set 3 -------------------------------
+% \usepackage{bookman}
+%%%% Set 4 -------------------------------
+% \usepackage{charter}
+%%%% Set 5 -------------------------------
+% \usepackage{newcent}
+%%%% Set 6 -------------------------------
+% \usepackage[sc]{mathpazo}
+% \usepackage[scaled]{helvet}
+% \usepackage{eulervm}
+%%%% Set 7 -------------------------------
+% \usepackage{mathpazo}
+% \usepackage{avant}
+%%%%  END  -------------------------------
+
+
+
+
+%%%%% Configure chapters, headers, footers, and page numbering
+\definecolor{chaptercolor}{gray}{0.8}
+% helper macros
+\newcommand\numlifter[1]{\raisebox{-1.25cm}[0pt][0pt]{\smash{{#1}}}}
+\newcommand\numindent{\kern30pt}
+\newlength\chaptertitleboxheight
+\makechapterstyle{hansen}{
+  \renewcommand\printchaptername{\raggedleft}
+  \renewcommand\printchapternum{%
+    \begingroup%
+    \leavevmode%
+    \chapnumfont%
+    \strut%
+    \numlifter{\thechapter}%
+    \numindent%
+\endgroup%
+}
+  \renewcommand*{\printchapternonum}{%
+    \vphantom{\begingroup%
+      \leavevmode%
+      \chapnumfont%
+      \numlifter{\vphantom{9}}%
+      \numindent%
+      \endgroup}
+    \afterchapternum}
+  \setlength\midchapskip{0pt}
+  \setlength\beforechapskip{0.5\baselineskip}
+  \setlength{\afterchapskip}{3\baselineskip}
+  \renewcommand\chapnumfont{%
+    \fontsize{4cm}{0cm}%
+    \bfseries%
+    \sffamily%
+    \color{chaptercolor}%
+  }
+  \renewcommand\chaptitlefont{%
+    \normalfont%
+    \huge%
+    \bfseries%
+    \raggedleft%
+  }%
+  \settototalheight\chaptertitleboxheight{%
+    \parbox{\textwidth}{\chaptitlefont \strut bg\\bg\strut}}
+  \renewcommand\printchaptertitle[1]{%
+    \parbox[t][\chaptertitleboxheight][t]{\textwidth}{%
+      %\microtypesetup{protrusion=false}% add this if you use microtype
+      \chaptitlefont\strut ##1\strut}%
+}}
+\chapterstyle{hansen}
+\aliaspagestyle{chapter}{empty} % just to save some space
+
+
+
+%
+% UNL guidelines:
+%
+% The pages should be numbered consecutively at the bottom centre of the
+% page.
+\makepagestyle{UNL@myvf}
+\makeoddfoot{UNL@myvf}{}{\thepage}{}
+\makeevenfoot{UNL@myvf}{}{\thepage}{}
+\makeheadrule{UNL@myvf}{\textwidth}{\normalrulethickness}
+\makeevenhead{UNL@myvf}{\small\textsc{\leftmark}}{}{}
+\makeoddhead{UNL@myvf}{}{}{\small\textsc{\rightmark}}
+\pagestyle{UNL@myvf}
+%
+\frenchspacing

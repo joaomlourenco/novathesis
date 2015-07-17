@@ -29,6 +29,9 @@ All contributors, both sporadic and regular, are welcome. :) Please [contact me]
 
 News
 ----
+*2015-07-17 — The Hansen style*
++ Added a new (nice) style: hansen
+
 *2015-07-15 — Towards multiple schools and multiple styles*
 + Renamed document types 'prepmsc'->'mscplan', 'prepphd'->'phdplan', 'propphd'->'phdprop'
 + Split the “unlthesis.cls” file into subfiles with specific contents and moved them to the 'unl-thesis' folder

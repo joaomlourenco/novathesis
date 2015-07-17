@@ -2,7 +2,7 @@
 %% unlthesis.cls
 %% UNL thesis document class
 %%
-%% Version 15072015 (Jul 2015)
+%% Version 17072015 (Jul 2015)
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -28,7 +28,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2015/01/15 UNL Thesis Template]
+\ProvidesClass{unlthesis}[2015/01/17 UNL Thesis Template]
 
 
 % --------------------------------------------------------
