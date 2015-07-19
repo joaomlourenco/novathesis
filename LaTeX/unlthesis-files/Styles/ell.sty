@@ -27,18 +27,3 @@
 
 %%%%% Configure chapters, headers, footers, and page numbering
 \chapterstyle{ell}
-
-%
-% UNL guidelines:
-%
-% The pages should be numbered consecutively at the bottom centre of the
-% page.
-\makepagestyle{UNL@myvf}
-\makeoddfoot{UNL@myvf}{}{\thepage}{}
-\makeevenfoot{UNL@myvf}{}{\thepage}{}
-\makeheadrule{UNL@myvf}{\textwidth}{\normalrulethickness}
-\makeevenhead{UNL@myvf}{\small\textsc{\leftmark}}{}{}
-\makeoddhead{UNL@myvf}{}{}{\small\textsc{\rightmark}}
-\pagestyle{UNL@myvf}
-%
-\frenchspacing

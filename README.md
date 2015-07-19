@@ -29,8 +29,9 @@ All contributors, both sporadic and regular, are welcome. :) Please [contact me]
 
 News
 ----
-*2015-07-17 — The Hansen style*
-+ Added a new (nice) style: hansen
+*2015-07-20 — Lots of styles*
++ Added a new institution: ul/ist
++ Added lots of styles: bianchi bluebox brotherton dash default elegant(*) ell ger hansen jenor lyhne madsen pedersen veelo vz14 vz34 vz43
 
 *2015-07-15 — Towards multiple schools and multiple styles*
 + Renamed document types 'prepmsc'->'mscplan', 'prepphd'->'phdplan', 'propphd'->'phdprop'

@@ -1,0 +1,66 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% STYLE: elegant
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%% Configure set of used fonts
+%%%% Set 1 -------------------------------
+\RequirePackage{kpfonts}
+%%%% Set 2 -------------------------------
+% \RequirePackage{fourier}
+%%%% Set 3 -------------------------------
+% \usepackage{bookman}
+%%%% Set 4 -------------------------------
+% \usepackage{charter}
+%%%% Set 5 -------------------------------
+% \usepackage{newcent}
+%%%% Set 6 -------------------------------
+% \usepackage[sc]{mathpazo}
+% \usepackage[scaled]{helvet}
+% \usepackage{eulervm}
+%%%% Set 7 -------------------------------
+% \usepackage{mathpazo}
+% \usepackage{avant}
+%%%%  END  -------------------------------
+
+
+
+
+%%%%% Configure chapters, headers, footers, and page numbering
+\newsavebox{\ChpNumBox}
+\definecolor{ChapBlue}{rgb}{0.00,0.65,0.65}
+\newcommand*{\thickhrulefill}{%
+  \leavevmode\leaders\hrule height 1\p@ \hfill \kern \z@}
+\newcommand*\BuildChpNum[2]{%
+  \begin{tabular}[t]{@{}c@{}}
+    \makebox[0pt][c]{#1\strut}  \\[.5ex]
+    \colorbox{ChapBlue}{%
+      \rule[-10em]{0pt}{0pt}%
+      \rule{1ex}{0pt}\color{black}#2\strut
+      \rule{1ex}{0pt}}%
+  \end{tabular}}
+\makechapterstyle{BlueBox}{%
+  \renewcommand{\chapnamefont}{\large\scshape}
+  \renewcommand{\chapnumfont}{\Huge\bfseries}
+  \renewcommand{\chaptitlefont}{\raggedright\Huge\bfseries}
+  \setlength{\beforechapskip}{20pt}
+  \setlength{\midchapskip}{26pt}
+  \setlength{\afterchapskip}{40pt}
+  \renewcommand{\printchaptername}{}
+  \renewcommand{\chapternamenum}{}
+  \renewcommand{\printchapternum}{%
+    \sbox{\ChpNumBox}{%
+      \BuildChpNum{\chapnamefont\@chapapp}%
+      {\chapnumfont\thechapter}}}
+  \renewcommand{\printchapternonum}{%
+    \sbox{\ChpNumBox}{%
+      \BuildChpNum{\chapnamefont\vphantom{\@chapapp}}%
+      {\chapnumfont\hphantom{\thechapter}}}}
+  \renewcommand{\afterchapternum}{}
+  \renewcommand{\printchaptertitle}[1]{%
+    \usebox{\ChpNumBox}\hfill
+    \parbox[t]{\hsize-\wd\ChpNumBox-1em}{%
+      \vspace{\midchapskip}%
+      \thickhrulefill\par
+      \chaptitlefont ##1\par}}%
+}
+\chapterstyle{BlueBox}

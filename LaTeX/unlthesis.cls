@@ -2,7 +2,7 @@
 %% unlthesis.cls
 %% UNL thesis document class
 %%
-%% Version 17072015 (Jul 2015)
+%% Version 17072020 (Jul 2015)
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -28,7 +28,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2015/01/17 UNL Thesis Template]
+\ProvidesClass{unlthesis}[2015/01/20 UNL Thesis Template]
 
 
 % --------------------------------------------------------
@@ -63,6 +63,13 @@
 \def\cleardoublepage{%
   \newpage{\pagestyle{empty}\origcleardoublepage}
 }
+
+% Do some magic defining arrays :)
+\newcommand{\mynewdata}[1]{%
+\@namedef{#1}[##1]=##2{\@namedef{#1##1}{##2}}
+\@namedef{use#1}[##1]{\csname #1##1\endcsname}
+}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -121,16 +128,19 @@
 \newdata*{university}
 \newdata*{faculty}
 \newdata*{majorfield}
-% \newdata*{logo}
-% \newdata*{thesiscover}
+\mynewdata{logo}
+\mynewdata{thesiscover}
+% \mynewdata{coveritem}
 
 % --------------------------------------------------------
 % Fake the definitions for the 'thesiscover' and 'logo' arrays
 %
-\def\thesiscover[#1]=#2{
-  \expandafter\gdef\csname UNL@thesiscover@#1\endcsname{#2}}
-\def\logo[#1]=#2{
-  \expandafter\gdef\csname UNL@logo@#1\endcsname{#2}}
+% \def\thesiscover[#1]=#2{
+%   \expandafter\gdef\csname UNL@thesiscover@#1\endcsname{#2}}
+% \def\logo[#1]=#2{
+%   \expandafter\gdef\csname UNL@logo@#1\endcsname{#2}}
+% \def\coveritem[#1]=#2{
+  % \expandafter\gdef\csname UNL@coveritem@#1\endcsname{#2}}
 
 
 % --------------------------------------------------------
@@ -752,7 +762,7 @@ Copyright \copyright\ \@author, \faculty[\UNL@cover@lang], \university[\UNL@cove
 				{\UNL@shortauthor & & \UNL@title} 
 		& & 
     \vspace*{4pt}
-    \includegraphics[origin=c,angle=-90,height=0.9\UNL@spinewidth]{\UNL@logo@spine}
+    \includegraphics[origin=c,angle=-90,height=0.9\UNL@spinewidth]{\uselog[spine]}
 	\end{tabularx}
 }}
 \restoregeometry

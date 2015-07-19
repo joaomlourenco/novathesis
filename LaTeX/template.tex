@@ -2,7 +2,7 @@
 %% texplate.tex
 %% UNL thesis document template
 %%
-%% Version 15072017 (Jul 2015)
+%% Version 15072020 (Jul 2015)
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -18,11 +18,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[
-  doctype=msc,      % phd(*), phdplan, phdprop, msc, mscplan, bsc
-  school=fctunl,    % fctunl(*)
-  docstyle=elegant, % bianchi, default, elegant(*), ell, ger, hansen, veelo
+  doctype=phd,      % phd(*), phdplan, phdprop, msc, mscplan, bsc
+  school=unl/fct,    % unl/fct(*), ul/ist
+  docstyle=elegant, % bianchi bluebox brotherton dash default elegant(*) ell ger 
+                    % hansen jenor lyhne madsen pedersen veelo vz14 vz34 vz43
 	lang=en,          % en(*), pt
-  coverlang=en,     % en, pt(*)
+  coverlang=pt,     % en, pt(*)
 	linkscolor=darkblue,  % darkblue, black (Set to 'black' for PRINTING)
 	spine=false,			% (Set to 'true' for PRINTING the book spine)
 	biblatex={        % Options for biblatex (see biblatex documentation)
@@ -97,7 +98,7 @@
 % Univesity
 % \university[pt]={Universidade NOVA de Lisboa}
 % \university[en]={NOVA University of Lisbon}
-%
+% 
 % % Faculty / School
 % \faculty[pt]={Faculdade de Ciências e Tecnologia}
 % \faculty[en]={Faculty of Sciences and Technology}
@@ -131,8 +132,9 @@
 
 % Advisers (maximum of 9)
 % use [f] for female and [m] for male
-\adviser[f]{John Doe Adviser Name}{Full Professor}{\newline NOVA University of Lisbon}
-\adviser[m]{John Doe Male Adviser Name}{Associate Professor}{Some University Somewhere}
+\adviser[f]{John Doe Adviser Name}{Full Professor}{NOVA University of Lisbon} 
+% you may use "\newline" to force a new line
+\adviser[m]{John Doe Male Adviser Name}{Associate Professor}{\newline Some University Somewhere}
 
 
 % Co-Advisers (maximum of 9)

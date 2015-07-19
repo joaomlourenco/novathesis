@@ -23,8 +23,6 @@
 %%%%  END  -------------------------------
 
 
-
-
 %%%%% Configure chapters, headers, footers, and page numbering
 \RequirePackage{soul}
 \newsavebox{\UNL@chapter} 
@@ -44,7 +42,7 @@
 	\makebox[0pt][c]{% aka \rlap
 		\makebox[1cm][r]{\usebox\UNL@chapter}%
 	}}
-\makechapterstyle{UNLchapstyle}{
+\makechapterstyle{elegant}{
 	\renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so} 
 	\renewcommand\chaptitlefont{\normalfont\LARGE\bfseries\scshape} 
 	\renewcommand\chapternamenum{} \renewcommand\printchaptername{} 
@@ -52,18 +50,4 @@
 	\renewcommand\afterchapternum{\par\vskip\midchapskip} 
 	\renewcommand\printchaptertitle[1]{\color{darkgray}\chaptitlefont\raggedleft ##1\par}
 } 
-\chapterstyle{UNLchapstyle}
-%
-% UNL guidelines:
-%
-% The pages should be numbered consecutively at the bottom centre of the
-% page.
-\makepagestyle{UNL@myvf} 
-\makeoddfoot{UNL@myvf}{}{\thepage}{} 
-\makeevenfoot{UNL@myvf}{}{\thepage}{} 
-\makeheadrule{UNL@myvf}{\textwidth}{\normalrulethickness} 
-\makeevenhead{UNL@myvf}{\small\textsc{\leftmark}}{}{} 
-\makeoddhead{UNL@myvf}{}{}{\small\textsc{\rightmark}}
-\pagestyle{UNL@myvf}
-%
-\frenchspacing
+\chapterstyle{elegant}
