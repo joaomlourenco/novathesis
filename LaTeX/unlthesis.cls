@@ -122,6 +122,7 @@
 
 \newdata*{UNL@dissertationstr}
 \newdata*{UNL@copyrighttext}
+\newdata*{UNL@acknowledgments}
 
 % Input definitions for strings above in multiple languages
 \input{unlthesis-files/lang-text.sty}
@@ -607,7 +608,9 @@ Copyright \copyright\ \@author, \faculty[\UNL@cover@lang], \university[\UNL@cove
 	\noindent
 	\textbf{\large \UNL@title}\par
 	\bigskip
-	\thecopyrightstr
+	\thecopyrightstr\par
+  \bigskip
+  {\begin{Spacing}{1}\scriptsize\noindent\UNL@acknowledgments[\UNL@cover@lang]\end{Spacing}}
 }
 
 \def\printcopyright{%
