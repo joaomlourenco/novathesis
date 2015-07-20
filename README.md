@@ -5,9 +5,7 @@ The unlthesis LaTeX class is a PhD thesis template for the [FCT Universidade Nov
 
 The template is easily costumizable for other institutions as well.  If you costumize this template for your institution, please [let me knwow](http://docentes.fct.unl.pt/joao-lourenco) about the hardest costumization tasks do that I can work a bit on them.  Thanks.
 
-```html
-<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">UNL Thesis LaTeX Template</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">João M. Lourenço</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/joaomlourenco/unlthesis" rel="dct:source">https://github.com/joaomlourenco/unlthesis</a>.
-```
+*This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/.*
 
 
 Quick Guide
