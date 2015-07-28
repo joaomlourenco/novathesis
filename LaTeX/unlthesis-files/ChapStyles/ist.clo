@@ -1,29 +1,9 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ist.clo
+%% UNL thesis configuration file
+%%
+%% Costumization for the IST chapter style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% STYLE: elegant
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%% Configure set of used fonts
-%%%% Set 1 -------------------------------
-\RequirePackage{kpfonts}
-%%%% Set 2 -------------------------------
-% \RequirePackage{fourier}
-%%%% Set 3 -------------------------------
-% \usepackage{bookman}
-%%%% Set 4 -------------------------------
-% \usepackage{charter}
-%%%% Set 5 -------------------------------
-% \usepackage{newcent}
-%%%% Set 6 -------------------------------
-% \usepackage[sc]{mathpazo}
-% \usepackage[scaled]{helvet}
-% \usepackage{eulervm}
-%%%% Set 7 -------------------------------
-% \usepackage{mathpazo}
-% \usepackage{avant}
-%%%%  END  -------------------------------
-
-
-
 
 %%%%% Configure chapters, headers, footers, and page numbering
 \definecolor{chaptercolor}{rgb}{0.7,0.8,0.9}

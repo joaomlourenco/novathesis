@@ -31,6 +31,11 @@ All contributors, both sporadic and regular, are welcome. :) Please [contact me]
 
 News
 ----
+*2015-07-28 — Lots of styles*
++ Major internal changes, but mainly not visible to the template user.  Now the template includes "folder-based" support for new schools (forward compatible with new folders to be added).
++ Created a flexible system to design the thesis cover and its contents, to facilitate the support of other schools/institutions.
++ General cleanup of the code. Removed dependencies from a few packages (geometry, tabu, memoir, ...)
+
 *2015-07-20 — Lots of styles*
 + Added a new institution: ul/ist
 + Added lots of styles: bianchi bluebox brotherton dash default elegant(*) ell ger hansen jenor lyhne madsen pedersen veelo vz14 vz34 vz43

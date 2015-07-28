@@ -1,6 +1,9 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% PACKAGES
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% packages.clo
+%% UNL thesis configuration file
+%%
+%% Packages to be loaded
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%% Configure input encoding
 \RequirePackage{inputenc}		% Format for the input file(s), see the "enc" option
@@ -12,15 +15,33 @@
 
 %%%%% Configure multilingual language support
 \RequirePackage{babel}			% Support for bilingual documents
-\RequirePackage{memory}		  % To keep records to store strings
 
 
 %%%%% Fine tuning of typesetting
-\RequirePackage[final, babel]{microtype}
+\usepackage[%
+  babel=true,
+  activate={true,nocompatibility},  % activate={true,nocompatibility} - activate protrusion and expansion
+  final,            % final - enable microtype; use "draft" to disable  
+  tracking=true,    % tracking=true - activate this technique
+  kerning=true,     % kerning=true - activate this technique
+  spacing=true,     % spacing=true - activate this technique
+  factor=1100,      % factor=1100 - add 10% to the protrusion amount (default is 1000)
+  stretch=10,       % stretch=10 - reduce stretchability (default is 20)
+  shrink=10,        % shrink=10 - reduce shrinkability (default is 20)
+]{microtype}
+
+
+
+
+
 
 
 %%%%% Better support for calculations
-\RequirePackage{calc}
+% \RequirePackage{calc}
+
+
+%%%%% Better support for calculations
+\RequirePackage{xstring}
 
 
 %%%%% Configure Graphics
@@ -51,7 +72,7 @@
 
 %%%%% Configure page geometry
 % Needs version equal or later to 2010/02/12, which support the "newgeometry" command
-\RequirePackage[top=3cm,bottom=3cm,inner=3.5cm,outer=2.5cm]{geometry}[2010/02/12]
+% \RequirePackage[a4paper]{geometry}[2010/02/12]
 
 
 %%%%% Condditional processing for PDF file
@@ -69,17 +90,7 @@
 
 % AAdd an image to the backgroung
 % 	Used to inser the background image in the cover page
-\RequirePackage{eso-pic}
-\newcommand{\BackgroundPic}[1]{
-    \put(0,0){
-	\parbox[b][\paperheight]{\paperwidth}{%
-		\vfill
-		\centering
-		\includegraphics[width=\paperwidth,height=\paperheight,
-		keepaspectratio]{#1}%
-		\vfill
-}}}
-
+\RequirePackage{eso-pic}[2015/04/20]
 
 % To process the bibliography
 \RequirePackage[backend=bibtex]{biblatex}

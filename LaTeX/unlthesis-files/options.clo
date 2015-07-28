@@ -1,0 +1,218 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% options.clo
+%% UNL thesis configuration file
+%%
+%% Processing of Class optinos
+%%
+%% Order and lnguage for printing the abstracts depending on the language
+%% These macros are just informative for now (it is hardcoded in the
+%% 	unlthesis.clo file)… this must be fixed in the future!!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PROCESS KEY-VAL OPTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{kvoptions-patch}
+\RequirePackage{xkeyval}
+\RequirePackage{xifthen}
+
+
+
+% --------------------------------------------------------
+% DOCUMENT TYPE	- unlthesis@opt€doctype
+%
+% bsc     BSc report			        
+% mscplan MSc preliminary report
+% msc     MSc dissertation		
+% phdprop PhD proposal			
+% phdplan PhD preliminary report	
+% phd     PhD thesis			
+\DeclareOptionX{doctype}{
+	\typeout{'doctype'=#1}
+	\gdef\unlthesis@opt@doctype{#1}
+}
+
+
+
+% --------------------------------------------------------
+% SCHOOL - unlthesis@opt@school
+%
+% unl/fct Faculdade de Ciências e Tecnologia da Universidade Nova de Lisboa
+% ul/is   Isntituto Superior Técnico da Universidade de Lisboa
+\DeclareOptionX{school}{
+	\typeout{'school'=#1}
+	\gdef\unlthesis@opt@school{#1}
+}
+
+
+
+% --------------------------------------------------------
+% CHAPTER STYLE - unlthesis@opt@chapstyle
+%
+% bianchi bluebox brotherton dash default elegant(*) ell ger  
+% hansen ist jenor lyhne madsen pedersen veelo vz14 vz34 vz43
+\DeclareOptionX{chapstyle}{
+	\typeout{'chapstyle'=#1}
+	\gdef\unlthesis@opt@chapstyle{#1}
+}
+
+
+
+% --------------------------------------------------------
+% FONT STYLE - unlthesis@opt@fontstyle
+%
+% bookman charter fourier kpfonts(*) mathpazo1 mathpazo2 newcent
+\DeclareOptionX{fontstyle}{
+	\typeout{'fontstyle'=#1}
+	\gdef\unlthesis@opt@fontstyle{#1}
+}
+
+
+% --------------------------------------------------------
+% MAIN LANGUAGE - unlthesis@opt@lang
+%
+% pt  Portuguese
+% en  English
+\gdef\unlthesis@opt@lang{en}
+\DeclareOptionX{lang}{
+  % \typeout{'lang'=#1}
+	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}{\gdef\unlthesis@opt@lang{pt}\PassOptionsToPackage{english,portuguese}{babel}}
+	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}{\gdef\unlthesis@opt@lang{en}\PassOptionsToPackage{portuguese,english}{babel}}{
+	\PackageError{unlthesis}{Wrong value for option 'lang'}{Please see the documentation}
+	\expandafter\endinput
+	}}
+}
+
+
+% --------------------------------------------------------
+% COVER LANGUAGE - unlthesis@opt@coverlang
+%
+% pt  Portuguese
+% en  English
+\gdef\unlthesis@opt@coverlang{\unlthesis@opt@lang}
+\DeclareOptionX{coverlang}{
+  % \typeout{'coverlang'=#1}
+	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}{\gdef\unlthesis@opt@coverlang{pt}}
+	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}{\gdef\unlthesis@opt@coverlang{en}}{
+	\PackageError{unlthesis}{Wrong value for option 'coverlang'}{Please see the documentation}
+	\expandafter\endinput
+	}}
+}
+
+
+% --------------------------------------------------------
+% HYPER LINKS COLOR
+%
+% darkblue, black
+\DeclareOptionX{linkscolor}{
+	\typeout{'linkscolor'=#1}
+	\PassOptionsToPackage{allcolors=#1}{hyperref}
+}
+
+
+% --------------------------------------------------------
+% CHARACTER ENCODING
+%
+% utf8
+% latin1
+% Anything else valid for package "inputenc"
+\DeclareOptionX{enc}{
+	\typeout{'enc'=#1}
+	\PassOptionsToPackage{#1}{inputenc}
+}
+
+
+% --------------------------------------------------------
+% PRINT BOOK SPINE
+%
+% true
+% false
+\DeclareOptionX{spine}[true]{
+	\typeout{'spine'=#1}
+	\ifthenelse{\equal{#1}{true}}{\AtEndDocument{\printthespine}}{}
+}
+
+
+
+% --------------------------------------------------------
+% BIBLATEX OPTIONS
+% Are passed to the biblatex package
+%
+% style= numeric | alphabetic | …
+% ...
+\DeclareOptionX{biblatex}{
+ 	\typeout{'biblatex'=#1}
+	\PassOptionsToPackage{#1}{biblatex}
+}
+
+
+% --------------------------------------------------------
+% BOOK OPTIONS		
+% Are passed to the main class (book)
+%
+% twoside, a4paer, ...
+\DeclareOptionX{memoir}{
+	\typeout{'memoir'=#1}
+	\PassOptionsToClass{#1}{memoir}
+}
+
+
+
+% --------------------------------------------------------
+% DESTINATION MEDIA
+%
+% screen  PDF to visualize in the screen or tablets
+% paper   PDF to print
+\DeclareOptionX{media}[screen]{
+	\typeout{'media'=#1}
+  \ifthenelse{\equal{#1}{screen}}{}{\PassOptionsToPackage{allcolors=black}{hyperref}}
+  \def\unlthesis@opt@media{#1}
+}
+
+
+% --------------------------------------------------------
+% BIBBYCHAPTER		Bibliography per chaper… Ignored for now!
+\let\unlthesis@bibbychapter=0
+% \DeclareOption{bibbychapter}{
+% 	\let\unlthesis@bibbychapter=1
+% }
+
+
+
+% --------------------------------------------------------
+% DEFAULT OPTIONS
+% \PassOptionsToPackage{portuguese,english}{babel}
+\ExecuteOptionsX{
+	doctype=phd,
+  school=fctunl,
+  fontstyle=kpfonts,
+  chapstyle=elegant,
+	enc=utf8,
+	lang=en,
+  coverlang=pt,
+  linkscolor=darkblue,
+	spine=false,
+	biblatex={
+		% sorting=nyt,%
+		% style=alphabetic,%
+		% labelyear=false,%
+		style=numeric,
+		maxalphanames=2,
+		defernumbers=true,%
+		maxbibnames=20,%
+		maxcitenames=2,%
+		mincitenames=1,%
+		firstinits=true,% will render all first and middle names as initials
+		uniquename=init,%
+		% dashed=false,%
+		sortcites=true,
+	},
+	memoir={a4paper, 11pt, draft},
+  media=screen,
+}
+
+
+
+% --------------------------------------------------------
+% PROCESSING OPTIONS
+\ProcessOptionsX\relax

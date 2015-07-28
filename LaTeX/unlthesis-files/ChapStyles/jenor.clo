@@ -1,27 +1,9 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% jenor.clo
+%% UNL thesis configuration file
+%%
+%% Costumization for the Jenor chapter style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% STYLE: elegant
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%% Configure set of used fonts
-%%%% Set 1 -------------------------------
-\RequirePackage{kpfonts}
-%%%% Set 2 -------------------------------
-% \RequirePackage{fourier}
-%%%% Set 3 -------------------------------
-% \usepackage{bookman}
-%%%% Set 4 -------------------------------
-% \usepackage{charter}
-%%%% Set 5 -------------------------------
-% \usepackage{newcent}
-%%%% Set 6 -------------------------------
-% \usepackage[sc]{mathpazo}
-% \usepackage[scaled]{helvet}
-% \usepackage{eulervm}
-%%%% Set 7 -------------------------------
-% \usepackage{mathpazo}
-% \usepackage{avant}
-%%%%  END  -------------------------------
-
 
 %%%%% Configure chapters, headers, footers, and page numbering
 \usepackage{fix-cm}

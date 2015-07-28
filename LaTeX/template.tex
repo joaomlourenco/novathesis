@@ -7,7 +7,7 @@
 %% To view a copy of this license, 
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 15072020 (Jul 2015)
+%% Version 2015/07/28 [3.0.0]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -22,25 +22,35 @@
 %%     - João Lourenço (joao.lourenco@fct.unl.pt)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% The default option marked with (*)
 \documentclass[
   doctype=phd,      % phd(*), phdplan, phdprop, msc, mscplan, bsc
-  school=unl/fct,    % unl/fct(*), ul/ist
-  docstyle=elegant, % bianchi bluebox brotherton dash default elegant(*) ell ger 
-                    % hansen jenor lyhne madsen pedersen veelo vz14 vz34 vz43
+  school=unl/fct,   % unl/fct(*), ul/ist
 	lang=en,          % en(*), pt
+  fontstyle=kpfonts, % bookman charter fourier kpfonts(*) mathpazo1 mathpazo2 newcent 
+  chapstyle=elegant, % bianchi bluebox brotherton dash default elegant(*) ell ger 
+                    % hansen ist jenor lyhne madsen pedersen veelo vz14 vz34 vz43
   coverlang=pt,     % en, pt(*)
 	linkscolor=darkblue,  % darkblue, black (Set to 'black' for PRINTING)
 	spine=false,			% (Set to 'true' for PRINTING the book spine)
 	biblatex={        % Options for biblatex (see biblatex documentation)
 		style=numeric,  % numeric(*), alphabetic, authoryear, bwl-FU
 		sorting=nyt,		% none, nyt(*), ynt
-		firstinits=true,  % render all first and middle names as initials
+		firstinits=true, % render all first and middle names as initials
 		sortcites=true, % If numeric, sort cites by crescent order
 	},
-	memoir={a4paper, 11pt, draft},	% See the 'memoir' documentation
+	memoir={a4paper, twoside, 11pt, draft},	% See the 'memoir' documentation
           % 10pt, 11pt(*), 12pt
-					% Replace 'draft' with 'final' for final version
+          % oneside, twoside(*)  <= use 'oneside' for screen, 'twoside' for printing double face
+					% draft, final  <= Replace 'draft' with 'final' in final version
+  media=screen,      % screen(*), paper
+          % behavior to be defined in school options based in "\unlthesis@opt@media"
+          % definitions for screen: left and right margins are equal, colored links
+          % definitions for paper: left and right margins are different, black links
 ]{unlthesis}
+
+% \usepackage{showframe}
+
 
 %%============================================================
 %%
@@ -66,7 +76,7 @@
 \usepackage{listings}		% Fontification of source code listings
 %\usepackage{colortbl}		% Use colors in background of table cells
 \usepackage[textsize=footnotesize]{todonotes}	% To register TODO notes in the text
-\setlength{\marginparwidth}{1.5cm}
+\setlength{\marginparwidth}{3.25cm}
 
 
 
@@ -94,30 +104,14 @@
 }
 
 
-
-%------------------------------------------------------------------
-% Some default values that you may whish to override
-%------------------------------------------------------------------
-% Identification: defined in the file "defaults.tex"
-%
-% Univesity
-% \university[pt]={Universidade NOVA de Lisboa}
-% \university[en]={NOVA University of Lisbon}
-% 
-% % Faculty / School
-% \faculty[pt]={Faculdade de Ciências e Tecnologia}
-% \faculty[en]={Faculty of Sciences and Technology}
-%
-% % Área científica
-% \majorfield[pt]={Engenharia Informática}
-% \majorfield[en]={Computer Science and Engineering}
-%
-% % Imagens de fundo na capa das teses
-% \thesiscoverphd{cover-phd-std}
-% \thesiscovermsc{cover-msc-std}
-% \thesiscoverbsc{cover-bsc-std}
-% \thesiscoverplain{cover-plain-std}
-
+%%============================================================
+% For costumization,
+%        see file 'unl-thesis/Schools/*/*/defaults.clo'
+%        and file 'unl-thesis/lang-text.clo'
+% You may override here any of the values defined there
+% e.g.
+% \themajorfield[pt]={Engenharia Biomédica}
+% \themajorfield[en]={Biomedical Engineering}
 %%============================================================
 
 % Title of the dissertation/thesis
@@ -126,40 +120,41 @@
 
 % Autor
 % use [f] for female and [m] for male
-\author[m]{John Longname Doe}
-\shortauthor{John Doe}
+\authorname[m]{John Longname Doe}{John Doe}
 \authordegree{Master of Science}
 
 % Date
-\themonth{June}
-\theyear{2015}
+\datemonth{June}
+\dateyear{2015}
 
 
-% Advisers (maximum of 9)
+% Advisers
+% use "\newline" if necessary to break the lines in the apprpriate place
 % use [f] for female and [m] for male
-\adviser[f]{John Doe Adviser Name}{Full Professor}{NOVA University of Lisbon} 
+\adviser[f]{John Doe Adviser Name}{Full Professor}{\newline NOVA University of Lisbon} 
 % you may use "\newline" to force a new line
-\adviser[m]{John Doe Male Adviser Name}{Associate Professor}{\newline Some University Somewhere}
+\adviser[m]{John Doe Male Adviser Name}{Associate\newline Professor}{Some University Somewhere}
 
 
 % Co-Advisers (maximum of 9)
 % use [f] for female and [m] for male
-\coadviser[f]{John Doe Co-Adviser Name}{Associate Professor}{Faculdade de Ciências e Tecnologia da Universidade Nova de Lisboa}
+\coadviser[f]{John Doe Co-Adviser Name}{Associate\newline Professor}{Faculdade de Ciências e Tecnologia\newline da Universidade Nova de Lisboa}
 % \coadviser[f]{[Nome da co-orientadora 2]}{[Profª.\ Auxiliar]}{[Universidade Nova de Lisboa]}
 
 
 % committee (maximum of 9 elements)
 % Use [p] for chair, [a] for raporteurs, [v] or nothing for remaining members
 % President of the committee
-\committee[p]{Name of the committee chair}
+\committee[c,m]{Name of the male committee chairperson}
 % Main raporteurs
-\committee[a]{Name of one of the main raporteurs}
-\committee[a]{Name of the other main raporteur}
+\committee[r,f]{Name of a female raporteur}
+\committee[r,f]{Name of another (male) raporteur}
+% Main raporteurs
+\committee[a,f]{Name of one female adviser}
+\committee[a,f]{Name of another female adviser}
 % Other members of the committee - include the Adviser in this list
-\committee[v]{Another member of the committee}
-\committee[v]{Yet another member of the committee}
-\committee[v]{Yet another member of the committee}
-\committee[v]{Yet another member of the committee}
+\committee[m,m]{Another member of the committee}
+\committee[m,f]{Yet another member of the committee}
 
 %%------------------------------------------------------------
 %% All the names inside braces below sould correspond to a file
@@ -193,7 +188,7 @@
 \chapterfile{chapter1}
 \chapterfile{chapter2}
 \chapterfile{chapter3}
-%\chapterfile{chapter4}
+% \chapterfile{chapter4}
 
 
 % Text appendixes
@@ -225,8 +220,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \thesisfrontmatter	% Before the main text (TOC, etc)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\coverpage		% The cover page
+\printcoverpage		% The cover page
 \printcopyright		% Print the copyright page (will only be printed if adequate for the document type)
 \printdedicatory	% Print the dedicatory (will only be printed if adequate for the document type)
 \printacknowledgements	% Print the acknowledgments (will only be printed if adequate for the document type)
@@ -240,7 +234,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \thesismainmatter	% The main text
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \printchapthers		% Print document chapters
 \printbib		% Print the bibliography
 \printappendixes	% Print appendixes, if any!

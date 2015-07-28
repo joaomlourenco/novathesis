@@ -1,0 +1,135 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% defaults.clo
+%% UNL thesis configuration file
+%%
+%% Costumization for FCT-UNL (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Univesity
+\university[pt]={Universidade NOVA de Lisboa}
+\university[en]={NOVA University of Lisbon}
+
+% Faculty / School
+\faculty[pt]={Faculdade de Ciências e Tecnologia}
+\faculty[en]={Faculty of Sciences and Technology}
+
+% Scientific filed
+\majorfield[pt]={Engenharia Informática}
+\majorfield[en]={Computer Science and Engineering}
+
+% Comiittee printing order
+\committeeorder[pt]={c,r,m} % 
+\committeeorder[en]={c,r,m}
+
+% Cover background images
+\thesiscover[phd]={cover-phd-std}
+\thesiscover[msc]={cover-msc-std}
+\thesiscover[bsc]={cover-bsc-std}
+\thesiscover[plain]={cover-plain-std}
+
+% Spine logo
+\logo[spine]={logoUNL}
+
+% Set margins for "normal" pages
+\margin[screen,top]={3.5cm}
+\margin[screen,bottom]={2.5cm}
+\margin[screen,left]={3.0cm}
+\margin[screen,right]={3.0cm}
+\margin[paper,top]={3.5cm}
+\margin[paper,bottom]={2.5cm}
+\margin[paper,left]={2.5cm}
+\margin[paper,right]={3.5cm}
+
+% Set margins for cover pages
+\margin[phd,top]={3.9cm}
+\margin[phd,bottom]={1.6cm}
+\margin[phd,left]={5.5cm}
+\margin[phd,right]={2.5cm}
+\margin[msc,top]={4.0cm}
+\margin[msc,bottom]={1.3cm}
+\margin[msc,left]={4.5cm}
+\margin[msc,right]={3.3cm}
+\margin[bsc,top]={4.0cm}
+\margin[bsc,bottom]={1.3cm}
+\margin[bsc,left]={4.5cm}
+\margin[bsc,right]={3.3cm}
+\margin[plain,top]={4.0cm}
+\margin[plain,bottom]={1.3cm}
+\margin[plain,left]={4.5cm}
+\margin[plain,right]={3.3cm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% UNL guidelines:
+% The pages should be numbered consecutively at the bottom centre of the
+% page.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makepagestyle{unlthesis@myvf} 
+\makeoddfoot{unlthesis@myvf}{}{\thepage}{} 
+\makeevenfoot{unlthesis@myvf}{}{\thepage}{} 
+\makeheadrule{unlthesis@myvf}{\textwidth}{\normalrulethickness} 
+\makeevenhead{unlthesis@myvf}{\small\textsc{\leftmark}}{}{} 
+\makeoddhead{unlthesis@myvf}{}{}{\small\textsc{\rightmark}}
+\pagestyle{unlthesis@myvf}
+%
+\frenchspacing
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Author name
+\coveritem[c]{0cm}{%
+  \coverbackground
+  \fontfamily{phv}\fontsize{14}{14}\selectfont
+  \textbf{\theauthorname}
+}
+
+% Academic qualifications
+\coveritem[c]{0.25cm}{%
+  \fontfamily{phv}\fontsize{11}{11}\selectfont
+  \theauthordegree
+}
+
+% % Title of Dissertation
+\coveritem[c]{3.5cm}{
+  \fontfamily{phv}\fontsize{16}{16}\selectfont
+  \textbf{\thetitle}
+}
+
+% Degree
+\coveritem[c]{1.5cm}{
+  \fontfamily{phv}\fontsize{11}{11}\selectfont
+  \thepresentationtext
+}
+
+% Advisers
+\coveritem[c]{2}{
+  \fontfamily{phv}\fontsize{12}{12}\selectfont
+  \printadvisers
+}
+
+
+% Committee — only print the committee for the main classes
+\coveritem[r]{2}{
+  \ifthenelse{%
+    \equal{\unlthesis@opt@doctype}{bsc}%
+    \OR\equal{\unlthesis@opt@doctype}{msc}%
+    \OR\equal{\unlthesis@opt@doctype}{phd}}
+  {\fontfamily{phv}\fontsize{10}{10}\selectfont\printcommittee}
+  {}
+}
+
+
+% Date
+\coveritem[c]{4}{
+  \fontfamily{phv}\fontsize{11}{11}\selectfont
+  \ifdraftdoc
+    \textbf{DRAFT: \today}
+  \else
+    \textbf{\thedatemonth, \thedateyear}
+  \fi
+}
