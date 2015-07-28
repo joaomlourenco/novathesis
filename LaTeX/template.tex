@@ -7,7 +7,7 @@
 %% To view a copy of this license, 
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2015/07/28 [3.0.0]
+%% Version 2015/07/28 [3.0.1]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -31,6 +31,8 @@
   chapstyle=elegant, % bianchi bluebox brotherton dash default elegant(*) ell ger 
                     % hansen ist jenor lyhne madsen pedersen veelo vz14 vz34 vz43
   coverlang=pt,     % en, pt(*)
+  otherlistsat=front, % front(*), back
+  aftercover=false, % false=don't true=include the aftercover file (even if exists)
 	linkscolor=darkblue,  % darkblue, black (Set to 'black' for PRINTING)
 	spine=false,			% (Set to 'true' for PRINTING the book spine)
 	biblatex={        % Options for biblatex (see biblatex documentation)
@@ -48,8 +50,6 @@
           % definitions for screen: left and right margins are equal, colored links
           % definitions for paper: left and right margins are different, black links
 ]{unlthesis}
-
-% \usepackage{showframe}
 
 
 %%============================================================
@@ -174,6 +174,9 @@
 \abstractfile[pt]{resumo}	% Abstract in Portuguese
 \abstractfile[en]{abstract}	% Abstract in English
 
+% definition of the second cover, to be printed before the copyright (to serve FCSH-UNL)
+\aftercoverfile{aftercover}
+
 
 % The Table of Contents is always printed.
 % The other lists below may be commented and omitted.
@@ -221,6 +224,7 @@
 \thesisfrontmatter	% Before the main text (TOC, etc)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \printcoverpage		% The cover page
+\printaftercover
 \printcopyright		% Print the copyright page (will only be printed if adequate for the document type)
 \printdedicatory	% Print the dedicatory (will only be printed if adequate for the document type)
 \printacknowledgements	% Print the acknowledgments (will only be printed if adequate for the document type)
@@ -228,7 +232,7 @@
 \printabstract		% Print abstracts (in PT and EN). The abstract in the document main language will
 			% be printed first, the abstract in the foreign language will be printed second
 \tableofcontents* 	% Always print the table of contents
-\printotherlists 	% Print other lists of contents according to instructions given above
+\printotherlists 	% If option 'otherlistsat=front', print other lists of contents according to instructions given above, otherwise do nothing
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -236,6 +240,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \printchapthers		% Print document chapters
 \printbib		% Print the bibliography
+% \printotherlists   % Alternative location to print the other lists (if you uncomment this one, comment the other one above)
+\printotherlists 	% If option 'otherlistsat=back', print other lists of contents according to instructions given above, otherwise do nothing
 \printappendixes	% Print appendixes, if any!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

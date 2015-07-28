@@ -69,6 +69,17 @@
 
 
 % --------------------------------------------------------
+% WHERE TO PRINT OTHER LISTS - unlthesis@opt@otherlistsat
+%
+% front back
+\gdef\unlthesis@opt@otherlistsat{front}
+\DeclareOptionX{otherlistsat}{
+	\typeout{'otherlistsat'=#1}
+	\gdef\unlthesis@opt@otherlistsat{#1}
+}
+
+
+% --------------------------------------------------------
 % MAIN LANGUAGE - unlthesis@opt@lang
 %
 % pt  Portuguese
@@ -119,6 +130,17 @@
 \DeclareOptionX{enc}{
 	\typeout{'enc'=#1}
 	\PassOptionsToPackage{#1}{inputenc}
+}
+
+
+% --------------------------------------------------------
+% PRINT AFETR COVER
+%
+% true
+% false
+\DeclareOptionX{aftercover}[false]{
+	\typeout{'aftercover'=#1}
+  \gdef\unlthesis@aftercover{#1}
 }
 
 
@@ -188,9 +210,11 @@
   fontstyle=kpfonts,
   chapstyle=elegant,
 	enc=utf8,
+  otherlistsat=front,
 	lang=en,
   coverlang=pt,
   linkscolor=darkblue,
+  aftercover=false,
 	spine=false,
 	biblatex={
 		% sorting=nyt,%

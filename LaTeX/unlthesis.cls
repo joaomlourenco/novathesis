@@ -7,7 +7,7 @@
 %% To view a copy of this license, 
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2015/07/28 [3.0.0]
+%% Version 2015/07/28 [3.0.1]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -89,6 +89,11 @@
     \includegraphics[width=\paperwidth,height=\paperheight]{#1}
   }
 }
+
+\newcommand{\coveritem}[3][c]{%
+  \listcsadd{unlthesis@coveritem@list}{[#1][#2]{#3}}
+}
+
 \newcounter{unlthesis@myloop}
 \def\unlthesis@printcoveritem@i[#1][#2]#3{%
   \IfInteger{#2}{%IS INTEGER
@@ -110,12 +115,9 @@
     #3
   \end{minipage}\par
 }
+
 \newcommand{\unlthesis@printcoveritem}[1]{
   \unlthesis@printcoveritem@i#1
-}
-
-\newcommand{\coveritem}[3][c]{%
-  \listcsadd{unlthesis@coveritem@list}{[#1][#2]{#3}}
 }
 
 \newcommand{\printcoveritems}{%
@@ -150,8 +152,25 @@
     }
   }
   ~% This space is important here so that the cover page is not empty anymore!
-  \cleardoublepage  
+  \cleardoublepage
 }
+
+
+\newcommand{\unlthesis@aftercover@file}{}
+\newcommand{\aftercoverfile}[1]{%
+  \renewcommand{\unlthesis@aftercover@file}{#1}
+}
+
+\newcommand{\printaftercover}{%
+  \ifthenelse{\equal{\unlthesis@aftercover}{true}}
+  {
+    \InputIfFileExists{Chapters/\unlthesis@aftercover@file}%
+      {\cleardoublepage}%
+      {}
+  }%
+  {}
+}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Multilingual support
@@ -176,30 +195,29 @@
 
 \mynewdata{adviserstr}
 \mynewdata{adviserstrfont}
-\adviserstrfont[]={}
+\adviserstrfont[\unlthesis@opt@coverlang]={}
 \mynewdata{coadviserstr}
 \mynewdata{coadviserstrfont}
-\coadviserstrfont[]={}
+\coadviserstrfont[\unlthesis@opt@coverlang]={}
 \mynewdata{degreestr}
 \mynewdata{degreestrfont}
-\degreestrfont[]={}
+\degreestrfont[\unlthesis@opt@coverlang]={}
 
 \mynewdata{doctypestr}
 
 \mynewdata{committeeorder}
 \mynewdata{committeetitlestr}
 \mynewdata{committeetitlestrfont}
-\committeetitlestrfont[]={}
+\committeetitlestrfont[\unlthesis@opt@coverlang]={}
 \mynewdata{commiteememberstr}
 \mynewdata{commiteememberstrfont}
-\commiteememberstrfont[]={}
+\commiteememberstrfont[\unlthesis@opt@coverlang]={}
 
 \mynewdata{dissertationstr}
 \mynewdata{dissertationstrfont}
-\dissertationstrfont[]={}
+\dissertationstrfont[\unlthesis@opt@coverlang]={}
 \mynewdata{copyrighttextstr}
 \mynewdata{acknowledgmentsstr}
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -317,7 +335,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
   \ifthenelse{\equal{\value{unlthesis@committee@#1@cnt}}{1}}
     {\def\unlthesis@tmp@total{1}}  % for portuguese: only use female form if no males are present
     {\def\unlthesis@tmp@total{2}}
-  { \thecommiteememberstrfont[]
+  { \thecommiteememberstrfont[\unlthesis@opt@coverlang]
     \thecommiteememberstr[#1,\unlthesis@tmp@total,\unlthesis@tmp@gender,\unlthesis@opt@coverlang]:
   }
   \forlistcsloop{\unlthesis@printcommitteeclassmembers}{unlthesis@committee@#1@list}
@@ -330,7 +348,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
     % committeetitlestr[…] is empty
   \else
     \multicolumn{2}{c}{{%
-            \thecommitteetitlestrfont[]
+            \thecommitteetitlestrfont[\unlthesis@opt@coverlang]
             \thecommitteetitlestr[\unlthesis@opt@coverlang]}
           }\\[1ex]
   \fi
@@ -391,7 +409,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
       {\def\unlthesis@tmp@total{1}}  % for portuguese: only use female form if no males are present
       {\def\unlthesis@tmp@total{2}}
     {% new block to keep font changing local 
-      \@nameuse{the#1adviserstrfont}[]
+      \@nameuse{the#1adviserstrfont}[\unlthesis@opt@coverlang]
       \@nameuse{the#1adviserstr}%
               [\unlthesis@tmp@total,\unlthesis@tmp@gender,\unlthesis@opt@coverlang]:
     }
@@ -667,19 +685,42 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Deal with optional lists in the frontmatter: listoftables, litoffigures, etc.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\unlthesis@printlist#1{%
+\newcommand{\unlthesis@printlist}[1]{%
 	#1\cleardoublepage
 }
 
-\def\addlisttofrontmatter#1{%
+\newcommand{\addlisttofrontmatter}[1]{%
 	\listgadd{\unlthesis@frontmatter@list}{#1}
 }
 
-\def\printotherlists{%
-	\ifthenelse{\isundefined\unlthesis@frontmatter@list}{}%
-		{\cleardoublepage%
-		 \forlistloop{\unlthesis@printlist}{\unlthesis@frontmatter@list}}%
+\newcommand{\printotherlists@i}{%
+	\ifthenelse{\isundefined\unlthesis@frontmatter@list}%
+    {}%
+		{ \cleardoublepage%
+      \forlistloop{\unlthesis@printlist}{\unlthesis@frontmatter@list}
+    }%
   \cleardoublepage
+}
+
+\newcommand{\printotherlists}{%
+  \cleardoublepage
+  % printotherlists [\unlthesis@opt@otherlistsat]
+  \ifthenelse{\equal{\unlthesis@opt@otherlistsat}{front}}%
+  {
+    \if@mainmatter
+    \else
+      \printotherlists@i
+    \fi
+  }
+  {}
+  \ifthenelse{\equal{\unlthesis@opt@otherlistsat}{back}}%
+  {
+    \if@mainmatter
+      \printotherlists@i
+    \else
+    \fi
+  }
+  {}
 }
 
 
