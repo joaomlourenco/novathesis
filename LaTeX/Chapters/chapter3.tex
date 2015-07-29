@@ -70,7 +70,7 @@ Please, use these examples as a starting point, but you should always consider u
 
 \lipsum[1-3]
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering
  \subbottom[One sub-figure]{%
     \includegraphics[width=0.5\linewidth]{knitting-vectorial}}%
@@ -209,12 +209,12 @@ Para agregar várias figuras numa única… Poderá assim referenciar o conjunto
 
 \begin{figure}[htbp]
 	\centering
-    \subbottom[Novelo de lã] {
+    \subbottom[Novelo de lã] {%
 		\label{fig:novelo}
 		\includegraphics[height=1in]{knitting-vectorial}
     }
 \qquad\qquad
-    \subbottom[Tempestade com neve] {
+    \subbottom[Tempestade com neve] {%
 		\label{fig:nuvem}
 		\includegraphics[height=1in]{snowstorm-vectorial}
     }
@@ -231,8 +231,8 @@ Para incluir listagens de código no seu documento, deverá incluir o pacote \em
  * The HelloWorldApp class implements an application that
  * simply prints "Hello World!" to standard output.
  */
-class HelloWorldApp {
-    public static void main(String[] args) {
+class HelloWorldApp {%
+    public static void main(String[] args) {%
         System.out.println("Hello World!"); // Display the string.
     }
 }

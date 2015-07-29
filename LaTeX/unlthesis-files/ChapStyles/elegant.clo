@@ -24,7 +24,7 @@
 	\makebox[0pt][c]{% aka \rlap
 		\makebox[1cm][r]{\usebox\unlthesis@chapter}%
 	}}
-\makechapterstyle{elegant}{
+\makechapterstyle{elegant}{%
 	\renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so} 
 	\renewcommand\chaptitlefont{\normalfont\LARGE\bfseries\scshape} 
 	\renewcommand\chapternamenum{} \renewcommand\printchaptername{} 

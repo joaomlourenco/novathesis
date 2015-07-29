@@ -18,7 +18,7 @@
 \majorfield[en]={Computer Science and Engineering}
 
 % Comiittee printing order
-\committeeorder[pt]={c,r,a,m} % 
+\committeeorder[pt]={c,r,a,m}% 
 \committeeorder[en]={c,r,a,m}
 
 % Cover background images
@@ -155,7 +155,7 @@
 }
 
 % % Title of Dissertation
-\coveritem[c]{1}{
+\coveritem[c]{1}{%
   \fontsize{18}{20}\selectfont
   \textbf{\thetitle}
 }
@@ -167,13 +167,13 @@
 }
 
 % Degree
-\coveritem[c]{1}{
+\coveritem[c]{1}{%
   \fontsize{12}{12}\selectfont
   \thepresentationtext
 }
 
 % Advisers
-\coveritem[c]{2}{
+\coveritem[c]{2}{%
   \adviserstrfont[\unlthesis@opt@coverlang]={\bfseries}
   \coadviserstrfont[\unlthesis@opt@coverlang]={\bfseries}
   \fontsize{12}{12}\selectfont
@@ -182,21 +182,21 @@
 
 
 % Committee — only print the committee for the main classes
-\coveritem[c]{1}{
+\coveritem[c]{1}{%
   \ifthenelse{%
     \equal{\unlthesis@opt@doctype}{bsc}%
     \OR\equal{\unlthesis@opt@doctype}{msc}%
-    \OR\equal{\unlthesis@opt@doctype}{phd}}
-  { \committeetitlestrfont[\unlthesis@opt@coverlang]={\fontsize{14}{14}\selectfont\bfseries}
+    \OR\equal{\unlthesis@opt@doctype}{phd}}%
+  {\committeetitlestrfont[\unlthesis@opt@coverlang]={\fontsize{14}{14}\selectfont\bfseries}
     \commiteememberstrfont[\unlthesis@opt@coverlang]={\bfseries}
     \fontsize{12}{12}\selectfont\printcommittee
-  }
-  {}
+  }%
+  {}%
 }
 
 
 % Date
-\coveritem[c]{1}{
+\coveritem[c]{1}{%
   \fontsize{14}{14}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}

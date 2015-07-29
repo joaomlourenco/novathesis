@@ -7,7 +7,7 @@
 
 %%%%% Configure chapters, headers, footers, and page numbering
 \newif\ifNoChapNumber
-\makechapterstyle{VZ34}{
+\makechapterstyle{VZ34}{%
   \renewcommand\chapternamenum{}
   \renewcommand\printchaptername{}
   \renewcommand\printchapternum{}

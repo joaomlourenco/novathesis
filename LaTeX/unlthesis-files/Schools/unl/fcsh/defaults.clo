@@ -18,7 +18,7 @@
 \majorfield[en]={«Scientific Field»}
 
 % Comiittee printing order
-\committeeorder[pt]={c,r,a,m} % 
+\committeeorder[pt]={c,r,a,m}% 
 \committeeorder[en]={c,r,a,m}
 
 % Cover background images
@@ -91,12 +91,12 @@
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\definecolor{fcshblue}{rgb}{0.15,0.30,0.60} % Background title color
+\definecolor{fcshblue}{rgb}{0.15,0.30,0.60}% Background title color
 
 
 % LOGO
 \coveritem[c]{0cm}{%
-\mbox{
+\mbox{%
   \hspace*{0.5cm}
   \begin{tabular}[c]{@{}l@{}}
     \includegraphics[width=9cm]{fcsh-logo}
@@ -116,7 +116,7 @@
 % }
 
 % % Title of Dissertation
-\coveritem[c]{1}{
+\coveritem[c]{1}{%
   \fontfamily{phv}\fontsize{18}{18}\selectfont
   \textcolor{fcshblue}{\textbf{\thetitle}}
 }
@@ -128,13 +128,13 @@
 }
 
 % Degree
-\coveritem[c]{1}{
+\coveritem[c]{1}{%
   \fontfamily{phv}\fontsize{12}{12}\selectfont
   \textcolor{fcshblue}{\thepresentationtext}
 }
 
 % Advisers
-% \coveritem[c]{2}{
+% \coveritem[c]{2}{%
 %   \adviserstrfont[]={\bfseries}
 %   \coadviserstrfont[]={\bfseries}
 %   \fontsize{12}{12}\selectfont
@@ -143,12 +143,12 @@
 
 
 % Committee — only print the committee for the main classes
-% \coveritem[c]{1}{
+% \coveritem[c]{1}{%
 %   \ifthenelse{%
 %     \equal{\unlthesis@opt@doctype}{bsc}%
 %     \OR\equal{\unlthesis@opt@doctype}{msc}%
 %     \OR\equal{\unlthesis@opt@doctype}{phd}}
-%   { \committeetitlestrfont[]={\fontsize{14}{14}\selectfont\bfseries}
+%   {\committeetitlestrfont[]={\fontsize{14}{14}\selectfont\bfseries}
 %     \commiteememberstrfont[]={\bfseries}
 %      \fontsize{12}{12}\selectfont\printcommittee
 %   }
@@ -157,7 +157,7 @@
 
 
 % Date
-\coveritem[c]{1}{
+\coveritem[c]{1}{%
   \fontfamily{phv}\fontsize{14}{14}\selectfont
   \textcolor{fcshblue}{%
     \ifdraftdoc

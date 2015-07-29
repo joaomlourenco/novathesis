@@ -78,7 +78,7 @@
 %%%%% Condditional processing for PDF file
 % \RequirePackage{ifpdf}		% This is now the recommended way for checking for PDFLaTeX:
 % \ifpdf
-% % \pdfinfo{
+% % \pdfinfo{%
 % %    /Author (Author's name)
 % %    /Title (PhD Thesis)
 % %    /Keywords (One; Two;Three)

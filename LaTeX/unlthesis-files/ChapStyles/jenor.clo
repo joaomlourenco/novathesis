@@ -9,7 +9,7 @@
 \usepackage{fix-cm}
 \definecolor{numbercolor}{gray}{0.7}
 \newif\ifchapternonum
-\makechapterstyle{jenor}{
+\makechapterstyle{jenor}{%
   \renewcommand\printchaptername{}
   \renewcommand\printchapternum{}
   \renewcommand\printchapternonum{\chapternonumtrue}
@@ -25,7 +25,7 @@
       \vphantom{\raisebox{-15pt}{\chapnumfont 1}}}
     \end{tabularx}%
     \else
-    \begin{tabularx}{\textwidth}{Xl}
+    \begin{tabularx}{\textwidth}{Xl}%
     {\parbox[b]{\linewidth}{\chaptitlefont ##1}}
     & \raisebox{-15pt}{\chapnumfont \thechapter}%
     \end{tabularx}%

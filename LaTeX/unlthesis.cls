@@ -7,7 +7,7 @@
 %% To view a copy of this license, 
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2015/07/28 [3.0.1]
+%% Version 2015/07/29 [3.0.3]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -33,7 +33,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2015/07/28 UNL Thesis Template]
+\ProvidesClass{unlthesis}[2015/07/29 UNL Thesis Template]
 
 
 % --------------------------------------------------------
@@ -65,7 +65,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Redefine \cleardoublepage to use a really empty page…
 \let\origcleardoublepage=\cleardoublepage
-\def\cleardoublepage{%
+\renewcommand\cleardoublepage{%
   \newpage{\pagestyle{empty}\origcleardoublepage}
 }
 
@@ -116,7 +116,7 @@
   \end{minipage}\par
 }
 
-\newcommand{\unlthesis@printcoveritem}[1]{
+\newcommand{\unlthesis@printcoveritem}[1]{%
   \unlthesis@printcoveritem@i#1
 }
 
@@ -125,7 +125,7 @@
 	\forlistcsloop{\unlthesis@printcoveritem}{unlthesis@coveritem@list}}
 }
 
-\newcommand{\printcoverpage}{
+\newcommand{\printcoverpage}{%
   \thispagestyle{empty}
   \newlength{\mpwidth}
   \setlength{\mpwidth}{\dimexpr%
@@ -138,19 +138,19 @@
       -\themargin[\unlthesis@opt@doctype,top]
       -\themargin[\unlthesis@opt@doctype,bottom]}
   \newsavebox{\unlthesis@coverbox}
-  \sbox{\unlthesis@coverbox}{
-    \parbox[t][\mpheight][t]{\mpwidth}{
+  \sbox{\unlthesis@coverbox}{%
+    \parbox[t][\mpheight][t]{\mpwidth}{%
       \printcoveritems
-    }
-  }
+    }%
+  }%
   \AddToShipoutPictureFG*{%
-    \AtPageUpperLeft{
+    \AtPageUpperLeft{%
       \put(%
         \LenToUnit{\themargin[\unlthesis@opt@doctype,left]},%
         -\LenToUnit{\themargin[\unlthesis@opt@doctype,top]})%
-        {\usebox{\unlthesis@coverbox}}
-    }
-  }
+        {\usebox{\unlthesis@coverbox}}%
+    }%
+  }%
   ~% This space is important here so that the cover page is not empty anymore!
   \cleardoublepage
 }
@@ -162,13 +162,13 @@
 }
 
 \newcommand{\printaftercover}{%
-  \ifthenelse{\equal{\unlthesis@aftercover}{true}}
-  {
+  \ifthenelse{\equal{\unlthesis@aftercover}{true}}%
+  {%
     \InputIfFileExists{Chapters/\unlthesis@aftercover@file}%
       {\cleardoublepage}%
-      {}
+      {}%
   }%
-  {}
+  {}%
 }
 
 
@@ -327,22 +327,22 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
   & #1\\
 }
 
-\newcommand{\unlthesis@printcommitteemembers}[1]{
+\newcommand{\unlthesis@printcommitteemembers}[1]{%
   % argument is classe of committee memeber {c,r,a,m}
-  \ifthenelse{\equal{\value{unlthesis@committee@#1m@cnt}}{0}}
-    {\def\unlthesis@tmp@gender{f}}  % for portuguese: only use female form if no males are present
-    {\def\unlthesis@tmp@gender{m}}
-  \ifthenelse{\equal{\value{unlthesis@committee@#1@cnt}}{1}}
-    {\def\unlthesis@tmp@total{1}}  % for portuguese: only use female form if no males are present
-    {\def\unlthesis@tmp@total{2}}
-  { \thecommiteememberstrfont[\unlthesis@opt@coverlang]
+  \ifthenelse{\equal{\value{unlthesis@committee@#1m@cnt}}{0}}%
+    {\def\unlthesis@tmp@gender{f}}% for portuguese: only use female form if no males are present
+    {\def\unlthesis@tmp@gender{m}}%
+  \ifthenelse{\equal{\value{unlthesis@committee@#1@cnt}}{1}}%
+    {\def\unlthesis@tmp@total{1}}% for portuguese: only use female form if no males are present
+    {\def\unlthesis@tmp@total{2}}%
+  {\thecommiteememberstrfont[\unlthesis@opt@coverlang]
     \thecommiteememberstr[#1,\unlthesis@tmp@total,\unlthesis@tmp@gender,\unlthesis@opt@coverlang]:
   }
   \forlistcsloop{\unlthesis@printcommitteeclassmembers}{unlthesis@committee@#1@list}
 }
 
 \newcommand{\printcommittee}{%
-  \xdef\unlthesis@tmp{\expandafter\thecommitteetitlestr[\unlthesis@opt@coverlang]}
+  \xdef\unlthesis@tmp{\thecommitteetitlestr[\unlthesis@opt@coverlang]}
   \begin{tabular}{rl}
   \ifx\unlthesis@tmp\@empty
     % committeetitlestr[…] is empty
@@ -352,7 +352,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
             \thecommitteetitlestr[\unlthesis@opt@coverlang]}
           }\\[1ex]
   \fi
-  \xdef\unlthesis@tmp{\expandafter\thecommitteeorder[\unlthesis@opt@coverlang]}
+  \xdef\unlthesis@tmp{\thecommitteeorder[\unlthesis@opt@coverlang]}
   \iteratecsvlist{\unlthesis@printcommitteemembers}{\unlthesis@tmp}
   \end{tabular}
 }
@@ -402,16 +402,16 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 
 \newcommand{\printadvisers@i}[1][]{%
   \ifcsname unlthesis@#1adviser@list\endcsname
-    \ifthenelse{\equal{\value{unlthesis@#1adviser@m@cnt}}{0}}
-      {\def\unlthesis@tmp@gender{f}}  % for portuguese: only use female form if no males are present
-      {\def\unlthesis@tmp@gender{m}}
-    \ifthenelse{\equal{\value{unlthesis@#1adviser@cnt}}{1}}
-      {\def\unlthesis@tmp@total{1}}  % for portuguese: only use female form if no males are present
-      {\def\unlthesis@tmp@total{2}}
+    \ifthenelse{\equal{\value{unlthesis@#1adviser@m@cnt}}{0}}%
+      {\def\unlthesis@tmp@gender{f}}% for portuguese: only use female form if no males are present
+      {\def\unlthesis@tmp@gender{m}}%
+    \ifthenelse{\equal{\value{unlthesis@#1adviser@cnt}}{1}}%
+      {\def\unlthesis@tmp@total{1}}% for portuguese: only use female form if no males are present
+      {\def\unlthesis@tmp@total{2}}%
     {% new block to keep font changing local 
-      \@nameuse{the#1adviserstrfont}[\unlthesis@opt@coverlang]
+      \@nameuse{the#1adviserstrfont}[\unlthesis@opt@coverlang]%
       \@nameuse{the#1adviserstr}%
-              [\unlthesis@tmp@total,\unlthesis@tmp@gender,\unlthesis@opt@coverlang]:
+              [\unlthesis@tmp@total,\unlthesis@tmp@gender,\unlthesis@opt@coverlang]:%
     }
     \forlistcsloop{\printadvisers@ii}{unlthesis@#1adviser@list}
   \else
@@ -459,7 +459,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 \checkandfixthelayout
 
 %% For debugging the page layout
-\newcommand\unlthesis@typetwolengths[4]{
+\newcommand\unlthesis@typetwolengths[4]{%
   % #1 = text before
   % #2 = first length
   % #3 = text between
@@ -470,7 +470,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
   \edef\l@second{\strip@pt\@tempdimc}%
   #1: \l@first\mem@tl@unit\space#3\space\l@second\mem@tl@unit
 }
-\newcommand\unlthesis@typeonelength[2]{
+\newcommand\unlthesis@typeonelength[2]{%
   % #1 = text before
   % #2 = first length
   \setlength\@tempdimc{\mem@tl@unitperpt #2}
@@ -509,14 +509,13 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Including chapters and similars
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\dedicatoryfile#1{%
-  \gdef\@dedicatoryfile{#1}}
 \def\@dedicatoryfile{\@empty}
+\def\dedicatoryfile#1{\gdef\@dedicatoryfile{#1}}
 
 \ifx\@dedicatoryfile\@empty
 \def\printdedicatory{}
 \else
-\def\printdedicatory{
+\def\printdedicatory{%
 	\ifthenelse{%
 		\equal{\unlthesis@opt@doctype}{bsc}	% bsc
 		\OR
@@ -537,14 +536,13 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 \fi
 
 
-\def\quotefile#1{%
-  \gdef\@quotefile{#1}}
 \def\@quotefile{\@empty}
+\def\quotefile#1{\gdef\@quotefile{#1}}
 
 \ifx\@quotefile\@empty
 \def\printquote{}
 \else
-\def\printquote{
+\def\printquote{%
 	\ifthenelse{%
 		\equal{\unlthesis@opt@doctype}{bsc}	% bsc
 		\OR
@@ -565,9 +563,8 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 \fi
 
 
-\def\acknowledgementsfile#1{%
-  \gdef\unlthesis@acknowledgementsfile{#1}}
 \def\unlthesis@acknowledgementsfile{\@empty}
+\def\acknowledgementsfile#1{\gdef\unlthesis@acknowledgementsfile{#1}}
 
 \def\printacknowledgements{%
 	\IfFileExists{Chapters/\unlthesis@acknowledgementsfile}{%
@@ -580,10 +577,10 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 		}{% THEN
 			\input{Chapters/\unlthesis@acknowledgementsfile}
 			\cleardoublepage
-		}{ % ELSE
-		}
-	}
-	{}
+		}{% ELSE
+		}%
+	}%
+	{}%
 }
 
 
@@ -597,7 +594,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 \def\unlthesis@abstractfile@en{\@empty}
 
 \def\abstractfile[#1]#2{%
-	\expandafter\gdef\csname unlthesis@abstractfile@#1\endcsname{#2}}
+	\expandafter\xdef\csname unlthesis@abstractfile@#1\endcsname{#2}}
 
 \def\selectthelanguage#1{%
 	\ifthenelse{\equal{#1}{pt}}{\selectlanguage{portuguese}}{}
@@ -618,7 +615,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 
 
 \def\printabstract{% 
-	\xdef\unlthesis@tmp{\expandafter\theabstractorder[\unlthesis@opt@lang]}
+	\xdef\unlthesis@tmp{\theabstractorder[\unlthesis@opt@lang]}
   \iteratecsvlist{\unlthesis@printabstract@lang}{\unlthesis@tmp}
   % disables protrusion locally in the document for the forthcoming tables of contents
   \microtypesetup{protrusion=false} 
@@ -646,9 +643,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Chapters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\chapterfile#1{%
-	\listgadd{\unlthesis@chapter@list}{#1}
-}
+\def\chapterfile#1{\listgadd{\unlthesis@chapter@list}{#1}}
 
 \def\unlthesis@printchapter#1{%
 	\InputIfFileExists{Chapters/#1}{}{ERROR: File '#1' does not exist!!!}
@@ -696,7 +691,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 \newcommand{\printotherlists@i}{%
 	\ifthenelse{\isundefined\unlthesis@frontmatter@list}%
     {}%
-		{ \cleardoublepage%
+		{\cleardoublepage%
       \forlistloop{\unlthesis@printlist}{\unlthesis@frontmatter@list}
     }%
   \cleardoublepage
@@ -706,21 +701,21 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
   \cleardoublepage
   % printotherlists [\unlthesis@opt@otherlistsat]
   \ifthenelse{\equal{\unlthesis@opt@otherlistsat}{front}}%
-  {
+  {%
     \if@mainmatter
     \else
       \printotherlists@i
     \fi
-  }
-  {}
+  }%
+  {}%
   \ifthenelse{\equal{\unlthesis@opt@otherlistsat}{back}}%
-  {
+  {%
     \if@mainmatter
       \printotherlists@i
     \else
     \fi
-  }
-  {}
+  }%
+  {}%
 }
 
 
@@ -783,7 +778,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
     \begin{minipage}{100mm}
     \quotefonti
     \begin{flushright}}
-\def\enddedicatory{
+\def\enddedicatory{%
 	\end{flushright}
     \normalfont
     \end{minipage}
@@ -802,7 +797,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
     \begin{minipage}{100mm}
     \quotefonti
     \begin{flushright}}
-\def\endquote{
+\def\endquote{%
 	\end{flushright}
     \normalfont
     \end{minipage}
@@ -823,7 +818,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 \newcommand{\setabstractlang}[1]{%
 	\selectthelanguage{#1}
 	\gdef\unlthesis@keywordsstr{\thekeywordsname[#1]}
-	\expandafter\chapter*{\theabstractname[#1]}
+	\chapter*{\theabstractname[#1]}
 	\rule{\textwidth}{0.2mm} ~\\[-3.5ex]
 }
 
@@ -850,7 +845,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 
 \maxsecnumdepth{subsubsection}
 
-\definecolor{backGrayColor}{rgb}{0.7,0.7,0.7} % Background title color
+\definecolor{backGrayColor}{rgb}{0.7,0.7,0.7}% Background title color
 
 
 
@@ -906,14 +901,14 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 \centering
 \framebox[\unlthesis@spinewidth]{\rotatebox{90}{%
 	\begin{tabularx}{\textheight-1em}{@{\hspace*{1.5em}}m{\unlthesis@spine@yearwidth}X@{}c@{}X@{}c@{}X@{}m{\unlthesis@spinewidth}@{\hspace*{1em}}}
-		\ifthenelse{\unlthesis@spinewidth > \unlthesis@spine@yearwidth}
-				{\rotatebox[origin=br]{-90}{\parbox{\unlthesis@spinewidth}
-						{\centering\hspace*{4pt}\thedateyear}}}
-				{\thedateyear}
-		& & \ifthenelse
-				{\unlthesis@spinewidth > \unlthesis@thick@spineheight}
-				{& \usebox{\unlthesis@spine@thick} &}
-				{\theauthorshortname & & \thetitle} 
+		\ifthenelse{\unlthesis@spinewidth > \unlthesis@spine@yearwidth}%
+				{\rotatebox[origin=br]{-90}{\parbox{\unlthesis@spinewidth}%
+						{\centering\hspace*{4pt}\thedateyear}}}%
+				{\thedateyear}%
+		& & \ifthenelse%
+				{\unlthesis@spinewidth > \unlthesis@thick@spineheight}%
+				{& \usebox{\unlthesis@spine@thick} &}%
+				{\theauthorshortname & & \thetitle}%
 		& & 
     \vspace*{4pt}
     \includegraphics[origin=c,angle=-90,height=0.9\unlthesis@spinewidth]{\thelogo[spine]}

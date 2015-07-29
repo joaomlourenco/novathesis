@@ -12,7 +12,7 @@
   \VL\VL\VL\VL\VL\VL\VL
 }
 \setlength\midchapskip{0pt}
-\makechapterstyle{VZ43}{
+\makechapterstyle{VZ43}{%
   \renewcommand\chapternamenum{}
   \renewcommand\printchaptername{}
   \renewcommand\printchapternum{}

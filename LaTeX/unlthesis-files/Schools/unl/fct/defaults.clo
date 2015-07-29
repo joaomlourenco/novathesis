@@ -18,7 +18,7 @@
 \majorfield[en]={Computer Science and Engineering}
 
 % Comiittee printing order
-\committeeorder[pt]={c,r,m} % 
+\committeeorder[pt]={c,r,m}% 
 \committeeorder[en]={c,r,m}
 
 % Cover background images
@@ -95,37 +95,37 @@
 }
 
 % % Title of Dissertation
-\coveritem[c]{4.5cm}{
+\coveritem[c]{4.5cm}{%
   \fontfamily{phv}\fontsize{16}{16}\selectfont
   \textbf{\thetitle}
 }
 
 % Degree
-\coveritem[c]{1.5cm}{
+\coveritem[c]{1.5cm}{%
   \fontfamily{phv}\fontsize{11}{11}\selectfont
   \thepresentationtext
 }
 
 % Advisers
-\coveritem[c]{2}{
+\coveritem[c]{2}{%
   \fontfamily{phv}\fontsize{12}{12}\selectfont
   \printadvisers
 }
 
 
 % Committee — only print the committee for the main classes
-\coveritem[r]{2}{
+\coveritem[r]{2}{%
   \ifthenelse{%
     \equal{\unlthesis@opt@doctype}{bsc}%
     \OR\equal{\unlthesis@opt@doctype}{msc}%
-    \OR\equal{\unlthesis@opt@doctype}{phd}}
-  {\fontfamily{phv}\fontsize{10}{10}\selectfont\printcommittee}
-  {}
+    \OR\equal{\unlthesis@opt@doctype}{phd}}%
+  {\fontfamily{phv}\fontsize{10}{10}\selectfont\printcommittee}%
+  {}%
 }
 
 
 % Date
-\coveritem[c]{4}{
+\coveritem[c]{4}{%
   \fontfamily{phv}\fontsize{11}{11}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
