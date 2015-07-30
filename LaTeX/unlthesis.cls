@@ -7,7 +7,7 @@
 %% To view a copy of this license, 
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2015/07/29 [3.0.3]
+%% Version 2015/07/30 [3.0.4]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -397,7 +397,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
   #1, #2, #3
 }
 \newcommand{\printadvisers@ii}[1]{%
-   & \printadvisers@iii#1\\
+   & \printadvisers@iii#1\\[0.4ex]
 }
 
 \newcommand{\printadvisers@i}[1][]{%
@@ -408,7 +408,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
     \ifthenelse{\equal{\value{unlthesis@#1adviser@cnt}}{1}}%
       {\def\unlthesis@tmp@total{1}}% for portuguese: only use female form if no males are present
       {\def\unlthesis@tmp@total{2}}%
-    {% new block to keep font changing local 
+    {% new block to keep font changing local
       \@nameuse{the#1adviserstrfont}[\unlthesis@opt@coverlang]%
       \@nameuse{the#1adviserstr}%
               [\unlthesis@tmp@total,\unlthesis@tmp@gender,\unlthesis@opt@coverlang]:%

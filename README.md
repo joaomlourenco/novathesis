@@ -31,9 +31,31 @@ All contributors, both sporadic and regular, are welcome. :) Please [contact me]
 
 News
 ----
+*2015-07-30 — Version 3.0.4*
++ More bug fixes on cover designs
+
 *2015-07-29 — Version 3.0.3*
 + Folder “Examples” as a showcase of thesis for different schools and with different chapter styles
 + More bug fixes
+
+*2015-07-28 — Version 3.0.2*
++ Added support for FCSH-UNL (together with FCT-UNL and IST-UL, see the
+README files in the corresponding folders)
++ New option: *otherlistsat=front|back* to print the other lists
+(figures, tables, etc) after the TOC or just before the appendixes
++ New option: *aftercover=false|ture* to (not) include the aftercover
+file (even if exists)
++ New Option: *media=screen|paper* to specify the target medias (they
+may use different page layouts)
+
+*2015-07-28 — Version 3.0.0*
++ Major internal changes, but mainly not visible to the template user.
+Now the template includes "folder-based" support for new schools
+(forward compatible with new folders to be added).
++ Created a flexible system to design the thesis cover and its
+contents, to facilitate the support of other schools/institutions.
++ General cleanup of the code. Removed dependencies from a few packages
+(geometry, tabu, memoir, ...)
 
 *2015-07-20 — Lots of styles*
 + Added a new institution: ul/ist
