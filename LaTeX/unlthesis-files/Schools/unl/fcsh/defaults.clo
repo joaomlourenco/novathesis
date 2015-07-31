@@ -76,7 +76,8 @@
 \pagestyle{unlthesis@myvf}
 
 % Use romman numerals for Appendixes
-\patchcmd{\HyOrg@appendix}{\@Alph}{\@Roman}{}{}
+% \patchcmd{\HyOrg@appendix}{\@Alph}{\@Roman}{}{}
+\patchcmd{\appendix}{\@Alph}{\@Roman}{}{}
 
 \frenchspacing
 

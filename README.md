@@ -31,6 +31,9 @@ All contributors, both sporadic and regular, are welcome. :) Please [contact me]
 
 News
 ----
+*2015-07-30 — Version 3.0.5*
++ Now 'hyperref' is the last package to be loaded (as recommended in the package documentation).
+
 *2015-07-30 — Version 3.0.4*
 + More bug fixes on cover designs
 

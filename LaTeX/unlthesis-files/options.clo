@@ -116,6 +116,17 @@
 
 
 % --------------------------------------------------------
+% PRINT AFETR COVER
+%
+% true
+% false
+\DeclareOptionX{aftercover}[false]{%
+	\typeout{'aftercover'=#1}
+  \gdef\unlthesis@opt@aftercover{#1}
+}
+
+
+% --------------------------------------------------------
 % HYPER LINKS COLOR
 %
 % darkblue, black
@@ -134,17 +145,6 @@
 \DeclareOptionX{enc}{%
 	\typeout{'enc'=#1}
 	\PassOptionsToPackage{#1}{inputenc}
-}
-
-
-% --------------------------------------------------------
-% PRINT AFETR COVER
-%
-% true
-% false
-\DeclareOptionX{aftercover}[false]{%
-	\typeout{'aftercover'=#1}
-  \gdef\unlthesis@aftercover{#1}
 }
 
 

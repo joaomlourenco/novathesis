@@ -162,7 +162,7 @@
 }
 
 \newcommand{\printaftercover}{%
-  \ifthenelse{\equal{\unlthesis@aftercover}{true}}%
+  \ifthenelse{\equal{\unlthesis@opt@aftercover}{true}}%
   {%
     \InputIfFileExists{Chapters/\unlthesis@aftercover@file}%
       {\cleardoublepage}%
@@ -284,9 +284,8 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 
 \newcommand{\authorname}[3][m]{% [m|f]{Long name}{Short name}
   \renewcommand{\theauthorgender}{#1}
-  \renewcommand{\theauthorname}{#2}
+  \renewcommand{\theauthorname}{#2\hypersetup{pdfauthor={#2}}}
   \renewcommand{\theauthorshortname}{#3}
-  \hypersetup{pdfauthor={\theauthorname}}
 }
 
 \newcommand{\authordegree}[1]{%
@@ -297,7 +296,7 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 %% Work identification
 \newcommand{\thetitle}{~title \unlthesis@undefined}
 \renewcommand{\title}[1]{%
-  \renewcommand{\thetitle}{#1}
+  \renewcommand{\thetitle}{#1\hypersetup{pdftitle={#1}}}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

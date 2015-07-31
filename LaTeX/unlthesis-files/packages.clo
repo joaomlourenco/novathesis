@@ -31,17 +31,15 @@
 ]{microtype}
 
 
-
-
-
-
-
-%%%%% Better support for calculations
-% \RequirePackage{calc}
-
-
 %%%%% Better support for calculations
 \RequirePackage{xstring}
+
+
+% To process lists and other stuff
+\RequirePackage{etoolbox}
+
+% To process the bibliography
+\RequirePackage[backend=bibtex]{biblatex}
 
 
 %%%%% Configure Graphics
@@ -56,9 +54,15 @@
 }
 
 
-% To process lists and other stuff
-\RequirePackage{etoolbox}
+% AAdd an image to the backgroung
+% 	Used to inser the background image in the cover page
+\RequirePackage{eso-pic}[2015/04/20]
 
+
+
+%%%%% LOAD THESE PACKAGES JUST AT THE ENF OF THE PREAMBLE 
+%%%%% AND BEFORE THE \BEGIN{DOCUMENT}
+\AtEndPreamble{%
 
 %%%%% Configure HyperRefs
 % \RequirePackage[pdftex,usenames]{color}
@@ -69,28 +73,4 @@
 \RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}
 \RequirePackage{memhfixc}		% Must be used on memoir document class after hyperref
 
-
-%%%%% Configure page geometry
-% Needs version equal or later to 2010/02/12, which support the "newgeometry" command
-% \RequirePackage[a4paper]{geometry}[2010/02/12]
-
-
-%%%%% Condditional processing for PDF file
-% \RequirePackage{ifpdf}		% This is now the recommended way for checking for PDFLaTeX:
-% \ifpdf
-% % \pdfinfo{%
-% %    /Author (Author's name)
-% %    /Title (PhD Thesis)
-% %    /Keywords (One; Two;Three)
-% %    /CreationDate (D:\pdfdate)
-% % }
-% \else
-% \fi
-
-
-% AAdd an image to the backgroung
-% 	Used to inser the background image in the cover page
-\RequirePackage{eso-pic}[2015/04/20]
-
-% To process the bibliography
-\RequirePackage[backend=bibtex]{biblatex}
+}
