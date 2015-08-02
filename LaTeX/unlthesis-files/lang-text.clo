@@ -116,16 +116,16 @@
 
 \degreestr[bsc,m,en]={Bachelor}
 \degreestr[bsc,f,en]={Bachelor}
-\degreestr[msc,m,en]={Master}
-\degreestr[msc,f,en]={Master}
-\degreestr[mscplan,m,en]={Master}
-\degreestr[mscplan,f,en]={Master}
-\degreestr[phd,m,en]={Doctor}
-\degreestr[phd,f,en]={Doctor}
-\degreestr[phdplan,m,en]={Doctor}
-\degreestr[phdplan,f,en]={Doctor}
-\degreestr[phdprop,m,en]={Doctor}
-\degreestr[phdprop,f,en]={Doctor}
+\degreestr[msc,m,en]={Master of Science}
+\degreestr[msc,f,en]={Master of Science}
+\degreestr[mscplan,m,en]={Master of Science}
+\degreestr[mscplan,f,en]={Master of Science}
+\degreestr[phd,m,en]={Doctor of Philosophy}
+\degreestr[phd,f,en]={Doctor of Philosophy}
+\degreestr[phdplan,m,en]={Doctor of Philosophy}
+\degreestr[phdplan,f,en]={Doctor of Philosophy}
+\degreestr[phdprop,m,en]={Doctor of Philosophy}
+\degreestr[phdprop,f,en]={Doctor of Philosophy}
 
 \doctypestr[bsc,en]={Bachelor Report}
 \doctypestr[msc,en]={Master of Science Dissertation}
@@ -153,23 +153,23 @@
 \commiteememberstr[m,2,f,en]={Members}
 	
 \dissertationstr[bsc,en]={Report submitted in partial fulfillment\\%
-of the requirements for the degree of\\%
-\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
 \dissertationstr[mscplan,en]={Dissertaion plan submitted in partial fulfillment\\%
-of the requirements for the degree of\\%
-\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
 \dissertationstr[msc,en]={Dissertaion submitted in partial fulfillment\\%
-of the requirements for the degree of\\%
-\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
 \dissertationstr[phdplan,en]={Thesis plan submitted in partial fulfillment\\%
-of the requirements for the degree of\\%
-\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
 \dissertationstr[phdprop,en]={Thesis proposal submitted in partial fulfillment\\%
-of the requirements for the degree of\\%
-\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
 \dissertationstr[phd,en]={Thesis submitted in partial fulfillment\\%
-of the requirements for the degree of\\%
-\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
 \copyrighttextstr[en]={The \thefaculty[\unlthesis@opt@coverlang]\ and the \theuniversity[\unlthesis@opt@coverlang]\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
 \acknowledgmentsstr[en]={This document was created unsing the (pdf)\LaTeX\ processor, based in the “unlthesis” template[1], developed at the Dep.\ Informática of FCT-NOVA [2].\quad[1] \url{https://github.com/joaomlourenco/unlthesis}\quad[2] \url{http://www.di.fct.unl.pt}}
 
@@ -190,9 +190,9 @@ of the requirements for the degree of\\%
 
 \degreestr[bsc,m,fr]={Baccalaureate}
 \degreestr[bsc,f,fr]={TBD: baccalaureate}
-\degreestr[msc,m,fr]={Master}
+\degreestr[msc,m,fr]={Master of Science}
 \degreestr[msc,f,fr]={TBD: Master}
-\degreestr[mscplan,m,fr]={Master}
+\degreestr[mscplan,m,fr]={Master of Science}
 \degreestr[mscplan,f,fr]={TBD: Master}
 \degreestr[phd,m,fr]={Docteur}
 \degreestr[phd,f,fr]={TBD: Docteur}

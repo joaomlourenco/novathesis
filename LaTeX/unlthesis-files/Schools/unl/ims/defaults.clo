@@ -2,7 +2,7 @@
 %% defaults.clo
 %% UNL thesis configuration file
 %%
-%% Costumization for FCT-UNL (strings and cover)
+%% Costumization for NOVA-IMS (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Univesity
@@ -10,7 +10,7 @@
 \university[en]={NOVA University of Lisbon}
 
 % Faculty / School
-\faculty[pt]={Instituto Superior de Estatística e Gestão de Informação}
+\faculty[pt]={Instituto Superior de Estatística e Gestão da Informação}
 \faculty[en]={NOVA IMS Information Management School}
 
 % Scientific filed
@@ -22,42 +22,78 @@
 \committeeorder[en]={c,r,m}
 
 % Cover background images
-\thesiscover[phd]={cover-phd-std}
-\thesiscover[msc]={cover-msc-std}
-\thesiscover[bsc]={cover-bsc-std}
-\thesiscover[plain]={cover-plain-std}
+\thesiscover[phd]={}
+\thesiscover[msc]={}
+\thesiscover[bsc]={}
+\thesiscover[plain]={}
 
 % Spine logo
 \logo[spine]={logoUNL}
 
 % Set margins for "normal" pages
 \margin[screen,top]={3.0cm}
-\margin[screen,bottom]=3.0cm}
-\margin[screen,left]={3.5cm}
-\margin[screen,right]={3.5cm}
+\margin[screen,bottom]={3.0cm}
+\margin[screen,left]={3.25cm}
+\margin[screen,right]={3.25cm}
 \margin[paper,top]={3.0cm}
 \margin[paper,bottom]={3.0cm}
 \margin[paper,left]={3.5cm}
-\margin[paper,right]={3.5cm}
+\margin[paper,right]={3.0cm}
 
 % Set margins for cover pages
-\margin[phd,top]={3.9cm}
-\margin[phd,bottom]={1.6cm}
-\margin[phd,left]={5.5cm}
-\margin[phd,right]={2.5cm}
-\margin[msc,top]={4.0cm}
-\margin[msc,bottom]={1.3cm}
-\margin[msc,left]={4.5cm}
-\margin[msc,right]={3.3cm}
-\margin[bsc,top]={4.0cm}
-\margin[bsc,bottom]={1.3cm}
-\margin[bsc,left]={4.5cm}
-\margin[bsc,right]={3.3cm}
-\margin[plain,top]={4.0cm}
-\margin[plain,bottom]={1.3cm}
-\margin[plain,left]={4.5cm}
-\margin[plain,right]={3.3cm}
+\margin[phd,top]={3.0cm}
+\margin[phd,bottom]={2.0cm}
+\margin[phd,left]={3.0cm}
+\margin[phd,right]={3.0cm}
+\margin[msc,top]={3.0cm}
+\margin[msc,bottom]={2.0cm}
+\margin[msc,left]={3.0cm}
+\margin[msc,right]={3.0cm}
+\margin[bsc,top]={3.0cm}
+\margin[bsc,bottom]={2.0cm}
+\margin[bsc,left]={3.0cm}
+\margin[bsc,right]={3.0cm}
+\margin[plain,top]={3.0cm}
+\margin[plain,bottom]={2.0cm}
+\margin[plain,left]={3.0cm}
+\margin[plain,right]={3.0cm}
 
+\dissertationstr[bsc,pt]={Relatório apresentado como requisito parcial para obtenção do Grau de\\[1.25ex] %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em {\themajorfield[\unlthesis@opt@coverlang]}}
+
+\dissertationstr[mscplan,pt]={Relatório intermédio apresentado como requisito parcial para obtenção do Grau de\\[1.25ex] %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em {\themajorfield[\unlthesis@opt@coverlang]}}
+
+\dissertationstr[msc,pt]={Dissertação apresentada  como requisito parcial para obtenção do Grau de\\[1.25ex] %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em {\themajorfield[\unlthesis@opt@coverlang]}}
+
+\dissertationstr[phdplan,pt]={Relatório intermédio apresentado  como requisito parcial para obtenção do Grau de\\[1.25ex] %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em {\themajorfield[\unlthesis@opt@coverlang]}}
+
+\dissertationstr[phdprop,pt]={Proposta de dissertação apresentada como requisito parcial para obtenção do Grau de\\[1.25ex] %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em {\themajorfield[\unlthesis@opt@coverlang]}}
+
+\dissertationstr[phd,pt]={Dissertação apresentada  como requisito parcial\\ para obtenção do Grau de\\[1.25ex] %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em {\themajorfield[\unlthesis@opt@coverlang]}}
+
+\dissertationstr[bsc,en]={Report submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in {\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[mscplan,en]={Dissertaion plan submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in {\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[msc,en]={Dissertaion submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in {\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phdplan,en]={Thesis plan submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in {\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phdprop,en]={Thesis proposal submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in {\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phd,en]={Thesis submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in {\themajorfield[\unlthesis@opt@coverlang]}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % UNL guidelines:
@@ -75,6 +111,10 @@
 %
 \frenchspacing
 
+% Use arabic numerals for Appendixes
+% \patchcmd{\HyOrg@appendix}{\@Alph}{\@Roman}{}{}
+\patchcmd{\appendix}{\@Alph}{\@arabic}{}{}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -82,50 +122,57 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Author name
-\coveritem[c]{0cm}{%
-  \coverbackground
-  \fontfamily{phv}\fontsize{14}{14}\selectfont
-  \textbf{\theauthorname}
-}
-
-% Academic qualifications
-\coveritem[c]{0.25cm}{%
-  \fontfamily{phv}\fontsize{11}{11}\selectfont
-  \theauthordegree
+% School
+\coveritem[c]{0.0cm}{%
+  \fontsize{16}{16}\selectfont
+  \textbf{{\theuniversity[\unlthesis@opt@coverlang]}}\\
+  \vspace{2mm}
+  \textbf{{\thefaculty[\unlthesis@opt@coverlang]}}
 }
 
 % % Title of Dissertation
-\coveritem[c]{3.5cm}{%
-  \fontfamily{phv}\fontsize{16}{16}\selectfont
+\coveritem[c]{1}{%
+  \fontsize{18}{20}\selectfont
   \textbf{\thetitle}
 }
 
+% Academic qualifications
+% \coveritem[c]{0.25cm}{%
+%   \fontfamily{phv}\fontsize{11}{11}\selectfont
+%   \theauthordegree
+% }
+
 % Degree
-\coveritem[c]{1.5cm}{%
+\coveritem[c]{1}{%
   \fontfamily{phv}\fontsize{11}{11}\selectfont
-  \thepresentationtext
+  \thepresentationtext\\by
+}
+
+\coveritem[c]{0.75ex}{%
+  \fontfamily{phv}\fontsize{12}{12}\selectfont
+  {\theauthorname}
 }
 
 % Advisers
-\coveritem[c]{2}{%
+\coveritem[r]{1}{%
   \fontfamily{phv}\fontsize{12}{12}\selectfont
   \printadvisers
 }
 
 
 % Committee — only print the committee for the main classes
-\coveritem[r]{2}{%
-  \ifthenelse{%
-    \equal{\unlthesis@opt@doctype}{bsc}%
-    \OR\equal{\unlthesis@opt@doctype}{msc}%
-    \OR\equal{\unlthesis@opt@doctype}{phd}}%
-  {\fontfamily{phv}\fontsize{10}{10}\selectfont\printcommittee}%
-  {}%
-}
+% \coveritem[r]{1}{%
+%   \ifthenelse{%
+%     \equal{\unlthesis@opt@doctype}{bsc}%
+%     \OR\equal{\unlthesis@opt@doctype}{msc}%
+%     \OR\equal{\unlthesis@opt@doctype}{phd}}%
+%   {\fontfamily{phv}\fontsize{10}{10}\selectfont\printcommittee}%
+%   {}%
+% }
 
 
 % Date
-\coveritem[c]{4}{%
+\coveritem[c]{1}{%
   \fontfamily{phv}\fontsize{11}{11}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}

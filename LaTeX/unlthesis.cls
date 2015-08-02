@@ -413,7 +413,6 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
               [\unlthesis@tmp@total,\unlthesis@tmp@gender,\unlthesis@opt@coverlang]:%
     }
     \forlistcsloop{\printadvisers@ii}{unlthesis@#1adviser@list}
-  \else
   \fi
 }
 
@@ -432,7 +431,6 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
       \printadvisers@i[co]
       \end{tabularx}
     }
-  \else
   \fi
   \noindent\usebox\unlthesis@savebox
 }
