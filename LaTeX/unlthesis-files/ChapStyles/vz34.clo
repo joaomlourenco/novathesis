@@ -14,12 +14,12 @@
   \renewcommand\chapnumfont{\Huge\bfseries}
   \renewcommand\chaptitlefont{\Huge\bfseries\raggedright}
   \renewcommand\printchaptertitle[1]{%
-    \begin{tabular}{@{}p{1cm}|!{\quad}p{\textwidth-1cm-2em-4\tabcolsep }}
-      \ifNoChapNumber\relax\else\chapnumfont \thechapter\fi
-      & \chaptitlefont ##1
-    \end{tabular}
-    \NoChapNumberfalse
-  }
+    \begin{tabular}{@{}p{1cm}|!{\quad}p{\textwidth-1cm-2em-4\tabcolsep }}%
+      \ifNoChapNumber\relax\else\chapnumfont \thechapter\fi%
+      & \chaptitlefont ##1%
+    \end{tabular}%
+    \NoChapNumberfalse%
+  }%
   \renewcommand\printchapternonum{\NoChapNumbertrue}
 }
 \chapterstyle{VZ34}  

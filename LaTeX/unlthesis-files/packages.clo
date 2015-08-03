@@ -63,14 +63,12 @@
 %%%%% LOAD THESE PACKAGES JUST AT THE ENF OF THE PREAMBLE 
 %%%%% AND BEFORE THE \BEGIN{DOCUMENT}
 \AtEndPreamble{%
-
-%%%%% Configure HyperRefs
-% \RequirePackage[pdftex,usenames]{color}
-% \RequirePackage[pdftex]{xcolor}
-% \RequirePackage[usenames]{color}
-\RequirePackage{xcolor}
-\definecolor{darkblue}{rgb}{0.0,0.08,0.45}
-\RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}
-\RequirePackage{memhfixc}		% Must be used on memoir document class after hyperref
-
+  %%%%% Configure HyperRefs
+  % \RequirePackage[pdftex,usenames]{color}
+  % \RequirePackage[pdftex]{xcolor}
+  % \RequirePackage[usenames]{color}
+  \RequirePackage{xcolor}%
+  \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
+  \RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}%
+  \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
 }

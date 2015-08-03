@@ -24,11 +24,11 @@
       \ifNoChapNumber\relax\else%
       \colorbox{black}{\color{white}%
         \makebox[.8cm]{\chapnumfont\strut \thechapter}}
-      \fi
-      & \chaptitlefont ##1
-    \end{tabular}
-    \NoChapNumberfalse
-}
+      \fi%
+      & \chaptitlefont ##1%
+    \end{tabular}%
+    \NoChapNumberfalse%
+  }
   \renewcommand\printchapternonum{\NoChapNumbertrue}
 }
 \chapterstyle{VZ43}

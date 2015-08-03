@@ -127,16 +127,16 @@ of the requirements for the degree of\\[1ex]%
 % Author name
 % School
 \coveritem[c]{0.0cm}{%
-  \fontsize{16}{16}\selectfont
-  \textbf{{\theuniversity[\unlthesis@opt@coverlang]}}\\
-  \vspace{2mm}
-  \textbf{{\thefaculty[\unlthesis@opt@coverlang]}}
+  \fontsize{16}{16}\selectfont%
+  \textbf{{\theuniversity[\unlthesis@opt@coverlang]}}\\%
+  \vspace{2mm}%
+  \textbf{{\thefaculty[\unlthesis@opt@coverlang]}}%
 }
 
 % % Title of Dissertation
 \coveritem[c]{1}{%
-  \fontsize{18}{20}\selectfont
-  \textbf{\thetitle}
+  \fontsize{18}{20}\selectfont%
+  \textbf{\thetitle}%
 }
 
 % Academic qualifications
@@ -147,19 +147,19 @@ of the requirements for the degree of\\[1ex]%
 
 % Degree
 \coveritem[c]{1}{%
-  \fontfamily{phv}\fontsize{11}{11}\selectfont
-  \thepresentationtext\\by
+  \fontfamily{phv}\fontsize{11}{11}\selectfont%
+  \thepresentationtext\\by%
 }
 
 \coveritem[c]{0.75ex}{%
-  \fontfamily{phv}\fontsize{12}{12}\selectfont
-  {\theauthorname}
+  \fontfamily{phv}\fontsize{12}{12}\selectfont%
+  {\theauthorname}%
 }
 
 % Advisers
 \coveritem[r]{1}{%
-  \fontfamily{phv}\fontsize{12}{12}\selectfont
-  \printadvisers
+  \fontfamily{phv}\fontsize{12}{12}\selectfont%
+  \printadvisers%
 }
 
 
@@ -176,10 +176,10 @@ of the requirements for the degree of\\[1ex]%
 
 % Date
 \coveritem[c]{1}{%
-  \fontfamily{phv}\fontsize{11}{11}\selectfont
-  \ifdraftdoc
-    \textbf{DRAFT: \today}
-  \else
-    \textbf{\thedatemonth, \thedateyear}
-  \fi
+  \fontfamily{phv}\fontsize{11}{11}\selectfont%
+  \ifdraftdoc%
+    \textbf{DRAFT: \today}%
+  \else%
+    \textbf{\thedatemonth, \thedateyear}%
+  \fi%
 }

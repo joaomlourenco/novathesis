@@ -100,15 +100,16 @@
 
 % LOGO
 \coveritem[c]{0cm}{%
-\mbox{%
-  \hspace*{0.5cm}
-  \begin{tabular}[c]{@{}l@{}}
-    \includegraphics[width=9cm]{logoFCSH}
-  \end{tabular}
-  \quad
-  \begin{tabular}[c]{l}
-    \textcolor{fcshblue}{\rule{0.5\stockwidth}{4pt}}
-  \end{tabular}}
+  \mbox{%
+    \hspace*{0.5cm}%
+    \begin{tabular}[c]{@{}l@{}}%
+      \includegraphics[width=9cm]{logoFCSH}%
+    \end{tabular}%
+    \quad%
+    \begin{tabular}[c]{l}%
+      \textcolor{fcshblue}{\rule{0.5\stockwidth}{4pt}}%
+    \end{tabular}%
+  }%
 }
 
 % School
@@ -121,20 +122,20 @@
 
 % % Title of Dissertation
 \coveritem[c]{1}{%
-  \fontfamily{phv}\fontsize{18}{18}\selectfont
-  \textcolor{fcshblue}{\textbf{\thetitle}}
+  \fontfamily{phv}\fontsize{18}{18}\selectfont%
+  \textcolor{fcshblue}{\textbf{\thetitle}}%
 }
 
 % Author name
 \coveritem[c]{1}{%
-  \fontfamily{phv}\fontsize{14}{14}\selectfont
-  \textcolor{fcshblue}{\textbf{\theauthorname}}
+  \fontfamily{phv}\fontsize{14}{14}\selectfont%
+  \textcolor{fcshblue}{\textbf{\theauthorname}}%
 }
 
 % Degree
 \coveritem[c]{1}{%
-  \fontfamily{phv}\fontsize{12}{12}\selectfont
-  \textcolor{fcshblue}{\thepresentationtext}
+  \fontfamily{phv}\fontsize{12}{12}\selectfont%
+  \textcolor{fcshblue}{\thepresentationtext}%
 }
 
 % Advisers
@@ -162,18 +163,18 @@
 
 % Date
 \coveritem[c]{1}{%
-  \fontfamily{phv}\fontsize{14}{14}\selectfont
-  \textcolor{fcshblue}{%
-    \ifdraftdoc
-      \textbf{DRAFT: \today}
-    \else
-      \textbf{\thedatemonth, \thedateyear}
-    \fi
-  }
+  \fontfamily{phv}\fontsize{14}{14}\selectfont%
+  \textcolor{fcshblue}{%%
+    \ifdraftdoc%
+      \textbf{DRAFT: \today}%
+    \else%
+      \textbf{\thedatemonth, \thedateyear}%
+    \fi%
+  }%
 }
 
 \coveritem[c]{1.5cm}{%
-  \raisebox{-0.6cm}{  
-    \textcolor{fcshblue}{\hspace*{-0.2cm}\rule{\stockwidth}{0.75cm}}
-  }
+  \raisebox{-0.6cm}{  %
+    \textcolor{fcshblue}{\hspace*{-0.2cm}\rule{\stockwidth}{0.75cm}}%
+  }%
 }

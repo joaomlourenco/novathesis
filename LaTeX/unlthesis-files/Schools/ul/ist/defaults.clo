@@ -146,41 +146,41 @@
 
 % LOGO
 \coveritem[l]{0cm}{%
-  \includegraphics[width=5cm]{logoIST}
+  \includegraphics[width=5cm]{logoIST}%
 }
 
 % School
 \coveritem[c]{0.5cm}{%
-  \fontsize{16}{16}\selectfont
-  \textbf{\MakeUppercase{\theuniversity[\unlthesis@opt@coverlang]}}\\
-  \vspace{2mm}
-  \textbf{\MakeUppercase{\thefaculty[\unlthesis@opt@coverlang]}}
+  \fontsize{16}{16}\selectfont%
+  \textbf{\MakeUppercase{\theuniversity[\unlthesis@opt@coverlang]}}\\%
+  \vspace{2mm}%
+  \textbf{\MakeUppercase{\thefaculty[\unlthesis@opt@coverlang]}}%
 }
 
 % % Title of Dissertation
 \coveritem[c]{1}{%
-  \fontsize{18}{20}\selectfont
-  \textbf{\thetitle}
+  \fontsize{18}{20}\selectfont%
+  \textbf{\thetitle}%
 }
 
 % Author name
 \coveritem[c]{1}{%
-  \fontsize{14}{14}\selectfont
-  \textbf{\theauthorname}
+  \fontsize{14}{14}\selectfont%
+  \textbf{\theauthorname}%
 }
 
 % Degree
 \coveritem[c]{1}{%
-  \fontsize{12}{12}\selectfont
-  \thepresentationtext
+  \fontsize{12}{12}\selectfont%
+  \thepresentationtext%
 }
 
 % Advisers
 \coveritem[c]{2}{%
-  \adviserstrfont[\unlthesis@opt@coverlang]={\bfseries}
-  \coadviserstrfont[\unlthesis@opt@coverlang]={\bfseries}
-  \fontsize{12}{12}\selectfont
-  \printadvisers
+  \adviserstrfont[\unlthesis@opt@coverlang]={\bfseries}%
+  \coadviserstrfont[\unlthesis@opt@coverlang]={\bfseries}%
+  \fontsize{12}{12}\selectfont%
+  \printadvisers%
 }
 
 
@@ -190,9 +190,9 @@
     \equal{\unlthesis@opt@doctype}{bsc}%
     \OR\equal{\unlthesis@opt@doctype}{msc}%
     \OR\equal{\unlthesis@opt@doctype}{phd}}%
-  {\committeetitlestrfont[\unlthesis@opt@coverlang]={\fontsize{14}{14}\selectfont\bfseries}
-    \commiteememberstrfont[\unlthesis@opt@coverlang]={\bfseries}
-    \fontsize{12}{12}\selectfont\printcommittee
+  {\committeetitlestrfont[\unlthesis@opt@coverlang]={\fontsize{14}{14}\selectfont\bfseries}%
+    \commiteememberstrfont[\unlthesis@opt@coverlang]={\bfseries}%
+    \fontsize{12}{12}\selectfont\printcommittee%
   }%
   {}%
 }
@@ -200,11 +200,11 @@
 
 % Date
 \coveritem[c]{1}{%
-  \fontsize{14}{14}\selectfont
-  \ifdraftdoc
-    \textbf{DRAFT: \today}
-  \else
-    \textbf{\thedatemonth, \thedateyear}
-  \fi
+  \fontsize{14}{14}\selectfont%
+  \ifdraftdoc%
+    \textbf{DRAFT: \today}%
+  \else%
+    \textbf{\thedatemonth, \thedateyear}%
+  \fi%
 }
 

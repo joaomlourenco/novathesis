@@ -9,8 +9,10 @@
 \definecolor{chaptercolor}{gray}{0.8}
 % helper macros
 \newcommand\numlifter[1]{\raisebox{-1.25cm}[0pt][0pt]{\smash{{#1}}}}
+
 \newcommand\numindent{\kern30pt}
 \newlength\chaptertitleboxheight
+
 \makechapterstyle{hansen}{%
   \renewcommand\printchaptername{\raggedleft}
   \renewcommand\printchapternum{%
@@ -20,19 +22,19 @@
     \strut%
     \numlifter{\thechapter}%
     \numindent%
-\endgroup%
-}
+    \endgroup%
+  }
   \renewcommand*{\printchapternonum}{%
     \vphantom{\begingroup%
       \leavevmode%
       \chapnumfont%
       \numlifter{\vphantom{9}}%
       \numindent%
-      \endgroup}
+      \endgroup}%
     \afterchapternum}
   \setlength\midchapskip{0pt}
-  \setlength\beforechapskip{0.5\baselineskip}
-  \setlength{\afterchapskip}{3\baselineskip}
+  \setlength\beforechapskip{0.5\baselineskip}%
+  \setlength{\afterchapskip}{3\baselineskip}%
   \renewcommand\chapnumfont{%
     \fontsize{4cm}{0cm}%
     \bfseries%
@@ -51,6 +53,7 @@
     \parbox[t][\chaptertitleboxheight][t]{\textwidth}{%
       %\microtypesetup{protrusion=false}% add this if you use microtype
       \chaptitlefont\strut ##1\strut}%
-}}
+  }%
+}
 \chapterstyle{hansen}
 % \aliaspagestyle{chapter}{empty}% just to save some space

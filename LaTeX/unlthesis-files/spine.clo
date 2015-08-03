@@ -1,6 +1,7 @@
 % Draw the book spine
 
 \makeatletter
+
 \newlength{\unlthesis@spinewidth}%
 \setlength{\unlthesis@spinewidth}{1mm * (\thelastpage + 19) / 20}%
 
@@ -46,10 +47,10 @@
 
 
 % Make a box with the title
-\newbox{\unlthesis@spine@box@title}
-\newlength{\unlthesis@spine@box@title@width}
-\newlength{\unlthesis@spine@box@title@height}
-\newlength{\unlthesis@spine@box@middlewidth}
+\newbox{\unlthesis@spine@box@title}%
+\newlength{\unlthesis@spine@box@title@width}%
+\newlength{\unlthesis@spine@box@title@height}%
+\newlength{\unlthesis@spine@box@middlewidth}%
 \newcommand{\make@spine@box@title}[1]{%
   \setlength{\unlthesis@spine@box@middlewidth}{%
     \dimexpr\linewidth-\unlthesis@spine@box@logo@width-\unlthesis@spine@box@date@width%
@@ -63,16 +64,16 @@
     \savebox{\unlthesis@spine@box@title}{%
       \resizebox{!}{0.95\unlthesis@spinewidth}{\usebox{\unlthesis@spine@box@title}}%
     }%
-  \fi
+  \fi%
   \settowidth{\unlthesis@spine@box@title@width}{\usebox{\unlthesis@spine@box@title}}%
   \settoheight{\unlthesis@spine@box@title@height}{\usebox{\unlthesis@spine@box@title}}%
 }
 
 
 % Make a box with the author
-\newbox{\unlthesis@spine@box@author}
-\newlength{\unlthesis@spine@box@author@width}
-\newlength{\unlthesis@spine@box@author@height}
+\newbox{\unlthesis@spine@box@author}%
+\newlength{\unlthesis@spine@box@author@width}%
+\newlength{\unlthesis@spine@box@author@height}%
 \newcommand{\make@spine@box@author}[1]{%
   \savebox{\unlthesis@spine@box@author}{%
     \parbox{#1\unlthesis@spine@box@middlewidth}{\centering\thespine[author]}%
@@ -89,9 +90,9 @@
 }
 
 
-\newbox{\unlthesis@spine@box@titleauthor}
-\newlength{\unlthesis@spine@box@titleauthor@width}
-\newlength{\unlthesis@spine@box@titleauthor@height}
+\newbox{\unlthesis@spine@box@titleauthor}%
+\newlength{\unlthesis@spine@box@titleauthor@width}%
+\newlength{\unlthesis@spine@box@titleauthor@height}%
 \newcommand{\make@spine@box@titleauthor}{%
   \make@spine@box@title{0.8}%
   \make@spine@box@author{0.8}%
@@ -105,15 +106,15 @@
     {\usebox{\unlthesis@spine@box@titleauthor}}%
   \settoheight{\unlthesis@spine@box@titleauthor@height}%
     {\usebox{\unlthesis@spine@box@titleauthor}}%
-  \ifdim\unlthesis@spine@box@titleauthor@height > 0.95\unlthesis@spinewidth
+  \ifdim\unlthesis@spine@box@titleauthor@height > 0.95\unlthesis@spinewidth%
     \make@spine@box@title{0.4}%
     \make@spine@box@author{0.4}%
     \savebox{\unlthesis@spine@box@titleauthor}{%
       \usebox{\unlthesis@spine@box@title}%
-      \qquad
+      \qquad%
       \usebox{\unlthesis@spine@box@author}%
     }%
-  \fi
+  \fi%
   \settowidth{\unlthesis@spine@box@titleauthor@width}%
     {\usebox{\unlthesis@spine@box@titleauthor}}%
   \settoheight{\unlthesis@spine@box@titleauthor@height}%
@@ -132,37 +133,37 @@
 \newcommand{\AtStockLowerCenter}[1]{%
   \AtPageUpperLeft{% 
     \put(\LenToUnit{(\paperwidth-\unlthesis@spinewidth)/2},%
-         \LenToUnit{-\paperheight}){#1}
-  }
+         \LenToUnit{-\paperheight}){#1}%
+  }%
 }
 
-\newbox{\unlthesis@spine@box}
+\newbox{\unlthesis@spine@box}%
 \newcommand{\printspine}{%
-  \cleardoublepage
-  \thispagestyle{empty}
+  \cleardoublepage%
+  \thispagestyle{empty}%
   \make@spine@box@logo{}{\thespine[logo]}%
   \make@spine@box@date%
-  \make@spine@box@titleauthor
+  \make@spine@box@titleauthor%
   \savebox{\unlthesis@spine@box}{%
     \rotatebox{90}{%
       \framebox[\stockheight]{%
         \parbox[c][\unlthesis@spinewidth][c]{\unlthesis@spine@box@date@width}%
           {\usebox{\unlthesis@spine@box@date}}%
-        \hfill
+        \hfill%
         \parbox[c][\unlthesis@spinewidth][c]{\unlthesis@spine@box@titleauthor@width}%
           {\usebox{\unlthesis@spine@box@titleauthor}}%
-        \hfill
+        \hfill%
         \parbox[c][\unlthesis@spinewidth][c]{\unlthesis@spine@box@logo@width}%
           {\usebox{\unlthesis@spine@box@logo}}%
-      }
-    }
-  }
+      }%
+    }%
+  }%
   \AddToShipoutPictureFG*{%
     \AtStockLowerCenter{%
         {\usebox{\unlthesis@spine@box}}%
     }%
   }%
   ~% This space is important here so that the cover page is not empty anymore!
-  \cleardoublepage
-}
+  \cleardoublepage%
+}%
 \makeatother

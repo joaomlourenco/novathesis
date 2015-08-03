@@ -66,13 +66,13 @@
 % Redefine \cleardoublepage to use a really empty page…
 \let\origcleardoublepage=\cleardoublepage
 \renewcommand\cleardoublepage{%
-  \newpage{\pagestyle{empty}\origcleardoublepage}
+  \newpage{\pagestyle{empty}\origcleardoublepage}%
 }
 
 % Do some magic defining arrays :)
 \newcommand{\mynewdata}[1]{%
-  \@namedef{#1}[##1]=##2{\@namedef{#1##1}{##2}}
-  \@namedef{the#1}[##1]{\@nameuse{#1##1}}
+  \@namedef{#1}[##1]=##2{\@namedef{#1##1}{##2}}%
+  \@namedef{the#1}[##1]{\@nameuse{#1##1}}%
 }
 
 \newcommand{\iteratecsvlist}[2]{%
@@ -86,61 +86,61 @@
 
 \newcommand{\coverbackground}[1][\@nameuse{thesiscover\unlthesis@opt@doctype}]{%
   \AddToShipoutPictureBG*{%
-    \includegraphics[width=\paperwidth,height=\paperheight]{#1}
-  }
+    \includegraphics[width=\paperwidth,height=\paperheight]{#1}%
+  }%
 }
 
 \newcommand{\coveritem}[3][c]{%
-  \listcsadd{unlthesis@coveritem@list}{[#1][#2]{#3}}
+  \listcsadd{unlthesis@coveritem@list}{[#1][#2]{#3}}%
 }
 
 \newcounter{unlthesis@myloop}
 \def\unlthesis@printcoveritem@i[#1][#2]#3{%
   \IfInteger{#2}{%IS INTEGER
-    \setcounter{unlthesis@myloop}{0}
+    \setcounter{unlthesis@myloop}{0}%
     \whileboolexpr{test{\ifnumless{\value{unlthesis@myloop}}{#2}}}{%
-      \stepcounter{unlthesis@myloop}
-      \vfill
-    }
+      \stepcounter{unlthesis@myloop}%
+      \vfill%
+    }%
   }{%IS NOT INTEGER
-    \vspace*{#2}
-  }
-  \noindent\begin{minipage}[t]{\linewidth}
+    \vspace*{#2}%
+  }%
+  \noindent\begin{minipage}[t]{\linewidth}%
     \ifthenelse{\equal{#1}{l}}{\raggedright}{%
       \ifthenelse{\equal{#1}{c}}{\centering}{%
         \ifthenelse{\equal{#1}{r}}{\raggedleft}{%
-        }
-      }
-    }
-    #3
-  \end{minipage}\par
+        }%
+      }%
+    }%
+    #3%
+  \end{minipage}\par%
 }
 
 \newcommand{\unlthesis@printcoveritem}[1]{%
-  \unlthesis@printcoveritem@i#1
+  \unlthesis@printcoveritem@i#1%
 }
 
 \newcommand{\printcoveritems}{%
   \ifthenelse{\isundefined{\unlthesis@coveritem@list}}{}{%
-	\forlistcsloop{\unlthesis@printcoveritem}{unlthesis@coveritem@list}}
+	\forlistcsloop{\unlthesis@printcoveritem}{unlthesis@coveritem@list}}%
 }
 
 \newcommand{\printcoverpage}{%
-  \thispagestyle{empty}
-  \newlength{\mpwidth}
+  \thispagestyle{empty}%
+  \newlength{\mpwidth}%
   \setlength{\mpwidth}{\dimexpr%
     \paperwidth%
       -\themargin[\unlthesis@opt@doctype,left]%
-      -\themargin[\unlthesis@opt@doctype,right]}
-  \newlength{\mpheight}
+      -\themargin[\unlthesis@opt@doctype,right]}%
+  \newlength{\mpheight}%
   \setlength{\mpheight}{\dimexpr%
-    \paperheight
-      -\themargin[\unlthesis@opt@doctype,top]
-      -\themargin[\unlthesis@opt@doctype,bottom]}
-  \newsavebox{\unlthesis@coverbox}
+    \paperheight%
+      -\themargin[\unlthesis@opt@doctype,top]%
+      -\themargin[\unlthesis@opt@doctype,bottom]}%
+  \newsavebox{\unlthesis@coverbox}%
   \sbox{\unlthesis@coverbox}{%
     \parbox[t][\mpheight][t]{\mpwidth}{%
-      \printcoveritems
+      \printcoveritems%
     }%
   }%
   \AddToShipoutPictureFG*{%
@@ -152,13 +152,13 @@
     }%
   }%
   ~% This space is important here so that the cover page is not empty anymore!
-  \cleardoublepage
+  \cleardoublepage%
 }
 
 
 \newcommand{\unlthesis@aftercover@file}{}
 \newcommand{\aftercoverfile}[1]{%
-  \renewcommand{\unlthesis@aftercover@file}{#1}
+  \renewcommand{\unlthesis@aftercover@file}{#1}%
 }
 
 \newcommand{\printaftercover}{%
@@ -177,10 +177,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ifthenelse{\equal{\unlthesis@opt@lang}{pt}}%
 	{\selectlanguage{portuguese}}%
-{\ifthenelse{\equal{\unlthesis@opt@lang}{en}}%
-	{\selectlanguage{english}}%
-	{\PackageError{unlthesis}{Wrong value for option 'lang'}{Please see the documentation}%
-	\expandafter\endinput}}
+  {\ifthenelse{\equal{\unlthesis@opt@lang}{en}}%
+  	{\selectlanguage{english}}%
+  	{\PackageError{unlthesis}{Wrong value for option 'lang'}{Please see the documentation}%
+  	\expandafter\endinput}%
+  }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -251,17 +252,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \gdef\thepresentationtext{%
-	\thedissertationstr[\unlthesis@opt@doctype,\unlthesis@opt@coverlang]
+	\thedissertationstr[\unlthesis@opt@doctype,\unlthesis@opt@coverlang]%
 }
 
 \gdef\thecopyrightstr{%
-\thispagestyle{empty}
-\noindent
-Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \theuniversity[\unlthesis@opt@coverlang]
-
-\bigskip
-\noindent
-\thecopyrighttextstr[\unlthesis@opt@coverlang]}
+  \thispagestyle{empty}%
+  \noindent%
+  Copyright \copyright\ \theauthorname, %
+  \thefaculty[\unlthesis@opt@coverlang], \theuniversity[\unlthesis@opt@coverlang]%
+  \bigskip%
+  \noindent%
+  \thecopyrighttextstr[\unlthesis@opt@coverlang]%
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -283,21 +285,23 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 \newcommand{\theauthordegree}{~authordegree \unlthesis@undefined}
 
 \newcommand{\authorname}[3][m]{% [m|f]{Long name}{Short name}
-  \renewcommand{\theauthorgender}{#1}
-  \renewcommand{\theauthorname}{#2\hypersetup{pdfauthor={#2}}}
-  \renewcommand{\theauthorshortname}{#3}
+  \renewcommand{\theauthorgender}{#1}%
+  \renewcommand{\theauthorname}{#2\hypersetup{pdfauthor={#2}}}%
+  \renewcommand{\theauthorshortname}{#3}%
 }
 
 \newcommand{\authordegree}[1]{%
-  \renewcommand{\theauthordegree}{#1}
+  \renewcommand{\theauthordegree}{#1}%
 }
 
 
 %% Work identification
 \newcommand{\thetitle}{~title \unlthesis@undefined}
 \renewcommand{\title}[1]{%
-  \renewcommand{\thetitle}{#1\hypersetup{pdftitle={#1}}}
+  \renewcommand{\thetitle}{#1\hypersetup{pdftitle={#1}}}%
 }
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% NEW definition for committee with lists
@@ -307,23 +311,23 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 \setcounter{unlthesis@committee@cnt}{0}
 
 \def\committee[#1,#2]#3{% #1={c,r,a,m} #2={m,f} #3={member name}
-  \ifcsname c@unlthesis@committee@#1@cnt\endcsname
+  \ifcsname c@unlthesis@committee@#1@cnt\endcsname%
   \else
-    \newcounter{unlthesis@committee@#1@cnt}     % to count the total # of members in class
-    \setcounter{unlthesis@committee@#1@cnt}{0}
-    \newcounter{unlthesis@committee@#1m@cnt}    % to count the # of male members in class
-    \setcounter{unlthesis@committee@#1m@cnt}{0}
-    \newcounter{unlthesis@committee@#1f@cnt}    % to count the # of female members in class
-    \setcounter{unlthesis@committee@#1f@cnt}{0}
+    \newcounter{unlthesis@committee@#1@cnt}%    to count the total # of members in class
+    \setcounter{unlthesis@committee@#1@cnt}{0}%
+    \newcounter{unlthesis@committee@#1m@cnt}%   to count the # of male members in class
+    \setcounter{unlthesis@committee@#1m@cnt}{0}%
+    \newcounter{unlthesis@committee@#1f@cnt}%   to count the # of female members in class
+    \setcounter{unlthesis@committee@#1f@cnt}{0}%
   \fi
-  \stepcounter{unlthesis@committee@#1@cnt}
-  \stepcounter{unlthesis@committee@#1#2@cnt}
-  \listcsadd{unlthesis@committee@#1@list}{#3}
+  \stepcounter{unlthesis@committee@#1@cnt}%
+  \stepcounter{unlthesis@committee@#1#2@cnt}%
+  \listcsadd{unlthesis@committee@#1@list}{#3}%
 }
 
 
 \newcommand{\unlthesis@printcommitteeclassmembers}[1]{%
-  & #1\\
+  & #1\\%
 }
 
 \newcommand{\unlthesis@printcommitteemembers}[1]{%
@@ -334,26 +338,26 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
   \ifthenelse{\equal{\value{unlthesis@committee@#1@cnt}}{1}}%
     {\def\unlthesis@tmp@total{1}}% for portuguese: only use female form if no males are present
     {\def\unlthesis@tmp@total{2}}%
-  {\thecommiteememberstrfont[\unlthesis@opt@coverlang]
-    \thecommiteememberstr[#1,\unlthesis@tmp@total,\unlthesis@tmp@gender,\unlthesis@opt@coverlang]:
-  }
-  \forlistcsloop{\unlthesis@printcommitteeclassmembers}{unlthesis@committee@#1@list}
+  {\thecommiteememberstrfont[\unlthesis@opt@coverlang] %
+    \thecommiteememberstr[#1,\unlthesis@tmp@total,\unlthesis@tmp@gender,\unlthesis@opt@coverlang]:%
+  }%
+  \forlistcsloop{\unlthesis@printcommitteeclassmembers}{unlthesis@committee@#1@list}%
 }
 
 \newcommand{\printcommittee}{%
-  \xdef\unlthesis@tmp{\thecommitteetitlestr[\unlthesis@opt@coverlang]}
-  \begin{tabular}{rl}
-  \ifx\unlthesis@tmp\@empty
+  \xdef\unlthesis@tmp{\thecommitteetitlestr[\unlthesis@opt@coverlang]}%
+  \begin{tabular}{rl}%
+  \ifx\unlthesis@tmp\@empty%
     % committeetitlestr[…] is empty
-  \else
-    \multicolumn{2}{c}{{%
-            \thecommitteetitlestrfont[\unlthesis@opt@coverlang]
-            \thecommitteetitlestr[\unlthesis@opt@coverlang]}
-          }\\[1ex]
-  \fi
-  \xdef\unlthesis@tmp{\thecommitteeorder[\unlthesis@opt@coverlang]}
-  \iteratecsvlist{\unlthesis@printcommitteemembers}{\unlthesis@tmp}
-  \end{tabular}
+  \else%
+    \multicolumn{2}{c}{{%%
+            \thecommitteetitlestrfont[\unlthesis@opt@coverlang] %
+            \thecommitteetitlestr[\unlthesis@opt@coverlang]}%
+          }\\[1ex]%
+  \fi%
+  \xdef\unlthesis@tmp{\thecommitteeorder[\unlthesis@opt@coverlang]}%
+  \iteratecsvlist{\unlthesis@printcommitteemembers}{\unlthesis@tmp}%
+  \end{tabular}%
 }
 
 
@@ -362,45 +366,45 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\adviser}[4][m]{%
-  \unlthesis@adviser{#1}{#2}{#3}{#4}
+  \unlthesis@adviser{#1}{#2}{#3}{#4}%
 }
 
 \newcommand{\coadviser}[4][m]{%
-  \unlthesis@adviser[co]{#1}{#2}{#3}{#4}
+  \unlthesis@adviser[co]{#1}{#2}{#3}{#4}%
 }
 
-\newcounter{unlthesis@adviser@cnt}
-\setcounter{unlthesis@adviser@cnt}{0}
-\newcounter{unlthesis@adviser@m@cnt}
-\setcounter{unlthesis@adviser@m@cnt}{0}
-\newcounter{unlthesis@adviser@f@cnt}
-\setcounter{unlthesis@adviser@f@cnt}{0}
-\newcounter{unlthesis@coadviser@cnt}
-\setcounter{unlthesis@coadviser@cnt}{0}
-\newcounter{unlthesis@coadviser@m@cnt}
-\setcounter{unlthesis@coadviser@m@cnt}{0}
-\newcounter{unlthesis@coadviser@f@cnt}
-\setcounter{unlthesis@coadviser@f@cnt}{0}
+\newcounter{unlthesis@adviser@cnt}%
+\setcounter{unlthesis@adviser@cnt}{0}%
+\newcounter{unlthesis@adviser@m@cnt}%
+\setcounter{unlthesis@adviser@m@cnt}{0}%
+\newcounter{unlthesis@adviser@f@cnt}%
+\setcounter{unlthesis@adviser@f@cnt}{0}%
+\newcounter{unlthesis@coadviser@cnt}%
+\setcounter{unlthesis@coadviser@cnt}{0}%
+\newcounter{unlthesis@coadviser@m@cnt}%
+\setcounter{unlthesis@coadviser@m@cnt}{0}%
+\newcounter{unlthesis@coadviser@f@cnt}%
+\setcounter{unlthesis@coadviser@f@cnt}{0}%
 % #1 = [] for adviser or [co] co co-adviser
 % #2 = [m] or [f]
 % #3 = {name}
 % #4 = {category}
 % #5 = {school/institution}
 \newcommand{\unlthesis@adviser}[5][]{%
-  \stepcounter{unlthesis@#1adviser@cnt}
-  \stepcounter{unlthesis@#1adviser@#2@cnt}
+  \stepcounter{unlthesis@#1adviser@cnt}%
+  \stepcounter{unlthesis@#1adviser@#2@cnt}%
 	\listcsgadd{unlthesis@#1adviser@list}{{#3},{#4},{#5}}%
 }
 
 \def\printadvisers@iii#1,#2,#3{%
-  #1, #2, #3
+  #1, #2, #3%
 }
 \newcommand{\printadvisers@ii}[1]{%
-   & \printadvisers@iii#1\\[0.4ex]
+   & \printadvisers@iii#1\\[0.4ex]%
 }
 
 \newcommand{\printadvisers@i}[1][]{%
-  \ifcsname unlthesis@#1adviser@list\endcsname
+  \ifcsname unlthesis@#1adviser@list\endcsname%
     \ifthenelse{\equal{\value{unlthesis@#1adviser@m@cnt}}{0}}%
       {\def\unlthesis@tmp@gender{f}}% for portuguese: only use female form if no males are present
       {\def\unlthesis@tmp@gender{m}}%
@@ -412,27 +416,27 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
       \@nameuse{the#1adviserstr}%
               [\unlthesis@tmp@total,\unlthesis@tmp@gender,\unlthesis@opt@coverlang]:%
     }
-    \forlistcsloop{\printadvisers@ii}{unlthesis@#1adviser@list}
-  \fi
+    \forlistcsloop{\printadvisers@ii}{unlthesis@#1adviser@list}%
+  \fi%
 }
 
 \newcommand{\printadvisers}{%
-  \newbox\unlthesis@savebox
+  \newbox\unlthesis@savebox%
   \sbox\unlthesis@savebox{%
-    \begin{tabular}{@{}rl@{}}
-      \printadvisers@i
-      \printadvisers@i[co]
-    \end{tabular}
-  }
-  \ifdim\wd\unlthesis@savebox>\linewidth
+    \begin{tabular}{@{}rl@{}}%
+      \printadvisers@i%
+      \printadvisers@i[co]%
+    \end{tabular}%
+  }%
+  \ifdim\wd\unlthesis@savebox>\linewidth%
     \sbox\unlthesis@savebox{%
-      \begin{tabularx}{0.99\linewidth}{@{}rX@{}}
-      \printadvisers@i
-      \printadvisers@i[co]
-      \end{tabularx}
-    }
-  \fi
-  \noindent\usebox\unlthesis@savebox
+      \begin{tabularx}{0.99\linewidth}{@{}rX@{}}%
+      \printadvisers@i%
+      \printadvisers@i[co]%
+      \end{tabularx}%
+    }%
+  \fi%
+  \noindent\usebox\unlthesis@savebox%
 }
 
 
@@ -448,12 +452,12 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 \setulmarginsandblock%
   {\themargin[\unlthesis@opt@media,top]}%
   {\themargin[\unlthesis@opt@media,bottom]}%
-  {*}
+  {*}%
 \setlrmarginsandblock%
   {\themargin[\unlthesis@opt@media,left]}%
   {\themargin[\unlthesis@opt@media,right]}%
-  {*}
-\checkandfixthelayout
+  {*}%
+\checkandfixthelayout%
 
 %% For debugging the page layout
 \newcommand\unlthesis@typetwolengths[4]{%
@@ -461,38 +465,38 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
   % #2 = first length
   % #3 = text between
   % #4 = second length
-  \setlength\@tempdimc{\mem@tl@unitperpt #2}
+  \setlength\@tempdimc{\mem@tl@unitperpt #2}%
   \edef\l@first{\strip@pt\@tempdimc}%
-  \setlength\@tempdimc{\mem@tl@unitperpt #4}
+  \setlength\@tempdimc{\mem@tl@unitperpt #4}%
   \edef\l@second{\strip@pt\@tempdimc}%
-  #1: \l@first\mem@tl@unit\space#3\space\l@second\mem@tl@unit
+  #1: \l@first\mem@tl@unit\space#3\space\l@second\mem@tl@unit%
 }
 \newcommand\unlthesis@typeonelength[2]{%
   % #1 = text before
   % #2 = first length
-  \setlength\@tempdimc{\mem@tl@unitperpt #2}
+  \setlength\@tempdimc{\mem@tl@unitperpt #2}%
   \edef\l@first{\strip@pt\@tempdimc}%
-  #1: \l@first\mem@tl@unit
+  #1: \l@first\mem@tl@unit%
 }
 \newcommand*{\typelayout}{%
-  \hrule
-  \unlthesis@typetwolengths{Stock height and width}{\stockheight}{by}{\stockwidth}\\
-  \unlthesis@typetwolengths{Top and edge trims}{\trimtop}{and}{\trimedge}\\
-  \unlthesis@typetwolengths{Page height and width}{\paperheight}{by}{\paperwidth}\\
-  \unlthesis@typetwolengths{Text height and width}{\textheight}{by}{\textwidth}\\
-  \unlthesis@typetwolengths{Spine and edge margins}{\spinemargin}{and}{\foremargin}\\
-  \unlthesis@typetwolengths{Upper and lower margins}{\uppermargin}{and}{\lowermargin}\\
-  \unlthesis@typetwolengths{Headheight and headsep}{\headheight}{and}{\headsep}\\
-  \unlthesis@typeonelength{Footskip}{\footskip}\\
-  \unlthesis@typetwolengths{Columnsep and columnseprule}{\columnsep}{and}{\columnseprule}\\
-  \unlthesis@typetwolengths{Marginparsep and marginparwidth}{\marginparsep}{and}{\marginparwidth}\\
-  \unlthesis@typetwolengths{Sidecapsep and sidecapwidth}{\sidecapsep}{and}{\sidecapwidth}\\
-  \unlthesis@typetwolengths{Sidebarhsep and sidebarwidth}{\sidebarhsep}{and}{\sidebarwidth}\\
-  \unlthesis@typetwolengths{Sidebarvsep and sidebartopsep}{\sidebarvsep}{and}{\sidebartopsep}\\
-  \unlthesis@typeonelength{Sidebarheight}{\dimen\sideins}\\
-  \unlthesis@typetwolengths{Sidefoothsep and sidefootwidth}{\sidefoothsep}{and}{\sidefootwidth}\\
-  \unlthesis@typetwolengths{Sidefootvsep and sidefootheight}{\sidefootvsep}{and}{\sidefootheight}\\
-  \hrule
+  \hrule%
+  \unlthesis@typetwolengths{Stock height and width}{\stockheight}{by}{\stockwidth}\\%
+  \unlthesis@typetwolengths{Top and edge trims}{\trimtop}{and}{\trimedge}\\%
+  \unlthesis@typetwolengths{Page height and width}{\paperheight}{by}{\paperwidth}\\%
+  \unlthesis@typetwolengths{Text height and width}{\textheight}{by}{\textwidth}\\%
+  \unlthesis@typetwolengths{Spine and edge margins}{\spinemargin}{and}{\foremargin}\\%
+  \unlthesis@typetwolengths{Upper and lower margins}{\uppermargin}{and}{\lowermargin}\\%
+  \unlthesis@typetwolengths{Headheight and headsep}{\headheight}{and}{\headsep}\\%
+  \unlthesis@typeonelength{Footskip}{\footskip}\\%
+  \unlthesis@typetwolengths{Columnsep and columnseprule}{\columnsep}{and}{\columnseprule}\\%
+  \unlthesis@typetwolengths{Marginparsep and marginparwidth}{\marginparsep}{and}{\marginparwidth}\\%
+  \unlthesis@typetwolengths{Sidecapsep and sidecapwidth}{\sidecapsep}{and}{\sidecapwidth}\\%
+  \unlthesis@typetwolengths{Sidebarhsep and sidebarwidth}{\sidebarhsep}{and}{\sidebarwidth}\\%
+  \unlthesis@typetwolengths{Sidebarvsep and sidebartopsep}{\sidebarvsep}{and}{\sidebartopsep}\\%
+  \unlthesis@typeonelength{Sidebarheight}{\dimen\sideins}\\%
+  \unlthesis@typetwolengths{Sidefoothsep and sidefootwidth}{\sidefoothsep}{and}{\sidefootwidth}\\%
+  \unlthesis@typetwolengths{Sidefootvsep and sidefootheight}{\sidefootvsep}{and}{\sidefootheight}\\%
+  \hrule%
   }
     
 
@@ -509,26 +513,26 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 \def\@dedicatoryfile{\@empty}
 \def\dedicatoryfile#1{\gdef\@dedicatoryfile{#1}}
 
-\ifx\@dedicatoryfile\@empty
-\def\printdedicatory{}
-\else
+\ifx\@dedicatoryfile\@empty%
+\def\printdedicatory{}%
+\else%
 \def\printdedicatory{%
 	\ifthenelse{%
 		\equal{\unlthesis@opt@doctype}{bsc}	% bsc
-		\OR
+		\OR%
 		\equal{\unlthesis@opt@doctype}{msc}	% msc
-		\OR
+		\OR%
 		\equal{\unlthesis@opt@doctype}{phd}	% phd
 	}{% THEN
 		\InputIfFileExists{Chapters/\@dedicatoryfile}{%
 			% File dedicatory.tex exists and is read
-			\global\let\@dedicatoryfile\@empty
-			\cleardoublepage
+			\global\let\@dedicatoryfile\@empty%
+			\cleardoublepage%
 		}{%
 			% File does not exist
-		}	
+		}%
 	}{ % ELSE
-	}
+	}%
 }
 \fi
 
@@ -536,27 +540,27 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 \def\@quotefile{\@empty}
 \def\quotefile#1{\gdef\@quotefile{#1}}
 
-\ifx\@quotefile\@empty
-\def\printquote{}
-\else
-\def\printquote{%
-	\ifthenelse{%
-		\equal{\unlthesis@opt@doctype}{bsc}	% bsc
-		\OR
-		\equal{\unlthesis@opt@doctype}{msc}	% msc
-		\OR
-		\equal{\unlthesis@opt@doctype}{phd}	% phd
-	}{% THEN
-		\InputIfFileExists{Chapters/\@quotefile}{%
-			% File qualtefile.tex exists and is read
-			\global\let\@quotefile\@empty
-			\cleardoublepage
-		}{%
-			% File quotefile.tex is not found, ignore
-		}	
-	}{ % ELSE
-	}
-}
+\ifx\@quotefile\@empty%
+  \def\printquote{}%
+\else%
+  \def\printquote{%
+  	\ifthenelse{%
+  		\equal{\unlthesis@opt@doctype}{bsc}	% bsc
+  		\OR%
+  		\equal{\unlthesis@opt@doctype}{msc}	% msc
+  		\OR%
+  		\equal{\unlthesis@opt@doctype}{phd}	% phd
+  	}{% THEN
+  		\InputIfFileExists{Chapters/\@quotefile}{%
+  			% File qualtefile.tex exists and is read
+  			\global\let\@quotefile\@empty%
+  			\cleardoublepage%
+  		}{%
+  			% File quotefile.tex is not found, ignore
+  		}	%
+  	}{ % ELSE
+  	}%
+  }%
 \fi
 
 
@@ -567,13 +571,13 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 	\IfFileExists{Chapters/\unlthesis@acknowledgementsfile}{%
 		\ifthenelse{%
 			\equal{\unlthesis@opt@doctype}{bsc}	% bsc
-			\OR
+			\OR%
 			\equal{\unlthesis@opt@doctype}{msc}	% msc
-			\OR
+			\OR%
 			\equal{\unlthesis@opt@doctype}{phd}	% phd
 		}{% THEN
-			\input{Chapters/\unlthesis@acknowledgementsfile}
-			\cleardoublepage
+			\input{Chapters/\unlthesis@acknowledgementsfile}%
+			\cleardoublepage%
 		}{% ELSE
 		}%
 	}%
@@ -591,48 +595,48 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 \def\unlthesis@abstractfile@en{\@empty}
 
 \def\abstractfile[#1]#2{%
-	\expandafter\xdef\csname unlthesis@abstractfile@#1\endcsname{#2}}
+	\expandafter\xdef\csname unlthesis@abstractfile@#1\endcsname{#2}}%
 
 \def\selectthelanguage#1{%
-	\ifthenelse{\equal{#1}{pt}}{\selectlanguage{portuguese}}{}
-	\ifthenelse{\equal{#1}{en}}{\selectlanguage{english}}{}
+	\ifthenelse{\equal{#1}{pt}}{\selectlanguage{portuguese}}{}%
+	\ifthenelse{\equal{#1}{en}}{\selectlanguage{english}}{}%
 }
 
 
 \def\unlthesis@printabstract@lang#1{%
-{ % Extra braces to force language changes to be local
-	\edef\unlthesis@filetoinclude{Chapters/\@nameuse{unlthesis@abstractfile@#1}}
-	\selectthelanguage{#1}
-	\InputIfFileExists{\unlthesis@filetoinclude}%
-    {}%
-    {}
-  \cleardoublepage
-}
+  { % Extra braces to force language changes to be local
+  	\edef\unlthesis@filetoinclude{Chapters/\@nameuse{unlthesis@abstractfile@#1}}%
+  	\selectthelanguage{#1}%
+  	\InputIfFileExists{\unlthesis@filetoinclude}%
+      {}%
+      {}%
+    \cleardoublepage%
+  }%
 }
 
 
 \def\printabstract{% 
-	\xdef\unlthesis@tmp{\theabstractorder[\unlthesis@opt@lang]}
-  \iteratecsvlist{\unlthesis@printabstract@lang}{\unlthesis@tmp}
+	\xdef\unlthesis@tmp{\theabstractorder[\unlthesis@opt@lang]}%
+  \iteratecsvlist{\unlthesis@printabstract@lang}{\unlthesis@tmp}%
   % disables protrusion locally in the document for the forthcoming tables of contents
-  \microtypesetup{protrusion=false} 
+  \microtypesetup{protrusion=false}%
 }
 
 
 
 \def\thesisfrontmatter{%
-  \frontmatter
+  \frontmatter%
   % \pagestyle{unlthesis@myvf}
-  \pagenumbering{roman}
-  \setlength{\headheight}{15pt}
+  \pagenumbering{roman}%
+  \setlength{\headheight}{15pt}%
 }
 
 \def\thesismainmatter{%
   % enables protrusion locally for the remainder of the document
-  \microtypesetup{protrusion=true} 
-	\mainmatter
-	\pagenumbering{arabic} 
-	\setlength{\headheight}{15pt}
+  \microtypesetup{protrusion=true} %
+	\mainmatter%
+	\pagenumbering{arabic} %
+	\setlength{\headheight}{15pt}%
 }
 
 
@@ -643,12 +647,12 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 \def\chapterfile#1{\listgadd{\unlthesis@chapter@list}{#1}}
 
 \def\unlthesis@printchapter#1{%
-	\InputIfFileExists{Chapters/#1}{}{ERROR: File '#1' does not exist!!!}
+	\InputIfFileExists{Chapters/#1}{}{ERROR: File '#1' does not exist!!!}%
 }
 
 \def\printchapthers{%
 	\ifthenelse{\isundefined\unlthesis@chapter@list}{}%
-		{\forlistloop{\unlthesis@printchapter}{\unlthesis@chapter@list}}
+		{\forlistloop{\unlthesis@printchapter}{\unlthesis@chapter@list}}%
 }
 
 
@@ -657,11 +661,11 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 %% Appendixes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\appendixfile#1{%
-	\listgadd{\unlthesis@appendix@list}{#1}
+	\listgadd{\unlthesis@appendix@list}{#1}%
 }
 
 \def\unlthesis@printappendix#1{%
-	\InputIfFileExists{Chapters/#1}{}{ERROR: File '#1' does not exist!!!}
+	\InputIfFileExists{Chapters/#1}{}{ERROR: File '#1' does not exist!!!}%
 }
 
 \def\printappendixes{%
@@ -678,39 +682,39 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 %% Deal with optional lists in the frontmatter: listoftables, litoffigures, etc.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\unlthesis@printlist}[1]{%
-	#1\cleardoublepage
+	#1\cleardoublepage%
 }
 
 \newcommand{\addlisttofrontmatter}[1]{%
-	\listgadd{\unlthesis@frontmatter@list}{#1}
+	\listgadd{\unlthesis@frontmatter@list}{#1}%
 }
 
 \newcommand{\printotherlists@i}{%
 	\ifthenelse{\isundefined\unlthesis@frontmatter@list}%
     {}%
 		{\cleardoublepage%
-      \forlistloop{\unlthesis@printlist}{\unlthesis@frontmatter@list}
+      \forlistloop{\unlthesis@printlist}{\unlthesis@frontmatter@list}%
     }%
-  \cleardoublepage
+  \cleardoublepage%
 }
 
 \newcommand{\printotherlists}{%
-  \cleardoublepage
+  \cleardoublepage%
   % printotherlists [\unlthesis@opt@otherlistsat]
   \ifthenelse{\equal{\unlthesis@opt@otherlistsat}{front}}%
   {%
-    \if@mainmatter
-    \else
-      \printotherlists@i
-    \fi
+    \if@mainmatter%
+    \else%
+      \printotherlists@i%
+    \fi%
   }%
   {}%
   \ifthenelse{\equal{\unlthesis@opt@otherlistsat}{back}}%
   {%
-    \if@mainmatter
-      \printotherlists@i
-    \else
-    \fi
+    \if@mainmatter%
+      \printotherlists@i%
+    \else%
+    \fi%
   }%
   {}%
 }
@@ -721,13 +725,10 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\addbibfile#1{%
-  \addbibresource{#1}}
+\def\addbibfile#1{\addbibresource{#1}}
 
 \def\printbib{%
-	\if\unlthesis@bibbychapter0
-		\printbibliography
-	\fi
+		\printbibliography%
 }
 
 
@@ -737,86 +738,86 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\printcopyright{%
 	\ifthenelse{%
-		\equal{\unlthesis@opt@doctype}{bsc}	% bsc
-		\OR
-		\equal{\unlthesis@opt@doctype}{msc}	% msc
-		\OR
-		\equal{\unlthesis@opt@doctype}{phd}	% phd
+		\equal{\unlthesis@opt@doctype}{bsc}% bsc
+		\OR%
+		\equal{\unlthesis@opt@doctype}{msc}% msc
+		\OR%
+		\equal{\unlthesis@opt@doctype}{phd}% phd
 	}{% THEN
-		\printcopyrightpage
-	}{ % ELSE
-	}
+		\printcopyrightpage%
+	}{% ELSE
+	}%
 }
 
 \def\printcopyrightpage{%
-	\cleardoublepage
-	\null\vfill
-  \noindent
-  \textbf{\large \thetitle}\par
-  \bigskip
-  \thecopyrightstr\par
-  \vskip\baselineskip
-  {\scriptsize
-      \begin{Spacing}{1}
-        \fontfamily{phv}\selectfont\noindent\theacknowledgmentsstr[\unlthesis@opt@coverlang]
-      \end{Spacing}
-  }
-  \cleardoublepage
+	\cleardoublepage%
+	\null\vfill%
+  \noindent%
+  \textbf{\large \thetitle}\par%
+  \bigskip%
+  \thecopyrightstr\par%
+  \vskip\baselineskip%
+  {\scriptsize%
+      \begin{Spacing}{1}%
+        \fontfamily{phv}\selectfont\noindent\theacknowledgmentsstr[\unlthesis@opt@coverlang]%
+      \end{Spacing}%
+  }%
+  \cleardoublepage%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Dedicatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\dedicatory{%
-	\if@openright\cleardoublepage\else\clearpage\fi
-	\thispagestyle{empty}
-	~\\[2cm]
-    \begin{flushright}
-    \begin{minipage}{100mm}
-    \quotefonti
-    \begin{flushright}}
+\def\dedicatory{%%
+	\if@openright\cleardoublepage\else\clearpage\fi%
+	\thispagestyle{empty}%
+	~\\[2cm]%
+    \begin{flushright}%
+    \begin{minipage}{100mm}%
+    \quotefonti%
+    \begin{flushright}}%
 \def\enddedicatory{%
-	\end{flushright}
-    \normalfont
-    \end{minipage}
-	\end{flushright}
-\if@openright\cleardoublepage\else\clearpage\fi
+	\end{flushright}%
+    \normalfont%
+    \end{minipage}%
+	\end{flushright}%
+\if@openright\cleardoublepage\else\clearpage\fi%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Quote
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\quote{%
-	\if@openright\cleardoublepage\else\clearpage\fi
-	\thispagestyle{empty}
-	~\\[2cm]
-    \begin{flushright}
-    \begin{minipage}{100mm}
-    \quotefonti
-    \begin{flushright}}
+\def\quote{%%
+	\if@openright\cleardoublepage\else\clearpage\fi%
+	\thispagestyle{empty}%
+	~\\[2cm]%
+    \begin{flushright}%
+    \begin{minipage}{100mm}%
+    \quotefonti%
+    \begin{flushright}}%
 \def\endquote{%
-	\end{flushright}
-    \normalfont
-    \end{minipage}
-	\end{flushright}
+	\end{flushright}%
+    \normalfont%
+    \end{minipage}%
+	\end{flushright}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\acknowledgements{%
-  \def\unlthesis@ack{\theacknowledgementsname[\unlthesis@opt@lang]}
-  \chapter*{\unlthesis@ack}
+  \def\unlthesis@ack{\theacknowledgementsname[\unlthesis@opt@lang]}%
+  \chapter*{\unlthesis@ack}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\setabstractlang}[1]{%
-	\selectthelanguage{#1}
-	\gdef\unlthesis@keywordsstr{\thekeywordsname[#1]}
-	\chapter*{\theabstractname[#1]}
-	\rule{\textwidth}{0.2mm} ~\\[-3.5ex]
+	\selectthelanguage{#1}%
+	\gdef\unlthesis@keywordsstr{\thekeywordsname[#1]}%
+	\chapter*{\theabstractname[#1]}%
+	\rule{\textwidth}{0.2mm} ~\\[-3.5ex]%
 }
 
   
@@ -824,7 +825,8 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 %% Keywords
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\keywords{%
-  \par\vskip\baselineskip\noindent{\bfseries\unlthesis@keywordsstr: }}
+  \par\vskip\baselineskip\noindent{\bfseries\unlthesis@keywordsstr: }%
+}
 \def\endkeywords{~\\[2ex]\rule{\textwidth}{0.2mm}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

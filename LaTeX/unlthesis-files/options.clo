@@ -28,8 +28,8 @@
 % phdplan PhD preliminary report	
 % phd     PhD thesis			
 \DeclareOptionX{doctype}{%
-	\typeout{'doctype'=#1}
-	\gdef\unlthesis@opt@doctype{#1}
+	\typeout{'doctype'=#1}%
+	\gdef\unlthesis@opt@doctype{#1}%
 }
 
 
@@ -40,8 +40,8 @@
 % unl/fct Faculdade de Ciências e Tecnologia da Universidade Nova de Lisboa
 % ul/is   Isntituto Superior Técnico da Universidade de Lisboa
 \DeclareOptionX{school}{%
-	\typeout{'school'=#1}
-	\gdef\unlthesis@opt@school{#1}
+	\typeout{'school'=#1}%
+	\gdef\unlthesis@opt@school{#1}%
 }
 
 
@@ -52,8 +52,8 @@
 % bianchi bluebox brotherton dash default elegant(*) ell ger  
 % hansen ist jenor lyhne madsen pedersen veelo vz14 vz34 vz43
 \DeclareOptionX{chapstyle}{%
-	\typeout{'chapstyle'=#1}
-	\gdef\unlthesis@opt@chapstyle{#1}
+	\typeout{'chapstyle'=#1}%
+	\gdef\unlthesis@opt@chapstyle{#1}%
 }
 
 
@@ -63,8 +63,8 @@
 %
 % bookman charter fourier kpfonts(*) mathpazo1 mathpazo2 newcent
 \DeclareOptionX{fontstyle}{%
-	\typeout{'fontstyle'=#1}
-	\gdef\unlthesis@opt@fontstyle{#1}
+	\typeout{'fontstyle'=#1}%
+	\gdef\unlthesis@opt@fontstyle{#1}%
 }
 
 
@@ -72,10 +72,10 @@
 % WHERE TO PRINT OTHER LISTS - unlthesis@opt@otherlistsat
 %
 % front back
-\gdef\unlthesis@opt@otherlistsat{front}
+\gdef\unlthesis@opt@otherlistsat{front}%
 \DeclareOptionX{otherlistsat}{%
-	\typeout{'otherlistsat'=#1}
-	\gdef\unlthesis@opt@otherlistsat{#1}
+	\typeout{'otherlistsat'=#1}%
+	\gdef\unlthesis@opt@otherlistsat{#1}%
 }
 
 
@@ -84,7 +84,7 @@
 %
 % pt  Portuguese
 % en  English
-\gdef\unlthesis@opt@lang{en}
+\gdef\unlthesis@opt@lang{en}%
 \DeclareOptionX{lang}{%
   % \typeout{'lang'=#1}
 	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}%%
@@ -92,8 +92,8 @@
 	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}%
     {\gdef\unlthesis@opt@lang{en}\PassOptionsToPackage{portuguese,english}{babel}}%
     {\PackageError{unlthesis}{Wrong value for option 'lang'}{Please see the documentation}%
-	    \expandafter\endinput}
-	}
+     \expandafter\endinput}%
+	}%
 }
 
 
@@ -102,16 +102,16 @@
 %
 % pt  Portuguese
 % en  English
-\gdef\unlthesis@opt@coverlang{\unlthesis@opt@lang}
+\gdef\unlthesis@opt@coverlang{\unlthesis@opt@lang}%
 \DeclareOptionX{coverlang}{%
-  \typeout{'coverlang'=#1}
+  \typeout{'coverlang'=#1}%
 	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}%
     {\gdef\unlthesis@opt@coverlang{pt}}%
 	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}%
     {\gdef\unlthesis@opt@coverlang{en}}%
       {\PackageError{unlthesis}{Wrong value for option 'coverlang'}{Please see the documentation}%
-	     \expandafter\endinput}
-	}
+	     \expandafter\endinput}%
+	}%
 }
 
 
@@ -121,8 +121,8 @@
 % true
 % false
 \DeclareOptionX{aftercover}[false]{%
-	\typeout{'aftercover'=#1}
-  \gdef\unlthesis@opt@aftercover{#1}
+	\typeout{'aftercover'=#1}%
+  \gdef\unlthesis@opt@aftercover{#1}%
 }
 
 
@@ -131,8 +131,8 @@
 %
 % darkblue, black
 \DeclareOptionX{linkscolor}{%
-	\typeout{'linkscolor'=#1}
-	\PassOptionsToPackage{allcolors=#1}{hyperref}
+	\typeout{'linkscolor'=#1}%
+	\PassOptionsToPackage{allcolors=#1}{hyperref}%
 }
 
 
@@ -143,8 +143,8 @@
 % latin1
 % Anything else valid for package "inputenc"
 \DeclareOptionX{enc}{%
-	\typeout{'enc'=#1}
-	\PassOptionsToPackage{#1}{inputenc}
+	\typeout{'enc'=#1}%
+	\PassOptionsToPackage{#1}{inputenc}%
 }
 
 
@@ -154,8 +154,8 @@
 % true
 % false
 \DeclareOptionX{spine}[true]{%
-	\typeout{'spine'=#1}
-	\ifthenelse{\equal{#1}{true}}{\AtEndDocument{\input{unlthesis-files/spine.clo}\printspine}}{}
+	\typeout{'spine'=#1}%
+	\ifthenelse{\equal{#1}{true}}{\AtEndDocument{\input{unlthesis-files/spine.clo}\printspine}}{}%
 }
 
 
@@ -167,8 +167,8 @@
 % style= numeric | alphabetic | …
 % ...
 \DeclareOptionX{biblatex}{%
- 	\typeout{'biblatex'=#1}
-	\PassOptionsToPackage{#1}{biblatex}
+ 	\typeout{'biblatex'=#1}%
+	\PassOptionsToPackage{#1}{biblatex}%
 }
 
 
@@ -178,8 +178,8 @@
 %
 % twoside, a4paer, ...
 \DeclareOptionX{memoir}{%
-	\typeout{'memoir'=#1}
-	\PassOptionsToClass{#1}{memoir}
+	\typeout{'memoir'=#1}%
+	\PassOptionsToClass{#1}{memoir}%
 }
 
 
@@ -190,18 +190,10 @@
 % screen  PDF to visualize in the screen or tablets
 % paper   PDF to print
 \DeclareOptionX{media}[screen]{%
-	\typeout{'media'=#1}
-  \ifthenelse{\equal{#1}{screen}}{}{\PassOptionsToPackage{allcolors=black}{hyperref}}
-  \def\unlthesis@opt@media{#1}
+	\typeout{'media'=#1}%
+  \ifthenelse{\equal{#1}{screen}}{}{\PassOptionsToPackage{allcolors=black}{hyperref}}%
+  \def\unlthesis@opt@media{#1}%
 }
-
-
-% --------------------------------------------------------
-% BIBBYCHAPTER		Bibliography per chaper… Ignored for now!
-\let\unlthesis@bibbychapter=0
-% \DeclareOption{bibbychapter}{%
-% 	\let\unlthesis@bibbychapter=1
-% }
 
 
 

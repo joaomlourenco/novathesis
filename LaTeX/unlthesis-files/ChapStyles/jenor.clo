@@ -26,10 +26,11 @@
     \end{tabularx}%
     \else
     \begin{tabularx}{\textwidth}{Xl}%
-    {\parbox[b]{\linewidth}{\chaptitlefont ##1}}
+    {\parbox[b]{\linewidth}{\chaptitlefont ##1}}%
     & \raisebox{-15pt}{\chapnumfont \thechapter}%
     \end{tabularx}%
     \fi
-    \par\vskip2mm\hrule
-} }
+    \par\vskip2mm\hrule%
+  }
+}
 \chapterstyle{jenor}

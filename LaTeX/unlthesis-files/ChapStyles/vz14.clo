@@ -13,11 +13,11 @@
   \renewcommand\printchaptername{}
   \renewcommand\chapnamefont{\Large\scshape}
   \renewcommand\printchapternum{%
-    \chapnamefont\null\thickhrulefill\quad
+    \chapnamefont\null\thickhrulefill\quad%
     \@chapapp\space\thechapter\quad\thickhrulefill}
   \renewcommand\printchapternonum{%
-    \par\thickhrulefill\par\vskip\midchapskip
-    \hrule\vskip\midchapskip
+    \par\thickhrulefill\par\vskip\midchapskip%
+    \hrule\vskip\midchapskip%
   }
   \renewcommand\chaptitlefont{\Huge\scshape\centering}
   \renewcommand\afterchapternum{%
