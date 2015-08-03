@@ -27,8 +27,11 @@
 \thesiscover[bsc]={}
 \thesiscover[plain]={}
 
-% Spine logo
-\logo[spine]={logoIST}
+% Spine info
+\spine[logo]={logoIST2}
+\spine[author]={\theauthorshortname}
+\spine[title]={\thetitle}
+\spine[year]={\thedateyear}
 
 % Set margins for "normal" pages
 \margin[screen,top]={3.5cm}

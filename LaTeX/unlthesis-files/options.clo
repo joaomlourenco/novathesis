@@ -155,7 +155,7 @@
 % false
 \DeclareOptionX{spine}[true]{%
 	\typeout{'spine'=#1}
-	\ifthenelse{\equal{#1}{true}}{\AtEndDocument{\printthespine}}{}
+	\ifthenelse{\equal{#1}{true}}{\AtEndDocument{\input{unlthesis-files/spine.clo}\printspine}}{}
 }
 
 

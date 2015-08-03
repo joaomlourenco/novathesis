@@ -27,8 +27,11 @@
 \thesiscover[bsc]={}
 \thesiscover[plain]={}
 
-% Spine logo
-\logo[spine]={fcsh-logo}
+% Spine info
+\spine[logo]={logoUNL}
+\spine[author]={\theauthorshortname}
+\spine[title]={\thetitle}
+\spine[year]={\thedateyear}
 
 % Set margins for "normal" pages
 \margin[screen,top]={2.5cm}
@@ -100,7 +103,7 @@
 \mbox{%
   \hspace*{0.5cm}
   \begin{tabular}[c]{@{}l@{}}
-    \includegraphics[width=9cm]{fcsh-logo}
+    \includegraphics[width=9cm]{logoFCSH}
   \end{tabular}
   \quad
   \begin{tabular}[c]{l}

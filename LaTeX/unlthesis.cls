@@ -232,7 +232,7 @@
 \mynewdata{university}
 \mynewdata{faculty}
 \mynewdata{majorfield}
-\mynewdata{logo}
+\mynewdata{spine}
 \mynewdata{thesiscover}
 \mynewdata{margin}
 
@@ -859,59 +859,6 @@ Copyright \copyright\ \theauthorname, \thefaculty[\unlthesis@opt@coverlang], \th
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Generate book spine (if otion "spine=true")
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\printthespine{%
-\cleardoublepage
-\setulmarginsandblock{0.1cm}{0.1cm}{*}%
-\setlrmarginsandblock{0.1cm}{0.1cm}{*}%
-\fixthelayout
-\cleardoublepage
-\pagestyle{empty}
-\thispagestyle{empty}
-
-\newlength\unlthesis@spinewidth 
-\setlength\unlthesis@spinewidth{1mm * (\thelastpage + 19) / 20}
-\fontsize{11}{12}\selectfont
-
-\newlength\unlthesis@heighttwolines
-\setlength\unlthesis@heighttwolines{\heightof{\parbox{2cm}{m\\m}}}
-\newlength\unlthesis@thinkspineskip
-\setlength\unlthesis@thinkspineskip{(\unlthesis@spinewidth-\unlthesis@heighttwolines)/6}
-\newsavebox{\unlthesis@spine@thick}
-\sbox\unlthesis@spine@thick{%
-	\begin{tabular}{c}
-		\thetitle\\[\unlthesis@thinkspineskip]
-		\theauthorshortname
-	\end{tabular}
-}
-\newlength\unlthesis@thick@spineheight
-\setlength\unlthesis@thick@spineheight{\heightof{\usebox{\unlthesis@spine@thick}}}
-\addtolength\unlthesis@thick@spineheight{\depthof{\usebox{\unlthesis@spine@thick}}}
-
-
-
-\newsavebox{\unlthesis@spine@year}
-\sbox\unlthesis@spine@year{%
-	\thedateyear
-}
-\newlength\unlthesis@spine@yearwidth
-\setlength\unlthesis@spine@yearwidth{\widthof{~\usebox{\unlthesis@spine@year}~}}
-\centering
-\framebox[\unlthesis@spinewidth]{\rotatebox{90}{%
-	\begin{tabularx}{\textheight-1em}{@{\hspace*{1.5em}}m{\unlthesis@spine@yearwidth}X@{}c@{}X@{}c@{}X@{}m{\unlthesis@spinewidth}@{\hspace*{1em}}}
-		\ifthenelse{\unlthesis@spinewidth > \unlthesis@spine@yearwidth}%
-				{\rotatebox[origin=br]{-90}{\parbox{\unlthesis@spinewidth}%
-						{\centering\hspace*{4pt}\thedateyear}}}%
-				{\thedateyear}%
-		& & \ifthenelse%
-				{\unlthesis@spinewidth > \unlthesis@thick@spineheight}%
-				{& \usebox{\unlthesis@spine@thick} &}%
-				{\theauthorshortname & & \thetitle}%
-		& & 
-    \vspace*{4pt}
-    \includegraphics[origin=c,angle=-90,height=0.9\unlthesis@spinewidth]{\thelogo[spine]}
-	\end{tabularx}
-}}
-\cleardoublepage
-}
-
-
+%
+% See file "unlthesis-files/spine.clo"
+% This file is loaded only if otion "spine=true"  :)
