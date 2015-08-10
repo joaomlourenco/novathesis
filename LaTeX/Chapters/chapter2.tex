@@ -15,14 +15,19 @@
 
 {\LARGE \textbf{~\\These instructions are outdated! Please see also the “template.tex” file!\\}}
 
-This chapter describes how to use the \LaTeX{} style thesis{}. This style file is a major rewrite from a previous style used in our Department, which was in turn adapted from a style file from the University of Pernambuco, Brazil.  We aimed at providing an improved visual layout and, simultaneously, a \emph{very easy to use} template (aka, a \LaTeX{} template for dummies). ;)
+This chapter describes how to use the \LaTeX\ \unlthesis\ template (and the “\unlthesisclass” class file).
 
-\noindent%
-\fbox{%
-\begin{minipage}{\linewidth}
-	The first main rule you must know is that \textbf{you must} specify the encoding of your text files. A simple \emph{rule of thumb} is: if you are using Windows add ``latin1'' to the list of package options; if you are using other systems, such as Linux or Mac OSx, add ``utf8'' to the list of package options.
-\end{minipage}%
-}
+Let's start with some simple suggestions:
+
+\begin{enumerate}
+  \item No! You don't have to use this template to write your thesis.  You don't even have to use \LaTeX.  However, writing a thesis is serious stuff, andwhich tool you shall use to write it is not a decision to make lighthearted.
+  \item \LaTeX\ is hard enough by itself.  This template aims at making your life easier, but not easy. If you choose to use this template to write your thesis, you are very welcome.  However, don't expect me to provide you help with \LaTeX.  Look for help with your friends (you have some friends, don't you?), or search the web, or try even to read some book(s) on \LaTeX. In the end you will certainly find the experience rewarding.
+  \item So, don't forget, when you come to the point of “\emph{How do I do this with \LaTeX?}” look for help!  Google is your best friend. 
+  \item If you believe the difficulty is related with the \unlthesis\ template itself (and not with \LaTeX), please \textbf{do not} send me an email asking for help.  Please look for help in the \unlthesis\ Google Group (URL) and the \unlthesis\ Facebook group (URL).  If you can't find help there from previous posts/messages, then post your own question. Hopefully someone will answer you.
+\end{enumerate}
+
+Now, let's go to a major issue for Windows users.  Characters have to be encoded in files as numbers, and that is how character encodings were born. ASCII and EBCDIC standards are long lost in the past.  The world now uses UTF-8.  Well, not all the world… Windows is still stick in its \emph{codepages}, and “latin1” is what windows uses as the codepage for Western Europe. This messes up with the template. Please be sure you use an editor with UTF-8 support.  \emph{Go to the preferences/options/… of your text editor and set up its default file encoding as UTF-8.}
+
 % section introduction (end)
 
 % ====================
@@ -31,27 +36,70 @@ This chapter describes how to use the \LaTeX{} style thesis{}. This style file i
 \section{Folder Structure} % (fold)
 \label{sec:folder_structure}
 
-The template file for writing dissertations in \LaTeX{} if organized into a main directory and a set of files and sub-directories:
-\begin{description}
-	\item[ThesisDIFCTUNL] This is the main directory and includes:
-	\begin{description}
-		\item[Logo] Directory with University logos;
-		\item[Scripts] Directory with useful bash scripts, e.g., for cleaning all temporary files;
-		\item[User] Directory where to put user files (text and figures);
-		\item[alpha-pt.bst] A file with bibliographic names in portuguese, e.g., ``Relatório Técnico'' e ``Tese de Doutoramento'' instead of ``Technical Report'' and ``PhD Thesis.'' This file is used automatically if Portuguese is selected as the main language (see below);
-		\item[defaults.tex] A file with the main default values for the package (institution name, degree name and similars);
-		\item[template.tex] The main file. You should run \LaTeX{} in this one. Please refrain from changing the file content outside of the well defined area;
-		\item[thesisdifctunl.cls] The \LaTeX{} class file for the thesis{} style. Currently, some of the defaults are stored here instead of \texttt{defaults.tex}. This file should not be changed, unless you'er ready to play with fire! :)
-	\end{description}
-\end{description}
+The \unlthesis\ template is organized into files and folders. At the main level it includes the following files and folders:
 
-Again, we would like to recall that all the user \LaTeX{} files should be stored in the \texttt{User} directory, and all the images in \texttt{User/Figures} directory.\todo[inline]{Yet another note!}
+\noindent
+\begin{tabularx}{\linewidth}{>{\ttfamily}l>{\itshape}l>{\upshape}X}
+unlthesis.cls     & file    & 
+The main class file. It will include additional files from \texttt{unlthesis-files} folder. 
+\\ 
+template.tex      & file    & 
+The main user file. Use this file as the main file for your thesis. 
+\\
+bibliography.bib  & file    & 
+An example of a bibliography file. You may have has many as you want. \\
+template.pdf      & file    & 
+A possible result of applying pdf\LaTeX\ to the \texttt{template.tex} file. The template supports multiple types of documents (e.g., MSc dissertation, PhD thesis, …) and multiple Schools (e.g., FCT-UNL, FCSH-UNL, IST-UL, …) and each will produce different results.
+\\
+Chapters          & folder  & Examples of thesis chapters. Replace them with your own chapters. 
+\\
+Examples          & folder  & Some more examples of the use of the template for different document types and Schools. 
+\\
+Scripts           & folder  & Some (possibly useful) scripts for Unix-based systems (Linux, Mac OSx). If you are a windows user, ignore this folder (you may safely delete it if you want). 
+\\
+unlthesis-files   & folder  & 
+Additional files for the \unlthesisclass\ file.  Unless you know what you are doing, avoid messing up with the files and folders inside this folder (except for deleting the unused Schools, see below). 
+\\
+\end{tabularx}
+
+The \texttt{unlthesis-files} folder contains additional files and folders that complement the main \unlthesisclass\ file.  These are:
+
+\noindent
+\begin{tabularx}{\linewidth}{>{\ttfamily}l>{\itshape}l>{\upshape}X}
+README.txt      & file    &
+A file to be read!  :) 
+\\
+fix-babel.clo   & file    &
+Simple fixes to the \texttt{babel} package.
+\\
+lang-text.clo   & file    &
+Translations of important strings used in the template.  Currently fully supported are Portuguese and English, but French is on the way.  If you add translations for your own language, please be so kind and send them to me. Thank you!
+\\
+options.clo     & file    &
+Processing of \unlthesisclass\ options.  \emph{Don't mess with this!}
+\\
+packages.clo    & file    &
+Additional packages to be loaded into the \unlthesis\ template. \emph{You should not mess with this!}
+\\
+spine.clo       & file    &
+This file is loaded only if the option \texttt{spine=true}, and includes the typesetting of the book spine.
+\\
+ChapStyles      & folder  &
+Contains a lot of files, one for each chapter style.  If you really know what you are doing, you may add your own chapter style here.
+\\
+FontStyles      & folder  &
+Contains a few files, one for each set of fonts (main text font, chapter font, section font, subsection font, etc).  If you really know what you are doing, you may add your own set here.
+\\
+Schools         & folder  &
+Configuration files for each school.  This folder is organized into subfolders, one for each university.  \emph{You may safely delete all the subfolders except the one for your University.}  Then open the subfolder of your University and \emph{you may safely delete all the subfolders except the one for your School/Faculty}.
+\\
+\end{tabularx}
 % section folder_structure (end)
 
 % ===================
 % = Package options =
 % ===================
-\section{Package Options} % (fold)
+\section{\unlthesisclass\ Options} % (fold)
 \label{sec:package_options}
 
 The thesis{} style includes the following options, that must be included in the options list in the \verb!\documentclass[options]{thesisdifctunl}! line at the top of the \texttt{texplate.tex} file.
