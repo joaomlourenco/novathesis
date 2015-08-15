@@ -175,14 +175,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Multilingual support
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ifthenelse{\equal{\unlthesis@opt@lang}{pt}}%
-	{\selectlanguage{portuguese}}%
-  {\ifthenelse{\equal{\unlthesis@opt@lang}{en}}%
-  	{\selectlanguage{english}}%
-  	{\PackageError{unlthesis}{Wrong value for option 'lang'}{Please see the documentation}%
-  	\expandafter\endinput}%
-  }
-
+\def\selectthelanguage#1{%
+	\ifthenelse{\equal{#1}{pt}}{\selectlanguage{portuguese}}{}%
+	\ifthenelse{\equal{#1}{en}}{\selectlanguage{english}}{}%
+	\ifthenelse{\equal{#1}{fr}}{\selectlanguage{french}}{}%
+}
+\selectthelanguage{\unlthesis@opt@lang}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Definition of fake arrays
@@ -596,12 +594,6 @@
 
 \def\abstractfile[#1]#2{%
 	\expandafter\xdef\csname unlthesis@abstractfile@#1\endcsname{#2}}%
-
-\def\selectthelanguage#1{%
-	\ifthenelse{\equal{#1}{pt}}{\selectlanguage{portuguese}}{}%
-	\ifthenelse{\equal{#1}{en}}{\selectlanguage{english}}{}%
-}
-
 
 \def\unlthesis@printabstract@lang#1{%
   { % Extra braces to force language changes to be local

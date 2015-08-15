@@ -84,16 +84,17 @@
 %
 % pt  Portuguese
 % en  English
+% fr  French
 \gdef\unlthesis@opt@lang{en}%
 \DeclareOptionX{lang}{%
-  % \typeout{'lang'=#1}
-	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}%%
-    {\gdef\unlthesis@opt@lang{pt}\PassOptionsToPackage{english,portuguese}{babel}}%
-	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}%
-    {\gdef\unlthesis@opt@lang{en}\PassOptionsToPackage{portuguese,english}{babel}}%
-    {\PackageError{unlthesis}{Wrong value for option 'lang'}{Please see the documentation}%
-     \expandafter\endinput}%
-	}%
+  \typeout{'lang'=#1}
+  \lowercase{\gdef\unlthesis@opt@lang{#1}}
+	\ifthenelse{\equal{\unlthesis@opt@lang}{pt}}%%
+    {\PassOptionsToPackage{english,portuguese}{babel}}{}%
+	\ifthenelse{\equal{\unlthesis@opt@lang}{en}}%
+    {\PassOptionsToPackage{portuguese,english}{babel}}{}%
+	\ifthenelse{\equal{\unlthesis@opt@lang}{fr}}%
+    {\PassOptionsToPackage{english,french}{babel}}{}%
 }
 
 
@@ -105,13 +106,7 @@
 \gdef\unlthesis@opt@coverlang{\unlthesis@opt@lang}%
 \DeclareOptionX{coverlang}{%
   \typeout{'coverlang'=#1}%
-	\ifthenelse{\equal{#1}{pt}\OR\equal{#1}{PT}}%
-    {\gdef\unlthesis@opt@coverlang{pt}}%
-	{\ifthenelse{\equal{#1}{en}\OR\equal{#1}{EN}}%
-    {\gdef\unlthesis@opt@coverlang{en}}%
-      {\PackageError{unlthesis}{Wrong value for option 'coverlang'}{Please see the documentation}%
-	     \expandafter\endinput}%
-	}%
+  \lowercase{\gdef\unlthesis@opt@coverlang{#1}}
 }
 
 

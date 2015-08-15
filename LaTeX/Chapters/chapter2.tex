@@ -20,7 +20,7 @@ This chapter describes how to use the \LaTeX\ \unlthesis\ template (and the “\
 Let's start with some simple suggestions:
 
 \begin{enumerate}
-  \item No! You don't have to use this template to write your thesis.  You don't even have to use \LaTeX.  However, writing a thesis is serious stuff, andwhich tool you shall use to write it is not a decision to make lighthearted.
+  \item No! You don't have to use this template to write your thesis.  You don't even have to use \LaTeX.  However, writing a thesis is serious stuff, and which tool you shall use to write it is not a decision to make lighthearted.
   \item \LaTeX\ is hard enough by itself.  This template aims at making your life easier, but not easy. If you choose to use this template to write your thesis, you are very welcome.  However, don't expect me to provide you help with \LaTeX.  Look for help with your friends (you have some friends, don't you?), or search the web, or try even to read some book(s) on \LaTeX. In the end you will certainly find the experience rewarding.
   \item So, don't forget, when you come to the point of “\emph{How do I do this with \LaTeX?}” look for help!  Google is your best friend. 
   \item If you believe the difficulty is related with the \unlthesis\ template itself (and not with \LaTeX), please \textbf{do not} send me an email asking for help.  Please look for help in the \unlthesis\ Google Group (URL) and the \unlthesis\ Facebook group (URL).  If you can't find help there from previous posts/messages, then post your own question. Hopefully someone will answer you.
@@ -67,7 +67,7 @@ The \texttt{unlthesis-files} folder contains additional files and folders that c
 \noindent
 \begin{tabularx}{\linewidth}{>{\ttfamily}l>{\itshape}l>{\upshape}X}
 README.txt      & file    &
-A file to be read!  :) 
+A file that should be read!  :) 
 \\
 fix-babel.clo   & file    &
 Simple fixes to the \texttt{babel} package.
@@ -94,37 +94,116 @@ Schools         & folder  &
 Configuration files for each school.  This folder is organized into subfolders, one for each university.  \emph{You may safely delete all the subfolders except the one for your University.}  Then open the subfolder of your University and \emph{you may safely delete all the subfolders except the one for your School/Faculty}.
 \\
 \end{tabularx}
+
+As stated above, the \texttt{Schools} folder contains per-university folders and per-school (faculty) subfolders.  Currently these are the available folders:
+
+\noindent
+\begin{tabularx}{\linewidth}{>{\ttfamily}r@{~/~}>{\ttfamily}l>{\itshape}l>{\upshape}X}
+ul     & ist    & folder  & 
+The folder for the \href{http://www.tecnico.ulisboa.pt}{\emph{Instituto Superior Técnico}} of the \emph{University of Lisbon}.
+\\
+unl    & fcsh   & folder  & 
+The folder for the \href{http:www.fcsh.unl.pt}{\emph{Faculty of Human and Social Sciences}}  of the \emph{NOVA University of Lisbon}.
+\\
+unl    & fct    & folder  & 
+The folder for the \href{http:www.fct.unl.pt}{\emph{Faculty of Sciences and Technology}} of the \emph{NOVA University of Lisbon}.
+\\
+unl    & ims    & folder  & 
+The folder for the \href{http:www.ims.unl.pt}{\emph{Information and Management School}} of the \emph{NOVA University of Lisbon}.
+\\
+\end{tabularx}
+
 % section folder_structure (end)
 
 % ===================
 % = Package options =
 % ===================
-\section{\unlthesisclass\ Options} % (fold)
+\section{\unlthesisclass\ Class Options} % (fold)
 \label{sec:package_options}
 
-The thesis{} style includes the following options, that must be included in the options list in the \verb!\documentclass[options]{thesisdifctunl}! line at the top of the \texttt{texplate.tex} file.
+The \unlthesis\ class can be customized with the options listed below.
 
-The list below aggregates related options in a single item. For each list, the default value is prefixed with a *.
+\newcommand{\classoption}[3]{\textbf{#1=OPT}\qquad #2\\\qquad\emph{#3}\\}
 
-\subsection{Language Related Options} % (fold)
-\label{sub:language_related_options}
+\noindent
+\begin{ctabular}{@{}p{\linewidth}@{}}
+  \toprule
+  \classoption{doctype}%
+    {phd(*), phdplan, phdprop, msc, mscplan, bsc}%
+    {The type of the document: PhD Thesis (default), PhD Plan, PhD Proposal, MSc Disseration, MSc Plan, BSc Report}
+    \midrule
+  \classoption{school}%
+    {unl/fct(*), unl/fcsh, unl/ims, ul/ist}%
+    {The name of the school. This option changes the typesetting of the cover and some School specific formating, like margins, fonts, paragraph spacing and indentation, etc…}
+    \midrule
+  \classoption{lang}%
+    {en(*), pt}%
+    {The main language for the document.  Currently only Portuguese and English are supported.  Other languages are expected to be support in forthcoming versions.}
+    \midrule
+  \classoption{fontstyle}%
+    {bookman, charter, fourier, kpfonts(*), mathpazo1, mathpazo2, newcent}%
+    {The font set to be used in the document.  Please note that a font set include definitions for the main text, headings, maths, etc.}
+    \midrule
+  \classoption{chapstyle}%
+    {bianchi, bluebox, brotherton, dash, default, elegant(*), ell, ger, hansen, ist, jenor, lyhne, madsen, pedersen, veelo, vz14, vz34, vz43}%
+    {The chapter style, i.e., the look of the chapter beginning.}
+    \midrule
+  \classoption{converlang}%
+    {en, pt(*)}%
+    {The language to be used when typesetting the cover page.}
+    \midrule
+  \classoption{otherlistsat}%
+    {front(*), back}%
+    {Where to put the other lists besides the table of contents. The default is (\texttt{front}) before the main text.  But some scientific areas prefer them at the end of the document (\texttt{back}), just before the Appendixes.}
+    \midrule
+  \classoption{aftercover}%
+    {true, false(*)}%
+    {Include or don't include the contents of the “\texttt{aftercover}” file. The default is for this file to be ignored (if if it exists).}
+    \midrule
+  \classoption{linkscolor}%
+    {darkblue(*), black}%
+    {The color for all the hyperlinks in the PDF file.  The “\texttt{media=paper}” option (see below) will override this option to “\texttt{black}”}
+    \midrule
+  \classoption{spine}%
+    {true, false(*)}%
+    {Generate the book spine and the last page in the PDF.}
+    \midrule
+  \classoption{biblatex}%
+    {OPT=\{list of options for \texttt{biblatex}\}}%
+    {Customize \texttt{biblatex}, the bibliography management system used in this class. Probably you will want to change the value of the \texttt{biblatex} “\texttt{style}” option. For other customizations of \texttt{biblatex} check its manual.}
+    \midrule
+  \classoption{memoir}%
+    {OPT=\{list of options for \texttt{memoir}\}}%
+    {Customize the base class \texttt{memoir}. The \texttt{memoir} manual should be the first document to be consulted when looking for “\textbf{how can I do this?}” You may wnat to change the base font size from 11pt to a smaller (10pt) or larger (12pt) size.  Also, remember to change the “\texttt{draft}” to final when your document is finished.}
+    \midrule
+  \classoption{media}%
+    {screen(*), paper}%
+    {Behavior to be customized in the school options/configuration. Expected definitions for screen are: left and right margins are equal and use colored links. Expected definitions for paper are: left and right margins are different and use black links.}
+    \bottomrule
+\end{ctabular}
 
-You must choose the main language for the document. The available options are:
+\section{Additional considerations about the class options} % (fold)
+\label{sec:additional_considerations}
 
-\begin{enumerate}
-	\item \textbf{pt} --- The text is written in Portuguese (with a small abstract in English).
-	\item \textbf{*en} --- The text is written in English (with a small abstract in Portuguese).
-\end{enumerate}
+In this section we will provide some additional considerations about some of the customizations available as class options.
 
-The language option affects:
+\subsection{The main language} % (fold)
+\label{sub:the_main_language}
+
+The choice of the main language with the option “\texttt{lang=OPT}” affects:
+
 \begin{itemize}
-	\item \textbf{The order of the summaries.} First the abstract in the main language and then in the foreign language. This means that if your main language for the document in english, you will see first the abstract (in english) and then the ``resumo'' (in portuguese). If you switch the main language for the document, it will also automatically switch the order of the summaries.
+	\item \textbf{The order of the summaries.} First is printed the abstract in the main language and then in the foreign language. This means that if your main language for the document in English, you will see first the “abstract” (in English) and then the “resumo” (in Portuguese). If you switch the main language for the document for Portuguese, it will also automatically switch the order of the summaries to “resumo” and then “abstract”.
 	\item \textbf{The names for document sectioning.} E.g., ``Chapter'' vs.\ ``Capítulo'', ``Table of Contents'' vs.\ ``Índice'', ``Figure'' vs.\ ``Figura'', etc.
 	\item \textbf{The type of documents in the bibliogrpahy.} E.g., ``Technical Report'' vs.\ ``Relatório Técnico'', ``PhD Thesis'' vs.\ ``Tese de Doutoramento'', etc.
 \end{itemize} 
 
-No mater which language you chose, you will always have the appropriate hyphenation rules according to the language at that point. You always get portuguese hyphenation rules in the ``Resumo'', english hyphenation rules in the ``Abstract'', and then the main language hyphenation rules for the rest of the document.
-% section package_options (end)
+No mater which language you chose, you will always have the appropriate hyphenation rules according to the language at that point. You always get Portuguese hyphenation rules in the ``Resumo'', english hyphenation rules in the ``Abstract'', and then the main language hyphenation rules for the rest of the document.
+
+% subsection the_main_language (end).
+
+% section additional_consideration (end)
+
 
 \subsection{Class of Text} % (fold)
 \label{sub:class_of_text}
