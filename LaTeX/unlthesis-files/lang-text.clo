@@ -226,11 +226,17 @@ of the requirements for the degree of\\[1.25ex]%
 \commiteememberstr[m,2,m,fr]={TBD: Vogais}
 \commiteememberstr[m,2,f,fr]={TBD: Vogais}
 
-\dissertationstr[bsc,fr]={TBD: Relatório para obtenção do Grau de \\\thedegree\ em \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
-\dissertationstr[mscplan,fr]={TBD: Relatório intermédio para obtenção do Grau de \\\thedegree\ em \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
-\dissertationstr[msc,fr]={TBD: Dissertação para obtenção do Grau de \\\thedegree\ em \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
-\dissertationstr[phdprop,fr]={TBD: Proposta de dissertação para obtenção do Grau de \\\thedegree\ em \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
-\dissertationstr[phdplan,fr]={TBD: Relatório intermédio para obtenção do Grau de \\\thedegree\ em \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
-\dissertationstr[phd,fr]={Thèse pour obtenir le titre de \\\thedegree, spécialité de \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
-\copyrighttextstr[fr]={L’\theuniversity[\unlthesis@opt@coverlang]\ et \thefaculty[\unlthesis@opt@coverlang]\ ont le droit, perpétuel et sans limites géographiques, d’archiver et publier cette thèse grâce à des copies reproduites sur papier ou sous format numérique, ou par tout autre moyen connu ou à être inventé, et exclusivement à des fins non lucratives de recherche et d’enseignement. L’auteur et les coauteurs le cas échéant conservent la propriété du droit d’auteur et des droits moraux qui protègent ce document.}
+\dissertationstr[bsc,fr]={Relatório para obtenção do Grau de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[mscplan,fr]={Relatório intermédio para obtenção do Grau de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[msc,fr]={Dissertação para obtenção do Grau de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phdplan,fr]={Relatório intermédio para obtenção do Grau de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phdprop,fr]={Proposta de dissertação para obtenção do Grau de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phd,fr]={Dissertação para obtenção do Grau de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\copyrighttextstr[fr]={L'\theuniversity[\unlthesis@opt@coverlang]\ et \thefaculty[\unlthesis@opt@coverlang]\ ont le droit, perpétuel et sans limites géographiques, d'archiver et publier cette thèse grâce à des copies reproduites sur papier ou sous format numérique, ou par tout autre moyen connu ou à être inventé, et exclusivement à des fins non lucratives de recherche et d'enseignement. L'auteur et les coauteurs le cas échéant conservent la propriété du droit d'auteur et des droits moraux qui protègent ce document.}
 \acknowledgmentsstr[fr]={Manuscrit mis en page avec (pdf)\LaTeX\ à partir du template “unlthesis” [1], developée au Dep.\ Informática de la FCT-NOVA [2].\quad[1] \url{https://github.com/joaomlourenco/unlthesis}\quad[2] \url{http://www.di.fct.unl.pt}.}
