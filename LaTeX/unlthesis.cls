@@ -36,27 +36,6 @@
 \ProvidesClass{unlthesis}[2015/07/29 UNL Thesis Template]
 
 
-% --------------------------------------------------------
-% PROCESS PACKAGE OPTIONS
-\input{unlthesis-files/options.clo}
-
-
-% --------------------------------------------------------
-% LOAD MAIN CLASS AND ADDITIONAL PACKAGES
-\LoadClass{memoir}
-\OnehalfSpacing           % One-and-half spacing
-\newsubfloat{figure}      % To handle subfigures
-
-
-% --------------------------------------------------------
-% LOAD ADDITIONAL PACKAGES
-\input{unlthesis-files/packages.clo}
-
-
-% --------------------------------------------------------
-% FIX BABEL TRANSLATION
-\input{unlthesis-files/fix-babel.clo}
-
 
 
 
@@ -78,6 +57,47 @@
 \newcommand{\iteratecsvlist}[2]{%
   \@for\unlthesis@themember:=#2\do{#1{\unlthesis@themember}}%
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Multilingual support
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\selectthelanguage}[1]{%
+  \xdef\unlthesis@tmp{\thelangabbrev[#1]}%
+  \expandafter\selectlanguage\expandafter{\unlthesis@tmp}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Loading additinal files
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% --------------------------------------------------------
+% SOME PRELIMINARY LANGUAGE DEFINITIONS
+\mynewdata{langabbrev}
+\mynewdata{langsused}
+\mynewdata{abstractorder}
+\input{unlthesis-files/lang-text.clo}
+
+% --------------------------------------------------------
+% PROCESS PACKAGE OPTIONS
+\input{unlthesis-files/options.clo}
+
+
+% --------------------------------------------------------
+% LOAD MAIN CLASS AND ADDITIONAL PACKAGES
+\LoadClass{memoir}
+\OnehalfSpacing           % One-and-half spacing
+\newsubfloat{figure}      % To handle subfigures
+
+
+% --------------------------------------------------------
+% LOAD ADDITIONAL PACKAGES
+\input{unlthesis-files/packages.clo}
+
+
+% --------------------------------------------------------
+% FIX BABEL TRANSLATION
+\input{unlthesis-files/fix-babel.clo}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -171,24 +191,13 @@
   {}%
 }
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Multilingual support
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\selectthelanguage#1{%
-	\ifthenelse{\equal{#1}{pt}}{\selectlanguage{portuguese}}{}%
-	\ifthenelse{\equal{#1}{en}}{\selectlanguage{english}}{}%
-	\ifthenelse{\equal{#1}{fr}}{\selectlanguage{french}}{}%
-}
-\selectthelanguage{\unlthesis@opt@lang}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Definition of fake arrays
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\mynewdata{abstractorder}
-\mynewdata{abstractname}
-\mynewdata{keywordsname}
-\mynewdata{acknowledgementsname}
+
+\mynewdata{abstractstring}
+\mynewdata{keywordsstring}
+\mynewdata{acknowledgementsstring}
 \mynewdata{notdefined}
 \newcommand\unlthesis@undefined{\thenotdefined[\unlthesis@opt@lang]}
 
@@ -222,7 +231,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Main strings in multiple languages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input{unlthesis-files/lang-text.clo}
+
+\newcommand{\unlthesis@includestrings@lang}[1]{%
+  \edef\unlthesis@filetoinclude{unlthesis-files/strings-#1.clo}
+  \input{\unlthesis@filetoinclude}
+}
+\iteratecsvlist{\unlthesis@includestrings@lang}{\unlthesis@tmp}%
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -255,12 +270,12 @@
 
 \gdef\thecopyrightstr{%
   \thispagestyle{empty}%
+  \selectthelanguage{\unlthesis@opt@copyrightlang}%
   \noindent%
   Copyright \copyright\ \theauthorname, %
-  \thefaculty[\unlthesis@opt@coverlang], \theuniversity[\unlthesis@opt@coverlang]%
-  \bigskip%
-  \noindent%
-  \thecopyrighttextstr[\unlthesis@opt@coverlang]%
+  \thefaculty[\unlthesis@opt@copyrightlang], \theuniversity[\unlthesis@opt@copyrightlang]%
+  \thecopyrighttextstr[\unlthesis@opt@copyrightlang]%
+  \selectthelanguage{\unlthesis@opt@lang}
 }
 
 
@@ -585,23 +600,27 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%% Abstract
+%%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\glossaryfile}[1]{%
+  \InputIfFileExists{Chapters/#1}{}{}
+}%
 
-
-\def\unlthesis@abstractfile@pt{\@empty}
-\def\unlthesis@abstractfile@en{\@empty}
+\newcommand{\acronymsfile}[1]{%
+  \InputIfFileExists{Chapters/#1}{}{}
+}%
 
 \def\abstractfile[#1]#2{%
 	\expandafter\xdef\csname unlthesis@abstractfile@#1\endcsname{#2}}%
 
-\def\unlthesis@printabstract@lang#1{%
+\newcommand{\unlthesis@printabstract@lang}[1]{%
   { % Extra braces to force language changes to be local
+    \setabstractlang{#1}%
   	\edef\unlthesis@filetoinclude{Chapters/\@nameuse{unlthesis@abstractfile@#1}}%
-  	\selectthelanguage{#1}%
   	\InputIfFileExists{\unlthesis@filetoinclude}%
       {}%
       {}%
+    \selectthelanguage{\unlthesis@opt@lang}
     \cleardoublepage%
   }%
 }
@@ -618,6 +637,7 @@
 
 \def\thesisfrontmatter{%
   \frontmatter%
+  \selectthelanguage{\unlthesis@opt@lang}
   % \pagestyle{unlthesis@myvf}
   \pagenumbering{roman}%
   \setlength{\headheight}{15pt}%
@@ -798,7 +818,7 @@
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\acknowledgements{%
-  \def\unlthesis@ack{\theacknowledgementsname[\unlthesis@opt@lang]}%
+  \def\unlthesis@ack{\theacknowledgementsstring[\unlthesis@opt@lang]}%
   \chapter*{\unlthesis@ack}%
 }
 
@@ -807,8 +827,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\setabstractlang}[1]{%
 	\selectthelanguage{#1}%
-	\gdef\unlthesis@keywordsstr{\thekeywordsname[#1]}%
-	\chapter*{\theabstractname[#1]}%
+  \gdef\unlthesis@keywordsstr{\thekeywordsstring[#1]}%
+	\chapter*{\theabstractstring[#1]}%
 	\rule{\textwidth}{0.2mm} ~\\[-3.5ex]%
 }
 

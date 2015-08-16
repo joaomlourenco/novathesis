@@ -14,7 +14,7 @@
 
 
 %%%%% Configure multilingual language support
-\RequirePackage{babel}			% Support for bilingual documents
+\RequirePackage[english]{babel}			% Support for bilingual documents
 
 
 %%%%% Fine tuning of typesetting
@@ -54,10 +54,15 @@
 }
 
 
-% AAdd an image to the backgroung
-% 	Used to inser the background image in the cover page
+% Add an image to the backgroung
+% Used to insert the background image in the cover page
 \RequirePackage{eso-pic}[2015/04/20]
 
+
+% Manage glossaries
+\usepackage[nonumberlist,translate=babel,acronym]{glossaries} % To create gloassries
+% \glsdisablehyper
+\makenoidxglossaries
 
 
 %%%%% LOAD THESE PACKAGES JUST AT THE ENF OF THE PREAMBLE 

@@ -85,16 +85,17 @@
 % pt  Portuguese
 % en  English
 % fr  French
+\newcommand{\unlthesis@addtobabel}[1]{%
+  \typeout{'babellang'=\thelangabbrev[#1]}%
+  \PassOptionsToPackage{\thelangabbrev[#1]}{babel}%
+}
+
 \gdef\unlthesis@opt@lang{en}%
 \DeclareOptionX{lang}{%
-  \typeout{'lang'=#1}
-  \lowercase{\gdef\unlthesis@opt@lang{#1}}
-	\ifthenelse{\equal{\unlthesis@opt@lang}{pt}}%%
-    {\PassOptionsToPackage{english,portuguese}{babel}}{}%
-	\ifthenelse{\equal{\unlthesis@opt@lang}{en}}%
-    {\PassOptionsToPackage{portuguese,english}{babel}}{}%
-	\ifthenelse{\equal{\unlthesis@opt@lang}{fr}}%
-    {\PassOptionsToPackage{english,french}{babel}}{}%
+  \typeout{'lang'=#1}%
+  \lowercase{\gdef\unlthesis@opt@lang{#1}}%
+  \xdef\unlthesis@tmp{\thelangsused[\unlthesis@opt@lang]}%
+  \iteratecsvlist{\unlthesis@addtobabel}{\unlthesis@tmp}%
 }
 
 
@@ -107,6 +108,18 @@
 \DeclareOptionX{coverlang}{%
   \typeout{'coverlang'=#1}%
   \lowercase{\gdef\unlthesis@opt@coverlang{#1}}
+}
+
+
+% --------------------------------------------------------
+% COPYRIGHT LANGUAGE - unlthesis@opt@copyrightlang
+%
+% pt  Portuguese
+% en  English
+\gdef\unlthesis@opt@copyrightlang{\unlthesis@opt@lang}%
+\DeclareOptionX{copyrightlang}{%
+  \typeout{'copyrightlang'=#1}%
+  \lowercase{\gdef\unlthesis@opt@copyrightlang{#1}}
 }
 
 
@@ -186,7 +199,12 @@
 % paper   PDF to print
 \DeclareOptionX{media}[screen]{%
 	\typeout{'media'=#1}%
-  \ifthenelse{\equal{#1}{screen}}{}{\PassOptionsToPackage{allcolors=black}{hyperref}}%
+  \ifthenelse{\equal{#1}{screen}}{%
+    \PassOptionsToClass{oneside}{memoir}%
+  }{%
+    \PassOptionsToClass{twoside}{memoir}%
+    \PassOptionsToPackage{allcolors=black}{hyperref}%
+  }%
   \def\unlthesis@opt@media{#1}%
 }
 
@@ -203,7 +221,6 @@
 	enc=utf8,
   otherlistsat=front,
 	lang=en,
-  coverlang=pt,
   linkscolor=darkblue,
   aftercover=false,
 	spine=false,

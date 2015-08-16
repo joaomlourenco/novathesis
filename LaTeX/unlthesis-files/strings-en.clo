@@ -1,0 +1,83 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% strings-en.clo
+%% UNL thesis configuration file
+%%
+%% Costumization for language depedent strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% English - strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\abstractstring[en]={Abstract}
+\keywordsstring[en]={Keywords}
+\notdefined[en]={UNDEFINED}
+\acknowledgementsstring[en]={Acknowledgements}
+
+\adviserstr[1,m,en]={Adviser}
+\adviserstr[1,f,en]={Adviser}
+\adviserstr[2,m,en]={Advisers}
+\adviserstr[2,f,en]={Advisers}
+\coadviserstr[1,m,en]={Co-adviser}
+\coadviserstr[1,f,en]={Co-adviser}
+\coadviserstr[2,m,en]={Co-advisers}
+\coadviserstr[2,f,en]={Co-advisers}
+
+\degreestr[bsc,m,en]={Bachelor}
+\degreestr[bsc,f,en]={Bachelor}
+\degreestr[msc,m,en]={Master of Science}
+\degreestr[msc,f,en]={Master of Science}
+\degreestr[mscplan,m,en]={Master of Science}
+\degreestr[mscplan,f,en]={Master of Science}
+\degreestr[phd,m,en]={Doctor of Philosophy}
+\degreestr[phd,f,en]={Doctor of Philosophy}
+\degreestr[phdplan,m,en]={Doctor of Philosophy}
+\degreestr[phdplan,f,en]={Doctor of Philosophy}
+\degreestr[phdprop,m,en]={Doctor of Philosophy}
+\degreestr[phdprop,f,en]={Doctor of Philosophy}
+
+\doctypestr[bsc,en]={Bachelor Report}
+\doctypestr[msc,en]={Master of Science Dissertation}
+\doctypestr[mscplan,en]={Master of Science Qualification}
+\doctypestr[phdplan,en]={Doctorate Qualification}
+\doctypestr[phdprop,en]={Doctorate Proposal}
+\doctypestr[phd,en]={Doctorate Dissertation}
+
+\committeetitlestr[en]={Examination Committee}
+\commiteememberstr[c,1,m,en]={Chairperson}
+\commiteememberstr[c,1,f,en]={Chairperson}
+\commiteememberstr[c,2,m,en]={Chairpersons}
+\commiteememberstr[c,2,f,en]={Chairpersons}
+\commiteememberstr[r,1,m,en]={Raporteur}
+\commiteememberstr[r,2,f,en]={Raporteur}
+\commiteememberstr[r,1,m,en]={Raporteurs}
+\commiteememberstr[r,2,f,en]={Raporteurs}
+\commiteememberstr[a,1,m,en]={Adviser}
+\commiteememberstr[a,2,f,en]={Adviser}
+\commiteememberstr[a,1,m,en]={Advisers}
+\commiteememberstr[a,2,f,en]={Advisers}
+\commiteememberstr[m,1,m,en]={Member}
+\commiteememberstr[m,1,f,en]={Member}
+\commiteememberstr[m,2,m,en]={Members}
+\commiteememberstr[m,2,f,en]={Members}
+	
+\dissertationstr[bsc,en]={Report submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[mscplan,en]={Dissertaion plan submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[msc,en]={Dissertaion submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phdplan,en]={Thesis plan submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phdprop,en]={Thesis proposal submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phd,en]={Thesis submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\copyrighttextstr[en]={The \thefaculty[\unlthesis@opt@coverlang]\ and the \theuniversity[\unlthesis@opt@coverlang]\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+\acknowledgmentsstr[en]={This document was created unsing the (pdf)\LaTeX\ processor, based in the “unlthesis” template[1], developed at the Dep.\ Informática of FCT-NOVA [2].\quad[1] \url{https://github.com/joaomlourenco/unlthesis}\quad[2] \url{http://www.di.fct.unl.pt}}

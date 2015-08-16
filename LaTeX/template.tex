@@ -26,25 +26,27 @@
 \documentclass[
   doctype=phd,      % phd(*), phdplan, phdprop, msc, mscplan, bsc
   school=unl/fct,   % unl/fct(*), unl/fcsh, ul/ist
-	lang=en,          % en(*), pt
+  lang=en,          % en(*), pt, fr
+  coverlang=pt,     % defaults to main language
+  copyrightlang=pt, % defaults to main language
   fontstyle=kpfonts, % bookman charter fourier kpfonts(*) mathpazo1 mathpazo2 newcent 
   chapstyle=elegant, % bianchi bluebox brotherton dash default elegant(*) ell ger 
                     % hansen ist jenor lyhne madsen pedersen veelo vz14 vz34 vz43
-  coverlang=pt,     % en, pt(*)
   otherlistsat=front, % front(*), back
   aftercover=false, % false=don't true=include the aftercover file (even if exists)
 	linkscolor=darkblue,  % darkblue, black (Set to 'black' for PRINTING)
-	spine=true,			% (Set to 'true' for PRINTING the book spine)
+	spine=false,       % (Set to 'true' for PRINTING the book spine)
 	biblatex={        % Options for biblatex (see biblatex documentation)
 		style=numeric,  % numeric(*), alphabetic, authoryear, bwl-FU
-		sorting=nyt,		% none, nyt(*), ynt
+		sorting=nyt,    % none, nyt(*), ynt
 		firstinits=true, % render all first and middle names as initials
 		sortcites=true, % If numeric, sort cites by crescent order
 	},
-	memoir={a4paper, twoside, 11pt, draft},	% See the 'memoir' documentation
-          % 10pt, 11pt(*), 12pt
-          % oneside, twoside(*)  <= use 'oneside' for screen, 'twoside' for printing double face
-					% draft, final  <= Replace 'draft' with 'final' in final version
+	memoir={	        % See the 'memoir' documentation
+    a4paper,        % the paper size/format
+    11pt,           % 10pt, 11pt(*), 12pt
+    draft,           % draft, final  <= Replace 'draft' with 'final' in final version
+  },
   media=screen,      % screen(*), paper
           % behavior to be defined in school options based in "\unlthesis@opt@media"
           % definitions for screen: left and right margins are equal, colored links
@@ -66,11 +68,6 @@
 %% VERY IMPORTANT
 \usepackage{booktabs}		% Beautiful simple tables
 \usepackage{paralist}		% To enable customizble enumerates
-\usepackage[nonumberlist,translate=babel]{glossaries}	% To create gloassries
-\glsdisablehyper
-\makenoidxglossaries
-\InputIfFileExists{Chapters/acronyms}{}{}	% The contents of both files (acronyms and glossary) will be merged
-\InputIfFileExists{Chapters/glossary}{}{}	% The contents of both files (acronyms and glossary) will be merged
 
 %% IMPORTANT (consider removing/commenting)
 \usepackage{listings}		% Fontification of source code listings
@@ -105,15 +102,14 @@
 
 
 
-
 %%============================================================
 % For costumization,
 %        see file 'unl-thesis/Schools/*/*/defaults.clo'
 %        and file 'unl-thesis/lang-text.clo'
 % You may override here any of the values defined there
 % e.g.
-% \themajorfield[pt]={Engenharia Biomédica}
-% \themajorfield[en]={Biomedical Engineering}
+% \majorfield[pt]={Engenharia Biomédica}
+% \majorfield[en]={Biomedical Engineering}
 %%============================================================
 
 % Title of the dissertation/thesis
@@ -175,6 +171,9 @@
 % \quotefile{quote}		% Quote
 \abstractfile[pt]{resumo}	% Abstract in Portuguese
 \abstractfile[en]{abstract}	% Abstract in English
+\abstractfile[fr]{resume}	% Abstract in French
+\glossaryfile{glossary}
+\acronymsfile{acronyms}
 
 % definition of the second cover, to be printed before the copyright (to serve FCSH-UNL)
 \aftercoverfile{aftercover}
@@ -185,7 +184,7 @@
 \addlisttofrontmatter{\listoffigures}	% The List of Figures. Comment to omit.
 \addlisttofrontmatter{\listoftables} 	% The List of Tables. Comment to omit.
 \addlisttofrontmatter{\lstlistoflistings}	% The List of Code Listings. Comment to omit.
-\addlisttofrontmatter{\printnoidxglossary[]}	% The List if Abreviations / Glossary. Comment to omit.
+\addlisttofrontmatter{\printnoidxglossary}	% The List if Abreviations / Glossary. Comment to omit.
 
 
 % Text chapters

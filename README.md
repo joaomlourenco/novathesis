@@ -31,6 +31,13 @@ All contributors, both sporadic and regular, are welcome. :) Please [contact me]
 
 News
 ----
+*2015-08-17 — Version 3.0.6 — Better language support*
++ Don't have to set the language in the abstract file (it is automatic now)
++ Added abstract example in french
++ Split file “lang-text.clo”: now it contains only main language settings. The language-dependent strings now are in separate files “strings-<LANG>.clo”
++ Added a new option to control the language of the copyright string
++ Now if “media=string” forces option “oneside” to memoir. If “media=paper” forces option “twoside” to memoir.
+
 *2015-07-31 — Version 3.0.5 — Smaller is better*
 + Now 'hyperref' is the last package to be loaded (as recommended in the package documentation).
 + Moved extra documentation to the [unlthesis-extras repository](https://github.com/joaomlourenco/unlthesis-extras)
