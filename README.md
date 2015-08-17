@@ -37,6 +37,7 @@ News
 + Split file “lang-text.clo”: now it contains only main language settings. The language-dependent strings now are in separate files “strings-<LANG>.clo”
 + Added a new option to control the language of the copyright string
 + Now if “media=string” forces option “oneside” to memoir. If “media=paper” forces option “twoside” to memoir.
++ Running example with Glossary and Acronyms
 
 *2015-07-31 — Version 3.0.5 — Smaller is better*
 + Now 'hyperref' is the last package to be loaded (as recommended in the package documentation).
