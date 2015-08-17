@@ -229,7 +229,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Main strings in multiple languages
+%% Include strings in the used languages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\unlthesis@includestrings@lang}[1]{%
@@ -256,7 +256,7 @@
 
 % --------------------------------------------------------
 % Include the file with the defaults
-\InputIfFileExists{unlthesis-files/Schools/\unlthesis@opt@school/defaults.clo}{}{ERROR: File 'unlthesis-files/\unlthesis@opt@school/defaults.clo' does not exist!!!}
+\InputIfFileExists{unlthesis-files/Schools/\unlthesis@opt@school/defaults.clo}{}{}
 
 
 
@@ -284,11 +284,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Date and month
-\def\datemonth#1{\gdef\thedatemonth{#1}}
-\def\dateyear#1{\gdef\thedateyear{#1}}
+\newcommand{\thedatemonth}{~datemonth \unlthesis@undefined}
+\newcommand{\thedateyear}{~dateyear \unlthesis@undefined}
 
-\def\thedatemonth{~datemonth \unlthesis@undefined}
-\def\thedateyear{~dateyear \unlthesis@undefined}
+\newcommand{\datemonth}[1]{\renewcommand{\thedatemonth}{#1}}
+\newcommand{\dateyear}[1]{\renewcommand{\thedateyear}{#1}}
 
 
 %% Author identification
@@ -323,7 +323,7 @@
 \newcounter{unlthesis@committee@cnt}
 \setcounter{unlthesis@committee@cnt}{0}
 
-\def\committee[#1,#2]#3{% #1={c,r,a,m} #2={m,f} #3={member name}
+\def\committee[#1,#2]#3{% #1={c,r,a,m,g} #2={m,f} #3={member name}
   \ifcsname c@unlthesis@committee@#1@cnt\endcsname%
   \else
     \newcounter{unlthesis@committee@#1@cnt}%    to count the total # of members in class
@@ -841,22 +841,18 @@
 }
 \def\endkeywords{~\\[2ex]\rule{\textwidth}{0.2mm}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Quotations
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Table of contents
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setcounter{tocdepth}{2}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Sectioning
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \maxsecnumdepth{subsubsection}
-
-\definecolor{backGrayColor}{rgb}{0.7,0.7,0.7}% Background title color
 
 
 

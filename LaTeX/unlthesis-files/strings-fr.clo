@@ -44,22 +44,26 @@
 \doctypestr[phdprop,fr]={TBD: Proposta de Tese de Doutoramento}
 
 \committeetitlestr[fr]={Jury}
-\commiteememberstr[c,1,m,fr]={TBD: Presidente}
-\commiteememberstr[c,1,f,fr]={TBD: Presidente}
-\commiteememberstr[c,2,m,fr]={TBD: Presidentes}
-\commiteememberstr[c,2,f,fr]={TBD: Presidentes}
-\commiteememberstr[r,1,m,fr]={TBD: Arguente}
-\commiteememberstr[r,1,f,fr]={TBD: Arguente}
-\commiteememberstr[r,2,m,fr]={TBD: Arguentes}
-\commiteememberstr[r,2,f,fr]={TBD: Arguentes}
-\commiteememberstr[a,1,m,fr]={TBD: Orientador}
-\commiteememberstr[a,2,f,fr]={TBD: Orientadora}
-\commiteememberstr[a,2,m,fr]={TBD: Orientadores}
-\commiteememberstr[a,2,f,fr]={TBD: Orientadoras}
-\commiteememberstr[m,1,m,fr]={TBD: Vogal}
-\commiteememberstr[m,1,f,fr]={TBD: Vogal}
-\commiteememberstr[m,2,m,fr]={TBD: Vogais}
-\commiteememberstr[m,2,f,fr]={TBD: Vogais}
+\commiteememberstr[c,1,m,fr]={Président}
+\commiteememberstr[c,1,f,fr]={Présidente}
+\commiteememberstr[c,2,m,fr]={Présidents}
+\commiteememberstr[c,2,f,fr]={Présidentes}
+\commiteememberstr[r,1,m,fr]={Rapporteur}
+\commiteememberstr[r,1,f,fr]={Rapportrice}
+\commiteememberstr[r,2,m,fr]={Rapporteur}
+\commiteememberstr[r,2,f,fr]={Rapportrices}
+\commiteememberstr[a,1,m,fr]={Directeur de thèse}
+\commiteememberstr[a,2,f,fr]={Directrice de thèse}
+\commiteememberstr[a,2,m,fr]={Directeurs de thèse}
+\commiteememberstr[a,2,f,fr]={Directrices de thèse}
+\commiteememberstr[m,1,m,fr]={Examinateur}
+\commiteememberstr[m,1,f,fr]={Examinatrice}
+\commiteememberstr[m,2,m,fr]={Examinateurs}
+\commiteememberstr[m,2,f,fr]={Examinatrices}
+\commiteememberstr[g,1,m,fr]={Invité}
+\commiteememberstr[g,1,f,fr]={Invitée}
+\commiteememberstr[g,2,m,fr]={Invités}
+\commiteememberstr[g,2,f,fr]={Invitées}
 
 \dissertationstr[bsc,fr]={Relatório para obtenção do Grau de %
 \thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
@@ -71,7 +75,7 @@
 \thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
 \dissertationstr[phdprop,fr]={Proposta de dissertação para obtenção do Grau de %
 \thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
-\dissertationstr[phd,fr]={Dissertação para obtenção do Grau de %
-\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phd,fr]={Thèse présentée pour obtenir le grade de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ de\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
 \copyrighttextstr[fr]={L'\theuniversity[\unlthesis@opt@coverlang]\ et \thefaculty[\unlthesis@opt@coverlang]\ ont le droit, perpétuel et sans limites géographiques, d'archiver et publier cette thèse grâce à des copies reproduites sur papier ou sous format numérique, ou par tout autre moyen connu ou à être inventé, et exclusivement à des fins non lucratives de recherche et d'enseignement. L'auteur et les coauteurs le cas échéant conservent la propriété du droit d'auteur et des droits moraux qui protègent ce document.}
 \acknowledgmentsstr[fr]={Manuscrit mis en page avec (pdf)\LaTeX\ à partir du template “unlthesis” [1], developée au Dep.\ Informática de la FCT-NOVA [2].\quad[1] \url{https://github.com/joaomlourenco/unlthesis}\quad[2] \url{http://www.di.fct.unl.pt}.}
