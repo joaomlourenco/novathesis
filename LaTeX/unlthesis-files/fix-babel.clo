@@ -17,6 +17,9 @@
   \renewcommand{\indexname}{Índice Remissivo}%
   \def\lstlistlistingname{Listagens}%
 }
+\addto\captionsenglish{%
+  \def\lstlistlistingname{Listings}%
+}
 
 % Corrigir espaço para páginas com numeração romana na ToC
 \renewcommand{\@pnumwidth}{2em}
