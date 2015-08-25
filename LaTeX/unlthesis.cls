@@ -368,7 +368,7 @@
             \thecommitteetitlestr[\unlthesis@opt@coverlang]}%
           }\\[1ex]%
   \fi%
-  \xdef\unlthesis@tmp{\thecommitteeorder[\unlthesis@opt@coverlang]}%
+  \xdef\unlthesis@tmp{\thecommitteeorder[all]}%
   \iteratecsvlist{\unlthesis@printcommitteemembers}{\unlthesis@tmp}%
   \end{tabular}%
 }
