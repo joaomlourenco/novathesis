@@ -7,7 +7,7 @@
 %% To view a copy of this license, 
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2015/08/17 [3.0.6]
+%% Version 2015/08/25 [3.0.7]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -33,7 +33,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2015/08/17 unlthesis template]
+\ProvidesClass{unlthesis}[2015/08/25 unlthesis template]
 
 
 
@@ -233,7 +233,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\unlthesis@includestrings@lang}[1]{%
-  \edef\unlthesis@filetoinclude{unlthesis-files/strings-#1.clo}
+  \edef\unlthesis@filetoinclude{unlthesis-files/Strings/strings-#1.clo}
   \input{\unlthesis@filetoinclude}
 }
 \iteratecsvlist{\unlthesis@includestrings@lang}{\unlthesis@tmp}%
@@ -273,7 +273,7 @@
   \selectthelanguage{\unlthesis@opt@copyrightlang}%
   \noindent%
   Copyright \copyright\ \theauthorname, %
-  \thefaculty[\unlthesis@opt@copyrightlang], \theuniversity[\unlthesis@opt@copyrightlang]%
+  \thefaculty[\unlthesis@opt@copyrightlang], \theuniversity[\unlthesis@opt@copyrightlang].\\%
   \thecopyrighttextstr[\unlthesis@opt@copyrightlang]%
   \selectthelanguage{\unlthesis@opt@lang}
 }
@@ -523,13 +523,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Including chapters and similars
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\@dedicatoryfile{\@empty}
-\def\dedicatoryfile#1{\gdef\@dedicatoryfile{#1}}
+\newcommand{\@dedicatoryfile}{\@empty}
+\newcommand{\dedicatoryfile}[1]{\renewcommand{\@dedicatoryfile}{#1}}
 
 \ifx\@dedicatoryfile\@empty%
-\def\printdedicatory{}%
+\newcommand{\printdedicatory}{}%
 \else%
-\def\printdedicatory{%
+\newcommand{\printdedicatory}{%
 	\ifthenelse{%
 		\equal{\unlthesis@opt@doctype}{bsc}	% bsc
 		\OR%
@@ -550,13 +550,13 @@
 \fi
 
 
-\def\@quotefile{\@empty}
-\def\quotefile#1{\gdef\@quotefile{#1}}
+\newcommand{\@quotefile}{\@empty}
+\newcommand{\quotefile}[1]{\renewcommand{\@quotefile}{#1}}
 
 \ifx\@quotefile\@empty%
-  \def\printquote{}%
+  \newcommand{\printquote}{}%
 \else%
-  \def\printquote{%
+  \newcommand{\printquote}{%
   	\ifthenelse{%
   		\equal{\unlthesis@opt@doctype}{bsc}	% bsc
   		\OR%
@@ -577,10 +577,12 @@
 \fi
 
 
-\def\unlthesis@acknowledgementsfile{\@empty}
-\def\acknowledgementsfile#1{\gdef\unlthesis@acknowledgementsfile{#1}}
+\newcommand{\unlthesis@acknowledgementsfile}{\@empty}
+\newcommand{\acknowledgementsfile}[1]{%
+  \renewcommand{\unlthesis@acknowledgementsfile}{#1}%
+}
 
-\def\printacknowledgements{%
+\newcommand{\printacknowledgements}{%
 	\IfFileExists{Chapters/\unlthesis@acknowledgementsfile}{%
 		\ifthenelse{%
 			\equal{\unlthesis@opt@doctype}{bsc}	% bsc
@@ -626,7 +628,7 @@
 }
 
 
-\def\printabstract{% 
+\newcommand{\printabstract}{% 
 	\xdef\unlthesis@tmp{\theabstractorder[\unlthesis@opt@lang]}%
   \iteratecsvlist{\unlthesis@printabstract@lang}{\unlthesis@tmp}%
   % disables protrusion locally in the document for the forthcoming tables of contents
@@ -635,7 +637,7 @@
 
 
 
-\def\thesisfrontmatter{%
+\newcommand{\thesisfrontmatter}{%
   \frontmatter%
   \selectthelanguage{\unlthesis@opt@lang}
   % \pagestyle{unlthesis@myvf}
@@ -643,7 +645,7 @@
   \setlength{\headheight}{15pt}%
 }
 
-\def\thesismainmatter{%
+\newcommand{\thesismainmatter}{%
   % enables protrusion locally for the remainder of the document
   \microtypesetup{protrusion=true} %
 	\mainmatter%
@@ -656,13 +658,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Chapters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\chapterfile#1{\listgadd{\unlthesis@chapter@list}{#1}}
+\newcommand{\chapterfile}[1]{\listgadd{\unlthesis@chapter@list}{#1}}
 
-\def\unlthesis@printchapter#1{%
+\newcommand{\unlthesis@printchapter}[1]{%
 	\InputIfFileExists{Chapters/#1}{}{ERROR: File '#1' does not exist!!!}%
 }
 
-\def\printchapthers{%
+\newcommand{\printchapthers}{%
 	\ifthenelse{\isundefined\unlthesis@chapter@list}{}%
 		{\forlistloop{\unlthesis@printchapter}{\unlthesis@chapter@list}}%
 }
@@ -672,19 +674,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Appendixes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\appendixfile#1{%
+\newcommand{\appendixfile}[1]{%
 	\listgadd{\unlthesis@appendix@list}{#1}%
 }
 
-\def\unlthesis@printappendix#1{%
-	\InputIfFileExists{Chapters/#1}{}{ERROR: File '#1' does not exist!!!}%
+\newcommand{\unlthesis@printappendix}[1]{%
+	\InputIfFileExists{Chapters/#1}{}{}%
 }
 
-\def\printappendixes{%
+\newcommand{\printappendixes}{%
 	\ifthenelse{\isundefined\unlthesis@appendix@list}{}%
 		{\cleardoublepage\appendix%
 		 \forlistloop{\unlthesis@printappendix}{\unlthesis@appendix@list}}%
-}
+} 
 
 
 
@@ -737,18 +739,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\addbibfile#1{\addbibresource{#1}}
+\newcommand{\addbibfile}[1]{\addbibresource{#1}}
 
-\def\printbib{%
-		\printbibliography%
-}
+\newcommand{\printbib}{\printbibliography}
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Copyright page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\printcopyright{%
+\newcommand{\printcopyright}{%
 	\ifthenelse{%
 		\equal{\unlthesis@opt@doctype}{bsc}% bsc
 		\OR%
@@ -761,7 +761,7 @@
 	}%
 }
 
-\def\printcopyrightpage{%
+\newcommand{\printcopyrightpage}{%
 	\cleardoublepage%
 	\null\vfill%
   \noindent%
@@ -781,26 +781,27 @@
 %% Dedicatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\dedicatory{%%
-	\if@openright\cleardoublepage\else\clearpage\fi%
+	\cleardoublepage%
 	\thispagestyle{empty}%
 	~\\[2cm]%
     \begin{flushright}%
     \begin{minipage}{100mm}%
     \quotefonti%
-    \begin{flushright}}%
+    \begin{flushright}%
+}%
 \def\enddedicatory{%
 	\end{flushright}%
     \normalfont%
     \end{minipage}%
 	\end{flushright}%
-\if@openright\cleardoublepage\else\clearpage\fi%
+	\cleardoublepage%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Quote
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\quote{%%
-	\if@openright\cleardoublepage\else\clearpage\fi%
+	\cleardoublepage%
 	\thispagestyle{empty}%
 	~\\[2cm]%
     \begin{flushright}%
@@ -817,17 +818,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\acknowledgements{%
-  \def\unlthesis@ack{\theacknowledgementsstring[\unlthesis@opt@lang]}%
-  \chapter*{\unlthesis@ack}%
+\newcommand{\acknowledgements}{%
+  \chapter*{\theacknowledgementsstring[\unlthesis@opt@lang]}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\unlthesis@keywordsstr}{}
 \newcommand{\setabstractlang}[1]{%
 	\selectthelanguage{#1}%
-  \gdef\unlthesis@keywordsstr{\thekeywordsstring[#1]}%
+  \renewcommand{\unlthesis@keywordsstr}{\thekeywordsstring[#1]}%
 	\chapter*{\theabstractstring[#1]}%
 	\rule{\textwidth}{0.2mm} ~\\[-3.5ex]%
 }

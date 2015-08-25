@@ -60,7 +60,7 @@
 
 
 % Manage glossaries
-\usepackage[nonumberlist,translate=babel,acronym]{glossaries} % To create gloassries
+\usepackage[nonumberlist,translate=babel,acronym,toc]{glossaries} % To create gloassries
 % \glsdisablehyper
 \makenoidxglossaries
 
