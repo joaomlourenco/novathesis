@@ -1,0 +1,83 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% strings-it.clo
+%% UNL thesis configuration file
+%%
+%% Costumization for language depedent strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Italian - strings
+%%% Acknowledgments to Paolo Romano <romano@inesc-id.pt>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\abstractstring[it]={Sommario}
+\keywordsstring[it]={Parole Chiave}
+\notdefined[it]={NOT DEFINITO}
+\acknowledgementsstring[it]={Ringraziamenti}
+
+\adviserstr[1,m,it]={Relatore}
+\adviserstr[1,f,it]={Relatrice}
+\adviserstr[2,m,it]={Relatori}
+\adviserstr[2,f,it]={Relatrici}
+\coadviserstr[1,m,it]={Correlatore}
+\coadviserstr[1,f,it]={Correlatrice}
+\coadviserstr[2,m,it]={Correlatori}
+\coadviserstr[2,f,it]={Correlatrici}
+
+\degreestr[bsc,m,it]={Laurea Triennale}
+\degreestr[bsc,f,it]={Laurea Triennale}
+\degreestr[msc,m,it]={Laurea Specialistica}
+\degreestr[msc,f,it]={Laurea Specialistica}
+\degreestr[mscplan,m,it]={Laurea Specialistica}
+\degreestr[mscplan,f,it]={Laurea Specialistica}
+\degreestr[phd,m,it]={Dottore}
+\degreestr[phd,f,it]={Dottoressa}
+\degreestr[phdplan,m,it]={Dottore}
+\degreestr[phdplan,f,it]={Dottoressa}
+\degreestr[phdprop,m,it]={Dottore}
+\degreestr[phdprop,f,it]={Dottoressa}
+
+\doctypestr[bsc,it]={Tesi di Laurea Triennale}
+\doctypestr[msc,it]={Tesi di Laurea Specialistica}
+\doctypestr[mscplan,it]={Piano per Tesi di Laurea Specialistica}
+\doctypestr[phdplan,it]={Piano per Tesi di Dottorato}
+\doctypestr[phdprop,it]={Proposta di Tesi di Dottorato}
+\doctypestr[phd,it]={Tesi di Dottorato}
+
+\committeetitlestr[it]={Commissione Esaminatrice}
+\commiteememberstr[c,1,m,it]={Presidente}
+\commiteememberstr[c,1,f,it]={Presidentessa}
+\commiteememberstr[c,2,m,it]={Presidenti}
+\commiteememberstr[c,2,f,it]={Presidentesse}
+\commiteememberstr[r,1,m,it]={Controrelatore}
+\commiteememberstr[r,2,f,it]={Controrelatrice}
+\commiteememberstr[r,1,m,it]={Controrelatori}
+\commiteememberstr[r,2,f,it]={Controrelatrici}
+\commiteememberstr[a,1,m,it]={Relatore}
+\commiteememberstr[a,2,f,it]={Relatrice}
+\commiteememberstr[a,1,m,it]={Relatori}
+\commiteememberstr[a,2,f,it]={Relatrici}
+\commiteememberstr[m,1,m,it]={Membro}
+\commiteememberstr[m,1,f,it]={Membro}
+\commiteememberstr[m,2,m,it]={Membri}
+\commiteememberstr[m,2,f,it]={Membri}
+\commiteememberstr[g,1,m,fr]={Invitato}
+\commiteememberstr[g,1,f,fr]={Invitata}
+\commiteememberstr[g,2,m,fr]={invitati}
+\commiteememberstr[g,2,f,fr]={invitate}
+	
+\dissertationstr[bsc,it]={Documento sottomesso per ottenere il Grado di\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[mscplan,it]={Piano di Tesi per ottenere il Grado di\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[msc,it]={Tesi sottomessa per ottenere il Grado di\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phdplan,it]={Piano di Tesi per ottenere il Grado dI\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phdprop,it]={Proposta di Tesi per ottenere il Grado dI\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phd,it]={Thesis submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in\\ \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\copyrighttextstr[it]={La \thefaculty[\unlthesis@opt@coverlang]\ e \theuniversity[\unlthesis@opt@coverlang]\ hanno il diritto perpetuo e senza limiti geografici, di archiviare e pubblicare questa tesi attraverso esemplari stampati in formato cartaceo o digitale, o attraverso qualsiasi altro mezzo consciuto o che possa essere inventato, e di disseminare tramite repositori scientifici e permettere la sua copia e distribuzione per scopi non commerciali, didattici o di ricerca, a patto che sia dato credito all'autore e editore.}
+\acknowledgmentsstr[it]={Questo documento é stato creato usando (pdf)\LaTeX, sulla base del template “unlthesis” [1], sviluppato nel Dip. di Informatica di FCT-NOVA [2].\quad[1] \url{https://github.com/joaomlourenco/unlthesis}\quad[2] \url{http://www.di.fct.unl.pt}}

@@ -31,6 +31,9 @@ All contributors, both sporadic and regular, are welcome. :) Please [contact me]
 
 News
 ----
+*2015-08-25 — Version 3.0.7 — Italian is here*
++ Added support for the Italian language (thanks to Paolo Romano <romano@inesc-id.pt>)
+
 *2015-08-17 — Version 3.0.6 — Better language support*
 + Don't have to set the language in the abstract file (it is automatic now)
 + Added abstract example in french

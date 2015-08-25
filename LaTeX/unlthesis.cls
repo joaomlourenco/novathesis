@@ -7,7 +7,7 @@
 %% To view a copy of this license, 
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2015/08/17 [3.0.6]
+%% Version 2015/08/25 [3.0.7]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -33,7 +33,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2015/08/17 unlthesis template]
+\ProvidesClass{unlthesis}[2015/08/25 unlthesis template]
 
 
 
@@ -233,7 +233,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\unlthesis@includestrings@lang}[1]{%
-  \edef\unlthesis@filetoinclude{unlthesis-files/strings-#1.clo}
+  \edef\unlthesis@filetoinclude{unlthesis-files/Strings/strings-#1.clo}
   \input{\unlthesis@filetoinclude}
 }
 \iteratecsvlist{\unlthesis@includestrings@lang}{\unlthesis@tmp}%
@@ -273,7 +273,7 @@
   \selectthelanguage{\unlthesis@opt@copyrightlang}%
   \noindent%
   Copyright \copyright\ \theauthorname, %
-  \thefaculty[\unlthesis@opt@copyrightlang], \theuniversity[\unlthesis@opt@copyrightlang]%
+  \thefaculty[\unlthesis@opt@copyrightlang], \theuniversity[\unlthesis@opt@copyrightlang].\\%
   \thecopyrighttextstr[\unlthesis@opt@copyrightlang]%
   \selectthelanguage{\unlthesis@opt@lang}
 }
