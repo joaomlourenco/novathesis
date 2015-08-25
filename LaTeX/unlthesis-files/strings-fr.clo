@@ -23,26 +23,6 @@
 \coadviserstr[2,m,fr]={Co-Directeurs de thèse}
 \coadviserstr[2,f,fr]={Co-Directrices de thèse}
 
-\degreestr[bsc,m,fr]={Baccalaureate}
-\degreestr[bsc,f,fr]={TBD: baccalaureate}
-\degreestr[msc,m,fr]={Master of Science}
-\degreestr[msc,f,fr]={TBD: Master}
-\degreestr[mscplan,m,fr]={Master of Science}
-\degreestr[mscplan,f,fr]={TBD: Master}
-\degreestr[phd,m,fr]={Docteur}
-\degreestr[phd,f,fr]={TBD: Docteur}
-\degreestr[phdplan,m,fr]={Docteur}
-\degreestr[phdplan,f,fr]={TBD: Docteur}
-\degreestr[phdprop,m,fr]={Docteur}
-\degreestr[phdprop,f,fr]={TBD: Docteur}
-
-\doctypestr[bsc,fr]={TBD: Projeto de Licenciatura}
-\doctypestr[msc,fr]={TBD: Dissertação de Mestrado}
-\doctypestr[mscplan,fr]={TBD: Preparação de Dissertação}
-\doctypestr[phdplan,fr]={TBD: Plano de Tese}
-\doctypestr[phd,fr]={TBD: Tese de Doutoramento}
-\doctypestr[phdprop,fr]={TBD: Proposta de Tese de Doutoramento}
-
 \committeetitlestr[fr]={Jury}
 \commiteememberstr[c,1,m,fr]={Président}
 \commiteememberstr[c,1,f,fr]={Présidente}
@@ -65,17 +45,37 @@
 \commiteememberstr[g,2,m,fr]={Invités}
 \commiteememberstr[g,2,f,fr]={Invitées}
 
-\dissertationstr[bsc,fr]={Relatório para obtenção do Grau de %
-\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
-\dissertationstr[mscplan,fr]={Relatório intermédio para obtenção do Grau de %
-\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
-\dissertationstr[msc,fr]={Dissertação para obtenção do Grau de %
-\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
-\dissertationstr[phdplan,fr]={Relatório intermédio para obtenção do Grau de %
-\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
-\dissertationstr[phdprop,fr]={Proposta de dissertação para obtenção do Grau de %
-\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
-\dissertationstr[phd,fr]={Thèse présentée pour obtenir le grade de %
-\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ de\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
-\copyrighttextstr[fr]={L'\theuniversity[\unlthesis@opt@coverlang]\ et \thefaculty[\unlthesis@opt@coverlang]\ ont le droit, perpétuel et sans limites géographiques, d'archiver et publier cette thèse grâce à des copies reproduites sur papier ou sous format numérique, ou par tout autre moyen connu ou à être inventé, et exclusivement à des fins non lucratives de recherche et d'enseignement. L'auteur et les coauteurs le cas échéant conservent la propriété du droit d'auteur et des droits moraux qui protègent ce document.}
-\acknowledgmentsstr[fr]={Manuscrit mis en page avec (pdf)\LaTeX\ à partir du template “unlthesis” [1], developée au Dep.\ Informática de la FCT-NOVA [2].\quad[1] \url{https://github.com/joaomlourenco/unlthesis}\quad[2] \url{http://www.di.fct.unl.pt}.}
+\degreestr[bsc,m,fr]={Licencié}
+\degreestr[bsc,f,fr]={Licenciée}
+\degreestr[msc,m,fr]={Maître}
+\degreestr[msc,f,fr]={Maîtresse}
+\degreestr[mscplan,m,fr]={Maître}
+\degreestr[mscplan,f,fr]={Maîtresse}
+\degreestr[phd,m,fr]={Docteur}
+\degreestr[phd,f,fr]={Docteure}
+\degreestr[phdplan,m,fr]={Docteur}
+\degreestr[phdplan,f,fr]={Docteure}
+\degreestr[phdprop,m,fr]={Docteur}
+\degreestr[phdprop,f,fr]={Docteure}
+
+\doctypestr[bsc,fr]={Projet de licence}
+\doctypestr[mscplan,fr]={Préparation de la dissertation de master}
+\doctypestr[msc,fr]={Dissertation de master}
+\doctypestr[phdplan,fr]={Plan de thèse de doctorat}
+\doctypestr[phdprop,fr]={Proposition de thèse de doctorat}
+\doctypestr[phd,fr]={Thèse de doctorat}
+
+\dissertationstr[bsc,pt]={Rapport pour obtention du degré de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ en\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[mscplan,pt]={Rapport intermédiaire pour obtention du degré de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ en\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[msc,pt]={Dissertation pour obtention du degré de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ en\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phdplan,pt]={Rapport intermédiaire pour obtention du degré de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ en\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phdprop,pt]={Proposition de dissertation pour obtention du degré de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ en\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phd,pt]={Dissertation pour obtention du degré de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ en\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\copyrighttextstr[pt]={La \thefaculty[\unlthesis@opt@coverlang]\ e a \theuniversity[\unlthesis@opt@coverlang]\ ont le droit, perpetuel et sans limites géographiques, d’archiver et de publiquer cette dissertation à travers d’exemplaires imprimés, reproduits en papier ou en format digital, ou à travers de n’importe quel autre moyen connu ou qui pourra être inventé, et de la divulguer à travers des dépôts scientifiques et d’admettre sa copie et distribution seulement en contextes didactiques ou de recherche, et jamais comerciaux, à condition que les droits d’auteur et editeur soient respectés.}
+\acknowledgmentsstr[pt]={Ce document a été crée en utilisant le processeur (pdf)\LaTex, basé sur le modèle “unlthesis” [1] développé par le Dep. Informática de FCT-NOVA [2].\quad[1] \url{https://github.com/joaomlourenco/unlthesis}\quad[2] \url{http://www.di.fct.unl.pt}}
