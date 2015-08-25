@@ -7,7 +7,7 @@
 %% To view a copy of this license, 
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2015/08/25 [3.0.7]
+%% Version 2015/08/26 [3.0.8]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -33,7 +33,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2015/08/25 unlthesis template]
+\ProvidesClass{unlthesis}[2015/08/26 unlthesis template]
 
 
 
@@ -76,7 +76,7 @@
 \mynewdata{langabbrev}
 \mynewdata{langsused}
 \mynewdata{abstractorder}
-\input{unlthesis-files/lang-text.clo}
+\input{unlthesis-files/lang-conf.clo}
 
 % --------------------------------------------------------
 % PROCESS PACKAGE OPTIONS
@@ -147,6 +147,7 @@
 
 \newcommand{\printcoverpage}{%
   \thispagestyle{empty}%
+  \selectthelanguage{\unlthesis@opt@coverlang}%
   \newlength{\mpwidth}%
   \setlength{\mpwidth}{\dimexpr%
     \paperwidth%
@@ -173,6 +174,7 @@
   }%
   ~% This space is important here so that the cover page is not empty anymore!
   \cleardoublepage%
+  \selectthelanguage{\unlthesis@opt@lang}%
 }
 
 

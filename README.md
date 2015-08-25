@@ -31,6 +31,10 @@ All contributors, both sporadic and regular, are welcome. :) Please [contact me]
 
 News
 ----
+*2015-08-26 — Version 3.0.8 — French and Italian are here*
++ Added support for the Italian language (thanks to Paolo Romano <romano@inesc-id.pt>)
++ Added support for the Italian language (thanks to Sara Ferreira <sarasalomeferreira@gmail.com>)
+
 *2015-08-25 — Version 3.0.7 — Italian is here*
 + Added support for the Italian language (thanks to Paolo Romano <romano@inesc-id.pt>)
 

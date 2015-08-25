@@ -20,6 +20,12 @@
 \addto\captionsenglish{%
   \def\lstlistlistingname{Listings}%
 }
+\addto\captionsfrench{%
+  \def\lstlistlistingname{TBD: Listings}%
+}
+\addto\captionsitalian{%
+  \def\lstlistlistingname{TBD: Listings}%
+}
 
 % Corrigir espaço para páginas com numeração romana na ToC
 \renewcommand{\@pnumwidth}{2em}
