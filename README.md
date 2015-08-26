@@ -31,6 +31,9 @@ All contributors, both sporadic and regular, are welcome. :) Please [contact me]
 
 News
 ----
+*2015-08-27 — Version 3.0.9 — Covers are all right*
++ Fixed a bug with the background images for the covers in the document classes “mscplan”, “phdplan” and “phdprop”.
+
 *2015-08-26 — Version 3.0.8 — French and Italian are here*
 + Added support for the Italian language (thanks to Paolo Romano <romano@inesc-id.pt>)
 + Added support for the Italian language (thanks to Sara Ferreira <sarasalomeferreira@gmail.com>)

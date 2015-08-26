@@ -22,7 +22,10 @@
 
 % Cover background images
 \thesiscover[phd]={}
+\thesiscover[phdplan]={}
+\thesiscover[phdprop]={}
 \thesiscover[msc]={}
+\thesiscover[mscplan]={}
 \thesiscover[bsc]={}
 \thesiscover[plain]={}
 
@@ -47,10 +50,22 @@
 \margin[phd,bottom]={2.0cm}
 \margin[phd,left]={3.0cm}
 \margin[phd,right]={3.0cm}
+\margin[phdplan,top]={3.0cm}
+\margin[phdplan,bottom]={2.0cm}
+\margin[phdplan,left]={3.0cm}
+\margin[phdplan,right]={3.0cm}
+\margin[phdprop,top]={3.0cm}
+\margin[phdprop,bottom]={2.0cm}
+\margin[phdprop,left]={3.0cm}
+\margin[phdprop,right]={3.0cm}
 \margin[msc,top]={3.0cm}
 \margin[msc,bottom]={2.0cm}
 \margin[msc,left]={3.0cm}
 \margin[msc,right]={3.0cm}
+\margin[mscplan,top]={3.0cm}
+\margin[mscplan,bottom]={2.0cm}
+\margin[mscplan,left]={3.0cm}
+\margin[mscplan,right]={3.0cm}
 \margin[bsc,top]={3.0cm}
 \margin[bsc,bottom]={2.0cm}
 \margin[bsc,left]={3.0cm}

@@ -1,0 +1,80 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% strings-de.clo
+%% UNL thesis configuration file
+%%
+%% Costumization for language depedent strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Deutch - strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\abstractstring[de]={Resumo}
+\keywordsstring[de]={Palavras-chave}
+\notdefined[de]={NÃO DEFINIDO}
+\acknowledgementsstring[de]={Agradecimentos}
+
+\adviserstr[1,m,de]={Orientador}
+\adviserstr[1,f,de]={Orientadora}
+\adviserstr[2,m,de]={Orientadores}
+\adviserstr[2,f,de]={Orientadoras}
+\coadviserstr[1,m,de]={Co-orientador}
+\coadviserstr[1,f,de]={Co-orientadora}
+\coadviserstr[2,m,de]={Co-orientadores}
+\coadviserstr[2,f,de]={Co-orientadoras}
+
+\committeetitlestr[de]={Júri}
+\commiteememberstr[c,1,m,de]={Presidente}
+\commiteememberstr[c,1,f,de]={Presidente}
+\commiteememberstr[c,2,m,de]={Presidentes}
+\commiteememberstr[c,2,f,de]={Presidentes}
+\commiteememberstr[r,1,m,de]={Arguente}
+\commiteememberstr[r,1,f,de]={Arguente}
+\commiteememberstr[r,2,m,de]={Arguentes}
+\commiteememberstr[r,2,f,de]={Arguentes}
+\commiteememberstr[a,1,m,de]={Orientador}
+\commiteememberstr[a,1,f,de]={Orientadora}
+\commiteememberstr[a,2,m,de]={Orientadores}
+\commiteememberstr[a,2,f,de]={Orientadoras}
+\commiteememberstr[m,1,m,de]={Vogal}
+\commiteememberstr[m,1,f,de]={Vogal}
+\commiteememberstr[m,2,m,de]={Vogais}
+\commiteememberstr[m,2,f,de]={Vogais}
+\commiteememberstr[g,1,m,fr]={Convidado}
+\commiteememberstr[g,1,f,fr]={Convidada}
+\commiteememberstr[g,2,m,fr]={Convidados}
+\commiteememberstr[g,2,f,fr]={Convidadas}
+
+\degreestr[bsc,m,de]={Licenciado}
+\degreestr[bsc,f,de]={Licenciada}
+\degreestr[msc,m,de]={Mestre}
+\degreestr[msc,f,de]={Mestre}
+\degreestr[mscplan,m,de]={Mestre}
+\degreestr[mscplan,f,de]={Mestre}
+\degreestr[phd,m,de]={Doutor}
+\degreestr[phd,f,de]={Doutora}
+\degreestr[phdplan,m,de]={Doutor}
+\degreestr[phdplan,f,de]={Doutora}
+\degreestr[phdprop,m,de]={Doutor}
+\degreestr[phdprop,f,de]={Doutora}
+
+\doctypestr[bsc,de]={Projeto de Licenciatura}
+\doctypestr[mscplan,de]={Preparação de Dissertação de Mestrado}
+\doctypestr[msc,de]={Dissertação de Mestrado}
+\doctypestr[phdplan,de]={Plano de Tese de Doutoramento}
+\doctypestr[phdprop,de]={Proposta de Tese de Doutoramento}
+\doctypestr[phd,de]={Tese de Doutoramento}
+
+\dissertationstr[bsc,de]={Relatório para obtenção do Grau de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[mscplan,de]={Relatório intermédio para obtenção do Grau de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[msc,de]={Dissertação para obtenção do Grau de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phdplan,de]={Relatório intermédio para obtenção do Grau de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phdprop,de]={Proposta de dissertação para obtenção do Grau de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\dissertationstr[phd,de]={Dissertação para obtenção do Grau de %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em\\[1ex] \textbf{\themajorfield[\unlthesis@opt@coverlang]}}
+\copyrighttextstr[de]={A \thefaculty[\unlthesis@opt@coverlang]\ e a \theuniversity[\unlthesis@opt@coverlang]\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+\acknowledgmentsstr[de]={Este documento foi gerado utilizando o processador (pdf)\LaTeX, com base no template “unlthesis” [1] desenvolvido no Dep.\ Informática da FCT-NOVA [2].\quad[1] \url{https://github.com/joaomlourenco/unlthesis}\quad[2] \url{http://www.di.fct.unl.pt}}
