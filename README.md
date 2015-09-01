@@ -1,5 +1,4 @@
-* unlthesis *
-===============
+# unlthesis
 
 The unlthesis LaTeX class is a thesis template initially designed for the PhD and MSc thesis at [FCT Universidade Nova de Lisboa (FCT-UNL)](http://www.fct.unl.pt), Portugal. The class provides utilities to easily set up the cover page, the front matter pages, the page headers, etc. with respect to the official guidelines of the FCT-UNL for writing PhD dissertations.
 
@@ -8,25 +7,25 @@ The template is easily customizable, including the support for other institution
 *This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/.*
 
 
-Donations
----------
+## Getting Started
 
-If you think this template really helped you while writing your thesis, think about doing a [small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KTPG2K2AHCRAW). I'll keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
+### Download
 
+Get the latest realease from the [releases page](https://github.com/joaomlourenco/unlthesis/releases)!
 
-Quick Guide
------------
+### Problems
 
-+ **DOWNLOAD???**  Get the latest realease from the [releases page](https://github.com/joaomlourenco/unlthesis/releases)!
-+ **Suggestions and/or recommendations?** Please add them to the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) and help other users!
-+ **Problems?** Check the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) and have some hope! :)
-+ **Still with problems?**  Ask for help in the [discussion forum](https://groups.google.com/forum/#!forum/unlthesis) at https://groups.google.com/forum/#!forum/unlthesis. That is the right place to ask for help!  *Please don't send me an email! with problems/questions*
-+ **Did you find a bug?**  Please [open an issue](https://github.com/joaomlourenco/unlthesis/issues). Thanks!
-+ [See below](#news) for the most recent [news](#news).
+Check the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) and have some hope! :smile:
 
+If you couldn't find what you were looking for, ask for help in the [discussion forum](https://groups.google.com/forum/#!forum/unlthesis) at https://groups.google.com/forum/#!forum/unlthesis. That is the right place to ask for help!  *Please don't send me an email! with problems/questions*
 
-Disclaimer
-----------
+### Suggestions and Recommendations
+
+Please add them to the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) and help other users!
+
+**Did you find a bug?**  Please [open an issue](https://github.com/joaomlourenco/unlthesis/issues). Thanks!
+
+## Disclaimer
 
 These are not official templates for FCT-UNL, although they are fully compliant to the FCT and UNL formatting regulations.
 
@@ -34,15 +33,22 @@ The Word template is *frozen*.  The maintenance is very very limited.
 
 All contributors, both sporadic and regular, are welcome. :) Please [contact me](http://docentes.fct.unl.pt/joao-lourenco) to join the team.
 
+## Donations
 
-News
-----
+If you think this template really helped you while writing your thesis, think about doing a [small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KTPG2K2AHCRAW). I'll keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
+
+## News
+
+*2015-09-01 — Version 3.1.0 — Fixed hyperlinks in citations*
++ Hyperlinks in citations were not working; now they are
++ `hyperref` option for `bibtex` exposed in `template.tex`.
+
 *2015-08-27 — Version 3.0.9 — Covers are all right*
 + Fixed a bug with the background images for the covers in the document classes “mscplan”, “phdplan” and “phdprop”.
 
 *2015-08-26 — Version 3.0.8 — French and Italian are here*
 + Added support for the Italian language (thanks to Paolo Romano <romano@inesc-id.pt>)
-+ Added support for the Italian language (thanks to Sara Ferreira <sarasalomeferreira@gmail.com>)
++ Added support for the French language (thanks to Sara Ferreira <sarasalomeferreira@gmail.com>)
 
 *2015-08-25 — Version 3.0.7 — Italian is here*
 + Added support for the Italian language (thanks to Paolo Romano <romano@inesc-id.pt>)

@@ -38,9 +38,6 @@
 % To process lists and other stuff
 \RequirePackage{etoolbox}
 
-% To process the bibliography
-\RequirePackage[backend=bibtex]{biblatex}
-
 
 %%%%% Configure Graphics
 \RequirePackage{graphicx}
@@ -77,3 +74,9 @@
   \RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}%
   \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
 }
+
+
+% To process the bibliography
+% (This should be listed after the hyperref, otherwise hyperlinks in citations won't work)
+\RequirePackage[backend=bibtex]{biblatex}
+
