@@ -39,6 +39,9 @@ If you think this template really helped you while writing your thesis, think ab
 
 ## News
 
+*2015-09-01 — Fixed typo*
++ Typo in word "dissertation" corrected in `strings-en.clo`. (thanks to David Lopes and Rodrigo Carvalho)
+
 *2015-09-01 — Fixed hyperlinks in citations*
 + Hyperlinks in citations were not working; now they are
 + `hyperref` option for `bibtex` exposed in `template.tex`.
