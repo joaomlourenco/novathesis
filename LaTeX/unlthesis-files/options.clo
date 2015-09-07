@@ -200,9 +200,9 @@
 \DeclareOptionX{media}[screen]{%
 	\typeout{'media'=#1}%
   \ifthenelse{\equal{#1}{screen}}{%
-    \PassOptionsToClass{oneside}{memoir}%
+    % \PassOptionsToClass{oneside}{memoir}%
   }{%
-    \PassOptionsToClass{twoside}{memoir}%
+    % \PassOptionsToClass{twoside}{memoir}%
     \PassOptionsToPackage{allcolors=black}{hyperref}%
   }%
   \def\unlthesis@opt@media{#1}%

@@ -39,12 +39,11 @@ If you think this template really helped you while writing your thesis, think ab
 
 ## News
 
-*2015-09-01 — Fixed typo*
-+ Typo in word "dissertation" corrected in `strings-en.clo`. (thanks to David Lopes and Rodrigo Carvalho)
-
-*2015-09-01 — Fixed hyperlinks in citations*
-+ Hyperlinks in citations were not working; now they are
+*2015-09-07 — Version 3.0.10 — Multiple bug fixes*
 + `hyperref` option for `bibtex` exposed in `template.tex`.
++ Hyperlinks in citations were not working; now they are.
++ Fixed a bug that allowed chapters to start in even numbered pages.
++ Typo in word "dissertation" corrected in `strings-en.clo` (thanks to David Lopes and Rodrigo Carvalho).
 
 *2015-08-27 — Version 3.0.9 — Covers are all right*
 + Fixed a bug with the background images for the covers in the document classes “mscplan”, “phdplan” and “phdprop”.
