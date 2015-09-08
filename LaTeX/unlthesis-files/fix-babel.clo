@@ -16,6 +16,7 @@
   \renewcommand{\contentsname}{Índice}%
   \renewcommand{\indexname}{Índice Remissivo}%
   \def\lstlistlistingname{Listagens}%
+  def\lstlistingname{Listagem}%
 }
 \addto\captionsenglish{%
   \def\lstlistlistingname{Listings}%
