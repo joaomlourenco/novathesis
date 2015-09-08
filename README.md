@@ -39,6 +39,10 @@ If you think this template really helped you while writing your thesis, think ab
 
 ## News
 
+*2015-09-08 — Version 3.0.11 — Bug fixes in Listings*
++ Added the translation of "Listing #" to "Listagem #" for the Portuguese language in `fix-babel.clo` (thanks to Constantino Gomes for the fix).
++ Fixed a typo in `template.tex`.
+
 *2015-09-07 — Version 3.0.10 — Multiple bug fixes*
 + `hyperref` option for `bibtex` exposed in `template.tex`.
 + Hyperlinks in citations were not working; now they are.
