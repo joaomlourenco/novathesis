@@ -39,7 +39,7 @@ If you think this template really helped you while writing your thesis, think ab
 
 ## News
 
-*2015-09-08 — Version 3.0.11 — Bug fixes in Listings*
+*2015-09-08 — Version 3.0.12 — Bug fixes in Listings*
 + Added the translation of "Listing #" to "Listagem #" for the Portuguese language in `fix-babel.clo` (thanks to Constantino Gomes for the fix).
 + Fixed a typo in `template.tex`.
 
