@@ -44,7 +44,7 @@ If you think this template really helped you while writing your thesis, think ab
 
 ## Recent News
 
-NOTE: see the file `changes.txt` for the complete listing of changes.
+NOTE: see the file `changelog.txt` for the complete listing of changes.
 
 *2015-09-08 — Version 3.0.12 — Bug fixes in Listings*
 + Added the translation of "Listing #" to "Listagem #" for the Portuguese language in `fix-babel.clo` (thanks to Constantino Gomes for the fix).
