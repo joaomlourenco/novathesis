@@ -15,11 +15,14 @@
 %% BUGS and SUGGESTIONS: please submit an issue at the project web page
 %%      at: https://github.com/joaomlourenco/unlthesis/
 %%
-%% HELP: please ask for help at the unlthesis google group
-%%      at: https://groups.google.com/forum/#!forum/unlthesis
+%% HELP: please ask for help at the unlthesis google group at
+%%          https://groups.google.com/forum/#!forum/unlthesis
+%%      or at the facebook page
+%%          https://www.facebook.com/groups/unlthesis/
 %%
 %% Authors / Contributors:
-%%     - João Lourenço (joao.lourenco@fct.unl.pt)
+%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%      - Bruno Candeias <b.candeias@campus.fct.unl.pt>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -359,7 +362,7 @@
   \forlistcsloop{\unlthesis@printcommitteeclassmembers}{unlthesis@committee@#1@list}%
 }
 
-\newcommand{\printcommittee}{%
+\newcommand{\printcommittee@i}{%
   \xdef\unlthesis@tmp{\thecommitteetitlestr[\unlthesis@opt@coverlang]}%
   \begin{tabular}{rl}%
   \ifx\unlthesis@tmp\@empty%
@@ -373,6 +376,12 @@
   \xdef\unlthesis@tmp{\thecommitteeorder[all]}%
   \iteratecsvlist{\unlthesis@printcommitteemembers}{\unlthesis@tmp}%
   \end{tabular}%
+}
+
+\newcommand{\printcommittee}{%
+  \ifthenelse{\equal{\unlthesis@opt@printcommittee}{true}}%
+  {\printcommittee@i}
+  {}
 }
 
 

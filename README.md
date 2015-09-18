@@ -46,6 +46,12 @@ If you think this template really helped you while writing your thesis, think ab
 
 NOTE: see the file `changelog.txt` for the complete listing of changes.
 
+*2015-09-?? — Version 3.0.13 — TBD*
++ Added link to Facebook page in the comments at top of unlthesis.cls and template.tex
++ New option 'printcommittee' (default=true) to inhibit printing the committee (when it should be printed)
++ Fixed spacing in book spine
+
+
 *2015-09-08 — Version 3.0.12 — Bug fixes in Listings*
 + Added the translation of "Listing #" to "Listagem #" for the Portuguese language in `fix-babel.clo` (thanks to Constantino Gomes for the fix).
 + Fixed a typo in `template.tex`.

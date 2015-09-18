@@ -28,16 +28,16 @@
   \savebox{\unlthesis@spine@box@date}{\thespine[year]}%
   \settowidth{\unlthesis@spine@box@date@width}{\usebox{\unlthesis@spine@box@date}}%
   \settoheight{\unlthesis@spine@box@date@height}{\usebox{\unlthesis@spine@box@date}}%
-  \ifdim\unlthesis@spine@box@date@width < 0.95\unlthesis@spinewidth%
+  \ifdim\unlthesis@spine@box@date@width < 0.90\unlthesis@spinewidth%
     \savebox{\unlthesis@spine@box@date}{%
       \rotatebox[origin=c]{-90}{\usebox{\unlthesis@spine@box@date}}%
     }%
   \fi%
   \settowidth{\unlthesis@spine@box@date@width}{\usebox{\unlthesis@spine@box@date}}%
   \settoheight{\unlthesis@spine@box@date@height}{\usebox{\unlthesis@spine@box@date}}%
-  \ifdim\unlthesis@spine@box@date@height > 0.95\unlthesis@spinewidth%
+  \ifdim\unlthesis@spine@box@date@height > 0.90\unlthesis@spinewidth%
     \savebox{\unlthesis@spine@box@date}{%
-      \resizebox{!}{0.95\unlthesis@spinewidth}{\usebox{\unlthesis@spine@box@date}}%
+      \resizebox{!}{0.90\unlthesis@spinewidth}{\usebox{\unlthesis@spine@box@date}}%
     }%
   \fi%
   \settowidth{\unlthesis@spine@box@date@width}{\usebox{\unlthesis@spine@box@date}}%
@@ -60,9 +60,9 @@
   }%
   \settowidth{\unlthesis@spine@box@title@width}{\usebox{\unlthesis@spine@box@title}}%
   \settoheight{\unlthesis@spine@box@title@height}{\usebox{\unlthesis@spine@box@title}}%
-  \ifdim\unlthesis@spine@box@title@height > 0.95\unlthesis@spinewidth%
+  \ifdim\unlthesis@spine@box@title@height > 0.90\unlthesis@spinewidth%
     \savebox{\unlthesis@spine@box@title}{%
-      \resizebox{!}{0.95\unlthesis@spinewidth}{\usebox{\unlthesis@spine@box@title}}%
+      \resizebox{!}{0.90\unlthesis@spinewidth}{\usebox{\unlthesis@spine@box@title}}%
     }%
   \fi%
   \settowidth{\unlthesis@spine@box@title@width}{\usebox{\unlthesis@spine@box@title}}%
@@ -80,9 +80,9 @@
   }%
   \settowidth{\unlthesis@spine@box@author@width}{\usebox{\unlthesis@spine@box@author}}%
   \settoheight{\unlthesis@spine@box@author@height}{\usebox{\unlthesis@spine@box@author}}%
-  \ifdim\unlthesis@spine@box@author@height > 0.95\unlthesis@spinewidth%
+  \ifdim\unlthesis@spine@box@author@height > 0.90\unlthesis@spinewidth%
     \savebox{\unlthesis@spine@box@author}{%
-      \resizebox{!}{0.95\unlthesis@spinewidth}{\usebox{\unlthesis@spine@box@author}}%
+      \resizebox{!}{0.90\unlthesis@spinewidth}{\usebox{\unlthesis@spine@box@author}}%
     }%
   \fi%
   \settowidth{\unlthesis@spine@box@author@width}{\usebox{\unlthesis@spine@box@author}}%
@@ -106,7 +106,7 @@
     {\usebox{\unlthesis@spine@box@titleauthor}}%
   \settoheight{\unlthesis@spine@box@titleauthor@height}%
     {\usebox{\unlthesis@spine@box@titleauthor}}%
-  \ifdim\unlthesis@spine@box@titleauthor@height > 0.95\unlthesis@spinewidth%
+  \ifdim\unlthesis@spine@box@titleauthor@height > 0.90\unlthesis@spinewidth%
     \make@spine@box@title{0.4}%
     \make@spine@box@author{0.4}%
     \savebox{\unlthesis@spine@box@titleauthor}{%
@@ -119,9 +119,9 @@
     {\usebox{\unlthesis@spine@box@titleauthor}}%
   \settoheight{\unlthesis@spine@box@titleauthor@height}%
     {\usebox{\unlthesis@spine@box@titleauthor}}%
-  \ifdim\unlthesis@spine@box@titleauthor@height > 0.95\unlthesis@spinewidth%
+  \ifdim\unlthesis@spine@box@titleauthor@height > 0.90\unlthesis@spinewidth%
     \savebox{\unlthesis@spine@box@titleauthor}{%
-      \resizebox{!}{0.95\unlthesis@spinewidth}{\usebox{\unlthesis@spine@box@titleauthor}}%
+      \resizebox{!}{0.90\unlthesis@spinewidth}{\usebox{\unlthesis@spine@box@titleauthor}}%
     }%
   \fi%
   \settowidth{\unlthesis@spine@box@titleauthor@width}%
@@ -163,7 +163,7 @@
         {\usebox{\unlthesis@spine@box}}%
     }%
   }%
-  ~% This space is important here so that the cover page is not empty anymore!
-  \cleardoublepage%
+  ~% This space is important here so that the spine page is not empty anymore!
+  % \cleardoublepage%
 }%
 \makeatother

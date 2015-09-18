@@ -28,11 +28,11 @@
 	}}
   
 \makechapterstyle{elegant}{%
-	\renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so} %
-	\renewcommand\chaptitlefont{\normalfont\LARGE\bfseries\scshape} %
-	\renewcommand\chapternamenum{} \renewcommand\printchaptername{} %
-	\renewcommand\printchapternum{\null\hfill\unlthesis@chm[2.5cm]\hspace*{14pt}\par} %
-	\renewcommand\afterchapternum{\par\vskip\midchapskip} %
+	\renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so}%
+	\renewcommand\chaptitlefont{\normalfont\LARGE\bfseries\scshape}%
+	\renewcommand\chapternamenum{} \renewcommand\printchaptername{}%
+	\renewcommand\printchapternum{\null\hfill\unlthesis@chm[2.5cm]\hspace*{14pt}\par}%
+	\renewcommand\afterchapternum{\par\vskip\midchapskip}%
 	\renewcommand\printchaptertitle[1]{\color{darkgray}\chaptitlefont\raggedleft ##1\par}%
 } 
 \chapterstyle{elegant}

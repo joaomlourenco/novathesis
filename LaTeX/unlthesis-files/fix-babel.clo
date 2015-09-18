@@ -13,8 +13,8 @@
 % Replace "Índice" with "Índice Remissivo"
 % "Listings" in Portuguese
 \addto\captionsportuguese{%
-  \renewcommand{\contentsname}{Índice}%
-  \renewcommand{\indexname}{Índice Remissivo}%
+  \def\contentsname{Índice}%
+  \def\indexname{Índice Remissivo}%
   \def\lstlistlistingname{Listagens}%
   \def\lstlistingname{Listagem}%
 }

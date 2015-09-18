@@ -1,4 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% options.clo
 %% UNL thesis configuration file
 %%
@@ -135,6 +135,17 @@
 
 
 % --------------------------------------------------------
+% PRINT EVALUATION COMMITTEE
+%
+% true
+% false
+\DeclareOptionX{printcommittee}[true]{%
+	\typeout{'printcommittee'=#1}%
+  \gdef\unlthesis@opt@printcommittee{#1}%
+}
+
+
+% --------------------------------------------------------
 % HYPER LINKS COLOR
 %
 % darkblue, black
@@ -223,6 +234,7 @@
 	lang=en,
   linkscolor=darkblue,
   aftercover=false,
+  printcommittee=true,
 	spine=false,
 	biblatex={%
 		% sorting=nyt,%
