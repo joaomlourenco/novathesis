@@ -7,7 +7,7 @@
 %% To view a copy of this license, 
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2015/09/08 [3.0.12]
+%% Version 2015/09/08 [3.0.12x]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -36,7 +36,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2015/09/08 unlthesis template]
+\ProvidesClass{unlthesis}[2015/09/18 unlthesis template]
 
 
 
