@@ -8,7 +8,8 @@
 %%%%% Configure chapters, headers, footers, and page numbering
 \definecolor{chaptercolor}{rgb}{0.7,0.8,0.9}
 \font\ch@pnumfont=eurm10 at 2in %cminch -> ams euler
-\font\ch@pnamfont=cmbr8 at 8mm % computer modern bright
+\font\ch@pnamfont=ebmr8 at 8mm % computer modern bright
+% \font\ch@pnamfont=cmbr8 at 8mm % computer modern bright
 
 % helper macros
 \newcommand\numlifter[1]{\raisebox{-1.25cm}[0pt][0pt]{\smash{{#1}}}}
@@ -52,9 +53,8 @@
   }
   \settototalheight\chaptertitleboxheight{%
     \parbox{\textwidth}{\chaptitlefont \strut bg\\bg\strut}}%
-  \renewcommand\printchaptertitle[1]{%
     \parbox[t][\chaptertitleboxheight][t]{\textwidth}{%
-      %\microtypesetup{protrusion=false}% add this if you use microtype
+      \microtypesetup{protrusion=false}% add this if you use microtype
       \chaptitlefont\raggedleft\baselineskip=30pt%
       \strut ##1\strut%
     }%

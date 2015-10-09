@@ -8,9 +8,9 @@
 %%%%% Configure input encoding
 \RequirePackage{inputenc}		% Format for the input file(s), see the "enc" option
 
-
 %%%%% Configure font encoding
 \RequirePackage[T1]{fontenc}		% Use new T1 fonts
+\RequirePackage{textcomp}
 
 
 %%%%% Configure multilingual language support
