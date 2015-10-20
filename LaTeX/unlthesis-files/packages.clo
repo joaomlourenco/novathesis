@@ -10,8 +10,6 @@
 
 %%%%% Configure font encoding
 \RequirePackage[T1]{fontenc}		% Use new T1 fonts
-\RequirePackage{textcomp}
-
 
 %%%%% Configure multilingual language support
 \RequirePackage[english]{babel}			% Support for bilingual documents
