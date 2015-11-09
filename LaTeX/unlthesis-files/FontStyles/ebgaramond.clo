@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% kpfonts.clo
+%% ebgaramond.clo
 %% UNL thesis configuration file
 %%
-%% Customization of fonts to use a Paltino-like font set
+%% Customization of font to use a EB Garamond font set
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{kpfonts}
-\RequirePackage[cal=boondoxo]{mathalfa} % mathcal
+\RequirePackage[cmintegrals,cmbraces]{newtxmath}
+\RequirePackage{ebgaramond-maths}
