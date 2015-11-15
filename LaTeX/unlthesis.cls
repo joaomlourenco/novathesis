@@ -349,7 +349,8 @@
 }
 
 \newcommand{\unlthesis@printcommitteemembers}[1]{%
-  % argument is classe of committee memeber {c,r,a,m}
+  % argument is classe of committee memeber {c,r,a,m,g}
+  \ifcsname unlthesis@committee@#1@list\endcsname
   \ifthenelse{\equal{\value{unlthesis@committee@#1m@cnt}}{0}}%
     {\def\unlthesis@tmp@gender{f}}% for portuguese: only use female form if no males are present
     {\def\unlthesis@tmp@gender{m}}%
@@ -360,6 +361,7 @@
     \thecommiteememberstr[#1,\unlthesis@tmp@total,\unlthesis@tmp@gender,\unlthesis@opt@coverlang]:%
   }%
   \forlistcsloop{\unlthesis@printcommitteeclassmembers}{unlthesis@committee@#1@list}%
+  \fi
 }
 
 \newcommand{\printcommittee@i}{%
