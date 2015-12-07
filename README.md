@@ -46,11 +46,15 @@ If you think this template really helped you while writing your thesis, think ab
 
 NOTE: see the file `changelog.txt` for the complete listing of changes.
 
-*2015-09-?? — Version 3.0.13 — TBD*
+*2015-12-07 — Version 3.0.13 — Less and less known bugs…
 + Added link to Facebook page in the comments at top of unlthesis.cls and template.tex
 + New option 'printcommittee' (default=true) to inhibit printing the committee (when it should be printed)
++ Allow empty sets of committee members
++ Multiple fixes for font sets (thanks to Flávio Martins)
 + Fixed spacing in book spine
 + Removed package `textcomp`, which was clashing with font `kpfonts`, and it does not seem necessary.
++ Fixed a bug with glossaries hyperlinks
++ Fixed a font bug in IST chapter style
 
 *2015-09-08 — Version 3.0.12 — Bug fixes in Listings*
 + Added the translation of "Listing #" to "Listagem #" for the Portuguese language in `fix-babel.clo` (thanks to Constantino Gomes for the fix).
