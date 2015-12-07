@@ -16,7 +16,7 @@
 
 
 %%%%% Fine tuning of typesetting
-\usepackage[%
+\RequirePackage[%
   babel=true,
   activate={true,nocompatibility},  % activate={true,nocompatibility} - activate protrusion and expansion
   final,            % final - enable microtype; use "draft" to disable  
@@ -37,6 +37,29 @@
 \RequirePackage{etoolbox}
 
 
+%%%%% LOAD THESE PACKAGES JUST AT THE ENF OF THE PREAMBLE 
+%%%%% AND BEFORE THE \BEGIN{DOCUMENT}
+\unlthesisAtEndClassFile{%
+  %%%%% Configure HyperRefs
+  % \RequirePackage[pdftex,usenames]{color}
+  % \RequirePackage[pdftex]{xcolor}
+  % \RequirePackage[usenames]{color}
+  \RequirePackage{xcolor}%
+  \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
+  \RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}%
+  \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
+
+% To process the bibliography
+% (This should be listed after the hyperref, otherwise hyperlinks in citations won't work)
+\RequirePackage[backend=bibtex]{biblatex}
+
+  % Manage glossaries
+  \RequirePackage[nonumberlist,translate=babel,acronym,toc]{glossaries} % To create gloassries
+  % \glsdisablehyper
+  \makenoidxglossaries
+}
+
+
 %%%%% Configure Graphics
 \RequirePackage{graphicx}
 \graphicspath{{Chapters/Figures/}}
@@ -54,29 +77,6 @@
 \RequirePackage{eso-pic}[2015/04/20]
 
 
-% Manage glossaries
-\usepackage[nonumberlist,translate=babel,acronym,toc]{glossaries} % To create gloassries
-% \glsdisablehyper
-\makenoidxglossaries
-
-
-%%%%% LOAD THESE PACKAGES JUST AT THE ENF OF THE PREAMBLE 
-%%%%% AND BEFORE THE \BEGIN{DOCUMENT}
-\AtEndPreamble{%
-  %%%%% Configure HyperRefs
-  % \RequirePackage[pdftex,usenames]{color}
-  % \RequirePackage[pdftex]{xcolor}
-  % \RequirePackage[usenames]{color}
-  \RequirePackage{xcolor}%
-  \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
-  \RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}%
-  \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
-}
-
-
-% To process the bibliography
-% (This should be listed after the hyperref, otherwise hyperlinks in citations won't work)
-\RequirePackage[backend=bibtex]{biblatex}
 
 
 % Setup of listings, for more information check package manual

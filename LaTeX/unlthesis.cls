@@ -74,6 +74,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+\newcommand{\unlthesisAtEndClassFile}[1]{%
+  \listcsadd{unlthesis@atendclassfile@list}{#1}%
+}
+
+\newcommand{\unlthesis@executemacro}[1]{%
+  #1%
+}
+
+\newcommand{\unlthesisExecuteAtEndClassFile}{%
+  \forlistcsloop{\unlthesis@executemacro}{unlthesis@atendclassfile@list}%
+}
+
 % --------------------------------------------------------
 % SOME PRELIMINARY LANGUAGE DEFINITIONS
 \mynewdata{langabbrev}
@@ -879,6 +891,9 @@
 \InputIfFileExists{unlthesis-files/FontStyles/\unlthesis@opt@fontstyle.clo}{}{}
 
 
+
+
+\unlthesisExecuteAtEndClassFile
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Generate book spine (if otion "spine=true")
