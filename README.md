@@ -46,7 +46,7 @@ If you think this template really helped you while writing your thesis, think ab
 
 NOTE: see the file `changelog.txt` for the complete listing of changes.
 
-*2015-12-07 — Version 3.0.13 — Less and less known bugs…
+*2015-12-07 — Version 3.0.13 — Less and less known bugs…*
 + Added link to Facebook page in the comments at top of unlthesis.cls and template.tex
 + New option 'printcommittee' (default=true) to inhibit printing the committee (when it should be printed)
 + Allow empty sets of committee members

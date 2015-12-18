@@ -20,6 +20,7 @@
 }
 \addto\captionsenglish{%
   \def\lstlistlistingname{Listings}%
+  \def\lstlistingname{Listing}%
 }
 \addto\captionsfrench{%
   \def\lstlistlistingname{TBD: Listings}%
