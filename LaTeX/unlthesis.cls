@@ -7,7 +7,7 @@
 %% To view a copy of this license, 
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2015/09/17 [3.0.13]
+%% Version 2016/01/07 [3.1.0]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -23,6 +23,7 @@
 %% Authors / Contributors:
 %%      - João Lourenço <joao.lourenco@fct.unl.pt>
 %%      - Bruno Candeias <b.candeias@campus.fct.unl.pt>
+%%      — Flávio Martins <flaviomartins@acm.org>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,7 +37,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2015/09/18 unlthesis template]
+\ProvidesClass{unlthesis}[2016/01/07 unlthesis template]
 
 
 
