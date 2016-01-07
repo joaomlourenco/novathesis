@@ -57,6 +57,12 @@
   \@namedef{the#1}[##1]{\@nameuse{#1##1}}%
 }
 
+\def\ifexists#1[#2]#3{%
+  \ifcsname #1#2\endcsname%
+    #3%
+  \fi%
+}
+
 \newcommand{\iteratecsvlist}[2]{%
   \@for\unlthesis@themember:=#2\do{#1{\unlthesis@themember}}%
 }
@@ -329,6 +335,11 @@
 \newcommand{\thetitle}{~title \unlthesis@undefined}
 \renewcommand{\title}[1]{%
   \renewcommand{\thetitle}{#1\hypersetup{pdftitle={#1}}}%
+}
+
+\newcommand{\thesubtitle}{~subtitle \unlthesis@undefined}
+\newcommand{\subtitle}[1]{%
+  \renewcommand{\thesubtitle}{#1}%
 }
 
 

@@ -34,33 +34,35 @@
 
 % The default option marked with (*)
 \documentclass[
-  doctype=phd,      % phd(*), phdplan, phdprop, msc, mscplan, bsc
-  school=unl/fct,   % unl/fct(*), unl/fcsh, ul/ist
-  lang=en,          % en(*), fr, it, pt
-  coverlang=pt,     % defaults to main language
-  copyrightlang=pt, % defaults to main language
-  fontstyle=kpfonts, % bookman charter fourier kpfonts(*) mathpazo1 mathpazo2 newcent 
-  chapstyle=elegant, % bianchi bluebox brotherton dash default elegant(*) ell ger 
-                    % hansen ist jenor lyhne madsen pedersen veelo vz14 vz34 vz43
-  otherlistsat=front, % front(*), back
-  aftercover=false, % false=don't true=include the aftercover file (even if exists)
+  doctype=phd,          % phd(*), phdplan, phdprop, msc, mscplan, bsc
+  school=unl/fct,       % unl/fct(*), unl/fcsh, unl/ims, ul/ist
+  lang=en,              % en(*), fr, it, pt
+  coverlang=pt,         % defaults to main language
+  copyrightlang=pt,     % defaults to main language
+  fontstyle=kpfonts,    % baskervaldx bookman charter ebgaramond fbb fourier garamond
+                        % heuristica kpfonts(*) libertine mathpazo1 mathpazo2 newcent
+                        % newpx newtx 
+  chapstyle=elegant,    % bianchi bluebox brotherton dash default elegant(*) ell ger 
+                        % hansen ist jenor lyhne madsen pedersen veelo vz14 vz34 vz43
+  otherlistsat=front,   % front(*), back
+  aftercover=false,     % false=don't true=include the aftercover file (even if exists)
 	linkscolor=darkblue,  % darkblue, black (Set to 'black' for PRINTING)
   printcommittee=true,  % set to 'false' from submitted versins who should not have 
                         % the list of committee memebers
-	spine=false,       % (Set to 'true' for PRINTING the book spine)
-	biblatex={        % Options for biblatex (see biblatex documentation)
-		style=numeric,  % numeric(*), alphabetic, authoryear, bwl-FU
-		sorting=nyt,    % none, nyt(*), ynt
-		firstinits=true, % render all first and middle names as initials
-		sortcites=true, % If numeric, sort cites by crescent order
-    hyperref=true   % Hyperlinks in citations: true(*) false
+	spine=false,          % (Set to 'true' for PRINTING the book spine)
+	biblatex={            % Options for biblatex (see biblatex documentation)
+		style=numeric,      % numeric(*), alphabetic, authoryear, bwl-FU
+		sorting=nyt,        % none, nyt(*), ynt
+		firstinits=true,    % render all first and middle names as initials
+		sortcites=true,     % If numeric, sort cites by crescent order
+    hyperref=true       % Hyperlinks in citations: true(*) false
 	},
-	memoir={	        % See the 'memoir' documentation
-    a4paper,        % the paper size/format
-    11pt,           % 10pt, 11pt(*), 12pt
-    draft,           % draft, final  <= Replace 'draft' with 'final' in final version
+	memoir={	            % See the 'memoir' documentation
+    a4paper,            % the paper size/format
+    11pt,               % 10pt, 11pt(*), 12pt
+    draft,              % draft, final  <= Replace 'draft' with 'final' in final version
   },
-  media=screen,      % screen(*), paper
+  media=screen,         % screen(*), paper
           % behavior to be defined in school options based in "\unlthesis@opt@media"
           % definitions for screen: left and right margins are equal, colored links
           % definitions for paper: left and right margins are different, black links
@@ -94,7 +96,7 @@
 
 
 %------------------------------------------------------------------
-% Costumization of user included packages
+% Costumization of some packages
 %------------------------------------------------------------------
 
 % Where to look for figures
@@ -123,11 +125,14 @@
 % e.g.
 % \majorfield[pt]={Engenharia Biomédica}
 % \majorfield[en]={Biomedical Engineering}
+% \thesiscover[msc]={cover-megi-nova-ims}
+% \thesiscover[msc]={cover-mgi-nova-ims}
 %%============================================================
 
 % Title of the dissertation/thesis
 % USe "\\" to break the title into two or more lines
 \title{Impressive Thesis Title}
+\subtitle{Science is beautiful}
 
 % Autor
 % use [f] for female and [m] for male

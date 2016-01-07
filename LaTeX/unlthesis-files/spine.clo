@@ -20,6 +20,21 @@
   \settoheight{\unlthesis@spine@box@logo@height}{\usebox{\unlthesis@spine@box@logo}}%
 }
 
+% Make a box with the logo2
+\newbox{\unlthesis@spine@box@logotwo}%
+\newlength{\unlthesis@spine@box@logotwo@width}%
+\newlength{\unlthesis@spine@box@logotwo@height}%
+\newcommand{\unlthesis@spine@box@logotwoangle}{-90}%
+\newcommand{\make@spine@box@logotwo}[2]{%
+  \savebox{\unlthesis@spine@box@logotwo}{%
+    \includegraphics%
+      [origin=c,angle=\unlthesis@spine@box@logotwoangle,height=0.95\unlthesis@spinewidth,#1]%
+      {#2}%
+  }%
+  \settowidth{\unlthesis@spine@box@logotwo@width}{\usebox{\unlthesis@spine@box@logo}}%
+  \settoheight{\unlthesis@spine@box@logotwo@height}{\usebox{\unlthesis@spine@box@logo}}%
+}
+
 % Make a box with the date
 \newbox{\unlthesis@spine@box@date}%
 \newlength{\unlthesis@spine@box@date@width}%
@@ -98,8 +113,11 @@
   \make@spine@box@author{0.8}%
   \savebox{\unlthesis@spine@box@titleauthor}{%
     \parbox{0.8\unlthesis@spine@box@middlewidth}{%
-      \usebox{\unlthesis@spine@box@title}\\[0.75ex]%
+      % \vfill%
+      \usebox{\unlthesis@spine@box@title}%
+      \vfill%
       \usebox{\unlthesis@spine@box@author}%
+      % \vfill%
     }%
   }%
   \settowidth{\unlthesis@spine@box@titleauthor@width}%
@@ -142,19 +160,28 @@
   \cleardoublepage%
   \thispagestyle{empty}%
   \make@spine@box@logo{}{\thespine[logo]}%
+  \ifexists{spine}[logotwo]{%
+    \make@spine@box@logotwo{}{\thespine[logotwo]}%
+  }
   \make@spine@box@date%
   \make@spine@box@titleauthor%
   \savebox{\unlthesis@spine@box}{%
     \rotatebox{90}{%
       \framebox[\stockheight]{%
+        ~
         \parbox[c][\unlthesis@spinewidth][c]{\unlthesis@spine@box@date@width}%
           {\usebox{\unlthesis@spine@box@date}}%
+        \ifexists{spine}[logotwo]{%
+          \parbox[c][\unlthesis@spinewidth][c]{\unlthesis@spine@box@logotwo@width}%
+            {\hspace*{3mm}\usebox{\unlthesis@spine@box@logotwo}}%
+        }
         \hfill%
         \parbox[c][\unlthesis@spinewidth][c]{\unlthesis@spine@box@titleauthor@width}%
           {\usebox{\unlthesis@spine@box@titleauthor}}%
         \hfill%
         \parbox[c][\unlthesis@spinewidth][c]{\unlthesis@spine@box@logo@width}%
           {\usebox{\unlthesis@spine@box@logo}}%
+        ~
       }%
     }%
   }%
