@@ -296,7 +296,7 @@
   \thispagestyle{empty}%
   \selectthelanguage{\unlthesis@opt@copyrightlang}%
   \noindent%
-  Copyright \copyright\ \theauthorname, %
+  Copyright \textcopyright\ \theauthorname, %
   \thefaculty[\unlthesis@opt@copyrightlang], \theuniversity[\unlthesis@opt@copyrightlang].\\%
   \thecopyrighttextstr[\unlthesis@opt@copyrightlang]%
   \selectthelanguage{\unlthesis@opt@lang}
