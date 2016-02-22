@@ -7,7 +7,7 @@
 %% To view a copy of this license, 
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2016/02/22 [3.2.0]
+%% Version 2016/02/22 [3.1.2]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -209,12 +209,11 @@
     \cleardoublepage%
     \selectthelanguage{\unlthesis@opt@lang}%
   }
+}
 
-  \newcommand{\unlthesis@aftercover@file}{}
-  \newcommand{\aftercoverfile}[1]{%
-    \renewcommand{\unlthesis@aftercover@file}{#1}%
-  }
-  \fi
+\newcommand{\unlthesis@aftercover@file}{}
+\newcommand{\aftercoverfile}[1]{%
+  \renewcommand{\unlthesis@aftercover@file}{#1}%
 }
 
 \newcommand{\printaftercover}{%

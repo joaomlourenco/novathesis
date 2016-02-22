@@ -46,6 +46,9 @@ If you think this template really helped you while writing your thesis, think ab
 
 NOTE: see the file `changelog.txt` for the complete listing of changes.
 
+*2016-02-22 — Version 3.1.2 — NOVA IMS improved*
++ Bugfix in \printaftercover
+
 *2016-02-22 — Version 3.1.1 — NOVA IMS improved*
 + Added support for NOVA IMS (new PhD tempalte)
 + Added support for local (per school) "spine.clo" files. The main one is only used in no local version of the file is supplied.
