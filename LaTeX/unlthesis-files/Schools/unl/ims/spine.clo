@@ -160,10 +160,22 @@
       \begin{tabularx}{\paperheight}%
                 {@{\hspace*{2.0cm}}p{1cm}@{\hspace*{0.9cm}}>{\hsize=1.5\hsize}X@{}>{\hsize=0.5\hsize}X@{\hspace*{1.5cm}}l@{\hspace*{2.0cm}}}
         \usebox{\unlthesis@spine@box@date} &
+        % w=\the\unlthesis@spine@box@title@width~h=\the\hsize~
+        \ifdim\unlthesis@spine@box@title@width > 460pt% 
+          \savebox{\unlthesis@spine@box@title}{%
+            \resizebox{450pt}{!}{\usebox{\unlthesis@spine@box@title}}%
+          }%
+        \fi%
         \cellcolor{white}
-        {\parbox{\hsize}{\usebox{\unlthesis@spine@box@title}}} &
+        {\parbox{\hsize}{\centering\usebox{\unlthesis@spine@box@title}}} &
+        % w=\the\unlthesis@spine@box@author@width~h=\the\hsize~
+        \ifdim\unlthesis@spine@box@author@width > 155pt% 
+          \savebox{\unlthesis@spine@box@author}{%
+            \resizebox{150pt}{!}{\usebox{\unlthesis@spine@box@author}}%
+          }%
+        \fi%
         \cellcolor{white}
-        {\parbox{\hsize}{\usebox{\unlthesis@spine@box@author}}} &
+        {\parbox{\hsize}{\centering\usebox{\unlthesis@spine@box@author}}} &
         \rotatebox[origin=c]{-90}{\textcolor{white}{PhD}}\\
       \end{tabularx}
       \fi

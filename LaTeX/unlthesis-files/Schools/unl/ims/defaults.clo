@@ -184,9 +184,8 @@ of the requirements for the degree of %
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ifthenelse{\equal{\unlthesis@opt@doctype}{phd}}%
-{% phd
   % PHD PROGRAM
+\newcommand{\novaimscoverphd}{%
   \coveritem[l]{0cm}{%
     \coverbackground
   }
@@ -198,7 +197,7 @@ of the requirements for the degree of %
   % SPECIALIZATION IN
   \coveritem[l]{0,7cm}{%
     \fontfamily{phv}\fontsize{16}{16}\selectfont
-    \textcolor{imsmidgrey}{\textbf{Specialization in}}
+    \textcolor{imsmidgrey}{\textbf{Specialization in \thesubtitle}}
   }
   % DISSERTATION TITLE
   \coveritem[l]{1.8cm}{%
@@ -206,18 +205,18 @@ of the requirements for the degree of %
     \textcolor{imsdarkgrey}{\textbf{\thetitle}}
   }
   % AUTHOR NAME
-  \coveritem[l]{0.2cm}{%
+  \coveritem[l]{0.4cm}{%
     \fontfamily{phv}\fontsize{14}{14}\selectfont
     \textcolor{imsdarkgrey}{\textbf{\theauthorname}}
   }
   % DISSERTATION TEXT
-  \coveritem[l]{6.8cm}{%
+  \coveritem[l]{5}{%
     \fontfamily{phv}\fontsize{14}{14}\selectfont
     \textcolor{imsdarkgrey}%
           {\thedissertationstr[\unlthesis@opt@doctype,\unlthesis@opt@coverlang]}
   }
   % DATE
-  \coveritem[l]{2}{%
+  \coveritem[l]{1cm}{%
     \fontfamily{phv}\fontsize{11}{11}\selectfont%
     \textcolor{imsdarkgrey}{\textbf{%
       \ifdraftdoc%
@@ -228,7 +227,7 @@ of the requirements for the degree of %
     }}%
   }
   % SCHOOL
-  \coveritem[l]{1}{%
+  \coveritem[l]{1cm}{%
     \fontfamily{phv}\fontsize{11}{11}\selectfont
     \textcolor{imsdarkgrey}%
           {\textbf{\thefaculty[en]}}
@@ -239,49 +238,10 @@ of the requirements for the degree of %
     \textcolor{imsdarkgrey}%
           {\theuniversity[\unlthesis@opt@coverlang]}
   }
-  %
-  % % Academic qualifications
-  % \coveritem[c]{0.25cm}{%
-  %   \fontfamily{phv}\fontsize{11}{11}\selectfont
-  %   \theauthordegree
-  % }
-  %
-  % % % Title of Dissertation
-  % \coveritem[c]{4.5cm}{%
-  %   \fontfamily{phv}\fontsize{16}{16}\selectfont
-  %   \textbf{\thetitle}
-  % }
-  %
-  % % Degree
-  % \coveritem[c]{1.5cm}{%
-  %   \fontfamily{phv}\fontsize{11}{11}\selectfont
-  %   \thepresentationtext
-  % }
-  %
-  % % Advisers
-  % \coveritem[c]{2}{%
-  %   \fontfamily{phv}\fontsize{12}{12}\selectfont
-  %   \printadvisers
-  % }
-  %
-  %
-  % % Committee — only print the committee for the main classes
-  % \coveritem[r]{2}{%
-  %   \fontfamily{phv}\fontsize{10}{10}\selectfont\printcommittee%
-  % }
-  %
-  %
-  % % Date
-  % \coveritem[c]{4}{%
-  %   \fontfamily{phv}\fontsize{11}{11}\selectfont
-  %   \ifdraftdoc
-  %     \textbf{DRAFT: \today}
-  %   \else
-  %     \textbf{\thedatemonth, \thedateyear}
-  %   \fi
-  % }
-}%
-{% msc and others
+}
+
+  % MSc PROGRAM
+\newcommand{\novaimscovermsc}{%
   % % Title of Dissertation
   \coveritem[l]{0cm}{%
     \coverbackground
@@ -318,3 +278,8 @@ of the requirements for the degree of %
     % \fi
   }
 }
+
+
+\ifthenelse{\equal{\unlthesis@opt@doctype}{phd}}%
+{\novaimscoverphd}
+\novaimscovermsc{}
