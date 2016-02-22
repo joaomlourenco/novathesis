@@ -166,7 +166,6 @@
 	\PassOptionsToPackage{#1}{inputenc}%
 }
 
-
 % --------------------------------------------------------
 % PRINT BOOK SPINE
 %
@@ -174,7 +173,14 @@
 % false
 \DeclareOptionX{spine}[true]{%
 	\typeout{'spine'=#1}%
-	\ifthenelse{\equal{#1}{true}}{\AtEndDocument{\input{unlthesis-files/spine.clo}\printspine}}{}%
+	\ifthenelse{\equal{#1}{true}}{%
+    \AtEndDocument{%
+    \InputIfFileExists{unlthesis-files/Schools/\unlthesis@opt@school/spine.clo}%
+                      {}
+                      {\input{unlthesis-files/spine.clo}}%
+    \printspine%
+    }%
+  }{}%
 }
 
 

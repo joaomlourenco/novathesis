@@ -6,28 +6,38 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Univesity
-\university[pt]={Universidade NOVA de Lisboa}
+\university[pt]={Universidade Nova de Lisboa}
 \university[en]={NOVA University of Lisbon}
 
 % Faculty / School
 \faculty[pt]={Instituto Superior de Estatística e Gestão da Informação}
-\faculty[en]={NOVA IMS Information Management School}
+\faculty[en]={NOVA Information Management School}
 
 % Scientific filed
-\majorfield[pt]={Estatística e Gestão de Informação}
+\majorfield[pt]={Information Management}
 \majorfield[en]={Information Management}
 
 % Comiittee printing order
 \committeeorder[all]={c,r,m}% 
 
 % Cover background images
-\thesiscover[phd]={cover-phd-nova-ims}
-\thesiscover[phdplan]={cover-phd-nova-ims}
-\thesiscover[phdprop]={cover-phd-nova-ims}
-\thesiscover[msc]={cover-megi-nova-ims}
-\thesiscover[mscplan]={cover-megi-nova-ims}
-\thesiscover[bsc]={}
-\thesiscover[plain]={}
+\thesiscover[phd,front]={nova-ims-front-cover-phd}
+\thesiscover[phd,back]={nova-ims-back-cover-phd}
+\thesiscover[phd,spine]={nova-ims-book-spine-phd}
+\thesiscover[phdprop,front]={nova-ims-front-cover-phd}
+\thesiscover[phdprop,back]={nova-ims-back-cover-phd}
+\thesiscover[phdprop,spine]={nova-ims-book-spine-phd}
+\thesiscover[phdplan,front]={nova-ims-front-cover-phd}
+\thesiscover[phdplan,back]={nova-ims-back-cover-phd}
+\thesiscover[phdplan,spine]={nova-ims-book-spine-phd}
+\thesiscover[msc,front]={cover-megi-nova-ims}
+\thesiscover[msc,back]={nova-ims-back-cover-phd}
+\thesiscover[msc,spine]={nova-ims-book-spine-phd}
+\thesiscover[mscplan,front]={cover-megi-nova-ims}
+\thesiscover[mscplan,back]={nova-ims-back-cover-phd}
+\thesiscover[mscplan,spine]={nova-ims-book-spine-phd}
+\thesiscover[bsc,front]={}
+\thesiscover[plain,front]={}
 
 % Rename Doctor degree
 \degreestr[phd,m,en]={Doctor}
@@ -36,13 +46,19 @@
 \degreestr[phdplan,f,en]={Doctor}
 \degreestr[phdprop,m,en]={Doctor}
 \degreestr[phdprop,f,en]={Doctor}
+\degreestr[phd,m,pt]={Doctor}
+\degreestr[phd,f,pt]={Doctor}
+\degreestr[phdplan,m,pt]={Doctor}
+\degreestr[phdplan,f,pt]={Doctor}
+\degreestr[phdprop,m,pt]={Doctor}
+\degreestr[phdprop,f,pt]={Doctor}
 
 %% DARK GREY  112,121,128
 %% LIGHT GREY 200,203,206
 
 % Spine info
-\spine[logo]={logo-UNL}
-\spine[logotwo]={logo-NOVA-IMS}
+% \spine[logo]={logo-UNL}
+% \spine[logotwo]={logo-NOVA-IMS}
 \spine[author]={\theauthorshortname}
 \spine[title]={\thetitle}
 \spine[year]={\thedateyear}
@@ -58,34 +74,34 @@
 \margin[paper,right]={3.0cm}
 
 % Set margins for cover pages
-\margin[phd,top]={3.0cm}
-\margin[phd,bottom]={2.0cm}
-\margin[phd,left]={3.0cm}
-\margin[phd,right]={3.0cm}
-\margin[phdplan,top]={3.0cm}
-\margin[phdplan,bottom]={2.0cm}
-\margin[phdplan,left]={3.0cm}
-\margin[phdplan,right]={3.0cm}
-\margin[phdprop,top]={3.0cm}
-\margin[phdprop,bottom]={2.0cm}
-\margin[phdprop,left]={3.0cm}
-\margin[phdprop,right]={3.0cm}
+\margin[phd,top]={10.0cm}
+\margin[phd,bottom]={2.4cm}
+\margin[phd,left]={7.0cm}
+\margin[phd,right]={2.0cm}
+\margin[phdplan,top]={8.5cm}
+\margin[phdplan,bottom]={6.0cm}
+\margin[phdplan,left]={6.8cm}
+\margin[phdplan,right]={2.0cm}
+\margin[phdprop,top]={8.5cm}
+\margin[phdprop,bottom]={6.0cm}
+\margin[phdprop,left]={6.8cm}
+\margin[phdprop,right]={2.0cm}
 \margin[msc,top]={8.5cm}
 \margin[msc,bottom]={6.0cm}
 \margin[msc,left]={6.8cm}
 \margin[msc,right]={2.0cm}
-\margin[mscplan,top]={3.0cm}
-\margin[mscplan,bottom]={2.0cm}
-\margin[mscplan,left]={3.0cm}
-\margin[mscplan,right]={3.0cm}
-\margin[bsc,top]={3.0cm}
-\margin[bsc,bottom]={2.0cm}
-\margin[bsc,left]={3.0cm}
-\margin[bsc,right]={3.0cm}
-\margin[plain,top]={3.0cm}
-\margin[plain,bottom]={2.0cm}
-\margin[plain,left]={3.0cm}
-\margin[plain,right]={3.0cm}
+\margin[mscplan,top]={8.5cm}
+\margin[mscplan,bottom]={6.0cm}
+\margin[mscplan,left]={6.8cm}
+\margin[mscplan,right]={2.0cm}
+\margin[bsc,top]={8.5cm}
+\margin[bsc,bottom]={6.0cm}
+\margin[bsc,left]={6.8cm}
+\margin[bsc,right]={2.0cm}
+\margin[plain,top]={8.5cm}
+\margin[plain,bottom]={6.0cm}
+\margin[plain,left]={6.8cm}
+\margin[plain,right]={2.0cm}
 
 \dissertationstr[bsc,pt]={Relatório apresentado como requisito parcial para obtenção do Grau de\\[1.25ex] %
 \thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ em {\themajorfield[\unlthesis@opt@coverlang]}}
@@ -114,15 +130,30 @@ of the requirements for the degree of\\[1ex]%
 \dissertationstr[msc,en]={Dissertaion submitted in partial fulfillment\\%
 of the requirements for the degree of\\[1ex]%
 \thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in {\themajorfield[\unlthesis@opt@coverlang]}}
-\dissertationstr[phdplan,en]={Thesis plan submitted in partial fulfillment\\%
-of the requirements for the degree of\\[1ex]%
-\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in {\themajorfield[\unlthesis@opt@coverlang]}}
-\dissertationstr[phdprop,en]={Thesis proposal submitted in partial fulfillment\\%
-of the requirements for the degree of\\[1ex]%
-\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in {\themajorfield[\unlthesis@opt@coverlang]}}
-\dissertationstr[phd,en]={A thesis submitted in partial fulfillment\\%
-of the requirements for the degree of\\[1ex]%
-\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in {\themajorfield[\unlthesis@opt@coverlang]}}
+
+\dissertationstr[phdplan,pt]={A thesis plan submitted in partial fulfillment %
+of the requirements for the degree of %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in {\themajorfield[\unlthesis@opt@coverlang]}, under the supervision of \printadvisersaslist}
+
+\dissertationstr[phdplan,en]={A thesis plan submitted in partial fulfillment %
+of the requirements for the degree of %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in {\themajorfield[\unlthesis@opt@coverlang]}, under the supervision of \printadvisersaslist}
+
+\dissertationstr[phdprop,pt]={A thesis proposal submitted in partial fulfillment %
+of the requirements for the degree of %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in {\themajorfield[\unlthesis@opt@coverlang]}, under the supervision of \printadvisersaslist}
+
+\dissertationstr[phdprop,en]={A thesis proposal submitted in partial fulfillment %
+of the requirements for the degree of %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in {\themajorfield[\unlthesis@opt@coverlang]}, under the supervision of \printadvisersaslist}
+
+\dissertationstr[phd,pt]={A thesis submitted in partial fulfillment %
+of the requirements for the degree of %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in {\themajorfield[\unlthesis@opt@coverlang]}, under the supervision of \printadvisersaslist}
+
+\dissertationstr[phd,en]={A thesis submitted in partial fulfillment %
+of the requirements for the degree of %
+\thedegreestr[\unlthesis@opt@doctype,\theauthorgender,\unlthesis@opt@coverlang]\ in {\themajorfield[\unlthesis@opt@coverlang]}, under the supervision of \printadvisersaslist}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % UNL guidelines:
@@ -145,8 +176,9 @@ of the requirements for the degree of\\[1ex]%
 % \patchcmd{\appendix}{\@Alph}{\@arabic}{}{}
 
 
-\definecolor{imsdarkgrey}{RGB}{112,121,128}
-\definecolor{imslightgrey}{RGB}{200,203,206}
+\definecolor{imsdarkgrey}{RGB}{100,100,100}
+\definecolor{imsmidgrey}{RGB}{190,190,190}
+\definecolor{imslightgrey}{RGB}{240,240,240}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
@@ -154,53 +186,100 @@ of the requirements for the degree of\\[1ex]%
 
 \ifthenelse{\equal{\unlthesis@opt@doctype}{phd}}%
 {% phd
-  % Author name
-  \coveritem[c]{0cm}{%
+  % PHD PROGRAM
+  \coveritem[l]{0cm}{%
     \coverbackground
-    \fontfamily{phv}\fontsize{14}{14}\selectfont
-    \textbf{\theauthorname}
   }
-
-  % Academic qualifications
-  \coveritem[c]{0.25cm}{%
-    \fontfamily{phv}\fontsize{11}{11}\selectfont
-    \theauthordegree
-  }
-
-  % % Title of Dissertation
-  \coveritem[c]{4.5cm}{%
+  % INFORMATION MANAGEMENT
+  \coveritem[l]{0cm}{%
     \fontfamily{phv}\fontsize{16}{16}\selectfont
-    \textbf{\thetitle}
+    \textcolor{imsdarkgrey}{\textbf{\themajorfield[\unlthesis@opt@coverlang]}}
   }
-
-  % Degree
-  \coveritem[c]{1.5cm}{%
+  % SPECIALIZATION IN
+  \coveritem[l]{0,7cm}{%
+    \fontfamily{phv}\fontsize{16}{16}\selectfont
+    \textcolor{imsmidgrey}{\textbf{Specialization in}}
+  }
+  % DISSERTATION TITLE
+  \coveritem[l]{1.8cm}{%
+    \fontfamily{phv}\fontsize{16}{16}\selectfont
+    \textcolor{imsdarkgrey}{\textbf{\thetitle}}
+  }
+  % AUTHOR NAME
+  \coveritem[l]{0.2cm}{%
+    \fontfamily{phv}\fontsize{14}{14}\selectfont
+    \textcolor{imsdarkgrey}{\textbf{\theauthorname}}
+  }
+  % DISSERTATION TEXT
+  \coveritem[l]{6.8cm}{%
+    \fontfamily{phv}\fontsize{14}{14}\selectfont
+    \textcolor{imsdarkgrey}%
+          {\thedissertationstr[\unlthesis@opt@doctype,\unlthesis@opt@coverlang]}
+  }
+  % DATE
+  \coveritem[l]{2}{%
+    \fontfamily{phv}\fontsize{11}{11}\selectfont%
+    \textcolor{imsdarkgrey}{\textbf{%
+      \ifdraftdoc%
+        DRAFT: \today%
+      \else%
+        \thedatemonth, \thedateyear%
+      \fi%
+    }}%
+  }
+  % SCHOOL
+  \coveritem[l]{1}{%
     \fontfamily{phv}\fontsize{11}{11}\selectfont
-    \thepresentationtext
+    \textcolor{imsdarkgrey}%
+          {\textbf{\thefaculty[en]}}
   }
-
-  % Advisers
-  \coveritem[c]{2}{%
-    \fontfamily{phv}\fontsize{12}{12}\selectfont
-    \printadvisers
-  }
-
-
-  % Committee — only print the committee for the main classes
-  \coveritem[r]{2}{%
-    \fontfamily{phv}\fontsize{10}{10}\selectfont\printcommittee%
-  }
-
-
-  % Date
-  \coveritem[c]{4}{%
+  % UNIVERSITY
+  \coveritem[l]{0.0cm}{%
     \fontfamily{phv}\fontsize{11}{11}\selectfont
-    \ifdraftdoc
-      \textbf{DRAFT: \today}
-    \else
-      \textbf{\thedatemonth, \thedateyear}
-    \fi
+    \textcolor{imsdarkgrey}%
+          {\theuniversity[\unlthesis@opt@coverlang]}
   }
+  %
+  % % Academic qualifications
+  % \coveritem[c]{0.25cm}{%
+  %   \fontfamily{phv}\fontsize{11}{11}\selectfont
+  %   \theauthordegree
+  % }
+  %
+  % % % Title of Dissertation
+  % \coveritem[c]{4.5cm}{%
+  %   \fontfamily{phv}\fontsize{16}{16}\selectfont
+  %   \textbf{\thetitle}
+  % }
+  %
+  % % Degree
+  % \coveritem[c]{1.5cm}{%
+  %   \fontfamily{phv}\fontsize{11}{11}\selectfont
+  %   \thepresentationtext
+  % }
+  %
+  % % Advisers
+  % \coveritem[c]{2}{%
+  %   \fontfamily{phv}\fontsize{12}{12}\selectfont
+  %   \printadvisers
+  % }
+  %
+  %
+  % % Committee — only print the committee for the main classes
+  % \coveritem[r]{2}{%
+  %   \fontfamily{phv}\fontsize{10}{10}\selectfont\printcommittee%
+  % }
+  %
+  %
+  % % Date
+  % \coveritem[c]{4}{%
+  %   \fontfamily{phv}\fontsize{11}{11}\selectfont
+  %   \ifdraftdoc
+  %     \textbf{DRAFT: \today}
+  %   \else
+  %     \textbf{\thedatemonth, \thedateyear}
+  %   \fi
+  % }
 }%
 {% msc and others
   % % Title of Dissertation

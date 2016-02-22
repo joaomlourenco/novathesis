@@ -5,11 +5,11 @@
 %% Packages to be loaded
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%% Configure input encoding
-\RequirePackage{inputenc}		% Format for the input file(s), see the "enc" option
-
 %%%%% Configure font encoding
 \RequirePackage[T1]{fontenc}		% Use new T1 fonts
+
+%%%%% Configure input encoding
+\RequirePackage{inputenc}		% Format for the input file(s), see the "enc" option
 
 %%%%% Configure multilingual language support
 \RequirePackage[english]{babel}			% Support for bilingual documents
@@ -45,6 +45,7 @@
   % \RequirePackage[pdftex]{xcolor}
   % \RequirePackage[usenames]{color}
   \RequirePackage{xcolor}%
+  \RequirePackage{colortbl}
   \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
   \RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}%
   \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref

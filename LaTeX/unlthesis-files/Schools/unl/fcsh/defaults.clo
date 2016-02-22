@@ -21,13 +21,13 @@
 \committeeorder[all]={c,r,a,m}% 
 
 % Cover background images
-\thesiscover[phd]={}
-\thesiscover[phdplan]={}
-\thesiscover[phdprop]={}
-\thesiscover[msc]={}
-\thesiscover[mscplan]={}
-\thesiscover[bsc]={}
-\thesiscover[plain]={}
+\thesiscover[phd,front]={}
+\thesiscover[phdplan,front]={}
+\thesiscover[phdprop,front]={}
+\thesiscover[msc,front]={}
+\thesiscover[mscplan,front]={}
+\thesiscover[bsc,front]={}
+\thesiscover[plain,front]={}
 
 % Spine info
 \spine[logo]={logoUNL}

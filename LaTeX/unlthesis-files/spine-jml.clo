@@ -1,0 +1,196 @@
+% Draw the book spine
+
+\makeatletter
+
+\newlength{\unlthesis@spinewidth}%
+\setlength{\unlthesis@spinewidth}{1mm * (\thelastpage + 19) / 20}%
+
+% Make a box with the logo
+\newbox{\unlthesis@spine@box@logo}%
+\newlength{\unlthesis@spine@box@logo@width}%
+\newlength{\unlthesis@spine@box@logo@height}%
+\newcommand{\unlthesis@spine@box@logoangle}{-90}%
+\newcommand{\make@spine@box@logo}[2]{%
+  \savebox{\unlthesis@spine@box@logo}{%
+    \includegraphics%
+      [origin=c,angle=\unlthesis@spine@box@logoangle,height=0.95\unlthesis@spinewidth,#1]%
+      {#2}%
+  }%
+  \settowidth{\unlthesis@spine@box@logo@width}{\usebox{\unlthesis@spine@box@logo}}%
+  \settoheight{\unlthesis@spine@box@logo@height}{\usebox{\unlthesis@spine@box@logo}}%
+}
+
+% Make a box with the logo2
+\newbox{\unlthesis@spine@box@logotwo}%
+\newlength{\unlthesis@spine@box@logotwo@width}%
+\newlength{\unlthesis@spine@box@logotwo@height}%
+\newcommand{\unlthesis@spine@box@logotwoangle}{-90}%
+\newcommand{\make@spine@box@logotwo}[2]{%
+  \savebox{\unlthesis@spine@box@logotwo}{%
+    \includegraphics%
+      [origin=c,angle=\unlthesis@spine@box@logotwoangle,height=0.95\unlthesis@spinewidth,#1]%
+      {#2}%
+  }%
+  \settowidth{\unlthesis@spine@box@logotwo@width}{\usebox{\unlthesis@spine@box@logo}}%
+  \settoheight{\unlthesis@spine@box@logotwo@height}{\usebox{\unlthesis@spine@box@logo}}%
+}
+
+% Make a box with the date
+\newbox{\unlthesis@spine@box@date}%
+\newlength{\unlthesis@spine@box@date@width}%
+\newlength{\unlthesis@spine@box@date@height}%
+\newcommand{\make@spine@box@date}{%
+  \savebox{\unlthesis@spine@box@date}{\thespine[year]}%
+  \settowidth{\unlthesis@spine@box@date@width}{\usebox{\unlthesis@spine@box@date}}%
+  \settoheight{\unlthesis@spine@box@date@height}{\usebox{\unlthesis@spine@box@date}}%
+  \ifdim\unlthesis@spine@box@date@width < 0.90\unlthesis@spinewidth%
+    \savebox{\unlthesis@spine@box@date}{%
+      \rotatebox[origin=c]{-90}{\usebox{\unlthesis@spine@box@date}}%
+    }%
+  \fi%
+  \settowidth{\unlthesis@spine@box@date@width}{\usebox{\unlthesis@spine@box@date}}%
+  \settoheight{\unlthesis@spine@box@date@height}{\usebox{\unlthesis@spine@box@date}}%
+  \ifdim\unlthesis@spine@box@date@height > 0.90\unlthesis@spinewidth%
+    \savebox{\unlthesis@spine@box@date}{%
+      \resizebox{!}{0.90\unlthesis@spinewidth}{\usebox{\unlthesis@spine@box@date}}%
+    }%
+  \fi%
+  \settowidth{\unlthesis@spine@box@date@width}{\usebox{\unlthesis@spine@box@date}}%
+  \settoheight{\unlthesis@spine@box@date@height}{\usebox{\unlthesis@spine@box@date}}%
+}
+
+
+
+% Make a box with the title
+\newbox{\unlthesis@spine@box@title}%
+\newlength{\unlthesis@spine@box@title@width}%
+\newlength{\unlthesis@spine@box@title@height}%
+\newlength{\unlthesis@spine@box@middlewidth}%
+\newcommand{\make@spine@box@title}[1]{%
+  \setlength{\unlthesis@spine@box@middlewidth}{%
+    \dimexpr\linewidth-\unlthesis@spine@box@logo@width-\unlthesis@spine@box@date@width%
+  }%
+  \savebox{\unlthesis@spine@box@title}{%
+    \parbox{#1\unlthesis@spine@box@middlewidth}{\centering\bfseries\thespine[title]}%
+  }%
+  \settowidth{\unlthesis@spine@box@title@width}{\usebox{\unlthesis@spine@box@title}}%
+  \settoheight{\unlthesis@spine@box@title@height}{\usebox{\unlthesis@spine@box@title}}%
+  \ifdim\unlthesis@spine@box@title@height > 0.90\unlthesis@spinewidth%
+    \savebox{\unlthesis@spine@box@title}{%
+      \resizebox{!}{0.90\unlthesis@spinewidth}{\usebox{\unlthesis@spine@box@title}}%
+    }%
+  \fi%
+  \settowidth{\unlthesis@spine@box@title@width}{\usebox{\unlthesis@spine@box@title}}%
+  \settoheight{\unlthesis@spine@box@title@height}{\usebox{\unlthesis@spine@box@title}}%
+}
+
+
+% Make a box with the author
+\newbox{\unlthesis@spine@box@author}%
+\newlength{\unlthesis@spine@box@author@width}%
+\newlength{\unlthesis@spine@box@author@height}%
+\newcommand{\make@spine@box@author}[1]{%
+  \savebox{\unlthesis@spine@box@author}{%
+    \parbox{#1\unlthesis@spine@box@middlewidth}{\centering\thespine[author]}%
+  }%
+  \settowidth{\unlthesis@spine@box@author@width}{\usebox{\unlthesis@spine@box@author}}%
+  \settoheight{\unlthesis@spine@box@author@height}{\usebox{\unlthesis@spine@box@author}}%
+  \ifdim\unlthesis@spine@box@author@height > 0.90\unlthesis@spinewidth%
+    \savebox{\unlthesis@spine@box@author}{%
+      \resizebox{!}{0.90\unlthesis@spinewidth}{\usebox{\unlthesis@spine@box@author}}%
+    }%
+  \fi%
+  \settowidth{\unlthesis@spine@box@author@width}{\usebox{\unlthesis@spine@box@author}}%
+  \settoheight{\unlthesis@spine@box@author@height}{\usebox{\unlthesis@spine@box@author}}%
+}
+
+
+\newbox{\unlthesis@spine@box@titleauthor}%
+\newlength{\unlthesis@spine@box@titleauthor@width}%
+\newlength{\unlthesis@spine@box@titleauthor@height}%
+\newcommand{\make@spine@box@titleauthor}{%
+  \make@spine@box@title{0.8}%
+  \make@spine@box@author{0.8}%
+  \savebox{\unlthesis@spine@box@titleauthor}{%
+    \parbox{0.8\unlthesis@spine@box@middlewidth}{%
+      % \vfill%
+      \usebox{\unlthesis@spine@box@title}%
+      \vfill%
+      \usebox{\unlthesis@spine@box@author}%
+      % \vfill%
+    }%
+  }%
+  \settowidth{\unlthesis@spine@box@titleauthor@width}%
+    {\usebox{\unlthesis@spine@box@titleauthor}}%
+  \settoheight{\unlthesis@spine@box@titleauthor@height}%
+    {\usebox{\unlthesis@spine@box@titleauthor}}%
+  \ifdim\unlthesis@spine@box@titleauthor@height > 0.90\unlthesis@spinewidth%
+    \make@spine@box@title{0.4}%
+    \make@spine@box@author{0.4}%
+    \savebox{\unlthesis@spine@box@titleauthor}{%
+      \usebox{\unlthesis@spine@box@title}%
+      \qquad%
+      \usebox{\unlthesis@spine@box@author}%
+    }%
+  \fi%
+  \settowidth{\unlthesis@spine@box@titleauthor@width}%
+    {\usebox{\unlthesis@spine@box@titleauthor}}%
+  \settoheight{\unlthesis@spine@box@titleauthor@height}%
+    {\usebox{\unlthesis@spine@box@titleauthor}}%
+  \ifdim\unlthesis@spine@box@titleauthor@height > 0.90\unlthesis@spinewidth%
+    \savebox{\unlthesis@spine@box@titleauthor}{%
+      \resizebox{!}{0.90\unlthesis@spinewidth}{\usebox{\unlthesis@spine@box@titleauthor}}%
+    }%
+  \fi%
+  \settowidth{\unlthesis@spine@box@titleauthor@width}%
+    {\usebox{\unlthesis@spine@box@titleauthor}}%
+  \settoheight{\unlthesis@spine@box@titleauthor@height}%
+    {\usebox{\unlthesis@spine@box@titleauthor}}%
+}
+
+\newcommand{\AtStockLowerCenter}[1]{%
+  \AtPageUpperLeft{% 
+    \put(\LenToUnit{(\paperwidth-\unlthesis@spinewidth)/2},%
+         \LenToUnit{-\paperheight}){#1}%
+  }%
+}
+
+\newbox{\unlthesis@spine@box}%
+\newcommand{\printspine}{%
+  \cleardoublepage%
+  \thispagestyle{empty}%
+  \make@spine@box@logo{}{\thespine[logo]}%
+  \ifexists{spine}[logotwo]{%
+    \make@spine@box@logotwo{}{\thespine[logotwo]}%
+  }
+  \make@spine@box@date%
+  \make@spine@box@titleauthor%
+  \savebox{\unlthesis@spine@box}{%
+    \rotatebox{90}{%
+      \framebox[\stockheight]{%
+        ~
+        \parbox[c][\unlthesis@spinewidth][c]{\unlthesis@spine@box@date@width}%
+          {\usebox{\unlthesis@spine@box@date}}%
+        \ifexists{spine}[logotwo]{%
+          \parbox[c][\unlthesis@spinewidth][c]{\unlthesis@spine@box@logotwo@width}%
+            {\hspace*{3mm}\usebox{\unlthesis@spine@box@logotwo}}%
+        }
+        \hfill%
+        \parbox[c][\unlthesis@spinewidth][c]{\unlthesis@spine@box@titleauthor@width}%
+          {\usebox{\unlthesis@spine@box@titleauthor}}%
+        \hfill%
+        \parbox[c][\unlthesis@spinewidth][c]{\unlthesis@spine@box@logo@width}%
+          {\usebox{\unlthesis@spine@box@logo}}%
+        ~
+      }%
+    }%
+  }%
+  \AddToShipoutPictureFG*{%
+    \AtStockLowerCenter{%
+        {\usebox{\unlthesis@spine@box}}%
+    }%
+  }%
+  ~% This space is important here so that the spine page is not empty anymore!
+  % \cleardoublepage%
+}%
+\makeatother

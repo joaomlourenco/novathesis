@@ -46,6 +46,13 @@ If you think this template really helped you while writing your thesis, think ab
 
 NOTE: see the file `changelog.txt` for the complete listing of changes.
 
+*2016-02-22 — Version 3.1.1 — NOVA IMS improved*
++ Added support for NOVA IMS (new PhD tempalte)
++ Added support for local (per school) "spine.clo" files. The main one is only used in no local version of the file is supplied.
++ Added support for "back cover" and "book spine" images in defaults.clo
++ Now using an altrnative "spine.clo" (thanks to Tomás Monteiro <monteiro.tomas@gmail.com>)
++ Minor fixes for NOVA IMS
+
 *2016-01-07 — Version 3.1.0 — NOVA IMS*
 + Added support for NOVA IMS
 

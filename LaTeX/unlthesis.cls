@@ -7,7 +7,7 @@
 %% To view a copy of this license, 
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2016/01/07 [3.1.0]
+%% Version 2016/02/22 [3.2.0]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -37,9 +37,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{unlthesis}[2016/01/07 unlthesis template]
-
-
+\ProvidesClass{unlthesis}[2016/02/22 unlthesis template]
 
 
 
@@ -126,7 +124,7 @@
 %% Cover definition macros
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\coverbackground}[1][\@nameuse{thesiscover\unlthesis@opt@doctype}]{%
+\newcommand{\coverbackground}[1][\@nameuse{thesiscover\unlthesis@opt@doctype,front}]{%
   \AddToShipoutPictureBG*{%
     \includegraphics[width=\paperwidth,height=\paperheight]{#1}%
   }%
@@ -199,10 +197,24 @@
   \selectthelanguage{\unlthesis@opt@lang}%
 }
 
+\newcommand{\printbackcoverpage}{%
+  \ifexists{thesiscover}[\unlthesis@opt@doctype,back]{
+    \cleardoublepage%
+    \thispagestyle{empty}%
+    ~
+    \clearpage%
+    \thispagestyle{empty}%
+    \coverbackground[\@nameuse{thesiscover\unlthesis@opt@doctype,back}]
+    ~% This space is important here so that the cover page is not empty anymore!
+    \cleardoublepage%
+    \selectthelanguage{\unlthesis@opt@lang}%
+  }
 
-\newcommand{\unlthesis@aftercover@file}{}
-\newcommand{\aftercoverfile}[1]{%
-  \renewcommand{\unlthesis@aftercover@file}{#1}%
+  \newcommand{\unlthesis@aftercover@file}{}
+  \newcommand{\aftercoverfile}[1]{%
+    \renewcommand{\unlthesis@aftercover@file}{#1}%
+  }
+  \fi
 }
 
 \newcommand{\printaftercover}{%
@@ -489,6 +501,48 @@
   \noindent\usebox\unlthesis@savebox%
 }
 
+
+\newcounter{@unlthesis@cnt}%
+\setcounter{@unlthesis@cnt}{0}%
+\newcommand{\printadvisersaslist@ii}[1]{%
+  \stepcounter{@unlthesis@cnt}%
+  \ifthenelse{\equal{\value{@unlthesis@cnt}}{1}}%
+  {}%
+  {\ifthenelse{\equal{\value{@unlthesis@cnt}}{\value{@unlthesis@alladvisers@cnt}}}%
+              { and }%
+              {, }%
+  }%
+  #1%
+}%
+
+\newcounter{@unlthesis@alladvisers@cnt}
+\setcounter{@unlthesis@alladvisers@cnt}{0}
+\def\makelistwithalladvisers@ii#1,#2,#3{%
+  \!\!%
+  \listcsadd{@unlthesis@listwithhalladvisers}{#1}%
+}%
+\newcommand{\makelistwithalladvisers@i}[1]{
+  \stepcounter{@unlthesis@alladvisers@cnt}%
+  \makelistwithalladvisers@ii#1%
+}%
+\newcommand{\makelistwithalladvisers}{
+  \ifcsname unlthesis@adviser@list\endcsname%
+    \!%
+    \forlistcsloop{\makelistwithalladvisers@i}{unlthesis@adviser@list}%
+  \fi%
+  \ifcsname unlthesis@coadviser@list\endcsname%
+    \!%
+    \forlistcsloop{\makelistwithalladvisers@i}{unlthesis@coadviser@list}
+  \fi%
+}%
+
+\newcommand{\printadvisersaslist}{%
+  \makelistwithalladvisers%
+% [\arabic{@unlthesis@alladvisers@cnt}]
+  \ifcsname @unlthesis@listwithhalladvisers\endcsname%
+    \forlistcsloop{\printadvisersaslist@ii}{@unlthesis@listwithhalladvisers}%
+  \fi%
+}
 
 
 
@@ -808,7 +862,8 @@
   \vskip\baselineskip%
   {\scriptsize%
       \begin{Spacing}{1}%
-        \fontfamily{phv}\selectfont\noindent\theacknowledgmentsstr[\unlthesis@opt@coverlang]%
+        \fontfamily{phv}\fontsize{6.3}{6.3}\selectfont%
+        \noindent\theacknowledgmentsstr[\unlthesis@opt@coverlang]%
       \end{Spacing}%
   }%
   \cleardoublepage%
