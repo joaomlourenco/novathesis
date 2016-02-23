@@ -20,7 +20,7 @@
 	\makeatletter
 
 	\newlength{\unlthesis@spinewidth}%
-	\setlength{\unlthesis@spinewidth}{1mm * (\thelastpage+ 19) / 20}% replace \thelastpage by 1581 to get 80mm width folder label or any other value as long as the width is bigger than 50mm 
+	\setlength{\unlthesis@spinewidth}{1mm * (\thelastsheet+ 19) / 20}% replace \thelastsheet by 1581 to get 80mm width folder label or any other value as long as the width is bigger than 50mm 
 
 
 % Make a box with the date
@@ -256,7 +256,7 @@
 \makeatletter
 
 \newlength{\unlthesis@spinewidth}%
-\setlength{\unlthesis@spinewidth}{1mm * (\thelastpage+ 19) / 20}% replace \thelastpage by 1581 to get 80mm width folder label or any other value as long as the width is bigger than 50mm
+\setlength{\unlthesis@spinewidth}{1mm * (\thelastsheet+ 19) / 20}% replace \thelastsheet by 1581 to get 80mm width folder label or any other value as long as the width is bigger than 50mm
 
 % Make a box with the date
 \newbox{\unlthesis@spine@box@date}%
