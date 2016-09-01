@@ -125,7 +125,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%% PUT THIS IN A MORE ADEQUATE PLACE
-\def\fcul{ul/fc}
 \newif\if@printcommitteeaux
 \@printcommitteeauxfalse % aux variable
 
@@ -205,9 +204,16 @@
   }%
   ~% This space is important here so that the cover page is not empty anymore!
   \cleardoublepage%
-	\ifx\unlthesis@opt@school\fcul%
-		\@printcommitteeauxtrue
-
+  \@printcommitteeauxtrue
+  \ifthenelse{%
+  	\equal{\unlthesis@opt@school}{ul/fc}%
+  	\AND\(%
+  		\equal{\unlthesis@opt@doctype}{phd}%
+  		\OR\equal{\unlthesis@opt@doctype}{phdprop}%
+  		\OR\equal{\unlthesis@opt@doctype}{phdplan}%
+		\)%
+	}%
+	{
 		\thispagestyle{empty}%
 	  \selectthelanguage{\unlthesis@opt@coverlang}%
 	  \setlength{\mpwidth}{\dimexpr%
@@ -234,7 +240,8 @@
 	  }%
 	  ~% This space is important here so that the cover page is not empty anymore!
 	  \cleardoublepage%
-	\fi
+  }%
+  {}%
   \selectthelanguage{\unlthesis@opt@lang}%
 }
 
@@ -262,16 +269,10 @@
 \newcommand{\printaftercover}{%
   \ifthenelse{\equal{\unlthesis@opt@aftercover}{true}}%
   {%
-  	\ifx\unlthesis@opt@school\fcul%
-  		\printcommitteeauxtrue% aux variable
-  		\printcoverpage%
-  		\cleardoublepage%
-  	\else%
     \InputIfFileExists{Chapters/\unlthesis@aftercover@file}%
       {\cleardoublepage}%
       {}%
-    \fi
-  }%
+	}%
   {}%
 }
 
@@ -329,7 +330,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \mynewdata{university}
 \mynewdata{faculty}
+\mynewdata{department}
 \mynewdata{majorfield}
+\mynewdata{specialization}
 \mynewdata{spine}
 \mynewdata{thesiscover}
 \mynewdata{margin}
