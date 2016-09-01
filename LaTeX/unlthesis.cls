@@ -124,6 +124,13 @@
 %% Cover definition macros
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%% PUT THIS IN A MORE ADEQUATE PLACE
+\def\fcul{ul/fc}
+\newif\if@printcommitteeaux
+\@printcommitteeauxfalse % aux variable
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newcommand{\coverbackground}[1][\@nameuse{thesiscover\unlthesis@opt@doctype,front}]{%
   \AddToShipoutPictureBG*{%
     \includegraphics[width=\paperwidth,height=\paperheight]{#1}%
@@ -165,20 +172,24 @@
 	\forlistcsloop{\unlthesis@printcoveritem}{unlthesis@coveritem@list}}%
 }
 
+\newlength{\mpwidth}%
+\newlength{\mpheight}%
+\newsavebox{\unlthesis@coverbox}%
+
 \newcommand{\printcoverpage}{%
   \thispagestyle{empty}%
   \selectthelanguage{\unlthesis@opt@coverlang}%
-  \newlength{\mpwidth}%
+  
   \setlength{\mpwidth}{\dimexpr%
     \paperwidth%
       -\themargin[\unlthesis@opt@doctype,left]%
       -\themargin[\unlthesis@opt@doctype,right]}%
-  \newlength{\mpheight}%
+  
   \setlength{\mpheight}{\dimexpr%
     \paperheight%
       -\themargin[\unlthesis@opt@doctype,top]%
       -\themargin[\unlthesis@opt@doctype,bottom]}%
-  \newsavebox{\unlthesis@coverbox}%
+
   \sbox{\unlthesis@coverbox}{%
     \parbox[t][\mpheight][t]{\mpwidth}{%
       \printcoveritems%
@@ -194,6 +205,36 @@
   }%
   ~% This space is important here so that the cover page is not empty anymore!
   \cleardoublepage%
+	\ifx\unlthesis@opt@school\fcul%
+		\@printcommitteeauxtrue
+
+		\thispagestyle{empty}%
+	  \selectthelanguage{\unlthesis@opt@coverlang}%
+	  \setlength{\mpwidth}{\dimexpr%
+	    \paperwidth%
+	      -\themargin[\unlthesis@opt@doctype,left]%
+	      -\themargin[\unlthesis@opt@doctype,right]}%
+	  \setlength{\mpheight}{\dimexpr%
+	    \paperheight%
+	      -\themargin[\unlthesis@opt@doctype,top]%
+	      -\themargin[\unlthesis@opt@doctype,bottom]}%
+	  \newsavebox{\unlthesis@aftercoverbox}%
+	  \sbox{\unlthesis@aftercoverbox}{%
+	    \parbox[t][\mpheight][t]{\mpwidth}{%
+	      \printcoveritems%
+	    }%
+	  }%
+	  \AddToShipoutPictureFG*{%
+	    \AtPageUpperLeft{%
+	      \put(%
+	        \LenToUnit{\themargin[\unlthesis@opt@doctype,left]},%
+	        -\LenToUnit{\themargin[\unlthesis@opt@doctype,top]})%
+	        {\usebox{\unlthesis@aftercoverbox}}%
+	    }%
+	  }%
+	  ~% This space is important here so that the cover page is not empty anymore!
+	  \cleardoublepage%
+	\fi
   \selectthelanguage{\unlthesis@opt@lang}%
 }
 
@@ -216,12 +257,20 @@
   \renewcommand{\unlthesis@aftercover@file}{#1}%
 }
 
+
+
 \newcommand{\printaftercover}{%
   \ifthenelse{\equal{\unlthesis@opt@aftercover}{true}}%
   {%
+  	\ifx\unlthesis@opt@school\fcul%
+  		\printcommitteeauxtrue% aux variable
+  		\printcoverpage%
+  		\cleardoublepage%
+  	\else%
     \InputIfFileExists{Chapters/\unlthesis@aftercover@file}%
       {\cleardoublepage}%
       {}%
+    \fi
   }%
   {}%
 }
