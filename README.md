@@ -46,8 +46,13 @@ If you think this template really helped you while writing your thesis, think ab
 
 NOTE: see the file `changelog.txt` for the complete listing of changes.
 
-*2016-02-22 — Version 3.1.3 — Support for FC-UL*
-+ Added cover support for FC-UL.
+*2016-09-17 — Version 3.1.4 — Support for FC-UL*
++ Added support for FC-UL.
+
+*2016-02-22 — Version 3.1.3 — Book spine is ok*
++ Bug fix in \printaftercover
++ Bug fix in cover of NOVA IMS
++ Bug fix in book spine of NOVA IMS
 
 *2016-02-22 — Version 3.1.2 — NOVA IMS improved*
 + Bugfix in \printaftercover
