@@ -204,7 +204,10 @@
   }%
   ~% This space is important here so that the cover page is not empty anymore!
   \cleardoublepage%
+  
+  %% Print second conver page if school is ul/fc
   \@printcommitteeauxtrue
+  \setcounter{@unlthesis@cnt}{0}%	reset counter used in the name listing
   \ifthenelse{%
   	\equal{\unlthesis@opt@school}{ul/fc}%
   	\AND\(%
