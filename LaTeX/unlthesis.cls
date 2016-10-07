@@ -751,7 +751,7 @@
 \newcommand{\chapterfile}[1]{\listgadd{\unlthesis@chapter@list}{#1}}
 
 \newcommand{\unlthesis@printchapter}[1]{%
-	\InputIfFileExists{Chapters/#1}{}{ERROR: File '#1' does not exist!!!}%
+	\InputIfFileExists{Chapters/#1}{\cleardoublepage}{ERROR: File '#1' does not exist!!!}%
 }
 
 \newcommand{\printchapthers}{%
@@ -769,7 +769,7 @@
 }
 
 \newcommand{\unlthesis@printappendix}[1]{%
-	\InputIfFileExists{Chapters/#1}{}{}%
+	\InputIfFileExists{Chapters/#1}{\cleardoublepage}{}%
 }
 
 \newcommand{\printappendixes}{%

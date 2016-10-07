@@ -17,6 +17,7 @@
   \def\indexname{Índice Remissivo}%
   \def\lstlistlistingname{Listagens}%
   \def\lstlistingname{Listagem}%
+  \defineshorthand{"-}{\babelhyphen{repeat}}% generates a hyphen that will repeat on a new line
 }
 \addto\captionsenglish{%
   \def\lstlistlistingname{Listings}%
