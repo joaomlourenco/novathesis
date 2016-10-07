@@ -36,6 +36,11 @@
 % To process lists and other stuff
 \RequirePackage{etoolbox}
 
+%% Workaround found to the problem described in issue #39 @github
+%% I think that this could be solved differently, but for the time being
+%% it will have to do.
+\RequirePackage{subcaption}
+
 
 %%%%% LOAD THESE PACKAGES JUST AT THE ENF OF THE PREAMBLE 
 %%%%% AND BEFORE THE \BEGIN{DOCUMENT}
