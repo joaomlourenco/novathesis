@@ -817,7 +817,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Appendixes
+%% Appendixes and Annexes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\appendixfile}[1]{%
 	\listgadd{\unlthesis@appendix@list}{#1}%
@@ -833,7 +833,26 @@
 		 \forlistloop{\unlthesis@printappendix}{\unlthesis@appendix@list}}%
 } 
 
+\newcommand{\annexfile}[1]{%
+	\listgadd{\unlthesis@annex@list}{#1}%
+}
 
+\newcommand{\unlthesis@printannex}[1]{%
+	\InputIfFileExists{Chapters/#1}{\cleardoublepage}{}%
+}
+
+\newcommand{\printannexes}{%
+	\ifthenelse{\isundefined\unlthesis@annex@list}{}%
+		{\cleardoublepage\annex%
+		 \forlistloop{\unlthesis@printannex}{\unlthesis@annex@list}}%
+} 
+
+\newcommand{\annex}{\par
+  \setcounter{chapter}{0}%
+  \setcounter{section}{0}%
+  \gdef\@chapapp{\annexname}%
+  \gdef\thechapter{\@Roman\c@chapter}%
+  }
 
 
 

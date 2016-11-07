@@ -161,7 +161,7 @@
                 {@{\hspace*{2.0cm}}p{1cm}@{\hspace*{0.9cm}}>{\hsize=1.5\hsize}X@{}>{\hsize=0.5\hsize}X@{\hspace*{1.5cm}}l@{\hspace*{2.0cm}}}
         \usebox{\unlthesis@spine@box@date} &
         % w=\the\unlthesis@spine@box@title@width~h=\the\hsize~
-        \ifdim\unlthesis@spine@box@title@width > 460pt% 
+        \ifdim\unlthesis@spine@box@title@width > 450pt% 
           \savebox{\unlthesis@spine@box@title}{%
             \resizebox{450pt}{!}{\usebox{\unlthesis@spine@box@title}}%
           }%

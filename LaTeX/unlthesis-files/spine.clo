@@ -114,7 +114,7 @@
 	%  \fi%
 	  \ifdim\unlthesis@spine@box@title@height > 0.70\unlthesis@spinewidth%
 		\savebox{\unlthesis@spine@box@title}{%
-		  \parbox{0.70\paperheight}{\centering{\bfseries\thespine[title]}}%
+		  \parbox{0.80\paperheight}{\centering{\bfseries\thespine[title]}}%
 		}%
 	  \fi%
 	  

@@ -193,6 +193,7 @@
 \abstractfile[en]{abstract-en}	% Abstract in English
 \abstractfile[fr]{abstract-fr}	% Abstract in French
 \glossaryfile{glossary}
+\setglossarystyle{super}
 \acronymsfile{acronyms}
 
 % definition of the second cover, to be printed before the copyright (to serve FCSH-UNL)
@@ -204,7 +205,7 @@
 \addlisttofrontmatter{\listoffigures}	% The List of Figures. Comment to omit.
 \addlisttofrontmatter{\listoftables} 	% The List of Tables. Comment to omit.
 \addlisttofrontmatter{\lstlistoflistings}	% The List of Code Listings. Comment to omit.
-\addlisttofrontmatter{\printnoidxglossaries}	% The Glossary and List of Acrnonyms
+\addlisttofrontmatter{\glsnogroupskiptrue\setlength{\glsdescwidth}{0.8\textwidth}\printnoidxglossaries}	% The Glossary and List of Acrnonyms
 
 
 % Text chapters
@@ -219,6 +220,9 @@
 % sintax: \appendixfile{file}
 % Comment if not needed
 \appendixfile{appendix1}
+\appendixfile{appendix2}
+\annexfile{annex1}
+\annexfile{annex2}
 
 
 % BibTeX bibiography files. Can be used multiple times with a single file nae each time.
