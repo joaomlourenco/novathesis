@@ -30,6 +30,10 @@ Please add them to the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) a
 
 **Did you find a bug?**  Please [open an issue](https://github.com/joaomlourenco/unlthesis/issues). Thanks!
 
+## Donations
+
+If you think this template really helped you while writing your thesis, think about doing a [small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KTPG2K2AHCRAW). I'll keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
+
 ## Disclaimer
 
 These are not official templates for FCT-UNL, although they are fully compliant to the FCT and UNL formatting regulations.
@@ -38,13 +42,12 @@ The Word template is *frozen*.  The maintenance is very very limited.
 
 All contributors, both sporadic and regular, are welcome. :) Please [contact me](http://docentes.fct.unl.pt/joao-lourenco) to join the team.
 
-## Donations
-
-If you think this template really helped you while writing your thesis, think about doing a [small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KTPG2K2AHCRAW). I'll keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
-
 ## Recent News
 
 NOTE: see the file `changelog.txt` for the complete listing of changes.
+
+*2016-11-07 — Version 3.2.0 — Support for both Appendixes and Annexes*
++ Added support for both Appendixes and Annexes.
 
 *2016-09-17 — Version 3.1.4 — Support for FC-UL*
 + Added support for FC-UL.
