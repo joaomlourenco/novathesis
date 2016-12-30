@@ -1,6 +1,6 @@
 # unlthesis
 
-The unlthesis LaTeX class is a thesis template initially designed for the PhD and MSc thesis at [FCT Universidade Nova de Lisboa (FCT-UNL)](http://www.fct.unl.pt), Portugal. The class provides utilities to easily set up the cover page, the front matter pages, the page headers, etc. with respect to the official guidelines of the FCT-UNL for writing PhD dissertations.
+The NOVAthesis LaTeX class is a thesis template initially designed for the PhD and MSc thesis at [FCT Universidade NOVA de Lisboa (FCT-NOVA)](http://www.fct.unl.pt), Portugal. The class provides utilities to easily set up the cover page, the front matter pages, the page headers, etc. with respect to the official guidelines of the FCT-NOVA for writing PhD dissertations.
 
 The template is easily customizable, including the support for other institutions as well. Currently the template supports out-of-thebox (at least): 17 Chapter Styles, 7 font sets, 4 schools.  If you customize this template for your institution or add new style files, please [let me knwow](http://docentes.fct.unl.pt/joao-lourenco) about the thorns in the process, so that I can work a bit to smooth them.  Thanks!
 
@@ -11,24 +11,24 @@ The template is easily customizable, including the support for other institution
 
 ### Download
 
-Get the latest realease from the [releases page](https://github.com/joaomlourenco/unlthesis/releases)!
+Get the latest realease from the [releases page](https://github.com/joaomlourenco/novathesis/releases)!
 
 ### Problems and Difficulties
 
-Check the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) and have some hope! :smile:
+Check the [wiki](https://github.com/joaomlourenco/novathesis/wiki) and have some hope! :smile:
 
 If you couldn't find what you were looking for, ask for help in:
 
-* the [discussion forum](https://groups.google.com/forum/#!forum/unlthesis) at https://groups.google.com/forum/#!forum/unlthesis. 
-* the [facebook page](https://www.facebook.com/groups/unlthesis/) at https://www.facebook.com/groups/unlthesis.
+* the [discussion forum](https://groups.google.com/forum/#!forum/novathesis) at https://groups.google.com/forum/#!forum/novathesis. 
+* the [facebook page](https://www.facebook.com/groups/novathesis/) at https://www.facebook.com/groups/novathesis.
 
 Those are the right places to ask for help!  *Please don't ask for help by email! We won't answer…*
 
 ### Suggestions and Recommendations
 
-Please add them to the [wiki](https://github.com/joaomlourenco/unlthesis/wiki) and help other users!
+Please add them to the [wiki](https://github.com/joaomlourenco/novathesis/wiki) and help other users!
 
-**Did you find a bug?**  Please [open an issue](https://github.com/joaomlourenco/unlthesis/issues). Thanks!
+**Did you find a bug?**  Please [open an issue](https://github.com/joaomlourenco/novathesis/issues). Thanks!
 
 ## Donations
 
@@ -36,7 +36,7 @@ If you think this template really helped you while writing your thesis, think ab
 
 ## Disclaimer
 
-These are not official templates for FCT-UNL, although they are fully compliant to the FCT and UNL formatting regulations.
+These are not official templates for FCT-NOVA, although they are fully compliant to the FCT and NOVA formatting regulations.
 
 The Word template is *frozen*.  The maintenance is very very limited.
 
