@@ -137,7 +137,7 @@
 % % Title of Dissertation
 \coveritem[c]{1}{%
   \fontfamily{phv}\fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\thetitle}}%
+  \parbox[c][][c]{0.95\stockwidth}{\centering\textcolor{fcshblue}{\textbf{\thetitle}}}
 }
 
 % Author name
