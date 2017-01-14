@@ -20,9 +20,11 @@ Check the [wiki](https://github.com/joaomlourenco/novathesis/wiki) and have some
 If you couldn't find what you were looking for, ask for help in:
 
 * the [discussion forum](https://groups.google.com/forum/#!forum/novathesis) at https://groups.google.com/forum/#!forum/novathesis. 
-* the [facebook page](https://www.facebook.com/groups/novathesis/) at https://www.facebook.com/groups/novathesis.
+* the [facebook page](https://www.facebook.com/groups/novathesis/) (PT or EN) at https://www.facebook.com/groups/novathesis.
+* the [google group](https://groups.google.com/forum/#!forum/novathesis) (EN only please) at https://groups.google.com/forum/#!forum/novathesis.
+* You may also give a look at the new [NOVA thesis blog](https://novathesis.blogspot.pt) at https://novathesis.blogspot.pt.
 
-Those are the right places to ask for help!  *Please don't ask for help by email! We won't answer…*
+Those are the right places to learn about LaTeX and ask for help!  *Please don't ask for help by email! We won't answer…*
 
 ### Suggestions and Recommendations
 
