@@ -1,0 +1,15 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% libertine.clo
+%% NOVA thesis configuration file
+%%
+%% Customization of font to use a Linux Libertine font set
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{textcomp}
+\RequirePackage[sb]{libertine}
+\RequirePackage[varqu,varl]{zi4}% inconsolata
+\RequirePackage[libertine,bigdelims,vvarbb]{newtxmath} % bb from STIX
+\RequirePackage[cal=boondoxo]{mathalfa} % mathcal
+\useosf % osf for text, not math
+\RequirePackage[supstfm=libertinesups,%
+supscaled=1.2,%
+raised=-.13em]{superiors}

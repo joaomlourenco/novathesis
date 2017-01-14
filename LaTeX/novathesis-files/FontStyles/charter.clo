@@ -1,0 +1,12 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% charter.clo
+%% NOVA thesis configuration file
+%%
+%% Customization of fonts to use Charter fontset
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[full]{textcomp}
+\RequirePackage[osf,sups,scaled=.97]{XCharter} % osf for text, not math
+\RequirePackage{cabin} % sans serif
+\RequirePackage[varqu,varl]{inconsolata} % sans serif typewriter
+\RequirePackage[libertine,bigdelims,vvarbb,scaled=1.03]{newtxmath} % bb from STIX
+\RequirePackage[cal=boondoxo]{mathalfa} % mathcal

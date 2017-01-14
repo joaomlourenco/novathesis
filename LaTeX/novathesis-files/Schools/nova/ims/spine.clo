@@ -1,0 +1,356 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% spine.clo
+%% NOVA thesis document template
+%%
+%% This work is licensed under the 
+%% Creative Commons Attribution-NonCommercial 4.0 International License. 
+%% To view a copy of this license, 
+%% visit http://creativecommons.org/licenses/by-nc/4.0/.
+%%
+%% Authors / Contributors:
+%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%      - Tomás Monteiro <monteiro.tomas@gmail.com>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Draw the book spine
+% usable range: 145 to 425 pages, maximum characters for the title 140 and 22 for the author name
+% usable range: 75 to 145 pages, maximum characters for the title 70 and 22 for the author name
+
+	\makeatletter
+
+	\newlength{\novathesis@spinewidth}%
+	\setlength{\novathesis@spinewidth}{1mm * (\thelastsheet+ 19) / 20}% replace \thelastsheet by 1581 to get 80mm width folder label or any other value as long as the width is bigger than 50mm 
+
+
+% Make a box with the date
+	\newbox{\novathesis@spine@box@date}%
+	\newlength{\novathesis@spine@box@date@width}%
+	\newlength{\novathesis@spine@box@date@height}%
+	\newcommand{\make@spine@box@date}{%
+	  \savebox{\novathesis@spine@box@date}{\fontfamily{phv}\fontsize{10}{10}\selectfont\thespine[year]}%
+	  \settowidth{\novathesis@spine@box@date@width}{\usebox{\novathesis@spine@box@date}}%
+	  \settoheight{\novathesis@spine@box@date@height}{\usebox{\novathesis@spine@box@date}}%
+	  \ifdim\novathesis@spine@box@date@width < 0.90\novathesis@spinewidth%
+		\savebox{\novathesis@spine@box@date}{%
+		  \rotatebox[origin=c]{-90}{\usebox{\novathesis@spine@box@date}}%
+		}%
+	  \fi%
+	  \settowidth{\novathesis@spine@box@date@width}{\usebox{\novathesis@spine@box@date}}%
+	  \settoheight{\novathesis@spine@box@date@height}{\usebox{\novathesis@spine@box@date}}%
+	  \ifdim\novathesis@spine@box@date@height > 0.90\novathesis@spinewidth%
+		\savebox{\novathesis@spine@box@date}{%
+		  \resizebox{!}{0.90\novathesis@spinewidth}{\usebox{\novathesis@spine@box@date}}%
+		}%
+	  \fi%
+	  \settowidth{\novathesis@spine@box@date@width}{\usebox{\novathesis@spine@box@date}}%
+	  \settoheight{\novathesis@spine@box@date@height}{\usebox{\novathesis@spine@box@date}}%
+	}
+
+
+
+
+% Make a box with the title
+	\newbox{\novathesis@spine@box@title}%
+	\newlength{\novathesis@spine@box@title@width}%
+	\newlength{\novathesis@spine@box@title@height}%
+	\newlength{\novathesis@spine@box@middlewidth}%
+	\newcommand{\make@spine@box@title}{%
+	  \savebox{\novathesis@spine@box@title}{\fontfamily{phv}\fontsize{14}{14}\selectfont\thespine[title]}
+	  \settowidth{\novathesis@spine@box@title@width}{\usebox{\novathesis@spine@box@title}}%
+	  \settoheight{\novathesis@spine@box@title@height}{\usebox{\novathesis@spine@box@title}}%
+	%  \ifdim\novathesis@spine@box@title@height <= 0.50\novathesis@spinewidth%
+	%	\savebox{\novathesis@spine@box@title}{%
+	%	  \resizebox{!}{0.35\novathesis@spinewidth}{\usebox{\novathesis@spine@box@title}}%
+	%	}%
+	%  \fi%
+	  \ifdim\novathesis@spine@box@title@height > 0.70\novathesis@spinewidth%
+		\savebox{\novathesis@spine@box@title}{%
+		  \parbox{0.70\paperheight}{\fontfamily{phv}\fontsize{14}{14}\selectfont\thespine[title]}%
+		}%
+	  \fi%
+	  
+	  \ifdim\novathesis@spinewidth > 50mm%
+		\savebox{\novathesis@spine@box@title}{%
+		  \rotatebox[origin=c]{-90}{\parbox{50mm}{\fontfamily{phv}\fontsize{14}{14}\selectfont\thespine[title]}}%
+		}%
+	  \fi%
+	  
+	  \settowidth{\novathesis@spine@box@title@width}{\usebox{\novathesis@spine@box@title}}%
+	  \settoheight{\novathesis@spine@box@title@height}{\usebox{\novathesis@spine@box@title}}%
+	}
+
+
+% Make a box with the author
+	\newbox{\novathesis@spine@box@author}%
+	\newlength{\novathesis@spine@box@author@width}%
+	\newlength{\novathesis@spine@box@author@height}%
+	\newcommand{\make@spine@box@author}{%
+	  \savebox{\novathesis@spine@box@author}{\fontfamily{phv}\fontsize{10}{10}\selectfont\thespine[author]}
+	  \settowidth{\novathesis@spine@box@author@width}{\usebox{\novathesis@spine@box@author}}%
+	  \settoheight{\novathesis@spine@box@author@height}{\usebox{\novathesis@spine@box@author}}%
+	  \ifdim\novathesis@spine@box@author@height > 0.60\novathesis@spinewidth%
+		\savebox{\novathesis@spine@box@author}{%
+		  \resizebox{!}{0.60\novathesis@spinewidth}{\usebox{\novathesis@spine@box@author}}%
+		}%
+	  \fi%
+	  \ifdim\novathesis@spinewidth > 50mm%
+		\savebox{\novathesis@spine@box@author}{%
+		  \rotatebox[origin=c]{-90}{\usebox{\novathesis@spine@box@author}}%
+		}%
+	  \fi%
+	  \settowidth{\novathesis@spine@box@author@width}{\usebox{\novathesis@spine@box@author}}%
+	  \settoheight{\novathesis@spine@box@author@height}{\usebox{\novathesis@spine@box@author}}%
+	}
+
+	
+	
+% Make the titleauthor group
+	\newbox{\novathesis@spine@box@titleauthor}%
+	\newlength{\novathesis@spine@box@titleauthor@width}%
+	\newlength{\novathesis@spine@box@titleauthor@height}%
+	\newcommand{\make@spine@box@titleauthor}{%
+	  \savebox{\novathesis@spine@box@titleauthor}{%
+      \begin{tabular}{c}
+        \usebox{\novathesis@spine@box@title} \\
+        \usebox{\novathesis@spine@box@author}
+      \end{tabular}
+	  }%
+	  \settowidth{\novathesis@spine@box@titleauthor@width}%
+		      {\usebox{\novathesis@spine@box@titleauthor}}%
+	  \settoheight{\novathesis@spine@box@titleauthor@height}%
+          {\usebox{\novathesis@spine@box@titleauthor}}%
+	}
+
+
+
+% start drawing things
+
+	\newcommand{\AtStockLowerCenter}[1]{%
+	  \AtPageUpperLeft{% 
+		\put(\LenToUnit{(\paperwidth-\novathesis@spinewidth)/2},%
+			 \LenToUnit{-\paperheight}){#1}%
+	  }%
+	}
+
+
+
+
+
+	\newbox{\novathesis@spine@box}%
+	\newcommand{\printspine}{%
+	  \clearpage%
+	  \make@spine@box@date%
+	  \make@spine@box@title%
+	  \make@spine@box@author%
+	  \make@spine@box@titleauthor%
+	  \savebox{\novathesis@spine@box}{%
+		\rotatebox{90}{%
+		  \framebox[\stockheight]{%
+      \parbox[c][\novathesis@spinewidth][c]{\paperheight}{
+  	  \ifdim\novathesis@spine@box@titleauthor@height < 0.75\novathesis@spinewidth%
+      \begin{tabularx}{\paperheight}%
+              {@{\hspace*{2.0cm}}p{1.0cm}@{\hspace*{0.9cm}}X@{\hspace*{1.5cm}}l@{\hspace*{2.0cm}}}
+        \usebox{\novathesis@spine@box@date} &
+        \cellcolor{white}
+        {\parbox{\hsize}{\centering\usebox{\novathesis@spine@box@titleauthor}}} &
+        \rotatebox[origin=c]{-90}{\textcolor{white}{PhD}}\\
+      \end{tabularx}
+      \else
+      \begin{tabularx}{\paperheight}%
+                {@{\hspace*{2.0cm}}p{1cm}@{\hspace*{0.9cm}}>{\hsize=1.5\hsize}X@{}>{\hsize=0.5\hsize}X@{\hspace*{1.5cm}}l@{\hspace*{2.0cm}}}
+        \usebox{\novathesis@spine@box@date} &
+        % w=\the\novathesis@spine@box@title@width~h=\the\hsize~
+        \ifdim\novathesis@spine@box@title@width > 450pt% 
+          \savebox{\novathesis@spine@box@title}{%
+            \resizebox{450pt}{!}{\usebox{\novathesis@spine@box@title}}%
+          }%
+        \fi%
+        \cellcolor{white}
+        {\parbox{\hsize}{\centering\usebox{\novathesis@spine@box@title}}} &
+        % w=\the\novathesis@spine@box@author@width~h=\the\hsize~
+        \ifdim\novathesis@spine@box@author@width > 155pt% 
+          \savebox{\novathesis@spine@box@author}{%
+            \resizebox{150pt}{!}{\usebox{\novathesis@spine@box@author}}%
+          }%
+        \fi%
+        \cellcolor{white}
+        {\parbox{\hsize}{\centering\usebox{\novathesis@spine@box@author}}} &
+        \rotatebox[origin=c]{-90}{\textcolor{white}{PhD}}\\
+      \end{tabularx}
+      \fi
+      }
+      %
+      % ~
+      %       \hspace*{1.75cm}
+      % \parbox[c][\novathesis@spinewidth][c]{\novathesis@spine@box@date@width}%
+      %   {\usebox{\novathesis@spine@box@date}}%
+      %       \hspace*{2cm}
+      % \parbox[c][\novathesis@spinewidth][c]{\novathesis@spine@box@title@width}%
+      %   {\colorbox{white}{\usebox{\novathesis@spine@box@title}}}%
+      % \hfill%
+      % \parbox[c][\novathesis@spinewidth][c]{\novathesis@spine@box@author@width}%
+      %   {\colorbox{white}{\usebox{\novathesis@spine@box@author}}}%
+      % ~
+     }%
+		}%
+	  }%
+	  
+	  \ifdim\novathesis@spinewidth > 50mm%
+	  \savebox{\novathesis@spine@box}{%
+		\rotatebox{90}{%
+		  \framebox{%
+			\parbox[c][\novathesis@spinewidth][c]{\novathesis@spine@box@date@width}%
+			  {\usebox{\novathesis@spine@box@date}}%
+			\hfill%
+			\parbox[c][\novathesis@spinewidth][c]{\novathesis@spine@box@title@width}%
+			  {\usebox{\novathesis@spine@box@title}}%
+			\hfill%
+			\parbox[c][\novathesis@spinewidth][c]{\novathesis@spine@box@author@width}%
+			  {\usebox{\novathesis@spine@box@author}}%
+			~
+		  }%
+		}%
+	  }%
+	  \fi%
+    \newlength{\novathesis@spine@box@width}
+    \newlength{\novathesis@spine@box@height}
+    \settowidth{\novathesis@spine@box@width}{\usebox{\novathesis@spine@box}}
+    \settoheight{\novathesis@spine@box@height}{\usebox{\novathesis@spine@box}}
+	  \thispagestyle{empty}%
+	  \pagestyle{empty}%
+	  \AddToShipoutPictureBG*{%
+      \AtStockLowerCenter{%
+        {\includegraphics[width=\novathesis@spine@box@width,height=\novathesis@spine@box@height]{\thethesiscover[phd,spine]}}%
+      }%
+	  }%
+	  \AddToShipoutPictureFG*{%
+      \AtStockLowerCenter{{\usebox{\novathesis@spine@box}}}%
+	  }%
+	  ~% This space is important here so that the spine page is not empty anymore!
+	  % \cleardoublepage%
+	}%
+	\makeatother
+
+\endinput
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% spine.clo
+%% NOVA thesis document template
+%%
+%% This work is licensed under the 
+%% Creative Commons Attribution-NonCommercial 4.0 International License. 
+%% To view a copy of this license, 
+%% visit http://creativecommons.org/licenses/by-nc/4.0/.
+%%
+%% Authors / Contributors:
+%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%      - Tomás Monteiro <monteiro.tomas@gmail.com>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Draw the book spine
+% usable range: 145 to 425 pages, maximum characters for the title 140 and 22 for the author name
+% usable range: 75 to 145 pages, maximum characters for the title 70 and 22 for the author name
+
+\makeatletter
+
+\newlength{\novathesis@spinewidth}%
+\setlength{\novathesis@spinewidth}{1mm * (\thelastsheet+ 19) / 20}% replace \thelastsheet by 1581 to get 80mm width folder label or any other value as long as the width is bigger than 50mm
+
+% Make a box with the date
+\newbox{\novathesis@spine@box@date}%
+\newlength{\novathesis@spine@box@date@width}%
+\newlength{\novathesis@spine@box@date@height}%
+\newcommand{\make@spine@box@date}{%
+  \savebox{\novathesis@spine@box@date}{%
+    \fontfamily{phv}\fontsize{10}{10}\selectfont\thespine[year]%
+    }%  
+  \settowidth{\novathesis@spine@box@date@width}{\usebox{\novathesis@spine@box@date}}%
+  \settoheight{\novathesis@spine@box@date@height}{\usebox{\novathesis@spine@box@date}}%
+  \ifdim\novathesis@spine@box@date@width < 0.90\novathesis@spinewidth%
+  \savebox{\novathesis@spine@box@date}{%
+    \rotatebox[origin=c]{-90}{\usebox{\novathesis@spine@box@date}}%
+  }%
+  \fi%
+  \settowidth{\novathesis@spine@box@date@width}{\usebox{\novathesis@spine@box@date}}%
+  \settoheight{\novathesis@spine@box@date@height}{\usebox{\novathesis@spine@box@date}}%
+  \ifdim\novathesis@spine@box@date@height > 0.90\novathesis@spinewidth%
+  \savebox{\novathesis@spine@box@date}{%
+    \resizebox{!}{0.90\novathesis@spinewidth}{\usebox{\novathesis@spine@box@date}}%
+  }%
+  \fi%
+  \settowidth{\novathesis@spine@box@date@width}{\usebox{\novathesis@spine@box@date}}%
+  \settoheight{\novathesis@spine@box@date@height}{\usebox{\novathesis@spine@box@date}}%
+}
+
+
+% Make a box with the title
+\newbox{\novathesis@spine@box@title}%
+\newlength{\novathesis@spine@box@title@width}%
+\newlength{\novathesis@spine@box@title@height}%
+\newcommand{\make@spine@box@title}{%
+  \savebox{\novathesis@spine@box@title}{%
+    {\fontfamily{phv}\fontsize{14}{14}\selectfont\thespine[title]}%
+  }%
+  \settowidth{\novathesis@spine@box@title@width}{\usebox{\novathesis@spine@box@title}}%
+  \settoheight{\novathesis@spine@box@title@height}{\usebox{\novathesis@spine@box@title}}%
+}
+
+
+% Make a box with the author
+\newbox{\novathesis@spine@box@author}%
+\newlength{\novathesis@spine@box@author@width}%
+\newlength{\novathesis@spine@box@author@height}%
+\newcommand{\make@spine@box@author}{%
+  \savebox{\novathesis@spine@box@author}{%
+    {\fontfamily{phv}\fontsize{11}{11}\selectfont\thespine[author]}%
+  }%
+  \settowidth{\novathesis@spine@box@author@width}{\usebox{\novathesis@spine@box@author}}%
+  \settoheight{\novathesis@spine@box@author@height}{\usebox{\novathesis@spine@box@author}}%
+}
+
+
+
+\newcommand{\AtStockLowerCenter}[1]{%
+  \AtPageUpperLeft{%
+  \put(\LenToUnit{(\paperwidth-\novathesis@spinewidth)/2},%
+     \LenToUnit{-\paperheight}){#1}%
+  }%
+}
+
+
+\newbox{\novathesis@spine@hbox}%
+\newbox{\novathesis@spine@vbox}%
+\newcommand{\printspine}{%
+  \make@spine@box@date%
+  \make@spine@box@title%
+  \make@spine@box@author%
+  \savebox{\novathesis@spine@hbox}{%
+      \parbox[c][\novathesis@spinewidth][c]{\paperheight}{%
+        \begin{tabular*}{2cm}{@{}c@{}}
+          \usebox{\novathesis@spine@box@date}
+        \end{tabular*}
+        \begin{tabular*}{0.60\paperheight}{@{}c@{}}
+          \usebox{\novathesis@spine@box@title}%
+        \end{tabular*}
+        \begin{tabular*}{0.40\paperheight}{@{}c@{}}
+          \usebox{\novathesis@spine@box@author}
+        \end{tabular*}
+      }
+      \hfill
+      PhD
+      \hspace*{1cm}
+  }
+  \savebox{\novathesis@spine@vbox}{\rotatebox{90}{\novathesis@spine@hbox}}
+  %% typeset
+  \cleardoublepage%
+  \thispagestyle{empty}%
+  \pagestyle{empty}%
+  \AddToShipoutPictureFG*{%
+    \AtStockLowerCenter{\fbox{\usebox{\novathesis@spine@vbox}}}%
+  }%
+  ~% This space is important here so that the spine page is not empty anymore!
+  % \cleardoublepage%
+}%
+\makeatother

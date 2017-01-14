@@ -1,0 +1,12 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% garamond.clo
+%% NOVA thesis configuration file
+%%
+%% Customization of font to use a Garamond font set
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[full]{textcomp}
+\RequirePackage[sups,osf,scaled=.96]{garamondx} % osf (or osfI) for text, not math
+\RequirePackage[scaled=.95]{cabin} % sans serif
+\RequirePackage[varqu,varl]{inconsolata} % sans serif typewriter
+\RequirePackage[garamondx,bigdelims,vvarbb]{newtxmath} % bb from STIX
+\RequirePackage[cal=boondoxo]{mathalfa} % mathcal

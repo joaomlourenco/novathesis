@@ -1,0 +1,34 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% vz43.clo
+%% NOVA thesis configuration file
+%%
+%% Costumization for the VZ43 chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%% Configure chapters, headers, footers, and page numbering
+\newif\ifNoChapNumber
+\newcommand\Vlines{%
+  \def\VL{\rule[-2cm]{1pt}{5cm}\hspace{1mm}\relax}
+  \VL\VL\VL\VL\VL\VL\VL
+}
+\setlength\midchapskip{0pt}
+\makechapterstyle{VZ43}{%
+  \renewcommand\chapternamenum{}
+  \renewcommand\printchaptername{}
+  \renewcommand\printchapternum{}
+  \renewcommand\chapnumfont{\Huge\bfseries\centering}
+  \renewcommand\chaptitlefont{\Huge\bfseries\raggedright}
+  \renewcommand\printchaptertitle[1]{%
+    \Vlines\hspace*{-2em}%
+    \begin{tabular}{@{}p{1cm} p{\textwidth-3cm}}%
+      \ifNoChapNumber\relax\else%
+      \colorbox{black}{\color{white}%
+        \makebox[.8cm]{\chapnumfont\strut \thechapter}}
+      \fi%
+      & \chaptitlefont ##1%
+    \end{tabular}%
+    \NoChapNumberfalse%
+  }
+  \renewcommand\printchapternonum{\NoChapNumbertrue}
+}
+\chapterstyle{VZ43}

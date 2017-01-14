@@ -1,0 +1,40 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% fix-babel.clo
+%% NOVA thesis configuration file
+%%
+%% Minor fixes to babel translation to portuguese
+%%
+%% Order and lnguage for printing the abstracts depending on the language
+%% These macros are just informative for now (it is hardcoded in the
+%% 	novathesis.clo file)… this must be fixed in the future!!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Replace "Conteúdo" with "Índice"
+% Replace "Índice" with "Índice Remissivo"
+% "Listings" in Portuguese
+\addto\captionsportuguese{%
+  \def\contentsname{Índice}%
+  \def\indexname{Índice Remissivo}%
+  \def\lstlistlistingname{Listagens}%
+  \def\lstlistingname{Listagem}%
+  \defineshorthand{"-}{\babelhyphen{repeat}}% generates a hyphen that will repeat on a new line
+  \gdef\annexname{Anexo}
+}
+\addto\captionsenglish{%
+  \def\lstlistlistingname{Listings}%
+  \def\lstlistingname{Listing}%
+  \gdef\annexname{Annex}
+}
+\addto\captionsfrench{%
+  \def\lstlistlistingname{Listes de Code}%
+  \gdef\annexname{Annexe}
+}
+\addto\captionsitalian{%
+  \def\lstlistlistingname{Listatos}%
+  \gdef\annexname{Annesso}
+}
+
+
+
+% Corrigir espaço para páginas com numeração romana na ToC
+\renewcommand{\@pnumwidth}{2em}

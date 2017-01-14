@@ -1,0 +1,12 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% pedersen.clo
+%% NOVA thesis configuration file
+%%
+%% Costumization for the Pedersen chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%% Configure chapters, headers, footers, and page numbering
+\definecolor{ared}{rgb}{.647,.129,.149}
+\renewcommand\colorchapnum{\color{ared}}
+\renewcommand\colorchaptitle{\color{ared}}
+\chapterstyle{pedersen}

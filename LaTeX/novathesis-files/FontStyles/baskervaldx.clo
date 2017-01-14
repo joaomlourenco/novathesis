@@ -1,0 +1,12 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% baskervaldx.clo
+%% NOVA thesis configuration file
+%%
+%% Customization of font to use a Baskerville font set
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[full]{textcomp}
+\RequirePackage[osf,sups]{Baskervaldx} % osf for text, not math
+\RequirePackage{cabin} % sans serif
+\RequirePackage[varqu,varl]{inconsolata} % sans serif typewriter
+\RequirePackage[baskervaldx,bigdelims,vvarbb]{newtxmath} % bb from STIX
+\RequirePackage[cal=boondoxo]{mathalfa} % mathcal

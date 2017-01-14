@@ -1,0 +1,36 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% jenor.clo
+%% NOVA thesis configuration file
+%%
+%% Costumization for the Jenor chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%% Configure chapters, headers, footers, and page numbering
+\usepackage{fix-cm}
+\definecolor{numbercolor}{gray}{0.7}
+\newif\ifchapternonum
+\makechapterstyle{jenor}{%
+  \renewcommand\printchaptername{}
+  \renewcommand\printchapternum{}
+  \renewcommand\printchapternonum{\chapternonumtrue}
+  \renewcommand\chaptitlefont{\fontfamily{pbk}\fontseries{db}%
+    \fontshape{n}\fontsize{25}{35}\selectfont\raggedleft}
+  \renewcommand\chapnumfont{\fontfamily{pbk}\fontseries{m}\fontshape{n}%
+    \fontsize{1in}{0in}\selectfont\color{numbercolor}}
+  \renewcommand\printchaptertitle[1]{%
+    \noindent%
+    \ifchapternonum%
+    \begin{tabularx}{\textwidth}{X}%
+    {\parbox[b]{\linewidth}{\chaptitlefont ##1}%
+      \vphantom{\raisebox{-15pt}{\chapnumfont 1}}}
+    \end{tabularx}%
+    \else
+    \begin{tabularx}{\textwidth}{Xl}%
+    {\parbox[b]{\linewidth}{\chaptitlefont ##1}}%
+    & \raisebox{-15pt}{\chapnumfont \thechapter}%
+    \end{tabularx}%
+    \fi
+    \par\vskip2mm\hrule%
+  }
+}
+\chapterstyle{jenor}

@@ -1,0 +1,12 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% newpx.clo
+%% NOVA thesis configuration file
+%%
+%% Customization of font to use a newpx font set
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[full]{textcomp}
+\RequirePackage[osf]{newpxtext} % osf for text, not math
+\RequirePackage{cabin} % sans serif
+\RequirePackage[varqu,varl]{inconsolata} % sans serif typewriter
+\RequirePackage[bigdelims,vvarbb]{newpxmath} % bb from STIX
+\RequirePackage[cal=boondoxo]{mathalfa} % mathcal

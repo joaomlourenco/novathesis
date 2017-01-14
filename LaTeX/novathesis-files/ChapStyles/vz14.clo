@@ -1,0 +1,28 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% vz14.clo
+%% NOVA thesis configuration file
+%%
+%% Costumization for the VZ14 chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%% Configure chapters, headers, footers, and page numbering
+\newcommand\thickhrulefill{\leavevmode \leaders \hrule height 1ex \hfill \kern \z@}
+\setlength\midchapskip{10pt}
+\makechapterstyle{VZ14}{%
+  \renewcommand\chapternamenum{}
+  \renewcommand\printchaptername{}
+  \renewcommand\chapnamefont{\Large\scshape}
+  \renewcommand\printchapternum{%
+    \chapnamefont\null\thickhrulefill\quad%
+    \@chapapp\space\thechapter\quad\thickhrulefill}
+  \renewcommand\printchapternonum{%
+    \par\thickhrulefill\par\vskip\midchapskip%
+    \hrule\vskip\midchapskip%
+  }
+  \renewcommand\chaptitlefont{\Huge\scshape\centering}
+  \renewcommand\afterchapternum{%
+    \par\nobreak\vskip\midchapskip\hrule\vskip\midchapskip}
+  \renewcommand\afterchaptertitle{%
+    \par\vskip\midchapskip\hrule\nobreak\vskip\afterchapskip}
+}
+\chapterstyle{VZ14}

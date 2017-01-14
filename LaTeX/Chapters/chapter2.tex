@@ -1,7 +1,7 @@
 %!TEX root = ../template.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% chapter2.tex
-%% UNL thesis document file
+%% NOVA thesis document file
 %%
 %% Chapter with the template manual
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -16,7 +16,7 @@
 
 {\LARGE \textbf{~\\These instructions are outdated! Please see also the “template.tex” file!\\}}
 
-This chapter describes how to use the \LaTeX\ \unlthesis\ template (and the “\unlthesisclass” class file).
+This chapter describes how to use the \LaTeX\ \novathesis\ template (and the “\novathesisclass” class file).
 
 Let's start with some simple suggestions:
 
@@ -24,7 +24,7 @@ Let's start with some simple suggestions:
   \item No! You don't have to use this template to write your thesis.  You don't even have to use \LaTeX.  However, writing a thesis is serious stuff, and which tool you shall use to write it is not a decision to make lighthearted.
   \item \LaTeX\ is hard enough by itself.  This template aims at making your life easier, but not easy. If you choose to use this template to write your thesis, you are very welcome.  However, don't expect me to provide you help with \LaTeX.  Look for help with your friends (you have some friends, don't you?), or search the web, or try even to read some book(s) on \LaTeX. In the end you will certainly find the experience rewarding.
   \item So, don't forget, when you come to the point of “\emph{How do I do this with \LaTeX?}” look for help!  Google is your best friend. 
-  \item If you believe the difficulty is related with the \unlthesis\ template itself (and not with \LaTeX), please \textbf{do not} send me an email asking for help.  Please look for help in the \unlthesis\ Google Group (URL) and the \unlthesis\ Facebook group (URL).  If you can't find help there from previous posts/messages, then post your own question. Hopefully someone will answer you.
+  \item If you believe the difficulty is related with the \novathesis\ template itself (and not with \LaTeX), please \textbf{do not} send me an email asking for help.  Please look for help in the \novathesis\ Google Group (URL) and the \novathesis\ Facebook group (URL).  If you can't find help there from previous posts/messages, then post your own question. Hopefully someone will answer you.
 \end{enumerate}
 
 Now, let's go to a major issue for Windows users.  Characters have to be encoded in files as numbers, and that is how character encodings were born. ASCII and EBCDIC standards are long lost in the past.  The world now uses UTF-8.  Well, not all the world… Windows is still stick in its \emph{codepages}, and “latin1” is what windows uses as the codepage for Western Europe. This messes up with the template. Please be sure you use an editor with UTF-8 support.  \emph{Go to the preferences/options/… of your text editor and set up its default file encoding as UTF-8.}
@@ -37,12 +37,12 @@ Now, let's go to a major issue for Windows users.  Characters have to be encoded
 \section{Folder Structure} % (fold)
 \label{sec:folder_structure}
 
-The \unlthesis\ template is organized into files and folders. At the main level it includes the following files and folders:
+The \novathesis\ template is organized into files and folders. At the main level it includes the following files and folders:
 
 \noindent
 \begin{tabularx}{\linewidth}{>{\ttfamily}l>{\itshape}l>{\upshape}X}
-unlthesis.cls     & file    & 
-The main class file. It will include additional files from \texttt{unlthesis-files} folder. 
+novathesis.cls     & file    & 
+The main class file. It will include additional files from \texttt{novathesis-files} folder. 
 \\ 
 template.tex      & file    & 
 The main user file. Use this file as the main file for your thesis. 
@@ -50,7 +50,7 @@ The main user file. Use this file as the main file for your thesis.
 bibliography.bib  & file    & 
 An example of a bibliography file. You may have has many as you want. \\
 template.pdf      & file    & 
-A possible result of applying pdf\LaTeX\ to the \texttt{template.tex} file. The template supports multiple types of documents (e.g., MSc dissertation, PhD thesis, …) and multiple Schools (e.g., FCT-UNL, FCSH-UNL, IST-UL, …) and each will produce different results.
+A possible result of applying pdf\LaTeX\ to the \texttt{template.tex} file. The template supports multiple types of documents (e.g., MSc dissertation, PhD thesis, …) and multiple Schools (e.g., FCT-NOVA, FCSH-NOVA, IST-UL, FC-UL, …) and each will produce different results.
 \\
 Chapters          & folder  & Examples of thesis chapters. Replace them with your own chapters. 
 \\
@@ -58,12 +58,12 @@ Examples          & folder  & Some more examples of the use of the template for 
 \\
 Scripts           & folder  & Some (possibly useful) scripts for Unix-based systems (Linux, Mac OSx). If you are a windows user, ignore this folder (you may safely delete it if you want). 
 \\
-unlthesis-files   & folder  & 
-Additional files for the \unlthesisclass\ file.  Unless you know what you are doing, avoid messing up with the files and folders inside this folder (except for deleting the unused Schools, see below). 
+novathesis-files   & folder  & 
+Additional files for the \novathesisclass\ file.  Unless you know what you are doing, avoid messing up with the files and folders inside this folder (except for deleting the unused Schools, see below). 
 \\
 \end{tabularx}
 
-The \texttt{unlthesis-files} folder contains additional files and folders that complement the main \unlthesisclass\ file.  These are:
+The \texttt{novathesis-files} folder contains additional files and folders that complement the main \novathesisclass\ file.  These are:
 
 \noindent
 \begin{tabularx}{\linewidth}{>{\ttfamily}l>{\itshape}l>{\upshape}X}
@@ -77,10 +77,10 @@ lang-text.clo   & file    &
 Translations of important strings used in the template.  Currently fully supported are Portuguese and English, but French is on the way.  If you add translations for your own language, please be so kind and send them to me. Thank you!
 \\
 options.clo     & file    &
-Processing of \unlthesisclass\ options.  \emph{Don't mess with this!}
+Processing of \novathesisclass\ options.  \emph{Don't mess with this!}
 \\
 packages.clo    & file    &
-Additional packages to be loaded into the \unlthesis\ template. \emph{You should not mess with this!}
+Additional packages to be loaded into the \novathesis\ template. \emph{You should not mess with this!}
 \\
 spine.clo       & file    &
 This file is loaded only if the option \texttt{spine=true}, and includes the typesetting of the book spine.
@@ -103,14 +103,14 @@ As stated above, the \texttt{Schools} folder contains per-university folders and
 ul     & ist    & folder  & 
 The folder for the \href{http://www.tecnico.ulisboa.pt}{\emph{Instituto Superior Técnico}} of the \emph{University of Lisbon}.
 \\
-unl    & fcsh   & folder  & 
+nova    & fcsh   & folder  & 
 The folder for the \href{http:www.fcsh.unl.pt}{\emph{Faculty of Human and Social Sciences}}  of the \emph{NOVA University of Lisbon}.
 \\
-unl    & fct    & folder  & 
+nova    & fct    & folder  & 
 The folder for the \href{http:www.fct.unl.pt}{\emph{Faculty of Sciences and Technology}} of the \emph{NOVA University of Lisbon}.
 \\
-unl    & ims    & folder  & 
-The folder for the \href{http:www.ims.unl.pt}{\emph{Information and Management School}} of the \emph{NOVA University of Lisbon}.
+nova    & novaims    & folder  & 
+The folder for the \href{http:www.novaims.unl.pt}{\emph{Information and Management School}} of the \emph{NOVA University of Lisbon}.
 \\
 \end{tabularx}
 
@@ -119,22 +119,22 @@ The folder for the \href{http:www.ims.unl.pt}{\emph{Information and Management S
 % ===================
 % = Package options =
 % ===================
-\section{\unlthesisclass\ Class Options} % (fold)
+\section{\novathesisclass\ Class Options} % (fold)
 \label{sec:package_options}
 
-The \unlthesis\ class can be customized with the options listed below.
+The \novathesis\ class can be customized with the options listed below.
 
 \newcommand{\classoption}[3]{\textbf{#1=OPT}\qquad #2\\\qquad\emph{#3}\\}
 
 \noindent
 \begin{ctabular}{@{}p{\linewidth}@{}}
   \toprule
-  \classoption{doctype}%
+  \classoption{docdegree}%
     {phd(*), phdplan, phdprop, msc, mscplan, bsc}%
     {The type of the document: PhD Thesis (default), PhD Plan, PhD Proposal, MSc Disseration, MSc Plan, BSc Report}
     \midrule
   \classoption{school}%
-    {unl/fct(*), unl/fcsh, unl/ims, ul/ist}%
+		{nova/fct(*), nova/fcsh, nova/ims, ul/ist, ul/fc}%
     {The name of the school. This option changes the typesetting of the cover and some School specific formating, like margins, fonts, paragraph spacing and indentation, etc…}
     \midrule
   \classoption{lang}%
@@ -213,10 +213,10 @@ You must choose the class of text for the document. The available options are:
 
 \begin{enumerate}
 	\item \textbf{bsc} --- BSc graduation report.
-	\item \textbf{*mscplan} --- Preparation of MSc dissertation. This is a preliminary report graduate students at DI-FCT-UNL must prepare to conclude the first semester of the two-semesters MSc work. The files specified by \verb!\dedicatoryfile! and \verb!\acknowledgmentsfile! are ignored, even if present, for this class of document.
+	\item \textbf{*mscplan} --- Preparation of MSc dissertation. This is a preliminary report graduate students at DI-FCT-NOVA must prepare to conclude the first semester of the two-semesters MSc work. The files specified by \verb!\dedicatoryfile! and \verb!\acknowledgmentsfile! are ignored, even if present, for this class of document.
 	\item \textbf{msc} --- MSc dissertation.
 	\item \textbf{phdprop} ---  Proposal for a PhD work. The files specified by \verb!\dedicatoryfile! and \verb!\acknowledgmentsfile! are ignored, even if present, for this class of document.
-	\item \textbf{prepphd} ---  Preparation of a PhD thesis. This is a preliminary report PhD students at DI-FCT-UNL must prepare before the end of the third semester of PhD work. The files specified by \verb!\dedicatoryfile! and \verb!\acknowledgmentsfile! are ignored, even if present, for this class of document.
+	\item \textbf{prepphd} ---  Preparation of a PhD thesis. This is a preliminary report PhD students at DI-FCT-NOVA must prepare before the end of the third semester of PhD work. The files specified by \verb!\dedicatoryfile! and \verb!\acknowledgmentsfile! are ignored, even if present, for this class of document.
 	\item \textbf{phd} --- PhD dissertation.
 \end{enumerate}
 % subsection class_of_text (end)
@@ -270,9 +270,9 @@ Let's have a look at a couple of examples:
 
 \begin{itemize}
 	\item Preparation of PhD thesis, in portuguese, with 11pt size and to be printed single sided (I wonder why one would do this!)\\
-	\verb!\documentclass[prepphd,pt,11pt,oneside,latin1]{thesisdifctunl}!
+	\verb!\documentclass[prepphd,pt,11pt,oneside,latin1]{thesisdifct-nova}!
 	\item MSc dissertation, in english, with 12pt size and to be printed double sided\\
-	\verb!\documentclass[msc,en,12pt,twoside,utf8]{thesisdifctunl}!
+	\verb!\documentclass[msc,en,12pt,twoside,utf8]{thesisdifct-nova}!
 \end{itemize}
 % subsection examples (end)
 
@@ -299,5 +299,5 @@ Lets add the term ``\gls{computer}'' to the glossary!
 %
 % Please note that
 % \begin{center}
-%   \textbf{\large this package and template are not official for FCT/UNL}.
+%   \textbf{\large this package and template are not official for FCT/NOVA}.
 % \end{center}

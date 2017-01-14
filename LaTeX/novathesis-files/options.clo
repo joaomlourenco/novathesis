@@ -1,0 +1,268 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% options.clo
+%% NOVA thesis configuration file
+%%
+%% Processing of Class optinos
+%%
+%% Order and lnguage for printing the abstracts depending on the language
+%% These macros are just informative for now (it is hardcoded in the
+%% 	novathesis.clo file)… this must be fixed in the future!!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PROCESS KEY-VAL OPTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{kvoptions-patch}
+\RequirePackage{xkeyval}
+\RequirePackage{xifthen}
+
+
+
+% --------------------------------------------------------
+% DOCUMENT TYPE	- novathesis@opt€docdegree
+%
+% bsc     BSc report			        
+% mscplan MSc preliminary report
+% msc     MSc dissertation		
+% phdprop PhD proposal			
+% phdplan PhD preliminary report	
+% phd     PhD thesis			
+\DeclareOptionX{docdegree}{%
+	\typeout{'docdegree'=#1}%
+	\gdef\novathesis@opt@docdegree{#1}%
+}
+
+
+
+% --------------------------------------------------------
+% SCHOOL - novathesis@opt@school
+%
+% nova/fct Faculdade de Ciências e Tecnologia da Universidade Nova de Lisboa
+% ul/is   Isntituto Superior Técnico da Universidade de Lisboa
+\DeclareOptionX{school}{%
+	\typeout{'school'=#1}%
+	\gdef\novathesis@opt@school{#1}%
+}
+
+
+
+% --------------------------------------------------------
+% CHAPTER STYLE - novathesis@opt@chapstyle
+%
+% bianchi bluebox brotherton dash default elegant(*) ell ger  
+% hansen ist jenor lyhne madsen pedersen veelo vz14 vz34 vz43
+\DeclareOptionX{chapstyle}{%
+	\typeout{'chapstyle'=#1}%
+	\gdef\novathesis@opt@chapstyle{#1}%
+}
+
+
+
+% --------------------------------------------------------
+% FONT STYLE - novathesis@opt@fontstyle
+%
+% bookman charter fourier kpfonts(*) mathpazo1 mathpazo2 newcent
+\DeclareOptionX{fontstyle}{%
+	\typeout{'fontstyle'=#1}%
+	\gdef\novathesis@opt@fontstyle{#1}%
+}
+
+
+% --------------------------------------------------------
+% WHERE TO PRINT OTHER LISTS - novathesis@opt@otherlistsat
+%
+% front back
+\gdef\novathesis@opt@otherlistsat{front}%
+\DeclareOptionX{otherlistsat}{%
+	\typeout{'otherlistsat'=#1}%
+	\gdef\novathesis@opt@otherlistsat{#1}%
+}
+
+
+% --------------------------------------------------------
+% MAIN LANGUAGE - novathesis@opt@lang
+%
+% pt  Portuguese
+% en  English
+% fr  French
+\newcommand{\novathesis@addtobabel}[1]{%
+  \typeout{'babellang'=\thelangabbrev[#1]}%
+  \PassOptionsToPackage{\thelangabbrev[#1]}{babel}%
+}
+
+\gdef\novathesis@opt@lang{en}%
+\DeclareOptionX{lang}{%
+  \typeout{'lang'=#1}%
+  \lowercase{\gdef\novathesis@opt@lang{#1}}%
+  \xdef\novathesis@tmp{\thelangsused[\novathesis@opt@lang]}%
+  \iteratecsvlist{\novathesis@addtobabel}{\novathesis@tmp}%
+}
+
+
+% --------------------------------------------------------
+% COVER LANGUAGE - novathesis@opt@coverlang
+%
+% pt  Portuguese
+% en  English
+\gdef\novathesis@opt@coverlang{\novathesis@opt@lang}%
+\DeclareOptionX{coverlang}{%
+  \typeout{'coverlang'=#1}%
+  \lowercase{\gdef\novathesis@opt@coverlang{#1}}
+}
+
+
+% --------------------------------------------------------
+% COPYRIGHT LANGUAGE - novathesis@opt@copyrightlang
+%
+% pt  Portuguese
+% en  English
+\gdef\novathesis@opt@copyrightlang{\novathesis@opt@lang}%
+\DeclareOptionX{copyrightlang}{%
+  \typeout{'copyrightlang'=#1}%
+  \lowercase{\gdef\novathesis@opt@copyrightlang{#1}}
+}
+
+
+% --------------------------------------------------------
+% PRINT AFETR COVER
+%
+% true
+% false
+\DeclareOptionX{aftercover}[false]{%
+	\typeout{'aftercover'=#1}%
+  \gdef\novathesis@opt@aftercover{#1}%
+}
+
+
+% --------------------------------------------------------
+% PRINT EVALUATION COMMITTEE
+%
+% true
+% false
+\DeclareOptionX{printcommittee}[true]{%
+	\typeout{'printcommittee'=#1}%
+  \gdef\novathesis@opt@printcommittee{#1}%
+}
+
+
+% --------------------------------------------------------
+% HYPER LINKS COLOR
+%
+% darkblue, black
+\DeclareOptionX{linkscolor}{%
+	\typeout{'linkscolor'=#1}%
+	\PassOptionsToPackage{allcolors=#1}{hyperref}%
+}
+
+
+% --------------------------------------------------------
+% CHARACTER ENCODING
+%
+% utf8
+% latin1
+% Anything else valid for package "inputenc"
+\DeclareOptionX{enc}{%
+	\typeout{'enc'=#1}%
+	\PassOptionsToPackage{#1}{inputenc}%
+}
+
+% --------------------------------------------------------
+% PRINT BOOK SPINE
+%
+% true
+% false
+\DeclareOptionX{spine}[true]{%
+	\typeout{'spine'=#1}%
+	\ifthenelse{\equal{#1}{true}}{%
+    \AtEndDocument{%
+    \InputIfFileExists{novathesis-files/Schools/\novathesis@opt@school/spine.clo}%
+                      {}
+                      {\input{novathesis-files/spine.clo}}%
+    \printspine%
+    }%
+  }{}%
+}
+
+
+
+% --------------------------------------------------------
+% BIBLATEX OPTIONS
+% Are passed to the biblatex package
+%
+% style= numeric | alphabetic | …
+% ...
+\DeclareOptionX{biblatex}{%
+ 	\typeout{'biblatex'=#1}%
+	\PassOptionsToPackage{#1}{biblatex}%
+}
+
+
+% --------------------------------------------------------
+% BOOK OPTIONS		
+% Are passed to the main class (book)
+%
+% twoside, a4paer, ...
+\DeclareOptionX{memoir}{%
+	\typeout{'memoir'=#1}%
+	\PassOptionsToClass{#1}{memoir}%
+}
+
+
+
+% --------------------------------------------------------
+% DESTINATION MEDIA
+%
+% screen  PDF to visualize in the screen or tablets
+% paper   PDF to print
+\DeclareOptionX{media}[screen]{%
+	\typeout{'media'=#1}%
+  \ifthenelse{\equal{#1}{screen}}{%
+    % \PassOptionsToClass{oneside}{memoir}%
+  }{%
+    % \PassOptionsToClass{twoside}{memoir}%
+    \PassOptionsToPackage{allcolors=black}{hyperref}%
+  }%
+  \def\novathesis@opt@media{#1}%
+}
+
+
+
+% --------------------------------------------------------
+% DEFAULT OPTIONS
+% \PassOptionsToPackage{portuguese,english}{babel}
+\ExecuteOptionsX{%
+	docdegree=phd,
+  school=nova/fct,
+  fontstyle=kpfonts,
+  chapstyle=elegant,
+	enc=utf8,
+  otherlistsat=front,
+	lang=en,
+  linkscolor=darkblue,
+  aftercover=false,
+  printcommittee=true,
+	spine=false,
+	biblatex={%
+		% sorting=nyt,%
+		% style=alphabetic,%
+		% labelyear=false,%
+		style=numeric,
+		maxalphanames=2,
+		defernumbers=true,%
+		maxbibnames=20,%
+		maxcitenames=2,%
+		mincitenames=1,%
+		firstinits=true,% will render all first and middle names as initials
+		uniquename=init,%
+		% dashed=false,%
+		sortcites=true,
+	},
+	memoir={a4paper, 11pt, draft},
+  media=screen,
+}
+
+
+
+% --------------------------------------------------------
+% PROCESSING OPTIONS
+\ProcessOptionsX\relax

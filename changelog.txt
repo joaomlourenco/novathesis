@@ -1,3 +1,8 @@
+*2017-01-14 — Version 4.0.0 — Template renamed to NOVA thesis (novathesis)
+
+*2016-11-07 — Version 3.2.0 — Support for both Appendixes and Annexes*
++ Added support for both Appendixes and Annexes.
+
 *2016-09-17 — Version 3.1.4 — Support for FC-UL*
 + Added support for FC-UL.
 
@@ -20,7 +25,7 @@
 + Added support for NOVA IMS
 
 *2015-12-07 — Version 3.0.13 — Less and less known bugs…*
-+ Added link to Facebook page in the comments at top of unlthesis.cls and template.tex
++ Added link to Facebook page in the comments at top of novathesis.cls and template.tex
 + New option 'printcommittee' (default=true) to inhibit printing the committee (when it should be printed)
 + Allow empty sets of committee members
 + Multiple fixes for font sets (thanks to Flávio Martins)
@@ -59,7 +64,7 @@
 
 *2015-07-31 — Version 3.0.5 — Smaller is better*
 + Now 'hyperref' is the last package to be loaded (as recommended in the package documentation).
-+ Moved extra documentation to the [unlthesis-extras repository](https://github.com/joaomlourenco/unlthesis-extras)
++ Moved extra documentation to the [novathesis-extras repository](https://github.com/joaomlourenco/novathesis-extras)
 
 *2015-07-30 — Version 3.0.4*
 + More bug fixes on cover designs
@@ -69,7 +74,7 @@
 + More bug fixes
 
 *2015-07-28 — Version 3.0.2*
-+ Added support for FCSH-UNL (together with FCT-UNL and IST-UL, see the
++ Added support for FCSH-NOVA (together with FCT-NOVA and IST-UL, see the
 README files in the corresponding folders)
 + New option: *otherlistsat=front|back* to print the other lists
 (figures, tables, etc) after the TOC or just before the appendixes
@@ -93,11 +98,11 @@ contents, to facilitate the support of other schools/institutions.
 
 *2015-07-15 — Towards multiple schools and multiple styles*
 + Renamed document types 'prepmsc'->'mscplan', 'prepphd'->'phdplan', 'propphd'->'phdprop'
-+ Split the “unlthesis.cls” file into subfiles with specific contents and moved them to the 'unl-thesis' folder
++ Split the “novathesis.cls” file into subfiles with specific contents and moved them to the 'nova-thesis' folder
 + Added support for multiple schools
-	- Added option “school” (defaults to “fctunl”, no more are available now)
-	- Moved the FCT-UNL support configuration file to the appropriate folder
-	- Renamed the “Logo” folder “Images” and moved it inside the “fctunl” configuration folder
+	- Added option “school” (defaults to “fct-nova”, no more are available now)
+	- Moved the FCT-NOVA support configuration file to the appropriate folder
+	- Renamed the “Logo” folder “Images” and moved it inside the “fct-nova” configuration folder
 + Added support for multiple book styles
 	- Added option “style” (defaults to “elegant”, but others are available)
 + Added the new options to the “template.tex” file
@@ -133,7 +138,7 @@ contents, to facilitate the support of other schools/institutions.
 *2014-08-12 — Better support for multilingual documents.*
 + New file “langsupport.tex” with configuration for support of multiples languages
 + Added a flexible interface based in the macro "\addlisttofrontmatter{…}" to manage the different types of lists in the frontmatter (LOF, LOT, etc)
-+ Extensive changes to "unlthesis.cls" to: i) use the info from file "langsupport.tex"; and ii) make internal use of lists to do repetitive processing.
++ Extensive changes to "novathesis.cls" to: i) use the info from file "langsupport.tex"; and ii) make internal use of lists to do repetitive processing.
 + The support for "glossaries" is not hardcoded into the class file anymore, now it is loaded in the template file and an alternative package may be used instead.
 
 *2014-08-08 — Autoformating for the advisers.*
@@ -169,17 +174,17 @@ contents, to facilitate the support of other schools/institutions.
 + No more need of subfigure (direct support by memoir).
 
 *2014-07-01 — A new version of the template is out.*
-+ THe name of the clas in now "unlthesis" and is based in the book memoir class.  
++ THe name of the clas in now "novathesis" and is based in the book memoir class.  
 + Part of the class was rewritten to add support for other referencing types (e.g., numbers unsorted, numbers sorted, alpha, apa-like, etc)
 
 *2014-07-01 — The repository moved out form GoogleCode to GitHub.*
 
-*2014-02-18 — A [discussion forum](https://groups.google.com/forum/#!forum/thesisdifctunl) for users of this template is available at https://groups.google.com/forum/#!forum/thesisdifctunl. 
+*2014-02-18 — A [discussion forum](https://groups.google.com/forum/#!forum/thesisdifct-nova) for users of this template is available at https://groups.google.com/forum/#!forum/thesisdifct-nova. 
 + Please register… ask for help/support there and give help/support to your peers.*
 
-*2011-02-27 — The LaTeX template is now fully compliant to the FCT and UNL formatting regulations.*
+*2011-02-27 — The LaTeX template is now fully compliant to the FCT and NOVA formatting regulations.*
 
-*2011-02-27 — There is a MS Word DOC version of the template, also fully compliant to the FCT and UNL formatting regulations.*
+*2011-02-27 — There is a MS Word DOC version of the template, also fully compliant to the FCT and NOVA formatting regulations.*
 
 *2011-11-19 — New version (v 2.1) is now available in downloads section.*
 + Most visible improvement is the smart support for multiple advisers and co-advisers (maximum 9). Sensitive to gender and number. 
@@ -189,7 +194,7 @@ contents, to facilitate the support of other schools/institutions.
 + Most visible improvement is the support for multiple advisers and co-advisers (maximum 9).
 
 *2011-10-23 — New version available in downloads section.*
-+ This is a major revision to include the new requirements of FCT/UNL concerning the thesis layout (including a major redesign of the cover page).
++ This is a major revision to include the new requirements of FCT/NOVA concerning the thesis layout (including a major redesign of the cover page).
 
 *2011-01-19 — New version available in downloads section.*
 + Includes some minor bug fixes and support for input encodings: UTF8 (default) and Latin1.

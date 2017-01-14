@@ -1,23 +1,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% texplate.tex
-%% UNL thesis document template
+%% NOVA thesis document template
 %%
 %% This work is licensed under the 
 %% Creative Commons Attribution-NonCommercial 4.0 International License. 
 %% To view a copy of this license, 
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2016/11/07 [3.2.0]
+%% Version 2017/01/14 [4.0.0]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
-%% Universidade Nova de Lisboa
-%% BUGS and SUGGESTIONS: please submit an issue at the project web page
-%%      at: https://github.com/joaomlourenco/unlthesis/
+%% Universidade NOVA de Lisboa
 %%
-%% HELP: please ask for help at the unlthesis google group at
-%%          https://groups.google.com/forum/#!forum/unlthesis
+%% BUGS and SUGGESTIONS: please submit an issue at the project web page
+%%      at: https://github.com/joaomlourenco/novathesis/
+%%
+%% HELP: please ask for help at the NOVAthesis google group at
+%%          https://groups.google.com/forum/#!forum/novathesis
 %%      or at the facebook page
-%%          https://www.facebook.com/groups/unlthesis/
+%%          https://www.facebook.com/groups/novathesis/
 %%
 %% Authors / Contributors:
 %%      - João Lourenço <joao.lourenco@fct.unl.pt>
@@ -26,7 +27,7 @@
 %% DONATIONS:
 %%     If you think this template really helped you while writing your thesis,
 %%     think about doing a small donation. Just access the website 
-%%     https://github.com/joaomlourenco/unlthesis/
+%%     https://github.com/joaomlourenco/novathesis/
 %%     and click in the “Donation” link.
 %%     I'll keep a list thanking to all the identified donors that identify
 %%     themselves in the “*Add special instructions to the seller:*” box.
@@ -34,8 +35,8 @@
 
 % The default option marked with (*)
 \documentclass[
-  doctype=phd,          % phd(*), phdplan, phdprop, msc, mscplan, bsc
-  school=unl/fct,       % unl/fct(*), unl/fcsh, unl/ims, ul/ist, ul/fc
+  docdegree=phd,        % phd(*), phdplan, phdprop, msc, mscplan, bsc
+  school=nova/fct,      % nova/fct(*), nova/fcsh, nova/ims, ul/ist, ul/fc
   lang=en,              % en(*), fr, it, pt
   coverlang=pt,         % defaults to main language
   copyrightlang=pt,     % defaults to main language
@@ -63,10 +64,10 @@
     final,              % draft, final  <= Replace 'draft' with 'final' in final version
   },
   media=screen,         % screen(*), paper
-          % behavior to be defined in school options based in "\unlthesis@opt@media"
+          % behavior to be defined in school options based in "\novathesis@opt@media"
           % definitions for screen: left and right margins are equal, colored links
           % definitions for paper: left and right margins are different, black links
-]{unlthesis}
+]{novathesis}
 
 
 
@@ -120,8 +121,8 @@
 
 %%============================================================
 % For costumization,
-%        see file 'unl-thesis/Schools/*/*/defaults.clo'
-%        and file 'unl-thesis/lang-text.clo'
+%        see file 'nova-thesis/Schools/*/*/defaults.clo'
+%        and file 'nova-thesis/lang-text.clo'
 % You may override here any of the values defined there
 % e.g.
 % \majorfield[pt]={Engenharia Biomédica}
@@ -196,8 +197,8 @@
 \setglossarystyle{super}
 \acronymsfile{acronyms}
 
-% definition of the second cover, to be printed before the copyright (to serve FCSH-UNL)
-\aftercoverfile{aftercover-unl-ims}
+% definition of the second cover, to be printed before the copyright (to serve FCSH-NOVA)
+\aftercoverfile{aftercover-nova-ims}
 
 
 % The Table of Contents is always printed.

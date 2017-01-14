@@ -1,4 +1,4 @@
-TDIR = ThesisDIFCTUNL-$(shell date +%F)
+TDIR = ThesisDIFCTNOVA-$(shell date +%F)
 ZFILE = $(TDIR).zip
 
 
