@@ -7,7 +7,7 @@
 %% To view a copy of this license, 
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2017/01/14 [4.0.0]
+%% Version 2017/01/30 [4.0.1]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade NOVA de Lisboa
@@ -52,10 +52,33 @@
                         % the list of committee memebers
 	spine=false,          % (Set to 'true' for PRINTING the book spine)
 	biblatex={            % Options for biblatex (see biblatex documentation)
-		style=numeric-comp,      % numeric(*), alphabetic, authoryear, bwl-FU
-		sorting=nyt,        % none, nyt(*), ynt
-		firstinits=true,    % render all first and middle names as initials
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%%% uncomment for 'apa' like citations
+		% backend=biber,			% must use biber as the backend (and not bibtex)
+		% natbib=true,				% compatiblity with natbib (use \cite{…} or \citep{…})
+		% style=apa,					% APA style
+		% maxcitenames=2,			% use at most two names in citation
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%%% uncomment for 'numeric-by-order-of-citation' like citations
+		% backend=bibtex,		  % use bibtex if possible
+		% style=numeric-comp, % numeric(*), alphabetic, authoryear, bwl-FU
+		% sortcites=true,     % If numeric, sort cites by crescent order
+		% sorting=none,       % none, nyt(*), ynt
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%%% uncomment for 'numeric-by-order-of-citation' like citations
+		backend=bibtex,		  % use bibtex if possible
+		style=numeric-comp, % numeric(*), alphabetic, authoryear, bwl-FU
 		sortcites=true,     % If numeric, sort cites by crescent order
+		sorting=nyt,        % none, nyt(*), ynt
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%%% uncomment for 'numeric-by-order-of-citation' like citations
+		% backend=bibtex,		  % use bibtex if possible
+		% style=alphabetic,   % numeric(*), alphabetic, authoryear, bwl-FU
+		% sorting=nyt,        % none, nyt(*), ynt
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%%% other options for biblatex
+    maxbibnames=99,			% Never use 'et al' in the bibliography
+		firstinits=true,    % render all first and middle names as initials
     hyperref=true       % Hyperlinks in citations: true(*) false
 	},
 	memoir={	            % See the 'memoir' documentation

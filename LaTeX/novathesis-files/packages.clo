@@ -12,6 +12,7 @@
 \RequirePackage{inputenc}		% Format for the input file(s), see the "enc" option
 
 %%%%% Configure multilingual language support
+\RequirePackage{csquotes}
 \RequirePackage[english]{babel}			% Support for bilingual documents
 
 
@@ -57,7 +58,9 @@
 
 % To process the bibliography
 % (This should be listed after the hyperref, otherwise hyperlinks in citations won't work)
-\RequirePackage[backend=bibtex]{biblatex}
+\RequirePackage{biblatex}
+\DeclareLanguageMapping{english}{american-apa}
+\DeclareLanguageMapping{portuguese}{portuguese-apa}
 
   % Manage glossaries
   \RequirePackage[nonumberlist,translate=babel,acronym,toc]{glossaries} % To create gloassries
