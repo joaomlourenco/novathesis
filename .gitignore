@@ -95,3 +95,6 @@ sympy-plots-for-*.tex/
 .[a-zA-Z0-9]*
 *.pages
 .synctex*
+
+# Consider dockerignore file
+!.dockerignore

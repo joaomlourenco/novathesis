@@ -6,8 +6,31 @@ The template is easily customizable, including the support for other institution
 
 *This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/.*
 
-
 ## Getting Started
+
+### Quick Start
+
+Clone repository:
+
+```bash
+git clone https://github.com/joaomlourenco/novathesis.git
+```
+
+Install [Docker](https://docs.docker.com/engine/installation/) and build docker image:
+
+```bash
+docker build -t novathesis .
+```
+
+Generate PDF file (run twice to generate TOC, LOF and LOT):
+
+```bash
+docker run -it --rm -v $PWD/LaTeX:/src novathesis pdflatex template.tex
+```
+
+On Windows replace `$PWD/LaTeX` with `/c/this/is/my/path/LaTeX`, where `this/is/my/path` is the path to novathesis project.
+
+Open generated file `template.pdf`.
 
 ### Download
 
