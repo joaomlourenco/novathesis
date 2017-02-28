@@ -17,7 +17,7 @@ RUN apt-get update \
 	    	vim \
 	&& apt-get clean
 
-# Texlive dependencies
+# TeX Live dependencies
 RUN apt-get update \
 	&& apt-get install -y \
 			python \
@@ -25,15 +25,15 @@ RUN apt-get update \
 			wget \
 	&& apt-get clean
 
-# Texlive environment
+# TeX Live environment
 ENV PATH /usr/local/texlive/latest/bin/x86_64-linux:$PATH
 ENV INFOPATH /usr/local/texlive/latest/texmf-dist/doc/info
 ENV MANPATH /usr/local/texlive/latest/texmf-dist/doc/man
 
-# Texlive installation profile
+# TeX Live installation profile
 COPY texlive.profile /root/
 
-# Texlive installation
+# TeX Live installation
 RUN cd /root \
 	# Hack for Windows platform
 	&& sed -i 's/\r//g' texlive.profile \
