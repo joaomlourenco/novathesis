@@ -48,6 +48,8 @@ All contributors, both sporadic and regular, are welcome. :) Please [contact me]
 
 NOTE: see the file `changelog.txt` for the complete listing of changes.
 
+*2017-01-30 — Version 4.0.1 — Support for APA-like citations and bibliography
+
 *2017-01-14 — Version 4.0.0 — Template renamed to NOVA thesis (novathesis)
 
 *2016-11-07 — Version 3.2.0 — Support for both Appendixes and Annexes*
