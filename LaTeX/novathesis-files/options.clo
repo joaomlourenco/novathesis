@@ -252,7 +252,7 @@
 		maxbibnames=20,%
 		maxcitenames=2,%
 		mincitenames=1,%
-		firstinits=true,% will render all first and middle names as initials
+		giveninits=true,% will render all first and middle names as initials
 		uniquename=init,%
 		% dashed=false,%
 		sortcites=true,

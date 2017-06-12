@@ -1,0 +1,11 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% fbb.clo
+%% NOVA thesis configuration file
+%%
+%% Customization of font to use a Bembo-like (Cardo) font set
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% load babel package and options before erewhon
+\RequirePackage[p,osf,scaled=.98,space]{erewhon}
+\RequirePackage[varqu,varl]{inconsolata} % typewriter
+\RequirePackage[scaled=.95]{cabin} % sans serif like Gill Sans
+\RequirePackage[utopia,vvarbb]{newtxmath}
