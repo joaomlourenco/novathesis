@@ -867,6 +867,11 @@
 	\listgadd{\novathesis@frontmatter@list}{#1}%
 }
 
+\newcommand{\printtoc}{%
+  \pdfbookmark[0]{\contentsname}{contents}
+	\tableofcontents*
+}
+
 \newcommand{\printotherlists@i}{%
 	\ifthenelse{\isundefined\novathesis@frontmatter@list}%
     {}%

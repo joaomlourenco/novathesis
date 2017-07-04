@@ -53,7 +53,8 @@
   \RequirePackage{xcolor}%
   \RequirePackage{colortbl}
   \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
-  \RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}%
+  \RequirePackage[pdftex, breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}%
+	\RequirePackage[all]{hypcap}
   \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
 
 % To process the bibliography
