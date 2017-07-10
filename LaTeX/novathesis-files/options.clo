@@ -1,3 +1,4 @@
+%!TEX root = ../template.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% options.clo
 %% NOVA thesis configuration file
@@ -183,7 +184,25 @@
   }{}%
 }
 
-
+% --------------------------------------------------------
+% PRINT CD COVER
+%
+% true
+% false
+\DeclareOptionX{cdcover}[true]{%
+	\typeout{'cdcover'=#1}%
+	\ifthenelse{\equal{#1}{true}}{%
+    \AtEndDocument{%
+    \InputIfFileExists{novathesis-files/Schools/\novathesis@opt@school/cdcover.clo}%
+                      {}
+                      {\input{novathesis-files/cdcover.clo}}%
+    % \begin{landscape}
+    \printcdcover%  
+    % \end{landscape}
+    \printcdinlay%
+    }%
+  }{}%
+}
 
 % --------------------------------------------------------
 % BIBLATEX OPTIONS
