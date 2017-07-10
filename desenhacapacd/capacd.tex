@@ -1,0 +1,63 @@
+\documentclass{minimal}
+\usepackage[paperheight=120mm,paperwidth=120mm]{geometry}
+%\setstocksize{120mm}{120mm}
+%\settrimmedsize{90mm}{90mm}{*}
+%\setlrmarginsandblock{10mm}{10mm}{*}
+%\setulmarginsandblock{10mm}{10mm}{*}
+\usepackage[UTF8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}
+\usepackage{eso-pic}
+
+\newcommand\BackgroundPicBSC{\put(0,0){\parbox[b][\paperheight]{\paperwidth}{\centering\includegraphics[width=\paperwidth,height=\paperheight]{images/cover-bsc-std_square}}}}
+
+\newcommand\BackgroundPicMSC{\put(0,0){\parbox[b][\paperheight]{\paperwidth}{\centering\includegraphics[width=\paperwidth,height=\paperheight]{images/cover-msc-std_square}}}}
+
+\newcommand\BackgroundPicPHD{\put(0,0){\parbox[b][\paperheight]{\paperwidth}{\centering\includegraphics[width=\paperwidth,height=\paperheight]{images/cover-phd-std_square}}}}
+
+\begin{document}
+% Select the cover style: \BackgroundPicBSC, \BackgroundPicMSC or \BackgroundPicPHD
+\AddToShipoutPicture*{\BackgroundPicMSC} 
+% Author name
+\centering
+  \fontfamily{phv}\fontsize{12}{12}\selectfont
+  \textbf{Tomás João Monteiro}
+	\medskip
+
+
+
+% Academic qualifications
+  \fontfamily{phv}\fontsize{9}{9}\selectfont
+  Licenciado em Ciências da Engenharia Química e Bioquímica
+	\vfill
+
+
+
+% Title of Dissertation
+
+  \fontfamily{phv}\fontsize{12}{12}\selectfont
+  \textbf{Utilização de técnicas de controlo estatístico de processo com vista à redução da variabilidade no fabrico de PET}
+  \medskip
+
+
+
+% Degree
+
+  \fontfamily{phv}\fontsize{9}{9}\selectfont
+  Dissertação para obtenção do grau de Mestre em Engenharia Química e Bioquímica
+  \vfill
+
+
+
+% Date
+
+  \fontfamily{phv}\fontsize{9}{9}\selectfont
+  \textbf{Março, 2016}
+  
+  
+  
+  
+  
+% Draw the fct/unl frame
+
+\end{document}
