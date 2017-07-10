@@ -48,6 +48,11 @@ All contributors, both sporadic and regular, are welcome. :) Please [contact me]
 
 NOTE: see the file `changelog.txt` for the complete listing of changes.
 
+*2017-07-19 — Version 4.1.0 — CD cover support
++ Added support for school specific CD cover and inlay
++ Added support for default CD cover and inlay (if no school specific definition)
++ Added support for FCT (MSc and PhD) specific CD covers
+
 *2017-01-30 — Version 4.0.1 — Support for APA-like citations and bibliography
 
 *2017-01-14 — Version 4.0.0 — Template renamed to NOVA thesis (novathesis)
