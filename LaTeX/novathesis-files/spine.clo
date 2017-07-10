@@ -1,3 +1,4 @@
+%!TEX root = ../template.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% spine.clo
 %% NOVA thesis document template
@@ -17,7 +18,7 @@
 % usable range: 145 to 425 pages, maximum characters for the title 140 and 22 for the author name
 % usable range: 75 to 145 pages, maximum characters for the title 70 and 22 for the author name
 
-	\makeatletter
+  \makeatletter
 
 	\newlength{\novathesis@spinewidth}%
 	\setlength{\novathesis@spinewidth}{1mm * (\thelastsheet) / 20}% replace \thelastsheet by 1600 to get 80mm width folder label or any other value as long as the width is bigger than 50mm 
@@ -283,4 +284,4 @@
 	  ~% This space is important here so that the spine page is not empty anymore!
 	  % \cleardoublepage%
 	}%
-	\makeatother
+  \makeatother

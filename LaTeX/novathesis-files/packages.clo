@@ -1,3 +1,4 @@
+%!TEX root = ../template.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% packages.clo
 %% NOVA thesis configuration file
@@ -36,6 +37,9 @@
 
 % To process lists and other stuff
 \RequirePackage{etoolbox}
+
+% To typeset text sideways
+% \RequirePackage{lscape}
 
 %% Workaround found to the problem described in issue #39 @github
 %% I think that this could be solved differently, but for the time being

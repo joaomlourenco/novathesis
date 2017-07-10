@@ -1,3 +1,4 @@
+%!TEX root = ../template.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% lang-text.clo
 %% NOVA thesis configuration file
@@ -12,12 +13,14 @@
 \langabbrev[en]={english}
 \langabbrev[fr]={french}
 \langabbrev[it]={italian}
+\langabbrev[es]={spanish}
 
 % languages to be used in the document
 \langsused[pt]={pt,en}
 \langsused[en]={en,pt}
 \langsused[fr]={fr,en}
 \langsused[it]={it,en}
+\langsused[es]={es,en}
 
 % for each main language, list which abstracts shall be printed and in which order
 % may have more than two (just be sure you include the languages above as well)
@@ -25,4 +28,5 @@
 \abstractorder[en]={en,pt}
 \abstractorder[fr]={fr,en}
 \abstractorder[it]={it,en}
+\abstractorder[es]={es,en}
 

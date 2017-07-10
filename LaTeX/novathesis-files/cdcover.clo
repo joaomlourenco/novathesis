@@ -1,0 +1,158 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% cdcover.clo
+%% NOVA thesis document template
+%%
+%% This work is licensed under the 
+%% Creative Commons Attribution-NonCommercial 4.0 International License. 
+%% To view a copy of this license, 
+%% visit http://creativecommons.org/licenses/by-nc/4.0/.
+%%
+%% Authors / Contributors:
+%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%      - Tomás Monteiro <monteiro.tomas@gmail.com>
+%%
+%% This CD cover is a refactoring of the pull request by Tomás Monteiro
+%% to reuse the information already provided in the file “template.tex”
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Draw the cdcover
+
+
+%% Cover: 12.0cm x 12.0cm
+%% Inlay: 15.0cm x 11.8cm
+%% Inlay fold: 0,635cm + 13,73cm + 0,635cm
+
+\makeatletter
+
+\prependtographicspath{{novathesis-files/Images/}}
+
+\newsavebox{\cdcover@savebox}
+
+\newcommand{\printcdcover}{%
+	\clearpage
+
+	\thispagestyle{empty}
+	\pagestyle{empty}
+	
+	\setstocksize{12cm}{12cm}
+	\settrimmedsize{\stockheight}{\stockwidth}{*}
+	\settrims{0pt}{0pt}
+	\setlrmarginsandblock{*}{-5mm}{*}
+	\setulmarginsandblock{0mm}{*}{*}
+	% \setlength{\parskip}{0pt}
+	\setheadfoot{0mm}{0mm}
+	\setheaderspaces{*}{0mm}{*}
+	\setmarginnotes{0mm}{0mm}{0mm}
+	\checkandfixthelayout[fixed]
+
+  \AddToShipoutPictureBG*{\includegraphics[width=120mm]{cd-cover-std}}
+
+	\savebox{\cdcover@savebox}{%
+	\begin{minipage}[t][7.0cm]{9cm}
+		
+		% Author name
+		% \raggedright
+		% \raggedleft
+		\centering
+		\fontfamily{phv}\fontsize{12}{12}\selectfont
+		\textbf{\theauthorname}
+		\medskip
+
+		% Academic qualifications
+		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\theauthordegree
+		\vfill
+
+		% Title of Dissertation
+		\fontfamily{phv}\fontsize{12}{12}\selectfont
+		\textbf{\thetitle}
+		\vfill
+
+		% Degree
+		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\thepresentationtext
+		\vfill
+
+		% Date
+		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\textbf{\thedatemonth, \thedateyear}	
+		
+		
+	\end{minipage}
+	}
+
+	~\\[1.75cm]~\hspace*{1.7cm}
+	\usebox{\cdcover@savebox}
+
+}
+
+\newcommand{\printcdinlay}{%
+	\clearpage
+
+	\thispagestyle{empty}
+	\pagestyle{empty}
+	
+	\setstocksize{11.8cm}{15cm}
+	\settrimmedsize{\stockheight}{\stockwidth}{*}
+	\settrims{0pt}{0pt}
+	\setlrmarginsandblock{*}{0mm}{*}
+	\setulmarginsandblock{0mm}{*}{*}
+	% \setlength{\parskip}{0pt}
+	\setheadfoot{0mm}{0mm}
+	\setheaderspaces{*}{0mm}{*}
+	\setmarginnotes{0mm}{0mm}{0mm}
+	\checkandfixthelayout[fixed]
+
+  \AddToShipoutPictureBG*{\includegraphics[width=150mm]{cd-inlay-std}}
+
+	\savebox{\cdcover@savebox}{%
+	\begin{minipage}[t][8cm]{11cm}
+		
+		% Author name
+		% \raggedright
+		% \raggedleft
+		{
+		\centering
+		\vfill
+		\fontfamily{phv}\fontsize{12}{12}\selectfont
+		\textbf{\theauthorname}
+		\medskip
+
+		% Academic qualifications
+		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\theauthordegree
+		\vfill
+
+		% Title of Dissertation
+		\fontfamily{phv}\fontsize{12}{12}\selectfont
+		\textbf{\thetitle}
+		\vfill
+
+		% Degree
+		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\thepresentationtext
+		\vfill
+
+		% Date
+		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\textbf{\thedatemonth, \thedateyear}	
+		\vfill
+
+		}
+		\fontfamily{phv}\fontsize{5}{7}\selectfont
+		\thecopyrightstr
+		
+	\end{minipage}
+	}
+	
+	\par
+
+	\setlength{\fboxsep}{0pt}
+	% ~\hspace*{1.8cm}
+	~\\[0.75cm]~\hspace*{1.8cm}
+	\usebox{\cdcover@savebox}
+}
+
+\makeatother
