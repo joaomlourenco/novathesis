@@ -109,6 +109,7 @@
 \DeclareOptionX{coverlang}{%
   \typeout{'coverlang'=#1}%
   \lowercase{\gdef\novathesis@opt@coverlang{#1}}
+  \novathesis@addtobabel{\novathesis@opt@coverlang}
 }
 
 
