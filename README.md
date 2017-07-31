@@ -48,6 +48,9 @@ All contributors, both sporadic and regular, are welcome. :) Please [contact me]
 
 NOTE: see the file `changelog.txt` for the complete listing of changes.
 
+*2017-07-26 — Version 4.1.2 — CD spine for FCT-NOVA
++ Now both spines in the CD inlay are filled out. One has the "date, author and logo" and the other has the "date, title and logo".
+
 *2017-07-15 — Version 4.1.1 — Bugfixes in book spine for FCT-NOVA
 
 *2017-07-10 — Version 4.1.0 — CD cover support
