@@ -401,8 +401,11 @@
 
 %% Work identification
 \newcommand{\thetitle}{~title \novathesis@undefined}
-\renewcommand{\title}[1]{%
-  \renewcommand{\thetitle}{#1\hypersetup{pdftitle={#1}}}%
+\renewcommand{\title}[2][]{%
+  \ifthenelse{\equal{#1}{}}%
+    {\newcommand{\covertitle}{#2}}%
+    {\newcommand{\covertitle}{#1}}%
+  \renewcommand{\thetitle}{#2\hypersetup{pdftitle={#2}}}%
 }
 
 \newcommand{\thesubtitle}{~subtitle \novathesis@undefined}

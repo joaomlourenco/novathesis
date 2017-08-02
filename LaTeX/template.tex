@@ -25,7 +25,7 @@
 %%      - Bruno Candeias <b.candeias@campus.fct.unl.pt>
 %%
 %% DONATIONS:
-%%     If you think this template really helped you while writing your thesis,
+%%     If you think this templatze really helped you while writing your thesis,
 %%     think about doing a small donation. Just access the website 
 %%     https://github.com/joaomlourenco/novathesis/
 %%     and click in the “Donation” link.
@@ -50,7 +50,7 @@
   linkscolor=darkblue,  % darkblue, black (Set to 'black' for PRINTING)
   printcommittee=true,  % set to 'false' from submitted versins who should not have 
                         % the list of committee memebers
-  spine=false,          % (Set to 'true' for PRINTING the book spine)
+  spine=true,          % (Set to 'true' for PRINTING the book spine)
   cdcover=true,         % (Set to 'true' for PRINTING the CD cover)
   biblatex={            % Options for biblatex (see biblatex documentation)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -158,7 +158,18 @@
 
 % Title of the dissertation/thesis
 % USe "\\" to break the title into two or more lines
-\title{A Very Long and Impressive Thesis Title}
+% \let\oldtitle=\title
+% \makeatletter
+% \renewcommand{\title}[2][]{%
+%   \ifthenelse{\equal{#1}{}}%
+%     {\newcommand{\covertitle}{#2}}%
+%     {\newcommand{\covertitle}{#1}}%
+%   \let\title=\oldtitle
+%   \title{#2}
+% }
+% \makeatother
+
+\title[A Very Long and Impressive Thesis Title\\With a Line Break]{A Very Long and Impressive Thesis Title With a Line Break}
 \subtitle{Science is beautiful}
 
 % Autor
