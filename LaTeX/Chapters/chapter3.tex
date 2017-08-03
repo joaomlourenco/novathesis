@@ -72,14 +72,16 @@ Please, use these examples as a starting point, but you should always consider u
 \lipsum[1-3]
 
 \begin{figure}[htbp]
-\centering
- \subbottom[One sub-figure]{%
-    \includegraphics[width=0.5\linewidth]{knitting-vectorial}}%
- \subbottom[Another sub-figure]{%
-    \includegraphics[width=0.5\linewidth]{knitting-vectorial}}
-\caption{A figure with two sub-figures!}
-\label{fig:fig2subfig}
+  \centering
+  \subcaptionbox{One sub-figure\label{fig:leftsubfig}}%
+    {\includegraphics[width=0.5\linewidth]{knitting-vectorial}}%
+  \subcaptionbox{Another sub-figure\label{fig:rightsubfig}}%
+    {\includegraphics[width=0.5\linewidth]{knitting-vectorial}}%
+  \caption{A figure with two sub-figures!}
+  \label{fig:fig2subfig}
 \end{figure}
+
+\textbf{And this is a small text that references the Figure~\ref{fig:fig2subfig} and its Subfigures~\ref{fig:leftsubfig} and~\ref{fig:rightsubfig}.}
 
 \lipsum[1-3]
 
