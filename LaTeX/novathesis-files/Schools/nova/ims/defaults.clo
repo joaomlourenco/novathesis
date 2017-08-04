@@ -6,12 +6,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Univesity
-\university[pt]={Universidade Nova de Lisboa}
-\university[en]={NOVA University of Lisbon}
+\university[pt]={Universidade NOVA de Lisboa}
+\university[en]={NOVA University Lisbon}
+\university[fr]={NOVA University Lisbon}
+\university[it]={NOVA University Lisbon}
 
 % Faculty / School
-\faculty[pt]={Instituto Superior de Estatística e Gestão da Informação}
-\faculty[en]={NOVA Information Management School}
+\faculty[pt]={Faculdade de Ciências e Tecnologia}
+\faculty[en]={Faculty of Sciences and Technology}
+\faculty[fr]={Faculty of Sciences and Technology}
+\faculty[it]={Faculty of Sciences and Technology}
 
 % Scientific filed
 \majorfield[pt]={Information Management}
@@ -202,7 +206,7 @@ of the requirements for the degree of %
   % DISSERTATION TITLE
   \coveritem[l]{1.8cm}{%
     \fontfamily{phv}\fontsize{16}{16}\selectfont
-    \textcolor{imsdarkgrey}{\textbf{\thetitle}}
+    \textcolor{imsdarkgrey}{\textbf{\covertitle}}
   }
   % AUTHOR NAME
   \coveritem[l]{0.4cm}{%
@@ -250,7 +254,7 @@ of the requirements for the degree of %
   % % Title of Dissertation
   \coveritem[l]{1}{%
     \fontfamily{phv}\fontsize{17}{17}\selectfont
-    \textcolor{imsdarkgrey}{\textbf{\thetitle}}\\[0.25ex]
+    \textcolor{imsdarkgrey}{\textbf{\covertitle}}\\[0.25ex]
     \fontfamily{phv}\fontsize{16}{16}\selectfont
     \textcolor{imslightgrey}{\thesubtitle}
   }

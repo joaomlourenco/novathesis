@@ -6,12 +6,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Univesity
-\university[pt]={Universidade de Lisboa}
-\university[en]={University of Lisbon}
+\university[pt]={Universidade NOVA de Lisboa}
+\university[en]={NOVA University Lisbon}
+\university[fr]={NOVA University Lisbon}
+\university[it]={NOVA University Lisbon}
 
 % Faculty / School
-\faculty[pt]={Faculdade de Ciências}
-\faculty[en]={Faculdade de Ciências}
+\faculty[pt]={Faculdade de Ciências e Tecnologia}
+\faculty[en]={Faculty of Sciences and Technology}
+\faculty[fr]={Faculty of Sciences and Technology}
+\faculty[it]={Faculty of Sciences and Technology}
 
 % Scientific field
 \majorfield[pt]={Engenharia Informática}
@@ -212,7 +216,7 @@
 % % Title of Dissertation
 \coveritem[c]{1}{%
   \fontfamily{phv}\fontseries{mc}\fontsize{17}{17}\selectfont%
-  \textbf{\thetitle}%
+  \textbf{\covertitle}%
   \vspace{20mm}
 }
 

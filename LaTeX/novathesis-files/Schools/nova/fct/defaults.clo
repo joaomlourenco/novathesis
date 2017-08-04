@@ -7,19 +7,24 @@
 
 % Univesity
 \university[pt]={Universidade NOVA de Lisboa}
-\university[en]={NOVA University of Lisbon}
-\university[fr]={Universidade NOVA de Lisboa}
-\university[it]={Universidade NOVA de Lisboa}
+\university[en]={NOVA University Lisbon}
+\university[fr]={NOVA University Lisbon}
+\university[it]={NOVA University Lisbon}
 
 % Faculty / School
 \faculty[pt]={Faculdade de Ciências e Tecnologia}
 \faculty[en]={Faculty of Sciences and Technology}
-\faculty[fr]={Faculdade de Ciências e Tecnologia}
-\faculty[it]={Faculdade de Ciências e Tecnologia}
+\faculty[fr]={Faculty of Sciences and Technology}
+\faculty[it]={Faculty of Sciences and Technology}
 
 % Scientific filed
-\majorfield[pt]={Engenharia Informática}
-\majorfield[en]={Computer Science and Engineering}
+\IfSubStr{\novathesis@opt@docdegree}{phd}{%
+    \majorfield[pt]={Informática}
+    \majorfield[en]={Computer Science and Informatics}
+  }{%
+  \majorfield[pt]={Engenharia Informática}
+  \majorfield[en]={Computer Science and Informatics Engineering}
+  }
 \majorfield[fr]={Ingénierie Informatique}
 \majorfield[it]={Ingegneria Informatica}
 
@@ -134,7 +139,7 @@
 % % Title of Dissertation
 \coveritem[c]{4.5cm}{%
   \fontfamily{phv}\fontsize{16}{16}\selectfont
-  \textbf{\thetitle}
+  \textbf{\covertitle}
 }
 
 % Degree

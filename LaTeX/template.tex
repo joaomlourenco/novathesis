@@ -25,7 +25,7 @@
 %%      - Bruno Candeias <b.candeias@campus.fct.unl.pt>
 %%
 %% DONATIONS:
-%%     If you think this template really helped you while writing your thesis,
+%%     If you think this templatze really helped you while writing your thesis,
 %%     think about doing a small donation. Just access the website 
 %%     https://github.com/joaomlourenco/novathesis/
 %%     and click in the “Donation” link.
@@ -50,7 +50,7 @@
   linkscolor=darkblue,  % darkblue, black (Set to 'black' for PRINTING)
   printcommittee=true,  % set to 'false' from submitted versins who should not have 
                         % the list of committee memebers
-  spine=false,          % (Set to 'true' for PRINTING the book spine)
+  spine=true,          % (Set to 'true' for PRINTING the book spine)
   cdcover=true,         % (Set to 'true' for PRINTING the CD cover)
   biblatex={            % Options for biblatex (see biblatex documentation)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -158,7 +158,18 @@
 
 % Title of the dissertation/thesis
 % USe "\\" to break the title into two or more lines
-\title{A Very Long and Impressive Thesis Title}
+% \let\oldtitle=\title
+% \makeatletter
+% \renewcommand{\title}[2][]{%
+%   \ifthenelse{\equal{#1}{}}%
+%     {\newcommand{\covertitle}{#2}}%
+%     {\newcommand{\covertitle}{#1}}%
+%   \let\title=\oldtitle
+%   \title{#2}
+% }
+% \makeatother
+
+\title[A Very Long and Impressive Thesis Title\\With a Line Break]{A Very Long and Impressive Thesis Title With a Line Break}
 \subtitle{Science is beautiful}
 
 % Autor
@@ -167,8 +178,8 @@
 \authordegree{Master of Science}
 
 % Date
-\datemonth{June}
-\dateyear{2015}
+\datemonth{August}
+\dateyear{2017}
 
 
 % Advisers
@@ -182,20 +193,20 @@
 
 % Co-Advisers (maximum of 9)
 % use [f] for female and [m] for male
-\coadviser[f]{John Doe Co-Adviser Name}{Associate\\& Professor}{Faculdade de Ciências e Tecnologia\\& da Universidade Nova de Lisboa}
+\coadviser[f]{John Doe Co-Adviser Name}{Associate\\& Professor}{NOVA University of Lisbon}
 % \coadviser[f]{[Nome da co-orientadora 2]}{[Profª.\ Auxiliar]}{[Universidade Nova de Lisboa]}
 
 
 % committee (maximum of 9 elements)
-% Use [c] for chair, [r] for raporteurs, [a] for advisers, [v] or nothing for remaining members
+% Use [c] for chair, [r] for raporteurs, [a] for advisers, [m] or nothing for remaining members
 % Chair of the committee
-\committee[c,m]{Name of the male committee chairperson}
+\committee[c,m]{Name of the committee chairperson}
 % Main raporteurs
-\committee[r,f]{Name of a female raporteur}
-\committee[r,f]{Name of another (male) raporteur}
+\committee[r,f]{Name of a raporteur}
+\committee[r,f]{Name of another raporteur}
 % Advisers
-\committee[a,f]{Name of one female adviser}
-\committee[a,f]{Name of another female adviser}
+\committee[a,f]{Name of an adviser}
+\committee[a,f]{Name of another adviser}
 % Other members of the committee - include the Adviser in this list
 \committee[m,m]{Another member of the committee}
 \committee[m,f]{Yet another member of the committee}
