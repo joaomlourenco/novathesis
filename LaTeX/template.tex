@@ -35,7 +35,7 @@
 
 % The default option marked with (*)
 \documentclass[
-  docdegree=phd,        % phd(*), phdplan, phdprop, msc, mscplan, bsc
+  docdegree=msc,        % phd(*), phdplan, phdprop, msc, mscplan, bsc
   school=nova/fct,      % nova/fct(*), nova/fcsh, nova/ims, ul/ist, ul/fc
   lang=en,              % en(*), fr, it, pt
   coverlang=pt,         % defaults to main language
@@ -50,8 +50,8 @@
   linkscolor=darkblue,  % darkblue, black (Set to 'black' for PRINTING)
   printcommittee=true,  % set to 'false' from submitted versins who should not have 
                         % the list of committee memebers
-  spine=true,          % (Set to 'true' for PRINTING the book spine)
-  cdcover=true,         % (Set to 'true' for PRINTING the CD cover)
+  spine=false,          % (Set to 'true' for PRINTING the book spine)
+  cdcover=false,         % (Set to 'true' for PRINTING the CD cover)
   biblatex={            % Options for biblatex (see biblatex documentation)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% uncomment for 'apa' like citations
@@ -83,7 +83,7 @@
     hyperref=true       % Hyperlinks in citations: true(*) false
   },
   memoir={              % See the 'memoir' documentation
-    showtrims,          % DEBUG
+    % showtrims,          % DEBUG
     a4paper,            % the paper size/format
     11pt,               % 10pt, 11pt(*), 12pt
     final,              % draft, final  <= Replace 'draft' with 'final' in final version
