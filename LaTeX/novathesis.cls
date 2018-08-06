@@ -597,7 +597,6 @@
 
 \newcommand{\printadvisersaslist}{%
   \makelistwithalladvisers%
-% [\arabic{@novathesis@alladvisers@cnt}]
   \ifcsname @novathesis@listwithhalladvisers\endcsname%
     \forlistcsloop{\printadvisersaslist@ii}{@novathesis@listwithhalladvisers}%
   \fi%
@@ -853,6 +852,7 @@
 } 
 
 \newcommand{\annex}{\par
+  \xdef\Hy@chapapp{annex}%
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
   \gdef\@chapapp{\annexname}%
@@ -873,7 +873,7 @@
 }
 
 \newcommand{\printtoc}{%
-  \pdfbookmark[0]{\contentsname}{contents}
+  % \pdfbookmark[0]{\contentsname}{contents}
 	\tableofcontents*
 }
 

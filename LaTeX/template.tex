@@ -37,7 +37,7 @@
 \documentclass[
   docdegree=msc,        % phd(*), phdplan, phdprop, msc, mscplan, bsc
   school=nova/fct,      % nova/fct(*), nova/fcsh, nova/ims, ul/ist, ul/fc
-  lang=en,              % en(*), fr, it, pt
+  lang=pt,              % en(*), fr, it, pt
   coverlang=pt,         % defaults to main language
   copyrightlang=pt,     % defaults to main language
   fontstyle=kpfonts,    % baskervaldx bookman charter ebgaramond fbb fourier garamond
@@ -256,10 +256,10 @@
 % Text appendixes
 % sintax: \appendixfile{file}
 % Comment if not needed
-% \appendixfile{appendix1}
-% \appendixfile{appendix2}
-% \annexfile{annex1}
-% \annexfile{annex2}
+\appendixfile{appendix1}
+\appendixfile{appendix2}
+\annexfile{annex1}
+
 
 
 % BibTeX bibiography files. Can be used multiple times with a single file nae each time.
@@ -305,6 +305,7 @@
 \printbib    % Print the bibliography
 % \printotherlists   % Alternative location to print the other lists (if you uncomment this one, comment the other one above)
 \printotherlists   % If option 'otherlistsat=back', print other lists of contents according to instructions given above, otherwise do nothing
+% \addtocontents{toc}{\setlength{\cftsecnumwidth}{4em}}
 \printappendixes  % Print appendixes, if any!
 \printannexes  % Print appendixes, if any!
 \printbackcoverpage
