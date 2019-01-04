@@ -1,4 +1,4 @@
-# novathesis
+# NOVAthesis
 
 --------
 
