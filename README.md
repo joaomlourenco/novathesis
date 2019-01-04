@@ -1,4 +1,4 @@
-# NOVAthesis
+# NOVAthesis LaTeX template
 
 --------
 
