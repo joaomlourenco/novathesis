@@ -761,6 +761,10 @@
   \InputIfFileExists{Chapters/#1}{}{}
 }%
 
+\newcommand{\symbolsfile}[1]{%
+  \InputIfFileExists{Chapters/#1}{}{}
+}%
+
 \def\abstractfile[#1]#2{%
 	\expandafter\xdef\csname novathesis@abstractfile@#1\endcsname{#2}}%
 

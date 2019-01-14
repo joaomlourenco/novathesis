@@ -68,7 +68,10 @@
 \DeclareLanguageMapping{portuguese}{portuguese-apa}
 
   % Manage glossaries
-  \RequirePackage[nonumberlist,translate=babel,acronym,toc]{glossaries} % To create gloassries
+  \RequirePackage[nonumberlist,translate=babel,acronym,toc,
+    symbols, % adds symbols listing
+    sanitize=none % allow \gls inside descriptions
+  ]{glossaries-extra} % To create glossaries
   % \glsdisablehyper
   \makenoidxglossaries
 }
