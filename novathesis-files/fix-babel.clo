@@ -20,19 +20,23 @@
   \def\lstlistingname{Listagem}%
   \defineshorthand{"-}{\babelhyphen{repeat}}% generates a hyphen that will repeat on a new line
   \gdef\annexname{Anexo}
+  \gdef\annexnamepl{Anexos}
 }
 \addto\captionsenglish{%
   \def\lstlistlistingname{Listings}%
   \def\lstlistingname{Listing}%
   \gdef\annexname{Annex}
+  \gdef\annexnamepl{Annexes}
 }
 \addto\captionsfrench{%
   \def\lstlistlistingname{Listes de Code}%
   \gdef\annexname{Annexe}
+  \gdef\annexnamepl{Annexes}
 }
 \addto\captionsitalian{%
   \def\lstlistlistingname{Listatos}%
   \gdef\annexname{Annesso}
+  \gdef\annexnamepl{Annessi}
 }
 
 
