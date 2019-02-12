@@ -833,7 +833,7 @@
 
 \newcommand{\printappendixes}{%
 	\ifthenelse{\isundefined\novathesis@appendix@list}{}%
-		{\cleardoublepage\appendix%
+		{\cleardoublepage\appendix\addappheadtotoc%
 		 \forlistloop{\novathesis@printappendix}{\novathesis@appendix@list}}%
 } 
 
@@ -847,11 +847,12 @@
 
 \newcommand{\printannexes}{%
 	\ifthenelse{\isundefined\novathesis@annex@list}{}%
-		{\cleardoublepage\annex%
+		{\renewcommand{\appendixtocname}{\annexnamepl}%
+         \cleardoublepage\annex\addappheadtotoc%
 		 \forlistloop{\novathesis@printannex}{\novathesis@annex@list}}%
 } 
 
-\newcommand{\annex}{\par
+\newcommand{\annex}{
   \xdef\Hy@chapapp{annex}%
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
