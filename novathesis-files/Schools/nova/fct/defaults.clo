@@ -122,6 +122,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\@printcommitteeauxtrue
 
 % Author name
 \coveritem[c]{0cm}{%
@@ -157,12 +158,14 @@
 
 % Committee — only print the committee for the main classes
 \coveritem[r]{2}{%
+\if@printcommitteeaux
   \ifthenelse{%
     \equal{\novathesis@opt@docdegree}{bsc}%
     \OR\equal{\novathesis@opt@docdegree}{msc}%
     \OR\equal{\novathesis@opt@docdegree}{phd}}%
   {\fontfamily{phv}\fontsize{10}{10}\selectfont\printcommittee}%
   {}%
+\fi
 }
 
 

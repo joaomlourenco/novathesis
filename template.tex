@@ -46,6 +46,7 @@
   chapstyle=elegant,    % bianchi bluebox brotherton dash default elegant(*) ell ger 
                         % hansen ist jenor lyhne madsen pedersen veelo vz14 vz34 vz43
   otherlistsat=front,   % front(*), back
+  secondcover=true,     % false=don't true=include the aftercover file (even if exists)
   aftercover=false,     % false=don't true=include the aftercover file (even if exists)
   linkscolor=darkblue,  % darkblue, black (Set to 'black' for PRINTING)
   printcommittee=true,  % set to 'false' from submitted versins who should not have 
@@ -154,6 +155,7 @@
 % \majorfield[en]={Biomedical Engineering}
 % \thesiscover[msc,front]={cover-megi-nova-ims}
 % \thesiscover[msc,front]={cover-mgi-nova-ims}
+\glstocfalse
 %%============================================================
 
 % Title of the dissertation/thesis
@@ -231,7 +233,7 @@
 \abstractfile[fr]{abstract-fr}  % Abstract in French
 \glossaryfile{glossary}
 \setglossarystyle{super}
-\acronymsfile{acronyms}
+\acronymsfile{acronyms} 
 \symbolsfile{symbols}
 
 % definition of the second cover, to be printed before the copyright (to serve FCSH-NOVA)

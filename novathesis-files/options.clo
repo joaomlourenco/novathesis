@@ -126,6 +126,17 @@
 
 
 % --------------------------------------------------------
+% PRINT SECOND COVER
+%
+% true
+% false
+\DeclareOptionX{secondcover}[false]{%
+	\typeout{'secondcover'=#1}%
+  \gdef\novathesis@opt@secondcover{#1}%
+}
+
+
+% --------------------------------------------------------
 % PRINT AFETR COVER
 %
 % true
@@ -259,6 +270,7 @@
   otherlistsat=front,
 	lang=en,
   linkscolor=darkblue,
+  secondcover=false,
   aftercover=false,
   printcommittee=true,
 	spine=false,

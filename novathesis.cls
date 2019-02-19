@@ -209,14 +209,7 @@
   %% Print second conver page if school is ul/fc
   \@printcommitteeauxtrue
   \setcounter{@novathesis@cnt}{0}%	reset counter used in the name listing
-  \ifthenelse{%
-  	\equal{\novathesis@opt@school}{ul/fc}%
-  	\AND\(%
-  		\equal{\novathesis@opt@docdegree}{phd}%
-  		\OR\equal{\novathesis@opt@docdegree}{phdprop}%
-  		\OR\equal{\novathesis@opt@docdegree}{phdplan}%
-		\)%
-	}%
+  \ifthenelse{\equal{\novathesis@opt@secondcover}{true}}%
 	{
 		\thispagestyle{empty}%
 	  \selectthelanguage{\novathesis@opt@coverlang}%
@@ -869,8 +862,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Deal with optional lists in the frontmatter: listoftables, litoffigures, etc.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlistof{lstlistoflistings}{lol}{\lstlistlistingname}
 \newcommand{\novathesis@printlist}[1]{%
-	#1\cleardoublepage%
+	#1*\cleardoublepage%
 }
 
 \newcommand{\addlisttofrontmatter}[1]{%
