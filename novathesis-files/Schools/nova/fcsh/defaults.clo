@@ -50,32 +50,32 @@
 \margin[paper,right]={3.5cm}
 
 % Set margins for cover pages
-\margin[phd,top]={0.5cm}
-\margin[phd,bottom]={0.0cm}
+\margin[phd,top]={0.0cm}
+\margin[phd,bottom]={1.0cm}
 \margin[phd,left]={0.0cm}
 \margin[phd,right]={0.0cm}
-\margin[phdplan,top]={0.5cm}
-\margin[phdplan,bottom]={0.0cm}
+\margin[phdplan,top]={0.0cm}
+\margin[phdplan,bottom]={1.0cm}
 \margin[phdplan,left]={0.0cm}
 \margin[phdplan,right]={0.0cm}
-\margin[phdprop,top]={0.5cm}
-\margin[phdprop,bottom]={0.0cm}
+\margin[phdprop,top]={0.0cm}
+\margin[phdprop,bottom]={1.0cm}
 \margin[phdprop,left]={0.0cm}
 \margin[phdprop,right]={0.0cm}
-\margin[msc,top]={0.5cm}
-\margin[msc,bottom]={0.0cm}
+\margin[msc,top]={0.0cm}
+\margin[msc,bottom]={1.0cm}
 \margin[msc,left]={0.0cm}
 \margin[msc,right]={0.0cm}
-\margin[mscplan,top]={0.5cm}
-\margin[mscplan,bottom]={0.0cm}
+\margin[mscplan,top]={0.0cm}
+\margin[mscplan,bottom]={1.0cm}
 \margin[mscplan,left]={0.0cm}
 \margin[mscplan,right]={0.0cm}
-\margin[bsc,top]={0.5cm}
-\margin[bsc,bottom]={0.0cm}
+\margin[bsc,top]={0.0cm}
+\margin[bsc,bottom]={1.0cm}
 \margin[bsc,left]={0.0cm}
 \margin[bsc,right]={0.0cm}
-\margin[plain,top]={0.5cm}
-\margin[plain,bottom]={0.0cm}
+\margin[plain,top]={0.0cm}
+\margin[plain,bottom]={1.0cm}
 \margin[plain,left]={0.0cm}
 \margin[plain,right]={0.0cm}
 
@@ -113,20 +113,14 @@
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\definecolor{fcshblue}{rgb}{0.15,0.30,0.60}% Background title color
+\definecolor{fcshblue}{RGB}{25,61,108}% Background title color
 
 
 % LOGO
-\coveritem[c]{0cm}{%
+\coveritem[l]{1.0cm}{%
   \mbox{%
-    \hspace*{0.5cm}%
-    \begin{tabular}[c]{@{}l@{}}%
-      \includegraphics[width=9cm]{logoFCSH}%
-    \end{tabular}%
-    \quad%
-    \begin{tabular}[c]{l}%
-      \textcolor{fcshblue}{\rule{0.5\stockwidth}{4pt}}%
-    \end{tabular}%
+    \hspace*{0.8cm}%
+      \includegraphics[width=9cm]{novologo_cores_crop}%
   }%
 }
 
@@ -190,9 +184,4 @@
     \fi%
   }%
 }
-
-\coveritem[c]{1.5cm}{%
-  \raisebox{-0.6cm}{  %
-    \textcolor{fcshblue}{\hspace*{-0.2cm}\rule{\stockwidth}{0.75cm}}%
-  }%
 }
