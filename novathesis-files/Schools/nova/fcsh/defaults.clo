@@ -51,31 +51,31 @@
 
 % Set margins for cover pages
 \margin[phd,top]={0.0cm}
-\margin[phd,bottom]={1.0cm}
+\margin[phd,bottom]={0.0cm}
 \margin[phd,left]={0.0cm}
 \margin[phd,right]={0.0cm}
 \margin[phdplan,top]={0.0cm}
-\margin[phdplan,bottom]={1.0cm}
+\margin[phdplan,bottom]={0.0cm}
 \margin[phdplan,left]={0.0cm}
 \margin[phdplan,right]={0.0cm}
 \margin[phdprop,top]={0.0cm}
-\margin[phdprop,bottom]={1.0cm}
+\margin[phdprop,bottom]={0.0cm}
 \margin[phdprop,left]={0.0cm}
 \margin[phdprop,right]={0.0cm}
 \margin[msc,top]={0.0cm}
-\margin[msc,bottom]={1.0cm}
+\margin[msc,bottom]={0.0cm}
 \margin[msc,left]={0.0cm}
 \margin[msc,right]={0.0cm}
 \margin[mscplan,top]={0.0cm}
-\margin[mscplan,bottom]={1.0cm}
+\margin[mscplan,bottom]={0.0cm}
 \margin[mscplan,left]={0.0cm}
 \margin[mscplan,right]={0.0cm}
 \margin[bsc,top]={0.0cm}
-\margin[bsc,bottom]={1.0cm}
+\margin[bsc,bottom]={0.0cm}
 \margin[bsc,left]={0.0cm}
 \margin[bsc,right]={0.0cm}
 \margin[plain,top]={0.0cm}
-\margin[plain,bottom]={1.0cm}
+\margin[plain,bottom]={0.0cm}
 \margin[plain,left]={0.0cm}
 \margin[plain,right]={0.0cm}
 
@@ -117,12 +117,30 @@
 
 
 % LOGO
+% if second cover, print with horizontal rule.
 \coveritem[l]{1.0cm}{%
-  \mbox{%
-    \hspace*{0.8cm}%
-      \includegraphics[width=9cm]{novologo_cores_crop}%
+  \if@printcommitteeaux
+  {  
+    \mbox{%
+      \hspace*{0.8cm}%
+      \begin{tabular}[c]{@{}l@{}}%
+        \includegraphics[width=9cm]{novologo_cores_crop}%
+      \end{tabular}%
+      \quad%
+      \begin{tabular}[c]{l}%
+        \textcolor{fcshblue}{\rule{0.5\stockwidth}{4pt}}%
+      \end{tabular}%
+    }%
   }%
+  \else
+    \mbox{%
+        \hspace*{0.8cm}%
+          \includegraphics[width=9cm]{novologo_cores_crop}%
+        }%
+  \fi
 }
+
+
 
 % School
 % \coveritem[c]{2.5cm}{%
@@ -140,14 +158,14 @@
 
 % Author name
 \coveritem[c]{1}{%
-  \fontfamily{phv}\fontsize{14}{14}\selectfont%
+  \fontfamily{phv}\fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\theauthorname}}%
 }
 
 % Degree
 \coveritem[c]{1}{%
-  \fontfamily{phv}\fontsize{12}{12}\selectfont%
-  \textcolor{fcshblue}{\thepresentationtext}%
+  \fontfamily{phv}\fontsize{18}{18}\selectfont%
+  \textcolor{fcshblue}{\textbf{\thepresentationtext}}%
 }
 
 % Advisers
@@ -184,4 +202,11 @@
     \fi%
   }%
 }
-}
+
+\coveritem[c]{1cm}{%
+\if@printcommitteeaux
+ \raisebox{-1cm}{  %
+   \textcolor{fcshblue}{\hspace*{-0.1cm}\rule{\stockwidth}{0.75cm}}%
+ }
+ \fi
+ }
