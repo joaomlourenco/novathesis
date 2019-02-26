@@ -40,8 +40,10 @@
 \thesiscover[mscplan,front]={nova-ims-front-cover-megi}
 \thesiscover[mscplan,back]={nova-ims-back-cover}
 \thesiscover[mscplan,spine]={nova-ims-book-spine}
-\thesiscover[bsc,front]={}
-\thesiscover[plain,front]={}
+\thesiscover[bsc,front]={nova-ims-front-cover-generic}
+\thesiscover[bsc,back]={nova-ims-back-cover}
+\thesiscover[bsc,spine]={nova-ims-book-spine}
+\thesiscover[plain,front]={nova-ims-front-cover-generic}
 
 % Rename Doctor degree
 \degreestr[phd,m,en]={Doctor}
