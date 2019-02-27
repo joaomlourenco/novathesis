@@ -35,7 +35,7 @@
 
 % The default option marked with (*)
 \documentclass[
-  docdegree=msc,        % phd(*), phdplan, phdprop, msc, mscplan, bsc
+  docdegree=phd,        % phd(*), phdplan, phdprop, msc, mscplan, bsc
   school=nova/fct,      % nova/fct(*), nova/fcsh, nova/ims, ul/ist, ul/fc
   lang=pt,              % en(*), fr, it, pt
   % coverlang=en,         % defaults to main language
@@ -117,7 +117,8 @@
 \usepackage[textsize=footnotesize]{todonotes}  % To register TODO notes in the text
 \setlength{\marginparwidth}{3.25cm}
 
-
+%% For automatic adding month and year
+\usepackage[calc]{datetime2}
 
 %% FOR DEMO PURPOSES ONLY --- TO BE REMOVED by final users
 \usepackage{lipsum}
@@ -158,18 +159,6 @@
 \glstocfalse
 %%============================================================
 
-% Title of the dissertation/thesis
-% USe "\\" to break the title into two or more lines
-% \let\oldtitle=\title
-% \makeatletter
-% \renewcommand{\title}[2][]{%
-%   \ifthenelse{\equal{#1}{}}%
-%     {\newcommand{\covertitle}{#2}}%
-%     {\newcommand{\covertitle}{#1}}%
-%   \let\title=\oldtitle
-%   \title{#2}
-% }
-% \makeatother
 
 \title[A Very Long and Impressive Thesis Title\\With a Line Break]{A Very Long and Impressive Thesis Title With a Line Break}
 \subtitle{Science is beautiful}
@@ -180,8 +169,8 @@
 \authordegree{Master of Science}
 
 % Date
-\datemonth{August}
-\dateyear{2017}
+\datemonth{\DTMmonthname{\month}}
+\dateyear{\the\year}
 
 
 % Advisers
