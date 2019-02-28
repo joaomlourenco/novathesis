@@ -111,6 +111,9 @@
     language=Java,
     float,
     frame=single,
+    columns=fullflexible,
+    breaklines=true,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
     inputencoding=utf8,
     extendedchars=true,
     literate=
