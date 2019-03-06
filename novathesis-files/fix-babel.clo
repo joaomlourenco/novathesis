@@ -21,6 +21,7 @@
   \defineshorthand{"-}{\babelhyphen{repeat}}% generates a hyphen that will repeat on a new line
   \gdef\annexname{Anexo}
   \gdef\annexnamepl{Anexos}
+  \gdef\appendixnamepl{Apêndices}
 }
 \addto\captionsenglish{%
   \def\lstlistlistingname{Listings}%
