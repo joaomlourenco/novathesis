@@ -3,9 +3,9 @@
 %% options.clo
 %% NOVA thesis configuration file
 %%
-%% Processing of Class optinos
+%% Processing of Class options
 %%
-%% Order and lnguage for printing the abstracts depending on the language
+%% Order and language for printing the abstracts depending on the language
 %% These macros are just informative for now (it is hardcoded in the
 %% 	novathesis.clo file)… this must be fixed in the future!!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -39,7 +39,7 @@
 % SCHOOL - novathesis@opt@school
 %
 % nova/fct Faculdade de Ciências e Tecnologia da Universidade Nova de Lisboa
-% ul/is   Isntituto Superior Técnico da Universidade de Lisboa
+% ul/ist   Isntituto Superior Técnico da Universidade de Lisboa
 \DeclareOptionX{school}{%
 	\typeout{'school'=#1}%
 	\gdef\novathesis@opt@school{#1}%
