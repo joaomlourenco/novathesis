@@ -1,9 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% ebgaramond.clo
+%% tgschola.clo
 %% NOVA thesis configuration file
 %%
-%% Customization of font to use a EB Garamond font set
+%% Customization of font to use a Tex Gyre Schola font set
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage[cmintegrals,cmbraces]{newtxmath}
-\RequirePackage{ebgaramond-maths}
+\RequirePackage{tgschola}

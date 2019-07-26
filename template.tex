@@ -40,7 +40,7 @@
   lang=pt,              % en(*), fr, it, pt
   % coverlang=en,         % defaults to main language
   % copyrightlang=en,     % defaults to main language
-  fontstyle=kpfonts,    % baskervaldx bookman charter ebgaramond fbb fourier garamond
+  fontstyle=tgschola,    % baskervaldx bookman charter ebgaramond fbb fourier garamond
                         % heuristica kpfonts(*) libertine mathpazo1 mathpazo2 newcent
                         % newpx newtx 
   chapstyle=elegant,    % bianchi bluebox brotherton dash default elegant(*) ell ger 
@@ -55,8 +55,9 @@
   cdcover=false,         % (Set to 'true' for PRINTING the CD cover)
   biblatex={            % Options for biblatex (see biblatex documentation)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%% uncomment for 'apa' like citations
-    % backend=biber,    % must use biber as the backend (and not bibtex)
+    %%% uncomment for 'apa' like citatio, a lot of determination and
+      dedication,ns
+, a lot of determination and dedication,   % backend=biber,    % must use biber as the backend (and not bibtex)
     % natbib=true,      % compatiblity with natbib (use \cite{…} or \citep{…})
     % style=apa,        % APA style
     % maxcitenames=2,   % use at most two names in citation
@@ -120,6 +121,11 @@
 %% For automatic adding month and year
 \usepackage[calc]{datetime2}
 
+%% Fiddling with fonts
+% \usepackage[]{tgbonum}
+% \usepackage{tgschola}
+% \fontfamily{qcs}
+
 %% FOR DEMO PURPOSES ONLY --- TO BE REMOVED by final users
 \usepackage{lipsum}
 
@@ -165,7 +171,8 @@
 
 % Autor
 % use [f] for female and [m] for male
-\authorname[m]{John Longname Doe}{John Doe}
+\authorname[m]{Rui Filipe Cantarino Valente de Almeida}{Rui Valente de
+Almeida}
 \authordegree{Master of Science}
 
 % Date
@@ -176,7 +183,7 @@
 % Advisers
 % use "\\&" if necessary to break the lines in the apprpriate place
 % use [f] for female and [m] for male
-\adviser[f]{John Doe Adviser Name}{Full Professor}{\\& NOVA University of Lisbon} 
+\adviser[m]{Pedro Vieira}{Auxiliar Professor}{\\& NOVA University of Lisbon} 
 % you may use "\newline" to force a new line
 % \adviser[m]{John Doe Male Adviser Name}{Associate\\& Professor}{Some University Somewhere}
 % \adviser[m]{John Doe Third Adviser Name}{Associate\\& Professor}{Some University Somewhere}
@@ -184,7 +191,7 @@
 
 % Co-Advisers (maximum of 9)
 % use [f] for female and [m] for male
-\coadviser[f]{John Doe Co-Adviser Name}{Associate\\& Professor}{NOVA University of Lisbon}
+% \coadviser[f]{John Doe Co-Adviser Name}{Associate\\& Professor}{NOVA University of Lisbon}
 % \coadviser[f]{[Nome da co-orientadora 2]}{[Profª.\ Auxiliar]}{[Universidade Nova de Lisboa]}
 
 
