@@ -20,10 +20,10 @@
 % Scientific filed
 \IfSubStr{\novathesis@opt@docdegree}{phd}{%
     \majorfield[pt]={Informática}
-    \majorfield[en]={Computer Science}
+    \majorfield[en]={Biomedical Engineering}
   }{%
   \majorfield[pt]={Engenharia Informática}
-  \majorfield[en]={Computer Science and Engineering}
+  \majorfield[en]={Biomedical Engineering}
   }
 \majorfield[fr]={Ingénierie Informatique}
 \majorfield[it]={Ingegneria Informatica}
