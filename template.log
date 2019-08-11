@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.31)  9 AUG 2019 17:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.31)  11 AUG 2019 18:54
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1802,33 +1802,7 @@ Package glossaries Warning: Empty glossary for \printnoidxglossary[type={symbols
 
 
 
-]
-
-./Chapters/chapter1.tex:84: Package glossaries-extra Error: Glossary entry `WHO' has not been defined.
-
-See the glossaries-extra package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.84 Health Organization (\gls{WHO})
-                                     states that there are six major air
-You need to define a glossary entry before you can reference it.
-
-
-./Chapters/chapter1.tex:87: Package glossaries-extra Error: Glossary entry `PM' has not been defined.
-
-See the glossaries-extra package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.87     \item Particle Matter (\gls{PM})
-                                         ;
-You need to define a glossary entry before you can reference it.
-
-)
-Underfull \vbox (badness 5316) has occurred while \output is active []
-
- [2] [3] [4
+] [2]) [3] [4
 
 ] (./Chapters/chapter2.tex) [5
 
@@ -1879,31 +1853,28 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 315.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 315.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 315.
 Package rerunfilecheck Info: File `template.out' has not changed.
-(rerunfilecheck)             Checksum: 72E0560E9449CAF914DC089BCCF3A37C;1193.
+(rerunfilecheck)             Checksum: 81E20276F6DD9F2FE051166970E23618;1193.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 Package logreq Info: Writing requests to 'template.run.xml'.
 \openout1 = `template.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 51756 strings out of 492609
- 973287 string characters out of 6129033
- 1630015 words of memory out of 5000000
- 54690 multiletter control sequences out of 15000+600000
+ 51902 strings out of 492609
+ 975295 string characters out of 6129033
+ 1632480 words of memory out of 5000000
+ 54832 multiletter control sequences out of 15000+600000
  630289 words of font info for 131 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  72i,12n,96p,2025b,2430s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/tex-gyre/q-ec-sc.enc}{/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/tex-gyre/q-ec.enc}{/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/tex-gyre/qcsb.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/tex-gyre/qcsr.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/tex-gyre/qcsri.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfss1440.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfss2074.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfss2488.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on template.pdf (36 pages, 238508 bytes).
+Output written on template.pdf (36 pages, 242134 bytes).
 PDF statistics:
- 426 PDF objects out of 1000 (max. 8388607)
- 355 compressed objects within 4 object streams
- 93 named destinations out of 1000 (max. 500000)
+ 440 PDF objects out of 1000 (max. 8388607)
+ 369 compressed objects within 4 object streams
+ 97 named destinations out of 1000 (max. 500000)
  31506 words of extra memory for PDF output out of 35830 (max. 10000000)
 
