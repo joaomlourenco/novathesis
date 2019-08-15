@@ -5,25 +5,130 @@
 %%
 %% Chapter with the template manual
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{ThesisDIFCTNL User's Manual}
-\label{cha:users_manual}
+\chapter{Research Question}
+\label{cha:research_question}
 
-% ================
-% = Introduction =
-% ================
-\section{Introduction} % (fold)
-\label{sec:introduction}
+\section{Problem Introduction}%
+\label{sec:problem_introduction}
+
+\gls{AP} is a very important topic of discussion in the current days,
+with scientists and researchers around the globe being very well aware
+of the potential effects it can have on the health of individuals and
+populations across all ecosystems. Not to mention its implications on
+climate change, which are generally regarded as one of the capital
+threats to life on Earth's survival (on par with a nuclear apocalypse).
+Defining \gls{AP} can be a challenge. In fact, its effects and presence
+is so all-encompassing, that it would be fair to say that its definition
+changes with the angle with which one looks upon it.  Nonetheless, it is
+important to at least try to define it, in order to approach it in some
+way~\cite{Lovett2009, Ghorani-Azam2016}.
+
+The United States Environmental Protection Agency (\Gls{EPA}) defined
+Air Pollution (\Gls{AP}) as "\textit{the presence of contaminants or
+    pollutant substances in the air that interfere with human health or
+    welfare, or produce other harmful environmental
+effects}"~\cite{Vallero2014}. This is (perhaps intentionally) a very
+broad definition, too broad to avoid vagueness. It does introduce a key
+concept: the term \emph{pollutant}, which needs be discussed in order
+to complete the definition above.
+
+It would be very hard to find someone who did not have an almost
+instinctive idea of what a pollutant is. We know something is amiss when
+we notice our air is full of smoke or smells strange, but our senses are
+not enough. There are many chemical components that are untraceable by
+unaided humans, and some that are only detected by our noses and eyes at
+concentration levels which are above the threshold where they can damage
+our health. This makes the task of separating pollutants from
+non-pollutants a non-trivial one. If we cannot rely solely on our senses
+to detect them, then it is up to the scientists and engineers to create
+methods that allow us to do so. Whats more, we must also rely on them to
+understand how can a normally harmless substance be a pollutant,
+depending on the circumstance. For instance, nitrous compounds are
+traditionally beneficial to the soils and cultures, but they can and do
+cause pulmonary and  cardiovascular complications in
+humans~\cite{Kampa2008, Ghorani-Azam2016, Carugno2016}.
+
+Context matters to pollutants. The toxic nature of a certain chemical
+only is revealed when someone or something gets exposed to it. Even
+then, there are exposure levels which do not bear any effects, good or
+bad. At these levels, a pollutant is but an impurity. There too many
+potential pollutants in our modern day world to list here, but the World
+Health Organization (\gls{WHO}) states that there are six major air
+pollutants:
+\begin{itemize}
+    \item Particle Matter (\gls{PM});
+    \item Ground level ozone (O$_3$);
+    \item Carbon monoxide (CO);
+    \item Sulfur Oxides (SO$_x$);
+    \item Nitrous Oxides (NO$_x$);
+    \item Lead (Pb).
+\end{itemize}
+
+Exposure to these pollutants have different effects on humans, ranging in
+seriousness from skin irritation to neuropsychiatric complications,
+depending on dose and on the time the exposure lasts.
+
+\section{Research Question}%
+\label{sec:research_question}
+
+In Chapter~\ref{cha:introduction}, I have introduced the reasons which
+led NGNS-IS to pursue the development of an atmospheric monitoring
+system, and that what set it apart from other systems was the ability to
+spectroscopically map pollutants concentrations using tomographic
+methods, thus defining a primary objective for this thesis.
+
+Two secondary objectives were born from the necessary initial research,
+which had a very heavy influence over the adopted methods:
+\begin{itemize}
+    \item To use a tomographic approach for the mapping procedure;
+    \item To use a single light collection point, minimizing material
+        costs.
+\end{itemize}
+
+Taking all the above into account, we arrive at the main Research
+Question (\gls{RQ}), presented in Table~\ref{tab:RQ1}.
+\begin{table}[htpb]
+    \centering
+    \label{tab:RQ1}
+    \caption{Main research question.}
+    \begin{tabularx}{0.8\textwidth}{cX}
+        \toprule
+        \textbf{RQ1}&\emph{ How to design a tomographic atmosphere
+        monitoring system based on DOAS? }\\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+This is the main research question. It gave rise to four other more
+detailed research questions. These secondary questions allow a better
+delimitation of the work at hand and are important complements to RQ1.
+This questions are presented in Table~\ref{tab:sec_RQ}
+
+\begin{table}[htpb]
+    \centering
+    \label{tab:sec_RQ}
+    \caption{Secondary research questions.}
+    \begin{tabularx}{0.8\textwidth}{cX}
+        \toprule
+        \textbf{RQ1.1}&\emph{ What would be the best strategy
+        for the system to cover a small geographic region in an urban
+        setting }\\
+        \midrule
+        \textbf{RQ1.2}&\emph{ What would be the necessary
+        components for such a system? }\\
+        \midrule
+        \textbf{RQ1.3}&\emph{ How will the system acquire the
+        data? }\\
+        \midrule
+        \textbf{RQ1.4}&\emph{ What should the tomographic
+        reconstruction look like and how to perform it? }\\
+        \bottomrule
+    \end{tabularx}
+\end{table}
 
 
-% \section{Example glossary, acronyms, and symbols}
-% %
-% % \todo[inline]{A a note in a line by itself.}
-% %
-% This is the first occurrence of an abbreviation: \gls{abbrev}. And now the second occurrence of the same abbreviation: \gls{abbrev}. And a new acronym with capital letter: \Gls{xpt} and reused \gls{xpt}.  Let's also use a few other acronyms such as \gls{aaa}, \gls{aab}, \gls{aba}, \gls{bbb} and \gls{xpt}.
-% In geometry, the area enclosed by a circle of radius \gls{r} is $\pi r^2$. Here the Greek letter \gls{pi} is equal to the ratio of the circumference of any circle to its diameter.
-% Lets add ``\gls{computer}'' to the glossary!
-%
-% Please note that
-% \begin{center}
-%   \textbf{\large this package and template are not official for FCT/NOVA}.
-% \end{center}
+
+\section{Hypothesis and Approach}%
+\label{sec:hypothesis_and_approach}
+
+

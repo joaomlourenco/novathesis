@@ -12,20 +12,35 @@
 \chapter{Introduction}
 \label{cha:introduction}
 
-\section{Contextualization}%
-\label{sec:contextualisation}
-\begin{itemize}
-    \item NGNS and FFF;
-    \item Clients asked for a solution to monitor air pollution;
-    \item In January 2016 starts the ATMOS project;
-    \item Artificial light source idea;
-    \item Tomography idea
-\end{itemize}
+\section{Background and Motivation}%
+\label{sec:bg_and_motivation}
 
 \subsection{Background}%
 \label{sub:background}
 
-The idea behind this thesis was born in 2015, at NGNS-IS. 
+The idea behind this thesis was born in 2015, at NGNS-IS (a Portuguese
+tech startup). At the time, the company's flagship product was the
+Forest Fire Finder (\gls{FFF}), which was a forest fire detection system
+that performed a spectroscopical analysis of the atmosphere and then,
+through some Machine Learning (\gls{ML}) techniques, could detect the
+presence of a smoke column above the horizon and alert the operators.
+
+The growing importance of Air Pollution (\gls{AP}) in today's society,
+and the fact that the system was already scanning the atmosphere for
+some chemical components originated and motivated the idea behind this
+thesis. Although \gls{FFF} was already a spectroscopic system, it was
+constructed to operate in remote and inhospitable locations, and its
+design had had no spatial constraints into account. In addition, the
+system scanning method (depicted in Figure~\ref{fig:fff_scanning}) meant
+that it was not appropriate for pollution measurement, as it could only
+detect a mean pollutant column density for each spectrum it took. A
+truly useful monitoring tool would be able to map these pollutants
+concentration, thus retrieving the same kind of information as a network
+of in-situ electro-chemical sensors.
+
+This ambition also brought novelty to the project, since to the best of
+the team's knowledge, a similar system had not yet been developed, a
+situation that has remained the same up to the current days.
 
 \subsection{The Problem}%
 \label{sub:the_problem}
@@ -63,9 +78,9 @@ methods, were:
         for the technology.
 \end{itemize}
 
-This thesis is thus subject to the Research Question (\gls{RQ}):
-\textbf{How to design a single collection, tomographic mapping, DOAS
-atmospheric monitoring system?}
+% This thesis is thus subject to the Research Question (\gls{RQ}):
+% \textbf{How to design a single collection, tomographic mapping, DOAS
+% atmospheric monitoring system?}
 
 \subsection{Methods}%
 \label{sub:methods}
@@ -78,90 +93,88 @@ To answer this question, I
 \subsection{Conclusions}%
 \label{sub:conclusions}
 
-\section{Theoretical Background}%
-\label{sec:theoretical_background}
+% \section{Theoretical Background}%
+% \label{sec:theoretical_background}
 
-\subsection{Air Pollution}%
-\label{ssub:air_pollution}
+% \subsection{Air Pollution}%
+% \label{ssub:air_pollution}
 
-Air Pollution (\gls{AP}) is a very important topic of discussion in the
-current days, with scientists and researchers around the globe being
-very well aware of the potential effects it can have on the health of
-individuals and populations across all ecosystems. Not to mention its
-implications on climate change, which are generally regarded as one of
-the capital threats to life on Earth's survival (on par with a nuclear
-apocalypse). Defining \gls{AP} can be a challenge. In fact, its effects
-and presence is so all-encompassing, that it would be fair to say that
-its definition changes with the angle with which one looks upon it.
-Nonetheless, it is important to at least try to define it, in order to
-approach it in some way~\cite{Lovett2009, Ghorani-Azam2016}.
+% Air Pollution (\gls{AP}) is a very important topic of discussion in the
+% current days, with scientists and researchers around the globe being
+% very well aware of the potential effects it can have on the health of
+% individuals and populations across all ecosystems. Not to mention its
+% implications on climate change, which are generally regarded as one of
+% the capital threats to life on Earth's survival (on par with a nuclear
+% apocalypse). Defining \gls{AP} can be a challenge. In fact, its effects
+% and presence is so all-encompassing, that it would be fair to say that
+% its definition changes with the angle with which one looks upon it.
+% Nonetheless, it is important to at least try to define it, in order to
+% approach it in some way~\cite{Lovett2009, Ghorani-Azam2016}.
 
-The United States Environmental Protection Agency (\Gls{EPA}) defined
-Air Pollution (\Gls{AP}) as "\textit{the presence of contaminants or
-    pollutant substances in the air that interfere with human health or
-    welfare, or produce other harmful environmental
-effects}"~\cite{Vallero2014}. This is (perhaps intentionally) a very
-broad definition, too broad to avoid vagueness. It does introduce a key
-concept: the term \emph{pollutant}, which needs be discussed in order
-to complete the definition above.
+% The United States Environmental Protection Agency (\Gls{EPA}) defined
+% Air Pollution (\Gls{AP}) as "\textit{the presence of contaminants or
+%     pollutant substances in the air that interfere with human health or
+%     welfare, or produce other harmful environmental
+% effects}"~\cite{Vallero2014}. This is (perhaps intentionally) a very
+% broad definition, too broad to avoid vagueness. It does introduce a key
+% concept: the term \emph{pollutant}, which needs be discussed in order
+% to complete the definition above.
 
-It would be very hard to find someone who did not have an almost
-instinctive idea of what a pollutant is. We know something is amiss when
-we notice our air is full of smoke or smells strange, but our senses are
-not enough. There are many chemical components that are untraceable by
-unaided humans, and some that are only detected by our noses and eyes at
-concentration levels which are above the threshold where they can damage
-our health. This makes the task of separating pollutants from
-non-pollutants a non-trivial one. If we cannot rely solely on our senses
-to detect them, then it is up to the scientists and engineers to create
-methods that allow us to do so. Whats more, we must also rely on them to
-understand how can a normally harmless substance be a pollutant,
-depending on the circumstance. For instance, nitrous compounds are
-traditionally beneficial to the soils and cultures, but they can and do
-cause pulmonary and  cardiovascular complications in
-humans~\cite{Kampa2008, Ghorani-Azam2016, Carugno2016}.
+% It would be very hard to find someone who did not have an almost
+% instinctive idea of what a pollutant is. We know something is amiss when
+% we notice our air is full of smoke or smells strange, but our senses are
+% not enough. There are many chemical components that are untraceable by
+% unaided humans, and some that are only detected by our noses and eyes at
+% concentration levels which are above the threshold where they can damage
+% our health. This makes the task of separating pollutants from
+% non-pollutants a non-trivial one. If we cannot rely solely on our senses
+% to detect them, then it is up to the scientists and engineers to create
+% methods that allow us to do so. Whats more, we must also rely on them to
+% understand how can a normally harmless substance be a pollutant,
+% depending on the circumstance. For instance, nitrous compounds are
+% traditionally beneficial to the soils and cultures, but they can and do
+% cause pulmonary and  cardiovascular complications in
+% humans~\cite{Kampa2008, Ghorani-Azam2016, Carugno2016}.
 
-Context matters to pollutants. The toxic nature of a certain chemical
-only is revealed when someone or something gets exposed to it. Even
-then, there are exposure levels which do not bear any effects, good or
-bad. At these levels, a pollutant is but an impurity. There too many
-potential pollutants in our modern day world to list here, but the World
-Health Organization (\gls{WHO}) states that there are six major air
-pollutants:
-\begin{itemize}
-    \item Particle Matter (\gls{PM});
-    \item Ground level ozone (O$_3$);
-    \item Carbon monoxide (CO);
-    \item Sulfur Oxides (SO$_x$);
-    \item Nitrous Oxides (NO$_x$);
-    \item Lead (Pb).
-\end{itemize}
+% Context matters to pollutants. The toxic nature of a certain chemical
+% only is revealed when someone or something gets exposed to it. Even
+% then, there are exposure levels which do not bear any effects, good or
+% bad. At these levels, a pollutant is but an impurity. There too many
+% potential pollutants in our modern day world to list here, but the World
+% Health Organization (\gls{WHO}) states that there are six major air
+% pollutants:
+% \begin{itemize}
+%     \item Particle Matter (\gls{PM});
+%     \item Ground level ozone (O$_3$);
+%     \item Carbon monoxide (CO);
+%     \item Sulfur Oxides (SO$_x$);
+%     \item Nitrous Oxides (NO$_x$);
+%     \item Lead (Pb).
+% \end{itemize}
 
-Exposure to these pollutants have different effects on humans, ranging in
-seriousness from skin irritation to neuropsychiatric complications,
-depending on dose and on the time the exposure lasts. In the next
-subsections, I will address each of the major pollutants enumerated and
-briefly describe the physiological mechanisms behind their toxicity.
+% Exposure to these pollutants have different effects on humans, ranging in
+% seriousness from skin irritation to neuropsychiatric complications,
+% depending on dose and on the time the exposure lasts. In the next
+% subsections, I will address each of the major pollutants enumerated and
+% briefly describe the physiological mechanisms behind their toxicity.
 
-\subsubsection{Particle Matter}%
-\label{ssub:particle_matter}
+% \subsubsection{Particle Matter}%
+% \label{ssub:particle_matter}
 
-\subsubsection{Ground Level Ozone}%
-\label{ssub:ground_level_ozone}
+% \subsubsection{Ground Level Ozone}%
+% \label{ssub:ground_level_ozone}
 
-\subsubsection{Carbon Monoxide}%
-\label{ssub:carbon_monoxide}
+% \subsubsection{Carbon Monoxide}%
+% \label{ssub:carbon_monoxide}
 
-\subsubsection{Sulfur Oxides}%
-\label{ssub:sulfur_oxides}
+% \subsubsection{Sulfur Oxides}%
+% \label{ssub:sulfur_oxides}
 
-\subsubsection{Nitrous Oxides}%
-\label{ssub:nitrous_oxides}
+% \subsubsection{Nitrous Oxides}%
+% \label{ssub:nitrous_oxides}
 
-\subsubsection{Lead}%
-\label{ssub:lead}
-
-
+% \subsubsection{Lead}%
+% \label{ssub:lead}
 
 
 
@@ -176,5 +189,7 @@ briefly describe the physiological mechanisms behind their toxicity.
 
 
 
-\section{Literature Review}%
-\label{sec:literature_review}
+
+
+% \section{Literature Review}%
+% \label{sec:literature_review}
