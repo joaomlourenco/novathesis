@@ -1,10 +1,10 @@
 % $ biblatex auxiliary file $
-% $ biblatex bbl format version 3.0 $
+% $ biblatex bbl format version 2.9 $
 % Do not modify the above lines!
 %
 % This is an auxiliary file used by the 'biblatex' package.
-% This file may safely be deleted. It will be recreated as
-% required.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
 %
 \begingroup
 \makeatletter
@@ -16,260 +16,292 @@
   {}
 \endgroup
 
-\datalist[entry]{nyt/global//global/global}
-  \entry{Carugno2016}{article}{}
-    \name{author}{8}{}{%
-      {{hash=CM}{%
-         family={Carugno},
-         familyi={C\bibinitperiod},
-         given={Michele},
-         giveni={M\bibinitperiod},
-      }}%
-      {{hash=CD}{%
-         family={Consonni},
-         familyi={C\bibinitperiod},
-         given={Dario},
-         giveni={D\bibinitperiod},
-      }}%
-      {{hash=RG}{%
-         family={Randi},
-         familyi={R\bibinitperiod},
-         given={Giorgia},
-         giveni={G\bibinitperiod},
-      }}%
-      {{hash=CD}{%
-         family={Catelan},
-         familyi={C\bibinitperiod},
-         given={Dolores},
-         giveni={D\bibinitperiod},
-      }}%
-      {{hash=GL}{%
-         family={Grisotto},
-         familyi={G\bibinitperiod},
-         given={Laura},
-         giveni={L\bibinitperiod},
-      }}%
-      {{hash=BPA}{%
-         family={Bertazzi},
-         familyi={B\bibinitperiod},
-         given={Pier\bibnamedelima Alberto},
-         giveni={P\bibinitperiod\bibinitdelim A\bibinitperiod},
-      }}%
-      {{hash=BA}{%
-         family={Biggeri},
-         familyi={B\bibinitperiod},
-         given={Annibale},
-         giveni={A\bibinitperiod},
-      }}%
-      {{hash=BM}{%
-         family={Baccini},
-         familyi={B\bibinitperiod},
-         given={Michela},
-         giveni={M\bibinitperiod},
-      }}%
-    }
-    \strng{namehash}{CM+1}
-    \strng{fullhash}{CMCDRGCDGLBPABABM1}
-    \field{labelnamesource}{author}
-    \field{labeltitlesource}{title}
-    \field{sortinit}{C}
-    \field{sortinithash}{C}
-    \verb{doi}
-    \verb 10.1016/j.envres.2016.03.003
-    \endverb
-    \field{issn}{00139351}
-    \field{pages}{415\bibrangedash 424}
-    \field{title}{{Air pollution exposure, cause-specific deaths and
-  hospitalizations in a highly polluted Italian region}}
-    \verb{url}
-    \verb https://linkinghub.elsevier.com/retrieve/pii/S0013935116300834
-    \endverb
-    \field{volume}{147}
-    \field{journaltitle}{Environmental Research}
-    \field{year}{2016}
-    \warn{\item Invalid format of field 'month'}
-  \endentry
 
-  \entry{Ghorani-Azam2016}{article}{}
-    \name{author}{3}{}{%
-      {{hash=GAA}{%
-         family={Ghorani-Azam},
-         familyi={G\bibinithyphendelim A\bibinitperiod},
-         given={Adel},
-         giveni={A\bibinitperiod},
-      }}%
-      {{hash=RZB}{%
-         family={Riahi-Zanjani},
-         familyi={R\bibinithyphendelim Z\bibinitperiod},
-         given={Bamdad},
-         giveni={B\bibinitperiod},
-      }}%
-      {{hash=BMM}{%
-         family={Balali-Mood},
-         familyi={B\bibinithyphendelim M\bibinitperiod},
-         given={Mahdi},
-         giveni={M\bibinitperiod},
-      }}%
-    }
-    \strng{namehash}{GAA+1}
-    \strng{fullhash}{GAARZBBMM1}
-    \field{labelnamesource}{author}
-    \field{labeltitlesource}{title}
-    \field{sortinit}{G}
-    \field{sortinithash}{G}
-    \verb{doi}
-    \verb 10.4103/1735-1995.189646
-    \endverb
-    \field{issn}{1735-1995}
-    \field{number}{1}
-    \field{pages}{65}
-    \field{title}{{Effects of air pollution on human health and practical
-  measures for prevention in Iran}}
-    \verb{url}
-    \verb http://www.jmsjournal.net/text.asp?2016/21/1/65/189646
-    \endverb
-    \field{volume}{21}
-    \field{journaltitle}{Journal of Research in Medical Sciences}
-    \field{year}{2016}
-  \endentry
-
-  \entry{Kampa2008}{article}{}
-    \name{author}{2}{}{%
-      {{hash=KM}{%
-         family={Kampa},
-         familyi={K\bibinitperiod},
-         given={Marilena},
-         giveni={M\bibinitperiod},
-      }}%
-      {{hash=CE}{%
-         family={Castanas},
-         familyi={C\bibinitperiod},
-         given={Elias},
-         giveni={E\bibinitperiod},
-      }}%
-    }
-    \strng{namehash}{KMCE1}
-    \strng{fullhash}{KMCE1}
-    \field{labelnamesource}{author}
-    \field{labeltitlesource}{title}
-    \field{sortinit}{K}
-    \field{sortinithash}{K}
-    \verb{doi}
-    \verb 10.1016/j.envpol.2007.06.012
-    \endverb
-    \field{issn}{02697491}
-    \field{number}{2}
-    \field{pages}{362\bibrangedash 367}
-    \field{title}{{Human health effects of air pollution}}
-    \verb{url}
-    \verb https://linkinghub.elsevier.com/retrieve/pii/S0269749107002849
-    \endverb
-    \field{volume}{151}
-    \field{journaltitle}{Environmental Pollution}
-    \field{year}{2008}
-    \warn{\item Invalid format of field 'month'}
-  \endentry
-
-  \entry{Lovett2009}{article}{}
-    \name{author}{8}{}{%
-      {{hash=LGM}{%
-         family={Lovett},
-         familyi={L\bibinitperiod},
-         given={Gary\bibnamedelima M.},
-         giveni={G\bibinitperiod\bibinitdelim M\bibinitperiod},
-      }}%
-      {{hash=TTH}{%
-         family={Tear},
-         familyi={T\bibinitperiod},
-         given={Timothy\bibnamedelima H.},
-         giveni={T\bibinitperiod\bibinitdelim H\bibinitperiod},
-      }}%
-      {{hash=EDC}{%
-         family={Evers},
-         familyi={E\bibinitperiod},
-         given={David\bibnamedelima C.},
-         giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod},
-      }}%
-      {{hash=FSE}{%
-         family={Findlay},
-         familyi={F\bibinitperiod},
-         given={Stuart\bibnamedelima E.G.},
-         giveni={S\bibinitperiod\bibinitdelim E\bibinitperiod},
-      }}%
-      {{hash=CBJ}{%
-         family={Cosby},
-         familyi={C\bibinitperiod},
-         given={B.\bibnamedelima Jack},
-         giveni={B\bibinitperiod\bibinitdelim J\bibinitperiod},
-      }}%
-      {{hash=DJK}{%
-         family={Dunscomb},
-         familyi={D\bibinitperiod},
-         given={Judy\bibnamedelima K.},
-         giveni={J\bibinitperiod\bibinitdelim K\bibinitperiod},
-      }}%
-      {{hash=DCT}{%
-         family={Driscoll},
-         familyi={D\bibinitperiod},
-         given={Charles\bibnamedelima T.},
-         giveni={C\bibinitperiod\bibinitdelim T\bibinitperiod},
-      }}%
-      {{hash=WKC}{%
-         family={Weathers},
-         familyi={W\bibinitperiod},
-         given={Kathleen\bibnamedelima C.},
-         giveni={K\bibinitperiod\bibinitdelim C\bibinitperiod},
-      }}%
-    }
-    \strng{namehash}{LGM+1}
-    \strng{fullhash}{LGMTTHEDCFSECBJDJKDCTWKC1}
-    \field{labelnamesource}{author}
-    \field{labeltitlesource}{title}
-    \field{sortinit}{L}
-    \field{sortinithash}{L}
-    \verb{doi}
-    \verb 10.1111/j.1749-6632.2009.04153.x
-    \endverb
-    \field{issn}{00778923}
-    \field{number}{1}
-    \field{pages}{99\bibrangedash 135}
-    \field{title}{{Effects of Air Pollution on Ecosystems and Biological
-  Diversity in the Eastern United States}}
-    \verb{url}
-    \verb http://doi.wiley.com/10.1111/j.1749-6632.2009.04153.x
-    \endverb
-    \field{volume}{1162}
-    \field{journaltitle}{Annals of the New York Academy of Sciences}
-    \field{year}{2009}
-    \warn{\item Invalid format of field 'month'}
-  \endentry
-
-  \entry{Vallero2014}{book}{}
-    \name{author}{1}{}{%
-      {{hash=VD}{%
-         family={Vallero},
-         familyi={V\bibinitperiod},
-         given={Daniel},
-         giveni={D\bibinitperiod},
-      }}%
-    }
-    \list{publisher}{1}{%
-      {Academic Press}%
-    }
-    \strng{namehash}{VD1}
-    \strng{fullhash}{VD1}
-    \field{labelnamesource}{author}
-    \field{labeltitlesource}{title}
-    \field{sortinit}{V}
-    \field{sortinithash}{V}
-    \field{edition}{5}
-    \field{isbn}{9780124017337}
-    \field{title}{{Fundamentals of air pollution}}
-    \verb{file}
-    \verb :home/rui/Downloads/Daniel Vallero - Fundamentals of Air Pollution, F
-    \verb ifth Edition-Academic Press (2014).pdf:pdf
-    \endverb
-    \field{year}{2014}
-  \endentry
-\enddatalist
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global}
+    \entry{Carugno2016}{article}{}
+      \name{author}{8}{}{%
+        {{uniquename=0,uniquepart=base,hash=9e5bacaae21e791a6ce18bce6dcfa2fb}{%
+           family={Carugno},
+           familyi={C\bibinitperiod},
+           given={Michele},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=c5b15ab2637cc9fb61f42ce0a2be7fc6}{%
+           family={Consonni},
+           familyi={C\bibinitperiod},
+           given={Dario},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=67c5cc3f6445de358d1ac6076a74b745}{%
+           family={Randi},
+           familyi={R\bibinitperiod},
+           given={Giorgia},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=1ac16c890e3f14ce61c9eaeb1b17013a}{%
+           family={Catelan},
+           familyi={C\bibinitperiod},
+           given={Dolores},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=570c92b5997c80a0fa6fccc3faa1dbc4}{%
+           family={Grisotto},
+           familyi={G\bibinitperiod},
+           given={Laura},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=210bc2ca7d5aa980323b9cc48024ca4d}{%
+           family={Bertazzi},
+           familyi={B\bibinitperiod},
+           given={Pier\bibnamedelima Alberto},
+           giveni={P\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=b2e611d34228a8ce39aef790f54beee1}{%
+           family={Biggeri},
+           familyi={B\bibinitperiod},
+           given={Annibale},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=8d91a282928bbd1d58a5cd76e3de0de5}{%
+           family={Baccini},
+           familyi={B\bibinitperiod},
+           given={Michela},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{491f720a993a74736694dd809c57a087}
+      \strng{fullhash}{869d3d012e6e691856f5483027c4f4ad}
+      \strng{bibnamehash}{869d3d012e6e691856f5483027c4f4ad}
+      \strng{authorbibnamehash}{869d3d012e6e691856f5483027c4f4ad}
+      \strng{authornamehash}{491f720a993a74736694dd809c57a087}
+      \strng{authorfullhash}{869d3d012e6e691856f5483027c4f4ad}
+      \field{sortinit}{C}
+      \field{sortinithash}{963e9d84a3da2344e8833203de5aed05}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{00139351}
+      \field{journaltitle}{Environmental Research}
+      \field{month}{5}
+      \field{title}{{Air pollution exposure, cause-specific deaths and hospitalizations in a highly polluted Italian region}}
+      \field{volume}{147}
+      \field{year}{2016}
+      \field{pages}{415\bibrangedash 424}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1016/j.envres.2016.03.003
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0013935116300834
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0013935116300834
+      \endverb
+    \endentry
+    \entry{Ghorani-Azam2016}{article}{}
+      \name{author}{3}{}{%
+        {{uniquename=0,uniquepart=base,hash=15896faad570718a7bc446e9b5940199}{%
+           family={Ghorani-Azam},
+           familyi={G\bibinithyphendelim A\bibinitperiod},
+           given={Adel},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=6808a05f696eb71b16522fd22ee08f1f}{%
+           family={Riahi-Zanjani},
+           familyi={R\bibinithyphendelim Z\bibinitperiod},
+           given={Bamdad},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=0b7dbdc7162fb4a1d308d3964d8e9507}{%
+           family={Balali-Mood},
+           familyi={B\bibinithyphendelim M\bibinitperiod},
+           given={Mahdi},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{317f60b664564a909b5dc9c35d6bb0dc}
+      \strng{fullhash}{ae9ed0fbd7165e9062855263cc199ebb}
+      \strng{bibnamehash}{ae9ed0fbd7165e9062855263cc199ebb}
+      \strng{authorbibnamehash}{ae9ed0fbd7165e9062855263cc199ebb}
+      \strng{authornamehash}{317f60b664564a909b5dc9c35d6bb0dc}
+      \strng{authorfullhash}{ae9ed0fbd7165e9062855263cc199ebb}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1735-1995}
+      \field{journaltitle}{Journal of Research in Medical Sciences}
+      \field{number}{1}
+      \field{title}{{Effects of air pollution on human health and practical measures for prevention in Iran}}
+      \field{volume}{21}
+      \field{year}{2016}
+      \field{pages}{65}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.4103/1735-1995.189646
+      \endverb
+      \verb{urlraw}
+      \verb http://www.jmsjournal.net/text.asp?2016/21/1/65/189646
+      \endverb
+      \verb{url}
+      \verb http://www.jmsjournal.net/text.asp?2016/21/1/65/189646
+      \endverb
+    \endentry
+    \entry{Kampa2008}{article}{}
+      \name{author}{2}{}{%
+        {{uniquename=0,uniquepart=base,hash=f7ad967b0244b5cf987c0c6e1ceb3102}{%
+           family={Kampa},
+           familyi={K\bibinitperiod},
+           given={Marilena},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=9f3639c4d7d16d2cb2999d474347d558}{%
+           family={Castanas},
+           familyi={C\bibinitperiod},
+           given={Elias},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{4f0cca4b52256a8f26534183abb77836}
+      \strng{fullhash}{4f0cca4b52256a8f26534183abb77836}
+      \strng{bibnamehash}{4f0cca4b52256a8f26534183abb77836}
+      \strng{authorbibnamehash}{4f0cca4b52256a8f26534183abb77836}
+      \strng{authornamehash}{4f0cca4b52256a8f26534183abb77836}
+      \strng{authorfullhash}{4f0cca4b52256a8f26534183abb77836}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{02697491}
+      \field{journaltitle}{Environmental Pollution}
+      \field{month}{1}
+      \field{number}{2}
+      \field{title}{{Human health effects of air pollution}}
+      \field{volume}{151}
+      \field{year}{2008}
+      \field{pages}{362\bibrangedash 367}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1016/j.envpol.2007.06.012
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0269749107002849
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0269749107002849
+      \endverb
+    \endentry
+    \entry{Lovett2009}{article}{}
+      \name{author}{8}{}{%
+        {{uniquename=0,uniquepart=base,hash=8ca9b7abb0550b4946724439049092ba}{%
+           family={Lovett},
+           familyi={L\bibinitperiod},
+           given={Gary\bibnamedelima M.},
+           giveni={G\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=fe514d3762248b4e640233d0af1cbde9}{%
+           family={Tear},
+           familyi={T\bibinitperiod},
+           given={Timothy\bibnamedelima H.},
+           giveni={T\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=b6a6a9011ef2c35d0309244f8cc0b53e}{%
+           family={Evers},
+           familyi={E\bibinitperiod},
+           given={David\bibnamedelima C.},
+           giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=8048b564a4c6f99ac281a4d7e1f9aeee}{%
+           family={Findlay},
+           familyi={F\bibinitperiod},
+           given={Stuart\bibnamedelima E.G.},
+           giveni={S\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=8d30d20d956e46d31e7e34d2cdbfd2cc}{%
+           family={Cosby},
+           familyi={C\bibinitperiod},
+           given={B.\bibnamedelimi Jack},
+           giveni={B\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=a794b4ebc1d4b35c4e78b1a6c7388efe}{%
+           family={Dunscomb},
+           familyi={D\bibinitperiod},
+           given={Judy\bibnamedelima K.},
+           giveni={J\bibinitperiod\bibinitdelim K\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=23a50b54a378bd4ac59a96b9221d8ceb}{%
+           family={Driscoll},
+           familyi={D\bibinitperiod},
+           given={Charles\bibnamedelima T.},
+           giveni={C\bibinitperiod\bibinitdelim T\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=0ba0b48ed193a3deea3f6a14a2658f22}{%
+           family={Weathers},
+           familyi={W\bibinitperiod},
+           given={Kathleen\bibnamedelima C.},
+           giveni={K\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{ce84f95f22df0cb743243181cdccc589}
+      \strng{fullhash}{0800db0ab913337f5e6b83e49506ff04}
+      \strng{bibnamehash}{0800db0ab913337f5e6b83e49506ff04}
+      \strng{authorbibnamehash}{0800db0ab913337f5e6b83e49506ff04}
+      \strng{authornamehash}{ce84f95f22df0cb743243181cdccc589}
+      \strng{authorfullhash}{0800db0ab913337f5e6b83e49506ff04}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{00778923}
+      \field{journaltitle}{Annals of the New York Academy of Sciences}
+      \field{month}{4}
+      \field{number}{1}
+      \field{title}{{Effects of Air Pollution on Ecosystems and Biological Diversity in the Eastern United States}}
+      \field{volume}{1162}
+      \field{year}{2009}
+      \field{pages}{99\bibrangedash 135}
+      \range{pages}{37}
+      \verb{doi}
+      \verb 10.1111/j.1749-6632.2009.04153.x
+      \endverb
+      \verb{urlraw}
+      \verb http://doi.wiley.com/10.1111/j.1749-6632.2009.04153.x
+      \endverb
+      \verb{url}
+      \verb http://doi.wiley.com/10.1111/j.1749-6632.2009.04153.x
+      \endverb
+    \endentry
+    \entry{Vallero2014}{book}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=ce91b76a24de4713e7e0d3b012084221}{%
+           family={Vallero},
+           familyi={V\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Academic Press}%
+      }
+      \strng{namehash}{ce91b76a24de4713e7e0d3b012084221}
+      \strng{fullhash}{ce91b76a24de4713e7e0d3b012084221}
+      \strng{bibnamehash}{ce91b76a24de4713e7e0d3b012084221}
+      \strng{authorbibnamehash}{ce91b76a24de4713e7e0d3b012084221}
+      \strng{authornamehash}{ce91b76a24de4713e7e0d3b012084221}
+      \strng{authorfullhash}{ce91b76a24de4713e7e0d3b012084221}
+      \field{sortinit}{V}
+      \field{sortinithash}{75dd7385c90b2252c3ae853a80ca853b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{5}
+      \field{isbn}{9780124017337}
+      \field{title}{{Fundamentals of air pollution}}
+      \field{year}{2014}
+      \verb{file}
+      \verb :home/rui/Downloads/Daniel Vallero - Fundamentals of Air Pollution, Fifth Edition-Academic Press (2014).pdf:pdf
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
 \endinput
+

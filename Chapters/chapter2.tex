@@ -81,6 +81,8 @@ Two secondary objectives were born from the necessary initial research,
 which had a very heavy influence over the adopted methods:
 \begin{itemize}
     \item To use a tomographic approach for the mapping procedure;
+    \item To ensure the designed system would be small and highly
+        mobile;
     \item To use a single light collection point, minimizing material
         costs.
 \end{itemize}
@@ -89,12 +91,12 @@ Taking all the above into account, we arrive at the main Research
 Question (\gls{RQ}), presented in Table~\ref{tab:RQ1}.
 \begin{table}[htpb]
     \centering
-    \label{tab:RQ1}
     \caption{Main research question.}
+    \label{tab:RQ1}
     \begin{tabularx}{0.8\textwidth}{cX}
         \toprule
-        \textbf{RQ1}&\emph{ How to design a tomographic atmosphere
-        monitoring system based on DOAS? }\\
+        \textbf{RQ1}&\emph{ How to design a miniaturized tomographic
+        atmosphere monitoring system based on DOAS? }\\
         \bottomrule
     \end{tabularx}
 \end{table}
@@ -106,13 +108,12 @@ This questions are presented in Table~\ref{tab:sec_RQ}
 
 \begin{table}[htpb]
     \centering
-    \label{tab:sec_RQ}
     \caption{Secondary research questions.}
+    \label{tab:sec_RQ}
     \begin{tabularx}{0.8\textwidth}{cX}
         \toprule
         \textbf{RQ1.1}&\emph{ What would be the best strategy
-        for the system to cover a small geographic region in an urban
-        setting }\\
+        for the system to cover a small geographic region? }\\
         \midrule
         \textbf{RQ1.2}&\emph{ What would be the necessary
         components for such a system? }\\
@@ -137,30 +138,27 @@ described in Chapter~\ref{cha:introduction}, which responds to the
 achieved by careful selection of mathematical tomographic algorithms and
 instrumentation that is able to implement them correctly.
 
-Pursuing this hypothesis will naturally lead to answering all the
-research questions, both primary and secondary. This will involve
-studying the literature in at least two fronts: on one hand, I will have
-to search and implement the tomographic part of the project; on the
-other, I will have to study and select the main system components. Both
-tasks seem reasonably independent, but in truth they are not. Whatever
-the components will be, they will have to be capable of implementing the
-algorithms, and conversely, the algorithms should be chosen in such a
-way that it does not make the instrumentation too costly or impossible
-to assemble.
+The first step in answering the entirety of the research questions
+should be to answer RQ1.1. In fact, it is not possible to make any other
+decision before this matter is settled. As with any technical problem,
+there are several ways to create a tomographic atmospheric monitoring
+tool. However, each and every one of them implies some kind of
+compromise, which determines the system's capabilities and requirements.
+Will the system use retro-reflection? Shall it move during the
+measurement? These are the kind of questions that determine the whole
+project.
 
-Before building the system and having to purchase all necessary parts
-and components, the first approach shall be designing a software
-simulation of what the measurements that the final design is supposed to
-do. This simulator must include all major system features, so that it
-correctly mimics reality and is therefore able to mathematically
-validate the acquisition and reconstruction approach. The results
-obtained from the simulation will then dictate mechanical and control
-requirements.
+When the measurement strategy is determined, one could start picking
+parts and components. However, a better first approach would be
+designing a software simulation. This simulator must include all major
+system features, so that it correctly mimics reality and is therefore
+able to mathematically validate the acquisition and reconstruction
+approach. The results obtained from the simulation will then dictate
+mechanical and control requirements.
 
-Finally, and in parallel with the simulation development, it is
-important to start working in the physical aspect of the project, namely
-in what concerns the optical instrumentation. While it is true that, in
-this aspect, the proposed system is similar to the \gls{FFF}, it is also
-true that the Forest Fire Finder's lack of spatial constraints is not
-acceptable in this project, and therefore some effort will have to be
-expended minimizing (and optimizing) optical instrumentation.
+One other aspect that needs addressing is the optical section. As
+mentioned before, the system will be inspired in \gls{FFF}'s basic
+optical capabilities. However, the smoke detector was not conceived with
+spatial restrictions in mind. This important set of components will thus
+need redesigning, so that it is in line with the size objectives of the
+new system.
