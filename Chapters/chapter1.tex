@@ -31,16 +31,19 @@ some chemical components originated and motivated the idea behind this
 thesis. Although \gls{FFF} was already a spectroscopic system, it was
 constructed to operate in remote and inhospitable locations, and its
 design had had no spatial constraints into account. In addition, the
-system scanning method (depicted in Figure~\ref{fig:fff_scanning}) meant
-that it was not appropriate for pollution measurement, as it could only
-detect a mean pollutant column density for each spectrum it took. A
-truly useful monitoring tool would be able to map these pollutants
-concentration, thus retrieving the same kind of information as a network
-of in-situ electro-chemical sensors.
+system scanning method meant that it was not appropriate for pollution
+measurement, as it could only detect a mean pollutant column density for
+each spectrum it took. A truly useful monitoring tool would be able to
+map these pollutants concentration, thus retrieving the same kind of
+information as a network of in-situ electro-chemical sensors.
 
 This ambition also brought novelty to the project, since to the best of
 the team's knowledge, a similar system had not yet been developed, a
-situation that has remained the same up to the current days.
+situation that has remained the same up to the current days. It was with
+this novelty in mind (and the realization of the research that it
+entailed), that the company decided to publish this PhD Project, in a
+tripartite consortium with FCT-NOVA and the Portuguese Foundation for
+Science and Technology.
 
 \subsection{The Problem}%
 \label{sub:the_problem}
@@ -70,28 +73,44 @@ NO$_x$ and SO$_x$, using Differential Optical Absorption Spectroscopy
 (\gls{DOAS}) as the measurement technique. During the research, several
 "micro-objectives" appeared regularly. Some were kept and incorporated
 in the workplan, others discarded after initial exploration. The main
-secondary objectives, which had a very heavy influence over the adopted
-methods, were:
+secondary objectives were:
+
 \begin{itemize}
     \item To use a tomographic approach for the mapping procedure;
     \item To use a single collection point, minimizing material costs
         for the technology.
 \end{itemize}
 
-% This thesis is thus subject to the Research Question (\gls{RQ}):
-% \textbf{How to design a single collection, tomographic mapping, DOAS
-% atmospheric monitoring system?}
+These objectives allowed setting several research questions, which are
+introduced in Section~\ref{sec:research_question}.
 
 \subsection{Methods}%
 \label{sub:methods}
 
-To answer this question, I 
+To address these goals, I assumed the development of this thesis to be
+essentially split in two parts, which are to be explored simultaneously.
+They can (coarsely) be addressed as \emph{tomography} and
+\emph{instrumentation}. On the tomography side, it will be necessary to
+study what are the more appropriate algorithms (and what type of
+tomography), how they can be physically deployed (i.e., the problem's
+geometry) and what type of reconstruction method is the more favorable.
+Regarding the instrumentation, there are also several points that need
+considering: decisions are required with regard to the mechanics, the
+controls and the optical components of the final system. A more detailed
+discussion of these topics can be found in
+Section~\ref{sec:hypothesis_and_approach} and
+Chapter~\ref{cha:research_methods}.
 
-\subsection{Results}%
-\label{sub:results}
-
-\subsection{Conclusions}%
-\label{sub:conclusions}
+One of the most important steps in the development of this work is
+designing and implementing a simulation software platform, that allows
+the validation of the acquisition strategy, the geometry selection and
+the reconstruction approach. This endeavor will also be of critical
+importance for component selection, since it will define the component
+requirements for the whole system. On the optical instrumentation side,
+this project will require optimizing \gls{FFF}'s optical assembly.
+Although similar in purpose and types of components, this assembly is
+significantly larger than what is acceptable for this project and needs
+redesigning.
 
 % \section{Theoretical Background}%
 % \label{sec:theoretical_background}
