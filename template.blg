@@ -1,23 +1,27 @@
-[0] Config.pm:302> INFO - This is Biber 2.11
-[0] Config.pm:305> INFO - Logfile is 'template.blg'
-[43] biber-darwin:313> INFO - === Fri Aug 16, 2019, 09:43:12
-[68] Biber.pm:371> INFO - Reading 'template.bcf'
-[179] Biber.pm:857> INFO - Found 5 citekeys in bib section 0
-[194] Biber.pm:3976> INFO - Processing section 0
-[206] Biber.pm:4136> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
-[222] bibtex.pm:1500> INFO - LaTeX decoding ...
-[614] bibtex.pm:1316> INFO - Found BibTeX data source 'bibliography.bib'
-[639] Utils.pm:193> WARN - Duplicate entry key: 'Kak2001' in file 'bibliography.bib', skipping ...
-[640] Utils.pm:193> WARN - Duplicate entry key: 'Verkruysse2005' in file 'bibliography.bib', skipping ...
-[643] Utils.pm:193> WARN - Duplicate entry key: 'Frins2006' in file 'bibliography.bib', skipping ...
-[647] Utils.pm:193> WARN - Duplicate entry key: 'Laepple2004' in file 'bibliography.bib', skipping ...
-[663] Utils.pm:193> WARN - month field 'may' in entry 'Carugno2016' is not an integer - this will probably not sort properly.
-[674] Utils.pm:193> WARN - month field 'jan' in entry 'Kampa2008' is not an integer - this will probably not sort properly.
-[687] Utils.pm:193> WARN - month field 'apr' in entry 'Lovett2009' is not an integer - this will probably not sort properly.
-[728] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[728] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[728] Biber.pm:3804> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
-[728] Biber.pm:3810> INFO - No sort tailoring available for locale 'en-US'
-[743] bbl.pm:617> INFO - Writing 'template.bbl' with encoding 'UTF-8'
-[750] bbl.pm:720> INFO - Output to template.bbl
-[750] Biber.pm:110> INFO - WARNINGS: 7
+[0] Config.pm:304> INFO - This is Biber 2.12
+[14] Config.pm:307> INFO - Logfile is 'template.blg'
+[53] biber:315> INFO - === Thu Aug 22, 2019, 16:46:59
+[74] Biber.pm:371> INFO - Reading 'template.bcf'
+[147] Biber.pm:889> INFO - Found 14 citekeys in bib section 0
+[163] Biber.pm:4093> INFO - Processing section 0
+[174] Biber.pm:4254> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
+[190] bibtex.pm:1523> INFO - LaTeX decoding ...
+[523] bibtex.pm:1340> INFO - Found BibTeX data source 'bibliography.bib'
+[526] Utils.pm:193> WARN - Duplicate entry key: 'Kak2001' in file 'bibliography.bib', skipping ...
+[532] Utils.pm:193> WARN - Duplicate entry key: 'Verkruysse2005' in file 'bibliography.bib', skipping ...
+[534] Utils.pm:193> WARN - Duplicate entry key: 'Frins2006' in file 'bibliography.bib', skipping ...
+[537] Utils.pm:193> WARN - Duplicate entry key: 'Laepple2004' in file 'bibliography.bib', skipping ...
+[554] Utils.pm:193> WARN - month field 'may' in entry 'Carugno2016' is not an integer - this will probably not sort properly.
+[567] Utils.pm:193> WARN - month field 'jan' in entry 'Kampa2008' is not an integer - this will probably not sort properly.
+[583] Utils.pm:193> WARN - month field 'apr' in entry 'Lovett2009' is not an integer - this will probably not sort properly.
+[620] Utils.pm:193> WARN - month field 'jan' in entry 'Kak2001a' is not an integer - this will probably not sort properly.
+[625] Utils.pm:193> WARN - ISBN '0161-5505 (Print)$\backslash$n0161-5505 (Linking)' in entry 'Bruyant2002' is invalid - run biber with '--validate_datamodel' for details.
+[637] Utils.pm:193> WARN - ISBN '0022-5193' in entry 'Herman1973' is invalid - run biber with '--validate_datamodel' for details.
+[641] Utils.pm:193> WARN - ISBN '1077-2014' in entry 'Herman1995' is invalid - run biber with '--validate_datamodel' for details.
+[681] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[681] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[681] Biber.pm:3921> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[681] Biber.pm:3927> INFO - No sort tailoring available for locale 'en-US'
+[705] bbl.pm:636> INFO - Writing 'template.bbl' with encoding 'UTF-8'
+[718] bbl.pm:739> INFO - Output to template.bbl
+[718] Biber.pm:110> INFO - WARNINGS: 11
