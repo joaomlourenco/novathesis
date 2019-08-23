@@ -68,6 +68,192 @@ syndromes.
 \section{Tomographic algorithms and reconstruction techniques}%
 \label{sec:tomographic_algorithms_and_reconstruction_techniques}
 
+\subsection{Introduction}%
+\label{sub:introduction}
+
+Tomography is the cross-sectional imaging of an object through the use
+of transmitted or reflected waves, captured by the object exposure to
+the waves from a set of known angles. It has many different applications
+in science, industry, and most prominently, medicine. Since the
+invention of the Computed Tomography (\gls{CT}) machine in 1972, by
+Hounsfielf~\cite{Gunderman2006}, tomographic imaging techniques have had
+a revolutionary impact, allowing doctors to see inside their patients,
+without having to subject them to more invasive
+procedures~\cite{Kak2001a}.
+
+Mathematical basis for tomography were set by Johannes Radon in 1917. At
+the time, he postulated that  it is possible to represent a function
+written in $\mathbb{R}$ in the space of straight lines, $\mathbb{L}$
+through the function's line integrals. A line integral is an integral in
+which the function that is being integrated is evaluated along a curved
+path, a line. In the tomographic case, these line integrals represent a
+measurement on a ray that traverses the Region Of Interest (\gls{ROI}).
+Each set of line integrals, characterized by an incidence angle, is
+called a projection (see Figure~\ref{fig:projection}). To perform a
+tomographic reconstruction, the machine must take many projections
+around the object. To the set of projections arranged in matrix form by
+detector and projection angle, we call sinogram. All reconstruction
+methods, analytical and iterative, revolve around going from reality to
+sinogram to image~\cite{Bruyant2002, Kak2001, Herman1973, Herman1995,
+Herman2009, Defrise2003}.
+
+\begin{figure}[htpb]
+    \centering
+    \missingfigure{Projection Schematic}
+    \caption{A schematic representation of a projection.}
+    \label{fig:projection}
+\end{figure}
+
+There are two broad algorithm families when it comes to tomographic
+reconstruction, regarding the physics of the problem. The problem can
+involve either non-diffracting sources (light travels in straight
+lines), such as the X-Rays in a conventional \gls{CT} exam; or
+diffracting sources, such as micro-waves or ultrasound in more
+research-oriented applications. In this document, I will not address the
+latter family, since I will not be applying them in my work. In the next
+few paragraphs, I will discuss the first family of algorithms, and
+describe how an image can be reconstructed from an object's projections
+when the radiation source is non-diffracting.
+
+Let's consider the case in which we deal with a single ray of solar
+light entering the atmosphere at a given point. Since the atmosphere
+contains numerous absorbents and comparable atmospheric effects, the ray
+changes from the point where it enters the atmosphere to the point at
+which it is measured by a detector. Total absorption will depend on the
+pollutant species, their cross-section and their concentration, since it
+obeys Lambert-Beer's law. Looking from another angle, this absorption
+is also the line integral that we will use to reconstruct our image.
+With \gls{DOAS}, it is possible to measure several pollutants at the
+same time, but for simplicity (and since it is one of the most studied
+compounds in the field), let's consider that the single pollutant in our
+atmospheric mixture is NO$_2$.
+
+\subsection{Initial Considerations}%
+\label{sub:initial_considerations}
+
+
+The problem of tomographic reconstruction can be approached in a number
+of ways, depending mostly on the authors. In my literary search, I have
+found that Kak and Slaney~\cite{Kak2001} have certainly explained this
+problem in one of the clearer ways available. Therefore, I shall base
+the rest of my presentation in their writings, and complement with other
+authors' notes wherever necessary.
+
+Considering the coordinate system displayed in
+Figure~\ref{fig:coordinates}. In this schematic, the object is
+represented by the function $f(x, y)$. The  $(\theta, t)$ parameters can
+be used to define any line in this schematic. Line AB in particular can
+be written:
+
+\begin{equation}
+    \label{eq:lineAB}
+    x \cdot \cos(\theta) + y \cdot \sin(\theta) = t
+\end{equation}
+
+\begin{figure}[htpb]
+    \centering
+    \missingfigure{Coordinates system}
+    \caption{Schematic representation for coordinate setting.}
+    \label{fig:coordinates}
+\end{figure}
+
+And if we were to write a line integral along this line, it would look
+like Equation~\ref{eq:lineABIntegral}, the Radon transform of function
+$f(x, y)$:
+
+\begin{equation}
+    \label{eq:lineABIntegral}
+    P_{\theta}(t) = \int_{-\infty}^{\infty} f(x, y) \cdot \delta(x \cdot
+    \cos(\theta) + y \cdot \sin(\theta) - t) dxdy
+\end{equation}
+
+Where $\delta$, the delta function, is defined in
+Equation~\ref{eq:delta}.
+
+\begin{equation}
+    \label{eq:delta}
+    \delta (\phi) =  
+    \begin{cases}
+            1, & \phi = 0\\
+            0, & otherwise
+    \end{cases}
+\end{equation}
+
+As I have mentioned previously, a projection is a set of line integrals
+such as $P_{\theta}(t)$. Geometry plays a very important role in how the
+integrals are written and solved for reconstruction. The simplest case
+is the one where the set is acquired in a row, describing what is called
+a parallel geometry. Another more complex case is when a single point
+source is used as origin for all rays, forming a fan. This is called a
+fanbeam array. There are other possible geometries, but they fall out of
+the scope of this work and will therefore not be addressed any further.
+
+\subsection{The Fourier Slice Theorem}%
+\label{sub:the_fourier_slice_theorem}
+
+The Fourier Slice Theorem (\gls{FST}) is the most important component of
+the most important algorithm in tomographic inversion, the Filtered
+BackProjection algorithm (\gls{FBP}). \gls{FST} is based on the equality
+relation between the 
+two-dimensional Fourier Transform (\gls{FT}) of the object function and
+the one-dimensional \gls{FT} of the object's projection at an angle
+$\theta$. Let's start by writing the 2D \gls{FT} for the object
+function, Equation~\ref{eq:objectFT}, and the 1D \gls{FT} of projection
+P$_\theta$, in Equation~\ref{eq:1dFTproj}.
+
+\begin{equation}
+    \label{eq:objectFT}
+    F(u, v) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(x, y)
+    \cdot \exp \left [ -j2\pi (ux + vy) \right ] dx dy 
+\end{equation}
+
+\begin{equation}
+    \label{eq:1dFTproj}
+    S_{\theta}(\omega) = \int_{-\infty}^{\infty} P_{\theta} \cdot \exp\left[
+    -j2 \pi \omega t \right]
+\end{equation}
+
+For simplicity, let's consider the 2D \gls{FT} at the line defined by
+$v=0$ in the frequency domain. We rewrite the 2D \gls{FT} integral as:
+
+\begin{equation}
+    \label{eq:v=0}
+    F(u, 0) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(x, y)
+    \cdot \exp \left[  -j 2\pi  \omega ux \right] dx dy
+\end{equation}
+
+Notice that $y$ is not present in the phase factor of the \gls{FT}
+expression anymore, and this means we can rearrange the integral as:
+
+\begin{equation}
+    \label{eq:v=02}
+    F(u, 0) = \int_{-\infty}^{\infty} \left[ \mathbf{\int_{-\infty}^{\infty}
+    f(x, y) dy }\right] \cdot \exp \left[  -j 2\pi  \omega ux \right] dx 
+\end{equation}
+
+Now, the part of Equation~\ref{eq:v=02} is similar to
+Equation~\ref{eq:lineABIntegral}. It is precisely that equation,
+considering $\theta=0$ and a constant value of $x$, as in
+Equation~\ref{eq:p0}.
+
+\begin{equation}
+    \label{eq:p0}
+    P_{\theta=0} (x) = \int_{-\infty}^{\infty} f(x, y) dy
+\end{equation}
+
+This in turn can be substituted in Equation~\ref{eq:v=02}, finally
+arriving at:
+
+\begin{equation}
+    \label{eq:FTP}
+    F(u, 0) = \int_{-\infty}^{\infty} P_{\theta=0} (x) \cdot \exp \left[
+    -j 2\pi ux \right] dx
+\end{equation}
+
+
+
+
+
 \section{DOAS tomography instrumentation}%
 \label{sec:doas_tomography_instrumentation}
 
