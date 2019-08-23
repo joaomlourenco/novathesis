@@ -217,7 +217,7 @@ For simplicity, let's consider the 2D \gls{FT} at the line defined by
 $v=0$ in the frequency domain. We rewrite the 2D \gls{FT} integral as:
 
 \begin{equation}
-    \label{eq:v=0}
+    \label{eq:v0}
     F(u, 0) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(x, y)
     \cdot \exp \left[  -j 2\pi  \omega ux \right] dx dy
 \end{equation}
@@ -226,12 +226,12 @@ Notice that $y$ is not present in the phase factor of the \gls{FT}
 expression anymore, and this means we can rearrange the integral as:
 
 \begin{equation}
-    \label{eq:v=02}
+    \label{eq:v02}
     F(u, 0) = \int_{-\infty}^{\infty} \left[ \mathbf{\int_{-\infty}^{\infty}
     f(x, y) dy }\right] \cdot \exp \left[  -j 2\pi  \omega ux \right] dx 
 \end{equation}
 
-Now, the part of Equation~\ref{eq:v=02} is similar to
+Now, the \textbf{bold} part of Equation~\ref{eq:v02} is similar to
 Equation~\ref{eq:lineABIntegral}. It is precisely that equation,
 considering $\theta=0$ and a constant value of $x$, as in
 Equation~\ref{eq:p0}.
@@ -241,7 +241,7 @@ Equation~\ref{eq:p0}.
     P_{\theta=0} (x) = \int_{-\infty}^{\infty} f(x, y) dy
 \end{equation}
 
-This in turn can be substituted in Equation~\ref{eq:v=02}, finally
+This in turn can be substituted in Equation~\ref{eq:v02}, finally
 arriving at:
 
 \begin{equation}
@@ -250,7 +250,42 @@ arriving at:
     -j 2\pi ux \right] dx
 \end{equation}
 
+And this is the one-dimensional \gls{FT} for the projection at angle
+$\theta=0$. Finally, the enunciation of the Fourier Slice Theorem:
+\begin{center}
+    \textbf{
+    \emph{
+        The Fourier Transform of a parallel projection  of an image $f(x,
+        y)$ taken at angle $\theta$ gives a slice of the two-dimensional
+        Fourier Transform, $F(u, v)$, subtending an angle $\theta$ with the
+        $u$-axis (see Figure~\ref{fig:fst})
+    }}
+\end{center}
 
+\begin{figure}[htpb]
+    \centering
+    \missingfigure{Fourier Slice Theorem}
+    \caption{The \gls{FST}, a schematic representation.}
+    \label{fig:fst}
+\end{figure}
+
+\subsection{The Filtered BackProjection Algorithm}%
+\label{sub:the_filtered_backprojection_algorithm}
+
+The idea behind the \gls{FBP} algorithm is almost a conclusion for the
+\gls{FST} theorem. If one assembles sufficient \emph{parallel}
+projections in the Fourier space (and in their correct places), then the
+2D \gls{IFT} of the summation of all those projections will render an
+estimation for the object function, $f(x, y)$. In practice, things are
+not this smooth\todo{accumulation of low frequency components - find way
+to say this scientifically}. If we were to do this in this fashion, we
+would end up with a significantly distorted reconstruction, due to the
+fact that low frequency (corresponding to the center of the Fourier
+space) is much more represented that low frequency, since every
+projection goes through the center, but there can be large gaps at the
+edges. What we need in order to cut these low frequencies (to a degree),
+is to filter our projections so that they are weighted according to
+their frequency, $\omega$. 
 
 
 
