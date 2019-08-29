@@ -272,25 +272,60 @@ $\theta=0$. Finally, the enunciation of the Fourier Slice Theorem:
 \subsection{The Filtered BackProjection Algorithm}%
 \label{sub:the_filtered_backprojection_algorithm}
 
-The idea behind the \gls{FBP} algorithm is almost a conclusion for the
-\gls{FST} theorem. If one assembles sufficient \emph{parallel}
-projections in the Fourier space (and in their correct places), then the
-2D \gls{IFT} of the summation of all those projections will render an
-estimation for the object function, $f(x, y)$. In practice, things are
-not this smooth\todo{accumulation of low frequency components - find way
-to say this scientifically}. If we were to do this in this fashion, we
-would end up with a significantly distorted reconstruction, due to the
-fact that low frequency (corresponding to the center of the Fourier
-space) is much more represented that low frequency, since every
-projection goes through the center, but there can be large gaps at the
-edges. What we need in order to cut these low frequencies (to a degree),
-is to filter our projections so that they are weighted according to
-their frequency, $\omega$. 
+If one takes the \gls{FST} into account, the idea behind the \gls{FBP}
+seems to appear almost naturally. Say one has a single projection and
+its Fourier transform. From the \gls{FST}, this projection is the same
+as the object's two-dimensional \gls{FT} in a single line. A crude
+reconstruction of the original object would result if someone were to
+place this projection in its right place in the Fourier domain and then
+perform a two-dimensional \gls{IFT}, while assuming every other
+projection to be 0. The result, in the image space, would be as if
+someone had smeared the object in the projections direction.
+
+What is really needed for a correct reconstruction is to do this many
+times, with many projections. This brings a problem with the method:
+smearing the object in all directions will clearly produce a wrong
+\emph{accumulation} in the center of the image, since every projection
+passes through the middle (remember we are still talking about parallel
+geometry projections) and are summed on top of each other, but on the
+outer edges, this does not occur. If one does not address this, the
+image intensity levels in the reconstructed image will be severely
+overestimated in the center and underestimated in the edges (due to
+normalization). The solution is conceptually easy: we multiply the
+Fourier transform by a weighting filter proportional to its frequency
+($\omega$) and that encompasses its relevance in the global scheme of
+projections. If there are $K$ projections, then it is adequate for this
+value to be $\frac{2\pi\lvert\omega\rvert}{K}$. As an algorithm,
+\gls{FBP} can be written as in Algorithm~\ref{alg:fbp}.
+\begin{algorithm}
+    \caption{The Filtered BackProjection Algorithm}
+    \label{alg:fbp}
+    \begin{algorithmic}
+        \FORALL{$\theta, \theta \in \left\{0..180,
+        \frac{180}{K}\right\}$}
+        \STATE{Measure projection $P_{\theta}(t)$;}
+        \STATE{FT($P_{\theta}(t)$), rendering $S_{\theta}(\omega)$}
+        \STATE{Multiply by $\frac{2\pi\lvert{\omega}\rvert}{K}$;}
+        \STATE{Sum the \gls{IFT} of the result in the image space.}
+    \ENDFOR
+    \end{algorithmic}
+\end{algorithm}
+
+
+
 
 
 
 \section{DOAS tomography instrumentation}%
 \label{sec:doas_tomography_instrumentation}
+
+\subsection{Active DOAS tomography}%
+\label{sub:active_doas_tomography}
+
+\subsection{Passive DOAS tomography}%
+\label{sub:passive_doas_tomography}
+
+
 
 
 
