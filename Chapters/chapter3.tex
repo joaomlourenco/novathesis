@@ -103,7 +103,7 @@ invention of the Computed Tomography (\gls{CT}) machine in 1972, by
 Hounsfielf~\cite{Gunderman2006}, tomographic imaging techniques have had
 a revolutionary impact, allowing doctors to see inside their patients,
 without having to subject them to more invasive
-procedures~\cite{Kak2001a}.
+procedures~\cite{Kak2001}.
 
 Mathematical basis for tomography were set by Johannes Radon in 1917. At
 the time, he postulated that  it is possible to represent a function
@@ -288,13 +288,16 @@ $\theta=0$. Finally, the enunciation of the Fourier Slice Theorem:
 
 \begin{figure}[htpb]
     \centering
-    \includegraphics[width = .8\textwidth]{img/fst.png}    
+    \includegraphics[width =.8\textwidth]{img/fst.png}    
     \caption{The \gls{FST}, a schematic representation.}
     \label{fig:fst}
 \end{figure}
 
 \subsection{The Filtered BackProjection Algorithm}%
 \label{sub:the_filtered_backprojection_algorithm}
+
+\subsubsection{The rationale for \gls{FBP}}%
+\label{ssub:the_rationale_for_fbp}
 
 If one takes the \gls{FST} into account, the idea behind the \gls{FBP}
 seems to appear almost naturally. Say one has a single projection and
@@ -321,6 +324,7 @@ Fourier transform by a weighting filter proportional to its frequency
 projections. If there are $K$ projections, then it is adequate for this
 value to be $\frac{2\pi\lvert\omega\rvert}{K}$. As an algorithm,
 \gls{FBP} can be written as in Algorithm~\ref{alg:fbp}.
+
 \begin{algorithm}
     \caption{The Filtered BackProjection Algorithm}
     \label{alg:fbp}
@@ -335,13 +339,52 @@ value to be $\frac{2\pi\lvert\omega\rvert}{K}$. As an algorithm,
     \end{algorithmic}
 \end{algorithm}
 
+\subsubsection{Fan Projections Reconstruction}%
+\label{ssub:fan_projections_reconstruction}
+
+Parallel projections, in which the object is scanned linearly from
+multiple directions, have the advantage of having a relatively simple
+reconstruction scheme. However, they usually result in acquisition times
+which are in the order of minutes. A faster way of collecting the data
+is one where all radiation emanates from a single point-source, which
+rotates around the target object (as well as the detectors). There are
+two types of fan beam projections: equiangular and equally spaced. In
+this project, I have only worked with equiangular processes, so I will
+not include an explanation for equally spaced fan beam projections. The
+reader may find this well described (much better than I would be able
+to) in ~\cite{Kak2001} and ~\cite{Herman1973}.
+
+Consider Figure~\ref{fig:equiangular}. If our projection data were
+acquired through a parallel ray geometry, we would be able to say that
+ray SA belonged to a projection $P_{\theta}(t)$, in which $\theta$ and
+$t$ would be written:
+
+\begin{equation}
+    \label{eq:theta_and_t}
+    \theta = \beta + \gamma \quad \text{ and } \quad t = D \cdot \sin \gamma
+\end{equation}
+
+In Equation~\ref{eq:theta_and_t}, $D$ is the distance between the source
+$S$ and the origin $O$; $\gamma$ is the angle of a ray within a fan and
+$\beta$ is the angle that the source $S$ makes with a reference axis.
+
+For deriving the reconstruction
+
+\begin{figure}[htpb]
+    \centering
+    \missingfigure{kak and slaney fig 3.19}
+    \caption{Schematic representation of an equiangular fan beam
+    projection.}
+    \label{fig:equiangular}
+\end{figure}
 
 
 
+\section{DOAS}%
+\label{sec:doas}
 
-
-\section{DOAS tomography instrumentation}%
-\label{sec:doas_tomography_instrumentation}
+\section{DOAS tomography}%
+\label{sec:doas_tomography}
 
 \subsection{Active DOAS tomography}%
 \label{sub:active_doas_tomography}
