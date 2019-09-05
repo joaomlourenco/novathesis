@@ -378,11 +378,11 @@
     \endentry
     \entry{Kak2001}{book}{}
       \name{author}{2}{}{%
-        {{uniquename=0,uniquepart=base,hash=79d20b9313c4fe34a6618496ed4afd96}{%
+        {{uniquename=0,uniquepart=base,hash=2b0c9ec82e8fec6e7ce16ffc778931a0}{%
            family={Kak},
            familyi={K\bibinitperiod},
-           given={Avinash\bibnamedelima C.},
-           giveni={A\bibinitperiod\bibinitdelim C\bibinitperiod},
+           given={A.C.},
+           giveni={A\bibinitperiod},
            givenun=0}}%
         {{uniquename=0,uniquepart=base,hash=af3eb849c7bb824718da580e0514e62b}{%
            family={Slaney},
@@ -392,41 +392,21 @@
            givenun=0}}%
       }
       \list{publisher}{2}{%
-        {Society for Industrial}%
+        {Society of Industrial}%
         {Applied Mathematics}%
       }
-      \strng{namehash}{fae4ea75541958580743dd6b82008bbd}
-      \strng{fullhash}{fae4ea75541958580743dd6b82008bbd}
-      \strng{bibnamehash}{fae4ea75541958580743dd6b82008bbd}
-      \strng{authorbibnamehash}{fae4ea75541958580743dd6b82008bbd}
-      \strng{authornamehash}{fae4ea75541958580743dd6b82008bbd}
-      \strng{authorfullhash}{fae4ea75541958580743dd6b82008bbd}
+      \strng{namehash}{aedeaa7fb3a2d1499baa848c2540ba06}
+      \strng{fullhash}{aedeaa7fb3a2d1499baa848c2540ba06}
+      \strng{bibnamehash}{aedeaa7fb3a2d1499baa848c2540ba06}
+      \strng{authorbibnamehash}{aedeaa7fb3a2d1499baa848c2540ba06}
+      \strng{authornamehash}{aedeaa7fb3a2d1499baa848c2540ba06}
+      \strng{authorfullhash}{aedeaa7fb3a2d1499baa848c2540ba06}
       \field{sortinit}{K}
       \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{abstract}{3 Algorithms for Reconstruction with Nondiffracting Sources 3.1 Line Integrals and Projections 49 3.2 The Fourier Slice Theorem 56 3.3 Reconstruction Algorithms for Parallel Projections 60 The Idea l Theory l Computer Implementation of the Algorithm 3.4 Reconstruction from Fan Projections 75 Equiangular Rays l Equally Spaced Collinear Detectors l A Re-sorting Algorithm 3.5 Fan Beam Reconstruction from a Limited Number of Views 93 3.6 Three-Dimensional Reconstructions 99 Three-Dimensional Projections l Three-Dimensional Filtered Backprojection 5 49}
-      \field{booktitle}{Principles of Computerized Tomographic Imaging}
-      \field{isbn}{978-0-89871-494-4}
-      \field{issn}{00766879}
-      \field{month}{1}
-      \field{number}{1}
       \field{title}{{Principles of Computerized Tomographic Imaging}}
       \field{year}{2001}
-      \field{pages}{49\bibrangedash 112}
-      \range{pages}{64}
-      \verb{doi}
-      \verb 10.1137/1.9780898719277
-      \endverb
-      \verb{file}
-      \verb ::
-      \endverb
-      \verb{urlraw}
-      \verb http://epubs.siam.org/doi/book/10.1137/1.9780898719277
-      \endverb
-      \verb{url}
-      \verb http://epubs.siam.org/doi/book/10.1137/1.9780898719277
-      \endverb
     \endentry
     \entry{Kampa2008}{article}{}
       \name{author}{2}{}{%
@@ -470,6 +450,65 @@
       \endverb
       \verb{url}
       \verb https://linkinghub.elsevier.com/retrieve/pii/S0269749107002849
+      \endverb
+    \endentry
+    \entry{Laepple2004}{article}{}
+      \name{author}{4}{}{%
+        {{uniquename=0,uniquepart=base,hash=d4ad8458d1360046c678df43b2bdc3fd}{%
+           family={Laepple},
+           familyi={L\bibinitperiod},
+           given={T},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=e189acad2d22e7c977ac4a2b8dedf7d1}{%
+           family={Knab},
+           familyi={K\bibinitperiod},
+           given={V},
+           giveni={V\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=b38af08fc48b635c598aa865fef345af}{%
+           family={Mettendorf},
+           familyi={M\bibinitperiod},
+           given={K.-U.},
+           giveni={K\bibinithyphendelim U\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=443514bfdde8f08b31088fe1f5a7391b}{%
+           family={Pundt},
+           familyi={P\bibinitperiod},
+           given={I},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{c1cbb44a733efa9a1eeccb6ae141da55}
+      \strng{fullhash}{69f5ed91001f6366dc112fd070607fda}
+      \strng{bibnamehash}{69f5ed91001f6366dc112fd070607fda}
+      \strng{authorbibnamehash}{69f5ed91001f6366dc112fd070607fda}
+      \strng{authornamehash}{c1cbb44a733efa9a1eeccb6ae141da55}
+      \strng{authorfullhash}{69f5ed91001f6366dc112fd070607fda}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{annotation}{NULL}
+      \field{issn}{1680-7375}
+      \field{journaltitle}{Atmospheric Chemistry and Physics Discussions}
+      \field{number}{3}
+      \field{title}{{Longpath DOAS tomography on a motorway exhaust gas plume: numerical studies and application to data from the BAB II campaign}}
+      \field{volume}{4}
+      \field{year}{2004}
+      \field{pages}{2435\bibrangedash 2484}
+      \range{pages}{50}
+      \verb{doi}
+      \verb 10.5194/acpd-4-2435-2004
+      \endverb
+      \verb{file}
+      \verb ::
+      \endverb
+      \verb{urlraw}
+      \verb http://www.atmos-chem-phys-discuss.net/4/2435/2004/
+      \endverb
+      \verb{url}
+      \verb http://www.atmos-chem-phys-discuss.net/4/2435/2004/
       \endverb
     \endentry
     \entry{Lovett2009}{article}{}
@@ -550,6 +589,270 @@
       \endverb
       \verb{url}
       \verb http://doi.wiley.com/10.1111/j.1749-6632.2009.04153.x
+      \endverb
+    \endentry
+    \entry{Olaguer2015}{article}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=c33b108a9ea98ad3aef947ed3d60027f}{%
+           family={Olaguer},
+           familyi={O\bibinitperiod},
+           given={Eduardo\bibnamedelima P.},
+           giveni={E\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{c33b108a9ea98ad3aef947ed3d60027f}
+      \strng{fullhash}{c33b108a9ea98ad3aef947ed3d60027f}
+      \strng{bibnamehash}{c33b108a9ea98ad3aef947ed3d60027f}
+      \strng{authorbibnamehash}{c33b108a9ea98ad3aef947ed3d60027f}
+      \strng{authornamehash}{c33b108a9ea98ad3aef947ed3d60027f}
+      \strng{authorfullhash}{c33b108a9ea98ad3aef947ed3d60027f}
+      \field{sortinit}{O}
+      \field{sortinithash}{dad3efd0836470093a7b4a7bb756eb8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1178-6302}
+      \field{journaltitle}{Environmental Health Insights}
+      \field{month}{1}
+      \field{title}{{Overview of the Benzene and Other Toxics Exposure (BEE-TEX) Field Study}}
+      \field{volume}{9s4}
+      \field{year}{2015}
+      \field{pages}{EHI.S15654}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.4137/EHI.S15654
+      \endverb
+      \verb{urlraw}
+      \verb http://journals.sagepub.com/doi/10.4137/EHI.S15654
+      \endverb
+      \verb{url}
+      \verb http://journals.sagepub.com/doi/10.4137/EHI.S15654
+      \endverb
+    \endentry
+    \entry{Pundt2005}{article}{}
+      \name{author}{9}{}{%
+        {{uniquename=0,uniquepart=base,hash=443514bfdde8f08b31088fe1f5a7391b}{%
+           family={Pundt},
+           familyi={P\bibinitperiod},
+           given={I.},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=c2f0682e474c01f903cb091d46f91d50}{%
+           family={Mettendorf},
+           familyi={M\bibinitperiod},
+           given={K.\bibnamedelimi U.},
+           giveni={K\bibinitperiod\bibinitdelim U\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=d4ad8458d1360046c678df43b2bdc3fd}{%
+           family={Laepple},
+           familyi={L\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=e189acad2d22e7c977ac4a2b8dedf7d1}{%
+           family={Knab},
+           familyi={K\bibinitperiod},
+           given={V.},
+           giveni={V\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=63ebfccb53da7f70bc690015463cd21f}{%
+           family={Xie},
+           familyi={X\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=c6b53a2be716d8675865868ed3caa8e1}{%
+           family={L{ö}sch},
+           familyi={L\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=38993844054b96f40ef2b28307906f49}{%
+           family={Friedeburg},
+           familyi={F\bibinitperiod},
+           given={C.\bibnamedelimi V.},
+           giveni={C\bibinitperiod\bibinitdelim V\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=0d96ad47b01da58e607abec7d1d33c0b}{%
+           family={Platt},
+           familyi={P\bibinitperiod},
+           given={U.},
+           giveni={U\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=8721372faf29db0a881be71f01d8989d}{%
+           family={Wagner},
+           familyi={W\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{49eac5afbfc8ab0be15cc6178f6ade8a}
+      \strng{fullhash}{9054d2bbb068e924e74c46eb46c88cad}
+      \strng{bibnamehash}{9054d2bbb068e924e74c46eb46c88cad}
+      \strng{authorbibnamehash}{9054d2bbb068e924e74c46eb46c88cad}
+      \strng{authornamehash}{49eac5afbfc8ab0be15cc6178f6ade8a}
+      \strng{authorfullhash}{9054d2bbb068e924e74c46eb46c88cad}
+      \field{sortinit}{P}
+      \field{sortinithash}{8d51b3d5b78d75b54308d706b9bbe285}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The Tomographic Differential Optical Absorption Spectroscopy (Tom-DOAS) technique and results from a first application are presented. This novel technique serves to measure 2-3-dimensional concentration fields of different trace gases (e.g. NO 2, SO 2, ozone) in the planetary boundary layer on a small scale (100-10 000 m) by the use of multiple light paths. Ways to use telescopes, lamps, retroreflector arrays and spectrometers for the simultaneous measurement of many light-paths are proposed. The results from a first Long-path Tom-DOAS experiment next to a German motorway, which was part of the BAB II campaign April/May 2001 [Edition of the Institut f??r Meteorologie und Klimaforschung, Forschungszentrum Karlsruhe/Universit??t Karlsruhe, pp. 45, 2001), are presented. From the measurements along 16 different light paths vertical profiles on both sides of the motorway as well as a two-dimensional map of the NO 2 vehicle emission plume are derived. The concentration distributions agree qualitatively with model simulations of an earlier campaign. ?? 2004 Elsevier Ltd. All rights reserved.}
+      \field{annotation}{NULL}
+      \field{issn}{13522310}
+      \field{journaltitle}{Atmospheric Environment}
+      \field{number}{5}
+      \field{title}{{Measurements of trace gas distributions using Long-path DOAS-Tomography during the motorway campaign BAB II: Experimental setup and results for NO 2}}
+      \field{volume}{39}
+      \field{year}{2005}
+      \field{pages}{967\bibrangedash 975}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1016/j.atmosenv.2004.07.035
+      \endverb
+      \verb{file}
+      \verb ::
+      \endverb
+      \keyw{DOAS,NO 2,Tomography,Vehicle emission}
+    \endentry
+    \entry{Stutz2016}{article}{}
+      \name{author}{11}{}{%
+        {{uniquename=0,uniquepart=base,hash=c1d0d56ecd7b6f6793da73aba554e1b8}{%
+           family={Stutz},
+           familyi={S\bibinitperiod},
+           given={Jochen},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=a0909e4c721d920379bff0ffbf072260}{%
+           family={Hurlock},
+           familyi={H\bibinitperiod},
+           given={Stephen\bibnamedelima C.},
+           giveni={S\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=267fb8366496152300f67dae82a296da}{%
+           family={Colosimo},
+           familyi={C\bibinitperiod},
+           given={Santo\bibnamedelima F.},
+           giveni={S\bibinitperiod\bibinitdelim F\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=99e80d74cb9bf482c4bed7a65304f199}{%
+           family={Tsai},
+           familyi={T\bibinitperiod},
+           given={Catalina},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=60cb49d7bdbc218b9a2cd4571bb38124}{%
+           family={Cheung},
+           familyi={C\bibinitperiod},
+           given={Ross},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=70738b3b866188aa39ce7c73cca22d95}{%
+           family={Festa},
+           familyi={F\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=adf747d234b80a076ab043b0240e2a5e}{%
+           family={Pikelnaya},
+           familyi={P\bibinitperiod},
+           given={Olga},
+           giveni={O\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=6312de140d259f592157c14d1105eb43}{%
+           family={Alvarez},
+           familyi={A\bibinitperiod},
+           given={Sergio},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=fa98f8e15c98ba06c3235811ebacd1c4}{%
+           family={Flynn},
+           familyi={F\bibinitperiod},
+           given={James\bibnamedelima H.},
+           giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=ea7c5fc3c7e1481d36eb2a2f60f3d848}{%
+           family={Erickson},
+           familyi={E\bibinitperiod},
+           given={Matthew\bibnamedelima H.},
+           giveni={M\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=c33b108a9ea98ad3aef947ed3d60027f}{%
+           family={Olaguer},
+           familyi={O\bibinitperiod},
+           given={Eduardo\bibnamedelima P.},
+           giveni={E\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{b233dd20aaba8268450aa750018c3189}
+      \strng{fullhash}{477a5e26115a578790bff93be1b6a757}
+      \strng{bibnamehash}{477a5e26115a578790bff93be1b6a757}
+      \strng{authorbibnamehash}{477a5e26115a578790bff93be1b6a757}
+      \strng{authornamehash}{b233dd20aaba8268450aa750018c3189}
+      \strng{authorfullhash}{477a5e26115a578790bff93be1b6a757}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{13522310}
+      \field{journaltitle}{Atmospheric Environment}
+      \field{month}{12}
+      \field{title}{{A novel dual-LED based long-path DOAS instrument for the measurement of aromatic hydrocarbons}}
+      \field{volume}{147}
+      \field{year}{2016}
+      \field{pages}{121\bibrangedash 132}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1016/j.atmosenv.2016.09.054
+      \endverb
+      \verb{urlraw}
+      \verb http://linkinghub.elsevier.com/retrieve/pii/S1352231016307713
+      \endverb
+      \verb{url}
+      \verb http://linkinghub.elsevier.com/retrieve/pii/S1352231016307713
+      \endverb
+    \endentry
+    \entry{ValentedeAlmeida2017}{article}{}
+      \name{author}{2}{}{%
+        {{uniquename=0,uniquepart=base,hash=1ee9319d1b309870aea7c3c8cfed942a}{%
+           family={{Valente de Almeida}},
+           familyi={V\bibinitperiod},
+           given={Rui},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=d3479232e80d71e33aae788c4cf9a853}{%
+           family={Vieira},
+           familyi={V\bibinitperiod},
+           given={Pedro},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{e4e71fd586c1d794edd12e2f6d4044b4}
+      \strng{fullhash}{e4e71fd586c1d794edd12e2f6d4044b4}
+      \strng{bibnamehash}{e4e71fd586c1d794edd12e2f6d4044b4}
+      \strng{authorbibnamehash}{e4e71fd586c1d794edd12e2f6d4044b4}
+      \strng{authornamehash}{e4e71fd586c1d794edd12e2f6d4044b4}
+      \strng{authorfullhash}{e4e71fd586c1d794edd12e2f6d4044b4}
+      \field{sortinit}{V}
+      \field{sortinithash}{75dd7385c90b2252c3ae853a80ca853b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Abstract. Fires are an important factor in shaping Earth's ecosystems. Plant and animal life, in almost every land habitat, are at least partially dependent on the effects of fire. However, their destructive force, which has often proven uncontrollable, is one of our greatest concerns, effectively resulting in several policies in the most important industrialised regions of the globe. This paper aims to comprehensively characterise the Forest Fire Finder (FFF), a forest fire detection system based mainly upon a spectroscopic technique called differential optical absorption spectroscopy (DOAS). The system is designed and configured with the goal of detecting higher-than-the-horizon smoke columns by measuring and comparing scattered sunlight spectra. The article covers hardware and software, as well as their interactions and specific algorithms for day mode operation. An analysis of data retrieved from several installations deployed in the course of the last 5 years is also presented. Finally, this paper features a discussion on the most prominent future improvements planned for the system, as well as its ramifications and adaptations, such as a thermal imaging system for short-range fire seeking or environmental quality control.}
+      \field{issn}{1867-8548}
+      \field{journaltitle}{Atmospheric Measurement Techniques}
+      \field{month}{6}
+      \field{number}{6}
+      \field{title}{{Forest Fire Finder – DOAS application to long-range forest fire detection}}
+      \field{volume}{10}
+      \field{year}{2017}
+      \field{pages}{2299\bibrangedash 2311}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.5194/amt-10-2299-2017
+      \endverb
+      \verb{urlraw}
+      \verb https://www.atmos-meas-tech.net/10/2299/2017/
+      \endverb
+      \verb{url}
+      \verb https://www.atmos-meas-tech.net/10/2299/2017/
       \endverb
     \endentry
     \entry{Vallero2014}{book}{}

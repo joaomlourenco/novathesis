@@ -1,29 +1,31 @@
 [0] Config.pm:304> INFO - This is Biber 2.12
 [0] Config.pm:307> INFO - Logfile is 'template.blg'
-[30] biber:315> INFO - === Fri Aug 30, 2019, 17:26:42
-[50] Biber.pm:371> INFO - Reading 'template.bcf'
-[122] Biber.pm:889> INFO - Found 15 citekeys in bib section 0
-[137] Biber.pm:4093> INFO - Processing section 0
-[148] Biber.pm:4254> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
-[163] bibtex.pm:1523> INFO - LaTeX decoding ...
-[496] bibtex.pm:1340> INFO - Found BibTeX data source 'bibliography.bib'
-[502] Utils.pm:193> WARN - Duplicate entry key: 'Kak2001' in file 'bibliography.bib', skipping ...
-[510] Utils.pm:193> WARN - Duplicate entry key: 'Frins2006' in file 'bibliography.bib', skipping ...
-[510] Utils.pm:193> WARN - Duplicate entry key: 'Laepple2004' in file 'bibliography.bib', skipping ...
-[511] Utils.pm:193> WARN - Duplicate entry key: 'Verkruysse2005' in file 'bibliography.bib', skipping ...
-[528] Utils.pm:193> WARN - month field 'may' in entry 'Carugno2016' is not an integer - this will probably not sort properly.
+[33] biber:315> INFO - === Thu Sep  5, 2019, 12:26:57
+[54] Biber.pm:371> INFO - Reading 'template.bcf'
+[127] Biber.pm:889> INFO - Found 20 citekeys in bib section 0
+[142] Biber.pm:4093> INFO - Processing section 0
+[152] Biber.pm:4254> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
+[168] bibtex.pm:1523> INFO - LaTeX decoding ...
+[498] bibtex.pm:1340> INFO - Found BibTeX data source 'bibliography.bib'
+[501] Utils.pm:193> WARN - Duplicate entry key: 'Verkruysse2005' in file 'bibliography.bib', skipping ...
+[509] Utils.pm:193> WARN - Duplicate entry key: 'Kak2001' in file 'bibliography.bib', skipping ...
+[511] Utils.pm:193> WARN - Duplicate entry key: 'Frins2006' in file 'bibliography.bib', skipping ...
+[512] Utils.pm:193> WARN - Duplicate entry key: 'Laepple2004' in file 'bibliography.bib', skipping ...
+[529] Utils.pm:193> WARN - month field 'may' in entry 'Carugno2016' is not an integer - this will probably not sort properly.
 [541] Utils.pm:193> WARN - month field 'jan' in entry 'Kampa2008' is not an integer - this will probably not sort properly.
 [557] Utils.pm:193> WARN - month field 'apr' in entry 'Lovett2009' is not an integer - this will probably not sort properly.
-[594] Utils.pm:193> WARN - month field 'jan' in entry 'Kak2001' is not an integer - this will probably not sort properly.
-[599] Utils.pm:193> WARN - ISBN '0161-5505 (Print)$\backslash$n0161-5505 (Linking)' in entry 'Bruyant2002' is invalid - run biber with '--validate_datamodel' for details.
+[598] Utils.pm:193> WARN - ISBN '0161-5505 (Print)$\backslash$n0161-5505 (Linking)' in entry 'Bruyant2002' is invalid - run biber with '--validate_datamodel' for details.
 [606] Utils.pm:193> WARN - ISBN '0022-5193' in entry 'Herman1973' is invalid - run biber with '--validate_datamodel' for details.
 [610] Utils.pm:193> WARN - ISBN '1077-2014' in entry 'Herman1995' is invalid - run biber with '--validate_datamodel' for details.
-[622] Utils.pm:193> WARN - I didn't find a database entry for 'EEA2016' (section 0)
-[622] Utils.pm:193> WARN - I didn't find a database entry for 'EEA2007' (section 0)
-[649] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[649] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[649] Biber.pm:3921> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
-[650] Biber.pm:3927> INFO - No sort tailoring available for locale 'en-US'
-[671] bbl.pm:636> INFO - Writing 'template.bbl' with encoding 'UTF-8'
-[682] bbl.pm:739> INFO - Output to template.bbl
-[682] Biber.pm:110> INFO - WARNINGS: 13
+[667] Utils.pm:193> WARN - month field 'dec' in entry 'Stutz2016' is not an integer - this will probably not sort properly.
+[671] Utils.pm:193> WARN - month field 'jan' in entry 'Olaguer2015' is not an integer - this will probably not sort properly.
+[676] Utils.pm:193> WARN - month field 'jun' in entry 'ValentedeAlmeida2017' is not an integer - this will probably not sort properly.
+[677] Utils.pm:193> WARN - I didn't find a database entry for 'EEA2016' (section 0)
+[677] Utils.pm:193> WARN - I didn't find a database entry for 'EEA2007' (section 0)
+[714] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[714] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[714] Biber.pm:3921> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[714] Biber.pm:3927> INFO - No sort tailoring available for locale 'en-US'
+[743] bbl.pm:636> INFO - Writing 'template.bbl' with encoding 'UTF-8'
+[762] bbl.pm:739> INFO - Output to template.bbl
+[762] Biber.pm:110> INFO - WARNINGS: 15
