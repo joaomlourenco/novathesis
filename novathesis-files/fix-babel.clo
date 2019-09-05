@@ -28,16 +28,19 @@
   \def\lstlistingname{Listing}%
   \gdef\annexname{Annex}
   \gdef\annexnamepl{Annexes}
+  \gdef\appendixnamepl{Appendices}
 }
 \addto\captionsfrench{%
   \def\lstlistlistingname{Listes de Code}%
   \gdef\annexname{Annexe}
   \gdef\annexnamepl{Annexes}
+  \gdef\appendixnamepl{Appendices}
 }
 \addto\captionsitalian{%
   \def\lstlistlistingname{Listatos}%
   \gdef\annexname{Annesso}
   \gdef\annexnamepl{Annessi}
+  \gdef\appendixnamepl{Appendici}
 }
 
 
