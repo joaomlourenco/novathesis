@@ -865,7 +865,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newlistof{lstlistoflistings}{lol}{\lstlistlistingname}
 \newcommand{\novathesis@printlist}[1]{%
-	#1*\cleardoublepage%
+	#1\cleardoublepage%
 }
 
 \newcommand{\addlisttofrontmatter}[1]{%
