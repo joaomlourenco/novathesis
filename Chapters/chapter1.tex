@@ -15,36 +15,47 @@
 \section{Background and Motivation}%
 \label{sec:bg_and_motivation}
 
-\subsection{Background}%
-\label{sub:background}
+\subsection{Context}%
+\label{sub:context}
 
 The idea behind this thesis was born in 2015, at NGNS-IS (a Portuguese
 tech startup). At the time, the company's flagship product was the
-Forest Fire Finder (\gls{FFF}), which was a forest fire detection system
-that performed a spectroscopical analysis of the atmosphere and then,
-through some Machine Learning (\gls{ML}) techniques, could detect the
-presence of a smoke column above the horizon and alert the operators.
+Forest Fire Finder (\gls{FFF}). The \gls{FFF} was a forest fire
+detection system, capable of mostly autonomous and automatic operation.
+The system was the first application of Differential Optical Absorption
+Spectroscopy~\gls{DOAS} for fire detection, and for that it was patented
+in 2007 (see~\cite{Vieira2007, Application2008}). The \gls{FFF} is a
+remote sensing device that scans the horizon for the presence of a smoke
+column, sequentially performing a chemical analysis of each azimuth,
+using the Sun as a light source for its spectroscopic
+operations~\cite{ValentedeAlmeida2017}.
 
-The growing importance of Air Pollution (\gls{AP}) in today's society,
-and the fact that the system was already scanning the atmosphere for
-some chemical components originated and motivated the idea behind this
-thesis. Although \gls{FFF} was already a spectroscopic system, it was
-constructed to operate in remote and inhospitable locations, and its
-design had had no spatial constraints into account. In addition, the
-system scanning method meant that it was not appropriate for pollution
-measurement, as it could only detect a mean pollutant column density for
-each spectrum it took. A truly useful monitoring tool would be able to
-map these pollutants concentration, thus retrieving the same kind of
-information as a network of in-situ electro-chemical sensors.
+The \gls{FFF} was deployed in several "habitats", both nationally
+(Parque Nacional da Peneda-Gerês and Ourém) and internationally (Spain
+and Brazil). One of the company's clients at the time was interested in
+a pollution monitoring solution, and asked if the spectroscopic system
+would be capable of performing such a task. The challenge resonated
+through the company's structure and the idea that created this thesis
+was born. The team then started reading about the concept of Air
+Pollution~\gls{AP} and how both populations and entities were concerned
+about it. It became clear that, while there were already several methods
+to measure \gls{AP}, there was a clear market drive for the development
+of a system that could leverage the large area capabilities of a
+\gls{DOAS} device while being able to provide a more spatially resolved
+"picture" of the atmospheric status.
 
-There were, at the time, a few research projects that aimed to bring
-this kind of capacity to Differential Optical Absorption Spectroscopy
-(\gls{DOAS}) based systems. However, there was ample room for
-improvement, as it was made clear by the lack of commercial systems and
-the scarcity of the literature on the subject. Realizing the type of
-research that accomplishing this project would entail, the company
-decided to publish this PhD Project, in a tripartite consortium with
-FCT-NOVA and the Portuguese Foundation for Science and Technology.
+With the understanding that this was a very valid idea, and that air
+quality was (and still is) a growing concern in the minds of both people
+and governments, the company managed to have this research financed by
+a PT2020 European fund, which was not only a very welcome financial
+contribution, but also a clear validation of the project's goals and of
+the need there was for a system with the proposed capabilities. However
+valid and necessary the product was, it was also plain to see that
+although \gls{FFF} was a good starting point, there was still a lot of
+continuous research work needed before any of the goals that had been
+set were achieved. It was this need that led to the publication of this
+PhD project, in a tripartite consortium between FCT-NOVA, NGNS-IS and
+the Portuguese Foundation for Science and Technology.
 
 \subsection{The Problem}%
 \label{sub:the_problem}
