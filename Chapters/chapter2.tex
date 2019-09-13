@@ -11,72 +11,47 @@
 \section{Problem Introduction}%
 \label{sec:problem_introduction}
 
+
 \gls{AP} is a very important topic of discussion in the current days,
 with scientists and researchers around the globe being very well aware
 of the potential effects it can have on the health of individuals and
-populations across all ecosystems. After climate change (one of the
-largest capital threats to life on Earth, perhaps just behind nuclear
-apocalypse), \gls{AP} is the biggest environmental concern for
-Europeans, and Europe's single largest environmental health
+populations across all ecosystems~\cite{Lovett2009}. After climate
+change (one of the largest capital threats to life on Earth, perhaps
+just behind nuclear apocalypse), \gls{AP} is the biggest environmental
+concern for Europeans, and Europe's single largest environmental health
 hazard~\cite{EEA2016}. It has also been established by many authors as a
 major cause of premature death, cardiopulmonary disease onset and
 hospital visits~\cite{Ghorani-Azam2016, EEA2007, EEA2016,
-WorldHealthOrganisationEurope2004,}.
+WorldHealthOrganisationEurope2004}.
 
-Even in spite of all the trouble it causes, defining \gls{AP} can be a
-challenge. In fact, its effects and presence is so all-encompassing,
-that it would be fair to say that its definition changes with the angle
-with which one looks upon it. The United States Environmental Protection
-Agency (\Gls{EPA}) defined Air Pollution (\Gls{AP}) as "\textit{the
-presence of contaminants or pollutant substances in the air that
-interfere with human health or welfare, or produce other harmful
-environmental effects}"~\cite{Vallero2014}. This is (perhaps
-intentionally) a very broad definition, too broad to avoid vagueness. It
-does introduce a key concept: the term \emph{pollutant}, which needs be
-discussed in order to complete the definition above.
+The growing concerns about Air Pollution and its effects on human health
+and the world in general is an indication for the importance of
+measuring it correctly and with great detail. The diversity of its
+effects and the sheer number of variables that need to be considered
+establish the problem of \gls{AP} as one that can only be effectively
+tackled if  approached intelligently, highlighting the need for smart
+devices for the measuring and monitoring atmospheric pollutants.
 
-It would be very hard to find someone who did not have an almost
-instinctive idea of what a pollutant is. We know something is amiss when
-we notice our air is full of smoke or smells strange, but our senses are
-not enough. There are many chemical components that are untraceable by
-unaided humans, and some that are only detected by our noses and eyes at
-concentration levels which are above the threshold where they can damage
-our health. This makes the task of separating pollutants from
-non-pollutants a non-trivial one. If we cannot rely solely on our senses
-to detect them, then it is up to the scientists and engineers to create
-methods that allow us to do so. Whats more, we must also rely on them to
-understand how can a normally harmless substance be a pollutant,
-depending on the circumstance. For instance, nitrous compounds are
-traditionally beneficial to the soils and cultures, but they can and do
-cause pulmonary and  cardiovascular complications in
-humans~\cite{Kampa2008, Ghorani-Azam2016, Carugno2016}.
+At the moment, there are several solutions that can be implemented for
+measuring atmospheric pollution. However, these solutions are limited in
+their application to either large area coverage and small details (DOAS
+ground stations, satellite data) or very detailed information in a very
+localized and fixed way (in-situ electrochemical sensors). To the best
+of our knowledge, there are no available systems that can monitor and
+map pollutant concentration without requiring infrastructure
+installation and capable of performing at various altitudes.
 
-Context matters to pollutants. The toxic nature of a certain chemical
-only is revealed when someone or something gets exposed to it. Even
-then, there are exposure levels which do not bear any effects, good or
-bad. At these levels, a pollutant is but an impurity. There are too many
-potential pollutants in our modern day world to list here, but several
-reports make special mention to six pollutions, which are identified as
-being the major contributors to Air Pollution complications.
-
-\begin{itemize}
-    \item Particle Matter (\gls{PM});
-    \item Ground level ozone (O$_3$);
-    \item Carbon monoxide (CO);
-    \item Sulfur Oxides (SO$_x$);
-    \item Nitrous Oxides (NO$_x$);
-    \item Lead (Pb).
-\end{itemize}
-
-Exposure to these pollutants has different effects on humans, ranging in
-seriousness from skin irritation to neuropsychiatric complications,
-depending on dose and on the time the exposure lasts.
+The answer to this lack could be a highly mobile tomographic DOAS
+system, that could bridge the gap between the local monitoring
+capabilities of in-situ electrochemical sensors and large-area
+spectroscopic ground stations, while maintaining portability and
+flexibility.
 
 \section{Research Question}%
 \label{sec:research_question}
 
-In Chapter~\ref{cha:introduction}, I have introduced the reasons which
-led NGNS-IS to pursue the development of an atmospheric monitoring
+In Chapter~\ref{cha:bg_and_motivation}, I have introduced the reasons
+which led NGNS-IS to pursue the development of an atmospheric monitoring
 system, and that what set it apart from other systems was the ability to
 spectroscopically map pollutants concentrations using tomographic
 methods, thus defining a primary objective for this thesis.
@@ -137,7 +112,7 @@ This questions are presented in Table~\ref{tab:sec_RQ}
 \label{sec:hypothesis_and_approach}
 
 This work is based on the hypothesis that a system such as the one
-described in Chapter~\ref{cha:introduction}, which responds to the
+described in Chapter~\ref{cha:bg_and_motivation}, which responds to the
 \gls{RQ} in Table~\ref{tab:RQ1} and Table~\ref{tab:sec_RQ} can be
 achieved by careful selection of mathematical tomographic algorithms and
 instrumentation that is able to implement them correctly.
