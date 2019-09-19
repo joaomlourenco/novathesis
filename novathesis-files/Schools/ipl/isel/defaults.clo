@@ -1,0 +1,238 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Costumization for ISEL-IPL (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% University
+\university[pt]={Instituto Politécnico de Lisboa}
+\university[en]={Polytechnic Institute of Lisbon}
+\university[fr]={Polytechnic Institute of Lisbon}
+\university[it]={Polytechnic Institute of Lisbon}
+
+% Faculty / School
+\faculty[pt]={IInstituto Superior de Engenharia de Lisboa}
+\faculty[en]={Instituto Superior de Engenharia de Lisboa}
+\faculty[fr]={Instituto Superior de Engenharia de Lisboa}
+\faculty[it]={Instituto Superior de Engenharia de Lisboa}
+
+% Scientific field
+\majorfield[pt]={Engenharia e Gestão Industrial}
+\majorfield[en]={Industrial Engineering and Management}
+
+% Department
+\department[pt]={Área Departamental de \themajorfield[pt]}
+\department[en]={Department of \themajorfield[en]}
+
+% Comiittee printing order
+\committeeorder[all]={c,r,a,m}% 
+
+% Cover background images
+\thesiscover[phd,front]={}
+\thesiscover[phdplan,front]={}
+\thesiscover[phdprop,front]={}
+\thesiscover[msc,front]={}
+\thesiscover[mscplan,front]={}
+\thesiscover[bsc,front]={}
+\thesiscover[plain,front]={}
+
+% Spine info
+\spine[logo]={logoISEL}
+\spine[author]={\theauthorshortname}
+\spine[title]={\thetitle}
+\spine[year]={\thedateyear}
+
+% Set margins for "normal" pages
+\margin[screen,top]={3.5cm}
+\margin[screen,bottom]={2.5cm}
+\margin[screen,left]={3.0cm}
+\margin[screen,right]={3.0cm}
+\margin[paper,top]={3.5cm}
+\margin[paper,bottom]={2.5cm}
+\margin[paper,left]={2.5cm}
+\margin[paper,right]={3.5cm}
+
+% Set margins for cover pages
+\margin[phd,top]={2.0cm}
+\margin[phd,bottom]={1.5cm}
+\margin[phd,left]={2.5cm}
+\margin[phd,right]={2.5cm}
+\margin[phdplan,top]={2.0cm}
+\margin[phdplan,bottom]={1.5cm}
+\margin[phdplan,left]={2.5cm}
+\margin[phdplan,right]={2.5cm}
+\margin[phdprop,top]={2.0cm}
+\margin[phdprop,bottom]={1.5cm}
+\margin[phdprop,left]={2.5cm}
+\margin[phdprop,right]={2.5cm}
+\margin[msc,top]={2.0cm}
+\margin[msc,bottom]={1.5cm}
+\margin[msc,left]={2.5cm}
+\margin[msc,right]={2.5cm}
+\margin[mscplan,top]={2.0cm}
+\margin[mscplan,bottom]={1.5cm}
+\margin[mscplan,left]={2.5cm}
+\margin[mscplan,right]={2.5cm}
+\margin[bsc,top]={2.0cm}
+\margin[bsc,bottom]={1.5cm}
+\margin[bsc,left]={2.5cm}
+\margin[bsc,right]={2.5cm}
+\margin[plain,top]={2.0cm}
+\margin[plain,bottom]={1.5cm}
+\margin[plain,left]={2.5cm}
+\margin[plain,right]={2.5cm}
+
+\dissertationstr[bsc,pt]={Relatório para obtenção do Grau de %
+\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\dissertationstr[mscplan,pt]={Relatório intermédio para obtenção do Grau de %
+\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\dissertationstr[msc,pt]={Dissertação de natureza científica para obtenção do grau de  %
+\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\dissertationstr[phdplan,pt]={Relatório intermédio para obtenção do Grau de %
+\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\dissertationstr[phdprop,pt]={Proposta de dissertação para obtenção do Grau de %
+\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\dissertationstr[phd,pt]={Dissertação para obtenção do Grau de %
+\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\copyrighttextstr[pt]={O \thefaculty[\novathesis@opt@coverlang]\ e o \theuniversity[\novathesis@opt@coverlang]\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+
+\copyrighttextstr[en]={The \thefaculty[\novathesis@opt@coverlang]\ and the \theuniversity[\novathesis@opt@coverlang]\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IST guidelines:
+% The pages should be numbered consecutively at the bottom centre of the
+% page.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makepagestyle{novathesis@myvf} 
+\makeoddfoot{novathesis@myvf}{}{\thepage}{} 
+\makeevenfoot{novathesis@myvf}{}{\thepage}{} 
+\makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
+\makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
+\makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
+\pagestyle{novathesis@myvf}
+%
+\frenchspacing
+
+% Fazer indentação parágrafos
+\setlength{\parindent}{17pt}
+
+% Corrigir distância entre número de secção (e.g. ``3.10'' e título da mesma)
+% Para ver info no manual, procurar por cftKnumwidth em que K é o tipo da entrada (capítulo, section, ...)
+% \setlength{\cftsectionnumwidth}{1.2\cftsectionnumwidth}
+% \setlength{\cftfigurenumwidth}{1.2\cftfigurenumwidth}
+% \setlength{\cftlistingnumwidth}{1.2\cftlistingnumwidth}
+% \setlength{\cftchapternumwidth}{1.2\cftchapternumwidth}
+
+% Corrigir espaço para páginas com numeração romana na ToC
+\renewcommand{\@pnumwidth}{2em}
+
+% Espaçamento entre entradas na ToC
+% \setlength{\cftbeforesectionskip}{2mm}
+% \setlength{\cftbeforesubsectionskip}{2mm}
+% \setlength{\cftbeforefigureskip}{2mm}
+% \setlength{\cftbeforelistingskip}{2mm}
+% \setlength{\cftbeforetableskip}{2mm}
+
+
+% Redefinir fonte de secção, subscção, etc…
+\newbox\s@ch@@ghtb@x
+\setbox\s@ch@@ghtb@x=\hbox{{\normalfont\Huge A}}
+\font\p@rtnamfont=cmbr8 at 13mm % computer modern bright
+\font\s@cnamfont=cmbrsl8 at \ht\s@ch@@ghtb@x % computer modern bright
+\renewcommand\section{\@startsection {section}{1}{0pt}%
+                                   {-3.5ex plus -0.5ex minus -.2ex}%
+                                   {2.3ex \@plus.2ex}%
+                                   {\s@cnamfont}}
+\renewcommand\subsection{\@startsection{subsection}{2}{0pt}%
+                                     {-2.5ex plus -0.5ex minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\normalfont\large\bfseries}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{0pt}%
+                                     {-2.5ex plus -0.5ex minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\normalfont\normalsize\bfseries}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{0pt}%
+                                    {0.25ex plus 0.5ex minus.2ex}%
+                                    {-1em}%
+                                    {\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+                                       {0.25ex plus 0.5ex minus .2ex}%
+                                       {-1em}%
+                                      {\normalfont\normalsize\bfseries}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% LOGO
+\coveritem[c]{0cm}{%
+  \includegraphics[width=2cm]{logoISEL}%
+}
+
+% School
+\coveritem[c]{0.5cm}{%
+  \fontsize{13}{13}\selectfont%
+  \textbf{\MakeUppercase{\thefaculty[\novathesis@opt@coverlang]}}\\%
+  \fontsize{10}{10}\selectfont%
+  \textbf{\MakeUppercase{\thedepartment[\novathesis@opt@coverlang]}}%
+}
+
+\coveritem[c]{0.5cm}{
+	\ifthenelse{\equal{\thefrontpageimage}{\novathesis@undefined}}{}{\includegraphics[width=12cm,  height=8cm]{\thefrontpageimage}}
+}
+
+% % Title of Dissertation
+\coveritem[c]{1}{%
+  \fontsize{18}{20}\selectfont%
+  \textbf{\covertitle}%
+}
+
+% Author name
+\coveritem[c]{1}{%
+  \fontsize{16}{16}\selectfont%
+  \textbf{\theauthorname}\\[1ex]
+  \fontsize{14}{14}\selectfont%
+  (\theauthordegree)%
+}
+
+% Degree
+\coveritem[c]{1}{%
+  \fontsize{12}{12}\selectfont%
+  \thepresentationtext%
+}
+
+% Advisers
+\coveritem[c]{2}{%
+  \adviserstrfont[\novathesis@opt@coverlang]={\bfseries}%
+  \coadviserstrfont[\novathesis@opt@coverlang]={\bfseries}%
+  \fontsize{11}{11}\selectfont%
+  \printadvisers%
+}
+
+
+% Committee — only print the committee for the main classes
+\coveritem[c]{1}{%
+  \ifthenelse{%
+    \equal{\novathesis@opt@docdegree}{bsc}%
+    \OR\equal{\novathesis@opt@docdegree}{msc}%
+    \OR\equal{\novathesis@opt@docdegree}{phd}}%
+  {\committeetitlestrfont[\novathesis@opt@coverlang]={\fontsize{14}{14}\selectfont\bfseries}%
+    \commiteememberstrfont[\novathesis@opt@coverlang]={\bfseries}%
+    \fontsize{11}{11}\selectfont\printcommittee%
+  }%
+  {}%
+}
+
+
+% Date
+\coveritem[c]{1}{%
+  \fontsize{10}{10}\selectfont%
+  \ifdraftdoc%
+    \textbf{DRAFT: \today}%
+  \else%
+    \textbf{\thedatemonth, \thedateyear}%
+  \fi%
+}
+
