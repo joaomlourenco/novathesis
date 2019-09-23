@@ -9,212 +9,130 @@
 \newcommand{\novathesisclass}{\texttt{novathesis.cls}}
 
 
-\chapter{Introduction}
-\label{cha:introduction}
 
-\section{Background and Motivation}%
-\label{sec:bg_and_motivation}
+\chapter{Background and Motivation}%
+\label{cha:bg_and_motivation}
 
-\subsection{Background}%
-\label{sub:background}
+\section{Context}%
+\label{sec:context}
 
 The idea behind this thesis was born in 2015, at NGNS-IS (a Portuguese
 tech startup). At the time, the company's flagship product was the
-Forest Fire Finder (\gls{FFF}), which was a forest fire detection system
-that performed a spectroscopical analysis of the atmosphere and then,
-through some Machine Learning (\gls{ML}) techniques, could detect the
-presence of a smoke column above the horizon and alert the operators.
+Forest Fire Finder (\gls{FFF}). The \gls{FFF} was a forest fire
+detection system, capable of mostly autonomous and automatic operation.
+The system was the first application of Differential Optical Absorption
+Spectroscopy~\gls{DOAS} for fire detection, and for that it was patented
+in 2007 (see~\cite{Vieira2007, Application2008}). The \gls{FFF} is a
+remote sensing device that scans the horizon for the presence of a smoke
+column, sequentially performing a chemical analysis of each azimuth,
+using the Sun as a light source for its spectroscopic
+operations~\cite{ValentedeAlmeida2017}.
 
-The growing importance of Air Pollution (\gls{AP}) in today's society,
-and the fact that the system was already scanning the atmosphere for
-some chemical components originated and motivated the idea behind this
-thesis. Although \gls{FFF} was already a spectroscopic system, it was
-constructed to operate in remote and inhospitable locations, and its
-design had had no spatial constraints into account. In addition, the
-system scanning method meant that it was not appropriate for pollution
-measurement, as it could only detect a mean pollutant column density for
-each spectrum it took. A truly useful monitoring tool would be able to
-map these pollutants concentration, thus retrieving the same kind of
-information as a network of in-situ electro-chemical sensors.
+The \gls{FFF} was deployed in several "habitats", both nationally
+(Parque Nacional da Peneda-Gerês and Ourém) and internationally (Spain
+and Brazil). One of the company's clients at the time was interested in
+a pollution monitoring solution, and asked if the spectroscopic system
+would be capable of performing such a task. The challenge resonated
+through the company's structure and the idea that created this thesis
+was born. The team then started reading about the concept of Air
+Pollution~\gls{AP} and how both populations and entities were concerned
+about it. It became clear that, while there were already several methods
+to measure \gls{AP}, there was a clear market drive for the development
+of a system that could leverage the large area capabilities of a
+\gls{DOAS} device while being able to provide a more spatially resolved
+"picture" of the atmospheric status. With this in mind, the company
+managed to have the investigation financed through a PT2020 funding
+opportunity. This achievement was a clear validation of the project's
+goals and of the need there was for a system with the proposed
+capabilities. It was, however, not enough. \gls{FFF} was a very good
+starting point, but there was still a lot of continuous research work
+needed before any of the goals that had been set were achieved. This led
+to the publication of this PhD project, in a tripartite consortium
+between FCT-NOVA, NGNS-IS and the Portuguese Foundation for Science and
+Technology. Its main goal was to develop an atmospheric monitoring
+system prototype that would be able to spectroscopically map pollutant
+concentrations in a two-dimensional way.
 
-There were, at the time, a few research projects that aimed to bring
-this kind of capacity to Differential Optical Absorption Spectroscopy
-(\gls{DOAS}) based systems. However, there was ample room for
-improvement, as it was made clear by the lack of commercial systems and
-the scarcity of the literature on the subject. Realizing the type of
-research that accomplishing this project would entail, the company
-decided to publish this PhD Project, in a tripartite consortium with
-FCT-NOVA and the Portuguese Foundation for Science and Technology.
+\section{The Problem}%
+\label{sec:the_problem}
 
-\subsection{The Problem}%
-\label{sub:the_problem}
+The first step in tackling the development of the proposed system was to
+understand the problem it should be dealing with. Air Pollution
+(\gls{AP}) is one of the most present concerns of people around the
+industrialized modern world. In Europe, it is perceived to be the second
+most important threat to the environment. The first is climate change,
+which is great part caused by \gls{AP}. Scientists in many countries
+have established it as a major cause for premature death, disease onset
+and hospital visits for some decades now. Regulatory bodies of many
+countries have been gathered to put some legislative pressure on
+industries and on society itself, in order to produce a decrease in the
+amount of Air Pollution to which people are exposed. These policies and
+measures have had a dramatic influence in air quality, which is very
+significantly improved throughout the years. In spite of this, official
+reports continue to highlight the importance of keeping a vigilant eye
+towards \gls{AP} proliferation and its possible undiscovered health
+effects. A better introduction to the subject of \gls{AP} is produced in
+Section~\ref{sec:problem_introduction}.
 
-Air Pollution (\gls{AP}) is one of the grave concerns of modern day
-western society, with many decades worth of research proving that it can
-have a pronounced negative effect on human, animal and plant life, as
-shown in Section~\ref{sec:theoretical_background}. On humans, it has
-been shown to significantly increase risk of cardiovascular, pulmonary
-and even neuropsychiatric diseases~\cite{Carugno2016, Ghorani-Azam2016,
-Kampa2008}. Its implications on ecosystems are remarkably complex and
-difficult to quantify, but nonetheless extremely important, and have a
-huge impact on biodiversity~\cite{Lovett2009}.
+Our spectacular progress as a species in the last few centuries has had
+some unforeseen adverse consequences. Mitigating them is not only a
+responsibility, but also a necessity. In some regards, as is the
+\gls{AP} case, this mitigation is only achievable with intelligent and
+effective action. This of course demands that we understand, trace and
+measure it in as many ways as possible. This project aimed to create
+just that: another way in which to measure and map the behavior of
+certain pollutants.
 
-Knowing all this brings us the responsibility of at least trying to
-mitigate some of these adverse consequences of the spectacular progress
-that we have achieved in the few last centuries. But we cannot act
-unless we also know what we must do; and to know this, we must have
-the devices and means to employ them that allow us to measure \gls{AP},
-to trace it and to understand it, so that our actions against it are
-effective.
+\section{Objectives}%
+\label{sec:objectives}
 
-\subsection{Objectives}%
-\label{sub:objectives}
+From the beginning of the project, the main objective has always been to
+design and develop a miniaturized spectroscopic environmental analysis
+device. The system would have to be small and portable enough to adapt
+to a drone, but should be able to function if adapted to any other
+surface, such as a car or even a fixed station. With time, however, the
+goal changed somewhat. The miniaturization and drone-adaptation were
+kept, but there was now the need to be able to map the pollutant
+concentration along a geographic region through the use of tomographic
+reconstruction algorithms. This meant that, while the device itself
+would be perfectly capable of operating without a drone, the tomographic
+capability would be lost, unless a prohibitively large number of
+spectroscopic systems were deployed in that region.
 
-The overarching goal of this thesis was to theorize and design a
-bidimensional mapping tool for trace atmospheric pollutants such as
-NO$_x$ and SO$_x$, using DOAS as the measurement technique. In order to
-maximize commercial value (and viability), the system had to be small
-and mobile.During the research, several "micro-objectives" appeared
-regularly. Some were kept and incorporated in the workplan, others
-discarded after initial exploration. The main secondary objectives were:
+The concept evolved in such a way that the  overarching goal of this
+thesis is now to theorize and design a two-dimensional mapping tool for
+trace atmospheric pollutants such as NO$_x$ and SO$_x$, using passive
+DOAS as the measurement technique. In addition to this, it should be
+mentioned that the system must be small and portable; use tomographic
+reconstruction (and acquisition) algorithms to map the region; and that
+it should use only one collection point (to reduce costs and
+instrumental complexity). From these objectives, the research questions,
+detailed in Section~\ref{sec:research_question} were derived.
 
-\begin{itemize}
-    \item To use a tomographic approach for the mapping procedure;
-    \item To ensure the designed system would be small and highly
-        mobile;
-    \item To use a single collection point, minimizing material costs
-        for the technology.
+% \section{Methods}%
+% \label{sec:methods}
 
-\end{itemize}
+% To address these goals, I assumed the development of this thesis to be
+% essentially split in two parts, which are to be explored simultaneously.
+% They can (coarsely) be addressed as \emph{tomography} and
+% \emph{instrumentation}. On the tomography side, it will be necessary to
+% study what are the more appropriate algorithms (and what type of
+% tomography), how they can be physically deployed (i.e., the problem's
+% geometry) and what type of reconstruction method is the more favorable.
+% Regarding the instrumentation, there are also several points that need
+% considering: decisions are required with regard to the mechanics, the
+% controls and the optical components of the final system. A more detailed
+% discussion of these topics can be found in
+% Section~\ref{sec:hypothesis_and_approach} and
+% Chapter~\ref{cha:research_methods}.
 
-These objectives allowed setting several research questions, which are
-introduced in Section~\ref{sec:research_question}.
-
-\subsection{Methods}%
-\label{sub:methods}
-
-To address these goals, I assumed the development of this thesis to be
-essentially split in two parts, which are to be explored simultaneously.
-They can (coarsely) be addressed as \emph{tomography} and
-\emph{instrumentation}. On the tomography side, it will be necessary to
-study what are the more appropriate algorithms (and what type of
-tomography), how they can be physically deployed (i.e., the problem's
-geometry) and what type of reconstruction method is the more favorable.
-Regarding the instrumentation, there are also several points that need
-considering: decisions are required with regard to the mechanics, the
-controls and the optical components of the final system. A more detailed
-discussion of these topics can be found in
-Section~\ref{sec:hypothesis_and_approach} and
-Chapter~\ref{cha:research_methods}.
-
-One of the most important steps in the development of this work is
-designing and implementing a simulation software platform, that allows
-the validation of the acquisition strategy, the geometry selection and
-the reconstruction approach. This endeavor will also be of critical
-importance for component selection, since it will define the component
-requirements for the whole system. On the optical instrumentation side,
-this project will require optimizing \gls{FFF}'s optical assembly.
-Although similar in purpose and types of components, this assembly is
-significantly larger than what is acceptable for this project and needs
-redesigning.
-
-% \section{Theoretical Background}%
-% \label{sec:theoretical_background}
-
-% \subsection{Air Pollution}%
-% \label{ssub:air_pollution}
-
-% Air Pollution (\gls{AP}) is a very important topic of discussion in the
-% current days, with scientists and researchers around the globe being
-% very well aware of the potential effects it can have on the health of
-% individuals and populations across all ecosystems. Not to mention its
-% implications on climate change, which are generally regarded as one of
-% the capital threats to life on Earth's survival (on par with a nuclear
-% apocalypse). Defining \gls{AP} can be a challenge. In fact, its effects
-% and presence is so all-encompassing, that it would be fair to say that
-% its definition changes with the angle with which one looks upon it.
-% Nonetheless, it is important to at least try to define it, in order to
-% approach it in some way~\cite{Lovett2009, Ghorani-Azam2016}.
-
-% The United States Environmental Protection Agency (\Gls{EPA}) defined
-% Air Pollution (\Gls{AP}) as "\textit{the presence of contaminants or
-%     pollutant substances in the air that interfere with human health or
-%     welfare, or produce other harmful environmental
-% effects}"~\cite{Vallero2014}. This is (perhaps intentionally) a very
-% broad definition, too broad to avoid vagueness. It does introduce a key
-% concept: the term \emph{pollutant}, which needs be discussed in order
-% to complete the definition above.
-
-% It would be very hard to find someone who did not have an almost
-% instinctive idea of what a pollutant is. We know something is amiss when
-% we notice our air is full of smoke or smells strange, but our senses are
-% not enough. There are many chemical components that are untraceable by
-% unaided humans, and some that are only detected by our noses and eyes at
-% concentration levels which are above the threshold where they can damage
-% our health. This makes the task of separating pollutants from
-% non-pollutants a non-trivial one. If we cannot rely solely on our senses
-% to detect them, then it is up to the scientists and engineers to create
-% methods that allow us to do so. Whats more, we must also rely on them to
-% understand how can a normally harmless substance be a pollutant,
-% depending on the circumstance. For instance, nitrous compounds are
-% traditionally beneficial to the soils and cultures, but they can and do
-% cause pulmonary and  cardiovascular complications in
-% humans~\cite{Kampa2008, Ghorani-Azam2016, Carugno2016}.
-
-% Context matters to pollutants. The toxic nature of a certain chemical
-% only is revealed when someone or something gets exposed to it. Even
-% then, there are exposure levels which do not bear any effects, good or
-% bad. At these levels, a pollutant is but an impurity. There too many
-% potential pollutants in our modern day world to list here, but the World
-% Health Organization (\gls{WHO}) states that there are six major air
-% pollutants:
-% \begin{itemize}
-%     \item Particle Matter (\gls{PM});
-%     \item Ground level ozone (O$_3$);
-%     \item Carbon monoxide (CO);
-%     \item Sulfur Oxides (SO$_x$);
-%     \item Nitrous Oxides (NO$_x$);
-%     \item Lead (Pb).
-% \end{itemize}
-
-% Exposure to these pollutants have different effects on humans, ranging in
-% seriousness from skin irritation to neuropsychiatric complications,
-% depending on dose and on the time the exposure lasts. In the next
-% subsections, I will address each of the major pollutants enumerated and
-% briefly describe the physiological mechanisms behind their toxicity.
-
-% \subsubsection{Particle Matter}%
-% \label{ssub:particle_matter}
-
-% \subsubsection{Ground Level Ozone}%
-% \label{ssub:ground_level_ozone}
-
-% \subsubsection{Carbon Monoxide}%
-% \label{ssub:carbon_monoxide}
-
-% \subsubsection{Sulfur Oxides}%
-% \label{ssub:sulfur_oxides}
-
-% \subsubsection{Nitrous Oxides}%
-% \label{ssub:nitrous_oxides}
-
-% \subsubsection{Lead}%
-% \label{ssub:lead}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-% \section{Literature Review}%
-% \label{sec:literature_review}
+% One of the most important steps in the development of this work is
+% designing and implementing a simulation software platform, that allows
+% the validation of the acquisition strategy, the geometry selection and
+% the reconstruction approach. This endeavor will also be of critical
+% importance for component selection, since it will define the component
+% requirements for the whole system. On the optical instrumentation side,
+% this project will require optimizing \gls{FFF}'s optical assembly.
+% Although similar in purpose and types of components, this assembly is
+% significantly larger than what is acceptable for this project and needs
+% redesigning.

@@ -11,15 +11,163 @@
 \section{Aimed contribution}%
 \label{sec:aimed_contribution}
 
+This work aims to answer its main \gls{RQ} by following and pursuing the
+proposed hypothesis (see Section~\ref{sec:hypothesis_and_approach}). In
+doing so, I will contribute with a commercially viable (from a technical
+perspective) atmospheric monitoring system based on DOAS, capable of not
+only measuring pollutant contamination but also mapping their
+concentration in a given geographic region. This will generate several
+intermediate steps, which are themselves smaller contributions:
+
+The first intermediate step will be the development of a tomographic
+strategy. This will of course include the selection of a sampling
+geometry (consider the ones presented in
+Section~\ref{sec:tomographic_algorithms_and_reconstruction_techniques}),
+but also the positioning of "sources and sensors" within the selected
+geometry. Since the system is designed to be a passive DOAS device (see
+Section~\ref{sec:doas}), careful consideration must be taken in this
+respect. Spectral acquisition must be done in a way that allows
+tomographic reconstruction, but also respecting limitations and
+particularities that come from working with solar light. This step
+corresponds to answering the first secondary Research Question (see
+Table~\ref{tab:sec_RQ}).
+
+The next step will be to write a simulation tool for the tomographic
+procedure. The idea is for this tool to encompass the acquisition
+strategy that was defined in the previous step, in order to replicate
+the whole measurement process and then perform the reconstruction using
+one or more algorithms. The simulation tool has several functions. For
+one, it allows the fine-tuning of the approaches without having to
+expend any resources in purchasing material. Besides this, it also gives
+gives researchers the chance to experiment with different algorithms.
+The routine will be divided into two modules. The first module computes
+the projections for a given phantom, and the second performs the
+reconstruction with the projection data. The point is that one can write
+a tomographic reconstruction routine and plug it to the projection
+computation module, without any interference from one to the other. 
+
+Finally we reach the instrumentation definition phase. In this stage, I
+will have to select the optical components necessary to build this
+system, including telescope, spectrometer and all the connection
+components. In order to maintain this system as small as possible, I
+will try to avoid using optical fibers, thus minimizing energy loss
+between telescope and spectrometer. In this stage, I will also have to
+design a mechanical support that allows a drone to be equipped with the
+optical system, respecting all positioning and pointing requirements
+that such a device must entail.
+
 \section{Detailed work plan and scheduling}%
 \label{sec:detailed_work_plan_and_scheduling}
+
+In this section, I will present the work plan that was defined and is
+being followed while conducting the work of the proposed thesis.I will
+start by Figure~\ref{fig:low_res_gantt}, a low resolution Gantt chart.
+This chart is comprised of the more high level tasks, which coarsely
+follow the previously detailed approaches and contribution goals
+(see~\ref{sec:aimed_contribution}
+and~\ref{sec:hypothesis_and_approach}). We can see that there are two
+main milestones, which correspond to the publication moments. The first
+of these milestones was reached in 2017, with the publication
+of~\cite{ValentedeAlmeida2017}.
+
+\begin{figure}[htpb]
+    \centering
+    \missingfigure{Gantt chart, with only the hammock tasks.}
+    \caption{Low resolution Gantt chart for the present thesis.}
+    \label{fig:low_res_gantt}
+\end{figure}
+
+Figure~\ref{fig:task1}, Figure~\ref{fig:task2}, Figure~\ref{fig:task3}
+and Figure~\ref{fig:task4} are the same Gantt chart presented in
+Figure~\ref{fig:low_res_gantt}, but they are \emph{zoomed in} to each
+task of the project.
+
+\begin{figure}[htpb]
+    \centering
+    \missingfigure{}
+    \caption{Zoomed Gantt chart for task 1 - ....}
+    \label{fig:task1}
+\end{figure}
+
+\begin{figure}[htpb]
+    \centering
+    \missingfigure{}
+    \caption{Zoomed Gantt chart for task 1 - ....}
+    \label{fig:task2}
+\end{figure}
+
+\begin{figure}[htpb]
+    \centering
+    \missingfigure{}
+    \caption{Zoomed Gantt chart for task 1 - ....}
+    \label{fig:task3}
+\end{figure}
+
+\begin{figure}[htpb]
+    \centering
+    \missingfigure{}
+    \caption{Zoomed Gantt chart for task 1 - ....}
+    \label{fig:task4}
+\end{figure}
 
 \section{Validation methodology}%
 \label{sec:validation_methodology}
 
+There are several ways to validate a piece of work as the one I present
+here. It is important to do this in more than one, to ensure not only
+the validity of the project, but also its relevancy.
+
+Before going any further, I should mention that although my project was
+conducted as part of the pursuit of a doctoral degree, it was not a
+traditional PhD, in the sense that it was not done solely in a
+University setting. The grant that I was awarded by the Portuguese
+Foundation for Science and Technology was part of a PhD Program for
+degrees conducted in partnership between FCT NOVA and a group of
+companies, named NOVA Instrumentation for Health (NOVA I4H). This is
+relevant as it indicates that there is at least a commercial interest in
+developing the technology I propose with this thesis (a market
+validation of sorts). Otherwise, the project would not be viable for the
+company.
+
+One important way in which I will validate this project is by publishing
+in significant peer reviewed publications. As illustrated in
+Figure~\ref{fig:low_res_gantt}, during the course of my PhD, I intend to
+publish two relevant articles in Web-of-Science-indexed publications.
+The first of these was published in 2017, at the end of the preliminary
+studies stage of the project. The second is currently in the finishing
+stages of writing and should be submitted before the end of September.
+Conference-wise, I plan to introduce my work to the scientific community
+in 2020, by participating in at least one acknowledged conference in the
+remote sensing or atmospheric monitoring community.
+Table~\ref{tab:dissemination_plan} summarizes the project's
+dissemination plan.
+
+\begin{table}[htpb]
+    \centering
+    \caption{Dissemination plan for the PhD Project.}
+    \label{tab:dissemination_plan}
+    \begin{tabular}{c}
+    
+    \end{tabular}
+\end{table}
+
+
+
+
 \section{Integration with other research activities}%
 \label{sec:integration_with_other_research_activities}
 
+As stated in Chapter~\ref{cha:bg_and_motivation}, this project started
+as a direct evolution from the Forest Fire Finder system, an autonomous
+forest fire detection device. In 2017, NGNS-IS (the birthplace of
+\gls{FFF}) was absorber by the Compta group, and \gls{FFF} became
+Bee2Fire. As an extension to the Bee2Fire, this project is integrated in
+Compta's research efforts, namely in the remote sensing and artificial
+intelligence department. 
+
+In addition to this, the present work is supported by the Portuguese
+Foundation for Science and Technology, through the NOVA I4H PhD Program
+(grant reference: PDE/BDE/114549/2016).
 
 
 
