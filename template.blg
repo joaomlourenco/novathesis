@@ -1,0 +1,29 @@
+[0] Config.pm:304> INFO - This is Biber 2.12
+[0] Config.pm:307> INFO - Logfile is 'template.blg'
+[24] biber:315> INFO - === Mon Sep 23, 2019, 14:38:10
+[43] Biber.pm:371> INFO - Reading 'template.bcf'
+[101] Biber.pm:889> INFO - Found 26 citekeys in bib section 0
+[112] Biber.pm:4093> INFO - Processing section 0
+[121] Biber.pm:4254> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
+[139] bibtex.pm:1523> INFO - LaTeX decoding ...
+[522] bibtex.pm:1340> INFO - Found BibTeX data source 'bibliography.bib'
+[531] Utils.pm:193> WARN - Duplicate entry key: 'Kak2001' in file 'bibliography.bib', skipping ...
+[534] Utils.pm:193> WARN - Duplicate entry key: 'Frins2006' in file 'bibliography.bib', skipping ...
+[535] Utils.pm:193> WARN - Possible typo (case mismatch) between datasource keys: 'EnvirovisionSolutions' and 'EnviroVisionSolutions' in file 'bibliography.bib'
+[553] Utils.pm:193> WARN - month field 'jun' in entry 'ValentedeAlmeida2017' is not an integer - this will probably not sort properly.
+[565] Utils.pm:193> WARN - month field 'apr' in entry 'Lovett2009' is not an integer - this will probably not sort properly.
+[586] Utils.pm:193> WARN - ISBN '19778449' in entry 'EEA2016' is invalid - run biber with '--validate_datamodel' for details.
+[607] Utils.pm:193> WARN - ISBN '0161-5505 (Print)$\backslash$n0161-5505 (Linking)' in entry 'Bruyant2002' is invalid - run biber with '--validate_datamodel' for details.
+[613] Utils.pm:193> WARN - ISBN '0022-5193' in entry 'Herman1973' is invalid - run biber with '--validate_datamodel' for details.
+[616] Utils.pm:193> WARN - ISBN '1077-2014' in entry 'Herman1995' is invalid - run biber with '--validate_datamodel' for details.
+[648] Utils.pm:193> WARN - month field 'feb' in entry 'GRAINGER1962' is not an integer - this will probably not sort properly.
+[653] Utils.pm:193> WARN - month field 'jul' in entry 'Chance1997' is not an integer - this will probably not sort properly.
+[692] Utils.pm:193> WARN - month field 'dec' in entry 'Stutz2016' is not an integer - this will probably not sort properly.
+[695] Utils.pm:193> WARN - month field 'jan' in entry 'Olaguer2015' is not an integer - this will probably not sort properly.
+[733] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[733] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[733] Biber.pm:3921> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[733] Biber.pm:3927> INFO - No sort tailoring available for locale 'en-US'
+[761] bbl.pm:636> INFO - Writing 'template.bbl' with encoding 'UTF-8'
+[783] bbl.pm:739> INFO - Output to template.bbl
+[783] Biber.pm:110> INFO - WARNINGS: 13

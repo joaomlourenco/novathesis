@@ -1,0 +1,1201 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.0 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global}
+    \entry{Bevington2003}{book}{}
+      \name{author}{2}{}{%
+        {{uniquename=0,uniquepart=base,hash=3af7fac3e5ffc763bb2cfa87639c0823}{%
+           family={Bevington},
+           familyi={B\bibinitperiod},
+           given={Philip\bibnamedelima R.},
+           giveni={P\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=2eac1b7bdc675e68adcd0c934422c86a}{%
+           family={Robinson},
+           familyi={R\bibinitperiod},
+           given={D.\bibnamedelimi Keith},
+           giveni={D\bibinitperiod\bibinitdelim K\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{0c1cf78c11001c2873f6ac5cbc682fdd}
+      \strng{fullhash}{0c1cf78c11001c2873f6ac5cbc682fdd}
+      \strng{bibnamehash}{0c1cf78c11001c2873f6ac5cbc682fdd}
+      \strng{authorbibnamehash}{0c1cf78c11001c2873f6ac5cbc682fdd}
+      \strng{authornamehash}{0c1cf78c11001c2873f6ac5cbc682fdd}
+      \strng{authorfullhash}{0c1cf78c11001c2873f6ac5cbc682fdd}
+      \field{sortinit}{B}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{0-07-247227-8}
+      \field{title}{{Data Reduction and Error Analysis for the Physical Sciences}}
+      \field{year}{2003}
+    \endentry
+    \entry{Brinkmann1968}{article}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=3b290cf30919c0539122a791a24e074e}{%
+           family={Brinkmann},
+           familyi={B\bibinitperiod},
+           given={R\bibnamedelima T},
+           giveni={R\bibinitperiod\bibinitdelim T\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{3b290cf30919c0539122a791a24e074e}
+      \strng{fullhash}{3b290cf30919c0539122a791a24e074e}
+      \strng{bibnamehash}{3b290cf30919c0539122a791a24e074e}
+      \strng{authorbibnamehash}{3b290cf30919c0539122a791a24e074e}
+      \strng{authornamehash}{3b290cf30919c0539122a791a24e074e}
+      \strng{authorfullhash}{3b290cf30919c0539122a791a24e074e}
+      \field{sortinit}{B}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0004-637X}
+      \field{journaltitle}{Astrophys J}
+      \field{title}{{Rotational Raman scattering in planetary atmospheres}}
+      \field{volume}{154}
+      \field{year}{1968}
+      \field{pages}{1087\bibrangedash 1093}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1086/149827
+      \endverb
+      \verb{file}
+      \verb ::
+      \endverb
+    \endentry
+    \entry{Bruyant2002}{article}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=67a275553a3bc8391ca23b09ee0679d9}{%
+           family={Bruyant},
+           familyi={B\bibinitperiod},
+           given={Philippe\bibnamedelima P.},
+           giveni={P\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{67a275553a3bc8391ca23b09ee0679d9}
+      \strng{fullhash}{67a275553a3bc8391ca23b09ee0679d9}
+      \strng{bibnamehash}{67a275553a3bc8391ca23b09ee0679d9}
+      \strng{authorbibnamehash}{67a275553a3bc8391ca23b09ee0679d9}
+      \strng{authornamehash}{67a275553a3bc8391ca23b09ee0679d9}
+      \strng{authorfullhash}{67a275553a3bc8391ca23b09ee0679d9}
+      \field{sortinit}{B}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Images of the inside of the human body can be obtained noninvasively using tomographic acquisition and processing techniques. In particular, these techniques are commonly used to obtain images of a gamma-emitter distribution after its administration in the human body. The reconstructed images are obtained given a set of their projections, acquired using rotating gamma cameras. A general overview of analytic and iterative methods of reconstruction in SPECT is presented with a special focus on filter backprojection (FBP), conjugate gradient, maximum likelihood expectation maximization, and maximum a posteriori expectation maximization algorithms. The FBP algorithm is faster than iterative algorithms, with the latter providing a framework for accurately modeling the emission and detection processes.}
+      \field{annotation}{NULL}
+      \field{isbn}{0161-5505 (Print)$\backslash$n0161-5505 (Linking)}
+      \field{issn}{0161-5505}
+      \field{journaltitle}{Journal of nuclear medicine : official publication, Society of Nuclear Medicine}
+      \field{number}{10}
+      \field{title}{{Analytic and iterative reconstruction algorithms in SPECT.}}
+      \field{volume}{43}
+      \field{year}{2002}
+      \field{pages}{1343\bibrangedash 58}
+      \range{pages}{16}
+      \verb{file}
+      \verb ::
+      \endverb
+      \verb{urlraw}
+      \verb http://jnm.snmjournals.org/cgi/content/abstract/43/10/1343{\%}5Cnhttp://jnm.snmjournals.org/cgi/content/full/43/10/1343{\%}5Cnhttp://www.ncbi.nlm.nih.gov/pubmed/12368373
+      \endverb
+      \verb{url}
+      \verb http://jnm.snmjournals.org/cgi/content/abstract/43/10/1343%7B%5C%%7D5Cnhttp://jnm.snmjournals.org/cgi/content/full/43/10/1343%7B%5C%%7D5Cnhttp://www.ncbi.nlm.nih.gov/pubmed/12368373
+      \endverb
+      \keyw{1343,1358,43,analytic recon-,iterative reconstruction algorithms,j nucl med 2002,spect,struction algorithm}
+    \endentry
+    \entry{Chance1997}{article}{}
+      \name{author}{2}{}{%
+        {{uniquename=0,uniquepart=base,hash=4bb962d7c2510e7f6878a10ec370d971}{%
+           family={Chance},
+           familyi={C\bibinitperiod},
+           given={Kelly\bibnamedelima V.},
+           giveni={K\bibinitperiod\bibinitdelim V\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=b4f9a513f4c5c845eff1fd41ad26c39c}{%
+           family={Spurr},
+           familyi={S\bibinitperiod},
+           given={Robert\bibnamedelimb J.\bibnamedelimi D.},
+           giveni={R\bibinitperiod\bibinitdelim J\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{ef8b6593188b2a3ad48859c11209a285}
+      \strng{fullhash}{ef8b6593188b2a3ad48859c11209a285}
+      \strng{bibnamehash}{ef8b6593188b2a3ad48859c11209a285}
+      \strng{authorbibnamehash}{ef8b6593188b2a3ad48859c11209a285}
+      \strng{authornamehash}{ef8b6593188b2a3ad48859c11209a285}
+      \strng{authorfullhash}{ef8b6593188b2a3ad48859c11209a285}
+      \field{sortinit}{C}
+      \field{sortinithash}{963e9d84a3da2344e8833203de5aed05}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0003-6935}
+      \field{journaltitle}{Applied Optics}
+      \field{month}{7}
+      \field{number}{21}
+      \field{title}{{Ring effect studies: Rayleigh scattering, including molecular parameters for rotational Raman scattering, and the Fraunhofer spectrum}}
+      \field{volume}{36}
+      \field{year}{1997}
+      \field{pages}{5224}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1364/AO.36.005224
+      \endverb
+      \verb{urlraw}
+      \verb https://www.osapublishing.org/abstract.cfm?URI=ao-36-21-5224
+      \endverb
+      \verb{url}
+      \verb https://www.osapublishing.org/abstract.cfm?URI=ao-36-21-5224
+      \endverb
+    \endentry
+    \entry{Danckaert2015}{misc}{}
+      \name{author}{7}{}{%
+        {{uniquename=0,uniquepart=base,hash=951d4da48116bef6c9c395027dfb040d}{%
+           family={Danckaert},
+           familyi={D\bibinitperiod},
+           given={Thomas},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=f2f201fc884de47b6060c3b2d7e41a59}{%
+           family={Fayt},
+           familyi={F\bibinitperiod},
+           given={Caroline},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=227944ffb560d898cac42974d261c26e}{%
+           family={{Van Roozendael}},
+           familyi={V\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=53ebb7b5dde5fb3a7b2cc1a9345ffad0}{%
+           family={Smedt},
+           familyi={S\bibinitperiod},
+           given={Isabelle},
+           giveni={I\bibinitperiod},
+           givenun=0,
+           prefix={de},
+           prefixi={d\bibinitperiod},
+           prefixun=0}}%
+        {{uniquename=0,uniquepart=base,hash=3c56218ba6b7b2c73c2e023011330c55}{%
+           family={Letocart},
+           familyi={L\bibinitperiod},
+           given={Vincent},
+           giveni={V\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=79c90383cc652ca46332e393f916c819}{%
+           family={Merlaud},
+           familyi={M\bibinitperiod},
+           given={Alexis},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=f4711c4fb615936fd1f007cc61f80026}{%
+           family={Pinardi},
+           familyi={P\bibinitperiod},
+           given={Gaia},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{d349573934433a60a5a744bb6baaf1ad}
+      \strng{fullhash}{23fc0acc0813a666056bc1084f396d66}
+      \strng{bibnamehash}{23fc0acc0813a666056bc1084f396d66}
+      \strng{authorbibnamehash}{23fc0acc0813a666056bc1084f396d66}
+      \strng{authornamehash}{d349573934433a60a5a744bb6baaf1ad}
+      \strng{authorfullhash}{23fc0acc0813a666056bc1084f396d66}
+      \field{sortinit}{D}
+      \field{sortinithash}{2ef1bd9a78cc71eb74d7231c635177b8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{QDOAS}}
+      \field{year}{2015}
+      \verb{file}
+      \verb ::
+      \endverb
+      \verb{urlraw}
+      \verb http://uv-vis.aeronomie.be/software/QDOAS/
+      \endverb
+      \verb{url}
+      \verb http://uv-vis.aeronomie.be/software/QDOAS/
+      \endverb
+    \endentry
+    \entry{Defrise2003}{article}{}
+      \name{author}{3}{}{%
+        {{uniquename=0,uniquepart=base,hash=c618aead04933f6835db7178f6a5c236}{%
+           family={Defrise},
+           familyi={D\bibinitperiod},
+           given={Michel},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=59a40dcc4a63bb37e3a093b391318042}{%
+           family={Kinahan},
+           familyi={K\bibinitperiod},
+           given={Paul\bibnamedelima E},
+           giveni={P\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=717303f28f5b0fca5424e8978ff0a1cf}{%
+           family={Michel},
+           familyi={M\bibinitperiod},
+           given={Christian\bibnamedelima J},
+           giveni={C\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{553f343c8918244a32d9095c3f82610a}
+      \strng{fullhash}{a1d5552a74b9be6e8c69c65c99bdc10e}
+      \strng{bibnamehash}{a1d5552a74b9be6e8c69c65c99bdc10e}
+      \strng{authorbibnamehash}{a1d5552a74b9be6e8c69c65c99bdc10e}
+      \strng{authornamehash}{553f343c8918244a32d9095c3f82610a}
+      \strng{authorfullhash}{a1d5552a74b9be6e8c69c65c99bdc10e}
+      \field{sortinit}{D}
+      \field{sortinithash}{2ef1bd9a78cc71eb74d7231c635177b8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{4 Image Reconstruction Algorithms in PET * 2D Data Organization}}
+      \field{year}{2003}
+      \field{pages}{91\bibrangedash 114}
+      \range{pages}{24}
+    \endentry
+    \entry{EEA2007}{report}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=90aa9b8fa4bb4d8ad89a11841186926d}{%
+           family={EEA},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \strng{fullhash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \strng{bibnamehash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \strng{authorbibnamehash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \strng{authornamehash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \strng{authorfullhash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \field{extraname}{1}
+      \field{sortinit}{E}
+      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Europe}
+      \field{number}{2}
+      \field{title}{{Air pollution in Europe 1990–2004}}
+      \field{type}{techreport}
+      \field{year}{2007}
+      \verb{file}
+      \verb :home/rui/Downloads/Air{\_}pollution{\_}in{\_}Europe{\_}1990{\_}2004.pdf:pdf
+      \endverb
+    \endentry
+    \entry{EEA2016}{report}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=90aa9b8fa4bb4d8ad89a11841186926d}{%
+           family={EEA},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \strng{fullhash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \strng{bibnamehash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \strng{authorbibnamehash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \strng{authornamehash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \strng{authorfullhash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \field{extraname}{2}
+      \field{sortinit}{E}
+      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{7 Executive summary Air quality in Europe — 2017 report Executive summary Air pollution is a key environmental and social issue and, at the same time, it is a complex problem posing multiple challenges in terms of management and mitigation of harmful pollutants. Air pollutants are emitted from anthropogenic and natural sources; they may be either emitted directly (primary pollutants) or formed in the atmosphere (as secondary pollutants). They have a number of impacts on health, ecosystems, the built environment and the climate; they may be transported or formed over long distances; and they may affect large areas. Effective action to reduce the impacts of air pollution requires a good understanding of its causes, how pollutants are transported and transformed in the atmosphere, and how they affect humans, ecosystems, the climate, and subsequently society and the economy. The current report presents an updated overview and analysis of air quality in Europe from 2000 to 2015. It reviews the progress made towards meeting the air quality standards established in the two European Ambient Air Quality Directives, and towards the long-term objectives of achieving levels of air pollution that do not lead to unacceptable harm to human health and the environment. It also presents the latest findings and estimates on population and ecosystem exposure to the air pollutants with the greatest impacts and effects on human health and the environment (Box ES.1). The evaluation of the status of air quality is based mainly on ambient air measurements, in conjunction with data on anthropogenic emissions and their evolution over time. Air quality policies have delivered, and continue to deliver, many improvements. Reduced emissions have improved air quality in Europe, and, for a number of pollutants, exceedances of European standards are rare. However, substantial challenges remain and considerable impacts on human health and on the environment persist. A large proportion of European populations and ecosystems are still exposed to air pollution that exceeds European standards and, especially, the World Health Organization (WHO) Air Quality Guidelines (AQGs). Effective air quality policies require action and cooperation at global, European, national and local levels, which must reach across most economic sectors and engage the public. Holistic solutions must be found that involve technological development and structural and behavioural changes. These will be necessary to achieve human wellbeing and social development, to protect the natural capital and to support economic prosperity, all of which are part of the European Union's (EU) 2050 vision of living well within the limits of the planet.}
+      \field{isbn}{19778449}
+      \field{number}{28}
+      \field{title}{{Air quality in Europe}}
+      \field{type}{techreport}
+      \field{volume}{1}
+      \field{year}{2016}
+      \field{pages}{83}
+      \range{pages}{1}
+      \verb{doi}
+      \verb doi:10.2800/413142
+      \endverb
+      \verb{file}
+      \verb :home/rui/Downloads/eea2018.pdf:pdf
+      \endverb
+    \endentry
+    \entry{Ghorani-Azam2016}{article}{}
+      \name{author}{3}{}{%
+        {{uniquename=0,uniquepart=base,hash=15896faad570718a7bc446e9b5940199}{%
+           family={Ghorani-Azam},
+           familyi={G\bibinithyphendelim A\bibinitperiod},
+           given={Adel},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=6808a05f696eb71b16522fd22ee08f1f}{%
+           family={Riahi-Zanjani},
+           familyi={R\bibinithyphendelim Z\bibinitperiod},
+           given={Bamdad},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=0b7dbdc7162fb4a1d308d3964d8e9507}{%
+           family={Balali-Mood},
+           familyi={B\bibinithyphendelim M\bibinitperiod},
+           given={Mahdi},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{317f60b664564a909b5dc9c35d6bb0dc}
+      \strng{fullhash}{ae9ed0fbd7165e9062855263cc199ebb}
+      \strng{bibnamehash}{ae9ed0fbd7165e9062855263cc199ebb}
+      \strng{authorbibnamehash}{ae9ed0fbd7165e9062855263cc199ebb}
+      \strng{authornamehash}{317f60b664564a909b5dc9c35d6bb0dc}
+      \strng{authorfullhash}{ae9ed0fbd7165e9062855263cc199ebb}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1735-1995}
+      \field{journaltitle}{Journal of Research in Medical Sciences}
+      \field{number}{1}
+      \field{title}{{Effects of air pollution on human health and practical measures for prevention in Iran}}
+      \field{volume}{21}
+      \field{year}{2016}
+      \field{pages}{65}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.4103/1735-1995.189646
+      \endverb
+      \verb{urlraw}
+      \verb http://www.jmsjournal.net/text.asp?2016/21/1/65/189646
+      \endverb
+      \verb{url}
+      \verb http://www.jmsjournal.net/text.asp?2016/21/1/65/189646
+      \endverb
+    \endentry
+    \entry{GRAINGER1962}{article}{}
+      \name{author}{2}{}{%
+        {{uniquename=0,uniquepart=base,hash=be05c2f231383a75ddda66b889869b3e}{%
+           family={GRAINGER},
+           familyi={G\bibinitperiod},
+           given={J.\bibnamedelimi F.},
+           giveni={J\bibinitperiod\bibinitdelim F\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=3b8c853df72c9076ce25f721df367b08}{%
+           family={RING},
+           familyi={R\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{07e16d5abd101c6dd37db5b75444c341}
+      \strng{fullhash}{07e16d5abd101c6dd37db5b75444c341}
+      \strng{bibnamehash}{07e16d5abd101c6dd37db5b75444c341}
+      \strng{authorbibnamehash}{07e16d5abd101c6dd37db5b75444c341}
+      \strng{authornamehash}{07e16d5abd101c6dd37db5b75444c341}
+      \strng{authorfullhash}{07e16d5abd101c6dd37db5b75444c341}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0028-0836}
+      \field{journaltitle}{Nature}
+      \field{month}{2}
+      \field{number}{4817}
+      \field{title}{{Anomalous Fraunhofer Line Profiles}}
+      \field{volume}{193}
+      \field{year}{1962}
+      \field{pages}{762\bibrangedash 762}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1038/193762a0
+      \endverb
+      \verb{urlraw}
+      \verb http://www.nature.com/doifinder/10.1038/193762a0
+      \endverb
+      \verb{url}
+      \verb http://www.nature.com/doifinder/10.1038/193762a0
+      \endverb
+    \endentry
+    \entry{Gunderman2006}{book}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=3f314eb5101df3f041a5c486bfcb990c}{%
+           family={Gunderman},
+           familyi={G\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Thieme}%
+      }
+      \strng{namehash}{3f314eb5101df3f041a5c486bfcb990c}
+      \strng{fullhash}{3f314eb5101df3f041a5c486bfcb990c}
+      \strng{bibnamehash}{3f314eb5101df3f041a5c486bfcb990c}
+      \strng{authorbibnamehash}{3f314eb5101df3f041a5c486bfcb990c}
+      \strng{authornamehash}{3f314eb5101df3f041a5c486bfcb990c}
+      \strng{authorfullhash}{3f314eb5101df3f041a5c486bfcb990c}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This comprehensive introduction to the essentials of radiology is designed to enable readers to excel at ordering the appropriate examination and reliably interpreting basic imaging findings. Organized around the major organ systems, it situates imaging within the larger context of the patient's clinical presentation, the pathophysiology of the disease or injury, the analysis and differential diagnosis of imaging findings, and the integration of each into patient management. Special features include: Concise reviews of key anatomic and physiologic principles Full integration of pathophysiology and imaging findings More than 600 exquisite illustrations demonstrating important concepts Mini-atlas of essential cross-sectional anatomy of the brain, chest, and abdomen Essential Radiology is an invaluable reference for learning how to make full use of radiology's extraordinary promise in diagnosing disease and enhancing patient care. Instructors will find this an ideal book for course adoption.}
+      \field{edition}{2}
+      \field{isbn}{9781588900821}
+      \field{title}{{Essential Radiology: Clinical Presentation, Pathophysiology, Imaging, 2nd ed.}}
+      \field{year}{2006}
+    \endentry
+    \entry{Herman1995}{article}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=c261bd731d7c2d823a449a68455f4cbe}{%
+           family={Herman},
+           familyi={H\bibinitperiod},
+           given={G.\bibnamedelimi T.},
+           giveni={G\bibinitperiod\bibinitdelim T\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{c261bd731d7c2d823a449a68455f4cbe}
+      \strng{fullhash}{c261bd731d7c2d823a449a68455f4cbe}
+      \strng{bibnamehash}{c261bd731d7c2d823a449a68455f4cbe}
+      \strng{authorbibnamehash}{c261bd731d7c2d823a449a68455f4cbe}
+      \strng{authornamehash}{c261bd731d7c2d823a449a68455f4cbe}
+      \strng{authorfullhash}{c261bd731d7c2d823a449a68455f4cbe}
+      \field{extraname}{1}
+      \field{sortinit}{H}
+      \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This article covers the problem of reconstruction of structures from data collected based on transmitted or emitted radiation. The problem occurs in a wide range of areas, such as X-ray CT, emission tomography, photon migration imaging, electron microscopic reconstruction, etc. The article addresses the design, implementation, evaluation, and application of computer algorithms for solving the reconstruction problem in various biomedical areas and emphasizes the essential role of computers, which is due to the fact that the underlying biomedical problems result in mathematical problems in which the number of unknowns is in the millions. {©} 1995 Academic Press. All rights reserved.}
+      \field{annotation}{NULL}
+      \field{isbn}{1077-2014}
+      \field{issn}{10772014}
+      \field{journaltitle}{Real-Time Imaging}
+      \field{number}{1}
+      \field{title}{{Image Reconstruction From Projections}}
+      \field{volume}{1}
+      \field{year}{1995}
+      \field{pages}{3\bibrangedash 18}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.1006/rtim.1995.1002
+      \endverb
+      \verb{file}
+      \verb ::
+      \endverb
+    \endentry
+    \entry{Herman2009}{book}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=10a486094bfc7e10759c6d577c89c3e8}{%
+           family={Herman},
+           familyi={H\bibinitperiod},
+           given={Gabor\bibnamedelima T.},
+           giveni={G\bibinitperiod\bibinitdelim T\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {London}%
+      }
+      \list{publisher}{1}{%
+        {Springer London}%
+      }
+      \strng{namehash}{10a486094bfc7e10759c6d577c89c3e8}
+      \strng{fullhash}{10a486094bfc7e10759c6d577c89c3e8}
+      \strng{bibnamehash}{10a486094bfc7e10759c6d577c89c3e8}
+      \strng{authorbibnamehash}{10a486094bfc7e10759c6d577c89c3e8}
+      \strng{authornamehash}{10a486094bfc7e10759c6d577c89c3e8}
+      \strng{authorfullhash}{10a486094bfc7e10759c6d577c89c3e8}
+      \field{extraname}{2}
+      \field{sortinit}{H}
+      \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-1-85233-617-2}
+      \field{series}{Advances in Pattern Recognition}
+      \field{title}{{Fundamentals of Computerized Tomography}}
+      \field{year}{2009}
+      \verb{doi}
+      \verb 10.1007/978-1-84628-723-7
+      \endverb
+      \verb{file}
+      \verb ::
+      \endverb
+      \verb{urlraw}
+      \verb http://link.springer.com/10.1007/978-1-84628-723-7
+      \endverb
+      \verb{url}
+      \verb http://link.springer.com/10.1007/978-1-84628-723-7
+      \endverb
+    \endentry
+    \entry{Herman1973}{article}{}
+      \name{author}{3}{}{%
+        {{uniquename=0,uniquepart=base,hash=10a486094bfc7e10759c6d577c89c3e8}{%
+           family={Herman},
+           familyi={H\bibinitperiod},
+           given={Gabor\bibnamedelima T.},
+           giveni={G\bibinitperiod\bibinitdelim T\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=b403460a823921a2f4227c1c104cca5d}{%
+           family={Lent},
+           familyi={L\bibinitperiod},
+           given={Arnold},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=85088eeca8175706ff80987f9d21bb37}{%
+           family={Rowland},
+           familyi={R\bibinitperiod},
+           given={Stuart\bibnamedelima W.},
+           giveni={S\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{7a1841850f2e92e00b743d43b0bf310c}
+      \strng{fullhash}{2c6dd6e79e8c6aba5a840a3b619b050a}
+      \strng{bibnamehash}{2c6dd6e79e8c6aba5a840a3b619b050a}
+      \strng{authorbibnamehash}{2c6dd6e79e8c6aba5a840a3b619b050a}
+      \strng{authornamehash}{7a1841850f2e92e00b743d43b0bf310c}
+      \strng{authorfullhash}{2c6dd6e79e8c6aba5a840a3b619b050a}
+      \field{sortinit}{H}
+      \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Some properties of the algebraic reconstruction techniques (ART) for reconstructing objects from their projections (e.g. electron micrographs) are discussed. Some generalizations of previously published ART algorithms are given. In particular, ART is extended to handle weighted projection data. An early conjecture about ART is proved for one of the algorithms: it converges to the most uniform solution of the constraint equations provided by the projection data. Other convergence properties of the ART algorithms are discussed and proved. Some new ART algorithms are described. These are believed to converge to optimal reconstructions consistent with the projection data. The importance of choosing the correct ray widths in case of real projection data is demonstrated, and a method for calculating correct ray widths is given. A method is proposed for estimating the optimal number of iterations in a reconstruction. The performance of ART on real data is demonstrated both in the absence of and in the presence of noise. {©} 1973.}
+      \field{isbn}{0022-5193}
+      \field{issn}{10958541}
+      \field{journaltitle}{Journal of Theoretical Biology}
+      \field{number}{1}
+      \field{title}{{ART: Mathematics and applications. A report on the mathematical foundations and on the applicability to real data of the algebraic reconstruction techniques}}
+      \field{volume}{42}
+      \field{year}{1973}
+      \verb{doi}
+      \verb 10.1016/0022-5193(73)90145-8
+      \endverb
+    \endentry
+    \entry{Kak2001}{incollection}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=79d20b9313c4fe34a6618496ed4afd96}{%
+           family={Kak},
+           familyi={K\bibinitperiod},
+           given={Avinash\bibnamedelima C.},
+           giveni={A\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{79d20b9313c4fe34a6618496ed4afd96}
+      \strng{fullhash}{79d20b9313c4fe34a6618496ed4afd96}
+      \strng{bibnamehash}{79d20b9313c4fe34a6618496ed4afd96}
+      \strng{authorbibnamehash}{79d20b9313c4fe34a6618496ed4afd96}
+      \strng{authornamehash}{79d20b9313c4fe34a6618496ed4afd96}
+      \strng{authorfullhash}{79d20b9313c4fe34a6618496ed4afd96}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{An entirely different approach for tomographic imaging consists of assuming that the cross section consists of an array of unknowns, and then setting up algebraic equations for the unknowns in terms of the measured projection data. Although conceptually this approach is much simpler than the transform-based methods discussed in previous sections, for medical applications it lacks the accuracy and the speed of implementation. However, there are situations where it is not possible to measure a large number of projections, or the projections are not uniformly distributed over 180 or 360”) both these conditions being necessary requirements for the transformbased techniques to produce results with the accuracy desired in medical imaging. An example of such a situation is earth resources imaging using cross-borehole measurements discussed in Chapter 4. Problems of this type are sometimes more amenable to solution by algebraic techniques. Algebraic techniques are also useful when the energy propagation paths between the source and receiver positions are subject to ray bending on account of refraction, or when the energy propagation undergoes attenuation along ray paths as in emission CT. [Unfortunately, many imaging problems where refraction is encountered also suffer from diffraction effects (see Chap. 4).] As will be obvious from the discussion to follow, in algebraic methods it is essential to know ray paths that connect the corresponding transmitter and receiver positions. When refraction and diffraction effects are substantial (medium inhomogeneities exceed 10{\%} of the average background value and the correlation length of these inhomogeneities is comparable to a wavelength), it becomes impossible to predict these ray paths. If algebraic techniques are applied under these conditions, we often obtain meaningless results.}
+      \field{booktitle}{Computerized Tomographic Imaging}
+      \field{isbn}{978-0-89871-494-4}
+      \field{issn}{00766879}
+      \field{title}{{Algebraic Reconstruction Algorithms}}
+      \field{year}{2001}
+      \field{pages}{275\bibrangedash 296}
+      \range{pages}{22}
+      \verb{doi}
+      \verb 10.1137/1.9780898719277.ch7
+      \endverb
+    \endentry
+    \entry{Laepple2004}{article}{}
+      \name{author}{4}{}{%
+        {{uniquename=0,uniquepart=base,hash=d4ad8458d1360046c678df43b2bdc3fd}{%
+           family={Laepple},
+           familyi={L\bibinitperiod},
+           given={T},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=e189acad2d22e7c977ac4a2b8dedf7d1}{%
+           family={Knab},
+           familyi={K\bibinitperiod},
+           given={V},
+           giveni={V\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=b38af08fc48b635c598aa865fef345af}{%
+           family={Mettendorf},
+           familyi={M\bibinitperiod},
+           given={K.-U.},
+           giveni={K\bibinithyphendelim U\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=443514bfdde8f08b31088fe1f5a7391b}{%
+           family={Pundt},
+           familyi={P\bibinitperiod},
+           given={I},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{c1cbb44a733efa9a1eeccb6ae141da55}
+      \strng{fullhash}{69f5ed91001f6366dc112fd070607fda}
+      \strng{bibnamehash}{69f5ed91001f6366dc112fd070607fda}
+      \strng{authorbibnamehash}{69f5ed91001f6366dc112fd070607fda}
+      \strng{authornamehash}{c1cbb44a733efa9a1eeccb6ae141da55}
+      \strng{authorfullhash}{69f5ed91001f6366dc112fd070607fda}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{annotation}{NULL}
+      \field{issn}{1680-7375}
+      \field{journaltitle}{Atmospheric Chemistry and Physics Discussions}
+      \field{number}{3}
+      \field{title}{{Longpath DOAS tomography on a motorway exhaust gas plume: numerical studies and application to data from the BAB II campaign}}
+      \field{volume}{4}
+      \field{year}{2004}
+      \field{pages}{2435\bibrangedash 2484}
+      \range{pages}{50}
+      \verb{doi}
+      \verb 10.5194/acpd-4-2435-2004
+      \endverb
+      \verb{file}
+      \verb ::
+      \endverb
+      \verb{urlraw}
+      \verb http://www.atmos-chem-phys-discuss.net/4/2435/2004/
+      \endverb
+      \verb{url}
+      \verb http://www.atmos-chem-phys-discuss.net/4/2435/2004/
+      \endverb
+    \endentry
+    \entry{Lovett2009}{article}{}
+      \name{author}{8}{}{%
+        {{uniquename=0,uniquepart=base,hash=73e4204e459c8caeb3975ff4fee8ed8c}{%
+           family={Lovett},
+           familyi={L\bibinitperiod},
+           given={Gary\bibnamedelima M.},
+           giveni={G\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=749948ab21d66486dcc7c14929acaa97}{%
+           family={Tear},
+           familyi={T\bibinitperiod},
+           given={Timothy\bibnamedelima H.},
+           giveni={T\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=7551e4555ebf701f772f045ab8553a8d}{%
+           family={Evers},
+           familyi={E\bibinitperiod},
+           given={David\bibnamedelima C.},
+           giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=aca5f06a9f3bdc05e5f462c782fffaf8}{%
+           family={Findlay},
+           familyi={F\bibinitperiod},
+           given={Stuart\bibnamedelima E.G.},
+           giveni={S\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=0553bdfe0d5b55bced1cc35e500ceae3}{%
+           family={Cosby},
+           familyi={C\bibinitperiod},
+           given={B.\bibnamedelimi Jack},
+           giveni={B\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=0304023154aff151bb51ba02479307cd}{%
+           family={Dunscomb},
+           familyi={D\bibinitperiod},
+           given={Judy\bibnamedelima K.},
+           giveni={J\bibinitperiod\bibinitdelim K\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=12b8afcf74b1643ba6079a2189e8f0bb}{%
+           family={Driscoll},
+           familyi={D\bibinitperiod},
+           given={Charles\bibnamedelima T.},
+           giveni={C\bibinitperiod\bibinitdelim T\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=1fc0e8e74a9d25f98618c3797f435c55}{%
+           family={Weathers},
+           familyi={W\bibinitperiod},
+           given={Kathleen\bibnamedelima C.},
+           giveni={K\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{d0d9d0e60ef70b218756b4c9b460048b}
+      \strng{fullhash}{c57de2d5dcfe72e358ee34edb4634f39}
+      \strng{bibnamehash}{c57de2d5dcfe72e358ee34edb4634f39}
+      \strng{authorbibnamehash}{c57de2d5dcfe72e358ee34edb4634f39}
+      \strng{authornamehash}{d0d9d0e60ef70b218756b4c9b460048b}
+      \strng{authorfullhash}{c57de2d5dcfe72e358ee34edb4634f39}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{00778923}
+      \field{journaltitle}{Annals of the New York Academy of Sciences}
+      \field{month}{4}
+      \field{number}{1}
+      \field{title}{{Effects of Air Pollution on Ecosystems and Biological Diversity in the Eastern United States}}
+      \field{volume}{1162}
+      \field{year}{2009}
+      \field{pages}{99\bibrangedash 135}
+      \range{pages}{37}
+      \verb{doi}
+      \verb 10.1111/j.1749-6632.2009.04153.x
+      \endverb
+      \verb{urlraw}
+      \verb http://doi.wiley.com/10.1111/j.1749-6632.2009.04153.x
+      \endverb
+      \verb{url}
+      \verb http://doi.wiley.com/10.1111/j.1749-6632.2009.04153.x
+      \endverb
+    \endentry
+    \entry{Merlaud2013}{book}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=79c90383cc652ca46332e393f916c819}{%
+           family={Merlaud},
+           familyi={M\bibinitperiod},
+           given={Alexis},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Facult{é} des Sciences - Universit{é} Catholique de Louvain}%
+      }
+      \list{location}{1}{%
+        {Louvain}%
+      }
+      \list{publisher}{1}{%
+        {Presses Universitaires de Louvain}%
+      }
+      \strng{namehash}{79c90383cc652ca46332e393f916c819}
+      \strng{fullhash}{79c90383cc652ca46332e393f916c819}
+      \strng{bibnamehash}{79c90383cc652ca46332e393f916c819}
+      \strng{authorbibnamehash}{79c90383cc652ca46332e393f916c819}
+      \strng{authornamehash}{79c90383cc652ca46332e393f916c819}
+      \strng{authorfullhash}{79c90383cc652ca46332e393f916c819}
+      \field{sortinit}{M}
+      \field{sortinithash}{cfd219b90152c06204fab207bc6c7cab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-2-87558-128-0}
+      \field{title}{{Development and use of compact instruments for tropospheric investigations based on optical spectroscopy from mobile platforms}}
+      \field{type}{PhD Thesis}
+      \field{year}{2013}
+      \verb{file}
+      \verb ::
+      \endverb
+      \verb{urlraw}
+      \verb http://books.google.com/books?hl=en{\&}lr={\&}id=inXVSyR82zwC{\&}oi=fnd{\&}pg=PR3{\&}dq=Development+and+use+of+compact+instruments+for+tropospheric+investigations+based+on+optical+spectroscopy+from+mobile+platforms+sciences{\&}ots=VdebeDBQMc{\&}sig=4G0eVEvthJXuqd8WI3IWjjVXuXc
+      \endverb
+      \verb{url}
+      \verb http://books.google.com/books?hl=en%7B%5C&%7Dlr=%7B%5C&%7Did=inXVSyR82zwC%7B%5C&%7Doi=fnd%7B%5C&%7Dpg=PR3%7B%5C&%7Ddq=Development+and+use+of+compact+instruments+for+tropospheric+investigations+based+on+optical+spectroscopy+from+mobile+platforms+sciences%7B%5C&%7Dots=VdebeDBQMc%7B%5C&%7Dsig=4G0eVEvthJXuqd8WI3IWjjVXuXc
+      \endverb
+    \endentry
+    \entry{Olaguer2015}{article}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=c33b108a9ea98ad3aef947ed3d60027f}{%
+           family={Olaguer},
+           familyi={O\bibinitperiod},
+           given={Eduardo\bibnamedelima P.},
+           giveni={E\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{c33b108a9ea98ad3aef947ed3d60027f}
+      \strng{fullhash}{c33b108a9ea98ad3aef947ed3d60027f}
+      \strng{bibnamehash}{c33b108a9ea98ad3aef947ed3d60027f}
+      \strng{authorbibnamehash}{c33b108a9ea98ad3aef947ed3d60027f}
+      \strng{authornamehash}{c33b108a9ea98ad3aef947ed3d60027f}
+      \strng{authorfullhash}{c33b108a9ea98ad3aef947ed3d60027f}
+      \field{sortinit}{O}
+      \field{sortinithash}{dad3efd0836470093a7b4a7bb756eb8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1178-6302}
+      \field{journaltitle}{Environmental Health Insights}
+      \field{month}{1}
+      \field{title}{{Overview of the Benzene and Other Toxics Exposure (BEE-TEX) Field Study}}
+      \field{volume}{9s4}
+      \field{year}{2015}
+      \field{pages}{EHI.S15654}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.4137/EHI.S15654
+      \endverb
+      \verb{urlraw}
+      \verb http://journals.sagepub.com/doi/10.4137/EHI.S15654
+      \endverb
+      \verb{url}
+      \verb http://journals.sagepub.com/doi/10.4137/EHI.S15654
+      \endverb
+    \endentry
+    \entry{Platt2007}{book}{}
+      \name{author}{2}{}{%
+        {{uniquename=0,uniquepart=base,hash=0d96ad47b01da58e607abec7d1d33c0b}{%
+           family={Platt},
+           familyi={P\bibinitperiod},
+           given={U},
+           giveni={U\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=e7504920ecf9616996722d39900c03e3}{%
+           family={Stutz},
+           familyi={S\bibinitperiod},
+           given={J},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Heidelberg, Germany}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{063bacbbe1d6cbaa9880115969ac2145}
+      \strng{fullhash}{063bacbbe1d6cbaa9880115969ac2145}
+      \strng{bibnamehash}{063bacbbe1d6cbaa9880115969ac2145}
+      \strng{authorbibnamehash}{063bacbbe1d6cbaa9880115969ac2145}
+      \strng{authornamehash}{063bacbbe1d6cbaa9880115969ac2145}
+      \strng{authorfullhash}{063bacbbe1d6cbaa9880115969ac2145}
+      \field{sortinit}{P}
+      \field{sortinithash}{8d51b3d5b78d75b54308d706b9bbe285}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9783540211938}
+      \field{title}{{Differential Optical Absorption Spectroscopy}}
+      \field{year}{2007}
+      \verb{file}
+      \verb :home/rui/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Platt, Stutz - 2007 - Differential Optical Absorption Spectroscopy.pdf:pdf
+      \endverb
+    \endentry
+    \entry{Pundt2005}{article}{}
+      \name{author}{9}{}{%
+        {{uniquename=0,uniquepart=base,hash=443514bfdde8f08b31088fe1f5a7391b}{%
+           family={Pundt},
+           familyi={P\bibinitperiod},
+           given={I.},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=c2f0682e474c01f903cb091d46f91d50}{%
+           family={Mettendorf},
+           familyi={M\bibinitperiod},
+           given={K.\bibnamedelimi U.},
+           giveni={K\bibinitperiod\bibinitdelim U\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=d4ad8458d1360046c678df43b2bdc3fd}{%
+           family={Laepple},
+           familyi={L\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=e189acad2d22e7c977ac4a2b8dedf7d1}{%
+           family={Knab},
+           familyi={K\bibinitperiod},
+           given={V.},
+           giveni={V\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=63ebfccb53da7f70bc690015463cd21f}{%
+           family={Xie},
+           familyi={X\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=c6b53a2be716d8675865868ed3caa8e1}{%
+           family={L{ö}sch},
+           familyi={L\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=38993844054b96f40ef2b28307906f49}{%
+           family={Friedeburg},
+           familyi={F\bibinitperiod},
+           given={C.\bibnamedelimi V.},
+           giveni={C\bibinitperiod\bibinitdelim V\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=0d96ad47b01da58e607abec7d1d33c0b}{%
+           family={Platt},
+           familyi={P\bibinitperiod},
+           given={U.},
+           giveni={U\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=8721372faf29db0a881be71f01d8989d}{%
+           family={Wagner},
+           familyi={W\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{49eac5afbfc8ab0be15cc6178f6ade8a}
+      \strng{fullhash}{9054d2bbb068e924e74c46eb46c88cad}
+      \strng{bibnamehash}{9054d2bbb068e924e74c46eb46c88cad}
+      \strng{authorbibnamehash}{9054d2bbb068e924e74c46eb46c88cad}
+      \strng{authornamehash}{49eac5afbfc8ab0be15cc6178f6ade8a}
+      \strng{authorfullhash}{9054d2bbb068e924e74c46eb46c88cad}
+      \field{sortinit}{P}
+      \field{sortinithash}{8d51b3d5b78d75b54308d706b9bbe285}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The Tomographic Differential Optical Absorption Spectroscopy (Tom-DOAS) technique and results from a first application are presented. This novel technique serves to measure 2-3-dimensional concentration fields of different trace gases (e.g. NO 2, SO 2, ozone) in the planetary boundary layer on a small scale (100-10 000 m) by the use of multiple light paths. Ways to use telescopes, lamps, retroreflector arrays and spectrometers for the simultaneous measurement of many light-paths are proposed. The results from a first Long-path Tom-DOAS experiment next to a German motorway, which was part of the BAB II campaign April/May 2001 [Edition of the Institut f??r Meteorologie und Klimaforschung, Forschungszentrum Karlsruhe/Universit??t Karlsruhe, pp. 45, 2001), are presented. From the measurements along 16 different light paths vertical profiles on both sides of the motorway as well as a two-dimensional map of the NO 2 vehicle emission plume are derived. The concentration distributions agree qualitatively with model simulations of an earlier campaign. ?? 2004 Elsevier Ltd. All rights reserved.}
+      \field{annotation}{NULL}
+      \field{issn}{13522310}
+      \field{journaltitle}{Atmospheric Environment}
+      \field{number}{5}
+      \field{title}{{Measurements of trace gas distributions using Long-path DOAS-Tomography during the motorway campaign BAB II: Experimental setup and results for NO 2}}
+      \field{volume}{39}
+      \field{year}{2005}
+      \field{pages}{967\bibrangedash 975}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1016/j.atmosenv.2004.07.035
+      \endverb
+      \verb{file}
+      \verb ::
+      \endverb
+      \keyw{DOAS,NO 2,Tomography,Vehicle emission}
+    \endentry
+    \entry{Stutz2016}{article}{}
+      \name{author}{11}{}{%
+        {{uniquename=0,uniquepart=base,hash=c1d0d56ecd7b6f6793da73aba554e1b8}{%
+           family={Stutz},
+           familyi={S\bibinitperiod},
+           given={Jochen},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=a0909e4c721d920379bff0ffbf072260}{%
+           family={Hurlock},
+           familyi={H\bibinitperiod},
+           given={Stephen\bibnamedelima C.},
+           giveni={S\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=267fb8366496152300f67dae82a296da}{%
+           family={Colosimo},
+           familyi={C\bibinitperiod},
+           given={Santo\bibnamedelima F.},
+           giveni={S\bibinitperiod\bibinitdelim F\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=99e80d74cb9bf482c4bed7a65304f199}{%
+           family={Tsai},
+           familyi={T\bibinitperiod},
+           given={Catalina},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=60cb49d7bdbc218b9a2cd4571bb38124}{%
+           family={Cheung},
+           familyi={C\bibinitperiod},
+           given={Ross},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=70738b3b866188aa39ce7c73cca22d95}{%
+           family={Festa},
+           familyi={F\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=adf747d234b80a076ab043b0240e2a5e}{%
+           family={Pikelnaya},
+           familyi={P\bibinitperiod},
+           given={Olga},
+           giveni={O\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=6312de140d259f592157c14d1105eb43}{%
+           family={Alvarez},
+           familyi={A\bibinitperiod},
+           given={Sergio},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=fa98f8e15c98ba06c3235811ebacd1c4}{%
+           family={Flynn},
+           familyi={F\bibinitperiod},
+           given={James\bibnamedelima H.},
+           giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=ea7c5fc3c7e1481d36eb2a2f60f3d848}{%
+           family={Erickson},
+           familyi={E\bibinitperiod},
+           given={Matthew\bibnamedelima H.},
+           giveni={M\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=c33b108a9ea98ad3aef947ed3d60027f}{%
+           family={Olaguer},
+           familyi={O\bibinitperiod},
+           given={Eduardo\bibnamedelima P.},
+           giveni={E\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{b233dd20aaba8268450aa750018c3189}
+      \strng{fullhash}{477a5e26115a578790bff93be1b6a757}
+      \strng{bibnamehash}{477a5e26115a578790bff93be1b6a757}
+      \strng{authorbibnamehash}{477a5e26115a578790bff93be1b6a757}
+      \strng{authornamehash}{b233dd20aaba8268450aa750018c3189}
+      \strng{authorfullhash}{477a5e26115a578790bff93be1b6a757}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{13522310}
+      \field{journaltitle}{Atmospheric Environment}
+      \field{month}{12}
+      \field{title}{{A novel dual-LED based long-path DOAS instrument for the measurement of aromatic hydrocarbons}}
+      \field{volume}{147}
+      \field{year}{2016}
+      \field{pages}{121\bibrangedash 132}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1016/j.atmosenv.2016.09.054
+      \endverb
+      \verb{urlraw}
+      \verb http://linkinghub.elsevier.com/retrieve/pii/S1352231016307713
+      \endverb
+      \verb{url}
+      \verb http://linkinghub.elsevier.com/retrieve/pii/S1352231016307713
+      \endverb
+    \endentry
+    \entry{ValentedeAlmeida2017}{article}{}
+      \name{author}{2}{}{%
+        {{uniquename=0,uniquepart=base,hash=1ee9319d1b309870aea7c3c8cfed942a}{%
+           family={{Valente de Almeida}},
+           familyi={V\bibinitperiod},
+           given={Rui},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=d3479232e80d71e33aae788c4cf9a853}{%
+           family={Vieira},
+           familyi={V\bibinitperiod},
+           given={Pedro},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{e4e71fd586c1d794edd12e2f6d4044b4}
+      \strng{fullhash}{e4e71fd586c1d794edd12e2f6d4044b4}
+      \strng{bibnamehash}{e4e71fd586c1d794edd12e2f6d4044b4}
+      \strng{authorbibnamehash}{e4e71fd586c1d794edd12e2f6d4044b4}
+      \strng{authornamehash}{e4e71fd586c1d794edd12e2f6d4044b4}
+      \strng{authorfullhash}{e4e71fd586c1d794edd12e2f6d4044b4}
+      \field{sortinit}{V}
+      \field{sortinithash}{75dd7385c90b2252c3ae853a80ca853b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Abstract. Fires are an important factor in shaping Earth's ecosystems. Plant and animal life, in almost every land habitat, are at least partially dependent on the effects of fire. However, their destructive force, which has often proven uncontrollable, is one of our greatest concerns, effectively resulting in several policies in the most important industrialised regions of the globe. This paper aims to comprehensively characterise the Forest Fire Finder (FFF), a forest fire detection system based mainly upon a spectroscopic technique called differential optical absorption spectroscopy (DOAS). The system is designed and configured with the goal of detecting higher-than-the-horizon smoke columns by measuring and comparing scattered sunlight spectra. The article covers hardware and software, as well as their interactions and specific algorithms for day mode operation. An analysis of data retrieved from several installations deployed in the course of the last 5 years is also presented. Finally, this paper features a discussion on the most prominent future improvements planned for the system, as well as its ramifications and adaptations, such as a thermal imaging system for short-range fire seeking or environmental quality control.}
+      \field{issn}{1867-8548}
+      \field{journaltitle}{Atmospheric Measurement Techniques}
+      \field{month}{6}
+      \field{number}{6}
+      \field{title}{{Forest Fire Finder – DOAS application to long-range forest fire detection}}
+      \field{volume}{10}
+      \field{year}{2017}
+      \field{pages}{2299\bibrangedash 2311}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.5194/amt-10-2299-2017
+      \endverb
+      \verb{urlraw}
+      \verb https://www.atmos-meas-tech.net/10/2299/2017/
+      \endverb
+      \verb{url}
+      \verb https://www.atmos-meas-tech.net/10/2299/2017/
+      \endverb
+    \endentry
+    \entry{Application2008}{misc}{}
+      \name{author}{2}{}{%
+        {{uniquename=0,uniquepart=base,hash=d3479232e80d71e33aae788c4cf9a853}{%
+           family={Vieira},
+           familyi={V\bibinitperiod},
+           given={Pedro},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=9428363cd30adf0da54db8e280f0f85b}{%
+           family={Matos},
+           familyi={M\bibinitperiod},
+           given={Jo{ã}o},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{86a53f13cceb719f1414304b433d4d73}
+      \strng{fullhash}{86a53f13cceb719f1414304b433d4d73}
+      \strng{bibnamehash}{86a53f13cceb719f1414304b433d4d73}
+      \strng{authorbibnamehash}{86a53f13cceb719f1414304b433d4d73}
+      \strng{authornamehash}{86a53f13cceb719f1414304b433d4d73}
+      \strng{authorfullhash}{86a53f13cceb719f1414304b433d4d73}
+      \field{sortinit}{V}
+      \field{sortinithash}{75dd7385c90b2252c3ae853a80ca853b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The present invention relates to a system for detection of forest fires, based on the chemical analysis of the atmosphere through optic spectroscopy. The Smoke originated from a fire has a chemical composition different from that of a normal atmosphere. This chemical composition is determined by the analysis of light absorption, which passes through the Smoke, in its different wavelengths, carried out by a spectrometer. In this case, the spectrometer is associated to a telescope and Solar light is used as the light Source allowing the detection of Smoke originated from a fire in a specific area of the horizon. The maximum distance from which the Smoke can be detected depends only on the potency of the telescope and may be of many kilometers. The installation of the system on a rotating Support and the use of computational logarithms makes the detection in any point of the horizon possible, a completely autonomous way.}
+      \field{number}{19}
+      \field{title}{{SYSTEM FOR AUTOMATIC DETECTION OF FOREST FIRES THROUGHOPTC SPECTROSCOPY}}
+      \field{volume}{1}
+      \field{year}{2008}
+      \field{pages}{19\bibrangedash 22}
+      \range{pages}{4}
+      \verb{file}
+      \verb :home/rui/Downloads/US20080198025A1.pdf:pdf
+      \endverb
+    \endentry
+    \entry{Vieira2007}{misc}{}
+      \name{author}{3}{}{%
+        {{uniquename=0,uniquepart=base,hash=d3479232e80d71e33aae788c4cf9a853}{%
+           family={Vieira},
+           familyi={V\bibinitperiod},
+           given={Pedro},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=9428363cd30adf0da54db8e280f0f85b}{%
+           family={Matos},
+           familyi={M\bibinitperiod},
+           given={Jo{ã}o},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=ad289998e79e4db9c44429f2a17f85c2}{%
+           family={Mendes},
+           familyi={M\bibinitperiod},
+           given={Maria},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Faculdade de Ci{ê}ncias e Tecnologia - Universidade Nova de Lisboa}%
+      }
+      \list{publisher}{1}{%
+        {INPI}%
+      }
+      \strng{namehash}{2e307e89f86333dbba90a90bda83d483}
+      \strng{fullhash}{082f12b904097c00051bc1b58933f62d}
+      \strng{bibnamehash}{082f12b904097c00051bc1b58933f62d}
+      \strng{authorbibnamehash}{082f12b904097c00051bc1b58933f62d}
+      \strng{authornamehash}{2e307e89f86333dbba90a90bda83d483}
+      \strng{authorfullhash}{082f12b904097c00051bc1b58933f62d}
+      \field{sortinit}{V}
+      \field{sortinithash}{75dd7385c90b2252c3ae853a80ca853b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{Sistema para a detec{ç}{ã}o autom{á}tica de inc{ê}ndios florestais por espectroscopia {ó}ptica}}
+      \field{year}{2007}
+      \verb{file}
+      \verb :home/rui/Downloads/PT103304B.pdf:pdf
+      \endverb
+    \endentry
+    \entry{WorldHealthOrganisationEurope2004}{article}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=842a81d10f40ca7e5679295f88262a01}{%
+           family={{World Health Organisation Europe}},
+           familyi={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{842a81d10f40ca7e5679295f88262a01}
+      \strng{fullhash}{842a81d10f40ca7e5679295f88262a01}
+      \strng{bibnamehash}{842a81d10f40ca7e5679295f88262a01}
+      \strng{authorbibnamehash}{842a81d10f40ca7e5679295f88262a01}
+      \strng{authornamehash}{842a81d10f40ca7e5679295f88262a01}
+      \strng{authorfullhash}{842a81d10f40ca7e5679295f88262a01}
+      \field{sortinit}{W}
+      \field{sortinithash}{ecb89ff85896a47dc313960773ac311d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This report summarizes the most recent information on the health effects of air pollution. It is based on the results of a comprehensive review of scientific evidence organized by the World Health Organization in support of air pollution policy development in Europe, and in particular the European Commission's Clean Air for Europe (CAFE) programme. The review indicates that air pollution at current levels still poses a considerable burden on health in Europe. Many different adverse effects have been linked to exposure to air pollution, including an increased risk of cardiopulmonary disease and a reduction in life expectancy of a year or more for people living in European cities. Some of these effects occur at very low concentrations that were previously considered safe. Taken together, the evidence is sufficient to strongly recommend further policy action to reduce levels of air pollutants, including particulates, nitrogen dioxide and ozone. It is reasonable to assume that a reduction in air pollution will lead to considerable health benefits}
+      \field{journaltitle}{World Health}
+      \field{title}{{Health Aspects of Air Pollution Results from the WHO Project "Systematic Review of Health Aspects of Air Pollution in Europe"}}
+      \field{year}{2004}
+      \field{pages}{30}
+      \range{pages}{1}
+      \verb{file}
+      \verb :home/rui/Downloads/who{\_}air{\_}pollution{\_}effects.pdf:pdf
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
