@@ -1,5 +1,5 @@
 % $ biblatex auxiliary file $
-% $ biblatex bbl format version 3.0 $
+% $ biblatex bbl format version 2.9 $
 % Do not modify the above lines!
 %
 % This is an auxiliary file used by the 'biblatex' package.
@@ -19,83 +19,69 @@
 
 \refsection{0}
   \datalist[entry]{nyt/global//global/global}
-    \entry{Bevington2003}{book}{}
-      \name{author}{2}{}{%
-        {{uniquename=0,uniquepart=base,hash=3af7fac3e5ffc763bb2cfa87639c0823}{%
-           family={Bevington},
+    \entry{Bell2008}{article}{}
+      \name{author}{3}{}{%
+        {{uniquename=0,uniquepart=base,hash=e5eea09f6f3f23153b4f47ca9936d1f4}{%
+           family={Bell},
            familyi={B\bibinitperiod},
-           given={Philip\bibnamedelima R.},
-           giveni={P\bibinitperiod\bibinitdelim R\bibinitperiod},
+           given={Micheile\bibnamedelima L.},
+           giveni={M\bibinitperiod\bibinitdelim L\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=2eac1b7bdc675e68adcd0c934422c86a}{%
-           family={Robinson},
-           familyi={R\bibinitperiod},
-           given={D.\bibnamedelimi Keith},
-           giveni={D\bibinitperiod\bibinitdelim K\bibinitperiod},
+        {{uniquename=0,uniquepart=base,hash=46479ed385ba7fbfa76fc026f8c0ad22}{%
+           family={Davis},
+           familyi={D\bibinitperiod},
+           given={Devra\bibnamedelima L.},
+           giveni={D\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=85b09f78154696e67acab88d20addc5e}{%
+           family={Fletcher},
+           familyi={F\bibinitperiod},
+           given={Tony},
+           giveni={T\bibinitperiod},
            givenun=0}}%
       }
-      \strng{namehash}{0c1cf78c11001c2873f6ac5cbc682fdd}
-      \strng{fullhash}{0c1cf78c11001c2873f6ac5cbc682fdd}
-      \strng{bibnamehash}{0c1cf78c11001c2873f6ac5cbc682fdd}
-      \strng{authorbibnamehash}{0c1cf78c11001c2873f6ac5cbc682fdd}
-      \strng{authornamehash}{0c1cf78c11001c2873f6ac5cbc682fdd}
-      \strng{authorfullhash}{0c1cf78c11001c2873f6ac5cbc682fdd}
+      \strng{namehash}{c6566bfeed82104642c2e296b9db7264}
+      \strng{fullhash}{fbee9bfd16b76fd4a184597bdaa71d37}
+      \strng{bibnamehash}{fbee9bfd16b76fd4a184597bdaa71d37}
+      \strng{authorbibnamehash}{fbee9bfd16b76fd4a184597bdaa71d37}
+      \strng{authornamehash}{c6566bfeed82104642c2e296b9db7264}
+      \strng{authorfullhash}{fbee9bfd16b76fd4a184597bdaa71d37}
       \field{sortinit}{B}
       \field{sortinithash}{276475738cc058478c1677046f857703}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{isbn}{0-07-247227-8}
-      \field{title}{{Data Reduction and Error Analysis for the Physical Sciences}}
-      \field{year}{2003}
-    \endentry
-    \entry{Brinkmann1968}{article}{}
-      \name{author}{1}{}{%
-        {{uniquename=0,uniquepart=base,hash=3b290cf30919c0539122a791a24e074e}{%
-           family={Brinkmann},
-           familyi={B\bibinitperiod},
-           given={R\bibnamedelima T},
-           giveni={R\bibinitperiod\bibinitdelim T\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{3b290cf30919c0539122a791a24e074e}
-      \strng{fullhash}{3b290cf30919c0539122a791a24e074e}
-      \strng{bibnamehash}{3b290cf30919c0539122a791a24e074e}
-      \strng{authorbibnamehash}{3b290cf30919c0539122a791a24e074e}
-      \strng{authornamehash}{3b290cf30919c0539122a791a24e074e}
-      \strng{authorfullhash}{3b290cf30919c0539122a791a24e074e}
-      \field{sortinit}{B}
-      \field{sortinithash}{276475738cc058478c1677046f857703}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{issn}{0004-637X}
-      \field{journaltitle}{Astrophys J}
-      \field{title}{{Rotational Raman scattering in planetary atmospheres}}
-      \field{volume}{154}
-      \field{year}{1968}
-      \field{pages}{1087\bibrangedash 1093}
-      \range{pages}{7}
+      \field{abstract}{The London smog of 1952 is one of history's most important air pollution episodes in terms of its impact on science, public perception of air pollution, and government regulation. The association between health and air pollution during the episode was evident as a strong rise in air pollution levels was immediately followed by sharp increases in mortality and morbidity. However, mortality in the months after the smog was also elevated above normal levels. An initial government report proposed the hypothesis that influenza was responsible for high mortality during these months. Estimates of the number of influenza deaths were generated using multiple methods, indicating that only a fraction of the deaths in the months after the smog could be attributable to influenza. Sensitivity analysis reveals that only an extremely severe influenza epidemic could account for the majority of the excess deaths for this time period. Such an epidemic would be on the order of twice the case-fatality rate and quadruple the incidence observed in a general medical practice during the winter of 1953. These results underscore the need for diligence regarding extremely high air pollution that still exists in many parts of the world.}
+      \field{isbn}{9780387734118}
+      \field{journaltitle}{Urban Ecology: An International Perspective on the Interaction Between Humans and Nature}
+      \field{number}{1}
+      \field{title}{{A retrospective assessment of mortality from the london smog episode of 1952: The role of influenza and pollution}}
+      \field{volume}{6}
+      \field{year}{2008}
+      \field{pages}{263\bibrangedash 268}
+      \range{pages}{6}
       \verb{doi}
-      \verb 10.1086/149827
+      \verb 10.1007/978-0-387-73412-5_15
       \endverb
       \verb{file}
-      \verb ::
+      \verb :Users/ruialmeida/Downloads/london{\_}smog.pdf:pdf
       \endverb
+      \keyw{London,air pollution,influenza,mortality}
     \endentry
     \entry{Bruyant2002}{article}{}
       \name{author}{1}{}{%
-        {{uniquename=0,uniquepart=base,hash=67a275553a3bc8391ca23b09ee0679d9}{%
+        {{uniquename=0,uniquepart=base,hash=782c1d9ddfadcfa0301b0490ddd30259}{%
            family={Bruyant},
            familyi={B\bibinitperiod},
            given={Philippe\bibnamedelima P.},
            giveni={P\bibinitperiod\bibinitdelim P\bibinitperiod},
            givenun=0}}%
       }
-      \strng{namehash}{67a275553a3bc8391ca23b09ee0679d9}
-      \strng{fullhash}{67a275553a3bc8391ca23b09ee0679d9}
-      \strng{bibnamehash}{67a275553a3bc8391ca23b09ee0679d9}
-      \strng{authorbibnamehash}{67a275553a3bc8391ca23b09ee0679d9}
-      \strng{authornamehash}{67a275553a3bc8391ca23b09ee0679d9}
-      \strng{authorfullhash}{67a275553a3bc8391ca23b09ee0679d9}
+      \strng{namehash}{782c1d9ddfadcfa0301b0490ddd30259}
+      \strng{fullhash}{782c1d9ddfadcfa0301b0490ddd30259}
+      \strng{bibnamehash}{782c1d9ddfadcfa0301b0490ddd30259}
+      \strng{authorbibnamehash}{782c1d9ddfadcfa0301b0490ddd30259}
+      \strng{authornamehash}{782c1d9ddfadcfa0301b0490ddd30259}
+      \strng{authorfullhash}{782c1d9ddfadcfa0301b0490ddd30259}
       \field{sortinit}{B}
       \field{sortinithash}{276475738cc058478c1677046f857703}
       \field{labelnamesource}{author}
@@ -112,7 +98,7 @@
       \field{pages}{1343\bibrangedash 58}
       \range{pages}{16}
       \verb{file}
-      \verb ::
+      \verb :Users/ruialmeida/Library/Application Support/Mendeley Desktop/Downloaded/Bruyant - 2002 - Analytic and iterative reconstruction algorithms in SPECT.pdf:pdf
       \endverb
       \verb{urlraw}
       \verb http://jnm.snmjournals.org/cgi/content/abstract/43/10/1343{\%}5Cnhttp://jnm.snmjournals.org/cgi/content/full/43/10/1343{\%}5Cnhttp://www.ncbi.nlm.nih.gov/pubmed/12368373
@@ -122,120 +108,6 @@
       \endverb
       \keyw{1343,1358,43,analytic recon-,iterative reconstruction algorithms,j nucl med 2002,spect,struction algorithm}
     \endentry
-    \entry{Chance1997}{article}{}
-      \name{author}{2}{}{%
-        {{uniquename=0,uniquepart=base,hash=4bb962d7c2510e7f6878a10ec370d971}{%
-           family={Chance},
-           familyi={C\bibinitperiod},
-           given={Kelly\bibnamedelima V.},
-           giveni={K\bibinitperiod\bibinitdelim V\bibinitperiod},
-           givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=b4f9a513f4c5c845eff1fd41ad26c39c}{%
-           family={Spurr},
-           familyi={S\bibinitperiod},
-           given={Robert\bibnamedelimb J.\bibnamedelimi D.},
-           giveni={R\bibinitperiod\bibinitdelim J\bibinitperiod\bibinitdelim D\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{ef8b6593188b2a3ad48859c11209a285}
-      \strng{fullhash}{ef8b6593188b2a3ad48859c11209a285}
-      \strng{bibnamehash}{ef8b6593188b2a3ad48859c11209a285}
-      \strng{authorbibnamehash}{ef8b6593188b2a3ad48859c11209a285}
-      \strng{authornamehash}{ef8b6593188b2a3ad48859c11209a285}
-      \strng{authorfullhash}{ef8b6593188b2a3ad48859c11209a285}
-      \field{sortinit}{C}
-      \field{sortinithash}{963e9d84a3da2344e8833203de5aed05}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{issn}{0003-6935}
-      \field{journaltitle}{Applied Optics}
-      \field{month}{7}
-      \field{number}{21}
-      \field{title}{{Ring effect studies: Rayleigh scattering, including molecular parameters for rotational Raman scattering, and the Fraunhofer spectrum}}
-      \field{volume}{36}
-      \field{year}{1997}
-      \field{pages}{5224}
-      \range{pages}{1}
-      \verb{doi}
-      \verb 10.1364/AO.36.005224
-      \endverb
-      \verb{urlraw}
-      \verb https://www.osapublishing.org/abstract.cfm?URI=ao-36-21-5224
-      \endverb
-      \verb{url}
-      \verb https://www.osapublishing.org/abstract.cfm?URI=ao-36-21-5224
-      \endverb
-    \endentry
-    \entry{Danckaert2015}{misc}{}
-      \name{author}{7}{}{%
-        {{uniquename=0,uniquepart=base,hash=951d4da48116bef6c9c395027dfb040d}{%
-           family={Danckaert},
-           familyi={D\bibinitperiod},
-           given={Thomas},
-           giveni={T\bibinitperiod},
-           givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=f2f201fc884de47b6060c3b2d7e41a59}{%
-           family={Fayt},
-           familyi={F\bibinitperiod},
-           given={Caroline},
-           giveni={C\bibinitperiod},
-           givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=227944ffb560d898cac42974d261c26e}{%
-           family={{Van Roozendael}},
-           familyi={V\bibinitperiod},
-           given={M.},
-           giveni={M\bibinitperiod},
-           givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=53ebb7b5dde5fb3a7b2cc1a9345ffad0}{%
-           family={Smedt},
-           familyi={S\bibinitperiod},
-           given={Isabelle},
-           giveni={I\bibinitperiod},
-           givenun=0,
-           prefix={de},
-           prefixi={d\bibinitperiod},
-           prefixun=0}}%
-        {{uniquename=0,uniquepart=base,hash=3c56218ba6b7b2c73c2e023011330c55}{%
-           family={Letocart},
-           familyi={L\bibinitperiod},
-           given={Vincent},
-           giveni={V\bibinitperiod},
-           givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=79c90383cc652ca46332e393f916c819}{%
-           family={Merlaud},
-           familyi={M\bibinitperiod},
-           given={Alexis},
-           giveni={A\bibinitperiod},
-           givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=f4711c4fb615936fd1f007cc61f80026}{%
-           family={Pinardi},
-           familyi={P\bibinitperiod},
-           given={Gaia},
-           giveni={G\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{d349573934433a60a5a744bb6baaf1ad}
-      \strng{fullhash}{23fc0acc0813a666056bc1084f396d66}
-      \strng{bibnamehash}{23fc0acc0813a666056bc1084f396d66}
-      \strng{authorbibnamehash}{23fc0acc0813a666056bc1084f396d66}
-      \strng{authornamehash}{d349573934433a60a5a744bb6baaf1ad}
-      \strng{authorfullhash}{23fc0acc0813a666056bc1084f396d66}
-      \field{sortinit}{D}
-      \field{sortinithash}{2ef1bd9a78cc71eb74d7231c635177b8}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{{QDOAS}}
-      \field{year}{2015}
-      \verb{file}
-      \verb ::
-      \endverb
-      \verb{urlraw}
-      \verb http://uv-vis.aeronomie.be/software/QDOAS/
-      \endverb
-      \verb{url}
-      \verb http://uv-vis.aeronomie.be/software/QDOAS/
-      \endverb
-    \endentry
     \entry{Defrise2003}{article}{}
       \name{author}{3}{}{%
         {{uniquename=0,uniquepart=base,hash=c618aead04933f6835db7178f6a5c236}{%
@@ -244,13 +116,13 @@
            given={Michel},
            giveni={M\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=59a40dcc4a63bb37e3a093b391318042}{%
+        {{uniquename=0,uniquepart=base,hash=02df2983fe7b7d578a201b1e5e10edb1}{%
            family={Kinahan},
            familyi={K\bibinitperiod},
            given={Paul\bibnamedelima E},
            giveni={P\bibinitperiod\bibinitdelim E\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=717303f28f5b0fca5424e8978ff0a1cf}{%
+        {{uniquename=0,uniquepart=base,hash=e34c861d70638fcb9a6e899828eed3a5}{%
            family={Michel},
            familyi={M\bibinitperiod},
            given={Christian\bibnamedelima J},
@@ -258,11 +130,11 @@
            givenun=0}}%
       }
       \strng{namehash}{553f343c8918244a32d9095c3f82610a}
-      \strng{fullhash}{a1d5552a74b9be6e8c69c65c99bdc10e}
-      \strng{bibnamehash}{a1d5552a74b9be6e8c69c65c99bdc10e}
-      \strng{authorbibnamehash}{a1d5552a74b9be6e8c69c65c99bdc10e}
+      \strng{fullhash}{c1bbf2aa0dc444ca0697942d9651ec03}
+      \strng{bibnamehash}{c1bbf2aa0dc444ca0697942d9651ec03}
+      \strng{authorbibnamehash}{c1bbf2aa0dc444ca0697942d9651ec03}
       \strng{authornamehash}{553f343c8918244a32d9095c3f82610a}
-      \strng{authorfullhash}{a1d5552a74b9be6e8c69c65c99bdc10e}
+      \strng{authorfullhash}{c1bbf2aa0dc444ca0697942d9651ec03}
       \field{sortinit}{D}
       \field{sortinithash}{2ef1bd9a78cc71eb74d7231c635177b8}
       \field{labelnamesource}{author}
@@ -271,6 +143,9 @@
       \field{year}{2003}
       \field{pages}{91\bibrangedash 114}
       \range{pages}{24}
+      \verb{file}
+      \verb :Users/ruialmeida/Documents/tomografia/reconstructionAlgorithms.pdf:pdf
+      \endverb
     \endentry
     \entry{EEA2007}{report}{}
       \name{author}{1}{}{%
@@ -278,13 +153,15 @@
            family={EEA},
            familyi={E\bibinitperiod}}}%
       }
+      \list{institution}{1}{%
+        {European Environment Agency}%
+      }
       \strng{namehash}{90aa9b8fa4bb4d8ad89a11841186926d}
       \strng{fullhash}{90aa9b8fa4bb4d8ad89a11841186926d}
       \strng{bibnamehash}{90aa9b8fa4bb4d8ad89a11841186926d}
       \strng{authorbibnamehash}{90aa9b8fa4bb4d8ad89a11841186926d}
       \strng{authornamehash}{90aa9b8fa4bb4d8ad89a11841186926d}
       \strng{authorfullhash}{90aa9b8fa4bb4d8ad89a11841186926d}
-      \field{extraname}{1}
       \field{sortinit}{E}
       \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
       \field{labelnamesource}{author}
@@ -295,7 +172,7 @@
       \field{type}{techreport}
       \field{year}{2007}
       \verb{file}
-      \verb :home/rui/Downloads/Air{\_}pollution{\_}in{\_}Europe{\_}1990{\_}2004.pdf:pdf
+      \verb :Users/ruialmeida/Downloads/airPollutionEurope2004.pdf:pdf
       \endverb
     \endentry
     \entry{EEA2016}{report}{}
@@ -310,7 +187,6 @@
       \strng{authorbibnamehash}{90aa9b8fa4bb4d8ad89a11841186926d}
       \strng{authornamehash}{90aa9b8fa4bb4d8ad89a11841186926d}
       \strng{authorfullhash}{90aa9b8fa4bb4d8ad89a11841186926d}
-      \field{extraname}{2}
       \field{sortinit}{E}
       \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
       \field{labelnamesource}{author}
@@ -328,7 +204,7 @@
       \verb doi:10.2800/413142
       \endverb
       \verb{file}
-      \verb :home/rui/Downloads/eea2018.pdf:pdf
+      \verb :Users/ruialmeida/Downloads/airQualityEurope2018.pdf:pdf
       \endverb
     \endentry
     \entry{Ghorani-Azam2016}{article}{}
@@ -380,50 +256,6 @@
       \verb http://www.jmsjournal.net/text.asp?2016/21/1/65/189646
       \endverb
     \endentry
-    \entry{GRAINGER1962}{article}{}
-      \name{author}{2}{}{%
-        {{uniquename=0,uniquepart=base,hash=be05c2f231383a75ddda66b889869b3e}{%
-           family={GRAINGER},
-           familyi={G\bibinitperiod},
-           given={J.\bibnamedelimi F.},
-           giveni={J\bibinitperiod\bibinitdelim F\bibinitperiod},
-           givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=3b8c853df72c9076ce25f721df367b08}{%
-           family={RING},
-           familyi={R\bibinitperiod},
-           given={J.},
-           giveni={J\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{07e16d5abd101c6dd37db5b75444c341}
-      \strng{fullhash}{07e16d5abd101c6dd37db5b75444c341}
-      \strng{bibnamehash}{07e16d5abd101c6dd37db5b75444c341}
-      \strng{authorbibnamehash}{07e16d5abd101c6dd37db5b75444c341}
-      \strng{authornamehash}{07e16d5abd101c6dd37db5b75444c341}
-      \strng{authorfullhash}{07e16d5abd101c6dd37db5b75444c341}
-      \field{sortinit}{G}
-      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{issn}{0028-0836}
-      \field{journaltitle}{Nature}
-      \field{month}{2}
-      \field{number}{4817}
-      \field{title}{{Anomalous Fraunhofer Line Profiles}}
-      \field{volume}{193}
-      \field{year}{1962}
-      \field{pages}{762\bibrangedash 762}
-      \range{pages}{1}
-      \verb{doi}
-      \verb 10.1038/193762a0
-      \endverb
-      \verb{urlraw}
-      \verb http://www.nature.com/doifinder/10.1038/193762a0
-      \endverb
-      \verb{url}
-      \verb http://www.nature.com/doifinder/10.1038/193762a0
-      \endverb
-    \endentry
     \entry{Gunderman2006}{book}{}
       \name{author}{1}{}{%
         {{uniquename=0,uniquepart=base,hash=3f314eb5101df3f041a5c486bfcb990c}{%
@@ -454,20 +286,19 @@
     \endentry
     \entry{Herman1995}{article}{}
       \name{author}{1}{}{%
-        {{uniquename=0,uniquepart=base,hash=c261bd731d7c2d823a449a68455f4cbe}{%
+        {{uniquename=0,uniquepart=base,hash=9c095858b1665b1374780fa98ec61946}{%
            family={Herman},
            familyi={H\bibinitperiod},
            given={G.\bibnamedelimi T.},
            giveni={G\bibinitperiod\bibinitdelim T\bibinitperiod},
            givenun=0}}%
       }
-      \strng{namehash}{c261bd731d7c2d823a449a68455f4cbe}
-      \strng{fullhash}{c261bd731d7c2d823a449a68455f4cbe}
-      \strng{bibnamehash}{c261bd731d7c2d823a449a68455f4cbe}
-      \strng{authorbibnamehash}{c261bd731d7c2d823a449a68455f4cbe}
-      \strng{authornamehash}{c261bd731d7c2d823a449a68455f4cbe}
-      \strng{authorfullhash}{c261bd731d7c2d823a449a68455f4cbe}
-      \field{extraname}{1}
+      \strng{namehash}{9c095858b1665b1374780fa98ec61946}
+      \strng{fullhash}{9c095858b1665b1374780fa98ec61946}
+      \strng{bibnamehash}{9c095858b1665b1374780fa98ec61946}
+      \strng{authorbibnamehash}{9c095858b1665b1374780fa98ec61946}
+      \strng{authornamehash}{9c095858b1665b1374780fa98ec61946}
+      \strng{authorfullhash}{9c095858b1665b1374780fa98ec61946}
       \field{sortinit}{H}
       \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
       \field{labelnamesource}{author}
@@ -487,12 +318,12 @@
       \verb 10.1006/rtim.1995.1002
       \endverb
       \verb{file}
-      \verb ::
+      \verb :Users/ruialmeida/Library/Application Support/Mendeley Desktop/Downloaded/Herman - 1995 - Image reconstruction from projections.pdf:pdf
       \endverb
     \endentry
     \entry{Herman2009}{book}{}
       \name{author}{1}{}{%
-        {{uniquename=0,uniquepart=base,hash=10a486094bfc7e10759c6d577c89c3e8}{%
+        {{uniquename=0,uniquepart=base,hash=09bd05c0a634382fa8ac6e2e1382ee7a}{%
            family={Herman},
            familyi={H\bibinitperiod},
            given={Gabor\bibnamedelima T.},
@@ -505,13 +336,12 @@
       \list{publisher}{1}{%
         {Springer London}%
       }
-      \strng{namehash}{10a486094bfc7e10759c6d577c89c3e8}
-      \strng{fullhash}{10a486094bfc7e10759c6d577c89c3e8}
-      \strng{bibnamehash}{10a486094bfc7e10759c6d577c89c3e8}
-      \strng{authorbibnamehash}{10a486094bfc7e10759c6d577c89c3e8}
-      \strng{authornamehash}{10a486094bfc7e10759c6d577c89c3e8}
-      \strng{authorfullhash}{10a486094bfc7e10759c6d577c89c3e8}
-      \field{extraname}{2}
+      \strng{namehash}{09bd05c0a634382fa8ac6e2e1382ee7a}
+      \strng{fullhash}{09bd05c0a634382fa8ac6e2e1382ee7a}
+      \strng{bibnamehash}{09bd05c0a634382fa8ac6e2e1382ee7a}
+      \strng{authorbibnamehash}{09bd05c0a634382fa8ac6e2e1382ee7a}
+      \strng{authornamehash}{09bd05c0a634382fa8ac6e2e1382ee7a}
+      \strng{authorfullhash}{09bd05c0a634382fa8ac6e2e1382ee7a}
       \field{sortinit}{H}
       \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
       \field{labelnamesource}{author}
@@ -524,7 +354,7 @@
       \verb 10.1007/978-1-84628-723-7
       \endverb
       \verb{file}
-      \verb ::
+      \verb :Users/ruialmeida/Library/Application Support/Mendeley Desktop/Downloaded/Herman - 2009 - Fundamentals of Computerized Tomography.pdf:pdf
       \endverb
       \verb{urlraw}
       \verb http://link.springer.com/10.1007/978-1-84628-723-7
@@ -535,7 +365,7 @@
     \endentry
     \entry{Herman1973}{article}{}
       \name{author}{3}{}{%
-        {{uniquename=0,uniquepart=base,hash=10a486094bfc7e10759c6d577c89c3e8}{%
+        {{uniquename=0,uniquepart=base,hash=09bd05c0a634382fa8ac6e2e1382ee7a}{%
            family={Herman},
            familyi={H\bibinitperiod},
            given={Gabor\bibnamedelima T.},
@@ -547,19 +377,19 @@
            given={Arnold},
            giveni={A\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=85088eeca8175706ff80987f9d21bb37}{%
+        {{uniquename=0,uniquepart=base,hash=754053d06550cb372bf8627121a9a2fb}{%
            family={Rowland},
            familyi={R\bibinitperiod},
            given={Stuart\bibnamedelima W.},
            giveni={S\bibinitperiod\bibinitdelim W\bibinitperiod},
            givenun=0}}%
       }
-      \strng{namehash}{7a1841850f2e92e00b743d43b0bf310c}
-      \strng{fullhash}{2c6dd6e79e8c6aba5a840a3b619b050a}
-      \strng{bibnamehash}{2c6dd6e79e8c6aba5a840a3b619b050a}
-      \strng{authorbibnamehash}{2c6dd6e79e8c6aba5a840a3b619b050a}
-      \strng{authornamehash}{7a1841850f2e92e00b743d43b0bf310c}
-      \strng{authorfullhash}{2c6dd6e79e8c6aba5a840a3b619b050a}
+      \strng{namehash}{f87bdb79e436211478674f700abc8557}
+      \strng{fullhash}{15ab2caf18efae8ef7bd46f8b08eb879}
+      \strng{bibnamehash}{15ab2caf18efae8ef7bd46f8b08eb879}
+      \strng{authorbibnamehash}{15ab2caf18efae8ef7bd46f8b08eb879}
+      \strng{authornamehash}{f87bdb79e436211478674f700abc8557}
+      \strng{authorfullhash}{15ab2caf18efae8ef7bd46f8b08eb879}
       \field{sortinit}{H}
       \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
       \field{labelnamesource}{author}
@@ -578,19 +408,19 @@
     \endentry
     \entry{Kak2001}{incollection}{}
       \name{author}{1}{}{%
-        {{uniquename=0,uniquepart=base,hash=79d20b9313c4fe34a6618496ed4afd96}{%
+        {{uniquename=0,uniquepart=base,hash=bc535e885c38d225664fa2553147d4ea}{%
            family={Kak},
            familyi={K\bibinitperiod},
            given={Avinash\bibnamedelima C.},
            giveni={A\bibinitperiod\bibinitdelim C\bibinitperiod},
            givenun=0}}%
       }
-      \strng{namehash}{79d20b9313c4fe34a6618496ed4afd96}
-      \strng{fullhash}{79d20b9313c4fe34a6618496ed4afd96}
-      \strng{bibnamehash}{79d20b9313c4fe34a6618496ed4afd96}
-      \strng{authorbibnamehash}{79d20b9313c4fe34a6618496ed4afd96}
-      \strng{authornamehash}{79d20b9313c4fe34a6618496ed4afd96}
-      \strng{authorfullhash}{79d20b9313c4fe34a6618496ed4afd96}
+      \strng{namehash}{bc535e885c38d225664fa2553147d4ea}
+      \strng{fullhash}{bc535e885c38d225664fa2553147d4ea}
+      \strng{bibnamehash}{bc535e885c38d225664fa2553147d4ea}
+      \strng{authorbibnamehash}{bc535e885c38d225664fa2553147d4ea}
+      \strng{authornamehash}{bc535e885c38d225664fa2553147d4ea}
+      \strng{authorfullhash}{bc535e885c38d225664fa2553147d4ea}
       \field{sortinit}{K}
       \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
       \field{labelnamesource}{author}
@@ -621,7 +451,7 @@
            given={V},
            giveni={V\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=b38af08fc48b635c598aa865fef345af}{%
+        {{uniquename=0,uniquepart=base,hash=8eaa28d9aedf04e0a38af23dcc63af8f}{%
            family={Mettendorf},
            familyi={M\bibinitperiod},
            given={K.-U.},
@@ -635,11 +465,11 @@
            givenun=0}}%
       }
       \strng{namehash}{c1cbb44a733efa9a1eeccb6ae141da55}
-      \strng{fullhash}{69f5ed91001f6366dc112fd070607fda}
-      \strng{bibnamehash}{69f5ed91001f6366dc112fd070607fda}
-      \strng{authorbibnamehash}{69f5ed91001f6366dc112fd070607fda}
+      \strng{fullhash}{1e4afa05d23dd140bb146d1dc3413ff5}
+      \strng{bibnamehash}{1e4afa05d23dd140bb146d1dc3413ff5}
+      \strng{authorbibnamehash}{1e4afa05d23dd140bb146d1dc3413ff5}
       \strng{authornamehash}{c1cbb44a733efa9a1eeccb6ae141da55}
-      \strng{authorfullhash}{69f5ed91001f6366dc112fd070607fda}
+      \strng{authorfullhash}{1e4afa05d23dd140bb146d1dc3413ff5}
       \field{sortinit}{L}
       \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
       \field{labelnamesource}{author}
@@ -657,7 +487,7 @@
       \verb 10.5194/acpd-4-2435-2004
       \endverb
       \verb{file}
-      \verb ::
+      \verb :Users/ruialmeida/Library/Application Support/Mendeley Desktop/Downloaded/Laepple et al. - 2004 - Longpath DOAS tomography on a motorway exhaust gas plume numerical studies and application to data from the BAB.pdf:pdf
       \endverb
       \verb{urlraw}
       \verb http://www.atmos-chem-phys-discuss.net/4/2435/2004/
@@ -668,61 +498,61 @@
     \endentry
     \entry{Lovett2009}{article}{}
       \name{author}{8}{}{%
-        {{uniquename=0,uniquepart=base,hash=73e4204e459c8caeb3975ff4fee8ed8c}{%
+        {{uniquename=0,uniquepart=base,hash=8ca9b7abb0550b4946724439049092ba}{%
            family={Lovett},
            familyi={L\bibinitperiod},
            given={Gary\bibnamedelima M.},
            giveni={G\bibinitperiod\bibinitdelim M\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=749948ab21d66486dcc7c14929acaa97}{%
+        {{uniquename=0,uniquepart=base,hash=fe514d3762248b4e640233d0af1cbde9}{%
            family={Tear},
            familyi={T\bibinitperiod},
            given={Timothy\bibnamedelima H.},
            giveni={T\bibinitperiod\bibinitdelim H\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=7551e4555ebf701f772f045ab8553a8d}{%
+        {{uniquename=0,uniquepart=base,hash=b6a6a9011ef2c35d0309244f8cc0b53e}{%
            family={Evers},
            familyi={E\bibinitperiod},
            given={David\bibnamedelima C.},
            giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=aca5f06a9f3bdc05e5f462c782fffaf8}{%
+        {{uniquename=0,uniquepart=base,hash=8048b564a4c6f99ac281a4d7e1f9aeee}{%
            family={Findlay},
            familyi={F\bibinitperiod},
            given={Stuart\bibnamedelima E.G.},
            giveni={S\bibinitperiod\bibinitdelim E\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=0553bdfe0d5b55bced1cc35e500ceae3}{%
+        {{uniquename=0,uniquepart=base,hash=8d30d20d956e46d31e7e34d2cdbfd2cc}{%
            family={Cosby},
            familyi={C\bibinitperiod},
            given={B.\bibnamedelimi Jack},
            giveni={B\bibinitperiod\bibinitdelim J\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=0304023154aff151bb51ba02479307cd}{%
+        {{uniquename=0,uniquepart=base,hash=a794b4ebc1d4b35c4e78b1a6c7388efe}{%
            family={Dunscomb},
            familyi={D\bibinitperiod},
            given={Judy\bibnamedelima K.},
            giveni={J\bibinitperiod\bibinitdelim K\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=12b8afcf74b1643ba6079a2189e8f0bb}{%
+        {{uniquename=0,uniquepart=base,hash=23a50b54a378bd4ac59a96b9221d8ceb}{%
            family={Driscoll},
            familyi={D\bibinitperiod},
            given={Charles\bibnamedelima T.},
            giveni={C\bibinitperiod\bibinitdelim T\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=1fc0e8e74a9d25f98618c3797f435c55}{%
+        {{uniquename=0,uniquepart=base,hash=0ba0b48ed193a3deea3f6a14a2658f22}{%
            family={Weathers},
            familyi={W\bibinitperiod},
            given={Kathleen\bibnamedelima C.},
            giveni={K\bibinitperiod\bibinitdelim C\bibinitperiod},
            givenun=0}}%
       }
-      \strng{namehash}{d0d9d0e60ef70b218756b4c9b460048b}
-      \strng{fullhash}{c57de2d5dcfe72e358ee34edb4634f39}
-      \strng{bibnamehash}{c57de2d5dcfe72e358ee34edb4634f39}
-      \strng{authorbibnamehash}{c57de2d5dcfe72e358ee34edb4634f39}
-      \strng{authornamehash}{d0d9d0e60ef70b218756b4c9b460048b}
-      \strng{authorfullhash}{c57de2d5dcfe72e358ee34edb4634f39}
+      \strng{namehash}{ce84f95f22df0cb743243181cdccc589}
+      \strng{fullhash}{0800db0ab913337f5e6b83e49506ff04}
+      \strng{bibnamehash}{0800db0ab913337f5e6b83e49506ff04}
+      \strng{authorbibnamehash}{0800db0ab913337f5e6b83e49506ff04}
+      \strng{authornamehash}{ce84f95f22df0cb743243181cdccc589}
+      \strng{authorfullhash}{0800db0ab913337f5e6b83e49506ff04}
       \field{sortinit}{L}
       \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
       \field{labelnamesource}{author}
@@ -779,7 +609,7 @@
       \field{type}{PhD Thesis}
       \field{year}{2013}
       \verb{file}
-      \verb ::
+      \verb :Users/ruialmeida/Library/Application Support/Mendeley Desktop/Downloaded/Merlaud - 2013 - Development and use of compact instruments for tropospheric investigations based on optical spectroscopy from mobile pl.pdf:pdf
       \endverb
       \verb{urlraw}
       \verb http://books.google.com/books?hl=en{\&}lr={\&}id=inXVSyR82zwC{\&}oi=fnd{\&}pg=PR3{\&}dq=Development+and+use+of+compact+instruments+for+tropospheric+investigations+based+on+optical+spectroscopy+from+mobile+platforms+sciences{\&}ots=VdebeDBQMc{\&}sig=4G0eVEvthJXuqd8WI3IWjjVXuXc
@@ -788,21 +618,50 @@
       \verb http://books.google.com/books?hl=en%7B%5C&%7Dlr=%7B%5C&%7Did=inXVSyR82zwC%7B%5C&%7Doi=fnd%7B%5C&%7Dpg=PR3%7B%5C&%7Ddq=Development+and+use+of+compact+instruments+for+tropospheric+investigations+based+on+optical+spectroscopy+from+mobile+platforms+sciences%7B%5C&%7Dots=VdebeDBQMc%7B%5C&%7Dsig=4G0eVEvthJXuqd8WI3IWjjVXuXc
       \endverb
     \endentry
+    \entry{Office2019}{misc}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=4d0005687d21cb90ca39b7de64cbfbe1}{%
+           family={Office},
+           familyi={O\bibinitperiod},
+           given={Met},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{4d0005687d21cb90ca39b7de64cbfbe1}
+      \strng{fullhash}{4d0005687d21cb90ca39b7de64cbfbe1}
+      \strng{bibnamehash}{4d0005687d21cb90ca39b7de64cbfbe1}
+      \strng{authorbibnamehash}{4d0005687d21cb90ca39b7de64cbfbe1}
+      \strng{authornamehash}{4d0005687d21cb90ca39b7de64cbfbe1}
+      \strng{authorfullhash}{4d0005687d21cb90ca39b7de64cbfbe1}
+      \field{sortinit}{O}
+      \field{sortinithash}{dad3efd0836470093a7b4a7bb756eb8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{The Great Smog of 1952}}
+      \field{urlyear}{}
+      \field{year}{2019}
+      \verb{urlraw}
+      \verb https://www.metoffice.gov.uk/weather/learn-about/weather/case-studies/great-smog
+      \endverb
+      \verb{url}
+      \verb https://www.metoffice.gov.uk/weather/learn-about/weather/case-studies/great-smog
+      \endverb
+    \endentry
     \entry{Olaguer2015}{article}{}
       \name{author}{1}{}{%
-        {{uniquename=0,uniquepart=base,hash=c33b108a9ea98ad3aef947ed3d60027f}{%
+        {{uniquename=0,uniquepart=base,hash=fe75f80caadfc03c7eab5d6bccdf7240}{%
            family={Olaguer},
            familyi={O\bibinitperiod},
            given={Eduardo\bibnamedelima P.},
            giveni={E\bibinitperiod\bibinitdelim P\bibinitperiod},
            givenun=0}}%
       }
-      \strng{namehash}{c33b108a9ea98ad3aef947ed3d60027f}
-      \strng{fullhash}{c33b108a9ea98ad3aef947ed3d60027f}
-      \strng{bibnamehash}{c33b108a9ea98ad3aef947ed3d60027f}
-      \strng{authorbibnamehash}{c33b108a9ea98ad3aef947ed3d60027f}
-      \strng{authornamehash}{c33b108a9ea98ad3aef947ed3d60027f}
-      \strng{authorfullhash}{c33b108a9ea98ad3aef947ed3d60027f}
+      \strng{namehash}{fe75f80caadfc03c7eab5d6bccdf7240}
+      \strng{fullhash}{fe75f80caadfc03c7eab5d6bccdf7240}
+      \strng{bibnamehash}{fe75f80caadfc03c7eab5d6bccdf7240}
+      \strng{authorbibnamehash}{fe75f80caadfc03c7eab5d6bccdf7240}
+      \strng{authornamehash}{fe75f80caadfc03c7eab5d6bccdf7240}
+      \strng{authorfullhash}{fe75f80caadfc03c7eab5d6bccdf7240}
       \field{sortinit}{O}
       \field{sortinithash}{dad3efd0836470093a7b4a7bb756eb8c}
       \field{labelnamesource}{author}
@@ -860,72 +719,72 @@
       \field{title}{{Differential Optical Absorption Spectroscopy}}
       \field{year}{2007}
       \verb{file}
-      \verb :home/rui/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Platt, Stutz - 2007 - Differential Optical Absorption Spectroscopy.pdf:pdf
+      \verb :Users/ruialmeida/Library/Application Support/Mendeley Desktop/Downloaded/Platt, Stutz - 2007 - Differential Optical Absorption Spectroscopy.pdf:pdf
       \endverb
     \endentry
     \entry{Pundt2005}{article}{}
       \name{author}{9}{}{%
-        {{uniquename=0,uniquepart=base,hash=443514bfdde8f08b31088fe1f5a7391b}{%
+        {{uniquename=0,uniquepart=base,hash=7a13e0fdb00a7c4c90893cf4b0ecd278}{%
            family={Pundt},
            familyi={P\bibinitperiod},
            given={I.},
            giveni={I\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=c2f0682e474c01f903cb091d46f91d50}{%
+        {{uniquename=0,uniquepart=base,hash=d0b666d937bee0066ae6e989c379fea4}{%
            family={Mettendorf},
            familyi={M\bibinitperiod},
            given={K.\bibnamedelimi U.},
            giveni={K\bibinitperiod\bibinitdelim U\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=d4ad8458d1360046c678df43b2bdc3fd}{%
+        {{uniquename=0,uniquepart=base,hash=2fd513f929dc82c21aaa1111c21e35b3}{%
            family={Laepple},
            familyi={L\bibinitperiod},
            given={T.},
            giveni={T\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=e189acad2d22e7c977ac4a2b8dedf7d1}{%
+        {{uniquename=0,uniquepart=base,hash=64e8abd9f4c74ef29d88ca74239ecb3e}{%
            family={Knab},
            familyi={K\bibinitperiod},
            given={V.},
            giveni={V\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=63ebfccb53da7f70bc690015463cd21f}{%
+        {{uniquename=0,uniquepart=base,hash=87ffef70355b4cda31118c16603fa2c5}{%
            family={Xie},
            familyi={X\bibinitperiod},
            given={P.},
            giveni={P\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=c6b53a2be716d8675865868ed3caa8e1}{%
+        {{uniquename=0,uniquepart=base,hash=8de954b19c11ce07097d893dbc8ab0e4}{%
            family={L{ö}sch},
            familyi={L\bibinitperiod},
            given={J.},
            giveni={J\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=38993844054b96f40ef2b28307906f49}{%
+        {{uniquename=0,uniquepart=base,hash=e9bb321249e9f2ebf936ac9ea225024e}{%
            family={Friedeburg},
            familyi={F\bibinitperiod},
            given={C.\bibnamedelimi V.},
            giveni={C\bibinitperiod\bibinitdelim V\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=0d96ad47b01da58e607abec7d1d33c0b}{%
+        {{uniquename=0,uniquepart=base,hash=a29d906d65ce268542382c5fbc32dfb1}{%
            family={Platt},
            familyi={P\bibinitperiod},
            given={U.},
            giveni={U\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=8721372faf29db0a881be71f01d8989d}{%
+        {{uniquename=0,uniquepart=base,hash=b959fb824ecd5025d518e70dfbcdc0b8}{%
            family={Wagner},
            familyi={W\bibinitperiod},
            given={T.},
            giveni={T\bibinitperiod},
            givenun=0}}%
       }
-      \strng{namehash}{49eac5afbfc8ab0be15cc6178f6ade8a}
-      \strng{fullhash}{9054d2bbb068e924e74c46eb46c88cad}
-      \strng{bibnamehash}{9054d2bbb068e924e74c46eb46c88cad}
-      \strng{authorbibnamehash}{9054d2bbb068e924e74c46eb46c88cad}
-      \strng{authornamehash}{49eac5afbfc8ab0be15cc6178f6ade8a}
-      \strng{authorfullhash}{9054d2bbb068e924e74c46eb46c88cad}
+      \strng{namehash}{8bb24be05fa70ebdd232bc0d80f328d1}
+      \strng{fullhash}{1497f359e7f63d041cc66da86974cebf}
+      \strng{bibnamehash}{1497f359e7f63d041cc66da86974cebf}
+      \strng{authorbibnamehash}{1497f359e7f63d041cc66da86974cebf}
+      \strng{authornamehash}{8bb24be05fa70ebdd232bc0d80f328d1}
+      \strng{authorfullhash}{1497f359e7f63d041cc66da86974cebf}
       \field{sortinit}{P}
       \field{sortinithash}{8d51b3d5b78d75b54308d706b9bbe285}
       \field{labelnamesource}{author}
@@ -944,7 +803,7 @@
       \verb 10.1016/j.atmosenv.2004.07.035
       \endverb
       \verb{file}
-      \verb ::
+      \verb :Users/ruialmeida/Library/Application Support/Mendeley Desktop/Downloaded/Pundt et al. - 2005 - Measurements of trace gas distributions using Long-path DOAS-Tomography during the motorway campaign BAB II Experi.pdf:pdf
       \endverb
       \keyw{DOAS,NO 2,Tomography,Vehicle emission}
     \endentry
@@ -956,13 +815,13 @@
            given={Jochen},
            giveni={J\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=a0909e4c721d920379bff0ffbf072260}{%
+        {{uniquename=0,uniquepart=base,hash=a8a1bcc82ea4f341c7cbd5844792fc77}{%
            family={Hurlock},
            familyi={H\bibinitperiod},
            given={Stephen\bibnamedelima C.},
            giveni={S\bibinitperiod\bibinitdelim C\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=267fb8366496152300f67dae82a296da}{%
+        {{uniquename=0,uniquepart=base,hash=86b8dd41d15507a44bad6ba53c52051e}{%
            family={Colosimo},
            familyi={C\bibinitperiod},
            given={Santo\bibnamedelima F.},
@@ -998,19 +857,19 @@
            given={Sergio},
            giveni={S\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=fa98f8e15c98ba06c3235811ebacd1c4}{%
+        {{uniquename=0,uniquepart=base,hash=1ca7ffaab81bb470822165cd2580ebd7}{%
            family={Flynn},
            familyi={F\bibinitperiod},
            given={James\bibnamedelima H.},
            giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=ea7c5fc3c7e1481d36eb2a2f60f3d848}{%
+        {{uniquename=0,uniquepart=base,hash=b2911c78ed6c1a7df5d89d5b60b309b9}{%
            family={Erickson},
            familyi={E\bibinitperiod},
            given={Matthew\bibnamedelima H.},
            giveni={M\bibinitperiod\bibinitdelim H\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=c33b108a9ea98ad3aef947ed3d60027f}{%
+        {{uniquename=0,uniquepart=base,hash=fe75f80caadfc03c7eab5d6bccdf7240}{%
            family={Olaguer},
            familyi={O\bibinitperiod},
            given={Eduardo\bibnamedelima P.},
@@ -1018,11 +877,11 @@
            givenun=0}}%
       }
       \strng{namehash}{b233dd20aaba8268450aa750018c3189}
-      \strng{fullhash}{477a5e26115a578790bff93be1b6a757}
-      \strng{bibnamehash}{477a5e26115a578790bff93be1b6a757}
-      \strng{authorbibnamehash}{477a5e26115a578790bff93be1b6a757}
+      \strng{fullhash}{bf4e6a660c675a407e0f02c8242963c7}
+      \strng{bibnamehash}{bf4e6a660c675a407e0f02c8242963c7}
+      \strng{authorbibnamehash}{bf4e6a660c675a407e0f02c8242963c7}
       \strng{authornamehash}{b233dd20aaba8268450aa750018c3189}
-      \strng{authorfullhash}{477a5e26115a578790bff93be1b6a757}
+      \strng{authorfullhash}{bf4e6a660c675a407e0f02c8242963c7}
       \field{sortinit}{S}
       \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
       \field{labelnamesource}{author}
@@ -1038,6 +897,9 @@
       \verb{doi}
       \verb 10.1016/j.atmosenv.2016.09.054
       \endverb
+      \verb{file}
+      \verb :Users/ruialmeida/Library/Application Support/Mendeley Desktop/Downloaded/Stutz et al. - 2016 - A novel dual-LED based long-path DOAS instrument for the measurement of aromatic hydrocarbons.pdf:pdf
+      \endverb
       \verb{urlraw}
       \verb http://linkinghub.elsevier.com/retrieve/pii/S1352231016307713
       \endverb
@@ -1047,7 +909,7 @@
     \endentry
     \entry{ValentedeAlmeida2017}{article}{}
       \name{author}{2}{}{%
-        {{uniquename=0,uniquepart=base,hash=1ee9319d1b309870aea7c3c8cfed942a}{%
+        {{uniquename=0,uniquepart=base,hash=34a9a92d01a0a78aa9d3818b0b8b5228}{%
            family={{Valente de Almeida}},
            familyi={V\bibinitperiod},
            given={Rui},
@@ -1060,12 +922,12 @@
            giveni={P\bibinitperiod},
            givenun=0}}%
       }
-      \strng{namehash}{e4e71fd586c1d794edd12e2f6d4044b4}
-      \strng{fullhash}{e4e71fd586c1d794edd12e2f6d4044b4}
-      \strng{bibnamehash}{e4e71fd586c1d794edd12e2f6d4044b4}
-      \strng{authorbibnamehash}{e4e71fd586c1d794edd12e2f6d4044b4}
-      \strng{authornamehash}{e4e71fd586c1d794edd12e2f6d4044b4}
-      \strng{authorfullhash}{e4e71fd586c1d794edd12e2f6d4044b4}
+      \strng{namehash}{ee0545c4467165947c48e50ae5baa182}
+      \strng{fullhash}{ee0545c4467165947c48e50ae5baa182}
+      \strng{bibnamehash}{ee0545c4467165947c48e50ae5baa182}
+      \strng{authorbibnamehash}{ee0545c4467165947c48e50ae5baa182}
+      \strng{authornamehash}{ee0545c4467165947c48e50ae5baa182}
+      \strng{authorfullhash}{ee0545c4467165947c48e50ae5baa182}
       \field{sortinit}{V}
       \field{sortinithash}{75dd7385c90b2252c3ae853a80ca853b}
       \field{labelnamesource}{author}
@@ -1090,6 +952,33 @@
       \verb https://www.atmos-meas-tech.net/10/2299/2017/
       \endverb
     \endentry
+    \entry{Vallero2014}{book}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=ce91b76a24de4713e7e0d3b012084221}{%
+           family={Vallero},
+           familyi={V\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Academic Press}%
+      }
+      \strng{namehash}{ce91b76a24de4713e7e0d3b012084221}
+      \strng{fullhash}{ce91b76a24de4713e7e0d3b012084221}
+      \strng{bibnamehash}{ce91b76a24de4713e7e0d3b012084221}
+      \strng{authorbibnamehash}{ce91b76a24de4713e7e0d3b012084221}
+      \strng{authornamehash}{ce91b76a24de4713e7e0d3b012084221}
+      \strng{authorfullhash}{ce91b76a24de4713e7e0d3b012084221}
+      \field{sortinit}{V}
+      \field{sortinithash}{75dd7385c90b2252c3ae853a80ca853b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{5}
+      \field{isbn}{9780124017337}
+      \field{title}{{Fundamentals of air pollution}}
+      \field{year}{2014}
+    \endentry
     \entry{Application2008}{misc}{}
       \name{author}{2}{}{%
         {{uniquename=0,uniquepart=base,hash=d3479232e80d71e33aae788c4cf9a853}{%
@@ -1098,19 +987,19 @@
            given={Pedro},
            giveni={P\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=9428363cd30adf0da54db8e280f0f85b}{%
+        {{uniquename=0,uniquepart=base,hash=15384ef1799434449fc4f2756f02e6de}{%
            family={Matos},
            familyi={M\bibinitperiod},
            given={Jo{ã}o},
            giveni={J\bibinitperiod},
            givenun=0}}%
       }
-      \strng{namehash}{86a53f13cceb719f1414304b433d4d73}
-      \strng{fullhash}{86a53f13cceb719f1414304b433d4d73}
-      \strng{bibnamehash}{86a53f13cceb719f1414304b433d4d73}
-      \strng{authorbibnamehash}{86a53f13cceb719f1414304b433d4d73}
-      \strng{authornamehash}{86a53f13cceb719f1414304b433d4d73}
-      \strng{authorfullhash}{86a53f13cceb719f1414304b433d4d73}
+      \strng{namehash}{7b0bbd303d38734be40672dad3bb4a4c}
+      \strng{fullhash}{7b0bbd303d38734be40672dad3bb4a4c}
+      \strng{bibnamehash}{7b0bbd303d38734be40672dad3bb4a4c}
+      \strng{authorbibnamehash}{7b0bbd303d38734be40672dad3bb4a4c}
+      \strng{authornamehash}{7b0bbd303d38734be40672dad3bb4a4c}
+      \strng{authorfullhash}{7b0bbd303d38734be40672dad3bb4a4c}
       \field{sortinit}{V}
       \field{sortinithash}{75dd7385c90b2252c3ae853a80ca853b}
       \field{labelnamesource}{author}
@@ -1122,9 +1011,6 @@
       \field{year}{2008}
       \field{pages}{19\bibrangedash 22}
       \range{pages}{4}
-      \verb{file}
-      \verb :home/rui/Downloads/US20080198025A1.pdf:pdf
-      \endverb
     \endentry
     \entry{Vieira2007}{misc}{}
       \name{author}{3}{}{%
@@ -1134,7 +1020,7 @@
            given={Pedro},
            giveni={P\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=9428363cd30adf0da54db8e280f0f85b}{%
+        {{uniquename=0,uniquepart=base,hash=15384ef1799434449fc4f2756f02e6de}{%
            family={Matos},
            familyi={M\bibinitperiod},
            given={Jo{ã}o},
@@ -1154,33 +1040,30 @@
         {INPI}%
       }
       \strng{namehash}{2e307e89f86333dbba90a90bda83d483}
-      \strng{fullhash}{082f12b904097c00051bc1b58933f62d}
-      \strng{bibnamehash}{082f12b904097c00051bc1b58933f62d}
-      \strng{authorbibnamehash}{082f12b904097c00051bc1b58933f62d}
+      \strng{fullhash}{ef295443249e105302c99d2fa9a2d171}
+      \strng{bibnamehash}{ef295443249e105302c99d2fa9a2d171}
+      \strng{authorbibnamehash}{ef295443249e105302c99d2fa9a2d171}
       \strng{authornamehash}{2e307e89f86333dbba90a90bda83d483}
-      \strng{authorfullhash}{082f12b904097c00051bc1b58933f62d}
+      \strng{authorfullhash}{ef295443249e105302c99d2fa9a2d171}
       \field{sortinit}{V}
       \field{sortinithash}{75dd7385c90b2252c3ae853a80ca853b}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{{Sistema para a detec{ç}{ã}o autom{á}tica de inc{ê}ndios florestais por espectroscopia {ó}ptica}}
       \field{year}{2007}
-      \verb{file}
-      \verb :home/rui/Downloads/PT103304B.pdf:pdf
-      \endverb
     \endentry
     \entry{WorldHealthOrganisationEurope2004}{article}{}
       \name{author}{1}{}{%
-        {{uniquename=0,uniquepart=base,hash=842a81d10f40ca7e5679295f88262a01}{%
+        {{uniquename=0,uniquepart=base,hash=d998f123972ea31a0b4177e7fe8c0636}{%
            family={{World Health Organisation Europe}},
            familyi={W\bibinitperiod}}}%
       }
-      \strng{namehash}{842a81d10f40ca7e5679295f88262a01}
-      \strng{fullhash}{842a81d10f40ca7e5679295f88262a01}
-      \strng{bibnamehash}{842a81d10f40ca7e5679295f88262a01}
-      \strng{authorbibnamehash}{842a81d10f40ca7e5679295f88262a01}
-      \strng{authornamehash}{842a81d10f40ca7e5679295f88262a01}
-      \strng{authorfullhash}{842a81d10f40ca7e5679295f88262a01}
+      \strng{namehash}{d998f123972ea31a0b4177e7fe8c0636}
+      \strng{fullhash}{d998f123972ea31a0b4177e7fe8c0636}
+      \strng{bibnamehash}{d998f123972ea31a0b4177e7fe8c0636}
+      \strng{authorbibnamehash}{d998f123972ea31a0b4177e7fe8c0636}
+      \strng{authornamehash}{d998f123972ea31a0b4177e7fe8c0636}
+      \strng{authorfullhash}{d998f123972ea31a0b4177e7fe8c0636}
       \field{sortinit}{W}
       \field{sortinithash}{ecb89ff85896a47dc313960773ac311d}
       \field{labelnamesource}{author}
@@ -1191,11 +1074,13 @@
       \field{year}{2004}
       \field{pages}{30}
       \range{pages}{1}
-      \verb{file}
-      \verb :home/rui/Downloads/who{\_}air{\_}pollution{\_}effects.pdf:pdf
-      \endverb
     \endentry
   \enddatalist
+  \missing{Bevington2003}
+  \missing{Brinkmann1968}
+  \missing{Chance1997}
+  \missing{Danckaert2015}
+  \missing{GRAINGER1962}
 \endrefsection
 \endinput
 
