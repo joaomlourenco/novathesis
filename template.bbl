@@ -207,6 +207,35 @@
       \verb :Users/ruialmeida/Downloads/airQualityEurope2018.pdf:pdf
       \endverb
     \endentry
+    \entry{EEA2019}{misc}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=90aa9b8fa4bb4d8ad89a11841186926d}{%
+           family={EEA},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \strng{fullhash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \strng{bibnamehash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \strng{authorbibnamehash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \strng{authornamehash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \strng{authorfullhash}{90aa9b8fa4bb4d8ad89a11841186926d}
+      \field{sortinit}{E}
+      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{European Environmental Agency}}
+      \field{urlday}{23}
+      \field{urlmonth}{9}
+      \field{urlyear}{2019}
+      \field{year}{2019}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.eea.europa.eu
+      \endverb
+      \verb{url}
+      \verb https://www.eea.europa.eu
+      \endverb
+    \endentry
     \entry{Ghorani-Azam2016}{article}{}
       \name{author}{3}{}{%
         {{uniquename=0,uniquepart=base,hash=15896faad570718a7bc446e9b5940199}{%
@@ -406,36 +435,37 @@
       \verb 10.1016/0022-5193(73)90145-8
       \endverb
     \endentry
-    \entry{Kak2001}{incollection}{}
-      \name{author}{1}{}{%
-        {{uniquename=0,uniquepart=base,hash=bc535e885c38d225664fa2553147d4ea}{%
+    \entry{Kak2001}{book}{}
+      \name{author}{2}{}{%
+        {{uniquename=0,uniquepart=base,hash=37697226d5d9fa5bd385e9396738ad74}{%
            family={Kak},
            familyi={K\bibinitperiod},
-           given={Avinash\bibnamedelima C.},
-           giveni={A\bibinitperiod\bibinitdelim C\bibinitperiod},
+           given={A.C.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=af3eb849c7bb824718da580e0514e62b}{%
+           family={Slaney},
+           familyi={S\bibinitperiod},
+           given={Malcolm},
+           giveni={M\bibinitperiod},
            givenun=0}}%
       }
-      \strng{namehash}{bc535e885c38d225664fa2553147d4ea}
-      \strng{fullhash}{bc535e885c38d225664fa2553147d4ea}
-      \strng{bibnamehash}{bc535e885c38d225664fa2553147d4ea}
-      \strng{authorbibnamehash}{bc535e885c38d225664fa2553147d4ea}
-      \strng{authornamehash}{bc535e885c38d225664fa2553147d4ea}
-      \strng{authorfullhash}{bc535e885c38d225664fa2553147d4ea}
+      \list{publisher}{2}{%
+        {Society of Industrial}%
+        {Applied Mathematics}%
+      }
+      \strng{namehash}{30f285a36804c7b2f5f50da66a6b85ff}
+      \strng{fullhash}{30f285a36804c7b2f5f50da66a6b85ff}
+      \strng{bibnamehash}{30f285a36804c7b2f5f50da66a6b85ff}
+      \strng{authorbibnamehash}{30f285a36804c7b2f5f50da66a6b85ff}
+      \strng{authornamehash}{30f285a36804c7b2f5f50da66a6b85ff}
+      \strng{authorfullhash}{30f285a36804c7b2f5f50da66a6b85ff}
       \field{sortinit}{K}
       \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{abstract}{An entirely different approach for tomographic imaging consists of assuming that the cross section consists of an array of unknowns, and then setting up algebraic equations for the unknowns in terms of the measured projection data. Although conceptually this approach is much simpler than the transform-based methods discussed in previous sections, for medical applications it lacks the accuracy and the speed of implementation. However, there are situations where it is not possible to measure a large number of projections, or the projections are not uniformly distributed over 180 or 360”) both these conditions being necessary requirements for the transformbased techniques to produce results with the accuracy desired in medical imaging. An example of such a situation is earth resources imaging using cross-borehole measurements discussed in Chapter 4. Problems of this type are sometimes more amenable to solution by algebraic techniques. Algebraic techniques are also useful when the energy propagation paths between the source and receiver positions are subject to ray bending on account of refraction, or when the energy propagation undergoes attenuation along ray paths as in emission CT. [Unfortunately, many imaging problems where refraction is encountered also suffer from diffraction effects (see Chap. 4).] As will be obvious from the discussion to follow, in algebraic methods it is essential to know ray paths that connect the corresponding transmitter and receiver positions. When refraction and diffraction effects are substantial (medium inhomogeneities exceed 10{\%} of the average background value and the correlation length of these inhomogeneities is comparable to a wavelength), it becomes impossible to predict these ray paths. If algebraic techniques are applied under these conditions, we often obtain meaningless results.}
-      \field{booktitle}{Computerized Tomographic Imaging}
-      \field{isbn}{978-0-89871-494-4}
-      \field{issn}{00766879}
-      \field{title}{{Algebraic Reconstruction Algorithms}}
+      \field{title}{{Principles of Computerized Tomographic Imaging}}
       \field{year}{2001}
-      \field{pages}{275\bibrangedash 296}
-      \range{pages}{22}
-      \verb{doi}
-      \verb 10.1137/1.9780898719277.ch7
-      \endverb
     \endentry
     \entry{Laepple2004}{article}{}
       \name{author}{4}{}{%
@@ -451,10 +481,10 @@
            given={V},
            giveni={V\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=8eaa28d9aedf04e0a38af23dcc63af8f}{%
+        {{uniquename=0,uniquepart=base,hash=08c0cffabd9e18adeaa4d2e08222145c}{%
            family={Mettendorf},
            familyi={M\bibinitperiod},
-           given={K.-U.},
+           given={K.-U},
            giveni={K\bibinithyphendelim U\bibinitperiod},
            givenun=0}}%
         {{uniquename=0,uniquepart=base,hash=443514bfdde8f08b31088fe1f5a7391b}{%
@@ -465,18 +495,19 @@
            givenun=0}}%
       }
       \strng{namehash}{c1cbb44a733efa9a1eeccb6ae141da55}
-      \strng{fullhash}{1e4afa05d23dd140bb146d1dc3413ff5}
-      \strng{bibnamehash}{1e4afa05d23dd140bb146d1dc3413ff5}
-      \strng{authorbibnamehash}{1e4afa05d23dd140bb146d1dc3413ff5}
+      \strng{fullhash}{83ceb8b0c411746cb59b2b5cdfad711e}
+      \strng{bibnamehash}{83ceb8b0c411746cb59b2b5cdfad711e}
+      \strng{authorbibnamehash}{83ceb8b0c411746cb59b2b5cdfad711e}
       \strng{authornamehash}{c1cbb44a733efa9a1eeccb6ae141da55}
-      \strng{authorfullhash}{1e4afa05d23dd140bb146d1dc3413ff5}
+      \strng{authorfullhash}{83ceb8b0c411746cb59b2b5cdfad711e}
       \field{sortinit}{L}
       \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{annotation}{NULL}
+      \field{abstract}{This paper presents a procedure for performing and optimizing inversions for DOAS tomography and its ap-plication to measurement data. DOAS tomography is a new technique to determine 2-and 3-dimensional concentration fields of air pollutants or other trace gases by combining dif-ferential optical absorption spectroscopy (DOAS) with tomo-graphic inversion techniques. Due to the limited amount of measured data, the resulting concentration fields are sensitive to the inversion process. Therefore detailed error estimations are needed to determine the quality of the reconstruction. In this paper we compare different row acting methods for the inversion, present a procedure for optimizing the parameters of the reconstruction process and propose a way to estimate the error-fields by numerical studies. The procedure was ap-plied to data from the motorway emission campaign BAB II. Two dimensional NO 2 cross sections at right angles to the motorway could be reconstructed qualitatively well at differ-ent meteorological situations. Additionally we present error fields for the reconstructions which show the problems and skills of the used measurement setup. Numerical studies on an improved setup for future motorway campaigns show, that DOAS tomography is able to produce high quality concentra-tion maps.}
       \field{issn}{1680-7375}
       \field{journaltitle}{Atmospheric Chemistry and Physics Discussions}
+      \field{month}{5}
       \field{number}{3}
       \field{title}{{Longpath DOAS tomography on a motorway exhaust gas plume: numerical studies and application to data from the BAB II campaign}}
       \field{volume}{4}
@@ -490,10 +521,10 @@
       \verb :Users/ruialmeida/Library/Application Support/Mendeley Desktop/Downloaded/Laepple et al. - 2004 - Longpath DOAS tomography on a motorway exhaust gas plume numerical studies and application to data from the BAB.pdf:pdf
       \endverb
       \verb{urlraw}
-      \verb http://www.atmos-chem-phys-discuss.net/4/2435/2004/
+      \verb www.atmos-chem-phys.org/acp/4/1323/ http://www.atmos-chem-phys-discuss.net/4/2435/2004/
       \endverb
       \verb{url}
-      \verb http://www.atmos-chem-phys-discuss.net/4/2435/2004/
+      \verb www.atmos-chem-phys.org/acp/4/1323/%20http://www.atmos-chem-phys-discuss.net/4/2435/2004/
       \endverb
     \endentry
     \entry{Lovett2009}{article}{}
