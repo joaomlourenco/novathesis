@@ -117,9 +117,6 @@
 \usepackage{csquotes}
 \usepackage{algorithm}
 \usepackage{algorithmic}
-\usepackage{tabularx}
-\usepackage{multirow}
-
 
 %% IMPORTANT (consider removing/commenting)
 %\usepackage{colortbl}    % Use colors in background of table cells
@@ -128,6 +125,11 @@
 
 %% For automatic adding month and year
 \usepackage[calc]{datetime2}
+
+%% Fiddling with fonts
+% \usepackage[]{tgbonum}
+% \usepackage{tgschola}
+% \fontfamily{qcs}
 
 %% FOR DEMO PURPOSES ONLY --- TO BE REMOVED by final users
 \usepackage{lipsum}
@@ -165,8 +167,7 @@
 % \majorfield[en]={Biomedical Engineering}
 % \thesiscover[msc,front]={cover-megi-nova-ims}
 % \thesiscover[msc,front]={cover-mgi-nova-ims}
-% \glstocfalse % Uncomment to remove 
-               % Glossary, Acronyms, and Symbols from TOC
+\glstocfalse
 %%============================================================
 
 
@@ -174,16 +175,13 @@
 on Differential Optical Absorption Spectroscopy]{Development of a
 Tomographic Atmospheric Monitoring System based on Differential Optical
 Absorption Spectroscopy}
-
 % \subtitle{Science is beautiful}
-
 
 % Autor
 % use [f] for female and [m] for male
 \authorname[m]{Rui Filipe Cantarino Valente de Almeida}{Rui Valente de
 Almeida}
 \authordegree{Master of Science}
-
 
 % Date
 \datemonth{\DTMmonthname{\month}}
@@ -233,13 +231,12 @@ Almeida}
 \acknowledgementsfile{acknowledgements}
 
 
-% \quotefile{quote}    % Quote
+\quotefile{quote}    % Quote
 \abstractfile[pt]{abstract-pt}  % Abstract in Portuguese
 \abstractfile[en]{abstract-en}  % Abstract in English
 \abstractfile[fr]{abstract-fr}  % Abstract in French
 % \glossaryfile{glossary}
-\setglossarystyle{super}
-\setabbreviationstyle[acronym]{long-short}
+% \setglossarystyle{super}
 \acronymsfile{acronyms} 
 % \symbolsfile{symbols}
 
@@ -261,18 +258,20 @@ Almeida}
 \chapterfile{chapter2}
 \chapterfile{chapter3}
 \chapterfile{chapter4}
+% \chapterfile{chapter4}
 
 
 % Text appendixes
 % sintax: \appendixfile{file}
 % Comment if not needed
-\appendixfile{appendix1}
-% \appendixfile{appendix2}
+% \appendixfile{appendix1}
+\appendixfile{appendix2}
 % \annexfile{annex1}
 
 
 
 % BibTeX bibiography files. Can be used multiple times with a single file nae each time.
+% \addbibfile{bibliography.bib}
 \addbibresource{bibliography.bib}
 
 
@@ -307,13 +306,12 @@ Almeida}
 \printotherlists   % If option 'otherlistsat=front', print other lists of contents according
                   % to instructions given above, otherwise do nothing
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \thesismainmatter  % The main text
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \printchapthers    % Print document chapters
-\printbibliography
 % \printbib    % Print the bibliography
+\printbibliography
 % \printotherlists   % Alternative location to print the other lists (if you uncomment this one, comment the other one above)
 \printotherlists   % If option 'otherlistsat=back', print other lists of contents according to instructions given above, otherwise do nothing
 % \addtocontents{toc}{\setlength{\cftsecnumwidth}{4em}}

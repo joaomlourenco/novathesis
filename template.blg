@@ -1,0 +1,15 @@
+[0] Config.pm:302> INFO - This is Biber 2.11
+[0] Config.pm:305> INFO - Logfile is 'template.blg'
+[44] biber-darwin:313> INFO - === Fri Oct  4, 2019, 16:33:59
+[70] Biber.pm:371> INFO - Reading 'template.bcf'
+[182] Biber.pm:857> INFO - Found 59 citekeys in bib section 0
+[198] Biber.pm:3976> INFO - Processing section 0
+[210] Biber.pm:4136> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
+[238] bibtex.pm:1500> INFO - LaTeX decoding ...
+[850] bibtex.pm:1316> INFO - Found BibTeX data source 'bibliography.bib'
+[1398] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1399] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1399] Biber.pm:3804> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[1399] Biber.pm:3810> INFO - No sort tailoring available for locale 'en-US'
+[1486] bbl.pm:617> INFO - Writing 'template.bbl' with encoding 'UTF-8'
+[1548] bbl.pm:720> INFO - Output to template.bbl

@@ -1,0 +1,12 @@
+:%s/month = {jan}/month = {1}/g
+:%s/month = {feb}/month = {2}/g
+:%s/month = {mar}/month = {3}/g
+:%s/month = {apr}/month = {4}/g
+:%s/month = {may}/month = {5}/g
+:%s/month = {jun}/month = {6}/g
+:%s/month = {jul}/month = {7}/g
+:%s/month = {aug}/month = {8}/g
+:%s/month = {sep}/month = {9}/g
+:%s/month = {oct}/month = {10}/g
+:%s/month = {nov}/month = {11}/g
+:%s/month = {dec}/month = {12}/g
