@@ -392,6 +392,14 @@
 }
 
 
+%% Front page Image
+\newcommand{\thefrontpageimage}{\novathesis@undefined}
+
+\newcommand{\frontpageimage}[1]{%
+  \renewcommand{\thefrontpageimage}{#1}%
+}
+
+
 %% Work identification
 \newcommand{\thetitle}{~title \novathesis@undefined}
 \renewcommand{\title}[2][]{%
