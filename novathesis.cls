@@ -830,7 +830,7 @@
 
 \newcommand{\printappendixes}{%
 	\ifthenelse{\isundefined\novathesis@appendix@list}{}%
-		{\renewcommand{\appendixtocname}{\appendixnamepl}%
+		{\renewcommand{\appendixtocname}{\appendixname}%
          \cleardoublepage\appendix\addappheadtotoc%
 		 \forlistloop{\novathesis@printappendix}{\novathesis@appendix@list}}%
 } 
