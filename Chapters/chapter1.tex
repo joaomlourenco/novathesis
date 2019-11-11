@@ -83,56 +83,90 @@ measure it in as many ways as possible. This project aimed to create
 just that: another way in which to measure and map the behavior of
 certain pollutants.
 
-\section{Objectives}%
-\label{sec:objectives}
+% \section{Objectives}%
+% \label{sec:objectives}
 
-From the beginning of the project, the main objective has always been to
-design and develop a miniaturized spectroscopic environmental analysis
-device. The system would have to be small and portable enough to adapt
-to a drone, but should be able to function if adapted to any other
-surface, such as a car or even a fixed station. With time, however, the
-goal changed somewhat. The miniaturization and drone-adaptation were
-kept, but there was now the need to be able to map the pollutant
-concentration along a geographic region through the use of tomographic
-reconstruction algorithms. This meant that, while the device itself
-would be perfectly capable of operating without a drone, the tomographic
-capability would be lost, unless a prohibitively large number of
-spectroscopic systems were deployed in that region.
+% From the beginning of the project, the main objective has always been to
+% design and develop a miniaturized spectroscopic environmental analysis
+% device. The system would have to be small and portable enough to adapt
+% to a drone, but should be able to function if adapted to any other
+% surface, such as a car or even a fixed station. With time, however, the
+% goal changed somewhat. The miniaturization and drone-adaptation were
+% kept, but there was now the need to be able to map the pollutant
+% concentration along a geographic region through the use of tomographic
+% reconstruction algorithms. This meant that, while the device itself
+% would be perfectly capable of operating without a drone, the tomographic
+% capability would be lost, unless a prohibitively large number of
+% spectroscopic systems were deployed in that region.
 
-The concept evolved in such a way that the  overarching goal of this
-thesis is now to theorize and design a two-dimensional mapping tool for
-trace atmospheric pollutants such as NO$_x$ and SO$_x$, using passive
-DOAS as the measurement technique. In addition to this, it should be
-mentioned that the system must be small and portable; use tomographic
-reconstruction (and acquisition) algorithms to map the region; and that
-it should use only one collection point (to reduce costs and
-instrumental complexity). From these objectives, the research questions,
-detailed in Section~\ref{sec:research_question} were derived.
+% This evolution in the scope of the project meant that the overarching
+% goal of the project would now be to theorize and design a
+% two-dimensional mapping tool for trace atmospheric pollutants such as
+% NO$_x$ and SO$_x$, using passive DOAS as the measurement technique. In
+% addition to this, it should be mentioned that the system must be small
+% and portable; use tomographic reconstruction (and acquisition)
+% algorithms to map the region; and that it should use only one collection
+% point (to reduce costs and instrumental complexity). It was from this
+% idea that we derived the research questions that we present in
+% Section~\ref{sec:research_question}. 
 
-% \section{Methods}%
-% \label{sec:methods}
+\section{Open Questions}%
+\label{sec:open_questions}
 
-% To address these goals, I assumed the development of this thesis to be
-% essentially split in two parts, which are to be explored simultaneously.
-% They can (coarsely) be addressed as \emph{tomography} and
-% \emph{instrumentation}. On the tomography side, it will be necessary to
-% study what are the more appropriate algorithms (and what type of
-% tomography), how they can be physically deployed (i.e., the problem's
-% geometry) and what type of reconstruction method is the more favorable.
-% Regarding the instrumentation, there are also several points that need
-% considering: decisions are required with regard to the mechanics, the
-% controls and the optical components of the final system. A more detailed
-% discussion of these topics can be found in
-% Section~\ref{sec:hypothesis_and_approach} and
-% Chapter~\ref{cha:research_methods}.
+The literature on DOAS tomography is sparse. Although the theory behind
+gas tomography is sound and well proved, the usage of this kind of
+systems demands a very high level of technical proficiency, which is
+chiefly found among scientists and researchers. Even then, given the
+fact that tomographic systems are also very expensive, the number of
+applications of this technology has been remarkably low, which results
+in a series of open questions, which this project and this thesis aim to
+exploit. 
 
-% One of the most important steps in the development of this work is
-% designing and implementing a simulation software platform, that allows
-% the validation of the acquisition strategy, the geometry selection and
-% the reconstruction approach. This endeavor will also be of critical
-% importance for component selection, since it will define the component
-% requirements for the whole system. On the optical instrumentation side,
-% this project will require optimizing \gls{FFF}'s optical assembly.
-% Although similar in purpose and types of components, this assembly is
-% significantly larger than what is acceptable for this project and needs
-% redesigning.
+Almost all the tomographic DOAS systems that were developed up until
+this day have been deployed as active DOAS ground stations that targeted
+a relatively small number of reflectors and as a result got a small
+number of light paths in their measurements (see, for
+instance,~\cite{Pundt2005}). These were unmovable devices that could in
+fact operate autonomously, but were only able to map a fixed region's
+trace gas profile. There have been, of course, some attempts at running
+airborne tomographic DOAS experiments, but we could not find a single
+one of these that would be able to run with no external interference. In
+volcanology, passive tomographic DOAS is commonly used to sample
+SO\textsubscript{2} profiles above the crater
+(see~\cite{Johansson2009}). This kind of system also uses fixed ground
+stations to gather the tomographic projections of a volcanic plume.
+Although ingenious, their setup is also plagued by the problem of
+insufficient information. It is very difficult to obtain a large
+projection number using fixed ground stations, and this is turn leads to
+poor image reconstructions. In Chapter~\ref{cha:literature_review}, I
+present a more in depth review of the various applications the technique
+has seen throughout the years.
+
+It seems, as consequence of the above, that there are nowadays two large
+open questions in the development of tomographic DOAS systems. On one
+hand, current tomographic DOAS assemblies work with low projection
+numbers, a limiting factor in the amount of detail the technique is able
+to reproduce; on the other hand, the developers of these devices have
+focused on the construction of unmovable ground stations, which
+complicates their proliferation and probably play a role on the fact
+that these systems are not at all widespread, in spite of their obvious
+interesting capabilities. The main motivation for this thesis is thus to
+explore these two large open questions, by developing a highly mobile
+tomographic DOAS system, able to collect a higher number of tomographic
+projections by being assembled onto an Unmanned Aerial Vehicle
+(\gls{UAV}), which should also give the system the ability to be
+autonomously deployed.
+
+\section{Document Structure}%
+\label{sec:document_structure}
+
+This document is structured as follows: after this small introduction, I
+dwell on the research questions and how they were derived
+(Chapter~\ref{cha:research_question}); in
+Chapter~\ref{cha:literature_review} I present comprehensive literature
+review, conducted as a final requirement for one of the courses I
+enrolled in during the PhD program; finally, in Chapter~\ref{cha:methodology}, I
+present the research methodology that was employed for the development
+of this thesis, and during the course of my work.
+
+
