@@ -69,9 +69,9 @@
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% uncomment for 'numeric-by-order-of-citation' like citations
     backend=biber,     % use bibtex if possible
-    style=numeric-comp, % numeric(*), alphabetic, authoryear, bwl-FU
+    style=numeric, % numeric(*), alphabetic, authoryear, bwl-FU
     sortcites=true,     % If numeric, sort cites by crescent order
-    sorting=nyt,        % none, nyt(*), ynt
+    sorting=none,        % none, nyt(*), ynt
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% uncomment for 'numeric-by-order-of-citation' like citations
     % backend=bibtex,   % use bibtex if possible
@@ -131,7 +131,7 @@
 
 %% FOR DEMO PURPOSES ONLY --- TO BE REMOVED by final users
 \usepackage{lipsum}
-
+\usepackage{pdfpages}
 
 %------------------------------------------------------------------
 % Costumization of some packages
@@ -277,6 +277,7 @@ Almeida}
 
 
 
+
 %%==== DANGER ==== DANGER ==== DANGER ==== DANGER ==== DANGER ====
 %%==== DANGER ==== DANGER ==== DANGER ==== DANGER ==== DANGER ====
 %%==== DANGER ==== DANGER ==== DANGER ==== DANGER ==== DANGER ====
@@ -291,7 +292,7 @@ Almeida}
 
 %% Begining of document
 \begin{document}
-
+% \listoftodos
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \thesisfrontmatter  % Before the main text (TOC, etc)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -317,7 +318,7 @@ Almeida}
 % \printotherlists   % Alternative location to print the other lists (if you uncomment this one, comment the other one above)
 \printotherlists   % If option 'otherlistsat=back', print other lists of contents according to instructions given above, otherwise do nothing
 % \addtocontents{toc}{\setlength{\cftsecnumwidth}{4em}}
-% \printappendixes  % Print appendixes, if any!
+\printappendixes  % Print appendixes, if any!
 \printannexes  % Print appendixes, if any!
 \printbackcoverpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
