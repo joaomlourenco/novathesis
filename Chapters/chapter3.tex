@@ -74,7 +74,7 @@ European productivity has been rising or stable across all sectors.
 
 \begin{figure}[htpb]
     \centering
-    \includegraphics[width=\textwidth]{img/emissions.png}
+    \includegraphics[clip, trim=2.1cm 6.5cm 2.5cm 5cm, width=\textwidth]{img/eea_emissions.pdf}
     \caption{EU emissions evolution through time, since the year 2000,
     separated by source of emissions~\cite{EEA2016}. Notice the downward
     trend for emissions across all sources.}
@@ -156,7 +156,7 @@ death~\cite{Penney}.
 
 \begin{figure}[htpb]
     \centering
-    \includegraphics[width=0.8\textwidth]{img/arrhythmia.png}
+    \includegraphics[clip, trim=2cm 19.5cm 8.5cm 3.6cm, width=.8\textwidth]{img/arrythmia.pdf}
     \caption{Physiological pathways to arrhythmia that stem from Air
     Pollution exposure~\cite{Vallero2014}.}
     \label{fig:arrhythmia}
@@ -179,7 +179,9 @@ may come from Air Pollution exposure, and the influence of their timing.
 
 \begin{figure}[htpb]
     \centering
-    \includegraphics[width=0.8\textwidth]{img/development.png}
+    \includegraphics[clip,% 
+        trim=3.4cm 12.2cm 3.4cm 3.6cm,%
+        width=0.8\textwidth]{img/development.pdf}
     \caption{Possible abnormalities caused by \gls{AP} exposure \emph{in
     utero}. Notice that time of exposure is of critical
     importance~\cite{Vallero2014}.}
@@ -564,7 +566,8 @@ be written:
 \begin{figure}[htpb]
     \centering
     \includegraphics[width=0.7\textwidth]{img/coordinates.png}
-    \caption{Schematic representation for coordinate setting.}
+    \caption{Schematic representation for coordinate setting. The image
+    depicts a parallel projection setting~\cite{Kak2001a}.}
     \label{fig:coordinates}
 \end{figure}
 
@@ -596,7 +599,7 @@ integrals are written and solved for reconstruction. The simplest case
 is the one where the set is acquired in a row, describing what is called
 a parallel geometry. Another more complex case is when a single point
 source is used as origin for all rays, forming a fan. This is called a
-fanbeam array. There are other possible geometries, but they fall out of
+fan-beam array. There are other possible geometries, but they fall out of
 the scope of this work and will therefore not be addressed any further.
 
 \subsection{The Fourier Slice Theorem}%
@@ -677,8 +680,11 @@ $\theta=0$. Finally, the enunciation of the Fourier Slice Theorem:
 
 \begin{figure}[htpb]
     \centering
-    \includegraphics[width =.8\textwidth]{img/fst.png}    
-    \caption{The \gls{FST}, a schematic representation.}
+    \includegraphics[clip,%
+        trim=5cm 12.2cm 5cm 10cm,%
+        width =.8\textwidth]{img/fst.pdf}
+    \caption{The \gls{FST}, a schematic
+    representation~\cite{Asl2013a}.}
     \label{fig:fst}
 \end{figure}
 
@@ -737,9 +743,9 @@ reconstruction scheme. However, they usually result in acquisition times
 which are in the order of minutes. A faster way of collecting the data
 is one where all radiation emanates from a single point-source, which
 rotates around the target object (as well as the detectors). There are
-two types of fan beam projections: equiangular and equally spaced. In
+two types of fan-beam projections: equiangular and equally spaced. In
 this project, I have only worked with equiangular processes, so I will
-not include an explanation for equally spaced fan beam projections. The
+not include an explanation for equally spaced fan-beam projections. The
 reader may find this well described (much better than I would be able
 to) in ~\cite{Kak2001} and ~\cite{Herman1973}.
 
@@ -757,22 +763,56 @@ In Equation~\ref{eq:theta_and_t}, $D$ is the distance between the source
 $S$ and the origin $O$; $\gamma$ is the angle of a ray within a fan and
 $\beta$ is the angle that the source $S$ makes with a reference axis.
 Through these relationships one can \emph{translate} the parallel
-projection's FBP algorithm to the fanbeam case, which involves several
+projection's FBP algorithm to the fan-beam case, which involves several
 complex geometric transformations, although the overall rationale is
 exactly the same.
 
 \begin{figure}[htpb]
     \centering
     \includegraphics[width=.8\textwidth]{img/fig319.png}
-    \caption{Schematic representation of an equiangular fan beam
+    \caption{Schematic representation of an equiangular fan-beam
     projection, taken from~\cite{Kak2001}.}
     \label{fig:equiangular}
 \end{figure}
 
-Another particularity of fanbeam projection data is the fact that they
+Another particularity of fan-beam projection data is the fact that they
 can be sorted into a parallel projection. For that, one starts with the
-premise that rays within
+premise that if one were to substitute the fan geometry for parallel
+beams, most of the fan-beam rays would also appear in some projection of
+the parallel setup. This re-sorting algorithm starts with
+Equation~\ref{eq:theta_and_t}. Now, if we call a fan-beam projection
+taken at angle $\beta$ $R_{\beta}(\gamma)$, and a parallel projection
+taken at angle $\theta$ $P_{\theta}(t)$, one could thus write
+Equation~\ref{eq:parallel_vs_fanbeam}, which can already be used to
+re-sort any fan-beam projection into parallel beam geometry.
 
+\begin{equation}
+    \label{eq:parallel_vs_fanbeam}
+    R_{\beta}(\gamma) = P_{\beta + \gamma}(D \cdot \sin \gamma)
+\end{equation}
+
+Let's call the angular interval between fan-beam projections can be
+written $\delta\beta$, and the angular interval of rays within each fan
+is written $\delta\gamma$. In the case that they are the same
+($\beta=\gamma=\alpha$), then it it is the case that they can both be
+replaced by multiples of that interval in
+Equation~\ref{eq:parallel_vs_fanbeam}, which becomes
+Equation~\ref{eq:parallel_vs_fanbeam2}.
+
+\begin{equation}
+    \label{eq:parallel_vs_fanbeam2}
+    R_{m \cdot \alpha}(n \cdot\alpha) = P_{m \cdot\alpha + n
+    \cdot\alpha}(D \cdot \sin n \cdot\alpha)
+\end{equation}
+
+Or, in non-mathematical notation, the n\textsuperscript{th} ray of the
+m\textsuperscript{th} radial projection (R) is the same as the
+n\textsuperscript{th} ray in the (m+n)\textsuperscript{th} parallel
+projection. Although being much simpler than directly applying the
+\gls{FBP} algorithm to the fan-beam projection data, this method has a
+limitation, which is the non-uniformity of the generated parallel
+projections. This can usually be corrected through
+interpolation~\cite{Kak2001a}. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
