@@ -1,4 +1,4 @@
-%!TEX root = ../template.tex
+%!TEX root = ../thesis_rui_almeida.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% chapter1.tex
 %% Rui V. Almeida's thesis file
@@ -8,151 +8,356 @@
 \chapter{Introduction}%
 \label{cha:introduction}
 
-\section{Introduction}%
-\label{sec:introduction}
+\section{Background, Motivation and Starting Points}%
+\label{sec:background_and_motivation}
 
+\subsection{Introduction}%
+\label{sub:introduction}
 
-\subsection{Aims}%
-\label{sub:aims}
+This thesis describes the work that I have done in the past 4 years on
+the design and development of a miniaturized system for atmospheric
+monitoring based on optical spectroscopy. The project itself was the
+major part of the \gls{ATMOS}, an initiative that was
+contemplated with European funding through a \gls{PT2020} initiative and
+came as a response to the growing weight that \gls{AP} has in the whole
+Western world.
+
+The potential impact of \gls{AP} on human health is amply documented.
+Numerous papers have, for decades, established many links between air
+quality and several common ailments like respiratory syndromes and
+cardiovascular diseases. Similar connections have also been found
+regarding the probability of gestational malformations and several types
+of cancer. On a different level, and of perhaps less immediate concern,
+are the effects that have been observed on ecosystems. Many times these
+effects are difficult to predict (and timely mitigate) and in some cases
+have been known to interfere with people's livelihood. In time, and if
+not addressed, these interferences will certainly hinder economies and
+limit the quality of life of populations globally. The severity of this
+problem makes it clear that we need to tackle it intelligently, and this
+approach requires that we can measure, trace and track \gls{AP}
+effectively, which beckons engineers and scientists to create more
+technology for this specific purpose.
+
+Answering this call, with this work I have tried to create a reply to
+the question of whether it would be possible to develop a
+two-dimensional pollutant mapping tool, small enough to be fitted onto a
+\gls{UAV}, which came to be a tomographically enabled design. To this
+end, I have developed a simulation platform that computationally proves
+the method's feasibility and confirmed through experiments that the
+hypothesis on which the solution is based, regarding the use of
+sequentially measured scattered sunlight as analogous to an artificial
+light source is valid.
+
+\subsection{Context}%
+\label{sub:context}
+
+The idea behind this thesis was born in 2015, at NGNS-IS (a Portuguese
+tech startup). At the time, the company's flagship product was the
+\gls{FFF}. The \gls{FFF} was a forest fire detection system, capable of
+mostly autonomous and automatic operation.  The system was the first
+application of \gls{DOAS} for fire detection, and for that it was
+patented in 2007 (see~\cite{Vieira2007, Application2008}). The \gls{FFF}
+is a remote sensing device that scans the horizon for the presence of a
+smoke column, sequentially performing a chemical analysis of each
+azimuth, using the Sun as a light source for its spectroscopic
+operations~\cite{ValentedeAlmeida2017}.
+
+The \gls{FFF} was deployed in several "habitats", both nationally
+(Parque Nacional da Peneda-Gerês and Ourém) and internationally (Spain
+and Brazil). One of the company's clients at the time was interested in
+a pollution monitoring solution, and asked if the spectroscopic system
+would be capable of performing such a task. The challenge resonated
+through the company's structure and the idea that created this thesis
+was born. The team then started reading about the concept of \gls{AP}
+and how both populations and entities were concerned about it. It became
+clear that, while there were already several methods to measure
+\gls{AP}, there was a clear market drive for the development of a system
+that could leverage the large area capabilities of a \gls{DOAS} device
+while being able to provide a more spatially resolved "picture" of the
+atmospheric status. With this in mind, the company managed to have the
+investigation financed through a \gls{PT2020} funding opportunity. This
+achievement was a clear validation of the project's goals and of the
+need there was for a system with the proposed capabilities. It was,
+however, not enough. \gls{FFF} was a very good starting point, but there
+was still a lot of continuous research work needed before any of the
+goals that had been set were achieved. This led to the publication of
+this PhD project, in a tripartite consortium between FCT-NOVA, NGNS-IS
+and the Portuguese Foundation for Science and Technology. Its main goal
+was to develop an atmospheric monitoring system prototype that would be
+able to spectroscopically map pollutant concentrations in a
+two-dimensional way.
+
+In April 2017, NGNS-IS was integrated in the Compta group, one of the
+oldest IT groups operating in Portugal. Despite its age, this company is
+one of the main presences in some of the most modern industrial fields,
+like \gls{IOT} applications. \gls{ATMOS}'s pollutant tracing
+capabilities made it an almost perfect fit in one of \gls{IOT}'s most
+resounding niches, the \emph{Smart Cities} trend. Unfortunately, the
+transition between one company and the other, regardless of the
+project's adequacy, was anything but smooth. Almost two years later, in
+the beginning of 2019, engulfed in a sea of endless bureaucracy and ill
+intent on behalf of the managing governmental authorities (who seemed
+always more interested in seeing the project fail than anything else),
+\gls{ATMOS} was terminated and financing was cut.
 
 \subsection{Research Questions}%
 \label{sub:research_questions}
 
-\subsection{Contribution}%
-\label{sub:contribution}
+In Section~\ref{sub:context}, I have introduced the reasons which led
+NGNS-IS to pursue the development of an atmospheric monitoring system,
+and that what set it apart from other systems was the ability to
+spectroscopically map pollutants concentrations using tomographic
+methods, thus defining a primary objective for this thesis.
 
-\subsection{Objectives}%
-\label{sub:objectives}
-
-\subsection{Findings}%
-\label{sub:findings}
-
-\section{Topic and aims}%
-\label{sec:topic_and_aims}
-
-\subsection{Air pollution}%
-\label{sub:air_pollution}
-
-\subsection{Air pollution monitoring}%
-\label{sub:air_pollution_monitoring}
-
-\subsection{DOAS}%
-\label{sub:doas}
-
-\subsubsection{DOAS Tomography}%
-\label{ssub:doas_tomography}
-
-\section{Literature review}%
-\label{sec:literature_review}
-
-\subsection{Air pollution}%
-\label{sub:air_pollution}
-
-\subsubsection{Definition}%
-\label{ssub:definition}
-
-\subsubsection{Sources}%
-\label{ssub:sources}
-
-\subsubsection{Effects}%
-\label{ssub:effects}
+Two secondary objectives were born from the necessary initial research,
+which had a very heavy influence over the adopted methods:
 \begin{itemize}
-    \item Human health
-    \item Ecosystems
-    \item Climate change
+    \item To use a tomographic approach for the mapping procedure;
+    \item To ensure the designed system would be small and highly
+        mobile;
+    \item To use a single light collection point, minimizing material
+        costs.
 \end{itemize}
 
-\subsection{Tomography}%
-\label{sub:tomography}
+Taking all the above into account, we arrive at the main Research
+Question (\gls{RQ}), presented in Table~\ref{tab:RQ1}.
+\begin{table}[htpb]
+    \centering
+    \caption{Main research question.}
+    \label{tab:RQ1}
+    \begin{tabularx}{0.8\textwidth}{cX}
+        \toprule
+        \textbf{RQ1}&\emph{ How to design a miniaturized tomographic
+        atmosphere monitoring system based on DOAS? }\\
+        \bottomrule
+    \end{tabularx}
+\end{table}
 
-\subsubsection{Reconstruction algorithms}%
-\label{ssub:reconstruction_algorithms}
+This is the main research question. It gave rise to four other more
+detailed research questions. These secondary questions allow a better
+delimitation of the work at hand and are important complements to RQ1.
+This questions are presented in Table~\ref{tab:sec_RQ}
 
+\begin{table}[htpb]
+    \centering
+    \caption{Secondary research questions.}
+    \label{tab:sec_RQ}
+    \begin{tabularx}{0.8\textwidth}{cX}
+        \toprule
+        \textbf{RQ1.1}&\emph{ What would be the best strategy
+        for the system to cover a small geographic region? }\\
+        \midrule
+        \textbf{RQ1.2}&\emph{ What would be the necessary
+        components for such a system? }\\
+        \midrule
+        \textbf{RQ1.3}&\emph{ How will the system acquire the
+        data? }\\
+        \midrule
+        \textbf{RQ1.4}&\emph{ What should the tomographic
+        reconstruction look like and how to perform it? }\\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\section{Problem Introduction}%
+\label{sec:problem_introduction}
+
+Daniel Vallero, in his book "Fundamentals of Air
+Pollution"~\cite{Vallero2014} makes a very important observation: Air
+Pollution has no universal definition. Its meaning is intertwined with
+the context with which it is measured and observed, with the ecosystem
+in which it is perceived and even with the pollutant concentration (not
+every toxic compound is toxic at every concentration). The \gls{EPA}
+defines Air Pollution as the following:
+
+\begin{center}
+    \begin{minipage}{0.8\textwidth}
+
+        \noindent
+            \textit{Air Pollution is the presence of contaminants or pollutant
+            substances in the air that interfere with human health or welfare,
+            or produce other harmful environmental effects.}
+
+    \end{minipage}
+\end{center}
+
+He then analyzes this definition through two possible lenses, the one
+that comes with the interference produced by air contaminants; and the
+one that comes from the harm they may cause. He notes that both points
+of view come with a heavy burden of ambiguity, incompatible with a
+scientific definition. We can thus observe that preferable to address
+the issue through its measurable effects and consequences. These are
+well-established and well known, and scientists all around the world
+have been publishing extensively about them for some decades now. The
+correlation between Air Pollution and an increased mortality in heavily
+industrialized areas was first established in Europe, in the 19$^{th}$
+century, but the first time it was taken seriously was during the 1952
+killer-smog incidents, in London~\cite{Platt2007}. At the time, a
+combination of very cold weather, an anticyclone and fireplace emissions
+caused a thick smog to fall over London, directly causing thousands of
+deaths and indirectly many more~\cite{Bell2008,Office2019}. The
+disastrous consequences of this incident had a huge impact in the civil
+society, resulting in a series of policies and laws, among which the
+Clean Air Acts of 1956 and 1968.
+
+\subsection{\acrlong{AP} Effects on Human Health}%
+\label{sub:ap_effects_on_human_health}
+
+\begin{flushright}
+    \begin{minipage}{0.6\textwidth}
+        ~\\[.5cm]
+        \noindent
+        \bfseries
+        \textit{
+            What is it that is not poison? All things are poison and
+            nothing is without poison. It is the dose alone that makes a
+            thing not poison.
+        }
+
+        \hfill-- Paracelsus
+    \end{minipage}
+\end{flushright}
+
+This quote, originally in the writings of one of the fathers of modern
+medicine, the Swiss Paracelsus, was taken from Patricia Frank's book
+called \emph{The Dose Makes The Poison}~\cite{Frank2011} and is one of
+the core tenets of toxicology even today. It holds for all chemicals,
+including the ones that constitute \gls{AP}, but it is incomplete. It is
+not the dose alone to make the poison. Rather, one has to consider the
+whole context at which we are directing our discussion. Nitrogen
+compounds in the air cause several respiratory syndromes, but in the
+soil they are essential nutrients~\cite{Vallero2014, Lovett2009}.
+Admittedly this is an extreme comparison, but it serves to introduce
+the reader to the concept of dependence between the poisonous nature of
+a chemical and the exposure conditions and circumstances. Moreover, it
+is the precursor to another important notion, which is that of the
+relation between dose and response. Generally, one can express the
+adverse effect of a given chemical by the damage it causes in relation
+to the exposure, the dose. Hence, increasing the concentration of a
+chemical in an organism also increases the severity of the adverse
+outcome~\cite{Vallero2014}. This mechanism, in which a variation of dose
+implies a change in the organism's response is what is called the
+dose-response, and is an important chemical characterization method in
+this context.
+
+\subsubsection{Respiratory System Ailments Related to \acrlong{AP}}%
+\label{ssub:respiratory_system_ailments_related_to_ap}
+
+
+\lipsum{5}
 \begin{itemize}
-    \item Analytical
-        \begin{itemize}
-            \item FBP;
-            \item Fan-beam FBP.
-        \end{itemize}
-    \item Iterative
-        \begin{itemize}
-            \item SART;
-            \item SIRT;
-            \item MLEM;
-        \end{itemize}
+    \item Cardiovascular
+    \item Gestation and malformations
+    \item Cancer
+    \item Neurological
 \end{itemize}
 
-\subsubsection{Geometries}%
-\label{ssub:geometries}
 
-\subsection{DOAS}%
-\label{sub:doas}
+\begin{itemize}
+    \item Ecosystem effects of Air pollution
+    \item Air pollution and Climate change
+    \item Sources of AP
+    \item Air Pollution in Europe
+    \item Air Pollution in other Western countries
+    \item Air pollution in developing countries
+    \item Detecting and monitoring air pollution
+    \item Technology's role in tackling AP
+\end{itemize}
 
-\subsubsection{Background}%
-\label{ssub:background}
+% \section{Literature review}%
+% \label{sec:literature_review}
 
-\subsubsection{DOAS-tomography}%
-\label{ssub:doas_tomography}
+% \subsection{Tomography}%
+% \label{sub:tomography}
 
-\section{Terms and scope of topics}%
-\label{sec:terms_and_scope_of_topics}
+% \subsubsection{Reconstruction algorithms}%
+% \label{ssub:reconstruction_algorithms}
 
-\section{Knowledge gap}%
-\label{sec:knowledge_gap}
+% \begin{itemize}
+%     \item Analytical
+%         \begin{itemize}
+%             \item FBP;
+%             \item Fan-beam FBP.
+%         \end{itemize}
+%     \item Iterative
+%         \begin{itemize}
+%             \item SART;
+%             \item SIRT;
+%             \item MLEM;
+%         \end{itemize}
+% \end{itemize}
 
-\subsection{Smart air pollution monitoring}%
-\label{sub:smart_air_pollution_monitoring}
+% \subsubsection{Geometries}%
+% \label{ssub:geometries}
 
-\subsection{2d or 3d concentration mapping technologies}%
-\label{sub:2d_or_3d_concentration_mapping_technologies}
+% \subsection{DOAS}%
+% \label{sub:doas}
 
-\subsection{Low mobility of existing systems}%
-\label{sub:low_mobility_of_existing_systems}
+% \subsubsection{Background}%
+% \label{ssub:background}
 
-\section{Relevance of topic}%
-\label{sec:relevance_of_topic}
+% \subsubsection{DOAS-tomography}%
+% \label{ssub:doas_tomography}
 
-\subsection{Smart cities}%
-\label{sub:smart_cities}
+% \section{Terms and scope of topics}%
+% \label{sec:terms_and_scope_of_topics}
 
-\subsection{Air pollution monitoring in the future}%
-\label{sub:air_pollution_monitoring_in_the_future}
+% \section{Knowledge gap}%
+% \label{sec:knowledge_gap}
 
-\section{Research Questions}%
-\label{sec:research_questions}
+% \subsection{Smart air pollution monitoring}%
+% \label{sub:smart_air_pollution_monitoring}
 
-\section{Hypothesis}%
-\label{sec:hypothesis}
+% \subsection{2d or 3d concentration mapping technologies}%
+% \label{sub:2d_or_3d_concentration_mapping_technologies}
 
-\section{Methods}%
-\label{sec:methods}
+% \subsection{Low mobility of existing systems}%
+% \label{sub:low_mobility_of_existing_systems}
 
-\subsection{Simulator}%
-\label{sub:simulator}
+% \section{Relevance of topic}%
+% \label{sec:relevance_of_topic}
 
-\subsection{UAV Instruments}%
-\label{sub:uav_instruments}
+% \subsection{Smart cities}%
+% \label{sub:smart_cities}
 
-\subsection{Telescope and adaptations}%
-\label{sub:telescope_and_adaptations}
+% \subsection{Air pollution monitoring in the future}%
+% \label{sub:air_pollution_monitoring_in_the_future}
 
-\subsubsection{Model selection}%
-\label{ssub:model_selection}
+% \section{Research Questions}%
+% \label{sec:research_questions}
 
-\subsubsection{Spectrometer coupling}%
-\label{ssub:spectrometer_coupling}
+% \section{Hypothesis}%
+% \label{sec:hypothesis}
 
-\subsection{Experiments}%
-\label{sub:experiments}
+% \section{Methods}%
+% \label{sec:methods}
 
-\subsection{SITL for trajectory programming}%
-\label{sub:sitl_for_trajectory_programming}
+% \subsection{Simulator}%
+% \label{sub:simulator}
 
-\section{Findings}%
-\label{sec:findings}
+% \subsection{UAV Instruments}%
+% \label{sub:uav_instruments}
 
-\section{Layout}%
-\label{sec:layout}
+% \subsection{Telescope and adaptations}%
+% \label{sub:telescope_and_adaptations}
+
+% \subsubsection{Model selection}%
+% \label{ssub:model_selection}
+
+% \subsubsection{Spectrometer coupling}%
+% \label{ssub:spectrometer_coupling}
+
+% \subsection{Experiments}%
+% \label{sub:experiments}
+
+% \subsection{SITL for trajectory programming}%
+% \label{sub:sitl_for_trajectory_programming}
+
+% \section{Findings}%
+% \label{sec:findings}
+
+% \section{Layout}%
+% \label{sec:layout}
 
 
 
