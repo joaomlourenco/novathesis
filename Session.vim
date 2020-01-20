@@ -8,15 +8,16 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
 endif
 set shortmess=aoO
 badd +149 ~/.vim_runtime/my_configs.vim
-badd +225 Chapters/1_introduction.tex
+badd +163 Chapters/1_introduction.tex
 badd +19 ~/Documents/TEX/temp_thesis/Chapters/chapter1.tex
-badd +239 thesis_rui_almeida.tex
+badd +264 thesis_rui_almeida.tex
 badd +1 Chapters/glossary.tex
 badd +34 Chapters/acronyms.tex
 badd +53 ~/Documents/TEX/temp_thesis/Chapters/chapter2.tex
 badd +21 ~/Documents/TEX/temp_thesis/Chapters/chapter3.tex
 badd +10 Chapters/quote.tex
 badd +1 Chapters/dedicatory.tex
+badd +106 Chapters/2_litreview.tex
 argglobal
 silent! argdel *
 edit Chapters/1_introduction.tex
@@ -32,8 +33,8 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 30 + 22) / 45)
-exe '2resize ' . ((&lines * 10 + 22) / 45)
+exe '1resize ' . ((&lines * 32 + 23) / 47)
+exe '2resize ' . ((&lines * 10 + 23) / 47)
 argglobal
 setlocal fdm=manual
 setlocal fde=0
@@ -44,12 +45,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 236 - ((11 * winheight(0) + 15) / 30)
+let s:l = 189 - ((22 * winheight(0) + 16) / 32)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-236
-normal! 013|
+189
+normal! 0
 wincmd w
 argglobal
 enew
@@ -62,8 +63,8 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 wincmd w
-exe '1resize ' . ((&lines * 30 + 22) / 45)
-exe '2resize ' . ((&lines * 10 + 22) / 45)
+exe '1resize ' . ((&lines * 32 + 23) / 47)
+exe '2resize ' . ((&lines * 10 + 23) / 47)
 tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
