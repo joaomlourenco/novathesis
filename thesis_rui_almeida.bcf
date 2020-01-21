@@ -1995,31 +1995,7 @@
     <bcf:datasource type="file" datatype="bibtex">bibliography.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">Vieira2007</bcf:citekey>
-    <bcf:citekey order="1">Application2008</bcf:citekey>
-    <bcf:citekey order="2">ValentedeAlmeida2017</bcf:citekey>
-    <bcf:citekey order="3">Guerreiro2019</bcf:citekey>
-    <bcf:citekey order="4">CEDelft2018</bcf:citekey>
-    <bcf:citekey order="5">Vallero2014</bcf:citekey>
-    <bcf:citekey order="6">Platt2007</bcf:citekey>
-    <bcf:citekey order="7">Bell2008</bcf:citekey>
-    <bcf:citekey order="7">Office2019</bcf:citekey>
-    <bcf:citekey order="8">Frank2011</bcf:citekey>
-  </bcf:section>
-  <!-- SORTING TEMPLATES -->
-  <bcf:sortingtemplate name="none">
-    <bcf:sort order="1">
-      <bcf:sortitem order="1">citeorder</bcf:sortitem>
-    </bcf:sort>
-  </bcf:sortingtemplate>
-  <!-- DATALISTS -->
-  <bcf:datalist section="0"
-                name="none/global//global/global"
-                type="entry"
-                sortingtemplatename="none"
-                sortingnamekeytemplatename="global"
-                labelprefix=""
-                uniquenametemplatename="global"
-                labelalphanametemplatename="global">
-  </bcf:datalist>
-</bcf:controlfile>
+    <bcf:citekey order="2">Vieira2007</bcf:citekey>
+    <bcf:citekey order="2">Application2008</bcf:citekey>
+    <bcf:citekey order="3">ValentedeAlmeida2017</bcf:citekey>
+    <bcf:citekey order="4">Guerreiro2019</bcf:cite

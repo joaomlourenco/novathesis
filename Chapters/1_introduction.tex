@@ -194,10 +194,150 @@ against \gls{AP} require the approach to be intelligent and
 knowledgeable, for the more we know, the better we can handle it. It is
 thus the role of technology and technologists, to develop new ways in
 which to measure, map, track and trace \gls{AP}, leveraging the power of
-human intellect to combat this impending threat that is upon us.
+human intellect and ingenuity to combat this impending threat that is
+upon us.
 
-% \section{Literature review}%
-% \label{sec:literature_review}
+\section{Literature review}%
+\label{sec:literature_review}
+
+\todo[inline, color=green!40]{This is supposed to be a small literature
+review, just to give an idea of the panorama. I don't want it to be more
+than one or two pages long for all topics.}
+
+
+\subsection{Tomography}%
+\label{sub:tomography}
+
+Tomography is the cross-sectional imaging of an object through the use
+of transmitted or reflected waves, captured by the object exposure to
+the waves from a set of known angles. It has many different applications
+in science, industry, and most prominently, medicine\todo{citatoins:
+examples of industrial applications of tomography}. Since the invention
+of the \gls{CT} machine in 1972, by Hounsfield~\cite{Gunderman2006},
+tomographic imaging techniques have had a revolutionary impact, allowing
+doctors to see inside their patients, without having to subject them to
+more invasive procedures~\cite{Kak2001}.
+
+Mathematical basis for tomography were set by Johannes Radon in 1917. At
+the time, he postulated that  it is possible to represent a function
+written in $\mathbb{R}$ in the space of straight lines, $\mathbb{L}$
+through the function's line integrals. A line integral is an integral in
+which the function that is being integrated is evaluated along a curved
+path, a line. In the tomographic case, these line integrals represent a
+measurement on a ray that traverses the \gls{ROI}.  Each set of line
+integrals, characterized by an incidence angle, is called a projection
+(see Figure~\ref{fig:projection}). To perform a tomographic
+reconstruction, the machine must take many projections around the
+object. To the set of projections arranged in matrix form by detector
+and projection angle, we call sinogram. All reconstruction methods,
+analytical and iterative, revolve around going from reality to sinogram
+to image~\cite{Bruyant2002, Kak2001, Herman1973, Herman1995, Herman2009,
+Defrise2003}.
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/projections.png}
+    \caption{A schematic representation of a projection acquisition. In
+    this image, taken from ~\cite{Herman2009}, the clear line that comes
+    down at a diagonal angle is a projection.}
+    \label{fig:projection}
+\end{figure}
+
+There are two broad algorithm families when it comes to tomographic
+reconstruction, regarding the physics of the problem. It can involve
+either non-diffracting sources (light travels in straight lines), such
+as the X-Rays in a conventional \gls{CT} exam; or diffracting sources,
+such as micro-waves or ultrasound in more research-oriented
+applications~\cite{Kak2001}. In this document, I will not address the
+latter family, since I will not be applying them in my work.
+
+In any tomographic procedure, the first step is to gather information
+from the target object. The first concept one requires for this is to
+determine the problem's geometry. There are many different possible
+geometry, however, there are two that are more important for this
+thesis: parallel and fan-beam geometries, which are presented in
+Figure~\ref{fig:geometries}. In the parallel case, there are as many
+light sources as there are detectors. Light travels between the source
+and the detector in straight lines, and the whole set rotates around the
+object's location. Fan-beam geometries are characterized by having only
+one light source which rotates around the target object. In this
+geometry, a set of detectors are placed on the other side of the object,
+and the lines (rays) between the source and the detectors describe a
+fan, thus the name of the technique~\cite{Herman2009, Kak2001}.
+
+As far as algorithms are concerned, there are two main types: analytical
+and iterative. The first family includes the most famous algorithm for
+these applications, the \gls{FBP}\todo{Reference to the chapter in which
+this technique is explained}. Iterative algorithms work by iteratively
+searching for a solution to the reconstruction equation, which is
+basically an underdetermined system of equations~\todo{check this!}.
+There are numerous algorithms that work in this way, but in my work, I
+have identified three that are extensively used, both in the field of
+atmospheric tomography and in medicine: \gls{ART}, \gls{SART}, and
+\gls{MLEM}. The simulator that was developed as part of this project
+uses the last two and \gls{FBP}.
+
+\subsection{\gls{DOAS}}%
+\label{sub:doas}
+
+Since the beginning of the 20\textsuperscript{th} century, scientists
+have been using spectroscopy to measure reactive trace gases in the
+atmosphere, especially ozone. The basis for these applications were set
+by Bouguer, Lambert and Beer, which have separately presented the law
+(Lambert-Beer's) that determines the relationship between light
+extinction and the concentration of an absorber, when it must traverse a
+medium in which this absorber is present. \gls{DOAS} is one of the
+methods that is applied for this purpose. It was developed in 1976, by
+Perner and his colleagues~\cite{Perner1976}, to detect and quantify the
+hydroxyl radical in the atmosphere.
+
+Lambert-Beer's law can be written as
+
+, based
+on~\cite{ValentedeAlmeida2017}, an article we have published in 2017,
+marking the conclusion of the initial studies for this PhD thesis.
+
+The technique was first developed in the late 1960s, by
+
+
+
+
+
+
+
+
+
+
+
+
+There are two main families of \gls{DOAS} assemblies, with different
+goals and capabilities:
+
+\begin{itemize}
+
+        \item Active systems, of which a simple illustration is
+            presented in Fig.~\ref{fig:activeSmall}, are characterized
+            by relying on an artificial light source for their
+            measurements. A spectrometer at the end of the light path
+            performs spectroscopic detection. Active DOAS techniques are
+            very similar to traditional in-lab absorption spectroscopy
+            techniques \cite{Platt2007};
+
+        \item Passive DOAS techniques, illustrated in
+            Fig.~\ref{fig:passiveSchematic}, use natural light sources,
+            such as the Sun and the moon, in their measurement process.
+            An optical system is pointed in certain elevation and
+            azimuth angles and sends the captured light into a
+            spectrometer, connected to a computer. The system returns
+            the total value of the light absorption in its
+            path~\cite{Platt2007,Merlaud2013}.
+
+\end{itemize}
+
+
+
+
+
 
 % \subsection{Tomography}%
 % \label{sub:tomography}
