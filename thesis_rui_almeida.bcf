@@ -1998,4 +1998,51 @@
     <bcf:citekey order="2">Vieira2007</bcf:citekey>
     <bcf:citekey order="2">Application2008</bcf:citekey>
     <bcf:citekey order="3">ValentedeAlmeida2017</bcf:citekey>
-    <bcf:citekey order="4">Guerreiro2019</bcf:cite
+    <bcf:citekey order="4">Guerreiro2019</bcf:citekey>
+    <bcf:citekey order="5">CEDelft2018</bcf:citekey>
+    <bcf:citekey order="6">Gunderman2006</bcf:citekey>
+    <bcf:citekey order="7">Kak2001</bcf:citekey>
+    <bcf:citekey order="8">Bruyant2002</bcf:citekey>
+    <bcf:citekey order="8">Kak2001</bcf:citekey>
+    <bcf:citekey order="8">Herman1973</bcf:citekey>
+    <bcf:citekey order="8">Herman1995</bcf:citekey>
+    <bcf:citekey order="8">Herman2009</bcf:citekey>
+    <bcf:citekey order="8">Defrise2003</bcf:citekey>
+    <bcf:citekey order="9">Herman2009</bcf:citekey>
+    <bcf:citekey order="10">Herman2009</bcf:citekey>
+    <bcf:citekey order="11">Kak2001</bcf:citekey>
+    <bcf:citekey order="12">Herman2009</bcf:citekey>
+    <bcf:citekey order="12">Kak2001</bcf:citekey>
+    <bcf:citekey order="13">Perner1976</bcf:citekey>
+    <bcf:citekey order="14">Platt2007</bcf:citekey>
+    <bcf:citekey order="15">Perner1976</bcf:citekey>
+    <bcf:citekey order="16">Platt2007</bcf:citekey>
+    <bcf:citekey order="16">Merlaud2013</bcf:citekey>
+    <bcf:citekey order="17">Platt2007</bcf:citekey>
+    <bcf:citekey order="18">Pundt2005</bcf:citekey>
+    <bcf:citekey order="19">Laepple2004</bcf:citekey>
+    <bcf:citekey order="20">Stutz2016</bcf:citekey>
+    <bcf:citekey order="21">Frins2006</bcf:citekey>
+    <bcf:citekey order="22">Vallero2014</bcf:citekey>
+    <bcf:citekey order="23">Platt2007</bcf:citekey>
+    <bcf:citekey order="24">Bell2008</bcf:citekey>
+    <bcf:citekey order="24">Office2019</bcf:citekey>
+    <bcf:citekey order="25">Frank2011</bcf:citekey>
+  </bcf:section>
+  <!-- SORTING TEMPLATES -->
+  <bcf:sortingtemplate name="none">
+    <bcf:sort order="1">
+      <bcf:sortitem order="1">citeorder</bcf:sortitem>
+    </bcf:sort>
+  </bcf:sortingtemplate>
+  <!-- DATALISTS -->
+  <bcf:datalist section="0"
+                name="none/global//global/global"
+                type="entry"
+                sortingtemplatename="none"
+                sortingnamekeytemplatename="global"
+                labelprefix=""
+                uniquenametemplatename="global"
+                labelalphanametemplatename="global">
+  </bcf:datalist>
+</bcf:controlfile>
