@@ -461,7 +461,7 @@
 
 \newcommand{\printcommittee@i}{%
   \xdef\novathesis@tmp{\thecommitteetitlestr[\novathesis@opt@coverlang]}%
-  \begin{tabular}{rl}%
+  \begin{tabularx}{0.75\textwidth}{@{}r>{\raggedright\arraybackslash}X@{}}%
   \ifx\novathesis@tmp\@empty%
     % committeetitlestr[…] is empty
   \else%
@@ -472,7 +472,7 @@
   \fi%
   \xdef\novathesis@tmp{\thecommitteeorder[all]}%
   \iteratecsvlist{\novathesis@printcommitteemembers}{\novathesis@tmp}%
-  \end{tabular}%
+  \end{tabularx}%
 }
 
 \newcommand{\printcommittee}{%
@@ -543,22 +543,26 @@
 }
 
 \newcommand{\printadvisers}{%
-  \newbox\novathesis@savebox%
-  \sbox\novathesis@savebox{%
-    \begin{tabular}{@{}rl@{}}%
-      \printadvisers@i%
-      \printadvisers@i[co]%
-    \end{tabular}%
-  }%
-  \ifdim\wd\novathesis@savebox>\linewidth%
-    \sbox\novathesis@savebox{%
-      \begin{tabularx}{0.99\linewidth}{@{}rX@{}}%
+  % \newbox\novathesis@savebox%
+  % \sbox\novathesis@savebox{%
+  %   \begin{tabular}{@{}rl@{}}%
+  %     \printadvisers@i%
+  %     \printadvisers@i[co]%
+  %   \end{tabular}%
+  % }%
+  % \ifdim\wd\novathesis@savebox>\linewidth%
+  %   \sbox\novathesis@savebox{%
+  %     \begin{tabularx}{0.99\linewidth}{@{}rX@{}}%
+  %     \printadvisers@i%
+  %     \printadvisers@i[co]%
+  %     \end{tabularx}%
+  %   }%
+  % \fi%
+  % \noindent\usebox\novathesis@savebox%
+      \begin{tabularx}{0.90\linewidth}{@{}r>{\raggedright\arraybackslash}X@{}}%
       \printadvisers@i%
       \printadvisers@i[co]%
       \end{tabularx}%
-    }%
-  \fi%
-  \noindent\usebox\novathesis@savebox%
 }
 
 
