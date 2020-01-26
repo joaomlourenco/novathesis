@@ -36,7 +36,7 @@
 % The default option marked with (*)
 \documentclass[
   docdegree=phd,        % phd(*), phdplan, phdprop, msc, mscplan, bsc
-  school=nova/fct,      % nova/fct(*), nova/fcsh, nova/ims, ul/ist, ul/fc
+  school=nova/fct,      % nova/fct(*), nova/fcsh, nova/ims, ul/ist, ul/fc, ipl/isel
   lang=pt,              % en(*), fr, it, pt
   % coverlang=en,         % defaults to main language
   % copyrightlang=en,     % defaults to main language
@@ -143,7 +143,10 @@
 %     frame=single,
 % }
 
-
+% epigraph configuration
+\epigraphfontsize{\small\itshape}
+\setlength\epigraphwidth{12.5cm}
+\setlength\epigraphrule{0pt}
 
 
 %%============================================================
@@ -156,7 +159,8 @@
 % \majorfield[en]={Biomedical Engineering}
 % \thesiscover[msc,front]={cover-megi-nova-ims}
 % \thesiscover[msc,front]={cover-mgi-nova-ims}
-\glstocfalse
+% \glstocfalse % Uncomment to remove 
+               % Glossary, Acronyms, and Symbols from TOC
 %%============================================================
 
 
@@ -171,6 +175,9 @@
 % Date
 \datemonth{\DTMmonthname{\month}}
 \dateyear{\the\year}
+
+% Front page image - for ISEL template - must be 12 x 8 cm
+%\frontpageimage{frontPageImage.png}
 
 
 % Advisers
@@ -222,6 +229,7 @@
 \abstractfile[fr]{abstract-fr}  % Abstract in French
 \glossaryfile{glossary}
 \setglossarystyle{super}
+\setabbreviationstyle[acronym]{long-short}
 \acronymsfile{acronyms} 
 \symbolsfile{symbols}
 
@@ -255,7 +263,7 @@
 
 
 % BibTeX bibiography files. Can be used multiple times with a single file nae each time.
-\addbibfile{bibliography.bib}
+\addbibresource{bibliography.bib}
 
 
 

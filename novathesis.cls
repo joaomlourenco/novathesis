@@ -392,6 +392,14 @@
 }
 
 
+%% Front page Image
+\newcommand{\thefrontpageimage}{\novathesis@undefined}
+
+\newcommand{\frontpageimage}[1]{%
+  \renewcommand{\thefrontpageimage}{#1}%
+}
+
+
 %% Work identification
 \newcommand{\thetitle}{~title \novathesis@undefined}
 \renewcommand{\title}[2][]{%
@@ -869,7 +877,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newlistof{lstlistoflistings}{lol}{\lstlistlistingname}
 \newcommand{\novathesis@printlist}[1]{%
-	#1*\cleardoublepage%
+	#1\cleardoublepage%
 }
 
 \newcommand{\addlisttofrontmatter}[1]{%

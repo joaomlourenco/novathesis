@@ -2,28 +2,28 @@
 %% defaults.clo
 %% NOVA thesis configuration file
 %%
-%% Costumization for IST-UL (strings and cover)
+%% Costumization for ISEL-IPL (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-<<<<<<< HEAD
-% Univesity
-=======
 % University
->>>>>>> master
-\university[pt]={Universidade de Lisboa}
-\university[en]={University of Lisbon}
-\university[fr]={University of Lisbon}
-\university[it]={University of Lisbon}
+\university[pt]={Instituto Politécnico de Lisboa}
+\university[en]={Polytechnic Institute of Lisbon}
+\university[fr]={Polytechnic Institute of Lisbon}
+\university[it]={Polytechnic Institute of Lisbon}
 
 % Faculty / School
-\faculty[pt]={Instituto Superior Técnico}
-\faculty[en]={Instituto Superior Técnico}
-\faculty[fr]={Instituto Superior Técnico}
-\faculty[it]={Instituto Superior Técnico}
+\faculty[pt]={IInstituto Superior de Engenharia de Lisboa}
+\faculty[en]={Instituto Superior de Engenharia de Lisboa}
+\faculty[fr]={Instituto Superior de Engenharia de Lisboa}
+\faculty[it]={Instituto Superior de Engenharia de Lisboa}
 
 % Scientific field
-\majorfield[pt]={Engenharia Informática e de Computadores}
-\majorfield[en]={Computer Science and Engineering}
+\majorfield[pt]={Engenharia e Gestão Industrial}
+\majorfield[en]={Industrial Engineering and Management}
+
+% Department
+\department[pt]={Área Departamental de \themajorfield[pt]}
+\department[en]={Department of \themajorfield[en]}
 
 % Comiittee printing order
 \committeeorder[all]={c,r,a,m}% 
@@ -38,7 +38,7 @@
 \thesiscover[plain,front]={}
 
 % Spine info
-\spine[logo]={logoIST2}
+\spine[logo]={logoISEL}
 \spine[author]={\theauthorshortname}
 \spine[title]={\thetitle}
 \spine[year]={\thedateyear}
@@ -84,18 +84,18 @@
 \margin[plain,right]={2.5cm}
 
 \dissertationstr[bsc,pt]={Relatório para obtenção do Grau de %
-\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
 \dissertationstr[mscplan,pt]={Relatório intermédio para obtenção do Grau de %
-\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
-\dissertationstr[msc,pt]={Dissertação para obtenção do Grau de %
-\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\dissertationstr[msc,pt]={Dissertação de natureza científica para obtenção do grau de  %
+\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
 \dissertationstr[phdplan,pt]={Relatório intermédio para obtenção do Grau de %
-\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
 \dissertationstr[phdprop,pt]={Proposta de dissertação para obtenção do Grau de %
-\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
 \dissertationstr[phd,pt]={Dissertação para obtenção do Grau de %
-\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
-\copyrighttextstr[pt]={O \thefaculty[\novathesis@opt@coverlang]\ e a \theuniversity[\novathesis@opt@coverlang]\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\copyrighttextstr[pt]={O \thefaculty[\novathesis@opt@coverlang]\ e o \theuniversity[\novathesis@opt@coverlang]\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
 
 \copyrighttextstr[en]={The \thefaculty[\novathesis@opt@coverlang]\ and the \theuniversity[\novathesis@opt@coverlang]\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
 
@@ -167,16 +167,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % LOGO
-\coveritem[l]{0cm}{%
-  \includegraphics[width=5cm]{logoIST}%
+\coveritem[c]{0cm}{%
+  \includegraphics[width=2cm]{logoISEL}%
 }
 
 % School
 \coveritem[c]{0.5cm}{%
-  \fontsize{16}{16}\selectfont%
-  \textbf{\MakeUppercase{\theuniversity[\novathesis@opt@coverlang]}}\\%
-  \vspace{2mm}%
-  \textbf{\MakeUppercase{\thefaculty[\novathesis@opt@coverlang]}}%
+  \fontsize{13}{13}\selectfont%
+  \textbf{\MakeUppercase{\thefaculty[\novathesis@opt@coverlang]}}\\%
+  \fontsize{10}{10}\selectfont%
+  \textbf{\MakeUppercase{\thedepartment[\novathesis@opt@coverlang]}}%
+}
+
+\coveritem[c]{0.5cm}{
+	\ifthenelse{\equal{\thefrontpageimage}{\novathesis@undefined}}{}{\includegraphics[width=12cm,  height=8cm]{\thefrontpageimage}}
 }
 
 % % Title of Dissertation
@@ -187,8 +191,10 @@
 
 % Author name
 \coveritem[c]{1}{%
+  \fontsize{16}{16}\selectfont%
+  \textbf{\theauthorname}\\[1ex]
   \fontsize{14}{14}\selectfont%
-  \textbf{\theauthorname}%
+  (\theauthordegree)%
 }
 
 % Degree
@@ -201,7 +207,7 @@
 \coveritem[c]{2}{%
   \adviserstrfont[\novathesis@opt@coverlang]={\bfseries}%
   \coadviserstrfont[\novathesis@opt@coverlang]={\bfseries}%
-  \fontsize{12}{12}\selectfont%
+  \fontsize{11}{11}\selectfont%
   \printadvisers%
 }
 
@@ -214,7 +220,7 @@
     \OR\equal{\novathesis@opt@docdegree}{phd}}%
   {\committeetitlestrfont[\novathesis@opt@coverlang]={\fontsize{14}{14}\selectfont\bfseries}%
     \commiteememberstrfont[\novathesis@opt@coverlang]={\bfseries}%
-    \fontsize{12}{12}\selectfont\printcommittee%
+    \fontsize{11}{11}\selectfont\printcommittee%
   }%
   {}%
 }
@@ -222,7 +228,7 @@
 
 % Date
 \coveritem[c]{1}{%
-  \fontsize{14}{14}\selectfont%
+  \fontsize{10}{10}\selectfont%
   \ifdraftdoc%
     \textbf{DRAFT: \today}%
   \else%
