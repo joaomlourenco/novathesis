@@ -236,41 +236,68 @@
 
 % Date
 \coveritem[c]{2}{%
+\begin{minipage}[t]{0.37\textwidth}
+  \ 
+\end{minipage}
+\hspace{0.65cm}
+\begin{minipage}[t]{0.55\textwidth}
   \fontsize{10}{10}\selectfont%
   \ifdraftdoc%
     \textbf{DRAFT: \today}%
   \else%
     \textbf{\thedatemonth, \thedateyear}%
   \fi%
+\end{minipage}
 }
-
 
 % Committee — only print the committee for the main classes
 % Author name and Title
-% \coveritem[l]{8cm}{%
-% % Author name
-%   \clearpage
-% \begin{minipage}[t]{0.37\textwidth}
-%   \fontsize{16}{16}\selectfont\raggedleft%
-%   \textbf{\theauthorname}%
-% \end{minipage}
-% \hspace{0.65cm}
-% % Title of Dissertation
-% \begin{minipage}[t]{0.55\textwidth}
-%   \fontsize{18}{20}\selectfont\raggedright%
-%   \textbf{\covertitle}%
-% \end{minipage}
-% }
-%
-% \coveritem[c]{1}{%
-%   \ifthenelse{%
-%     \equal{\novathesis@opt@docdegree}{bsc}%
-%     \OR\equal{\novathesis@opt@docdegree}{msc}%
-%     \OR\equal{\novathesis@opt@docdegree}{phd}}%
-%   {\committeetitlestrfont[\novathesis@opt@coverlang]={\fontsize{14}{14}\selectfont\bfseries}%
-%     \commiteememberstrfont[\novathesis@opt@coverlang]={\bfseries}%
-%     \fontsize{11}{11}\selectfont\printcommittee%
-%   }%
-%   {}%
-% }
-%
+\secondcoveritem[l]{6cm}{%
+% Author name
+\begin{minipage}[t]{0.37\textwidth}
+  \fontsize{16}{16}\selectfont\raggedleft%
+  \textbf{\theauthorname}%
+\end{minipage}
+\hspace{0.65cm}
+% Title of Dissertation
+\begin{minipage}[t]{0.55\textwidth}
+  \fontsize{18}{20}\selectfont\raggedright%
+  \textbf{\covertitle}%
+\end{minipage}
+}
+
+
+\secondcoveritem[c]{1}{%
+\begin{minipage}[t]{0.37\textwidth}
+  \ 
+\end{minipage}
+\hspace{0.65cm}
+\begin{minipage}[t]{0.55\textwidth}
+  \ifthenelse{%
+    \equal{\novathesis@opt@docdegree}{bsc}%
+    \OR\equal{\novathesis@opt@docdegree}{msc}%
+    \OR\equal{\novathesis@opt@docdegree}{phd}}%
+  {\committeetitlestrfont[\novathesis@opt@coverlang]={\fontsize{14}{14}\selectfont\bfseries}%
+    \commiteememberstrfont[\novathesis@opt@coverlang]={\bfseries}%
+    \fontsize{11}{11}\selectfont\printcommittee[1]%
+  }%
+  {}%
+\end{minipage}
+}
+
+
+% Date
+\secondcoveritem[c]{1}{%
+\begin{minipage}[t]{0.37\textwidth}
+  \ 
+\end{minipage}
+\hspace{0.65cm}
+\begin{minipage}[t]{0.55\textwidth}
+  \fontsize{10}{10}\selectfont%
+  \ifdraftdoc%
+    \textbf{DRAFT: \today}%
+  \else%
+    \textbf{\thedatemonth, \thedateyear}%
+  \fi%
+\end{minipage}
+}

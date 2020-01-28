@@ -141,6 +141,10 @@
   \listcsadd{novathesis@coveritem@list}{[#1][#2]{#3}}%
 }
 
+\newcommand{\secondcoveritem}[3][c]{%
+  \listcsadd{novathesis@secondcoveritem@list}{[#1][#2]{#3}}%
+}
+
 \newcounter{novathesis@myloop}
 \def\novathesis@printcoveritem@i[#1][#2]#3{%
   \IfInteger{#2}{%IS INTEGER
@@ -167,9 +171,20 @@
   \novathesis@printcoveritem@i#1%
 }
 
-\newcommand{\printcoveritems}{%
+\newcommand{\rawprintcoveritems}[1]{%
   \ifthenelse{\isundefined{\novathesis@coveritem@list}}{}{%
-	\forlistcsloop{\novathesis@printcoveritem}{novathesis@coveritem@list}}%
+	\forlistcsloop{\novathesis@printcoveritem}{#1}}%
+  %   \ifthenelse{\isundefined{\novathesis@secondcoveritem@list}}{}{%
+  %   \cleardoublepage
+  % \forlistcsloop{\novathesis@printsecondcoveritems}{#1}}%
+}
+
+\newcommand{\printcoveritems}{%
+  \rawprintcoveritems{novathesis@coveritem@list}
+}
+
+\newcommand{\printsecondcoveritems}{%
+  \rawprintcoveritems{novathesis@secondcoveritem@list}
 }
 
 \newlength{\mpwidth}%
@@ -224,7 +239,7 @@
 	  \newsavebox{\novathesis@aftercoverbox}%
 	  \sbox{\novathesis@aftercoverbox}{%
 	    \parbox[t][\mpheight][t]{\mpwidth}{%
-	      \printcoveritems%
+        \ifthenelse{\isundefined{\novathesis@secondcoveritem@list}}{\printcoveritems}{\printsecondcoveritems}
 	    }%
 	  }%
 	  \AddToShipoutPictureFG*{%
@@ -460,9 +475,9 @@
   \fi
 }
 
-\newcommand{\printcommittee@i}{%
+\newcommand{\printcommittee@i}[1]{%
   \xdef\novathesis@tmp{\thecommitteetitlestr[\novathesis@opt@coverlang]}%
-  \begin{tabularx}{0.75\textwidth}{@{}r>{\raggedright\arraybackslash}X@{}}%
+  \begin{tabularx}{#1\textwidth}{@{}r>{\raggedright\arraybackslash}X@{}}%
   \ifx\novathesis@tmp\@empty%
     % committeetitlestr[…] is empty
   \else%
@@ -476,9 +491,9 @@
   \end{tabularx}%
 }
 
-\newcommand{\printcommittee}{%
+\newcommand{\printcommittee}[1][0.75]{%
   \ifthenelse{\equal{\novathesis@opt@printcommittee}{true}}%
-  {\printcommittee@i}
+  {\printcommittee@i{#1}}
   {}
 }
 
