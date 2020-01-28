@@ -29,7 +29,7 @@
 \committeeorder[all]={c,r,a,m}% 
 
 % Cover background images
-\frontpageimage[]={ESTSetubal-IPS}
+\frontpageimage[]={ESTSetubal-IPS} % don't add the .jpg extension
 \thesiscover[phd,front]={}
 \thesiscover[phdplan,front]={}
 \thesiscover[phdprop,front]={}
@@ -138,30 +138,30 @@
 
 
 % Redefinir fonte de secção, subscção, etc…
-\newbox\s@ch@@ghtb@x
-\setbox\s@ch@@ghtb@x=\hbox{{\normalfont\Huge A}}
-\font\p@rtnamfont=cmbr8 at 13mm % computer modern bright
-\font\s@cnamfont=cmbrsl8 at \ht\s@ch@@ghtb@x % computer modern bright
-\renewcommand\section{\@startsection {section}{1}{0pt}%
-                                   {-3.5ex plus -0.5ex minus -.2ex}%
-                                   {2.3ex \@plus.2ex}%
-                                   {\s@cnamfont}}
-\renewcommand\subsection{\@startsection{subsection}{2}{0pt}%
-                                     {-2.5ex plus -0.5ex minus -.2ex}%
-                                     {1.5ex \@plus .2ex}%
-                                     {\normalfont\large\bfseries}}
-\renewcommand\subsubsection{\@startsection{subsubsection}{3}{0pt}%
-                                     {-2.5ex plus -0.5ex minus -.2ex}%
-                                     {1.5ex \@plus .2ex}%
-                                     {\normalfont\normalsize\bfseries}}
-\renewcommand\paragraph{\@startsection{paragraph}{4}{0pt}%
-                                    {0.25ex plus 0.5ex minus.2ex}%
-                                    {-1em}%
-                                    {\normalfont\normalsize\bfseries}}
-\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
-                                       {0.25ex plus 0.5ex minus .2ex}%
-                                       {-1em}%
-                                      {\normalfont\normalsize\bfseries}}
+% \newbox\s@ch@@ghtb@x
+% \setbox\s@ch@@ghtb@x=\hbox{{\normalfont\Huge A}}
+% \font\p@rtnamfont=cmbr8 at 13mm % computer modern bright
+% \font\s@cnamfont=cmbrsl8 at \ht\s@ch@@ghtb@x % computer modern bright
+% \renewcommand\section{\@startsection {section}{1}{0pt}%
+%                                    {-3.5ex plus -0.5ex minus -.2ex}%
+%                                    {2.3ex \@plus.2ex}%
+%                                    {\s@cnamfont}}
+% \renewcommand\subsection{\@startsection{subsection}{2}{0pt}%
+%                                      {-2.5ex plus -0.5ex minus -.2ex}%
+%                                      {1.5ex \@plus .2ex}%
+%                                      {\normalfont\large\bfseries}}
+% \renewcommand\subsubsection{\@startsection{subsubsection}{3}{0pt}%
+%                                      {-2.5ex plus -0.5ex minus -.2ex}%
+%                                      {1.5ex \@plus .2ex}%
+%                                      {\normalfont\normalsize\bfseries}}
+% \renewcommand\paragraph{\@startsection{paragraph}{4}{0pt}%
+%                                     {0.25ex plus 0.5ex minus.2ex}%
+%                                     {-1em}%
+%                                     {\normalfont\normalsize\bfseries}}
+% \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+%                                        {0.25ex plus 0.5ex minus .2ex}%
+%                                        {-1em}%
+%                                       {\normalfont\normalsize\bfseries}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
@@ -184,6 +184,7 @@
 % Author name and Title
 \coveritem[l]{1}{%
 % Author name
+\fontfamily{phv}
 \begin{minipage}[t]{0.37\textwidth}
   \fontsize{16}{16}\selectfont\raggedleft%
   \textbf{\theauthorname}%  
@@ -210,6 +211,7 @@
 
 % Degree
 \coveritem[l]{1}{
+\fontfamily{phv}
 \begin{minipage}[t]{0.37\textwidth}
   \ 
 \end{minipage}
@@ -222,6 +224,7 @@
 
 % Advisers
 \coveritem[c]{1}{%
+\fontfamily{phv}
 \begin{minipage}[t]{0.37\textwidth}
   \ 
 \end{minipage}
@@ -236,6 +239,7 @@
 
 % Date
 \coveritem[c]{2}{%
+\fontfamily{phv}
 \begin{minipage}[t]{0.37\textwidth}
   \ 
 \end{minipage}
@@ -252,8 +256,9 @@
 
 % Committee — only print the committee for the main classes
 % Author name and Title
-\secondcoveritem[l]{6cm}{%
+\secondcoveritem[l]{6.1cm}{%
 % Author name
+\fontfamily{phv}
 \begin{minipage}[t]{0.37\textwidth}
   \fontsize{16}{16}\selectfont\raggedleft%
   \textbf{\theauthorname}%
@@ -268,11 +273,12 @@
 
 
 \secondcoveritem[c]{1}{%
-\begin{minipage}[t]{0.37\textwidth}
+\fontfamily{phv}
+\begin{minipage}[t]{0.20\textwidth}
   \ 
 \end{minipage}
-\hspace{0.65cm}
-\begin{minipage}[t]{0.55\textwidth}
+% \hspace{0.65cm}
+\begin{minipage}[t]{0.75\textwidth}
   \ifthenelse{%
     \equal{\novathesis@opt@docdegree}{bsc}%
     \OR\equal{\novathesis@opt@docdegree}{msc}%
@@ -288,6 +294,7 @@
 
 % Date
 \secondcoveritem[c]{1}{%
+\fontfamily{phv}
 \begin{minipage}[t]{0.37\textwidth}
   \ 
 \end{minipage}
