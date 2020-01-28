@@ -29,6 +29,7 @@
 \committeeorder[all]={c,r,a,m}% 
 
 % Cover background images
+\frontpageimage[]={ESTSetubal-IPS}
 \thesiscover[phd,front]={}
 \thesiscover[phdplan,front]={}
 \thesiscover[phdprop,front]={}
@@ -168,66 +169,73 @@
 
 % LOGO
 \coveritem[c]{0cm}{%
-  \includegraphics[width=2cm]{logoESTS}%
+  \includegraphics[width=6cm]{logoESTS}%
 }
+%
+% % School
+% \coveritem[c]{0.5cm}{%
+%   \fontsize{13}{13}\selectfont%
+%   \textbf{\MakeUppercase{\thefaculty[\novathesis@opt@coverlang]}}\\%
+%   \fontsize{10}{10}\selectfont%
+%   \textbf{\MakeUppercase{\thedepartment[\novathesis@opt@coverlang]}}%
+% }
 
-% School
-\coveritem[c]{0.5cm}{%
-  \fontsize{13}{13}\selectfont%
-  \textbf{\MakeUppercase{\thefaculty[\novathesis@opt@coverlang]}}\\%
-  \fontsize{10}{10}\selectfont%
-  \textbf{\MakeUppercase{\thedepartment[\novathesis@opt@coverlang]}}%
-}
 
-\coveritem[c]{0.5cm}{
-	\ifthenelse{\equal{\thefrontpageimage}{\novathesis@undefined}}{}{\includegraphics[width=12cm,  height=8cm]{\thefrontpageimage}}
-}
-
-% % Title of Dissertation
-\coveritem[c]{1}{%
-  \fontsize{18}{20}\selectfont%
-  \textbf{\covertitle}%
-}
-
+% Author name and Title
+\coveritem[l]{1}{%
 % Author name
-\coveritem[c]{1}{%
-  \fontsize{16}{16}\selectfont%
-  \textbf{\theauthorname}\\[1ex]
-  \fontsize{14}{14}\selectfont%
-  (\theauthordegree)%
+\begin{minipage}[t]{0.37\textwidth}
+  \fontsize{16}{16}\selectfont\raggedleft%
+  \textbf{\theauthorname}%  
+\end{minipage}
+\hspace{0.65cm}
+% Title of Dissertation
+\begin{minipage}[t]{0.55\textwidth}
+  \fontsize{18}{20}\selectfont\raggedright%
+  \textbf{\covertitle}%
+\end{minipage}
 }
+
+% Photo
+\coveritem[l]{1}{
+\begin{minipage}[t]{0.37\textwidth}
+  \ 
+\end{minipage}
+\hspace{0.65cm}
+\begin{minipage}[t]{0.55\textwidth}
+	\includegraphics[height=5.3cm]{\thefrontpageimage[]}
+\end{minipage}
+}
+
 
 % Degree
-\coveritem[c]{1}{%
+\coveritem[l]{1}{
+\begin{minipage}[t]{0.37\textwidth}
+  \ 
+\end{minipage}
+\hspace{0.65cm}
+\begin{minipage}[t]{0.55\textwidth}
   \fontsize{12}{12}\selectfont%
   \thepresentationtext%
+\end{minipage}
 }
 
 % Advisers
-\coveritem[c]{2}{%
+\coveritem[c]{1}{%
+\begin{minipage}[t]{0.37\textwidth}
+  \ 
+\end{minipage}
+\hspace{0.65cm}
+\begin{minipage}[t]{0.55\textwidth}
   \adviserstrfont[\novathesis@opt@coverlang]={\bfseries}%
   \coadviserstrfont[\novathesis@opt@coverlang]={\bfseries}%
   \fontsize{11}{11}\selectfont%
   \printadvisers%
+\end{minipage}
 }
-
-
-% Committee — only print the committee for the main classes
-\coveritem[c]{1}{%
-  \ifthenelse{%
-    \equal{\novathesis@opt@docdegree}{bsc}%
-    \OR\equal{\novathesis@opt@docdegree}{msc}%
-    \OR\equal{\novathesis@opt@docdegree}{phd}}%
-  {\committeetitlestrfont[\novathesis@opt@coverlang]={\fontsize{14}{14}\selectfont\bfseries}%
-    \commiteememberstrfont[\novathesis@opt@coverlang]={\bfseries}%
-    \fontsize{11}{11}\selectfont\printcommittee%
-  }%
-  {}%
-}
-
 
 % Date
-\coveritem[c]{1}{%
+\coveritem[c]{2}{%
   \fontsize{10}{10}\selectfont%
   \ifdraftdoc%
     \textbf{DRAFT: \today}%
@@ -236,3 +244,33 @@
   \fi%
 }
 
+
+% Committee — only print the committee for the main classes
+% Author name and Title
+% \coveritem[l]{8cm}{%
+% % Author name
+%   \clearpage
+% \begin{minipage}[t]{0.37\textwidth}
+%   \fontsize{16}{16}\selectfont\raggedleft%
+%   \textbf{\theauthorname}%
+% \end{minipage}
+% \hspace{0.65cm}
+% % Title of Dissertation
+% \begin{minipage}[t]{0.55\textwidth}
+%   \fontsize{18}{20}\selectfont\raggedright%
+%   \textbf{\covertitle}%
+% \end{minipage}
+% }
+%
+% \coveritem[c]{1}{%
+%   \ifthenelse{%
+%     \equal{\novathesis@opt@docdegree}{bsc}%
+%     \OR\equal{\novathesis@opt@docdegree}{msc}%
+%     \OR\equal{\novathesis@opt@docdegree}{phd}}%
+%   {\committeetitlestrfont[\novathesis@opt@coverlang]={\fontsize{14}{14}\selectfont\bfseries}%
+%     \commiteememberstrfont[\novathesis@opt@coverlang]={\bfseries}%
+%     \fontsize{11}{11}\selectfont\printcommittee%
+%   }%
+%   {}%
+% }
+%

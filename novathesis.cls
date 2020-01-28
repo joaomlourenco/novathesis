@@ -333,6 +333,7 @@
 \mynewdata{spine}
 \mynewdata{thesiscover}
 \mynewdata{margin}
+\mynewdata{frontpageimage}
 
 % --------------------------------------------------------
 % Add school specific Images folder to the graphics path
@@ -392,12 +393,12 @@
 }
 
 
-%% Front page Image
-\newcommand{\thefrontpageimage}{\novathesis@undefined}
-
-\newcommand{\frontpageimage}[1]{%
-  \renewcommand{\thefrontpageimage}{#1}%
-}
+% %% Front page Image
+% \newcommand{\thefrontpageimage}{\novathesis@undefined}
+%
+% \newcommand{\frontpageimage}[1]{%
+%   \renewcommand{\thefrontpageimage}{#1}%
+% }
 
 
 %% Work identification
