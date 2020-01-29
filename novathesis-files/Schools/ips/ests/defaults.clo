@@ -29,7 +29,7 @@
 \committeeorder[all]={c,r,a,m}% 
 
 % Cover background images
-\frontpageimage[]={ESTSetubal-IPS} % don't add the .jpg extension
+\frontpageimage[]={ESTS-JPG} % don't add the .jpg extension
 \thesiscover[phd,front]={}
 \thesiscover[phdplan,front]={}
 \thesiscover[phdprop,front]={}
@@ -169,7 +169,7 @@
 
 % LOGO
 \coveritem[c]{0cm}{%
-  \includegraphics[width=6cm]{logoESTS}%
+  \includegraphics[width=6cm]{ESTS-JPG}%
 }
 %
 % % School
@@ -187,12 +187,12 @@
 \fontfamily{phv}
 \begin{minipage}[t]{0.37\textwidth}
   \fontsize{16}{16}\selectfont\raggedleft%
-  \textbf{\theauthorname}%  
+  \theauthorname%  
 \end{minipage}
 \hspace{0.65cm}
 % Title of Dissertation
 \begin{minipage}[t]{0.55\textwidth}
-  \fontsize{18}{20}\selectfont\raggedright%
+  \fontsize{16}{16}\selectfont\raggedright%
   \textbf{\covertitle}%
 \end{minipage}
 }
@@ -261,12 +261,12 @@
 \fontfamily{phv}
 \begin{minipage}[t]{0.37\textwidth}
   \fontsize{16}{16}\selectfont\raggedleft%
-  \textbf{\theauthorname}%
+  \theauthorname%
 \end{minipage}
 \hspace{0.65cm}
 % Title of Dissertation
 \begin{minipage}[t]{0.55\textwidth}
-  \fontsize{18}{20}\selectfont\raggedright%
+  \fontsize{16}{16}\selectfont\raggedright%
   \textbf{\covertitle}%
 \end{minipage}
 }
@@ -285,7 +285,7 @@
     \OR\equal{\novathesis@opt@docdegree}{phd}}%
   {\committeetitlestrfont[\novathesis@opt@coverlang]={\fontsize{14}{14}\selectfont\bfseries}%
     \commiteememberstrfont[\novathesis@opt@coverlang]={\bfseries}%
-    \fontsize{11}{11}\selectfont\printcommittee[1]%
+    \fontsize{12}{12}\selectfont\printcommittee[1]%
   }%
   {}%
 \end{minipage}
