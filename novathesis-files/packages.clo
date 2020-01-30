@@ -49,6 +49,8 @@
 %% it will have to do.
 \RequirePackage{subcaption}
 
+\RequirePackage[pdftex,dvipsnames]{xcolor}%
+
 
 %%%%% LOAD THESE PACKAGES JUST AT THE ENF OF THE PREAMBLE 
 %%%%% AND BEFORE THE \BEGIN{DOCUMENT}
@@ -57,10 +59,9 @@
   % \RequirePackage[pdftex,usenames]{color}
   % \RequirePackage[pdftex]{xcolor}
   % \RequirePackage[usenames]{color}
-  \RequirePackage{xcolor}%
   \RequirePackage{colortbl}
-  \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
-  \RequirePackage[pdftex, breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}%
+  % \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
+  \RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}%
 	\RequirePackage[all]{hypcap}
   \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
 
