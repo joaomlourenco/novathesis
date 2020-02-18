@@ -7,7 +7,7 @@
 %% To view a copy of this license, 
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2019/02/26 [4.2.1]
+%% Version 2020/02/18 [4.3.0]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade NOVA de Lisboa
@@ -35,7 +35,7 @@
 
 % The default option marked with (*)
 \documentclass[
-  docdegree=phd,        % phd(*), phdplan, phdprop, msc, mscplan, bsc
+  docdegree=msc,        % phd(*), phdplan, phdprop, msc, mscplan, bsc
   school=nova/fct,      % nova/fct(*), nova/fcsh, nova/ims, ul/ist, ul/fc, ipl/isel
   lang=pt,              % en(*), fr, it, pt
   % coverlang=en,         % defaults to main language
@@ -46,7 +46,7 @@
   chapstyle=elegant,    % bianchi bluebox brotherton dash default elegant(*) ell ger 
                         % hansen ist jenor lyhne madsen pedersen veelo vz14 vz34 vz43
   otherlistsat=front,   % front(*), back
-  secondcover=false,     % false=don't true=include the aftercover file (even if exists)
+  secondcover=true,     % false=don't true=include the aftercover file (even if exists)
   aftercover=false,     % false=don't true=include the aftercover file (even if exists)
   linkscolor=darkblue,  % darkblue, black (Set to 'black' for PRINTING)
   printcommittee=true,  % set to 'false' from submitted versins who should not have 
@@ -85,6 +85,7 @@
   },
   memoir={              % See the 'memoir' documentation
     % showtrims,          % DEBUG
+    % openany,
     a4paper,            % the paper size/format
     11pt,               % 10pt, 11pt(*), 12pt
     final,              % draft, final  <= Replace 'draft' with 'final' in final version
@@ -148,6 +149,21 @@
 \setlength\epigraphwidth{12.5cm}
 \setlength\epigraphrule{0pt}
 
+%setup colors for hyperlinks
+\hypersetup{
+linkcolor=NavyBlue
+,citecolor=NavyBlue
+,filecolor=Red
+,urlcolor=NavyBlue
+,menucolor=Red
+,runcolor=Red
+,linkbordercolor=NavyBlue
+,citebordercolor=NavyBlue
+,filebordercolor=Red
+,urlbordercolor=NavyBlue
+,menubordercolor=Red
+,runbordercolor=Red
+}
 
 %%============================================================
 % For costumization,
@@ -198,7 +214,7 @@
 % committee (maximum of 9 elements)
 % Use [c] for chair, [r] for raporteurs, [a] for advisers, [m] or nothing for remaining members
 % Chair of the committee
-\committee[c,m]{Name of the committee chairperson}
+\committee[c,m]{Name of the committee chairperson, Full Professor, FCT-NOVA}
 % Main raporteurs
 \committee[r,f]{Name of a raporteur}
 \committee[r,f]{Name of another raporteur}
@@ -256,9 +272,9 @@
 % Text appendixes
 % sintax: \appendixfile{file}
 % Comment if not needed
-\appendixfile{appendix1}
-\appendixfile{appendix2}
-\annexfile{annex1}
+% \appendixfile{appendix1}
+% \appendixfile{appendix2}
+% \annexfile{annex1}
 
 
 

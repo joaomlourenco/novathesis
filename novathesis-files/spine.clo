@@ -235,7 +235,7 @@
 
 	\newbox{\novathesis@spine@box}%
 	\newcommand{\printspine}{%
-	  \cleardoublepage%
+	  \clearforchapter%
 	  \thispagestyle{empty}%
 	  \make@spine@box@logo{}{\thespine[logo]}%
 	  \ifexists{spine}[logotwo]{%
@@ -303,6 +303,6 @@
       \AtStockLowerCenter{{\usebox{\novathesis@spine@box}}}%
 	  }%
 	  ~% This space is important here so that the spine page is not empty anymore!
-	  % \cleardoublepage%
+	  % \clearforchapter%
 	}%
   \makeatother

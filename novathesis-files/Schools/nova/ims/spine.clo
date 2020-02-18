@@ -228,7 +228,7 @@
       \AtStockLowerCenter{{\usebox{\novathesis@spine@box}}}%
 	  }%
 	  ~% This space is important here so that the spine page is not empty anymore!
-	  % \cleardoublepage%
+	  % \clearforchapter%
 	}%
 	\makeatother
 
@@ -344,13 +344,13 @@
   }
   \savebox{\novathesis@spine@vbox}{\rotatebox{90}{\novathesis@spine@hbox}}
   %% typeset
-  \cleardoublepage%
+  \clearforchapter%
   \thispagestyle{empty}%
   \pagestyle{empty}%
   \AddToShipoutPictureFG*{%
     \AtStockLowerCenter{\fbox{\usebox{\novathesis@spine@vbox}}}%
   }%
   ~% This space is important here so that the spine page is not empty anymore!
-  % \cleardoublepage%
+  % \clearforchapter%
 }%
 \makeatother
