@@ -45,7 +45,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Redefine \cleardoublepage to use a really empty page…
+% Redefine \clearforchapter to use a really empty page…
 \let\origcleardoublepage=\cleardoublepage
 \renewcommand\cleardoublepage{%
   \newpage{\pagestyle{empty}\origcleardoublepage}%
@@ -175,7 +175,7 @@
   \ifthenelse{\isundefined{\novathesis@coveritem@list}}{}{%
 	\forlistcsloop{\novathesis@printcoveritem}{#1}}%
   %   \ifthenelse{\isundefined{\novathesis@secondcoveritem@list}}{}{%
-  %   \cleardoublepage
+  %   \clearforchapter
   % \forlistcsloop{\novathesis@printsecondcoveritems}{#1}}%
 }
 
@@ -219,7 +219,7 @@
     }%
   }%
   ~% This space is important here so that the cover page is not empty anymore!
-  \cleardoublepage%
+  \clearforchapter%
   
   %% Print second conver page if school is ul/fc
   \@printcommitteeauxtrue
@@ -251,7 +251,7 @@
 	    }%
 	  }%
 	  ~% This space is important here so that the cover page is not empty anymore!
-	  \cleardoublepage%
+	  \clearforchapter%
   }%
   {}%
   \selectthelanguage{\novathesis@opt@lang}%
@@ -259,14 +259,14 @@
 
 \newcommand{\printbackcoverpage}{%
   \ifexists{thesiscover}[\novathesis@opt@docdegree,back]{
-    \cleardoublepage%
+    \clearforchapter%
     \thispagestyle{empty}%
     ~
     \clearpage%
     \thispagestyle{empty}%
     \coverbackground[\@nameuse{thesiscover\novathesis@opt@docdegree,back}]
     ~% This space is important here so that the cover page is not empty anymore!
-    \cleardoublepage%
+    \clearforchapter%
     \selectthelanguage{\novathesis@opt@lang}%
   }
 }
@@ -282,7 +282,7 @@
   \ifthenelse{\equal{\novathesis@opt@aftercover}{true}}%
   {%
     \InputIfFileExists{Chapters/\novathesis@aftercover@file}%
-      {\cleardoublepage}%
+      {\clearforchapter}%
       {}%
 	}%
   {}%
@@ -710,7 +710,7 @@
 		\InputIfFileExists{Chapters/\@dedicatoryfile}{%
 			% File dedicatory.tex exists and is read
 			\global\let\@dedicatoryfile\@empty%
-			\cleardoublepage%
+			\clearforchapter%
 		}{%
 			% File does not exist
 		}%
@@ -737,7 +737,7 @@
   		\InputIfFileExists{Chapters/\@quotefile}{%
   			% File qualtefile.tex exists and is read
   			\global\let\@quotefile\@empty%
-  			\cleardoublepage%
+  			\clearforchapter%
   		}{%
   			% File quotefile.tex is not found, ignore
   		}	%
@@ -762,7 +762,7 @@
 			\equal{\novathesis@opt@docdegree}{phd}	% phd
 		}{% THEN
 			\input{Chapters/\novathesis@acknowledgementsfile}%
-			\cleardoublepage%
+			\clearforchapter%
 		}{% ELSE
 		}%
 	}%
@@ -797,7 +797,7 @@
       {}%
       {}%
     \selectthelanguage{\novathesis@opt@lang}
-    \cleardoublepage%
+    \clearforchapter%
   }%
 }
 
@@ -835,7 +835,7 @@
 \newcommand{\chapterfile}[1]{\listgadd{\novathesis@chapter@list}{#1}}
 
 \newcommand{\novathesis@printchapter}[1]{%
-	\InputIfFileExists{Chapters/#1}{\cleardoublepage}{ERROR: File '#1' does not exist!!!}%
+	\InputIfFileExists{Chapters/#1}{\clearforchapter}{ERROR: File '#1' does not exist!!!}%
 }
 
 \newcommand{\printchapthers}{%
@@ -853,13 +853,13 @@
 }
 
 \newcommand{\novathesis@printappendix}[1]{%
-	\InputIfFileExists{Chapters/#1}{\cleardoublepage}{}%
+	\InputIfFileExists{Chapters/#1}{\clearforchapter}{}%
 }
 
 \newcommand{\printappendixes}{%
 	\ifthenelse{\isundefined\novathesis@appendix@list}{}%
 		{\renewcommand{\appendixtocname}{\appendixnamepl}%
-         \cleardoublepage\appendix\addappheadtotoc%
+         \clearforchapter\appendix\addappheadtotoc%
 		 \forlistloop{\novathesis@printappendix}{\novathesis@appendix@list}}%
 } 
 
@@ -868,13 +868,13 @@
 }
 
 \newcommand{\novathesis@printannex}[1]{%
-	\InputIfFileExists{Chapters/#1}{\cleardoublepage}{}%
+	\InputIfFileExists{Chapters/#1}{\clearforchapter}{}%
 }
 
 \newcommand{\printannexes}{%
 	\ifthenelse{\isundefined\novathesis@annex@list}{}%
 		{\renewcommand{\appendixtocname}{\annexnamepl}%
-         \cleardoublepage\annex\addappheadtotoc%
+         \clearforchapter\annex\addappheadtotoc%
 		 \forlistloop{\novathesis@printannex}{\novathesis@annex@list}}%
 } 
 
@@ -893,7 +893,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newlistof{lstlistoflistings}{lol}{\lstlistlistingname}
 \newcommand{\novathesis@printlist}[1]{%
-	#1\cleardoublepage%
+	#1\clearforchapter%
 }
 
 \newcommand{\addlisttofrontmatter}[1]{%
@@ -908,14 +908,14 @@
 \newcommand{\printotherlists@i}{%
 	\ifthenelse{\isundefined\novathesis@frontmatter@list}%
     {}%
-		{\cleardoublepage%
+		{\clearforchapter%
       \forlistloop{\novathesis@printlist}{\novathesis@frontmatter@list}%
     }%
-  \cleardoublepage%
+  \clearforchapter%
 }
 
 \newcommand{\printotherlists}{%
-  \cleardoublepage%
+  \clearforchapter%
   % printotherlists [\novathesis@opt@otherlistsat]
   \ifthenelse{\equal{\novathesis@opt@otherlistsat}{front}}%
   {%
@@ -964,7 +964,7 @@
 }
 
 \newcommand{\printcopyrightpage}{%
-	\cleardoublepage%
+	\clearforchapter%
 	\null\vfill%
   \noindent%
   \textbf{\large \thetitle}\par%
@@ -977,14 +977,14 @@
         \noindent\theacknowledgmentsstr[\novathesis@opt@coverlang]%
       \end{Spacing}%
   }%
-  \cleardoublepage%
+  \clearforchapter%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Dedicatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\dedicatory{%%
-	\cleardoublepage%
+	\clearforchapter%
 	\thispagestyle{empty}%
 	~\\[2cm]%
     \begin{flushright}%
@@ -997,14 +997,14 @@
     \normalfont%
     \end{minipage}%
 	\end{flushright}%
-	\cleardoublepage%
+	\clearforchapter%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Quote
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\quote{%%
-	\cleardoublepage%
+	\clearforchapter%
 	\thispagestyle{empty}%
 	~\\[2cm]%
     \begin{flushright}%
