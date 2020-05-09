@@ -1,5 +1,6 @@
 %!TEX root = ../thesis_rui_almeida.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% chapter1.tex
 %% Rui V. Almeida's thesis file
 %%
@@ -100,64 +101,7 @@ intent on behalf of the managing governmental authorities (who seemed
 always more interested in seeing the project fail than anything else),
 \gls{ATMOS} was terminated and financing was cut.
 
-\subsection{Research Questions}%
-\label{sub:research_questions}
 
-In Section~\ref{sub:context}, I have introduced the reasons which led
-NGNS-IS to pursue the development of an atmospheric monitoring system,
-and that what set it apart from other systems was the ability to
-spectroscopically map pollutants concentrations using tomographic
-methods, thus defining a primary objective for this thesis.
-
-Two secondary objectives were born from the necessary initial research,
-which had a very heavy influence over the adopted methods:
-\begin{itemize}
-    \item To use a tomographic approach for the mapping procedure;
-    \item To ensure the designed system would be small and highly
-        mobile;
-    \item To use a single light collection point, minimizing material
-        costs.
-\end{itemize}
-
-Taking all the above into account, we arrive at the main Research
-Question (\gls{RQ}), presented in Table~\ref{tab:RQ1}.
-\begin{table}[htpb]
-    \centering
-    \caption{Main research question.}
-    \label{tab:RQ1}
-    \begin{tabularx}{0.8\textwidth}{cX}
-        \toprule
-        \textbf{RQ1}&\emph{ How to design a miniaturized tomographic
-        atmosphere monitoring system based on DOAS? }\\
-        \bottomrule
-    \end{tabularx}
-\end{table}
-
-This is the main research question. It gave rise to four other more
-detailed research questions. These secondary questions allow a better
-delimitation of the work at hand and are important complements to RQ1.
-This questions are presented in Table~\ref{tab:sec_RQ}.
-
-\begin{table}[htpb]
-    \centering
-    \caption{Secondary research questions.}
-    \label{tab:sec_RQ}
-    \begin{tabularx}{0.8\textwidth}{cX}
-        \toprule
-        \textbf{RQ1.1}&\emph{ What would be the best strategy
-        for the system to cover a small geographic region? }\\
-        \midrule
-        \textbf{RQ1.2}&\emph{ What would be the necessary
-        components for such a system? }\\
-        \midrule
-        \textbf{RQ1.3}&\emph{ How will the system acquire the
-        data? }\\
-        \midrule
-        \textbf{RQ1.4}&\emph{ What should the tomographic
-        reconstruction look like and how to perform it? }\\
-        \bottomrule
-    \end{tabularx}
-\end{table}
 
 \section{Problem Introduction}%
 \label{sec:problem_introduction}
@@ -200,11 +144,6 @@ upon us.
 \section{Literature review}%
 \label{sec:literature_review}
 
-\todo[inline, color=green!40]{This is supposed to be a small literature
-review, just to give an idea of the panorama. I don't want it to be more
-than one or two pages long for all topics.}
-
-
 \subsection{Tomography}%
 \label{sub:tomography}
 
@@ -236,7 +175,7 @@ Defrise2003}.
 
 \begin{figure}[htpb]
     \centering
-    \includegraphics[width=0.5\textwidth]{img/projections.png}
+    \includegraphics[width=0.5\textwidth]{img/png/projections.png}
     \caption{A schematic representation of a projection acquisition. In
     this image, taken from ~\cite{Herman2009}, the clear line that comes
     down at a diagonal angle is a projection.}
@@ -346,7 +285,7 @@ tomography. In doing this review, I have alaso found that the largest
 DOAS tomography study was performed in Germany, during the first years
 of the 21\textsuperscript{st} century. This research campagin, called
 BAB-II~\cite{Laepple2004}, aimed to measure and map traffic-related
-concentrations for NO\textsubscript{2} in the motorway that goes between
+concentrations for \gls{no2} in the motorway that goes between
 Heidelberg and Mannheim. A more recent effort that is mention worthy is
 the paper by the Stutz~\cite{Stutz2016}, in which the group created a
 tomographic system that was able to perform as a fence  line monitor for
@@ -375,103 +314,187 @@ invaluable technique in the fight to understand and track the movement
 of pollutant plumes, but the fact that the available systems require
 dedicated infrastructure to operate and have no mobility at all may be
 the most important factor leading to the almost non-existing investment
-in this kinds of systems. By intending to design and create a system
-that is able to counter these limitations, bringing mobility and a
-higher number of projections to the table, this thesis will fill its
-part of this gaps and perhaps come closer to what can be a commercial
-system with this kind of capabilities.
+DOAS tomography systems.
+
+More than half of the world's population is expected to be living in
+cities by the year 2050, and in the next 10 years we will see an
+increase in the number of so-called megacities of more than
+30\%~\cite{CABI2019}. This puts a lot of pressure on governmental
+agencies and municipalities (specially in the West) to "smarten up"
+their urban infrastructures, so that cities can harbor their inhabitants
+with reasonable quality of life for everyone. In fact, a recent report
+by xxx concluded that in the next yyy years, states and cities will
+spend more than 150 billion Euros on this kind of
+infrastructure~\todo{Check these numbers}. The flexibility and mobility
+that the system I am developing brings to the table are two very heavy
+points in its favor as a pollution mapping tool which is unobtainable
+with the traditional methods, whether \emph{in-situ} or remote.
 
 
+\section{Research Questions}%
+\label{sec:research_questions}
+
+In Section~\ref{sub:context}, I have introduced the reasons which led
+NGNS-IS to pursue the development of an atmospheric monitoring system,
+and that what set it apart from other systems was the ability to
+spectroscopically map pollutants concentrations using tomographic
+methods, thus defining a primary objective for this thesis.
+
+Two secondary objectives were born from the necessary initial research,
+which had a very heavy influence over the adopted methods:
+\begin{itemize}
+    \item To use a tomographic approach for the mapping procedure;
+    \item To ensure the designed system would be small and highly
+        mobile;
+    \item To use a single light collection point, minimizing material
+        costs.
+\end{itemize}
+
+Taking all the above into account, we arrive at the main Research
+Question (\gls{RQ}), presented in Table~\ref{tab:RQ1}.
+\begin{table}[htpb]
+    \centering
+    \caption{Main research question.}
+    \label{tab:RQ1}
+    \begin{tabularx}{0.8\textwidth}{cX}
+        \toprule
+        \textbf{RQ1}&\emph{ How to design a miniaturized tomographic
+        atmosphere monitoring system based on DOAS? }\\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+This is the main research question. It gave rise to four other more
+detailed research questions. These secondary questions allow a better
+delimitation of the work at hand and are important complements to RQ1.
+This questions are presented in Table~\ref{tab:sec_RQ}.
+
+\begin{table}[htpb]
+    \centering
+    \caption{Secondary research questions.}
+    \label{tab:sec_RQ}
+    \begin{tabularx}{0.8\textwidth}{cX}
+        \toprule
+        \textbf{RQ1.1}&\emph{ What would be the best strategy
+        for the system to cover a small geographic region? }\\
+        \midrule
+        \textbf{RQ1.2}&\emph{ What would be the necessary
+        components for such a system? }\\
+        \midrule
+        \textbf{RQ1.3}&\emph{ How will the system acquire the
+        data? }\\
+        \midrule
+        \textbf{RQ1.4}&\emph{ What should the tomographic
+        reconstruction look like and how to perform it? }\\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\section{Hypothesis}%
+\label{sec:hypothesis}
+
+As stated in Section~\ref{sec:research_questions}, the main goal of my
+work was to provide an answer to the question of how to design a
+miniaturized tomographic atmosphere monitoring system, based on
+\gls{DOAS}.  This sentence is the most important point of the project.
+Every development from this point forward stems from it and is motivated
+by it. It also requires some deconstruction in order to understand the
+true scope of the matter. First, it is a miniaturized device. This means
+that besides all the habitual requirements (performance, function,
+adequacy, compatibility with the other components, safety and security)
+in defining components in an engineering project, one must also keep in
+mind the footprint of each component, and how much it weighs. Second, it
+is a tomographic system, which means that not only the device must be
+able to take line integrals from some kind of medium, it must also be
+able to describe a predefined trajectory, with admissible levels of
+geometric error, which complies to a certain projection geometry.
+Otherwise, one would not be able to apply a tomographic reconstruction
+routine to obtain the map of the target species concentrations. Finally
+the system is supposed to monitor the atmosphere in some way. Now, as
+implied in the same sentence, \gls{DOAS} is the technique that I am
+trying to apply in this system. But as I point out in
+Section~\ref{sub:doas} and with more depth in
+Section~\ref{sec:lit_review_doas} , there are two families of
+\gls{DOAS}, and within them, many sub-techniques. This system which I am
+developing is based on the hypothesis that we can use an almost hybrid
+approach to \gls{DOAS}: passive \gls{DOAS} instrumental simplicity and
+active \gls{DOAS} retrieval simplicity. As illustrated in
+Figure~\ref{fig:hypothesis}, one could use a scattered sunlight
+measurement as a light source for a \gls{DOAS} analysis, provided
+distances between the two points are kept small, optical densities are
+low (clear atmosphere), and both spectral measurements are taken in the
+same angle. With this process, we would only effectively be using as
+projections the spectral measurements of the \gls{ROI}. This hypothesis,
+while not being mentioned in the library directly, has already been
+hinted at in several papers, namely references~\cite{Frins2006,
+Casaballe2017, Johansson2009}.
+
+\begin{figure}[htpb]
+    \centering
+    \missingfigure{}
+    \caption{Hypothesis schematic. Light captured at point A is used as
+        a light source (or $I_0$) for the light captured at point B,
+        just as if using an artificial light source. As long as
+        distances are kept small and the optical thickness is low,
+        scattering will be negligible.  This is a huge simplification
+        over the traditional passive \gls{DOAS} analysis process, as
+        explained in Section~\ref{sec:lit_review_doas}.}
+    \label{fig:hypothesis}
+\end{figure}
+
+\section{Methods and Findings}%
+\label{sec:methods}
+
+\todo[inline]{Consider rewriting this section.}
+
+The system proposed in this thesis is a conjunction of sub-components
+that work together towards the final goal. The first division is between
+what is a physical, tangible component and what is just software
+related. On the first level, developing this project involved selecting
+the components for a custom made \gls{UAV} to which the spectroscopic
+system will be attached to. In addition to this, I also had to select
+the on-board electronics module, which is comprised of the flight
+controller, which takes care of the device's movement; and the on-board
+computer, which handles the acquisition of data via the optical module,
+an assembly of spectrometers and telescopes connected through a
+custom-built coupling part. All this assembly will perform according to
+what is programmed using ArduCopter's SITL programming
+suite~\todo{citation}.
+
+On a software level, developing this project implied the creation of a
+tomographic simulation tool, written in Python (and more particularly,
+NumPy)~\cite{Python, Oliphant2007}. This tool was coded considering the
+hypothesis described in Section~\ref{sec:hypothesis}, and includes the
+description of the trajectory that the system must conduct in order to
+reconstruct the target species concentration maps. Regarding the
+reconstruction itself, this tool includes custom-built routines for the
+\gls{FBP} algorithm and the \gls{MLEM} algorithm, and applies a SciPy
+library~\todo{citation} method to perform \gls{SART} reconstruction.
+Moreover, the simulation platform also takes into consideration
+geometric and reconstruction errors, proper to this kind of system.
+
+The rest of this thesis describes my best efforts in developing a
+spectral system that would provide an affirmative reply to the research
+question, taking into account the literary gaps that we have found in
+our literature review. In doing this, I have successfully built a
+software simulation tool that computationally proves that our
+tomographic assumptions are reasonable and allow the concentration
+mapping of any trace species that can be targeted by the \gls{DOAS}
+technique. On an experimental level, I have also managed to validate the
+hypothesis described in Section~\ref{sec:hypothesis}.
+
+\section{Layout}%
+\label{sec:layout}
+
+After this introduction, in Chapter~\ref{cha:literature_review}, we can
+find a more thorough literature review than the one presented in
+Section~\ref{sec:literature_review}. After that, I have included the
+chapter in which I present and discuss the methods employed in this
+project's development (Chapter~\ref{cha:methods}). Finally, in
+Chapter~\ref{cha:conclusions}, I present what could be concluded as a
+result of this project.
 
 
-% \subsubsection{Reconstruction algorithms}%
-% \label{ssub:reconstruction_algorithms}
-
-% \begin{itemize}
-%     \item Analytical
-%         \begin{itemize}
-%             \item FBP;
-%             \item Fan-beam FBP.
-%         \end{itemize}
-%     \item Iterative
-%         \begin{itemize}
-%             \item SART;
-%             \item SIRT;
-%             \item MLEM;
-%         \end{itemize}
-% \end{itemize}
-
-% \subsubsection{Geometries}%
-% \label{ssub:geometries}
-
-% \subsection{DOAS}%
-% \label{sub:doas}
-
-% \subsubsection{Background}%
-% \label{ssub:background}
-
-% \subsubsection{DOAS-tomography}%
-% \label{ssub:doas_tomography}
-
-% \section{Terms and scope of topics}%
-% \label{sec:terms_and_scope_of_topics}
-
-% \section{Knowledge gap}%
-% \label{sec:knowledge_gap}
-
-% \subsection{Smart air pollution monitoring}%
-% \label{sub:smart_air_pollution_monitoring}
-
-% \subsection{2d or 3d concentration mapping technologies}%
-% \label{sub:2d_or_3d_concentration_mapping_technologies}
-
-% \subsection{Low mobility of existing systems}%
-% \label{sub:low_mobility_of_existing_systems}
-
-% \section{Relevance of topic}%
-% \label{sec:relevance_of_topic}
-
-% \subsection{Smart cities}%
-% \label{sub:smart_cities}
-
-% \subsection{Air pollution monitoring in the future}%
-% \label{sub:air_pollution_monitoring_in_the_future}
-
-% \section{Research Questions}%
-% \label{sec:research_questions}
-
-% \section{Hypothesis}%
-% \label{sec:hypothesis}
-
-% \section{Methods}%
-% \label{sec:methods}
-
-% \subsection{Simulator}%
-% \label{sub:simulator}
-
-% \subsection{UAV Instruments}%
-% \label{sub:uav_instruments}
-
-% \subsection{Telescope and adaptations}%
-% \label{sub:telescope_and_adaptations}
-
-% \subsubsection{Model selection}%
-% \label{ssub:model_selection}
-
-% \subsubsection{Spectrometer coupling}%
-% \label{ssub:spectrometer_coupling}
-
-% \subsection{Experiments}%
-% \label{sub:experiments}
-
-% \subsection{SITL for trajectory programming}%
-% \label{sub:sitl_for_trajectory_programming}
-
-% \section{Findings}%
-% \label{sec:findings}
-
-% \section{Layout}%
-% \label{sec:layout}
 
 
 
