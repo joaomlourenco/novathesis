@@ -64,8 +64,6 @@ Please add them to the [wiki](https://github.com/joaomlourenco/novathesis/wiki) 
 
 ## Disclaimer
 
-These are not official templates for FCT-NOVA, although they are fully compliant to the FCT and NOVA formatting regulations.
-
-The Word template is *frozen*.  The maintenance is very very limited.
+These are not official templates for FCT-NOVA or any other School, although we have done our best to make it fully compliant to each School regulations for thesis/dissertation presentation.
 
 All contributors, both sporadic and regular, are welcome. :) Please [contact me](http://docentes.fct.unl.pt/joao-lourenco) to join the team.
