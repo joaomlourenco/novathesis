@@ -977,7 +977,10 @@
   {\scriptsize%
       \begin{Spacing}{1}%
         \fontfamily{phv}\fontsize{6.3}{6.3}\selectfont%
-        \noindent\theacknowledgmentsstr[\novathesis@opt@coverlang]%
+        \noindent
+        \ifthenelse{\equal{\novathesis@opt@printtrackmessage}{true}}%
+        {\hypersetup{allcolors=black}\theacknowledgmentsstr[\novathesis@opt@coverlang]}%
+        {\hypersetup{allcolors=white}\textcolor{white}{\theacknowledgmentsstr[\novathesis@opt@coverlang]}}%
       \end{Spacing}%
   }%
   \clearforchapter%
