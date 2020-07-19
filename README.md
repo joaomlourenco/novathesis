@@ -8,18 +8,18 @@
 
 The NOVAthesis LaTeX class is a thesis template initially designed for the PhD and MSc thesis at [FCT Universidade NOVA de Lisboa (FCT-NOVA)](http://www.fct.nova.pt), Portugal, but currently it supports more schools, namely:
 * NOVA University Lisboa
-    * FCT-NOVA [NOVA School for Science and Technology](https://www.fct.unl.pt)
-    * NOVA-IMS [NOVA Information Management School](https://www.novaims.unl.pt)
-    * ENSP-NOVA [National School of Public Heath]{https://www.ensp.unl.pt}
-    * FCSH-NOVA [Faculdade de Ciências Humanas e Sociais](https://www.fcsh.unl.pt)
+    * [NOVA School for Science and Technology](https://www.fct.unl.pt) (FCT-NOVA)
+    * [NOVA Information Management School](https://www.novaims.unl.pt) (NOVA-IMS)
+    * [National School of Public Heath]{https://www.ensp.unl.pt} (ENSP-NOVA)
+    * [Faculdade de Ciências Humanas e Sociais](https://www.fcsh.unl.pt) (FCSH-NOVA)
 * University of Lisbon
-    * IST-UL [Instituto Superior Técnico from Universidade de Lisboa](https://tecnico.ulisboa.pt)
-    * FC-UL [Faculdade de Ciências from  Universidade de Lisboa](https://ciencias.ulisboa.pt)
+    * [Instituto Superior Técnico from Universidade de Lisboa](https://tecnico.ulisboa.pt) (IST-UL)
+    * [Faculdade de Ciências from  Universidade de Lisboa](https://ciencias.ulisboa.pt) (FC-UL)
 * Instituto Politécnico de Lisboa
-    * ISEL-IPL [Instituto Superior de Engenharia de Lisboa](https://www.isel.pt)
+    * [Instituto Superior de Engenharia de Lisboa](https://www.isel.pt) (ISEL-IPL)
     * Instituto Politécnico de Setúbal
-    * ESS-IPS [Escola Superior de Saúde](https://www.ess.ips.pt)
-    * ESTB-IPS [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt)
+    * [Escola Superior de Saúde](https://www.ess.ips.pt) (ESS-IPS)
+    * [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt) (ESTB-IPS)
 
 The class provides options to easily set up the cover page, the front matter pages, the page headers, etc. with respect to the official dissertation guidelines for each of the supported Schools.
 
