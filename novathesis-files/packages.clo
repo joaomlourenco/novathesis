@@ -72,7 +72,8 @@
 \DeclareLanguageMapping{portuguese}{portuguese-apa}
 
   % Manage glossaries
-  \RequirePackage[nonumberlist,translate=babel,toc,
+  \RequirePackage[nonumberlist,toc,
+  translate=babel,
     acronym, % adds acronyms listing
     symbols, % adds symbols listing
     sanitize=none % allow \gls inside descriptions
