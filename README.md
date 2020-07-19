@@ -6,19 +6,35 @@
 
 --------
 
-The NOVAthesis LaTeX class is a thesis template initially designed for the PhD and MSc thesis at [FCT Universidade NOVA de Lisboa (FCT-NOVA)](http://www.fct.nova.pt), Portugal. The class provides utilities to easily set up the cover page, the front matter pages, the page headers, etc. with respect to the official guidelines of the FCT-NOVA for writing PhD dissertations.
+The NOVAthesis LaTeX class is a thesis template initially designed for the PhD and MSc thesis at [FCT Universidade NOVA de Lisboa (FCT-NOVA)](http://www.fct.nova.pt), Portugal, but currently it supports more schools, namely:
+* NOVA University Lisboa
+    * [www.fct.unl.pt](NOVA School for Science and Technology) (FCT-NOVA)
+    * [www.novaims.unl.pt](NOVA Information Management School) (IMS-NOVA) 
+    * [www.ensp.unl.pt]{Natinal School of Publich Heath} (ENSP-NOVA)
+    * [www.fcsh.unl.pt](Faculdade de Ciêncais Humanas e Sociais) (FCSH-NOVA)
+* University of Lisbon
+    * I[tecnico.ulisboa.pt](nstituto Superior Técnico from Universidade de Lisboa) (IST-UL)
+    * [ciencias.ulisboa.pt(]Faculdade de Ciências from  Universidade de Lisboa) (FC-UL)
+* Instituto Politécnico de Lisboa
+    * [www.isel.pt](Instituto Superior de ENgenharia de Lisboa) (ISEL-IPL)
+* Instituto Politécnico de Setúbal
+    * [www.ess.ips.pt](Escola Superior de Saúde) (ESS-IPS)
+    * [www.estbarreiro.ips.pt](Escola Superior de Tecnologia do Barreiro) (ESTB-IPS)
 
-The template is easily customizable, including the support for other institutions as well. Currently the template supports out-of-thebox (at least): 17 Chapter Styles, 7 font sets, 4 schools.  If you customize this template for your institution or add new style files, please [let me knwow](http://docentes.fct.unl.pt/joao-lourenco) about the thorns in the process, so that I can work a bit to smooth them.  Thanks!
+The class provides options to easily set up the cover page, the front matter pages, the page headers, etc. with respect to the official dissertation guidelines for each of the supported Schools.
+
+The template is also easily customizable, including the support for new Schools. Currently the template supports out-of-thebox (at least): 17 Chapter Styles, 7 font sets, 9 schools.  If you customize this template for your institution or add new style files, please [let me knwow](http://docentes.fct.unl.pt/joao-lourenco).  Thanks!
 
 *This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/.*
 
 ## Donations
 
-If you think this template really helped you while writing your thesis, think about doing a [small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KTPG2K2AHCRAW). I'll keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
+This template is the result of hundreds (yes! *hundreds*) of hours of work from the main developer.  If you think this template really helped you while writing your thesis, think about doing a [small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KTPG2K2AHCRAW). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
 
-Thank you to the two donators (out of a few hundreds of users) of 2019:
-* Jorge Barreto
+Thank you to the (only) two donators from 2019:
+* Jorge Barreto.
 * Raissa Almeida.
+All the best to you!
 
 ## Getting Started
 
@@ -52,7 +68,3 @@ These are not official templates for FCT-NOVA, although they are fully compliant
 The Word template is *frozen*.  The maintenance is very very limited.
 
 All contributors, both sporadic and regular, are welcome. :) Please [contact me](http://docentes.fct.unl.pt/joao-lourenco) to join the team.
-
-## Recent News
-
-Please check the file `changelog.txt` for the complete listing of changes.
