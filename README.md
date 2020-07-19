@@ -8,18 +8,18 @@
 
 The NOVAthesis LaTeX class is a thesis template initially designed for the PhD and MSc thesis at [FCT Universidade NOVA de Lisboa (FCT-NOVA)](http://www.fct.nova.pt), Portugal, but currently it supports more schools, namely:
 * NOVA University Lisboa
-    * FCT-NOVA [www.fct.unl.pt](NOVA School for Science and Technology)
-    * NOVA-IMS [www.novaims.unl.pt](NOVA Information Management School)
-    * ENSP-NOVA [www.ensp.unl.pt]{Natinal School of Publich Heath}
-    * FCSH-NOVA [www.fcsh.unl.pt](Faculdade de Ciêncais Humanas e Sociais)
+    * FCT-NOVA [https://www.fct.unl.pt](NOVA School for Science and Technology)
+    * NOVA-IMS [https://www.novaims.unl.pt](NOVA Information Management School)
+    * ENSP-NOVA [https://www.ensp.unl.pt]{Natinal School of Publich Heath}
+    * FCSH-NOVA [https://www.fcsh.unl.pt](Faculdade de Ciêncais Humanas e Sociais)
 * University of Lisbon
-    * IST-UL I[tecnico.ulisboa.pt](nstituto Superior Técnico from Universidade de Lisboa)
-    * FC-UL [ciencias.ulisboa.pt(]Faculdade de Ciências from  Universidade de Lisboa)
+    * IST-UL I[https://tecnico.ulisboa.pt](nstituto Superior Técnico from Universidade de Lisboa)
+    * FC-UL [https://ciencias.ulisboa.pt(]Faculdade de Ciências from  Universidade de Lisboa)
 * Instituto Politécnico de Lisboa
-    * ISEL-IPL [www.isel.pt](Instituto Superior de ENgenharia de Lisboa)
+    * ISEL-IPL [https://www.isel.pt](Instituto Superior de ENgenharia de Lisboa)
     * Instituto Politécnico de Setúbal
-    * ESS-IPS [www.ess.ips.pt](Escola Superior de Saúde)
-    * ESTB-IPS [www.estbarreiro.ips.pt](Escola Superior de Tecnologia do Barreiro)
+    * ESS-IPS [https://www.ess.ips.pt](Escola Superior de Saúde)
+    * ESTB-IPS [https://www.estbarreiro.ips.pt](Escola Superior de Tecnologia do Barreiro)
 
 The class provides options to easily set up the cover page, the front matter pages, the page headers, etc. with respect to the official dissertation guidelines for each of the supported Schools.
 
