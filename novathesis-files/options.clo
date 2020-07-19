@@ -159,6 +159,17 @@
 
 
 % --------------------------------------------------------
+% PRINT TRACKING MESSAGE
+%
+% true
+% false
+\DeclareOptionX{trackmessage}[true]{%
+	\typeout{'printtrackmessage'=#1}%
+  \gdef\novathesis@opt@printtrackmessage{#1}%
+}
+
+
+% --------------------------------------------------------
 % HYPER LINKS COLOR
 %
 % darkblue, black
@@ -273,6 +284,7 @@
   secondcover=false,
   aftercover=false,
   printcommittee=true,
+  trackmessage=ture,
 	spine=false,
 	biblatex={%
 		% sorting=nyt,%
