@@ -3,9 +3,9 @@
 %% novathesis.clsnova
 %% NOVA thesis document class
 %%
-%% This work is licensed under the 
-%% Creative Commons Attribution-NonCommercial 4.0 International License. 
-%% To view a copy of this license, 
+%% This work is licensed under the
+%% Creative Commons Attribution-NonCommercial 4.0 International License.
+%% To view a copy of this license,
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
 %% Version 2020/02/18 [4.3.0]
@@ -30,9 +30,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
-%%% 
+%%%
 %%%   You SHOULD NOT change this file (you are playing with fire!)
-%%% 
+%%%
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -194,12 +194,12 @@
 \newcommand{\printcoverpage}{%
   \thispagestyle{empty}%
   \selectthelanguage{\novathesis@opt@coverlang}%
-  
+
   \setlength{\mpwidth}{\dimexpr%
     \paperwidth%
       -\themargin[\novathesis@opt@docdegree,left]%
       -\themargin[\novathesis@opt@docdegree,right]}%
-  
+
   \setlength{\mpheight}{\dimexpr%
     \paperheight%
       -\themargin[\novathesis@opt@docdegree,top]%
@@ -220,7 +220,7 @@
   }%
   ~% This space is important here so that the cover page is not empty anymore!
   \clearforchapter%
-  
+
   %% Print second conver page if school is ul/fc
   \@printcommitteeauxtrue
   \setcounter{@novathesis@cnt}{0}%	reset counter used in the name listing
@@ -684,7 +684,7 @@
   \novathesis@typetwolengths{Sidefootvsep and sidefootheight}{\sidefootvsep}{and}{\sidefootheight}\\%
   \hrule%
   }
-    
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -805,7 +805,7 @@
 }
 
 
-\newcommand{\printabstract}{% 
+\newcommand{\printabstract}{%
 	\xdef\novathesis@tmp{\theabstractorder[\novathesis@opt@lang]}%
   \iteratecsvlist{\novathesis@printabstract@lang}{\novathesis@tmp}%
   % disables protrusion locally in the document for the forthcoming tables of contents
@@ -841,7 +841,7 @@
 	\InputIfFileExists{Chapters/#1}{\clearforchapter}{ERROR: File '#1' does not exist!!!}%
 }
 
-\newcommand{\printchapthers}{%
+\newcommand{\printchapters}{%
 	\ifthenelse{\isundefined\novathesis@chapter@list}{}%
 		{\forlistloop{\novathesis@printchapter}{\novathesis@chapter@list}}%
 }
@@ -864,7 +864,7 @@
 		{\renewcommand{\appendixtocname}{\appendixnamepl}%
          \clearforchapter\appendix\addappheadtotoc%
 		 \forlistloop{\novathesis@printappendix}{\novathesis@appendix@list}}%
-} 
+}
 
 \newcommand{\annexfile}[1]{%
 	\listgadd{\novathesis@annex@list}{#1}%
@@ -879,7 +879,7 @@
 		{\renewcommand{\appendixtocname}{\annexnamepl}%
          \clearforchapter\annex\addappheadtotoc%
 		 \forlistloop{\novathesis@printannex}{\novathesis@annex@list}}%
-} 
+}
 
 \newcommand{\annex}{
   \xdef\Hy@chapapp{annex}%
@@ -1039,7 +1039,7 @@
 	\rule{\textwidth}{0.2mm} ~\\[-3.5ex]%
 }
 
-  
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Keywords
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
