@@ -8,18 +8,18 @@
 
 The NOVAthesis LaTeX class is a thesis template initially designed for the PhD and MSc thesis at [FCT Universidade NOVA de Lisboa (FCT-NOVA)](http://www.fct.nova.pt), Portugal, but currently it supports more schools, namely:
 * NOVA University Lisboa
-    * FCT-NOVA [https://www.fct.unl.pt](NOVA School for Science and Technology)
-    * NOVA-IMS [https://www.novaims.unl.pt](NOVA Information Management School)
-    * ENSP-NOVA [https://www.ensp.unl.pt]{Natinal School of Publich Heath}
-    * FCSH-NOVA [https://www.fcsh.unl.pt](Faculdade de Ciêncais Humanas e Sociais)
+    * FCT-NOVA [NOVA School for Science and Technology](https://www.fct.unl.pt)
+    * NOVA-IMS [NOVA Information Management School](https://www.novaims.unl.pt)
+    * ENSP-NOVA [National School of Public Heath]{https://www.ensp.unl.pt}
+    * FCSH-NOVA [Faculdade de Ciências Humanas e Sociais](https://www.fcsh.unl.pt)
 * University of Lisbon
-    * IST-UL I[https://tecnico.ulisboa.pt](nstituto Superior Técnico from Universidade de Lisboa)
-    * FC-UL [https://ciencias.ulisboa.pt(]Faculdade de Ciências from  Universidade de Lisboa)
+    * IST-UL [Instituto Superior Técnico from Universidade de Lisboa](https://tecnico.ulisboa.pt)
+    * FC-UL [Faculdade de Ciências from  Universidade de Lisboa](https://ciencias.ulisboa.pt)
 * Instituto Politécnico de Lisboa
-    * ISEL-IPL [https://www.isel.pt](Instituto Superior de ENgenharia de Lisboa)
+    * ISEL-IPL [Instituto Superior de Engenharia de Lisboa](https://www.isel.pt)
     * Instituto Politécnico de Setúbal
-    * ESS-IPS [https://www.ess.ips.pt](Escola Superior de Saúde)
-    * ESTB-IPS [https://www.estbarreiro.ips.pt](Escola Superior de Tecnologia do Barreiro)
+    * ESS-IPS [Escola Superior de Saúde](https://www.ess.ips.pt)
+    * ESTB-IPS [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt)
 
 The class provides options to easily set up the cover page, the front matter pages, the page headers, etc. with respect to the official dissertation guidelines for each of the supported Schools.
 
