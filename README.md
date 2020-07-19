@@ -16,6 +16,10 @@ The template is easily customizable, including the support for other institution
 
 If you think this template really helped you while writing your thesis, think about doing a [small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KTPG2K2AHCRAW). I'll keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
 
+Thank you to the two donators of 2019:
+* Jorge Barreto
+* Raissa Almeida.
+
 ## Getting Started
 
 ### Download
