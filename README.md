@@ -34,6 +34,7 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 Thank you to the (only) two donators from 2019:
 * Jorge Barreto.
 * Raissa Almeida.
+
 All the best to you!
 
 ## Getting Started
