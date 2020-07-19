@@ -23,13 +23,13 @@ The NOVAthesis LaTeX class is a thesis template initially designed for the PhD a
 
 The class provides options to easily set up the cover page, the front matter pages, the page headers, etc. with respect to the official dissertation guidelines for each of the supported Schools.
 
-The template is also easily customizable, including the support for new Schools. Currently the template supports out-of-thebox (at least): 17 Chapter Styles, 7 font sets, 9 schools.  If you customize this template for your institution or add new style files, please [let me knwow](http://docentes.fct.unl.pt/joao-lourenco).  Thanks!
+The template is also easily customizable, including the support for new Schools. Currently the template supports out-of-the-box (at least): 17 Chapter Styles, 7 font sets, 9 schools.  If you customize this template for your institution or add new style files, please [let me knwow](http://docentes.fct.unl.pt/joao-lourenco).  Thanks!
 
 *This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/.*
 
 ## Donations
 
-This template is the result of hundreds (yes! *hundreds*) of hours of work from the main developer.  If you think this template really helped you while writing your thesis, think about doing a [small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KTPG2K2AHCRAW). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
+This template is the result of hundreds (yes! *hundreds*) of hours of work from the main developer.  If you think this template really helped you while writing your thesis, think about doing a [**donation**](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KTPG2K2AHCRAW). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
 
 Thank you to the (only) two donators from 2019:
 * Jorge Barreto.
