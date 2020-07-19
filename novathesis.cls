@@ -534,8 +534,11 @@
 }
 
 \def\printadvisers@iii#1,#2,#3{%
-  #1, #2, #3%
+  #1%
+  \ifthenelse{\equal{#2}{}}{}{, #2}%
+  \ifthenelse{\equal{#3}{}}{}{, #3}%
 }
+
 \newcommand{\printadvisers@ii}[1]{%
    & \printadvisers@iii#1\\[0.4ex]%
 }

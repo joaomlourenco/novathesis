@@ -5,11 +5,7 @@
 %% Costumization for IST-UL (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-<<<<<<< HEAD
-% Univesity
-=======
 % University
->>>>>>> master
 \university[pt]={Universidade de Lisboa}
 \university[en]={University of Lisbon}
 \university[fr]={University of Lisbon}
@@ -139,8 +135,9 @@
 % Redefinir fonte de secção, subscção, etc…
 \newbox\s@ch@@ghtb@x
 \setbox\s@ch@@ghtb@x=\hbox{{\normalfont\Huge A}}
-\font\p@rtnamfont=cmbr8 at 13mm % computer modern bright
-\font\s@cnamfont=cmbrsl8 at \ht\s@ch@@ghtb@x % computer modern bright
+\newcommand{\s@cnamfont}{\usefont{T1}{cmbr}{m}{sl}\fontsize{18}{20}\selectfont}
+% \font\p@rtnamfont=cmbr8 at 13mm % computer modern bright
+% \font\s@cnamfont=cmbrsl8 at \ht\s@ch@@ghtb@x % computer modern bright
 \renewcommand\section{\@startsection {section}{1}{0pt}%
                                    {-3.5ex plus -0.5ex minus -.2ex}%
                                    {2.3ex \@plus.2ex}%
