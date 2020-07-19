@@ -17,7 +17,7 @@ The NOVAthesis LaTeX class is a thesis template initially designed for the PhD a
     * [Faculdade de Ciências from  Universidade de Lisboa](https://ciencias.ulisboa.pt) (FC-UL)
 * Instituto Politécnico de Lisboa
     * [Instituto Superior de Engenharia de Lisboa](https://www.isel.pt) (ISEL-IPL)
-    * Instituto Politécnico de Setúbal
+* Instituto Politécnico de Setúbal
     * [Escola Superior de Saúde](https://www.ess.ips.pt) (ESS-IPS)
     * [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt) (ESTB-IPS)
 
