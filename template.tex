@@ -7,7 +7,7 @@
 %% To view a copy of this license,
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2020/02/18 [4.3.0]
+%% Version 2020/07/20 [4.4.0]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade NOVA de Lisboa
@@ -36,7 +36,7 @@
 % The default option marked with (*)
 \documentclass[
   docdegree=msc,        % phd(*), phdplan, phdprop, msc, mscplan, bsc
-  school=nova/fct,      % nova/fct(*), nova/fcsh, nova/ims, ul/ist, ul/fc, ipl/isel
+  school=nova/fct ,      % nova/fct(*), nova/fcsh, nova/ims, ul/ist, ul/fc, ipl/isel
   lang=en,              % en(*), fr, it, pt
   % coverlang=en,         % defaults to main language
   % copyrightlang=en,     % defaults to main language
@@ -68,13 +68,13 @@
     % sortcites=true,     % If numeric, sort cites by crescent order
     % sorting=none,       % none, nyt(*), ynt
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%% uncomment for 'numeric-by-order-of-citation' like citations
+    %%% uncomment for 'numeric' sorted by author's last name like citations
     backend=bibtex,     % use bibtex if possible
     style=numeric-comp, % numeric(*), alphabetic, authoryear, bwl-FU
     sortcites=true,     % If numeric, sort cites by crescent order
     sorting=nyt,        % none, nyt(*), ynt
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%% uncomment for 'numeric-by-order-of-citation' like citations
+    %%% uncomment for 'alphanumeric-key' like citations
     % backend=bibtex,   % use bibtex if possible
     % style=alphabetic, % numeric(*), alphabetic, authoryear, bwl-FU
     % sorting=nyt,      % none, nyt(*), ynt
@@ -168,12 +168,6 @@ linkcolor=NavyBlue
 
 %%============================================================
 % For costumization,
-%        see file 'nova-thesis/Schools/*/*/defaults.clo'
-%        and file 'nova-thesis/lang-text.clo'
-% You may override here any of the values defined there
-% e.g.
-% \majorfield[pt]={Engenharia Biomédica}
-% \majorfield[en]={Biomedical Engineering}
 % \thesiscover[msc,front]={cover-megi-nova-ims}
 % \thesiscover[msc,front]={cover-mgi-nova-ims}
 % \glstocfalse % Uncomment to remove
@@ -181,8 +175,25 @@ linkcolor=NavyBlue
 %%============================================================
 
 
+% Thesis/Dissertation title
 \title[A Very Long and Impressive Thesis Title\\With a Line Break]{A Very Long and Impressive Thesis Title With a Line Break}
 \subtitle{Science is beautiful}
+
+% Scientific filed (for MSc in Computer Science)
+\majorfield[pt]={Engenharia Informática}
+\majorfield[en]={Computer Science and Engineering}
+
+% Scientific filed (for PhD in Computer Science)
+% \majorfield[pt]={Informática}
+% \majorfield[en]={Computer Science}
+
+% Degree name (for MSc in Computer Science)
+\degreename[pt]={Mestrado Integrado em Engenharia Informática}
+\degreename[en]={Integrated Master in Computer Science and Engineering}
+
+% Degree name (for PhD in Computer Science)
+% \degreename[pt]={Programa de Doutoramento em Informática}
+% \degreename[en]={PhD Program in Computer Science}
 
 % Autor
 % use [f] for female and [m] for male
@@ -192,10 +203,6 @@ linkcolor=NavyBlue
 % Date
 \datemonth{\DTMmonthname{\month}}
 \dateyear{\the\year}
-
-% Front page image - for ISEL template - must be 12 x 8 cm
-%\frontpageimage{frontPageImage.png}
-
 
 % Advisers
 % use "\\&" if necessary to break the lines in the apprpriate place
@@ -245,7 +252,7 @@ linkcolor=NavyBlue
 \abstractfile[en]{abstract-en}  % Abstract in English
 \abstractfile[fr]{abstract-fr}  % Abstract in French
 \glossaryfile{glossary}
-\setglossarystyle{super}
+\setglossarystyle{long}
 \setabbreviationstyle[acronym]{long-short}
 \acronymsfile{acronyms}
 \symbolsfile{symbols}
@@ -259,7 +266,11 @@ linkcolor=NavyBlue
 \addlisttofrontmatter{\listoffigures}  % The List of Figures. Comment to omit.
 \addlisttofrontmatter{\listoftables}   % The List of Tables. Comment to omit.
 \addlisttofrontmatter{\lstlistoflistings}  % The List of Code Listings. Comment to omit.
-\addlisttofrontmatter{\glsnogroupskiptrue\setlength{\glsdescwidth}{0.8\textwidth}\printnoidxglossaries}  % The Glossary and List of Acrnonyms
+\addlisttofrontmatter{%
+  \glsnogroupskiptrue%
+  \setlength{\glsdescwidth}{0.75\textwidth}%
+  \printnoidxglossaries%
+}  % The Glossary and List of Acrnonyms
 
 
 % Text chapters

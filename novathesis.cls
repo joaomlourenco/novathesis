@@ -8,7 +8,7 @@
 %% To view a copy of this license,
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2020/02/18 [4.3.0]
+%% Version 2020/07/20 [4.4.0]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade Nova de Lisboa
@@ -38,7 +38,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{novathesis}[2020/02/18 novathesis template]
+\ProvidesClass{novathesis}[2020/07/20 novathesis template]
 
 
 
@@ -132,8 +132,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\coverbackground}[1][\@nameuse{thesiscover\novathesis@opt@docdegree,front}]{%
-  \AddToShipoutPictureBG*{%
-    \includegraphics[width=\paperwidth,height=\paperheight]{#1}%
+  \ifthenelse{\equal{#1}{}}{}{%
+    \AddToShipoutPictureBG*{%
+      \includegraphics[width=\paperwidth,height=\paperheight]{#1}%
+    }%
   }%
 }
 
@@ -307,6 +309,8 @@
 \mynewdata{degreestr}
 \mynewdata{degreestrfont}
 \degreestrfont[\novathesis@opt@coverlang]={}
+
+\mynewdata{degreename}
 
 \mynewdata{docdegreestr}
 

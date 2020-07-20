@@ -15,7 +15,7 @@
 \faculty[pt]={Faculdade de Ciências e Tecnologia}
 \faculty[en]={NOVA School of Science and Technology}
 \faculty[fr]={NOVA School of Science and Technology}
-\faculty[it]={FacultyNOVA School of Science and Technology}
+\faculty[it]={NOVA School of Science and Technology}
 
 % Scientific filed
 \IfSubStr{\novathesis@opt@docdegree}{phd}{%
@@ -115,7 +115,7 @@
 \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
 \pagestyle{novathesis@myvf}
 %
-\frenchspacing
+%\frenchspacing
 
 
 
