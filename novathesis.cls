@@ -481,18 +481,20 @@
 
 \newcommand{\printcommittee@i}[1]{%
   \xdef\novathesis@tmp{\thecommitteetitlestr[\novathesis@opt@coverlang]}%
-  \begin{tabularx}{#1\textwidth}{@{}r>{\raggedright\arraybackslash}X@{}}%
-  \ifx\novathesis@tmp\@empty%
-    % committeetitlestr[…] is empty
-  \else%
-    \multicolumn{2}{c}{{%%
-            \thecommitteetitlestrfont[\novathesis@opt@coverlang] %
-            \thecommitteetitlestr[\novathesis@opt@coverlang]}%
-          }\\[1ex]%
-  \fi%
-  \xdef\novathesis@tmp{\thecommitteeorder[all]}%
-  \iteratecsvlist{\novathesis@printcommitteemembers}{\novathesis@tmp}%
-  \end{tabularx}%
+  \begin{center}%
+    \begin{tabularx}{#1\textwidth}{@{}r>{\raggedright\arraybackslash}X@{}}%
+    \ifx\novathesis@tmp\@empty%
+      % committeetitlestr[…] is empty
+    \else%
+      \multicolumn{2}{c}{{%%
+              \thecommitteetitlestrfont[\novathesis@opt@coverlang] %
+              \thecommitteetitlestr[\novathesis@opt@coverlang]}%
+            }\\[1ex]%
+    \fi%
+    \xdef\novathesis@tmp{\thecommitteeorder[all]}%
+    \iteratecsvlist{\novathesis@printcommitteemembers}{\novathesis@tmp}%
+    \end{tabularx}%
+  \end{center}%
 }
 
 \newcommand{\printcommittee}[1][0.75]{%
