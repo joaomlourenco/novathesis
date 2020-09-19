@@ -69,7 +69,7 @@ literature, including health effects, environmental effects and
     EEA~\cite{CABI2019}. These are the pollutants whose effect is more
     significant for society itself, given their level of dangerousness and
     how common they are.}
-    \label{tab:label}
+    \label{tab:criteria_pollutants}
     \begin{tabular}{c}
     
     \end{tabular}
@@ -874,31 +874,797 @@ another component's measurement either positively or negatively.
 Finally, any usable monitoring technique must be sufficiently precise as
 to provide valid measurements.
 
-There are literally dozens of methods for monitoring \gls{AP}, with
-differing physical principles behind them. They can be categorized in
-numerous ways, depending on the application and on the technique's
-capabilities. Since it would be impossible to provide examples and
-explanations for all possible methods, I will only present them for the
-most commonly used techniques and for those that are related to this
-thesis' spectroscopic method, \gls{DOAS}.
+\acrlong{AP} monitoring techniques and devices are too many to address
+them all in this document. Besides, the physical principles involved are
+completely different from one to another, making it very difficult to
+make a broad generalization, other than the fact that they can be
+divided into local and remote sensing devices. The gold standard for air
+quality measurements remains those techniques in which a sample is
+collected in the field and then taken to the laboratory to be analyzed
+by very powerful analytical methods such as chromatography or mass
+spectroscopy. While undoubtedly providing the most accurate
+representation of the air composition at the time and place the sample
+was collected, it is also true that this method's results are too slow
+to use regularly in the field.
+
+Another very important air quality monitoring method is the use of
+electrochemical sensors. The first variants (wet cells) of this kind of
+sensor became very popular in the field of industrial hygiene, where
+they were applied in many portable flue gas analyzers. They were very
+attractive to companies worldwide given their potential for very low
+costs in comparison to optical or other more complex techniques. Apart
+from the oxygen wet cell sensor, that has a slightly different
+configuration, these electrochemical devices are comprised of three
+electrodes - a sensing electrode, a counter electrode and a reference
+electrode - separated by a thin layer of electrolyte. The gas that is
+diffused to the surface of the electrode is either oxidized or reduced,
+thus changing the systems electrical properties, in a way that is then
+captured by an amplification circuit.
+
+Wet cell electrochemical sensors were the precursors of the now more
+common solid state sensors. These sensors are the ones that we see in
+every subterranean parking lot, measuring several traffic related gases
+such as \gls{co}, \gls{co2} or \gls{no2}. In general semiconductor gas
+detectors are comprised of two modules: a receptor and a transducer (see
+Figure~\ref{fig:semiconductor_sensor}). The receptor has in its
+composition a material (or set of materials) that, in contact with the
+target gas, induces a change in the systems inherent properties (work
+function, dielectric constant, resistance, etc.) or emits heat or light.
+The transducer is a device or circuit that converts the receptor's
+changes into an electrical signal. There are 5 types of semiconductor
+sensors, according to the material from which the transducer is made.
+These types are enumerated in Table~\ref{tab:semiconductor_sensor}.
+
+\begin{figure}[htpb]
+    \centering
+    \missingfigure{}
+    \caption{Semiconductor electrochemical sensor basic structure. There
+    are many examples of this type of sensors, but in general they
+    follow this architecture.}
+    \label{fig:semiconductor_sensor}
+\end{figure}
+
+\begin{table}[htpb]
+    \centering
+    \caption{Categorization of semiconductor gas sensors. The type of
+    transducer and receptor dictates the type of the sensor.}
+    \label{tab:semiconductor_sensor}
+    \missingfigure{This is actually a table}
+\end{table}
+
+Optical (spectroscopic) systems are fundamentally different from the
+other techniques that have already been presented. They can be used to
+perform remote sensing measurements (as far as being used for
+measurements aboard satellites). In the last few decades, these
+techniques have gained a lot of ground in atmospheric research, due to
+their high sensitivity and specificity and the universality of their
+applicability. Spectroscopic methods are based on Lambert-Beer's law
+(see Section~\ref{sec:doas} for a more thorough explanation), and make
+use of the fact that the way in which gases interact with light is well
+known and follows an exponential expression. There are many
+spectroscopic techniques for measuring \gls{AP}. Selecting one requires
+careful consideration of a number of factors like the target gases,
+optical path arrangement, type of light source, etc.
+Figure~\ref{fig:selecting_spectroscopic_method} provides several
+examples of optical measurement methods, and how they can be divided.
+
+\begin{figure}[htpb]
+    \centering
+    \missingfigure{}
+    \caption{There are many spectroscopic techniques for atmospheric
+    trace gas concentration measurement. Although several are depicted
+    here, keep in mind that this is not an exhaustive list and is meant as
+    an example repository.}
+    \label{fig:selecting_spectroscopic_method}
+\end{figure}
+
+One of the most important atmospheric analysis methods, and especially
+in what concerns this document, is \gls{DOAS}. While it is based on the
+same mathematical formulation as the other spectroscopic methods, it is
+also based on other factors, which shall be discussed in
+Section~\ref{sec:doas}.
+
+\section{DOAS}%
+\label{sec:doas}
+
+Differential Optical Absorption Spectroscopy is a well established
+absorption technique that is widely used in the field of atmospheric
+studies~\cite{Platt2007}. In this section, I present a short
+introduction to the field, extracted from~\cite{ValentedeAlmeida2017},
+an article we have published in 2017, marking the conclusion of the
+initial studies for this PhD thesis.
+
+There are two main families of \gls{DOAS} assemblies, with different
+goals and capabilities:
+
+\begin{itemize}
+
+        \item Active systems, of which a simple illustration is
+            presented in Fig.~\ref{fig:activeSmall}, are characterized
+            by relying on an artificial light source for their
+            measurements. A spectrometer at the end of the light path
+            performs spectroscopic detection. Active DOAS techniques are
+            very similar to traditional in-lab absorption spectroscopy
+            techniques \cite{Platt2007};
+
+        \item Passive DOAS techniques, illustrated in
+            Fig.~\ref{fig:passiveSchematic}, use natural light sources,
+            such as the Sun and the moon, in their measurement process.
+            An optical system is pointed in certain elevation and
+            azimuth angles and sends the captured light into a
+            spectrometer, connected to a computer. The system returns
+            the total value of the light absorption in its
+            path~\cite{Platt2007,Merlaud2013}.
+
+\end{itemize}
+
+%f2
+ \begin{figure*}[t]
+    \includegraphics[width=14cm]{img/pdf/amt-2016-314-f02.pdf}
+    \caption{Active DOAS schematic.}\label{fig:activeSmall}
+  \end{figure*}
+
+%f3
+  \begin{figure*}[t]
+      \includegraphics[width=14cm]{img/png/amt-2016-314-f03.png}
+      \caption{Passive DOAS schematic.}\label{fig:passiveSchematic}
+  \end{figure*}
+
+DOAS itself is based on Lambert--Beer's law, which can be written as
+\cite{Platt2007}
+
+\begin{equation}
+  \centering
+  \label{eq:lambertBeer}
+  I(\lambda) = I_0 (\lambda) \cdot \exp(-\sigma(\lambda) \cdot c \cdot L) \;,
+\end{equation}
+
+Where $\lambda$ is the wavelength of the emitted light; $I(\lambda)$ is
+the light intensity as measured by the system; $I_{0}(\lambda)$ is the
+intensity of the light as emitted by the source; and $\sigma(\lambda)$
+is the absorption cross section of absorber, which is wavelength
+dependent; $c$ is the concentration of the absorber we want to measure.
 
 
+This law allows the definition of optical thickness
+($\tau$)~\cite{Platt2007}:
 
-% \section{DOAS}%
-% \label{sec:doas}
+\begin{equation}
+      \label{eq:opticalThickness}
+      \tau(\lambda) = \ln \bigg( \frac{I_{0}(\lambda)}{I(\lambda)}\bigg) = \sigma(\lambda) \cdot c \cdot
+      L.
+\end{equation}
 
-% \section{Tomography}%
-% \label{sec:tomography}
+In a laboratory setting, Eq.~(\ref{eq:lambertBeer})
+or~(\ref{eq:opticalThickness}) can be used to directly calculate an
+absorber's concentration, provided there is knowledge of  its cross
+section. In the open atmosphere, however, absorption spectroscopy
+techniques are far more complex. On one hand, $I_0(\lambda)$ is not
+accessible since we measure from inside the medium we want to measure.
+On the other hand, there are several environmental and instrumental
+effects that influence measurement results. These effects include the
+following~\cite{Platt2007}.
+
+\begin{itemize}
+      \item Rayleigh scattering is due to small molecules present in the
+          atmosphere and is heavily influenced by wavelength (hence the
+          blue colour of the
+      sky).
+      \item Mie scattering is caused by particles and larger molecules
+          suspended in the atmosphere and is not very dependent
+      on the wavelength (hence the white colour of clouds).
+      \item Instrumental and turbulence effects are the instrument's
+          transmissivity and atmospheric turbulence in the optical path
+          also limit light intensity.
+
+  \end{itemize}
+
+In addition, we also have to take into account that, in the atmosphere,
+there are a number of trace gases that interfere with passing light.
+
+Another aspect worth mentioning is that our device is never pointed
+directly at the light source (the Sun) but always processes light that
+has been scattered at some unknown point in the optical path. This means
+that the light that reaches our detector is only the scattered fraction
+of the sunlight, depending on the system's position and geometry, as
+well as wavelength.
+
+The expansion of Lambert--Beer's equation to include all these effects
+results in Eq.~(\ref{eq:expandedLambertBeer}).
+
+\begin{align}
+      \label{eq:expandedLambertBeer}
+I(\lambda) & = I_{0}(\lambda) \cdot A(\lambda, \ldots) \cdot S(\lambda) \nonumber \\
+      &\cdot
+      \exp \Bigg[ - \int \Big[ \Big(\sum_{i} \sigma_{i}(\lambda, s) \cdot c_{i}(s)\Big) +
+      \epsilon_\mathrm{M}(\lambda, s)\nonumber\\
+      & + \epsilon_\mathrm{R}(\lambda, s) \Big]\mathrm{d}s \Bigg],
+\end{align}
+
+Where $A(\lambda, \ldots)$ is the fraction of scattered light that
+reaches the device, $S(\lambda)$ represents instrumental and turbulence
+effects, $\sigma_{i}(\lambda, s)$ is the absorption cross section of
+absorber $i$, $c_{i}$ is the concentration of absorber $i$,
+$\epsilon_\mathrm{R}(\lambda)$ represents Rayleigh's extinction
+coefficient and $\epsilon_\mathrm{M}(\lambda)$ represents Mie's
+extinction coefficient.
+
+
+The interest of this equation lies within the retrieval of $c_i$, a
+given absorber's concentration. Since the integral is taken along the
+total atmospheric path of the measured photons, and considering that
+their cross sections do not vary significantly in atmospheric
+conditions, it is possible to define the concept of slant column, which
+is of great importance~\cite{Merlaud2013}.
+
+\begin{equation}
+      \label{eq:slantColumn}
+      \mathrm{SC}_{i} = \int c_{i}(s)\mathrm{d}s
+\end{equation}
+
+This quantity, as Eq.~(\ref{eq:slantColumn}) shows, equals the integral
+of an individual absorber's concentration along the atmospheric optical
+path of relevance.
+
+Now, without knowledge of $I_{0}(\lambda)$, these equations cannot give
+us absolute concentration values. We can, however, use another scattered
+light spectrum as reference in Eq.~(\ref{eq:opticalThickness}). Instead
+of absolute densities, this will yield relative changes in the
+atmosphere. We thus arrive at Eq.~(\ref{eq:relativeOpticalThickness}).
+
+\begin{align}
+      \label{eq:relativeOpticalThickness}
+      \ln\Big( \frac{I_\mathrm{ref}}{I}(\lambda) \Big) &= \ln\Big( \frac{A_\mathrm{ref}}{A}(\lambda,\ldots) \Big) + \ln\Big( \frac{S_\mathrm{ref}}{S}(\lambda) \Big) \nonumber\\
+      &+  \sum_{i} (\sigma_{i}(\lambda) \cdot \Delta \mathrm{SC}_{i}(\lambda)) + \Delta \tau_\mathrm{M}(\lambda) \nonumber\\
+      &+ \Delta \tau_\mathrm{R}(\lambda),
+\end{align}
+
+Where $\Delta \mathrm{SC}_{i}$  is the relative slant column of absorber
+$i$; $\Delta \tau_\mathrm{M}$  is the relative Mie scattering term,
+integrated to its optical thickness; and $\Delta \tau_\mathrm{R}$ is the
+relative Rayleigh scattering term, integrated to its optical thickness.
+
+
+This is where the principle of DOAS is applied. Instrument features,
+scattering and other atmospheric effects have broad absorption spectral
+profiles, which vary slowly with wavelength. Several trace absorbers
+have narrow and rapidly varying spectral signatures in at least a small
+section of the spectrum. By using Eq.~(\ref{eq:separation}), we can
+separate these contributions \cite{Danckaert2015}.
+
+\begin{equation}
+      \label{eq:separation}
+      \sigma(\lambda) = \sigma{'}(\lambda) + \sigma_{0}(\lambda)
+\end{equation}
+
+Here, the broad part of the optical thickness ($\sigma_{0}(\lambda)$)
+can be separated from the narrow part ($\sigma{'}(\lambda)$ --
+differential) by approximating it by a low-order polynomial, resulting
+in Eq.~(\ref{eq:DOAS}).
+
+\begin{equation}
+      \label{eq:DOAS}
+      \ln\Big( \frac{I_\mathrm{ref}}{I}(\lambda) \Big) = \sum_{i = 1}^{n} \sigma_{i}{'}(\lambda) \cdot \Delta \mathrm{SC}_{i} + \sum_{j = 0}^{m} a_{j} \cdot
+      \lambda^{j},
+\end{equation}
+
+Where $\sum_{i = 1}^{n} \sigma_{i}{'}(\lambda) \cdot \Delta SC_{i}$ is
+the differential part (narrowband, rapidly varying with wavelength) and
+$\sum_{j = 0}^{m} a_{j} \cdot \lambda^{j}$ is a low-order polynomial,
+used to remove the broadband spectral features resulting from
+atmospheric and instrumental phenomena.
+
+
+In practice, the mathematical solving of Eq.~(\ref{eq:DOAS}) is not
+enough since it does not account for the Ring effect or the
+non-linearities that result from stray light and wavelength shift in
+measured and cross-section spectra.
+
+The Ring effect is a consequence of rotational Raman scattering:
+molecules in the atmosphere do not absorb photons in a purely elastic
+(Rayleigh scattering) fashion. A small portion of the light--matter
+interaction is in fact inelastic \cite{Brinkmann1968,Merlaud2013}. This
+changes the light source frequencies as seen from the detector. This
+phenomenon was first noticed by Grainger and Ring in 1962. At the time,
+they noticed that the well-known Fraunhofer lines would slightly change
+when one  observed them by using moonlight instead of scattered daylight
+\cite{GRAINGER1962}.
+
+From the occurrence of these phenomena, it results that the mathematical
+procedure for DOAS measurements consists in solving a linear and a
+non-linear problem. The linear problem is solved by writing
+Eq.~(\ref{eq:DOAS}) in its matrix form:
+
+\begin{equation}
+      \label{eq:DOAS_matrix}
+      \tau = \mathbf{A} \cdot X.
+\end{equation}
+
+$\mathbf{A}$ is an $m\,\times\,n$ matrix, with its columns being the
+differential cross sections $\sigma_{i}{'}(\lambda)$ and the wavelength
+powers taking the polynomial $P(\lambda) = \sum_{j = 0}^{m} a_{j} \cdot
+\lambda^{j}$ into account. Since the number of lines in $A$ is much
+larger than the number of columns, the system is overdetermined and, in
+this case, we must use methods to numerically approximate a solution. It
+is common to use the least-squares approach, in which the best solution
+is the one that minimises $\chi^{2} = \left[\tau - A \cdot X\right]
+\cdot \left[\tau - A \cdot X\right]^{T}$.
+
+While the Ring effect is treated as a pseudo-absorber, a synthetically
+produced~\cite{Chance1997} cross section that is fitted just like any
+other absorber, non-linearities are addressed by applying
+Levenberg--Marquardt's approach to non-linear fitting problems to
+Eq.~(\ref{eq:DOAS_nonLinear}) \cite{Merlaud2013,Press2007}:
+
+
+\begin{align}
+      \label{eq:DOAS_nonLinear}
+      &\ln\Big( \frac{I_\mathrm{ref}(\lambda)}{I(\lambda + \mathrm{shift}) + \mathrm{offset}} \Big) = \sum_{i = 1}^{n} \sigma_{i}{'}(\lambda) \cdot \Delta \mathrm{SC}_{i} \nonumber\\
+      &+ \sum_{j = 0}^{m} a_{j} \cdot \lambda^{j},
+\end{align}
+
+Where shift and offset, which represent spectral wavelength shifts and
+stray light offsets, respectively, are responsible for the non-linear
+character of the problem.
+
+
+\section{Tomographic algorithms and reconstruction techniques}%
+\label{sec:tomographic_algorithms_and_reconstruction_techniques}
+
+\subsection{Introduction}%
+\label{sub:tomography_introduction}
+
+Tomography is the cross-sectional imaging of an object through the use
+of transmitted or reflected waves, captured by the object exposure to
+the waves from a set of known angles. It has many different applications
+in science, industry, and most prominently, medicine. Since the
+invention of the Computed Tomography (\gls{CT}) machine in 1972, by
+Hounsfield~\cite{Gunderman2006}, tomographic imaging techniques have had
+a revolutionary impact, allowing doctors to see inside their patients,
+without having to subject them to more invasive
+procedures~\cite{Kak2001}.
+
+Mathematical basis for tomography were set by Johannes Radon in 1917. At
+the time, he postulated that  it is possible to represent a function
+written in $\mathbb{R}$ in the space of straight lines, $\mathbb{L}$
+through the function's line integrals. A line integral is an integral in
+which the function that is being integrated is evaluated along a curved
+path, a line. In the tomographic case, these line integrals represent a
+measurement on a ray that traverses the Region Of Interest (\gls{ROI}).
+Each set of line integrals, characterized by an incidence angle, is
+called a projection (see Figure~\ref{fig:projection}). To perform a
+tomographic reconstruction, the machine must take many projections
+around the object. To the set of projections arranged in matrix form by
+detector and projection angle, we call sinogram. All reconstruction
+methods, analytical and iterative, revolve around going from reality to
+sinogram to image~\cite{Bruyant2002, Kak2001, Herman1973, Herman1995,
+Herman2009, Defrise2003}.
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/png/projections.png}
+    \caption{A schematic representation of a projection acquisition. In
+    this image, taken from ~\cite{Herman2009}, the clear line that comes
+    down at a diagonal angle is a projection.}
+    \label{fig:projection}
+\end{figure}
+
+There are two broad algorithm families when it comes to tomographic
+reconstruction, regarding the physics of the problem. The problem can
+involve either non-diffracting sources (light travels in straight
+lines), such as the X-Rays in a conventional \gls{CT} exam; or
+diffracting sources, such as micro-waves or ultrasound in more
+research-oriented applications~\cite{Kak2001}. In this document, I will
+not address the latter family, since I will not be applying them in my
+work. In the next few paragraphs, I will discuss the first family of
+algorithms, and describe how an image can be reconstructed from an
+object's projections when the radiation source is non-diffracting.
+
+Let's consider the case in which we deal with a single ray of solar
+light entering the atmosphere at a given point. Since the atmosphere
+contains numerous absorbents and comparable atmospheric effects, the ray
+changes from the point where it enters the atmosphere to the point at
+which it is measured by a detector. Total absorption will depend on the
+pollutant species, their cross-section and their concentration, since it
+obeys Lambert-Beer's law. Looking from another angle, this absorption
+is also the line integral that we will use to reconstruct our image.
+With \gls{DOAS}, it is possible to measure several pollutants at the
+same time, but for simplicity (and since it is one of the most studied
+compounds in the field), let's consider that the single pollutant in our
+atmospheric mixture is NO$_2$.
+
+\subsection{Initial Considerations}%
+\label{sub:initial_considerations}
+
+The problem of tomographic reconstruction can be approached in a number
+of ways, depending mostly on the authors. In my literary search, I have
+found that Kak and Slaney~\cite{Kak2001} have certainly explained this
+problem in one of the clearer ways available. Therefore, I shall base
+the rest of my presentation in their writings, and complement with other
+authors' notes wherever necessary.
+
+Considering the coordinate system displayed in
+Figure~\ref{fig:coordinates}. In this schematic, the object is
+represented by the function $f(x, y)$. The  $(\theta, t)$ parameters can
+be used to define any line in this schematic. Line AB in particular can
+be written:
+
+\begin{equation}
+    \label{eq:lineAB}
+    x \cdot \cos(\theta) + y \cdot \sin(\theta) = t
+\end{equation}
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/png/coordinates.png}
+    \caption{Schematic representation for coordinate setting. The image
+    depicts a parallel projection setting~\cite{Kak2001a}.}
+    \label{fig:coordinates}
+\end{figure}
+
+And if we were to write a line integral along this line, it would look
+like Equation~\ref{eq:lineABIntegral}, the Radon transform of function
+$f(x, y)$:
+
+\begin{equation}
+    \label{eq:lineABIntegral}
+    P_{\theta}(t) = \int_{-\infty}^{\infty} f(x, y) \cdot \delta(x \cdot
+    \cos(\theta) + y \cdot \sin(\theta) - t) dxdy
+\end{equation}
+
+Where $\delta$, the delta function, is defined in
+Equation~\ref{eq:delta}.
+
+\begin{equation}
+    \label{eq:delta}
+    \delta (\phi) =  
+    \begin{cases}
+            1, & \phi = 0\\
+            0, & otherwise
+    \end{cases}
+\end{equation}
+
+As I have mentioned previously, a projection is a set of line integrals
+such as $P_{\theta}(t)$. Geometry plays a very important role in how the
+integrals are written and solved for reconstruction. The simplest case
+is the one where the set is acquired in a row, describing what is called
+a parallel geometry. Another more complex case is when a single point
+source is used as origin for all rays, forming a fan. This is called a
+fan-beam array. There are other possible geometries, but they fall out of
+the scope of this work and will therefore not be addressed any further.
+
+\subsection{The Fourier Slice Theorem}%
+\label{sub:the_fourier_slice_theorem}
+
+The Fourier Slice Theorem (\gls{FST}) is the most important component of
+the most important algorithm in tomographic inversion, the Filtered
+BackProjection algorithm (\gls{FBP}). \gls{FST} is based on the equality
+relation between the 
+two-dimensional Fourier Transform (\gls{FT}) of the object function and
+the one-dimensional \gls{FT} of the object's projection at an angle
+$\theta$. Let's start by writing the 2D \gls{FT} for the object
+function, Equation~\ref{eq:objectFT}, and the 1D \gls{FT} of projection
+P$_\theta$, in Equation~\ref{eq:1dFTproj}.
+
+\begin{equation}
+    \label{eq:objectFT}
+    F(u, v) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(x, y)
+    \cdot \exp \left [ -j2\pi (ux + vy) \right ] dx dy 
+\end{equation}
+
+\begin{equation}
+    \label{eq:1dFTproj}
+    S_{\theta}(\omega) = \int_{-\infty}^{\infty} P_{\theta} \cdot \exp\left[
+    -j2 \pi \omega t \right]
+\end{equation}
+
+For simplicity, let's consider the 2D \gls{FT} at the line defined by
+$v=0$ in the frequency domain. We rewrite the 2D \gls{FT} integral as:
+
+\begin{equation}
+    \label{eq:v0}
+    F(u, 0) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(x, y)
+    \cdot \exp \left[  -j 2\pi  \omega ux \right] dx dy
+\end{equation}
+
+Notice that $y$ is not present in the phase factor of the \gls{FT}
+expression anymore, and this means we can rearrange the integral as:
+
+\begin{equation}
+    \label{eq:v02}
+    F(u, 0) = \int_{-\infty}^{\infty} \left[ \mathbf{\int_{-\infty}^{\infty}
+    f(x, y) dy }\right] \cdot \exp \left[  -j 2\pi  \omega ux \right] dx 
+\end{equation}
+
+Now, the \textbf{bold} part of Equation~\ref{eq:v02} is similar to
+Equation~\ref{eq:lineABIntegral}. It is precisely that equation,
+considering $\theta=0$ and a constant value of $x$, as in
+Equation~\ref{eq:p0}.
+
+\begin{equation}
+    \label{eq:p0}
+    P_{\theta=0} (x) = \int_{-\infty}^{\infty} f(x, y) dy
+\end{equation}
+
+This in turn can be substituted in Equation~\ref{eq:v02}, finally
+arriving at:
+
+\begin{equation}
+    \label{eq:FTP}
+    F(u, 0) = \int_{-\infty}^{\infty} P_{\theta=0} (x) \cdot \exp \left[
+    -j 2\pi ux \right] dx
+\end{equation}
+
+And this is the one-dimensional \gls{FT} for the projection at angle
+$\theta=0$. Finally, the enunciation of the Fourier Slice Theorem:
+\begin{center}
+    \begin{minipage}{0.8\textwidth}
+
+        \noindent\textbf{\emph{The Fourier Transform of a parallel
+                projection  of an image $f(x, y)$ taken at angle
+                $\theta$ gives a slice of the two-dimensional Fourier
+                Transform, $F(u, v)$, subtending an angle $\theta$ with
+                the $u$-axis (see Figure~\ref{fig:fst})}}
+
+    \end{minipage}
+\end{center}
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=.8\textwidth]{img/png/fst.png}
+    \caption{The \gls{FST}, a schematic
+    representation~\cite{Asl2013a}.}
+    \label{fig:fst}
+\end{figure}
+
+\subsection{The Filtered BackProjection Algorithm}%
+\label{sub:the_filtered_backprojection_algorithm}
+
+\subsubsection{The rationale for \gls{FBP}}%
+\label{ssub:the_rationale_for_fbp}
+
+If one takes the \gls{FST} into account, the idea behind the \gls{FBP}
+seems to appear almost naturally. Say one has a single projection and
+its Fourier transform. From the \gls{FST}, this projection is the same
+as the object's two-dimensional \gls{FT} in a single line. A crude
+reconstruction of the original object would result if someone were to
+place this projection in its right place in the Fourier domain and then
+perform a two-dimensional \gls{IFT}, while assuming every other
+projection to be 0. The result, in the image space, would be as if
+someone had smeared the object in the projections direction.
+
+What is really needed for a correct reconstruction is to do this many
+times, with many projections. This brings a problem with the method:
+smearing the object in all directions will clearly produce a wrong
+\emph{accumulation} in the center of the image, since every projection
+passes through the middle (remember we are still talking about parallel
+geometry projections) and are summed on top of each other, but on the
+outer edges, this does not occur. If one does not address this, the
+image intensity levels in the reconstructed image will be severely
+overestimated in the center and underestimated in the edges (due to
+normalization). The solution is conceptually easy: we multiply the
+Fourier transform by a weighting filter proportional to its frequency
+($\omega$) and that encompasses its relevance in the global scheme of
+projections. If there are $K$ projections, then it is adequate for this
+value to be $\frac{2\pi\lvert\omega\rvert}{K}$. As an algorithm,
+\gls{FBP} can be written as in Algorithm~\ref{alg:fbp}.
+
+\begin{algorithm}
+    \caption{The Filtered BackProjection Algorithm}
+    \label{alg:fbp}
+    \begin{algorithmic}
+        \FORALL{$\theta, \theta \in \left\{0..180,
+        \frac{180}{K}\right\}$}
+        \STATE{Measure projection $P_{\theta}(t)$;}
+        \STATE{FT($P_{\theta}(t)$), rendering $S_{\theta}(\omega)$}
+        \STATE{Multiply by $\frac{2\pi\lvert{\omega}\rvert}{K}$;}
+        \STATE{Sum the \gls{IFT} of the result in the image space.}
+    \ENDFOR
+    \end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Fan Projections Reconstruction}%
+\label{ssub:fan_projections_reconstruction}
+
+Parallel projections, in which the object is scanned linearly from
+multiple directions, have the advantage of having a relatively simple
+reconstruction scheme. However, they usually result in acquisition times
+which are in the order of minutes. A faster way of collecting the data
+is one where all radiation emanates from a single point-source, which
+rotates around the target object (as well as the detectors). There are
+two types of fan-beam projections: equiangular and equally spaced. In
+this project, I have only worked with equiangular processes, so I will
+not include an explanation for equally spaced fan-beam projections. The
+reader may find this well described (much better than I would be able
+to) in ~\cite{Kak2001} and ~\cite{Herman1973}.
+
+Consider Figure~\ref{fig:equiangular}. If our projection data were
+acquired through a parallel ray geometry, we would be able to say that
+ray SA belonged to a projection $P_{\theta}(t)$, in which $\theta$ and
+$t$ would be written:
+
+\begin{equation}
+    \label{eq:theta_and_t}
+    \theta = \beta + \gamma \quad \text{ and } \quad t = D \cdot \sin \gamma
+\end{equation}
+
+In Equation~\ref{eq:theta_and_t}, $D$ is the distance between the source
+$S$ and the origin $O$; $\gamma$ is the angle of a ray within a fan and
+$\beta$ is the angle that the source $S$ makes with a reference axis.
+Through these relationships one can \emph{translate} the parallel
+projection's FBP algorithm to the fan-beam case, which involves several
+complex geometric transformations, although the overall rationale is
+exactly the same.
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=.8\textwidth]{img/png/fig319.png}
+    \caption{Schematic representation of an equiangular fan-beam
+    projection, taken from~\cite{Kak2001}.}
+    \label{fig:equiangular}
+\end{figure}
+
+Another particularity of fan-beam projection data is the fact that they
+can be sorted into a parallel projection. For that, one starts with the
+premise that if one were to substitute the fan geometry for parallel
+beams, most of the fan-beam rays would also appear in some projection of
+the parallel setup. This re-sorting algorithm starts with
+Equation~\ref{eq:theta_and_t}. Now, if we call a fan-beam projection
+taken at angle $\beta$ $R_{\beta}(\gamma)$, and a parallel projection
+taken at angle $\theta$ $P_{\theta}(t)$, one could thus write
+Equation~\ref{eq:parallel_vs_fanbeam}, which can already be used to
+re-sort any fan-beam projection into parallel beam geometry.
+
+\begin{equation}
+    \label{eq:parallel_vs_fanbeam}
+    R_{\beta}(\gamma) = P_{\beta + \gamma}(D \cdot \sin \gamma)
+\end{equation}
+
+Let's call the angular interval between fan-beam projections can be
+written $\delta\beta$, and the angular interval of rays within each fan
+is written $\delta\gamma$. In the case that they are the same
+($\beta=\gamma=\alpha$), then it it is the case that they can both be
+replaced by multiples of that interval in
+Equation~\ref{eq:parallel_vs_fanbeam}, which becomes
+Equation~\ref{eq:parallel_vs_fanbeam2}.
+
+\begin{equation}
+    \label{eq:parallel_vs_fanbeam2}
+    R_{m \cdot \alpha}(n \cdot\alpha) = P_{m \cdot\alpha + n
+    \cdot\alpha}(D \cdot \sin n \cdot\alpha)
+\end{equation}
+
+Or, in non-mathematical notation, the n\textsuperscript{th} ray of the
+m\textsuperscript{th} radial projection (R) is the same as the
+n\textsuperscript{th} ray in the (m+n)\textsuperscript{th} parallel
+projection. Although being much simpler than directly applying the
+\gls{FBP} algorithm to the fan-beam projection data, this method has a
+limitation, which is the non-uniformity of the generated parallel
+projections. This can usually be corrected through
+interpolation~\cite{Kak2001a}. 
+
+
 
 \section{DOAS Tomography}%
 \label{sec:doas_tomography}
 
-\input{asd/intro.tex}
-\input{asd/background.tex}
-\input{asd/methods.tex}
-\input{asd/conduction.tex}
-\input{asd/conclusions.tex}
+During the course of this PhD, and as a credit requirement, I attended
+several courses, namely in the Computer Science Department. One of them,
+entitled "\emph{Advanced Software Development}" had as final requirement
+the writing of a \gls{sms} on a topic of my choosing. This course
+happened around the time I was starting to develop a \gls{DOAS}
+tomography system, and one of the requirements of that work was to study
+the state of the art to get a clear notion of how these systems were
+being applied and developed globally. Therefore, this was the topic that
+I chose for my \gls{sms}. The article (currently awaiting acceptance for
+publication) is transcribed in full in Appendix~\ref{ap:tomDoas},  but I
+include a selection of the most important parts in this section.
 
+An \gls{sms} is a systematic first approach to a subject, and are
+normally designed to retrieve a broad view of a given research area and
+quantify the amount of evidence that there is in that specific field.
+They share some similarities with \gls{slr} but work with much broader
+data extraction and analysis procedures.Many times, they are used as
+guides for primary research~\cite{Kitchenham2007}. In our case, the goal
+was to understand the literary landscape of \gls{DOAS} tomographic
+applications. This kind of study normally has three stages: planning,
+conduction and reporting.
 
+The planning stage of a \gls{sms} is when the authors define the
+research questions and decide on the search protocol. The research
+questions are defined according to the research goal, which in this case
+was to assess the current status of the technology used in tomographic
+\gls{DOAS}. A very common method for structuring the study's efforts is
+the \gls{picoc} method. In our own case, this method is reflected in
+Table~\ref{tab:picoc_sms}.
+
+\begin{table}[htb]
+\small
+\centering
+\caption{PICOC analysis.}
+\label{tab:picoc_sms}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Population} & DOAS research in general.\\ 
+\textbf{Intervention} & The papers must address tomographic DOAS.\\
+\textbf{Outcome} & Status \textbf{assessment} for \textbf{DOAS tomography}.\\
+\textbf{Context} & Research papers.\\\bottomrule
+\end{tabular}
+\end{table}
+
+While being a good indication on how the study will be conducted, the
+presented method is not sufficiently specific for direct application.
+Before proceeding, the research question is sliced according to the
+\gls{picoc} analysis, resulting in what is presented through
+Table~\ref{tab:rq_slicing_sms}.
+
+\begin{table}[htb]
+\centering
+\small
+\caption{Research question slicing}
+\label{tab:rq_slicing}
+    \begin{tabularx}{\textwidth}{lX}
+        \toprule
+        \textbf{Original} & What is the current status of the technology used in
+        tomographic DOAS? \\
+        \textbf{RQ1} & Is there a typical hardware setup used in tomographic
+        DOAS studies? \\
+        \textbf{RQ2} & Is there a standard software used to perform these
+        analysis? \\
+        \textbf{RQ3} & What are the algorithms more commonly used?\\\bottomrule
+    \end{tabularx}
+\end{table}
+
+The next step in this planning stage was to define the search queries
+and the electronic libraries in which they would be searched.
+Preliminary searches indicated that, although the topic was
+well-established as a measuring technique, literature on the subject was
+not widely available. Therefore, the search query was intentionally
+vague: \textbf{DOAS atmospher* tomography}, with the asterisk working as
+a wild card. As to the electronic libraries, and from the same
+preliminary searches, we understood that the search would have to
+involve the broadest repositories available. After experimenting a
+little further, we decided to base our study in the libraries presented
+in Table~\ref{tab:libraries_sms}.
+
+\begin{table}[htb]
+\centering
+\caption{Electronic libraries used in this study.}
+\label{tab:libraries}
+    \begin{tabularx}{\textwidth}{ll}
+        \toprule
+        \textbf{Library}          & \textbf{URL}\\
+        \midrule
+        Google Scholar (GS)   & https://scholar.google.com/\\
+        Web of Knowledge (WoK)& https://webofknowledge.com\\
+        Scopus (SD)   & https://www.scopus.com\\
+        % IEEE             & http://ieeexplore.ieee.org/\\
+        % AGU Publications (AGU) & http://agupubs.onlinelibrary.wiley.com/hub/\\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+In the planning stage of the \gls{sms} it is also necessary to determine
+the study's exclusion and inclusion criteria for found papers. Ours was
+not an exception and these filters are presented in
+Table~\ref{tab:select_filters_sms}.
+
+\begin{table}[htb]
+\centering
+\caption{Selection filters in use for this study's search.}
+\label{tab:select_filters}
+\begin{tabularx}{\textwidth}{lXl}%{@{}cll@{}}
+\toprule
+\multicolumn{1}{l}{} & \textbf{Criterium} & \textbf{Definition} \\ \midrule
+\multirow{1}{*}{\textbf{Exc. Criteria}} & EC1 & Satellite data papers
+are not accepted \\
+\midrule
+\multicolumn{1}{l}{\multirow{3}{*}{\textbf{Inc. Criteria}}} & IC1 &
+Results must be journal papers \\
+\multicolumn{1}{l}{} & IC2 & Results must be about Tomographic DOAS \\ 
+\multicolumn{1}{l}{} & IC3 & Results must be written in English \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 
