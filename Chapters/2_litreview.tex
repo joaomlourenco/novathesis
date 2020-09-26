@@ -1548,6 +1548,32 @@ interpolation~\cite{Kak2001a}.
 \section{DOAS Tomography}%
 \label{sec:doas_tomography}
 
+Measurement results from \gls{DOAS} experiments are line integrals. They
+describe the number of molecules that is traversed by light in a given
+direction (the direction towards which the instrument is pointing).
+Thus, we can consider an experiment in which many of these instruments
+are covering a given geographic region of the atmosphere in either 2 or
+3 dimensions. This is a tomographic inversion problem, with the
+projections being the \gls{DOAS} measurements.
+
+
+
+
+
+Atmospheric spectroscopy as the data generating part of a tomographic
+problem was first addressed in ~\todo{citation Shepp 1979}. In this
+paper, the authors propose a computerised method employing a tunable
+laser  and a set of mirrors for the retrieval of concentration values in
+a two-dimensional circular region. Although not specifically concerning
+\gls{DOAS}, the article established the basis for the technique.  The
+most significant work corpus regarding DOAS Tomography came about only
+in the 21\textsuperscript{st} century, when a group in the University of
+Heidelberg dedicated themselves to determining two-dimensional trace-gas
+concentration variations over a busy motorway in Germany - the BABII
+campaign. 
+
+
+
 During the course of this PhD, and as a credit requirement, I attended
 several courses, namely in the Computer Science Department. One of them,
 entitled "\emph{Advanced Software Development}" had as final requirement
@@ -1706,9 +1732,79 @@ equation, $S$ represents the final quality score.
     S = Q_{i} \cdot \frac{C_i}{Age_i}
 \end{equation}
 
-\todo{Complete this}
+While being a good indication on how the study will be conducted, the
+presented method is not sufficiently specific for direct application.
+Before proceeding, the research question is sliced according to the
+\gls{picoc} analysis, resulting in what is presented through
+Table~\ref{tab:rq_slicing_sms}.
 
+\begin{table}[htb]
+\centering
+\small
+\caption{Research question slicing}
+\label{tab:rq_slicing}
+    \begin{tabularx}{\textwidth}{lX}
+        \toprule
+        \textbf{Original} & What is the current status of the technology used in
+        tomographic DOAS? \\
+        \textbf{RQ1} & Is there a typical hardware setup used in tomographic
+        DOAS studies? \\
+        \textbf{RQ2} & Is there a standard software used to perform these
+        analysis? \\
+        \textbf{RQ3} & What are the algorithms more commonly used?\\\bottomrule
+    \end{tabularx}
+\end{table}
 
+The next step in this planning stage was to define the search queries
+and the electronic libraries in which they would be searched.
+Preliminary searches indicated that, although the topic was
+well-established as a measuring technique, literature on the subject was
+not widely available. Therefore, the search query was intentionally
+vague: \textbf{DOAS atmospher* tomography}, with the asterisk working as
+a wild card. As to the electronic libraries, and from the same
+preliminary searches, we understood that the search would have to
+involve the broadest repositories available. After experimenting a
+little further, we decided to base our study in the libraries presented
+in Table~\ref{tab:libraries_sms}.
 
+\begin{table}[htb]
+\centering
+\caption{Electronic libraries used in this study.}
+\label{tab:libraries}
+    \begin{tabularx}{\textwidth}{ll}
+        \toprule
+        \textbf{Library}          & \textbf{URL}\\
+        \midrule
+        Google Scholar (GS)   & https://scholar.google.com/\\
+        Web of Knowledge (WoK)& https://webofknowledge.com\\
+        Scopus (SD)   & https://www.scopus.com\\
+        % IEEE             & http://ieeexplore.ieee.org/\\
+        % AGU Publications (AGU) & http://agupubs.onlinelibrary.wiley.com/hub/\\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+In the planning stage of the \gls{sms} it is also necessary to determine
+the study's exclusion and inclusion criteria for found papers. Ours was
+not an exception and these filters are presented in
+Table~\ref{tab:select_filters_sms}.
+
+\begin{table}[htb]
+\centering
+\caption{Selection filters in use for this study's search.}
+\label{tab:select_filters}
+\begin{tabularx}{\textwidth}{lXl}%{@{}cll@{}}
+\toprule
+\multicolumn{1}{l}{} & \textbf{Criterium} & \textbf{Definition} \\ \midrule
+\multirow{1}{*}{\textbf{Exc. Criteria}} & EC1 & Satellite data papers
+are not accepted \\
+\midrule
+\multicolumn{1}{l}{\multirow{3}{*}{\textbf{Inc. Criteria}}} & IC1 &
+Results must be journal papers \\
+\multicolumn{1}{l}{} & IC2 & Results must be about Tomographic DOAS \\ 
+\multicolumn{1}{l}{} & IC3 & Results must be written in English \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 
