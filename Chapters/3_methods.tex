@@ -11,26 +11,19 @@
 \todo[inline]{\textbf{\large{THIS CHAPTER WAS DIRECTLY PULLED FROM THE
 TOMOSIM ARTICLE AND NEEDS A LOT OF WORK BEFORE IT IS COMPLETE.}}}
 
-\section{Methods}%
-\label{sec:methods}
+This chapter details the methods that were used trying to answer the
+research questions that were determined in
+Chapter~\ref{cha:introduction}. They reflect the three-pronged nature
+of this whole work, detailing the design of the UAV system and its
+projected features, the simulation software that was used to validate
+the mathematical approach and to understand if this method would be able
+to obtain a "spectral image" of a certain number of trace compounds in
+a given region of the atmosphere, and finally, the experiment that was
+designed and conducted to validate the measurement strategy on which
+this system is based.
 
-This section contains a description of the methods employed in the
-development of the tomography simulator, as well as their justification
-and their relationship with the theoretical principles laid out in
-Chapter~\ref{cha:literature_review}.
-
-It is important to highlight one general consideration, which is that
-the whole software is part of a larger project and its final goal is the
-construction of a compact spectroscopic device, able to use DOAS to scan
-the atmosphere for a particular group of trace gases, while being small
-enough to be fitted onto an Unmanned Aerial Vehicle (UAV, or drone).
-This plays an important role in this simulator's design as well as in
-the methods used to write it, however, design and construction details
-for this UAV are not to be included in this paper, and will probably
-figure in a dedicated article.
-
-\subsection{Measurement trajectory}%
-\label{sub:measurement_trajectory}
+\section{The drone}%
+\label{sec:the_drone}
 
 Consider a drone equipped with a DOAS system and the ability to command
 spectral acquisition. The spectral system cannot perform point
@@ -67,15 +60,29 @@ in each stop along the circumference is a fanbeam shaped projection. To
 facilitate the resorting operation of the projections, the angular
 interval between each stop is the same as the one between rays.
 
-\begin{figure}[htpb]
-    \centering
-    \includegraphics[width=0.8\textwidth]{img/png/proj_schem.png}
-    \caption{Project ATMOS planned trajectory, designed to allow
-    tomographic analysis of the atmosphere. Each drone transparency
-    level represents one stop, and each line coming from the drone
-    represents one acquisition path.}
-    \label{fig:trajectory_schematic}
+\begin{figure}
+    \begin{subfigure}[t]{.49\textwidth}
+    \includegraphics[width=\linewidth]{img/pdf/spectralMeasurementSketch.pdf}
+    \caption{Measurement hypothesis: the number of molecules that
+    interact with scattered light between A and B is the same as the
+    subtraction of the number of molecules found to have interacted at A
+    from the number of molecules found in B}
+    \label{fig:measurement_hypothesis}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{.49\textwidth}
+    \includegraphics[width=\linewidth]{img/pdf/spectralMeasurementsFromTheSide.pdf}
+    \caption{Measurement schematic representation: the drone covering
+    an urban area of about 1 km in diameter.}
+    \label{fig:measurements_from_the_side}
+\end{subfigure}
+\caption{Schematic representation of the spectroscopic principle and the
+measurement strategy employed by this system.}
+\label{fig:measurement_strategy_schematics}
 \end{figure}
+
+\section{The Simulator: TomoSim}%
+\label{sec:the_simulator_tomosim}
 
 \subsection{Tomographic Procedures}%
 \label{sub:tomographic_procedures}
@@ -183,15 +190,12 @@ can be normalised by running Siddon's algorithm again for a limited
 number of projections, and equating calculated projections with the ones
 that were acquired from the original phantom.
 
-\subsection{Error estimation}%
-\label{sub:error_estimation}
+\section{The Experiment}%
+\label{sec:the_experiment}
 
-Tomosim uses three reconstruction methods in order to obtain an image
-from the projection data. After implementation of the algorithms, one
-must evaluate how they perform with the phantoms with which they were
-tested. A typical Squared Error approach was employed to this end:
-the image produced by the reconstruction is normalised and subtracted
-from the original phantom, a result which is then squared. Three
-different metrics are then used to evaluate reconstruction errors:
-visual inspection (how much "black" is in the error image), maximum
-numeric error and mean error (Mean Squared Error).
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.8\linewidth]{img/png/experimentMap.png}
+    \caption{Location of observer points for the physical experiment.}
+    \label{fig:experiment_map}
+\end{figure}
