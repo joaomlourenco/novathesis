@@ -29,7 +29,7 @@ The template is also easily customizable, including the support for new Schools.
 
 ## Donations
 
-This template is the result of hundreds (yes! *hundreds*) of hours of work from the main developer.  If you think this template really helped you while writing your thesis, think about doing a [**donation**](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KTPG2K2AHCRAW). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
+This template is the result of hundreds (yes! *hundreds*) of hours of work from the main developer.  If you think this template really helped you while writing your thesis, think about doing a [**donation**](https://paypal.me/novathesis). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
 
 Thank you to the (only) two donators from 2019:
 * Jorge Barreto.
