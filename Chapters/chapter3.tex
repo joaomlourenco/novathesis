@@ -73,10 +73,10 @@ Please, use these examples as a starting point, but you should always consider u
 
 \begin{figure}[htbp]
   \centering
-  \subcaptionbox{One sub-figure\label{fig:leftsubfig}}%
-    {\includegraphics[width=0.5\linewidth]{knitting-vectorial}}%
-  \subcaptionbox{Another sub-figure\label{fig:rightsubfig}}%
-    {\includegraphics[width=0.5\linewidth]{knitting-vectorial}}%
+  \subbottom[One sub-figure\label{fig:leftsubfig}]{%
+    \includegraphics[width=0.5\linewidth]{knitting-vectorial}}%
+  \subbottom[Another sub-figure\label{fig:rightsubfig}]{%
+    \includegraphics[width=0.5\linewidth]{knitting-vectorial}}%
   \caption{A figure with two sub-figures!}
   \label{fig:fig2subfig}
 \end{figure}
@@ -212,12 +212,12 @@ Para agregar várias figuras numa única… Poderá assim referenciar o conjunto
 
 \begin{figure}[htbp]
 	\centering
-    \subbottom[Novelo de lã] {%
+    \subbottom[Novelo de lã]{%
 		\label{fig:novelo}
 		\includegraphics[height=1in]{knitting-vectorial}
     }
 \qquad\qquad
-    \subbottom[Tempestade com neve] {%
+    \subbottom[Tempestade com neve]{%
 		\label{fig:nuvem}
 		\includegraphics[height=1in]{snowstorm-vectorial}
     }
