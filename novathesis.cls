@@ -108,7 +108,6 @@
 % LOAD MAIN CLASS AND ADDITIONAL PACKAGES
 \LoadClass{memoir}
 \OnehalfSpacing           % One-and-half spacing
-\newsubfloat{figure}      % To handle subfigures
 
 
 % --------------------------------------------------------
