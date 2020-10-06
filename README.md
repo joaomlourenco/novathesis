@@ -31,6 +31,13 @@ The template is also easily customizable, including the support for new Schools.
 
 This template is the result of hundreds (yes! *hundreds*) of hours of work from the main developer.  If you think this template really helped you while writing your thesis, think about doing a [**donation**](https://paypal.me/novathesis). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
 
+### Donors 2020
+* João Carvalho
+* David Romão
+* DisplayersereStream
+* Antonio Estevao
+
+### Donnors 2019
 Thank you to the (only) two donors from 2019:
 * Jorge Barreto.
 * Raissa Almeida.
