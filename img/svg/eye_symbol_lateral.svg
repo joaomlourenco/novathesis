@@ -1,0 +1,34 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="375px" height="600px" 
+     viewBox="0 0 125 200" version="1.1"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink" >
+<title>Eye symbol</title>
+<desc>Eye symbol - eye view from side - useful to show the point of view
+or the point of observation - Licence: Public Domain</desc>
+  <defs>
+  </defs>
+<g> 
+	<path stroke="black" stroke-width="2" fill="none"
+	d="M10,100 a 100,70 0 0,0 95.831,-50" /> 
+	<path stroke="black" stroke-width="2" fill="none"
+	d="M10,100 a 100,70 0 0,1 95.831,50" /> 
+	<path stroke="black" stroke-width="2" fill="none"
+	d="M100,60.512 a 30,65 0 0,1 0,78.975" /> 
+	<path id="pupil" stroke="black" stroke-width="2" fill="black"
+	d="M106,93 a 9,7 0 0,0 0,14" /> 
+  <g id="eyelashs">
+	<path id="eylash1" stroke="black" stroke-width="1" fill="black"
+	d="M105,51.857 l 6,7" /> 
+	<path id="eylash2" stroke="black" stroke-width="1" fill="black"
+	d="M104,53.882 l 6,7" /> 
+	<path id="eylash3" stroke="black" stroke-width="1" fill="black"
+	d="M103,55.729 l 6,7" /> 
+	<path id="eylash4" stroke="black" stroke-width="1" fill="black"
+	d="M102,57.434 l 6,7" /> 
+  </g>
+</g>
+</svg>
+

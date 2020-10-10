@@ -1,0 +1,50 @@
+[0] Config.pm:304> INFO - This is Biber 2.14
+[0] Config.pm:307> INFO - Logfile is 'thesis_rui_almeida.blg'
+[55] biber:322> INFO - === Sat Sep 26, 2020, 18:38:23
+[65] Biber.pm:415> INFO - Reading 'thesis_rui_almeida.bcf'
+[138] Biber.pm:943> INFO - Found 84 citekeys in bib section 0
+[148] Biber.pm:4256> INFO - Processing section 0
+[148] Utils.pm:75> INFO - Globbing data source 'bibliography.bib'
+[148] Utils.pm:91> INFO - Globbed data source 'bibliography.bib' to bibliography.bib
+[155] Biber.pm:4455> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
+[176] bibtex.pm:1653> INFO - LaTeX decoding ...
+[651] bibtex.pm:1471> INFO - Found BibTeX data source 'bibliography.bib'
+[654] Utils.pm:304> WARN - Duplicate entry key: 'Casaballe2017' in file 'bibliography.bib', skipping ...
+[658] Utils.pm:304> WARN - Duplicate entry key: 'Kak2001' in file 'bibliography.bib', skipping ...
+[658] Utils.pm:304> WARN - Duplicate entry key: 'ODriscoll2003a' in file 'bibliography.bib', skipping ...
+[660] Utils.pm:304> WARN - Duplicate entry key: 'Pundt2005b' in file 'bibliography.bib', skipping ...
+[663] Utils.pm:304> WARN - Duplicate entry key: 'Frins2006' in file 'bibliography.bib', skipping ...
+[663] Utils.pm:304> WARN - Duplicate entry key: 'Verkruysse2005' in file 'bibliography.bib', skipping ...
+[663] Utils.pm:304> WARN - Duplicate entry key: 'Laepple2004' in file 'bibliography.bib', skipping ...
+[665] Utils.pm:304> WARN - Possible typo (case mismatch) between datasource keys: 'EnviroVisionSolutions' and 'EnvirovisionSolutions' in file 'bibliography.bib'
+[667] Utils.pm:304> WARN - Duplicate entry key: 'Pundt2005a' in file 'bibliography.bib', skipping ...
+[667] Utils.pm:304> WARN - Duplicate entry key: 'Laepple2004' in file 'bibliography.bib', skipping ...
+[687] Utils.pm:304> WARN - month field 'jun' in entry 'ValentedeAlmeida2017' is not an integer - this will probably not sort properly.
+[715] Utils.pm:304> WARN - ISBN '0161-5505 (Print)$\backslash$n0161-5505 (Linking)' in entry 'Bruyant2002' is invalid - run biber with '--validate_datamodel' for details.
+[719] Utils.pm:304> WARN - ISBN '0022-5193' in entry 'Herman1973' is invalid - run biber with '--validate_datamodel' for details.
+[722] Utils.pm:304> WARN - ISBN '1077-2014' in entry 'Herman1995' is invalid - run biber with '--validate_datamodel' for details.
+[740] Utils.pm:304> WARN - month field 'aug' in entry 'Perner1976' is not an integer - this will probably not sort properly.
+[771] Utils.pm:304> WARN - month field 'aug' in entry 'Laepple2004' is not an integer - this will probably not sort properly.
+[783] Utils.pm:304> WARN - month field 'dec' in entry 'Stutz2016' is not an integer - this will probably not sort properly.
+[788] Utils.pm:304> WARN - month field 'aug' in entry 'Frins2006' is not an integer - this will probably not sort properly.
+[804] Utils.pm:304> WARN - month field 'dec' in entry 'Johansson2009' is not an integer - this will probably not sort properly.
+[824] Utils.pm:304> WARN - ISBN '19778449' in entry 'EEA2016' is invalid - run biber with '--validate_datamodel' for details.
+[895] Utils.pm:304> WARN - month field 'apr' in entry 'Lovett2009' is not an integer - this will probably not sort properly.
+[944] Utils.pm:304> WARN - month field 'feb' in entry 'GRAINGER1962' is not an integer - this will probably not sort properly.
+[947] Utils.pm:304> WARN - month field 'jul' in entry 'Chance1997' is not an integer - this will probably not sort properly.
+[956] Utils.pm:304> WARN - month field 'jan' in entry 'Kak2001a' is not an integer - this will probably not sort properly.
+[982] Utils.pm:304> WARN - month field 'apr' in entry 'Sanders1993' is not an integer - this will probably not sort properly.
+[987] Utils.pm:304> WARN - ISBN '0377-0273' in entry 'Bobrowski2006' is invalid - run biber with '--validate_datamodel' for details.
+[993] Utils.pm:304> WARN - ISBN '0018-9499' in entry 'Gordon1974' is invalid - run biber with '--validate_datamodel' for details.
+[997] Utils.pm:304> WARN - ISBN '19361327' in entry 'Haisch2012' is invalid - run biber with '--validate_datamodel' for details.
+[1012] Utils.pm:304> WARN - month field 'mar' in entry 'Hartl2006' is not an integer - this will probably not sort properly.
+[1024] Utils.pm:304> WARN - month field 'mar' in entry 'Murphy2003' is not an integer - this will probably not sort properly.
+[1031] Utils.pm:304> WARN - month field 'apr' in entry 'Pundt2006' is not an integer - this will probably not sort properly.
+[1041] Utils.pm:304> WARN - month field 'feb' in entry 'Pundt2005b' is not an integer - this will probably not sort properly.
+[1112] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1112] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1112] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
+[1112] Biber.pm:4090> INFO - No sort tailoring available for locale 'en-US'
+[1155] bbl.pm:652> INFO - Writing 'thesis_rui_almeida.bbl' with encoding 'UTF-8'
+[1208] bbl.pm:755> INFO - Output to thesis_rui_almeida.bbl
+[1208] Biber.pm:128> INFO - WARNINGS: 32
