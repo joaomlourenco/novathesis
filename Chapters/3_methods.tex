@@ -61,25 +61,27 @@ facilitate the resorting operation of the projections, the angular
 interval between each stop is the same as the one between rays.
 
 \begin{figure}
-    \begin{subfigure}[t]{.49\textwidth}
-    \includegraphics[width=\linewidth]{img/pdf/spectralMeasurementSketch.pdf}
-    \caption{Measurement hypothesis: the number of molecules that
-    interact with scattered light between A and B is the same as the
-    subtraction of the number of molecules found to have interacted at A
-    from the number of molecules found in B}
-    \label{fig:measurement_hypothesis}
-\end{subfigure}
-\hfill
-\begin{subfigure}[t]{.49\textwidth}
-    \includegraphics[width=\linewidth]{img/pdf/spectralMeasurementsFromTheSide.pdf}
-    \caption{Measurement schematic representation: the drone covering
-    an urban area of about 1 km in diameter.}
-    \label{fig:measurements_from_the_side}
-\end{subfigure}
-\caption{Schematic representation of the spectroscopic principle and the
-measurement strategy employed by this system.}
-\label{fig:measurement_strategy_schematics}
+    \centering
+    \begin{tabular}[b]{c}
+        \includegraphics[width=.45\linewidth]{%...
+            img/pdf/spectralMeasurementSketch.pdf}\\
+        \small (a)
+    \end{tabular}
+    \hfill
+    \begin{tabular}[b]{c}
+        \includegraphics[width=.45\linewidth]{%...
+            img/pdf/spectralMeasurementsFromTheSide.pdf}\\
+        \small (b)
+    \end{tabular}
+    \caption{a) The measurement idea: light absorption between A and B
+    is given by the subtraction of A from B. b) Schematic representation
+    of a measurement operation, side view.}
+    \label{fig:measurement}
 \end{figure}
+
+
+
+
 
 \section{The Simulator: TomoSim}%
 \label{sec:the_simulator_tomosim}
@@ -133,25 +135,39 @@ For this reason, the phantom presented in Figure~\ref{fig:new_phantom}
 was designed.
 
 \begin{figure}
-    \centering
-    \begin{subfigure}[t]{0.45\textwidth}
-    \begin{center}
-        \includegraphics[width=\textwidth]{img/png/shepp_logan.png}
-    \end{center}
-    \caption{Shepp-Logan phantom, commonly used in medical imaging.}
-    \label{fig:shepplogan}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.45\textwidth}
-    \begin{center}
-        \includegraphics[width=\textwidth]{img/png/spectral.png}
-    \end{center}
-    \caption{New phantom, designed for spectroscopic analysis of
-    atmopsheric trace gases.}
-    \label{fig:new_phantom}
-    \end{subfigure}
-    \caption{Set of phantoms used for the Tomosim simulator.}
+   \centering 
+   \begin{tabular}[b]{c}
+      \includegraphics[width=0.45\textwidth]{img/png/shepp_logan.png}\\
+      \small (a)
+   \end{tabular}
+   \hfill
+   \begin{tabular}[b]{c}
+       \includegraphics[width=.45\textwidth]{img/png/spectral.png}\label{fig:new_phantom}\\
+      \small (b)
+   \end{tabular}
+   \caption{Set of phantoms used in the TomoSim simualtor: a) the
+   Shepp-Logan phantom, commonly used in medical imaging; b) a new
+   phantom, designed for the tomographic reconstruction of atmospheric
+   gas distribution.}\label{fig:phantoms}
 \end{figure}
+% \begin{figure}
+%     \begin{subfloat}{0.45\textwidth}
+%         \begin{center}
+%             %         \end{center}
+%         \caption{Shepp-Logan phantom, commonly used in medical imaging.}
+%         \label{fig:shepplogan}
+%     \end{subfloat}
+%     \hfill
+%     \begin{subfloat}{0.45\textwidth}
+%         \begin{center}
+%             \includegraphics[width=\textwidth]{img/png/spectral.png}
+%         \end{center}
+%         \caption{New phantom, designed for spectroscopic analysis of
+%         atmopsheric trace gases.}
+%         \label{fig:new_phantom}
+%     \end{subfloat}
+%     \caption{Set of phantoms used for the Tomosim simulator.}
+% \end{figure}
 
 In this simulation, the pixel value is related to the concentration of
 the trace gas being sampled by using the projections themselves as
