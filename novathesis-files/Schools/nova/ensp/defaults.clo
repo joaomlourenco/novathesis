@@ -135,7 +135,7 @@
 % % Title of Dissertation
 \coveritem[c]{1cm}{%
   \fontfamily{phv}\fontsize{14}{14}\selectfont
-  \thedegreename[\novathesis@opt@coverlang]
+  \thedegreename[\option{/novathesis/coverlang}]
 }
 
 % Author name
@@ -178,7 +178,7 @@
 % % Title of Dissertation
 \secondcoveritem[c]{1cm}{%
   \fontfamily{phv}\fontsize{14}{14}\selectfont
-  \themajorfield[\novathesis@opt@coverlang]
+  \themajorfield[\option{/novathesis/coverlang}]
 }
 
 % Author name

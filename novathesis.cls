@@ -194,7 +194,7 @@
 
 \newcommand{\printcoverpage}{%
   \thispagestyle{empty}%
-  \selectthelanguage{\novathesis@opt@coverlang}%
+  \selectthelanguage{\option{/novathesis/coverlang}}%
 
   \setlength{\mpwidth}{\dimexpr%
     \paperwidth%
@@ -228,7 +228,7 @@
   \ifthenelse{\equal{\option{/novathesis/secondcover}}{true}}%
 	{
 		\thispagestyle{empty}%
-	  \selectthelanguage{\novathesis@opt@coverlang}%
+	  \selectthelanguage{\option{/novathesis/coverlang}}%
 	  \setlength{\mpwidth}{\dimexpr%
 	    \paperwidth%
 	      -\themargin[\option{/novathesis/docdegree},left]%
@@ -255,7 +255,7 @@
 	  \clearforchapter%
   }%
   {}%
-  \selectthelanguage{\novathesis@opt@lang}%
+  \selectthelanguage{\option{/novathesis/lang}}%
 }
 
 \newcommand{\printbackcoverpage}{%
@@ -301,13 +301,13 @@
 
 \mynewdata{adviserstr}
 \mynewdata{adviserstrfont}
-\adviserstrfont[\novathesis@opt@coverlang]={}
+\adviserstrfont[\option{/novathesis/coverlang}]={}
 \mynewdata{coadviserstr}
 \mynewdata{coadviserstrfont}
-\coadviserstrfont[\novathesis@opt@coverlang]={}
+\coadviserstrfont[\option{/novathesis/coverlang}]={}
 \mynewdata{degreestr}
 \mynewdata{degreestrfont}
-\degreestrfont[\novathesis@opt@coverlang]={}
+\degreestrfont[\option{/novathesis/coverlang}]={}
 
 \mynewdata{degreename}
 
@@ -316,14 +316,14 @@
 \mynewdata{committeeorder}
 \mynewdata{committeetitlestr}
 \mynewdata{committeetitlestrfont}
-\committeetitlestrfont[\novathesis@opt@coverlang]={}
+\committeetitlestrfont[\option{/novathesis/coverlang}]={}
 \mynewdata{commiteememberstr}
 \mynewdata{commiteememberstrfont}
-\commiteememberstrfont[\novathesis@opt@coverlang]={}
+\commiteememberstrfont[\option{/novathesis/coverlang}]={}
 
 \mynewdata{dissertationstr}
 \mynewdata{dissertationstrfont}
-\dissertationstrfont[\novathesis@opt@coverlang]={}
+\dissertationstrfont[\option{/novathesis/coverlang}]={}
 \mynewdata{copyrighttextstr}
 \mynewdata{acknowledgmentsstr}
 
@@ -373,16 +373,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \gdef\thepresentationtext{%
-	\thedissertationstr[\option{/novathesis/docdegree},\novathesis@opt@coverlang]%
+	\thedissertationstr[\option{/novathesis/docdegree},\option{/novathesis/coverlang}]%
 }
 
 \gdef\thecopyrightstr{%
   \thispagestyle{empty}%
-  \selectthelanguage{\novathesis@opt@copyrightlang}%
+  \selectthelanguage{\option{/novathesis/copyrightlang}}%
   \noindent%
   Copyright \textcopyright\ \theauthorname, %
-  \thefaculty[\novathesis@opt@copyrightlang], \theuniversity[\novathesis@opt@copyrightlang].\\%
-  \thecopyrighttextstr[\novathesis@opt@copyrightlang]%
+  \thefaculty[\option{/novathesis/copyrightlang}], \theuniversity[\option{/novathesis/copyrightlang}].\\%
+  \thecopyrighttextstr[\option{/novathesis/copyrightlang}]%
   \selectthelanguage{\novathesis@opt@lang}
 }
 
@@ -476,22 +476,22 @@
   \ifthenelse{\equal{\value{novathesis@committee@#1@cnt}}{1}}%
     {\def\novathesis@tmp@total{1}}% for portuguese: only use female form if no males are present
     {\def\novathesis@tmp@total{2}}%
-  {\thecommiteememberstrfont[\novathesis@opt@coverlang] %
-    \thecommiteememberstr[#1,\novathesis@tmp@total,\novathesis@tmp@gender,\novathesis@opt@coverlang]:%
+  {\thecommiteememberstrfont[\option{/novathesis/coverlang}] %
+    \thecommiteememberstr[#1,\novathesis@tmp@total,\novathesis@tmp@gender,\option{/novathesis/coverlang}]:%
   }%
   \forlistcsloop{\novathesis@printcommitteeclassmembers}{novathesis@committee@#1@list}%
   \fi
 }
 
 \newcommand{\printcommittee@i}[1]{%
-  \xdef\novathesis@tmp{\thecommitteetitlestr[\novathesis@opt@coverlang]}%
+  \xdef\novathesis@tmp{\thecommitteetitlestr[\option{/novathesis/coverlang}]}%
   \begin{tabularx}{#1\textwidth}{@{}r>{\raggedright\arraybackslash}X@{}}%
   \ifx\novathesis@tmp\@empty%
     % committeetitlestr[…] is empty
   \else%
     \multicolumn{2}{c}{{%%
-            \thecommitteetitlestrfont[\novathesis@opt@coverlang] %
-            \thecommitteetitlestr[\novathesis@opt@coverlang]}%
+            \thecommitteetitlestrfont[\option{/novathesis/coverlang}] %
+            \thecommitteetitlestr[\option{/novathesis/coverlang}]}%
           }\\[1ex]%
   \fi%
   \xdef\novathesis@tmp{\thecommitteeorder[all]}%
@@ -560,10 +560,10 @@
       {\def\novathesis@tmp@total{1}}% for portuguese: only use female form if no males are present
       {\def\novathesis@tmp@total{2}}%
     {% new block to keep font changing local
-      \@nameuse{the#1adviserstrfont}[\novathesis@opt@coverlang]%
+      \@nameuse{the#1adviserstrfont}[\option{/novathesis/coverlang}]%
       \@nameuse{the#1adviserstr}%
-              [\novathesis@tmp@total,\novathesis@tmp@gender,\novathesis@opt@coverlang]:%
-%              [\novathesis@tmp@total][\novathesis@tmp@gender][\novathesis@opt@coverlang]\\
+              [\novathesis@tmp@total,\novathesis@tmp@gender,\option{/novathesis/coverlang}]:%
+%              [\novathesis@tmp@total][\novathesis@tmp@gender][\option{/novathesis/coverlang}]\\
     }
     \forlistcsloop{\printadvisers@ii}{novathesis@#1adviser@list}%
   \fi%
@@ -644,12 +644,12 @@
 
 \settypeoutlayoutunit{mm}
 \setulmarginsandblock%
-  {\themargin[\novathesis@opt@media,top]}%
-  {\themargin[\novathesis@opt@media,bottom]}%
+  {\themargin[\option{/novathesis/media},top]}%
+  {\themargin[\option{/novathesis/media},bottom]}%
   {*}%
 \setlrmarginsandblock%
-  {\themargin[\novathesis@opt@media,left]}%
-  {\themargin[\novathesis@opt@media,right]}%
+  {\themargin[\option{/novathesis/media},left]}%
+  {\themargin[\option{/novathesis/media},right]}%
   {*}%
 \checkandfixthelayout%
 
@@ -987,8 +987,8 @@
         \fontfamily{phv}\fontsize{6.3}{6.3}\selectfont%
         \noindent
         \ifthenelse{\equal{\\option{/novathesis/trackmessage}}{true}}%
-        {\hypersetup{allcolors=black}\theacknowledgmentsstr[\novathesis@opt@coverlang]}%
-        {\hypersetup{allcolors=white}\textcolor{white}{\theacknowledgmentsstr[\novathesis@opt@coverlang]}}%
+        {\hypersetup{allcolors=black}\theacknowledgmentsstr[\option{/novathesis/coverlang}]}%
+        {\hypersetup{allcolors=white}\textcolor{white}{\theacknowledgmentsstr[\option{/novathesis/coverlang}]}}%
       \end{Spacing}%
   }%
   \clearforchapter%

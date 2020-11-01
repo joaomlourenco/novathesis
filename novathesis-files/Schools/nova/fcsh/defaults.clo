@@ -145,9 +145,9 @@
 % School
 % \coveritem[c]{2.5cm}{%
 %   \fontsize{16}{16}\selectfont
-%   \textbf{\MakeUppercase{\theuniversity[\novathesis@opt@coverlang]}}\\
+%   \textbf{\MakeUppercase{\theuniversity[\option{/novathesis/coverlang}]}}\\
 %   \vspace{2mm}
-%   \textbf{\MakeUppercase{\thefaculty[\novathesis@opt@coverlang]}}
+%   \textbf{\MakeUppercase{\thefaculty[\option{/novathesis/coverlang}]}}
 % }
 
 % % Title of Dissertation
