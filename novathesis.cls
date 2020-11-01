@@ -360,11 +360,11 @@
 
 % --------------------------------------------------------
 % Add school specific Images folder to the graphics path
-\prependtographicspath{{novathesis-files/Schools/\novathesis@opt@school/Images/}}
+\prependtographicspath{{novathesis-files/Schools/\option{/novathesis/school}/Images/}}
 
 % --------------------------------------------------------
 % Include the file with the defaults
-\InputIfFileExists{novathesis-files/Schools/\novathesis@opt@school/defaults.clo}{}{}
+\InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/defaults.clo}{}{}
 
 
 

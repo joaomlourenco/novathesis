@@ -194,23 +194,6 @@
 
 
 % --------------------------------------------------------
-% DOCUMENT TYPE	- novathesis@opt€docdegree
-%
-% bsc     BSc report			        
-% mscplan MSc preliminary report
-% msc     MSc dissertation		
-% phdprop PhD proposal			
-% phdplan PhD preliminary report	
-% phd     PhD thesis			
-% \DeclareOptionX{docdegree}{%
-%   \typeout{'docdegree'=#1}%
-%   \gdef\novathesis@opt@docdegree{#1}%
-% }
-% \edef\novathesis@opt@docdegree{\option{/novathesis/docdegree}}
-
-
-
-% --------------------------------------------------------
 % SCHOOL - novathesis@opt@school
 %
 % nova/fct Faculdade de Ciências e Tecnologia da Universidade Nova de Lisboa
@@ -219,7 +202,7 @@
 %   \typeout{'school'=#1}%
 %   \gdef\novathesis@opt@school{#1}%
 % }
-\edef\novathesis@opt@school{\option{/novathesis/school}}
+% \edef\novathesis@opt@school{\option{/novathesis/school}}
 
 
 % --------------------------------------------------------
@@ -395,10 +378,9 @@
 %     }%
 %   }{}%
 % }
-\edef\novathesis@opt@spine{\option{/novathesis/spine}}
-	\ifthenelse{\equal{\novathesis@opt@spine}{true}}{%
+	\ifthenelse{\equal{\option{/novathesis/spine}}{true}}{%
     \AtEndDocument{%
-    \InputIfFileExists{novathesis-files/Schools/\novathesis@opt@school/spine.clo}%
+    \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/spine.clo}%
                       {}
                       {\input{novathesis-files/spine.clo}}%
     \printspine%
@@ -424,10 +406,10 @@
 %     }%
 %   }{}%
 % }
-\edef\novathesis@opt@cdcover{\option{/novathesis/cdcover}}
-	\ifthenelse{\equal{\edef\novathesis@opt@cdcover}{true}}{%
+% \edef\novathesis@opt@cdcover{\option{/novathesis/cdcover}}
+	\ifthenelse{\equal{\option{/novathesis/cdcover}}{true}}{%
     \AtEndDocument{%
-    \InputIfFileExists{novathesis-files/Schools/\novathesis@opt@school/cdcover.clo}%
+    \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/cdcover.clo}%
                       {}
                       {\input{novathesis-files/cdcover.clo}}%
     % \begin{landscape}
