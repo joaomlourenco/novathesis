@@ -206,7 +206,7 @@
 %   \typeout{'docdegree'=#1}%
 %   \gdef\novathesis@opt@docdegree{#1}%
 % }
-\edef\novathesis@opt@docdegree{\option{/novathesis/docdegree}}
+% \edef\novathesis@opt@docdegree{\option{/novathesis/docdegree}}
 
 
 

@@ -130,7 +130,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\coverbackground}[1][\@nameuse{thesiscover\novathesis@opt@docdegree,front}]{%
+\newcommand{\coverbackground}[1][\@nameuse{thesiscover\option{/novathesis/docdegree},front}]{%
   \ifthenelse{\equal{#1}{}}{}{%
     \AddToShipoutPictureBG*{%
       \includegraphics[width=\paperwidth,height=\paperheight]{#1}%
@@ -198,13 +198,13 @@
 
   \setlength{\mpwidth}{\dimexpr%
     \paperwidth%
-      -\themargin[\novathesis@opt@docdegree,left]%
-      -\themargin[\novathesis@opt@docdegree,right]}%
+      -\themargin[\option{/novathesis/docdegree},left]%
+      -\themargin[\option{/novathesis/docdegree},right]}%
 
   \setlength{\mpheight}{\dimexpr%
     \paperheight%
-      -\themargin[\novathesis@opt@docdegree,top]%
-      -\themargin[\novathesis@opt@docdegree,bottom]}%
+      -\themargin[\option{/novathesis/docdegree},top]%
+      -\themargin[\option{/novathesis/docdegree},bottom]}%
 
   \sbox{\novathesis@coverbox}{%
     \parbox[t][\mpheight][t]{\mpwidth}{%
@@ -214,8 +214,8 @@
   \AddToShipoutPictureFG*{%
     \AtPageUpperLeft{%
       \put(%
-        \LenToUnit{\themargin[\novathesis@opt@docdegree,left]},%
-        -\LenToUnit{\themargin[\novathesis@opt@docdegree,top]})%
+        \LenToUnit{\themargin[\option{/novathesis/docdegree},left]},%
+        -\LenToUnit{\themargin[\option{/novathesis/docdegree},top]})%
         {\usebox{\novathesis@coverbox}}%
     }%
   }%
@@ -231,12 +231,12 @@
 	  \selectthelanguage{\novathesis@opt@coverlang}%
 	  \setlength{\mpwidth}{\dimexpr%
 	    \paperwidth%
-	      -\themargin[\novathesis@opt@docdegree,left]%
-	      -\themargin[\novathesis@opt@docdegree,right]}%
+	      -\themargin[\option{/novathesis/docdegree},left]%
+	      -\themargin[\option{/novathesis/docdegree},right]}%
 	  \setlength{\mpheight}{\dimexpr%
 	    \paperheight%
-	      -\themargin[\novathesis@opt@docdegree,top]%
-	      -\themargin[\novathesis@opt@docdegree,bottom]}%
+	      -\themargin[\option{/novathesis/docdegree},top]%
+	      -\themargin[\option{/novathesis/docdegree},bottom]}%
 	  \newsavebox{\novathesis@aftercoverbox}%
 	  \sbox{\novathesis@aftercoverbox}{%
 	    \parbox[t][\mpheight][t]{\mpwidth}{%
@@ -246,8 +246,8 @@
 	  \AddToShipoutPictureFG*{%
 	    \AtPageUpperLeft{%
 	      \put(%
-	        \LenToUnit{\themargin[\novathesis@opt@docdegree,left]},%
-	        -\LenToUnit{\themargin[\novathesis@opt@docdegree,top]})%
+	        \LenToUnit{\themargin[\option{/novathesis/docdegree},left]},%
+	        -\LenToUnit{\themargin[\option{/novathesis/docdegree},top]})%
 	        {\usebox{\novathesis@aftercoverbox}}%
 	    }%
 	  }%
@@ -259,13 +259,13 @@
 }
 
 \newcommand{\printbackcoverpage}{%
-  \ifexists{thesiscover}[\novathesis@opt@docdegree,back]{
+  \ifexists{thesiscover}[\option{/novathesis/docdegree},back]{
     \clearforchapter%
     \thispagestyle{empty}%
     ~
     \clearpage%
     \thispagestyle{empty}%
-    \coverbackground[\@nameuse{thesiscover\novathesis@opt@docdegree,back}]
+    \coverbackground[\@nameuse{thesiscover\option{/novathesis/docdegree},back}]
     ~% This space is important here so that the cover page is not empty anymore!
     \clearforchapter%
     \selectthelanguage{\novathesis@opt@lang}%
@@ -373,7 +373,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \gdef\thepresentationtext{%
-	\thedissertationstr[\novathesis@opt@docdegree,\novathesis@opt@coverlang]%
+	\thedissertationstr[\option{/novathesis/docdegree},\novathesis@opt@coverlang]%
 }
 
 \gdef\thecopyrightstr{%
@@ -712,11 +712,11 @@
 \else%
 \newcommand{\printdedicatory}{%
 	\ifthenelse{%
-		\equal{\novathesis@opt@docdegree}{bsc}	% bsc
+		\equal{\option{/novathesis/docdegree}}{bsc}	% bsc
 		\OR%
-		\equal{\novathesis@opt@docdegree}{msc}	% msc
+		\equal{\option{/novathesis/docdegree}}{msc}	% msc
 		\OR%
-		\equal{\novathesis@opt@docdegree}{phd}	% phd
+		\equal{\option{/novathesis/docdegree}}{phd}	% phd
 	}{% THEN
 		\InputIfFileExists{Chapters/\@dedicatoryfile}{%
 			% File dedicatory.tex exists and is read
@@ -739,11 +739,11 @@
 \else%
   \newcommand{\printquote}{%
   	\ifthenelse{%
-  		\equal{\novathesis@opt@docdegree}{bsc}	% bsc
+  		\equal{\option{/novathesis/docdegree}}{bsc}	% bsc
   		\OR%
-  		\equal{\novathesis@opt@docdegree}{msc}	% msc
+  		\equal{\option{/novathesis/docdegree}}{msc}	% msc
   		\OR%
-  		\equal{\novathesis@opt@docdegree}{phd}	% phd
+  		\equal{\option{/novathesis/docdegree}}{phd}	% phd
   	}{% THEN
   		\InputIfFileExists{Chapters/\@quotefile}{%
   			% File qualtefile.tex exists and is read
@@ -766,11 +766,11 @@
 \newcommand{\printacknowledgements}{%
 	\IfFileExists{Chapters/\novathesis@acknowledgementsfile}{%
 		\ifthenelse{%
-			\equal{\novathesis@opt@docdegree}{bsc}	% bsc
+			\equal{\option{/novathesis/docdegree}}{bsc}	% bsc
 			\OR%
-			\equal{\novathesis@opt@docdegree}{msc}	% msc
+			\equal{\option{/novathesis/docdegree}}{msc}	% msc
 			\OR%
-			\equal{\novathesis@opt@docdegree}{phd}	% phd
+			\equal{\option{/novathesis/docdegree}}{phd}	% phd
 		}{% THEN
 			\input{Chapters/\novathesis@acknowledgementsfile}%
 			\clearforchapter%
@@ -963,11 +963,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\printcopyright}{%
 	\ifthenelse{%
-		\equal{\novathesis@opt@docdegree}{bsc}% bsc
+		\equal{\option{/novathesis/docdegree}}{bsc}% bsc
 		\OR%
-		\equal{\novathesis@opt@docdegree}{msc}% msc
+		\equal{\option{/novathesis/docdegree}}{msc}% msc
 		\OR%
-		\equal{\novathesis@opt@docdegree}{phd}% phd
+		\equal{\option{/novathesis/docdegree}}{phd}% phd
 	}{% THEN
 		\printcopyrightpage%
 	}{% ELSE

@@ -18,7 +18,7 @@
 \faculty[it]={NOVA School of Science and Technology}
 
 % Scientific filed
-\IfSubStr{\novathesis@opt@docdegree}{phd}{%
+\IfSubStr{\option{/novathesis/docdegree}}{phd}{%
     \majorfield[pt]={Informática}
     \majorfield[en]={Computer Science}
   }{%
@@ -160,9 +160,9 @@
 \coveritem[r]{2}{%
 \if@printcommitteeaux
   \ifthenelse{%
-    \equal{\novathesis@opt@docdegree}{bsc}%
-    \OR\equal{\novathesis@opt@docdegree}{msc}%
-    \OR\equal{\novathesis@opt@docdegree}{phd}}%
+    \equal{\option{/novathesis/docdegree}}{bsc}%
+    \OR\equal{\option{/novathesis/docdegree}}{msc}%
+    \OR\equal{\option{/novathesis/docdegree}}{phd}}%
   {\fontfamily{phv}\fontsize{10}{10}\selectfont\printcommittee}%
   {}%
 \fi

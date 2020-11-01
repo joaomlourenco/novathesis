@@ -180,9 +180,9 @@
 % Committee — only print the committee for the main classes
 % \coveritem[c]{1}{%
 %   \ifthenelse{%
-%     \equal{\novathesis@opt@docdegree}{bsc}%
-%     \OR\equal{\novathesis@opt@docdegree}{msc}%
-%     \OR\equal{\novathesis@opt@docdegree}{phd}}
+%     \equal{\option{/novathesis/docdegree}}{bsc}%
+%     \OR\equal{\option{/novathesis/docdegree}}{msc}%
+%     \OR\equal{\option{/novathesis/docdegree}}{phd}}
 %   {\committeetitlestrfont[]={\fontsize{14}{14}\selectfont\bfseries}
 %     \commiteememberstrfont[]={\bfseries}
 %      \fontsize{12}{12}\selectfont\printcommittee
