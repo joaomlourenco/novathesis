@@ -254,7 +254,7 @@
 %   \typeout{'secondcover'=#1}%
 %   \gdef\novathesis@opt@secondcover{#1}%
 % }
-\edef\novathesis@opt@secondcover{\option{/novathesis/secondcover}}
+% \edef\novathesis@opt@secondcover{\option{/novathesis/secondcover}}
 
 
 % --------------------------------------------------------
@@ -266,7 +266,7 @@
 %   \typeout{'aftercover'=#1}%
 %   \gdef\novathesis@opt@aftercover{#1}%
 % }
-\edef\novathesis@opt@aftercover{\option{/novathesis/aftercover}}
+% \edef\novathesis@opt@aftercover{\option{/novathesis/aftercover}}
 
 
 % --------------------------------------------------------
@@ -278,7 +278,7 @@
 %   \typeout{'printcommittee'=#1}%
 %   \gdef\novathesis@opt@printcommittee{#1}%
 % }
-\edef\novathesis@opt@printcommittee{\option{/novathesis/printcommittee}}
+% \edef\novathesis@opt@printcommittee{\option{/novathesis/printcommittee}}
 
 
 % --------------------------------------------------------
@@ -290,7 +290,7 @@
 %   \typeout{'printtrackmessage'=#1}%
 %   \gdef\novathesis@opt@printtrackmessage{#1}%
 % }
-\edef\novathesis@opt@printtrackmessage{\option{/novathesis/trackmessage}}
+% \edef\novathesis@opt@printtrackmessage{\option{/novathesis/trackmessage}}
 
 
 % --------------------------------------------------------

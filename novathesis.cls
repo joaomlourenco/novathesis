@@ -225,7 +225,7 @@
   %% Print second conver page if school is ul/fc
   \@printcommitteeauxtrue
   \setcounter{@novathesis@cnt}{0}%	reset counter used in the name listing
-  \ifthenelse{\equal{\novathesis@opt@secondcover}{true}}%
+  \ifthenelse{\equal{\option{/novathesis/secondcover}}{true}}%
 	{
 		\thispagestyle{empty}%
 	  \selectthelanguage{\novathesis@opt@coverlang}%
@@ -280,7 +280,7 @@
 
 
 \newcommand{\printaftercover}{%
-  \ifthenelse{\equal{\novathesis@opt@aftercover}{true}}%
+  \ifthenelse{\equal{\option{/novathesis/aftercover}}{true}}%
   {%
     \InputIfFileExists{Chapters/\novathesis@aftercover@file}%
       {\clearforchapter}%
@@ -500,7 +500,7 @@
 }
 
 \newcommand{\printcommittee}[1][0.75]{%
-  \ifthenelse{\equal{\novathesis@opt@printcommittee}{true}}%
+  \ifthenelse{\equal{\option{/novathesis/printcommittee}}{true}}%
   {\printcommittee@i{#1}}
   {}
 }
@@ -986,7 +986,7 @@
       \begin{Spacing}{1}%
         \fontfamily{phv}\fontsize{6.3}{6.3}\selectfont%
         \noindent
-        \ifthenelse{\equal{\novathesis@opt@printtrackmessage}{true}}%
+        \ifthenelse{\equal{\\option{/novathesis/trackmessage}}{true}}%
         {\hypersetup{allcolors=black}\theacknowledgmentsstr[\novathesis@opt@coverlang]}%
         {\hypersetup{allcolors=white}\textcolor{white}{\theacknowledgmentsstr[\novathesis@opt@coverlang]}}%
       \end{Spacing}%
