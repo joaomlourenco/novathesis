@@ -31,9 +31,9 @@
 \options{
   /novathesis/.new family
   % languages
-  , langsshort/.new list = {pt, en, es, it}
-  , langslong/.new list = {portuguese, english, spanish, italian}
-  , langshorttolong/.new choice = {pt=portuguese, en=english, es=spanish, it=italian}
+  , langsshort/.new list = {pt, en, fr, it}
+  , langslong/.new list = {portuguese, english, french, italian}
+  , langshorttolong/.new choice = {pt=portuguese, en=english, fr=french, it=italian}
   , langshorttolong/.expands
   , maplang/.new cmd = {%
         \optionsalso{/novathesis/langshorttolong = #1}%
@@ -50,11 +50,11 @@
   % %novathesis@opt@otherlistsat
   , otherlistsat/.new choice = {front, back}
   % %novathesis@opt@lang
-  , lang/.new choice = {pt, en, es, it}
+  , lang/.new choice = {pt, en, fr, it}
   % %novathesis@opt@coverlang
-  , coverlang/.new choice = {pt, en, es, it}
+  , coverlang/.new choice = {pt, en, fr, it}
   % %novathesis@opt@copyrightlang
-  , copyrightlang/.new choice = {pt, en, es, it}
+  , copyrightlang/.new choice = {pt, en, fr, it}
   % %novathesis@opt@printcommittee
   , printcommittee/.new toggle = true
   % %novathesis@opt@trackmessage
@@ -134,55 +134,6 @@
   \PassOptionsToClass{#1}{memoir}%
   % \ProcessOptions
 }
-%
-% % BOOK SPINE
-% \iftoggle{/novathesis/spine}{%
-%   % TRUE
-%   \AtEndDocument{%
-%     \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/spine.clo}%
-%       {}%
-%       {\input{novathesis-files/spine.clo}}%
-%     \printspine%
-%   }%
-% }{%
-%   %FALSE
-% }%
-%
-% % CD COVER
-% \iftoggle{/novathesis/cdcover}{%
-%   % TRUE
-%   \AtEndDocument{%
-%     \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/cdcover.clo}%
-%       {}%
-%       {\input{novathesis-files/cdcover.clo}}%
-%     \printcdcover%
-%   }%
-% }{%
-%   %FALSE
-% }%
-%
-% % DESTINATION MEDIA
-% \ifoptionequal{/novathesis/media}{paper}%
-%   {\PassOptionsToPackage{allcolors=black}{hyperref}}%
-%   {}
-
-% \ProcessOptions*
-
-% \endinput
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -191,52 +142,16 @@
 
 % --------------------------------------------------------
 % MAIN LANGUAGE - novathesis@opt@lang
-%
-% pt  Portuguese
-% en  English
-% fr  French
-% \newcommand{\novathesis@addtobabel}[1]{%
-%   \typeout{'babellang'=\thelangabbrev[#1]}%
-%   \PassOptionsToPackage{\thelangabbrev[#1]}{babel}%
-% }
-%
-% \gdef\novathesis@opt@lang{en}%
-% \DeclareOptionX{lang}{%
-%   \typeout{'lang'=#1}%
-%   \lowercase{\gdef\novathesis@opt@lang{#1}}%
-%   \xdef\novathesis@tmp{\thelangsused[\novathesis@opt@lang]}%
-%   \iteratecsvlist{\novathesis@addtobabel}{\novathesis@tmp}%
-% }
 \edef\novathesis@opt@lang{\option{/novathesis/lang}}
 
 
 % --------------------------------------------------------
 % COVER LANGUAGE - novathesis@opt@coverlang
-%
-% pt  Portuguese
-% en  English
-% \gdef\option{/novathesis/coverlang}{\novathesis@opt@lang}%
-% \DeclareOptionX{coverlang}{%
-%   \typeout{'coverlang'=#1}%
-%   \lowercase{\gdef\option{/novathesis/coverlang}{#1}}
-%   \novathesis@addtobabel{\option{/novathesis/coverlang}}
-% }
 \options{
   /novathesis/coverlang = \option{/novathesis/lang},
-  /novathesis/copyrightlang = \option{/novathesis/copyrightlang}
+  /novathesis/copyrightlang = \option{/novathesis/lang}
 }
 
-
-% --------------------------------------------------------
-% COPYRIGHT LANGUAGE - novathesis@opt@copyrightlang
-%
-% pt  Portuguese
-% en  English
-% \gdef\option{/novathesis/copyrightlang}{\novathesis@opt@lang}%
-% \DeclareOptionX{copyrightlang}{%
-%   \typeout{'copyrightlang'=#1}%
-%   \lowercase{\gdef\option{/novathesis/copyrightlang}{#1}}
-% }
 
 % --------------------------------------------------------
 % PRINT BOOK SPINE
@@ -272,3 +187,4 @@
   {}
 
 
+\options@ProcessOptions{/novathesis}
