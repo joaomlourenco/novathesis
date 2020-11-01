@@ -194,54 +194,6 @@
 
 
 % --------------------------------------------------------
-% SCHOOL - novathesis@opt@school
-%
-% nova/fct Faculdade de Ciências e Tecnologia da Universidade Nova de Lisboa
-% ul/ist   Isntituto Superior Técnico da Universidade de Lisboa
-% \DeclareOptionX{school}{%
-%   \typeout{'school'=#1}%
-%   \gdef\novathesis@opt@school{#1}%
-% }
-% \edef\novathesis@opt@school{\option{/novathesis/school}}
-
-
-% --------------------------------------------------------
-% CHAPTER STYLE - novathesis@opt@chapstyle
-%
-% bianchi bluebox brotherton dash default elegant(*) ell ger  
-% hansen ist jenor lyhne madsen pedersen veelo vz14 vz34 vz43
-% \DeclareOptionX{chapstyle}{%
-%   \typeout{'chapstyle'=#1}%
-%   \gdef\novathesis@opt@chapstyle{#1}%
-% }
-\edef\novathesis@opt@chapstyle{\option{/novathesis/chapstyle}}
-
-
-
-% --------------------------------------------------------
-% FONT STYLE - novathesis@opt@fontstyle
-%
-% bookman charter fourier kpfonts(*) mathpazo1 mathpazo2 newcent
-% \DeclareOptionX{fontstyle}{%
-%   \typeout{'fontstyle'=#1}%
-%   \gdef\novathesis@opt@fontstyle{#1}%
-% }
-\edef\novathesis@opt@fontstyle{\option{/novathesis/fontstyle}}
-
-
-% --------------------------------------------------------
-% WHERE TO PRINT OTHER LISTS - novathesis@opt@otherlistsat
-%
-% front back
-% \gdef\novathesis@opt@otherlistsat{front}%
-% \DeclareOptionX{otherlistsat}{%
-%   \typeout{'otherlistsat'=#1}%
-%   \gdef\novathesis@opt@otherlistsat{#1}%
-% }
-\edef\novathesis@opt@otherlistsat{\option{/novathesis/otherlistsat}}
-
-
-% --------------------------------------------------------
 % MAIN LANGUAGE - novathesis@opt@lang
 %
 % pt  Portuguese

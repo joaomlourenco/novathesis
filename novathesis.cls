@@ -927,8 +927,8 @@
 
 \newcommand{\printotherlists}{%
   \clearforchapter%
-  % printotherlists [\novathesis@opt@otherlistsat]
-  \ifthenelse{\equal{\novathesis@opt@otherlistsat}{front}}%
+  % printotherlists [\option{/novathesis/otherlistsat}]
+  \ifthenelse{\equal{\option{/novathesis/otherlistsat}}{front}}%
   {%
     \if@mainmatter%
     \else%
@@ -936,7 +936,7 @@
     \fi%
   }%
   {}%
-  \ifthenelse{\equal{\novathesis@opt@otherlistsat}{back}}%
+  \ifthenelse{\equal{\option{/novathesis/otherlistsat}}{back}}%
   {%
     \if@mainmatter%
       \printotherlists@i%
@@ -1080,7 +1080,7 @@
 
 \InputIfFileExists{novathesis-files/ChapStyles/\option{/novathesis/chapstyle}.clo}{}{}
 
-\InputIfFileExists{novathesis-files/FontStyles/\novathesis@opt@fontstyle.clo}{}{}
+\InputIfFileExists{novathesis-files/FontStyles/\option{/novathesis/fontstyle}.clo}{}{}
 
 
 
