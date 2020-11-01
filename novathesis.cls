@@ -1078,7 +1078,7 @@
 % Text style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\InputIfFileExists{novathesis-files/ChapStyles/\novathesis@opt@chapstyle.clo}{}{}
+\InputIfFileExists{novathesis-files/ChapStyles/\option{/novathesis/chapstyle}.clo}{}{}
 
 \InputIfFileExists{novathesis-files/FontStyles/\novathesis@opt@fontstyle.clo}{}{}
 
