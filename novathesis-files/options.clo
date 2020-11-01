@@ -25,51 +25,58 @@
 %% PROCESS KEY-VAL OPTIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{options-nt}
+\RequirePackage{xkeyval}
 \RequirePackage{xifthen}
 %
 \options{
   /novathesis/.new family
-%   , /novathesis/alllang/.new list = {pt, en, es, it}
-%   , /novathesis/alllanglong/.new list = {portuguese, english, spanish, italian}
+  % languages
+  , langsshort/.new list = {pt, en, es, it}
+  , langslong/.new list = {portuguese, english, spanish, italian}
+  , langshorttolong/.new choice = {pt=portuguese, en=english, es=spanish, it=italian}
+  , langshorttolong/.expands
+  , maplang/.new cmd = {%
+        \optionsalso{/novathesis/langshorttolong = #1}%
+        \option{/novathesis/langshorttolong}%
+  }
   % %novathesis@opt@docdegree
-  , /novathesis/docdegree/.new choice = {phd, phdplan, phdprop, msc, mscplan, bsc},
+  , docdegree/.new choice = {phd, phdplan, phdprop, msc, mscplan, bsc},
   % %novathesis@opt@school
-  , /novathesis/school/.new choice = {{nova/fct}, {nova/fcsh}, {nova/ims}, {nova/ensp}, {ul/ist}, {ul/fc}, {ipl/isel}, {ips/ests}}
+  , school/.new choice = {{nova/fct}, {nova/fcsh}, {nova/ims}, {nova/ensp}, {ul/ist}, {ul/fc}, {ipl/isel}, {ips/ests}}
   % %novathesis@opt@chapstyle
-  , /novathesis/chapstyle/.new choice = {elegant, bianchi, bluebox, brotherton, dash, default, ell, ger, hansen, ist, jenor, lyhne, madsen, pedersen, veelo, vz14, vz34, vz43}
+  , chapstyle/.new choice = {elegant, bianchi, bluebox, brotherton, dash, default, ell, ger, hansen, ist, jenor, lyhne, madsen, pedersen, veelo, vz14, vz34, vz43}
   % %novathesis@opt@fontstyle
-  , /novathesis/fontstyle/.new choice = {kpfonts, baskervaldx, bookman, charter, ebgaramond, fbb, fourier, garamond, heuristica, libertine, mathpazo1, mathpazo2, newcent, newpx, newtx}
+  , fontstyle/.new choice = {kpfonts, baskervaldx, bookman, charter, ebgaramond, fbb, fourier, garamond, heuristica, libertine, mathpazo1, mathpazo2, newcent, newpx, newtx}
   % %novathesis@opt@otherlistsat
-  , /novathesis/otherlistsat/.new choice = {front, back}
+  , otherlistsat/.new choice = {front, back}
   % %novathesis@opt@lang
-  % , /novathesis/lang/.new choice = {pt, en, es, it}
+  , lang/.new choice = {pt, en, es, it}
   % %novathesis@opt@coverlang
-  % , /novathesis/coverlang/.new choice = {pt, en, es, it}
+  , coverlang/.new choice = {pt, en, es, it}
   % %novathesis@opt@copyrightlang
-  % , /novathesis/copyrightlang/.new choice = {pt, en, es, it}
+  , copyrightlang/.new choice = {pt, en, es, it}
   % %novathesis@opt@printcommittee
-  , /novathesis/printcommittee/.new toggle = true
+  , printcommittee/.new toggle = true
   % %novathesis@opt@trackmessage
-  , /novathesis/trackmessage/.new toggle = true
+  , trackmessage/.new toggle = true
   % %novathesis@opt@secondcover
-  , /novathesis/secondcover/.new toggle = false
+  , secondcover/.new toggle = false
   % %novathesis@opt@aftercover
-  , /novathesis/aftercover/.new toggle = false
+  , aftercover/.new toggle = false
   % %novathesis@opt@spine
-  , /novathesis/spine/.new toggle
+  , spine/.new toggle
   % %novathesis@opt@cdcover
-  , /novathesis/cdcover/.new toggle
+  , cdcover/.new toggle
   % %novathesis@opt@biblatex
-  % , /novathesis/biblatex/.new list = {maxalphanames=2, sortcites=true}
+  , biblatex/.new list = {maxalphanames=2, sortcites=true}
   % %novathesis@opt@memoir
-  % , /novathesis/memoir/.new list = {a4paper, 11pt, draft}
+  , memoir/.new list = {a4paper, 11pt, draft}
   % %novathesis@opt@media
-  , /novathesis/media/.new choice = {screen, paper}
+  , media/.new choice = {screen, paper}
   %novathesis@opt@linkscolor
-  , /novathesis/linkscolor/.new cmd = {\PassOptionsToPackage{allcolors=#1}{hyperref}}
+  , linkscolor/.new cmd = {\PassOptionsToPackage{allcolors=#1}{hyperref}}
 }
 
-%
 % \newcounter{nt@lang@a@cnt}
 % \newcounter{nt@lang@b@cnt}
 % \newcommand{\expandlang}[1]{%
@@ -99,25 +106,34 @@
 % PROCESSING OPTIONS
 \options@ProcessOptions{/novathesis}
 
+\newcommand{\maplang}[1]{%
+  \options{/novathesis/langshorttolong = #1}%
+  % \option{/novathesis/langshorttolong}
+  % \options{/novathesis/langsmaps = #1}%
+  % % \option{/novathesis/langsmaps}
+  \expandafter{\romannumeral-`X\option{/novathesis/langshorttolong}}
+}
+
 %
 % % LANG
-% \optionlistdo{/novathesis/alllang}{%
-%   \ifoptionequal{/novathesis/lang}{#1}%
-%     {\PassOptionsToPackage{main=\thelangabbrev[#1]}{babel}}%
-%     {\PassOptionsToPackage{\thelangabbrev[#1]}{babel}}%
-% }
+\optionlistdo{/novathesis/langsshort}{%
+  \ifoptionequal{/novathesis/lang}{#1}%
+    {\PassOptionsToPackage{main=\thelangabbrev[#1]}{babel}}%
+    {\PassOptionsToPackage{\thelangabbrev[#1]}{babel}}%
+}
+
 %
 % % BIBLATEX OPTIONS
-% \optionlistdo{/novathesis/biblatex}{%
-%   \PassOptionsToPackage{#1}{biblatex}%
-%   \ProcessOptions*
-% }
+\optionlistdo{/novathesis/biblatex}{%
+  \PassOptionsToPackage{#1}{biblatex}%
+  % \ProcessOptions
+}
 %
 % % MEMOIR OPTIONS
-% \optionlistdo{/novathesis/memoir}{%
-%   \PassOptionsToPackage{#1}{memoir}%
-%   \ProcessOptions*
-% }
+\optionlistdo{/novathesis/memoir}{%
+  \PassOptionsToClass{#1}{memoir}%
+  % \ProcessOptions
+}
 %
 % % BOOK SPINE
 % \iftoggle{/novathesis/spine}{%
@@ -172,9 +188,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PROCESS KEY-VAL OPTIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{kvoptions-patch}
-\RequirePackage{xkeyval}
-\RequirePackage{xifthen}
+% \RequirePackage{kvoptions-patch}
+% \RequirePackage{xifthen}
 
 
 
@@ -249,18 +264,19 @@
 % pt  Portuguese
 % en  English
 % fr  French
-\newcommand{\novathesis@addtobabel}[1]{%
-  \typeout{'babellang'=\thelangabbrev[#1]}%
-  \PassOptionsToPackage{\thelangabbrev[#1]}{babel}%
-}
-
-\gdef\novathesis@opt@lang{en}%
-\DeclareOptionX{lang}{%
-  \typeout{'lang'=#1}%
-  \lowercase{\gdef\novathesis@opt@lang{#1}}%
-  \xdef\novathesis@tmp{\thelangsused[\novathesis@opt@lang]}%
-  \iteratecsvlist{\novathesis@addtobabel}{\novathesis@tmp}%
-}
+% \newcommand{\novathesis@addtobabel}[1]{%
+%   \typeout{'babellang'=\thelangabbrev[#1]}%
+%   \PassOptionsToPackage{\thelangabbrev[#1]}{babel}%
+% }
+%
+% \gdef\novathesis@opt@lang{en}%
+% \DeclareOptionX{lang}{%
+%   \typeout{'lang'=#1}%
+%   \lowercase{\gdef\novathesis@opt@lang{#1}}%
+%   \xdef\novathesis@tmp{\thelangsused[\novathesis@opt@lang]}%
+%   \iteratecsvlist{\novathesis@addtobabel}{\novathesis@tmp}%
+% }
+\edef\novathesis@opt@lang{\option{/novathesis/lang}}
 
 
 % --------------------------------------------------------
@@ -268,12 +284,18 @@
 %
 % pt  Portuguese
 % en  English
-\gdef\novathesis@opt@coverlang{\novathesis@opt@lang}%
-\DeclareOptionX{coverlang}{%
-  \typeout{'coverlang'=#1}%
-  \lowercase{\gdef\novathesis@opt@coverlang{#1}}
-  \novathesis@addtobabel{\novathesis@opt@coverlang}
+% \gdef\novathesis@opt@coverlang{\novathesis@opt@lang}%
+% \DeclareOptionX{coverlang}{%
+%   \typeout{'coverlang'=#1}%
+%   \lowercase{\gdef\novathesis@opt@coverlang{#1}}
+%   \novathesis@addtobabel{\novathesis@opt@coverlang}
+% }
+\options{
+  /novathesis/coverlang = \option{/novathesis/lang},
+  /novathesis/copyrightlang = \option{/novathesis/copyrightlang}
 }
+\edef\novathesis@opt@coverlang{\option{/novathesis/coverlang}}
+\edef\novathesis@opt@copyrightlang{\option{/novathesis/copyrightlang}}
 
 
 % --------------------------------------------------------
@@ -281,11 +303,11 @@
 %
 % pt  Portuguese
 % en  English
-\gdef\novathesis@opt@copyrightlang{\novathesis@opt@lang}%
-\DeclareOptionX{copyrightlang}{%
-  \typeout{'copyrightlang'=#1}%
-  \lowercase{\gdef\novathesis@opt@copyrightlang{#1}}
-}
+% \gdef\novathesis@opt@copyrightlang{\novathesis@opt@lang}%
+% \DeclareOptionX{copyrightlang}{%
+%   \typeout{'copyrightlang'=#1}%
+%   \lowercase{\gdef\novathesis@opt@copyrightlang{#1}}
+% }
 
 
 % --------------------------------------------------------
@@ -324,7 +346,6 @@
 \edef\novathesis@opt@printcommittee{\option{/novathesis/printcommittee}}
 
 
-
 % --------------------------------------------------------
 % PRINT TRACKING MESSAGE
 %
@@ -353,10 +374,10 @@
 % utf8
 % latin1
 % Anything else valid for package "inputenc"
-\DeclareOptionX{enc}{%
-	\typeout{'enc'=#1}%
-	\PassOptionsToPackage{#1}{inputenc}%
-}
+% \DeclareOptionX{enc}{%
+%   \typeout{'enc'=#1}%
+%   \PassOptionsToPackage{#1}{inputenc}%
+% }
 
 % --------------------------------------------------------
 % PRINT BOOK SPINE
@@ -422,10 +443,10 @@
 %
 % style= numeric | alphabetic | …
 % ...
-\DeclareOptionX{biblatex}{%
- 	\typeout{'biblatex'=#1}%
-	\PassOptionsToPackage{#1}{biblatex}%
-}
+% \DeclareOptionX{biblatex}{%
+%    \typeout{'biblatex'=#1}%
+%   \PassOptionsToPackage{#1}{biblatex}%
+% }
 
 
 % --------------------------------------------------------
@@ -433,10 +454,10 @@
 % Are passed to the main class (book)
 %
 % twoside, a4paer, ...
-\DeclareOptionX{memoir}{%
-	\typeout{'memoir'=#1}%
-	\PassOptionsToClass{#1}{memoir}%
-}
+% \DeclareOptionX{memoir}{%
+%   \typeout{'memoir'=#1}%
+%   \PassOptionsToClass{#1}{memoir}%
+% }
 
 
 
@@ -465,41 +486,41 @@
 % --------------------------------------------------------
 % DEFAULT OPTIONS
 % \PassOptionsToPackage{portuguese,english}{babel}
-\ExecuteOptionsX{%
+% \ExecuteOptionsX{%
 	% docdegree=phd,
   % school=nova/fct,
   % fontstyle=kpfonts,
   % chapstyle=elegant,
-	enc=utf8,
+  % enc=utf8,
   % otherlistsat=front,
-	lang=en,
+  % lang=en,
   % linkscolor=darkblue,
   %   secondcover=false,
   %   aftercover=false,
   %   printcommittee=true,
   %   trackmessage=ture,
   % spine=false,
-	biblatex={%
-		% sorting=nyt,%
-		% style=alphabetic,%
-		% labelyear=false,%
-		style=numeric,
-		maxalphanames=2,
-		defernumbers=true,%
-		maxbibnames=20,%
-		maxcitenames=2,%
-		mincitenames=1,%
-		giveninits=true,% will render all first and middle names as initials
-		uniquename=init,%
-		% dashed=false,%
-		sortcites=true,
-	},
-	memoir={a4paper, 11pt, draft},
+  % biblatex={%
+  %   % sorting=nyt,%
+  %   % style=alphabetic,%
+  %   % labelyear=false,%
+  %   style=numeric,
+  %   maxalphanames=2,
+  %   defernumbers=true,%
+  %   maxbibnames=20,%
+  %   maxcitenames=2,%
+  %   mincitenames=1,%
+  %   giveninits=true,% will render all first and middle names as initials
+  %   uniquename=init,%
+  %   % dashed=false,%
+  %   sortcites=true,
+  % },
+  % memoir={a4paper, 11pt, draft},
   % media=screen,
-}
+% }
 
 
 
 % --------------------------------------------------------
 % PROCESSING OPTIONS
-\ProcessOptionsX\relax
+% \ProcessOptionsX\relax

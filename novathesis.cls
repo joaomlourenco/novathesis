@@ -332,11 +332,16 @@
 %% Include strings in the used languages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\novathesis@includestrings@lang}[1]{%
-  \edef\novathesis@filetoinclude{novathesis-files/Strings/strings-#1.clo}
-  \input{\novathesis@filetoinclude}%
+\optionlistdo{/novathesis/langsshort}{%
+  \InputIfFileExists{novathesis-files/Strings/strings-#1.clo}%
+    {}%
+    {}
 }
-\iteratecsvlist{\novathesis@includestrings@lang}{\novathesis@tmp}%
+% \newcommand{\novathesis@includestrings@lang}[1]{%
+%   \edef\novathesis@filetoinclude{novathesis-files/Strings/strings-#1.clo}
+%   \input{\novathesis@filetoinclude}%
+% }
+% \iteratecsvlist{\novathesis@includestrings@lang}{\novathesis@tmp}%
 
 
 

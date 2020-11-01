@@ -10,11 +10,11 @@
 \RequirePackage[T1]{fontenc}		% Use new T1 fonts
 
 %%%%% Configure input encoding
-\RequirePackage{inputenc}		% Format for the input file(s), see the "enc" option
+\RequirePackage[utf8]{inputenc}		% Format for the input file(s), see the "enc" option
 
 %%%%% Configure multilingual language support
 \RequirePackage{csquotes}
-\RequirePackage[portuguese,english]{babel}			% Support for bilingual documents
+\RequirePackage{babel}			% Support for bilingual documents
 
 
 % \RequirePackage{appendix}
