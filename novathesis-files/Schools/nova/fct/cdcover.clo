@@ -45,13 +45,13 @@
 	\setmarginnotes{0mm}{0mm}{0mm}
 	\checkandfixthelayout[fixed]
 
-  % \ifthenelse{\equal{\novathesis@opt@docdegree}{phd}%
-  %     \OR\equal{\novathesis@opt@docdegree}{phdprop}%
-  %     \OR\equal{\novathesis@opt@docdegree}{phdplan}%
+  % \ifthenelse{\equal{\option{/novathesis/docdegree}}{phd}%
+  %     \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
+  %     \OR\equal{\option{/novathesis/docdegree}}{phdplan}%
   %     }%
   %     {\AddToShipoutPictureBG*{\includegraphics[width=120mm]{cd-cover-phd}}}
   %     {\AddToShipoutPictureBG*{\includegraphics[width=120mm]{cd-cover-msc}}}
-  \AddToShipoutPictureBG*{\includegraphics[width=120mm]{\@nameuse{thesiscover\novathesis@opt@docdegree,cdfront}}}
+  \AddToShipoutPictureBG*{\includegraphics[width=120mm]{\@nameuse{thesiscover\option{/novathesis/docdegree},cdfront}}}
 
 	\savebox{\cdcover@savebox}{%
 	\begin{minipage}[t][7.0cm]{9cm}
@@ -87,7 +87,7 @@
 	\end{minipage}
 	}
 
-  \ifthenelse{\equal{\novathesis@opt@docdegree}{phd}}%
+  \ifthenelse{\equal{\option{/novathesis/docdegree}}{phd}}%
   {~\\[1.75cm]~\hspace*{2.3cm}}
 	{~\\[1.75cm]~\hspace*{1.7cm}}
 	\usebox{\cdcover@savebox}
@@ -113,13 +113,13 @@
 	\setmarginnotes{0mm}{0mm}{0mm}
 	\checkandfixthelayout[fixed]
 
-  % \ifthenelse{\equal{\novathesis@opt@docdegree}{phd}%
-  %     \OR\equal{\novathesis@opt@docdegree}{phdprop}%
-  %     \OR\equal{\novathesis@opt@docdegree}{phdplan}%
+  % \ifthenelse{\equal{\option{/novathesis/docdegree}}{phd}%
+  %     \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
+  %     \OR\equal{\option{/novathesis/docdegree}}{phdplan}%
   %     }%
   %     {\AddToShipoutPictureBG*{\includegraphics[width=150mm]{cd-inlay-phd}}}
   %     {\AddToShipoutPictureBG*{\includegraphics[width=150mm]{cd-inlay-msc}}}
-  \AddToShipoutPictureBG*{\includegraphics[width=150mm]{\@nameuse{thesiscover\novathesis@opt@docdegree,cdinlay}}}
+  \AddToShipoutPictureBG*{\includegraphics[width=150mm]{\@nameuse{thesiscover\option{/novathesis/docdegree},cdinlay}}}
   
 	\savebox{\cdcover@savebox}{%
 	\begin{minipage}[t][8cm]{11cm}
@@ -165,7 +165,7 @@
 
 	\setlength{\fboxsep}{0pt}
 	% ~\hspace*{1.8cm}
-  \ifthenelse{\equal{\novathesis@opt@docdegree}{phd}}%
+  \ifthenelse{\equal{\option{/novathesis/docdegree}}{phd}}%
   {~\\[0.75cm]~\hspace*{2.5cm}}
 	{~\\[0.75cm]~\hspace*{1.8cm}}
 	\usebox{\cdcover@savebox}

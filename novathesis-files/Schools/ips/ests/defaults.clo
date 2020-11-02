@@ -85,20 +85,20 @@
 \margin[plain,right]={2.0cm}
 
 \dissertationstr[bsc,pt]={Relatório para obtenção do Grau de %
-\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\option{/novathesis/coverlang}]}}
 \dissertationstr[mscplan,pt]={Relatório intermédio para obtenção do Grau de %
-\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\option{/novathesis/coverlang}]}}
 \dissertationstr[msc,pt]={Dissertação de natureza científica para obtenção do grau de  %
-\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\option{/novathesis/coverlang}]}}
 \dissertationstr[phdplan,pt]={Relatório intermédio para obtenção do Grau de %
-\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\option{/novathesis/coverlang}]}}
 \dissertationstr[phdprop,pt]={Proposta de dissertação para obtenção do Grau de %
-\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\option{/novathesis/coverlang}]}}
 \dissertationstr[phd,pt]={Dissertação para obtenção do Grau de %
-\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\novathesis@opt@coverlang]}}
-\copyrighttextstr[pt]={A \thefaculty[\novathesis@opt@coverlang]\ e o \theuniversity[\novathesis@opt@coverlang]\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\option{/novathesis/coverlang}]}}
+\copyrighttextstr[pt]={A \thefaculty[\option{/novathesis/coverlang}]\ e o \theuniversity[\option{/novathesis/coverlang}]\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
 
-\copyrighttextstr[en]={The \thefaculty[\novathesis@opt@coverlang]\ and the \theuniversity[\novathesis@opt@coverlang]\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+\copyrighttextstr[en]={The \thefaculty[\option{/novathesis/coverlang}]\ and the \theuniversity[\option{/novathesis/coverlang}]\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -175,9 +175,9 @@
 % % School
 % \coveritem[c]{0.5cm}{%
 %   \fontsize{13}{13}\selectfont%
-%   \textbf{\MakeUppercase{\thefaculty[\novathesis@opt@coverlang]}}\\%
+%   \textbf{\MakeUppercase{\thefaculty[\option{/novathesis/coverlang}]}}\\%
 %   \fontsize{10}{10}\selectfont%
-%   \textbf{\MakeUppercase{\thedepartment[\novathesis@opt@coverlang]}}%
+%   \textbf{\MakeUppercase{\thedepartment[\option{/novathesis/coverlang}]}}%
 % }
 
 
@@ -230,8 +230,8 @@
 \end{minipage}
 \hspace{0.65cm}
 \begin{minipage}[t]{0.55\textwidth}
-  \adviserstrfont[\novathesis@opt@coverlang]={\bfseries}%
-  \coadviserstrfont[\novathesis@opt@coverlang]={\bfseries}%
+  \adviserstrfont[\option{/novathesis/coverlang}]={\bfseries}%
+  \coadviserstrfont[\option{/novathesis/coverlang}]={\bfseries}%
   \fontsize{11}{11}\selectfont%
   \printadvisers%
 \end{minipage}
@@ -280,11 +280,11 @@
 % \hspace{0.65cm}
 \begin{minipage}[t]{0.75\textwidth}
   \ifthenelse{%
-    \equal{\novathesis@opt@docdegree}{bsc}%
-    \OR\equal{\novathesis@opt@docdegree}{msc}%
-    \OR\equal{\novathesis@opt@docdegree}{phd}}%
-  {\committeetitlestrfont[\novathesis@opt@coverlang]={\fontsize{14}{14}\selectfont\bfseries}%
-    \commiteememberstrfont[\novathesis@opt@coverlang]={\bfseries}%
+    \equal{\option{/novathesis/docdegree}}{bsc}%
+    \OR\equal{\option{/novathesis/docdegree}}{msc}%
+    \OR\equal{\option{/novathesis/docdegree}}{phd}}%
+  {\committeetitlestrfont[\option{/novathesis/coverlang}]={\fontsize{14}{14}\selectfont\bfseries}%
+    \commiteememberstrfont[\option{/novathesis/coverlang}]={\bfseries}%
     \fontsize{12}{12}\selectfont\printcommittee[1]%
   }%
   {}%

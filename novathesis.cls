@@ -8,24 +8,34 @@
 %% To view a copy of this license,
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2020/07/20 [4.4.0]
+%% Version 2020/11/02 [5.0.0]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
-%% Universidade Nova de Lisboa
+%% Universidade NOVA de Lisboa
 %%
 %% BUGS and SUGGESTIONS: please submit an issue at the project web page
 %%      at: https://github.com/joaomlourenco/novathesis/
 %%
-%% HELP: please ask for help at the novathesis google group at
+%% HELP: please DO NOT SEND ME EMAILS about LaTeX or the NOVAthesis template
+%%       please ask for help at the NOVAthesis google group at
 %%          https://groups.google.com/forum/#!forum/novathesis
-%%      or at the facebook page
+%%      or at the NOVAthesis facebook group at
 %%          https://www.facebook.com/groups/novathesis/
 %%
-%% Authors / Contributors:
-%%      - João Lourenço <joao.lourenco@fct.unl.pt>
-%%      - Bruno Candeias <b.candeias@campus.fct.unl.pt>
-%%      — Flávio Martins <flaviomartins@acm.org>
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% AUTHOR @github:
+%%      - joaomlourenco
+%%
+%% CONTRIBUTORS @github:
+%%      - bcandeias, flaviomartins, tmonteiro2344, jsaramago, microlina, riclas, pedrovieira
+%%
+%% DONATIONS:
+%%     If you think this templatze really helped you while writing your thesis,
+%%     think about doing a small donation. Just access the website
+%%     https://github.com/joaomlourenco/novathesis/
+%%     and click in the “Donation” link.
+%%     I'll keep a list thanking to all the identified donors that identify
+%%     themselves in the “*Add special instructions to the seller:*” box.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
@@ -38,7 +48,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{novathesis}[2020/07/20 novathesis template]
+\ProvidesClass{novathesis}[2020/11/02 novathesis template]
 
 
 
@@ -71,8 +81,10 @@
 %% Multilingual support
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\selectthelanguage}[1]{%
-  \xdef\novathesis@tmp{\thelangabbrev[#1]}%
-  \expandafter\selectlanguage\expandafter{\novathesis@tmp}%
+  \options{/novathesis/langshorttolong=#1}
+  \edef\nt@tmp{\option{/novathesis/langshorttolong}}%
+  \typeout{'SWITCHING LANG TO = '\nt@tmp}
+  \expandafter\selectlanguage\expandafter{\nt@tmp}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -130,7 +142,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\coverbackground}[1][\@nameuse{thesiscover\novathesis@opt@docdegree,front}]{%
+\newcommand{\coverbackground}[1][\@nameuse{thesiscover\option{/novathesis/docdegree},front}]{%
   \ifthenelse{\equal{#1}{}}{}{%
     \AddToShipoutPictureBG*{%
       \includegraphics[width=\paperwidth,height=\paperheight]{#1}%
@@ -194,17 +206,17 @@
 
 \newcommand{\printcoverpage}{%
   \thispagestyle{empty}%
-  \selectthelanguage{\novathesis@opt@coverlang}%
+  \selectthelanguage{\option{/novathesis/coverlang}}%
 
   \setlength{\mpwidth}{\dimexpr%
     \paperwidth%
-      -\themargin[\novathesis@opt@docdegree,left]%
-      -\themargin[\novathesis@opt@docdegree,right]}%
+      -\themargin[\option{/novathesis/docdegree},left]%
+      -\themargin[\option{/novathesis/docdegree},right]}%
 
   \setlength{\mpheight}{\dimexpr%
     \paperheight%
-      -\themargin[\novathesis@opt@docdegree,top]%
-      -\themargin[\novathesis@opt@docdegree,bottom]}%
+      -\themargin[\option{/novathesis/docdegree},top]%
+      -\themargin[\option{/novathesis/docdegree},bottom]}%
 
   \sbox{\novathesis@coverbox}{%
     \parbox[t][\mpheight][t]{\mpwidth}{%
@@ -214,8 +226,8 @@
   \AddToShipoutPictureFG*{%
     \AtPageUpperLeft{%
       \put(%
-        \LenToUnit{\themargin[\novathesis@opt@docdegree,left]},%
-        -\LenToUnit{\themargin[\novathesis@opt@docdegree,top]})%
+        \LenToUnit{\themargin[\option{/novathesis/docdegree},left]},%
+        -\LenToUnit{\themargin[\option{/novathesis/docdegree},top]})%
         {\usebox{\novathesis@coverbox}}%
     }%
   }%
@@ -225,18 +237,18 @@
   %% Print second conver page if school is ul/fc
   \@printcommitteeauxtrue
   \setcounter{@novathesis@cnt}{0}%	reset counter used in the name listing
-  \ifthenelse{\equal{\novathesis@opt@secondcover}{true}}%
+  \ifthenelse{\equal{\option{/novathesis/secondcover}}{true}}%
 	{
 		\thispagestyle{empty}%
-	  \selectthelanguage{\novathesis@opt@coverlang}%
+	  \selectthelanguage{\option{/novathesis/coverlang}}%
 	  \setlength{\mpwidth}{\dimexpr%
 	    \paperwidth%
-	      -\themargin[\novathesis@opt@docdegree,left]%
-	      -\themargin[\novathesis@opt@docdegree,right]}%
+	      -\themargin[\option{/novathesis/docdegree},left]%
+	      -\themargin[\option{/novathesis/docdegree},right]}%
 	  \setlength{\mpheight}{\dimexpr%
 	    \paperheight%
-	      -\themargin[\novathesis@opt@docdegree,top]%
-	      -\themargin[\novathesis@opt@docdegree,bottom]}%
+	      -\themargin[\option{/novathesis/docdegree},top]%
+	      -\themargin[\option{/novathesis/docdegree},bottom]}%
 	  \newsavebox{\novathesis@aftercoverbox}%
 	  \sbox{\novathesis@aftercoverbox}{%
 	    \parbox[t][\mpheight][t]{\mpwidth}{%
@@ -246,8 +258,8 @@
 	  \AddToShipoutPictureFG*{%
 	    \AtPageUpperLeft{%
 	      \put(%
-	        \LenToUnit{\themargin[\novathesis@opt@docdegree,left]},%
-	        -\LenToUnit{\themargin[\novathesis@opt@docdegree,top]})%
+	        \LenToUnit{\themargin[\option{/novathesis/docdegree},left]},%
+	        -\LenToUnit{\themargin[\option{/novathesis/docdegree},top]})%
 	        {\usebox{\novathesis@aftercoverbox}}%
 	    }%
 	  }%
@@ -255,20 +267,20 @@
 	  \clearforchapter%
   }%
   {}%
-  \selectthelanguage{\novathesis@opt@lang}%
+  \selectthelanguage{\option{/novathesis/mainlang}}%
 }
 
 \newcommand{\printbackcoverpage}{%
-  \ifexists{thesiscover}[\novathesis@opt@docdegree,back]{
+  \ifexists{thesiscover}[\option{/novathesis/docdegree},back]{
     \clearforchapter%
     \thispagestyle{empty}%
     ~
     \clearpage%
     \thispagestyle{empty}%
-    \coverbackground[\@nameuse{thesiscover\novathesis@opt@docdegree,back}]
+    \coverbackground[\@nameuse{thesiscover\option{/novathesis/docdegree},back}]
     ~% This space is important here so that the cover page is not empty anymore!
     \clearforchapter%
-    \selectthelanguage{\novathesis@opt@lang}%
+    \selectthelanguage{\option{/novathesis/mainlang}}%
   }
 }
 
@@ -280,7 +292,7 @@
 
 
 \newcommand{\printaftercover}{%
-  \ifthenelse{\equal{\novathesis@opt@aftercover}{true}}%
+  \ifthenelse{\equal{\option{/novathesis/aftercover}}{true}}%
   {%
     \InputIfFileExists{Chapters/\novathesis@aftercover@file}%
       {\clearforchapter}%
@@ -297,17 +309,17 @@
 \mynewdata{keywordsstring}
 \mynewdata{acknowledgementsstring}
 \mynewdata{notdefined}
-\newcommand\novathesis@undefined{\thenotdefined[\novathesis@opt@lang]}
+\newcommand\novathesis@undefined{\thenotdefined[\option{/novathesis/mainlang}]}
 
 \mynewdata{adviserstr}
 \mynewdata{adviserstrfont}
-\adviserstrfont[\novathesis@opt@coverlang]={}
+\adviserstrfont[\option{/novathesis/coverlang}]={}
 \mynewdata{coadviserstr}
 \mynewdata{coadviserstrfont}
-\coadviserstrfont[\novathesis@opt@coverlang]={}
+\coadviserstrfont[\option{/novathesis/coverlang}]={}
 \mynewdata{degreestr}
 \mynewdata{degreestrfont}
-\degreestrfont[\novathesis@opt@coverlang]={}
+\degreestrfont[\option{/novathesis/coverlang}]={}
 
 \mynewdata{degreename}
 
@@ -316,14 +328,14 @@
 \mynewdata{committeeorder}
 \mynewdata{committeetitlestr}
 \mynewdata{committeetitlestrfont}
-\committeetitlestrfont[\novathesis@opt@coverlang]={}
+\committeetitlestrfont[\option{/novathesis/coverlang}]={}
 \mynewdata{commiteememberstr}
 \mynewdata{commiteememberstrfont}
-\commiteememberstrfont[\novathesis@opt@coverlang]={}
+\commiteememberstrfont[\option{/novathesis/coverlang}]={}
 
 \mynewdata{dissertationstr}
 \mynewdata{dissertationstrfont}
-\dissertationstrfont[\novathesis@opt@coverlang]={}
+\dissertationstrfont[\option{/novathesis/coverlang}]={}
 \mynewdata{copyrighttextstr}
 \mynewdata{acknowledgmentsstr}
 
@@ -332,11 +344,16 @@
 %% Include strings in the used languages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\novathesis@includestrings@lang}[1]{%
-  \edef\novathesis@filetoinclude{novathesis-files/Strings/strings-#1.clo}
-  \input{\novathesis@filetoinclude}%
+\optionlistdo{/novathesis/langsshort}{%
+  \InputIfFileExists{novathesis-files/Strings/strings-#1.clo}%
+    {}%
+    {}
 }
-\iteratecsvlist{\novathesis@includestrings@lang}{\novathesis@tmp}%
+% \newcommand{\novathesis@includestrings@lang}[1]{%
+%   \edef\novathesis@filetoinclude{novathesis-files/Strings/strings-#1.clo}
+%   \input{\novathesis@filetoinclude}%
+% }
+% \iteratecsvlist{\novathesis@includestrings@lang}{\novathesis@tmp}%
 
 
 
@@ -355,11 +372,11 @@
 
 % --------------------------------------------------------
 % Add school specific Images folder to the graphics path
-\prependtographicspath{{novathesis-files/Schools/\novathesis@opt@school/Images/}}
+\prependtographicspath{{novathesis-files/Schools/\option{/novathesis/school}/Images/}}
 
 % --------------------------------------------------------
 % Include the file with the defaults
-\InputIfFileExists{novathesis-files/Schools/\novathesis@opt@school/defaults.clo}{}{}
+\InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/defaults.clo}{}{}
 
 
 
@@ -368,17 +385,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \gdef\thepresentationtext{%
-	\thedissertationstr[\novathesis@opt@docdegree,\novathesis@opt@coverlang]%
+	\thedissertationstr[\option{/novathesis/docdegree},\option{/novathesis/coverlang}]%
 }
 
 \gdef\thecopyrightstr{%
   \thispagestyle{empty}%
-  \selectthelanguage{\novathesis@opt@copyrightlang}%
+  \selectthelanguage{\option{/novathesis/copyrightlang}}%
   \noindent%
   Copyright \textcopyright\ \theauthorname, %
-  \thefaculty[\novathesis@opt@copyrightlang], \theuniversity[\novathesis@opt@copyrightlang].\\%
-  \thecopyrighttextstr[\novathesis@opt@copyrightlang]%
-  \selectthelanguage{\novathesis@opt@lang}
+  \thefaculty[\option{/novathesis/copyrightlang}], \theuniversity[\option{/novathesis/copyrightlang}].\\%
+  \thecopyrighttextstr[\option{/novathesis/copyrightlang}]%
+  \selectthelanguage{\option{/novathesis/mainlang}}
 }
 
 
@@ -471,22 +488,22 @@
   \ifthenelse{\equal{\value{novathesis@committee@#1@cnt}}{1}}%
     {\def\novathesis@tmp@total{1}}% for portuguese: only use female form if no males are present
     {\def\novathesis@tmp@total{2}}%
-  {\thecommiteememberstrfont[\novathesis@opt@coverlang] %
-    \thecommiteememberstr[#1,\novathesis@tmp@total,\novathesis@tmp@gender,\novathesis@opt@coverlang]:%
+  {\thecommiteememberstrfont[\option{/novathesis/coverlang}] %
+    \thecommiteememberstr[#1,\novathesis@tmp@total,\novathesis@tmp@gender,\option{/novathesis/coverlang}]:%
   }%
   \forlistcsloop{\novathesis@printcommitteeclassmembers}{novathesis@committee@#1@list}%
   \fi
 }
 
 \newcommand{\printcommittee@i}[1]{%
-  \xdef\novathesis@tmp{\thecommitteetitlestr[\novathesis@opt@coverlang]}%
+  \xdef\novathesis@tmp{\thecommitteetitlestr[\option{/novathesis/coverlang}]}%
   \begin{tabularx}{#1\textwidth}{@{}r>{\raggedright\arraybackslash}X@{}}%
   \ifx\novathesis@tmp\@empty%
     % committeetitlestr[…] is empty
   \else%
     \multicolumn{2}{c}{{%%
-            \thecommitteetitlestrfont[\novathesis@opt@coverlang] %
-            \thecommitteetitlestr[\novathesis@opt@coverlang]}%
+            \thecommitteetitlestrfont[\option{/novathesis/coverlang}] %
+            \thecommitteetitlestr[\option{/novathesis/coverlang}]}%
           }\\[1ex]%
   \fi%
   \xdef\novathesis@tmp{\thecommitteeorder[all]}%
@@ -495,7 +512,7 @@
 }
 
 \newcommand{\printcommittee}[1][0.75]{%
-  \ifthenelse{\equal{\novathesis@opt@printcommittee}{true}}%
+  \ifthenelse{\equal{\option{/novathesis/printcommittee}}{true}}%
   {\printcommittee@i{#1}}
   {}
 }
@@ -555,10 +572,10 @@
       {\def\novathesis@tmp@total{1}}% for portuguese: only use female form if no males are present
       {\def\novathesis@tmp@total{2}}%
     {% new block to keep font changing local
-      \@nameuse{the#1adviserstrfont}[\novathesis@opt@coverlang]%
+      \@nameuse{the#1adviserstrfont}[\option{/novathesis/coverlang}]%
       \@nameuse{the#1adviserstr}%
-              [\novathesis@tmp@total,\novathesis@tmp@gender,\novathesis@opt@coverlang]:%
-%              [\novathesis@tmp@total][\novathesis@tmp@gender][\novathesis@opt@coverlang]\\
+              [\novathesis@tmp@total,\novathesis@tmp@gender,\option{/novathesis/coverlang}]:%
+%              [\novathesis@tmp@total][\novathesis@tmp@gender][\option{/novathesis/coverlang}]\\
     }
     \forlistcsloop{\printadvisers@ii}{novathesis@#1adviser@list}%
   \fi%
@@ -639,12 +656,12 @@
 
 \settypeoutlayoutunit{mm}
 \setulmarginsandblock%
-  {\themargin[\novathesis@opt@media,top]}%
-  {\themargin[\novathesis@opt@media,bottom]}%
+  {\themargin[\option{/novathesis/media},top]}%
+  {\themargin[\option{/novathesis/media},bottom]}%
   {*}%
 \setlrmarginsandblock%
-  {\themargin[\novathesis@opt@media,left]}%
-  {\themargin[\novathesis@opt@media,right]}%
+  {\themargin[\option{/novathesis/media},left]}%
+  {\themargin[\option{/novathesis/media},right]}%
   {*}%
 \checkandfixthelayout%
 
@@ -707,11 +724,11 @@
 \else%
 \newcommand{\printdedicatory}{%
 	\ifthenelse{%
-		\equal{\novathesis@opt@docdegree}{bsc}	% bsc
+		\equal{\option{/novathesis/docdegree}}{bsc}	% bsc
 		\OR%
-		\equal{\novathesis@opt@docdegree}{msc}	% msc
+		\equal{\option{/novathesis/docdegree}}{msc}	% msc
 		\OR%
-		\equal{\novathesis@opt@docdegree}{phd}	% phd
+		\equal{\option{/novathesis/docdegree}}{phd}	% phd
 	}{% THEN
 		\InputIfFileExists{Chapters/\@dedicatoryfile}{%
 			% File dedicatory.tex exists and is read
@@ -734,11 +751,11 @@
 \else%
   \newcommand{\printquote}{%
   	\ifthenelse{%
-  		\equal{\novathesis@opt@docdegree}{bsc}	% bsc
+  		\equal{\option{/novathesis/docdegree}}{bsc}	% bsc
   		\OR%
-  		\equal{\novathesis@opt@docdegree}{msc}	% msc
+  		\equal{\option{/novathesis/docdegree}}{msc}	% msc
   		\OR%
-  		\equal{\novathesis@opt@docdegree}{phd}	% phd
+  		\equal{\option{/novathesis/docdegree}}{phd}	% phd
   	}{% THEN
   		\InputIfFileExists{Chapters/\@quotefile}{%
   			% File qualtefile.tex exists and is read
@@ -761,11 +778,11 @@
 \newcommand{\printacknowledgements}{%
 	\IfFileExists{Chapters/\novathesis@acknowledgementsfile}{%
 		\ifthenelse{%
-			\equal{\novathesis@opt@docdegree}{bsc}	% bsc
+			\equal{\option{/novathesis/docdegree}}{bsc}	% bsc
 			\OR%
-			\equal{\novathesis@opt@docdegree}{msc}	% msc
+			\equal{\option{/novathesis/docdegree}}{msc}	% msc
 			\OR%
-			\equal{\novathesis@opt@docdegree}{phd}	% phd
+			\equal{\option{/novathesis/docdegree}}{phd}	% phd
 		}{% THEN
 			\input{Chapters/\novathesis@acknowledgementsfile}%
 			\clearforchapter%
@@ -802,14 +819,14 @@
   	\InputIfFileExists{\novathesis@filetoinclude}%
       {}%
       {}%
-    \selectthelanguage{\novathesis@opt@lang}
+    \selectthelanguage{\option{/novathesis/mainlang}}
     \clearforchapter%
   }%
 }
 
 
 \newcommand{\printabstract}{%
-	\xdef\novathesis@tmp{\theabstractorder[\novathesis@opt@lang]}%
+	\xdef\novathesis@tmp{\theabstractorder[\option{/novathesis/mainlang}]}%
   \iteratecsvlist{\novathesis@printabstract@lang}{\novathesis@tmp}%
   % disables protrusion locally in the document for the forthcoming tables of contents
   \microtypesetup{protrusion=false}%
@@ -819,7 +836,7 @@
 
 \newcommand{\thesisfrontmatter}{%
   \frontmatter%
-  \selectthelanguage{\novathesis@opt@lang}
+  \selectthelanguage{\option{/novathesis/mainlang}}
   % \pagestyle{novathesis@myvf}
   \pagenumbering{roman}%
   \setlength{\headheight}{15pt}%
@@ -922,8 +939,8 @@
 
 \newcommand{\printotherlists}{%
   \clearforchapter%
-  % printotherlists [\novathesis@opt@otherlistsat]
-  \ifthenelse{\equal{\novathesis@opt@otherlistsat}{front}}%
+  % printotherlists [\option{/novathesis/otherlistsat}]
+  \ifthenelse{\equal{\option{/novathesis/otherlistsat}}{front}}%
   {%
     \if@mainmatter%
     \else%
@@ -931,7 +948,7 @@
     \fi%
   }%
   {}%
-  \ifthenelse{\equal{\novathesis@opt@otherlistsat}{back}}%
+  \ifthenelse{\equal{\option{/novathesis/otherlistsat}}{back}}%
   {%
     \if@mainmatter%
       \printotherlists@i%
@@ -947,7 +964,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\addbibfile}[1]{\addbibresource{#1}}
+\newcommand{\addbibfile}[1]{%
+  \iftoggle{/novathesis/biblatex loaded}%
+    {}%
+    { \letoptionlist{/novathesis/biblatex}\nt@tmp
+      \typeout{'PASSING TO BIBLATEX= '\nt@tmp}
+      \RequirePackage[\nt@tmp]{biblatex}%
+      \DeclareLanguageMapping{english}{american-apa}%
+      \DeclareLanguageMapping{portuguese}{portuguese-apa}%
+      \option{/novathesis/biblatex loaded/.flip}
+    }
+  \addbibresource{#1}
+}
 
 \newcommand{\printbib}{\printbibliography}
 
@@ -958,11 +986,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\printcopyright}{%
 	\ifthenelse{%
-		\equal{\novathesis@opt@docdegree}{bsc}% bsc
+		\equal{\option{/novathesis/docdegree}}{bsc}% bsc
 		\OR%
-		\equal{\novathesis@opt@docdegree}{msc}% msc
+		\equal{\option{/novathesis/docdegree}}{msc}% msc
 		\OR%
-		\equal{\novathesis@opt@docdegree}{phd}% phd
+		\equal{\option{/novathesis/docdegree}}{phd}% phd
 	}{% THEN
 		\printcopyrightpage%
 	}{% ELSE
@@ -981,9 +1009,9 @@
       \begin{Spacing}{1}%
         \fontfamily{phv}\fontsize{6.3}{6.3}\selectfont%
         \noindent
-        \ifthenelse{\equal{\novathesis@opt@printtrackmessage}{true}}%
-        {\hypersetup{allcolors=black}\theacknowledgmentsstr[\novathesis@opt@coverlang]}%
-        {\hypersetup{allcolors=white}\textcolor{white}{\theacknowledgmentsstr[\novathesis@opt@coverlang]}}%
+        \ifthenelse{\equal{\\option{/novathesis/trackmessage}}{true}}%
+        {\hypersetup{allcolors=black}\theacknowledgmentsstr[\option{/novathesis/coverlang}]}%
+        {\hypersetup{allcolors=white}\textcolor{white}{\theacknowledgmentsstr[\option{/novathesis/coverlang}]}}%
       \end{Spacing}%
   }%
   \clearforchapter%
@@ -1031,7 +1059,7 @@
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\acknowledgements}{%
-  \chapter*{\theacknowledgementsstring[\novathesis@opt@lang]}%
+  \chapter*{\theacknowledgementsstring[\option{/novathesis/mainlang}]}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1073,9 +1101,9 @@
 % Text style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\InputIfFileExists{novathesis-files/ChapStyles/\novathesis@opt@chapstyle.clo}{}{}
+\InputIfFileExists{novathesis-files/ChapStyles/\option{/novathesis/chapstyle}.clo}{}{}
 
-\InputIfFileExists{novathesis-files/FontStyles/\novathesis@opt@fontstyle.clo}{}{}
+\InputIfFileExists{novathesis-files/FontStyles/\option{/novathesis/fontstyle}.clo}{}{}
 
 
 

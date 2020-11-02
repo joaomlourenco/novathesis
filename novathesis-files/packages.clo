@@ -10,11 +10,11 @@
 \RequirePackage[T1]{fontenc}		% Use new T1 fonts
 
 %%%%% Configure input encoding
-\RequirePackage{inputenc}		% Format for the input file(s), see the "enc" option
+\RequirePackage[utf8]{inputenc}		% Format for the input file(s), see the "enc" option
 
 %%%%% Configure multilingual language support
 \RequirePackage{csquotes}
-\RequirePackage[portuguese,english]{babel}			% Support for bilingual documents
+\RequirePackage{babel}			% Support for bilingual documents
 
 
 % \RequirePackage{appendix}
@@ -45,7 +45,7 @@
 % \RequirePackage{lscape}
 
 % To use a wide range of color names
-\RequirePackage[dvipsnames]{xcolor}%
+\RequirePackage[svgnames]{xcolor}%
 
 
 %%%%% LOAD THESE PACKAGES JUST AT THE ENF OF THE PREAMBLE 
@@ -56,7 +56,7 @@
   % \RequirePackage[pdftex]{xcolor}
   % \RequirePackage[usenames]{color}
   \RequirePackage{colortbl}
-  % \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
+  \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
 
 
   % Manage glossaries
@@ -123,12 +123,6 @@
 \RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}%
 \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
 \RequirePackage[all]{hypcap}
-
-% To process the bibliography
-% (This should be listed after the hyperref, otherwise hyperlinks in citations won't work)
-\RequirePackage{biblatex}
-\DeclareLanguageMapping{english}{american-apa}
-\DeclareLanguageMapping{portuguese}{portuguese-apa}
 
 % To handle subfigures
 \newsubfloat{figure}

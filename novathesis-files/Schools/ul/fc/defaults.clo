@@ -110,11 +110,11 @@
 
 
 \dissertationstr[phdplan,pt]={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]}
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]}
 \dissertationstr[phdprop,pt]={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]}
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]}
 \dissertationstr[phd,pt]={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestr[\novathesis@opt@docdegree,\theauthorgender,\novathesis@opt@coverlang]}
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -188,16 +188,16 @@
 % School
 \coveritem[c]{0.5cm}{%
   \fontfamily{phv}\fontseries{mc}\fontsize{12}{12}\selectfont%
-  \MakeUppercase{\theuniversity[\novathesis@opt@coverlang]}\\%
+  \MakeUppercase{\theuniversity[\option{/novathesis/coverlang}]}\\%
   \vspace{2mm}%
-  \MakeUppercase{\thefaculty[\novathesis@opt@coverlang]}\\%
+  \MakeUppercase{\thefaculty[\option{/novathesis/coverlang}]}\\%
   \ifthenelse{%
- 		\equal{\novathesis@opt@docdegree}{msc}%
-  	\OR\equal{\novathesis@opt@docdegree}{mscplan}%
+ 		\equal{\option{/novathesis/docdegree}}{msc}%
+  	\OR\equal{\option{/novathesis/docdegree}}{mscplan}%
  	}
  	{
 	 	\vspace{2mm}%
-	 	\MakeUppercase{\thedepartment[\novathesis@opt@coverlang]}%
+	 	\MakeUppercase{\thedepartment[\option{/novathesis/coverlang}]}%
  	}{}
   \vspace{20mm}
 }
@@ -205,9 +205,9 @@
 % Logo
 \coveritem[c]{0cm}{%
 	\ifthenelse{%
-	  \equal{\novathesis@opt@docdegree}{phd}%
-	  \OR\equal{\novathesis@opt@docdegree}{phdprop}%
-	  \OR\equal{\novathesis@opt@docdegree}{phdplan}}%
+	  \equal{\option{/novathesis/docdegree}}{phd}%
+	  \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
+	  \OR\equal{\option{/novathesis/docdegree}}{phdplan}}%
 	{ \includegraphics[height=4.99cm]{logoFCUL} }
 	{ \includegraphics[width=7cm]{logoFCUL2} }
   \vspace{20mm}
@@ -223,17 +223,17 @@
 % Degree
 % In this position only if it is a phd doc;
 \ifthenelse{%
-  \equal{\novathesis@opt@docdegree}{phd}%
-  \OR\equal{\novathesis@opt@docdegree}{phdprop}%
-  \OR\equal{\novathesis@opt@docdegree}{phdplan}}%
+  \equal{\option{/novathesis/docdegree}}{phd}%
+  \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
+  \OR\equal{\option{/novathesis/docdegree}}{phdplan}}%
 {
 	\coveritem[c]{1}{%
 	  \fontfamily{phv}\fontseries{mc}\fontsize{13}{13}\selectfont%
 		\textbf{\theauthordegree}\\%
 		\ifthenelse{%
-	 		\NOT\equal{\thespecialization[\novathesis@opt@coverlang]}{}%
+	 		\NOT\equal{\thespecialization[\option{/novathesis/coverlang}]}{}%
  		}
- 		{\thespecialization[\novathesis@opt@coverlang]}
+ 		{\thespecialization[\option{/novathesis/coverlang}]}
  		{}
 		\vspace{20mm}%
 	}%
@@ -250,16 +250,16 @@
 % Degree
 % In this position only if it is a msc doc;
 \ifthenelse{%
-  \equal{\novathesis@opt@docdegree}{msc}%
-  \OR\equal{\novathesis@opt@docdegree}{mscplan}}%
+  \equal{\option{/novathesis/docdegree}}{msc}%
+  \OR\equal{\option{/novathesis/docdegree}}{mscplan}}%
 {
 	\coveritem[c]{1}{%
 	  \fontfamily{phv}\fontseries{mc}\fontsize{13}{13}\selectfont%
 		\textbf{\theauthordegree\\}
 		\ifthenelse{%
-	 		\NOT\equal{\thespecialization[\novathesis@opt@coverlang]}{}%
+	 		\NOT\equal{\thespecialization[\option{/novathesis/coverlang}]}{}%
  		}
- 		{\thespecialization[\novathesis@opt@coverlang]}
+ 		{\thespecialization[\option{/novathesis/coverlang}]}
  		{}
 		\vspace{10mm}%
 	}
@@ -269,7 +269,7 @@
 % Advisers
 \coveritem[c]{1}{%
   \fontfamily{phv}\fontsize{13}{13}\selectfont
-  \theadviserslabel[\novathesis@opt@coverlang]\\%
+  \theadviserslabel[\option{/novathesis/coverlang}]\\%
   \vspace{5mm}%
   \printadvisersaslist%
   \vspace{5mm}%
@@ -280,9 +280,9 @@
 \coveritem[c]{1}{%
 \if@printcommitteeaux
   \ifthenelse{%
-  \equal{\novathesis@opt@docdegree}{bsc}%
-  \OR\equal{\novathesis@opt@docdegree}{msc}%
-  \OR\equal{\novathesis@opt@docdegree}{phd}}%
+  \equal{\option{/novathesis/docdegree}}{bsc}%
+  \OR\equal{\option{/novathesis/docdegree}}{msc}%
+  \OR\equal{\option{/novathesis/docdegree}}{phd}}%
   {  
   	\fontfamily{phv}\fontseries{mc}\fontsize{10}{10}\selectfont%
 		\printcommittee%
@@ -294,9 +294,9 @@
 % Document purpose
 % Only if it is a phd doc;
 \ifthenelse{%
-  \equal{\novathesis@opt@docdegree}{phd}%
-  \OR\equal{\novathesis@opt@docdegree}{phdplan}%
-  \OR\equal{\novathesis@opt@docdegree}{phdprop}}%
+  \equal{\option{/novathesis/docdegree}}{phd}%
+  \OR\equal{\option{/novathesis/docdegree}}{phdplan}%
+  \OR\equal{\option{/novathesis/docdegree}}{phdprop}}%
 {
 	\coveritem[c]{1}{%
 	  \fontfamily{phv}\fontseries{mc}\fontsize{12}{12}\selectfont%
