@@ -33,8 +33,7 @@
   , langsshort/.new list = {pt, en, fr, it}
   , langslong/.new list = {portuguese, english, french, italian}
   , langshorttolong/.new choice = {pt=portuguese, en=english, fr=french, it=italian}
-  , langshorttolong/.expands
-  , maplang/.new transformer = {%
+  , maplang/.new cmd = {%
         \options{/novathesis/langshorttolong = #1}%
         \option{/novathesis/langshorttolong}%
   }
@@ -48,8 +47,10 @@
   , fontstyle/.new choice = {kpfonts, baskervaldx, bookman, charter, ebgaramond, fbb, fourier, garamond, heuristica, libertine, mathpazo1, mathpazo2, newcent, newpx, newtx}
   % %novathesis@opt@otherlistsat
   , otherlistsat/.new choice = {front, back}
+  % HANDLER
+  , lang/.new style = {/novathesis/mainlang=#1,/novathesis/copyrightlang=#1}
   % %novathesis@opt@lang
-  , lang/.new choice = {pt, en, fr, it}
+  , mainlang/.new choice = {pt, en, fr, it}
   % %novathesis@opt@coverlang
   , coverlang/.new choice = {pt, en, fr, it}
   % %novathesis@opt@copyrightlang
@@ -67,9 +68,9 @@
   % %novathesis@opt@cdcover
   , cdcover/.new toggle
   % %novathesis@opt@biblatex
-  , biblatex/.new list = {maxalphanames=2, sortcites=true}
+  , biblatex/.new list
   % %novathesis@opt@memoir
-  , memoir/.new list = {a4paper}
+  , memoir/.new list
   % %novathesis@opt@media
   , media/.new choice = {screen, paper}
   %novathesis@opt@linkscolor
@@ -78,56 +79,38 @@
   , biblatex loaded/.new toggle
 }
 
-% \newcounter{nt@lang@a@cnt}
-% \newcounter{nt@lang@b@cnt}
-% \newcommand{\expandlang}[1]{%
-%   \ifoptioncontains{/novathesis/alllang}{#1}{%
-%     \edef\nt@lang@tmp{#1}
-%     \setcounter{nt@lang@a@cnt}{0}
-%     \optionlistdo{/novathesis/alllang} {%
-%       \ifthenelse{\equal{\nt@lang@tmp}{##1}}{\listbreak}{\stepcounter{nt@lang@a@cnt}}
-%     }
-%     \setcounter{nt@lang@b@cnt}{0}
-%     \optionlistdo{/novathesis/alllanglong} {%
-%      \ifnum\thent@lang@a@cnt=\thent@lang@b@cnt
-%        \xdef\thelonglang{##1}\listbreak
-%      \else
-%        \stepcounter{nt@lang@b@cnt}
-%      \fi
-%     }
-%     \thelonglang
-%   }{
-%     \typeout{'Invalid lang: '#1}
-%     \end
-%     % INVALID ABBREV LANG
-%   }
-% }
+
+\newcommand{\ntsetup}[1]{%
+  \typeout{'NTSETUP = '#1}
+  \options{/novathesis/#1}%
+}
+
 
 % --------------------------------------------------------
 % PROCESSING OPTIONS
 \options@ProcessOptions{/novathesis}
 
 \newcommand{\maplang}[1]{%
-  \options{/novathesis/langshorttolong = #1}%
-  % \option{/novathesis/langshorttolong}
-  % \options{/novathesis/langsmaps = #1}%
-  % % \option{/novathesis/langsmaps}
-  \expandafter{\romannumeral-`X\option{/novathesis/langshorttolong}}
+  \options{/novathesis/maplang=#1}
 }
 
 %
-% % LANG
+% % BABEL
+\edef\nt@alllangs{}
 \optionlistdo{/novathesis/langsshort}{%
-  \ifoptionequal{/novathesis/lang}{#1}%
-    {\PassOptionsToPackage{main=\thelangabbrev[#1]}{babel}}%
-    {\PassOptionsToPackage{\thelangabbrev[#1]}{babel}}%
+  \options{/novathesis/langshorttolong=#1}%
+  \ifoptionequal{/novathesis/mainlang}{#1}%
+    {\edef\nt@alllangs{\nt@alllangs,main=\option{/novathesis/langshorttolong}}}%
+    {\edef\nt@alllangs{\nt@alllangs,\option{/novathesis/langshorttolong}}}%
 }
+\typeout{'PASSING TO BABEL = '\nt@alllangs}
+\PassOptionsToPackage{\nt@alllangs}{babel}
 
 % --------------------------------------------------------
 % Define DEFAULT VALUES for COVER and COPYRIGHT languages
 \options{
-  /novathesis/coverlang = \option{/novathesis/lang}
-  , /novathesis/copyrightlang = \option{/novathesis/lang}
+  /novathesis/coverlang = \option{/novathesis/mainlang}
+  , /novathesis/copyrightlang = \option{/novathesis/mainlang}
   , /novathesis/linkscolor = RoyalBlue
 }
 

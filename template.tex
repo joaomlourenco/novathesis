@@ -37,7 +37,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% All class options will be passed to memoir
-\documentclass[11pt, final]{novathesis}
+\documentclass[a4paper, 11pt, final]{novathesis}
 
 %%============================================================
 %%  BEGINING OF TEMPLATE COSTUMIZATION
@@ -61,7 +61,7 @@
 %%%%%% LESS IMPORTANT ONES %%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \ntsetup{spine=true}          % (Set to 'true' for PRINTING the book spine)
-% \ntsetup{cdcover=true}         % (Set to 'true' for PRINTING the CD cover)
+% \ntsetup{cdcover=true}        % (Set to 'true' for PRINTING the CD cover)
 % \ntsetup{coverlang=en}        % defaults to main language
 % \ntsetup{copyrightlang=en}    % defaults to main language
 % \ntsetup{fontstyle=garamond   % baskervaldx bookman charter ebgaramond fbb fourier garamond
@@ -90,6 +90,9 @@
 %% OTHER BIBLATEX OPTIONS
 \ntsetup{biblatex/.push={backend=biber, giveninits=true, hyperref=true}}
 
+%%============================================================
+%%  END OF TEMPLATE COSTUMIZATION
+%%============================================================
 
 
 %------------------------------------------------------------------
@@ -136,21 +139,6 @@
 \setlength\epigraphwidth{12.5cm}
 \setlength\epigraphrule{0pt}
 
-%setup colors for hyperlinks
-% \hypersetup{
-% linkcolor=NavyBlue
-% ,citecolor=NavyBlue
-% ,filecolor=Red
-% ,urlcolor=NavyBlue
-% ,menucolor=Red
-% ,runcolor=Red
-% ,linkbordercolor=NavyBlue
-% ,citebordercolor=NavyBlue
-% ,filebordercolor=Red
-% ,urlbordercolor=NavyBlue
-% ,menubordercolor=Red
-% ,runbordercolor=Red
-% }
 
 %%============================================================
 % For costumization,

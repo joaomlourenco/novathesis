@@ -41,10 +41,6 @@
 \ProvidesClass{novathesis}[2020/07/20 novathesis template]
 
 
-\newcommand{\ntsetup}[1]{%
-  \options{/novathesis/#1}%
-}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
@@ -75,8 +71,10 @@
 %% Multilingual support
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\selectthelanguage}[1]{%
-  \xdef\novathesis@tmp{\thelangabbrev[#1]}%
-  \expandafter\selectlanguage\expandafter{\novathesis@tmp}%
+  \options{/novathesis/langshorttolong=#1}
+  \edef\nt@tmp{\option{/novathesis/langshorttolong}}%
+  \typeout{'SWITCHING LANG TO = '\nt@tmp}
+  \expandafter\selectlanguage\expandafter{\nt@tmp}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -259,7 +257,7 @@
 	  \clearforchapter%
   }%
   {}%
-  \selectthelanguage{\option{/novathesis/lang}}%
+  \selectthelanguage{\option{/novathesis/mainlang}}%
 }
 
 \newcommand{\printbackcoverpage}{%
@@ -272,7 +270,7 @@
     \coverbackground[\@nameuse{thesiscover\option{/novathesis/docdegree},back}]
     ~% This space is important here so that the cover page is not empty anymore!
     \clearforchapter%
-    \selectthelanguage{\option{/novathesis/lang}}%
+    \selectthelanguage{\option{/novathesis/mainlang}}%
   }
 }
 
@@ -301,7 +299,7 @@
 \mynewdata{keywordsstring}
 \mynewdata{acknowledgementsstring}
 \mynewdata{notdefined}
-\newcommand\novathesis@undefined{\thenotdefined[\option{/novathesis/lang}]}
+\newcommand\novathesis@undefined{\thenotdefined[\option{/novathesis/mainlang}]}
 
 \mynewdata{adviserstr}
 \mynewdata{adviserstrfont}
@@ -387,7 +385,7 @@
   Copyright \textcopyright\ \theauthorname, %
   \thefaculty[\option{/novathesis/copyrightlang}], \theuniversity[\option{/novathesis/copyrightlang}].\\%
   \thecopyrighttextstr[\option{/novathesis/copyrightlang}]%
-  \selectthelanguage{\option{/novathesis/lang}}
+  \selectthelanguage{\option{/novathesis/mainlang}}
 }
 
 
@@ -811,14 +809,14 @@
   	\InputIfFileExists{\novathesis@filetoinclude}%
       {}%
       {}%
-    \selectthelanguage{\option{/novathesis/lang}}
+    \selectthelanguage{\option{/novathesis/mainlang}}
     \clearforchapter%
   }%
 }
 
 
 \newcommand{\printabstract}{%
-	\xdef\novathesis@tmp{\theabstractorder[\option{/novathesis/lang}]}%
+	\xdef\novathesis@tmp{\theabstractorder[\option{/novathesis/mainlang}]}%
   \iteratecsvlist{\novathesis@printabstract@lang}{\novathesis@tmp}%
   % disables protrusion locally in the document for the forthcoming tables of contents
   \microtypesetup{protrusion=false}%
@@ -828,7 +826,7 @@
 
 \newcommand{\thesisfrontmatter}{%
   \frontmatter%
-  \selectthelanguage{\option{/novathesis/lang}}
+  \selectthelanguage{\option{/novathesis/mainlang}}
   % \pagestyle{novathesis@myvf}
   \pagenumbering{roman}%
   \setlength{\headheight}{15pt}%
@@ -1051,7 +1049,7 @@
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\acknowledgements}{%
-  \chapter*{\theacknowledgementsstring[\option{/novathesis/lang}]}%
+  \chapter*{\theacknowledgementsstring[\option{/novathesis/mainlang}]}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
