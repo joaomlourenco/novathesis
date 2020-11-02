@@ -7,7 +7,7 @@
 %% To view a copy of this license,
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2020/07/20 [4.4.0]
+%% Version 2020/11/02 [5.0.0]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade NOVA de Lisboa
@@ -15,14 +15,17 @@
 %% BUGS and SUGGESTIONS: please submit an issue at the project web page
 %%      at: https://github.com/joaomlourenco/novathesis/
 %%
-%% HELP: please ask for help at the NOVAthesis google group at
+%% HELP: please DO NOT SEND ME EMAILS about LaTeX or the NOVAthesis template
+%%       please ask for help at the NOVAthesis google group at
 %%          https://groups.google.com/forum/#!forum/novathesis
-%%      or at the facebook page
+%%      or at the NOVAthesis facebook group at
 %%          https://www.facebook.com/groups/novathesis/
 %%
-%% Authors / Contributors:
-%%      - João Lourenço <joao.lourenco@fct.unl.pt>
-%%      - Bruno Candeias <b.candeias@campus.fct.unl.pt>
+%% AUTHOR @github:
+%%      - joaomlourenco
+%%
+%% CONTRIBUTORS @github:
+%%      - bcandeias, flaviomartins, tmonteiro2344, jsaramago, microlina, riclas, pedrovieira
 %%
 %% DONATIONS:
 %%     If you think this templatze really helped you while writing your thesis,
@@ -32,70 +35,60 @@
 %%     I'll keep a list thanking to all the identified donors that identify
 %%     themselves in the “*Add special instructions to the seller:*” box.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% The default option marked with (*)
-\documentclass[
-  % docdegree=msc,        % phd(*), phdplan, phdprop, msc, mscplan, bsc
-  % school=nova/fcsh,     % nova/fct(*), nova/fcsh, nova/ims, ul/ist, ul/fc, ipl/isel
-  % lang=en,              % en(*), fr, it, pt
-  % % coverlang=en,         % defaults to main language
-  % % copyrightlang=en,     % defaults to main language
-  % fontstyle=garamond    % baskervaldx bookman charter ebgaramond fbb fourier garamond
-  %                       % heuristica kpfonts(*) libertine mathpazo1 mathpazo2 newcent
-  %                       % newpx newtx
-  % chapstyle=default,    % bianchi bluebox brotherton dash default elegant(*) ell ger
-  %                       % hansen ist jenor lyhne madsen pedersen veelo vz14 vz34 vz43
-  % otherlistsat=back,   % front(*), back
-  % secondcover=true,    % print a second cover page
-  % aftercover=true,     % false=don't true=include the aftercover file (even if exists)
-  % linkscolor=SteelBlue,   % darkblue, black (Set to 'black' for PRINTING)
-  % printcommittee=false,  % set to 'false' from submitted versins who should not have
-  %                       % the list of committee memebers
-  % spine=true,          % (Set to 'true' for PRINTING the book spine)
-  % cdcover=true,         % (Set to 'true' for PRINTING the CD cover)
-  % trackmessage=true,    % PLEASE PLEASE PLEASE be honest and fair and leave this as true…
-  % biblatex={            % Options for biblatex (see biblatex documentation)
-  %   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %   %%% uncomment for 'apa' like citations
-  %   % backend=biber,    % must use biber as the backend (and not bibtex)
-  %   % natbib=true,      % compatiblity with natbib (use \cite{…} or \citep{…})
-  %   % style=apa,        % APA style
-  %   % maxcitenames=2,   % use at most two names in citation
-  %   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %   %%% uncomment for 'numeric-by-order-of-citation' like citations
-  %   % backend=bibtex,     % use bibtex if possible
-  %   % style=numeric-comp, % numeric(*), alphabetic, authoryear, bwl-FU
-  %   % sortcites=true,     % If numeric, sort cites by crescent order
-  %   % sorting=none,       % none, nyt(*), ynt
-  %   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %   %%% uncomment for 'numeric' sorted by author's last name like citations
-  %   backend=bibtex,     % use bibtex if possible
-  %   style=numeric-comp, % numeric(*), alphabetic, authoryear, bwl-FU
-  %   sortcites=true,     % If numeric, sort cites by crescent order
-  %   sorting=nyt,        % none, nyt(*), ynt
-  %   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %   %%% uncomment for 'alphanumeric-key' like citations
-  %   % backend=bibtex,   % use bibtex if possible
-  %   % style=alphabetic, % numeric(*), alphabetic, authoryear, bwl-FU
-  %   % sorting=nyt,      % none, nyt(*), ynt
-  %   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %   %%% other options for biblatex
-  %   maxbibnames=99,     % Never use 'et al' in the bibliography
-  %   giveninits=true,    % render all first and middle names as initials
-  %   hyperref=true       % Hyperlinks in citations: true(*) false
-  % },
-  % memoir={              % See the 'memoir' documentation
-  %   % showtrims,          % DEBUG
-  %   % openany,
-  %   a4paper,            % the paper size/format
-  %   11pt,               % 10pt, 11pt(*), 12pt
-  %   draft,              % draft, final  <= Replace 'draft' with 'final' in final version
-  % },
-  % media=paper,         % screen(*), paper
-  %                       % SCREEN ==> left and right margins are equal, colored links
-  %                       % PAPER ==> left and right margins are different, black links
-]{novathesis}
+
+%% All class options will be passed to memoir
+\documentclass[11pt, final]{novathesis}
+
+%%============================================================
+%%  BEGINING OF TEMPLATE COSTUMIZATION
+%%============================================================
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% THE MOST IMPORTANT ONES %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \ntsetup{docdegree=msc}       % phd, phdplan, phdprop, msc, mscplan, bsc
+% \ntsetup{school=nova/fcsh}    % nova/fct, nova/fcsh, nova/ims, ul/ist, ul/fc, ipl/isel
+% \ntsetup{lang=en}             % pt, en, fr, it
+% \ntsetup{media=paper}         % screen, paper
+%                               % SCREEN ==> left and right margins are equal, colored links
+%                               % PAPER ==> left and right margins are different, black links
+% \ntsetup{printcommittee=false}% set to 'false' from versins under evaluation. Only final 
+%                               % should have the list of committee memebers
+% \ntsetup{secondcover=true}    % print a second cover page (for some schools it is slightly 
+%                               % different)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% LESS IMPORTANT ONES %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \ntsetup{spine=true}          % (Set to 'true' for PRINTING the book spine)
+% \ntsetup{cdcover=true}         % (Set to 'true' for PRINTING the CD cover)
+% \ntsetup{coverlang=en}        % defaults to main language
+% \ntsetup{copyrightlang=en}    % defaults to main language
+% \ntsetup{fontstyle=garamond   % baskervaldx bookman charter ebgaramond fbb fourier garamond
+%                               % heuristica kpfonts(*) libertine mathpazo1 mathpazo2 newcent
+%                               % newpx newtx
+% \ntsetup{chapstyle=default}   % bianchi bluebox brotherton dash default elegant(*) ell ger
+%                               % hansen ist jenor lyhne madsen pedersen veelo vz14 vz34 vz43
+% \ntsetup{otherlistsat=back}   % front(*)} back
+% \ntsetup{aftercover=true}     % false=don't true=include the aftercover file (even if exists)
+% \ntsetup{linkscolor=SteelBlue}% For valid color names, look at "svgname" in the "xcolor"
+%                               % package documentation
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% BIBLATEX CONFIGURATION %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NUMBERED ORDER BY CITATION
+% \ntsetup{biblatex={style=numeric-comp, sortcites=true, sorting=none}}
+%% NUMBERED ORDER BY LAST NAME OF FIRST AUTHOR
+% \ntsetup{biblatex={style=numeric-comp, sortcites=true, sorting=nyt}}
+%% APLHA CITATION ORDER BY LAST NAME OF FIRST AUTHOR
+% \ntsetup{biblatex={style=alphabetic, sortcites=true, sorting=nyt}}
+%% APA-LIKE CITATION
+% \ntsetup{biblatex={natbib=true, style=apa, maxcitenames=2}}
+
+%% OTHER BIBLATEX OPTIONS
+\ntsetup{biblatex/.push={backend=biber, giveninits=true, hyperref=true}}
 
 
 

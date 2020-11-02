@@ -69,7 +69,7 @@
   % %novathesis@opt@biblatex
   , biblatex/.new list = {maxalphanames=2, sortcites=true}
   % %novathesis@opt@memoir
-  , memoir/.new list = {a4paper, 11pt, draft}
+  , memoir/.new list = {a4paper}
   % %novathesis@opt@media
   , media/.new choice = {screen, paper}
   %novathesis@opt@linkscolor
@@ -123,21 +123,6 @@
     {\PassOptionsToPackage{\thelangabbrev[#1]}{babel}}%
 }
 
-%
-% % BIBLATEX OPTIONS
-\optionlistdo{/novathesis/biblatex}{%
-  \PassOptionsToPackage{#1}{biblatex}%
-  % \ProcessOptions
-}
-%
-% % MEMOIR OPTIONS
-\optionlistdo{/novathesis/memoir}{%
-  \PassOptionsToClass{#1}{memoir}%
-  % \ProcessOptions
-}
-
-
-
 % --------------------------------------------------------
 % Define DEFAULT VALUES for COVER and COPYRIGHT languages
 \options{
@@ -146,7 +131,15 @@
   , /novathesis/linkscolor = RoyalBlue
 }
 
-\options@ProcessOptions{/novathesis}
+
+% % MEMOIR OPTIONS
+% \letoptionlist{/novathesis/memoir}\nt@tmp
+% \typeout{'MEMOIR = '\nt@tmp}
+% \PassOptionsToClass{\nt@tmp}{memoir}
+% \optionlistdo{/novathesis/memoir}{%
+%   \PassOptionsToClass{#1}{memoir}%
+%   % \ProcessOptions
+% }
 
 % --------------------------------------------------------
 % PRINT BOOK SPINE
@@ -180,3 +173,8 @@
 \ifthenelse{\equal{\option{/novathesis/media}}{paper}}%
   {\options{/novathesis/setlinkscolor=black}}
   {\options{/novathesis/setlinkscolor=\nt@linkscolor}}
+
+
+\letoptionlist{/options/remaining}\nt@remaining
+\typeout{'PASSING TO MEMOIR='\nt@remaining}
+\PassOptionsToClass{\nt@remaining}{memoir}

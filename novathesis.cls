@@ -41,8 +41,8 @@
 \ProvidesClass{novathesis}[2020/07/20 novathesis template]
 
 
-\newcommand{\ntsetup}[1]{
-  \options{#1}
+\newcommand{\ntsetup}[1]{%
+  \options{/novathesis/#1}%
 }
 
 
@@ -959,7 +959,9 @@
 \newcommand{\addbibfile}[1]{%
   \iftoggle{/novathesis/biblatex loaded}%
     {}%
-    { \RequirePackage{biblatex}%
+    { \letoptionlist{/novathesis/biblatex}\nt@tmp
+      \typeout{'PASSING TO BIBLATEX= '\nt@tmp}
+      \RequirePackage[\nt@tmp]{biblatex}%
       \DeclareLanguageMapping{english}{american-apa}%
       \DeclareLanguageMapping{portuguese}{portuguese-apa}%
       \option{/novathesis/biblatex loaded/.flip}

@@ -124,12 +124,5 @@
 \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
 \RequirePackage[all]{hypcap}
 
-% To process the bibliography
-% (This should be listed after the hyperref, otherwise hyperlinks in citations won't work)
-% \AtBeginDocument{%
-%   \RequirePackage{biblatex}
-%   \DeclareLanguageMapping{english}{american-apa}
-%   \DeclareLanguageMapping{portuguese}{portuguese-apa}
-% }
 % To handle subfigures
 \newsubfloat{figure}
