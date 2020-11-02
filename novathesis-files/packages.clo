@@ -45,7 +45,7 @@
 % \RequirePackage{lscape}
 
 % To use a wide range of color names
-\RequirePackage[dvipsnames]{xcolor}%
+\RequirePackage[svgnames]{xcolor}%
 
 
 %%%%% LOAD THESE PACKAGES JUST AT THE ENF OF THE PREAMBLE 
@@ -56,7 +56,7 @@
   % \RequirePackage[pdftex]{xcolor}
   % \RequirePackage[usenames]{color}
   \RequirePackage{colortbl}
-  % \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
+  \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
 
 
   % Manage glossaries

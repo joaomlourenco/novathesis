@@ -32,77 +32,71 @@
 %%     I'll keep a list thanking to all the identified donors that identify
 %%     themselves in the “*Add special instructions to the seller:*” box.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % The default option marked with (*)
 \documentclass[
-  docdegree=msc,        % phd(*), phdplan, phdprop, msc, mscplan, bsc
-  school=nova/fct,      % nova/fct(*), nova/fcsh, nova/ims, ul/ist, ul/fc, ipl/isel
-  lang=en,              % en(*), fr, it, pt
-  % coverlang=pt,         % defaults to main language
-  % copyrightlang=es,     % defaults to main language
-  fontstyle=kpfonts,    % baskervaldx bookman charter ebgaramond fbb fourier garamond
-                        % heuristica kpfonts(*) libertine mathpazo1 mathpazo2 newcent
-                        % newpx newtx
-  chapstyle=elegant,    % bianchi bluebox brotherton dash default elegant(*) ell ger
-                        % hansen ist jenor lyhne madsen pedersen veelo vz14 vz34 vz43
-  otherlistsat=front,   % front(*), back
-  secondcover=false,     % false=don't true=include the aftercover file (even if exists)
-  aftercover=false,     % false=don't true=include the aftercover file (even if exists)
-  linkscolor=darkblue,  % darkblue, black (Set to 'black' for PRINTING)
-  printcommittee=true,  % set to 'false' from submitted versins who should not have
-                        % the list of committee memebers
-  spine=true,          % (Set to 'true' for PRINTING the book spine)
-  cdcover=true,         % (Set to 'true' for PRINTING the CD cover)
-  trackmessage=true,    % PLEASE PLEASE PLEASE be honest and fair and leave this as true… 
-  biblatex={            % Options for biblatex (see biblatex documentation)
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%% uncomment for 'apa' like citations
-    % backend=biber,    % must use biber as the backend (and not bibtex)
-    % natbib=true,      % compatiblity with natbib (use \cite{…} or \citep{…})
-    % style=apa,        % APA style
-    % maxcitenames=2,   % use at most two names in citation
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%% uncomment for 'numeric-by-order-of-citation' like citations
-    % backend=bibtex,     % use bibtex if possible
-    % style=numeric-comp, % numeric(*), alphabetic, authoryear, bwl-FU
-    % sortcites=true,     % If numeric, sort cites by crescent order
-    % sorting=none,       % none, nyt(*), ynt
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%% uncomment for 'numeric' sorted by author's last name like citations
-    backend=bibtex,     % use bibtex if possible
-    style=numeric-comp, % numeric(*), alphabetic, authoryear, bwl-FU
-    sortcites=true,     % If numeric, sort cites by crescent order
-    sorting=nyt,        % none, nyt(*), ynt
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%% uncomment for 'alphanumeric-key' like citations
-    % backend=bibtex,   % use bibtex if possible
-    % style=alphabetic, % numeric(*), alphabetic, authoryear, bwl-FU
-    % sorting=nyt,      % none, nyt(*), ynt
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%% other options for biblatex
-    maxbibnames=99,     % Never use 'et al' in the bibliography
-    giveninits=true,    % render all first and middle names as initials
-    hyperref=true       % Hyperlinks in citations: true(*) false
-  },
-  memoir={              % See the 'memoir' documentation
-    % showtrims,          % DEBUG
-    % openany,
-    a4paper,            % the paper size/format
-    11pt,               % 10pt, 11pt(*), 12pt
-    draft,              % draft, final  <= Replace 'draft' with 'final' in final version
-  },
-  media=screen,         % screen(*), paper
-                        % SCREEN ==> left and right margins are equal, colored links
-                        % PAPER ==> left and right margins are different, black links
+  % docdegree=msc,        % phd(*), phdplan, phdprop, msc, mscplan, bsc
+  % school=nova/fcsh,     % nova/fct(*), nova/fcsh, nova/ims, ul/ist, ul/fc, ipl/isel
+  % lang=en,              % en(*), fr, it, pt
+  % % coverlang=en,         % defaults to main language
+  % % copyrightlang=en,     % defaults to main language
+  % fontstyle=garamond    % baskervaldx bookman charter ebgaramond fbb fourier garamond
+  %                       % heuristica kpfonts(*) libertine mathpazo1 mathpazo2 newcent
+  %                       % newpx newtx
+  % chapstyle=default,    % bianchi bluebox brotherton dash default elegant(*) ell ger
+  %                       % hansen ist jenor lyhne madsen pedersen veelo vz14 vz34 vz43
+  % otherlistsat=back,   % front(*), back
+  % secondcover=true,    % print a second cover page
+  % aftercover=true,     % false=don't true=include the aftercover file (even if exists)
+  % linkscolor=SteelBlue,   % darkblue, black (Set to 'black' for PRINTING)
+  % printcommittee=false,  % set to 'false' from submitted versins who should not have
+  %                       % the list of committee memebers
+  % spine=true,          % (Set to 'true' for PRINTING the book spine)
+  % cdcover=true,         % (Set to 'true' for PRINTING the CD cover)
+  % trackmessage=true,    % PLEASE PLEASE PLEASE be honest and fair and leave this as true…
+  % biblatex={            % Options for biblatex (see biblatex documentation)
+  %   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %   %%% uncomment for 'apa' like citations
+  %   % backend=biber,    % must use biber as the backend (and not bibtex)
+  %   % natbib=true,      % compatiblity with natbib (use \cite{…} or \citep{…})
+  %   % style=apa,        % APA style
+  %   % maxcitenames=2,   % use at most two names in citation
+  %   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %   %%% uncomment for 'numeric-by-order-of-citation' like citations
+  %   % backend=bibtex,     % use bibtex if possible
+  %   % style=numeric-comp, % numeric(*), alphabetic, authoryear, bwl-FU
+  %   % sortcites=true,     % If numeric, sort cites by crescent order
+  %   % sorting=none,       % none, nyt(*), ynt
+  %   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %   %%% uncomment for 'numeric' sorted by author's last name like citations
+  %   backend=bibtex,     % use bibtex if possible
+  %   style=numeric-comp, % numeric(*), alphabetic, authoryear, bwl-FU
+  %   sortcites=true,     % If numeric, sort cites by crescent order
+  %   sorting=nyt,        % none, nyt(*), ynt
+  %   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %   %%% uncomment for 'alphanumeric-key' like citations
+  %   % backend=bibtex,   % use bibtex if possible
+  %   % style=alphabetic, % numeric(*), alphabetic, authoryear, bwl-FU
+  %   % sorting=nyt,      % none, nyt(*), ynt
+  %   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %   %%% other options for biblatex
+  %   maxbibnames=99,     % Never use 'et al' in the bibliography
+  %   giveninits=true,    % render all first and middle names as initials
+  %   hyperref=true       % Hyperlinks in citations: true(*) false
+  % },
+  % memoir={              % See the 'memoir' documentation
+  %   % showtrims,          % DEBUG
+  %   % openany,
+  %   a4paper,            % the paper size/format
+  %   11pt,               % 10pt, 11pt(*), 12pt
+  %   draft,              % draft, final  <= Replace 'draft' with 'final' in final version
+  % },
+  % media=paper,         % screen(*), paper
+  %                       % SCREEN ==> left and right margins are equal, colored links
+  %                       % PAPER ==> left and right margins are different, black links
 ]{novathesis}
 
 
 
-%%============================================================
-%%
-%%  BEGINING OF USER COSTUMIZATION
-%%
-%%============================================================
 
 
 %------------------------------------------------------------------
@@ -150,20 +144,20 @@
 \setlength\epigraphrule{0pt}
 
 %setup colors for hyperlinks
-\hypersetup{
-linkcolor=NavyBlue
-,citecolor=NavyBlue
-,filecolor=Red
-,urlcolor=NavyBlue
-,menucolor=Red
-,runcolor=Red
-,linkbordercolor=NavyBlue
-,citebordercolor=NavyBlue
-,filebordercolor=Red
-,urlbordercolor=NavyBlue
-,menubordercolor=Red
-,runbordercolor=Red
-}
+% \hypersetup{
+% linkcolor=NavyBlue
+% ,citecolor=NavyBlue
+% ,filecolor=Red
+% ,urlcolor=NavyBlue
+% ,menucolor=Red
+% ,runcolor=Red
+% ,linkbordercolor=NavyBlue
+% ,citebordercolor=NavyBlue
+% ,filebordercolor=Red
+% ,urlbordercolor=NavyBlue
+% ,menubordercolor=Red
+% ,runbordercolor=Red
+% }
 
 %%============================================================
 % For costumization,

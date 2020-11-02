@@ -74,7 +74,8 @@
   % %novathesis@opt@media
   , media/.new choice = {screen, paper}
   %novathesis@opt@linkscolor
-  , linkscolor/.new cmd = {\PassOptionsToPackage{allcolors=#1}{hyperref}}
+  , linkscolor/.new cmd = {\gdef\nt@linkscolor{#1}}
+  , setlinkscolor/.new cmd = {\PassOptionsToPackage{allcolors=#1}{hyperref}}
 }
 
 % \newcounter{nt@lang@a@cnt}
@@ -136,22 +137,16 @@
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% PROCESS KEY-VAL OPTIONS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % --------------------------------------------------------
-% MAIN LANGUAGE - novathesis@opt@lang
-\edef\novathesis@opt@lang{\option{/novathesis/lang}}
-
-
-% --------------------------------------------------------
-% COVER LANGUAGE - novathesis@opt@coverlang
+% Define DEFAULT VALUES for COVER and COPYRIGHT languages
 \options{
-  /novathesis/coverlang = \option{/novathesis/lang},
-  /novathesis/copyrightlang = \option{/novathesis/lang}
+  /novathesis/coverlang = \option{/novathesis/lang}
+  , /novathesis/copyrightlang = \option{/novathesis/lang}
+  , /novathesis/linkscolor = RoyalBlue
 }
 
+\options@ProcessOptions{/novathesis}
 
 % --------------------------------------------------------
 % PRINT BOOK SPINE
@@ -179,12 +174,9 @@
     }%
   }{}
 
-
 % --------------------------------------------------------
 % DESTINATION MEDIA
+% If destination media is paper, remove hyoerlink colors from PDF
 \ifthenelse{\equal{\option{/novathesis/media}}{paper}}%
-  {\PassOptionsToPackage{allcolors=black}{hyperref}}
-  {}
-
-
-\options@ProcessOptions{/novathesis}
+  {\options{/novathesis/setlinkscolor=black}}
+  {\options{/novathesis/setlinkscolor=\nt@linkscolor}}

@@ -41,6 +41,10 @@
 \ProvidesClass{novathesis}[2020/07/20 novathesis template]
 
 
+\newcommand{\ntsetup}[1]{
+  \options{#1}
+}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
@@ -268,7 +272,7 @@
     \coverbackground[\@nameuse{thesiscover\option{/novathesis/docdegree},back}]
     ~% This space is important here so that the cover page is not empty anymore!
     \clearforchapter%
-    \selectthelanguage{\novathesis@opt@lang}%
+    \selectthelanguage{\option{/novathesis/lang}}%
   }
 }
 
@@ -297,7 +301,7 @@
 \mynewdata{keywordsstring}
 \mynewdata{acknowledgementsstring}
 \mynewdata{notdefined}
-\newcommand\novathesis@undefined{\thenotdefined[\novathesis@opt@lang]}
+\newcommand\novathesis@undefined{\thenotdefined[\option{/novathesis/lang}]}
 
 \mynewdata{adviserstr}
 \mynewdata{adviserstrfont}
@@ -383,7 +387,7 @@
   Copyright \textcopyright\ \theauthorname, %
   \thefaculty[\option{/novathesis/copyrightlang}], \theuniversity[\option{/novathesis/copyrightlang}].\\%
   \thecopyrighttextstr[\option{/novathesis/copyrightlang}]%
-  \selectthelanguage{\novathesis@opt@lang}
+  \selectthelanguage{\option{/novathesis/lang}}
 }
 
 
@@ -807,14 +811,14 @@
   	\InputIfFileExists{\novathesis@filetoinclude}%
       {}%
       {}%
-    \selectthelanguage{\novathesis@opt@lang}
+    \selectthelanguage{\option{/novathesis/lang}}
     \clearforchapter%
   }%
 }
 
 
 \newcommand{\printabstract}{%
-	\xdef\novathesis@tmp{\theabstractorder[\novathesis@opt@lang]}%
+	\xdef\novathesis@tmp{\theabstractorder[\option{/novathesis/lang}]}%
   \iteratecsvlist{\novathesis@printabstract@lang}{\novathesis@tmp}%
   % disables protrusion locally in the document for the forthcoming tables of contents
   \microtypesetup{protrusion=false}%
@@ -824,7 +828,7 @@
 
 \newcommand{\thesisfrontmatter}{%
   \frontmatter%
-  \selectthelanguage{\novathesis@opt@lang}
+  \selectthelanguage{\option{/novathesis/lang}}
   % \pagestyle{novathesis@myvf}
   \pagenumbering{roman}%
   \setlength{\headheight}{15pt}%
@@ -1036,7 +1040,7 @@
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\acknowledgements}{%
-  \chapter*{\theacknowledgementsstring[\novathesis@opt@lang]}%
+  \chapter*{\theacknowledgementsstring[\option{/novathesis/lang}]}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
