@@ -25,7 +25,6 @@
 %% PROCESS KEY-VAL OPTIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{options-nt}
-\RequirePackage{xkeyval}
 \RequirePackage{xifthen}
 %
 \options{
@@ -76,6 +75,7 @@
   %novathesis@opt@linkscolor
   , linkscolor/.new cmd = {\gdef\nt@linkscolor{#1}}
   , setlinkscolor/.new cmd = {\PassOptionsToPackage{allcolors=#1}{hyperref}}
+  , biblatex loaded/.new toggle
 }
 
 % \newcounter{nt@lang@a@cnt}

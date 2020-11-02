@@ -956,7 +956,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\addbibfile}[1]{\addbibresource{#1}}
+\newcommand{\addbibfile}[1]{%
+  \iftoggle{/novathesis/biblatex loaded}%
+    {}%
+    { \RequirePackage{biblatex}%
+      \DeclareLanguageMapping{english}{american-apa}%
+      \DeclareLanguageMapping{portuguese}{portuguese-apa}%
+      \option{/novathesis/biblatex loaded/.flip}
+    }
+  \addbibresource{#1}
+}
 
 \newcommand{\printbib}{\printbibliography}
 

@@ -126,9 +126,10 @@
 
 % To process the bibliography
 % (This should be listed after the hyperref, otherwise hyperlinks in citations won't work)
-\RequirePackage{biblatex}
-\DeclareLanguageMapping{english}{american-apa}
-\DeclareLanguageMapping{portuguese}{portuguese-apa}
-
+% \AtBeginDocument{%
+%   \RequirePackage{biblatex}
+%   \DeclareLanguageMapping{english}{american-apa}
+%   \DeclareLanguageMapping{portuguese}{portuguese-apa}
+% }
 % To handle subfigures
 \newsubfloat{figure}
