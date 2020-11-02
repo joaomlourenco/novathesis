@@ -34,8 +34,8 @@
   , langslong/.new list = {portuguese, english, french, italian}
   , langshorttolong/.new choice = {pt=portuguese, en=english, fr=french, it=italian}
   , langshorttolong/.expands
-  , maplang/.new cmd = {%
-        \optionsalso{/novathesis/langshorttolong = #1}%
+  , maplang/.new transformer = {%
+        \options{/novathesis/langshorttolong = #1}%
         \option{/novathesis/langshorttolong}%
   }
   % %novathesis@opt@docdegree
