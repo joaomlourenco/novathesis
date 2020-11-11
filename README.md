@@ -8,7 +8,7 @@
 
 --------
 
-The NOVAthesis LaTeX class is a thesis template initially designed for the PhD and MSc thesis at [FCT Universidade NOVA de Lisboa (FCT-NOVA)](http://www.fct.nova.pt), Portugal, but currently it supports more schools, namely:
+The NOVAthesis LaTeX class is a thesis template initially designed for the PhD and MSc thesis at [FCT-NOVA — NOVA School of Science and Technology](http://www.fct.unl.pt), Portugal, but currently it supports more schools, namely:
 * NOVA University Lisbon
     * [NOVA School for Science and Technology](https://www.fct.unl.pt) (FCT-NOVA)
     * [NOVA Information Management School](https://www.novaims.unl.pt) (NOVA-IMS)
@@ -24,9 +24,11 @@ The NOVAthesis LaTeX class is a thesis template initially designed for the PhD a
     * [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt) (ESTB-IPS)
 * [Escola Superior de Enfermagem do Porto](https://www.esenf.pt/pt/) (ESEP)
 
-The class provides options to easily set up the cover page, the front matter pages, the page headers, etc. with respect to the official dissertation guidelines for each of the supported Schools.
-
-The template is also easily customizable, including the support for new Schools. Currently the template supports out-of-the-box (at least): 17 Chapter Styles, 7 font sets, 9 schools.  If you customize this template for your institution or add new style files, please [let me knwow](http://docentes.fct.unl.pt/joao-lourenco).  Thanks!
+The template provides an _easy to use_ setting for you to write your thesis/dissertation in LaTeX:
+*  Select your school
+* Fill your thesis metadata (title, research field, etc) in the file “template.tex”
+* Create your thesis/dissertation contents using the files in folder “_Chapters_”
+* Process using you favorite LaTeX processor (pdfLaTeX, XeLaTeX or LuaLaTeX)
 
 *This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/.*
 
@@ -34,18 +36,17 @@ The template is also easily customizable, including the support for new Schools.
 
 This template is the result of hundreds (yes! *hundreds*) of hours of work from the main developer.  If you think this template really helped you while writing your thesis, think about doing a [**donation**](https://paypal.me/novathesis). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
 
-#### Donors 2020
-* João Carvalho
-* David Romão
-* DisplayersereStream
-* Antonio Estevao
+Thank you to our donnors:
 
-#### Donnors 2019
-Thank you to the (only) two donors from 2019:
+##### Donors 2020
+* João Carvalho.
+* David Romão.
+* DisplayersereStream.
+* Antonio Estevao.
+
+##### Donnors 2019
 * Jorge Barreto.
 * Raissa Almeida.
-
-All the best to you!
 
 ## Getting Started
 
