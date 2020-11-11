@@ -20,7 +20,7 @@ The NOVAthesis LaTeX class is a thesis template initially designed for the PhD a
 * Instituto Politécnico de Setúbal
     * [Escola Superior de Saúde](https://www.ess.ips.pt) (ESS-IPS)
     * [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt) (ESTB-IPS)
-* [Escola Superior de Enfermagem do Porto] (https://www.esenf.pt/pt/)(ESEP)
+* [Escola Superior de Enfermagem do Porto](https://www.esenf.pt/pt/) (ESEP)
 
 The class provides options to easily set up the cover page, the front matter pages, the page headers, etc. with respect to the official dissertation guidelines for each of the supported Schools.
 
