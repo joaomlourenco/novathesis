@@ -57,8 +57,6 @@
   , copyrightlang/.new choice = {pt, en, fr, it}
   % %novathesis@opt@printcommittee
   , printcommittee/.new toggle = true
-  % %novathesis@opt@trackmessage
-  , trackmessage/.new toggle = true
   % %novathesis@opt@secondcover
   , secondcover/.new toggle = false
   % %novathesis@opt@aftercover

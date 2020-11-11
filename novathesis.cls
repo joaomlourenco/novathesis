@@ -51,6 +51,24 @@
 \ProvidesClass{novathesis}[2020/11/02 novathesis template]
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% CHECK IF USING LUALATEX OR XELATEX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newif\ifxetexorluatex
+\begingroup\catcode94=7 \catcode0=9 % ASCII 94 is ^
+\def\empty{}\def\next{^^^^0000}\expandafter\endgroup
+\ifx\next\empty\xetexorluatextrue\else\xetexorluatexfalse\fi
+% \newif\ifxetexorluatex
+% \ifxetex
+%   \xetexorluatextrue
+% \else
+%   \ifluatex
+%     \xetexorluatextrue
+%   \else
+%     \xetexorluatexfalse
+%   \fi
+% \fi
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
@@ -232,6 +250,16 @@
     }%
   }%
   ~% This space is important here so that the cover page is not empty anymore!
+  \newpage
+  \thispagestyle{empty}
+  \null\vfill%
+  {\scriptsize%
+      \begin{Spacing}{1}%
+        \fontfamily{phv}\fontsize{6.3}{6.3}\selectfont%
+        \noindent
+        \hypersetup{allcolors=white}\textcolor{white}{\theacknowledgmentsstr[\option{/novathesis/coverlang}]}%
+      \end{Spacing}%
+  }%  
   \clearforchapter%
 
   %% Print second conver page if school is ul/fc
@@ -829,7 +857,7 @@
 	\xdef\novathesis@tmp{\theabstractorder[\option{/novathesis/mainlang}]}%
   \iteratecsvlist{\novathesis@printabstract@lang}{\novathesis@tmp}%
   % disables protrusion locally in the document for the forthcoming tables of contents
-  \microtypesetup{protrusion=false}%
+  \ifxetexorluatex\else\microtypesetup{protrusion=false}\fi%
 }
 
 
@@ -844,7 +872,7 @@
 
 \newcommand{\thesismainmatter}{%
   % enables protrusion locally for the remainder of the document
-  \microtypesetup{protrusion=true} %
+  \ifxetexorluatex\else\microtypesetup{protrusion=true}\fi%
 	\mainmatter%
 	\pagenumbering{arabic} %
 	\setlength{\headheight}{15pt}%
@@ -1004,16 +1032,6 @@
   \textbf{\large \thetitle}\par%
   \bigskip%
   \thecopyrightstr\par%
-  \vskip\baselineskip%
-  {\scriptsize%
-      \begin{Spacing}{1}%
-        \fontfamily{phv}\fontsize{6.3}{6.3}\selectfont%
-        \noindent
-        \ifthenelse{\equal{\\option{/novathesis/trackmessage}}{true}}%
-        {\hypersetup{allcolors=black}\theacknowledgmentsstr[\option{/novathesis/coverlang}]}%
-        {\hypersetup{allcolors=white}\textcolor{white}{\theacknowledgmentsstr[\option{/novathesis/coverlang}]}}%
-      \end{Spacing}%
-  }%
   \clearforchapter%
 }
 
