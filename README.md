@@ -1,4 +1,4 @@
-![NOVAthesis logo](https://github.com/joaomlourenco/novathesis/novathesis-files/Images/novathesis_cover_image.jpg)
+![NOVAthesis logo](https://github.com/joaomlourenco/novathesis/blob/master/novathesis-files/Images/novathesis_cover_image.jpg?raw=true)
 
 # NOVAthesis LaTeX template
 
