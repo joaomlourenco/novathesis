@@ -1,3 +1,5 @@
+![NOVAthesis logo](https://github.com/joaomlourenco/novathesis/novathesis-files/Images/novathesis_cover_image.jpg)
+
 # NOVAthesis LaTeX template
 
 --------
