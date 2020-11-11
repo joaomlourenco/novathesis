@@ -39,10 +39,10 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 Thank you to our donnors:
 
 ##### Donors 2020
-* João Carvalho, David Romão, DisplayersereStream, Antonio Estevao.
+João Carvalho, David Romão, DisplayersereStream, Antonio Estevao.
 
 ##### Donnors 2019
-* Jorge Barreto, Raissa Almeida.
+Jorge Barreto, Raissa Almeida.
 
 ## Getting Started
 
