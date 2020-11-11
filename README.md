@@ -20,6 +20,7 @@ The NOVAthesis LaTeX class is a thesis template initially designed for the PhD a
 * Instituto Politécnico de Setúbal
     * [Escola Superior de Saúde](https://www.ess.ips.pt) (ESS-IPS)
     * [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt) (ESTB-IPS)
+* [Escola Superior de Enfermagem do Porto] (https://www.esenf.pt/pt/)(ESEP)
 
 The class provides options to easily set up the cover page, the front matter pages, the page headers, etc. with respect to the official dissertation guidelines for each of the supported Schools.
 
@@ -31,13 +32,13 @@ The template is also easily customizable, including the support for new Schools.
 
 This template is the result of hundreds (yes! *hundreds*) of hours of work from the main developer.  If you think this template really helped you while writing your thesis, think about doing a [**donation**](https://paypal.me/novathesis). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
 
-### Donors 2020
+#### Donors 2020
 * João Carvalho
 * David Romão
 * DisplayersereStream
 * Antonio Estevao
 
-### Donnors 2019
+#### Donnors 2019
 Thank you to the (only) two donors from 2019:
 * Jorge Barreto.
 * Raissa Almeida.

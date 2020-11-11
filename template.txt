@@ -1,445 +1,0 @@
-John Longname Doe
-Master of Science
-
-A Very Long and Impressive Thesis Title With a Line Break
-
-Dissertação para obtenção do Grau de Doutor em Informática
-
-John Doe Adviser Name, Full Professor, NOVA University of Lisbon Co-orientadora: John Doe Co-Adviser Name, Associate Professor, NOVA University of Lisbon
-
-Orientadora:
-
-Júri Presidente: Arguentes: Vogais: Name of the committee chairperson Name of a raporteur Name of another raporteur Another member of the committee Yet another member of the committee
-
-Janeiro, 2020
-
-A Very Long and Impressive Thesis Title With a Line Break
-Copyright © John Longname Doe, Faculdade de Ciências e Tecnologia, Universidade NOVA de Lisboa. A Faculdade de Ciências e Tecnologia e a Universidade NOVA de Lisboa têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.
-AT X, com base no template "novathesis" [1] desenvolvido no Dep. Informática da FCT-NOVA [2]. Este documento foi gerado utilizando o processador (pdf)L E [1] https://github.com/joaomlourenco/novathesis [2] http://www.di.fct.unl.pt
-
-Lorem ipsum.
-
-Ag r ad e c i m e n t o s
-The acknowledgements. You are free to write this section at your own will. However, usually it starts with the institutional acknowledgements (adviser, institution, grants, workmates, . . . ) and then comes the personal acknowledgements (friends, family, . . . ).
-
-vii
-
-Resumo
-
-Independentemente da língua em que está escrita a dissertação, é necessário um resumo na língua do texto principal e um resumo noutra língua. Assume-se que as duas línguas em questão serão sempre o Português e o Inglês. O template colocará automaticamente em primeiro lugar o resumo na língua do texto principal e depois o resumo na outra língua. Por exemplo, se a dissertação está escrita em Português, primeiro aparecerá o resumo em Português, depois em Inglês, seguido do texto principal em Português. Se a dissertação está escrita em Inglês, primeiro aparecerá o resumo em Inglês, depois em Português, seguido do texto principal em Inglês. O resumo não deve exceder uma página e deve responder às seguintes questões: · Qual é o problema? · Porque é que ele é interessante? · Qual é a solução? · O que resulta (implicações) da solução?
-AT X E agora vamos fazer um teste com uma quebra de linha no hífen a ver se a L E duplica o hífen na linha seguinte. . .
-
-zzzz zzz zzzz zzz zzzz zzz zzzz zzz zzzz zzz zzzz zzz zzzz zzz zzzz zzz zzzz comentar-lhe zzz zzzz zzz zzzz Sim! Funciona! :) Palavras-chave: Palavras-chave (em Português) . . .
-
-ix
-
-A b s t r ac t
-
-The dissertation must contain two versions of the abstract, one in the same language as the main text, another in a different language. The package assumes that the two languages under consideration are always Portuguese and English. The package will sort the abstracts in the appropriate order. This means that the first abstract will be in the same language as the main text, followed by the abstract in the other language, and then followed by the main text. For example, if the dissertation is written in Portuguese, first will come the summary in Portuguese and then in English, followed by the main text in Portuguese. If the dissertation is written in English, first will come the summary in English and then in Portuguese, followed by the main text in English. The abstract shoul not exceed one page and should answer the following questions: · What's the problem? · Why is it interesting? · What's the solution? · What follows from the solution?
-
-Keywords: Keywords (in English) . . .
-
-xi
-
-Índice
-
-Lista de Figuras Lista de Tabelas Listagens Glossário Siglas Símbolos 1 Introduction 1.1 A Bit of History . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1.2 Disclaimer . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 ThesisDIFCTNL User's Manual 2.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2.2 Folder Structure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2.3 novathesis.cls Class Options . . . . . . . . . . . . . . . . . . . . . . . . 2.4 Additional considerations about the class options . . . . . . . . . . . . . . 2.4.1 2.4.2 2.4.3 2.4.4 2.4.5 2.4.6 The main language . . . . . . . . . . . . . . . . . . . . . . . . . . . Class of Text . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Printing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Font Size . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Text Encoding . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-AT L
-
-xv xvii xix xxi xxiii xxvii 1 1 1 3 3 4 5 7 7 7 8 8 8 8 9 9 11 11 11 11
-
-2.5 How to Write Using
-
-EX . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2.6 Example glossary, acronyms, and symbols . . . . . . . . . . . . . . . . . .
-
-AT X Tutorial with Examples 3 A Short L E
-
-3.1 Document Structure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3.2 Dealing with Bibliogrpahy . . . . . . . . . . . . . . . . . . . . . . . . . . . 3.3 Inserting Tables . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . xiii
-
-ÍNDICE
-
-3.4 Importing Images . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3.5 Floats, Figures and Captions . . . . . . . . . . . . . . . . . . . . . . . . . . 3.6 Text Formatting . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3.7 Generating PDFs from 3.7.1 3.7.2 3.7.3 EX . . . . . . . . . . . . . . . . . . . . . . . . . . Generating PDFs with pdflatex . . . . . . . . . . . . . . . . . . . . Dealing with Images . . . . . . . . . . . . . . . . . . . . . . . . . . Creating Source Files Compatible with both latex and pdflatex . .
-AT L
-
-11 11 13 13 13 14 14 16 21
-
-3.8 Equações . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Bibliografia
-
-xiv
-
-L i s ta d e Fi g u r a s
-
-3.1 A figure with two sub-figures! . . . . . . . . . . . . . . . . . . . . . . . . . . . 3.2 Imagem em formato bitmap (JPG) . . . . . . . . . . . . . . . . . . . . . . . . . 3.3 Imagem em formato PDF vectorial . . . . . . . . . . . . . . . . . . . . . . . . 3.4 Exemplo de utilização de subbottom . . . . . . . . . . . . . . . . . . . . . . . .
-
-12 17 18 19
-
-xv
-
-L i s ta d e Ta b e l a s
-
-3.1 Test results summary. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-15
-
-xvii
-
-L i s tag e n s
-3.1 Hello World . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
-
-xix
-
-Glossário
-aliquam tincidunt urna. Nulla ullamcorper vestibulum turpis. Pellentesque cursus luctus mauris. computer An electronic device which is capable of receiving information (data) in a particular form and of performing a sequence of operations in accordance with a predetermined but variable set of procedural instructions (program) to produce a result in the form of information or signals. cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices. Phasellus eu tellus sit amet tortor gravida placerat. donec nonummy pellentesque ante. Phasellus adipiscing semper elit. Proin fermentum massa ac quam. Sed diam turpis, molestie vitae, placerat a, molestie nec, leo. integer sapien est, iaculis in, pretium quis, viverra ac, nunc. Praesent eget sem vel leo ultrices bibendum. Aenean faucibus. lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. maecenas lacinia morbi ac nam ipsum ligula, eleifend at, accumsan nec, suscipit a, ipsum. Morbi blandit ligula feugiat magna. Nunc eleifend consequat lorem. orci et nisl hendrerit mollis. Suspendisse ut massa. Cras nec ante. Pellentesque a nulla. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla. Curabitur auctor semper nulla. Donec varius orci eget risus. Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam. Duis eget orci sit amet orci dignissim rutrum.
-
-xxi
-
-G LO S SÁ R I O
-
-nam lacus
-
-libero, pretium at, lobortis vitae, ultricies et, tellus. Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna, vitae ornare odio metus a mi.
-
-nam dui name arcu
-
-ligula, fringilla a, euismod sodales, sollicitudin vel, wisi. Morbi auctor lorem non justo. libero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo.
-
-nulla malesuada
-
-porttitor diam. Donec felis erat, congue non, volutpat at, tincidunt tristique, libero. Vivamus viverra fermentum felis.
-
-sed lacinia
-
-nulla vitae enim. Pellentesque tincidunt purus vel magna. Integer non enim. Praesent euismod nunc eu purus. Donec bibendum quam in tellus.
-
-xxii
-
-Siglas
-aaa aab aba abbrev AEU AFM AMD ANP ATG AVF bbb CAS CDG CEA CIV DIA DNM DNMC DRN EII ENE EPA ESQ ESV ETS acornym aaa acornym aab acornym aba abbreviation of a longer text adipiscing elit ut aenean faucibus morbi a magna donec ac nunc praesent amet tortor gravida adipiscing vitae felis acornym bbb curabitur auctor semper curabitur dictum gravida congue eu accumsan consectetuer id vulputate duis eget orci dolor nulla malesuada duis nibh mi congue dignissim rutrum nam est iaculis in et netus et eu pulvinar at eleifend sagittis quis eget sem vel eu tellus sit
-
-xxiii
-
-SIGLAS
-
-FUP LID LNE LUB LVU MAC MFA MNA MTS NDV NPH OER PEV PIS PQV SAO SNE STC TEM ULC UPA VAE VMR xpto
-
-fringilla ultrices phasellus lorem ipsum dolor libero nonummy eget leo ultrices bibendum lectus vestibulum urna mollis ac nulla malesuada fames ac mauris nam arcu morbi tristique senectus nulla donec varius neque pellentesque habitant orci eget risus purus elit vestibulum placerat integer sapien pretium quis viverra sit amet orci sem nulla et sit amet consectetuer turpis egestas mauris ut leo cras ut placerat ac vehicula augue eu viverra metus rhoncus and extension of a xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto
-
-xxiv
-
-SIGLAS
-
-xxv
-
-Símbolos
- r the numerical value of pi the radius of a circle
-
-xxvii
-
-Capítulo
-
-1
-
-Introduction
-This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/.
-
-1.1
-
-A Bit of History
-
-The novathesis was originally developed to help MSc and PhD students of the Computer Science and Engineering Department of the NOVA School of Science and Technology of NOVA University Lisbon (DI-FCT-NOVA) to write their thesis and dissertations Using
-AT X. These student can easily cope with L AT X by themselves, and the only need some L E E
-
-help in the bootstrap process to make their life easier. However, as the template spread out among the students from other degrees at FCTNOVA, the demand for am easier-to-use template as grown. And the template in its current shape aims at answering the expectations of those that, although they are not familiar with programming nor with markup languages, so still feel brave enough to give
-AT X a try and rejoice with the beauty of the texts typeset by this system. L E
-
-1.2
-
-Disclaimer
-
-It is up to you, the student, to read the FCT and/or NOVA regulations on how to format and submit your MSc or PhD dissertation. This template is endorsed by the FCT-NOVA and even linked from its web pages, but it is not an official template. This template exists to make your life easier, but in the end of the line you are accountable for both the looks and the contents of the document you submit as your dissertation. 1
-
-Capítulo
-
-2
-
-T h e s i s D I FC T N L U s e r's M a n ua l
-
-2.1
-
-Introduction
-
-These instructions are outdated! Please see also the "template.tex" file!
-AT X novathesis template (and the "novathesis.cls" This chapter describes how to use the L E
-
-class file). Let's start with some simple suggestions: 1. No! You don't have to use this template to write your thesis. You don't even have to
-AT X. However, writing a thesis is serious stuff, and which tool you shall use to use L E
-
-write it is not a decision to make lighthearted.
-AT X is hard enough by itself. This template aims at making your life easier, but not 2. L E easy. If you choose to use this template to write your thesis, you are very welcome. AT X. Look for help with your However, don't expect me to provide you help with L E
-
-friends (you have some friends, don't you?), or search the web, or try even to read
-AT X. In the end you will certainly find the experience rewarding. some book(s) on L E AT X?" look 3. So, don't forget, when you come to the point of "How do I do this with L E
-
-for help! Google is your best friend. 4. If you believe the difficulty is related with the novathesis template itself (and not
-AT X), please do not send me an email asking for help. Please look for help in with L E
-
-the novathesis Google Group (URL) and the novathesis Facebook group (URL). If you can't find help there from previous posts/messages, then post your own question. Hopefully someone will answer you. 3
-
-CA P Í T U LO 2 . T H E S I S D I FC T N L U S E R ' S M A N UA L
-
-Now, let's go to a major issue for Windows users. Characters have to be encoded in files as numbers, and that is how character encodings were born. ASCII and EBCDIC standards are long lost in the past. The world now uses UTF-8. Well, not all the world. . . Windows is still stick in its codepages, and "latin1" is what windows uses as the codepage for Western Europe. This messes up with the template. Please be sure you use an editor with UTF-8 support. Go to the preferences/options/. . . of your text editor and set up its default file encoding as UTF-8.
-
-2.2
-
-Folder Structure
-
-The novathesis template is organized into files and folders. At the main level it includes the following files and folders: novathesis.cls template.tex bibliography.bib template.pdf file file file file The main class file. It will include additional files from novathesis-files folder. The main user file. Use this file as the main file for your thesis. An example of a bibliography file. You may have has many as you want.
-AT X to the temA possible result of applying pdfL E plate.tex file. The template supports multiple types of
-
-documents (e.g., MSc dissertation, PhD thesis, . . . ) and multiple Schools (e.g., FCT-NOVA, FCSH-NOVA, IST-UL, FC-UL, . . . ) and each will produce different results. Chapters Examples Scripts folder folder folder Examples of thesis chapters. Replace them with your own chapters. Some more examples of the use of the template for different document types and Schools. Some (possibly useful) scripts for Unix-based systems (Linux, Mac OSx). If you are a windows user, ignore this folder (you may safely delete it if you want). novathesis-files folder Additional files for the novathesis.cls file. Unless you know what you are doing, avoid messing up with the files and folders inside this folder (except for deleting the unused Schools, see below). The novathesis-files folder contains additional files and folders that complement the main novathesis.cls file. These are: 4
-
-2 . 3 . NOVATHESIS.CLS C L A S S O P T I O N S
-
-README.txt fix-babel.clo lang-text.clo
-
-file file file
-
-A file that should be read! :) Simple fixes to the babel package. Translations of important strings used in the template. Currently fully supported are Portuguese and English, but French is on the way. If you add translations for your own language, please be so kind and send them to me. Thank you!
-
-options.clo packages.clo spine.clo ChapStyles
-
-file file file folder
-
-Processing of novathesis.cls options. Don't mess with this! Additional packages to be loaded into the novathesis template. You should not mess with this! This file is loaded only if the option spine=true, and includes the typesetting of the book spine. Contains a lot of files, one for each chapter style. If you really know what you are doing, you may add your own chapter style here.
-
-FontStyles
-
-folder
-
-Contains a few files, one for each set of fonts (main text font, chapter font, section font, subsection font, etc). If you really know what you are doing, you may add your own set here.
-
-Schools
-
-folder
-
-Configuration files for each school. This folder is organized into subfolders, one for each university. You may safely delete all the subfolders except the one for your University. Then open the subfolder of your University and you may safely delete all
-
-the subfolders except the one for your School/Faculty. As stated above, the Schools folder contains per-university folders and per-school (faculty) subfolders. Currently these are the available folders: ul / ist folder The folder for the Instituto Superior Técnico of the University of Lisbon. nova / fcsh nova / fct nova / novaims folder folder folder The folder for the Faculty of Human and Social Sciences of the NOVA University of Lisbon. The folder for the Faculty of Sciences and Technology of the NOVA University of Lisbon. The folder for the Information and Management School of the NOVA University of Lisbon.
-
-2.3
-
-novathesis.cls Class Options
-
-The novathesis class can be customized with the options listed below. docdegree=OPT MSc Plan, BSc Report 5 phd(*), phdplan, phdprop, msc, mscplan, bsc
-
-The type of the document: PhD Thesis (default), PhD Plan, PhD Proposal, MSc Disseration,
-
-CA P Í T U LO 2 . T H E S I S D I FC T N L U S E R ' S M A N UA L
-
-school=OPT
-
-nova/fct(*), nova/fcsh, nova/ims, ul/ist, ul/fc
-
-The name of the school. This option changes the typesetting of the cover and some School specific formating, like margins, fonts, paragraph spacing and indentation, etc. . . lang=OPT en(*), pt
-
-The main language for the document. Currently only Portuguese and English are supported. Other languages are expected to be support in forthcoming versions. fontstyle=OPT cent The font set to be used in the document. Please note that a font set include definitions for the main text, headings, maths, etc. chapstyle=OPT bianchi, bluebox, brotherton, dash, default, elegant(*), ell, ger, hanbookman, charter, fourier, kpfonts(*), mathpazo1, mathpazo2, new-
-
-sen, ist, jenor, lyhne, madsen, pedersen, veelo, vz14, vz34, vz43 The chapter style, i.e., the look of the chapter beginning. converlang=OPT en, pt(*)
-
-The language to be used when typesetting the cover page. otherlistsat=OPT front(*), back
-
-Where to put the other lists besides the table of contents. The default is (front) before the main text. But some scientific areas prefer them at the end of the document (back), just before the Appendixes. aftercover=OPT true, false(*)
-
-Include or don't include the contents of the "aftercover" file. The default is for this file to be ignored (if if it exists). linkscolor=OPT darkblue(*), black
-
-The color for all the hyperlinks in the PDF file. The "media=paper" option (see below) will override this option to "black" spine=OPT true, false(*)
-
-Generate the book spine and the last page in the PDF. biblatex=OPT OPT={list of options for biblatex}
-
-Customize biblatex, the bibliography management system used in this class. Probably you will want to change the value of the biblatex "style" option. For other customizations of biblatex check its manual. memoir=OPT OPT={list of options for memoir}
-
-Customize the base class memoir. The memoir manual should be the first document to be consulted when looking for "how can I do this?" You may wnat to change the base font size from 11pt to a smaller (10pt) or larger (12pt) size. Also, remember to change the "draft" to final when your document is finished. media=OPT screen(*), paper 6
-
-2 . 4 . A D D I T I O N A L CO N S I D E R AT I O N S A B O U T T H E C L A S S O P T I O N S
-
-Behavior to be customized in the school options/configuration. Expected definitions for screen are: left and right margins are equal and use colored links. Expected definitions for paper are: left and right margins are different and use black links.
-
-2.4
-
-Additional considerations about the class options
-
-In this section we will provide some additional considerations about some of the customizations available as class options.
-
-2.4.1
-
-The main language
-
-The choice of the main language with the option "lang=OPT" affects: · The order of the summaries. First is printed the abstract in the main language and then in the foreign language. This means that if your main language for the document in English, you will see first the "abstract" (in English) and then the "resumo" (in Portuguese). If you switch the main language for the document for Portuguese, it will also automatically switch the order of the summaries to "resumo" and then "abstract". · The names for document sectioning. E.g., "Chapter" vs. "Capítulo", "Table of Contents" vs. "Índice", "Figure" vs. "Figura", etc. · The type of documents in the bibliogrpahy. E.g., "Technical Report" vs. "Relatório Técnico", "PhD Thesis" vs. "Tese de Doutoramento", etc. No mater which language you chose, you will always have the appropriate hyphenation rules according to the language at that point. You always get Portuguese hyphenation rules in the "Resumo", english hyphenation rules in the "Abstract", and then the main language hyphenation rules for the rest of the document.
-
-2.4.2
-
-Class of Text
-
-You must choose the class of text for the document. The available options are: 1. bsc -- BSc graduation report. 2. *mscplan -- Preparation of MSc dissertation. This is a preliminary report graduate students at DI-FCT-NOVA must prepare to conclude the first semester of the twosemesters MSc work. The files specified by \dedicatoryfile and \acknowledgmentsfile are ignored, even if present, for this class of document. 3. msc -- MSc dissertation. 7
-
-CA P Í T U LO 2 . T H E S I S D I FC T N L U S E R ' S M A N UA L
-
-4. phdprop -- Proposal for a PhD work. The files specified by \dedicatoryfile and \acknowledgmentsfile are ignored, even if present, for this class of document. 5. prepphd -- Preparation of a PhD thesis. This is a preliminary report PhD students at DI-FCT-NOVA must prepare before the end of the third semester of PhD work. The files specified by \dedicatoryfile and \acknowledgmentsfile are ignored, even if present, for this class of document. 6. phd -- PhD dissertation.
-
-2.4.3
-
-Printing
-
-You must choose how your document will be printed. The available options are: 1. oneside -- Single side page printing. 2. *twoside -- Double sided page printing.
-
-2.4.4
-
-Font Size
-
-You must select the encoding for your text. The available options are: 1. 11pt -- Eleven (11) points font size. 2. *12pt -- Twelve (12) points font size. You should really stick to 12pt. . .
-
-2.4.5
-
-Text Encoding
-
-You must choose the font size for your document. The available options are: 1. latin1 -- Use Latin-1 (ISO 8859-1) encoding. Most probably you should use this option if you use Windows; 2. utf8 -- Use UTF8 encoding. Most probably you should use this option if you are not using Windows.
-
-2.4.6
-
-Examples
-
-Let's have a look at a couple of examples: · Preparation of PhD thesis, in portuguese, with 11pt size and to be printed single sided (I wonder why one would do this!) \documentclass[prepphd,pt,11pt,oneside,latin1]{thesisdifct-nova} · MSc dissertation, in english, with 12pt size and to be printed double sided \documentclass[msc,en,12pt,twoside,utf8]{thesisdifct-nova} 8
-
-AT X 2 . 5 . H OW TO W R I T E U S I N G L E
-
-2.5
-
-A How to Write Using L TEX
-
-AT Xconstructs, Please have a look at Chapter 3, where you may find many examples of L E
-
-such as Sectioning, inserting Figures and Tables, writing Equations, Theorems and algorithms, exhibit code listings, etc.
-
-2.6
-
-Example glossary, acronyms, and symbols
-
-This is the first occurrence of an abbreviation: abbreviation of a longer text (abbrev). And now the second occurrence of the same abbreviation: abbrev. And a new acronym with capital letter: And extension of a xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto xpto (xpto) and reused xpto. Let's also use a few other acronyms such as acornym aaa (aaa), acornym aab (aab), acornym aba (aba), acornym bbb (bbb) and xpto. In geometry, the area enclosed by a circle of radius r is r 2 . Here the Greek letter  is equal to the ratio of the circumference of any circle to its diameter. Lets add "computer" to the glossary!
-
-9
-
-Capítulo
-alternative ways for achieving similar results.
-
-3
-
-AT X Tu t o r i a l w i t h E x a m p l e s A S h o rt L E
-
-AT X. We also show This Chapter aims at exemplifying how to do common stuff with L E some stuff which is not that common! ;)
-
-Please, use these examples as a starting point, but you should always consider using the Big Oracle (aka, Google, your best friend) to search for additional information or
-
-3.1 3.2 3.3 3.4 3.5
-
-Document Structure Dealing with Bibliogrpahy Inserting Tables Importing Images Floats, Figures and Captions
-
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices. Phasellus eu tellus sit amet tortor gravida placerat. Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. Praesent eget sem vel leo ultrices bibendum. Aenean faucibus. Morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla. Curabitur auctor semper nulla. Donec varius orci eget risus. Duis nibh mi, congue eu, accumsan 11
-
-AT X T U TO R I A L W I T H E X A M P L E S CA P Í T U LO 3 . A S H O R T L E
-
-eleifend, sagittis quis, diam. Duis eget orci sit amet orci dignissim rutrum. Nam dui ligula, fringilla a, euismod sodales, sollicitudin vel, wisi. Morbi auctor lorem non justo. Nam lacus libero, pretium at, lobortis vitae, ultricies et, tellus. Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna, vitae ornare odio metus a mi. Morbi ac orci et nisl hendrerit mollis. Suspendisse ut massa. Cras nec ante. Pellentesque a nulla. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam tincidunt urna. Nulla ullamcorper vestibulum turpis. Pellentesque cursus luctus mauris. Nulla malesuada porttitor diam. Donec felis erat, congue non, volutpat at, tincidunt tristique, libero. Vivamus viverra fermentum felis. Donec nonummy pellentesque ante. Phasellus adipiscing semper elit. Proin fermentum massa ac quam. Sed diam turpis, molestie vitae, placerat a, molestie nec, leo. Maecenas lacinia. Nam ipsum ligula, eleifend at, accumsan nec, suscipit a, ipsum. Morbi blandit ligula feugiat magna. Nunc eleifend consequat lorem. Sed lacinia nulla vitae enim. Pellentesque tincidunt purus vel magna. Integer non enim. Praesent euismod nunc eu purus. Donec bibendum quam in tellus. Nullam cursus pulvinar lectus. Donec et mi. Nam vulputate metus eu enim. Vestibulum pellentesque felis eu massa.
-
-(a) One sub-figure
-
-(b) Another sub-figure
-
-Figura 3.1: A figure with two sub-figures! And this is a small text that references the Figure 3.1 and its Subfigures 3.1a and 3.1b. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices. Phasellus eu tellus sit amet tortor gravida placerat. Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. Praesent eget sem vel leo ultrices bibendum. Aenean faucibus. Morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla. Curabitur auctor semper nulla. Donec varius orci eget risus. Duis nibh mi, congue eu, accumsan 12
-
-3 . 6 . T E X T FO R M AT T I N G
-
-eleifend, sagittis quis, diam. Duis eget orci sit amet orci dignissim rutrum. Nam dui ligula, fringilla a, euismod sodales, sollicitudin vel, wisi. Morbi auctor lorem non justo. Nam lacus libero, pretium at, lobortis vitae, ultricies et, tellus. Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna, vitae ornare odio metus a mi. Morbi ac orci et nisl hendrerit mollis. Suspendisse ut massa. Cras nec ante. Pellentesque a nulla. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam tincidunt urna. Nulla ullamcorper vestibulum turpis. Pellentesque cursus luctus mauris. Nulla malesuada porttitor diam. Donec felis erat, congue non, volutpat at, tincidunt tristique, libero. Vivamus viverra fermentum felis. Donec nonummy pellentesque ante. Phasellus adipiscing semper elit. Proin fermentum massa ac quam. Sed diam turpis, molestie vitae, placerat a, molestie nec, leo. Maecenas lacinia. Nam ipsum ligula, eleifend at, accumsan nec, suscipit a, ipsum. Morbi blandit ligula feugiat magna. Nunc eleifend consequat lorem. Sed lacinia nulla vitae enim. Pellentesque tincidunt purus vel magna. Integer non enim. Praesent euismod nunc eu purus. Donec bibendum quam in tellus. Nullam cursus pulvinar lectus. Donec et mi. Nam vulputate metus eu enim. Vestibulum pellentesque felis eu massa.
-
-3.6 3.7
-3.7.1
-
-Text Formatting
-A Generating PDFs from L TEX
-
-Generating PDFs with pdflatex
-
-You may create PDF files either by using latex to generate a DVI file, and then use one of the many DVI-2-PDF converters, such as dvipdfm. Alternatively, you may use pdflatex, which will immediately generate a PDF with no intermediate DVI or PS files. In some systems, such as Apple, PDF is already the default
-AT X. I strongly recommend you to use this approach, unless you have a very format for L E
-
-good argument to go for latex + dvipdfm. A typical pass for a document with figures, cross-references and a bibliography would be: $ pdflatex template $ bibtex template $ pdflatex template $ pdflatex template You will notice that there is a new PDF file in the working directory called template.pdf. Simple :) Please note that, to be sure all table of contents, cross-references and bibliographic citations are up-to-date, you must run latex once, then bibtex, and then latex twice. 13
-
-AT X T U TO R I A L W I T H E X A M P L E S CA P Í T U LO 3 . A S H O R T L E
-
-3.7.2
-
-Dealing with Images
-
-You may process the same source files with both latex or pdflatex. But, if your text include images, you must be careful. latex and pdflatex accept images in different (exclusive) formats. For latex you may use EPS ou PS figures. For pdflatex you may use JPG, PNG or PDF figures. I strongly recommend you to use PDF figures in vectorial format (do not use bitmap images unless you have no other choice).
-
-3.7.3
-
-Creating Source Files Compatible with both latex and pdflatex
-
-Do not include the extension of the file in the \includegraphics command. E.g., use \includegraphics{sonwman} and not \includegraphics{sonwman.eps}. If you use the first form, latex or pdflatex will add an appropriate file extension. This means that, if you plan to use only pdflatex, you need only to keep (preferably) a PDF version of all the images. If you plan to use also latex, then you also need an EPS version of each image.
-
-14
-
-AT X 3 . 7 . G E N E R AT I N G P D F S F R OM L E
-
-To be included in the sections above
-Para fazer citações, deverá usar-se a chave da referência no ficheiro BibTeX. Se for uma única referência [2], usar um "~" para ligar o \cite{...} à palavra que o precede (. . . referência~\cite{Artho04}). Caso queira fazer múltiplas citações [6­8], deverá agrupá-las dentro de um úinico \cite{...}. Note que o ficheiro de bibliografia pode ter tantas entradas quantas quiser. Apenas aquelas cuja chave seja referenciada no texto é que serão incluidas na listagem de bibliografia. Footnotes1 will be numbered and shown in the bottom of the page. A Tabela 3.1 ilustra alguns conceitos importantes associados à contrução de tabelas: i) Não usar linhas verticais; ii) A legenda deve ficar por cima da tabela; iii) Usar as macros \toprule, \midrule e \bottomrule para fazer a linha horizontal superior, interiores e inferior, respectivamente. Tabela 3.1: Test results summary. Test [3] Connection [1] Coordinates'03 [1] Local Variable [1] NASA [2] Coordinates'04 [2] Buffer [2] Double-Check [4] StringBuffer [9] Account [9] Jigsaw [9] Over-reporting [9] Under-reporting [5] Allocate Vector Knight Moves Total Anomalies 2 1 1 1 1 0 0 1 1 1 0 1 1 1 12 Warnings 2 4 2 1 4 7 2 0 1 2 2 1 2 3 33 Correct 1 1 1 1 1 0 0 0 1 1 0 1 1 1 10 Categories C 2B, 1C A -- 3C 2A, 1B, 2C, 2D 1A, 1B -- -- C 1A, 1C -- C 2B 5A, 6B, 10C, 2D Missed 1 0 0 0 0 0 0 1 0 0 0 0 0 0 2
-
-As figuras a inserir no documento deverão ser de qualidade, preferencialmente em formato vectorial (PDF vectorial) e não em bitmap (PNG, JPG, etc). As imagens bitmap (Figura 3.2) não escalam bem e têm reflexos negativos na qualidade do seu docuemnto. Pelo contrário, as imagens vectoriais Figura 3.3 escalam muito tanto quanto o necessário sem degradar a qualidade da imagem. Só deve usar screenshots se não tive mesmo nenhuma alternativa. Em vez e gerar um screenshot, tente usar uma impressora virtual PDF e imprimir para um ficheiro PDF. Regra
-1 This is a simple footnote.
-
-15
-
-AT X T U TO R I A L W I T H E X A M P L E S CA P Í T U LO 3 . A S H O R T L E
-
-geral obterá um PDF vetorial. Mesmo que o seu PDF contenha imagens, elas terão sempre qualidade maior ou igual à que obteria com um screenshot. Para agregar várias figuras numa única. . . Poderá assim referenciar o conjunto 3.4, a priemira delas 3.4a ou a segunda 3.4b. Para incluir listagens de código no seu documento, deverá incluir o pacote listings e depois usar o ambiente lstlisting, como exemplificado na Listagem 3.1.
-
-Listagem 3.1: Hello World
-1 2 3 4 5 6 7 8 9
-
-/** * The HelloWorldApp class implements an application that * simply prints "Hello World!" to standard output. */ class HelloWorldApp {% public static void main(String[] args) {% System.out.println("Hello World!"); // Display the string. } }
-
-3.8
-
-Equações
-
-O LaTeX é uma ferramenta poderosa para escrever em estilo matemático. Permite inserir fórmulas no meio do texto como por exemplo esta: ax2 + bx + c = 0. Também permite que as fórmulas sejam destacadas numa linha separada e centradas na página  -b ± b2 - 4ac x= 2a  -b ± b2 - 4ac x= 2a ou numeradas aaa que depois pode ser referida no texto como sendo a equação 3.1 aa (3.1)
-
-a b c
-
-(3.2) (3.3) (3.4) (3.5)
-
-16
-
-3 . 8 . E QUAÇÕ E S
-
-Figura 3.2: Imagem em formato bitmap (JPG) 17
-
-AT X T U TO R I A L W I T H E X A M P L E S CA P Í T U LO 3 . A S H O R T L E
-
-Figura 3.3: Imagem em formato PDF vectorial 18
-
-3 . 8 . E QUAÇÕ E S
-
-a Novelo de lã
-
-b Tempestade com neve
-
-Figura 3.4: Exemplo de utilização de subbottom
-
-19
-
-Bibliografia
-[1] [2] C. Artho, K. Havelund e A. Biere. High-Level Data Races. 2003. u r l : citeseer.ist. psu.edu/artho03highlevel.html. C. Artho, K. Havelund e A. Biere. "Using Block-Local Atomicity to Detect StaleValue Concurrency Errors". Em: ATVA. Ed. por F. Wang. Vol. 3299. Lecture Notes in Computer Science. Springer, 2004, pp. 150­164. i s b n : 3-540-23610-4. [3] N. E. Beckman, K. Bierhoff e J. Aldrich. "Verifying Correct Usage of Atomic Blocks and Typestate". Em: SIGPLAN Not. 43.10 (2008), pp. 227­244. i s s n : 0362-1340. doi : http://doi.acm.org/10.1145/1449955.1449783. [4] C. Flanagan e S. N. Freund. "Atomizer: a dynamic atomicity checker for multithreaded programs". Em: POPL '04: Proceedings of the 31st ACM SIGPLAN-SIGACT symposium on Principles of programming languages. Venice, Italy: ACM, 2004, pp. 256­ 267. i s b n : 1-58113-729-X. d o i : http://doi.acm.org/10.1145/964001.964023. [5] [6] [7] IBM's Concurrency Testing Repository. J. E. B. Moss. Nested transactions: an approach to reliable distributed computing. Cambridge, MA, USA: Massachusetts Institute of Technology, 1985. isbn : 0-262-13200-1. N. Shavit e D. Touitou. "Software transactional memory". Em: PODC '95: Proceedings of the fourteenth annual ACM symposium on Principles of distributed computing. Ottowa, Ontario, Canada: ACM, 1995, pp. 204­213. isbn : 0-89791-710-3. doi : http://doi. acm.org/10.1145/224964.224987. [8] [9] A. Silberschatz, H. F. Korth e S. Sudarshan. Database System Concepts. Fifth. McGrawHill, 2006. i s b n : 007-124476-X. C. von Praun e T. R. Gross. "Static Detection of Atomicity Violations in ObjectOriented Programs". Em: Journal of Object Technology. 2003, p. 2004.
-
-21
-
-
