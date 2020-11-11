@@ -1,0 +1,223 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Costumization for ESEP/ESENF (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% RGB = 41, 141, 187
+
+% Univesity
+\university[pt]={Escola Superior de Enfermagem do Porto}
+\university[en]={Nursing School of Porto}%%TBD
+\university[fr]={Escola Superior de Enfermagem do Porto}%%TBD
+\university[it]={Escola Superior de Enfermagem do Porto}%%TBD
+
+% Faculty / School
+\faculty[pt]={Escola Superior de Enfermagem do Porto}
+\faculty[en]={Nursing School of Porto}%%TBD
+\faculty[fr]={Escola Superior de Enfermagem do Porto}%%TBD
+\faculty[it]={Escola Superior de Enfermagem do Porto}%%TBD
+
+% Scientific filed
+\majorfield[pt]={«Área Científica»}
+\majorfield[en]={“Scientific Field”}
+
+% Degree name
+\degreename[pt]={Enfermagem em Saúde Mental e Psiquiatria}
+\degreename[en]={“Degree Name”}
+
+% Comiittee printing order
+\committeeorder[all]={c,r,m}% 
+
+% Cover background images
+\thesiscover[phd,front]={ESEP-cover}
+\thesiscover[phdplan,front]={ESEP-cover}
+\thesiscover[phdprop,front]={ESEP-cover}
+\thesiscover[msc,front]={ESEP-cover}
+\thesiscover[mscplan,front]={ESEP-cover}
+\thesiscover[bsc,front]={ESEP-cover}
+\thesiscover[plain,front]={ESEP-cover}
+\thesiscover[phd,cdfront]={}
+\thesiscover[phd,cdinlay]={}
+\thesiscover[phdplan,cdfront]={}
+\thesiscover[phdplan,cdinlay]={}
+\thesiscover[phdprop,cdfront]={}
+\thesiscover[phdprop,cdinlay]={}
+\thesiscover[msc,cdfront]={}
+\thesiscover[msc,cdinlay]={}
+\thesiscover[mscplan,cdfront]={}
+\thesiscover[mscplan,cdinlay]={}
+\thesiscover[bsc,cdfront]={}
+\thesiscover[bsc,cdinlay]={}
+\thesiscover[plain,cdfront]={}
+\thesiscover[plain,cdinlay]={}
+
+% Spine info
+\spine[logo]={ESEP-logo_horizontal}
+\spine[author]={\theauthorshortname}
+\spine[title]={\thetitle}
+\spine[year]={\thedateyear}
+
+% Set margins for "normal" pages
+\margin[screen,top]={2.5cm}
+\margin[screen,bottom]={2.5cm}
+\margin[screen,left]={3.25cm}
+\margin[screen,right]={3.25cm}
+\margin[paper,top]={2.5cm}
+\margin[paper,bottom]={2.5cm}
+\margin[paper,left]={4cm}
+\margin[paper,right]={2.5cm}
+
+% Set margins for cover pages
+\margin[phd,top]={1.0cm}
+\margin[phd,bottom]={1.0cm}
+\margin[phd,left]={7cm}
+\margin[phd,right]={0.5cm}
+\margin[phdplan,top]={1.0cm}
+\margin[phdplan,bottom]={1.0cm}
+\margin[phdplan,left]={1.0cm}
+\margin[phdplan,right]={1.0cm}
+\margin[phdprop,top]={1.0cm}
+\margin[phdprop,bottom]={1.0cm}
+\margin[phdprop,left]={1.0cm}
+\margin[phdprop,right]={1.0cm}
+\margin[msc,top]={1.0cm}
+\margin[msc,bottom]={0.0cm}
+\margin[msc,left]={7cm}
+\margin[msc,right]={0.5cm}
+\margin[mscplan,top]={1.0cm}
+\margin[mscplan,bottom]={1.0cm}
+\margin[mscplan,left]={1.0cm}
+\margin[mscplan,right]={1.0cm}
+\margin[bsc,top]={1.0cm}
+\margin[bsc,bottom]={1.0cm}
+\margin[bsc,left]={1.0cm}
+\margin[bsc,right]={1.0cm}
+\margin[plain,top]={1.0cm}
+\margin[plain,bottom]={1.0cm}
+\margin[plain,left]={1.0cm}
+\margin[plain,right]={1.0cm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NOVA guidelines:
+% The pages should be numbered consecutively at the bottom centre of the
+% page.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makepagestyle{novathesis@myvf} 
+\makeoddfoot{novathesis@myvf}{}{\thepage}{} 
+\makeevenfoot{novathesis@myvf}{}{\thepage}{} 
+\makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
+\makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
+\makeoddhead{novathesis@myvf}{}{}{\small\textsc{\leftmark}}
+\pagestyle{novathesis@myvf}
+%
+%\frenchspacing
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \@printcommitteeauxtrue
+
+% ESEP logo
+\coveritem[c]{2.2cm}{%
+  \coverbackground
+  \noindent
+  \fontsize{15}{15}\selectfont
+  \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty[\novathesis@opt@coverlang]}}
+}
+
+% % Degree name
+\coveritem[c]{0.5cm}{%
+  \fontsize{15}{15}\selectfont
+  \thedegreename[\novathesis@opt@coverlang]
+}
+
+% % Title of Dissertation
+\coveritem[c]{6.5cm}{%
+  \fontsize{15}{15}\selectfont
+  \expandafter\MakeUppercase\expandafter{\covertitle}\\[1ex]
+  \fontsize{12}{12}\selectfont
+  Dissertação
+}
+
+% Author name
+\coveritem[c]{3}{%
+  \fontsize{12}{12}\selectfont
+  \textbf{\theauthorname}
+}
+
+% Date
+\coveritem[c]{1}{%
+  \fontsize{12}{12}\selectfont
+  \ifdraftdoc
+    \textbf{DRAFT: \today}
+  \else
+    \thedatemonth, \thedateyear
+  \fi
+}
+
+% % Final space
+\coveritem[c]{1cm}{%
+  ~
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \@printcommitteeauxtrue
+
+% ESEP logo
+\secondcoveritem[c]{2.2cm}{%
+  \coverbackground
+  \fontsize{15}{15}\selectfont
+  \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty[\novathesis@opt@coverlang]}}
+}
+
+% % Degree name
+\secondcoveritem[c]{0.5cm}{%
+  \fontsize{15}{15}\selectfont
+  \thedegreename[\novathesis@opt@coverlang]
+}
+
+% % Title of Dissertation
+\secondcoveritem[c]{6.5cm}{%
+  \fontsize{15}{15}\selectfont
+  \expandafter\MakeUppercase\expandafter{\covertitle}\\[1ex]
+  \fontsize{12}{12}\selectfont
+  \expandafter\MakeUppercase\expandafter{\titleEN}
+}
+
+% Advisers
+\secondcoveritem[c]{1}{%
+  \fontsize{11}{11}\selectfont
+  \parbox{0.80\textwidth}%
+  {\printadvisers}
+}
+
+% Author name
+\secondcoveritem[c]{1}{%
+  \fontsize{12}{12}\selectfont
+  \textbf{\theauthorname}
+}
+
+% Date
+\secondcoveritem[c]{1}{%
+  \fontsize{12}{12}\selectfont
+  \ifdraftdoc
+    \textbf{DRAFT: \today}
+  \else
+    \thedatemonth, \thedateyear
+  \fi
+}
+
+% % Final space
+\secondcoveritem[c]{1cm}{%
+  ~
+}
+
+
