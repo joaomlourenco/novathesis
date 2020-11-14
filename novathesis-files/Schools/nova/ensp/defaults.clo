@@ -119,7 +119,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \@printcommitteeauxtrue
+\newcover
 
 % ENSP logo
 \coveritem[c]{1cm}{%
@@ -162,7 +162,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \@printcommitteeauxtrue
 
 % ENSP logo
 \secondcoveritem[c]{1cm}{%
@@ -214,27 +213,3 @@
 \secondcoveritem[c]{1cm}{%
   ~
 }
-
-
-%
-% % Academic qualifications
-% \coveritem[c]{0.25cm}{%
-%   \fontfamily{phv}\fontsize{11}{11}\selectfont
-%   \theauthordegree
-% }
-%
-%
-%
-% % Committee — only print the committee for the main classes
-% \coveritem[r]{2}{%
-% \if@printcommitteeaux
-%   \ifthenelse{%
-%     \equal{\option{/novathesis/docdegree}}{bsc}% 
-%     \OR\equal{\option{/novathesis/docdegree}}{msc}%
-%     \OR\equal{\option{/novathesis/docdegree}}{phd}}%
-%   {\fontfamily{phv}\fontsize{10}{10}\selectfont\printcommittee}%
-%   {}%
-% \fi
-% }
-%
-%

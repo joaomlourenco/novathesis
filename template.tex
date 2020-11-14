@@ -7,7 +7,7 @@
 %% To view a copy of this license,
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2020/11/11 [5.1.0]
+%% Version 2020/11/14 [5.1.1]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade NOVA de Lisboa
@@ -39,6 +39,7 @@
 %% All class options will be passed to memoir
 \documentclass[a4paper, 11pt, final]{novathesis}
 
+
 %%============================================================
 %%  BEGINING OF TEMPLATE COSTUMIZATION
 %%============================================================
@@ -49,12 +50,14 @@
 % \ntsetup{docdegree=msc}       % phd, phdplan, phdprop, msc, mscplan, bsc
 % \ntsetup{school=nova/fcsh}    % nova/fct, nova/fcsh, nova/ims, ul/ist, ul/fc, ipl/isel
 % \ntsetup{lang=en}             % pt, en, fr, it
+% \ntsetup{linkscolor=SteelBlue}% For valid color names, look at "svgname" in the "xcolor"
+%                               % package documentation
 % \ntsetup{media=paper}         % screen, paper
 %                               % SCREEN ==> left and right margins are equal, colored links
 %                               % PAPER ==> left and right margins are different, black links
-% \ntsetup{printcommittee=false}% set to 'false' from versins under evaluation. Only final 
+% \ntsetup{printcommittee=false}% set to 'false' from versins under evaluation. Only final
 %                               % should have the list of committee memebers
-% \ntsetup{secondcover=true}    % print a second cover page (for some schools it is slightly 
+% \ntsetup{secondcover=true}    % print a second cover page (for some schools it is slightly
 %                               % different)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -64,31 +67,31 @@
 % \ntsetup{cdcover=true}        % (Set to 'true' for PRINTING the CD cover)
 % \ntsetup{coverlang=en}        % defaults to main language
 % \ntsetup{copyrightlang=en}    % defaults to main language
-% \ntsetup{fontstyle=garamond   % baskervaldx bookman charter ebgaramond fbb fourier garamond
+% \ntsetup{fontstyle=bookman}  % baskervaldx bookman charter ebgaramond fbb fourier garamond
 %                               % heuristica kpfonts(*) libertine mathpazo1 mathpazo2 newcent
 %                               % newpx newtx
 % \ntsetup{chapstyle=default}   % bianchi bluebox brotherton dash default elegant(*) ell ger
 %                               % hansen ist jenor lyhne madsen pedersen veelo vz14 vz34 vz43
 % \ntsetup{otherlistsat=back}   % front(*)} back
 % \ntsetup{aftercover=true}     % false=don't true=include the aftercover file (even if exists)
-% \ntsetup{linkscolor=SteelBlue}% For valid color names, look at "svgname" in the "xcolor"
-%                               % package documentation
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% BIBLATEX CONFIGURATION %%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% NUMBERED ORDER BY CITATION
-% \ntsetup{biblatex={style=numeric-comp, sortcites=true, sorting=none}}
-%% NUMBERED ORDER BY LAST NAME OF FIRST AUTHOR
-% \ntsetup{biblatex={style=numeric-comp, sortcites=true, sorting=nyt}}
-%% APLHA CITATION ORDER BY LAST NAME OF FIRST AUTHOR
-% \ntsetup{biblatex={style=alphabetic, sortcites=true, sorting=nyt}}
-%% APA-LIKE CITATION
-% \ntsetup{biblatex={natbib=true, style=apa, maxcitenames=2}}
-
 %% OTHER BIBLATEX OPTIONS
 \ntsetup{biblatex/.push={backend=biber, giveninits=true, hyperref=true}}
+
+%% Uncomment the preferred style
+
+%% NUMBERED ORDER BY CITATION
+% \ntsetup{biblatex/.push={style=numeric-comp, sortcites=true, sorting=none}}
+%% NUMBERED ORDER BY LAST NAME OF FIRST AUTHOR
+% \ntsetup{biblatex/.push={style=numeric-comp, sortcites=true, sorting=nyt}}
+%% APLHA CITATION ORDER BY LAST NAME OF FIRST AUTHOR
+% \ntsetup{biblatex/.push={style=alphabetic, sortcites=true, sorting=nyt}}
+%% APA-LIKE CITATION
+% \ntsetup{biblatex/.push={natbib=true, style=apa6, maxcitenames=2}}
 
 %%============================================================
 %%  END OF TEMPLATE COSTUMIZATION

@@ -118,59 +118,56 @@
 %\frenchspacing
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\@printcommitteeauxtrue
+\newcover
 
 % Author name
-\coveritem[c]{0cm}{%
+\coveritem{c}{0cm}{%
   \coverbackground
   \fontfamily{phv}\fontsize{14}{14}\selectfont
   \textbf{\theauthorname}
 }
 
 % Academic qualifications
-\coveritem[c]{0.25cm}{%
+\coveritem{c}{0.25cm}{%
   \fontfamily{phv}\fontsize{11}{11}\selectfont
   \theauthordegree
 }
 
 % % Title of Dissertation
-\coveritem[c]{4.5cm}{%
+\coveritem{c}{4.5cm}{%
   \fontfamily{phv}\fontsize{16}{16}\selectfont
   \textbf{\covertitle}
 }
 
 % Degree
-\coveritem[c]{1.5cm}{%
+\coveritem{c}{1.5cm}{%
   \fontfamily{phv}\fontsize{11}{11}\selectfont
   \thepresentationtext
 }
 
 % Advisers
-\coveritem[c]{2}{%
+\coveritem{c}{2}{%
   \fontfamily{phv}\fontsize{12}{12}\selectfont
   \printadvisers
 }
 
 
 % Committee — only print the committee for the main classes
-\coveritem[r]{2}{%
-\if@printcommitteeaux
+\coveritem{r}{2}{%
   \ifthenelse{%
     \equal{\option{/novathesis/docdegree}}{bsc}%
     \OR\equal{\option{/novathesis/docdegree}}{msc}%
     \OR\equal{\option{/novathesis/docdegree}}{phd}}%
   {\fontfamily{phv}\fontsize{10}{10}\selectfont\printcommittee}%
   {}%
-\fi
 }
 
 
 % Date
-\coveritem[c]{4}{%
+\coveritem{c}{4}{%
   \fontfamily{phv}\fontsize{11}{11}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
@@ -178,3 +175,4 @@
     \textbf{\thedatemonth, \thedateyear}
   \fi
 }
+

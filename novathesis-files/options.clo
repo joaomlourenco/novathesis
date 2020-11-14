@@ -62,9 +62,24 @@
   % %novathesis@opt@aftercover
   , aftercover/.new toggle = false
   % %novathesis@opt@spine
-  , spine/.new toggle
+  , spine/.new cmd = {%
+      \AtEndDocument{%
+        \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/spine.clo}%
+          {}%
+          {\input{novathesis-files/spine.clo}}%
+        \printspine%
+      }%
+  }
   % %novathesis@opt@cdcover
-  , cdcover/.new toggle
+  , cdcover/.new cmd = {%
+      \AtEndDocument{%
+      \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/cdcover.clo}%
+        {}%
+        {\input{novathesis-files/cdcover.clo}}%
+      \printcdcover%  
+      \printcdinlay%
+      }%
+  }
   % %novathesis@opt@biblatex
   , biblatex/.new list
   % %novathesis@opt@memoir
@@ -72,15 +87,46 @@
   % %novathesis@opt@media
   , media/.new choice = {screen, paper}
   %novathesis@opt@linkscolor
-  , linkscolor/.new cmd = {\gdef\nt@linkscolor{#1}}
-  , setlinkscolor/.new cmd = {\PassOptionsToPackage{allcolors=#1}{hyperref}}
+  , linkscolor/.new cmd = {\@ifpackageloaded{hyperref}{\hypersetup{allcolors=#1}}{\PassOptionsToPackage{allcolors=#1}{hyperref}}}
   , biblatex loaded/.new toggle
+  , handler/school/.new cmd = {%
+    \typeout{NT HANDLER SCHOOL ROUTINE #1}
+    \prependtographicspath{{novathesis-files/Schools/#1/Images/}}
+    \InputIfFileExists{novathesis-files/Schools/#1/defaults.clo}{}{\PackageWarining{novathesis}{Missing defaults for #1}}
+  }
+  , handler/media/.new cmd = {%
+    \setulmarginsandblock%
+      {\themargin[#1,top]}%
+      {\themargin[#1,bottom]}%
+      {*}%
+    \setlrmarginsandblock%
+      {\themargin[#1,left]}%
+      {\themargin[#1,right]}%
+      {*}%
+    \checkandfixthelayout%
+    \ifthenelse{\equal{\option{/novathesis/media}}{paper}}%
+      {\options{/novathesis/linkscolor=black}}
+      {}
+  }
+  , handler/chapstyle/.new cmd = {%
+    \InputIfFileExists{novathesis-files/ChapStyles/#1.clo}{}{\PackageWarining{novathesis}{Invalid Chapter Style: #1}}
+  }
+  , handler/fontstyle/.new cmd = {%
+    \InputIfFileExists{novathesis-files/FontStyles/#1.clo}{}{\PackageWarining{novathesis}{Invalid Font Style: #1}}
+  }
 }
 
+\def\@ntfirstof#1=#2\@nil{#1}
+\def\@ntsecondof#1=#2\@nil{#2}
 
 \newcommand{\ntsetup}[1]{%
-  \typeout{'NTSETUP = '#1}
-  \options{/novathesis/#1}%
+  \edef\@nt@keyval{#1}
+  \edef\@nt@opt{\@ntfirstof#1\@nil}
+  \edef\@nt@value{\@ntsecondof#1\@nil}
+  \typeout{'NT SETUP = '[\@nt@keyval]~/~[\@nt@opt]~/~[\@nt@value]}
+  \options{/novathesis/\@nt@opt = \@nt@value}%
+  \typeout{'NT HANDLER = '/novathesis/handler/\@nt@opt}%
+  \option{/novathesis/handler/\@nt@opt}
 }
 
 
@@ -101,7 +147,7 @@
     {\edef\nt@alllangs{\nt@alllangs,main=\option{/novathesis/langshorttolong}}}%
     {\edef\nt@alllangs{\nt@alllangs,\option{/novathesis/langshorttolong}}}%
 }
-\typeout{'PASSING TO BABEL = '\nt@alllangs}
+\typeout{'NT PASSING TO BABEL = '\nt@alllangs}
 \PassOptionsToPackage{\nt@alllangs}{babel}
 
 % --------------------------------------------------------
@@ -115,7 +161,7 @@
 
 % % MEMOIR OPTIONS
 % \letoptionlist{/novathesis/memoir}\nt@tmp
-% \typeout{'MEMOIR = '\nt@tmp}
+% \typeout{'NT MEMOIR = '\nt@tmp}
 % \PassOptionsToClass{\nt@tmp}{memoir}
 % \optionlistdo{/novathesis/memoir}{%
 %   \PassOptionsToClass{#1}{memoir}%
@@ -124,38 +170,38 @@
 
 % --------------------------------------------------------
 % PRINT BOOK SPINE
-	\ifthenelse{\equal{\option{/novathesis/spine}}{true}}{%
-    \AtEndDocument{%
-    \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/spine.clo}%
-                      {}
-                      {\input{novathesis-files/spine.clo}}%
-    \printspine%
-    }%
-  }{}%
+  % \ifthenelse{\equal{\option{/novathesis/spine}}{true}}{%
+  %     \AtEndDocument{%
+  %     \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/spine.clo}%
+  %                       {}
+  %                       {\input{novathesis-files/spine.clo}}%
+  %     \printspine%
+  %     }%
+  %   }{}%
 
 
 % --------------------------------------------------------
 % PRINT CD COVER
-	\ifthenelse{\equal{\option{/novathesis/cdcover}}{true}}{%
-    \AtEndDocument{%
-    \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/cdcover.clo}%
-                      {}
-                      {\input{novathesis-files/cdcover.clo}}%
-    % \begin{landscape}
-    \printcdcover%  
-    % \end{landscape}
-    \printcdinlay%
-    }%
-  }{}
+  % \ifthenelse{\equal{\option{/novathesis/cdcover}}{true}}{%
+  %     \AtEndDocument{%
+  %     \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/cdcover.clo}%
+  %                       {}
+  %                       {\input{novathesis-files/cdcover.clo}}%
+  %     % \begin{landscape}
+  %     \printcdcover%
+  %     % \end{landscape}
+  %     \printcdinlay%
+  %     }%
+  %   }{}
 
 % --------------------------------------------------------
 % DESTINATION MEDIA
 % If destination media is paper, remove hyoerlink colors from PDF
-\ifthenelse{\equal{\option{/novathesis/media}}{paper}}%
-  {\options{/novathesis/setlinkscolor=black}}
-  {\options{/novathesis/setlinkscolor=\nt@linkscolor}}
+% \ifthenelse{\equal{\option{/novathesis/media}}{paper}}%
+%   {\options{/novathesis/linkscolor=black}}
+%   {\options{/novathesis/linkscolor=\nt@linkscolor}}
 
 
 \letoptionlist{/options/remaining}\nt@remaining
-\typeout{'PASSING TO MEMOIR='\nt@remaining}
+\typeout{'NT PASSING TO MEMOIR='\nt@remaining}
 \PassOptionsToClass{\nt@remaining}{memoir}

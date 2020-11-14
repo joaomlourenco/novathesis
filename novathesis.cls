@@ -8,7 +8,7 @@
 %% To view a copy of this license,
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2020/11/11 [5.1.0]
+%% Version 2020/11/14 [5.1.1]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade NOVA de Lisboa
@@ -48,7 +48,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{novathesis}[2020/11/11 novathesis template]
+\ProvidesClass{novathesis}[2020/11/14 novathesis template]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -101,7 +101,7 @@
 \newcommand{\selectthelanguage}[1]{%
   \options{/novathesis/langshorttolong=#1}
   \edef\nt@tmp{\option{/novathesis/langshorttolong}}%
-  \typeout{'SWITCHING LANG TO = '\nt@tmp}
+  \typeout{'NT SWITCHING LANG TO = '\nt@tmp}
   \expandafter\selectlanguage\expandafter{\nt@tmp}%
 }
 
@@ -154,11 +154,13 @@
 %% Cover definition macros
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%% PUT THIS IN A MORE ADEQUATE PLACE
-\newif\if@printcommitteeaux
-\@printcommitteeauxfalse % aux variable
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\newcover}{%
+  \let\novathesis@coveritem@list=\undefined
+  \let\novathesis@secondcoveritem@list=\undefined
+}
 
 \newcommand{\coverbackground}[1][\@nameuse{thesiscover\option{/novathesis/docdegree},front}]{%
   \ifthenelse{\equal{#1}{}}{}{%
@@ -168,11 +170,13 @@
   }%
 }
 
-\newcommand{\coveritem}[3][c]{%
+\newcommand{\coveritem}[3]{%
+  \typeout{NT COVER 1 BLOCK}
   \listcsadd{novathesis@coveritem@list}{[#1][#2]{#3}}%
 }
 
-\newcommand{\secondcoveritem}[3][c]{%
+\newcommand{\secondcoveritem}[3]{%
+  \typeout{NT COVER 2 BLOCK}
   \listcsadd{novathesis@secondcoveritem@list}{[#1][#2]{#3}}%
 }
 
@@ -205,9 +209,6 @@
 \newcommand{\rawprintcoveritems}[1]{%
   \ifthenelse{\isundefined{\novathesis@coveritem@list}}{}{%
 	\forlistcsloop{\novathesis@printcoveritem}{#1}}%
-  %   \ifthenelse{\isundefined{\novathesis@secondcoveritem@list}}{}{%
-  %   \clearforchapter
-  % \forlistcsloop{\novathesis@printsecondcoveritems}{#1}}%
 }
 
 \newcommand{\printcoveritems}{%
@@ -222,10 +223,26 @@
 \newlength{\mpheight}%
 \newsavebox{\novathesis@coverbox}%
 
-\newcommand{\printcoverpage}{%
-  \thispagestyle{empty}%
-  \selectthelanguage{\option{/novathesis/coverlang}}%
 
+
+\newcommand{\printcoverpage}{%
+  % \thispagestyle{empty}%
+  \selectthelanguage{\option{/novathesis/coverlang}}%
+  \printthecover%
+  \clearforchapter%
+  \ifthenelse{\equal{\option{/novathesis/secondcover}}{true}}%
+    {% SECOND COVER TRUE
+      \ifcsdef{novathesis@secondcoveritem@list}%
+        {\printthecover[second]}%
+        {\printthecover}%
+        \clearforchapter
+    }%
+    {}% NO SECOND COVER
+  \selectthelanguage{\option{/novathesis/mainlang}}%
+}
+
+\newcommand{\printthecover}[1][]{%
+  \thispagestyle{empty}%
   \setlength{\mpwidth}{\dimexpr%
     \paperwidth%
       -\themargin[\option{/novathesis/docdegree},left]%
@@ -238,7 +255,7 @@
 
   \sbox{\novathesis@coverbox}{%
     \parbox[t][\mpheight][t]{\mpwidth}{%
-      \printcoveritems%
+      \@nameuse{print#1coveritems}%
     }%
   }%
   \AddToShipoutPictureFG*{%
@@ -250,8 +267,13 @@
     }%
   }%
   ~% This space is important here so that the cover page is not empty anymore!
+  \ifcsdef{@the#1coverbackpage}{\@nameuse{@the#1coverbackpage}}{}
+}
+
+
+\newcommand{\@firstcoverbackpage}{%
   \newpage
-  \thispagestyle{empty}
+  \thispagestyle{empty}%
   \null\vfill%
   {\scriptsize%
       \begin{Spacing}{1}%
@@ -260,42 +282,6 @@
         \hypersetup{allcolors=white}\textcolor{white}{\theacknowledgmentsstr[\option{/novathesis/coverlang}]}%
       \end{Spacing}%
   }%  
-  \clearforchapter%
-
-  %% Print second conver page if school is ul/fc
-  \@printcommitteeauxtrue
-  \setcounter{@novathesis@cnt}{0}%	reset counter used in the name listing
-  \ifthenelse{\equal{\option{/novathesis/secondcover}}{true}}%
-	{
-		\thispagestyle{empty}%
-	  \selectthelanguage{\option{/novathesis/coverlang}}%
-	  \setlength{\mpwidth}{\dimexpr%
-	    \paperwidth%
-	      -\themargin[\option{/novathesis/docdegree},left]%
-	      -\themargin[\option{/novathesis/docdegree},right]}%
-	  \setlength{\mpheight}{\dimexpr%
-	    \paperheight%
-	      -\themargin[\option{/novathesis/docdegree},top]%
-	      -\themargin[\option{/novathesis/docdegree},bottom]}%
-	  \newsavebox{\novathesis@aftercoverbox}%
-	  \sbox{\novathesis@aftercoverbox}{%
-	    \parbox[t][\mpheight][t]{\mpwidth}{%
-        \ifthenelse{\isundefined{\novathesis@secondcoveritem@list}}{\printcoveritems}{\printsecondcoveritems}
-	    }%
-	  }%
-	  \AddToShipoutPictureFG*{%
-	    \AtPageUpperLeft{%
-	      \put(%
-	        \LenToUnit{\themargin[\option{/novathesis/docdegree},left]},%
-	        -\LenToUnit{\themargin[\option{/novathesis/docdegree},top]})%
-	        {\usebox{\novathesis@aftercoverbox}}%
-	    }%
-	  }%
-	  ~% This space is important here so that the cover page is not empty anymore!
-	  \clearforchapter%
-  }%
-  {}%
-  \selectthelanguage{\option{/novathesis/mainlang}}%
 }
 
 \newcommand{\printbackcoverpage}{%
@@ -316,8 +302,6 @@
 \newcommand{\aftercoverfile}[1]{%
   \renewcommand{\novathesis@aftercover@file}{#1}%
 }
-
-
 
 \newcommand{\printaftercover}{%
   \ifthenelse{\equal{\option{/novathesis/aftercover}}{true}}%
@@ -405,6 +389,7 @@
 % --------------------------------------------------------
 % Include the file with the defaults
 \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/defaults.clo}{}{}
+
 
 
 
@@ -634,7 +619,6 @@
 
 
 \newcounter{@novathesis@cnt}%
-\setcounter{@novathesis@cnt}{0}%
 \newcommand{\printadvisersaslist@ii}[1]{%
   \stepcounter{@novathesis@cnt}%
   \ifthenelse{\equal{\value{@novathesis@cnt}}{1}}%
@@ -670,6 +654,7 @@
 \newcommand{\printadvisersaslist}{%
   \makelistwithalladvisers%
   \ifcsname @novathesis@listwithhalladvisers\endcsname%
+    \setcounter{@novathesis@cnt}{0}%  
     \forlistcsloop{\printadvisersaslist@ii}{@novathesis@listwithhalladvisers}%
   \fi%
 }
@@ -679,7 +664,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PAGE LAYOUT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\synctex=1 % Uase synctex
+\synctex=1 % Use synctex
 \brokenpenalty=10000
 
 \settypeoutlayoutunit{mm}
@@ -996,7 +981,7 @@
   \iftoggle{/novathesis/biblatex loaded}%
     {}%
     { \letoptionlist{/novathesis/biblatex}\nt@tmp
-      \typeout{'PASSING TO BIBLATEX= '\nt@tmp}
+      \typeout{'NT PASSING TO BIBLATEX= '\nt@tmp}
       \RequirePackage[\nt@tmp]{biblatex}%
       \DeclareLanguageMapping{english}{american-apa}%
       \DeclareLanguageMapping{portuguese}{portuguese-apa}%

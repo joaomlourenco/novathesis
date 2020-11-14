@@ -182,6 +182,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcover
 
 % Temporary macro to use in conditional expressions;
 
@@ -278,7 +279,6 @@
 
 % Committee — only print the committee for the main classes
 \coveritem[c]{1}{%
-\if@printcommitteeaux
   \ifthenelse{%
   \equal{\option{/novathesis/docdegree}}{bsc}%
   \OR\equal{\option{/novathesis/docdegree}}{msc}%
@@ -288,7 +288,6 @@
 		\printcommittee%
 	}%
   {}%
-\fi
 }
 
 % Document purpose
