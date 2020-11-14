@@ -122,30 +122,30 @@
 \newcover
 
 % ENSP logo
-\coveritem[c]{1cm}{%
+\coveritem{c}{1cm}{%
   \noindent\includegraphics[width=0.4\textwidth]{nova-ensp-logo-pt}
 }
 
 % % Title of Dissertation
-\coveritem[c]{1}{%
+\coveritem{c}{1}{%
   \fontfamily{phv}\fontsize{14}{14}\selectfont
   \textbf{\covertitle}
 }
 
 % % Title of Dissertation
-\coveritem[c]{1cm}{%
+\coveritem{c}{1cm}{%
   \fontfamily{phv}\fontsize{14}{14}\selectfont
   \thedegreename[\option{/novathesis/coverlang}]
 }
 
 % Author name
-\coveritem[c]{1}{%
+\coveritem{c}{1}{%
   \fontfamily{phv}\fontsize{12}{12}\selectfont
   \textbf{\theauthorname}
 }
 
 % Date
-\coveritem[c]{1}{%
+\coveritem{c}{1}{%
   \fontfamily{phv}\fontsize{12}{12}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
@@ -155,7 +155,7 @@
 }
 
 % % Final space
-\coveritem[c]{1cm}{%
+\coveritem{c}{1cm}{%
   ~
 }
 
@@ -164,43 +164,43 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % ENSP logo
-\secondcoveritem[c]{1cm}{%
+\secondcoveritem{c}{1cm}{%
   \noindent\includegraphics[width=0.4\textwidth]{nova-ensp-logo-pt}
 }
 
 % % Title of Dissertation
-\secondcoveritem[c]{1}{%
+\secondcoveritem{c}{1}{%
   \fontfamily{phv}\fontsize{14}{14}\selectfont
   \textbf{\covertitle}
 }
 
 % % Title of Dissertation
-\secondcoveritem[c]{1cm}{%
+\secondcoveritem{c}{1cm}{%
   \fontfamily{phv}\fontsize{14}{14}\selectfont
   \themajorfield[\option{/novathesis/coverlang}]
 }
 
 % Author name
-\secondcoveritem[c]{1}{%
+\secondcoveritem{c}{1}{%
   \fontfamily{phv}\fontsize{12}{12}\selectfont
   \textbf{\theauthorname}
 }
 
 % Degree
-\secondcoveritem[c]{1}{%
+\secondcoveritem{c}{1}{%
   \fontfamily{phv}\fontsize{11}{11}\selectfont
   \thepresentationtext
 }
 
 % Advisers
-\secondcoveritem[c]{1}{%
+\secondcoveritem{c}{1}{%
   \fontfamily{phv}\fontsize{12}{12}\selectfont
   \parbox{0.75\textwidth}%
   {\printadvisers}
 }
 
 % Date
-\secondcoveritem[c]{1}{%
+\secondcoveritem{c}{1}{%
   \fontfamily{phv}\fontsize{12}{12}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
@@ -210,6 +210,6 @@
 }
 
 % % Final space
-\secondcoveritem[c]{1cm}{%
+\secondcoveritem{c}{1cm}{%
   ~
 }

@@ -445,7 +445,7 @@
 % \newcommand{\thefrontpageimage}{\novathesis@undefined}
 %
 % \newcommand{\frontpageimage}[1]{%
-%   \renewcommand{\thefrontpageimage}{#1}%
+%   \def\thefrontpageimage{#1}%
 % }
 
 

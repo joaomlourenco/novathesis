@@ -122,7 +122,7 @@
 % \setlength{\cftchapternumwidth}{1.2\cftchapternumwidth}
 
 % Corrigir espaço para páginas com numeração romana na ToC
-\renewcommand{\@pnumwidth}{2em}
+% \renewcommand{\@pnumwidth}{2em} 
 
 % Espaçamento entre entradas na ToC
 % \setlength{\cftbeforesectionskip}{2mm}
@@ -133,31 +133,31 @@
 
 
 % Redefinir fonte de secção, subscção, etc…
-\newbox\s@ch@@ghtb@x
-\setbox\s@ch@@ghtb@x=\hbox{{\normalfont\Huge A}}
-\newcommand{\s@cnamfont}{\usefont{T1}{cmbr}{m}{sl}\fontsize{18}{20}\selectfont}
+% \newbox\s@ch@@ghtb@x
+% \setbox\s@ch@@ghtb@x=\hbox{{\normalfont\Huge A}}
+% \newcommand{\s@cnamfont}{\usefont{T1}{cmbr}{m}{sl}\fontsize{18}{20}\selectfont}
 % \font\p@rtnamfont=cmbr8 at 13mm % computer modern bright
 % \font\s@cnamfont=cmbrsl8 at \ht\s@ch@@ghtb@x % computer modern bright
-\renewcommand\section{\@startsection {section}{1}{0pt}%
-                                   {-3.5ex plus -0.5ex minus -.2ex}%
-                                   {2.3ex \@plus.2ex}%
-                                   {\s@cnamfont}}
-\renewcommand\subsection{\@startsection{subsection}{2}{0pt}%
-                                     {-2.5ex plus -0.5ex minus -.2ex}%
-                                     {1.5ex \@plus .2ex}%
-                                     {\normalfont\large\bfseries}}
-\renewcommand\subsubsection{\@startsection{subsubsection}{3}{0pt}%
-                                     {-2.5ex plus -0.5ex minus -.2ex}%
-                                     {1.5ex \@plus .2ex}%
-                                     {\normalfont\normalsize\bfseries}}
-\renewcommand\paragraph{\@startsection{paragraph}{4}{0pt}%
-                                    {0.25ex plus 0.5ex minus.2ex}%
-                                    {-1em}%
-                                    {\normalfont\normalsize\bfseries}}
-\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
-                                       {0.25ex plus 0.5ex minus .2ex}%
-                                       {-1em}%
-                                      {\normalfont\normalsize\bfseries}}
+% \renewcommand\section{\@startsection {section}{1}{0pt}%
+%                                    {-3.5ex plus -0.5ex minus -.2ex}%
+%                                    {2.3ex \@plus.2ex}%
+%                                    {\s@cnamfont}}
+% \renewcommand\subsection{\@startsection{subsection}{2}{0pt}%
+%                                      {-2.5ex plus -0.5ex minus -.2ex}%
+%                                      {1.5ex \@plus .2ex}%
+%                                      {\normalfont\large\bfseries}}
+% \renewcommand\subsubsection{\@startsection{subsubsection}{3}{0pt}%
+%                                      {-2.5ex plus -0.5ex minus -.2ex}%
+%                                      {1.5ex \@plus .2ex}%
+%                                      {\normalfont\normalsize\bfseries}}
+% \renewcommand\paragraph{\@startsection{paragraph}{4}{0pt}%
+%                                     {0.25ex plus 0.5ex minus.2ex}%
+%                                     {-1em}%
+%                                     {\normalfont\normalsize\bfseries}}
+% \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+%                                        {0.25ex plus 0.5ex minus .2ex}%
+%                                        {-1em}%
+%                                       {\normalfont\normalsize\bfseries}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
@@ -165,12 +165,12 @@
 \newcover
 
 % LOGO
-\coveritem[l]{0cm}{%
+\coveritem{l}{0cm}{%
   \includegraphics[width=5cm]{logoIST}%
 }
 
 % School
-\coveritem[c]{0.5cm}{%
+\coveritem{c}{0.5cm}{%
   \fontsize{16}{16}\selectfont%
   \textbf{\MakeUppercase{\theuniversity[\option{/novathesis/coverlang}]}}\\%
   \vspace{2mm}%
@@ -178,25 +178,25 @@
 }
 
 % % Title of Dissertation
-\coveritem[c]{1}{%
+\coveritem{c}{1}{%
   \fontsize{18}{20}\selectfont%
   \textbf{\covertitle}%
 }
 
 % Author name
-\coveritem[c]{1}{%
+\coveritem{c}{1}{%
   \fontsize{14}{14}\selectfont%
   \textbf{\theauthorname}%
 }
 
 % Degree
-\coveritem[c]{1}{%
+\coveritem{c}{1}{%
   \fontsize{12}{12}\selectfont%
   \thepresentationtext%
 }
 
 % Advisers
-\coveritem[c]{2}{%
+\coveritem{c}{2}{%
   \adviserstrfont[\option{/novathesis/coverlang}]={\bfseries}%
   \coadviserstrfont[\option{/novathesis/coverlang}]={\bfseries}%
   \fontsize{12}{12}\selectfont%
@@ -205,7 +205,7 @@
 
 
 % Committee — only print the committee for the main classes
-\coveritem[c]{1}{%
+\coveritem{c}{1}{%
   \ifthenelse{%
     \equal{\option{/novathesis/docdegree}}{bsc}%
     \OR\equal{\option{/novathesis/docdegree}}{msc}%
@@ -219,7 +219,7 @@
 
 
 % Date
-\coveritem[c]{1}{%
+\coveritem{c}{1}{%
   \fontsize{14}{14}\selectfont%
   \ifdraftdoc%
     \textbf{DRAFT: \today}%

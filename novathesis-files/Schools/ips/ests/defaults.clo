@@ -127,7 +127,7 @@
 % \setlength{\cftchapternumwidth}{1.2\cftchapternumwidth}
 
 % Corrigir espaço para páginas com numeração romana na ToC
-\renewcommand{\@pnumwidth}{2em}
+% \renewcommand{\@pnumwidth}{2em}
 
 % Espaçamento entre entradas na ToC
 % \setlength{\cftbeforesectionskip}{2mm}
@@ -169,21 +169,12 @@
 \newcover
 
 % LOGO
-\coveritem[c]{0cm}{%
+\coveritem{c}{0cm}{%
   \includegraphics[width=6cm]{ESTS-JPG}%
 }
-%
-% % School
-% \coveritem[c]{0.5cm}{%
-%   \fontsize{13}{13}\selectfont%
-%   \textbf{\MakeUppercase{\thefaculty[\option{/novathesis/coverlang}]}}\\%
-%   \fontsize{10}{10}\selectfont%
-%   \textbf{\MakeUppercase{\thedepartment[\option{/novathesis/coverlang}]}}%
-% }
-
 
 % Author name and Title
-\coveritem[l]{1}{%
+\coveritem{l}{1}{%
 % Author name
 \fontfamily{phv}
 \begin{minipage}[t]{0.37\textwidth}
@@ -199,7 +190,7 @@
 }
 
 % Photo
-\coveritem[l]{1}{
+\coveritem{l}{1}{
 \begin{minipage}[t]{0.37\textwidth}
   \ 
 \end{minipage}
@@ -211,7 +202,7 @@
 
 
 % Degree
-\coveritem[l]{1}{
+\coveritem{l}{1}{
 \fontfamily{phv}
 \begin{minipage}[t]{0.37\textwidth}
   \ 
@@ -224,7 +215,7 @@
 }
 
 % Advisers
-\coveritem[c]{1}{%
+\coveritem{c}{1}{%
 \fontfamily{phv}
 \begin{minipage}[t]{0.37\textwidth}
   \ 
@@ -239,7 +230,7 @@
 }
 
 % Date
-\coveritem[c]{2}{%
+\coveritem{c}{2}{%
 \fontfamily{phv}
 \begin{minipage}[t]{0.37\textwidth}
   \ 
@@ -257,7 +248,7 @@
 
 % Committee — only print the committee for the main classes
 % Author name and Title
-\secondcoveritem[l]{6.1cm}{%
+\secondcoveritem{l}{6.1cm}{%
 % Author name
 \fontfamily{phv}
 \begin{minipage}[t]{0.37\textwidth}
@@ -273,7 +264,7 @@
 }
 
 
-\secondcoveritem[c]{1}{%
+\secondcoveritem{c}{1}{%
 \fontfamily{phv}
 \begin{minipage}[t]{0.20\textwidth}
   \ 
@@ -294,7 +285,7 @@
 
 
 % Date
-\secondcoveritem[c]{1}{%
+\secondcoveritem{c}{1}{%
 \fontfamily{phv}
 \begin{minipage}[t]{0.37\textwidth}
   \ 
