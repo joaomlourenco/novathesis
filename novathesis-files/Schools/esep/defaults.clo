@@ -124,21 +124,21 @@
 \newcover
 
 % ESEP logo
-\coveritem[c]{2.2cm}{%
+\coveritem{c}{2.2cm}{%
   \coverbackground
   \noindent
   \fontsize{15}{15}\selectfont
-  \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty[\novathesis@opt@coverlang]}}
+  \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty[\option{/novathesis/coverlang}]}}
 }
 
 % % Degree name
-\coveritem[c]{0.5cm}{%
+\coveritem{c}{0.5cm}{%
   \fontsize{15}{15}\selectfont
-  \thedegreename[\novathesis@opt@coverlang]
+  \thedegreename[\option{/novathesis/coverlang}]]
 }
 
 % % Title of Dissertation
-\coveritem[c]{6.5cm}{%
+\coveritem{c}{6.5cm}{%
   \fontsize{15}{15}\selectfont
   \expandafter\MakeUppercase\expandafter{\covertitle}\\[1ex]
   \fontsize{12}{12}\selectfont
@@ -146,13 +146,13 @@
 }
 
 % Author name
-\coveritem[c]{3}{%
+\coveritem{c}{3}{%
   \fontsize{12}{12}\selectfont
   \textbf{\theauthorname}
 }
 
 % Date
-\coveritem[c]{1}{%
+\coveritem{c}{1}{%
   \fontsize{12}{12}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
@@ -162,7 +162,7 @@
 }
 
 % % Final space
-\coveritem[c]{1cm}{%
+\coveritem{c}{1cm}{%
   ~
 }
 
@@ -171,20 +171,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % ESEP logo
-\secondcoveritem[c]{2.2cm}{%
+\secondcoveritem{c}{2.2cm}{%
   \coverbackground
   \fontsize{15}{15}\selectfont
-  \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty[\novathesis@opt@coverlang]}}
+  \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty[\option{/novathesis/coverlang}]}}
 }
 
 % % Degree name
-\secondcoveritem[c]{0.5cm}{%
+\secondcoveritem{c}{0.5cm}{%
   \fontsize{15}{15}\selectfont
-  \thedegreename[\novathesis@opt@coverlang]
+  \thedegreename[\option{/novathesis/coverlang}]]
 }
 
 % % Title of Dissertation
-\secondcoveritem[c]{6.5cm}{%
+\secondcoveritem{c}{6.5cm}{%
   \fontsize{15}{15}\selectfont
   \expandafter\MakeUppercase\expandafter{\covertitle}\\[1ex]
   \fontsize{12}{12}\selectfont
@@ -192,20 +192,20 @@
 }
 
 % Advisers
-\secondcoveritem[c]{1}{%
+\secondcoveritem{c}{1}{%
   \fontsize{11}{11}\selectfont
   \parbox{0.80\textwidth}%
   {\printadvisers}
 }
 
 % Author name
-\secondcoveritem[c]{1}{%
+\secondcoveritem{c}{1}{%
   \fontsize{12}{12}\selectfont
   \textbf{\theauthorname}
 }
 
 % Date
-\secondcoveritem[c]{1}{%
+\secondcoveritem{c}{1}{%
   \fontsize{12}{12}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
@@ -215,7 +215,7 @@
 }
 
 % % Final space
-\secondcoveritem[c]{1cm}{%
+\secondcoveritem{c}{1cm}{%
   ~
 }
 
