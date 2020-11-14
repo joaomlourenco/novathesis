@@ -8,7 +8,7 @@
 %% To view a copy of this license,
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2020/11/14 [5.1.1]
+%% Version 2020/11/14 [5.1.2]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade NOVA de Lisboa
