@@ -44,7 +44,7 @@
   % %novathesis@opt@chapstyle
   , chapstyle/.new choice = {elegant, bianchi, bluebox, brotherton, dash, default, ell, ger, hansen, ist, jenor, lyhne, madsen, pedersen, veelo, vz14, vz34, vz43}
   % %novathesis@opt@fontstyle
-  , fontstyle/.new choice = {kpfonts, baskervaldx, bookman, charter, ebgaramond, fbb, fourier, garamond, heuristica, libertine, mathpazo1, mathpazo2, newcent, newpx, newtx}
+  , fontstyle/.new choice = {kpfonts, bookman, libertine, mathpazo1, mathpazo2, newcent, newpx, newtx}
   % %novathesis@opt@otherlistsat
   , otherlistsat/.new choice = {front, back}
   % HANDLER

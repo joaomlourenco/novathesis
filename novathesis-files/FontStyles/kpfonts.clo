@@ -4,5 +4,10 @@
 %%
 %% Customization of fonts to use a Paltino-like font set
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{kpfonts}
-\RequirePackage[cal=boondoxo]{mathalfa} % mathcal
+
+\ifxetexorluatex
+  \RequirePackage{kpfonts-otf}
+\else
+  \RequirePackage{kpfonts}
+  \RequirePackage[cal=boondoxo]{mathalfa} % mathcal
+\fi

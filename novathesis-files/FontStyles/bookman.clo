@@ -4,4 +4,8 @@
 %%
 %% Costumization of fonts to use Bookman fontset
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{bookman}
+\ifxetexorluatex
+  \setmainfont{TeX Gyre Bonum}
+\else
+  \RequirePackage{bookman}
+\fi
