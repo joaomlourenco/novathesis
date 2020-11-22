@@ -24,7 +24,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PROCESS KEY-VAL OPTIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{novathesis-files/options-nt}
+\RequirePackage{options-nt}
 \RequirePackage{xifthen}
 %
 \options{
@@ -158,48 +158,6 @@
   , /novathesis/linkscolor = RoyalBlue
 }
 
-
-% % MEMOIR OPTIONS
-% \letoptionlist{/novathesis/memoir}\nt@tmp
-% \typeout{'NT MEMOIR = '\nt@tmp}
-% \PassOptionsToClass{\nt@tmp}{memoir}
-% \optionlistdo{/novathesis/memoir}{%
-%   \PassOptionsToClass{#1}{memoir}%
-%   % \ProcessOptions
-% }
-
-% --------------------------------------------------------
-% PRINT BOOK SPINE
-  % \ifthenelse{\equal{\option{/novathesis/spine}}{true}}{%
-  %     \AtEndDocument{%
-  %     \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/spine.clo}%
-  %                       {}
-  %                       {\input{novathesis-files/spine.clo}}%
-  %     \printspine%
-  %     }%
-  %   }{}%
-
-
-% --------------------------------------------------------
-% PRINT CD COVER
-  % \ifthenelse{\equal{\option{/novathesis/cdcover}}{true}}{%
-  %     \AtEndDocument{%
-  %     \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/cdcover.clo}%
-  %                       {}
-  %                       {\input{novathesis-files/cdcover.clo}}%
-  %     % \begin{landscape}
-  %     \printcdcover%
-  %     % \end{landscape}
-  %     \printcdinlay%
-  %     }%
-  %   }{}
-
-% --------------------------------------------------------
-% DESTINATION MEDIA
-% If destination media is paper, remove hyoerlink colors from PDF
-% \ifthenelse{\equal{\option{/novathesis/media}}{paper}}%
-%   {\options{/novathesis/linkscolor=black}}
-%   {\options{/novathesis/linkscolor=\nt@linkscolor}}
 
 
 \letoptionlist{/options/remaining}\nt@remaining
