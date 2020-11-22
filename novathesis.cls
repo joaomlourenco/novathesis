@@ -8,7 +8,7 @@
 %% To view a copy of this license,
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2020/11/14 [5.1.2]
+%% Version 2020/11/22 [5.1.3]
 %% Departamento de Informática
 %% Faculdade de Ciências e Tecnologia
 %% Universidade NOVA de Lisboa
@@ -48,7 +48,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{novathesis}[2020/11/14 novathesis template]
+\ProvidesClass{novathesis}[2020/11/22 novathesis template]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
