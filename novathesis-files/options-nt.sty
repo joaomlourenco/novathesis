@@ -594,10 +594,15 @@
 % Lists
 % --------------------------------------------------------
 
+\newrobustcmd*\option@remove[2]{\listcsremove{optk@#1}{#2}}
 \newrobustcmd*\option@setnil[1]{\option@set{#1}{}}
 \newrobustcmd*\option@push[2]{\listcsadd{optk@#1}{#2}}
 \newrobustcmd*\option@epush[2]{\listcseadd{optk@#1}{#2}}%
-\newrobustcmd\optionlistdo[2]{\def\opt@@do##1{#2}\forlistcsloop{\opt@@do}{optk@#1}}
+% \newrobustcmd\optionlistdo[2]{\def\opt@@do##1{#2}\forlistcsloop{\opt@@do}{optk@#1}}
+\newrobustcmd\optionlistdo[2]{%
+  \csdef{opt@@do#1}##1{#2}%
+  \forlistcsloop{\@nameuse{opt@@do#1}}{optk@#1}%
+}
 
 \newrobustcmd*\option@setlist[2]{\option@setnil{#1}\option@concat{#1}{#2}}
 \newrobustcmd*\option@concat[2]{%
@@ -1087,6 +1092,7 @@
   },
   /handlers/show/list/.new cmd    = \letoptionlist{#1}\opt@list\option@showvalue{\opt@list},
   /handlers/push/.new operation   = \option@push{#1}{#2},
+  /handlers/remove/.new operation   = \option@remove{#1}{#2},
   /handlers/concat/.new operation = \option@concat{#1}{#2},
   %
   /handlers/new choice/.new handler={%

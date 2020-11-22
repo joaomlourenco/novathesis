@@ -51,7 +51,6 @@
 \ProvidesClass{novathesis}[2020/11/14 novathesis template]
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOOK FOR PACKAGES ALSO IN "novathesis-files" folder
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -130,8 +129,6 @@
 
 % --------------------------------------------------------
 % SOME PRELIMINARY LANGUAGE DEFINITIONS
-\mynewdata{langabbrev}
-\mynewdata{langsused}
 \mynewdata{abstractorder}
 \input{novathesis-files/lang-conf.clo}
 
