@@ -24,8 +24,6 @@
 %% Inlay: 15.0cm x 11.8cm
 %% Inlay fold: 0,635cm + 13,73cm + 0,635cm
 
-\makeatletter
-
 \prependtographicspath{{novathesis-files/Images/}}
 
 \newsavebox{\cdcover@savebox}
@@ -154,5 +152,3 @@
 	~\\[0.75cm]~\hspace*{1.8cm}
 	\usebox{\cdcover@savebox}
 }
-
-\makeatother

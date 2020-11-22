@@ -42,9 +42,9 @@
   % %novathesis@opt@school
   , school/.new choice = {{nova/fct}, {nova/fcsh}, {nova/ims}, {nova/ensp}, {ul/ist}, {ul/fc}, {ipl/isel}, {ips/ests}, {esep}}
   % %novathesis@opt@chapstyle
-  , chapstyle/.new choice = {elegant, bianchi, bluebox, brotherton, dash, default, ell, ger, hansen, ist, jenor, lyhne, madsen, pedersen, veelo, vz14, vz34, vz43}
+  , chapstyle/.new choice = {elegant, bianchi, bluebox, default, ell, hansen, ist, lyhne, madsen, pedersen, veelo, vz34, vz43}
   % %novathesis@opt@fontstyle
-  , fontstyle/.new choice = {kpfonts, bookman, libertine, mathpazo1, mathpazo2, newcent, newpx, newtx}
+  , fontstyle/.new choice = {kpfonts, bookman, libertine, calibri}
   % %novathesis@opt@otherlistsat
   , otherlistsat/.new choice = {front, back}
   % HANDLER

@@ -54,7 +54,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOOK FOR PACKAGES ALSO IN "novathesis-files" folder
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\input@path}{{./}{Chapters/}{novathesis-files/}}
+\providecommand*{\input@path}{}
+\edef\input@path{{./}{Chapters/}{novathesis-files/}\input@path}% subfolder path
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHECK IF USING LUALATEX OR XELATEX
@@ -988,7 +989,8 @@
       \RequirePackage[\nt@tmp]{biblatex}%
       \DeclareLanguageMapping{english}{american-apa}%
       \DeclareLanguageMapping{portuguese}{portuguese-apa}%
-      \option{/novathesis/biblatex loaded/.flip}
+      \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
+      \option{/novathesis/biblatex loaded/.flip}%
     }
   \addbibresource{#1}
 }

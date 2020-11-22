@@ -7,44 +7,50 @@
 
 %%%%% Configure chapters, headers, footers, and page numbering
 \RequirePackage{soul}
-\newsavebox{\novathesis@chapter} 
-\newsavebox{\novathesis@part} 
 
-\newcommand\novathesis@chapter@marker[1][4cm]{%
-	\sbox\novathesis@chapter{% 
+\makeatletter
+\undef{\novathesis@elegant@chapter}
+\newsavebox{\novathesis@elegant@chapter}
+\undef{\novathesis@elegant@part}
+\newsavebox{\novathesis@elegant@part}
+
+\providecommand{\novathesis@elegant@chapter@marker}[1][4cm]{%
+	\sbox\novathesis@elegant@chapter{% 
 		\resizebox{!}{#1}{\fboxsep=1pt%
 			\colorbox{lightgray}{\color{white}\thechapter}% 
 		}}%
 		\rotatebox{90}{% 
 			\resizebox{%
-				\heightof{\usebox{\novathesis@chapter}}+\depthof{\usebox{\novathesis@chapter}}}% 
+				\heightof{\usebox{\novathesis@elegant@chapter}}+\depthof{\usebox{\novathesis@elegant@chapter}}}% 
 			{!}{\scshape\so\@chapapp}}\quad%
-		\raisebox{\depthof{\usebox{\novathesis@chapter}}}{\usebox{\novathesis@chapter}}%
+		\raisebox{\depthof{\usebox{\novathesis@elegant@chapter}}}{\usebox{\novathesis@elegant@chapter}}%
 }
 
-\newcommand\novathesis@chm[1][4cm]{%
-	\sbox\novathesis@chapter{\novathesis@chapter@marker[#1]}% 
+\providecommand{\novathesis@elegant@chm}[1][4cm]{%
+	\sbox\novathesis@elegant@chapter{\novathesis@elegant@chapter@marker[#1]}% 
 	\makebox[0pt][c]{% aka \rlap
-		\makebox[1cm][r]{\usebox\novathesis@chapter}%
-	}}
+		\makebox[1cm][r]{\usebox\novathesis@elegant@chapter}%
+	}%
+}
 	
-	\newcommand\novathesis@part@marker[1][4cm]{%
-		\sbox\novathesis@part{% 
-			\resizebox{!}{#1}{\fboxsep=1pt%
-				\colorbox{lightgray}{\color{white}\thepart}% 
-			}}%
-			\rotatebox{90}{% 
-				\resizebox{%
-					\heightof{\usebox{\novathesis@part}}+\depthof{\usebox{\novathesis@part}}}% 
-				{!}{\scshape\so{\partname}}}\quad%
-			\raisebox{\depthof{\usebox{\novathesis@part}}}{\usebox{\novathesis@part}}%
-	}
+\providecommand{\novathesis@elegant@part@marker}[1][4cm]{%
+	\sbox\novathesis@elegant@part{% 
+		\resizebox{!}{#1}{\fboxsep=1pt%
+			\colorbox{lightgray}{\color{white}\thepart}% 
+		}}%
+		\rotatebox{90}{% 
+			\resizebox{%
+				\heightof{\usebox{\novathesis@elegant@part}}+\depthof{\usebox{\novathesis@elegant@part}}}% 
+			{!}{\scshape\so{\partname}}}\quad%
+		\raisebox{\depthof{\usebox{\novathesis@elegant@part}}}{\usebox{\novathesis@elegant@part}}%
+}
 
-	\newcommand\novathesis@ptm[1][4cm]{%
-		\sbox\novathesis@part{\novathesis@part@marker[#1]}% 
-		\makebox[0pt][c]{% aka \rlap
-			\makebox[1cm][r]{\usebox\novathesis@part}%
-		}}
+\providecommand{\novathesis@elegant@ptm}[1][4cm]{%
+	\sbox\novathesis@elegant@part{\novathesis@elegant@part@marker[#1]}% 
+	\makebox[0pt][c]{% aka \rlap
+		\makebox[1cm][r]{\usebox\novathesis@elegant@part}%
+	}%
+}
 	
   
 \makechapterstyle{elegant}{%
@@ -52,7 +58,7 @@
 	\renewcommand{\chaptitlefont}{\normalfont\LARGE\bfseries\scshape}%
 	\renewcommand{\chapternamenum}{} 
 	\renewcommand{\printchaptername}{}%
-	\renewcommand{\printchapternum}{\null\hfill\novathesis@chm[2.5cm]\hspace*{14pt}\par}%
+	\renewcommand{\printchapternum}{\null\hfill\novathesis@elegant@chm[2.5cm]\hspace*{14pt}\par}%
 	\renewcommand{\afterchapternum}{\par\vskip\midchapskip}%
 	\renewcommand{\printchaptertitle}[1]{\color{darkgray}\chaptitlefont\raggedleft ##1\par}%
 	%
@@ -61,10 +67,9 @@
 	\renewcommand{\partnamenum}{}
 	\renewcommand{\printpartname}{}%
 	\renewcommand{\thepart}{\Roman{part}}
-	\renewcommand{\printpartnum}{\null\hfill\novathesis@ptm[2.5cm]\hspace*{14pt}\par}%
+	\renewcommand{\printpartnum}{\null\hfill\novathesis@elegant@ptm[2.5cm]\hspace*{14pt}\par}%
 	% \renewcommand{\afterpartnum}{\par\vskip\midchapskip}%
 	\renewcommand{\printparttitle}[1]{\color{darkgray}\parttitlefont\raggedleft ##1\par}%
 	\renewcommand*{\partnumfont}{\normalfont\scshape\MakeLowercase}
-	
 } 
 \chapterstyle{elegant}

@@ -1,7 +1,6 @@
 %!TEX root = ../template.tex
 % Draw the book spine
 
-\makeatletter
 
 \newlength{\novathesis@spinewidth}%
 \setlength{\novathesis@spinewidth}{1mm * (\thelastpage + 19) / 20}%
@@ -194,4 +193,3 @@
   ~% This space is important here so that the spine page is not empty anymore!
   % \clearforchapter%
 }%
-\makeatother
