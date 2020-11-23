@@ -43,7 +43,7 @@
   \gdef\appendixnamepl{Appendici}
 }
 
-\ifxetexorluatex
+\ifluatex
   \babelposthyphenation{portuguese}{.=.}{
     {},
     { no = -, pre = -, post = -, data = 1 },

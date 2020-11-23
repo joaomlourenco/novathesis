@@ -52,10 +52,17 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Load iftex package
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{iftex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOOK FOR PACKAGES ALSO IN "novathesis-files" folder
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \providecommand*{\input@path}{}
 \edef\input@path{{./}{Chapters/}{novathesis-files/}\input@path}% subfolder path
+
+\newcommand*{\coverprehook}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHECK IF USING LUALATEX OR XELATEX
@@ -230,19 +237,22 @@
 
 
 \newcommand{\printcoverpage}{%
-  % \thispagestyle{empty}%
-  \selectthelanguage{\option{/novathesis/coverlang}}%
-  \printthecover%
-  \clearforchapter%
-  \ifthenelse{\equal{\option{/novathesis/secondcover}}{true}}%
-    {% SECOND COVER TRUE
-      \ifcsdef{novathesis@secondcoveritem@list}%
-        {\printthecover[second]}%
-        {\printthecover}%
-        \clearforchapter
-    }%
-    {}% NO SECOND COVER
-  \selectthelanguage{\option{/novathesis/mainlang}}%
+  \bgroup
+    \coverprehook
+    % \thispagestyle{empty}%
+    \selectthelanguage{\option{/novathesis/coverlang}}%
+    \printthecover%
+    \clearforchapter%
+    \ifthenelse{\equal{\option{/novathesis/secondcover}}{true}}%
+      {% SECOND COVER TRUE
+        \ifcsdef{novathesis@secondcoveritem@list}%
+          {\printthecover[second]}%
+          {\printthecover}%
+          \clearforchapter
+      }%
+      {}% NO SECOND COVER
+    \selectthelanguage{\option{/novathesis/mainlang}}%
+  \egroup
 }
 
 \newcommand{\printthecover}[1][]{%

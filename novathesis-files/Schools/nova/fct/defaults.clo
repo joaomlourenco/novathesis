@@ -118,10 +118,19 @@
 %\frenchspacing
 
 
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    \fontfamily{phv}%
+  \fi
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcover
+
 
 % Author name
 \coveritem{c}{0cm}{%
@@ -132,25 +141,25 @@
 
 % Academic qualifications
 \coveritem{c}{0.25cm}{%
-  \fontfamily{phv}\fontsize{11}{11}\selectfont
+  \fontsize{11}{11}\selectfont
   \theauthordegree
 }
 
 % % Title of Dissertation
 \coveritem{c}{4.5cm}{%
-  \fontfamily{phv}\fontsize{16}{16}\selectfont
+  \fontsize{16}{16}\selectfont
   \textbf{\covertitle}
 }
 
 % Degree
 \coveritem{c}{1.5cm}{%
-  \fontfamily{phv}\fontsize{11}{11}\selectfont
+  \fontsize{11}{11}\selectfont
   \thepresentationtext
 }
 
 % Advisers
 \coveritem{c}{2}{%
-  \fontfamily{phv}\fontsize{12}{12}\selectfont
+  \fontsize{12}{12}\selectfont
   \printadvisers
 }
 
@@ -161,18 +170,17 @@
     \equal{\option{/novathesis/docdegree}}{bsc}%
     \OR\equal{\option{/novathesis/docdegree}}{msc}%
     \OR\equal{\option{/novathesis/docdegree}}{phd}}%
-  {\fontfamily{phv}\fontsize{10}{10}\selectfont\printcommittee}%
+  {\fontsize{10}{10}\selectfont\printcommittee}%
   {}%
 }
 
 
 % Date
 \coveritem{c}{4}{%
-  \fontfamily{phv}\fontsize{11}{11}\selectfont
+  \fontsize{11}{11}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
   \else
     \textbf{\thedatemonth, \thedateyear}
   \fi
 }
-
