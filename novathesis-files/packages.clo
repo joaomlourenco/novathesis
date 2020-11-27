@@ -71,13 +71,13 @@
   \RequirePackage[
     nonumberlist,toc
     , translate=babel
-    , acronym % adds acronyms listing
-    , symbols % adds symbols listing
+    , acronym % add acronyms listing
+    , symbols % add symbols listing
     , sanitize=none % allow \gls inside descriptions
     % , automake
   ]{glossaries-extra} % To create glossaries
   % \glsdisablehyper
-  \makenoidxglossaries
+  \makenoidxglossaries % use TeX to sort
   % \makeglossaries
 % }
 

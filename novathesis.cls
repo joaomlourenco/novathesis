@@ -86,11 +86,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Redefine \clearforchapter to use a really empty page…
-\let\origcleardoublepage=\cleardoublepage
-\renewcommand\cleardoublepage{%
-  \newpage{\pagestyle{empty}\origcleardoublepage}%
-}
 
 % Do some magic defining arrays :)
 \newcommand{\mynewdata}[1]{%
@@ -114,38 +109,35 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE FILE LISTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\@addfile}[2]{%
-  % #1 = file famylly (e.g., chapters, gloassaries, …)
-  % #2 = filename or key=filename
-  \ifoptiondefined{/novathesis/files/#1}{}{\options{/novathesis/files/#1/.new list}}%
-  \typeout{NT FILE ADD /novathesis/files/#1 = #2}%
-  \options{/novathesis/files/#1/.push = {#2}}%
-}
-
-\newcommand{\@forallfiles}[2]{%
-  \optionlistdo{/novathesis/files/#1}{#2{##1}}%
-}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Adding files to lists
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntaddfile}[1]{%
   % syntax: \ntaddile{class}[key]{filename}
   %         key = {pt, en, …}
   %         key = {glossary, acronyms, symbols}
-  \@ifnextchar[{\@ntaddfile@i#1}{\@ntaddfile@i#1[VAL]}%
+  \@ifnextchar[{\@ntaddfile@iii#1}{\@ntaddfile@iii#1[VAL]}%
 }
 
-\def\@ntaddfile@i#1[#2]#3{%
+\def\@ntaddfile@iii#1[#2]#3{%
   % #1 = file type (abstract, quote, etc)
   % #2 = optional file lang
   % #3 = filename
-  \typeout{NT ADDFILE [#1] [#2] [#3]}%
+  % \typeout{NT ADDFILE [#1] [#2] [#3]}%
   \ifcsdef{@ntaddfilehook#1}{\@nameuse{@ntaddfilehook#1}{#2}{#3}}{}%
   \ifcsdef{@ntaddfilehook#1#2}{\@nameuse{@ntaddfilehook#1#2}{#3}}{}%
-  \@addfile{#1}{#2=#3}
+  \@ntaddfile@ii{#1}{#2=#3}
+}
+
+\newcommand{\@ntaddfile@ii}[2]{%
+  % #1 = file famylly (e.g., chapters, gloassaries, …)
+  % #2 = filename or key=filename
+  \ifoptiondefined{/novathesis/files/#1}{}{\options{/novathesis/files/#1/.new list}}%
+  % \typeout{NT FILE ADD /novathesis/files/#1 = #2}%
+  \options{/novathesis/files/#1/.push = {#2}}%
+}
+
+\newcommand{\@forallfiles}[2]{%
+  % #1 = file famylly (e.g., chapters, gloassaries, …)
+  % #2 = macro to be applied, which will receive the item from the list
+  \optionlistdo{/novathesis/files/#1}{#2{##1}}%
 }
 
 
@@ -155,25 +147,14 @@
 \newcommand{\selectthelanguage}[1]{%
   \options{/novathesis/langshorttolong=#1}%
   \edef\nt@tmp{\option{/novathesis/langshorttolong}}%
-  \typeout{'NT SWITCHING LANG TO = '\nt@tmp}%
+  % \typeout{'NT SWITCHING LANG TO = '\nt@tmp}%
   \expandafter\selectlanguage\expandafter{\nt@tmp}%
 }
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Loading additinal files
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\novathesisAtEndClassFile}[1]{%
-  \listcsadd{novathesis@atendclassfile@list}{#1}%
-}
-
-\newcommand{\novathesis@executemacro}[1]{%
-  #1%
-}
-
-\newcommand{\novathesisExecuteAtEndClassFile}{%
-  \forlistcsloop{\novathesis@executemacro}{novathesis@atendclassfile@list}%
-}
 
 % --------------------------------------------------------
 % SOME PRELIMINARY LANGUAGE DEFINITIONS
@@ -184,17 +165,14 @@
 % PROCESS PACKAGE OPTIONS
 \input{novathesis-files/options.clo}
 
-
 % --------------------------------------------------------
 % LOAD MAIN CLASS AND ADDITIONAL PACKAGES
 \LoadClass{memoir}
 \OnehalfSpacing           % One-and-half spacing
 
-
 % --------------------------------------------------------
 % LOAD ADDITIONAL PACKAGES
 \input{novathesis-files/packages.clo}
-
 
 % --------------------------------------------------------
 % FIX BABEL TRANSLATION
@@ -204,9 +182,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Cover definition macros
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\newcover}{%
   \let\novathesis@coveritem@list=\undefined%
@@ -222,12 +197,12 @@
 }
 
 \newcommand{\coveritem}[3]{%
-  \typeout{NT COVER 1 BLOCK}%
+  % \typeout{NT COVER 1 BLOCK}%
   \listcsadd{novathesis@coveritem@list}{[#1][#2]{#3}}%
 }
 
 \newcommand{\secondcoveritem}[3]{%
-  \typeout{NT COVER 2 BLOCK}%
+  % \typeout{NT COVER 2 BLOCK}%
   \listcsadd{novathesis@secondcoveritem@list}{[#1][#2]{#3}}%
 }
 
@@ -433,7 +408,7 @@
 \prependtographicspath{{novathesis-files/Schools/\option{/novathesis/school}/Images/}}
 
 % --------------------------------------------------------
-% Include the file with the defaults
+% Include the school's defaults
 \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/defaults.clo}{}{}
 
 
@@ -442,7 +417,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LABELS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \gdef\thepresentationtext{%
 	\thedissertationstr[\option{/novathesis/docdegree},\option{/novathesis/coverlang}]%
 }
@@ -461,14 +435,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% IDENTIFICATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % Date and month
 \newcommand{\thedatemonth}{~datemonth \novathesis@undefined}
 \newcommand{\thedateyear}{~dateyear \novathesis@undefined}
 
 \newcommand{\datemonth}[1]{\renewcommand{\thedatemonth}{#1}}
 \newcommand{\dateyear}[1]{\renewcommand{\thedateyear}{#1}}
-
 
 %% Author identification
 \newcommand{\theauthorname}{~authorname \novathesis@undefined}
@@ -506,6 +478,39 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% NEW definition for committee with lists
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\ntcommittee[#1][#2]#3{%
+  % #1={c,r,a,m}
+  %     c = chair
+  %     r = raporteur/referee
+  %     a = adviser
+  %     m = othermembers
+  % #2={m,f}
+  % #3={committee member name, position, etc}
+  \options{/novathesis/committee/#1/gender/.new value = {#2}}%
+  \options{/novathesis/committee/#1/name/.new value = {#3}}%
+}
+
+\newcommand{\xntprintcommittee}[1][0.75]{%
+  % #1 = Percentage of \textwidth used by the committee list
+  \xdef\novathesis@tmp{\thecommitteetitlestr[\option{/novathesis/coverlang}]}%
+  \begin{tabularx}{#1\textwidth}{@{}r>{\raggedright\arraybackslash}X@{}}%
+  \ifx\novathesis@tmp\@empty%
+    % committeetitlestr[…] is empty
+  \else%
+    \multicolumn{2}{c}{{%%
+            \thecommitteetitlestrfont[\option{/novathesis/coverlang}] %
+            \thecommitteetitlestr[\option{/novathesis/coverlang}]}%
+          }\\[1ex]%
+  \fi%
+  \xdef\novathesis@tmp{\thecommitteeorder[all]}%
+  \iteratecsvlist{\@ntprintcommitteemmember}{\novathesis@tmp}%
+  \end{tabularx}%
+}
+
+\newcommand{\@ntprintcommitteemmember}[1]{%
+  \typeout{NT ntprintcommitteemmember #1}%
+}
 
 \newcounter{novathesis@committee@cnt}
 \setcounter{novathesis@committee@cnt}{0}
@@ -756,7 +761,7 @@
   % #1 = KEY
   % #2 = file class
   \options{/novathesis/files/#2/.getval = {#1}}%
-  \typeout{NT TRYING TO LOAD \option@listmatch@value}%
+  % \typeout{NT TRYING TO LOAD \option@listmatch@value}%
   \InputIfFileExists{\option@listmatch@value}%
     {\typeout{NT LOADING \option@listmatch@value succeeded}}%
     {\typeout{NT LOADING \option@listmatch@value failed}}%
@@ -764,8 +769,8 @@
 
 \newcommand{\@ntprintnext@ii}[2]{%
   % #1 = file class
-  % #2 = KEY=vale
-  \typeout{NT @ntprintnext@ii [#1] [#2]}%
+  % #2 = KEY=value
+  % \typeout{NT @ntprintnext@ii [#1] [#2]}%
   \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%
   \typeout{NT @ntprintnext@ii TRYING TO LOAD \option@listmatch@value}%
   \InputIfFileExists{\option@listmatch@value}%
@@ -774,7 +779,7 @@
 }
 
 \newcommand{\@ntprintifmaindoc@i}[1]{%
-  \typeout{NT Attemnpting to load #1}%
+  % \typeout{NT Attemnpting to load #1}%
 	\ifthenelse{%
     % IF it is not a plan or proposal
 		\equal{\option{/novathesis/docdegree}}{bsc}	% bsc
@@ -798,19 +803,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \newcommand{\ntglossaryfile}[1]{\@addfile{glossaries}{glossary=#1}}
-% \newcommand{\ntacronymsfile}[1]{\@addfile{glossaries}{acronyms=#1}}
-% \newcommand{\ntsymbolsfile}[1]{\@addfile{glossaries}{symbols=#1}}
+\newcommand{\ntprintabstracts}{%
+  \xdef\novathesis@tmp{\theabstractorder[\option{/novathesis/mainlang}]}%
+  \iteratecsvlist{\@ntprintabstract}{\novathesis@tmp}%
+}
 
 \newcommand{\@ntprintabstract}[1]{%
   \typeout{NT PRINT ABSTRACT #1}%
   \setabstractlang{#1}%
   \@ntprintfisrt@ii[#1]{abstract}%
   \selectthelanguage{\option{/novathesis/mainlang}}%
-}
-\newcommand{\ntprintabstracts}{%
-  \xdef\novathesis@tmp{\theabstractorder[\option{/novathesis/mainlang}]}%
-  \iteratecsvlist{\@ntprintabstract}{\novathesis@tmp}%
 }
 
 
@@ -905,30 +907,35 @@
 \newcommand*{\option@listmatch}[2]{
   \typeout{NT LISTMATCH [#1] [#2]}%
   \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%
-  \ifthenelse{\equal{\option@listmatch@key}{#1}}%
-    {\typeout{NT FOUND KEY=\option@listmatch@key VALUE=\option@listmatch@value}\listbreak}%
-    {\typeout{NT LOOKING KEY=\option@listmatch@key VALUE=\option@listmatch@value}}%
+  \typeout{K=\option@listmatch@key ~V=\option@listmatch@value}
+  \ifthenelse{\equal{\option@listmatch@key}{#1}}{\listbreak}{}%
+  % \ifthenelse{\equal{\option@listmatch@key}{#1}}%
+    % {\typeout{NT FOUND KEY=\option@listmatch@key VALUE=\option@listmatch@value}\listbreak}%
+    % {\typeout{NT LOOKING KEY=\option@listmatch@key VALUE=\option@listmatch@value}}%
 }%
 \options{/handlers/getval/.new operation = {%
-  \typeout{NT GETVAL #1 #2}%
+  \typeout{NT GETVAL [#1] [#2]}%
     \optionlistdo{#1}{\option@listmatch{#2}{##1}}%
   }%
 }
 
-\newcommand*{\@loadglossaryfileifexists}[1]{%
-  \typeout{NT LOADGLOSSARYFILEIFEXISTS #1}%
-  \options{/novathesis/files/glossaries/.getval = {#1}}
-  \InputIfFileExists{\option@listmatch@value}%
-    {\typeout{NT LOADING \option@listmatch@value succeeded}}%
-    {\typeout{NT LOADING \option@listmatch@value failed}}%
+\newcommand*{\@loadglossaryfileifexists}[2]{%
+  % #1 = glossary type
+  % %2 = glossary key
+  \typeout{NT loadglossaryfileifexists [#1] [#2]}%
+  \options{/novathesis/files/#1/.getval = {#2}}%
+  \typeout{NT loadglossaryfileifexists TRYING TO LOAD \option@listmatch@value}%
+  \IfFileExists{\option@listmatch@value}%
+    {\loadglsentries{\option@listmatch@value}\typeout{NT LOADING GLOASSARY \option@listmatch@value succeeded}}%
+    {\typeout{NT LOADING GLOASSARY \option@listmatch@value failed}}%
 }
 
-\newcommand{\loadglossaryfiles}{%
-  \forcsvlist{\@loadglossaryfileifexists}{glossary,acronyms,symbols}%
+\newcommand{\@loadglossaryfiles}{%
+  \forcsvlist{\@loadglossaryfileifexists{glossaries}}{glossary,acronyms,symbols}%
 }
   
-\AtBeginDocument{
-  \loadglossaryfiles%
+\AtEndPreamble{
+  \@loadglossaryfiles%
 }
 
 
@@ -944,7 +951,7 @@
   \DeclareLanguageMapping{english}{american-apa}%
   \DeclareLanguageMapping{portuguese}{portuguese-apa}%
   \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
-  \typeout{'NT ADD BIB RESOURCE= '#2}%
+  \typeout{'NT ADD BIBLATEX RESOURCE= '#2}%
   \addbibresource{#2}%
 }
 
@@ -1068,8 +1075,6 @@
 
 
 
-
-\novathesisExecuteAtEndClassFile
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Generate book spine (if otion "spine=true")
