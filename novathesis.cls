@@ -1,6 +1,6 @@
 %!TEX root = template.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% novathesis.clsnova
+%% novathesis.cls
 %% NOVA thesis document class
 %%
 %% This work is licensed under the
@@ -108,20 +108,60 @@
   \@for\novathesis@themember:=#2\do{#1{\novathesis@themember}}%
 }
 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MANAGE FILE LISTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\@addfile}[2]{%
+  % #1 = file famylly (e.g., chapters, gloassaries, …)
+  % #2 = filename or key=filename
+  \ifoptiondefined{/novathesis/files/#1}{}{\options{/novathesis/files/#1/.new list}}%
+  \typeout{NT FILE ADD /novathesis/files/#1 = #2}%
+  \options{/novathesis/files/#1/.push = {#2}}%
+}
+
+\newcommand{\@forallfiles}[2]{%
+  \optionlistdo{/novathesis/files/#1}{#2{##1}}%
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Adding files to lists
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\ntaddfile}[1]{%
+  % syntax: \ntaddile{class}[key]{filename}
+  %         key = {pt, en, …}
+  %         key = {glossary, acronyms, symbols}
+  \@ifnextchar[{\@ntaddfile@i#1}{\@ntaddfile@i#1[VAL]}%
+}
+
+\def\@ntaddfile@i#1[#2]#3{%
+  % #1 = file type (abstract, quote, etc)
+  % #2 = optional file lang
+  % #3 = filename
+  \typeout{NT ADDFILE [#1] [#2] [#3]}%
+  \ifcsdef{@ntaddfilehook#1}{\@nameuse{@ntaddfilehook#1}{#2}{#3}}{}%
+  \ifcsdef{@ntaddfilehook#1#2}{\@nameuse{@ntaddfilehook#1#2}{#3}}{}%
+  \@addfile{#1}{#2=#3}
+}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Multilingual support
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\selectthelanguage}[1]{%
-  \options{/novathesis/langshorttolong=#1}
+  \options{/novathesis/langshorttolong=#1}%
   \edef\nt@tmp{\option{/novathesis/langshorttolong}}%
-  \typeout{'NT SWITCHING LANG TO = '\nt@tmp}
+  \typeout{'NT SWITCHING LANG TO = '\nt@tmp}%
   \expandafter\selectlanguage\expandafter{\nt@tmp}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Loading additinal files
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 \newcommand{\novathesisAtEndClassFile}[1]{%
   \listcsadd{novathesis@atendclassfile@list}{#1}%
@@ -169,8 +209,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\newcover}{%
-  \let\novathesis@coveritem@list=\undefined
-  \let\novathesis@secondcoveritem@list=\undefined
+  \let\novathesis@coveritem@list=\undefined%
+  \let\novathesis@secondcoveritem@list=\undefined%
 }
 
 \newcommand{\coverbackground}[1][\@nameuse{thesiscover\option{/novathesis/docdegree},front}]{%
@@ -182,12 +222,12 @@
 }
 
 \newcommand{\coveritem}[3]{%
-  \typeout{NT COVER 1 BLOCK}
+  \typeout{NT COVER 1 BLOCK}%
   \listcsadd{novathesis@coveritem@list}{[#1][#2]{#3}}%
 }
 
 \newcommand{\secondcoveritem}[3]{%
-  \typeout{NT COVER 2 BLOCK}
+  \typeout{NT COVER 2 BLOCK}%
   \listcsadd{novathesis@secondcoveritem@list}{[#1][#2]{#3}}%
 }
 
@@ -222,12 +262,12 @@
 	\forlistcsloop{\novathesis@printcoveritem}{#1}}%
 }
 
-\newcommand{\printcoveritems}{%
-  \rawprintcoveritems{novathesis@coveritem@list}
+\newcommand{\ntprintcoveritems}{%
+  \rawprintcoveritems{novathesis@coveritem@list}%
 }
 
-\newcommand{\printsecondcoveritems}{%
-  \rawprintcoveritems{novathesis@secondcoveritem@list}
+\newcommand{\ntprintsecondcoveritems}{%
+  \rawprintcoveritems{novathesis@secondcoveritem@list}%
 }
 
 \newlength{\mpwidth}%
@@ -236,40 +276,38 @@
 
 
 
-\newcommand{\printcoverpage}{%
-  \bgroup
-    \coverprehook
+\newcommand{\ntprintcoverpage}{%
+  \bgroup%
+    \coverprehook%
     % \thispagestyle{empty}%
     \selectthelanguage{\option{/novathesis/coverlang}}%
-    \printthecover%
+    \ntprintthecover%
     \clearforchapter%
     \ifthenelse{\equal{\option{/novathesis/secondcover}}{true}}%
       {% SECOND COVER TRUE
         \ifcsdef{novathesis@secondcoveritem@list}%
-          {\printthecover[second]}%
-          {\printthecover}%
-          \clearforchapter
+          {\ntprintthecover[second]}%
+          {\ntprintthecover}%
+          \clearforchapter%
       }%
       {}% NO SECOND COVER
     \selectthelanguage{\option{/novathesis/mainlang}}%
-  \egroup
+  \egroup%
 }
 
-\newcommand{\printthecover}[1][]{%
+\newcommand{\ntprintthecover}[1][]{%
   \thispagestyle{empty}%
   \setlength{\mpwidth}{\dimexpr%
     \paperwidth%
       -\themargin[\option{/novathesis/docdegree},left]%
       -\themargin[\option{/novathesis/docdegree},right]}%
-
   \setlength{\mpheight}{\dimexpr%
     \paperheight%
       -\themargin[\option{/novathesis/docdegree},top]%
       -\themargin[\option{/novathesis/docdegree},bottom]}%
-
   \sbox{\novathesis@coverbox}{%
     \parbox[t][\mpheight][t]{\mpwidth}{%
-      \@nameuse{print#1coveritems}%
+      \@nameuse{ntprint#1coveritems}%
     }%
   }%
   \AddToShipoutPictureFG*{%
@@ -281,43 +319,43 @@
     }%
   }%
   ~% This space is important here so that the cover page is not empty anymore!
-  \ifcsdef{@the#1coverbackpage}{\@nameuse{@the#1coverbackpage}}{}
+  \ifcsdef{@the#1coverbackpage}{\@nameuse{@the#1coverbackpage}}{}%
 }
 
 
 \newcommand{\@firstcoverbackpage}{%
-  \newpage
+  \newpage%
   \thispagestyle{empty}%
   \null\vfill%
   {\scriptsize%
       \begin{Spacing}{1}%
-        \fontfamily{phv}\fontsize{6.3}{6.3}\selectfont%
-        \noindent
+        \fontfamily{phv}\fontsize{6.3}{6.3}\selectfont% 
+        \noindent%
         \hypersetup{allcolors=white}\textcolor{white}{\theacknowledgmentsstr[\option{/novathesis/coverlang}]}%
       \end{Spacing}%
   }%  
 }
 
-\newcommand{\printbackcoverpage}{%
-  \ifexists{thesiscover}[\option{/novathesis/docdegree},back]{
+\newcommand{\ntprintbackcoverpage}{%
+  \ifexists{thesiscover}[\option{/novathesis/docdegree},back]{%
     \clearforchapter%
     \thispagestyle{empty}%
     ~
     \clearpage%
     \thispagestyle{empty}%
-    \coverbackground[\@nameuse{thesiscover\option{/novathesis/docdegree},back}]
+    \coverbackground[\@nameuse{thesiscover\option{/novathesis/docdegree},back}]%
     ~% This space is important here so that the cover page is not empty anymore!
     \clearforchapter%
     \selectthelanguage{\option{/novathesis/mainlang}}%
-  }
+  }%
 }
 
 \newcommand{\novathesis@aftercover@file}{}
-\newcommand{\aftercoverfile}[1]{%
+\newcommand{\ntaftercoverfile}[1]{%
   \renewcommand{\novathesis@aftercover@file}{#1}%
 }
 
-\newcommand{\printaftercover}{%
+\newcommand{\ntprintaftercover}{%
   \ifthenelse{\equal{\option{/novathesis/aftercover}}{true}}%
   {%
     \InputIfFileExists{Chapters/\novathesis@aftercover@file}%
@@ -367,20 +405,14 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Include strings in the used languages
+%% Include strings for all the languages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \optionlistdo{/novathesis/langsshort}{%
   \InputIfFileExists{novathesis-files/Strings/strings-#1.clo}%
     {}%
-    {}
+    {}%
 }
-% \newcommand{\novathesis@includestrings@lang}[1]{%
-%   \edef\novathesis@filetoinclude{novathesis-files/Strings/strings-#1.clo}
-%   \input{\novathesis@filetoinclude}%
-% }
-% \iteratecsvlist{\novathesis@includestrings@lang}{\novathesis@tmp}%
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -455,14 +487,6 @@
 }
 
 
-% %% Front page Image
-% \newcommand{\thefrontpageimage}{\novathesis@undefined}
-%
-% \newcommand{\frontpageimage}[1]{%
-%   \def\thefrontpageimage{#1}%
-% }
-
-
 %% Work identification
 \newcommand{\thetitle}{~title \novathesis@undefined}
 \renewcommand{\title}[2][]{%
@@ -522,7 +546,7 @@
   \fi
 }
 
-\newcommand{\printcommittee@i}[1]{%
+\newcommand{\ntprintcommittee@i}[1]{%
   \xdef\novathesis@tmp{\thecommitteetitlestr[\option{/novathesis/coverlang}]}%
   \begin{tabularx}{#1\textwidth}{@{}r>{\raggedright\arraybackslash}X@{}}%
   \ifx\novathesis@tmp\@empty%
@@ -538,10 +562,10 @@
   \end{tabularx}%
 }
 
-\newcommand{\printcommittee}[1][0.75]{%
-  \ifthenelse{\equal{\option{/novathesis/printcommittee}}{true}}%
-  {\printcommittee@i{#1}}
-  {}
+\newcommand{\ntprintcommittee}[1][0.75]{%
+  \ifthenelse{\equal{\option{/novathesis/printcommittee}}{true}}%%
+  {\ntprintcommittee@i{#1}}%
+  {}%
 }
 
 
@@ -580,17 +604,17 @@
 	\listcsgadd{novathesis@#1adviser@list}{{#3},{#4},{#5}}%
 }
 
-\def\printadvisers@iii#1,#2,#3{%
+\def\ntprintadvisers@iii#1,#2,#3{%
   #1%
   \ifthenelse{\equal{#2}{}}{}{, #2}%
   \ifthenelse{\equal{#3}{}}{}{, #3}%
 }
 
-\newcommand{\printadvisers@ii}[1]{%
-   & \printadvisers@iii#1\\[0.4ex]%
+\newcommand{\ntprintadvisers@ii}[1]{%
+   & \ntprintadvisers@iii#1\\[0.4ex]%
 }
 
-\newcommand{\printadvisers@i}[1][]{%
+\newcommand{\ntprintadvisers@i}[1][]{%
   \ifcsname novathesis@#1adviser@list\endcsname%
     \ifthenelse{\equal{\value{novathesis@#1adviser@m@cnt}}{0}}%
       {\def\novathesis@tmp@gender{f}}% for portuguese: only use female form if no males are present
@@ -604,36 +628,20 @@
               [\novathesis@tmp@total,\novathesis@tmp@gender,\option{/novathesis/coverlang}]:%
 %              [\novathesis@tmp@total][\novathesis@tmp@gender][\option{/novathesis/coverlang}]\\
     }
-    \forlistcsloop{\printadvisers@ii}{novathesis@#1adviser@list}%
+    \forlistcsloop{\ntprintadvisers@ii}{novathesis@#1adviser@list}%
   \fi%
 }
 
-\newcommand{\printadvisers}{%
-  % \newbox\novathesis@savebox%
-  % \sbox\novathesis@savebox{%
-  %   \begin{tabular}{@{}rl@{}}%
-  %     \printadvisers@i%
-  %     \printadvisers@i[co]%
-  %   \end{tabular}%
-  % }%
-  % \ifdim\wd\novathesis@savebox>\linewidth%
-  %   \sbox\novathesis@savebox{%
-  %     \begin{tabularx}{0.99\linewidth}{@{}rX@{}}%
-  %     \printadvisers@i%
-  %     \printadvisers@i[co]%
-  %     \end{tabularx}%
-  %   }%
-  % \fi%
-  % \noindent\usebox\novathesis@savebox%
+\newcommand{\ntprintadvisers}{%
       \begin{tabularx}{0.90\linewidth}{@{}r>{\raggedright\arraybackslash}X@{}}%
-      \printadvisers@i%
-      \printadvisers@i[co]%
+      \ntprintadvisers@i%
+      \ntprintadvisers@i[co]%
       \end{tabularx}%
 }
 
 
 \newcounter{@novathesis@cnt}%
-\newcommand{\printadvisersaslist@ii}[1]{%
+\newcommand{\ntprintadvisersaslist@ii}[1]{%
   \stepcounter{@novathesis@cnt}%
   \ifthenelse{\equal{\value{@novathesis@cnt}}{1}}%
   {}%
@@ -665,11 +673,11 @@
   \fi%
 }%
 
-\newcommand{\printadvisersaslist}{%
+\newcommand{\ntprintadvisersaslist}{%
   \makelistwithalladvisers%
   \ifcsname @novathesis@listwithhalladvisers\endcsname%
     \setcounter{@novathesis@cnt}{0}%  
-    \forlistcsloop{\printadvisersaslist@ii}{@novathesis@listwithhalladvisers}%
+    \forlistcsloop{\ntprintadvisersaslist@ii}{@novathesis@listwithhalladvisers}%
   \fi%
 }
 
@@ -741,135 +749,79 @@
 \newcommand\quotefonti{\itshape\normalsize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Including chapters and similars
+%% Printing chapters and similars
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\@dedicatoryfile}{\@empty}
-\newcommand{\dedicatoryfile}[1]{\renewcommand{\@dedicatoryfile}{#1}}
 
-\ifx\@dedicatoryfile\@empty%
-\newcommand{\printdedicatory}{}%
-\else%
-\newcommand{\printdedicatory}{%
+\newcommand{\@ntprintfisrt@ii}[2][VAL]{%
+  % #1 = KEY
+  % #2 = file class
+  \options{/novathesis/files/#2/.getval = {#1}}%
+  \typeout{NT TRYING TO LOAD \option@listmatch@value}%
+  \InputIfFileExists{\option@listmatch@value}%
+    {\typeout{NT LOADING \option@listmatch@value succeeded}}%
+    {\typeout{NT LOADING \option@listmatch@value failed}}%
+}
+
+\newcommand{\@ntprintnext@ii}[2]{%
+  % #1 = file class
+  % #2 = KEY=vale
+  \typeout{NT @ntprintnext@ii [#1] [#2]}%
+  \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%
+  \typeout{NT @ntprintnext@ii TRYING TO LOAD \option@listmatch@value}%
+  \InputIfFileExists{\option@listmatch@value}%
+    {\typeout{NT @ntprintnext@ii LOADING \option@listmatch@value succeeded}}%
+    {\typeout{NT @ntprintnext@ii LOADING \option@listmatch@value failed}}%
+}
+
+\newcommand{\@ntprintifmaindoc@i}[1]{%
+  \typeout{NT Attemnpting to load #1}%
 	\ifthenelse{%
+    % IF it is not a plan or proposal
 		\equal{\option{/novathesis/docdegree}}{bsc}	% bsc
 		\OR%
 		\equal{\option{/novathesis/docdegree}}{msc}	% msc
 		\OR%
 		\equal{\option{/novathesis/docdegree}}{phd}	% phd
-	}{% THEN
-		\InputIfFileExists{Chapters/\@dedicatoryfile}{%
-			% File dedicatory.tex exists and is read
-			\global\let\@dedicatoryfile\@empty%
-			\clearforchapter%
-		}{%
-			% File does not exist
-		}%
+	}{% THEN it is a main document
+    \@ntprintfisrt@ii{#1}%
 	}{ % ELSE
-	}%
-}
-\fi
-
-
-\newcommand{\@quotefile}{\@empty}
-\newcommand{\quotefile}[1]{\renewcommand{\@quotefile}{#1}}
-
-\ifx\@quotefile\@empty%
-  \newcommand{\printquote}{}%
-\else%
-  \newcommand{\printquote}{%
-  	\ifthenelse{%
-  		\equal{\option{/novathesis/docdegree}}{bsc}	% bsc
-  		\OR%
-  		\equal{\option{/novathesis/docdegree}}{msc}	% msc
-  		\OR%
-  		\equal{\option{/novathesis/docdegree}}{phd}	% phd
-  	}{% THEN
-  		\InputIfFileExists{Chapters/\@quotefile}{%
-  			% File qualtefile.tex exists and is read
-  			\global\let\@quotefile\@empty%
-  			\clearforchapter%
-  		}{%
-  			% File quotefile.tex is not found, ignore
-  		}	%
-  	}{ % ELSE
-  	}%
-  }%
-\fi
-
-
-\newcommand{\novathesis@acknowledgementsfile}{\@empty}
-\newcommand{\acknowledgementsfile}[1]{%
-  \renewcommand{\novathesis@acknowledgementsfile}{#1}%
+    % It is a plan or proposal
+	}%  
 }
 
-\newcommand{\printacknowledgements}{%
-	\IfFileExists{Chapters/\novathesis@acknowledgementsfile}{%
-		\ifthenelse{%
-			\equal{\option{/novathesis/docdegree}}{bsc}	% bsc
-			\OR%
-			\equal{\option{/novathesis/docdegree}}{msc}	% msc
-			\OR%
-			\equal{\option{/novathesis/docdegree}}{phd}	% phd
-		}{% THEN
-			\input{Chapters/\novathesis@acknowledgementsfile}%
-			\clearforchapter%
-		}{% ELSE
-		}%
-	}%
-	{}%
-}
+\newcommand{\ntprintdedicatory}{\clearforchapter\@ntprintifmaindoc@i{dedicatory}}
+\newcommand{\ntprintquote}{\clearforchapter\@ntprintifmaindoc@i{quote}}
+\newcommand{\ntprintacknowledgements}{\clearforchapter\@ntprintifmaindoc@i{acknowledgements}}
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\glossaryfile}[1]{%
-  \InputIfFileExists{Chapters/#1}{}{}
-}%
+% \newcommand{\ntglossaryfile}[1]{\@addfile{glossaries}{glossary=#1}}
+% \newcommand{\ntacronymsfile}[1]{\@addfile{glossaries}{acronyms=#1}}
+% \newcommand{\ntsymbolsfile}[1]{\@addfile{glossaries}{symbols=#1}}
 
-\newcommand{\acronymsfile}[1]{%
-  \InputIfFileExists{Chapters/#1}{}{}
-}%
-
-\newcommand{\symbolsfile}[1]{%
-  \InputIfFileExists{Chapters/#1}{}{}
-}%
-
-\def\abstractfile[#1]#2{%
-	\expandafter\xdef\csname novathesis@abstractfile@#1\endcsname{#2}}%
-
-\newcommand{\novathesis@printabstract@lang}[1]{%
-  { % Extra braces to force language changes to be local
-    \setabstractlang{#1}%
-  	\edef\novathesis@filetoinclude{Chapters/\@nameuse{novathesis@abstractfile@#1}}%
-  	\InputIfFileExists{\novathesis@filetoinclude}%
-      {}%
-      {}%
-    \selectthelanguage{\option{/novathesis/mainlang}}
-    \clearforchapter%
-  }%
+\newcommand{\@ntprintabstract}[1]{%
+  \typeout{NT PRINT ABSTRACT #1}%
+  \setabstractlang{#1}%
+  \@ntprintfisrt@ii[#1]{abstract}%
+  \selectthelanguage{\option{/novathesis/mainlang}}%
 }
-
-
-\newcommand{\printabstract}{%
-	\xdef\novathesis@tmp{\theabstractorder[\option{/novathesis/mainlang}]}%
-  \iteratecsvlist{\novathesis@printabstract@lang}{\novathesis@tmp}%
-  % disables protrusion locally in the document for the forthcoming tables of contents
-  \ifxetexorluatex\else\microtypesetup{protrusion=false}\fi%
+\newcommand{\ntprintabstracts}{%
+  \xdef\novathesis@tmp{\theabstractorder[\option{/novathesis/mainlang}]}%
+  \iteratecsvlist{\@ntprintabstract}{\novathesis@tmp}%
 }
-
 
 
 \newcommand{\thesisfrontmatter}{%
   \frontmatter%
-  \selectthelanguage{\option{/novathesis/mainlang}}
-  % \pagestyle{novathesis@myvf}
+  \selectthelanguage{\option{/novathesis/mainlang}}%
   \pagenumbering{roman}%
   \setlength{\headheight}{15pt}%
 }
 
-\newcommand{\thesismainmatter}{%
+\newcommand{\ntthesismainmatter}{%
   % enables protrusion locally for the remainder of the document
   \ifxetexorluatex\else\microtypesetup{protrusion=true}\fi%
 	\mainmatter%
@@ -882,51 +834,30 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Chapters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\chapterfile}[1]{\listgadd{\novathesis@chapter@list}{#1}}
+\newcommand{\ntchapterfile}[1]{\listgadd{\novathesis@chapter@list}{#1}}
 
-\newcommand{\novathesis@printchapter}[1]{%
-	\InputIfFileExists{Chapters/#1}{\clearforchapter}{ERROR: File '#1' does not exist!!!}%
+
+\newcommand{\ntprintchapters}{%
+    \@forallfiles{chapter}{\@ntprintnext@ii{chapter}}%
 }
-
-\newcommand{\printchapters}{%
-	\ifthenelse{\isundefined\novathesis@chapter@list}{}%
-		{\forlistloop{\novathesis@printchapter}{\novathesis@chapter@list}}%
-}
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Appendixes and Annexes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\appendixfile}[1]{%
-	\listgadd{\novathesis@appendix@list}{#1}%
+
+\newcommand{\ntprintappendixes}{%
+  \renewcommand{\appendixtocname}{\appendixnamepl}%
+  \clearforchapter\appendix\addappheadtotoc%
+  \@forallfiles{appendix}{\@ntprintnext@ii{appendix}}%
 }
 
-\newcommand{\novathesis@printappendix}[1]{%
-	\InputIfFileExists{Chapters/#1}{\clearforchapter}{}%
+\newcommand{\ntprintannexes}{%
+  \renewcommand{\appendixtocname}{\annexnamepl}%
+  \clearforchapter\annex\addappheadtotoc%
+  \@forallfiles{annex}{\@ntprintnext@ii{annex}}%
 }
 
-\newcommand{\printappendixes}{%
-	\ifthenelse{\isundefined\novathesis@appendix@list}{}%
-		{\renewcommand{\appendixtocname}{\appendixnamepl}%
-         \clearforchapter\appendix\addappheadtotoc%
-		 \forlistloop{\novathesis@printappendix}{\novathesis@appendix@list}}%
-}
-
-\newcommand{\annexfile}[1]{%
-	\listgadd{\novathesis@annex@list}{#1}%
-}
-
-\newcommand{\novathesis@printannex}[1]{%
-	\InputIfFileExists{Chapters/#1}{\clearforchapter}{}%
-}
-
-\newcommand{\printannexes}{%
-	\ifthenelse{\isundefined\novathesis@annex@list}{}%
-		{\renewcommand{\appendixtocname}{\annexnamepl}%
-         \clearforchapter\annex\addappheadtotoc%
-		 \forlistloop{\novathesis@printannex}{\novathesis@annex@list}}%
-}
 
 \newcommand{\annex}{
   \xdef\Hy@chapapp{annex}%
@@ -942,77 +873,91 @@
 %% Deal with optional lists in the frontmatter: listoftables, litoffigures, etc.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newlistof{lstlistoflistings}{lol}{\lstlistlistingname}
-\newcommand{\novathesis@printlist}[1]{%
-	#1\clearforchapter%
+
+
+\newcommand{\ntprintindex}[1]{%
+  \ifoptiondefined{/novathesis/list/indexes}{}{\options{/novathesis/list/indexes/.new list}}  %
+  \ifthenelse{\equal{#1}{tableofcontents}}{\options{/novathesis/list/indexes/.push = {%
+        \clearforchapter\tableofcontents*%
+  }}}{}%
+  \ifthenelse{\equal{#1}{listoffigures}}{\options{/novathesis/list/indexes/.push = {%
+        \clearforchapter\listoffigures%
+  }}}{}%
+  \ifthenelse{\equal{#1}{listoftables}}{\options{/novathesis/list/indexes/.push = {%
+        \clearforchapter\listoftables%
+  }}}{}%
+  \ifthenelse{\equal{#1}{listoflistings}}{\options{/novathesis/list/indexes/.push = {%
+        \clearforchapter\lstlistoflistings%
+  }}}{}%
+  \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/novathesis/list/indexes/.push = {%
+          \setglossarystyle{long}%
+          \setabbreviationstyle[acronym]{long-short}%
+          \glsnogroupskiptrue%
+          \setlength{\glsdescwidth}{0.75\textwidth}%
+          \printnoidxglossaries\clearforchapter%
+  }}}{}%
 }
 
-\newcommand{\addlisttofrontmatter}[1]{%
-	\listgadd{\novathesis@frontmatter@list}{#1}%
-}
+\newcommand{\ntprintallindexes}{\optionlistdo{/novathesis/list/indexes}{##1}}
 
-\newcommand{\printtoc}{%
-  % \pdfbookmark[0]{\contentsname}{contents}
-	\tableofcontents*
-}
 
-\newcommand{\printotherlists@i}{%
-	\ifthenelse{\isundefined\novathesis@frontmatter@list}%
-    {}%
-		{\clearforchapter%
-      \forlistloop{\novathesis@printlist}{\novathesis@frontmatter@list}%
-    }%
-  \clearforchapter%
-}
-
-\newcommand{\printotherlists}{%
-  \clearforchapter%
-  % printotherlists [\option{/novathesis/otherlistsat}]
-  \ifthenelse{\equal{\option{/novathesis/otherlistsat}}{front}}%
-  {%
-    \if@mainmatter%
-    \else%
-      \printotherlists@i%
-    \fi%
+% \def\option@listmatch@getval#1=#2{#2}
+\newcommand*{\option@listmatch}[2]{
+  \typeout{NT LISTMATCH [#1] [#2]}%
+  \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%
+  \ifthenelse{\equal{\option@listmatch@key}{#1}}%
+    {\typeout{NT FOUND KEY=\option@listmatch@key VALUE=\option@listmatch@value}\listbreak}%
+    {\typeout{NT LOOKING KEY=\option@listmatch@key VALUE=\option@listmatch@value}}%
+}%
+\options{/handlers/getval/.new operation = {%
+  \typeout{NT GETVAL #1 #2}%
+    \optionlistdo{#1}{\option@listmatch{#2}{##1}}%
   }%
-  {}%
-  \ifthenelse{\equal{\option{/novathesis/otherlistsat}}{back}}%
-  {%
-    \if@mainmatter%
-      \printotherlists@i%
-    \else%
-    \fi%
-  }%
-  {}%
 }
 
+\newcommand*{\@loadglossaryfileifexists}[1]{%
+  \typeout{NT LOADGLOSSARYFILEIFEXISTS #1}%
+  \options{/novathesis/files/glossaries/.getval = {#1}}
+  \InputIfFileExists{\option@listmatch@value}%
+    {\typeout{NT LOADING \option@listmatch@value succeeded}}%
+    {\typeout{NT LOADING \option@listmatch@value failed}}%
+}
+
+\newcommand{\loadglossaryfiles}{%
+  \forcsvlist{\@loadglossaryfileifexists}{glossary,acronyms,symbols}%
+}
+  
+\AtBeginDocument{
+  \loadglossaryfiles%
+}
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\addbibfile}[1]{%
-  \iftoggle{/novathesis/biblatex loaded}%
-    {}%
-    { \letoptionlist{/novathesis/biblatex}\nt@tmp
-      \typeout{'NT PASSING TO BIBLATEX= '\nt@tmp}
-      \RequirePackage[\nt@tmp]{biblatex}%
-      \DeclareLanguageMapping{english}{american-apa}%
-      \DeclareLanguageMapping{portuguese}{portuguese-apa}%
-      \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
-      \option{/novathesis/biblatex loaded/.flip}%
-    }
-  \addbibresource{#1}
+
+\newcommand{\@ntaddfilehookbib}[2]{%
+  \letoptionlist{/novathesis/biblatex}\nt@tmp%
+  \typeout{'NT PASSING TO BIBLATEX= '\nt@tmp}%
+  \RequirePackage[\nt@tmp]{biblatex}%
+  \DeclareLanguageMapping{english}{american-apa}%
+  \DeclareLanguageMapping{portuguese}{portuguese-apa}%
+  \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
+  \typeout{'NT ADD BIB RESOURCE= '#2}%
+  \addbibresource{#2}%
 }
 
-\newcommand{\printbib}{\printbibliography}
+\newcommand{\ntprintbib}{%
+  \printbibliography%
+}
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Copyright page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\printcopyright}{%
+\newcommand{\ntprintcopyright}{%
 	\ifthenelse{%
 		\equal{\option{/novathesis/docdegree}}{bsc}% bsc
 		\OR%
@@ -1020,12 +965,12 @@
 		\OR%
 		\equal{\option{/novathesis/docdegree}}{phd}% phd
 	}{% THEN
-		\printcopyrightpage%
+		\ntprintcopyrightpage%
 	}{% ELSE
 	}%
 }
 
-\newcommand{\printcopyrightpage}{%
+\newcommand{\ntprintcopyrightpage}{%
 	\clearforchapter%
 	\null\vfill%
   \noindent%
@@ -1039,7 +984,6 @@
 %% Dedicatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\dedicatory{%%
-	\clearforchapter%
 	\thispagestyle{empty}%
 	~\\[2cm]%
     \begin{flushright}%
@@ -1059,7 +1003,6 @@
 %% Quote
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\quote{%%
-	\clearforchapter%
 	\thispagestyle{empty}%
 	~\\[2cm]%
     \begin{flushright}%

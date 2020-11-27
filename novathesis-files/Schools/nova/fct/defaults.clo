@@ -5,6 +5,8 @@
 %% Costumization for FCT-NOVA (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\typeout{NT LOADING defaults.clo}
+
 % Univesity
 \university[pt]={Universidade NOVA de Lisboa}
 \university[en]={NOVA University Lisbon}
@@ -160,7 +162,7 @@
 % Advisers
 \coveritem{c}{2}{%
   \fontsize{12}{12}\selectfont
-  \printadvisers
+  \ntprintadvisers
 }
 
 
@@ -170,7 +172,7 @@
     \equal{\option{/novathesis/docdegree}}{bsc}%
     \OR\equal{\option{/novathesis/docdegree}}{msc}%
     \OR\equal{\option{/novathesis/docdegree}}{phd}}%
-  {\fontsize{10}{10}\selectfont\printcommittee}%
+  {\fontsize{10}{10}\selectfont\ntprintcommittee}%
   {}%
 }
 

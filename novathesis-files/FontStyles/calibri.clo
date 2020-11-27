@@ -4,6 +4,9 @@
 %%
 %% Costumization of fonts to use Bookman fontset
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING bookman.clo}
+
 \ifxetexorluatex
   \setmainfont[
     Path=novathesis-files/FontStyles/Fonts/,

@@ -13,6 +13,8 @@
 %%      - Tomás Monteiro <monteiro.tomas@gmail.com>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\typeout{NT LAODING spine.clo}
+
 
 % Draw the book spine
 % usable range: 145 to 425 pages, maximum characters for the title 140 and 22 for the author name
@@ -233,7 +235,7 @@
 
 
 	\newbox{\novathesis@spine@box}%
-	\newcommand{\printspine}{%
+	\newcommand{\ntprintspine}{%
 	  \clearforchapter%
 	  \thispagestyle{empty}%
 	  \make@spine@box@logo{}{\thespine[logo]}%

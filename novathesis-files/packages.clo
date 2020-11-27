@@ -5,6 +5,9 @@
 %%
 %% Packages to be loaded
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LAODING packages.clo}
+
 \ifxetexorluatex
 \usepackage{fontspec}
 \else
@@ -55,7 +58,7 @@
 
 %%%%% LOAD THESE PACKAGES JUST AT THE ENF OF THE PREAMBLE 
 %%%%% AND BEFORE THE \BEGIN{DOCUMENT}
-\novathesisAtEndClassFile{%
+% \novathesisAtEndClassFile{%
   %%%%% Configure HyperRefs
   % \RequirePackage[pdftex,usenames]{color}
   % \RequirePackage[pdftex]{xcolor}
@@ -65,15 +68,18 @@
 
 
   % Manage glossaries
-  \RequirePackage[nonumberlist,toc,
-  translate=babel,
-    acronym, % adds acronyms listing
-    symbols, % adds symbols listing
-    sanitize=none % allow \gls inside descriptions
+  \RequirePackage[
+    nonumberlist,toc
+    , translate=babel
+    , acronym % adds acronyms listing
+    , symbols % adds symbols listing
+    , sanitize=none % allow \gls inside descriptions
+    % , automake
   ]{glossaries-extra} % To create glossaries
   % \glsdisablehyper
   \makenoidxglossaries
-}
+  % \makeglossaries
+% }
 
 
 %%%%% Configure Graphics
@@ -125,9 +131,11 @@
 }
 
 
-\RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}%
-\RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
-\RequirePackage[all]{hypcap}
+\AtEndPreamble{%
+  \RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}%
+  \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
+  \RequirePackage[all]{hypcap}
+  % To handle subfigures
+  \newsubfloat{figure}
+}
 
-% To handle subfigures
-\newsubfloat{figure}

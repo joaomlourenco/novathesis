@@ -5,6 +5,8 @@
 %% Costumization for the VZ43 chapter style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\typeout{NT LOADING vz43.clo}
+
 %%%%% Configure chapters, headers, footers, and page numbering
 \newif\ifNoChapNumber
 \newcommand\Vlines{%
@@ -29,6 +31,6 @@
     \end{tabular}%
     \NoChapNumberfalse%
   }
-  \renewcommand\printchapternonum{\NoChapNumbertrue}
+  \renewcommand\ntprintchapternonum{\NoChapNumbertrue}
 }
 \chapterstyle{VZ43}

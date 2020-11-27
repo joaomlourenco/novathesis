@@ -254,7 +254,7 @@
   \fontfamily{phv}\fontsize{13}{13}\selectfont
   \theadviserslabel[\option{/novathesis/coverlang}]\\%
   \vspace{5mm}%
-  \printadvisersaslist%
+  \ntprintadvisersaslist%
   \vspace{5mm}%
 }
 
@@ -267,7 +267,7 @@
   \OR\equal{\option{/novathesis/docdegree}}{phd}}%
   {  
   	\fontfamily{phv}\fontseries{mc}\fontsize{10}{10}\selectfont%
-		\printcommittee%
+		\ntprintcommittee%
 	}%
   {}%
 }

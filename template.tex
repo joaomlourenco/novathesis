@@ -78,7 +78,7 @@
 %%%%%% BIBLATEX CONFIGURATION %%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% OTHER BIBLATEX OPTIONS
-\ntsetup{biblatex/.push={backend=biber, giveninits=true, hyperref=true}}
+\ntsetup{biblatex/.push={backend=bibtex, giveninits=true, hyperref=true, natbib=true, maxcitenames=2}}
 
 %% Uncomment the preferred style
 
@@ -90,6 +90,7 @@
 % \ntsetup{biblatex/.push={style=alphabetic, sortcites=true, sorting=nyt}}
 %% APA-LIKE CITATION
 % \ntsetup{biblatex/.push={natbib=true, style=apa6, maxcitenames=2}}
+% \ntsetup{biblatex/.push={maxcitenames=3}}
 
 %%============================================================
 %%  END OF TEMPLATE COSTUMIZATION
@@ -114,6 +115,8 @@
 
 %% FOR DEMO PURPOSES ONLY --- TO BE REMOVED by final users
 \usepackage{lipsum}
+
+\usepackage{array,esvect}
 
 
 %------------------------------------------------------------------
@@ -209,65 +212,68 @@
 \committee[m,f]{Yet another member of the committee}
 
 %%------------------------------------------------------------
-%% All the names inside braces below sould correspond to a file
-%%     with extension ".tex" and located in the "Chapters" folder
+%% Except for the bibliography, all the other names below inside 
+%%     braces must correspond to a file with extension ".tex" 
+%%     and located in the "Chapters" folder
 %%------------------------------------------------------------
-
-% Dedicatory text. Will only be considered for final documents,
-% i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
-\dedicatoryfile{dedicatory}
-
-% the file with the quote
-\quotefile{quote}
-
-% Acknowledgments text. Will only be considered for final documents,
-% i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
-\acknowledgementsfile{acknowledgements}
-
-
-\abstractfile[pt]{abstract-pt}  % Abstract in Portuguese
-\abstractfile[en]{abstract-en}  % Abstract in English
-\abstractfile[fr]{abstract-fr}  % Abstract in French
-\glossaryfile{glossary}
-\setglossarystyle{long}
-\setabbreviationstyle[acronym]{long-short}
-\acronymsfile{acronyms}
-\symbolsfile{symbols}
-
-% definition of the second cover, to be printed before the copyright (to serve FCSH-NOVA)
-\aftercoverfile{aftercover-nova-ims}
-
-% The Table of Contents is always printed.
-% The other lists below may be commented and omitted.
-\addlisttofrontmatter{\listoffigures}  % The List of Figures. Comment to omit.
-\addlisttofrontmatter{\listoftables}   % The List of Tables. Comment to omit.
-\addlisttofrontmatter{\lstlistoflistings}  % The List of Code Listings. Comment to omit.
-\addlisttofrontmatter{%
-  \glsnogroupskiptrue%
-  \setlength{\glsdescwidth}{0.75\textwidth}%
-  \printnoidxglossaries%
-}  % The Glossary and List of Acrnonyms
-
-
-% Text chapters
-% syntax: \chapterfile{file}
-\chapterfile{chapter1}
-\chapterfile{chapter2}
-\chapterfile{chapter3}
-% \chapterfile{chapter4}
-
-
-% Text appendixes
-% sintax: \appendixfile{file}
-% Comment if not needed
-% \appendixfile{appendix1}
-% \appendixfile{appendix2}
-% \annexfile{annex1}
-
 
 
 % BibTeX bibiography files. Can be used multiple times with a single file nae each time.
-\addbibfile{bibliography.bib}
+\ntaddfile{bib}{bibliography.bib}
+% \ntaddbibfile{bibliography.bib}
+
+% Dedicatory text. Will only be considered for final documents,
+% i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
+\ntaddfile{dedicatory}{dedicatory}
+
+% Acknowledgments text. Will only be considered for final documents,
+% i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
+\ntaddfile{acknowledgements}{acknowledgements}
+
+% The file with the quote
+\ntaddfile{quote}{quote}
+
+% Abstract files in multiple languages
+\ntaddfile{abstract}[pt]{abstract-pt}  % Abstract in Portuguese
+\ntaddfile{abstract}[en]{abstract-en}  % Abstract in English
+\ntaddfile{abstract}[fr]{abstract-fr}  % Abstract in French
+
+\ntaddfile{glossaries}[glossary]{glossary}
+\ntaddfile{glossaries}[acronyms]{acronyms}
+\ntaddfile{glossaries}[symbols]{symbols}
+
+\loadglsentries[\acronymtype]{example-glossaries-acronym.tex}
+\loadglsentries{example-glossaries-long.tex}
+
+% definition of the second cover, to be printed before the copyright (to serve FCSH-NOVA)
+\ntaftercoverfile{aftercover-nova-ims}
+
+% The Table of Contents is always printed.
+% The other lists below may be commented and omitted.
+\ntprintindex{tableofcontents}% TheTable of Contents. Probably you want ot leave this as is…
+\ntprintindex{listoffigures}% The List of Figures. Comment to omit.
+\ntprintindex{listoftables}% The List of Tables. Comment to omit.
+\ntprintindex{listoflistings}% The List of Listings. Comment to omit.
+\ntprintindex{listsofglossaries}% The Glossary, and the lists of Acronyms and Symbols
+
+
+
+% Text chapters
+% syntax: \ntaddfile{chapter}{file}
+\ntaddfile{chapter}{chapter1}
+\ntaddfile{chapter}{chapter2}
+\ntaddfile{chapter}{chapter3}
+% \ntaddfile{chapter}{chapter4}
+
+
+% Text appendixes and annexes
+% sintax: \ntaddfile{appendix}{file}
+%         \ntaddfile{annex}{file}
+% Comment if not needed
+\ntaddfile{appendix}{appendix1}
+\ntaddfile{appendix}{appendix2}
+\ntaddfile{annex}{annex1}
+
 
 
 
@@ -285,34 +291,31 @@
 
 %% Begining of document
 \begin{document}
+  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \thesisfrontmatter  % Before the main text (TOC, etc)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\printcoverpage    % The cover page
-\printaftercover
-\printcopyright    % Print the copyright page (will only be printed if adequate for the document type)
-\printdedicatory  % Print the dedicatory (will only be printed if adequate for the document type)
-\printacknowledgements  % Print the acknowledgments (will only be printed if adequate for the document type)
-\printquote        % Print the quote (if file exists and is adequate for the document type)
-\printabstract    % Print abstracts (in PT and EN). The abstract in the document main language will
+\ntprintcoverpage    % The cover page
+\ntprintaftercover
+\ntprintcopyright    % Print the copyright page (will only be printed if adequate for the document type)
+\ntprintdedicatory  % Print the dedicatory (will only be printed if adequate for the document type)
+\ntprintacknowledgements  % Print the acknowledgments (will only be printed if adequate for the document type)
+\ntprintquote        % Print the quote (if file exists and is adequate for the document type)
+\ntprintabstracts    % Print abstracts (in PT and EN). The abstract in the document main language will
                   % be printed first, the abstract in the foreign language will be printed second
-\printtoc         % Always print the table of contents
-\printotherlists   % If option 'otherlistsat=front', print other lists of contents according
-                  % to instructions given above, otherwise do nothing
+\ntprintallindexes  % Print all the indexes (TOC, LOF, LOT, …)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\thesismainmatter  % The main text
+\ntthesismainmatter  % The main text
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\printchapters    % Print document chapters
-\printbib    % Print the bibliography
-% \printotherlists   % Alternative location to print the other lists (if you uncomment this one, comment the other one above)
-\printotherlists   % If option 'otherlistsat=back', print other lists of contents according to instructions given above, otherwise do nothing
-% \addtocontents{toc}{\setlength{\cftsecnumwidth}{4em}}
-\printappendixes  % Print appendixes, if any!
-\printannexes  % Print appendixes, if any!
-\printbackcoverpage
+\ntprintchapters    % Print document chapters
+\ntprintbib    % Print the bibliography
+% \ntprintotherlists   % Alternative location to print the other lists (if you uncomment this one, comment the other one above)
+\ntprintappendixes  % Print appendixes, if any!
+\ntprintannexes  % Print appendixes, if any!
+\ntprintbackcoverpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% End of document
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

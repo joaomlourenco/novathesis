@@ -24,11 +24,13 @@
 %% Inlay: 15.0cm x 11.8cm
 %% Inlay fold: 0,635cm + 13,73cm + 0,635cm
 
+\typeout{NT LAODING cdcolver.clo}
+
 \prependtographicspath{{novathesis-files/Images/}}
 
 \newsavebox{\cdcover@savebox}
 
-\newcommand{\printcdcover}{%
+\newcommand{\ntprintcdcover}{%
 	\clearpage
 
 	\thispagestyle{empty}
@@ -86,7 +88,7 @@
 
 }
 
-\newcommand{\printcdinlay}{%
+\newcommand{\ntprintcdinlay}{%
 	\clearpage
 
 	\thispagestyle{empty}

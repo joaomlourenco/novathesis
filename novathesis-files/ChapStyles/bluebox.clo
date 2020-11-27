@@ -5,6 +5,8 @@
 %% Costumization for the BlueBox chapter style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\typeout{NT LOADING bluebox.clo}
+
 %%%%% Configure chapters, headers, footers, and page numbering
 \makeatletter
 \newsavebox{\ChpNumBox}
@@ -37,7 +39,7 @@
     \sbox{\ChpNumBox}{%
       \BuildChpNum{\chapnamefont\@chapapp}%
       {\chapnumfont\thechapter}}}%
-  \renewcommand{\printchapternonum}{%
+  \renewcommand{\ntprintchapternonum}{%
     \sbox{\ChpNumBox}{%
       \BuildChpNum{\chapnamefont\vphantom{\@chapapp}}%
       {\chapnumfont\hphantom{\thechapter}}}}%

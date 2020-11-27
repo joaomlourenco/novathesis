@@ -5,6 +5,8 @@
 %% Costumization for the Pedersen chapter style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\typeout{NT LOADING pedersen.clo}
+
 %%%%% Configure chapters, headers, footers, and page numbering
 \definecolor{ared}{rgb}{.647,.129,.149}
 \renewcommand\colorchapnum{\color{ared}}

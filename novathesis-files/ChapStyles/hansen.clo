@@ -5,6 +5,8 @@
 %% Costumization for the Hasnsen chapter style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\typeout{NT LOADING hasnsen.clo}
+
 %%%%% Configure chapters, headers, footers, and page numbering
 \definecolor{chaptercolor}{gray}{0.8}
 % helper macros
@@ -24,7 +26,7 @@
     \numindent%
     \endgroup%
   }
-  \renewcommand*{\printchapternonum}{%
+  \renewcommand*{\ntprintchapternonum}{%
     \vphantom{\begingroup%
       \leavevmode%
       \chapnumfont%

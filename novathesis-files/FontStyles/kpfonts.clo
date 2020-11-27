@@ -5,6 +5,8 @@
 %% Customization of fonts to use a Paltino-like font set
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\typeout{NT LOADING kpfonts.clo}
+
 \ifxetexorluatex
   \RequirePackage{kpfonts-otf}
 \else

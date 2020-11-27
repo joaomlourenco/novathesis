@@ -4,6 +4,9 @@
 %%
 %% Customization of font to use a Linux Libertine font set
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING libertine.clo}
+
 \RequirePackage{textcomp}
 \RequirePackage[sb]{libertine}
 \RequirePackage[varqu,varl]{zi4}% inconsolata

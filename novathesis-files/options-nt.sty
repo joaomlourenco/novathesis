@@ -594,7 +594,7 @@
 % Lists
 % --------------------------------------------------------
 
-\newrobustcmd*\option@remove[2]{\listcsremove{optk@#1}{#2}}
+\newrobustcmd*\option@remove[2]{\typeout{NT LIST REMOVE [#2] from \@nameuse{optk@#1}}\listcsremove{optk@#1}{#2}\typeout{NT LIST REMOVE \@nameuse{optk@#1}}}
 \newrobustcmd*\option@setnil[1]{\option@set{#1}{}}
 \newrobustcmd*\option@push[2]{\listcsadd{optk@#1}{#2}}
 \newrobustcmd*\option@epush[2]{\listcseadd{optk@#1}{#2}}%

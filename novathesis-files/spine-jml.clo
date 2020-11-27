@@ -1,6 +1,8 @@
 %!TEX root = ../template.tex
 % Draw the book spine
 
+\typeout{NT LAODING spine-jml.clo}
+
 
 \newlength{\novathesis@spinewidth}%
 \setlength{\novathesis@spinewidth}{1mm * (\thelastpage + 19) / 20}%
@@ -156,7 +158,7 @@
 }
 
 \newbox{\novathesis@spine@box}%
-\newcommand{\printspine}{%
+\newcommand{\ntprintspine}{%
   \clearforchapter%
   \thispagestyle{empty}%
   \make@spine@box@logo{}{\thespine[logo]}%

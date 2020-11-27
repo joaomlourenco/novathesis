@@ -225,7 +225,7 @@
   \adviserstrfont[\option{/novathesis/coverlang}]={\bfseries}%
   \coadviserstrfont[\option{/novathesis/coverlang}]={\bfseries}%
   \fontsize{11}{11}\selectfont%
-  \printadvisers%
+  \ntprintadvisers%
 \end{minipage}
 }
 
@@ -277,7 +277,7 @@
     \OR\equal{\option{/novathesis/docdegree}}{phd}}%
   {\committeetitlestrfont[\option{/novathesis/coverlang}]={\fontsize{14}{14}\selectfont\bfseries}%
     \commiteememberstrfont[\option{/novathesis/coverlang}]={\bfseries}%
-    \fontsize{12}{12}\selectfont\printcommittee[1]%
+    \fontsize{12}{12}\selectfont\ntprintcommittee[1]%
   }%
   {}%
 \end{minipage}

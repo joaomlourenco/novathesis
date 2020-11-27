@@ -21,6 +21,8 @@
 %% 	novathesis.clo file)… this must be fixed in the future!!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\typeout{NT LAODING options.clo}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PROCESS KEY-VAL OPTIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -67,7 +69,7 @@
         \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/spine.clo}%
           {}%
           {\input{novathesis-files/spine.clo}}%
-        \printspine%
+        \ntprintspine%
       }%
   }
   % %novathesis@opt@cdcover
@@ -76,8 +78,8 @@
       \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/cdcover.clo}%
         {}%
         {\input{novathesis-files/cdcover.clo}}%
-      \printcdcover%  
-      \printcdinlay%
+      \ntprintcdcover%  
+      \ntprintcdinlay%
       }%
   }
   % %novathesis@opt@biblatex
@@ -114,6 +116,7 @@
   , handler/fontstyle/.new cmd = {%
     \InputIfFileExists{novathesis-files/FontStyles/#1.clo}{}{\PackageWarining{novathesis}{Invalid Font Style: #1}}
   }
+  , files/glossaries/.new list = {}
 }
 
 \def\@ntfirstof#1=#2\@nil{#1}

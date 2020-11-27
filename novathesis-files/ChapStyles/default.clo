@@ -5,5 +5,7 @@
 %% Costumization for the Default chapter style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\typeout{NT LOADING default.clo}
+
 %%%%% Configure chapters, headers, footers, and page numbering
 \chapterstyle{default}

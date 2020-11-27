@@ -15,6 +15,8 @@
 %% to reuse the information already provided in the file “template.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\typeout{NT LOADING cdcover.clo}
+
 
 % Draw the cdcover
 
@@ -27,7 +29,7 @@
 \newsavebox{\cdcover@savebox@spineone}
 \newsavebox{\cdcover@savebox@spinetwo}
 
-\newcommand{\printcdcover}{%
+\newcommand{\ntprintcdcover}{%
 	\clearpage
 
 	\thispagestyle{empty}
@@ -95,7 +97,7 @@
 
 
 
-\newcommand{\printcdinlay}{%
+\newcommand{\ntprintcdinlay}{%
 	\clearpage
 
 	\thispagestyle{empty}
