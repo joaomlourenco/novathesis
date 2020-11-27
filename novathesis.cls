@@ -8,10 +8,10 @@
 %% To view a copy of this license,
 %% visit http://creativecommons.org/licenses/by-nc/4.0/.
 %%
-%% Version 2020/11/22 [5.1.3]
-%% Departamento de Informática
-%% Faculdade de Ciências e Tecnologia
-%% Universidade NOVA de Lisboa
+%% Version 2020/11/27 [5.1.4]
+%% Departamento de Informática (www.di.fct.unl.pt)
+%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Universidade NOVA de Lisboa (www.unl.pt)
 %%
 %% BUGS and SUGGESTIONS: please submit an issue at the project web page
 %%      at: https://github.com/joaomlourenco/novathesis/
@@ -48,7 +48,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{novathesis}[2020/11/22 novathesis template]
+\ProvidesClass{novathesis}[2020/11/27 novathesis template]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -757,25 +757,25 @@
 %% Printing chapters and similars
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\@ntprintfisrt@ii}[2][VAL]{%
+\newcommand{\@ntloadfisrt@ii}[2][VAL]{%
   % #1 = KEY
   % #2 = file class
   \options{/novathesis/files/#2/.getval = {#1}}%
   % \typeout{NT TRYING TO LOAD \option@listmatch@value}%
   \InputIfFileExists{\option@listmatch@value}%
-    {\typeout{NT LOADING \option@listmatch@value succeeded}}%
-    {\typeout{NT LOADING \option@listmatch@value failed}}%
+    {}%
+    {}%
 }
 
-\newcommand{\@ntprintnext@ii}[2]{%
+\newcommand{\@ntloadnext@ii}[2]{%
   % #1 = file class
   % #2 = KEY=value
   % \typeout{NT @ntprintnext@ii [#1] [#2]}%
   \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%
-  \typeout{NT @ntprintnext@ii TRYING TO LOAD \option@listmatch@value}%
+  % \typeout{NT @ntprintnext@ii TRYING TO LOAD \option@listmatch@value}%
   \InputIfFileExists{\option@listmatch@value}%
-    {\typeout{NT @ntprintnext@ii LOADING \option@listmatch@value succeeded}}%
-    {\typeout{NT @ntprintnext@ii LOADING \option@listmatch@value failed}}%
+    {}%
+    {}%
 }
 
 \newcommand{\@ntprintifmaindoc@i}[1]{%
@@ -788,7 +788,7 @@
 		\OR%
 		\equal{\option{/novathesis/docdegree}}{phd}	% phd
 	}{% THEN it is a main document
-    \@ntprintfisrt@ii{#1}%
+    \@ntloadfisrt@ii{#1}%
 	}{ % ELSE
     % It is a plan or proposal
 	}%  
@@ -809,9 +809,9 @@
 }
 
 \newcommand{\@ntprintabstract}[1]{%
-  \typeout{NT PRINT ABSTRACT #1}%
+  % \typeout{NT PRINT ABSTRACT #1}%
   \setabstractlang{#1}%
-  \@ntprintfisrt@ii[#1]{abstract}%
+  \@ntloadfisrt@ii[#1]{abstract}%
   \selectthelanguage{\option{/novathesis/mainlang}}%
 }
 
@@ -840,7 +840,7 @@
 
 
 \newcommand{\ntprintchapters}{%
-    \@forallfiles{chapter}{\@ntprintnext@ii{chapter}}%
+    \@forallfiles{chapter}{\@ntloadnext@ii{chapter}}%
 }
 
 
@@ -851,13 +851,13 @@
 \newcommand{\ntprintappendixes}{%
   \renewcommand{\appendixtocname}{\appendixnamepl}%
   \clearforchapter\appendix\addappheadtotoc%
-  \@forallfiles{appendix}{\@ntprintnext@ii{appendix}}%
+  \@forallfiles{appendix}{\@ntloadnext@ii{appendix}}%
 }
 
 \newcommand{\ntprintannexes}{%
   \renewcommand{\appendixtocname}{\annexnamepl}%
   \clearforchapter\annex\addappheadtotoc%
-  \@forallfiles{annex}{\@ntprintnext@ii{annex}}%
+  \@forallfiles{annex}{\@ntloadnext@ii{annex}}%
 }
 
 
@@ -905,7 +905,7 @@
 
 % \def\option@listmatch@getval#1=#2{#2}
 \newcommand*{\option@listmatch}[2]{
-  \typeout{NT LISTMATCH [#1] [#2]}%
+  % \typeout{NT LISTMATCH [#1] [#2]}%
   \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%
   \typeout{K=\option@listmatch@key ~V=\option@listmatch@value}
   \ifthenelse{\equal{\option@listmatch@key}{#1}}{\listbreak}{}%
@@ -914,7 +914,7 @@
     % {\typeout{NT LOOKING KEY=\option@listmatch@key VALUE=\option@listmatch@value}}%
 }%
 \options{/handlers/getval/.new operation = {%
-  \typeout{NT GETVAL [#1] [#2]}%
+  % \typeout{NT GETVAL [#1] [#2]}%
     \optionlistdo{#1}{\option@listmatch{#2}{##1}}%
   }%
 }
@@ -922,12 +922,12 @@
 \newcommand*{\@loadglossaryfileifexists}[2]{%
   % #1 = glossary type
   % %2 = glossary key
-  \typeout{NT loadglossaryfileifexists [#1] [#2]}%
+  % \typeout{NT loadglossaryfileifexists [#1] [#2]}%
   \options{/novathesis/files/#1/.getval = {#2}}%
-  \typeout{NT loadglossaryfileifexists TRYING TO LOAD \option@listmatch@value}%
+  % \typeout{NT loadglossaryfileifexists TRYING TO LOAD \option@listmatch@value}%
   \IfFileExists{\option@listmatch@value}%
-    {\loadglsentries{\option@listmatch@value}\typeout{NT LOADING GLOASSARY \option@listmatch@value succeeded}}%
-    {\typeout{NT LOADING GLOASSARY \option@listmatch@value failed}}%
+    {\loadglsentries{\option@listmatch@value}}%
+    {}%
 }
 
 \newcommand{\@loadglossaryfiles}{%

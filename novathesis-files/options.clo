@@ -21,7 +21,7 @@
 %% 	novathesis.clo file)… this must be fixed in the future!!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LAODING options.clo}
+\typeout{NT LOADING FILE options.clo}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PROCESS KEY-VAL OPTIONS
@@ -92,7 +92,7 @@
   , linkscolor/.new cmd = {\@ifpackageloaded{hyperref}{\hypersetup{allcolors=#1}}{\PassOptionsToPackage{allcolors=#1}{hyperref}}}
   , biblatex loaded/.new toggle
   , handler/school/.new cmd = {%
-    \typeout{NT HANDLER SCHOOL ROUTINE #1}
+    % \typeout{NT HANDLER SCHOOL ROUTINE #1}
     \prependtographicspath{{novathesis-files/Schools/#1/Images/}}
     \InputIfFileExists{novathesis-files/Schools/#1/defaults.clo}{}{\PackageWarining{novathesis}{Missing defaults for #1}}
   }
@@ -128,7 +128,7 @@
   \edef\@nt@value{\@ntsecondof#1\@nil}
   \typeout{'NT SETUP = '[\@nt@keyval]~/~[\@nt@opt]~/~[\@nt@value]}
   \options{/novathesis/\@nt@opt = \@nt@value}%
-  \typeout{'NT HANDLER = '/novathesis/handler/\@nt@opt}%
+  % \typeout{'NT HANDLER = '/novathesis/handler/\@nt@opt}%
   \option{/novathesis/handler/\@nt@opt}
 }
 

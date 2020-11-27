@@ -5,7 +5,7 @@
 %% Costumization of fonts to use Bookman fontset
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING bookman.clo}
+\typeout{NT LOADING FILE bookman.clo}
 
 \ifxetexorluatex
   \setmainfont{TeX Gyre Bonum}
