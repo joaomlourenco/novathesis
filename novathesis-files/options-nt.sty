@@ -594,10 +594,30 @@
 % Lists
 % --------------------------------------------------------
 
-\newrobustcmd*\option@remove[2]{\typeout{NT LIST REMOVE [#2] from \@nameuse{optk@#1}}\listcsremove{optk@#1}{#2}\typeout{NT LIST REMOVE \@nameuse{optk@#1}}}
-\newrobustcmd*\option@setnil[1]{\option@set{#1}{}}
-\newrobustcmd*\option@push[2]{\listcsadd{optk@#1}{#2}}
-\newrobustcmd*\option@epush[2]{\listcseadd{optk@#1}{#2}}%
+\newrobustcmd*{\option@listsize}[1]{%
+  \typeout{NT option@listsize [#1]}%
+  \ifcsname c@#1/@sizecnt\endcsname%
+    \@nameuse{the#1/@sizecnt}%
+  \else%
+    0%
+  \fi%
+}
+\newrobustcmd*{\option@adjustlistsize}[1]{%
+  \typeout{NT option@adjustlistsize [#1]}
+  \stepcounter{#1/@sizecnt}%
+  % \edef\opt@list@size{\@nameuse{the#1/@sizecnt}}%
+  % \typeout{NT letoption [#1/@size=\opt@list@size]}
+  \option@eset{#1/@size}{#1/@sizecnt}
+}
+\newrobustcmd*{\option@neworzerocounter}[1]{%
+  \typeout{NT option@neworzerocounter [#1]}
+  \ifcsname c@#1\endcsname\else\newcounter{#1}\fi%
+  \setcounter{#1}{0}%
+}
+% \newrobustcmd*\option@remove[2]{\typeout{NT LIST REMOVE [#2] from \@nameuse{optk@#1}}\listcsremove{optk@#1}{#2}\typeout{NT LIST REMOVE \@nameuse{optk@#1}}}%
+\newrobustcmd*\option@setnil[1]{\option@set{#1}{}\option@neworzerocounter{#1/@sizecnt}}%
+\newrobustcmd*\option@push[2]{\listcsadd{optk@#1}{#2}\option@adjustlistsize{#1}}%
+\newrobustcmd*\option@epush[2]{\listcseadd{optk@#1}{#2}\option@adjustlistsize{#1}}%
 % \newrobustcmd\optionlistdo[2]{\def\opt@@do##1{#2}\forlistcsloop{\opt@@do}{optk@#1}}
 \newrobustcmd\optionlistdo[2]{%
   \csdef{opt@@do#1}##1{#2}%
@@ -1092,7 +1112,8 @@
   },
   /handlers/show/list/.new cmd    = \letoptionlist{#1}\opt@list\option@showvalue{\opt@list},
   /handlers/push/.new operation   = \option@push{#1}{#2},
-  /handlers/remove/.new operation   = \option@remove{#1}{#2},
+  % /handlers/remove/.new operation   = \option@remove{#1}{#2},
+  /handlers/size/.new operation*   = \option@listsize{#1},
   /handlers/concat/.new operation = \option@concat{#1}{#2},
   %
   /handlers/new choice/.new handler={%

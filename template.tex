@@ -39,7 +39,6 @@
 %% All class options will be passed to memoir
 \documentclass[a4paper, 11pt, final]{novathesis}
 
-
 %%============================================================
 %%  BEGINING OF TEMPLATE COSTUMIZATION
 %%============================================================
@@ -148,40 +147,41 @@
 % For costumization,
 % \thesiscover[msc,front]={cover-megi-nova-ims}
 % \thesiscover[msc,front]={cover-mgi-nova-ims}
-% \glstocfalse % Uncomment to remove
-               % Glossary, Acronyms, and Symbols from TOC
 %%============================================================
 
 
+%%------------------------------------------------------------
 % Thesis/Dissertation title
 \title[A Very Long and Impressive Thesis Title\\With a Line Break]{A Very Long and Impressive Thesis Title With a Line Break}
 \subtitle{Science is beautiful}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% For MSc in Computer Science %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%------------------------------------------------------------
+% Degree costumization
+
+%%% For MSc in Computer Science
 % \majorfield[pt]={Engenharia Informática}
 % \majorfield[en]={Computer Science and Engineering}
 % \degreename[pt]={Mestrado Integrado em Engenharia Informática}
 % \degreename[en]={Integrated Master in Computer Science and Engineering}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% For PhD in Computer Science %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\majorfield[pt]={Informática}%% For MSc comment here and uncomment above
-\majorfield[en]={Computer Science}%% For MSc comment here and uncomment above
-\degreename[pt]={Programa de Doutoramento em Informática}%% For MSc comment here and uncomment above
-\degreename[en]={PhD Program in Computer Science}%% For MSc comment here and uncomment above
+%%% For PhD in Computer Science
+\majorfield[pt]={Informática}                             %% For MSc comment here and uncomment above
+\majorfield[en]={Computer Science}                        %% For MSc comment here and uncomment above
+\degreename[pt]={Programa de Doutoramento em Informática} %% For MSc comment here and uncomment above
+\degreename[en]={PhD Program in Computer Science}         %% For MSc comment here and uncomment above
 
+%%------------------------------------------------------------
 % Autor
 % use [f] for female and [m] for male
 \authorname[m]{John Longname Doe}{John Doe}
 \authordegree{Master of Science}
 
+%%------------------------------------------------------------
 % Date
 \datemonth{\DTMmonthname{\month}}
 \dateyear{\the\year}
 
+%%------------------------------------------------------------
 % Advisers
 % use "\\&" if necessary to break the lines in the apprpriate place
 % use [f] for female and [m] for male
@@ -190,132 +190,161 @@
 % \adviser[m]{John Doe Male Adviser Name}{Associate\\& Professor}{Some University Somewhere}
 % \adviser[m]{John Doe Third Adviser Name}{Associate\\& Professor}{Some University Somewhere}
 
-
+%%------------------------------------------------------------
 % Co-Advisers (maximum of 9)
 % use [f] for female and [m] for male
-\coadviser[f]{John Doe Co-Adviser Name}{Associate Professor}{NOVA University of Lisbon}
+\coadviser[m]{John Doe Co-Adviser Name}{Associate Professor}{NOVA University of Lisbon}
 % \coadviser[f]{[Nome da co-orientadora 2]}{[Profª.\ Auxiliar]}{[Universidade Nova de Lisboa]}
 
-
-% committee (maximum of 9 elements)
-% Use [c] for chair, [r] for raporteurs, [a] for advisers, [m] or nothing for remaining members
+%%------------------------------------------------------------
+% Committee
+% \ntcommittee[job][gender]{Name, Position, Organization}
+% For [job] use: [c] for committee chair
+%                [r] for raporteurs
+%                [a] for advisers
+%                [m] for remaining members
+%                [g] for guests
 % Chair of the committee
-\committee[c,m]{Name of the committee chairperson, Full Professor, FCT-NOVA}
+\ntcommittee[c][m]{Name of the committee chairperson, Full Professor, FCT-NOVA}
 % Main raporteurs
-\committee[r,f]{Name of a raporteur}
-\committee[r,f]{Name of another raporteur}
-% Advisers
-\committee[a,f]{Name of an adviser}
-\committee[a,f]{Name of another adviser}
-% Other members of the committee - include the Adviser in this list
-\committee[m,m]{Another member of the committee}
-\committee[m,f]{Yet another member of the committee}
+\ntcommittee[r][m]{Name of a raporteur, Position, University}
+\ntcommittee[r][m]{Name of another raporteur, Position, University}
+% Advisers — FOR FCT-NOVA ADD ADVISERS AS "OTHER MEMBERS [m]"
+% \ntcommittee[a][f]{Name of an adviser, Position, University}
+% \ntcommittee[a][f]{Name of another adviser, Position, University}
+% Other members of the committee
+\ntcommittee[m][m]{Another member of the committee, Position, University}
+\ntcommittee[m][f]{Yet another member of the committee, Position, University}
+% Guest members
+% \ntcommittee[g][m]{Guest member of the committee, Position, University}
+% \ntcommittee[g][f]{Yet another guest member of the committee, Position, University}
+
+
+
+%=============================================================================
+% THE FILES
+%=============================================================================
 
 %%------------------------------------------------------------
-%% Except for the bibliography, all the other names below inside 
-%%     braces must correspond to a file with extension ".tex" 
-%%     and located in the "Chapters" folder
+%% Except for the bibliography, all the other FILE names below  
+%%     inside braces must correspond to a file with extension 
+%%     ".tex" and located in the "Chapters" folder
 %%------------------------------------------------------------
 
-
+%%------------------------------------------------------------
 % BibTeX bibiography files. Can be used multiple times with a single file nae each time.
+% syntax:  \ntaddfile{bib}{filename.bib}
 \ntaddfile{bib}{bibliography.bib}
-% \ntaddbibfile{bibliography.bib}
 
+%%------------------------------------------------------------
 % Dedicatory text. Will only be considered for final documents,
 % i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
+% syntax:  \ntaddfile{dedicatory}{filename}
 \ntaddfile{dedicatory}{dedicatory}
 
+%%------------------------------------------------------------
 % Acknowledgments text. Will only be considered for final documents,
 % i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
+% syntax:  \ntaddfile{acknowledgements}{filename}
 \ntaddfile{acknowledgements}{acknowledgements}
 
+%%------------------------------------------------------------
 % The file with the quote
+% syntax:  \ntaddfile{quote}{filename}
 \ntaddfile{quote}{quote}
 
+%%------------------------------------------------------------
 % Abstract files in multiple languages
+% syntax:  \ntaddfile{abstract}[language]{filename}
 \ntaddfile{abstract}[pt]{abstract-pt}  % Abstract in Portuguese
 \ntaddfile{abstract}[en]{abstract-en}  % Abstract in English
 \ntaddfile{abstract}[fr]{abstract-fr}  % Abstract in French
 
+% Lists of Glossary, Acronyms and Symbols
+% syntax:  \ntaddfile{glossaries}[list-type]{filename}
 \ntaddfile{glossaries}[glossary]{glossary}
 \ntaddfile{glossaries}[acronyms]{acronyms}
 \ntaddfile{glossaries}[symbols]{symbols}
 
-% \loadglsentries[\acronymtype]{example-glossaries-acronym.tex}
-% \loadglsentries{example-glossaries-long.tex}
-
-% definition of the second cover, to be printed before the copyright
-% \ntaftercoverfile{aftercover-nova-ims}
-
-% The Table of Contents is always printed.
-% The other lists below may be commented and omitted.
-\ntprintindex{tableofcontents}% TheTable of Contents. Probably you want ot leave this as is…
-\ntprintindex{listoffigures}% The List of Figures. Comment to omit.
-\ntprintindex{listoftables}% The List of Tables. Comment to omit.
-\ntprintindex{listoflistings}% The List of Listings. Comment to omit.
-\ntprintindex{listsofglossaries}% The Glossary, and the lists of Acronyms and Symbols
-
-
-
+%%------------------------------------------------------------
 % Text chapters
-% syntax: \ntaddfile{chapter}{file}
+% syntax: \ntaddfile{chapter}{filename}
 \ntaddfile{chapter}{chapter1}
 \ntaddfile{chapter}{chapter2}
 \ntaddfile{chapter}{chapter3}
 % \ntaddfile{chapter}{chapter4}
 
-
+%%------------------------------------------------------------
 % Text appendixes and annexes
-% sintax: \ntaddfile{appendix}{file}
-%         \ntaddfile{annex}{file}
+% sintax: \ntaddfile{appendix}{filename}
+%         \ntaddfile{annex}{filename}
 % Comment if not needed
 \ntaddfile{appendix}{appendix1}
 \ntaddfile{appendix}{appendix2}
 \ntaddfile{annex}{annex1}
 
+%%------------------------------------------------------------
+% Definition of the aftercover page, to be printed before the copyright
+% syntax:  \ntaddfile{aftercover}{filename}
+% \ntaddfile{aftercover}{aftercover-nova-ims}
+
+%=============================================================================
+% THE INDEXES
+%=============================================================================
+%%------------------------------------------------------------
+% The other lists below may be commented and omitted.
+% syntax:  \ntaddindex{index-name}
+\ntaddindex{tableofcontents}    % TheTable of Contents. Probably you want ot leave this as is! ;)
+\ntaddindex{listoffigures}      % The List of Figures. Comment to omit.
+\ntaddindex{listoftables}       % The List of Tables. Comment to omit.
+\ntaddindex{listoflistings}     % The List of Listings. Comment to omit.
+\ntaddindex{listsofglossaries}  % The Glossary, and the lists of Acronyms and Symbols
+
+%%============================================================
+%%  END OF TEMPLATE COSTUMIZATION
+%%  PLEASE DO NOT TOUCH BELOW THIS POINT…
+%%============================================================
 
 
 
-%%==== DANGER ==== DANGER ==== DANGER ==== DANGER ==== DANGER ====
-%%==== DANGER ==== DANGER ==== DANGER ==== DANGER ==== DANGER ====
-%%==== DANGER ==== DANGER ==== DANGER ==== DANGER ==== DANGER ====
-%%
-%%  END OF USER COSTUMIZAITON
-%% Please do not change below this point!!! :)
-%%
-%%==== DANGER ==== DANGER ==== DANGER ==== DANGER ==== DANGER ====
-%%==== DANGER ==== DANGER ==== DANGER ==== DANGER ==== DANGER ====
-%%==== DANGER ==== DANGER ==== DANGER ==== DANGER ==== DANGER ====
 
 
-%% Begining of document
-\begin{document}
+
+
+
+
+
+
+
+
+
+
+
+%%------------------------------------------------------------
+\begin{document}        % Begining of document
   
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\thesisfrontmatter  % Before the main text (TOC, etc)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ntprintcoverpage    % The cover page
-\ntprintaftercover
-\ntprintcopyright    % Print the copyright page (will only be printed if adequate for the document type)
-\ntprintdedicatory  % Print the dedicatory (will only be printed if adequate for the document type)
-\ntprintacknowledgements  % Print the acknowledgments (will only be printed if adequate for the document type)
-\ntprintquote        % Print the quote (if file exists and is adequate for the document type)
-\ntprintabstracts    % Print abstracts (in PT and EN). The abstract in the document main language will
-                  % be printed first, the abstract in the foreign language will be printed second
-\ntprintallindexes  % Print all the indexes (TOC, LOF, LOT, …)
+%%------------------------------------------------------------
+\thesisfrontmatter      % Before the main text (TOC, etc) — Roman page numbering
+%%------------------------------------------------------------
+% (*) Will only be printed if adequate for the document type
+\ntprintcoverpage       % The cover page
+\ntprintaftercover      % The aftercover page
+\ntprintcopyright       % (*) The copyright page
+\ntprintdedicatory      % (*) Print the dedicatory
+\ntprintacknowledgements% (*) Print the acknowledgments
+\ntprintquote           % (*) Print the quote
+\ntprintabstracts       % Print abstracts in multiple languges. 
+                        % Changing the language will change the order of the abstracts
+\ntprintallindexes      % Print all the indexes defined above TOC, LOF, LOT, …)
 
+%%------------------------------------------------------------
+\ntthesismainmatter     % The main text — Arabic page numbering
+%%------------------------------------------------------------
+\ntprintchapters        % Print document chapters
+\ntprintbib             % Print the bibliography
+\ntprintappendixes      % Print appendixes, if any!
+\ntprintannexes         % Print appendixes, if any!
+\ntprintbackcoverpage   % The back cover
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ntthesismainmatter  % The main text
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ntprintchapters    % Print document chapters
-\ntprintbib    % Print the bibliography
-% \ntprintotherlists   % Alternative location to print the other lists (if you uncomment this one, comment the other one above)
-\ntprintappendixes  % Print appendixes, if any!
-\ntprintannexes  % Print appendixes, if any!
-\ntprintbackcoverpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% End of document
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\end{document}
+%%------------------------------------------------------------
+\end{document}          % End of document

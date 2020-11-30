@@ -484,28 +484,84 @@
   %     c = chair
   %     r = raporteur/referee
   %     a = adviser
-  %     m = othermembers
+  %     m = other members
+  %     g = guests
   % #2={m,f}
   % #3={committee member name, position, etc}
-  \options{/novathesis/committee/#1/gender/.new value = {#2}}%
-  \options{/novathesis/committee/#1/name/.new value = {#3}}%
+  \ifoptiondefined{/novathesis/committee/#1/name}%
+    {}%
+    {\options{/novathesis/committee/#1/name/.new list}\options{/novathesis/committee/#1/gender/.new list}}
+  \options{/novathesis/committee/#1/gender/.push = {#2}}%
+  \options{/novathesis/committee/#1/name/.push = {#3}}%
 }
 
-\newcommand{\xntprintcommittee}[1][0.75]{%
+\newcommand{\ntprintcommittee}[1][0.75]{%
+  \begin{minipage}{#1\textwidth}
   % #1 = Percentage of \textwidth used by the committee list
-  \xdef\novathesis@tmp{\thecommitteetitlestr[\option{/novathesis/coverlang}]}%
-  \begin{tabularx}{#1\textwidth}{@{}r>{\raggedright\arraybackslash}X@{}}%
-  \ifx\novathesis@tmp\@empty%
+  \begin{tabularx}{\linewidth}{@{}rX@{}}%
+  \ntprintcommitteetitlestr\\[1ex]%
+  \forcsvlist{\@ntprintgroup}{c,r,a,m,g}
+  % \xdef\novathesis@tmp{\thecommitteeorder[all]}%
+  % \iteratecsvlist{\@ntprintcommitteemmember}{\novathesis@tmp}%
+  \end{tabularx}%
+  \end{minipage}
+}
+
+\newcommand*{\ntprintcommitteetitlestr}{%
+  % \ifx\novathesis@tmp\@empty%
+  \expandnext{\ifx}{\thecommitteetitlestr[\option{/novathesis/coverlang}]}\@empty%
     % committeetitlestr[…] is empty
   \else%
     \multicolumn{2}{c}{{%%
-            \thecommitteetitlestrfont[\option{/novathesis/coverlang}] %
-            \thecommitteetitlestr[\option{/novathesis/coverlang}]}%
-          }\\[1ex]%
+            \thecommitteetitlestrfont[\option{/novathesis/coverlang}]%
+            \thecommitteetitlestr[\option{/novathesis/coverlang}]:}%
+          }%
   \fi%
-  \xdef\novathesis@tmp{\thecommitteeorder[all]}%
-  \iteratecsvlist{\@ntprintcommitteemmember}{\novathesis@tmp}%
-  \end{tabularx}%
+}
+
+\newcommand{\@ntprintgroup}[1]{%
+  % #1={c,r,a,m,g}
+  % \typeout{[NT ntprintgroup \string#1]}
+  % \typeout{[NT ntprintgroup \string\option{/novathesis/committee/#1/name/@size}]}
+  % \typeout{[NT ntprintgroup \string \c@the/novathesis/committee/#1/name/@sizecnt]}
+  % \def\mynewline{}
+  \ifoptiondefined{/novathesis/committee/#1/name}{%
+    \@nt@reducegender{/novathesis/committee/#1/gender}{\mygender}%
+    \@nt@reducenumber{/novathesis/committee/#1/name}{\mynumber}%
+    \smallskip\thecommiteememberstr[#1,\mynumber,\mygender,\option{/novathesis/coverlang}]: & %
+    \begin{minipage}[t]{\linewidth}\raggedright%
+    \optionlistdo{/novathesis/committee/#1/name}{##1\\}%
+    \end{minipage}\\%
+  }%
+  {}%
+  % \gdef{\@nt@group@gender}{}
+  % \optionlistdo{/novathesis/committee/#1/name/gender}{\@ntgender{##1}{\@nt@group@gender}}
+}
+
+\newcommand*{\@nt@reducegender}[2]{%
+  % #1 = gender list
+  % %2 = result
+  \gdef#2{f}%
+  \optionlistdo{#1}{\if##1m\relax\gdef#2{m}\fi}%
+}
+
+\newcommand{\@nt@reducenumber}[2]{%
+  % #1 = number
+  % %2 = result
+  % \ifnum#1>1\relax\let#2=2\else\let#2=1\fi%
+  % \show#1
+  \ifnum\value{\option{#1/@size}}=1%
+    \gdef#2{1}%
+  \else%
+    \gdef#2{2}%
+  \fi%
+}
+
+\newcommand*{\@ntgender}[2]{%
+  % #1 = {m,f}
+  % #2 = accumulator
+  \ifthenelse{\equal{#2}{}}{\xdef#2{#1}}{}%
+  \ifthenelse{\equal{#1}{f} \AND \equal{#2}{m}}{\xdef#2{m}}{}%
 }
 
 \newcommand{\@ntprintcommitteemmember}[1]{%
@@ -567,11 +623,11 @@
   \end{tabularx}%
 }
 
-\newcommand{\ntprintcommittee}[1][0.75]{%
-  \ifthenelse{\equal{\option{/novathesis/printcommittee}}{true}}%%
-  {\ntprintcommittee@i{#1}}%
-  {}%
-}
+% \newcommand{\ntprintcommittee}[1][0.75]{%
+%   \ifthenelse{\equal{\option{/novathesis/printcommittee}}{true}}%%
+%   {\ntprintcommittee@i{#1}}%
+%   {}%
+% }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -877,7 +933,7 @@
 \newlistof{lstlistoflistings}{lol}{\lstlistlistingname}
 
 
-\newcommand{\ntprintindex}[1]{%
+\newcommand{\ntaddindex}[1]{%
   \ifoptiondefined{/novathesis/list/indexes}{}{\options{/novathesis/list/indexes/.new list}}  %
   \ifthenelse{\equal{#1}{tableofcontents}}{\options{/novathesis/list/indexes/.push = {%
         \clearforchapter\tableofcontents*%
