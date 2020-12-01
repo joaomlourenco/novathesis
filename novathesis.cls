@@ -109,29 +109,29 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE PERSON LISTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\ntaddperson}[1]{%
-  % syntax: \ntaddperson{class}[key]{personname}
-  %         #1 = {author, adviser, committee}
-  %         #2 = {m,f} | {{c,r,a,m,g},{m,f}}
-  %         #3 = personname
-  \@ntaddtolist{person}{#1}%
+\def\ntaddperson#1[#2]#3{%
+  \@ntaddperson@iv{#1}[,#2]{#3}%
 }
 
 \def\ntcommittee[#1,#2]#3{%
-  % #1={c,r,a,m}
+  \@ntaddperson@iv{committee}[#1,#2]{#3}%
+}
+
+\def\@ntaddperson@iv#1[#2,#3]#4{%
+  % #1 = {author, adviser, committee}
+  % #2={c,r,a,m}
   %     c = chair
   %     r = raporteur/referee
   %     a = adviser
   %     m = other members
   %     g = guests
-  % #2={m,f}
-  % #3={committee member name, position, etc}
-  \ntaddperson{committee}
-  \ifoptiondefined{/novathesis/committee/#1/name}%
+  % #3={m,f}
+  % #4={committee member name, position, etc}
+  \ifoptiondefined{/novathesis/#1/#2/name}%
     {}%
-    {\options{/novathesis/committee/#1/name/.new list}\options{/novathesis/committee/#1/gender/.new list}}
-  \options{/novathesis/committee/#1/gender/.push = {#2}}%
-  \options{/novathesis/committee/#1/name/.push = {#3}}%
+    {\options{/novathesis/#1/#2/name/.new list}\options{/novathesis/#1/#2/gender/.new list}}
+  \options{/novathesis/#1/#2/gender/.push = {#3}}%
+  \options{/novathesis/#1/#2/name/.push = {#4}}%
 }
 
 \newcommand*{\ntaddfile}[1]{%
@@ -413,9 +413,9 @@
 \mynewdata{committeetitlestr}
 \mynewdata{committeetitlestrfont}
 \committeetitlestrfont[\option{/novathesis/coverlang}]={}
-\mynewdata{commiteememberstr}
-\mynewdata{commiteememberstrfont}
-\commiteememberstrfont[\option{/novathesis/coverlang}]={}
+\mynewdata{committeememberstr}
+\mynewdata{committeememberstrfont}
+\committeememberstrfont[\option{/novathesis/coverlang}]={}
 
 \mynewdata{dissertationstr}
 \mynewdata{dissertationstrfont}
@@ -523,35 +523,56 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% NEW definition for committee with lists
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\ntcommittee[#1,#2]#3{%
-  % #1={c,r,a,m}
-  %     c = chair
-  %     r = raporteur/referee
-  %     a = adviser
-  %     m = other members
-  %     g = guests
-  % #2={m,f}
-  % #3={committee member name, position, etc}
-  \ifoptiondefined{/novathesis/committee/#1/name}%
-    {}%
-    {\options{/novathesis/committee/#1/name/.new list}\options{/novathesis/committee/#1/gender/.new list}}
-  \options{/novathesis/committee/#1/gender/.push = {#2}}%
-  \options{/novathesis/committee/#1/name/.push = {#3}}%
+% \def\ntcommittee[#1,#2]#3{%
+%   % #1={c,r,a,m}
+%   %     c = chair
+%   %     r = raporteur/referee
+%   %     a = adviser
+%   %     m = other members
+%   %     g = guests
+%   % #2={m,f}
+%   % #3={committee member name, position, etc}
+%   \ifoptiondefined{/novathesis/committee/#1/name}%
+%     {}%
+%     {\options{/novathesis/committee/#1/name/.new list}\options{/novathesis/committee/#1/gender/.new list}}
+%   \options{/novathesis/committee/#1/gender/.push = {#2}}%
+%   \options{/novathesis/committee/#1/name/.push = {#3}}%
+% }
+
+\newcommand{\ntprintadvisers}[1][0.90]{%
+  \begin{minipage}{#1\textwidth}
+  % % #1 = Percentage of \textwidth used by the advisers list
+  \begin{tabularx}{\linewidth}{@{}rX@{}}%
+  \forcsvlist{\@ntprintadvisergroup}{adviser,coadviser}
+  \end{tabularx}%
+  \end{minipage}
+}
+
+\newcommand{\@ntprintadvisergroup}[1]{%
+  % #1={adviser,coadviser}
+  \ifoptiondefined{/novathesis/#1//name}{%
+    \@nt@reducegender{/novathesis/#1//gender}{\mygender}%
+    \@nt@reducenumber{/novathesis/#1//name}{\mynumber}%
+    \smallskip%
+    \csname the#1str\endcsname[\mynumber,\mygender,\option{/novathesis/coverlang}]: & %
+    \begin{minipage}[t]{\linewidth}\raggedright%
+    \optionlistdo{/novathesis/#1//name}{##1\\[1pt]}%
+    \end{minipage}\\%
+  }%
+  {\typeout{NT option[/novathesis/#1//name] undefined}}%
 }
 
 \newcommand{\ntprintcommittee}[1][0.75]{%
   \begin{minipage}{#1\textwidth}
   % #1 = Percentage of \textwidth used by the committee list
   \begin{tabularx}{\linewidth}{@{}rX@{}}%
-  \ntprintcommitteetitlestr\\[1ex]%
-  \forcsvlist{\@ntprintgroup}{c,r,a,m,g}
-  % \xdef\novathesis@tmp{\thecommitteeorder[all]}%
-  % \iteratecsvlist{\@ntprintcommitteemmember}{\novathesis@tmp}%
+  \@ntprintcommitteetitlestr\\[1ex]%
+  \forcsvlist{\@ntprintcommitteegroup}{c,r,a,m,g}
   \end{tabularx}%
   \end{minipage}
 }
 
-\newcommand*{\ntprintcommitteetitlestr}{%
+\newcommand*{\@ntprintcommitteetitlestr}{%
   % \ifx\novathesis@tmp\@empty%
   \expandnext{\ifx}{\thecommitteetitlestr[\option{/novathesis/coverlang}]}\@empty%
     % committeetitlestr[…] is empty
@@ -563,23 +584,17 @@
   \fi%
 }
 
-\newcommand{\@ntprintgroup}[1]{%
+\newcommand{\@ntprintcommitteegroup}[1]{%
   % #1={c,r,a,m,g}
-  % \typeout{[NT ntprintgroup \string#1]}
-  % \typeout{[NT ntprintgroup \string\option{/novathesis/committee/#1/name/@size}]}
-  % \typeout{[NT ntprintgroup \string \c@the/novathesis/committee/#1/name/@sizecnt]}
-  % \def\mynewline{}
   \ifoptiondefined{/novathesis/committee/#1/name}{%
     \@nt@reducegender{/novathesis/committee/#1/gender}{\mygender}%
     \@nt@reducenumber{/novathesis/committee/#1/name}{\mynumber}%
-    \smallskip\thecommiteememberstr[#1,\mynumber,\mygender,\option{/novathesis/coverlang}]: & %
+    \smallskip\thecommitteememberstr[#1,\mynumber,\mygender,\option{/novathesis/coverlang}]: & %
     \begin{minipage}[t]{\linewidth}\raggedright%
-    \optionlistdo{/novathesis/committee/#1/name}{##1\\}%
+    \optionlistdo{/novathesis/committee/#1/name}{##1\\[1pt]}%
     \end{minipage}\\%
   }%
   {}%
-  % \gdef{\@nt@group@gender}{}
-  % \optionlistdo{/novathesis/committee/#1/name/gender}{\@ntgender{##1}{\@nt@group@gender}}
 }
 
 \newcommand*{\@nt@reducegender}[2]{%
@@ -600,78 +615,6 @@
     \gdef#2{2}%
   \fi%
 }
-
-\newcommand*{\@ntgender}[2]{%
-  % #1 = {m,f}
-  % #2 = accumulator
-  \ifthenelse{\equal{#2}{}}{\xdef#2{#1}}{}%
-  \ifthenelse{\equal{#1}{f} \AND \equal{#2}{m}}{\xdef#2{m}}{}%
-}
-
-\newcommand{\@ntprintcommitteemmember}[1]{%
-  \typeout{NT ntprintcommitteemmember #1}%
-}
-
-\newcounter{novathesis@committee@cnt}
-\setcounter{novathesis@committee@cnt}{0}
-
-\def\committee[#1,#2]#3{% #1={c,r,a,m,g} #2={m,f} #3={member name}
-  \ifcsname c@novathesis@committee@#1@cnt\endcsname%
-  \else
-    \newcounter{novathesis@committee@#1@cnt}%    to count the total # of members in class
-    \setcounter{novathesis@committee@#1@cnt}{0}%
-    \newcounter{novathesis@committee@#1m@cnt}%   to count the # of male members in class
-    \setcounter{novathesis@committee@#1m@cnt}{0}%
-    \newcounter{novathesis@committee@#1f@cnt}%   to count the # of female members in class
-    \setcounter{novathesis@committee@#1f@cnt}{0}%
-  \fi
-  \stepcounter{novathesis@committee@#1@cnt}%
-  \stepcounter{novathesis@committee@#1#2@cnt}%
-  \listcsadd{novathesis@committee@#1@list}{#3}%
-}
-
-
-\newcommand{\novathesis@printcommitteeclassmembers}[1]{%
-  & #1\\%
-}
-
-\newcommand{\novathesis@printcommitteemembers}[1]{%
-  % argument is classe of committee memeber {c,r,a,m,g}
-  \ifcsname novathesis@committee@#1@list\endcsname
-  \ifthenelse{\equal{\value{novathesis@committee@#1m@cnt}}{0}}%
-    {\def\novathesis@tmp@gender{f}}% for portuguese: only use female form if no males are present
-    {\def\novathesis@tmp@gender{m}}%
-  \ifthenelse{\equal{\value{novathesis@committee@#1@cnt}}{1}}%
-    {\def\novathesis@tmp@total{1}}% for portuguese: only use female form if no males are present
-    {\def\novathesis@tmp@total{2}}%
-  {\thecommiteememberstrfont[\option{/novathesis/coverlang}] %
-    \thecommiteememberstr[#1,\novathesis@tmp@total,\novathesis@tmp@gender,\option{/novathesis/coverlang}]:%
-  }%
-  \forlistcsloop{\novathesis@printcommitteeclassmembers}{novathesis@committee@#1@list}%
-  \fi
-}
-
-\newcommand{\ntprintcommittee@i}[1]{%
-  \xdef\novathesis@tmp{\thecommitteetitlestr[\option{/novathesis/coverlang}]}%
-  \begin{tabularx}{#1\textwidth}{@{}r>{\raggedright\arraybackslash}X@{}}%
-  \ifx\novathesis@tmp\@empty%
-    % committeetitlestr[…] is empty
-  \else%
-    \multicolumn{2}{c}{{%%
-            \thecommitteetitlestrfont[\option{/novathesis/coverlang}] %
-            \thecommitteetitlestr[\option{/novathesis/coverlang}]}%
-          }\\[1ex]%
-  \fi%
-  \xdef\novathesis@tmp{\thecommitteeorder[all]}%
-  \iteratecsvlist{\novathesis@printcommitteemembers}{\novathesis@tmp}%
-  \end{tabularx}%
-}
-
-% \newcommand{\ntprintcommittee}[1][0.75]{%
-%   \ifthenelse{\equal{\option{/novathesis/printcommittee}}{true}}%%
-%   {\ntprintcommittee@i{#1}}%
-%   {}%
-% }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -737,12 +680,12 @@
   \fi%
 }
 
-\newcommand{\ntprintadvisers}{%
-      \begin{tabularx}{0.90\linewidth}{@{}r>{\raggedright\arraybackslash}X@{}}%
-      \ntprintadvisers@i%
-      \ntprintadvisers@i[co]%
-      \end{tabularx}%
-}
+% \newcommand{\ntprintadvisers}{%
+%       \begin{tabularx}{0.90\linewidth}{@{}r>{\raggedright\arraybackslash}X@{}}%
+%       \ntprintadvisers@i%
+%       \ntprintadvisers@i[co]%
+%       \end{tabularx}%
+% }
 
 
 \newcounter{@novathesis@cnt}%

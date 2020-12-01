@@ -182,18 +182,17 @@
 
 %%------------------------------------------------------------
 % Advisers
-% use "\\&" if necessary to break the lines in the apprpriate place
 % use [f] for female and [m] for male
-\adviser[f]{Mary Doe Adviser Name}{Full Professor}{NOVA University of Lisbon}
-% you may use "\newline" to force a new line
-% \adviser[m]{John Doe Male Adviser Name}{Associate\\& Professor}{Some University Somewhere}
-% \adviser[m]{John Doe Third Adviser Name}{Associate\\& Professor}{Some University Somewhere}
+% use "\\" if necessary to break the lines in the apprpriate place
+\ntaddperson{adviser}[f]{{Mary Doe Adviser Name, Full Professor, NOVA University of Lisbon}}
+% \ntaddperson{adviser}[f]{{Mary Doe other Adviser Name, Full Professor, NOVA University of Lisbon}}
 
 %%------------------------------------------------------------
-% Co-Advisers (maximum of 9)
+% Co-Advisers
 % use [f] for female and [m] for male
-\coadviser[m]{John Doe Co-Adviser Name}{Associate Professor}{NOVA University of Lisbon}
-% \coadviser[f]{[Nome da co-orientadora 2]}{[Profª.\ Auxiliar]}{[Universidade Nova de Lisboa]}
+% use "\\" if necessary to break the lines in the apprpriate place
+\ntaddperson{coadviser}[f]{John Doe Co-Adviser Name, Associate Professor, NOVA University of Lisbon}
+\ntaddperson{coadviser}[f]{John Doe other Co-Adviser Name, Full Professor, NOVA University of Lisbon}
 
 %%------------------------------------------------------------
 % Committee

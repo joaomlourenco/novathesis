@@ -224,7 +224,7 @@
     \OR\equal{\option{/novathesis/docdegree}}{msc}%
     \OR\equal{\option{/novathesis/docdegree}}{phd}}%
   {\committeetitlestrfont[\option{/novathesis/coverlang}]={\fontsize{14}{14}\selectfont\bfseries}%
-    \commiteememberstrfont[\option{/novathesis/coverlang}]={\bfseries}%
+    \committeememberstrfont[\option{/novathesis/coverlang}]={\bfseries}%
     \fontsize{11}{11}\selectfont\ntprintcommittee%
   }%
   {}%
