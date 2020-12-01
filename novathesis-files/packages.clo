@@ -65,20 +65,6 @@
   % \RequirePackage[usenames]{color}
   \RequirePackage{colortbl}
   \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
-
-
-  % Manage glossaries
-  \RequirePackage[
-    nonumberlist,toc
-    , translate=babel
-    , acronym % add acronyms listing
-    , symbols % add symbols listing
-    , sanitize=none % allow \gls inside descriptions
-    % , automake
-  ]{glossaries-extra} % To create glossaries
-  % \glsdisablehyper
-  \makenoidxglossaries % use TeX to sort
-  % \makeglossaries
 % }
 
 
@@ -137,5 +123,17 @@
   \RequirePackage[all]{hypcap}
   % To handle subfigures
   \newsubfloat{figure}
+  % Manage glossaries
+  \RequirePackage[
+    nonumberlist,toc
+    , translate=babel
+    , acronym % add acronyms listing
+    , symbols % add symbols listing
+    , sanitize=none % allow \gls inside descriptions
+    % , automake
+  ]{glossaries-extra} % To create glossaries
+  % \glsdisablehyper
+  \makenoidxglossaries % use TeX to sort
+  % \makeglossaries
 }
 
