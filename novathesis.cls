@@ -107,37 +107,82 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MANAGE PERSON LISTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\ntaddperson}[1]{%
+  % syntax: \ntaddperson{class}[key]{personname}
+  %         #1 = {author, adviser, committee}
+  %         #2 = {m,f} | {{c,r,a,m,g},{m,f}}
+  %         #3 = personname
+  \@ntaddtolist{person}{#1}%
+}
+
+\def\ntcommittee[#1,#2]#3{%
+  % #1={c,r,a,m}
+  %     c = chair
+  %     r = raporteur/referee
+  %     a = adviser
+  %     m = other members
+  %     g = guests
+  % #2={m,f}
+  % #3={committee member name, position, etc}
+  \ntaddperson{committee}
+  \ifoptiondefined{/novathesis/committee/#1/name}%
+    {}%
+    {\options{/novathesis/committee/#1/name/.new list}\options{/novathesis/committee/#1/gender/.new list}}
+  \options{/novathesis/committee/#1/gender/.push = {#2}}%
+  \options{/novathesis/committee/#1/name/.push = {#3}}%
+}
+
+\newcommand*{\ntaddfile}[1]{%
+  % syntax: \ntaddfile{class}[key]{filename}
+  %         #1 = file family (quote, abstract, chapter, etc)
+  %         #2 = [file lang] (OPTIONAL)
+  %         #3 = filename
+  % \typeout{NT ntaddfile [#1]}
+  \@ntaddtolist{file}{#1}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE FILE LISTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\ntaddfile}[1]{%
-  % syntax: \ntaddile{class}[key]{filename}
-  %         key = {pt, en, …}
-  %         key = {glossary, acronyms, symbols}
-  \@ifnextchar[{\@ntaddfile@iii#1}{\@ntaddfile@iii#1[VAL]}%
+\newcommand*{\@ntaddtolist}[2]{%
+  % syntax: \ntaddto{type}{class}[key]{filename}
+  %         #1  = {file, person}
+  %         #2 = family {quote, abstract, chapter, etc} or {author, adviser, committee}
+  %         #3 = [file lang] (OPTIONAL)
+  %         #4 = filename
+  \@ifnextchar[{\@ntaddtolist@iv[#1]#2}{\@ntaddtolist@iv[#1]#2[VAL]}%
 }
 
-\def\@ntaddfile@iii#1[#2]#3{%
-  % #1 = file type (abstract, quote, etc)
-  % #2 = optional file lang
-  % #3 = filename
-  % \typeout{NT ADDFILE [#1] [#2] [#3]}%
-  \ifcsdef{@ntaddfilehook#1}{\@nameuse{@ntaddfilehook#1}{#2}{#3}}{}%
-  \ifcsdef{@ntaddfilehook#1#2}{\@nameuse{@ntaddfilehook#1#2}{#3}}{}%
-  \@ntaddfile@ii{#1}{#2=#3}
+\def\@ntaddtolist@iv[#1]#2[#3]#4{%
+  % syntax: \@ntaddfile@iii{type}{class}[key]{filename}
+  %         #1  = {file, person}
+  %         #2 = file family (quote, abstract, chapter, etc)
+  %         #3 = optional file lang
+  %         #4 = filename
+  % \typeout{NT ADDFILE [#1] [#2] [#3] [#4]}%
+  % \typeout{NT @ntaddlisthook#1#2 @ntaddlisthook#1#2#3}
+  \ifcsdef{@ntaddlisthook#1#2}{\@nameuse{@ntaddlisthook#1#2}{#3}{#4}}{}%
+  \ifcsdef{@ntaddlisthook#1#2#3}{\@nameuse{@ntaddlisthook#1#2#3}{#4}}{}%
+  \@ntaddtolist@iii{#1}{#2}{#3=#4}%
 }
 
-\newcommand{\@ntaddfile@ii}[2]{%
-  % #1 = file famylly (e.g., chapters, gloassaries, …)
-  % #2 = filename or key=filename
-  \ifoptiondefined{/novathesis/files/#1}{}{\options{/novathesis/files/#1/.new list}}%
-  % \typeout{NT FILE ADD /novathesis/files/#1 = #2}%
-  \options{/novathesis/files/#1/.push = {#2}}%
+\newcommand{\@ntaddtolist@iii}[3]{%
+  % #1 = {file, person}
+  % #2 = file family (quote, abstract, chapter, etc)
+  % #3 = filename OR key=filename
+  \ifoptiondefined{/novathesis/#1/#2}{}{\options{/novathesis/#1/#2/.new list}}%
+  % \typeout{NT FILE ADD /novathesis/#1/#1 = #2}%
+  \options{/novathesis/#1/#2/.push = {#3}}%
 }
 
-\newcommand{\@forallfiles}[2]{%
-  % #1 = file famylly (e.g., chapters, gloassaries, …)
-  % #2 = macro to be applied, which will receive the item from the list
-  \optionlistdo{/novathesis/files/#1}{#2{##1}}%
+\newcommand{\@ntforalllist}[3]{%
+  % #1 = {file, person}
+  % #2 = file family (quote, abstract, chapter, etc)
+  % #3 = macro to be applied, which will receive the item from the list
+  \optionlistdo{/novathesis/#1/#2}{#3{##1}}%
 }
 
 
@@ -478,8 +523,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% NEW definition for committee with lists
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\def\ntcommittee[#1][#2]#3{%
+\def\ntcommittee[#1,#2]#3{%
   % #1={c,r,a,m}
   %     c = chair
   %     r = raporteur/referee
@@ -816,7 +860,7 @@
 \newcommand{\@ntloadfisrt@ii}[2][VAL]{%
   % #1 = KEY
   % #2 = file class
-  \options{/novathesis/files/#2/.getval = {#1}}%
+  \options{/novathesis/file/#2/.getval = {#1}}%
   % \typeout{NT TRYING TO LOAD \option@listmatch@value}%
   \InputIfFileExists{\option@listmatch@value}%
     {}%
@@ -896,7 +940,7 @@
 
 
 \newcommand{\ntprintchapters}{%
-    \@forallfiles{chapter}{\@ntloadnext@ii{chapter}}%
+    \@ntforalllist{file}{chapter}{\@ntloadnext@ii{chapter}}%
 }
 
 
@@ -907,13 +951,13 @@
 \newcommand{\ntprintappendixes}{%
   \renewcommand{\appendixtocname}{\appendixnamepl}%
   \clearforchapter\appendix\addappheadtotoc%
-  \@forallfiles{appendix}{\@ntloadnext@ii{appendix}}%
+  \@ntforalllist{file}{appendix}{\@ntloadnext@ii{appendix}}%
 }
 
 \newcommand{\ntprintannexes}{%
   \renewcommand{\appendixtocname}{\annexnamepl}%
   \clearforchapter\annex\addappheadtotoc%
-  \@forallfiles{annex}{\@ntloadnext@ii{annex}}%
+  \@ntforalllist{file}{annex}{\@ntloadnext@ii{annex}}%
 }
 
 
@@ -979,7 +1023,7 @@
   % #1 = glossary type
   % %2 = glossary key
   % \typeout{NT loadglossaryfileifexists [#1] [#2]}%
-  \options{/novathesis/files/#1/.getval = {#2}}%
+  \options{/novathesis/file/#1/.getval = {#2}}%
   % \typeout{NT loadglossaryfileifexists TRYING TO LOAD \option@listmatch@value}%
   \IfFileExists{\option@listmatch@value}%
     {\loadglsentries{\option@listmatch@value}}%
@@ -1000,7 +1044,7 @@
 %% Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\@ntaddfilehookbib}[2]{%
+\newcommand{\@ntaddlisthookfilebib}[2]{%
   \letoptionlist{/novathesis/biblatex}\nt@tmp%
   \typeout{'NT PASSING TO BIBLATEX= '\nt@tmp}%
   \RequirePackage[\nt@tmp]{biblatex}%
