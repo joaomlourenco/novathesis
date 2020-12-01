@@ -550,16 +550,16 @@
 
 \newcommand{\@ntprintadvisergroup}[1]{%
   % #1={adviser,coadviser}
-  \ifoptiondefined{/novathesis//#1/name}{%
-    \@nt@reducegender{/novathesis//#1/gender}{\mygender}%
-    \@nt@reducenumber{/novathesis//#1/name}{\mynumber}%
+  \ifoptiondefined{/novathesis/#1//name}{%
+    \@nt@reducegender{/novathesis/#1//gender}{\mygender}%
+    \@nt@reducenumber{/novathesis/#1//name}{\mynumber}%
     \smallskip%
     \csname the#1str\endcsname[\mynumber,\mygender,\option{/novathesis/coverlang}]: & %
     \begin{minipage}[t]{\linewidth}\raggedright%
-    \optionlistdo{/novathesis//#1/name}{##1\\[1pt]}%
+    \optionlistdo{/novathesis/#1//name}{##1\\[1pt]}%
     \end{minipage}\\%
   }%
-  {\typeout{NT option[/novathesis//#1/name] undefined}}%
+  {\typeout{NT option[/novathesis/#1//name] undefined}}%
 }
 
 \newcommand{\ntprintcommittee}[1][0.75]{%
