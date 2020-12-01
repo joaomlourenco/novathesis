@@ -103,18 +103,20 @@
   \@for\novathesis@themember:=#2\do{#1{\novathesis@themember}}%
 }
 
+\def\instring#1#2{TT\fi\begingroup
+  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE PERSON LISTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\ntaddperson#1[#2]#3{%
-  \@ntaddperson@iv{#1}[,#2]{#3}%
+\def\ntcommittee[#1,#2]#3{%
+  \ntaddperson{committee}[#1,#2]{#3}%
 }
 
-\def\ntcommittee[#1,#2]#3{%
-  \@ntaddperson@iv{committee}[#1,#2]{#3}%
+\def\ntaddperson#1[#2]#3{%
+  \if\instring{,}{#2}\@ntaddperson@iv{#1}[#2]{#3}\else\@ntaddperson@iv{#1}[,#2]{#3}\fi%
 }
 
 \def\@ntaddperson@iv#1[#2,#3]#4{%

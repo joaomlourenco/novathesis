@@ -196,23 +196,23 @@
 
 %%------------------------------------------------------------
 % Committee
-% \ntcommittee[job][gender]{Name, Position, Organization}
+% \ntaddperson{committee}[job][gender]{Name, Position, Organization}
 % For [job] use: [c] for committee chair
 %                [r] for raporteurs
 %                [a] for advisers
 %                [m] for remaining members
 %                [g] for guests
 % Chair of tntcommitteehe committee
-\ntcommittee[c,m]{Name of the committee chairperson, Full Professor, FCT-NOVA}
+\ntaddperson{committee}[c,m]{Name of the committee chairperson, Full Professor, FCT-NOVA}
 % Main raporteurs
-\ntcommittee[r,m]{Name of a raporteur, Position, University}
-\ntcommittee[r,m]{Name of another raporteur, Position, University}
+\ntaddperson{committee}[r,m]{Name of a raporteur, Position, University}
+\ntaddperson{committee}[r,m]{Name of another raporteur, Position, University}
 % Advisers — FOR FCT-NOVA ADD ADVISERS AS "OTHER MEMBERS [m]"
 % \ntcommittee[a,f]{Name of an adviser, Position, University}
 % \ntcommittee[a,f]{Name of another adviser, Position, University}
 % Other members of the committee
-\ntcommittee[m,m]{Another member of the committee, Position, University}
-\ntcommittee[m,f]{Yet another member of the committee, Position, University}
+\ntaddperson{committee}[m,m]{Another member of the committee, Position, University}
+\ntaddperson{committee}[m,f]{Yet another member of the committee, Position, University}
 % Guest members
 % \ntcommittee[g,m]{Guest member of the committee, Position, University}
 % \ntcommittee[g,f]{Yet another guest member of the committee, Position, University}
