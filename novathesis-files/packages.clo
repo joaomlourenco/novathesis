@@ -137,7 +137,7 @@
     , translate=babel
     , acronym % add acronyms listing
     , symbols % add symbols listing
-    , sanitize=none % allow \gls inside descriptions
+    , sanitizesort=false % allow \gls inside descriptions
     % , automake
   ]{glossaries-extra} % To create glossaries
   % \glsdisablehyper

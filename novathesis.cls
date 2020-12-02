@@ -512,10 +512,9 @@
 \newcommand{\thetitle}{\novathesis@undefined[The Thesis Title]}
 \newcommand{\nttitle}[1]{%
   \newcommand{\thecovertitle}{#1}%
-    {% New cope for definitions
-      \renewcommand\\{ }
-      \xdef\@thetitle{#1}
-    }
+    \saveexpandmode\noexpandarg % set \noexpandarg locally
+      \StrSubstitute[0]{#1}{\\}{ }[\@thetitle]
+    \restoreexpandmode % restore the previous mode
   \renewcommand{\thetitle}{\@thetitle}%
   \AtBeginDocument{%
     \hypersetup{pdftitle = {\thetitle}}%
