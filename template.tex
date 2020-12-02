@@ -42,6 +42,10 @@
 %% See “memoir” manual for more options.
 \documentclass[a4paper, 11pt, final]{novathesis}
 
+
+
+
+
 %%============================================================
 %%  BEGINING OF TEMPLATE COSTUMIZATION
 %%============================================================
@@ -150,6 +154,8 @@
 
 
 
+
+
 %%============================================================
 %%  LOADING AND CONFIGURATION OF ADDITIONAL PACKAGES
 %%============================================================
@@ -158,52 +164,26 @@
 %% To enable customizble enumerates.  See the documentation.
 \usepackage{paralist}    
 
-%% IMPORTANT (consider removing/commenting)
-%\usepackage{colortbl}    % Use colors in background of table cells
+%%------------------------------------------------------------
+%% Leave TODOs and NOTEs duting text writing
 \usepackage[textsize=footnotesize]{todonotes}  % To register TODO notes in the text
-\setlength{\marginparwidth}{3.25cm}
-
-%% FOR DEMO PURPOSES ONLY --- TO BE REMOVED by final users
-\usepackage{lipsum}
-
-\usepackage{array,esvect}
-
-
-%------------------------------------------------------------------
-% Costumization of some packages
-%------------------------------------------------------------------
-
-% Where to look for figures
-% \prependtographicspath{{some-folder-here}}
-
-% Setup of listings, for more information check the 'listings' package manual
-% \lstset{
-%     captionpos=t,
-%     basicstyle={\ttfamily\footnotesize},
-%     numbers=left,
-%     numberstyle={\ttfamily\tiny},
-%     tabsize=2,
-%     language=Java,
-%     float,
-%     frame=single,
-% }
-
-% epigraph configuration
-\epigraphfontsize{\small\itshape}
-\setlength\epigraphwidth{12.5cm}
-\setlength\epigraphrule{0pt}
-
-
-%%============================================================
-% For costumization,
-% \thesiscover[msc,front]={cover-megi-nova-ims}
-% \thesiscover[msc,front]={cover-mgi-nova-ims}
-%%============================================================
-
 
 %%------------------------------------------------------------
-% Thesis/Dissertation title
-\title[A Very Long and Impressive Thesis Title\\With a Line Break]{A Very Long and Impressive Thesis Title With a Line Break}
+%% FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+\usepackage{lipsum}
+
+
+
+
+
+%%============================================================
+%%  DOCUMENT ATTRIBUTES
+%%============================================================
+
+%%------------------------------------------------------------
+%% Thesis/Dissertation title (and sub-title)
+\title[A Very Long and Impressive Thesis Title\\With a Line Break]%
+      {A Very Long and Impressive Thesis Title With a Line Break}
 \subtitle{Science is beautiful}
 
 %%------------------------------------------------------------
