@@ -122,7 +122,7 @@
 \def\@ntfirstof#1=#2\@nil{#1}
 \def\@ntsecondof#1=#2\@nil{#2}
 
-\newcommand{\ntsetup}[1]{%
+\newcommand*{\ntsetup}[1]{%
   \edef\@nt@keyval{#1}
   \edef\@nt@opt{\@ntfirstof#1\@nil}
   \edef\@nt@value{\@ntsecondof#1\@nil}
@@ -131,6 +131,8 @@
   % \typeout{'NT HANDLER = '/novathesis/handler/\@nt@opt}%
   \option{/novathesis/handler/\@nt@opt}
 }
+
+\newcommand*{\ntbibsetup}[1]{\options{/novathesis/biblatex/.push={#1}}}
 
 
 % --------------------------------------------------------

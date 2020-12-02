@@ -118,14 +118,18 @@
 
 
 \AtEndPreamble{%
-  \RequirePackage[breaklinks, colorlinks=true, pdfdisplaydoctitle]{hyperref}%
+  \RequirePackage[%
+    , breaklinks%
+    , colorlinks=true%
+    , pdfdisplaydoctitle%
+  ]{hyperref}%
   \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
   \RequirePackage[all]{hypcap}
   % To handle subfigures
   \newsubfloat{figure}
   % Manage glossaries
   \RequirePackage[
-    nonumberlist,toc
+    , nonumberlist,toc
     , translate=babel
     , acronym % add acronyms listing
     , symbols % add symbols listing

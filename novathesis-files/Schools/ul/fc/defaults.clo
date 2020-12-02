@@ -46,7 +46,7 @@
 \spine[logo]={logoFCUL3}
 \spine[author]={\theauthorshortname}
 \spine[title]={\thetitle}
-\spine[year]={\thedateyear}
+\spine[year]={\thentdateyear}
 
 % Set margins for "normal" pages
 \margin[screen,top]={3.5cm}
@@ -294,6 +294,6 @@
   \ifdraftdoc%
     DRAFT: \today%
   \else%
-    \thedateyear%
+    \thentdateyear%
   \fi%
 }

@@ -57,7 +57,7 @@
 \spine[logo]={ESEP-logo_horizontal}
 \spine[author]={\theauthorshortname}
 \spine[title]={\thetitle}
-\spine[year]={\thedateyear}
+\spine[year]={\thentdateyear}
 
 % Set margins for "normal" pages
 \margin[screen,top]={2.5cm}
@@ -157,7 +157,7 @@
   \ifdraftdoc
     \textbf{DRAFT: \today}
   \else
-    \thedatemonth, \thedateyear
+    \thentdatemonth, \thentdateyear
   \fi
 }
 
@@ -210,7 +210,7 @@
   \ifdraftdoc
     \textbf{DRAFT: \today}
   \else
-    \thedatemonth, \thedateyear
+    \thentdatemonth, \thentdateyear
   \fi
 }
 

@@ -25,7 +25,8 @@
 %%      - joaomlourenco
 %%
 %% CONTRIBUTORS @github:
-%%      - bcandeias, flaviomartins, tmonteiro2344, jsaramago, microlina, riclas, pedrovieira
+%%      - bcandeias, flaviomartins, tmonteiro2344, jsaramago, 
+%%        microlina, riclas, pedrovieira
 %%
 %% DONATIONS:
 %%     If you think this templatze really helped you while writing your thesis,
@@ -36,80 +37,131 @@
 %%     themselves in the “*Add special instructions to the seller:*” box.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% All class options will be passed to memoir
+%%------------------------------------------------------------
+%% All class options will be passed to “memoir”.
+%% See “memoir” manual for more options.
 \documentclass[a4paper, 11pt, final]{novathesis}
 
 %%============================================================
 %%  BEGINING OF TEMPLATE COSTUMIZATION
 %%============================================================
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%% THE MOST IMPORTANT ONES %%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% \ntsetup{docdegree=msc}       % phd, phdplan, phdprop, msc, mscplan, bsc
-% \ntsetup{school=nova/fcsh}    % nova/fct, nova/fcsh, nova/ims, nova/ensp, ul/ist, ul/fc, ipl/isel, ips/ests, esep
-% \ntsetup{lang=en}             % pt, en, fr, it
-% \ntsetup{linkscolor=SteelBlue}% For valid color names, look at "svgname" in the "xcolor"
-%                               % package documentation
-% \ntsetup{media=paper}         % screen, paper
-%                               % SCREEN ==> left and right margins are equal, colored links
-%                               % PAPER ==> left and right margins are different, black links
-% \ntsetup{printcommittee=false}% set to 'false' from versins under evaluation. Only final
-%                               % should have the list of committee memebers
-% \ntsetup{secondcover=true}    % print a second cover page (for some schools it is slightly
-%                               % different)
+%%------------------------------------------------------------
+%% THE MOST IMPORTANT/POPULAR OPTIONS
+%%------------------------------------------------------------
+% \ntsetup{docdegree=msc}       % The type od document
+%                               %     [ phd, phdplan, phdprop, msc, mscplan, bsc ]
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%% LESS IMPORTANT ONES %%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \ntsetup{fontstyle=calibri}  % kpfonts bookman libertine calibri* (*) only for xelatex/lualatex)
-% \ntsetup{chapstyle=default}   % elegant.clo bianchi.clo bluebox.clo default.clo ell.clo hansen.clo
-                                % ist.clo lyhne.clo madsen.clo pedersen.clo veelo.clo vz34.clo vz43.clo
-% \ntsetup{coverlang=en}        % defaults to main language
-% \ntsetup{copyrightlang=en}    % defaults to main language
-% \ntsetup{aftercover=true}     % false=don't true=include the aftercover file (even if exists)
-% \ntsetup{spine=true}          % (Set to 'true' for PRINTING the book spine)
-% \ntsetup{cdcover=true}        % (Set to 'true' for PRINTING the CD cover)
-% \ntsetup{otherlistsat=back}   % front(*)} back
+% \ntsetup{school=nova/fcsh}    % The school id
+%                               %     [ nova/fct, nova/fcsh, nova/ims, nova/ensp, 
+%                               %       ul/ist, ul/fc, ipl/isel, ips/ests, esep ]
+
+% \ntsetup{lang=en}             % The main language for the document text
+%                               %     [ pt, en, fr, it ]
+
+% \ntsetup{linkscolor=SteelBlue}% The color for the hyperlinks (URLs, 
+%                               %     cross references, citations)
+%                               %     for valid color names, look at "svgname" 
+%                               %     in the "xcolor" package documentation
+
+% \ntsetup{media=paper}         % The target media for the PDF
+%                               %     [ screen, paper ]
+%                               %     SCREEN ==> left and right margins are 
+%                               %                equal, colored links
+%                               %     PAPER  ==> left and right margins are 
+%                               %                 different, black links
+
+% \ntsetup{printcommittee=false}% Should the committee be printed??
+%                               %     should be 'false' for document versins still
+%                               %     under work/evaluation.   Only final versions 
+%                               %     should have the list of committee memebers.
+
+% \ntsetup{secondcover=true}    % Should a second cover page be printed?
+%                               %     if the contents for the second page are not 
+%                               %     defined, the second cover will be a replica 
+%                               %     of the first cover.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%% BIBLATEX CONFIGURATION %%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% OTHER BIBLATEX OPTIONS
-\ntsetup{biblatex/.push={backend=bibtex, giveninits=true, hyperref=true, natbib=true, maxcitenames=2}}
+%%------------------------------------------------------------
+%% THE LESS IMPORTANT/POPULAR OPTIONS
+%%------------------------------------------------------------
+% \ntsetup{fontstyle=calibri}   % The font set to be used in the docuemnt
+%                               %     [ kpfonts bookman libertine calibri(*) ] 
+%                               %     (*) only for xelatex/lualatex)
 
+% \ntsetup{chapstyle=default}   % The chapter style to be used
+%                               %     [ elegant.clo bianchi.clo bluebox.clo 
+%                               %       default.clo ell.clo hansen.clo
+                                %       ist.clo lyhne.clo madsen.clo pedersen.clo 
+                                %       veelo.clo vz34.clo vz43.clo ]
+                                
+% \ntsetup{coverlang=en}        % The language for the cover (and second cover) page 
+%                               %     defaults to main document language
+
+% \ntsetup{copyrightlang=en}    % The language for the copuyright message
+%                               %     defaults to main document language
+
+% \ntsetup{aftercover=true}     % Does the document have after cover pages??
+%                               %     after cover pages are printed immediately 
+%                               %     after the cover pages
+
+% \ntsetup{spine=true}          % Print a “book spine” at the end of the document
+
+% \ntsetup{cdcover=true}        % Print a “cd cover” at the end of the document
+
+
+%%------------------------------------------------------------
+%% BIBLATEX CONFIGURATION
+%%------------------------------------------------------------
+
+%%------------------------------------------------------------
+%% We are using hyperref.  Leave this option.
+\ntbibsetup{giveninits=true}
+
+%%------------------------------------------------------------
+% If it works, leave biber.  If it fails for you, try bibtex
+\ntbibsetup{backend=biber}
+% \ntbibsetup{backend=bibtex}
+
+%%------------------------------------------------------------
+%% Print only initials of given name
+\ntbibsetup{giveninits=true}
 %% Uncomment the preferred style
 
+%%------------------------------------------------------------
 %% NUMBERED ORDER BY CITATION
-% \ntsetup{biblatex/.push={style=numeric-comp, sortcites=true, sorting=none}}
+% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=none}
+
+%%------------------------------------------------------------
 %% NUMBERED ORDER BY LAST NAME OF FIRST AUTHOR
-% \ntsetup{biblatex/.push={style=numeric-comp, sortcites=true, sorting=nyt}}
+% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=nyt}
+
+%%------------------------------------------------------------
 %% APLHA CITATION ORDER BY LAST NAME OF FIRST AUTHOR
-% \ntsetup{biblatex/.push={style=alphabetic, sortcites=true, sorting=nyt}}
+% \ntbibsetup{style=alphabetic, sortcites=true, sorting=nyt}
+
+%%------------------------------------------------------------
 %% APA-LIKE CITATION
-% \ntsetup{biblatex/.push={natbib=true, style=apa6, maxcitenames=2}}
-% \ntsetup{biblatex/.push={maxcitenames=3}}
+% \ntbibsetup{backend=biber, natbib=true, style=apa6, maxcitenames=2}
 
 %%============================================================
 %%  END OF TEMPLATE COSTUMIZATION
 %%============================================================
 
-%------------------------------------------------------------------
-% Additional packages you may want to use (comment those not needed)
-%------------------------------------------------------------------
 
-%% VERY IMPORTANT
-% \usepackage{booktabs}    % Beautiful simple tables
-\usepackage{paralist}    % To enable customizble enumerates
+
+%%============================================================
+%%  LOADING AND CONFIGURATION OF ADDITIONAL PACKAGES
+%%============================================================
+
+%%------------------------------------------------------------
+%% To enable customizble enumerates.  See the documentation.
+\usepackage{paralist}    
 
 %% IMPORTANT (consider removing/commenting)
 %\usepackage{colortbl}    % Use colors in background of table cells
 \usepackage[textsize=footnotesize]{todonotes}  % To register TODO notes in the text
 \setlength{\marginparwidth}{3.25cm}
-
-%% For automatic adding month and year
-\usepackage[calc]{datetime2}
 
 %% FOR DEMO PURPOSES ONLY --- TO BE REMOVED by final users
 \usepackage{lipsum}
@@ -177,8 +229,8 @@
 
 %%------------------------------------------------------------
 % Date
-\datemonth{\DTMmonthname{\month}}
-\dateyear{\the\year}
+\ntdatemonth{$<$month$>$}
+\ntdateyear{\the\year}
 
 %%------------------------------------------------------------
 % Advisers

@@ -42,7 +42,7 @@
 \spine[logo]={logoISEL}
 \spine[author]={\theauthorshortname}
 \spine[title]={\thetitle}
-\spine[year]={\thedateyear}
+\spine[year]={\thentdateyear}
 
 % Set margins for "normal" pages
 \margin[screen,top]={3.5cm}
@@ -237,7 +237,7 @@
   \ifdraftdoc%
     \textbf{DRAFT: \today}%
   \else%
-    \textbf{\thedatemonth, \thedateyear}%
+    \textbf{\thentdatemonth, \thentdateyear}%
   \fi%
 }
 

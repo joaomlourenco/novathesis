@@ -60,7 +60,7 @@
 \spine[logo]={logoNOVA}
 \spine[author]={\theauthorshortname}
 \spine[title]={\thetitle}
-\spine[year]={\thedateyear}
+\spine[year]={\thentdateyear}
 
 % Set margins for "normal" pages
 \margin[screen,top]={3.5cm}
@@ -137,7 +137,7 @@
 % Author name
 \coveritem{c}{0cm}{%
   \coverbackground
-  \fontfamily{phv}\fontsize{14}{14}\selectfont
+  \fontsize{14}{14}\selectfont
   \textbf{\theauthorname}
 }
 
@@ -183,6 +183,6 @@
   \ifdraftdoc
     \textbf{DRAFT: \today}
   \else
-    \textbf{\thedatemonth, \thedateyear}
+    \textbf{\thentdatemonth, \thentdateyear}
   \fi
 }

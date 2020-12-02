@@ -483,11 +483,11 @@
 %% IDENTIFICATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Date and month
-\newcommand{\thedatemonth}{~datemonth \novathesis@undefined}
-\newcommand{\thedateyear}{~dateyear \novathesis@undefined}
+\newcommand{\thentdatemonth}{~ntdatemonth \novathesis@undefined}
+\newcommand{\thentdateyear}{~ntdateyear \novathesis@undefined}
 
-\newcommand{\datemonth}[1]{\renewcommand{\thedatemonth}{#1}}
-\newcommand{\dateyear}[1]{\renewcommand{\thedateyear}{#1}}
+\newcommand{\ntdatemonth}[1]{\renewcommand{\thentdatemonth}{#1}}
+\newcommand{\ntdateyear}[1]{\renewcommand{\thentdateyear}{#1}}
 
 %% Author identification
 \newcommand{\theauthorname}{~authorname \novathesis@undefined}
@@ -864,7 +864,7 @@
 \newcommand{\@ntaddlisthookfilebib}[2]{%
   \letoptionlist{/novathesis/biblatex}\nt@tmp%
   \typeout{'NT PASSING TO BIBLATEX= '\nt@tmp}%
-  \RequirePackage[\nt@tmp]{biblatex}%
+  \RequirePackage[hyperref=true,\nt@tmp]{biblatex}%
   \DeclareLanguageMapping{english}{american-apa}%
   \DeclareLanguageMapping{portuguese}{portuguese-apa}%
   \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
