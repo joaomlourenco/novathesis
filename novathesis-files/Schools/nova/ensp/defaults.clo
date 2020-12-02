@@ -129,7 +129,7 @@
 % % Title of Dissertation
 \coveritem{c}{1}{%
   \fontfamily{phv}\fontsize{14}{14}\selectfont
-  \textbf{\covertitle}
+  \textbf{\thecovertitle}
 }
 
 % % Title of Dissertation
@@ -171,7 +171,7 @@
 % % Title of Dissertation
 \secondcoveritem{c}{1}{%
   \fontfamily{phv}\fontsize{14}{14}\selectfont
-  \textbf{\covertitle}
+  \textbf{\thecovertitle}
 }
 
 % % Title of Dissertation

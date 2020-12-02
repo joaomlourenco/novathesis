@@ -117,6 +117,10 @@
 }
 
 
+% Flexible definition of new environments
+\RequirePackage{environ}
+
+
 \AtEndPreamble{%
   \RequirePackage[%
     , breaklinks%

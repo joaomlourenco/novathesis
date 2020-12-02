@@ -72,7 +72,7 @@
 
 		% Title of Dissertation
 		\fontfamily{phv}\fontsize{12}{12}\selectfont
-		\textbf{\covertitle}
+		\textbf{\thecovertitle}
 		\vfill
 
 		% Degree
@@ -142,7 +142,7 @@
 
 		% Title of Dissertation
 		\fontfamily{phv}\fontsize{12}{12}\selectfont
-		\textbf{\covertitle}
+		\textbf{\thecovertitle}
 		\vfill
 
 		% Degree

@@ -128,7 +128,7 @@
 % % Title of Dissertation
 \coveritem{c}{1}{%
   \fontfamily{phv}\fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\covertitle}}%
+  \textcolor{fcshblue}{\textbf{\thecovertitle}}%
 }
 
 % Author name
@@ -174,7 +174,7 @@
 % % Title of Dissertation
 \secondcoveritem{c}{1}{%
   \fontfamily{phv}\fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\covertitle}}%
+  \textcolor{fcshblue}{\textbf{\thecovertitle}}%
 }
 
 % Author name

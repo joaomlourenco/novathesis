@@ -209,7 +209,7 @@ of the requirements for the degree of %
   % DISSERTATION TITLE
   \coveritem{l}{1.8cm}{%
     \fontfamily{phv}\fontsize{16}{16}\selectfont
-    \textcolor{imsdarkgrey}{\textbf{\covertitle}}
+    \textcolor{imsdarkgrey}{\textbf{\thecovertitle}}
   }
   % AUTHOR NAME
   \coveritem{l}{0.4cm}{%
@@ -257,7 +257,7 @@ of the requirements for the degree of %
   % % Title of Dissertation
   \coveritem{l}{1}{%
     \fontfamily{phv}\fontsize{17}{17}\selectfont
-    \textcolor{imsdarkgrey}{\textbf{\covertitle}}\\[0.25ex]
+    \textcolor{imsdarkgrey}{\textbf{\thecovertitle}}\\[0.25ex]
     \fontfamily{phv}\fontsize{16}{16}\selectfont
     \textcolor{imslightgrey}{\thesubtitle}
   }

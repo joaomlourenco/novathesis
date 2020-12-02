@@ -106,7 +106,8 @@
 \def\instring#1#2{TT\fi\begingroup
   \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
 
-
+\def\ntmajorfield[#1]#2{\majorfield[#1]={#2}}
+\def\ntdegreename[#1]#2{\degreename[#1]={#2}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE PERSON LISTS
@@ -395,7 +396,7 @@
 \mynewdata{keywordsstring}
 \mynewdata{acknowledgementsstring}
 \mynewdata{notdefined}
-\newcommand\novathesis@undefined{\thenotdefined[\option{/novathesis/mainlang}]}
+\newcommand\novathesis@undefined[1][]{$<$ #1 \thenotdefined[\option{/novathesis/mainlang}] $>$}
 
 \mynewdata{adviserstr}
 \mynewdata{adviserstrfont}
@@ -483,42 +484,48 @@
 %% IDENTIFICATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Date and month
-\newcommand{\thentdatemonth}{~ntdatemonth \novathesis@undefined}
-\newcommand{\thentdateyear}{~ntdateyear \novathesis@undefined}
+\newcommand{\thentdatemonth}{\novathesis@undefined[Month]}
+\newcommand{\thentdateyear}{\novathesis@undefined[Year]}
 
 \newcommand{\ntdatemonth}[1]{\renewcommand{\thentdatemonth}{#1}}
 \newcommand{\ntdateyear}[1]{\renewcommand{\thentdateyear}{#1}}
 
 %% Author identification
-\newcommand{\theauthorname}{~authorname \novathesis@undefined}
-\newcommand{\theauthorshortname}{~authorshortname \novathesis@undefined}
-\newcommand{\theauthorgender}{~authorgender \novathesis@undefined}
-\newcommand{\theauthordegree}{~authordegree \novathesis@undefined}
+\newcommand{\theauthorname}{\novathesis@undefined[Author Name]}
+\newcommand{\theauthorshortname}{\novathesis@undefined[Author Short Name]}
+\newcommand{\theauthorgender}{\novathesis@undefined[Author Gender]}
+\newcommand{\theauthordegree}{\novathesis@undefined[Author Degree]}
 
-\newcommand{\authorname}[3][m]{% [m|f]{Long name}{Short name}
+\newcommand{\ntauthorname}[3][m]{% [m|f]{Long name}{Short name}
   \renewcommand{\theauthorgender}{#1}%
-  \renewcommand{\theauthorname}{#2\hypersetup{pdfauthor={#2}}}%
+  \renewcommand{\theauthorname}{#2}%
   \renewcommand{\theauthorshortname}{#3}%
+  \AtBeginDocument{\hypersetup{pdfauthor = {#2}}}
 }
 
-\newcommand{\authordegree}[1]{%
+\newcommand{\ntauthordegree}[1]{%
   \renewcommand{\theauthordegree}{#1}%
 }
 
-
+ 
 %% Work identification
-\newcommand{\thetitle}{~title \novathesis@undefined}
-\renewcommand{\title}[2][]{%
-  \ifthenelse{\equal{#1}{}}%
-    {\newcommand{\covertitle}{#2}}%
-    {\newcommand{\covertitle}{#1}}%
-  \renewcommand{\thetitle}{#2\hypersetup{pdftitle={#2}}}%
+\newcommand{\thetitle}{\novathesis@undefined[The Thesis Title]}
+\newcommand{\nttitle}[1]{%
+  \newcommand{\thecovertitle}{#1}%
+    {% New cope for definitions
+      \renewcommand\\{ }
+      \xdef\@thetitle{#1}
+    }
+  \renewcommand{\thetitle}{\@thetitle}%
+  \AtBeginDocument{%
+    \hypersetup{pdftitle = {\thetitle}}%
+    \hypersetup{pdfsubject = {\thepresentationtext}}
+  }%
+  \typeout{NT TITLE = [#1][\@thetitle]}
 }
 
-\newcommand{\thesubtitle}{~subtitle \novathesis@undefined}
-\newcommand{\subtitle}[1]{%
-  \renewcommand{\thesubtitle}{#1}%
-}
+\newcommand{\thesubtitle}{\novathesis@undefined[The Thesis Sub-Title]}
+\newcommand{\ntsubtitle}[1]{\renewcommand{\thesubtitle}{#1}}
 
 
 
@@ -907,44 +914,41 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Dedicatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\dedicatory{%%
-	\thispagestyle{empty}%
-	~\\[2cm]%
-    \begin{flushright}%
-    \begin{minipage}{100mm}%
+\NewEnviron{thededicatory}{
+  \thispagestyle{empty}%
+  ~\\[2cm]%
+  \raggedleft%
+  \begin{minipage}{100mm}%
+    \raggedleft%
     \quotefonti%
-    \begin{flushright}%
-}%
-\def\enddedicatory{%
-	\end{flushright}%
+    \BODY
     \normalfont%
-    \end{minipage}%
-	\end{flushright}%
+  \end{minipage}%
 	\clearforchapter%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Quote
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\quote{%%
-	\thispagestyle{empty}%
-	~\\[2cm]%
-    \begin{flushright}%
-    \begin{minipage}{100mm}%
+\NewEnviron{thequote}{%%
+  \thispagestyle{empty}%
+  ~\\[2cm]%
+  \raggedleft
+  \begin{minipage}{100mm}%
+    \raggedleft
     \quotefonti%
-    \begin{flushright}}%
-\def\endquote{%
-	\end{flushright}%
+    \BODY%
     \normalfont%
-    \end{minipage}%
-	\end{flushright}%
+  \end{minipage}%
+	\clearforchapter%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\acknowledgements}{%
+\NewEnviron{acknowledgements}{%
   \chapter*{\theacknowledgementsstring[\option{/novathesis/mainlang}]}%
+  \BODY
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -962,11 +966,28 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Keywords
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\keywords{%
-  \par\vskip\baselineskip\noindent{\bfseries\novathesis@keywordsstr: }%
-}
-\def\endkeywords{~\\[2ex]\rule{\textwidth}{0.2mm}}
+% \def\keywords[#1]#2{%
+%   % #1 = lang
+%   % #2 = {keyword 1, keyword2, …}
+%   \csdef{@nt@keywords@#1}{#2}
+% }
+% \def\keywords{%
+%   \par\vskip\baselineskip\noindent{\bfseries\novathesis@keywordsstr: }%
+% }
+% \def\endkeywords{~\\[2ex]\rule{\textwidth}{0.2mm}}
 
+
+\newtoggle{@nt@keywords@defined}
+\togglefalse{@nt@keywords@defined}
+\NewEnviron{keywords}[1][en]{%
+  \csdef{@nt@keywords@#1}{\BODY}
+  \iftoggle{@nt@keywords@defined}%
+    {}%
+    {\hypersetup{pdfkeywords = {\BODY}}}
+  \par\vskip\baselineskip\noindent{\bfseries\novathesis@keywordsstr: }%
+  \BODY%
+  \\[2ex]\rule{\textwidth}{0.2mm}  
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Table of contents

@@ -140,7 +140,7 @@
 % % Title of Dissertation
 \coveritem{c}{6.5cm}{%
   \fontsize{15}{15}\selectfont
-  \expandafter\MakeUppercase\expandafter{\covertitle}\\[1ex]
+  \expandafter\MakeUppercase\expandafter{\thecovertitle}\\[1ex]
   \fontsize{12}{12}\selectfont
   Dissertação
 }
@@ -186,7 +186,7 @@
 % % Title of Dissertation
 \secondcoveritem{c}{6.5cm}{%
   \fontsize{15}{15}\selectfont
-  \expandafter\MakeUppercase\expandafter{\covertitle}\\[1ex]
+  \expandafter\MakeUppercase\expandafter{\thecovertitle}\\[1ex]
   \fontsize{12}{12}\selectfont
   \expandafter\MakeUppercase\expandafter{\titleEN}
 }

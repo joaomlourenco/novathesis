@@ -185,7 +185,7 @@
 % Title of Dissertation
 \begin{minipage}[t]{0.55\textwidth}
   \fontsize{16}{16}\selectfont\raggedright%
-  \textbf{\covertitle}%
+  \textbf{\thecovertitle}%
 \end{minipage}
 }
 
@@ -259,7 +259,7 @@
 % Title of Dissertation
 \begin{minipage}[t]{0.55\textwidth}
   \fontsize{16}{16}\selectfont\raggedright%
-  \textbf{\covertitle}%
+  \textbf{\thecovertitle}%
 \end{minipage}
 }
 
