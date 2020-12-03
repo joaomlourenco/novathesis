@@ -11,23 +11,22 @@
 \chapter{ThesisDIFCTNL \emph{User's Manual}}
 \label{cha:users_manual}
 
-% ================
-% = Introduction =
-% ================
+\glsresetall
+
 \section{Introduction} % (fold)
 \label{sec:introduction}
 
-{\LARGE \textbf{~\\These instructions are outdated! Please see also the “template.tex” file!\\}}
-
-This chapter describes how to use the \LaTeX\ \novathesis\ template (and the “\novathesisclass” class file).
+This chapter describes how to use the \gls{novathesis}\ and the \gls{novathesisclass} file.
 
 Let's start with some simple suggestions:
+
+\endinput
 
 \begin{enumerate}
   \item No! You don't have to use this template to write your thesis.  You don't even have to use \LaTeX.  However, writing a thesis is serious stuff, and which tool you shall use to write it is not a decision to make lighthearted.
   \item \LaTeX\ is hard enough by itself.  This template aims at making your life easier, but not easy. If you choose to use this template to write your thesis, you are very welcome.  However, don't expect me to provide you help with \LaTeX.  Look for help with your friends (you have some friends, don't you?), or search the web, or try even to read some book(s) on \LaTeX. In the end you will certainly find the experience rewarding.
   \item So, don't forget, when you come to the point of “\emph{How do I do this with \LaTeX?}” look for help!  Google is your best friend. 
-  \item If you believe the difficulty is related with the \novathesis\ template itself (and not with \LaTeX), please \textbf{do not} send me an email asking for help.  Please look for help in the \novathesis\ Google Group (URL) and the \novathesis\ Facebook group (URL).  If you can't find help there from previous posts/messages, then post your own question. Hopefully someone will answer you.
+  \item If you believe the difficulty is related with the \gls{novathesis}\ template itself (and not with \LaTeX), please \textbf{do not} send me an email asking for help.  Please look for help in the \gls{novathesis}\ Google Group (URL) and the \gls{novathesis}\ Facebook group (URL).  If you can't find help there from previous posts/messages, then post your own question. Hopefully someone will answer you.
 \end{enumerate}
 
 Now, let's go to a major issue for Windows users.  Characters have to be encoded in files as numbers, and that is how character encodings were born. ASCII and EBCDIC standards are long lost in the past.  The world now uses UTF-8.  Well, not all the world… Windows is still stick in its \emph{codepages}, and “latin1” is what windows uses as the codepage for Western Europe. This messes up with the template. Please be sure you use an editor with UTF-8 support.  \emph{Go to the preferences/options/… of your text editor and set up its default file encoding as UTF-8.}
@@ -40,7 +39,7 @@ Now, let's go to a major issue for Windows users.  Characters have to be encoded
 \section{Folder Structure} % (fold)
 \label{sec:folder_structure}
 
-The \novathesis\ template is organized into files and folders. At the main level it includes the following files and folders:
+The \gls{novathesis}\ template is organized into files and folders. At the main level it includes the following files and folders:
 
 \noindent
 \begin{tabularx}{\linewidth}{>{\ttfamily}l>{\itshape}l>{\upshape}X}
@@ -62,11 +61,11 @@ Examples          & folder  & Some more examples of the use of the template for 
 Scripts           & folder  & Some (possibly useful) scripts for Unix-based systems (Linux, Mac OSx). If you are a windows user, ignore this folder (you may safely delete it if you want). 
 \\
 novathesis-files   & folder  & 
-Additional files for the \novathesisclass\ file.  Unless you know what you are doing, avoid messing up with the files and folders inside this folder (except for deleting the unused Schools, see below). 
+Additional files for the \gls{novathesisclass}\ file.  Unless you know what you are doing, avoid messing up with the files and folders inside this folder (except for deleting the unused Schools, see below). 
 \\
 \end{tabularx}
 
-The \texttt{novathesis-files} folder contains additional files and folders that complement the main \novathesisclass\ file.  These are:
+The \texttt{novathesis-files} folder contains additional files and folders that complement the main \gls{novathesisclass}\ file.  These are:
 
 \noindent
 \begin{tabularx}{\linewidth}{>{\ttfamily}l>{\itshape}l>{\upshape}X}
@@ -80,10 +79,10 @@ lang-text.clo   & file    &
 Translations of important strings used in the template.  Currently fully supported are Portuguese and English, but French is on the way.  If you add translations for your own language, please be so kind and send them to me. Thank you!
 \\
 options.clo     & file    &
-Processing of \novathesisclass\ options.  \emph{Don't mess with this!}
+Processing of \gls{novathesisclass}\ options.  \emph{Don't mess with this!}
 \\
 packages.clo    & file    &
-Additional packages to be loaded into the \novathesis\ template. \emph{You should not mess with this!}
+Additional packages to be loaded into the \gls{novathesis}\ template. \emph{You should not mess with this!}
 \\
 spine.clo       & file    &
 This file is loaded only if the option \texttt{spine=true}, and includes the typesetting of the book spine.
@@ -122,10 +121,10 @@ The folder for the \href{http:www.novaims.unl.pt}{\emph{Information and Manageme
 % ===================
 % = Package options =
 % ===================
-\section{\novathesisclass\ Class Options} % (fold)
+\section{\gls{novathesisclass}\ Class Options} % (fold)
 \label{sec:package_options}
 
-The \novathesis\ class can be customized with the options listed below.
+The \gls{novathesiscass}\ can be customized with the options listed below.
 
 \newcommand{\classoption}[3]{\textbf{#1=OPT}\qquad #2\\\qquad\emph{#3}\\}
 

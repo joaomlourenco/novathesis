@@ -109,6 +109,10 @@
 \def\ntmajorfield[#1]#2{\majorfield[#1]={#2}}
 \def\ntdegreename[#1]#2{\degreename[#1]={#2}}
 
+\newcommand{\ntgetkeyval}[4][=]{%
+  \StrCut{#2}{#1}#3#4%
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE PERSON LISTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -694,7 +698,7 @@
   % #1 = file class
   % #2 = KEY=value
   % \typeout{NT @ntprintnext@ii [#1] [#2]}%
-  \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%
+  \ntgetkeyval{#2}{\option@listmatch@key}{\option@listmatch@value}%
   % \typeout{NT @ntprintnext@ii TRYING TO LOAD \option@listmatch@value}%
   \InputIfFileExists{\option@listmatch@value}%
     {}%
@@ -815,10 +819,6 @@
         \clearforchapter\lstlistoflistings%
   }}}{}%
   \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/novathesis/list/indexes/.push = {%
-          \setglossarystyle{long}%
-          \setabbreviationstyle[acronym]{long-short}%
-          \glsnogroupskiptrue%
-          \setlength{\glsdescwidth}{0.75\textwidth}%
           \printnoidxglossaries\clearforchapter%
   }}}{}%
 }
@@ -842,24 +842,20 @@
   }%
 }
 
-\newcommand*{\@loadglossaryfileifexists}[2]{%
-  % #1 = glossary type
-  % %2 = glossary key
-  % \typeout{NT loadglossaryfileifexists [#1] [#2]}%
-  \options{/novathesis/file/#1/.getval = {#2}}%
-  % \typeout{NT loadglossaryfileifexists TRYING TO LOAD \option@listmatch@value}%
-  \IfFileExists{\option@listmatch@value}%
-    {\loadglsentries{\option@listmatch@value}}%
-    {}%
+\newcommand{\@loadglossaryfiles}{%
+  \optionlistdo{/novathesis/file/glossaries}{\@loadglossaryfile{##1}}
 }
 
-\newcommand{\@loadglossaryfiles}{%
-  \forcsvlist{\@loadglossaryfileifexists{glossaries}}{glossary,acronyms,symbols}%
+\newcommand{\@loadglossaryfile}[1]{%
+  % #1 = {glossary, acronyms, symbols}={filename}
+  \ntgetkeyval{#1}{\@nt@key}{\@nt@value}
+  \typeout{NT @loadglossaryfile [\@nt@key][\@nt@value]}
+  \IfFileExists{\@nt@value}%
+    {\loadglsentries{\@nt@value}}%
+    {\ClassWarning{novathesis}{File \option@listmatch@value~doe not exist!}{}}%
 }
-  
-\AtEndPreamble{
-  \@loadglossaryfiles%
-}
+
+\AtEndPreamble{\@loadglossaryfiles}
 
 
 
@@ -965,17 +961,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Keywords
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \def\keywords[#1]#2{%
-%   % #1 = lang
-%   % #2 = {keyword 1, keyword2, …}
-%   \csdef{@nt@keywords@#1}{#2}
-% }
-% \def\keywords{%
-%   \par\vskip\baselineskip\noindent{\bfseries\novathesis@keywordsstr: }%
-% }
-% \def\endkeywords{~\\[2ex]\rule{\textwidth}{0.2mm}}
-
-
 \newtoggle{@nt@keywords@defined}
 \togglefalse{@nt@keywords@defined}
 \NewEnviron{keywords}[1][en]{%

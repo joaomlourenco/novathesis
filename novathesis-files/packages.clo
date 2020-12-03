@@ -137,11 +137,13 @@
     , translate=babel
     , acronym % add acronyms listing
     , symbols % add symbols listing
-    , sanitizesort=false % allow \gls inside descriptions
+    % , sanitizesort=false % allow \gls inside descriptions
     % , automake
   ]{glossaries-extra} % To create glossaries
-  % \glsdisablehyper
+  \setglossarystyle{long}%
+  \setabbreviationstyle[acronym]{long-short}%
+  \glsnogroupskiptrue%
+  \setlength{\glsdescwidth}{0.75\textwidth}%
   \makenoidxglossaries % use TeX to sort
-  % \makeglossaries
 }
 

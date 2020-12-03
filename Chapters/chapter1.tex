@@ -11,39 +11,131 @@
 \chapter{Introduction}
 \label{cha:introduction}
 
-\newcommand{\novathesis}{\emph{novathesis}}
-\newcommand{\novathesisclass}{\texttt{novathesis.cls}}
-
+%% You may define new commands in the main text.  These commands will 
+%% be valid from this point until the end of the document.
+ 
 
 % epigraph configuration
 \epigraphfontsize{\small\itshape}
 \setlength\epigraphwidth{12.5cm}
 \setlength\epigraphrule{0pt}
+
 \epigraph{
-  This work is licensed under the Creative Commons Attribution-NonCommercial~4.0 International License.
-  To view a copy of this license, visit \url{http://creativecommons.org/licenses/by-nc/4.0/}.
+  This work is licensed under the \href{LaTeX project public license}{\LaTeX\ Project Public License v1.3c}.
+  To view a copy of this license, visit \url{LaTeX project public license}.
 }
 
-\section{A Bit of History} % (fold)
+\section{The \emph{NOVAthesis} template}
 \label{sec:a_bit_of_history}
 
-The \novathesis\ template was originally developed to help MSc and PhD students of the Computer Science and Engineering Department of the NOVA School of Science and Technology of NOVA University Lisbon (DI-FCT-NOVA) to write their thesis and dissertations Using \LaTeX.\todo{Must revise the text in this document! Help is very welcome!}
-%
-These student can easily cope with \LaTeX\ by themselves, and the only need some help in the bootstrap process to make their life easier.
+The \gls{novathesis} \LaTeX\ tempalte was initially directed to the PhD and MSc students thesis at \gls{DI} of the \gls{FCT} of the \gls{NOVA}, Portugal, but currently (v5.1.5) it supports other degrees and Schools, namely:
+\begin{itemize}
+  \item NOVA University Lisbon
+  \begin{itemize}
+    \item NOVA School of Science and Technology \href{https://www.fct.unl.pt}{(FCT-NOVA)}
+    \item NOVA Information Management School (\href{https://www.novaims.unl.pt}{NOVA-IMS})
+    \item National School of Public Heath (\href{https://www.ensp.unl.pt}{ENSP-NOVA})
+    \item Faculdade de Ciências Humanas e Sociais (\href{https://www.fcsh.unl.pt}{FCSH-NOVA})
+  \end{itemize}
+  \item University of Lisbon
+  \begin{itemize}
+    \item Instituto Superior Técnico from Universidade de Lisboa (\href{https://tecnico.ulisboa.pt}{IST-UL})
+    \item Faculdade de Ciências from  Universidade de Lisboa (\href{https://ciencias.ulisboa.pt}{FC-UL})
+  \end{itemize}
+  \item Instituto Politécnico de Lisboa
+  \begin{itemize}
+    \item Instituto Superior de Engenharia de Lisboa (\href{https://www.isel.pt}{ISEL-IPL})
+  \end{itemize}
+  \item Instituto Politécnico de Setúbal
+   \begin{itemize}
+    \item Escola Superior de Saúde (\href{https://www.ess.ips.pt}{ESS-IPS})
+    \item Escola Superior de Tecnologia do Barreiro (\href{https://www.estbarreiro.ips.pt}{ESTB-IPS})
+  \end{itemize}
+  \item Escola Superior de Enfermagem do Porto (\href{https://www.esenf.pt/pt/}{ESEP})
+\end{itemize}
 
-However, as the template spread out among the students from other degrees at FCT-NOVA, the demand for am easier-to-use template as grown.
-%
-And the template in its current shape aims at answering the expectations of those that, although they are not familiar with programming nor with markup languages, so still feel brave enough to give \LaTeX\ a try and rejoice with the beauty of the texts typeset by this system.
+The template provides an \emph{easy to use} setting for you to write your thesis/dissertation in \LaTeX:
+\begin{itemize}
+  \item  Select your school;
+  \item Fill your thesis metadata (title, research field, etc) in the file “\texttt{template.tex}”;
+  \item Create your thesis/dissertation contents using the files in folder “\texttt{Chapters}”; and
+  \item Process using you favorite \LaTeX\ processor (pdf\LaTeX, \XeLaTeX\ or \LuaLaTeX).
+\end{itemize}
 
-% section a_bit_of_history (end)
+\section{Getting Started}
+\label{sec:getting_started}
+
+\subsection{Using Overleaf}
+\label{sub:using_overleaf}
+
+\begin{wrapfigure}{r}{0.5\linewidth}
+\vspace*{-15ex}\includegraphics[width=\linewidth]{overleaf}%
+\end{wrapfigure}
+
+Just access the \acrlong{novathesis} in \href{https://www.overleaf.com/latex/templates/new-university-of-lisbon-universidade-nova-de-lisboa-slash-unl-thesis-template/fwbztcrptjmg}{Overleaf} and select the green button \emph{Open as Template}. 
+
+Please note that the version currently available in Overleaf (v4.1.3) is outdated. A new version will be submitted to Overleaf soon.  
+
+\subsection{Using a Local \LaTeX\ Installation}
+\label{sub:using_local_latex}
+
+\begin{wrapfigure}{r}{0.5\linewidth}
+\vspace*{-15ex}\includegraphics[width=\linewidth]{github}%
+\end{wrapfigure}
+
+Just access the \acrlong{novathesis} in \href{https://github.com/joaomlourenco/novathesis}{GitHub}, select the green button \emph{Code} and then \emph{download} (or \emph{clone}) the template.  You will always get the latest version of the template (currently v5.1.5).
 
 
-\section{Disclaimer} % (fold)
+\section{Getting Help}
+\label{sec:getting_help}
+
+\begin{center}  
+  \fbox{\textbf{Please do not send me emails!  I will not answer them!}}
+\end{center}
+ 
+\subsection{Google and a very long section name with another blah}
+\label{sub:group_google}
+
+Remember, when looking for hints or help, \emph{\href{google.com}{Google} is your best friend}!   And if you prefix your Google query with “\emph{LaTeX}”, your fist link will most probably direct you to \texttt{tex.stackexchange.com}.
+
+\subsection{Group Support}
+\label{sub:group_support}
+
+To get directed help on the \acrlong{novathesis} please join:
+\begin{itemize}
+  \item the \href{https://www.facebook.com/groups/novathesis}{NOVAtheis Facebook group}; or
+  \item the \href{https://groups.google.com/forum/#!forum/novathesis}{NOVAthesis Google group}.
+\end{itemize}  
+
+
+\section{Donations}
+\label{sec:donations}
+
+This template is the result of hundreds (yes! \emph{may hundreds}!) of hours of work from the \href{https://docentes.fct.unl.pt/joao-lourenco}{main developer}.  If you think this template really made you life easier while writing your thesis, please consider making a [**donation**](https://paypal.me/novathesis). We will keep a list thanking to all the identified donors that identify themselves in the “\emph{Add special instructions to the seller}” box.
+
+\subsubsection*{Donnors 2020}
+\label{ssub:donnors_2020}
+
+\begin{inparaitem}[]
+  \item João Carvalho, 
+  \item David Romão, 
+  \item DisplayersereStream, and
+  \item António Estêvão.  
+\end{inparaitem}
+
+\subsubsection*{Donnors 2019}
+\label{ssub:donnors_2019}
+
+\begin{inparaitem}[]
+  \item Jorge Barreto and
+  \item Raissa Almeida.  
+\end{inparaitem}
+
+
+
+\section{Disclaimer}
 \label{sec:disclaimer}
 
-It is up to you, the student, to read the FCT and/or NOVA regulations on how to format and submit your MSc or PhD dissertation.\todo[inline]{And this comment occupies a full line!}
-
-This template is endorsed by the FCT-NOVA and even linked from its web pages, but it is not an official template.
+Although this template is endorsed by the FCT-NOVA and even \href{https://www.fct.unl.pt/estudante/informacao-academica}{linked from its web site}, this is stil not an official template.
 %
-This template exists to make your life easier, but in the end of the line you are accountable for both the looks and the contents of the document you submit as your dissertation.
-
+This template exists to make your life easier and we do our best to make the \gls{novathesis} template compliant to the supported Schools' regulations, but in the end of the line you and only you are accountable for both the look and the contents of the document you submit as your thesis/dissertation.
