@@ -50,7 +50,7 @@
   % %novathesis@opt@otherlistsat
   , otherlistsat/.new choice = {front, back}
   % HANDLER
-  , lang/.new style = {/novathesis/mainlang=#1,/novathesis/copyrightlang=#1}
+  , lang/.new style = {/novathesis/mainlang=#1,/novathesis/copyrightlang=#1,/novathesis/coverlang=#1}
   % %novathesis@opt@lang
   , mainlang/.new choice = {pt, en, fr, it}
   % %novathesis@opt@coverlang
@@ -63,6 +63,7 @@
   , secondcover/.new toggle = false
   % %novathesis@opt@aftercover
   , aftercover/.new toggle = false
+  , debugcover/.new toggle = false
   % %novathesis@opt@spine
   , spine/.new cmd = {%
       \AtEndDocument{%
@@ -119,18 +120,19 @@
   , files/glossaries/.new list = {}
 }
 
-\def\@ntfirstof#1=#2\@nil{#1}
-\def\@ntsecondof#1=#2\@nil{#2}
-
 \newcommand*{\ntsetup}[1]{%
-  \edef\@nt@keyval{#1}
-  \edef\@nt@opt{\@ntfirstof#1\@nil}
-  \edef\@nt@value{\@ntsecondof#1\@nil}
-  \typeout{'NT SETUP = '[\@nt@keyval]~/~[\@nt@opt]~/~[\@nt@value]}
-  \options{/novathesis/\@nt@opt = \@nt@value}%
+  \ntgetkeyval{#1}\@nt@opt\@nt@value
+  \typeout{'NT SETUP = '[#1]~/~[\@nt@opt]~/~[\@nt@value]}
+  \csuse{@nt@opt\@nt@opt @prehook}
+  \options{/novathesis/\@nt@opt = {\@nt@value}}%
   % \typeout{'NT HANDLER = '/novathesis/handler/\@nt@opt}%
   \option{/novathesis/handler/\@nt@opt}
+  \typeout{NT ->@nt@opt#1hook}
 }
+
+\newcommand*{\@nt@optschool@prehook}{%
+}
+
 
 \newcommand*{\ntbibsetup}[1]{\options{/novathesis/biblatex/.push={#1}}}
 

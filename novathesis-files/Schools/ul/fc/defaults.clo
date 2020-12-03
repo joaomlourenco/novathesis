@@ -170,7 +170,7 @@
 
 % School
 \coveritem{c}{0.5cm}{%
-  \fontfamily{phv}\fontseries{mc}\fontsize{12}{12}\selectfont%
+  \fontseries{mc}\fontsize{12}{12}\selectfont%
   \MakeUppercase{\theuniversity[\option{/novathesis/coverlang}]}\\%
   \vspace{2mm}%
   \MakeUppercase{\thefaculty[\option{/novathesis/coverlang}]}\\%
@@ -198,7 +198,7 @@
 
 % % Title of Dissertation
 \coveritem{c}{1}{%
-  \fontfamily{phv}\fontseries{mc}\fontsize{17}{17}\selectfont%
+  \fontseries{mc}\fontsize{17}{17}\selectfont%
   \textbf{\thecovertitle}%
   \vspace{20mm}
 }
@@ -211,7 +211,7 @@
   \OR\equal{\option{/novathesis/docdegree}}{phdplan}}%
 {
 	\coveritem{c}{1}{%
-	  \fontfamily{phv}\fontseries{mc}\fontsize{13}{13}\selectfont%
+	  \fontseries{mc}\fontsize{13}{13}\selectfont%
 		\textbf{\theauthordegree}\\%
 		\ifthenelse{%
 	 		\NOT\equal{\thespecialization[\option{/novathesis/coverlang}]}{}%
@@ -225,7 +225,7 @@
 
 % Author name
 \coveritem{c}{1}{%
-  \fontfamily{phv}\fontseries{mc}\fontsize{15}{15}\selectfont%
+  \fontseries{mc}\fontsize{15}{15}\selectfont%
   \theauthorname%
   \vspace{10mm}
 }
@@ -237,7 +237,7 @@
   \OR\equal{\option{/novathesis/docdegree}}{mscplan}}%
 {
 	\coveritem{c}{1}{%
-	  \fontfamily{phv}\fontseries{mc}\fontsize{13}{13}\selectfont%
+	  \fontseries{mc}\fontsize{13}{13}\selectfont%
 		\textbf{\theauthordegree\\}
 		\ifthenelse{%
 	 		\NOT\equal{\thespecialization[\option{/novathesis/coverlang}]}{}%
@@ -251,7 +251,7 @@
 
 % Advisers
 \coveritem{c}{1}{%
-  \fontfamily{phv}\fontsize{13}{13}\selectfont
+  \fontsize{13}{13}\selectfont
   \theadviserslabel[\option{/novathesis/coverlang}]\\%
   \vspace{5mm}%
   \ntprintadvisersaslist%
@@ -266,7 +266,7 @@
   \OR\equal{\option{/novathesis/docdegree}}{msc}%
   \OR\equal{\option{/novathesis/docdegree}}{phd}}%
   {  
-  	\fontfamily{phv}\fontseries{mc}\fontsize{10}{10}\selectfont%
+  	\fontseries{mc}\fontsize{10}{10}\selectfont%
 		\ntprintcommittee%
 	}%
   {}%
@@ -280,7 +280,7 @@
   \OR\equal{\option{/novathesis/docdegree}}{phdprop}}%
 {
 	\coveritem{c}{1}{%
-	  \fontfamily{phv}\fontseries{mc}\fontsize{12}{12}\selectfont%
+	  \fontseries{mc}\fontsize{12}{12}\selectfont%
 		\thepresentationtext%
 	}%
 }
@@ -290,7 +290,7 @@
 % Date
 \coveritem{c}{1}{%
 	\vspace{5mm}%
-  \fontfamily{phv}\fontseries{mc}\fontsize{14}{14}\selectfont%
+  \fontseries{mc}\fontsize{14}{14}\selectfont%
   \ifdraftdoc%
     DRAFT: \today%
   \else%

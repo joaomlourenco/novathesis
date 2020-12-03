@@ -62,7 +62,9 @@
 \providecommand*{\input@path}{}
 \edef\input@path{{./}{Chapters/}{novathesis-files/}\input@path}% subfolder path
 
-\newcommand*{\coverprehook}{}
+\newcommand*{\coverprehook}{%
+  \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHECK IF USING LUALATEX OR XELATEX
@@ -71,16 +73,8 @@
 \begingroup\catcode94=7 \catcode0=9 % ASCII 94 is ^
 \def\empty{}\def\next{^^^^0000}\expandafter\endgroup
 \ifx\next\empty\xetexorluatextrue\else\xetexorluatexfalse\fi
-% \newif\ifxetexorluatex
-% \ifxetex
-%   \xetexorluatextrue
-% \else
-%   \ifluatex
-%     \xetexorluatextrue
-%   \else
-%     \xetexorluatexfalse
-%   \fi
-% \fi
+
+\newcommand{\ifxeorlua}[2]{\ifxetexorluatex#1\else#2\fi}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -108,6 +102,7 @@
 
 \def\ntmajorfield[#1]#2{\majorfield[#1]={#2}}
 \def\ntdegreename[#1]#2{\degreename[#1]={#2}}
+\def\ntspecialization[#1]#2{\specialization[#1]={#2}}
 
 \newcommand{\ntgetkeyval}[4][=]{%
   \StrCut{#2}{#1}#3#4%
@@ -230,14 +225,11 @@
 % FIX BABEL TRANSLATION
 \input{novathesis-files/fix-babel.clo}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Cover definition macros
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\newcover}{%
-  \let\novathesis@coveritem@list=\undefined%
-  \let\novathesis@secondcoveritem@list=\undefined%
 }
 
 \newcommand{\coverbackground}[1][\@nameuse{thesiscover\option{/novathesis/docdegree},front}]{%
@@ -250,12 +242,12 @@
 
 \newcommand{\coveritem}[3]{%
   % \typeout{NT COVER 1 BLOCK}%
-  \listcsadd{novathesis@coveritem@list}{[#1][#2]{#3}}%
+  \listcsadd{novathesis@\option{/novathesis/school}@coveritem@list}{[#1][#2]{#3}}%
 }
 
 \newcommand{\secondcoveritem}[3]{%
   % \typeout{NT COVER 2 BLOCK}%
-  \listcsadd{novathesis@secondcoveritem@list}{[#1][#2]{#3}}%
+  \listcsadd{novathesis@\option{/novathesis/school}@secondcoveritem@list}{[#1][#2]{#3}}%
 }
 
 \newcounter{novathesis@myloop}
@@ -285,23 +277,21 @@
 }
 
 \newcommand{\rawprintcoveritems}[1]{%
-  \ifthenelse{\isundefined{\novathesis@coveritem@list}}{}{%
+  \ifthenelse{\isundefined{#1}}{}{%
 	\forlistcsloop{\novathesis@printcoveritem}{#1}}%
 }
 
 \newcommand{\ntprintcoveritems}{%
-  \rawprintcoveritems{novathesis@coveritem@list}%
+  \rawprintcoveritems{novathesis@\option{/novathesis/school}@coveritem@list}%
 }
 
 \newcommand{\ntprintsecondcoveritems}{%
-  \rawprintcoveritems{novathesis@secondcoveritem@list}%
+  \rawprintcoveritems{novathesis@\option{/novathesis/school}@secondcoveritem@list}%
 }
 
 \newlength{\mpwidth}%
 \newlength{\mpheight}%
 \newsavebox{\novathesis@coverbox}%
-
-
 
 \newcommand{\ntprintcoverpage}{%
   \bgroup%
@@ -322,8 +312,11 @@
   \egroup%
 }
 
+
 \newcommand{\ntprintthecover}[1][]{%
-  \thispagestyle{empty}%
+  \iftoggle{/novathesis/debugcover}%
+    {\thispagestyle{measurestyle}}%
+    {\thispagestyle{empty}}
   \setlength{\mpwidth}{\dimexpr%
     \paperwidth%
       -\themargin[\option{/novathesis/docdegree},left]%
@@ -346,19 +339,20 @@
     }%
   }%
   ~% This space is important here so that the cover page is not empty anymore!
-  \ifcsdef{@the#1coverbackpage}{\@nameuse{@the#1coverbackpage}}{}%
+  \csuse{@the#1coverbackpage}%
 }
 
-
-\newcommand{\@firstcoverbackpage}{%
+\newcommand{\@thecoverbackpage}{%
   \newpage%
   \thispagestyle{empty}%
   \null\vfill%
   {\scriptsize%
       \begin{Spacing}{1}%
-        \fontfamily{phv}\fontsize{6.3}{6.3}\selectfont% 
+        \ifxeorlua{setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+        \fontsize{6.3}{6.3}\selectfont% 
         \noindent%
-        \hypersetup{allcolors=white}\textcolor{white}{\theacknowledgmentsstr[\option{/novathesis/coverlang}]}%
+        \hypersetup{allcolors=white}\textcolor{white}%
+                   {\theacknowledgmentsstr[\option{/novathesis/coverlang}]}%
       \end{Spacing}%
   }%  
 }
@@ -401,6 +395,7 @@
 \mynewdata{acknowledgementsstring}
 \mynewdata{notdefined}
 \newcommand\novathesis@undefined[1][]{$<$ #1 \thenotdefined[\option{/novathesis/mainlang}] $>$}
+\mynewdata{specializationstr}
 
 \mynewdata{adviserstr}
 \mynewdata{adviserstrfont}
@@ -458,12 +453,6 @@
 % --------------------------------------------------------
 % Add school specific Images folder to the graphics path
 \prependtographicspath{{novathesis-files/Schools/\option{/novathesis/school}/Images/}}
-
-% --------------------------------------------------------
-% Include the school's defaults
-\InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/defaults.clo}{}{}
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -527,14 +516,30 @@
   \typeout{NT TITLE = [#1][\@thetitle]}
 }
 
-\newcommand{\thesubtitle}{\novathesis@undefined[The Thesis Sub-Title]}
-\newcommand{\ntsubtitle}[1]{\renewcommand{\thesubtitle}{#1}}
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% NEW definition for committee with lists
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ntprintoptionlist}[3]{%
+  \newcounter{@ntprintoptionlist@cnt}
+  \setcounter{@ntprintoptionlist@cnt}{1}
+  \def\@nt@comma{}%
+  \optionlistdo{#1}{%
+    \StrCut{##1}{,}\@nt@name\@nt@rest%
+    \@nt@comma\@nt@name%
+    \stepcounter{@ntprintoptionlist@cnt}%
+    \ifnum\value{\option{#1/@size}}=\value{@ntprintoptionlist@cnt}%
+      \def\@nt@comma{#3}%
+    \else%
+      \def\@nt@comma{#2}%
+    \fi%
+  }%
+}
+
+\newcommand{\ntprintadvisersaslist}[1][adviser]{%
+  \ntprintoptionlist{/novathesis/#1//name}{, }{ and }
+}
 
 \newcommand{\ntprintadvisers}[1][0.90]{%
   \begin{minipage}{#1\textwidth}
@@ -615,22 +620,33 @@
 
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Include the School's defaults
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/defaults.clo}{}{}
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PAGE LAYOUT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\synctex=1 % Use synctex
-\brokenpenalty=10000
 
-\settypeoutlayoutunit{mm}
-\setulmarginsandblock%
-  {\themargin[\option{/novathesis/media},top]}%
-  {\themargin[\option{/novathesis/media},bottom]}%
-  {*}%
-\setlrmarginsandblock%
-  {\themargin[\option{/novathesis/media},left]}%
-  {\themargin[\option{/novathesis/media},right]}%
-  {*}%
-\checkandfixthelayout%
+\AtEndPreamble{\ntsetlayout}
+\newcommand{\ntsetlayout}{%
+  \synctex=1 % Use synctex
+  \brokenpenalty=10000
+  \settypeoutlayoutunit{mm}
+  \setulmarginsandblock%
+    {\themargin[\option{/novathesis/media},top]}%
+    {\themargin[\option{/novathesis/media},bottom]}%
+    {*}%
+  \setlrmarginsandblock%
+    {\themargin[\option{/novathesis/media},left]}%
+    {\themargin[\option{/novathesis/media},right]}%
+    {*}%
+  \checkandfixthelayout%
+}
 
 %% For debugging the page layout
 \newcommand\novathesis@typetwolengths[4]{%
@@ -644,6 +660,7 @@
   \edef\l@second{\strip@pt\@tempdimc}%
   #1: \l@first\mem@tl@unit\space#3\space\l@second\mem@tl@unit%
 }
+
 \newcommand\novathesis@typeonelength[2]{%
   % #1 = text before
   % #2 = first length
@@ -651,6 +668,7 @@
   \edef\l@first{\strip@pt\@tempdimc}%
   #1: \l@first\mem@tl@unit%
 }
+
 \newcommand*{\typelayout}{%
   \hrule%
   \novathesis@typetwolengths{Stock height and width}{\stockheight}{by}{\stockwidth}\\%
@@ -670,7 +688,8 @@
   \novathesis@typetwolengths{Sidefoothsep and sidefootwidth}{\sidefoothsep}{and}{\sidefootwidth}\\%
   \novathesis@typetwolengths{Sidefootvsep and sidefootheight}{\sidefootvsep}{and}{\sidefootheight}\\%
   \hrule%
-  }
+}
+
 
 
 
@@ -752,7 +771,7 @@
 
 \newcommand{\ntthesismainmatter}{%
   % enables protrusion locally for the remainder of the document
-  \ifxetexorluatex\else\microtypesetup{protrusion=true}\fi%
+  \ifxeorlua{}{\microtypesetup{protrusion=true}}%
 	\mainmatter%
 	\pagenumbering{arabic} %
 	\setlength{\headheight}{15pt}%
@@ -973,6 +992,7 @@
   \\[2ex]\rule{\textwidth}{0.2mm}  
 }
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Table of contents
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -991,10 +1011,10 @@
 % Text style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\InputIfFileExists{novathesis-files/ChapStyles/\option{/novathesis/chapstyle}.clo}{}{}
-
-\InputIfFileExists{novathesis-files/FontStyles/\option{/novathesis/fontstyle}.clo}{}{}
-
+\AtEndPreamble{%
+\InputIfFileExists{novathesis-files/ChapStyles/\option{/novathesis/chapstyle}.clo}{}{}%
+\InputIfFileExists{novathesis-files/FontStyles/\option{/novathesis/fontstyle}.clo}{}{}%
+}
 
 
 

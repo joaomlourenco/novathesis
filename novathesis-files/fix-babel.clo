@@ -25,6 +25,7 @@
   \gdef\annexnamepl{Anexos}
   \gdef\appendixnamepl{Apêndices}
 }
+
 \addto\captionsenglish{%
   \def\lstlistlistingname{Listings}%
   \def\lstlistingname{Listing}%
@@ -32,12 +33,14 @@
   \gdef\annexnamepl{Annexes}
   \gdef\appendixnamepl{Appendices}
 }
+
 \addto\captionsfrench{%
   \def\lstlistlistingname{Listes de Code}%
   \gdef\annexname{Annexe}
   \gdef\annexnamepl{Annexes}
   \gdef\appendixnamepl{Appendices}
 }
+
 \addto\captionsitalian{%
   \def\lstlistlistingname{Listatos}%
   \gdef\annexname{Annesso}

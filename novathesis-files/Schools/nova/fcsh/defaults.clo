@@ -51,31 +51,31 @@
 
 % Set margins for cover pages
 \margin[phd,top]={0.0cm}
-\margin[phd,bottom]={0.0cm}
+\margin[phd,bottom]={2.0cm}
 \margin[phd,left]={0.0cm}
 \margin[phd,right]={0.0cm}
 \margin[phdplan,top]={0.0cm}
-\margin[phdplan,bottom]={0.0cm}
+\margin[phdplan,bottom]={2.0cm}
 \margin[phdplan,left]={0.0cm}
 \margin[phdplan,right]={0.0cm}
 \margin[phdprop,top]={0.0cm}
-\margin[phdprop,bottom]={0.0cm}
+\margin[phdprop,bottom]={2.0cm}
 \margin[phdprop,left]={0.0cm}
 \margin[phdprop,right]={0.0cm}
 \margin[msc,top]={0.0cm}
-\margin[msc,bottom]={0.0cm}
+\margin[msc,bottom]={2.0cm}
 \margin[msc,left]={0.0cm}
 \margin[msc,right]={0.0cm}
 \margin[mscplan,top]={0.0cm}
-\margin[mscplan,bottom]={0.0cm}
+\margin[mscplan,bottom]={2.0cm}
 \margin[mscplan,left]={0.0cm}
 \margin[mscplan,right]={0.0cm}
 \margin[bsc,top]={0.0cm}
-\margin[bsc,bottom]={0.0cm}
+\margin[bsc,bottom]={2.0cm}
 \margin[bsc,left]={0.0cm}
 \margin[bsc,right]={0.0cm}
 \margin[plain,top]={0.0cm}
-\margin[plain,bottom]={0.0cm}
+\margin[plain,bottom]={2.0cm}
 \margin[plain,left]={0.0cm}
 \margin[plain,right]={0.0cm}
 
@@ -127,25 +127,49 @@
 
 % % Title of Dissertation
 \coveritem{c}{1}{%
-  \fontfamily{phv}\fontsize{18}{18}\selectfont%
+  \fontseries{mc}\fontsize{12}{12}\selectfont%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\thecovertitle}}%
 }
 
 % Author name
 \coveritem{c}{1}{%
-  \fontfamily{phv}\fontsize{18}{18}\selectfont%
+  \fontseries{mc}\fontsize{12}{12}\selectfont%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\theauthorname}}%
 }
 
 % Degree
 \coveritem{c}{1}{%
-  \fontfamily{phv}\fontsize{18}{18}\selectfont%
+  \fontseries{mc}\fontsize{12}{12}\selectfont%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\thepresentationtext}}%
 }
 
 % Date
 \coveritem{c}{1}{%
-  \fontfamily{phv}\fontsize{14}{14}\selectfont%
+  \fontseries{mc}\fontsize{12}{12}\selectfont%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{14}{14}\selectfont%
   \textcolor{fcshblue}{%%
     \ifdraftdoc%
       \textbf{DRAFT: \today}%
@@ -173,25 +197,49 @@
 
 % % Title of Dissertation
 \secondcoveritem{c}{1}{%
-  \fontfamily{phv}\fontsize{18}{18}\selectfont%
+  \fontseries{mc}\fontsize{12}{12}\selectfont%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\thecovertitle}}%
 }
 
 % Author name
 \secondcoveritem{c}{1}{%
-  \fontfamily{phv}\fontsize{18}{18}\selectfont%
+  \fontseries{mc}\fontsize{12}{12}\selectfont%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\theauthorname}}%
 }
 
 % Degree
 \secondcoveritem{c}{1}{%
-  \fontfamily{phv}\fontsize{18}{18}\selectfont%
+  \fontseries{mc}\fontsize{12}{12}\selectfont%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\thepresentationtext}}%
 }
 
 % Date
 \secondcoveritem{c}{1}{%
-  \fontfamily{phv}\fontsize{14}{14}\selectfont%
+  \fontseries{mc}\fontsize{12}{12}\selectfont%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{14}{14}\selectfont%
   \textcolor{fcshblue}{%%
     \ifdraftdoc%
       \textbf{DRAFT: \today}%

@@ -56,27 +56,27 @@
 		% \raggedright
 		% \raggedleft
 		\centering
-		\fontfamily{phv}\fontsize{12}{12}\selectfont
+		\fontsize{12}{12}\selectfont
 		\textbf{\theauthorname}
 		\medskip
 
 		% Academic qualifications
-		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\fontsize{9}{9}\selectfont
 		\theauthordegree
 		\vfill
 
 		% Title of Dissertation
-		\fontfamily{phv}\fontsize{12}{12}\selectfont
+		\fontsize{12}{12}\selectfont
 		\textbf{\thetitle}
 		\vfill
 
 		% Degree
-		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\fontsize{9}{9}\selectfont
 		\thepresentationtext
 		\vfill
 
 		% Date
-		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\fontsize{9}{9}\selectfont
 		\textbf{\thentdatemonth, \thentdateyear}	
 		
 		
@@ -116,32 +116,32 @@
 		{
 		\centering
 		\vfill
-		\fontfamily{phv}\fontsize{12}{12}\selectfont
+		\fontsize{12}{12}\selectfont
 		\textbf{\theauthorname}
 		\medskip
 
 		% Academic qualifications
-		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\fontsize{9}{9}\selectfont
 		\theauthordegree
 		\vfill
 
 		% Title of Dissertation
-		\fontfamily{phv}\fontsize{12}{12}\selectfont
+		\fontsize{12}{12}\selectfont
 		\textbf{\thetitle}
 		\vfill
 
 		% Degree
-		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\fontsize{9}{9}\selectfont
 		\thepresentationtext
 		\vfill
 
 		% Date
-		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\fontsize{9}{9}\selectfont
 		\textbf{\thentdatemonth, \thentdateyear}	
 		\vfill
 
 		}
-		\fontfamily{phv}\fontsize{5}{7}\selectfont
+		\fontsize{5}{7}\selectfont
 		\thecopyrightstr
 		
 	\end{minipage}

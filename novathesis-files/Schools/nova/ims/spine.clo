@@ -27,7 +27,21 @@
 	\newlength{\novathesis@spine@box@date@width}%
 	\newlength{\novathesis@spine@box@date@height}%
 	\newcommand{\make@spine@box@date}{%
-	  \savebox{\novathesis@spine@box@date}{\fontfamily{phv}\fontsize{10}{10}\selectfont\thespine[year]}%
+	  \savebox{\novathesis@spine@box@date}{\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{10}{10}\selectfont\thespine[year]}%
 	  \settowidth{\novathesis@spine@box@date@width}{\usebox{\novathesis@spine@box@date}}%
 	  \settoheight{\novathesis@spine@box@date@height}{\usebox{\novathesis@spine@box@date}}%
 	  \ifdim\novathesis@spine@box@date@width < 0.90\novathesis@spinewidth%
@@ -55,7 +69,21 @@
 	\newlength{\novathesis@spine@box@title@height}%
 	\newlength{\novathesis@spine@box@middlewidth}%
 	\newcommand{\make@spine@box@title}{%
-	  \savebox{\novathesis@spine@box@title}{\fontfamily{phv}\fontsize{14}{14}\selectfont\thespine[title]}
+	  \savebox{\novathesis@spine@box@title}{\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{14}{14}\selectfont\thespine[title]}
 	  \settowidth{\novathesis@spine@box@title@width}{\usebox{\novathesis@spine@box@title}}%
 	  \settoheight{\novathesis@spine@box@title@height}{\usebox{\novathesis@spine@box@title}}%
 	%  \ifdim\novathesis@spine@box@title@height <= 0.50\novathesis@spinewidth%
@@ -65,13 +93,41 @@
 	%  \fi%
 	  \ifdim\novathesis@spine@box@title@height > 0.70\novathesis@spinewidth%
 		\savebox{\novathesis@spine@box@title}{%
-		  \parbox{0.70\paperheight}{\fontfamily{phv}\fontsize{14}{14}\selectfont\thespine[title]}%
+		  \parbox{0.70\paperheight}{\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{14}{14}\selectfont\thespine[title]}%
 		}%
 	  \fi%
 	  %
 	  \ifdim\novathesis@spinewidth > 50mm%
 		\savebox{\novathesis@spine@box@title}{%
-		  \rotatebox[origin=c]{-90}{\parbox{50mm}{\fontfamily{phv}\fontsize{14}{14}\selectfont\thespine[title]}}%
+		  \rotatebox[origin=c]{-90}{\parbox{50mm}{\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{14}{14}\selectfont\thespine[title]}}%
 		}%
 	  \fi%
 	  %
@@ -85,7 +141,21 @@
 	\newlength{\novathesis@spine@box@author@width}%
 	\newlength{\novathesis@spine@box@author@height}%
 	\newcommand{\make@spine@box@author}{%
-	  \savebox{\novathesis@spine@box@author}{\fontfamily{phv}\fontsize{10}{10}\selectfont\thespine[author]}
+	  \savebox{\novathesis@spine@box@author}{\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{10}{10}\selectfont\thespine[author]}
 	  \settowidth{\novathesis@spine@box@author@width}{\usebox{\novathesis@spine@box@author}}%
 	  \settoheight{\novathesis@spine@box@author@height}{\usebox{\novathesis@spine@box@author}}%
 	  \ifdim\novathesis@spine@box@author@height > 0.60\novathesis@spinewidth%

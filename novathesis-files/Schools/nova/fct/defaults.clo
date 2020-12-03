@@ -74,15 +74,15 @@
 
 % Set margins for cover pages
 \margin[phd,top]={3.9cm}
-\margin[phd,bottom]={1.6cm}
+\margin[phd,bottom]={1.4cm}
 \margin[phd,left]={5.5cm}
 \margin[phd,right]={2.5cm}
 \margin[phdplan,top]={3.9cm}
-\margin[phdplan,bottom]={1.6cm}
+\margin[phdplan,bottom]={1.4cm}
 \margin[phdplan,left]={5.5cm}
 \margin[phdplan,right]={2.5cm}
 \margin[phdprop,top]={3.9cm}
-\margin[phdprop,bottom]={1.6cm}
+\margin[phdprop,bottom]={1.4cm}
 \margin[phdprop,left]={5.5cm}
 \margin[phdprop,right]={2.5cm}
 \margin[msc,top]={4.0cm}
@@ -119,14 +119,6 @@
 %
 %\frenchspacing
 
-
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    \fontfamily{phv}%
-  \fi
-}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page

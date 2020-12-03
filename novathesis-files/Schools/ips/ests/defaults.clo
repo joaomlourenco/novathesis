@@ -176,7 +176,21 @@
 % Author name and Title
 \coveritem{l}{1}{%
 % Author name
-\fontfamily{phv}
+\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+
 \begin{minipage}[t]{0.37\textwidth}
   \fontsize{16}{16}\selectfont\raggedleft%
   \theauthorname%  
@@ -203,7 +217,21 @@
 
 % Degree
 \coveritem{l}{1}{
-\fontfamily{phv}
+\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+
 \begin{minipage}[t]{0.37\textwidth}
   \ 
 \end{minipage}
@@ -216,7 +244,21 @@
 
 % Advisers
 \coveritem{c}{1}{%
-\fontfamily{phv}
+\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+
 \begin{minipage}[t]{0.37\textwidth}
   \ 
 \end{minipage}
@@ -231,7 +273,21 @@
 
 % Date
 \coveritem{c}{2}{%
-\fontfamily{phv}
+\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+
 \begin{minipage}[t]{0.37\textwidth}
   \ 
 \end{minipage}
@@ -250,7 +306,21 @@
 % Author name and Title
 \secondcoveritem{l}{6.1cm}{%
 % Author name
-\fontfamily{phv}
+\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+
 \begin{minipage}[t]{0.37\textwidth}
   \fontsize{16}{16}\selectfont\raggedleft%
   \theauthorname%
@@ -265,7 +335,21 @@
 
 
 \secondcoveritem{c}{1}{%
-\fontfamily{phv}
+\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+
 \begin{minipage}[t]{0.20\textwidth}
   \ 
 \end{minipage}
@@ -286,7 +370,21 @@
 
 % Date
 \secondcoveritem{c}{1}{%
-\fontfamily{phv}
+\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+
 \begin{minipage}[t]{0.37\textwidth}
   \ 
 \end{minipage}

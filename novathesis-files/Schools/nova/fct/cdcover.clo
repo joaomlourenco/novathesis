@@ -61,27 +61,97 @@
 		% \raggedright
 		% \raggedleft
 		\centering
-		\fontfamily{phv}\fontsize{12}{12}\selectfont
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{12}{12}\selectfont
 		\textbf{\theauthorname}
 		\medskip
 
 		% Academic qualifications
-		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{9}{9}\selectfont
 		\theauthordegree
 		\vfill
 
 		% Title of Dissertation
-		\fontfamily{phv}\fontsize{12}{12}\selectfont
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{12}{12}\selectfont
 		\textbf{\thecovertitle}
 		\vfill
 
 		% Degree
-		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{9}{9}\selectfont
 		\thepresentationtext
 		\vfill
 
 		% Date
-		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{9}{9}\selectfont
 		\textbf{\thentdatemonth, \thentdateyear}	
 		
 		
@@ -131,32 +201,116 @@
 		{
 		\centering
 		\vfill
-		\fontfamily{phv}\fontsize{12}{12}\selectfont
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{12}{12}\selectfont
 		\textbf{\theauthorname}
 		\medskip
 
 		% Academic qualifications
-		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{9}{9}\selectfont
 		\theauthordegree
 		\vfill
 
 		% Title of Dissertation
-		\fontfamily{phv}\fontsize{12}{12}\selectfont
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{12}{12}\selectfont
 		\textbf{\thecovertitle}
 		\vfill
 
 		% Degree
-		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{9}{9}\selectfont
 		\thepresentationtext
 		\vfill
 
 		% Date
-		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{9}{9}\selectfont
 		\textbf{\thentdatemonth, \thentdateyear}	
 		\vfill
 
 		}
-		\fontfamily{phv}\fontsize{5}{7}\selectfont
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{5}{7}\selectfont
 		\thecopyrightstr
 		
 	\end{minipage}
@@ -174,7 +328,13 @@
   \newlength{\novathesis@cd@box@height}
 
 	\savebox{\cdcover@savebox@spineone}{%
-    \fontfamily{phv}\fontsize{9}{9}\selectfont
+    \fontseries{mc}\fontsize{12}{12}\selectfont%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{9}{9}\selectfont
     \makebox[\paperheight][c]{
       \begin{tabular}{l}
         \thespine[year]
@@ -195,7 +355,13 @@
     }%
 
   \savebox{\cdcover@savebox@spinetwo}{%
-    \fontfamily{phv}\fontsize{9}{9}\selectfont
+    \fontseries{mc}\fontsize{12}{12}\selectfont%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{9}{9}\selectfont
     \makebox[\paperheight][c]{
       \begin{tabular}{l}
         \thespine[year]

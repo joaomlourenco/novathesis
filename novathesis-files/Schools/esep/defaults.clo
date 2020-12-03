@@ -25,7 +25,7 @@
 
 % Degree name
 \degreename[pt]={Enfermagem em Saúde Mental e Psiquiatria}
-\degreename[en]={“Degree Name”}
+\degreename[en]={$<$Degree Name$>$}
 
 % Comiittee printing order
 \committeeorder[all]={c,r,m}% 
@@ -101,9 +101,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% NOVA guidelines:
-% The pages should be numbered consecutively at the bottom centre of the
-% page.
+% ESEP guidelines:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \makepagestyle{novathesis@myvf} 
@@ -125,21 +123,22 @@
 
 % ESEP logo
 \coveritem{c}{2.2cm}{%
-  \coverbackground
-  \noindent
-  \fontsize{15}{15}\selectfont
-  \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty[\option{/novathesis/coverlang}]}}
+  \coverbackground%
+  \noindent%
+  \fontsize{15}{15}\selectfont%
+  \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty[\option{/novathesis/coverlang}]}}%
 }
 
 % % Degree name
 \coveritem{c}{0.5cm}{%
   \fontsize{15}{15}\selectfont
-  \thedegreename[\option{/novathesis/coverlang}]]
+  \thedegreename[\option{/novathesis/coverlang}]
 }
 
 % % Title of Dissertation
 \coveritem{c}{6.5cm}{%
   \fontsize{15}{15}\selectfont
+  % \thecovertitle%
   \expandafter\MakeUppercase\expandafter{\thecovertitle}\\[1ex]
   \fontsize{12}{12}\selectfont
   Dissertação
@@ -169,7 +168,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\endinput
 % ESEP logo
 \secondcoveritem{c}{2.2cm}{%
   \coverbackground

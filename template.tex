@@ -40,7 +40,7 @@
 %%------------------------------------------------------------
 %% All class options will be passed to “memoir”.
 %% See “memoir” manual for more options.
-\documentclass[a4paper, 11pt, final]{novathesis}
+\documentclass[a4paper, 11pt]{novathesis}
 
 
 
@@ -56,7 +56,7 @@
 % \ntsetup{docdegree=msc}       % The type od document
 %                               %     [ phd, phdplan, phdprop, msc, mscplan, bsc ]
 
-% \ntsetup{school=nova/fcsh}    % The school id
+% \ntsetup{nova/fcsh}           % The school id
 %                               %     [ nova/fct, nova/fcsh, nova/ims, nova/ensp, 
 %                               %       ul/ist, ul/fc, ipl/isel, ips/ests, esep ]
 
@@ -94,11 +94,9 @@
 %                               %     (*) only for xelatex/lualatex)
 
 % \ntsetup{chapstyle=default}   % The chapter style to be used
-%                               %     [ elegant.clo bianchi.clo bluebox.clo 
-%                               %       default.clo ell.clo hansen.clo
-                                %       ist.clo lyhne.clo madsen.clo pedersen.clo 
-                                %       veelo.clo vz34.clo vz43.clo ]
-                                
+%                               %     [ elegant bianchi bluebox  default ell hansen
+                                %        ist lyhne madsen pedersen veelo vz34 vz43 ]
+
 % \ntsetup{coverlang=en}        % The language for the cover (and second cover) page 
 %                               %     defaults to main document language
 
@@ -108,6 +106,8 @@
 % \ntsetup{aftercover=true}     % Does the document have after cover pages??
 %                               %     after cover pages are printed immediately 
 %                               %     after the cover pages
+
+% \ntsetup{debugcover=true}     % Print a ruller in the cover page
 
 % \ntsetup{spine=true}          % Print a “book spine” at the end of the document
 
@@ -177,7 +177,6 @@
 
 
 
-
 %%============================================================
 %%  DOCUMENT ATTRIBUTES
 %%============================================================
@@ -185,7 +184,6 @@
 %%------------------------------------------------------------
 %% Thesis/Dissertation title (and sub-title)
 \nttitle{A Very Long and Impressive Thesis Title\\with a Forced Line Break}%
-\ntsubtitle{Science is beautiful}
 
 %%------------------------------------------------------------
 % Degree costumization
@@ -202,6 +200,13 @@
 \ntdegreename[pt]{Programa de Doutoramento em Informática} %% For MSc comment here and uncomment above
 \ntdegreename[en]{PhD Program in Computer Science}         %% For MSc comment here and uncomment above
 
+
+%%------------------------------------------------------------
+% Degree costumization
+% If the degree includes a specialization
+\ntspecialization[pt]{Sistemas Distribuídos}
+\ntspecialization[en]{Distributed Systems}
+
 %%------------------------------------------------------------
 % Autor
 % use [f] for female and [m] for male
@@ -210,8 +215,10 @@
 
 %%------------------------------------------------------------
 % Date
-\ntdatemonth{$<$ month $>$}
-\ntdateyear{\the\year}
+% \ntdatemonth{$<$ month $>$}
+% \ntdateyear{\the\year}
+\ntdatemonth{$<$month$>$}
+\ntdateyear{$<$year$>$}
 
 %%------------------------------------------------------------
 % Advisers
@@ -219,6 +226,7 @@
 % use "\\" if necessary to break the lines in the apprpriate place
 \ntaddperson{adviser}[f]{{Mary Doe Adviser Name, Full Professor, NOVA University of Lisbon}}
 % \ntaddperson{adviser}[f]{{Mary Doe other Adviser Name, Full Professor, NOVA University of Lisbon}}
+% \ntaddperson{adviser}[f]{{Mary Doe yet another Adviser Name, Full Professor, NOVA University of Lisbon}}
 
 %%------------------------------------------------------------
 % Co-Advisers
