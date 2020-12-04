@@ -176,7 +176,6 @@
 
 
 
-
 %%============================================================
 %%  DOCUMENT ATTRIBUTES
 %%============================================================
@@ -274,6 +273,7 @@
 % BibTeX bibiography files. Can be used multiple times with a single file nae each time.
 % syntax:  \ntaddfile{bib}{filename.bib}
 \ntaddfile{bib}{bibliography.bib}
+\DeclareLanguageMapping{italian}{italian-apa}%
 
 %%------------------------------------------------------------
 % Dedicatory text. Will only be considered for final documents,
@@ -303,7 +303,7 @@
 % syntax:  \ntaddfile{glossaries}[list-type]{filename}
 \ntaddfile{glossaries}[glossary]{glossary}
 \ntaddfile{glossaries}[acronyms]{acronyms}
-% \ntaddfile{glossaries}[symbols]{symbols}
+\ntaddfile{glossaries}[symbols]{symbols}
 
 %%------------------------------------------------------------
 % Text chapters
@@ -312,6 +312,7 @@
 \ntaddfile{chapter}{chapter2}
 \ntaddfile{chapter}{chapter3}
 % \ntaddfile{chapter}{chapter4}
+% \ntaddfile{chapter}{chapter-last}
 
 %%------------------------------------------------------------
 % Text appendixes and annexes
