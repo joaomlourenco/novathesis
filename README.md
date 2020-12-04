@@ -5,15 +5,11 @@
 
 --------
 
-*If you are here looking for the (deprecated) Word templates (not maintained anymore), please go to [this other repository](https://github.com/joaomlourenco/novathesis_word).*
-
---------
-
 The NOVAthesis LaTeX class is a thesis template initially designed for the PhD and MSc thesis at [FCT-NOVA — NOVA School of Science and Technology](http://www.fct.unl.pt), Portugal, but currently it supports more schools, namely:
 * NOVA University Lisbon
     * [NOVA School for Science and Technology](https://www.fct.unl.pt) (FCT-NOVA)
     * [NOVA Information Management School](https://www.novaims.unl.pt) (NOVA-IMS)
-    * [National School of Public Heath]{https://www.ensp.unl.pt} (ENSP-NOVA)
+    * [National School of Public Heath](https://www.ensp.unl.pt) (ENSP-NOVA)
     * [Faculdade de Ciências Humanas e Sociais](https://www.fcsh.unl.pt) (FCSH-NOVA)
 * University of Lisbon
     * [Instituto Superior Técnico from Universidade de Lisboa](https://tecnico.ulisboa.pt) (IST-UL)
@@ -31,7 +27,7 @@ The template provides an _easy to use_ setting for you to write your thesis/diss
 * Create your thesis/dissertation contents using the files in folder “_Chapters_”
 * Process using you favorite LaTeX processor (pdfLaTeX, XeLaTeX or LuaLaTeX)
 
-*This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/.*
+*This work is licensed under the LATEX Project Public License v1.3c. To view a copy of this license, visit the [LaTeX project public license](https://www.latex-project.org/lppl/lppl-1-3c/).*
 
 ## Donations
 
@@ -40,7 +36,7 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 Thank you to our donnors:
 
 ##### Donors 2020
-João Carvalho, David Romão, DisplayersereStream, Antonio Estevao.
+João Carvalho, David Romão, DisplayersereStream, António Estêvão.
 
 ##### Donnors 2019
 Jorge Barreto, Raissa Almeida.
@@ -57,7 +53,6 @@ Check the [wiki](https://github.com/joaomlourenco/novathesis/wiki) and have some
 
 If you couldn't find what you were looking for, ask for help in:
 
-* the [discussion forum](https://groups.google.com/forum/#!forum/novathesis) at https://groups.google.com/forum/#!forum/novathesis. 
 * the [facebook page](https://www.facebook.com/groups/novathesis/) (PT or EN) at https://www.facebook.com/groups/novathesis.
 * the [google group](https://groups.google.com/forum/#!forum/novathesis) (EN only please) at https://groups.google.com/forum/#!forum/novathesis.
 * You may also give a look at the new [NOVA thesis blog](https://novathesis.blogspot.pt) at https://novathesis.blogspot.pt.
@@ -75,3 +70,7 @@ Please add them to the [wiki](https://github.com/joaomlourenco/novathesis/wiki) 
 These are not official templates for FCT-NOVA or any other School, although we have done our best to make it fully compliant to each School regulations for thesis/dissertation presentation.
 
 All contributors, both sporadic and regular, are welcome. :) Please [contact me](http://docentes.fct.unl.pt/joao-lourenco) to join the team.
+
+--------
+
+*If you are here looking for the (deprecated) Word templates (not maintained anymore), please go to [this other repository](https://github.com/joaomlourenco/novathesis_word).*
