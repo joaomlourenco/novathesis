@@ -513,7 +513,7 @@
     \hypersetup{pdftitle = {\thetitle}}%
     \hypersetup{pdfsubject = {\thepresentationtext}}
   }%
-  \typeout{NT TITLE = [#1][\@thetitle]}
+  % \typeout{NT TITLE = [#1][\@thetitle]}
 }
 
 
@@ -561,7 +561,7 @@
     \optionlistdo{/novathesis/#1//name}{##1\\[1pt]}%
     \end{minipage}\\%
   }%
-  {\typeout{NT option[/novathesis/#1//name] undefined}}%
+  {\ClassWarning{novathesis}{option[/novathesis/#1//name] undefined}}%
 }
 
 \newcommand{\ntprintcommittee}[1][0.75]{%
@@ -849,11 +849,8 @@
 \newcommand*{\option@listmatch}[2]{
   % \typeout{NT LISTMATCH [#1] [#2]}%
   \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%
-  \typeout{K=\option@listmatch@key ~V=\option@listmatch@value}
+  % \typeout{K=\option@listmatch@key ~V=\option@listmatch@value}
   \ifthenelse{\equal{\option@listmatch@key}{#1}}{\listbreak}{}%
-  % \ifthenelse{\equal{\option@listmatch@key}{#1}}%
-    % {\typeout{NT FOUND KEY=\option@listmatch@key VALUE=\option@listmatch@value}\listbreak}%
-    % {\typeout{NT LOOKING KEY=\option@listmatch@key VALUE=\option@listmatch@value}}%
 }%
 \options{/handlers/getval/.new operation = {%
   % \typeout{NT GETVAL [#1] [#2]}%
@@ -868,7 +865,7 @@
 \newcommand{\@loadglossaryfile}[1]{%
   % #1 = {glossary, acronyms, symbols}={filename}
   \ntgetkeyval{#1}{\@nt@key}{\@nt@value}
-  \typeout{NT @loadglossaryfile [\@nt@key][\@nt@value]}
+  % \typeout{NT @loadglossaryfile [\@nt@key][\@nt@value]}
   \IfFileExists{\@nt@value}%
     {\loadglsentries{\@nt@value}}%
     {\ClassWarning{novathesis}{File \option@listmatch@value~doe not exist!}{}}%
@@ -884,12 +881,10 @@
 
 \newcommand{\@ntaddlisthookfilebib}[2]{%
   \letoptionlist{/novathesis/biblatex}\nt@tmp%
-  \typeout{'NT PASSING TO BIBLATEX= '\nt@tmp}%
+  % \typeout{'NT PASSING TO BIBLATEX= '\nt@tmp}%
   \RequirePackage[hyperref=true,\nt@tmp]{biblatex}%
-  \DeclareLanguageMapping{english}{american-apa}%
-  \DeclareLanguageMapping{portuguese}{portuguese-apa}%
   \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
-  \typeout{'NT ADD BIBLATEX RESOURCE= '#2}%
+  % \typeout{'NT ADD BIBLATEX RESOURCE= '#2}%
   \addbibresource{#2}%
 }
 

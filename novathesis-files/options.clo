@@ -46,7 +46,7 @@
   % %novathesis@opt@chapstyle
   , chapstyle/.new choice = {elegant, bianchi, bluebox, default, ell, hansen, ist, lyhne, madsen, pedersen, veelo, vz34, vz43}
   % %novathesis@opt@fontstyle
-  , fontstyle/.new choice = {kpfonts, bookman, libertine, calibri, scholax, kieranhealy}
+  , fontstyle/.new choice = {kpfonts, bookman, erewhon, libertine, scholax, calibri, kieranhealy}
   % %novathesis@opt@otherlistsat
   , otherlistsat/.new choice = {front, back}
   % HANDLER
@@ -122,12 +122,12 @@
 
 \newcommand*{\ntsetup}[1]{%
   \ntgetkeyval{#1}\@nt@opt\@nt@value
-  \typeout{'NT SETUP = '[#1]~/~[\@nt@opt]~/~[\@nt@value]}
+  % \typeout{'NT SETUP = '[#1]~/~[\@nt@opt]~/~[\@nt@value]}
   \csuse{@nt@opt\@nt@opt @prehook}
   \options{/novathesis/\@nt@opt = {\@nt@value}}%
   % \typeout{'NT HANDLER = '/novathesis/handler/\@nt@opt}%
   \option{/novathesis/handler/\@nt@opt}
-  \typeout{NT ->@nt@opt#1hook}
+  % \typeout{NT ->@nt@opt#1hook}
 }
 
 \newcommand*{\@nt@optschool@prehook}{%
@@ -154,7 +154,7 @@
     {\edef\nt@alllangs{\nt@alllangs,main=\option{/novathesis/langshorttolong}}}%
     {\edef\nt@alllangs{\nt@alllangs,\option{/novathesis/langshorttolong}}}%
 }
-\typeout{'NT PASSING TO BABEL = '\nt@alllangs}
+% \typeout{'NT PASSING TO BABEL = '\nt@alllangs}
 \PassOptionsToPackage{\nt@alllangs}{babel}
 
 % --------------------------------------------------------
@@ -170,5 +170,5 @@
 % --------------------------------------------------------
 % Pass the remaining options to memoir
 \letoptionlist{/options/remaining}\nt@remaining
-\typeout{'NT PASSING TO MEMOIR='\nt@remaining}
+% \typeout{'NT PASSING TO MEMOIR='\nt@remaining}
 \PassOptionsToClass{\nt@remaining}{memoir}
