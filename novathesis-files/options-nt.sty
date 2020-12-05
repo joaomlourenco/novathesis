@@ -1113,7 +1113,7 @@
   /handlers/show/list/.new cmd    = \letoptionlist{#1}\opt@list\option@showvalue{\opt@list},
   /handlers/push/.new operation   = \option@push{#1}{#2},
   /handlers/cpush/.new operation   = {%
-          \ifoptiondefined{#1}{}{\optionalso{#1/.new list}}%
+          \expandnextsingle\ifoptiondefined{#1}{}{\expandnextsingle\options{#1/.new list}}%
           \option@push{#1}{#2}%
   },
   % /handlers/remove/.new operation   = \option@remove{#1}{#2},

@@ -127,39 +127,39 @@
 
 
 % Author name
-\coveritem{c}{0cm}{%
+\ntaddtocover[1]{c}{0cm}{%
   \coverbackground
   \fontsize{14}{14}\selectfont
   \textbf{\theauthorname}
 }
 
 % Academic qualifications
-\coveritem{c}{0.25cm}{%
+\ntaddtocover[1]{c}{0.25cm}{%
   \fontsize{11}{11}\selectfont
   \theauthordegree
 }
 
 % % Title of Dissertation
-\coveritem{c}{4.5cm}{%
+\ntaddtocover[1]{c}{4.5cm}{%
   \fontsize{16}{16}\selectfont
   \textbf{\thecovertitle}
 }
 
 % Degree
-\coveritem{c}{1.5cm}{%
+\ntaddtocover[1]{c}{1.5cm}{%
   \fontsize{11}{11}\selectfont
   \thepresentationtext
 }
 
 % Advisers
-\coveritem{c}{2}{%
+\ntaddtocover[1]{c}{2}{%
   \fontsize{12}{12}\selectfont
   \ntprintadvisers
 }
 
 
 % Committee — only print the committee for the main classes
-\coveritem{r}{2}{%
+\ntaddtocover[1]{r}{2}{%
   \ifthenelse{%
     \equal{\option{/novathesis/docdegree}}{bsc}%
     \OR\equal{\option{/novathesis/docdegree}}{msc}%
@@ -170,7 +170,7 @@
 
 
 % Date
-\coveritem{c}{4}{%
+\ntaddtocover[1]{c}{4}{%
   \fontsize{11}{11}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}

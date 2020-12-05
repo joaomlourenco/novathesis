@@ -22,6 +22,9 @@
 \RequirePackage{csquotes}
 \RequirePackage{babel}			% Support for bilingual documents
 
+%%%%% Command multido
+\RequirePackage{multido}
+\newcommand{\Repeat}{\multido{\i=1+1}}
 
 % \RequirePackage{appendix}
 

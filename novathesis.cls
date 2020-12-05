@@ -129,11 +129,8 @@
   %     g = guests
   % #3={m,f}
   % #4={committee member name, position, etc}
-  \ifoptiondefined{/novathesis/#1/#2/name}%
-    {}%
-    {\options{/novathesis/#1/#2/name/.new list}\options{/novathesis/#1/#2/gender/.new list}}
-  \options{/novathesis/#1/#2/gender/.push = {#3}}%
-  \options{/novathesis/#1/#2/name/.push = {#4}}%
+  \options{/novathesis/#1/#2/gender/.cpush = {#3}}%
+  \options{/novathesis/#1/#2/name/.cpush = {#4}}%
 }
 
 \newcommand*{\ntaddfile}[1]{%
@@ -175,9 +172,8 @@
   % #1 = {file, person}
   % #2 = file family (quote, abstract, chapter, etc)
   % #3 = filename OR key=filename
-  \ifoptiondefined{/novathesis/#1/#2}{}{\options{/novathesis/#1/#2/.new list}}%
   % \typeout{NT FILE ADD /novathesis/#1/#1 = #2}%
-  \options{/novathesis/#1/#2/.push = {#3}}%
+  \options{/novathesis/#1/#2/.cpush = {#3}}%
 }
 
 \newcommand{\@ntforalllist}[3]{%
@@ -240,71 +236,32 @@
   }%
 }
 
-\newcommand{\coveritem}[3]{%
-  % \typeout{NT COVER 1 BLOCK}%
-  \listcsadd{novathesis@\option{/novathesis/school}@coveritem@list}{[#1][#2]{#3}}%
+
+\newcommand*{\ntaddtocover}[4][1]{%
+% #1 = cover number {1, 2}    (1 is the default)
+% #2 = position {l, c, r}
+% #3 = distance from previous {length, integer}  (if integer uses proportional spacing)
+% #4 = the code
+  \options{/@nt/\option{/novathesis/school}/cover/#1/element/.cpush = {[#2][#3]{#4}}}
 }
 
-\newcommand{\secondcoveritem}[3]{%
-  % \typeout{NT COVER 2 BLOCK}%
-  \listcsadd{novathesis@\option{/novathesis/school}@secondcoveritem@list}{[#1][#2]{#3}}%
-}
-
-\newcounter{novathesis@myloop}
-\def\novathesis@printcoveritem@i[#1][#2]#3{%
-  \IfInteger{#2}{%IS INTEGER
-    \setcounter{novathesis@myloop}{0}%
-    \whileboolexpr{test{\ifnumless{\value{novathesis@myloop}}{#2}}}{%
-      \stepcounter{novathesis@myloop}%
-      \vfill%
-    }%
-  }{%IS NOT INTEGER
-    \vspace*{#2}%
-  }%
-  \noindent\begin{minipage}[t]{\linewidth}%
-    \ifthenelse{\equal{#1}{l}}{\raggedright}{%
-      \ifthenelse{\equal{#1}{c}}{\centering}{%
-        \ifthenelse{\equal{#1}{r}}{\raggedleft}{%
-        }%
-      }%
-    }%
-    #3%
-  \end{minipage}\par%
-}
-
-\newcommand{\novathesis@printcoveritem}[1]{%
-  \novathesis@printcoveritem@i#1%
-}
-
-\newcommand{\rawprintcoveritems}[1]{%
-  \ifthenelse{\isundefined{#1}}{}{%
-	\forlistcsloop{\novathesis@printcoveritem}{#1}}%
-}
-
-\newcommand{\ntprintcoveritems}{%
-  \rawprintcoveritems{novathesis@\option{/novathesis/school}@coveritem@list}%
-}
-
-\newcommand{\ntprintsecondcoveritems}{%
-  \rawprintcoveritems{novathesis@\option{/novathesis/school}@secondcoveritem@list}%
-}
 
 \newlength{\mpwidth}%
 \newlength{\mpheight}%
 \newsavebox{\novathesis@coverbox}%
 
-\newcommand{\ntprintcoverpage}{%
+\newcommand{\ntprintcovers}{%
   \bgroup%
     \coverprehook%
     % \thispagestyle{empty}%
     \selectthelanguage{\option{/novathesis/coverlang}}%
-    \ntprintthecover%
+    \@nt@printthecover[1]%
     \clearforchapter%
     \ifthenelse{\equal{\option{/novathesis/secondcover}}{true}}%
       {% SECOND COVER TRUE
         \ifcsdef{novathesis@secondcoveritem@list}%
-          {\ntprintthecover[second]}%
-          {\ntprintthecover}%
+          {\@nt@printthecover[2]}%
+          {\@nt@printthecover[1]}%
           \clearforchapter%
       }%
       {}% NO SECOND COVER
@@ -312,8 +269,8 @@
   \egroup%
 }
 
-
-\newcommand{\ntprintthecover}[1][]{%
+\newcommand{\@nt@printthecover}[1][]{%
+  % #1 = cover number {1, 2}    (1 is the default)
   \iftoggle{/novathesis/debugcover}%
     {\thispagestyle{measurestyle}}%
     {\thispagestyle{empty}}
@@ -327,7 +284,7 @@
       -\themargin[\option{/novathesis/docdegree},bottom]}%
   \sbox{\novathesis@coverbox}{%
     \parbox[t][\mpheight][t]{\mpwidth}{%
-      \@nameuse{ntprint#1coveritems}%
+      \@nt@printcovergroup[#1]%
     }%
   }%
   \AddToShipoutPictureFG*{%
@@ -339,10 +296,35 @@
     }%
   }%
   ~% This space is important here so that the cover page is not empty anymore!
-  \csuse{@the#1coverbackpage}%
+  \csuse{@thecover#1backpage}%
 }
 
-\newcommand{\@thecoverbackpage}{%
+\newcommand*{\@nt@printcovergroup}[1][1]{%
+  % #1 = cover number {1, 2}    (1 is the default)
+  \optionlistdo{/@nt/\option{/novathesis/school}/cover/#1/element}{%
+    \@nt@printcoverelement@iii##1%
+  }%
+}
+
+\def\@nt@printcoverelement@iii[#1][#2]#3{%
+  % #1 = position {l, c, r}
+  % #2 = distance from previous {length, integer}  (if integer uses proportional spacing)
+  % #3 = the code
+  \typeout{NT novathesis@printcoveritem [#1] [#2]}
+  \IfInteger{#2}{%IS INTEGER
+    \Repeat{#2}{\vfill}
+  }{%IS NOT INTEGER
+    \vspace*{#2}%
+  }%
+  \noindent\begin{minipage}[t]{\linewidth}%
+    \if#1l\relax\raggedright\fi%
+    \if#1c\relax\centering\fi%
+    \if#1r\relax\raggedleft\fi%
+    #3%
+  \end{minipage}\par%
+}
+
+\csdef{@thecover1backpage}{%
   \newpage%
   \thispagestyle{empty}%
   \null\vfill%
@@ -361,7 +343,7 @@
   \ifexists{thesiscover}[\option{/novathesis/docdegree},back]{%
     \clearforchapter%
     \thispagestyle{empty}%
-    ~
+    ~%
     \clearpage%
     \thispagestyle{empty}%
     \coverbackground[\@nameuse{thesiscover\option{/novathesis/docdegree},back}]%
@@ -371,10 +353,10 @@
   }%
 }
 
-\newcommand{\novathesis@aftercover@file}{}
-\newcommand{\ntaftercoverfile}[1]{%
-  \renewcommand{\novathesis@aftercover@file}{#1}%
-}
+% \newcommand{\novathesis@aftercover@file}{}
+% \newcommand{\ntaftercoverfile}[1]{%
+%   \renewcommand{\novathesis@aftercover@file}{#1}%
+% }
 
 \newcommand{\ntprintaftercover}{%
   \ifthenelse{\equal{\option{/novathesis/aftercover}}{true}}%
@@ -824,20 +806,19 @@
 
 
 \newcommand{\ntaddindex}[1]{%
-  \ifoptiondefined{/novathesis/list/indexes}{}{\options{/novathesis/list/indexes/.new list}}  %
-  \ifthenelse{\equal{#1}{tableofcontents}}{\options{/novathesis/list/indexes/.push = {%
+  \ifthenelse{\equal{#1}{tableofcontents}}{\options{/novathesis/list/indexes/.cpush = {%
         \clearforchapter\tableofcontents*%
   }}}{}%
-  \ifthenelse{\equal{#1}{listoffigures}}{\options{/novathesis/list/indexes/.push = {%
+  \ifthenelse{\equal{#1}{listoffigures}}{\options{/novathesis/list/indexes/.cpush = {%
         \clearforchapter\listoffigures%
   }}}{}%
-  \ifthenelse{\equal{#1}{listoftables}}{\options{/novathesis/list/indexes/.push = {%
+  \ifthenelse{\equal{#1}{listoftables}}{\options{/novathesis/list/indexes/.cpush = {%
         \clearforchapter\listoftables%
   }}}{}%
-  \ifthenelse{\equal{#1}{listoflistings}}{\options{/novathesis/list/indexes/.push = {%
+  \ifthenelse{\equal{#1}{listoflistings}}{\options{/novathesis/list/indexes/.cpush = {%
         \clearforchapter\lstlistoflistings%
   }}}{}%
-  \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/novathesis/list/indexes/.push = {%
+  \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/novathesis/list/indexes/.cpush = {%
           \printnoidxglossaries\clearforchapter%
   }}}{}%
 }
