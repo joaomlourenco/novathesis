@@ -46,7 +46,7 @@
   % %novathesis@opt@chapstyle
   , chapstyle/.new choice = {elegant, bianchi, bluebox, default, ell, hansen, ist, lyhne, madsen, pedersen, veelo, vz34, vz43}
   % %novathesis@opt@fontstyle
-  , fontstyle/.new choice = {kpfonts, bookman, libertine, calibri}
+  , fontstyle/.new choice = {kpfonts, bookman, libertine, calibri, scholax, kieranhealy}
   % %novathesis@opt@otherlistsat
   , otherlistsat/.new choice = {front, back}
   % HANDLER
@@ -63,9 +63,9 @@
   , secondcover/.new toggle = false
   % %novathesis@opt@aftercover
   , aftercover/.new toggle = false
+  , urlstyle/.new cmd = {\edef\@nt@urlstyle{#1}\AfterPreamble{\urlstyle{\@nt@urlstyle}}}
   , debugcover/.new toggle = false
-  % %novathesis@opt@spine
-  , spine/.new cmd = {%
+  , spine/.new cmd* = {%
       \AtEndDocument{%
         \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/spine.clo}%
           {}%
@@ -74,7 +74,7 @@
       }%
   }
   % %novathesis@opt@cdcover
-  , cdcover/.new cmd = {%
+  , cdcover/.new cmd* = {%
       \AtEndDocument{%
       \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/cdcover.clo}%
         {}%
@@ -167,6 +167,8 @@
 
 
 
+% --------------------------------------------------------
+% Pass the remaining options to memoir
 \letoptionlist{/options/remaining}\nt@remaining
 \typeout{'NT PASSING TO MEMOIR='\nt@remaining}
 \PassOptionsToClass{\nt@remaining}{memoir}

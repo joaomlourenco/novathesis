@@ -7,9 +7,9 @@
 
 \typeout{NT LOADING FILE kpfonts.clo}
 
-\ifxetexorluatex
-  \RequirePackage{kpfonts-otf}
-\else
-  \RequirePackage{kpfonts}
-  \RequirePackage[cal=boondoxo]{mathalfa} % mathcal
-\fi
+\ifxeorlua{%
+  \RequirePackage{kpfonts-otf}%
+}{%
+  \RequirePackage{kpfonts}%
+  \RequirePackage[cal=boondoxo]{mathalfa}% mathcal
+}

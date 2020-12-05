@@ -348,7 +348,7 @@
   \null\vfill%
   {\scriptsize%
       \begin{Spacing}{1}%
-        \ifxeorlua{setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+        \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
         \fontsize{6.3}{6.3}\selectfont% 
         \noindent%
         \hypersetup{allcolors=white}\textcolor{white}%
@@ -1015,7 +1015,6 @@
 \InputIfFileExists{novathesis-files/ChapStyles/\option{/novathesis/chapstyle}.clo}{}{}%
 \InputIfFileExists{novathesis-files/FontStyles/\option{/novathesis/fontstyle}.clo}{}{}%
 }
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

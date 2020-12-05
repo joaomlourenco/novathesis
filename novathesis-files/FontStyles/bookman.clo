@@ -7,8 +7,8 @@
 
 \typeout{NT LOADING FILE bookman.clo}
 
-\ifxetexorluatex
-  \setmainfont{TeX Gyre Bonum}
-\else
-  \RequirePackage{bookman}
-\fi
+\ifxeorlua{%
+  \setmainfont{TeX Gyre Bonum}%
+}{%
+  \RequirePackage{bookman}%
+}
