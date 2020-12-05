@@ -1,7 +1,7 @@
 ![NOVAthesis logo](novathesis-files/Images/novathesis_cover_image.jpg)
 
 # NOVAthesis LaTeX template
-%% Version 2020-12-04 [5.1.6]
+%% Version 2020-12-05 [5.1.7]
 
 --------
 
