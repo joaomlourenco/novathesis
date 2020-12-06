@@ -1,9 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% defaults.clo
+%% nova/ims/defaults.clo
 %% NOVA thesis configuration file
 %%
 %% Costumization for NOVA-IMS (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE nova/ims/defaults.clo}
 
 % Univesity
 \university[pt]={Universidade NOVA de Lisboa}
@@ -189,78 +191,45 @@ of the requirements for the degree of %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcover
 
   % PHD PROGRAM
 \newcommand{\novaimscoverphd}{%
-  \coveritem{l}{0cm}{%
-    \coverbackground
+  \ntaddtocover{1,2}{l}{0cm}{%
+    \ntcoverbackground%
   }
   % INFORMATION MANAGEMENT
-  \coveritem{l}{0cm}{%
-    \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{16}{16}\selectfont
-    \textcolor{imsdarkgrey}{\textbf{\themajorfield[\option{/novathesis/coverlang}]}}
+  \ntaddtocover{1,2}{l}{0cm}{%
+    \fontsize{16}{16}\selectfont%
+    \textcolor{imsdarkgrey}{\textbf{\themajorfield[\option{/novathesis/coverlang}]}}%
   }
   % SPECIALIZATION IN
-  \coveritem{l}{0,7cm}{%
-    \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{16}{16}\selectfont
-    \textcolor{imsmidgrey}{\textbf{\thespecializationstr[\option{/novathesis/coverlang}] \thespecialization[\option{/novathesis/coverlang}]}}
+  \ntaddtocover{1,2}{l}{0,7cm}{%
+    \fontsize{16}{16}\selectfont
+    \textcolor{imsmidgrey}{%
+      \textbf{\thespecializationstr[\option{/novathesis/coverlang}]
+      \thespecialization[\option{/novathesis/coverlang}]}%
+    }%
   }
   % DISSERTATION TITLE
-  \coveritem{l}{1.8cm}{%
-    \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{16}{16}\selectfont
-    \textcolor{imsdarkgrey}{\textbf{\thecovertitle}}
+  \ntaddtocover{1,2}{l}{1.8cm}{%
+    \fontsize{16}{16}\selectfont%
+    \textcolor{imsdarkgrey}{\textbf{\thecovertitle}}%
   }
   % AUTHOR NAME
-  \coveritem{l}{0.4cm}{%
-    \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{14}{14}\selectfont
-    \textcolor{imsdarkgrey}{\textbf{\theauthorname}}
+  \ntaddtocover{1,2}{l}{0.4cm}{%
+    \fontsize{14}{14}\selectfont%
+    \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
   }
   % DISSERTATION TEXT
-  \coveritem{l}{5}{%
-    \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{14}{14}\selectfont
-    \textcolor{imsdarkgrey}%
-          {\thedissertationstr[\option{/novathesis/docdegree},\option{/novathesis/coverlang}]}
-  }
+  \ntaddtocover{1,2}{l}{5}{%
+    \fontsize{14}{14}\selectfont%
+    \textcolor{imsdarkgrey}{%
+      \thedissertationstr[\option{/novathesis/docdegree},\option{/novathesis/coverlang}]%
+    }%
+  }%
   % DATE
-  \coveritem{l}{1cm}{%
-    \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{11}{11}\selectfont%
+  \ntaddtocover{1,2}{l}{1cm}{%
+    \fontsize{11}{11}\selectfont%
     \textcolor{imsdarkgrey}{\textbf{%
       \ifdraftdoc%
         DRAFT: \today%
@@ -270,109 +239,55 @@ of the requirements for the degree of %
     }}%
   }
   % SCHOOL
-  \coveritem{l}{1cm}{%
-    \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{11}{11}\selectfont
-    \textcolor{imsdarkgrey}%
-          {\textbf{\thefaculty[en]}}
+  \ntaddtocover{1,2}{l}{1cm}{%
+    \fontsize{11}{11}\selectfont%
+    \textcolor{imsdarkgrey}{\textbf{\thefaculty[en]}}%
   }
   % UNIVERSITY
-  \coveritem{l}{0.0cm}{%
-    \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{11}{11}\selectfont
-    \textcolor{imsdarkgrey}%
-          {\theuniversity[\option{/novathesis/coverlang}]}
+  \ntaddtocover{1,2}{l}{0.0cm}{%
+    \fontsize{11}{11}\selectfont%
+    \textcolor{imsdarkgrey}{\theuniversity[\option{/novathesis/coverlang}]}%
   }
 }
+
 
   % MSc PROGRAM
 \newcommand{\novaimscovermsc}{%
   % % Title of Dissertation
-  \coveritem{l}{0cm}{%
-    \coverbackground
+  \ntaddtocover{1,2}{l}{0cm}{%
+    \ntcoverbackground%
   }
 
   % % Title of Dissertation
-  \coveritem{l}{1}{%
-    \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{17}{17}\selectfont
-    \textcolor{imsdarkgrey}{\textbf{\thecovertitle}}\\[0.25ex]
-    \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{16}{16}\selectfont
-    \textcolor{imslightgrey}{\thespecialization[\option{/novathesis/coverlang}]}
+  \ntaddtocover{1,2}{l}{1}{%
+    \fontsize{17}{17}\selectfont%
+    \textcolor{imsdarkgrey}{\textbf{\thecovertitle}}\\[0.25ex]%
+    \fontsize{16}{16}\selectfont%
+    \textcolor{imslightgrey}{\thespecialization[\option{/novathesis/coverlang}]}%
   }
 
   % Author name
-  \coveritem{l}{1}{%
-    \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{15}{15}\selectfont
-    \textcolor{imsdarkgrey}{\textbf{\theauthorname}}
+  \ntaddtocover{1,2}{l}{1}{%
+    \fontsize{15}{15}\selectfont%
+    \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
   }
 
   % Degree
-  \coveritem{l}{1}{%
-    \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{14}{14}\selectfont
-    \textcolor{imsdarkgrey}{\thepresentationtext}
+  \ntaddtocover{1,2}{l}{1}{%
+    \fontsize{14}{14}\selectfont%
+    \textcolor{imsdarkgrey}{\thepresentationtext}%
   }
 
   % Date
-  \coveritem{c}{1}{%
+  \ntaddtocover{1,2}{c}{1}{%
     ~
-    % \fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
+    % \fontsize{11}{11}\selectfont%
+    % \ifdraftdoc%
+    %   \textbf{DRAFT: \today}%
+    % \else%
+    %   \textbf{\thentdatemonth, \thentdateyear}%
+    % \fi%
+  }%
 }
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{11}{11}\selectfont
-    % \ifdraftdoc
-    %   \textbf{DRAFT: \today}
-    % \else
-    %   \textbf{\thentdatemonth, \thentdateyear}
-    % \fi
-  }
-}
-
-
-\ifthenelse{\equal{\option{/novathesis/docdegree}}{phd}}%
-{\novaimscoverphd}
-\novaimscovermsc{}
+\ifphddoc{\novaimscoverphd}{\novaimscovermsc}

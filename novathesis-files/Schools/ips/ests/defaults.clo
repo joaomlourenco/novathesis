@@ -166,235 +166,114 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcover
 
 % LOGO
-\coveritem{c}{0cm}{%
-  \includegraphics[width=6cm]{ESTS-JPG}%
+\ntaddtocover[4.6cm]{1}{c}{4cm}{%
+  \includegraphics[height=4.6cm]{ESTS-JPG}%
+}
+
+\ntaddtocover[4.6cm]{2}{c}{4cm}{%
+  \null~%
 }
 
 % Author name and Title
-\coveritem{l}{1}{%
-% Author name
-\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-
-\begin{minipage}[t]{0.37\textwidth}
-  \fontsize{16}{16}\selectfont\raggedleft%
-  \theauthorname%  
-\end{minipage}
-\hspace{0.65cm}
-% Title of Dissertation
-\begin{minipage}[t]{0.55\textwidth}
-  \fontsize{16}{16}\selectfont\raggedright%
-  \textbf{\thecovertitle}%
-\end{minipage}
+\ntaddtocover{1,2}{l}{5cm}{%
+  % Author name
+  \begin{minipage}[t]{0.37\textwidth}%
+    \fontsize{16}{16}\selectfont\raggedleft%
+    \theauthorname%  
+  \end{minipage}%
+  \hspace{0.65cm}%
+  % Title of Dissertation
+  \begin{minipage}[t]{0.55\textwidth}%
+    \fontsize{16}{16}\selectfont\raggedright%
+    \textbf{\thecovertitle}%
+  \end{minipage}%
 }
 
 % Photo
-\coveritem{l}{1}{
-\begin{minipage}[t]{0.37\textwidth}
-  \ 
-\end{minipage}
-\hspace{0.65cm}
-\begin{minipage}[t]{0.55\textwidth}
-	\includegraphics[height=5.3cm]{\thefrontpageimage[]}
-\end{minipage}
+\ntaddtocover[5.3cm]{1}{l}{1}{%
+  \begin{minipage}[t]{0.37\textwidth}%
+    ~%
+  \end{minipage}%
+  \hspace{0.65cm}%
+  \begin{minipage}[t]{0.55\textwidth}%
+  	\includegraphics[height=5.3cm]{\thefrontpageimage[]}%
+  \end{minipage}%
 }
-
 
 % Degree
-\coveritem{l}{1}{
-\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-
-\begin{minipage}[t]{0.37\textwidth}
-  \ 
-\end{minipage}
-\hspace{0.65cm}
-\begin{minipage}[t]{0.55\textwidth}
-  \fontsize{12}{12}\selectfont%
-  \thepresentationtext%
-\end{minipage}
+\ntaddtocover{1}{l}{1}{%
+  \begin{minipage}[t]{0.37\textwidth}%
+    ~%
+  \end{minipage}%
+  \hspace{0.65cm}%
+  \begin{minipage}[t]{0.55\textwidth}%
+    \fontsize{12}{12}\selectfont%
+    \thepresentationtext%
+  \end{minipage}%
 }
 
 % Advisers
-\coveritem{c}{1}{%
-\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-
-\begin{minipage}[t]{0.37\textwidth}
-  \ 
-\end{minipage}
-\hspace{0.65cm}
-\begin{minipage}[t]{0.55\textwidth}
-  \adviserstrfont[\option{/novathesis/coverlang}]={\bfseries}%
-  \coadviserstrfont[\option{/novathesis/coverlang}]={\bfseries}%
-  \fontsize{11}{11}\selectfont%
-  \ntprintadvisers%
-\end{minipage}
+\ntaddtocover{1}{c}{1}{%
+  \begin{minipage}[t]{0.37\textwidth}%
+    ~%
+  \end{minipage}%
+  \hspace{0.65cm}%
+  \begin{minipage}[t]{0.55\textwidth}%
+    \adviserstrfont[\option{/novathesis/coverlang}]={\bfseries}%
+    \coadviserstrfont[\option{/novathesis/coverlang}]={\bfseries}%
+    \fontsize{11}{11}\selectfont%
+    \ntprintadvisers%
+  \end{minipage}%
 }
 
 % Date
-\coveritem{c}{2}{%
-\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
+\ntaddtocover{1}{c}{2}{%
+  \begin{minipage}[t]{0.37\textwidth}%
+    ~%
+  \end{minipage}%
+  \hspace{0.65cm}%
+  \begin{minipage}[t]{0.55\textwidth}%
+    \fontsize{10}{10}\selectfont%
+    \ifdraftdoc%
+      \textbf{DRAFT: \today}%
+    \else%
+      \textbf{\thentdatemonth, \thentdateyear}%
+    \fi%
+  \end{minipage}%
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
 
-\begin{minipage}[t]{0.37\textwidth}
-  \ 
-\end{minipage}
-\hspace{0.65cm}
-\begin{minipage}[t]{0.55\textwidth}
-  \fontsize{10}{10}\selectfont%
-  \ifdraftdoc%
-    \textbf{DRAFT: \today}%
-  \else%
-    \textbf{\thentdatemonth, \thentdateyear}%
-  \fi%
-\end{minipage}
-}
-
-% Committee — only print the committee for the main classes
-% Author name and Title
-\secondcoveritem{l}{6.1cm}{%
-% Author name
-\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-
-\begin{minipage}[t]{0.37\textwidth}
-  \fontsize{16}{16}\selectfont\raggedleft%
-  \theauthorname%
-\end{minipage}
-\hspace{0.65cm}
-% Title of Dissertation
-\begin{minipage}[t]{0.55\textwidth}
-  \fontsize{16}{16}\selectfont\raggedright%
-  \textbf{\thecovertitle}%
-\end{minipage}
-}
-
-
-\secondcoveritem{c}{1}{%
-\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-
-\begin{minipage}[t]{0.20\textwidth}
-  \ 
-\end{minipage}
-% \hspace{0.65cm}
-\begin{minipage}[t]{0.75\textwidth}
-  \ifthenelse{%
-    \equal{\option{/novathesis/docdegree}}{bsc}%
-    \OR\equal{\option{/novathesis/docdegree}}{msc}%
-    \OR\equal{\option{/novathesis/docdegree}}{phd}}%
-  {\committeetitlestrfont[\option{/novathesis/coverlang}]={\fontsize{14}{14}\selectfont\bfseries}%
-    \committeememberstrfont[\option{/novathesis/coverlang}]={\bfseries}%
-    \fontsize{12}{12}\selectfont\ntprintcommittee[1]%
-  }%
-  {}%
-\end{minipage}
+\ntaddtocover{2}{c}{1}{%
+  \begin{minipage}[t]{0.20\textwidth}%
+    ~%
+  \end{minipage}%
+  % \hspace{0.65cm}%
+  \begin{minipage}[t]{0.75\textwidth}%
+    \ifmaindoc{%
+      \committeetitlestrfont[\option{/novathesis/coverlang}]={\fontsize{14}{14}\selectfont\bfseries}%
+      \committeememberstrfont[\option{/novathesis/coverlang}]={\bfseries}%
+      \fontsize{12}{12}\selectfont\ntprintcommittee[1]%
+    }%
+    {}%
+  \end{minipage}%
 }
 
 
 % Date
-\secondcoveritem{c}{1}{%
-\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-
-\begin{minipage}[t]{0.37\textwidth}
-  \ 
-\end{minipage}
-\hspace{0.65cm}
-\begin{minipage}[t]{0.55\textwidth}
-  \fontsize{10}{10}\selectfont%
-  \ifdraftdoc%
-    \textbf{DRAFT: \today}%
-  \else%
-    \textbf{\thentdatemonth, \thentdateyear}%
-  \fi%
-\end{minipage}
+\ntaddtocover{1,2}{c}{1}{%
+  \begin{minipage}[t]{0.37\textwidth}%
+    ~%
+  \end{minipage}%
+  \hspace{0.65cm}%
+  \begin{minipage}[t]{0.55\textwidth}%
+    \fontsize{10}{10}\selectfont%
+    \ifdraftdoc%
+      \textbf{DRAFT: \today}%
+    \else%
+      \textbf{\thentdatemonth, \thentdateyear}%
+    \fi%
+  \end{minipage}%
 }

@@ -1,9 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% defaults.clo
+%% ul/fc/defaults.clo
 %% NOVA thesis configuration file
 %%
 %% Costumization for FC-UL (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE ul/fc/defaults.clo}
 
 % Univesity
 \university[pt]={Universidade de Lisboa}
@@ -164,12 +166,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcover
 
 % Temporary macro to use in conditional expressions;
 
 % School
-\coveritem{c}{0.5cm}{%
+\ntaddtocover{1,2}{c}{0.5cm}{%
   \fontseries{mc}\fontsize{12}{12}\selectfont%
   \MakeUppercase{\theuniversity[\option{/novathesis/coverlang}]}\\%
   \vspace{2mm}%
@@ -177,30 +178,30 @@
   \ifthenelse{%
  		\equal{\option{/novathesis/docdegree}}{msc}%
   	\OR\equal{\option{/novathesis/docdegree}}{mscplan}%
- 	}
- 	{
+ 	}{% THEN
 	 	\vspace{2mm}%
 	 	\MakeUppercase{\thedepartment[\option{/novathesis/coverlang}]}%
- 	}{}
-  \vspace{20mm}
+ 	}{% ELSE
+  }%
+  \vspace{20mm}%
 } 
 
 % Logo
-\coveritem{c}{0cm}{%
+\ntaddtocover{1,2}{c}{0cm}{%
 	\ifthenelse{%
-	  \equal{\option{/novathesis/docdegree}}{phd}%
-	  \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
-	  \OR\equal{\option{/novathesis/docdegree}}{phdplan}}%
-	{ \includegraphics[height=4.99cm]{logoFCUL} }
-	{ \includegraphics[width=7cm]{logoFCUL2} }
-  \vspace{20mm}
+        \equal{\option{/novathesis/docdegree}}{phd}%
+        \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
+        \OR\equal{\option{/novathesis/docdegree}}{phdplan}}%
+    {\includegraphics[height=4.99cm]{logoFCUL}}%
+    {\includegraphics[width=7cm]{logoFCUL2}}%
+  \vspace{20mm}%
 }
 
 % % Title of Dissertation
-\coveritem{c}{1}{%
+\ntaddtocover{1,2}{c}{1}{%
   \fontseries{mc}\fontsize{17}{17}\selectfont%
   \textbf{\thecovertitle}%
-  \vspace{20mm}
+  \vspace{20mm}%
 }
 
 % Degree
@@ -210,7 +211,7 @@
   \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
   \OR\equal{\option{/novathesis/docdegree}}{phdplan}}%
 {
-	\coveritem{c}{1}{%
+	\ntaddtocover{1,2}{c}{1}{%
 	  \fontseries{mc}\fontsize{13}{13}\selectfont%
 		\textbf{\theauthordegree}\\%
 		\ifthenelse{%
@@ -220,14 +221,14 @@
  		{}
 		\vspace{20mm}%
 	}%
-}
+}%
 {}
 
 % Author name
-\coveritem{c}{1}{%
+\ntaddtocover{1,2}{c}{1}{%
   \fontseries{mc}\fontsize{15}{15}\selectfont%
   \theauthorname%
-  \vspace{10mm}
+  \vspace{10mm}%
 }
 
 % Degree
@@ -236,22 +237,22 @@
   \equal{\option{/novathesis/docdegree}}{msc}%
   \OR\equal{\option{/novathesis/docdegree}}{mscplan}}%
 {
-	\coveritem{c}{1}{%
+	\ntaddtocover{1,2}{c}{1}{%
 	  \fontseries{mc}\fontsize{13}{13}\selectfont%
 		\textbf{\theauthordegree\\}
 		\ifthenelse{%
 	 		\NOT\equal{\thespecialization[\option{/novathesis/coverlang}]}{}%
- 		}
- 		{\thespecialization[\option{/novathesis/coverlang}]}
- 		{}
-		\vspace{10mm}%
-	}
-}	
+ 		}%
+ 		  {\thespecialization[\option{/novathesis/coverlang}]}%
+ 		  {}%
+		\vspace{10mm}%%
+	}%
+}%
 {}
 
 % Advisers
-\coveritem{c}{1}{%
-  \fontsize{13}{13}\selectfont
+\ntaddtocover{1,2}{c}{1}{%
+  \fontsize{13}{13}\selectfont%
   \theadviserslabel[\option{/novathesis/coverlang}]\\%
   \vspace{5mm}%
   \ntprintadvisersaslist%
@@ -260,35 +261,23 @@
 
 
 % Committee — only print the committee for the main classes
-\coveritem{c}{1}{%
-  \ifthenelse{%
-  \equal{\option{/novathesis/docdegree}}{bsc}%
-  \OR\equal{\option{/novathesis/docdegree}}{msc}%
-  \OR\equal{\option{/novathesis/docdegree}}{phd}}%
-  {  
-  	\fontseries{mc}\fontsize{10}{10}\selectfont%
+\ntaddtocover{1,2}{c}{1}{%
 		\ntprintcommittee%
-	}%
-  {}%
 }
 
 % Document purpose
 % Only if it is a phd doc;
-\ifthenelse{%
-  \equal{\option{/novathesis/docdegree}}{phd}%
-  \OR\equal{\option{/novathesis/docdegree}}{phdplan}%
-  \OR\equal{\option{/novathesis/docdegree}}{phdprop}}%
-{
-	\coveritem{c}{1}{%
+\ifmaindoc{%
+	\ntaddtocover{1,2}{c}{1}{%
 	  \fontseries{mc}\fontsize{12}{12}\selectfont%
 		\thepresentationtext%
 	}%
-}
+}%
 {}
 
 
 % Date
-\coveritem{c}{1}{%
+\ntaddtocover{1,2}{c}{1}{%
 	\vspace{5mm}%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
   \ifdraftdoc%

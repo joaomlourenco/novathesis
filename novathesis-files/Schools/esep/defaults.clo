@@ -1,9 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% defaults.clo
+%% esep/defaults.clo
 %% NOVA thesis configuration file
 %%
 %% Costumization for ESEP/ESENF (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE esep/defaults.clo}
 
 %%% RGB = 41, 141, 187
 
@@ -119,24 +121,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcover
 
 % ESEP logo
-\coveritem{c}{2.2cm}{%
-  \coverbackground%
+\ntaddtocover{1}{c}{2.2cm}{%
+  \ntcoverbackground%
   \noindent%
   \fontsize{15}{15}\selectfont%
   \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty[\option{/novathesis/coverlang}]}}%
 }
 
 % % Degree name
-\coveritem{c}{0.5cm}{%
+\ntaddtocover{1}{c}{0.5cm}{%
   \fontsize{15}{15}\selectfont
   \thedegreename[\option{/novathesis/coverlang}]
 }
 
 % % Title of Dissertation
-\coveritem{c}{6.5cm}{%
+\ntaddtocover{1}{c}{6.5cm}{%
   \fontsize{15}{15}\selectfont
   % \thecovertitle%
   \expandafter\MakeUppercase\expandafter{\thecovertitle}\\[1ex]
@@ -145,13 +146,13 @@
 }
 
 % Author name
-\coveritem{c}{3}{%
+\ntaddtocover{1}{c}{3}{%
   \fontsize{12}{12}\selectfont
   \textbf{\theauthorname}
 }
 
 % Date
-\coveritem{c}{1}{%
+\ntaddtocover{1}{c}{1}{%
   \fontsize{12}{12}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
@@ -161,29 +162,29 @@
 }
 
 % % Final space
-\coveritem{c}{1cm}{%
+\ntaddtocover{1}{c}{1cm}{%
   ~
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
+%% Draw the second cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\endinput
+
 % ESEP logo
-\secondcoveritem{c}{2.2cm}{%
-  \coverbackground
+\ntaddtocover{2}{c}{2.2cm}{%
+  \ntcoverbackground
   \fontsize{15}{15}\selectfont
   \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty[\option{/novathesis/coverlang}]}}
 }
 
 % % Degree name
-\secondcoveritem{c}{0.5cm}{%
+\ntaddtocover{2}{c}{0.5cm}{%
   \fontsize{15}{15}\selectfont
   \thedegreename[\option{/novathesis/coverlang}]]
 }
 
 % % Title of Dissertation
-\secondcoveritem{c}{6.5cm}{%
+\ntaddtocover{2}{c}{6.5cm}{%
   \fontsize{15}{15}\selectfont
   \expandafter\MakeUppercase\expandafter{\thecovertitle}\\[1ex]
   \fontsize{12}{12}\selectfont
@@ -191,20 +192,20 @@
 }
 
 % Advisers
-\secondcoveritem{c}{1}{%
+\ntaddtocover{2}{c}{1}{%
   \fontsize{11}{11}\selectfont
   \parbox{0.80\textwidth}%
   {\ntprintadvisers}
 }
 
 % Author name
-\secondcoveritem{c}{1}{%
+\ntaddtocover{2}{c}{1}{%
   \fontsize{12}{12}\selectfont
   \textbf{\theauthorname}
 }
 
 % Date
-\secondcoveritem{c}{1}{%
+\ntaddtocover{2}{c}{1}{%
   \fontsize{12}{12}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
@@ -214,7 +215,7 @@
 }
 
 % % Final space
-\secondcoveritem{c}{1cm}{%
+\ntaddtocover{2}{c}{1cm}{%
   ~
 }
 

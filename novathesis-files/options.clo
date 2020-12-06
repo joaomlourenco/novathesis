@@ -40,7 +40,7 @@
         \option{/novathesis/langshorttolong}%
   }
   % %novathesis@opt@docdegree
-  , docdegree/.new choice = {phd, phdplan, phdprop, msc, mscplan, bsc},
+  , docdegree/.new choice = {phd, phdprop, phdplan, msc, mscplan, bsc},
   % %novathesis@opt@school
   , school/.new choice = {{nova/fct}, {nova/fcsh}, {nova/ims}, {nova/ensp}, {ul/ist}, {ul/fc}, {ipl/isel}, {ips/ests}, {esep}}
   % %novathesis@opt@chapstyle
@@ -91,11 +91,16 @@
   , media/.new choice = {screen, paper}
   %novathesis@opt@linkscolor
   , linkscolor/.new cmd = {\@ifpackageloaded{hyperref}{\hypersetup{allcolors=#1}}{\PassOptionsToPackage{allcolors=#1}{hyperref}}}
-  , biblatex loaded/.new toggle
   , handler/school/.new cmd = {%
-    % \typeout{NT HANDLER SCHOOL ROUTINE #1}
-    \prependtographicspath{{novathesis-files/Schools/#1/Images/}}
-    \InputIfFileExists{novathesis-files/Schools/#1/defaults.clo}{}{\PackageWarining{novathesis}{Missing defaults for #1}}
+    \typeout{NT HANDLER SCHOOL ROUTINE [#1]}
+    \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/element}%
+      {}% it as a reload… do nothing
+      {% Load new school definitions
+        \prependtographicspath{{novathesis-files/Schools/#1/Images/}}%
+        \InputIfFileExists{novathesis-files/Schools/#1/defaults.clo}%
+          {}%
+          {\PackageWarining{novathesis}{Missing file “defaults.clo” for #1}}%
+      }%
   }
   , handler/media/.new cmd = {%
     \setulmarginsandblock%

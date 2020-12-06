@@ -1,9 +1,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% defaults.clo
+%% nova/fcsh/defaults.clo
 %% NOVA thesis configuration file
 %%
 %% Costumization for FCSH-NOVA (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE nova/fsch/defaults.clo}
+
+\ntsetup{secondcover=true}
 
 % Univesity
 \university[pt]={Universidade NOVA de Lisboa}
@@ -37,7 +41,7 @@
 \spine[logo]={logoNOVA}
 \spine[author]={\theauthorshortname}
 \spine[title]={\thetitle}
-\spine[year]={\thentdateyear}
+\spine[year]={\thedateyear}
 
 % Set margins for "normal" pages
 \margin[screen,top]={2.5cm}
@@ -51,31 +55,31 @@
 
 % Set margins for cover pages
 \margin[phd,top]={0.0cm}
-\margin[phd,bottom]={2.0cm}
+\margin[phd,bottom]={0.0cm}
 \margin[phd,left]={0.0cm}
 \margin[phd,right]={0.0cm}
 \margin[phdplan,top]={0.0cm}
-\margin[phdplan,bottom]={2.0cm}
+\margin[phdplan,bottom]={0.0cm}
 \margin[phdplan,left]={0.0cm}
 \margin[phdplan,right]={0.0cm}
 \margin[phdprop,top]={0.0cm}
-\margin[phdprop,bottom]={2.0cm}
+\margin[phdprop,bottom]={0.0cm}
 \margin[phdprop,left]={0.0cm}
 \margin[phdprop,right]={0.0cm}
 \margin[msc,top]={0.0cm}
-\margin[msc,bottom]={2.0cm}
+\margin[msc,bottom]={0.0cm}
 \margin[msc,left]={0.0cm}
 \margin[msc,right]={0.0cm}
 \margin[mscplan,top]={0.0cm}
-\margin[mscplan,bottom]={2.0cm}
+\margin[mscplan,bottom]={0.0cm}
 \margin[mscplan,left]={0.0cm}
 \margin[mscplan,right]={0.0cm}
 \margin[bsc,top]={0.0cm}
-\margin[bsc,bottom]={2.0cm}
+\margin[bsc,bottom]={0.0cm}
 \margin[bsc,left]={0.0cm}
 \margin[bsc,right]={0.0cm}
 \margin[plain,top]={0.0cm}
-\margin[plain,bottom]={2.0cm}
+\margin[plain,bottom]={0.0cm}
 \margin[plain,left]={0.0cm}
 \margin[plain,right]={0.0cm}
 
@@ -115,143 +119,62 @@
 
 \definecolor{fcshblue}{RGB}{25,61,108}% Background title color
 
-\newcover
 
-
-\coveritem{l}{1.0cm}{%
-  \mbox{%
-    \hspace*{0.8cm}%
+\ntaddtocover{1}{l}{1.0cm}{%
+  \null%
+  \begin{tabular*}{{0.5\stockwidth}}[c]{@{\hspace*{0.8cm}}l@{}}%
     \includegraphics[width=9cm]{novologo_cores_crop}%
-  }%
+  \end{tabular*}%
 }
+
+\ntaddtocover{2}{l}{1.0cm}{%
+  \null%
+  \begin{tabular*}{{0.5\stockwidth}}[c]{@{\hspace*{0.8cm}}l@{}}%
+    \includegraphics[width=9cm]{novologo_cores_crop}%
+  \end{tabular*}%
+  \begin{tabular*}{{0.5\stockwidth}}[c]{@{}l@{}}%
+    \textcolor{fcshblue}{\rule{0.5\stockwidth}{4pt}}%
+  \end{tabular*}%
+}
+
 
 % % Title of Dissertation
-\coveritem{c}{1}{%
-  \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{18}{18}\selectfont%
+\ntaddtocover{1,2}{c}{1}{%
+  \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\thecovertitle}}%
 }
 
 % Author name
-\coveritem{c}{1}{%
-  \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{18}{18}\selectfont%
+\ntaddtocover{1,2}{c}{1}{%
+  \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\theauthorname}}%
 }
 
 % Degree
-\coveritem{c}{1}{%
-  \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{18}{18}\selectfont%
+\ntaddtocover{1,2}{c}{1}{%
+  \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\thepresentationtext}}%
 }
 
 % Date
-\coveritem{c}{1}{%
-  \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{14}{14}\selectfont%
+\ntaddtocover{1,2}{c}{1}{%
+  \fontsize{14}{14}\selectfont%
   \textcolor{fcshblue}{%%
     \ifdraftdoc%
       \textbf{DRAFT: \today}%
     \else%
-      \textbf{\thentdatemonth, \thentdateyear}%
+      \textbf{\thentdatemonth, \thentdateyear}
     \fi%
   }%
 }
 
-
-
-
-\secondcoveritem{l}{1.0cm}{%
-  \mbox{%
-    \hspace*{0.8cm}%
-    \begin{tabular}[c]{@{}l@{}}%
-      \includegraphics[width=9cm]{novologo_cores_crop}%
-    \end{tabular}%
-    \quad%
-    \begin{tabular}[c]{l}%
-      \textcolor{fcshblue}{\rule{0.5\stockwidth}{4pt}}%
-    \end{tabular}%
-  }%
+\ntaddtocover{1}{c}{2.0cm}{%
+  \null
 }
 
-% % Title of Dissertation
-\secondcoveritem{c}{1}{%
-  \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\thecovertitle}}%
-}
-
-% Author name
-\secondcoveritem{c}{1}{%
-  \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\theauthorname}}%
-}
-
-% Degree
-\secondcoveritem{c}{1}{%
-  \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\thepresentationtext}}%
-}
-
-% Date
-\secondcoveritem{c}{1}{%
-  \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{14}{14}\selectfont%
-  \textcolor{fcshblue}{%%
-    \ifdraftdoc%
-      \textbf{DRAFT: \today}%
-    \else%
-      \textbf{\thentdatemonth, \thentdateyear}%
-    \fi%
-  }%
-}
-
-\secondcoveritem{c}{1cm}{%
- \raisebox{-1cm}{  %
-   \textcolor{fcshblue}{\hspace*{-0.1cm}\rule{\stockwidth}{0.75cm}}%
- }
+\ntaddtocover{2}{c}{1cm}{%
+ \raisebox{-1cm}{%
+   \textcolor{fcshblue}{\rule{\stockwidth}{0.75cm}}%
+ }%
 }
 

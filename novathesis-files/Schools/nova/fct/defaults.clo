@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% defaults.clo
+%% nova/fct/defaults.clo
 %% NOVA thesis configuration file
 %%
 %% Costumization for FCT-NOVA (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE defaults.clo}
+\typeout{NT LOADING FILE nova/fct/defaults.clo}
 
 % Univesity
 \university[pt]={Universidade NOVA de Lisboa}
@@ -123,54 +123,49 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcover
 
 
 % Author name
-\ntaddtocover[1]{c}{0cm}{%
-  \coverbackground
+\ntaddtocover{1,2}{c}{0cm}{%
+  \ntcoverbackground
   \fontsize{14}{14}\selectfont
   \textbf{\theauthorname}
 }
 
 % Academic qualifications
-\ntaddtocover[1]{c}{0.25cm}{%
+\ntaddtocover{1,2}{c}{0.25cm}{%
   \fontsize{11}{11}\selectfont
   \theauthordegree
 }
 
 % % Title of Dissertation
-\ntaddtocover[1]{c}{4.5cm}{%
+\ntaddtocover{1,2}{c}{4.5cm}{%
   \fontsize{16}{16}\selectfont
   \textbf{\thecovertitle}
 }
 
 % Degree
-\ntaddtocover[1]{c}{1.5cm}{%
+\ntaddtocover{1,2}{c}{1.5cm}{%
   \fontsize{11}{11}\selectfont
   \thepresentationtext
 }
 
 % Advisers
-\ntaddtocover[1]{c}{2}{%
+\ntaddtocover{1,2}{c}{2}{%
   \fontsize{12}{12}\selectfont
   \ntprintadvisers
 }
 
 
 % Committee — only print the committee for the main classes
-\ntaddtocover[1]{r}{2}{%
-  \ifthenelse{%
-    \equal{\option{/novathesis/docdegree}}{bsc}%
-    \OR\equal{\option{/novathesis/docdegree}}{msc}%
-    \OR\equal{\option{/novathesis/docdegree}}{phd}}%
-  {\fontsize{10}{10}\selectfont\ntprintcommittee}%
-  {}%
+\ntaddtocover{1,2}{r}{2}{%
+  \fontsize{10}{10}\selectfont%
+  \ntprintcommittee%
 }
 
 
 % Date
-\ntaddtocover[1]{c}{4}{%
+\ntaddtocover{1,2}{c}{4}{%
   \fontsize{11}{11}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
