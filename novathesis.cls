@@ -553,18 +553,29 @@
 
  
 %% Work identification
-\newcommand{\thetitle}{\novathesis@undefined[The Thesis Title]}
-\newcommand{\nttitle}[1]{%
-  \newcommand{\thecovertitle}{#1}%
-    \saveexpandmode\noexpandarg % set \noexpandarg locally
-      \StrSubstitute[0]{#1}{\\}{ }[\@thetitle]
-    \restoreexpandmode % restore the previous mode
-  \renewcommand{\thetitle}{\@thetitle}%
-  \AtBeginDocument{%
-    \hypersetup{pdftitle = {\thetitle}}%
-    \hypersetup{pdfsubject = {\thepresentationtext}}
-  }%
-  % \typeout{NT TITLE = [#1][\@thetitle]}
+\newcommand{\thecovertitle}[1][\option{/novathesis/coverlang}]{%
+  \typeout{NT thecovertitle [#1]}
+  \thedoccovertitle[#1]%
+}
+\newcommand{\thetitle}[1][\option{/novathesis/coverlang}]{%
+  \thedoctitle[#1]%
+}
+\mynewdata{doccovertitle}
+\mynewdata{doctitle}
+\newcommand{\nttitle}[2][\option{/novathesis/coverlang}]{%
+  \typeout{NT nttitle [#1] [#2]}
+  \doccovertitle[#1]={#2}
+  \saveexpandmode\noexpandarg % set \noexpandarg locally
+    \StrSubstitute[0]{#2}{\\}{ }[\@thetitle]
+  \restoreexpandmode % restore the previous mode
+  \doctitle[#1]=\@thetitle%
+  \ifthenelse{\equal{#1}{\option{/novathesis/coverlang}}}{%
+    \AtBeginDocument{%
+      \hypersetup{pdftitle = {\thedoctitle[\option{/novathesis/coverlang}]}}%
+      \hypersetup{pdfsubject = {\thepresentationtext}}
+    }%
+  }{}%
+  % \typeout{NT TITLE = [#2][\@thetitle]}
 }
 
 

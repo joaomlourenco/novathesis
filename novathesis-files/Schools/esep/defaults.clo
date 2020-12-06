@@ -123,7 +123,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % ESEP logo
-\ntaddtocover{1}{c}{2.2cm}{%
+\ntaddtocover{1,2}{c}{2.2cm}{%
   \ntcoverbackground%
   \noindent%
   \fontsize{15}{15}\selectfont%
@@ -131,81 +131,57 @@
 }
 
 % % Degree name
-\ntaddtocover{1}{c}{0.5cm}{%
+\ntaddtocover{1,2}{c}{0.5cm}{%
   \fontsize{15}{15}\selectfont
   \thedegreename[\option{/novathesis/coverlang}]
 }
 
-% % Title of Dissertation
+% % Title of Dissertation 1
 \ntaddtocover{1}{c}{6.5cm}{%
-  \fontsize{15}{15}\selectfont
-  % \thecovertitle%
-  \expandafter\MakeUppercase\expandafter{\thecovertitle}\\[1ex]
-  \fontsize{12}{12}\selectfont
-  Dissertação
+  % \fontseries{mc}
+  \begin{minipage}[t][4cm][t]{\textwidth}
+    \centering%
+    \fontsize{15}{15}\selectfont%
+    {\scshape\thecovertitle}\\[1ex]%
+    \fontsize{12}{12}\selectfont%
+    Dissertação%
+  \end{minipage}%
 }
 
-% Author name
-\ntaddtocover{1}{c}{3}{%
-  \fontsize{12}{12}\selectfont
-  \textbf{\theauthorname}
-}
-
-% Date
-\ntaddtocover{1}{c}{1}{%
-  \fontsize{12}{12}\selectfont
-  \ifdraftdoc
-    \textbf{DRAFT: \today}
-  \else
-    \thentdatemonth, \thentdateyear
-  \fi
-}
-
-% % Final space
-\ntaddtocover{1}{c}{1cm}{%
-  ~
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the second cover page
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% ESEP logo
-\ntaddtocover{2}{c}{2.2cm}{%
-  \ntcoverbackground
-  \fontsize{15}{15}\selectfont
-  \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty[\option{/novathesis/coverlang}]}}
-}
-
-% % Degree name
-\ntaddtocover{2}{c}{0.5cm}{%
-  \fontsize{15}{15}\selectfont
-  \thedegreename[\option{/novathesis/coverlang}]]
-}
-
-% % Title of Dissertation
+% % Title of Dissertation 2
 \ntaddtocover{2}{c}{6.5cm}{%
-  \fontsize{15}{15}\selectfont
-  \expandafter\MakeUppercase\expandafter{\thecovertitle}\\[1ex]
-  \fontsize{12}{12}\selectfont
-  \expandafter\MakeUppercase\expandafter{\titleEN}
+  % \fontseries{mc}
+  \begin{minipage}[t][4cm][t]{\textwidth}
+    \centering%
+    \fontsize{15}{15}\selectfont\scshape%
+    \thecovertitle\\[1ex]
+    \thecovertitle[en]
+  \end{minipage}%
 }
 
-% Advisers
-\ntaddtocover{2}{c}{1}{%
-  \fontsize{11}{11}\selectfont
-  \parbox{0.80\textwidth}%
-  {\ntprintadvisers}
+% Advisers 2
+\ntaddtocover{2}{c}{2cm}{%
+  % \fontseries{mc}
+  \parbox[t][4cm]{\textwidth}{%
+    \centering%
+    \fontsize{11}{11}\selectfont%
+    \parbox{0.80\textwidth}{\ntprintadvisers[0.75]}%
+  }%
+}
+\ntaddtocover{1}{c}{2cm}{%
+  \parbox[t][4cm]{\textwidth}{%
+  ~%
+  }%
 }
 
 % Author name
-\ntaddtocover{2}{c}{1}{%
+\ntaddtocover{1,2}{c}{1}{%
   \fontsize{12}{12}\selectfont
   \textbf{\theauthorname}
 }
 
 % Date
-\ntaddtocover{2}{c}{1}{%
+\ntaddtocover{1,2}{c}{2}{%
   \fontsize{12}{12}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
@@ -215,8 +191,55 @@
 }
 
 % % Final space
-\ntaddtocover{2}{c}{1cm}{%
+\ntaddtocover{1,2}{c}{1cm}{%
   ~
 }
-
-
+%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %% Draw the second cover page
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% % ESEP logo
+% \ntaddtocover{2}{c}{2.2cm}{%
+%   \ntcoverbackground
+%   \fontsize{15}{15}\selectfont
+%   \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty[\option{/novathesis/coverlang}]}}
+% }
+%
+% % % Degree name
+% \ntaddtocover{2}{c}{0.5cm}{%
+%   \fontsize{15}{15}\selectfont
+%   \thedegreename[\option{/novathesis/coverlang}]
+% }
+%
+% % % Title of Dissertation
+% \ntaddtocover{2}{c}{6.5cm}{%
+%   % \fontseries{mc}
+%   \fontsize{15}{15}\selectfont
+%   \scshape
+%   \thecovertitle\\[1ex]
+%   \thecovertitle[en]
+% }
+%
+% % Author name
+% \ntaddtocover{2}{c}{1}{%
+%   \fontsize{12}{12}\selectfont
+%   \textbf{\theauthorname}
+% }
+%
+% % Date
+% \ntaddtocover{2}{c}{1}{%
+%   \fontsize{12}{12}\selectfont
+%   \ifdraftdoc
+%     \textbf{DRAFT: \today}
+%   \else
+%     \thentdatemonth, \thentdateyear
+%   \fi
+% }
+%
+% % % Final space
+% \ntaddtocover{2}{c}{1cm}{%
+%   ~
+% }
+%
+%
