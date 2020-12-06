@@ -168,12 +168,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % LOGO
-\ntaddtocover[4.6cm]{1}{c}{4cm}{%
+\ntaddtocover{1}{c}{0cm}{%
   \includegraphics[height=4.6cm]{ESTS-JPG}%
 }
 
-\ntaddtocover[4.6cm]{2}{c}{4cm}{%
-  \null~%
+\ntaddtocover{2}{c}{0cm}{%
+  \rule{0cm}{4.6cm}%
 }
 
 % Author name and Title
@@ -192,7 +192,7 @@
 }
 
 % Photo
-\ntaddtocover[5.3cm]{1}{l}{1}{%
+\ntaddtocover{1}{l}{1}{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%
@@ -209,7 +209,8 @@
   \end{minipage}%
   \hspace{0.65cm}%
   \begin{minipage}[t]{0.55\textwidth}%
-    \fontsize{12}{12}\selectfont%
+    % \fontseries{mc}
+    \fontsize{11}{11}\selectfont%
     \thepresentationtext%
   \end{minipage}%
 }
