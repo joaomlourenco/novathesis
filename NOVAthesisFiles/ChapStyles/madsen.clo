@@ -1,0 +1,12 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ChapterStyle/madsen.clo
+%% NOVA thesis configuration file
+%%
+%% Costumization for the Madsen chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE ChapterStyle/madsen.clo}
+
+%%%%% Configure chapters, headers, footers, and page numbering
+\chapterstyle{madsen}
+

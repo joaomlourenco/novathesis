@@ -1,0 +1,84 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%Strings/pt.clo
+%% NOVA thesis configuration file
+%%
+%% Costumization for language depedent strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILEStrings/pt.clo}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Portuguese - strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\abstractstring[pt]={Resumo}
+\keywordsstring[pt]={Palavras-chave}
+\notdefined[pt]={NÃO DEFINIDO}
+\acknowledgementsstring[pt]={Agradecimentos}
+\specializationstr[pt]={Especialização em}
+
+\adviserstr[1,m,pt]={Orientador}
+\adviserstr[1,f,pt]={Orientadora}
+\adviserstr[2,m,pt]={Orientadores}
+\adviserstr[2,f,pt]={Orientadoras}
+\coadviserstr[1,m,pt]={Coorientador}
+\coadviserstr[1,f,pt]={Coorientadora}
+\coadviserstr[2,m,pt]={Coorientadores}
+\coadviserstr[2,f,pt]={Coorientadoras}
+
+\committeetitlestr[pt]={Júri}
+\committeememberstr[c,1,m,pt]={Presidente}
+\committeememberstr[c,1,f,pt]={Presidente}
+\committeememberstr[c,2,m,pt]={Presidentes}
+\committeememberstr[c,2,f,pt]={Presidentes}
+\committeememberstr[r,1,m,pt]={Arguente}
+\committeememberstr[r,1,f,pt]={Arguente}
+\committeememberstr[r,2,m,pt]={Arguentes}
+\committeememberstr[r,2,f,pt]={Arguentes}
+\committeememberstr[a,1,m,pt]={Orientador}
+\committeememberstr[a,1,f,pt]={Orientadora}
+\committeememberstr[a,2,m,pt]={Orientadores}
+\committeememberstr[a,2,f,pt]={Orientadoras}
+\committeememberstr[m,1,m,pt]={Vogal}
+\committeememberstr[m,1,f,pt]={Vogal}
+\committeememberstr[m,2,m,pt]={Vogais}
+\committeememberstr[m,2,f,pt]={Vogais}
+\committeememberstr[g,1,m,pt]={Convidado}
+\committeememberstr[g,1,f,pt]={Convidada}
+\committeememberstr[g,2,m,pt]={Convidados}
+\committeememberstr[g,2,f,pt]={Convidadas}
+
+\degreestr[bsc,m,pt]={Licenciado}
+\degreestr[bsc,f,pt]={Licenciada}
+\degreestr[msc,m,pt]={Mestre}
+\degreestr[msc,f,pt]={Mestre}
+\degreestr[mscplan,m,pt]={Mestre}
+\degreestr[mscplan,f,pt]={Mestre}
+\degreestr[phd,m,pt]={Doutor}
+\degreestr[phd,f,pt]={Doutora}
+\degreestr[phdplan,m,pt]={Doutor}
+\degreestr[phdplan,f,pt]={Doutora}
+\degreestr[phdprop,m,pt]={Doutor}
+\degreestr[phdprop,f,pt]={Doutora}
+
+\docdegreestr[bsc,pt]={Projeto de Licenciatura}
+\docdegreestr[mscplan,pt]={Preparação de Dissertação de Mestrado}
+\docdegreestr[msc,pt]={Dissertação de Mestrado}
+\docdegreestr[phdplan,pt]={Plano de Tese de Doutoramento}
+\docdegreestr[phdprop,pt]={Proposta de Tese de Doutoramento}
+\docdegreestr[phd,pt]={Tese de Doutoramento}
+
+\dissertationstr[bsc,pt]={Relatório para obtenção do Grau de %
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\themajorfield[\option{/novathesis/coverlang}]}}
+\dissertationstr[mscplan,pt]={Relatório intermédio para obtenção do Grau de %
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\themajorfield[\option{/novathesis/coverlang}]}}
+\dissertationstr[msc,pt]={Dissertação para obtenção do Grau de %
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\themajorfield[\option{/novathesis/coverlang}]}}
+\dissertationstr[phdplan,pt]={Relatório intermédio para obtenção do Grau de %
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\themajorfield[\option{/novathesis/coverlang}]}}
+\dissertationstr[phdprop,pt]={Proposta de dissertação para obtenção do Grau de %
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\themajorfield[\option{/novathesis/coverlang}]}}
+\dissertationstr[phd,pt]={Dissertação para obtenção do Grau de %
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\themajorfield[\option{/novathesis/coverlang}]}}
+
+\copyrighttextstr[pt]={A \thefaculty[\option{/novathesis/copyrightlang}]\ e a \theuniversity[\option{/novathesis/copyrightlang}]\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+\acknowledgmentsstr[pt]={Este documento foi gerado utilizando o processador (pdf/Xe/Lua)\LaTeX, com base no template \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis}, desenvolvido no \href{http://www.di.fct.unl.pt}{Dep.\ Informática da FCT–NOVA} por \href{https://docentes.fct.unl.pt/joao-lourenco}{João M. Lourenço}.}

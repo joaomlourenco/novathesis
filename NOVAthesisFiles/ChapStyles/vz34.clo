@@ -1,0 +1,27 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ChapterStyle/vz34.clo
+%% NOVA thesis configuration file
+%%
+%% Costumization for the VZ34 chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE ChapterStyle/vz34.clo}
+
+%%%%% Configure chapters, headers, footers, and page numbering
+\newif\ifNoChapNumber
+\makechapterstyle{VZ34}{%
+  \renewcommand\chapternamenum{}
+  \renewcommand\printchaptername{}
+  \renewcommand\printchapternum{}
+  \renewcommand\chapnumfont{\Huge\bfseries}
+  \renewcommand\chaptitlefont{\Huge\bfseries\raggedright}
+  \renewcommand\printchaptertitle[1]{%
+    \begin{tabular}{@{}p{1cm}|!{\quad}p{\textwidth-1cm-2em-4\tabcolsep }}%
+      \ifNoChapNumber\relax\else\chapnumfont \thechapter\fi%
+      & \chaptitlefont ##1%
+    \end{tabular}%
+    \NoChapNumberfalse%
+  }%
+  \renewcommand\ntprintchapternonum{\NoChapNumbertrue}
+}
+\chapterstyle{VZ34}  

@@ -1,0 +1,91 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%Strings/en.clo
+%% NOVA thesis configuration file
+%%
+%% Costumization for language depedent strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILEStrings/en.clo}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% English - strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\abstractstring[en]={Abstract}
+\keywordsstring[en]={Keywords}
+\notdefined[en]={UNDEFINED}
+\acknowledgementsstring[en]={Acknowledgements}
+\specializationstr[en]={Specialization in}
+
+\adviserstr[1,m,en]={Adviser}
+\adviserstr[1,f,en]={Adviser}
+\adviserstr[2,m,en]={Advisers}
+\adviserstr[2,f,en]={Advisers}
+\coadviserstr[1,m,en]={Co-adviser}
+\coadviserstr[1,f,en]={Co-adviser}
+\coadviserstr[2,m,en]={Co-advisers}
+\coadviserstr[2,f,en]={Co-advisers}
+
+\degreestr[bsc,m,en]={Bachelor}
+\degreestr[bsc,f,en]={Bachelor}
+\degreestr[msc,m,en]={Master of Science}
+\degreestr[msc,f,en]={Master of Science}
+\degreestr[mscplan,m,en]={Master of Science}
+\degreestr[mscplan,f,en]={Master of Science}
+\degreestr[phd,m,en]={Doctor of Philosophy}
+\degreestr[phd,f,en]={Doctor of Philosophy}
+\degreestr[phdplan,m,en]={Doctor of Philosophy}
+\degreestr[phdplan,f,en]={Doctor of Philosophy}
+\degreestr[phdprop,m,en]={Doctor of Philosophy}
+\degreestr[phdprop,f,en]={Doctor of Philosophy}
+
+\docdegreestr[bsc,en]={Bachelor Report}
+\docdegreestr[msc,en]={Master of Science Dissertation}
+\docdegreestr[mscplan,en]={Master of Science Qualification}
+\docdegreestr[phdplan,en]={Doctorate Qualification}
+\docdegreestr[phdprop,en]={Doctorate Proposal}
+\docdegreestr[phd,en]={Doctorate Dissertation}
+
+\committeetitlestr[en]={Examination Committee}
+\committeememberstr[c,1,m,en]={Chair}
+\committeememberstr[c,1,f,en]={Chair}
+\committeememberstr[c,2,m,en]={Chairs}
+\committeememberstr[c,2,f,en]={Chairs}
+\committeememberstr[r,1,m,en]={Rapporteur}
+\committeememberstr[r,1,f,en]={Rapporteur}
+\committeememberstr[r,2,m,en]={Rapporteurs}
+\committeememberstr[r,2,f,en]={Rapporteurs}
+\committeememberstr[a,1,m,en]={Adviser}
+\committeememberstr[a,1,f,en]={Adviser}
+\committeememberstr[a,2,m,en]={Advisers}
+\committeememberstr[a,2,f,en]={Advisers}
+\committeememberstr[m,1,m,en]={Member}
+\committeememberstr[m,1,f,en]={Member}
+\committeememberstr[m,2,m,en]={Members}
+\committeememberstr[m,2,f,en]={Members}
+\committeememberstr[g,1,m,en]={Guest}
+\committeememberstr[g,1,f,en]={Guest}
+\committeememberstr[g,2,m,en]={Guests}
+\committeememberstr[g,2,f,em]={Guests}
+	
+\dissertationstr[bsc,en]={Report submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ in\\ \textbf{\themajorfield[\option{/novathesis/coverlang}]}}
+\dissertationstr[mscplan,en]={Dissertation plan submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ in\\ \textbf{\themajorfield[\option{/novathesis/coverlang}]}}
+\dissertationstr[msc,en]={Dissertation submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ in\\ \textbf{\themajorfield[\option{/novathesis/coverlang}]}}
+\dissertationstr[phdplan,en]={Thesis plan submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ in\\ \textbf{\themajorfield[\option{/novathesis/coverlang}]}}
+\dissertationstr[phdprop,en]={Thesis proposal submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ in\\ \textbf{\themajorfield[\option{/novathesis/coverlang}]}}
+\dissertationstr[phd,en]={Thesis submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1.25ex]%
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ in\\ \textbf{\themajorfield[\option{/novathesis/coverlang}]}}
+
+\copyrighttextstr[en]={The \thefaculty[\option{/novathesis/copyrightlang}]\ and the \theuniversity[\option{/novathesis/copyrightlang}]\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+\acknowledgmentsstr[en]={This document was created using the (pdf/Xe/Lua)\LaTeX\ processor, based on the \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template, developed at the \href{http://www.di.fct.unl.pt}{Dep.\ Informática of FCT-NOVA} by \href{https://docentes.fct.unl.pt/joao-lourenco}{João M. Lourenço}.}

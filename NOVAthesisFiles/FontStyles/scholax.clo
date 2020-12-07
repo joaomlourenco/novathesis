@@ -1,0 +1,17 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/scholax.clo
+%% NOVA thesis configuration file
+%%
+%% Customization of font to use a Linux Libertine font set
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE FontStyles/scholax.clo}
+
+\RequirePackage[p,osf]{scholax}
+% T1 and textcomp are loaded by package. Change that here, if you want
+% load sans and typewriter packages here, if needed
+\RequirePackage{amsmath,amsthm}% must be loaded before newtxmath
+% amssymb should not be loaded
+\RequirePackage[scaled=1.075,ncf,vvarbb]{newtxmath}% need to scale up math package
+% vvarbb selects the STIX version of blackboard bold. See below.
+\linespread{1.05} %needed only if scholax loaded at full scale

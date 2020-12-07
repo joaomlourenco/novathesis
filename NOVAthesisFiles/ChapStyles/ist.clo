@@ -1,0 +1,55 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ChapterStyle/ist.clo
+%% NOVA thesis configuration file
+%%
+%% Costumization for the IST chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE ChapterStyle/ist.clo}
+
+%%%%% Configure chapters, headers, footers, and page numbering
+\RequirePackage{soul}
+
+\makeatletter
+
+\definecolor{istchaptercolor}{rgb}{0.7,0.8,0.9}
+
+\undef{\novathesis@ist@chapter}
+\newsavebox{\novathesis@ist@chapter}
+\undef{\novathesis@ist@part}
+\newsavebox{\novathesis@ist@part}
+
+
+\providecommand{\novathesis@ist@chm}[1][4cm]{%
+	\resizebox{!}{#1}{%
+    \fboxsep=1pt%
+		\color{istchaptercolor}\thechapter%
+	}%
+}
+	
+\providecommand{\novathesis@ist@ptm}[1][4cm]{%
+  \novathesis@ist@chm{#1}
+}
+	
+  
+\makechapterstyle{ist}{%
+  % \renewcommand{\chapnamefont}{\normalfont\Large\scshape\raggedleft\so}%
+	\renewcommand{\chaptitlefont}{\normalfont\huge\bfseries\sffamily}%
+  % \renewcommand{\chapternamenum}{}
+  \renewcommand{\printchaptername}{}%
+	\renewcommand{\printchapternum}{\null\hfill\novathesis@ist@chm[4cm]\hspace*{14pt}\par}%
+  \renewcommand{\afterchapternum}{\vspace*{-11ex}}%
+  \renewcommand{\printchaptertitle}[1]{\color{darkgray}\chaptitlefont\raggedleft ##1\par}%
+	%
+  % \renewcommand{\partnamefont}{\chapnamefont}
+  % \renewcommand{\parttitlefont}{\chaptitlefont}
+  % \renewcommand{\partnamenum}{}
+	\renewcommand{\printpartname}{}%
+	\renewcommand{\thepart}{\Roman{part}}
+	\renewcommand{\printpartnum}{\null\hfill\novathesis@ist@ptm[4cm]\hspace*{14pt}\par}%
+  % \renewcommand{\afterpartnum}{\vspace*{-11ex}}%
+	\renewcommand{\printparttitle}[1]{\color{darkgray}\parttitlefont\raggedleft ##1\par}%
+	\renewcommand*{\partnumfont}{\normalfont\scshape\MakeLowercase}
+} 
+\chapterstyle{ist}
+

@@ -1,0 +1,19 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/bookman.clo
+%% NOVA thesis configuration file
+%%
+%% Costumization of fonts to use Bookman fontset
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE FontStyles/bookman.clo}
+
+\ifxeorlua{%
+  \setmainfont[
+    Path=NOVAthesisFiles/FontStyles/Fonts/,
+    BoldItalicFont=Calibriz.ttf,
+    BoldFont      =Calibrib.ttf,
+    ItalicFont    =Calibrii.ttf
+  ]{Calibri.ttf}%
+}{%
+  \include{NOVAthesisFiles/FontStyles/kpfonts}%  
+}

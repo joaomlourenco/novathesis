@@ -1,0 +1,288 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ul/fc/defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Costumization for FC-UL (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE ul/fc/defaults.clo}
+
+% Univesity
+\university[pt]={Universidade de Lisboa}
+\university[en]={University of Lisbon}
+\university[fr]={University of Lisbon}
+\university[it]={University of Lisbon}
+
+% Faculty / School
+\faculty[pt]={Faculdade de Ciências}
+\faculty[en]={Faculty of Sciences}
+\faculty[fr]={Faculty of Sciences}
+\faculty[it]={Faculty of Sciences}
+
+% Scientific field
+\majorfield[pt]={A DEFINIR}
+\majorfield[en]={TO BE DEFINED}
+
+% Department field
+\department[pt]={A DEFINIR}
+\department[en]={TO BE DEFINED}
+
+% Specialization field
+\specialization[pt]={A DEFINIR}
+\specialization[en]={TO BE DEFINED}
+
+
+% Comiittee printing order
+\committeeorder[all]={c,r,a,m}% 
+
+% Cover background images
+\thesiscover[phd,front]={}
+\thesiscover[phdplan,front]={}
+\thesiscover[phdprop,front]={}
+\thesiscover[msc,front]={}
+\thesiscover[mscplan,front]={}
+\thesiscover[bsc,front]={}
+\thesiscover[plain,front]={}
+
+% Spine info
+\spine[logo]={logoFCUL3}
+\spine[author]={\theauthorshortname}
+\spine[title]={\thetitle}
+\spine[year]={\thentdateyear}
+
+% Set margins for "normal" pages
+\margin[screen,top]={3.5cm}
+\margin[screen,bottom]={2.5cm}
+\margin[screen,left]={3.0cm}
+\margin[screen,right]={3.0cm}
+\margin[paper,top]={3.5cm}
+\margin[paper,bottom]={2.5cm}
+\margin[paper,left]={2.5cm}
+\margin[paper,right]={3.5cm}
+
+%% Set margins for cover pages
+\margin[phd,top]={1.0cm}
+\margin[phd,bottom]={1.5cm}
+\margin[phd,left]={2.5cm}
+\margin[phd,right]={2.5cm}
+
+\margin[phdplan,top]={2.0cm}
+\margin[phdplan,bottom]={1.5cm}
+\margin[phdplan,left]={2.5cm}
+\margin[phdplan,right]={2.5cm}
+
+\margin[phdprop,top]={2.0cm}
+\margin[phdprop,bottom]={1.5cm}
+\margin[phdprop,left]={2.5cm}
+\margin[phdprop,right]={2.5cm}
+
+\margin[msc,top]={2.0cm}
+\margin[msc,bottom]={1.5cm}
+\margin[msc,left]={2.5cm}
+\margin[msc,right]={2.5cm}
+
+\margin[mscplan,top]={2.0cm}
+\margin[mscplan,bottom]={1.5cm}
+\margin[mscplan,left]={2.5cm}
+\margin[mscplan,right]={2.5cm}
+
+\margin[bsc,top]={2.0cm}
+\margin[bsc,bottom]={1.5cm}
+\margin[bsc,left]={2.5cm}
+\margin[bsc,right]={2.5cm}
+
+\margin[plain,top]={2.0cm}
+\margin[plain,bottom]={1.5cm}
+\margin[plain,left]={2.5cm}
+\margin[plain,right]={2.5cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% String re-definition; original definitions in string-X.clo
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use array helper defined in novathesis.csl
+\mynewdata{adviserslabel}
+
+\adviserslabel[pt]={Tese orientada por:}
+\adviserslabel[en]={Thesis supervised by:}
+\adviserslabel[de]={TBD}
+\adviserslabel[es]={TBD}
+\adviserslabel[fr]={TBD}
+\adviserslabel[it]={TBD}
+
+
+\dissertationstr[phdplan,pt]={Documento especialmente elaborado para a obtenção do grau de  %
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]}
+\dissertationstr[phdprop,pt]={Documento especialmente elaborado para a obtenção do grau de  %
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]}
+\dissertationstr[phd,pt]={Documento especialmente elaborado para a obtenção do grau de  %
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FCUL guidelines:
+% The pages should be numbered consecutively at the bottom centre of the
+% page.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makepagestyle{novathesis@myvf} 
+\makeoddfoot{novathesis@myvf}{}{\thepage}{} 
+\makeevenfoot{novathesis@myvf}{}{\thepage}{} 
+\makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
+\makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
+\makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
+\pagestyle{novathesis@myvf}
+%
+%\frenchspacing
+
+% Fazer indentação parágrafos
+% \setlength{\parindent}{17pt}
+
+% Redefinir fonte de secção, subscção, etc…
+% \newbox\ntmybox
+% \setbox\ntmybox=\hbox{{\normalfont\Huge A}}
+% \font\p@rtnamfont=cmbr8 at 13mm % computer modern bright
+% \font\s@cnamfont=cmbrsl8 at \ht\ntmybox % computer modern bright
+% \renewcommand\section{\@startsection {section}{1}{0pt}%
+%                                    {-3.5ex plus -0.5ex minus -.2ex}%
+%                                    {2.3ex \@plus.2ex}%
+%                                    {\s@cnamfont}}
+% \renewcommand\subsection{\@startsection{subsection}{2}{0pt}%
+%                                      {-2.5ex plus -0.5ex minus -.2ex}%
+%                                      {1.5ex \@plus .2ex}%
+%                                      {\normalfont\large\bfseries}}
+% \renewcommand\subsubsection{\@startsection{subsubsection}{3}{0pt}%
+%                                      {-2.5ex plus -0.5ex minus -.2ex}%
+%                                      {1.5ex \@plus .2ex}%
+%                                      {\normalfont\normalsize\bfseries}}
+% \renewcommand\paragraph{\@startsection{paragraph}{4}{0pt}%
+%                                     {0.25ex plus 0.5ex minus.2ex}%
+%                                     {-1em}%
+%                                     {\normalfont\normalsize\bfseries}}
+% \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+%                                        {0.25ex plus 0.5ex minus .2ex}%
+%                                        {-1em}%
+%                                       {\normalfont\normalsize\bfseries}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Temporary macro to use in conditional expressions;
+
+% School
+\ntaddtocover{1,2}{c}{0.5cm}{%
+  \fontseries{mc}\fontsize{12}{12}\selectfont%
+  \MakeUppercase{\theuniversity[\option{/novathesis/coverlang}]}\\%
+  \vspace{2mm}%
+  \MakeUppercase{\thefaculty[\option{/novathesis/coverlang}]}\\%
+  \ifthenelse{%
+ 		\equal{\option{/novathesis/docdegree}}{msc}%
+  	\OR\equal{\option{/novathesis/docdegree}}{mscplan}%
+ 	}{% THEN
+	 	\vspace{2mm}%
+	 	\MakeUppercase{\thedepartment[\option{/novathesis/coverlang}]}%
+ 	}{% ELSE
+  }%
+  \vspace{20mm}%
+} 
+
+% Logo
+\ntaddtocover{1,2}{c}{0cm}{%
+	\ifthenelse{%
+        \equal{\option{/novathesis/docdegree}}{phd}%
+        \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
+        \OR\equal{\option{/novathesis/docdegree}}{phdplan}}%
+    {\includegraphics[height=4.99cm]{logoFCUL}}%
+    {\includegraphics[width=7cm]{logoFCUL2}}%
+  \vspace{20mm}%
+}
+
+% % Title of Dissertation
+\ntaddtocover{1,2}{c}{1}{%
+  \fontseries{mc}\fontsize{17}{17}\selectfont%
+  \textbf{\thecovertitle}%
+  \vspace{20mm}%
+}
+
+% Degree
+% In this position only if it is a phd doc;
+\ifthenelse{%
+  \equal{\option{/novathesis/docdegree}}{phd}%
+  \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
+  \OR\equal{\option{/novathesis/docdegree}}{phdplan}}%
+{
+	\ntaddtocover{1,2}{c}{1}{%
+	  \fontseries{mc}\fontsize{13}{13}\selectfont%
+		\textbf{\theauthordegree}\\%
+		\ifthenelse{%
+	 		\NOT\equal{\thespecialization[\option{/novathesis/coverlang}]}{}%
+ 		}
+ 		{\thespecialization[\option{/novathesis/coverlang}]}
+ 		{}
+		\vspace{20mm}%
+	}%
+}%
+{}
+
+% Author name
+\ntaddtocover{1,2}{c}{1}{%
+  \fontseries{mc}\fontsize{15}{15}\selectfont%
+  \theauthorname%
+  \vspace{10mm}%
+}
+
+% Degree
+% In this position only if it is a msc doc;
+\ifthenelse{%
+  \equal{\option{/novathesis/docdegree}}{msc}%
+  \OR\equal{\option{/novathesis/docdegree}}{mscplan}}%
+{
+	\ntaddtocover{1,2}{c}{1}{%
+	  \fontseries{mc}\fontsize{13}{13}\selectfont%
+		\textbf{\theauthordegree\\}
+		\ifthenelse{%
+	 		\NOT\equal{\thespecialization[\option{/novathesis/coverlang}]}{}%
+ 		}%
+ 		  {\thespecialization[\option{/novathesis/coverlang}]}%
+ 		  {}%
+		\vspace{10mm}%%
+	}%
+}%
+{}
+
+% Advisers
+\ntaddtocover{1,2}{c}{1}{%
+  \fontsize{13}{13}\selectfont%
+  \theadviserslabel[\option{/novathesis/coverlang}]\\%
+  \vspace{5mm}%
+  \ntprintadvisersaslist%
+  \vspace{5mm}%
+}
+
+
+% Committee — only print the committee for the main classes
+\ntaddtocover{1,2}{c}{1}{%
+		\ntprintcommittee%
+}
+
+% Document purpose
+% Only if it is a phd doc;
+\ifmaindoc{%
+	\ntaddtocover{1,2}{c}{1}{%
+	  \fontseries{mc}\fontsize{12}{12}\selectfont%
+		\thepresentationtext%
+	}%
+}%
+{}
+
+
+% Date
+\ntaddtocover{1,2}{c}{1}{%
+	\vspace{5mm}%
+  \fontseries{mc}\fontsize{14}{14}\selectfont%
+  \ifdraftdoc%
+    DRAFT: \today%
+  \else%
+    \thentdateyear%
+  \fi%
+}
