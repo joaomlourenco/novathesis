@@ -61,7 +61,7 @@
 %% CHECK IF USING LUALATEX OR XELATEX
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newif\ifxetexorluatex
-\begingroup\catcode94=7 \catcode0=9 % ASCII 94 is ^
+\begingroup\catcode94=7 \catcode0=9% ASCII 94 is ^
 \def\empty{}\def\next{^^^^0000}\expandafter\endgroup
 \ifx\next\empty\xetexorluatextrue\else\xetexorluatexfalse\fi
 
@@ -79,7 +79,7 @@
   \@namedef{the#1}[##1]{\@nameuse{#1##1}}%
 }
 
-\def\ifexists#1[#2]#3{\ifcsname #1#2\endcsname#3\fi}
+\def\ifdatadefined#1[#2]#3#4{\ifcsname #1#2\endcsname#3\else#4\fi}
 
 % --------------------------------------------------------
 % Check if it is a main document type, i.e., bsc, msc or phd
@@ -279,7 +279,7 @@
 % --------------------------------------------------------
 % LOAD MAIN CLASS AND ADDITIONAL PACKAGES
 \LoadClass{memoir}
-\OnehalfSpacing           % One-and-half spacing
+\OnehalfSpacing% One-and-half spacing
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING ADDITINAL FILES AFTER LOADING MEMOIR
@@ -297,10 +297,10 @@
 %% COVER DEFINITION MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntaddtocover}[4]{%
-% #1 = cover number {1, 2}    (1 is the default)
-% #2 = position {l, c, r}
-% #3 = distance from previous {length, integer}  (if integer uses proportional spacing)
-% #4 = the code
+  % #1 = cover number {1, 2}    (1 is the default)
+  % #2 = position {l, c, r}
+  % #3 = distance from previous {length, integer}  (if integer uses proportional spacing)
+  % #4 = the code
   % \typeout{NT ntaddtocover [/@nt/cover/\option{/novathesis/school}/element = #1 #2]}
   \options{/@nt/cover/\option{/novathesis/school}/element/.cpush = {#1=[#2][#3]{#4}}}
 }
@@ -311,14 +311,18 @@
 
 \newcommand*{\ntprintcovers}{%
   \begingroup%
-    \ntcoverprehook%
     % \thispagestyle{empty}%
+    \ntcoverprehook{1}%
     \@nt@select@lang{\option{/novathesis/coverlang}}%
     \@nt@printthecover{1}%
+    \ntcoverposthook{1}%
     \clearforchapter%
     \iftoggle{/novathesis/secondcover}%
       {% SECOND COVER TRUE
+          \ntcoverprehook{2}%
+          \@nt@select@lang{\option{/novathesis/coverlang}}%
           \@nt@printthecover{2}%
+          \ntcoverposthook{2}%
           \clearforchapter%
       }%
       {}% NO SECOND COVER
@@ -327,17 +331,17 @@
   \endgroup%
 }
 
-\newcommand*{\ntcoverprehook}{%
+\newcommand*{\ntcoverprehook}[1]{%
   \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
 }
 
-\newcommand*{\ntcoverposthook}{}
+\newcommand*{\ntcoverposthook}[1]{}
 
 \newcommand*{\@nt@printthecover}[1]{%
   % #1 = cover number {1, 2}    (1 is the default)
   \iftoggle{/novathesis/debugcover}%
     {\thispagestyle{measurestyle}}%
-    {\thispagestyle{empty}}
+    {\thispagestyle{empty}}%
   \setlength{\mpwidth}{\dimexpr%
     \paperwidth%
       -\themargin[\option{/novathesis/docdegree},left]%
@@ -409,7 +413,7 @@
 }
 
 \newcommand{\ntprintbackcoverpage}{%
-  \ifexists{thesiscover}[\option{/novathesis/docdegree},back]{%
+  \ifdatadefined{thesiscover}[\option{/novathesis/docdegree},back]{%
     \clearforchapter%
     \thispagestyle{empty}%
     ~%
@@ -419,7 +423,7 @@
     ~% This space is important here so that the cover page is not empty anymore!
     \clearforchapter%
     \@nt@select@lang{\option{/novathesis/mainlang}}%
-  }%
+  }{}%
 }
 
 \newcommand{\ntcoverbackground}[1][\@nameuse{thesiscover\option{/novathesis/docdegree},front}]{%
@@ -566,18 +570,23 @@
 \mynewdata{doccovertitle}
 \mynewdata{doctitle}
 \newcommand{\nttitle}[2][\option{/novathesis/coverlang}]{%
-  \typeout{NT nttitle [#1] [#2]}
-  \doccovertitle[#1]={#2}
-  \saveexpandmode\noexpandarg % set \noexpandarg locally
-    \StrSubstitute[0]{#2}{\\}{ }[\@thetitle]
-  \restoreexpandmode % restore the previous mode
-  \doctitle[#1]=\@thetitle%
-  \ifthenelse{\equal{#1}{\option{/novathesis/coverlang}}}{%
-    \AtBeginDocument{%
-      \hypersetup{pdftitle = {\thedoctitle[\option{/novathesis/coverlang}]}}%
-      \hypersetup{pdfsubject = {\thepresentationtext}}
-    }%
-  }{}%
+  % \typeout{NT nttitle [#1] [#2]}
+  % \ifdatadefined{doccovertitle}[\option{/novathesis/coverlang}]{%
+  %   % Already defined… ignore redefinition with warning
+  %   % \ClassWarning{novathesis}{Ignoring redefinition of title in \option{/novathesis/coverlang}}{Fix the \\nttitle optional argument}%
+  % }{%
+    \doccovertitle[#1]={#2}%
+    \saveexpandmode\noexpandarg% set \noexpandarg locally
+      \StrSubstitute[0]{#2}{\\}{ }[\@thetitle]%
+    \restoreexpandmode% restore the previous mode
+    \doctitle[#1]=\@thetitle%
+    \ifthenelse{\equal{#1}{\option{/novathesis/coverlang}}}{%
+      \AtBeginDocument{%
+        \hypersetup{pdftitle = {\thedoctitle[\option{/novathesis/coverlang}]}}%
+        \hypersetup{pdfsubject = {\thepresentationtext}}
+      }%
+    }{}%
+  % }
   % \typeout{NT TITLE = [#2][\@thetitle]}
 }
 
@@ -610,7 +619,7 @@
 
 \newcommand{\ntprintadvisers}[1][0.90]{%
   \begin{minipage}{#1\textwidth}
-  % % #1 = Percentage of \textwidth used by the advisers list
+  % #1 = Percentage of \textwidth used by the advisers list
   \begin{tabularx}{\linewidth}{@{}rX@{}}%
   \forcsvlist{\@nt@printadvisergroup}{adviser,coadviser}
   \end{tabularx}%
@@ -677,16 +686,14 @@
 
 \newcommand*{\@nt@reducegender}[2]{%
   % #1 = gender list
-  % %2 = result
+  % #2 = result
   \gdef#2{f}%
   \optionlistdo{#1}{\if##1m\relax\gdef#2{m}\fi}%
 }
 
 \newcommand{\@nt@reducenumber}[2]{%
   % #1 = number
-  % %2 = result
-  % \ifnum#1>1\relax\let#2=2\else\let#2=1\fi%
-  % \show#1
+  % #2 = result
   \ifnum\value{\option{#1/@size}}=1%
     \gdef#2{1}%
   \else%
@@ -710,7 +717,7 @@
 
 \AtEndPreamble{\ntsetlayout}
 \newcommand{\ntsetlayout}{%
-  \synctex=1 % Use synctex
+  \synctex=1% Use synctex
   \brokenpenalty=10000
   \settypeoutlayoutunit{mm}
   \setulmarginsandblock%
@@ -804,7 +811,7 @@
   % \typeout{NT Attemnpting to load #1}%
 	\ifmaindoc{% THEN it is a main document
     \@ntloadfisrt@ii{#1}%
-	}{ % ELSE
+	}{% ELSE
     % It is a plan or proposal type document
 	}%  
 }
@@ -842,7 +849,7 @@
   % enables protrusion locally for the remainder of the document
   \ifxeorlua{}{\microtypesetup{protrusion=true}}%
 	\mainmatter%
-	\pagenumbering{arabic} %
+	\pagenumbering{arabic}%
 	\setlength{\headheight}{15pt}%
 }
 

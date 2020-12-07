@@ -11,8 +11,9 @@
 
 \ifxeorlua{%
   \ntsetup{fontstyle=calibri}%
-  \renewcommand{\ntcoverprehook}{}%
+  \renewcommand{\ntcoverprehook}[1]{}%
 }{}
+\nttitle[en]{Please define the title in english with \verb|\nttitle[en]{THE TITLE}|}
 
 % Univesity
 \university[pt]={Escola Superior de Enfermagem do Porto}

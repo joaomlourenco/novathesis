@@ -1,12 +1,20 @@
 #!/bin/bash
 
+renice 20 $$
+
 # should the output directory be deleted?
-OUTDIR=OutputTests
+NOW=$(date "+%Y-%m-%d@%H-%M")
+VERSION=$(fgrep "%% Version" template.tex | cut -d '[' -f 2 | cut -d ']' -f 1)
+OUTDIR=../NT-OutputTests-v$VERSION
+LOGFILE=$OUTDIR/log_$NOW.log
 FORCE=false
 DELETE=false
 SET1=false
 SET2=false
 
+#===================================================================
+# Process command line arguments
+#===================================================================
 args=`getopt fx12o: $*`
 # you should not use `getopt abo: "$@"` since that would parse
 # the arguments differently from what the set command below does.
@@ -41,13 +49,9 @@ for i; do
     esac
 done
 
-echo OUTDIR=$OUTDIR
-echo DELETE=$DELETE
-echo SET1=$SET1
-echo SET2=$SET2
-
-renice 20 $$
-
+#===================================================================
+# DEFINITIONS
+#===================================================================
 
 processor="pdfxe pdflua pdf"
 # %%------------------------------------------------------------
@@ -87,7 +91,9 @@ if [ "$OUTDIR" = "ture" ]; then
 	fi
 fi
 
-# test the main attributes
+#===================================================================
+# TEST PRIMARY ATTRIBUTES
+#===================================================================
 if [ "$SET1" = "true" ]; then
 	for i2 in "school"; do
 		for school_ in ${!i2}; do
@@ -97,14 +103,14 @@ if [ "$SET1" = "true" ]; then
 					rm main.aux
 					perl -pi -e "s|^% \\\\ntsetup{$i2=(.*)}|\\\\ntsetup{$i2=$school_}|" main.tex
 					perl -pi -e "s|^% \\\\ntsetup{$i1=(.*)}|\\\\ntsetup{$i1=$degree_}|" main.tex
-					mkdir -p $OUTDIR/$school_
+					mkdir -p $OUTDIR/1/$school_
 					for processor_ in $processor; do
 						echo "=================================================================="
 						echo "$i2=$school_ $i1=$degree_ $processor_"
 						echo "=================================================================="
-						latexmk -time -silent -$processor_ -interaction=nonstopmode main | tee -a  $OUTDIR/log.log
+						latexmk -time -silent -$processor_ -interaction=nonstopmode main | tee -a  $LOGFILE
 						[ -f main.xdv ] && xdvipdfmx -E -o main.pdf main.xdv && rm main.xdv
-						[ -f main.pdf ] && mv main.pdf $OUTDIR/$school_/$degree_-$processor_.pdf
+						[ -f main.pdf ] && mv main.pdf $OUTDIR/1/$school_/$degree_-$processor_.pdf
 					done
 				done
 			done
@@ -116,17 +122,27 @@ if [ "$SET1" = "true" ]; then
 	
 fi # SET1
 
-# Test other attributes
+
+#===================================================================
+# TEST SECONDRY ATTRIBUTES
+#===================================================================
 if [ "$SET2" = "true" ]; then
+	mkdir -p $OUTDIR/2
 	for i in lang linkscolor media urlstyle media printcommittee secondcover urlstyle fontstyle chapstyle; do
 		for j in ${!i}; do
 			echo "=================================================================="
 			echo "Testing - $i=$j"
 			echo "=================================================================="
 			cp template.tex main.tex
+			# perl -pi -e "s|^% \\\\ntsetup{school=(.*)}|\\\\ntsetup{school=nova/fct}|" main.tex
 			perl -pi -e "s|^% \\\\ntsetup{$i=(.*)}|\\\\ntsetup{$i=$j}|" main.tex
-			fgrep ntsetup main.tex | fgrep $i
+			# fgrep ntsetup main.tex | fgrep -e "$i" -e "school"
+			time latexmk -silent -pdf -interaction=nonstopmode main | tee -a $LOGFILE
+			[ -f main.pdf ] && mv main.pdf $OUTDIR/2/$i-$j.pdf || touch $OUTDIR/2/$i-$j-FAILED.txt
 		done
 	done
+	
+	Scripts/latex-clean-temp.sh
+	rm main.tex
 	
 fi # SET2
