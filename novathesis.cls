@@ -147,7 +147,7 @@
 % Alias for consistency in template.tex
 \def\ntmajorfield[#1]#2{\majorfield[#1]={#2}}
 \def\ntdegreename[#1]#2{\degreename[#1]={#2}}
-\def\specialization[#1]#2{\specialization[#1]={#2}}
+\def\ntspecialization[#1]#2{\specialization[#1]={#2}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

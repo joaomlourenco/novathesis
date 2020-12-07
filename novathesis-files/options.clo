@@ -47,8 +47,6 @@
   , chapstyle/.new choice = {elegant, bianchi, bluebox, default, ell, hansen, ist, lyhne, madsen, pedersen, veelo, vz34, vz43}
   % %novathesis@opt@fontstyle
   , fontstyle/.new choice = {kpfonts, bookman, erewhon, libertine, scholax, calibri, kieranhealy}
-  % %novathesis@opt@otherlistsat
-  , otherlistsat/.new choice = {front, back}
   % HANDLER
   , lang/.new style = {/novathesis/mainlang=#1,/novathesis/copyrightlang=#1,/novathesis/coverlang=#1}
   % %novathesis@opt@lang

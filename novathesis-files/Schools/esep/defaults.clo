@@ -9,6 +9,8 @@
 
 %%% RGB = 41, 141, 187
 
+\ifxeorlua{\ntsetup{fontstyle=calibri}}{}
+
 % Univesity
 \university[pt]={Escola Superior de Enfermagem do Porto}
 \university[en]={Nursing School of Porto}%%TBD
