@@ -252,8 +252,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\@nt@select@lang}[1]{%
   % #1 = lang {pt, en, fr, it}
-  \options{/novathesis/langshorttolong=#1}%
-  \edef\@nt@tmp{\option{/novathesis/langshorttolong}}%
+  \options{/@nt/langshorttolong=#1}%
+  \edef\@nt@tmp{\option{/@nt/langshorttolong}}%
   % \typeout{'NT SWITCHING LANG TO = '\nt@tmp}%
   \expandafter\selectlanguage\expandafter{\@nt@tmp}%
 }
@@ -488,7 +488,7 @@
 %% Include strings for all the languages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\optionlistdo{/novathesis/langsshort}{%
+\optionlistdo{/@nt/langsshort}{%
   \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.clo}%
     {}%
     {}%
@@ -955,7 +955,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\@ntaddlisthookfilebib}[2]{%
-  \letoptionlist{/novathesis/biblatex}\nt@tmp%
+  \letoptionlist{/@nt/biblatex}\nt@tmp%
   % \typeout{'NT PASSING TO BIBLATEX= '\nt@tmp}%
   \RequirePackage[hyperref=true,\nt@tmp]{biblatex}%
   \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
