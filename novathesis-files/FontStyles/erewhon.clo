@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% erewhon.clo
+%% FontStyles/erewhon.clo
 %% NOVA thesis configuration file
 %%
 %% Customization of font to use a Linux Libertine font set
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE erewhon.clo}
+\typeout{NT LOADING FILE FontStyles/erewhon.clo}
 
 % load babel package and options before erewhon
 \usepackage[p,osf,scaled=.98,space]{erewhon} % scaling by .98 not really necessary

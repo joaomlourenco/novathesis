@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% spine.clo
+%% nova/ims/spine.clo
 %% NOVA thesis document template
 %%
 %% This work is licensed under the 
@@ -12,6 +12,7 @@
 %%      - Tomás Monteiro <monteiro.tomas@gmail.com>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\typeout{NT LOADING FILE nova/ims/spine.clo}
 
 % Draw the book spine
 % usable range: 145 to 425 pages, maximum characters for the title 140 and 22 for the author name

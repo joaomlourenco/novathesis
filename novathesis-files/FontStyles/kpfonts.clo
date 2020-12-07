@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% kpfonts.clo
+%% FontStyles/kpfonts.clo
 %% NOVA thesis configuration file
 %%
 %% Customization of fonts to use a Paltino-like font set
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE kpfonts.clo}
+\typeout{NT LOADING FILE FontStyles/kpfonts.clo}
 
 \ifxeorlua{%
   \RequirePackage{kpfonts-otf}%

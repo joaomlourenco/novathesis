@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ChapterStyle/default.clo
+%% ChapterStyle/section.clo
 %% NOVA thesis configuration file
 %%
 %% Costumization for the Default chapter style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE ChapterStyle/default.clo}
+\typeout{NT LOADING FILE ChapterStyle/section.clo}
 
 %%%%% Configure chapters, headers, footers, and page numbering
-\chapterstyle{default}
+\chapterstyle{section}

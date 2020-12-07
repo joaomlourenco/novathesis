@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% libertine.clo
+%% FontStyles/libertine.clo
 %% NOVA thesis configuration file
 %%
 %% Customization of font to use a Linux Libertine font set
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE libertine.clo}
+\typeout{NT LOADING FILE FontStyles/libertine.clo}
 
 \RequirePackage{textcomp}
 \RequirePackage[sb]{libertine}

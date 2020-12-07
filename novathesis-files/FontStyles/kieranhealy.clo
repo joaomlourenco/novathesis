@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% kieranhealy.clo
+%% FontStyles/kieranhealy.clo
 %% NOVA thesis configuration file
 %%
 %% Costumization of fonts to use Bookman fontset
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE kieranhealy.clo}
+\typeout{NT LOADING FILE FontStyles/kieranhealy.clo}
 
 \ifxeorlua{%
   \setromanfont[Path=novathesis-files/FontStyles/Fonts/,
