@@ -311,7 +311,7 @@
 
 \newcommand*{\ntprintcovers}{%
   \begingroup%
-    \@nt@coverprehook%
+    \ntcoverprehook%
     % \thispagestyle{empty}%
     \@nt@select@lang{\option{/novathesis/coverlang}}%
     \@nt@printthecover{1}%
@@ -323,12 +323,15 @@
       }%
       {}% NO SECOND COVER
     \@nt@select@lang{\option{/novathesis/mainlang}}%
+    \ntcoverposthook%
   \endgroup%
 }
 
-\newcommand*{\@nt@coverprehook}{%
+\newcommand*{\ntcoverprehook}{%
   \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
 }
+
+\newcommand*{\ntcoverposthook}{}
 
 \newcommand*{\@nt@printthecover}[1]{%
   % #1 = cover number {1, 2}    (1 is the default)
