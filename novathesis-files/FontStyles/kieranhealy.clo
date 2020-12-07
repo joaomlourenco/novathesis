@@ -8,7 +8,7 @@
 \typeout{NT LOADING FILE FontStyles/kieranhealy.clo}
 
 \ifxeorlua{%
-  \setromanfont[Path=novathesis-files/FontStyles/Fonts/,
+  \setromanfont[Path=NOVAthesisFiles/FontStyles/Fonts/,
                 BoldItalicFont=MinionPro-Bold-Italic.otf,
                 BoldFont      =MinionPro-Bold.otf,
                 ItalicFont    =MinionPro-Italic.otf,
@@ -17,7 +17,7 @@
                 Ligatures     ={Common},,
                 Scale         =1.10,
   ]{MinionPro}
-  \setsansfont[Path=novathesis-files/FontStyles/Fonts/,
+  \setsansfont[Path=NOVAthesisFiles/FontStyles/Fonts/,
                BoldItalicFont=MyriadPro-Bold-Italic.otf,
                BoldFont      =MyriadPro-Bold.otf,
                ItalicFont    =MyriadPro-Italic.otf,
@@ -26,7 +26,7 @@
                % Colour=AA0000
   % ]{Unit-Medium}
   ]{MyriadPro}
-  \setmonofont[Path=novathesis-files/FontStyles/Fonts/,
+  \setmonofont[Path=NOVAthesisFiles/FontStyles/Fonts/,
                Mapping=tex-text,
                Scale=0.90,
                % Scale=0.72,

@@ -9,11 +9,11 @@
 
 \ifxeorlua{%
   \setmainfont[
-    Path=novathesis-files/FontStyles/Fonts/,
+    Path=NOVAthesisFiles/FontStyles/Fonts/,
     BoldItalicFont=Calibriz.ttf,
     BoldFont      =Calibrib.ttf,
     ItalicFont    =Calibrii.ttf
   ]{Calibri.ttf}%
 }{%
-  \include{novathesis-files/FontStyles/kpfonts}%  
+  \include{NOVAthesisFiles/FontStyles/kpfonts}%  
 }

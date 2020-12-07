@@ -51,10 +51,10 @@
 \ProvidesClass{novathesis}[2020/12/02 novathesis template]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% LOOK FOR PACKAGES ALSO IN "novathesis-files" folder
+%% LOOK FOR PACKAGES ALSO IN "NOVAthesisFiles" folder
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \providecommand*{\input@path}{}
-\g@addto@macro\input@path{{./}{Chapters/}{novathesis-files/}}% subfolder path
+\g@addto@macro\input@path{{./}{Chapters/}{NOVAthesisFiles/}}% subfolder path
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -266,11 +266,11 @@
 % --------------------------------------------------------
 % SOME PRELIMINARY LANGUAGE DEFINITIONS
 \mynewdata{abstractorder}
-\input{novathesis-files/lang-conf.clo}
+\input{NOVAthesisFiles/lang-conf.clo}
 
 % --------------------------------------------------------
 % PROCESS PACKAGE OPTIONS
-\input{novathesis-files/options.clo}
+\input{NOVAthesisFiles/options.clo}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING MEMOIR
@@ -287,11 +287,11 @@
 
 % --------------------------------------------------------
 % LOAD ADDITIONAL PACKAGES
-\input{novathesis-files/packages.clo}
+\input{NOVAthesisFiles/packages.clo}
 
 % --------------------------------------------------------
 % FIX BABEL TRANSLATION
-\input{novathesis-files/fix-babel.clo}
+\input{NOVAthesisFiles/fix-babel.clo}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% COVER DEFINITION MACROS
@@ -489,7 +489,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \optionlistdo{/novathesis/langsshort}{%
-  \InputIfFileExists{novathesis-files/Strings/strings-#1.clo}%
+  \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.clo}%
     {}%
     {}%
 }
@@ -510,7 +510,7 @@
 
 % --------------------------------------------------------
 % Add school specific Images folder to the graphics path
-\prependtographicspath{{novathesis-files/Schools/\option{/novathesis/school}/Images/}}
+\prependtographicspath{{NOVAthesisFiles/Schools/\option{/novathesis/school}/Images/}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -707,7 +707,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Include the School's defaults
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/defaults.clo}{}{}
+\InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.clo}{}{}
 
 
 
@@ -1077,8 +1077,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \AtEndPreamble{%
-\InputIfFileExists{novathesis-files/ChapStyles/\option{/novathesis/chapstyle}.clo}{}{}%
-\InputIfFileExists{novathesis-files/FontStyles/\option{/novathesis/fontstyle}.clo}{}{}%
+\InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.clo}{}{}%
+\InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/fontstyle}.clo}{}{}%
 }
 
 
@@ -1086,5 +1086,5 @@
 % Generate book spine (if otion "spine=true")
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% See file "novathesis-files/spine.clo"
+% See file "NOVAthesisFiles/spine.clo"
 % This file is loaded only if otion "spine=true"  :)

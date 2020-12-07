@@ -65,18 +65,18 @@
   , debugcover/.new toggle = false
   , spine/.new cmd* = {%
       \AtEndDocument{%
-        \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/spine.clo}%
+        \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/spine.clo}%
           {}%
-          {\input{novathesis-files/spine.clo}}%
+          {\input{NOVAthesisFiles/spine.clo}}%
         \ntprintspine%
       }%
   }
   % %novathesis@opt@cdcover
   , cdcover/.new cmd* = {%
       \AtEndDocument{%
-      \InputIfFileExists{novathesis-files/Schools/\option{/novathesis/school}/cdcover.clo}%
+      \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/cdcover.clo}%
         {}%
-        {\input{novathesis-files/cdcover.clo}}%
+        {\input{NOVAthesisFiles/cdcover.clo}}%
       \ntprintcdcover%  
       \ntprintcdinlay%
       }%
@@ -94,8 +94,8 @@
     \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/element}%
       {}% it as a reload… do nothing
       {% Load new school definitions
-        \prependtographicspath{{novathesis-files/Schools/#1/Images/}}%
-        \InputIfFileExists{novathesis-files/Schools/#1/defaults.clo}%
+        \prependtographicspath{{NOVAthesisFiles/Schools/#1/Images/}}%
+        \InputIfFileExists{NOVAthesisFiles/Schools/#1/defaults.clo}%
           {}%
           {\PackageWarining{novathesis}{Missing file “defaults.clo” for #1}}%
       }%
@@ -115,10 +115,10 @@
       {}
   }
   , handler/chapstyle/.new cmd = {%
-    \InputIfFileExists{novathesis-files/ChapStyles/#1.clo}{}{\PackageWarining{novathesis}{Invalid Chapter Style: #1}}
+    \InputIfFileExists{NOVAthesisFiles/ChapStyles/#1.clo}{}{\PackageWarining{novathesis}{Invalid Chapter Style: #1}}
   }
   , handler/fontstyle/.new cmd = {%
-    \InputIfFileExists{novathesis-files/FontStyles/#1.clo}{}{\PackageWarining{novathesis}{Invalid Font Style: #1}}
+    \InputIfFileExists{NOVAthesisFiles/FontStyles/#1.clo}{}{\PackageWarining{novathesis}{Invalid Font Style: #1}}
   }
   , files/glossaries/.new list = {}
 }
