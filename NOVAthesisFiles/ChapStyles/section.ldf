@@ -1,0 +1,11 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ChapterStyle/section.ldf
+%% NOVA thesis configuration file
+%%
+%% Costumization for the Default chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE ChapterStyle/section.ldf}
+
+%%%%% Configure chapters, headers, footers, and page numbering
+\chapterstyle{section}

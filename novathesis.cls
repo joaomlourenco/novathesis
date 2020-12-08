@@ -266,11 +266,11 @@
 % --------------------------------------------------------
 % SOME PRELIMINARY LANGUAGE DEFINITIONS
 \mynewdata{abstractorder}
-\input{NOVAthesisFiles/lang-conf.clo}
+\input{NOVAthesisFiles/lang-conf.tex}
 
 % --------------------------------------------------------
 % PROCESS PACKAGE OPTIONS
-\input{NOVAthesisFiles/options.clo}
+\input{NOVAthesisFiles/options.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING MEMOIR
@@ -287,11 +287,11 @@
 
 % --------------------------------------------------------
 % LOAD ADDITIONAL PACKAGES
-\input{NOVAthesisFiles/packages.clo}
+\input{NOVAthesisFiles/packages.tex}
 
 % --------------------------------------------------------
 % FIX BABEL TRANSLATION
-\input{NOVAthesisFiles/fix-babel.clo}
+\input{NOVAthesisFiles/fix-babel.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% COVER DEFINITION MACROS
@@ -513,7 +513,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \optionlistdo{/@nt/langsshort}{%
-  \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.clo}%
+  \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
     {}%
     {}%
 }
@@ -731,7 +731,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Include the School's defaults
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.clo}{}{}
+\InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.ldf}{}{}
 
 
 
@@ -1101,8 +1101,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \AtEndPreamble{%
-\InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.clo}{}{}%
-\InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/fontstyle}.clo}{}{}%
+\InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.ldf}{}{}%
+\InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/fontstyle}.ldf}{}{}%
 }
 
 
@@ -1110,5 +1110,5 @@
 % Generate book spine (if otion "spine=true")
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% See file "NOVAthesisFiles/spine.clo"
+% See file "NOVAthesisFiles/spine.tex"
 % This file is loaded only if otion "spine=true"  :)

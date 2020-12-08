@@ -1,0 +1,385 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova/fct/FontStyles/cdcover.tex
+%% NOVA thesis document template
+%%
+%% This work is licensed under the 
+%% Creative Commons Attribution-NonCommercial 4.0 International License. 
+%% To view a copy of this license, 
+%% visit http://creativecommons.org/licenses/by-nc/4.0/.
+%%
+%% Authors / Contributors:
+%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%      - Tomás Monteiro <monteiro.tomas@gmail.com>
+%%
+%% This CD cover is a refactoring of the pull request by Tomás Monteiro
+%% to reuse the information already provided in the file “template.tex”
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE nova/fct/FontStyles/cdcover.tex}
+
+
+% Draw the cdcover
+
+
+%% Cover: 12.0cm x 12.0cm
+%% Inlay: 15.0cm x 11.8cm
+%% Inlay fold: 0,635cm + 13,73cm + 0,635cm
+
+\newsavebox{\cdcover@savebox}
+\newsavebox{\cdcover@savebox@spineone}
+\newsavebox{\cdcover@savebox@spinetwo}
+
+\newcommand{\ntprintcdcover}{%
+	\clearpage
+
+	\thispagestyle{empty}
+	\pagestyle{empty}
+	
+	\setstocksize{12cm}{12cm}
+	\settrimmedsize{\stockheight}{\stockwidth}{*}
+	\settrims{0pt}{0pt}
+	\setlrmarginsandblock{*}{-5mm}{*}
+	\setulmarginsandblock{0mm}{*}{*}
+	% \setlength{\parskip}{0pt}
+	\setheadfoot{0mm}{0mm}
+	\setheaderspaces{*}{0mm}{*}
+	\setmarginnotes{0mm}{0mm}{0mm}
+	\checkandfixthelayout[fixed]
+
+  % \ifthenelse{\equal{\option{/novathesis/docdegree}}{phd}%
+  %     \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
+  %     \OR\equal{\option{/novathesis/docdegree}}{phdplan}%
+  %     }%
+  %     {\AddToShipoutPictureBG*{\includegraphics[width=120mm]{cd-cover-phd}}}
+  %     {\AddToShipoutPictureBG*{\includegraphics[width=120mm]{cd-cover-msc}}}
+  \AddToShipoutPictureBG*{\includegraphics[width=120mm]{\@nameuse{thesiscover\option{/novathesis/docdegree},cdfront}}}
+
+	\savebox{\cdcover@savebox}{%
+	\begin{minipage}[t][7.0cm]{9cm}
+		
+		% Author name
+		% \raggedright
+		% \raggedleft
+		\centering
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{12}{12}\selectfont
+		\textbf{\theauthorname}
+		\medskip
+
+		% Academic qualifications
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{9}{9}\selectfont
+		\theauthordegree
+		\vfill
+
+		% Title of Dissertation
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{12}{12}\selectfont
+		\textbf{\thecovertitle}
+		\vfill
+
+		% Degree
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{9}{9}\selectfont
+		\thepresentationtext
+		\vfill
+
+		% Date
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{9}{9}\selectfont
+		\textbf{\thentdatemonth, \thentdateyear}	
+		
+		
+	\end{minipage}
+	}
+
+  \ifthenelse{\equal{\option{/novathesis/docdegree}}{phd}}%
+  {~\\[1.75cm]~\hspace*{2.3cm}}
+	{~\\[1.75cm]~\hspace*{1.7cm}}
+	\usebox{\cdcover@savebox}
+
+}
+
+
+
+\newcommand{\ntprintcdinlay}{%
+	\clearpage
+
+	\thispagestyle{empty}
+	\pagestyle{empty}
+	
+	\setstocksize{11.8cm}{15cm}
+	\settrimmedsize{\stockheight}{\stockwidth}{*}
+	\settrims{0pt}{0pt}
+	\setlrmarginsandblock{*}{0mm}{*}
+	\setulmarginsandblock{0mm}{*}{*}
+	% \setlength{\parskip}{0pt}
+	\setheadfoot{0mm}{0mm}
+	\setheaderspaces{*}{0mm}{*}
+	\setmarginnotes{0mm}{0mm}{0mm}
+	\checkandfixthelayout[fixed]
+
+  % \ifthenelse{\equal{\option{/novathesis/docdegree}}{phd}%
+  %     \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
+  %     \OR\equal{\option{/novathesis/docdegree}}{phdplan}%
+  %     }%
+  %     {\AddToShipoutPictureBG*{\includegraphics[width=150mm]{cd-inlay-phd}}}
+  %     {\AddToShipoutPictureBG*{\includegraphics[width=150mm]{cd-inlay-msc}}}
+  \AddToShipoutPictureBG*{\includegraphics[width=150mm]{\@nameuse{thesiscover\option{/novathesis/docdegree},cdinlay}}}
+  
+	\savebox{\cdcover@savebox}{%
+	\begin{minipage}[t][8cm]{11cm}
+		
+		% Author name
+		% \raggedright
+		% \raggedleft
+		{
+		\centering
+		\vfill
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{12}{12}\selectfont
+		\textbf{\theauthorname}
+		\medskip
+
+		% Academic qualifications
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{9}{9}\selectfont
+		\theauthordegree
+		\vfill
+
+		% Title of Dissertation
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{12}{12}\selectfont
+		\textbf{\thecovertitle}
+		\vfill
+
+		% Degree
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{9}{9}\selectfont
+		\thepresentationtext
+		\vfill
+
+		% Date
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{9}{9}\selectfont
+		\textbf{\thentdatemonth, \thentdateyear}	
+		\vfill
+
+		}
+		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fix the cover font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\coverprehook}{%
+  \ifxetexorluatex
+    \setmainfont[Ligatures=TeX]{Helvetica}  
+  \else
+    %
+  \fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{5}{7}\selectfont
+		\thecopyrightstr
+		
+	\end{minipage}
+	}
+	
+	\par
+
+	\setlength{\fboxsep}{0pt}
+	% ~\hspace*{1.8cm}
+  \ifthenelse{\equal{\option{/novathesis/docdegree}}{phd}}%
+  {~\\[0.75cm]~\hspace*{2.5cm}}
+	{~\\[0.75cm]~\hspace*{1.8cm}}
+	\usebox{\cdcover@savebox}
+
+  \newlength{\novathesis@cd@box@height}
+
+	\savebox{\cdcover@savebox@spineone}{%
+    \fontseries{mc}\fontsize{12}{12}\selectfont%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{9}{9}\selectfont
+    \makebox[\paperheight][c]{
+      \begin{tabular}{l}
+        \thespine[year]
+      \end{tabular}
+      \hfill
+      \begin{tabular}{l}
+        \thespine[author]
+      \end{tabular}
+      \hfill
+      \settototalheight{\novathesis@cd@box@height}{tg}%
+      \begin{tabular}{c}
+        \raisebox{-5pt}{\rotatebox[origin=c]{-90}{\includegraphics[height=2\novathesis@cd@box@height,origin=c]{\thespine[logo]}}}
+      \end{tabular}
+    }
+	}
+  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+\put(0.5,\LenToUnit{0.5\paperheight}){\rotatebox[origin=c]{90}{{\usebox{\cdcover@savebox@spineone}}}}%
+    }%
+
+  \savebox{\cdcover@savebox@spinetwo}{%
+    \fontseries{mc}\fontsize{12}{12}\selectfont%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+\fontsize{9}{9}\selectfont
+    \makebox[\paperheight][c]{
+      \begin{tabular}{l}
+        \thespine[year]
+      \end{tabular}
+      \hfill
+      \begin{tabular}{l}
+        \thespine[title]
+      \end{tabular}
+      \hfill
+      \settototalheight{\novathesis@cd@box@height}{tg}%
+      \begin{tabular}{c}
+        \raisebox{-5pt}{\rotatebox[origin=c]{-90}{\includegraphics[height=2\novathesis@cd@box@height,origin=c]{\thespine[logo]}}}
+      \end{tabular}
+    }
+  }
+  \settototalheight{\novathesis@cd@box@height}{\usebox{\cdcover@savebox@spinetwo}}%
+  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+\put(\LenToUnit{\paperwidth-\novathesis@cd@box@height-0.5pt},\LenToUnit{0.5\paperheight}){\rotatebox[origin=c]{90}{{\usebox{\cdcover@savebox@spinetwo}}}}%
+    }%
+  
+}

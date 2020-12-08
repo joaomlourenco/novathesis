@@ -1,0 +1,11 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ChapterStyle/bianchi.ldf
+%% NOVA thesis configuration file
+%%
+%% Costumization for the Bianchi chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE ChapterStyle/bianchi.ldf}
+
+%%%%% Configure chapters, headers, footers, and page numbering
+\chapterstyle{bianchi}

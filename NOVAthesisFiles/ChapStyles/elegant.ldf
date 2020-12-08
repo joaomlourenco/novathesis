@@ -1,0 +1,77 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ChapterStyle/elegant.ldf
+%% NOVA thesis configuration file
+%%
+%% Costumization for the Elegant chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE ChapterStyle/elegant.ldf}
+
+%%%%% Configure chapters, headers, footers, and page numbering
+\RequirePackage{soul}
+
+\makeatletter
+\undef{\novathesis@elegant@chapter}
+\newsavebox{\novathesis@elegant@chapter}
+\undef{\novathesis@elegant@part}
+\newsavebox{\novathesis@elegant@part}
+
+\providecommand{\novathesis@elegant@chapter@marker}[1][4cm]{%
+	\sbox\novathesis@elegant@chapter{% 
+		\resizebox{!}{#1}{\fboxsep=1pt%
+			\colorbox{lightgray}{\color{white}\thechapter}% 
+		}}%
+		\rotatebox{90}{% 
+			\resizebox{%
+				\heightof{\usebox{\novathesis@elegant@chapter}}+\depthof{\usebox{\novathesis@elegant@chapter}}}% 
+			{!}{\scshape\so\@chapapp}}\quad%
+		\raisebox{\depthof{\usebox{\novathesis@elegant@chapter}}}{\usebox{\novathesis@elegant@chapter}}%
+}
+
+\providecommand{\novathesis@elegant@chm}[1][4cm]{%
+	\sbox\novathesis@elegant@chapter{\novathesis@elegant@chapter@marker[#1]}% 
+	\makebox[0pt][c]{% aka \rlap
+		\makebox[1cm][r]{\usebox\novathesis@elegant@chapter}%
+	}%
+}
+	
+\providecommand{\novathesis@elegant@part@marker}[1][4cm]{%
+	\sbox\novathesis@elegant@part{% 
+		\resizebox{!}{#1}{\fboxsep=1pt%
+			\colorbox{lightgray}{\color{white}\thepart}% 
+		}}%
+		\rotatebox{90}{% 
+			\resizebox{%
+				\heightof{\usebox{\novathesis@elegant@part}}+\depthof{\usebox{\novathesis@elegant@part}}}% 
+			{!}{\scshape\so{\partname}}}\quad%
+		\raisebox{\depthof{\usebox{\novathesis@elegant@part}}}{\usebox{\novathesis@elegant@part}}%
+}
+
+\providecommand{\novathesis@elegant@ptm}[1][4cm]{%
+	\sbox\novathesis@elegant@part{\novathesis@elegant@part@marker[#1]}% 
+	\makebox[0pt][c]{% aka \rlap
+		\makebox[1cm][r]{\usebox\novathesis@elegant@part}%
+	}%
+}
+	
+  
+\makechapterstyle{elegant}{%
+	\renewcommand{\chapnamefont}{\normalfont\Large\scshape\raggedleft\so}%
+	\renewcommand{\chaptitlefont}{\normalfont\LARGE\bfseries\scshape}%
+	\renewcommand{\chapternamenum}{} 
+	\renewcommand{\printchaptername}{}%
+	\renewcommand{\printchapternum}{\null\hfill\novathesis@elegant@chm[2.5cm]\hspace*{14pt}\par}%
+	\renewcommand{\afterchapternum}{\par\vskip\midchapskip}%
+	\renewcommand{\printchaptertitle}[1]{\color{darkgray}\chaptitlefont\raggedleft ##1\par}%
+	%
+	\renewcommand{\partnamefont}{\chapnamefont}
+	\renewcommand{\parttitlefont}{\chaptitlefont}
+	\renewcommand{\partnamenum}{}
+	\renewcommand{\printpartname}{}%
+	\renewcommand{\thepart}{\Roman{part}}
+	\renewcommand{\printpartnum}{\null\hfill\novathesis@elegant@ptm[2.5cm]\hspace*{14pt}\par}%
+	% \renewcommand{\afterpartnum}{\par\vskip\midchapskip}%
+	\renewcommand{\printparttitle}[1]{\color{darkgray}\parttitlefont\raggedleft ##1\par}%
+	\renewcommand*{\partnumfont}{\normalfont\scshape\MakeLowercase}
+} 
+\chapterstyle{elegant}

@@ -1,0 +1,11 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ChapterStyle/veelo.ldf
+%% NOVA thesis configuration file
+%%
+%% Costumization for the Veelo chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE ChapterStyle/veelo.ldf}
+
+%%%%% Configure chapters, headers, footers, and page numbering
+\chapterstyle{veelo}

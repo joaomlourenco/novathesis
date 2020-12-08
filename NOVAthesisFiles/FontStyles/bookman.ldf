@@ -1,0 +1,14 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/bookman.ldf
+%% NOVA thesis configuration file
+%%
+%% Costumization of fonts to use Bookman fontset
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE FontStyles/bookman.ldf}
+
+\ifxeorlua{%
+  \setmainfont{TeX Gyre Bonum}%
+}{%
+  \RequirePackage{bookman}%
+}
