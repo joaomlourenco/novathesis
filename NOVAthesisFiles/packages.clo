@@ -119,18 +119,9 @@
       {€}{{\EUR}}1 {£}{{\pounds}}1
 }
 
-% \iftoggle{/novathesis/debugcover}{%
-  \RequirePackage{scrlayer}
-  \DeclareNewLayer[
-    foreground,
-    innermargin,
-    outermargin,
-    contents=\layercontentsmeasure
-  ]{measurelayer}
-  \DeclareNewPageStyleByLayers{measurestyle}{measurelayer}
-% }%
-% {}
 
+% Cover design debugging
+\RequirePackage[type=none]{fgruler}
 
 
 % Flexible definition of new environments

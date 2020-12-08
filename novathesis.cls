@@ -340,8 +340,18 @@
 \newcommand*{\@nt@printthecover}[1]{%
   % #1 = cover number {1, 2}    (1 is the default)
   \iftoggle{/novathesis/debugcover}%
-    {\thispagestyle{measurestyle}}%
-    {\thispagestyle{empty}}%
+    {%
+      \edef\@nt@tmpleft{\themargin[\option{/novathesis/docdegree},left]}%
+      \edef\@nt@tmpright{\themargin[\option{/novathesis/docdegree},right]}%
+      \edef\@nt@tmptop{\themargin[\option{/novathesis/docdegree},top]}%
+      \edef\@nt@tmpbottom{\themargin[\option{/novathesis/docdegree},bottom]}%
+      \fgrulerthickcm{}{}{1pt}
+      % \setfgruler{numsep=-17pt}
+      \fgruler[cm]{upperleft}{\@nt@tmpleft}{\@nt@tmptop}
+      \fgruler[cm]{lowerright}{\@nt@tmpright}{\@nt@tmpbottom}
+    }%
+    {}
+  \thispagestyle{empty}
   \setlength{\mpwidth}{\dimexpr%
     \paperwidth%
       -\themargin[\option{/novathesis/docdegree},left]%
@@ -388,12 +398,26 @@
     }{%IS NOT INTEGER
       \vspace*{#3}%
     }%
-    \noindent\begin{minipage}[t]{\linewidth}%
-      \if#2l\relax\raggedright\fi%
-      \if#2c\relax\centering\fi%
-      \if#2r\relax\raggedleft\fi%
+    \noindent%
+    \iftoggle{/novathesis/debugcover}{% IF in debug mode surround element in box
+      \setlength{\fboxsep}{0pt}%
+      \fbox{%
+        \begin{minipage}[t]{\linewidth}%
+          \if#2l\relax\raggedright\fi%
+          \if#2c\relax\centering\fi%
+          \if#2r\relax\raggedleft\fi%
+          #4%
+        \end{minipage}%
+      }%
+    }{% Not in debug mode
+      \begin{minipage}[t]{\linewidth}%
+        \if#2l\relax\raggedright\fi%
+        \if#2c\relax\centering\fi%
+        \if#2r\relax\raggedleft\fi%
         #4%
-    \end{minipage}\par%
+      \end{minipage}%
+    }%
+    \par%
   \fi%
 }
 
