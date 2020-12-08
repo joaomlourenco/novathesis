@@ -14,4 +14,4 @@
 % amssymb should not be loaded
 \RequirePackage[scaled=1.075,ncf,vvarbb]{newtxmath}% need to scale up math package
 % vvarbb selects the STIX version of blackboard bold. See below.
-\linespread{1.05} %needed only if scholax loaded at full scale
+\linespread{1.10} %needed only if scholax loaded at full scale
