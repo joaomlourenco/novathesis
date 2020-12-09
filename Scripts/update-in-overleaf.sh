@@ -74,7 +74,7 @@ read a
 read a
 [ -f main.tex ] && mv -f main.tex main-OLD.tex
 read a
-ls | fgrep -v -e Chapters -e bibliography.bib -e '*-OLD.tex' | xargs git rm -rf
+ls | fgrep -v -e Chapters -e bibliography.bib -e *-OLD.tex | xargs git rm -rf
 # find . -type d | grep -v -e '^.$' -e '/.git' -e 'Chapters' | while read i; do git rm -rf "$i"; done
 read a
 mv ../$NTNAME/* .		# get files from NOVAthesis folder
@@ -87,7 +87,7 @@ rm -rf Scripts Examples
 read a
 git add -A .					# Add all files to git
 read a
-V=$(fgrep "%% Version" template.tex | cut -d '[' -f 2 | cut -d ']' -f 1)
+V=$(fgrep "%% Version" main.tex | cut -d '[' -f 2 | cut -d ']' -f 1)
 git commit -m "Updated template NOVAthesis to version $V"
 read a
 git push
