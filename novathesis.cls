@@ -4,9 +4,9 @@
 %% NOVA thesis document class
 %%
 %% This work is licensed under the
-%% Creative Commons Attribution-NonCommercial 4.0 International License.
-%% To view a copy of this license,
-%% visit http://creativecommons.org/licenses/by-nc/4.0/.
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
 %% Version 2020-12-09 [5.1.8]
 %% Departamento de Informática (www.di.fct.unl.pt)
@@ -26,15 +26,16 @@
 %%      - joaomlourenco
 %%
 %% CONTRIBUTORS @github:
-%%      - bcandeias, flaviomartins, tmonteiro2344, jsaramago, microlina, riclas, pedrovieira
+%%      - bcandeias, flaviomartins, tmonteiro2344, jsaramago, 
+%%        microlina, riclas, pedrovieira
 %%
 %% DONATIONS:
-%%     If you think this templatze really helped you while writing your thesis,
-%%     think about doing a small donation. Just access the website
-%%     https://github.com/joaomlourenco/novathesis/
-%%     and click in the “Donation” link.
-%%     I'll keep a list thanking to all the identified donors that identify
-%%     themselves in the “*Add special instructions to the seller:*” box.
+%%     If you think this template really helped you while writing your thesis,
+%%     think about making a small donation. Just access the website
+%%     https://paypal.me/novathesis
+%%     and click in the “Donation” link.  We will keep a list thanking to all 
+%%     the identified donors that identify themselves in the “Add special 
+%%     instructions to the seller:” box.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

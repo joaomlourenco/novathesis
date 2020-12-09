@@ -31,7 +31,7 @@ The template provides an _easy to use_ setting for you to write your thesis/diss
 
 ## Donations
 
-This template is the result of hundreds (yes! *hundreds*) of hours of work from the main developer.  If you think this template really helped you while writing your thesis, think about doing a [**donation**](https://paypal.me/novathesis). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
+This template is the result of hundreds (yes! *hundreds*) of hours of work from the main developer.  If you think this template really helped you while writing your thesis, think about making a [**donation**](https://paypal.me/novathesis). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
 
 Thank you to our donnors:
 
@@ -45,7 +45,7 @@ Jorge Barreto, Raissa Almeida.
 
 ### Download
 
-Get the latest realease from the [releases page](https://github.com/joaomlourenco/novathesis/releases)!
+Get the latest release from the [releases page](https://github.com/joaomlourenco/novathesis/releases)!
 
 ### Problems and Difficulties
 
