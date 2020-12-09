@@ -2,18 +2,22 @@
 
 ME=$(basename $0)
 
+LINE=$(grep "^%% Version" template.tex)
+V=$(echo $LINE | cut -d '[' -f 2 | cut -d ']' -f 1)
+D=$(echo $LINE | cut -d ' ' -f 3)
+FILES=$(grep -rl "^%% Version" . | fgrep -v $ME)
+echo Current DATE=$D VERSION=$V FILES=[$FILES]
+
+
 if [ -z "$1" ]; then
 	echo
 	echo "Usage: $ME <new-version-number>"
 	echo
+	exit 1
 fi
 
-LINE=$(fgrep "%% Version" template.tex)
-V=$(echo $LINE | cut -d '[' -f 2 | cut -d ']' -f 1)
-D=$(echo $LINE | cut -d ' ' -f 3)
 T=$(date  +%Y-%m-%d)
-FILES=$(fgrep -rl "%% Version" . | fgrep -v $ME)
 
-echo $D [$V] $T [$FILES]
+echo New DATE=$T VERSION=$1
 
 perl -pi -e "s,%% Version $D \[$V\],%% Version $T \[$1\]," $FILES
