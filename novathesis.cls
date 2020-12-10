@@ -310,7 +310,7 @@
 \newsavebox{\novathesis@coverbox}%
 
 \newcommand*{\ntprintcovers}{%
-  \begingroup%
+  \bgroup%
     % \thispagestyle{empty}%
     \ntcoverprehook{1}%
     \@nt@select@lang{\option{/novathesis/coverlang}}%
@@ -327,8 +327,7 @@
       }%
       {}% NO SECOND COVER
     \@nt@select@lang{\option{/novathesis/mainlang}}%
-    \ntcoverposthook%
-  \endgroup%
+  \egroup%
 }
 
 \newcommand*{\ntcoverprehook}[1]{%
@@ -585,7 +584,7 @@
  
 %% Work identification
 \newcommand{\thecovertitle}[1][\option{/novathesis/coverlang}]{%
-  \typeout{NT thecovertitle [#1]}
+  % \typeout{NT thecovertitle [#1]}
   \thedoccovertitle[#1]%
 }
 \newcommand{\thetitle}[1][\option{/novathesis/coverlang}]{%
@@ -1071,7 +1070,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newtoggle{@nt@keywords@defined}
 \togglefalse{@nt@keywords@defined}
-\NewEnviron{keywords}[1][en]{%
+\NewEnviron{keywords}[1][\option{/@nt/langshorttolong}]{%
   \csdef{@nt@keywords@#1}{\BODY}
   \iftoggle{@nt@keywords@defined}%
     {}%
