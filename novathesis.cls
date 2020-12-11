@@ -967,7 +967,7 @@
   % \typeout{NT @loadglossaryfile [\@nt@key][\@nt@value]}
   \IfFileExists{\@nt@value}%
     {\loadglsentries{\@nt@value}}%
-    {\ClassWarning{novathesis}{File \option@listmatch@value~doe not exist!}{}}%
+    {}%
 }
 
 \AtEndPreamble{\@loadglossaryfiles}
@@ -1017,7 +1017,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Dedicatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NewEnviron{thededicatory}{
+\NewEnviron{ntdedicatory}{
   \thispagestyle{empty}%
   ~\\[2cm]%
   \raggedleft%
@@ -1033,7 +1033,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Quote
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NewEnviron{thequote}{%%
+\NewEnviron{ntquote}{%%
   \thispagestyle{empty}%
   ~\\[2cm]%
   \raggedleft
@@ -1049,7 +1049,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NewEnviron{acknowledgements}{%
+\NewEnviron{ntacknowledgements}{%
   \chapter*{\theacknowledgementsstring[\option{/novathesis/mainlang}]}%
   \BODY
 }
