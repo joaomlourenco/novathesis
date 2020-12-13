@@ -7,14 +7,19 @@
 type wget >& /dev/null && GETCMD="wget -q -O"
 type curl >& /dev/null && GETCMD="curl -L -s -o"
 type unzip >& /dev/null && UNZIPCMD="unzip"
+type git >& /dev/null && GITCMD="git"
 
 
 if [[ -z "$UNZIPCMD" ]]; then
-	echo "Did not find 'unzip' command! Aborting..."
+	echo "Did not find 'unzip' in your computer! Aborting..."
 	exit 1
 fi
 if [[ -z "$GETCMD" ]]; then
-	echo "Did not find 'curl' neither 'wget' commands! Aborting..."
+	echo "Did not find 'curl' neither 'wget' in your computer! Aborting..."
+	exit 1
+fi
+if [[ -z "$GITCMD" ]]; then
+	echo "Did not find 'git' in your computer! Aborting..."
 	exit 1
 fi
 
@@ -41,7 +46,7 @@ function usage() {
 }
 
 
-while getopts ":qks:g:t:" opt; do
+while getopts ":qkls:g:t:" opt; do
   case ${opt} in
 	q ) # process option q
 		QUIET="--quiet"
@@ -151,19 +156,89 @@ echo "Renaming 'template.tex' to 'main.tex' due to Overleaf preference"
 mv -f template.tex main.tex	# Overleaf prefers "main.tex" as main file
 echo "Removing unnecessary files"
 rm -rf Scripts Examples _config.yml template.pdf
-echo "Committing and pushing new version"
+
+# Patch files
+echo 'Patching "quote.tex", "dedicatory.tex" and "acknowledgements.tex"'
+for i in quote dedicatory acknowledgements; do
+	if [[ -f "Chapters/$i.tex" ]]; then
+		perl -pi -e "s,\\\\end$i,\\\\end{nt$i}," Chapters/$i.tex
+		perl -pi -e "s,\\\\$i,\\\\begin{nt$i}," Chapters/$i.tex
+	fi
+done
+if [[ -f Chapters/acknowledgements.tex ]]; then
+	fgrep "\end{ntacknowledgements}" Chapters/acknowledgements.tex || echo "\\end{ntacknowledgements}" >> Chapters/acknowledgements.tex
+fi
+
+# Import info fromtemplate-OLD.tex or from main-OLD.tex??
+if [[ -f template-OLD.tex && fgrep -q novathesis template-OLD.tex ]]; then
+	INFILE=template-OLD.tex
+fi
+if [[ -f main-OLD.tex && fgrep -q novathesis main-OLD.tex ]]; then
+	if [[ -n "$INFILE" ]]; then
+		echo 'Found novathesis in both "template-OLD.tex" and "main-OLD.tex"!  Using info from "main-OLD.tex"'
+	fi
+	INFILE=main-OLD.tex
+fi
+if [[ -f template.tex ]]; then
+	OUTFILE=template.tex
+fi
+if [[ -f main.tex ]]; then
+	if [[ -n "$INFILE" ]]; then
+		echo 'Found novathesis in both "template.tex" and "main.tex"!  Using info from "main.tex"'
+	fi
+	OUTFILE=main.tex
+fi
+
+echo "Patching \"$OUTFILE\" with info from \"$INFILE\""
+CLASS_OPTIONS_TO_IMPORT="docdegree school lang printcommittee"
+echo "Importing class options [$OPTIONS_TO_IMPORT]"
+for i in $CLASS_OPTIONS_TO_IMPORT; do
+	INREGEX="^\s*($i)=([^ ,]*).*$"
+	# OUTREGEX="\\\\ntsetup{$i=$VAL"
+	OPT=$i
+	VAL=$(cat $INFILE | perl -ne "s/$INREGEX/\2/ and print $1")
+	echo Activating $OPT=$VAL...
+	perl -pi -e "s|%* *\\\\ntsetup{$i=.*}|\\\\ntsetup{$i=$VAL}|" $OUTFILE
+done
+
+RX_NAME="title";	RX_INF_IN="^\\\\title(\[(.*)\])?{(.*)}\s$>";	RX_OUTF_IN]="";	 RX_OUTF_OUT=""
+for i in {1..20}; do
+	VAR=REGEX$i
+	echo $VAR=${REGEX1[name]}
+done
+
+
+
+TITLE=$(grep "^\\\\\<title\>" $INFILE | perl -p -e "s|^\\\\title\[(.*)\].*|\1|")
+[[ -z "$TITLE" ]] && TITLE=$(grep "^\\\\\<title\>" $INFILE | perl -p -e "s|^\\\\title.*{(.*)}|\1|")
+if [[ -n "$TITLE" ]]; then
+	echo Setting title to [$TITLE]
+	TITLE=$(echo $TITLE | perl -p -e 's/\\/\\\\/g')
+	perl -pi -e "s|^%* *\\\\nttitle{.*}|\\\\nttitle{$TITLE}|" main.tex
+fi
+AUTHOR=$(grep "^\\\\\<authorname\>" $INFILE)
+if [[ -n "$AUTHOR" ]]; then
+	AUTHORGENDER=$(fgrep "\authorname" $INFILE | perl -p -e "s/\\\\authorname\[(.)\].*/\1/")
+	AUTHORLONGNAME=$(fgrep "\authorname" $INFILE | perl -p -e "s/\\\\authorname\[.\]{(.*)}{.*}/\1/")
+	AUTHORSHORTNAME=$(fgrep "\authorname" $INFILE | perl -p -e "s/\\\\authorname\[.\]{.*}{(.*)}/\1/")
+	echo Setting author info to [$AUTHORGENDER] [$AUTHORLONGNAME] [$AUTHORLONGNAME]
+	perl -pi -e "s/%* *\\\\ntauthorname\[.\]{.*}{.*}/\\\\ntauthorname[$AUTHORGENDER]{$AUTHORLONGNAME}{$AUTHORLONGNAME}/" main.tex
+fi
+AUTHORDEGHREE=$(grep "^\\\\\<authordegree\>" $INFILE | cut -d '{' -f 2 | cut -d '}' -f 1)
+if [[ -n "$AUTHORDEGHREE" ]]; then
+	echo Setting author degree info to [$AUTHORDEGHREE]
+	perl -pi -e "s/%* *\\\\ntauthordegree{(.*)}/\\\\ntauthordegree{$AUTHORDEGHREE}/" main.tex
+fi
+
+echo Remember to setup manually the biblatex options...
 
 if [[ -z "$LOCAL" ]]; then
+	echo "Committing and pushing new version"
 	git add -A .					# Add all files to git
 	V=$(fgrep "%% Version" main.tex | cut -d '[' -f 2 | cut -d ']' -f 1)
 	git commit $QUIET -m "Updated template NOVAthesis to version $V"
 	git push
 fi
-
-# Patch files
-for i in quote dedicatory acknowledgements; do
-	[[ -f "Chapters/$i.tex" ]] && perl -pi -e "s/\\$i/\\begin{nt$i}/" -e "s/\\end$i/\\end{nt$i}/" Chapters/$i.tex
-done
 cd ..
 
 # Clean temp directory
