@@ -84,13 +84,15 @@
   , school/.new choice = {{nova/fct}, {nova/fcsh}, {nova/ims}, {nova/ensp},
                           {ul/ist}, {ul/fc}, {ipl/isel}, {ips/ests}, {esep}}
   % %novathesis@opt@chapstyle
-  , chapstyle/.new choice = {bianchi, bluebox, default, elegant,
+  , chapstyle/.new choice = {bianchi, bluebox, default, elegant, 
                              ell, hansen, ist, lyhne, madsen,
                             pedersen, section, southall, veelo,
                             vz34, vz43}
+  , chapstyle=elegant        % set elegant as the default
   % %novathesis@opt@fontstyle
   , fontstyle/.new choice = {kpfonts, bookman, erewhon, libertine, scholax,
                              calibri, kieranhealy}
+  , fontstyle=kpfonts        % set kpfonts as the default
   % HANDLER
   , lang/.new style = {/novathesis/mainlang=#1,/novathesis/copyrightlang=#1,
                        /novathesis/coverlang=#1}
@@ -140,7 +142,6 @@
               {\hypersetup{allcolors=#1}}%
               {\PassOptionsToPackage{allcolors=#1}{hyperref}}%
   }
-  , files/glossaries/.new list = {}
 }
 
 \newcommand*{\ntsetup}[1]{%

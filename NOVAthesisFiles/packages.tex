@@ -9,8 +9,9 @@
 \typeout{NT LOADING FILE packages.tex}
 
 \ifxetexorluatex
-\usepackage{fontspec}
-\else
+  % xelatex or lualatex
+  \RequirePackage{fontspec}%
+\else% pdflatex
   %%%%% Configure font encoding
   \RequirePackage[T1]{fontenc}		% Use new T1 fonts
 
@@ -30,8 +31,7 @@
 
 
 %%%%% Fine tuning of typesetting
-\ifxetexorluatex
-\else
+\ifxeorlua{}{% pdflatex
   \RequirePackage[%
     babel=true,
     activate={true,nocompatibility},  % activate={true,nocompatibility} - activate protrusion and expansion
@@ -43,7 +43,7 @@
     stretch=10,       % stretch=10 - reduce stretchability (default is 20)
     shrink=10,        % shrink=10 - reduce shrinkability (default is 20)
   ]{microtype}
-\fi
+}
 
 %%%%% Better support for calculations
 \RequirePackage{xstring}

@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% nova/fct/FontStyles/cdcover.tex
+%% cdcover.tex
 %% NOVA thesis document template
 %%
 %% This work is licensed under the 
@@ -25,11 +25,12 @@
 %% Inlay: 15.0cm x 11.8cm
 %% Inlay fold: 0,635cm + 13,73cm + 0,635cm
 
+\makeatletter
 \newsavebox{\cdcover@savebox}
 \newsavebox{\cdcover@savebox@spineone}
 \newsavebox{\cdcover@savebox@spinetwo}
 
-\newcommand{\ntprintcdcover}{%
+\newcommand{\printcdcover}{%
 	\clearpage
 
 	\thispagestyle{empty}
@@ -46,13 +47,13 @@
 	\setmarginnotes{0mm}{0mm}{0mm}
 	\checkandfixthelayout[fixed]
 
-  % \ifthenelse{\equal{\option{/novathesis/docdegree}}{phd}%
-  %     \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
-  %     \OR\equal{\option{/novathesis/docdegree}}{phdplan}%
+  % \ifthenelse{\equal{\novathesis@opt@docdegree}{phd}%
+  %     \OR\equal{\novathesis@opt@docdegree}{phdprop}%
+  %     \OR\equal{\novathesis@opt@docdegree}{phdplan}%
   %     }%
   %     {\AddToShipoutPictureBG*{\includegraphics[width=120mm]{cd-cover-phd}}}
   %     {\AddToShipoutPictureBG*{\includegraphics[width=120mm]{cd-cover-msc}}}
-  \AddToShipoutPictureBG*{\includegraphics[width=120mm]{\@nameuse{thesiscover\option{/novathesis/docdegree},cdfront}}}
+  \AddToShipoutPictureBG*{\includegraphics[width=120mm]{\@nameuse{thesiscover\novathesis@opt@docdegree,cdfront}}}
 
 	\savebox{\cdcover@savebox}{%
 	\begin{minipage}[t][7.0cm]{9cm}
@@ -61,104 +62,34 @@
 		% \raggedright
 		% \raggedleft
 		\centering
-		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{12}{12}\selectfont
+		\fontfamily{phv}\fontsize{12}{12}\selectfont
 		\textbf{\theauthorname}
 		\medskip
 
 		% Academic qualifications
-		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{9}{9}\selectfont
+		\fontfamily{phv}\fontsize{9}{9}\selectfont
 		\theauthordegree
 		\vfill
 
 		% Title of Dissertation
-		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{12}{12}\selectfont
-		\textbf{\thecovertitle}
+		\fontfamily{phv}\fontsize{12}{12}\selectfont
+		\textbf{\covertitle}
 		\vfill
 
 		% Degree
-		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{9}{9}\selectfont
+		\fontfamily{phv}\fontsize{9}{9}\selectfont
 		\thepresentationtext
 		\vfill
 
 		% Date
-		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{9}{9}\selectfont
-		\textbf{\thentdatemonth, \thentdateyear}	
+		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\textbf{\thedatemonth, \thedateyear}	
 		
 		
 	\end{minipage}
 	}
 
-  \ifthenelse{\equal{\option{/novathesis/docdegree}}{phd}}%
+  \ifthenelse{\equal{\novathesis@opt@docdegree}{phd}}%
   {~\\[1.75cm]~\hspace*{2.3cm}}
 	{~\\[1.75cm]~\hspace*{1.7cm}}
 	\usebox{\cdcover@savebox}
@@ -167,7 +98,7 @@
 
 
 
-\newcommand{\ntprintcdinlay}{%
+\newcommand{\printcdinlay}{%
 	\clearpage
 
 	\thispagestyle{empty}
@@ -184,13 +115,13 @@
 	\setmarginnotes{0mm}{0mm}{0mm}
 	\checkandfixthelayout[fixed]
 
-  % \ifthenelse{\equal{\option{/novathesis/docdegree}}{phd}%
-  %     \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
-  %     \OR\equal{\option{/novathesis/docdegree}}{phdplan}%
+  % \ifthenelse{\equal{\novathesis@opt@docdegree}{phd}%
+  %     \OR\equal{\novathesis@opt@docdegree}{phdprop}%
+  %     \OR\equal{\novathesis@opt@docdegree}{phdplan}%
   %     }%
   %     {\AddToShipoutPictureBG*{\includegraphics[width=150mm]{cd-inlay-phd}}}
   %     {\AddToShipoutPictureBG*{\includegraphics[width=150mm]{cd-inlay-msc}}}
-  \AddToShipoutPictureBG*{\includegraphics[width=150mm]{\@nameuse{thesiscover\option{/novathesis/docdegree},cdinlay}}}
+  \AddToShipoutPictureBG*{\includegraphics[width=150mm]{\@nameuse{thesiscover\novathesis@opt@docdegree,cdinlay}}}
   
 	\savebox{\cdcover@savebox}{%
 	\begin{minipage}[t][8cm]{11cm}
@@ -201,116 +132,32 @@
 		{
 		\centering
 		\vfill
-		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{12}{12}\selectfont
+		\fontfamily{phv}\fontsize{12}{12}\selectfont
 		\textbf{\theauthorname}
 		\medskip
 
 		% Academic qualifications
-		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{9}{9}\selectfont
+		\fontfamily{phv}\fontsize{9}{9}\selectfont
 		\theauthordegree
 		\vfill
 
 		% Title of Dissertation
-		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{12}{12}\selectfont
-		\textbf{\thecovertitle}
+		\fontfamily{phv}\fontsize{12}{12}\selectfont
+		\textbf{\covertitle}
 		\vfill
 
 		% Degree
-		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{9}{9}\selectfont
+		\fontfamily{phv}\fontsize{9}{9}\selectfont
 		\thepresentationtext
 		\vfill
 
 		% Date
-		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{9}{9}\selectfont
-		\textbf{\thentdatemonth, \thentdateyear}	
+		\fontfamily{phv}\fontsize{9}{9}\selectfont
+		\textbf{\thedatemonth, \thedateyear}	
 		\vfill
 
 		}
-		\fontfamily%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fix the cover font
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\coverprehook}{%
-  \ifxetexorluatex
-    \setmainfont[Ligatures=TeX]{Helvetica}  
-  \else
-    %
-  \fi
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{5}{7}\selectfont
+		\fontfamily{phv}\fontsize{5}{7}\selectfont
 		\thecopyrightstr
 		
 	\end{minipage}
@@ -320,7 +167,7 @@
 
 	\setlength{\fboxsep}{0pt}
 	% ~\hspace*{1.8cm}
-  \ifthenelse{\equal{\option{/novathesis/docdegree}}{phd}}%
+  \ifthenelse{\equal{\novathesis@opt@docdegree}{phd}}%
   {~\\[0.75cm]~\hspace*{2.5cm}}
 	{~\\[0.75cm]~\hspace*{1.8cm}}
 	\usebox{\cdcover@savebox}
@@ -328,13 +175,7 @@
   \newlength{\novathesis@cd@box@height}
 
 	\savebox{\cdcover@savebox@spineone}{%
-    \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{9}{9}\selectfont
+    \fontfamily{phv}\fontsize{9}{9}\selectfont
     \makebox[\paperheight][c]{
       \begin{tabular}{l}
         \thespine[year]
@@ -355,13 +196,7 @@
     }%
 
   \savebox{\cdcover@savebox@spinetwo}{%
-    \fontseries{mc}\fontsize{12}{12}\selectfont%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-\fontsize{9}{9}\selectfont
+    \fontfamily{phv}\fontsize{9}{9}\selectfont
     \makebox[\paperheight][c]{
       \begin{tabular}{l}
         \thespine[year]
@@ -383,3 +218,5 @@
     }%
   
 }
+
+\makeatother

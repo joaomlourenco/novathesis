@@ -13,7 +13,7 @@
   \ntsetup{fontstyle=calibri}%
   \renewcommand{\ntcoverprehook}[1]{}%
 }{}
-\nttitle[en]{Please define the title in english with \verb|\nttitle[en]{THE TITLE}|}
+% \nttitle[en]{Please define the title in english with \verb|\nttitle[en]{THE TITLE}|}
 
 % Univesity
 \university[pt]={Escola Superior de Enfermagem do Porto}
@@ -64,7 +64,7 @@
 % Spine info
 \spine[logo]={ESEP-logo_horizontal}
 \spine[author]={\theauthorshortname}
-\spine[title]={\thetitle}
+\spine[title]={\thecovertitle}
 \spine[year]={\thentdateyear}
 
 % Set margins for "normal" pages
@@ -133,7 +133,8 @@
   \ntcoverbackground%
   \noindent%
   \fontsize{15}{15}\selectfont%
-  \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty[\option{/novathesis/coverlang}]}}%
+  \textbf{\MakeTextUppercase{\thefaculty[\option{/novathesis/coverlang}]}}
+  % \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty[\option{/novathesis/coverlang}]}}%
 }
 
 % % Degree name
@@ -144,11 +145,10 @@
 
 % % Title of Dissertation 1
 \ntaddtocover{1}{c}{6.5cm}{%
-  % \fontseries{mc}
   \begin{minipage}[t][4cm][t]{\textwidth}
     \centering%
     \fontsize{15}{15}\selectfont%
-    {\scshape\thecovertitle}\\[1ex]%
+    \thecovertitle[caps]\\[1ex]%
     \fontsize{12}{12}\selectfont%
     Dissertação%
   \end{minipage}%

@@ -94,6 +94,9 @@
 		\equal{\option{/novathesis/docdegree}}{phd}% phd
 	}%
 }
+
+% --------------------------------------------------------
+% Check if it is a PhD document type, i.e.,phd, phdprop, phdplan
 \newcommand{\ifphddoc}{
 	\ifthenelse{%
     % IF it is a PHD related document
@@ -104,6 +107,9 @@
 		\equal{\option{/novathesis/docdegree}}{phdplan}% phd plan
 	}%
 }
+
+% --------------------------------------------------------
+% Check if it is a MSc document type, i.e.,mac, macplan
 \newcommand{\ifmscdoc}{
 	\ifthenelse{%
     % IF it is a MSC related document
@@ -123,7 +129,7 @@
 % --------------------------------------------------------
 % Itelare a comma separated list
 \newcommand{\iteratecsvlist}[2]{%
-  \@for\novathesis@themember:=#2\do{#1{\novathesis@themember}}%
+  \@for\@nt@themember:=#2\do{#1{\@nt@themember}}%
 }
 
 % --------------------------------------------------------
@@ -308,7 +314,7 @@
 
 \newlength{\mpwidth}%
 \newlength{\mpheight}%
-\newsavebox{\novathesis@coverbox}%
+\newsavebox{\@nt@coverbox}%
 
 \newcommand*{\ntprintcovers}{%
   \bgroup%
@@ -317,14 +323,11 @@
     \@nt@select@lang{\option{/novathesis/coverlang}}%
     \@nt@printthecover{1}%
     \ntcoverposthook{1}%
-    \clearforchapter%
     \iftoggle{/novathesis/secondcover}%
       {% SECOND COVER TRUE
           \ntcoverprehook{2}%
-          \@nt@select@lang{\option{/novathesis/coverlang}}%
           \@nt@printthecover{2}%
           \ntcoverposthook{2}%
-          \clearforchapter%
       }%
       {}% NO SECOND COVER
     \@nt@select@lang{\option{/novathesis/mainlang}}%
@@ -360,21 +363,22 @@
     \paperheight%
       -\themargin[\option{/novathesis/docdegree},top]%
       -\themargin[\option{/novathesis/docdegree},bottom]}%
-  \sbox{\novathesis@coverbox}{%
-    \parbox[t][\mpheight][t]{\mpwidth}{%
-      \@nt@printcovergroup{#1}%
-    }%
+  \sbox{\@nt@coverbox}{%
+    \begin{minipage}[t][\mpheight][t]{\mpwidth}%
+      \@nt@printcovergroup{#1}%      
+    \end{minipage}%
   }%
   \AddToShipoutPictureFG*{%
     \AtPageUpperLeft{%
       \put(%
         \LenToUnit{\themargin[\option{/novathesis/docdegree},left]},%
         -\LenToUnit{\themargin[\option{/novathesis/docdegree},top]})%
-        {\usebox{\novathesis@coverbox}}%
+        {\usebox{\@nt@coverbox}}%
     }%
   }%
   ~% This space is important here so that the cover page is not empty anymore!
   \csuse{@thecover#1backpage}%
+  \clearforchapter
 }
 
 \newcommand*{\@nt@printcovergroup}[1]{%
@@ -461,7 +465,7 @@
 \newcommand*{\ntprintaftercover}{%
   \ifthenelse{\equal{\option{/novathesis/aftercover}}{true}}%
   {%
-    \InputIfFileExists{Chapters/\novathesis@aftercover@file}%
+    \InputIfFileExists{Chapters/\@nt@aftercover@file}%
       {\clearforchapter}%
       {}%
 	}%
@@ -476,7 +480,7 @@
 \mynewdata{keywordsstring}
 \mynewdata{acknowledgementsstring}
 \mynewdata{notdefined}
-\newcommand\novathesis@undefined[1][]{$<$ #1 \thenotdefined[\option{/novathesis/mainlang}] $>$}
+\newcommand\@nt@undefined[1][]{$<$ #1 \thenotdefined[\option{/novathesis/mainlang}] $>$}
 \mynewdata{specializationstr}
 
 \mynewdata{adviserstr}
@@ -559,17 +563,17 @@
 %% IDENTIFICATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Date and month
-\newcommand{\thentdatemonth}{\novathesis@undefined[Month]}
-\newcommand{\thentdateyear}{\novathesis@undefined[Year]}
+\newcommand{\thentdatemonth}{\@nt@undefined[Month]}
+\newcommand{\thentdateyear}{\@nt@undefined[Year]}
 
 \newcommand{\ntdatemonth}[1]{\renewcommand{\thentdatemonth}{#1}}
 \newcommand{\ntdateyear}[1]{\renewcommand{\thentdateyear}{#1}}
 
 %% Author identification
-\newcommand{\theauthorname}{\novathesis@undefined[Author Name]}
-\newcommand{\theauthorshortname}{\novathesis@undefined[Author Short Name]}
-\newcommand{\theauthorgender}{\novathesis@undefined[Author Gender]}
-\newcommand{\theauthordegree}{\novathesis@undefined[Author Degree]}
+\newcommand{\theauthorname}{\@nt@undefined[Author Name]}
+\newcommand{\theauthorshortname}{\@nt@undefined[Author Short Name]}
+\newcommand{\theauthorgender}{\@nt@undefined[Author Gender]}
+\newcommand{\theauthordegree}{\@nt@undefined[Author Degree]}
 
 \newcommand{\ntauthorname}[3][m]{% [m|f]{Long name}{Short name}
   \renewcommand{\theauthorgender}{#1}%
@@ -584,33 +588,33 @@
 
  
 %% Work identification
-\newcommand{\thecovertitle}[1][\option{/novathesis/coverlang}]{%
+\newcommand{\thecovertitle}[1][]{%
   % \typeout{NT thecovertitle [#1]}
-  \thedoccovertitle[#1]%
+  \ifstrempty{#1}%
+    {\thedoccovertitle[\option{/novathesis/coverlang}]}%
+    {\thedoccovertitlecaps[\option{/novathesis/coverlang}]}
 }
 \newcommand{\thetitle}[1][\option{/novathesis/coverlang}]{%
   \thedoctitle[#1]%
 }
 \mynewdata{doccovertitle}
+\mynewdata{doccovertitlecaps}
 \mynewdata{doctitle}
+\def\@thetitle{}
 \newcommand{\nttitle}[2][\option{/novathesis/coverlang}]{%
   % \typeout{NT nttitle [#1] [#2]}
-  % \ifdatadefined{doccovertitle}[\option{/novathesis/coverlang}]{%
-  %   % Already defined… ignore redefinition with warning
-  %   % \ClassWarning{novathesis}{Ignoring redefinition of title in \option{/novathesis/coverlang}}{Fix the \\nttitle optional argument}%
-  % }{%
     \doccovertitle[#1]={#2}%
+    \doccovertitlecaps[#1]={\expandafter\MakeTextUppercase\expandafter{#2}}%
     \saveexpandmode\noexpandarg% set \noexpandarg locally
       \StrSubstitute[0]{#2}{\\}{ }[\@thetitle]%
     \restoreexpandmode% restore the previous mode
     \doctitle[#1]=\@thetitle%
     \ifthenelse{\equal{#1}{\option{/novathesis/coverlang}}}{%
       \AtBeginDocument{%
-        \hypersetup{pdftitle = {\thedoctitle[\option{/novathesis/coverlang}]}}%
+        \hypersetup{pdftitle = {\@thetitle}}%
         \hypersetup{pdfsubject = {\thepresentationtext}}
       }%
     }{}%
-  % }
   % \typeout{NT TITLE = [#2][\@thetitle]}
 }
 
@@ -618,21 +622,46 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print option list as a comma separated list
+%%% with "and" prefixing the last element
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\@nt@printoptionlist}[3]{%
-  \@nt@newcounter[1]{@ntprintoptionlist@cnt}
-  \def\@nt@comma{}%
-  \optionlistdo{#1}{%
-    \StrCut{##1}{,}\@nt@name\@nt@rest%
-    \@nt@comma\@nt@name%
-    \stepcounter{@ntprintoptionlist@cnt}%
-    \ifnum\value{\option{#1/@size}}=\value{@ntprintoptionlist@cnt}%
-      \def\@nt@comma{#3}%
-    \else%
-      \def\@nt@comma{#2}%
-    \fi%
-  }%
+\newcommand{\printoptionlist}[3]{%
+  % #1 = options list
+  % #2 = separator (e.g, ",")
+  % #3 = last separator (e.g., "and")
+  \letoptionlist{#1}\@nt@list
+  \StrCount{\@nt@list}{,}[\@nt@count]
+  \ifcase\@nt@count
+    % case 0
+    #1
+  \or
+    % case 1
+    \StrSubstitute{\@nt@list}{,}{ and }
+  \else
+    % other
+    \StrSubstitute[\the\numexpr \@nt@count-1]{\@nt@list}{,}{|}[\@nt@list@i]
+    \StrSubstitute{\@nt@list@i}{,}{ #3 }[\@nt@list@ii]
+    \StrSubstitute{\@nt@list@ii}{|}{#2}
+  \fi
 }
+
+%%%% Alternative hand-made implementation
+% \newcommand{\@nt@printoptionlist}[3]{%
+  % #1 = options list
+  % #2 = separator (e.g, ",")
+  % #3 = last separator (e.g., "and")
+%   \@nt@newcounter[1]{@ntprintoptionlist@cnt}
+%   \def\@nt@comma{}%
+%   \optionlistdo{#1}{%
+%     \StrCut{##1}{,}\@nt@name\@nt@rest%
+%     \@nt@comma\@nt@name%
+%     \stepcounter{@ntprintoptionlist@cnt}%
+%     \ifnum\value{\option{#1/@size}}=\value{@ntprintoptionlist@cnt}%
+%       \def\@nt@comma{#3}%
+%     \else%
+%       \def\@nt@comma{#2}%
+%     \fi%
+%   }%
+% }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print advisers
@@ -666,7 +695,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Print advisers
+%%% Print committee
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintcommittee}[1][0.75]{%
   \ifmaindoc{% A main document may have committee
@@ -684,7 +713,7 @@
 }
 
 \newcommand*{\@ntprintcommitteetitlestr}{%
-  % \ifx\novathesis@tmp\@empty%
+  % \ifx\@nt@tmp\@empty%
   \expandnext{\ifx}{\thecommitteetitlestr[\option{/novathesis/coverlang}]}\@empty%
     % committeetitlestr[…] is empty
   \else%
@@ -756,7 +785,7 @@
 }
 
 %% For debugging the page layout
-\newcommand\novathesis@typetwolengths[4]{%
+\newcommand\@nt@typetwolengths[4]{%
   % #1 = text before
   % #2 = first length
   % #3 = text between
@@ -768,7 +797,7 @@
   #1: \l@first\mem@tl@unit\space#3\space\l@second\mem@tl@unit%
 }
 
-\newcommand\novathesis@typeonelength[2]{%
+\newcommand\@nt@typeonelength[2]{%
   % #1 = text before
   % #2 = first length
   \setlength\@tempdimc{\mem@tl@unitperpt #2}%
@@ -778,22 +807,22 @@
 
 \newcommand*{\typelayout}{%
   \hrule%
-  \novathesis@typetwolengths{Stock height and width}{\stockheight}{by}{\stockwidth}\\%
-  \novathesis@typetwolengths{Top and edge trims}{\trimtop}{and}{\trimedge}\\%
-  \novathesis@typetwolengths{Page height and width}{\paperheight}{by}{\paperwidth}\\%
-  \novathesis@typetwolengths{Text height and width}{\textheight}{by}{\textwidth}\\%
-  \novathesis@typetwolengths{Spine and edge margins}{\spinemargin}{and}{\foremargin}\\%
-  \novathesis@typetwolengths{Upper and lower margins}{\uppermargin}{and}{\lowermargin}\\%
-  \novathesis@typetwolengths{Headheight and headsep}{\headheight}{and}{\headsep}\\%
-  \novathesis@typeonelength{Footskip}{\footskip}\\%
-  \novathesis@typetwolengths{Columnsep and columnseprule}{\columnsep}{and}{\columnseprule}\\%
-  \novathesis@typetwolengths{Marginparsep and marginparwidth}{\marginparsep}{and}{\marginparwidth}\\%
-  \novathesis@typetwolengths{Sidecapsep and sidecapwidth}{\sidecapsep}{and}{\sidecapwidth}\\%
-  \novathesis@typetwolengths{Sidebarhsep and sidebarwidth}{\sidebarhsep}{and}{\sidebarwidth}\\%
-  \novathesis@typetwolengths{Sidebarvsep and sidebartopsep}{\sidebarvsep}{and}{\sidebartopsep}\\%
-  \novathesis@typeonelength{Sidebarheight}{\dimen\sideins}\\%
-  \novathesis@typetwolengths{Sidefoothsep and sidefootwidth}{\sidefoothsep}{and}{\sidefootwidth}\\%
-  \novathesis@typetwolengths{Sidefootvsep and sidefootheight}{\sidefootvsep}{and}{\sidefootheight}\\%
+  \@nt@typetwolengths{Stock height and width}{\stockheight}{by}{\stockwidth}\\%
+  \@nt@typetwolengths{Top and edge trims}{\trimtop}{and}{\trimedge}\\%
+  \@nt@typetwolengths{Page height and width}{\paperheight}{by}{\paperwidth}\\%
+  \@nt@typetwolengths{Text height and width}{\textheight}{by}{\textwidth}\\%
+  \@nt@typetwolengths{Spine and edge margins}{\spinemargin}{and}{\foremargin}\\%
+  \@nt@typetwolengths{Upper and lower margins}{\uppermargin}{and}{\lowermargin}\\%
+  \@nt@typetwolengths{Headheight and headsep}{\headheight}{and}{\headsep}\\%
+  \@nt@typeonelength{Footskip}{\footskip}\\%
+  \@nt@typetwolengths{Columnsep and columnseprule}{\columnsep}{and}{\columnseprule}\\%
+  \@nt@typetwolengths{Marginparsep and marginparwidth}{\marginparsep}{and}{\marginparwidth}\\%
+  \@nt@typetwolengths{Sidecapsep and sidecapwidth}{\sidecapsep}{and}{\sidecapwidth}\\%
+  \@nt@typetwolengths{Sidebarhsep and sidebarwidth}{\sidebarhsep}{and}{\sidebarwidth}\\%
+  \@nt@typetwolengths{Sidebarvsep and sidebartopsep}{\sidebarvsep}{and}{\sidebartopsep}\\%
+  \@nt@typeonelength{Sidebarheight}{\dimen\sideins}\\%
+  \@nt@typetwolengths{Sidefoothsep and sidefootwidth}{\sidefoothsep}{and}{\sidefootwidth}\\%
+  \@nt@typetwolengths{Sidefootvsep and sidefootheight}{\sidefootvsep}{and}{\sidefootheight}\\%
   \hrule%
 }
 
@@ -841,7 +870,9 @@
 }
 
 \newcommand{\ntprintdedicatory}{\clearforchapter\@nt@printifmaindoc@i{dedicatory}}
+
 \newcommand{\ntprintquote}{\clearforchapter\@nt@printifmaindoc@i{quote}}
+
 \newcommand{\ntprintacknowledgements}{\clearforchapter\@nt@printifmaindoc@i{acknowledgements}}
 
 
@@ -850,8 +881,8 @@
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
-  \xdef\novathesis@tmp{\theabstractorder[\option{/novathesis/mainlang}]}%
-  \iteratecsvlist{\@ntprintabstract}{\novathesis@tmp}%
+  \xdef\@nt@tmp{\theabstractorder[\option{/novathesis/mainlang}]}%
+  \iteratecsvlist{\@ntprintabstract}{\@nt@tmp}%
 }
 
 \newcommand{\@ntprintabstract}[1]{%
@@ -882,7 +913,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Chapters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\ntchapterfile}[1]{\listgadd{\novathesis@chapter@list}{#1}}
+\newcommand{\ntchapterfile}[1]{\listgadd{\@nt@chapter@list}{#1}}
 
 
 \newcommand{\ntprintchapters}{%
@@ -1057,10 +1088,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\novathesis@keywordsstr}{}
+\newcommand{\@nt@keywordsstr}{}
 \newcommand{\setabstractlang}[1]{%
 	\@nt@select@lang{#1}%
-  \renewcommand{\novathesis@keywordsstr}{\thekeywordsstring[#1]}%
+  \renewcommand{\@nt@keywordsstr}{\thekeywordsstring[#1]}%
 	\chapter*{\theabstractstring[#1]}%
 	\rule{\textwidth}{0.2mm} ~\\[-3.5ex]%
 }
@@ -1076,7 +1107,7 @@
   \iftoggle{@nt@keywords@defined}%
     {}%
     {\hypersetup{pdfkeywords = {\BODY}}}
-  \par\vskip\baselineskip\noindent{\bfseries\novathesis@keywordsstr: }%
+  \par\vskip\baselineskip\noindent{\bfseries\@nt@keywordsstr: }%
   \BODY%
   \\[2ex]\rule{\textwidth}{0.2mm}  
 }
@@ -1107,8 +1138,8 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Generate book spine (if otion "spine=true")
+% Fixes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% See file "NOVAthesisFiles/spine.tex"
-% This file is loaded only if otion "spine=true"  :)
+
+% Fix spacing for pages with roman numerals in ToC
+\renewcommand{\@pnumwidth}{2.5em}% default is 1.55em
