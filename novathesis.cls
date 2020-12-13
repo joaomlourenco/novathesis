@@ -59,6 +59,13 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TWO BASIC REQUIRED PACKAGES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{options-nt}
+\RequirePackage{xifthen}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHECK IF USING LUALATEX OR XELATEX
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newif\ifxetexorluatex
@@ -81,43 +88,6 @@
 }
 
 \def\ifdatadefined#1[#2]#3#4{\ifcsname #1#2\endcsname#3\else#4\fi}
-
-% --------------------------------------------------------
-% Check if it is a main document type, i.e., bsc, msc or phd
-\newcommand{\ifmaindoc}{
-	\ifthenelse{%
-    % IF it is not a plan or proposal document type
-		\equal{\option{/novathesis/docdegree}}{bsc}% bsc
-		\OR%
-		\equal{\option{/novathesis/docdegree}}{msc}% msc
-		\OR%
-		\equal{\option{/novathesis/docdegree}}{phd}% phd
-	}%
-}
-
-% --------------------------------------------------------
-% Check if it is a PhD document type, i.e.,phd, phdprop, phdplan
-\newcommand{\ifphddoc}{
-	\ifthenelse{%
-    % IF it is a PHD related document
-		\equal{\option{/novathesis/docdegree}}{phd}% phd thesis
-		\OR%
-		\equal{\option{/novathesis/docdegree}}{phdprop}% phd proposal
-		\OR%
-		\equal{\option{/novathesis/docdegree}}{phdplan}% phd plan
-	}%
-}
-
-% --------------------------------------------------------
-% Check if it is a MSc document type, i.e.,mac, macplan
-\newcommand{\ifmscdoc}{
-	\ifthenelse{%
-    % IF it is a MSC related document
-		\equal{\option{/novathesis/docdegree}}{phd}% msc dissertation
-		\OR%
-		\equal{\option{/novathesis/docdegree}}{phdplan}% man plan
-	}%
-}
 
 % --------------------------------------------------------
 % If necessary create, then initialize the counter
@@ -156,6 +126,67 @@
 \def\ntdegreename[#1]#2{\degreename[#1]={#2}}
 \def\ntspecialization[#1]#2{\specialization[#1]={#2}}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MANAGE DOCUMENT CLASSES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\options{/@nt/.cd
+  , document/fallback/.new list = {phdprop=phd, phdplan=phd, mscplan=msc}
+  , document/class/phd/.new list = {phd, phdprop, phdplan}
+  , document/class/msc/.new list = {msc, mscplan}
+  , document/class/bsc/.new list = {bsc}
+  , document/class/main/.new list = {phd, msc, bsc}
+}
+
+\newcommand{\@ifdocclass@ii}[2]{%
+  % #1 = document tyoe
+  % %2 = possible document calss 
+  \ifoptioncontains{/@nt/document/class/#2}{#1}
+}
+
+% --------------------------------------------------------
+% Check if the document is of a specific class, i.e., bsc, msc, phd or main
+\newcommand{\ifmaindoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{main}}
+\newcommand{\ifphddoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{phd}}
+\newcommand{\ifmscdoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{msc}}
+\newcommand{\ifbscdoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{bsc}}
+
+% --------------------------------------------------------
+% Check if it is a main document type, i.e., bsc, msc or phd
+% \newcommand{\ifmaindoc}{
+%   \ifthenelse{%
+%     % IF it is not a plan or proposal document type
+%     \equal{\option{/novathesis/docdegree}}{bsc}% bsc
+%     \OR%
+%     \equal{\option{/novathesis/docdegree}}{msc}% msc
+%     \OR%
+%     \equal{\option{/novathesis/docdegree}}{phd}% phd
+%   }%
+% }
+
+% --------------------------------------------------------
+% Check if it is a PhD document type, i.e.,phd, phdprop, phdplan
+% \newcommand{\ifphddoc}{
+%   \ifthenelse{%
+%     % IF it is a PHD related document
+%     \equal{\option{/novathesis/docdegree}}{phd}% phd thesis
+%     \OR%
+%     \equal{\option{/novathesis/docdegree}}{phdprop}% phd proposal
+%     \OR%
+%     \equal{\option{/novathesis/docdegree}}{phdplan}% phd plan
+%   }%
+% }
+
+% --------------------------------------------------------
+% Check if it is a MSc document type, i.e.,mac, macplan
+% \newcommand{\ifmscdoc}{
+%   \ifthenelse{%
+%     % IF it is a MSC related document
+%     \equal{\option{/novathesis/docdegree}}{msc}% msc dissertation
+%     \OR%
+%     \equal{\option{/novathesis/docdegree}}{mscplan}% man plan
+%   }%
+% }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FRONTEND FOR MANAGING PERSON LISTS - nunsued for now
