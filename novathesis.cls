@@ -898,9 +898,7 @@
   % #2 = file class
   \options{/novathesis/file/#2/.getval = {#1}}%
   % \typeout{NT TRYING TO LOAD \option@listmatch@value}%
-  \InputIfFileExists{\option@listmatch@value}%
-    {}%
-    {}%
+  \InputIfFileExists{\option@listmatch@value}{}{}%
 }
 
 \newcommand{\@ntloadnext@ii}[2]{%
@@ -909,9 +907,7 @@
   % \typeout{NT @ntprintnext@ii [#1] [#2]}%
   \ntgetkeyval{#2}{\option@listmatch@key}{\option@listmatch@value}%
   % \typeout{NT @ntprintnext@ii TRYING TO LOAD \option@listmatch@value}%
-  \InputIfFileExists{\option@listmatch@value}%
-    {}%
-    {}%
+  \InputIfFileExists{\option@listmatch@value}{}{}%
 }
 
 \newcommand{\@nt@printifmaindoc@i}[1]{%
@@ -1199,4 +1195,32 @@
 \renewcommand{\@pnumwidth}{2.5em}% default is 1.55em
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Compatibility with legacy “template.tex”
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Title
+\renewcommand{\title}[2][]{\ifthenelse{\equal{#1}{}}{\nttitle{#2}}{\nttitle{#1}}}
+\newcommand{\authorname}{\ntauthorname}
+\newcommand{\authordegree}{\ntauthordegree}
+\newcommand{\datemonth}{\ntdatemonth}
+\newcommand{\dateyear}{\ntdateyear}
+\newcommand{\adviser}[4][m]{\ntaddperson{adviser}[#1]{#2, #3}}
+\newcommand{\coadviser}[4][m]{\ntaddperson{coadviser}[#1]{#2, #3}}
+\newcommand{\committee}[2][m]{\ntaddperson{committee}[#1]{#2}}
+\newcommand{\dedicatoryfile}[1]{\ntaddfile{dedicatory}{#1}}
+\newcommand{\acknowledgementsfile}[1]{\ntaddfile{acknowledgements}{#1}}
+\newcommand{\quotefile}[1]{\ntaddfile{quote}{#1}}
+\newcommand{\aftercoverfile}[1]{\ntaddfile{aftercover}{#1}}
+\newcommand{\abstractfile}[2][pt]{\ntaddfile{abstract}[#1]{#2}}
+\newcommand{\chapterfile}[1]{\ntaddfile{chapter}{#1}}
+\newcommand{\addbibfile}[1]{\ntaddfile{bib}{#1}}
+\newcommand{\glossaryfile}[1]{\ntaddfile{glossaries}[glossary]{#1}}
+\newcommand{\acronymsfile}[1]{\ntaddfile{glossaries}[acronyms]{#1}}
+\newcommand{\symbolsfile}[1]{\ntaddfile{glossaries}[symbols]{#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End of Class Hook
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \@nt@AtEnfClass@hook
