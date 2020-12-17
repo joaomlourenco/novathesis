@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2020-12-09 [5.1.8]
+%% Version 2020-12-17 [5.1.9]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -63,6 +63,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{options-nt}
 \RequirePackage{xifthen}
+\RequirePackage{xstring}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -77,6 +78,15 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Hook AtEndClass
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\@nt@AtEnfClass@hook}{}
+\newcommand{\@AtEndClass}[2][app]{\csuse{#1to}\nt@AtEnfClass@hook{#2}}
+
+
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -84,7 +94,21 @@
 % Do some magic defining arrays :)
 \newcommand*{\mynewdata}[1]{%
   \@namedef{#1}[##1]=##2{\@namedef{#1##1}{##2}}%
-  \@namedef{the#1}[##1]{\@nameuse{#1##1}}%
+  % \@namedef{the#1}[##1]{\@nameuse{#1##1}}%
+  \@namedef{the#1}[##1]{%
+    \ifdatadefined{#1}[##1]{%
+      \@nameuse{#1##1}%
+    }{%
+      \edef\@nt@str{##1}%
+      \typeout{NT STRCUT ##1}%
+      \StrCut{\@nt@str}{,}\@nt@left\@nt@right%
+      \ifdatadefined{#1}[\@nt@left,*]{%
+        \nameuse{#1[\@nameuse{#1[\@nt@left,*]},\@nt@right]}%
+      }{%
+        \ClassWarining{novathesis}{Undefined data element “#1[##1]”}{}%
+      }%
+    }%
+  }%
 }
 
 \def\ifdatadefined#1[#2]#3#4{\ifcsname #1#2\endcsname#3\else#4\fi}
@@ -729,17 +753,16 @@
 %%% Print committee
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintcommittee}[1][0.75]{%
-  \ifmaindoc{% A main document may have committee
-    \begin{minipage}{#1\textwidth}
+  \iftoggle{/novathesis/printcommittee}{% TRUE
+    \begin{minipage}{#1\textwidth}%
     % #1 = Percentage of \textwidth used by the committee list
     \begin{tabularx}{\linewidth}{@{}rX@{}}%
     \@ntprintcommitteetitlestr\\[1ex]%
-    \forcsvlist{\@ntprintcommitteegroup}{c,r,a,m,g}
+    \forcsvlist{\@ntprintcommitteegroup}{c,r,a,m,g}%
     \end{tabularx}%
     \end{minipage}
   }%
-  {%
-    % A plan or propoal does not have a formal commitee
+  {%% FASLE
   }%
 }
 
@@ -1174,3 +1197,6 @@
 
 % Fix spacing for pages with roman numerals in ToC
 \renewcommand{\@pnumwidth}{2.5em}% default is 1.55em
+
+
+\@nt@AtEnfClass@hook

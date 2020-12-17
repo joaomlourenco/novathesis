@@ -161,11 +161,20 @@
 
 
 % --------------------------------------------------------
-% PROCESSING OPTIONS
-\options@ProcessOptions{/novathesis}
+% PROCESSING CLASS OPTIONS
+\options@ProcessOptions{/novathesis}%
 
+
+% --------------------------------------------------------
+% FORCE SOME OPTIONS
+\@AtEndClass{\options{/novathesis/printcommittee = false}}
+
+
+% --------------------------------------------------------
+% BABEL STUFF
+\options@ProcessOptions{/novathesis}
 \newcommand{\maplang}[1]{%
-  \options{/@nt/maplang=#1}
+  \options{/@nt/maplang=#1}%
 }
 
 %
@@ -178,11 +187,11 @@
     {\edef\nt@alllangs{\nt@alllangs,\option{/@nt/langshorttolong}}}%
 }
 % \typeout{'NT PASSING TO BABEL = '\nt@alllangs}
-\PassOptionsToPackage{\nt@alllangs}{babel}
+\PassOptionsToPackage{\nt@alllangs}{babel}%
 
 % --------------------------------------------------------
 % Define DEFAULT VALUES for COVER and COPYRIGHT languages
-\options{
+\options{%
   /novathesis/coverlang = \option{/novathesis/mainlang}
   , /novathesis/copyrightlang = \option{/novathesis/mainlang}
   , /novathesis/linkscolor = RoyalBlue

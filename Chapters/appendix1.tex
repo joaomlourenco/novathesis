@@ -8,7 +8,13 @@
 
 \typeout{NT LOADING FILE appendix1.tex}
 
-\chapter{Appendix 1 Lorem Ipsum}
-\label{app:lorem_ipsum1}
+\chapter{\emph{NOVAthesis} covers showcase}
+\label{app:covers_showcase}
 
-\lipsum[1-5]
+\newcommand{\showcasecoversize}{0.3\linewidth}
+\newcommand{\myincludeimage}[1]{%
+    \fbox{\includegraphics[width=\showcasecoversize]{#1}}
+    \hfill
+}
+
+\iteratecsvlist{\myincludeimage}{cover-phd-nova-fct, cover-phd-nova-fcsh, cover-phd-nova-ims, cover-phd-nova-ensp, cover-phd-ul-fc, cover-phd-ul-ist, cover-phd-ipl-isel, cover-phd-ips-ests, cover-phd-esep}
