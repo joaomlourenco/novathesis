@@ -99,14 +99,14 @@
     \ifdatadefined{#1}[##1]{%
       \@nameuse{#1##1}%
     }{%
-      \edef\@nt@str{##1}%
-      \typeout{NT STRCUT ##1}%
-      \StrCut{\@nt@str}{,}\@nt@left\@nt@right%
-      \ifdatadefined{#1}[\@nt@left,*]{%
-        \nameuse{#1[\@nameuse{#1[\@nt@left,*]},\@nt@right]}%
-      }{%
-        \ClassWarining{novathesis}{Undefined data element “#1[##1]”}{}%
-      }%
+      % \edef\@nt@str{##1}%
+      % % \typeout{NT STRCUT ##1}%
+      % \StrCut{\@nt@str}{,}\@nt@left\@nt@right%
+      % \ifdatadefined{#1}[\@nt@left,*]{%
+      %   \nameuse{#1[\@nameuse{#1[\@nt@left,*]},\@nt@right]}%
+      % }{%
+      \ClassWarining{novathesis}{Undefined data element “#1[##1]”}{}%
+      % }%
     }%
   }%
 }
@@ -919,11 +919,11 @@
 	}%  
 }
 
-\newcommand{\ntprintdedicatory}{\clearforchapter\@nt@printifmaindoc@i{dedicatory}}
+\newcommand{\ntprintdedicatory}{\@nt@printifmaindoc@i{dedicatory}\clearforchapter}
 
-\newcommand{\ntprintquote}{\clearforchapter\@nt@printifmaindoc@i{quote}}
+\newcommand{\ntprintquote}{\@nt@printifmaindoc@i{quote}\clearforchapter}
 
-\newcommand{\ntprintacknowledgements}{\clearforchapter\@nt@printifmaindoc@i{acknowledgements}}
+\newcommand{\ntprintacknowledgements}{\@nt@printifmaindoc@i{acknowledgements}\clearforchapter}
 
 
 
