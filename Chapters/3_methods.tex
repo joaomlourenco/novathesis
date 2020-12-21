@@ -72,8 +72,8 @@ the one in Figure~\ref{fig:an_hexacopter}\todo{image citation}.
 \end{figure}
 
 A natural choice as it may seem as means for the measurements I am
-describing in this document, its programming is almost (if not more) as
-important as the hardware itself. The vehicle must be programmed to
+describing in this document, its programming is almost  as important as
+the hardware itself (if not more). The vehicle must be programmed to
 describe a very precise (taking into account the type of operation we
 are proposing) trajectory. In flight, the drone should be able to carry
 and point an optical system towards any direction and in a short time.
@@ -118,8 +118,45 @@ Section~\ref{sec:tomographic_algorithms_and_reconstruction_techniques}.
     constitutes the general trajectory of the drone. On the right the
     gymbal points the optical system towards different directions, forming
     what can be seen as a fan.}
-    \label{fig:illustriated_trajectory_and_fanbeam_formation}
+    \label{fig:illustrated_trajectory_and_fanbeam_formation}
 \end{figure}
+
+\subsection{Discretisation}%
+\label{sub:discretisation}
+
+Discretisation is the process by which the \gls{ROI} is digitised into a
+computational platform. There are several algorithms designed for this
+effect that are available in the literature. One of the easiest to
+implement that is also adequate to this application (unsurprisingly)
+comes from the medical imaging field. It was published in 1985 by Robert
+Siddon~\cite{Siddon1985}.
+
+The Siddon algorithm is one of the foremost path calculation algorithms
+in the medical field of radiology. It is not only used for the
+discretisation of tomographic fields, but also in the dose calculation
+process of radiation therapy patients. The idea behind the algorithm is
+that the total dose of a radiation ray, i.e., its path, is given by the
+sum of the length within each pixel that this ray traverses multiplied
+by the density of said pixel~\todo{Ugly. Rewrite}. In mathematical
+notation, one can write this as in Equation~\ref{eq:siddon_sum}.
+
+\begin{equation}
+    \label{eq:siddon_sum}
+    d = \sum_{i}\sum_{j}\sum{k} l(i, j, k)\cdot\rho(i, j, k)
+\end{equation}
+
+In Equation~\ref{eq:siddon_sum}, $d$ is the radiological path (the
+projection value), $i$, $j$, $k$ are the coordinate vectors, $l$ is the
+length within a pixel and $\rho$ is the pixel density. In our case, this
+last value is the trace gas column density for that pixel.
+
+The main reason for Siddon's algorithm 
+
+
+
+
+
+
 
 
 
