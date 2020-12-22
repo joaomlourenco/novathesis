@@ -512,17 +512,19 @@
 \mynewdata{committeeorder}
 \mynewdata{committeetitlestr}
 \mynewdata{committeetitlestrfont}
-\committeetitlestrfont[\option{/novathesis/coverlang}]={}
 \mynewdata{committeememberstr}
 \mynewdata{committeememberstrfont}
-\committeememberstrfont[\option{/novathesis/coverlang}]={}
 
 \mynewdata{dissertationstr}
 \mynewdata{dissertationstrfont}
-\dissertationstrfont[\option{/novathesis/coverlang}]={}
 \mynewdata{copyrighttextstr}
 \mynewdata{acknowledgmentsstr}
 
+\optionlistdo{/@nt/langsshort}{%
+  \committeetitlestrfont[#1]={}%
+  \committeememberstrfont[#1]={}%
+  \dissertationstrfont[#1]={}%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Include strings for all the languages
@@ -679,7 +681,7 @@
 %%% Print advisers
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintadvisersaslist}[1][adviser]{%
-  \@nt@printoptionlist{/@nt/#1//name}{, }{ and }
+  \printoptionlist{/@nt/#1//name}{, }{ and }
 }
 
 \newcommand{\ntprintadvisers}[1][0.90]{%
