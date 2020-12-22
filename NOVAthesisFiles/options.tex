@@ -30,9 +30,9 @@
 \RequirePackage{xifthen}
 \options{/@nt/.new family
   % languages
-  , langsshort/.new list = {pt, en, fr, it}
-  , langslong/.new list = {portuguese, english, french, italian}
-  , langshorttolong/.new choice = {pt=portuguese, en=english, fr=french, 
+  , langsshort/.new list = {en, pt, fr, it}
+  , langslong/.new list = {english, portuguese, french, italian}
+  , langshorttolong/.new choice = {en=english, pt=portuguese, fr=french, 
                                    it=italian}
   , maplang/.new cmd = {%
             \options{/@nt/langshorttolong = #1}%
