@@ -99,14 +99,7 @@
     \ifdatadefined{#1}[##1]{%
       \@nameuse{#1##1}%
     }{%
-      % \edef\@nt@str{##1}%
-      % % \typeout{NT STRCUT ##1}%
-      % \StrCut{\@nt@str}{,}\@nt@left\@nt@right%
-      % \ifdatadefined{#1}[\@nt@left,*]{%
-      %   \nameuse{#1[\@nameuse{#1[\@nt@left,*]},\@nt@right]}%
-      % }{%
       \ClassWarining{novathesis}{Undefined data element “#1[##1]”}{}%
-      % }%
     }%
   }%
 }
@@ -175,42 +168,6 @@
 \newcommand{\ifmscdoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{msc}}
 \newcommand{\ifbscdoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{bsc}}
 
-% --------------------------------------------------------
-% Check if it is a main document type, i.e., bsc, msc or phd
-% \newcommand{\ifmaindoc}{
-%   \ifthenelse{%
-%     % IF it is not a plan or proposal document type
-%     \equal{\option{/novathesis/docdegree}}{bsc}% bsc
-%     \OR%
-%     \equal{\option{/novathesis/docdegree}}{msc}% msc
-%     \OR%
-%     \equal{\option{/novathesis/docdegree}}{phd}% phd
-%   }%
-% }
-
-% --------------------------------------------------------
-% Check if it is a PhD document type, i.e.,phd, phdprop, phdplan
-% \newcommand{\ifphddoc}{
-%   \ifthenelse{%
-%     % IF it is a PHD related document
-%     \equal{\option{/novathesis/docdegree}}{phd}% phd thesis
-%     \OR%
-%     \equal{\option{/novathesis/docdegree}}{phdprop}% phd proposal
-%     \OR%
-%     \equal{\option{/novathesis/docdegree}}{phdplan}% phd plan
-%   }%
-% }
-
-% --------------------------------------------------------
-% Check if it is a MSc document type, i.e.,mac, macplan
-% \newcommand{\ifmscdoc}{
-%   \ifthenelse{%
-%     % IF it is a MSC related document
-%     \equal{\option{/novathesis/docdegree}}{msc}% msc dissertation
-%     \OR%
-%     \equal{\option{/novathesis/docdegree}}{mscplan}% man plan
-%   }%
-% }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FRONTEND FOR MANAGING PERSON LISTS - nunsued for now
@@ -254,8 +211,8 @@
   %     g = guests
   % #3={m,f}
   % #4={committee member name, position, etc}
-  \options{/novathesis/#1/#2/gender/.cpush = {#3}}%
-  \options{/novathesis/#1/#2/name/.cpush = {#4}}%
+  \options{/@nt/#1/#2/gender/.cpush = {#3}}%
+  \options{/@nt/#1/#2/name/.cpush = {#4}}%
 }
 
 
@@ -298,14 +255,14 @@
   % #2 = file family (quote, abstract, chapter, etc)
   % #3 = filename OR key=filename
   % \typeout{NT FILE ADD /novathesis/#1/#1 = #2}%
-  \options{/novathesis/#1/#2/.cpush = {#3}}%
+  \options{/@nt/#1/#2/.cpush = {#3}}%
 }
 
 \newcommand{\@nt@foralllist}[3]{%
   % #1 = {file, person}
   % #2 = file family (quote, abstract, chapter, etc)
   % #3 = macro to be applied, which will receive the item from the list
-  \optionlistdo{/novathesis/#1/#2}{#3{##1}}%
+  \optionlistdo{/@nt/#1/#2}{#3{##1}}%
 }
 
 
@@ -722,7 +679,7 @@
 %%% Print advisers
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintadvisersaslist}[1][adviser]{%
-  \@nt@printoptionlist{/novathesis/#1//name}{, }{ and }
+  \@nt@printoptionlist{/@nt/#1//name}{, }{ and }
 }
 
 \newcommand{\ntprintadvisers}[1][0.90]{%
@@ -736,16 +693,16 @@
 
 \newcommand{\@nt@printadvisergroup}[1]{%
   % #1={adviser,coadviser}
-  \ifoptiondefined{/novathesis/#1//name}{%
-    \@nt@reducegender{/novathesis/#1//gender}{\mygender}%
-    \@nt@reducenumber{/novathesis/#1//name}{\mynumber}%
+  \ifoptiondefined{/@nt/#1//name}{%
+    \@nt@reducegender{/@nt/#1//gender}{\mygender}%
+    \@nt@reducenumber{/@nt/#1//name}{\mynumber}%
     \smallskip%
     \csname the#1str\endcsname[\mynumber,\mygender,\option{/novathesis/coverlang}]: & %
     \begin{minipage}[t]{\linewidth}\raggedright%
-    \optionlistdo{/novathesis/#1//name}{##1\\[1pt]}%
+    \optionlistdo{/@nt/#1//name}{##1\\[1pt]}%
     \end{minipage}\\%
   }%
-  {\ClassWarning{novathesis}{option[/novathesis/#1//name] undefined}}%
+  {\ClassWarning{novathesis}{option[/@nt/#1//name] undefined}}%
 }
 
 
@@ -780,12 +737,12 @@
 
 \newcommand{\@ntprintcommitteegroup}[1]{%
   % #1={c,r,a,m,g}
-  \ifoptiondefined{/novathesis/committee/#1/name}{%
-    \@nt@reducegender{/novathesis/committee/#1/gender}{\mygender}%
-    \@nt@reducenumber{/novathesis/committee/#1/name}{\mynumber}%
+  \ifoptiondefined{/@nt/committee/#1/name}{%
+    \@nt@reducegender{/@nt/committee/#1/gender}{\mygender}%
+    \@nt@reducenumber{/@nt/committee/#1/name}{\mynumber}%
     \smallskip\thecommitteememberstr[#1,\mynumber,\mygender,\option{/novathesis/coverlang}]: & %
     \begin{minipage}[t]{\linewidth}\raggedright%
-    \optionlistdo{/novathesis/committee/#1/name}{##1\\[1pt]}%
+    \optionlistdo{/@nt/committee/#1/name}{##1\\[1pt]}%
     \end{minipage}\\%
   }%
   {}%
@@ -896,7 +853,7 @@
 \newcommand{\@ntloadfisrt@ii}[2][VAL]{%
   % #1 = KEY
   % #2 = file class
-  \options{/novathesis/file/#2/.getval = {#1}}%
+  \options{/@nt/file/#2/.getval = {#1}}%
   % \typeout{NT TRYING TO LOAD \option@listmatch@value}%
   \InputIfFileExists{\option@listmatch@value}{}{}%
 }
@@ -1005,24 +962,24 @@
 
 
 \newcommand{\ntaddindex}[1]{%
-  \ifthenelse{\equal{#1}{tableofcontents}}{\options{/novathesis/list/indexes/.cpush = {%
+  \ifthenelse{\equal{#1}{tableofcontents}}{\options{/@nt/list/indexes/.cpush = {%
         \clearforchapter\tableofcontents*%
   }}}{}%
-  \ifthenelse{\equal{#1}{listoffigures}}{\options{/novathesis/list/indexes/.cpush = {%
+  \ifthenelse{\equal{#1}{listoffigures}}{\options{/@nt/list/indexes/.cpush = {%
         \clearforchapter\listoffigures%
   }}}{}%
-  \ifthenelse{\equal{#1}{listoftables}}{\options{/novathesis/list/indexes/.cpush = {%
+  \ifthenelse{\equal{#1}{listoftables}}{\options{/@nt/list/indexes/.cpush = {%
         \clearforchapter\listoftables%
   }}}{}%
-  \ifthenelse{\equal{#1}{listoflistings}}{\options{/novathesis/list/indexes/.cpush = {%
+  \ifthenelse{\equal{#1}{listoflistings}}{\options{/@nt/list/indexes/.cpush = {%
         \clearforchapter\lstlistoflistings%
   }}}{}%
-  \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/novathesis/list/indexes/.cpush = {%
+  \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/@nt/list/indexes/.cpush = {%
           \printnoidxglossaries\clearforchapter%
   }}}{}%
 }
 
-\newcommand{\ntprintallindexes}{\optionlistdo{/novathesis/list/indexes}{##1}}
+\newcommand{\ntprintallindexes}{\optionlistdo{/@nt/list/indexes}{##1}}
 
 
 % \def\option@listmatch@getval#1=#2{#2}
@@ -1039,7 +996,7 @@
 }
 
 \newcommand{\@loadglossaryfiles}{%
-  \optionlistdo{/novathesis/file/glossaries}{\@loadglossaryfile{##1}}
+  \optionlistdo{/@nt/file/glossaries}{\@loadglossaryfile{##1}}
 }
 
 \newcommand{\@loadglossaryfile}[1]{%

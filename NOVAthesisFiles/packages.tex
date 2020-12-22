@@ -139,18 +139,20 @@
   \newsubfloat{figure}
   % Manage glossaries
   \RequirePackage[
-    , nonumberlist
+    % , nonumberlist
     , toc
     , translate=babel
     , acronym % add acronyms listing
     , symbols % add symbols listing
     % , sanitizesort=false % allow \gls inside descriptions
     % , automake
-  ]{glossaries-extra} % To create glossaries
-  \setglossarystyle{long}%
-  \setabbreviationstyle[acronym]{long-short}%
-  \glsnogroupskiptrue%
-  \setlength{\glsdescwidth}{0.75\textwidth}%
-  \makenoidxglossaries % use TeX to sort
+  ]{glossaries-extra}% To create glossaries
+  \RequirePackage{glossary-xltabular}
+  \setglossarystyle{xltabular3colheaderborder}%
+  % \setlength{\glsdescwidth}{\linewidth}%
+  % \addtolength{\glsdescwidth}{-1em}
+  % \setglossarystyle{long}%
+  \renewcommand{\glsnamefont}[1]{\textbf{#1}}%
+  \makenoidxglossaries% use TeX to sort
 }
 
