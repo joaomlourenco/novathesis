@@ -15,7 +15,7 @@ if [[ -z "$UNZIPCMD" ]]; then
 	exit 1
 fi
 if [[ -z "$GETCMD" ]]; then
-	echo "Did not find 'curl' neither 'wget' in your computer! Aborting..."
+	echo "Did not find neither 'curl' nor 'wget' in your computer! Aborting..."
 	exit 1
 fi
 if [[ -z "$GITCMD" ]]; then

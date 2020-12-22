@@ -77,65 +77,32 @@
 }
 
 \options{/novathesis/.new family
-  % %novathesis@opt@docdegree
   , docdegree/.new choice = {phd, phdprop, phdplan, msc, mscplan, bsc},
-  % %novathesis@opt@school
   , school/.new choice = {{nova/fct}, {nova/fcsh}, {nova/ims}, {nova/ensp},
                           {ul/ist}, {ul/fc}, {ipl/isel}, {ips/ests}, {esep}}
-  % %novathesis@opt@chapstyle
   , chapstyle/.new choice = {bianchi, bluebox, default, elegant, 
                              ell, hansen, ist, lyhne, madsen,
                             pedersen, section, southall, veelo,
                             vz34, vz43}
   , chapstyle=elegant        % set elegant as the default
-  % %novathesis@opt@fontstyle
   , fontstyle/.new choice = {kpfonts, bookman, erewhon, libertine, scholax,
                              calibri, kieranhealy}
   , fontstyle=kpfonts        % set kpfonts as the default
-  % HANDLER
   , lang/.new style = {/novathesis/mainlang=#1,/novathesis/copyrightlang=#1,
                        /novathesis/coverlang=#1}
-  % %novathesis@opt@lang
-  , mainlang/.new choice = {pt, en, fr, it}
-  % %novathesis@opt@coverlang
-  , coverlang/.new choice = {pt, en, fr, it}
-  % %novathesis@opt@copyrightlang
-  , copyrightlang/.new choice = {pt, en, fr, it}
-  % %novathesis@opt@printcommittee
+  , mainlang/.new choice = {en, pt, fr, it}
+  , coverlang/.new choice = {en, pt, fr, it}
+  , copyrightlang/.new choice = {en, pt, fr, it}
   , printcommittee/.new toggle = true
-  % %novathesis@opt@secondcover
   , secondcover/.new toggle = false
-  % %novathesis@opt@aftercover
   , aftercover/.new toggle = false
   , urlstyle/.new cmd = {%
             \edef\@nt@urlstyle{#1}\AfterPreamble{\urlstyle{\@nt@urlstyle}}%
   }
   , debugcover/.new toggle = false
-  , spine/.new cmd* = {%
-            \AtEndDocument{%
-              \InputIfFileExists{%
-                  NOVAthesisFiles/Schools/\option{/novathesis/school}/spine.tex%
-              }%
-                {}%
-                {\input{NOVAthesisFiles/spine.tex}}%
-              \ntprintspine%
-            }%
-  }
-  % %novathesis@opt@cdcover
-  , cdcover/.new cmd* = {%
-            \AtEndDocument{%
-            \InputIfFileExists{%
-                NOVAthesisFiles/Schools/\option{/novathesis/school}/cdcover.tex%
-            }%
-              {}%
-              {\input{NOVAthesisFiles/cdcover.tex}}%
-            \ntprintcdcover%  
-            \ntprintcdinlay%
-            }%
-  }
-  % %novathesis@opt@media
+  , spine/.new toggle = false%
+  , cdcover/.new toggle = false%
   , media/.new choice = {screen, paper}
-  %novathesis@opt@linkscolor
   , linkscolor/.new cmd = {%
             \@ifpackageloaded{hyperref}%
               {\hypersetup{allcolors=#1}}%
@@ -204,3 +171,25 @@
 \letoptionlist{/options/remaining}\nt@remaining
 % \typeout{'NT PASSING TO MEMOIR='\nt@remaining}
 \PassOptionsToClass{\nt@remaining}{memoir}
+
+
+
+\AtEndDocument{%
+  \iftoggle{/novathesis/spine}{%
+    \InputIfFileExists{%
+        NOVAthesisFiles/Schools/\option{/novathesis/school}/spine.tex%
+    }%
+      {}%
+      {\input{NOVAthesisFiles/spine.tex}}%
+    \ntprintspine%
+  }{}%
+  \iftoggle{/novathesis/cdcover}{%
+    \InputIfFileExists{%
+        NOVAthesisFiles/Schools/\option{/novathesis/school}/cdcover.tex%
+    }%
+      {}%
+      {\input{NOVAthesisFiles/cdcover.tex}}%
+    \ntprintcdcover%  
+    \ntprintcdinlay%
+  }{}%
+}%
