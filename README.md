@@ -29,6 +29,9 @@ The template provides an _easy to use_ setting for you to write your thesis/diss
 
 *This work is licensed under the LATEX Project Public License v1.3c. To view a copy of this license, visit the [LaTeX project public license](https://www.latex-project.org/lppl/lppl-1-3c/).*
 
+## Showcase
+<img src="NOVAthesisFiles/Images/cover-phd-nova-fct.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-ims.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-ensp.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-fcsh.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ul-ist.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ul-fc.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ipl-isel.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ips-ests.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-esep.jpg" width="100"/>
+
 ## Donations
 
 This template is the result of hundreds (yes! *hundreds*) of hours of work from the main developer.  If you think this template really helped you while writing your thesis, think about making a [**donation**](https://paypal.me/novathesis). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
