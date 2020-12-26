@@ -1,4 +1,4 @@
-%%
+  %%
 %% This is file `glossary-long.sty',
 %% generated with the docstrip utility.
 %%
@@ -74,7 +74,7 @@
 \newglossarystyle{xltabularborder}{%
   \setglossarystyle{xltabular}%
   \renewenvironment{theglossary}{%
-    \xltabular{\linewidth}{|l|X|}}{\endxltabular}%
+    \xltabular{\linewidth}{@{}|l|X|@{}}}{\endxltabular}%
   \renewcommand*{\glossaryheader}{\hline\endhead\hline\endfoot}%
 }
 \newglossarystyle{xltabularheader}{%
@@ -92,7 +92,7 @@
 }
 \newglossarystyle{xltabular3col}{%
   \renewenvironment{theglossary}%
-    {\xltabular{\linewidth}{lXp{\glspagelistwidth}}}%
+    {\xltabular{\linewidth}{@{}lX>{\raggedleft}p{\glspagelistwidth}@{}}}%
     {\endxltabular}%
   \renewcommand*{\glossaryheader}{}%
   \renewcommand*{\glsgroupheading}[1]{}%
@@ -115,7 +115,7 @@
 \newglossarystyle{xltabular3colborder}{%
   \setglossarystyle{xltabular3col}%
   \renewenvironment{theglossary}%
-    {\xltabular{\linewidth}{|l|X|p{\glspagelistwidth}|}}%
+    {\xltabular{\linewidth}{@{}|l|X|>{\raggedleft}p{\glspagelistwidth}|@{}}}%
     {\endxltabular}%
   \renewcommand*{\glossaryheader}{\hline\endhead\hline\endfoot}%
 }
@@ -135,7 +135,7 @@
 }
 \newglossarystyle{xltabular4col}{%
   \renewenvironment{theglossary}%
-    {\xltabular{\linewidth}{llll}}%
+    {\xltabular{\linewidth}{@{}llll@{}}}%
     {\endxltabular}%
   \renewcommand*{\glossaryheader}{}%
   \renewcommand*{\glsgroupheading}[1]{}%
@@ -167,14 +167,14 @@
 \newglossarystyle{xltabular4colborder}{%
   \setglossarystyle{xltabular4col}%
   \renewenvironment{theglossary}%
-    {\xltabular{\linewidth}{|l|l|l|l|}}%
+    {\xltabular{\linewidth}{@{}|l|l|l|l|@{}}}%
     {\endxltabular}%
   \renewcommand*{\glossaryheader}{\hline\endhead\hline\endfoot}%
 }
 \newglossarystyle{xltabular4colheaderborder}{%
   \setglossarystyle{xltabular4col}%
   \renewenvironment{theglossary}%
-    {\xltabular{\linewidth}{|l|l|l|l|}}%
+    {\xltabular{\linewidth}{@{}|l|l|l|l|@{}}}%
     {\endxltabular}%
   \renewcommand*{\glossaryheader}{%
     \hline\bfseries\entryname&\bfseries\descriptionname&
@@ -185,25 +185,25 @@
 \newglossarystyle{altxltabular4col}{%
    \setglossarystyle{xltabular4col}%
   \renewenvironment{theglossary}%
-    {\xltabular{\linewidth}{lXll}}%
+    {\xltabular{\linewidth}{@{}lXll@{}}}%
     {\endxltabular}%
 }
 \newglossarystyle{altxltabular4colheader}{%
   \setglossarystyle{xltabular4colheader}%
   \renewenvironment{theglossary}%
-    {\xltabular{\linewidth}{lXll}}%
+    {\xltabular{\linewidth}{@{}lXll@{}}}%
     {\endxltabular}%
 }
 \newglossarystyle{altxltabular4colborder}{%
    \setglossarystyle{xltabular4colborder}%
   \renewenvironment{theglossary}%
-    {\xltabular{\linewidth}{|l|X|l|l|}}%
+    {\xltabular{\linewidth}{@{}|l|X|l|l|@{}}}%
     {\endxltabular}%
 }
 \newglossarystyle{altxltabular4colheaderborder}{%
   \setglossarystyle{xltabular4colheaderborder}%
   \renewenvironment{theglossary}%
-    {\xltabular{\linewidth}{|l|X|l|l|}}%
+    {\xltabular{\linewidth}{@{}|l|X|l|l|@{}}}%
     {\endxltabular}%
 }
 \endinput

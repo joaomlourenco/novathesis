@@ -111,7 +111,7 @@
 }
 
 \newcommand*{\ntsetup}[1]{%
-  \ntgetkeyval{#1}\@nt@opt\@nt@value
+  \StrCut{#1}{=}\@nt@opt\@nt@value
   % \typeout{'NT SETUP = '[#1]~/~[\@nt@opt]~/~[\@nt@value]}
   \csuse{@nt@opt\@nt@opt @prehook}
   \options{/novathesis/\@nt@opt = {\@nt@value}}%

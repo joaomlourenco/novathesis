@@ -28,7 +28,7 @@
 \degreename(en):={“Degree Name”}
 
 % Comiittee printing order
-\committeeorder[all]={c,r,m}% 
+\committeeorder(all):={c,r,m}% 
 
 % Cover background images
 \thesiscover(phd,front):={}

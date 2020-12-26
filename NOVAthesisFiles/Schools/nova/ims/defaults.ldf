@@ -24,7 +24,7 @@
 \majorfield(en):={Information Management}
 
 % Comiittee printing order
-\committeeorder[all]={c,r,m}% 
+\committeeorder(all):={c,r,m}% 
 
 % Cover background images
 \thesiscover(phd,front):={nova-ims-front-cover-phd}
@@ -48,18 +48,18 @@
 \thesiscover(plain,front):={nova-ims-front-cover-generic}
 
 % Rename Doctor degree
-\degreestr[phd,m,en]={Doctor}
-\degreestr[phd,f,en]={Doctor}
-\degreestr[phdplan,m,en]={Doctor}
-\degreestr[phdplan,f,en]={Doctor}
-\degreestr[phdprop,m,en]={Doctor}
-\degreestr[phdprop,f,en]={Doctor}
-\degreestr[phd,m,pt]={Doctor}
-\degreestr[phd,f,pt]={Doctor}
-\degreestr[phdplan,m,pt]={Doctor}
-\degreestr[phdplan,f,pt]={Doctor}
-\degreestr[phdprop,m,pt]={Doctor}
-\degreestr[phdprop,f,pt]={Doctor}
+\degreestr(phd,m,en):={Doctor}
+\degreestr(phd,f,en):={Doctor}
+\degreestr(phdplan,m,en):={Doctor}
+\degreestr(phdplan,f,en):={Doctor}
+\degreestr(phdprop,m,en):={Doctor}
+\degreestr(phdprop,f,en):={Doctor}
+\degreestr(phd,m,pt):={Doctor}
+\degreestr(phd,f,pt):={Doctor}
+\degreestr(phdplan,m,pt):={Doctor}
+\degreestr(phdplan,f,pt):={Doctor}
+\degreestr(phdprop,m,pt):={Doctor}
+\degreestr(phdprop,f,pt):={Doctor}
 
 %% DARK GREY  112,121,128
 %% LIGHT GREY 200,203,206
@@ -111,57 +111,57 @@
 \margin(plain,left):={6.8cm}
 \margin(plain,right):={2.0cm}
 
-\dissertationstr[bsc,pt]={Relatório apresentado como requisito parcial para obtenção do Grau de\\[1.25ex] %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em {\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstr(bsc,pt):={Relatório apresentado como requisito parcial para obtenção do Grau de\\[1.25ex] %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em {\themajorfield(\option{/novathesis/coverlang})}}
 
-\dissertationstr[mscplan,pt]={Relatório intermédio apresentado como requisito parcial para obtenção do Grau de\\[1.25ex] %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em {\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstr(mscplan,pt):={Relatório intermédio apresentado como requisito parcial para obtenção do Grau de\\[1.25ex] %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em {\themajorfield(\option{/novathesis/coverlang})}}
 
-\dissertationstr[msc,pt]={Dissertação apresentada  como requisito parcial para obtenção do Grau de %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em {\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstr(msc,pt):={Dissertação apresentada  como requisito parcial para obtenção do Grau de %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em {\themajorfield(\option{/novathesis/coverlang})}}
 
-\dissertationstr[phdplan,pt]={Relatório intermédio apresentado  como requisito parcial para obtenção do Grau de\\[1.25ex] %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em {\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstr(phdplan,pt):={Relatório intermédio apresentado  como requisito parcial para obtenção do Grau de\\[1.25ex] %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em {\themajorfield(\option{/novathesis/coverlang})}}
 
-\dissertationstr[phdprop,pt]={Proposta de dissertação apresentada como requisito parcial para obtenção do Grau de\\[1.25ex] %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em {\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstr(phdprop,pt):={Proposta de dissertação apresentada como requisito parcial para obtenção do Grau de\\[1.25ex] %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em {\themajorfield(\option{/novathesis/coverlang})}}
 
-\dissertationstr[phd,pt]={Dissertação apresentada  como requisito parcial\\ para obtenção do Grau de\\[1.25ex] %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em {\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstr(phd,pt):={Dissertação apresentada  como requisito parcial\\ para obtenção do Grau de\\[1.25ex] %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em {\themajorfield(\option{/novathesis/coverlang})}}
 
-\dissertationstr[bsc,en]={Report submitted in partial fulfillment\\%
+\dissertationstr(bsc,en):={Report submitted in partial fulfillment\\%
 of the requirements for the degree of\\[1ex]%
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ in {\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr[mscplan,en]={Dissertaion plan submitted in partial fulfillment\\%
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstr(mscplan,en):={Dissertaion plan submitted in partial fulfillment\\%
 of the requirements for the degree of\\[1ex]%
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ in {\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr[msc,en]={Dissertaion submitted in partial fulfillment\\%
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstr(msc,en):={Dissertaion submitted in partial fulfillment\\%
 of the requirements for the degree of\\[1ex]%
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ in {\themajorfield(\option{/novathesis/coverlang})}}
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}}
 
-\dissertationstr[phdplan,pt]={A thesis plan submitted in partial fulfillment %
+\dissertationstr(phdplan,pt):={A thesis plan submitted in partial fulfillment %
 of the requirements for the degree of %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
 
-\dissertationstr[phdplan,en]={A thesis plan submitted in partial fulfillment %
+\dissertationstr(phdplan,en):={A thesis plan submitted in partial fulfillment %
 of the requirements for the degree of %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
 
-\dissertationstr[phdprop,pt]={A thesis proposal submitted in partial fulfillment %
+\dissertationstr(phdprop,pt):={A thesis proposal submitted in partial fulfillment %
 of the requirements for the degree of %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
 
-\dissertationstr[phdprop,en]={A thesis proposal submitted in partial fulfillment %
+\dissertationstr(phdprop,en):={A thesis proposal submitted in partial fulfillment %
 of the requirements for the degree of %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
 
-\dissertationstr[phd,pt]={A thesis submitted in partial fulfillment %
+\dissertationstr(phd,pt):={A thesis submitted in partial fulfillment %
 of the requirements for the degree of %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
 
-\dissertationstr[phd,en]={A thesis submitted in partial fulfillment %
+\dissertationstr(phd,en):={A thesis submitted in partial fulfillment %
 of the requirements for the degree of %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NOVA guidelines:
@@ -206,7 +206,7 @@ of the requirements for the degree of %
   \ntaddtocover{1,2}{l}{0,7cm}{%
     \fontsize{16}{16}\selectfont
     \textcolor{imsmidgrey}{%
-      \textbf{\thespecializationstr[\option{/novathesis/coverlang}]
+      \textbf{\thespecializationstr(\option{/novathesis/coverlang})
       \thespecialization(\option{/novathesis/coverlang})}%
     }%
   }
@@ -224,7 +224,7 @@ of the requirements for the degree of %
   \ntaddtocover{1,2}{l}{5}{%
     \fontsize{14}{14}\selectfont%
     \textcolor{imsdarkgrey}{%
-      \thedissertationstr[\option{/novathesis/docdegree},\option{/novathesis/coverlang}]%
+      \thedissertationstr(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
     }%
   }%
   % DATE

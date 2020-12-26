@@ -31,7 +31,7 @@
 \majorfield(it):={Ingegneria Informatica}
 
 % Comiittee printing order
-\committeeorder[all]={c,r,m}% 
+\committeeorder(all):={c,r,m}% 
 
 % Cover background images
 \thesiscover(phd,front):={cover-phd-std}

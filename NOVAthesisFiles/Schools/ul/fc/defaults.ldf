@@ -33,7 +33,7 @@
 
 
 % Comiittee printing order
-\committeeorder[all]={c,r,a,m}% 
+\committeeorder(all):={c,r,a,m}% 
 
 % Cover background images
 \thesiscover(phd,front):={}
@@ -111,12 +111,12 @@
 \adviserslabel[it]={TBD}
 
 
-\dissertationstr[phdplan,pt]={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]}
-\dissertationstr[phdprop,pt]={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]}
-\dissertationstr[phd,pt]={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]}
+\dissertationstr(phdplan,pt):={Documento especialmente elaborado para a obtenção do grau de  %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
+\dissertationstr(phdprop,pt):={Documento especialmente elaborado para a obtenção do grau de  %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
+\dissertationstr(phd,pt):={Documento especialmente elaborado para a obtenção do grau de  %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

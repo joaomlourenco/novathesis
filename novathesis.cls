@@ -65,6 +65,7 @@
 \RequirePackage{xifthen}
 \RequirePackage{xstring}
 
+% Do some magic defining associative arrays :)
 \RequirePackage{assocarray}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -92,32 +93,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % --------------------------------------------------------
-% Do some magic defining arrays :)
-\newcommand*{\mynewdata}[1]{%
-  \@namedef{#1}[##1]=##2{\@namedef{#1##1}{##2}}%
-  % \@namedef{the#1}[##1]{\@nameuse{#1##1}}%
-  \@namedef{the#1}[##1]{%
-    \ifdatadefined{#1}[##1]{%
-      \@nameuse{#1##1}%
-    }{%
-      \ClassWarining{novathesis}{Undefined data element “#1[##1]”}{}%
-    }%
-  }%
-}
-
-\def\ifdatadefined#1[#2]#3#4{\ifcsname #1#2\endcsname#3\else#4\fi}
-
-% --------------------------------------------------------
 % If necessary create, then initialize the counter
 \newcommand*{\@nt@newcounter}[2][0]{%
   \ifcsname c@#2\endcsname\else\newcounter{#2}\fi%
   \setcounter{#2}{#1}%
-}
-
-% --------------------------------------------------------
-% Itelare a comma separated list
-\newcommand{\iteratecsvlist}[2]{%
-  \@for\@nt@themember:=#2\do{#1{\@nt@themember}}%
 }
 
 % --------------------------------------------------------
@@ -126,16 +105,6 @@
   % #1 = character to look for
   % #2 = string
   \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@%
-}
-
-% --------------------------------------------------------
-% Split a string by a character
-\newcommand*{\ntgetkeyval}[4][=]{%
-  % #1 = character to look for
-  % #2 = string to split
-  % #3 = macro to receive the left part
-  % #4 = macro to receive the right part
-  \StrCut{#2}{#1}#3#4%
 }
 
 % --------------------------------------------------------
@@ -285,7 +254,7 @@
 
 % --------------------------------------------------------
 % SOME PRELIMINARY LANGUAGE DEFINITIONS
-\mynewdata{abstractorder}
+\assocarray{abstractorder}
 \input{NOVAthesisFiles/lang-conf.tex}
 
 % --------------------------------------------------------
@@ -450,7 +419,7 @@
         \fontsize{6.3}{6.3}\selectfont% 
         \noindent%
         \hypersetup{allcolors=white}\textcolor{white}%
-                   {\theacknowledgmentsstr[\option{/novathesis/coverlang}]}%
+                   {\theacknowledgmentsstr(\option{/novathesis/coverlang})}%
       \end{Spacing}%
   }%  
 }
@@ -492,39 +461,39 @@
 %% Definition of fake arrays
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\mynewdata{abstractstring}
-\mynewdata{keywordsstring}
-\mynewdata{acknowledgementsstring}
-\mynewdata{notdefined}
-\newcommand\@nt@undefined[1][]{$<$ #1 \thenotdefined[\option{/novathesis/mainlang}] $>$}
-\mynewdata{specializationstr}
+\assocarray{abstractstring}
+\assocarray{keywordsstring}
+\assocarray{acknowledgementsstring}
+\assocarray{notdefined}
+\newcommand\@nt@undefined[1][]{$<$ #1 \thenotdefined(\option{/novathesis/mainlang}) $>$}
+\assocarray{specializationstr}
 
-\mynewdata{adviserstr}
-\mynewdata{adviserstrfont}
-\mynewdata{coadviserstr}
-\mynewdata{coadviserstrfont}
-\mynewdata{degreestr}
-\mynewdata{degreestrfont}
+\assocarray{adviserstr}
+\assocarray{adviserstrfont}
+\assocarray{coadviserstr}
+\assocarray{coadviserstrfont}
+\assocarray{degreestr}
+\assocarray{degreestrfont}
 
 \assocarray{degreename}
 
-\mynewdata{docdegreestr}
+\assocarray{docdegreestr}
 
-\mynewdata{committeeorder}
-\mynewdata{committeetitlestr}
-\mynewdata{committeetitlestrfont}
-\mynewdata{committeememberstr}
-\mynewdata{committeememberstrfont}
+\assocarray{committeeorder}
+\assocarray{committeetitlestr}
+\assocarray{committeetitlestrfont}
+\assocarray{committeememberstr}
+\assocarray{committeememberstrfont}
 
-\mynewdata{dissertationstr}
-\mynewdata{dissertationstrfont}
-\mynewdata{copyrighttextstr}
-\mynewdata{acknowledgmentsstr}
+\assocarray{dissertationstr}
+\assocarray{dissertationstrfont}
+\assocarray{copyrighttextstr}
+\assocarray{acknowledgmentsstr}
 
 \optionlistdo{/@nt/langsshort}{%
-  \committeetitlestrfont[#1]={}%
-  \committeememberstrfont[#1]={}%
-  \dissertationstrfont[#1]={}%
+  \committeetitlestrfont(#1):={}%
+  \committeememberstrfont(#1):={}%
+  \dissertationstrfont(#1):={}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -560,7 +529,7 @@
 %% LABELS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \gdef\thepresentationtext{%
-	\thedissertationstr[\option{/novathesis/docdegree},\option{/novathesis/coverlang}]%
+	\thedissertationstr(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
 }
 
 \gdef\thecopyrightstr{%
@@ -569,7 +538,7 @@
   \noindent%
   Copyright \textcopyright\ \theauthorname, %
   \thefaculty(\option{/novathesis/copyrightlang}), \theuniversity(\option{/novathesis/copyrightlang}).\\%
-  \thecopyrighttextstr[\option{/novathesis/copyrightlang}]%
+  \thecopyrighttextstr(\option{/novathesis/copyrightlang})%
   \@nt@select@lang{\option{/novathesis/mainlang}}
 }
 
@@ -606,24 +575,24 @@
 \newcommand{\thecovertitle}[1][]{%
   % \typeout{NT thecovertitle [#1]}
   \ifstrempty{#1}%
-    {\thedoccovertitle[\option{/novathesis/coverlang}]}%
-    {\thedoccovertitlecaps[\option{/novathesis/coverlang}]}
+    {\thedoccovertitle(\option{/novathesis/coverlang})}%
+    {\thedoccovertitlecaps(\option{/novathesis/coverlang})}
 }
 \newcommand{\thetitle}[1][\option{/novathesis/coverlang}]{%
-  \thedoctitle[#1]%
+  \thedoctitle(#1)%
 }
-\mynewdata{doccovertitle}
-\mynewdata{doccovertitlecaps}
-\mynewdata{doctitle}
+\assocarray{doccovertitle}
+\assocarray{doccovertitlecaps}
+\assocarray{doctitle}
 \def\@thetitle{}
 \newcommand{\nttitle}[2][\option{/novathesis/coverlang}]{%
   % \typeout{NT nttitle [#1] [#2]}
-    \doccovertitle[#1]={#2}%
-    \doccovertitlecaps[#1]={\expandafter\MakeTextUppercase\expandafter{#2}}%
+    \doccovertitle(#1):={#2}%
+    \doccovertitlecaps(#1):={\expandafter\MakeTextUppercase\expandafter{#2}}%
     \saveexpandmode\noexpandarg% set \noexpandarg locally
       \StrSubstitute[0]{#2}{\\}{ }[\@thetitle]%
     \restoreexpandmode% restore the previous mode
-    \doctitle[#1]=\@thetitle%
+    \doctitle(#1):=\@thetitle%
     \ifthenelse{\equal{#1}{\option{/novathesis/coverlang}}}{%
       \AtBeginDocument{%
         \hypersetup{pdftitle = {\@thetitle}}%
@@ -728,12 +697,12 @@
 
 \newcommand*{\@ntprintcommitteetitlestr}{%
   % \ifx\@nt@tmp\@empty%
-  \expandnext{\ifx}{\thecommitteetitlestr[\option{/novathesis/coverlang}]}\@empty%
+  \expandnext{\ifx}{\thecommitteetitlestr(\option{/novathesis/coverlang})}\@empty%
     % committeetitlestr[…] is empty
   \else%
     \multicolumn{2}{c}{{%%
-            \thecommitteetitlestrfont[\option{/novathesis/coverlang}]%
-            \thecommitteetitlestr[\option{/novathesis/coverlang}]:}%
+            \thecommitteetitlestrfont(\option{/novathesis/coverlang})%
+            \thecommitteetitlestr(\option{/novathesis/coverlang}):}%
           }%
   \fi%
 }
@@ -743,7 +712,7 @@
   \ifoptiondefined{/@nt/committee/#1/name}{%
     \@nt@reducegender{/@nt/committee/#1/gender}{\mygender}%
     \@nt@reducenumber{/@nt/committee/#1/name}{\mynumber}%
-    \smallskip\thecommitteememberstr[#1,\mynumber,\mygender,\option{/novathesis/coverlang}]: & %
+    \smallskip\thecommitteememberstr(#1,\mynumber,\mygender,\option{/novathesis/coverlang}): & %
     \begin{minipage}[t]{\linewidth}\raggedright%
     \optionlistdo{/@nt/committee/#1/name}{##1\\[1pt]}%
     \end{minipage}\\%
@@ -866,7 +835,7 @@
   % #1 = file class
   % #2 = KEY=value
   % \typeout{NT @ntprintnext@ii [#1] [#2]}%
-  \ntgetkeyval{#2}{\option@listmatch@key}{\option@listmatch@value}%
+  \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%
   % \typeout{NT @ntprintnext@ii TRYING TO LOAD \option@listmatch@value}%
   \InputIfFileExists{\option@listmatch@value}{}{}%
 }
@@ -892,8 +861,8 @@
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
-  \xdef\@nt@tmp{\theabstractorder[\option{/novathesis/mainlang}]}%
-  \iteratecsvlist{\@ntprintabstract}{\@nt@tmp}%
+  \xdef\@nt@tmp{\theabstractorder(\option{/novathesis/mainlang})}%
+  \expandnext{\forcsvlist\@ntprintabstract}{\@nt@tmp}%
 }
 
 \newcommand{\@ntprintabstract}[1]{%
@@ -1005,7 +974,7 @@
 
 \newcommand{\@loadglossaryfile}[1]{%
   % #1 = {glossary, acronyms, symbols}={filename}
-  \ntgetkeyval{#1}{\@nt@key}{\@nt@value}
+  \StrCut{#1}{=}\@nt@key\@nt@value
   % \typeout{NT @loadglossaryfile [\@nt@key][\@nt@value]}
   \IfFileExists{\@nt@value}%
     {\loadglsentries{\@nt@value}}%
@@ -1092,7 +1061,7 @@
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NewEnviron{ntacknowledgements}{%
-  \chapter*{\theacknowledgementsstring[\option{/novathesis/mainlang}]}%
+  \chapter*{\theacknowledgementsstring(\option{/novathesis/mainlang})}%
   \BODY
 }
 
@@ -1102,8 +1071,8 @@
 \newcommand{\@nt@keywordsstr}{}
 \newcommand{\setabstractlang}[1]{%
 	\@nt@select@lang{#1}%
-  \renewcommand{\@nt@keywordsstr}{\thekeywordsstring[#1]}%
-	\chapter*{\theabstractstring[#1]}%
+  \renewcommand{\@nt@keywordsstr}{\thekeywordsstring(#1)}%
+	\chapter*{\theabstractstring(#1)}%
 	\rule{\textwidth}{0.2mm} ~\\[-3.5ex]%
 }
 
