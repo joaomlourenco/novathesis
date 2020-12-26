@@ -94,9 +94,9 @@
 
 % --------------------------------------------------------
 % If necessary create, then initialize the counter
-\newcommand*{\@nt@newcounter}[2][0]{%
-  \ifcsname c@#2\endcsname\else\newcounter{#2}\fi%
-  \setcounter{#2}{#1}%
+\newcommand*{\setnewcounter}[2]{%
+  \ifcsname c@#1\endcsname\else\newcounter{#1}\fi%
+  \setcounter{#1}{#2}%
 }
 
 % --------------------------------------------------------
@@ -112,6 +112,11 @@
 \def\ntmajorfield[#1]#2{\majorfield(#1):={#2}}
 \def\ntdegreename[#1]#2{\degreename(#1):={#2}}
 \def\ntspecialization[#1]#2{\specialization(#1):={#2}}
+
+
+% --------------------------------------------------------
+% Print string between <...>
+\newcommand{\embrace}[1]{$<$#1$>$}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -458,14 +463,14 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Definition of fake arrays
+%% Definition of associative arrays
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\@nt@undefined[1][]{\embrace{#1 \thenotdefined(\option{/novathesis/mainlang})}}
 
 \assocarray{abstractstring}
 \assocarray{keywordsstring}
 \assocarray{acknowledgementsstring}
 \assocarray{notdefined}
-\newcommand\@nt@undefined[1][]{$<$ #1 \thenotdefined(\option{/novathesis/mainlang}) $>$}
 \assocarray{specializationstr}
 
 \assocarray{adviserstr}
@@ -608,50 +613,55 @@
 %%% Print option list as a comma separated list
 %%% with "and" prefixing the last element
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\printoptionlist}[3]{%
-  % #1 = options list
-  % #2 = separator (e.g, ",")
-  % #3 = last separator (e.g., "and")
-  \letoptionlist{#1}\@nt@list
-  \StrCount{\@nt@list}{,}[\@nt@count]
-  \ifcase\@nt@count
-    % case 0
-    #1
-  \or
-    % case 1
-    \StrSubstitute{\@nt@list}{,}{ and }
-  \else
-    % other
-    \StrSubstitute[\the\numexpr \@nt@count-1]{\@nt@list}{,}{|}[\@nt@list@i]
-    \StrSubstitute{\@nt@list@i}{,}{ #3 }[\@nt@list@ii]
-    \StrSubstitute{\@nt@list@ii}{|}{#2}
-  \fi
-}
-
-%%%% Alternative hand-made implementation
-% \newcommand{\@nt@printoptionlist}[3]{%
-  % #1 = options list
-  % #2 = separator (e.g, ",")
-  % #3 = last separator (e.g., "and")
-%   \@nt@newcounter[1]{@ntprintoptionlist@cnt}
-%   \def\@nt@comma{}%
-%   \optionlistdo{#1}{%
-%     \StrCut{##1}{,}\@nt@name\@nt@rest%
-%     \@nt@comma\@nt@name%
-%     \stepcounter{@ntprintoptionlist@cnt}%
-%     \ifnum\value{\option{#1/@size}}=\value{@ntprintoptionlist@cnt}%
-%       \def\@nt@comma{#3}%
-%     \else%
-%       \def\@nt@comma{#2}%
-%     \fi%
-%   }%
+% \newcommand{\printoptionlist}[3]{%
+%   % #1 = options list
+%   % #2 = separator (e.g, ",")
+%   % #3 = last separator (e.g., "and")
+%   \letoptionlist{#1}\@nt@list
+%   \StrCount{\@nt@list}{,}[\@nt@count]
+%   \ifcase\@nt@count
+%     % case 0
+%     #1
+%   \or
+%     % case 1
+%     \StrSubstitute{\@nt@list}{,}{ and }
+%   \else
+%     % other
+%     \StrSubstitute[\the\numexpr \@nt@count-1]{\@nt@list}{,}{|}[\@nt@list@i]
+%     \StrSubstitute{\@nt@list@i}{,}{ #3 }[\@nt@list@ii]
+%     \StrSubstitute{\@nt@list@ii}{|}{#2}
+%   \fi
 % }
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print advisers
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\ntprintadvisersaslist}[1][adviser]{%
-  \printoptionlist{/@nt/#1//name}{, }{ and }
+\newcommand{\ntprintadvisersaslist}[1][adviser,coadviser]{%
+  % \printoptionlist{/@nt/#1//name}{, }{ and }
+  \gdef\@nt@addviserslist{}%
+  \setnewcounter{@nt@advisertotal}{0}%
+  \forcsvlist\@nt@getadvisername{#1}%
+  \setnewcounter{@nt@advisern}{0}%
+  \expandnext{\forcsvlist\@nt@printadvisersaslist}{\@nt@addviserslist}%
+}
+
+\newcommand{\@nt@getadvisername}[1]{%
+  \optionlistdo{/@nt/#1//name}{%
+    \StrCut{##1}{,}\@nt@tmpl\@nt@tmpr%
+    \xdef\@nt@addviserslist{\@nt@addviserslist,\@nt@tmpl}%
+    \stepcounter{@nt@advisertotal}%
+  }%
+}
+
+\newcommand{\@nt@printadvisersaslist}[1]{%
+  \stepcounter{@nt@advisern}%
+  \ifnum\value{@nt@advisern}=\value{@nt@advisertotal}%
+    { and }%
+  \else\ifnum\value{@nt@advisern}>1%
+    {, }%
+  \fi\fi%
+  #1%
 }
 
 \newcommand{\ntprintadvisers}[1][0.90]{%

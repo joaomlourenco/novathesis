@@ -621,7 +621,7 @@
 % \newrobustcmd\optionlistdo[2]{\def\opt@@do##1{#2}\forlistcsloop{\opt@@do}{optk@#1}}
 \newrobustcmd\optionlistdo[2]{%
   \csdef{opt@@do#1}##1{#2}%
-  \forlistcsloop{\@nameuse{opt@@do#1}}{optk@#1}%
+  \forlistcsloop{\csuse{opt@@do#1}}{optk@#1}%
 }
 
 \newrobustcmd*\option@setlist[2]{\option@setnil{#1}\option@concat{#1}{#2}}
@@ -997,7 +997,7 @@
 
 % defining new option types
 \options{%
-  /handlers/undef/.new handler = {%
+  /handlers/undef/.new handler* = {%
     \ifoptiondefined{#1}{%
       \option@undef{#1}%
       \option@undef{#1/@type}%
@@ -1112,7 +1112,7 @@
   },
   /handlers/show/list/.new cmd    = \letoptionlist{#1}\opt@list\option@showvalue{\opt@list},
   /handlers/push/.new operation   = \option@push{#1}{#2},
-  /handlers/cpush/.new operation   = {%
+  /handlers/cpush/.new operation = {%
           \expandnextsingle\ifoptiondefined{#1}{}{\expandnextsingle\options{#1/.new list}}%
           \option@push{#1}{#2}%
   },

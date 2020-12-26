@@ -199,17 +199,23 @@
 % \ntdegreename[en]{Integrated Master in Computer Science and Engineering}  %% For PhD comment here and uncomment above
 
 %%% For PhD in Computer Science @ FCT-NOVA
-\ntmajorfield[pt]{Informática}                             %% For MSc comment here and uncomment above
-\ntmajorfield[en]{Computer Science}                        %% For MSc comment here and uncomment above
-\ntdegreename[pt]{Programa de Doutoramento em Informática} %% For MSc comment here and uncomment above
-\ntdegreename[en]{PhD Program in Computer Science}         %% For MSc comment here and uncomment above
+% \ntmajorfield[pt]{Informática}                             %% For MSc comment here and uncomment above
+% \ntmajorfield[en]{Computer Science}                        %% For MSc comment here and uncomment above
+% \ntdegreename[pt]{Programa de Doutoramento em Informática} %% For MSc comment here and uncomment above
+% \ntdegreename[en]{PhD Program in Computer Science}         %% For MSc comment here and uncomment above
+
+%%% SEE ABOVE for MSc and PhD in Computer Science @ FCT-NOVA 
+\ntmajorfield[pt]{\embrace{Área de Científica}}
+\ntmajorfield[en]{\embrace{Scientific Field of Study}}
+\ntdegreename[pt]{\embrace{Nome do Curso}}
+\ntdegreename[en]{\embrace{Degree's Name}}
 
 
 %%------------------------------------------------------------
 % Degree costumization
 % If the degree includes a specialization
-\ntspecialization[pt]{Sistemas Distribuídos}
-\ntspecialization[en]{Distributed Systems}
+\ntspecialization[pt]{\embrace{Nome da Especialização}}
+\ntspecialization[en]{\embrace{Specialization's Name}}
 
 %%------------------------------------------------------------
 % Autor
@@ -221,15 +227,15 @@
 % Date
 % \ntdatemonth{$<$ month $>$}
 % \ntdateyear{\the\year}
-\ntdatemonth{$<$month$>$}
-\ntdateyear{$<$year$>$}
+\ntdatemonth{\embrace{month}}
+\ntdateyear{\embrace{year}}
 
 %%------------------------------------------------------------
 % Advisers
 % use [f] for female and [m] for male
 % use "\\" if necessary to break the lines in the apprpriate place
 \ntaddperson{adviser}[f]{{Mary Doe Adviser Name, Full Professor, NOVA University of Lisbon}}
-% \ntaddperson{adviser}[f]{{Mary Doe other Adviser Name, Full Professor, NOVA University of Lisbon}}
+\ntaddperson{adviser}[f]{{Mary Doe other Adviser Name, Full Professor, NOVA University of Lisbon}}
 % \ntaddperson{adviser}[f]{{Mary Doe yet another Adviser Name, Full Professor, NOVA University of Lisbon}}
 
 %%------------------------------------------------------------

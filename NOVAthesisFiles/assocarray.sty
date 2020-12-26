@@ -110,7 +110,7 @@
 
 \def\@aa@def@ii#1(#2):{%
   % \typeout{@aa@star@ii{⟨name⟩}{⟨index⟩}}%
-  \typeout{AA def [#1][#2]}%
+  % \typeout{AA def [#1][#2]}%
   \@ifnextchar={\@aa@assign@iii#1(#2):}{%
     \@ifnextchar>{\@aa@redir@iv#1(#2):}{%
       \errmsg{Invalid operator}%
@@ -204,7 +204,7 @@
   % #2 = index
   % use[#1][#2]\par
   % \foundfalse
-  \typeout{AA use-[#1]-[#2]-}%
+  % \typeout{AA use-[#1]-[#2]-}%
   \ifcsdef{@aa@#1@#2}{%
     % Direct use
     % \foundtrue%
