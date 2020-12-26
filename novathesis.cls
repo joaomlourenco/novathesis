@@ -583,12 +583,15 @@
     {\thedoccovertitle(\option{/novathesis/coverlang})}%
     {\thedoccovertitlecaps(\option{/novathesis/coverlang})}
 }
+
 \newcommand{\thetitle}[1][\option{/novathesis/coverlang}]{%
   \thedoctitle(#1)%
 }
+
 \assocarray{doccovertitle}
 \assocarray{doccovertitlecaps}
 \assocarray{doctitle}
+
 \def\@thetitle{}
 \newcommand{\nttitle}[2][\option{/novathesis/coverlang}]{%
   % \typeout{NT nttitle [#1] [#2]}
