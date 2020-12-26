@@ -74,7 +74,7 @@
 	\newlength{\@nt@spine@box@date@height}%
 	\newcommand{\make@spine@box@date}{%
     % Print year into box
-	  \savebox{\@nt@spine@box@date}{\thespine[year]}%
+	  \savebox{\@nt@spine@box@date}{\thespine(year)}%
     % Get date box width and height
 	  \settowidth{\@nt@spine@box@date@width}{\usebox{\@nt@spine@box@date}}%
 	  \settototalheight{\@nt@spine@box@date@height}{\usebox{\@nt@spine@box@date}}%
@@ -112,7 +112,7 @@
 		  \dimexpr\paperheight-\@nt@spine@box@logo@height-\@nt@spine@box@date@height%
 	  }%
     % Let's print the title in a single line and see how it looks
-    \savebox{\@nt@spine@box@title}{\bfseries\thespine[title]}
+    \savebox{\@nt@spine@box@title}{\bfseries\thespine(title)}
     % Get title height
 	  \settototalheight{\@nt@spine@box@title@height}{\usebox{\@nt@spine@box@title}}%
     % Check if height is larger than spine width, resize to spine width if necessary
@@ -149,7 +149,7 @@
 		  \dimexpr\paperheight-\@nt@spine@box@logo@height-\@nt@spine@box@date@height%
 	  }%
     % Let's print the author in a single line and see how it looks
-    \savebox{\@nt@spine@box@author}{\bfseries\thespine[author]}
+    \savebox{\@nt@spine@box@author}{\bfseries\thespine(author)}
     % Get author height
 	  \settototalheight{\@nt@spine@box@author@height}{\usebox{\@nt@spine@box@author}}%
     % Check if height is larger than spine width, resize to spine width if necessary
@@ -238,9 +238,9 @@
 	\newcommand{\ntprintspine}{%
 	  \clearforchapter%
 	  \thispagestyle{empty}%
-	  \make@spine@box@logo{}{\thespine[logo]}%
+	  \make@spine@box@logo{}{\thespine(logo)}%
 	  \ifexists{spine}[logotwo]{%
-		\make@spine@box@logotwo{}{\thespine[logotwo]}%
+		\make@spine@box@logotwo{}{\thespine(logotwo)}%
 	  }
 	  \make@spine@box@date%
 	  \make@spine@box@titleauthor%

@@ -8,99 +8,99 @@
 \typeout{NT LOADING FILE ips/ests/defaults.ldf}
 
 % University
-\university[pt]={Instituto Politécnico de Setúbal}
-\university[en]={Polytechnic Institute of Setúbal}
-\university[fr]={Polytechnic Institute of Setúbal}
-\university[it]={Polytechnic Institute of Setúbal}
+\university(pt):={Instituto Politécnico de Setúbal}
+\university(en):={Polytechnic Institute of Setúbal}
+\university(fr):={Polytechnic Institute of Setúbal}
+\university(it):={Polytechnic Institute of Setúbal}
 
 % Faculty / School
-\faculty[pt]={Escola Superior de Tecnologia de Setúbal}
-\faculty[en]={Escola Superior de Tecnologia de Setúbal}
-\faculty[fr]={Escola Superior de Tecnologia de Setúbal}
-\faculty[it]={Escola Superior de Tecnologia de Setúbal}
+\faculty(pt):={Escola Superior de Tecnologia de Setúbal}
+\faculty(en):={Escola Superior de Tecnologia de Setúbal}
+\faculty(fr):={Escola Superior de Tecnologia de Setúbal}
+\faculty(it):={Escola Superior de Tecnologia de Setúbal}
 
 % Scientific field
-\majorfield[pt]={Engenharia Informática}
-\majorfield[en]={Computer Science and Engineering}
+\majorfield(pt):={Engenharia Informática}
+\majorfield(en):={Computer Science and Engineering}
 
 % Department
-\department[pt]={Área Departamental de \themajorfield[pt]}
-\department[en]={Department of \themajorfield[en]}
+\department(pt):={Área Departamental de \themajorfield(pt)}
+\department(en):={Department of \themajorfield(en)}
 
 % Comiittee printing order
 \committeeorder[all]={c,r,a,m}% 
 
 % Cover background images
-\frontpageimage[]={ESTS-JPG} % don't add the .jpg extension
-\thesiscover[phd,front]={}
-\thesiscover[phdplan,front]={}
-\thesiscover[phdprop,front]={}
-\thesiscover[msc,front]={}
-\thesiscover[mscplan,front]={}
-\thesiscover[bsc,front]={}
-\thesiscover[plain,front]={}
+\frontpageimage():={ESTS-JPG} % don't add the .jpg extension
+\thesiscover(phd,front):={}
+\thesiscover(phdplan,front):={}
+\thesiscover(phdprop,front):={}
+\thesiscover(msc,front):={}
+\thesiscover(mscplan,front):={}
+\thesiscover(bsc,front):={}
+\thesiscover(plain,front):={}
 
 % Spine info
-\spine[logo]={logoESTS}
-\spine[author]={\theauthorshortname}
-\spine[title]={\thetitle}
-\spine[year]={\thentdateyear}
+\spine(logo):={logoESTS}
+\spine(author):={\theauthorshortname}
+\spine(title):={\thetitle}
+\spine(year):={\thentdateyear}
 
 % Set margins for "normal" pages
-\margin[screen,top]={2.0cm}
-\margin[screen,bottom]={1.5cm}
-\margin[screen,left]={3.0cm}
-\margin[screen,right]={2.0cm}
-\margin[paper,top]={2.0cm}
-\margin[paper,bottom]={1.5cm}
-\margin[paper,left]={3.0cm}
-\margin[paper,right]={2.0cm}
+\margin(screen,top):={2.0cm}
+\margin(screen,bottom):={1.5cm}
+\margin(screen,left):={3.0cm}
+\margin(screen,right):={2.0cm}
+\margin(paper,top):={2.0cm}
+\margin(paper,bottom):={1.5cm}
+\margin(paper,left):={3.0cm}
+\margin(paper,right):={2.0cm}
 
 % Set margins for cover pages
-\margin[phd,top]={2.0cm}
-\margin[phd,bottom]={1.5cm}
-\margin[phd,left]={3.0cm}
-\margin[phd,right]={2.0cm}
-\margin[phdplan,top]={2.0cm}
-\margin[phdplan,bottom]={1.5cm}
-\margin[phdplan,left]={3.0cm}
-\margin[phdplan,right]={2.0cm}
-\margin[phdprop,top]={2.0cm}
-\margin[phdprop,bottom]={1.5cm}
-\margin[phdprop,left]={3.0cm}
-\margin[phdprop,right]={2.0cm}
-\margin[msc,top]={2.0cm}
-\margin[msc,bottom]={1.5cm}
-\margin[msc,left]={3.0cm}
-\margin[msc,right]={2.0cm}
-\margin[mscplan,top]={2.0cm}
-\margin[mscplan,bottom]={1.5cm}
-\margin[mscplan,left]={3.0cm}
-\margin[mscplan,right]={2.0cm}
-\margin[bsc,top]={2.0cm}
-\margin[bsc,bottom]={1.5cm}
-\margin[bsc,left]={3.0cm}
-\margin[bsc,right]={2.0cm}
-\margin[plain,top]={2.0cm}
-\margin[plain,bottom]={1.5cm}
-\margin[plain,left]={3.0cm}
-\margin[plain,right]={2.0cm}
+\margin(phd,top):={2.0cm}
+\margin(phd,bottom):={1.5cm}
+\margin(phd,left):={3.0cm}
+\margin(phd,right):={2.0cm}
+\margin(phdplan,top):={2.0cm}
+\margin(phdplan,bottom):={1.5cm}
+\margin(phdplan,left):={3.0cm}
+\margin(phdplan,right):={2.0cm}
+\margin(phdprop,top):={2.0cm}
+\margin(phdprop,bottom):={1.5cm}
+\margin(phdprop,left):={3.0cm}
+\margin(phdprop,right):={2.0cm}
+\margin(msc,top):={2.0cm}
+\margin(msc,bottom):={1.5cm}
+\margin(msc,left):={3.0cm}
+\margin(msc,right):={2.0cm}
+\margin(mscplan,top):={2.0cm}
+\margin(mscplan,bottom):={1.5cm}
+\margin(mscplan,left):={3.0cm}
+\margin(mscplan,right):={2.0cm}
+\margin(bsc,top):={2.0cm}
+\margin(bsc,bottom):={1.5cm}
+\margin(bsc,left):={3.0cm}
+\margin(bsc,right):={2.0cm}
+\margin(plain,top):={2.0cm}
+\margin(plain,bottom):={1.5cm}
+\margin(plain,left):={3.0cm}
+\margin(plain,right):={2.0cm}
 
 \dissertationstr[bsc,pt]={Relatório para obtenção do Grau de %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\option{/novathesis/coverlang}]}}
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstr[mscplan,pt]={Relatório intermédio para obtenção do Grau de %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\option{/novathesis/coverlang}]}}
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstr[msc,pt]={Dissertação de natureza científica para obtenção do grau de  %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\option{/novathesis/coverlang}]}}
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstr[phdplan,pt]={Relatório intermédio para obtenção do Grau de %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\option{/novathesis/coverlang}]}}
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstr[phdprop,pt]={Proposta de dissertação para obtenção do Grau de %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\option{/novathesis/coverlang}]}}
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstr[phd,pt]={Dissertação para obtenção do Grau de %
-\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield[\option{/novathesis/coverlang}]}}
-\copyrighttextstr[pt]={A \thefaculty[\option{/novathesis/coverlang}]\ e o \theuniversity[\option{/novathesis/coverlang}]\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+\thedegreestr[\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang}]\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+\copyrighttextstr[pt]={A \thefaculty(\option{/novathesis/coverlang})\ e o \theuniversity(\option{/novathesis/coverlang})\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
 
-\copyrighttextstr[en]={The \thefaculty[\option{/novathesis/coverlang}]\ and the \theuniversity[\option{/novathesis/coverlang}]\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+\copyrighttextstr[en]={The \thefaculty(\option{/novathesis/coverlang})\ and the \theuniversity(\option{/novathesis/coverlang})\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -200,7 +200,7 @@
   \end{minipage}%
   \hspace{0.65cm}%
   \begin{minipage}[t]{0.55\textwidth}%
-  	\includegraphics[height=5.3cm]{\thefrontpageimage[]}%
+  	\includegraphics[height=5.3cm]{\thefrontpageimage()}%
   \end{minipage}%
 }
 

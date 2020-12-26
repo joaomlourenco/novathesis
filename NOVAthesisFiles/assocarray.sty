@@ -54,10 +54,6 @@
     \expandafter\@secondoftwo%
   \fi%
 }
-% \providecommand*{\ifempty}[3]{%
-%   \edef\@if@empty{#1}%
-%   \ifx\@if@empty\empty#2\else#3\fi
-% }
 \providecommand*{\ifempty}[1]{%
   \if#1\empty\relax
     \expandafter\@firstoftwo%
@@ -100,6 +96,9 @@
 %================================================================
 % ASSOCARRAY
 %================================================================
+\def\ifaadefined#1(#2){%
+  \ifcsdef{@aa@#1@#2}%
+}
 \newcommand*{\assocarray}[1]{%
   \csdef{#1}(##1){\@ifnextchar:{\@aa@def@ii\expanded{#1}(\expanded{##1})}{\@aa@use@ii\expanded{#1}(\expanded{##1})}}%
   \newcounter{@aa@#1@cnt}%
@@ -123,7 +122,7 @@
   % \ifcsdef{@aa@#1@#2}%
   %   {reassign[#1(#2):=#3]\par}%
   %   {assign[#1(#2)$:=$#3]\par}%
-  \csedef{@aa@#1@#2}{\expanded{#3}}%
+  \csdef{@aa@#1@#2}{#3}%
 }
 
 \def\@aa@redir@iv#1(#2):>#3(#4){%
@@ -199,7 +198,7 @@
 
 \endinput
 
-\newif\iffound%
+% \newif\iffound%
 \def\@aa@use@ii#1(#2){%
   % #1 = name
   % #2 = index

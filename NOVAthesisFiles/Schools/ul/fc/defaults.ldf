@@ -8,93 +8,93 @@
 \typeout{NT LOADING FILE ul/fc/defaults.ldf}
 
 % Univesity
-\university[pt]={Universidade de Lisboa}
-\university[en]={University of Lisbon}
-\university[fr]={University of Lisbon}
-\university[it]={University of Lisbon}
+\university(pt):={Universidade de Lisboa}
+\university(en):={University of Lisbon}
+\university(fr):={University of Lisbon}
+\university(it):={University of Lisbon}
 
 % Faculty / School
-\faculty[pt]={Faculdade de Ciências}
-\faculty[en]={Faculty of Sciences}
-\faculty[fr]={Faculty of Sciences}
-\faculty[it]={Faculty of Sciences}
+\faculty(pt):={Faculdade de Ciências}
+\faculty(en):={Faculty of Sciences}
+\faculty(fr):={Faculty of Sciences}
+\faculty(it):={Faculty of Sciences}
 
 % Scientific field
-\majorfield[pt]={\@nt@undefined[A DEFINIR]}
-\majorfield[en]={\@nt@undefined[TO BE DEFINED]}
+\majorfield(pt):={\@nt@undefined[A DEFINIR]}
+\majorfield(en):={\@nt@undefined[TO BE DEFINED]}
 
 % Department field
-\department[pt]={\@nt@undefined[A DEFINIR]}
-\department[en]={\@nt@undefined[TO BE DEFINED]}
+\department(pt):={\@nt@undefined[A DEFINIR]}
+\department(en):={\@nt@undefined[TO BE DEFINED]}
 
 % Specialization field
-\specialization[pt]={\@nt@undefined[A DEFINIR]}
-\specialization[en]={\@nt@undefined[TO BE DEFINED]}
+\specialization(pt):={\@nt@undefined[A DEFINIR]}
+\specialization(en):={\@nt@undefined[TO BE DEFINED]}
 
 
 % Comiittee printing order
 \committeeorder[all]={c,r,a,m}% 
 
 % Cover background images
-\thesiscover[phd,front]={}
-\thesiscover[phdplan,front]={}
-\thesiscover[phdprop,front]={}
-\thesiscover[msc,front]={}
-\thesiscover[mscplan,front]={}
-\thesiscover[bsc,front]={}
-\thesiscover[plain,front]={}
+\thesiscover(phd,front):={}
+\thesiscover(phdplan,front):={}
+\thesiscover(phdprop,front):={}
+\thesiscover(msc,front):={}
+\thesiscover(mscplan,front):={}
+\thesiscover(bsc,front):={}
+\thesiscover(plain,front):={}
 
 % Spine info
-\spine[logo]={logoFCUL3}
-\spine[author]={\theauthorshortname}
-\spine[title]={\thetitle}
-\spine[year]={\thentdateyear}
+\spine(logo):={logoFCUL3}
+\spine(author):={\theauthorshortname}
+\spine(title):={\thetitle}
+\spine(year):={\thentdateyear}
 
 % Set margins for "normal" pages
-\margin[screen,top]={3.5cm}
-\margin[screen,bottom]={2.5cm}
-\margin[screen,left]={3.0cm}
-\margin[screen,right]={3.0cm}
-\margin[paper,top]={3.5cm}
-\margin[paper,bottom]={2.5cm}
-\margin[paper,left]={2.5cm}
-\margin[paper,right]={3.5cm}
+\margin(screen,top):={3.5cm}
+\margin(screen,bottom):={2.5cm}
+\margin(screen,left):={3.0cm}
+\margin(screen,right):={3.0cm}
+\margin(paper,top):={3.5cm}
+\margin(paper,bottom):={2.5cm}
+\margin(paper,left):={2.5cm}
+\margin(paper,right):={3.5cm}
 
 %% Set margins for cover pages
-\margin[phd,top]={1.0cm}
-\margin[phd,bottom]={1.5cm}
-\margin[phd,left]={2.5cm}
-\margin[phd,right]={2.5cm}
+\margin(phd,top):={1.0cm}
+\margin(phd,bottom):={1.5cm}
+\margin(phd,left):={2.5cm}
+\margin(phd,right):={2.5cm}
 
-\margin[phdplan,top]={2.0cm}
-\margin[phdplan,bottom]={1.5cm}
-\margin[phdplan,left]={2.5cm}
-\margin[phdplan,right]={2.5cm}
+\margin(phdplan,top):={2.0cm}
+\margin(phdplan,bottom):={1.5cm}
+\margin(phdplan,left):={2.5cm}
+\margin(phdplan,right):={2.5cm}
 
-\margin[phdprop,top]={2.0cm}
-\margin[phdprop,bottom]={1.5cm}
-\margin[phdprop,left]={2.5cm}
-\margin[phdprop,right]={2.5cm}
+\margin(phdprop,top):={2.0cm}
+\margin(phdprop,bottom):={1.5cm}
+\margin(phdprop,left):={2.5cm}
+\margin(phdprop,right):={2.5cm}
 
-\margin[msc,top]={2.0cm}
-\margin[msc,bottom]={1.5cm}
-\margin[msc,left]={2.5cm}
-\margin[msc,right]={2.5cm}
+\margin(msc,top):={2.0cm}
+\margin(msc,bottom):={1.5cm}
+\margin(msc,left):={2.5cm}
+\margin(msc,right):={2.5cm}
 
-\margin[mscplan,top]={2.0cm}
-\margin[mscplan,bottom]={1.5cm}
-\margin[mscplan,left]={2.5cm}
-\margin[mscplan,right]={2.5cm}
+\margin(mscplan,top):={2.0cm}
+\margin(mscplan,bottom):={1.5cm}
+\margin(mscplan,left):={2.5cm}
+\margin(mscplan,right):={2.5cm}
 
-\margin[bsc,top]={2.0cm}
-\margin[bsc,bottom]={1.5cm}
-\margin[bsc,left]={2.5cm}
-\margin[bsc,right]={2.5cm}
+\margin(bsc,top):={2.0cm}
+\margin(bsc,bottom):={1.5cm}
+\margin(bsc,left):={2.5cm}
+\margin(bsc,right):={2.5cm}
 
-\margin[plain,top]={2.0cm}
-\margin[plain,bottom]={1.5cm}
-\margin[plain,left]={2.5cm}
-\margin[plain,right]={2.5cm}
+\margin(plain,top):={2.0cm}
+\margin(plain,bottom):={1.5cm}
+\margin(plain,left):={2.5cm}
+\margin(plain,right):={2.5cm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % String re-definition; original definitions in string-X.ldf
@@ -172,15 +172,15 @@
 % School
 \ntaddtocover{1,2}{c}{0.5cm}{%
   \fontseries{mc}\fontsize{12}{12}\selectfont%
-  \MakeUppercase{\theuniversity[\option{/novathesis/coverlang}]}\\%
+  \MakeUppercase{\theuniversity(\option{/novathesis/coverlang})}\\%
   \vspace{2mm}%
-  \MakeUppercase{\thefaculty[\option{/novathesis/coverlang}]}\\%
+  \MakeUppercase{\thefaculty(\option{/novathesis/coverlang})}\\%
   \ifthenelse{%
  		\equal{\option{/novathesis/docdegree}}{msc}%
   	\OR\equal{\option{/novathesis/docdegree}}{mscplan}%
  	}{% THEN
 	 	\vspace{2mm}%
-	 	\MakeUppercase{\thedepartment[\option{/novathesis/coverlang}]}%
+	 	\MakeUppercase{\thedepartment(\option{/novathesis/coverlang})}%
  	}{% ELSE
   }%
   \vspace{20mm}%
@@ -215,9 +215,9 @@
 	  \fontseries{mc}\fontsize{13}{13}\selectfont%
 		\textbf{\theauthordegree}\\%
 		\ifthenelse{%
-	 		\NOT\equal{\thespecialization[\option{/novathesis/coverlang}]}{}%
+	 		\NOT\equal{\thespecialization(\option{/novathesis/coverlang})}{}%
  		}
- 		{\thespecialization[\option{/novathesis/coverlang}]}
+ 		{\thespecialization(\option{/novathesis/coverlang})}
  		{}
 		\vspace{20mm}%
 	}%
@@ -241,9 +241,9 @@
 	  \fontseries{mc}\fontsize{13}{13}\selectfont%
 		\textbf{\theauthordegree\\}
 		\ifthenelse{%
-	 		\NOT\equal{\thespecialization[\option{/novathesis/coverlang}]}{}%
+	 		\NOT\equal{\thespecialization(\option{/novathesis/coverlang})}{}%
  		}%
- 		  {\thespecialization[\option{/novathesis/coverlang}]}%
+ 		  {\thespecialization(\option{/novathesis/coverlang})}%
  		  {}%
 		\vspace{10mm}%%
 	}%

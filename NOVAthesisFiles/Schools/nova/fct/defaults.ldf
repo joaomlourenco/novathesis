@@ -8,59 +8,59 @@
 \typeout{NT LOADING FILE nova/fct/defaults.ldf}
 
 % Univesity
-\university[pt]={Universidade NOVA de Lisboa}
-\university[en]={NOVA University Lisbon}
-\university[fr]={NOVA University Lisbon}
-\university[it]={NOVA University Lisbon}
+\university(pt):={Universidade NOVA de Lisboa}
+\university(en):={NOVA University Lisbon}
+\university(fr):={NOVA University Lisbon}
+\university(it):={NOVA University Lisbon}
 
 % Faculty / School
-\faculty[pt]={Faculdade de Ciências e Tecnologia}
-\faculty[en]={NOVA School of Science and Technology}
-\faculty[fr]={NOVA School of Science and Technology}
-\faculty[it]={NOVA School of Science and Technology}
+\faculty(pt):={Faculdade de Ciências e Tecnologia}
+\faculty(en):={NOVA School of Science and Technology}
+\faculty(fr):={NOVA School of Science and Technology}
+\faculty(it):={NOVA School of Science and Technology}
 
 % Scientific filed
 \IfSubStr{\option{/novathesis/docdegree}}{phd}{%
-    \majorfield[pt]={Informática}
-    \majorfield[en]={Computer Science}
+    \majorfield(pt):={Informática}
+    \majorfield(en):={Computer Science}
   }{%
-  \majorfield[pt]={Engenharia Informática}
-  \majorfield[en]={Computer Science and Engineering}
+  \majorfield(pt):={Engenharia Informática}
+  \majorfield(en):={Computer Science and Engineering}
   }
-\majorfield[fr]={Ingénierie Informatique}
-\majorfield[it]={Ingegneria Informatica}
+\majorfield(fr):={Ingénierie Informatique}
+\majorfield(it):={Ingegneria Informatica}
 
 % Comiittee printing order
 \committeeorder[all]={c,r,m}% 
 
 % Cover background images
-\thesiscover[phd,front]={cover-phd-std}
-\thesiscover[phdplan,front]={cover-phd-std}
-\thesiscover[phdprop,front]={cover-phd-std}
-\thesiscover[msc,front]={cover-msc-std}
-\thesiscover[mscplan,front]={cover-msc-std}
-\thesiscover[bsc,front]={cover-bsc-std}
-\thesiscover[plain,front]={cover-plain-std}
-\thesiscover[phd,cdfront]={cd-cover-phd}
-\thesiscover[phd,cdinlay]={cd-inlay-phd}
-\thesiscover[phdplan,cdfront]={cd-cover-phd}
-\thesiscover[phdplan,cdinlay]={cd-inlay-phd}
-\thesiscover[phdprop,cdfront]={cd-cover-phd}
-\thesiscover[phdprop,cdinlay]={cd-inlay-phd}
-\thesiscover[msc,cdfront]={cd-cover-msc}
-\thesiscover[msc,cdinlay]={cd-inlay-msc}
-\thesiscover[mscplan,cdfront]={cd-cover-msc}
-\thesiscover[mscplan,cdinlay]={cd-inlay-msc}
-\thesiscover[bsc,cdfront]={cd-cover-msc}
-\thesiscover[bsc,cdinlay]={cd-inlay-msc}
-\thesiscover[plain,cdfront]={cd-cover-msc}
-\thesiscover[plain,cdinlay]={cd-inlay-msc}
+\thesiscover(phd,front):={cover-phd-std}
+\thesiscover(phdplan,front):={cover-phd-std}
+\thesiscover(phdprop,front):={cover-phd-std}
+\thesiscover(msc,front):={cover-msc-std}
+\thesiscover(mscplan,front):={cover-msc-std}
+\thesiscover(bsc,front):={cover-bsc-std}
+\thesiscover(plain,front):={cover-plain-std}
+\thesiscover(phd,cdfront):={cd-cover-phd}
+\thesiscover(phd,cdinlay):={cd-inlay-phd}
+\thesiscover(phdplan,cdfront):={cd-cover-phd}
+\thesiscover(phdplan,cdinlay):={cd-inlay-phd}
+\thesiscover(phdprop,cdfront):={cd-cover-phd}
+\thesiscover(phdprop,cdinlay):={cd-inlay-phd}
+\thesiscover(msc,cdfront):={cd-cover-msc}
+\thesiscover(msc,cdinlay):={cd-inlay-msc}
+\thesiscover(mscplan,cdfront):={cd-cover-msc}
+\thesiscover(mscplan,cdinlay):={cd-inlay-msc}
+\thesiscover(bsc,cdfront):={cd-cover-msc}
+\thesiscover(bsc,cdinlay):={cd-inlay-msc}
+\thesiscover(plain,cdfront):={cd-cover-msc}
+\thesiscover(plain,cdinlay):={cd-inlay-msc}
 
 % Spine info
-\spine[logo]={logoNOVA}
-\spine[author]={\theauthorshortname}
-\spine[title]={\thetitle}
-\spine[year]={\thentdateyear}
+\spine(logo):={logoNOVA}
+\spine(author):={\theauthorshortname}
+\spine(title):={\thetitle}
+\spine(year):={\thentdateyear}
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}

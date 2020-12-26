@@ -140,9 +140,9 @@
 
 % --------------------------------------------------------
 % Alias for consistency in template.tex
-\def\ntmajorfield[#1]#2{\majorfield[#1]={#2}}
-\def\ntdegreename[#1]#2{\degreename[#1]={#2}}
-\def\ntspecialization[#1]#2{\specialization[#1]={#2}}
+\def\ntmajorfield[#1]#2{\majorfield(#1):={#2}}
+\def\ntdegreename[#1]#2{\degreename(#1):={#2}}
+\def\ntspecialization[#1]#2{\specialization(#1):={#2}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -357,10 +357,10 @@
   % #1 = cover number {1, 2}    (1 is the default)
   \iftoggle{/novathesis/debugcover}%
     {%
-      \edef\@nt@tmpleft{\themargin(\option{/novathesis/docdegree},left)}%
-      \edef\@nt@tmpright{\themargin(\option{/novathesis/docdegree},right)}%
-      \edef\@nt@tmptop{\themargin(\option{/novathesis/docdegree},top)}%
-      \edef\@nt@tmpbottom{\themargin(\option{/novathesis/docdegree},bottom)}%
+      \edef\@nt@tmpleft{\margin(\option{/novathesis/docdegree},left)}%
+      \edef\@nt@tmpright{\margin(\option{/novathesis/docdegree},right)}%
+      \edef\@nt@tmptop{\margin(\option{/novathesis/docdegree},top)}%
+      \edef\@nt@tmpbottom{\margin(\option{/novathesis/docdegree},bottom)}%
       \fgrulerthickcm{}{}{1pt}
       % \setfgruler{numsep=-17pt}
       \fgruler[cm]{upperleft}{\@nt@tmpleft}{\@nt@tmptop}
@@ -456,20 +456,21 @@
 }
 
 \newcommand{\ntprintbackcoverpage}{%
-  \ifdatadefined{thesiscover}[\option{/novathesis/docdegree},back]{%
+  \ifaadefined{thesiscover}(\option{/novathesis/docdegree},back){%
     \clearforchapter%
     \thispagestyle{empty}%
     ~%
     \clearpage%
     \thispagestyle{empty}%
-    \ntcoverbackground[\@nameuse{thesiscover\option{/novathesis/docdegree},back}]%
+    \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},back)]%
     ~% This space is important here so that the cover page is not empty anymore!
     \clearforchapter%
     \@nt@select@lang{\option{/novathesis/mainlang}}%
   }{}%
 }
 
-\newcommand{\ntcoverbackground}[1][\@nameuse{thesiscover\option{/novathesis/docdegree},front}]{%
+% \newcommand{\ntcoverbackground}[1][\@nameuse{thesiscover\option{/novathesis/docdegree},front}]{%
+\newcommand{\ntcoverbackground}[1][\thethesiscover(\option{/novathesis/docdegree},front)]{%
   \ifthenelse{\equal{#1}{}}{}{%
     \AddToShipoutPictureBG*{%
       \includegraphics[width=\paperwidth,height=\paperheight]{#1}%
@@ -505,7 +506,7 @@
 \mynewdata{degreestr}
 \mynewdata{degreestrfont}
 
-\mynewdata{degreename}
+\assocarray{degreename}
 
 \mynewdata{docdegreestr}
 
@@ -540,16 +541,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Defaults for uniersity, faculty, degree, etc…
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\mynewdata{university}
-\mynewdata{faculty}
-\mynewdata{department}
-\mynewdata{majorfield}
-\mynewdata{specialization}
-\mynewdata{spine}
-\mynewdata{thesiscover}
-% \mynewdata{margin}
+\assocarray{university}
+\assocarray{faculty}
+\assocarray{department}
+\assocarray{majorfield}
+\assocarray{specialization}
+\assocarray{spine}
+\assocarray{thesiscover}
 \assocarray{margin}
-\mynewdata{frontpageimage}
+\assocarray{frontpageimage}
 
 % --------------------------------------------------------
 % Add school specific Images folder to the graphics path
@@ -568,7 +568,7 @@
   \@nt@select@lang{\option{/novathesis/copyrightlang}}%
   \noindent%
   Copyright \textcopyright\ \theauthorname, %
-  \thefaculty[\option{/novathesis/copyrightlang}], \theuniversity[\option{/novathesis/copyrightlang}].\\%
+  \thefaculty(\option{/novathesis/copyrightlang}), \theuniversity(\option{/novathesis/copyrightlang}).\\%
   \thecopyrighttextstr[\option{/novathesis/copyrightlang}]%
   \@nt@select@lang{\option{/novathesis/mainlang}}
 }
