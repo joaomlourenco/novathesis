@@ -101,14 +101,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Use array helper defined in novathesis.csl
-\mynewdata{adviserslabel}
+\assocarray{adviserslabel}
 
-\adviserslabel[pt]={Tese orientada por:}
-\adviserslabel[en]={Thesis supervised by:}
-\adviserslabel[de]={TBD}
-\adviserslabel[es]={TBD}
-\adviserslabel[fr]={TBD}
-\adviserslabel[it]={TBD}
+\adviserslabel(pt):={Tese orientada por:}
+\adviserslabel(en):={Thesis supervised by:}
+\adviserslabel(de):={TBD}
+\adviserslabel(es):={TBD}
+\adviserslabel(fr):={TBD}
+\adviserslabel(it):={TBD}
 
 
 \dissertationstr(phdplan,pt):={Documento especialmente elaborado para a obtenção do grau de  %
@@ -253,7 +253,7 @@
 % Advisers
 \ntaddtocover{1,2}{c}{1}{%
   \fontsize{13}{13}\selectfont%
-  \theadviserslabel[\option{/novathesis/coverlang}]\\%
+  \theadviserslabel(\option{/novathesis/coverlang})\\%
   \vspace{5mm}%
   \ntprintadvisersaslist%
   \vspace{5mm}%

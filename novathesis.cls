@@ -343,7 +343,7 @@
       % \fgruler[cm]{lowerright}{\themargin(\option{/novathesis/docdegree},right)}{\themargin(\option{/novathesis/docdegree},bottom)}
     }%
     {}
-  \thispagestyle{empty}
+   \thispagestyle{empty}
   \setlength{\mpwidth}{\dimexpr%
     \paperwidth%
       -\themargin(\option{/novathesis/docdegree},left)%
@@ -679,7 +679,7 @@
     \@nt@reducegender{/@nt/#1//gender}{\mygender}%
     \@nt@reducenumber{/@nt/#1//name}{\mynumber}%
     \smallskip%
-    \csname the#1str\endcsname[\mynumber,\mygender,\option{/novathesis/coverlang}]: & %
+    \csname the#1str\endcsname(\mynumber,\mygender,\option{/novathesis/coverlang}): & %
     \begin{minipage}[t]{\linewidth}\raggedright%
     \optionlistdo{/@nt/#1//name}{##1\\[1pt]}%
     \end{minipage}\\%
