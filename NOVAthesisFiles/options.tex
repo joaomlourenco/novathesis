@@ -54,12 +54,12 @@
   }
   , handler/media/.new cmd = {%
               \setulmarginsandblock%
-                {\themargin[#1,top]}%
-                {\themargin[#1,bottom]}%
+                {\margin(#1,top)}%
+                {\margin(#1,bottom)}%
                 {*}%
               \setlrmarginsandblock%
-                {\themargin[#1,left]}%
-                {\themargin[#1,right]}%
+                {\margin(#1,left)}%
+                {\margin(#1,right)}%
                 {*}%
               \checkandfixthelayout%
               \ifthenelse{\equal{\option{/novathesis/media}}{paper}}%

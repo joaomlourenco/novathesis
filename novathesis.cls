@@ -65,6 +65,7 @@
 \RequirePackage{xifthen}
 \RequirePackage{xstring}
 
+\RequirePackage{assocarray}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHECK IF USING LUALATEX OR XELATEX
@@ -356,25 +357,27 @@
   % #1 = cover number {1, 2}    (1 is the default)
   \iftoggle{/novathesis/debugcover}%
     {%
-      \edef\@nt@tmpleft{\themargin[\option{/novathesis/docdegree},left]}%
-      \edef\@nt@tmpright{\themargin[\option{/novathesis/docdegree},right]}%
-      \edef\@nt@tmptop{\themargin[\option{/novathesis/docdegree},top]}%
-      \edef\@nt@tmpbottom{\themargin[\option{/novathesis/docdegree},bottom]}%
+      \edef\@nt@tmpleft{\themargin(\option{/novathesis/docdegree},left)}%
+      \edef\@nt@tmpright{\themargin(\option{/novathesis/docdegree},right)}%
+      \edef\@nt@tmptop{\themargin(\option{/novathesis/docdegree},top)}%
+      \edef\@nt@tmpbottom{\themargin(\option{/novathesis/docdegree},bottom)}%
       \fgrulerthickcm{}{}{1pt}
       % \setfgruler{numsep=-17pt}
       \fgruler[cm]{upperleft}{\@nt@tmpleft}{\@nt@tmptop}
       \fgruler[cm]{lowerright}{\@nt@tmpright}{\@nt@tmpbottom}
+      % \fgruler[cm]{upperleft}{\themargin(\option{/novathesis/docdegree},left)}{\themargin(\option{/novathesis/docdegree},top)}
+      % \fgruler[cm]{lowerright}{\themargin(\option{/novathesis/docdegree},right)}{\themargin(\option{/novathesis/docdegree},bottom)}
     }%
     {}
   \thispagestyle{empty}
   \setlength{\mpwidth}{\dimexpr%
     \paperwidth%
-      -\themargin[\option{/novathesis/docdegree},left]%
-      -\themargin[\option{/novathesis/docdegree},right]}%
+      -\themargin(\option{/novathesis/docdegree},left)%
+      -\themargin(\option{/novathesis/docdegree},right)}%
   \setlength{\mpheight}{\dimexpr%
     \paperheight%
-      -\themargin[\option{/novathesis/docdegree},top]%
-      -\themargin[\option{/novathesis/docdegree},bottom]}%
+      -\themargin(\option{/novathesis/docdegree},top)%
+      -\themargin(\option{/novathesis/docdegree},bottom)}%
   \sbox{\@nt@coverbox}{%
     \begin{minipage}[t][\mpheight][t]{\mpwidth}%
       \@nt@printcovergroup{#1}%      
@@ -383,8 +386,8 @@
   \AddToShipoutPictureFG*{%
     \AtPageUpperLeft{%
       \put(%
-        \LenToUnit{\themargin[\option{/novathesis/docdegree},left]},%
-        -\LenToUnit{\themargin[\option{/novathesis/docdegree},top]})%
+        \LenToUnit{\themargin(\option{/novathesis/docdegree},left)},%
+        -\LenToUnit{\themargin(\option{/novathesis/docdegree},top)})%
         {\usebox{\@nt@coverbox}}%
     }%
   }%
@@ -497,13 +500,10 @@
 
 \mynewdata{adviserstr}
 \mynewdata{adviserstrfont}
-\adviserstrfont[\option{/novathesis/coverlang}]={}
 \mynewdata{coadviserstr}
 \mynewdata{coadviserstrfont}
-\coadviserstrfont[\option{/novathesis/coverlang}]={}
 \mynewdata{degreestr}
 \mynewdata{degreestrfont}
-\degreestrfont[\option{/novathesis/coverlang}]={}
 
 \mynewdata{degreename}
 
@@ -547,7 +547,8 @@
 \mynewdata{specialization}
 \mynewdata{spine}
 \mynewdata{thesiscover}
-\mynewdata{margin}
+% \mynewdata{margin}
+\assocarray{margin}
 \mynewdata{frontpageimage}
 
 % --------------------------------------------------------
@@ -781,18 +782,19 @@
 %% PAGE LAYOUT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\AtEndPreamble{\ntsetlayout}
+\AtBeginDocument{\ntsetlayout}
+
 \newcommand{\ntsetlayout}{%
   \synctex=1% Use synctex
   \brokenpenalty=10000
   \settypeoutlayoutunit{mm}
   \setulmarginsandblock%
-    {\themargin[\option{/novathesis/media},top]}%
-    {\themargin[\option{/novathesis/media},bottom]}%
+    {\themargin(\option{/novathesis/media},top)}%
+    {\themargin(\option{/novathesis/media},bottom)}%
     {*}%
   \setlrmarginsandblock%
-    {\themargin[\option{/novathesis/media},left]}%
-    {\themargin[\option{/novathesis/media},right]}%
+    {\themargin(\option{/novathesis/media},left)}%
+    {\themargin(\option{/novathesis/media},right)}%
     {*}%
   \checkandfixthelayout%
 }
