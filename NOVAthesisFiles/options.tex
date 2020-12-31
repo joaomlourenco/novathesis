@@ -105,8 +105,8 @@
   , media/.new choice = {screen, paper}
   , linkscolor/.new cmd = {%
             \@ifpackageloaded{hyperref}%
-              {\hypersetup{allcolors=#1}}%
-              {\PassOptionsToPackage{allcolors=#1}{hyperref}}%
+              {\hypersetup{allcolors=#1,unicode}}%
+              {\PassOptionsToPackage{allcolors=#1,unicode}{hyperref}}%
   }
 }
 

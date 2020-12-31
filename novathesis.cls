@@ -116,7 +116,7 @@
 
 % --------------------------------------------------------
 % Print string between <...>
-\newcommand{\embrace}[1]{$<$#1$>$}
+\newcommand{\embrace}[1]{$langle$#1$rangle$}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -445,11 +445,14 @@
 
 % \newcommand{\ntcoverbackground}[1][\@nameuse{thesiscover\option{/novathesis/docdegree},front}]{%
 \newcommand{\ntcoverbackground}[1][\thethesiscover(\option{/novathesis/docdegree},front)]{%
-  \ifthenelse{\equal{#1}{}}{}{%
-    \AddToShipoutPictureBG*{%
-      \includegraphics[width=\paperwidth,height=\paperheight]{#1}%
-    }%
-  }%
+  % \show#1
+  % \xdef\@nt@tmpx{#1}
+  \includegraphics[width=\paperwidth,height=\paperheight]{#1}
+  % \IfFileExists{\@nt@tmp}{%
+    % \AddToShipoutPictureBG*{%
+    %   \includegraphics[width=\paperwidth,height=\paperheight]{\@nt@tmpx}%
+    % }%
+  % }{}%
 }
 
 \newcommand*{\ntprintaftercover}{%
@@ -694,7 +697,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print committee
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\ntprintcommittee}[1][0.75]{%
+\newcommand{\@nt@printcommittee@i}[1]{%
   \iftoggle{/novathesis/printcommittee}{% TRUE
     \begin{minipage}{#1\textwidth}%
     % #1 = Percentage of \textwidth used by the committee list
@@ -868,7 +871,7 @@
 
 \newcommand{\ntprintacknowledgements}{\@nt@printifmaindoc@i{acknowledgements}\clearforchapter}
 
-
+\newcommand{\ntprintcommittee}[1][0.75]{\ifmaindoc{\@nt@printcommittee@i{#1}}{}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% Abstract, Acronyms and Glossary

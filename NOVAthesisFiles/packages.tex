@@ -72,7 +72,7 @@
 
 
 %%%%% Configure Graphics
-\RequirePackage[final]{graphicx}
+\RequirePackage[nobeamer]{graphbox}
 \graphicspath{{Chapters/Figures/}}
 \DeclareGraphicsExtensions{.pdf, .png, .jpg, .tif}
 \newcommand\appendtographicspath[1]{%
@@ -132,7 +132,12 @@
     , breaklinks%
     , colorlinks=true%
     , pdfdisplaydoctitle%
+    , unicode
   ]{hyperref}%
+  \pdfstringdefDisableCommands{%
+    \def\\{}%
+    \def\texttt#1{#1}%
+  }
   \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
   \RequirePackage[all]{hypcap}
   % To handle subfigures

@@ -53,7 +53,7 @@
 %%------------------------------------------------------------
 %% THE MOST IMPORTANT/POPULAR OPTIONS
 %%------------------------------------------------------------
-% \ntsetup{docdegree=msc}       % The type od document
+\ntsetup{docdegree=phdplan}       % The type od document
 %                               %     [ phd, phdplan, phdprop, msc, mscplan, bsc ]
 
 % \ntsetup{school=nova/ims}    % The school id
@@ -191,24 +191,34 @@
 
 %%------------------------------------------------------------
 % Degree costumization
-
-%%% For MSc in Computer Science @ FCT-NOVA
-% \ntmajorfield[pt]{Engenharia Informática}                                 %% For PhD comment here and uncomment above
-% \ntmajorfield[en]{Computer Science and Engineering}                       %% For PhD comment here and uncomment above
-% \ntdegreename[pt]{Mestrado Integrado em Engenharia Informática}           %% For PhD comment here and uncomment above
-% \ntdegreename[en]{Integrated Master in Computer Science and Engineering}  %% For PhD comment here and uncomment above
-
-%%% For PhD in Computer Science @ FCT-NOVA
-% \ntmajorfield[pt]{Informática}                             %% For MSc comment here and uncomment above
-% \ntmajorfield[en]{Computer Science}                        %% For MSc comment here and uncomment above
-% \ntdegreename[pt]{Programa de Doutoramento em Informática} %% For MSc comment here and uncomment above
-% \ntdegreename[en]{PhD Program in Computer Science}         %% For MSc comment here and uncomment above
-
-%%% SEE ABOVE for MSc and PhD in Computer Science @ FCT-NOVA 
 \ntmajorfield[pt]{\embrace{Área de Científica}}
 \ntmajorfield[en]{\embrace{Scientific Field of Study}}
 \ntdegreename[pt]{\embrace{Nome do Curso}}
 \ntdegreename[en]{\embrace{Degree's Name}}
+
+%%% Uncomment for MSc and PhD in Computer Science @ FCT-NOVA 
+% \ifphddoc{%
+%   % It is a PhD Degree in Computer Science
+%   \ntmajorfield[pt]{Informática}
+%   \ntmajorfield[en]{Computer Science}
+%   \ntdegreename[pt]{Programa de Doutoramento em Informática}
+%   \ntdegreename[en]{PhD Program in Computer Science}
+% }{}
+% \ifmscdoc{%
+%   % It is a MSc degree in Computer Science
+%   \ntmajorfield[pt]{Engenharia Informática}
+%   \ntmajorfield[en]{Computer Science and Engineering}
+%   \ntdegreename[pt]{Mestrado Integrado em Engenharia Informática}
+%   \ntdegreename[en]{Integrated Master in Computer Science and Engineering}
+% }{}
+% \ifbscdoc{%
+%   % It is a MSc degree in Computer Science
+%   \ntmajorfield[pt]{Engenharia Informática}
+%   \ntmajorfield[en]{Computer Science and Engineering}
+%   \ntdegreename[pt]{Licenciatura em Ciência e Engenharia Informática}
+%   \ntdegreename[en]{Bachelor in Computer Science and Engineering}
+% }{}
+
 
 
 %%------------------------------------------------------------
