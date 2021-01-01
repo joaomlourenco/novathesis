@@ -118,7 +118,7 @@
 
 % --------------------------------------------------------
 % Print string between <...>
-\newcommand{\embrace}[1]{$\langle$#1$\rangle$}
+\newcommand{\embrace}[1]{\texorpdfstring{$\langle$}{<}#1\texorpdfstring{$\rangle$}{>}}
 
 % --------------------------------------------------------
 % Split a string by a character
