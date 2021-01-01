@@ -179,14 +179,14 @@
   \fontsize{13}{13}\selectfont%
   \textbf{\MakeUppercase{\thefaculty(\option{/novathesis/coverlang})}}\\%
   \fontsize{10}{10}\selectfont%
-  \textbf{\MakeUppercase{\thedepartment(\option{/novathesis/coverlang})}}%
+  \textbf{\MakeUppercase{\thedepartment[\option{/novathesis/coverlang}]}}%
 }
 
 \ntaddtocover{1,2}{c}{0.5cm}{%
-  % \typeout{thefrontpageimage=\thefrontpageimage()}
-  \ifaadefined\thefrontpageimage()%
-    {\includegraphics[height=8cm]{\thefrontpageimage()}}%
+  % \typeout{thefrontpageimage=\thefrontpageimage[]}
+  \ifthenelse{\equal{\thefrontpageimage[]}{}}%
     {}%
+    {\includegraphics[width=12cm,  height=8cm]{\thefrontpageimage[]}}%
 }
 
 % % Title of Dissertation

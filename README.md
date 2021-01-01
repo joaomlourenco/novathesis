@@ -9,8 +9,6 @@
 
 --------
 
-## About
-
 The NOVAthesis LaTeX class is a thesis template initially designed for the PhD and MSc thesis at [FCT-NOVA — NOVA School of Science and Technology](http://www.fct.unl.pt), Portugal, but currently it supports more schools, namely:
 * NOVA University Lisbon
     * [NOVA School for Science and Technology](https://www.fct.unl.pt) (FCT-NOVA)

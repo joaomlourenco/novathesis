@@ -137,19 +137,19 @@
   \pdfstringdefDisableCommands{%
     \def\\{}%
     \def\texttt#1{#1}%
-  }
+  }%
   \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
-  \RequirePackage[all]{hypcap}
+  \RequirePackage[all]{hypcap}%
   % To handle subfigures
-  \newsubfloat{figure}
+  \newsubfloat{figure}%
   % Manage glossaries
   \RequirePackage[
     % , nonumberlist
-    , toc
-    , translate=babel
-    , acronym % add acronyms listing
-    , symbols % add symbols listing
-    % , sanitizesort=false % allow \gls inside descriptions
+    , toc%
+    , translate=babel%
+    , acronym% add acronyms listing
+    , symbols% add symbols listing
+    % , sanitizesort=false% allow \gls inside descriptions
     % , automake
   ]{glossaries-extra}% To create glossaries
   \RequirePackage{glossary-xltabular}

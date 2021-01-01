@@ -19,39 +19,42 @@
 \faculty(fr):={NOVA School of Science and Technology}
 \faculty(it):={NOVA School of Science and Technology}
 
+% Scientific filed
+\IfSubStr{\option{/novathesis/docdegree}}{phd}{%
+    \majorfield(pt):={Informática}
+    \majorfield(en):={Computer Science}
+  }{%
+  \majorfield(pt):={Engenharia Informática}
+  \majorfield(en):={Computer Science and Engineering}
+  }
+\majorfield(fr):={Ingénierie Informatique}
+\majorfield(it):={Ingegneria Informatica}
+
 % Comiittee printing order
 \committeeorder(all):={c,r,m}% 
 
 % Cover background images
+\thesiscover(phd,front):={cover-phd-std}
+\thesiscover(phdplan,front):={cover-phd-std}
+\thesiscover(phdprop,front):={cover-phd-std}
+\thesiscover(msc,front):={cover-msc-std}
+\thesiscover(mscplan,front):={cover-msc-std}
+\thesiscover(bsc,front):={cover-bsc-std}
+\thesiscover(plain,front):={cover-plain-std}
 \thesiscover(phd,cdfront):={cd-cover-phd}
 \thesiscover(phd,cdinlay):={cd-inlay-phd}
-\thesiscover(phd,front):={cover-phd-std}
-\thesiscover(phdprop,cdfront):={cd-cover-phd}
-\thesiscover(phdprop,cdinlay):={cd-inlay-phd}
-\thesiscover(phdprop,front):={cover-phd-std}
 \thesiscover(phdplan,cdfront):={cd-cover-phd}
 \thesiscover(phdplan,cdinlay):={cd-inlay-phd}
-\thesiscover(phdplan,front):={cover-phd-std}
-
-% \thesiscover(phdprop,*):>thesiscover(phd,*)
-% \thesiscover(phdplan,*):>thesiscover(phd,*)
-
+\thesiscover(phdprop,cdfront):={cd-cover-phd}
+\thesiscover(phdprop,cdinlay):={cd-inlay-phd}
 \thesiscover(msc,cdfront):={cd-cover-msc}
 \thesiscover(msc,cdinlay):={cd-inlay-msc}
-\thesiscover(msc,front):={cover-msc-std}
 \thesiscover(mscplan,cdfront):={cd-cover-msc}
 \thesiscover(mscplan,cdinlay):={cd-inlay-msc}
-\thesiscover(mscplan,front):={cover-msc-std}
-
-% \thesiscover(mscplan,*):>thesiscover(msd,*)
-
 \thesiscover(bsc,cdfront):={cd-cover-msc}
 \thesiscover(bsc,cdinlay):={cd-inlay-msc}
-\thesiscover(bsc,front):={cover-bsc-std}
-% \thesiscover(plain,cdfront):={cd-cover-msc}
-% \thesiscover(plain,cdinlay):={cd-inlay-msc}
-% \thesiscover(plain,front):={cover-plain-std}
-
+\thesiscover(plain,cdfront):={cd-cover-msc}
+\thesiscover(plain,cdinlay):={cd-inlay-msc}
 
 % Spine info
 \spine(logo):={logoNOVA}

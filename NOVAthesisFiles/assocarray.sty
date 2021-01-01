@@ -29,7 +29,6 @@
 \ProvidesPackage{assocarray}[\xstringdate\space v\xstringversion\space, Joao Lourenco, Provides an associative array]
 
 \RequirePackage{xstring}
-\RequirePackage{multido}
 
 \newif\ifopt@debug
 \DeclareOption{debug}{\opt@debugtrue}
@@ -71,13 +70,27 @@
 \newcommand*{\@newcounter}[1]{%
   \ifcsname c@#1\endcsname\else\newcounter{#1}\fi%
 }
-
-\newif\ifmultido%
-\newcommand{\ntmultido}{%
-  \multidotrue%
-  \multido%
-}
-\newcommand{\ntmultidobreak}{\multidofalse}
+\newif\ifforcontinue
+\newcommand{\forbreak}{\forcontinuefalse}
+\newcommand{\forloop}[3][1]{%
+% \forloop[⟨step⟩]{⟨counter⟩}{⟨initial value⟩}{⟨condition⟩}{⟨code⟩}
+    \@newcounter{#2}%
+    \setcounter{#2}{#3}%
+    \forcontinuetrue%
+    % \typeout{M @forloop{#1}{#2}{\arabic{#2}}{#4}}%
+    \@forloop@{#1}{#2}{#3}%
+}%
+\newcommand{\@forloop@}[4]{%
+% \@forloop[⟨step⟩]{⟨counter⟩}{⟨initial value⟩}{⟨condition⟩}{⟨code⟩}
+    % \typeout{L @forloop[#1]{#2}{\arabic{#2}}{#4}}%
+    \ifnum#4\relax%
+        \@firstofone%
+        \addtocounter{#2}{#1}%
+        \ifforcontinue%
+          \@forloop@{#1}{#2}{\value{#2}}{#4}%
+        \fi%
+    \fi%
+}%
 
 
 %================================================================
@@ -86,13 +99,12 @@
 \def\ifaadefined#1(#2){%
   \ifcsdef{@aa@#1@#2}%
 }
-
 \newcommand*{\assocarray}[1]{%
-  \csdef{#1}(##1){\@ifnextchar:{\@aa@def@ii#1(##1)}{\@aa@use@ii#1(##1)}}%
+  \csdef{#1}(##1){\@ifnextchar:{\expandafter\@aa@def@ii#1\expandafter(##1)}{\expandafter\@aa@use@ii#1\expandafter(##1)}}%
   \newcounter{@aa@#1@cnt}%
   \setcounter{@aa@#1@cnt}{0}%
   % %% The following command is only for backward compatibility
-  \csdef{the#1}(##1){\@aa@use@ii#1(##1)}%
+  \csdef{the#1}(##1){\expandafter\@aa@use@ii#1\expandafter(##1)}%
   % \csdef{the#1}(##1){\csuse{@aa@#1@##1}}%
 }
 
@@ -120,8 +132,8 @@
   \StrCut{#2}{*}\@aa@cutL\@aa@cutR%
   \csedef{@aa@#1*@\arabic{@aa@#1@cnt}@idxL}{\@aa@cutL}%
   \csedef{@aa@#1*@\arabic{@aa@#1@cnt}@idxR}{\@aa@cutR}%
-  \csedef{@aa@#1*@\arabic{@aa@#1@cnt}@Vkey}{#3}%
-  \csedef{@aa@#1*@\arabic{@aa@#1@cnt}@Vidx}{#4}%
+  \csedef{@aa@#1*@\arabic{@aa@#1@cnt}@Vkey}{\expanded{#3}}%
+  \csedef{@aa@#1*@\arabic{@aa@#1@cnt}@Vidx}{\expanded{#4}}%
   \StrCut{#4}{*}\@aa@cutL\@aa@cutR%
   \csedef{@aa@#1*@\arabic{@aa@#1@cnt}@VidxL}{\@aa@cutL}%
   \csedef{@aa@#1*@\arabic{@aa@#1@cnt}@VidxR}{\@aa@cutR}%
@@ -144,38 +156,93 @@
   }{%
     \ifcsname c@@aa@#1@cnt\endcsname%
       \ifnum\value{@aa@#1@cnt}>0\relax% There are redirections
-        \ntmultido{\ic=\arabic{@aa@#1@cnt}+-1}{\arabic{@aa@#1@cnt}}{%
-          \ifmultido
-            % [R\ic/\arabic{@aa@#1@cnt} \csuse{@aa@#1*@\ic @Vkey}]
-            \IfEq{\csuse{@aa@#1*@\ic @idxL}}{}{%
-              \edef\@aa@cutL{}%
-              \edef\@aa@idxRest{#2}%
+        \forloop[-1]{@aa@redir@#1@cnt}{\arabic{@aa@#1@cnt}}{\value{@aa@redir@#1@cnt}>0}{%
+          \IfEq{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxL}}{}{%
+            \edef\@aa@cutL{}%
+            \edef\@aa@idxRest{#2}%
+          }{%
+            \StrCut{#2}{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxL}}\@aa@cutL\@aa@idxRest%
+          }%
+          \IfEq{\@aa@cutL}{}{%
+            \IfEq{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxR}}{}{%
+              \edef\@aa@cutR{}%
             }{%
-              \StrCut{#2}{\csuse{@aa@#1*@\ic @idxL}}\@aa@cutL\@aa@idxRest%
+              \StrCut{\@aa@idxRest}{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxR}}\@aa@idxRest\@aa@cutR%
             }%
-            \IfEq{\@aa@cutL}{}{%
-              \IfEq{\csuse{@aa@#1*@\ic @idxR}}{}{%
-                \edef\@aa@cutR{}%
-              }{%
-                \StrCut{\@aa@idxRest}{\csuse{@aa@#1*@\ic @idxR}}\@aa@idxRest\@aa@cutR%
-              }%
-              \IfEq{\@aa@cutR}{}{%
-                % $>$\csuse{@aa@#1*@\ic @Vkey}%
-                %      (\csuse{@aa@#1*@\ic @VidxL}%
-                %       \@aa@idxRest%
-                %       \csuse{@aa@#1*@\ic @VidxR})
-                \@aa@use@ii{\csuse{@aa@#1*@\ic @Vkey}}(%
-                                  \csuse{@aa@#1*@\ic @VidxL}%
-                                  \@aa@idxRest%
-                                  \csuse{@aa@#1*@\ic @VidxR})%
-                \ntmultidobreak%
-              }{%
-                % Failed right…
-              }%
+            \IfEq{\@aa@cutR}{}{%
+              % $>$\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@Vkey}%
+              %      (\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@VidxL}%
+              %       \@aa@idxRest%
+              %       \csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@VidxR})
+              \@aa@use@ii{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@Vkey}}(%
+                            \expanded{%
+                                \csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@VidxL}%
+                                \@aa@idxRest%
+                                \csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@VidxR}})%
+              \forbreak%
             }{%
-              % Failed left…
+              % Failed right…
             }%
-          \fi%
+          }{%
+            % Failed left…
+          }%
+        }%
+      \fi%
+    \fi%
+  }%
+  % \iffound
+  % \else
+  %   \textbf{ERR: #1[#2] undefined}
+  % \fi
+}
+
+\endinput
+
+% \newif\iffound%
+\def\@aa@use@ii#1(#2){%
+  % #1 = name
+  % #2 = index
+  % use[#1][#2]\par
+  % \foundfalse
+  % \typeout{AA use-[#1]-[#2]-}%
+  \ifcsdef{@aa@#1@#2}{%
+    % Direct use
+    % \foundtrue%
+    \csuse{@aa@#1@#2}%
+  }{%
+    \ifcsname c@@aa@#1@cnt\endcsname
+      \ifnum\value{@aa@#1@cnt}>0\relax% There are redirections
+        \forloop[-1]{@aa@redir@#1@cnt}{\arabic{@aa@#1@cnt}}{\value{@aa@redir@#1@cnt}>0}{%
+          % R\arabic{@aa@redir@#1@cnt}
+          \IfEq{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxL}}{}{%
+            \edef\@aa@cutL{}%
+            \edef\@aa@idxRest{#2}%
+          }{%
+            \StrCut{#2}{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxL}}\@aa@cutL\@aa@idxRest%
+          }%
+          \IfEq{\@aa@cutL}{}{%
+            \IfEq{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxR}}{}{%
+              \edef\@aa@cutR{}%
+            }{%
+              \StrCut{\@aa@idxRest}{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxR}}\@aa@idxRest\@aa@cutR%
+            }%
+            \IfEq{\@aa@cutR}{}{%
+              % $>$\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@Vkey}%
+              %      (\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@VidxL}%
+              %       \@aa@idxRest%
+              %       \csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@VidxR})
+              \@aa@use@ii{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@Vkey}}(%
+                            \expanded{%
+                                \csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@VidxL}%
+                                \@aa@idxRest%
+                                \csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@VidxR}})%
+              \forbreak%
+            }{%
+              % Failed right…
+            }%
+          }{%
+            % Failed left…
+          }%
         }%
       \fi%
     \fi%

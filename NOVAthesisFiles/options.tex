@@ -32,8 +32,7 @@
   % languages
   , langsshort/.new list = {en, pt, fr, it}
   , langslong/.new list = {english, portuguese, french, italian}
-  , langshorttolong/.new choice = {en=english, pt=portuguese, fr=french, 
-                                   it=italian}
+  , langshorttolong/.new choice = {en=english, pt=portuguese, fr=french, it=italian}
   , maplang/.new cmd = {%
             \options{/@nt/langshorttolong = #1}%
             \option{/@nt/langshorttolong}%
@@ -54,12 +53,12 @@
   }
   , handler/media/.new cmd = {%
               \setulmarginsandblock%
-                {\margin(#1,top)}%
-                {\margin(#1,bottom)}%
+                {\themargin(#1,top)}%
+                {\themargin(#1,bottom)}%
                 {*}%
               \setlrmarginsandblock%
-                {\margin(#1,left)}%
-                {\margin(#1,right)}%
+                {\themargin(#1,left)}%
+                {\themargin(#1,right)}%
                 {*}%
               \checkandfixthelayout%
               \ifthenelse{\equal{\option{/novathesis/media}}{paper}}%
@@ -111,7 +110,7 @@
 }
 
 \newcommand*{\ntsetup}[1]{%
-  \StrCut{#1}{=}\@nt@opt\@nt@value
+  \ntgetkeyval{#1}\@nt@opt\@nt@value
   % \typeout{'NT SETUP = '[#1]~/~[\@nt@opt]~/~[\@nt@value]}
   \csuse{@nt@opt\@nt@opt @prehook}
   \options{/novathesis/\@nt@opt = {\@nt@value}}%

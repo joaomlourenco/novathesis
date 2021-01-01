@@ -64,9 +64,8 @@
 \RequirePackage{options-nt}
 \RequirePackage{xifthen}
 \RequirePackage{xstring}
-
-% Do some magic defining associative arrays :)
 \RequirePackage{assocarray}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHECK IF USING LUALATEX OR XELATEX
@@ -93,10 +92,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % --------------------------------------------------------
+% Do some magic defining arrays :)
+\def\ifdatadefined#1(#2){\ifcsname #1#2\endcsname\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi}
+
+% --------------------------------------------------------
 % If necessary create, then initialize the counter
 \newcommand*{\setnewcounter}[2]{%
   \ifcsname c@#1\endcsname\else\newcounter{#1}\fi%
   \setcounter{#1}{#2}%
+}
+
+% --------------------------------------------------------
+% Itelare a comma separated list
+\newcommand{\iteratecsvlist}[2]{%
+  \@for\@nt@themember:=#2\do{#1{\@nt@themember}}%
 }
 
 % --------------------------------------------------------
@@ -108,15 +117,24 @@
 }
 
 % --------------------------------------------------------
-% Alias for consistency in template.tex
-\def\ntmajorfield[#1]#2{\majorfield(#1):={#2}}
-\def\ntdegreename[#1]#2{\degreename(#1):={#2}}
-\def\ntspecialization[#1]#2{\specialization(#1):={#2}}
-
+% Print string between <...>
+\newcommand{\embrace}[1]{$\langle$#1$\rangle$}
 
 % --------------------------------------------------------
-% Print string between <...>
-\newcommand{\embrace}[1]{$langle$#1$rangle$}
+% Split a string by a character
+\newcommand*{\ntgetkeyval}[4][=]{%
+  % #1 = character to look for
+  % #2 = string to split
+  % #3 = macro to receive the left part
+  % #4 = macro to receive the right part
+  \StrCut{#2}{#1}#3#4%
+}
+
+% --------------------------------------------------------
+% Alias for consistency in template.tex
+\def\ntmajorfield(#1)#2{\majorfield(#1):={#2}}
+\def\ntdegreename(#1)#2{\degreename(#1):={#2}}
+\def\ntspecialization(#1)#2{\specialization(#1):={#2}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -331,10 +349,10 @@
   % #1 = cover number {1, 2}    (1 is the default)
   \iftoggle{/novathesis/debugcover}%
     {%
-      \edef\@nt@tmpleft{\margin(\option{/novathesis/docdegree},left)}%
-      \edef\@nt@tmpright{\margin(\option{/novathesis/docdegree},right)}%
-      \edef\@nt@tmptop{\margin(\option{/novathesis/docdegree},top)}%
-      \edef\@nt@tmpbottom{\margin(\option{/novathesis/docdegree},bottom)}%
+      \edef\@nt@tmpleft{\themargin(\option{/novathesis/docdegree},left)}%
+      \edef\@nt@tmpright{\themargin(\option{/novathesis/docdegree},right)}%
+      \edef\@nt@tmptop{\themargin(\option{/novathesis/docdegree},top)}%
+      \edef\@nt@tmpbottom{\themargin(\option{/novathesis/docdegree},bottom)}%
       \fgrulerthickcm{}{}{1pt}
       % \setfgruler{numsep=-17pt}
       \fgruler[cm]{upperleft}{\@nt@tmpleft}{\@nt@tmptop}
@@ -342,8 +360,8 @@
       % \fgruler[cm]{upperleft}{\themargin(\option{/novathesis/docdegree},left)}{\themargin(\option{/novathesis/docdegree},top)}
       % \fgruler[cm]{lowerright}{\themargin(\option{/novathesis/docdegree},right)}{\themargin(\option{/novathesis/docdegree},bottom)}
     }%
-    {}
-   \thispagestyle{empty}
+    {}%
+  \thispagestyle{empty}%
   \setlength{\mpwidth}{\dimexpr%
     \paperwidth%
       -\themargin(\option{/novathesis/docdegree},left)%
@@ -430,13 +448,13 @@
 }
 
 \newcommand{\ntprintbackcoverpage}{%
-  \ifaadefined{thesiscover}(\option{/novathesis/docdegree},back){%
+  \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},back){%
     \clearforchapter%
     \thispagestyle{empty}%
     ~%
     \clearpage%
     \thispagestyle{empty}%
-    \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},back)]%
+    \ntcoverbackground(\@nameuse{thesiscover\option{/novathesis/docdegree},back})%
     ~% This space is important here so that the cover page is not empty anymore!
     \clearforchapter%
     \@nt@select@lang{\option{/novathesis/mainlang}}%
@@ -445,14 +463,11 @@
 
 % \newcommand{\ntcoverbackground}[1][\@nameuse{thesiscover\option{/novathesis/docdegree},front}]{%
 \newcommand{\ntcoverbackground}[1][\thethesiscover(\option{/novathesis/docdegree},front)]{%
-  % \show#1
-  % \xdef\@nt@tmpx{#1}
-  \includegraphics[width=\paperwidth,height=\paperheight]{#1}
-  % \IfFileExists{\@nt@tmp}{%
-    % \AddToShipoutPictureBG*{%
-    %   \includegraphics[width=\paperwidth,height=\paperheight]{\@nt@tmpx}%
-    % }%
-  % }{}%
+  \ifthenelse{\equal{#1}{}}{}{%
+    \AddToShipoutPictureBG*{%
+      \includegraphics[width=\paperwidth,height=\paperheight]{#1}%
+    }%
+  }%
 }
 
 \newcommand*{\ntprintaftercover}{%
@@ -584,7 +599,7 @@
   % \typeout{NT thecovertitle [#1]}
   \ifstrempty{#1}%
     {\thedoccovertitle(\option{/novathesis/coverlang})}%
-    {\thedoccovertitlecaps(\option{/novathesis/coverlang})}
+    {\thedoccovertitlecaps[\option{/novathesis/coverlang}]}
 }
 
 \newcommand{\thetitle}[1][\option{/novathesis/coverlang}]{%
@@ -596,6 +611,7 @@
 \assocarray{doctitle}
 
 \def\@thetitle{}
+
 \newcommand{\nttitle}[2][\option{/novathesis/coverlang}]{%
   % \typeout{NT nttitle [#1] [#2]}
     \doccovertitle(#1):={#2}%
@@ -639,6 +655,24 @@
 %   \fi
 % }
 
+%%%% Alternative hand-made implementation
+% \newcommand{\@nt@printoptionlist}[3]{%
+  % #1 = options list
+  % #2 = separator (e.g, ",")
+  % #3 = last separator (e.g., "and")
+%   \@nt@newcounter[1]{@ntprintoptionlist@cnt}
+%   \def\@nt@comma{}%
+%   \optionlistdo{#1}{%
+%     \StrCut{##1}{,}\@nt@name\@nt@rest%
+%     \@nt@comma\@nt@name%
+%     \stepcounter{@ntprintoptionlist@cnt}%
+%     \ifnum\value{\option{#1/@size}}=\value{@ntprintoptionlist@cnt}%
+%       \def\@nt@comma{#3}%
+%     \else%
+%       \def\@nt@comma{#2}%
+%     \fi%
+%   }%
+% }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print advisers
@@ -697,6 +731,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print committee
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ntprintcommittee}[1][0.75]{\ifmaindoc{\@nt@printcommittee@i{#1}}{}}
+
 \newcommand{\@nt@printcommittee@i}[1]{%
   \iftoggle{/novathesis/printcommittee}{% TRUE
     \begin{minipage}{#1\textwidth}%
@@ -767,7 +803,7 @@
 %% PAGE LAYOUT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\AtBeginDocument{\ntsetlayout}
+\AtEndPreamble{\ntsetlayout}
 
 \newcommand{\ntsetlayout}{%
   \synctex=1% Use synctex
@@ -851,7 +887,7 @@
   % #1 = file class
   % #2 = KEY=value
   % \typeout{NT @ntprintnext@ii [#1] [#2]}%
-  \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%
+  \ntgetkeyval{#2}{\option@listmatch@key}{\option@listmatch@value}%
   % \typeout{NT @ntprintnext@ii TRYING TO LOAD \option@listmatch@value}%
   \InputIfFileExists{\option@listmatch@value}{}{}%
 }
@@ -871,14 +907,14 @@
 
 \newcommand{\ntprintacknowledgements}{\@nt@printifmaindoc@i{acknowledgements}\clearforchapter}
 
-\newcommand{\ntprintcommittee}[1][0.75]{\ifmaindoc{\@nt@printcommittee@i{#1}}{}}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
   \xdef\@nt@tmp{\theabstractorder(\option{/novathesis/mainlang})}%
-  \expandnext{\forcsvlist\@ntprintabstract}{\@nt@tmp}%
+  \iteratecsvlist{\@ntprintabstract}{\@nt@tmp}%
 }
 
 \newcommand{\@ntprintabstract}[1]{%
@@ -990,7 +1026,7 @@
 
 \newcommand{\@loadglossaryfile}[1]{%
   % #1 = {glossary, acronyms, symbols}={filename}
-  \StrCut{#1}{=}\@nt@key\@nt@value
+  \ntgetkeyval{#1}{\@nt@key}{\@nt@value}
   % \typeout{NT @loadglossaryfile [\@nt@key][\@nt@value]}
   \IfFileExists{\@nt@value}%
     {\loadglsentries{\@nt@value}}%
