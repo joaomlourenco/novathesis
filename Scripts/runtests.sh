@@ -18,7 +18,7 @@ SET2=false
 args=`getopt fx12o: $*`
 # you should not use `getopt abo: "$@"` since that would parse
 # the arguments differently from what the set command below does.
-if [ $? != 0 ]
+if [ $# = 0 ]
 then
         echo 'Usage: ...'
         exit 2

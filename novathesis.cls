@@ -92,10 +92,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % --------------------------------------------------------
-% Do some magic defining arrays :)
-\def\ifdatadefined#1(#2){\ifcsname #1#2\endcsname\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi}
-
-% --------------------------------------------------------
 % If necessary create, then initialize the counter
 \newcommand*{\setnewcounter}[2]{%
   \ifcsname c@#1\endcsname\else\newcounter{#1}\fi%
@@ -160,6 +156,11 @@
 \newcommand{\ifphddoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{phd}}
 \newcommand{\ifmscdoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{msc}}
 \newcommand{\ifbscdoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{bsc}}
+
+\newcommand{\ifdocfinal}{\ifoptionequal{/novathesis/docstatus}{final}}
+\newcommand{\ifdocprovisional}{\ifoptionequal{/novathesis/docstatus}{provisional}}
+\newcommand{\ifdocdraft}{\ifoptionequal{/novathesis/docstatus}{draft}}
+\newcommand{\ifdocworking}{\ifoptionequal{/novathesis/docstatus}{working}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -345,10 +346,17 @@
 
 \newcommand*{\ntcoverposthook}[1]{}
 
+\def\thecovernumber{}
+\newcommand{\casecovernumber}{%
+  \expandafter\if\thecovernumber1\relax\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi%
+}
+
 \newcommand*{\@nt@printthecover}[1]{%
   % #1 = cover number {1, 2}    (1 is the default)
+  \def\thecovernumber{#1}%
   \iftoggle{/novathesis/debugcover}%
     {%
+      \color{blue}%
       \edef\@nt@tmpleft{\themargin(\option{/novathesis/docdegree},left)}%
       \edef\@nt@tmpright{\themargin(\option{/novathesis/docdegree},right)}%
       \edef\@nt@tmptop{\themargin(\option{/novathesis/docdegree},top)}%
@@ -436,19 +444,18 @@
   \newpage%
   \thispagestyle{empty}%
   \null\vfill%
-  {\scriptsize%
-      \begin{Spacing}{1}%
-        \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
-        \fontsize{6.3}{6.3}\selectfont% 
-        \noindent%
-        \hypersetup{allcolors=white}\textcolor{white}%
-                   {\theacknowledgmentsstr(\option{/novathesis/coverlang})}%
-      \end{Spacing}%
-  }%  
+  \begin{Spacing}{1}%
+    \scriptsize%
+    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+    \fontsize{6.3}{6.3}\selectfont% 
+    \noindent%
+    \hypersetup{allcolors=white}\textcolor{white}%
+               {\theacknowledgmentsstr(\option{/novathesis/coverlang})}%
+  \end{Spacing}%
 }
 
 \newcommand{\ntprintbackcoverpage}{%
-  \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},back){%
+  \ifaadefined{thesiscover}(\option{/novathesis/docdegree},back){%
     \clearforchapter%
     \thispagestyle{empty}%
     ~%
@@ -463,7 +470,7 @@
 
 % \newcommand{\ntcoverbackground}[1][\@nameuse{thesiscover\option{/novathesis/docdegree},front}]{%
 \newcommand{\ntcoverbackground}[1][\thethesiscover(\option{/novathesis/docdegree},front)]{%
-  \ifthenelse{\equal{#1}{}}{}{%
+  \IfEq{#1}{}{}{%ELSE
     \AddToShipoutPictureBG*{%
       \includegraphics[width=\paperwidth,height=\paperheight]{#1}%
     }%

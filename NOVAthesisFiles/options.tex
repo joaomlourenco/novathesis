@@ -79,6 +79,8 @@
   , docdegree/.new choice = {phd, phdprop, phdplan, msc, mscplan, bsc},
   , school/.new choice = {{nova/fct}, {nova/fcsh}, {nova/ims}, {nova/ensp},
                           {ul/ist}, {ul/fc}, {ipl/isel}, {ips/ests}, {esep}}
+  , docstatus/.new choice = {final, provisional, draft, working},
+  , docstatus = final,
   , chapstyle/.new choice = {bianchi, bluebox, default, elegant, 
                              ell, hansen, ist, lyhne, madsen,
                             pedersen, section, southall, veelo,
@@ -99,6 +101,8 @@
             \edef\@nt@urlstyle{#1}\AfterPreamble{\urlstyle{\@nt@urlstyle}}%
   }
   , debugcover/.new toggle = false
+  % , justcovers/.new toggle = false
+  % , coverslist/.new list,
   , spine/.new toggle = false%
   , cdcover/.new toggle = false%
   , media/.new choice = {screen, paper}

@@ -19,17 +19,6 @@
 \faculty(fr):={NOVA School of Science and Technology}
 \faculty(it):={NOVA School of Science and Technology}
 
-% Scientific filed
-\IfSubStr{\option{/novathesis/docdegree}}{phd}{%
-    \majorfield(pt):={Informática}
-    \majorfield(en):={Computer Science}
-  }{%
-  \majorfield(pt):={Engenharia Informática}
-  \majorfield(en):={Computer Science and Engineering}
-  }
-\majorfield(fr):={Ingénierie Informatique}
-\majorfield(it):={Ingegneria Informatica}
-
 % Comiittee printing order
 \committeeorder(all):={c,r,m}% 
 
