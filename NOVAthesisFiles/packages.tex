@@ -11,6 +11,7 @@
 \ifxetexorluatex
   % xelatex or lualatex
   \RequirePackage{fontspec}%
+  \defaultfontfeatures{Ligatures=TeX}
 \else% pdflatex
   %%%%% Configure font encoding
   \RequirePackage[T1]{fontenc}		% Use new T1 fonts
@@ -22,10 +23,6 @@
 %%%%% Configure multilingual language support
 \RequirePackage{csquotes}
 \RequirePackage{babel}			% Support for bilingual documents
-
-%%%%% Command multido
-\RequirePackage{multido}
-\newcommand{\Repeat}{\multido{\i=1+1}}
 
 % \RequirePackage{appendix}
 

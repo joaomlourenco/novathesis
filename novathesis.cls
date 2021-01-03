@@ -36,6 +36,20 @@
 %%     and click in the “Donation” link.  We will keep a list thanking to all 
 %%     the identified donors that identify themselves in the “Add special 
 %%     instructions to the seller:” box.
+%%
+%% CITATION:
+%%     If you use this template, please be kind and cite it in your bibliography:
+%%           “João M. Lourenço, \emph{The NOVAthesis \LaTeX\ Template User’s Manual},
+%%            NOVA School of Science and Technology, NOVA University Lisbon, 2021,
+%%            \url{https://github.com/joaomlourenco/novathesis/raw/master/template.pdf}.”
+%%    The BibTeX entry is:
+%%           @ Manual{novathesis-manual,
+%%            title        = {{The NOVAthesis Template User's Manual}},
+%%            author       = {João M. Lourenço},
+%%            organization = {NOVA University Lisbon},
+%%            year         = {2021},
+%%            url          = {https://github.com/joaomlourenco/novathesis/raw/master/template.pdf},
+%%           }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -64,6 +78,7 @@
 \RequirePackage{options-nt}
 \RequirePackage{xifthen}
 \RequirePackage{xstring}
+\RequirePackage{repeat-nt}
 \RequirePackage{assocarray}
 
 
@@ -96,12 +111,6 @@
 \newcommand*{\setnewcounter}[2]{%
   \ifcsname c@#1\endcsname\else\newcounter{#1}\fi%
   \setcounter{#1}{#2}%
-}
-
-% --------------------------------------------------------
-% Itelare a comma separated list
-\newcommand{\iteratecsvlist}[2]{%
-  \@for\@nt@themember:=#2\do{#1{\@nt@themember}}%
 }
 
 % --------------------------------------------------------
@@ -188,11 +197,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\ntaddperson#1[#2]#3{%
   % See "\@ntaddperson@iv" below
-  \if\instring{,}{#2}%
-    \@ntaddperson@iv{#1}[#2]{#3}%
-  \else%
-    \@ntaddperson@iv{#1}[,#2]{#3}%
-  \fi%
+  \IfSubStr{#2}{,}%
+    {\@ntaddperson@iv{#1}[#2]{#3}}%
+    {\@ntaddperson@iv{#1}[,#2]{#3}}%
 }
 
 \def\@ntaddperson@iv#1[#2,#3]#4{%
@@ -411,9 +418,9 @@
   % #4 = the code
   % #5 = curernt cover number {1, 2, {1,2}}
   % \typeout{NT novathesis@printcoveritem [#1] [#2]}
-  \if\instring{#5}{#1}%
+  \IfSubStr{#1}{#5}{%
     \IfInteger{#3}{%IS INTEGER
-      \Repeat{#3}{\vfill}
+      \ntrepeat\to{#3}\do{\vfill}
     }{%IS NOT INTEGER
       \vspace*{#3}%
     }%
@@ -437,7 +444,7 @@
       \end{minipage}%
     }%
     \par%
-  \fi%
+  }{}%
 }
 
 \csdef{@thecover1backpage}{%
@@ -921,7 +928,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
   \xdef\@nt@tmp{\theabstractorder(\option{/novathesis/mainlang})}%
-  \iteratecsvlist{\@ntprintabstract}{\@nt@tmp}%
+  \expandnext{\forcsvlist{\@ntprintabstract}}{\@nt@tmp}%
 }
 
 \newcommand{\@ntprintabstract}[1]{%
