@@ -528,8 +528,11 @@
 \assocarray{acknowledgmentsstr}
 
 \optionlistdo{/@nt/langsshort}{%
-  \committeetitlestrfont(#1):={}%
+  \adviserstrfont(#1):={}%
+  \coadviserstrfont(#1):={}%
   \committeememberstrfont(#1):={}%
+  \committeetitlestrfont(#1):={}%
+  \degreestrfont(#1):={}%
   \dissertationstrfont(#1):={}%
 }
 
@@ -729,16 +732,17 @@
 
 \newcommand{\@nt@printadvisergroup}[1]{%
   % #1={adviser,coadviser}
-  \ifoptiondefined{/@nt/#1//name}{%
-    \@nt@reducegender{/@nt/#1//gender}{\mygender}%
-    \@nt@reducenumber{/@nt/#1//name}{\mynumber}%
-    \smallskip%
-    \csname the#1str\endcsname(\mynumber,\mygender,\option{/novathesis/coverlang}): & %
-    \begin{minipage}[t]{\linewidth}\raggedright%
-    \optionlistdo{/@nt/#1//name}{##1\\[1pt]}%
-    \end{minipage}\\%
-  }%
-  {\ClassWarning{novathesis}{option[/@nt/#1//name] undefined}}%
+    \ifoptiondefined{/@nt/#1//name}{%
+      \@nt@reducegender{/@nt/#1//gender}{\mygender}%
+      \@nt@reducenumber{/@nt/#1//name}{\mynumber}%
+      \smallskip%
+      \csuse{the#1strfont}(\option{/novathesis/coverlang})%
+      \csuse{the#1str}(\mynumber,\mygender,\option{/novathesis/coverlang}): & %
+      \begin{minipage}[t]{\linewidth}\raggedright%
+      \optionlistdo{/@nt/#1//name}{##1\\[1pt]}%
+      \end{minipage}\\%
+    }%
+    {\ClassWarning{novathesis}{option[/@nt/#1//name] undefined}}%
 }
 
 
@@ -778,7 +782,9 @@
   \ifoptiondefined{/@nt/committee/#1/name}{%
     \@nt@reducegender{/@nt/committee/#1/gender}{\mygender}%
     \@nt@reducenumber{/@nt/committee/#1/name}{\mynumber}%
-    \smallskip\thecommitteememberstr(#1,\mynumber,\mygender,\option{/novathesis/coverlang}): & %
+    \smallskip%
+    \thecommitteememberstrfont(\option{/novathesis/coverlang})%
+    \thecommitteememberstr(#1,\mynumber,\mygender,\option{/novathesis/coverlang}): & %
     \begin{minipage}[t]{\linewidth}\raggedright%
     \optionlistdo{/@nt/committee/#1/name}{##1\\[1pt]}%
     \end{minipage}\\%

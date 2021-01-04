@@ -3,6 +3,7 @@
 
 \typeout{NT LOADING FILE spine-jml.tex}
 
+\makeatletter
 
 \newlength{\@nt@spinewidth}%
 \setlength{\@nt@spinewidth}{1mm * (\thelastpage + 19) / 20}%
@@ -195,3 +196,5 @@
   ~% This space is important here so that the spine page is not empty anymore!
   % \clearforchapter%
 }%
+
+\makeatother
