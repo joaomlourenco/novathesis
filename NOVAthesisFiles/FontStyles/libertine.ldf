@@ -7,7 +7,6 @@
 
 \typeout{NT LOADING FILE FontStyles/libertine.ldf}
 
-\RequirePackage{textcomp}
 \RequirePackage[sb]{libertine}
 \RequirePackage[varqu,varl]{zi4}% inconsolata
 \useosf % osf for text, not math
