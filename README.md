@@ -1,6 +1,6 @@
 ![NOVAthesis logo](NOVAthesisFiles/Images/novathesis-logo.jpg)
 
-# _novathesis_ LaTeX template
+# novathesis LaTeX template
 %% Version 2021-01-03 [5.1.12]
 
 --------
@@ -9,7 +9,7 @@
 
 --------
 
-The _novathesis_ LaTeX class is a thesis template initially designed for the PhD and MSc thesis at [FCT-NOVA — NOVA School of Science and Technology](http://www.fct.unl.pt), Portugal, but currently it supports more schools, namely:
+The novathesis LaTeX class is a thesis template initially designed for the PhD and MSc thesis at [FCT-NOVA — NOVA School of Science and Technology](http://www.fct.unl.pt), Portugal, but currently it supports more schools, namely:
 * NOVA University Lisbon
     * [NOVA School for Science and Technology](https://www.fct.unl.pt) (FCT-NOVA)
     * [NOVA Information Management School](https://www.novaims.unl.pt) (NOVA-IMS)
