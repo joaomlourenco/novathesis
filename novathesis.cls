@@ -447,18 +447,30 @@
   }{}%
 }
 
+\newcommand{\ntfixspacing}{%
+  \iftoggle{/@nt/ntfixspacing}{}
+  {%
+    % \options{/@nt/ntfixspacing = true}
+    \newpage%
+    \thispagestyle{empty}%
+    \null\vfill%
+    \begin{Spacing}{1}%
+      \scriptsize%
+      \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+      \fontsize{6.3}{6.3}\selectfont% 
+      \noindent%
+      \hypersetup{allcolors=white}\textcolor{white}%
+                 {\theacknowledgmentsstr(\option{/novathesis/coverlang})}%
+    \end{Spacing}%
+  }
+}
+
 \csdef{@thecover1backpage}{%
-  \newpage%
-  \thispagestyle{empty}%
-  \null\vfill%
-  \begin{Spacing}{1}%
-    \scriptsize%
-    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
-    \fontsize{6.3}{6.3}\selectfont% 
-    \noindent%
-    \hypersetup{allcolors=white}\textcolor{white}%
-               {\theacknowledgmentsstr(\option{/novathesis/coverlang})}%
-  \end{Spacing}%
+  \ntfixspacing%
+}
+
+\csdef{@thecover2backpage}{%
+  \ntfixspacing%
 }
 
 \newcommand{\ntprintbackcoverpage}{%
@@ -945,11 +957,11 @@
 	}%  
 }
 
-\newcommand{\ntprintdedicatory}{\@nt@printifmaindoc@i{dedicatory}\clearforchapter}
+\newcommand{\ntprintdedicatory}{\@nt@printifmaindoc@i{dedicatory}\ntfixspacing\clearforchapter}
 
-\newcommand{\ntprintquote}{\@nt@printifmaindoc@i{quote}\clearforchapter}
+\newcommand{\ntprintquote}{\@nt@printifmaindoc@i{quote}\ntfixspacing\clearforchapter}
 
-\newcommand{\ntprintacknowledgements}{\@nt@printifmaindoc@i{acknowledgements}\clearforchapter}
+\newcommand{\ntprintacknowledgements}{\@nt@printifmaindoc@i{acknowledgements}\ntfixspacing\clearforchapter}
 
 
 
@@ -966,6 +978,7 @@
   \setabstractlang{#1}%
   \@ntloadfisrt@ii[#1]{abstract}%
   \@nt@select@lang{\option{/novathesis/mainlang}}%
+  \ntfixspacing%
 }
 
 
@@ -1106,7 +1119,7 @@
 \newcommand{\ntprintcopyright}{%
 	\ifmaindoc{% THEN
     \iftoggle{/novathesis/printcopyright}%
-      {\ntprintcopyrightpage}%
+      {\ntprintcopyrightpage\ntfixspacing\clearforchapter}%
       {}%
 	}{}%
 }
@@ -1118,7 +1131,6 @@
   \textbf{\large \thetitle}\par%
   \bigskip%
   \thecopyrightstr\par%
-  \clearforchapter%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1127,14 +1139,15 @@
 \NewEnviron{ntdedicatory}{
   \thispagestyle{empty}%
   ~\\[2cm]%
-  \raggedleft%
-  \begin{minipage}{100mm}%
+  \begin{minipage}{\linewidth}%
     \raggedleft%
-    \quotefonti%
-    \BODY
-    \normalfont%
-  \end{minipage}%
-	\clearforchapter%
+    \begin{minipage}{100mm}%
+      \raggedleft%
+      \quotefonti%
+      \BODY
+      \normalfont%
+    \end{minipage}%
+  \end{minipage}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1143,14 +1156,15 @@
 \NewEnviron{ntquote}{%%
   \thispagestyle{empty}%
   ~\\[2cm]%
-  \raggedleft
-  \begin{minipage}{100mm}%
-    \raggedleft
-    \quotefonti%
-    \BODY%
-    \normalfont%
-  \end{minipage}%
-	\clearforchapter%
+  \begin{minipage}{\linewidth}%
+    \raggedleft%
+    \begin{minipage}{100mm}%
+      \raggedleft
+      \quotefonti%
+      \BODY%
+      \normalfont%
+    \end{minipage}%
+  \end{minipage}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
