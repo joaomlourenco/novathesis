@@ -1,0 +1,170 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova/fct/defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Costumization for FCT-NOVA (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE nova/fct/defaults.ldf}
+
+% Univesity
+\university(pt):={\embrace{NONE}}
+\university(en):={\embrace{NONE}}
+\university(fr):={\embrace{NONE}}
+\university(it):={\embrace{NONE}}
+
+% Faculty / School
+\faculty(pt):={\embrace{NONE}}
+\faculty(en):={\embrace{NONE}}
+\faculty(fr):={\embrace{NONE}}
+\faculty(it):={\embrace{NONE}}
+
+% Comiittee printing order
+\committeeorder(all):={c,r,m}% 
+
+% Cover background images
+\thesiscover(phd,front):={cover-msc-gt}
+\thesiscover(phdplan,front):={cover-msc-gt}
+\thesiscover(phdprop,front):={cover-msc-gt}
+\thesiscover(msc,front):={cover-msc-gt}
+\thesiscover(mscplan,front):={cover-msc-gt}
+\thesiscover(bsc,front):={cover-msc-gt}
+\thesiscover(plain,front):={cover-msc-gt}
+\thesiscover(phd,cdfront):={cover-msc-gt}
+\thesiscover(phd,cdinlay):={cover-msc-gt}
+\thesiscover(phdplan,cdfront):={cover-msc-gt}
+\thesiscover(phdplan,cdinlay):={cover-msc-gt}
+\thesiscover(phdprop,cdfront):={cover-msc-gt}
+\thesiscover(phdprop,cdinlay):={cover-msc-gt}
+\thesiscover(msc,cdfront):={}
+\thesiscover(msc,cdinlay):={}
+\thesiscover(mscplan,cdfront):={}
+\thesiscover(mscplan,cdinlay):={}
+\thesiscover(bsc,cdfront):={}
+\thesiscover(bsc,cdinlay):={}
+\thesiscover(plain,cdfront):={}
+\thesiscover(plain,cdinlay):={}
+
+% Spine info
+\spine(logo):={}
+\spine(author):={\theauthorshortname}
+\spine(title):={\thetitle}
+\spine(year):={\thentdateyear}
+
+% Set margins for "normal" pages
+\margin(screen,top):={3.5cm}
+\margin(screen,bottom):={2.5cm}
+\margin(screen,left):={3.0cm}
+\margin(screen,right):={3.0cm}
+\margin(paper,top):={3.5cm}
+\margin(paper,bottom):={2.5cm}
+\margin(paper,left):={2.5cm}
+\margin(paper,right):={3.5cm}
+
+% Set margins for cover pages
+\margin(msc,top):={2.5cm}
+\margin(msc,bottom):={2.5cm}
+\margin(msc,left):={1.5cm}
+\margin(msc,right):={1.5cm}
+\margin(mscplan,top):={2.5cm}
+\margin(mscplan,bottom):={2.5cm}
+\margin(mscplan,left):={1.5cm}
+\margin(mscplan,right):={1.5cm}
+
+
+\adviserstr(en):={Dissertation supervised by:}
+\coadviserstr(en):={Co-supervised by:}
+
+\adviserstrfont(en):={\bfseries}
+\coadviserstrfont(en):={\bfseries}
+
+\ntsetup{printcopyright=false}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NOVA guidelines:
+% The pages should be numbered consecutively at the bottom centre of the
+% page.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makepagestyle{novathesis@myvf} 
+\makeoddfoot{novathesis@myvf}{}{\thepage}{} 
+\makeevenfoot{novathesis@myvf}{}{\thepage}{} 
+\makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
+\makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
+\makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
+\pagestyle{novathesis@myvf}
+%
+%\frenchspacing
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \renewcommand{\ntcoverprehook}[1]{}
+
+% Title of Dissertation
+\ntaddtocover{1}{c}{6cm}{%
+  \ntcoverbackground
+  \begin{minipage}[t][7.5cm][b]{\linewidth}
+    \raggedright
+    \fontsize{18}{18}\selectfont
+    \bfseries\thecovertitle[caps]%
+  \end{minipage}
+}
+
+% Author name
+\ntaddtocover{1}{c}{0.9cm}{%
+  \begin{minipage}[t][1.8cm][c]{\linewidth}
+    \fontsize{16}{16}\selectfont
+    \textbf{\theauthorname}
+  \end{minipage}
+}
+
+% Title of Dissertation - COVER 2
+\ntaddtocover{2}{c}{2cm}{%
+  \begin{minipage}[t]{\linewidth}
+    \centering
+    \fontsize{16}{16}\selectfont
+    \bfseries\thecovertitle[caps]%
+  \end{minipage}
+}
+
+% Academic qualifications
+% \ntaddtocover{1,2}{c}{0.25cm}{%
+%   \fontsize{11}{11}\selectfont
+%   \theauthordegree
+% }
+
+% Degree
+% \ntaddtocover{1,2}{c}{1.5cm}{%
+%   \fontsize{11}{11}\selectfont
+%   \thepresentationtext
+% }
+
+% Advisers
+\ntaddtocover{2}{c}{3cm}{%
+  \ntprintadvisersgroup{adviser}
+}
+
+% Co-advisers
+\ntaddtocover{2}{c}{1cm}{%
+  \ntprintadvisersgroup{coadviser}
+}
+
+
+% Committee — only print the committee for the main classes
+% \ntaddtocover{1,2}{r}{2}{%
+%   \fontsize{10}{10}\selectfont%
+%   \ntprintcommittee%
+% }
+
+
+% Date
+\ntaddtocover{2}{c}{1}{%
+  \fontsize{11}{11}\selectfont
+  \ifdraftdoc
+    \textbf{DRAFT: \today}
+  \else
+    \textbf{\thentdatemonth, \thentdateyear}
+  \fi
+}

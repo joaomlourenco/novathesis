@@ -5,7 +5,7 @@
 
 --------
 
-<img src="NOVAthesisFiles/Images/cover-phd-nova-fct.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-ims.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-ensp.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-fcsh.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ul-ist.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ul-fc.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ipl-isel.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ips-ests.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-esep.jpg" width="100"/>
+<img src="NOVAthesisFiles/Images/cover-phd-nova-fct.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-ims.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-ensp.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-fcsh.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ul-ist.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ul-fc.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ipl-isel.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ips-ests.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-esep.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-msc-gt.jpg" width="100"/>
 
 --------
 
@@ -24,6 +24,9 @@ The novathesis LaTeX class is a thesis template initially designed for the PhD a
     * [Escola Superior de Saúde](https://www.ess.ips.pt) (ESS-IPS)
     * [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt) (ESTB-IPS)
 * [Escola Superior de Enfermagem do Porto](https://www.esenf.pt/pt/) (ESEP)
+
+The novathesis LaTeX template also supports the following degrees from Universities' Consortia:
+* Erasmus Mundus [Masters Program in Geospatial Technologies](https://mastergeotech.info)
 
 The template provides an _easy to use_ setting for you to write your thesis/dissertation in LaTeX:
 *  Select your school
