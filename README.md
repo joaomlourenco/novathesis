@@ -9,7 +9,7 @@
 
 --------
 
-The novathesis LaTeX class is a thesis template initially designed for the PhD and MSc thesis at [FCT-NOVA — NOVA School of Science and Technology](http://www.fct.unl.pt), Portugal, but currently it supports more schools, namely:
+The novathesis LaTeX class is a thesis template initially designed for the PhD thesis and MSc dissertations at [FCT-NOVA — NOVA School of Science and Technology](http://www.fct.unl.pt), Portugal, but currently it supports more schools, namely:
 * NOVA University Lisbon
     * [NOVA School for Science and Technology](https://www.fct.unl.pt) (FCT-NOVA)
     * [NOVA Information Management School](https://www.novaims.unl.pt) (NOVA-IMS)
@@ -74,7 +74,7 @@ Please add them to the [wiki](https://github.com/joaomlourenco/novathesis/wiki) 
 
 ## Disclaimer
 
-These are not official templates for FCT-NOVA or any other School, although we have done our best to make it fully compliant to each School regulations for thesis/dissertation presentation.
+These are not official templates for FCT-NOVA nor any other School, although we have done our best to make it fully compliant to each School regulations for thesis/dissertation presentation.
 
 All contributors, both sporadic and regular, are welcome. :) Please [contact me](http://docentes.fct.unl.pt/joao-lourenco) to join the team.
 
