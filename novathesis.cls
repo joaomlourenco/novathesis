@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-01-03 [5.1.12]
+%% Version 2021-01-09 [5.2.1]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -616,7 +616,7 @@
   % \typeout{NT thecovertitle [#1]}
   \ifstrempty{#1}%
     {\thedoccovertitle(\option{/novathesis/coverlang})}%
-    {\thedoccovertitlecaps[\option{/novathesis/coverlang}]}
+    {\thedoccovertitlecaps(\option{/novathesis/coverlang})}
 }
 
 \newcommand{\thetitle}[1][\option{/novathesis/coverlang}]{%
@@ -631,11 +631,14 @@
 
 \newcommand{\nttitle}[2][\option{/novathesis/coverlang}]{%
   % \typeout{NT nttitle [#1] [#2]}
-    \doccovertitle(#1):={#2}%
-    \doccovertitlecaps(#1):={\expandafter\MakeTextUppercase\expandafter{#2}}%
     \saveexpandmode\noexpandarg% set \noexpandarg locally
       \StrSubstitute[0]{#2}{\\}{ }[\@thetitle]%
+      \StrSubstitute[0]{#2}{\\}{\newline}[\@thetitleii]%
+      % \def\@thetitleiii{\expandafter\MakeUppercase\expandafter{\@thetitleii}}
+      % \StrSubstitute[0]{\@thetitleiii}{@}{\newline}[\@thetitleiv]%
     \restoreexpandmode% restore the previous mode
+    \doccovertitle(#1):={#2}%
+    \doccovertitlecaps(#1):={\expandafter\MakeUppercase\expandafter{\@thetitleii}}%
     \doctitle(#1):=\@thetitle%
     \ifthenelse{\equal{#1}{\option{/novathesis/coverlang}}}{%
       \AtBeginDocument{%
@@ -719,6 +722,27 @@
     {, }%
   \fi\fi%
   #1%
+}
+
+\newcommand{\ntprintadvisersgroup}[2][0.90]{%
+  % #1 = width
+  % %2 = {adviser,coadviser}
+  \ifoptiondefined{/@nt/#2//name}{%
+    \bgroup
+      \csuse{the#2strfont}(\option{/novathesis/coverlang})%
+      \csuse{the#2str}(\option{/novathesis/coverlang})\\[1ex]%
+    \egroup
+    \begin{minipage}[t]{#1\linewidth}%
+      \centering
+      \optionlistdo{/@nt/#2//name}{\@nt@printadvisersgroup##1,\@nil}%
+    \end{minipage}%
+  }%
+  {\ClassWarning{novathesis}{option[/@nt/#1//name] undefined}}%
+}
+
+\def\@nt@printadvisersgroup#1,#2\@nil{%
+  #1\\
+  \IfEq{#2}{}{\medskip}{\@nt@printadvisersgroup#2\@nil}%
 }
 
 \newcommand{\ntprintadvisers}[1][0.90]{%
@@ -1081,10 +1105,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintcopyright}{%
 	\ifmaindoc{% THEN
-		\ntprintcopyrightpage%
-	}{% ELSE
-    % do nothing
-	}%
+    \iftoggle{/novathesis/printcopyright}%
+      {\ntprintcopyrightpage}%
+      {}%
+	}{}%
 }
 
 \newcommand{\ntprintcopyrightpage}{%

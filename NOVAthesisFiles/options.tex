@@ -79,7 +79,7 @@
   , docdegree/.new choice = {phd, phdprop, phdplan, msc, mscplan, bsc},
   , school/.new choice = {{nova/fct}, {nova/fcsh}, {nova/ims}, {nova/ensp},
                           {ul/ist}, {ul/fc}, {ipl/isel}, {ips/ests}, {esep},
-                          {iscte-iul/ista}}
+                          {iscte-iul/ista}, {consortium/msc-gt}}
   , docstatus/.new choice = {final, provisional, draft, working},
   , docstatus = final,
   , chapstyle/.new choice = {bianchi, bluebox, default, elegant, 
@@ -96,6 +96,7 @@
   , coverlang/.new choice = {en, pt, fr, it}
   , copyrightlang/.new choice = {en, pt, fr, it}
   , printcommittee/.new toggle = true
+  , printcopyright/.new toggle = true
   , secondcover/.new toggle = false
   , aftercover/.new toggle = false
   , urlstyle/.new cmd = {%
