@@ -1,0 +1,43 @@
+%!TEX root = ../../thesis_rui_almeida.tex
+
+
+\section{Methods and Findings}%
+\label{sec:intro_methods}
+
+\todo[inline]{Consider rewriting this section.}
+
+The system proposed in this thesis is a conjunction of sub-components
+that work together towards the final goal. The first division is between
+what is a physical, tangible component and what is just software
+related. On the first level, developing this project involved selecting
+the components for a custom made \gls{UAV} to which the spectroscopic
+system will be attached to. In addition to this, I also had to select
+the on-board electronics module, which is comprised of the flight
+controller, which takes care of the device's movement; and the on-board
+computer, which handles the acquisition of data via the optical module,
+an assembly of spectrometers and telescopes connected through a
+custom-built coupling part. All this assembly will perform according to
+what is programmed using ArduCopter's SITL programming
+suite~\todo{citation}.
+
+On a software level, developing this project implied the creation of a
+tomographic simulation tool, written in Python (and more particularly,
+NumPy)~\cite{Python, Oliphant2007}. This tool was coded considering the
+hypothesis described in Section~\ref{sec:intro_hypothesis}, and includes the
+description of the trajectory that the system must conduct in order to
+reconstruct the target species concentration maps. Regarding the
+reconstruction itself, this tool includes custom-built routines for the
+\gls{FBP} algorithm and the \gls{MLEM} algorithm, and applies a SciPy
+library~\todo{citation} method to perform \gls{SART} reconstruction.
+Moreover, the simulation platform also takes into consideration
+geometric and reconstruction errors, proper to this kind of system.
+
+The rest of this thesis describes my best efforts in developing a
+spectral system that would provide an affirmative reply to the research
+question, taking into account the literary gaps that we have found in
+our literature review. In doing this, I have successfully built a
+software simulation tool that computationally proves that our
+tomographic assumptions are reasonable and allow the concentration
+mapping of any trace species that can be targeted by the \gls{DOAS}
+technique. On an experimental level, I have also managed to validate the
+hypothesis described in Section~\ref{sec:intro_hypothesis}.

@@ -252,9 +252,6 @@
       \field{isbn}{9781588900821}
       \field{title}{{Essential Radiology: Clinical Presentation, Pathophysiology, Imaging, 2nd ed.}}
       \field{year}{2006}
-      \verb{file}
-      \verb :home/rui/Downloads/Essential-Radiology-Clinical-Presentation-Pathophysiology-Imaging-.pdf:pdf
-      \endverb
     \endentry
     \entry{Kak2001}{book}{}
       \name{author}{2}{}{%
@@ -407,7 +404,7 @@
       \verb 10.1006/rtim.1995.1002
       \endverb
       \verb{file}
-      \verb :home/rui/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Herman - 1995 - Image reconstruction from projections.pdf:pdf
+      \verb ::
       \endverb
     \endentry
     \entry{Herman2009}{book}{}
@@ -646,9 +643,9 @@
       \field{labeltitlesource}{title}
       \field{isbn}{9783540211938}
       \field{title}{{Differential Optical Absorption Spectroscopy - Principles and Applications}}
-      \field{year}{2007}
+      \field{year}{2008}
       \verb{file}
-      \verb :home/rui/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Platt, Stutz - 2007 - Differential Optical Absorption Spectroscopy.pdf:pdf
+      \verb :Users/ruivalmeida/Library/Application Support/Mendeley Desktop/Downloaded/Platt, Stutz - 2008 - Differential Optical Absorption Spectroscopy - Principles and Applications.pdf:pdf
       \endverb
     \endentry
     \entry{Merlaud2013}{thesis}{}
@@ -684,7 +681,7 @@
       \field{type}{PhD Thesis}
       \field{year}{2013}
       \verb{file}
-      \verb :home/rui/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Merlaud - 2013 - Development and use of compact instruments for tropospheric investigations based on optical spectroscopy from mobile pl.pdf:pdf
+      \verb ::
       \endverb
       \verb{urlraw}
       \verb http://books.google.com/books?hl=en{\&}lr={\&}id=inXVSyR82zwC{\&}oi=fnd{\&}pg=PR3{\&}dq=Development+and+use+of+compact+instruments+for+tropospheric+investigations+based+on+optical+spectroscopy+from+mobile+platforms+sciences{\&}ots=VdebeDBQMc{\&}sig=4G0eVEvthJXuqd8WI3IWjjVXuXc
@@ -809,25 +806,25 @@
         {{uniquename=0,uniquepart=base,hash=d4ad8458d1360046c678df43b2bdc3fd}{%
            family={Laepple},
            familyi={L\bibinitperiod},
-           given={T.},
+           given={T},
            giveni={T\bibinitperiod},
            givenun=0}}%
         {{uniquename=0,uniquepart=base,hash=e189acad2d22e7c977ac4a2b8dedf7d1}{%
            family={Knab},
            familyi={K\bibinitperiod},
-           given={V.},
+           given={V},
            giveni={V\bibinitperiod},
            givenun=0}}%
         {{uniquename=0,uniquepart=base,hash=b38af08fc48b635c598aa865fef345af}{%
            family={Mettendorf},
            familyi={M\bibinitperiod},
-           given={K.-U.},
+           given={K.-U},
            giveni={K\bibinithyphendelim U\bibinitperiod},
            givenun=0}}%
         {{uniquename=0,uniquepart=base,hash=443514bfdde8f08b31088fe1f5a7391b}{%
            family={Pundt},
            familyi={P\bibinitperiod},
-           given={I.},
+           given={I},
            giveni={I\bibinitperiod},
            givenun=0}}%
       }
@@ -841,23 +838,27 @@
       \field{sortinithash}{a4b52e5432884761f50fb9571273b93e}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{issn}{1680-7324}
-      \field{journaltitle}{Atmospheric Chemistry and Physics}
-      \field{month}{8}
-      \field{number}{5}
+      \field{abstract}{This paper presents a procedure for performing and optimizing inversions for DOAS tomography and its ap-plication to measurement data. DOAS tomography is a new technique to determine 2-and 3-dimensional concentration fields of air pollutants or other trace gases by combining dif-ferential optical absorption spectroscopy (DOAS) with tomo-graphic inversion techniques. Due to the limited amount of measured data, the resulting concentration fields are sensitive to the inversion process. Therefore detailed error estimations are needed to determine the quality of the reconstruction. In this paper we compare different row acting methods for the inversion, present a procedure for optimizing the parameters of the reconstruction process and propose a way to estimate the error-fields by numerical studies. The procedure was ap-plied to data from the motorway emission campaign BAB II. Two dimensional NO 2 cross sections at right angles to the motorway could be reconstructed qualitatively well at differ-ent meteorological situations. Additionally we present error fields for the reconstructions which show the problems and skills of the used measurement setup. Numerical studies on an improved setup for future motorway campaigns show, that DOAS tomography is able to produce high quality concentra-tion maps.}
+      \field{issn}{1680-7375}
+      \field{journaltitle}{Atmospheric Chemistry and Physics Discussions}
+      \field{month}{5}
+      \field{number}{3}
       \field{title}{{Longpath DOAS tomography on a motorway exhaust gas plume: numerical studies and application to data from the BAB II campaign}}
       \field{volume}{4}
       \field{year}{2004}
-      \field{pages}{1323\bibrangedash 1342}
-      \range{pages}{20}
+      \field{pages}{2435\bibrangedash 2484}
+      \range{pages}{50}
       \verb{doi}
-      \verb 10.5194/acp-4-1323-2004
+      \verb 10.5194/acpd-4-2435-2004
+      \endverb
+      \verb{file}
+      \verb ::
       \endverb
       \verb{urlraw}
-      \verb http://www.atmos-chem-phys.net/4/1323/2004/
+      \verb www.atmos-chem-phys.org/acp/4/1323/ http://www.atmos-chem-phys-discuss.net/4/2435/2004/
       \endverb
       \verb{url}
-      \verb http://www.atmos-chem-phys.net/4/1323/2004/
+      \verb www.atmos-chem-phys.org/acp/4/1323/%20http://www.atmos-chem-phys-discuss.net/4/2435/2004/
       \endverb
     \endentry
     \entry{Stutz2016}{article}{}
@@ -990,8 +991,8 @@
       \strng{authorbibnamehash}{3ec1d16408aaa537802cac53ae18db1d}
       \strng{authornamehash}{2504bef5c80ac9d3bace9fb63baa7ddf}
       \strng{authorfullhash}{3ec1d16408aaa537802cac53ae18db1d}
-      \field{sortinit}{3}
-      \field{sortinithash}{a4b52e5432884761f50fb9571273b93e}
+      \field{sortinit}{4}
+      \field{sortinithash}{11cdaee3b18e01d77f3f428b13c1fc76}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{issn}{0003-6935}
@@ -1058,9 +1059,6 @@
       \field{year}{2019}
       \field{pages}{1689\bibrangedash 1699}
       \range{pages}{11}
-      \verb{file}
-      \verb :home/rui/Downloads/air{\_}pollution/Nāīka, Vai{\'{s}}ālī{\_} Saxena, Pallavi - Air pollution{\_} sources, impacts and controls-CAB International (2019).pdf:pdf
-      \endverb
     \endentry
     \entry{Casaballe2017}{article}{}
       \name{author}{4}{}{%
@@ -1099,9 +1097,9 @@
       \field{sortinithash}{11cdaee3b18e01d77f3f428b13c1fc76}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{abstract}{We analyze and compare two approaches for the tomographic reconstruction of trace gas distributions in the atmosphere, adapted to differential optical absorption spectroscopy (DOAS) applications. The first approach performs the inversion by solving a regularized least squares problem. Regularization is required because the retrieval of the distribution from a limited set of measurements is an ill-posed problem. This approach does not consider the nonnegativity of the trace gas concentrations. The second approach is a new proposal that solves an optimization problem with the Laplacian of the solution as the regularization term. This approach enables the possibility of adding the nonnegativity constraint to the solution. The algorithm here is stated as an instance of a convex optimization problem and can numerically be solved using, for example, the CVX package. We test both approaches on reconstructions of simulated gas distributions and different experimental configurations applicable to Multi-Axis DOAS and multispectral imaging measurements. From the results, we can then determine a set of reconstruction parameters appropriate to real plume measurements.}
       \field{issn}{23335084}
       \field{journaltitle}{Earth and Space Science}
+      \field{month}{12}
       \field{number}{12}
       \field{title}{{Comparison Between Regularized Optimization Algorithms for Tomographic Reconstruction of Plume Cross Sections in the Atmosphere}}
       \field{volume}{4}
@@ -1111,10 +1109,12 @@
       \verb{doi}
       \verb 10.1002/2017EA000341
       \endverb
-      \verb{file}
-      \verb :home/rui/Documents/asd{\_}search/articles/downloaded/casaballe2017.pdf:pdf
+      \verb{urlraw}
+      \verb http://doi.wiley.com/10.1002/2017EA000341
       \endverb
-      \keyw{DOAS,gas emission,regularization,tomography}
+      \verb{url}
+      \verb http://doi.wiley.com/10.1002/2017EA000341
+      \endverb
     \endentry
     \entry{Johansson2009}{article}{}
       \name{author}{4}{}{%
@@ -1379,9 +1379,6 @@
       \field{isbn}{9780470381120}
       \field{title}{{The Dose Makes The Poison: A Plain Language Guide to Toxicology}}
       \field{year}{2011}
-      \verb{file}
-      \verb :home/rui/Downloads/air{\_}pollution/The-Dose-Makes-the-Poison-A-Plain-Language-Guide-to-Toxicology.pdf:pdf
-      \endverb
     \endentry
     \entry{EEA2016}{report}{}
       \name{author}{1}{}{%
@@ -1396,8 +1393,8 @@
       \strng{authornamehash}{90aa9b8fa4bb4d8ad89a11841186926d}
       \strng{authorfullhash}{90aa9b8fa4bb4d8ad89a11841186926d}
       \field{extraname}{1}
-      \field{sortinit}{4}
-      \field{sortinithash}{11cdaee3b18e01d77f3f428b13c1fc76}
+      \field{sortinit}{5}
+      \field{sortinithash}{3c19c3776b658b3558e9e2e4840c01e2}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{7 Executive summary Air quality in Europe — 2017 report Executive summary Air pollution is a key environmental and social issue and, at the same time, it is a complex problem posing multiple challenges in terms of management and mitigation of harmful pollutants. Air pollutants are emitted from anthropogenic and natural sources; they may be either emitted directly (primary pollutants) or formed in the atmosphere (as secondary pollutants). They have a number of impacts on health, ecosystems, the built environment and the climate; they may be transported or formed over long distances; and they may affect large areas. Effective action to reduce the impacts of air pollution requires a good understanding of its causes, how pollutants are transported and transformed in the atmosphere, and how they affect humans, ecosystems, the climate, and subsequently society and the economy. The current report presents an updated overview and analysis of air quality in Europe from 2000 to 2015. It reviews the progress made towards meeting the air quality standards established in the two European Ambient Air Quality Directives, and towards the long-term objectives of achieving levels of air pollution that do not lead to unacceptable harm to human health and the environment. It also presents the latest findings and estimates on population and ecosystem exposure to the air pollutants with the greatest impacts and effects on human health and the environment (Box ES.1). The evaluation of the status of air quality is based mainly on ambient air measurements, in conjunction with data on anthropogenic emissions and their evolution over time. Air quality policies have delivered, and continue to deliver, many improvements. Reduced emissions have improved air quality in Europe, and, for a number of pollutants, exceedances of European standards are rare. However, substantial challenges remain and considerable impacts on human health and on the environment persist. A large proportion of European populations and ecosystems are still exposed to air pollution that exceeds European standards and, especially, the World Health Organization (WHO) Air Quality Guidelines (AQGs). Effective air quality policies require action and cooperation at global, European, national and local levels, which must reach across most economic sectors and engage the public. Holistic solutions must be found that involve technological development and structural and behavioural changes. These will be necessary to achieve human wellbeing and social development, to protect the natural capital and to support economic prosperity, all of which are part of the European Union's (EU) 2050 vision of living well within the limits of the planet.}
@@ -1426,8 +1423,8 @@
       \strng{authornamehash}{90aa9b8fa4bb4d8ad89a11841186926d}
       \strng{authorfullhash}{90aa9b8fa4bb4d8ad89a11841186926d}
       \field{extraname}{2}
-      \field{sortinit}{4}
-      \field{sortinithash}{11cdaee3b18e01d77f3f428b13c1fc76}
+      \field{sortinit}{5}
+      \field{sortinithash}{3c19c3776b658b3558e9e2e4840c01e2}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{booktitle}{Europe}
@@ -1501,9 +1498,6 @@
       \verb{doi}
       \verb 10.1371/journal.pone.0144443
       \endverb
-      \verb{file}
-      \verb :home/rui/Documents/refs/UN-IGME-Child-Mortality-Report-2019.pdf:pdf
-      \endverb
     \endentry
     \entry{Goldizen2016}{article}{}
       \name{author}{3}{}{%
@@ -1548,9 +1542,6 @@
       \verb{doi}
       \verb 10.1002/ppul.23262
       \endverb
-      \verb{file}
-      \verb :home/rui/Documents/refs/air{\_}pollution/respiratory/Respiratory Effects of Air Pollution on Children.pdf:pdf
-      \endverb
       \keyw{COPD,ambient air pollution,asthma,biomass fuel,cancer,exposure assessment,indoor air pollution,lung function,particulate matter,respiratory disease,respiratory infections,traffic}
     \endentry
     \entry{Brook2008}{article}{}
@@ -1584,9 +1575,6 @@
       \verb{doi}
       \verb 10.1042/CS20070444
       \endverb
-      \verb{file}
-      \verb :home/rui/Documents/refs/air{\_}pollution/cardiovascular/brook2008.pdf:pdf
-      \endverb
       \keyw{Air pollution,Cardiovascular disease,Inflammation,Oxidative stress,Particulate matter,Pulmonary tree}
     \endentry
     \entry{Bourdrel2017}{article}{}
@@ -1597,11 +1585,11 @@
            given={Thomas},
            giveni={T\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=c8e1420506a4747478e01b9a590aa2fc}{%
+        {{uniquename=0,uniquepart=base,hash=81889e373e82baa9546c738ed3718840}{%
            family={Bind},
            familyi={B\bibinitperiod},
-           given={Marie\bibnamedelima Ab{è}le},
-           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod},
+           given={Marie-Ab{è}le},
+           giveni={M\bibinithyphendelim A\bibinitperiod},
            givenun=0}}%
         {{uniquename=0,uniquepart=base,hash=6bd71db5df52ef40bb95296c74bd1dba}{%
            family={B{é}jot},
@@ -1615,26 +1603,27 @@
            given={Olivier},
            giveni={O\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=0f4a6615b89b33c0d37f66f41f45b52c}{%
+        {{uniquename=0,uniquepart=base,hash=ac0915e55897332c07931c55121d82ac}{%
            family={Argacha},
            familyi={A\bibinitperiod},
-           given={Jean\bibnamedelima Fran{ç}ois},
-           giveni={J\bibinitperiod\bibinitdelim F\bibinitperiod},
+           given={Jean-Fran{ç}ois},
+           giveni={J\bibinithyphendelim F\bibinitperiod},
            givenun=0}}%
       }
       \strng{namehash}{eaa848d1eb1d3804cec0a90c746e9457}
-      \strng{fullhash}{2c37b64f80d2faa172e7e9f2fa3fcbb3}
-      \strng{bibnamehash}{2c37b64f80d2faa172e7e9f2fa3fcbb3}
-      \strng{authorbibnamehash}{2c37b64f80d2faa172e7e9f2fa3fcbb3}
+      \strng{fullhash}{9057b10665d77e2420c36bcd3137ad90}
+      \strng{bibnamehash}{9057b10665d77e2420c36bcd3137ad90}
+      \strng{authorbibnamehash}{9057b10665d77e2420c36bcd3137ad90}
       \strng{authornamehash}{eaa848d1eb1d3804cec0a90c746e9457}
-      \strng{authorfullhash}{2c37b64f80d2faa172e7e9f2fa3fcbb3}
+      \strng{authorfullhash}{9057b10665d77e2420c36bcd3137ad90}
       \field{sortinit}{6}
       \field{sortinithash}{57e57fb8451e7fcfa45d1e069f6d3136}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Air pollution is composed of particulate matter (PM) and gaseous pollutants, such as nitrogen dioxide and ozone. PM is classified according to size into coarse particles (PM10), fine particles (PM2.5) and ultrafine particles. We aim to provide an original review of the scientific evidence from epidemiological and experimental studies examining the cardiovascular effects of outdoor air pollution. Pooled epidemiological studies reported that a 10 $\mu$g/m3 increase in long-term exposure to PM2.5 was associated with an 11{\%} increase in cardiovascular mortality. Increased cardiovascular mortality was also related to long-term and short-term exposure to nitrogen dioxide. Exposure to air pollution and road traffic was associated with an increased risk of arteriosclerosis, as shown by premature aortic and coronary calcification. Short-term increases in air pollution were associated with an increased risk of myocardial infarction, stroke and acute heart failure. The risk was increased even when pollutant concentrations were below European standards. Reinforcing the evidence from epidemiological studies, numerous experimental studies demonstrated that air pollution promotes a systemic vascular oxidative stress reaction. Radical oxygen species induce endothelial dysfunction, monocyte activation and some proatherogenic changes in lipoproteins, which initiate plaque formation. Furthermore, air pollution favours thrombus formation, because of an increase in coagulation factors and platelet activation. Experimental studies also indicate that some pollutants have more harmful cardiovascular effects, such as combustion-derived PM2.5 and ultrafine particles. Air pollution is a major contributor to cardiovascular diseases. Promotion of safer air quality appears to be a new challenge in cardiovascular disease prevention.}
-      \field{issn}{18752128}
+      \field{issn}{18752136}
       \field{journaltitle}{Archives of Cardiovascular Diseases}
+      \field{month}{11}
       \field{number}{11}
       \field{title}{{Cardiovascular effects of air pollution}}
       \field{volume}{110}
@@ -1644,8 +1633,11 @@
       \verb{doi}
       \verb 10.1016/j.acvd.2017.05.003
       \endverb
-      \verb{file}
-      \verb :home/rui/Documents/refs/air{\_}pollution/cardiovascular/1-s2.0-S1875213617301304-main.pdf:pdf
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S1875213617301304
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S1875213617301304
       \endverb
       \keyw{Air pollution,Cardiovascular mortality,Myocardial infarction,Oxidative stress,Particulate matter}
     \endentry
@@ -1713,9 +1705,6 @@
       \verb{doi}
       \verb 10.1186/s12889-019-7055-z
       \endverb
-      \verb{file}
-      \verb :home/rui/Documents/refs/air{\_}pollution/gestational/s12889-019-7055-z.pdf:pdf
-      \endverb
       \keyw{Air pollution,Exposure windows,Premature SGA,Retrospective study}
     \endentry
     \entry{Olsson2013}{article}{}
@@ -1761,9 +1750,6 @@
       \range{pages}{8}
       \verb{doi}
       \verb 10.1136/bmjopen-2012-001955
-      \endverb
-      \verb{file}
-      \verb :home/rui/Documents/refs/air{\_}pollution/gestational/e001955.full.pdf:pdf
       \endverb
     \endentry
     \entry{Genc2012}{article}{}
@@ -1811,9 +1797,6 @@
       \field{year}{2012}
       \verb{doi}
       \verb 10.1155/2012/782462
-      \endverb
-      \verb{file}
-      \verb :home/rui/Documents/refs/air{\_}pollution/neurological/JT2012-782462.pdf:pdf
       \endverb
     \endentry
     \entry{DePradoBert2018}{article}{}
@@ -1874,9 +1857,6 @@
       \verb{doi}
       \verb 10.1007/s40572-018-0209-9
       \endverb
-      \verb{file}
-      \verb :home/rui/Documents/refs/air{\_}pollution/neurological/40572{\_}2018{\_}Article{\_}209.pdf:pdf
-      \endverb
       \keyw{Air pollution,Brain,Cognition,Epidemiological studies,Neuroimaging}
     \endentry
     \entry{Calderon-Garciduenas2014}{article}{}
@@ -1934,9 +1914,6 @@
       \verb{doi}
       \verb 10.3389/fnhum.2014.00613
       \endverb
-      \verb{file}
-      \verb :home/rui/Documents/refs/air{\_}pollution/neurological/fnhum-08-00613.pdf:pdf
-      \endverb
       \keyw{Air pollution,Alzheimer,Brain volumetric changes,Cognition,Cytokines,Parkinson,Urban children,White matter hyperintensities}
     \endentry
     \entry{Zhang2007}{article}{}
@@ -1974,9 +1951,6 @@
       \range{pages}{11}
       \verb{doi}
       \verb 10.1097/AIA.0b013e318034194e
-      \endverb
-      \verb{file}
-      \verb :home/rui/Downloads/nihms151009.pdf:pdf
       \endverb
       \verb{urlraw}
       \verb http://journals.lww.com/00004311-200704520-00004
@@ -2044,8 +2018,8 @@
       \strng{authorbibnamehash}{335677090027315d758b431b58a39b25}
       \strng{authornamehash}{655db38ebb571688c1173ca0dc05db1b}
       \strng{authorfullhash}{335677090027315d758b431b58a39b25}
-      \field{sortinit}{7}
-      \field{sortinithash}{c818dd9105a2852444fc9f5e145c294e}
+      \field{sortinit}{8}
+      \field{sortinithash}{07edf88d4ea82509b9c4b4d13f41c452}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{The aim of this trend report is to assess the effectiveness of air pollution policies under the Convention on Long-range Transboundary Air Pollution (LRTAP), and to document progress and identify remaining challenges. Trends in environmental and health responses to long-range transported air pollution are presented, primarily focusing on 1990 to 2012 and on Europe, with additional data from North America and the Arctic region. Air pollutants included in the report are sulphur and nitrogen as acidifying agents, nutrient-nitrogen, ground-level ozone, particulate matter (PM), heavy metals and persistent organic pollutants (POPs). The results are from work done under the bodies of the Working Group on Effects of the LRTAP Convention, i.e. ICP Integrated Monitoring, ICP Forests, ICP Materials, ICP Modelling and Mapping, ICP Vegetation, ICP Waters, JEG Dynamic Modelling and the Task Force on Health. The European Monitoring and Evaluation Programme (EMEP) and the Arctic Monitoring and Assessment Programme (AMAP) also contributed.}
@@ -2053,9 +2027,6 @@
       \field{title}{{ICP Waters Report 125/2015: trends in ecosystem and health responses to long-range transported atmospheric pollutants}}
       \field{type}{techreport}
       \field{year}{2015}
-      \verb{file}
-      \verb :home/rui/Documents/refs/air{\_}pollution/ecosystems/Trends{\_}in{\_}ecosystem{\_}and{\_}health{\_}responses{\_}to{\_}long-range{\_}transported{\_}atmospheric{\_}pollutants.pdf:pdf
-      \endverb
     \endentry
     \entry{Lovett2009}{article}{}
       \name{author}{8}{}{%
@@ -2129,9 +2100,6 @@
       \range{pages}{37}
       \verb{doi}
       \verb 10.1111/j.1749-6632.2009.04153.x
-      \endverb
-      \verb{file}
-      \verb :home/rui/Downloads/lovett2009.pdf:pdf
       \endverb
       \verb{urlraw}
       \verb http://doi.wiley.com/10.1111/j.1749-6632.2009.04153.x
@@ -2236,9 +2204,6 @@
       \field{isbn}{978-0-7910-9737-3}
       \field{title}{{The Dust Bowl}}
       \field{year}{2008}
-      \verb{file}
-      \verb :home/rui/Documents/refs/air{\_}pollution/books/ronaldReis{\_}dustBowl.pdf:pdf
-      \endverb
     \endentry
     \entry{WorldHealthOrganization2016}{misc}{}
       \name{author}{1}{}{%
@@ -2252,8 +2217,8 @@
       \strng{authorbibnamehash}{531217507bec092b6ec36c0f78f46736}
       \strng{authornamehash}{531217507bec092b6ec36c0f78f46736}
       \strng{authorfullhash}{531217507bec092b6ec36c0f78f46736}
-      \field{sortinit}{8}
-      \field{sortinithash}{07edf88d4ea82509b9c4b4d13f41c452}
+      \field{sortinit}{9}
+      \field{sortinithash}{1dd72ab054147731c9d824b49aba0534}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{{Radon and Health}}
@@ -2284,8 +2249,8 @@
       \strng{authorbibnamehash}{fd5c58115447a7da312448ff75c9ad3c}
       \strng{authornamehash}{fd5c58115447a7da312448ff75c9ad3c}
       \strng{authorfullhash}{fd5c58115447a7da312448ff75c9ad3c}
-      \field{sortinit}{8}
-      \field{sortinithash}{07edf88d4ea82509b9c4b4d13f41c452}
+      \field{sortinit}{9}
+      \field{sortinithash}{1dd72ab054147731c9d824b49aba0534}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{booktitle}{ProTeste}
@@ -2464,9 +2429,6 @@
       \field{year}{2016}
       \field{pages}{454}
       \range{pages}{1}
-      \verb{file}
-      \verb :home/rui/Documents/refs/air{\_}pollution/books/outdoorAirPollution{\_}IARCMonographs.pdf:pdf
-      \endverb
     \endentry
     \entry{IEA}{misc}{}
       \name{author}{1}{}{%
@@ -2485,7 +2447,10 @@
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{{Data {\&} Statistics - International Energy Agency}}
-      \field{urlyear}{}
+      \field{urlday}{17}
+      \field{urlmonth}{4}
+      \field{urlyear}{2020}
+      \field{urldateera}{ce}
       \verb{urlraw}
       \verb https://www.iea.org/data-and-statistics?country=WORLD{\&}fuel=Energy supply{\&}indicator=Total primary energy supply (TPES) by source
       \endverb
@@ -2612,7 +2577,7 @@
       \field{title}{{QDOAS}}
       \field{year}{2015}
       \verb{file}
-      \verb ::
+      \verb :Users/ruivalmeida/Library/Application Support/Mendeley Desktop/Downloaded/Danckaert et al. - 2015 - QDOAS.pdf:pdf
       \endverb
       \verb{urlraw}
       \verb http://uv-vis.aeronomie.be/software/QDOAS/
@@ -2976,6 +2941,233 @@
       \endverb
       \verb{url}
       \verb http://doi.wiley.com/10.1118/1.595715
+      \endverb
+    \endentry
+    \entry{Dewerd2014}{book}{}
+      \name{author}{2}{}{%
+        {{uniquename=0,uniquepart=base,hash=bc2ef995530e1b903091300dc8b1a2fa}{%
+           family={Dewerd},
+           familyi={D\bibinitperiod},
+           given={Larry\bibnamedelima A.},
+           giveni={L\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=8ea94c949a4e041a69c5885688078b5e}{%
+           family={Kissick},
+           familyi={K\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \name{editor}{2}{}{%
+        {{hash=201e6ebadf1bfa65828dd6e413abb7c6}{%
+           family={DeWerd},
+           familyi={D\bibinitperiod},
+           given={Larry\bibnamedelima A.},
+           giveni={L\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=51945a881462a170f562273598d53a7e}{%
+           family={Kissick},
+           familyi={K\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY}%
+      }
+      \list{publisher}{1}{%
+        {Springer New York}%
+      }
+      \strng{namehash}{b6d45a2b3dc98e71e8a4ba5a83778cae}
+      \strng{fullhash}{b6d45a2b3dc98e71e8a4ba5a83778cae}
+      \strng{bibnamehash}{b6d45a2b3dc98e71e8a4ba5a83778cae}
+      \strng{authorbibnamehash}{b6d45a2b3dc98e71e8a4ba5a83778cae}
+      \strng{authornamehash}{b6d45a2b3dc98e71e8a4ba5a83778cae}
+      \strng{authorfullhash}{b6d45a2b3dc98e71e8a4ba5a83778cae}
+      \strng{editorbibnamehash}{5fa29da0cca80225a3c6e604d49e2653}
+      \strng{editornamehash}{5fa29da0cca80225a3c6e604d49e2653}
+      \strng{editorfullhash}{5fa29da0cca80225a3c6e604d49e2653}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-1-4614-8303-8}
+      \field{series}{Biological and Medical Physics, Biomedical Engineering}
+      \field{title}{{The Phantoms of Medical and Health Physics}}
+      \field{year}{2014}
+      \field{pages}{286}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1007/978-1-4614-8304-5
+      \endverb
+      \verb{file}
+      \verb :Users/ruivalmeida/Desktop/(Biological and Medical Physics, Biomedical Engineering) Larry A. DeWerd, Michael Lawless (auth.), Larry A. DeWerd, Michael Kissick (eds.) - The Phantoms of Medical and Health Physics{\_} Devices for Res.pdf:pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://www.springer.com/series/3740 http://link.springer.com/10.1007/978-1-4614-8304-5
+      \endverb
+      \verb{url}
+      \verb http://www.springer.com/series/3740%20http://link.springer.com/10.1007/978-1-4614-8304-5
+      \endverb
+    \endentry
+    \entry{Stachniss2009}{article}{}
+      \name{author}{3}{}{%
+        {{uniquename=0,uniquepart=base,hash=5d87e0c36213202151bff64fdd9346a3}{%
+           family={Stachniss},
+           familyi={S\bibinitperiod},
+           given={Cyrill},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=b7e95f99c5229e32b62dd28b1132af9e}{%
+           family={Plagemann},
+           familyi={P\bibinitperiod},
+           given={Christian},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=07fbf6d793583366549426f06a764544}{%
+           family={Lilienthal},
+           familyi={L\bibinitperiod},
+           given={Achim\bibnamedelima J.},
+           giveni={A\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{d48f2a5c5e2e1bdb58da3204096031bf}
+      \strng{fullhash}{6e6dbf30141e3f915278f9144bcb36a1}
+      \strng{bibnamehash}{6e6dbf30141e3f915278f9144bcb36a1}
+      \strng{authorbibnamehash}{6e6dbf30141e3f915278f9144bcb36a1}
+      \strng{authornamehash}{d48f2a5c5e2e1bdb58da3204096031bf}
+      \strng{authorfullhash}{6e6dbf30141e3f915278f9144bcb36a1}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0929-5593}
+      \field{journaltitle}{Autonomous Robots}
+      \field{month}{4}
+      \field{number}{2-3}
+      \field{title}{{Learning gas distribution models using sparse Gaussian process mixtures}}
+      \field{volume}{26}
+      \field{year}{2009}
+      \field{pages}{187\bibrangedash 202}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.1007/s10514-009-9111-5
+      \endverb
+      \verb{urlraw}
+      \verb http://link.springer.com/10.1007/s10514-009-9111-5
+      \endverb
+      \verb{url}
+      \verb http://link.springer.com/10.1007/s10514-009-9111-5
+      \endverb
+    \endentry
+    \entry{Shepp1974}{article}{}
+      \name{author}{2}{}{%
+        {{uniquename=0,uniquepart=base,hash=5e7990bac27b0f8fd715badec8e9acf3}{%
+           family={Shepp},
+           familyi={S\bibinitperiod},
+           given={L.\bibnamedelimi A.},
+           giveni={L\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=eee253f16d1b4af1d57b148a3ccad69d}{%
+           family={Logan},
+           familyi={L\bibinitperiod},
+           given={B.\bibnamedelimi F.},
+           giveni={B\bibinitperiod\bibinitdelim F\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{bf915b4eb19cd37004760bf2faab7301}
+      \strng{fullhash}{bf915b4eb19cd37004760bf2faab7301}
+      \strng{bibnamehash}{bf915b4eb19cd37004760bf2faab7301}
+      \strng{authorbibnamehash}{bf915b4eb19cd37004760bf2faab7301}
+      \strng{authornamehash}{bf915b4eb19cd37004760bf2faab7301}
+      \strng{authorfullhash}{bf915b4eb19cd37004760bf2faab7301}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0018-9499}
+      \field{journaltitle}{IEEE Transactions on Nuclear Science}
+      \field{month}{6}
+      \field{number}{3}
+      \field{title}{{The Fourier reconstruction of a head section}}
+      \field{volume}{21}
+      \field{year}{1974}
+      \field{pages}{21\bibrangedash 43}
+      \range{pages}{23}
+      \verb{doi}
+      \verb 10.1109/TNS.1974.6499235
+      \endverb
+      \verb{urlraw}
+      \verb http://ieeexplore.ieee.org/document/6499235/
+      \endverb
+      \verb{url}
+      \verb http://ieeexplore.ieee.org/document/6499235/
+      \endverb
+    \endentry
+    \entry{Kazantsev2018}{article}{}
+      \name{author}{5}{}{%
+        {{uniquename=0,uniquepart=base,hash=741930ac3ff73797c644db32205576c2}{%
+           family={Kazantsev},
+           familyi={K\bibinitperiod},
+           given={Daniil},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=73f99b9e26fb37cd46db06944d2b11b8}{%
+           family={Pickalov},
+           familyi={P\bibinitperiod},
+           given={Valery},
+           giveni={V\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=8d895e015044505f05c689360aec3056}{%
+           family={Nagella},
+           familyi={N\bibinitperiod},
+           given={Srikanth},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=78be891f1ba3204fd75b35575d5b894d}{%
+           family={Pasca},
+           familyi={P\bibinitperiod},
+           given={Edoardo},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=36fc36d70ed262f0ce9cb3c51f432bfa}{%
+           family={Withers},
+           familyi={W\bibinitperiod},
+           given={Philip\bibnamedelima J.},
+           giveni={P\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{57df67dd2f716b4a3c0ad6ba5c9d40df}
+      \strng{fullhash}{ee060d3c7c37a1205092020e901cc256}
+      \strng{bibnamehash}{ee060d3c7c37a1205092020e901cc256}
+      \strng{authorbibnamehash}{ee060d3c7c37a1205092020e901cc256}
+      \strng{authornamehash}{57df67dd2f716b4a3c0ad6ba5c9d40df}
+      \strng{authorfullhash}{ee060d3c7c37a1205092020e901cc256}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In the field of computerized tomographic imaging, many novel reconstruction techniques are routinely tested using simplistic numerical phantoms, e.g. the well-known Shepp–Logan phantom. These phantoms cannot sufficiently cover the broad spectrum of applications in CT imaging where, for instance, smooth or piecewise-smooth 3D objects are common. TomoPhantom provides quick access to an external library of modular analytical 2D/3D phantoms with temporal extensions. In TomoPhantom, quite complex phantoms can be built using additive combinations of geometrical objects, such as, Gaussians, parabolas, cones, ellipses, rectangles and volumetric extensions of them. Newly designed phantoms are better suited for benchmarking and testing of different image processing techniques. Specifically, tomographic reconstruction algorithms which employ 2D and 3D scanning geometries, can be rigorously analyzed using the software. TomoPhantom also provides a capability of obtaining analytical tomographic projections which further extends the applicability of software towards more realistic, free from the “inverse crime” testing. All core modules of the package are written in the C-OpenMP language and wrappers for Python and MATLAB are provided to enable easy access. Due to C-based multi-threaded implementation, volumetric phantoms of high spatial resolution can be obtained with computational efficiency.}
+      \field{issn}{2352-7110}
+      \field{journaltitle}{SoftwareX}
+      \field{month}{1}
+      \field{title}{{TomoPhantom, a software package to generate 2D–4D analytical phantoms for CT image reconstruction algorithm benchmarks}}
+      \field{volume}{7}
+      \field{year}{2018}
+      \field{pages}{150\bibrangedash 155}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1016/J.SOFTX.2018.05.003
+      \endverb
+      \verb{file}
+      \verb ::
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S2352711018300335?via{\%}3Dihub
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S2352711018300335?via%7B%5C%%7D3Dihub
       \endverb
     \endentry
     \entry{Honninger2004}{article}{}
@@ -3358,7 +3550,7 @@
       \verb 10.1364/OL.4.000075
       \endverb
       \verb{file}
-      \verb ::
+      \verb :Users/ruivalmeida/Library/Application Support/Mendeley Desktop/Downloaded/Byer, Shepp - 1979 - Two-dimensional remote air-pollution monitoring via tomography.pdf:pdf
       \endverb
       \verb{urlraw}
       \verb http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed{\&}id=19687805{\&}retmode=ref{\&}cmd=prlinks
@@ -3545,9 +3737,6 @@
       \field{number}{2}
       \field{title}{{2d tomographic reconstruction of trace gas distributions from long-path DOAS measurements: General approach, validation and outlook on an experiment on an urban site}}
       \field{year}{2005}
-      \verb{file}
-      \verb :home/rui/Documents/asd{\_}search/articles/707.pdf:pdf
-      \endverb
       \keyw{DOAS,Gaussian dispersion plumes,Tomography,Trace gas distributions}
     \endentry
     \entry{Murphy2003}{inproceedings}{}
@@ -3641,6 +3830,7 @@
       \strng{authorbibnamehash}{d69b7dbb90b44de6514805206a25bd49}
       \strng{authornamehash}{a3723ea3b3444a7a12a55ee28dd7c72b}
       \strng{authorfullhash}{d69b7dbb90b44de6514805206a25bd49}
+      \field{extraname}{1}
       \field{sortinit}{1}
       \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
       \field{labelnamesource}{author}
@@ -3787,41 +3977,61 @@
       \verb https://linkinghub.elsevier.com/retrieve/pii/S1352231004009628
       \endverb
     \endentry
-    \entry{ODriscoll2003a}{article}{}
-      \name{author}{2}{}{%
-        {{uniquename=0,uniquepart=base,hash=72a940528f0c7cae86820a13ebecf1d9}{%
+    \entry{ODriscoll2003a}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{uniquename=0,uniquepart=base,hash=ef03ff217e0943db5e17a58b13ddf6c2}{%
            family={O'Driscoll},
            familyi={O\bibinitperiod},
-           given={S.},
+           given={Stephen},
            giveni={S\bibinitperiod},
            givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=73d3beb65bbe20813c78d79195478631}{%
+        {{uniquename=0,uniquepart=base,hash=925dfb1453552ffb7f1a8a5e7e80beb7}{%
+           family={Murphy},
+           familyi={M\bibinitperiod},
+           given={John\bibnamedelima G.},
+           giveni={J\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=82ec525352cd794f316a2aa75f9c14c6}{%
            family={Smith},
            familyi={S\bibinitperiod},
-           given={N.\bibnamedelimi J.},
+           given={Niall\bibnamedelima J.},
            giveni={N\bibinitperiod\bibinitdelim J\bibinitperiod},
            givenun=0}}%
       }
-      \strng{namehash}{ee501ff08c075c268e661c418f8d70b9}
-      \strng{fullhash}{ee501ff08c075c268e661c418f8d70b9}
-      \strng{bibnamehash}{ee501ff08c075c268e661c418f8d70b9}
-      \strng{authorbibnamehash}{ee501ff08c075c268e661c418f8d70b9}
-      \strng{authornamehash}{ee501ff08c075c268e661c418f8d70b9}
-      \strng{authorfullhash}{ee501ff08c075c268e661c418f8d70b9}
+      \name{editor}{1}{}{%
+        {{hash=be9f883942e41cfced0db62131689b7a}{%
+           family={Glynn},
+           familyi={G\bibinitperiod},
+           given={Thomas\bibnamedelima J.},
+           giveni={T\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{a3723ea3b3444a7a12a55ee28dd7c72b}
+      \strng{fullhash}{d69b7dbb90b44de6514805206a25bd49}
+      \strng{bibnamehash}{d69b7dbb90b44de6514805206a25bd49}
+      \strng{authorbibnamehash}{d69b7dbb90b44de6514805206a25bd49}
+      \strng{authornamehash}{a3723ea3b3444a7a12a55ee28dd7c72b}
+      \strng{authorfullhash}{d69b7dbb90b44de6514805206a25bd49}
+      \strng{editorbibnamehash}{be9f883942e41cfced0db62131689b7a}
+      \strng{editornamehash}{be9f883942e41cfced0db62131689b7a}
+      \strng{editorfullhash}{be9f883942e41cfced0db62131689b7a}
+      \field{extraname}{2}
       \field{sortinit}{1}
       \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{abstract}{With over 75{\%} of Europeans living and working in urbanised areas the quality of air in this environment is of extreme importance, influencing directly the health and well being of a significant proportion of the continent's population as well as impacting on the greater ecosystem. A microenvironment of particular interest is the street canyon where the spatial and temporal characteristics of pollutants are known to be complex, resulting from airflow patterns that transport and disperse the pollutants. Measurement of pollutants exhibiting such spatial and temporal variability will require new sensing approaches with high data quality standards. We discuss the use of Tomographic-DOAS (Differential Optical Absorption Spectroscopy) for the visualisation of the spatial distribution of air contaminants in street canyons. We provide reviews of the DOAS remote sensing technique, explaining how DOAS works and why it has significant advantages over traditional point-sampling methods. We discuss the novel combination of DOAS and computed tomography (CT) to produce Tomographic-DOAS, demonstrating how it can be utilised to produce near real-time maps of concentration levels of multiple air contaminants in a street canyon. We demonstrate this with simulated reconstructions using model based pollutant data for a street canyon. Finally, we discuss the future direction and feasibility of this approach, highlighting current limitations and where further research and development are required.}
-      \field{isbn}{1853128228}
-      \field{journaltitle}{Advances in Air Pollution}
-      \field{title}{{Tomographic-DOAS: From sensing to visualisation of urban street canyon pollutants}}
-      \field{volume}{13}
+      \field{month}{3}
+      \field{title}{{Computed tomography of air pollutants in street canyons}}
       \field{year}{2003}
-      \field{pages}{681\bibrangedash 691}
-      \range{pages}{11}
-      \verb{file}
-      \verb :home/rui/Documents/asd{\_}search/articles/downloaded/AIR03067FU.pdf:pdf
+      \field{pages}{958}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1117/12.463985
+      \endverb
+      \verb{urlraw}
+      \verb http://proceedings.spiedigitallibrary.org/proceeding.aspx?doi=10.1117/12.463985
+      \endverb
+      \verb{url}
+      \verb http://proceedings.spiedigitallibrary.org/proceeding.aspx?doi=10.1117/12.463985
       \endverb
     \endentry
     \entry{Mettendorf2006}{article}{}

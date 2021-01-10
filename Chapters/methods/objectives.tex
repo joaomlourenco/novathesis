@@ -1,0 +1,304 @@
+%!TEX root=../../thesis_rui_almeida.tex
+
+
+\section{Section Objectives}%
+\label{sec:section_objectives}
+
+\begin{itemize}
+    \item Summarise, explain and recount how the question was answered;
+    \item Discuss the previous point in details;
+    \item Why are techniques relevant;
+    \item How were the techniques used;
+\end{itemize}
+
+\section{Questions the readers should be able to answer once they've
+read the section}%
+\label{sec:questions_the_readers_should_be_able_to_answer_once_they_ve_read_the_section}
+\begin{itemize}
+    \item What are the results;
+    \item How do the findings relate to previous studies;
+    \item Was there anything surprising that did not go as planned;
+    \item Why the presented conclusion have been reached;
+    \item Explain results;
+\end{itemize}
+
+
+\section{How was the question answered?}%
+\label{sec:how_was_the_question_answered_}
+\textbf{Question}
+
+How to design a miniaturised tomographic atmosphere monitoring system
+based on DOAS?
+
+\textbf{How was the question addressed?}
+
+\begin{description}
+    \item[Projection-based hypothesis:]first step was to design an
+        information gathering approach. Ours was based on the definition
+        of a particular trajectory for the measurement device. This had
+        to be validated in computational and mathematical sense;
+    \item[Measurement based hypothesis:] although it is clearly implied
+        by Lambertian theory, there is no literature that I know of that
+        points to the fact that my measurements are correct. Therefore,
+        the assumption that we can measure columns densities between two
+        points sequentially must be tested;
+\end{description}
+
+\section{Detailed presentation of projection-based hypothesis}%
+\label{sec:detailed_presentation_of_projection_based_hypothesis}
+
+\begin{description}
+    \item[Hypothesis:]
+        \begin{itemize}
+            \item A tomographic atmospheric measurement entails
+                capturing projections in many different angles;
+            \item The typical atmospheric tomographic DOAS application
+                uses serveral tens of projections for reconstruction;
+            \item A drone moving in a circular trajectory would be able
+                to capture an array of fan-beam projections with a
+                specially motorised spectroscopic assembly;
+            \item In theory, this would be sufficient for
+                reconstruction;
+            \item For simplicity, in this application we use the
+                re-sorting reconstruction algorithm, which applies the
+                FBP algorithm to a synthetically created parallel beam
+                sinogram;
+        \end{itemize}
+    \item[How is the trajectory defined:\\]
+        \begin{itemize}
+            \item circular;
+            \item one stop at each $\alpha$ degrees. At each one:
+                \begin{itemize}
+                    \item gymbal points to a number of directions
+                        (parameter) at regular intervals (parameter),
+                        taking one measurement at a time;
+                \end{itemize}
+            \item on a second moment, the drone moves to the entry
+                points of the rays that have been capturesd by the
+                equipment, taking a measurement at each one, in the same
+                direction;
+            \item use the measurement hypothesis to determine the
+                column densities between 1\textsuperscript{st}
+                measurement moment and the 2\textsuperscript{nd}.
+        \end{itemize}
+\end{description}
+
+\section{Calculation of Projections}%
+\label{sec:calculation_of_projections}
+
+\begin{enumerate}
+    \item Discretise the Region Of Interest
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+% This chapter details the methods that were used trying to answer the
+% research questions that were determined in
+% Chapter~\ref{cha:introduction}. They reflect the three-pronged nature
+% of this whole work, detailing the design of the UAV system and its
+% projected features, the simulation software that was used to validate
+% the mathematical approach and to understand if this method would be able
+% to obtain a "spectral image" of a certain number of trace compounds in
+% a given region of the atmosphere, and finally, the experiment that was
+% designed and conducted to validate the measurement strategy on which
+% this system is based.
+
+% \section{The drone}%
+% \label{sec:the_drone}
+
+% Consider a drone equipped with a DOAS system and the ability to command
+% spectral acquisition. The spectral system cannot perform point
+% measurements, but only averaged measurements over a large region. This
+% makes drawing a twodimensional (eventually tridimensional) map of trace
+% polutants in a region an impossible task if one were to apply the
+% technique directly. One can, however, consider each spectral acquisition
+% as if it were a projection of the field of analysis. If this is the
+% case, then it should be possible to create that polutant map using
+% tomography. This immediately implies the need of an adequate trajectory.
+
+% This trajectory will have to encompass the whole area in study, and
+% movement within it must allow the equipment to perform all the
+% measurements at angles such that it is possible for the tomography
+% algorithm to reconstruct an image from the acquired data. As illustrated
+% by Figure~\ref{fig:trajectory_schematic}, movement within the trajectory
+% will go as follows:
+% \begin{itemize}
+%     \item Drone starts at a given point, which must be defined and
+%         known;
+%     \item Drone moves along a circumference, stopping at regular angular
+%         intervals, which are configured at scan time;
+%     \item On each of the stops, the drone points the spectral equipment
+%         at the center of the trajectory;
+%     \item Drone rotates. First to one side, then the other. Again on
+%         fixed intervals the drone stops rotation for a given period of
+%         time;
+%     \item During each rotation stop, the spectral equipment acquires
+%         data;
+% \end{itemize}
+
+% Each spectral measurement is approximated to a ray, and the set of rays
+% in each stop along the circumference is a fanbeam shaped projection. To
+% facilitate the resorting operation of the projections, the angular
+% interval between each stop is the same as the one between rays.
+
+% \begin{figure}
+%     \centering
+%     \begin{tabular}[b]{c}
+%         \includegraphics[width=.45\linewidth]{%...
+%             img/pdf/spectralMeasurementSketch.pdf}\\
+%         \small (a)
+%     \end{tabular}
+%     \hfill
+%     \begin{tabular}[b]{c}
+%         \includegraphics[width=.45\linewidth]{%...
+%             img/pdf/spectralMeasurementsFromTheSide.pdf}\\
+%         \small (b)
+%     \end{tabular}
+%     \caption{a) The measurement idea: light absorption between A and B
+%     is given by the subtraction of A from B. b) Schematic representation
+%     of a measurement operation, side view.}
+%     \label{fig:measurement}
+% \end{figure}
+
+
+
+
+
+% \section{The Simulator: TomoSim}%
+% \label{sec:the_simulator_tomosim}
+
+% \subsection{Tomographic Procedures}%
+% \label{sub:tomographic_procedures}
+
+% As discussed in Subsection~\ref{sub:measurement_trajectory}, the UAV's
+% trajectory and acquisition strategy generate what is treated
+% subsequently as a fanbeam geometry problem. Before reconstructing the
+% spectral image however, one must convert the continuous nature of the
+% natural space into a discrete model, which can be interpreted by the
+% computer, in the discretisation step. Siddon's algorithm is used for
+% this effect. It allows the calculation of the optical path for each ray
+% in a fan. More importantly, it returns the portion of these paths that
+% is in each "pixel". This is a very important piece of data, since it
+% will be assembled onto what is called the system matrix, which
+% fundamental for iterative reconstruction methods.
+
+% The most important part of the implementation of Siddon's algorithm in
+% what concerns this simulator is the determination of three starting
+% parameters: number of lines, line starting point (p1) and line finishing
+% point (p2). The first parameter is set by the number of pixels in the
+% phantom, which is a configurable parameter. p1 is also in part set by
+% the size of the phantom, but also depends on the projection angle. p2 is
+% algebrically calculated using the ray's slope to determine its line
+% equation and then some vector properties to find where this line
+% intersects the trajectory circumference, which becomes a matter of
+% solving a simple second degree equation after some algebric
+% manipulation. After these three parameters are completely determined,
+% discretisation of the field of analysis is achieved through a normal
+% implementation of Siddon's algorithm, as is described in
+% Section~\ref{sec:theoretical_background}.
+
+% With the space conveniently discretised, the routine starts
+% reconstructing the image from the generated projection data. Since no
+% actual measurements were conducted during the development of this
+% simulation, gas concentration was also simulated, as well as their
+% spatial distribution. Concentration values, which actually are column
+% density values, were chosen to be similar to the ones that can be found
+% in nature. Spatial distribution information is provided to the
+% simulation routine in a phantom form. In tomography, a phantom is an
+% artificial image that is used to test reconstruction algorithms. One of
+% the most commonly used phantoms in tomographic imaging is the
+% Shepp-Logan phantom (see Figure~\ref{fig:shepplogan}), which was
+% designed to mimic the human head structure. This phantom is very readily
+% available in the relevant literature and was therefore used for the
+% development of this simulation routine. The phantom's structure,
+% however, is not very adequate to one of atmospheric spectral imaging.
+% For this reason, the phantom presented in Figure~\ref{fig:new_phantom}
+% was designed.
+
+% \begin{figure}
+%    \centering 
+%    \begin{tabular}[b]{c}
+%       \includegraphics[width=0.45\textwidth]{img/png/shepp_logan.png}\\
+%       \small (a)
+%    \end{tabular}
+%    \hfill
+%    \begin{tabular}[b]{c}
+%        \includegraphics[width=.45\textwidth]{img/png/spectral.png}\label{fig:new_phantom}\\
+%       \small (b)
+%    \end{tabular}
+%    \caption{Set of phantoms used in the TomoSim simualtor: a) the
+%    Shepp-Logan phantom, commonly used in medical imaging; b) a new
+%    phantom, designed for the tomographic reconstruction of atmospheric
+%    gas distribution.}\label{fig:phantoms}
+% \end{figure}
+% % \begin{figure}
+% %     \begin{subfloat}{0.45\textwidth}
+% %         \begin{center}
+% %             %         \end{center}
+% %         \caption{Shepp-Logan phantom, commonly used in medical imaging.}
+% %         \label{fig:shepplogan}
+% %     \end{subfloat}
+% %     \hfill
+% %     \begin{subfloat}{0.45\textwidth}
+% %         \begin{center}
+% %             \includegraphics[width=\textwidth]{img/png/spectral.png}
+% %         \end{center}
+% %         \caption{New phantom, designed for spectroscopic analysis of
+% %         atmopsheric trace gases.}
+% %         \label{fig:new_phantom}
+% %     \end{subfloat}
+% %     \caption{Set of phantoms used for the Tomosim simulator.}
+% % \end{figure}
+
+% In this simulation, the pixel value is related to the concentration of
+% the trace gas being sampled by using the projections themselves as
+% normalising units. Light enters the Region Of Interest at point P1 and
+% leaves at point P2. At the entrance point, light is simulated through
+% the use of a solar spectrum with no atmospheric contamination (see
+% ~\cite{Kurucz1984}). The ROI is populated with the some concentration of
+% trace gases that one wants to simulate, distributed along one of the
+% phantom matrices that have been discussed. Pixel values in these
+% matrices are equated to molecule numbers.
+
+% When setup in this manner, one can simulate a detector \emph{looking}
+% from point P2 to point P1, and \emph{seeing} the contamination of the
+% solar spectrum by the trace gases in the phantom. The simulator then
+% applies the Siddon algorithm from P1 to P2 and thus calculates the
+% number of molecules traversed by each ray of light. All the numbers for
+% all the projections are then assembled onto a single matrix, the
+% sinogram. The optical lengths of each pixel for each ray are also stored
+% in the system matrix. In real life measurements, this process is
+% slightly more complicated, because the contamination at point P1 is not
+% known \emph{a priori}.
+
+% Reconstruction algorithms \emph{per se} only start at this point, in two
+% ways: iterative and analytical. For the latter, there is still an
+% intermediate step, in which the fanbeam sinogram collected by the device
+% is transformed into a parallel projection sinogram (pseudocode for this
+% transformation is shown in Algorithm~\ref{alg:resorting}). Iterative
+% algorithms, however, do not require this step, since they are mostly
+% independent of the problem's geometry~\cite{Defrise2003}.
+
+% After running the reconstruction, the simulator already provides a
+% twodimensional map of the trace gas in the ROI, but it lacks the numeric
+% values for the measured densities. The image matrix is, at this point, a
+% collection of 32 bit floating point numbers from 0 to 1. These numbers
+% can be normalised by running Siddon's algorithm again for a limited
+% number of projections, and equating calculated projections with the ones
+% that were acquired from the original phantom.
+
+% \section{The Experiment}%
+% \label{sec:the_experiment}
+
+% \begin{figure}[htpb]
+%     \centering
+%     \includegraphics[width=0.8\linewidth]{img/png/experimentMap.png}
+%     \caption{Location of observer points for the physical experiment.}
+%     \label{fig:experiment_map}
+% \end{figure}

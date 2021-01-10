@@ -1,0 +1,95 @@
+%!TEX root = ../../thesis_rui_almeida.tex
+
+
+
+\section{Background, Motivation and Starting Points}%
+\label{sec:background_and_motivation}
+
+\subsection{Introduction}%
+\label{sub:introduction}
+
+This thesis describes the work that I have done in the past 4 years on
+the design and development of a miniaturized system for atmospheric
+monitoring based on optical spectroscopy. The project itself was the
+major part of the \gls{ATMOS}, an initiative that was
+contemplated with European funding through a \gls{PT2020} initiative and
+came as a response to the growing weight that \gls{AP} has in the whole
+Western world.
+
+The potential impact of \gls{AP} on human health is amply documented.
+Numerous papers have, for decades, established many links between air
+quality and several common ailments like respiratory syndromes and
+cardiovascular diseases. Similar connections have also been found
+regarding the probability of gestational malformations and several types
+of cancer. On a different level, and of perhaps less immediate concern,
+are the effects that have been observed on ecosystems. Many times these
+effects are difficult to predict (and timely mitigate) and in some cases
+have been known to interfere with people's livelihood. In time, and if
+not addressed, these interferences will certainly hinder economies and
+limit the quality of life of populations globally. The severity of this
+problem makes it clear that we need to tackle it intelligently, and this
+approach requires that we can measure, trace and track \gls{AP}
+effectively, which beckons engineers and scientists to create more
+technology for this specific purpose.
+
+Answering this call, with this work I have tried to create a reply to
+the question of whether it would be possible to develop a
+two-dimensional pollutant mapping tool, small enough to be fitted onto a
+\gls{UAV}, which came to be a tomographically enabled design. To this
+end, I have developed a simulation platform that computationally proves
+the method's feasibility and confirmed through experiments that the
+hypothesis on which the solution is based, regarding the use of
+sequentially measured scattered sunlight as analogous to an artificial
+light source is valid.
+
+\subsection{Context}%
+\label{sub:context}
+
+The idea behind this thesis was born in 2015, at NGNS-IS (a Portuguese
+tech startup). At the time, the company's flagship product was the
+\gls{FFF}. The \gls{FFF} was a forest fire detection system, capable of
+mostly autonomous and automatic operation.  The system was the first
+application of \gls{DOAS} for fire detection, and for that it was
+patented in 2007 (see~\cite{Vieira2007, Application2008}). The \gls{FFF}
+is a remote sensing device that scans the horizon for the presence of a
+smoke column, sequentially performing a chemical analysis of each
+azimuth, using the Sun as a light source for its spectroscopic
+operations~\cite{ValentedeAlmeida2017}.
+
+The \gls{FFF} was deployed in several "habitats", both nationally
+(Parque Nacional da Peneda-Gerês and Ourém) and internationally (Spain
+and Brazil). One of the company's clients at the time was interested in
+a pollution monitoring solution, and asked if the spectroscopic system
+would be capable of performing such a task. The challenge resonated
+through the company's structure and the idea that created this thesis
+was born. The team then started reading about the concept of \gls{AP}
+and how both populations and entities were concerned about it. It became
+clear that, while there were already several methods to measure
+\gls{AP}, there was a clear market drive for the development of a system
+that could leverage the large area capabilities of a \gls{DOAS} device
+while being able to provide a more spatially resolved "picture" of the
+atmospheric status. With this in mind, the company managed to have the
+investigation financed through a \gls{PT2020} funding opportunity. This
+achievement was a clear validation of the project's goals and of the
+need there was for a system with the proposed capabilities. It was,
+however, not enough. \gls{FFF} was a very good starting point, but there
+was still a lot of continuous research work needed before any of the
+goals that had been set were achieved. This led to the publication of
+this PhD project, in a tripartite consortium between FCT-NOVA, NGNS-IS
+and the Portuguese Foundation for Science and Technology. Its main goal
+was to develop an atmospheric monitoring system prototype that would be
+able to spectroscopically map pollutant concentrations in a
+two-dimensional way.
+
+In April 2017, NGNS-IS was integrated in the Compta group, one of the
+oldest IT groups operating in Portugal. Despite its age, this company is
+one of the main presences in some of the most modern industrial fields,
+like \gls{IOT} applications. \gls{ATMOS}'s pollutant tracing
+capabilities made it an almost perfect fit in one of \gls{IOT}'s most
+resounding niches, the \emph{Smart Cities} trend. Unfortunately, the
+transition between one company and the other, regardless of the
+project's adequacy, was anything but smooth. Almost two years later, in
+the beginning of 2019, engulfed in a sea of endless bureaucracy and ill
+intent on behalf of the managing governmental authorities (who seemed
+always more interested in seeing the project fail than anything else),
+\gls{ATMOS} was terminated and financing was cut.

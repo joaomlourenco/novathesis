@@ -1,0 +1,54 @@
+%!TEX root = ../../thesis_rui_almeida.tex
+
+
+\section{Hypothesis}%
+\label{sec:intro_hypothesis}
+
+As stated in Section~\ref{sec:research_questions}, the main goal of my
+work was to provide an answer to the question of how to design a
+miniaturized tomographic atmosphere monitoring system, based on
+\gls{DOAS}.  This sentence is the most important point of the project.
+Every development from this point forward stems from it and is motivated
+by it. It also requires some deconstruction in order to understand the
+true scope of the matter. First, it is a miniaturized device. This means
+that besides all the habitual requirements (performance, function,
+adequacy, compatibility with the other components, safety and security)
+in defining components in an engineering project, one must also keep in
+mind the footprint of each component, and how much it weighs. Second, it
+is a tomographic system, which means that not only the device must be
+able to take line integrals from some kind of medium, it must also be
+able to describe a predefined trajectory, with admissible levels of
+geometric error, which complies to a certain projection geometry.
+Otherwise, one would not be able to apply a tomographic reconstruction
+routine to obtain the map of the target species concentrations. Finally
+the system is supposed to monitor the atmosphere in some way. Now, as
+implied in the same sentence, \gls{DOAS} is the technique that I am
+trying to apply in this system. But as I point out in
+Section~\ref{sub:doas} and with more depth in
+Section~\ref{sec:lit_review_doas} , there are two families of
+\gls{DOAS}, and within them, many sub-techniques. This system which I am
+developing is based on the hypothesis that we can use an almost hybrid
+approach to \gls{DOAS}: passive \gls{DOAS} instrumental simplicity and
+active \gls{DOAS} retrieval simplicity. As illustrated in
+Figure~\ref{fig:hypothesis}, one could use a scattered sunlight
+measurement as a light source for a \gls{DOAS} analysis, provided
+distances between the two points are kept small, optical densities are
+low (clear atmosphere), and both spectral measurements are taken in the
+same angle. With this process, we would only effectively be using as
+projections the spectral measurements of the \gls{ROI}. This hypothesis,
+while not being mentioned in the library directly, has already been
+hinted at in several papers, namely references~\cite{Frins2006,
+Casaballe2017, Johansson2009}.
+
+\begin{figure}[htpb]
+    \centering
+    \missingfigure{}
+    \caption{Hypothesis schematic. Light captured at point A is used as
+        a light source (or $I_0$) for the light captured at point B,
+        just as if using an artificial light source. As long as
+        distances are kept small and the optical thickness is low,
+        scattering will be negligible.  This is a huge simplification
+        over the traditional passive \gls{DOAS} analysis process, as
+        explained in Section~\ref{sec:lit_review_doas}.}
+    \label{fig:hypothesis}
+\end{figure}
