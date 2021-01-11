@@ -25,11 +25,11 @@ The “novathesis” LaTeX template was initially designed for the PhD thesis an
 The “novathesis” LaTeX template also supports the following degrees from Universities' Consortia:
 * Erasmus Mundus [Masters Program in Geospatial Technologies](https://mastergeotech.info)
 
-The template provides an _easy to use_ setting for you to write your thesis/dissertation in LaTeX:
+<!-- The template provides an _easy to use_ setting for you to write your thesis/dissertation in LaTeX:
 *  Select your school
 * Fill your thesis metadata (title, research field, etc) in the file “*template.tex*”
 * Create your thesis/dissertation contents using the files in folder “*Chapters*”
-* Process using you favorite LaTeX processor (pdfLaTeX, XeLaTeX or LuaLaTeX)
+* Process using you favorite LaTeX processor (pdfLaTeX, XeLaTeX or LuaLaTeX) -->
 
 *This work is licensed under the LaTeX Project Public License v1.3c. To view a copy of this license, visit the [LaTeX project public license](https://www.latex-project.org/lppl/lppl-1-3c/).*
 
@@ -55,7 +55,7 @@ The template provides an _easy to use_ setting for you to write your thesis/diss
 2. Download “novathesis” by either:
 	* Cloning the [GitHub repository](https://github.com/joaomlourenco/novathesis) with <kbd>git clone https://github.com/joaomlourenco/novathesis.git</kbd>; or
 	* Downloading the [latest version from the GitHub repository as a Zip file](https://github.com/joaomlourenco/novathesis/archive/master.zip)
-3. Compile the document:
+3. Compile the document with you favorite LaTeX processor (pdfLaTeX, XeLaTeX or LuaLaTeX):
 	* The main file is named “*template.tex*”.  
 	* Either load it in your favorite [LaTeX text editor](https://en.wikipedia.org/wiki/Comparison_of_TeX_editors) or compile it in the terminal with
 <kbd>latexmk -pdf template</kbd>.
@@ -66,7 +66,7 @@ The template provides an _easy to use_ setting for you to write your thesis/diss
 	* Name the (separate) files containing the abstracts, chapters, appendices, annexes, etc…
 5. Recompile de document:
 	* See 3. above.
-6. You're done with a beautifully formatted thesis/dissertation 😃
+6. You're done with a beautifully formatted thesis/dissertation! 😃
 
 ### With a Remote Cloud-based Service
 
@@ -83,7 +83,7 @@ The template provides an _easy to use_ setting for you to write your thesis/diss
 	* Fill in your name, thesis title, etc…
 	* Name the (separate) files containing the abstracts, chapters, appendices, annexes, etc…
 5. Recompile de document.
-6. You're done with a beautifully formatted thesis/dissertation 😃
+6. You're done with a beautifully formatted thesis/dissertation! 😃
 
 *NOTE: a deprecated version of the novathesis template (v4.x) is available as an [Overleaf template](https://pt.overleaf.com/latex/templates/new-university-of-lisbon-universidade-nova-de-lisboa-slash-unl-thesis-template/fwbztcrptjmg).  Just select <kbd>open as template</kbd> and go to step 6 above!*
 
