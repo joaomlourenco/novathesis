@@ -46,7 +46,7 @@ The “novathesis” LaTeX template also supports the following degrees from Uni
 
 ### With a Local LaTeX Installation
 
-*See below for alternatives to a local LaTeX installation*
+*[See below](#with-a-remote-cloud-based-service) for alternatives to a local LaTeX installation*
 
 1. Download LaTeX:
 	* **Windows:** install either [MikTeX](https://miktex.org) or [TeX-Live](https://www.tug.org/texlive/).
@@ -70,7 +70,7 @@ The “novathesis” LaTeX template also supports the following degrees from Uni
 
 ### With a Remote Cloud-based Service
 
-*See above for using a local installation of LaTeX*
+*[See above](#with-a-local-latex-installation) for using a local installation of LaTeX*
 
 1. Download the [latest version from the GitHub repository as a Zip file](https://github.com/joaomlourenco/novathesis/archive/master.zip).
 2. Login to your favorite LaTeX cloud service.  I recommend [Overleaf](https://www.overleaf.com?r=f5160636&rm=d&rs=b) but there are alternatives (these instructions apply to Overleaf  and you'll have to adapt for other providers).
