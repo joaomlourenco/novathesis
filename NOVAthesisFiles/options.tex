@@ -30,9 +30,9 @@
 \RequirePackage{xifthen}
 \options{/@nt/.new family
   % languages
-  , langsshort/.new list = {en, pt, fr, it}
-  , langslong/.new list = {english, portuguese, french, italian}
-  , langshorttolong/.new choice = {en=english, pt=portuguese, fr=french, it=italian}
+  , langsshort/.new list = {en, pt, fr, it, de, es}
+  , langslong/.new list = {english, portuguese, french, italian, german, spanish}
+  , langshorttolong/.new choice = {en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish}
   , maplang/.new cmd = {%
             \options{/@nt/langshorttolong = #1}%
             \option{/@nt/langshorttolong}%
@@ -93,9 +93,9 @@
   , fontstyle=kpfonts        % set kpfonts as the default
   , lang/.new style = {/novathesis/mainlang=#1,/novathesis/copyrightlang=#1,
                        /novathesis/coverlang=#1}
-  , mainlang/.new choice = {en, pt, fr, it}
-  , coverlang/.new choice = {en, pt, fr, it}
-  , copyrightlang/.new choice = {en, pt, fr, it}
+  , mainlang/.new choice = {en, pt, fr, it, de, es}
+  , coverlang/.new choice = {en, pt, fr, it, de, es}
+  , copyrightlang/.new choice = {en, pt, fr, it, de, es}
   , printcommittee/.new toggle = true
   , printcopyright/.new toggle = true
   , secondcover/.new toggle = false

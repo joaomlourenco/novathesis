@@ -1,0 +1,110 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%Strings/de.ldf
+%% NOVA thesis configuration file
+%%
+%% Costumization for language depedent strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILEStrings/de.ldf}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% German - strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\abstractstring(de):={Zusammenfassung}
+\keywordsstring(de):={Stichwörter}
+\notdefined(de):={UNDEFINIERT}
+\acknowledgementsstring(de):={Danksagungen}
+\specializationstr(de):={Spezialisierung in}
+
+\majorfield(de):={\embrace{Wissenschaftliches Gebiet}}
+\degreename(de):={\embrace{Name des Studienprogramms}}
+
+\adviserstr(1,m,de):={Betreuer}% male, singular
+\adviserstr(1,f,de):={Betreuerin}% female, singular
+\adviserstr(2,m,de):={Betreuer}% male, plural
+\adviserstr(2,f,de):={Betreuerinnen}% female, plural
+\coadviserstr(1,m,de):={Zweitbetreuer}% male, singular
+\coadviserstr(1,f,de):={Zweitbetreuerin}% female, singular
+\coadviserstr(2,m,de):={Zweitbetreuer}% male, plural
+\coadviserstr(2,f,de):={Zweitbetreuerin}% female, plural
+
+\degreestr(bsc,m,de):={Bachelor}
+\degreestr(bsc,f,de):={Bachelor}
+\degreestr(msc,m,de):={Master of Science}
+\degreestr(msc,f,de):={Master of Science}
+\degreestr(mscplan,m,de):={Master of Science}
+\degreestr(mscplan,f,de):={Master of Science}
+\degreestr(phd,m,de):={Doktors der Naturwissenschaften}
+\degreestr(phd,f,de):={Doktors der Naturwissenschaften}
+\degreestr(phdplan,m,de):={Doktors der Naturwissenschaften} % Does not exist in Germany
+\degreestr(phdplan,f,de):={Doktors der Naturwissenschaften} % Does not exist in Germany
+\degreestr(phdprop,m,de):={Doktors der Naturwissenschaften} % Does not exist in Germany
+\degreestr(phdprop,f,de):={Doktors der Naturwissenschaften} % Does not exist in Germany
+
+\docdegreestr(bsc,de):={Bachelorarbeit}
+\docdegreestr(msc,de):={Masterarbeit}
+\docdegreestr(mscplan,de):={Master of Science Qualification} % Not really sure what this is
+\docdegreestr(phdplan,de):={Doctorate Qualification} % Not really sure what this is
+%% hr: siehe https://www.di.fct.unl.pt/sites/www.di.fct.unl.pt/files/guidelinesthesisplan.pdf
+%% so richtig gibts das bei uns nicht, am nähesten kommt das Exposé das bei uns in der
+%% Betreuungsvereinbarung vorgesehen ist
+\docdegreestr(phdprop,de):={Doctorate Proposal} % Not really sure what this is
+%% Das ist das Äquivalent von unserem Fakultätsvortrag, nur dass das an der UNL nicht nur ein
+%% Vortrag ist, sondern ein richtiger Text der da vor Thesis-Fertigstellung abgegeben werden muss
+%% Gibt denke ich auch keine gute Übersetzung... 
+\docdegreestr(phd,de):={Dissertation}
+
+\committeetitlestr(de):={Prüfungsausschuss}
+\committeememberstr(c,1,m,de):={Vorsitzender}% male, singular
+\committeememberstr(c,1,f,de):={Vorsitzende}% female, singular
+\committeememberstr(c,2,m,de):={Vorsitzende}% male, plural
+\committeememberstr(c,2,f,de):={Vorsitzende}% female, plural
+\committeememberstr(r,1,m,de):={Gutachter}% male, singular 		
+\committeememberstr(r,1,f,de):={Gutachterin}% female, singular
+\committeememberstr(r,2,m,de):={Gutachter}% male, plural
+\committeememberstr(r,2,f,de):={Gutachterinnen}% female, plural
+\committeememberstr(a,1,m,de):={Betreuer}% male, singular		
+\committeememberstr(a,1,f,de):={Betreuer}% female, singular
+\committeememberstr(a,2,m,de):={Betreuer}% male, plural
+\committeememberstr(a,2,f,de):={Betreuer}% female, plural
+\committeememberstr(m,1,m,de):={Mitglied}% male, singular			
+\committeememberstr(m,1,f,de):={Mitglied}% female, singular
+\committeememberstr(m,2,m,de):={Mitglied}% male, plural
+\committeememberstr(m,2,f,de):={Mitglied}% female, plural
+\committeememberstr(g,1,m,de):={Gast}% male, singular			
+\committeememberstr(g,1,f,de):={Gast}% female, singular
+\committeememberstr(g,2,m,de):={Gäste}% male, plural
+\committeememberstr(g,2,f,de):={Gäste}% female, plural
+	
+
+\dissertationstr(bsc,de):={Bachelorarbeit vorgelegt von\\[1.25ex]%
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+
+ 
+\dissertationstr(mscplan,de):={Exposé für eine Masterarbeit vorgelegt \\[1.25ex]%
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+
+
+\dissertationstr(msc,de):={Masterarbeit vorgelegt von\\[1.25ex]%
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+
+
+\dissertationstr(phdplan,de):={Exposé für eine Dissertations vorgelegt \\[1.25ex]%
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+
+ 
+\dissertationstr(phdprop,de):={Exposé für eine Dissertations vorgelegt\\[1.25ex]%
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+
+\dissertationstr(phd,de):={Dissertation\\%
+zur Erlangung des akademischen Grades eines\\[1.25ex]%
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+
+% Probably this is not a legally binding translation
+\copyrighttextstr(de):={Die \thefaculty(\option{/novathesis/copyrightlang})\ und die \theuniversity(\option{/novathesis/copyrightlang})\ haben das zeitlich und räumlich unbeschränkte Recht, diese Arbeit durch gedruckte Exemplare auf Papier oder in digitaler Form oder durch jedes andere bekannte oder noch zu erfindende Mittel zu archivieren und zu veröffentlichen und über wissenschaftliche Repositorien zu verbreiten und ihre Vervielfältigung und Verbreitung zu nichtkommerziellen, Bildungs- oder Forschungszwecken zuzulassen, solange der Autor und Herausgeber genannt wird.}
+
+
+
+
+\acknowledgmentsstr(de):={Dieses Dokument wurde mit Hilfe von (pdf/Xe/Lua)\LaTeX\ erzeugt, basierend auf der Vorlage \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} \,[0], entwickelt an dem \href{http://www.di.fct.unl.pt}{Dep.\ Informática of FCT-NOVA} von \href{https://docentes.fct.unl.pt/joao-lourenco}{João M. Lourenço}. [0]\,João M. Lourenço, \emph{The NOVAthesis \LaTeX\ Template User’s Manual}, NOVA School of Science and Technology, NOVA University Lisbon, 2021, \url{https://github.com/joaomlourenco/novathesis/raw/master/template.pdf}.}

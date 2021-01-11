@@ -17,7 +17,7 @@
 %%      at: https://github.com/joaomlourenco/novathesis/
 %%
 %% HELP: please DO NOT SEND ME EMAILS about LaTeX or the NOVAthesis template
-%%       please ask for help at GitHub Discusisons page at
+%%       please ask for help at GitHub Discussions page at
 %%          https://github.com/joaomlourenco/novathesis/discussions
 %%      or at the NOVAthesis facebook group at
 %%          https://www.facebook.com/groups/novathesis
@@ -539,6 +539,15 @@
 \assocarray{copyrighttextstr}
 \assocarray{acknowledgmentsstr}
 
+\assocarray{majorfield}
+\assocarray{specialization}
+
+\newcommand{\initassocarray}[2][\embrace{\notdefined(\option{/novathesis/coverlang})}]{
+  \optionlistdo{/@nt/langsshort}{%
+    \csuse{#2}(##1):={#1}%
+  }%
+}
+
 \optionlistdo{/@nt/langsshort}{%
   \adviserstrfont(#1):={}%
   \coadviserstrfont(#1):={}%
@@ -562,15 +571,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Defaults for uniersity, faculty, degree, etc…
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\assocarray{university}
-\assocarray{faculty}
-\assocarray{department}
-\assocarray{majorfield}
-\assocarray{specialization}
+% \assocarray{university}
+% \assocarray{faculty}
+% \assocarray{department}
 \assocarray{spine}
 \assocarray{thesiscover}
 \assocarray{margin}
 \assocarray{frontpageimage}
+
+
+\newcommand{\@nt@newassocarray}[1]{%
+  \assocarray{#1}%
+  \initassocarray[\embrace{\MakeUppercase{#1}}]{#1}%
+}
+\forcsvlist{\@nt@newassocarray}{university,faculty,department}
 
 % --------------------------------------------------------
 % Add school specific Images folder to the graphics path

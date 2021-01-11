@@ -12,9 +12,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \abstractstring(pt):={Resumo}
 \keywordsstring(pt):={Palavras-chave}
-\notdefined(pt):={NÃO DEFINIDO}
+\notdefined(pt):={INDEFINIDO}
 \acknowledgementsstring(pt):={Agradecimentos}
 \specializationstr(pt):={Especialização em}
+
+\majorfield(pt):={\embrace{Área Científica}}
+\degreename(pt):={\embrace{Designação do Curso}}
 
 \adviserstr(1,m,pt):={Orientador}
 \adviserstr(1,f,pt):={Orientadora}
