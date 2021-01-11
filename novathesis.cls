@@ -17,10 +17,10 @@
 %%      at: https://github.com/joaomlourenco/novathesis/
 %%
 %% HELP: please DO NOT SEND ME EMAILS about LaTeX or the NOVAthesis template
-%%       please ask for help at the NOVAthesis google group at
-%%          https://groups.google.com/forum/#!forum/novathesis
+%%       please ask for help at GitHub Discusisons page at
+%%          https://github.com/joaomlourenco/novathesis/discussions
 %%      or at the NOVAthesis facebook group at
-%%          https://www.facebook.com/groups/novathesis/
+%%          https://www.facebook.com/groups/novathesis
 %%
 %% AUTHOR @github:
 %%      - joaomlourenco
