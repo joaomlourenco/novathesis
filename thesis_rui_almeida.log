@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.6.6)  26 SEP 2020 18:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.6.6)  5 JAN 2021 17:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1427,25 +1427,7 @@ File: pppdftex.def 2020/01/28 v0.5q Pdfpages driver for pdfTeX (AM)
 \c@novathesis@committee@m@cnt=\count565
 \c@novathesis@committee@mm@cnt=\count566
 \c@novathesis@committee@mf@cnt=\count567
- (./Chapters/acronyms.tex
-
-./Chapters/acronyms.tex:63: LaTeX Error: Missing \begin{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.63 <
-      <<<<<< HEAD
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-Overfull \hbox (25.11734pt too wide) in paragraph at lines 63--68
-[]\T1/cmr/m/n/10.95 <<<<<<< HEAD =======   >>>>>>> 7a09a264e0cde79265b14280359e29bda84467ed |
- []
-
-)
+ (./Chapters/acronyms.tex)
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
@@ -1462,9 +1444,6 @@ LaTeX Warning: Label `tab:libraries' multiply defined.
 
 
 LaTeX Warning: Label `tab:select_filters' multiply defined.
-
-
-LaTeX Warning: Label `sec:methods' multiply defined.
 
 
 LaTeX Warning: Label `sub:tomography' multiply defined.
@@ -1624,11 +1603,7 @@ Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
 Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
-) [1
-
-{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2
-
-]
+)
 LaTeX Font Info:    Trying to load font information for T1+phv on input line 304.
  (/usr/local/texlive/2020/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
@@ -1653,12 +1628,15 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-<novathesis-files/Schools/nova/fct/Images/cover-phd-std.pdf, id=259, 597.23125pt x 845.1575pt>
+<novathesis-files/Schools/nova/fct/Images/cover-phd-std.pdf, id=236, 597.23125pt x 845.1575pt>
 File: novathesis-files/Schools/nova/fct/Images/cover-phd-std.pdf Graphic file (type pdf)
 <use novathesis-files/Schools/nova/fct/Images/cover-phd-std.pdf>
 Package pdftex.def Info: novathesis-files/Schools/nova/fct/Images/cover-phd-std.pdf  used on input line 304.
 (pdftex.def)             Requested size: 597.54874pt x 845.06516pt.
- [1 <./novathesis-files/Schools/nova/fct/Images/cover-phd-std.pdf>] [2
+ [1
+
+
+{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./novathesis-files/Schools/nova/fct/Images/cover-phd-std.pdf>] [2
 
 ]
 Overfull \hbox (5.44762pt too wide) in paragraph at lines 306--306
@@ -1796,19 +1774,16 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [11
 
 
-])
-Underfull \vbox (badness 10000) has occurred while \output is active []
+]) [12] (./thesis_rui_almeida.lot) [13
 
- [12] [13] [14
-
-] (./thesis_rui_almeida.lot) [15] [16
+] [14
 
 ]
 
 Package glossaries Warning: Empty glossary for \printnoidxglossary[type={main}]. Rerun may be required (or you may have forgotten to use commands like \gls) on input line 313.
 
 Using TeX to sort glossary entries---this may take a while
-[17
+[15
 
 
 ]
@@ -1816,20 +1791,16 @@ Overfull \hbox (17.95872pt too wide) in paragraph at lines 313--313
 [] |
  []
 
-[18]
+[16]
 
 Package glossaries Warning: Empty glossary for \printnoidxglossary[type={symbols}]. Rerun may be required (or you may have forgotten to use commands like \gls) on input line 313.
 
-[19] [20
+[17] [18
 
 ] (./Chapters/1_introduction.tex
 Underfull \vbox (badness 1629) has occurred while \output is active []
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.65 
-      [1
+ [1
 
 
 
@@ -1844,17 +1815,13 @@ Package glossaries-extra Warning: Base acronym command \acrlong should not be us
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.125 
-       [2]
+ [2]
 
 Package glossaries-extra Warning: Base acronym command \acrlong should not be used with new abbreviation definitions. Use \glsxtrlong instead on input line 133.
 
 Package hyperref Info: bookmark level for unknown todo defaults to 0 on input line 154.
 [3]
-<img/png/projections.png, id=732, 211.79124pt x 211.79124pt>
+<img/png/projections.png, id=697, 211.79124pt x 211.79124pt>
 File: img/png/projections.png Graphic file (type png)
 <use img/png/projections.png>
 Package pdftex.def Info: img/png/projections.png  used on input line 178.
@@ -1922,7 +1889,7 @@ Package glossaries-extra Warning: Base acronym command \acrlong should not be us
 Package glossaries-extra Warning: Base acronym command \acrlong should not be used with new abbreviation definitions. Use \glsxtrlong instead on input line 143.
 
 [12]
-<img/pdf/respiratory_system.pdf, id=905, 597.23125pt x 845.1575pt>
+<img/pdf/respiratory_system.pdf, id=870, 597.23125pt x 845.1575pt>
 File: img/pdf/respiratory_system.pdf Graphic file (type pdf)
 <use img/pdf/respiratory_system.pdf>
 Package pdftex.def Info: img/pdf/respiratory_system.pdf  used on input line 178.
@@ -1952,7 +1919,7 @@ Package glossaries-extra Warning: Base acronym command \acrlong should not be us
 Package glossaries-extra Warning: Base acronym command \acrlong should not be used with new abbreviation definitions. Use \glsxtrlong instead on input line 293.
 
 [15]
-<img/pdf/development.pdf, id=1213, 597.23125pt x 845.1575pt>
+<img/pdf/development.pdf, id=1177, 597.23125pt x 845.1575pt>
 File: img/pdf/development.pdf Graphic file (type pdf)
 <use img/pdf/development.pdf>
 Package pdftex.def Info: img/pdf/development.pdf  used on input line 329.
@@ -1965,7 +1932,7 @@ Package glossaries-extra Warning: Base acronym command \acrlong should not be us
 Underfull \vbox (badness 1642) has occurred while \output is active []
 
  [16]
-<img/pdf/lung_development.pdf, id=1249, 597.23125pt x 845.1575pt>
+<img/pdf/lung_development.pdf, id=1214, 597.23125pt x 845.1575pt>
 File: img/pdf/lung_development.pdf Graphic file (type pdf)
 <use img/pdf/lung_development.pdf>
 Package pdftex.def Info: img/pdf/lung_development.pdf  used on input line 379.
@@ -2032,7 +1999,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Package glossaries-extra Warning: Base acronym command \acrlong should not be used with new abbreviation definitions. Use \glsxtrlong instead on input line 540.
 
-<img/jpg/capelinhos1957.jpeg, id=1639, 369.38pt x 602.25pt>
+<img/jpg/capelinhos1957.jpeg, id=1605, 369.38pt x 602.25pt>
 File: img/jpg/capelinhos1957.jpeg Graphic file (type jpg)
 <use img/jpg/capelinhos1957.jpeg>
 Package pdftex.def Info: img/jpg/capelinhos1957.jpeg  used on input line 567.
@@ -2040,7 +2007,7 @@ Package pdftex.def Info: img/jpg/capelinhos1957.jpeg  used on input line 567.
 
 Package glossaries-extra Warning: Base acronym command \acrlong should not be used with new abbreviation definitions. Use \glsxtrlong instead on input line 579.
 
-<img/pdf/dust.pdf, id=1650, 597.23125pt x 845.1575pt>
+<img/pdf/dust.pdf, id=1616, 597.23125pt x 845.1575pt>
 File: img/pdf/dust.pdf Graphic file (type pdf)
 <use img/pdf/dust.pdf>
 Package pdftex.def Info: img/pdf/dust.pdf  used on input line 596.
@@ -2059,13 +2026,13 @@ Package glossaries-extra Warning: Base acronym command \acrlong should not be us
 
 Package glossaries-extra Warning: Base acronym command \acrlong should not be used with new abbreviation definitions. Use \glsxtrlong instead on input line 650.
 
-<img/pdf/co2_ice_cores.pdf, id=1775, 1204.5pt x 803.0pt>
+<img/pdf/co2_ice_cores.pdf, id=1740, 1204.5pt x 803.0pt>
 File: img/pdf/co2_ice_cores.pdf Graphic file (type pdf)
 <use img/pdf/co2_ice_cores.pdf>
 Package pdftex.def Info: img/pdf/co2_ice_cores.pdf  used on input line 665.
 (pdftex.def)             Requested size: 340.8013pt x 182.92546pt.
 [24 <./img/pdf/co2_ice_cores.pdf>]
-<img/pdf/pollution_sources.pdf, id=1836, 597.23125pt x 845.1575pt>
+<img/pdf/pollution_sources.pdf, id=1801, 597.23125pt x 845.1575pt>
 File: img/pdf/pollution_sources.pdf Graphic file (type pdf)
 <use img/pdf/pollution_sources.pdf>
 Package pdftex.def Info: img/pdf/pollution_sources.pdf  used on input line 689.
@@ -2084,13 +2051,13 @@ Package epstopdf Info: Source file: <img/eps/energy_co2_gdp.eps>
 (epstopdf)             Command: <repstopdf --outfile=img/eps/energy_co2_gdp-eps-converted-to.pdf img/eps/energy_co2_gdp.eps>
 (epstopdf)             \includegraphics on input line 722.
 Package epstopdf Info: Output file is already uptodate.
-<img/eps/energy_co2_gdp-eps-converted-to.pdf, id=1967, 1156.32pt x 433.62pt>
+<img/eps/energy_co2_gdp-eps-converted-to.pdf, id=1933, 1156.32pt x 433.62pt>
 File: img/eps/energy_co2_gdp-eps-converted-to.pdf Graphic file (type pdf)
 <use img/eps/energy_co2_gdp-eps-converted-to.pdf>
 Package pdftex.def Info: img/eps/energy_co2_gdp-eps-converted-to.pdf  used on input line 722.
 (pdftex.def)             Requested size: 426.0pt x 159.74876pt.
  [26 <./img/eps/energy_co2_gdp-eps-converted-to.pdf>]
-<img/pdf/european_emission_trends.pdf, id=2084, 597.23125pt x 845.1575pt>
+<img/pdf/european_emission_trends.pdf, id=2050, 597.23125pt x 845.1575pt>
 File: img/pdf/european_emission_trends.pdf Graphic file (type pdf)
 <use img/pdf/european_emission_trends.pdf>
 Package pdftex.def Info: img/pdf/european_emission_trends.pdf  used on input line 819.
@@ -2100,7 +2067,7 @@ Package pdftex.def Info: img/pdf/european_emission_trends.pdf  used on input lin
 Package glossaries-extra Warning: Base acronym command \acrlong should not be used with new abbreviation definitions. Use \glsxtrlong instead on input line 824.
 
 [27]
-<img/pdf/european_emissions_by_sector.pdf, id=2098, 597.23125pt x 845.1575pt>
+<img/pdf/european_emissions_by_sector.pdf, id=2063, 597.23125pt x 845.1575pt>
 File: img/pdf/european_emissions_by_sector.pdf Graphic file (type pdf)
 <use img/pdf/european_emissions_by_sector.pdf>
 Package pdftex.def Info: img/pdf/european_emissions_by_sector.pdf  used on input line 837.
@@ -2133,12 +2100,12 @@ Underfull \vbox (badness 5592) has occurred while \output is active []
  [30] [31]
 
 pdfTeX warning: pdflatex (file ./img/pdf/amt-2016-314-f02.pdf): PDF inclusion: found PDF version <1.6>, but at most version <1.5> allowed
-<img/pdf/amt-2016-314-f02.pdf, id=2382, 621.48715pt x 177.5674pt>
+<img/pdf/amt-2016-314-f02.pdf, id=2348, 621.48715pt x 177.5674pt>
 File: img/pdf/amt-2016-314-f02.pdf Graphic file (type pdf)
 <use img/pdf/amt-2016-314-f02.pdf>
 Package pdftex.def Info: img/pdf/amt-2016-314-f02.pdf  used on input line 1003.
 (pdftex.def)             Requested size: 398.33858pt x 113.81342pt.
-<img/png/amt-2016-314-f03.png, id=2383, 835.12pt x 291.0875pt>
+<img/png/amt-2016-314-f03.png, id=2349, 835.12pt x 291.0875pt>
 File: img/png/amt-2016-314-f03.png Graphic file (type png)
 <use img/png/amt-2016-314-f03.png>
 Package pdftex.def Info: img/png/amt-2016-314-f03.png  used on input line 1009.
@@ -2159,7 +2126,7 @@ File: img/png/projections.png Graphic file (type png)
 Package pdftex.def Info: img/png/projections.png  used on input line 1245.
 (pdftex.def)             Requested size: 213.0pt x 213.00906pt.
  [36]
-<img/png/coordinates.png, id=2489, 560.0925pt x 475.7775pt>
+<img/png/coordinates.png, id=2454, 560.0925pt x 475.7775pt>
 File: img/png/coordinates.png Graphic file (type png)
 <use img/png/coordinates.png>
 Package pdftex.def Info: img/png/coordinates.png  used on input line 1299.
@@ -2168,7 +2135,7 @@ Package pdftex.def Info: img/png/coordinates.png  used on input line 1299.
 Overfull \vbox (12.2pt too high) has occurred while \output is active []
 
  [37 <./img/png/coordinates.png>] [38]
-<img/png/fst.png, id=2528, 499.8675pt x 330.23375pt>
+<img/png/fst.png, id=2494, 499.8675pt x 330.23375pt>
 File: img/png/fst.png Graphic file (type png)
 <use img/png/fst.png>
 Package pdftex.def Info: img/png/fst.png  used on input line 1414.
@@ -2179,7 +2146,7 @@ Overfull \vbox (12.2pt too high) has occurred while \output is active []
  [39 <./img/png/fst.png>]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 1453.
  [40]
-<img/png/fig319.png, id=2569, 599.23875pt x 517.935pt>
+<img/png/fig319.png, id=2534, 599.23875pt x 517.935pt>
 File: img/png/fig319.png Graphic file (type png)
 <use img/png/fig319.png>
 Package pdftex.def Info: img/png/fig319.png  used on input line 1501.
@@ -2192,7 +2159,7 @@ Overfull \vbox (12.2pt too high) has occurred while \output is active []
 Package glossaries-extra Warning: Base acronym command \acrlong should not be used with new abbreviation definitions. Use \glsxtrlong instead on input line 1599.
 
 [42]
-<img/pdf/sms_planning.pdf, id=2608, 569.24669pt x 611.40419pt>
+<img/pdf/sms_planning.pdf, id=2573, 569.24669pt x 611.40419pt>
 File: img/pdf/sms_planning.pdf Graphic file (type pdf)
 <use img/pdf/sms_planning.pdf>
 Package pdftex.def Info: img/pdf/sms_planning.pdf  used on input line 1607.
@@ -2229,20 +2196,26 @@ Underfull \hbox (badness 1112) in paragraph at lines 12--12
 \T1/qcs/b/n/12 AR-TI-CLE AND NEEDS A LOT OF WORK BE-FORE IT IS COM- 
  []
 
+
+LaTeX Warning: Reference `fig:trajectory_schematic' on page 47 undefined on input line 42.
+
 [47
 
 
 ]
-<img/pdf/spectralMeasurementSketch.pdf, id=2668, 328.3467pt x 126.4725pt>
+<img/pdf/spectralMeasurementSketch.pdf, id=2632, 328.3467pt x 126.4725pt>
 File: img/pdf/spectralMeasurementSketch.pdf Graphic file (type pdf)
 <use img/pdf/spectralMeasurementSketch.pdf>
 Package pdftex.def Info: img/pdf/spectralMeasurementSketch.pdf  used on input line 65.
 (pdftex.def)             Requested size: 208.74234pt x 80.4037pt.
-<img/pdf/spectralMeasurementsFromTheSide.pdf, id=2669, 319.1925pt x 126.4725pt>
+<img/pdf/spectralMeasurementsFromTheSide.pdf, id=2633, 319.1925pt x 126.4725pt>
 File: img/pdf/spectralMeasurementsFromTheSide.pdf Graphic file (type pdf)
 <use img/pdf/spectralMeasurementsFromTheSide.pdf>
 Package pdftex.def Info: img/pdf/spectralMeasurementsFromTheSide.pdf  used on input line 74.
 (pdftex.def)             Requested size: 208.74234pt x 82.70982pt.
+
+
+LaTeX Warning: Reference `sub:measurement_trajectory' on page 48 undefined on input line 90.
 
 
 LaTeX Warning: Reference `sec:theoretical_background' on page 48 undefined on input line 115.
@@ -2254,12 +2227,12 @@ pdfTeX warning: pdflatex (file ./img/pdf/spectralMeasurementSketch.pdf): PDF inc
 
 pdfTeX warning: pdflatex (file ./img/pdf/spectralMeasurementsFromTheSide.pdf): PDF inclusion: invalid other resource which is no dict (key 'ProcSets', type <array>); ignored.
 >]
-<img/png/shepp_logan.png, id=2712, 501.875pt x 501.875pt>
+<img/png/shepp_logan.png, id=2674, 501.875pt x 501.875pt>
 File: img/png/shepp_logan.png Graphic file (type png)
 <use img/png/shepp_logan.png>
 Package pdftex.def Info: img/png/shepp_logan.png  used on input line 139.
 (pdftex.def)             Requested size: 191.6987pt x 191.70235pt.
-<img/png/spectral.png, id=2713, 501.875pt x 503.8825pt>
+<img/png/spectral.png, id=2675, 501.875pt x 503.8825pt>
 File: img/png/spectral.png Graphic file (type png)
 <use img/png/spectral.png>
 Package pdftex.def Info: img/png/spectral.png  used on input line 147.
@@ -2268,19 +2241,96 @@ Package pdftex.def Info: img/png/spectral.png  used on input line 147.
 
 LaTeX Warning: Reference `alg:resorting' on page 50 undefined on input line 181.
 
-<img/png/experimentMap.png, id=2722, 1093.08376pt x 669.50125pt>
+[50]
+
+LaTeX Font Warning: Command \small invalid in math mode on input line 233.
+
+LaTeX Font Info:    Calculating math sizes for size <> on input line 239.
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <0.7> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <0.5> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <0.7> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <0.5> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <0.7> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <0.5> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/bx/n' in size <> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/bx/n' in size <0.7> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/bx/n' in size <0.5> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/b/it' in size <> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/b/it' in size <0.7> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/b/it' in size <0.5> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/b/n' in size <> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/b/n' in size <0.7> not available
+(Font)              size <5> substituted on input line 239.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/b/n' in size <0.5> not available
+(Font)              size <5> substituted on input line 239.
+
+<img/png/experimentMap.png, id=2699, 1093.08376pt x 669.50125pt>
 File: img/png/experimentMap.png Graphic file (type png)
 <use img/png/experimentMap.png>
-Package pdftex.def Info: img/png/experimentMap.png  used on input line 198.
+Package pdftex.def Info: img/png/experimentMap.png  used on input line 270.
 (pdftex.def)             Requested size: 340.8013pt x 208.73848pt.
-) [50] [51 <./img/png/experimentMap.png>] [52
-
-]
+) [51] [52 <./img/png/experimentMap.png>]
 Overfull \hbox (1.80646pt too wide) in paragraph at lines 324--324
 \T1/cmtt/m/n/10.95 org / cgi / content / abstract / 43 / 10 / 1343 % 7B % 5C % %7D5Cnhttp : / / jnm . snmjournals .|
  []
 
-[53] [54] [55] [56] [57]
+[53
+
+] [54] [55] [56] [57]
 Overfull \hbox (3.13846pt too wide) in paragraph at lines 324--324
 \T1/qcs/m/it/10.95 (-10) Recipes: The Art of Sci-en-tific Com-put-ing\T1/qcs/m/n/10.95 (-10) . 3rd Edi-tio. 2007. \T1/qcs/m/sc/10.95/100ls (-10) isbn\T1/qcs/m/n/10.95 (-10) : 9788578110796.|
  []
@@ -2297,7 +2347,7 @@ Overfull \hbox (21.57681pt too wide) in paragraph at lines 324--324
 
 
 ]) (./asd/background.tex [64]
-<img/png/maxdoas.png, id=2973, 304.13625pt x 125.46875pt>
+<img/png/maxdoas.png, id=2948, 304.13625pt x 125.46875pt>
 File: img/png/maxdoas.png Graphic file (type png)
 <use img/png/maxdoas.png>
 Package pdftex.def Info: img/png/maxdoas.png  used on input line 87.
@@ -2318,7 +2368,7 @@ Underfull \hbox (badness 10000) in alignment at lines 96--96
  []
 
 [69] [70]) (./asd/conduction.tex
-<img/pdf/asd_flowchart.pdf, id=3034, 443.7378pt x 245.9589pt>
+<img/pdf/asd_flowchart.pdf, id=3007, 443.7378pt x 245.9589pt>
 File: img/pdf/asd_flowchart.pdf Graphic file (type pdf)
 <use img/pdf/asd_flowchart.pdf>
 Package pdftex.def Info: img/pdf/asd_flowchart.pdf  used on input line 30.
@@ -2357,18 +2407,12 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 332.
  (./thesis_rui_almeida.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 332.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 332.
+Package rerunfilecheck Info: File `thesis_rui_almeida.out' has not changed.
+(rerunfilecheck)             Checksum: D3F74596766796139E5FD2BC34C76C7A;3401.
 
-
-Package rerunfilecheck Warning: File `thesis_rui_almeida.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `thesis_rui_almeida.out':
-(rerunfilecheck)             Before: F4D0A7AECA88465E016F48D19D2BA855;3594
-(rerunfilecheck)             After:  ED56FE7665B0AE4C7E2CAC2FA7C9854C;3401.
 
 LaTeX Font Warning: Size substitutions with differences
-(Font)              up to 1.85pt have occurred.
+(Font)              up to 4.5pt have occurred.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -2384,36 +2428,18 @@ Package logreq Info: Writing requests to 'thesis_rui_almeida.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 48201 strings out of 480478
- 899361 string characters out of 5899581
- 1850179 words of memory out of 5000000
- 62733 multiletter control sequences out of 15000+600000
- 668596 words of font info for 217 fonts, out of 8000000 for 9000
+ 48258 strings out of 480478
+ 900502 string characters out of 5899581
+ 1849808 words of memory out of 5000000
+ 62796 multiletter control sequences out of 15000+600000
+ 670531 words of font info for 226 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  73i,13n,106p,2832b,3901s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{table.caption.70} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{table.caption.67} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.68} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.63} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.59} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{section*.62} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.3.4.2} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.3.4.1} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.3.4} has been referenced but does not exist, replaced by a fixed one
-
-{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/tex-gyre/q-ec.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/tex-gyre/q-ec-sc.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/tex-gyre/q-ts1.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/tex-gyre/qcsb.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/tex-gyre/qcsbi.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/tex-gyre/qcsr.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/tex-gyre/qcsri.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfsx2488.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on thesis_rui_almeida.pdf (98 pages, 5287246 bytes).
+{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/tex-gyre/q-ec.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/tex-gyre/q-ec-sc.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/tex-gyre/q-ts1.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/tex-gyre/qcsb.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/tex-gyre/qcsbi.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/tex-gyre/qcsr.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/tex-gyre/qcsri.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfsx2488.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
+Output written on thesis_rui_almeida.pdf (94 pages, 5285755 bytes).
 PDF statistics:
- 3264 PDF objects out of 3580 (max. 8388607)
- 1998 compressed objects within 20 object streams
- 404 named destinations out of 1000 (max. 500000)
- 42698 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 3237 PDF objects out of 3580 (max. 8388607)
+ 1974 compressed objects within 20 object streams
+ 398 named destinations out of 1000 (max. 500000)
+ 42674 words of extra memory for PDF output out of 42996 (max. 10000000)
 

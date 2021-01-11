@@ -495,10 +495,6 @@ INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/graphics/lscape.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/graphics/lscape.sty
-INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/tex-gyre/ec-qcsr.tfm
-INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/tex-gyre/ec-qcsr-sc.tfm
-INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/tex-gyre/ec-qcsr-sc.tfm
-INPUT /usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/biblatex-apa/american-apa.lbx
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/biblatex-apa/american-apa.lbx
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/psnfss/t1phv.fd
@@ -570,6 +566,7 @@ INPUT ./novathesis-files/Schools/nova/fct/Images/cover-phd-std.pdf
 INPUT ./novathesis-files/Schools/nova/fct/Images/cover-phd-std.pdf
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/vf/adobe/helvetic/phvb8t.vf
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/adobe/helvetic/phvb8r.tfm
+INPUT /usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/vf/adobe/helvetic/phvr8t.vf
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/vf/adobe/helvetic/phvb8t.vf
@@ -643,6 +640,9 @@ INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/biblatex-apa/american-apa.lbx
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/biblatex-apa/american-apa.lbx
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/biblatex-apa/american-apa.lbx
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/biblatex-apa/american-apa.lbx
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/tex-gyre/ec-qcsr.tfm
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/tex-gyre/ec-qcsr-sc.tfm
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/tex-gyre/ec-qcsr-sc.tfm
 INPUT thesis_rui_almeida.lof
 INPUT thesis_rui_almeida.lof
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/biblatex-apa/american-apa.lbx
@@ -744,6 +744,15 @@ INPUT ./img/png/shepp_logan.png
 INPUT img/png/spectral.png
 INPUT ./img/png/spectral.png
 INPUT ./img/png/spectral.png
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam5.tfm
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam5.tfm
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam5.tfm
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
 INPUT img/png/experimentMap.png
 INPUT ./img/png/experimentMap.png
 INPUT ./img/png/experimentMap.png
@@ -798,8 +807,10 @@ INPUT /usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
@@ -808,7 +819,6 @@ INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/tex-gyre/qcsb.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/tex-gyre/qcsbi.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/tex-gyre/qcsr.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/tex-gyre/qcsri.pfb
-INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfsx1440.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfsx2488.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb
