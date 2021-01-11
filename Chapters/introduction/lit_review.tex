@@ -1,0 +1,191 @@
+%!TEX root = ../../thesis_rui_almeida.tex
+
+
+\section{Literature review}%
+\label{sec:literature_review}
+
+\subsection{Tomography}%
+\label{sub:tomography}
+
+Tomography is the cross-sectional imaging of an object through the use
+of transmitted or reflected waves, captured by the object exposure to
+the waves from a set of known angles. It has many different applications
+in science, industry, and most prominently, medicine\todo{citatoins:
+examples of industrial applications of tomography}. Since the invention
+of the \gls{CT} machine in 1972, by Hounsfield~\cite{Gunderman2006},
+tomographic imaging techniques have had a revolutionary impact, allowing
+doctors to see inside their patients, without having to subject them to
+more invasive procedures~\cite{Kak2001}.
+
+Mathematical basis for tomography were set by Johannes Radon in 1917. At
+the time, he postulated that  it is possible to represent a function
+written in $\mathbb{R}$ in the space of straight lines, $\mathbb{L}$
+through the function's line integrals. A line integral is an integral in
+which the function that is being integrated is evaluated along a curved
+path, a line. In the tomographic case, these line integrals represent a
+measurement on a ray that traverses the \gls{ROI}.  Each set of line
+integrals, characterized by an incidence angle, is called a projection
+(see Figure~\ref{fig:projection}). To perform a tomographic
+reconstruction, the machine must take many projections around the
+object. To the set of projections arranged in matrix form by detector
+and projection angle, we call sinogram. All reconstruction methods,
+analytical and iterative, revolve around going from reality to sinogram
+to image~\cite{Bruyant2002, Kak2001, Herman1973, Herman1995, Herman2009,
+Defrise2003}.
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/png/projections.png}
+    \caption{A schematic representation of a projection acquisition. In
+    this image, taken from ~\cite{Herman2009}, the clear line that comes
+    down at a diagonal angle is a projection.}
+    \label{fig:projection}
+\end{figure}
+
+There are two broad algorithm families when it comes to tomographic
+reconstruction, regarding the physics of the problem. It can involve
+either non-diffracting sources (light travels in straight lines), such
+as the X-Rays in a conventional \gls{CT} exam; or diffracting sources,
+such as micro-waves or ultrasound in more research-oriented
+applications~\cite{Kak2001}. In this document, I will not address the
+latter family, since I will not be applying them in my work.
+
+In any tomographic procedure, the first step is to gather information
+from the target object. The first concept one requires for this is to
+determine the problem's geometry. There are many different possible
+geometry, however, there are two that are more important for this
+thesis: parallel and fan-beam geometries, which are presented in
+Figure~\ref{fig:geometries}. In the parallel case, there are as many
+light sources as there are detectors. Light travels between the source
+and the detector in straight lines, and the whole set rotates around the
+object's location. Fan-beam geometries are characterized by having only
+one light source which rotates around the target object. In this
+geometry, a set of detectors are placed on the other side of the object,
+and the lines (rays) between the source and the detectors describe a
+fan, thus the name of the technique~\cite{Herman2009, Kak2001}.
+
+As far as algorithms are concerned, there are two main types: analytical
+and iterative. The first family includes the most famous algorithm for
+these applications, the \gls{FBP}\todo{Reference to the chapter in which
+this technique is explained}. Iterative algorithms work by iteratively
+searching for a solution to the reconstruction equation, which is
+basically an underdetermined system of equations~\todo{check this!}.
+There are numerous algorithms that work in this way, but in my work, I
+have identified three that are extensively used, both in the field of
+atmospheric tomography and in medicine: \gls{ART}, \gls{SART}, and
+\gls{MLEM}. The simulator that was developed as part of this project
+uses the last two and \gls{FBP}.
+
+\subsection{\gls{DOAS}}%
+\label{sub:doas}
+
+Since the beginning of the 20\textsuperscript{th} century, scientists
+have been using spectroscopy to measure reactive trace gases in the
+atmosphere, especially ozone. The basis for these applications were set
+by Bouguer, Lambert and Beer, which have separately presented the law
+(Lambert-Beer's) that determines the relationship between light
+extinction and the concentration of an absorber, when it must traverse a
+medium in which this absorber is present. \gls{DOAS} is one of the
+methods that is applied for this purpose. It was developed in 1976, by
+Perner and his colleagues~\cite{Perner1976}, to detect and quantify the
+hydroxyl radical in the atmosphere. The book by Jochen Stütz and Ulrich
+Platt~\cite{Platt2007} is considered by most researchers one of the most
+important references in the field and is present in most bibliographies
+of the literature in this subject (it is also one of the main references
+in this thesis). Platt, in particular, has been working with the
+technique since its beginning, as one of the elements of Perner's team
+that published the article about the hydroxyl radical mentioned some
+lines above~\cite{Perner1976}.
+
+Besides \gls{DOAS}, Lambert-Beer's law is the basis of many quantitative
+spectroscopy applications. However, most of these techniques are used in
+a laboratory context, in which conditions are controlled and very well
+known. Atmospheric studies do not have this luxury. In the open
+atmosphere, there are a number of factors, like Mie and Rayleigh
+scattering, atmospheric turbulence or thermal fluctuations in the
+optical path that make outdoor spectral measurements more complicated.
+\gls{DOAS} is able to circumvent these difficulties by measuring
+differential absorptions, which is to say the difference in absorption
+between two different wavelengths~\cite{Platt2007, Merlaud2013}.
+
+There are two modalities for \gls{DOAS} experiments, Active and Passive,
+which differ mainly on the use of artificial or natural light sources,
+respectively. Both methods have their advantages and disadvantages.
+Active systems are more similar to a bench spectroscopy experiment.
+Conditions are more controlled (starting with the light source) and
+therefore, results are usually more reliable and precise, not to mention
+simpler to reach, since there is no need to account for complex physical
+phenomena, like radiative transfer~\cite{Platt2007}. However, these
+systems do require additional material, and many times entire
+infrastructures have to be built around them~\cite{Pundt2005}. Passive
+systems, on the other hand, can be comprised of just a computer, a
+spectrometer and a telescope, making them instrumentally much simpler
+than their active counterparts. This flexibility also comes with the
+possibility to develop new interesting sub-techniques, like
+\gls{maxdoas}, which allows (for instance) the determination of the
+stratospheric contribution of a certain trace gas (in opposition to its
+tropospheric contribution). The mathematical processing of the acquired
+spectra, nonetheless, is much more complex.
+
+\subsection{DOAS Tomography}%
+\label{sub:doas_tomography}
+
+DOAS tomography is a relatively new subject within the realm of
+\gls{DOAS}. It consists in the application of tomographic methods to
+reconstruct a two-dimensional or three-dimensional \emph{map} of the
+concentrations of trace gases in study. The seminal paper that
+originated this and other remote sensing tomographic techniques was
+published by Shepp in xxxx~\todo{This is written in some of the
+tomographic DOAS papers.}. It is not by any means a very populated
+literary space. In a systematic review that was performed as part of a
+course I took during the development of this PhD thesis~\todo{Reference
+the section in which this paper is more thoroughly discussed}, I managed
+to identify a total of 13 papers that were clearly about DOAS
+tomography. In doing this review, I have alaso found that the largest
+DOAS tomography study was performed in Germany, during the first years
+of the 21\textsuperscript{st} century. This research campagin, called
+BAB-II~\cite{Laepple2004}, aimed to measure and map traffic-related
+concentrations for \gls{no2} in the motorway that goes between
+Heidelberg and Mannheim. A more recent effort that is mention worthy is
+the paper by the Stutz~\cite{Stutz2016}, in which the group created a
+tomographic system that was able to perform as a fence  line monitor for
+a refinery in Houston, Texas. In between the two studies, and right
+after BAB-II, Erna Frins published her paper~\cite{Frins2006}, in which
+she described the use of a \gls{maxdoas} system alternately pointed
+towards sun-illuminated and dark targets in a tomographic manner.
+
+Besides the birds eye view of the literary panorama of the DOAS
+tomography field, this systematic review allowed me to understand two
+important gaps in the technology being employed for this research. The
+first is that all of the studies that were featured in my review used a
+very low number of tomographic projections (some dozens of line
+integrals). This is a problem because it is the single most important
+factor for the resolution of any tomographic procedure, and although
+resolution is not an absolutely critical factor in atmospheric analysis
+(because the sizes of the target objects - gas plumes - are very large
+and diffuse), it is an important system feature that should be improved.
+Moreover, the second important pattern that was clear from my research
+was that all but one of the described systems were fixed, and the one
+that was mobile was composed of a minimum of two spectral acquisition
+devices and had one of the lowest numbers of projections in all papers.
+This is a very important gap. DOAS tomography has the ability not only
+to measure but also to map pollutant concentrations and can be an
+invaluable technique in the fight to understand and track the movement
+of pollutant plumes, but the fact that the available systems require
+dedicated infrastructure to operate and have no mobility at all may be
+the most important factor leading to the almost non-existing investment
+DOAS tomography systems.
+
+More than half of the world's population is expected to be living in
+cities by the year 2050, and in the next 10 years we will see an
+increase in the number of so-called megacities of more than
+30\%~\cite{CABI2019}. This puts a lot of pressure on governmental
+agencies and municipalities (specially in the West) to "smarten up"
+their urban infrastructures, so that cities can harbor their inhabitants
+with reasonable quality of life for everyone. In fact, a recent report
+by xxx concluded that in the next yyy years, states and cities will
+spend more than 150 billion Euros on this kind of
+infrastructure~\todo{Check these numbers}. The flexibility and mobility
+that the system I am developing brings to the table are two very heavy
+points in its favor as a pollution mapping tool which is unobtainable
+with the traditional methods, whether \emph{in-situ} or remote.
