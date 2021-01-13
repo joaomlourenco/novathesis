@@ -14,8 +14,8 @@
 \abstractstring(es):={Resumen}
 \keywordsstring(es):={Palabras clave}
 \notdefined(es):={INDEFINIDO}
-\acknowledgementsstring(es):={Agradecimiento}
-\specializationstr(es):={Especialización en}
+\acknowledgementsstring(es):={Agradecimientos}
+\specializationstr(es):={Especialidad en}
 
 \majorfield(es):={\embrace{Campo científico}}
 \degreename(es):={\embrace{Nombre del programa de estudios}}
@@ -24,17 +24,17 @@
 \adviserstr(1,f,es):={Directora}% female, singular
 \adviserstr(2,m,es):={Directores}% male, plural
 \adviserstr(2,f,es):={Directoras}% female, plural
-\coadviserstr(1,m,es):={Co-director}% male, singular
-\coadviserstr(1,f,es):={Co-directora}% female, singular
-\coadviserstr(2,m,es):={Co-directores}% male, plural
-\coadviserstr(2,f,es):={Co-directoras}% female, plural
+\coadviserstr(1,m,es):={Codirector}% male, singular
+\coadviserstr(1,f,es):={Codirectora}% female, singular
+\coadviserstr(2,m,es):={Codirectores}% male, plural
+\coadviserstr(2,f,es):={Codirectoras}% female, plural
 
 \degreestr(bsc,m,es):={Grado}
 \degreestr(bsc,f,es):={Grado}
-\degreestr(msc,m,es):={Masters}
-\degreestr(msc,f,es):={Masters}
-\degreestr(mscplan,m,es):={Masters}
-\degreestr(mscplan,f,es):={Masters}
+\degreestr(msc,m,es):={Máster}
+\degreestr(msc,f,es):={Máster}
+\degreestr(mscplan,m,es):={Máster}
+\degreestr(mscplan,f,es):={Máster}
 \degreestr(phd,m,es):={Doctorado}
 \degreestr(phd,f,es):={Doctorado}
 \degreestr(phdplan,m,es):={Doctorado}
@@ -42,9 +42,9 @@
 \degreestr(phdprop,m,es):={Doctorado}
 \degreestr(phdprop,f,es):={Doctorado}
 
-\docdegreestr(bsc,es):={Tesis de fin de Grado}
-\docdegreestr(msc,es):={Tesis de Masters}
-\docdegreestr(mscplan,es):={Plan de Tesis de Masters}
+\docdegreestr(bsc,es):={Trabajo de fin de Grado}
+\docdegreestr(msc,es):={Tesis de Máster}
+\docdegreestr(mscplan,es):={Plan de Tesis de Máster}
 \docdegreestr(phdplan,es):={Plan de Tesis Doctoral}
 \docdegreestr(phdprop,es):={Propuesta de Tesis Doctoral}
 \docdegreestr(phd,es):={Tesis Doctoral}
@@ -72,19 +72,25 @@
 \committeememberstr(g,2,f,em):={Miembros invitadas}% female, plural
 	
 \dissertationstr(bsc,es):={Informe entregado para el cumplimiento de los requisitos para el título de\\[1.25ex]%
+
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(mscplan,es):={Propuesta de tesis entregada para el cumplimiento
+
+\dissertationstr(mscplan,es):={Plan de tesis entregado para el cumplimiento
 de los requisitos para el título de\\[1.25ex]%
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 
 \dissertationstr(msc,es):={Tesis entregada para el cumplimiento de los requisitos para el título de\\[1.25ex]%
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(phdplan,es):={Propuesta de tesis entregada para el cumplimiento de los requisitos del título de\\[1.25ex]%
+
+\dissertationstr(phdplan,es):={Plan de tesis entregada para el cumplimiento de los requisitos del título de\\[1.25ex]%
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+
 \dissertationstr(phdprop,es):={Propuesta de tesis entregada para el cumplimiento de los requisitos del título de\\[1.25ex]%
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+
 \dissertationstr(phd,es):={Tesis entregada para el cumplimiento de los requisitos del título de\\[1.25ex]%
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+
 \copyrighttextstr(es):={El
 \thefaculty(\option{/novathesis/copyrightlang})\ y la
 \theuniversity(\option{/novathesis/copyrightlang})\ tienen el derecho,
@@ -95,9 +101,10 @@ y a diseminarla a través de repositorios científicos y de
 permitir su copia y distribución para propositos educacionales, de
 investigación o no comerciales, en tanto en cuanto se dé credito
 al autor y al editor.}
+
 \acknowledgmentsstr(es):={Este documento se ha
-creaduo usando el procesador (pdf/Xe/Lua)\LaTeX, basado en
-\href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template\,[0],
+creaduo usando el procesador (pdf/Xe/Lua)\LaTeX, basado en la plantilla
+\href{https://github.com/joaomlourenco/novathesis}{NOVAthesis}\,[0],
 desarrollado en \href{http://www.di.fct.unl.pt}{Dep.\ Informática of FCT-NOVA} por
 \href{https://docentes.fct.unl.pt/joao-lourenco}{João M. Lourenço}. [0]\,João M. Lourenço, \emph{The NOVAthesis \LaTeX\ Template User’s Manual},
 Facultad de Ciencias y Tecnología, Universidad NOVA de Lisboa, 2021, \url{https://github.com/joaomlourenco/novathesis/raw/master/template.pdf}.}
