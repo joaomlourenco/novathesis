@@ -214,11 +214,9 @@
 	\ntaddtocover{1,2}{c}{1}{%
 	  \fontseries{mc}\fontsize{13}{13}\selectfont%
 		\textbf{\theauthordegree}\\%
-		\ifthenelse{%
-	 		\NOT\equal{\thespecialization[\option{/novathesis/coverlang}]}{}%
- 		}
- 		{\thespecialization[\option{/novathesis/coverlang}]}
- 		{}
+		\ifthenelse{\isempty{\thespecialization[\option{/novathesis/coverlang}]}}
+      {}
+      {\thespecialization[\option{/novathesis/coverlang}]}
 		\vspace{20mm}%
 	}%
 }%
@@ -240,11 +238,9 @@
 	\ntaddtocover{1,2}{c}{1}{%
 	  \fontseries{mc}\fontsize{13}{13}\selectfont%
 		\textbf{\theauthordegree\\}
-		\ifthenelse{%
-	 		\NOT\equal{\thespecialization[\option{/novathesis/coverlang}]}{}%
- 		}%
- 		  {\thespecialization[\option{/novathesis/coverlang}]}%
+		\ifthenelse{\isempty{\thespecialization[\option{/novathesis/coverlang}]}}%
  		  {}%
+ 		  {\thespecialization[\option{/novathesis/coverlang}]}%
 		\vspace{10mm}%%
 	}%
 }%

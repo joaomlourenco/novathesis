@@ -1254,7 +1254,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Title
-\renewcommand{\title}[2][]{\ifthenelse{\equal{#1}{}}{\nttitle{#2}}{\nttitle{#1}}}
+\renewcommand{\title}[2][]{\ifthenelse{\isempty{#1}}{\nttitle{#2}}{\nttitle{#1}}}
 \newcommand{\authorname}{\ntauthorname}
 \newcommand{\authordegree}{\ntauthordegree}
 \newcommand{\datemonth}{\ntdatemonth}

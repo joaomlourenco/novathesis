@@ -184,7 +184,7 @@
 
 \ntaddtocover{1,2}{c}{0.5cm}{%
   % \typeout{thefrontpageimage=\thefrontpageimage[]}
-  \ifthenelse{\equal{\thefrontpageimage[]}{}}%
+  \ifthenelse{\isempty{\thefrontpageimage[]}}%
     {}%
     {\includegraphics[width=12cm,  height=8cm]{\thefrontpageimage[]}}%
 }
