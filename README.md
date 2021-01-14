@@ -21,6 +21,22 @@
 
 
 --------
+## Table of Contents
+
+* [About](#about)
+* [Getting Started](#getting-started)
+	* [With a Local LaTeX Installation](#with-a-local-latex-installation)
+	* [With a Remote Cloud-based Service](#with-a-remote-cloud-based-service)
+* [Problems and Difficulties](#problems-and-difficulties)
+* [Suggestions, Bugs and Feature Requests](#suggestions-bugs-and-feature-requests)
+* [Recognition](#recognition)
+* [Showcase of supported Schools](#showcase-of-supported-schools)
+* [Disclaimer](#disclaimer)
+* [Word Templates](#word-templates)
+
+
+
+--------
 ## About
 
 The “novathesis” LaTeX template was initially designed for the PhD thesis and MSc dissertations at [FCT-NOVA — NOVA School of Science and Technology](http://www.fct.unl.pt), Portugal, but currently it supports more schools, namely:
@@ -50,13 +66,6 @@ The “novathesis” LaTeX template also supports the following degrees from Uni
 
 *This work is licensed under the LaTeX Project Public License v1.3c. To view a copy of this license, visit the [LaTeX project public license](https://www.latex-project.org/lppl/lppl-1-3c/).*
 
---------
-
-### Showcase of supported Schools
-<img src="NOVAthesisFiles/Images/cover-phd-nova-fct.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-ims.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-ensp.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-fcsh.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ul-ist.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ul-fc.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ipl-isel.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ips-ests.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-esep.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-msc-gt.jpg" width="100"/>
-
-<!-- ### Showcase of other usages around the world
-<img src="NOVAthesisFiles/Images/world-es-zaragoza-border.jpg" width="100"/> <img src="NOVAthesisFiles/Images/world-nl-uva-border.jpg" width="100"/>  -->
 
 --------
 ## Getting Started
@@ -125,11 +134,32 @@ Those are the right places to learn about LaTeX and ask for help!  *Please don't
 * **Would you like to request a new feature (or support of a new School)?**  Please [open an issue](https://github.com/joaomlourenco/novathesis/issues). Thanks!
 
 --------
-## Donations
+## Recognition
 
-This template is the result of hundreds (yes! *hundreds*) of hours of work from the main developer.  If you think this template really helped you while writing your thesis, think about making a [**donation**](https://paypal.me/novathesis). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
+This template is the result of hundreds (yes! *hundreds*) of hours of work from the main developer.  If you use this template, please be kind and give something back by choosing at least one of the following:
 
+1. Cite the NOVAthesis manual in your thesis/dissertation.
+
+         @Manual{novathesis-manual,
+              title        = {{The NOVAthesis Template User's Manual}},
+              author       = {João M. Lourenço},
+              organization = {NOVA University Lisbon},
+              year         = {2021},
+              url          = {https://github.com/joaomlourenco/novathesis/raw/master/template.pdf},
+         }
+
+1.  [**Make a small donation**](https://paypal.me/novathesis). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
 Thank you to our donnors:  *João Carvalho (2020), David Romão (2020), DisplayersereStream (2020), António Estêvão (2020), Jorge Barreto (2019), Raissa Almeida (2019)*.
+
+1. Give the NOVAthesis project a star in GitHub byclicking in the star at the top-right of the [project's home page](https://github.com/joaomlourenco/novathesis).
+
+--------
+## Showcase of supported Schools
+
+<img src="NOVAthesisFiles/Images/cover-phd-nova-fct.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-ims.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-ensp.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-fcsh.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ul-ist.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ul-fc.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ipl-isel.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ips-ests.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-esep.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-msc-gt.jpg" width="100"/>
+
+<!-- ### Showcase of other usages around the world
+<img src="NOVAthesisFiles/Images/world-es-zaragoza-border.jpg" width="100"/> <img src="NOVAthesisFiles/Images/world-nl-uva-border.jpg" width="100"/>  -->
 
 --------
 ## Disclaimer
@@ -139,5 +169,6 @@ These are not official templates for FCT-NOVA nor any other School, although we 
 All contributors, both sporadic and regular, are welcome. :) Please [contact me](http://docentes.fct.unl.pt/joao-lourenco) to join the team.
 
 --------
+## Word Templates
 
 *If you are here looking for the (deprecated) Word templates (not maintained anymore), please go to [this other repository](https://github.com/joaomlourenco/novathesis_word).*
