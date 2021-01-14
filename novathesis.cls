@@ -1121,8 +1121,8 @@
   \addbibresource{#2}%
 }
 
-\newcommand{\ntprintbib}{%
-  \printbibliography%
+\newcommand{\ntprintbib}[1][Bibliography]{%
+    \printbibliography[#1]%
 }
 
 
