@@ -27,8 +27,9 @@
 * [Getting Started](#getting-started)
 	* [With a Local LaTeX Installation](#with-a-local-latex-installation)
 	* [With a Remote Cloud-based Service](#with-a-remote-cloud-based-service)
-* [Problems and Difficulties](#problems-and-difficulties)
-* [Suggestions, Bugs and Feature Requests](#suggestions-bugs-and-feature-requests)
+* [Getting Help](#getting-help)
+	* [Problems and Difficulties](#problems-and-difficulties)
+	* [Suggestions, Bugs and Feature Requests](#suggestions-bugs-and-feature-requests)
 * [Recognition](#recognition)
 * [Showcase of supported Schools](#showcase-of-supported-schools)
 * [Disclaimer](#disclaimer)
@@ -114,7 +115,9 @@ The “novathesis” LaTeX template also supports the following degrees from Uni
 *NOTE: a deprecated version of the novathesis template (v4.x) is available as an [Overleaf template](https://pt.overleaf.com/latex/templates/new-university-of-lisbon-universidade-nova-de-lisboa-slash-unl-thesis-template/fwbztcrptjmg).  Just select <kbd>open as template</kbd> and go to step 6 above!*
 
 --------
-## Problems and Difficulties
+## Getting Help
+
+### Problems and Difficulties
 
 Check the [wiki](https://github.com/joaomlourenco/novathesis/wiki) and have some hope! :smile:
 
@@ -126,8 +129,7 @@ If you couldn't find what you were looking for, ask for help in:
 
 Those are the right places to learn about LaTeX and ask for help!  *Please don't ask for help by email! I will not answer them…*
 
---------
-## Suggestions, Bugs and Feature Requests
+### Suggestions, Bugs and Feature Requests
 
 * **Do you have a suggestion? ** Please add it to the [wiki](https://github.com/joaomlourenco/novathesis/wiki) and help other users!
 * **Did you find a bug?**  Please [open an issue](https://github.com/joaomlourenco/novathesis/issues). Thanks!
