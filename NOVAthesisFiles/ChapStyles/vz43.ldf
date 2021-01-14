@@ -9,7 +9,7 @@
 
 %%%%% Configure chapters, headers, footers, and page numbering
 \newif\ifNoChapNumber
-\newcommand\Vlines{%
+\providecommand\Vlines{%
   \def\VL{\rule[-2cm]{1pt}{5cm}\hspace{1mm}\relax}
   \VL\VL\VL\VL\VL\VL\VL
 }
@@ -31,6 +31,6 @@
     \end{tabular}%
     \NoChapNumberfalse%
   }
-  \renewcommand\ntprintchapternonum{\NoChapNumbertrue}
+  \renewcommand\printchapternonum{\NoChapNumbertrue}
 }
 \chapterstyle{VZ43}

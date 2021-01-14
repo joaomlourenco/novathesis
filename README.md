@@ -9,37 +9,16 @@
 [![GitHub followers](https://img.shields.io/github/followers/joaomlourenco.svg?style=social&label=Follow)](https://github.com/joaomlourenco/novathesis)
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/joaomlourenco/novathesis/graphs/commit-activity)
-[![made-with-latex](https://img.shields.io/badge/Made%20with-LaTeX-1f425f.svg?color=orange)](https://www.latex-project.org/)
-[![GitHub license](https://img.shields.io/badge/License-LaTeX%20v1.3c-orange.svg)](https://www.latex-project.org/lppl/lppl-1-3c)
+[![made-with-latex](https://img.shields.io/badge/Made%20with-LaTeX-1f425f.svg?color=green)](https://www.latex-project.org/)
+[![GitHub license](https://img.shields.io/badge/License-LaTeX%20v1.3c-green.svg)](https://www.latex-project.org/lppl/lppl-1-3c)
 
 [![GitHub release](https://img.shields.io/github/release/joaomlourenco/novathesis.svg)](https://github.com/joaomlourenco/novathesis/releases/)
 [![GitHub commits](https://img.shields.io/github/commits-since/joaomlourenco/novathesis/2.0.0.svg)](https://github.com/joaomlourenco/novathesis/commit/)
 ![![Last commit](https://github.com/joaomlourenco/novathesis)](https://img.shields.io/github/last-commit/joaomlourenco/novathesis?color=blue)
 
-[![GitHub license](https://img.shields.io/badge/SAY%20THANKS-€5-green.svg)](https://paypal.me/novathesis)
-
-<!-- ![![Opencollective Backers](https://img.shields.io/opencollective/backers/novathesis-template)](https://img.shields.io/opencollective/backers/novathesis-template) -->
+[![GitHub license](https://img.shields.io/badge/SAY%20THANKS-€5-orange.svg)](https://paypal.me/novathesis)
 
 
-<!-- [![Github all releases](https://img.shields.io/github/downloads/joaomlourenco/novathesis/total.svg)](https://github.com/joaomlourenco/novathesis/releases/)
-[![Github releases (by asset)](https://img.shields.io/github/downloads/joaomlourenco/novathesis/latest/novathesis/novathesis.cls)](github.com/joaomlourenco/novathesis/releases/) -->
-
-
-<!-- [![Twitter Follow](https://img.shields.io/twitter/follow/joao_m_lourenco.svg?style=social)](https://twitter.com/joao_m_lourenco) -->
-
-<!-- [![GitHub forks](https://img.shields.io/github/forks/Naereen/StrapDown.js.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/Naereen/StrapDown.js/network/)
-[![GitHub stars](https://img.shields.io/github/stars/Naereen/StrapDown.js.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/Naereen/StrapDown.js/stargazers/)
-[![GitHub watchers](https://img.shields.io/github/watchers/Naereen/StrapDown.js.svg?style=social&label=Watch&maxAge=2592000)](https://GitHub.com/Naereen/StrapDown.js/watchers/)
-![Profile views](https://gpvc.arturio.dev/Naereen)
-[![GitHub followers](https://img.shields.io/github/followers/Naereen.svg?style=social&label=Follow&maxAge=2592000)](https://github.com/Naereen?tab=followers)
-[![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/contributors/)
-[![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://GitHub.com/Naereen/StrapDown.js/issues/)
-[![GitHub issues-closed](https://img.shields.io/github/issues-closed/Naereen/StrapDown.js.svg)](https://GitHub.com/Naereen/StrapDown.js/issues?q=is%3Aissue+is%3Aclosed)
-[![Only 32 Kb](https://badge-size.herokuapp.com/Naereen/StrapDown.js/master/strapdown.min.js)](https://github.com/Naereen/StrapDown.js/blob/master/strapdown.min.js)
-[![HitCount](http://hits.dwyl.io/Naereen/badges.svg)](http://hits.dwyl.io/Naereen/badges)
-[![Package Control total downloads](https://img.shields.io/packagecontrol/dt/SwitchDictionary.svg)](https://packagecontrol.io/packages/SwitchDictionary)
-[![Analytics](https://ga-beacon.appspot.com/UA-38514290-17/github.com/Naereen/badges/README.md?pixel)](https://GitHub.com/Naereen/badges/)
-[![Analytics](https://ga-beacon.appspot.com/UA-38514290-17/github.com/Naereen/badges/README.md?pixel)](https://GitHub.com/Naereen/badges/) -->
 
 --------
 ## About

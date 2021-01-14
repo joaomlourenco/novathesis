@@ -39,7 +39,7 @@
     \sbox{\ChpNumBox}{%
       \BuildChpNum{\chapnamefont\@chapapp}%
       {\chapnumfont\thechapter}}}%
-  \renewcommand{\ntprintchapternonum}{%
+  \renewcommand{\printchapternonum}{%
     \sbox{\ChpNumBox}{%
       \BuildChpNum{\chapnamefont\vphantom{\@chapapp}}%
       {\chapnumfont\hphantom{\thechapter}}}}%
