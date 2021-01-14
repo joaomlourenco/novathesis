@@ -1121,11 +1121,11 @@
   \addbibresource{#2}%
 }
 
-\newcommand{\ntprintbib}[1][Bibliography]{%
-    \printbibliography[#1]%
+\newcommand{\ntprintbib}[1][]{%
+  \ifthenelse{\isempty{#1}}%
+  {\printbibliography}%
+  {\printbibliography[title=#1]}%
 }
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Copyright page
