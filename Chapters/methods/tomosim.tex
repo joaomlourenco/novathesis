@@ -219,16 +219,30 @@ in Table~\ref{tab:new_phantom}.
 
 \begin{figure}[htpb]
     \centering
-    \missingfigure{}
-    \caption{New phantom custom designed for the Tomosim application.}
+    \includegraphics[width=.8\textwidth]{img/eps/original_phantom.eps}
+    \caption{A graphical representation of the new spectral phantom,
+    custom built for the TomoSim application.}
     \label{fig:new_phantom}
 \end{figure}
 
 
 \begin{table}[htpb]
     \centering
-    \caption{New phantom feature definition.}
+    \caption{Table summarising the new phantom's construction details,
+    as a sum of 5 Gaussian profiles and an ellipse designed using
+    TomoPhantom. In this table, C0 is the object's amplitude, X0 and Y0
+    are its center coordinates, and a and b are the objects half-widths.
+    The table is constructed using TomoPhantom's particular syntax and
+    more information can be obtained at~\cite{Kazantsev2018}.}
     \label{tab:new_phantom}
-    \missingfigure{Missing table for the feature definition of the
-    phantom.}
+    \begin{tabular}{@{}lcccccr@{}}
+    \hline
+    \textbf{Type} & \textbf{C0} & \textbf{X0} & \textbf{Y0} & \textbf{a}
+                  & \textbf{b} & \textbf{\textbf{Angle}} \\ \hline
+    Gaussian & 1 & -0,1 & -0,1 & 0,25 & 0,5 & -45 \\
+    Gaussian & 1 & 0,6 & 0 & 0,65 & 0,45 & -45 \\
+    Gaussian & 1 & -0,6 & -0,4 & 0,8 & 0,8 & 0 \\
+    Gaussian & 1 & -0,4 & 0,8 & 0,7 & 0,7 & 0 \\
+    Ellipse & 1 & 0,4 & -0,8 & 0,3 & 0,15 & 0 \\ \hline
+    \end{tabular}
 \end{table}
