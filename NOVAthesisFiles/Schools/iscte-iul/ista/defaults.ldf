@@ -169,10 +169,10 @@
 \ntaddtocover{1,2}{c}{0.5cm}{%
   \fontsize{16}{16}\selectfont%
   \vspace{1cm}%
-  %\textbf{\MakeUppercase{\theuniversity[\option{/novathesis/coverlang}]}}\\%
+  %\textbf{\MakeUppercase{\theuniversity(\option{/novathesis/coverlang})}}\\%
   \textbf{\thefaculty(\option{/novathesis/coverlang})}\\%
   \vspace{2mm}%
-  %\textbf{\MakeUppercase{\thefaculty[\option{/novathesis/coverlang}]}}%
+  %\textbf{\MakeUppercase{\thefaculty(\option{/novathesis/coverlang})}}%
   \textbf{\themajorfield(\option{/novathesis/coverlang})}%
 }
 

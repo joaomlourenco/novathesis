@@ -200,7 +200,7 @@
   \end{minipage}%
   \hspace{0.65cm}%
   \begin{minipage}[t]{0.55\textwidth}%
-  	\includegraphics[height=5.3cm]{\thefrontpageimage[]}%
+  	\includegraphics[height=5.3cm]{\thefrontpageimage()}%
   \end{minipage}%
 }
 
