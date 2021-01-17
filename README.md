@@ -150,8 +150,7 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
               url          = {https://github.com/joaomlourenco/novathesis/raw/master/template.pdf},
          }
 
-1.  [**Make a small donation**](https://paypal.me/novathesis). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.
-Thank you to our donnors:  *João Carvalho (2020), David Romão (2020), DisplayersereStream (2020), António Estêvão (2020), Jorge Barreto (2019), Raissa Almeida (2019)*.
+1.  [**Make a small donation**](https://paypal.me/novathesis). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.  Our special thanks to:  **2021:** Pedro Rechena, Filipa Carvalho; **2020:** João Carvalho, David Romão, DisplayersereStream, António Estêvão; **2019:** Jorge Barreto, Raissa Almeida.
 
 1. Give the NOVAthesis project a star in GitHub byclicking in the star at the top-right of the [project's home page](https://github.com/joaomlourenco/novathesis).
 
