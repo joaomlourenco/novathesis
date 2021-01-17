@@ -246,3 +246,83 @@ in Table~\ref{tab:new_phantom}.
     Ellipse & 1 & 0,4 & -0,8 & 0,3 & 0,15 & 0 \\ \hline
     \end{tabular}
 \end{table}
+
+\subsection{Error Estimation}%
+\label{sub:error_estimation}
+
+Error sources for the Tomosim simulator come in four different natures:
+time errors, geometric errors, spectroscopic errors and reconstruction
+errors.
+
+Time errors come from the fact that there are two moments of
+measurement. In a dynamic system, the time that passes between the two
+is enough for concentrations to change significantly. Tomosim does not
+address these errors, because they can be eliminated by the introduction
+of a second drone carrying the same type of equipment, which would
+eliminate said time difference.
+
+Geometric errors exist due to the drone not being able to situate
+itself perfectly. There is always a positioning error, no matter how
+sophisticated the onboard equipment is. This type of error is addressed
+in the simulation through a Monte Carlo like approach.
+
+Positioning and pointing errors are assumed to have normal
+distributions. Each time a point is calculated by the drone, a normally
+distributed random number, with a mean if 0 and a standard deviation
+equal to the nominal error of the positioning system. This number is
+then added to the theoretical point.
+Figure~\ref{fig:geometric_error_calculation} is a graphical
+representation of the reasoning behind the calculation of the geometric
+error. The image deals with two types of error. One comes from the
+\gls{rtk} positioning system (the positioning error, $\epsilon_p$); and
+the other that comes from the gimbal (the pointing error,
+$\epsilon_\gamma$). The two $\epsilon$ values are the nominal error for
+the positioning and the pointing devices. The error is introduced in the
+simulation through the values of $\beta$ and $D$ (see
+Figure~\ref{fig:p2_calculation}) while calculating $P_2$. Given the very
+low nominal error for the gimbal, the small angle approximation is valid
+($\sin \theta = \theta$). This is used to determine the theoretical
+value of $P_2$, located on the device's circular trajectory. Finally,
+the software adds the positioning error, using the same process as in
+$P_1$'s case. The error depiction in
+Figure~\ref{fig:geometric_error_calculation} is extremely exaggerated
+for visibility.
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/pdf/error_estimation_2.pdf}
+    \caption{Error estimation graphical representation. Note errors are
+    extremely exaggerated for visualisation purposes.}
+    \label{fig:geometric_error_calculation}
+\end{figure}
+
+The third type of error are the spectroscopic errors. These come from
+the spectroscopic equipment that is used to gather projections. To take
+this noise into account, the simulator adds a Gaussian noise spectrum to
+each measurement, which is configurable through its standard deviation,
+as was previously done in~\cite{Stutz1996}. This is a valid approach,
+insofar as the captured spectra are perfectly calibrated regarding
+spectral shift and squeeze. Since this is a simulation software, this is
+an acceptable assumption.
+
+The final type of error that the system needs to contend with is the
+reconstruction error. In tomographic inversion problems, it is common to
+use techniques such as the \gls{mse} as a metric for an algorithm's
+performance. Tomosim was also evaluated in this light and in two
+separate ways. The first was to calculate the \gls{mse} for each pixel of the
+whole image. This information can still be viewed as an image (it is a
+two-dimensional grid of values) and paints an immediate picture of the
+general behaviour of the reconstruction algorithm. Moreover, it can tell
+the viewer if there are any types of shapes or areas in which the
+algorithm has more difficulties. The second way of using \gls{mse} to
+evaluate the reconstruction is to calculate a score through
+Equation~\ref{eq:mse_score}. In this equation, and with respect to this
+simulator, $f$ is the original image and $g$ the one reconstructed from
+projections.
+
+\begin{equation}
+    \centering
+    \label{eq:mse_score}
+    E = \sqrt{\frac{\sum\lvert g(x,y) - f(x,y)
+    \lvert^{^{2}}}{\sum\lvert f(x,y) \lvert ^{^{2}}}}
+\end{equation}
