@@ -152,7 +152,7 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 
 1.  [**Make a small donation**](https://paypal.me/novathesis). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.  Our special thanks to:  **2021:** Pedro Rechena, Filipa Carvalho; **2020:** João Carvalho, David Romão, DisplayersereStream, António Estêvão; **2019:** Jorge Barreto, Raissa Almeida.
 
-1. Give the NOVAthesis project a star in GitHub byclicking in the star at the top-right of the [project's home page](https://github.com/joaomlourenco/novathesis).
+1. Give the NOVAthesis project a star in GitHub by clicking in the star at the top-right of the [project's home page](https://github.com/joaomlourenco/novathesis).
 
 --------
 ## Showcase of supported Schools
