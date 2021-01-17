@@ -43,7 +43,7 @@
 \newlength{\@nt@spine@box@date@width}%
 \newlength{\@nt@spine@box@date@height}%
 \newcommand{\make@spine@box@date}{%
-  \savebox{\@nt@spine@box@date}{\thespine[year]}%
+  \savebox{\@nt@spine@box@date}{\thespine(year)}%
   \settowidth{\@nt@spine@box@date@width}{\usebox{\@nt@spine@box@date}}%
   \settoheight{\@nt@spine@box@date@height}{\usebox{\@nt@spine@box@date}}%
   \ifdim\@nt@spine@box@date@width < 0.90\@nt@spinewidth%
@@ -74,7 +74,7 @@
     \dimexpr\linewidth-\@nt@spine@box@logo@width-\@nt@spine@box@date@width%
   }%
   \savebox{\@nt@spine@box@title}{%
-    \parbox{#1\@nt@spine@box@middlewidth}{\centering\bfseries\thespine[title]}%
+    \parbox{#1\@nt@spine@box@middlewidth}{\centering\bfseries\thespine(title)}%
   }%
   \settowidth{\@nt@spine@box@title@width}{\usebox{\@nt@spine@box@title}}%
   \settoheight{\@nt@spine@box@title@height}{\usebox{\@nt@spine@box@title}}%
@@ -94,7 +94,7 @@
 \newlength{\@nt@spine@box@author@height}%
 \newcommand{\make@spine@box@author}[1]{%
   \savebox{\@nt@spine@box@author}{%
-    \parbox{#1\@nt@spine@box@middlewidth}{\centering\thespine[author]}%
+    \parbox{#1\@nt@spine@box@middlewidth}{\centering\thespine(author)}%
   }%
   \settowidth{\@nt@spine@box@author@width}{\usebox{\@nt@spine@box@author}}%
   \settoheight{\@nt@spine@box@author@height}{\usebox{\@nt@spine@box@author}}%
@@ -162,9 +162,9 @@
 \newcommand{\ntprintspine}{%
   \clearforchapter%
   \thispagestyle{empty}%
-  \make@spine@box@logo{}{\thespine[logo]}%
+  \make@spine@box@logo{}{\thespine(logo)}%
   \ifexists{spine}[logotwo]{%
-    \make@spine@box@logotwo{}{\thespine[logotwo]}%
+    \make@spine@box@logotwo{}{\thespine(logotwo)}%
   }
   \make@spine@box@date%
   \make@spine@box@titleauthor%

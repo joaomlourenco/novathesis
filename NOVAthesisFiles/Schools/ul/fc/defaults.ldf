@@ -180,7 +180,7 @@
   	\OR\equal{\option{/novathesis/docdegree}}{mscplan}%
  	}{% THEN
 	 	\vspace{2mm}%
-	 	\MakeUppercase{\thedepartment[\option{/novathesis/coverlang}]}%
+	 	\MakeUppercase{\thedepartment(\option{/novathesis/coverlang})}%
  	}{% ELSE
   }%
   \vspace{20mm}%
@@ -214,9 +214,9 @@
 	\ntaddtocover{1,2}{c}{1}{%
 	  \fontseries{mc}\fontsize{13}{13}\selectfont%
 		\textbf{\theauthordegree}\\%
-		\ifthenelse{\isempty{\thespecialization[\option{/novathesis/coverlang}]}}
+		\ifthenelse{\isempty{\thespecialization(\option{/novathesis/coverlang})}}
       {}
-      {\thespecialization[\option{/novathesis/coverlang}]}
+      {\thespecialization(\option{/novathesis/coverlang})}
 		\vspace{20mm}%
 	}%
 }%
@@ -238,9 +238,9 @@
 	\ntaddtocover{1,2}{c}{1}{%
 	  \fontseries{mc}\fontsize{13}{13}\selectfont%
 		\textbf{\theauthordegree\\}
-		\ifthenelse{\isempty{\thespecialization[\option{/novathesis/coverlang}]}}%
+		\ifthenelse{\isempty{\thespecialization(\option{/novathesis/coverlang})}}%
  		  {}%
- 		  {\thespecialization[\option{/novathesis/coverlang}]}%
+ 		  {\thespecialization(\option{/novathesis/coverlang})}%
 		\vspace{10mm}%%
 	}%
 }%
@@ -249,7 +249,7 @@
 % Advisers
 \ntaddtocover{1,2}{c}{1}{%
   \fontsize{13}{13}\selectfont%
-  \theadviserslabel[\option{/novathesis/coverlang}]\\%
+  \theadviserslabel(\option{/novathesis/coverlang})\\%
   \vspace{5mm}%
   \ntprintadvisersaslist%
   \vspace{5mm}%
