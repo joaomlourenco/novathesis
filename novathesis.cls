@@ -966,16 +966,18 @@
   % \typeout{NT Attemnpting to load #1}%
 	\ifmaindoc{% THEN it is a main document
     \@ntloadfisrt@ii{#1}%
+    \ntfixspacing%
+    \clearforchapter%
 	}{% ELSE
     % It is a plan or proposal type document
 	}%  
 }
 
-\newcommand{\ntprintdedicatory}{\@nt@printifmaindoc@i{dedicatory}\ntfixspacing\clearforchapter}
+\newcommand{\ntprintdedicatory}{\@nt@printifmaindoc@i{dedicatory}}
 
-\newcommand{\ntprintquote}{\@nt@printifmaindoc@i{quote}\ntfixspacing\clearforchapter}
+\newcommand{\ntprintquote}{\@nt@printifmaindoc@i{quote}}
 
-\newcommand{\ntprintacknowledgements}{\@nt@printifmaindoc@i{acknowledgements}\ntfixspacing\clearforchapter}
+\newcommand{\ntprintacknowledgements}{\@nt@printifmaindoc@i{acknowledgements}}
 
 
 
