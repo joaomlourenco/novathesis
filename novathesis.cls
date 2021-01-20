@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-01-09 [5.2.1]
+%% Version 2021-01-20 [5.2.2]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -43,8 +43,8 @@
 %%            NOVA School of Science and Technology, NOVA University Lisbon, 2021,
 %%            \url{https://github.com/joaomlourenco/novathesis/raw/master/template.pdf}.”
 %%    The BibTeX entry is:
-%%           @ Manual{novathesis-manual,
-%%            title        = {{The NOVAthesis Template User's Manual}},
+%%           @Manual{novathesis-manual,
+%%            title        = {{The NOVAthesis \LaTeX\ Template User's Manual}},
 %%            author       = {João M. Lourenço},
 %%            organization = {NOVA University Lisbon},
 %%            year         = {2021},
@@ -450,27 +450,35 @@
 \newcommand{\ntfixspacing}{%
   \iftoggle{/@nt/ntfixspacing}{}
   {%
-    % \options{/@nt/ntfixspacing = true}
-    \newpage%
-    \thispagestyle{empty}%
-    \null\vfill%
     \begin{Spacing}{1}%
-      \scriptsize%
       \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
-      \fontsize{6.3}{6.3}\selectfont% 
-      \noindent%
-      \hypersetup{allcolors=white}\textcolor{white}%
-                 {\theacknowledgmentsstr(\option{/novathesis/coverlang})}%
-    \end{Spacing}%
+      \fontsize{0.01}{0.01}\selectfont%
+      \hypersetup{allcolors=white}%
+      \noindent\makebox[0pt]{%
+        \noindent\textcolor{white}{\theacknowledgmentsstr(\option{/novathesis/coverlang})}%
+      }%
+    \end{Spacing}
+    % \options{/@nt/ntfixspacing = true}
+    % \newpage%
+    % \thispagestyle{empty}%
+    % \null\vfill%
+    % \begin{Spacing}{1}%
+    %   \scriptsize%
+    %   \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+    %   \fontsize{6.3}{6.3}\selectfont%
+    %   \noindent%
+    %   \hypersetup{allcolors=white}\textcolor{white}%
+    %              {\theacknowledgmentsstr(\option{/novathesis/coverlang})}%
+    % \end{Spacing}%
   }
 }
 
 \csdef{@thecover1backpage}{%
-  \ntfixspacing%
+  \newpage\thispagestyle{empty}\null\ntfixspacing%
 }
 
 \csdef{@thecover2backpage}{%
-  \ntfixspacing%
+  \newpage\thispagestyle{empty}\null\ntfixspacing%
 }
 
 \newcommand{\ntprintbackcoverpage}{%
