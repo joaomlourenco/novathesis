@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-01-20 [5.2.2]
+%% Version 2021-01-21 [5.1.3]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -334,6 +334,8 @@
     % \thispagestyle{empty}%
     \ntcoverprehook{1}%
     \@nt@select@lang{\option{/novathesis/coverlang}}%
+    \pdfbookmark{\thefrontmatterstring(\option{/novathesis/coverlang})}{bmfrontmatter}
+    \subpdfbookmark{\thecoverstring(\option{/novathesis/coverlang})}{bmcover}
     \@nt@printthecover{1}%
     \ntcoverposthook{1}%
     \iftoggle{/novathesis/secondcover}%
@@ -343,7 +345,6 @@
           \ntcoverposthook{2}%
       }%
       {}% NO SECOND COVER
-    \@nt@select@lang{\option{/novathesis/mainlang}}%
   \egroup%
 }
 
@@ -505,6 +506,7 @@
 }
 
 \newcommand*{\ntprintaftercover}{%
+  \@nt@select@lang{\option{/novathesis/mainlang}}%
   \ifthenelse{\equal{\option{/novathesis/aftercover}}{true}}%
   {%
     \InputIfFileExists{Chapters/\@nt@aftercover@file}%
@@ -519,9 +521,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\@nt@undefined[1][]{\embrace{#1 \thenotdefined(\option{/novathesis/mainlang})}}
 
+\assocarray{frontmatterstring}
+\assocarray{coverstring}
+\assocarray{copyrightstring}
+\assocarray{dedicatorystring}
+\assocarray{acknowledgementsstring}
+\assocarray{quotestring}
 \assocarray{abstractstring}
 \assocarray{keywordsstring}
-\assocarray{acknowledgementsstring}
 \assocarray{notdefined}
 \assocarray{specializationstr}
 
@@ -609,6 +616,7 @@
 \gdef\thecopyrightstr{%
   \thispagestyle{empty}%
   \@nt@select@lang{\option{/novathesis/copyrightlang}}%
+  \currentpdfbookmark{Copyright}{bmcopyright}
   \noindent%
   Copyright \textcopyright\ \theauthorname, %
   \thefaculty(\option{/novathesis/copyrightlang}), \theuniversity(\option{/novathesis/copyrightlang}).\\%
@@ -970,9 +978,17 @@
   \InputIfFileExists{\option@listmatch@value}{}{}%
 }
 
+\def\lowc{\expandafter\lowercaseA\expandafter{\iffalse}\fi}
+\long\def\lowercaseA#1{\lowercase{#1}\egroup}
+\def\upc{\expandafter\uppercaseA\expandafter{\iffalse}\fi}
+\long\def\uppercaseA#1{\uppercase{#1}\egroup}
+
 \newcommand{\@nt@printifmaindoc@i}[1]{%
   % \typeout{NT Attemnpting to load #1}%
 	\ifmaindoc{% THEN it is a main document
+    \@nt@select@lang{\option{/novathesis/mainlang}}%
+    % \edef\@nt@bm{\expandafter\MakeUppercase\expandafter#1}
+    \currentpdfbookmark{\csuse{the#1string}(\option{/novathesis/mainlang})}{bm#1}
     \@ntloadfisrt@ii{#1}%
     \ntfixspacing%
     \clearforchapter%
@@ -995,14 +1011,26 @@
 \newcommand{\ntprintabstracts}{%
   \xdef\@nt@tmp{\theabstractorder(\option{/novathesis/mainlang})}%
   \expandnext{\forcsvlist{\@ntprintabstract}}{\@nt@tmp}%
+  \@nt@select@lang{\option{/novathesis/mainlang}}%  
+}
+
+\newcommand{\abstracttextprehook}[1]{
+	\rule{\textwidth}{0.2mm} ~\\[-3.5ex]%
+}
+\newcommand{\abstracttextposthook}[1]{
+	\null\\[2ex]\rule{\textwidth}{0.2mm}  
 }
 
 \newcommand{\@ntprintabstract}[1]{%
   % \typeout{NT PRINT ABSTRACT #1}%
   \setabstractlang{#1}%
+  \currentpdfbookmark{\theabstractstring(#1)}{bmabstract#1}
+  \printabstracttitle{#1}%
+  \abstracttextprehook{#1}
   \@ntloadfisrt@ii[#1]{abstract}%
-  \@nt@select@lang{\option{/novathesis/mainlang}}%
+  \abstracttextposthook{#1}%
   \ntfixspacing%
+  \clearforchapter%
 }
 
 
@@ -1206,8 +1234,9 @@
 \newcommand{\setabstractlang}[1]{%
 	\@nt@select@lang{#1}%
   \renewcommand{\@nt@keywordsstr}{\thekeywordsstring(#1)}%
+}
+\newcommand{\printabstracttitle}[1]{%
 	\chapter*{\theabstractstring(#1)}%
-	\rule{\textwidth}{0.2mm} ~\\[-3.5ex]%
 }
 
 
@@ -1223,7 +1252,6 @@
     {\hypersetup{pdfkeywords = {\BODY}}}
   \par\vskip\baselineskip\noindent{\bfseries\@nt@keywordsstr: }%
   \BODY%
-  \\[2ex]\rule{\textwidth}{0.2mm}  
 }
 
 
