@@ -101,7 +101,7 @@ The “novathesis” LaTeX template also supports the following degrees from Uni
 
 1. Download the [latest version from the GitHub repository as a Zip file](https://github.com/joaomlourenco/novathesis/archive/master.zip).
 2. Login to your favorite LaTeX cloud service.  I recommend [Overleaf](https://www.overleaf.com?r=f5160636&rm=d&rs=b) but there are alternatives (these instructions apply to Overleaf  and you'll have to adapt for other providers).
-3. Create a new empty project.
+3. In the menu select <kbd>New project</kbd>-><kbd>Upload project</kbd>
 4. Upload the zip with all the "novathesis" files.
 5. Select “*template.tex*” as the main file.
 6. Compile the template and have the first version of the PDF.
