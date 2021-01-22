@@ -170,16 +170,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % LOGO
-\ntaddtocover{1}{c}{0cm}{%
+\ntaddtocover[cover=1, align=c, vspace=0cm]{%
   \includegraphics[height=4.6cm]{ESTS-JPG}%
 }
 
-\ntaddtocover{2}{c}{0cm}{%
+\ntaddtocover[cover=2, align=c, vspace=0cm]{%
   \rule{0cm}{4.6cm}%
 }
 
 % Author name and Title
-\ntaddtocover{1,2}{l}{5cm}{%
+\ntaddtocover[cover=1/2, align=l, vspace=5cm]{%
   % Author name
   \begin{minipage}[t]{0.37\textwidth}%
     \fontsize{16}{16}\selectfont\raggedleft%
@@ -194,7 +194,7 @@
 }
 
 % Photo
-\ntaddtocover{1}{l}{1}{%
+\ntaddtocover[cover=1, align=l, vspace=1]{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%
@@ -205,7 +205,7 @@
 }
 
 % Degree
-\ntaddtocover{1}{l}{1}{%
+\ntaddtocover[cover=1, align=l, vspace=1]{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%
@@ -218,7 +218,7 @@
 }
 
 % Advisers
-\ntaddtocover{1}{c}{1}{%
+\ntaddtocover[cover=1, align=c, vspace=1]{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%
@@ -232,7 +232,7 @@
 }
 
 % Date
-\ntaddtocover{1}{c}{2}{%
+\ntaddtocover[cover=1, align=c, vspace=2]{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%
@@ -249,7 +249,7 @@
 
 
 
-\ntaddtocover{2}{c}{1}{%
+\ntaddtocover[cover=2, align=c, vspace=1]{%
   \begin{minipage}[t]{0.20\textwidth}%
     ~%
   \end{minipage}%
@@ -266,7 +266,7 @@
 
 
 % Date
-\ntaddtocover{1,2}{c}{1}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1]{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%

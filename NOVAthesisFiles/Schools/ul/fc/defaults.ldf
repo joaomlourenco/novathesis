@@ -170,7 +170,7 @@
 % Temporary macro to use in conditional expressions;
 
 % School
-\ntaddtocover{1,2}{c}{0.5cm}{%
+\ntaddtocover[cover=1/2, align=c, vspace=0.5cm]{%
   \fontseries{mc}\fontsize{12}{12}\selectfont%
   \MakeUppercase{\theuniversity(\option{/novathesis/coverlang})}\\%
   \vspace{2mm}%
@@ -187,7 +187,7 @@
 } 
 
 % Logo
-\ntaddtocover{1,2}{c}{0cm}{%
+\ntaddtocover[cover=1/2, align=c, vspace=0cm]{%
 	\ifthenelse{%
         \equal{\option{/novathesis/docdegree}}{phd}%
         \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
@@ -198,7 +198,7 @@
 }
 
 % % Title of Dissertation
-\ntaddtocover{1,2}{c}{1}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1]{%
   \fontseries{mc}\fontsize{17}{17}\selectfont%
   \textbf{\thecovertitle}%
   \vspace{20mm}%
@@ -211,7 +211,7 @@
   \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
   \OR\equal{\option{/novathesis/docdegree}}{phdplan}}%
 {
-	\ntaddtocover{1,2}{c}{1}{%
+	\ntaddtocover[cover=1/2, align=c, vspace=1]{%
 	  \fontseries{mc}\fontsize{13}{13}\selectfont%
 		\textbf{\theauthordegree}\\%
 		\ifthenelse{\isempty{\thespecialization(\option{/novathesis/coverlang})}}
@@ -223,7 +223,7 @@
 {}
 
 % Author name
-\ntaddtocover{1,2}{c}{1}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1]{%
   \fontseries{mc}\fontsize{15}{15}\selectfont%
   \theauthorname%
   \vspace{10mm}%
@@ -235,7 +235,7 @@
   \equal{\option{/novathesis/docdegree}}{msc}%
   \OR\equal{\option{/novathesis/docdegree}}{mscplan}}%
 {
-	\ntaddtocover{1,2}{c}{1}{%
+	\ntaddtocover[cover=1/2, align=c, vspace=1]{%
 	  \fontseries{mc}\fontsize{13}{13}\selectfont%
 		\textbf{\theauthordegree\\}
 		\ifthenelse{\isempty{\thespecialization(\option{/novathesis/coverlang})}}%
@@ -247,7 +247,7 @@
 {}
 
 % Advisers
-\ntaddtocover{1,2}{c}{1}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1]{%
   \fontsize{13}{13}\selectfont%
   \theadviserslabel(\option{/novathesis/coverlang})\\%
   \vspace{5mm}%
@@ -257,14 +257,14 @@
 
 
 % Committee — only print the committee for the main classes
-\ntaddtocover{1,2}{c}{1}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1]{%
 		\ntprintcommittee%
 }
 
 % Document purpose
 % Only if it is a phd doc;
 \ifmaindoc{%
-	\ntaddtocover{1,2}{c}{1}{%
+	\ntaddtocover[cover=1/2, align=c, vspace=1]{%
 	  \fontseries{mc}\fontsize{12}{12}\selectfont%
 		\thepresentationtext%
 	}%
@@ -273,7 +273,7 @@
 
 
 % Date
-\ntaddtocover{1,2}{c}{1}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1]{%
 	\vspace{5mm}%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
   \ifdraftdoc%

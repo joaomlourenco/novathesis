@@ -113,48 +113,60 @@
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% \ntaddtocover[cover=1/2, align=c, height=3cm, inalign=c, vspace=0cm]{%
+%   \textbf{\theauthorname}
+% }
+%
+% \ntaddtocover[cover=1, align=l, vspace=1]{%
+%   \textbf{\theauthorname}
+% }
+%
+% \ntaddtocover[cover=1, align=l, vspace=1cm]{%
+%   \textbf{\theauthorname}
+% }
+% \endinput
 
 % Author name
-\ntaddtocover{1,2}{c}{0cm}{%
+\ntaddtocover[cover=1/2, align=c, vspace=0cm]{%
   \ntcoverbackground
   \fontsize{14}{14}\selectfont
   \textbf{\theauthorname}
 }
 
 % Academic qualifications
-\ntaddtocover{1,2}{c}{0.25cm}{%
+\ntaddtocover[cover=1/2, align=c, vspace=0.25cm]{%
   \fontsize{11}{11}\selectfont
   \theauthordegree
 }
 
 % % Title of Dissertation
-\ntaddtocover{1,2}{c}{4.5cm}{%
+\ntaddtocover[cover=1/2, align=c, vspace=4.5cm]{%
   \fontsize{16}{16}\selectfont
   \textbf{\thecovertitle}
 }
 
 % Degree
-\ntaddtocover{1,2}{c}{1.5cm}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1.5cm]{%
   \fontsize{11}{11}\selectfont
   \thepresentationtext
 }
 
 % Advisers
-\ntaddtocover{1,2}{c}{2}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1]{%
   \fontsize{12}{12}\selectfont
   \ntprintadvisers
 }
 
 
 % Committee — only print the committee for the main classes
-\ntaddtocover{1,2}{r}{2}{%
+\ntaddtocover[cover=1/2, align=r, vspace=1]{%
   \fontsize{10}{10}\selectfont%
   \ntprintcommittee%
 }
 
 
 % Date
-\ntaddtocover{1,2}{c}{4}{%
+\ntaddtocover[cover=1/2, align=c, vspace=3.5cm  ]{%
   \fontsize{11}{11}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}

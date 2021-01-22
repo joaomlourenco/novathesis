@@ -120,14 +120,14 @@
 \definecolor{fcshblue}{RGB}{25,61,108}% Background title color
 
 
-\ntaddtocover{1}{l}{1.0cm}{%
+\ntaddtocover[cover=1, align=l, vspace=1.0cm]{%
   \null%
   \begin{tabular*}{{0.5\stockwidth}}[c]{@{\hspace*{0.8cm}}l@{}}%
     \includegraphics[width=9cm]{novologo_cores_crop}%
   \end{tabular*}%
 }
 
-\ntaddtocover{2}{l}{1.0cm}{%
+\ntaddtocover[cover=2, align=l, vspace=1.0cm]{%
   \null%
   \begin{tabular*}{{0.5\stockwidth}}[c]{@{\hspace*{0.8cm}}l@{}}%
     \includegraphics[width=9cm]{novologo_cores_crop}%
@@ -139,25 +139,25 @@
 
 
 % % Title of Dissertation
-\ntaddtocover{1,2}{c}{1}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1]{%
   \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\thecovertitle}}%
 }
 
 % Author name
-\ntaddtocover{1,2}{c}{1}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1]{%
   \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\theauthorname}}%
 }
 
 % Degree
-\ntaddtocover{1,2}{c}{1}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1]{%
   \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\thepresentationtext}}%
 }
 
 % Date
-\ntaddtocover{1,2}{c}{1}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1]{%
   \fontsize{14}{14}\selectfont%
   \textcolor{fcshblue}{%%
     \ifdraftdoc%
@@ -168,11 +168,11 @@
   }%
 }
 
-\ntaddtocover{1}{c}{2.0cm}{%
+\ntaddtocover[cover=1, align=c, vspace=2.0cm]{%
   \null
 }
 
-\ntaddtocover{2}{c}{1cm}{%
+\ntaddtocover[cover=2, align=c, vspace=1cm]{%
  \raisebox{-1cm}{%
    \textcolor{fcshblue}{\rule{\stockwidth}{0.75cm}}%
  }%
