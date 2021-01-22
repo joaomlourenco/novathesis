@@ -103,7 +103,7 @@
 % \renewcommand{\ntcoverprehook}[1]{}
 
 % Title of Dissertation
-\ntaddtocover{1}{c}{6cm}{%
+\ntaddtocover[cover=1, align=c, vspace=6cm]{%
   \ntcoverbackground
   \begin{minipage}[t][7.5cm][b]{\linewidth}
     \raggedright
@@ -113,7 +113,7 @@
 }
 
 % Author name
-\ntaddtocover{1}{c}{0.9cm}{%
+\ntaddtocover[cover=1, align=c, vspace=0.9cm]{%
   \begin{minipage}[t][1.8cm][c]{\linewidth}
     \fontsize{16}{16}\selectfont
     \textbf{\theauthorname}
@@ -121,7 +121,7 @@
 }
 
 % Title of Dissertation - COVER 2
-\ntaddtocover{2}{c}{2cm}{%
+\ntaddtocover[cover=2, align=c, vspace=2cm]{%
   \begin{minipage}[t]{\linewidth}
     \centering
     \fontsize{16}{16}\selectfont
@@ -130,37 +130,37 @@
 }
 
 % Academic qualifications
-% \ntaddtocover{1,2}{c}{0.25cm}{%
+% \ntaddtocover[cover=1/2, align=c, vspace=0.25cm]{%
 %   \fontsize{11}{11}\selectfont
 %   \theauthordegree
 % }
 
 % Degree
-% \ntaddtocover{1,2}{c}{1.5cm}{%
+% \ntaddtocover[cover=1/2, align=c, vspace=1.5cm]{%
 %   \fontsize{11}{11}\selectfont
 %   \thepresentationtext
 % }
 
 % Advisers
-\ntaddtocover{2}{c}{3cm}{%
+\ntaddtocover[cover=2, align=c, vspace=3cm]{%
   \ntprintadvisersgroup{adviser}
 }
 
 % Co-advisers
-\ntaddtocover{2}{c}{1cm}{%
+\ntaddtocover[cover=2, align=c, vspace=1cm]{%
   \ntprintadvisersgroup{coadviser}
 }
 
 
 % Committee — only print the committee for the main classes
-% \ntaddtocover{1,2}{r}{2}{%
+% \ntaddtocover[cover=1/2, align=r, vspace=2]{%
 %   \fontsize{10}{10}\selectfont%
 %   \ntprintcommittee%
 % }
 
 
 % Date
-\ntaddtocover{2}{c}{1}{%
+\ntaddtocover[cover=2, align=c, vspace=1]{%
   \fontsize{11}{11}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}

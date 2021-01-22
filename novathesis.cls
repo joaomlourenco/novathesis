@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-01-22 [5.2.4]
+%% Version 2021-01-22 [5.3.0]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -255,7 +255,7 @@
   % #1 = {file, person}
   % #2 = file family (quote, abstract, chapter, etc)
   % #3 = filename OR key=filename
-  % \typeout{NT FILE ADD /novathesis/#1/#1 = #2}%
+  % \typeout{NT FILE ADD /@nt/#1/#1 = #2}%
   \options{/@nt/#1/#2/.cpush = {#3}}%
 }
 
@@ -316,13 +316,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% COVER DEFINITION MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\ntaddtocover}[4]{%
-  % #1 = cover number {1, 2}    (1 is the default)
-  % #2 = position {l, c, r}
-  % #3 = distance from previous {length, integer}  (if integer uses proportional spacing)
-  % #4 = the code
-  % \typeout{NT ntaddtocover [/@nt/cover/\option{/novathesis/school}/element = #1 #2]}
-  \options{/@nt/cover/\option{/novathesis/school}/element/.cpush = {#1=[#2][#3]{#4}}}
+\newcommand*{\ntaddtocover}[2][]{%
+  % #1 = cover atrtibutes
+  % #2 = the code
+  % \typeout{NT ntaddtocover [/@nt/cover/\option{/novathesis/school}/element = #1]}
+  \options{/@nt/cover/\option{/novathesis/school}/element/.cpush = {{#1}=*={#2}}}
 }
 
 \newlength{\mpwidth}%
@@ -373,8 +371,6 @@
       % \setfgruler{numsep=-17pt}
       \fgruler[cm]{upperleft}{\@nt@tmpleft}{\@nt@tmptop}
       \fgruler[cm]{lowerright}{\@nt@tmpright}{\@nt@tmpbottom}
-      % \fgruler[cm]{upperleft}{\themargin(\option{/novathesis/docdegree},left)}{\themargin(\option{/novathesis/docdegree},top)}
-      % \fgruler[cm]{lowerright}{\themargin(\option{/novathesis/docdegree},right)}{\themargin(\option{/novathesis/docdegree},bottom)}
     }%
     {}%
   \thispagestyle{empty}%
@@ -408,45 +404,108 @@
   % #1 = cover number {1, 2}    (1 is the default)
   \optionlistdo{/@nt/cover/\option{/novathesis/school}/element}{%
     % \typeout{NT printcovergroup [##1]}
-    \@nt@printcoverelement@iv##1[#1]%
+    \@nt@printcoverelement@iv[#1]##1%
   }%
 }
 
-\def\@nt@printcoverelement@iv#1=[#2][#3]#4[#5]{%
-  % #1 = cover number to apply to {1, 2, {1,2}}
-  % #2 = position {l, c, r}
-  % #3 = distance from previous {length, integer}  (if integer uses proportional spacing)
-  % #4 = the code
-  % #5 = curernt cover number {1, 2, {1,2}}
-  % \typeout{NT novathesis@printcoveritem [#1] [#2]}
-  \IfSubStr{#1}{#5}{%
-    \IfInteger{#3}{%IS INTEGER
-      \ntrepeat\to{#3}\do{\vfill}
-    }{%IS NOT INTEGER
-      \vspace*{#3}%
-    }%
+\options{/@ntcoveropts/.new family
+  , cover/.new value = {},
+  , align/.new choice = {c, l, r}
+  , inalign/.new choice = {t, c, b}
+  , height/.new value = {}
+  , vspace/.new value = {}
+  , defaults/.new style* = {cover=1/2, align=c, inalign=t, height=@, vspace=0pt}
+  , defaults
+}
+
+\def\@nt@printcoverelement@iv[#1]#2=*=#3{%
+  \options{/@ntcoveropts,defaults}
+  \options{/@ntcoveropts,#2}
+  % \par \null\hrule
+  % \par DEF = [%
+  %   cover=\option{/@ntcoveropts/cover},
+  %   align=\option{/@ntcoveropts/align},
+  %   inalign=\option{/@ntcoveropts/inalign},
+  %   height=\option{/@ntcoveropts/height},
+  %   vspace=\option{/@ntcoveropts/vspace}%
+  % ]
+  % \par Cover \# = [#1]
+  % \par Attributes = [#2]
+  % \par \detokenize{#3}
+  % \options{/@ntcoveropts,#2}
+  % \par SET = [%
+  %   cover=\option{/@ntcoveropts/cover},
+  %   align=\option{/@ntcoveropts/align},
+  %   inalign=\option{/@ntcoveropts/align},
+  %   height=\option{/@ntcoveropts/height},
+  %   vspace=\option{/@ntcoveropts/vspace}%
+  % ]
+  \IfSubStr{\option{/@ntcoveropts/cover}}{#1}{%
+    \IfInteger{\option{/@ntcoveropts/vspace}}%
+      {\vspace*{1cm}\ntrepeat\to{\option{/@ntcoveropts/vspace}}\do{\vfill}}%
+      {\vspace*{\option{/@ntcoveropts/vspace}}}%
     \noindent%
     \iftoggle{/novathesis/debugcover}{% IF in debug mode surround element in box
       \setlength{\fboxsep}{0pt}%
       \fbox{%
-        \begin{minipage}[t]{\linewidth}%
-          \if#2l\relax\raggedright\fi%
-          \if#2c\relax\centering\fi%
-          \if#2r\relax\raggedleft\fi%
-          #4%
-        \end{minipage}%
+        \IfEq{\option{/@ntcoveropts/height}}{@}
+          {\minipage[t]{\linewidth}}%
+          {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\linewidth}}
+          \IfEq{\option{/@ntcoveropts/align}}{l}{\raggedright}{}
+          \IfEq{\option{/@ntcoveropts/align}}{c}{\centering}{}
+          \IfEq{\option{/@ntcoveropts/align}}{r}{\raggedleft}{}
+          #3%
+        \endminipage%
       }%
     }{% Not in debug mode
-      \begin{minipage}[t]{\linewidth}%
-        \if#2l\relax\raggedright\fi%
-        \if#2c\relax\centering\fi%
-        \if#2r\relax\raggedleft\fi%
-        #4%
-      \end{minipage}%
+        \IfEq{\option{/@ntcoveropts/height}}{@}
+          {\minipage[t]{\linewidth}}%
+          {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\linewidth}}
+          \IfEq{\option{/@ntcoveropts/align}}{l}{\raggedright}{}
+          \IfEq{\option{/@ntcoveropts/align}}{c}{\centering}{}
+          \IfEq{\option{/@ntcoveropts/align}}{r}{\raggedleft}{}
+          #3%
+        \endminipage%
     }%
     \par%
   }{}%
 }
+
+% \def\@nt@printcoverelement@iv#1=[#2][#3]#4[#5]{%
+%   % #1 = cover number to apply to {1, 2, {1,2}}
+%   % #2 = position {l, c, r}
+%   % #3 = distance from previous {length, integer}  (if integer uses proportional spacing)
+%   % #4 = the code
+%   % #5 = curernt cover number {1, 2, {1,2}}
+%   % \typeout{NT novathesis@printcoveritem [#1] [#2]}
+%   \IfSubStr{#1}{#5}{%
+%     \IfInteger{#3}{%IS INTEGER
+%       \ntrepeat\to{#3}\do{\vfill}
+%     }{%IS NOT INTEGER
+%       \vspace*{#3}%
+%     }%
+%     \noindent%
+%     \iftoggle{/novathesis/debugcover}{% IF in debug mode surround element in box
+%       \setlength{\fboxsep}{0pt}%
+%       \fbox{%
+%         \begin{minipage}[t]{\linewidth}%
+%           \if#2l\relax\raggedright\fi%
+%           \if#2c\relax\centering\fi%
+%           \if#2r\relax\raggedleft\fi%
+%           #4%
+%         \end{minipage}%
+%       }%
+%     }{% Not in debug mode
+%       \begin{minipage}[t]{\linewidth}%
+%         \if#2l\relax\raggedright\fi%
+%         \if#2c\relax\centering\fi%
+%         \if#2r\relax\raggedleft\fi%
+%         #4%
+%       \end{minipage}%
+%     }%
+%     \par%
+%   }{}%
+% }
 
 \newcommand{\ntfixspacing}{%
   \iftoggle{/@nt/ntfixspacing}{}
