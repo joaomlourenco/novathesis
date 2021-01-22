@@ -986,12 +986,15 @@
 \newcommand{\@nt@printifmaindoc@i}[1]{%
   % \typeout{NT Attemnpting to load #1}%
 	\ifmaindoc{% THEN it is a main document
-    \@nt@select@lang{\option{/novathesis/mainlang}}%
-    % \edef\@nt@bm{\expandafter\MakeUppercase\expandafter#1}
-    \currentpdfbookmark{\csuse{the#1string}(\option{/novathesis/mainlang})}{bm#1}
-    \@ntloadfisrt@ii{#1}%
-    \ntfixspacing%
-    \clearforchapter%
+    \options{/@nt/file/#1/.getval = {VAL}}%
+    \IfEq{\option@listmatch@value}{}{}{%
+      \@nt@select@lang{\option{/novathesis/mainlang}}%
+      % \edef\@nt@bm{\expandafter\MakeUppercase\expandafter#1}
+      \currentpdfbookmark{\csuse{the#1string}(\option{/novathesis/mainlang})}{bm#1}
+      \@ntloadfisrt@ii{#1}%
+      \ntfixspacing%
+      \clearforchapter%
+    }%
 	}{% ELSE
     % It is a plan or proposal type document
 	}%  
