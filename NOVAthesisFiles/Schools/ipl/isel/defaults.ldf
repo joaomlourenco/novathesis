@@ -170,19 +170,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % LOGO
-\ntaddtocover{1,2}{c}{0cm}{%
+\ntaddtocover[cover=1/2, align=c, vspace=0cm]{%
   \includegraphics[width=2cm]{logoISEL}%
 }
 
 % School
-\ntaddtocover{1,2}{c}{0.5cm}{%
+\ntaddtocover[cover=1/2, align=c, vspace=0.5cm]{%
   \fontsize{13}{13}\selectfont%
   \textbf{\MakeUppercase{\thefaculty(\option{/novathesis/coverlang})}}\\%
   \fontsize{10}{10}\selectfont%
   \textbf{\MakeUppercase{\thedepartment(\option{/novathesis/coverlang})}}%
 }
 
-\ntaddtocover{1,2}{c}{0.5cm}{%
+\ntaddtocover[cover=1/2, align=c, vspace=0.5cm]{%
   % \typeout{thefrontpageimage=\thefrontpageimage()}
   \ifthenelse{\isempty{\thefrontpageimage()}}%
     {}%
@@ -190,13 +190,13 @@
 }
 
 % % Title of Dissertation
-\ntaddtocover{1,2}{c}{1}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1]{%
   \fontsize{18}{20}\selectfont%
   \textbf{\thecovertitle}%
 }
 
 % Author name
-\ntaddtocover{1,2}{c}{1}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1]{%
   \fontsize{16}{16}\selectfont%
   \textbf{\theauthorname}\\[1ex]
   \fontsize{14}{14}\selectfont%
@@ -204,13 +204,13 @@
 }
 
 % Degree
-\ntaddtocover{1,2}{c}{1}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1]{%
   \fontsize{12}{12}\selectfont%
   \thepresentationtext%
 }
 
 % Advisers
-\ntaddtocover{1,2}{c}{2}{%
+\ntaddtocover[cover=1/2, align=c, vspace=2]{%
   \adviserstrfont(\option{/novathesis/coverlang}):={\bfseries}%
   \coadviserstrfont(\option{/novathesis/coverlang}):={\bfseries}%
   \fontsize{11}{11}\selectfont%
@@ -219,7 +219,7 @@
 
 
 % Committee — only print the committee for the main classes
-\ntaddtocover{1,2}{c}{1}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1]{%
   \ifmaindoc{%
     \committeetitlestrfont(\option{/novathesis/coverlang}):={\fontsize{14}{14}\selectfont\bfseries}%
     \committeememberstrfont(\option{/novathesis/coverlang}):={\bfseries}%
@@ -230,7 +230,7 @@
 
 
 % Date
-\ntaddtocover{1,2}{c}{1}{%
+\ntaddtocover[cover=1/2, align=c, vspace=1]{%
   \fontsize{10}{10}\selectfont%
   \ifdraftdoc%
     \textbf{DRAFT: \today}%
