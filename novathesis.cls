@@ -140,6 +140,7 @@
 \def\ntmajorfield(#1)#2{\majorfield(#1):={#2}}
 \def\ntdegreename(#1)#2{\degreename(#1):={#2}}
 \def\ntspecialization(#1)#2{\specialization(#1):={#2}}
+\def\ntsponsors(#1)#2{\sponsorsstr(#1):={#2}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -367,10 +368,10 @@
       \edef\@nt@tmpright{\themargin(\option{/novathesis/docdegree},right)}%
       \edef\@nt@tmptop{\themargin(\option{/novathesis/docdegree},top)}%
       \edef\@nt@tmpbottom{\themargin(\option{/novathesis/docdegree},bottom)}%
-      \fgrulerthickcm{}{}{1pt}
+      \fgrulerthickcm{}{}{1pt}%
       % \setfgruler{numsep=-17pt}
-      \fgruler[cm]{upperleft}{\@nt@tmpleft}{\@nt@tmptop}
-      \fgruler[cm]{lowerright}{\@nt@tmpright}{\@nt@tmpbottom}
+      \fgruler[cm]{upperleft}{\@nt@tmpleft}{\@nt@tmptop}%
+      \fgruler[cm]{lowerright}{\@nt@tmpright}{\@nt@tmpbottom}%
     }%
     {}%
   \thispagestyle{empty}%
@@ -419,56 +420,58 @@
 }
 
 \def\@nt@printcoverelement@iv[#1]#2=*=#3{%
-  \options{/@ntcoveropts,defaults}
-  \options{/@ntcoveropts,#2}
-  % \par \null\hrule
-  % \par DEF = [%
-  %   cover=\option{/@ntcoveropts/cover},
-  %   align=\option{/@ntcoveropts/align},
-  %   inalign=\option{/@ntcoveropts/inalign},
-  %   height=\option{/@ntcoveropts/height},
-  %   vspace=\option{/@ntcoveropts/vspace}%
-  % ]
-  % \par Cover \# = [#1]
-  % \par Attributes = [#2]
-  % \par \detokenize{#3}
-  % \options{/@ntcoveropts,#2}
-  % \par SET = [%
-  %   cover=\option{/@ntcoveropts/cover},
-  %   align=\option{/@ntcoveropts/align},
-  %   inalign=\option{/@ntcoveropts/align},
-  %   height=\option{/@ntcoveropts/height},
-  %   vspace=\option{/@ntcoveropts/vspace}%
-  % ]
-  \IfSubStr{\option{/@ntcoveropts/cover}}{#1}{%
-    \IfInteger{\option{/@ntcoveropts/vspace}}%
-      {\vspace*{1cm}\ntrepeat\to{\option{/@ntcoveropts/vspace}}\do{\vfill}}%
-      {\vspace*{\option{/@ntcoveropts/vspace}}}%
-    \noindent%
-    \iftoggle{/novathesis/debugcover}{% IF in debug mode surround element in box
-      \setlength{\fboxsep}{0pt}%
-      \fbox{%
-        \IfEq{\option{/@ntcoveropts/height}}{@}
-          {\minipage[t]{\linewidth}}%
-          {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\linewidth}}
-          \IfEq{\option{/@ntcoveropts/align}}{l}{\raggedright}{}
-          \IfEq{\option{/@ntcoveropts/align}}{c}{\centering}{}
-          \IfEq{\option{/@ntcoveropts/align}}{r}{\raggedleft}{}
-          #3%
-        \endminipage%
+  \IfEq{\detokenize{#3}}{}{}{%
+    \options{/@ntcoveropts,defaults}%
+    \options{/@ntcoveropts,#2}%
+    % \par \null\hrule
+    % \par DEF = [%
+    %   cover=\option{/@ntcoveropts/cover},
+    %   align=\option{/@ntcoveropts/align},
+    %   inalign=\option{/@ntcoveropts/inalign},
+    %   height=\option{/@ntcoveropts/height},
+    %   vspace=\option{/@ntcoveropts/vspace}%
+    % ]
+    % \par Cover \# = [#1]
+    % \par Attributes = [#2]
+    % \par \detokenize{#3}
+    % \options{/@ntcoveropts,#2}
+    % \par SET = [%
+    %   cover=\option{/@ntcoveropts/cover},
+    %   align=\option{/@ntcoveropts/align},
+    %   inalign=\option{/@ntcoveropts/align},
+    %   height=\option{/@ntcoveropts/height},
+    %   vspace=\option{/@ntcoveropts/vspace}%
+    % ]
+    \IfSubStr{\option{/@ntcoveropts/cover}}{#1}{%
+      \IfInteger{\option{/@ntcoveropts/vspace}}%
+        {\ntrepeat\to{\option{/@ntcoveropts/vspace}}\do{\vfill}}%
+        {\vspace*{\option{/@ntcoveropts/vspace}}}%
+      \noindent%
+      \iftoggle{/novathesis/debugcover}{% IF in debug mode surround element in box
+        \setlength{\fboxsep}{0pt}%
+        \fbox{%
+          \IfEq{\option{/@ntcoveropts/height}}{@}%
+            {\minipage[t]{\linewidth}}%
+            {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\linewidth}}%
+            \IfEq{\option{/@ntcoveropts/align}}{l}{\raggedright}{}%
+            \IfEq{\option{/@ntcoveropts/align}}{c}{\centering}{}%
+            \IfEq{\option{/@ntcoveropts/align}}{r}{\raggedleft}{}%
+            #3%
+          \endminipage%
+        }%
+      }{% Not in debug mode
+          \IfEq{\option{/@ntcoveropts/height}}{@}%
+            {\minipage[t]{\linewidth}}%
+            {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\linewidth}}%
+            \IfEq{\option{/@ntcoveropts/align}}{l}{\raggedright}{}%
+            \IfEq{\option{/@ntcoveropts/align}}{c}{\centering}{}%
+            \IfEq{\option{/@ntcoveropts/align}}{r}{\raggedleft}{}%
+            #3%
+          \endminipage%
       }%
-    }{% Not in debug mode
-        \IfEq{\option{/@ntcoveropts/height}}{@}
-          {\minipage[t]{\linewidth}}%
-          {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\linewidth}}
-          \IfEq{\option{/@ntcoveropts/align}}{l}{\raggedright}{}
-          \IfEq{\option{/@ntcoveropts/align}}{c}{\centering}{}
-          \IfEq{\option{/@ntcoveropts/align}}{r}{\raggedleft}{}
-          #3%
-        \endminipage%
-    }%
-    \par%
-  }{}%
+      \par%
+    }{X}%
+  }%
 }
 
 % \def\@nt@printcoverelement@iv#1=[#2][#3]#4[#5]{%
@@ -548,7 +551,7 @@
     ~%
     \clearpage%
     \thispagestyle{empty}%
-    \ntcoverbackground(\@nameuse{thesiscover\option{/novathesis/docdegree},back})%
+    \thethesiscover(\@nameuse{thesiscover\option{/novathesis/docdegree},back})%
     ~% This space is important here so that the cover page is not empty anymore!
     \clearforchapter%
     \@nt@select@lang{\option{/novathesis/mainlang}}%
@@ -590,6 +593,7 @@
 \assocarray{keywordsstring}
 \assocarray{notdefined}
 \assocarray{specializationstr}
+\assocarray{sponsorsstr}
 
 \assocarray{adviserstr}
 \assocarray{adviserstrfont}

@@ -68,18 +68,18 @@
 %%------------------------------------------------------------
 %% THE MOST IMPORTANT/POPULAR OPTIONS
 %%------------------------------------------------------------
-% \ntsetup{docdegree=msc}       % The type of document
+\ntsetup{docdegree=msc}       % The type of document
 %                               %     [ phd, phdplan, phdprop, msc, mscplan, bsc ]
 
-% \ntsetup{school=nova/fcsh}    % The school id
+\ntsetup{school=ul/fc}    % The school id
 %                               %     [ nova/fct, nova/fcsh, nova/ims, nova/ensp, 
 %                               %       ul/ist, ul/fc, ipl/isel, ips/ests, esep,
 %                               %       iscte-iul/ista, consortium/msc-gt ]
 
-% \ntsetup{docstatus=working}   % The status of the document
+\ntsetup{docstatus=provisional}   % The status of the document
 %                               %     [ final, provisional, draft, working ]
 
-% \ntsetup{lang=pt}             % The main language for the document text
+\ntsetup{lang=pt}             % The main language for the document text
 %                               %     [ en, pt, fr, it, de, es ]
 
 % \ntsetup{linkscolor=SteelBlue}% The color for the hyperlinks (URLs, 
@@ -136,7 +136,7 @@
 
 % \ntsetup{cdcover=true}        % Print a “cd cover” at the end of the document
 
-% \ntsetup{debugcover=true}     % Debug cover development: print rulers in the cover page
+\ntsetup{debugcover=true}     % Debug cover development: print rulers in the cover page
 
 
 %%------------------------------------------------------------
@@ -241,12 +241,17 @@
 %   \ntdegreename(en){Bachelor in Computer Science and Engineering}
 % }{}
 
-
 %%------------------------------------------------------------
 % Degree costumization
 % If the degree includes a specialization
 \ntspecialization(pt){\embrace{Designação da Especialidade}}
 \ntspecialization(en){\embrace{Speciality Name}}
+
+%%------------------------------------------------------------
+% Sponsors
+% Some Schools require the work sponsors to be listed in the cover
+\ntsponsors(pt){\embrace{Fontes de Financiamento}}
+\ntsponsors(en){\embrace{Funding Sponsors}}
 
 %%------------------------------------------------------------
 % Autor
