@@ -347,11 +347,14 @@
   \egroup%
 }
 
-\newcommand*{\ntcoverprehook}[1]{%
-  \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
-}
-
+\newcommand*{\ntcoverprehook}[1]{}
 \newcommand*{\ntcoverposthook}[1]{}
+\newcommand\AtBeginCover[1]{
+  \apptocmd{\ntcoverprehook}{#1}{}{}%
+}
+\newcommand\AtEndCover[1]{
+  \apptocmd{\ntcoverposthook}{#1}{}{}%
+}
 
 \def\thecovernumber{}
 \newcommand{\casecovernumber}{%
@@ -411,68 +414,118 @@
 
 \options{/@ntcoveropts/.new family
   , cover/.new value = {},
+  , status/.new value = {},
+  , degree/.new value = {},
   , align/.new choice = {c, l, r}
-  , inalign/.new choice = {t, c, b}
+  , inalign/.new choice = {c, t, b}
   , height/.new value = {}
   , vspace/.new value = {}
-  , defaults/.new style* = {cover=1/2, align=c, inalign=t, height=@, vspace=0pt}
+  , defaults/.new style* = {cover={}, status={}, degree={}, align=c, inalign=c, height={}, vspace=0pt}
   , defaults
 }
 
 \def\@nt@printcoverelement@iv[#1]#2=*=#3{%
-  \IfEq{\detokenize{#3}}{}{}{%
-    \options{/@ntcoveropts,defaults}%
+  % #1 = cover number {1, 2}    (1 is the default)
+  % #2 = conve element options
+  % #3 = cover element code
+  \ifthenelse{\equal{#3}{}}{}{%
+    \options{/@ntcoveropts,defaults}%.
     \options{/@ntcoveropts,#2}%
-    % \par \null\hrule
-    % \par DEF = [%
-    %   cover=\option{/@ntcoveropts/cover},
-    %   align=\option{/@ntcoveropts/align},
-    %   inalign=\option{/@ntcoveropts/inalign},
-    %   height=\option{/@ntcoveropts/height},
-    %   vspace=\option{/@ntcoveropts/vspace}%
-    % ]
-    % \par Cover \# = [#1]
-    % \par Attributes = [#2]
-    % \par \detokenize{#3}
-    % \options{/@ntcoveropts,#2}
-    % \par SET = [%
-    %   cover=\option{/@ntcoveropts/cover},
-    %   align=\option{/@ntcoveropts/align},
-    %   inalign=\option{/@ntcoveropts/align},
-    %   height=\option{/@ntcoveropts/height},
-    %   vspace=\option{/@ntcoveropts/vspace}%
-    % ]
-    \IfSubStr{\option{/@ntcoveropts/cover}}{#1}{%
-      \IfInteger{\option{/@ntcoveropts/vspace}}%
-        {\ntrepeat\to{\option{/@ntcoveropts/vspace}}\do{\vfill}}%
-        {\vspace*{\option{/@ntcoveropts/vspace}}}%
-      \noindent%
-      \iftoggle{/novathesis/debugcover}{% IF in debug mode surround element in box
-        \setlength{\fboxsep}{0pt}%
-        \fbox{%
-          \IfEq{\option{/@ntcoveropts/height}}{@}%
-            {\minipage[t]{\linewidth}}%
-            {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\linewidth}}%
-            \IfEq{\option{/@ntcoveropts/align}}{l}{\raggedright}{}%
-            \IfEq{\option{/@ntcoveropts/align}}{c}{\centering}{}%
-            \IfEq{\option{/@ntcoveropts/align}}{r}{\raggedleft}{}%
-            #3%
-          \endminipage%
-        }%
-      }{% Not in debug mode
-          \IfEq{\option{/@ntcoveropts/height}}{@}%
-            {\minipage[t]{\linewidth}}%
-            {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\linewidth}}%
-            \IfEq{\option{/@ntcoveropts/align}}{l}{\raggedright}{}%
-            \IfEq{\option{/@ntcoveropts/align}}{c}{\centering}{}%
-            \IfEq{\option{/@ntcoveropts/align}}{r}{\raggedleft}{}%
-            #3%
-          \endminipage%
-      }%
-      \par%
-    }{X}%
+    \StrCount{\option{/@ntcoveropts/cover}}{#1}[\@nt@incover]%
+    \StrCount{\option{/@ntcoveropts/status}}{\option{/novathesis/docstatus}}[\@nt@instatus]%
+    \StrCount{\option{/@ntcoveropts/degree}}{\option{/novathesis/docdegree}}[\@nt@indegree]%
+    \ifthenelse{%
+              \(\equal{\option{/@ntcoveropts/cover}}{}\OR\@nt@incover>0\)\AND
+              \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND
+              \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}
+      {\@nt@printcoverelement@i{#3}}%
+      {}%
   }%
 }
+
+\newsavebox{\@nt@coverelement}
+\newcommand{\@nt@printcoverelement@i}[1]{%
+  % #1 = code
+  %
+  % If vspace is integer then replace by \vfill
+  % otherwise is absolute verstical space
+  \IfInteger{\option{/@ntcoveropts/vspace}}%
+    {\ntrepeat\to{\option{/@ntcoveropts/vspace}}\do{\vfill}}%
+    {\vspace*{\option{/@ntcoveropts/vspace}}}%
+  %
+  % Typeset contents in a box
+  \begin{lrbox}{\@nt@coverelement}
+    \IfStrEq{\option{/@ntcoveropts/height}}{}%
+      {\minipage[t]{\linewidth}}%
+      {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\linewidth}}%
+        \IfStrEqCase{\option{/@ntcoveropts/align}}{%
+          {l}{\raggedright}%
+          {c}{\centering}%
+          {r}{\raggedleft}%
+        }%
+        #1%
+    \endminipage%
+  \end{lrbox}
+  \noindent%
+  \iftoggle{/novathesis/debugcover}{% IF in debug mode surround element in box
+    \setlength{\fboxsep}{0pt}%
+    \fbox{\usebox{\@nt@coverelement}}%
+  }{\usebox{\@nt@coverelement}}%
+  \par%
+}
+
+  % \IfStrEq{\detokenize{#3}}{}{}{%
+  %   \options{/@ntcoveropts,defaults}%.
+  %   \options{/@ntcoveropts,#2}%
+  %   % \par \null\hrule
+  %   % \par DEF = [%
+  %   %   cover=\option{/@ntcoveropts/cover},
+  %   %   align=\option{/@ntcoveropts/align},
+  %   %   inalign=\option{/@ntcoveropts/inalign},
+  %   %   height=\option{/@ntcoveropts/height},
+  %   %   vspace=\option{/@ntcoveropts/vspace}%
+  %   % ]
+  %   % \par Cover \# = [#1]
+  %   % \par Attributes = [#2]
+  %   % \par \detokenize{#3}
+  %   % \options{/@ntcoveropts,#2}
+  %   % \par SET = [%
+  %   %   cover=\option{/@ntcoveropts/cover},
+  %   %   align=\option{/@ntcoveropts/align},
+  %   %   inalign=\option{/@ntcoveropts/align},
+  %   %   height=\option{/@ntcoveropts/height},
+  %   %   vspace=\option{/@ntcoveropts/vspace}%
+  %   % ]
+  %   \IfSubStr{\option{/@ntcoveropts/cover}}{#1}{%
+  %     \IfInteger{\option{/@ntcoveropts/vspace}}%
+  %       {\ntrepeat\to{\option{/@ntcoveropts/vspace}}\do{\vfill}}%
+  %       {\vspace*{\option{/@ntcoveropts/vspace}}}%
+  %     \noindent%
+  %     \iftoggle{/novathesis/debugcover}{% IF in debug mode surround element in box
+  %       \setlength{\fboxsep}{0pt}%
+  %       \fbox{%
+  %         \IfStrEq{\option{/@ntcoveropts/height}}{@}%
+  %           {\minipage[t]{\linewidth}}%
+  %           {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\linewidth}}%
+  %           \IfStrEq{\option{/@ntcoveropts/align}}{l}{\raggedright}{}%
+  %           \IfStrEq{\option{/@ntcoveropts/align}}{c}{\centering}{}%
+  %           \IfStrEq{\option{/@ntcoveropts/align}}{r}{\raggedleft}{}%
+  %           #3%
+  %         \endminipage%
+  %       }%
+  %     }{% Not in debug mode
+  %         \IfStrEq{\option{/@ntcoveropts/height}}{@}%
+  %           {\minipage[t]{\linewidth}}%
+  %           {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\linewidth}}%
+  %           \IfStrEq{\option{/@ntcoveropts/align}}{l}{\raggedright}{}%
+  %           \IfStrEq{\option{/@ntcoveropts/align}}{c}{\centering}{}%
+  %           \IfStrEq{\option{/@ntcoveropts/align}}{r}{\raggedleft}{}%
+  %           #3%
+  %         \endminipage%
+  %     }%
+  %     \par%
+  %   }{X}%
+  % }%
 
 % \def\@nt@printcoverelement@iv#1=[#2][#3]#4[#5]{%
 %   % #1 = cover number to apply to {1, 2, {1,2}}
@@ -560,7 +613,7 @@
 
 % \newcommand{\ntcoverbackground}[1][\@nameuse{thesiscover\option{/novathesis/docdegree},front}]{%
 \newcommand{\ntcoverbackground}[1][\thethesiscover(\option{/novathesis/docdegree},front)]{%
-  \IfEq{#1}{}{}{%ELSE
+  \IfStrEq{#1}{}{}{%ELSE
     \AddToShipoutPictureBG*{%
       \includegraphics[width=\paperwidth,height=\paperheight]{#1}%
     }%
@@ -847,7 +900,7 @@
 
 \def\@nt@printadvisersgroup#1,#2\@nil{%
   #1\\
-  \IfEq{#2}{}{\medskip}{\@nt@printadvisersgroup#2\@nil}%
+  \IfStrEq{#2}{}{\medskip}{\@nt@printadvisersgroup#2\@nil}%
 }
 
 \newcommand{\ntprintadvisers}[1][0.90]{%
@@ -1050,7 +1103,7 @@
   % \typeout{NT Attemnpting to load #1}%
 	\ifmaindoc{% THEN it is a main document
     \options{/@nt/file/#1/.getval = {VAL}}%
-    \IfEq{\option@listmatch@value}{}{}{%
+    \IfStrEq{\option@listmatch@value}{}{}{%
       \@nt@select@lang{\option{/novathesis/mainlang}}%
       % \edef\@nt@bm{\expandafter\MakeUppercase\expandafter#1}
       \currentpdfbookmark{\csuse{the#1string}(\option{/novathesis/mainlang})}{bm#1}

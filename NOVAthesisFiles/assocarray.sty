@@ -157,19 +157,19 @@
     \ifcsname c@@aa@#1@cnt\endcsname%
       \ifnum\value{@aa@#1@cnt}>0\relax% There are redirections
         \forloop[-1]{@aa@redir@#1@cnt}{\arabic{@aa@#1@cnt}}{\value{@aa@redir@#1@cnt}>0}{%
-          \IfEq{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxL}}{}{%
+          \IfStrEq{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxL}}{}{%
             \edef\@aa@cutL{}%
             \edef\@aa@idxRest{#2}%
           }{%
             \StrCut{#2}{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxL}}\@aa@cutL\@aa@idxRest%
           }%
-          \IfEq{\@aa@cutL}{}{%
-            \IfEq{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxR}}{}{%
+          \IfStrEq{\@aa@cutL}{}{%
+            \IfStrEq{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxR}}{}{%
               \edef\@aa@cutR{}%
             }{%
               \StrCut{\@aa@idxRest}{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxR}}\@aa@idxRest\@aa@cutR%
             }%
-            \IfEq{\@aa@cutR}{}{%
+            \IfStrEq{\@aa@cutR}{}{%
               % $>$\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@Vkey}%
               %      (\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@VidxL}%
               %       \@aa@idxRest%
@@ -214,19 +214,19 @@
       \ifnum\value{@aa@#1@cnt}>0\relax% There are redirections
         \forloop[-1]{@aa@redir@#1@cnt}{\arabic{@aa@#1@cnt}}{\value{@aa@redir@#1@cnt}>0}{%
           % R\arabic{@aa@redir@#1@cnt}
-          \IfEq{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxL}}{}{%
+          \IfStrEq{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxL}}{}{%
             \edef\@aa@cutL{}%
             \edef\@aa@idxRest{#2}%
           }{%
             \StrCut{#2}{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxL}}\@aa@cutL\@aa@idxRest%
           }%
-          \IfEq{\@aa@cutL}{}{%
-            \IfEq{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxR}}{}{%
+          \IfStrEq{\@aa@cutL}{}{%
+            \IfStrEq{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxR}}{}{%
               \edef\@aa@cutR{}%
             }{%
               \StrCut{\@aa@idxRest}{\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@idxR}}\@aa@idxRest\@aa@cutR%
             }%
-            \IfEq{\@aa@cutR}{}{%
+            \IfStrEq{\@aa@cutR}{}{%
               % $>$\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@Vkey}%
               %      (\csuse{@aa@#1*@\arabic{@aa@redir@#1@cnt}@VidxL}%
               %       \@aa@idxRest%
