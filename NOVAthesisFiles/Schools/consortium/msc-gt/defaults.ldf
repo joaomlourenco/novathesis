@@ -100,10 +100,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \renewcommand{\ntcoverprehook}[1]{}
+\AtBeginCover{%
+  \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+}
 
 % Title of Dissertation
-\ntaddtocover[cover=1, align=c, vspace=6cm]{%
+\ntaddtocover[cover=1, vspace=6cm]{%
   \ntcoverbackground
   \begin{minipage}[t][7.5cm][b]{\linewidth}
     \raggedright
@@ -113,7 +115,7 @@
 }
 
 % Author name
-\ntaddtocover[cover=1, align=c, vspace=0.9cm]{%
+\ntaddtocover[cover=1, vspace=0.9cm]{%
   \begin{minipage}[t][1.8cm][c]{\linewidth}
     \fontsize{16}{16}\selectfont
     \textbf{\theauthorname}
@@ -121,7 +123,7 @@
 }
 
 % Title of Dissertation - COVER 2
-\ntaddtocover[cover=2, align=c, vspace=2cm]{%
+\ntaddtocover[cover=2, vspace=2cm]{%
   \begin{minipage}[t]{\linewidth}
     \centering
     \fontsize{16}{16}\selectfont
@@ -130,37 +132,37 @@
 }
 
 % Academic qualifications
-% \ntaddtocover[cover=1/2, align=c, vspace=0.25cm]{%
+% \ntaddtocover[vspace=0.25cm]{%
 %   \fontsize{11}{11}\selectfont
 %   \theauthordegree
 % }
 
 % Degree
-% \ntaddtocover[cover=1/2, align=c, vspace=1.5cm]{%
+% \ntaddtocover[vspace=1.5cm]{%
 %   \fontsize{11}{11}\selectfont
 %   \thepresentationtext
 % }
 
 % Advisers
-\ntaddtocover[cover=2, align=c, vspace=3cm]{%
+\ntaddtocover[cover=2, vspace=3cm]{%
   \ntprintadvisersgroup{adviser}
 }
 
 % Co-advisers
-\ntaddtocover[cover=2, align=c, vspace=1cm]{%
+\ntaddtocover[cover=2, vspace=1cm]{%
   \ntprintadvisersgroup{coadviser}
 }
 
 
 % Committee — only print the committee for the main classes
-% \ntaddtocover[cover=1/2, align=r, vspace=2]{%
+% \ntaddtocover[align=r, vspace=2]{%
 %   \fontsize{10}{10}\selectfont%
 %   \ntprintcommittee%
 % }
 
 
 % Date
-\ntaddtocover[cover=2, align=c, vspace=1]{%
+\ntaddtocover[cover=2, vspace=1]{%
   \fontsize{11}{11}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
