@@ -160,7 +160,7 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 <img src="NOVAthesisFiles/Images/cover-phd-nova-fct.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-ims.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-ensp.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-fcsh.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ul-ist.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ul-fc.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ipl-isel.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ips-ests.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-esep.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-msc-gt.jpg" width="100"/>
 
 <!-- ### Showcase of other usages around the world
-<img src="NOVAthesisFiles/Images/world-es-zaragoza-border.jpg" width="100"/> <img src="NOVAthesisFiles/Images/world-nl-uva-border.jpg" width="100"/>  -->
+<img src="NOVAthesisFiles/Images/world-es-zaragoza-border.jpg" width="100"/> <img src="NOVAthesisFiles/Images/world-nl-uva-border.jpg" width="100"/>   -->
 
 --------
 ## Disclaimer
