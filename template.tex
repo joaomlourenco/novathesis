@@ -7,7 +7,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-01-22 [5.3.0]
+%% Version 2021-01-31 [5.3.1]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -71,12 +71,12 @@
 % \ntsetup{docdegree=msc}       % The type of document
 %                               %     [ phd, phdplan, phdprop, msc, mscplan, bsc ]
 
-% \ntsetup{school=nova/fcsh}    % The school id
+% \ntsetup{school=ul/fc}    % The school id
 %                               %     [ nova/fct, nova/fcsh, nova/ims, nova/ensp, 
 %                               %       ul/ist, ul/fc, ipl/isel, ips/ests, esep,
 %                               %       iscte-iul/ista, consortium/msc-gt ]
 
-% \ntsetup{docstatus=working}   % The status of the document
+% \ntsetup{docstatus=provisional}   % The status of the document
 %                               %     [ final, provisional, draft, working ]
 
 % \ntsetup{lang=pt}             % The main language for the document text
@@ -144,10 +144,6 @@
 %%------------------------------------------------------------
 
 %%------------------------------------------------------------
-%% We are using hyperref.  Leave this option.
-\ntbibsetup{giveninits=true}
-
-%%------------------------------------------------------------
 % If it works, leave biber.  If it fails for you, try bibtex
 \ntbibsetup{backend=biber}
 % \ntbibsetup{backend=bibtex}
@@ -158,12 +154,12 @@
 %% Uncomment the preferred style
 
 %%------------------------------------------------------------
-%% NUMBERED ORDER BY CITATION
-% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=none}
+%% NUMBERED ORDER BY LAST NAME OF FIRST AUTHOR - this is the default
+% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=nyt}
 
 %%------------------------------------------------------------
-%% NUMBERED ORDER BY LAST NAME OF FIRST AUTHOR
-% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=nyt}
+%% NUMBERED ORDER BY CITATION
+% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=none}
 
 %%------------------------------------------------------------
 %% APLHA CITATION ORDER BY LAST NAME OF FIRST AUTHOR
@@ -241,12 +237,17 @@
 %   \ntdegreename(en){Bachelor in Computer Science and Engineering}
 % }{}
 
-
 %%------------------------------------------------------------
 % Degree costumization
 % If the degree includes a specialization
 \ntspecialization(pt){\embrace{Designação da Especialidade}}
 \ntspecialization(en){\embrace{Speciality Name}}
+
+%%------------------------------------------------------------
+% Sponsors
+% Some Schools require the work sponsors to be listed in the cover
+\ntsponsors(pt){\embrace{Fontes de Financiamento}}
+\ntsponsors(en){\embrace{Funding Sponsors}}
 
 %%------------------------------------------------------------
 % Autor
@@ -265,7 +266,7 @@
 % Advisers
 % use [f] for female and [m] for male
 % use "\\" if necessary to break the lines in the apprpriate place
-\ntaddperson{adviser}[f]{{Mary Doe Adviser Name, Full Professor, NOVA University Lisbon}}
+\ntaddperson{adviser}[f]{{Mary Doe Adviser Name, \\Full Professor, NOVA University Lisbon}}
 % \ntaddperson{adviser}[f]{{Mary Doe other Adviser Name, Full Professor, NOVA University Lisbon}}
 % \ntaddperson{adviser}[f]{{Mary Doe yet another Adviser Name, Full Professor, NOVA University Lisbon}}
 
@@ -273,8 +274,8 @@
 % Co-Advisers
 % use [f] for female and [m] for male
 % use "\\" if necessary to break the lines in the apprpriate place
-\ntaddperson{coadviser}[f]{John Doe Co-Adviser Name, Associate Professor, NOVA University Lisbon}
-\ntaddperson{coadviser}[f]{John Doe other Co-Adviser Name, Full Professor, NOVA University Lisbon}
+\ntaddperson{coadviser}[f]{John Doe Co-Adviser Name, \\Associate Professor, NOVA University Lisbon}
+\ntaddperson{coadviser}[f]{John Doe other Co-Adviser Name, \\Full Professor, NOVA University Lisbon}
 
 %%------------------------------------------------------------
 % Committee
@@ -287,14 +288,14 @@
 % Chair of tntcommitteehe committee
 \ntaddperson{committee}[c,m]{Name of the committee chairperson, Full Professor, FCT-NOVA}
 % Main raporteurs
-\ntaddperson{committee}[r,m]{Name of a raporteur, Position, University}
-\ntaddperson{committee}[r,m]{Name of another raporteur, Position, University}
+\ntaddperson{committee}[r,m]{Name of a raporteur, Another University}
+\ntaddperson{committee}[r,m]{Name of another raporteur, Another University}
 % Advisers — FOR FCT-NOVA ADD ADVISERS AS "OTHER MEMBERS [m]"
 % \ntcommittee[a,f]{Name of an adviser, Position, University}
 % \ntcommittee[a,f]{Name of another adviser, Position, University}
 % Other members of the committee
-\ntaddperson{committee}[m,m]{Another member of the committee, Position, University}
-\ntaddperson{committee}[m,f]{Yet another member of the committee, Position, University}
+\ntaddperson{committee}[m,m]{Another member of the committee, Another University}
+\ntaddperson{committee}[m,f]{Yet another member of the committee, Another University}
 % Guest members
 % \ntcommittee[g,m]{Guest member of the committee, Position, University}
 % \ntcommittee[g,f]{Yet another guest member of the committee, Position, University}
@@ -452,7 +453,7 @@
 \ntthesismainmatter     % The main text — Arabic page numbering
 %%------------------------------------------------------------
 \ntprintchapters        % Print document chapters
-\ntprintbib             % Print the bibliography.  Change to "\ntprintbib[⟨title⟩]" to redfine the title!
+\ntprintbib             % Print the bibliography.  Change to "\ntprintbib[title=⟨title⟩]" to redfine the title!
 \ntprintappendixes      % Print appendixes, if any!
 \ntprintannexes         % Print appendixes, if any!
 \ntprintbackcoverpage   % The back cover

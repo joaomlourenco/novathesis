@@ -159,14 +159,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtBeginCover{%
+  \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+}
 
 % LOGO
-\ntaddtocover[cover=1/2, align=c, vspace=0cm]{%
+\ntaddtocover[vspace=0cm]{%
   \includegraphics[width=12cm]{iscte-iul-\option{/novathesis/coverlang}} % Adjusts the front page logo based on the coverlang property
 }
 
 % School
-\ntaddtocover[cover=1/2, align=c, vspace=0.5cm]{%
+\ntaddtocover[vspace=0.5cm]{%
   \fontsize{16}{16}\selectfont%
   \vspace{1cm}%
   %\textbf{\MakeUppercase{\theuniversity(\option{/novathesis/coverlang})}}\\%
@@ -177,38 +180,38 @@
 }
 
 % % Title of Dissertation
-\ntaddtocover[cover=1/2, align=c, vspace=1]{%
+\ntaddtocover[vspace=1]{%
   \fontsize{18}{20}\selectfont%
   %\textbf{\thetitle}%
   \textbf{\thetitle}%
 }
 
 % Author name
-\ntaddtocover[cover=1/2, align=c, vspace=1]{%
+\ntaddtocover[vspace=1]{%
   \fontsize{14}{14}\selectfont%
   %\textbf{\theauthorname}%
   \textbf{\theauthorname}%
 }
 
 % Degree
-\ntaddtocover[cover=1/2, align=c, vspace=1]{%
+\ntaddtocover[vspace=1]{%
   \fontsize{12}{12}\selectfont%
   \thepresentationtext%
 }
 
 % Advisers
-\ntaddtocover[cover=1/2, align=c, vspace=2]{%
+\ntaddtocover[vspace=2]{%
   \fontsize{12}{12}\selectfont%
   \ntprintadvisers%
 }
 
 % Committee — only print the committee for the main classes
-\ntaddtocover[cover=1/2, align=c, vspace=1]{%
+\ntaddtocover[vspace=1]{%
   \fontsize{12}{12}\selectfont\ntprintcommittee
 }
 
 % Date
-\ntaddtocover[cover=1/2, align=c, vspace=1]{%
+\ntaddtocover[vspace=1]{%
   \fontsize{14}{14}\selectfont%
   \ifdraftdoc%
     \textbf{DRAFT: \today}%

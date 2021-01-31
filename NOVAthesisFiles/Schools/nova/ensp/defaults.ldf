@@ -121,44 +121,47 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtBeginCover{%
+  \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+}
 
 % ENSP logo
-\ntaddtocover[cover=1/2, align=c, vspace=1cm]{%
+\ntaddtocover[vspace=1cm]{%
   \noindent\includegraphics[width=0.4\textwidth]{nova-ensp-logo-pt}
 }
 
 % % Title of Dissertation
-\ntaddtocover[cover=1/2, align=c, vspace=1]{%
+\ntaddtocover[vspace=1]{%
   \fontsize{14}{14}\selectfont
   \textbf{\thecovertitle}
 }
 
 % % Title of Dissertation
-\ntaddtocover[cover=1/2, align=c, vspace=1cm]{%
+\ntaddtocover[vspace=1cm]{%
   \fontsize{14}{14}\selectfont
   \thedegreename(\option{/novathesis/coverlang})
 }
 
 % Author name
-\ntaddtocover[cover=1/2, align=c, vspace=1]{%
+\ntaddtocover[vspace=1]{%
   \fontsize{12}{12}\selectfont
   \textbf{\theauthorname}
 }
 
 % Degree
-\ntaddtocover[cover=2, align=c, vspace=1]{%
+\ntaddtocover[cover=2, vspace=1]{%
   \fontsize{11}{11}\selectfont
   \thepresentationtext
 }
 
 % Advisers
-\ntaddtocover[cover=2, align=c, vspace=1]{%
+\ntaddtocover[cover=2, vspace=1]{%
   \fontsize{12}{12}\selectfont
   \ntprintadvisers[0.75]
 }
 
 % Date
-\ntaddtocover[cover=1/2, align=c, vspace=1]{%
+\ntaddtocover[vspace=1]{%
   \fontsize{12}{12}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
@@ -168,6 +171,6 @@
 }
 
 % % Final space
-\ntaddtocover[cover=1/2, align=c, vspace=1cm]{%
+\ntaddtocover[vspace=1cm]{%
   ~
 }

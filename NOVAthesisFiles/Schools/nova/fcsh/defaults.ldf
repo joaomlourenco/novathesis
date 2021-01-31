@@ -116,6 +116,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtBeginCover{%
+  \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+}
 
 \definecolor{fcshblue}{RGB}{25,61,108}% Background title color
 
@@ -139,25 +142,25 @@
 
 
 % % Title of Dissertation
-\ntaddtocover[cover=1/2, align=c, vspace=1]{%
+\ntaddtocover[vspace=1]{%
   \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\thecovertitle}}%
 }
 
 % Author name
-\ntaddtocover[cover=1/2, align=c, vspace=1]{%
+\ntaddtocover[vspace=1]{%
   \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\theauthorname}}%
 }
 
 % Degree
-\ntaddtocover[cover=1/2, align=c, vspace=1]{%
+\ntaddtocover[vspace=1]{%
   \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\thepresentationtext}}%
 }
 
 % Date
-\ntaddtocover[cover=1/2, align=c, vspace=1]{%
+\ntaddtocover[vspace=1]{%
   \fontsize{14}{14}\selectfont%
   \textcolor{fcshblue}{%%
     \ifdraftdoc%
@@ -168,11 +171,11 @@
   }%
 }
 
-\ntaddtocover[cover=1, align=c, vspace=2.0cm]{%
+\ntaddtocover[cover=1, vspace=2.0cm]{%
   \null
 }
 
-\ntaddtocover[cover=2, align=c, vspace=1cm]{%
+\ntaddtocover[cover=2, vspace=1cm]{%
  \raisebox{-1cm}{%
    \textcolor{fcshblue}{\rule{\stockwidth}{0.75cm}}%
  }%

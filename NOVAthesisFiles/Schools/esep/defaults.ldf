@@ -9,10 +9,6 @@
 
 %%% RGB = 41, 141, 187
 
-\ifxeorlua{%
-  \ntsetup{fontstyle=calibri}%
-  \renewcommand{\ntcoverprehook}[1]{}%
-}{}
 % \nttitle[en]{Please define the title in english with \verb|\nttitle[en]{THE TITLE}|}
 
 % Univesity
@@ -127,9 +123,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifxeorlua{%
+  \ntsetup{fontstyle=calibri}%
+}{%
+  \AtBeginCover{%
+    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+  }%
+}
 
 % ESEP logo
-\ntaddtocover[cover=1/2, align=c, vspace=2.2cm]{%
+\ntaddtocover[vspace=2.2cm]{%
   \ntcoverbackground%
   \noindent%
   \fontsize{15}{15}\selectfont%
@@ -138,13 +141,13 @@
 }
 
 % % Degree name
-\ntaddtocover[cover=1/2, align=c, vspace=0.5cm]{%
+\ntaddtocover[vspace=0.5cm]{%
   \fontsize{15}{15}\selectfont
   \thedegreename(\option{/novathesis/coverlang})
 }
 
 % % Title of Dissertation 1
-\ntaddtocover[cover=1, align=c, vspace=6.5cm]{%
+\ntaddtocover[cover=1, vspace=6.5cm]{%
   \begin{minipage}[t][4cm][t]{\textwidth}
     \centering%
     \fontsize{15}{15}\selectfont%
@@ -155,7 +158,7 @@
 }
 
 % % Title of Dissertation 2
-\ntaddtocover[cover=2, align=c, vspace=6.5cm]{%
+\ntaddtocover[cover=2, vspace=6.5cm]{%
   % \fontseries{mc}
   \begin{minipage}[t][4cm][t]{\textwidth}
     \centering%
@@ -166,7 +169,7 @@
 }
 
 % Advisers 2
-\ntaddtocover[cover=2, align=c, vspace=2cm]{%
+\ntaddtocover[cover=2, vspace=2cm]{%
   % \fontseries{mc}
   \parbox[t][4cm]{\textwidth}{%
     \centering%
@@ -174,20 +177,20 @@
     \parbox{0.80\textwidth}{\ntprintadvisers[0.75]}%
   }%
 }
-\ntaddtocover[cover=1, align=c, vspace=2cm]{%
+\ntaddtocover[cover=1, vspace=2cm]{%
   \parbox[t][4cm]{\textwidth}{%
   ~%
   }%
 }
 
 % Author name
-\ntaddtocover[cover=1/2, align=c, vspace=1]{%
+\ntaddtocover[vspace=1]{%
   \fontsize{12}{12}\selectfont
   \textbf{\theauthorname}
 }
 
 % Date
-\ntaddtocover[cover=1/2, align=c, vspace=2]{%
+\ntaddtocover[vspace=2]{%
   \fontsize{12}{12}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
@@ -197,7 +200,7 @@
 }
 
 % % Final space
-\ntaddtocover[cover=1/2, align=c, vspace=1cm]{%
+\ntaddtocover[vspace=1cm]{%
   ~
 }
 %
@@ -206,20 +209,20 @@
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % % ESEP logo
-% \ntaddtocover[cover=2, align=c, vspace=2.2cm]{%
+% \ntaddtocover[cover=2, vspace=2.2cm]{%
 %   \ntcoverbackground
 %   \fontsize{15}{15}\selectfont
 %   \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty(\option{/novathesis/coverlang})}}
 % }
 %
 % % % Degree name
-% \ntaddtocover[cover=2, align=c, vspace=0.5cm]{%
+% \ntaddtocover[cover=2, vspace=0.5cm]{%
 %   \fontsize{15}{15}\selectfont
 %   \thedegreename(\option{/novathesis/coverlang})
 % }
 %
 % % % Title of Dissertation
-% \ntaddtocover[cover=2, align=c, vspace=6.5cm]{%
+% \ntaddtocover[cover=2, vspace=6.5cm]{%
 %   % \fontseries{mc}
 %   \fontsize{15}{15}\selectfont
 %   \scshape
@@ -228,13 +231,13 @@
 % }
 %
 % % Author name
-% \ntaddtocover[cover=2, align=c, vspace=1]{%
+% \ntaddtocover[cover=2, vspace=1]{%
 %   \fontsize{12}{12}\selectfont
 %   \textbf{\theauthorname}
 % }
 %
 % % Date
-% \ntaddtocover[cover=2, align=c, vspace=1]{%
+% \ntaddtocover[cover=2, vspace=1]{%
 %   \fontsize{12}{12}\selectfont
 %   \ifdraftdoc
 %     \textbf{DRAFT: \today}
@@ -244,7 +247,7 @@
 % }
 %
 % % % Final space
-% \ntaddtocover[cover=2, align=c, vspace=1cm]{%
+% \ntaddtocover[cover=2, vspace=1cm]{%
 %   ~
 % }
 %
