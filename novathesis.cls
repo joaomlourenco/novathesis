@@ -474,119 +474,28 @@
   \par%
 }
 
-  % \IfStrEq{\detokenize{#3}}{}{}{%
-  %   \options{/@ntcoveropts,defaults}%.
-  %   \options{/@ntcoveropts,#2}%
-  %   % \par \null\hrule
-  %   % \par DEF = [%
-  %   %   cover=\option{/@ntcoveropts/cover},
-  %   %   align=\option{/@ntcoveropts/align},
-  %   %   inalign=\option{/@ntcoveropts/inalign},
-  %   %   height=\option{/@ntcoveropts/height},
-  %   %   vspace=\option{/@ntcoveropts/vspace}%
-  %   % ]
-  %   % \par Cover \# = [#1]
-  %   % \par Attributes = [#2]
-  %   % \par \detokenize{#3}
-  %   % \options{/@ntcoveropts,#2}
-  %   % \par SET = [%
-  %   %   cover=\option{/@ntcoveropts/cover},
-  %   %   align=\option{/@ntcoveropts/align},
-  %   %   inalign=\option{/@ntcoveropts/align},
-  %   %   height=\option{/@ntcoveropts/height},
-  %   %   vspace=\option{/@ntcoveropts/vspace}%
-  %   % ]
-  %   \IfSubStr{\option{/@ntcoveropts/cover}}{#1}{%
-  %     \IfInteger{\option{/@ntcoveropts/vspace}}%
-  %       {\ntrepeat\to{\option{/@ntcoveropts/vspace}}\do{\vfill}}%
-  %       {\vspace*{\option{/@ntcoveropts/vspace}}}%
-  %     \noindent%
-  %     \iftoggle{/novathesis/debugcover}{% IF in debug mode surround element in box
-  %       \setlength{\fboxsep}{0pt}%
-  %       \fbox{%
-  %         \IfStrEq{\option{/@ntcoveropts/height}}{@}%
-  %           {\minipage[t]{\linewidth}}%
-  %           {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\linewidth}}%
-  %           \IfStrEq{\option{/@ntcoveropts/align}}{l}{\raggedright}{}%
-  %           \IfStrEq{\option{/@ntcoveropts/align}}{c}{\centering}{}%
-  %           \IfStrEq{\option{/@ntcoveropts/align}}{r}{\raggedleft}{}%
-  %           #3%
-  %         \endminipage%
-  %       }%
-  %     }{% Not in debug mode
-  %         \IfStrEq{\option{/@ntcoveropts/height}}{@}%
-  %           {\minipage[t]{\linewidth}}%
-  %           {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\linewidth}}%
-  %           \IfStrEq{\option{/@ntcoveropts/align}}{l}{\raggedright}{}%
-  %           \IfStrEq{\option{/@ntcoveropts/align}}{c}{\centering}{}%
-  %           \IfStrEq{\option{/@ntcoveropts/align}}{r}{\raggedleft}{}%
-  %           #3%
-  %         \endminipage%
-  %     }%
-  %     \par%
-  %   }{X}%
-  % }%
-
-% \def\@nt@printcoverelement@iv#1=[#2][#3]#4[#5]{%
-%   % #1 = cover number to apply to {1, 2, {1,2}}
-%   % #2 = position {l, c, r}
-%   % #3 = distance from previous {length, integer}  (if integer uses proportional spacing)
-%   % #4 = the code
-%   % #5 = curernt cover number {1, 2, {1,2}}
-%   % \typeout{NT novathesis@printcoveritem [#1] [#2]}
-%   \IfSubStr{#1}{#5}{%
-%     \IfInteger{#3}{%IS INTEGER
-%       \ntrepeat\to{#3}\do{\vfill}
-%     }{%IS NOT INTEGER
-%       \vspace*{#3}%
-%     }%
-%     \noindent%
-%     \iftoggle{/novathesis/debugcover}{% IF in debug mode surround element in box
-%       \setlength{\fboxsep}{0pt}%
-%       \fbox{%
-%         \begin{minipage}[t]{\linewidth}%
-%           \if#2l\relax\raggedright\fi%
-%           \if#2c\relax\centering\fi%
-%           \if#2r\relax\raggedleft\fi%
-%           #4%
-%         \end{minipage}%
-%       }%
-%     }{% Not in debug mode
-%       \begin{minipage}[t]{\linewidth}%
-%         \if#2l\relax\raggedright\fi%
-%         \if#2c\relax\centering\fi%
-%         \if#2r\relax\raggedleft\fi%
-%         #4%
-%       \end{minipage}%
-%     }%
-%     \par%
-%   }{}%
-% }
-
-\newcommand{\ntfixspacing}{%
-  \iftoggle{/@nt/ntfixspacing}{}
+\newenvironment{tinywhite}[1][white]
   {%
     \begin{Spacing}{1}%
       \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
       \fontsize{0.01}{0.01}\selectfont%
-      \hypersetup{allcolors=white}%
-      \noindent\makebox[0pt]{%
-        \noindent\textcolor{white}{\theacknowledgmentsstr(\option{/novathesis/coverlang})}%
-      }%
-    \end{Spacing}
-    % \options{/@nt/ntfixspacing = true}
-    % \newpage%
-    % \thispagestyle{empty}%
-    % \null\vfill%
-    % \begin{Spacing}{1}%
-    %   \scriptsize%
-    %   \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
-    %   \fontsize{6.3}{6.3}\selectfont%
-    %   \noindent%
-    %   \hypersetup{allcolors=white}\textcolor{white}%
-    %              {\theacknowledgmentsstr(\option{/novathesis/coverlang})}%
-    % \end{Spacing}%
+      \hypersetup{allcolors=#1}%
+      \color{#1}%
+  }%
+  {%
+    \end{Spacing}\ignorespacesafterend%
   }
+
+\newcommand{\ntfixspacing}{%
+  \iftoggle{/@nt/ntfixspacing}{}%
+  {%
+    \begin{tinywhite}%
+      \noindent\makebox[0pt]{%
+        \noindent\theacknowledgmentsstr(\option{/novathesis/coverlang})%
+      }%
+    \end{tinywhite}%
+    \options{/@nt/ntfixspacing = true}
+  }%
 }
 
 \csdef{@thecover1backpage}{%
@@ -1272,7 +1181,7 @@
 \newcommand{\@ntaddlisthookfilebib}[2]{%
   \letoptionlist{/@nt/biblatex}\nt@tmp%
   % \typeout{'NT PASSING TO BIBLATEX= '\nt@tmp}%
-  \RequirePackage[hyperref=true,\nt@tmp]{biblatex}%
+  \RequirePackage[hyperref=auto,defernumbers=true,\nt@tmp]{biblatex}%
   \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
   % \typeout{'NT ADD BIBLATEX RESOURCE= '#2}%
   \addbibresource{#2}%
@@ -1281,7 +1190,11 @@
 \newcommand{\ntprintbib}[1][]{%
   % \ifthenelse{\isempty{#1}}%
   % {\printbibliography}%
-  {\printbibliography[#1]}%
+  % \blx@refcontext@sortingtemplatename
+  {\printbibliography[#1,notkeyword={novathesis-manual}]}%
+  \begin{tinywhite}%
+  {\renewcommand*{\bibfont}{\fontsize{0.01}{0.01}\selectfont}\printbibliography[heading=none,keyword={novathesis-manual}]}
+  \end{tinywhite}%
 }
 
 \AtEndPreamble{\ntaddfile{bib}{NOVAthesisFiles/fix-bib.ldf}}
