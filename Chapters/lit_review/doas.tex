@@ -1,5 +1,4 @@
-%\TEX root = ../../thesis_rui_almeida.tex
-
+%!TEX root=../../thesis_rui_almeida.tex
 
 \section{DOAS}%
 \label{sec:doas}
@@ -36,16 +35,18 @@ goals and capabilities:
 \end{itemize}
 
 %f2
- \begin{figure*}[t]
-    \includegraphics[width=14cm]{img/pdf/amt-2016-314-f02.pdf}
+ \begin{figure}[t]
+    \centering
+    \includegraphics[width=.8\textwidth]{img/pdf/amt-2016-314-f02.pdf}
     \caption{Active DOAS schematic.}\label{fig:activeSmall}
-  \end{figure*}
+  \end{figure}
 
 %f3
-  \begin{figure*}[t]
-      \includegraphics[width=14cm]{img/png/amt-2016-314-f03.png}
+  \begin{figure}[t]
+      \centering
+      \includegraphics[width=.8\textwidth]{img/png/amt-2016-314-f03.png}
       \caption{Passive DOAS schematic.}\label{fig:passiveSchematic}
-  \end{figure*}
+  \end{figure}
 
 DOAS itself is based on Lambert--Beer's law, which can be written as
 \cite{Platt2007}
@@ -68,8 +69,8 @@ This law allows the definition of optical thickness
 
 \begin{equation}
       \label{eq:opticalThickness}
-      \tau(\lambda) = \ln \bigg( \frac{I_{0}(\lambda)}{I(\lambda)}\bigg) = \sigma(\lambda) \cdot c \cdot
-      L.
+      \tau(\lambda) = \ln \bigg( \frac{I_{0}(\lambda)}{I(\lambda)}\bigg)
+      = \sigma(\lambda) \cdot c \cdot L.
 \end{equation}
 
 In a laboratory setting, Eq.~(\ref{eq:lambertBeer})
@@ -109,21 +110,27 @@ well as wavelength.
 The expansion of Lambert--Beer's equation to include all these effects
 results in Eq.~(\ref{eq:expandedLambertBeer}).
 
-\begin{align}
-      \label{eq:expandedLambertBeer}
-I(\lambda) & = I_{0}(\lambda) \cdot A(\lambda, \ldots) \cdot S(\lambda) \nonumber \\
-      &\cdot
-      \exp \Bigg[ - \int \Big[ \Big(\sum_{i} \sigma_{i}(\lambda, s) \cdot c_{i}(s)\Big) +
-      \epsilon_\mathrm{M}(\lambda, s)\nonumber\\
-      & + \epsilon_\mathrm{R}(\lambda, s) \Big]\mathrm{d}s \Bigg],
-\end{align}
+\begin{equation}
+    \label{eq:expandedLambertBeer}
+    \begin{aligned}
+        \epsilon_\mathrm{\small{TG}}(\lambda, s)&=\sum_{i} \sigma_{i}(\lambda, s)
+            \cdot c_{i}(s)\\
+       I(\lambda) &= I_0(\lambda) \cdot A(\lambda, \ldots) \cdot
+            S(\lambda) \cdot\\
+                   &\quad\cdot \exp \left[ -\int \left[
+                       \epsilon_{TG}(\lambda, s) +
+                           \epsilon_{\mathrm{M}}(\lambda, s) +
+                               \epsilon_{\mathrm{R}}(\lambda, s)  \right] \right] 
+    \end{aligned}
+\end{equation}
 
 Where $A(\lambda, \ldots)$ is the fraction of scattered light that
 reaches the device, $S(\lambda)$ represents instrumental and turbulence
 effects, $\sigma_{i}(\lambda, s)$ is the absorption cross section of
-absorber $i$, $c_{i}$ is the concentration of absorber $i$,
-$\epsilon_\mathrm{R}(\lambda)$ represents Rayleigh's extinction
-coefficient and $\epsilon_\mathrm{M}(\lambda)$ represents Mie's
+absorber $i$, $c_{i}$ is the concentration of absorber $i$.
+$\epsilon_{\mathrm{TG}}(\lambda, s)$ is the absorption by the $i$ trace gases,
+$\epsilon_\mathrm{R}(\lambda, s)$ represents Rayleigh's extinction
+coefficient and $\epsilon_\mathrm{M}(\lambda, s)$ represents Mie's
 extinction coefficient.
 
 
@@ -149,12 +156,17 @@ light spectrum as reference in Eq.~(\ref{eq:opticalThickness}). Instead
 of absolute densities, this will yield relative changes in the
 atmosphere. We thus arrive at Eq.~(\ref{eq:relativeOpticalThickness}).
 
-\begin{align}
-      \label{eq:relativeOpticalThickness}
-      \ln\Big( \frac{I_\mathrm{ref}}{I}(\lambda) \Big) &= \ln\Big( \frac{A_\mathrm{ref}}{A}(\lambda,\ldots) \Big) + \ln\Big( \frac{S_\mathrm{ref}}{S}(\lambda) \Big) \nonumber\\
-      &+  \sum_{i} (\sigma_{i}(\lambda) \cdot \Delta \mathrm{SC}_{i}(\lambda)) + \Delta \tau_\mathrm{M}(\lambda) \nonumber\\
-      &+ \Delta \tau_\mathrm{R}(\lambda),
-\end{align}
+\begin{equation}
+    \label{eq:relativeOpticalThickness}
+    \begin{aligned}
+        \ln\Bigg( \frac{I_\mathrm{ref}}{I}(\lambda) \Bigg) &= 
+            \ln\Big( \frac{A_\mathrm{ref}}{A}(\lambda,\ldots) \Big) + \ln\Big( 
+                \frac{S_\mathrm{ref}}{S}(\lambda) \Big) \nonumber\\
+                                                           &+  \sum_{i} 
+            (\sigma_{i}(\lambda) \cdot \Delta \mathrm{SC}_{i}(\lambda)) + 
+                \Delta \tau_\mathrm{M}(\lambda) \nonumber\\
+    \end{aligned}     
+\end{equation}
 
 Where $\Delta \mathrm{SC}_{i}$  is the relative slant column of absorber
 $i$; $\Delta \tau_\mathrm{M}$  is the relative Mie scattering term,
@@ -180,9 +192,11 @@ differential) by approximating it by a low-order polynomial, resulting
 in Eq.~(\ref{eq:DOAS}).
 
 \begin{equation}
-      \label{eq:DOAS}
-      \ln\Big( \frac{I_\mathrm{ref}}{I}(\lambda) \Big) = \sum_{i = 1}^{n} \sigma_{i}{'}(\lambda) \cdot \Delta \mathrm{SC}_{i} + \sum_{j = 0}^{m} a_{j} \cdot
-      \lambda^{j},
+    \label{eq:DOAS}
+    \begin{aligned}
+        \ln\left( \frac{I_\mathrm{ref}}{I}(\lambda) \right) &= \sum_{i = 1}^{n} \sigma_{i}{'}(\lambda) 
+            \cdot \Delta \mathrm{SC}_{i} + \sum_{j = 0}^{m} a_{j} \cdot \lambda^{j}
+    \end{aligned}
 \end{equation}
 
 Where $\sum_{i = 1}^{n} \sigma_{i}{'}(\lambda) \cdot \Delta SC_{i}$ is
@@ -190,7 +204,6 @@ the differential part (narrowband, rapidly varying with wavelength) and
 $\sum_{j = 0}^{m} a_{j} \cdot \lambda^{j}$ is a low-order polynomial,
 used to remove the broadband spectral features resulting from
 atmospheric and instrumental phenomena.
-
 
 In practice, the mathematical solving of Eq.~(\ref{eq:DOAS}) is not
 enough since it does not account for the Ring effect or the
@@ -233,12 +246,15 @@ other absorber, non-linearities are addressed by applying
 Levenberg--Marquardt's approach to non-linear fitting problems to
 Eq.~(\ref{eq:DOAS_nonLinear}) \cite{Merlaud2013,Press2007}:
 
-
-\begin{align}
-      \label{eq:DOAS_nonLinear}
-      &\ln\Big( \frac{I_\mathrm{ref}(\lambda)}{I(\lambda + \mathrm{shift}) + \mathrm{offset}} \Big) = \sum_{i = 1}^{n} \sigma_{i}{'}(\lambda) \cdot \Delta \mathrm{SC}_{i} \nonumber\\
-      &+ \sum_{j = 0}^{m} a_{j} \cdot \lambda^{j},
-\end{align}
+\begin{equation}
+    \label{eq:DOAS_nonLinear}
+    \begin{aligned}
+        \ln \left( \frac{I_\mathrm{ref}(\lambda)}{I(\lambda +
+            \mathrm{shift}) + \mathrm{offset}} \right) &= \sum_{i=1}^{n}
+                \sigma_{i}{'}(\lambda) \cdot \Delta \mathrm{SC}_{i} + 
+                    \sum_{j=0}^{m} a_{j} \cdot \lambda^{j}
+    \end{aligned}
+\end{equation}
 
 Where shift and offset, which represent spectral wavelength shifts and
 stray light offsets, respectively, are responsible for the non-linear

@@ -290,13 +290,71 @@ It is given by the expression in Equation~\ref{eq:pixel_pair}.
     \end{aligned}
 \end{equation}
 
+Knowing the pixels and the ray lengths for each of them makes the
+application of the radiological path equation
+(Equation~\ref{eq:siddon_sum}) trivial. From another perspective,
+Siddon's algorithm produces an even more important piece of information.
+One gets total geometric knowledge of the tomographic assembly. If
+matrix form, this is called the system matrix, and it is an essential
+part of the application of any iterative algorithm.
 
-
+Figure~\ref{fig:system_matrix} aims to graphically explain the formation
+of this matrix. Each line in the matrix can be thought of as a flattened
+matrix of the same size as the tomographic image to reconstruct. There
+are as many of these lines as there are rays in the tomographic
+assembly. Each element of the matrix contains the length of the ray
+corresponding to each line, as it is calculated (through the application
+of Siddon's algorithm) for the corresponding pixel of the aforementioned
+flattened matrix.
 
 \subsubsection{Exit Point Calculation}%
 \label{ssub:exit_point_calculation}
 
+Figure~\ref{fig:p2_calculation} is a schematic snapshot of a point in
+which the drone is taking a spectrum in one of its stops. Here, the
+drone's position ($P_1$) is given by the distance $D$ and the angle
+$\beta$. The gimbal is pointing at a direction at an angular distance of
+$\gamma$ form line $0P_1$. Point $P_2$, which is not known, is at the
+intersection between the trajectory's circumference and line $P_1P_2$.
+Now, any point on this line can be expressed parametrically, with the
+sum of a point and a vector; while to say a point is on a circumference
+is the same as saying the distance between that point and the centre of
+this circumference is equal to its radius. The situation can be
+described by the expressions in Equation~\ref{eq:vectorialLineP1P2}.
 
+\begin{equation}
+    \label{eq:vectorialLineP1P2}
+    \begin{aligned}
+        X &= P_1 + t \cdot (P_2 - P_1)\\
+    |P_2| &= D^2\\ 
+    \end{aligned}
+\end{equation}
+
+Unravelling these expressions, and making use of the algebraic property
+that says that $|A|^2 = A \cdot A$, the expression becomes a second
+degree equation, as stated in Equation~\ref{eq:secondDegreeEquation},
+writing $P_2 - P_1$ as V.
+
+\begin{equation}
+    \label{eq:secondDegreeEquation}
+    t^2V^2 + 2 \cdot V \cdot P_1 \cdot t + P_{1}^2 - D^2 = 0
+\end{equation}
+
+If line $P_1P_2$ non-tangentially intersects the circumference, solving
+Equation~\ref{eq:secondDegreeEquation} renders two values for $t$ (which
+correspond to $P_1$ and $P_2$). Selection is made by determining the
+returned value of $t$ which maximises the euclidean distance between the
+produced point and $P_1$.
+
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width = .8\textwidth]{img/pdf/finding_p2.pdf}
+    \caption{$P_2$ Calculation. The software uses the position of the
+    drone, as defined by the vertical angle, $\beta$, and the distance between
+    the drone and the centre of the trajectory, $D$, to determine $P_2$
+    through the solution of a second degree equation.}\label{fig:p2_calculation}
+\end{figure}
 
 \subsection{Phantoms}%
 \label{sub:phantoms}
