@@ -804,7 +804,7 @@
       \optionlistdo{/@nt/#2//name}{\@nt@printadvisersgroup##1,\@nil}%
     \end{minipage}%
   }%
-  {\ClassWarning{novathesis}{option[/@nt/#1//name] undefined}}%
+  {}%
 }
 
 \def\@nt@printadvisersgroup#1,#2\@nil{%
@@ -826,14 +826,14 @@
     \ifoptiondefined{/@nt/#1//name}{%
       \@nt@reducegender{/@nt/#1//gender}{\mygender}%
       \@nt@reducenumber{/@nt/#1//name}{\mynumber}%
-      \smallskip%
+      \medskip%
       \csuse{the#1strfont}(\option{/novathesis/coverlang})%
       \csuse{the#1str}(\mynumber,\mygender,\option{/novathesis/coverlang}): & %
       \begin{minipage}[t]{\linewidth}\raggedright%
-      \optionlistdo{/@nt/#1//name}{##1\\[1pt]}%
+      \optionlistdo{/@nt/#1//name}{##1\\[0.3ex]}%
       \end{minipage}\\%
     }%
-    {\ClassWarning{novathesis}{option[/@nt/#1//name] undefined}}%
+    {}%
 }
 
 
@@ -873,11 +873,11 @@
   \ifoptiondefined{/@nt/committee/#1/name}{%
     \@nt@reducegender{/@nt/committee/#1/gender}{\mygender}%
     \@nt@reducenumber{/@nt/committee/#1/name}{\mynumber}%
-    \smallskip%
+    \medskip%
     \thecommitteememberstrfont(\option{/novathesis/coverlang})%
     \thecommitteememberstr(#1,\mynumber,\mygender,\option{/novathesis/coverlang}): & %
     \begin{minipage}[t]{\linewidth}\raggedright%
-    \optionlistdo{/@nt/committee/#1/name}{##1\\[1pt]}%
+    \optionlistdo{/@nt/committee/#1/name}{##1\\[0.3ex]}%
     \end{minipage}\\%
   }%
   {}%
