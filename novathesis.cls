@@ -1279,10 +1279,13 @@
 }
 
 \newcommand{\ntprintbib}[1][]{%
-  \ifthenelse{\isempty{#1}}%
-  {\printbibliography}%
-  {\printbibliography[title=#1]}%
+  % \ifthenelse{\isempty{#1}}%
+  % {\printbibliography}%
+  {\printbibliography[#1]}%
 }
+
+\AtEndPreamble{\ntaddfile{bib}{NOVAthesisFiles/fix-bib.ldf}}
+\AtEndDocument{\nocite{ntmbib}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Copyright page

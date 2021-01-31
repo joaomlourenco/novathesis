@@ -144,10 +144,6 @@
 %%------------------------------------------------------------
 
 %%------------------------------------------------------------
-%% We are using hyperref.  Leave this option.
-\ntbibsetup{giveninits=true}
-
-%%------------------------------------------------------------
 % If it works, leave biber.  If it fails for you, try bibtex
 \ntbibsetup{backend=biber}
 % \ntbibsetup{backend=bibtex}
@@ -158,12 +154,12 @@
 %% Uncomment the preferred style
 
 %%------------------------------------------------------------
-%% NUMBERED ORDER BY CITATION
-% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=none}
+%% NUMBERED ORDER BY LAST NAME OF FIRST AUTHOR - this is the default
+% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=nyt}
 
 %%------------------------------------------------------------
-%% NUMBERED ORDER BY LAST NAME OF FIRST AUTHOR
-% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=nyt}
+%% NUMBERED ORDER BY CITATION
+% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=none}
 
 %%------------------------------------------------------------
 %% APLHA CITATION ORDER BY LAST NAME OF FIRST AUTHOR
@@ -457,7 +453,7 @@
 \ntthesismainmatter     % The main text — Arabic page numbering
 %%------------------------------------------------------------
 \ntprintchapters        % Print document chapters
-\ntprintbib             % Print the bibliography.  Change to "\ntprintbib[⟨title⟩]" to redfine the title!
+\ntprintbib             % Print the bibliography.  Change to "\ntprintbib[title=⟨title⟩]" to redfine the title!
 \ntprintappendixes      % Print appendixes, if any!
 \ntprintannexes         % Print appendixes, if any!
 \ntprintbackcoverpage   % The back cover
