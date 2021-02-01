@@ -207,7 +207,7 @@
   % #1 = {author, adviser, committee}
   % #2={c,r,a,m}
   %     c = chair
-  %     r = raporteur/referee
+  %     r = rapporteur/referee
   %     a = adviser
   %     m = other members
   %     g = guests

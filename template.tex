@@ -62,7 +62,7 @@
 
 
 %%============================================================
-%%  BEGINING OF TEMPLATE COSTUMIZATION
+%%  BEGINNING OF TEMPLATE CUSTOMIZATION
 %%============================================================
 
 %%------------------------------------------------------------
@@ -95,9 +95,9 @@
 %                               %                 different, black links
 
 % \ntsetup{printcommittee=false}% Should the committee be printed??
-%                               %     should be 'false' for document versins still
+%                               %     should be 'false' for document versions still
 %                               %     under work/evaluation.   Only final versions 
-%                               %     should have the list of committee memebers.
+%                               %     should have the list of committee members.
 
 % \ntsetup{printcopyright=fale} % Should the copyright message be printed??
 
@@ -125,7 +125,7 @@
 % \ntsetup{coverlang=en}        % The language for the cover (and second cover) page 
 %                               %     defaults to main document language
 
-% \ntsetup{copyrightlang=en}    % The language for the copuyright message
+% \ntsetup{copyrightlang=en}    % The language for the copyright message
 %                               %     defaults to main document language
 
 % \ntsetup{aftercover=true}     % Does the document have after cover pages??
@@ -170,7 +170,7 @@
 % \ntbibsetup{backend=biber, natbib=true, style=apa6, maxcitenames=2}
 
 %%============================================================
-%%  END OF TEMPLATE COSTUMIZATION
+%%  END OF TEMPLATE CUSTOMIZATION
 %%============================================================
 
 
@@ -181,11 +181,11 @@
 %%============================================================
 
 %%------------------------------------------------------------
-%% To enable customizble enumerates.  See the documentation.
+%% To enable costumizble enumerates.  See the documentation.
 \usepackage{paralist}    
 
 %%------------------------------------------------------------
-%% Leave TODOs and NOTEs duting text writing
+%% Leave TODOs and NOTEs during text writing
 \usepackage[textsize=footnotesize]{todonotes}  % To register TODO notes in the text
 
 %%------------------------------------------------------------
@@ -210,7 +210,7 @@
 % \nttitle[en]{The title in a Specific language}%
 
 %%------------------------------------------------------------
-% Degree costumization
+% Degree customization
 
 %% See below for the degrees in Computer Science @ FCT-NOVA
 \ntmajorfield(pt){\embrace{Área Científica}}
@@ -242,7 +242,7 @@
 % }{}
 
 %%------------------------------------------------------------
-% Degree costumization
+% Degree customization
 % If the degree includes a specialization
 \ntspecialization(pt){\embrace{Designação da Especialidade}}
 \ntspecialization(en){\embrace{Speciality Name}}
@@ -254,7 +254,7 @@
 \ntsponsors(en){\embrace{Funding Sponsors}}
 
 %%------------------------------------------------------------
-% Autor
+% Author
 % use [f] for female and [m] for male
 \ntauthorname[m]{John Longname Doe}{John Doe}
 \ntauthordegree{Master of Science}
@@ -269,7 +269,7 @@
 %%------------------------------------------------------------
 % Advisers
 % use [f] for female and [m] for male
-% use "\\" if necessary to break the lines in the apprpriate place
+% use "\\" if necessary to break the lines in the appropriate place
 \ntaddperson{adviser}[f]{{Mary Doe Adviser Name, \\Full Professor, NOVA University Lisbon}}
 % \ntaddperson{adviser}[f]{{Mary Doe other Adviser Name, Full Professor, NOVA University Lisbon}}
 % \ntaddperson{adviser}[f]{{Mary Doe yet another Adviser Name, Full Professor, NOVA University Lisbon}}
@@ -277,7 +277,7 @@
 %%------------------------------------------------------------
 % Co-Advisers
 % use [f] for female and [m] for male
-% use "\\" if necessary to break the lines in the apprpriate place
+% use "\\" if necessary to break the lines in the appropriate place
 \ntaddperson{coadviser}[f]{John Doe Co-Adviser Name, \\Associate Professor, NOVA University Lisbon}
 \ntaddperson{coadviser}[f]{John Doe other Co-Adviser Name, \\Full Professor, NOVA University Lisbon}
 
@@ -285,15 +285,15 @@
 % Committee
 % \ntaddperson{committee}[job][gender]{Name, Position, Organization}
 % For [job] use: [c] for committee chair
-%                [r] for raporteurs
+%                [r] for rapporteurs
 %                [a] for advisers
 %                [m] for remaining members
 %                [g] for guests
 % Chair of tntcommitteehe committee
 \ntaddperson{committee}[c,m]{Name of the committee chairperson, Full Professor, FCT-NOVA}
-% Main raporteurs
-\ntaddperson{committee}[r,m]{Name of a raporteur, Another University}
-\ntaddperson{committee}[r,m]{Name of another raporteur, Another University}
+% Main rapporteurs
+\ntaddperson{committee}[r,m]{Name of a rapporteur, Another University}
+\ntaddperson{committee}[r,m]{Name of another rapporteur, Another University}
 % Advisers — FOR FCT-NOVA ADD ADVISERS AS "OTHER MEMBERS [m]"
 % \ntcommittee[a,f]{Name of an adviser, Position, University}
 % \ntcommittee[a,f]{Name of another adviser, Position, University}
@@ -367,7 +367,7 @@
 
 %%------------------------------------------------------------
 % Text appendixes and annexes
-% sintax: \ntaddfile{appendix}{filename}
+% syntax: \ntaddfile{appendix}{filename}
 %         \ntaddfile{annex}{filename}
 % Comment if not needed
 \ntaddfile{appendix}{appendix1}
@@ -385,14 +385,14 @@
 %%------------------------------------------------------------
 % The other lists below may be commented and omitted.
 % syntax:  \ntaddindex{index-name}
-\ntaddindex{tableofcontents}    % TheTable of Contents. Probably you want ot leave this as is! ;)
+\ntaddindex{tableofcontents}    % The Table of Contents. Probably you want ot leave this as is! ;)
 \ntaddindex{listoffigures}      % The List of Figures. Comment to omit.
 \ntaddindex{listoftables}       % The List of Tables. Comment to omit.
 \ntaddindex{listoflistings}     % The List of Listings. Comment to omit.
 \ntaddindex{listsofglossaries}  % The Glossary, and the lists of Acronyms and Symbols
 
 %%============================================================
-%%  END OF TEMPLATE COSTUMIZATION
+%%  END OF TEMPLATE CUSTOMIZATION
 %%  PLEASE DO NOT TOUCH BELOW THIS POINT…
 %%============================================================
 
@@ -437,7 +437,7 @@
 %%============================================================
 
 %%------------------------------------------------------------
-\begin{document}        % Begining of document
+\begin{document}        % Beginning of document
 
 %%------------------------------------------------------------
 \thesisfrontmatter      % Before the main text (TOC, etc) — Roman page numbering
@@ -449,7 +449,7 @@
 \ntprintdedicatory      % (*) Print the dedicatory
 \ntprintacknowledgements% (*) Print the acknowledgments
 \ntprintquote           % (*) Print the quote
-\ntprintabstracts       % Print abstracts in multiple languges. 
+\ntprintabstracts       % Print abstracts in multiple languages. 
                         % Changing the language will change the order of the abstracts
 \ntprintallindexes      % Print all the indexes defined above TOC, LOF, LOT, …)
 
@@ -457,7 +457,7 @@
 \ntthesismainmatter     % The main text — Arabic page numbering
 %%------------------------------------------------------------
 \ntprintchapters        % Print document chapters
-\ntprintbib             % Print the bibliography.  Change to "\ntprintbib[title=⟨title⟩]" to redfine the title!
+\ntprintbib             % Print the bibliography.  Change to "\ntprintbib[title=⟨title⟩]" to redefine the title!
 \ntprintappendixes      % Print appendixes, if any!
 \ntprintannexes         % Print appendixes, if any!
 \ntprintbackcoverpage   % The back cover
