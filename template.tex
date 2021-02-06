@@ -62,7 +62,7 @@
 
 
 %%============================================================
-%%  BEGINNING OF TEMPLATE CUSTOMIZATION
+%%  TEMPLATE CUSTOMIZATION / OPTIONS
 %%============================================================
 
 %%------------------------------------------------------------
@@ -167,7 +167,7 @@
 
 %%------------------------------------------------------------
 %% APA-LIKE CITATION
-% \ntbibsetup{backend=biber, natbib=true, style=apa6, maxcitenames=2}
+% \ntbibsetup{backend=biber, natbib=true, style=apa6}
 
 %%============================================================
 %%  END OF TEMPLATE CUSTOMIZATION
@@ -181,22 +181,13 @@
 %%============================================================
 
 %%------------------------------------------------------------
-%% To enable costumizble enumerates.  See the documentation.
-\usepackage{paralist}    
-
-%%------------------------------------------------------------
-%% Leave TODOs and NOTEs during text writing
-\usepackage[textsize=footnotesize]{todonotes}  % To register TODO notes in the text
-
-%%------------------------------------------------------------
-%% FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
-\usepackage{wrapfig}
-\usepackage{metalogo}
-\usepackage{lipsum}
-
-%%------------------------------------------------------------
 %% ADD YOUR PACKAGES AND CUSTOMIZATION HERE
-% \usepackage{add-your-package-here}
+% syntax: \usepackage[options]{packagename}
+\usepackage{paralist}     % To enable costumizble enumerates.  See the documentation.
+\usepackage[textsize=footnotesize]{todonotes}  % To register TODO notes in the text
+\usepackage{wrapfig}      % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+\usepackage{metalogo}     % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+\usepackage{lipsum}       % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 
 
 
@@ -205,16 +196,22 @@
 %%============================================================
 
 %%------------------------------------------------------------
-%% Thesis/Dissertation title (valid for all languages unless redefined as below)
+% Thesis/Dissertation title (valid for all languages unless redefined as below)
+% syntax: \nttitle{title}
 \nttitle{A Very Long and Impressive Thesis Title\\with a Forced Line Break}%
 % \nttitle[en]{The title in a Specific language}%
 
 %%------------------------------------------------------------
-% Degree customization
-
-%% See below for the degrees in Computer Science @ FCT-NOVA
+% Degree customization - majorfield
+% See below for the degrees in Computer Science @ FCT-NOVA
+% syntax: \ntmajorfield(language){name}
 \ntmajorfield(pt){\embrace{Área Científica}}
 \ntmajorfield(en){\embrace{Scientific Field}}
+
+%%------------------------------------------------------------
+% Degree customization - ntdegreename
+% See below for the degrees in Computer Science @ FCT-NOVA
+% syntax: \ntdegreename(language){name}
 \ntdegreename(pt){\embrace{Designação do Curso}}
 \ntdegreename(en){\embrace{Study Program Name}}
 
@@ -243,66 +240,67 @@
 
 %%------------------------------------------------------------
 % Degree customization
-% If the degree includes a specialization
+%   If the degree includes a specialization
+%   syntax: \ntspecialization(language){name}
 \ntspecialization(pt){\embrace{Designação da Especialidade}}
 \ntspecialization(en){\embrace{Speciality Name}}
 
 %%------------------------------------------------------------
 % Sponsors
-% Some Schools require the work sponsors to be listed in the cover
+%   Some Schools require the work sponsors to be listed in the cover
+%   syntax: \ntsponsors(language){names}
 \ntsponsors(pt){\embrace{Fontes de Financiamento}}
 \ntsponsors(en){\embrace{Funding Sponsors}}
 
 %%------------------------------------------------------------
-% Author
-% use [f] for female and [m] for male
+% Author full name, abbreviated name, and gender
+%   use [f] for female and [m] for male author
+%   syntax: \ntauthorname(language){full name}{abbreviated name}
 \ntauthorname[m]{John Longname Doe}{John Doe}
+
+%%------------------------------------------------------------
+% Author previous degree
+%   syntax: \ntauthordegree{degree}
 \ntauthordegree{Master of Science}
 
 %%------------------------------------------------------------
-% Date
-% \ntdatemonth{$<$ month $>$}
-% \ntdateyear{\the\year}
+% Submission date
+%   syntax: \ntdatemonth{month}
+%           \ntdateyear{year}
 \ntdatemonth{\embrace{month}}
 \ntdateyear{\embrace{year}}
 
 %%------------------------------------------------------------
-% Advisers
-% use [f] for female and [m] for male
-% use "\\" if necessary to break the lines in the appropriate place
+% Advisers' gender and info (name, position, school, etc)
+%   use [for female and [m] for male
+%   use "\\" to break the lines in the appropriate place
+%   syntax: \ntaddperson{adviser}[gender]{Name, Position, School}
 \ntaddperson{adviser}[f]{{Mary Doe Adviser Name, \\Full Professor, NOVA University Lisbon}}
 % \ntaddperson{adviser}[f]{{Mary Doe other Adviser Name, Full Professor, NOVA University Lisbon}}
 % \ntaddperson{adviser}[f]{{Mary Doe yet another Adviser Name, Full Professor, NOVA University Lisbon}}
 
 %%------------------------------------------------------------
-% Co-Advisers
-% use [f] for female and [m] for male
-% use "\\" if necessary to break the lines in the appropriate place
+% Co-Advisers' gender and info (name, position, school, etc)
+%   use [for female and [m] for male
+%   use "\\" to break the lines in the appropriate place
+%   syntax: \ntaddperson{coadviser}[gender]{Name, Position, School}
 \ntaddperson{coadviser}[f]{John Doe Co-Adviser Name, \\Associate Professor, NOVA University Lisbon}
 \ntaddperson{coadviser}[f]{John Doe other Co-Adviser Name, \\Full Professor, NOVA University Lisbon}
 
 %%------------------------------------------------------------
-% Committee
-% \ntaddperson{committee}[job][gender]{Name, Position, Organization}
-% For [job] use: [c] for committee chair
-%                [r] for rapporteurs
-%                [a] for advisers
-%                [m] for remaining members
-%                [g] for guests
-% Chair of tntcommitteehe committee
+% Committee members
+%   For [role] use: [c] for committee chair
+%                   [r] for rapporteurs
+%                   [a] for advisers
+%                   [m] for remaining members
+%                   [g] for guests
+%   syntax: \ntaddperson{adviser}[role,gender]{Name, Position, School}
 \ntaddperson{committee}[c,m]{Name of the committee chairperson, Full Professor, FCT-NOVA}
-% Main rapporteurs
-\ntaddperson{committee}[r,m]{Name of a rapporteur, Another University}
-\ntaddperson{committee}[r,m]{Name of another rapporteur, Another University}
-% Advisers — FOR FCT-NOVA ADD ADVISERS AS "OTHER MEMBERS [m]"
-% \ntcommittee[a,f]{Name of an adviser, Position, University}
-% \ntcommittee[a,f]{Name of another adviser, Position, University}
-% Other members of the committee
-\ntaddperson{committee}[m,m]{Another member of the committee, Another University}
-\ntaddperson{committee}[m,f]{Yet another member of the committee, Another University}
-% Guest members
+\ntaddperson{committee}[r,m]{Name of a rapporteur, Position, Another University}
+\ntaddperson{committee}[r,m]{Name of another rapporteur, Position, Another University}
+\ntaddperson{committee}[a,m]{name of the adviser present in defense, Position, University}
+\ntaddperson{committee}[m,f]{Yet another member of the committee, Position, Another University}
 % \ntcommittee[g,m]{Guest member of the committee, Position, University}
-% \ntcommittee[g,f]{Yet another guest member of the committee, Position, University}
 
 
 
@@ -311,54 +309,53 @@
 %=============================================================================
 
 %%------------------------------------------------------------
-%% Except for the bibliography, all the other FILE names below  
+%% Except for the bibliography, all the other FILE NAMES below  
 %%     inside braces must correspond to a file with extension 
 %%     ".tex" and located in the "Chapters" folder
 %%------------------------------------------------------------
 
 %%------------------------------------------------------------
-% BibTeX bibiography files and customization. May be used multiple 
-% times with a single file nae each time.
-% syntax:  \ntaddfile{bib}{filename.bib}
+% BibTeX bibiography files and customization.  
+%   May be used multiple times with a single file nae each time.
+%   syntax: \ntaddfile{bib}{filename.bib}
 \ntaddfile{bib}{bibliography.bib}
-% \DeclareLanguageMapping{portuguese}{portuguese-apa6}%
-% \DeclareLanguageMapping{english}{english-apa6}%
-% \DeclareLanguageMapping{french}{french-apa6}%
-% \DeclareLanguageMapping{italian}{italian-apa6}%
+%\ntaddfile{bib}{anotherbibfile.bib}
 
 %%------------------------------------------------------------
-% Dedicatory text. Will only be considered for final documents,
-% i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
-% syntax:  \ntaddfile{dedicatory}{filename}
+% File with the dedicatory text. Will only be considered for final documents,
+%   i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
+%   syntax: \ntaddfile{dedicatory}{filename}
 \ntaddfile{dedicatory}{dedicatory}
 
 %%------------------------------------------------------------
-% Acknowledgments text. Will only be considered for final documents,
-% i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
-% syntax:  \ntaddfile{acknowledgements}{filename}
+% File with the acknowledgments text. Will only be considered for final documents,
+%   i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
+%   syntax: \ntaddfile{acknowledgements}{filename}
 \ntaddfile{acknowledgements}{acknowledgements}
 
 %%------------------------------------------------------------
-% The file with the quote
-% syntax:  \ntaddfile{quote}{filename}
+% File with the quote text. Will only be considered for final documents,
+%   i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
+%   syntax: \ntaddfile{quote}{filename}
 \ntaddfile{quote}{quote}
 
 %%------------------------------------------------------------
 % Abstract files in multiple languages
-% syntax:  \ntaddfile{abstract}[language]{filename}
+%   syntax: \ntaddfile{abstract}[language]{filename}
 \ntaddfile{abstract}[pt]{abstract-pt}  % Abstract in Portuguese
 \ntaddfile{abstract}[en]{abstract-en}  % Abstract in English
-\ntaddfile{abstract}[fr]{abstract-fr}  % Abstract in French
+% \ntaddfile{abstract}[fr]{abstract-fr}  % Abstract in French
 
+%%------------------------------------------------------------
 % Lists of Glossary, Acronyms and Symbols
-% syntax:  \ntaddfile{glossaries}[list-type]{filename}
+%   syntax: \ntaddfile{glossaries}[list-type]{filename}
 \ntaddfile{glossaries}[glossary]{glossary}
 \ntaddfile{glossaries}[acronyms]{acronyms}
 \ntaddfile{glossaries}[symbols]{symbols}
 
 %%------------------------------------------------------------
-% Text chapters
-% syntax: \ntaddfile{chapter}{filename}
+% Main text - document chapters
+%   syntax: \ntaddfile{chapter}{filename}
 \ntaddfile{chapter}{chapter1}
 \ntaddfile{chapter}{chapter2}
 \ntaddfile{chapter}{chapter3}
@@ -369,22 +366,23 @@
 % Text appendixes and annexes
 % syntax: \ntaddfile{appendix}{filename}
 %         \ntaddfile{annex}{filename}
-% Comment if not needed
 \ntaddfile{appendix}{appendix1}
 \ntaddfile{appendix}{appendix2}
 \ntaddfile{annex}{annex1}
+% \ntaddfile{annex}{annex2}
 
 %%------------------------------------------------------------
 % Definition of the aftercover page, to be printed before the copyright
-% syntax:  \ntaddfile{aftercover}{filename}
+% syntax: \ntaddfile{aftercover}{filename}
 % \ntaddfile{aftercover}{aftercover-nova-ims}
 
+
+
 %=============================================================================
-% THE INDEXES
+% WHICH INDEXES TO PRINT?
 %=============================================================================
 %%------------------------------------------------------------
-% The other lists below may be commented and omitted.
-% syntax:  \ntaddindex{index-name}
+% syntax: \ntaddindex{index-name}
 \ntaddindex{tableofcontents}    % The Table of Contents. Probably you want ot leave this as is! ;)
 \ntaddindex{listoffigures}      % The List of Figures. Comment to omit.
 \ntaddindex{listoftables}       % The List of Tables. Comment to omit.
@@ -442,7 +440,6 @@
 %%------------------------------------------------------------
 \thesisfrontmatter      % Before the main text (TOC, etc) — Roman page numbering
 %%------------------------------------------------------------
-% (*) Will only be printed if adequate for the document type
 \ntprintcovers       % The cover page
 \ntprintaftercover      % The aftercover page
 \ntprintcopyright       % (*) The copyright page
@@ -452,15 +449,17 @@
 \ntprintabstracts       % Print abstracts in multiple languages. 
                         % Changing the language will change the order of the abstracts
 \ntprintallindexes      % Print all the indexes defined above TOC, LOF, LOT, …)
+% (*) Will only be printed if adequate for the document type
 
 %%------------------------------------------------------------
 \ntthesismainmatter     % The main text — Arabic page numbering
 %%------------------------------------------------------------
 \ntprintchapters        % Print document chapters
-\ntprintbib             % Print the bibliography.  Change to "\ntprintbib[title=⟨title⟩]" to redefine the title!
+\ntprintbib             % Print the bibliography.  Change to 
+                        %   "\ntprintbib[title=⟨title⟩]" to redefine the title!
 \ntprintappendixes      % Print appendixes, if any!
 \ntprintannexes         % Print appendixes, if any!
-\ntprintbackcoverpage   % The back cover
+\ntprintbackcoverpage   % Print the back cover, if any!
 
 %%------------------------------------------------------------
 \end{document}          % End of document
