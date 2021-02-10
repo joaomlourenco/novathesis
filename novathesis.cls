@@ -477,7 +477,7 @@
 \newenvironment{tinywhite}[1][white]
   {%
     \begin{Spacing}{1}%
-      \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+      \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
       \fontsize{0.01}{0.01}\selectfont%
       \hypersetup{allcolors=#1}%
       \color{#1}%
