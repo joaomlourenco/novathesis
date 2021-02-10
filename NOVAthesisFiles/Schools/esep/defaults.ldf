@@ -127,7 +127,7 @@
   \ntsetup{fontstyle=calibri}%
 }{%
   \AtBeginCover{%
-    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+    \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
   }%
 }
 

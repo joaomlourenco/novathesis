@@ -195,7 +195,7 @@
 % Temporary macro to use in conditional expressions;
 
 \AtBeginCover{%
-  \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+  \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
   \ifdocfinal{\provisionalstring(\option{/novathesis/coverlang}):={~}}{}%
 }
 
