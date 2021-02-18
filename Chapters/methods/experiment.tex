@@ -5,13 +5,12 @@
 As stated in this chapter's introductory notes, this thesis main body of
 work revolves around two base assumptions, our hypothesis. The first
 one, about the information capturing by the idealised system, was
-addressed in lkjashdkjh~\todo{reference the correct subsection after
-merging with the mac branch}. The second, more physical in nature, is
-the subject matter of this section. Our hypothesis states that the light
-absorption between points $A$ and $B$ (let's call it $A_{AB}$) should be
-equal to the difference of the absorptions in $A$ and $B$. We can write
-this, in a \emph{Lambertian} manner as in
-Equation~\ref{eq:lambertian_hypothesis}.
+addressed in Subsection~\ref{sub:discretisation}. The second, more
+physical in nature, is the subject matter of this section. Our
+hypothesis states that the light absorption between points $A$ and $B$
+(let's call it $A_{AB}$) should be equal to the difference of the
+absorptions in $A$ and $B$. We can write this, in a \emph{Lambertian}
+manner as in Equation~\ref{eq:lambertian_hypothesis}.
 
 \begin{equation}
     \label{eq:lambertian_hypothesis}
@@ -71,7 +70,7 @@ instrumental limitations, adverse environmental effects, etc.. The
 experiment we describe in the next few paragraphs aimed at determining
 target trace gas concentration in a set analysis field. This field is
 dimension-wise compatible with those that would be employed in the final
-working system. The experiment geographic information is presented in
+working system. This experiment is represented in
 Figure~\ref{fig:experiment_map}.
 
 \begin{figure}[htpb]
@@ -80,3 +79,23 @@ Figure~\ref{fig:experiment_map}.
     \caption{Location of observer points for the physical experiment.}
     \label{fig:experiment_map}
 \end{figure}
+
+The goal of the experiment was to compare passive and active \gls{DOAS}
+measurements performed with a very short time difference between them.
+The passive measurement would employ the same acquisition strategy as
+the drone is expected to use. This comparison will be used to test our
+second hypothesis.
+
+Finding two appropriate experiment sites proved to be the first
+difficulty: both telescopes should see sky on the back of the other
+telescope. Otherwise, the contribution from the terrain's reflection
+would have to be taken into account and the experiment conditions would
+be very different from the ones the drone will have. There are not many
+site pairs that provide this, and most of the ones that exist are
+private and did not authorise our presence. In the end, we managed to
+run the experiment in the facilities of \emph{Infraestruturas de
+Portugal} and the \emph{Cristo-Rei} sanctuary, near our own base. 
+
+
+
+
