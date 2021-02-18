@@ -1,5 +1,4 @@
-%\TEX root = ../../thesis_rui_almeida.tex
-
+%!TEX root=../../thesis_rui_almeida.tex
 
 \section{DOAS}%
 \label{sec:doas}
@@ -10,42 +9,6 @@ studies~\cite{Platt2007}. In this section, I present a short
 introduction to the field, extracted from~\cite{ValentedeAlmeida2017},
 an article we have published in 2017, marking the conclusion of the
 initial studies for this PhD thesis.
-
-There are two main families of \gls{DOAS} assemblies, with different
-goals and capabilities:
-
-\begin{itemize}
-
-        \item Active systems, of which a simple illustration is
-            presented in Fig.~\ref{fig:activeSmall}, are characterized
-            by relying on an artificial light source for their
-            measurements. A spectrometer at the end of the light path
-            performs spectroscopic detection. Active DOAS techniques are
-            very similar to traditional in-lab absorption spectroscopy
-            techniques \cite{Platt2007};
-
-        \item Passive DOAS techniques, illustrated in
-            Fig.~\ref{fig:passiveSchematic}, use natural light sources,
-            such as the Sun and the moon, in their measurement process.
-            An optical system is pointed in certain elevation and
-            azimuth angles and sends the captured light into a
-            spectrometer, connected to a computer. The system returns
-            the total value of the light absorption in its
-            path~\cite{Platt2007,Merlaud2013}.
-
-\end{itemize}
-
-%f2
- \begin{figure*}[t]
-    \includegraphics[width=14cm]{img/pdf/amt-2016-314-f02.pdf}
-    \caption{Active DOAS schematic.}\label{fig:activeSmall}
-  \end{figure*}
-
-%f3
-  \begin{figure*}[t]
-      \includegraphics[width=14cm]{img/png/amt-2016-314-f03.png}
-      \caption{Passive DOAS schematic.}\label{fig:passiveSchematic}
-  \end{figure*}
 
 DOAS itself is based on Lambert--Beer's law, which can be written as
 \cite{Platt2007}
@@ -62,14 +25,13 @@ intensity of the light as emitted by the source; and $\sigma(\lambda)$
 is the absorption cross section of absorber, which is wavelength
 dependent; $c$ is the concentration of the absorber we want to measure.
 
-
 This law allows the definition of optical thickness
 ($\tau$)~\cite{Platt2007}:
 
 \begin{equation}
       \label{eq:opticalThickness}
-      \tau(\lambda) = \ln \bigg( \frac{I_{0}(\lambda)}{I(\lambda)}\bigg) = \sigma(\lambda) \cdot c \cdot
-      L.
+      \tau(\lambda) = \ln \bigg( \frac{I_{0}(\lambda)}{I(\lambda)}\bigg)
+      = \sigma(\lambda) \cdot c \cdot L.
 \end{equation}
 
 In a laboratory setting, Eq.~(\ref{eq:lambertBeer})
@@ -93,7 +55,6 @@ following~\cite{Platt2007}.
       \item Instrumental and turbulence effects are the instrument's
           transmissivity and atmospheric turbulence in the optical path
           also limit light intensity.
-
   \end{itemize}
 
 In addition, we also have to take into account that, in the atmosphere,
@@ -109,23 +70,28 @@ well as wavelength.
 The expansion of Lambert--Beer's equation to include all these effects
 results in Eq.~(\ref{eq:expandedLambertBeer}).
 
-\begin{align}
-      \label{eq:expandedLambertBeer}
-I(\lambda) & = I_{0}(\lambda) \cdot A(\lambda, \ldots) \cdot S(\lambda) \nonumber \\
-      &\cdot
-      \exp \Bigg[ - \int \Big[ \Big(\sum_{i} \sigma_{i}(\lambda, s) \cdot c_{i}(s)\Big) +
-      \epsilon_\mathrm{M}(\lambda, s)\nonumber\\
-      & + \epsilon_\mathrm{R}(\lambda, s) \Big]\mathrm{d}s \Bigg],
-\end{align}
+\begin{equation}
+    \label{eq:expandedLambertBeer}
+    \begin{aligned}
+        \epsilon_\mathrm{\small{TG}}(\lambda, s)&=\sum_{i} \sigma_{i}(\lambda, s)
+            \cdot c_{i}(s)\\
+       I(\lambda) &= I_0(\lambda) \cdot A(\lambda, \ldots) \cdot
+            S(\lambda) \cdot\\
+                   &\quad\cdot \exp \left[ -\int \left[
+                       \epsilon_{TG}(\lambda, s) +
+                           \epsilon_{\mathrm{M}}(\lambda, s) +
+                               \epsilon_{\mathrm{R}}(\lambda, s)  \right] \right] 
+    \end{aligned}
+\end{equation}
 
 Where $A(\lambda, \ldots)$ is the fraction of scattered light that
 reaches the device, $S(\lambda)$ represents instrumental and turbulence
 effects, $\sigma_{i}(\lambda, s)$ is the absorption cross section of
-absorber $i$, $c_{i}$ is the concentration of absorber $i$,
-$\epsilon_\mathrm{R}(\lambda)$ represents Rayleigh's extinction
-coefficient and $\epsilon_\mathrm{M}(\lambda)$ represents Mie's
+absorber $i$, $c_{i}$ is the concentration of absorber $i$.
+$\epsilon_{\mathrm{TG}}(\lambda, s)$ is the absorption by the $i$ trace gases,
+$\epsilon_\mathrm{R}(\lambda, s)$ represents Rayleigh's extinction
+coefficient and $\epsilon_\mathrm{M}(\lambda, s)$ represents Mie's
 extinction coefficient.
-
 
 The interest of this equation lies within the retrieval of $c_i$, a
 given absorber's concentration. Since the integral is taken along the
@@ -149,18 +115,22 @@ light spectrum as reference in Eq.~(\ref{eq:opticalThickness}). Instead
 of absolute densities, this will yield relative changes in the
 atmosphere. We thus arrive at Eq.~(\ref{eq:relativeOpticalThickness}).
 
-\begin{align}
-      \label{eq:relativeOpticalThickness}
-      \ln\Big( \frac{I_\mathrm{ref}}{I}(\lambda) \Big) &= \ln\Big( \frac{A_\mathrm{ref}}{A}(\lambda,\ldots) \Big) + \ln\Big( \frac{S_\mathrm{ref}}{S}(\lambda) \Big) \nonumber\\
-      &+  \sum_{i} (\sigma_{i}(\lambda) \cdot \Delta \mathrm{SC}_{i}(\lambda)) + \Delta \tau_\mathrm{M}(\lambda) \nonumber\\
-      &+ \Delta \tau_\mathrm{R}(\lambda),
-\end{align}
+\begin{equation}
+    \label{eq:relativeOpticalThickness}
+    \begin{aligned}
+        \ln\Bigg( \frac{I_\mathrm{ref}}{I}(\lambda) \Bigg) &= 
+            \ln\Big( \frac{A_\mathrm{ref}}{A}(\lambda,\ldots) \Big) + \ln\Big( 
+                \frac{S_\mathrm{ref}}{S}(\lambda) \Big) \nonumber\\
+                                                           &+  \sum_{i} 
+            (\sigma_{i}(\lambda) \cdot \Delta \mathrm{SC}_{i}(\lambda)) + 
+                \Delta \tau_\mathrm{M}(\lambda) \nonumber\\
+    \end{aligned}     
+\end{equation}
 
 Where $\Delta \mathrm{SC}_{i}$  is the relative slant column of absorber
 $i$; $\Delta \tau_\mathrm{M}$  is the relative Mie scattering term,
 integrated to its optical thickness; and $\Delta \tau_\mathrm{R}$ is the
 relative Rayleigh scattering term, integrated to its optical thickness.
-
 
 This is where the principle of DOAS is applied. Instrument features,
 scattering and other atmospheric effects have broad absorption spectral
@@ -180,9 +150,11 @@ differential) by approximating it by a low-order polynomial, resulting
 in Eq.~(\ref{eq:DOAS}).
 
 \begin{equation}
-      \label{eq:DOAS}
-      \ln\Big( \frac{I_\mathrm{ref}}{I}(\lambda) \Big) = \sum_{i = 1}^{n} \sigma_{i}{'}(\lambda) \cdot \Delta \mathrm{SC}_{i} + \sum_{j = 0}^{m} a_{j} \cdot
-      \lambda^{j},
+    \label{eq:DOAS}
+    \begin{aligned}
+        \ln\left( \frac{I_\mathrm{ref}}{I}(\lambda) \right) &= \sum_{i = 1}^{n} \sigma_{i}{'}(\lambda) 
+            \cdot \Delta \mathrm{SC}_{i} + \sum_{j = 0}^{m} a_{j} \cdot \lambda^{j}
+    \end{aligned}
 \end{equation}
 
 Where $\sum_{i = 1}^{n} \sigma_{i}{'}(\lambda) \cdot \Delta SC_{i}$ is
@@ -190,7 +162,6 @@ the differential part (narrowband, rapidly varying with wavelength) and
 $\sum_{j = 0}^{m} a_{j} \cdot \lambda^{j}$ is a low-order polynomial,
 used to remove the broadband spectral features resulting from
 atmospheric and instrumental phenomena.
-
 
 In practice, the mathematical solving of Eq.~(\ref{eq:DOAS}) is not
 enough since it does not account for the Ring effect or the
@@ -205,41 +176,124 @@ changes the light source frequencies as seen from the detector. This
 phenomenon was first noticed by Grainger and Ring in 1962. At the time,
 they noticed that the well-known Fraunhofer lines would slightly change
 when one  observed them by using moonlight instead of scattered daylight
-\cite{GRAINGER1962}.
+\cite{GRAINGER1962}. Mathematically, the Ring effect is introduced into
+the \gls{DOAS} expressions as a synthetically produced pseudo-absorber.
 
-From the occurrence of these phenomena, it results that the mathematical
-procedure for DOAS measurements consists in solving a linear and a
-non-linear problem. The linear problem is solved by writing
-Eq.~(\ref{eq:DOAS}) in its matrix form:
+Up until this point, the \gls{DOAS} problem can be solved by a system of
+linear equations of the form displayed in
+Equation~\ref{eq:linearSystem}.
 
 \begin{equation}
-      \label{eq:DOAS_matrix}
-      \tau = \mathbf{A} \cdot X.
+    \label{eq:linearSystem}
+    \tau = A \cdot X
 \end{equation}
 
-$\mathbf{A}$ is an $m\,\times\,n$ matrix, with its columns being the
-differential cross sections $\sigma_{i}{'}(\lambda)$ and the wavelength
-powers taking the polynomial $P(\lambda) = \sum_{j = 0}^{m} a_{j} \cdot
-\lambda^{j}$ into account. Since the number of lines in $A$ is much
-larger than the number of columns, the system is overdetermined and, in
-this case, we must use methods to numerically approximate a solution. It
-is common to use the least-squares approach, in which the best solution
-is the one that minimises $\chi^{2} = \left[\tau - A \cdot X\right]
-\cdot \left[\tau - A \cdot X\right]^{T}$.
+$A$ is an $m \times n$ matrix. Its columns are the differential
+cross-sections fot he measurement target gas, $\sigma_{i}^{'}(\lambda)$,
+and the wavelength powers ($\lambda$ ,$\lambda^2$, $\lambda^3$, \ldots)
+according to the polynomial used for the broadband extraction described
+above, $P(\lambda)=\sum_{j=0}^{m} a_{j}\lambda^{j}$. The lines of matrix
+$A$ are the wavelength window of study, as \emph{seen} by the
+spectrometer used in the experiment. This leads to there being many more
+lines than columns in $A$. The system is thus overdetermined. Solving it
+requires the use of numerical approximations, and the most common
+approach is a least-squares approximation, in which the best solution
+minimises $\chi^2=\left[\tau - A \cdot X\right]\left[\tau - A \cdot
+X\right]^T$. The upper script $T$ used in this expression denotes the
+transpose of the preceding matrix.
 
-While the Ring effect is treated as a pseudo-absorber, a synthetically
-produced~\cite{Chance1997} cross section that is fitted just like any
-other absorber, non-linearities are addressed by applying
-Levenberg--Marquardt's approach to non-linear fitting problems to
-Eq.~(\ref{eq:DOAS_nonLinear}) \cite{Merlaud2013,Press2007}:
+A crude \gls{DOAS} algorithm might not go any forward. In effect, this
+is precisely the approached followed in~\cite{ValentedeAlmeida2017} for
+smoke detection using machine learning techniques. A more refined
+measurement, aimed at quantification of the target trace gases and not
+at determining the presence of a particular type of atmospheric event
+requires an additional consideration, and some more algorithmic steps.
+There are in fact some non-linearities in the complete retrieval
+process. These non-linearities are not retrievable through linear
+algorithms alone. These non-linear effects present themselves as shifts,
+stretches and offsets in the measured signal. They do not directly
+change the dependent variable values (i.e., the radiance), but instead
+"move" the scale of the independent variable (i.e., the wavelength).
+Therefore, linear approximations such as least-squares minimisation are
+not sensitive to them. A non-linear approximation algorithm such as
+Levenberg--Marquardt~\cite{Press2007} can be used, and the expression
+that is being solved is presented in Equation~\ref{eq:DOAS_nonLinear}.
+
+\begin{equation}
+    \label{eq:DOAS_nonLinear}
+    \begin{aligned}
+        \ln \left( \frac{I_\mathrm{ref}(\lambda)}{I(\lambda +
+            \mathrm{shift}) + \mathrm{offset}} \right) &= \sum_{i=1}^{n}
+                \sigma_{i}{'}(\lambda) \cdot \Delta \mathrm{SC}_{i} + 
+                    \sum_{j=0}^{m} a_{j} \cdot \lambda^{j}
+    \end{aligned}
+\end{equation}
+
+Programming-wise, solving these equations is an iterative two-stage
+process, which runs until one of the following typical stop criteria are
+met.
+
+\begin{description}
+    \item[Maximum iteration number:] This is a self-explanatory
+        criterion. It limits the number of times the algorithm's cycle
+        can run; 
+    \item[Minimum improvement threshold:] As the algorithm proceeds,
+        this criterion ensures that it progresses in the correct
+        direction, i.e., minimising $\chi^2$;
+    \item[Minimisation target:] If $\chi^2$ becomes lower than this
+        given threshold, the cycle is terminated. 
+\end{description}
+
+The cycle begins by the determination of the concentration values of the
+target trace gases and the $\chi^2$ score is calculated. The wavelength
+window is shifted, stretched and offset according to the initial
+conditions. The $\chi^2$ is re-calculated and compared to the previous
+value. This cycle is iteratively repeated in the best minimisation
+direction until any of the stop criteria are met and the cycle is
+terminated. Algorithm~\ref{alg:doas_non_linear} summarises this process.
+
+\missingfigure{DOAS non linear}
+
+There are two main families of \gls{DOAS} assemblies, with different
+goals and capabilities:
+
+\begin{itemize}
+
+        \item Active systems, of which a simple illustration is
+            presented in Fig.~\ref{fig:activeSmall}, are characterized
+            by relying on an artificial light source for their
+            measurements. A spectrometer at the end of the light path
+            performs spectroscopic detection. Active DOAS techniques are
+            very similar to traditional in-lab absorption spectroscopy
+            techniques \cite{Platt2007};
+
+            \begin{figure}[htb]
+                \centering
+                \includegraphics[width=.8\textwidth]{img/pdf/amt-2016-314-f02.pdf}
+                \caption{Active DOAS schematic.}\label{fig:activeSmall}
+              \end{figure}
 
 
-\begin{align}
-      \label{eq:DOAS_nonLinear}
-      &\ln\Big( \frac{I_\mathrm{ref}(\lambda)}{I(\lambda + \mathrm{shift}) + \mathrm{offset}} \Big) = \sum_{i = 1}^{n} \sigma_{i}{'}(\lambda) \cdot \Delta \mathrm{SC}_{i} \nonumber\\
-      &+ \sum_{j = 0}^{m} a_{j} \cdot \lambda^{j},
-\end{align}
+        \item Passive DOAS techniques, illustrated in
+            Fig.~\ref{fig:passiveSchematic}, use natural light sources,
+            such as the Sun and the moon, in their measurement process.
+            An optical system is pointed in certain elevation and
+            azimuth angles and sends the captured light into a
+            spectrometer, connected to a computer. The system returns
+            the total value of the light absorption in its
+            path~\cite{Platt2007,Merlaud2013}.
 
-Where shift and offset, which represent spectral wavelength shifts and
-stray light offsets, respectively, are responsible for the non-linear
-character of the problem.
+              \begin{figure}[htb]
+                  \centering
+                  \includegraphics[width=.8\textwidth]{img/png/amt-2016-314-f03.png}
+                  \caption{Passive DOAS schematic.}\label{fig:passiveSchematic}
+              \end{figure}
+
+\end{itemize}
+
+\todo[inline]{MISSING}
+\begin{itemize}
+    \item types of active and passive measurements
+    \item scattered sunlight measurements;
+    \item satellite based measurements (SCIAMACHY).
+\end{itemize}

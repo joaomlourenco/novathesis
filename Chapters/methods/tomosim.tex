@@ -174,6 +174,188 @@ analysis field as a sum of discrete lengths}
 \label{alg:siddon}
 \end{algorithm}
 
+Detailing the two-dimensional case\footnote{A
+three-dimensional case would be just the same but with an additional
+coordinate.} should start by the definition of the discretisation grid
+itself, as in Equation~\ref{eq:discretisation_grid}. The equation
+reflects the recursive nature of the grid definition. In it, $d_x$ and
+$d_y$ are the distances between the $x$ and $y$ planes, which correspond
+to the lengths of the pixels in those coordinates. $N_x$ and $N_y$ are
+the number of pixels in $x$ and $y$ that are contained in the grid.
+
+\begin{equation}
+    \label{eq:discretisation_grid}
+    \begin{aligned}
+        X_{plane}(1) &= X_{plane}(1) + (i-1) \cdot d_x\\
+        Y_{plane}(1) &= Y_{plane}(1) + (j-1) \cdot d_y\\
+    \end{aligned}
+\end{equation}
+
+The parametric values $\alpha_{min}$ and $\alpha_{max}$ are given by the
+intersections of the ray with the sides of the grid ($i = 1$ and $i =
+N_x$) and can be written as in Equation~\ref{eq:alpha_limits}.
+
+\begin{equation}
+    \label{eq:alpha_limits}
+    \begin{aligned}
+        \alpha_{min} &= max \left\{  0, min \left[  \alpha_x(1),
+                \alpha_x(N_x)  \right], min\left[ \alpha_y(1),
+                    \alpha_y(N_y)  \right] \right\}\\
+        \alpha_{max} &= min\left\{ 1, max\left[ \alpha_x(1),
+                \alpha_x(N_x)  \right], max\left[ \alpha_y(1),
+                    \alpha_y(N_x) \right]  \right\}\\
+    \end{aligned}
+\end{equation}
+
+Not all line intersections have a corresponding parametric value. The
+ones that do are comprised within index ranges that are defined by
+Equation~\ref{eq:parametric_ranges}. This equation presents the case for
+the first coordinate ($x$), with the second coordinate having an
+identical expression.
+
+\begin{equation}
+    \label{eq:parametric_ranges}
+    \begin{aligned}
+        i_{min} &= N_x - \frac{ X_{plane}(N_x) - \alpha_{min}(X_2 - X_1)
+            - X_1 }{d_x}\\
+        i_{max} &= 1 + \frac{X_1 + \alpha_{max}(X_2 - X_1) -
+            X_{plane}(1)}{d_x}\\
+    \end{aligned}
+\end{equation}
+
+Equation~\ref{eq:parametric_ranges} defines a range of possible indices
+for the pixels, in parametric fashion. We can use this range to
+construct the set of used parametric indices, given in
+Equation~\ref{eq:parametric_index_set} for the $x$ coordinate. 
+
+\begin{equation}
+    \label{eq:parametric_index_set}
+    \left\{ \alpha_x \right\} = \left\{ \alpha_x(i_{min}), \ldots,
+        \alpha_x(i_{max})  \right\}
+\end{equation}
+
+Although Equation~\ref{eq:parametric_index_set} only presents the
+expression for the first coordinate, there are similar expressions for
+the other coordinates at play. After determining the set of possible
+indices for $x$ and $y$, these sets must be arranged in ascending order,
+creating an index superset. To this the minimum and maximum values,
+calculated in Equation~\ref{eq:alpha_limits}, are appended. The
+resulting and final set of parametric values is presented in
+Equation~\ref{eq:final_parametric_set}.
+
+\begin{equation}
+    \label{eq:final_parametric_set}
+    \begin{aligned}
+        \alpha^* &= merge(\alpha_x, \alpha_y)\\
+        \{ \alpha \} &= \{ \alpha_{min}, \alpha^*, \alpha_{max} \}\\
+                     &= \alpha(0), \ldots, \alpha(n)\\
+    \end{aligned}
+\end{equation}
+
+Where the last term, $n$, is given by the sum of all index range
+numbers, as in Equation~\ref{eq:n}, again for the two-dimensional case.
+
+\begin{equation}
+    \label{eq:n}
+    n = (i_{max} - i_{min} + 1) + (j_{max} - j_{min} + 1)
+\end{equation}
+
+Each element of the array defined in
+Equation~\ref{eq:final_parametric_set} is an intersection between the
+ray and a given pixel. Since they are ordered, it is possible to
+calculate the array of pixel lengths for each ray, using the expression
+in Equation~\ref{eq:length1}.
+
+\begin{equation}
+    \label{eq:length1}
+    l_{m} = d_{12}[ \alpha(m) - \alpha(m-1)] \quad (m = 1 \ldots n)
+\end{equation}
+
+With $d_{12}$ being the distance between $P_1$ and $P_2$, calculated
+through the Euclidean formula for distance between two points. In
+Tomosim, this distance is always equal to the trajectory's diameter.
+
+Pixel $[i(m), j(m)]$ is located in the midpoint between the
+m\textsuperscript{th} and the (m-1)\textsuperscript{th} intersections.
+It is given by the expression in Equation~\ref{eq:pixel_pair}.
+
+\begin{equation}
+    \label{eq:pixel_pair}
+    \begin{aligned}
+        \alpha_{mid} &= \frac{\alpha(m) + \alpha(m-1)}{2}\\
+        i(m) &= 1 + \frac{X_1 + \alpha_{mid}\cdot(X_2 - X_1) -
+            X_{plane}(1)}{d_x}\\
+        j(m) &= 1 + \frac{Y_1 + \alpha_{mid}\cdot(X_2 - X_1) -
+            Y_{plane}(1)}{d_y}\\
+    \end{aligned}
+\end{equation}
+
+Knowing the pixels and the ray lengths for each of them makes the
+application of the radiological path equation
+(Equation~\ref{eq:siddon_sum}) trivial. From another perspective,
+Siddon's algorithm produces an even more important piece of information.
+One gets total geometric knowledge of the tomographic assembly. If
+matrix form, this is called the system matrix, and it is an essential
+part of the application of any iterative algorithm.
+
+Figure~\ref{fig:system_matrix} aims to graphically explain the formation
+of this matrix. Each line in the matrix can be thought of as a flattened
+matrix of the same size as the tomographic image to reconstruct. There
+are as many of these lines as there are rays in the tomographic
+assembly. Each element of the matrix contains the length of the ray
+corresponding to each line, as it is calculated (through the application
+of Siddon's algorithm) for the corresponding pixel of the aforementioned
+flattened matrix.
+
+\subsubsection{Exit Point Calculation}%
+\label{ssub:exit_point_calculation}
+
+Figure~\ref{fig:p2_calculation} is a schematic snapshot of a point in
+which the drone is taking a spectrum in one of its stops. Here, the
+drone's position ($P_1$) is given by the distance $D$ and the angle
+$\beta$. The gimbal is pointing at a direction at an angular distance of
+$\gamma$ form line $0P_1$. Point $P_2$, which is not known, is at the
+intersection between the trajectory's circumference and line $P_1P_2$.
+Now, any point on this line can be expressed parametrically, with the
+sum of a point and a vector; while to say a point is on a circumference
+is the same as saying the distance between that point and the centre of
+this circumference is equal to its radius. The situation can be
+described by the expressions in Equation~\ref{eq:vectorialLineP1P2}.
+
+\begin{equation}
+    \label{eq:vectorialLineP1P2}
+    \begin{aligned}
+        X &= P_1 + t \cdot (P_2 - P_1)\\
+    |P_2| &= D^2\\ 
+    \end{aligned}
+\end{equation}
+
+Unravelling these expressions, and making use of the algebraic property
+that says that $|A|^2 = A \cdot A$, the expression becomes a second
+degree equation, as stated in Equation~\ref{eq:secondDegreeEquation},
+writing $P_2 - P_1$ as V.
+
+\begin{equation}
+    \label{eq:secondDegreeEquation}
+    t^2V^2 + 2 \cdot V \cdot P_1 \cdot t + P_{1}^2 - D^2 = 0
+\end{equation}
+
+If line $P_1P_2$ non-tangentially intersects the circumference, solving
+Equation~\ref{eq:secondDegreeEquation} renders two values for $t$ (which
+correspond to $P_1$ and $P_2$). Selection is made by determining the
+returned value of $t$ which maximises the euclidean distance between the
+produced point and $P_1$.
+
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width = .8\textwidth]{img/pdf/finding_p2.pdf}
+    \caption{$P_2$ Calculation. The software uses the position of the
+    drone, as defined by the vertical angle, $\beta$, and the distance between
+    the drone and the centre of the trajectory, $D$, to determine $P_2$
+    through the solution of a second degree equation.}\label{fig:p2_calculation}
+\end{figure}
+
 \subsection{Phantoms}%
 \label{sub:phantoms}
 
@@ -326,3 +508,5 @@ projections.
     E = \sqrt{\frac{\sum\lvert g(x,y) - f(x,y)
     \lvert^{^{2}}}{\sum\lvert f(x,y) \lvert ^{^{2}}}}
 \end{equation}
+
+
