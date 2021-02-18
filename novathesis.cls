@@ -361,23 +361,41 @@
   \expandafter\if\thecovernumber1\relax\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi%
 }
 
+\newcommand{\drawrullers}[1][orange]{%
+% 1 = color
+  \color{#1}%
+  \edef\@nt@tmpleft{\themargin(\option{/novathesis/docdegree},left)}%
+  \edef\@nt@tmpright{\themargin(\option{/novathesis/docdegree},right)}%
+  \edef\@nt@tmptop{\themargin(\option{/novathesis/docdegree},top)}%
+  \edef\@nt@tmpbottom{\themargin(\option{/novathesis/docdegree},bottom)}%
+  \fgrulerthickcm{}{}{1pt}%
+  % \setfgruler{numsep=-17pt}
+  \fgruler[cm]{upperleft}{\@nt@tmpleft}{\@nt@tmptop}%
+  \fgruler[cm]{lowerright}{\@nt@tmpright}{\@nt@tmpbottom}%
+}
+
+\usepackage{tikz}
+\usepackage{geometry}
+\usetikzlibrary{backgrounds}
+\newcommand{\drawgraph}[1][orange]{%
+\noindent
+  \def\width{\paperwidth}%
+  \def\hauteur{29.65}%
+  \edef\myxl{\themargin(\option{/novathesis/docdegree},left)}%
+  \edef\myxr{\themargin(\option{/novathesis/docdegree},right)}%
+  \edef\myyt{\themargin(\option{/novathesis/docdegree},top)}%
+  \edef\myyb{\themargin(\option{/novathesis/docdegree},bottom)}%
+  \begin{tikzpicture}[x=1cm, y=-1cm, semitransparent, overlay]%
+      \draw[step=1mm, line width=0.1mm, orange!30!white] (\myxl, {3cm}) grid (\mpwidth,\hauteur);%
+      \draw[step=5mm, line width=0.2mm, orange!40!white] (0,0) grid (\width,\hauteur);%
+      \draw[step=5cm, line width=0.5mm, orange!50!white] (0,0) grid (\width,\hauteur);%
+      \draw[step=1cm, line width=0.3mm, orange!90!white] (0,0) grid (\width,\hauteur);%
+  \end{tikzpicture}%
+}
+
 \newcommand*{\@nt@printthecover}[1]{%
   % #1 = cover number {1, 2}    (1 is the default)
   \def\thecovernumber{#1}%
-  \iftoggle{/novathesis/debugcover}%
-    {%
-      \color{blue}%
-      \edef\@nt@tmpleft{\themargin(\option{/novathesis/docdegree},left)}%
-      \edef\@nt@tmpright{\themargin(\option{/novathesis/docdegree},right)}%
-      \edef\@nt@tmptop{\themargin(\option{/novathesis/docdegree},top)}%
-      \edef\@nt@tmpbottom{\themargin(\option{/novathesis/docdegree},bottom)}%
-      \fgrulerthickcm{}{}{1pt}%
-      % \setfgruler{numsep=-17pt}
-      \fgruler[cm]{upperleft}{\@nt@tmpleft}{\@nt@tmptop}%
-      \fgruler[cm]{lowerright}{\@nt@tmpright}{\@nt@tmpbottom}%
-    }%
-    {}%
-  \thispagestyle{empty}%
   \setlength{\mpwidth}{\dimexpr%
     \paperwidth%
       -\themargin(\option{/novathesis/docdegree},left)%
@@ -386,9 +404,14 @@
     \paperheight%
       -\themargin(\option{/novathesis/docdegree},top)%
       -\themargin(\option{/novathesis/docdegree},bottom)}%
+  \savegeometry{maintext}%
+  \newgeometry{hmargin=0pt,vmargin=-11pt}%
+  % \iftoggle{/novathesis/debugcover}{\drawrullers}{}%
+  \iftoggle{/novathesis/debugcover}{\drawgraph}{}%
+  \thispagestyle{empty}%
   \sbox{\@nt@coverbox}{%
     \begin{minipage}[t][\mpheight][t]{\mpwidth}%
-      \@nt@printcovergroup{#1}%      
+      \@nt@printcovergroup{#1}%
     \end{minipage}%
   }%
   \AddToShipoutPictureFG*{%
@@ -399,7 +422,7 @@
         {\usebox{\@nt@coverbox}}%
     }%
   }%
-  ~% This space is important here so that the cover page is not empty anymore!
+  \loadgeometry{maintext}
   \csuse{@thecover#1backpage}%
   \clearforchapter
 }
@@ -1093,6 +1116,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Appendixes and Annexes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\addappheadtotoc}{%
+  \phantomsection
+  \addtocontents{toc}%
+    {\protect\contentsline{chapter}{\appendixtocname}{}{}}%
+ }
 
 \newcommand{\ntprintappendixes}{%
   \renewcommand{\appendixtocname}{\appendixnamepl}%
@@ -1125,7 +1153,10 @@
 
 \newcommand{\ntaddindex}[1]{%
   \ifthenelse{\equal{#1}{tableofcontents}}{\options{/@nt/list/indexes/.cpush = {%
-        \clearforchapter\tableofcontents*%
+        \clearforchapter
+        \phantomsection
+        \addcontentsline{toc}{chapter}{Table of contents}%
+        \tableofcontents*%
   }}}{}%
   \ifthenelse{\equal{#1}{listoffigures}}{\options{/@nt/list/indexes/.cpush = {%
         \clearforchapter\listoffigures%
