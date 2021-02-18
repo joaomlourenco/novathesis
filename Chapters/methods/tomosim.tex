@@ -174,6 +174,188 @@ analysis field as a sum of discrete lengths}
 \label{alg:siddon}
 \end{algorithm}
 
+Detailing the two-dimensional case\footnote{A
+three-dimensional case would be just the same but with an additional
+coordinate.} should start by the definition of the discretisation grid
+itself, as in Equation~\ref{eq:discretisation_grid}. The equation
+reflects the recursive nature of the grid definition. In it, $d_x$ and
+$d_y$ are the distances between the $x$ and $y$ planes, which correspond
+to the lengths of the pixels in those coordinates. $N_x$ and $N_y$ are
+the number of pixels in $x$ and $y$ that are contained in the grid.
+
+\begin{equation}
+    \label{eq:discretisation_grid}
+    \begin{aligned}
+        X_{plane}(1) &= X_{plane}(1) + (i-1) \cdot d_x\\
+        Y_{plane}(1) &= Y_{plane}(1) + (j-1) \cdot d_y\\
+    \end{aligned}
+\end{equation}
+
+The parametric values $\alpha_{min}$ and $\alpha_{max}$ are given by the
+intersections of the ray with the sides of the grid ($i = 1$ and $i =
+N_x$) and can be written as in Equation~\ref{eq:alpha_limits}.
+
+\begin{equation}
+    \label{eq:alpha_limits}
+    \begin{aligned}
+        \alpha_{min} &= max \left\{  0, min \left[  \alpha_x(1),
+                \alpha_x(N_x)  \right], min\left[ \alpha_y(1),
+                    \alpha_y(N_y)  \right] \right\}\\
+        \alpha_{max} &= min\left\{ 1, max\left[ \alpha_x(1),
+                \alpha_x(N_x)  \right], max\left[ \alpha_y(1),
+                    \alpha_y(N_x) \right]  \right\}\\
+    \end{aligned}
+\end{equation}
+
+Not all line intersections have a corresponding parametric value. The
+ones that do are comprised within index ranges that are defined by
+Equation~\ref{eq:parametric_ranges}. This equation presents the case for
+the first coordinate ($x$), with the second coordinate having an
+identical expression.
+
+\begin{equation}
+    \label{eq:parametric_ranges}
+    \begin{aligned}
+        i_{min} &= N_x - \frac{ X_{plane}(N_x) - \alpha_{min}(X_2 - X_1)
+            - X_1 }{d_x}\\
+        i_{max} &= 1 + \frac{X_1 + \alpha_{max}(X_2 - X_1) -
+            X_{plane}(1)}{d_x}\\
+    \end{aligned}
+\end{equation}
+
+Equation~\ref{eq:parametric_ranges} defines a range of possible indices
+for the pixels, in parametric fashion. We can use this range to
+construct the set of used parametric indices, given in
+Equation~\ref{eq:parametric_index_set} for the $x$ coordinate. 
+
+\begin{equation}
+    \label{eq:parametric_index_set}
+    \left\{ \alpha_x \right\} = \left\{ \alpha_x(i_{min}), \ldots,
+        \alpha_x(i_{max})  \right\}
+\end{equation}
+
+Although Equation~\ref{eq:parametric_index_set} only presents the
+expression for the first coordinate, there are similar expressions for
+the other coordinates at play. After determining the set of possible
+indices for $x$ and $y$, these sets must be arranged in ascending order,
+creating an index superset. To this the minimum and maximum values,
+calculated in Equation~\ref{eq:alpha_limits}, are appended. The
+resulting and final set of parametric values is presented in
+Equation~\ref{eq:final_parametric_set}.
+
+\begin{equation}
+    \label{eq:final_parametric_set}
+    \begin{aligned}
+        \alpha^* &= merge(\alpha_x, \alpha_y)\\
+        \{ \alpha \} &= \{ \alpha_{min}, \alpha^*, \alpha_{max} \}\\
+                     &= \alpha(0), \ldots, \alpha(n)\\
+    \end{aligned}
+\end{equation}
+
+Where the last term, $n$, is given by the sum of all index range
+numbers, as in Equation~\ref{eq:n}, again for the two-dimensional case.
+
+\begin{equation}
+    \label{eq:n}
+    n = (i_{max} - i_{min} + 1) + (j_{max} - j_{min} + 1)
+\end{equation}
+
+Each element of the array defined in
+Equation~\ref{eq:final_parametric_set} is an intersection between the
+ray and a given pixel. Since they are ordered, it is possible to
+calculate the array of pixel lengths for each ray, using the expression
+in Equation~\ref{eq:length1}.
+
+\begin{equation}
+    \label{eq:length1}
+    l_{m} = d_{12}[ \alpha(m) - \alpha(m-1)] \quad (m = 1 \ldots n)
+\end{equation}
+
+With $d_{12}$ being the distance between $P_1$ and $P_2$, calculated
+through the Euclidean formula for distance between two points. In
+Tomosim, this distance is always equal to the trajectory's diameter.
+
+Pixel $[i(m), j(m)]$ is located in the midpoint between the
+m\textsuperscript{th} and the (m-1)\textsuperscript{th} intersections.
+It is given by the expression in Equation~\ref{eq:pixel_pair}.
+
+\begin{equation}
+    \label{eq:pixel_pair}
+    \begin{aligned}
+        \alpha_{mid} &= \frac{\alpha(m) + \alpha(m-1)}{2}\\
+        i(m) &= 1 + \frac{X_1 + \alpha_{mid}\cdot(X_2 - X_1) -
+            X_{plane}(1)}{d_x}\\
+        j(m) &= 1 + \frac{Y_1 + \alpha_{mid}\cdot(X_2 - X_1) -
+            Y_{plane}(1)}{d_y}\\
+    \end{aligned}
+\end{equation}
+
+Knowing the pixels and the ray lengths for each of them makes the
+application of the radiological path equation
+(Equation~\ref{eq:siddon_sum}) trivial. From another perspective,
+Siddon's algorithm produces an even more important piece of information.
+One gets total geometric knowledge of the tomographic assembly. If
+matrix form, this is called the system matrix, and it is an essential
+part of the application of any iterative algorithm.
+
+Figure~\ref{fig:system_matrix} aims to graphically explain the formation
+of this matrix. Each line in the matrix can be thought of as a flattened
+matrix of the same size as the tomographic image to reconstruct. There
+are as many of these lines as there are rays in the tomographic
+assembly. Each element of the matrix contains the length of the ray
+corresponding to each line, as it is calculated (through the application
+of Siddon's algorithm) for the corresponding pixel of the aforementioned
+flattened matrix.
+
+\subsubsection{Exit Point Calculation}%
+\label{ssub:exit_point_calculation}
+
+Figure~\ref{fig:p2_calculation} is a schematic snapshot of a point in
+which the drone is taking a spectrum in one of its stops. Here, the
+drone's position ($P_1$) is given by the distance $D$ and the angle
+$\beta$. The gimbal is pointing at a direction at an angular distance of
+$\gamma$ form line $0P_1$. Point $P_2$, which is not known, is at the
+intersection between the trajectory's circumference and line $P_1P_2$.
+Now, any point on this line can be expressed parametrically, with the
+sum of a point and a vector; while to say a point is on a circumference
+is the same as saying the distance between that point and the centre of
+this circumference is equal to its radius. The situation can be
+described by the expressions in Equation~\ref{eq:vectorialLineP1P2}.
+
+\begin{equation}
+    \label{eq:vectorialLineP1P2}
+    \begin{aligned}
+        X &= P_1 + t \cdot (P_2 - P_1)\\
+    |P_2| &= D^2\\ 
+    \end{aligned}
+\end{equation}
+
+Unravelling these expressions, and making use of the algebraic property
+that says that $|A|^2 = A \cdot A$, the expression becomes a second
+degree equation, as stated in Equation~\ref{eq:secondDegreeEquation},
+writing $P_2 - P_1$ as V.
+
+\begin{equation}
+    \label{eq:secondDegreeEquation}
+    t^2V^2 + 2 \cdot V \cdot P_1 \cdot t + P_{1}^2 - D^2 = 0
+\end{equation}
+
+If line $P_1P_2$ non-tangentially intersects the circumference, solving
+Equation~\ref{eq:secondDegreeEquation} renders two values for $t$ (which
+correspond to $P_1$ and $P_2$). Selection is made by determining the
+returned value of $t$ which maximises the euclidean distance between the
+produced point and $P_1$.
+
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width = .8\textwidth]{img/pdf/finding_p2.pdf}
+    \caption{$P_2$ Calculation. The software uses the position of the
+    drone, as defined by the vertical angle, $\beta$, and the distance between
+    the drone and the centre of the trajectory, $D$, to determine $P_2$
+    through the solution of a second degree equation.}\label{fig:p2_calculation}
+\end{figure}
+
 \subsection{Phantoms}%
 \label{sub:phantoms}
 
@@ -219,16 +401,112 @@ in Table~\ref{tab:new_phantom}.
 
 \begin{figure}[htpb]
     \centering
-    \missingfigure{}
-    \caption{New phantom custom designed for the Tomosim application.}
+    \includegraphics[width=.8\textwidth]{img/eps/original_phantom.eps}
+    \caption{A graphical representation of the new spectral phantom,
+    custom built for the TomoSim application.}
     \label{fig:new_phantom}
 \end{figure}
 
 
 \begin{table}[htpb]
     \centering
-    \caption{New phantom feature definition.}
+    \caption{Table summarising the new phantom's construction details,
+    as a sum of 5 Gaussian profiles and an ellipse designed using
+    TomoPhantom. In this table, C0 is the object's amplitude, X0 and Y0
+    are its center coordinates, and a and b are the objects half-widths.
+    The table is constructed using TomoPhantom's particular syntax and
+    more information can be obtained at~\cite{Kazantsev2018}.}
     \label{tab:new_phantom}
-    \missingfigure{Missing table for the feature definition of the
-    phantom.}
+    \begin{tabular}{@{}lcccccr@{}}
+    \hline
+    \textbf{Type} & \textbf{C0} & \textbf{X0} & \textbf{Y0} & \textbf{a}
+                  & \textbf{b} & \textbf{\textbf{Angle}} \\ \hline
+    Gaussian & 1 & -0,1 & -0,1 & 0,25 & 0,5 & -45 \\
+    Gaussian & 1 & 0,6 & 0 & 0,65 & 0,45 & -45 \\
+    Gaussian & 1 & -0,6 & -0,4 & 0,8 & 0,8 & 0 \\
+    Gaussian & 1 & -0,4 & 0,8 & 0,7 & 0,7 & 0 \\
+    Ellipse & 1 & 0,4 & -0,8 & 0,3 & 0,15 & 0 \\ \hline
+    \end{tabular}
 \end{table}
+
+\subsection{Error Estimation}%
+\label{sub:error_estimation}
+
+Error sources for the Tomosim simulator come in four different natures:
+time errors, geometric errors, spectroscopic errors and reconstruction
+errors.
+
+Time errors come from the fact that there are two moments of
+measurement. In a dynamic system, the time that passes between the two
+is enough for concentrations to change significantly. Tomosim does not
+address these errors, because they can be eliminated by the introduction
+of a second drone carrying the same type of equipment, which would
+eliminate said time difference.
+
+Geometric errors exist due to the drone not being able to situate
+itself perfectly. There is always a positioning error, no matter how
+sophisticated the onboard equipment is. This type of error is addressed
+in the simulation through a Monte Carlo like approach.
+
+Positioning and pointing errors are assumed to have normal
+distributions. Each time a point is calculated by the drone, a normally
+distributed random number, with a mean if 0 and a standard deviation
+equal to the nominal error of the positioning system. This number is
+then added to the theoretical point.
+Figure~\ref{fig:geometric_error_calculation} is a graphical
+representation of the reasoning behind the calculation of the geometric
+error. The image deals with two types of error. One comes from the
+\gls{rtk} positioning system (the positioning error, $\epsilon_p$); and
+the other that comes from the gimbal (the pointing error,
+$\epsilon_\gamma$). The two $\epsilon$ values are the nominal error for
+the positioning and the pointing devices. The error is introduced in the
+simulation through the values of $\beta$ and $D$ (see
+Figure~\ref{fig:p2_calculation}) while calculating $P_2$. Given the very
+low nominal error for the gimbal, the small angle approximation is valid
+($\sin \theta = \theta$). This is used to determine the theoretical
+value of $P_2$, located on the device's circular trajectory. Finally,
+the software adds the positioning error, using the same process as in
+$P_1$'s case. The error depiction in
+Figure~\ref{fig:geometric_error_calculation} is extremely exaggerated
+for visibility.
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/pdf/error_estimation_2.pdf}
+    \caption{Error estimation graphical representation. Note errors are
+    extremely exaggerated for visualisation purposes.}
+    \label{fig:geometric_error_calculation}
+\end{figure}
+
+The third type of error are the spectroscopic errors. These come from
+the spectroscopic equipment that is used to gather projections. To take
+this noise into account, the simulator adds a Gaussian noise spectrum to
+each measurement, which is configurable through its standard deviation,
+as was previously done in~\cite{Stutz1996}. This is a valid approach,
+insofar as the captured spectra are perfectly calibrated regarding
+spectral shift and squeeze. Since this is a simulation software, this is
+an acceptable assumption.
+
+The final type of error that the system needs to contend with is the
+reconstruction error. In tomographic inversion problems, it is common to
+use techniques such as the \gls{mse} as a metric for an algorithm's
+performance. Tomosim was also evaluated in this light and in two
+separate ways. The first was to calculate the \gls{mse} for each pixel of the
+whole image. This information can still be viewed as an image (it is a
+two-dimensional grid of values) and paints an immediate picture of the
+general behaviour of the reconstruction algorithm. Moreover, it can tell
+the viewer if there are any types of shapes or areas in which the
+algorithm has more difficulties. The second way of using \gls{mse} to
+evaluate the reconstruction is to calculate a score through
+Equation~\ref{eq:mse_score}. In this equation, and with respect to this
+simulator, $f$ is the original image and $g$ the one reconstructed from
+projections.
+
+\begin{equation}
+    \centering
+    \label{eq:mse_score}
+    E = \sqrt{\frac{\sum\lvert g(x,y) - f(x,y)
+    \lvert^{^{2}}}{\sum\lvert f(x,y) \lvert ^{^{2}}}}
+\end{equation}
+
+
