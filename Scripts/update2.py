@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # ============================================================
 #  IMPORTS
 # ============================================================
@@ -9,6 +11,7 @@ import sys
 import zipfile
 import glob
 import urllib2
+# import requests
 import re
 
 # ============================================================
@@ -127,15 +130,32 @@ def get_remote_zip(url, file_name=None):
     if os.path.exists(file_name):
         print ("Error: file '{0}' already exists! Aborting...".format(file_name))
         sys.exit(1)
+
+    # with open(file_name, "wb") as f:
+    #     print "Downloading %s" % file_name
+    #     response = requests.get(url, stream=True)
+    #     total_length = response.headers.get('content-length')
+    #
+    #     if total_length is None:  # no content length header
+    #         f.write(response.content)
+    #     else:
+    #         dl = 0
+    #         total_length = int(total_length)
+    #         for data in response.iter_content(chunk_size=4096):
+    #             dl += len(data)
+    #             f.write(data)
+    #             done = int(50 * dl / total_length)
+    #             sys.stdout.write("\r[%s%s]" % ('=' * done, ' ' * (50 - done)))
+    #             sys.stdout.flush()
     u = urllib2.urlopen(url)
     meta = u.info()
     content_length = meta.getheaders("Content-Length")
-    if content_length is []:
+    if content_length == [] or content_length is None:
         file_size = -1
     else:
         file_size = int(content_length[0])
     if options.verbose > 0:
-        print ("Downloading: '{0}' Bytes: {1}".format(url, file_size))
+        print ("Downloading: '{0}', byte: {1}".format(url, file_size))
     # Download
     file_size_dl = 0
     block_sz = 8192
@@ -164,20 +184,19 @@ def print_progress_bar(file_size, file_size_dl):
 #  LOAD / SAVE TEMPLATE
 # ============================================================
 template_filename = "template.tex"
-template_old_filename = "template-OLD.tex"
+template_v5_old_filename = "template-v5.tex"
 
 
-def load_template(target):
+def load_file(target):
     with open(target) as f:
-        template = "".join(line for line in f)
-    return template
+        file = "".join(line for line in f)
+    return file
 
 
-def save_template(template):
-    os.rename(template_filename, template_old_filename)
+def save_file(data, file_name = template_filename):
     # v_print(1, "Saving updated version to '{0}'".format(t_path)
-    with open(template_filename, "w") as text_file:
-        text_file.write(template)
+    with open(file_name, "w") as text_file:
+        text_file.write(data)
 
 
 # ============================================================
@@ -255,10 +274,10 @@ def make_folder(opt, protocol, url):
 # ============================================================
 #  EXTRACT INFO
 # ============================================================
-def extract_info(version):
+def extract_info(version, filename='template.tex'):
     v_print(1, "EXTRACT_INFO({})".format(version))
     os.chdir(g_folders[version])
-    template = load_template('template.tex')
+    template = load_file(filename)
     v_print(1, "{0} OPTIONS".format(version))
     extract_info_options(template, version)
     v_print(1, "{0} PACKAGES".format(version))
@@ -345,15 +364,18 @@ def make_dest(src, nt, out):
     v_print(1, "MAKE_DEST({0}, {1}, {2})".format(src, nt, out))
     v_print(1, "\tCopy {0} -> {1}".format(nt, out))
     shutil.copytree(nt, out)
+    os.rename(out+'/template.tex', out+'/template-v5.tex')
     for i in ['Chapters', 'Examples', '_config.yml', 'bibliography.bib', 'template.pdf']:
         make_dest_delete(i, out)
-    srcfiles = glob.glob('{0}/*.bib'.format(src)) + ['{0}/Chapters'.format(src)]
+    srcfiles = glob.glob('{0}/*.bib'.format(src)) + ['{0}/Chapters'.format(src), '{0}/template.tex'.format(src)]
     for i in srcfiles:
         make_dest_copy(i, out, src)
+    os.rename(out + '/template.tex', out + '/template-v4.tex')
 
 
 def make_dest_copy(i, out, src):
-    i = i.split('/')[2]
+    i = i.split('/')
+    i = i[len(i)-1]
     v_print(1, "\tCopy {0}/{1} -> {2}/{3}".format(src, i, out, i))
     if os.path.isdir('{0}/{1}'.format(src, i)):
         shutil.copytree("{0}/{1}".format(src, i), "{0}/{1}".format(out, i))
@@ -448,13 +470,26 @@ def patch_cover_majorfield(opt, template, val):
 def patch_files(template, src):
     v_print(1, "\tPATCH_FILES")
     v_print(1, "\t\tDeleting example files...")
-    for opt in ['bib', 'dedicatory', 'acknowledgements', 'quote', 'glossaries', 'chapter', 'appendix', 'annex',
+    for opt in ['bib', 'dedicatory', 'acknowledgements', 'quote', 'glossaries', 'abstract', 'chapter', 'appendix', 'annex',
                 'aftercover']:
         template = patch_files_delete(opt, template)
     for i in template_info[src]['files']:
         template = patch_files_add(i, template)
+    for i in ['dedicatory', 'acknowledgements', 'quote']:
+        patch_files_begin_end(src, i)
     return template
 
+
+def patch_files_begin_end (opt, file):
+    file_name = 'Chapters/' + file + '.tex'
+    f = load_file(file_name)
+    f = re.sub(r'\n\\' + file, r'\n\\begin{nt' + file + '}', f)
+    m = re.search(r'\n\\end' + file, f)
+    if m is None:
+        f = f + '\n\\end{nt' + file + '}'
+    else:
+        f = re.sub(r'\n\\end' + file, r'\n\\end{nt' + file + '}', f)
+    save_file(f, file_name)
 
 def patch_files_add(i, template):
     v_print(1, "PATCH_FILES_add({0})".format(i))
@@ -483,14 +518,14 @@ patch_function = {
 }
 
 
-def patch_template(src, nt, out):
+def patch_template(src, nt, out, filename='template.tex'):
     v_print(1, "PATCH_TEMPLATE({0}, {1}, {2})".format(src, nt, out))
     os.chdir(g_folders[out])
-    template = load_template('template.tex')
+    template = load_file(filename)
     for i in ('o', 'p', 'c', 'f'):
         if i in options.patch:
             template = patch_function[i](template, src)
-    save_template(template)
+    save_file(template)
 
 
 # ============================================================
@@ -503,10 +538,10 @@ def main(argv):
     for i in ['src', 'nt']:
         make_folder(i, getattr(options, i), g_urls[i])
     make_folder_folder('out', g_urls['out'], False)
-    extract_info('src')
-    extract_info('nt')
+    extract_info('src', 'template.tex')
+    extract_info('nt', 'template.tex')
     make_dest(g_folders['src'], g_folders['nt'], g_folders['out'])
-    patch_template('src', 'nt', 'out')
+    patch_template('src', 'nt', 'out', 'template-v5.tex')
 
 
 if __name__ == "__main__":
