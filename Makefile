@@ -3,15 +3,14 @@ T = $(B).pdf
 S = $(B).tex
 L = latexmk
 
-PDFLATEX_SUFFIX = ""
-XELATEX_SUFFIX = "xe"
-LUALATEX_SUFFIX = "lua"
+deafult: 2020
 
-deafult: pdf
-
-.PHONY: pdf
-pdf: $(S)
+.PHONY: 2020
+2020: $(S)
 	$(L) -pdf $(B)
+
+2019:
+	PATH="/usr/local/texlive/2019/bin/x86_64-darwin/:$(PATH)" $(L) -pdf $(B)
 
 xe: $(S)
 	$(L) -pdfxe $(B)
