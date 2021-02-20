@@ -413,6 +413,7 @@ def patch_options_option(i, template):
 
 def patch_packages(template, src):
     v_print(1, "\tPatching PACKAGES")
+    template_info[src]['packages'].append('subcaption')
     pcks = "\n".join('\\\\usepackage{%s}' % i for i in template_info[src]['packages'])
     template = re.sub(r'((\n\s*)?(\n\s*%?\s*\\usepackage.*))+', '\n' + pcks, template)
     return template
@@ -476,11 +477,19 @@ def patch_files(template, src):
     for i in template_info[src]['files']:
         template = patch_files_add(i, template)
     for i in ['dedicatory', 'acknowledgements', 'quote']:
-        patch_files_begin_end(src, i)
+        patch_files_begin_end(i)
+    patch_files_handle_subcaption()
     return template
 
 
-def patch_files_begin_end (opt, file):
+def patch_files_handle_subcaption():
+    file_name = 'NOVAthesisFiles/packages.tex'
+    f = load_file(file_name)
+    f = re.sub(r'\n(\s*newsubfloat{figure})', r'\n%\\1', f)
+    save_file(f, file_name)
+
+
+def patch_files_begin_end (file):
     file_name = 'Chapters/' + file + '.tex'
     f = load_file(file_name)
     f = re.sub(r'\n\\' + file, r'\n\\begin{nt' + file + '}', f)
