@@ -25,22 +25,14 @@ which the function that is being integrated is evaluated along a curved
 path, a line. In the tomographic case, these line integrals represent a
 measurement on a ray that traverses the Region Of Interest (\gls{ROI}).
 Each set of line integrals, characterized by an incidence angle, is
-called a projection (see Figure~\ref{fig:projection}). To perform a
-tomographic reconstruction, the machine must take many projections
-around the object. To the set of projections arranged in matrix form by
-detector and projection angle, we call sinogram. All reconstruction
-methods, analytical and iterative, revolve around going from reality to
-sinogram to image~\cite{Bruyant2002, Kak2001, Herman1973, Herman1995,
-Herman2009, Defrise2003}.
-
-\begin{figure}[htpb]
-    \centering
-    \includegraphics[width=0.5\textwidth]{img/png/projections.png}
-    \caption{A schematic representation of a projection acquisition. In
-    this image, taken from ~\cite{Herman2009}, the clear line that comes
-    down at a diagonal angle is a projection.}
-    \label{fig:projection}
-\end{figure}
+called a projection (see Figure~\ref{fig:projection} in
+Section~\ref{sub:tomography}). To perform a tomographic reconstruction,
+the machine must take many projections around the object. To the set of
+projections arranged in matrix form by detector and projection angle, we
+call sinogram. All reconstruction methods, analytical and iterative,
+revolve around going from reality to sinogram to
+image~\cite{Bruyant2002, Kak2001, Herman1973, Herman1995, Herman2009,
+Defrise2003}.
 
 There are two broad algorithm families when it comes to tomographic
 reconstruction, regarding the physics of the problem. The problem can
