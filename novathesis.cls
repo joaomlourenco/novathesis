@@ -1168,7 +1168,7 @@
           %
           \ifthenelse{\equal{#1}{true}}{
             \phantomsection
-            \addcontentsline{toc}{chapter}{Table of contents}%
+            \addcontentsline{toc}{chapter}{Table of Contents}%
           }
           {
             \pdfbookmark{Contents}{contents}%
