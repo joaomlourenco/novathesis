@@ -500,7 +500,7 @@
 \newenvironment{tinywhite}[1][white]
   {%
     \begin{Spacing}{1}%
-      \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
+      \sffamily
       \fontsize{0.01}{0.01}\selectfont%
       \hypersetup{allcolors=#1}%
       \color{#1}%
@@ -1153,10 +1153,15 @@
 
 \newcommand{\ntaddindex}[1]{%
   \ifthenelse{\equal{#1}{tableofcontents}}{\options{/@nt/list/indexes/.cpush = {%
-        \clearforchapter
-        \phantomsection
-        \addcontentsline{toc}{chapter}{Table of contents}%
-        \tableofcontents*%
+        \clearforchapter%
+        \iftoggle{/novathesis/tocintoc}{%
+            \tableofcontents%
+        }{%
+            \phantomsection%
+            \pdfbookmark{\contentsname}{toctarget}%
+            \hypertarget{toctarget}{\tableofcontents*}
+            \tableofcontents*
+        }
   }}}{}%
   \ifthenelse{\equal{#1}{listoffigures}}{\options{/@nt/list/indexes/.cpush = {%
         \clearforchapter\listoffigures%
