@@ -379,14 +379,14 @@
 \usetikzlibrary{backgrounds}
 \newcommand{\drawgraph}[1][orange]{%
 \noindent
-  \def\width{\paperwidth}%
+  \def\width{21}%
   \def\hauteur{29.65}%
-  \edef\myxl{\themargin(\option{/novathesis/docdegree},left)}%
-  \edef\myxr{\themargin(\option{/novathesis/docdegree},right)}%
-  \edef\myyt{\themargin(\option{/novathesis/docdegree},top)}%
-  \edef\myyb{\themargin(\option{/novathesis/docdegree},bottom)}%
+  \StrDel{\themargin(\option{/novathesis/docdegree},left)}{cm}[\myxl]%
+  \StrDel{\themargin(\option{/novathesis/docdegree},right)}{cm}[\myxr]%
+  \StrDel{\themargin(\option{/novathesis/docdegree},top)}{cm}[\myyt]%
+  \StrDel{\themargin(\option{/novathesis/docdegree},bottom)}{cm}[\myyb]%
   \begin{tikzpicture}[x=1cm, y=-1cm, semitransparent, overlay]%
-      \draw[step=1mm, line width=0.1mm, orange!30!white] (\myxl, {3cm}) grid (\mpwidth,\hauteur);%
+      \draw[step=1mm, line width=0.1mm, orange!30!white] (\myxl,\myyt) grid (\width-\myxr,\hauteur-\myyb);%
       \draw[step=5mm, line width=0.2mm, orange!40!white] (0,0) grid (\width,\hauteur);%
       \draw[step=5cm, line width=0.5mm, orange!50!white] (0,0) grid (\width,\hauteur);%
       \draw[step=1cm, line width=0.3mm, orange!90!white] (0,0) grid (\width,\hauteur);%
