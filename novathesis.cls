@@ -1160,7 +1160,7 @@
             \phantomsection%
             \pdfbookmark{\contentsname}{toctarget}%
             \hypertarget{toctarget}{\tableofcontents*}
-            \tableofcontents*
+            % \tableofcontents*
         }
   }}}{}%
   \ifthenelse{\equal{#1}{listoffigures}}{\options{/@nt/list/indexes/.cpush = {%
