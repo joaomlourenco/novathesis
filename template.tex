@@ -68,7 +68,7 @@
 %%------------------------------------------------------------
 %% THE MOST IMPORTANT/POPULAR OPTIONS
 %%------------------------------------------------------------
-% \ntsetup{docdegree=msc}       % The type of document
+\ntsetup{docdegree=phd}       % The type of document
 %                               %     [ phd, phdplan, phdprop, msc, mscplan, bsc ]
 
 % \ntsetup{school=ul/fc}    % The school id
@@ -200,14 +200,23 @@
 % Thesis/Dissertation title (valid for all languages unless redefined as below)
 % syntax: \nttitle{title}
 \nttitle{A Very Long and Impressive Thesis Title\\with a Forced Line Break}%
+% \nttitle{A Very Long and Impressive Thesis Title}%
 % \nttitle[en]{The title in a Specific language}%
 
 %%------------------------------------------------------------
-% Degree customization - majorfield
-% See below for the degrees in Computer Science @ FCT-NOVA
-% syntax: \ntmajorfield(language){name}
-\ntmajorfield(pt){\embrace{Área Científica}}
-\ntmajorfield(en){\embrace{Scientific Field}}
+% Thesis/Dissertation subtitle (valid for all languages unless redefined as below)
+% syntax: \nttitle{title}
+\ntsubtitle{Some thoughts on the Live, Universe, \\and Everything Else}%
+% \ntsubtitle{Some thoughts on the Live and the Universe}%
+% \nttitle[en]{The title in a Specific language}%
+
+%%------------------------------------------------------------
+% Department
+% syntax: \ntdepartment(language){name}
+\ntdepartment(pt){\embrace{Desginação do Departamento}}
+\ntdepartment(pt){Engenharia Eletrotécnica e de Computadores}
+% \ntdepartment(pt){Informática}
+\ntdepartment(en){\embrace{Department Name}}
 
 %%------------------------------------------------------------
 % Degree customization - ntdegreename
@@ -338,7 +347,7 @@
 % File with the quote text. Will only be considered for final documents,
 %   i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
 %   syntax: \ntaddfile{quote}{filename}
-\ntaddfile{quote}{filename}
+\ntaddfile{quote}{quote}
 
 %%------------------------------------------------------------
 % Abstract files in multiple languages
@@ -357,22 +366,22 @@
 %%------------------------------------------------------------
 % Main text - document chapters
 %   syntax: \ntaddfile{chapter}{filename}
-\ntaddfile{chapter}{chapter1}
-\ntaddfile{chapter}{chapter2}
-\ntaddfile{chapter}{chapter3}
+% \ntaddfile{chapter}{chapter1}
+% \ntaddfile{chapter}{chapter2}
+% \ntaddfile{chapter}{chapter3}
 % \ntaddfile{chapter}{chapter4}
 % \ntaddfile{chapter}{chapter-last}
 
 %%------------------------------------------------------------
 % Text appendixes 
 % syntax: \ntaddfile{appendix}{filename}
-\ntaddfile{appendix}{appendix1}
-\ntaddfile{appendix}{appendix2}
+% \ntaddfile{appendix}{appendix1}
+% \ntaddfile{appendix}{appendix2}
 
 %%------------------------------------------------------------
 % Text annexes
 % syntax: \ntaddfile{annex}{filename}
-\ntaddfile{annex}{annex1}
+% \ntaddfile{annex}{annex1}
 % \ntaddfile{annex}{annex2}
 
 %%------------------------------------------------------------

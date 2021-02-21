@@ -137,6 +137,7 @@
 
 % --------------------------------------------------------
 % Alias for consistency in template.tex
+\def\ntdepartment(#1)#2{\department(#1):={#2}}
 \def\ntmajorfield(#1)#2{\majorfield(#1):={#2}}
 \def\ntdegreename(#1)#2{\degreename(#1):={#2}}
 \def\ntspecialization(#1)#2{\specialization(#1):={#2}}
@@ -443,7 +444,9 @@
   , inalign/.new choice = {c, t, b}
   , height/.new value = {}
   , vspace/.new value = {}
-  , defaults/.new style* = {cover={}, status={}, degree={}, align=c, inalign=c, height={}, vspace=0pt}
+  , hspace/.new value = {}
+  , defaults/.new style* = {cover={}, status={}, degree={}, align=c, inalign=c, 
+                            height={}, hspace=0pt, vspace=0pt}
   , defaults
 }
 
@@ -479,8 +482,8 @@
   % Typeset contents in a box
   \begin{lrbox}{\@nt@coverelement}
     \IfStrEq{\option{/@ntcoveropts/height}}{}%
-      {\minipage[t]{\linewidth}}%
-      {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\linewidth}}%
+      {\minipage[t]{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}}}%
+      {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}}}%
         \IfStrEqCase{\option{/@ntcoveropts/align}}{%
           {l}{\raggedright}%
           {c}{\centering}%
@@ -490,6 +493,7 @@
     \endminipage%
   \end{lrbox}
   \noindent%
+  \hspace*{\option{/@ntcoveropts/hspace}}%
   \iftoggle{/novathesis/debugcover}{% IF in debug mode surround element in box
     \setlength{\fboxsep}{0pt}%
     \fbox{\usebox{\@nt@coverelement}}%
@@ -500,7 +504,8 @@
 \newenvironment{tinywhite}[1][white]
   {%
     \begin{Spacing}{1}%
-      \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
+      % \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
+      \ifxeorlua{}{\fontfamily{phv}}%
       \fontsize{0.01}{0.01}\selectfont%
       \hypersetup{allcolors=#1}%
       \color{#1}%
@@ -634,9 +639,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Defaults for uniersity, faculty, degree, etc…
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \assocarray{university}
-% \assocarray{faculty}
-% \assocarray{department}
 \assocarray{spine}
 \assocarray{thesiscover}
 \assocarray{margin}
@@ -713,19 +715,31 @@
   \thedoctitle(#1)%
 }
 
+
+\newcommand{\thecoversubtitle}[1][]{%
+  % \typeout{NT thecovertitle [#1]}
+  \ifstrempty{#1}%
+    {\thedoccoversubtitle(\option{/novathesis/coverlang})}%
+    {\thedoccoversubtitlecaps(\option{/novathesis/coverlang})}
+}
+
+\newcommand{\thesubtitle}[1][\option{/novathesis/coverlang}]{%
+  \thedocsubtitle(#1)%
+}
+
+\assocarray{doctitle}
 \assocarray{doccovertitle}
 \assocarray{doccovertitlecaps}
-\assocarray{doctitle}
+\assocarray{docsubtitle}
+\assocarray{doccoversubtitle}
+\assocarray{doccoversubtitlecaps}
 
 \def\@thetitle{}
-
 \newcommand{\nttitle}[2][\option{/novathesis/coverlang}]{%
   % \typeout{NT nttitle [#1] [#2]}
     \saveexpandmode\noexpandarg% set \noexpandarg locally
       \StrSubstitute[0]{#2}{\\}{ }[\@thetitle]%
       \StrSubstitute[0]{#2}{\\}{\newline}[\@thetitleii]%
-      % \def\@thetitleiii{\expandafter\MakeUppercase\expandafter{\@thetitleii}}
-      % \StrSubstitute[0]{\@thetitleiii}{@}{\newline}[\@thetitleiv]%
     \restoreexpandmode% restore the previous mode
     \doccovertitle(#1):={#2}%
     \doccovertitlecaps(#1):={\expandafter\MakeUppercase\expandafter{\@thetitleii}}%
@@ -737,6 +751,18 @@
       }%
     }{}%
   % \typeout{NT TITLE = [#2][\@thetitle]}
+}
+
+\def\@thesubtitle{}
+\newcommand{\ntsubtitle}[2][\option{/novathesis/coverlang}]{%
+  % \typeout{NT nttitle [#1] [#2]}
+    \saveexpandmode\noexpandarg% set \noexpandarg locally
+      \StrSubstitute[0]{#2}{\\}{ }[\@thesubtitle]%
+      \StrSubstitute[0]{#2}{\\}{\newline}[\@thesubtitleii]%
+    \restoreexpandmode% restore the previous mode
+    \doccoversubtitle(#1):={#2}%
+    \doccoversubtitlecaps(#1):={\expandafter\MakeUppercase\expandafter{\@thesubtitleii}}%
+    \docsubtitle(#1):=\@thesubtitle%
 }
 
 
@@ -1013,7 +1039,7 @@
   % #1 = KEY
   % #2 = file class
   \options{/@nt/file/#2/.getval = {#1}}%
-  % \typeout{NT TRYING TO LOAD \option@listmatch@value}%
+  \typeout{NT TRYING TO LOAD \option@listmatch@value}%
   \InputIfFileExists{\option@listmatch@value}{}{}%
 }
 
@@ -1032,10 +1058,10 @@
 \long\def\uppercaseA#1{\uppercase{#1}\egroup}
 
 \newcommand{\@nt@printifmaindoc@i}[1]{%
-  % \typeout{NT Attemnpting to load #1}%
+  % \typeout{NT Attempt to load #1}%
 	\ifmaindoc{% THEN it is a main document
     \options{/@nt/file/#1/.getval = {VAL}}%
-    \IfStrEq{\option@listmatch@value}{}{}{%
+    \IfStrEq{\option@listmatch@value}{}{\typeout{NT LOAD #1 empty}}{%
       \@nt@select@lang{\option{/novathesis/mainlang}}%
       % \edef\@nt@bm{\expandafter\MakeUppercase\expandafter#1}
       \currentpdfbookmark{\csuse{the#1string}(\option{/novathesis/mainlang})}{bm#1}
