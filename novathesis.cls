@@ -1151,25 +1151,50 @@
 \newlistof{lstlistoflistings}{lol}{\lstlistlistingname}
 
 
-\newcommand{\ntaddindex}[1]{%
-  \ifthenelse{\equal{#1}{tableofcontents}}{\options{/@nt/list/indexes/.cpush = {%
-        \clearforchapter
-        \phantomsection
-        \addcontentsline{toc}{chapter}{Table of contents}%
-        \tableofcontents*%
-  }}}{}%
-  \ifthenelse{\equal{#1}{listoffigures}}{\options{/@nt/list/indexes/.cpush = {%
-        \clearforchapter\listoffigures%
-  }}}{}%
-  \ifthenelse{\equal{#1}{listoftables}}{\options{/@nt/list/indexes/.cpush = {%
-        \clearforchapter\listoftables%
-  }}}{}%
-  \ifthenelse{\equal{#1}{listoflistings}}{\options{/@nt/list/indexes/.cpush = {%
-        \clearforchapter\lstlistoflistings%
-  }}}{}%
-  \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/@nt/list/indexes/.cpush = {%
-          \printnoidxglossaries\clearforchapter%
-  }}}{}%
+\def\ntaddindex{%
+   \@ifnextchar[%
+     {\ntaddindex@i}
+     {\ntaddindex@i[true]}%
+}
+\def\ntaddindex@i[#1]{%
+   \@ifnextchar[%
+     {\ntaddindex@ii{#1}}
+     {\ntaddindex@ii{#1}[def2]}%
+}
+\def\ntaddindex@ii#1[#2]#3{%
+
+    \ifthenelse{\equal{#3}{tableofcontents}}{\options{/@nt/list/indexes/.cpush = {%
+          \clearforchapter%
+          %
+          \ifthenelse{\equal{#1}{true}}{
+            \phantomsection
+            \addcontentsline{toc}{chapter}{Table of contents}%
+          }
+          {
+            \pdfbookmark{Contents}{contents}%
+          }
+          %
+          \IfInteger{#2}{
+            \ifthenelse{#2>2}{
+                \setcounter{tocdepth}{#2-1} % index depth
+            }{}}{}%
+          %\phantomsection
+          %\addcontentsline{toc}{chapter}{Table of contents}%
+          %\pdfbookmark{Contents}{contents}
+          \tableofcontents*%
+    }}}{}%
+    \ifthenelse{\equal{#3}{listoffigures}}{\options{/@nt/list/indexes/.cpush = {%
+          \clearforchapter\listoffigures%
+    }}}{}%
+    \ifthenelse{\equal{#3}{listoftables}}{\options{/@nt/list/indexes/.cpush = {%
+          \clearforchapter\listoftables%
+    }}}{}%
+    \ifthenelse{\equal{#3}{listoflistings}}{\options{/@nt/list/indexes/.cpush = {%
+          \clearforchapter\lstlistoflistings%
+    }}}{}%
+    \ifthenelse{\equal{#3}{listsofglossaries}}{\options{/@nt/list/indexes/.cpush = {%
+            \printnoidxglossaries\clearforchapter%
+    }}}{}%
 }
 
 \newcommand{\ntprintallindexes}{\optionlistdo{/@nt/list/indexes}{##1}}
