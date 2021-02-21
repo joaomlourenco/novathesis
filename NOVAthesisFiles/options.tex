@@ -77,7 +77,7 @@
 }
 
 \options{/novathesis/.new family
-  , docdegree/.new choice = {phd, phdprop, phdplan, msc, mscplan, bsc},
+  , docdegree/.new choice = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
   , school/.new choice = {{nova/fct}, {nova/fcsh}, {nova/ims}, {nova/ensp},
                           {ul/ist}, {ul/fc}, {ipl/isel}, {ips/ests}, {esep},
                           {iscte-iul/ista}, {consortium/msc-gt}}
@@ -101,6 +101,7 @@
   , secondcover/.new toggle = false
   , aftercover/.new toggle = false
   , gnumberlist/.new toggle = true
+  , tocintoc/.new toggle = false
   , urlstyle/.new cmd = {%
             \edef\@nt@urlstyle{#1}\AfterPreamble{\urlstyle{\@nt@urlstyle}}%
   }

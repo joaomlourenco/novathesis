@@ -21,6 +21,24 @@
 \faculty(fr):={NOVA School of Science and Technology}
 \faculty(it):={NOVA School of Science and Technology}
 
+% Departments
+\assocarray{NSSTdep}
+\NSSTdep(DCEA):={\\Ciências e Engenharia do Ambiente}
+\NSSTdep(DCM):={\\Ciência dos Materiais}
+\NSSTdep(DCR):={\\Conservação e Restauro}
+\NSSTdep(DCSA):={\\Ciências Sociais Aplicadas}
+\NSSTdep(DCT):={\\Ciências da Terra}
+\NSSTdep(DCTB):={\\Ciências e Tecnologia da Biomassa}
+\NSSTdep(DCV):={\\Ciências da Vida}
+\NSSTdep(DEC):={\\Engenharia Civil}
+\NSSTdep(DEEC):={Engenharia\\Eletrotécnica e de Computadores}
+\NSSTdep(DEMI):={\\Engenharia Mecânica e Industrial}
+\NSSTdep(DF):={\\Física}
+\NSSTdep(DI):={\\Informática}
+\NSSTdep(DM):={\\Matemática}
+\NSSTdep(DQ):={\\Química}
+
+
 % Comiittee printing order
 \committeeorder(all):={c,r,m}% 
 
@@ -122,10 +140,8 @@
 % Author name
 \ntaddtocover[vspace=0cm,align=l,hspace=6.1cm,height=2.0cm,inalign=t]{%
   \ntcoverbackground
-  % \gilliuscondensed
   \fontsize{17}{17}\selectfont
-  {\rule{0pt}{9.5mm}\MakeTextUppercase{Departamento de \thedepartment(pt)}}
-  % \textbf{\theauthorname}
+  \rule{0pt}{9.5mm}\MakeTextUppercase{Departamento de \thedepartment(pt)}
 }
 %
 % % Academic qualifications
