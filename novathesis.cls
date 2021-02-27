@@ -138,7 +138,7 @@
 % --------------------------------------------------------
 % Alias for consistency in template.tex
 \def\ntdepartment(#1)#2{\department(#1):={#2}}
-% \def\ntmajorfield(#1)#2{\majorfield(#1):={#2}}
+\def\ntmajorfield(#1)#2{\majorfield(#1):={#2}}
 \def\ntdegreename(#1)#2{\degreename(#1):={#2}}
 \def\ntspecialization(#1)#2{\specialization(#1):={#2}}
 \def\ntsponsors(#1)#2{\sponsorsstr(#1):={#2}}
@@ -537,18 +537,16 @@
   \newpage\thispagestyle{empty}\null\ntfixspacing%
 }
 
-\newcommand{\ntprintbackcoverpage}{%
-  \ifaadefined{thesiscover}(\option{/novathesis/docdegree},back){%
-    \clearforchapter%
-    \thispagestyle{empty}%
-    ~%
-    \clearpage%
-    \thispagestyle{empty}%
-    \thethesiscover(\@nameuse{thesiscover\option{/novathesis/docdegree},back})%
-    ~% This space is important here so that the cover page is not empty anymore!
-    \clearforchapter%
-    \@nt@select@lang{\option{/novathesis/mainlang}}%
-  }{}%
+\newcommand*{\ntprintbackcover}{%
+  \clearforchapter%
+  \thispagestyle{empty}%
+  ~\newpage% \the back cover goes on the even page
+  \bgroup%
+    \AtCoverExecute{back}{begin}%
+    \@nt@select@lang{\option{/novathesis/coverlang}}%
+    \@nt@printthecover{back}%
+    \AtCoverExecute{back}{end}%
+  \egroup%
 }
 
 % \newcommand{\ntcoverbackground}[1][\@nameuse{thesiscover\option{/novathesis/docdegree},front}]{%
@@ -610,7 +608,7 @@
 \assocarray{copyrighttextstr}
 \assocarray{acknowledgmentsstr}
 
-% \assocarray{majorfield}
+\assocarray{majorfield}
 \assocarray{specialization}
 
 \newcommand{\initassocarray}[2][\embrace{\notdefined(\option{/novathesis/coverlang})}]{

@@ -68,10 +68,10 @@
 %%------------------------------------------------------------
 %% THE MOST IMPORTANT/POPULAR OPTIONS
 %%------------------------------------------------------------
-\ntsetup{docdegree=msc}       % The type of document
+\ntsetup{docdegree=phd}       % The type of document
 %                               %     [ phd, phdplan, phdprop, msc, mscplan, bsc, plain ]
  
-\ntsetup{school=nova/sst}    % The school id
+\ntsetup{school=nova/ims}    % The school id
 %                               %     [ nova/fct, nova/fcsh, nova/ims, nova/ensp, 
 %                               %       ul/ist, ul/fc, ipl/isel, ips/ests, esep,
 %                               %       iscte-iul/ista, consortium/msc-gt ]
@@ -120,7 +120,7 @@
 %                               %       calibri(*), kieranhealy(*) ] 
 %                               %     (*) only for xelatex/lualatex)
 
-\ntsetup{chapstyle=nsst}   % The chapter style to be used
+% \ntsetup{chapstyle=nsst}   % The chapter style to be used
 %                               %     [ elegantbianchi bluebox default ell hansen ist
 %                               %       lyhne madsen pedersen section southall veelo
 %                               %       vz34 vz43 ]
@@ -437,6 +437,7 @@
 %%------------------------------------------------------------
 \begin{document}        % Beginning of document
 
+
 %%------------------------------------------------------------
 \thesisfrontmatter      % Before the main text (TOC, etc) — Roman page numbering
 %%------------------------------------------------------------
@@ -459,7 +460,7 @@
                         %   "\ntprintbib[title=⟨title⟩]" to redefine the title!
 \ntprintappendixes      % Print appendixes, if any!
 \ntprintannexes         % Print appendixes, if any!
-\ntprintbackcoverpage   % Print the back cover, if any!
+\ntprintbackcover       % Print the back cover, if any!
 
 %%------------------------------------------------------------
 \end{document}          % End of document

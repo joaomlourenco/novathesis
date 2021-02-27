@@ -5,7 +5,7 @@
 %% Customization for language depedent strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILEStrings/de.ldf}
+\typeout{NT LOADING FILE Strings/de.ldf}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% German - strings
@@ -22,7 +22,7 @@
 \notdefined(de):={UNDEFINIERT}
 \specializationstr(de):={Spezialisierung in}
 
-% \majorfield(de):={\embrace{Wissenschaftliches Gebiet}}
+\majorfield(de):={\embrace{Wissenschaftliches Gebiet}}
 \degreename(de):={\embrace{Name des Studienprogramms}}
 
 \adviserstr(1,m,de):={Betreuer}% male, singular
@@ -83,28 +83,28 @@
 \committeememberstr(g,2,f,de):={Gäste}% female, plural
 	
 
-% \dissertationstr(bsc,de):={Bachelorarbeit vorgelegt von\\[1.25ex]%
-% \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstr(bsc,de):={Bachelorarbeit vorgelegt von\\[1.25ex]%
+  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 %
 %
-% \dissertationstr(mscplan,de):={Exposé für eine Masterarbeit vorgelegt \\[1.25ex]%
-% \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstr(mscplan,de):={Exposé für eine Masterarbeit vorgelegt \\[1.25ex]%
+  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 %
 %
-% \dissertationstr(msc,de):={Masterarbeit vorgelegt von\\[1.25ex]%
-% \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstr(msc,de):={Masterarbeit vorgelegt von\\[1.25ex]%
+  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 %
 %
-% \dissertationstr(phdplan,de):={Exposé für eine Dissertations vorgelegt \\[1.25ex]%
-% \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstr(phdplan,de):={Exposé für eine Dissertations vorgelegt \\[1.25ex]%
+  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 %
 %
-% \dissertationstr(phdprop,de):={Exposé für eine Dissertations vorgelegt\\[1.25ex]%
-% \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstr(phdprop,de):={Exposé für eine Dissertations vorgelegt\\[1.25ex]%
+  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 %
-% \dissertationstr(phd,de):={Dissertation\\%
+\dissertationstr(phd,de):={Dissertation\\%
 % zur Erlangung des akademischen Grades eines\\[1.25ex]%
-% \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 
 % Probably this is not a legally binding translation
 \copyrighttextstr(de):={Die \theschool(\option{/novathesis/copyrightlang})\ und die \theuniversity(\option{/novathesis/copyrightlang})\ haben das zeitlich und räumlich unbeschränkte Recht, diese Arbeit durch gedruckte Exemplare auf Papier oder in digitaler Form oder durch jedes andere bekannte oder noch zu erfindende Mittel zu archivieren und zu veröffentlichen und über wissenschaftliche Repositorien zu verbreiten und ihre Vervielfältigung und Verbreitung zu nichtkommerziellen, Bildungs- oder Forschungszwecken zuzulassen, solange der Autor und Herausgeber genannt wird.}
