@@ -105,8 +105,13 @@
 \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
 \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
 \pagestyle{novathesis@myvf}
-%
-%\frenchspacing
+
+\newcommand{\abstracttextprehook}[1]{
+  % \rule{\textwidth}{0.2mm} ~\\[-3.5ex]%
+}
+\newcommand{\abstracttextposthook}[1]{
+  % \null\\[2ex]\rule{\textwidth}{0.2mm}%
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

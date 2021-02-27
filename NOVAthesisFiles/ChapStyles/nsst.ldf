@@ -1,0 +1,43 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ChapterStyle/nsst.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for the “NOVA School of Science and Technology” chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE ChapterStyle/nsst.ldf}
+
+\chapterstyle{ell}
+\makeatletter
+\renewcommand{\chs@ell@helper}[1]{%
+  \par%
+    % \begin{adjustwidth}{}{-\chapindent}
+    \IfEq{#1}{}{% Unnumbered chapter
+      \begin{tabularx}{\linewidth}{>{\raggedleft\arraybackslash}X@{}}%|emacs
+        \leavevmode\chapnumfont #1\vphantom{1}%
+        \hspace*{3.6pt}%
+        \rule[-13.5pt]{0pt}{14.8mm}%
+        \\%
+        % \hline%
+      \end{tabularx}%
+    }{%
+      \begin{tabularx}{\linewidth}{>{\raggedleft\arraybackslash}X|@{}}%|emacs
+        \leavevmode\chapnumfont #1\vphantom{1}%
+        \hspace*{3.6pt}%
+        \rule[-13.5pt]{0pt}{14.8mm}%
+        \\%
+        % \hline%
+      \end{tabularx}%
+    }
+    % \end{adjustwidth}%
+  \par%
+}%
+
+\renewcommand*{\printchaptertitle}[1]{%
+  \raggedleft {\chaptitlefont\scshape #1}\par\nobreak
+}
+
+\gappto{\secheadstyle}{\sffamily}
+\gappto{\subsecheadstyle}{\sffamily}
+\gappto{\subsubsecheadstyle}{\sffamily}
+\makeatother

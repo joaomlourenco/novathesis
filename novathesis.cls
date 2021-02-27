@@ -1084,11 +1084,9 @@
   \@nt@select@lang{\option{/novathesis/mainlang}}%  
 }
 
-\newcommand{\abstracttextprehook}[1]{
-	\rule{\textwidth}{0.2mm} ~\\[-3.5ex]%
+\providecommand{\abstracttextprehook}[1]{
 }
-\newcommand{\abstracttextposthook}[1]{
-	\null\\[2ex]\rule{\textwidth}{0.2mm}  
+\providecommand{\abstracttextposthook}[1]{
 }
 
 \newcommand{\@ntprintabstract}[1]{%
