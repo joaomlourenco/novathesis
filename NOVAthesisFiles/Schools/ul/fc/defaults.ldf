@@ -16,10 +16,10 @@
 \university(it):={University of Lisbon}
 
 % Faculty / School
-\faculty(pt):={Faculdade de Ciências}
-\faculty(en):={Faculty of Sciences}
-\faculty(fr):={Faculty of Sciences}
-\faculty(it):={Faculty of Sciences}
+\school(pt):={Faculdade de Ciências}
+\school(en):={Faculty of Sciences}
+\school(fr):={Faculty of Sciences}
+\school(it):={Faculty of Sciences}
 
 % Department field
 \department(pt):={\embrace{Designação do Departamento}}
@@ -206,7 +206,7 @@
   }{}%
   \fontseries{mc}\fontsize{12}{12}\selectfont%
   \MakeUppercase{\theuniversity(\option{/novathesis/coverlang})}\\[2mm]%
-  \MakeUppercase{\thefaculty(\option{/novathesis/coverlang})}\\[2mm]%
+  \MakeUppercase{\theschool(\option{/novathesis/coverlang})}\\[2mm]%
   \ifmscdoc
 	 	{\MakeUppercase{\thedepartment(\option{/novathesis/coverlang})}}%
     {}%

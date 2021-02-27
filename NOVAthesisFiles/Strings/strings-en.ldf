@@ -22,7 +22,7 @@
 \notdefined(en):={UNDEFINED}
 \specializationstr(en):={Specialization in}
 
-\majorfield(en):={\embrace{Scientific Field}}
+% \majorfield(en):={\embrace{Scientific Field}}
 \degreename(en):={\embrace{Study Program Name}}
 
 \adviserstr(1,m,en):={Adviser}
@@ -76,24 +76,24 @@
 \committeememberstr(g,2,m,en):={Guests}
 \committeememberstr(g,2,f,em):={Guests}
 	
-\dissertationstr(bsc,en):={Report submitted in partial fulfillment\\%
-of the requirements for the degree of\\[1.25ex]%
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(mscplan,en):={Dissertation plan submitted in partial fulfillment\\%
-of the requirements for the degree of\\[1.25ex]%
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(msc,en):={Dissertation submitted in partial fulfillment\\%
-of the requirements for the degree of\\[1.25ex]%
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(phdplan,en):={Thesis plan submitted in partial fulfillment\\%
-of the requirements for the degree of\\[1.25ex]%
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(phdprop,en):={Thesis proposal submitted in partial fulfillment\\%
-of the requirements for the degree of\\[1.25ex]%
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(phd,en):={Thesis submitted in partial fulfillment\\%
-of the requirements for the degree of\\[1.25ex]%
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+% \dissertationstr(bsc,en):={Report submitted in partial fulfillment\\%
+% of the requirements for the degree of\\[1.25ex]%
+% \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+% \dissertationstr(mscplan,en):={Dissertation plan submitted in partial fulfillment\\%
+% of the requirements for the degree of\\[1.25ex]%
+% \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+% \dissertationstr(msc,en):={Dissertation submitted in partial fulfillment\\%
+% of the requirements for the degree of\\[1.25ex]%
+% \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+% \dissertationstr(phdplan,en):={Thesis plan submitted in partial fulfillment\\%
+% of the requirements for the degree of\\[1.25ex]%
+% \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+% \dissertationstr(phdprop,en):={Thesis proposal submitted in partial fulfillment\\%
+% of the requirements for the degree of\\[1.25ex]%
+% \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+% \dissertationstr(phd,en):={Thesis submitted in partial fulfillment\\%
+% of the requirements for the degree of\\[1.25ex]%
+% \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 
-\copyrighttextstr(en):={The \thefaculty(\option{/novathesis/copyrightlang})\ and the \theuniversity(\option{/novathesis/copyrightlang})\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+\copyrighttextstr(en):={The \theschool(\option{/novathesis/copyrightlang})\ and the \theuniversity(\option{/novathesis/copyrightlang})\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
 \acknowledgmentsstr(en):={This document was created using the (pdf/Xe/Lua)\LaTeX\ processor, based on the \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template, developed at the \href{http://www.di.fct.unl.pt}{Dep.\ Informática of FCT-NOVA} by \href{https://docentes.fct.unl.pt/joao-lourenco}{João M. Lourenço}. [0]\,João M. Lourenço, \emph{The NOVAthesis \LaTeX\ Template User’s Manual}, NOVA School of Science and Technology, NOVA University Lisbon, 2021, \url{https://github.com/joaomlourenco/novathesis/raw/master/template.pdf}.}

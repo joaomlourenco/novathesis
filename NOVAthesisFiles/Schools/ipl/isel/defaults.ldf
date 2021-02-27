@@ -14,10 +14,10 @@
 \university(it):={Polytechnic Institute of Lisbon}
 
 % Faculty / School
-\faculty(pt):={IInstituto Superior de Engenharia de Lisboa}
-\faculty(en):={Instituto Superior de Engenharia de Lisboa}
-\faculty(fr):={Instituto Superior de Engenharia de Lisboa}
-\faculty(it):={Instituto Superior de Engenharia de Lisboa}
+\school(pt):={IInstituto Superior de Engenharia de Lisboa}
+\school(en):={Instituto Superior de Engenharia de Lisboa}
+\school(fr):={Instituto Superior de Engenharia de Lisboa}
+\school(it):={Instituto Superior de Engenharia de Lisboa}
 
 % Scientific field
 \majorfield(pt):={Engenharia e Gestão Industrial}
@@ -98,9 +98,9 @@
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstr(phd,pt):={Dissertação para obtenção do Grau de %
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
-\copyrighttextstr(pt):={O \thefaculty(\option{/novathesis/coverlang})\ e o \theuniversity(\option{/novathesis/coverlang})\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+\copyrighttextstr(pt):={O \theschool(\option{/novathesis/coverlang})\ e o \theuniversity(\option{/novathesis/coverlang})\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
 
-\copyrighttextstr(en):={The \thefaculty(\option{/novathesis/coverlang})\ and the \theuniversity(\option{/novathesis/coverlang})\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+\copyrighttextstr(en):={The \theschool(\option{/novathesis/coverlang})\ and the \theuniversity(\option{/novathesis/coverlang})\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -180,7 +180,7 @@
 % School
 \ntaddtocover[vspace=0.5cm]{%
   \fontsize{13}{13}\selectfont%
-  \textbf{\MakeUppercase{\thefaculty(\option{/novathesis/coverlang})}}\\%
+  \textbf{\MakeUppercase{\theschool(\option{/novathesis/coverlang})}}\\%
   \fontsize{10}{10}\selectfont%
   \textbf{\MakeUppercase{\thedepartment(\option{/novathesis/coverlang})}}%
 }

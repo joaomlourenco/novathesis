@@ -69,7 +69,7 @@
 %% LOOK FOR PACKAGES ALSO IN "NOVAthesisFiles" folder
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \providecommand*{\input@path}{}
-\g@addto@macro\input@path{{./}{Chapters/}{NOVAthesisFiles/}}% subfolder path
+\g@addto@macro\input@path{{./}{Config/}{Chapters/}{NOVAthesisFiles/}}% subfolder path
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -94,7 +94,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Hook AtEndClass
+%% Hook Class
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\@nt@AtEnfClass@hook}{}
@@ -138,7 +138,7 @@
 % --------------------------------------------------------
 % Alias for consistency in template.tex
 \def\ntdepartment(#1)#2{\department(#1):={#2}}
-\def\ntmajorfield(#1)#2{\majorfield(#1):={#2}}
+% \def\ntmajorfield(#1)#2{\majorfield(#1):={#2}}
 \def\ntdegreename(#1)#2{\degreename(#1):={#2}}
 \def\ntspecialization(#1)#2{\specialization(#1):={#2}}
 \def\ntsponsors(#1)#2{\sponsorsstr(#1):={#2}}
@@ -331,30 +331,32 @@
 
 \newcommand*{\ntprintcovers}{%
   \bgroup%
-    % \thispagestyle{empty}%
-    \ntcoverprehook{1}%
+    \AtCoverExecute{1}{begin}%
     \@nt@select@lang{\option{/novathesis/coverlang}}%
     \pdfbookmark{\thefrontmatterstring(\option{/novathesis/coverlang})}{bmfrontmatter}
     \subpdfbookmark{\thecoverstring(\option{/novathesis/coverlang})}{bmcover}
     \@nt@printthecover{1}%
-    \ntcoverposthook{1}%
+    \AtCoverExecute{1}{end}%
     \iftoggle{/novathesis/secondcover}%
       {% SECOND COVER TRUE
-          \ntcoverprehook{2}%
-          \@nt@printthecover{2}%
-          \ntcoverposthook{2}%
+            %If cover 2 is defined use its definition
+            \AtCoverExecute{2}{begin}%
+            \@nt@printthecover{2}%
+            \AtCoverExecute{2}{end}
       }%
       {}% NO SECOND COVER
   \egroup%
 }
 
-\newcommand*{\ntcoverprehook}[1]{}
-\newcommand*{\ntcoverposthook}[1]{}
-\newcommand\AtBeginCover[1]{
-  \apptocmd{\ntcoverprehook}{#1}{}{}%
+\newcommand\AtCoverExecute[2]{
+  \optionlistdo{/@nt/atcover/#1/#2}{##1}
 }
-\newcommand\AtEndCover[1]{
-  \apptocmd{\ntcoverposthook}{#1}{}{}%
+
+\newcommand\AtBeginCover[2][1]{
+  \options{/@nt/atcover/#1/begin/.cpush = {#2}}%
+}
+\newcommand\AtEndCover[2][1]{
+  \options{/@nt/atcover/#1/end/.cpush = {#2}}%
 }
 
 \def\thecovernumber{}
@@ -445,8 +447,9 @@
   , height/.new value = {}
   , vspace/.new value = {}
   , hspace/.new value = {}
+  , color/.new color = {}
   , defaults/.new style* = {cover={}, status={}, degree={}, align=c, inalign=c, 
-                            height={}, hspace=0pt, vspace=0pt}
+                            height={}, hspace=0pt, vspace=0pt, color={black}}
   , defaults
 }
 
@@ -457,6 +460,7 @@
   \ifthenelse{\equal{#3}{}}{}{%
     \options{/@ntcoveropts,defaults}%.
     \options{/@ntcoveropts,#2}%
+    \color{\option{/@ntcoveropts/color}}%
     \StrCount{\option{/@ntcoveropts/cover}}{#1}[\@nt@incover]%
     \StrCount{\option{/@ntcoveropts/status}}{\option{/novathesis/docstatus}}[\@nt@instatus]%
     \StrCount{\option{/@ntcoveropts/degree}}{\option{/novathesis/docdegree}}[\@nt@indegree]%
@@ -606,7 +610,7 @@
 \assocarray{copyrighttextstr}
 \assocarray{acknowledgmentsstr}
 
-\assocarray{majorfield}
+% \assocarray{majorfield}
 \assocarray{specialization}
 
 \newcommand{\initassocarray}[2][\embrace{\notdefined(\option{/novathesis/coverlang})}]{
@@ -648,7 +652,7 @@
   \assocarray{#1}%
   \initassocarray[\embrace{\MakeUppercase{#1}}]{#1}%
 }
-\forcsvlist{\@nt@newassocarray}{university,faculty,department}
+\forcsvlist{\@nt@newassocarray}{university,school,department}
 
 % --------------------------------------------------------
 % Add school specific Images folder to the graphics path
@@ -668,7 +672,7 @@
   \currentpdfbookmark{Copyright}{bmcopyright}
   \noindent%
   Copyright \textcopyright\ \theauthorname, %
-  \thefaculty(\option{/novathesis/copyrightlang}), \theuniversity(\option{/novathesis/copyrightlang}).\\%
+  \theschool(\option{/novathesis/copyrightlang}), \theuniversity(\option{/novathesis/copyrightlang}).\\%
   \thecopyrighttextstr(\option{/novathesis/copyrightlang})%
   \@nt@select@lang{\option{/novathesis/mainlang}}
 }
@@ -843,10 +847,8 @@
   % #1 = width
   % %2 = {adviser,coadviser}
   \ifoptiondefined{/@nt/#2//name}{%
-    \bgroup
-      \csuse{the#2strfont}(\option{/novathesis/coverlang})%
-      \csuse{the#2str}(\option{/novathesis/coverlang})\\[1ex]%
-    \egroup
+    \csuse{the#2strfont}(\option{/novathesis/coverlang})%
+    \csuse{the#2str}(\option{/novathesis/coverlang})\\[1ex]%
     \begin{minipage}[t]{#1\linewidth}%
       \centering
       \optionlistdo{/@nt/#2//name}{\@nt@printadvisersgroup##1,\@nil}%
@@ -942,7 +944,7 @@
   % #1 = number
   % #2 = result
   \ifnum\value{\option{#1/@size}}=1%
-    \gdef#2{1}%
+    \gdef#2{1}%.
   \else%
     \gdef#2{2}%
   \fi%
@@ -962,7 +964,7 @@
 %% PAGE LAYOUT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\AtEndPreamble{\ntsetlayout}
+\AtEndPreamble{\typeout{NT AtEndPreamble ntsetlayout}\ntsetlayout}
 
 \newcommand{\ntsetlayout}{%
   \synctex=1% Use synctex
@@ -1230,7 +1232,7 @@
     {}%
 }
 
-\AtEndPreamble{\@loadglossaryfiles}
+\AtEndPreamble{\typeout{NT AtEndPreamble loadglossaryfiles}\@loadglossaryfiles}
 
 
 
@@ -1257,7 +1259,7 @@
   \end{tinywhite}%
 }
 
-\AtEndPreamble{\ntaddfile{bib}{NOVAthesisFiles/fix-bib.ldf}}
+\AtEndPreamble{\typeout{NT AtEndPreamble ntaddbib}\ntaddfile{bib}{NOVAthesisFiles/fix-bib.ldf}}
 \AtEndDocument{\nocite{ntmbib}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1369,8 +1371,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \AtEndPreamble{%
-\InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.ldf}{}{}%
-\InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/fontstyle}.ldf}{}{}%
+  \typeout{NT AtEndPreamble loading chapstyle and fontstyle}
+  \InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.ldf}{}{}%
+  \InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/fontstyle}.ldf}{}{}%
 }
 
 
@@ -1405,7 +1408,6 @@
 \newcommand{\glossaryfile}[1]{\ntaddfile{glossaries}[glossary]{#1}}
 \newcommand{\acronymsfile}[1]{\ntaddfile{glossaries}[acronyms]{#1}}
 \newcommand{\symbolsfile}[1]{\ntaddfile{glossaries}[symbols]{#1}}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % End of Class Hook

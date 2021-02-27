@@ -29,7 +29,6 @@
 
 % \RequirePackage{appendix}
 
-\RequirePackage[sfdefault,condensed]{gillius}
 % \RequirePackage{printlen}
 % \uselengthunit{mm}\printlength{\linewidth}
 
@@ -164,5 +163,5 @@
   \setabbreviationstyle[acronym]{long-short}
   \renewcommand{\glsnamefont}[1]{\textbf{#1}}%
   \makenoidxglossaries% use TeX to sort
-  \AtEndPreamble{\iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}}
+  \AtEndPreamble{\typeout{NT AtEndPreamble nonumberlist}\iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}}
 % }

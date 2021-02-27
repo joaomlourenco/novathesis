@@ -68,10 +68,10 @@
 %%------------------------------------------------------------
 %% THE MOST IMPORTANT/POPULAR OPTIONS
 %%------------------------------------------------------------
-\ntsetup{docdegree=mscplan}       % The type of document
+\ntsetup{docdegree=msc}       % The type of document
 %                               %     [ phd, phdplan, phdprop, msc, mscplan, bsc, plain ]
  
-% \ntsetup{school=ul/fc}    % The school id
+\ntsetup{school=nova/sst}    % The school id
 %                               %     [ nova/fct, nova/fcsh, nova/ims, nova/ensp, 
 %                               %       ul/ist, ul/fc, ipl/isel, ips/ests, esep,
 %                               %       iscte-iul/ista, consortium/msc-gt ]
@@ -143,7 +143,7 @@
 % \ntsetup{cdcover=true}        % Shall a “cd cover” be printed at the end of
 %                               %     the document?
 
-% \ntsetup{debugcover=true}     % Debug cover development: print rulers in the cover page
+\ntsetup{debugcover=true}     % Debug cover development: print rulers in the cover page
 
 
 %%------------------------------------------------------------
@@ -202,68 +202,35 @@
 
 %%------------------------------------------------------------
 % Thesis/Dissertation title (valid for all languages unless redefined as below)
-% syntax: \nttitle{title}
-\nttitle{A Very Long and Impressive Thesis Title\\with a Forced Line Break}%
-% \nttitle{A Very Long and Impressive Thesis Title}%
-% \nttitle[en]{The title in a Specific language}%
+%   syntax: \nttitle{title}
+\nttitle{A Very Long and Impressive\\Thesis Title with a Forced Line Break}%
+%   \nttitle{A Very Long and Impressive Thesis Title}%
+%   \nttitle[en]{The title in a Specific language}%
 
 %%------------------------------------------------------------
 % Thesis/Dissertation subtitle (valid for all languages unless redefined as below)
-% syntax: \nttitle{title}
+%   syntax: \nttitle{title}
 \ntsubtitle{Some thoughts on the Live, Universe, \\and Everything Else}%
-% \ntsubtitle{Some thoughts on the Live and the Universe}%
-% \nttitle[en]{The title in a Specific language}%
+%   \ntsubtitle{Some thoughts on the Live and the Universe}%
+%   \nttitle[en]{The title in a Specific language}%
 
 %%------------------------------------------------------------
-% Department
-% For FCT-NOVA, please uncomment the corresponding department below
-% syntax: \ntdepartment(language){name}
-\ntdepartment(pt){\\\embrace{Desiginação do Departamento}}
-\ntdepartment(en){\\\embrace{Department Name}}
-% \ntdepartment(pt){\theNSSTdep(DCEA)}
-% \ntdepartment(pt){\theNSSTdep(DCM)}
-% \ntdepartment(pt){\theNSSTdep(DCR)}
-% \ntdepartment(pt){\theNSSTdep(DCSA)}
-% \ntdepartment(pt){\theNSSTdep(DCT)}
-% \ntdepartment(pt){\theNSSTdep(DCTB)}
-% \ntdepartment(pt){\theNSSTdep(DCV)}
-% \ntdepartment(pt){\theNSSTdep(DEC)}
-% \ntdepartment(pt){\theNSSTdep(DEEC)}
-% \ntdepartment(pt){\theNSSTdep(DEMI)}
-% \ntdepartment(pt){\theNSSTdep(DF)}
-% \ntdepartment(pt){\theNSSTdep(DI)}
-% \ntdepartment(pt){\theNSSTdep(DM)}
-% \ntdepartment(pt){\theNSSTdep(DQ)}
+% Department customization
+%   DON'T TOUCH HERE! Please open and edit the
+%   configuration file “Config/department_name.tex”
+\input{department_name}
 
 %%------------------------------------------------------------
-% Degree customization - ntdegreename
-% See below for the degrees in Computer Science @ FCT-NOVA
-% syntax: \ntdegreename(language){name}
-\ntdegreename(pt){\embrace{Designação do Curso}}
-\ntdegreename(en){\embrace{Study Program Name}}
-
-%%% Uncomment for MSc and PhD in Computer Science @ FCT-NOVA 
-% \ifphddoc{%
-%   % It is a PhD Degree in Computer Science
-%   \ntmajorfield(pt){Informática}
-%   \ntmajorfield(en){Computer Science}
-%   \ntdegreename(pt){Programa de Doutoramento em Informática}
-%   \ntdegreename(en){PhD Program in Computer Science}
-% }{}
-% \ifmscdoc{%
-%   % It is a MSc degree in Computer Science
-%   \ntmajorfield(pt){Engenharia Informática}
-%   \ntmajorfield(en){Computer Science and Engineering}
-%   \ntdegreename(pt){Mestrado Integrado em Engenharia Informática}
-%   \ntdegreename(en){Integrated Master in Computer Science and Engineering}
-% }{}
-% \ifbscdoc{%
-%   % It is a MSc degree in Computer Science
-%   \ntmajorfield(pt){Engenharia Informática}
-%   \ntmajorfield(en){Computer Science and Engineering}
-%   \ntdegreename(pt){Licenciatura em Ciência e Engenharia Informática}
-%   \ntdegreename(en){Bachelor in Computer Science and Engineering}
-% }{}
+% Degree customization
+%   DON'T TOUCH HERE! Please open edit the appropriate
+%   configuration file “Config/degree_name_???.tex”
+\ifphddoc{% PhD program
+  \input{degree_name_phd}%
+}{\ifmscdoc{% MSc program
+  \input{degree_name_msc}%
+}{% Other program
+  \input{degree_name_other}%
+}}
 
 %%------------------------------------------------------------
 % Degree customization
@@ -323,10 +290,10 @@
 %                   [g] for guests
 %   syntax: \ntaddperson{committee}[role,gender]{Name, Position, School}
 \ntaddperson{committee}[c,m]{Name of the committee chairperson, Full Professor, FCT-NOVA}
-\ntaddperson{committee}[r,m]{Name of a rapporteur, Position, Another University}
-\ntaddperson{committee}[r,m]{Name of another rapporteur, Position, Another University}
-\ntaddperson{committee}[a,m]{name of the adviser present in defense, Position, University}
-\ntaddperson{committee}[m,f]{Yet another member of the committee, Position, Another University}
+\ntaddperson{committee}[r,m]{Name of a rapporteur, Associate Professor, Another University}
+\ntaddperson{committee}[r,m]{Name of another rapporteur, Assistant Professor, Another University}
+\ntaddperson{committee}[a,m]{name of the adviser present in defense, Associate Professor, University}
+\ntaddperson{committee}[m,f]{Yet another member of the committee, Full Professor, Another University}
 % \ntaddperson{committee}[g,m]{Guest member of the committee, Position, University}
 
 
@@ -383,7 +350,7 @@
 %%------------------------------------------------------------
 % Main text - document chapters
 %   syntax: \ntaddfile{chapter}{filename}
-% \ntaddfile{chapter}{chapter1}
+\ntaddfile{chapter}{chapter1}
 % \ntaddfile{chapter}{chapter2}
 % \ntaddfile{chapter}{chapter3}
 % \ntaddfile{chapter}{chapter4}
@@ -463,6 +430,7 @@
 %%  DON'T TOUCH BELOW THIS POINT!
 %%  IF YOU DO… YOU DESERVE WHATEVER HAPPENS AFTERWARDS!
 %%============================================================
+
 
 %%------------------------------------------------------------
 \begin{document}        % Beginning of document

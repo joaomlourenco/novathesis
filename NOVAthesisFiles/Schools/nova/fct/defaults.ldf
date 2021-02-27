@@ -7,8 +7,6 @@
 
 \typeout{NT LOADING FILE nova/fct/defaults.ldf}
 
-\prependtographicspath{{NOVAthesisFiles/Schools/\option{/novathesis/school}/Images-new/}}
-
 % Univesity
 \university(pt):={Universidade NOVA de Lisboa}
 \university(en):={NOVA University Lisbon}
@@ -16,40 +14,22 @@
 \university(it):={NOVA University Lisbon}
 
 % Faculty / School
-\faculty(pt):={Faculdade de Ciências e Tecnologia}
-\faculty(en):={NOVA School of Science and Technology}
-\faculty(fr):={NOVA School of Science and Technology}
-\faculty(it):={NOVA School of Science and Technology}
-
-% Departments
-\assocarray{NSSTdep}
-\NSSTdep(DCEA):={\\Ciências e Engenharia do Ambiente}
-\NSSTdep(DCM):={\\Ciência dos Materiais}
-\NSSTdep(DCR):={\\Conservação e Restauro}
-\NSSTdep(DCSA):={\\Ciências Sociais Aplicadas}
-\NSSTdep(DCT):={\\Ciências da Terra}
-\NSSTdep(DCTB):={\\Ciências e Tecnologia da Biomassa}
-\NSSTdep(DCV):={\\Ciências da Vida}
-\NSSTdep(DEC):={\\Engenharia Civil}
-\NSSTdep(DEEC):={Engenharia\\Eletrotécnica e de Computadores}
-\NSSTdep(DEMI):={\\Engenharia Mecânica e Industrial}
-\NSSTdep(DF):={\\Física}
-\NSSTdep(DI):={\\Informática}
-\NSSTdep(DM):={\\Matemática}
-\NSSTdep(DQ):={\\Química}
-
+\school(pt):={Faculdade de Ciências e Tecnologia}
+\school(en):={NOVA School of Science and Technology}
+\school(fr):={NOVA School of Science and Technology}
+\school(it):={NOVA School of Science and Technology}
 
 % Comiittee printing order
 \committeeorder(all):={c,r,m}% 
 
 % Cover background images
-\thesiscover(phd,front):={cover-phd-new copy}
-\thesiscover(phdplan,front):={cover-phd-new}
-\thesiscover(phdprop,front):={cover-phd-new}
-\thesiscover(msc,front):={cover-msc-new}
-\thesiscover(mscplan,front):={CAPAS_MEST_DEF_RGB}
-\thesiscover(bsc,front):={cover-bsc-new}
-\thesiscover(plain,front):={cover-bsc-new}
+\thesiscover(phd,front):={cover-phd-std}
+\thesiscover(phdplan,front):={cover-phd-std}
+\thesiscover(phdprop,front):={cover-phd-std}
+\thesiscover(msc,front):={cover-msc-std}
+\thesiscover(mscplan,front):={cover-msc-std}
+\thesiscover(bsc,front):={cover-bsc-std}
+\thesiscover(plain,front):={cover-plain-std}
 \thesiscover(phd,cdfront):={cd-cover-phd}
 \thesiscover(phd,cdinlay):={cd-inlay-phd}
 \thesiscover(phdplan,cdfront):={cd-cover-phd}
@@ -82,34 +62,34 @@
 \margin(paper,right):={3.5cm}
 
 % Set margins for cover pages
-\margin(phd,top):={1.0cm}
-\margin(phd,bottom):={1.05cm}
-\margin(phd,left):={3.55cm}
-\margin(phd,right):={1.0cm}
-\margin(phdplan,top):={1.0cm}
-\margin(phdplan,bottom):={1.05cm}
-\margin(phdplan,left):={3.55cm}
-\margin(phdplan,right):={1.0cm}
-\margin(phdprop,top):={1.0cm}
-\margin(phdprop,bottom):={1.05cm}
-\margin(phdprop,left):={3.55cm}
-\margin(phdprop,right):={1.0cm}
-\margin(msc,top):={1.0cm}
-\margin(msc,bottom):={1.05cm}
-\margin(msc,left):={3.55cm}
-\margin(msc,right):={1.0cm}
-\margin(mscplan,top):={1.0cm}
-\margin(mscplan,bottom):={1.05cm}
-\margin(mscplan,left):={3.55cm}
-\margin(mscplan,right):={1.0cm}
-\margin(bsc,top):={1.0cm}
-\margin(bsc,bottom):={1.05cm}
-\margin(bsc,left):={3.55cm}
-\margin(bsc,right):={1.0cm}
-\margin(plain,top):={1.0cm}
-\margin(plain,bottom):={1.05cm}
-\margin(plain,left):={3.55cm}
-\margin(plain,right):={1.0cm}
+\margin(phd,top):={3.9cm}
+\margin(phd,bottom):={1.4cm}
+\margin(phd,left):={5.5cm}
+\margin(phd,right):={2.5cm}
+\margin(phdplan,top):={3.9cm}
+\margin(phdplan,bottom):={1.4cm}
+\margin(phdplan,left):={5.5cm}
+\margin(phdplan,right):={2.5cm}
+\margin(phdprop,top):={3.9cm}
+\margin(phdprop,bottom):={1.4cm}
+\margin(phdprop,left):={5.5cm}
+\margin(phdprop,right):={2.5cm}
+\margin(msc,top):={4.0cm}
+\margin(msc,bottom):={1.3cm}
+\margin(msc,left):={4.5cm}
+\margin(msc,right):={3.3cm}
+\margin(mscplan,top):={4.0cm}
+\margin(mscplan,bottom):={1.3cm}
+\margin(mscplan,left):={4.5cm}
+\margin(mscplan,right):={3.3cm}
+\margin(bsc,top):={4.0cm}
+\margin(bsc,bottom):={1.3cm}
+\margin(bsc,left):={4.5cm}
+\margin(bsc,right):={3.3cm}
+\margin(plain,top):={4.0cm}
+\margin(plain,bottom):={1.3cm}
+\margin(plain,left):={4.5cm}
+\margin(plain,right):={3.3cm}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -133,77 +113,51 @@
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtBeginCover{%
-  % \ifxeorlua{\setmainfont[Ligatures={1.0cm}
-  \color{white}\sffamily
+  \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
 }
 
 % Author name
-\ntaddtocover[vspace=0cm,align=l,hspace=6.1cm,height=2.0cm,inalign=t]{%
+\ntaddtocover[vspace=0cm]{%
   \ntcoverbackground
-  \fontsize{17}{17}\selectfont
-  \rule{0pt}{9.5mm}\MakeTextUppercase{Departamento de \thedepartment(pt)}
+  \fontsize{14}{14}\selectfont
+  \textbf{\theauthorname}
 }
-%
-% % Academic qualifications
-% \ntaddtocover[vspace=0.25cm]{%
-%   \fontsize{11}{11}\selectfont
-%   \theauthordegree
-% }
 
-% The author name
-\ntaddtocover[vspace=5.3cm,align=l,height=4cm,inalign=t]{%
-  \ifphddoc{%
-    \fontsize{22}{21}\selectfont
-    \textbf{\thecovertitle[caps]}\\[4mm]
-    \fontsize{14}{14}\selectfont
-    \textbf{\thecoversubtitle[caps]}%
-  }{%
-    \fontsize{17}{17}\selectfont
-    \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]
-    \fontsize{17}{17}\selectfont
-    \theauthordegree%
-  }
+% Academic qualifications
+\ntaddtocover[vspace=0.25cm]{%
+  \fontsize{11}{11}\selectfont
+  \theauthordegree
 }
 
 % % Title of Dissertation
-\ntaddtocover[vspace=3.3cm,align=l,height=4cm,inalign=t]{%
-  \ifphddoc{%
-    \fontsize{17}{17}\selectfont
-    \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]
-    \fontsize{17}{17}\selectfont
-    \theauthordegree%
-  }{%
-    \fontsize{22}{21}\selectfont
-    \textbf{\thecovertitle[caps]}\\[4mm]
-    \fontsize{14}{14}\selectfont
-    \textbf{\thecoversubtitle[caps]}%
-  }
+\ntaddtocover[vspace=4.5cm]{%
+  \fontsize{16}{16}\selectfont
+  \textbf{\thecovertitle}
 }
-%
-% % Degree
-% \ntaddtocover[vspace=1.5cm]{%
-%   \fontsize{11}{11}\selectfont
-%   \thepresentationtext
-% }
-% % Advisers
-% \ntaddtocover[vspace=1]{%
-%   \fontsize{12}{12}\selectfont
-%   \ntprintadvisers
-% }
-%
-% % Committee — only print the committee for the main classes
-% \ntaddtocover[align=r, vspace=1]{%
-%   \fontsize{10}{10}\selectfont%
-%   \ntprintcommittee%
-% }
+
+% Degree
+\ntaddtocover[vspace=1.5cm]{%
+  \fontsize{11}{11}\selectfont
+  \thepresentationtext
+}
+% Advisers
+\ntaddtocover[vspace=1]{%
+  \fontsize{12}{12}\selectfont
+  \ntprintadvisers
+}
+
+% Committee — only print the committee for the main classes
+\ntaddtocover[align=r, vspace=1]{%
+  \fontsize{10}{10}\selectfont%
+  \ntprintcommittee%
+}
 
 % Date
-\ntaddtocover[vspace=1,align=l]{%
-  \fontsize{14}{13}\selectfont
-  \theuniversity(pt)\\
-  \ifdraftdoc%
-    \textbf{DRAFT: \today}%
-  \else%
-    \textbf{\thentdatemonth, \thentdateyear}%
-  \fi%
+\ntaddtocover[vspace=3.5cm  ]{%
+  \fontsize{11}{11}\selectfont
+  \ifdraftdoc
+    \textbf{DRAFT: \today}
+  \else
+    \textbf{\thentdatemonth, \thentdateyear}
+  \fi
 }

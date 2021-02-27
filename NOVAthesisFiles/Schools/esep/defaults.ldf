@@ -18,10 +18,10 @@
 \university(it):={Escola Superior de Enfermagem do Porto}%%TBD
 
 % Faculty / School
-\faculty(pt):={Escola Superior de Enfermagem do Porto}
-\faculty(en):={Nursing School of Porto}%%TBD
-\faculty(fr):={Escola Superior de Enfermagem do Porto}%%TBD
-\faculty(it):={Escola Superior de Enfermagem do Porto}%%TBD
+\school(pt):={Escola Superior de Enfermagem do Porto}
+\school(en):={Nursing School of Porto}%%TBD
+\school(fr):={Escola Superior de Enfermagem do Porto}%%TBD
+\school(it):={Escola Superior de Enfermagem do Porto}%%TBD
 
 % Scientific filed
 \majorfield(pt):={«Área Científica»}
@@ -136,8 +136,8 @@
   \ntcoverbackground%
   \noindent%
   \fontsize{15}{15}\selectfont%
-  \textbf{\MakeTextUppercase{\thefaculty(\option{/novathesis/coverlang})}}
-  % \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty(\option{/novathesis/coverlang})}}%
+  \textbf{\MakeTextUppercase{\theschool(\option{/novathesis/coverlang})}}
+  % \expandafter\MakeUppercase\expandafter{\textbf{\theschool(\option{/novathesis/coverlang})}}%
 }
 
 % % Degree name
@@ -212,7 +212,7 @@
 % \ntaddtocover[cover=2, vspace=2.2cm]{%
 %   \ntcoverbackground
 %   \fontsize{15}{15}\selectfont
-%   \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty(\option{/novathesis/coverlang})}}
+%   \expandafter\MakeUppercase\expandafter{\textbf{\theschool(\option{/novathesis/coverlang})}}
 % }
 %
 % % % Degree name

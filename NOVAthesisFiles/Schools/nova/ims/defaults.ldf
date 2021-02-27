@@ -14,10 +14,10 @@
 \university(it):={NOVA University Lisbon}
 
 % Faculty / School
-\faculty(pt):={Information Management School}
-\faculty(en):={Information Management School}
-\faculty(fr):={Information Management School}
-\faculty(it):={Information Management School}
+\school(pt):={Information Management School}
+\school(en):={Information Management School}
+\school(fr):={Information Management School}
+\school(it):={Information Management School}
 
 % Scientific filed
 \majorfield(pt):={Gestão de Informação}
@@ -241,7 +241,7 @@ of the requirements for the degree of %
   % SCHOOL
   \ntaddtocover[align=l, vspace=1cm]{%
     \fontsize{11}{11}\selectfont%
-    \textcolor{imsdarkgrey}{\textbf{\thefaculty(en)}}%
+    \textcolor{imsdarkgrey}{\textbf{\theschool(en)}}%
   }
   % UNIVERSITY
   \ntaddtocover[align=l, vspace=0.0cm]{%
