@@ -227,15 +227,15 @@
   \end{minipage}%
   \hspace{0.65cm}%
   \begin{minipage}[t]{0.55\textwidth}%
-    \adviserstrfont(\option{/novathesis/coverlang}):={\bfseries}%
-    \coadviserstrfont(\option{/novathesis/coverlang}):={\bfseries}%
+    \theadviserstrfont{\bfseries}%
+    \thecoadviserstrfont{\bfseries}%
     \fontsize{11}{11}\selectfont%
     \ntprintadvisers%
   \end{minipage}%
 }
 
 % Date
-\ntaddtocover[cover=1, vspace=2]{%
+\ntaddtocover[vspace=2]{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%
@@ -259,27 +259,11 @@
   % \hspace{0.65cm}%
   \begin{minipage}[t]{0.75\textwidth}%
     \ifmaindoc{%
-      \committeetitlestrfont(\option{/novathesis/coverlang}):={\fontsize{14}{14}\selectfont\bfseries}%
-      \committeememberstrfont(\option{/novathesis/coverlang}):={\bfseries}%
+      \thecommitteetitlestrfont{\fontsize{14}{14}\selectfont\bfseries}%
+      \thecommitteememberstrfont{\bfseries}%
       \fontsize{12}{12}\selectfont\ntprintcommittee[1]%
     }%
     {}%
   \end{minipage}%
 }
 
-
-% Date
-\ntaddtocover[vspace=1]{%
-  \begin{minipage}[t]{0.37\textwidth}%
-    ~%
-  \end{minipage}%
-  \hspace{0.65cm}%
-  \begin{minipage}[t]{0.55\textwidth}%
-    \fontsize{10}{10}\selectfont%
-    \ifdraftdoc%
-      \textbf{DRAFT: \today}%
-    \else%
-      \textbf{\thentdatemonth, \thentdateyear}%
-    \fi%
-  \end{minipage}%
-}
