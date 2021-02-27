@@ -589,11 +589,11 @@
 \assocarray{sponsorsstr}
 
 \assocarray{adviserstr}
-\assocarray{adviserstrfont}
+\providecommand*{\theadviserstrfont}{}
 \assocarray{coadviserstr}
-\assocarray{coadviserstrfont}
+\providecommand*{\thecoadviserstrfont}{}
 \assocarray{degreestr}
-\assocarray{degreestrfont}
+\providecommand*{\thedegreestrfont}{}
 
 \assocarray{degreename}
 
@@ -601,12 +601,12 @@
 
 \assocarray{committeeorder}
 \assocarray{committeetitlestr}
-\assocarray{committeetitlestrfont}
+\providecommand*{\thecommitteetitlestrfont}{}
 \assocarray{committeememberstr}
-\assocarray{committeememberstrfont}
+\providecommand*{\thecommitteememberstrfont}{}
 
 \assocarray{dissertationstr}
-\assocarray{dissertationstrfont}
+\providecommand*{\thedissertationstrfont}{}
 \assocarray{copyrighttextstr}
 \assocarray{acknowledgmentsstr}
 
@@ -619,14 +619,6 @@
   }%
 }
 
-\optionlistdo{/@nt/langsshort}{%
-  \adviserstrfont(#1):={}%
-  \coadviserstrfont(#1):={}%
-  \committeememberstrfont(#1):={}%
-  \committeetitlestrfont(#1):={}%
-  \degreestrfont(#1):={}%
-  \dissertationstrfont(#1):={}%
-}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Include strings for all the languages
@@ -663,7 +655,7 @@
 %% LABELS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \gdef\thepresentationtext{%
-	\thedissertationstr(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+	\thedissertationstrfont\thedissertationstr(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
 }
 
 \gdef\thecopyrightstr{%
@@ -847,7 +839,7 @@
   % #1 = width
   % %2 = {adviser,coadviser}
   \ifoptiondefined{/@nt/#2//name}{%
-    \csuse{the#2strfont}(\option{/novathesis/coverlang})%
+    \csuse{the#2strfont}%
     \csuse{the#2str}(\option{/novathesis/coverlang})\\[1ex]%
     \begin{minipage}[t]{#1\linewidth}%
       \centering
@@ -877,7 +869,7 @@
       \@nt@reducegender{/@nt/#1//gender}{\mygender}%
       \@nt@reducenumber{/@nt/#1//name}{\mynumber}%
       \medskip%
-      \csuse{the#1strfont}(\option{/novathesis/coverlang})%
+      \csuse{the#1strfont}%
       \csuse{the#1str}(\mynumber,\mygender,\option{/novathesis/coverlang}): & %
       \begin{minipage}[t]{\linewidth}\raggedright%
       \optionlistdo{/@nt/#1//name}{##1\\[0.3ex]}%
@@ -912,7 +904,7 @@
     % committeetitlestr[…] is empty
   \else%
     \multicolumn{2}{c}{{%%
-            \thecommitteetitlestrfont(\option{/novathesis/coverlang})%
+            \thecommitteetitlestrfont%
             \thecommitteetitlestr(\option{/novathesis/coverlang}):}%
           }%
   \fi%
@@ -924,7 +916,7 @@
     \@nt@reducegender{/@nt/committee/#1/gender}{\mygender}%
     \@nt@reducenumber{/@nt/committee/#1/name}{\mynumber}%
     \medskip%
-    \thecommitteememberstrfont(\option{/novathesis/coverlang})%
+    \thecommitteememberstrfont%
     \thecommitteememberstr(#1,\mynumber,\mygender,\option{/novathesis/coverlang}): & %
     \begin{minipage}[t]{\linewidth}\raggedright%
     \optionlistdo{/@nt/committee/#1/name}{##1\\[0.3ex]}%

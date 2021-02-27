@@ -113,36 +113,10 @@
 \pagestyle{novathesis@myvf}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Redefine some strings
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \dissertationstr(bsc,en):={%
-%   Report submitted in partial fulfillment of the requirements for the degree of\\%
-%   \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})
-%   in \textbf{\themajorfield(\option{/novathesis/coverlang})}}
-% \dissertationstr(mscplan,en):={Dissertation plan submitted in partial fulfillment\\%
-% of the requirements for the degree of\\[1.25ex]%
-% \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(msc,en):={%
-  Dissertation submitted in partial fulfillment of the requirements for the degree of\\%
-  % \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})
-  \textbf{\thedegreename(\option{/novathesis/coverlang})}}
-% \dissertationstr(phdplan,en):={Thesis plan submitted in partial fulfillment\\%
-% of the requirements for the degree of\\[1.25ex]%
-% \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
-% \dissertationstr(phdprop,en):={Thesis proposal submitted in partial fulfillment\\%
-% of the requirements for the degree of\\[1.25ex]%
-% \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
-% \dissertationstr(phd,en):={%
-%   Thesis submitted in partial fulfillment of the requirements for the degree of\\[1.25ex]%
-%   \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})
-%   in \textbf{\themajorfield}}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
+%% Draw the cover pages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\gdef\sstdepnamei{}
 \AtBeginCover{%
   \sffamily%
   \StrLen{\thedepartment(\option{/novathesis/coverlang})}[\sstdepstrlen]
@@ -159,6 +133,11 @@
 \AtEndCover{%
 }
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% COVER 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % Department name
 \ntaddtocover[cover=1,color=white,vspace=1.5mm,align=l,hspace=6.1cm,height=2.0cm,inalign=t]{%
 % \ntaddtocover[cover=1,vspace=1.5mm,align=l,hspace=5.5cm,height=2.0cm,inalign=t]{%
@@ -166,12 +145,6 @@
   \fontsize{14}{14}\selectfont%
   \MakeTextUppercase{[\sstdepname]}
 }
-%
-% % Academic qualifications
-% \ntaddtocover[cover=1,vspace=0.25cm]{%
-%   \fontsize{11}{11}\selectfont
-%   \theauthordegree
-% }
 
 % Title of Dissertation (PhD) / The author name (MSc)
 \ntaddtocover[cover=1,color={white},vspace=5.3cm,align=l,height=4cm,inalign=t]{%
@@ -202,29 +175,6 @@
     \textbf{\thecoversubtitle[caps]}%
   }
 }
-%
-% % Degree
-% \ntaddtocover[cover=1,color={white},vspace=1.5cm]{%
-%   \fontsize{11}{11}\selectfont
-%   \thepresentationtext
-% }
-% % Advisers
-% \ntaddtocover[cover=1,color={white},vspace=1]{%
-%   \fontsize{12}{12}\selectfont
-%   \ntprintadvisers
-% }
-%
-% % Committee — only print the committee for the main classes
-% \ntaddtocover[cover=1,color={white},align=r, vspace=1]{%
-%   \fontsize{10}{10}\selectfont%
-%   \ntprintcommittee%
-% }
-
-% Document type
-% \ntaddtocover[cover=1,color={white},vspace=1.8cm,align=l,height=1.0cm,inalign=t]{%
-%   \fontsize{14}{14}\selectfont
-%   \thedegreename(pt)
-% }
 
 % Date
 \ntaddtocover[cover=1,color={white},vspace=1,align=l]{%
@@ -238,6 +188,10 @@
   \fi%
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% COVER 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % LOGOS
 \ntaddtocover[cover=2,vspace=-4mm,align=l,hspace=-2.5cm,height=2.0cm,inalign=t]{%
   \begin{minipage}[b]{8.7cm}
@@ -249,12 +203,13 @@
   \begin{minipage}[b]{9cm}
     \fontsize{14}{14}\selectfont%
     \MakeTextUppercase{[\sstdepname]}%
-  \end{minipage}
-  }
+  \end{minipage}%
+  }\\[4ex]%
+  \hrule
 }
 
 % Title of Dissertation (PhD)
-\ntaddtocover[cover=2,vspace=2cm,align=l]{%
+\ntaddtocover[cover=2,vspace=3cm,align=l]{%
   \fontsize{17}{17}\selectfont
   \textbf{\thecovertitle[caps]}\\[4mm]
   \fontsize{12}{12}\selectfont
@@ -269,20 +224,36 @@
   \theauthordegree%
 }
 
-% The presentation text
-\ntaddtocover[cover=2,vspace=1,align=l]{%
-  \fontsize{12}{12}\selectfont%
-  \thepresentationtext%
-}
-
+% % The presentation text
+% \ntaddtocover[cover=2,vspace=2,align=l]{%
+%   \fontsize{12}{12}\selectfont%
+%   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}%
+% }
+%
 % The advisers
-\ntaddtocover[cover=2,vspace=2,align=l]{%
+\ntaddtocover[cover=2,vspace=1,align=l]{%
+  \def\theadviserstrfont{\bfseries}
+  \def\thecoadviserstrfont{\bfseries}
   \fontsize{12}{12}\selectfont
   \ntprintadvisers%
 }
 
 % The committee
-\ntaddtocover[cover=2,vspace=2,align=l]{%
+\ntaddtocover[cover=2,vspace=1,hspace=3.5cm,align=l]{%
+  \def\thecommitteetitlestrfont{\bfseries}
+  \def\thecommitteememberstrfont{\bfseries}
   \fontsize{12}{12}\selectfont
-  \ntprintcommittee%
+  \ntprintcommittee[1]%
+}
+
+% Date
+\ntaddtocover[cover=2,vspace=1,align=l]{%
+  \fontsize{10}{10}\selectfont
+  \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[1.25ex]
+  \theuniversity(\option{/novathesis/coverlang})\\
+  \ifdraftdoc%
+    \textbf{DRAFT: \today}%
+  \else%
+    \textbf{\thentdatemonth, \thentdateyear}%
+  \fi%
 }
