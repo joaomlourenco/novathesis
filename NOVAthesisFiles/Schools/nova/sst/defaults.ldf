@@ -204,7 +204,7 @@
   \raisebox{9mm}{%
   \begin{minipage}[b]{9cm}
     \fontsize{14}{14}\selectfont%
-    \MakeTextUppercase{[\sstdepname]}%
+    \MakeTextUppercase{\sstdepname}%
   \end{minipage}%
   }\\[4ex]%
   \hrule

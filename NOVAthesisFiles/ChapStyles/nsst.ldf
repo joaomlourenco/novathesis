@@ -37,7 +37,7 @@
   \raggedleft {\chaptitlefont\scshape #1}\par\nobreak
 }
 
-\gappto{\secheadstyle}{\sffamily}
-\gappto{\subsecheadstyle}{\sffamily}
-\gappto{\subsubsecheadstyle}{\sffamily}
+% \gappto{\secheadstyle}{\sffamily}
+% \gappto{\subsecheadstyle}{\sffamily}
+% \gappto{\subsubsecheadstyle}{\sffamily}
 \makeatother
