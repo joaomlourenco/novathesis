@@ -732,12 +732,13 @@
   % \typeout{NT nttitle [#1] [#2]}
     \saveexpandmode\noexpandarg% set \noexpandarg locally
       \StrSubstitute[0]{#2}{\\}{ }[\@thetitle]%
-      \StrSubstitute[0]{#2}{\\}{\newline}[\@thetitleii]%
+      \def\@thrtitleincaps{\expandafter\MakeUppercase\expandafter{#2}}%
+      \StrSubstitute[0]{\@thrtitleincaps}{\\}{\newline}[\@thetitleii]%
     \restoreexpandmode% restore the previous mode
     \doccovertitle(#1):={#2}%
-    \doccovertitlecaps(#1):={\expandafter\MakeUppercase\expandafter{\@thetitleii}}%
+    \doccovertitlecaps(#1):={\@thetitleii}%
     \doctitle(#1):=\@thetitle%
-    \ifthenelse{\equal{#1}{\option{/novathesis/coverlang}}}{%
+    \ifoptionequal{/novathesis/coverlang}{#1}{%
       \AtBeginDocument{%
         \hypersetup{pdftitle = {\@thetitle}}%
         \hypersetup{pdfsubject = {\thepresentationtext}}
