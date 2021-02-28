@@ -75,8 +75,8 @@
 \adviserstr(en):={Dissertation supervised by:}
 \coadviserstr(en):={Co-supervised by:}
 
-\adviserstrfont(en):={\bfseries}
-\coadviserstrfont(en):={\bfseries}
+\def\adviserstrfont{\bfseries}
+\def\coadviserstrfont{\bfseries}
 
 \ntsetup{printcopyright=false}
 
