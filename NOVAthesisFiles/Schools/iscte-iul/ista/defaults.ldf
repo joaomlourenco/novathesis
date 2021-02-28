@@ -16,10 +16,10 @@
 \school(en):={School of Technology and Architecture}
 
 % Font customization
-\adviserstrfont(\option{/novathesis/coverlang}):={\bfseries}%
-\coadviserstrfont(\option{/novathesis/coverlang}):={\bfseries}%
-\committeetitlestrfont(\option{/novathesis/coverlang}):={\fontsize{14}{14}\selectfont\bfseries}%
-\committeememberstrfont(\option{/novathesis/coverlang}):={\bfseries}%
+\def\adviserstrfont{\bfseries}%
+\def\cviserstrfont{\bfseries}%
+\def\citteetitlestrfont{\fontsize{14}{14}\selectfont\bfseries}%
+\def\citteememberstrfont{\bfseries}%
 
 % Comiittee printing order
 \committeeorder(all):={c,r,a,m}% 
