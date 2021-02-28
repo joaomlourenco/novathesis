@@ -30,6 +30,8 @@
 
 % Cover background images
 \thesiscover(phd,front):={CAPA_DOUT_V2}
+\thesiscover(phd,back):={CONTRACAPA_DOUT_V2}
+\thesiscover(phd,spine):={CONTRACAPA_DOUT_V2}
 \thesiscover(phdplan,front):={CAPA_DOUT_V2}
 \thesiscover(phdprop,front):={CAPA_DOUT_V2}
 \thesiscover(msc,front):={CAPA_MEST_V2}
@@ -256,4 +258,9 @@
   \else%
     \textbf{\thentdatemonth, \thentdateyear}%
   \fi%
+}
+
+
+\ntaddtocover[cover=back]{%
+  \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},back)]
 }
