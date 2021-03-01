@@ -246,21 +246,7 @@
     {}%
 }%
 
-% \ifthenelse{%
-%   \equal{\option{/novathesis/docdegree}}{phd}%
-%   \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
-%   \OR\equal{\option{/novathesis/docdegree}}{phdplan}}%
-% {
-%   \ntaddtocover[vspace=1]{%
-%     \fontseries{mc}\fontsize{13}{13}\selectfont%
-%     \textbf{\theauthordegree}\\%
-%     \ifthenelse{\isempty{\thespecialization(\option{/novathesis/coverlang})}}
-%       {}
-%       {\thespecialization(\option{/novathesis/coverlang})}
-%     \vspace{20mm}%
-%   }%
-% }%
-% {}
+
 %
 % Author name
 \ntaddtocover[vspace=3.0cm]{%

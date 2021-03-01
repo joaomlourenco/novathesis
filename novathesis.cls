@@ -560,7 +560,7 @@
 
 \newcommand*{\ntprintaftercover}{%
   \@nt@select@lang{\option{/novathesis/mainlang}}%
-  \ifthenelse{\equal{\option{/novathesis/aftercover}}{true}}%
+  \iftoggle{/novathesis/aftercover}%
   {%
     \InputIfFileExists{Chapters/\@nt@aftercover@file}%
       {\clearforchapter}%

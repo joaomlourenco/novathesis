@@ -61,7 +61,7 @@
                 {\themargin(#1,right)}%
                 {*}%
               \checkandfixthelayout%
-              \ifthenelse{\equal{\option{/novathesis/media}}{paper}}%
+              \ifoptionequal{/novathesis/media}{paper}%
                 {\options{/novathesis/linkscolor=black}}
                 {}
   }
