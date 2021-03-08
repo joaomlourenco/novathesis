@@ -1,0 +1,268 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova/sst/defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for FCT-NOVA (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT LOADING FILE nova/sst/defaults.ldf}
+
+% LaTeX font similar to Gill Sans
+\RequirePackage{gillius2}
+\options{/novathesis/secondcover=true}
+
+% Univesity
+\university(pt):={Universidade NOVA de Lisboa}
+\university(en):={NOVA University Lisbon}
+\university(fr):={NOVA University Lisbon}
+\university(it):={NOVA University Lisbon}
+\university(logo):={nova_emblema}
+
+% Faculty / School
+\school(pt):={Faculdade de Ciências e Tecnologia}
+\school(en):={NOVA School of Science and Technology}
+\school(fr):={NOVA School of Science and Technology}
+\school(it):={NOVA School of Science and Technology}
+\school(logo):={nsst_logo}
+
+% Comiittee printing order
+\committeeorder(all):={c,r,m}%  
+
+% Cover background images
+\thesiscover(phd,front):={phd_front_cover}
+\thesiscover(phd,back):={phd_back_cover}
+\thesiscover(phd,spine):={phd_spine}
+
+\thesiscover(phdprop,front):={phd_front_cover}
+\thesiscover(phdprop,back):={phd_back_cover}
+\thesiscover(phdprop,spine):={phd_spine}
+
+\thesiscover(phdplan,front):={phd_front_cover}
+\thesiscover(phdplan,back):={phd_back_cover}
+\thesiscover(phphdpland,spine):={phd_spine}
+
+\thesiscover(msc,front):={msc_front_cover}
+\thesiscover(msc,back):={msc_back_cover}
+
+\thesiscover(mscplan,front):={msc_front_cover}
+\thesiscover(mmscplansc,back):={msc_back_cover}
+
+\thesiscover(bsc,front):={}
+\thesiscover(plain,front):={}
+
+\thesiscover(phd,cdfront):={cd-cover-phd}
+\thesiscover(phd,cdinlay):={cd-inlay-phd}
+\thesiscover(msc,cdfront):={cd-cover-msc}
+\thesiscover(msc,cdinlay):={cd-inlay-msc}
+
+% Spine info
+\spine(logo):={nova_emblema}
+\spine(author):={\theauthorshortname}
+\spine(title):={\thetitle}
+\spine(year):={\thentdateyear}
+
+% Set margins for "normal" pages
+\margin(screen,top):={3.5cm}
+\margin(screen,bottom):={2.5cm}
+\margin(screen,left):={3.0cm}
+\margin(screen,right):={3.0cm}
+\margin(paper,top):={3.5cm}
+\margin(paper,bottom):={2.5cm}
+\margin(paper,left):={2.5cm}
+\margin(paper,right):={3.5cm}
+
+% Set margins for cover pages
+\margin(phd,top):={1.0cm}
+\margin(phd,bottom):={1.5cm}
+\margin(phd,left):={3.55cm}
+\margin(phd,right):={2.0cm}
+\margin(phdplan,top):={1.0cm}
+\margin(phdplan,bottom):={1.5cm}
+\margin(phdplan,left):={3.55cm}
+\margin(phdplan,right):={2.0cm}
+\margin(phdprop,top):={1.0cm}
+\margin(phdprop,bottom):={1.5cm}
+\margin(phdprop,left):={3.55cm}
+\margin(phdprop,right):={2.0cm}
+\margin(msc,top):={1.0cm}
+\margin(msc,bottom):={1.5cm}
+\margin(msc,left):={3.55cm}
+\margin(msc,right):={2.0cm}
+\margin(mscplan,top):={1.0cm}
+\margin(mscplan,bottom):={1.5cm}
+\margin(mscplan,left):={3.55cm}
+\margin(mscplan,right):={2.0cm}
+\margin(bsc,top):={1.0cm}
+\margin(bsc,bottom):={1.5cm}
+\margin(bsc,left):={3.55cm}
+\margin(bsc,right):={2.0cm}
+\margin(plain,top):={1.0cm}
+\margin(plain,bottom):={1.5cm}
+\margin(plain,left):={3.55cm}
+\margin(plain,right):={2.0cm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NOVA guidelines:
+% The pages should be numbered consecutively at the bottom centre of the
+% page.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \makepagestyle{novathesis@myvf}
+% \makeoddfoot{novathesis@myvf}{}{\thepage}{}
+% \makeevenfoot{novathesis@myvf}{}{\thepage}{}
+% \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}
+% \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}
+% \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
+% \pagestyle{novathesis@myvf}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover pages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtBeginCover{%
+  \sffamily%
+  \StrLen{\thedepartment(\option{/novathesis/coverlang})}[\sstdepstrlen]
+  \ifthenelse{\sstdepstrlen<28}{%
+    \StrSubstitute[1]{\thedepartment(\option{/novathesis/coverlang})}{ }{\newline}[\sstdepnamei]%
+  }{%
+    \StrSubstitute[3]{\thedepartment(\option{/novathesis/coverlang})}{ }{\$\$\$}[\sstdepnamei]%
+    \StrSubstitute[2]{\sstdepnamei}{\$\$\$}{ }[\sstdepnamei]%
+    \StrSubstitute{\sstdepnamei}{\$\$\$}{\newline}[\sstdepnamei]%
+  }
+  \xdef\sstdepname{\sstdepnamei}
+}
+
+\AtEndCover{%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% COVER 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Department name
+\ntaddtocover[cover=1,color=white,vspace=1.5mm,align=l,hspace=6.1cm,height=2.0cm,inalign=t]{%
+% \ntaddtocover[cover=1,vspace=1.5mm,align=l,hspace=5.5cm,height=2.0cm,inalign=t]{%
+  \ntcoverbackground%
+  \fontsize{14}{14}\selectfont%
+  \MakeTextUppercase{[\sstdepname]}
+}
+
+% Title of Dissertation (PhD) / The author name (MSc)
+\ntaddtocover[cover=1,color={white},vspace=5.3cm,align=l,height=4cm,inalign=t]{%
+  \ifphddoc{%
+    \fontsize{22}{21}\selectfont
+    \textbf{\thecovertitle[caps]}\\[4mm]
+    \fontsize{14}{14}\selectfont
+    \textbf{\thecoversubtitle[caps]}%
+  }{%
+    \fontsize{17}{17}\selectfont
+    \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]
+    \fontsize{17}{17}\selectfont
+    \theauthordegree%
+  }
+}
+
+% The author name (PhD) / Title of Dissertation (MSc)
+\ntaddtocover[cover=1,color={white},vspace=2.0cm,align=l,height=4cm,inalign=c]{%
+  \ifphddoc{%
+    \fontsize{17}{17}\selectfont
+    \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]
+    \fontsize{17}{17}\selectfont
+    \theauthordegree%
+  }{%
+    \fontsize{22}{21}\selectfont
+    \textbf{\thecovertitle[caps]}\\[4mm]
+    \fontsize{14}{14}\selectfont
+    \textbf{\thecoversubtitle[caps]}%
+  }
+}
+
+% Date
+\ntaddtocover[cover=1,color={white},vspace=1,align=l]{%
+  \fontsize{14}{13}\selectfont
+  \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[3mm]
+  \theuniversity(\option{/novathesis/coverlang})\\
+  \ifdraftdoc%
+    \textbf{DRAFT: \today}%
+  \else%
+    \textbf{\thentdatemonth, \thentdateyear}%
+  \fi%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% COVER 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% LOGOS
+\ntaddtocover[cover=2,vspace=-4mm,align=l,hspace=-2.5cm,height=2.0cm,inalign=t]{%
+  \begin{minipage}[b]{8.7cm}
+  \includegraphics[height=2cm]{\expanded{\theuniversity(logo)}}%
+  \hspace{3mm}\rule{0.5mm}{2cm}\hspace{5mm}%
+  \raisebox{2.5mm}{\includegraphics[height=2.15cm]{\expanded{\theschool(logo)}}}%
+  \end{minipage}%
+  \raisebox{9mm}{%
+  \begin{minipage}[b]{9cm}
+    \fontsize{14}{14}\selectfont%
+    \MakeTextUppercase{\sstdepname}%
+  \end{minipage}%
+  }\\[4ex]%
+  \hrule
+}
+
+% Title of Dissertation (PhD)
+\ntaddtocover[cover=2,vspace=3cm,align=l]{%
+  \fontsize{17}{17}\selectfont
+  \textbf{\thecovertitle[caps]}\\[4mm]
+  \fontsize{12}{12}\selectfont
+  \textbf{\thecoversubtitle[caps]}%
+}
+
+% The author name
+\ntaddtocover[cover=2,vspace=1,align=l]{%
+  \fontsize{14}{14}\selectfont
+  \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]
+  \fontsize{14}{14}\selectfont
+  \theauthordegree%
+}
+
+% % The presentation text
+% \ntaddtocover[cover=2,vspace=2,align=l]{%
+%   \fontsize{12}{12}\selectfont%
+%   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}%
+% }
+%
+% The advisers
+\ntaddtocover[cover=2,vspace=1,align=l]{%
+  \def\theadviserstrfont{\bfseries}
+  \def\thecoadviserstrfont{\bfseries}
+  \fontsize{12}{12}\selectfont
+  \ntprintadvisers%
+}
+
+% The committee
+\ntaddtocover[cover=2,vspace=1,hspace=3.5cm,align=l]{%
+  \def\thecommitteetitlestrfont{\bfseries}
+  \def\thecommitteememberstrfont{\bfseries}
+  \fontsize{12}{12}\selectfont
+  \ntprintcommittee[1]%
+}
+
+% Date
+\ntaddtocover[cover=2,vspace=1,align=l]{%
+  \fontsize{10}{10}\selectfont
+  \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[1.25ex]
+  \theuniversity(\option{/novathesis/coverlang})\\
+  \ifdraftdoc%
+    \textbf{DRAFT: \today}%
+  \else%
+    \textbf{\thentdatemonth, \thentdateyear}%
+  \fi%
+}
+
+
+\ntaddtocover[cover=back]{%
+  \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},back)]
+}
