@@ -13,21 +13,21 @@
   \par%
     % \begin{adjustwidth}{}{-\chapindent}
     \IfEq{#1}{}{% Unnumbered chapter
-      \begin{tabularx}{\linewidth}{>{\raggedleft\arraybackslash}X@{}}%|emacs
+      \hfill\begin{tabular}{r@{}}%|emacs
         \leavevmode\chapnumfont #1\vphantom{1}%
         \hspace*{3.6pt}%
         \rule[-13.5pt]{0pt}{14.8mm}%
         \\%
         % \hline%
-      \end{tabularx}%
+      \end{tabular}%
     }{%
-      \begin{tabularx}{\linewidth}{>{\raggedleft\arraybackslash}X|@{}}%|emacs
-        \leavevmode\chapnumfont #1\vphantom{1}%
+      \hfill\begin{tabular}{|r@{}}%|emacs
+        \leavevmode\chapnumfont ~#1\vphantom{1}%
         \hspace*{3.6pt}%
         \rule[-13.5pt]{0pt}{14.8mm}%
         \\%
         % \hline%
-      \end{tabularx}%
+      \end{tabular}%
     }
     % \end{adjustwidth}%
   \par%

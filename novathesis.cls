@@ -377,9 +377,11 @@
   \fgruler[cm]{lowerright}{\@nt@tmpright}{\@nt@tmpbottom}%
 }
 
-\usepackage{tikz}
-\usepackage{geometry}
-\usetikzlibrary{backgrounds}
+\iftoggle{/novathesis/debugcover}{
+  \usepackage{tikz}
+  \usetikzlibrary{backgrounds}
+}{}
+
 \newcommand{\drawgraph}[1][orange]{%
 \noindent
   \def\width{21}%

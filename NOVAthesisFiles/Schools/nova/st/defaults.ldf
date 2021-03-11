@@ -17,13 +17,15 @@
 \university(fr):={NOVA University Lisbon}
 \university(it):={NOVA University Lisbon}
 \university(logo):={nova_emblema}
+\university(logo,neg):={nova_emblema_negativo}
 
 % Faculty / School
 \school(pt):={Faculdade de Ciências e Tecnologia}
 \school(en):={NOVA School of Science and Technology}
 \school(fr):={NOVA School of Science and Technology}
 \school(it):={NOVA School of Science and Technology}
-\school(logo):={nsst_logo}
+\school(logo):={fct_logo}
+\school(logo,neg):={fct_logo_negativo}
 
 % Comiittee printing order
 \committeeorder(all):={c,r,m}%  
@@ -56,7 +58,7 @@
 \thesiscover(msc,cdinlay):={cd-inlay-msc}
 
 % Spine info
-\spine(logo):={nova_emblema}
+\spine(logo):={\ifphddoc{\theuniversity(logo,neg)}{\theschool(logo,neg)}}
 \spine(author):={\theauthorshortname}
 \spine(title):={\thetitle}
 \spine(year):={\thentdateyear}
@@ -123,15 +125,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtBeginCover{%
   \sffamily%
-  \StrLen{\thedepartment(\option{/novathesis/coverlang})}[\sstdepstrlen]
+  \StrLen{\thedepartment(\option{/novathesis/coverlang})}[\sstdepstrlen]%
   \ifthenelse{\sstdepstrlen<28}{%
     \StrSubstitute[1]{\thedepartment(\option{/novathesis/coverlang})}{ }{\newline}[\sstdepnamei]%
   }{%
     \StrSubstitute[3]{\thedepartment(\option{/novathesis/coverlang})}{ }{\$\$\$}[\sstdepnamei]%
     \StrSubstitute[2]{\sstdepnamei}{\$\$\$}{ }[\sstdepnamei]%
     \StrSubstitute{\sstdepnamei}{\$\$\$}{\newline}[\sstdepnamei]%
-  }
-  \xdef\sstdepname{\sstdepnamei}
+  }%
+  \xdef\sstdepname{\sstdepnamei}%
 }
 
 \AtEndCover{%
