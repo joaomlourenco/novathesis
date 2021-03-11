@@ -1,8 +1,3 @@
-<head>
-<meta property="og:image" content="https://github.com//joaomlourenco/novathesis/blob/master/NOVAthesisFiles/Images/novathesis-logo-grey-white-v3.3-921x195.jpg">
-<link rel="image_src" href="lib/divvy.png">
-</head>
-
 <img src="NOVAthesisFiles/Images/novathesis-logo-grey-white-v3.3-921x195.jpg" width="600"/> 
 <!-- ![NOVAthesis logo](NOVAthesisFiles/Images/novathesis-logo.jpg) -->
 
