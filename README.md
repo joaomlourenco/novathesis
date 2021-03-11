@@ -1,5 +1,5 @@
 <head>
-<meta property="og:image" content="https://github.com/joaomlourenco/novathesis/NOVAthesisFiles/Images/novathesis-logo-grey-white-v3.3-921x195.jpg">
+<meta property="og:image" content="https://github.com//joaomlourenco/novathesis/blob/master/NOVAthesisFiles/Images/novathesis-logo-grey-white-v3.3-921x195.jpg">
 <link rel="image_src" href="lib/divvy.png">
 </head>
 
