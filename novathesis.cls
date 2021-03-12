@@ -378,7 +378,7 @@
 }
 
 \iftoggle{/novathesis/debugcover}{
-  \usepackage{tikz}
+  \RequirePackage{tikz}
   \usetikzlibrary{backgrounds}
 }{}
 

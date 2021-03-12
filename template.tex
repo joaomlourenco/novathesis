@@ -68,7 +68,7 @@
 %%------------------------------------------------------------
 %% THE MOST IMPORTANT/POPULAR OPTIONS
 %%------------------------------------------------------------
-% \ntsetup{docdegree=msc}       % The type of document
+\ntsetup{docdegree=msc}       % The type of document
 %                               %     [ phd, phdplan, phdprop, msc, mscplan, bsc, plain ]
 
 \ntsetup{school=nova/st}    % The school id
@@ -137,7 +137,7 @@
 
 % \ntsetup{printcopyright=fale} % Shall the copyright message be printed??
 
-% \ntsetup{spine=true}          % Shall a “book spine” be printed at the end of
+\ntsetup{spine=true}          % Shall a “book spine” be printed at the end of
 %                               %     the document?
 
 % \ntsetup{cdcover=true}        % Shall a “cd cover” be printed at the end of
@@ -195,6 +195,8 @@
 \usepackage{lipsum}       % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 
 
+\usepackage{tikz}
+\usetikzlibrary{backgrounds}
 
 
 
@@ -212,8 +214,8 @@
 %%------------------------------------------------------------
 % Thesis/Dissertation subtitle (valid for all languages unless redefined as below)
 %   syntax: \nttitle{title}
-\ntsubtitle{Some thoughts on the Live, the Universe, \\and Everything Else}%
-%   \ntsubtitle{Some thoughts on the Live and the Universe}%
+\ntsubtitle{Some thoughts on the Life, the Universe, \\and Everything Else}%
+%   \ntsubtitle{Some thoughts on the Life and the Universe}%
 %   \nttitle[en]{The title in a Specific language}%
 
 %%------------------------------------------------------------
@@ -252,12 +254,12 @@
 % Author full name, abbreviated name, and gender
 %   use [f] for female and [m] for male author
 %   syntax: \ntauthorname(language){full name}{abbreviated name}
-\ntauthorname[m]{John Longname Doe}{John Doe}
+\ntauthorname[m]{John Very Longname Doe}{John Doe}
 
 %%------------------------------------------------------------
 % Author previous degree
 %   syntax: \ntauthordegree{degree}
-\ntauthordegree{Master of Science}
+\ntauthordegree{Master in \embrace{name of previous degree}}
 
 %%------------------------------------------------------------
 % Submission date
@@ -294,8 +296,9 @@
 \ntaddperson{committee}[c,m]{Name of the committee chairperson, Full Professor, FCT-NOVA}
 \ntaddperson{committee}[r,m]{Name of a rapporteur, Associate Professor, Another University}
 \ntaddperson{committee}[r,m]{Name of another rapporteur, Assistant Professor, Another University}
-\ntaddperson{committee}[a,m]{name of the adviser present in defense, Associate Professor, University}
+\ntaddperson{committee}[a,m]{Name of the adviser present in defense, Associate Professor, University}
 \ntaddperson{committee}[m,f]{Yet another member of the committee, Full Professor, Another University}
+\ntaddperson{committee}[m,f]{Yet another member of the committee, Assistant Professor, Another University}
 % \ntaddperson{committee}[g,m]{Guest member of the committee, Position, University}
 
 
@@ -355,8 +358,8 @@
 \ntaddfile{chapter}{chapter1}
 \ntaddfile{chapter}{chapter2}
 \ntaddfile{chapter}{chapter3}
-% \ntaddfile{chapter}{chapter4}
-% \ntaddfile{chapter}{chapter-last}
+\ntaddfile{chapter}{chapter4}
+\ntaddfile{chapter}{chapter-last}
 
 %%------------------------------------------------------------
 % Text appendixes 

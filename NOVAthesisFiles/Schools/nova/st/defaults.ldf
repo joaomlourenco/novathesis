@@ -45,6 +45,7 @@
 
 \thesiscover(msc,front):={msc_front_cover}
 \thesiscover(msc,back):={msc_back_cover}
+\thesiscover(msc,spine):={msc_spine}
 
 \thesiscover(mscplan,front):={msc_front_cover}
 \thesiscover(mmscplansc,back):={msc_back_cover}
@@ -58,10 +59,15 @@
 \thesiscover(msc,cdinlay):={cd-inlay-msc}
 
 % Spine info
-\spine(logo):={\ifphddoc{\theuniversity(logo,neg)}{\theschool(logo,neg)}}
+\spine(logo,phd):={\theuniversity(logo,neg)}
+\spine(logo,raisebox,phd):={0pt}
+\spine(logo,msc):={\theschool(logo,neg)}
+\spine(logo,raisebox,msc):={1mm}
 \spine(author):={\theauthorshortname}
 \spine(title):={\thetitle}
 \spine(year):={\thentdateyear}
+\spine(top):={116pt}
+\spine(margin):={5mm}
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
@@ -70,8 +76,8 @@
 \margin(screen,right):={3.0cm}
 \margin(paper,top):={3.5cm}
 \margin(paper,bottom):={2.5cm}
-\margin(paper,left):={2.5cm}
-\margin(paper,right):={3.5cm}
+\margin(paper,left):={3.0cm}
+\margin(paper,right):={3.0cm}
 
 % Set margins for cover pages
 \margin(phd,top):={1.0cm}
@@ -149,7 +155,7 @@
 % \ntaddtocover[cover=1,vspace=1.5mm,align=l,hspace=5.5cm,height=2.0cm,inalign=t]{%
   \ntcoverbackground%
   \fontsize{14}{14}\selectfont%
-  \MakeTextUppercase{[\sstdepname]}
+  \MakeTextUppercase{\sstdepname}
 }
 
 % Title of Dissertation (PhD) / The author name (MSc)
