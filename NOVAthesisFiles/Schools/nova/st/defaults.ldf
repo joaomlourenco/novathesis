@@ -159,12 +159,15 @@
 }
 
 % Title of Dissertation (PhD) / The author name (MSc)
-\ntaddtocover[cover=1,color={white},vspace=5.3cm,align=l,height=4cm,inalign=t]{%
+\ntaddtocover[cover=1,color={white},vspace=5.3cm,align=l,height=3.0cm,inalign=c]{%
   \ifphddoc{%
     \fontsize{22}{21}\selectfont
-    \textbf{\thecovertitle[caps]}\\[4mm]
-    \fontsize{14}{14}\selectfont
-    \textbf{\thecoversubtitle[caps]}%
+    \textbf{\thecovertitle[caps]}%
+    \ifaadefined{doccoversubtitlecaps}(\option{/novathesis/coverlang}){%
+      \\[4mm]%
+      \fontsize{14}{14}\selectfont%
+      \textbf{\thecoversubtitle[caps]}%
+    }{}%
   }{%
     \fontsize{17}{17}\selectfont
     \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]
@@ -174,7 +177,7 @@
 }
 
 % The author name (PhD) / Title of Dissertation (MSc)
-\ntaddtocover[cover=1,color={white},vspace=2.0cm,align=l,height=4cm,inalign=c]{%
+\ntaddtocover[cover=1,color={white},vspace=3.0cm,align=l,height=3cm,inalign=c]{%
   \ifphddoc{%
     \fontsize{17}{17}\selectfont
     \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]
@@ -182,9 +185,12 @@
     \theauthordegree%
   }{%
     \fontsize{22}{21}\selectfont
-    \textbf{\thecovertitle[caps]}\\[4mm]
-    \fontsize{14}{14}\selectfont
-    \textbf{\thecoversubtitle[caps]}%
+    \textbf{\thecovertitle[caps]}%
+    \ifaadefined{doccoversubtitlecaps}(\option{/novathesis/coverlang}){%
+      \\[4mm]%
+      \fontsize{14}{14}\selectfont%
+      \textbf{\thecoversubtitle[caps]}%
+    }{}%
   }
 }
 

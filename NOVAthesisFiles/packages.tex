@@ -122,8 +122,17 @@
 }
 
 
-% Cover design debugging
-\RequirePackage[type=none]{fgruler}
+\iftoggle{/novathesis/debugcover}{%
+  % Cover design debugging
+  \RequirePackage[type=none]{fgruler}
+}{}
+
+
+\iftoggle{/novathesis/spine}{%
+  % Load book spine images in the background
+  \usepackage{tikz}
+  \usetikzlibrary{backgrounds}
+}{}
 
 
 % Flexible definition of new environments
