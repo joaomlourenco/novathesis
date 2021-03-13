@@ -211,7 +211,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % LOGOS
-\ntaddtocover[cover=2,vspace=-4mm,align=l,hspace=-2.5cm,height=2.0cm,inalign=t]{%
+\ntaddtocover[cover=2,vspace=-4mm,align=l,height=2.0cm,inalign=t]{%
   \begin{minipage}[b]{8.7cm}
   \includegraphics[height=2cm]{\expanded{\theuniversity(logo)}}%
   \hspace{3mm}\rule{0.5mm}{2cm}\hspace{5mm}%

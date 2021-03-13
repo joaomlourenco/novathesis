@@ -377,11 +377,6 @@
   \fgruler[cm]{lowerright}{\@nt@tmpright}{\@nt@tmpbottom}%
 }
 
-\iftoggle{/novathesis/debugcover}{
-  \RequirePackage{tikz}
-  \usetikzlibrary{backgrounds}
-}{}
-
 \newcommand{\drawgraph}[1][orange]{%
 \noindent
   \def\width{21}%
@@ -419,14 +414,18 @@
       \@nt@printcovergroup{#1}%
     \end{minipage}%
   }%
-  \AddToShipoutPictureFG*{%
-    \AtPageUpperLeft{%
-      \put(%
-        \LenToUnit{\themargin(\option{/novathesis/docdegree},left)},%
-        -\LenToUnit{\themargin(\option{/novathesis/docdegree},top)})%
-        {\usebox{\@nt@coverbox}}%
-    }%
-  }%
+  % \AddToShipoutPictureFG*{%
+  %   \AtPageUpperLeft{%
+  %     \put(%
+  %       \LenToUnit{\themargin(\option{/novathesis/docdegree},left)},%
+  %       -\LenToUnit{\themargin(\option{/novathesis/docdegree},top)})%
+  %       {\usebox{\@nt@coverbox}}%
+  %   }%
+  % }%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[inner sep=0] at (current page.center)
+            {\usebox{\@nt@coverbox}};
+  \end{tikzpicture}
   \loadgeometry{maintext}
   \csuse{@thecover#1backpage}%
   \clearforchapter
@@ -554,9 +553,13 @@
 % \newcommand{\ntcoverbackground}[1][\@nameuse{thesiscover\option{/novathesis/docdegree},front}]{%
 \newcommand{\ntcoverbackground}[1][\thethesiscover(\option{/novathesis/docdegree},front)]{%
   \IfStrEq{#1}{}{}{%ELSE
-    \AddToShipoutPictureBG*{%
-      \includegraphics[width=\paperwidth,height=\paperheight]{#1}%
-    }%
+    % \AddToShipoutPictureBG*{%
+    %   \includegraphics[width=\paperwidth,height=\paperheight]{#1}%
+    % }%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[inner sep=0] at (current page.center)
+              {\includegraphics[width=\paperwidth,height=\paperheight]{#1}};
+    \end{tikzpicture}
   }%
 }
 

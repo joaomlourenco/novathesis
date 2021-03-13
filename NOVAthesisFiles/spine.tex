@@ -302,9 +302,12 @@
 		}%
 	  }%
 	  \fi%
-	  \AddToShipoutPictureFG*{%
-      \AtStockLowerCenter{{\usebox{\@nt@spine@box}}}%
-	  }%
+    % \AddToShipoutPictureFG*{%
+    %       \AtStockLowerCenter{{\usebox{\@nt@spine@box}}}%
+    % }%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[inner sep=0] at (current page.center) {\usebox{\@nt@spine@box}};
+    \end{tikzpicture}
 	  ~% This space is important here so that the spine page is not empty anymore!
 	  % \clearforchapter%
 	}%

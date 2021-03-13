@@ -87,7 +87,7 @@
 
 % Add an image to the backgroung
 % Used to insert the background image in the cover page
-\RequirePackage{eso-pic}[2015/04/20]
+% \RequirePackage{eso-pic}[2015/04/20]
 
 
 
@@ -128,11 +128,9 @@
 }{}
 
 
-\iftoggle{/novathesis/spine}{%
-  % Load book spine images in the background
-  \usepackage{tikz}
-  \usetikzlibrary{backgrounds}
-}{}
+% Load book spine images in the background
+\usepackage{tikz}
+\usetikzlibrary{backgrounds}
 
 
 % Flexible definition of new environments

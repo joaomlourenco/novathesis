@@ -51,7 +51,10 @@
 	\setmarginnotes{0mm}{0mm}{0mm}
 	\checkandfixthelayout[fixed]
 
-  \AddToShipoutPictureBG*{\includegraphics[width=120mm]{cd-cover-std}}
+  % \AddToShipoutPictureBG*{\includegraphics[width=120mm]{cd-cover-std}}
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[inner sep=0] at (current page.center) {\includegraphics[width=120mm]{cd-cover-std}};
+  \end{tikzpicture}
 
 	\savebox{\cdcover@savebox}{%
 	\begin{minipage}[t][7.0cm]{9cm}
@@ -109,7 +112,10 @@
 	\setmarginnotes{0mm}{0mm}{0mm}
 	\checkandfixthelayout[fixed]
 
-  \AddToShipoutPictureBG*{\includegraphics[width=150mm]{cd-inlay-std}}
+  % \AddToShipoutPictureBG*{\includegraphics[width=150mm]{cd-inlay-std}}
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[inner sep=0] at (current page.center) {\includegraphics[width=120mm]{cd-inlay-std}};
+  \end{tikzpicture}
 
 	\savebox{\cdcover@savebox}{%
 	\begin{minipage}[t][8cm]{11cm}
