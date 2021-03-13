@@ -1226,9 +1226,9 @@
   % \ifthenelse{\isempty{#1}}%
   % {\printbibliography}%
   % \blx@refcontext@sortingtemplatename
-  {\printbibliography[#1,notkeyword={novathesis-manual}]}%
+  {\printbibliography[#1,notkeyword={ntmbib}]}%
   \begin{tinywhite}%
-  {\renewcommand*{\bibfont}{\fontsize{0.01}{0.01}\selectfont}\printbibliography[heading=none,keyword={novathesis-manual}]}
+  {\renewcommand*{\bibfont}{\fontsize{0.01}{0.01}\selectfont}\printbibliography[heading=none,keyword={ntmbib}]}
   \end{tinywhite}%
 }
 
