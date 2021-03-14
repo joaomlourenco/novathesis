@@ -963,7 +963,7 @@
 \AtEndPreamble{\typeout{NT AtEndPreamble ntsetlayout}\ntsetlayout}
 
 \newcommand{\ntsetlayout}{%
-  \synctex=1% Use synctex
+  % \synctex=1% Use synctex
   \brokenpenalty=10000
   \settypeoutlayoutunit{mm}
   \setulmarginsandblock%
@@ -1169,7 +1169,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Deal with optional lists in the frontmatter: listoftables, litoffigures, etc.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newlistof{lstlistoflistings}{lol}{\lstlistlistingname}
+% \newlistof{lstlistoflistings}{lol}{\lstlistlistingname}
 
 
 \newcommand{\ntaddindex}[1]{%
@@ -1182,19 +1182,13 @@
             \pdfbookmark{\contentsname}{toctarget}%
             \hypertarget{toctarget}{\tableofcontents*}
         }
-  }}}{}%
-  \ifthenelse{\equal{#1}{listoffigures}}{\options{/@nt/list/indexes/.cpush = {%
-        \clearforchapter\listoffigures%
-  }}}{}%
-  \ifthenelse{\equal{#1}{listoftables}}{\options{/@nt/list/indexes/.cpush = {%
-        \clearforchapter\listoftables%
-  }}}{}%
-  \ifthenelse{\equal{#1}{listoflistings}}{\options{/@nt/list/indexes/.cpush = {%
-        \clearforchapter\lstlistoflistings%
-  }}}{}%
-  \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/@nt/list/indexes/.cpush = {%
-          \printnoidxglossaries\clearforchapter%
-  }}}{}%
+  }}}{%
+    \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/@nt/list/indexes/.cpush = {%
+            \clearforchapter\printnoidxglossaries\clearforchapter%
+    }}}{%
+      \options{/@nt/list/indexes/.cpush = {\clearforchapter\csuse{#1}}}
+    }%
+  }%
 }
 
 \newcommand{\ntprintallindexes}{\optionlistdo{/@nt/list/indexes}{##1}}
@@ -1240,17 +1234,21 @@
   \RequirePackage[hyperref=auto,defernumbers=true,\nt@tmp]{biblatex}%
   \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
   % \typeout{'NT ADD BIBLATEX RESOURCE= '#2}%
-  \addbibresource{#2}%
+  \IfSubStr{#2}{/}{\def\@nt@bibfolder{}}{\def\@nt@bibfolder{Bibliography/}}%
+  \addbibresource{\expanded{\@nt@bibfolder#2}}%
 }
 
 \newcommand{\ntprintbib}[1][]{%
   % \ifthenelse{\isempty{#1}}%
   % {\printbibliography}%
   % \blx@refcontext@sortingtemplatename
-  {\printbibliography[#1,notkeyword={novathesis-manual}]}%
-  \begin{tinywhite}%
-  {\renewcommand*{\bibfont}{\fontsize{0.01}{0.01}\selectfont}\printbibliography[heading=none,keyword={novathesis-manual}]}
-  \end{tinywhite}%
+  \printbibliography[#1,notkeyword={novathesis-manual}]%
+  \begingroup
+    \begin{tinywhite}{%
+      \renewcommand*{\bibfont}{\fontsize{0.01}{0.01}\selectfont}%
+      \printbibliography[heading=none,keyword={novathesis-manual}]%
+    }\end{tinywhite}%
+  \endgroup
 }
 
 \AtEndPreamble{\typeout{NT AtEndPreamble ntaddbib}\ntaddfile{bib}{NOVAthesisFiles/fix-bib.ldf}}

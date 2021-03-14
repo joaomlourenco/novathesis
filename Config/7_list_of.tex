@@ -6,12 +6,15 @@
 \typeout{NT LOADING FILE Config/7_list_of.tex}
 
 %=============================================================================
-% WHICH INDEXES TO PRINT?
-%     syntax: \ntaddindex{index-name}
+% WHICH LISTS/INDEXES TO PRINT?
+%         syntax: \ntaddindex{list-name}
+%   You may add more lists if you want to, but please notice that the 
+%   initial "\" is always omited in the “list-name”
 %=============================================================================
 
 \ntaddindex{tableofcontents}    % The Table of Contents. Probably you want ot leave this as is! ;)
 \ntaddindex{listoffigures}      % The List of Figures. Comment to omit.
 \ntaddindex{listoftables}       % The List of Tables. Comment to omit.
-% \ntaddindex{listoflistings}     % The List of Listings. Comment to omit.
+% \ntaddindex{lstlistoflistings}     % The List of Listings for package “listings”. Comment to omit.
+% \ntaddindex{listoflistings}     % The List of Listings for the “minted” package. Comment to omit.
 \ntaddindex{listsofglossaries}  % The Glossary, and the lists of Acronyms and Symbols
