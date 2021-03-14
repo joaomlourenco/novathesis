@@ -1,7 +1,7 @@
 B = template
 T = $(B).pdf
 S = $(B).tex
-L = latexmk
+L = latexmk -shell-escape
 
 deafult: 2020
 
