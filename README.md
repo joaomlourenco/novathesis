@@ -1,4 +1,4 @@
-<img src="NOVAthesisFiles/Images/novathesis-logo.jpg" width="600"/> 
+<img src="NOVAthesisFiles/Images/novathesis-logo-grey-white-v3.3-921x195.jpg" width="600"/> 
 <!-- ![NOVAthesis logo](NOVAthesisFiles/Images/novathesis-logo.jpg) -->
 
 <!-- # “novathesis” LaTeX template -->
@@ -143,24 +143,23 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 1. Cite the NOVAthesis manual in your thesis/dissertation.
 
          @Manual{novathesis-manual,
-              title        = {{The NOVAthesis Template User's Manual}},
-              author       = {João M. Lourenço},
-              organization = {NOVA University Lisbon},
-              year         = {2021},
-              url          = {https://github.com/joaomlourenco/novathesis/raw/master/template.pdf},
+              title        = "{The NOVAthesis Template User's Manual}",
+              author       = "João M. Lourenço",
+              organization = "NOVA University Lisbon",
+              year         = "2021",
+              url          = "https://github.com/joaomlourenco/novathesis/raw/master/template.pdf",
          }
 
-1.  [**Make a small donation**](https://paypal.me/novathesis). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.  Our special thanks to:  **2021:** Ricardo Teixeira, Pedro Rechena, Filipa Carvalho; **2020:** João Carvalho, David Romão, DisplayersereStream, António Estêvão; **2019:** Jorge Barreto, Raissa Almeida.
+1.  [**Make a small donation**](https://paypal.me/novathesis). We will keep a list thanking to all the identified donors that identify themselves in the “*Add special instructions to the seller:*” box.  Our special thanks to:  **2021:** Jessie Harney, João Barbosa, Ricardo Teixeira, Janak Parajuli, Ganesh Prasad Sigdel, Sahibzada Saadoon Hammad, Pedro Rechena, Filipa Carvalho; **2020:** João Carvalho, David Romão, DisplayersereStream, António Estêvão; **2019:** Jorge Barreto, Raissa Almeida.
 
 1. Give the NOVAthesis project a star in GitHub by clicking in the star at the top-right of the [project's home page](https://github.com/joaomlourenco/novathesis).
 
 --------
 ## Showcase of supported Schools
 
-<img src="NOVAthesisFiles/Images/cover-phd-nova-fct.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-ims.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-ensp.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-nova-fcsh.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ul-ist.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ul-fc.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ipl-isel.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-ips-ests.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-phd-esep.jpg" width="100"/> <img src="NOVAthesisFiles/Images/cover-msc-gt.jpg" width="100"/>
-
+<img src="NOVAthesisFiles/Images/Showcase/cover-phd-nova-fct.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/cover-phd-nova-ims.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/cover-phd-nova-ensp.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/cover-phd-nova-fcsh.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/cover-phd-ul-ist.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/cover-phd-ul-fc.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/cover-phd-ipl-isel.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/cover-phd-ips-ests.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/cover-phd-esep.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/cover-msc-gt.jpg" width="100"/> 
 <!-- ### Showcase of other usages around the world
-<img src="NOVAthesisFiles/Images/world-es-zaragoza-border.jpg" width="100"/> <img src="NOVAthesisFiles/Images/world-nl-uva-border.jpg" width="100"/>   -->
+<img src="NOVAthesisFiles/Images/Showcase/world-es-zaragoza-border.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/world-nl-uva-border.jpg" width="100"/>   -->
 
 --------
 ## Disclaimer
