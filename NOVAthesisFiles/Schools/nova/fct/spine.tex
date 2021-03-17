@@ -62,13 +62,13 @@
   \hspace*{0.34\spine@len@gap}%
   \thespine(title)%
   \hspace*{0.33\spine@len@gap}%
-  \hspace*{\spine@len@margin}%
-  \begin{minipage}[c]{\spine@len@top}
-    \centering
-    \raisebox{\thespine(logo,raisebox,\option{/novathesis/docdegree})}%
-             {\includegraphics[height=0.9\novathesis@spinewidth]%
-                              {\expanded{\thespine(logo,\option{/novathesis/docdegree})}}}%
-  \end{minipage}%
+  % \hspace*{\spine@len@margin}%
+  % \begin{minipage}[c]{\spine@len@top}
+  %   \centering
+  %   \raisebox{\thespine(logo,raisebox,\option{/novathesis/docdegree})}%
+  %            {\includegraphics[width=0.9\novathesis@spinewidth,angle=-90]%
+  %                             {\expanded{\thespine(logo,\option{/novathesis/docdegree})}}}%
+  % \end{minipage}%
 }
 
 \newcommand{\ntprintspine}{%
@@ -76,14 +76,20 @@
   % \printlen%
   \color{white}%
   \savegeometry{maintext}%
-  \newgeometry{textwidth=\novathesis@spinewidth,textheight=\paperheight,showframe}%
+  \newgeometry{textwidth=\novathesis@spinewidth,textheight=\paperheight}%
   \begin{tikzpicture}[remember picture, overlay]
   % draw image
     \node[inner sep=0] at (current page.center)
             {\includegraphics[width=\textwidth,height=\textheight]%
                              {\thethesiscover(\option{/novathesis/docdegree},spine)}%
             };
+    \node[inner sep=0,yshift=-0.5\spine@len@top, xshift=-\expanded{\thespine(logo,\option{/novathesis/docdegree},raise)}\novathesis@spinewidth] at (current page.north)
+            {\includegraphics[width=0.9\novathesis@spinewidth
+                             ,angle=\expanded{\thespine(logo,\option{/novathesis/docdegree},angle)}
+                             ,scale=\expanded{\thespine(logo,\option{/novathesis/docdegree},scale)}]%
+                             {\expanded{\thespine(logo,\option{/novathesis/docdegree})}}};
     \node[inner sep=0] at (current page.center) {\rotatebox{90}{\spinetext}};
   \end{tikzpicture}
+  \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
   \loadgeometry{maintext}%
 }

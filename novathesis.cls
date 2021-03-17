@@ -359,74 +359,52 @@
   \options{/@nt/atcover/#1/end/.cpush = {#2}}%
 }
 
-\def\thecovernumber{}
-\newcommand{\casecovernumber}{%
-  \expandafter\if\thecovernumber1\relax\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi%
-}
-
-\newcommand{\drawrullers}[1][orange]{%
-% 1 = color
-  \color{#1}%
-  \edef\@nt@tmpleft{\themargin(\option{/novathesis/docdegree},left)}%
-  \edef\@nt@tmpright{\themargin(\option{/novathesis/docdegree},right)}%
-  \edef\@nt@tmptop{\themargin(\option{/novathesis/docdegree},top)}%
-  \edef\@nt@tmpbottom{\themargin(\option{/novathesis/docdegree},bottom)}%
-  \fgrulerthickcm{}{}{1pt}%
-  % \setfgruler{numsep=-17pt}
-  \fgruler[cm]{upperleft}{\@nt@tmpleft}{\@nt@tmptop}%
-  \fgruler[cm]{lowerright}{\@nt@tmpright}{\@nt@tmpbottom}%
-}
-
-\newcommand{\drawgraph}[1][orange]{%
-\noindent
-  \def\width{21}%
-  \def\hauteur{29.65}%
-  \StrDel{\themargin(\option{/novathesis/docdegree},left)}{cm}[\myxl]%
-  \StrDel{\themargin(\option{/novathesis/docdegree},right)}{cm}[\myxr]%
-  \StrDel{\themargin(\option{/novathesis/docdegree},top)}{cm}[\myyt]%
-  \StrDel{\themargin(\option{/novathesis/docdegree},bottom)}{cm}[\myyb]%
-  \begin{tikzpicture}[x=1cm, y=-1cm, semitransparent, overlay]%
-      \draw[step=1mm, line width=0.1mm, orange!30!white] (\myxl,\myyt) grid (\width-\myxr,\hauteur-\myyb);%
-      \draw[step=5mm, line width=0.2mm, orange!40!white] (0,0) grid (\width,\hauteur);%
-      \draw[step=5cm, line width=0.5mm, orange!50!white] (0,0) grid (\width,\hauteur);%
-      \draw[step=1cm, line width=0.3mm, orange!90!white] (0,0) grid (\width,\hauteur);%
+\newcommand{\debuggrid}[1][orange]{%
+  \begin{tikzpicture}[remember picture, semitransparent, overlay, shift=(current page.north west)]%
+        \draw[step=1mm, line width=0.1mm, #1!30!white] 
+            (\expanded{\themargin(\option{/novathesis/docdegree},left)}
+            ,-\expanded{\themargin(\option{/novathesis/docdegree},top)})
+            grid 
+            (\paperwidth-\expanded{\themargin(\option{/novathesis/docdegree},right)}
+            ,-\paperheight+\expanded{\themargin(\option{/novathesis/docdegree},bottom)});
+        \draw[step=5mm, line width=0.2mm, #1!40!white] (current page.north west)
+            grid (current page.south east);
+        \draw[step=1cm, line width=0.3mm, #1!90!white] (current page.north west)
+            grid (current page.south east);
+        \draw[step=5cm, line width=0.5mm, #1!50!white] (current page.north west)
+            grid (current page.south east);
   \end{tikzpicture}%
 }
 
-\newcommand*{\@nt@printthecover}[1]{%
-  % #1 = cover number {1, 2}    (1 is the default)
-  \def\thecovernumber{#1}%
-  \setlength{\mpwidth}{\dimexpr%
-    \paperwidth%
-      -\themargin(\option{/novathesis/docdegree},left)%
-      -\themargin(\option{/novathesis/docdegree},right)}%
-  \setlength{\mpheight}{\dimexpr%
-    \paperheight%
-      -\themargin(\option{/novathesis/docdegree},top)%
-      -\themargin(\option{/novathesis/docdegree},bottom)}%
-  \savegeometry{maintext}%
-  \newgeometry{hmargin=0pt,vmargin=-11pt}%
-  % \iftoggle{/novathesis/debugcover}{\drawrullers}{}%
-  \iftoggle{/novathesis/debugcover}{\drawgraph}{}%
-  \thispagestyle{empty}%
+\newcommand{\ntcovertext}[1][1]{%
+  \edef\mpwidth{\paperwidth
+                -\expanded{\themargin(\option{/novathesis/docdegree},left)}
+                -\expanded{\themargin(\option{/novathesis/docdegree},right)}}
+  \edef\mpheight{\paperheight
+                -\expanded{\themargin(\option{/novathesis/docdegree},top)}
+                -\expanded{\themargin(\option{/novathesis/docdegree},bottom)}}
   \sbox{\@nt@coverbox}{%
     \begin{minipage}[t][\mpheight][t]{\mpwidth}%
       \@nt@printcovergroup{#1}%
     \end{minipage}%
   }%
-  % \AddToShipoutPictureFG*{%
-  %   \AtPageUpperLeft{%
-  %     \put(%
-  %       \LenToUnit{\themargin(\option{/novathesis/docdegree},left)},%
-  %       -\LenToUnit{\themargin(\option{/novathesis/docdegree},top)})%
-  %       {\usebox{\@nt@coverbox}}%
-  %   }%
-  % }%
-  \begin{tikzpicture}[remember picture, overlay]
-    \node[inner sep=0] at (current page.center)
+  \pgfmathsetmacro\@nt@xshift{0.5*\mpwidth}
+  \begin{tikzpicture}[remember picture, overlay,, shift=(current page.north west)]
+                      % shift=(\expanded{\themargin(\option{/novathesis/docdegree},left)},
+                      %       \paperheight-\expanded{\themargin(\option{/novathesis/docdegree},top)})]
+    \node[inner sep=0,anchor=north west] 
+            at (\expanded{\themargin(\option{/novathesis/docdegree},left)},-\expanded{\themargin(\option{/novathesis/docdegree},top)})
             {\usebox{\@nt@coverbox}};
   \end{tikzpicture}
-  \loadgeometry{maintext}
+}
+
+\newcommand*{\@nt@printthecover}[1]{%
+  % #1 = cover number {1, 2}    (1 is the default)
+  \thispagestyle{empty}%
+  \def\@nt@xid{#1}
+  \ntcoverbackground[#1]%
+  \ntcovertext[#1]%
+  \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
   \csuse{@thecover#1backpage}%
   \clearforchapter
 }
@@ -550,16 +528,15 @@
   \egroup%
 }
 
-% \newcommand{\ntcoverbackground}[1][\@nameuse{thesiscover\option{/novathesis/docdegree},front}]{%
-\newcommand{\ntcoverbackground}[1][\thethesiscover(\option{/novathesis/docdegree},front)]{%
-  \IfStrEq{#1}{}{}{%ELSE
-    % \AddToShipoutPictureBG*{%
-    %   \includegraphics[width=\paperwidth,height=\paperheight]{#1}%
-    % }%
+\newcommand{\ntcoverbackground}[1][1]{%
+  \def\@nt@arg{#1}%
+  \IfEq{#1}{1}{\def\@nt@arg{front}}{}%
+  \edef\@nt@img{\expanded{\thethesiscover(\option{/novathesis/docdegree},\@nt@arg)}}%
+  \IfStrEq{\@nt@img}{}{}{%ELSE
     \begin{tikzpicture}[remember picture, overlay]
       \node[inner sep=0] at (current page.center)
-              {\includegraphics[width=\paperwidth,height=\paperheight]{#1}};
-    \end{tikzpicture}
+              {\includegraphics[width=\paperwidth,height=\paperheight]{\@nt@img}};
+    \end{tikzpicture}%
   }%
 }
 

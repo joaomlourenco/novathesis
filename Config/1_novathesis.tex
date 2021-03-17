@@ -12,7 +12,7 @@
 %%------------------------------------------------------------
 %% THE MOST IMPORTANT/POPULAR OPTIONS
 %%------------------------------------------------------------
-% \ntsetup{docdegree=msc}       % The type of document
+\ntsetup{docdegree=msc}       % The type of document
 %                               %     [ phd, phdplan, phdprop, msc, mscplan, bsc, plain ]
 
 % \ntsetup{school=nova/fct}    % The school id
@@ -46,10 +46,13 @@
 % \ntsetup{gnumberlist=false}   % Shall the page numbers that appear after
 %                               %     the entries in glossaries br printed?
 
-% \ntsetup{secondcover=true}    % Shall a second cover page be printed?
+% \ntsetup{secondcover=true}    % Shall a second cover page be forced?
 %                               %     if the contents for the second page are not 
 %                               %     defined, the second cover will be a replica 
 %                               %     of the first cover.
+
+\ntsetup{spine=true}          % Shall a “book spine” be printed at the end of
+%                               %     the document?
 
 % \ntsetup{urlstyle=same}       % Use the same (main) font in URLs
 
@@ -80,9 +83,6 @@
 %                               %     after the cover pages
 
 % \ntsetup{printcopyright=fale} % Shall the copyright message be printed??
-
-% \ntsetup{spine=true}          % Shall a “book spine” be printed at the end of
-%                               %     the document?
 
 % \ntsetup{cdcover=true}        % Shall a “cd cover” be printed at the end of
 %                               %     the document?

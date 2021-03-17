@@ -48,7 +48,8 @@
 \thesiscover(msc,spine):={msc_spine}
 
 \thesiscover(mscplan,front):={msc_front_cover}
-\thesiscover(mmscplansc,back):={msc_back_cover}
+\thesiscover(mscplan,back):={msc_back_cover}
+\thesiscover(mscplan,spine):={msc_spine}
 
 \thesiscover(bsc,front):={}
 \thesiscover(plain,front):={}
@@ -60,13 +61,18 @@
 
 % Spine info
 \spine(logo,phd):={\theuniversity(logo,neg)}
-\spine(logo,raisebox,phd):={0pt}
+\spine(logo,phd,angle):={0}
+\spine(logo,phd,scale):={1}
+\spine(logo,phd,raise):={0}
 \spine(logo,msc):={\theschool(logo,neg)}
-\spine(logo,raisebox,msc):={1mm}
+\spine(logo,msc,angle):={90}
+\spine(logo,msc,scale):={1.5}
+\spine(logo,msc,raise):={0.075}
 \spine(author):={\theauthorshortname}
 \spine(title):={\thetitle}
 \spine(year):={\thentdateyear}
-\spine(top):={116pt}
+% \spine(top):={116pt}
+\spine(top):={4.075cm}
 \spine(margin):={5mm}
 
 % Set margins for "normal" pages
@@ -108,6 +114,12 @@
 \margin(plain,bottom):={1.5cm}
 \margin(plain,left):={3.55cm}
 \margin(plain,right):={2.0cm}
+
+% Set margins for "debug grid"
+\margin(grid,top):={0pt}
+\margin(grid,bottom):={0pt}
+\margin(grid,left):={0pt}
+\margin(grid,right):={0pt}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -151,9 +163,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Department name
-\ntaddtocover[cover=1,color=white,vspace=1.5mm,align=l,hspace=6.1cm,height=2.0cm,inalign=t]{%
-% \ntaddtocover[cover=1,vspace=1.5mm,align=l,hspace=5.5cm,height=2.0cm,inalign=t]{%
-  \ntcoverbackground%
+\ntaddtocover[cover=1,color=white,vspace=1.25mm,align=l,hspace=6.1cm,height=2.0cm,inalign=t]{%
+  % \ntcoverbackground%
   \fontsize{14}{14}\selectfont%
   \MakeTextUppercase{\sstdepname}
 }
@@ -211,11 +222,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % LOGOS
-\ntaddtocover[cover=2,vspace=-4mm,align=l,height=2.0cm,inalign=t]{%
+\ntaddtocover[cover=2,vspace=1.0mm,hspace=-2.6cm,align=l,height=2.0cm,inalign=t]{%
+  \vspace*{-4mm}
   \begin{minipage}[b]{8.7cm}
-  \includegraphics[height=2cm]{\expanded{\theuniversity(logo)}}%
-  \hspace{3mm}\rule{0.5mm}{2cm}\hspace{5mm}%
-  \raisebox{2.5mm}{\includegraphics[height=2.15cm]{\expanded{\theschool(logo)}}}%
+  \includegraphics[width=2.15cm]{\expanded{\theuniversity(logo)}}%
+  \hspace{3.5mm}\rule{0.5mm}{2cm}\hspace{5mm}%
+  \raisebox{2.5mm}{\includegraphics[width=3.52cm]{\expanded{\theschool(logo)}}}%
   \end{minipage}%
   \raisebox{9mm}{%
   \begin{minipage}[b]{9cm}
