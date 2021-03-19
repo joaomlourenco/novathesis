@@ -558,6 +558,7 @@
 
 \assocarray{frontmatterstring}
 \assocarray{coverstring}
+\assocarray{backcoverstring}
 \assocarray{copyrightstring}
 \assocarray{dedicatorystring}
 \assocarray{acknowledgementsstring}

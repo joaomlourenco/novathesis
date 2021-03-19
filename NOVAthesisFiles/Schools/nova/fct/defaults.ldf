@@ -128,13 +128,13 @@
 % page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \makepagestyle{novathesis@myvf}
-% \makeoddfoot{novathesis@myvf}{}{\thepage}{}
-% \makeevenfoot{novathesis@myvf}{}{\thepage}{}
-% \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}
-% \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}
-% \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
-% \pagestyle{novathesis@myvf}
+\makepagestyle{novathesis@myvf}
+\makeoddfoot{novathesis@myvf}{}{\thepage}{}
+\makeevenfoot{novathesis@myvf}{}{\thepage}{}
+\makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}
+\makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}
+\makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
+\pagestyle{novathesis@myvf}
 
 
 
