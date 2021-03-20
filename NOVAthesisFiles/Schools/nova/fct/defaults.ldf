@@ -264,7 +264,7 @@
 \ntaddtocover[cover=2,vspace=1,align=l]{%
   \def\theadviserstrfont{\bfseries}
   \def\thecoadviserstrfont{\bfseries}
-  \fontsize{12}{12}\selectfont
+  \fontsize{11}{11}\selectfont
   \ntprintadvisers%
 }
 
@@ -272,7 +272,7 @@
 \ntaddtocover[cover=2,vspace=1,hspace=3.5cm,align=l]{%
   \def\thecommitteetitlestrfont{\bfseries}
   \def\thecommitteememberstrfont{\bfseries}
-  \fontsize{12}{12}\selectfont
+  \fontsize{10}{10}\selectfont
   \ntprintcommittee[1]%
 }
 

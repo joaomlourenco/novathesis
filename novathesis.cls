@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-03-14 [6.1.1]
+%% Version 2021-03-20 [6.1.1]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -20,7 +20,7 @@
 %%       please ask for help at GitHub Discussions page at
 %%          https://github.com/joaomlourenco/novathesis/discussions
 %%      or at the NOVAthesis facebook group at
-%%          https://www.facebook.com/groups/novathesis
+%%            
 %%
 %% AUTHOR @github:
 %%      - joaomlourenco
@@ -63,7 +63,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{novathesis}[2020/12/02 novathesis template]
+\ProvidesClass{novathesis}[2021-03-20 novathesis template]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOOK FOR PACKAGES ALSO IN "NOVAthesisFiles" folder
@@ -73,13 +73,14 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% TWO BASIC REQUIRED PACKAGES
+%% SOME ESSENTIAL PACKAGES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{options-nt}
+\RequirePackage{nt-options}
 \RequirePackage{xifthen}
 \RequirePackage{xstring}
-\RequirePackage{repeat-nt}
+\RequirePackage{nt-repeat}
 \RequirePackage{assocarray}
+\RequirePackage{nt-version}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
