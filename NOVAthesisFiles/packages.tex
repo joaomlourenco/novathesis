@@ -120,12 +120,12 @@
 \RequirePackage{environ}
 
 
-% Define page layout
-\RequirePackage{geometry}
+% Refer to labels in external docuemnts
+% \RequirePackage{xr}
 
 
 % Fixing autoref in yperref
-\RequirePackage{fix-hyperref}
+\RequirePackage{NOVAthesisFiles/fix-hyperref}
 
 
 
@@ -159,10 +159,13 @@
   \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
   \RequirePackage[all]{hypcap}%
   %--------------------------------
-  % To handle subfigures
-  \newsubfloat{figure}%
+  % Define page layout - after hyperref
+  \RequirePackage{geometry}
   %--------------------------------
-  % “glossasries” stuff
+  % To handle subfigures - ????
+  \newsubfloat{figure}
+  %--------------------------------
+  % “glossasries” stuff - after hyperref
   \RequirePackage[%
     % , nonumberlist
     , toc%
@@ -172,13 +175,13 @@
     % , sanitizesort=false% allow \gls inside descriptions
     % , automake
   ]{glossaries-extra}% To create glossaries
-  \RequirePackage{glossary-xltabular}%
+  \RequirePackage{NOVAthesisFiles/glossary-xltabular}%
   \setglossarystyle{xltabular}%
   \setabbreviationstyle[acronym]{long-short}%
   \renewcommand{\glsnamefont}[1]{\textbf{##1}}%
   \makenoidxglossaries% use TeX to sort
   %--------------------------------
-  % “Process gnumberlist” option
+  % “Process gnumberlist” option - after glossaries
   \iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}%
   \@loadglossaryfiles%
 }

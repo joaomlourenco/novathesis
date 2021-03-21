@@ -1,4 +1,4 @@
-%!TEX root = template.tex
+%!TEX root=template.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% novathesis.cls
 %% NOVA thesis document class
@@ -44,11 +44,11 @@
 %%            \url{https://github.com/joaomlourenco/novathesis/raw/master/template.pdf}.”
 %%    The BibTeX entry is:
 %%           @Manual{novathesis-manual,
-%%            title        = {{The NOVAthesis \LaTeX\ Template User's Manual}},
-%%            author       = {João M. Lourenço},
-%%            organization = {NOVA University Lisbon},
-%%            year         = {2021},
-%%            url          = {https://github.com/joaomlourenco/novathesis/raw/master/template.pdf},
+%%            title       ={{The NOVAthesis \LaTeX\ Template User's Manual}},
+%%            author      ={João M. Lourenço},
+%%            organization={NOVA University Lisbon},
+%%            year        ={2021},
+%%            url         ={https://github.com/joaomlourenco/novathesis/raw/master/template.pdf},
 %%           }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -68,19 +68,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOOK FOR PACKAGES ALSO IN "NOVAthesisFiles" folder
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\providecommand*{\input@path}{}
-\g@addto@macro\input@path{{./}{Config/}{Chapters/}{NOVAthesisFiles/}}% subfolder path
+% \providecommand*{\input@path}{}
+% \g@addto@macro\input@path{{./}{NOVAthesisFiles/}}% subfolder path
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% SOME ESSENTIAL PACKAGES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{nt-options}
+\RequirePackage{NOVAthesisFiles/nt-options}
 \RequirePackage{xifthen}
 \RequirePackage{xstring}
 % \RequirePackage{nt-repeat}
-\RequirePackage{assocarray}
-\RequirePackage{nt-version}
+\RequirePackage{NOVAthesisFiles/assocarray}
+\RequirePackage{NOVAthesisFiles/nt-version}
 % To process lists and other stuff
 \RequirePackage{etoolbox}
 
@@ -114,10 +114,10 @@
 % --------------------------------------------------------
 % Split a string by a character
 \newcommand*{\ntgetkeyval}[4][=]{%
-  % #1 = character to look for
-  % #2 = string to split
-  % #3 = macro to receive the left part
-  % #4 = macro to receive the right part
+  % #1=character to look for
+  % #2=string to split
+  % #3=macro to receive the left part
+  % #4=macro to receive the right part
   \StrCut{#2}{#1}#3#4%
 }
 
@@ -131,19 +131,91 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% INTERNAL KEY-VAL STUFF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \RequirePackage{nt-options}
+% \RequirePackage{xifthen}
+
+\options{/@nt/.new family
+  % languages
+  , langsshort/.new list={en, pt, fr, it, de, es}
+  , langslong/.new list={english, portuguese, french, italian, german, spanish}
+  , langshorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish}
+  , maplang/.new cmd={%
+            \options{/@nt/langshorttolong=#1}%
+            \option{/@nt/langshorttolong}%
+  }  
+  % %novathesis@opt@biblatex
+  , biblatex/.new list
+  , handler/school/.new cmd={%
+            \typeout{NT HANDLER SCHOOL ROUTINE [#1]}%
+            \prependtographicspath{{NOVAthesisFiles/Schools/#1/Images/}}%
+            \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/element}%
+              {}% it as a reload… do nothing
+              {% Load new school definitions
+                \InputIfFileExists{NOVAthesisFiles/Schools/#1/defaults.ldf}%
+                  {}%
+                  {\PackageWarining{novathesis}%
+                                   {Missing file “defaults.ldf” for #1}}%
+              }%
+  }
+  , handler/media/.new cmd={%
+              \setulmarginsandblock%
+                {\themargin(#1,top)}%
+                {\themargin(#1,bottom)}%
+                {*}%
+              \setlrmarginsandblock%
+                {\themargin(#1,left)}%
+                {\themargin(#1,right)}%
+                {*}%
+              \checkandfixthelayout%
+              % \ifoptionequal{/novathesis/media}{paper}%
+              \IfEq{#1}{paper}%
+                {\options{/novathesis/linkscolor=black}}%
+                {}%
+  }
+  , handler/chapstyle/.new cmd={%
+    \InputIfFileExists{NOVAthesisFiles/ChapStyles/#1.ldf}{}%
+      {\PackageWarining{novathesis}{Invalid Chapter Style: #1}}%
+  }
+  , handler/fontstyle/.new cmd={%
+    \InputIfFileExists{NOVAthesisFiles/FontStyles/#1.ldf}{}%
+      {\PackageWarining{novathesis}{Invalid Font Style: #1}}%
+  }
+  , ntfixspacing/.new toggle=false
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MANAGE FOLDERS PER CLASS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\options{/@nt/folders/.new choice={
+  bib=Bibliography, 
+  dedicatory=Chapters, 
+  acknowledgements=Chapters, 
+  quote=Chapters, 
+  abstract=Chapters, 
+  glossaries=Chapters, 
+  chapter=Chapters, 
+  appendix=Chapters, 
+  annex=Chapters}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE DOCUMENT CLASSES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \options{/@nt/.cd
-  , document/fallback/.new list = {phdprop=phd, phdplan=phd, mscplan=msc}
-  , document/class/phd/.new list = {phd, phdprop, phdplan}
-  , document/class/msc/.new list = {msc, mscplan}
-  , document/class/bsc/.new list = {bsc}
-  , document/class/main/.new list = {phd, msc, bsc}
+  , document/fallback/.new list={phdprop=phd, phdplan=phd, mscplan=msc}
+  , document/class/phd/.new list={phd, phdprop, phdplan}
+  , document/class/msc/.new list={msc, mscplan}
+  , document/class/bsc/.new list={bsc}
+  , document/class/main/.new list={phd, msc, bsc}
 }
 
 \newcommand{\@ifdocclass@ii}[2]{%
-  % #1 = document type
-  % %2 = possible document calss 
+  % #1=document type
+  % %2=possible document calss 
   \ifoptioncontains{/@nt/document/class/#2}{#1}
 }
 
@@ -193,17 +265,17 @@
 
 \def\@ntaddperson@iv#1[#2,#3]#4{%
   % syntax: \ntaddperson{class}[key,gender]{filename}
-  % #1 = {author, adviser, committee, …}
+  % #1={author, adviser, committee, …}
   % #2={c,r,a,m,g}
-  %     c = chair
-  %     r = rapporteur/referee
-  %     a = adviser
-  %     m = other members
-  %     g = guests
+  %     c=chair
+  %     r=rapporteur/referee
+  %     a=adviser
+  %     m=other members
+  %     g=guests
   % #3={m,f}
   % #4={committee member name, position, etc}
-  \options{/@nt/#1/#2/gender/.cpush = {#3}}%
-  \options{/@nt/#1/#2/name/.cpush = {#4}}%
+  \options{/@nt/#1/#2/gender/.cpush={#3}}%
+  \options{/@nt/#1/#2/name/.cpush={#4}}%
 }
 
 
@@ -212,28 +284,28 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntaddfile}[1]{%
   % syntax: \ntaddfile{class}[key]{filename}
-  %         #1 = file family (quote, abstract, chapter, etc)
-  %         #2 = [file lang] (OPTIONAL)
-  %         #3 = filename
+  %         #1=file family (quote, abstract, chapter, etc)
+  %         #2=[file lang] (OPTIONAL)
+  %         #3=filename
   % \typeout{NT ntaddfile [#1]}
   \@nt@addtolist{file}{#1}%
 }
 
 \newcommand*{\@nt@addtolist}[2]{%
   % syntax: \ntaddto{type}{class}[key]{filename}
-  %         #1  = {file, person}
-  %         #2 = family {quote, abstract, chapter, etc} or {author, adviser, committee}
-  %         #3 = [file lang] (OPTIONAL)
-  %         #4 = filename
+  %         #1 ={file, person}
+  %         #2=family {quote, abstract, chapter, etc} or {author, adviser, committee}
+  %         #3=[file lang] (OPTIONAL)
+  %         #4=filename
   \@ifnextchar[{\@nt@addtolist@iv[#1]#2}{\@nt@addtolist@iv[#1]#2[VAL]}%
 }
 
 \def\@nt@addtolist@iv[#1]#2[#3]#4{%
   % syntax: \@ntaddfile@iii{type}{class}[key]{filename}
-  %         #1  = {file, person}
-  %         #2 = file family (quote, abstract, chapter, etc)
-  %         #3 = optional file lang
-  %         #4 = filename
+  %         #1 ={file, person}
+  %         #2=file family (quote, abstract, chapter, etc)
+  %         #3=optional file lang
+  %         #4=filename
   % \typeout{NT ADDFILE [#1] [#2] [#3] [#4]}%
   % \typeout{NT @ntaddlisthook#1#2 @ntaddlisthook#1#2#3}
   \ifcsdef{@ntaddlisthook#1#2}{\@nameuse{@ntaddlisthook#1#2}{#3}{#4}}{}%
@@ -242,17 +314,17 @@
 }
 
 \newcommand*{\@nt@addtolist@iii}[3]{%
-  % #1 = {file, person}
-  % #2 = file family (quote, abstract, chapter, etc)
-  % #3 = filename OR key=filename
-  % \typeout{NT FILE ADD /@nt/#1/#1 = #2}%
-  \options{/@nt/#1/#2/.cpush = {#3}}%
+  % #1={file, person}
+  % #2=file family (quote, abstract, chapter, etc)
+  % #3=filename OR key=filename
+  % \typeout{NT FILE ADD /@nt/#1/#1=#2}%
+  \options{/@nt/#1/#2/.cpush={#3}}%
 }
 
 \newcommand{\@nt@foralllist}[3]{%
-  % #1 = {file, person}
-  % #2 = file family (quote, abstract, chapter, etc)
-  % #3 = macro to be applied, which will receive the item from the list
+  % #1={file, person}
+  % #2=file family (quote, abstract, chapter, etc)
+  % #3=macro to be applied, which will receive the item from the list
   \optionlistdo{/@nt/#1/#2}{#3{##1}}%
 }
 
@@ -261,10 +333,10 @@
 %% Multilingual support
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\@nt@select@lang}[1]{%
-  % #1 = lang {pt, en, fr, it}
+  % #1=lang {pt, en, fr, it}
   \options{/@nt/langshorttolong=#1}%
   % \edef\@nt@tmp{\option{/@nt/langshorttolong}}%
-  % \typeout{'NT SWITCHING LANG TO = '\nt@tmp}%
+  % \typeout{'NT SWITCHING LANG TO='\nt@tmp}%
   \expandafter\selectlanguage\expandafter{\expanded{\option{/@nt/langshorttolong}}}%
 }
 
@@ -308,14 +380,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\@ntaddtocover@iii}[3]{%
   % \typeout{NT ntaddtocover #3}%
-  \options{/@nt/cover/\option{/novathesis/school}/#3/.cpush = {{#1}=*={#2}}}%
+  \options{/@nt/cover/\option{/novathesis/school}/#3/.cpush={{#1}=*={#2}}}%
 }
 
 \newcommand*{\ntaddtocover}[3][]{%
-  % #1 = cover atrtibutes
-  % #2 = the code
-  % \typeout{NT ntaddtocover [/@nt/cover/\option{/novathesis/school}/element = #1]}
-  % \options{/@nt/cover/\option{/novathesis/school}/element/.cpush = {{#1}=*={#2}}}
+  % #1=cover atrtibutes
+  % #2=the code
+  % \typeout{NT ntaddtocover [/@nt/cover/\option{/novathesis/school}/element=#1]}
+  % \options{/@nt/cover/\option{/novathesis/school}/element/.cpush={{#1}=*={#2}}}
   \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
 }
 
@@ -347,10 +419,10 @@
 }
 
 \newcommand\AtBeginCover[2][1]{
-  \options{/@nt/atcover/#1/begin/.cpush = {#2}}%
+  \options{/@nt/atcover/#1/begin/.cpush={#2}}%
 }
 \newcommand\AtEndCover[2][1]{
-  \options{/@nt/atcover/#1/end/.cpush = {#2}}%
+  \options{/@nt/atcover/#1/end/.cpush={#2}}%
 }
 
 \newcommand{\debuggrid}[1][orange]{%
@@ -393,7 +465,7 @@
 }
 
 \newcommand*{\@nt@printthecover}[1]{%
-  % #1 = cover number {1, 2}    (1 is the default)
+  % #1=cover number {1, 2}    (1 is the default)
   \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/#1}{%
     % \typeout{NT printthecover #1}
     \thispagestyle{empty}%
@@ -406,7 +478,7 @@
 }
 
 \newcommand*{\@nt@printcovergroup}[1]{%
-  % #1 = cover number {1, 2}    (1 is the default)
+  % #1=cover number {1, 2}    (1 is the default)
   \optionlistdo{/@nt/cover/\option{/novathesis/school}/#1}{%
     % \typeout{NT printcovergroup [##1]}
     % \typeout{NT printcovergroup #1}
@@ -415,23 +487,23 @@
 }
 
 \options{/@ntcoveropts/.new family
-  , status/.new value = {},
-  , degree/.new value = {},
-  , align/.new choice = {c, l, r}
-  , inalign/.new choice = {c, t, b}
-  , height/.new value = {}
-  , vspace/.new value = {}
-  , hspace/.new value = {}
-  , color/.new color = {}
-  , defaults/.new style* = {align=c, inalign=c, status={}, degree={}, 
+  , status/.new value={},
+  , degree/.new value={},
+  , align/.new choice={c, l, r}
+  , inalign/.new choice={c, t, b}
+  , height/.new value={}
+  , vspace/.new value={}
+  , hspace/.new value={}
+  , color/.new color={}
+  , defaults/.new style*={align=c, inalign=c, status={}, degree={}, 
                             height={}, hspace=0pt, vspace=0pt, color={black}}
   , defaults
 }
 
 \def\@nt@printcoverelement@iv[#1]#2=*=#3{%
-  % #1 = cover number {1, 2}    (1 is the default)
-  % #2 = conve element options
-  % #3 = cover element code
+  % #1=cover number {1, 2}    (1 is the default)
+  % #2=conve element options
+  % #3=cover element code
   \ifthenelse{\equal{#3}{}}{}{%
     \options{/@ntcoveropts,defaults}%.
     \options{/@ntcoveropts,#2}%
@@ -449,7 +521,7 @@
 
 \newsavebox{\@nt@coverelement}
 \newcommand{\@nt@printcoverelement@i}[1]{%
-  % #1 = code
+  % #1=code
   %
   % If vspace is integer then replace by \vfill
   % otherwise is absolute verstical space
@@ -500,7 +572,7 @@
         \noindent\theacknowledgmentsstr(\option{/novathesis/coverlang})%
       }%
     \end{tinywhite}%
-    \options{/@nt/ntfixspacing = true}
+    \options{/@nt/ntfixspacing=true}
   }%
 }
 
@@ -678,7 +750,7 @@
   \renewcommand{\theauthorgender}{#1}%
   \renewcommand{\theauthorname}{#2}%
   \renewcommand{\theauthorshortname}{#3}%
-  \AtBeginDocument{\hypersetup{pdfauthor = {#2}}}
+  \AtBeginDocument{\hypersetup{pdfauthor={#2}}}
 }
 
 \newcommand{\ntauthordegree}[1]{%
@@ -730,11 +802,11 @@
     \doctitle(#1):=\@thetitle%
     \ifoptionequal{/novathesis/coverlang}{#1}{%
       \AtBeginDocument{%
-        \hypersetup{pdftitle = {\@thetitle}}%
-        \hypersetup{pdfsubject = {\thepresentationtext}}
+        \hypersetup{pdftitle={\@thetitle}}%
+        \hypersetup{pdfsubject={\thepresentationtext}}
       }%
     }{}%
-  % \typeout{NT TITLE = [#2][\@thetitle]}
+  % \typeout{NT TITLE=[#2][\@thetitle]}
 }
 
 \def\@thesubtitle{}
@@ -756,9 +828,9 @@
 %%% with "and" prefixing the last element
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \newcommand{\printoptionlist}[3]{%
-%   % #1 = options list
-%   % #2 = separator (e.g, ",")
-%   % #3 = last separator (e.g., "and")
+%   % #1=options list
+%   % #2=separator (e.g, ",")
+%   % #3=last separator (e.g., "and")
 %   \letoptionlist{#1}\@nt@list
 %   \StrCount{\@nt@list}{,}[\@nt@count]
 %   \ifcase\@nt@count
@@ -777,9 +849,9 @@
 
 %%%% Alternative hand-made implementation
 % \newcommand{\@nt@printoptionlist}[3]{%
-  % #1 = options list
-  % #2 = separator (e.g, ",")
-  % #3 = last separator (e.g., "and")
+  % #1=options list
+  % #2=separator (e.g, ",")
+  % #3=last separator (e.g., "and")
 %   \@nt@newcounter[1]{@ntprintoptionlist@cnt}
 %   \def\@nt@comma{}%
 %   \optionlistdo{#1}{%
@@ -825,8 +897,8 @@
 }
 
 \newcommand{\ntprintadvisersgroup}[2][0.90]{%
-  % #1 = width
-  % %2 = {adviser,coadviser}
+  % #1=width
+  % %2={adviser,coadviser}
   \ifoptiondefined{/@nt/#2//name}{%
     \csuse{the#2strfont}%
     \csuse{the#2str}(\option{/novathesis/coverlang})\\[1ex]%
@@ -845,7 +917,7 @@
 
 \newcommand{\ntprintadvisers}[1][0.90]{%
   \begin{minipage}{#1\textwidth}
-  % #1 = Percentage of \textwidth used by the advisers list
+  % #1=Percentage of \textwidth used by the advisers list
   \begin{tabularx}{\linewidth}{@{}rX@{}}%
   \forcsvlist{\@nt@printadvisergroup}{adviser,coadviser}
   \end{tabularx}%
@@ -876,7 +948,7 @@
 \newcommand{\@nt@printcommittee@i}[1]{%
   \iftoggle{/novathesis/printcommittee}{% TRUE
     \begin{minipage}{#1\textwidth}%
-    % #1 = Percentage of \textwidth used by the committee list
+    % #1=Percentage of \textwidth used by the committee list
     \begin{tabularx}{\linewidth}{@{}rX@{}}%
     \@ntprintcommitteetitlestr\\[1ex]%
     \forcsvlist{\@ntprintcommitteegroup}{c,r,a,m,g}%
@@ -915,15 +987,15 @@
 }
 
 \newcommand*{\@nt@reducegender}[2]{%
-  % #1 = gender list
-  % #2 = result
+  % #1=gender list
+  % #2=result
   \gdef#2{f}%
   \optionlistdo{#1}{\if##1m\relax\gdef#2{m}\fi}%
 }
 
 \newcommand{\@nt@reducenumber}[2]{%
-  % #1 = number
-  % #2 = result
+  % #1=number
+  % #2=result
   \ifnum\value{\option{#1/@size}}=1%
     \gdef#2{1}%.
   \else%
@@ -964,10 +1036,10 @@
 
 %% For debugging the page layout
 \newcommand\@nt@typetwolengths[4]{%
-  % #1 = text before
-  % #2 = first length
-  % #3 = text between
-  % #4 = second length
+  % #1=text before
+  % #2=first length
+  % #3=text between
+  % #4=second length
   \setlength\@tempdimc{\mem@tl@unitperpt #2}%
   \edef\l@first{\strip@pt\@tempdimc}%
   \setlength\@tempdimc{\mem@tl@unitperpt #4}%
@@ -976,8 +1048,8 @@
 }
 
 \newcommand\@nt@typeonelength[2]{%
-  % #1 = text before
-  % #2 = first length
+  % #1=text before
+  % #2=first length
   \setlength\@tempdimc{\mem@tl@unitperpt #2}%
   \edef\l@first{\strip@pt\@tempdimc}%
   #1: \l@first\mem@tl@unit%
@@ -1016,24 +1088,38 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Printing chapters and similars
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\@ntloadfile@i}[1]{%
+  % \IfFileExists{\option@listmatch@value}{%
+  %   \input{\option@listmatch@value}%
+  %   \typeout{NT LOADING "\option@listmatch@value" succeeded}%
+  % }{%
+  %   \typeout{NT LOADING "\option@listmatch@value\space" failed}%
+  % }%
+  \typeout{NT TRYING TO LOAD #1}%
+  \InputIfFileExists{#1}{%
+    \typeout{NT LOADING “#1” succeeded}%
+    % \externaldocument{#1}% from package 'xr
+  }{%
+    \typeout{NT LOADING “#1” failed}%
+  }
+}
 
 \newcommand{\@ntloadfisrt@ii}[2][VAL]{%
-  % #1 = KEY
-  % #2 = file class
-  \options{/@nt/file/#2/.getval = {#1}}%
-  \typeout{NT TRYING TO LOAD \option@listmatch@value}%
-  \InputIfFileExists{\option@listmatch@value}%
-    {\typeout{NT LOADING "\option@listmatch@value" succeeded}}%
-    {\typeout{NT LOADING "\option@listmatch@value\space" failed}}%
+  % #1=KEY
+  % #2=file class
+  \options{/@nt/folders=#2}
+  \typeout{NT ntloadfisrt [#2] [#1] [\expanded{\option{/@nt/folders}}]}
+  \options{/@nt/file/#2/.getval={#1}}%
+  \@ntloadfile@i{\expanded{\option{/@nt/folders}/\option@listmatch@value}}%
 }
 
 \newcommand{\@ntloadnext@ii}[2]{%
-  % #1 = file class
-  % #2 = KEY=value
-  % \typeout{NT @ntprintnext@ii [#1] [#2]}%
+  % #1=file class
+  % #2=KEY=value
+  \options{/@nt/folders=#1}
+  \typeout{NT ntloadnext [#2] [#1] [\expanded{\option{/@nt/folders}}]}
   \ntgetkeyval{#2}{\option@listmatch@key}{\option@listmatch@value}%
-  % \typeout{NT @ntprintnext@ii TRYING TO LOAD \option@listmatch@value}%
-  \InputIfFileExists{\option@listmatch@value}{}{}%
+  \@ntloadfile@i{\expanded{\option{/@nt/folders}/\option@listmatch@value}}%
 }
 
 \def\lowc{\expandafter\lowercaseA\expandafter{\iffalse}\fi}
@@ -1044,7 +1130,7 @@
 \newcommand{\@nt@printifmaindoc@i}[1]{%
   % \typeout{NT Attempt to load #1}%
 	\ifmaindoc{% THEN it is a main document
-    \options{/@nt/file/#1/.getval = {VAL}}%
+    \options{/@nt/file/#1/.getval={VAL}}%
     \IfStrEq{\option@listmatch@value}{}{\typeout{NT LOAD #1 empty}}{%
       \@nt@select@lang{\option{/novathesis/mainlang}}%
       % \edef\@nt@bm{\expandafter\MakeUppercase\expandafter#1}
@@ -1160,7 +1246,7 @@
 
 
 \newcommand{\ntaddindex}[1]{%
-  \ifthenelse{\equal{#1}{tableofcontents}}{\options{/@nt/list/indexes/.cpush = {%
+  \ifthenelse{\equal{#1}{tableofcontents}}{\options{/@nt/list/indexes/.cpush={%
         \clearforchapter%
         \iftoggle{/novathesis/tocintoc}{%
             \tableofcontents%
@@ -1170,10 +1256,10 @@
             \hypertarget{toctarget}{\tableofcontents*}
         }
   }}}{%
-    \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/@nt/list/indexes/.cpush = {%
+    \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/@nt/list/indexes/.cpush={%
             \clearforchapter\printnoidxglossaries\clearforchapter%
     }}}{%
-      \options{/@nt/list/indexes/.cpush = {\clearforchapter\csuse{#1}}}
+      \options{/@nt/list/indexes/.cpush={\clearforchapter\csuse{#1}}}
     }%
   }%
 }
@@ -1188,7 +1274,7 @@
   % \typeout{K=\option@listmatch@key ~V=\option@listmatch@value}
   \ifthenelse{\equal{\option@listmatch@key}{#1}}{\listbreak}{}%
 }%
-\options{/handlers/getval/.new operation = {%
+\options{/handlers/getval/.new operation={%
   % \typeout{NT GETVAL [#1] [#2]}%
     \optionlistdo{#1}{\option@listmatch{#2}{##1}}%
   }%
@@ -1199,11 +1285,12 @@
 }
 
 \newcommand{\@loadglossaryfile}[1]{%
-  % #1 = {glossary, acronyms, symbols}={filename}
+  % #1={glossary, acronyms, symbols}={filename}
   \ntgetkeyval{#1}{\@nt@key}{\@nt@value}
   % \typeout{NT @loadglossaryfile [\@nt@key][\@nt@value]}
-  \IfFileExists{\@nt@value}%
-    {\loadglsentries{\@nt@value}}%
+  \options{/@nt/folders=glossaries}
+  \IfFileExists{\expanded{\option{/@nt/folders}/\@nt@value}}%
+    {\loadglsentries{\expanded{\option{/@nt/folders}/\@nt@value}}}%
     {}%
 }
 
@@ -1310,7 +1397,7 @@
   \csdef{@nt@keywords@#1}{\BODY}
   \iftoggle{@nt@keywords@defined}%
     {}%
-    {\hypersetup{pdfkeywords = {\BODY}}}
+    {\hypersetup{pdfkeywords={\BODY}}}
   \par\vskip\baselineskip\noindent{\bfseries\@nt@keywordsstr: }%
   \BODY%
 }

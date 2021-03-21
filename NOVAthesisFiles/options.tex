@@ -5,79 +5,9 @@
 %%
 %% Processing of Class options
 %%
-%% Order and language for printing the abstracts depending on the language
-%% These macros are just informative for now (it is hardcoded in the
-%% 	novathesis.ldf file)… this must be fixed in the future!!
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%!TEX root = ../template.tex
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% options.tex
-%% NOVA thesis configuration file
-%%
-%% Processing of Class options
-%%
-%% Order and language for printing the abstracts depending on the language
-%% These macros are just informative for now (it is hardcoded in the
-%% 	novathesis.ldf file)… this must be fixed in the future!!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT LOADING FILE options.tex}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% INTERNAL KEY-VAL STUFF
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \RequirePackage{nt-options}
-% \RequirePackage{xifthen}
-
-\options{/@nt/.new family
-  % languages
-  , langsshort/.new list = {en, pt, fr, it, de, es}
-  , langslong/.new list = {english, portuguese, french, italian, german, spanish}
-  , langshorttolong/.new choice = {en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish}
-  , maplang/.new cmd = {%
-            \options{/@nt/langshorttolong = #1}%
-            \option{/@nt/langshorttolong}%
-  }  
-  % %novathesis@opt@biblatex
-  , biblatex/.new list
-  , handler/school/.new cmd = {%
-            \typeout{NT HANDLER SCHOOL ROUTINE [#1]}%
-            \prependtographicspath{{NOVAthesisFiles/Schools/#1/Images/}}%
-            \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/element}%
-              {}% it as a reload… do nothing
-              {% Load new school definitions
-                \InputIfFileExists{NOVAthesisFiles/Schools/#1/defaults.ldf}%
-                  {}%
-                  {\PackageWarining{novathesis}%
-                                   {Missing file “defaults.ldf” for #1}}%
-              }%
-  }
-  , handler/media/.new cmd = {%
-              \setulmarginsandblock%
-                {\themargin(#1,top)}%
-                {\themargin(#1,bottom)}%
-                {*}%
-              \setlrmarginsandblock%
-                {\themargin(#1,left)}%
-                {\themargin(#1,right)}%
-                {*}%
-              \checkandfixthelayout%
-              % \ifoptionequal{/novathesis/media}{paper}%
-              \IfEq{#1}{paper}%
-                {\options{/novathesis/linkscolor=black}}%
-                {}%
-  }
-  , handler/chapstyle/.new cmd = {%
-    \InputIfFileExists{NOVAthesisFiles/ChapStyles/#1.ldf}{}%
-      {\PackageWarining{novathesis}{Invalid Chapter Style: #1}}%
-  }
-  , handler/fontstyle/.new cmd = {%
-    \InputIfFileExists{NOVAthesisFiles/FontStyles/#1.ldf}{}%
-      {\PackageWarining{novathesis}{Invalid Font Style: #1}}%
-  }
-  , ntfixspacing/.new toggle = false
-}
-
 
 \options{/novathesis/.new family
   , docdegree/.new choice = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
