@@ -307,7 +307,7 @@
 %% COVER DEFINITION MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\@ntaddtocover@iii}[3]{%
-  \typeout{NT ntaddtocover #3}%
+  % \typeout{NT ntaddtocover #3}%
   \options{/@nt/cover/\option{/novathesis/school}/#3/.cpush = {{#1}=*={#2}}}%
 }
 
@@ -395,7 +395,7 @@
 \newcommand*{\@nt@printthecover}[1]{%
   % #1 = cover number {1, 2}    (1 is the default)
   \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/#1}{%
-    \typeout{NT printthecover #1}
+    % \typeout{NT printthecover #1}
     \thispagestyle{empty}%
     \ntcoverbackground[#1]%
     \ntcovertext[#1]%
@@ -409,7 +409,7 @@
   % #1 = cover number {1, 2}    (1 is the default)
   \optionlistdo{/@nt/cover/\option{/novathesis/school}/#1}{%
     % \typeout{NT printcovergroup [##1]}
-    \typeout{NT printcovergroup #1}
+    % \typeout{NT printcovergroup #1}
     \@nt@printcoverelement@iv[#1]##1%
   }%
 }
@@ -838,7 +838,7 @@
 }
 
 \def\@nt@printadvisersgroup#1,#2\@nil{%
-  #1\\
+  \mbox{}#1\\
   \IfStrEq{#2}{}{\medskip}{\@nt@printadvisersgroup#2\@nil}%
 }
 
@@ -1021,7 +1021,9 @@
   % #2 = file class
   \options{/@nt/file/#2/.getval = {#1}}%
   \typeout{NT TRYING TO LOAD \option@listmatch@value}%
-  \InputIfFileExists{\option@listmatch@value}{}{}%
+  \InputIfFileExists{\option@listmatch@value}%
+    {\typeout{NT LOADING "\option@listmatch@value" succeeded}}%
+    {\typeout{NT LOADING "\option@listmatch@value\space" failed}}%
 }
 
 \newcommand{\@ntloadnext@ii}[2]{%

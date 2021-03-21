@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% nova/fct/defaults.ldf
+%% consortium/msc-gt/defaults.ldf
 %% NOVA thesis configuration file
 %%
 %% Customization for FCT-NOVA (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE nova/fct/defaults.ldf}
+\typeout{NT LOADING FILE consortium/msc-gt/defaults.ldf}
 
 % Univesity
 \university(pt):={\embrace{NONE}}
@@ -70,6 +70,10 @@
 \margin(mscplan,bottom):={2.5cm}
 \margin(mscplan,left):={1.5cm}
 \margin(mscplan,right):={1.5cm}
+\margin(phd,top):={2.5cm}
+\margin(phd,bottom):={2.5cm}
+\margin(phd,left):={1.5cm}
+\margin(phd,right):={1.5cm}
 
 
 \adviserstr(en):={Dissertation supervised by:}
@@ -79,6 +83,7 @@
 \def\coadviserstrfont{\bfseries}
 
 \ntsetup{printcopyright=false}
+\ntsetup{secondcover=true}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NOVA guidelines:
@@ -105,64 +110,58 @@
 }
 
 % Title of Dissertation
-\ntaddtocover[ vspace=6cm]{1}{%
-  \ntcoverbackground
-  \begin{minipage}[t][7.5cm][b]{\linewidth}
-    \raggedright
+\ntaddtocover[vspace=6cm,height=7.5cm]{1}{%
+    \raggedright%
     \fontsize{18}{18}\selectfont
     \bfseries\thecovertitle[caps]%
-  \end{minipage}
 }
 
 % Author name
-\ntaddtocover[ vspace=0.9cm]{1}{%
-  \begin{minipage}[t][1.8cm][c]{\linewidth}
+\ntaddtocover[vspace=0.9cm,height=1.8cm]{1}{%
+    \raggedright%
     \fontsize{16}{16}\selectfont
     \textbf{\theauthorname}
-  \end{minipage}
 }
 
 % Title of Dissertation - COVER 2
-\ntaddtocover[ vspace=2cm]{2}{%
-  \begin{minipage}[t]{\linewidth}
-    \centering
+\ntaddtocover[vspace=2cm]{2}{%
+    \centering%
     \fontsize{16}{16}\selectfont
     \bfseries\thecovertitle[caps]%
-  \end{minipage}
 }
 
 % Academic qualifications
-% \ntaddtocover[vspace=0.25cm]{%
+% \ntaddtocover[vspace=0.25cm]{1,2}{%
 %   \fontsize{11}{11}\selectfont
 %   \theauthordegree
 % }
 
 % Degree
-% \ntaddtocover[vspace=1.5cm]{%
+% \ntaddtocover[vspace=1.5cm]{1,2}{%
 %   \fontsize{11}{11}\selectfont
 %   \thepresentationtext
 % }
 
 % Advisers
-\ntaddtocover[ vspace=3cm]{2}{%
-  \ntprintadvisersgroup{adviser}
+\ntaddtocover[vspace=3cm]{2}{%
+  \ntprintadvisersgroup{adviser}%
 }
 
 % Co-advisers
-\ntaddtocover[ vspace=1cm]{2}{%
-  \ntprintadvisersgroup{coadviser}
+\ntaddtocover[vspace=1cm]{2}{%
+  % \ntprintadvisersgroup{coadviser}%
 }
 
 
 % Committee — only print the committee for the main classes
-% \ntaddtocover[align=r, vspace=2]{%
+% \ntaddtocover[align=r, vspace=2]{1,2}{%
 %   \fontsize{10}{10}\selectfont%
 %   \ntprintcommittee%
 % }
 
 
 % Date
-\ntaddtocover[ vspace=1]{2}{%
+\ntaddtocover[vspace=1]{2}{%
   \fontsize{11}{11}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}

@@ -182,7 +182,7 @@
 }
 
 % Author name and Title
-\ntaddtocover[align=l, vspace=5cm]{%
+\ntaddtocover[align=l, vspace=5cm]{1,2}{%
   % Author name
   \begin{minipage}[t]{0.37\textwidth}%
     \fontsize{16}{16}\selectfont\raggedleft%
@@ -235,7 +235,7 @@
 }
 
 % Date
-\ntaddtocover[vspace=2]{%
+\ntaddtocover[vspace=2]{1,2}{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%

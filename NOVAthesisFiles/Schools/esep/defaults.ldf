@@ -132,8 +132,7 @@
 }
 
 % ESEP logo
-\ntaddtocover[vspace=2.2cm]{%
-  \ntcoverbackground%
+\ntaddtocover[vspace=2.2cm]{1,2}{%
   \noindent%
   \fontsize{15}{15}\selectfont%
   \textbf{\MakeTextUppercase{\theschool(\option{/novathesis/coverlang})}}
@@ -141,7 +140,7 @@
 }
 
 % Degree name
-\ntaddtocover[vspace=0.5cm]{%
+\ntaddtocover[vspace=0.5cm]{1,2}{%
   \fontsize{15}{15}\selectfont
   \thedegreename(\option{/novathesis/coverlang})
 }
@@ -179,13 +178,13 @@
 }
 
 % Author name
-\ntaddtocover[vspace=1]{%
+\ntaddtocover[vspace=1]{1,2}{%
   \fontsize{12}{12}\selectfont
   \textbf{\theauthorname}
 }
 
 % Date
-\ntaddtocover[vspace=2]{%
+\ntaddtocover[vspace=2]{1,2}{%
   \fontsize{12}{12}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}

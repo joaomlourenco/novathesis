@@ -193,9 +193,9 @@ of the requirements for the degree of %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   % PHD PROGRAM
-\ntaddtocover[ align=l, vspace=0cm, degree=phd]{1,2}{%
-  \ntcoverbackground%
-}
+% \ntaddtocover[ align=l, vspace=0cm, degree=phd]{1,2}{%
+%   \ntcoverbackground%
+% }
 % INFORMATION MANAGEMENT
 \ntaddtocover[ align=l, vspace=0cm, degree=phd]{1,2}{%
   \fontsize{16}{16}\selectfont%
@@ -251,9 +251,9 @@ of the requirements for the degree of %
 
   % MSc PROGRAM
 % % Title of Dissertation
-\ntaddtocover[ align=l, vspace=0cm, degree=msc]{1,2}{%
-  \ntcoverbackground%
-}
+% \ntaddtocover[ align=l, vspace=0cm, degree=msc]{1,2}{%
+%   \ntcoverbackground%
+% }
 
 % % Title of Dissertation
 \ntaddtocover[ align=l, vspace=1, degree=msc]{1,2}{%

@@ -169,12 +169,12 @@
 }
 
 % LOGO
-\ntaddtocover[align=l, vspace=0cm]{%
+\ntaddtocover[align=l, vspace=0cm]{1,2}{%
   \includegraphics[width=5cm]{logoIST}%
 }
 
 % School
-\ntaddtocover[vspace=0.5cm]{%
+\ntaddtocover[vspace=0.5cm]{1,2}{%
   \fontsize{16}{16}\selectfont%
   \textbf{\MakeUppercase{\theuniversity(\option{/novathesis/coverlang})}}\\%
   \vspace{2mm}%
@@ -182,25 +182,25 @@
 }
 
 % % Title of Dissertation
-\ntaddtocover[vspace=1]{%
+\ntaddtocover[vspace=1]{1,2}{%
   \fontsize{18}{20}\selectfont%
   \textbf{\thecovertitle}%
 }
 
 % Author name
-\ntaddtocover[vspace=1]{%
+\ntaddtocover[vspace=1]{1,2}{%
   \fontsize{14}{14}\selectfont%
   \textbf{\theauthorname}%
 }
 
 % Degree
-\ntaddtocover[vspace=1]{%
+\ntaddtocover[vspace=1]{1,2}{%
   \fontsize{12}{12}\selectfont%
   \thepresentationtext%
 }
 
 % Advisers
-\ntaddtocover[vspace=2]{%
+\ntaddtocover[vspace=2]{1,2}{%
   \gdef\theadviserstrfont{\bfseries}%
   \gdef\thecoadviserstrfont{\bfseries}%
   \fontsize{12}{12}\selectfont%
@@ -209,7 +209,7 @@
 
 
 % Committee — only print the committee for the main classes
-\ntaddtocover[vspace=1]{%
+\ntaddtocover[vspace=1]{1,2}{%
   \ifmaindoc{%
     \gdef\thecommitteetitlestrfont{\fontsize{14}{14}\selectfont\bfseries}%
     \gdef\thecommitteememberstrfont{\bfseries}%
@@ -221,7 +221,7 @@
 
 
 % Date
-\ntaddtocover[vspace=1]{%
+\ntaddtocover[vspace=1]{1,2}{%
   \fontsize{14}{14}\selectfont%
   \ifdraftdoc%
     \textbf{DRAFT: \today}%
