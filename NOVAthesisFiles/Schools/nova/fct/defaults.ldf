@@ -9,7 +9,7 @@
 
 % LaTeX font similar to Gill Sans
 \RequirePackage{gillius2}
-\options{/novathesis/secondcover=true}
+\ntsetup{secondcover=true}
 
 % Univesity
 \university(pt):={Universidade NOVA de Lisboa}
@@ -163,14 +163,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Department name
-\ntaddtocover[cover=1,color=white,vspace=1.25mm,align=l,hspace=6.1cm,height=2.0cm,inalign=t]{%
+\ntaddtocover[color=white,vspace=1.25mm,align=l,hspace=6.1cm,height=2.0cm,inalign=t]{1}{%
   % \ntcoverbackground%
   \fontsize{14}{14}\selectfont%
   \MakeTextUppercase{\sstdepname}
 }
 
 % Title of Dissertation (PhD) / The author name (MSc)
-\ntaddtocover[cover=1,color={white},vspace=5.3cm,align=l,height=3.0cm,inalign=c]{%
+\ntaddtocover[color={white},vspace=5.3cm,align=l,height=3.0cm,inalign=c]{1}{%
   \ifphddoc{%
     \fontsize{22}{21}\selectfont
     \textbf{\thecovertitle[caps]}%
@@ -188,7 +188,7 @@
 }
 
 % The author name (PhD) / Title of Dissertation (MSc)
-\ntaddtocover[cover=1,color={white},vspace=3.0cm,align=l,height=3cm,inalign=c]{%
+\ntaddtocover[color={white},vspace=3.0cm,align=l,height=3cm,inalign=c]{1}{%
   \ifphddoc{%
     \fontsize{17}{17}\selectfont
     \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]
@@ -206,7 +206,7 @@
 }
 
 % Date
-\ntaddtocover[cover=1,color={white},vspace=1,align=l]{%
+\ntaddtocover[color={white},vspace=1,align=l]{1}{%
   \fontsize{14}{13}\selectfont
   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[3mm]
   \theuniversity(\option{/novathesis/coverlang})\\
@@ -222,7 +222,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % LOGOS
-\ntaddtocover[cover=2,vspace=1.0mm,hspace=-2.6cm,align=l,height=2.0cm,inalign=t]{%
+\ntaddtocover[color=black, vspace=1.0mm,hspace=-2.6cm,align=l,height=2.0cm,inalign=t]{2}{%
   \vspace*{-4mm}
   \begin{minipage}[b]{8.7cm}
   \includegraphics[width=2.15cm]{\expanded{\theuniversity(logo)}}%
@@ -239,7 +239,7 @@
 }
 
 % Title of Dissertation (PhD)
-\ntaddtocover[cover=2,vspace=3cm,align=l]{%
+\ntaddtocover[vspace=3cm,align=l]{2}{%
   \fontsize{17}{17}\selectfont
   \textbf{\thecovertitle[caps]}\\[4mm]
   \fontsize{12}{12}\selectfont
@@ -247,7 +247,7 @@
 }
 
 % The author name
-\ntaddtocover[cover=2,vspace=1,align=l]{%
+\ntaddtocover[vspace=1,align=l]{2}{%
   \fontsize{14}{14}\selectfont
   \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]
   \fontsize{14}{14}\selectfont
@@ -255,13 +255,13 @@
 }
 
 % % The presentation text
-% \ntaddtocover[cover=2,vspace=2,align=l]{%
+% \ntaddtocover[vspace=2,align=l]{2}{%
 %   \fontsize{12}{12}\selectfont%
 %   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}%
 % }
 %
 % The advisers
-\ntaddtocover[cover=2,vspace=1,align=l]{%
+\ntaddtocover[vspace=1,align=l]{2}{%
   \def\theadviserstrfont{\bfseries}
   \def\thecoadviserstrfont{\bfseries}
   \fontsize{11}{11}\selectfont
@@ -269,7 +269,7 @@
 }
 
 % The committee
-\ntaddtocover[cover=2,vspace=1,hspace=3.5cm,align=l]{%
+\ntaddtocover[vspace=1,hspace=3.5cm,align=l]{2}{%
   \def\thecommitteetitlestrfont{\bfseries}
   \def\thecommitteememberstrfont{\bfseries}
   \fontsize{10}{10}\selectfont
@@ -277,7 +277,7 @@
 }
 
 % Date
-\ntaddtocover[cover=2,vspace=1,align=l]{%
+\ntaddtocover[vspace=1,align=l]{2}{%
   \fontsize{10}{10}\selectfont
   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[1.25ex]
   \theuniversity(\option{/novathesis/coverlang})\\
@@ -289,6 +289,6 @@
 }
 
 
-\ntaddtocover[cover=back]{%
-  \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},back)]
-}
+% \ntaddtocover{back}{%
+%   \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},back)]
+% }

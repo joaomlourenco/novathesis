@@ -193,16 +193,16 @@ of the requirements for the degree of %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   % PHD PROGRAM
-\ntaddtocover[cover={1,2}, align=l, vspace=0cm, degree=phd]{%
+\ntaddtocover[ align=l, vspace=0cm, degree=phd]{1,2}{%
   \ntcoverbackground%
 }
 % INFORMATION MANAGEMENT
-\ntaddtocover[cover={1,2}, align=l, vspace=0cm, degree=phd]{%
+\ntaddtocover[ align=l, vspace=0cm, degree=phd]{1,2}{%
   \fontsize{16}{16}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\themajorfield(\option{/novathesis/coverlang})}}%
 }
 % SPECIALIZATION IN
-\ntaddtocover[cover={1,2}, align=l, vspace=0.7cm, degree=phd]{%
+\ntaddtocover[ align=l, vspace=0.7cm, degree=phd]{1,2}{%
   \fontsize{16}{16}\selectfont
   \textcolor{imsmidgrey}{%
     \textbf{\thespecializationstr(\option{/novathesis/coverlang})
@@ -210,24 +210,24 @@ of the requirements for the degree of %
   }%
 }
 % DISSERTATION TITLE
-\ntaddtocover[cover={1,2}, align=l, vspace=1.8cm, degree=phd]{%
+\ntaddtocover[ align=l, vspace=1.8cm, degree=phd]{1,2}{%
   \fontsize{16}{16}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\thecovertitle}}%
 }
 % AUTHOR NAME
-\ntaddtocover[cover={1,2}, align=l, vspace=0.4cm, degree=phd]{%
+\ntaddtocover[ align=l, vspace=0.4cm, degree=phd]{1,2}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
 }
 % DISSERTATION TEXT
-\ntaddtocover[cover={1,2}, align=l, vspace=5, degree=phd]{%
+\ntaddtocover[ align=l, vspace=5, degree=phd]{1,2}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{%
     \thedissertationstr(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
   }%
 }%
 % DATE
-\ntaddtocover[cover={1,2}, align=l, vspace=1cm, degree=phd]{%
+\ntaddtocover[ align=l, vspace=1cm, degree=phd]{1,2}{%
   \fontsize{11}{11}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{%
     \ifdraftdoc%
@@ -238,12 +238,12 @@ of the requirements for the degree of %
   }}%
 }
 % SCHOOL
-\ntaddtocover[cover={1,2}, align=l, vspace=1cm, degree=phd]{%
+\ntaddtocover[ align=l, vspace=1cm, degree=phd]{1,2}{%
   \fontsize{11}{11}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\theschool(en)}}%
 }
 % UNIVERSITY
-\ntaddtocover[cover={1,2}, align=l, vspace=0.0cm, degree=phd]{%
+\ntaddtocover[ align=l, vspace=0.0cm, degree=phd]{1,2}{%
   \fontsize{11}{11}\selectfont%
   \textcolor{imsdarkgrey}{\theuniversity(\option{/novathesis/coverlang})}%
 }
@@ -251,12 +251,12 @@ of the requirements for the degree of %
 
   % MSc PROGRAM
 % % Title of Dissertation
-\ntaddtocover[cover={1,2}, align=l, vspace=0cm, degree=msc]{%
+\ntaddtocover[ align=l, vspace=0cm, degree=msc]{1,2}{%
   \ntcoverbackground%
 }
 
 % % Title of Dissertation
-\ntaddtocover[cover={1,2}, align=l, vspace=1, degree=msc]{%
+\ntaddtocover[ align=l, vspace=1, degree=msc]{1,2}{%
   \fontsize{17}{17}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\thecovertitle}}\\[0.25ex]%
   \fontsize{16}{16}\selectfont%
@@ -264,19 +264,19 @@ of the requirements for the degree of %
 }
 
 % Author name
-\ntaddtocover[cover={1,2}, align=l, vspace=1, degree=msc]{%
+\ntaddtocover[ align=l, vspace=1, degree=msc]{1,2}{%
   \fontsize{15}{15}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
 }
 
 % Degree
-\ntaddtocover[cover={1,2}, align=l, vspace=1, degree=msc]{%
+\ntaddtocover[ align=l, vspace=1, degree=msc]{1,2}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{\thepresentationtext}%
 }
 
 % Date
-\ntaddtocover[cover={1,2}, vspace=1, degree=msc]{%
+\ntaddtocover[ vspace=1, degree=msc]{1,2}{%
   ~
   % \fontsize{11}{11}\selectfont%
   % \ifdraftdoc%
@@ -287,6 +287,6 @@ of the requirements for the degree of %
 }%
 
 
-\ntaddtocover[cover=back]{%
-  \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},back)]
-}
+% \ntaddtocover[cover=back]{back}{%
+%   \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},back)]
+% }

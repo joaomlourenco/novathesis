@@ -154,10 +154,10 @@
 \newcommand{\ifmscdoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{msc}}
 \newcommand{\ifbscdoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{bsc}}
 
-% \newcommand{\ifdocfinal}{\ifoptionequal{/novathesis/docstatus}{final}}
-% \newcommand{\ifdocprovisional}{\ifoptionequal{/novathesis/docstatus}{provisional}}
-% \newcommand{\ifdocdraft}{\ifoptionequal{/novathesis/docstatus}{draft}}
-% \newcommand{\ifdocworking}{\ifoptionequal{/novathesis/docstatus}{working}}
+\newcommand{\ifdocfinal}{\ifoptionequal{/novathesis/docstatus}{final}}
+\newcommand{\ifdocprovisional}{\ifoptionequal{/novathesis/docstatus}{provisional}}
+\newcommand{\ifdocdraft}{\ifoptionequal{/novathesis/docstatus}{draft}}
+\newcommand{\ifdocworking}{\ifoptionequal{/novathesis/docstatus}{working}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -306,11 +306,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% COVER DEFINITION MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\ntaddtocover}[2][]{%
+\newcommand*{\@ntaddtocover@iii}[3]{%
+  \typeout{NT ntaddtocover #3}%
+  \options{/@nt/cover/\option{/novathesis/school}/#3/.cpush = {{#1}=*={#2}}}%
+}
+
+\newcommand*{\ntaddtocover}[3][]{%
   % #1 = cover atrtibutes
   % #2 = the code
   % \typeout{NT ntaddtocover [/@nt/cover/\option{/novathesis/school}/element = #1]}
-  \options{/@nt/cover/\option{/novathesis/school}/element/.cpush = {{#1}=*={#2}}}
+  % \options{/@nt/cover/\option{/novathesis/school}/element/.cpush = {{#1}=*={#2}}}
+  \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
 }
 
 \newlength{\mpwidth}%
@@ -388,25 +394,27 @@
 
 \newcommand*{\@nt@printthecover}[1]{%
   % #1 = cover number {1, 2}    (1 is the default)
-  \thispagestyle{empty}%
-  \def\@nt@xid{#1}
-  \ntcoverbackground[#1]%
-  \ntcovertext[#1]%
-  \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
-  \csuse{@thecover#1backpage}%
-  \clearforchapter
+  \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/#1}{%
+    \typeout{NT printthecover #1}
+    \thispagestyle{empty}%
+    \ntcoverbackground[#1]%
+    \ntcovertext[#1]%
+    \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
+    \csuse{@thecover#1backpage}%
+    \clearforchapter%
+  }{\typeout{NT printthecover #1 undefined}}%
 }
 
 \newcommand*{\@nt@printcovergroup}[1]{%
   % #1 = cover number {1, 2}    (1 is the default)
-  \optionlistdo{/@nt/cover/\option{/novathesis/school}/element}{%
+  \optionlistdo{/@nt/cover/\option{/novathesis/school}/#1}{%
     % \typeout{NT printcovergroup [##1]}
+    \typeout{NT printcovergroup #1}
     \@nt@printcoverelement@iv[#1]##1%
   }%
 }
 
 \options{/@ntcoveropts/.new family
-  , cover/.new value = {},
   , status/.new value = {},
   , degree/.new value = {},
   , align/.new choice = {c, l, r}
@@ -415,7 +423,7 @@
   , vspace/.new value = {}
   , hspace/.new value = {}
   , color/.new color = {}
-  , defaults/.new style* = {cover={}, status={}, degree={}, align=c, inalign=c, 
+  , defaults/.new style* = {align=c, inalign=c, status={}, degree={}, 
                             height={}, hspace=0pt, vspace=0pt, color={black}}
   , defaults
 }
@@ -427,12 +435,11 @@
   \ifthenelse{\equal{#3}{}}{}{%
     \options{/@ntcoveropts,defaults}%.
     \options{/@ntcoveropts,#2}%
-    \color{\option{/@ntcoveropts/color}}%
-    \StrCount{\option{/@ntcoveropts/cover}}{#1}[\@nt@incover]%
+    \color{\option{/@ntcoveropts/color}}% 
+    % \StrCount{\option{/@ntcoveropts/cover}}{#1}[\@nt@incover]%
     \StrCount{\option{/@ntcoveropts/status}}{\option{/novathesis/docstatus}}[\@nt@instatus]%
     \StrCount{\option{/@ntcoveropts/degree}}{\option{/novathesis/docdegree}}[\@nt@indegree]%
     \ifthenelse{%
-              \(\equal{\option{/@ntcoveropts/cover}}{}\OR\@nt@incover>0\)\AND
               \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND
               \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}
       {\@nt@printcoverelement@i{#3}}%
@@ -505,15 +512,25 @@
 }
 
 \newcommand*{\ntprintbackcover}{%
+  \newtoggle{@nt@backcover}%
+  \togglefalse{@nt@backcover}%
   \clearforchapter%
-  \thispagestyle{empty}%
-  ~\newpage% \the back cover goes on the even page
-  \bgroup%
-    \AtCoverExecute{back}{begin}%
-    \@nt@select@lang{\option{/novathesis/coverlang}}%
-    \@nt@printthecover{back}%
-    \AtCoverExecute{back}{end}%
-  \egroup%
+  \def\@nt@arg{back}%
+  \ifaadefined{thesiscover}(\option{/novathesis/docdegree},back)%
+    {\toggletrue{@nt@backcover}}{}%
+  \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/back}%
+    {\toggletrue{@nt@backcover}}{}%
+  \iftoggle{@nt@backcover}{%
+    \thispagestyle{empty}%
+    ~\newpage% \the back cover goes on the even page
+    \bgroup%
+      \ntaddtocover{back}{}%
+      \AtCoverExecute{back}{begin}%
+      \@nt@select@lang{\option{/novathesis/coverlang}}%
+      \@nt@printthecover{back}%
+      \AtCoverExecute{back}{end}%
+    \egroup%
+  }{}%
 }
 
 \newcommand{\ntcoverbackground}[1][1]{%
@@ -526,6 +543,7 @@
               {\includegraphics[width=\paperwidth,height=\paperheight]{\@nt@img}};
     \end{tikzpicture}%
   }%
+
 }
 
 \newcommand*{\ntprintaftercover}{%
@@ -918,7 +936,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Include the School's defaults
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.ldf}{}{}
+% \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.ldf}{}{}
 
 
 
@@ -1076,7 +1094,7 @@
   \frontmatter%
   \@nt@select@lang{\option{/novathesis/mainlang}}%
   \pagenumbering{roman}%
-  \setlength{\headheight}{15pt}%
+  % \setlength{\headheight}{15pt}%
 }
 
 \newcommand{\ntthesismainmatter}{%

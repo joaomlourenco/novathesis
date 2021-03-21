@@ -173,11 +173,11 @@
 }
 
 % LOGO
-\ntaddtocover[cover=1, vspace=0cm]{%
+\ntaddtocover[ vspace=0cm]{1}{%
   \includegraphics[height=4.6cm]{ESTS-JPG}%
 }
 
-\ntaddtocover[cover=2, vspace=0cm]{%
+\ntaddtocover[ vspace=0cm]{2}{%
   \rule{0cm}{4.6cm}%
 }
 
@@ -197,7 +197,7 @@
 }
 
 % Photo
-\ntaddtocover[cover=1, align=l, vspace=1]{%
+\ntaddtocover[ align=l, vspace=1]{1}{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%
@@ -208,7 +208,7 @@
 }
 
 % Degree
-\ntaddtocover[cover=1, align=l, vspace=1]{%
+\ntaddtocover[ align=l, vspace=1]{1}{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%
@@ -221,7 +221,7 @@
 }
 
 % Advisers
-\ntaddtocover[cover=1, vspace=1]{%
+\ntaddtocover[ vspace=1]{1}{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%
@@ -252,7 +252,7 @@
 
 
 
-\ntaddtocover[cover=2, vspace=1]{%
+\ntaddtocover[ vspace=1]{2}{%
   \begin{minipage}[t]{0.20\textwidth}%
     ~%
   \end{minipage}%

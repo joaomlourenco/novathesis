@@ -42,10 +42,10 @@
   , biblatex/.new list
   , handler/school/.new cmd = {%
             \typeout{NT HANDLER SCHOOL ROUTINE [#1]}%
+            \prependtographicspath{{NOVAthesisFiles/Schools/#1/Images/}}%
             \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/element}%
               {}% it as a reload… do nothing
               {% Load new school definitions
-                \prependtographicspath{{NOVAthesisFiles/Schools/#1/Images/}}%
                 \InputIfFileExists{NOVAthesisFiles/Schools/#1/defaults.ldf}%
                   {}%
                   {\PackageWarining{novathesis}%

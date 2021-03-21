@@ -105,7 +105,7 @@
 }
 
 % Title of Dissertation
-\ntaddtocover[cover=1, vspace=6cm]{%
+\ntaddtocover[ vspace=6cm]{1}{%
   \ntcoverbackground
   \begin{minipage}[t][7.5cm][b]{\linewidth}
     \raggedright
@@ -115,7 +115,7 @@
 }
 
 % Author name
-\ntaddtocover[cover=1, vspace=0.9cm]{%
+\ntaddtocover[ vspace=0.9cm]{1}{%
   \begin{minipage}[t][1.8cm][c]{\linewidth}
     \fontsize{16}{16}\selectfont
     \textbf{\theauthorname}
@@ -123,7 +123,7 @@
 }
 
 % Title of Dissertation - COVER 2
-\ntaddtocover[cover=2, vspace=2cm]{%
+\ntaddtocover[ vspace=2cm]{2}{%
   \begin{minipage}[t]{\linewidth}
     \centering
     \fontsize{16}{16}\selectfont
@@ -144,12 +144,12 @@
 % }
 
 % Advisers
-\ntaddtocover[cover=2, vspace=3cm]{%
+\ntaddtocover[ vspace=3cm]{2}{%
   \ntprintadvisersgroup{adviser}
 }
 
 % Co-advisers
-\ntaddtocover[cover=2, vspace=1cm]{%
+\ntaddtocover[ vspace=1cm]{2}{%
   \ntprintadvisersgroup{coadviser}
 }
 
@@ -162,7 +162,7 @@
 
 
 % Date
-\ntaddtocover[cover=2, vspace=1]{%
+\ntaddtocover[ vspace=1]{2}{%
   \fontsize{11}{11}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}

@@ -147,7 +147,7 @@
 }
 
 % Title of Dissertation 1
-\ntaddtocover[cover=1, vspace=6.5cm, height=4cm, inalign=t]{%
+\ntaddtocover[ vspace=6.5cm, height=4cm, inalign=t]{1}{%
     \centering%
     \fontsize{15}{15}\selectfont%
     \thecovertitle[caps]\\[1ex]%
@@ -156,7 +156,7 @@
 }
 
 % % Title of Dissertation 2
-\ntaddtocover[cover=2, vspace=6.5cm, height=4cm, inalign=t]{%
+\ntaddtocover[ vspace=6.5cm, height=4cm, inalign=t]{2}{%
     \centering%
     \fontsize{15}{15}\selectfont\scshape%
     \thecovertitle\\[1ex]%
@@ -164,7 +164,7 @@
 }
 
 % Advisers 2
-\ntaddtocover[cover=2, vspace=2cm]{%
+\ntaddtocover[ vspace=2cm]{2}{%
   % \fontseries{mc}
   \parbox[t][4cm]{\textwidth}{%
     \centering%
@@ -172,7 +172,7 @@
     \parbox{0.80\textwidth}{\ntprintadvisers[0.75]}%
   }%
 }
-\ntaddtocover[cover=1, vspace=2cm]{%
+\ntaddtocover[ vspace=2cm]{1}{%
   \parbox[t][4cm]{\textwidth}{%
   ~%
   }%
@@ -200,20 +200,20 @@
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % % ESEP logo
-% \ntaddtocover[cover=2, vspace=2.2cm]{%
+% \ntaddtocover[ vspace=2.2cm]{2}{%
 %   \ntcoverbackground
 %   \fontsize{15}{15}\selectfont
 %   \expandafter\MakeUppercase\expandafter{\textbf{\theschool(\option{/novathesis/coverlang})}}
 % }
 %
 % % % Degree name
-% \ntaddtocover[cover=2, vspace=0.5cm]{%
+% \ntaddtocover[ vspace=0.5cm]{2}{%
 %   \fontsize{15}{15}\selectfont
 %   \thedegreename(\option{/novathesis/coverlang})
 % }
 %
 % % % Title of Dissertation
-% \ntaddtocover[cover=2, vspace=6.5cm]{%
+% \ntaddtocover[ vspace=6.5cm]{2}{%
 %   % \fontseries{mc}
 %   \fontsize{15}{15}\selectfont
 %   \scshape
@@ -222,13 +222,13 @@
 % }
 %
 % % Author name
-% \ntaddtocover[cover=2, vspace=1]{%
+% \ntaddtocover[ vspace=1]{2}{%
 %   \fontsize{12}{12}\selectfont
 %   \textbf{\theauthorname}
 % }
 %
 % % Date
-% \ntaddtocover[cover=2, vspace=1]{%
+% \ntaddtocover[ vspace=1]{2}{%
 %   \fontsize{12}{12}\selectfont
 %   \ifdraftdoc
 %     \textbf{DRAFT: \today}
@@ -238,7 +238,7 @@
 % }
 %
 % % % Final space
-% \ntaddtocover[cover=2, vspace=1cm]{%
+% \ntaddtocover[ vspace=1cm]{2}{%
 %   ~
 % }
 %
