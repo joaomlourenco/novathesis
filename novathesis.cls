@@ -78,7 +78,7 @@
 \RequirePackage{nt-options}
 \RequirePackage{xifthen}
 \RequirePackage{xstring}
-\RequirePackage{nt-repeat}
+% \RequirePackage{nt-repeat}
 \RequirePackage{assocarray}
 \RequirePackage{nt-version}
 % To process lists and other stuff
@@ -454,7 +454,8 @@
   % If vspace is integer then replace by \vfill
   % otherwise is absolute verstical space
   \IfInteger{\option{/@ntcoveropts/vspace}}%
-    {\ntrepeat\to{\option{/@ntcoveropts/vspace}}\do{\vfill}}%
+    % {\ntrepeat\to{\option{/@ntcoveropts/vspace}}\do{\vfill}}%
+    {\vskip 0pt plus \option{/@ntcoveropts/vspace}fill}
     {\vspace*{\option{/@ntcoveropts/vspace}}}%
   %
   % Typeset contents in a box
@@ -1206,7 +1207,7 @@
     {}%
 }
 
-\AtEndPreamble{\typeout{NT AtEndPreamble loadglossaryfiles}\@loadglossaryfiles}
+% \AtEndPreamble{\typeout{NT AtEndPreamble loadglossaryfiles}\@loadglossaryfiles}
 
 
 
@@ -1328,24 +1329,24 @@
 \maxsecnumdepth{subsubsection}
 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Text style
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\AtEndPreamble{%
-  \typeout{NT AtEndPreamble loading chapstyle and fontstyle}
-  \InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.ldf}{}{}%
-  \InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/fontstyle}.ldf}{}{}%
-}
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Fixes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Fix spacing for pages with roman numerals in ToC
 \renewcommand{\@pnumwidth}{2.5em}% default is 1.55em
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Text style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \AtEndPreamble{%
+  % \typeout{NT AtEndPreamble loading chapstyle and fontstyle}
+\InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.ldf}{}{}%
+\InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/fontstyle}.ldf}{}{}%
+% }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
