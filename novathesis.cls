@@ -148,7 +148,7 @@
   % %novathesis@opt@biblatex
   , biblatex/.new list
   , handler/school/.new cmd={%
-            \typeout{NT HANDLER SCHOOL ROUTINE [#1]}%
+            % \typeout{NT HANDLER SCHOOL ROUTINE [#1]}%
             \prependtographicspath{{NOVAthesisFiles/Schools/#1/Images/}}%
             \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/element}%
               {}% it as a reload… do nothing
@@ -306,11 +306,20 @@
   %         #2=file family (quote, abstract, chapter, etc)
   %         #3=optional file lang
   %         #4=filename
-  % \typeout{NT ADDFILE [#1] [#2] [#3] [#4]}%
+  % \typeout{NT addtolist [#1] [#2] [#3] [#4]}%
   % \typeout{NT @ntaddlisthook#1#2 @ntaddlisthook#1#2#3}
-  \ifcsdef{@ntaddlisthook#1#2}{\@nameuse{@ntaddlisthook#1#2}{#3}{#4}}{}%
-  \ifcsdef{@ntaddlisthook#1#2#3}{\@nameuse{@ntaddlisthook#1#2#3}{#4}}{}%
-  \@nt@addtolist@iii{#1}{#2}{#3=#4}%
+  \IfSubStr{#4}{/}{%
+    \def\@nt@filewithpath{#4}
+  }{%
+    \options{/@nt/folders=#2}%
+    \def\@nt@filewithpath{\expanded{\option{/@nt/folders}/#4}}%
+  }%
+  % \typeout{NT ntload ADDFILE [#1] [#2] [#3] [\@nt@filewithpath]}%
+  \ifcsdef{@ntaddlisthook#1#2}{\@nameuse{@ntaddlisthook#1#2}{#3}{\@nt@filewithpath}}{}%
+  \ifcsdef{@ntaddlisthook#1#2#3}{\@nameuse{@ntaddlisthook#1#2#3}{\@nt@filewithpath}}{}%
+  \expanded{\options{/@nt/#1/#2/#3/.cpush={\@nt@filewithpath}}}%
+  \typeout{NT ADDED FILE [/@nt/#1/#2/#3=\@nt@filewithpath]}%
+  % \@nt@addtolist@iii{#1}{#2}{#3=\@nt@filewithpath}%
 }
 
 \newcommand*{\@nt@addtolist@iii}[3]{%
@@ -318,7 +327,7 @@
   % #2=file family (quote, abstract, chapter, etc)
   % #3=filename OR key=filename
   % \typeout{NT FILE ADD /@nt/#1/#1=#2}%
-  \options{/@nt/#1/#2/.cpush={#3}}%
+  % \options{/@nt/#1/#2/.cpush={#3}}%
 }
 
 \newcommand{\@nt@foralllist}[3]{%
@@ -1095,32 +1104,26 @@
   % }{%
   %   \typeout{NT LOADING "\option@listmatch@value\space" failed}%
   % }%
-  \typeout{NT TRYING TO LOAD #1}%
+  % \typeout{NT TRYING TO LOAD #1}%
   \InputIfFileExists{#1}{%
     \typeout{NT LOADING “#1” succeeded}%
-    % \externaldocument{#1}% from package 'xr
+    % \externaldocument{#1}% from package 'xr'
   }{%
     \typeout{NT LOADING “#1” failed}%
   }
 }
 
-\newcommand{\@ntloadfisrt@ii}[2][VAL]{%
+\newcommand{\@ntloadfiles@ii}[2][VAL]{%
   % #1=KEY
   % #2=file class
-  \options{/@nt/folders=#2}
-  \typeout{NT ntloadfisrt [#2] [#1] [\expanded{\option{/@nt/folders}}]}
-  \options{/@nt/file/#2/.getval={#1}}%
-  \@ntloadfile@i{\expanded{\option{/@nt/folders}/\option@listmatch@value}}%
+  % \options{/@nt/folders=#2}%
+  % \typeout{NT ntloadfiles [#2] [#1] [/@nt/file/#2/#1]}% [\expanded{\option{/@nt/folders}}]}
+  \ifoptiondefined{/@nt/file/#2/#1}%
+    {\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}%
+    {}
 }
 
-\newcommand{\@ntloadnext@ii}[2]{%
-  % #1=file class
-  % #2=KEY=value
-  \options{/@nt/folders=#1}
-  \typeout{NT ntloadnext [#2] [#1] [\expanded{\option{/@nt/folders}}]}
-  \ntgetkeyval{#2}{\option@listmatch@key}{\option@listmatch@value}%
-  \@ntloadfile@i{\expanded{\option{/@nt/folders}/\option@listmatch@value}}%
-}
+
 
 \def\lowc{\expandafter\lowercaseA\expandafter{\iffalse}\fi}
 \long\def\lowercaseA#1{\lowercase{#1}\egroup}
@@ -1130,15 +1133,16 @@
 \newcommand{\@nt@printifmaindoc@i}[1]{%
   % \typeout{NT Attempt to load #1}%
 	\ifmaindoc{% THEN it is a main document
-    \options{/@nt/file/#1/.getval={VAL}}%
-    \IfStrEq{\option@listmatch@value}{}{\typeout{NT LOAD #1 empty}}{%
+    \ifoptiondefined{/@nt/file/#1/VAL}{%
+    % \options{/@nt/file/#1/.getval={VAL}}%
+    % \IfStrEq{\option@listmatch@value}{}{\typeout{NT LOAD #1 empty}}{%
       \@nt@select@lang{\option{/novathesis/mainlang}}%
       % \edef\@nt@bm{\expandafter\MakeUppercase\expandafter#1}
       \currentpdfbookmark{\csuse{the#1string}(\option{/novathesis/mainlang})}{bm#1}
-      \@ntloadfisrt@ii{#1}%
+      \@ntloadfiles@ii{#1}%
       \ntfixspacing%
       \clearforchapter%
-    }%
+    }{\typeout{NT LOAD #1 undefined}}%
 	}{% ELSE
     % It is a plan or proposal type document
 	}%  
@@ -1172,7 +1176,7 @@
   \currentpdfbookmark{\theabstractstring(#1)}{bmabstract#1}
   \printabstracttitle{#1}%
   \abstracttextprehook{#1}
-  \@ntloadfisrt@ii[#1]{abstract}%
+  \@ntloadfiles@ii[#1]{abstract}%
   \abstracttextposthook{#1}%
   \ntfixspacing%
   \clearforchapter%
@@ -1203,7 +1207,7 @@
 
 
 \newcommand{\ntprintchapters}{%
-    \@nt@foralllist{file}{chapter}{\@ntloadnext@ii{chapter}}%
+    \@nt@foralllist{file}{chapter}{\@ntloadfiles@ii{chapter}}%
 }
 
 
@@ -1219,13 +1223,13 @@
 \newcommand{\ntprintappendixes}{%
   \renewcommand{\appendixtocname}{\appendixnamepl}%
   \clearforchapter\appendix\addappheadtotoc%
-  \@nt@foralllist{file}{appendix}{\@ntloadnext@ii{appendix}}%
+  \@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
 }
 
 \newcommand{\ntprintannexes}{%
   \renewcommand{\appendixtocname}{\annexnamepl}%
   \clearforchapter\annex\addappheadtotoc%
-  \@nt@foralllist{file}{annex}{\@ntloadnext@ii{annex}}%
+  \@nt@foralllist{file}{annex}{\@ntloadfiles@ii{annex}}%
 }
 
 
@@ -1281,18 +1285,20 @@
 }
 
 \newcommand{\@loadglossaryfiles}{%
-  \optionlistdo{/@nt/file/glossaries}{\@loadglossaryfile{##1}}
+  \optionlistdo{/@nt/file/glossaries/glossary}{\@ntloadfile@i{##1}}%
+  \optionlistdo{/@nt/file/glossaries/acronyms}{\@ntloadfile@i{##1}}%
+  \optionlistdo{/@nt/file/glossaries/symbols}{\@ntloadfile@i{##1}}%
 }
 
-\newcommand{\@loadglossaryfile}[1]{%
-  % #1={glossary, acronyms, symbols}={filename}
-  \ntgetkeyval{#1}{\@nt@key}{\@nt@value}
-  % \typeout{NT @loadglossaryfile [\@nt@key][\@nt@value]}
-  \options{/@nt/folders=glossaries}
-  \IfFileExists{\expanded{\option{/@nt/folders}/\@nt@value}}%
-    {\loadglsentries{\expanded{\option{/@nt/folders}/\@nt@value}}}%
-    {}%
-}
+% \newcommand{\@loadglossaryfile}[1]{%
+%   % #1={glossary, acronyms, symbols}={filename}
+%   % \ntgetkeyval{#1}{\@nt@key}{\@nt@value}
+%   % \typeout{NT @loadglossaryfile [\@nt@key][\@nt@value]}
+%   % \options{/@nt/folders=glossaries}
+%   \IfFileExists{#1}}%
+%     {\loadglsentries{#1}}%
+%     {}%
+% }
 
 % \AtEndPreamble{\typeout{NT AtEndPreamble loadglossaryfiles}\@loadglossaryfiles}
 

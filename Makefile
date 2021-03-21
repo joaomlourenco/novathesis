@@ -12,19 +12,23 @@ $(T): $(S)
 
 .PHONY: 2020
 2020: $(S)
+	$(L) -pdf -silent $(B)
+
+.PHONY: verb verbose
+verb verbose:
 	$(L) -pdf $(B)
 
 .PHONY: 2019
 2019:
-	PATH="/usr/local/texlive/2019/bin/x86_64-darwin/:$(PATH)" $(L) -pdf $(B)
+	PATH="/usr/local/texlive/2019/bin/x86_64-darwin/:$(PATH)" $(L) -pdf -silent $(B)
 
 .PHONY: xe
 xe: $(S)
-	$(L) -pdfxe $(B)
+	$(L) -pdfxe -silent $(B)
 
 .PHONY: lua
 lua: $(S)
-	$(L) -pdflua $(B)
+	$(L) -pdflua -silent $(B)
 
 .PHONY: v
 .PHONY: view

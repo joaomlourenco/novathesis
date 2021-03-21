@@ -6,7 +6,7 @@
 %% Packages to be loaded
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE packages.tex}
+\typeout{NT FILE packages.tex}
 
 \ifxetexorluatex
   % xelatex or lualatex
@@ -132,16 +132,13 @@
 \csdef{files_hook}{%
   %--------------------------------
   % “biblatex” stuff
-  \typeout{NT LOADING fix-bib.ldf}%
   \ntaddfile{bib}{NOVAthesisFiles/fix-bib.ldf}%
   \AtEndDocument{\nocite{ntmbib}}%
   \letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
   \RequirePackage[hyperref=auto,defernumbers=true,\@nt@biblatex@opts]{biblatex}%
   \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
-  \optionlistdo{/@nt/file/bib}{%
-    \ntgetkeyval{##1}\@nt@key\@nt@bibfile%
-    \IfSubStr{\@nt@bibfile}{/}{\def\@nt@bibfolder{}}{\def\@nt@bibfolder{Bibliography/}}%
-    \addbibresource{\expanded{\@nt@bibfolder\@nt@bibfile}}%
+  \optionlistdo{/@nt/file/bib/VAL}{%
+    \addbibresource{##1}%
   }%
   %--------------------------------
   % “hyperref” stuff
