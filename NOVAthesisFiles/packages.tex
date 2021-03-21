@@ -26,6 +26,7 @@
 %%%%% Configure multilingual language support
 \RequirePackage{csquotes}
 \RequirePackage{babel}			% Support for bilingual documents
+\RequirePackage{url}
 
 % \RequirePackage{appendix}
 
@@ -51,23 +52,12 @@
 \RequirePackage{xstring}
 
 
-% To process lists and other stuff
-\RequirePackage{etoolbox}
-
 % To use a wide range of color names
 \RequirePackage[svgnames]{xcolor}%
 
 
-%%%%% LOAD THESE PACKAGES JUST AT THE ENF OF THE PREAMBLE 
-%%%%% AND BEFORE THE \BEGIN{DOCUMENT}
-% \novathesisAtEndClassFile{%
-  %%%%% Configure HyperRefs
-  % \RequirePackage[pdftex,usenames]{color}
-  % \RequirePackage[pdftex]{xcolor}
-  % \RequirePackage[usenames]{color}
 \RequirePackage{colortbl}
 \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
-% }
 
 
 %%%%% Configure Graphics
@@ -137,24 +127,43 @@
 % Fixing autoref in yperref
 \RequirePackage{fix-hyperref}
 
-% \AtEndPreamble{%
+
+
+\csdef{files_hook}{%
+  %--------------------------------
+  % “biblatex” stuff
+  \typeout{NT LOADING fix-bib.ldf}%
+  \ntaddfile{bib}{NOVAthesisFiles/fix-bib.ldf}%
+  \AtEndDocument{\nocite{ntmbib}}%
+  \letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
+  \RequirePackage[hyperref=auto,defernumbers=true,\@nt@biblatex@opts]{biblatex}%
+  \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
+  \optionlistdo{/@nt/file/bib}{%
+    \ntgetkeyval{##1}\@nt@key\@nt@bibfile%
+    \IfSubStr{\@nt@bibfile}{/}{\def\@nt@bibfolder{}}{\def\@nt@bibfolder{Bibliography/}}%
+    \addbibresource{\expanded{\@nt@bibfolder\@nt@bibfile}}%
+  }%
+  %--------------------------------
+  % “hyperref” stuff
   \RequirePackage[%
     , breaklinks%
     , colorlinks=true%
     , pdfdisplaydoctitle%
-    , unicode
+    , unicode%
   ]{hyperref}%
   \@nt@fixhyperref%
   \pdfstringdefDisableCommands{%
     \def\\{}%
-    \def\texttt#1{#1}%
+    \def\texttt##1{##1}%
   }%
   \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
   \RequirePackage[all]{hypcap}%
+  %--------------------------------
   % To handle subfigures
   \newsubfloat{figure}%
-  % Manage glossaries
-  \RequirePackage[
+  %--------------------------------
+  % “glossasries” stuff
+  \RequirePackage[%
     % , nonumberlist
     , toc%
     , translate=babel%
@@ -163,10 +172,12 @@
     % , sanitizesort=false% allow \gls inside descriptions
     % , automake
   ]{glossaries-extra}% To create glossaries
-  \RequirePackage{glossary-xltabular}
+  \RequirePackage{glossary-xltabular}%
   \setglossarystyle{xltabular}%
-  \setabbreviationstyle[acronym]{long-short}
-  \renewcommand{\glsnamefont}[1]{\textbf{#1}}%
+  \setabbreviationstyle[acronym]{long-short}%
+  \renewcommand{\glsnamefont}[1]{\textbf{##1}}%
   \makenoidxglossaries% use TeX to sort
-  \AtEndPreamble{\typeout{NT AtEndPreamble nonumberlist}\iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}}
-% }
+  %--------------------------------
+  % “Process gnumberlist” option
+  \iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}%
+}

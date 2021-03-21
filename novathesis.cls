@@ -81,6 +81,8 @@
 \RequirePackage{nt-repeat}
 \RequirePackage{assocarray}
 \RequirePackage{nt-version}
+% To process lists and other stuff
+\RequirePackage{etoolbox}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -93,15 +95,6 @@
 
 \newcommand*{\ifxeorlua}[2]{\ifxetexorluatex#1\else#2\fi}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Hook Class
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\@nt@AtEnfClass@hook}{}
-\newcommand{\@AtEndClass}[2][app]{\csuse{#1to}\nt@AtEnfClass@hook{#2}}
-
-
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
@@ -112,14 +105,6 @@
 \newcommand*{\setnewcounter}[2]{%
   \ifcsname c@#1\endcsname\else\newcounter{#1}\fi%
   \setcounter{#1}{#2}%
-}
-
-% --------------------------------------------------------
-% Check if a string contains a character
-\newcommand{\instring}[2]{TT\fi\begingroup
-  % #1 = character to look for
-  % #2 = string
-  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@%
 }
 
 % --------------------------------------------------------
@@ -157,7 +142,7 @@
 }
 
 \newcommand{\@ifdocclass@ii}[2]{%
-  % #1 = document tyoe
+  % #1 = document type
   % %2 = possible document calss 
   \ifoptioncontains{/@nt/document/class/#2}{#1}
 }
@@ -169,10 +154,10 @@
 \newcommand{\ifmscdoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{msc}}
 \newcommand{\ifbscdoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{bsc}}
 
-\newcommand{\ifdocfinal}{\ifoptionequal{/novathesis/docstatus}{final}}
-\newcommand{\ifdocprovisional}{\ifoptionequal{/novathesis/docstatus}{provisional}}
-\newcommand{\ifdocdraft}{\ifoptionequal{/novathesis/docstatus}{draft}}
-\newcommand{\ifdocworking}{\ifoptionequal{/novathesis/docstatus}{working}}
+% \newcommand{\ifdocfinal}{\ifoptionequal{/novathesis/docstatus}{final}}
+% \newcommand{\ifdocprovisional}{\ifoptionequal{/novathesis/docstatus}{provisional}}
+% \newcommand{\ifdocdraft}{\ifoptionequal{/novathesis/docstatus}{draft}}
+% \newcommand{\ifdocworking}{\ifoptionequal{/novathesis/docstatus}{working}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -198,16 +183,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE PERSON LISTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\ntaddperson#1[#2]#3{%
+\def\ntaddperson#1[#2]{%
+  % syntax: \ntaddperson{class}[key]{filename}
   % See "\@ntaddperson@iv" below
   \IfSubStr{#2}{,}%
-    {\@ntaddperson@iv{#1}[#2]{#3}}%
-    {\@ntaddperson@iv{#1}[,#2]{#3}}%
+    {\@ntaddperson@iv{#1}[#2]}%
+    {\@ntaddperson@iv{#1}[,#2]}%
 }
 
 \def\@ntaddperson@iv#1[#2,#3]#4{%
-  % #1 = {author, adviser, committee}
-  % #2={c,r,a,m}
+  % syntax: \ntaddperson{class}[key,gender]{filename}
+  % #1 = {author, adviser, committee, …}
+  % #2={c,r,a,m,g}
   %     c = chair
   %     r = rapporteur/referee
   %     a = adviser
@@ -276,9 +263,9 @@
 \newcommand*{\@nt@select@lang}[1]{%
   % #1 = lang {pt, en, fr, it}
   \options{/@nt/langshorttolong=#1}%
-  \edef\@nt@tmp{\option{/@nt/langshorttolong}}%
+  % \edef\@nt@tmp{\option{/@nt/langshorttolong}}%
   % \typeout{'NT SWITCHING LANG TO = '\nt@tmp}%
-  \expandafter\selectlanguage\expandafter{\@nt@tmp}%
+  \expandafter\selectlanguage\expandafter{\expanded{\option{/@nt/langshorttolong}}}%
 }
 
 
@@ -1207,20 +1194,7 @@
 %% Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\@ntaddlisthookfilebib}[2]{%
-  \letoptionlist{/@nt/biblatex}\nt@tmp%
-  % \typeout{'NT PASSING TO BIBLATEX= '\nt@tmp}%
-  \RequirePackage[hyperref=auto,defernumbers=true,\nt@tmp]{biblatex}%
-  \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
-  % \typeout{'NT ADD BIBLATEX RESOURCE= '#2}%
-  \IfSubStr{#2}{/}{\def\@nt@bibfolder{}}{\def\@nt@bibfolder{Bibliography/}}%
-  \addbibresource{\expanded{\@nt@bibfolder#2}}%
-}
-
 \newcommand{\ntprintbib}[1][]{%
-  % \ifthenelse{\isempty{#1}}%
-  % {\printbibliography}%
-  % \blx@refcontext@sortingtemplatename
   \printbibliography[#1,notkeyword={novathesis-manual}]%
   \begingroup
     \begin{tinywhite}{%
@@ -1230,8 +1204,6 @@
   \endgroup
 }
 
-\AtEndPreamble{\typeout{NT AtEndPreamble ntaddbib}\ntaddfile{bib}{NOVAthesisFiles/fix-bib.ldf}}
-\AtEndDocument{\nocite{ntmbib}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Copyright page
@@ -1380,7 +1352,3 @@
 \newcommand{\acronymsfile}[1]{\ntaddfile{glossaries}[acronyms]{#1}}
 \newcommand{\symbolsfile}[1]{\ntaddfile{glossaries}[symbols]{#1}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% End of Class Hook
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\@nt@AtEnfClass@hook

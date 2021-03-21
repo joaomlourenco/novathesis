@@ -18,6 +18,13 @@
     This manual is outdated and must be revised!}
 \end{center}
 
+\makeatletter
+\optionlistdo{/@nt/file/bib}{%
+  \ntgetkeyval{#1}\@nt@key\@nt@val%
+  \par FILE=\@nt@val%
+}
+\makeatother
+
 \section{Introduction} % (fold)
 \label{sec:introduction}
 

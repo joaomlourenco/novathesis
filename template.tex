@@ -137,6 +137,7 @@
 %       configuration file “Config/1_novathesis.tex”
 %%============================================================
 \input{1_novathesis}
+\csuse{novathesis_hook}
 
 
 %%============================================================
@@ -145,6 +146,7 @@
 %       configuration file “Config/2_biblatex.tex”
 %%============================================================
 \input{2_biblatex}
+\csuse{biblatex_hook}
 
 
 %%============================================================
@@ -156,10 +158,13 @@
 %%============================================================
 \ifphddoc{% Standard names for PhD programs
   \input{3a_degree_phd}%
+  \csuse{degree_phd_hook}
 }{\ifmscdoc{% Standard names for MSc programs
   \input{3b_degree_msc}%
+  \csuse{degree_msc_hook}
 }{% Customizable name for any other program
   \input{3c_degree_other}%
+  \csuse{degree_other_hook}
 }}
 
 
@@ -169,6 +174,7 @@
 %       configuration file “Config/4_department.tex”
 %%============================================================
 \input{4_department}
+\csuse{department_hook}
 
 
 %%============================================================
@@ -177,6 +183,7 @@
 %       configuration file “Config/5_cover.tex”
 %%============================================================
 \input{5_cover}
+\csuse{cover_hook}
 
 
 %%============================================================
@@ -185,6 +192,7 @@
 %       configuration file “Config/6_files.tex”
 %%============================================================
 \input{6_files}
+\csuse{files_hook}
 
 
 %%============================================================
@@ -193,6 +201,7 @@
 %       configuration file “Config/7_list_of.tex”
 %%============================================================
 \input{7_list_of}
+\csuse{list_of_hook}
 
 
 %%============================================================
@@ -201,6 +210,7 @@
 %       configuration file “Config/8_packages.tex”
 %%============================================================
 \input{8_packages}
+\csuse{packages_hook}
 
 
 
