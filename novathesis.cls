@@ -147,33 +147,33 @@
   }  
   % %novathesis@opt@biblatex
   , biblatex/.new list
-  , handler/school/.new cmd={%
-            % \typeout{NT HANDLER SCHOOL ROUTINE [#1]}%
-            \prependtographicspath{{NOVAthesisFiles/Schools/#1/Images/}}%
-            \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/element}%
-              {}% it as a reload… do nothing
-              {% Load new school definitions
-                \InputIfFileExists{NOVAthesisFiles/Schools/#1/defaults.ldf}%
-                  {}%
-                  {\PackageWarining{novathesis}%
-                                   {Missing file “defaults.ldf” for #1}}%
-              }%
-  }
-  , handler/media/.new cmd={%
-              \setulmarginsandblock%
-                {\themargin(#1,top)}%
-                {\themargin(#1,bottom)}%
-                {*}%
-              \setlrmarginsandblock%
-                {\themargin(#1,left)}%
-                {\themargin(#1,right)}%
-                {*}%
-              \checkandfixthelayout%
-              % \ifoptionequal{/novathesis/media}{paper}%
-              \IfEq{#1}{paper}%
-                {\options{/novathesis/linkscolor=black}}%
-                {}%
-  }
+  % , handler/school/.new cmd={%
+  %           % \typeout{NT HANDLER SCHOOL ROUTINE [#1]}%
+  %           \prependtographicspath{{NOVAthesisFiles/Schools/#1/Images/}}%
+  %           \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/element}%
+  %             {}% it as a reload… do nothing
+  %             {% Load new school definitions
+  %               \InputIfFileExists{NOVAthesisFiles/Schools/#1/defaults.ldf}%
+  %                 {}%
+  %                 {\PackageWarining{novathesis}%
+  %                                  {Missing file “defaults.ldf” for #1}}%
+  %             }%
+  % }
+  % , handler/media/.new cmd={%
+  %             \setulmarginsandblock%
+  %               {\themargin(#1,top)}%
+  %               {\themargin(#1,bottom)}%
+  %               {*}%
+  %             \setlrmarginsandblock%
+  %               {\themargin(#1,left)}%
+  %               {\themargin(#1,right)}%
+  %               {*}%
+  %             \checkandfixthelayout%
+  %             % \ifoptionequal{/novathesis/media}{paper}%
+  %             \IfEq{#1}{paper}%
+  %               {\options{/novathesis/linkscolor=black}}%
+  %               {}%
+  % }
   , handler/chapstyle/.new cmd={%
     \InputIfFileExists{NOVAthesisFiles/ChapStyles/#1.ldf}{}%
       {\PackageWarining{novathesis}{Invalid Chapter Style: #1}}%
@@ -717,7 +717,7 @@
 
 % --------------------------------------------------------
 % Add school specific Images folder to the graphics path
-\prependtographicspath{{NOVAthesisFiles/Schools/\option{/novathesis/school}/Images/}}
+% \prependtographicspath{{NOVAthesisFiles/Schools/\option{/novathesis/school}/Images/}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

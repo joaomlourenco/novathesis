@@ -128,6 +128,15 @@
 \RequirePackage{NOVAthesisFiles/fix-hyperref}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% HOOKS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\csdef{novathesis_hook}{%
+  \prependtographicspath{{NOVAthesisFiles/Schools/\option{/novathesis/school}/Images/}}%
+  \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.ldf}{}%
+    {\PackageWarining{novathesis}%
+                     {Missing file “defaults.ldf” for ”\option{/novathesis/school}”}}%
+}
 
 \csdef{files_hook}{%
   %--------------------------------
