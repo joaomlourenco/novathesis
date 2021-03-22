@@ -10,15 +10,17 @@
 %% 	novathesis.ldf file)… this must be fixed in the future!!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE fix-babel.tex}
+\typeout{NT FILE fix-babel.tex}
 
 % Replace "Conteúdo" with "Índice"
 % Replace "Índice" with "Índice Remissivo"
 % "Listings" in Portuguese
 \addto\captionsportuguese{%
   \def\contentsname{Índice}%
+  \def\listfigurename{Índice de Figuras}%
+  \def\listtablename{Índice de Tabelas}%
   \def\indexname{Índice Remissivo}%
-  \def\lstlistlistingname{Listagens}%
+  \def\lstlistlistingname{Índice de Listagens}%
   \def\lstlistingname{Listagem}%
   \defineshorthand{"-}{\babelhyphen{repeat}}% generates a hyphen that will repeat on a new line
   \gdef\annexname{Anexo}
@@ -27,8 +29,8 @@
 }
 
 \addto\captionsenglish{%
-  \def\lstlistlistingname{Listings}%
-  \def\lstlistingname{Listing}%
+  % \def\lstlistlistingname{List of Listings}%
+  % \def\lstlistingname{Listing}%
   \gdef\annexname{Annex}
   \gdef\annexnamepl{Annexes}
   \gdef\appendixnamepl{Appendices}
@@ -48,10 +50,10 @@
   \gdef\appendixnamepl{Appendici}
 }
 
-\ifluatex
-  \babelposthyphenation{portuguese}{.=.}{
-    {},
-    { no = -, pre = -, post = -, data = 1 },
-    {}
-  }
+\ifluatex%
+  \babelposthyphenation{portuguese}{.=.}{%
+    {},%
+    { no = -, pre = -, post = -, data = 1 },%
+    {}%
+  }%
 \fi

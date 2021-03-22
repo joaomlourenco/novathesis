@@ -7,7 +7,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-01-31 [5.3.1]
+%% Version 2021-03-20 [6.1.1]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -52,355 +52,32 @@
 %% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%------------------------------------------------------------
-%% All class options will be passed to “memoir”.
-%% See “memoir” manual for more options.
-\documentclass[a4paper, 11pt]{novathesis}
 
 
 
 
 
-%%============================================================
-%%  TEMPLATE CUSTOMIZATION / OPTIONS
-%%============================================================
 
-%%------------------------------------------------------------
-%% THE MOST IMPORTANT/POPULAR OPTIONS
-%%------------------------------------------------------------
-% \ntsetup{docdegree=msc}       % The type of document
-%                               %     [ phd, phdplan, phdprop, msc, mscplan, bsc, plain ]
 
-% \ntsetup{school=ul/fc}    % The school id
-%                               %     [ nova/fct, nova/fcsh, nova/ims, nova/ensp, 
-%                               %       ul/ist, ul/fc, ipl/isel, ips/ests, esep,
-%                               %       iscte-iul/ista, consortium/msc-gt ]
 
-% \ntsetup{docstatus=provisional}   % The status of the document
-%                               %     [ final, provisional, draft, working ]
 
-% \ntsetup{lang=pt}             % The main language for the document text
-%                               %     [ en, pt, fr, it, de, es ]
 
-% \ntsetup{linkscolor=SteelBlue}% The color for the hyperlinks (URLs, 
-%                               %     cross references, citations)
-%                               %     for valid color names, look at "svgname" 
-%                               %     in the "xcolor" package documentation
 
-% \ntsetup{media=paper}         % The target media for the PDF
-%                               %     [ screen, paper ]
-%                               %     SCREEN ==> left and right margins are 
-%                               %                equal, colored links
-%                               %     PAPER  ==> left and right margins are 
-%                               %                 different, black links
 
-% \ntsetup{printcommittee=false}% Shall the committee be printed?
-%                               %     should be 'false' for document versions still
-%                               %     under work/evaluation.   Only final versions 
-%                               %     should have the list of committee members.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PLEASE DO NOT CHANGE THIS FILE
+%% ALL THE CUSTOMIZATION WAS MOVED TO THE ”Config” FOLDER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \ntsetup{gnumberlist=false}   % Shall the page numbers that appear after
-%                               %     the entries in glossaries br printed?
 
-% \ntsetup{secondcover=true}    % Shall a second cover page be printed?
-%                               %     if the contents for the second page are not 
-%                               %     defined, the second cover will be a replica 
-%                               %     of the first cover.
 
-% \ntsetup{urlstyle=same}       % Use the same (main) font in URLs
 
 
-%%------------------------------------------------------------
-%% THE LESS IMPORTANT/POPULAR OPTIONS
-%%------------------------------------------------------------
-% \ntsetup{tocintoc=true}       % Shall table of contects be listed in itself?
 
-% \ntsetup{fontstyle=erewhon}   % The font set to be used in the document
-%                               %     [ kpfonts bookman libertine, scholax 
-%                               %       calibri(*), kieranhealy(*) ] 
-%                               %     (*) only for xelatex/lualatex)
 
-% \ntsetup{chapstyle=bluebox}   % The chapter style to be used
-%                               %     [ elegantbianchi bluebox default ell hansen ist
-%                               %       lyhne madsen pedersen section southall veelo
-%                               %       vz34 vz43 ]
 
-% \ntsetup{coverlang=en}        % The language for the cover (and second cover) page 
-%                               %     defaults to main document language
 
-% \ntsetup{copyrightlang=en}    % The language for the copyright message
-%                               %     defaults to main document language
 
-% \ntsetup{aftercover=true}     % Does the document have after cover pages??
-%                               %     after cover pages are printed immediately 
-%                               %     after the cover pages
-
-% \ntsetup{printcopyright=fale} % Shall the copyright message be printed??
-
-% \ntsetup{spine=true}          % Shall a “book spine” be printed at the end of
-%                               %     the document?
-
-% \ntsetup{cdcover=true}        % Shall a “cd cover” be printed at the end of
-%                               %     the document?
-
-% \ntsetup{debugcover=true}     % Debug cover development: print rulers in the cover page
-
-
-%%------------------------------------------------------------
-%% BIBLATEX CONFIGURATION
-%%------------------------------------------------------------
-
-%%------------------------------------------------------------
-% If it works, leave biber.  If it fails for you, try bibtex
-\ntbibsetup{backend=biber}
-% \ntbibsetup{backend=bibtex}
-
-%%------------------------------------------------------------
-%% Print only initials of given name
-\ntbibsetup{giveninits=true}
-%% Uncomment the preferred style
-
-%%------------------------------------------------------------
-%% NUMBERED ORDER BY LAST NAME OF FIRST AUTHOR - this is the default
-% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=nyt}
-
-%%------------------------------------------------------------
-%% NUMBERED ORDER BY CITATION
-% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=none}
-
-%%------------------------------------------------------------
-%% APLHA CITATION ORDER BY LAST NAME OF FIRST AUTHOR
-% \ntbibsetup{style=alphabetic, sortcites=true, sorting=nyt}
-
-%%------------------------------------------------------------
-%% APA-LIKE CITATION
-% \ntbibsetup{backend=biber, natbib=true, style=apa6}
-
-%%============================================================
-%%  END OF TEMPLATE CUSTOMIZATION
-%%============================================================
-
-
-%%============================================================
-%%  LOADING AND CONFIGURATION OF ADDITIONAL PACKAGES
-%%============================================================
-
-%%------------------------------------------------------------
-%% ADD YOUR PACKAGES AND CUSTOMIZATION HERE
-% syntax: \usepackage[options]{packagename}
-\usepackage{paralist}     % To enable costumizble enumerates.  See the documentation.
-\usepackage[textsize=footnotesize]{todonotes}  % To register TODO notes in the text
-\usepackage{wrapfig}      % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
-\usepackage{metalogo}     % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
-\usepackage{lipsum}       % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
-
-
-
-%%============================================================
-%%  DOCUMENT ATTRIBUTES
-%%============================================================
-
-%%------------------------------------------------------------
-% Thesis/Dissertation title (valid for all languages unless redefined as below)
-% syntax: \nttitle{title}
-\nttitle{A Very Long and Impressive Thesis Title\\with a Forced Line Break}%
-% \nttitle[en]{The title in a Specific language}%
-
-%%------------------------------------------------------------
-% Degree customization - majorfield
-% See below for the degrees in Computer Science @ FCT-NOVA
-% syntax: \ntmajorfield(language){name}
-\ntmajorfield(pt){\embrace{Área Científica}}
-\ntmajorfield(en){\embrace{Scientific Field}}
-
-%%------------------------------------------------------------
-% Degree customization - ntdegreename
-% See below for the degrees in Computer Science @ FCT-NOVA
-% syntax: \ntdegreename(language){name}
-\ntdegreename(pt){\embrace{Designação do Curso}}
-\ntdegreename(en){\embrace{Study Program Name}}
-
-%%% Uncomment for MSc and PhD in Computer Science @ FCT-NOVA 
-% \ifphddoc{%
-%   % It is a PhD Degree in Computer Science
-%   \ntmajorfield(pt){Informática}
-%   \ntmajorfield(en){Computer Science}
-%   \ntdegreename(pt){Programa de Doutoramento em Informática}
-%   \ntdegreename(en){PhD Program in Computer Science}
-% }{}
-% \ifmscdoc{%
-%   % It is a MSc degree in Computer Science
-%   \ntmajorfield(pt){Engenharia Informática}
-%   \ntmajorfield(en){Computer Science and Engineering}
-%   \ntdegreename(pt){Mestrado Integrado em Engenharia Informática}
-%   \ntdegreename(en){Integrated Master in Computer Science and Engineering}
-% }{}
-% \ifbscdoc{%
-%   % It is a MSc degree in Computer Science
-%   \ntmajorfield(pt){Engenharia Informática}
-%   \ntmajorfield(en){Computer Science and Engineering}
-%   \ntdegreename(pt){Licenciatura em Ciência e Engenharia Informática}
-%   \ntdegreename(en){Bachelor in Computer Science and Engineering}
-% }{}
-
-%%------------------------------------------------------------
-% Degree customization
-%   If the degree includes a specialization
-%   syntax: \ntspecialization(language){name}
-\ntspecialization(pt){\embrace{Designação da Especialidade}}
-\ntspecialization(en){\embrace{Speciality Name}}
-
-%%------------------------------------------------------------
-% Sponsors
-%   Some Schools require the work sponsors to be listed in the cover
-%   syntax: \ntsponsors(language){names}
-\ntsponsors(pt){\embrace{Fontes de Financiamento}}
-\ntsponsors(en){\embrace{Funding Sponsors}}
-
-%%------------------------------------------------------------
-% Author full name, abbreviated name, and gender
-%   use [f] for female and [m] for male author
-%   syntax: \ntauthorname(language){full name}{abbreviated name}
-\ntauthorname[m]{John Longname Doe}{John Doe}
-
-%%------------------------------------------------------------
-% Author previous degree
-%   syntax: \ntauthordegree{degree}
-\ntauthordegree{Master of Science}
-
-%%------------------------------------------------------------
-% Submission date
-%   syntax: \ntdatemonth{month}
-%           \ntdateyear{year}
-\ntdatemonth{\embrace{month}}
-\ntdateyear{\embrace{year}}
-
-%%------------------------------------------------------------
-% Advisers' gender and info (name, position, school, etc)
-%   use [f] for female and [m] for male
-%   use "\\" to break the lines in the appropriate place
-%   syntax: \ntaddperson{adviser}[gender]{Name, Position, School}
-\ntaddperson{adviser}[f]{{Mary Doe Adviser Name, \\Full Professor, NOVA University Lisbon}}
-% \ntaddperson{adviser}[f]{{Mary Doe other Adviser Name, Full Professor, NOVA University Lisbon}}
-% \ntaddperson{adviser}[f]{{Mary Doe yet another Adviser Name, Full Professor, NOVA University Lisbon}}
-
-%%------------------------------------------------------------
-% Co-Advisers' gender and info (name, position, school, etc)
-%   use [f] for female and [m] for male
-%   use "\\" to break the lines in the appropriate place
-%   syntax: \ntaddperson{coadviser}[gender]{Name, Position, School}
-\ntaddperson{coadviser}[f]{John Doe Co-Adviser Name, \\Associate Professor, NOVA University Lisbon}
-\ntaddperson{coadviser}[f]{John Doe other Co-Adviser Name, \\Full Professor, NOVA University Lisbon}
-
-%%------------------------------------------------------------
-% Committee members
-%   For [role] use: [c] for committee chair
-%                   [r] for rapporteurs
-%                   [a] for advisers
-%                   [m] for remaining members
-%                   [g] for guests
-%   syntax: \ntaddperson{committee}[role,gender]{Name, Position, School}
-\ntaddperson{committee}[c,m]{Name of the committee chairperson, Full Professor, FCT-NOVA}
-\ntaddperson{committee}[r,m]{Name of a rapporteur, Position, Another University}
-\ntaddperson{committee}[r,m]{Name of another rapporteur, Position, Another University}
-\ntaddperson{committee}[a,m]{name of the adviser present in defense, Position, University}
-\ntaddperson{committee}[m,f]{Yet another member of the committee, Position, Another University}
-% \ntaddperson{committee}[g,m]{Guest member of the committee, Position, University}
-
-
-
-%=============================================================================
-% THE FILES
-%=============================================================================
-
-%%------------------------------------------------------------
-%% Except for the bibliography, all the other FILE NAMES below  
-%%     inside braces must correspond to a file with extension 
-%%     ".tex" and located in the "Chapters" folder
-%%------------------------------------------------------------
-
-%%------------------------------------------------------------
-% BibTeX bibiography files and customization.  
-%   May be used multiple times with a single file nae each time.
-%   syntax: \ntaddfile{bib}{filename.bib}
-\ntaddfile{bib}{bibliography.bib}
-%\ntaddfile{bib}{anotherbibfile.bib}
-
-%%------------------------------------------------------------
-% File with the dedicatory text. Will only be considered for final documents,
-%   i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
-%   syntax: \ntaddfile{dedicatory}{filename}
-\ntaddfile{dedicatory}{dedicatory}
-
-%%------------------------------------------------------------
-% File with the acknowledgments text. Will only be considered for final documents,
-%   i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
-%   syntax: \ntaddfile{acknowledgements}{filename}
-\ntaddfile{acknowledgements}{acknowledgements}
-
-%%------------------------------------------------------------
-% File with the quote text. Will only be considered for final documents,
-%   i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
-%   syntax: \ntaddfile{quote}{filename}
-\ntaddfile{quote}{quote}
-
-%%------------------------------------------------------------
-% Abstract files in multiple languages
-%   syntax: \ntaddfile{abstract}[language]{filename}
-\ntaddfile{abstract}[pt]{abstract-pt}  % Abstract in Portuguese
-\ntaddfile{abstract}[en]{abstract-en}  % Abstract in English
-% \ntaddfile{abstract}[fr]{abstract-fr}  % Abstract in French
-
-%%------------------------------------------------------------
-% Lists of Glossary, Acronyms and Symbols
-%   syntax: \ntaddfile{glossaries}[list-type]{filename}
-\ntaddfile{glossaries}[glossary]{glossary}
-\ntaddfile{glossaries}[acronyms]{acronyms}
-\ntaddfile{glossaries}[symbols]{symbols}
-
-%%------------------------------------------------------------
-% Main text - document chapters
-%   syntax: \ntaddfile{chapter}{filename}
-\ntaddfile{chapter}{chapter1}
-\ntaddfile{chapter}{chapter2}
-\ntaddfile{chapter}{chapter3}
-% \ntaddfile{chapter}{chapter4}
-% \ntaddfile{chapter}{chapter-last}
-
-%%------------------------------------------------------------
-% Text appendixes 
-% syntax: \ntaddfile{appendix}{filename}
-\ntaddfile{appendix}{appendix1}
-\ntaddfile{appendix}{appendix2}
-
-%%------------------------------------------------------------
-% Text annexes
-% syntax: \ntaddfile{annex}{filename}
-\ntaddfile{annex}{annex1}
-% \ntaddfile{annex}{annex2}
-
-%%------------------------------------------------------------
-% Definition of the aftercover page, to be printed before the copyright
-% syntax: \ntaddfile{aftercover}{filename}
-% \ntaddfile{aftercover}{aftercover-nova-ims}
-
-
-
-%=============================================================================
-% WHICH INDEXES TO PRINT?
-%=============================================================================
-%%------------------------------------------------------------
-% syntax: \ntaddindex{index-name}
-\ntaddindex{tableofcontents}    % The Table of Contents. Probably you want ot leave this as is! ;)
-\ntaddindex{listoffigures}      % The List of Figures. Comment to omit.
-\ntaddindex{listoftables}       % The List of Tables. Comment to omit.
-\ntaddindex{listoflistings}     % The List of Listings. Comment to omit.
-\ntaddindex{listsofglossaries}  % The Glossary, and the lists of Acronyms and Symbols
-
-%%============================================================
-%%  END OF TEMPLATE CUSTOMIZATION
-%%  PLEASE DO NOT TOUCH BELOW THIS POINT…
-%%============================================================
 
 
 
@@ -442,8 +119,107 @@
 %%  IF YOU DO… YOU DESERVE WHATEVER HAPPENS AFTERWARDS!
 %%============================================================
 
+
+
+
+
+
+
+%%------------------------------------------------------------
+%% All class options will be passed to “memoir”.
+%% See “memoir” manual for more options.
+\documentclass[a4paper, 11pt]{novathesis}
+
+  
+%%============================================================
+%%  TEMPLATE CUSTOMIZATION / OPTIONS
+%%      Please open and edit the appropriate
+%       configuration file “Config/1_novathesis.tex”
+%%============================================================
+\input{Config/1_novathesis}
+\NTRunHook{novathesis}
+
+
+%%============================================================
+%% BIBLATEX CONFIGURATION
+%%      Please open and edit the appropriate
+%       configuration file “Config/2_biblatex.tex”
+%%============================================================
+\input{Config/2_biblatex}
+\NTRunHook{biblatex}
+
+
+%%============================================================
+% Degree customization
+%   Please open and edit the appropriate
+%       configuration file “Config/3a_degree_phd.tex”
+%       or “Config/3b_degree_msc.tex”
+%       or “Config/3c_degree_other.tex”
+%%============================================================
+\ifphddoc{% Standard names for PhD programs
+  \input{Config/3a_degree_phd}%
+  \NTRunHook{degree_phd}
+}{\ifmscdoc{% Standard names for MSc programs
+  \input{Config/3b_degree_msc}%
+  \NTRunHook{degree_msc}
+}{% Customizable name for any other program
+  \input{Config/3c_degree_other}%
+  \NTRunHook{degree_other}
+}}
+
+
+%%============================================================
+% DEPARTMENT CONFIGURATION
+%   Please open and edit the appropriate
+%       configuration file “Config/4_department.tex”
+%%============================================================
+\input{Config/4_department}
+\NTRunHook{department}
+
+
+%%============================================================
+%%  THESIS/DISSERTATION COVER DATA (title, author, etc)
+%   Please open and edit the appropriate
+%       configuration file “Config/5_cover.tex”
+%%============================================================
+\input{Config/5_cover}
+\NTRunHook{cover}
+
+
+%%============================================================
+%%  THESIS/DISSERTATION FILES
+%   Please open and edit the appropriate
+%       configuration file “Config/6_files.tex”
+%%============================================================
+\input{Config/6_files}
+\NTRunHook{files}
+
+
+%%============================================================
+%%  WHICH LIST_OF TO PRINT
+%   Please open and edit the appropriate
+%       configuration file “Config/7_list_of.tex”
+%%============================================================
+\input{Config/7_list_of}
+\NTRunHook{list_of}
+
+
+%%============================================================
+%% ADDITIONAL PACKAGES and MACROS
+%%      Please open and edit the appropriate
+%       configuration file “Config/8_packages.tex”
+%%============================================================
+\input{Config/8_packages}
+\NTRunHook{packages}
+
+
+
+
+
 %%------------------------------------------------------------
 \begin{document}        % Beginning of document
+
+% \optionshowall
 
 %%------------------------------------------------------------
 \thesisfrontmatter      % Before the main text (TOC, etc) — Roman page numbering
@@ -467,7 +243,7 @@
                         %   "\ntprintbib[title=⟨title⟩]" to redefine the title!
 \ntprintappendixes      % Print appendixes, if any!
 \ntprintannexes         % Print appendixes, if any!
-\ntprintbackcoverpage   % Print the back cover, if any!
+\ntprintbackcover       % Print the back cover, if any!
 
 %%------------------------------------------------------------
 \end{document}          % End of document

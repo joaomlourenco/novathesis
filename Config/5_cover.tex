@@ -1,0 +1,102 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Config/5_cover.tex
+%% NOVA thesis configuration file
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE Config/5_cover.tex}
+
+%%============================================================
+%%  THESIS/DISSERTATION COVER DATA
+%%============================================================
+
+%%------------------------------------------------------------
+% Thesis/Dissertation title (valid for all languages unless redefined as below)
+%   syntax: \nttitle{title}
+\nttitle{A Very Long and Impressive\\Thesis Title with a Forced Line Break}%
+%   \nttitle{A Very Long and Impressive Thesis Title}%
+%   \nttitle[en]{The title in a Specific language}%
+
+%%------------------------------------------------------------
+% Thesis/Dissertation subtitle (valid for all languages unless redefined as below)
+%   syntax: \nttitle{title}
+\ntsubtitle{Some thoughts on the Life, the Universe,\\and Everything Else}%
+%   \ntsubtitle{Some thoughts on the Life and the Universe}%
+%   \nttitle[en]{The title in a Specific language}%
+
+%%------------------------------------------------------------
+% Department customization
+%   DON'T TOUCH HERE! Please open and edit the
+%   configuration file “Config/department_name.tex”
+
+%%------------------------------------------------------------
+% Degree customization
+%   DON'T TOUCH HERE! Please open and edit the appropriate
+%   configuration file “Config/degree_name_phd.tex”
+%   or “Config/degree_name_msc.tex”
+%   or “Config/degree_name_other.tex”
+
+%%------------------------------------------------------------
+% Degree customization
+%   If the degree includes a specialization
+%   syntax: \ntspecialization(language){name}
+\ntspecialization(pt){\embrace{Designação da Especialidade}}
+\ntspecialization(en){\embrace{Speciality Name}}
+
+%%------------------------------------------------------------
+% Sponsors
+%   Some Schools require the work sponsors to be listed in the cover
+%   syntax: \ntsponsors(language){names}
+\ntsponsors(pt){\embrace{Fontes de Financiamento}}
+\ntsponsors(en){\embrace{Funding Sponsors}}
+
+%%------------------------------------------------------------
+% Author full name, abbreviated name, and gender
+%   use [f] for female and [m] for male author
+%   syntax: \ntauthorname(language){full name}{abbreviated name}
+\ntauthorname[m]{John Very Longname Doe}{John Doe}
+
+%%------------------------------------------------------------
+% Author previous degree
+%   syntax: \ntauthordegree{degree}
+\ntauthordegree{Master in \embrace{name of previous degree}}
+
+%%------------------------------------------------------------
+% Submission date
+%   syntax: \ntdatemonth{month}
+%           \ntdateyear{year}
+\ntdatemonth{\embrace{month}}
+\ntdateyear{\embrace{year}}
+
+%%------------------------------------------------------------
+% Advisers' gender and info (name, position, school, etc)
+%   use [f] for female and [m] for male
+%   use "\\" to break the lines in the appropriate place
+%   syntax: \ntaddperson{adviser}[gender]{Name, Position, School}
+\ntaddperson{adviser}[f]{{Mary Doe Adviser Name, Full Professor, \\NOVA University Lisbon}}
+% \ntaddperson{adviser}[f]{{Mary Doe other Adviser Name, Full Professor, NOVA University Lisbon}}
+% \ntaddperson{adviser}[f]{{Mary Doe yet another Adviser Name, Full Professor, NOVA University Lisbon}}
+
+%%------------------------------------------------------------
+% Co-Advisers' gender and info (name, position, school, etc)
+%   use [f] for female and [m] for male
+%   use "\\" to break the lines in the appropriate place
+%   syntax: \ntaddperson{coadviser}[gender]{Name, Position, School}
+\ntaddperson{coadviser}[f]{John Doe Co-Adviser Name, Associate Professor, \\NOVA University Lisbon}
+\ntaddperson{coadviser}[f]{John Doe other Co-Adviser Name, Full Professor, \\NOVA University Lisbon}
+
+%%------------------------------------------------------------
+% Committee members
+%   For [role] use: [c] for committee chair
+%                   [r] for rapporteurs
+%                   [a] for advisers
+%                   [m] for remaining members
+%                   [g] for guests
+%   syntax: \ntaddperson{committee}[role,gender]{Name, Position, School}
+\ntaddperson{committee}[c,m]{Name of the committee chairperson, Full Professor, FCT-NOVA}
+\ntaddperson{committee}[r,m]{Name of a rapporteur, Associate Professor, \\Another University}
+% \ntaddperson{committee}[r,m]{Name of another rapporteur, \\Assistant Professor, Another University}
+\ntaddperson{committee}[a,m]{Name of the adviser present in defense, Associate Professor, \\Some University}
+\ntaddperson{committee}[m,f]{Yet another member of the committee, Full Professor, \\Another University}
+\ntaddperson{committee}[m,f]{Yet another member of the committee, Assistant Professor, \\Another University}
+% \ntaddperson{committee}[g,m]{Guest member of the committee, Position, University}

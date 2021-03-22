@@ -5,11 +5,11 @@
 %% Customization for ESEP/ESENF (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE esep/defaults.ldf}
+\typeout{NT FILE esep/defaults.ldf}
 
 %%% RGB = 41, 141, 187
 
-% \nttitle[en]{Please define the title in english with \verb|\nttitle[en]{THE TITLE}|}
+\nttitle[en]{Please define the title in english with \verb|\nttitle[en]{THE TITLE}|}
 
 % Univesity
 \university(pt):={Escola Superior de Enfermagem do Porto}
@@ -18,10 +18,10 @@
 \university(it):={Escola Superior de Enfermagem do Porto}%%TBD
 
 % Faculty / School
-\faculty(pt):={Escola Superior de Enfermagem do Porto}
-\faculty(en):={Nursing School of Porto}%%TBD
-\faculty(fr):={Escola Superior de Enfermagem do Porto}%%TBD
-\faculty(it):={Escola Superior de Enfermagem do Porto}%%TBD
+\school(pt):={Escola Superior de Enfermagem do Porto}
+\school(en):={Nursing School of Porto}%%TBD
+\school(fr):={Escola Superior de Enfermagem do Porto}%%TBD
+\school(it):={Escola Superior de Enfermagem do Porto}%%TBD
 
 % Scientific filed
 \majorfield(pt):={«Área Científica»}
@@ -75,31 +75,31 @@
 
 % Set margins for cover pages
 \margin(phd,top):={1.0cm}
-\margin(phd,bottom):={1.0cm}
+\margin(phd,bottom):={1.5cm}
 \margin(phd,left):={7cm}
 \margin(phd,right):={0.5cm}
 \margin(phdplan,top):={1.0cm}
-\margin(phdplan,bottom):={1.0cm}
+\margin(phdplan,bottom):={1.5cm}
 \margin(phdplan,left):={1.0cm}
 \margin(phdplan,right):={1.0cm}
 \margin(phdprop,top):={1.0cm}
-\margin(phdprop,bottom):={1.0cm}
+\margin(phdprop,bottom):={1.5cm}
 \margin(phdprop,left):={1.0cm}
 \margin(phdprop,right):={1.0cm}
 \margin(msc,top):={1.0cm}
-\margin(msc,bottom):={0.0cm}
+\margin(msc,bottom):={1.5cm}
 \margin(msc,left):={7cm}
 \margin(msc,right):={0.5cm}
 \margin(mscplan,top):={1.0cm}
-\margin(mscplan,bottom):={1.0cm}
+\margin(mscplan,bottom):={1.5cm}
 \margin(mscplan,left):={1.0cm}
 \margin(mscplan,right):={1.0cm}
 \margin(bsc,top):={1.0cm}
-\margin(bsc,bottom):={1.0cm}
+\margin(bsc,bottom):={1.5cm}
 \margin(bsc,left):={1.0cm}
 \margin(bsc,right):={1.0cm}
 \margin(plain,top):={1.0cm}
-\margin(plain,bottom):={1.0cm}
+\margin(plain,bottom):={1.5cm}
 \margin(plain,left):={1.0cm}
 \margin(plain,right):={1.0cm}
 
@@ -132,44 +132,38 @@
 }
 
 % ESEP logo
-\ntaddtocover[vspace=2.2cm]{%
-  \ntcoverbackground%
+\ntaddtocover[vspace=2.2cm]{1,2}{%
   \noindent%
   \fontsize{15}{15}\selectfont%
-  \textbf{\MakeTextUppercase{\thefaculty(\option{/novathesis/coverlang})}}
-  % \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty(\option{/novathesis/coverlang})}}%
+  \textbf{\MakeTextUppercase{\theschool(\option{/novathesis/coverlang})}}
+  % \expandafter\MakeUppercase\expandafter{\textbf{\theschool(\option{/novathesis/coverlang})}}%
 }
 
-% % Degree name
-\ntaddtocover[vspace=0.5cm]{%
+% Degree name
+\ntaddtocover[vspace=0.5cm]{1,2}{%
   \fontsize{15}{15}\selectfont
   \thedegreename(\option{/novathesis/coverlang})
 }
 
-% % Title of Dissertation 1
-\ntaddtocover[cover=1, vspace=6.5cm]{%
-  \begin{minipage}[t][4cm][t]{\textwidth}
+% Title of Dissertation 1
+\ntaddtocover[ vspace=6.5cm, height=4cm, inalign=t]{1}{%
     \centering%
     \fontsize{15}{15}\selectfont%
     \thecovertitle[caps]\\[1ex]%
     \fontsize{12}{12}\selectfont%
     Dissertação%
-  \end{minipage}%
 }
 
 % % Title of Dissertation 2
-\ntaddtocover[cover=2, vspace=6.5cm]{%
-  % \fontseries{mc}
-  \begin{minipage}[t][4cm][t]{\textwidth}
+\ntaddtocover[ vspace=6.5cm, height=4cm, inalign=t]{2}{%
     \centering%
     \fontsize{15}{15}\selectfont\scshape%
-    \thecovertitle\\[1ex]
-    \thecovertitle[en]
-  \end{minipage}%
+    \thecovertitle\\[1ex]%
+    \thecovertitle[en]%
 }
 
 % Advisers 2
-\ntaddtocover[cover=2, vspace=2cm]{%
+\ntaddtocover[ vspace=2cm]{2}{%
   % \fontseries{mc}
   \parbox[t][4cm]{\textwidth}{%
     \centering%
@@ -177,20 +171,20 @@
     \parbox{0.80\textwidth}{\ntprintadvisers[0.75]}%
   }%
 }
-\ntaddtocover[cover=1, vspace=2cm]{%
+\ntaddtocover[ vspace=2cm]{1}{%
   \parbox[t][4cm]{\textwidth}{%
   ~%
   }%
 }
 
 % Author name
-\ntaddtocover[vspace=1]{%
+\ntaddtocover[vspace=1]{1,2}{%
   \fontsize{12}{12}\selectfont
   \textbf{\theauthorname}
 }
 
 % Date
-\ntaddtocover[vspace=2]{%
+\ntaddtocover[vspace=2]{1,2}{%
   \fontsize{12}{12}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
@@ -199,30 +193,26 @@
   \fi
 }
 
-% % Final space
-\ntaddtocover[vspace=1cm]{%
-  ~
-}
 %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %% Draw the second cover page
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % % ESEP logo
-% \ntaddtocover[cover=2, vspace=2.2cm]{%
+% \ntaddtocover[ vspace=2.2cm]{2}{%
 %   \ntcoverbackground
 %   \fontsize{15}{15}\selectfont
-%   \expandafter\MakeUppercase\expandafter{\textbf{\thefaculty(\option{/novathesis/coverlang})}}
+%   \expandafter\MakeUppercase\expandafter{\textbf{\theschool(\option{/novathesis/coverlang})}}
 % }
 %
 % % % Degree name
-% \ntaddtocover[cover=2, vspace=0.5cm]{%
+% \ntaddtocover[ vspace=0.5cm]{2}{%
 %   \fontsize{15}{15}\selectfont
 %   \thedegreename(\option{/novathesis/coverlang})
 % }
 %
 % % % Title of Dissertation
-% \ntaddtocover[cover=2, vspace=6.5cm]{%
+% \ntaddtocover[ vspace=6.5cm]{2}{%
 %   % \fontseries{mc}
 %   \fontsize{15}{15}\selectfont
 %   \scshape
@@ -231,13 +221,13 @@
 % }
 %
 % % Author name
-% \ntaddtocover[cover=2, vspace=1]{%
+% \ntaddtocover[ vspace=1]{2}{%
 %   \fontsize{12}{12}\selectfont
 %   \textbf{\theauthorname}
 % }
 %
 % % Date
-% \ntaddtocover[cover=2, vspace=1]{%
+% \ntaddtocover[ vspace=1]{2}{%
 %   \fontsize{12}{12}\selectfont
 %   \ifdraftdoc
 %     \textbf{DRAFT: \today}
@@ -247,7 +237,7 @@
 % }
 %
 % % % Final space
-% \ntaddtocover[cover=2, vspace=1cm]{%
+% \ntaddtocover[ vspace=1cm]{2}{%
 %   ~
 % }
 %

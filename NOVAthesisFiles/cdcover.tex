@@ -3,10 +3,10 @@
 %% cdcover.tex
 %% NOVA thesis document template
 %%
-%% This work is licensed under the 
-%% Creative Commons Attribution-NonCommercial 4.0 International License. 
-%% To view a copy of this license, 
-%% visit http://creativecommons.org/licenses/by-nc/4.0/.
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
 %% Authors / Contributors:
 %%      - João Lourenço <joao.lourenco@fct.unl.pt>
@@ -16,7 +16,7 @@
 %% to reuse the information already provided in the file “template.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE cdcover.tex}
+\typeout{NT FILE cdcover.tex}
 
 
 % Draw the cdcover
@@ -26,7 +26,7 @@
 %% Inlay: 15.0cm x 11.8cm
 %% Inlay fold: 0,635cm + 13,73cm + 0,635cm
 
-\typeout{NT LOADING FILE cdcolver.ldf}
+\typeout{NT FILE cdcolver.ldf}
 
 \makeatletter
 
@@ -51,7 +51,10 @@
 	\setmarginnotes{0mm}{0mm}{0mm}
 	\checkandfixthelayout[fixed]
 
-  \AddToShipoutPictureBG*{\includegraphics[width=120mm]{cd-cover-std}}
+  % \AddToShipoutPictureBG*{\includegraphics[width=120mm]{cd-cover-std}}
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[inner sep=0] at (current page.center) {\includegraphics[width=120mm]{cd-cover-std}};
+  \end{tikzpicture}
 
 	\savebox{\cdcover@savebox}{%
 	\begin{minipage}[t][7.0cm]{9cm}
@@ -109,7 +112,10 @@
 	\setmarginnotes{0mm}{0mm}{0mm}
 	\checkandfixthelayout[fixed]
 
-  \AddToShipoutPictureBG*{\includegraphics[width=150mm]{cd-inlay-std}}
+  % \AddToShipoutPictureBG*{\includegraphics[width=150mm]{cd-inlay-std}}
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[inner sep=0] at (current page.center) {\includegraphics[width=120mm]{cd-inlay-std}};
+  \end{tikzpicture}
 
 	\savebox{\cdcover@savebox}{%
 	\begin{minipage}[t][8cm]{11cm}

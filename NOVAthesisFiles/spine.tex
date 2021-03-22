@@ -3,17 +3,17 @@
 %% spine.tex
 %% NOVA thesis document template
 %%
-%% This work is licensed under the 
-%% Creative Commons Attribution-NonCommercial 4.0 International License. 
-%% To view a copy of this license, 
-%% visit http://creativecommons.org/licenses/by-nc/4.0/.
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
 %% Authors / Contributors:
 %%      - João Lourenço <joao.lourenco@fct.unl.pt>
 %%      - Tomás Monteiro <monteiro.tomas@gmail.com>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE spine.tex}
+\typeout{NT FILE spine.tex}
 
 
 % Draw the book spine
@@ -302,9 +302,12 @@
 		}%
 	  }%
 	  \fi%
-	  \AddToShipoutPictureFG*{%
-      \AtStockLowerCenter{{\usebox{\@nt@spine@box}}}%
-	  }%
+    % \AddToShipoutPictureFG*{%
+    %       \AtStockLowerCenter{{\usebox{\@nt@spine@box}}}%
+    % }%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[inner sep=0] at (current page.center) {\usebox{\@nt@spine@box}};
+    \end{tikzpicture}
 	  ~% This space is important here so that the spine page is not empty anymore!
 	  % \clearforchapter%
 	}%
