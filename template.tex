@@ -158,14 +158,12 @@
 %%============================================================
 \ifphddoc{% Standard names for PhD programs
   \input{Config/3a_degree_phd}%
-  \NTRunHook{degree_phd}
 }{\ifmscdoc{% Standard names for MSc programs
   \input{Config/3b_degree_msc}%
-  \NTRunHook{degree_msc}
 }{% Customizable name for any other program
   \input{Config/3c_degree_other}%
-  \NTRunHook{degree_other}
 }}
+\NTRunHook{degree}
 
 
 %%============================================================
