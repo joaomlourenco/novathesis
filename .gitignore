@@ -294,6 +294,13 @@ TSWLatexianTemp*
 # glossaries
 *.glstex
 
+# latexmk watcher
+.*.watcher_pid
+
+### Word ###
+~*
+
+
 ### Linux ###
 *~
 

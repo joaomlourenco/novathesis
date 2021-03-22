@@ -5,7 +5,7 @@
 %% Customization for NOVA-IMS (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE nova/ims/defaults.ldf}
+\typeout{NT FILE nova/ims/defaults.ldf}
 
 % Univesity
 \university(pt):={Universidade NOVA de Lisboa}
@@ -14,10 +14,10 @@
 \university(it):={NOVA University Lisbon}
 
 % Faculty / School
-\faculty(pt):={Information Management School}
-\faculty(en):={Information Management School}
-\faculty(fr):={Information Management School}
-\faculty(it):={Information Management School}
+\school(pt):={Information Management School}
+\school(en):={Information Management School}
+\school(fr):={Information Management School}
+\school(it):={Information Management School}
 
 % Scientific filed
 \majorfield(pt):={Gestão de Informação}
@@ -193,101 +193,100 @@ of the requirements for the degree of %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   % PHD PROGRAM
-\newcommand{\novaimscoverphd}{%
-  \ntaddtocover[align=l, vspace=0cm]{%
-    \ntcoverbackground%
-  }
-  % INFORMATION MANAGEMENT
-  \ntaddtocover[align=l, vspace=0cm]{%
-    \fontsize{16}{16}\selectfont%
-    \textcolor{imsdarkgrey}{\textbf{\themajorfield(\option{/novathesis/coverlang})}}%
-  }
-  % SPECIALIZATION IN
-  \ntaddtocover[align=l, vspace=0,7cm]{%
-    \fontsize{16}{16}\selectfont
-    \textcolor{imsmidgrey}{%
-      \textbf{\thespecializationstr(\option{/novathesis/coverlang})
-      \thespecialization(\option{/novathesis/coverlang})}%
-    }%
-  }
-  % DISSERTATION TITLE
-  \ntaddtocover[align=l, vspace=1.8cm]{%
-    \fontsize{16}{16}\selectfont%
-    \textcolor{imsdarkgrey}{\textbf{\thecovertitle}}%
-  }
-  % AUTHOR NAME
-  \ntaddtocover[align=l, vspace=0.4cm]{%
-    \fontsize{14}{14}\selectfont%
-    \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
-  }
-  % DISSERTATION TEXT
-  \ntaddtocover[align=l, vspace=5]{%
-    \fontsize{14}{14}\selectfont%
-    \textcolor{imsdarkgrey}{%
-      \thedissertationstr(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
-    }%
+% \ntaddtocover[ align=l, vspace=0cm, degree=phd]{1,2}{%
+%   \ntcoverbackground%
+% }
+% INFORMATION MANAGEMENT
+\ntaddtocover[ align=l, vspace=0cm, degree=phd]{1,2}{%
+  \fontsize{16}{16}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\themajorfield(\option{/novathesis/coverlang})}}%
+}
+% SPECIALIZATION IN
+\ntaddtocover[ align=l, vspace=0.7cm, degree=phd]{1,2}{%
+  \fontsize{16}{16}\selectfont
+  \textcolor{imsmidgrey}{%
+    \textbf{\thespecializationstr(\option{/novathesis/coverlang})
+    \thespecialization(\option{/novathesis/coverlang})}%
   }%
-  % DATE
-  \ntaddtocover[align=l, vspace=1cm]{%
-    \fontsize{11}{11}\selectfont%
-    \textcolor{imsdarkgrey}{\textbf{%
-      \ifdraftdoc%
-        DRAFT: \today%
-      \else%
-        \thentdatemonth, \thentdateyear%
-      \fi%
-    }}%
-  }
-  % SCHOOL
-  \ntaddtocover[align=l, vspace=1cm]{%
-    \fontsize{11}{11}\selectfont%
-    \textcolor{imsdarkgrey}{\textbf{\thefaculty(en)}}%
-  }
-  % UNIVERSITY
-  \ntaddtocover[align=l, vspace=0.0cm]{%
-    \fontsize{11}{11}\selectfont%
-    \textcolor{imsdarkgrey}{\theuniversity(\option{/novathesis/coverlang})}%
-  }
+}
+% DISSERTATION TITLE
+\ntaddtocover[ align=l, vspace=1.8cm, degree=phd]{1,2}{%
+  \fontsize{16}{16}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\thecovertitle}}%
+}
+% AUTHOR NAME
+\ntaddtocover[ align=l, vspace=0.4cm, degree=phd]{1,2}{%
+  \fontsize{14}{14}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
+}
+% DISSERTATION TEXT
+\ntaddtocover[ align=l, vspace=5, degree=phd]{1,2}{%
+  \fontsize{14}{14}\selectfont%
+  \textcolor{imsdarkgrey}{%
+    \thedissertationstr(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+  }%
+}%
+% DATE
+\ntaddtocover[ align=l, vspace=1cm, degree=phd]{1,2}{%
+  \fontsize{11}{11}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{%
+    \ifdraftdoc%
+      DRAFT: \today%
+    \else%
+      \thentdatemonth, \thentdateyear%
+    \fi%
+  }}%
+}
+% SCHOOL
+\ntaddtocover[ align=l, vspace=1cm, degree=phd]{1,2}{%
+  \fontsize{11}{11}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\theschool(en)}}%
+}
+% UNIVERSITY
+\ntaddtocover[ align=l, vspace=0.0cm, degree=phd]{1,2}{%
+  \fontsize{11}{11}\selectfont%
+  \textcolor{imsdarkgrey}{\theuniversity(\option{/novathesis/coverlang})}%
 }
 
 
   % MSc PROGRAM
-\newcommand{\novaimscovermsc}{%
-  % % Title of Dissertation
-  \ntaddtocover[align=l, vspace=0cm]{%
-    \ntcoverbackground%
-  }
+% % Title of Dissertation
+% \ntaddtocover[ align=l, vspace=0cm, degree=msc]{1,2}{%
+%   \ntcoverbackground%
+% }
 
-  % % Title of Dissertation
-  \ntaddtocover[align=l, vspace=1]{%
-    \fontsize{17}{17}\selectfont%
-    \textcolor{imsdarkgrey}{\textbf{\thecovertitle}}\\[0.25ex]%
-    \fontsize{16}{16}\selectfont%
-    \textcolor{imslightgrey}{\thespecialization(\option{/novathesis/coverlang})}%
-  }
-
-  % Author name
-  \ntaddtocover[align=l, vspace=1]{%
-    \fontsize{15}{15}\selectfont%
-    \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
-  }
-
-  % Degree
-  \ntaddtocover[align=l, vspace=1]{%
-    \fontsize{14}{14}\selectfont%
-    \textcolor{imsdarkgrey}{\thepresentationtext}%
-  }
-
-  % Date
-  \ntaddtocover[vspace=1]{%
-    ~
-    % \fontsize{11}{11}\selectfont%
-    % \ifdraftdoc%
-    %   \textbf{DRAFT: \today}%
-    % \else%
-    %   \textbf{\thentdatemonth, \thentdateyear}%
-    % \fi%
-  }%
+% % Title of Dissertation
+\ntaddtocover[ align=l, vspace=1, degree=msc]{1,2}{%
+  \fontsize{17}{17}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\thecovertitle}}\\[0.25ex]%
+  \fontsize{16}{16}\selectfont%
+  \textcolor{imslightgrey}{\thespecialization(\option{/novathesis/coverlang})}%
 }
 
-\ifphddoc{\novaimscoverphd}{\novaimscovermsc}
+% Author name
+\ntaddtocover[ align=l, vspace=1, degree=msc]{1,2}{%
+  \fontsize{15}{15}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
+}
+
+% Degree
+\ntaddtocover[ align=l, vspace=1, degree=msc]{1,2}{%
+  \fontsize{14}{14}\selectfont%
+  \textcolor{imsdarkgrey}{\thepresentationtext}%
+}
+
+% Date
+\ntaddtocover[ vspace=1, degree=msc]{1,2}{%
+  ~
+  % \fontsize{11}{11}\selectfont%
+  % \ifdraftdoc%
+  %   \textbf{DRAFT: \today}%
+  % \else%
+  %   \textbf{\thentdatemonth, \thentdateyear}%
+  % \fi%
+}%
+
+
+% \ntaddtocover[cover=back]{back}{%
+%   \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},back)]
+% }

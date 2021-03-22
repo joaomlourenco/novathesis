@@ -5,7 +5,7 @@
 %% Customization for ISEL-IPL (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE ipl/isel/defaults.ldf}
+\typeout{NT FILE ipl/isel/defaults.ldf}
 
 % University
 \university(pt):={Instituto Politécnico de Lisboa}
@@ -14,10 +14,10 @@
 \university(it):={Polytechnic Institute of Lisbon}
 
 % Faculty / School
-\faculty(pt):={IInstituto Superior de Engenharia de Lisboa}
-\faculty(en):={Instituto Superior de Engenharia de Lisboa}
-\faculty(fr):={Instituto Superior de Engenharia de Lisboa}
-\faculty(it):={Instituto Superior de Engenharia de Lisboa}
+\school(pt):={Instituto Superior de Engenharia de Lisboa}
+\school(en):={Instituto Superior de Engenharia de Lisboa}
+\school(fr):={Instituto Superior de Engenharia de Lisboa}
+\school(it):={Instituto Superior de Engenharia de Lisboa}
 
 % Scientific field
 \majorfield(pt):={Engenharia e Gestão Industrial}
@@ -31,7 +31,7 @@
 \committeeorder(all):={c,r,a,m}% 
 
 % Cover background images
-\frontpageimage():={} % don't add the .jpg extension
+\frontpageimage():={logoISEL} % don't add the .jpg extension
 \thesiscover(phd,front):={}
 \thesiscover(phdplan,front):={}
 \thesiscover(phdprop,front):={}
@@ -98,9 +98,9 @@
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstr(phd,pt):={Dissertação para obtenção do Grau de %
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
-\copyrighttextstr(pt):={O \thefaculty(\option{/novathesis/coverlang})\ e o \theuniversity(\option{/novathesis/coverlang})\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+\copyrighttextstr(pt):={O \theschool(\option{/novathesis/coverlang})\ e o \theuniversity(\option{/novathesis/coverlang})\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
 
-\copyrighttextstr(en):={The \thefaculty(\option{/novathesis/coverlang})\ and the \theuniversity(\option{/novathesis/coverlang})\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+\copyrighttextstr(en):={The \theschool(\option{/novathesis/coverlang})\ and the \theuniversity(\option{/novathesis/coverlang})\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -119,7 +119,7 @@
 %\frenchspacing
 
 % Fazer indentação parágrafos
-\setlength{\parindent}{17pt}
+% \setlength{\parindent}{17pt}
 
 % Corrigir distância entre número de secção (e.g. ``3.10'' e título da mesma)
 % Para ver info no manual, procurar por cftKnumwidth em que K é o tipo da entrada (capítulo, section, ...)
@@ -173,33 +173,33 @@
 }
 
 % LOGO
-\ntaddtocover[vspace=0cm]{%
-  \includegraphics[width=2cm]{logoISEL}%
+\ntaddtocover[vspace=0cm,align=c]{1,2}{%
+  \includegraphics[height=1.5cm]{logoISEL}%
 }
 
-% School
-\ntaddtocover[vspace=0.5cm]{%
+% School%
+\ntaddtocover[vspace=0cm]{1,2}{%
   \fontsize{13}{13}\selectfont%
-  \textbf{\MakeUppercase{\thefaculty(\option{/novathesis/coverlang})}}\\%
+  \textbf{\MakeUppercase{\theschool(\option{/novathesis/coverlang})}}\\%
   \fontsize{10}{10}\selectfont%
   \textbf{\MakeUppercase{\thedepartment(\option{/novathesis/coverlang})}}%
 }
 
-\ntaddtocover[vspace=0.5cm]{%
-  % \typeout{thefrontpageimage=\thefrontpageimage()}
-  \ifthenelse{\isempty{\thefrontpageimage()}}%
-    {}%
-    {\includegraphics[width=12cm,  height=8cm]{\thefrontpageimage()}}%
+\ntaddtocover[vspace=0.5cm,height=8cm,inalign=c]{1,2}{%
+  % \typeout{NT thefrontpageimage=[\thefrontpageimage()]}
+  \ifaaempty{frontpageimage}()
+    {~}%
+    {\includegraphics[height=8cm]{\thefrontpageimage()}}%
 }
 
 % % Title of Dissertation
-\ntaddtocover[vspace=1]{%
+\ntaddtocover[vspace=1]{1,2}{%
   \fontsize{18}{20}\selectfont%
   \textbf{\thecovertitle}%
 }
 
 % Author name
-\ntaddtocover[vspace=1]{%
+\ntaddtocover[vspace=1]{1,2}{%
   \fontsize{16}{16}\selectfont%
   \textbf{\theauthorname}\\[1ex]
   \fontsize{14}{14}\selectfont%
@@ -207,33 +207,33 @@
 }
 
 % Degree
-\ntaddtocover[vspace=1]{%
+\ntaddtocover[vspace=1]{1,2}{%
   \fontsize{12}{12}\selectfont%
   \thepresentationtext%
 }
 
 % Advisers
-\ntaddtocover[vspace=2]{%
-  \adviserstrfont(\option{/novathesis/coverlang}):={\bfseries}%
-  \coadviserstrfont(\option{/novathesis/coverlang}):={\bfseries}%
+\ntaddtocover[vspace=2]{1,2}{%
+  \def\theadviserstrfont{\bfseries}%
+  \def\thecoadviserstrfont{\bfseries}%
   \fontsize{11}{11}\selectfont%
   \ntprintadvisers%
 }
 
 
 % Committee — only print the committee for the main classes
-\ntaddtocover[vspace=1]{%
+\ntaddtocover[vspace=1]{1,2}{%
   \ifmaindoc{%
-    \committeetitlestrfont(\option{/novathesis/coverlang}):={\fontsize{14}{14}\selectfont\bfseries}%
-    \committeememberstrfont(\option{/novathesis/coverlang}):={\bfseries}%
-    \fontsize{11}{11}\selectfont\ntprintcommittee%
+    \def\thecommitteetitlestrfont{\fontsize{14}{14}\selectfont\bfseries}%
+    \def\thecommitteememberstrfont{\bfseries}%
+    \fontsize{11}{11}\selectfont\ntprintcommittee[1.0]%
   }%
   {}%
 }
 
 
 % Date
-\ntaddtocover[vspace=1]{%
+\ntaddtocover[vspace=1]{1,2}{%
   \fontsize{10}{10}\selectfont%
   \ifdraftdoc%
     \textbf{DRAFT: \today}%

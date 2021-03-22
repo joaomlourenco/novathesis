@@ -2,10 +2,10 @@
 %% cdcover.tex
 %% NOVA thesis document template
 %%
-%% This work is licensed under the 
-%% Creative Commons Attribution-NonCommercial 4.0 International License. 
-%% To view a copy of this license, 
-%% visit http://creativecommons.org/licenses/by-nc/4.0/.
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
 %% Authors / Contributors:
 %%      - João Lourenço <joao.lourenco@fct.unl.pt>
@@ -15,7 +15,7 @@
 %% to reuse the information already provided in the file “template.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE nova/fct/FontStyles/cdcover.tex}
+\typeout{NT FILE nova/fct/FontStyles/cdcover.tex}
 
 
 % Draw the cdcover
@@ -54,7 +54,11 @@
   %     }%
   %     {\AddToShipoutPictureBG*{\includegraphics[width=120mm]{cd-cover-phd}}}
   %     {\AddToShipoutPictureBG*{\includegraphics[width=120mm]{cd-cover-msc}}}
-  \AddToShipoutPictureBG*{\includegraphics[width=120mm]{\@nameuse{thesiscover\novathesis@opt@docdegree,cdfront}}}
+  % \AddToShipoutPictureBG*{\includegraphics[width=120mm]{\@nameuse{thesiscover\novathesis@opt@docdegree,cdfront}}}
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[inner sep=0] at (current page.center) 
+                      {\includegraphics[width=120mm]{\@nameuse{thesiscover\novathesis@opt@docdegree,cdfront}}};
+  \end{tikzpicture}
 
 	\savebox{\cdcover@savebox}{%
 	\begin{minipage}[t][7.0cm]{9cm}
@@ -122,7 +126,11 @@
   %     }%
   %     {\AddToShipoutPictureBG*{\includegraphics[width=150mm]{cd-inlay-phd}}}
   %     {\AddToShipoutPictureBG*{\includegraphics[width=150mm]{cd-inlay-msc}}}
-  \AddToShipoutPictureBG*{\includegraphics[width=150mm]{\@nameuse{thesiscover\novathesis@opt@docdegree,cdinlay}}}
+  % \AddToShipoutPictureBG*{\includegraphics[width=150mm]{\@nameuse{thesiscover\novathesis@opt@docdegree,cdinlay}}}
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[inner sep=0] at (current page.center)
+                       {\includegraphics[width=150mm]{\@nameuse{thesiscover\novathesis@opt@docdegree,cdinlay}}};
+  \end{tikzpicture}
   
 	\savebox{\cdcover@savebox}{%
 	\begin{minipage}[t][8cm]{11cm}
@@ -192,9 +200,12 @@
       \end{tabular}
     }
 	}
-  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
-\put(0.5,\LenToUnit{0.5\paperheight}){\rotatebox[origin=c]{90}{{\usebox{\cdcover@savebox@spineone}}}}%
-    }%
+%   \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+% \put(0.5,\LenToUnit{0.5\paperheight}){\rotatebox[origin=c]{90}{{\usebox{\cdcover@savebox@spineone}}}}%
+%     }%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[inner sep=0] at (current page.center) {\rotatebox[origin=c]{90}{{\usebox{\cdcover@savebox@spineone}}}};
+  \end{tikzpicture}
 
   \savebox{\cdcover@savebox@spinetwo}{%
     \fontfamily{phv}\fontsize{9}{9}\selectfont
@@ -214,9 +225,12 @@
     }
   }
   \settototalheight{\novathesis@cd@box@height}{\usebox{\cdcover@savebox@spinetwo}}%
-  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
-\put(\LenToUnit{\paperwidth-\novathesis@cd@box@height-0.5pt},\LenToUnit{0.5\paperheight}){\rotatebox[origin=c]{90}{{\usebox{\cdcover@savebox@spinetwo}}}}%
-    }%
+%   \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+% \put(\LenToUnit{\paperwidth-\novathesis@cd@box@height-0.5pt},\LenToUnit{0.5\paperheight}){\rotatebox[origin=c]{90}{{\usebox{\cdcover@savebox@spinetwo}}}}%
+%     }%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[inner sep=0] at (current page.center) {\rotatebox[origin=c]{90}{{\usebox{\cdcover@savebox@spinetwo}}}};
+  \end{tikzpicture}
   
 }
 

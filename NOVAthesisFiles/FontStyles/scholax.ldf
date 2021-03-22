@@ -5,7 +5,7 @@
 %% Customization of font to use a Linux Libertine font set
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE FontStyles/scholax.ldf}
+\typeout{NT FILE FontStyles/scholax.ldf}
 
 \RequirePackage[p,osf]{scholax}
 % T1 and textcomp are loaded by package. Change that here, if you want

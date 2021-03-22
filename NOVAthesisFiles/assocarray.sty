@@ -99,6 +99,9 @@
 \def\ifaadefined#1(#2){%
   \ifcsdef{@aa@#1@#2}%
 }
+\def\ifaaempty#1(#2){%
+  \ifcsvoid{@aa@#1@#2}%
+}
 \newcommand*{\assocarray}[1]{%
   \csdef{#1}(##1){\@ifnextchar:{\expandafter\@aa@def@ii#1\expandafter(##1)}{\expandafter\@aa@use@ii#1\expandafter(##1)}}%
   \newcounter{@aa@#1@cnt}%

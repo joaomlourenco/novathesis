@@ -6,7 +6,7 @@
 %% Packages to be loaded
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE packages.tex}
+\typeout{NT FILE packages.tex}
 
 \ifxetexorluatex
   % xelatex or lualatex
@@ -21,14 +21,17 @@
 \fi
 
 % Load additional symbols
-\RequirePackage[full]{textcomp}
+% \RequirePackage[full]{textcomp}
 
 %%%%% Configure multilingual language support
 \RequirePackage{csquotes}
 \RequirePackage{babel}			% Support for bilingual documents
+\RequirePackage{url}
 
 % \RequirePackage{appendix}
 
+% \RequirePackage{printlen}
+% \uselengthunit{mm}\printlength{\linewidth}
 
 %%%%% Fine tuning of typesetting
 \ifxeorlua{}{% pdflatex
@@ -45,97 +48,114 @@
   ]{microtype}
 }
 
-%%%%% Better support for calculations
+%%%%% Better support for string manipulation
 \RequirePackage{xstring}
 
-
-% To process lists and other stuff
-\RequirePackage{etoolbox}
-
-% To typeset text sideways
-% \RequirePackage{lscape}
 
 % To use a wide range of color names
 \RequirePackage[svgnames]{xcolor}%
 
 
-%%%%% LOAD THESE PACKAGES JUST AT THE ENF OF THE PREAMBLE 
-%%%%% AND BEFORE THE \BEGIN{DOCUMENT}
-% \novathesisAtEndClassFile{%
-  %%%%% Configure HyperRefs
-  % \RequirePackage[pdftex,usenames]{color}
-  % \RequirePackage[pdftex]{xcolor}
-  % \RequirePackage[usenames]{color}
-  \RequirePackage{colortbl}
-  \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
-% }
+\RequirePackage{colortbl}
+\definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
 
 
 %%%%% Configure Graphics
-\RequirePackage[nobeamer]{graphbox}
+\RequirePackage[nobeamer]{graphbox}% improved version of "graphicx"
 \graphicspath{{Chapters/Figures/}}
 \DeclareGraphicsExtensions{.pdf, .png, .jpg, .tif}
-\newcommand\appendtographicspath[1]{%
-  \gappto\Ginput@path{#1}%
-}
-\newcommand\prependtographicspath[1]{%
-  \gpreto\Ginput@path{#1}%
-}
+\newcommand\appendtographicspath[1]{\gappto\Ginput@path{#1}}
+\newcommand\prependtographicspath[1]{\gpreto\Ginput@path{#1}}
 
 
 % Add an image to the backgroung
 % Used to insert the background image in the cover page
-\RequirePackage{eso-pic}[2015/04/20]
-
+% \RequirePackage{eso-pic}[2015/04/20]% Replaced with "tikz"
 
 
 % Setup of listings, for more information check package manual
-\RequirePackage{listings}		% Fontification of source code listings
-\lstset{
-    captionpos=t,
-    basicstyle={\ttfamily\footnotesize},
-    numbers=left,
-    numberstyle={\ttfamily\tiny},
-    tabsize=2,
-    language=Java,
-    float,
-    frame=single,
-    columns=fullflexible,
-    breaklines=true,
-    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
-    inputencoding=utf8,
-    extendedchars=true,
-    literate=
-      {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
-      {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
-      {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
-      {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
-      {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
-      {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
-      {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
-      {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
-      {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
-      {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
-      {€}{{\EUR}}1 {£}{{\pounds}}1
-}
+% \RequirePackage{listings}    % Fontification of source code listings
+% \lstset{
+%     captionpos=t,
+%     basicstyle={\ttfamily\footnotesize},
+%     numbers=left,
+%     numberstyle={\ttfamily\tiny},
+%     tabsize=2,
+%     language=Java,
+%     float,
+%     frame=single,
+%     columns=fullflexible,
+%     breaklines=true,
+%     postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+%     inputencoding=utf8,
+%     extendedchars=true,
+%     literate=
+%       {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+%       {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+%       {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+%       {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+%       {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+%       {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+%       {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+%       {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+%       {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+%       {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+%       {€}{{\EUR}}1 {£}{{\pounds}}1
+% }
 
 
-% Cover design debugging
-\RequirePackage[type=none]{fgruler}
+\iftoggle{/novathesis/debugcover}{%
+  % Cover design debugging
+  \RequirePackage[type=none]{fgruler}
+}{}
+
+
+% Load book spine images in the background
+\RequirePackage{tikz}
+% \usetikzlibrary{backgrounds}
+% \RequirePackage{tikzpagenodes}
 
 
 % Flexible definition of new environments
 \RequirePackage{environ}
 
-% Fixing autoref in yperref
-\RequirePackage{fix-hyperref}
 
-% \AtEndPreamble{%
+% Refer to labels in external docuemnts
+% \RequirePackage{xr}
+
+
+% Fixing autoref in yperref
+\RequirePackage{NOVAthesisFiles/fix-hyperref}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% HOOKS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NTAddToHook{novathesis}{%
+  \prependtographicspath{{NOVAthesisFiles/Schools/\option{/novathesis/school}/Images/}}%
+  \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.ldf}{}%
+    {\PackageWarining{novathesis}%
+                     {Missing file “defaults.ldf” for ”\option{/novathesis/school}”}}%
+}
+
+\NTAddToHook{files}{%
+  %--------------------------------
+  % “biblatex” stuff
+  \ntaddfile{bib}{NOVAthesisFiles/fix-bib.ldf}%
+  \AtEndDocument{\nocite{ntmbib}}%
+  \letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
+  \RequirePackage[hyperref=auto,defernumbers=true,\@nt@biblatex@opts]{biblatex}%
+  \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
+  \optionlistdo{/@nt/file/bib/VAL}{%
+    \addbibresource{#1}%
+  }%
+  %--------------------------------
+  % “hyperref” stuff
   \RequirePackage[%
     , breaklinks%
     , colorlinks=true%
     , pdfdisplaydoctitle%
-    , unicode
+    , unicode%
   ]{hyperref}%
   \@nt@fixhyperref%
   \pdfstringdefDisableCommands{%
@@ -144,10 +164,15 @@
   }%
   \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
   \RequirePackage[all]{hypcap}%
-  % To handle subfigures
-  \newsubfloat{figure}%
-  % Manage glossaries
-  \RequirePackage[
+  %--------------------------------
+  % Define page layout - after hyperref
+  \RequirePackage{geometry}
+  %--------------------------------
+  % To handle subfigures - ????
+  \newsubfloat{figure}
+  %--------------------------------
+  % “glossasries” stuff - after hyperref
+  \RequirePackage[%
     % , nonumberlist
     , toc%
     , translate=babel%
@@ -156,10 +181,13 @@
     % , sanitizesort=false% allow \gls inside descriptions
     % , automake
   ]{glossaries-extra}% To create glossaries
-  \RequirePackage{glossary-xltabular}
+  \RequirePackage{NOVAthesisFiles/glossary-xltabular}%
   \setglossarystyle{xltabular}%
-  \setabbreviationstyle[acronym]{long-short}
+  \setabbreviationstyle[acronym]{long-short}%
   \renewcommand{\glsnamefont}[1]{\textbf{#1}}%
   \makenoidxglossaries% use TeX to sort
-  \AtEndPreamble{\iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}}
-% }
+  %--------------------------------
+  % “Process gnumberlist” option - after glossaries
+  \iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}%
+  \@loadglossaryfiles%
+}

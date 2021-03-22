@@ -5,7 +5,9 @@
 %% Customization for FCT-NOVA (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE nova/ensp/defaults.ldf}
+\typeout{NT FILE nova/ensp/defaults.ldf}
+
+\ntsetup{secondcover=true}
 
 % Univesity
 \university(pt):={Universidade NOVA de Lisboa}
@@ -14,10 +16,10 @@
 \university(it):={NOVA University Lisbon}
 
 % Faculty / School
-\faculty(pt):={Escola Nacional de Saúde Pública}
-\faculty(en):={National School of Public Heath}
-\faculty(fr):={Escola Nacional de Saúde Pública}
-\faculty(it):={Escola Nacional de Saúde Pública}
+\school(pt):={Escola Nacional de Saúde Pública}
+\school(en):={National School of Public Heath}
+\school(fr):={Escola Nacional de Saúde Pública}
+\school(it):={Escola Nacional de Saúde Pública}
 
 % Scientific filed
 \majorfield(pt):={«Área Científica»}
@@ -126,42 +128,42 @@
 }
 
 % ENSP logo
-\ntaddtocover[vspace=1cm]{%
+\ntaddtocover[vspace=1cm]{1,2}{%
   \noindent\includegraphics[width=0.4\textwidth]{nova-ensp-logo-pt}
 }
 
 % % Title of Dissertation
-\ntaddtocover[vspace=1]{%
+\ntaddtocover[vspace=1]{1,2}{%
   \fontsize{14}{14}\selectfont
   \textbf{\thecovertitle}
 }
 
 % % Title of Dissertation
-\ntaddtocover[vspace=1cm]{%
+\ntaddtocover[vspace=1cm]{1,2}{%
   \fontsize{14}{14}\selectfont
   \thedegreename(\option{/novathesis/coverlang})
 }
 
 % Author name
-\ntaddtocover[vspace=1]{%
+\ntaddtocover[vspace=1]{1,2}{%
   \fontsize{12}{12}\selectfont
   \textbf{\theauthorname}
 }
 
 % Degree
-\ntaddtocover[cover=2, vspace=1]{%
+\ntaddtocover[ vspace=1]{2}{%
   \fontsize{11}{11}\selectfont
   \thepresentationtext
 }
 
 % Advisers
-\ntaddtocover[cover=2, vspace=1]{%
+\ntaddtocover[ vspace=1]{2}{%
   \fontsize{12}{12}\selectfont
   \ntprintadvisers[0.75]
 }
 
 % Date
-\ntaddtocover[vspace=1]{%
+\ntaddtocover[vspace=1]{1,2}{%
   \fontsize{12}{12}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
@@ -171,6 +173,6 @@
 }
 
 % % Final space
-\ntaddtocover[vspace=1cm]{%
+\ntaddtocover[vspace=1cm]{2,3}{%
   ~
 }

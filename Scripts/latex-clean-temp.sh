@@ -5,3 +5,5 @@ LOCALIGN=latex-ignore.txt
 
 [ -f "$STDIGN" ] && rm -f `cat "$STDIGN" | xargs`
 [ -f "$LOCALIGN" ] && rm -f `cat "$LOCALIGN" | xargs`
+
+exit 0

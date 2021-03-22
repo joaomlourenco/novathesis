@@ -5,7 +5,7 @@
 %% Customization for FC-UL (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE ul/fc/defaults.ldf}
+\typeout{NT FILE ul/fc/defaults.ldf}
 
 \ifphddoc{\ntsetup{secondcover=true}}{}
 
@@ -16,10 +16,10 @@
 \university(it):={University of Lisbon}
 
 % Faculty / School
-\faculty(pt):={Faculdade de Ciências}
-\faculty(en):={Faculty of Sciences}
-\faculty(fr):={Faculty of Sciences}
-\faculty(it):={Faculty of Sciences}
+\school(pt):={Faculdade de Ciências}
+\school(en):={Faculty of Sciences}
+\school(fr):={Faculty of Sciences}
+\school(it):={Faculty of Sciences}
 
 % Department field
 \department(pt):={\embrace{Designação do Departamento}}
@@ -200,45 +200,45 @@
 }
 
 % School
-\ntaddtocover[height=2.5cm, inalign=t]{%
+\ntaddtocover[height=2.5cm, inalign=t]{1,2}{%
   \iftoggle{/novathesis/debugcover}{%
     \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/docstatus},\thecovernumber)]%
   }{}%
   \fontseries{mc}\fontsize{12}{12}\selectfont%
   \MakeUppercase{\theuniversity(\option{/novathesis/coverlang})}\\[2mm]%
-  \MakeUppercase{\thefaculty(\option{/novathesis/coverlang})}\\[2mm]%
+  \MakeUppercase{\theschool(\option{/novathesis/coverlang})}\\[2mm]%
   \ifmscdoc
 	 	{\MakeUppercase{\thedepartment(\option{/novathesis/coverlang})}}%
     {}%
 } 
 
 % Logo
-\ntaddtocover[vspace=0.5cm, height=5cm, inalign=t]{%
+\ntaddtocover[vspace=0.5cm, height=5cm, inalign=t]{1,2}{%
 	\ifphddoc%
     {\hspace*{7mm}\includegraphics[height=4.55cm]{logoFCUL}}%
     {\includegraphics[width=7cm]{logoFCUL2}}%
 }
 
 % PhD Title of Dissertation
-\ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.2cm, height=2cm]{%
+\ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.2cm, height=2cm]{1,2}{%
   \fontseries{mc}\fontsize{17}{17}\selectfont%
   \textbf{\thecovertitle}%
 }
 
 % MSc Title of Dissertation
-\ntaddtocover[degree=msc/mscplan, vspace=2.0cm, height=2cm]{%
+\ntaddtocover[degree=msc/mscplan, vspace=2.0cm, height=2cm]{1,2}{%
   \fontseries{mc}\fontsize{17}{17}\selectfont%
   \textbf{\thecovertitle}%
 }
 
 % Doc Status
-\ntaddtocover[degree=phd/phdprop/phdplan, vspace=0cm, height=1.9cm]{%
+\ntaddtocover[degree=phd/phdprop/phdplan, vspace=0cm, height=1.9cm]{1,2}{%
   \emph{\theprovisionalstring(\option{/novathesis/coverlang})}%
 }
 
 % Degree
 % In this position only if it is a phd doc;
-\ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.4cm, height=2.5cm]{%
+\ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.4cm, height=2.5cm]{1,2}{%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
   \thedegreename(\option{/novathesis/coverlang})
   \ifaadefined{specialization}(\option{/novathesis/coverlang})%
@@ -246,31 +246,17 @@
     {}%
 }%
 
-% \ifthenelse{%
-%   \equal{\option{/novathesis/docdegree}}{phd}%
-%   \OR\equal{\option{/novathesis/docdegree}}{phdprop}%
-%   \OR\equal{\option{/novathesis/docdegree}}{phdplan}}%
-% {
-%   \ntaddtocover[vspace=1]{%
-%     \fontseries{mc}\fontsize{13}{13}\selectfont%
-%     \textbf{\theauthordegree}\\%
-%     \ifthenelse{\isempty{\thespecialization(\option{/novathesis/coverlang})}}
-%       {}
-%       {\thespecialization(\option{/novathesis/coverlang})}
-%     \vspace{20mm}%
-%   }%
-% }%
-% {}
+
 %
 % Author name
-\ntaddtocover[vspace=3.0cm]{%
+\ntaddtocover[vspace=3.0cm]{1,2}{%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
   \theauthorname%
 }
 
 % Degree
 % In this position only if it is a MSc doc;
-\ntaddtocover[degree=msc/mscplan, vspace=1.8cm, height=2.5cm]{%
+\ntaddtocover[degree=msc/mscplan, vspace=1.8cm, height=2.5cm]{1,2}{%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
   \thedegreename(\option{/novathesis/coverlang})
   \ifaadefined{specialization}(\option{/novathesis/coverlang})%
@@ -279,19 +265,19 @@
 }%
 
 % Doc Status
-\ntaddtocover[degree=msc/mscplan, vspace=0cm, height=1.0cm]{%
+\ntaddtocover[degree=msc/mscplan, vspace=0cm, height=1.0cm]{1,2}{%
   \emph{\theprovisionalstring(\option{/novathesis/coverlang})}%
 }
 
 % Advisers
-\ntaddtocover[degree=phd/phdprop/phdplan, vspace=2.0cm]{%
+\ntaddtocover[degree=phd/phdprop/phdplan, vspace=2.0cm]{1,2}{%
   \fontsize{10}{10}\selectfont%
   \theadviserslabel(\option{/novathesis/docdegree},\option{/novathesis/coverlang})\\[3mm]%
   \ntprintadvisersaslist%
 }
 
 % Advisers
-\ntaddtocover[degree=msc/mscplan, vspace=1.0cm]{%
+\ntaddtocover[degree=msc/mscplan, vspace=1.0cm]{1,2}{%
   \fontsize{10}{10}\selectfont%
   \theadviserslabel(\option{/novathesis/docdegree},\option{/novathesis/coverlang})\\[3mm]%
   \ntprintadvisersaslist%
@@ -299,17 +285,17 @@
 %
 %
 % % Committee — only print the committee for the main classes
-% \ntaddtocover[vspace=1]{%
+% \ntaddtocover[vspace=1]{1,2}{%
 %     \ntprintcommittee%
 % }
 %
 
 % Sponsor
-\ntaddtocover[cover=1, height=1cm, vspace=2]{%
+\ntaddtocover[ height=1cm, vspace=2]{1}{%
   % \fontseries{mc}
   ~
 }
-\ntaddtocover[cover=2, height=1cm, vspace=2]{%
+\ntaddtocover[ height=1cm, vspace=2]{2}{%
   % \fontseries{mc}
   \fontsize{10}{10}\selectfont%
   \thesponsorsstr(\option{/novathesis/coverlang})%
@@ -317,14 +303,14 @@
 
 % Document purpose
 % Only if it is a phd doc;
-\ntaddtocover[degree=phd/phdprop/phdplan, vspace=1]{%
+\ntaddtocover[degree=phd/phdprop/phdplan, vspace=1]{1,2}{%
   % \fontseries{mc}
   \fontsize{10}{10}\selectfont%
   \thepresentationtext%
 }%
 
 % Date
-\ntaddtocover[vspace=1.4cm]{%
+\ntaddtocover[vspace=1.4cm]{1,2}{%
   % \fontseries{mc}
   \fontsize{14}{14}\selectfont%
   \ifdraftdoc%

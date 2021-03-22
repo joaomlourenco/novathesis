@@ -1,0 +1,48 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Config/2_biblatex.tex
+%% NOVA thesis configuration file
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE Config/2_biblatex.tex}
+
+%%============================================================
+%%  BIBLIOGRAPHY CUSTOMIZATION / OPTIONS
+%%============================================================
+
+%%------------------------------------------------------------
+% If it works, leave biber.  If it fails for you, try bibtex
+\ntbibsetup{backend=biber}
+% \ntbibsetup{backend=bibtex}
+
+%%------------------------------------------------------------
+%% Print only initials of given name
+\ntbibsetup{giveninits=true}
+
+%%------------------------------------------------------------
+%% At the end of each entry in the bibliography lists in which 
+%% page(s) this entry is cited. Comment if you do not want this.
+\ntbibsetup{backref=true, backrefstyle=three} 
+
+
+
+%%============================================================
+%% BIBLIOGRAPHY STYLE
+%% For other styles, see the docuemntation for BibLaTeX
+%%============================================================
+
+%%------------------------------------------------------------
+%% NUMBERED ORDER BY LAST NAME OF FIRST AUTHOR - this is the default
+% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=nyt}
+
+%%------------------------------------------------------------
+%% NUMBERED ORDER BY CITATION
+% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=none}
+
+%%------------------------------------------------------------
+%% APLHA CITATION ORDER BY LAST NAME OF FIRST AUTHOR
+% \ntbibsetup{style=alphabetic, sortcites=true, sorting=nyt}
+
+%%------------------------------------------------------------
+%% APA-LIKE CITATION
+% \ntbibsetup{backend=biber, natbib=true, style=apa6}

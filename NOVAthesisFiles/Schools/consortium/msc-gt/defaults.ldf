@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% nova/fct/defaults.ldf
+%% consortium/msc-gt/defaults.ldf
 %% NOVA thesis configuration file
 %%
 %% Customization for FCT-NOVA (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT LOADING FILE nova/fct/defaults.ldf}
+\typeout{NT FILE consortium/msc-gt/defaults.ldf}
 
 % Univesity
 \university(pt):={\embrace{NONE}}
@@ -14,10 +14,10 @@
 \university(it):={\embrace{NONE}}
 
 % Faculty / School
-\faculty(pt):={\embrace{NONE}}
-\faculty(en):={\embrace{NONE}}
-\faculty(fr):={\embrace{NONE}}
-\faculty(it):={\embrace{NONE}}
+\school(pt):={\embrace{NONE}}
+\school(en):={\embrace{NONE}}
+\school(fr):={\embrace{NONE}}
+\school(it):={\embrace{NONE}}
 
 % Comiittee printing order
 \committeeorder(all):={c,r,m}% 
@@ -70,15 +70,20 @@
 \margin(mscplan,bottom):={2.5cm}
 \margin(mscplan,left):={1.5cm}
 \margin(mscplan,right):={1.5cm}
+\margin(phd,top):={2.5cm}
+\margin(phd,bottom):={2.5cm}
+\margin(phd,left):={1.5cm}
+\margin(phd,right):={1.5cm}
 
 
 \adviserstr(en):={Dissertation supervised by:}
 \coadviserstr(en):={Co-supervised by:}
 
-\adviserstrfont(en):={\bfseries}
-\coadviserstrfont(en):={\bfseries}
+\def\adviserstrfont{\bfseries}
+\def\coadviserstrfont{\bfseries}
 
 \ntsetup{printcopyright=false}
+\ntsetup{secondcover=true}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NOVA guidelines:
@@ -105,64 +110,58 @@
 }
 
 % Title of Dissertation
-\ntaddtocover[cover=1, vspace=6cm]{%
-  \ntcoverbackground
-  \begin{minipage}[t][7.5cm][b]{\linewidth}
-    \raggedright
+\ntaddtocover[vspace=6cm,height=7.5cm]{1}{%
+    \raggedright%
     \fontsize{18}{18}\selectfont
     \bfseries\thecovertitle[caps]%
-  \end{minipage}
 }
 
 % Author name
-\ntaddtocover[cover=1, vspace=0.9cm]{%
-  \begin{minipage}[t][1.8cm][c]{\linewidth}
+\ntaddtocover[vspace=0.9cm,height=1.8cm]{1}{%
+    \raggedright%
     \fontsize{16}{16}\selectfont
     \textbf{\theauthorname}
-  \end{minipage}
 }
 
 % Title of Dissertation - COVER 2
-\ntaddtocover[cover=2, vspace=2cm]{%
-  \begin{minipage}[t]{\linewidth}
-    \centering
+\ntaddtocover[vspace=2cm]{2}{%
+    \centering%
     \fontsize{16}{16}\selectfont
     \bfseries\thecovertitle[caps]%
-  \end{minipage}
 }
 
 % Academic qualifications
-% \ntaddtocover[vspace=0.25cm]{%
+% \ntaddtocover[vspace=0.25cm]{1,2}{%
 %   \fontsize{11}{11}\selectfont
 %   \theauthordegree
 % }
 
 % Degree
-% \ntaddtocover[vspace=1.5cm]{%
+% \ntaddtocover[vspace=1.5cm]{1,2}{%
 %   \fontsize{11}{11}\selectfont
 %   \thepresentationtext
 % }
 
 % Advisers
-\ntaddtocover[cover=2, vspace=3cm]{%
-  \ntprintadvisersgroup{adviser}
+\ntaddtocover[vspace=3cm]{2}{%
+  \ntprintadvisersgroup{adviser}%
 }
 
 % Co-advisers
-\ntaddtocover[cover=2, vspace=1cm]{%
-  \ntprintadvisersgroup{coadviser}
+\ntaddtocover[vspace=1cm]{2}{%
+  % \ntprintadvisersgroup{coadviser}%
 }
 
 
 % Committee — only print the committee for the main classes
-% \ntaddtocover[align=r, vspace=2]{%
+% \ntaddtocover[align=r, vspace=2]{1,2}{%
 %   \fontsize{10}{10}\selectfont%
 %   \ntprintcommittee%
 % }
 
 
 % Date
-\ntaddtocover[cover=2, vspace=1]{%
+\ntaddtocover[vspace=1]{2}{%
   \fontsize{11}{11}\selectfont
   \ifdraftdoc
     \textbf{DRAFT: \today}
