@@ -137,7 +137,7 @@
 %       configuration file “Config/1_novathesis.tex”
 %%============================================================
 \input{Config/1_novathesis}
-\csuse{novathesis_hook}
+\NTRunHook{novathesis}
 
 
 %%============================================================
@@ -146,7 +146,7 @@
 %       configuration file “Config/2_biblatex.tex”
 %%============================================================
 \input{Config/2_biblatex}
-\csuse{biblatex_hook}
+\NTRunHook{biblatex}
 
 
 %%============================================================
@@ -158,13 +158,13 @@
 %%============================================================
 \ifphddoc{% Standard names for PhD programs
   \input{Config/3a_degree_phd}%
-  \csuse{degree_phd_hook}
+  \NTRunHook{degree_phd}
 }{\ifmscdoc{% Standard names for MSc programs
   \input{Config/3b_degree_msc}%
-  \csuse{degree_msc_hook}
+  \NTRunHook{degree_msc}
 }{% Customizable name for any other program
   \input{Config/3c_degree_other}%
-  \csuse{degree_other_hook}
+  \NTRunHook{degree_other}
 }}
 
 
@@ -174,7 +174,7 @@
 %       configuration file “Config/4_department.tex”
 %%============================================================
 \input{Config/4_department}
-\csuse{department_hook}
+\NTRunHook{department}
 
 
 %%============================================================
@@ -183,7 +183,7 @@
 %       configuration file “Config/5_cover.tex”
 %%============================================================
 \input{Config/5_cover}
-\csuse{cover_hook}
+\NTRunHook{cover}
 
 
 %%============================================================
@@ -192,7 +192,7 @@
 %       configuration file “Config/6_files.tex”
 %%============================================================
 \input{Config/6_files}
-\csuse{files_hook}
+\NTRunHook{files}
 
 
 %%============================================================
@@ -201,7 +201,7 @@
 %       configuration file “Config/7_list_of.tex”
 %%============================================================
 \input{Config/7_list_of}
-\csuse{list_of_hook}
+\NTRunHook{list_of}
 
 
 %%============================================================
@@ -210,7 +210,7 @@
 %       configuration file “Config/8_packages.tex”
 %%============================================================
 \input{Config/8_packages}
-\csuse{packages_hook}
+\NTRunHook{packages}
 
 
 

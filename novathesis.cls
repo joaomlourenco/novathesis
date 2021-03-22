@@ -133,9 +133,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% INTERNAL KEY-VAL STUFF
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \RequirePackage{nt-options}
-% \RequirePackage{xifthen}
-
 \options{/@nt/.new family
   % languages
   , langsshort/.new list={en, pt, fr, it, de, es}
@@ -147,33 +144,6 @@
   }  
   % %novathesis@opt@biblatex
   , biblatex/.new list
-  % , handler/school/.new cmd={%
-  %           % \typeout{NT HANDLER SCHOOL ROUTINE [#1]}%
-  %           \prependtographicspath{{NOVAthesisFiles/Schools/#1/Images/}}%
-  %           \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/element}%
-  %             {}% it as a reload… do nothing
-  %             {% Load new school definitions
-  %               \InputIfFileExists{NOVAthesisFiles/Schools/#1/defaults.ldf}%
-  %                 {}%
-  %                 {\PackageWarining{novathesis}%
-  %                                  {Missing file “defaults.ldf” for #1}}%
-  %             }%
-  % }
-  % , handler/media/.new cmd={%
-  %             \setulmarginsandblock%
-  %               {\themargin(#1,top)}%
-  %               {\themargin(#1,bottom)}%
-  %               {*}%
-  %             \setlrmarginsandblock%
-  %               {\themargin(#1,left)}%
-  %               {\themargin(#1,right)}%
-  %               {*}%
-  %             \checkandfixthelayout%
-  %             % \ifoptionequal{/novathesis/media}{paper}%
-  %             \IfEq{#1}{paper}%
-  %               {\options{/novathesis/linkscolor=black}}%
-  %               {}%
-  % }
   , handler/chapstyle/.new cmd={%
     \InputIfFileExists{NOVAthesisFiles/ChapStyles/#1.ldf}{}%
       {\PackageWarining{novathesis}{Invalid Chapter Style: #1}}%
@@ -307,7 +277,6 @@
   %         #3=optional file lang
   %         #4=filename
   % \typeout{NT addtolist [#1] [#2] [#3] [#4]}%
-  % \typeout{NT @ntaddlisthook#1#2 @ntaddlisthook#1#2#3}
   \IfSubStr{#4}{/}{%
     \def\@nt@filewithpath{#4}
   }{%
@@ -315,8 +284,6 @@
     \def\@nt@filewithpath{\expanded{\option{/@nt/folders}/#4}}%
   }%
   % \typeout{NT ntload ADDFILE [#1] [#2] [#3] [\@nt@filewithpath]}%
-  \ifcsdef{@ntaddlisthook#1#2}{\@nameuse{@ntaddlisthook#1#2}{#3}{\@nt@filewithpath}}{}%
-  \ifcsdef{@ntaddlisthook#1#2#3}{\@nameuse{@ntaddlisthook#1#2#3}{\@nt@filewithpath}}{}%
   \expanded{\options{/@nt/#1/#2/#3/.cpush={\@nt@filewithpath}}}%
   \typeout{NT ADDED FILE [/@nt/#1/#2/#3=\@nt@filewithpath]}%
   % \@nt@addtolist@iii{#1}{#2}{#3=\@nt@filewithpath}%
@@ -604,7 +571,8 @@
     {\toggletrue{@nt@backcover}}{}%
   \iftoggle{@nt@backcover}{%
     \thispagestyle{empty}%
-    ~\newpage% \the back cover goes on the even page
+    \ntfixspacing%
+    \newpage% \the back cover goes on the even page
     \bgroup%
       \ntaddtocover{back}{}%
       \AtCoverExecute{back}{begin}%
@@ -616,8 +584,7 @@
 }
 
 \newcommand{\ntcoverbackground}[1][1]{%
-  \def\@nt@arg{#1}%
-  \IfEq{#1}{1}{\def\@nt@arg{front}}{}%
+  \IfEq{#1}{1}{\def\@nt@arg{front}}{\def\@nt@arg{#1}}%
   \edef\@nt@img{\expanded{\thethesiscover(\option{/novathesis/docdegree},\@nt@arg)}}%
   \IfStrEq{\@nt@img}{}{}{%ELSE
     \begin{tikzpicture}[remember picture, overlay]
@@ -693,10 +660,12 @@
 %% Include strings for all the languages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\optionlistdo{/@nt/langsshort}{%
-  \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
-    {}%
-    {}%
+\NTAddToHook{novathesis}{%
+  \optionlistdo{/novathesis/langsused}{%
+    \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
+      {}%
+      {}%
+  }%
 }
 
 
@@ -1165,19 +1134,14 @@
   \@nt@select@lang{\option{/novathesis/mainlang}}%  
 }
 
-\providecommand{\abstracttextprehook}[1]{
-}
-\providecommand{\abstracttextposthook}[1]{
-}
-
 \newcommand{\@ntprintabstract}[1]{%
   % \typeout{NT PRINT ABSTRACT #1}%
   \setabstractlang{#1}%
   \currentpdfbookmark{\theabstractstring(#1)}{bmabstract#1}
   \printabstracttitle{#1}%
-  \abstracttextprehook{#1}
+  \NTRunHook{abstract/pre}%
   \@ntloadfiles@ii[#1]{abstract}%
-  \abstracttextposthook{#1}%
+  \NTRunHook{abstract/post}%
   \ntfixspacing%
   \clearforchapter%
 }

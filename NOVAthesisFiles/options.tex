@@ -14,6 +14,7 @@
   , school/.new choice = {{nova/fct}, {nova/st}, {nova/fcsh}, {nova/ims}, {nova/ensp},
                           {ul/ist}, {ul/fc}, {ipl/isel}, {ips/ests}, {esep},
                           {iscte-iul/ista}, {consortium/msc-gt}, {nova/fct-legacy}}
+  , langsused/.new list = {en,pt}
   , docstatus/.new choice = {final, provisional, draft, working},
   , docstatus = final,
   , chapstyle/.new choice = {bianchi, bluebox, default, elegant, 
@@ -59,20 +60,24 @@
 % NTSETUP
 \newcommand*{\ntsetup}[1]{%
     \ntgetkeyval{#1}\@nt@opt\@nt@value%
-    % \typeout{'NT SETUP = '[#1]~/~[\@nt@opt]~/~[\@nt@value]}
-    \csuse{@nt@opt\@nt@opt @prehook}%
     \options{/novathesis/\@nt@opt = {\@nt@value}}%
-    % \typeout{'NT HANDLER = '/novathesis/handler/\@nt@opt}%
     \option{/@nt/handler/\@nt@opt}%
-    % \typeout{NT ->@nt@opt#1hook}
 }
-
 
 \newcommand*{\ntbibsetup}[1]{%
   \@ifpackageloaded{biblatex}%
     {\bibsetup{#1}}%
     {\options{/@nt/biblatex/.push={#1}}}%
 }
+
+\newcommand*{\NTAddToHook}[2]{
+  \options{/@nt/hook/#1/.cpush={#2}}%
+}
+
+\newcommand*{\NTRunHook}[1]{
+  \optionlistdo{/@nt/hook/#1}{##1}
+}
+
 
 % --------------------------------------------------------
 % BABEL STUFF

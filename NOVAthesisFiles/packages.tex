@@ -131,14 +131,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% HOOKS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\csdef{novathesis_hook}{%
+\NTAddToHook{novathesis}{%
   \prependtographicspath{{NOVAthesisFiles/Schools/\option{/novathesis/school}/Images/}}%
   \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.ldf}{}%
     {\PackageWarining{novathesis}%
                      {Missing file “defaults.ldf” for ”\option{/novathesis/school}”}}%
 }
 
-\csdef{files_hook}{%
+\NTAddToHook{files}{%
   %--------------------------------
   % “biblatex” stuff
   \ntaddfile{bib}{NOVAthesisFiles/fix-bib.ldf}%
@@ -147,7 +147,7 @@
   \RequirePackage[hyperref=auto,defernumbers=true,\@nt@biblatex@opts]{biblatex}%
   \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
   \optionlistdo{/@nt/file/bib/VAL}{%
-    \addbibresource{##1}%
+    \addbibresource{#1}%
   }%
   %--------------------------------
   % “hyperref” stuff
@@ -160,7 +160,7 @@
   \@nt@fixhyperref%
   \pdfstringdefDisableCommands{%
     \def\\{}%
-    \def\texttt##1{##1}%
+    \def\texttt#1{#1}%
   }%
   \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
   \RequirePackage[all]{hypcap}%
@@ -184,7 +184,7 @@
   \RequirePackage{NOVAthesisFiles/glossary-xltabular}%
   \setglossarystyle{xltabular}%
   \setabbreviationstyle[acronym]{long-short}%
-  \renewcommand{\glsnamefont}[1]{\textbf{##1}}%
+  \renewcommand{\glsnamefont}[1]{\textbf{#1}}%
   \makenoidxglossaries% use TeX to sort
   %--------------------------------
   % “Process gnumberlist” option - after glossaries
