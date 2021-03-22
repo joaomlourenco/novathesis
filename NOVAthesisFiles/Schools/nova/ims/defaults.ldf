@@ -20,8 +20,8 @@
 \school(it):={Information Management School}
 
 % Scientific filed
-\majorfield(pt):={Gestão de Informação}
-\majorfield(en):={Information Management}
+% \majorfield(pt):={Gestão de Informação}
+% \majorfield(en):={Information Management}
 
 % Comiittee printing order
 \committeeorder(all):={c,r,m}% 
@@ -191,6 +191,9 @@ of the requirements for the degree of %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtBeginCover{%
+  \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
+}
 
   % PHD PROGRAM
 % \ntaddtocover[ align=l, vspace=0cm, degree=phd]{1,2}{%

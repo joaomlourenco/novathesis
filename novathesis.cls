@@ -121,11 +121,15 @@
   \StrCut{#2}{#1}#3#4%
 }
 
+
 % --------------------------------------------------------
 % Alias for consistency in template.tex
 \def\ntdepartment(#1)#2{\department(#1):={#2}}
 \def\ntmajorfield(#1)#2{\majorfield(#1):={#2}}
-\def\ntdegreename(#1)#2{\degreename(#1):={#2}}
+\def\ntdegreename(#1)#2{%
+  \degreename(#1):={#2}%
+  \majorfield(#1):={#2}%
+}
 \def\ntspecialization(#1)#2{\specialization(#1):={#2}}
 \def\ntsponsors(#1)#2{\sponsorsstr(#1):={#2}}
 
@@ -338,6 +342,18 @@
 % LOAD MAIN CLASS AND ADDITIONAL PACKAGES
 \LoadClass{memoir}
 \OnehalfSpacing% One-and-half spacing
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Include strings for all the languages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NTAddToHook{novathesis}{%
+  \optionlistdo{/novathesis/langsused}{%
+    \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
+      {}%
+      {}%
+  }%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING ADDITINAL FILES AFTER LOADING MEMOIR
@@ -655,18 +671,6 @@
   }%
 }
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Include strings for all the languages
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\NTAddToHook{novathesis}{%
-  \optionlistdo{/novathesis/langsused}{%
-    \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
-      {}%
-      {}%
-  }%
-}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1392,7 +1396,6 @@
 
 % Fix spacing for pages with roman numerals in ToC
 \renewcommand{\@pnumwidth}{2.5em}% default is 1.55em
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
