@@ -42,4 +42,11 @@ clean:
 .PHONY: rc
 rc:
 	Scripts/latex-clean-temp.sh
-	
+
+
+.PHONY: rcb
+rcb:
+	Scripts/latex-clean-temp.sh
+	rm -rf `biber -cache`
+	biber -cache
+
