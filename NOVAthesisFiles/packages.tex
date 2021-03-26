@@ -141,8 +141,8 @@
 \NTAddToHook{files}{%
   %--------------------------------
   % “biblatex” stuff
-  \ntaddfile{bib}{NOVAthesisFiles/fix-bib.ldf}%
-  \AtEndDocument{\nocite{ntmbib}}%
+  % \ntaddfile{bib}{NOVAthesisFiles/fix-bib.ldf}%
+  % \AtEndDocument{\nocite{novathesis-manual}}%
   \letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
   \RequirePackage[hyperref=auto,defernumbers=true,\@nt@biblatex@opts]{biblatex}%
   \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography

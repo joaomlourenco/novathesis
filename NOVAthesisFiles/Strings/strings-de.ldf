@@ -22,9 +22,7 @@
 \keywordsstring(de):={Stichwörter}
 \notdefined(de):={UNDEFINIERT}
 \specializationstr(de):={Spezialisierung in}
-
-\majorfield(de):={\embrace{Wissenschaftliches Gebiet}}
-\degreename(de):={\embrace{Name des Studienprogramms}}
+\departmentofstr(de):={Abteilung für}
 
 \adviserstr(1,m,de):={Betreuer}% male, singular
 \adviserstr(1,f,de):={Betreuerin}% female, singular
@@ -113,4 +111,4 @@
 
 
 
-\acknowledgmentsstr(de):={Dieses Dokument wurde mit Hilfe von (pdf/Xe/Lua)\LaTeX\ erzeugt, basierend auf der Vorlage \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis}, entwickelt an dem \href{http://www.di.fct.unl.pt}{Dep.\ Informática of FCT-NOVA} von \href{https://docentes.fct.unl.pt/joao-lourenco}{João M. Lourenço}. [0]\,João M. Lourenço, \emph{The NOVAthesis \LaTeX\ Template User’s Manual}, NOVA School of Science and Technology, NOVA University Lisbon, 2021, \url{https://github.com/joaomlourenco/novathesis/raw/master/template.pdf}.}
+\acknowledgmentsstr(de):={Dieses Dokument wurde mit Hilfe von (pdf/Xe/Lua)\LaTeX\ erzeugt, basierend auf der Vorlage \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis}, entwickelt an dem \href{http://www.di.fct.unl.pt}{Dep.\ Informática of FCT-NOVA} von \href{https://docentes.fct.unl.pt/joao-lourenco}{João M. Lourenço}.~\cite{novathesis-manual}}

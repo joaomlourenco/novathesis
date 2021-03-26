@@ -70,6 +70,10 @@
     {\options{/@nt/biblatex/.push={#1}}}%
 }
 
+\newcommand*{\ntmemoirsetup}[1]{%
+  \PassOptionsToClass{#1}{memoir}%
+}
+
 \newcommand*{\NTAddToHook}[2]{
   \options{/@nt/hook/#1/.cpush={#2}}%
 }

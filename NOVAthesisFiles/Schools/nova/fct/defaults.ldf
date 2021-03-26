@@ -143,15 +143,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtBeginCover{%
   \sffamily%
-  \StrLen{\thedepartment(\option{/novathesis/coverlang})}[\sstdepstrlen]%
-  \ifthenelse{\sstdepstrlen<28}{%
-    \StrSubstitute[1]{\thedepartment(\option{/novathesis/coverlang})}{ }{\newline}[\sstdepnamei]%
-  }{%
-    \StrSubstitute[3]{\thedepartment(\option{/novathesis/coverlang})}{ }{\$\$\$}[\sstdepnamei]%
-    \StrSubstitute[2]{\sstdepnamei}{\$\$\$}{ }[\sstdepnamei]%
-    \StrSubstitute{\sstdepnamei}{\$\$\$}{\newline}[\sstdepnamei]%
-  }%
-  \xdef\sstdepname{\sstdepnamei}%
+  \xdef\sstdepname{\thedepartment(\option{/novathesis/coverlang})}%
 }
 
 \AtEndCover{%
@@ -211,9 +203,9 @@
   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[3mm]
   \theuniversity(\option{/novathesis/coverlang})\\
   \ifdraftdoc%
-    \textbf{DRAFT: \today}%
+    \textbf{DRAFT:} \today%
   \else%
-    \textbf{\thentdatemonth, \thentdateyear}%
+    \thentdatemonth, \thentdateyear%
   \fi%
 }
 
@@ -282,9 +274,9 @@
   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[1.25ex]
   \theuniversity(\option{/novathesis/coverlang})\\
   \ifdraftdoc%
-    \textbf{DRAFT: \today}%
+    \textbf{DRAFT:} \today%
   \else%
-    \textbf{\thentdatemonth, \thentdateyear}%
+    \thentdatemonth, \thentdateyear%
   \fi%
 }
 
