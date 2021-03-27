@@ -38,7 +38,7 @@
 
 --------
 
-**If you opt for using this project, please give it a star by clicking the (⭐️) at he top right of the page.**
+**If you opt for using this project, please give it a star by clicking the (⭐️) at the top right of the page.**
 
 --------
 ## About
