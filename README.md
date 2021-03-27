@@ -36,9 +36,13 @@
 * [Word Templates](#word-templates)
 
 
+--------
+
+**If you opt for using this project, please give it a star by clicking the (⭐️) at he top right of the page.**
 
 --------
 ## About
+
 
 The “novathesis” LaTeX template was initially designed for the PhD thesis and MSc dissertations at [FCT-NOVA — NOVA School of Science and Technology](http://www.fct.unl.pt), Portugal, but currently it supports more schools, namely:
 * NOVA University Lisbon
