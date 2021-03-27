@@ -30,10 +30,6 @@ xe: $(S)
 lua: $(S)
 	$(L) -pdflua -silent $(B)
 
-.PHONY: t
-t:
-	time make
-
 .PHONY: v
 .PHONY: view
 v view: $(T)

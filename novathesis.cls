@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-03-22 [6.0.1]
+%% Version 2021-03-27 [6.0.2]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -63,7 +63,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{novathesis}[2021-03-22 novathesis template]
+\ProvidesClass{novathesis}[2021-03-27 novathesis template]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOOK FOR PACKAGES ALSO IN "NOVAthesisFiles" folder
@@ -156,7 +156,6 @@
     \InputIfFileExists{NOVAthesisFiles/FontStyles/#1.ldf}{}%
       {\PackageWarining{novathesis}{Invalid Font Style: #1}}%
   }
-  , ntfixspacing/.new toggle=false
 }
 
 
@@ -338,6 +337,14 @@
 %% LOADING MEMOIR
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%============================================================
+%%  MEMOIR CUSTOMIZATION / OPTIONS
+%%      Please open and edit the appropriate
+%       configuration file “Config/0_memoir.tex”
+%%============================================================
+\input{Config/0_memoir}
+\NTRunHook{memoir}
+
 % --------------------------------------------------------
 % LOAD MAIN CLASS AND ADDITIONAL PACKAGES
 \LoadClass{memoir}
@@ -464,7 +471,6 @@
     \ntcoverbackground[#1]%
     \ntcovertext[#1]%
     \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
-    \csuse{@thecover#1backpage}%
     \clearforchapter%
   }{\typeout{NT printthecover #1 undefined}}%
 }
@@ -547,8 +553,8 @@
 \newenvironment{tinywhite}[1][white]
   {%
     \begin{Spacing}{1}%
-      \sffamily
-      \fontsize{0.01}{0.01}\selectfont%
+      \sffamily%
+      \fontsize{10.01}{10.01}\selectfont%
       \hypersetup{allcolors=#1}%
       \color{#1}%
   }%
@@ -556,24 +562,20 @@
     \end{Spacing}\ignorespacesafterend%
   }
 
+\newcommand{\@ntfixspacing}[2]{%
+  \renewcommand*{\bibfont}{\hypersetup{allcolors=#1}\color{#1}%
+                           \sffamily\fontsize{#2}{#2}\selectfont}
+  \newrefsection%
+    \begin{minipage}{\linewidth}%
+      \bibfont%
+      \theacknowledgmentsstr(\option{/novathesis/coverlang})%
+      \vspace*{-20ex}
+      \printbibliography[heading=none]%
+    \end{minipage}%
+  \newrefsection%
+}
 \newcommand{\ntfixspacing}{%
-  \iftoggle{/@nt/ntfixspacing}{}%
-  {%
-    \begin{tinywhite}%
-      \noindent\makebox[0pt]{%
-        \noindent\theacknowledgmentsstr(\option{/novathesis/coverlang})%
-      }%
-    \end{tinywhite}%
-    \options{/@nt/ntfixspacing=true}
-  }%
-}
-
-\csdef{@thecover1backpage}{%
-  \newpage\thispagestyle{empty}\null\ntfixspacing%
-}
-
-\csdef{@thecover2backpage}{%
-  \newpage\thispagestyle{empty}\null\ntfixspacing%
+  \@ntfixspacing{white}{0.01}%
 }
 
 \newcommand*{\ntprintbackcover}{%
@@ -587,7 +589,6 @@
     {\toggletrue{@nt@backcover}}{}%
   \iftoggle{@nt@backcover}{%
     \thispagestyle{empty}%
-    \ntfixspacing%
     \newpage% \the back cover goes on the even page
     \bgroup%
       \ntaddtocover{back}{}%
@@ -638,6 +639,7 @@
 \assocarray{keywordsstring}
 \assocarray{notdefined}
 \assocarray{specializationstr}
+\assocarray{departmentofstr}
 \assocarray{sponsorsstr}
 
 \assocarray{adviserstr}
@@ -1107,13 +1109,9 @@
   % \typeout{NT Attempt to load #1}%
 	\ifmaindoc{% THEN it is a main document
     \ifoptiondefined{/@nt/file/#1/VAL}{%
-    % \options{/@nt/file/#1/.getval={VAL}}%
-    % \IfStrEq{\option@listmatch@value}{}{\typeout{NT LOAD #1 empty}}{%
       \@nt@select@lang{\option{/novathesis/mainlang}}%
-      % \edef\@nt@bm{\expandafter\MakeUppercase\expandafter#1}
       \currentpdfbookmark{\csuse{the#1string}(\option{/novathesis/mainlang})}{bm#1}
       \@ntloadfiles@ii{#1}%
-      \ntfixspacing%
       \clearforchapter%
     }{\typeout{NT LOAD #1 undefined}}%
 	}{% ELSE
@@ -1146,7 +1144,6 @@
   \NTRunHook{abstract/pre}%
   \@ntloadfiles@ii[#1]{abstract}%
   \NTRunHook{abstract/post}%
-  \ntfixspacing%
   \clearforchapter%
 }
 
@@ -1226,7 +1223,7 @@
             \phantomsection%
             \pdfbookmark{\contentsname}{toctarget}%
             \hypertarget{toctarget}{\tableofcontents*}
-        }
+        }%
   }}}{%
     \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/@nt/list/indexes/.cpush={%
             \clearforchapter\printnoidxglossaries\clearforchapter%
@@ -1258,18 +1255,6 @@
   \optionlistdo{/@nt/file/glossaries/symbols}{\@ntloadfile@i{##1}}%
 }
 
-% \newcommand{\@loadglossaryfile}[1]{%
-%   % #1={glossary, acronyms, symbols}={filename}
-%   % \ntgetkeyval{#1}{\@nt@key}{\@nt@value}
-%   % \typeout{NT @loadglossaryfile [\@nt@key][\@nt@value]}
-%   % \options{/@nt/folders=glossaries}
-%   \IfFileExists{#1}}%
-%     {\loadglsentries{#1}}%
-%     {}%
-% }
-
-% \AtEndPreamble{\typeout{NT AtEndPreamble loadglossaryfiles}\@loadglossaryfiles}
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1277,13 +1262,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\ntprintbib}[1][]{%
-  \printbibliography[#1,notkeyword={novathesis-manual}]%
-  \begingroup
-    \begin{tinywhite}{%
-      \renewcommand*{\bibfont}{\fontsize{0.01}{0.01}\selectfont}%
-      \printbibliography[heading=none,keyword={novathesis-manual}]%
-    }\end{tinywhite}%
-  \endgroup
+  \printbibliography[#1]%
+  \ntfixspacing%
 }
 
 
@@ -1293,7 +1273,7 @@
 \newcommand{\ntprintcopyright}{%
 	\ifmaindoc{% THEN
     \iftoggle{/novathesis/printcopyright}%
-      {\ntprintcopyrightpage\ntfixspacing\clearforchapter}%
+      {\ntprintcopyrightpage\clearforchapter}%
       {}%
 	}{}%
 }
@@ -1302,7 +1282,7 @@
 	\clearforchapter%
 	\null\vfill%
   \noindent%
-  \textbf{\large \thetitle}\par%
+  \textbf{\large\thetitle}\par%
   \bigskip%
   \thecopyrightstr\par%
 }
