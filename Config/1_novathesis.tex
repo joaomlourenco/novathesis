@@ -15,22 +15,27 @@
 %%------------------------------------------------------------
 % \ntsetup{docdegree=msc}       % The type of document
 %                               %     [ phd, phdplan, phdprop, msc, mscplan, bsc, plain ]
+%                               % DEFAULT: docdegree=msc
 
 % \ntsetup{school=nova/ims}     % The school id
 %                               %     [ nova/fct, nova/fcsh, nova/ims, nova/ensp, 
 %                               %       ul/ist, ul/fc, ipl/isel, ips/ests, esep,
 %                               %       iscte-iul/ista, consortium/msc-gt, nova/fct-legacy ]
+%                               % DEFAULT: school=nova/fct
 
 % \ntsetup{langsused=en,pt,de}  % List of languages are used in the document
 %                               %     [ en, pt, fr, it, de, es ]
+%                               % DEFAULT: langsused=en,pt
 
-\ntsetup{lang=pt}             % The main language for the document text
+% \ntsetup{lang=pt}             % The main language for the document text
 %                               %     [ en, pt, fr, it, de, es ]
+%                               % DEFAULT: lang=en
 
 % \ntsetup{linkscolor=SteelBlue}% The color for the hyperlinks (URLs, 
 %                               %     cross references, citations)
 %                               %     for valid color names, look at "svgname" 
 %                               %     in the "xcolor" package documentation
+%                               % DEFAULT: whatever hyperref uses as default
 
 % \ntsetup{media=paper}         % The target media for the PDF
 %                               %     [ screen, paper ]
@@ -38,24 +43,30 @@
 %                               %                equal, colored links
 %                               %     PAPER  ==> left and right margins are 
 %                               %                 different, black links
+%                               % DEFAULT: media=screen
 
-% \ntsetup{printcommittee=false}% Shall the committee be printed?
+% \ntsetup{printcommittee=true}% Shall the committee be printed?
 %                               %     should be 'false' for document versions still
 %                               %     under work/evaluation.   Only final versions 
 %                               %     should have the list of committee members.
+%                               % DEFAULT: printcommittee=false
 
 % \ntsetup{gnumberlist=false}   % Shall the page numbers that appear after
 %                               %     the entries in glossaries br printed?
+%                               % DEFAULT: gnumberlist=true
 
 % \ntsetup{secondcover=true}    % Shall a second cover page be forced?
 %                               %     if the contents for the second page are not 
 %                               %     defined, the second cover will be a replica 
 %                               %     of the first cover.
+%                               % DEFAULT: secondcover=false
 
 % \ntsetup{spine=true}          % Shall a “book spine” be printed at the end of
 %                               %     the document?
+%                               % DEFAULT: spine=false
 
 % \ntsetup{urlstyle=same}       % Use the same (main) font in URLs
+%                               % DEFAULT: whatever hyperref uses as default
 
 
 %%------------------------------------------------------------
@@ -63,32 +74,42 @@
 %%------------------------------------------------------------
 % \ntsetup{docstatus=provisional}   % The status of the document
 %                               %     [ final, provisional, draft, working ]
+%                               % DEFAULT: docstatus=final
 
 % \ntsetup{tocintoc=true}       % Shall table of contects be listed in itself?
+%                               % DEFAULT: tocintoc=false
 
 % \ntsetup{fontstyle=erewhon}   % The font set to be used in the document
 %                               %     [ kpfonts bookman libertine, scholax 
 %                               %       calibri(*), kieranhealy(*) ] 
 %                               %     (*) only for xelatex/lualatex)
+%                               % DEFAULT: fontstyle=kpfonts
 
 % \ntsetup{chapstyle=elegant}   % The chapter style to be used
 %                               %     [ elegantbianchi bluebox default ell hansen ist
 %                               %       lyhne madsen pedersen section southall veelo
 %                               %       vz34 vz43 ]
+%                               % DEFAULT: chapstyle=elegant
 
 % \ntsetup{coverlang=en}        % The language for the cover (and second cover) page 
 %                               %     defaults to main document language
+%                               % DEFAULT: coverlang=the same as “lang”
 
 % \ntsetup{copyrightlang=en}    % The language for the copyright message
 %                               %     defaults to main document language
+%                               % DEFAULT: copyrightlang=the same as “lang”
 
 % \ntsetup{aftercover=true}     % Does the document have after cover pages??
 %                               %     after cover pages are printed immediately 
 %                               %     after the cover pages
+%                               % DEFAULT: aftercover=false
 
 % \ntsetup{printcopyright=fale} % Shall the copyright message be printed??
+%                               % DEFAULT: printcopyright=true
 
 % \ntsetup{cdcover=true}        % Shall a “cd cover” be printed at the end of
 %                               %     the document?
+%                               % DEFAULT: cdcover=false
 
-% \ntsetup{debugcover=true}     % Debug cover development: print rulers in the cover page
+% \ntsetup{debugcover=true}     % Cover development and debug: print rulers in the cover page
+%                               % DEFAULT: debugcover=false
