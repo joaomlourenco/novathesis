@@ -20,35 +20,34 @@
 %%       please ask for help at GitHub Discussions page at
 %%          https://github.com/joaomlourenco/novathesis/discussions
 %%      or at the NOVAthesis facebook group at
-%%            
+%%          https://www.facebook.com/groups/novathesis
 %%
 %% AUTHOR @github:
 %%      - joaomlourenco
 %%
 %% CONTRIBUTORS @github:
-%%      - bcandeias, flaviomartins, tmonteiro2344, jsaramago, 
-%%        microlina, riclas, pedrovieira
+%%      https://github.com/joaomlourenco/novathesis/wiki#help-with-the-project-patches-and-new-features
 %%
 %% DONATIONS:
-%%     If you think this template really helped you while writing your thesis,
-%%     think about making a small donation. Just access the website
-%%     https://paypal.me/novathesis
-%%     and click in the “Donation” link.  We will keep a list thanking to all 
-%%     the identified donors that identify themselves in the “Add special 
-%%     instructions to the seller:” box.
+%%      If you think this template really helped you while writing your thesis,
+%%      think about making a small donation. Just access the website
+%%      https://paypal.me/novathesis
+%%      and click in the “Donation” link.  We will keep a list thanking to all 
+%%      the identified donors that identify themselves in the “Add special 
+%%      instructions to the seller:” box.
 %%
 %% CITATION:
-%%     If you use this template, please be kind and cite it in your bibliography:
-%%           “João M. Lourenço, \emph{The NOVAthesis \LaTeX\ Template User’s Manual},
-%%            NOVA School of Science and Technology, NOVA University Lisbon, 2021,
-%%            \url{https://github.com/joaomlourenco/novathesis/raw/master/template.pdf}.”
-%%    The BibTeX entry is:
+%%      If you use this template, please be kind and cite it in your bibliography:
+%%           “João M. Lourenço, The NOVAthesis \LaTeX\ Template User’s Manual,
+%%            NOVA University Lisbon, 2021,
+%%            https://github.com/joaomlourenco/novathesis/raw/master/template.pdf.”
+%%      The BibTeX entry is:
 %%           @Manual{novathesis-manual,
-%%            title       ={{The NOVAthesis \LaTeX\ Template User's Manual}},
-%%            author      ={João M. Lourenço},
-%%            organization={NOVA University Lisbon},
-%%            year        ={2021},
-%%            url         ={https://github.com/joaomlourenco/novathesis/raw/master/template.pdf},
+%%              title       ={{The NOVAthesis \LaTeX\ Template User's Manual}},
+%%              author      ={João M. Lourenço},
+%%              organization={NOVA University Lisbon},
+%%              year        ={2021},
+%%              url         ={https://github.com/joaomlourenco/novathesis/raw/master/template.pdf},
 %%           }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -65,16 +64,12 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{novathesis}[2021-03-27 novathesis template]
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% LOOK FOR PACKAGES ALSO IN "NOVAthesisFiles" folder
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \providecommand*{\input@path}{}
-% \g@addto@macro\input@path{{./}{NOVAthesisFiles/}}% subfolder path
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% SOME ESSENTIAL PACKAGES
+%%    Others will be loaded later, in the file “packages.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{etoolbox}
 \RequirePackage{NOVAthesisFiles/nt-options}
 \RequirePackage{xifthen}
 \RequirePackage{xstring}
@@ -82,7 +77,6 @@
 \RequirePackage{NOVAthesisFiles/assocarray}
 \RequirePackage{NOVAthesisFiles/nt-version}
 % To process lists and other stuff
-\RequirePackage{etoolbox}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -386,7 +380,6 @@
   % #1=cover atrtibutes
   % #2=the code
   % \typeout{NT ntaddtocover [/@nt/cover/\option{/novathesis/school}/element=#1]}
-  % \options{/@nt/cover/\option{/novathesis/school}/element/.cpush={{#1}=*={#2}}}
   \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
 }
 
@@ -690,9 +683,6 @@
 }
 \forcsvlist{\@nt@newassocarray}{university,school,department}
 
-% --------------------------------------------------------
-% Add school specific Images folder to the graphics path
-% \prependtographicspath{{NOVAthesisFiles/Schools/\option{/novathesis/school}/Images/}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -805,50 +795,6 @@
     \docsubtitle(#1):=\@thesubtitle%
 }
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Print option list as a comma separated list
-%%% with "and" prefixing the last element
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \newcommand{\printoptionlist}[3]{%
-%   % #1=options list
-%   % #2=separator (e.g, ",")
-%   % #3=last separator (e.g., "and")
-%   \letoptionlist{#1}\@nt@list
-%   \StrCount{\@nt@list}{,}[\@nt@count]
-%   \ifcase\@nt@count
-%     % case 0
-%     #1
-%   \or
-%     % case 1
-%     \StrSubstitute{\@nt@list}{,}{ and }
-%   \else
-%     % other
-%     \StrSubstitute[\the\numexpr \@nt@count-1]{\@nt@list}{,}{|}[\@nt@list@i]
-%     \StrSubstitute{\@nt@list@i}{,}{ #3 }[\@nt@list@ii]
-%     \StrSubstitute{\@nt@list@ii}{|}{#2}
-%   \fi
-% }
-
-%%%% Alternative hand-made implementation
-% \newcommand{\@nt@printoptionlist}[3]{%
-  % #1=options list
-  % #2=separator (e.g, ",")
-  % #3=last separator (e.g., "and")
-%   \@nt@newcounter[1]{@ntprintoptionlist@cnt}
-%   \def\@nt@comma{}%
-%   \optionlistdo{#1}{%
-%     \StrCut{##1}{,}\@nt@name\@nt@rest%
-%     \@nt@comma\@nt@name%
-%     \stepcounter{@ntprintoptionlist@cnt}%
-%     \ifnum\value{\option{#1/@size}}=\value{@ntprintoptionlist@cnt}%
-%       \def\@nt@comma{#3}%
-%     \else%
-%       \def\@nt@comma{#2}%
-%     \fi%
-%   }%
-% }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print advisers
@@ -1073,12 +1019,6 @@
 %% Printing chapters and similars
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\@ntloadfile@i}[1]{%
-  % \IfFileExists{\option@listmatch@value}{%
-  %   \input{\option@listmatch@value}%
-  %   \typeout{NT LOADING "\option@listmatch@value" succeeded}%
-  % }{%
-  %   \typeout{NT LOADING "\option@listmatch@value\space" failed}%
-  % }%
   % \typeout{NT TRYING TO LOAD #1}%
   \InputIfFileExists{#1}{%
     \typeout{NT LOADING “#1” succeeded}%
@@ -1394,22 +1334,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Title
-\renewcommand{\title}[2][]{\ifthenelse{\isempty{#1}}{\nttitle{#2}}{\nttitle{#1}}}
-\newcommand{\authorname}{\ntauthorname}
-\newcommand{\authordegree}{\ntauthordegree}
-\newcommand{\datemonth}{\ntdatemonth}
-\newcommand{\dateyear}{\ntdateyear}
-\newcommand{\adviser}[4][m]{\ntaddperson{adviser}[#1]{#2, #3}}
-\newcommand{\coadviser}[4][m]{\ntaddperson{coadviser}[#1]{#2, #3}}
-\newcommand{\committee}[2][m]{\ntaddperson{committee}[#1]{#2}}
-\newcommand{\dedicatoryfile}[1]{\ntaddfile{dedicatory}{#1}}
-\newcommand{\acknowledgementsfile}[1]{\ntaddfile{acknowledgements}{#1}}
-\newcommand{\quotefile}[1]{\ntaddfile{quote}{#1}}
-\newcommand{\aftercoverfile}[1]{\ntaddfile{aftercover}{#1}}
-\newcommand{\abstractfile}[2][pt]{\ntaddfile{abstract}[#1]{#2}}
-\newcommand{\chapterfile}[1]{\ntaddfile{chapter}{#1}}
-\newcommand{\addbibfile}[1]{\ntaddfile{bib}{#1}}
-\newcommand{\glossaryfile}[1]{\ntaddfile{glossaries}[glossary]{#1}}
-\newcommand{\acronymsfile}[1]{\ntaddfile{glossaries}[acronyms]{#1}}
-\newcommand{\symbolsfile}[1]{\ntaddfile{glossaries}[symbols]{#1}}
+% \renewcommand{\title}[2][]{\ifthenelse{\isempty{#1}}{\nttitle{#2}}{\nttitle{#1}}}
+% \newcommand{\authorname}{\ntauthorname}
+% \newcommand{\authordegree}{\ntauthordegree}
+% \newcommand{\datemonth}{\ntdatemonth}
+% \newcommand{\dateyear}{\ntdateyear}
+% \newcommand{\adviser}[4][m]{\ntaddperson{adviser}[#1]{#2, #3}}
+% \newcommand{\coadviser}[4][m]{\ntaddperson{coadviser}[#1]{#2, #3}}
+% \newcommand{\committee}[2][m]{\ntaddperson{committee}[#1]{#2}}
+% \newcommand{\dedicatoryfile}[1]{\ntaddfile{dedicatory}{#1}}
+% \newcommand{\acknowledgementsfile}[1]{\ntaddfile{acknowledgements}{#1}}
+% \newcommand{\quotefile}[1]{\ntaddfile{quote}{#1}}
+% \newcommand{\aftercoverfile}[1]{\ntaddfile{aftercover}{#1}}
+% \newcommand{\abstractfile}[2][pt]{\ntaddfile{abstract}[#1]{#2}}
+% \newcommand{\chapterfile}[1]{\ntaddfile{chapter}{#1}}
+% \newcommand{\addbibfile}[1]{\ntaddfile{bib}{#1}}
+% \newcommand{\glossaryfile}[1]{\ntaddfile{glossaries}[glossary]{#1}}
+% \newcommand{\acronymsfile}[1]{\ntaddfile{glossaries}[acronyms]{#1}}
+% \newcommand{\symbolsfile}[1]{\ntaddfile{glossaries}[symbols]{#1}}
 
