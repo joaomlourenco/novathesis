@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ME=$(basename $0)
-VF="NOVAthesisFiles/version.tex"
+VF="NOVAthesisFiles/nt-version.sty"
 
 V=$(cat $VF | fgrep novathesisversion | sed -e 's/.*{\(.*\)}$/\1/')
 D=$(cat $VF | fgrep novathesisdate | sed -e 's/.*{\(.*\)}$/\1/')
