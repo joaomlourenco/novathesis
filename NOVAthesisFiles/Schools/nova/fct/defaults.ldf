@@ -98,13 +98,15 @@
 % page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\makepagestyle{novathesis@myvf} 
-\makeoddfoot{novathesis@myvf}{}{\thepage}{} 
-\makeevenfoot{novathesis@myvf}{}{\thepage}{} 
-\makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
-\makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
-\makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
-\pagestyle{novathesis@myvf}
+\AtEndPreamble{%
+  \makepagestyle{novathesis@myvf} 
+  \makeoddfoot{novathesis@myvf}{}{\thepage}{} 
+  \makeevenfoot{novathesis@myvf}{}{\thepage}{} 
+  \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
+  \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
+  \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
+  \pagestyle{novathesis@myvf}
+}
 
 % \NTAddToHook{abstract/pre}{%
 %   % \rule{\textwidth}{0.2mm} ~\\[-3.5ex]%
@@ -137,7 +139,7 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=4.5cm]{1}{%
   \fontsize{16}{16}\selectfont
-  \textbf{\thecovertitle}
+  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}
 }
 
 % Degree
@@ -159,12 +161,12 @@
 
 % Date
 \ntaddtocover[vspace=3.5cm]{1}{%
-  \fontsize{11}{11}\selectfont
-  \ifdraftdoc
-    \textbf{DRAFT: \today}
-  \else
+  \fontsize{11}{11}\selectfont%
+  % \ifdraftdoc
+    % \textbf{DRAFT: \today}
+  % \else
     \textbf{\thentdatemonth, \thentdateyear}
-  \fi
+  % \fi
 }
 
 %

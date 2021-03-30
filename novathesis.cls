@@ -29,19 +29,19 @@
 %%      https://github.com/joaomlourenco/novathesis/wiki#help-with-the-project-patches-and-new-features
 %%
 %% DONATIONS:
-%%      If you think this template really helped you while writing your thesis,
-%%      think about making a small donation. Just access the website
-%%      https://paypal.me/novathesis
-%%      and click in the “Donation” link.  We will keep a list thanking to all 
-%%      the identified donors that identify themselves in the “Add special 
-%%      instructions to the seller:” box.
+%%      If you think this template really helped you while writing your thesis, then
+%%          1. Go to the project web page and giv it a star (on the top-right)
+%%          2. Make a small donation using the URL below
+%%                    https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8
+%%             We will keep a list thanking to all the identified donors that identify
+%%             themselves in the “Add special instructions to the seller:” box.
 %%
 %% CITATION:
 %%      If you use this template, please be kind and cite it in your bibliography:
 %%           “João M. Lourenço, The NOVAthesis \LaTeX\ Template User’s Manual,
 %%            NOVA University Lisbon, 2021,
 %%            https://github.com/joaomlourenco/novathesis/raw/master/template.pdf.”
-%%      The BibTeX entry is:
+%%      The BibTeX entry is already in the exxample “bibliography.bib” file:
 %%           @Manual{novathesis-manual,
 %%              title       ={{The NOVAthesis \LaTeX\ Template User's Manual}},
 %%              author      ={João M. Lourenço},
@@ -69,14 +69,22 @@
 %% SOME ESSENTIAL PACKAGES
 %%    Others will be loaded later, in the file “packages.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{iftex}
 \RequirePackage{etoolbox}
-\RequirePackage{NOVAthesisFiles/nt-options}
 \RequirePackage{xifthen}
 \RequirePackage{xstring}
-% \RequirePackage{nt-repeat}
+\RequirePackage{NOVAthesisFiles/nt-options}
 \RequirePackage{NOVAthesisFiles/assocarray}
 \RequirePackage{NOVAthesisFiles/nt-version}
+% \RequirePackage{nt-repeat}
 % To process lists and other stuff
+
+%%%%% Configure Graphics
+\RequirePackage[nobeamer]{graphbox}% improved version of "graphicx"
+\graphicspath{{Chapters/Figures/}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg,.tif}
+\providecommand*\appendtographicspath[1]{\gappto\Ginput@path{#1}}
+\providecommand*\prependtographicspath[1]{\gpreto\Ginput@path{#1}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -315,46 +323,337 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ASSOCARRAY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\@nt@undefined[1][]{\embrace{#1 \thenotdefined(\option{/novathesis/mainlang})}}
+
+\assocarray{abstractorder}
+\assocarray{frontmatterstring}
+\assocarray{coverstring}
+\assocarray{backcoverstring}
+\assocarray{copyrightstring}
+\assocarray{dedicatorystring}
+\assocarray{acknowledgementsstring}
+\assocarray{quotestring}
+\assocarray{abstractstring}
+\assocarray{keywordsstring}
+\assocarray{notdefined}
+\assocarray{specializationstr}
+\assocarray{departmentofstr}
+\assocarray{sponsorsstr}
+
+\assocarray{adviserstr}
+\providecommand*{\theadviserstrfont}{}
+\assocarray{coadviserstr}
+\providecommand*{\thecoadviserstrfont}{}
+\assocarray{degreestr}
+\providecommand*{\thedegreestrfont}{}
+
+\assocarray{degreename}
+
+\assocarray{docdegreestr}
+
+\assocarray{committeeorder}
+\assocarray{committeetitlestr}
+\providecommand*{\thecommitteetitlestrfont}{}
+\assocarray{committeememberstr}
+\providecommand*{\thecommitteememberstrfont}{}
+
+\assocarray{dissertationstr}
+\providecommand*{\thedissertationstrfont}{}
+\assocarray{copyrighttextstr}
+\assocarray{acknowledgmentsstr}
+
+\assocarray{majorfield}
+\assocarray{specialization}
+
+\newcommand{\initassocarray}[2][\embrace{\notdefined(\option{/novathesis/coverlang})}]{
+  \optionlistdo{/@nt/langsshort}{%
+    \csuse{#2}(##1):={#1}%
+  }%
+}
+
+\assocarray{spine}
+\assocarray{thesiscover}
+\assocarray{margin}
+\assocarray{frontpageimage}
+
+\newcommand{\@nt@newassocarray}[1]{%
+  \assocarray{#1}%
+  \initassocarray[\embrace{\MakeUppercase{#1}}]{#1}%
+}
+\forcsvlist{\@nt@newassocarray}{university,school,department}
+
+\assocarray{doctitle}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING ADDITINAL FILES BEFORE LOADING MEMOIR
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % --------------------------------------------------------
 % SOME PRELIMINARY LANGUAGE DEFINITIONS
-\assocarray{abstractorder}
 \input{NOVAthesisFiles/lang-conf.tex}
 
 % --------------------------------------------------------
 % PROCESS PACKAGE OPTIONS
 \input{NOVAthesisFiles/options.tex}
 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LOADING CUSTOMIZATION STUFF - part 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%============================================================
+%  MEMOIR CUSTOMIZATION / OPTIONS
+%      Please open and edit the appropriate
+%       configuration file “Config/0_memoir.tex”
+%============================================================
+\input{Config/0_memoir}
+% \NTRunHook{memoir}
+
+  
+%============================================================
+%  TEMPLATE CUSTOMIZATION / OPTIONS
+%      Please open and edit the appropriate
+%       configuration file “Config/1_novathesis.tex”
+%============================================================
+\input{Config/1_novathesis}
+% \NTRunHook{novathesis}
+
+%============================================================
+% BIBLATEX CUSTOMIZATION
+%      Please open and edit the appropriate
+%       configuration file “Config/2_biblatex.tex”
+%============================================================
+\input{Config/2_biblatex}
+% \NTRunHook{biblatex}
+
+%============================================================
+% DEGREE CUSTOMIZATION
+%   Please open and edit the appropriate
+%       configuration file “Config/3a_degree_phd.tex”
+%       or “Config/3b_degree_msc.tex”
+%       or “Config/3c_degree_other.tex”
+%============================================================
+\ifphddoc{% Standard names for PhD programs
+  \input{Config/3a_degree_phd}%
+}{\ifmscdoc{% Standard names for MSc programs
+  \input{Config/3b_degree_msc}%
+}{% Customizable name for any other program
+  \input{Config/3c_degree_other}%
+}}
+% \NTRunHook{degree}
+
+
+%============================================================
+% DEPARTMENT CUSTOMIZATION
+%   Please open and edit the appropriate
+%       configuration file “Config/4_department.tex”
+%============================================================
+\input{Config/4_department}
+% \NTRunHook{department}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DEFINITIONS FOR THE REMINDER OF CUSTOMIZATION STUFF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%============================================================
+% Title
+\newcommand*{\nttitle}[2][\option{/novathesis/coverlang}]{%
+  % #1 = lang
+  % #2 = value
+  \@nttitle{main}{#1}{#2}%
+}
+
+\newcommand*{\ntsubtitle}[2][\option{/novathesis/coverlang}]{%
+  % #1 = lang
+  % #2 = value
+  \@ntsubtitle{sub}{#1}{#2}%
+}
+
+\newcommand*{\@nttitle}[3]{
+  % #1 = type (main, sub) title
+  % #2 = lang
+  % #3 = value
+  \typeout{NT @nttitle [#1] [#2] [#3]}
+  \saveexpandmode\noexpandarg% set \noexpandarg locally
+    \StrSubstitute[0]{#3}{\\}{ }[\@thetitle]%
+    \def\@thetitlei{\expandafter\MakeUppercase\expandafter{#3}}%
+    \StrSubstitute[0]{\@thetitlei}{\\}{\newline}[\@thetitlecaps]%
+  \restoreexpandmode% restore the previous mode
+  \csdef{@thetitle#1}{\@thetitle}%
+  \csdef{@thetitle#1caps}{\@thetitlecaps}%
+  \doctitle(#2,#1,cover):={#3}%
+  \doctitle(#2,#1):={\csuse{@thetitle#1}}%
+  \doctitle(#2,#1,cover,caps):={\csuse{@thetitle#1caps}}%
+}
+
+\newcommand*{\@ntsubtitle}[3]{
+  % #1 = type (main, sub) title
+  % #2 = lang
+  % #3 = value
+  \typeout{NT @nttitle [#1] [#2] [#3]}
+  \saveexpandmode\noexpandarg% set \noexpandarg locally
+    \StrSubstitute[0]{#3}{\\}{ }[\@thesubtitle]%
+    \def\@thesubtitlei{\expandafter\MakeUppercase\expandafter{#3}}%
+    \StrSubstitute[0]{\@thesubtitlei}{\\}{\newline}[\@thesubtitlecaps]%
+  \restoreexpandmode% restore the previous mode
+  \csdef{@thesubtitle#1}{\@thesubtitle}%
+  \csdef{@thesubtitle#1caps}{\@thesubtitlecaps}%
+  \doctitle(#2,#1):={#3}%
+  \doctitle(#2,#1,cover):={\csuse{@thesubtitle#1}}%
+  \doctitle(#2,#1,cover,caps):={\csuse{@thesubtitle#1caps}}%
+}
+
+
+%============================================================
+% Date and month
+\newcommand{\thentdatemonth}{\@nt@undefined[Month]}
+\newcommand{\thentdateyear}{\@nt@undefined[Year]}
+
+\newcommand{\ntdatemonth}[1]{\renewcommand{\thentdatemonth}{#1}}
+\newcommand{\ntdateyear}[1]{\renewcommand{\thentdateyear}{#1}}
+
+%============================================================
+% Author identification
+\newcommand{\theauthorname}{\@nt@undefined[Author Name]}
+\newcommand{\theauthorshortname}{\@nt@undefined[Author Short Name]}
+\newcommand{\theauthorgender}{\@nt@undefined[Author Gender]}
+\newcommand{\theauthordegree}{\@nt@undefined[Author Degree]}
+
+\newcommand{\ntauthorname}[3][m]{% [m|f]{Long name}{Short name}
+  \renewcommand{\theauthorgender}{#1}%
+  \renewcommand{\theauthorname}{#2}%
+  \renewcommand{\theauthorshortname}{#3}%
+  \AtBeginDocument{\hypersetup{pdfauthor={#2}}}
+}
+
+\newcommand{\ntauthordegree}[1]{%
+  \renewcommand{\theauthordegree}{#1}%
+}
+
+%============================================================
+% Adding list_of
+\newcommand{\netaddlistof}[1]{%
+  \ifthenelse{\equal{#1}{tableofcontents}}{\options{/@nt/list/indexes/.cpush={%
+        \clearforchapter%
+        \iftoggle{/novathesis/tocintoc}{%
+            \tableofcontents%
+        }{%
+            \phantomsection%
+            \pdfbookmark{\contentsname}{toctarget}%
+            \hypertarget{toctarget}{\tableofcontents*}
+        }%
+  }}}{%
+    \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/@nt/list/indexes/.cpush={%
+            \clearforchapter\printnoidxglossaries\clearforchapter%
+    }}}{%
+      \options{/@nt/list/indexes/.cpush={\clearforchapter\csuse{#1}}}
+    }%
+  }%
+}
+
+%============================================================
+% Cover hooks
+\newcommand\AtCoverExecute[2]{
+  \optionlistdo{/@nt/atcover/#1/#2}{##1}
+}
+
+\newcommand\AtBeginCover[2][1]{
+  \options{/@nt/atcover/#1/begin/.cpush={#2}}%
+}
+\newcommand\AtEndCover[2][1]{
+  \options{/@nt/atcover/#1/end/.cpush={#2}}%
+}
+
+\newcommand*{\@ntaddtocover@iii}[3]{%
+  % \typeout{NT ntaddtocover #3}%
+  \options{/@nt/cover/\option{/novathesis/school}/#3/.cpush={{#1}=*={#2}}}%
+}
+
+\newcommand*{\ntaddtocover}[3][]{%
+  % #1=cover atrtibutes
+  % #2=the code
+  % \typeout{NT ntaddtocover [/@nt/cover/\option{/novathesis/school}/element=#1]}
+  \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
+}
+
+
+
+
+
+
+
+
+
+
+\prependtographicspath{{NOVAthesisFiles/Schools/\option{/novathesis/school}/Images/}}%
+\InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.ldf}{}%
+{\PackageWarining{novathesis}%
+                   {Missing file “defaults.ldf” for ”\option{/novathesis/school}”}}%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LOADING CUSTOMIZATION STUFF - part 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%============================================================
+%  THESIS/DISSERTATION COVER DATA (title, author, etc)
+%   Please open and edit the appropriate
+%       configuration file “Config/5_cover.tex”
+%============================================================
+\input{Config/5_cover}
+% \NTRunHook{cover}
+
+%============================================================
+%  THESIS/DISSERTATION FILES
+%   Please open and edit the appropriate
+%       configuration file “Config/6_files.tex”
+%============================================================
+\input{Config/6_files}
+% \NTRunHook{files}
+
+%============================================================
+%  WHICH LIST_OF TO PRINT
+%   Please open and edit the appropriate
+%       configuration file “Config/7_list_of.tex”
+%============================================================
+\input{Config/7_list_of}
+% \NTRunHook{list_of}
+
+%============================================================
+% ADDITIONAL PACKAGES and MACROS
+%      Please open and edit the appropriate
+%       configuration file “Config/8_packages.tex”
+%============================================================
+\AtEndPreamble{\input{Config/8_packages}}
+% \NTRunHook{packages}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Include strings for all the languages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\optionlistdo{/novathesis/langsused}{%
+  \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
+    {}%
+    {}%
+}%
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING MEMOIR
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%============================================================
-%%  MEMOIR CUSTOMIZATION / OPTIONS
-%%      Please open and edit the appropriate
-%       configuration file “Config/0_memoir.tex”
-%%============================================================
-\input{Config/0_memoir}
-\NTRunHook{memoir}
-
 % --------------------------------------------------------
 % LOAD MAIN CLASS AND ADDITIONAL PACKAGES
 \LoadClass{memoir}
 \OnehalfSpacing% One-and-half spacing
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Include strings for all the languages
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\NTAddToHook{novathesis}{%
-  \optionlistdo{/novathesis/langsused}{%
-    \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
-      {}%
-      {}%
-  }%
-}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING ADDITINAL FILES AFTER LOADING MEMOIR
@@ -371,18 +670,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% COVER DEFINITION MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\@ntaddtocover@iii}[3]{%
-  % \typeout{NT ntaddtocover #3}%
-  \options{/@nt/cover/\option{/novathesis/school}/#3/.cpush={{#1}=*={#2}}}%
-}
-
-\newcommand*{\ntaddtocover}[3][]{%
-  % #1=cover atrtibutes
-  % #2=the code
-  % \typeout{NT ntaddtocover [/@nt/cover/\option{/novathesis/school}/element=#1]}
-  \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
-}
-
 \newlength{\mpwidth}%
 \newlength{\mpheight}%
 \newsavebox{\@nt@coverbox}%
@@ -404,17 +691,6 @@
       }%
       {}% NO SECOND COVER
   \egroup%
-}
-
-\newcommand\AtCoverExecute[2]{
-  \optionlistdo{/@nt/atcover/#1/#2}{##1}
-}
-
-\newcommand\AtBeginCover[2][1]{
-  \options{/@nt/atcover/#1/begin/.cpush={#2}}%
-}
-\newcommand\AtEndCover[2][1]{
-  \options{/@nt/atcover/#1/end/.cpush={#2}}%
 }
 
 \newcommand{\debuggrid}[1][orange]{%
@@ -616,73 +892,6 @@
   {}%
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Definition of associative arrays
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand\@nt@undefined[1][]{\embrace{#1 \thenotdefined(\option{/novathesis/mainlang})}}
-
-\assocarray{frontmatterstring}
-\assocarray{coverstring}
-\assocarray{backcoverstring}
-\assocarray{copyrightstring}
-\assocarray{dedicatorystring}
-\assocarray{acknowledgementsstring}
-\assocarray{quotestring}
-\assocarray{abstractstring}
-\assocarray{keywordsstring}
-\assocarray{notdefined}
-\assocarray{specializationstr}
-\assocarray{departmentofstr}
-\assocarray{sponsorsstr}
-
-\assocarray{adviserstr}
-\providecommand*{\theadviserstrfont}{}
-\assocarray{coadviserstr}
-\providecommand*{\thecoadviserstrfont}{}
-\assocarray{degreestr}
-\providecommand*{\thedegreestrfont}{}
-
-\assocarray{degreename}
-
-\assocarray{docdegreestr}
-
-\assocarray{committeeorder}
-\assocarray{committeetitlestr}
-\providecommand*{\thecommitteetitlestrfont}{}
-\assocarray{committeememberstr}
-\providecommand*{\thecommitteememberstrfont}{}
-
-\assocarray{dissertationstr}
-\providecommand*{\thedissertationstrfont}{}
-\assocarray{copyrighttextstr}
-\assocarray{acknowledgmentsstr}
-
-\assocarray{majorfield}
-\assocarray{specialization}
-
-\newcommand{\initassocarray}[2][\embrace{\notdefined(\option{/novathesis/coverlang})}]{
-  \optionlistdo{/@nt/langsshort}{%
-    \csuse{#2}(##1):={#1}%
-  }%
-}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Defaults for uniersity, faculty, degree, etc…
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\assocarray{spine}
-\assocarray{thesiscover}
-\assocarray{margin}
-\assocarray{frontpageimage}
-
-
-\newcommand{\@nt@newassocarray}[1]{%
-  \assocarray{#1}%
-  \initassocarray[\embrace{\MakeUppercase{#1}}]{#1}%
-}
-\forcsvlist{\@nt@newassocarray}{university,school,department}
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -704,96 +913,8 @@
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% IDENTIFICATION
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Date and month
-\newcommand{\thentdatemonth}{\@nt@undefined[Month]}
-\newcommand{\thentdateyear}{\@nt@undefined[Year]}
-
-\newcommand{\ntdatemonth}[1]{\renewcommand{\thentdatemonth}{#1}}
-\newcommand{\ntdateyear}[1]{\renewcommand{\thentdateyear}{#1}}
-
-%% Author identification
-\newcommand{\theauthorname}{\@nt@undefined[Author Name]}
-\newcommand{\theauthorshortname}{\@nt@undefined[Author Short Name]}
-\newcommand{\theauthorgender}{\@nt@undefined[Author Gender]}
-\newcommand{\theauthordegree}{\@nt@undefined[Author Degree]}
-
-\newcommand{\ntauthorname}[3][m]{% [m|f]{Long name}{Short name}
-  \renewcommand{\theauthorgender}{#1}%
-  \renewcommand{\theauthorname}{#2}%
-  \renewcommand{\theauthorshortname}{#3}%
-  \AtBeginDocument{\hypersetup{pdfauthor={#2}}}
-}
-
-\newcommand{\ntauthordegree}[1]{%
-  \renewcommand{\theauthordegree}{#1}%
-}
 
  
-%% Work identification
-\newcommand{\thecovertitle}[1][]{%
-  % \typeout{NT thecovertitle [#1]}
-  \ifstrempty{#1}%
-    {\thedoccovertitle(\option{/novathesis/coverlang})}%
-    {\thedoccovertitlecaps(\option{/novathesis/coverlang})}
-}
-
-\newcommand{\thetitle}[1][\option{/novathesis/coverlang}]{%
-  \thedoctitle(#1)%
-}
-
-
-\newcommand{\thecoversubtitle}[1][]{%
-  % \typeout{NT thecovertitle [#1]}
-  \ifstrempty{#1}%
-    {\thedoccoversubtitle(\option{/novathesis/coverlang})}%
-    {\thedoccoversubtitlecaps(\option{/novathesis/coverlang})}
-}
-
-\newcommand{\thesubtitle}[1][\option{/novathesis/coverlang}]{%
-  \thedocsubtitle(#1)%
-}
-
-\assocarray{doctitle}
-\assocarray{doccovertitle}
-\assocarray{doccovertitlecaps}
-\assocarray{docsubtitle}
-\assocarray{doccoversubtitle}
-\assocarray{doccoversubtitlecaps}
-
-\def\@thetitle{}
-\newcommand{\nttitle}[2][\option{/novathesis/coverlang}]{%
-  % \typeout{NT nttitle [#1] [#2]}
-    \saveexpandmode\noexpandarg% set \noexpandarg locally
-      \StrSubstitute[0]{#2}{\\}{ }[\@thetitle]%
-      \def\@thrtitleincaps{\expandafter\MakeUppercase\expandafter{#2}}%
-      \StrSubstitute[0]{\@thrtitleincaps}{\\}{\newline}[\@thetitleii]%
-    \restoreexpandmode% restore the previous mode
-    \doccovertitle(#1):={#2}%
-    \doccovertitlecaps(#1):={\@thetitleii}%
-    \doctitle(#1):=\@thetitle%
-    \ifoptionequal{/novathesis/coverlang}{#1}{%
-      \AtBeginDocument{%
-        \hypersetup{pdftitle={\@thetitle}}%
-        \hypersetup{pdfsubject={\thepresentationtext}}
-      }%
-    }{}%
-  % \typeout{NT TITLE=[#2][\@thetitle]}
-}
-
-\def\@thesubtitle{}
-\newcommand{\ntsubtitle}[2][\option{/novathesis/coverlang}]{%
-  % \typeout{NT nttitle [#1] [#2]}
-    \saveexpandmode\noexpandarg% set \noexpandarg locally
-      \StrSubstitute[0]{#2}{\\}{ }[\@thesubtitle]%
-      \StrSubstitute[0]{#2}{\\}{\newline}[\@thesubtitleii]%
-    \restoreexpandmode% restore the previous mode
-    \doccoversubtitle(#1):={#2}%
-    \doccoversubtitlecaps(#1):={\expandafter\MakeUppercase\expandafter{\@thesubtitleii}}%
-    \docsubtitle(#1):=\@thesubtitle%
-}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1153,26 +1274,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \newlistof{lstlistoflistings}{lol}{\lstlistlistingname}
 
-
-\newcommand{\ntaddindex}[1]{%
-  \ifthenelse{\equal{#1}{tableofcontents}}{\options{/@nt/list/indexes/.cpush={%
-        \clearforchapter%
-        \iftoggle{/novathesis/tocintoc}{%
-            \tableofcontents%
-        }{%
-            \phantomsection%
-            \pdfbookmark{\contentsname}{toctarget}%
-            \hypertarget{toctarget}{\tableofcontents*}
-        }%
-  }}}{%
-    \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/@nt/list/indexes/.cpush={%
-            \clearforchapter\printnoidxglossaries\clearforchapter%
-    }}}{%
-      \options{/@nt/list/indexes/.cpush={\clearforchapter\csuse{#1}}}
-    }%
-  }%
-}
-
 \newcommand{\ntprintallindexes}{\optionlistdo{/@nt/list/indexes}{##1}}
 
 
@@ -1222,7 +1323,7 @@
 	\clearforchapter%
 	\null\vfill%
   \noindent%
-  \textbf{\large\thetitle}\par%
+  \textbf{\large\thedoctitle(\option{/novathesis/coverlang},main)}\par%
   \bigskip%
   \thecopyrightstr\par%
 }
