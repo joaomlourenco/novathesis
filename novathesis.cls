@@ -95,7 +95,7 @@
 \def\empty{}\def\next{^^^^0000}\expandafter\endgroup
 \ifx\next\empty\xetexorluatextrue\else\xetexorluatexfalse\fi
 
-\newcommand*{\ifxeorlua}[2]{\ifxetexorluatex#1\else#2\fi}
+\newcommand{\ifxeorlua}[2]{\ifxetexorluatex#1\else#2\fi}
 
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -111,7 +111,7 @@
 
 % --------------------------------------------------------
 % Print string between <...>
-\newcommand{\embrace}[1]{\texorpdfstring{$\langle$}{<}#1\texorpdfstring{$\rangle$}{>}}
+\newcommand*{\embrace}[1]{\texorpdfstring{$\langle$}{<}#1\texorpdfstring{$\rangle$}{>}}
 
 % --------------------------------------------------------
 % Split a string by a character
@@ -302,7 +302,7 @@
   % \options{/@nt/#1/#2/.cpush={#3}}%
 }
 
-\newcommand{\@nt@foralllist}[3]{%
+\newcommand*{\@nt@foralllist}[3]{%
   % #1={file, person}
   % #2=file family (quote, abstract, chapter, etc)
   % #3=macro to be applied, which will receive the item from the list
@@ -325,7 +325,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ASSOCARRAY
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand\@nt@undefined[1][]{\embrace{#1 \thenotdefined(\option{/novathesis/mainlang})}}
+\newcommand*{\@nt@undefined}[1][]{\embrace{#1 \thenotdefined(\option{/novathesis/mainlang})}}
 
 \assocarray{abstractorder}
 \assocarray{frontmatterstring}
@@ -367,7 +367,7 @@
 \assocarray{majorfield}
 \assocarray{specialization}
 
-\newcommand{\initassocarray}[2][\embrace{\notdefined(\option{/novathesis/coverlang})}]{
+\newcommand*{\initassocarray}[2][\embrace{\notdefined(\option{/novathesis/coverlang})}]{
   \optionlistdo{/@nt/langsshort}{%
     \csuse{#2}(##1):={#1}%
   }%
@@ -378,7 +378,7 @@
 \assocarray{margin}
 \assocarray{frontpageimage}
 
-\newcommand{\@nt@newassocarray}[1]{%
+\newcommand*{\@nt@newassocarray}[1]{%
   \assocarray{#1}%
   \initassocarray[\embrace{\MakeUppercase{#1}}]{#1}%
 }
@@ -512,33 +512,34 @@
 
 %============================================================
 % Date and month
-\newcommand{\thentdatemonth}{\@nt@undefined[Month]}
-\newcommand{\thentdateyear}{\@nt@undefined[Year]}
+\newcommand*{\thentdatemonth}{\@nt@undefined[Month]}
+\newcommand*{\thentdateyear}{\@nt@undefined[Year]}
 
-\newcommand{\ntdatemonth}[1]{\renewcommand{\thentdatemonth}{#1}}
-\newcommand{\ntdateyear}[1]{\renewcommand{\thentdateyear}{#1}}
+\newcommand*{\ntdatemonth}[1]{\renewcommand*{\thentdatemonth}{#1}}
+\newcommand*{\ntdateyear}[1]{\renewcommand*{\thentdateyear}{#1}}
 
 %============================================================
 % Author identification
-\newcommand{\theauthorname}{\@nt@undefined[Author Name]}
-\newcommand{\theauthorshortname}{\@nt@undefined[Author Short Name]}
-\newcommand{\theauthorgender}{\@nt@undefined[Author Gender]}
-\newcommand{\theauthordegree}{\@nt@undefined[Author Degree]}
+\newcommand*{\theauthorname}{\@nt@undefined[Author Name]}
+\newcommand*{\theauthorshortname}{\@nt@undefined[Author Short Name]}
+\newcommand*{\theauthorgender}{\@nt@undefined[Author Gender]}
+\newcommand*{\theauthordegree}{\@nt@undefined[Author Degree]}
 
 \newcommand{\ntauthorname}[3][m]{% [m|f]{Long name}{Short name}
-  \renewcommand{\theauthorgender}{#1}%
-  \renewcommand{\theauthorname}{#2}%
-  \renewcommand{\theauthorshortname}{#3}%
+  \renewcommand*{\theauthorgender}{#1}%
+  \renewcommand*{\theauthorname}{#2}%
+  \renewcommand*{\theauthorshortname}{#3}%
   \AtBeginDocument{\hypersetup{pdfauthor={#2}}}
 }
 
-\newcommand{\ntauthordegree}[1]{%
-  \renewcommand{\theauthordegree}{#1}%
+\newcommand*{\ntauthordegree}[1]{%
+  \renewcommand*{\theauthordegree}{#1}%
 }
 
 %============================================================
 % Adding list_of
-\newcommand{\netaddlistof}[1]{%
+\newcommand*{\netaddindex}{\netaddlistof}
+\newcommand*{\netaddlistof}[1]{%
   \ifthenelse{\equal{#1}{tableofcontents}}{\options{/@nt/list/indexes/.cpush={%
         \clearforchapter%
         \iftoggle{/novathesis/tocintoc}{%
@@ -559,14 +560,14 @@
 
 %============================================================
 % Cover hooks
-\newcommand\AtCoverExecute[2]{
+\newcommand*{\AtCoverExecute}[2]{
   \optionlistdo{/@nt/atcover/#1/#2}{##1}
 }
 
-\newcommand\AtBeginCover[2][1]{
+\newcommand*{\AtBeginCover}[2][1]{
   \options{/@nt/atcover/#1/begin/.cpush={#2}}%
 }
-\newcommand\AtEndCover[2][1]{
+\newcommand*{\AtEndCover}[2][1]{
   \options{/@nt/atcover/#1/end/.cpush={#2}}%
 }
 
@@ -1044,7 +1045,7 @@
   \optionlistdo{#1}{\if##1m\relax\gdef#2{m}\fi}%
 }
 
-\newcommand{\@nt@reducenumber}[2]{%
+\newcommand*{\@nt@reducenumber}[2]{%
   % #1=number
   % #2=result
   \ifnum\value{\option{#1/@size}}=1%
@@ -1070,7 +1071,7 @@
 
 \AtEndPreamble{\typeout{NT AtEndPreamble ntsetlayout}\ntsetlayout}
 
-\newcommand{\ntsetlayout}{%
+\newcommand*{\ntsetlayout}{%
   % \synctex=1% Use synctex
   \brokenpenalty=10000
   \settypeoutlayoutunit{mm}
@@ -1086,7 +1087,7 @@
 }
 
 %% For debugging the page layout
-\newcommand\@nt@typetwolengths[4]{%
+\newcommand*{\@nt@typetwolengths}[4]{%
   % #1=text before
   % #2=first length
   % #3=text between
@@ -1098,7 +1099,7 @@
   #1: \l@first\mem@tl@unit\space#3\space\l@second\mem@tl@unit%
 }
 
-\newcommand\@nt@typeonelength[2]{%
+\newcommand*{\@nt@typeonelength}[2]{%
   % #1=text before
   % #2=first length
   \setlength\@tempdimc{\mem@tl@unitperpt #2}%
@@ -1133,8 +1134,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Fonts
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand\quotefont{\normalfont\normalsize}
-\newcommand\quotefonti{\itshape\normalsize}
+\newcommand*{\quotefont}{\normalfont\normalsize}
+\newcommand*{\quotefonti}{\itshape\normalsize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Printing chapters and similars
@@ -1209,14 +1210,14 @@
 }
 
 
-\newcommand{\thesisfrontmatter}{%
+\newcommand*{\ntthesisfrontmatter}{%
   \frontmatter%
   \@nt@select@lang{\option{/novathesis/mainlang}}%
   \pagenumbering{roman}%
   % \setlength{\headheight}{15pt}%
 }
 
-\newcommand{\ntthesismainmatter}{%
+\newcommand*{\ntthesismainmatter}{%
   % enables protrusion locally for the remainder of the document
   \ifxeorlua{}{\microtypesetup{protrusion=true}}%
 	\mainmatter%
@@ -1229,10 +1230,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Chapters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\ntchapterfile}[1]{\listgadd{\@nt@chapter@list}{#1}}
+\newcommand*{\ntchapterfile}[1]{\listgadd{\@nt@chapter@list}{#1}}
 
 
-\newcommand{\ntprintchapters}{%
+\newcommand*{\ntprintchapters}{%
     \@nt@foralllist{file}{chapter}{\@ntloadfiles@ii{chapter}}%
 }
 
@@ -1240,26 +1241,26 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Appendixes and Annexes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand{\addappheadtotoc}{%
+\renewcommand*{\addappheadtotoc}{%
   \phantomsection
   \addtocontents{toc}%
     {\protect\contentsline{chapter}{\appendixtocname}{}{}}%
  }
 
-\newcommand{\ntprintappendixes}{%
+\newcommand*{\ntprintappendixes}{%
   \renewcommand{\appendixtocname}{\appendixnamepl}%
   \clearforchapter\appendix\addappheadtotoc%
   \@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
 }
 
-\newcommand{\ntprintannexes}{%
+\newcommand*{\ntprintannexes}{%
   \renewcommand{\appendixtocname}{\annexnamepl}%
   \clearforchapter\annex\addappheadtotoc%
   \@nt@foralllist{file}{annex}{\@ntloadfiles@ii{annex}}%
 }
 
 
-\newcommand{\annex}{
+\newcommand*{\annex}{
   \xdef\Hy@chapapp{annex}%
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
@@ -1274,7 +1275,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \newlistof{lstlistoflistings}{lol}{\lstlistlistingname}
 
-\newcommand{\ntprintallindexes}{\optionlistdo{/@nt/list/indexes}{##1}}
+\newcommand*{\ntprintallindexes}{\optionlistdo{/@nt/list/indexes}{##1}}
 
 
 % \def\option@listmatch@getval#1=#2{#2}
@@ -1290,7 +1291,7 @@
   }%
 }
 
-\newcommand{\@loadglossaryfiles}{%
+\newcommand*{\@loadglossaryfiles}{%
   \optionlistdo{/@nt/file/glossaries/glossary}{\@ntloadfile@i{##1}}%
   \optionlistdo{/@nt/file/glossaries/acronyms}{\@ntloadfile@i{##1}}%
   \optionlistdo{/@nt/file/glossaries/symbols}{\@ntloadfile@i{##1}}%
@@ -1302,7 +1303,7 @@
 %% Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\ntprintbib}[1][]{%
+\newcommand*{\ntprintbib}[1][]{%
   \printbibliography[#1]%
   \ntfixspacing%
 }
@@ -1311,7 +1312,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Copyright page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\ntprintcopyright}{%
+\newcommand*{\ntprintcopyright}{%
 	\ifmaindoc{% THEN
     \iftoggle{/novathesis/printcopyright}%
       {\ntprintcopyrightpage\clearforchapter}%
@@ -1319,7 +1320,7 @@
 	}{}%
 }
 
-\newcommand{\ntprintcopyrightpage}{%
+\newcommand*{\ntprintcopyrightpage}{%
 	\clearforchapter%
 	\null\vfill%
   \noindent%
@@ -1373,12 +1374,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\@nt@keywordsstr}{}
-\newcommand{\setabstractlang}[1]{%
+\newcommand*{\@nt@keywordsstr}{}
+\newcommand*{\setabstractlang}[1]{%
 	\@nt@select@lang{#1}%
-  \renewcommand{\@nt@keywordsstr}{\thekeywordsstring(#1)}%
+  \renewcommand*{\@nt@keywordsstr}{\thekeywordsstring(#1)}%
 }
-\newcommand{\printabstracttitle}[1]{%
+\newcommand*{\printabstracttitle}[1]{%
 	\chapter*{\theabstractstring(#1)}%
 }
 
@@ -1416,7 +1417,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Fix spacing for pages with roman numerals in ToC
-\renewcommand{\@pnumwidth}{2.5em}% default is 1.55em
+\renewcommand*{\@pnumwidth}{2.5em}% default is 1.55em
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
