@@ -44,6 +44,7 @@
 *.synctex.gz
 *.synctex.gz(busy)
 *.pdfsync
+**.watcher_pid
 
 ## Build tool directories for auxiliary files
 # latexrun
@@ -297,9 +298,6 @@ TSWLatexianTemp*
 # latexmk watcher
 .*.watcher_pid
 
-### Word ###
-~*
-
 
 ### Linux ###
 *~
@@ -369,5 +367,8 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+### Word ###
+~*
 
 # End of https://www.toptal.com/developers/gitignore/api/latex,windows,linux,macos
