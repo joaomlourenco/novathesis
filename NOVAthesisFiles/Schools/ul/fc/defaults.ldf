@@ -149,13 +149,15 @@
 % The pages should be numbered consecutively at the bottom centre of the
 % page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\makepagestyle{novathesis@myvf} 
-\makeoddfoot{novathesis@myvf}{}{\thepage}{} 
-\makeevenfoot{novathesis@myvf}{}{\thepage}{} 
-\makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
-\makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
-\makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
-\pagestyle{novathesis@myvf}
+\AtEndPreamble{%
+  \makepagestyle{novathesis@myvf}%
+  \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
+  \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
+  \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
+  \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
+  \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
+  \pagestyle{novathesis@myvf}%
+}
 %
 %\frenchspacing
 
@@ -194,7 +196,7 @@
 
 % Temporary macro to use in conditional expressions;
 
-\AtBeginCover{%
+\NTAddToHook{cover/1/begin}{%
   \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
   \ifdocfinal{\provisionalstring(\option{/novathesis/coverlang}):={~}}{}%
 }
@@ -222,13 +224,13 @@
 % PhD Title of Dissertation
 \ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.2cm, height=2cm]{1,2}{%
   \fontseries{mc}\fontsize{17}{17}\selectfont%
-  \textbf{\thecovertitle}%
+  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
 }
 
 % MSc Title of Dissertation
 \ntaddtocover[degree=msc/mscplan, vspace=2.0cm, height=2cm]{1,2}{%
   \fontseries{mc}\fontsize{17}{17}\selectfont%
-  \textbf{\thecovertitle}%
+  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
 }
 
 % Doc Status
@@ -291,11 +293,11 @@
 %
 
 % Sponsor
-\ntaddtocover[ height=1cm, vspace=2]{1}{%
+\ntaddtocover[height=1cm, vspace=2]{1}{%
   % \fontseries{mc}
   ~
 }
-\ntaddtocover[ height=1cm, vspace=2]{2}{%
+\ntaddtocover[height=1cm, vspace=2]{2}{%
   % \fontseries{mc}
   \fontsize{10}{10}\selectfont%
   \thesponsorsstr(\option{/novathesis/coverlang})%

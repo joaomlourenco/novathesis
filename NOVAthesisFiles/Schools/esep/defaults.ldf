@@ -60,7 +60,7 @@
 % Spine info
 \spine(logo):={ESEP-logo_horizontal}
 \spine(author):={\theauthorshortname}
-\spine(title):={\thecovertitle}
+\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main,cover)}
 \spine(year):={\thentdateyear}
 
 % Set margins for "normal" pages
@@ -108,13 +108,15 @@
 % ESEP guidelines:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\makepagestyle{novathesis@myvf} 
-\makeoddfoot{novathesis@myvf}{}{\thepage}{} 
-\makeevenfoot{novathesis@myvf}{}{\thepage}{} 
-\makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
-\makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
-\makeoddhead{novathesis@myvf}{}{}{\small\textsc{\leftmark}}
-\pagestyle{novathesis@myvf}
+\AtEndPreamble{%
+  \makepagestyle{novathesis@myvf}%
+  \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
+  \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
+  \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
+  \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
+  \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
+  \pagestyle{novathesis@myvf}%
+}
 %
 %\frenchspacing
 
@@ -126,7 +128,7 @@
 \ifxeorlua{%
   \ntsetup{fontstyle=calibri}%
 }{%
-  \AtBeginCover{%
+  \NTAddToHook{cover/back/begin}{%
     \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
   }%
 }
@@ -146,24 +148,24 @@
 }
 
 % Title of Dissertation 1
-\ntaddtocover[ vspace=6.5cm, height=4cm, inalign=t]{1}{%
+\ntaddtocover[vspace=6.5cm, height=4cm, inalign=t]{1}{%
     \centering%
     \fontsize{15}{15}\selectfont%
-    \thecovertitle[caps]\\[1ex]%
+    \thedoctitle(\option{/novathesis/coverlang},main,cover)[caps]\\[1ex]%
     \fontsize{12}{12}\selectfont%
     Dissertação%
 }
 
 % % Title of Dissertation 2
-\ntaddtocover[ vspace=6.5cm, height=4cm, inalign=t]{2}{%
+\ntaddtocover[vspace=6.5cm, height=4cm, inalign=t]{2}{%
     \centering%
     \fontsize{15}{15}\selectfont\scshape%
-    \thecovertitle\\[1ex]%
-    \thecovertitle[en]%
+    \thedoctitle(\option{/novathesis/coverlang},main,cover)\\[1ex]%
+    \thedoctitle(\option{/novathesis/coverlang},main,cover)[en]%
 }
 
 % Advisers 2
-\ntaddtocover[ vspace=2cm]{2}{%
+\ntaddtocover[vspace=2cm]{2}{%
   % \fontseries{mc}
   \parbox[t][4cm]{\textwidth}{%
     \centering%
@@ -171,7 +173,7 @@
     \parbox{0.80\textwidth}{\ntprintadvisers[0.75]}%
   }%
 }
-\ntaddtocover[ vspace=2cm]{1}{%
+\ntaddtocover[vspace=2cm]{1}{%
   \parbox[t][4cm]{\textwidth}{%
   ~%
   }%
@@ -199,35 +201,35 @@
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % % ESEP logo
-% \ntaddtocover[ vspace=2.2cm]{2}{%
+% \ntaddtocover[vspace=2.2cm]{2}{%
 %   \ntcoverbackground
 %   \fontsize{15}{15}\selectfont
 %   \expandafter\MakeUppercase\expandafter{\textbf{\theschool(\option{/novathesis/coverlang})}}
 % }
 %
 % % % Degree name
-% \ntaddtocover[ vspace=0.5cm]{2}{%
+% \ntaddtocover[vspace=0.5cm]{2}{%
 %   \fontsize{15}{15}\selectfont
 %   \thedegreename(\option{/novathesis/coverlang})
 % }
 %
 % % % Title of Dissertation
-% \ntaddtocover[ vspace=6.5cm]{2}{%
+% \ntaddtocover[vspace=6.5cm]{2}{%
 %   % \fontseries{mc}
 %   \fontsize{15}{15}\selectfont
 %   \scshape
-%   \thecovertitle\\[1ex]
-%   \thecovertitle[en]
+%   \thedoctitle(\option{/novathesis/coverlang},main,cover)\\[1ex]
+%   \thedoctitle(\option{/novathesis/coverlang},main,cover)[en]
 % }
 %
 % % Author name
-% \ntaddtocover[ vspace=1]{2}{%
+% \ntaddtocover[vspace=1]{2}{%
 %   \fontsize{12}{12}\selectfont
 %   \textbf{\theauthorname}
 % }
 %
 % % Date
-% \ntaddtocover[ vspace=1]{2}{%
+% \ntaddtocover[vspace=1]{2}{%
 %   \fontsize{12}{12}\selectfont
 %   \ifdraftdoc
 %     \textbf{DRAFT: \today}
@@ -237,7 +239,7 @@
 % }
 %
 % % % Final space
-% \ntaddtocover[ vspace=1cm]{2}{%
+% \ntaddtocover[vspace=1cm]{2}{%
 %   ~
 % }
 %

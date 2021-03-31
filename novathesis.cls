@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-03-30 [6.1.0]
+%% Version 2021-03-31 [6.1.1]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{novathesis}[2021-03-30 novathesis template]
+\ProvidesClass{novathesis}[2021-03-31 novathesis template]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -111,7 +111,7 @@
 
 % --------------------------------------------------------
 % Print string between <...>
-\newcommand*{\embrace}[1]{\texorpdfstring{$\langle$}{<}#1\texorpdfstring{$\rangle$}{>}}
+\newcommand*{\embrace}[1]{$\langle$ #1 $\rangle$}
 
 % --------------------------------------------------------
 % Split a string by a character
@@ -564,11 +564,15 @@
   \optionlistdo{/@nt/atcover/#1/#2}{##1}
 }
 
-\newcommand*{\AtBeginCover}[2][1]{
-  \options{/@nt/atcover/#1/begin/.cpush={#2}}%
+\newcommand*{\AtCover}[3][1]{%
+  \options{/@nt/atcover/#1/#2/.cpush={#3}}%
 }
-\newcommand*{\AtEndCover}[2][1]{
-  \options{/@nt/atcover/#1/end/.cpush={#2}}%
+
+\newcommand*{\AtBeginCover}[2][1]{%
+  \AtCover{#1}{begin}{#2}%
+}
+\newcommand*{\AtEndCover}[2][1]{%
+  \AtCover{#1}{end}{#2}%
 }
 
 \newcommand*{\@ntaddtocover@iii}[3]{%
@@ -683,14 +687,12 @@
     \subpdfbookmark{\thecoverstring(\option{/novathesis/coverlang})}{bmcover}
     \@nt@printthecover{1}%
     \AtCoverExecute{1}{end}%
-    \iftoggle{/novathesis/secondcover}%
-      {% SECOND COVER TRUE
+    \iftoggle{/novathesis/secondcover}{% SECOND COVER TRUE
             %If cover 2 is defined use its definition
             \AtCoverExecute{2}{begin}%
             \@nt@printthecover{2}%
             \AtCoverExecute{2}{end}
-      }%
-      {}% NO SECOND COVER
+      }{}% NO SECOND COVER
   \egroup%
 }
 
@@ -852,20 +854,21 @@
   \newtoggle{@nt@backcover}%
   \togglefalse{@nt@backcover}%
   \clearforchapter%
-  \def\@nt@arg{back}%
   \ifaadefined{thesiscover}(\option{/novathesis/docdegree},back)%
     {\toggletrue{@nt@backcover}}{}%
   \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/back}%
     {\toggletrue{@nt@backcover}}{}%
   \iftoggle{@nt@backcover}{%
+    \NTRunHook{cover/preback/begin}%
     \thispagestyle{empty}%
-    \newpage% \the back cover goes on the even page
+    \NTRunHook{cover/preback/end}%
+    ~\newpage% \the back cover goes on the even page
     \bgroup%
       \ntaddtocover{back}{}%
-      \AtCoverExecute{back}{begin}%
+      \NTRunHook{cover/back/begin}%
       \@nt@select@lang{\option{/novathesis/coverlang}}%
       \@nt@printthecover{back}%
-      \AtCoverExecute{back}{end}%
+      \NTRunHook{cover/back/end}%
     \egroup%
   }{}%
 }
