@@ -315,9 +315,5 @@
 \ntaddtocover[vspace=1.4cm]{1,2}{%
   % \fontseries{mc}
   \fontsize{14}{14}\selectfont%
-  \ifdraftdoc%
-    DRAFT: \today%
-  \else%
     \thentdateyear%
-  \fi%
 }

@@ -165,9 +165,5 @@
 % Date
 \ntaddtocover[vspace=1]{2}{%
   \fontsize{11}{11}\selectfont
-  \ifdraftdoc
-    \textbf{DRAFT: \today}
-  \else
     \textbf{\thentdatemonth, \thentdateyear}
-  \fi
 }

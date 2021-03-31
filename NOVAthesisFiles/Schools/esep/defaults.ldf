@@ -9,7 +9,8 @@
 
 %%% RGB = 41, 141, 187
 
-\nttitle[en]{Please define the title in english with \verb|\nttitle[en]{THE TITLE}|}
+\ntsetup{secondcover=true}    % Shall a second cover page be forced?
+\nttitle[en]{Please define the title in english}
 
 % Univesity
 \university(pt):={Escola Superior de Enfermagem do Porto}
@@ -138,7 +139,6 @@
   \noindent%
   \fontsize{15}{15}\selectfont%
   \textbf{\MakeTextUppercase{\theschool(\option{/novathesis/coverlang})}}
-  % \expandafter\MakeUppercase\expandafter{\textbf{\theschool(\option{/novathesis/coverlang})}}%
 }
 
 % Degree name
@@ -151,7 +151,7 @@
 \ntaddtocover[vspace=6.5cm, height=4cm, inalign=t]{1}{%
     \centering%
     \fontsize{15}{15}\selectfont%
-    \thedoctitle(\option{/novathesis/coverlang},main,cover)[caps]\\[1ex]%
+    \thedoctitle(\option{/novathesis/coverlang},main,cover,caps)\\[1ex]%
     \fontsize{12}{12}\selectfont%
     Dissertação%
 }
@@ -161,7 +161,7 @@
     \centering%
     \fontsize{15}{15}\selectfont\scshape%
     \thedoctitle(\option{/novathesis/coverlang},main,cover)\\[1ex]%
-    \thedoctitle(\option{/novathesis/coverlang},main,cover)[en]%
+    \thedoctitle(en,main,cover)%
 }
 
 % Advisers 2
@@ -188,11 +188,7 @@
 % Date
 \ntaddtocover[vspace=2]{1,2}{%
   \fontsize{12}{12}\selectfont
-  \ifdraftdoc
-    \textbf{DRAFT: \today}
-  \else
-    \thentdatemonth, \thentdateyear
-  \fi
+    \textbf{\thentdatemonth, \thentdateyear}
 }
 
 %

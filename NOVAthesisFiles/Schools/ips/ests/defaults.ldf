@@ -244,11 +244,7 @@
   \hspace{0.65cm}%
   \begin{minipage}[t]{0.55\textwidth}%
     \fontsize{10}{10}\selectfont%
-    \ifdraftdoc%
-      \textbf{DRAFT: \today}%
-    \else%
-      \textbf{\thentdatemonth, \thentdateyear}%
-    \fi%
+    \textbf{\thentdatemonth, \thentdateyear}
   \end{minipage}%
 }
 
