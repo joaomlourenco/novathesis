@@ -169,13 +169,15 @@ of the requirements for the degree of %
 % page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\makepagestyle{novathesis@myvf} 
-\makeoddfoot{novathesis@myvf}{}{\thepage}{} 
-\makeevenfoot{novathesis@myvf}{}{\thepage}{} 
-\makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
-\makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
-\makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
-\pagestyle{novathesis@myvf}
+\AtEndPreamble{%
+  \makepagestyle{novathesis@myvf}%
+  \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
+  \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
+  \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
+  \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
+  \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
+  \pagestyle{novathesis@myvf}%
+}
 %
 %\frenchspacing
 
@@ -188,65 +190,69 @@ of the requirements for the degree of %
 \definecolor{imsmidgrey}{RGB}{190,190,190}
 \definecolor{imslightgrey}{RGB}{240,240,240}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtBeginCover{%
+\NTAddToHook{cover/1/begin}{%
   \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
 }
 
   % PHD PROGRAM
-% \ntaddtocover[ align=l, vspace=0cm, degree=phd]{1,2}{%
+% \ntaddtocover[align=l, vspace=0cm, degree=phd]{1,2}{%
 %   \ntcoverbackground%
 % }
 % INFORMATION MANAGEMENT
-\ntaddtocover[ align=l, vspace=0cm, degree=phd]{1,2}{%
+\ntaddtocover[align=l, vspace=0cm, degree=phd]{1,2}{%
   \fontsize{16}{16}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\themajorfield(\option{/novathesis/coverlang})}}%
 }
+
 % SPECIALIZATION IN
-\ntaddtocover[ align=l, vspace=0.7cm, degree=phd]{1,2}{%
+\ntaddtocover[align=l, vspace=0.7cm, degree=phd]{1,2}{%
   \fontsize{16}{16}\selectfont
   \textcolor{imsmidgrey}{%
     \textbf{\thespecializationstr(\option{/novathesis/coverlang})
     \thespecialization(\option{/novathesis/coverlang})}%
   }%
 }
+
 % DISSERTATION TITLE
-\ntaddtocover[ align=l, vspace=1.8cm, degree=phd]{1,2}{%
+\ntaddtocover[align=l, vspace=1.8cm, degree=phd]{1,2}{%
   \fontsize{16}{16}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{\thecovertitle}}%
+  \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
 }
+
 % AUTHOR NAME
-\ntaddtocover[ align=l, vspace=0.4cm, degree=phd]{1,2}{%
+\ntaddtocover[align=l, vspace=0.4cm, degree=phd]{1,2}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
 }
+
 % DISSERTATION TEXT
-\ntaddtocover[ align=l, vspace=5, degree=phd]{1,2}{%
+\ntaddtocover[align=l, vspace=5, degree=phd]{1,2}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{%
     \thedissertationstr(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
   }%
 }%
+
 % DATE
-\ntaddtocover[ align=l, vspace=1cm, degree=phd]{1,2}{%
+\ntaddtocover[align=l, vspace=1cm, degree=phd]{1,2}{%
   \fontsize{11}{11}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{%
-    \ifdraftdoc%
-      DRAFT: \today%
-    \else%
-      \thentdatemonth, \thentdateyear%
-    \fi%
-  }}%
+  \textcolor{imsdarkgrey}{%
+    \textbf{\thentdatemonth, \thentdateyear}%
+  }%
 }
+
 % SCHOOL
-\ntaddtocover[ align=l, vspace=1cm, degree=phd]{1,2}{%
+\ntaddtocover[align=l, vspace=1cm, degree=phd]{1,2}{%
   \fontsize{11}{11}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\theschool(en)}}%
 }
+
 % UNIVERSITY
-\ntaddtocover[ align=l, vspace=0.0cm, degree=phd]{1,2}{%
+\ntaddtocover[align=l, vspace=0.0cm, degree=phd]{1,2}{%
   \fontsize{11}{11}\selectfont%
   \textcolor{imsdarkgrey}{\theuniversity(\option{/novathesis/coverlang})}%
 }
@@ -254,32 +260,32 @@ of the requirements for the degree of %
 
   % MSc PROGRAM
 % % Title of Dissertation
-% \ntaddtocover[ align=l, vspace=0cm, degree=msc]{1,2}{%
+% \ntaddtocover[align=l, vspace=0cm, degree=msc]{1,2}{%
 %   \ntcoverbackground%
 % }
 
 % % Title of Dissertation
-\ntaddtocover[ align=l, vspace=1, degree=msc]{1,2}{%
+\ntaddtocover[align=l, vspace=1, degree=msc]{1,2}{%
   \fontsize{17}{17}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{\thecovertitle}}\\[0.25ex]%
+  \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}\\[0.25ex]%
   \fontsize{16}{16}\selectfont%
   \textcolor{imslightgrey}{\thespecialization(\option{/novathesis/coverlang})}%
 }
 
 % Author name
-\ntaddtocover[ align=l, vspace=1, degree=msc]{1,2}{%
+\ntaddtocover[align=l, vspace=1, degree=msc]{1,2}{%
   \fontsize{15}{15}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
 }
 
 % Degree
-\ntaddtocover[ align=l, vspace=1, degree=msc]{1,2}{%
+\ntaddtocover[align=l, vspace=1, degree=msc]{1,2}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{\thepresentationtext}%
 }
 
 % Date
-\ntaddtocover[ vspace=1, degree=msc]{1,2}{%
+\ntaddtocover[vspace=1, degree=msc]{1,2}{%
   ~
   % \fontsize{11}{11}\selectfont%
   % \ifdraftdoc%
@@ -288,7 +294,6 @@ of the requirements for the degree of %
   %   \textbf{\thentdatemonth, \thentdateyear}%
   % \fi%
 }%
-
 
 % \ntaddtocover[cover=back]{back}{%
 %   \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},back)]

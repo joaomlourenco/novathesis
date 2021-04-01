@@ -36,7 +36,7 @@
 % Spine info
 \spine(logo):={cover-iscte-iul}
 \spine(author):={\theauthorshortname}
-\spine(title):={\thetitle}
+\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main,cover)}
 \spine(year):={\thedateyear}
 
 % Set margins for "normal" pages
@@ -100,13 +100,15 @@
 % The pages should be numbered consecutively at the bottom centre of the
 % page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\makepagestyle{novathesis@myvf} 
-\makeoddfoot{novathesis@myvf}{}{\thepage}{} 
-\makeevenfoot{novathesis@myvf}{}{\thepage}{} 
-\makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
-\makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
-\makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
-\pagestyle{novathesis@myvf}
+\AtEndPreamble{%
+  \makepagestyle{novathesis@myvf}%
+  \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
+  \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
+  \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
+  \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
+  \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
+  \pagestyle{novathesis@myvf}%
+}
 %
 \frenchspacing
 
@@ -159,7 +161,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtBeginCover{%
+\NTAddToHook{cover/1/begin}{%
   \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
 }
 
@@ -183,7 +185,7 @@
 \ntaddtocover[vspace=1]{1,2}{%
   \fontsize{18}{20}\selectfont%
   %\textbf{\thetitle}%
-  \textbf{\thetitle}%
+  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
 }
 
 % Author name
@@ -213,9 +215,5 @@
 % Date
 \ntaddtocover[vspace=1]{1,2}{%
   \fontsize{14}{14}\selectfont%
-  \ifdraftdoc%
-    \textbf{DRAFT: \today}%
-  \else%
-    \textbf{\thentdatemonth, \thentdateyear}%
-  \fi%
+    \textbf{\thentdatemonth, \thentdateyear}
 }
