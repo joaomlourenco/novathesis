@@ -10,6 +10,6 @@
 \ifxeorlua{%
   \RequirePackage{kpfonts-otf}%
 }{%
-  \RequirePackage[notextcomp]{kpfonts}%
+  \RequirePackage[notextcomp,noamsmath]{kpfonts}%
   \RequirePackage[cal=boondoxo]{mathalfa}% mathcal
 }

@@ -92,13 +92,15 @@
 % The pages should be numbered consecutively at the bottom centre of the
 % page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\makepagestyle{novathesis@myvf} 
-\makeoddfoot{novathesis@myvf}{}{\thepage}{} 
-\makeevenfoot{novathesis@myvf}{}{\thepage}{} 
-\makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
-\makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
-\makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
-\pagestyle{novathesis@myvf}
+\AtEndPreamble{%
+  \makepagestyle{novathesis@myvf}%
+  \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
+  \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
+  \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
+  \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
+  \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
+  \pagestyle{novathesis@myvf}%
+}
 
 % Use romman numerals for Appendixes
 % \patchcmd{\HyOrg@appendix}{\@Alph}{\@Roman}{}{}
@@ -116,7 +118,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtBeginCover{%
+\NTAddToHook{cover/1/begin}{%
   \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
 }
 
@@ -130,7 +132,7 @@
   \end{tabular*}%
 }
 
-\ntaddtocover[ align=l, vspace=1.0cm]{2}{%
+\ntaddtocover[align=l, vspace=1.0cm]{2}{%
   \null%
   \begin{tabular*}{{0.5\stockwidth}}[c]{@{\hspace*{0.8cm}}l@{}}%
     \includegraphics[width=9cm]{novologo_cores_crop}%
@@ -144,7 +146,7 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=1]{1,2}{%
   \fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\thecovertitle}}%
+  \textcolor{fcshblue}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
 }
 
 % Author name
@@ -163,19 +165,15 @@
 \ntaddtocover[vspace=1]{1,2}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{fcshblue}{%%
-    \ifdraftdoc%
-      \textbf{DRAFT: \today}%
-    \else%
       \textbf{\thentdatemonth, \thentdateyear}
-    \fi%
   }%
 }
 
-\ntaddtocover[ vspace=2.0cm]{1}{%
+\ntaddtocover[vspace=2.0cm]{1}{%
   \null
 }
 
-\ntaddtocover[ vspace=1cm]{2}{%
+\ntaddtocover[vspace=1cm]{2}{%
  \raisebox{-1cm}{%
    \textcolor{fcshblue}{\rule{\stockwidth}{0.75cm}}%
  }%

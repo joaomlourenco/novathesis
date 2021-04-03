@@ -61,11 +61,11 @@
 
 
 %%%%% Configure Graphics
-\RequirePackage[nobeamer]{graphbox}% improved version of "graphicx"
-\graphicspath{{Chapters/Figures/}}
-\DeclareGraphicsExtensions{.pdf, .png, .jpg, .tif}
-\newcommand\appendtographicspath[1]{\gappto\Ginput@path{#1}}
-\newcommand\prependtographicspath[1]{\gpreto\Ginput@path{#1}}
+% \RequirePackage[nobeamer]{graphbox}% improved version of "graphicx"
+% \graphicspath{{Chapters/Figures/}}
+% \DeclareGraphicsExtensions{.pdf, .png, .jpg, .tif}
+% \newcommand\appendtographicspath[1]{\gappto\Ginput@path{#1}}
+% \newcommand\prependtographicspath[1]{\gpreto\Ginput@path{#1}}
 
 
 % Add an image to the backgroung
@@ -111,6 +111,7 @@
 
 
 % Load book spine images in the background
+\RequirePackage{xkeyval}
 \RequirePackage{tikz}
 % \usetikzlibrary{backgrounds}
 % \RequirePackage{tikzpagenodes}
@@ -127,18 +128,18 @@
 % Fixing autoref in yperref
 \RequirePackage{NOVAthesisFiles/fix-hyperref}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% HOOKS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NTAddToHook{novathesis}{%
-  \prependtographicspath{{NOVAthesisFiles/Schools/\option{/novathesis/school}/Images/}}%
-  \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.ldf}{}%
-    {\PackageWarining{novathesis}%
-                     {Missing file “defaults.ldf” for ”\option{/novathesis/school}”}}%
-}
+% \AtEndClass{novathesis}{%
+%   \prependtographicspath{{NOVAthesisFiles/Schools/\option{/novathesis/school}/Images/}}%
+%   \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.ldf}{}%
+%     {\PackageWarining{novathesis}%
+%                      {Missing file “defaults.ldf” for ”\option{/novathesis/school}”}}%
+% }
 
-\NTAddToHook{files}{%
+% \NTAddToHook{packages}
+% {%
   %--------------------------------
   % “biblatex” stuff
   % \ntaddfile{bib}{NOVAthesisFiles/fix-bib.ldf}%
@@ -180,6 +181,11 @@
     , symbols% add symbols listing
     % , sanitizesort=false% allow \gls inside descriptions
     % , automake
+    , nolong
+    , nosuper
+    , nolist
+    , notree
+    , nostyles
   ]{glossaries-extra}% To create glossaries
   \RequirePackage{NOVAthesisFiles/glossary-xltabular}%
   \setglossarystyle{xltabular}%
@@ -189,5 +195,5 @@
   %--------------------------------
   % “Process gnumberlist” option - after glossaries
   \iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}%
-  \@loadglossaryfiles%
-}
+  \AtEndPreamble{\@loadglossaryfiles}%
+% }

@@ -108,13 +108,15 @@
 % The pages should be numbered consecutively at the bottom centre of the
 % page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\makepagestyle{novathesis@myvf} 
-\makeoddfoot{novathesis@myvf}{}{\thepage}{} 
-\makeevenfoot{novathesis@myvf}{}{\thepage}{} 
-\makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
-\makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
-\makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
-\pagestyle{novathesis@myvf}
+\AtEndPreamble{%
+  \makepagestyle{novathesis@myvf}%
+  \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
+  \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
+  \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
+  \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
+  \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
+  \pagestyle{novathesis@myvf}%
+}
 %
 %\frenchspacing
 
@@ -168,16 +170,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtBeginCover{%
+\NTAddToHook{cover/1/begin}{%
   \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
 }
 
 % LOGO
-\ntaddtocover[ vspace=0cm]{1}{%
+\ntaddtocover[vspace=0cm]{1}{%
   \includegraphics[height=4.6cm]{ESTS-JPG}%
 }
 
-\ntaddtocover[ vspace=0cm]{2}{%
+\ntaddtocover[vspace=0cm]{2}{%
   \rule{0cm}{4.6cm}%
 }
 
@@ -192,12 +194,12 @@
   % Title of Dissertation
   \begin{minipage}[t]{0.55\textwidth}%
     \fontsize{16}{16}\selectfont\raggedright%
-    \textbf{\thecovertitle}%
+    \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
   \end{minipage}%
 }
 
 % Photo
-\ntaddtocover[ align=l, vspace=1]{1}{%
+\ntaddtocover[align=l, vspace=1]{1}{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%
@@ -208,7 +210,7 @@
 }
 
 % Degree
-\ntaddtocover[ align=l, vspace=1]{1}{%
+\ntaddtocover[align=l, vspace=1]{1}{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%
@@ -221,7 +223,7 @@
 }
 
 % Advisers
-\ntaddtocover[ vspace=1]{1}{%
+\ntaddtocover[vspace=1]{1}{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%
@@ -242,17 +244,13 @@
   \hspace{0.65cm}%
   \begin{minipage}[t]{0.55\textwidth}%
     \fontsize{10}{10}\selectfont%
-    \ifdraftdoc%
-      \textbf{DRAFT: \today}%
-    \else%
-      \textbf{\thentdatemonth, \thentdateyear}%
-    \fi%
+    \textbf{\thentdatemonth, \thentdateyear}
   \end{minipage}%
 }
 
 
 
-\ntaddtocover[ vspace=1]{2}{%
+\ntaddtocover[vspace=1]{2}{%
   \begin{minipage}[t]{0.20\textwidth}%
     ~%
   \end{minipage}%

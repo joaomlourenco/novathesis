@@ -91,13 +91,15 @@
 % page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\makepagestyle{novathesis@myvf} 
-\makeoddfoot{novathesis@myvf}{}{\thepage}{} 
-\makeevenfoot{novathesis@myvf}{}{\thepage}{} 
-\makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
-\makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
-\makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
-\pagestyle{novathesis@myvf}
+\AtEndPreamble{%
+  \makepagestyle{novathesis@myvf}%
+  \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
+  \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
+  \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
+  \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
+  \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
+  \pagestyle{novathesis@myvf}%
+}
 %
 %\frenchspacing
 
@@ -105,7 +107,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtBeginCover{%
+\NTAddToHook{cover/1/begin}{%
   \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
 }
 
@@ -113,7 +115,7 @@
 \ntaddtocover[vspace=6cm,height=7.5cm]{1}{%
     \raggedright%
     \fontsize{18}{18}\selectfont
-    \bfseries\thecovertitle[caps]%
+    \bfseries\thedoctitle(\option{/novathesis/coverlang},main,cover)[caps]%
 }
 
 % Author name
@@ -127,7 +129,7 @@
 \ntaddtocover[vspace=2cm]{2}{%
     \centering%
     \fontsize{16}{16}\selectfont
-    \bfseries\thecovertitle[caps]%
+    \bfseries\thedoctitle(\option{/novathesis/coverlang},main,cover)[caps]%
 }
 
 % Academic qualifications
@@ -163,9 +165,5 @@
 % Date
 \ntaddtocover[vspace=1]{2}{%
   \fontsize{11}{11}\selectfont
-  \ifdraftdoc
-    \textbf{DRAFT: \today}
-  \else
     \textbf{\thentdatemonth, \thentdateyear}
-  \fi
 }

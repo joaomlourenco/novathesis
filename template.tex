@@ -1,13 +1,14 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% template.tex
-%% NOVA thesis document template
+%!TEX root=template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% novathesis.cls
+%% NOVA thesis document class
 %%
 %% This work is licensed under the
 %% The LaTeX project public license (LPPL), version 1.3c
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-03-27 [6.0.2]
+%% Version 2021-03-31 [6.1.1]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -25,31 +26,29 @@
 %%      - joaomlourenco
 %%
 %% CONTRIBUTORS @github:
-%%      - bcandeias, flaviomartins, tmonteiro2344, jsaramago, 
-%%        microlina, riclas, pedrovieira
+%%      https://github.com/joaomlourenco/novathesis/wiki#help-with-the-project-patches-and-new-features
 %%
 %% DONATIONS:
-%%     If you think this template really helped you while writing your thesis,
-%%     think about making a small donation. Just access the website
-%%     https://paypal.me/novathesis
-%%     and click in the “Donation” link.  We will keep a list thanking to all 
-%%     the identified donors that identify themselves in the “Add special 
-%%     instructions to the seller:” box.
+%%      If you think this template really helped you while writing your thesis, then
+%%          1. Go to the project web page and giv it a star (on the top-right)
+%%          2. Make a small donation using the URL below
+%%                    https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8
+%%             We will keep a list thanking to all the identified donors that identify
+%%             themselves in the “Add special instructions to the seller:” box.
 %%
 %% CITATION:
-%%     If you use this template, please be kind and cite it in your bibliography:
-%%           “João M. Lourenço, \emph{The NOVAthesis \LaTeX\ Template User’s Manual},
-%%            NOVA School of Science and Technology, NOVA University Lisbon, 2021,
-%%            \url{https://github.com/joaomlourenco/novathesis/raw/master/template.pdf}.”
-%%    The BibTeX entry is:
+%%      If you use this template, please be kind and cite it in your bibliography:
+%%           “João M. Lourenço, The NOVAthesis \LaTeX\ Template User’s Manual,
+%%            NOVA University Lisbon, 2021,
+%%            https://github.com/joaomlourenco/novathesis/raw/master/template.pdf.”
+%%      The BibTeX entry is already in the exxample “bibliography.bib” file:
 %%           @Manual{novathesis-manual,
-%%            title        = {{The NOVAthesis \LaTeX\ Template User's Manual}},
-%%            author       = {João M. Lourenço},
-%%            organization = {NOVA University Lisbon},
-%%            year         = {2021},
-%%            url          = {https://github.com/joaomlourenco/novathesis/raw/master/template.pdf},
+%%              title       ={{The NOVAthesis \LaTeX\ Template User's Manual}},
+%%              author      ={João M. Lourenço},
+%%              organization={NOVA University Lisbon},
+%%              year        ={2021},
+%%              url         ={https://github.com/joaomlourenco/novathesis/raw/master/template.pdf},
 %%           }
-%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -65,8 +64,8 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% PLEASE DO NOT CHANGE THIS FILE
-%% ALL THE CUSTOMIZATION WAS MOVED TO THE ”Config” FOLDER
+% PLEASE DO NOT CHANGE THIS FILE
+% ALL THE CUSTOMIZATION WAS MOVED TO THE files in the ”Config” FOLDER
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -123,96 +122,82 @@
 
 
 
-
-
 %%------------------------------------------------------------
-%% All class options will be passed to “memoir”.
-%% See “memoir” manual for more options.
+%% This class is based in “memoir”.  To set memoir options,
+%% edit “Config/0_memoir.tex”.
 \documentclass{novathesis}
 
   
-%%============================================================
-%%  TEMPLATE CUSTOMIZATION / OPTIONS
-%%      Please open and edit the appropriate
+%============================================================
+%  TEMPLATE CUSTOMIZATION / OPTIONS
+%      Please open and edit the appropriate
 %       configuration file “Config/1_novathesis.tex”
-%%============================================================
-\input{Config/1_novathesis}
-\NTRunHook{novathesis}
+%============================================================
 
-
-%%============================================================
-%% BIBLATEX CONFIGURATION
-%%      Please open and edit the appropriate
+%============================================================
+% BIBLATEX CUSTOMIZATION
+%      Please open and edit the appropriate
 %       configuration file “Config/2_biblatex.tex”
-%%============================================================
-\input{Config/2_biblatex}
-\NTRunHook{biblatex}
+%============================================================
 
-
-%%============================================================
-% Degree customization
+%============================================================
+% DEGREE CUSTOMIZATION
 %   Please open and edit the appropriate
 %       configuration file “Config/3a_degree_phd.tex”
 %       or “Config/3b_degree_msc.tex”
 %       or “Config/3c_degree_other.tex”
-%%============================================================
-\ifphddoc{% Standard names for PhD programs
-  \input{Config/3a_degree_phd}%
-}{\ifmscdoc{% Standard names for MSc programs
-  \input{Config/3b_degree_msc}%
-}{% Customizable name for any other program
-  \input{Config/3c_degree_other}%
-}}
-\NTRunHook{degree}
+%============================================================
 
-
-%%============================================================
-% DEPARTMENT CONFIGURATION
+%============================================================
+% DEPARTMENT CUSTOMIZATION
 %   Please open and edit the appropriate
 %       configuration file “Config/4_department.tex”
-%%============================================================
-\input{Config/4_department}
-\NTRunHook{department}
+%============================================================
 
+% %============================================================
+% %  THESIS/DISSERTATION COVER DATA (title, author, etc)
+% %   Please open and edit the appropriate
+% %       configuration file “Config/5_cover.tex”
+% %============================================================
 
-%%============================================================
-%%  THESIS/DISSERTATION COVER DATA (title, author, etc)
-%   Please open and edit the appropriate
-%       configuration file “Config/5_cover.tex”
-%%============================================================
-\input{Config/5_cover}
-\NTRunHook{cover}
-
-
-%%============================================================
-%%  THESIS/DISSERTATION FILES
+%============================================================
+%  THESIS/DISSERTATION FILES
 %   Please open and edit the appropriate
 %       configuration file “Config/6_files.tex”
-%%============================================================
-\input{Config/6_files}
-\NTRunHook{files}
+%============================================================
 
-
-%%============================================================
-%%  WHICH LIST_OF TO PRINT
+%============================================================
+%  WHICH LIST_OF TO PRINT
 %   Please open and edit the appropriate
 %       configuration file “Config/7_list_of.tex”
-%%============================================================
-\input{Config/7_list_of}
-\NTRunHook{list_of}
+%============================================================
 
-
-%%============================================================
-%% ADDITIONAL PACKAGES and MACROS
-%%      Please open and edit the appropriate
+%============================================================
+% ADDITIONAL PACKAGES and MACROS
+%      Please open and edit the appropriate
 %       configuration file “Config/8_packages.tex”
+%============================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 %%============================================================
-\input{Config/8_packages}
-\NTRunHook{packages}
-
-
-
-
+%% HAVE I TOLD YOU TO NOT EDIT/CHANGE THIS FILE??? 
+%%============================================================
 
 %%------------------------------------------------------------
 \begin{document}        % Beginning of document
@@ -220,7 +205,7 @@
 % \optionshowall
 
 %%------------------------------------------------------------
-\thesisfrontmatter      % Before the main text (TOC, etc) — Roman page numbering
+\ntthesisfrontmatter      % Before the main text (TOC, etc) — Roman page numbering
 %%------------------------------------------------------------
 \ntprintcovers       % The cover page
 \ntprintaftercover      % The aftercover page
@@ -230,7 +215,7 @@
 \ntprintquote           % (*) Print the quote
 \ntprintabstracts       % Print abstracts in multiple languages. 
                         % Changing the language will change the order of the abstracts
-\ntprintallindexes      % Print all the indexes defined above TOC, LOF, LOT, …)
+\ntprintallindexes      % Print all the indexes defined in “7_list_of.tex”
 % (*) Will only be printed if adequate for the document type
 
 %%------------------------------------------------------------
@@ -238,9 +223,9 @@
 %%------------------------------------------------------------
 \ntprintchapters        % Print document chapters
 \ntprintbib             % Print the bibliography.  Change to 
-                        %   "\ntprintbib[title=⟨title⟩]" to redefine the title!
+                        %   “\ntprintbib[title=⟨title⟩]” to redefine the title!
 \ntprintappendixes      % Print appendixes, if any!
-\ntprintannexes         % Print appendixes, if any!
+\ntprintannexes         % Print annexes, if any!
 \ntprintbackcover       % Print the back cover, if any!
 
 %%------------------------------------------------------------
