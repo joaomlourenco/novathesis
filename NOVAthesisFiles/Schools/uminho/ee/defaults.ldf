@@ -2,7 +2,7 @@
 %% uminho/ee/defaults.ldf
 %% NOVA thesis configuration file
 %%
-%% Customization for FCT-NOVA (strings and cover)
+%% Customization for EE-UMINHO (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT FILE uminho/ee/defaults.ldf}
@@ -23,8 +23,80 @@
 % local strings
 %-----------------------------------------------------------------
 \assocarray{ofstr}
-\ofstr(en):={, }
 \ofstr(pt):={ de }
+\ofstr(en):={, }
+
+\assocarray{doctype}
+\doctype(pt,phd):={Tese de Doutoramento}
+\doctype(en,phd):={Doctorate Thesis}
+\doctype(pt,msc):={Master Thesis}
+
+\assocarray{advisersrt}
+\advisersrt(pt):={Trabalho efetuado sob a orientação de:}
+\advisersrt(en):={Word developed under the supervision of:}
+
+%------------------------------------------------------------------
+% LICENSING 
+%------------------------------------------------------------------
+
+%%%%%%%%% Important package for the licensing. 
+\RequirePackage[
+    type={CC},
+    lang=portuguese,
+    modifier={by-nc-sa},
+    version={4.0},
+]{doclicense} % By default english is used, however  is necessary to
+% explicity define the language if the license is in portuguese. The
+% modifier must be changed accordingly to user preferences.  If the
+% licensing is different from any of the Creative Commons (all rights
+% reserved for instance) just uncomment the line with \copyrightfile below
+% and add your own custom file and the doclicense package will be ignored.
+% Here the custom file has the name copyright
+
+
+\newcommand{\licenseThis}{%
+  \normalsize\textit{\textbf{\theumcopyrightlabel(\option{/novathesis/coverlang})}}\\
+  \doclicenseImage\\[0.5mm]%
+  \normalsize\textbf{\doclicenseLongName}\\[0.5mm]
+  \normalsize\textbf{\doclicenseName}\\[2ex]
+  \small\url{\doclicenseURL}
+}
+
+\assocarray{umcopyrightlabel}
+\umcopyrightlabel(pt):={Licença concedida aos utilizadores deste trabalho}
+\umcopyrightlabel(en):={License granted to the users of this work}
+
+\assocarray{umcopyrighttext}
+\umcopyrighttext(pt):={%
+  \begin{center}%
+    \textbf{DIREITOS DE AUTOR E CONDIÇÕES DE UTILIZAÇÃO DO TRABALHO POR TERCEIROS}%
+  \end{center}%
+  \indent Este é um trabalho académico que pode ser utilizado por terceiros desde que respeitadas as regras e boas práticas internacionalmente aceites, no que concerne aos direitos de autor e direitos conexos.\\[1ex]
+  \indent Assim, o presente trabalho pode ser utilizado nos termos previstos na licença abaixo
+indicada.\\[1ex]
+  \indent Caso o utilizador necessite de permissão para poder fazer um uso do trabalho em condições não previstas no licenciamento indicado, deverá contactar o autor, através do RepositoriUM da \theuniversity(\option{/novathesis/coverlang}).\\[1cm]
+  \licenseThis%
+}
+
+\umcopyrighttext(en):={%
+  \begin{center}
+    \textbf{COPYRIGHT AND TERMS OF USE OF THIS WORK BY A THIRD PARTY}%
+  \end{center}%
+  \indent This is academic work that can be used by third parties as long as internationally accepted rules and good practices regarding copyright and related rights are respected.\\[1ex]
+  \indent Accordingly, this work may be used under the license provided below.\\[1ex]
+  \indent If the user needs permission to make use of the work under conditions not provided for in the indicated licensing, they should contact the author through the RepositoriUM of \theuniversity(\option{/novathesis/coverlang}).\\[1cm]
+  \licenseThis%
+}
+
+\newcommand*{\umcopyrightmessage}{%
+  \thispagestyle{empty}%
+  \ntselectlang{\option{/novathesis/copyrightlang}}%
+  \currentpdfbookmark{Copyright}{bmcopyright}
+  \noindent%
+  \theumcopyrighttext(\option{/novathesis/copyrightlang})%
+  \ntselectlang{\option{/novathesis/mainlang}}
+}
+
 
 %-----------------------------------------------------------------
 % Remainder customization
@@ -49,27 +121,28 @@
 \committeeorder(all):={c,r,m}%  
 
 % Cover background images
-\thesiscover(phd,front):={capa-debug.pdf}
-\thesiscover(phdplan,front):={cover-phd-std}
-\thesiscover(phdprop,front):={cover-phd-std}
-\thesiscover(msc,front):={capa-debug.pdf}
-\thesiscover(mscplan,front):={cover-msc-std}
-\thesiscover(bsc,front):={cover-bsc-std}
-\thesiscover(plain,front):={cover-plain-std}
-\thesiscover(phd,cdfront):={cd-cover-phd}
-\thesiscover(phd,cdinlay):={cd-inlay-phd}
-\thesiscover(phdplan,cdfront):={cd-cover-phd}
-\thesiscover(phdplan,cdinlay):={cd-inlay-phd}
-\thesiscover(phdprop,cdfront):={cd-cover-phd}
-\thesiscover(phdprop,cdinlay):={cd-inlay-phd}
-\thesiscover(msc,cdfront):={cd-cover-msc}
-\thesiscover(msc,cdinlay):={cd-inlay-msc}
-\thesiscover(mscplan,cdfront):={cd-cover-msc}
-\thesiscover(mscplan,cdinlay):={cd-inlay-msc}
-\thesiscover(bsc,cdfront):={cd-cover-msc}
-\thesiscover(bsc,cdinlay):={cd-inlay-msc}
-\thesiscover(plain,cdfront):={cd-cover-msc}
-\thesiscover(plain,cdinlay):={cd-inlay-msc}
+% \thesiscover(phd,front):={capa-debug.pdf}
+% \thesiscover(phd,2):={capa2-debug.pdf}
+% \thesiscover(phdplan,front):={cover-phd-std}
+% \thesiscover(phdprop,front):={cover-phd-std}
+% \thesiscover(msc,front):={capa-debug.pdf}
+% \thesiscover(mscplan,front):={cover-msc-std}
+% \thesiscover(bsc,front):={cover-bsc-std}
+% \thesiscover(plain,front):={cover-plain-std}
+% \thesiscover(phd,cdfront):={cd-cover-phd}
+% \thesiscover(phd,cdinlay):={cd-inlay-phd}
+% \thesiscover(phdplan,cdfront):={cd-cover-phd}
+% \thesiscover(phdplan,cdinlay):={cd-inlay-phd}
+% \thesiscover(phdprop,cdfront):={cd-cover-phd}
+% \thesiscover(phdprop,cdinlay):={cd-inlay-phd}
+% \thesiscover(msc,cdfront):={cd-cover-msc}
+% \thesiscover(msc,cdinlay):={cd-inlay-msc}
+% \thesiscover(mscplan,cdfront):={cd-cover-msc}
+% \thesiscover(mscplan,cdinlay):={cd-inlay-msc}
+% \thesiscover(bsc,cdfront):={cd-cover-msc}
+% \thesiscover(bsc,cdinlay):={cd-inlay-msc}
+% \thesiscover(plain,cdfront):={cd-cover-msc}
+% \thesiscover(plain,cdinlay):={cd-inlay-msc}
 
 % Spine info
 \spine(logo):={logoNOVA}
@@ -88,135 +161,159 @@
 \margin(paper,right):={3.5cm}
 
 % Set margins for cover pages
-\margin(phd,top):={3.67cm}
+% \margin(phd,top):={3.67cm}
+\margin(phd,top):={0cm}
 \margin(phd,bottom):={1.0cm}
 \margin(phd,left):={7.87cm}
 \margin(phd,right):={2.0cm}
-\margin(phdplan,top):={3.67cm}
+\margin(phdplan,top):={0cm}
 \margin(phdplan,bottom):={1.0cm}
 \margin(phdplan,left):={7.87cm}
 \margin(phdplan,right):={2.0cm}
-\margin(phdprop,top):={3.67cm}
+\margin(phdprop,top):={0cm}
 \margin(phdprop,bottom):={1.0cm}
 \margin(phdprop,left):={7.87cm}
 \margin(phdprop,right):={2.0cm}
-\margin(msc,top):={4.0cm}
-\margin(msc,bottom):={1.3cm}
-\margin(msc,left):={4.5cm}
-\margin(msc,right):={3.3cm}
-\margin(mscplan,top):={4.0cm}
-\margin(mscplan,bottom):={1.3cm}
-\margin(mscplan,left):={4.5cm}
-\margin(mscplan,right):={3.3cm}
-\margin(bsc,top):={4.0cm}
-\margin(bsc,bottom):={1.3cm}{
-\margin(bsc,left):={4.5cm}
-\margin(bsc,right):={3.3cm}
-\margin(plain,top):={4.0cm}
-\margin(plain,bottom):={1.3cm}
-\margin(plain,left):={4.5cm}
-\margin(plain,right):={3.3cm}
+\margin(msc,top):={0cm}
+\margin(msc,bottom):={1.0cm}
+\margin(msc,left):={7.87cm}
+\margin(msc,right):={2.0cm}
+\margin(mscplan,top):={0cm}
+\margin(mscplan,bottom):={1.0cm}
+\margin(mscplan,left):={7.87cm}
+\margin(mscplan,right):={2.0cm}
+\margin(bsc,top):={0cm}
+\margin(bsc,bottom):={1.0cm}
+\margin(bsc,left):={7.87cm}
+\margin(bsc,right):={2.0cm}
+\margin(plain,top):={0cm}
+\margin(plain,bottom):={1.0cm}
+\margin(plain,left):={7.87cm}
+\margin(plain,right):={2.0cm}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% NOVA guidelines:
-% The pages should be numbered consecutively at the bottom centre of the
-% page.
+% Define your own pagestyle if you want to…
+% Leave the "\AtEndPreamble{…}"
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\definecolor{covergrey}{RGB}{152,152,154}%{98989a}
-\definecolor{coverred}{RGB}{167,52,57}%{a73439}
-
-
-\AtEndPreamble{%
-  \makepagestyle{novathesis@myvf} 
-  \makeoddfoot{novathesis@myvf}{}{\thepage}{} 
-  \makeevenfoot{novathesis@myvf}{}{\thepage}{} 
-  \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
-  \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
-  \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
-  \pagestyle{novathesis@myvf}
-}
-
-% \NTAddToHook{abstract/pre}{%
-%   % \rule{\textwidth}{0.2mm} ~\\[-3.5ex]%
-% }
-% \NTAddToHook{abstract/post}{%
-%   % \null\\[2ex]\rule{\textwidth}{0.2mm}%
+% \AtEndPreamble{%
+%   \makepagestyle{mypagestyle}
+%   \makeoddfoot{mypagestyle}{}{\thepage}{}
+%   \makeevenfoot{mypagestyle}{}{\thepage}{}
+%   \makeheadrule{mypagestyle}{\textwidth}{\normalrulethickness}
+%   \makeevenhead{mypagestyle}{\small\textsc{\leftmark}}{}{}
+%   \makeoddhead{mypagestyle}{}{}{\small\textsc{\rightmark}}
+%   \pagestyle{mypagestyle}
 % }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{covergrey}{RGB}{152,152,154}%{98989a}
+\definecolor{coverred}{RGB}{167,52,57}%{a73439}
+
+\newcommand{\phdtextcolor}{black}
+\newcommand{\msctextcolor}{covergrey}
+
 \NTAddToHook{cover/1/begin}{%
   % \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
-  \ifphddoc{\pagecolor{covergrey}\color{\covertextcolor}}{}
+  \ifphddoc{\pagecolor{covergrey}\color{\phdtextcolor}}{\pagecolor{white}\color{\msctextcolor}}%
 }
 
-% \NTAddToHook{cover/1/end}{%
-  % \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
-  % \ifphddoc{\newpagecolor{coverred}}{}%
-  % \ifmscdoc{\newpagecolor{coverred}}{\newpagecolor{covergrey}}%
-  %
-% }
+\NTAddToHook{cover/1/back}{%
+  \newpage%
+  \thispagestyle{empty}%
+  \ifphddoc{\pagecolor{coverred}}{\pagecolor{covergrey}}%
+  ~%
+}
 
-\newcommand{\covertextcolor}{blue}
-% Univeraity name
-\ntaddtocover[vspace=0cm,align=l]{1}{%
-  \ifphddoc{\color{\covertextcolor}}{}%
+\NTAddToHook{cover/2/begin}{%
+  \pagecolor{white}%
+}
+
+\NTAddToHook{cover/2/back}{%
+  \color{black}%
+  \newpage%
+  \null%
+  \vfill%
+  \umcopyrightmessage%
+  \vfill%
+}
+
+\NTAddToHook{cover/preback/begin}{%
+  \ifphddoc{\pagecolor{coverred}}{\pagecolor{covergrey}}%
+  ~%
+}
+
+\NTAddToHook{cover/back/begin}{%
+  \ifphddoc{\pagecolor{covergrey}}{\pagecolor{white}}%
+}
+
+% University and School logos
+\ntaddtocover[vspace=0cm,align=l,height=2.6cm]{1,2}{%
+  \includegraphics[height=2.5cm]{EE-C}%
+}
+
+
+% University and School names
+\ntaddtocover[vspace=1cm,align=l,height=5.25cm,inalign=t]{1,2}{%
+  \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
   \fontsize{14}{14}\selectfont%
   \addfontfeature{LetterSpace=2.5}%
   \textbf{\theuniversity(\option{/novathesis/coverlang})}%
-}
-
-% School name
-\ntaddtocover[vspace=2.2mm,align=l]{1}{%
-  \ifphddoc{\color{\covertextcolor}}{}%
-  \fontsize{14}{14}\selectfont%
+  \\%
   \addfontfeature{LetterSpace=1.2}%
   \theschool(\option{/novathesis/coverlang})%
-  % \theauthordegree
 }
 
-% School name
-\ntaddtocover[vspace=4.4cm,align=l]{1}{%
-  \ifphddoc{\color{\covertextcolor}}{}%
+% Author name
+\ntaddtocover[vspace=0mm,align=l]{1,2}{%
+  \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
   \fontsize{16}{16}\selectfont%
   \addfontfeature{LetterSpace=3.5}%
   \theauthorname%
 }
 
-% % Title of Dissertation
-\ntaddtocover[vspace=1.075cm,align=l]{1}{%
-  \ifphddoc{\color{\covertextcolor}}{}%
-  \fontsize{16}{16}\selectfont
+% Title of Dissertation
+\ntaddtocover[vspace=0.8cm,align=l,height=7.5cm,inalign=t]{1,2}{%
+  \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
+  \fontsize{16}{16}\selectfont%
+  \addfontfeature{LetterSpace=2.9}%
   \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}
 }
 
-% Degree
-% \ntaddtocover[vspace=1.5cm]{1}{%
-%   \ifphddoc{\color{\covertextcolor}}{}%
-%   \fontsize{11}{11}\selectfont
-%   \thepresentationtext
-% }
+% Degree info
+\ntaddtocover[vspace=0mm,align=l,height=2.4cm,inalign=t]{2}{%
+  \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
+  \fontsize{14}{14}\selectfont%
+  \thedoctype(\option{/novathesis/coverlang},\option{/novathesis/docdegree})%
+  \\%
+  \thedegreename(\option{/novathesis/coverlang})%
+  \\%
+  \thespecialization(\option{/novathesis/coverlang})%
+}
+
 % Advisers
-% \ntaddtocover[vspace=1]{1}{%
-%   \ifphddoc{\color{\covertextcolor}}{}%
-%   \fontsize{12}{12}\selectfont
-%   \ntprintadvisers
-% }
+\ntaddtocover[vspace=0,align=l]{2}{%
+  \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
+  \fontsize{14}{14}\selectfont%
+  \theadvisersrt(\option{/novathesis/coverlang})\\%
+  \textbf{\ntprintadvisersaslist}%
+}
 
 % Committee — only print the committee for the main classes
 % \ntaddtocover[align=r, vspace=1]{1}{%
-%   \ifphddoc{\color{\covertextcolor}}{}%
+%   \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
 %   \fontsize{10}{10}\selectfont%
 %   \ntprintcommittee%
 % }
 
 % Date
-\ntaddtocover[vspace=1,align=l]{1}{%
-  \ifphddoc{\color{\covertextcolor}}{}%
+\ntaddtocover[vspace=1,align=l]{1,2}{%
+  \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
   \fontsize{11}{11}\selectfont%
   % \ifdraftdoc
     % \textbf{DRAFT: \today}
@@ -225,7 +322,7 @@
   % \fi
 }
 
-%
-% \ntaddtocover{back}{%
-%   BLAHS
-% }
+
+\ntaddtocover{back}{%
+  ~%
+}

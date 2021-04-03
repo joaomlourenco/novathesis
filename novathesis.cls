@@ -97,7 +97,7 @@
 
 \newcommand{\ifxeorlua}[2]{\ifxetexorluatex#1\else#2\fi}
 
- 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -111,7 +111,7 @@
 
 % --------------------------------------------------------
 % Print string between <...>
-\newcommand*{\embrace}[1]{$\langle$ #1 $\rangle$}
+\newcommand*{\embrace}[1]{$\langle$#1$\rangle$}
 
 % --------------------------------------------------------
 % Split a string by a character
@@ -135,6 +135,15 @@
 \def\ntspecialization(#1)#2{\specialization(#1):={#2}}
 \def\ntsponsors(#1)#2{\sponsorsstr(#1):={#2}}
 
+
+% --------------------------------------------------------
+% Check if a font file exists
+\newcommand*{\ntcheckfont}[2]{%
+  \IfFileExists{NOVAthesisFiles/FontStyles/Fonts/#1}{}%
+               {\ClassError{novathesis}{Missing font “#1”! Please download fro
+m: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}{Please download fr
+om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% INTERNAL KEY-VAL STUFF
@@ -313,7 +322,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Multilingual support
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\@nt@select@lang}[1]{%
+\newcommand*{\ntselectlang}[1]{%
   % #1=lang {pt, en, fr, it}
   \options{/@nt/langshorttolong=#1}%
   % \edef\@nt@tmp{\option{/@nt/langshorttolong}}%
@@ -341,6 +350,7 @@
 \assocarray{specializationstr}
 \assocarray{departmentofstr}
 \assocarray{sponsorsstr}
+\assocarray{andstring}
 
 \assocarray{adviserstr}
 \providecommand*{\theadviserstrfont}{}
@@ -603,6 +613,16 @@
 \OnehalfSpacing% One-and-half spacing
 
 
+% --------------------------------------------------------
+% Customize the pagestyle
+\makepagestyle{novathesis@myvf} 
+\makeoddfoot{novathesis@myvf}{}{\thepage}{} 
+\makeevenfoot{novathesis@myvf}{}{\thepage}{} 
+\makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
+\makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
+\makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
+\pagestyle{novathesis@myvf}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING CUSTOMIZATION STUFF - part 2
@@ -673,7 +693,7 @@
 
 \newcommand*{\ntprintcovers}{%
   \bgroup%
-    \@nt@select@lang{\option{/novathesis/coverlang}}%
+    \ntselectlang{\option{/novathesis/coverlang}}%
     \pdfbookmark{\thefrontmatterstring(\option{/novathesis/coverlang})}{bmfrontmatter}
     \subpdfbookmark{\thecoverstring(\option{/novathesis/coverlang})}{bmcover}
     \NTRunHook{cover/1/begin}%
@@ -735,6 +755,7 @@
     \ntcoverbackground[#1]%
     \ntcovertext[#1]%
     \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
+    \NTRunHook{cover/#1/back}%
     \clearforchapter%
   }{\typeout{NT printthecover #1 undefined}}%
 }
@@ -858,7 +879,7 @@
     \bgroup%
       \ntaddtocover{back}{}%
       \NTRunHook{cover/back/begin}%
-      \@nt@select@lang{\option{/novathesis/coverlang}}%
+      \ntselectlang{\option{/novathesis/coverlang}}%
       \@nt@printthecover{back}%
       \NTRunHook{cover/back/end}%
     \egroup%
@@ -878,7 +899,7 @@
 }
 
 \newcommand*{\ntprintaftercover}{%
-  \@nt@select@lang{\option{/novathesis/mainlang}}%
+  \ntselectlang{\option{/novathesis/mainlang}}%
   \iftoggle{/novathesis/aftercover}%
   {%
     \InputIfFileExists{Chapters/\@nt@aftercover@file}%
@@ -893,19 +914,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LABELS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\gdef\thepresentationtext{%
+\providecommand\thepresentationtext{%
 	\thedissertationstrfont\thedissertationstr(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
 }
 
-\gdef\thecopyrightstr{%
+\providecommand\thecopyrightstr{%
   \thispagestyle{empty}%
-  \@nt@select@lang{\option{/novathesis/copyrightlang}}%
+  \ntselectlang{\option{/novathesis/copyrightlang}}%
   \currentpdfbookmark{Copyright}{bmcopyright}
   \noindent%
   Copyright \textcopyright\ \theauthorname, %
   \theschool(\option{/novathesis/copyrightlang}), \theuniversity(\option{/novathesis/copyrightlang}).\\%
   \thecopyrighttextstr(\option{/novathesis/copyrightlang})%
-  \@nt@select@lang{\option{/novathesis/mainlang}}
+  \ntselectlang{\option{/novathesis/mainlang}}
 }
 
 
@@ -936,7 +957,7 @@
 \newcommand{\@nt@printadvisersaslist}[1]{%
   \stepcounter{@nt@advisern}%
   \ifnum\value{@nt@advisern}=\value{@nt@advisertotal}%
-    { and }%
+    { \theandstring(\option{/novathesis/coverlang}) }%
   \else\ifnum\value{@nt@advisern}>1%
     {, }%
   \fi\fi%
@@ -1166,7 +1187,7 @@
   % \typeout{NT Attempt to load #1}%
 	\ifmaindoc{% THEN it is a main document
     \ifoptiondefined{/@nt/file/#1/VAL}{%
-      \@nt@select@lang{\option{/novathesis/mainlang}}%
+      \ntselectlang{\option{/novathesis/mainlang}}%
       \currentpdfbookmark{\csuse{the#1string}(\option{/novathesis/mainlang})}{bm#1}
       \@ntloadfiles@ii{#1}%
       \clearforchapter%
@@ -1190,7 +1211,7 @@
 \newcommand{\ntprintabstracts}{%
   \xdef\@nt@tmp{\theabstractorder(\option{/novathesis/mainlang})}%
   \expandnext{\forcsvlist{\@ntprintabstract}}{\@nt@tmp}%
-  \@nt@select@lang{\option{/novathesis/mainlang}}%  
+  \ntselectlang{\option{/novathesis/mainlang}}%  
 }
 
 \newcommand{\@ntprintabstract}[1]{%
@@ -1207,7 +1228,7 @@
 
 \newcommand*{\ntthesisfrontmatter}{%
   \frontmatter%
-  \@nt@select@lang{\option{/novathesis/mainlang}}%
+  \ntselectlang{\option{/novathesis/mainlang}}%
   \pagenumbering{roman}%
   % \setlength{\headheight}{15pt}%
 }
@@ -1371,7 +1392,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\@nt@keywordsstr}{}
 \newcommand*{\setabstractlang}[1]{%
-	\@nt@select@lang{#1}%
+	\ntselectlang{#1}%
   \renewcommand*{\@nt@keywordsstr}{\thekeywordsstring(#1)}%
 }
 \newcommand*{\printabstracttitle}[1]{%
