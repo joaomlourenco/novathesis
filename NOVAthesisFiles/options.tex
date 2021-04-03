@@ -13,7 +13,8 @@
   , docdegree/.new choice = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
   , school/.new choice = {{nova/fct}, {nova/st}, {nova/fcsh}, {nova/ims}, {nova/ensp},
                           {ul/ist}, {ul/fc}, {ipl/isel}, {ips/ests}, {esep},
-                          {iscte-iul/ista}, {consortium/msc-gt}, {nova/fct-legacy}}
+                          {iscte-iul/ista}, {consortium/msc-gt}, {nova/fct-legacy},
+                          {uminho/ee}}
   , langsused/.new list = {en,pt}
   , docstatus/.new choice = {final, provisional, draft, working},
   , docstatus = final,
@@ -21,9 +22,9 @@
                              ell, fct, hansen, ist, lyhne, madsen,
                             pedersen, section, southall, veelo,
                             vz34, vz43, compact}
-  , chapstyle=elegant        % set "fct" chapter style as the default
+  , chapstyle=fct        % set "fct" chapter style as the default
   , fontstyle/.new choice = {kpfonts, bookman, erewhon, libertine, scholax,
-                             calibri, kieranhealy}
+                             calibri, kieranhealy, newsgott}
   , fontstyle=kpfonts        % set kpfonts as the default
   , coverlang/.new choice = {en, pt, fr, it, de, es}
   , copyrightlang/.new choice = {en, pt, fr, it, de, es}

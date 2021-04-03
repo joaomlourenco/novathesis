@@ -561,16 +561,13 @@
 %============================================================
 % Cover hooks
 \newcommand*{\AtCoverExecute}[2]{
-  \optionlistdo{/@nt/atcover/#1/#2}{##1}
-}
-
-\newcommand*{\AtCover}[3][1]{%
-  \options{/@nt/atcover/#1/#2/.cpush={#3}}%
+  \NTRunHook{/cover/#1/#2}%
 }
 
 \newcommand*{\AtBeginCover}[2][1]{%
   \AtCover{#1}{begin}{#2}%
 }
+
 \newcommand*{\AtEndCover}[2][1]{%
   \AtCover{#1}{end}{#2}%
 }
@@ -591,20 +588,24 @@
 
 
 
-
-
-
-
-
 \prependtographicspath{{NOVAthesisFiles/Schools/\option{/novathesis/school}/Images/}}%
 \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.ldf}{}%
 {\PackageWarining{novathesis}%
                    {Missing file “defaults.ldf” for ”\option{/novathesis/school}”}}%
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LOADING MEMOIR
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% --------------------------------------------------------
+% LOAD MAIN CLASS AND ADDITIONAL PACKAGES
+\LoadClass{memoir}
+\OnehalfSpacing% One-and-half spacing
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% LOADING CUSTOMIZATION STUFF - part 1
+%% LOADING CUSTOMIZATION STUFF - part 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %============================================================
@@ -652,15 +653,6 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% LOADING MEMOIR
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% --------------------------------------------------------
-% LOAD MAIN CLASS AND ADDITIONAL PACKAGES
-\LoadClass{memoir}
-\OnehalfSpacing% One-and-half spacing
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING ADDITINAL FILES AFTER LOADING MEMOIR
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -681,17 +673,17 @@
 
 \newcommand*{\ntprintcovers}{%
   \bgroup%
-    \AtCoverExecute{1}{begin}%
     \@nt@select@lang{\option{/novathesis/coverlang}}%
     \pdfbookmark{\thefrontmatterstring(\option{/novathesis/coverlang})}{bmfrontmatter}
     \subpdfbookmark{\thecoverstring(\option{/novathesis/coverlang})}{bmcover}
+    \NTRunHook{cover/1/begin}%
     \@nt@printthecover{1}%
-    \AtCoverExecute{1}{end}%
+    \NTRunHook{cover/1/end}%
     \iftoggle{/novathesis/secondcover}{% SECOND COVER TRUE
             %If cover 2 is defined use its definition
-            \AtCoverExecute{2}{begin}%
+            \NTRunHook{cover/2/begin}%
             \@nt@printthecover{2}%
-            \AtCoverExecute{2}{end}
+            \NTRunHook{cover/2/end}%
       }{}% NO SECOND COVER
   \egroup%
 }

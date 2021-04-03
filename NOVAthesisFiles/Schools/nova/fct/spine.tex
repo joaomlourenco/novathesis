@@ -1,0 +1,96 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% spine.tex
+%% NOVA thesis document template
+%%
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
+%%
+%% Authors / Contributors:
+%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%      - Tomás Monteiro <monteiro.tomas@gmail.com>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE nova/fct/spine.tex}
+
+
+
+% Draw the book spine
+% usable range: 145 to 425 pages, maximum characters for the title 140 and 22 for the author name
+% usable range: 75 to 145 pages, maximum characters for the title 70 and 22 for the author name
+
+\makeatletter
+
+\newlength{\novathesis@spinewidth}%
+\setlength{\novathesis@spinewidth}{1mm * (\thelastsheet+ 19) / 20}% replace \thelastsheet by 1581 to get 80mm width folder label or any other value as long as the width is bigger than 50mm 
+
+\newlength{\spine@len@margin}
+\setlength{\spine@len@margin}{\thespine(margin)}
+\newlength{\spine@len@top}
+\setlength{\spine@len@top}{\thespine(top)}
+\newlength{\spine@len@name}
+\setlength{\spine@len@name}{\widthof{\thespine(author)}}
+\newlength{\spine@len@title}
+\setlength{\spine@len@title}{\widthof{\thespine(title)}}
+\newlength{\spine@len@year}
+\setlength{\spine@len@year}{\widthof{\thespine(year)}}
+\newlength{\spine@len@all}
+\setlength{\spine@len@all}{\spine@len@year+\spine@len@name+\spine@len@title+\spine@len@top+3\spine@len@margin}
+\newlength{\spine@len@gap}
+\setlength{\spine@len@gap}{\stockheight-\spine@len@all}
+  
+% \newcommand{\printlen}{%
+%   stockheight=\printlength{\stockheight}\par
+%   textheight=\printlength{\textheight}\par
+%   textwidth=\printlength{\textwidth}\par
+%   spine@len@margin=\printlength{\spine@len@margin}\par
+%   spine@len@top=\printlength{\spine@len@top}\par
+%   spine@len@name=\printlength{\spine@len@name}\par
+%   spine@len@title=\printlength{\spine@len@title}\par
+%   spine@len@year=\printlength{\spine@len@year}\par
+%   spine@len@all=\printlength{\spine@len@all}\par
+%   spine@len@gap=\printlength{\spine@len@gap}\par
+% }
+
+\newcommand{\spinetext}{%
+  \hspace*{\spine@len@margin}%
+  \thespine(year)%
+  \hspace*{\spine@len@margin}%
+  \hspace*{0.33\spine@len@gap}%
+  \thespine(author)%
+  \hspace*{0.34\spine@len@gap}%
+  \thespine(title)%
+  \hspace*{0.33\spine@len@gap}%
+  \hspace*{\spine@len@margin}%
+  \hspace*{\spine@len@top}%
+  % \begin{minipage}[c]{\spine@len@top}
+  %   \centering
+  %   \raisebox{\thespine(logo,raisebox,\option{/novathesis/docdegree})}%
+  %            {\includegraphics[width=0.9\novathesis@spinewidth,angle=-90]%
+  %                             {\expanded{\thespine(logo,\option{/novathesis/docdegree})}}}%
+  % \end{minipage}%
+}
+
+\newcommand{\ntprintspine}{%
+  \clearpage
+  % \printlen%
+  \color{white}%
+  \savegeometry{maintext}%
+  \newgeometry{textwidth=\novathesis@spinewidth,textheight=\paperheight}%
+  \begin{tikzpicture}[remember picture, overlay]
+  % draw image
+    \node[inner sep=0] at (current page.center)
+            {\includegraphics[width=\textwidth,height=\textheight]%
+                             {\thethesiscover(\option{/novathesis/docdegree},spine)}%
+            };
+    \node[inner sep=0,yshift=-0.5\spine@len@top, xshift=-\expanded{\thespine(logo,\option{/novathesis/docdegree},raise)}\novathesis@spinewidth] at (current page.north)
+            {\includegraphics[width=0.9\novathesis@spinewidth
+                             ,angle=\expanded{\thespine(logo,\option{/novathesis/docdegree},angle)}
+                             ,scale=\expanded{\thespine(logo,\option{/novathesis/docdegree},scale)}]%
+                             {\expanded{\thespine(logo,\option{/novathesis/docdegree})}}};
+    \node[inner sep=0] at (current page.center) {\rotatebox{90}{\spinetext}};
+  \end{tikzpicture}
+  \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
+  \loadgeometry{maintext}%
+}
