@@ -341,6 +341,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \assocarray{coverstring}
 \assocarray{backcoverstring}
 \assocarray{copyrightstring}
+\assocarray{statementstring}
 \assocarray{dedicatorystring}
 \assocarray{acknowledgementsstring}
 \assocarray{quotestring}
@@ -898,15 +899,44 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 }
 
-\newcommand*{\ntprintaftercover}{%
-  \ntselectlang{\option{/novathesis/mainlang}}%
-  \iftoggle{/novathesis/aftercover}%
-  {%
-    \InputIfFileExists{Chapters/\@nt@aftercover@file}%
-      {\clearforchapter}%
-      {}%
-	}%
-  {}%
+% \newcommand*{\ntprintstatement}{%
+%   \ntselectlang{\option{/novathesis/mainlang}}%
+%   \iftoggle{/novathesis/statement}%
+%   {%
+%     \InputIfFileExists{Chapters/statement.tex}%
+%       {\clearforchapter}%
+%       {%
+%         \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/statement.tex}%
+%           {\clearforchapter}%
+%           {\ClassError{novathesis}{No “statement.tex” found! Not in folder “Chapters” nor in folder “NOVAthesisFiles/Schools/\option{/novathesis/school}”}{}}%
+%       }%
+%   }%
+%   {}%
+% }
+
+
+\newcommand*{\ntprintstatement}{%
+  \iftoggle{/novathesis/statement}{% if statement toggle is on
+  	\ifmaindoc{% if it is a main document
+      \ifoptiondefined{/@nt/file/statement/VAL}{% if the user defined their own statement file
+        \ntselectlang{\option{/novathesis/mainlang}}%
+        \currentpdfbookmark{\csuse{thestatementstring}(\option{/novathesis/mainlang})}{bmstatement}
+        \@ntloadfiles@ii{statement}%
+        \clearforchapter%
+      }{%No statement file defined... try a school defined one
+        \ntselectlang{\option{/novathesis/mainlang}}%
+        \currentpdfbookmark{\csuse{thestatementstring}(\option{/novathesis/mainlang})}{bmstatement}
+        \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/statement.tex}%
+          {\clearforchapter}%
+          {\ClassError{novathesis}{No “statement.tex” found! Not defined with \string\ntaddfile{statement}{filename} nor in folder “NOVAthesisFiles/Schools/\option{/novathesis/school}”}{}}%
+        \clearforchapter%
+      }%
+    }{%
+      % It is a plan or proposal type document
+    }%
+  }{%
+    % statement toggle is off
+  }%
 }
 
 
@@ -957,9 +987,9 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newcommand{\@nt@printadvisersaslist}[1]{%
   \stepcounter{@nt@advisern}%
   \ifnum\value{@nt@advisern}=\value{@nt@advisertotal}%
-    { \theandstring(\option{/novathesis/coverlang}) }%
+    {\normalfont\ \theandstring(\option{/novathesis/coverlang}) }%
   \else\ifnum\value{@nt@advisern}>1%
-    {, }%
+    {\normalfont, }%
   \fi\fi%
   #1%
 }
@@ -1463,7 +1493,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 % \newcommand{\dedicatoryfile}[1]{\ntaddfile{dedicatory}{#1}}
 % \newcommand{\acknowledgementsfile}[1]{\ntaddfile{acknowledgements}{#1}}
 % \newcommand{\quotefile}[1]{\ntaddfile{quote}{#1}}
-% \newcommand{\aftercoverfile}[1]{\ntaddfile{aftercover}{#1}}
+% \newcommand{\statementfile}[1]{\ntaddfile{statement}{#1}}
 % \newcommand{\abstractfile}[2][pt]{\ntaddfile{abstract}[#1]{#2}}
 % \newcommand{\chapterfile}[1]{\ntaddfile{chapter}{#1}}
 % \newcommand{\addbibfile}[1]{\ntaddfile{bib}{#1}}
