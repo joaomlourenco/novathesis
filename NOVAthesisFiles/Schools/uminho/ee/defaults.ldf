@@ -157,6 +157,15 @@ indicada.\\[1ex]
 
 
 %-----------------------------------------------------------------
+% Abstracts
+%-----------------------------------------------------------------
+\NTAddToHook{abstract/pre}{%
+  \let\oldprintchaptername=\printchaptername%
+  \edef\printchaptername{TESTE\printchaptername}%
+}
+
+
+%-----------------------------------------------------------------
 % Remainder customization
 %-----------------------------------------------------------------
 % Univesity

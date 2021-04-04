@@ -324,6 +324,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntselectlang}[1]{%
   % #1=lang {pt, en, fr, it}
+  \def\@nt@current@lang{#1}%
   \options{/@nt/langshorttolong=#1}%
   % \edef\@nt@tmp{\option{/@nt/langshorttolong}}%
   % \typeout{'NT SWITCHING LANG TO='\nt@tmp}%
@@ -1248,8 +1249,9 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   % \typeout{NT PRINT ABSTRACT #1}%
   \setabstractlang{#1}%
   \currentpdfbookmark{\theabstractstring(#1)}{bmabstract#1}
-  \printabstracttitle{#1}%
   \NTRunHook{abstract/pre}%
+  \printabstracttitle{#1}%
+  \NTRunHook{abstract/mid}%
   \@ntloadfiles@ii[#1]{abstract}%
   \NTRunHook{abstract/post}%
   \clearforchapter%
