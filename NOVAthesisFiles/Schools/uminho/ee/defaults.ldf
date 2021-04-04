@@ -160,8 +160,16 @@ indicada.\\[1ex]
 % Abstracts
 %-----------------------------------------------------------------
 \NTAddToHook{abstract/pre}{%
-  \let\oldprintchaptername=\printchaptername%
-  \edef\printchaptername{TESTE\printchaptername}%
+  \let\oldchapterheadstart=\chapterheadstart%
+  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\@nt@current@lang,main)}}%
+  \preto{\chapterheadstart}{\vspace*{-2cm}}
+}
+\NTAddToHook{abstract/mid}{%
+  % \let\oldchapterheadstart=\chapterheadstart%
+  {{\noindent\newsgottbf\Large\thedoctitle(\@nt@current@lang,main)}\\[1ex]}%
+}
+\NTAddToHook{abstract/post}{%
+  \let\chapterheadstart=\oldchapterheadstart%
 }
 
 

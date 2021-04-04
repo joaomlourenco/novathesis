@@ -324,7 +324,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntselectlang}[1]{%
   % #1=lang {pt, en, fr, it}
-  \def\@nt@current@lang{#1}%
+  \gdef\@nt@current@lang{#1}%
   \options{/@nt/langshorttolong=#1}%
   % \edef\@nt@tmp{\option{/@nt/langshorttolong}}%
   % \typeout{'NT SWITCHING LANG TO='\nt@tmp}%
@@ -478,13 +478,13 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newcommand*{\nttitle}[2][\option{/novathesis/coverlang}]{%
   % #1 = lang
   % #2 = value
-  \@nttitle{main}{#1}{#2}%
+  \@nttitle{#1}{main}{#2}%
 }
 
 \newcommand*{\ntsubtitle}[2][\option{/novathesis/coverlang}]{%
   % #1 = lang
   % #2 = value
-  \@ntsubtitle{sub}{#1}{#2}%
+  \@ntsubtitle{#1}{sub}{#2}%
 }
 
 \newcommand*{\@nttitle}[3]{
@@ -497,11 +497,11 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
     \def\@thetitlei{\expandafter\MakeUppercase\expandafter{#3}}%
     \StrSubstitute[0]{\@thetitlei}{\\}{\newline}[\@thetitlecaps]%
   \restoreexpandmode% restore the previous mode
-  \csdef{@thetitle#1}{\@thetitle}%
-  \csdef{@thetitle#1caps}{\@thetitlecaps}%
-  \doctitle(#2,#1,cover):={#3}%
-  \doctitle(#2,#1):={\csuse{@thetitle#1}}%
-  \doctitle(#2,#1,cover,caps):={\csuse{@thetitle#1caps}}%
+  \csdef{@thetitle#2}{\@thetitle}%
+  \csdef{@thetitle#2caps}{\@thetitlecaps}%
+  \doctitle(#1,#2,cover):={#3}%
+  \doctitle(#1,#2):={\csuse{@thetitle#2}}%
+  \doctitle(#1,#2,cover,caps):={\csuse{@thetitle#2caps}}%
 }
 
 \newcommand*{\@ntsubtitle}[3]{

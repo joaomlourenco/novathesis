@@ -32,31 +32,31 @@
   BoldSlantedFeatures={FakeSlant=0.15},
 ]
 
-% \newfontfamily\newsgott{NewsGotT-Regular.ttf}[
-%   Ligatures=TeX,
-%   Mapping=tex-text,
-%   Path = NOVAthesisFiles/FontStyles/Fonts/,
-% ]
-%
-% \newfontfamily\newsgottbf{NewsGotT-bold.ttf}[
-%   Ligatures=TeX,
-%   Mapping=tex-text,
-%   Path = NOVAthesisFiles/FontStyles/Fonts/,
-% ]
-%
-% \newfontfamily\newsgottit{NewsGotT-Regular.ttf}[
-%   Ligatures=TeX,
-%   Mapping=tex-text,
-%   Path = NOVAthesisFiles/FontStyles/Fonts/,
-%   ItalicFeatures={FakeSlant=0.15},
-% ]
-%
-% \newfontfamily\newsgottsl{NewsGotT-Regular.ttf}[
-%   Ligatures=TeX,
-%   Mapping=tex-text,
-%   Path = NOVAthesisFiles/FontStyles/Fonts/,
-%   AutoFakeSlant=0.15,
-% ]
+\setfontfamily\newsgott{NewsGotT-Regular.ttf}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+]
+
+\setfontfamily\newsgottbf{NewsGotT-bold.ttf}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+]
+
+\setfontfamily\newsgottit{NewsGotT-Regular.ttf}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+  ItalicFeatures={FakeSlant=0.15},
+]
+
+\setfontfamily\newsgottsl{NewsGotT-Regular.ttf}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+  AutoFakeSlant=0.15,
+]
 
 %
 % %https://sourcefoundry.org/hack/
