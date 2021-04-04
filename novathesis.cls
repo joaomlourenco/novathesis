@@ -596,10 +596,54 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
 }
 
+\newcommand*{\ntprint}[1]{%
+  \IfStrEqCase{#1}{%
+    {covers}{\ntprintcovers}%
+    {backcover}{\ntprintbackcover}%
+    {frontmatter}{\ntprintlist{/@nt/docfrontmatter}}%
+    {mainmatter}{\ntprintlist{/@nt/docmainmatter}}%
+  }%
+}
+
+\newcommand*{\ntprintlist}[1]{%
+  \optionlistdo{#1}{\csuse{ntprint##1}}%
+}
+
+\newcommand*{\ntsetprintorder}[2]{%
+% #1 = frontmatter, mainmatter
+% #2 = list
+  \options{/@nt/doc#1/.cpush = {x}}%
+  \options{/@nt/doc#1 = {}}%
+  \options{/@nt/doc#1/.concat = {#2}}%
+}
+
+
+% --------------------------------------------------------
+% DEFAULT VALUES FOR frontmatter AND mainmatter
+\ntsetprintorder{frontmatter}{
+  statement,       % The statement page
+  copyright,       % (*) The copyright page
+  dedicatory,      % (*) Print the dedicatory
+  acknowledgements,% (*) Print the acknowledgments
+  quote,           % (*) Print the quote
+  abstracts,       % Print abstracts in multiple languages.
+  alllistof,       % Print all the indexes defined in “7_list_of.tex”
+}
+
+\ntsetprintorder{mainmatter}{
+  chapters,        % Print document chapters
+  bib,             % Print the bibliography.  Change to
+                   %    “bib[title=⟨title⟩]” to redefine the title!
+  appendixes,      % Print appendixes, if any!
+  annexes,         % Print annexes, if any!
+}
 
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LOADING SCHOOLS's “defaults.ldf”
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \prependtographicspath{{NOVAthesisFiles/Schools/\option{/novathesis/school}/Images/}}%
 \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.ldf}{}%
 {\PackageWarining{novathesis}%
@@ -897,26 +941,10 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
               {\includegraphics[width=\paperwidth,height=\paperheight]{\@nt@img}};
     \end{tikzpicture}%
   }%
-
 }
 
-% \newcommand*{\ntprintstatement}{%
-%   \ntselectlang{\option{/novathesis/mainlang}}%
-%   \iftoggle{/novathesis/statement}%
-%   {%
-%     \InputIfFileExists{Chapters/statement.tex}%
-%       {\clearforchapter}%
-%       {%
-%         \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/statement.tex}%
-%           {\clearforchapter}%
-%           {\ClassError{novathesis}{No “statement.tex” found! Not in folder “Chapters” nor in folder “NOVAthesisFiles/Schools/\option{/novathesis/school}”}{}}%
-%       }%
-%   }%
-%   {}%
-% }
-
-
 \newcommand*{\ntprintstatement}{%
+  \NTRunHook{statement/pre}%
   \iftoggle{/novathesis/statement}{% if statement toggle is on
   	\ifmaindoc{% if it is a main document
       \ifoptiondefined{/@nt/file/statement/VAL}{% if the user defined their own statement file
@@ -938,6 +966,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   }{%
     % statement toggle is off
   }%
+  \NTRunHook{statement/post}%
 }
 
 
@@ -1216,6 +1245,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 \newcommand{\@nt@printifmaindoc@i}[1]{%
   % \typeout{NT Attempt to load #1}%
+  \NTRunHook{#1/pre}%
 	\ifmaindoc{% THEN it is a main document
     \ifoptiondefined{/@nt/file/#1/VAL}{%
       \ntselectlang{\option{/novathesis/mainlang}}%
@@ -1226,6 +1256,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 	}{% ELSE
     % It is a plan or proposal type document
 	}%  
+  \NTRunHook{#1/post}%
 }
 
 \newcommand{\ntprintdedicatory}{\@nt@printifmaindoc@i{dedicatory}}
@@ -1250,27 +1281,33 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \setabstractlang{#1}%
   \currentpdfbookmark{\theabstractstring(#1)}{bmabstract#1}
   \NTRunHook{abstract/pre}%
+  \NTRunHook{abstract/#1/pre}%
   \printabstracttitle{#1}%
   \NTRunHook{abstract/mid}%
   \@ntloadfiles@ii[#1]{abstract}%
+  \NTRunHook{abstract/#1/post}%
   \NTRunHook{abstract/post}%
   \clearforchapter%
 }
 
 
 \newcommand*{\ntthesisfrontmatter}{%
+  \NTRunHook{frontmatter/pre}%
   \frontmatter%
   \ntselectlang{\option{/novathesis/mainlang}}%
   \pagenumbering{roman}%
   % \setlength{\headheight}{15pt}%
+  \NTRunHook{frontmatter/post}%
 }
 
 \newcommand*{\ntthesismainmatter}{%
+  \NTRunHook{mainmatter/pre}%
   % enables protrusion locally for the remainder of the document
-  \ifxeorlua{}{\microtypesetup{protrusion=true}}%
 	\mainmatter%
-	\pagenumbering{arabic}%
-	\setlength{\headheight}{15pt}%
+  \ifxeorlua{}{\microtypesetup{protrusion=true}}%
+  % \pagenumbering{arabic}%
+  % \setlength{\headheight}{15pt}%
+  \NTRunHook{mainmatter/post}%
 }
 
 
@@ -1323,7 +1360,11 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \newlistof{lstlistoflistings}{lol}{\lstlistlistingname}
 
-\newcommand*{\ntprintallindexes}{\optionlistdo{/@nt/list/indexes}{##1}}
+\newcommand*{\ntprintalllistof}{%
+  \NTRunHook{listof/pre}%
+  \optionlistdo{/@nt/list/indexes}{##1}%
+  \NTRunHook{listof/post}%
+}
 
 
 % \def\option@listmatch@getval#1=#2{#2}
@@ -1361,11 +1402,13 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %% Copyright page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntprintcopyright}{%
+  \NTRunHook{copyright/pre}%
 	\ifmaindoc{% THEN
     \iftoggle{/novathesis/printcopyright}%
       {\ntprintcopyrightpage\clearforchapter}%
       {}%
 	}{}%
+  \NTRunHook{copyright/post}%
 }
 
 \newcommand*{\ntprintcopyrightpage}{%

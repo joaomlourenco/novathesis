@@ -21,6 +21,31 @@
 \ntsetup{printcopyright=false}
 \ntsetup{statement=true}
 
+% --------------------------------------------------------
+% PRINT ORDER FOR frontmatter AND mainmatter
+\ntsetprintorder{frontmatter}{
+  acknowledgements,% (*) Print the acknowledgments
+  statement,       % The statement page
+  quote,           % (*) Print the quote
+  abstracts,       % Print abstracts in multiple languages.
+  alllistof,       % Print all the indexes defined in “7_list_of.tex”
+}
+
+% \ntsetprintorder{mainmatter}{
+%   chapters,        % Print document chapters
+%   bib,             % Print the bibliography.  Change to
+%                    %    “bib[title=⟨title⟩]” to redefine the title!
+%   appendixes,      % Print appendixes, if any!
+%   annexes,         % Print annexes, if any!
+% }
+
+\abstractorder(pt):={pt,en}
+\abstractorder(en):={pt,en}
+\abstractorder(fr):={pt,fr}
+\abstractorder(it):={pt,it}
+\abstractorder(es):={pt,es}
+\abstractorder(de):={pt,de}
+
 %-----------------------------------------------------------------
 % local strings
 %-----------------------------------------------------------------
@@ -172,6 +197,12 @@ indicada.\\[1ex]
   \let\chapterheadstart=\oldchapterheadstart%
 }
 
+\NTAddToHook{mainmatter/post}{%
+  \counterwithout{figure}{chapter}%
+  \counterwithout{table}{chapter}%
+}
+
+
 
 %-----------------------------------------------------------------
 % Remainder customization
@@ -226,14 +257,14 @@ indicada.\\[1ex]
 \spine(year):={\thentdateyear}
 
 % Set margins for "normal" pages
-\margin(screen,top):={3.5cm}
+\margin(screen,top):={2.5cm}
 \margin(screen,bottom):={2.5cm}
-\margin(screen,left):={3.0cm}
-\margin(screen,right):={3.0cm}
-\margin(paper,top):={3.5cm}
+\margin(screen,left):={2.5cm}
+\margin(screen,right):={2.5cm}
+\margin(paper,top):={2.5cm}
 \margin(paper,bottom):={2.5cm}
 \margin(paper,left):={2.5cm}
-\margin(paper,right):={3.5cm}
+\margin(paper,right):={2.5cm}
 
 % Set margins for cover pages
 % \margin(phd,top):={3.67cm}
@@ -329,8 +360,13 @@ indicada.\\[1ex]
 }
 
 % University and School logos
-\ntaddtocover[vspace=0cm,align=l,height=2.6cm]{1,2}{%
+\ntaddtocover[vspace=0cm,align=l,height=2.6cm]{1}{%
   \includegraphics[height=2.5cm]{EE-C}%
+}
+
+% University and School logos
+\ntaddtocover[vspace=0cm,align=l,height=2.6cm]{2}{%
+  \includegraphics[height=2.5cm]{EE-C-grey}%
 }
 
 
