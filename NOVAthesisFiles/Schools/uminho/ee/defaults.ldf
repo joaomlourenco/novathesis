@@ -339,7 +339,7 @@ indicada.\\[1ex]
 \definecolor{covergrey}{RGB}{152,152,154}%{98989a}
 \definecolor{coverred}{RGB}{167,52,57}%{a73439}
 
-\newcommand{\phdtextcolor}{black}
+\newcommand{\phdtextcolor}{white}
 \newcommand{\msctextcolor}{covergrey}
 
 \NTAddToHook{cover/1/begin}{%
