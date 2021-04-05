@@ -344,6 +344,8 @@ indicada.\\[1ex]
 \newcommand*{\settextcolor}{%
   \if\@nt@covernumber1\relax%
     \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
+  \else%
+    \color{covergrey}%
   \fi%
 }
 
@@ -361,7 +363,6 @@ indicada.\\[1ex]
 
 \NTAddToHook{cover/2/begin}{%
   \pagecolor{white}%
-  \color{black}%
 }
 
 \NTAddToHook{cover/2/back}{%
@@ -384,12 +385,12 @@ indicada.\\[1ex]
 }
 
 % University and School logos
-\ntaddtocover[vspace=0cm,align=l,height=2.6cm]{1}{%
+\ntaddtocover[vspace=-0.6mm,align=l,height=2.6cm]{1}{%
   \includegraphics[height=2.5cm]{EE-C}%
 }
 
 % University and School logos
-\ntaddtocover[vspace=0cm,align=l,height=2.6cm]{2}{%
+\ntaddtocover[vspace=-0.6mm,,align=l,height=2.6cm]{2}{%
   \includegraphics[height=2.5cm]{EE-C-grey}%
 }
 
