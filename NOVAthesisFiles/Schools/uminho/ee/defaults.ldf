@@ -275,11 +275,11 @@ indicada.\\[1ex]
 \spine(font):={}
 
 % Set margins for "normal" pages
-\margin(screen,top):={2.5cm}
+\margin(screen,top):={3.5cm}
 \margin(screen,bottom):={2.5cm}
 \margin(screen,left):={2.5cm}
 \margin(screen,right):={2.5cm}
-\margin(paper,top):={2.5cm}
+\margin(paper,top):={3.5cm}
 \margin(paper,bottom):={2.5cm}
 \margin(paper,left):={2.5cm}
 \margin(paper,right):={2.5cm}
@@ -339,8 +339,13 @@ indicada.\\[1ex]
 \definecolor{covergrey}{RGB}{152,152,154}%{98989a}
 \definecolor{coverred}{RGB}{167,52,57}%{a73439}
 
-\newcommand{\phdtextcolor}{black}
-\newcommand{\msctextcolor}{covergrey}
+\newcommand*{\phdtextcolor}{white}
+\newcommand*{\msctextcolor}{covergrey}
+\newcommand*{\settextcolor}{%
+  \if\@nt@covernumber1\relax%
+    \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
+  \fi%
+}
 
 \NTAddToHook{cover/1/begin}{%
   % \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
@@ -356,6 +361,7 @@ indicada.\\[1ex]
 
 \NTAddToHook{cover/2/begin}{%
   \pagecolor{white}%
+  \color{black}%
 }
 
 \NTAddToHook{cover/2/back}{%
@@ -390,7 +396,7 @@ indicada.\\[1ex]
 
 % University and School names
 \ntaddtocover[vspace=1cm,align=l,height=5.25cm,inalign=t]{1,2}{%
-  \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
+  \settextcolor%
   \fontsize{14}{14}\selectfont%
   \addfontfeature{LetterSpace=2.5}%
   \textbf{\theuniversity(\option{/novathesis/coverlang})}%
@@ -401,7 +407,7 @@ indicada.\\[1ex]
 
 % Author name
 \ntaddtocover[vspace=0mm,align=l]{1,2}{%
-  \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
+  \settextcolor%
   \fontsize{16}{16}\selectfont%
   \addfontfeature{LetterSpace=3.5}%
   \theauthorname%
@@ -409,7 +415,7 @@ indicada.\\[1ex]
 
 % Title of Dissertation
 \ntaddtocover[vspace=0.8cm,align=l,height=7.5cm,inalign=t]{1,2}{%
-  \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
+  \settextcolor%
   \fontsize{16}{16}\selectfont%
   \addfontfeature{LetterSpace=2.9}%
   \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}
@@ -417,7 +423,7 @@ indicada.\\[1ex]
 
 % Degree info
 \ntaddtocover[vspace=0mm,align=l,height=2.4cm,inalign=t]{2}{%
-  \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
+  \settextcolor%
   \fontsize{14}{14}\selectfont%
   \thedoctype(\option{/novathesis/coverlang},\option{/novathesis/docdegree})%
   \\%
@@ -428,7 +434,7 @@ indicada.\\[1ex]
 
 % Advisers
 \ntaddtocover[vspace=0,align=l]{2}{%
-  \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
+  \settextcolor%
   \fontsize{14}{14}\selectfont%
   \theadvisersrt(\option{/novathesis/coverlang})\\%
   \textbf{\ntprintadvisersaslist}%
@@ -443,7 +449,7 @@ indicada.\\[1ex]
 
 % Date
 \ntaddtocover[vspace=1,align=l]{1,2}{%
-  \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
+  \settextcolor%
   \fontsize{11}{11}\selectfont%
   % \ifdraftdoc
     % \textbf{DRAFT: \today}

@@ -850,17 +850,18 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
     \ifthenelse{%
               \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND
               \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}
-      {\@nt@printcoverelement@i{#3}}%
+      {\@nt@printcoverelement@ii{#1}{#3}}%
       {}%
   }%
 }
 
 \newsavebox{\@nt@coverelement}
-\newcommand{\@nt@printcoverelement@i}[1]{%
+\newcommand{\@nt@printcoverelement@ii}[2]{%
   % #1=code
   %
   % If vspace is integer then replace by \vfill
   % otherwise is absolute verstical space
+  \def\@nt@covernumber{#1}%
   \IfInteger{\option{/@ntcoveropts/vspace}}%
     % {\ntrepeat\to{\option{/@ntcoveropts/vspace}}\do{\vfill}}%
     {\vskip 0pt plus \option{/@ntcoveropts/vspace}fill}
@@ -876,7 +877,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
           {c}{\centering}%
           {r}{\raggedleft}%
         }%
-        #1%
+        #2%
     \endminipage%
   \end{lrbox}
   \noindent%

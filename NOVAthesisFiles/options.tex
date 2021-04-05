@@ -91,7 +91,8 @@
 }
 
 \edef\nt@alllangs{}
-\optionlistdo{/@nt/langsshort}{%
+\optionlistdo{/novathesis/langsused}{%
+% \optionlistdo{/@nt/langsshort}{%
   \options{/@nt/langshorttolong=#1}%
   \ifoptionequal{/novathesis/mainlang}{#1}%
     {\edef\nt@alllangs{\nt@alllangs,main=\option{/@nt/langshorttolong}}}%

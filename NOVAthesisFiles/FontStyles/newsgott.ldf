@@ -16,10 +16,9 @@
 
 
 \AtEndPreamble{%
-\renewcommand{\rmdefault}{fbb-LF}% Roman font for use in math mode
 \RequirePackage[type1]{cabin}% used only by \mathsf
 \RequirePackage{amsthm}% load before newtxmath
-\RequirePackage[noto,notosans,vvarbb]{newtxmath}% does not load minnewsgott because another Roman text package was specified
+\RequirePackage[libertine,vvarbb]{newtxmath}% does not load minnewsgott because another Roman text package was specified
 
 \setmainfont{NewsGotT}[
   Ligatures=TeX,
