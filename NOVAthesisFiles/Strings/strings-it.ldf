@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%Strings/it.ldf
+%% Strings/it.ldf
 %% NOVA thesis configuration file
 %%
 %% Customization for language depedent strings
@@ -14,8 +14,10 @@
 
 \frontmatterstring(it):={Le Prime Pagine}
 \coverstring(it):={Copertina}
-\backcoverstring(it):={Cover Posteriore}
+\backcoverstring(it):={Copertina Posteriore}
 \copyrightstring(it):={Copyright}
+\statementstring(it):={Dichiarazione}
+\statementstring(it):={Dopo la Copertina}
 \dedicatorystring(it):={Dedicativo}
 \acknowledgementsstring(it):={Ringraziamenti}
 \quotestring(it):={Citazione}
@@ -24,6 +26,7 @@
 \notdefined(it):={INDEFINITO}
 \specializationstr(it):={Specializzazione in}
 \departmentofstr(it):={Dipartimento di}
+\andstring(it):={e}
 
 \adviserstr(1,m,it):={Relatore}
 \adviserstr(1,f,it):={Relatrice}

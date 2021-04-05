@@ -1,0 +1,73 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/newsgott.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization of font to use a Linux Libertine font set
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE FontStyles/newsgott.ldf}
+
+\ntcheckfont{NewsGotT-Regular.ttf}{\url{URL://TBD}}
+\ntcheckfont{NewsGotT-Bold.ttf}{\url{URL://TBD}}
+
+\ifxeorlua{}{%
+  \ClassError{novathesis}{Font Style “newsgott” is not compatible with pdfLaTeX. Please use XeLaTeX or LuaLaTeX}{Please use XeLaTeX or LuaLaTeX}%
+}
+
+
+\AtEndPreamble{%
+\renewcommand{\rmdefault}{fbb-LF}% Roman font for use in math mode
+\RequirePackage[type1]{cabin}% used only by \mathsf
+\RequirePackage{amsthm}% load before newtxmath
+\RequirePackage[noto,notosans,vvarbb]{newtxmath}% does not load minnewsgott because another Roman text package was specified
+
+\setmainfont{NewsGotT}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+  Extension = .ttf, 
+  UprightFont=*-Regular,
+  BoldFont=*-Bold,
+  AutoFakeSlant=0.15,
+  BoldSlantedFeatures={FakeSlant=0.15},
+]
+
+\setfontfamily\newsgott{NewsGotT-Regular.ttf}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+]
+
+\setfontfamily\newsgottbf{NewsGotT-bold.ttf}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+]
+
+\setfontfamily\newsgottit{NewsGotT-Regular.ttf}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+  ItalicFeatures={FakeSlant=0.15},
+]
+
+\setfontfamily\newsgottsl{NewsGotT-Regular.ttf}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+  AutoFakeSlant=0.15,
+]
+
+%
+% %https://sourcefoundry.org/hack/
+% \setmonofont{Hack}[
+% %Scale=MatchLowercase,
+% Scale=0.8,
+% Path = novathesis-files/FontStyles/fonts/,
+% Extension = .ttf,
+% Mapping=tex-text,
+% UprightFont=*-Regular,
+% BoldFont=*-Bold,
+% ItalicFont=*-Italic,
+% BoldItalicFont=*-BoldItalic]
+}
