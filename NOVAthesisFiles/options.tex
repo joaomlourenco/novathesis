@@ -18,11 +18,11 @@
   , langsused/.new list = {en,pt}
   , docstatus/.new choice = {final, provisional, draft, working},
   , docstatus = final,
-  , chapstyle/.new choice = {bianchi, bluebox, default, elegant, 
-                             ell, fct, hansen, ist, lyhne, madsen,
+  , chapstyle/.new choice = {bar, bianchi, bluebox, default, elegant, 
+                             ell, hansen, ist, lyhne, madsen,
                             pedersen, section, southall, veelo,
                             vz34, vz43, compact}
-  , chapstyle=fct        % set "fct" chapter style as the default
+  , chapstyle=bar        % set "bar" chapter style as the default
   , fontstyle/.new choice = {kpfonts, bookman, erewhon, libertine, scholax,
                              calibri, kieranhealy, newsgott}
   , fontstyle=kpfonts        % set kpfonts as the default
@@ -126,7 +126,7 @@
     }%
       {}%
       {\input{NOVAthesisFiles/spine.tex}}%
-    \ntprintspine%
+    \csuse{ntprintspine}%
   }{}%
   \iftoggle{/novathesis/cdcover}{%
     \InputIfFileExists{%

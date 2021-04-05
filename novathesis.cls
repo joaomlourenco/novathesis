@@ -159,14 +159,14 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   }  
   % %novathesis@opt@biblatex
   , biblatex/.new list
-  , handler/chapstyle/.new cmd={%
-    \InputIfFileExists{NOVAthesisFiles/ChapStyles/#1.ldf}{}%
-      {\PackageWarining{novathesis}{Invalid Chapter Style: #1}}%
-  }
-  , handler/fontstyle/.new cmd={%
-    \InputIfFileExists{NOVAthesisFiles/FontStyles/#1.ldf}{}%
-      {\PackageWarining{novathesis}{Invalid Font Style: #1}}%
-  }
+  % , handler/chapstyle/.new cmd={%
+  %   \InputIfFileExists{NOVAthesisFiles/ChapStyles/#1.ldf}{}%
+  %     {\PackageWarining{novathesis}{Invalid Chapter Style: #1}}%
+  % }
+  % , handler/fontstyle/.new cmd={%
+  %   \InputIfFileExists{NOVAthesisFiles/FontStyles/#1.ldf}{}%
+  %     {\PackageWarining{novathesis}{Invalid Font Style: #1}}%
+  % }
 }
 
 
@@ -337,6 +337,12 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\@nt@undefined}[1][]{\embrace{#1 \thenotdefined(\option{/novathesis/mainlang})}}
 
+\newcommand*{\initassocarray}[2][\embrace{\notdefined(\option{/novathesis/coverlang})}]{
+  \optionlistdo{/@nt/langsshort}{%
+    \csuse{#2}(##1):={#1}%
+  }%
+}
+
 \assocarray{abstractorder}
 \assocarray{frontmatterstring}
 \assocarray{coverstring}
@@ -353,6 +359,11 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \assocarray{departmentofstr}
 \assocarray{sponsorsstr}
 \assocarray{andstring}
+\assocarray{commastring}
+% \initassocarray{,}{commastring}
+\optionlistdo{/@nt/langsshort}{
+  \commastring(#1):={,}%
+}
 
 \assocarray{adviserstr}
 \providecommand*{\theadviserstrfont}{}
@@ -379,12 +390,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \assocarray{majorfield}
 \assocarray{specialization}
 
-\newcommand*{\initassocarray}[2][\embrace{\notdefined(\option{/novathesis/coverlang})}]{
-  \optionlistdo{/@nt/langsshort}{%
-    \csuse{#2}(##1):={#1}%
-  }%
-}
-
 \assocarray{spine}
 \assocarray{thesiscover}
 \assocarray{margin}
@@ -410,6 +415,17 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 % --------------------------------------------------------
 % PROCESS PACKAGE OPTIONS
 \input{NOVAthesisFiles/options.tex}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Include strings for all the languages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\optionlistdo{/novathesis/langsused}{%
+  \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
+    {}%
+    {}%
+}%
 
 
 
@@ -707,17 +723,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 % \NTRunHook{packages}
 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Include strings for all the languages
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\optionlistdo{/novathesis/langsused}{%
-  \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
-    {}%
-    {}%
-}%
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING ADDITINAL FILES AFTER LOADING MEMOIR
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -801,6 +806,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
     \ntcoverbackground[#1]%
     \ntcovertext[#1]%
     \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
+    % \newpage\null%
     \NTRunHook{cover/#1/back}%
     \clearforchapter%
   }{\typeout{NT printthecover #1 undefined}}%
@@ -1019,7 +1025,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \ifnum\value{@nt@advisern}=\value{@nt@advisertotal}%
     {\normalfont\ \theandstring(\option{/novathesis/coverlang}) }%
   \else\ifnum\value{@nt@advisern}>1%
-    {\normalfont, }%
+    {\normalfont\thecommastring(\option{/novathesis/coverlang}) }%
   \fi\fi%
   #1%
 }

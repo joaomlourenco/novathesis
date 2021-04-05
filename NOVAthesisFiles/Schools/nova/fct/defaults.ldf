@@ -73,7 +73,7 @@
 \spine(logo,msc,scale):={1.5}
 \spine(logo,msc,raise):={0.075}
 \spine(author):={\theauthorshortname}
-\spine(title):={\thetitle}
+\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year):={\thentdateyear}
 % \spine(top):={116pt}
 \spine(top):={4.075cm}
