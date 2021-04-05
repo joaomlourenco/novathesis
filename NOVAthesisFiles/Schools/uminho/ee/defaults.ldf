@@ -350,7 +350,7 @@ indicada.\\[1ex]
 }
 
 \NTAddToHook{cover/1/begin}{%
-  % \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
+  % \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
   \ifphddoc{\pagecolor{covergrey}\color{\phdtextcolor}}{\pagecolor{white}\color{\msctextcolor}}%
 }
 
