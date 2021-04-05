@@ -241,7 +241,7 @@
 	  \clearforchapter%
 	  \thispagestyle{empty}%
 	  \make@spine@box@logo{}{\thespine(logo)}%
-	  \ifexists{spine}[logotwo]{%
+	  \ifaadefined{spine}(logotwo){%
 		\make@spine@box@logotwo{}{\thespine(logotwo)}%
 	  }
 	  \make@spine@box@date%
@@ -253,7 +253,7 @@
 			~~\hfill
 			\parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@date@width}%
 			  {\usebox{\@nt@spine@box@date}}%
-			\ifexists{spine}[logotwo]{%
+      \ifaadefined{spine}(logotwo){%
 			  \parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@logotwo@width}%
 				{\hspace*{3mm}\usebox{\@nt@spine@box@logotwo}}%
 			}
@@ -281,7 +281,7 @@
 			~
 			\parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@date@width}%
 			  {\usebox{\@nt@spine@box@date}}%
-			\ifexists{spine}[logotwo]{%
+      \ifaadefined{spine}(logotwo){%
 			  \parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@logotwo@width}%
 				{\hspace*{3mm}\usebox{\@nt@spine@box@logotwo}}%
 			}
