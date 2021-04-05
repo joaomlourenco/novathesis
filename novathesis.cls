@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-03-31 [6.1.1]
+%% Version 2021-04-05 [6.2.0]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{novathesis}[2021-03-31 novathesis template]
+\ProvidesClass{novathesis}[2021-04-05 novathesis template]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -508,16 +508,17 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   % #2 = lang
   % #3 = value
   \typeout{NT @nttitle [#1] [#2] [#3]}
-  \saveexpandmode\noexpandarg% set \noexpandarg locally
-    \StrSubstitute[0]{#3}{\\}{ }[\@thetitle]%
-    \def\@thetitlei{\expandafter\MakeUppercase\expandafter{#3}}%
-    \StrSubstitute[0]{\@thetitlei}{\\}{\newline}[\@thetitlecaps]%
-  \restoreexpandmode% restore the previous mode
-  \csdef{@thetitle#2}{\@thetitle}%
-  \csdef{@thetitle#2caps}{\@thetitlecaps}%
+  % \saveexpandmode\noexpandarg% set \noexpandarg locally
+  %   \StrSubstitute[0]{#3}{\\}{ }[\@thetitle]%
+    % \def\@thetitlei{\expandafter\MakeUppercase\expandafter{#3}}%
+    % \StrSubstitute[0]{\@thetitlei}{\\}{\newline}[\@thetitlecaps]%
+  % \restoreexpandmode% restore the previous mode
+  % \csdef{@thetitle#2}{\@thetitle}%
+  % \csdef{@thetitle#2caps}{\@thetitlecaps}%
+  \doctitle(#1,#2):={\saveexpandmode\noexpandarg\StrSubstitute[0]{#3}{\\}{ }\restoreexpandmode}%
+  \doctitle(#1,#2,caps):={\saveexpandmode\noexpandarg\StrSubstitute[0]{\expandafter\MakeUppercase\expandafter{#3}}{\\}{ }\restoreexpandmode}%
   \doctitle(#1,#2,cover):={#3}%
-  \doctitle(#1,#2):={\csuse{@thetitle#2}}%
-  \doctitle(#1,#2,cover,caps):={\csuse{@thetitle#2caps}}%
+  \doctitle(#1,#2,cover,caps):={\expandafter\MakeUppercase\expandafter{#3}}%
 }
 
 \newcommand*{\@ntsubtitle}[3]{

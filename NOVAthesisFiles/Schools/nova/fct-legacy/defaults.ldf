@@ -48,7 +48,7 @@
 % Spine info
 \spine(logo):={logoNOVA}
 \spine(author):={\theauthorshortname}
-\spine(title):={\thetitle}
+\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year):={\thentdateyear}
 
 % Set margins for "normal" pages
@@ -98,13 +98,13 @@
 % page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\makepagestyle{novathesis@myvf} 
-\makeoddfoot{novathesis@myvf}{}{\thepage}{} 
-\makeevenfoot{novathesis@myvf}{}{\thepage}{} 
-\makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
-\makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
-\makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
-\pagestyle{novathesis@myvf}
+% \makepagestyle{novathesis@myvf}
+% \makeoddfoot{novathesis@myvf}{}{\thepage}{}
+% \makeevenfoot{novathesis@myvf}{}{\thepage}{}
+% \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}
+% \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}
+% \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
+% \pagestyle{novathesis@myvf}
 
 % \NTAddToHook{abstract/pre}{%
 %   % \rule{\textwidth}{0.2mm} ~\\[-3.5ex]%
@@ -117,7 +117,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtBeginCover{%
+\NTAddToHook{cover/1/begin}{%
   \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
 }
 
@@ -137,7 +137,7 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=4.5cm]{1}{%
   \fontsize{16}{16}\selectfont
-  \textbf{\thecovertitle}
+  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}
 }
 
 % Degree
@@ -160,11 +160,7 @@
 % Date
 \ntaddtocover[vspace=3.5cm]{1}{%
   \fontsize{11}{11}\selectfont
-  \ifdraftdoc
-    \textbf{DRAFT: \today}
-  \else
-    \textbf{\thentdatemonth, \thentdateyear}
-  \fi
+  \textbf{\thentdatemonth, \thentdateyear}
 }
 
 %
