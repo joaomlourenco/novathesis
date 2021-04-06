@@ -65,6 +65,8 @@
 \andstring(es):={\\}
 \andstring(de):={\\}
 
+\ntpagestyle(frontmatter):={plain}
+
 %-----------------------------------------------------------------
 % local strings
 %-----------------------------------------------------------------
@@ -143,7 +145,7 @@ indicada.\\[1ex]
 }
 
 \newcommand*{\umcopyrightmessage}{%
-  \thispagestyle{empty}%
+  \thispagestyle{\thentpagestyle(frontmatter)}%
   \ntselectlang{\option{/novathesis/copyrightlang}}%
   \currentpdfbookmark{Copyright}{bmcopyright}
   \noindent%
