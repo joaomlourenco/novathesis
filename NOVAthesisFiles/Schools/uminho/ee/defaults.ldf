@@ -241,7 +241,7 @@ indicada.\\[1ex]
 \school(en):={Escola de Engenharia}
 \school(fr):={Escola de Engenharia}
 \school(it):={Escola de Engenharia}
-\school(logo):={}
+  \school(logo):={}
 % \school(logo,neg):={}
 
 % Comiittee printing order
@@ -462,7 +462,7 @@ indicada.\\[1ex]
   % \ifdraftdoc
     % \textbf{DRAFT: \today}
   % \else
-    \textbf{\thentdatemonth\theofstr(\option{/novathesis/coverlang})\thentdateyear}
+    \thentdatemonth\theofstr(\option{/novathesis/coverlang})\thentdateyear
   % \fi
 }
 
