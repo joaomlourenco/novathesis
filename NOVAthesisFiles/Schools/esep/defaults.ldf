@@ -130,7 +130,7 @@
   \ntsetup{fontstyle=calibri}%
 }{%
   \NTAddToHook{cover/back/begin}{%
-    \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
+    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
   }%
 }
 

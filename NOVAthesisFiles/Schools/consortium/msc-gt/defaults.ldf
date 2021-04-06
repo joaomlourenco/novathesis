@@ -7,6 +7,8 @@
 
 \typeout{NT FILE consortium/msc-gt/defaults.ldf}
 
+\ntsetup{secondcover=true}
+
 % Univesity
 \university(pt):={\embrace{NONE}}
 \university(en):={\embrace{NONE}}
@@ -23,19 +25,19 @@
 \committeeorder(all):={c,r,m}% 
 
 % Cover background images
-\thesiscover(phd,front):={cover-msc-gt}
-\thesiscover(phdplan,front):={cover-msc-gt}
-\thesiscover(phdprop,front):={cover-msc-gt}
-\thesiscover(msc,front):={cover-msc-gt}
-\thesiscover(mscplan,front):={cover-msc-gt}
-\thesiscover(bsc,front):={cover-msc-gt}
-\thesiscover(plain,front):={cover-msc-gt}
-\thesiscover(phd,cdfront):={cover-msc-gt}
-\thesiscover(phd,cdinlay):={cover-msc-gt}
-\thesiscover(phdplan,cdfront):={cover-msc-gt}
-\thesiscover(phdplan,cdinlay):={cover-msc-gt}
-\thesiscover(phdprop,cdfront):={cover-msc-gt}
-\thesiscover(phdprop,cdinlay):={cover-msc-gt}
+\thesiscover(phd,front):={}
+\thesiscover(phdplan,front):={}
+\thesiscover(phdprop,front):={}
+\thesiscover(msc,front):={cover-msc-consortium-gt}
+\thesiscover(mscplan,front):={cover-msc-consortium-gt}
+\thesiscover(bsc,front):={}
+\thesiscover(plain,front):={}
+\thesiscover(phd,cdfront):={}
+\thesiscover(phd,cdinlay):={}
+\thesiscover(phdplan,cdfront):={}
+\thesiscover(phdplan,cdinlay):={}
+\thesiscover(phdprop,cdfront):={}
+\thesiscover(phdprop,cdinlay):={}
 \thesiscover(msc,cdfront):={}
 \thesiscover(msc,cdinlay):={}
 \thesiscover(mscplan,cdfront):={}
@@ -91,15 +93,15 @@
 % page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\AtEndPreamble{%
-  \makepagestyle{novathesis@myvf}%
-  \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
-  \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
-  \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
-  \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
-  \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
-  \pagestyle{novathesis@myvf}%
-}
+% \AtEndPreamble{%
+%   \makepagestyle{novathesis@myvf}%
+%   \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
+%   \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
+%   \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
+%   \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
+%   \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
+%   \pagestyle{novathesis@myvf}%
+% }
 %
 %\frenchspacing
 
@@ -108,41 +110,28 @@
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NTAddToHook{cover/1/begin}{%
-  \ifxeorlua{\setmainfont[Ligatures=TeX]{TeX Gyre Heros}}{\fontfamily{phv}}%
+  \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
 }
 
 % Title of Dissertation
-\ntaddtocover[vspace=6cm,height=7.5cm]{1}{%
-    \raggedright%
+\ntaddtocover[vspace=5.5cm,height=8.1cm,align=l,inalign=b]{1}{%
     \fontsize{18}{18}\selectfont
-    \bfseries\thedoctitle(\option{/novathesis/coverlang},main,cover)[caps]%
+    \bfseries\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)%
 }
 
 % Author name
-\ntaddtocover[vspace=0.9cm,height=1.8cm]{1}{%
-    \raggedright%
+\ntaddtocover[vspace=0.9cm,height=1.7cm,align=l]{1}{%
     \fontsize{16}{16}\selectfont
     \textbf{\theauthorname}
 }
 
 % Title of Dissertation - COVER 2
-\ntaddtocover[vspace=2cm]{2}{%
-    \centering%
-    \fontsize{16}{16}\selectfont
-    \bfseries\thedoctitle(\option{/novathesis/coverlang},main,cover)[caps]%
-}
-
-% Academic qualifications
-% \ntaddtocover[vspace=0.25cm]{1,2}{%
-%   \fontsize{11}{11}\selectfont
-%   \theauthordegree
+% \ntaddtocover[vspace=2cm]{2}{%
+%     \centering%
+%     \fontsize{16}{16}\selectfont
+%     \bfseries\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)%
 % }
 
-% Degree
-% \ntaddtocover[vspace=1.5cm]{1,2}{%
-%   \fontsize{11}{11}\selectfont
-%   \thepresentationtext
-% }
 
 % Advisers
 \ntaddtocover[vspace=3cm]{2}{%
