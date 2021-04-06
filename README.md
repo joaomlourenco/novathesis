@@ -30,7 +30,6 @@
 * [Getting Help](#getting-help)
 	* [Problems and Difficulties](#problems-and-difficulties)
 	* [Suggestions, Bugs and Feature Requests](#suggestions-bugs-and-feature-requests)
-	* [School Specific Instructions & Suggestions](school-specific-instructions)
 * [Recognition](#recognition)
 * [Showcase of supported Schools](#showcase-of-supported-schools)
 * [Disclaimer](#disclaimer)
