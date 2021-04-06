@@ -403,6 +403,9 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 \assocarray{doctitle}
 
+\assocarray{ntpagestyle}
+\ntpagestyle(frontmatter):={empty}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING ADDITINAL FILES BEFORE LOADING MEMOIR
@@ -927,7 +930,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
     {\toggletrue{@nt@backcover}}{}%
   \iftoggle{@nt@backcover}{%
     \NTRunHook{cover/preback/begin}%
-    \thispagestyle{empty}%
+    \thispagestyle{\thentpagestyle(frontmatter)}%
     \NTRunHook{cover/preback/end}%
     ~\newpage% \the back cover goes on the even page
     \bgroup%
@@ -987,7 +990,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 }
 
 \providecommand\thecopyrightstr{%
-  \thispagestyle{empty}%
+  \thispagestyle{\thentpagestyle(frontmatter)}%
   \ntselectlang{\option{/novathesis/copyrightlang}}%
   \currentpdfbookmark{Copyright}{bmcopyright}
   \noindent%
@@ -1432,7 +1435,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %% Dedicatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NewEnviron{ntdedicatory}{
-  \thispagestyle{empty}%
+  \thispagestyle{\thentpagestyle(frontmatter)}%
   ~\\[2cm]%
   \begin{minipage}{\linewidth}%
     \raggedleft%
@@ -1449,7 +1452,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %% Quote
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NewEnviron{ntquote}{%%
-  \thispagestyle{empty}%
+  \thispagestyle{\thentpagestyle(frontmatter)}%
   ~\\[2cm]%
   \begin{minipage}{\linewidth}%
     \raggedleft%
