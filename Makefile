@@ -20,7 +20,7 @@ verb verbose:
 
 .PHONY: 2019
 2019:
-	PATH="/usr/local/texlive/2019/bin/x86_64-darwin/:$(PATH)" $(L) -pdfxe -silent $(B)
+	PATH="/usr/local/texlive/2019/bin/x86_64-darwin/:$(PATH)" $(L) -pdf -silent $(B)
 
 .PHONY: xe
 pdf: $(S)
