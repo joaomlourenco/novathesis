@@ -38,8 +38,7 @@
   , gnumberlist/.new toggle = true
   , tocintoc/.new toggle = false
   , urlstyle/.new cmd = {%
-            % \edef\@nt@urlstyle{#1}
-            \AfterPreamble{\expanded{\urlstyle{#1}}}%
+            \AfterPreamble{\urlstyle{#1}}%
   }
   , debugcover/.new toggle = false
   , spine/.new toggle = false%
