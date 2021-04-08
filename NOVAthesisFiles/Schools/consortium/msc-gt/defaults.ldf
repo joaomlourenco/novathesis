@@ -8,6 +8,20 @@
 \typeout{NT FILE consortium/msc-gt/defaults.ldf}
 
 \ntsetup{secondcover=true}
+\ntsetup{printcopyright=false}
+\ntsetup{secondcover=true}
+
+\ntdegreename(en){Master of Science in Geospatial Technologies}
+
+\adviserstr(en):={Dissertation supervised by:}
+\coadviserstr(en):={Co-supervised by:}
+
+\def\adviserstrfont{\bfseries}
+\def\coadviserstrfont{\bfseries}
+
+\dissertationstr(msc,en):={Dissertation submitted in partial fulfillment of the requirements\\
+for the degree of \emph{\thedegreename(en)}}
+
 
 % Univesity
 \university(pt):={\embrace{NONE}}
@@ -28,7 +42,7 @@
 \thesiscover(phd,front):={}
 \thesiscover(phdplan,front):={}
 \thesiscover(phdprop,front):={}
-\thesiscover(msc,front):={cover-msc-consortium-gt}
+\thesiscover(msc,front):={atom}
 \thesiscover(mscplan,front):={cover-msc-consortium-gt}
 \thesiscover(bsc,front):={}
 \thesiscover(plain,front):={}
@@ -64,28 +78,19 @@
 \margin(paper,right):={3.5cm}
 
 % Set margins for cover pages
-\margin(msc,top):={2.5cm}
-\margin(msc,bottom):={2.5cm}
-\margin(msc,left):={1.5cm}
+\margin(msc,top):={1.0cm}
+\margin(msc,bottom):={1.35cm}
+\margin(msc,left):={1.45cm}
 \margin(msc,right):={1.5cm}
 \margin(mscplan,top):={2.5cm}
 \margin(mscplan,bottom):={2.5cm}
-\margin(mscplan,left):={1.5cm}
+\margin(mscplan,left):={1.45cm}
 \margin(mscplan,right):={1.5cm}
 \margin(phd,top):={2.5cm}
 \margin(phd,bottom):={2.5cm}
 \margin(phd,left):={1.5cm}
 \margin(phd,right):={1.5cm}
 
-
-\adviserstr(en):={Dissertation supervised by:}
-\coadviserstr(en):={Co-supervised by:}
-
-\def\adviserstrfont{\bfseries}
-\def\coadviserstrfont{\bfseries}
-
-\ntsetup{printcopyright=false}
-\ntsetup{secondcover=true}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NOVA guidelines:
@@ -113,16 +118,69 @@
   \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
 }
 
+% \definecolor{gtblue}{RGB}{0,0,234}
+\definecolor{gtblue}{RGB}{50,64,247}
+
+
+
+% Title of Degree
+\ntaddtocover[vspace=0mm,height=6.35cm,align=l,inalign=t]{1}{%
+  \includegraphics[height=5.8cm]{cover-msc-gt-text-lines}%
+  \hfill%
+  \raisebox{2mm}{\includegraphics[height=2.7cm]{ball}}%
+}
+
+\ntaddtocover[vspace=1.5mm,height=8mm,align=l,inalign=t]{1}{%
+  \color{gtblue}\rule{\textwidth}{8mm}%
+}
+
+
+
 % Title of Dissertation
-\ntaddtocover[vspace=5.5cm,height=8.1cm,align=l,inalign=b]{1}{%
+\ntaddtocover[vspace=0mm,height=7.4cm,align=l,inalign=b]{1}{%
     \fontsize{18}{18}\selectfont
-    \bfseries\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)%
+    \bfseries\itshape\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)%
+    \ifaadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
+      \\[4mm]%
+      \fontsize{14}{14}\selectfont%
+      \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover)}%
+    }{}%
+}
+
+\ntaddtocover[vspace=0mm,height=10.5mm,align=l,inalign=b]{1}{%
+  \color{gtblue}\rule{0.5\textwidth}{4mm}%
 }
 
 % Author name
-\ntaddtocover[vspace=0.9cm,height=1.7cm,align=l]{1}{%
-    \fontsize{16}{16}\selectfont
-    \textbf{\theauthorname}
+\ntaddtocover[vspace=0mm,height=1.7cm,align=l]{1}{%
+    \fontsize{16}{16}\selectfont%
+    \theauthorname%
+}
+
+\ntaddtocover[vspace=0mm,height=7.5mm,align=l,inalign=t]{1}{%
+  \color{gtblue}\rule{0.5\textwidth}{4mm}%
+}
+
+\ntaddtocover[vspace=0mm,height=70.5mm,align=l,inalign=t]{1}{%
+  \fontsize{13}{13}\selectfont%
+  \thedissertationstr(msc,en)%
+}
+
+\ntaddtocover[vspace=0mm,height=1mm,align=l,inalign=t]{1}{%
+  \color{gtblue}\rule{\textwidth}{0.4mm}%
+}
+
+\ntaddtocover[vspace=1,,align=l]{1}{%
+  % \begin{tabular}{@{}l@{\hspace{1cm}}l@{\hspace{1cm}}l@{}}
+  \begin{minipage}{2.5cm}
+  \includegraphics[width=13mm]{Nova-IMS-BW}
+  \end{minipage}%
+  \begin{minipage}{3.2cm}
+  \includegraphics[width=21mm]{Universitat-Jaume-I-BW} 
+  \end{minipage}%
+  \begin{minipage}{3.5cm}
+  \includegraphics[width=27mm]{University-Munster-BW}
+  \end{minipage}
 }
 
 % Title of Dissertation - COVER 2
