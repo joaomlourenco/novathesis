@@ -8,7 +8,7 @@
 \typeout{NT FILE ChapterStyle/bluebox.ldf}
 
 %%%%% Configure chapters, headers, footers, and page numbering
-\makeatletter
+%\makeatletter
 \newsavebox{\ChpNumBox}
 \definecolor{ChapBlue}{rgb}{0.7,0.8,0.9}
 

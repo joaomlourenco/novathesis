@@ -8,7 +8,7 @@
 \typeout{NT FILE ChapterStyle/bar.ldf}
 
 \chapterstyle{ell}
-\makeatletter
+%\makeatletter
 \renewcommand{\chs@ell@helper}[1]{%
   \par%
     % \begin{adjustwidth}{}{-\chapindent}
@@ -40,4 +40,4 @@
 % \gappto{\secheadstyle}{\sffamily}
 % \gappto{\subsecheadstyle}{\sffamily}
 % \gappto{\subsubsecheadstyle}{\sffamily}
-\makeatother
+%\makeatother

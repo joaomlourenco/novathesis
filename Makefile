@@ -12,7 +12,7 @@ $(T): $(S)
 
 .PHONY: 2020
 2020: $(S)
-	$(L) -pdfxe -silent $(B)
+	$(L) -pdf -silent $(B)
 
 .PHONY: verb verbose
 verb verbose:
@@ -24,7 +24,7 @@ verb verbose:
 
 .PHONY: xe
 pdf: $(S)
-	$(L) -pdf -silent $(B)
+	$(L) -pdfxe -silent $(B)
 
 .PHONY: lua
 lua: $(S)

@@ -647,7 +647,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   acknowledgements,% (*) Print the acknowledgments
   quote,           % (*) Print the quote
   abstracts,       % Print abstracts in multiple languages.
-  alllistof,       % Print all the indexes defined in “7_list_of.tex”
+  alllistof,       % Print all the indexes defined in “8_list_of.tex”
 }
 
 \ntsetprintorder{mainmatter}{
@@ -711,20 +711,20 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 % \NTRunHook{files}
 
 %============================================================
-%  WHICH LIST_OF TO PRINT
-%   Please open and edit the appropriate
-%       configuration file “Config/7_list_of.tex”
-%============================================================
-\input{Config/7_list_of}
-% \NTRunHook{list_of}
-
-%============================================================
 % ADDITIONAL PACKAGES and MACROS
 %      Please open and edit the appropriate
 %       configuration file “Config/8_packages.tex”
 %============================================================
-\AtEndPreamble{\input{Config/8_packages}}
+\AtEndPreamble{\input{Config/7_packages}}
 % \NTRunHook{packages}
+
+%============================================================
+%  WHICH LIST_OF TO PRINT
+%   Please open and edit the appropriate
+%       configuration file “Config/8_list_of.tex”
+%============================================================
+\AtEndPreamble{\makeatletter\input{Config/8_list_of}}
+% \NTRunHook{list_of}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
