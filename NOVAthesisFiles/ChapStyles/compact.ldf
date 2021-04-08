@@ -9,7 +9,7 @@
 
 %%%%% Configure chapters, headers, footers, and page numbering
 \chapterstyle{section}
-\makeatletter
+%\makeatletter
 \setlength{\beforechapskip}{3.5ex \@plus 1ex \@minus .2ex}
 \renewcommand*{\chapterheadstart}{\vspace{\beforechapskip}}
 \setlength{\afterchapskip}{2.3ex \@plus .2ex}
@@ -18,4 +18,4 @@
 \gappto{\secheadstyle}{\sffamily}
 \gappto{\subsecheadstyle}{\sffamily}
 \gappto{\subsubsecheadstyle}{\sffamily}
-\makeatother
+%\makeatother
