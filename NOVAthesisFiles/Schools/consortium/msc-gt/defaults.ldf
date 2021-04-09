@@ -7,17 +7,20 @@
 
 \typeout{NT FILE consortium/msc-gt/defaults.ldf}
 
+\ntmemoirsetup{openany}
 \ntsetup{secondcover=true}
 \ntsetup{printcopyright=false}
 \ntsetup{secondcover=true}
+\ntsetup{coverlang=en}        % The language for the cover (and second cover) page
+\ntbibsetup{style=authoryear-comp, sortcites=true, sorting=nyt}
 
 \ntdegreename(en){Master of Science in Geospatial Technologies}
 
 \adviserstr(en):={Dissertation supervised by:}
 \coadviserstr(en):={Co-supervised by:}
 
-\def\adviserstrfont{\bfseries}
-\def\coadviserstrfont{\bfseries}
+\def\theadviserstrfont{\bfseries}
+\def\thecoadviserstrfont{\bfseries}
 
 \dissertationstr(msc,en):={Dissertation submitted in partial fulfillment of the requirements\\
 for the degree of \emph{\thedegreename(en)}}
@@ -43,6 +46,7 @@ for the degree of \emph{\thedegreename(en)}}
 \thesiscover(phdplan,front):={}
 \thesiscover(phdprop,front):={}
 \thesiscover(msc,front):={atom}
+\thesiscover(msc,back):={atom-back.pdf}
 \thesiscover(mscplan,front):={cover-msc-consortium-gt}
 \thesiscover(bsc,front):={}
 \thesiscover(plain,front):={}
@@ -62,20 +66,24 @@ for the degree of \emph{\thedegreename(en)}}
 \thesiscover(plain,cdinlay):={}
 
 % Spine info
-\spine(logo):={}
-\spine(author):={\theauthorshortname}
-\spine(title):={\thetitle}
+\spine(logo):={ball}
+\spine(font):={\normalsize}
+\spine(author):={\theauthorname}
+\spine(title):={\textbf{\emph{\thedoctitle(\option{/novathesis/coverlang},main,caps)}}}
 \spine(year):={\thentdateyear}
+\spine(top):={3cm}
+\spine(bottom):={1cm}
+\spine(margin):={0.5cm}
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
-\margin(screen,bottom):={2.5cm}
-\margin(screen,left):={3.0cm}
-\margin(screen,right):={3.0cm}
+\margin(screen,bottom):={3.0cm}
+\margin(screen,left):={3.25cm}
+\margin(screen,right):={3.25cm}
 \margin(paper,top):={3.5cm}
-\margin(paper,bottom):={2.5cm}
-\margin(paper,left):={2.5cm}
-\margin(paper,right):={3.5cm}
+\margin(paper,bottom):={3.0cm}
+\margin(paper,left):={3.5cm}
+\margin(paper,right):={3.0cm}
 
 % Set margins for cover pages
 \margin(msc,top):={1.0cm}
@@ -93,22 +101,42 @@ for the degree of \emph{\thedegreename(en)}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% NOVA guidelines:
-% The pages should be numbered consecutively at the bottom centre of the
-% page.
+% Other hooks
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \AtEndPreamble{%
-%   \makepagestyle{novathesis@myvf}%
-%   \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
-%   \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
-%   \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
-%   \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
-%   \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
-%   \pagestyle{novathesis@myvf}%
+\NTAddToHook{mainmatter/post}{%
+  \counterwithout{figure}{chapter}%
+  \counterwithout{table}{chapter}%
+  \renewcommand\@memback@floats{%
+      \counterwithin{figure}{chapter}%
+      \counterwithin{table}{chapter}%
+  }
+}
+
+\def\annexcounter{\the}
+
+\NTAddToHook{abstract/pre}{%
+  \let\oldchapterheadstart=\chapterheadstart%
+  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\@nt@current@lang,main)}}%
+  \preto{\chapterheadstart}{%
+    \noindent\begin{minipage}[t][0pt][t]{\textwidth}
+      \begin{center}%
+        \textbf{\Large\thedoctitle(\@nt@current@lang,main,cover,caps)}%
+        \ifaadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
+          \\[6mm]%
+          \textbf{\Large\thedoctitle(\option{/novathesis/coverlang},sub,cover)}%
+        }{}%
+      \end{center}%
+    \end{minipage}%
+  }%
+}
+% \NTAddToHook{abstract/mid}{%
+  % \let\oldchapterheadstart=\chapterheadstart%
+  % {{\noindent\Large\thedoctitle(\@nt@current@lang,main)}\\[1ex]}%
 % }
-%
-%\frenchspacing
+\NTAddToHook{abstract/post}{%
+  \let\chapterheadstart=\oldchapterheadstart%
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -116,12 +144,16 @@ for the degree of \emph{\thedegreename(en)}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NTAddToHook{cover/1/begin}{%
   \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+  % \addtocounter{page}{-1}%
 }
 
 % \definecolor{gtblue}{RGB}{0,0,234}
 \definecolor{gtblue}{RGB}{50,64,247}
 
 
+%==================================================================
+% COVER 1
+%==================================================================
 
 % Title of Degree
 \ntaddtocover[vspace=0mm,height=6.35cm,align=l,inalign=t]{1}{%
@@ -183,12 +215,22 @@ for the degree of \emph{\thedegreename(en)}}
   \end{minipage}
 }
 
+
+%==================================================================
+% COVER 2
+%==================================================================
+
 % Title of Dissertation - COVER 2
-% \ntaddtocover[vspace=2cm]{2}{%
-%     \centering%
-%     \fontsize{16}{16}\selectfont
-%     \bfseries\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)%
-% }
+\ntaddtocover[vspace=2cm]{2}{%
+    \centering%
+    \fontsize{16}{16}\selectfont
+    \bfseries\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)%
+    \ifaadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
+      \\[4mm]%
+      \fontsize{14}{14}\selectfont%
+      \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover)}%
+    }{}%
+}
 
 
 % Advisers
@@ -198,7 +240,7 @@ for the degree of \emph{\thedegreename(en)}}
 
 % Co-advisers
 \ntaddtocover[vspace=1cm]{2}{%
-  % \ntprintadvisersgroup{coadviser}%
+  \ntprintadvisersgroup{coadviser}%
 }
 
 
@@ -213,4 +255,36 @@ for the degree of \emph{\thedegreename(en)}}
 \ntaddtocover[vspace=1]{2}{%
   \fontsize{11}{11}\selectfont
     \textbf{\thentdatemonth, \thentdateyear}
+}
+
+
+%==================================================================
+% BACK COVER
+%==================================================================
+
+% Title of Degree
+\ntaddtocover[vspace=10mm,height=6.35cm,align=r,inalign=t]{back}{%
+  \raisebox{2mm}{\includegraphics[height=2.7cm]{ball}}%
+  \hfill%
+  \includegraphics[height=5.8cm]{cover-msc-gt-text-lines}%
+}
+
+\ntaddtocover[vspace=1.5mm,height=15mm,align=l,inalign=t]{back}{%
+  \color{gtblue}\rule{\textwidth}{8mm}%
+}
+
+\ntaddtocover[vspace=65mm,height=5mm,align=r,inalign=t]{back}{%
+  \color{gtblue}\rule{0.5\textwidth}{4mm}%
+}
+
+\ntaddtocover[vspace=15mm,height=5mm,align=r,inalign=t]{back}{%
+  \color{gtblue}\rule{0.5\textwidth}{4mm}%
+}
+
+\ntaddtocover[vspace=1,height=1mm,align=l,inalign=t]{back}{%
+  \color{gtblue}\rule{\textwidth}{0.4mm}%
+}
+
+\ntaddtocover[vspace=3mm,align=r]{back}{%
+  \includegraphics[width=29mm]{Erasmus-Mundus-BW}
 }
