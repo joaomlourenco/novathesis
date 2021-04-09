@@ -503,43 +503,32 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newcommand*{\ntsubtitle}[2][\option{/novathesis/coverlang}]{%
   % #1 = lang
   % #2 = value
-  \@ntsubtitle{#1}{sub}{#2}%
+  \@nttitle{#1}{sub}{#2}%
 }
 
+
+\newcommand{\removelinebreaks}[1]{%
+      \def\\{\relax}#1%
+}
+      
 \newcommand*{\@nttitle}[3]{
   % #1 = type (main, sub) title
   % #2 = lang
   % #3 = value
   \typeout{NT @nttitle [#1] [#2] [#3]}
-  % \saveexpandmode\noexpandarg% set \noexpandarg locally
-  %   \StrSubstitute[0]{#3}{\\}{ }[\@thetitle]%
-    % \def\@thetitlei{\expandafter\MakeUppercase\expandafter{#3}}%
-    % \StrSubstitute[0]{\@thetitlei}{\\}{\newline}[\@thetitlecaps]%
-  % \restoreexpandmode% restore the previous mode
-  % \csdef{@thetitle#2}{\@thetitle}%
-  % \csdef{@thetitle#2caps}{\@thetitlecaps}%
-  \doctitle(#1,#2):={\saveexpandmode\noexpandarg\StrSubstitute[0]{#3}{\\}{ }\restoreexpandmode}%
-  \doctitle(#1,#2,caps):={\saveexpandmode\noexpandarg\StrSubstitute[0]{\expandafter\MakeUppercase\expandafter{#3}}{\\}{ }\restoreexpandmode}%
+  % \doctitle(#1,#2):={\saveexpandmode\noexpandarg\StrSubstitute[0]{#3}{\\}{ }\restoreexpandmode}%
+  \doctitle(#1,#2):={\removelinebreaks{#3}}%
+  \doctitle(#1,#2,caps):={\removelinebreaks{\expandafter\MakeUppercase\expandafter{#3}}}%
+  % \doctitle(#1,#2,caps):={%
+  %       \saveexpandmode\noexpandarg%
+  %       \StrSubstitute[0]{\expandafter\MakeUppercase\expandafter{#3}}{\\}{ }%
+  %       \restoreexpandmode%
+  % }%
+  % \doctitle(#1,#2,caps):={\saveexpandmode\noexpandarg\StrSubstitute[0]{\expandafter\MakeUppercase\expandafter{#3}}{\\}{ }\restoreexpandmode}
   \doctitle(#1,#2,cover):={#3}%
   \doctitle(#1,#2,cover,caps):={\expandafter\MakeUppercase\expandafter{#3}}%
 }
 
-\newcommand*{\@ntsubtitle}[3]{
-  % #1 = type (main, sub) title
-  % #2 = lang
-  % #3 = value
-  \typeout{NT @nttitle [#1] [#2] [#3]}
-  \saveexpandmode\noexpandarg% set \noexpandarg locally
-    \StrSubstitute[0]{#3}{\\}{ }[\@thesubtitle]%
-    \def\@thesubtitlei{\expandafter\MakeUppercase\expandafter{#3}}%
-    \StrSubstitute[0]{\@thesubtitlei}{\\}{\newline}[\@thesubtitlecaps]%
-  \restoreexpandmode% restore the previous mode
-  \csdef{@thesubtitle#1}{\@thesubtitle}%
-  \csdef{@thesubtitle#1caps}{\@thesubtitlecaps}%
-  \doctitle(#2,#1):={#3}%
-  \doctitle(#2,#1,cover):={\csuse{@thesubtitle#1}}%
-  \doctitle(#2,#1,cover,caps):={\csuse{@thesubtitle#1caps}}%
-}
 
 
 %============================================================
@@ -1039,8 +1028,8 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   % #1=width
   % %2={adviser,coadviser}
   \ifoptiondefined{/@nt/#2//name}{%
-    \csuse{the#2strfont}%
-    \csuse{the#2str}(\option{/novathesis/coverlang})\\[1ex]%
+    {\csuse{the#2strfont}%
+    \csuse{the#2str}(\option{/novathesis/coverlang})}\\[1ex]%
     \begin{minipage}[t]{#1\linewidth}%
       \centering
       \optionlistdo{/@nt/#2//name}{\@nt@printadvisersgroup##1,\@nil}%
@@ -1352,16 +1341,17 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newcommand*{\ntprintannexes}{%
   \renewcommand{\appendixtocname}{\annexnamepl}%
   \clearforchapter\annex\addappheadtotoc%
+  \null%
   \@nt@foralllist{file}{annex}{\@ntloadfiles@ii{annex}}%
 }
 
-
+\ifdef{\annexcounter}{}{\def\annexcounter{\@Roman}}
 \newcommand*{\annex}{
   \xdef\Hy@chapapp{annex}%
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
   \gdef\@chapapp{\annexname}%
-  \gdef\thechapter{\@Roman\c@chapter}%
+  \gdef\thechapter{\annexcounter\c@chapter}%
   }
 
 
