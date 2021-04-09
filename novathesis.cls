@@ -371,6 +371,8 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \providecommand*{\thecoadviserstrfont}{}
 \assocarray{degreestr}
 \providecommand*{\thedegreestrfont}{}
+\providecommand*{\theadvisernamefont}{}
+\providecommand*{\theadviserremainderfont}{\\[-0.5ex]\itshape\scriptsize}
 
 \assocarray{degreename}
 
@@ -918,10 +920,12 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/back}%
     {\toggletrue{@nt@backcover}}{}%
   \iftoggle{@nt@backcover}{%
-    \NTRunHook{cover/preback/begin}%
-    \thispagestyle{\thentpagestyle(frontmatter)}%
-    \NTRunHook{cover/preback/end}%
-    ~\newpage% \the back cover goes on the even page
+    \if@openright
+      \NTRunHook{cover/preback/begin}%
+      \thispagestyle{\thentpagestyle(frontmatter)}%
+      \NTRunHook{cover/preback/end}%
+      ~\newpage% \the back cover goes on the even page
+    \fi
     \bgroup%
       \ntaddtocover{back}{}%
       \NTRunHook{cover/back/begin}%
@@ -1052,6 +1056,12 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \end{minipage}
 }
 
+\newcommand{\ntprintoneadviser}[1]{%
+  \StrCut{#1}{,}\@nt@name\@nt@remainder%
+  {\theadvisernamefont\ignorespaces\@nt@name}%
+  {\theadviserremainderfont\ignorespaces\@nt@remainder}
+}
+
 \newcommand{\@nt@printadvisergroup}[1]{%
   % #1={adviser,coadviser}
     \ifoptiondefined{/@nt/#1//name}{%
@@ -1061,7 +1071,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
       \csuse{the#1strfont}%
       \csuse{the#1str}(\mynumber,\mygender,\option{/novathesis/coverlang}): & %
       \begin{minipage}[t]{\linewidth}\raggedright%
-      \optionlistdo{/@nt/#1//name}{##1\\[0.3ex]}%
+      \optionlistdo{/@nt/#1//name}{\ntprintoneadviser{##1}\\[0.4ex]}%
       \end{minipage}\\%
     }%
     {}%
@@ -1160,6 +1170,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
     {\themargin(\option{/novathesis/media},right)}%
     {*}%
   \checkandfixthelayout%
+  \ifoptionequal{/novathesis/media}{paper}{\openright}{}
 }
 
 %% For debugging the page layout
