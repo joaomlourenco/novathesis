@@ -59,6 +59,8 @@ The “novathesis” LaTeX template was initially designed for the PhD thesis an
     * [Escola Superior de Saúde](https://www.ess.ips.pt) (ESS-IPS)
     * [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt) (ESTB-IPS)
 * [Escola Superior de Enfermagem do Porto](https://www.esenf.pt/pt/) (ESEP)
+* University of Minho
+    * [Escolha de Engenharia da Universidade do Minho](https://www.eng.uminho.pt/pt) (EEUM)
 
 The “novathesis” LaTeX template also supports the following degrees from Universities' Consortia:
 * Erasmus Mundus [Masters Program in Geospatial Technologies](https://mastergeotech.info)
