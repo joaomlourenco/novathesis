@@ -898,14 +898,14 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newcommand{\@ntfixspacing}[2]{%
   \renewcommand*{\bibfont}{\hypersetup{allcolors=#1}\color{#1}%
                            \sffamily\fontsize{#2}{#2}\selectfont}
-  \newrefsection%
+  \refsection%
     \begin{minipage}{\linewidth}%
       \bibfont%
       \theacknowledgmentsstr(\option{/novathesis/coverlang})%
       \vspace*{-20ex}
       \printbibliography[heading=none]%
     \end{minipage}%
-  \newrefsection%
+  \endrefsection%
 }
 \newcommand{\ntfixspacing}{%
   \@ntfixspacing{white}{0.01}%
