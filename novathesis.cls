@@ -608,8 +608,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 \newcommand*{\ntprint}[1]{%
   \IfStrEqCase{#1}{%
-    {frontcover}{\ntprintcoverfront}%
-    {backcover}{\ntprintbackcover}%
     {frontmatter}{\ntprintlist{/@nt/docfrontmatter}}%
     {mainmatter}{\ntprintlist{/@nt/docmainmatter}}%
   }%
@@ -740,7 +738,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newlength{\mpheight}%
 \newsavebox{\@nt@coverbox}%
 
-\newcommand*{\ntprintcoverfront}{%
+\newcommand*{\ntprintfrontcover}{%
   \bgroup%
     \ntselectlang{\option{/novathesis/coverlang}}%
     \pdfbookmark{\thefrontmatterstring(\option{/novathesis/coverlang})}{bmfrontmatter}%
@@ -1223,23 +1221,24 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %% Printing chapters and similars
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\@ntloadfile@i}[1]{%
-  % \typeout{NT TRYING TO LOAD #1}%
-  \InputIfFileExists{#1}{%
-    \typeout{NT LOADING “#1” succeeded}%
-    % \externaldocument{#1}% from package 'xr'
-  }{%
-    \typeout{NT LOADING “#1” failed}%
-  }
+    % \typeout{NT TRYING TO LOAD #1}%
+    \InputIfFileExists{#1}{%
+        \clearforchapter%
+        \typeout{NT LOADING “#1” succeeded}%
+        % \externaldocument{#1}% from package 'xr'
+    }{%
+        \typeout{NT LOADING “#1” failed}%
+    }
 }
 
 \newcommand{\@ntloadfiles@ii}[2][VAL]{%
-  % #1=KEY
-  % #2=file class
-  % \options{/@nt/folders=#2}%
-  % \typeout{NT ntloadfiles [#2] [#1] [/@nt/file/#2/#1]}% [\expanded{\option{/@nt/folders}}]}
-  \ifoptiondefined{/@nt/file/#2/#1}%
-    {\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}%
-    {}
+    % #1=KEY
+    % #2=file class
+    % \options{/@nt/folders=#2}%
+    % \typeout{NT ntloadfiles [#2] [#1] [/@nt/file/#2/#1]}% [\expanded{\option{/@nt/folders}}]}
+    \ifoptiondefined{/@nt/file/#2/#1}%
+        {\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}%
+        {}
 }
 
 
@@ -1369,7 +1368,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 \newcommand*{\ntprintalllistof}{%
   \NTRunHook{listof/pre}%
-  \optionlistdo{/@nt/list/indexes}{##1}%
+  \optionlistdo{/@nt/list/indexes}{##1\clearforchapter}%
   \NTRunHook{listof/post}%
 }
 
