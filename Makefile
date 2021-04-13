@@ -1,5 +1,5 @@
 B = template
-F = -shell-escape
+F = -shell-escape -synctex=1
 T = $(B).pdf
 S = $(B).tex
 L = latexmk $(F)

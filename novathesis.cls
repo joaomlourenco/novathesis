@@ -582,18 +582,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 %============================================================
 % Cover hooks
-\newcommand*{\AtCoverExecute}[2]{
-  \NTRunHook{/cover/#1/#2}%
-}
-
-\newcommand*{\AtBeginCover}[2][1]{%
-  \AtCover{#1}{begin}{#2}%
-}
-
-\newcommand*{\AtEndCover}[2][1]{%
-  \AtCover{#1}{end}{#2}%
-}
-
 \newcommand*{\@ntaddtocover@iii}[3]{%
   % \typeout{NT ntaddtocover #3}%
   \options{/@nt/cover/\@nt@univ/\@nt@schl/#3/.cpush={{#1}=*={#2}}}%
@@ -610,7 +598,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \IfStrEqCase{#1}{%
     {frontmatter}{\ntprintlist{/@nt/docfrontmatter}}%
     {mainmatter}{\ntprintlist{/@nt/docmainmatter}}%
-  }%
+  }[\csuse{ntprint#1}]%
 }
 
 \newcommand*{\ntprintlist}[1]{%
@@ -920,13 +908,13 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
     \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/back}%
         {\toggletrue{@nt@backcover}}{}%
     \iftoggle{@nt@backcover}{%
+        \ntaddtocover{back}{}%
         \pagestyle{empty}
         \ntselectlang{\option{/novathesis/coverlang}}%
         \NTRunHook{cover/preback/begin}%
         \NTRunHook{cover/preback/end}%
-        \bgroup%
-            \@nt@printthecover{back}%
-        \egroup%
+        \ifbool{@openright}{~\newpage}{}%
+        \@nt@printthecover{back}%
     }{}%
 }
 
@@ -1256,7 +1244,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
       \ntselectlang{\option{/novathesis/mainlang}}%
       \currentpdfbookmark{\csuse{the#1string}(\option{/novathesis/mainlang})}{bm#1}
       \@ntloadfiles@ii{#1}%
-      \clearforchapter%
     }{\typeout{NT LOAD #1 undefined}}%
 	}{% ELSE
     % It is a plan or proposal type document
@@ -1292,7 +1279,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \@ntloadfiles@ii[#1]{abstract}%
   \NTRunHook{abstract/#1/post}%
   \NTRunHook{abstract/post}%
-  \clearforchapter%
 }
 
 
@@ -1339,14 +1325,13 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 \newcommand*{\ntprintappendixes}{%
   \renewcommand{\appendixtocname}{\appendixnamepl}%
-  \clearforchapter\appendix\addappheadtotoc%
+  \appendix\addappheadtotoc%
   \@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
 }
 
 \newcommand*{\ntprintannexes}{%
   \renewcommand{\appendixtocname}{\annexnamepl}%
-  \clearforchapter\annex\addappheadtotoc%
-  \null%
+  \annex\addappheadtotoc%
   \@nt@foralllist{file}{annex}{\@ntloadfiles@ii{annex}}%
 }
 
@@ -1411,19 +1396,18 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \NTRunHook{copyright/pre}%
 	\ifmaindoc{% THEN
     \iftoggle{/novathesis/printcopyright}%
-      {\ntprintcopyrightpage\clearforchapter}%
+      {\ntprintcopyrightpage}%
       {}%
 	}{}%
   \NTRunHook{copyright/post}%
 }
 
 \newcommand*{\ntprintcopyrightpage}{%
-	\clearforchapter%
-	\null\vfill%
-  \noindent%
-  \textbf{\large\thedoctitle(\option{/novathesis/coverlang},main)}\par%
-  \bigskip%
-  \thecopyrightstr\par%
+    \null\vfill%
+    \noindent%
+    \textbf{\large\thedoctitle(\option{/novathesis/coverlang},main)}\par%
+    \bigskip%
+    \thecopyrightstr\par%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
