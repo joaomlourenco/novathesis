@@ -1,0 +1,300 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova/ims/defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for NOVA-IMS (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE nova/ims/defaults.ldf}
+
+% Univesity
+\university(pt):={Universidade NOVA de Lisboa}
+\university(en):={NOVA University Lisbon}
+\university(fr):={NOVA University Lisbon}
+\university(it):={NOVA University Lisbon}
+
+% Faculty / School
+\school(pt):={Information Management School}
+\school(en):={Information Management School}
+\school(fr):={Information Management School}
+\school(it):={Information Management School}
+
+% Scientific filed
+% \majorfield(pt):={Gestão de Informação}
+% \majorfield(en):={Information Management}
+
+% Comiittee printing order
+\committeeorder(all):={c,r,m}% 
+
+% Cover background images
+\thesiscover(phd,front):={nova-ims-front-cover-phd}
+\thesiscover(phd,back):={nova-ims-back-cover}
+\thesiscover(phd,spine):={nova-ims-book-spine}
+\thesiscover(phdprop,front):={nova-ims-front-cover-phd}
+\thesiscover(phdprop,back):={nova-ims-back-cover}
+\thesiscover(phdprop,spine):={nova-ims-book-spine}
+\thesiscover(phdplan,front):={nova-ims-front-cover-phd}
+\thesiscover(phdplan,back):={nova-ims-back-cover}
+\thesiscover(phdplan,spine):={nova-ims-book-spine}
+\thesiscover(msc,front):={nova-ims-front-cover-megi}
+\thesiscover(msc,back):={nova-ims-back-cover}
+\thesiscover(msc,spine):={nova-ims-book-spine}
+\thesiscover(mscplan,front):={nova-ims-front-cover-megi}
+\thesiscover(mscplan,back):={nova-ims-back-cover}
+\thesiscover(mscplan,spine):={nova-ims-book-spine}
+\thesiscover(bsc,front):={nova-ims-front-cover-generic}
+\thesiscover(bsc,back):={nova-ims-back-cover}
+\thesiscover(bsc,spine):={nova-ims-book-spine}
+\thesiscover(plain,front):={nova-ims-front-cover-generic}
+
+% Rename Doctor degree
+\degreestr(phd,m,en):={Doctor}
+\degreestr(phd,f,en):={Doctor}
+\degreestr(phdplan,m,en):={Doctor}
+\degreestr(phdplan,f,en):={Doctor}
+\degreestr(phdprop,m,en):={Doctor}
+\degreestr(phdprop,f,en):={Doctor}
+\degreestr(phd,m,pt):={Doctor}
+\degreestr(phd,f,pt):={Doctor}
+\degreestr(phdplan,m,pt):={Doctor}
+\degreestr(phdplan,f,pt):={Doctor}
+\degreestr(phdprop,m,pt):={Doctor}
+\degreestr(phdprop,f,pt):={Doctor}
+
+%% DARK GREY  112,121,128
+%% LIGHT GREY 200,203,206
+
+% Spine info
+% \spine(logo):={logo-NOVA}
+% \spine(logotwo):={logo-NOVA-IMS}
+\spine(author):={\theauthorshortname}
+\spine(title):={\thetitle}
+\spine(year):={\thentdateyear}
+
+% Set margins for "normal" pages
+\margin(screen,top):={3.0cm}
+\margin(screen,bottom):={3.0cm}
+\margin(screen,left):={3.25cm}
+\margin(screen,right):={3.25cm}
+\margin(paper,top):={3.0cm}
+\margin(paper,bottom):={3.0cm}
+\margin(paper,left):={3.5cm}
+\margin(paper,right):={3.0cm}
+
+% Set margins for cover pages
+\margin(phd,top):={10.0cm}
+\margin(phd,bottom):={2.4cm}
+\margin(phd,left):={7.0cm}
+\margin(phd,right):={2.0cm}
+\margin(phdplan,top):={8.5cm}
+\margin(phdplan,bottom):={6.0cm}
+\margin(phdplan,left):={6.8cm}
+\margin(phdplan,right):={2.0cm}
+\margin(phdprop,top):={8.5cm}
+\margin(phdprop,bottom):={6.0cm}
+\margin(phdprop,left):={6.8cm}
+\margin(phdprop,right):={2.0cm}
+\margin(msc,top):={8.5cm}
+\margin(msc,bottom):={6.0cm}
+\margin(msc,left):={6.8cm}
+\margin(msc,right):={2.0cm}
+\margin(mscplan,top):={8.5cm}
+\margin(mscplan,bottom):={6.0cm}
+\margin(mscplan,left):={6.8cm}
+\margin(mscplan,right):={2.0cm}
+\margin(bsc,top):={8.5cm}
+\margin(bsc,bottom):={6.0cm}
+\margin(bsc,left):={6.8cm}
+\margin(bsc,right):={2.0cm}
+\margin(plain,top):={8.5cm}
+\margin(plain,bottom):={6.0cm}
+\margin(plain,left):={6.8cm}
+\margin(plain,right):={2.0cm}
+
+\dissertationstr(bsc,pt):={Relatório apresentado como requisito parcial para obtenção do Grau de\\[1.25ex] %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em {\themajorfield(\option{/novathesis/coverlang})}}
+
+\dissertationstr(mscplan,pt):={Relatório intermédio apresentado como requisito parcial para obtenção do Grau de\\[1.25ex] %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em {\themajorfield(\option{/novathesis/coverlang})}}
+
+\dissertationstr(msc,pt):={Dissertação apresentada  como requisito parcial para obtenção do Grau de %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em {\themajorfield(\option{/novathesis/coverlang})}}
+
+\dissertationstr(phdplan,pt):={Relatório intermédio apresentado  como requisito parcial para obtenção do Grau de\\[1.25ex] %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em {\themajorfield(\option{/novathesis/coverlang})}}
+
+\dissertationstr(phdprop,pt):={Proposta de dissertação apresentada como requisito parcial para obtenção do Grau de\\[1.25ex] %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em {\themajorfield(\option{/novathesis/coverlang})}}
+
+\dissertationstr(phd,pt):={Dissertação apresentada  como requisito parcial\\ para obtenção do Grau de\\[1.25ex] %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em {\themajorfield(\option{/novathesis/coverlang})}}
+
+\dissertationstr(bsc,en):={Report submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1ex]%
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstr(mscplan,en):={Dissertaion plan submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1ex]%
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstr(msc,en):={Dissertaion submitted in partial fulfillment\\%
+of the requirements for the degree of\\[1ex]%
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}}
+
+\dissertationstr(phdplan,pt):={A thesis plan submitted in partial fulfillment %
+of the requirements for the degree of %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
+
+\dissertationstr(phdplan,en):={A thesis plan submitted in partial fulfillment %
+of the requirements for the degree of %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
+
+\dissertationstr(phdprop,pt):={A thesis proposal submitted in partial fulfillment %
+of the requirements for the degree of %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
+
+\dissertationstr(phdprop,en):={A thesis proposal submitted in partial fulfillment %
+of the requirements for the degree of %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
+
+\dissertationstr(phd,pt):={A thesis submitted in partial fulfillment %
+of the requirements for the degree of %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
+
+\dissertationstr(phd,en):={A thesis submitted in partial fulfillment %
+of the requirements for the degree of %
+\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}, under the supervision of \ntprintadvisersaslist}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NOVA guidelines:
+% The pages should be numbered consecutively at the bottom centre of the
+% page.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\AtEndPreamble{%
+  \makepagestyle{novathesis@myvf}%
+  \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
+  \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
+  \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
+  \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
+  \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
+  \pagestyle{novathesis@myvf}%
+}
+%
+%\frenchspacing
+
+% Use arabic numerals for Appendixes
+% \patchcmd{\HyOrg@appendix}{\@Alph}{\@Roman}{}{}
+% \patchcmd{\appendix}{\@Alph}{\@arabic}{}{}
+
+
+\definecolor{imsdarkgrey}{RGB}{100,100,100}
+\definecolor{imsmidgrey}{RGB}{190,190,190}
+\definecolor{imslightgrey}{RGB}{240,240,240}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NTAddToHook{cover/1/begin}{%
+  \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+}
+
+  % PHD PROGRAM
+% \ntaddtocover[align=l, vspace=0cm, degree=phd]{1,2}{%
+%   \ntcoverbackground%
+% }
+% INFORMATION MANAGEMENT
+\ntaddtocover[align=l, vspace=0cm, degree=phd]{1,2}{%
+  \fontsize{16}{16}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\themajorfield(\option{/novathesis/coverlang})}}%
+}
+
+% SPECIALIZATION IN
+\ntaddtocover[align=l, vspace=0.7cm, degree=phd]{1,2}{%
+  \fontsize{16}{16}\selectfont
+  \textcolor{imsmidgrey}{%
+    \textbf{\thespecializationstr(\option{/novathesis/coverlang})
+    \thespecialization(\option{/novathesis/coverlang})}%
+  }%
+}
+
+% DISSERTATION TITLE
+\ntaddtocover[align=l, vspace=1.8cm, degree=phd]{1,2}{%
+  \fontsize{16}{16}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
+}
+
+% AUTHOR NAME
+\ntaddtocover[align=l, vspace=0.4cm, degree=phd]{1,2}{%
+  \fontsize{14}{14}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
+}
+
+% DISSERTATION TEXT
+\ntaddtocover[align=l, vspace=5, degree=phd]{1,2}{%
+  \fontsize{14}{14}\selectfont%
+  \textcolor{imsdarkgrey}{%
+    \thedissertationstr(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+  }%
+}%
+
+% DATE
+\ntaddtocover[align=l, vspace=1cm, degree=phd]{1,2}{%
+  \fontsize{11}{11}\selectfont%
+  \textcolor{imsdarkgrey}{%
+    \textbf{\thentdatemonth, \thentdateyear}%
+  }%
+}
+
+% SCHOOL
+\ntaddtocover[align=l, vspace=1cm, degree=phd]{1,2}{%
+  \fontsize{11}{11}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\theschool(en)}}%
+}
+
+% UNIVERSITY
+\ntaddtocover[align=l, vspace=0.0cm, degree=phd]{1,2}{%
+  \fontsize{11}{11}\selectfont%
+  \textcolor{imsdarkgrey}{\theuniversity(\option{/novathesis/coverlang})}%
+}
+
+
+  % MSc PROGRAM
+% % Title of Dissertation
+% \ntaddtocover[align=l, vspace=0cm, degree=msc]{1,2}{%
+%   \ntcoverbackground%
+% }
+
+% % Title of Dissertation
+\ntaddtocover[align=l, vspace=1, degree=msc]{1,2}{%
+  \fontsize{17}{17}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}\\[0.25ex]%
+  \fontsize{16}{16}\selectfont%
+  \textcolor{imslightgrey}{\thespecialization(\option{/novathesis/coverlang})}%
+}
+
+% Author name
+\ntaddtocover[align=l, vspace=1, degree=msc]{1,2}{%
+  \fontsize{15}{15}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
+}
+
+% Degree
+\ntaddtocover[align=l, vspace=1, degree=msc]{1,2}{%
+  \fontsize{14}{14}\selectfont%
+  \textcolor{imsdarkgrey}{\thepresentationtext}%
+}
+
+% Date
+\ntaddtocover[vspace=1, degree=msc]{1,2}{%
+  ~
+  % \fontsize{11}{11}\selectfont%
+  % \ifdraftdoc%
+  %   \textbf{DRAFT: \today}%
+  % \else%
+  %   \textbf{\thentdatemonth, \thentdateyear}%
+  % \fi%
+}%
+
+% \ntaddtocover[cover=back]{back}{%
+%   \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},back)]
+% }

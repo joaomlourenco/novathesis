@@ -597,13 +597,13 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 \newcommand*{\@ntaddtocover@iii}[3]{%
   % \typeout{NT ntaddtocover #3}%
-  \options{/@nt/cover/\option{/novathesis/school}/#3/.cpush={{#1}=*={#2}}}%
+  \options{/@nt/cover/\@nt@univ/\@nt@schl/#3/.cpush={{#1}=*={#2}}}%
 }
 
 \newcommand*{\ntaddtocover}[3][]{%
   % #1=cover atrtibutes
   % #2=the code
-  % \typeout{NT ntaddtocover [/@nt/cover/\option{/novathesis/school}/element=#1]}
+  % \typeout{NT ntaddtocover [/@nt/cover/\@nt@univ/\@nt@schl/element=#1]}
   \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
 }
 
@@ -655,10 +655,14 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING SCHOOLS's “defaults.ldf”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\prependtographicspath{{NOVAthesisFiles/Schools/\option{/novathesis/school}/Images/}}%
-\InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.ldf}{}%
+\appendtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/Images/}}%
+\appendtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/}}%
+\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/univ-defaults.ldf}{}%
 {\PackageWarining{novathesis}%
-                   {Missing file “defaults.ldf” for ”\option{/novathesis/school}”}}%
+                   {Missing file “defaults.ldf” for ”\@nt@univ”}}%
+\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/schl-defaults.ldf}{}%
+{\PackageWarining{novathesis}%
+                   {Missing file “defaults.ldf” for ”\@nt@univ/\@nt@schl”}}%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -795,7 +799,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 \newcommand*{\@nt@printthecover}[1]{%
   % #1=cover number {1, 2}    (1 is the default)
-  \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/#1}{%
+  \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{%
     % \typeout{NT printthecover #1}
     \thispagestyle{empty}%
     \ntcoverbackground[#1]%
@@ -809,7 +813,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 \newcommand*{\@nt@printcovergroup}[1]{%
   % #1=cover number {1, 2}    (1 is the default)
-  \optionlistdo{/@nt/cover/\option{/novathesis/school}/#1}{%
+  \optionlistdo{/@nt/cover/\@nt@univ/\@nt@schl/#1}{%
     % \typeout{NT printcovergroup [##1]}
     % \typeout{NT printcovergroup #1}
     \@nt@printcoverelement@iv[#1]##1%
@@ -917,7 +921,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \clearforchapter%
   \ifaadefined{thesiscover}(\option{/novathesis/docdegree},back)%
     {\toggletrue{@nt@backcover}}{}%
-  \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/back}%
+  \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/back}%
     {\toggletrue{@nt@backcover}}{}%
   \iftoggle{@nt@backcover}{%
     \if@openright
@@ -959,9 +963,9 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
       }{%No statement file defined... try a school defined one
         \ntselectlang{\option{/novathesis/mainlang}}%
         \currentpdfbookmark{\csuse{thestatementstring}(\option{/novathesis/mainlang})}{bmstatement}
-        \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/statement.tex}%
+        \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}%
           {\clearforchapter}%
-          {\ClassError{novathesis}{No “statement.tex” found! Not defined with \string\ntaddfile{statement}{filename} nor in folder “NOVAthesisFiles/Schools/\option{/novathesis/school}”}{}}%
+          {\ClassError{novathesis}{No “statement.tex” found! Not defined with \string\ntaddfile{statement}{filename} nor in folder “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl”}{}}%
         \clearforchapter%
       }%
     }{%
@@ -1147,7 +1151,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Include the School's defaults
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.ldf}{}{}
+% \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/defaults.ldf}{}{}
 
 
 
