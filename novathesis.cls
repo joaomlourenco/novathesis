@@ -564,7 +564,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newcommand*{\netaddindex}{\netaddlistof}
 \newcommand*{\netaddlistof}[1]{%
   \ifthenelse{\equal{#1}{tableofcontents}}{\options{/@nt/list/indexes/.cpush={%
-        \clearforchapter%
         \iftoggle{/novathesis/tocintoc}{%
             \tableofcontents%
         }{%
@@ -574,9 +573,9 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
         }%
   }}}{%
     \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/@nt/list/indexes/.cpush={%
-            \clearforchapter\printnoidxglossaries\clearforchapter%
+            \printnoidxglossaries%
     }}}{%
-      \options{/@nt/list/indexes/.cpush={\clearforchapter\csuse{#1}}}
+      \options{/@nt/list/indexes/.cpush={\csuse{#1}}}
     }%
   }%
 }
