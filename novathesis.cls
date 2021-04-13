@@ -609,7 +609,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 \newcommand*{\ntprint}[1]{%
   \IfStrEqCase{#1}{%
-    {covers}{\ntprintcovers}%
+    {frontcover}{\ntprintcoverfront}%
     {backcover}{\ntprintbackcover}%
     {frontmatter}{\ntprintlist{/@nt/docfrontmatter}}%
     {mainmatter}{\ntprintlist{/@nt/docmainmatter}}%
@@ -741,7 +741,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newlength{\mpheight}%
 \newsavebox{\@nt@coverbox}%
 
-\newcommand*{\ntprintcovers}{%
+\newcommand*{\ntprintcoverfront}{%
   \bgroup%
     \ntselectlang{\option{/novathesis/coverlang}}%
     \pdfbookmark{\thefrontmatterstring(\option{/novathesis/coverlang})}{bmfrontmatter}
