@@ -655,8 +655,8 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING SCHOOLS's “defaults.ldf”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\appendtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/Images/}}%
-\appendtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/}}%
+\prependtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/Images/}}%
+\prependtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/}}%
 \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/univ-defaults.ldf}{}%
 {\PackageWarining{novathesis}%
                    {Missing file “defaults.ldf” for ”\@nt@univ”}}%
@@ -955,17 +955,16 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \NTRunHook{statement/pre}%
   \iftoggle{/novathesis/statement}{% if statement toggle is on
   	\ifmaindoc{% if it is a main document
+      \ntselectlang{\option{/novathesis/mainlang}}%
+      \currentpdfbookmark{\csuse{thestatementstring}(\option{/novathesis/mainlang})}{bmstatement}
       \ifoptiondefined{/@nt/file/statement/VAL}{% if the user defined their own statement file
-        \ntselectlang{\option{/novathesis/mainlang}}%
-        \currentpdfbookmark{\csuse{thestatementstring}(\option{/novathesis/mainlang})}{bmstatement}
         \@ntloadfiles@ii{statement}%
         \clearforchapter%
       }{%No statement file defined... try a school defined one
-        \ntselectlang{\option{/novathesis/mainlang}}%
-        \currentpdfbookmark{\csuse{thestatementstring}(\option{/novathesis/mainlang})}{bmstatement}
-        \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}%
-          {\clearforchapter}%
-          {\ClassError{novathesis}{No “statement.tex” found! Not defined with \string\ntaddfile{statement}{filename} nor in folder “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl”}{}}%
+          \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}%
+              {}%
+              {\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}{}
+                  {\ClassError{novathesis}{No “statement.tex” found! Not defined with \string\ntaddfile{statement}{filename} nor in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” or “NOVAthesisFiles/Schools/\@nt@univ”}{}}}%
         \clearforchapter%
       }%
     }{%

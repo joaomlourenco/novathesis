@@ -134,19 +134,20 @@
 
 \AtEndDocument{%
   \iftoggle{/novathesis/spine}{%
-    \InputIfFileExists{%
-        NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/spine.tex%
-    }%
-      {}%
-      {\input{NOVAthesisFiles/spine.tex}}%
+    \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/spine.tex}%
+          {}%
+          {\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/spine.tex}%
+              {}%
+              {\InputIfFileExists{NOVAthesisFiles/spine.tex}{}{}}}%
     \csuse{ntprintspine}%
   }{}%
   \iftoggle{/novathesis/cdcover}{%
-    \InputIfFileExists{%
-        NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/cdcover.tex%
-    }%
-      {}%
-      {\input{NOVAthesisFiles/cdcover.tex}}%
+    \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/cdcover.tex}%
+          {}%
+          {\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/cdcover.tex}%
+              {}%
+              {\InputIfFileExists{NOVAthesisFiles/cdcover.tex}{}{}}}%
+    \csuse{ntprintcdcover}%
     \ntprintcdcover%  
     \ntprintcdinlay%
   }{}%

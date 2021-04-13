@@ -57,13 +57,13 @@
   \ifphddoc{\color{white}}{\color{black}}%
   \hspace*{10mm}%
   \thespine(font)%
-  % \parbox{197mm}{\thespine(year)\hfill\thespine(author)\hspace{3mm}\textbf{\thespine(title)}}%
   \parbox{197mm}{UMinho~$|$~\thespine(year)\hfill\thespine(author)\hfill\textbf{\thespine(title)}}%
   \parbox{90mm}{~}%
 }
 
 \newcommand{\ntprintspine}{%
   \clearpage
+  \null%
   \NTRunHook{spine/pre}%
   % \printlen%
   \color{white}%
@@ -82,9 +82,14 @@
     %         {\includegraphics[width=\textwidth,height=\textheight]%
     %                          {\thethesiscover(spine)}%
     %         };
-    \node[inner sep=0,anchor=north,yshift=0.5pt] at (current page.north)
-            {\includegraphics[width=\novathesis@spinewidth]%
-                             {\expanded{\thespine(logo)}}};
+    \node (univ) [inner sep=0,anchor=north,yshift=0.5pt] at (current page.north)
+            {
+                \rotatebox{-90}{\includegraphics[width=\novathesis@spinewidth,angle=90]{\thespine(logo,university)}\hspace{-0.5pt}%
+                \includegraphics[width=\novathesis@spinewidth,angle=90]{\thespine(logo,school)}}
+             };
+    % \node (schl) [inner sep=0,below of=univ]%
+    %         {\includegraphics[width=\novathesis@spinewidth]%
+    %                          {\thespine(logo,school)}};
     \node[inner sep=0] at (current page.center) {\rotatebox{90}{\spinetext}};
   \end{tikzpicture}%
   \NTRunHook{spine/mid}%
@@ -92,40 +97,3 @@
   \loadgeometry{maintext}%
   \NTRunHook{spine/post}%
 }
-
-\newcommand{\ntprintbackspinecover}{%
-  % \clearpage%
-  % \thispagestyle{empty}%
-  % \newsavebox{\@nt@um@frontcover}%
-  % \newsavebox{\@nt@um@backcover}%
-  % \newsavebox{\@nt@um@spine}%
-  % \begin{lrbox}{\@nt@um@frontcover}%
-  %   \begin{minipage}[t]{\paperheight}[t]{\paperwidth}%
-  %     \ntselectlang{\option{/novathesis/coverlang}}%
-  %     \@nt@printthecover{1}%
-  %   \end{minipage}%
-  % \end{lrbox}%
- %  \begin{lrbox}{\@nt@um@backcover}%
- %    \begin{minipage}[t]{\paperheight}[t]{\paperwidth}%
- %      \@nt@printthecover{back}%
- %    \end{minipage}%
- %  \end{lrbox}%
- %  \begin{lrbox}{\@nt@um@spine}%
- %    \begin{minipage}[t]{\paperheight}[t]{\novathesis@spinewidth}%
- %      \ntprintspine{back}%
- %    \end{minipage}%
- %  \end{lrbox}%
- %  \newlength{\@nt@um@pagewidth}%
- %  \setlength{\@nt@um@pagewidth}{2\paperwidth+\novathesis@spinewidth}%
- %  % \newgeometry{paperwidth=2\paperheight+\novathesis@spinewidth,paperheight=\paperheight}%
- %  \pdfpagewidth=\@nt@um@pagewidth%
- %  \newgeometry{textwidth=\@nt@um@pagewidth}%
- %  \ifphddoc{\pagecolor{covergrey}}{\pagecolor{white}}
- % \begin{tikzpicture}[remember picture, overlay]
- %   \node[inner sep=0,anchor=center] at (current page.center) {\@nt@printthecover{1}};
-   % \node[inner sep=0,anchor=west] at (current page.west) {\usebox{\@nt@um@backcover}};
-   % \node[inner sep=0,anchor=east] at (current page.east) {\usebox{\@nt@um@bfrontcover}};
- % \end{tikzpicture}%
-  % \lipsum[1-5]
-}
-

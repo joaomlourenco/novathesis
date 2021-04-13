@@ -5,13 +5,13 @@ S = $(B).tex
 L = latexmk $(F)
 V = open -a skim
 
-default: 2020
+default: pdf
 
 $(T): $(S)
 	make
 
-.PHONY: 2020
-2020: $(S)
+.PHONY: pdf
+pdf: $(S)
 	$(L) -pdf -silent $(B)
 
 .PHONY: verb verbose
@@ -23,7 +23,7 @@ verb verbose:
 	PATH="/usr/local/texlive/2019/bin/x86_64-darwin/:$(PATH)" $(L) -pdf -silent $(B)
 
 .PHONY: xe
-pdf: $(S)
+xe: $(S)
 	$(L) -pdfxe -silent $(B)
 
 .PHONY: lua
