@@ -1,0 +1,24 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% uminho/ics/defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for EE-UMINHO (strings and cover)
+%%
+%%      This customization had the collaboration and support
+%%      from Bruno Pereira (b-pereira @ github), who built
+%%      the initial support in a fork of version 4.x
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE uminho/ics/defaults.ldf}
+
+%-----------------------------------------------------------------
+% Remainder customization
+%-----------------------------------------------------------------
+% Faculty / School
+\school(pt):={Instituto de Ciencias Sociais}
+\school(en):={Instituto de Ciencias Sociais}
+\school(fr):={Instituto de Ciencias Sociais}
+\school(it):={Instituto de Ciencias Sociais}
+\school(logo,RGB):={ICS-C}
+\school(logo,GRAY):={ICS-PB}
