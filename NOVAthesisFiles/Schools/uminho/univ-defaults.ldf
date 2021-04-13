@@ -387,7 +387,9 @@ indicada.\\[1ex]
 
 % University and School logos
 \ntaddtocover[vspace=-0.6mm,,align=l,height=2.6cm]{2}{%
+  \hspace*{-0.5pt}%
   \includegraphics[height=2.5cm]{\theuniversity(logo,GRAY)}%
+  \hspace{1pt}%
   \includegraphics[height=2.5cm]{\theschool(logo,GRAY)}%
 }
 
