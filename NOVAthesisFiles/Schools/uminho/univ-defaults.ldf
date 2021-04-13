@@ -348,7 +348,7 @@ indicada.\\[1ex]
   \ifphddoc{\pagecolor{covergrey}\color{\phdtextcolor}}{\pagecolor{white}\color{\msctextcolor}}%
 }
 
-\NTAddToHook{cover/1/back}{%
+\NTAddToHook{cover/1/end}{%
   \addtocounter{page}{-2}%
   \newpage%
   \thispagestyle{empty}%
@@ -360,7 +360,7 @@ indicada.\\[1ex]
   \pagecolor{white}%
 }
 
-\NTAddToHook{cover/2/back}{%
+\NTAddToHook{cover/2/end}{%
   \newpage%
   \thispagestyle{empty}%
   \color{black}%

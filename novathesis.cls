@@ -617,7 +617,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 }
 
 \newcommand*{\ntprintlist}[1]{%
-  \optionlistdo{#1}{\csuse{ntprint##1}}%
+  \optionlistdo{#1}{\csuse{ntprint##1}\clearforchapter}%
 }
 
 \newcommand*{\ntsetprintorder}[2]{%
@@ -744,17 +744,15 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newcommand*{\ntprintcoverfront}{%
   \bgroup%
     \ntselectlang{\option{/novathesis/coverlang}}%
-    \pdfbookmark{\thefrontmatterstring(\option{/novathesis/coverlang})}{bmfrontmatter}
-    \subpdfbookmark{\thecoverstring(\option{/novathesis/coverlang})}{bmcover}
-    \NTRunHook{cover/1/begin}%
+    \pdfbookmark{\thefrontmatterstring(\option{/novathesis/coverlang})}{bmfrontmatter}%
+    \subpdfbookmark{\thecoverstring(\option{/novathesis/coverlang})}{bmcover}%
     \@nt@printthecover{1}%
-    \NTRunHook{cover/1/end}%
     \iftoggle{/novathesis/secondcover}{% SECOND COVER TRUE
             %If cover 2 is defined use its definition
-            \NTRunHook{cover/2/begin}%
+            \clearforchapter%
             \@nt@printthecover{2}%
-            \NTRunHook{cover/2/end}%
       }{}% NO SECOND COVER
+    \clearforchapter%
   \egroup%
 }
 
@@ -802,11 +800,13 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{%
     % \typeout{NT printthecover #1}
     \thispagestyle{empty}%
+    \NTRunHook{cover/#1/begin}%
     \ntcoverbackground[#1]%
+    \NTRunHook{cover/#1/mid}%
     \ntcovertext[#1]%
     \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
     % \newpage\null%
-    \NTRunHook{cover/#1/back}%
+    \NTRunHook{cover/#1/end}%
     \clearforchapter%
   }{\typeout{NT printthecover #1 undefined}}%
 }
@@ -916,28 +916,21 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 }
 
 \newcommand*{\ntprintbackcover}{%
-  \newtoggle{@nt@backcover}%
-  \togglefalse{@nt@backcover}%
-  \clearforchapter%
-  \ifaadefined{thesiscover}(\option{/novathesis/docdegree},back)%
-    {\toggletrue{@nt@backcover}}{}%
-  \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/back}%
-    {\toggletrue{@nt@backcover}}{}%
-  \iftoggle{@nt@backcover}{%
-    \if@openright
-      \NTRunHook{cover/preback/begin}%
-      \thispagestyle{\thentpagestyle(frontmatter)}%
-      \NTRunHook{cover/preback/end}%
-      ~\newpage% \the back cover goes on the even page
-    \fi
-    \bgroup%
-      \ntaddtocover{back}{}%
-      \NTRunHook{cover/back/begin}%
-      \ntselectlang{\option{/novathesis/coverlang}}%
-      \@nt@printthecover{back}%
-      \NTRunHook{cover/back/end}%
-    \egroup%
-  }{}%
+    \newtoggle{@nt@backcover}%
+    \togglefalse{@nt@backcover}%
+    \ifaadefined{thesiscover}(\option{/novathesis/docdegree},back)%
+        {\toggletrue{@nt@backcover}}{}%
+    \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/back}%
+        {\toggletrue{@nt@backcover}}{}%
+    \iftoggle{@nt@backcover}{%
+        \pagestyle{empty}
+        \ntselectlang{\option{/novathesis/coverlang}}%
+        \NTRunHook{cover/preback/begin}%
+        \NTRunHook{cover/preback/end}%
+        \bgroup%
+            \@nt@printthecover{back}%
+        \egroup%
+    }{}%
 }
 
 \newcommand{\ntcoverbackground}[1][1]{%
