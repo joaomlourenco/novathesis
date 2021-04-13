@@ -1210,7 +1210,8 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\@ntloadfile@i}[1]{%
     % \typeout{NT TRYING TO LOAD #1}%
-    \InputIfFileExists{#1}{%
+    \IfFileExists{#1}{%
+        \input{#1}%
         \clearforchapter%
         \typeout{NT LOADING “#1” succeeded}%
         % \externaldocument{#1}% from package 'xr'
