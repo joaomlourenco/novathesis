@@ -644,10 +644,10 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \prependtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/}}%
 \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/univ-defaults.ldf}{}%
 {\PackageWarining{novathesis}%
-                   {Missing file “defaults.ldf” for ”\@nt@univ”}}%
+                   {Missing file “univ-defaults.ldf” for ”\@nt@univ”}}%
 \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/schl-defaults.ldf}{}%
 {\PackageWarining{novathesis}%
-                   {Missing file “defaults.ldf” for ”\@nt@univ/\@nt@schl”}}%
+                   {Missing file “schl-defaults.ldf” for ”\@nt@univ/\@nt@schl”}}%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
