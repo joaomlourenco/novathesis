@@ -62,8 +62,6 @@
 }
 
 \newcommand{\ntprintspine}{%
-  \clearpage
-  \null%
   \NTRunHook{spine/pre}%
   % \printlen%
   \color{white}%
@@ -91,6 +89,12 @@
     %         {\includegraphics[width=\novathesis@spinewidth]%
     %                          {\thespine(logo,school)}};
     \node[inner sep=0] at (current page.center) {\rotatebox{90}{\spinetext}};
+    \ifmscdoc{%
+        \node[inner sep=0,xshift=-0.1pt-0.5\novathesis@spinewidth] at (current page.center)
+                                 {\color{covergrey}\rule{0.1pt}{\paperheight}};
+        \node[inner sep=0,xshift=0.1pt+0.5\novathesis@spinewidth] at (current page.center)
+                                 {\color{covergrey}\rule{0.1pt}{\paperheight}};
+    }{}
   \end{tikzpicture}%
   \NTRunHook{spine/mid}%
   \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
