@@ -7,9 +7,9 @@
 
 \typeout{NT FILE FontStyles/newsgott.ldf}
 
-\ntcheckfont{NewsGotT-Regular.ttf}{\url{URL://TBD}}
-\ntcheckfont{NewsGotT-Bold.ttf}{\url{URL://TBD}}
-\ntcheckfont{NewsGotTLig-Regular.ttf}{\url{URL://TBD}}
+\ntcheckfont{NewsGotT-Regular.ttf}{https://www.ics.uminho.pt/pt/Comunicacao/Documents/NewsGotT.zip}
+\ntcheckfont{NewsGotT-Bold.ttf}{https://www.ics.uminho.pt/pt/Comunicacao/Documents/NewsGotT.zip}
+\ntcheckfont{NewsGotTLig-Regular.ttf}{https://www.ics.uminho.pt/pt/Comunicacao/Documents/NewsGotT.zip}
 
 \ifxeorlua{}{%
   \ClassError{novathesis}{Font Style “newsgott” is not compatible with pdfLaTeX. Please use XeLaTeX or LuaLaTeX}{Please use XeLaTeX or LuaLaTeX}%
@@ -26,39 +26,39 @@
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
   Extension = .ttf, 
-  UprightFont=*-Regular,
-  BoldFont=*-Bold,
+  UprightFont=n015003t,
+  BoldFont=n015006t,
   AutoFakeSlant=0.15,
   BoldSlantedFeatures={FakeSlant=0.15},
 ]
 
-\setfontfamily\newsgott{NewsGotT-Regular.ttf}[
+\setfontfamily\newsgott{n015003t}[
   Ligatures=TeX,
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
 ]
 
-\setfontfamily\newsgottbf{NewsGotT-bold.ttf}[
+\setfontfamily\newsgottbf{n015006t}[
   Ligatures=TeX,
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
 ]
 
-\setfontfamily\newsgottit{NewsGotT-Regular.ttf}[
+\setfontfamily\newsgottit{n015003t}[
   Ligatures=TeX,
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
   ItalicFeatures={FakeSlant=0.15},
 ]
 
-\setfontfamily\newsgottsl{NewsGotT-Regular.ttf}[
+\setfontfamily\newsgottsl{n015003t}[
   Ligatures=TeX,
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
   AutoFakeSlant=0.15,
 ]
 
-\setfontfamily\newsgottlig{NewsGotTLig-Regular.ttf}[
+\setfontfamily\newsgottlig{n015002t}[
   Ligatures=TeX,
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,

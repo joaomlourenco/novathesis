@@ -15,18 +15,9 @@
 \options{/novathesis/.new family
   , docdegree/.new choice = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
   , school/.new cmd = {         \typeout{NT school [#1]}%
-                                % \@my@schooloption#1\@nil%
                                 \@nt@schooloption@i#1\@nil%
-                                % \optionsalso{/novathesis/univ=nova, /novathesis/schl=fct}%
     }
-  % , school/.new choice = {  {nova/fct}, {nova/fct-new}, {nova/fcsh}, {nova/ims}, {nova/ensp},
-  %                           {ul/ist}, {ul/fc},
-  %                           {uminho/ee},
-  %                           {iscte-iul/ista},
-  %                           {ipl/isel}, {ips/ests},
-  %                           {other/esep}, {other/msc-gt},
-  %                        }
-  % , school = {nova/fct}
+  , school = {nova/fct}
   , langsused/.new list = {en,pt}
   , docstatus/.new choice = {final, provisional, draft, working},
   , chapstyle/.new choice = {bar, bianchi, bluebox, default, elegant, 

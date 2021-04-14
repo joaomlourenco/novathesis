@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% uminho/ics/schl-defaults.ldf
+%% uminho/ilch/schl-defaults.ldf
 %% NOVA thesis configuration file
 %%
-%% Customization for EE-UMINHO (strings and cover)
+%% Customization for ILCH-UMINHO (strings and cover)
 %%
 %%      This customization had the collaboration and support
 %%      from Bruno Pereira (b-pereira @ github), who built
@@ -10,15 +10,15 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE uminho/ics/schl-defaults.ldf}
+\typeout{NT FILE uminho/ilch/schl-defaults.ldf}
 
 %-----------------------------------------------------------------
 % Remainder customization
 %-----------------------------------------------------------------
 % Faculty / School
-\school(pt):={Instituto de Ciencias Sociais}
-\school(en):={Instituto de Ciencias Sociais}
-\school(fr):={Instituto de Ciencias Sociais}
-\school(it):={Instituto de Ciencias Sociais}
-\school(logo,RGB):={ICS-C}
-\school(logo,GRAY):={ICS-PB}
+\school(pt):={Instituto de Letras e Ciências Humanas​}
+\school(en):={Instituto de Letras e Ciências Humanas​}
+\school(fr):={Instituto de Letras e Ciências Humanas​}
+\school(it):={Instituto de Letras e Ciências Humanas​}
+\school(logo,RGB):={ILCH-C}
+\school(logo,GRAY):={ILCH-PB}

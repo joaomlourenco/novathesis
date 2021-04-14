@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% uminho/ics/schl-defaults.ldf
+%% uminho/ese/schl-defaults.ldf
 %% NOVA thesis configuration file
 %%
-%% Customization for EE-UMINHO (strings and cover)
+%% Customization for ESE-UMINHO (strings and cover)
 %%
 %%      This customization had the collaboration and support
 %%      from Bruno Pereira (b-pereira @ github), who built
@@ -10,15 +10,15 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE uminho/ics/schl-defaults.ldf}
+\typeout{NT FILE uminho/ese/schl-defaults.ldf}
 
 %-----------------------------------------------------------------
 % Remainder customization
 %-----------------------------------------------------------------
 % Faculty / School
-\school(pt):={Instituto de Ciencias Sociais}
-\school(en):={Instituto de Ciencias Sociais}
-\school(fr):={Instituto de Ciencias Sociais}
-\school(it):={Instituto de Ciencias Sociais}
-\school(logo,RGB):={ICS-C}
-\school(logo,GRAY):={ICS-PB}
+\school(pt):={Escola Superior de Enfermagem}
+\school(en):={Escola Superior de Enfermagem}
+\school(fr):={Escola Superior de Enfermagem}
+\school(it):={Escola Superior de Enfermagem}
+\school(logo,RGB):={ESE-C}
+\school(logo,GRAY):={ESE-PB}

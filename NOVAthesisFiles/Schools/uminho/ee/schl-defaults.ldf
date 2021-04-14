@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% uminho/ee/defaults.ldf
+%% uminho/ee/schl-defaults.ldf
 %% NOVA thesis configuration file
 %%
 %% Customization for EE-UMINHO (strings and cover)
@@ -10,7 +10,7 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE uminho/ee/defaults.ldf}
+\typeout{NT FILE uminho/ee/schl-defaults.ldf}
 
 %-----------------------------------------------------------------
 % Remainder customization
@@ -20,5 +20,5 @@
 \school(en):={Escola de Engenharia}
 \school(fr):={Escola de Engenharia}
 \school(it):={Escola de Engenharia}
-\school(logo,RGB):={EE-logo-RGB}
-\school(logo,GRAY):={EE-logo-GRAY}
+\school(logo,RGB):={EE-C}
+\school(logo,GRAY):={EE-PB}
