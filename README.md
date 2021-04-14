@@ -177,20 +177,6 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 --------
 ## Showcase of supported Schools
 
-nova-fct-phd.jpg
-nova-fcsh-phd.jpg
-nova-ims-phd.jpg
-nova-ensp-phd.jpg
-ul-fc-phd.jpg
-ul-ist-phd.jpg
-uminho-ee-msc.jpg
-uminho-ee-phd.jpg
-esep-phd.jpg
-ipl-isel-phd.jpg
-ips-ests-phd.jpg
-consortium-gt-msc.jpg
-
-
 <img src="NOVAthesisFiles/Images/Showcase/Covers/nova-fct-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/nova-ims-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/nova-ensp-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/nova-fcsh-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/ul-ist-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/ul-fc-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/uminho-ee-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/ipl-isel-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/ips-ests-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/esep-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/consortium-gt-msc.jpg" width="100"/> 
 <!-- ### Showcase of other usages around the world
 <img src="NOVAthesisFiles/Images/Showcase/world-es-zaragoza-border.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/world-nl-uva-border.jpg" width="100"/>   -->
