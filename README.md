@@ -53,14 +53,28 @@ The “novathesis” LaTeX template was initially designed for the PhD thesis an
 * University of Lisbon
     * [Instituto Superior Técnico from Universidade de Lisboa](https://tecnico.ulisboa.pt) (IST-UL)
     * [Faculdade de Ciências from  Universidade de Lisboa](https://ciencias.ulisboa.pt) (FC-UL)
+* University of Minho
+    * [Escola de Arquitetura](www.arquitetura.um​inho.pt​)
+    * [Escola de Ciências](www.ecum.umin​ho.pt)
+    * [Escola de Direito](www.direito.u​minho.pt)
+    * [Escola de Economia e Gestão](www.eeg.uminh​o.pt)
+    * [Escolha de Engenharia](https://www.eng.uminho.pt/pt) (EEUM)
+    * [Escola de Medicina](www.med​.uminho.pt)
+    * [Escola de Psicologia](www.psi.umi​nho.pt)
+    * [Escola Superior de Enfermagem](www.ese.uminh​o.pt)
+    * [Instituto de Ciências Sociais](www.ics.u​minho.pt)
+    * [Instituto de Educação](www.ie.uminh​o.pt)
+    * [Instituto de Letras e Ciências Humanas](  www.ilch.uminho​.pt​)
+    * [Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos​]( https://i3bs.uminho.pt/​)
+* ISCTE – Instituto Universitário de Lisboa
+    * [Escola de Tecnologia e Arquitectura](ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura)
 * Instituto Politécnico de Lisboa
     * [Instituto Superior de Engenharia de Lisboa](https://www.isel.pt) (ISEL-IPL)
 * Instituto Politécnico de Setúbal
     * [Escola Superior de Saúde](https://www.ess.ips.pt) (ESS-IPS)
     * [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt) (ESTB-IPS)
 * [Escola Superior de Enfermagem do Porto](https://www.esenf.pt/pt/) (ESEP)
-* University of Minho
-    * [Escolha de Engenharia da Universidade do Minho](https://www.eng.uminho.pt/pt) (EEUM)
+
 
 The “novathesis” LaTeX template also supports the following degrees from Universities' Consortia:
 * Erasmus Mundus [Masters Program in Geospatial Technologies](https://mastergeotech.info)
