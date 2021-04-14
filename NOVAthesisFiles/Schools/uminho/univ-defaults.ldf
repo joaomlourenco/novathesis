@@ -186,15 +186,7 @@ indicada.\\[1ex]
   \end{center}%
 }
 
-% \signatureline(en)={\makebox[0.1\textwidth]{\hrulefill},
-% \makebox[0.4\textwidth]{\hrulefill}\\*[0.1mm]\makebox[0.1\textwidth]{\footnotesize
-% (Location)} \makebox[0.4\textwidth]{\footnotesize (Date)}
-% \\[1cm]\begin{center}\makebox[0.7\textwidth]{\hrulefill}\\[1ex](\theauthorname)\end{center}}
-%
-% \signatureline[pt]={\makebox[0.1\textwidth]{\hrulefill},
-% \makebox[0.4\textwidth]{\hrulefill}\\*[0.1mm]\makebox[0.1\textwidth]{\footnotesize
-% (Localização)} \makebox[0.4\textwidth]{\footnotesize (Data)}
-% \\[1cm]\begin{center}\makebox[0.7\textwidth]{\hrulefill}\\[1ex](\theauthorname)\end{center}}
+\signatureline(en):={\thesignatureline(pt)}
 
 
 %-----------------------------------------------------------------
