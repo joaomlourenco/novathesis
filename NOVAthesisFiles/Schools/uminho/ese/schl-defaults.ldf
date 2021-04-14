@@ -1,0 +1,24 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% uminho/ese/schl-defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for ESE-UMINHO (strings and cover)
+%%
+%%      This customization had the collaboration and support
+%%      from Bruno Pereira (b-pereira @ github), who built
+%%      the initial support in a fork of version 4.x
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE uminho/ese/schl-defaults.ldf}
+
+%-----------------------------------------------------------------
+% Remainder customization
+%-----------------------------------------------------------------
+% Faculty / School
+\school(pt):={Escola Superior de Enfermagem}
+\school(en):={Escola Superior de Enfermagem}
+\school(fr):={Escola Superior de Enfermagem}
+\school(it):={Escola Superior de Enfermagem}
+\school(logo,RGB):={ESE-C}
+\school(logo,GRAY):={ESE-PB}

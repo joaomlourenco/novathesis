@@ -564,7 +564,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newcommand*{\netaddindex}{\netaddlistof}
 \newcommand*{\netaddlistof}[1]{%
   \ifthenelse{\equal{#1}{tableofcontents}}{\options{/@nt/list/indexes/.cpush={%
-        \clearforchapter%
         \iftoggle{/novathesis/tocintoc}{%
             \tableofcontents%
         }{%
@@ -574,50 +573,36 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
         }%
   }}}{%
     \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/@nt/list/indexes/.cpush={%
-            \clearforchapter\printnoidxglossaries\clearforchapter%
+            \printnoidxglossaries%
     }}}{%
-      \options{/@nt/list/indexes/.cpush={\clearforchapter\csuse{#1}}}
+      \options{/@nt/list/indexes/.cpush={\csuse{#1}}}
     }%
   }%
 }
 
 %============================================================
 % Cover hooks
-\newcommand*{\AtCoverExecute}[2]{
-  \NTRunHook{/cover/#1/#2}%
-}
-
-\newcommand*{\AtBeginCover}[2][1]{%
-  \AtCover{#1}{begin}{#2}%
-}
-
-\newcommand*{\AtEndCover}[2][1]{%
-  \AtCover{#1}{end}{#2}%
-}
-
 \newcommand*{\@ntaddtocover@iii}[3]{%
   % \typeout{NT ntaddtocover #3}%
-  \options{/@nt/cover/\option{/novathesis/school}/#3/.cpush={{#1}=*={#2}}}%
+  \options{/@nt/cover/\@nt@univ/\@nt@schl/#3/.cpush={{#1}=*={#2}}}%
 }
 
 \newcommand*{\ntaddtocover}[3][]{%
   % #1=cover atrtibutes
   % #2=the code
-  % \typeout{NT ntaddtocover [/@nt/cover/\option{/novathesis/school}/element=#1]}
+  % \typeout{NT ntaddtocover [/@nt/cover/\@nt@univ/\@nt@schl/element=#1]}
   \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
 }
 
 \newcommand*{\ntprint}[1]{%
   \IfStrEqCase{#1}{%
-    {covers}{\ntprintcovers}%
-    {backcover}{\ntprintbackcover}%
     {frontmatter}{\ntprintlist{/@nt/docfrontmatter}}%
     {mainmatter}{\ntprintlist{/@nt/docmainmatter}}%
-  }%
+  }[\csuse{ntprint#1}]%
 }
 
 \newcommand*{\ntprintlist}[1]{%
-  \optionlistdo{#1}{\csuse{ntprint##1}}%
+  \optionlistdo{#1}{\csuse{ntprint##1}\clearforchapter}%
 }
 
 \newcommand*{\ntsetprintorder}[2]{%
@@ -655,10 +640,14 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING SCHOOLS's “defaults.ldf”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\prependtographicspath{{NOVAthesisFiles/Schools/\option{/novathesis/school}/Images/}}%
-\InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.ldf}{}%
+\prependtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/Images/}}%
+\prependtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/}}%
+\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/univ-defaults.ldf}{}%
 {\PackageWarining{novathesis}%
-                   {Missing file “defaults.ldf” for ”\option{/novathesis/school}”}}%
+                   {Missing file “univ-defaults.ldf” for ”\@nt@univ”}}%
+\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/schl-defaults.ldf}{}%
+{\PackageWarining{novathesis}%
+                   {Missing file “schl-defaults.ldf” for ”\@nt@univ/\@nt@schl”}}%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -737,20 +726,18 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newlength{\mpheight}%
 \newsavebox{\@nt@coverbox}%
 
-\newcommand*{\ntprintcovers}{%
+\newcommand*{\ntprintfrontcover}{%
   \bgroup%
     \ntselectlang{\option{/novathesis/coverlang}}%
-    \pdfbookmark{\thefrontmatterstring(\option{/novathesis/coverlang})}{bmfrontmatter}
-    \subpdfbookmark{\thecoverstring(\option{/novathesis/coverlang})}{bmcover}
-    \NTRunHook{cover/1/begin}%
+    \pdfbookmark{\thefrontmatterstring(\option{/novathesis/coverlang})}{bmfrontmatter}%
+    \subpdfbookmark{\thecoverstring(\option{/novathesis/coverlang})}{bmcover}%
     \@nt@printthecover{1}%
-    \NTRunHook{cover/1/end}%
     \iftoggle{/novathesis/secondcover}{% SECOND COVER TRUE
             %If cover 2 is defined use its definition
-            \NTRunHook{cover/2/begin}%
+            \clearforchapter%
             \@nt@printthecover{2}%
-            \NTRunHook{cover/2/end}%
       }{}% NO SECOND COVER
+    \clearforchapter%
   \egroup%
 }
 
@@ -795,21 +782,23 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 \newcommand*{\@nt@printthecover}[1]{%
   % #1=cover number {1, 2}    (1 is the default)
-  \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/#1}{%
+  \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{%
     % \typeout{NT printthecover #1}
     \thispagestyle{empty}%
+    \NTRunHook{cover/#1/begin}%
     \ntcoverbackground[#1]%
+    \NTRunHook{cover/#1/mid}%
     \ntcovertext[#1]%
     \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
     % \newpage\null%
-    \NTRunHook{cover/#1/back}%
+    \NTRunHook{cover/#1/end}%
     \clearforchapter%
   }{\typeout{NT printthecover #1 undefined}}%
 }
 
 \newcommand*{\@nt@printcovergroup}[1]{%
   % #1=cover number {1, 2}    (1 is the default)
-  \optionlistdo{/@nt/cover/\option{/novathesis/school}/#1}{%
+  \optionlistdo{/@nt/cover/\@nt@univ/\@nt@schl/#1}{%
     % \typeout{NT printcovergroup [##1]}
     % \typeout{NT printcovergroup #1}
     \@nt@printcoverelement@iv[#1]##1%
@@ -912,28 +901,21 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 }
 
 \newcommand*{\ntprintbackcover}{%
-  \newtoggle{@nt@backcover}%
-  \togglefalse{@nt@backcover}%
-  \clearforchapter%
-  \ifaadefined{thesiscover}(\option{/novathesis/docdegree},back)%
-    {\toggletrue{@nt@backcover}}{}%
-  \ifoptiondefined{/@nt/cover/\option{/novathesis/school}/back}%
-    {\toggletrue{@nt@backcover}}{}%
-  \iftoggle{@nt@backcover}{%
-    \if@openright
-      \NTRunHook{cover/preback/begin}%
-      \thispagestyle{\thentpagestyle(frontmatter)}%
-      \NTRunHook{cover/preback/end}%
-      ~\newpage% \the back cover goes on the even page
-    \fi
-    \bgroup%
-      \ntaddtocover{back}{}%
-      \NTRunHook{cover/back/begin}%
-      \ntselectlang{\option{/novathesis/coverlang}}%
-      \@nt@printthecover{back}%
-      \NTRunHook{cover/back/end}%
-    \egroup%
-  }{}%
+    \newtoggle{@nt@backcover}%
+    \togglefalse{@nt@backcover}%
+    \ifaadefined{thesiscover}(\option{/novathesis/docdegree},back)%
+        {\toggletrue{@nt@backcover}}{}%
+    \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/back}%
+        {\toggletrue{@nt@backcover}}{}%
+    \iftoggle{@nt@backcover}{%
+        \ntaddtocover{back}{}%
+        \pagestyle{empty}
+        \ntselectlang{\option{/novathesis/coverlang}}%
+        \NTRunHook{cover/preback/begin}%
+        \NTRunHook{cover/preback/end}%
+        \ifbool{@openright}{~\newpage}{}%
+        \@nt@printthecover{back}%
+    }{}%
 }
 
 \newcommand{\ntcoverbackground}[1][1]{%
@@ -951,17 +933,16 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \NTRunHook{statement/pre}%
   \iftoggle{/novathesis/statement}{% if statement toggle is on
   	\ifmaindoc{% if it is a main document
+      \ntselectlang{\option{/novathesis/mainlang}}%
+      \currentpdfbookmark{\csuse{thestatementstring}(\option{/novathesis/mainlang})}{bmstatement}
       \ifoptiondefined{/@nt/file/statement/VAL}{% if the user defined their own statement file
-        \ntselectlang{\option{/novathesis/mainlang}}%
-        \currentpdfbookmark{\csuse{thestatementstring}(\option{/novathesis/mainlang})}{bmstatement}
         \@ntloadfiles@ii{statement}%
         \clearforchapter%
       }{%No statement file defined... try a school defined one
-        \ntselectlang{\option{/novathesis/mainlang}}%
-        \currentpdfbookmark{\csuse{thestatementstring}(\option{/novathesis/mainlang})}{bmstatement}
-        \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/statement.tex}%
-          {\clearforchapter}%
-          {\ClassError{novathesis}{No “statement.tex” found! Not defined with \string\ntaddfile{statement}{filename} nor in folder “NOVAthesisFiles/Schools/\option{/novathesis/school}”}{}}%
+          \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}%
+              {}%
+              {\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}{}
+                  {\ClassError{novathesis}{No “statement.tex” found! Not defined with \string\ntaddfile{statement}{filename} nor in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” or “NOVAthesisFiles/Schools/\@nt@univ”}{}}}%
         \clearforchapter%
       }%
     }{%
@@ -1147,7 +1128,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Include the School's defaults
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school}/defaults.ldf}{}{}
+% \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/defaults.ldf}{}{}
 
 
 
@@ -1228,23 +1209,25 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %% Printing chapters and similars
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\@ntloadfile@i}[1]{%
-  % \typeout{NT TRYING TO LOAD #1}%
-  \InputIfFileExists{#1}{%
-    \typeout{NT LOADING “#1” succeeded}%
-    % \externaldocument{#1}% from package 'xr'
-  }{%
-    \typeout{NT LOADING “#1” failed}%
-  }
+    % \typeout{NT TRYING TO LOAD #1}%
+    \IfFileExists{#1}{%
+        \input{#1}%
+        \clearforchapter%
+        \typeout{NT LOADING “#1” succeeded}%
+        % \externaldocument{#1}% from package 'xr'
+    }{%
+        \typeout{NT LOADING “#1” failed}%
+    }
 }
 
 \newcommand{\@ntloadfiles@ii}[2][VAL]{%
-  % #1=KEY
-  % #2=file class
-  % \options{/@nt/folders=#2}%
-  % \typeout{NT ntloadfiles [#2] [#1] [/@nt/file/#2/#1]}% [\expanded{\option{/@nt/folders}}]}
-  \ifoptiondefined{/@nt/file/#2/#1}%
-    {\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}%
-    {}
+    % #1=KEY
+    % #2=file class
+    % \options{/@nt/folders=#2}%
+    % \typeout{NT ntloadfiles [#2] [#1] [/@nt/file/#2/#1]}% [\expanded{\option{/@nt/folders}}]}
+    \ifoptiondefined{/@nt/file/#2/#1}%
+        {\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}%
+        {}
 }
 
 
@@ -1262,7 +1245,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
       \ntselectlang{\option{/novathesis/mainlang}}%
       \currentpdfbookmark{\csuse{the#1string}(\option{/novathesis/mainlang})}{bm#1}
       \@ntloadfiles@ii{#1}%
-      \clearforchapter%
     }{\typeout{NT LOAD #1 undefined}}%
 	}{% ELSE
     % It is a plan or proposal type document
@@ -1298,7 +1280,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \@ntloadfiles@ii[#1]{abstract}%
   \NTRunHook{abstract/#1/post}%
   \NTRunHook{abstract/post}%
-  \clearforchapter%
 }
 
 
@@ -1345,14 +1326,13 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 \newcommand*{\ntprintappendixes}{%
   \renewcommand{\appendixtocname}{\appendixnamepl}%
-  \clearforchapter\appendix\addappheadtotoc%
+  \appendix\addappheadtotoc%
   \@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
 }
 
 \newcommand*{\ntprintannexes}{%
   \renewcommand{\appendixtocname}{\annexnamepl}%
-  \clearforchapter\annex\addappheadtotoc%
-  \null%
+  \annex\addappheadtotoc%
   \@nt@foralllist{file}{annex}{\@ntloadfiles@ii{annex}}%
 }
 
@@ -1374,7 +1354,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 \newcommand*{\ntprintalllistof}{%
   \NTRunHook{listof/pre}%
-  \optionlistdo{/@nt/list/indexes}{##1}%
+  \optionlistdo{/@nt/list/indexes}{##1\clearforchapter}%
   \NTRunHook{listof/post}%
 }
 
@@ -1417,19 +1397,18 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \NTRunHook{copyright/pre}%
 	\ifmaindoc{% THEN
     \iftoggle{/novathesis/printcopyright}%
-      {\ntprintcopyrightpage\clearforchapter}%
+      {\ntprintcopyrightpage}%
       {}%
 	}{}%
   \NTRunHook{copyright/post}%
 }
 
 \newcommand*{\ntprintcopyrightpage}{%
-	\clearforchapter%
-	\null\vfill%
-  \noindent%
-  \textbf{\large\thedoctitle(\option{/novathesis/coverlang},main)}\par%
-  \bigskip%
-  \thecopyrightstr\par%
+    \null\vfill%
+    \noindent%
+    \textbf{\large\thedoctitle(\option{/novathesis/coverlang},main)}\par%
+    \bigskip%
+    \thecopyrightstr\par%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

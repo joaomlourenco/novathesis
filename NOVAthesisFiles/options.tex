@@ -9,15 +9,17 @@
 
 \typeout{NT FILE options.tex}
 
+
+\def\@nt@schooloption@i#1/#2\@nil{\gdef\@nt@univ{#1}\gdef\@nt@schl{#2}}
+
 \options{/novathesis/.new family
   , docdegree/.new choice = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
-  , school/.new choice = {{nova/fct}, {nova/st}, {nova/fcsh}, {nova/ims}, {nova/ensp},
-                          {ul/ist}, {ul/fc}, {ipl/isel}, {ips/ests}, {esep},
-                          {iscte-iul/ista}, {consortium/msc-gt}, {nova/fct-new},
-                          {uminho/ee}}
+  , school/.new cmd = {         \typeout{NT school [#1]}%
+                                \@nt@schooloption@i#1\@nil%
+    }
+  , school = {nova/fct}
   , langsused/.new list = {en,pt}
   , docstatus/.new choice = {final, provisional, draft, working},
-  , docstatus = final,
   , chapstyle/.new choice = {bar, bianchi, bluebox, default, elegant, 
                              ell, hansen, ist, lyhne, madsen,
                             pedersen, section, southall, veelo,
@@ -52,6 +54,7 @@
 }
 
 
+
 % --------------------------------------------------------
 % PROCESSING CLASS OPTIONS
 \options@ProcessOptions{/novathesis}%
@@ -59,9 +62,10 @@
 % --------------------------------------------------------
 % NTSETUP
 \newcommand*{\ntsetup}[1]{%
-    \ntgetkeyval{#1}\@nt@opt\@nt@value%
-    \options{/novathesis/\@nt@opt = {\@nt@value}}%
-    \option{/@nt/handler/\@nt@opt}%
+    % \ntgetkeyval{#1}\@nt@opt\@nt@value%
+    % \options{/novathesis/\@nt@opt = {\@nt@value}}%
+    \options{/novathesis/#1}%
+    % \option{/@nt/handler/\@nt@opt}%
 }
 
 \newcommand*{\ntbibsetup}[1]{%
@@ -121,19 +125,20 @@
 
 \AtEndDocument{%
   \iftoggle{/novathesis/spine}{%
-    \InputIfFileExists{%
-        NOVAthesisFiles/Schools/\option{/novathesis/school}/spine.tex%
-    }%
-      {}%
-      {\input{NOVAthesisFiles/spine.tex}}%
+    \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/spine.tex}%
+          {}%
+          {\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/spine.tex}%
+              {}%
+              {\InputIfFileExists{NOVAthesisFiles/spine.tex}{}{}}}%
     \csuse{ntprintspine}%
   }{}%
   \iftoggle{/novathesis/cdcover}{%
-    \InputIfFileExists{%
-        NOVAthesisFiles/Schools/\option{/novathesis/school}/cdcover.tex%
-    }%
-      {}%
-      {\input{NOVAthesisFiles/cdcover.tex}}%
+    \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/cdcover.tex}%
+          {}%
+          {\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/cdcover.tex}%
+              {}%
+              {\InputIfFileExists{NOVAthesisFiles/cdcover.tex}{}{}}}%
+    \csuse{ntprintcdcover}%
     \ntprintcdcover%  
     \ntprintcdinlay%
   }{}%
