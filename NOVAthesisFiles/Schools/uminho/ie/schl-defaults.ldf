@@ -1,0 +1,24 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% uminho/ie/schl-defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for IE-UMINHO (strings and cover)
+%%
+%%      This customization had the collaboration and support
+%%      from Bruno Pereira (b-pereira @ github), who built
+%%      the initial support in a fork of version 4.x
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE uminho/ie/schl-defaults.ldf}
+
+%-----------------------------------------------------------------
+% Remainder customization
+%-----------------------------------------------------------------
+% Faculty / School
+\school(pt):={Instituto de Educação}
+\school(en):={Instituto de Educação}
+\school(fr):={Instituto de Educação}
+\school(it):={Instituto de Educação}
+\school(logo,RGB):={IE-C}
+\school(logo,GRAY):={IE-PB}
