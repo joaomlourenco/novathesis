@@ -54,18 +54,18 @@ The “novathesis” LaTeX template was initially designed for the PhD thesis an
     * [Instituto Superior Técnico from Universidade de Lisboa](https://tecnico.ulisboa.pt) (IST-UL)
     * [Faculdade de Ciências from  Universidade de Lisboa](https://ciencias.ulisboa.pt) (FC-UL)
 * University of Minho
-    * [Escola de Arquitetura](www.arquitetura.um​inho.pt​) (EA-UM)
-    * [Escola de Ciências](www.ecum.umin​ho.pt) (EC-UM)
-    * [Escola de Direito](www.direito.u​minho.pt) (ED-UM)
-    * [Escola de Economia e Gestão](www.eeg.uminh​o.pt) (EEG-UM)
-    * [Escolha de Engenharia](https://www.eng.uminho.pt/pt) (EE-UM)
-    * [Escola de Medicina](www.med​.uminho.pt) (EM-UM)
-    * [Escola de Psicologia](www.psi.umi​nho.pt) (EP-UM)
-    * [Escola Superior de Enfermagem](www.ese.uminh​o.pt) (ESE-UM)
-    * [Instituto de Ciências Sociais](www.ics.u​minho.pt) (ICS-UM)
-    * [Instituto de Educação](www.ie.uminh​o.pt) (IE-UM)
-    * [Instituto de Letras e Ciências Humanas](www.ilch.uminho​.pt​) (ILCH-UM)
-    * [Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos​]( https://i3bs.uminho.pt/​) (I3Bs-UM)
+    * [Escola de Arquitetura](https://www.arquitetura.uminho.pt) (EA-UM)
+    * [Escola de Ciências](https://www.ecum.uminho.pt) (EC-UM)
+    * [Escola de Direito](https://www.direito.uminho.pt) (ED-UM)
+    * [Escola de Economia e Gestão](https://www.eeg.uminho.pt) (EEG-UM)
+    * [Escolha de Engenharia](https://www.eng.uminho.pt) (EE-UM)
+    * [Escola de Medicina](https://www.med.uminho.pt) (EM-UM)
+    * [Escola de Psicologia](https://www.psi.uminho.pt) (EP-UM)
+    * [Escola Superior de Enfermagem](https://www.ese.uminho.pt) (ESE-UM)
+    * [Instituto de Ciências Sociais](https://www.ese.uminho.pt) (ICS-UM)
+    * [Instituto de Educação](https://www.ie.uminho.pt) (IE-UM)
+    * [Instituto de Letras e Ciências Humanas](https://www.ilch.uminho.pt) (ILCH-UM)
+    * [Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos](https://i3bs.uminho.pt) (I3Bs-UM)
 * ISCTE – Instituto Universitário de Lisboa
     * [Escola de Tecnologia e Arquitectura](ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura) (ETA-ISCTE-IUL)
 * Instituto Politécnico de Lisboa
@@ -176,20 +176,6 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 
 --------
 ## Showcase of supported Schools
-
-nova-fct-phd.jpg
-nova-fcsh-phd.jpg
-nova-ims-phd.jpg
-nova-ensp-phd.jpg
-ul-fc-phd.jpg
-ul-ist-phd.jpg
-uminho-ee-msc.jpg
-uminho-ee-phd.jpg
-esep-phd.jpg
-ipl-isel-phd.jpg
-ips-ests-phd.jpg
-consortium-gt-msc.jpg
-
 
 <img src="NOVAthesisFiles/Images/Showcase/Covers/nova-fct-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/nova-ims-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/nova-ensp-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/nova-fcsh-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/ul-ist-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/ul-fc-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/uminho-ee-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/ipl-isel-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/ips-ests-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/esep-phd.jpg" width="100"/> <img src="NOVAthesisFiles/Images/Showcase/Covers/consortium-gt-msc.jpg" width="100"/> 
 <!-- ### Showcase of other usages around the world
