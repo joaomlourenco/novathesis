@@ -67,7 +67,7 @@ The “novathesis” LaTeX template was initially designed for the PhD thesis an
     * [Instituto de Letras e Ciências Humanas](https://www.ilch.uminho.pt) (ILCH-UM)
     * [Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos](https://i3bs.uminho.pt) (I3Bs-UM)
 * ISCTE – Instituto Universitário de Lisboa
-    * [Escola de Tecnologia e Arquitectura](ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura) (ETA-ISCTE-IUL)
+    * [Escola de Tecnologia e Arquitectura](https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura) (ETA-ISCTE-IUL)
 * Instituto Politécnico de Lisboa
     * [Instituto Superior de Engenharia de Lisboa](https://www.isel.pt) (ISEL-IPL)
 * Instituto Politécnico de Setúbal
