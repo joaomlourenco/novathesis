@@ -1,4 +1,5 @@
 uminho=xe
+esep=xe
 
 NOW=$(date "+%Y-%m-%d@%H:%M:%S")
 OUTDIR=$NOW/Covers
@@ -12,7 +13,8 @@ for DEGREE in msc phd; do
     find NOVAthesisFiles/Schools -type d -depth 2 | fgrep -v Images | cut -d '/' -f 3- | while read i; do
     	perl -pi -e "s-(%\s*)?\\\\ntsetup\{school=.*\}-\\\\ntsetup{school=$i}-" Config/1_novathesis.tex
         U=$(echo $i | cut -d '/' -f 1)
-        make ${!U} FLAGS=-f SILENT=""
+        S=$(echo $i | cut -d '/' -f 2)
+        make ${!U} ${!S} FLAGS=-f SILENT=""
     	F=$(echo $i | tr '/' '-')
     	pdftk template.pdf cat 1 output $OUTDIR/$DEGREE/cover-$F-$DEGREE.pdf
     done
