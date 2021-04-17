@@ -1,4 +1,4 @@
-<!-- <img src="https://joaomlourenco.github.io/novathesis/novathesis-latex-logo-v5.svg" width="600"/> -->
+<!-- <img src="http://joaomlourenco.github.io/novathesis/novathesis-latex-logo-v5.svg" width="600"/> -->
 
 [![GitHub forks](https://img.shields.io/github/forks/joaomlourenco/novathesis.svg?style=social&label=Fork)](https://github.com/joaomlourenco/novathesis)
 [![GitHub stars](https://img.shields.io/github/stars/joaomlourenco/novathesis.svg?style=social&label=Star)](https://github.com/joaomlourenco/novathesis)
