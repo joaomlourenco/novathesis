@@ -45,13 +45,13 @@ The “*novathesis*” LaTeX template is an Open Source project for writing thes
 
 The “*novathesis*” LaTeX template…
 
-* Is very easy to use for the LaTeX beginners:
+* **Is very easy to use for the LaTeX beginners:**
     * Just fill the cover data and your chapters with text!
-* Is flexible and adaptable for the LaTeX experts:
+* **Is flexible and adaptable for the LaTeX experts:**
     * It's LaTeX!  What would you expect?! 😉
-* Includes dozens of options that answer the requests from the large user's community (1000's users):
+* **Includes dozens of options that answer the requests from the large user's community (1000's users):**
     * e.g., multiple chapter styles, multiple font styles, automatic book spine generation, …
-* Supports multiples schools:
+* **Supports multiples schools:**
     * Currently supports +20 Schools, drawing the covers and typesetting the text according to the rules  of each School.
 
 *This work is licensed under the LaTeX Project Public License v1.3c. To view a copy of this license, visit the [LaTeX project public license](https://www.latex-project.org/lppl/lppl-1-3c/).*
