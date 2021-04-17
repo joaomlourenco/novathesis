@@ -188,6 +188,7 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 <img src="NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-nova-ensp-phd.svg" border="1" width="100"/>
 <img src="NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-ulisboa-fc-phd.svg" border="1" width="100"/>
 <img src="NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-ulisboa-ist-phd.svg" border="1" width="100"/>
+<img src="NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-iscteiul-eta-phd.svg" border="1" width="100"/>
 <img src="NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ea-phd.svg" border="1" width="100"/>
 <img src="NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ec-phd.svg" border="1" width="100"/>
 <img src="NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ed-phd.svg" border="1" width="100"/>
@@ -200,7 +201,6 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 <img src="NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ics-phd.svg" border="1" width="100"/>
 <img src="NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ie-phd.svg" border="1" width="100"/>
 <img src="NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ilch-phd.svg" border="1" width="100"/>
-<img src="NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-iscteiul-eta-phd.svg" border="1" width="100"/>
 <img src="NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-ipl-isel-phd.svg" border="1" width="100"/>
 <img src="NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-ips-ests-phd.svg" border="1" width="100"/>
 <img src="NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-other-esep-phd.svg" border="1" width="100"/>
