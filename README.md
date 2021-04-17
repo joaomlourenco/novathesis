@@ -181,6 +181,7 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/msc/svg/cover-nova-fct-msc.svg" border="1" width="100"/>&nbsp;&nbsp;
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-nova-fcsh-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-nova-ims-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
+<img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-nova-ims-msc.svg" border="1" width="100"/>&nbsp;&nbsp;
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-nova-ensp-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-ulisboa-fc-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-ulisboa-ist-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
@@ -197,8 +198,8 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ics-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ie-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ilch-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-ipl-isel-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-ips-ests-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
+<img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-ipl-isel-msc.svg" border="1" width="100"/>&nbsp;&nbsp;
+<img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-ips-ests-msc.svg" border="1" width="100"/>&nbsp;&nbsp;
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-other-esep-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/msc/svg/cover-other-mscgt-msc.svg" border="1" width="100"/>
 
