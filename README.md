@@ -1,3 +1,4 @@
+<meta property="og:image" content="http://joaomlourenco.github.io/novathesis/novathesis-latex-logo-v5.svg" />
 <!-- <img src="http://joaomlourenco.github.io/novathesis/novathesis-latex-logo-v5.svg" width="600"/> -->
 
 [![GitHub forks](https://img.shields.io/github/forks/joaomlourenco/novathesis.svg?style=social&label=Fork)](https://github.com/joaomlourenco/novathesis)
