@@ -36,7 +36,7 @@
 
 --------
 
-**If you opt for using this project, please give it a star by clicking the (⭐️) at the top right of the project's ]GitGub page](https://github.com/joaomlourenco/novathesis).**
+**If you opt for using this project, please give it a star by clicking the (⭐️) at the top right of the [project's page at GitGub](https://github.com/joaomlourenco/novathesis).**
 
 --------
 ## About
