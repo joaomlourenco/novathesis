@@ -1,4 +1,4 @@
-<img src="https://joaomlourenco.github.io/novathesis/novathesis-latex-logo-v5.svg" width="600"/>
+<img src="http://joaomlourenco.github.io/novathesis/novathesis-latex-logo-v5.svg" width="600"/>
 
 [![GitHub forks](https://img.shields.io/github/forks/joaomlourenco/novathesis.svg?style=social&label=Fork)](https://github.com/joaomlourenco/novathesis)
 [![GitHub stars](https://img.shields.io/github/stars/joaomlourenco/novathesis.svg?style=social&label=Star)](https://github.com/joaomlourenco/novathesis)
@@ -36,7 +36,7 @@
 
 --------
 
-**If you opt for using this project, please give it a star by clicking the (⭐️) at the top right of the page.**
+**If you opt for using this project, please give it a star by clicking the (⭐️) at the top right of the [project's page at GitGub](https://github.com/joaomlourenco/novathesis).**
 
 --------
 ## About
@@ -99,13 +99,7 @@ The “*novathesis*” LaTeX template…
 3. In the menu select <kbd>New project</kbd>-><kbd>Upload project</kbd>
 4. Upload the zip with all the "novathesis" files.
 5. Select “*template.tex*” as the main file.
-6. Compile the template and have the first version of the PDF.
-4. Edit “*template.tex*”:
-    * Select your School, main text language, bibliography style, etc…
-    * Fill in your name, thesis title, etc…
-    * Name the (separate) files containing the abstracts, chapters, appendices, annexes, etc…
-5. Recompile de document.
-6. You're done with a beautifully formatted thesis/dissertation! 😃
+6. Follow from [step 3 above](#with-a-local-latex-installation)
 
 *NOTE: a deprecated version of the novathesis template (v4.x) is available as an [Overleaf template](https://pt.overleaf.com/latex/templates/new-university-of-lisbon-universidade-nova-de-lisboa-slash-unl-thesis-template/fwbztcrptjmg).  Just select <kbd>open as template</kbd> and go to step 6 above!*
 
@@ -120,7 +114,7 @@ If you couldn't find what you were looking for, ask for help in:
 
 * The [GitHub Discussions page](https://github.com/joaomlourenco/novathesis/discussions) (only EN please) at https://github.com/joaomlourenco/novathesis/discussions.
 * The [Facebook page](https://www.facebook.com/groups/novathesis/) (PT or EN) at https://www.facebook.com/groups/novathesis.
-* You may also give a look at the [novathesis blog](https://novathesis.blogspot.pt) at https://novathesis.blogspot.pt.
+* You may also give a look at the [novathesis blog](https://novathesis.blogspot.pt) at [https://novathesis.blogspot.pt](https://novathesis.blogspot.pt).
 
 Those are the right places to learn about LaTeX and ask for help!  *Please don't ask for help by email! I will not answer them…*
 
