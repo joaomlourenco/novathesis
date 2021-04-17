@@ -177,7 +177,37 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 --------
 ## Showcase of supported Schools
 
-<img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-nova-fct-phd.svg" style="border:1px solid #000000" width="100"/>&nbsp;&nbsp;
+| :----: | :----: | :----: | :----: | :----: | :----: | 
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-nova-fct-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/msc/svg/cover-nova-fct-msc.svg" style="border:1px solid #000000" width="100"/> 
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-nova-fcsh-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-nova-ims-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-nova-ensp-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-ulisboa-fc-phd.svg" style="border:1px solid #000000" width="100"/>
+|
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-ulisboa-ist-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-iscteiul-eta-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ea-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ec-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ed-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ee-phd.svg" style="border:1px solid #000000" width="100"/>
+|
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-eeg-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-em-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ep-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ese-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-i3b-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ics-phd.svg" style="border:1px solid #000000" width="100"/>
+|
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ie-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-uminho-ilch-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-ipl-isel-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-ips-ests-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-other-esep-phd.svg" style="border:1px solid #000000" width="100"/>
+| <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/msc/svg/cover-other-mscgt-msc.svg" style="border:1px solid #000000" width="100"/>
+|
+
+<!-- <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-nova-fct-phd.svg" style="border:1px solid #000000" width="100"/>&nbsp;&nbsp;
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/msc/svg/cover-nova-fct-msc.svg" style="border:1px solid #000000" width="100"/>&nbsp;&nbsp;
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-nova-fcsh-phd.svg" style="border:1px solid #000000" width="100"/>&nbsp;&nbsp;
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-nova-ims-phd.svg" style="border:1px solid #000000" width="100"/>&nbsp;&nbsp;
@@ -200,7 +230,7 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-ipl-isel-phd.svg" style="border:1px solid #000000" width="100"/>&nbsp;&nbsp;
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-ips-ests-phd.svg" style="border:1px solid #000000" width="100"/>&nbsp;&nbsp;
 <img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/phd/svg/cover-other-esep-phd.svg" style="border:1px solid #000000" width="100"/>&nbsp;&nbsp;
-<img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/msc/svg/cover-other-mscgt-msc.svg" style="border:1px solid #000000" width="100"/>
+<img src="http://joaomlourenco.github.io/novathesis/NOVAthesisFiles/Images/Showcase/Covers/msc/svg/cover-other-mscgt-msc.svg" style="border:1px solid #000000" width="100"/> -->
 
 --------
 ## Disclaimer
