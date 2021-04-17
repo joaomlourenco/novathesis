@@ -100,12 +100,6 @@ The “*novathesis*” LaTeX template…
 4. Upload the zip with all the "novathesis" files.
 5. Select “*template.tex*” as the main file.
 6. Follow from [step 3 above](#with-a-local-latex-installation)
-4. Edit “*template.tex*”:
-    * Select your School, main text language, bibliography style, etc…
-    * Fill in your name, thesis title, etc…
-    * Name the (separate) files containing the abstracts, chapters, appendices, annexes, etc…
-5. Recompile de document.
-6. You're done with a beautifully formatted thesis/dissertation! 😃
 
 *NOTE: a deprecated version of the novathesis template (v4.x) is available as an [Overleaf template](https://pt.overleaf.com/latex/templates/new-university-of-lisbon-universidade-nova-de-lisboa-slash-unl-thesis-template/fwbztcrptjmg).  Just select <kbd>open as template</kbd> and go to step 6 above!*
 
