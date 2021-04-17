@@ -28,7 +28,8 @@
 	* [Problems and Difficulties](#problems-and-difficulties)
 	* [Suggestions, Bugs and Feature Requests](#suggestions-bugs-and-feature-requests)
 * [Recognition](#recognition)
-* [Showcase of supported Schools](#showcase-of-supported-schools)
+* [List of Supported Schools](#list-of-supported-schools)
+    * [Showcase](#showcase)
 * [Disclaimer](#disclaimer)
 * [Word Templates](#word-templates)
 
@@ -40,50 +41,20 @@
 --------
 ## About
 
+The “*novathesis*” LaTeX template is an Open Source project for writing thesis, dissertations, and other monograph-like documents.
 
-The “novathesis” LaTeX template was initially designed for the PhD thesis and MSc dissertations at [FCT-NOVA — NOVA School of Science and Technology](http://www.fct.unl.pt), Portugal, but currently it supports more schools, namely:
-* NOVA University Lisbon
-    * [NOVA School for Science and Technology](https://www.fct.unl.pt) (FCT-NOVA)
-    * [NOVA Information Management School](https://www.novaims.unl.pt) (NOVA-IMS)
-    * [National School of Public Heath](https://www.ensp.unl.pt) (ENSP-NOVA)
-    * [Faculdade de Ciências Humanas e Sociais](https://www.fcsh.unl.pt) (FCSH-NOVA)
-* University of Lisbon
-    * [Instituto Superior Técnico from Universidade de Lisboa](https://tecnico.ulisboa.pt) (IST-UL)
-    * [Faculdade de Ciências from  Universidade de Lisboa](https://ciencias.ulisboa.pt) (FC-UL)
-* University of Minho
-    * [Escola de Arquitetura](https://www.arquitetura.uminho.pt) (EA-UM)
-    * [Escola de Ciências](https://www.ecum.uminho.pt) (EC-UM)
-    * [Escola de Direito](https://www.direito.uminho.pt) (ED-UM)
-    * [Escola de Economia e Gestão](https://www.eeg.uminho.pt) (EEG-UM)
-    * [Escolha de Engenharia](https://www.eng.uminho.pt) (EE-UM)
-    * [Escola de Medicina](https://www.med.uminho.pt) (EM-UM)
-    * [Escola de Psicologia](https://www.psi.uminho.pt) (EP-UM)
-    * [Escola Superior de Enfermagem](https://www.ese.uminho.pt) (ESE-UM)
-    * [Instituto de Ciências Sociais](https://www.ese.uminho.pt) (ICS-UM)
-    * [Instituto de Educação](https://www.ie.uminho.pt) (IE-UM)
-    * [Instituto de Letras e Ciências Humanas](https://www.ilch.uminho.pt) (ILCH-UM)
-    * [Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos](https://i3bs.uminho.pt) (I3Bs-UM)
-* ISCTE – Instituto Universitário de Lisboa
-    * [Escola de Tecnologia e Arquitectura](https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura) (ETA-ISCTE-IUL)
-* Instituto Politécnico de Lisboa
-    * [Instituto Superior de Engenharia de Lisboa](https://www.isel.pt) (ISEL-IPL)
-* Instituto Politécnico de Setúbal
-    * [Escola Superior de Saúde](https://www.ess.ips.pt) (ESS-IPS)
-    * [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt) (ESTB-IPS)
-* [Escola Superior de Enfermagem do Porto](https://www.esenf.pt/pt/) (ESEP)
+The “*novathesis*” LaTeX template…
 
-
-The “novathesis” LaTeX template also supports the following degrees from Universities' Consortia:
-* Erasmus Mundus [Masters Program in Geospatial Technologies](https://mastergeotech.info)
-
-<!-- The template provides an _easy to use_ setting for you to write your thesis/dissertation in LaTeX:
-*  Select your school
-* Fill your thesis metadata (title, research field, etc) in the file “*template.tex*”
-* Create your thesis/dissertation contents using the files in folder “*Chapters*”
-* Process using you favorite LaTeX processor (pdfLaTeX, XeLaTeX or LuaLaTeX) -->
+* Is very easy to use for the LaTeX beginners:
+    * Just fill the cover data and your chapters with text!
+* Is flexible and adaptable for the LaTeX experts:
+    * It's LaTeX!  What would you expect?! 😉
+* Includes dozens of options that answer the requests from the large user's community (1000's users):
+    * e.g., multiple chapter styles, multiple font styles, automatic book spine generation, …
+* Supports multiples schools:
+    * Currently supports +20 Schools, drawing the covers and typesetting the text according to the rules  of each School.
 
 *This work is licensed under the LaTeX Project Public License v1.3c. To view a copy of this license, visit the [LaTeX project public license](https://www.latex-project.org/lppl/lppl-1-3c/).*
-
 
 --------
 ## Getting Started
@@ -172,33 +143,68 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 1. Give the NOVAthesis project a star in GitHub by clicking in the star at the top-right of the [project's home page](https://github.com/joaomlourenco/novathesis).
 
 --------
-## Showcase of supported Schools
+## List of Supported Schools
 
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-fct-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-nova-fct-msc.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-fcsh-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-ims-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-nova-ims-msc.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-ensp-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-ulisboa-fc-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-ulisboa-ist-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-iscteiul-eta-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ea-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ec-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ed-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ee-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-eeg-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-em-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ep-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ese-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-i3b-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ics-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ie-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ilch-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-ipl-isel-msc.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-ips-ests-msc.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-other-esep-phd.svg" border="1" width="100"/>&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-other-mscgt-msc.svg" border="1" width="100"/>
+* NOVA University Lisbon
+    * [NOVA School for Science and Technology](https://www.fct.unl.pt) (FCT-NOVA)
+    * [NOVA Information Management School](https://www.novaims.unl.pt) (NOVA-IMS)
+    * [National School of Public Heath](https://www.ensp.unl.pt) (ENSP-NOVA)
+    * [Faculdade de Ciências Humanas e Sociais](https://www.fcsh.unl.pt) (FCSH-NOVA)
+* University of Lisbon
+    * [Instituto Superior Técnico from Universidade de Lisboa](https://tecnico.ulisboa.pt) (IST-UL)
+    * [Faculdade de Ciências from  Universidade de Lisboa](https://ciencias.ulisboa.pt) (FC-UL)
+* University of Minho
+    * [Escola de Arquitetura](https://www.arquitetura.uminho.pt) (EA-UM)
+    * [Escola de Ciências](https://www.ecum.uminho.pt) (EC-UM)
+    * [Escola de Direito](https://www.direito.uminho.pt) (ED-UM)
+    * [Escola de Economia e Gestão](https://www.eeg.uminho.pt) (EEG-UM)
+    * [Escolha de Engenharia](https://www.eng.uminho.pt) (EE-UM)
+    * [Escola de Medicina](https://www.med.uminho.pt) (EM-UM)
+    * [Escola de Psicologia](https://www.psi.uminho.pt) (EP-UM)
+    * [Escola Superior de Enfermagem](https://www.ese.uminho.pt) (ESE-UM)
+    * [Instituto de Ciências Sociais](https://www.ese.uminho.pt) (ICS-UM)
+    * [Instituto de Educação](https://www.ie.uminho.pt) (IE-UM)
+    * [Instituto de Letras e Ciências Humanas](https://www.ilch.uminho.pt) (ILCH-UM)
+    * [Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos](https://i3bs.uminho.pt) (I3Bs-UM)
+* ISCTE – Instituto Universitário de Lisboa
+    * [Escola de Tecnologia e Arquitectura](https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura) (ETA-ISCTE-IUL)
+* Instituto Politécnico de Lisboa
+    * [Instituto Superior de Engenharia de Lisboa](https://www.isel.pt) (ISEL-IPL)
+* Instituto Politécnico de Setúbal
+    * [Escola Superior de Saúde](https://www.ess.ips.pt) (ESS-IPS)
+    * [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt) (ESTB-IPS)
+* Other Schools/Degrees
+    * [Escola Superior de Enfermagem do Porto](https://www.esenf.pt/pt/) (ESEP)
+    * Erasmus Mundus [Masters Program in Geospatial Technologies](https://mastergeotech.info)
+
+<!-- -------- -->
+### Showcase
+
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-fct-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-nova-fct-msc.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-fcsh-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-ims-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-nova-ims-msc.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-ensp-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-ulisboa-fc-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-ulisboa-ist-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-iscteiul-eta-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ea-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ec-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ed-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ee-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-eeg-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-em-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ep-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ese-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-i3b-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ics-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ie-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ilch-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-ipl-isel-msc.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-ips-ests-msc.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-other-esep-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-other-mscgt-msc.svg" border="1" width="100"/></kbd>
 
 
 --------
