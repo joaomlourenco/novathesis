@@ -1,7 +1,4 @@
-<img src="NOVAthesisFiles/Images/novathesis-logo-grey-white-v3.3-921x195.jpg" width="600"/> 
-<!-- ![NOVAthesis logo](NOVAthesisFiles/Images/novathesis-logo.jpg) -->
-
-<!-- # “novathesis” LaTeX template -->
+<img src="https://joaomlourenco.github.io/novathesis/novathesis-word-logo-v5.svg" width="600"/>
 
 [![GitHub forks](https://img.shields.io/github/forks/joaomlourenco/novathesis.svg?style=social&label=Fork)](https://github.com/joaomlourenco/novathesis)
 [![GitHub stars](https://img.shields.io/github/stars/joaomlourenco/novathesis.svg?style=social&label=Star)](https://github.com/joaomlourenco/novathesis)
