@@ -7,9 +7,9 @@
 
 \typeout{NT FILE FontStyles/newsgott.ldf}
 
-\ntcheckfont{n015003t.ttf}{https://www.ics.uminho.pt/pt/Comunicacao/Documents/NewsGotT.zip}
-\ntcheckfont{n015006t.ttf}{https://www.ics.uminho.pt/pt/Comunicacao/Documents/NewsGotT.zip}
-\ntcheckfont{n015002t.ttf}{https://www.ics.uminho.pt/pt/Comunicacao/Documents/NewsGotT.zip}
+\ntcheckfont{n015003t.ttf}{https://github.com/joaomlourenco/novathesis-extras/raw/main/Fonts/NewsGotT.zip}
+\ntcheckfont{n015006t.ttf}{https://github.com/joaomlourenco/novathesis-extras/raw/main/Fonts/NewsGotT.zip}
+\ntcheckfont{n015002t.ttf}{https://github.com/joaomlourenco/novathesis-extras/raw/main/Fonts/NewsGotT.zip}
 
 \ifxeorlua{}{%
   \ClassError{novathesis}{Font Style “newsgott” is not compatible with pdfLaTeX. Please use XeLaTeX or LuaLaTeX}{Please use XeLaTeX or LuaLaTeX}%

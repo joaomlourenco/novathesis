@@ -7,6 +7,8 @@
 
 \typeout{NT FILE other/esep/defaults.ldf}
 
+\ntsetup{fontstyle=calibri}
+
 %%% RGB = 41, 141, 187
 
 \ntsetup{secondcover=true}    % Shall a second cover page be forced?
@@ -127,12 +129,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ifxeorlua{%
-  \ntsetup{fontstyle=calibri}%
-}{%
-  \NTAddToHook{cover/back/begin}{%
-    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
-  }%
+\NTAddToHook{cover/1/begin}{%
+  \pagecolor{white}%
 }
 
 % ESEP logo
