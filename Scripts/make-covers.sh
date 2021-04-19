@@ -20,3 +20,7 @@ for DEGREE in msc phd; do
     done
 done 2>&1 | tee $OUTDIR/make-covers.log
 mv -f Config/1_novathesis.bak Config/1_novathesis.tex
+
+
+# pdf2svg INFILE OUTFILE
+# svgo -f msc/ --multipass
