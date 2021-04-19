@@ -163,16 +163,16 @@ of the requirements for the degree of %
 % page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\AtEndPreamble{%
-  \makepagestyle{novathesis@myvf}%
-  \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
-  \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
-  \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
-  \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
-  \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
-  \pagestyle{novathesis@myvf}%
-}
-%
+% \AtEndPreamble{%
+%   \makepagestyle{novathesis@myvf}%
+%   \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
+%   \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
+%   \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
+%   \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
+%   \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
+%   \pagestyle{novathesis@myvf}%
+% }
+% %
 %\frenchspacing
 
 % Use arabic numerals for Appendixes
@@ -189,7 +189,8 @@ of the requirements for the degree of %
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NTAddToHook{cover/1/begin}{%
-  \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+    \pagecolor{white}%
+    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
 }
 
   % PHD PROGRAM

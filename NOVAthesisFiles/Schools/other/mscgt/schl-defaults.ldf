@@ -143,6 +143,7 @@ for the degree of \emph{\thedegreename(en)}}
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NTAddToHook{cover/1/begin}{%
+  \pagecolor{white}%
   \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
   % \addtocounter{page}{-1}%
 }

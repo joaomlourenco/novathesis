@@ -191,6 +191,7 @@
 % Temporary macro to use in conditional expressions;
 
 \NTAddToHook{cover/1/begin}{%
+  \pagecolor{white}%
   \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
   \ifdocfinal{\provisionalstring(\option{/novathesis/coverlang}):={~}}{}%
 }
