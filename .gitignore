@@ -2,6 +2,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/latex,windows,linux,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=latex,windows,linux,macos
 
+### NOVAthesis specific ###
+**/Fonts
+
 ### LaTeX ###
 ## Core latex/pdflatex auxiliary files:
 *.aux
