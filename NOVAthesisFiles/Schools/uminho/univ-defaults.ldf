@@ -349,6 +349,7 @@ indicada.\\[1ex]
 }
 
 \NTAddToHook{cover/2/begin}{%
+  \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
   \pagecolor{white}%
 }
 
