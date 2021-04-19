@@ -1,7 +1,7 @@
 uminho=xe
 esep=xe
 
-NOW=$(date "+%Y-%m-%d@%H:%M:%S")
+NOW=$(date "+%Y-%m-%d@%H-%M-%S")
 OUTDIR=../$NOW/Covers
 
 rm -rf OUTDIR
