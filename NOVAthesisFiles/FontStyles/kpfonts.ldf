@@ -7,9 +7,11 @@
 
 \typeout{NT FILE FontStyles/kpfonts.ldf}
 
+\RequirePackage[notextcomp,noamsmath]{kpfonts}%
+\RequirePackage[cal=boondoxo]{mathalfa}% mathcal
 \ifxeorlua{%
-  \RequirePackage{kpfonts-otf}%
+  \IfFileExists{kpfonts-otf}
+      {\RequirePackage{kpfonts-otf}}%
+      {}%
 }{%
-  \RequirePackage[notextcomp,noamsmath]{kpfonts}%
-  \RequirePackage[cal=boondoxo]{mathalfa}% mathcal
 }

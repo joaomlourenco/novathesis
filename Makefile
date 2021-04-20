@@ -21,8 +21,8 @@ verb verbose:
 	$(L) -pdf $(B)
 
 .PHONY: 2019 2020
-2019 2020:
-	PATH="/usr/local/texlive/$@/bin/x86_64-darwin/:$(PATH)" $(L) -pdf $(SILENT) $(B)
+2019 2020 2021:
+	PATH="/usr/local/texlive/$@/bin/x86_64-darwin/:$(PATH)" $(L) $(X) $(SILENT) $(B)
 
 .PHONY: xe lua
 xe lua: $(S)
