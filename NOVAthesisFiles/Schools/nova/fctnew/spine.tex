@@ -73,16 +73,28 @@
   % \end{minipage}%
 }
 
-\newcommand{\ntprintspine}{%
-  \clearpage
+\newcommand{\ntprintspine}[1][]{%
+  \NTRunHook{spine/pre}%
   % \printlen%
   \color{white}%
-  \savegeometry{maintext}%
-  \newgeometry{textwidth=\novathesis@spinewidth,textheight=\paperheight}%
+  \IfStrEq{#1}{trim}{
+    \setstocksize{\paperheight}{\novathesis@spinewidth}
+    \settrimmedsize{\stockheight}{\stockwidth}{*}%
+    \setlrmarginsandblock{0pt}{0pt}{*}%
+    \setulmarginsandblock{0pt}{*}{1}%
+    \setheadfoot{0pt}{0pt}%
+    \setheaderspaces{0pt}{*}{*}%
+    \checkandfixthelayout[fixed]%
+    \ifluatex
+        \pagewidth=\novathesis@spinewidth% \pageheight=3in
+    \else
+        \pdfpagewidth=\novathesis@spinewidth% \pdfpageheight=3in
+    \fi
+  }{}%
   \begin{tikzpicture}[remember picture, overlay]
   % draw image
     \node[inner sep=0] at (current page.center)
-            {\includegraphics[width=\textwidth,height=\textheight]%
+            {\includegraphics[width=\novathesis@spinewidth,height=\stockheight]%
                              {\thethesiscover(\option{/novathesis/docdegree},spine)}%
             };
     \node[inner sep=0,yshift=-0.5\spine@len@top, xshift=-\expanded{\thespine(logo,\option{/novathesis/docdegree},raise)}\novathesis@spinewidth] at (current page.north)
@@ -93,5 +105,6 @@
     \node[inner sep=0] at (current page.center) {\rotatebox{90}{\spinetext}};
   \end{tikzpicture}
   \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
-  \loadgeometry{maintext}%
+  \NTRunHook{spine/post}%
 }
+
