@@ -66,8 +66,8 @@
   \NTRunHook{spine/pre}%
   % \printlen%
   \color{white}%
-  \savegeometry{maintext}%
-  \newgeometry{textwidth=\novathesis@spinewidth,textheight=\paperheight}%
+  % \savegeometry{maintext}%
+  % \newgeometry{textwidth=\novathesis@spinewidth,textheight=\paperheight}%
   \begin{tikzpicture}[remember picture, overlay]
     % \node[inner sep=0] at (current page.center) {\fill[red] rectangle (4,4)};
   \ifphddoc{%
@@ -99,6 +99,6 @@
   \end{tikzpicture}%
   \NTRunHook{spine/mid}%
   \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
-  \loadgeometry{maintext}%
+  % \loadgeometry{maintext}%
   \NTRunHook{spine/post}%
 }

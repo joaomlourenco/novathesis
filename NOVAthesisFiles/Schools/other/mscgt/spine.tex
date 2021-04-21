@@ -72,8 +72,8 @@
 \newcommand{\ntprintspine}{%
   \clearpage
   % \printlen%
-  \savegeometry{maintext}%
-  \newgeometry{textwidth=\novathesis@spinewidth,textheight=\paperheight}%
+  % \savegeometry{maintext}%
+  % \newgeometry{textwidth=\novathesis@spinewidth,textheight=\paperheight}%
   \begin{tikzpicture}[remember picture, overlay]
   % draw image
     % \node[inner sep=0] at (current page.center)
@@ -86,5 +86,5 @@
     \node[inner sep=0] at (current page.center) {\rotatebox{90}{\spinetext}};
   \end{tikzpicture}
   \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
-  \loadgeometry{maintext}%
+  % \loadgeometry{maintext}%
 }
