@@ -149,24 +149,9 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %% INTERNAL KEY-VAL STUFF
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \options{/@nt/.new family
-  % languages
   , langsshort/.new list={en, pt, fr, it, de, es}
-  , langslong/.new list={english, portuguese, french, italian, german, spanish}
   , langshorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish}
-  , maplang/.new cmd={%
-            \options{/@nt/langshorttolong=#1}%
-            \option{/@nt/langshorttolong}%
-  }  
-  % %novathesis@opt@biblatex
   , biblatex/.new list
-  % , handler/chapstyle/.new cmd={%
-  %   \InputIfFileExists{NOVAthesisFiles/ChapStyles/#1.ldf}{}%
-  %     {\PackageWarining{novathesis}{Invalid Chapter Style: #1}}%
-  % }
-  % , handler/fontstyle/.new cmd={%
-  %   \InputIfFileExists{NOVAthesisFiles/FontStyles/#1.ldf}{}%
-  %     {\PackageWarining{novathesis}{Invalid Font Style: #1}}%
-  % }
 }
 
 
@@ -189,18 +174,18 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE DOCUMENT CLASSES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\options{/@nt/.cd
-  , document/fallback/.new list={phdprop=phd, phdplan=phd, mscplan=msc}
-  , document/class/phd/.new list={phd, phdprop, phdplan}
-  , document/class/msc/.new list={msc, mscplan}
-  , document/class/bsc/.new list={bsc}
-  , document/class/main/.new list={phd, msc, bsc}
+\options{/@nt/document/.cd
+  , fallback/.new list={phdprop=phd, phdplan=phd, mscplan=msc}
+  , class/phd/.new list={phd, phdprop, phdplan}
+  , class/msc/.new list={msc, mscplan}
+  , class/bsc/.new list={bsc}
+  , class/main/.new list={phd, msc, bsc}
 }
 
 \newcommand{\@ifdocclass@ii}[2]{%
   % #1=document type
   % %2=possible document calss 
-  \ifoptioncontains{/@nt/document/class/#2}{#1}
+  \ifoptioncontains{/@nt/document/class/#2}{#1}%
 }
 
 % --------------------------------------------------------
@@ -300,15 +285,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   % \typeout{NT ntload ADDFILE [#1] [#2] [#3] [\@nt@filewithpath]}%
   \expanded{\options{/@nt/#1/#2/#3/.cpush={\@nt@filewithpath}}}%
   \typeout{NT ADDED FILE [/@nt/#1/#2/#3=\@nt@filewithpath]}%
-  % \@nt@addtolist@iii{#1}{#2}{#3=\@nt@filewithpath}%
-}
-
-\newcommand*{\@nt@addtolist@iii}[3]{%
-  % #1={file, person}
-  % #2=file family (quote, abstract, chapter, etc)
-  % #3=filename OR key=filename
-  % \typeout{NT FILE ADD /@nt/#1/#1=#2}%
-  % \options{/@nt/#1/#2/.cpush={#3}}%
 }
 
 \newcommand*{\@nt@foralllist}[3]{%
@@ -429,7 +405,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \optionlistdo{/novathesis/langsused}{%
   \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
     {}%
-    {}%
+    {\ClassError{novathesis}{Missing “strings-#1” file!}{Add a file with the translations for this language.}}%
 }%
 
 
@@ -475,7 +451,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \input{Config/3a_degree_phd}%
 }{\ifmscdoc{% Standard names for MSc programs
   \input{Config/3b_degree_msc}%
-}{% Customizable name for any other program
+}{% Customizable name for other programm (not PhD nor MSc)
   \input{Config/3c_degree_other}%
 }}
 % \NTRunHook{degree}
@@ -517,16 +493,9 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   % #1 = type (main, sub) title
   % #2 = lang
   % #3 = value
-  \typeout{NT @nttitle [#1] [#2] [#3]}
-  % \doctitle(#1,#2):={\saveexpandmode\noexpandarg\StrSubstitute[0]{#3}{\\}{ }\restoreexpandmode}%
+  % \typeout{NT @nttitle [#1] [#2] [#3]}%
   \doctitle(#1,#2):={\removelinebreaks{#3}}%
   \doctitle(#1,#2,caps):={\removelinebreaks{\expandafter\MakeUppercase\expandafter{#3}}}%
-  % \doctitle(#1,#2,caps):={%
-  %       \saveexpandmode\noexpandarg%
-  %       \StrSubstitute[0]{\expandafter\MakeUppercase\expandafter{#3}}{\\}{ }%
-  %       \restoreexpandmode%
-  % }%
-  % \doctitle(#1,#2,caps):={\saveexpandmode\noexpandarg\StrSubstitute[0]{\expandafter\MakeUppercase\expandafter{#3}}{\\}{ }\restoreexpandmode}
   \doctitle(#1,#2,cover):={#3}%
   \doctitle(#1,#2,cover,caps):={\expandafter\MakeUppercase\expandafter{#3}}%
 }
@@ -567,15 +536,14 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
         \iftoggle{/novathesis/tocintoc}{%
             \tableofcontents%
         }{%
-            \phantomsection%
-            \pdfbookmark{\contentsname}{toctarget}%
-            \hypertarget{toctarget}{\tableofcontents*}
+            \phantomsection\pdfbookmark{\contentsname}{toctarget}%
+            \hypertarget{toctarget}{\tableofcontents*}%
         }%
   }}}{%
     \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/@nt/list/indexes/.cpush={%
             \printnoidxglossaries%
     }}}{%
-      \options{/@nt/list/indexes/.cpush={\csuse{#1}}}
+      \options{/@nt/list/indexes/.cpush={\csuse{#1}}}%
     }%
   }%
 }
@@ -584,12 +552,16 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 % Cover hooks
 \newcommand*{\@ntaddtocover@iii}[3]{%
   % \typeout{NT ntaddtocover #3}%
+  % #1 = cover atrtibutes
+  % #2 = the block code
+  % #3 = covers where the code block should be applied
   \options{/@nt/cover/\@nt@univ/\@nt@schl/#3/.cpush={{#1}=*={#2}}}%
 }
 
 \newcommand*{\ntaddtocover}[3][]{%
-  % #1=cover atrtibutes
-  % #2=the code
+  % #1 = cover atrtibutes
+  % #2 = list of covers where the code block should be applied
+  % #3 = the block code
   % \typeout{NT ntaddtocover [/@nt/cover/\@nt@univ/\@nt@schl/element=#1]}
   \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
 }
@@ -608,9 +580,10 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newcommand*{\ntsetprintorder}[2]{%
 % #1 = frontmatter, mainmatter
 % #2 = list
-  \options{/@nt/doc#1/.cpush = {x}}%
-  \options{/@nt/doc#1 = {}}%
-  \options{/@nt/doc#1/.concat = {#2}}%
+  \option@setlist{/@nt/doc#1}{#2}%
+  % \options{/@nt/doc#1/.cpush = {x}}%
+  % \options{/@nt/doc#1 = {}}%
+  % \options{/@nt/doc#1/.concat = {#2}}%
 }
 
 
@@ -1472,7 +1445,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newtoggle{@nt@keywords@defined}
 \togglefalse{@nt@keywords@defined}
 \NewEnviron{keywords}[1][\option{/@nt/langshorttolong}]{%
-  \csdef{@nt@keywords@#1}{\BODY}
   \iftoggle{@nt@keywords@defined}%
     {}%
     {\hypersetup{pdfkeywords={\BODY}}}
