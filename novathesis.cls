@@ -102,6 +102,8 @@
 %% GENERAL PURPOSE MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\newcommand*{\defifundef}[2]{\ifundef{#1}{#2{#1}}{}}
+
 % --------------------------------------------------------
 % If necessary create, then initialize the counter
 \newcommand*{\setnewcounter}[2]{%
@@ -708,10 +710,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \end{tikzpicture}%
 }
 
-\newlength{\mpwidth}%
-\newlength{\mpheight}%
-\newsavebox{\@nt@coverbox}%
-
 \newcommand*{\ntprintfrontcover}{%
   \bgroup%
     \ntselectlang{\option{/novathesis/coverlang}}%
@@ -744,23 +742,24 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 }
 
 \newcommand{\ntcovertext}[1][1]{%
+  \defifundef{\mpwidth}{\newlength}
+  \defifundef{\mpheight}{\newlength}%
   \edef\mpwidth{\paperwidth
                 -\expanded{\themargin(\option{/novathesis/docdegree},left)}
                 -\expanded{\themargin(\option{/novathesis/docdegree},right)}}
   \edef\mpheight{\paperheight
                 -\expanded{\themargin(\option{/novathesis/docdegree},top)}
                 -\expanded{\themargin(\option{/novathesis/docdegree},bottom)}}
-  \sbox{\@nt@coverbox}{%
+  \defifundef{\@nt@coverbox}{\newsavebox}%
+  \savebox{\@nt@coverbox}{%
     \begin{minipage}[t][\mpheight][t]{\mpwidth}%
       \@nt@printcovergroup{#1}%
     \end{minipage}%
   }%
-  \pgfmathsetmacro\@nt@xshift{0.5*\mpwidth}
-  \begin{tikzpicture}[remember picture, overlay,, shift=(current page.north west)]
-                      % shift=(\expanded{\themargin(\option{/novathesis/docdegree},left)},
-                      %       \paperheight-\expanded{\themargin(\option{/novathesis/docdegree},top)})]
-    \node[inner sep=0,anchor=north west] 
-            at (\expanded{\themargin(\option{/novathesis/docdegree},left)},-\expanded{\themargin(\option{/novathesis/docdegree},top)})
+  \begin{tikzpicture}[remember picture, overlay, shift=(current page.north west)]
+    \node[inner sep=0,anchor=north west]  at
+            (\expanded{\themargin(\option{/novathesis/docdegree},left)},
+            -\expanded{\themargin(\option{/novathesis/docdegree},top)})
             {\usebox{\@nt@coverbox}};
   \end{tikzpicture}
 }
@@ -836,8 +835,8 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   % #1=code
   % #2=boxname
   % Create temp box if undefined
-  \ifundef{\@mkcvelembox}{\newsavebox{\@mkcvelembox}}{}%
-  \ifundef{\@mkcvelemwidth}{\newlength{\@mkcvelemwidth}}{}%
+  \defifundef{\@mkcvelembox}{\newsavebox}%
+  \defifundef{\@mkcvelemwidth}{\newlength}%
   \ifoptionblank{/@ntcoveropts/width}%
     {\setlength{\@mkcvelemwidth}{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}\relax}}%
     {\option{/@ntcoveropts/width}}%
@@ -856,7 +855,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
           \endminipage%
   \end{lrbox}
   % Create destination boxes if undefined
-  \ifundef{#2}{\newsavebox{#2}}{}%
+  \defifundef{#2}{\newsavebox}%
   \begin{lrbox}{#2}%
     % Add background color if necessary
     \ifoptionblank{/@ntcoveropts/bgcolor}%
@@ -1498,34 +1497,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 % Text style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \AtEndPreamble{%
-  % \typeout{NT AtEndPreamble loading chapstyle and fontstyle}
 \InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.ldf}{}{}%
 \InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/fontstyle}.ldf}{}{}%
-% }
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Compatibility with legacy “template.tex”
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Title
-% \renewcommand{\title}[2][]{\ifthenelse{\isempty{#1}}{\nttitle{#2}}{\nttitle{#1}}}
-% \newcommand{\authorname}{\ntauthorname}
-% \newcommand{\authordegree}{\ntauthordegree}
-% \newcommand{\datemonth}{\ntdatemonth}
-% \newcommand{\dateyear}{\ntdateyear}
-% \newcommand{\adviser}[4][m]{\ntaddperson{adviser}[#1]{#2, #3}}
-% \newcommand{\coadviser}[4][m]{\ntaddperson{coadviser}[#1]{#2, #3}}
-% \newcommand{\committee}[2][m]{\ntaddperson{committee}[#1]{#2}}
-% \newcommand{\dedicatoryfile}[1]{\ntaddfile{dedicatory}{#1}}
-% \newcommand{\acknowledgementsfile}[1]{\ntaddfile{acknowledgements}{#1}}
-% \newcommand{\quotefile}[1]{\ntaddfile{quote}{#1}}
-% \newcommand{\statementfile}[1]{\ntaddfile{statement}{#1}}
-% \newcommand{\abstractfile}[2][pt]{\ntaddfile{abstract}[#1]{#2}}
-% \newcommand{\chapterfile}[1]{\ntaddfile{chapter}{#1}}
-% \newcommand{\addbibfile}[1]{\ntaddfile{bib}{#1}}
-% \newcommand{\glossaryfile}[1]{\ntaddfile{glossaries}[glossary]{#1}}
-% \newcommand{\acronymsfile}[1]{\ntaddfile{glossaries}[acronyms]{#1}}
-% \newcommand{\symbolsfile}[1]{\ntaddfile{glossaries}[symbols]{#1}}
 
