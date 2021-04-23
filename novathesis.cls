@@ -744,10 +744,10 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newcommand{\ntcovertext}[1][1]{%
   \defifundef{\mpwidth}{\newlength}
   \defifundef{\mpheight}{\newlength}%
-  \edef\mpwidth{\paperwidth
+  \setlength{\mpwidth}{\dimexpr\paperwidth
                 -\expanded{\themargin(\option{/novathesis/docdegree},left)}
                 -\expanded{\themargin(\option{/novathesis/docdegree},right)}}
-  \edef\mpheight{\paperheight
+  \setlength{\mpheight}{\dimexpr\paperheight
                 -\expanded{\themargin(\option{/novathesis/docdegree},top)}
                 -\expanded{\themargin(\option{/novathesis/docdegree},bottom)}}
   \defifundef{\@nt@coverbox}{\newsavebox}%
@@ -762,6 +762,19 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
             -\expanded{\themargin(\option{/novathesis/docdegree},top)})
             {\usebox{\@nt@coverbox}};
   \end{tikzpicture}
+}
+
+\newcommand{\@nt@makeboxwithcovertext}[4]{%
+  % #1 = cover ID
+  % #2 = height
+  % #3 = width
+  % #4 = boxname
+  \defifundef{#4}{\newsavebox}%
+  \savebox{#4}{%
+    \begin{minipage}[t][#2][t]{#3}%
+      \@nt@printcovergroup{#1}%
+    \end{minipage}%
+  }%
 }
 
 \newcommand*{\@nt@printcovergroup}[1]{%
