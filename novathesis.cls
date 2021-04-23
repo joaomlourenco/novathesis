@@ -549,23 +549,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 }
 
 %============================================================
-% Cover hooks
-\newcommand*{\@ntaddtocover@iii}[3]{%
-  % \typeout{NT ntaddtocover #3}%
-  % #1 = cover atrtibutes
-  % #2 = the block code
-  % #3 = covers where the code block should be applied
-  \options{/@nt/cover/\@nt@univ/\@nt@schl/#3/.cpush={{#1}=*={#2}}}%
-}
-
-\newcommand*{\ntaddtocover}[3][]{%
-  % #1 = cover atrtibutes
-  % #2 = list of covers where the code block should be applied
-  % #3 = the block code
-  % \typeout{NT ntaddtocover [/@nt/cover/\@nt@univ/\@nt@schl/element=#1]}
-  \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
-}
-
+% Print document “regions”
 \newcommand*{\ntprint}[1]{%
   \IfStrEqCase{#1}{%
     {frontmatter}{\ntprintlist{/@nt/docfrontmatter}}%
@@ -581,9 +565,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 % #1 = frontmatter, mainmatter
 % #2 = list
   \option@setlist{/@nt/doc#1}{#2}%
-  % \options{/@nt/doc#1/.cpush = {x}}%
-  % \options{/@nt/doc#1 = {}}%
-  % \options{/@nt/doc#1/.concat = {#2}}%
 }
 
 
@@ -608,6 +589,24 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 }
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% COVER DEFINITION MACROS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\ntaddtocover}[3][]{%
+  % #1 = cover atrtibutes
+  % #2 = list of covers where the code block should be applied
+  % #3 = the block code
+  % \typeout{NT ntaddtocover [/@nt/cover/\@nt@univ/\@nt@schl/element=#1]}
+  \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
+}
+
+\newcommand*{\@ntaddtocover@iii}[3]{%
+  % \typeout{NT ntaddtocover #3}%
+  % #1 = cover atrtibutes
+  % #2 = the block code
+  % #3 = covers where the code block should be applied
+  \options{/@nt/cover/\@nt@univ/\@nt@schl/#3/.cpush={{#1}=*={#2}}}%
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -692,9 +691,23 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 % FIX BABEL TRANSLATION
 \input{NOVAthesisFiles/fix-babel.tex}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% COVER DEFINITION MACROS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\debuggrid}[1][orange]{%
+  \begin{tikzpicture}[remember picture, semitransparent, overlay, shift=(current page.north west)]%
+        \draw[step=1mm, line width=0.1mm, #1!30!white] 
+            (\expanded{\themargin(\option{/novathesis/docdegree},left)}
+            ,-\expanded{\themargin(\option{/novathesis/docdegree},top)})
+            grid 
+            (\paperwidth-\expanded{\themargin(\option{/novathesis/docdegree},right)}
+            ,-\paperheight+\expanded{\themargin(\option{/novathesis/docdegree},bottom)});
+        \draw[step=5mm, line width=0.2mm, #1!40!white] (current page.north west)
+            grid (current page.south east);
+        \draw[step=1cm, line width=0.3mm, #1!90!white] (current page.north west)
+            grid (current page.south east);
+        \draw[step=5cm, line width=0.5mm, #1!50!white] (current page.north west)
+            grid (current page.south east);
+  \end{tikzpicture}%
+}
+
 \newlength{\mpwidth}%
 \newlength{\mpheight}%
 \newsavebox{\@nt@coverbox}%
@@ -714,21 +727,20 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \egroup%
 }
 
-\newcommand{\debuggrid}[1][orange]{%
-  \begin{tikzpicture}[remember picture, semitransparent, overlay, shift=(current page.north west)]%
-        \draw[step=1mm, line width=0.1mm, #1!30!white] 
-            (\expanded{\themargin(\option{/novathesis/docdegree},left)}
-            ,-\expanded{\themargin(\option{/novathesis/docdegree},top)})
-            grid 
-            (\paperwidth-\expanded{\themargin(\option{/novathesis/docdegree},right)}
-            ,-\paperheight+\expanded{\themargin(\option{/novathesis/docdegree},bottom)});
-        \draw[step=5mm, line width=0.2mm, #1!40!white] (current page.north west)
-            grid (current page.south east);
-        \draw[step=1cm, line width=0.3mm, #1!90!white] (current page.north west)
-            grid (current page.south east);
-        \draw[step=5cm, line width=0.5mm, #1!50!white] (current page.north west)
-            grid (current page.south east);
-  \end{tikzpicture}%
+\newcommand*{\@nt@printthecover}[1]{%
+  % #1=cover number {1, 2}    (1 is the default)
+  \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{%
+    % \typeout{NT printthecover #1}
+    \thispagestyle{empty}%
+    \NTRunHook{cover/#1/begin}%
+    \ntcoverbackground[#1]%
+    \NTRunHook{cover/#1/mid}%
+    \ntcovertext[#1]%
+    \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
+    % \newpage\null%
+    \NTRunHook{cover/#1/end}%
+    \clearforchapter%
+  }{\typeout{NT printthecover #1 undefined}}%
 }
 
 \newcommand{\ntcovertext}[1][1]{%
@@ -753,96 +765,104 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \end{tikzpicture}
 }
 
-\newcommand*{\@nt@printthecover}[1]{%
-  % #1=cover number {1, 2}    (1 is the default)
-  \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{%
-    % \typeout{NT printthecover #1}
-    \thispagestyle{empty}%
-    \NTRunHook{cover/#1/begin}%
-    \ntcoverbackground[#1]%
-    \NTRunHook{cover/#1/mid}%
-    \ntcovertext[#1]%
-    \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
-    % \newpage\null%
-    \NTRunHook{cover/#1/end}%
-    \clearforchapter%
-  }{\typeout{NT printthecover #1 undefined}}%
-}
-
 \newcommand*{\@nt@printcovergroup}[1]{%
   % #1=cover number {1, 2}    (1 is the default)
   \optionlistdo{/@nt/cover/\@nt@univ/\@nt@schl/#1}{%
     % \typeout{NT printcovergroup [##1]}
     % \typeout{NT printcovergroup #1}
-    \@nt@printcoverelement@iv[#1]##1%
+    \@nt@printcoverelement@iv{#1}##1%
   }%
 }
 
 \options{/@ntcoveropts/.new family
-  , status/.new value={},
-  , degree/.new value={},
+  , status/.new value
+  , degree/.new value
+  , alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft}
   , align/.new choice={c, l, r}
   , inalign/.new choice={c, t, b}
-  , height/.new value={}
-  , vspace/.new value={}
-  , hspace/.new value={}
-  , color/.new color={}
-  , defaults/.new style*={align=c, inalign=c, status={}, degree={}, 
-                            height={}, hspace=0pt, vspace=0pt, color={black}}
+  , height/.new value
+  , width/.new value
+  , vspace/.new value
+  , hspace/.new value
+  , newpar/.new toggle
+  , color/.new color
+  , bgcolor/.new color
+  , defaults/.new style*={status={}, degree={}, align=c, inalign=c, height={}, width={}, 
+                          vspace=0pt, hspace=0pt, newpar=true, color={}, bgcolor={}}
   , defaults
 }
 
-\def\@nt@printcoverelement@iv[#1]#2=*=#3{%
-  % #1=cover number {1, 2}    (1 is the default)
+\def\@nt@printcoverelement@iv#1#2=*=#3{%
+  % #1=cover number {1, 2}
   % #2=conve element options
   % #3=cover element code
-  \ifthenelse{\equal{#3}{}}{}{%
+  \ifblank{#3}{}{%
+    \def\@nt@covernumber{#1}%
     \options{/@ntcoveropts,defaults}%.
     \options{/@ntcoveropts,#2}%
-    \color{\option{/@ntcoveropts/color}}% 
-    % \StrCount{\option{/@ntcoveropts/cover}}{#1}[\@nt@incover]%
+    \options{/@ntcoveropts,alignmap=\option{/@ntcoveropts/align}}%
     \StrCount{\option{/@ntcoveropts/status}}{\option{/novathesis/docstatus}}[\@nt@instatus]%
     \StrCount{\option{/@ntcoveropts/degree}}{\option{/novathesis/docdegree}}[\@nt@indegree]%
     \ifthenelse{%
               \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND
               \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}
-      {\@nt@printcoverelement@ii{#1}{#3}}%
+      {\@nt@printcoverelement@ii{#3}}%
+      % {\hspace*{\themargin(\option{/novathesis/docdegree},left)}\@nt@printcoverelement@ii{#3}}%
       {}%
   }%
 }
 
-\newsavebox{\@nt@coverelement}
-\newcommand{\@nt@printcoverelement@ii}[2]{%
+\newcommand{\@nt@printcoverelement@ii}[1]{%
+  % #1=cover number
   % #1=code
-  %
-  % If vspace is integer then replace by \vfill
-  % otherwise is absolute verstical space
-  \def\@nt@covernumber{#1}%
+  % If vspace is integer then replace by n*\vfill
+  % otherwise it is absolute verstical space
   \IfInteger{\option{/@ntcoveropts/vspace}}%
-    % {\ntrepeat\to{\option{/@ntcoveropts/vspace}}\do{\vfill}}%
-    {\vskip 0pt plus \option{/@ntcoveropts/vspace}fill}
+    {\vskip 0pt plus \option{/@ntcoveropts/vspace}fill}%
     {\vspace*{\option{/@ntcoveropts/vspace}}}%
   %
   % Typeset contents in a box
-  \begin{lrbox}{\@nt@coverelement}
-    \IfStrEq{\option{/@ntcoveropts/height}}{}%
-      {\minipage[t]{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}}}%
-      {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}}}%
-        \IfStrEqCase{\option{/@ntcoveropts/align}}{%
-          {l}{\raggedright}%
-          {c}{\centering}%
-          {r}{\raggedleft}%
-        }%
-        #2%
-    \endminipage%
-  \end{lrbox}
+  \@nt@makeboxwithcoverelement@ii{#1}{\@nt@coverelement}
   \noindent%
   \hspace*{\option{/@ntcoveropts/hspace}}%
-  \iftoggle{/novathesis/debugcover}{% IF in debug mode surround element in box
-    \setlength{\fboxsep}{0pt}%
+  \iftoggle{/novathesis/debugcover}{% If in debug mode surround element in box
+    \setlength{\fboxsep}{0pt}\hspace*{-\fboxrule}\vspace*{-\fboxrule}%
     \fbox{\usebox{\@nt@coverelement}}%
   }{\usebox{\@nt@coverelement}}%
-  \par%
+  \iftoggle{/@ntcoveropts/newpar}{\expandafter\par}{}%
+}
+
+\newcommand{\@nt@makeboxwithcoverelement@ii}[2]{%
+  % #1=code
+  % #2=boxname
+  % Create temp box if undefined
+  \ifundef{\@mkcvelembox}{\newsavebox{\@mkcvelembox}}{}%
+  \ifundef{\@mkcvelemwidth}{\newlength{\@mkcvelemwidth}}{}%
+  \ifoptionblank{/@ntcoveropts/width}%
+    {\setlength{\@mkcvelemwidth}{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}\relax}}%
+    {\option{/@ntcoveropts/width}}%
+  \ifoptionblank{/@ntcoveropts/height}%
+    {}%
+    {\edefoption{/@ntcoveropts/height}\@mkcvelemheight}%
+  % Save into temporary box
+  \begin{lrbox}{\@mkcvelembox}%
+    % Minipage definition is different if element height is given or not
+      % \begin{minipage}[t][\@mkcvelemheight][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}%
+      \ifoptionblank{/@ntcoveropts/height}%
+          {\minipage[t][][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
+          {\minipage[t][\@mkcvelemheight][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
+              \option{/@ntcoveropts/alignmap}%
+              #1%
+          \endminipage%
+  \end{lrbox}
+  % Create destination boxes if undefined
+  \ifundef{#2}{\newsavebox{#2}}{}%
+  \begin{lrbox}{#2}%
+    % Add background color if necessary
+    \ifoptionblank{/@ntcoveropts/bgcolor}%
+      {\usebox{\@mkcvelembox}}%
+      {\colorbox{\option{/@ntcoveropts/bgcolor}}{\usebox{\@mkcvelembox}}}%
+  \end{lrbox}%
 }
 
 \newenvironment{tinywhite}[1][white]
