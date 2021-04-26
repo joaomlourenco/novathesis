@@ -9,6 +9,7 @@
 
 % load babel package and options before erewhon
 \usepackage[p,osf,scaled=.98,space]{erewhon} % scaling by .98 not really necessary
+% \usepackage[scaled=.98]{erewhon-math} % scaling by .98 not really necessary
 \usepackage[varqu,varl]{inconsolata} % typewriter
 \usepackage[type1,scaled=.95]{cabin} % sans serif like Gill Sans
 \usepackage[utopia,vvarbb]{newtxmath}

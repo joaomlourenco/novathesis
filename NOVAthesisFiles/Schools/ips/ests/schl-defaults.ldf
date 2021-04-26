@@ -26,13 +26,13 @@
 
 % Cover background images
 \frontpageimage():={ESTS-JPG} % don't add the .jpg extension
-\thesiscover(phd,front):={}
-\thesiscover(phdplan,front):={}
-\thesiscover(phdprop,front):={}
-\thesiscover(msc,front):={}
-\thesiscover(mscplan,front):={}
-\thesiscover(bsc,front):={}
-\thesiscover(plain,front):={}
+\thesiscover(phd,front,image):={}
+\thesiscover(phdplan,front,image):={}
+\thesiscover(phdprop,front,image):={}
+\thesiscover(msc,front,image):={}
+\thesiscover(mscplan,front,image):={}
+\thesiscover(bsc,front,image):={}
+\thesiscover(plain,front,image):={}
 
 % Spine info
 \spine(logo):={logoESTS}

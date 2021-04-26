@@ -227,28 +227,28 @@ indicada.\\[1ex]
 \committeeorder(all):={c,r,m}%  
 
 % Cover background images
-% \thesiscover(phd,front):={capa-debug.pdf}
-% \thesiscover(phd,2):={capa2-debug.pdf}
-% \thesiscover(phdplan,front):={cover-phd-std}
-% \thesiscover(phdprop,front):={cover-phd-std}
-% \thesiscover(msc,front):={capa-debug.pdf}
-% \thesiscover(mscplan,front):={cover-msc-std}
-% \thesiscover(bsc,front):={cover-bsc-std}
-% \thesiscover(plain,front):={cover-plain-std}
-% \thesiscover(phd,cdfront):={cd-cover-phd}
-% \thesiscover(phd,cdinlay):={cd-inlay-phd}
-% \thesiscover(phdplan,cdfront):={cd-cover-phd}
-% \thesiscover(phdplan,cdinlay):={cd-inlay-phd}
-% \thesiscover(phdprop,cdfront):={cd-cover-phd}
-% \thesiscover(phdprop,cdinlay):={cd-inlay-phd}
-% \thesiscover(msc,cdfront):={cd-cover-msc}
-% \thesiscover(msc,cdinlay):={cd-inlay-msc}
-% \thesiscover(mscplan,cdfront):={cd-cover-msc}
-% \thesiscover(mscplan,cdinlay):={cd-inlay-msc}
-% \thesiscover(bsc,cdfront):={cd-cover-msc}
-% \thesiscover(bsc,cdinlay):={cd-inlay-msc}
-% \thesiscover(plain,cdfront):={cd-cover-msc}
-% \thesiscover(plain,cdinlay):={cd-inlay-msc}
+% \thesiscover(phd,front,image):={capa-debug.pdf}
+% \thesiscover(phd,2,image):={capa2-debug.pdf}
+% \thesiscover(phdplan,front,image):={cover-phd-std}
+% \thesiscover(phdprop,front,image):={cover-phd-std}
+% \thesiscover(msc,front,image):={capa-debug.pdf}
+% \thesiscover(mscplan,front,image):={cover-msc-std}
+% \thesiscover(bsc,front,image):={cover-bsc-std}
+% \thesiscover(plain,front,image):={cover-plain-std}
+% \thesiscover(phd,cdfront,image):={cd-cover-phd}
+% \thesiscover(phd,cdinlay,image):={cd-inlay-phd}
+% \thesiscover(phdplan,cdfront,image):={cd-cover-phd}
+% \thesiscover(phdplan,cdinlay,image):={cd-inlay-phd}
+% \thesiscover(phdprop,cdfront,image):={cd-cover-phd}
+% \thesiscover(phdprop,cdinlay,image):={cd-inlay-phd}
+% \thesiscover(msc,cdfront,image):={cd-cover-msc}
+% \thesiscover(msc,cdinlay,image):={cd-inlay-msc}
+% \thesiscover(mscplan,cdfront,image):={cd-cover-msc}
+% \thesiscover(mscplan,cdinlay,image):={cd-inlay-msc}
+% \thesiscover(bsc,cdfront,image):={cd-cover-msc}
+% \thesiscover(bsc,cdinlay,image):={cd-inlay-msc}
+% \thesiscover(plain,cdfront,image):={cd-cover-msc}
+% \thesiscover(plain,cdinlay,image):={cd-inlay-msc}
 
 % Spine info
 \spine(logo,university):={\theuniversity(logo,RGB)}

@@ -39,27 +39,27 @@
 \committeeorder(all):={c,r,m}% 
 
 % Cover background images
-\thesiscover(phd,front):={ESEP-cover}
-\thesiscover(phdplan,front):={ESEP-cover}
-\thesiscover(phdprop,front):={ESEP-cover}
-\thesiscover(msc,front):={ESEP-cover}
-\thesiscover(mscplan,front):={ESEP-cover}
-\thesiscover(bsc,front):={ESEP-cover}
-\thesiscover(plain,front):={ESEP-cover}
-\thesiscover(phd,cdfront):={}
-\thesiscover(phd,cdinlay):={}
-\thesiscover(phdplan,cdfront):={}
-\thesiscover(phdplan,cdinlay):={}
-\thesiscover(phdprop,cdfront):={}
-\thesiscover(phdprop,cdinlay):={}
-\thesiscover(msc,cdfront):={}
-\thesiscover(msc,cdinlay):={}
-\thesiscover(mscplan,cdfront):={}
-\thesiscover(mscplan,cdinlay):={}
-\thesiscover(bsc,cdfront):={}
-\thesiscover(bsc,cdinlay):={}
-\thesiscover(plain,cdfront):={}
-\thesiscover(plain,cdinlay):={}
+\thesiscover(phd,front,image):={ESEP-cover}
+\thesiscover(phdplan,front,image):={ESEP-cover}
+\thesiscover(phdprop,front,image):={ESEP-cover}
+\thesiscover(msc,front,image):={ESEP-cover}
+\thesiscover(mscplan,front,image):={ESEP-cover}
+\thesiscover(bsc,front,image):={ESEP-cover}
+\thesiscover(plain,front,image):={ESEP-cover}
+\thesiscover(phd,cdfront,image):={}
+\thesiscover(phd,cdinlay,image):={}
+\thesiscover(phdplan,cdfront,image):={}
+\thesiscover(phdplan,cdinlay,image):={}
+\thesiscover(phdprop,cdfront,image):={}
+\thesiscover(phdprop,cdinlay,image):={}
+\thesiscover(msc,cdfront,image):={}
+\thesiscover(msc,cdinlay,image):={}
+\thesiscover(mscplan,cdfront,image):={}
+\thesiscover(mscplan,cdinlay,image):={}
+\thesiscover(bsc,cdfront,image):={}
+\thesiscover(bsc,cdinlay,image):={}
+\thesiscover(plain,cdfront,image):={}
+\thesiscover(plain,cdinlay,image):={}
 
 % Spine info
 \spine(logo):={ESEP-logo_horizontal}

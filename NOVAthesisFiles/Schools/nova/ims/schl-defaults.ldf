@@ -21,25 +21,25 @@
 \committeeorder(all):={c,r,m}% 
 
 % Cover background images
-\thesiscover(phd,front):={nova-ims-front-cover-phd}
-\thesiscover(phd,back):={nova-ims-back-cover}
-\thesiscover(phd,spine):={nova-ims-book-spine}
-\thesiscover(phdprop,front):={nova-ims-front-cover-phd}
-\thesiscover(phdprop,back):={nova-ims-back-cover}
-\thesiscover(phdprop,spine):={nova-ims-book-spine}
-\thesiscover(phdplan,front):={nova-ims-front-cover-phd}
-\thesiscover(phdplan,back):={nova-ims-back-cover}
-\thesiscover(phdplan,spine):={nova-ims-book-spine}
-\thesiscover(msc,front):={nova-ims-front-cover-megi}
-\thesiscover(msc,back):={nova-ims-back-cover}
-\thesiscover(msc,spine):={nova-ims-book-spine}
-\thesiscover(mscplan,front):={nova-ims-front-cover-megi}
-\thesiscover(mscplan,back):={nova-ims-back-cover}
-\thesiscover(mscplan,spine):={nova-ims-book-spine}
-\thesiscover(bsc,front):={nova-ims-front-cover-generic}
-\thesiscover(bsc,back):={nova-ims-back-cover}
-\thesiscover(bsc,spine):={nova-ims-book-spine}
-\thesiscover(plain,front):={nova-ims-front-cover-generic}
+\thesiscover(phd,front,image):={nova-ims-front-cover-phd}
+\thesiscover(phd,back,image):={nova-ims-back-cover}
+\thesiscover(phd,spine,image):={nova-ims-book-spine}
+\thesiscover(phdprop,front,image):={nova-ims-front-cover-phd}
+\thesiscover(phdprop,back,image):={nova-ims-back-cover}
+\thesiscover(phdprop,spine,image):={nova-ims-book-spine}
+\thesiscover(phdplan,front,image):={nova-ims-front-cover-phd}
+\thesiscover(phdplan,back,image):={nova-ims-back-cover}
+\thesiscover(phdplan,spine,image):={nova-ims-book-spine}
+\thesiscover(msc,front,image):={nova-ims-front-cover-megi}
+\thesiscover(msc,back,image):={nova-ims-back-cover}
+\thesiscover(msc,spine,image):={nova-ims-book-spine}
+\thesiscover(mscplan,front,image):={nova-ims-front-cover-megi}
+\thesiscover(mscplan,back,image):={nova-ims-back-cover}
+\thesiscover(mscplan,spine,image):={nova-ims-book-spine}
+\thesiscover(bsc,front,image):={nova-ims-front-cover-generic}
+\thesiscover(bsc,back,image):={nova-ims-back-cover}
+\thesiscover(bsc,spine,image):={nova-ims-book-spine}
+\thesiscover(plain,front,image):={nova-ims-front-cover-generic}
 
 % Rename Doctor degree
 \degreestr(phd,m,en):={Doctor}
@@ -292,5 +292,5 @@ of the requirements for the degree of %
 }%
 
 % \ntaddtocover[cover=back]{back}{%
-%   \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},back)]
+%   \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},back,image)]
 % }
