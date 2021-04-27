@@ -23,13 +23,13 @@
 \committeeorder(all):={c,r,a,m}% 
 
 % Cover background images
-\thesiscover(phd,front,image):={}
-\thesiscover(phdplan,front,image):={}
-\thesiscover(phdprop,front,image):={}
-\thesiscover(msc,front,image):={}
-\thesiscover(mscplan,front,image):={}
-\thesiscover(bsc,front,image):={}
-\thesiscover(plain,front,image):={}
+\thesiscover(phd,1-1,image):={}
+\thesiscover(phdplan,1-1,image):={}
+\thesiscover(phdprop,1-1,image):={}
+\thesiscover(msc,1-1,image):={}
+\thesiscover(mscplan,1-1,image):={}
+\thesiscover(bsc,1-1,image):={}
+\thesiscover(plain,1-1,image):={}
 
 % Spine info
 \spine(logo):={logoNOVA}
@@ -86,15 +86,6 @@
 % The pages should be numbered consecutively at the bottom centre of the
 % page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{%
-  \makepagestyle{novathesis@myvf}%
-  \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
-  \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
-  \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
-  \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
-  \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
-  \pagestyle{novathesis@myvf}%
-}
 
 % Use romman numerals for Appendixes
 % \patchcmd{\HyOrg@appendix}{\@Alph}{\@Roman}{}{}

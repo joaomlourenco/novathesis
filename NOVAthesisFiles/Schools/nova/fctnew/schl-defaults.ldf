@@ -28,32 +28,32 @@
 \committeeorder(all):={c,r,m}%  
 
 % Cover background images
-\thesiscover(phd,front):={phd_front_cover}
-\thesiscover(phd,back):={phd_back_cover}
-\thesiscover(phd,spine):={phd_spine}
+\thesiscover(phd,1-1,image):={phd_front_cover}
+\thesiscover(phd,N-2,image):={phd_back_cover}
+\thesiscover(phd,spine,image):={phd_spine}
 
-\thesiscover(phdprop,front):={phd_front_cover}
-\thesiscover(phdprop,back):={phd_back_cover}
-\thesiscover(phdprop,spine):={phd_spine}
+\thesiscover(phdprop,1-1,image):={phd_front_cover}
+\thesiscover(phdprop,N-2,image):={phd_back_cover}
+\thesiscover(phdprop,spine,image):={phd_spine}
 
-\thesiscover(phdplan,front):={phd_front_cover}
-\thesiscover(phdplan,back):={phd_back_cover}
-\thesiscover(phphdpland,spine):={phd_spine}
+\thesiscover(phdplan,1-1,image):={phd_front_cover}
+\thesiscover(phdplan,N-2,image):={phd_back_cover}
+\thesiscover(phphdpland,spine,image):={phd_spine}
 
-\thesiscover(msc,front):={msc_front_cover}
-\thesiscover(msc,back):={msc_back_cover}
-\thesiscover(msc,spine):={msc_spine}
+\thesiscover(msc,1-1,image):={msc_front_cover}
+\thesiscover(msc,N-2,image):={msc_back_cover}
+\thesiscover(msc,spine,image):={msc_spine}
 
-\thesiscover(mscplan,front):={msc_front_cover}
-\thesiscover(mscplan,back):={msc_back_cover}
-\thesiscover(mscplan,spine):={msc_spine}
+\thesiscover(mscplan,1-1,image):={msc_front_cover}
+\thesiscover(mscplan,N-2,image):={msc_back_cover}
+\thesiscover(mscplan,spine,image):={msc_spine}
 
-\thesiscover(bsc,front):={}
-\thesiscover(plain,front):={}
+\thesiscover(bsc,1-1,image):={}
+\thesiscover(plain,1-1,image):={}
 
-\thesiscover(phd,cdfront):={cd-cover-phd}
+\thesiscover(phd,cd1-1,image):={cd-cover-phd}
 \thesiscover(phd,cdinlay):={cd-inlay-phd}
-\thesiscover(msc,cdfront):={cd-cover-msc}
+\thesiscover(msc,cd1-1,image):={cd-cover-msc}
 \thesiscover(msc,cdinlay):={cd-inlay-msc}
 
 % Spine info
@@ -140,7 +140,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover pages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NTAddToHook{cover/1/begin}{%
+\NTAddToHook{cover/1-1/pretext}{%
+  \color{white}\sffamily%
+}
+\NTAddToHook{cover/2-1/pretext}{%
   \sffamily%
 }
 
@@ -151,14 +154,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Department name
-\ntaddtocover[color=white,vspace=1.25mm,align=l,hspace=6.1cm,height=2.0cm,inalign=t]{1}{%
+\ntaddtocover[color=white,vspace=1.25mm,align=l,hspace=6.1cm,height=2.0cm,inalign=t]{1-1}{%
   % \ntcoverbackground%
   \fontsize{14}{14}\selectfont%
   \MakeTextUppercase{\thedepartment(\option{/novathesis/coverlang})}
 }
 
 % Title of Dissertation (PhD) / The author name (MSc)
-\ntaddtocover[color={white},vspace=5.3cm,align=l,height=3.0cm,inalign=c]{1}{%
+\ntaddtocover[color={white},vspace=5.3cm,align=l,height=3.0cm,inalign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{22}{21}\selectfont
     \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
@@ -176,7 +179,7 @@
 }
 
 % The author name (PhD) / Title of Dissertation (MSc)
-\ntaddtocover[color={white},vspace=3.0cm,align=l,height=3cm,inalign=c]{1}{%
+\ntaddtocover[color={white},vspace=3.0cm,align=l,height=3cm,inalign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{17}{17}\selectfont
     \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]
@@ -194,7 +197,7 @@
 }
 
 % Date
-\ntaddtocover[color={white},vspace=1,align=l]{1}{%
+\ntaddtocover[color={white},vspace=1,align=l]{1-1}{%
   \fontsize{14}{13}\selectfont
   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[3mm]
   \theuniversity(\option{/novathesis/coverlang})\\
@@ -206,7 +209,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % LOGOS
-\ntaddtocover[color=black, vspace=1.0mm,hspace=-2.6cm,align=l,height=2.0cm,inalign=t]{2}{%
+\ntaddtocover[color=black, vspace=1.0mm,hspace=-2.6cm,align=l,height=2.0cm,inalign=t]{2-1}{%
   \vspace*{-4mm}
   \begin{minipage}[b]{8.7cm}
   \includegraphics[width=2.15cm]{\expanded{\theuniversity(logo)}}%
@@ -223,7 +226,7 @@
 }
 
 % Title of Dissertation (PhD)
-\ntaddtocover[vspace=3cm,align=l]{2}{%
+\ntaddtocover[vspace=3cm,align=l]{2-1}{%
   \fontsize{17}{17}\selectfont
   \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
   \ifaadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
@@ -234,7 +237,7 @@
 }
 
 % The author name
-\ntaddtocover[vspace=1,align=l]{2}{%
+\ntaddtocover[vspace=1,align=l]{2-1}{%
   \fontsize{14}{14}\selectfont
   \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]
   \fontsize{14}{14}\selectfont
@@ -242,13 +245,13 @@
 }
 
 % % The presentation text
-% \ntaddtocover[vspace=2,align=l]{2}{%
+% \ntaddtocover[vspace=2,align=l]{2-1}{%
 %   \fontsize{12}{12}\selectfont%
 %   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}%
 % }
 %
 % The advisers
-\ntaddtocover[vspace=1,align=l]{2}{%
+\ntaddtocover[vspace=1,align=l]{2-1}{%
   \def\theadviserstrfont{\bfseries}
   \def\thecoadviserstrfont{\bfseries}
   \fontsize{11}{11}\selectfont
@@ -256,7 +259,7 @@
 }
 
 % The committee
-\ntaddtocover[vspace=1,hspace=3.5cm,align=l]{2}{%
+\ntaddtocover[vspace=1,hspace=3.5cm,align=l]{2-1}{%
   \def\thecommitteetitlestrfont{\bfseries}
   \def\thecommitteememberstrfont{\bfseries}
   \fontsize{10}{10}\selectfont
@@ -264,7 +267,7 @@
 }
 
 % Date
-\ntaddtocover[vspace=1,align=l]{2}{%
+\ntaddtocover[vspace=1,align=l]{2-1}{%
   \fontsize{10}{10}\selectfont
   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[1.25ex]
   \theuniversity(\option{/novathesis/coverlang})\\
