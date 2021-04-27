@@ -304,6 +304,7 @@
 % \AddToShipoutPictureFG*{%
 %       \AtStockLowerCenter{{\usebox{\@nt@spine@box}}}%
 % }%
+\thispagestyle{empty}%
 \begin{tikzpicture}[remember picture, overlay]
   \node[inner sep=0] at (current page.center) {\usebox{\@nt@spine@box}};
 \end{tikzpicture}
