@@ -23,19 +23,19 @@
 \committeeorder(all):={c,r,a,m}% 
 
 % Cover background images
-\thesiscover(phd,1-1,image):={}
-\thesiscover(phdplan,1-1,image):={}
-\thesiscover(phdprop,1-1,image):={}
-\thesiscover(msc,1-1,image):={}
-\thesiscover(mscplan,1-1,image):={}
-\thesiscover(bsc,1-1,image):={}
-\thesiscover(plain,1-1,image):={}
+% \thesiscover(phd,1-1,image):={}
+% \thesiscover(phdplan,1-1,image):={}
+% \thesiscover(phdprop,1-1,image):={}
+% \thesiscover(msc,1-1,image):={}
+% \thesiscover(mscplan,1-1,image):={}
+% \thesiscover(bsc,1-1,image):={}
+% \thesiscover(plain,1-1,image):={}
 
 % Spine info
-\spine(logo):={logoNOVA}
+\spine(logo):={\theuniversity(logo)}
 \spine(author):={\theauthorshortname}
-\spine(title):={\thetitle}
-\spine(year):={\thedateyear}
+\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(year):={\thentdateyear}
 
 % Set margins for "normal" pages
 \margin(screen,top):={2.5cm}
@@ -103,23 +103,26 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NTAddToHook{cover/1/begin}{%
+\NTAddToHook{cover/1-1/pretext}{%
     \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
   \pagecolor{white}%
+    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+}
+\NTAddToHook{cover/1-2/pretext}{%
     \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
 }
 
 \definecolor{fcshblue}{RGB}{25,61,108}% Background title color
 
 
-\ntaddtocover[align=l, vspace=1.0cm]{1}{%
+\ntaddtocover[align=l, vspace=1.0cm]{1-1}{%
   \null%
   \begin{tabular*}{{0.5\stockwidth}}[c]{@{\hspace*{0.8cm}}l@{}}%
     \includegraphics[width=9cm]{novologo_cores_crop}%
   \end{tabular*}%
 }
 
-\ntaddtocover[align=l, vspace=1.0cm]{2}{%
+\ntaddtocover[align=l, vspace=1.0cm]{2-1}{%
   \null%
   \begin{tabular*}{{0.5\stockwidth}}[c]{@{\hspace*{0.8cm}}l@{}}%
     \includegraphics[width=9cm]{novologo_cores_crop}%
@@ -131,36 +134,36 @@
 
 
 % % Title of Dissertation
-\ntaddtocover[vspace=1]{1,2}{%
+\ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
 }
 
 % Author name
-\ntaddtocover[vspace=1]{1,2}{%
+\ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\theauthorname}}%
 }
 
 % Degree
-\ntaddtocover[vspace=1]{1,2}{%
+\ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\thepresentationtext}}%
 }
 
 % Date
-\ntaddtocover[vspace=1]{1,2}{%
+\ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{fcshblue}{%%
       \textbf{\thentdatemonth, \thentdateyear}
   }%
 }
 
-\ntaddtocover[vspace=2.0cm]{1}{%
+\ntaddtocover[vspace=2.0cm]{1-1}{%
   \null
 }
 
-\ntaddtocover[vspace=1cm]{2}{%
+\ntaddtocover[vspace=1cm]{2-1}{%
  \raisebox{-1cm}{%
    \textcolor{fcshblue}{\rule{\stockwidth}{0.75cm}}%
  }%
