@@ -39,27 +39,34 @@
 \committeeorder(all):={c,r,m}% 
 
 % Cover background images
-\thesiscover(phd,front,image):={ESEP-cover}
-\thesiscover(phdplan,front,image):={ESEP-cover}
-\thesiscover(phdprop,front,image):={ESEP-cover}
-\thesiscover(msc,front,image):={ESEP-cover}
-\thesiscover(mscplan,front,image):={ESEP-cover}
-\thesiscover(bsc,front,image):={ESEP-cover}
-\thesiscover(plain,front,image):={ESEP-cover}
-\thesiscover(phd,cdfront,image):={}
-\thesiscover(phd,cdinlay,image):={}
-\thesiscover(phdplan,cdfront,image):={}
-\thesiscover(phdplan,cdinlay,image):={}
-\thesiscover(phdprop,cdfront,image):={}
-\thesiscover(phdprop,cdinlay,image):={}
-\thesiscover(msc,cdfront,image):={}
-\thesiscover(msc,cdinlay,image):={}
-\thesiscover(mscplan,cdfront,image):={}
-\thesiscover(mscplan,cdinlay,image):={}
-\thesiscover(bsc,cdfront,image):={}
-\thesiscover(bsc,cdinlay,image):={}
-\thesiscover(plain,cdfront,image):={}
-\thesiscover(plain,cdinlay,image):={}
+\ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
+\thesiscover(phd,1-1,bgcolor):={white}
+\thesiscover(phd,1-1,image):={ESEP-cover}
+\thesiscover(phdplan,1-1,bgcolor):={white}
+\thesiscover(phdplan,1-1,image):={ESEP-cover}
+\thesiscover(phdprop,1-1,image):={ESEP-cover}
+\thesiscover(msc,1-1,bgcolor):={white}
+\thesiscover(msc,1-1,image):={ESEP-cover}
+\thesiscover(mscplan,1-1,bgcolor):={white}
+\thesiscover(mscplan,1-1,image):={ESEP-cover}
+\thesiscover(bsc,1-1,bgcolor):={white}
+\thesiscover(bsc,1-1,image):={ESEP-cover}
+\thesiscover(plain,1-1,bgcolor):={white}
+\thesiscover(plain,1-1,image):={ESEP-cover}
+% \thesiscover(phd,cdfront,image):={}
+% \thesiscover(phd,cdinlay,image):={}
+% \thesiscover(phdplan,cdfront,image):={}
+% \thesiscover(phdplan,cdinlay,image):={}
+% \thesiscover(phdprop,cdfront,image):={}
+% \thesiscover(phdprop,cdinlay,image):={}
+% \thesiscover(msc,cdfront,image):={}
+% \thesiscover(msc,cdinlay,image):={}
+% \thesiscover(mscplan,cdfront,image):={}
+% \thesiscover(mscplan,cdinlay,image):={}
+% \thesiscover(bsc,cdfront,image):={}
+% \thesiscover(bsc,cdinlay,image):={}
+% \thesiscover(plain,cdfront,image):={}
+% \thesiscover(plain,cdinlay,image):={}
 
 % Spine info
 \spine(logo):={ESEP-logo_horizontal}
@@ -129,26 +136,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NTAddToHook{cover/1/begin}{%
-  \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
-  \pagecolor{white}%
-}
 
 % ESEP logo
-\ntaddtocover[vspace=2.2cm]{1,2}{%
+\ntaddtocover[vspace=2.2cm]{1-1,2-1}{%
   \noindent%
   \fontsize{15}{15}\selectfont%
   \textbf{\MakeTextUppercase{\theschool(\option{/novathesis/coverlang})}}
 }
 
 % Degree name
-\ntaddtocover[vspace=0.5cm]{1,2}{%
+\ntaddtocover[vspace=0.5cm]{1-1,2-1}{%
   \fontsize{15}{15}\selectfont
   \thedegreename(\option{/novathesis/coverlang})
 }
 
 % Title of Dissertation 1
-\ntaddtocover[vspace=6.5cm, height=4cm, inalign=t]{1}{%
+\ntaddtocover[vspace=6.5cm, height=4cm, inalign=t]{1-1}{%
     \centering%
     \fontsize{15}{15}\selectfont%
     \thedoctitle(\option{/novathesis/coverlang},main,cover,caps)\\[1ex]%
@@ -157,7 +160,7 @@
 }
 
 % % Title of Dissertation 2
-\ntaddtocover[vspace=6.5cm, height=4cm, inalign=t]{2}{%
+\ntaddtocover[vspace=6.5cm, height=4cm, inalign=t]{2-1}{%
     \centering%
     \fontsize{15}{15}\selectfont\scshape%
     \thedoctitle(\option{/novathesis/coverlang},main,cover)\\[1ex]%
@@ -165,7 +168,7 @@
 }
 
 % Advisers 2
-\ntaddtocover[vspace=2cm]{2}{%
+\ntaddtocover[vspace=2cm]{2-1}{%
   % \fontseries{mc}
   \parbox[t][4cm]{\textwidth}{%
     \centering%
@@ -173,20 +176,20 @@
     \parbox{0.80\textwidth}{\ntprintadvisers[0.75]}%
   }%
 }
-\ntaddtocover[vspace=2cm]{1}{%
+\ntaddtocover[vspace=2cm]{1-1}{%
   \parbox[t][4cm]{\textwidth}{%
   ~%
   }%
 }
 
 % Author name
-\ntaddtocover[vspace=1]{1,2}{%
+\ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont
   \textbf{\theauthorname}
 }
 
 % Date
-\ntaddtocover[vspace=2]{1,2}{%
+\ntaddtocover[vspace=2]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont
     \textbf{\thentdatemonth, \thentdateyear}
 }
