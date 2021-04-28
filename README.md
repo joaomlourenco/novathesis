@@ -31,7 +31,7 @@
 * [List of Supported Schools](#list-of-supported-schools)
     * [Showcase](#showcase)
 * [Disclaimer](#disclaimer)
-* [Word Templates](#word-templates)
+* [Microsoft Word Templates](#word-templates)
 
 
 --------
@@ -116,7 +116,7 @@ If you couldn't find what you were looking for, ask for help in:
 * The [Facebook page](https://www.facebook.com/groups/novathesis/) (PT or EN) at https://www.facebook.com/groups/novathesis.
 * You may also give a look at the [novathesis blog](https://novathesis.blogspot.pt) at [https://novathesis.blogspot.pt](https://novathesis.blogspot.pt).
 
-Those are the right places to learn about LaTeX and ask for help!  *Please don't ask for help by email! I will not answer them…*
+The [GitHub Discussions page](https://github.com/joaomlourenco/novathesis/discussions) and the [Facebook page](https://www.facebook.com/groups/novathesis/) are the right places to ask for help and support!  *Please don't try to contact me directly for questions or support, by email or any other channel! I will not answer such requests…*
 
 ### Suggestions, Bugs and Feature Requests
 
