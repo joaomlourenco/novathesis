@@ -239,6 +239,7 @@
 \newbox{\@nt@spine@box}%
 
 \newcommand{\ntprintspine}{%
+  \thispagestyle{empty}%
   \make@spine@box@logo{}{\thespine(logo)}%
   \ifaadefined{spine}(logotwo){%
 	\make@spine@box@logotwo{}{\thespine(logotwo)}%
@@ -247,7 +248,7 @@
   \make@spine@box@titleauthor%
   \savebox{\@nt@spine@box}{%
 	\rotatebox{90}{%
-  \setlength{\fboxsep}{0pt}
+  \setlength{\fboxsep}{0pt}%
 	  \framebox[\stockheight]{%
 		~~\hfill
 		\parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@date@width}%
