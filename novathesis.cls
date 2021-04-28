@@ -751,11 +751,14 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   % #1 = cover ID (major-minor)
   \bgroup
     \def\@nt@covernumber{#1}%
+    \ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1,textcolor)%
+        {\color{\thethesiscover(\option{/novathesis/docdegree},#1,textcolor)}}{}
     \ntselectlang{\option{/novathesis/coverlang}}%
-    \@ntmakeboxwithcover{#1}{\@fullcover@box}%
     \options{/@ntcoveropts/bookmark=#1}%
     \phantomsection\pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
-    \@nt@flushcoverbox{#1}{\@fullcover@box}%
+    \@ntmakeboxwithcover{#1}{\@fullcover@box}%
+    % \@nt@flushcoverbox{#1}{\@fullcover@box}%
+    \newpage%
   \egroup%
 }
 
@@ -766,7 +769,8 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \@ntmakecoverbgcolor{#1}{\@cover@bgcolor@box}%
   \@ntmakecoverimage{#1}{\@cover@image@box}%
   \@ntmakecovertext{#1}{\@cover@text@box}%
-  \begin{lrbox}{#2}%
+  \thispagestyle{empty}%
+  % \begin{lrbox}{#2}%
     \begin{tikzpicture}[remember picture, overlay]
       \node[inner sep=0, anchor=north]  at (current page.north)  {\usebox{\@cover@bgcolor@box}};
       \node[inner sep=0, anchor=north]  at (current page.north)  {\usebox{\@cover@image@box}};
@@ -776,22 +780,27 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
             , yshift=-\expanded{\themargin(\option{/novathesis/docdegree},top)}]  
                       at (current page.north west)  {\usebox{\@cover@text@box}};
     \end{tikzpicture}%
-  \end{lrbox}%
-}
-
-\newcommand*{\@nt@flushcoverbox}[2]{%
-  % #1 = cover ID (major-minor)
-  % #2 Cover box anme
-  \thispagestyle{empty}%
-  \begin{tikzpicture}[remember picture, overlay]
-    \node[inner sep=0,anchor=north]  at (current page.north)  {\usebox{#2}};
-  \end{tikzpicture}%
+  % \end{lrbox}%
   \iftoggle{/novathesis/debugcover}{%
     \NTRunHook{cover/#1/pregrid}%
     \debuggrid%
     \NTRunHook{cover/#1/postgrid}%
   }{}%
 }
+
+% \newcommand*{\@nt@flushcoverbox}[2]{%
+%   % #1 = cover ID (major-minor)
+%   % #2 Cover box anme
+%   \thispagestyle{empty}%
+%   \begin{tikzpicture}[remember picture, overlay]
+%     \node[inner sep=0,anchor=north]  at (current page.north)  {\usebox{#2}};
+%   \end{tikzpicture}%
+%   \iftoggle{/novathesis/debugcover}{%
+%     \NTRunHook{cover/#1/pregrid}%
+%     \debuggrid%
+%     \NTRunHook{cover/#1/postgrid}%
+%   }{}%
+% }
 
 \newcommand*{\@ntmakecoverbgcolor}[2]{%
   % #1 = cover ID (major-minor)
