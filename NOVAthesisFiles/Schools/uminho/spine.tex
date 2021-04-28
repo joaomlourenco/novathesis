@@ -63,15 +63,16 @@
 }
 
 \newcommand{\ntprintspine}{%
-  \NTRunHook{spine/pre}%
   % \printlen%
   \color{white}%
+  \thispagestyle{empty}
+  \NTRunHook{spine/pre}%
   % \savegeometry{maintext}%
   % \newgeometry{textwidth=\novathesis@spinewidth,textheight=\paperheight}%
   \begin{tikzpicture}[remember picture, overlay]
     % \node[inner sep=0] at (current page.center) {\fill[red] rectangle (4,4)};
   \ifphddoc{%
-    \node[inner sep=0,shape=rectangle,fill=covergrey,minimum height =\paperheight,minimum width =\novathesis@spinewidth] at (current page.center) {~};
+    \node[inner sep=0,shape=rectangle,fill=uminhoGREY,minimum height =\paperheight,minimum width =\novathesis@spinewidth] at (current page.center) {~};
   }{%
     % \node[inner sep=0,shape=rectangle,draw=black,fill=white,minimum height =\paperheight,minimum width =\novathesis@spinewidth] at (current page.center) {~};
   }%
@@ -92,9 +93,9 @@
     \node[inner sep=0] at (current page.center) {\rotatebox{90}{\spinetext}};
     \ifmscdoc{%
         \node[inner sep=0,xshift=-0.1pt-0.5\novathesis@spinewidth] at (current page.center)
-                                 {\color{covergrey}\rule{0.1pt}{\paperheight}};
+                                 {\color{uminhoGREY}\rule{0.1pt}{\paperheight}};
         \node[inner sep=0,xshift=0.1pt+0.5\novathesis@spinewidth] at (current page.center)
-                                 {\color{covergrey}\rule{0.1pt}{\paperheight}};
+                                 {\color{uminhoGREY}\rule{0.1pt}{\paperheight}};
     }{}
   \end{tikzpicture}%
   \NTRunHook{spine/mid}%
