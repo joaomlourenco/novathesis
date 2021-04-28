@@ -546,7 +546,9 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
         }%
   }}}{%
     \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/@nt/list/indexes/.cpush={%
-            \printnoidxglossaries%
+            \iftoggle{/novathesis/glsxindy}%
+                {\printglossaries}%
+                {\printnoidxglossaries}%
     }}}{%
       \options{/@nt/list/indexes/.cpush={\csuse{#1}}}%
     }%

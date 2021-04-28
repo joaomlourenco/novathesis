@@ -191,7 +191,10 @@
   \setglossarystyle{xltabular}%
   \setabbreviationstyle[acronym]{long-short}%
   \renewcommand{\glsnamefont}[1]{\textbf{#1}}%
-  \makenoidxglossaries% use TeX to sort
+  \iftoggle{/novathesis/glsxindy}%
+      {\makeglossaries}% use xindy to sort
+      {\makenoidxglossaries}% use TeX to sort
+  
   %--------------------------------
   % “Process gnumberlist” option - after glossaries
   \iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}%
