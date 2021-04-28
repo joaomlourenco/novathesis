@@ -1,4 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% uminho/univ-defaults.ldf
 %% NOVA thesis configuration file
 %%
@@ -24,6 +24,7 @@
 % --------------------------------------------------------
 % PRINT ORDER FOR frontmatter AND mainmatter
 \ntsetprintorder{frontmatter}{
+  copyrightmessage,
   acknowledgements,% (*) Print the acknowledgments
   statement,       % The statement page
   quote,           % (*) Print the quote
@@ -35,7 +36,7 @@
 %   chapters,        % Print document chapters
 %   bib,             % Print the bibliography.  Change to
 %                    %    “bib[title=⟨title⟩]” to redefine the title!
-%   appendixes,      % Print appendixes, if any!
+%   appendices,      % Print appendices, if any!
 %   annexes,         % Print annexes, if any!
 % }
 
@@ -60,7 +61,7 @@
 \andstring(es):={\\}
 \andstring(de):={\\}
 
-\ntpagestyle(frontmatter):={plain}
+
 
 %-----------------------------------------------------------------
 % local strings
@@ -139,54 +140,16 @@ indicada.\\[1ex]
   \licenseThis%
 }
 
-\newcommand*{\umcopyrightmessage}{%
-  \thispagestyle{\thentpagestyle(frontmatter)}%
+\newcommand*{\ntprintcopyrightmessage}{%
+  \thispagestyle{empty}%
   \ntselectlang{\option{/novathesis/copyrightlang}}%
   \currentpdfbookmark{Copyright}{bmcopyright}
+  \null\vfill%
   \noindent%
   \theumcopyrighttext(\option{/novathesis/copyrightlang})%
-  \ntselectlang{\option{/novathesis/mainlang}}
+  \vfill%
 }
 
-
-%-----------------------------------------------------------------
-% STATEMENT OF INTEGRITY
-%-----------------------------------------------------------------
-
-\assocarray{statementofintegritytextstr}
-
-\statementofintegritytextstr(pt):={%
-  \begin{center}%
-    \textbf{DECLARAÇÃO DE INTEGRIDADE}%
-  \end{center}%
-  \indent Declaro ter atuado com integridade na elaboração do presente trabalho académico e confirmo que não recorri à prática de plágio nem a qualquer forma de utilização indevida ou falsificação de informações ou resultados em nenhuma das etapas conducente à sua elaboração.\\[1ex]
-  \indent Mais declaro que conheço e que respeitei o Código de Conduta Ética da \theuniversity(\option{/novathesis/mainlang}).
-  }
-
-
-\statementofintegritytextstr(en):={%
-  \begin{center}%
-    \textbf{STATEMENT OF INTEGRITY}%
-  \end{center}%
-  \indent I hereby declare having conducted this academic work with integrity. I confirm that I have not used plagiarism or any form of undue use of information or falsification of results along the process leading to its elaboration.\\[1ex]
-  \indent I further declare that I have fully acknowledged the Code of Ethical Conduct of the \theuniversity(\option{/novathesis/mainlang}).
-}
-
-\assocarray{signatureline}
-
-\signatureline(pt):={%
-  \begin{tabular}{c@{~}c}%
-  \rule{10em}{0.5pt}, & \rule{16em}{0.5pt}\\[-1ex]%
-  (\theplacestr(\option{/novathesis/mainlang})) & (\thedatestr(\option{/novathesis/mainlang}))%
-  \end{tabular}%
-  \vspace{2cm}%
-  \begin{center}%
-    \rule{25em}{0.5pt}\\[-1ex]%
-    (\theauthorname)%
-  \end{center}%
-}
-
-\signatureline(en):={\thesignatureline(pt)}
 
 
 %-----------------------------------------------------------------
@@ -215,6 +178,11 @@ indicada.\\[1ex]
 %-----------------------------------------------------------------
 % Remainder customization
 %-----------------------------------------------------------------
+
+\ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
+\definecolor{uminhoGREY}{RGB}{152,152,154}%{98989a}
+\definecolor{uminhoRED}{RGB}{167,52,57}%{a73439}
+
 % Univesity
 \university(pt):={Universidade do Minho}
 \university(en):={Universidade do Minho}
@@ -227,28 +195,40 @@ indicada.\\[1ex]
 \committeeorder(all):={c,r,m}%  
 
 % Cover background images
-% \thesiscover(phd,front):={capa-debug.pdf}
-% \thesiscover(phd,2):={capa2-debug.pdf}
-% \thesiscover(phdplan,front):={cover-phd-std}
-% \thesiscover(phdprop,front):={cover-phd-std}
-% \thesiscover(msc,front):={capa-debug.pdf}
-% \thesiscover(mscplan,front):={cover-msc-std}
-% \thesiscover(bsc,front):={cover-bsc-std}
-% \thesiscover(plain,front):={cover-plain-std}
-% \thesiscover(phd,cdfront):={cd-cover-phd}
-% \thesiscover(phd,cdinlay):={cd-inlay-phd}
-% \thesiscover(phdplan,cdfront):={cd-cover-phd}
-% \thesiscover(phdplan,cdinlay):={cd-inlay-phd}
-% \thesiscover(phdprop,cdfront):={cd-cover-phd}
-% \thesiscover(phdprop,cdinlay):={cd-inlay-phd}
-% \thesiscover(msc,cdfront):={cd-cover-msc}
-% \thesiscover(msc,cdinlay):={cd-inlay-msc}
-% \thesiscover(mscplan,cdfront):={cd-cover-msc}
-% \thesiscover(mscplan,cdinlay):={cd-inlay-msc}
-% \thesiscover(bsc,cdfront):={cd-cover-msc}
-% \thesiscover(bsc,cdinlay):={cd-inlay-msc}
-% \thesiscover(plain,cdfront):={cd-cover-msc}
-% \thesiscover(plain,cdinlay):={cd-inlay-msc}
+\thesiscover(phd,1-1,textcolor):={white}
+\thesiscover(phd,1-1,bgcolor):={uminhoGREY}
+\thesiscover(phd,1-2,bgcolor):={uminhoRED}
+\thesiscover(phd,2-1,textcolor):={uminhoGREY}
+\thesiscover(phd,N-1,bgcolor):={uminhoRED}
+\thesiscover(phd,N-2,bgcolor):={uminhoGREY}
+\thesiscover(msc,1-1,textcolor):={uminhoGREY}
+\thesiscover(msc,1-1,bgcolor):={white}
+\thesiscover(msc,1-2,bgcolor):={uminhoGREY}
+\thesiscover(msc,2-1,textcolor):={uminhoGREY}
+\thesiscover(msc,N-1,bgcolor):={uminhoGREY}
+\thesiscover(msc,N-2,bgcolor):={white}
+
+% \thesiscover(phd,2,image):={capa2-debug.pdf}
+% \thesiscover(phdplan,front,image):={cover-phd-std}
+% \thesiscover(phdprop,front,image):={cover-phd-std}
+% \thesiscover(msc,front,image):={capa-debug.pdf}
+% \thesiscover(mscplan,front,image):={cover-msc-std}
+% \thesiscover(bsc,front,image):={cover-bsc-std}
+% \thesiscover(plain,front,image):={cover-plain-std}
+% \thesiscover(phd,cdfront,image):={cd-cover-phd}
+% \thesiscover(phd,cdinlay,image):={cd-inlay-phd}
+% \thesiscover(phdplan,cdfront,image):={cd-cover-phd}
+% \thesiscover(phdplan,cdinlay,image):={cd-inlay-phd}
+% \thesiscover(phdprop,cdfront,image):={cd-cover-phd}
+% \thesiscover(phdprop,cdinlay,image):={cd-inlay-phd}
+% \thesiscover(msc,cdfront,image):={cd-cover-msc}
+% \thesiscover(msc,cdinlay,image):={cd-inlay-msc}
+% \thesiscover(mscplan,cdfront,image):={cd-cover-msc}
+% \thesiscover(mscplan,cdinlay,image):={cd-inlay-msc}
+% \thesiscover(bsc,cdfront,image):={cd-cover-msc}
+% \thesiscover(bsc,cdinlay,image):={cd-inlay-msc}
+% \thesiscover(plain,cdfront,image):={cd-cover-msc}
+% \thesiscover(plain,cdinlay,image):={cd-inlay-msc}
 
 % Spine info
 \spine(logo,university):={\theuniversity(logo,RGB)}
@@ -323,63 +303,15 @@ indicada.\\[1ex]
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\definecolor{covergrey}{RGB}{152,152,154}%{98989a}
-\definecolor{coverred}{RGB}{167,52,57}%{a73439}
-
-\newcommand*{\phdtextcolor}{white}
-\newcommand*{\msctextcolor}{covergrey}
-\newcommand*{\settextcolor}{%
-  \if\@nt@covernumber1\relax%
-    \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
-  \else%
-    \color{covergrey}%
-  \fi%
-}
-
-\NTAddToHook{cover/1/begin}{%
-  \ifphddoc{\pagecolor{covergrey}\color{\phdtextcolor}}{\pagecolor{white}\color{\msctextcolor}}%
-}
-
-\NTAddToHook{cover/1/end}{%
-  \addtocounter{page}{-2}%
-  \newpage%
-  \thispagestyle{empty}%
-  \ifphddoc{\pagecolor{coverred}}{\pagecolor{covergrey}}%
-  ~%
-}
-
-\NTAddToHook{cover/2/begin}{%
-  \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
-  \pagecolor{white}%
-}
-
-\NTAddToHook{cover/2/end}{%
-  \newpage%
-  \thispagestyle{empty}%
-  \color{black}%
-  \null%
-  \vfill%
-  \umcopyrightmessage%
-  \vfill%
-}
-
-\NTAddToHook{cover/preback/begin}{%
-  \ifphddoc{\pagecolor{coverred}}{\pagecolor{covergrey}}%
-  ~\newpage%
-}
-
-\NTAddToHook{cover/back/begin}{%
-  \ifphddoc{\pagecolor{covergrey}}{\pagecolor{white}}%
-}
 
 % University and School logos
-\ntaddtocover[vspace=-0.6mm,align=l,height=2.6cm]{1}{%
+\ntaddtocover[vspace=-0.6mm,align=l,height=2.6cm]{1-1}{%
   \includegraphics[height=2.5cm]{\theuniversity(logo,RGB)}%
   \includegraphics[height=2.5cm]{\theschool(logo,RGB)}%
 }
 
 % University and School logos
-\ntaddtocover[vspace=-0.6mm,,align=l,height=2.6cm]{2}{%
+\ntaddtocover[vspace=-0.6mm,,align=l,height=2.6cm]{2-1}{%
   \hspace*{-0.5pt}%
   \includegraphics[height=2.5cm]{\theuniversity(logo,GRAY)}%
   \hspace{1pt}%
@@ -388,8 +320,7 @@ indicada.\\[1ex]
 
 
 % University and School names
-\ntaddtocover[vspace=1cm,align=l,height=5.25cm,inalign=t]{1,2}{%
-  \settextcolor%
+\ntaddtocover[vspace=1cm,align=l,height=5.25cm,inalign=t]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
   \addfontfeature{LetterSpace=2.5}%
   \textbf{\theuniversity(\option{/novathesis/coverlang})}%
@@ -399,24 +330,21 @@ indicada.\\[1ex]
 }
 
 % Author name
-\ntaddtocover[vspace=0mm,align=l]{1,2}{%
-  \settextcolor%
+\ntaddtocover[vspace=0mm,align=l]{1-1,2-1}{%
   \fontsize{16}{16}\selectfont%
   \addfontfeature{LetterSpace=3.5}%
   \theauthorname%
 }
 
 % Title of Dissertation
-\ntaddtocover[vspace=0.8cm,align=l,height=7.5cm,inalign=t]{1,2}{%
-  \settextcolor%
+\ntaddtocover[vspace=0.8cm,align=l,height=7.5cm,inalign=t]{1-1,2-1}{%
   \fontsize{16}{16}\selectfont%
   \addfontfeature{LetterSpace=2.9}%
   \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}
 }
 
 % Degree info
-\ntaddtocover[vspace=0mm,align=l,height=2.4cm,inalign=t]{2}{%
-  \settextcolor%
+\ntaddtocover[vspace=0mm,align=l,height=2.4cm,inalign=t]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \thedoctype(\option{/novathesis/coverlang},\option{/novathesis/docdegree})%
   \\%
@@ -426,33 +354,26 @@ indicada.\\[1ex]
 }
 
 % Advisers
-\ntaddtocover[vspace=0,align=l]{2}{%
-  \settextcolor%
+\ntaddtocover[vspace=0,align=l]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \theadvisersrt(\option{/novathesis/coverlang})\\%
   \textbf{\ntprintadvisersaslist}%
 }
 
 % Committee — only print the committee for the main classes
-% \ntaddtocover[align=r, vspace=1]{1}{%
+% \ntaddtocover[align=r, vspace=1]{1-1}{%
 %   \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
 %   \fontsize{10}{10}\selectfont%
 %   \ntprintcommittee%
 % }
 
 % Date
-\ntaddtocover[vspace=1,align=l]{1,2}{%
-  \settextcolor%
+\ntaddtocover[vspace=1,align=l]{1-1,2-1}{%
   \fontsize{11}{11}\selectfont%
   % \ifdraftdoc
     % \textbf{DRAFT: \today}
   % \else
     \thentdatemonth\theofstr(\option{/novathesis/coverlang})\thentdateyear
   % \fi
-}
-
-
-\ntaddtocover{back}{%
-  ~%
 }
 

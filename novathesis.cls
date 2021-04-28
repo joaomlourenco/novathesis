@@ -102,6 +102,8 @@
 %% GENERAL PURPOSE MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\newcommand*{\defifundef}[2]{\ifundef{#1}{#2{#1}}{}}
+
 % --------------------------------------------------------
 % If necessary create, then initialize the counter
 \newcommand*{\setnewcounter}[2]{%
@@ -321,7 +323,10 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 \assocarray{abstractorder}
 \assocarray{frontmatterstring}
+\assocarray{backmatterstring}
+\assocarray{spinestring}
 \assocarray{coverstring}
+\assocarray{coversheetstring}
 \assocarray{backcoverstring}
 \assocarray{copyrightstring}
 \assocarray{statementstring}
@@ -359,6 +364,8 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \providecommand*{\thecommitteetitlestrfont}{}
 \assocarray{committeememberstr}
 \providecommand*{\thecommitteememberstrfont}{}
+\providecommand*{\thecommitteenamefont}{}
+\providecommand*{\thecommitteeremainderfont}{\\[-0.5ex]\itshape\scriptsize}
 
 \assocarray{dissertationstr}
 \providecommand*{\thedissertationstrfont}{}
@@ -381,8 +388,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 \assocarray{doctitle}
 
-\assocarray{ntpagestyle}
-\ntpagestyle(frontmatter):={empty}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -536,7 +541,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
         \iftoggle{/novathesis/tocintoc}{%
             \tableofcontents%
         }{%
-            \phantomsection\pdfbookmark{\contentsname}{toctarget}%
+            \phantomsection\pdfbookmark[1]{\contentsname}{toctarget}%
             \hypertarget{toctarget}{\tableofcontents*}%
         }%
   }}}{%
@@ -549,28 +554,13 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 }
 
 %============================================================
-% Cover hooks
-\newcommand*{\@ntaddtocover@iii}[3]{%
-  % \typeout{NT ntaddtocover #3}%
-  % #1 = cover atrtibutes
-  % #2 = the block code
-  % #3 = covers where the code block should be applied
-  \options{/@nt/cover/\@nt@univ/\@nt@schl/#3/.cpush={{#1}=*={#2}}}%
-}
-
-\newcommand*{\ntaddtocover}[3][]{%
-  % #1 = cover atrtibutes
-  % #2 = list of covers where the code block should be applied
-  % #3 = the block code
-  % \typeout{NT ntaddtocover [/@nt/cover/\@nt@univ/\@nt@schl/element=#1]}
-  \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
-}
-
+% Print document “regions”
 \newcommand*{\ntprint}[1]{%
   \IfStrEqCase{#1}{%
     {frontmatter}{\ntprintlist{/@nt/docfrontmatter}}%
     {mainmatter}{\ntprintlist{/@nt/docmainmatter}}%
   }[\csuse{ntprint#1}]%
+  \ignorespaces%
 }
 
 \newcommand*{\ntprintlist}[1]{%
@@ -581,11 +571,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 % #1 = frontmatter, mainmatter
 % #2 = list
   \option@setlist{/@nt/doc#1}{#2}%
-  % \options{/@nt/doc#1/.cpush = {x}}%
-  % \options{/@nt/doc#1 = {}}%
-  % \options{/@nt/doc#1/.concat = {#2}}%
 }
-
 
 % --------------------------------------------------------
 % DEFAULT VALUES FOR frontmatter AND mainmatter
@@ -603,11 +589,29 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   chapters,        % Print document chapters
   bib,             % Print the bibliography.  Change to
                    %    “bib[title=⟨title⟩]” to redefine the title!
-  appendixes,      % Print appendixes, if any!
+  appendices,      % Print appendices, if any!
   annexes,         % Print annexes, if any!
 }
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% COVER DEFINITION MACROS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\ntaddtocover}[3][]{%
+  % #1 = cover atrtibutes
+  % #2 = list of covers where the code block should be applied
+  % #3 = the block code
+  % \typeout{NT ntaddtocover [/@nt/cover/\@nt@univ/\@nt@schl/element=#1]}
+  \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
+}
+
+\newcommand*{\@ntaddtocover@iii}[3]{%
+  % \typeout{NT ntaddtocover #3}%
+  % #1 = cover atrtibutes
+  % #2 = the block code
+  % #3 = covers where the code block should be applied
+  \options{/@nt/cover/\@nt@univ/\@nt@schl/#3/.cpush={{#1}=*={#2}}}%
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -616,10 +620,10 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \prependtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/Images/}}%
 \prependtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/}}%
 \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/univ-defaults.ldf}{}%
-{\PackageWarining{novathesis}%
+{\PackageWarning{novathesis}%
                    {Missing file “univ-defaults.ldf” for ”\@nt@univ”}}%
 \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/schl-defaults.ldf}{}%
-{\PackageWarining{novathesis}%
+{\PackageWarning{novathesis}%
                    {Missing file “schl-defaults.ldf” for ”\@nt@univ/\@nt@schl”}}%
 
 
@@ -640,7 +644,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
 \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
 \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
-\pagestyle{novathesis@myvf}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -692,28 +696,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 % FIX BABEL TRANSLATION
 \input{NOVAthesisFiles/fix-babel.tex}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% COVER DEFINITION MACROS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newlength{\mpwidth}%
-\newlength{\mpheight}%
-\newsavebox{\@nt@coverbox}%
-
-\newcommand*{\ntprintfrontcover}{%
-  \bgroup%
-    \ntselectlang{\option{/novathesis/coverlang}}%
-    \pdfbookmark{\thefrontmatterstring(\option{/novathesis/coverlang})}{bmfrontmatter}%
-    \subpdfbookmark{\thecoverstring(\option{/novathesis/coverlang})}{bmcover}%
-    \@nt@printthecover{1}%
-    \iftoggle{/novathesis/secondcover}{% SECOND COVER TRUE
-            %If cover 2 is defined use its definition
-            \clearforchapter%
-            \@nt@printthecover{2}%
-      }{}% NO SECOND COVER
-    \clearforchapter%
-  \egroup%
-}
-
 \newcommand{\debuggrid}[1][orange]{%
   \begin{tikzpicture}[remember picture, semitransparent, overlay, shift=(current page.north west)]%
         \draw[step=1mm, line width=0.1mm, #1!30!white] 
@@ -731,118 +713,249 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \end{tikzpicture}%
 }
 
-\newcommand{\ntcovertext}[1][1]{%
-  \edef\mpwidth{\paperwidth
-                -\expanded{\themargin(\option{/novathesis/docdegree},left)}
-                -\expanded{\themargin(\option{/novathesis/docdegree},right)}}
-  \edef\mpheight{\paperheight
-                -\expanded{\themargin(\option{/novathesis/docdegree},top)}
-                -\expanded{\themargin(\option{/novathesis/docdegree},bottom)}}
-  \sbox{\@nt@coverbox}{%
-    \begin{minipage}[t][\mpheight][t]{\mpwidth}%
-      \@nt@printcovergroup{#1}%
-    \end{minipage}%
-  }%
-  \pgfmathsetmacro\@nt@xshift{0.5*\mpwidth}
-  \begin{tikzpicture}[remember picture, overlay,, shift=(current page.north west)]
-                      % shift=(\expanded{\themargin(\option{/novathesis/docdegree},left)},
-                      %       \paperheight-\expanded{\themargin(\option{/novathesis/docdegree},top)})]
-    \node[inner sep=0,anchor=north west] 
-            at (\expanded{\themargin(\option{/novathesis/docdegree},left)},-\expanded{\themargin(\option{/novathesis/docdegree},top)})
-            {\usebox{\@nt@coverbox}};
-  \end{tikzpicture}
+\newcommand{\ntprintbackcover}{%
+  \phantomsection\pdfbookmark[0]{\thebackmatterstring(\option{/novathesis/coverlang})}{bmbackmatter}%
+  \ntprintcoverpair{N}%
 }
 
-\newcommand*{\@nt@printthecover}[1]{%
-  % #1=cover number {1, 2}    (1 is the default)
+\newcommand{\ntprintcovers}[1][1,2]{%
+  \phantomsection\pdfbookmark[0]{\thefrontmatterstring(\option{/novathesis/coverlang})}{bmfrontmatter}%
+  \forcsvlist{\ntprintcoverpair}{#1}%
+}
+
+\newcommand{\ntprintcoverpair}[1]{%
+  \IfStrEq{#1}{2}{%
+    \iftoggle{/novathesis/secondcover}{%
+      \ntprintcoversingle{#1}{1}%
+      \ntprintcoversingle{#1}{2}%
+    }{}%
+  }{%
+    \ntprintcoversingle{#1}{1}%
+    \ntprintcoversingle{#1}{2}%
+  }
+  \clearforchapter%
+}
+
+\newcommand{\ntprintcoversingle}[2]{%
+  % #1 = major cover ID
+  \IfStrEq{#2}{2}{%
+    \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{empty}\null\newpage}}{\def\@nt@newpage{}}%
+  }{\def\@nt@newpage{}}%
+  \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1-#2}{\@nt@newpage\@ntprintcover@i{#1-#2}}%
+  {\ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,bgcolor){\@nt@newpage\@ntprintcover@i{#1-#2}}%
+  {\ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,image){\@nt@newpage\@ntprintcover@i{#1-#2}}%
+  {}}}%
+}
+
+\newcommand{\@ntprintcover@i}[1]{%
+  % #1 = cover ID (major-minor)
+  \bgroup
+    \def\@nt@covernumber{#1}%
+    \ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1,textcolor)%
+        {\color{\thethesiscover(\option{/novathesis/docdegree},#1,textcolor)}}{}
+    \ntselectlang{\option{/novathesis/coverlang}}%
+    \options{/@ntcoveropts/bookmark=#1}%
+    \phantomsection\pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
+    \@ntmakeboxwithcover{#1}{\@fullcover@box}%
+    % \@nt@flushcoverbox{#1}{\@fullcover@box}%
+    \newpage%
+  \egroup%
+}
+
+\newcommand{\@ntmakeboxwithcover}[2]{%
+  % #1 = cover ID (major-minor)
+  % #2 = box name
+  \defifundef{#2}{\newsavebox}%
+  \@ntmakecoverbgcolor{#1}{\@cover@bgcolor@box}%
+  \@ntmakecoverimage{#1}{\@cover@image@box}%
+  \@ntmakecovertext{#1}{\@cover@text@box}%
+  \thispagestyle{empty}%
+  % \begin{lrbox}{#2}%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[inner sep=0, anchor=north]  at (current page.north)  {\usebox{\@cover@bgcolor@box}};
+      \node[inner sep=0, anchor=north]  at (current page.north)  {\usebox{\@cover@image@box}};
+      \node[inner sep=0
+            , anchor=north west
+            , xshift=\expanded{\themargin(\option{/novathesis/docdegree},left)}
+            , yshift=-\expanded{\themargin(\option{/novathesis/docdegree},top)}]  
+                      at (current page.north west)  {\usebox{\@cover@text@box}};
+    \end{tikzpicture}%
+  % \end{lrbox}%
+  \iftoggle{/novathesis/debugcover}{%
+    \NTRunHook{cover/#1/pregrid}%
+    \debuggrid%
+    \NTRunHook{cover/#1/postgrid}%
+  }{}%
+}
+
+% \newcommand*{\@nt@flushcoverbox}[2]{%
+%   % #1 = cover ID (major-minor)
+%   % #2 Cover box anme
+%   \thispagestyle{empty}%
+%   \begin{tikzpicture}[remember picture, overlay]
+%     \node[inner sep=0,anchor=north]  at (current page.north)  {\usebox{#2}};
+%   \end{tikzpicture}%
+%   \iftoggle{/novathesis/debugcover}{%
+%     \NTRunHook{cover/#1/pregrid}%
+%     \debuggrid%
+%     \NTRunHook{cover/#1/postgrid}%
+%   }{}%
+% }
+
+\newcommand*{\@ntmakecoverbgcolor}[2]{%
+  % #1 = cover ID (major-minor)
+  % #2 = box name
+  \defifundef{#2}{\newsavebox}%
+  \ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1,bgcolor)%
+      {\savebox{#2}{\@ntcoverbgcolor{#1}}}{}
+}
+
+\newcommand*{\@ntcoverbgcolor}[1]{%
+  % #1 = cover ID (major-minor)
+  \NTRunHook{cover/#1/prebgcolor}%
+  \begingroup%
+    \color{\thethesiscover(\option{/novathesis/docdegree},#1,bgcolor)}%
+    \rule{\paperwidth}{\paperheight}%
+  \endgroup%
+  \NTRunHook{cover/#1/postgcolor}%
+}
+
+\newcommand*{\@ntmakecoverimage}[2]{%
+  % #1 = cover ID (major-minor)
+  % #2 = box name
+  \defifundef{#2}{\newsavebox}%
+  \ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1,image)%
+      {\savebox{#2}{\@ntcoverimage{#1}}}{}
+}
+
+\newcommand*{\@ntcoverimage}[1]{%
+  % #1 = cover ID (major-minor)
+  \NTRunHook{cover/#1/preimage}%
+  \includegraphics[width=\paperwidth,height=\paperheight]%
+                  {\thethesiscover(\option{/novathesis/docdegree},#1,image)}%
+  \NTRunHook{cover/#1/postimage}%
+}
+
+\newcommand{\@ntmakecovertext}[2]{%
+  % #1 = cover ID (major-minor)
+  % #2 = box name
+  \defifundef{#2}{\newsavebox}%
   \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{%
-    % \typeout{NT printthecover #1}
-    \thispagestyle{empty}%
-    \NTRunHook{cover/#1/begin}%
-    \ntcoverbackground[#1]%
-    \NTRunHook{cover/#1/mid}%
-    \ntcovertext[#1]%
-    \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
-    % \newpage\null%
-    \NTRunHook{cover/#1/end}%
-    \clearforchapter%
-  }{\typeout{NT printthecover #1 undefined}}%
+    \begin{lrbox}{#2}%
+      \begin{minipage}[l]
+                      [\dimexpr\paperheight
+                                    -\themargin(\option{/novathesis/docdegree},top)%
+                                    -\themargin(\option{/novathesis/docdegree},bottom)%
+                      ]
+                      {\dimexpr\paperwidth
+                                    -\themargin(\option{/novathesis/docdegree},left)%
+                                    -\themargin(\option{/novathesis/docdegree},right)%
+                      }%
+        \@ntcovertext{#1}%
+      \end{minipage}%
+    \end{lrbox}%
+  }{}
 }
 
-\newcommand*{\@nt@printcovergroup}[1]{%
-  % #1=cover number {1, 2}    (1 is the default)
-  \optionlistdo{/@nt/cover/\@nt@univ/\@nt@schl/#1}{%
-    % \typeout{NT printcovergroup [##1]}
-    % \typeout{NT printcovergroup #1}
-    \@nt@printcoverelement@iv[#1]##1%
-  }%
+\newcommand{\@ntcovertext}[1]{%
+  % #1 = cover ID (major-minor)
+  \NTRunHook{cover/#1/pretext}%
+  \optionlistdo{/@nt/cover/\@nt@univ/\@nt@schl/#1}{\@ntcoverelement@iii{#1}##1}%
+  \NTRunHook{cover/#1/posttext}%
 }
 
-\options{/@ntcoveropts/.new family
-  , status/.new value={},
-  , degree/.new value={},
-  , align/.new choice={c, l, r}
-  , inalign/.new choice={c, t, b}
-  , height/.new value={}
-  , vspace/.new value={}
-  , hspace/.new value={}
-  , color/.new color={}
-  , defaults/.new style*={align=c, inalign=c, status={}, degree={}, 
-                            height={}, hspace=0pt, vspace=0pt, color={black}}
-  , defaults
-}
-
-\def\@nt@printcoverelement@iv[#1]#2=*=#3{%
-  % #1=cover number {1, 2}    (1 is the default)
-  % #2=conve element options
-  % #3=cover element code
-  \ifthenelse{\equal{#3}{}}{}{%
+\def\@ntcoverelement@iii#1#2=*=#3{%
+  % #1 = cover ID (major-minor)
+  % #2 = cover element options
+  % #3 = cover element code
+  \ifblank{#3}{}{%
     \options{/@ntcoveropts,defaults}%.
     \options{/@ntcoveropts,#2}%
-    \color{\option{/@ntcoveropts/color}}% 
-    % \StrCount{\option{/@ntcoveropts/cover}}{#1}[\@nt@incover]%
+    \options{/@ntcoveropts,alignmap=\option{/@ntcoveropts/align}}%
     \StrCount{\option{/@ntcoveropts/status}}{\option{/novathesis/docstatus}}[\@nt@instatus]%
     \StrCount{\option{/@ntcoveropts/degree}}{\option{/novathesis/docdegree}}[\@nt@indegree]%
     \ifthenelse{%
               \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND
               \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}
-      {\@nt@printcoverelement@ii{#1}{#3}}%
+      {\@ntcoverelement@ii{#1}{#3}}%
       {}%
   }%
 }
 
-\newsavebox{\@nt@coverelement}
-\newcommand{\@nt@printcoverelement@ii}[2]{%
-  % #1=code
-  %
-  % If vspace is integer then replace by \vfill
-  % otherwise is absolute verstical space
-  \def\@nt@covernumber{#1}%
+\options{/@ntcoveropts/.new family
+  , bookmark/.new choice = {1-1=\thecoverstring(\option{/novathesis/coverlang})
+                          , 1-2={}
+                          , 2-1=\thecoversheetstring(\option{/novathesis/coverlang})
+                          . 2-2={}
+                          , N-1={}
+                          , N-2=\thebackcoverstring(\option{/novathesis/coverlang})
+                          , spine=\thespinestring(\option{/novathesis/coverlang})}
+  , status/.new value
+  , degree/.new value
+  , alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft}
+  , align/.new choice={c, l, r}
+  , inalign/.new choice={c, t, b}
+  , height/.new value
+  , width/.new value
+  , vspace/.new value
+  , hspace/.new value
+  , newpar/.new toggle
+  , color/.new color
+  , bgcolor/.new color
+  , defaults/.new style*={status={}, degree={}, align=c, inalign=c, height={}, width={}, 
+                          vspace=0pt, hspace=0pt, newpar=true, color={}, bgcolor={}}
+  , defaults
+}
+
+\newcommand{\@ntcoverelement@ii}[2]{%
+  % #1 = cover ID (major-minor)
+  % #2 = code
+  % If vspace is integer then replace by n*\vfill
+  % otherwise it is absolute verstical space
   \IfInteger{\option{/@ntcoveropts/vspace}}%
-    % {\ntrepeat\to{\option{/@ntcoveropts/vspace}}\do{\vfill}}%
-    {\vskip 0pt plus \option{/@ntcoveropts/vspace}fill}
+    {\vskip 0pt plus \option{/@ntcoveropts/vspace}fill}%
     {\vspace*{\option{/@ntcoveropts/vspace}}}%
   %
   % Typeset contents in a box
-  \begin{lrbox}{\@nt@coverelement}
-    \IfStrEq{\option{/@ntcoveropts/height}}{}%
-      {\minipage[t]{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}}}%
-      {\minipage[t][\option{/@ntcoveropts/height}][\option{/@ntcoveropts/inalign}]{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}}}%
-        \IfStrEqCase{\option{/@ntcoveropts/align}}{%
-          {l}{\raggedright}%
-          {c}{\centering}%
-          {r}{\raggedleft}%
-        }%
-        #2%
-    \endminipage%
-  \end{lrbox}
+  \@nt@makeboxwithcoverelement@iii{#1}{#2}{\@nt@coverelement}%
   \noindent%
   \hspace*{\option{/@ntcoveropts/hspace}}%
-  \iftoggle{/novathesis/debugcover}{% IF in debug mode surround element in box
-    \setlength{\fboxsep}{0pt}%
+  \iftoggle{/novathesis/debugcover}{% If in debug mode surround element in box
+    \setlength{\fboxsep}{0pt}\hspace*{-\fboxrule}\vspace*{-\fboxrule}%
     \fbox{\usebox{\@nt@coverelement}}%
   }{\usebox{\@nt@coverelement}}%
-  \par%
+  \iftoggle{/@ntcoveropts/newpar}{\expandafter\par}{}%
+}
+
+\newcommand{\@nt@makeboxwithcoverelement@iii}[3]{%
+  % #1 = code
+  % #2 = boxname
+  % Create temp box if undefined
+  \defifundef{\@mkcvelemwidth}{\newlength}%
+  \ifoptionblank{/@ntcoveropts/width}%
+    {\setlength{\@mkcvelemwidth}{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}\relax}}%
+    {\option{/@ntcoveropts/width}}%
+  \ifoptionblank{/@ntcoveropts/height}%
+    {}%
+    {\edefoption{/@ntcoveropts/height}\@mkcvelemheight}%
+  % Create destination boxes if undefined and save to it
+  \defifundef{#3}{\newsavebox}%
+  \begin{lrbox}{#3}%
+    % Minipage definition is different if element height is given or not
+      % \begin{minipage}[t][\@mkcvelemheight][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}%
+      \ifoptionblank{/@ntcoveropts/height}%
+          {\minipage[t][][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
+          {\minipage[t][\@mkcvelemheight][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
+              \option{/@ntcoveropts/alignmap}%
+              #2%
+          \endminipage%
+  \end{lrbox}
+  \begin{lrbox}{#3}%
+    % Add  round color if necessary
+    \ifoptionblank{/@ntcoveropts/bgcolor}%
+      {\usebox{#3}}%
+      {\colorbox{\option{/@ntcoveropts/bgcolor}}{\usebox{#2}}}%
+  \end{lrbox}%
 }
 
 \newenvironment{tinywhite}[1][white]
@@ -873,41 +986,43 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \@ntfixspacing{white}{0.01}%
 }
 
-\newcommand*{\ntprintbackcover}{%
-    \newtoggle{@nt@backcover}%
-    \togglefalse{@nt@backcover}%
-    \ifaadefined{thesiscover}(\option{/novathesis/docdegree},back)%
-        {\toggletrue{@nt@backcover}}{}%
-    \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/back}%
-        {\toggletrue{@nt@backcover}}{}%
-    \iftoggle{@nt@backcover}{%
-        \ntaddtocover{back}{}%
-        \pagestyle{empty}
-        \ntselectlang{\option{/novathesis/coverlang}}%
-        \NTRunHook{cover/preback/begin}%
-        \NTRunHook{cover/preback/end}%
-        \ifbool{@openright}{~\newpage}{}%
-        \@nt@printthecover{back}%
-    }{}%
-}
-
-\newcommand{\ntcoverbackground}[1][1]{%
-  \IfEq{#1}{1}{\def\@nt@arg{front}}{\def\@nt@arg{#1}}%
-  \edef\@nt@img{\expanded{\thethesiscover(\option{/novathesis/docdegree},\@nt@arg)}}%
-  \IfStrEq{\@nt@img}{}{}{%ELSE
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[inner sep=0] at (current page.center)
-              {\includegraphics[width=\paperwidth,height=\paperheight]{\@nt@img}};
-    \end{tikzpicture}%
-  }%
-}
+% \newcommand*{\ntprintbackcover}{%
+%     \newtoggle{@nt@backcover}%
+%     \togglefalse{@nt@backcover}%
+%     \ifaadefined{thesiscover}(\option{/novathesis/docdegree},back,image)%
+%         {\toggletrue{@nt@backcover}}{}%
+%     \ifaadefined{thesiscover}(\option{/novathesis/docdegree},back,bgcolor)%
+%         {\toggletrue{@nt@backcover}}{}%
+%     \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/back}%
+%         {\toggletrue{@nt@backcover}}{}%
+%     \iftoggle{@nt@backcover}{%
+%         \ntaddtocover{back}{}%
+%         \pagestyle{empty}
+%         \ntselectlang{\option{/novathesis/coverlang}}%
+%         \NTRunHook{cover/preback/begin}%
+%         \NTRunHook{cover/preback/end}%
+%         \ifbool{@openright}{~\newpage}{}%
+%         \@nt@printthecover{back}%
+%     }{}%
+% }
+%
+% \newcommand{\ntcoverbackground}[1][1]{%
+%   % \IfEq{#1}{1}{\def\@nt@arg{front}}{\def\@nt@arg{#1}}%
+%   \edef\@nt@img{\expanded{\thethesiscover(\option{/novathesis/docdegree},#1,image)}}%
+%   \IfStrEq{\@nt@img}{}{}{%ELSE
+%     \begin{tikzpicture}[remember picture, overlay]
+%       \node[inner sep=0] at (current page.center)
+%               {\includegraphics[width=\paperwidth,height=\paperheight]{\@nt@img}};
+%     \end{tikzpicture}%
+%   }%
+% }
 
 \newcommand*{\ntprintstatement}{%
   \NTRunHook{statement/pre}%
   \iftoggle{/novathesis/statement}{% if statement toggle is on
   	\ifmaindoc{% if it is a main document
       \ntselectlang{\option{/novathesis/mainlang}}%
-      \currentpdfbookmark{\csuse{thestatementstring}(\option{/novathesis/mainlang})}{bmstatement}
+      \phantomsection\pdfbookmark[1]{\csuse{thestatementstring}(\option{/novathesis/mainlang})}{bmstatement}
       \ifoptiondefined{/@nt/file/statement/VAL}{% if the user defined their own statement file
         \@ntloadfiles@ii{statement}%
         \clearforchapter%
@@ -937,9 +1052,9 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 }
 
 \providecommand\thecopyrightstr{%
-  \thispagestyle{\thentpagestyle(frontmatter)}%
+  \thispagestyle{empty}%
   \ntselectlang{\option{/novathesis/copyrightlang}}%
-  \currentpdfbookmark{Copyright}{bmcopyright}
+  \phantomsection\pdfbookmark[1]{Copyright}{bmcopyright}
   \noindent%
   Copyright \textcopyright\ \theauthorname, %
   \theschool(\option{/novathesis/copyrightlang}), \theuniversity(\option{/novathesis/copyrightlang}).\\%
@@ -1011,9 +1126,13 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 }
 
 \newcommand{\ntprintoneadviser}[1]{%
-  \StrCut{#1}{,}\@nt@name\@nt@remainder%
-  {\theadvisernamefont\ignorespaces\@nt@name}%
-  {\theadviserremainderfont\ignorespaces\@nt@remainder}
+  \ntprintonename{adviser}{#1}%
+}
+
+\newcommand{\ntprintonename}[2]{%
+  \StrCut{#2}{,}\@nt@name\@nt@remainder%
+  {\csuse{the#1namefont}\ignorespaces\@nt@name}%
+  {\csuse{the#1remainderfont}\ignorespaces\@nt@remainder}%
 }
 
 \newcommand{\@nt@printadvisergroup}[1]{%
@@ -1039,13 +1158,13 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 \newcommand{\@nt@printcommittee@i}[1]{%
   \iftoggle{/novathesis/printcommittee}{% TRUE
-    \begin{minipage}{#1\textwidth}%
+    % \begin{minipage}{#1\textwidth}%
     % #1=Percentage of \textwidth used by the committee list
-    \begin{tabularx}{\linewidth}{@{}rX@{}}%
+    \begin{tabularx}{#1\linewidth}{@{}rX@{}}%
     \@ntprintcommitteetitlestr\\[1ex]%
     \forcsvlist{\@ntprintcommitteegroup}{c,r,a,m,g}%
     \end{tabularx}%
-    \end{minipage}
+    % \end{minipage}
   }%
   {%% FASLE
   }%
@@ -1056,10 +1175,10 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \expandnext{\ifx}{\thecommitteetitlestr(\option{/novathesis/coverlang})}\@empty%
     % committeetitlestr[…] is empty
   \else%
-    \multicolumn{2}{c}{{%%
-            \thecommitteetitlestrfont%
-            \thecommitteetitlestr(\option{/novathesis/coverlang}):}%
-          }%
+    % \multicolumn{2}{c}{{%%
+            & \thecommitteetitlestrfont%
+            \thecommitteetitlestr(\option{/novathesis/coverlang}):%}%
+          % }%
   \fi%
 }
 
@@ -1072,7 +1191,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
     \thecommitteememberstrfont%
     \thecommitteememberstr(#1,\mynumber,\mygender,\option{/novathesis/coverlang}): & %
     \begin{minipage}[t]{\linewidth}\raggedright%
-    \optionlistdo{/@nt/committee/#1/name}{##1\\[0.3ex]}%
+    \optionlistdo{/@nt/committee/#1/name}{\ntprintonename{committee}{##1}\\[0.3ex]}%
     \end{minipage}\\%
   }%
   {}%
@@ -1216,7 +1335,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 	\ifmaindoc{% THEN it is a main document
     \ifoptiondefined{/@nt/file/#1/VAL}{%
       \ntselectlang{\option{/novathesis/mainlang}}%
-      \currentpdfbookmark{\csuse{the#1string}(\option{/novathesis/mainlang})}{bm#1}
+      \phantomsection\pdfbookmark[1]{\csuse{the#1string}(\option{/novathesis/mainlang})}{bm#1}
       \@ntloadfiles@ii{#1}%
     }{\typeout{NT LOAD #1 undefined}}%
 	}{% ELSE
@@ -1245,7 +1364,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newcommand{\@ntprintabstract}[1]{%
   % \typeout{NT PRINT ABSTRACT #1}%
   \setabstractlang{#1}%
-  \currentpdfbookmark{\theabstractstring(#1)}{bmabstract#1}
+  \phantomsection\pdfbookmark[1]{\theabstractstring(#1)}{bmabstract#1}
   \NTRunHook{abstract/pre}%
   \NTRunHook{abstract/#1/pre}%
   \printabstracttitle{#1}%
@@ -1259,6 +1378,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newcommand*{\ntthesisfrontmatter}{%
   \NTRunHook{frontmatter/pre}%
   \frontmatter%
+  \pagestyle{novathesis@myvf}%
   \ntselectlang{\option{/novathesis/mainlang}}%
   \pagenumbering{roman}%
   % \setlength{\headheight}{15pt}%
@@ -1269,6 +1389,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \NTRunHook{mainmatter/pre}%
   % enables protrusion locally for the remainder of the document
 	\mainmatter%
+  \pagestyle{novathesis@myvf}%
   \ifxeorlua{}{\microtypesetup{protrusion=true}}%
   % \pagenumbering{arabic}%
   % \setlength{\headheight}{15pt}%
@@ -1292,12 +1413,11 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %% Appendixes and Annexes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand*{\addappheadtotoc}{%
-  \phantomsection
-  \addtocontents{toc}%
+  \phantomsection\addtocontents{toc}%
     {\protect\contentsline{chapter}{\appendixtocname}{}{}}%
  }
 
-\newcommand*{\ntprintappendixes}{%
+\newcommand*{\ntprintappendices}{%
   \renewcommand{\appendixtocname}{\appendixnamepl}%
   \appendix\addappheadtotoc%
   \@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
@@ -1388,7 +1508,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %% Dedicatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NewEnviron{ntdedicatory}{
-  \thispagestyle{\thentpagestyle(frontmatter)}%
+  \thispagestyle{empty}%
   ~\\[2cm]%
   \begin{minipage}{\linewidth}%
     \raggedleft%
@@ -1405,7 +1525,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %% Quote
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NewEnviron{ntquote}{%%
-  \thispagestyle{\thentpagestyle(frontmatter)}%
+  \thispagestyle{empty}%
   ~\\[2cm]%
   \begin{minipage}{\linewidth}%
     \raggedleft%
@@ -1478,34 +1598,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 % Text style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \AtEndPreamble{%
-  % \typeout{NT AtEndPreamble loading chapstyle and fontstyle}
 \InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.ldf}{}{}%
 \InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/fontstyle}.ldf}{}{}%
-% }
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Compatibility with legacy “template.tex”
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Title
-% \renewcommand{\title}[2][]{\ifthenelse{\isempty{#1}}{\nttitle{#2}}{\nttitle{#1}}}
-% \newcommand{\authorname}{\ntauthorname}
-% \newcommand{\authordegree}{\ntauthordegree}
-% \newcommand{\datemonth}{\ntdatemonth}
-% \newcommand{\dateyear}{\ntdateyear}
-% \newcommand{\adviser}[4][m]{\ntaddperson{adviser}[#1]{#2, #3}}
-% \newcommand{\coadviser}[4][m]{\ntaddperson{coadviser}[#1]{#2, #3}}
-% \newcommand{\committee}[2][m]{\ntaddperson{committee}[#1]{#2}}
-% \newcommand{\dedicatoryfile}[1]{\ntaddfile{dedicatory}{#1}}
-% \newcommand{\acknowledgementsfile}[1]{\ntaddfile{acknowledgements}{#1}}
-% \newcommand{\quotefile}[1]{\ntaddfile{quote}{#1}}
-% \newcommand{\statementfile}[1]{\ntaddfile{statement}{#1}}
-% \newcommand{\abstractfile}[2][pt]{\ntaddfile{abstract}[#1]{#2}}
-% \newcommand{\chapterfile}[1]{\ntaddfile{chapter}{#1}}
-% \newcommand{\addbibfile}[1]{\ntaddfile{bib}{#1}}
-% \newcommand{\glossaryfile}[1]{\ntaddfile{glossaries}[glossary]{#1}}
-% \newcommand{\acronymsfile}[1]{\ntaddfile{glossaries}[acronyms]{#1}}
-% \newcommand{\symbolsfile}[1]{\ntaddfile{glossaries}[symbols]{#1}}
 

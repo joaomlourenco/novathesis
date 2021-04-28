@@ -1,7 +1,7 @@
 SILENT = -silent
 
 B = template
-F = -shell-escape -synctex=1 $(FLAGS)
+F = -time -shell-escape -synctex=1 $(FLAGS)
 T = $(B).pdf
 S = $(B).tex
 L = latexmk $(F)

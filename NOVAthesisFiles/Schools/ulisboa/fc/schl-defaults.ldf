@@ -28,24 +28,27 @@
 \committeeorder(all):={c,r,a,m}% 
 
 % Cover background images
-\thesiscover(phd,final,1):={phd_final_1}
-\thesiscover(phd,final,2):={phd_final_2}
-\thesiscover(phd,provisional,1):={phd_provisional_1}
-\thesiscover(phd,provisional,2):={phd_provisional_2}
-\thesiscover(msc,final,1):={msc_final}
-\thesiscover(msc,provisional,1):={msc_provisional}
-% \thesiscover(phd,front):={}
-% \thesiscover(phdplan,front):={}
-% \thesiscover(phdprop,front):={}
-% \thesiscover(msc,front):={}
-% \thesiscover(mscplan,front):={}
-% \thesiscover(bsc,front):={}
-% \thesiscover(plain,front):={}
+\ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
+\thesiscover(phd,final,1-1,bgcolor):={white}
+\thesiscover(phd,final,1-1,image):={phd_final_1}
+\thesiscover(phd,final,2-1,image):={phd_final_2}
+\thesiscover(phd,provisional,1-1,image):={phd_provisional_1}
+\thesiscover(phd,provisional,2-1,image):={phd_provisional_2}
+\thesiscover(msc,final,1-1,bgcolor):={white}
+\thesiscover(msc,final,1-1,image):={msc_final}
+\thesiscover(msc,provisional,1-1,image):={msc_provisional}
+% \thesiscover(phd,front,image):={}
+% \thesiscover(phdplan,front,image):={}
+% \thesiscover(phdprop,front,image):={}
+% \thesiscover(msc,front,image):={}
+% \thesiscover(mscplan,front,image):={}
+% \thesiscover(bsc,front,image):={}
+% \thesiscover(plain,front,image):={}
 
 % Spine info
 \spine(logo):={logoFCUL3}
 \spine(author):={\theauthorshortname}
-\spine(title):={\thetitle}
+\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year):={\thentdateyear}
 
 % Set margins for "normal" pages
@@ -143,46 +146,7 @@
 % The pages should be numbered consecutively at the bottom centre of the
 % page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{%
-  \makepagestyle{novathesis@myvf}%
-  \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
-  \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
-  \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
-  \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
-  \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
-  \pagestyle{novathesis@myvf}%
-}
-%
-%\frenchspacing
 
-% Fazer indentação parágrafos
-% \setlength{\parindent}{17pt}
-
-% Redefinir fonte de secção, subscção, etc…
-% \newbox\ntmybox
-% \setbox\ntmybox=\hbox{{\normalfont\Huge A}}
-% \font\p@rtnamfont=cmbr8 at 13mm % computer modern bright
-% \font\s@cnamfont=cmbrsl8 at \ht\ntmybox % computer modern bright
-% \renewcommand\section{\@startsection {section}{1}{0pt}%
-%                                    {-3.5ex plus -0.5ex minus -.2ex}%
-%                                    {2.3ex \@plus.2ex}%
-%                                    {\s@cnamfont}}
-% \renewcommand\subsection{\@startsection{subsection}{2}{0pt}%
-%                                      {-2.5ex plus -0.5ex minus -.2ex}%
-%                                      {1.5ex \@plus .2ex}%
-%                                      {\normalfont\large\bfseries}}
-% \renewcommand\subsubsection{\@startsection{subsubsection}{3}{0pt}%
-%                                      {-2.5ex plus -0.5ex minus -.2ex}%
-%                                      {1.5ex \@plus .2ex}%
-%                                      {\normalfont\normalsize\bfseries}}
-% \renewcommand\paragraph{\@startsection{paragraph}{4}{0pt}%
-%                                     {0.25ex plus 0.5ex minus.2ex}%
-%                                     {-1em}%
-%                                     {\normalfont\normalsize\bfseries}}
-% \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
-%                                        {0.25ex plus 0.5ex minus .2ex}%
-%                                        {-1em}%
-%                                       {\normalfont\normalsize\bfseries}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
@@ -190,18 +154,17 @@
 
 % Temporary macro to use in conditional expressions;
 
-\NTAddToHook{cover/1/begin}{%
-  \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
-  \pagecolor{white}%
+\NTAddToHook{cover/1-1/pretext}{%
+  \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+  \ifdocfinal{\provisionalstring(\option{/novathesis/coverlang}):={~}}{}%
+}
+\NTAddToHook{cover/2-1/pretext}{%
   \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
   \ifdocfinal{\provisionalstring(\option{/novathesis/coverlang}):={~}}{}%
 }
 
 % School
-\ntaddtocover[height=2.5cm, inalign=t]{1,2}{%
-  \iftoggle{/novathesis/debugcover}{%
-    \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/docstatus},\thecovernumber)]%
-  }{}%
+\ntaddtocover[height=2.5cm, inalign=t]{1-1,2-1}{%
   \fontseries{mc}\fontsize{12}{12}\selectfont%
   \MakeUppercase{\theuniversity(\option{/novathesis/coverlang})}\\[2mm]%
   \MakeUppercase{\theschool(\option{/novathesis/coverlang})}\\[2mm]%
@@ -211,32 +174,32 @@
 } 
 
 % Logo
-\ntaddtocover[vspace=0.5cm, height=5cm, inalign=t]{1,2}{%
+\ntaddtocover[vspace=0.5cm, height=5cm, inalign=t]{1-1,2-1}{%
 	\ifphddoc%
     {\hspace*{7mm}\includegraphics[height=4.55cm]{logoFCUL}}%
     {\includegraphics[width=7cm]{logoFCUL2}}%
 }
 
 % PhD Title of Dissertation
-\ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.2cm, height=2cm]{1,2}{%
+\ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.2cm, height=2cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{17}{17}\selectfont%
   \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
 }
 
 % MSc Title of Dissertation
-\ntaddtocover[degree=msc/mscplan, vspace=2.0cm, height=2cm]{1,2}{%
+\ntaddtocover[degree=msc/mscplan, vspace=2.0cm, height=2cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{17}{17}\selectfont%
   \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
 }
 
 % Doc Status
-\ntaddtocover[degree=phd/phdprop/phdplan, vspace=0cm, height=1.9cm]{1,2}{%
+\ntaddtocover[degree=phd/phdprop/phdplan, vspace=0cm, height=1.9cm]{1-1,2-1}{%
   \emph{\theprovisionalstring(\option{/novathesis/coverlang})}%
 }
 
 % Degree
 % In this position only if it is a phd doc;
-\ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.4cm, height=2.5cm]{1,2}{%
+\ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.4cm, height=2.5cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
   \thedegreename(\option{/novathesis/coverlang})
   \ifaadefined{specialization}(\option{/novathesis/coverlang})%
@@ -247,14 +210,14 @@
 
 %
 % Author name
-\ntaddtocover[vspace=3.0cm]{1,2}{%
+\ntaddtocover[vspace=3.0cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
   \theauthorname%
 }
 
 % Degree
 % In this position only if it is a MSc doc;
-\ntaddtocover[degree=msc/mscplan, vspace=1.8cm, height=2.5cm]{1,2}{%
+\ntaddtocover[degree=msc/mscplan, vspace=1.8cm, height=2.5cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
   \thedegreename(\option{/novathesis/coverlang})
   \ifaadefined{specialization}(\option{/novathesis/coverlang})%
@@ -263,19 +226,19 @@
 }%
 
 % Doc Status
-\ntaddtocover[degree=msc/mscplan, vspace=0cm, height=1.0cm]{1,2}{%
+\ntaddtocover[degree=msc/mscplan, vspace=0cm, height=1.0cm]{1-1,2-1}{%
   \emph{\theprovisionalstring(\option{/novathesis/coverlang})}%
 }
 
 % Advisers
-\ntaddtocover[degree=phd/phdprop/phdplan, vspace=2.0cm]{1,2}{%
+\ntaddtocover[degree=phd/phdprop/phdplan, vspace=2.0cm]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
   \theadviserslabel(\option{/novathesis/docdegree},\option{/novathesis/coverlang})\\[3mm]%
   \ntprintadvisersaslist%
 }
 
 % Advisers
-\ntaddtocover[degree=msc/mscplan, vspace=1.0cm]{1,2}{%
+\ntaddtocover[degree=msc/mscplan, vspace=1.0cm]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
   \theadviserslabel(\option{/novathesis/docdegree},\option{/novathesis/coverlang})\\[3mm]%
   \ntprintadvisersaslist%
@@ -283,17 +246,17 @@
 %
 %
 % % Committee — only print the committee for the main classes
-% \ntaddtocover[vspace=1]{1,2}{%
+% \ntaddtocover[vspace=1]{1-1,2-1}{%
 %     \ntprintcommittee%
 % }
 %
 
 % Sponsor
-\ntaddtocover[height=1cm, vspace=2]{1}{%
+\ntaddtocover[height=1cm, vspace=2]{1-1}{%
   % \fontseries{mc}
   ~
 }
-\ntaddtocover[height=1cm, vspace=2]{2}{%
+\ntaddtocover[height=1cm, vspace=2]{2-1}{%
   % \fontseries{mc}
   \fontsize{10}{10}\selectfont%
   \thesponsorsstr(\option{/novathesis/coverlang})%
@@ -301,14 +264,14 @@
 
 % Document purpose
 % Only if it is a phd doc;
-\ntaddtocover[degree=phd/phdprop/phdplan, vspace=1]{1,2}{%
+\ntaddtocover[degree=phd/phdprop/phdplan, vspace=1]{1-1,2-1}{%
   % \fontseries{mc}
   \fontsize{10}{10}\selectfont%
   \thepresentationtext%
 }%
 
 % Date
-\ntaddtocover[vspace=1.4cm]{1,2}{%
+\ntaddtocover[vspace=1.4cm]{1-1,2-1}{%
   % \fontseries{mc}
   \fontsize{14}{14}\selectfont%
     \thentdateyear%

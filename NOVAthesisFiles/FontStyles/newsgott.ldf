@@ -25,40 +25,39 @@
   Ligatures=TeX,
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
-  Extension = .ttf, 
-  UprightFont=n015003t,
-  BoldFont=n015006t,
+  UprightFont=n015003t.ttf,
+  BoldFont=n015006t.ttf,
   AutoFakeSlant=0.15,
   BoldSlantedFeatures={FakeSlant=0.15},
 ]
 
-\setfontfamily\newsgott{n015003t}[
+\setfontfamily\newsgott{n015003t.ttf}[
   Ligatures=TeX,
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
 ]
 
-\setfontfamily\newsgottbf{n015006t}[
+\setfontfamily\newsgottbf{n015006t.ttf}[
   Ligatures=TeX,
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
 ]
 
-\setfontfamily\newsgottit{n015003t}[
+\setfontfamily\newsgottit{n015003t.ttf}[
   Ligatures=TeX,
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
   ItalicFeatures={FakeSlant=0.15},
 ]
 
-\setfontfamily\newsgottsl{n015003t}[
+\setfontfamily\newsgottsl{n015003t.ttf}[
   Ligatures=TeX,
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
   AutoFakeSlant=0.15,
 ]
 
-\setfontfamily\newsgottlig{n015002t}[
+\setfontfamily\newsgottlig{n015002t.ttf}[
   Ligatures=TeX,
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,

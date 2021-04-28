@@ -17,27 +17,30 @@
 \committeeorder(all):={c,r,m}% 
 
 % Cover background images
-\thesiscover(phd,front):={cover-phd-std}
-\thesiscover(phdplan,front):={cover-phd-std}
-\thesiscover(phdprop,front):={cover-phd-std}
-\thesiscover(msc,front):={cover-msc-std}
-\thesiscover(mscplan,front):={cover-msc-std}
-\thesiscover(bsc,front):={cover-bsc-std}
-\thesiscover(plain,front):={cover-plain-std}
-\thesiscover(phd,cdfront):={cd-cover-phd}
-\thesiscover(phd,cdinlay):={cd-inlay-phd}
-\thesiscover(phdplan,cdfront):={cd-cover-phd}
-\thesiscover(phdplan,cdinlay):={cd-inlay-phd}
-\thesiscover(phdprop,cdfront):={cd-cover-phd}
-\thesiscover(phdprop,cdinlay):={cd-inlay-phd}
-\thesiscover(msc,cdfront):={cd-cover-msc}
-\thesiscover(msc,cdinlay):={cd-inlay-msc}
-\thesiscover(mscplan,cdfront):={cd-cover-msc}
-\thesiscover(mscplan,cdinlay):={cd-inlay-msc}
-\thesiscover(bsc,cdfront):={cd-cover-msc}
-\thesiscover(bsc,cdinlay):={cd-inlay-msc}
-\thesiscover(plain,cdfront):={cd-cover-msc}
-\thesiscover(plain,cdinlay):={cd-inlay-msc}
+% \thesiscover(phd,1-1,bgcolor):={LightBlue}
+% \thesiscover(phd,1-2,bgcolor):={LightBlue}
+% \thesiscover(phd,1,back,bgcolor):={LightBlue}
+\thesiscover(phd,1-1,image):={cover-phd-std}
+\thesiscover(phdplan,1-1,image):={cover-phd-std}
+\thesiscover(phdprop,1-1,image):={cover-phd-std}
+\thesiscover(msc,1-1,image):={cover-msc-std}
+\thesiscover(mscplan,1-1,image):={cover-msc-std}
+\thesiscover(bsc,1-1,image):={cover-bsc-std}
+\thesiscover(plain,1-1,image):={cover-plain-std}
+% \thesiscover(phd,cd,1-1,image):={cd-cover-phd}
+% \thesiscover(phd,cd,inlay,image):={cd-inlay-phd}
+% \thesiscover(phdplan,cd,1-1,image):={cd-cover-phd}
+% \thesiscover(phdplan,cd,inlay,image):={cd-inlay-phd}
+% \thesiscover(phdprop,cd,1-1,image):={cd-cover-phd}
+% \thesiscover(phdprop,cd,inlay,image):={cd-inlay-phd}
+% \thesiscover(msc,cd,1-1,image):={cd-cover-msc}
+% \thesiscover(msc,cd,inlay,image):={cd-inlay-msc}
+% \thesiscover(mscplan,cd,1-1,image):={cd-cover-msc}
+% \thesiscover(mscplan,cd,inlay,image):={cd-inlay-msc}
+% \thesiscover(bsc,cd,1-1,image):={cd-cover-msc}
+% \thesiscover(bsc,cd,inlay,image):={cd-inlay-msc}
+% \thesiscover(plain,cd,1-1,image):={cd-cover-msc}
+% \thesiscover(plain,cd,inlay,image):={cd-inlay-msc}
 
 % Spine info
 \spine(logo):={logoNOVA}
@@ -111,50 +114,49 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NTAddToHook{cover/1/begin}{%
+\NTAddToHook{cover/1-1/pretext}{%
     \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
   \pagecolor{white}%
     \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
 }
 
 % Author name
-\ntaddtocover[vspace=0cm]{1}{%
-  \ntcoverbackground
+\ntaddtocover[vspace=0cm]{1-1}{%
   \fontsize{14}{14}\selectfont
   \textbf{\theauthorname}
 }
 
 % Academic qualifications
-\ntaddtocover[vspace=0.25cm]{1}{%
+\ntaddtocover[vspace=0.25cm]{1-1}{%
   \fontsize{11}{11}\selectfont
   \theauthordegree
 }
 
 % % Title of Dissertation
-\ntaddtocover[vspace=4.5cm]{1}{%
+\ntaddtocover[vspace=4.5cm]{1-1}{%
   \fontsize{16}{16}\selectfont
   \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}
 }
 
 % Degree
-\ntaddtocover[vspace=1.5cm]{1}{%
+\ntaddtocover[vspace=1.5cm]{1-1}{%
   \fontsize{11}{11}\selectfont
   \thepresentationtext
 }
 % Advisers
-\ntaddtocover[vspace=1]{1}{%
+\ntaddtocover[vspace=1]{1-1}{%
   \fontsize{12}{12}\selectfont
   \ntprintadvisers
 }
 
 % Committee — only print the committee for the main classes
-\ntaddtocover[align=r, vspace=1]{1}{%
+\ntaddtocover[align=r, vspace=1]{1-1}{%
   \fontsize{10}{10}\selectfont%
   \ntprintcommittee%
 }
 
 % Date
-\ntaddtocover[vspace=3.5cm]{1}{%
+\ntaddtocover[vspace=3.5cm]{1-1}{%
   \fontsize{11}{11}\selectfont
   \textbf{\thentdatemonth, \thentdateyear}
 }

@@ -65,18 +65,12 @@
   \hspace*{0.33\spine@len@gap}%
   \hspace*{\spine@len@margin}%
   \hspace*{\spine@len@top}%
-  % \begin{minipage}[c]{\spine@len@top}
-  %   \centering
-  %   \raisebox{\thespine(logo,raisebox,\option{/novathesis/docdegree})}%
-  %            {\includegraphics[width=0.9\novathesis@spinewidth,angle=-90]%
-  %                             {\expanded{\thespine(logo,\option{/novathesis/docdegree})}}}%
-  % \end{minipage}%
 }
 
 \newcommand{\ntprintspine}[1][]{%
-  \NTRunHook{spine/pre}%
   % \printlen%
   \color{white}%
+  \NTRunHook{spine/pre}%
   \IfStrEq{#1}{trim}{
     \setstocksize{\paperheight}{\novathesis@spinewidth}
     \settrimmedsize{\stockheight}{\stockwidth}{*}%
@@ -91,11 +85,12 @@
         \pdfpagewidth=\novathesis@spinewidth% \pdfpageheight=3in
     \fi
   }{}%
+  \thispagestyle{empty}%
   \begin{tikzpicture}[remember picture, overlay]
   % draw image
     \node[inner sep=0] at (current page.center)
             {\includegraphics[width=\novathesis@spinewidth,height=\stockheight]%
-                             {\thethesiscover(\option{/novathesis/docdegree},spine)}%
+                             {\thethesiscover(\option{/novathesis/docdegree},spine,image)}%
             };
     \node[inner sep=0,yshift=-0.5\spine@len@top, xshift=-\expanded{\thespine(logo,\option{/novathesis/docdegree},raise)}\novathesis@spinewidth] at (current page.north)
             {\includegraphics[width=0.9\novathesis@spinewidth

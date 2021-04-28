@@ -27,32 +27,32 @@
 \committeeorder(all):={c,r,m}% 
 
 % Cover background images
-\thesiscover(phd,front):={}
-\thesiscover(phdplan,front):={}
-\thesiscover(phdprop,front):={}
-\thesiscover(msc,front):={}
-\thesiscover(mscplan,front):={}
-\thesiscover(bsc,front):={}
-\thesiscover(plain,front):={}
-\thesiscover(phd,cdfront):={}
-\thesiscover(phd,cdinlay):={}
-\thesiscover(phdplan,cdfront):={}
-\thesiscover(phdplan,cdinlay):={}
-\thesiscover(phdprop,cdfront):={}
-\thesiscover(phdprop,cdinlay):={}
-\thesiscover(msc,cdfront):={}
-\thesiscover(msc,cdinlay):={}
-\thesiscover(mscplan,cdfront):={}
-\thesiscover(mscplan,cdinlay):={}
-\thesiscover(bsc,cdfront):={}
-\thesiscover(bsc,cdinlay):={}
-\thesiscover(plain,cdfront):={}
-\thesiscover(plain,cdinlay):={}
+% \thesiscover(phd,front,image):={}
+% \thesiscover(phdplan,front,image):={}
+% \thesiscover(phdprop,front,image):={}
+% \thesiscover(msc,front,image):={}
+% \thesiscover(mscplan,front,image):={}
+% \thesiscover(bsc,front,image):={}
+% \thesiscover(plain,front,image):={}
+% \thesiscover(phd,cdfront,image):={}
+% \thesiscover(phd,cdinlay,image):={}
+% \thesiscover(phdplan,cdfront,image):={}
+% \thesiscover(phdplan,cdinlay,image):={}
+% \thesiscover(phdprop,cdfront,image):={}
+% \thesiscover(phdprop,cdinlay,image):={}
+% \thesiscover(msc,cdfront,image):={}
+% \thesiscover(msc,cdinlay,image):={}
+% \thesiscover(mscplan,cdfront,image):={}
+% \thesiscover(mscplan,cdinlay,image):={}
+% \thesiscover(bsc,cdfront,image):={}
+% \thesiscover(bsc,cdinlay,image):={}
+% \thesiscover(plain,cdfront,image):={}
+% \thesiscover(plain,cdinlay,image):={}
 
 % Spine info
-\spine(logo):={logoNOVA}
+\spine(logo):={\theuniversity(logo)}
 \spine(author):={\theauthorshortname}
-\spine(title):={\thetitle}
+\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main,caps)}
 \spine(year):={\thentdateyear}
 
 % Set margins for "normal" pages
@@ -102,15 +102,15 @@
 % page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\AtEndPreamble{%
-  \makepagestyle{novathesis@myvf}%
-  \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
-  \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
-  \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
-  \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
-  \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
-  \pagestyle{novathesis@myvf}%
-}
+% \AtEndPreamble{%
+%   \makepagestyle{novathesis@myvf}%
+%   \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
+%   \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
+%   \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
+%   \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
+%   \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
+%   \pagestyle{novathesis@myvf}%
+% }
 %
 %\frenchspacing
 
@@ -119,54 +119,57 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NTAddToHook{cover/1/begin}{%
+\NTAddToHook{cover/1-1/pretext}{%
     \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
   \pagecolor{white}%
     \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
 }
+\NTAddToHook{cover/2-1/pretext}{%
+    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+}
 
 % ENSP logo
-\ntaddtocover[vspace=1cm]{1,2}{%
+\ntaddtocover[vspace=1cm]{1-1,2-1}{%
   \noindent\includegraphics[width=0.4\textwidth]{nova-ensp-logo-pt}
 }
 
 % % Title of Dissertation
-\ntaddtocover[vspace=1]{1,2}{%
+\ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont
   \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}
 }
 
 % % Title of Dissertation
-\ntaddtocover[vspace=1cm]{1,2}{%
+\ntaddtocover[vspace=1cm]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont
   \thedegreename(\option{/novathesis/coverlang})
 }
 
 % Author name
-\ntaddtocover[vspace=1]{1,2}{%
+\ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont
   \textbf{\theauthorname}
 }
 
 % Degree
-\ntaddtocover[vspace=1]{2}{%
+\ntaddtocover[vspace=1]{2-1}{%
   \fontsize{11}{11}\selectfont
   \thepresentationtext
 }
 
 % Advisers
-\ntaddtocover[vspace=1]{2}{%
+\ntaddtocover[vspace=1]{2-1}{%
   \fontsize{12}{12}\selectfont
   \ntprintadvisers[0.75]
 }
 
 % Date
-\ntaddtocover[vspace=1]{1,2}{%
+\ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont
     \textbf{\thentdatemonth, \thentdateyear}
 }
 
 % % Final space
-\ntaddtocover[vspace=1cm]{2,3}{%
+\ntaddtocover[vspace=1cm]{1-1,2-1}{%
   ~
 }
