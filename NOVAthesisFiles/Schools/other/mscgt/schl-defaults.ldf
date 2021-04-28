@@ -246,7 +246,7 @@ for the degree of \emph{\thedegreename(en)}}
 
 
 % Committee — only print the committee for the main classes
-% \ntaddtocover[align=r, vspace=2]{1,2}{%
+% \ntaddtocover[align=r, vspace=2]{1-1,2-1}{%
 %   \fontsize{10}{10}\selectfont%
 %   \ntprintcommittee%
 % }

@@ -200,20 +200,20 @@
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % % ESEP logo
-% \ntaddtocover[vspace=2.2cm]{2}{%
+% \ntaddtocover[vspace=2.2cm]{2-1}{%
 %   \ntcoverbackground
 %   \fontsize{15}{15}\selectfont
 %   \expandafter\MakeUppercase\expandafter{\textbf{\theschool(\option{/novathesis/coverlang})}}
 % }
 %
 % % % Degree name
-% \ntaddtocover[vspace=0.5cm]{2}{%
+% \ntaddtocover[vspace=0.5cm]{2-1}{%
 %   \fontsize{15}{15}\selectfont
 %   \thedegreename(\option{/novathesis/coverlang})
 % }
 %
 % % % Title of Dissertation
-% \ntaddtocover[vspace=6.5cm]{2}{%
+% \ntaddtocover[vspace=6.5cm]{2-1}{%
 %   % \fontseries{mc}
 %   \fontsize{15}{15}\selectfont
 %   \scshape
@@ -222,13 +222,13 @@
 % }
 %
 % % Author name
-% \ntaddtocover[vspace=1]{2}{%
+% \ntaddtocover[vspace=1]{2-1}{%
 %   \fontsize{12}{12}\selectfont
 %   \textbf{\theauthorname}
 % }
 %
 % % Date
-% \ntaddtocover[vspace=1]{2}{%
+% \ntaddtocover[vspace=1]{2-1}{%
 %   \fontsize{12}{12}\selectfont
 %   \ifdraftdoc
 %     \textbf{DRAFT: \today}
@@ -238,7 +238,7 @@
 % }
 %
 % % % Final space
-% \ntaddtocover[vspace=1cm]{2}{%
+% \ntaddtocover[vspace=1cm]{2-1}{%
 %   ~
 % }
 %

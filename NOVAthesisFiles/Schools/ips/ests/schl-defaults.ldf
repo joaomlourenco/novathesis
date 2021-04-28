@@ -26,18 +26,18 @@
 
 % Cover background images
 \frontpageimage():={ESTS-JPG} % don't add the .jpg extension
-\thesiscover(phd,front,image):={}
-\thesiscover(phdplan,front,image):={}
-\thesiscover(phdprop,front,image):={}
-\thesiscover(msc,front,image):={}
-\thesiscover(mscplan,front,image):={}
-\thesiscover(bsc,front,image):={}
-\thesiscover(plain,front,image):={}
+\thesiscover(phd,1-1,bgcolor):={white}
+% \thesiscover(phdplan,front,image):={}
+% \thesiscover(phdprop,front,image):={}
+% \thesiscover(msc,front,image):={}
+% \thesiscover(mscplan,front,image):={}
+% \thesiscover(bsc,front,image):={}
+% \thesiscover(plain,front,image):={}
 
 % Spine info
 \spine(logo):={logoESTS}
 \spine(author):={\theauthorshortname}
-\spine(title):={\thetitle}
+\spine(title):={\textbf{\emph{\thedoctitle(\option{/novathesis/coverlang},main)}}}
 \spine(year):={\thentdateyear}
 
 % Set margins for "normal" pages
@@ -102,85 +102,28 @@
 % The pages should be numbered consecutively at the bottom centre of the
 % page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{%
-  \makepagestyle{novathesis@myvf}%
-  \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
-  \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
-  \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
-  \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
-  \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
-  \pagestyle{novathesis@myvf}%
-}
-%
-%\frenchspacing
 
-% Fazer indentação parágrafos
-\setlength{\parindent}{17pt}
-
-% Corrigir distância entre número de secção (e.g. ``3.10'' e título da mesma)
-% Para ver info no manual, procurar por cftKnumwidth em que K é o tipo da entrada (capítulo, section, ...)
-% \setlength{\cftsectionnumwidth}{1.2\cftsectionnumwidth}
-% \setlength{\cftfigurenumwidth}{1.2\cftfigurenumwidth}
-% \setlength{\cftlistingnumwidth}{1.2\cftlistingnumwidth}
-% \setlength{\cftchapternumwidth}{1.2\cftchapternumwidth}
-
-% Corrigir espaço para páginas com numeração romana na ToC
-% \renewcommand{\@pnumwidth}{2em}
-
-% Espaçamento entre entradas na ToC
-% \setlength{\cftbeforesectionskip}{2mm}
-% \setlength{\cftbeforesubsectionskip}{2mm}
-% \setlength{\cftbeforefigureskip}{2mm}
-% \setlength{\cftbeforelistingskip}{2mm}
-% \setlength{\cftbeforetableskip}{2mm}
-
-
-% Redefinir fonte de secção, subscção, etc…
-% \newbox\s@ch@@ghtb@x
-% \setbox\s@ch@@ghtb@x=\hbox{{\normalfont\Huge A}}
-% \font\p@rtnamfont=cmbr8 at 13mm % computer modern bright
-% \font\s@cnamfont=cmbrsl8 at \ht\s@ch@@ghtb@x % computer modern bright
-% \renewcommand\section{\@startsection {section}{1}{0pt}%
-%                                    {-3.5ex plus -0.5ex minus -.2ex}%
-%                                    {2.3ex \@plus.2ex}%
-%                                    {\s@cnamfont}}
-% \renewcommand\subsection{\@startsection{subsection}{2}{0pt}%
-%                                      {-2.5ex plus -0.5ex minus -.2ex}%
-%                                      {1.5ex \@plus .2ex}%
-%                                      {\normalfont\large\bfseries}}
-% \renewcommand\subsubsection{\@startsection{subsubsection}{3}{0pt}%
-%                                      {-2.5ex plus -0.5ex minus -.2ex}%
-%                                      {1.5ex \@plus .2ex}%
-%                                      {\normalfont\normalsize\bfseries}}
-% \renewcommand\paragraph{\@startsection{paragraph}{4}{0pt}%
-%                                     {0.25ex plus 0.5ex minus.2ex}%
-%                                     {-1em}%
-%                                     {\normalfont\normalsize\bfseries}}
-% \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
-%                                        {0.25ex plus 0.5ex minus .2ex}%
-%                                        {-1em}%
-%                                       {\normalfont\normalsize\bfseries}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NTAddToHook{cover/1/begin}{%
-  \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
-  \pagecolor{white}%
+\NTAddToHook{cover/1-1/pretext}{%
+  % \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
+  % \pagecolor{white}%
   \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
 }
 
 % LOGO
-\ntaddtocover[vspace=0cm]{1}{%
+\ntaddtocover[vspace=0cm]{1-1}{%
   \includegraphics[height=4.6cm]{ESTS-JPG}%
 }
 
-\ntaddtocover[vspace=0cm]{2}{%
+\ntaddtocover[vspace=0cm]{2-1}{%
   \rule{0cm}{4.6cm}%
 }
 
 % Author name and Title
-\ntaddtocover[align=l, vspace=5cm]{1,2}{%
+\ntaddtocover[align=l, vspace=5cm]{1-1,2-1}{%
   % Author name
   \begin{minipage}[t]{0.37\textwidth}%
     \fontsize{16}{16}\selectfont\raggedleft%
@@ -195,7 +138,7 @@
 }
 
 % Photo
-\ntaddtocover[align=l, vspace=1]{1}{%
+\ntaddtocover[align=l, vspace=1]{1-1}{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%
@@ -206,7 +149,7 @@
 }
 
 % Degree
-\ntaddtocover[align=l, vspace=1]{1}{%
+\ntaddtocover[align=l, vspace=1]{1-1}{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%
@@ -219,7 +162,7 @@
 }
 
 % Advisers
-\ntaddtocover[vspace=1]{1}{%
+\ntaddtocover[vspace=1]{1-1}{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%
@@ -233,7 +176,7 @@
 }
 
 % Date
-\ntaddtocover[vspace=2]{1,2}{%
+\ntaddtocover[vspace=2]{1-1,2-1}{%
   \begin{minipage}[t]{0.37\textwidth}%
     ~%
   \end{minipage}%
@@ -246,7 +189,7 @@
 
 
 
-\ntaddtocover[vspace=1]{2}{%
+\ntaddtocover[vspace=1]{2-1}{%
   \begin{minipage}[t]{0.20\textwidth}%
     ~%
   \end{minipage}%
