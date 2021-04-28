@@ -240,7 +240,7 @@
 
 \newcommand{\ntprintspine}{%
   \thispagestyle{empty}%
-  \make@spine@box@logo{}{\thespine(logo)}%
+  \ifaadefined{spine}(logo){\make@spine@box@logo{}{\thespine(logo)}}{}%
   \ifaadefined{spine}(logotwo){%
 	\make@spine@box@logotwo{}{\thespine(logotwo)}%
   }
