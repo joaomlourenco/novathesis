@@ -65,25 +65,32 @@
   \hspace*{0.33\spine@len@gap}%
   \hspace*{\spine@len@margin}%
   \hspace*{\spine@len@top}%
-  % \begin{minipage}[c]{\spine@len@top}
-  %   \centering
-  %   \raisebox{\thespine(logo,raisebox,\option{/novathesis/docdegree})}%
-  %            {\includegraphics[width=0.9\novathesis@spinewidth,angle=-90]%
-  %                             {\expanded{\thespine(logo,\option{/novathesis/docdegree})}}}%
-  % \end{minipage}%
 }
 
-\newcommand{\ntprintspine}{%
-  \clearpage
+\newcommand{\ntprintspine}[1][]{%
   % \printlen%
   \color{white}%
-  \savegeometry{maintext}%
-  \newgeometry{textwidth=\novathesis@spinewidth,textheight=\paperheight}%
+  \NTRunHook{spine/pre}%
+  \IfStrEq{#1}{trim}{
+    \setstocksize{\paperheight}{\novathesis@spinewidth}
+    \settrimmedsize{\stockheight}{\stockwidth}{*}%
+    \setlrmarginsandblock{0pt}{0pt}{*}%
+    \setulmarginsandblock{0pt}{*}{1}%
+    \setheadfoot{0pt}{0pt}%
+    \setheaderspaces{0pt}{*}{*}%
+    \checkandfixthelayout[fixed]%
+    \ifluatex
+        \pagewidth=\novathesis@spinewidth% \pageheight=3in
+    \else
+        \pdfpagewidth=\novathesis@spinewidth% \pdfpageheight=3in
+    \fi
+  }{}%
+  \thispagestyle{empty}%
   \begin{tikzpicture}[remember picture, overlay]
   % draw image
     \node[inner sep=0] at (current page.center)
-            {\includegraphics[width=\textwidth,height=\textheight]%
-                             {\thethesiscover(\option{/novathesis/docdegree},spine)}%
+            {\includegraphics[width=\novathesis@spinewidth,height=\stockheight]%
+                             {\thethesiscover(\option{/novathesis/docdegree},spine,image)}%
             };
     \node[inner sep=0,yshift=-0.5\spine@len@top, xshift=-\expanded{\thespine(logo,\option{/novathesis/docdegree},raise)}\novathesis@spinewidth] at (current page.north)
             {\includegraphics[width=0.9\novathesis@spinewidth
@@ -93,5 +100,6 @@
     \node[inner sep=0] at (current page.center) {\rotatebox{90}{\spinetext}};
   \end{tikzpicture}
   \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
-  \loadgeometry{maintext}%
+  \NTRunHook{spine/post}%
 }
+

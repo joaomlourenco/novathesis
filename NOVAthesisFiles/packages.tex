@@ -134,7 +134,7 @@
 % \AtEndClass{novathesis}{%
 %   \prependtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/}}%
 %   \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/defaults.ldf}{}%
-%     {\PackageWarining{novathesis}%
+%     {\PackageWarning{novathesis}%
 %                      {Missing file “defaults.ldf” for ”\@nt@univ/\@nt@schl”}}%
 % }
 
@@ -167,7 +167,7 @@
   \RequirePackage[all]{hypcap}%
   %--------------------------------
   % Define page layout - after hyperref
-  \RequirePackage{geometry}
+  % \RequirePackage{geometry}
   %--------------------------------
   % To handle subfigures - ????
   \newsubfloat{figure}

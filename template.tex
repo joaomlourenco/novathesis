@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-04-16 [6.3.1]
+%% Version 2021-04-28 [6.3.2]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -204,29 +204,11 @@
 
 % \optionshowall
 
-\options{/novathesis/docfrontmatter/.new list = {
-  % covers,        % The cover page
-  statement,       % The statement page
-  copyright,        % (*) The copyright page
-  dedicatory,       % (*) Print the dedicatory
-  acknowledgements, % (*) Print the acknowledgments
-  quote,            % (*) Print the quote
-  abstracts,        % Print abstracts in multiple languages.
-  alllistof,       % Print all the indexes defined in “7_list_of.tex”
-}}
-\options{/novathesis/docmainmatter/.new list = {
-  chapters,         % Print document chapters
-  bib,              % Print the bibliography.  Change to
-  appendixes,       % Print appendixes, if any!
-  annexes,          % Print annexes, if any!
-  % backcover,        % Print the back cover, if any!
-}}
-
 
 %%------------------------------------------------------------
 \ntthesisfrontmatter      % Before the main text (TOC, etc) — Roman page numbering
 %%------------------------------------------------------------
-\ntprint{frontcover}      % The cover page
+\ntprint{covers}      % The cover page
 \ntprint{frontmatter}     % The default order is listed below, but can be changed 
 %                         % at the School's “defaults.ldf” with
 %                         % "\ntsetprintorder{list_of_items}", where “list_of_items”
@@ -252,7 +234,7 @@
 %                         %       chapters        % Print document chapters
 %                         %       bib             % Print the bibliography.  Change to
 %                                                 %    bib[title=⟨title⟩]” to redefine the title!
-%                         %       appendixes      % Print appendixes, if any!
+%                         %       appendices      % Print appendices, if any!
 %                         %       annexes         % Print annexes, if any!
 \ntprint{backcover}       % Print the back cover, if any!
 

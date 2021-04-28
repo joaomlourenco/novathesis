@@ -239,7 +239,8 @@
 \newbox{\@nt@spine@box}%
 
 \newcommand{\ntprintspine}{%
-  \make@spine@box@logo{}{\thespine(logo)}%
+  \thispagestyle{empty}%
+  \ifaadefined{spine}(logo){\make@spine@box@logo{}{\thespine(logo)}}{}%
   \ifaadefined{spine}(logotwo){%
 	\make@spine@box@logotwo{}{\thespine(logotwo)}%
   }
@@ -247,7 +248,7 @@
   \make@spine@box@titleauthor%
   \savebox{\@nt@spine@box}{%
 	\rotatebox{90}{%
-  \setlength{\fboxsep}{0pt}
+  \setlength{\fboxsep}{0pt}%
 	  \framebox[\stockheight]{%
 		~~\hfill
 		\parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@date@width}%
@@ -304,6 +305,7 @@
 % \AddToShipoutPictureFG*{%
 %       \AtStockLowerCenter{{\usebox{\@nt@spine@box}}}%
 % }%
+\thispagestyle{empty}%
 \begin{tikzpicture}[remember picture, overlay]
   \node[inner sep=0] at (current page.center) {\usebox{\@nt@spine@box}};
 \end{tikzpicture}

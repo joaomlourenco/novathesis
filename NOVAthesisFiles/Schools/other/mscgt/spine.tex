@@ -70,10 +70,10 @@
 }
 
 \newcommand{\ntprintspine}{%
-  \clearpage
+  \thispagestyle{empty}%
   % \printlen%
-  \savegeometry{maintext}%
-  \newgeometry{textwidth=\novathesis@spinewidth,textheight=\paperheight}%
+  % \savegeometry{maintext}%
+  % \newgeometry{textwidth=\novathesis@spinewidth,textheight=\paperheight}%
   \begin{tikzpicture}[remember picture, overlay]
   % draw image
     % \node[inner sep=0] at (current page.center)
@@ -81,10 +81,10 @@
     %                          {\thespine(logo)}%
     %         };
     \node[inner sep=0,yshift=-0.5\spine@len@top] at (current page.north)
-            {\includegraphics[width=0.9\novathesis@spinewidth]%
-                             {\thespine(logo)}};
-    \node[inner sep=0] at (current page.center) {\rotatebox{90}{\spinetext}};
+                        {\includegraphics[width=0.9\novathesis@spinewidth]{\thespine(logo)}};
+    \node[inner sep=0] at (current page.center) 
+                        {\setlength{\fboxsep}{0pt}\fbox{\rotatebox{90}{\spinetext}}};
   \end{tikzpicture}
   \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
-  \loadgeometry{maintext}%
+  % \loadgeometry{maintext}%
 }

@@ -21,25 +21,26 @@
 \committeeorder(all):={c,r,m}% 
 
 % Cover background images
-\thesiscover(phd,front):={nova-ims-front-cover-phd}
-\thesiscover(phd,back):={nova-ims-back-cover}
-\thesiscover(phd,spine):={nova-ims-book-spine}
-\thesiscover(phdprop,front):={nova-ims-front-cover-phd}
-\thesiscover(phdprop,back):={nova-ims-back-cover}
-\thesiscover(phdprop,spine):={nova-ims-book-spine}
-\thesiscover(phdplan,front):={nova-ims-front-cover-phd}
-\thesiscover(phdplan,back):={nova-ims-back-cover}
-\thesiscover(phdplan,spine):={nova-ims-book-spine}
-\thesiscover(msc,front):={nova-ims-front-cover-megi}
-\thesiscover(msc,back):={nova-ims-back-cover}
-\thesiscover(msc,spine):={nova-ims-book-spine}
-\thesiscover(mscplan,front):={nova-ims-front-cover-megi}
-\thesiscover(mscplan,back):={nova-ims-back-cover}
-\thesiscover(mscplan,spine):={nova-ims-book-spine}
-\thesiscover(bsc,front):={nova-ims-front-cover-generic}
-\thesiscover(bsc,back):={nova-ims-back-cover}
-\thesiscover(bsc,spine):={nova-ims-book-spine}
-\thesiscover(plain,front):={nova-ims-front-cover-generic}
+\thesiscover(phd,1-1,bgcolor):={white}
+\thesiscover(phd,1-1,image):={nova-ims-front-cover-phd}
+\thesiscover(phd,N-2,image):={nova-ims-back-cover}
+\thesiscover(phd,spine,image):={nova-ims-book-spine}
+\thesiscover(phdprop,1-1,image):={nova-ims-front-cover-phd}
+\thesiscover(phdprop,N-2,image):={nova-ims-back-cover}
+\thesiscover(phdprop,spine,image):={nova-ims-book-spine}
+\thesiscover(phdplan,1-1,image):={nova-ims-front-cover-phd}
+\thesiscover(phdplan,N-2,image):={nova-ims-back-cover}
+\thesiscover(phdplan,spine,image):={nova-ims-book-spine}
+\thesiscover(msc,1-1,image):={nova-ims-front-cover-megi}
+\thesiscover(msc,N-2,image):={nova-ims-back-cover}
+\thesiscover(msc,spine,image):={nova-ims-book-spine}
+\thesiscover(mscplan,1-1,image):={nova-ims-front-cover-megi}
+\thesiscover(mscplan,N-2,image):={nova-ims-back-cover}
+\thesiscover(mscplan,spine,image):={nova-ims-book-spine}
+\thesiscover(bsc,1-1,image):={nova-ims-front-cover-generic}
+\thesiscover(bsc,N-2,image):={nova-ims-back-cover}
+\thesiscover(bsc,spine,image):={nova-ims-book-spine}
+\thesiscover(plain,1-1,image):={nova-ims-front-cover-generic}
 
 % Rename Doctor degree
 \degreestr(phd,m,en):={Doctor}
@@ -59,10 +60,26 @@
 %% LIGHT GREY 200,203,206
 
 % Spine info
+\spine(logo,phd):={\theuniversity(logo,neg)}
+\spine(logo,phd,angle):={0}
+\spine(logo,phd,scale):={1}
+\spine(logo,phd,raise):={0}
+\spine(logo,msc):={\theschool(logo,neg)}
+\spine(logo,msc,angle):={90}
+\spine(logo,msc,scale):={1.5}
+\spine(logo,msc,raise):={0.075}
+\spine(author):={\theauthorshortname}
+\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(year):={\thentdateyear}
+% \spine(top):={116pt}
+\spine(top):={3.5cm}
+\spine(bottom):={2.1cm}
+
+% Spine info
 % \spine(logo):={logo-NOVA}
 % \spine(logotwo):={logo-NOVA-IMS}
 \spine(author):={\theauthorshortname}
-\spine(title):={\thetitle}
+\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year):={\thentdateyear}
 
 % Set margins for "normal" pages
@@ -188,24 +205,26 @@ of the requirements for the degree of %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NTAddToHook{cover/1/begin}{%
-    \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
-  \pagecolor{white}%
+\NTAddToHook{cover/1-1/pretext}{%
+    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+}
+
+\NTAddToHook{cover/2-1/pretext}{%
     \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
 }
 
   % PHD PROGRAM
-% \ntaddtocover[align=l, vspace=0cm, degree=phd]{1,2}{%
+% \ntaddtocover[align=l, vspace=0cm, degree=phd]{1-1,2-1}{%
 %   \ntcoverbackground%
 % }
 % INFORMATION MANAGEMENT
-\ntaddtocover[align=l, vspace=0cm, degree=phd]{1,2}{%
+\ntaddtocover[align=l, vspace=0cm, degree=phd]{1-1,2-1}{%
   \fontsize{16}{16}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\themajorfield(\option{/novathesis/coverlang})}}%
 }
 
 % SPECIALIZATION IN
-\ntaddtocover[align=l, vspace=0.7cm, degree=phd]{1,2}{%
+\ntaddtocover[align=l, vspace=0.7cm, degree=phd]{1-1,2-1}{%
   \fontsize{16}{16}\selectfont
   \textcolor{imsmidgrey}{%
     \textbf{\thespecializationstr(\option{/novathesis/coverlang})
@@ -214,19 +233,19 @@ of the requirements for the degree of %
 }
 
 % DISSERTATION TITLE
-\ntaddtocover[align=l, vspace=1.8cm, degree=phd]{1,2}{%
+\ntaddtocover[align=l, vspace=1.8cm, degree=phd]{1-1,2-1}{%
   \fontsize{16}{16}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
 }
 
 % AUTHOR NAME
-\ntaddtocover[align=l, vspace=0.4cm, degree=phd]{1,2}{%
+\ntaddtocover[align=l, vspace=0.4cm, degree=phd]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
 }
 
 % DISSERTATION TEXT
-\ntaddtocover[align=l, vspace=5, degree=phd]{1,2}{%
+\ntaddtocover[align=l, vspace=5, degree=phd]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{%
     \thedissertationstr(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
@@ -234,7 +253,7 @@ of the requirements for the degree of %
 }%
 
 % DATE
-\ntaddtocover[align=l, vspace=1cm, degree=phd]{1,2}{%
+\ntaddtocover[align=l, vspace=1cm, degree=phd]{1-1,2-1}{%
   \fontsize{11}{11}\selectfont%
   \textcolor{imsdarkgrey}{%
     \textbf{\thentdatemonth, \thentdateyear}%
@@ -242,13 +261,13 @@ of the requirements for the degree of %
 }
 
 % SCHOOL
-\ntaddtocover[align=l, vspace=1cm, degree=phd]{1,2}{%
+\ntaddtocover[align=l, vspace=1cm, degree=phd]{1-1,2-1}{%
   \fontsize{11}{11}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\theschool(en)}}%
 }
 
 % UNIVERSITY
-\ntaddtocover[align=l, vspace=0.0cm, degree=phd]{1,2}{%
+\ntaddtocover[align=l, vspace=0.0cm, degree=phd]{1-1,2-1}{%
   \fontsize{11}{11}\selectfont%
   \textcolor{imsdarkgrey}{\theuniversity(\option{/novathesis/coverlang})}%
 }
@@ -256,12 +275,12 @@ of the requirements for the degree of %
 
   % MSc PROGRAM
 % % Title of Dissertation
-% \ntaddtocover[align=l, vspace=0cm, degree=msc]{1,2}{%
+% \ntaddtocover[align=l, vspace=0cm, degree=msc]{1-1,2-1}{%
 %   \ntcoverbackground%
 % }
 
 % % Title of Dissertation
-\ntaddtocover[align=l, vspace=1, degree=msc]{1,2}{%
+\ntaddtocover[align=l, vspace=1, degree=msc]{1-1,2-1}{%
   \fontsize{17}{17}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}\\[0.25ex]%
   \fontsize{16}{16}\selectfont%
@@ -269,28 +288,19 @@ of the requirements for the degree of %
 }
 
 % Author name
-\ntaddtocover[align=l, vspace=1, degree=msc]{1,2}{%
+\ntaddtocover[align=l, vspace=1, degree=msc]{1-1,2-1}{%
   \fontsize{15}{15}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
 }
 
 % Degree
-\ntaddtocover[align=l, vspace=1, degree=msc]{1,2}{%
+\ntaddtocover[align=l, vspace=1, degree=msc]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{\thepresentationtext}%
 }
 
 % Date
-\ntaddtocover[vspace=1, degree=msc]{1,2}{%
+\ntaddtocover[vspace=1, degree=msc]{1-1,2-1}{%
   ~
-  % \fontsize{11}{11}\selectfont%
-  % \ifdraftdoc%
-  %   \textbf{DRAFT: \today}%
-  % \else%
-  %   \textbf{\thentdatemonth, \thentdateyear}%
-  % \fi%
 }%
 
-% \ntaddtocover[cover=back]{back}{%
-%   \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},back)]
-% }
