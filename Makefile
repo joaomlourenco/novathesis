@@ -7,6 +7,9 @@ S = $(B).tex
 L = latexmk $(F)
 V = open -a skim
 
+AUXFILES=$(shell ls $(B).* | fgrep -v .tex)
+
+
 default: pdf
 
 $(T): $(S)
@@ -34,7 +37,8 @@ v view: $(T)
 
 .PHONY: clean
 clean:
-	$(L) -c $(B)
+	@$(L) -c $(B)
+	@rm -f $(AUXFILES)
 
 .PHONY: rc
 rc:

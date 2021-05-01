@@ -119,11 +119,11 @@ for the degree of \emph{\thedegreename(en)}}
 
 \NTAddToHook{abstract/pre}{%
   \let\oldchapterheadstart=\chapterheadstart%
-  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\@nt@current@lang,main)}}%
+  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\option{/@nt/currentlang},main)}}%
   \preto{\chapterheadstart}{%
     \noindent\begin{minipage}[t][0pt][t]{\textwidth}
       \begin{center}%
-        \textbf{\Large\thedoctitle(\@nt@current@lang,main,cover,caps)}%
+        \textbf{\Large\thedoctitle(\option{/@nt/currentlang},main,cover,caps)}%
         \ifaadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
           \\[6mm]%
           \textbf{\Large\thedoctitle(\option{/novathesis/coverlang},sub,cover)}%
@@ -134,7 +134,7 @@ for the degree of \emph{\thedegreename(en)}}
 }
 % \NTAddToHook{abstract/mid}{%
   % \let\oldchapterheadstart=\chapterheadstart%
-  % {{\noindent\Large\thedoctitle(\@nt@current@lang,main)}\\[1ex]}%
+  % {{\noindent\Large\thedoctitle(\option{/@nt/currentlang},main)}\\[1ex]}%
 % }
 \NTAddToHook{abstract/post}{%
   \let\chapterheadstart=\oldchapterheadstart%

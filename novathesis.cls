@@ -90,13 +90,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHECK IF USING LUALATEX OR XELATEX
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newif\ifxetexorluatex
-\begingroup\catcode94=7 \catcode0=9% ASCII 94 is ^
-\def\empty{}\def\next{^^^^0000}\expandafter\endgroup
-\ifx\next\empty\xetexorluatextrue\else\xetexorluatexfalse\fi
+% \newif\ifxetexorluatex
+% \begingroup\catcode94=7 \catcode0=9% ASCII 94 is ^
+% \def\empty{}\def\next{^^^^0000}\expandafter\endgroup
+% \ifx\next\empty\xetexorluatextrue\else\xetexorluatexfalse\fi
+%
+% \newcommand{\ifxeorlua}[2]{\ifxetexorluatex#1\else#2\fi}
 
-\newcommand{\ifxeorlua}[2]{\ifxetexorluatex#1\else#2\fi}
-
+\newcommand{\ifxeorlua}{\ifthenelse{\boolean{luatex}\OR\boolean{xetex}}}
+\newcommand{\ifxetexorluatex}{\iftutex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
@@ -115,16 +117,6 @@
 % Print string between <...>
 \newcommand*{\embrace}[1]{$\langle$#1$\rangle$}
 
-% --------------------------------------------------------
-% Split a string by a character
-\newcommand*{\ntgetkeyval}[4][=]{%
-  % #1=character to look for
-  % #2=string to split
-  % #3=macro to receive the left part
-  % #4=macro to receive the right part
-  \StrCut{#2}{#1}#3#4%
-}
-
 
 % --------------------------------------------------------
 % Alias for consistency in template.tex
@@ -142,9 +134,7 @@
 % Check if a font file exists
 \newcommand*{\ntcheckfont}[2]{%
   \IfFileExists{NOVAthesisFiles/FontStyles/Fonts/#1}{}%
-               {\ClassError{novathesis}{Missing font “#1”! Please download fro
-m: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}{Please download fr
-om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
+               {\ClassError{novathesis}{Missing font “#1”! Please download from: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}{Please download from: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -152,6 +142,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \options{/@nt/.new family
   , langsshort/.new list={en, pt, fr, it, de, es}
+  , currentlang/.new choice={en, pt, fr, it, de, es}
   , langshorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish}
   , biblatex/.new list
 }
@@ -187,15 +178,15 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 \newcommand{\@ifdocclass@ii}[2]{%
   % #1=document type
   % %2=possible document calss 
-  \ifoptioncontains{/@nt/document/class/#2}{#1}%
+  \ifoptioncontains{/@nt/document/class/#1}{#2}%
 }
 
 % --------------------------------------------------------
 % Check if the document is of a specific class, i.e., bsc, msc, phd or main
-\newcommand{\ifmaindoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{main}}
-\newcommand{\ifphddoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{phd}}
-\newcommand{\ifmscdoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{msc}}
-\newcommand{\ifbscdoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{#1}{bsc}}
+\newcommand{\ifmaindoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{main}{#1}}
+\newcommand{\ifphddoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{phd}{#1}}
+\newcommand{\ifmscdoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{msc}{#1}}
+\newcommand{\ifbscdoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{bsc}{#1}}
 
 \newcommand{\ifdocfinal}{\ifoptionequal{/novathesis/docstatus}{final}}
 \newcommand{\ifdocprovisional}{\ifoptionequal{/novathesis/docstatus}{provisional}}
@@ -204,30 +195,10 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% FRONTEND FOR MANAGING PERSON LISTS - nunsued for now
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\ntcommittee[#1,#2]#3{%
-  \ntaddperson{committee}[#1,#2]{#3}%
-}
-
-\def\ntauthor[#1,#2]#3{%
-  \ntaddperson{author}[#1,#2]{#3}%
-}
-
-\def\ntadviser[#1,#2]#3{%
-  \ntaddperson{adviser}[#1,#2]{#3}%
-}
-
-\def\ntcoadviser[#1,#2]#3{%
-  \ntaddperson{coadviser}[#1,#2]{#3}%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE PERSON LISTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\ntaddperson#1[#2]{%
-  % syntax: \ntaddperson{class}[key]{filename}
+  % syntax: \ntaddperson{class}[key]{name}
   % See "\@ntaddperson@iv" below
   \IfSubStr{#2}{,}%
     {\@ntaddperson@iv{#1}[#2]}%
@@ -302,7 +273,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntselectlang}[1]{%
   % #1=lang {pt, en, fr, it}
-  \gdef\@nt@current@lang{#1}%
+  \options{/@nt/currentlang=#1}
   \options{/@nt/langshorttolong=#1}%
   % \edef\@nt@tmp{\option{/@nt/langshorttolong}}%
   % \typeout{'NT SWITCHING LANG TO='\nt@tmp}%
@@ -315,7 +286,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\@nt@undefined}[1][]{\embrace{#1 \thenotdefined(\option{/novathesis/mainlang})}}
 
-\newcommand*{\initassocarray}[2][\embrace{\notdefined(\option{/novathesis/coverlang})}]{
+\newcommand*{\initassocarray}[2][\embrace{\thenotdefined(\option{/novathesis/coverlang})}]{
   \optionlistdo{/@nt/langsshort}{%
     \csuse{#2}(##1):={#1}%
   }%
@@ -535,9 +506,8 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 %============================================================
 % Adding list_of
-\newcommand*{\netaddindex}{\netaddlistof}
 \newcommand*{\netaddlistof}[1]{%
-  \ifthenelse{\equal{#1}{tableofcontents}}{\options{/@nt/list/indexes/.cpush={%
+  \ifthenelse{\equal{#1}{tableofcontents}}{\options{/@nt/list/listof/.cpush={%
         \iftoggle{/novathesis/tocintoc}{%
             \tableofcontents%
         }{%
@@ -545,12 +515,12 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
             \hypertarget{toctarget}{\tableofcontents*}%
         }%
   }}}{%
-    \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/@nt/list/indexes/.cpush={%
+    \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/@nt/list/listof/.cpush={%
             \iftoggle{/novathesis/glsxindy}%
                 {\printglossaries}%
                 {\printnoidxglossaries}%
     }}}{%
-      \options{/@nt/list/indexes/.cpush={\csuse{#1}}}%
+      \options{/@nt/list/listof/.cpush={\csuse{#1}}}%
     }%
   }%
 }
@@ -559,8 +529,8 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 % Print document “regions”
 \newcommand*{\ntprint}[1]{%
   \IfStrEqCase{#1}{%
-    {frontmatter}{\ntprintlist{/@nt/docfrontmatter}}%
-    {mainmatter}{\ntprintlist{/@nt/docmainmatter}}%
+    {frontmatter}{\ntprintlist{/@nt/doc#1}}%
+    {mainmatter}{\ntprintlist{/@nt/doc#1}}%
   }[\csuse{ntprint#1}]%
   \ignorespaces%
 }
@@ -584,7 +554,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   acknowledgements,% (*) Print the acknowledgments
   quote,           % (*) Print the quote
   abstracts,       % Print abstracts in multiple languages.
-  alllistof,       % Print all the indexes defined in “8_list_of.tex”
+  alllistof,       % Print all the listof defined in “8_list_of.tex”
 }
 
 \ntsetprintorder{mainmatter}{
@@ -619,14 +589,18 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING SCHOOLS's “defaults.ldf”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\prependtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/Images/}}%
-\prependtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/}}%
+\IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
+    \prependtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/Images/}}%
+}{}%
+
+\IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
+    \prependtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/}}%
+}{}%
+
 \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/univ-defaults.ldf}{}%
-{\PackageWarning{novathesis}%
-                   {Missing file “univ-defaults.ldf” for ”\@nt@univ”}}%
+    {\PackageWarning{novathesis}{Missing file “univ-defaults.ldf” for ”\@nt@univ”}}%
 \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/schl-defaults.ldf}{}%
-{\PackageWarning{novathesis}%
-                   {Missing file “schl-defaults.ldf” for ”\@nt@univ/\@nt@schl”}}%
+    {\PackageWarning{novathesis}{Missing file “schl-defaults.ldf” for ”\@nt@univ/\@nt@schl”}}%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -885,6 +859,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 }
 
 \options{/@ntcoveropts/.new family
+  % titles for PDF bookmark / list of contents
   , bookmark/.new choice = {1-1=\thecoverstring(\option{/novathesis/coverlang})
                           , 1-2={}
                           , 2-1=\thecoversheetstring(\option{/novathesis/coverlang})
@@ -892,20 +867,33 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
                           , N-1={}
                           , N-2=\thebackcoverstring(\option{/novathesis/coverlang})
                           , spine=\thespinestring(\option{/novathesis/coverlang})}
+  % letter to macro for horizontal alignment
+  , alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft}
+  % filters / conditional printing
   , status/.new value
   , degree/.new value
-  , alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft}
+  % horizontal alighment and vertical alignments inside the box
   , align/.new choice={c, l, r}
   , inalign/.new choice={c, t, b}
+  % height of the box (default = the natural height for the contents)
   , height/.new value
+  % width of the box (default = full width)
   , width/.new value
+  % vertical spacing from precious box (default = 0pt, can also be an integer and,
+  % in this case, it means the weight of the vfill)
   , vspace/.new value
+  % horizontal spacing from the left margin (or last box in the same line) (default = 0pt)
   , hspace/.new value
+  % is the last box in the line (default = true)
   , newpar/.new toggle
+  % text color for the box (default = black)
   , color/.new color
+  % background color for the box (default = transparent)
   , bgcolor/.new color
+  % default values
   , defaults/.new style*={status={}, degree={}, align=c, inalign=c, height={}, width={}, 
                           vspace=0pt, hspace=0pt, newpar=true, color={}, bgcolor={}}
+  % set defaults
   , defaults
 }
 
@@ -988,36 +976,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
   \@ntfixspacing{white}{0.01}%
 }
 
-% \newcommand*{\ntprintbackcover}{%
-%     \newtoggle{@nt@backcover}%
-%     \togglefalse{@nt@backcover}%
-%     \ifaadefined{thesiscover}(\option{/novathesis/docdegree},back,image)%
-%         {\toggletrue{@nt@backcover}}{}%
-%     \ifaadefined{thesiscover}(\option{/novathesis/docdegree},back,bgcolor)%
-%         {\toggletrue{@nt@backcover}}{}%
-%     \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/back}%
-%         {\toggletrue{@nt@backcover}}{}%
-%     \iftoggle{@nt@backcover}{%
-%         \ntaddtocover{back}{}%
-%         \pagestyle{empty}
-%         \ntselectlang{\option{/novathesis/coverlang}}%
-%         \NTRunHook{cover/preback/begin}%
-%         \NTRunHook{cover/preback/end}%
-%         \ifbool{@openright}{~\newpage}{}%
-%         \@nt@printthecover{back}%
-%     }{}%
-% }
-%
-% \newcommand{\ntcoverbackground}[1][1]{%
-%   % \IfEq{#1}{1}{\def\@nt@arg{front}}{\def\@nt@arg{#1}}%
-%   \edef\@nt@img{\expanded{\thethesiscover(\option{/novathesis/docdegree},#1,image)}}%
-%   \IfStrEq{\@nt@img}{}{}{%ELSE
-%     \begin{tikzpicture}[remember picture, overlay]
-%       \node[inner sep=0] at (current page.center)
-%               {\includegraphics[width=\paperwidth,height=\paperheight]{\@nt@img}};
-%     \end{tikzpicture}%
-%   }%
-% }
 
 \newcommand*{\ntprintstatement}{%
   \NTRunHook{statement/pre}%
@@ -1249,46 +1207,46 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 }
 
 %% For debugging the page layout
-\newcommand*{\@nt@typetwolengths}[4]{%
-  % #1=text before
-  % #2=first length
-  % #3=text between
-  % #4=second length
-  \setlength\@tempdimc{\mem@tl@unitperpt #2}%
-  \edef\l@first{\strip@pt\@tempdimc}%
-  \setlength\@tempdimc{\mem@tl@unitperpt #4}%
-  \edef\l@second{\strip@pt\@tempdimc}%
-  #1: \l@first\mem@tl@unit\space#3\space\l@second\mem@tl@unit%
-}
-
-\newcommand*{\@nt@typeonelength}[2]{%
-  % #1=text before
-  % #2=first length
-  \setlength\@tempdimc{\mem@tl@unitperpt #2}%
-  \edef\l@first{\strip@pt\@tempdimc}%
-  #1: \l@first\mem@tl@unit%
-}
-
-\newcommand*{\typelayout}{%
-  \hrule%
-  \@nt@typetwolengths{Stock height and width}{\stockheight}{by}{\stockwidth}\\%
-  \@nt@typetwolengths{Top and edge trims}{\trimtop}{and}{\trimedge}\\%
-  \@nt@typetwolengths{Page height and width}{\paperheight}{by}{\paperwidth}\\%
-  \@nt@typetwolengths{Text height and width}{\textheight}{by}{\textwidth}\\%
-  \@nt@typetwolengths{Spine and edge margins}{\spinemargin}{and}{\foremargin}\\%
-  \@nt@typetwolengths{Upper and lower margins}{\uppermargin}{and}{\lowermargin}\\%
-  \@nt@typetwolengths{Headheight and headsep}{\headheight}{and}{\headsep}\\%
-  \@nt@typeonelength{Footskip}{\footskip}\\%
-  \@nt@typetwolengths{Columnsep and columnseprule}{\columnsep}{and}{\columnseprule}\\%
-  \@nt@typetwolengths{Marginparsep and marginparwidth}{\marginparsep}{and}{\marginparwidth}\\%
-  \@nt@typetwolengths{Sidecapsep and sidecapwidth}{\sidecapsep}{and}{\sidecapwidth}\\%
-  \@nt@typetwolengths{Sidebarhsep and sidebarwidth}{\sidebarhsep}{and}{\sidebarwidth}\\%
-  \@nt@typetwolengths{Sidebarvsep and sidebartopsep}{\sidebarvsep}{and}{\sidebartopsep}\\%
-  \@nt@typeonelength{Sidebarheight}{\dimen\sideins}\\%
-  \@nt@typetwolengths{Sidefoothsep and sidefootwidth}{\sidefoothsep}{and}{\sidefootwidth}\\%
-  \@nt@typetwolengths{Sidefootvsep and sidefootheight}{\sidefootvsep}{and}{\sidefootheight}\\%
-  \hrule%
-}
+% \newcommand*{\@nt@typetwolengths}[4]{%
+%   % #1=text before
+%   % #2=first length
+%   % #3=text between
+%   % #4=second length
+%   \setlength\@tempdimc{\mem@tl@unitperpt #2}%
+%   \edef\l@first{\strip@pt\@tempdimc}%
+%   \setlength\@tempdimc{\mem@tl@unitperpt #4}%
+%   \edef\l@second{\strip@pt\@tempdimc}%
+%   #1: \l@first\mem@tl@unit\space#3\space\l@second\mem@tl@unit%
+% }
+%
+% \newcommand*{\@nt@typeonelength}[2]{%
+%   % #1=text before
+%   % #2=first length
+%   \setlength\@tempdimc{\mem@tl@unitperpt #2}%
+%   \edef\l@first{\strip@pt\@tempdimc}%
+%   #1: \l@first\mem@tl@unit%
+% }
+%
+% \newcommand*{\typelayout}{%
+%   \hrule%
+%   \@nt@typetwolengths{Stock height and width}{\stockheight}{by}{\stockwidth}\\%
+%   \@nt@typetwolengths{Top and edge trims}{\trimtop}{and}{\trimedge}\\%
+%   \@nt@typetwolengths{Page height and width}{\paperheight}{by}{\paperwidth}\\%
+%   \@nt@typetwolengths{Text height and width}{\textheight}{by}{\textwidth}\\%
+%   \@nt@typetwolengths{Spine and edge margins}{\spinemargin}{and}{\foremargin}\\%
+%   \@nt@typetwolengths{Upper and lower margins}{\uppermargin}{and}{\lowermargin}\\%
+%   \@nt@typetwolengths{Headheight and headsep}{\headheight}{and}{\headsep}\\%
+%   \@nt@typeonelength{Footskip}{\footskip}\\%
+%   \@nt@typetwolengths{Columnsep and columnseprule}{\columnsep}{and}{\columnseprule}\\%
+%   \@nt@typetwolengths{Marginparsep and marginparwidth}{\marginparsep}{and}{\marginparwidth}\\%
+%   \@nt@typetwolengths{Sidecapsep and sidecapwidth}{\sidecapsep}{and}{\sidecapwidth}\\%
+%   \@nt@typetwolengths{Sidebarhsep and sidebarwidth}{\sidebarhsep}{and}{\sidebarwidth}\\%
+%   \@nt@typetwolengths{Sidebarvsep and sidebartopsep}{\sidebarvsep}{and}{\sidebartopsep}\\%
+%   \@nt@typeonelength{Sidebarheight}{\dimen\sideins}\\%
+%   \@nt@typetwolengths{Sidefoothsep and sidefootwidth}{\sidefoothsep}{and}{\sidefootwidth}\\%
+%   \@nt@typetwolengths{Sidefootvsep and sidefootheight}{\sidefootvsep}{and}{\sidefootheight}\\%
+%   \hrule%
+% }
 
 
 
@@ -1323,13 +1281,6 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
         {\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}%
         {}
 }
-
-
-
-\def\lowc{\expandafter\lowercaseA\expandafter{\iffalse}\fi}
-\long\def\lowercaseA#1{\lowercase{#1}\egroup}
-\def\upc{\expandafter\uppercaseA\expandafter{\iffalse}\fi}
-\long\def\uppercaseA#1{\uppercase{#1}\egroup}
 
 \newcommand{\@nt@printifmaindoc@i}[1]{%
   % \typeout{NT Attempt to load #1}%
@@ -1449,7 +1400,7 @@ om: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 
 \newcommand*{\ntprintalllistof}{%
   \NTRunHook{listof/pre}%
-  \optionlistdo{/@nt/list/indexes}{##1\clearforchapter}%
+  \optionlistdo{/@nt/list/listof}{##1\clearforchapter}%
   \NTRunHook{listof/post}%
 }
 
