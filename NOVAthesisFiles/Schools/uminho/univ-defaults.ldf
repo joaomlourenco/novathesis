@@ -29,7 +29,7 @@
   statement,       % The statement page
   quote,           % (*) Print the quote
   abstracts,       % Print abstracts in multiple languages.
-  alllistof,       % Print all the indexes defined in “7_list_of.tex”
+  alllistof,       % Print all the listof defined in “7_list_of.tex”
 }
 
 % \ntsetprintorder{mainmatter}{
@@ -157,12 +157,12 @@ indicada.\\[1ex]
 %-----------------------------------------------------------------
 \NTAddToHook{abstract/pre}{%
   \let\oldchapterheadstart=\chapterheadstart%
-  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\@nt@current@lang,main)}}%
+  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\option{/@nt/currentlang},main)}}%
   \preto{\chapterheadstart}{\vspace*{-2cm}}
 }
 \NTAddToHook{abstract/mid}{%
   % \let\oldchapterheadstart=\chapterheadstart%
-  {{\noindent\newsgottbf\Large\thedoctitle(\@nt@current@lang,main)}\\[1ex]}%
+  {{\noindent\newsgottbf\Large\thedoctitle(\option{/@nt/currentlang},main)}\\[1ex]}%
 }
 \NTAddToHook{abstract/post}{%
   \let\chapterheadstart=\oldchapterheadstart%
