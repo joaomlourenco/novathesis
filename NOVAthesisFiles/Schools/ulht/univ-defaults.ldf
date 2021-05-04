@@ -1,0 +1,31 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ulht/univ-defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for Universidade Lusófona (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE ulht/univ-defaults.ldf}
+
+
+% Univesity
+\university(pt):={Universidade Lusófona}
+\university(en):={Universidade Lusófona}
+\university(fr):={Universidade Lusófona}
+\university(it):={Universidade Lusófona}
+\frontpageimage():={cover}
+
+% Cover background images
+\thesiscover(bsc,1-1,image):={\thefrontpageimage()}
+\thesiscover(msc,1-1,image):={\thefrontpageimage()}
+
+% Set margins for cover pages
+\margin(bsc,top):={2.9cm}
+\margin(bsc,bottom):={1.3cm}
+\margin(bsc,left):={2.5cm}
+\margin(bsc,right):={2.5cm}
+
+\margin(msc,top):={2.9cm}
+\margin(msc,bottom):={1.3cm}
+\margin(msc,left):={2.5cm}
+\margin(msc,right):={2.5cm}
