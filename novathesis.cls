@@ -817,19 +817,23 @@
   % #2 = box name
   \defifundef{#2}{\newsavebox}%
   \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{%
-    \begin{lrbox}{#2}%
-      \begin{minipage}[l]
-                      [\dimexpr\paperheight
-                                    -\themargin(\option{/novathesis/docdegree},top)%
-                                    -\themargin(\option{/novathesis/docdegree},bottom)%
-                      ]
-                      {\dimexpr\paperwidth
-                                    -\themargin(\option{/novathesis/docdegree},left)%
-                                    -\themargin(\option{/novathesis/docdegree},right)%
-                      }%
-        \@ntcovertext{#1}%
-      \end{minipage}%
-    \end{lrbox}%
+    \ifaadefined{margin}(\option{/novathesis/docdegree},top){%
+      \begin{lrbox}{#2}%
+        \begin{minipage}[l]
+                        [\dimexpr\paperheight
+                                      -\themargin(\option{/novathesis/docdegree},top)%
+                                      -\themargin(\option{/novathesis/docdegree},bottom)%
+                        ]
+                        {\dimexpr\paperwidth
+                                      -\themargin(\option{/novathesis/docdegree},left)%
+                                      -\themargin(\option{/novathesis/docdegree},right)%
+                        }%
+          \@ntcovertext{#1}%
+        \end{minipage}%
+      \end{lrbox}%
+    }{%
+      \ClassError{novathesis}{Margins for cover of type “\option{/novathesis/docdegree}” undefined! Please define the margins in the School's definition file!}{}%
+    }
   }{}
 }
 
