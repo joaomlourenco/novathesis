@@ -94,9 +94,9 @@
 	\end{minipage}
 	}
 
-  \ifthenelse{\equal{\novathesis@opt@docdegree}{phd}}%
-  {~\\[1.75cm]~\hspace*{2.3cm}}
-	{~\\[1.75cm]~\hspace*{1.7cm}}
+  \IfStrEq{\novathesis@opt@docdegree}{phd}%
+    {~\\[1.75cm]~\hspace*{2.3cm}}%
+    {~\\[1.75cm]~\hspace*{1.7cm}}%
 	\usebox{\cdcover@savebox}
 
 }
@@ -176,9 +176,9 @@
 
 	\setlength{\fboxsep}{0pt}
 	% ~\hspace*{1.8cm}
-  \ifthenelse{\equal{\novathesis@opt@docdegree}{phd}}%
-  {~\\[0.75cm]~\hspace*{2.5cm}}
-	{~\\[0.75cm]~\hspace*{1.8cm}}
+  \IfStrEq{\novathesis@opt@docdegree}{phd}%
+    {~\\[0.75cm]~\hspace*{2.5cm}}
+  	{~\\[0.75cm]~\hspace*{1.8cm}}
 	\usebox{\cdcover@savebox}
 
   \newlength{\novathesis@cd@box@height}
