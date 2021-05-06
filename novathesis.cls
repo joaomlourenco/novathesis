@@ -1397,8 +1397,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Deal with optional lists in the frontmatter: listoftables, litoffigures, etc.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \newlistof{lstlistoflistings}{lol}{\lstlistlistingname}
-
 \newcommand*{\ntprintalllistof}{%
   \NTRunHook{listof/pre}%
   \optionlistdo{/@nt/list/listof}{##1\clearforchapter}%
@@ -1461,19 +1459,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Dedicatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \NewEnviron{ntdedicatory}{
-%   \thispagestyle{empty}%
-%   ~\\[2cm]%
-%   \begin{minipage}{\linewidth}%
-%     \raggedleft%
-%     \begin{minipage}{100mm}%
-%       \raggedleft%
-%       \quotefonti%
-%       \BODY
-%       \normalfont%
-%     \end{minipage}%
-%   \end{minipage}
-% }
 \newenvironment{ntdedicatory}{%
   \thispagestyle{empty}%
   ~\\[2cm]%
@@ -1491,19 +1476,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Quote
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \NewEnviron{ntquote}{%%
-%   \thispagestyle{empty}%
-%   ~\\[2cm]%
-%   \begin{minipage}{\linewidth}%
-%     \raggedleft%
-%     \begin{minipage}{100mm}%
-%       \raggedleft
-%       \quotefonti%
-%       \BODY%
-%       \normalfont%
-%     \end{minipage}%
-%   \end{minipage}
-% }
 \newenvironment{ntquote}{%
   \thispagestyle{empty}%
   ~\\[2cm]%
@@ -1521,10 +1493,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \NewEnviron{ntacknowledgements}{%
-%   \chapter*{\theacknowledgementsstring(\option{/novathesis/mainlang})}%
-%   \BODY
-% }
 \newenvironment{ntacknowledgements}{%
   \chapter*{\theacknowledgementsstring(\option{/novathesis/mainlang})}%
 }{}
@@ -1545,15 +1513,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Keywords
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \newtoggle{@nt@keywords@defined}
-% \togglefalse{@nt@keywords@defined}
-% \NewEnviron{keywords}[1][\option{/@nt/langshorttolong}]{%
-%   \iftoggle{@nt@keywords@defined}%
-%     {}%
-%     {\hypersetup{pdfkeywords={\BODY}}}
-%   \par\vskip\baselineskip\noindent{\bfseries\@nt@keywordsstr: }%
-%   \BODY%
-% }
 \newenvironment{keywords}[1][\option{/@nt/langshorttolong}]{%
   \defifundef{\ntkwbox}{\newsavebox}%
   \begin{lrbox}{\ntkwbox}%
