@@ -1081,12 +1081,12 @@
 }
 
 \newcommand{\ntprintadvisers}[1][0.90]{%
-  \begin{minipage}{#1\textwidth}
+  % \begin{minipage}{#1\textwidth}
   % #1=Percentage of \textwidth used by the advisers list
-  \begin{tabularx}{\linewidth}{@{}rX@{}}%
+  \begin{tabularx}{#1\textwidth}{@{}rX@{}}%
   \forcsvlist{\@nt@printadvisergroup}{adviser,coadviser}
   \end{tabularx}%
-  \end{minipage}
+  % \end{minipage}
 }
 
 \newcommand{\ntprintoneadviser}[1]{%
@@ -1124,14 +1124,12 @@
   \iftoggle{/novathesis/printcommittee}{% TRUE
     % \begin{minipage}{#1\textwidth}%
     % #1=Percentage of \textwidth used by the committee list
-    \begin{tabularx}{#1\linewidth}{@{}rX@{}}%
+    \begin{tabularx}{#1\textwidth}{@{}rX@{}}%
     \@ntprintcommitteetitlestr\\[1ex]%
     \forcsvlist{\@ntprintcommitteegroup}{c,r,a,m,g}%
     \end{tabularx}%
     % \end{minipage}
-  }%
-  {%% FASLE
-  }%
+  }{}%% NO PRINT COMMITTEE
 }
 
 \newcommand*{\@ntprintcommitteetitlestr}{%
