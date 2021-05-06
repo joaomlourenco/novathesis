@@ -185,6 +185,8 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 <!-- -------- -->
 ### Showcase
 
+Although the template goes far beyond the cover… some covers from the supported schools are is display below.
+
 <!-- NOVA-FCT-phd -->
 <kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-fct-phd.svg" border="1" width="100"/></kbd><!-- 
   NOVA-FCT-msc 
