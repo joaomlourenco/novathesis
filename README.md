@@ -206,8 +206,8 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 <kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-ulisboa-ist-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
 <!-- ISCTEIUL-ETA-msc -->
 <kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-iscteiul-eta-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
-<!-- OTHER-ESEP-msc -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-other-esep-msc.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<!-- ULHT-DEISI-msc -->
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-ulht-deisi-msc.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
 <!-- -->
 <!-- IPL-ISEL-msc -->
 <kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-ipl-isel-msc.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
@@ -215,6 +215,8 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 <kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-ips-ests-msc.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
 <!-- OTHER-MSCGT-msc -->
 <kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-other-mscgt-msc.svg" border="1" width="100"/></kbd>
+<!-- OTHER-ESEP-msc -->
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-other-esep-msc.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
 
 
 <!-- <kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ea-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
