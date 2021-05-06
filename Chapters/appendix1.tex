@@ -11,24 +11,40 @@
 \chapter{\emph{NOVAthesis} covers showcase}
 \label{app:covers_showcase}
 
-\newcommand{\showcasecoversize}{0.3\linewidth}
+This Appendix shows examples of covers for some of the supported Schools.  When the Schools have very similar covers (e.g., all the schools from Universidade do Minho), just one cover is shown.  If the covers for MSc dissertations and PhD  thesis are considerable different (e.g., for FCT-NOVA and UMinho), then both are shown.
+
+\newcommand{\showcasecoversize}{0.3\textwidth}
+\newcommand*{\myhfill}{}
 \newcommand{\myincludeimage}[1]{%
-    \fbox{\includegraphics[width=\showcasecoversize]{#1}}
-    \hfill
+    \myhfill%
+    \defifundef{\mycvbox}{\newsavebox}%
+    \savebox{\mycvbox}{\includegraphics[width=\showcasecoversize]{#1}}%
+    \defifundef{\mycvboxht}{\newlength}%
+    \setlength{\mycvboxht}{\dimexpr \showcasecoversize*\paperheight/\paperwidth}%
+    \rule{0pt}{1.1\mycvboxht}%
+    \setlength{\fboxsep}{0pt}%
+    \fbox{\includegraphics[width=\showcasecoversize]{#1}}%
+    \renewcommand*{\myhfill}{\hfill}%
 }
 
-\forcsvlist{\myincludeimage}{%
-cover-ipl-isel-msc.pdf,
-cover-ips-ests-msc.pdf,
-cover-iscteiul-eta-phd.pdf,
-cover-nova-ensp-phd.pdf,
-cover-nova-fcsh-phd.pdf,
-cover-nova-fct-phd.pdf,
-cover-nova-ims-phd.pdf,
-cover-other-esep-phd.pdf,
-cover-other-mscgt-msc.pdf,
-cover-ulisboa-fc-phd.pdf,
-cover-ulisboa-ist-phd.pdf,
-cover-uminho-ee-phd.pdf%
+\noindent\forcsvlist{\myincludeimage}{%
+  cover-nova-fct-msc,
+  cover-nova-fct-phd,
+  cover-nova-ims-phd,
+  %
+  cover-uminho-ee-phd,
+  cover-uminho-ee-msc,
+  cover-other-esep-phd,
+  %
+  cover-nova-fcsh-phd,
+  cover-nova-ensp-phd,
+  cover-iscteiul-eta-phd,
+  %
+  cover-ulisboa-fc-phd,
+  cover-ulisboa-ist-phd,
+  cover-ulht-deisi-msc,
+  %
+  cover-ipl-isel-msc,
+  cover-ips-ests-msc,
+  cover-other-mscgt-msc%
 }
->>>>>>> 5fddf8490ede8de01e803bba86ad4b8fc72272d2
