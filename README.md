@@ -183,40 +183,40 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
 ### Showcase
 
 <!-- NOVA-FCT-phd -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-fct-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-fct-phd.svg" border="1" width="100"/></kbd>
 <!-- NOVA-FCT-msc -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-nova-fct-msc.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-nova-fct-msc.svg" border="1" width="100"/></kbd>
 <!-- NOVA-IMS-phd -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-ims-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-ims-phd.svg" border="1" width="100"/></kbd>
 <!-- NOVA-IMS-msc -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-nova-ims-msc.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-nova-ims-msc.svg" border="1" width="100"/></kbd>
 <!-- -->
 <!-- NOVA-FCSH-phd -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-fcsh-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-fcsh-phd.svg" border="1" width="100"/></kbd>
 <!-- NOVA-FCSH-phd -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-ensp-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-nova-ensp-phd.svg" border="1" width="100"/></kbd>
 <!-- UMINHO-EE-phd -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ee-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ee-phd.svg" border="1" width="100"/></kbd>
 <!-- UMINHO-EE-msc -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-uminho-ee-msc.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-uminho-ee-msc.svg" border="1" width="100"/></kbd>
 <!-- -->
 <!-- ULISBOA-FC-phd -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-ulisboa-fc-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-ulisboa-fc-phd.svg" border="1" width="100"/></kbd>
 <!-- ULISBOA-IST-phd -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-ulisboa-ist-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-ulisboa-ist-phd.svg" border="1" width="100"/></kbd>
 <!-- ISCTEIUL-ETA-msc -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-iscteiul-eta-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-iscteiul-eta-phd.svg" border="1" width="100"/></kbd>
 <!-- ULHT-DEISI-msc -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-ulht-deisi-msc.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-ulht-deisi-msc.svg" border="1" width="100"/></kbd>
 <!-- -->
 <!-- IPL-ISEL-msc -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-ipl-isel-msc.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-ipl-isel-msc.svg" border="1" width="100"/></kbd>
 <!-- IPS-ESTS-msc -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-ips-ests-msc.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-ips-ests-msc.svg" border="1" width="100"/></kbd>
 <!-- OTHER-MSCGT-msc -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-other-mscgt-msc.svg" border="1" width="100"/></kbd>
+&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-other-mscgt-msc.svg" border="1" width="100"/></kbd>
 <!-- OTHER-ESEP-msc -->
-<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-other-esep-msc.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
+&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/msc/cover-other-esep-msc.svg" border="1" width="100"/></kbd>
 
 
 <!-- <kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/phd/cover-uminho-ea-phd.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;
