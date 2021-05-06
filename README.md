@@ -168,6 +168,8 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
     * [Instituto de Educação](https://www.ie.uminho.pt) (IE-UM)
     * [Instituto de Letras e Ciências Humanas](https://www.ilch.uminho.pt) (ILCH-UM)
     * [Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos](https://i3bs.uminho.pt) (I3Bs-UM)
+* Universidade Lusófona de Humanidades e Tecnologias
+    * [Departamento de Engenharia Informática e Sistemas de Informação](http://informatica.ulusofona.ptpt) (ULHT-DEISI)
 * ISCTE – Instituto Universitário de Lisboa
     * [Escola de Tecnologia e Arquitectura](https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura) (ETA-ISCTE-IUL)
 * Instituto Politécnico de Lisboa
