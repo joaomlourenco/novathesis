@@ -292,7 +292,6 @@
   }%
 }
 
-\assocarray{abstractorder}
 \assocarray{frontmatterstring}
 \assocarray{backmatterstring}
 \assocarray{spinestring}
@@ -367,7 +366,17 @@
 
 % --------------------------------------------------------
 % SOME PRELIMINARY LANGUAGE DEFINITIONS
-\input{NOVAthesisFiles/lang-conf.tex}
+% \input{NOVAthesisFiles/lang-conf.tex}
+
+% For each main language, list which abstracts shall be printed and in which order
+% may have more than two (just be sure you include the languages above as well)
+\assocarray{abstractorder}
+\abstractorder(pt):={pt,en}
+\abstractorder(en):={en,pt}
+\abstractorder(fr):={fr,en}
+\abstractorder(it):={it,en}
+\abstractorder(es):={es,en}
+\abstractorder(de):={de,en}
 
 % --------------------------------------------------------
 % PROCESS PACKAGE OPTIONS
