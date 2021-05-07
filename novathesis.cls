@@ -516,12 +516,15 @@
                                 \hypertarget{toctarget}{\tableofcontents*}%
                             }%
                         }}}%
+      {listofalgorithms}{\options{/@nt/list/listof/.cpush = {%
+                                \addcontentsline{toc}{chapter}{List of Algorithms}%
+                        }}}
       {listsofglossaries}{\options{/@nt/list/listof/.cpush={%
                               \iftoggle{/novathesis/glsxindy}%
                                   {\printglossaries}%
                                   {\printnoidxglossaries}%
                           }}}%
-    }[\options{/@nt/list/listof/.cpush={\csuse{#1}}}]%
+  }[\options{/@nt/list/listof/.cpush={\csuse{#1}}}]%
 }
 
 %============================================================
