@@ -507,22 +507,21 @@
 %============================================================
 % Adding list_of
 \newcommand*{\netaddlistof}[1]{%
-  \ifthenelse{\equal{#1}{tableofcontents}}{\options{/@nt/list/listof/.cpush={%
-        \iftoggle{/novathesis/tocintoc}{%
-            \tableofcontents%
-        }{%
-            \phantomsection\pdfbookmark[1]{\contentsname}{toctarget}%
-            \hypertarget{toctarget}{\tableofcontents*}%
-        }%
-  }}}{%
-    \ifthenelse{\equal{#1}{listsofglossaries}}{\options{/@nt/list/listof/.cpush={%
-            \iftoggle{/novathesis/glsxindy}%
-                {\printglossaries}%
-                {\printnoidxglossaries}%
-    }}}{%
-      \options{/@nt/list/listof/.cpush={\csuse{#1}}}%
-    }%
-  }%
+  \IfStrEqCase{#1}{%
+      {tableofcontents}{\options{/@nt/list/listof/.cpush={%
+                            \iftoggle{/novathesis/tocintoc}{%
+                                \tableofcontents%
+                            }{%
+                                \phantomsection\pdfbookmark[1]{\contentsname}{toctarget}%
+                                \hypertarget{toctarget}{\tableofcontents*}%
+                            }%
+                        }}}%
+      {listsofglossaries}{\options{/@nt/list/listof/.cpush={%
+                              \iftoggle{/novathesis/glsxindy}%
+                                  {\printglossaries}%
+                                  {\printnoidxglossaries}%
+                          }}}%
+    }[\options{/@nt/list/listof/.cpush={\csuse{#1}}}]%
 }
 
 %============================================================
@@ -1084,7 +1083,7 @@
   % \begin{minipage}{#1\textwidth}
   % #1=Percentage of \textwidth used by the advisers list
   \begin{tabularx}{#1\textwidth}{@{}rX@{}}%
-  \forcsvlist{\@nt@printadvisergroup}{adviser,coadviser}
+  \forcsvlist{\@nt@printadvisergroup}{adviser,coadviser}%
   \end{tabularx}%
   % \end{minipage}
 }
@@ -1398,8 +1397,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Deal with optional lists in the frontmatter: listoftables, litoffigures, etc.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \newlistof{lstlistoflistings}{lol}{\lstlistlistingname}
-
 \newcommand*{\ntprintalllistof}{%
   \NTRunHook{listof/pre}%
   \optionlistdo{/@nt/list/listof}{##1\clearforchapter}%
@@ -1412,7 +1409,7 @@
   % \typeout{NT LISTMATCH [#1] [#2]}%
   \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%
   % \typeout{K=\option@listmatch@key ~V=\option@listmatch@value}
-  \ifthenelse{\equal{\option@listmatch@key}{#1}}{\listbreak}{}%
+  \IfStrEq{#1}{\option@listmatch@key}{\listbreak}{}%
 }%
 \options{/handlers/getval/.new operation={%
   % \typeout{NT GETVAL [#1] [#2]}%
@@ -1462,44 +1459,43 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Dedicatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NewEnviron{ntdedicatory}{
+\newenvironment{ntdedicatory}{%
   \thispagestyle{empty}%
   ~\\[2cm]%
-  \begin{minipage}{\linewidth}%
+  \minipage{\linewidth}%
     \raggedleft%
-    \begin{minipage}{100mm}%
+    \minipage{100mm}%
       \raggedleft%
       \quotefonti%
-      \BODY
+}{%
       \normalfont%
-    \end{minipage}%
-  \end{minipage}
+    \endminipage%
+  \endminipage%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Quote
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NewEnviron{ntquote}{%%
+\newenvironment{ntquote}{%
   \thispagestyle{empty}%
   ~\\[2cm]%
-  \begin{minipage}{\linewidth}%
+  \minipage{\linewidth}%
     \raggedleft%
-    \begin{minipage}{100mm}%
-      \raggedleft
+    \minipage{100mm}%
+      \raggedleft%
       \quotefonti%
-      \BODY%
+}{%
       \normalfont%
-    \end{minipage}%
-  \end{minipage}
+    \endminipage%
+  \endminipage%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NewEnviron{ntacknowledgements}{%
+\newenvironment{ntacknowledgements}{%
   \chapter*{\theacknowledgementsstring(\option{/novathesis/mainlang})}%
-  \BODY
-}
+}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Abstract
@@ -1517,14 +1513,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Keywords
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newtoggle{@nt@keywords@defined}
-\togglefalse{@nt@keywords@defined}
-\NewEnviron{keywords}[1][\option{/@nt/langshorttolong}]{%
-  \iftoggle{@nt@keywords@defined}%
-    {}%
-    {\hypersetup{pdfkeywords={\BODY}}}
+\newenvironment{keywords}[1][\option{/@nt/langshorttolong}]{%
+  \defifundef{\ntkwbox}{\newsavebox}%
+  \begin{lrbox}{\ntkwbox}%
+}{%
+  \end{lrbox}%
+  \ifoptionequal{/@nt/currentlang}{\option{/novathesis/mainlang}}%
+      {\hypersetup{pdfkeywords={\usebox{\ntkwbox}}}}%
+      {}%
   \par\vskip\baselineskip\noindent{\bfseries\@nt@keywordsstr: }%
-  \BODY%
+  \usebox{\ntkwbox}%
 }
 
 
