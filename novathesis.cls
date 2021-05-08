@@ -218,6 +218,9 @@
   % #4={committee member name, position, etc}
   \options{/@nt/#1/#2/gender/.cpush={#3}}%
   \options{/@nt/#1/#2/name/.cpush={#4}}%
+  % \StrCut{#4}{,}\@ntaddperson@name\@ntaddperson@school
+  % \options{/@nt/#1/#2/name/.cpush={\@ntaddperson@name}}%
+  % \options{/@nt/#1/#2/school/.cpush={\@ntaddperson@school}}%
 }
 
 
@@ -1177,6 +1180,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print advisers
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%============================================================
+% Print advisers as list
+%============================================================
 \newcommand{\ntprintadvisersaslist}[1][adviser,coadviser]{%
   % \printoptionlist{/@nt/#1//name}{, }{ and }
   \gdef\@nt@addviserslist{}%
@@ -1204,6 +1211,18 @@
   #1%
 }
 
+%============================================================
+% Print advisers as group
+%============================================================
+\newcommand{\ntprintadvisers}[1][0.90]{%
+  % \begin{minipage}{#1\textwidth}
+  % #1=Percentage of \textwidth used by the advisers list
+  \begin{tabularx}{#1\textwidth}{@{}rX@{}}%
+  \forcsvlist{\@nt@printadvisergroup}{adviser,coadviser}%
+  \end{tabularx}%
+  % \end{minipage}
+}
+
 \newcommand{\ntprintadvisersgroup}[2][0.90]{%
   % #1=width
   % %2={adviser,coadviser}
@@ -1221,15 +1240,6 @@
 \def\@nt@printadvisersgroup#1,#2\@nil{%
   \mbox{}#1\\
   \IfStrEq{#2}{}{\medskip}{\@nt@printadvisersgroup#2\@nil}%
-}
-
-\newcommand{\ntprintadvisers}[1][0.90]{%
-  % \begin{minipage}{#1\textwidth}
-  % #1=Percentage of \textwidth used by the advisers list
-  \begin{tabularx}{#1\textwidth}{@{}rX@{}}%
-  \forcsvlist{\@nt@printadvisergroup}{adviser,coadviser}%
-  \end{tabularx}%
-  % \end{minipage}
 }
 
 \newcommand{\ntprintoneadviser}[1]{%

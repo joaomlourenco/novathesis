@@ -28,39 +28,17 @@
 
 \ProvidesPackage{assocarray}[\xstringdate\space v\xstringversion\space, Joao Lourenco, Provides an associative array]
 
+\RequirePackage{etoolbox}
 \RequirePackage{xstring}
 
 \newif\ifopt@debug
 \DeclareOption{debug}{\opt@debugtrue}
 \ProcessOptions\relax
 
-\providecommand*\csnewcommand{\@star@or@long\csnew@command}
-\providecommand*\csnew@command[1]{\expandafter\new@command\csname#1\endcsname}
-\providecommand*\recsnewcommand{\@star@or@long\recsnew@command}
-\providecommand*\recsnew@command[1]{\expandafter\renew@command\csname#1\endcsname}
-
-% Shamelessly tolen from etoolbox
-\providecommand*{\csdef}[1]{\expandafter\def\csname#1\endcsname}
-\providecommand*{\csedef}[1]{\expandafter\edef\csname#1\endcsname}
-\providecommand*{\csuse}[1]{%
-  \ifcsname#1\endcsname%
-    \csname#1\expandafter\endcsname%
-  \fi%
-}
-\providecommand*{\ifcsdef}[1]{%
-  \ifcsname#1\endcsname%
-    \expandafter\@firstoftwo%
-  \else%
-    \expandafter\@secondoftwo%
-  \fi%
-}
-\providecommand*{\ifempty}[1]{%
-  \if#1\empty\relax
-    \expandafter\@firstoftwo%
-  \else%
-    \expandafter\@secondoftwo%
-  \fi%
-}
+% \providecommand*\csnewcommand{\@star@or@long\csnew@command}
+% \providecommand*\csnew@command[1]{\expandafter\new@command\csname#1\endcsname}
+% \providecommand*\recsnewcommand{\@star@or@long\recsnew@command}
+% \providecommand*\recsnew@command[1]{\expandafter\renew@command\csname#1\endcsname}
 
 
 %================================================================
