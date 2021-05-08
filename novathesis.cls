@@ -218,9 +218,6 @@
   % #4={committee member name, position, etc}
   \options{/@nt/#1/#2/gender/.cpush={#3}}%
   \options{/@nt/#1/#2/name/.cpush={#4}}%
-  % \StrCut{#4}{,}\@ntaddperson@name\@ntaddperson@school
-  % \options{/@nt/#1/#2/name/.cpush={\@ntaddperson@name}}%
-  % \options{/@nt/#1/#2/school/.cpush={\@ntaddperson@school}}%
 }
 
 
@@ -1185,8 +1182,7 @@
 % Print advisers as list
 %============================================================
 \newcommand{\ntprintadvisersaslist}[1][adviser,coadviser]{%
-  % \printoptionlist{/@nt/#1//name}{, }{ and }
-  \gdef\@nt@addviserslist{}%
+  \def\@nt@addviserslist{}%
   \setnewcounter{@nt@advisertotal}{0}%
   \forcsvlist\@nt@getadvisername{#1}%
   \setnewcounter{@nt@advisern}{0}%
@@ -1212,7 +1208,7 @@
 }
 
 %============================================================
-% Print advisers as group
+% Print advisers as list
 %============================================================
 \newcommand{\ntprintadvisers}[1][0.90]{%
   % \begin{minipage}{#1\textwidth}
