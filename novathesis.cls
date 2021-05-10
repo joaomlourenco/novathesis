@@ -404,6 +404,7 @@
   , lang/.new style = {/novathesis/mainlang=#1,/novathesis/copyrightlang=#1,
                        /novathesis/coverlang=#1}
   , mainlang/.new choice = {en, pt, fr, it, de, es}
+  , printfrontmatter/.new toggle = true
   , printcommittee/.new toggle = false
   , printcopyright/.new toggle = true
   , secondcover/.new toggle = false
@@ -659,6 +660,11 @@
                         }}}%
       {listofalgorithms}{\options{/@nt/list/listof/.cpush = {%
                                 \addcontentsline{toc}{chapter}{List of Algorithms}%
+                                %  Add space between chapters #170
+                                \appto{\insertchapterspace}{\addtocontents{loa}{\protect\addvspace{10pt}}}%
+                                % Numbering algorithms as chapter.number #169
+                                \renewcommand\thealgorithm{\thechapter.\arabic{algorithm}}%
+                                \@addtoreset{algorithm}{chapter}%
                         }}}
       {listsofglossaries}{\options{/@nt/list/listof/.cpush={%
                               \iftoggle{/novathesis/glsxindy}%
@@ -672,7 +678,7 @@
 % Print document “regions”
 \newcommand*{\ntprint}[1]{%
   \IfStrEqCase{#1}{%
-    {frontmatter}{\ntprintlist{/@nt/doc#1}}%
+    {frontmatter}{\iftoggle{/novathesis/printfrontmatter}{\ntprintlist{/@nt/doc#1}}{}}%
     {mainmatter}{\ntprintlist{/@nt/doc#1}}%
   }[\csuse{ntprint#1}]%
   \ignorespaces%
