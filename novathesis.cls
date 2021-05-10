@@ -659,6 +659,11 @@
                         }}}%
       {listofalgorithms}{\options{/@nt/list/listof/.cpush = {%
                                 \addcontentsline{toc}{chapter}{List of Algorithms}%
+                                %  Add space between chapters #170
+                                \appto{\insertchapterspace}{\addtocontents{loa}{\protect\addvspace{10pt}}}%
+                                % Numbering algorithms as chapter.number #169
+                                \renewcommand\thealgorithm{\thechapter.\arabic{algorithm}}%
+                                \@addtoreset{algorithm}{chapter}%
                         }}}
       {listsofglossaries}{\options{/@nt/list/listof/.cpush={%
                               \iftoggle{/novathesis/glsxindy}%
