@@ -1574,9 +1574,12 @@
 }
 
 \newcommand*{\@loadglossaryfiles}{%
-  \optionlistdo{/@nt/file/glossaries/glossary}{\@ntloadfile@i{##1}}%
-  \optionlistdo{/@nt/file/glossaries/acronyms}{\@ntloadfile@i{##1}}%
-  \optionlistdo{/@nt/file/glossaries/symbols}{\@ntloadfile@i{##1}}%
+  \ifoptiondefined{/@nt/file/glossaries/glossary}%
+    {\optionlistdo{/@nt/file/glossaries/glossary}{\@ntloadfile@i{##1}}}{}%
+  \ifoptiondefined{/@nt/file/glossaries/acronyms}%
+  {\optionlistdo{/@nt/file/glossaries/acronyms}{\@ntloadfile@i{##1}}}{}%
+  \ifoptiondefined{/@nt/file/glossaries/symbols}%
+  {\optionlistdo{/@nt/file/glossaries/symbols}{\@ntloadfile@i{##1}}}{}%
 }
 
 
