@@ -1675,12 +1675,14 @@
 \newenvironment{keywords}[1][\option{/@nt/langshorttolong}]{%
   \defifundef{\ntkwbox}{\newsavebox}%
   \begin{lrbox}{\ntkwbox}%
+    \minipage[t]{\linewidth}%
+      \par\vskip\baselineskip\noindent{\bfseries\@nt@keywordsstr: }%
 }{%
+    \endminipage%
   \end{lrbox}%
   \ifoptionequal{/@nt/currentlang}{\option{/novathesis/mainlang}}%
       {\hypersetup{pdfkeywords={\usebox{\ntkwbox}}}}%
       {}%
-  \par\vskip\baselineskip\noindent{\bfseries\@nt@keywordsstr: }%
   \usebox{\ntkwbox}%
 }
 
