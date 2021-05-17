@@ -28,7 +28,10 @@
   UprightFont=n015003t.ttf,
   BoldFont=n015006t.ttf,
   AutoFakeSlant=0.15,
+  BoldSlantedFont=n015006t.ttf,
+  BoldItalicFont=n015006t.ttf,
   BoldSlantedFeatures={FakeSlant=0.15},
+  BoldItalicFeatures={FakeSlant=0.15},
 ]
 
 \setfontfamily\newsgott{n015003t.ttf}[
@@ -41,6 +44,13 @@
   Ligatures=TeX,
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
+]
+
+\setfontfamily\newsgottbfit{n015006t.ttf}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+  BoldItalicFeatures={FakeSlant=0.15},
 ]
 
 \setfontfamily\newsgottit{n015003t.ttf}[
