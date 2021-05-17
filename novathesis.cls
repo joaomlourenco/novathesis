@@ -1473,15 +1473,17 @@
 
 \newcommand{\@ntprintabstract}[1]{%
   % \typeout{NT PRINT ABSTRACT #1}%
-  \setabstractlang{#1}%
-  \phantomsection\pdfbookmark[1]{\theabstractstring(#1)}{bmabstract#1}
-  \NTRunHook{abstract/pre}%
-  \NTRunHook{abstract/#1/pre}%
-  \printabstracttitle{#1}%
-  \NTRunHook{abstract/mid}%
-  \@ntloadfiles@ii[#1]{abstract}%
-  \NTRunHook{abstract/#1/post}%
-  \NTRunHook{abstract/post}%
+  \ifoptiondefined{/@nt/file/abstract/#1}{%
+    \setabstractlang{#1}%
+    \phantomsection\pdfbookmark[1]{\theabstractstring(#1)}{bmabstract#1}
+    \NTRunHook{abstract/pre}%
+    \NTRunHook{abstract/#1/pre}%
+    \printabstracttitle{#1}%
+    \NTRunHook{abstract/mid}%
+    \@ntloadfiles@ii[#1]{abstract}%
+    \NTRunHook{abstract/#1/post}%
+    \NTRunHook{abstract/post}%
+  }{}
 }
 
 
