@@ -153,13 +153,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Temporary macro to use in conditional expressions;
+\AtEndPreamble{% 
+  \usepackage[scaled=1]{inter}%
+  % \usepackage{gillius2}%
+}
 
 \NTAddToHook{cover/1-1/pretext}{%
-  \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+  \sffamily%
   \ifdocfinal{\provisionalstring(\option{/novathesis/coverlang}):={~}}{}%
 }
 \NTAddToHook{cover/2-1/pretext}{%
-  \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+  \sffamily%
   \ifdocfinal{\provisionalstring(\option{/novathesis/coverlang}):={~}}{}%
 }
 

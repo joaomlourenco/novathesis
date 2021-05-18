@@ -23,7 +23,6 @@
 % Cover background images
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
 \thesiscover(phd,1-1,bgcolor):={white}
-\thesiscover(msc,1-1,bgcolor):={white}
 % \thesiscover(phd,front,image):={}
 % \thesiscover(phdplan,front,image):={}
 % \thesiscover(phdprop,front,image):={}
@@ -110,12 +109,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtEndPreamble{% 
+  \usepackage[scaled=1]{inter}%
+  % \usepackage{gillius2}%
+}
+
 \NTAddToHook{cover/1-1/pretext}{%
-    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+  \sffamily%
 }
 \NTAddToHook{cover/2-1/pretext}{%
-    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+  \sffamily%
 }
+
 
 % LOGO
 \ntaddtocover[align=l, vspace=0cm]{1-1,2-1}{%

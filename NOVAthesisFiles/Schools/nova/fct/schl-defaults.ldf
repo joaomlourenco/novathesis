@@ -7,6 +7,8 @@
 
 \typeout{NT FILE nova/fct-legacy/defaults.ldf}
 
+
+
 % Faculty / School
 \school(pt):={Faculdade de Ciências e Tecnologia}
 \school(en):={NOVA School of Science and Technology}
@@ -20,6 +22,7 @@
 % \thesiscover(phd,1-1,bgcolor):={LightBlue}
 % \thesiscover(phd,1-2,bgcolor):={LightBlue}
 % \thesiscover(phd,1,back,bgcolor):={LightBlue}
+\thesiscover(phd,1-1,bgcolor):={white}
 \thesiscover(phd,1-1,image):={cover-phd-std}
 \thesiscover(phdplan,1-1,image):={cover-phd-std}
 \thesiscover(phdprop,1-1,image):={cover-phd-std}
@@ -114,10 +117,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtEndPreamble{% 
+  \usepackage[scaled=1]{inter}%
+  % \usepackage{gillius2}%
+}
+
 \NTAddToHook{cover/1-1/pretext}{%
-    \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
-  \pagecolor{white}%
-    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+  \sffamily%
+}
+\NTAddToHook{cover/2-1/pretext}{%
+  \sffamily%
 }
 
 % Author name
