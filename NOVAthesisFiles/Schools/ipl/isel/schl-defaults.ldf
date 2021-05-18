@@ -108,9 +108,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NTAddToHook{cover/1-1/pretext}{%
-  \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+\AtEndPreamble{% 
+  \usepackage[scaled=1]{inter}%
+  % \usepackage{gillius2}%
 }
+
+\NTAddToHook{cover/1-1/pretext}{%
+  \sffamily%
+}
+\NTAddToHook{cover/2-1/pretext}{%
+  \sffamily%
+}
+
 
 % LOGO
 \ntaddtocover[vspace=0cm,align=c]{1-1,2-1}{%

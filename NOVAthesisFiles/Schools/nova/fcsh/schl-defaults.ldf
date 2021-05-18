@@ -103,15 +103,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NTAddToHook{cover/1-1/pretext}{%
-    \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
-  \pagecolor{white}%
-    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
-}
-\NTAddToHook{cover/1-2/pretext}{%
-    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+\AtEndPreamble{% 
+  \usepackage[scaled=1]{inter}%
+  % \usepackage{gillius2}%
 }
 
+\NTAddToHook{cover/1-1/pretext}{%
+  \sffamily%
+}
+\NTAddToHook{cover/2-1/pretext}{%
+  \sffamily%
+}
 \definecolor{fcshblue}{RGB}{25,61,108}% Background title color
 
 

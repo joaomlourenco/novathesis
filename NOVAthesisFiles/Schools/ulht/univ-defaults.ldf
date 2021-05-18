@@ -23,6 +23,7 @@
 
 % Cover background images
 \frontpageimage():={cover}
+\thesiscover(bsc,1-1,bgcolor):={white}
 \thesiscover(bsc,1-1,image):={\thefrontpageimage()}
 \thesiscover(msc,1-1,image):={\thefrontpageimage()}
 
@@ -74,8 +75,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtEndPreamble{% 
+  \usepackage[scaled=1]{inter}%
+  % \usepackage{gillius2}%
+}
+
 \NTAddToHook{cover/1-1/pretext}{%
-  \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+  \sffamily%
+}
+\NTAddToHook{cover/2-1/pretext}{%
+  \sffamily%
 }
 
 % LOGO

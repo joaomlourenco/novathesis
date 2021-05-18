@@ -205,14 +205,17 @@ of the requirements for the degree of %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtEndPreamble{% 
+  \usepackage[scaled=1]{inter}%
+  % \usepackage{gillius2}%
+}
+
 \NTAddToHook{cover/1-1/pretext}{%
-    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+  \sffamily%
 }
-
 \NTAddToHook{cover/2-1/pretext}{%
-    \ifxeorlua{\setmainfont[Ligatures=TeX]{Helvetica}}{\fontfamily{phv}}%
+  \sffamily%
 }
-
   % PHD PROGRAM
 % \ntaddtocover[align=l, vspace=0cm, degree=phd]{1-1,2-1}{%
 %   \ntcoverbackground%
