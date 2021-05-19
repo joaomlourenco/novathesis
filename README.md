@@ -1,4 +1,4 @@
-<img src="http://joaomlourenco.github.io/novathesis/novathesis-latex-logo-v5.svg" width="600"/>
+<img src="http://joaomlourenco.github.io/novathesis/novathesis-latex-logo-v5.jpg" width="600"/>
 <meta property="og:image" content="http://joaomlourenco.github.io/novathesis/novathesis-latex-logo-v5.svg" />
 
 
