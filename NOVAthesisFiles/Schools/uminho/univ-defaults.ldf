@@ -93,18 +93,16 @@
 %------------------------------------------------------------------
 
 %%%%%%%%% Important package for the licensing. 
+
+\options{/@nt/langshorttolong=\option{/novathesis/copyrightlang}}
+
+\PassOptionsToPackage{lang=\option{/@nt/langshorttolong}}{doclicense}
+\PassOptionsToPackage{modifier={\option{/novathesis/copyrightmodifier}}}{doclicense}
+
 \RequirePackage[
     type={CC},
-    lang=portuguese,
-    modifier={by-nc-sa},
     version={4.0},
-]{doclicense} % By default english is used, however  is necessary to
-% explicity define the language if the license is in portuguese. The
-% modifier must be changed accordingly to user preferences.  If the
-% licensing is different from any of the Creative Commons (all rights
-% reserved for instance) just uncomment the line with \copyrightfile below
-% and add your own custom file and the doclicense package will be ignored.
-% Here the custom file has the name copyright
+]{doclicense} 
 
 \newcommand{\licenseThis}{%
   \normalsize\textit{\textbf{\theumcopyrightlabel(\option{/novathesis/coverlang})}}\\
