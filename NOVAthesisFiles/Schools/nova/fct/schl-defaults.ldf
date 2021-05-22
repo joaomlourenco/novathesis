@@ -117,9 +117,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{% 
-  \usepackage[scaled=1]{inter}%
-  % \usepackage{gillius2}%
+\AtEndPreamble{%
+  \LoadHelveticaLikeFont%
 }
 
 \NTAddToHook{cover/1-1/pretext}{%

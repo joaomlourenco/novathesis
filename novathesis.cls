@@ -137,6 +137,21 @@
                {\ClassError{novathesis}{Missing font “#1”! Please download from: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}{Please download from: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
 }
 
+
+% --------------------------------------------------------
+% Load and Helvetica-like font as the default SF font
+\newcommand*{\LoadHelveticaLikeFont}{%
+  \IfFileExists{inter.sty}%
+    {\usepackage[scaled=1]{inter}}%
+    {\IfFileExists{helvet.sty}%
+      {\usepackage[scaled=0.95]{helvet}}%
+      {\IfFileExists{gillius2.sty}%
+        {\usepackage{gillius2}}%
+        {\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}
+      }%
+  }%
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% INTERNAL KEY-VAL STUFF
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
