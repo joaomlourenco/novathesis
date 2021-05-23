@@ -154,7 +154,7 @@
 
 % Temporary macro to use in conditional expressions;
 \AtEndPreamble{% 
-  \usepackage[scaled=1]{inter}%
+  \LoadHelveticaLikeFont%
   % \usepackage{gillius2}%
 }
 
