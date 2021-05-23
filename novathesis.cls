@@ -1613,13 +1613,13 @@
 %% Copyright page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntprintcopyright}{%
-  \NTRunHook{copyright/pre}%
 	\ifmaindoc{% THEN
+    \NTRunHook{copyright/pre}%
     \iftoggle{/novathesis/printcopyright}%
       {\ntprintcopyrightpage}%
       {}%
+    \NTRunHook{copyright/post}%
 	}{}%
-  \NTRunHook{copyright/post}%
 }
 
 \newcommand*{\ntprintcopyrightpage}{%
