@@ -895,7 +895,9 @@
         {\color{\thethesiscover(\option{/novathesis/docdegree},#1,textcolor)}}{}
     \ntselectlang{\option{/novathesis/coverlang}}%
     \options{/@ntcoveropts/bookmark=#1}%
-    \phantomsection\pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
+    \IfStrEq{\option{/@ntcoveropts/bookmark}}{}{}{%
+      \phantomsection\pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
+    }%
     \@ntmakeboxwithcover{#1}{\@fullcover@box}%
     % \@nt@flushcoverbox{#1}{\@fullcover@box}%
     \newpage%
@@ -1144,31 +1146,27 @@
   \@ntfixspacing{white}{0.01}%
 }
 
-
 \newcommand*{\ntprintstatement}{%
-  \NTRunHook{statement/pre}%
   \iftoggle{/novathesis/statement}{% if statement toggle is on
-  	\ifmaindoc{% if it is a main document
-      \ntselectlang{\option{/novathesis/mainlang}}%
-      \phantomsection\pdfbookmark[1]{\csuse{thestatementstring}(\option{/novathesis/mainlang})}{bmstatement}
-      \ifoptiondefined{/@nt/file/statement/VAL}{% if the user defined their own statement file
-        \@ntloadfiles@ii{statement}%
-        \clearforchapter%
-      }{%No statement file defined... try a school defined one
-          \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}%
-              {}%
-              {\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}{}
-                  {\ClassError{novathesis}{No “statement.tex” found! Not defined with \string\ntaddfile{statement}{filename} nor in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” or “NOVAthesisFiles/Schools/\@nt@univ”}{}}}%
-        \clearforchapter%
+    \ifmaindoc{%
+      \NTRunHook{statement/pre}%
+      \ifoptiondefined{/@nt/file/statement/VAL}{}{%ELSE
+        \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}%
+          {\ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}}%
+          {\IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}%
+            {\ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}}
+            {\ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} nor in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” or “NOVAthesisFiles/Schools/\@nt@univ”}{}}%
+          }%
       }%
-    }{%
-      % It is a plan or proposal type document
-    }%
-  }{%
-    % statement toggle is off
-  }%
-  \NTRunHook{statement/post}%
+      \ntselectlang{\option{/novathesis/mainlang}}%
+      \phantomsection\pdfbookmark[1]{\csuse{thestatementstring}(\option{/novathesis/mainlang})}{bmstatement}%
+      \@ntloadfiles@ii{statement}%
+      \NTRunHook{statement/post}%
+      \clearforchapter%
+    }{}%
+  }{}%
 }
+
 
 
 
