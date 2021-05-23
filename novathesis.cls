@@ -1167,30 +1167,6 @@
   }{}%
 }
 
-% \newcommand*{\ntprintstatement}{%
-%   \iftoggle{/novathesis/statement}{% if statement toggle is on
-%     \ifmaindoc{% if it is a main document
-%       \NTRunHook{statement/pre}%
-%       \ntselectlang{\option{/novathesis/mainlang}}%
-%       \phantomsection\pdfbookmark[1]{\csuse{thestatementstring}(\option{/novathesis/mainlang})}{bmstatement}
-%       \ifoptiondefined{/@nt/file/statement/VAL}{% if the user defined their own statement file
-%         \@ntloadfiles@ii{statement}%
-%         \clearforchapter%
-%       }{%No statement file defined... try a school defined one
-%           \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}%
-%               {}%
-%               {\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}{}
-%                   {\ClassError{novathesis}{No “statement.tex” found! Not defined with \string\ntaddfile{statement}{filename} nor in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” or “NOVAthesisFiles/Schools/\@nt@univ”}{}}}%
-%         \clearforchapter%
-%       }%
-%       \NTRunHook{statement/post}%
-%     }{%
-%       % It is a plan or proposal type document
-%     }%
-%   }{%
-%     % statement toggle is off
-%   }%
-% }
 
 
 
