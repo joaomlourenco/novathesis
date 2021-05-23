@@ -145,7 +145,7 @@ for the degree of \emph{\thedegreename(en)}}
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtEndPreamble{% 
-  \usepackage[scaled=1]{inter}%
+  \LoadHelveticaLikeFont%
   % \usepackage{gillius2}%
 }
 
