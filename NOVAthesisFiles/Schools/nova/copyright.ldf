@@ -1,0 +1,17 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova/copyright.ldf
+%% NOVA thesis configuration file
+%%
+%% Copyright message for the UNIVERSIADE NOVA DE LISBOA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE nova/copyright.ldf}
+
+% This following command prints the copyrigh tpage
+\newcommand{\ntprintcopyrightpage}{%
+  \null\vfill%
+  \noindent%
+  \textbf{\large\thedoctitle(\option{/novathesis/coverlang},main)}\par%
+  \bigskip%
+  \thecopyrightstr\par%
+}
