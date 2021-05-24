@@ -18,13 +18,12 @@
 %-----------------------------------------------------------------
 \ntsetup{secondcover=true}
 \ntsetup{fontstyle=newsgott}
-\ntsetup{printcopyright=false}
 \ntsetup{statement=true}
 
 % --------------------------------------------------------
 % PRINT ORDER FOR frontmatter AND mainmatter
 \ntsetprintorder{frontmatter}{
-  copyrightmessage,
+  copyright,       % (*) The copyright page
   acknowledgements,% (*) Print the acknowledgments
   statement,       % The statement page
   quote,           % (*) Print the quote
@@ -88,67 +87,6 @@
 \datestr(pt):={Data}
 \datestr(en):={Date}
 
-%------------------------------------------------------------------
-% LICENSING 
-%------------------------------------------------------------------
-
-%%%%%%%%% Important package for the licensing. 
-\RequirePackage[
-    type={CC},
-    lang=portuguese,
-    modifier={by-nc-sa},
-    version={4.0},
-]{doclicense} % By default english is used, however  is necessary to
-% explicity define the language if the license is in portuguese. The
-% modifier must be changed accordingly to user preferences.  If the
-% licensing is different from any of the Creative Commons (all rights
-% reserved for instance) just uncomment the line with \copyrightfile below
-% and add your own custom file and the doclicense package will be ignored.
-% Here the custom file has the name copyright
-
-\newcommand{\licenseThis}{%
-  \normalsize\textit{\textbf{\theumcopyrightlabel(\option{/novathesis/coverlang})}}\\
-  \doclicenseImage\\[0.5mm]%
-  \normalsize\textbf{\doclicenseLongName}\\[0.5mm]
-  \normalsize\textbf{\doclicenseName}\\[2ex]
-  \small\url{\doclicenseURL}
-}
-
-\assocarray{umcopyrightlabel}
-\umcopyrightlabel(pt):={Licença concedida aos utilizadores deste trabalho}
-\umcopyrightlabel(en):={License granted to the users of this work}
-
-\assocarray{umcopyrighttext}
-\umcopyrighttext(pt):={%
-  \begin{center}%
-    \textbf{DIREITOS DE AUTOR E CONDIÇÕES DE UTILIZAÇÃO DO TRABALHO POR TERCEIROS}%
-  \end{center}%
-  \indent Este é um trabalho académico que pode ser utilizado por terceiros desde que respeitadas as regras e boas práticas internacionalmente aceites, no que concerne aos direitos de autor e direitos conexos.\\[1ex]
-  \indent Assim, o presente trabalho pode ser utilizado nos termos previstos na licença abaixo
-indicada.\\[1ex]
-  \indent Caso o utilizador necessite de permissão para poder fazer um uso do trabalho em condições não previstas no licenciamento indicado, deverá contactar o autor, através do RepositoriUM da \theuniversity(\option{/novathesis/coverlang}).\\[1cm]
-  \licenseThis%
-}
-
-\umcopyrighttext(en):={%
-  \begin{center}
-    \textbf{COPYRIGHT AND TERMS OF USE OF THIS WORK BY A THIRD PARTY}%
-  \end{center}%
-  \indent This is academic work that can be used by third parties as long as internationally accepted rules and good practices regarding copyright and related rights are respected.\\[1ex]
-  \indent Accordingly, this work may be used under the license provided below.\\[1ex]
-  \indent If the user needs permission to make use of the work under conditions not provided for in the indicated licensing, they should contact the author through the RepositoriUM of \theuniversity(\option{/novathesis/coverlang}).\\[1cm]
-  \licenseThis%
-}
-
-\newcommand*{\ntprintcopyrightmessage}{%
-  \thispagestyle{empty}%
-  \ntselectlang{\option{/novathesis/copyrightlang}}%
-  \currentpdfbookmark{Copyright}{bmcopyright}
-  \null\vfill%
-  \noindent%
-  \theumcopyrighttext(\option{/novathesis/copyrightlang})%
-  \vfill%
-}
 
 
 
@@ -183,7 +121,7 @@ indicada.\\[1ex]
 \definecolor{uminhoGREY}{RGB}{152,152,154}%{98989a}
 \definecolor{uminhoRED}{RGB}{167,52,57}%{a73439}
 
-% Univesity
+% University
 \university(pt):={Universidade do Minho}
 \university(en):={Universidade do Minho}
 \university(fr):={Universidade do Minho}

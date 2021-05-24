@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-05-23 [6.4.4]
+%% Version 2021-05-25 [6.4.5]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{novathesis}[2021-05-23 novathesis template]
+\ProvidesClass{novathesis}[2021-05-25 novathesis template]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -311,7 +311,7 @@
 \assocarray{backmatterstring}
 \assocarray{spinestring}
 \assocarray{coverstring}
-\assocarray{coversheetstring}
+\assocarray{frontpagestring}
 \assocarray{backcoverstring}
 \assocarray{copyrightstring}
 \assocarray{statementstring}
@@ -416,6 +416,7 @@
   , fontstyle=kpfonts        % set kpfonts as the default
   , coverlang/.new choice = {en, pt, fr, it, de, es}
   , copyrightlang/.new choice = {en, pt, fr, it, de, es}
+  , copyrightmodifier/.new choice = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd}
   , lang/.new style = {/novathesis/mainlang=#1,/novathesis/copyrightlang=#1,
                        /novathesis/coverlang=#1}
   , mainlang/.new choice = {en, pt, fr, it, de, es}
@@ -766,7 +767,6 @@
 \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/schl-defaults.ldf}{}%
     {\PackageWarning{novathesis}{Missing file “schl-defaults.ldf” for ”\@nt@univ/\@nt@schl”}}%
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING MEMOIR
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -827,6 +827,27 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING ADDITINAL FILES AFTER LOADING MEMOIR
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\@ntloadfile@i}[1]{%
+    % \typeout{NT TRYING TO LOAD #1}%
+    \IfFileExists{#1}{%
+        \input{#1}%
+        \clearforchapter%
+        \typeout{NT LOADING “#1” succeeded}%
+        % \externaldocument{#1}% from package 'xr'
+    }{%
+        \typeout{NT LOADING “#1” failed}%
+    }
+}
+
+\newcommand{\@ntloadfiles@ii}[2][VAL]{%
+    % #1=KEY
+    % #2=file class
+    % \options{/@nt/folders=#2}%
+    % \typeout{NT ntloadfiles [#2] [#1] [/@nt/file/#2/#1]}% [\expanded{\option{/@nt/folders}}]}
+    \ifoptiondefined{/@nt/file/#2/#1}%
+        {\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}%
+        {}
+}
 
 % --------------------------------------------------------
 % LOAD ADDITIONAL PACKAGES
@@ -835,6 +856,36 @@
 % --------------------------------------------------------
 % FIX BABEL TRANSLATION
 \input{NOVAthesisFiles/fix-babel.tex}
+
+% --------------------------------------------------------
+% LOAD A DEFAULT COPYRIGHT PAGE DEFINITION
+\ifmaindoc{% only print if a main document
+  \iftoggle{/novathesis/printcopyright}{% if copuyright toggle is on
+    \ifoptiondefined{/@nt/file/copyright/VAL}{}{% copyright file was not defined, use default one
+      \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/copyright.ldf}%
+        {\ntaddfile{copyright}{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/copyright.ldf}}%
+        {\IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/copyright.ldf}%
+          {\ntaddfile{copyright}{NOVAthesisFiles/Schools/\@nt@univ/copyright.ldf}}%
+          {\IfFileExists{NOVAthesisFiles/copyright.ldf}%
+            {\ntaddfile{copyright}{NOVAthesisFiles/copyright.ldf}}%
+            {\ClassError{novathesis}%
+               {No “copyright.ldf” found! Not defined with  \string\ntaddfile{copyright}{filename.ldf} nor as “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/copyright.ldf” nor as “NOVAthesisFiles/Schools/\@nt@univ/copyright.ldf”}%
+               {}%
+            }%
+          }%
+        }%
+    }%
+    \@ntloadfiles@ii{copyright}%
+  }{}%
+}{}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PRINT DOCUMENT PARTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\debuggrid}[1][orange]{%
   \begin{tikzpicture}[remember picture, semitransparent, overlay, shift=(current page.north west)]%
@@ -1032,8 +1083,8 @@
   % titles for PDF bookmark / list of contents
   , bookmark/.new choice = {1-1=\thecoverstring(\option{/novathesis/coverlang})
                           , 1-2={}
-                          , 2-1=\thecoversheetstring(\option{/novathesis/coverlang})
-                          . 2-2={}
+                          , 2-1=\thefrontpagestring(\option{/novathesis/coverlang})
+                          , 2-2={}
                           , N-1={}
                           , N-2=\thebackcoverstring(\option{/novathesis/coverlang})
                           , spine=\thespinestring(\option{/novathesis/coverlang})}
@@ -1179,8 +1230,6 @@
 
 \providecommand\thecopyrightstr{%
   \thispagestyle{empty}%
-  \ntselectlang{\option{/novathesis/copyrightlang}}%
-  \phantomsection\pdfbookmark[1]{Copyright}{bmcopyright}
   \noindent%
   Copyright \textcopyright\ \theauthorname, %
   \theschool(\option{/novathesis/copyrightlang}), \theuniversity(\option{/novathesis/copyrightlang}).\\%
@@ -1430,28 +1479,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Printing chapters and similars
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\@ntloadfile@i}[1]{%
-    % \typeout{NT TRYING TO LOAD #1}%
-    \IfFileExists{#1}{%
-        \input{#1}%
-        \clearforchapter%
-        \typeout{NT LOADING “#1” succeeded}%
-        % \externaldocument{#1}% from package 'xr'
-    }{%
-        \typeout{NT LOADING “#1” failed}%
-    }
-}
-
-\newcommand{\@ntloadfiles@ii}[2][VAL]{%
-    % #1=KEY
-    % #2=file class
-    % \options{/@nt/folders=#2}%
-    % \typeout{NT ntloadfiles [#2] [#1] [/@nt/file/#2/#1]}% [\expanded{\option{/@nt/folders}}]}
-    \ifoptiondefined{/@nt/file/#2/#1}%
-        {\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}%
-        {}
-}
-
 \newcommand{\@nt@printifmaindoc@i}[1]{%
   % \typeout{NT Attempt to load #1}%
   \NTRunHook{#1/pre}%
@@ -1613,22 +1640,19 @@
 %% Copyright page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntprintcopyright}{%
-  \NTRunHook{copyright/pre}%
-	\ifmaindoc{% THEN
-    \iftoggle{/novathesis/printcopyright}%
-      {\ntprintcopyrightpage}%
-      {}%
-	}{}%
-  \NTRunHook{copyright/post}%
+  \iftoggle{/novathesis/printcopyright}{%
+    \ifmaindoc{%
+      \ntselectlang{\option{/novathesis/copyrightlang}}%
+      \phantomsection\pdfbookmark[1]{\csuse{thecopyrightstring}(\option{/novathesis/mainlang})}{bmcopyright}%
+      \NTRunHook{copyright/pre}%
+      \ntprintcopyrightpage%
+      \NTRunHook{copyright/post}%
+    }{}%
+  }{}%
 }
 
-\newcommand*{\ntprintcopyrightpage}{%
-    \null\vfill%
-    \noindent%
-    \textbf{\large\thedoctitle(\option{/novathesis/coverlang},main)}\par%
-    \bigskip%
-    \thecopyrightstr\par%
-}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Dedicatory
