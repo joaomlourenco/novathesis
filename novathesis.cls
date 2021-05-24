@@ -416,6 +416,7 @@
   , fontstyle=kpfonts        % set kpfonts as the default
   , coverlang/.new choice = {en, pt, fr, it, de, es}
   , copyrightlang/.new choice = {en, pt, fr, it, de, es}
+  , copyrightmodifier/.new choice = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd}
   , lang/.new style = {/novathesis/mainlang=#1,/novathesis/copyrightlang=#1,
                        /novathesis/coverlang=#1}
   , mainlang/.new choice = {en, pt, fr, it, de, es}

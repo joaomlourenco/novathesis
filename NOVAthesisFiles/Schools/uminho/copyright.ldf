@@ -21,11 +21,17 @@
 % LICENSING 
 %------------------------------------------------------------------
 
+% Convert copyright language from two letters to language name
+\options{/@nt/langshorttolong=\option{/novathesis/copyrightlang}}
+
+\PassOptionsToPackage{lang=\option{/@nt/langshorttolong}}{doclicense}
+\PassOptionsToPackage{modifier=\option{/novathesis/copyrightmodifier}}{doclicense}
+
 %%%%%%%%% Important package for the licensing. 
 \RequirePackage[
     type={CC},
-    lang=portuguese,
-    modifier={by-nc-sa},
+    % lang=portuguese,
+    % modifier={by-nc-sa},
     version={4.0},
 ]{doclicense} % By default english is used, however  is necessary to
 % explicity define the language if the license is in portuguese. The
@@ -36,10 +42,11 @@
 % Here the custom file has the name copyright
 
 \newcommand{\licenseThis}{%
-  \normalsize\textit{\textbf{\theumcopyrightlabel(\option{/novathesis/coverlang})}}\\
+  \normalsize%
+  \textbf{\emph{\theumcopyrightlabel(\option{/novathesis/coverlang})}}\\
   \doclicenseImage\\[0.5mm]%
-  \normalsize\textbf{\doclicenseLongName}\\[0.5mm]
-  \normalsize\textbf{\doclicenseName}\\[2ex]
+  \textbf{\doclicenseLongName}\\[0.5mm]
+  \textbf{\doclicenseName}\\[2ex]
   {\small\url{\doclicenseURL}}
 }
 
@@ -47,7 +54,12 @@
 \umcopyrightlabel(pt):={Licença concedida aos utilizadores deste trabalho}
 \umcopyrightlabel(en):={License granted to the users of this work}
 
+
+%% ============================================================
+%% COPYRIGHT TEXT
+%% ============================================================
 \assocarray{umcopyrighttext}
+
 \umcopyrighttext(pt):={%
   \begin{center}%
     \textbf{DIREITOS DE AUTOR E CONDIÇÕES DE UTILIZAÇÃO DO TRABALHO POR TERCEIROS}%
