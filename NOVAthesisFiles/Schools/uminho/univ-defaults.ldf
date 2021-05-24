@@ -107,11 +107,12 @@
 % Here the custom file has the name copyright
 
 \newcommand{\licenseThis}{%
-  \normalsize\textit{\textbf{\theumcopyrightlabel(\option{/novathesis/coverlang})}}\\
+  \normalsize%
+  \textit{\textbf{\theumcopyrightlabel(\option{/novathesis/coverlang})}}\\
   \doclicenseImage\\[0.5mm]%
-  \normalsize\textbf{\doclicenseLongName}\\[0.5mm]
-  \normalsize\textbf{\doclicenseName}\\[2ex]
-  \small\url{\doclicenseURL}
+  \textbf{\doclicenseLongName}\\[0.5mm]
+  \textbf{\doclicenseName}\\[2ex]
+  {\small\url{\doclicenseURL}}
 }
 
 \assocarray{umcopyrightlabel}
