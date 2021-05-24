@@ -26,6 +26,7 @@
 \thesiscover(bsc,1-1,bgcolor):={white}
 \thesiscover(bsc,1-1,image):={\thefrontpageimage()}
 \thesiscover(msc,1-1,image):={\thefrontpageimage()}
+\thesiscover(phd,1-1,image):={\thefrontpageimage()}
 
 % Set margins for cover pages
 \margin(bsc,top):={2.9cm}
@@ -37,6 +38,11 @@
 \margin(msc,bottom):={1.3cm}
 \margin(msc,left):={2.5cm}
 \margin(msc,right):={2.5cm}
+
+\margin(phd,top):={2.9cm}
+\margin(phd,bottom):={1.3cm}
+\margin(phd,left):={2.5cm}
+\margin(phd,right):={2.5cm}
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
