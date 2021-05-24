@@ -7,7 +7,7 @@
 
 \typeout{NT FILE uminho/copyright.ldf}
 
-% This following command prints the copyrigh tpage
+% The following command prints the copyrigh tpage
 \newcommand{\ntprintcopyrightpage}{%
   \thispagestyle{empty}%
   \null\vfill%
