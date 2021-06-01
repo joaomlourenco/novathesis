@@ -904,13 +904,32 @@
   \end{tikzpicture}%
 }
 
+\newcommand*{\ifocverdefined}[1][1]{%
+  % #1 = cover number
+  % #2 = true branch
+  % #3 = false branch
+  \def\@coverdefined{false}%
+  \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{\def\@coverdefined{true}}%
+  {\ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1,bgcolor){\def\@coverdefined{true}}%
+  {\ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1,image){\def\@coverdefined{true}}%
+  {}}}%
+  \IfStrEq{\@coverdefined}{true}{\@firstoftwo}{\@secondoftwo}%
+}
+
 \newcommand{\ntprintbackcover}{%
-  \phantomsection\pdfbookmark[0]{\thebackmatterstring(\option{/novathesis/coverlang})}{bmbackmatter}%
+  \ifocverdefined[N-1]{%
+    \phantomsection\pdfbookmark[-1]{\thebackmatterstring(\option{/novathesis/coverlang})}{bmbackmatter}%
+  }{%
+    \ifocverdefined[N-2]{%
+      \phantomsection\pdfbookmark[-1]{\thebackmatterstring(\option{/novathesis/coverlang})}{bmbackmatter}%
+    }{}%
+  }%
   \ntprintcoverpair{N}%
 }
 
 \newcommand{\ntprintcovers}[1][1,2]{%
-  \phantomsection\pdfbookmark[0]{\thefrontmatterstring(\option{/novathesis/coverlang})}{bmfrontmatter}%
+  \phantomsection\pdfbookmark[-1]{\thefrontmatterstring(\option{/novathesis/coverlang})}{bmfrontmatter}%
+  \NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
   \forcsvlist{\ntprintcoverpair}{#1}%
 }
 

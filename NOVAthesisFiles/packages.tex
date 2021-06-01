@@ -108,6 +108,7 @@
   %--------------------------------
   % “hyperref” stuff
   \RequirePackage[%
+    , bookmarksnumbered%
     , breaklinks%
     , colorlinks=true%
     , pdfdisplaydoctitle%
@@ -118,6 +119,7 @@
     \def\\{}%
     \def\texttt#1{#1}%
   }%
+  \RequirePackage{bookmark}%
   \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
   \RequirePackage[all]{hypcap}%
   %--------------------------------
