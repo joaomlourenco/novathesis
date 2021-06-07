@@ -111,6 +111,13 @@
   \counterwithout{table}{chapter}%
 }
 
+\NTAddToHook{dedicatory/pre}{%
+  \thispagestyle{plain}%
+}
+
+\NTAddToHook{quote/pre}{%
+  \thispagestyle{plain}%
+}
 
 
 %-----------------------------------------------------------------

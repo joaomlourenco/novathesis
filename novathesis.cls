@@ -1681,6 +1681,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{ntdedicatory}{%
   \thispagestyle{empty}%
+  \NTRunHook{dedicatory/pre}%
   ~\\[2cm]%
   \minipage{\linewidth}%
     \raggedleft%
@@ -1691,6 +1692,7 @@
       \normalfont%
     \endminipage%
   \endminipage%
+  \NTRunHook{dedicatory/post}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1698,6 +1700,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{ntquote}{%
   \thispagestyle{empty}%
+  \NTRunHook{quote/pre}%
   ~\\[2cm]%
   \minipage{\linewidth}%
     \raggedleft%
@@ -1708,6 +1711,7 @@
       \normalfont%
     \endminipage%
   \endminipage%
+  \NTRunHook{quote/post}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
