@@ -9,7 +9,7 @@
 
 % The following command prints the copyrigh tpage
 \newcommand{\ntprintcopyrightpage}{%
-  \thispagestyle{empty}%
+  \thispagestyle{plain}%
   \null\vfill%
   \noindent%
   \theumcopyrighttext(\option{/novathesis/copyrightlang})%
