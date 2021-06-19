@@ -788,6 +788,10 @@
 \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
 \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
 
+\ifoptionequal{/novathesis/media}{paper}{%
+  \ntsetup{linkscolor=Black}%
+}{%
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
