@@ -111,6 +111,13 @@
   \counterwithout{table}{chapter}%
 }
 
+\NTAddToHook{dedicatory/pre}{%
+  \thispagestyle{plain}%
+}
+
+\NTAddToHook{quote/pre}{%
+  \thispagestyle{plain}%
+}
 
 
 %-----------------------------------------------------------------
@@ -118,8 +125,12 @@
 %-----------------------------------------------------------------
 
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
-\definecolor{uminhoGREY}{RGB}{152,152,154}%{98989a}
-\definecolor{uminhoRED}{RGB}{167,52,57}%{a73439}
+%\definecolor{uminhoGREY}{RGB}{152,152,154}%{98989a}
+%\definecolor{uminhoRED}{RGB}{167,52,57}%{a73439}
+% Colorscheme as viewed in PDF Reader
+\definecolor{uminhoGREY}{RGB}{145,143,144}
+\definecolor{uminhoRED}{RGB}{158, 26, 37}
+
 
 % University
 \university(pt):={Universidade do Minho}

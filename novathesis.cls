@@ -618,9 +618,12 @@
   \@nttitle{#1}{sub}{#2}%
 }
 
+% \newcommand{\removelinebreaks}[1]{%
+%       \def\\{\relax}#1%
+% }
 
-\newcommand{\removelinebreaks}[1]{%
-      \def\\{\relax}#1%
+\newcommand{\replacelinebreakwithspace}[1]{%
+      \def\\{\ }#1%
 }
       
 \newcommand*{\@nttitle}[3]{
@@ -628,8 +631,8 @@
   % #2 = lang
   % #3 = value
   % \typeout{NT @nttitle [#1] [#2] [#3]}%
-  \doctitle(#1,#2):={\removelinebreaks{#3}}%
-  \doctitle(#1,#2,caps):={\removelinebreaks{\expandafter\MakeUppercase\expandafter{#3}}}%
+  \doctitle(#1,#2):={\replacelinebreakwithspace{#3}}%
+  \doctitle(#1,#2,caps):={\replacelinebreakwithspace{\expandafter\MakeUppercase\expandafter{#3}}}%
   \doctitle(#1,#2,cover):={#3}%
   \doctitle(#1,#2,cover,caps):={\expandafter\MakeUppercase\expandafter{#3}}%
 }
@@ -1678,6 +1681,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{ntdedicatory}{%
   \thispagestyle{empty}%
+  \NTRunHook{dedicatory/pre}%
   ~\\[2cm]%
   \minipage{\linewidth}%
     \raggedleft%
@@ -1688,6 +1692,7 @@
       \normalfont%
     \endminipage%
   \endminipage%
+  \NTRunHook{dedicatory/post}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1695,6 +1700,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{ntquote}{%
   \thispagestyle{empty}%
+  \NTRunHook{quote/pre}%
   ~\\[2cm]%
   \minipage{\linewidth}%
     \raggedleft%
@@ -1705,6 +1711,7 @@
       \normalfont%
     \endminipage%
   \endminipage%
+  \NTRunHook{quote/post}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
