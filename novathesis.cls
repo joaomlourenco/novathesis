@@ -677,6 +677,10 @@
                                 \hypertarget{toctarget}{\tableofcontents*}%
                             }%
                         }}}%
+      {listoflistings}{\options{/@nt/list/listof/.cpush={%
+                                \phantomsection\pdfbookmark{\listoflistingscaption}{loltarget}%
+                                \hypertarget{loltarget}{\listoflistings}%
+                        }}}%
       {listofalgorithms}{\options{/@nt/list/listof/.cpush = {%
                                 \addcontentsline{toc}{chapter}{List of Algorithms}%
                                 %  Add space between chapters #170
