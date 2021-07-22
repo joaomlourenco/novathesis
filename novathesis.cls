@@ -275,6 +275,12 @@
   \typeout{NT ADDED FILE [/@nt/#1/#2/#3=\@nt@filewithpath]}%
 }
 
+\newcommand*{\@nt@ifoptiondefined}[2]{%
+  % #1={file, person}
+  % #2=file family (quote, abstract, chapter, etc)
+  \ifoptiondefined{/@nt/#1/#2}%
+}
+
 \newcommand*{\@nt@foralllist}[3]{%
   % #1={file, person}
   % #2=file family (quote, abstract, chapter, etc)
@@ -1600,9 +1606,11 @@
  }
 
 \newcommand*{\ntprintappendices}{%
-  \renewcommand{\appendixtocname}{\appendixnamepl}%
-  \appendix\addappheadtotoc%
-  \@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
+  \@nt@ifoptiondefined{file}{appendix}{%
+    \renewcommand{\appendixtocname}{\appendixnamepl}%
+    \appendix\addappheadtotoc%
+    \@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
+  }{}%
 }
 
 \newcommand*{\ntprintannexes}{%
