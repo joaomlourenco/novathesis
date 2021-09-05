@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-06-19 [6.4.7]
+%% Version 2021-09-05 [6.4.8]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{novathesis}[2021-06-19 novathesis template]
+\ProvidesClass{novathesis}[2021-09-05 novathesis template]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -275,10 +275,11 @@
   \typeout{NT ADDED FILE [/@nt/#1/#2/#3=\@nt@filewithpath]}%
 }
 
-\newcommand*{\@nt@ifoptiondefined}[2]{%
+\newcommand*{\@nt@ifoptionlinstempty}[3][VAL]{%
   % #1={file, person}
   % #2=file family (quote, abstract, chapter, etc)
-  \ifoptiondefined{/@nt/#1/#2}%
+  % #3=optional file lang
+  \ifthenelse{\value{\option{/@nt/#2/#3/#1/@size}} = 0}%
 }
 
 \newcommand*{\@nt@foralllist}[3]{%
@@ -1606,11 +1607,11 @@
  }
 
 \newcommand*{\ntprintappendices}{%
-  \@nt@ifoptiondefined{file}{appendix}{%
+  \@nt@ifoptionlinstempty{file}{appendix}{}{%
     \renewcommand{\appendixtocname}{\appendixnamepl}%
     \appendix\addappheadtotoc%
     \@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
-  }{}%
+  }%
 }
 
 \newcommand*{\ntprintannexes}{%
