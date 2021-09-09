@@ -1,0 +1,175 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova/fct-legacy/defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for FCT-NOVA (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE nova/fct-legacy/defaults.ldf}
+
+
+
+% Faculty / School
+\school(pt):={Faculdade de Ciências e Tecnologia}
+\school(en):={NOVA School of Science and Technology}
+\school(fr):={NOVA School of Science and Technology}
+\school(it):={NOVA School of Science and Technology}
+
+% Comiittee printing order
+\committeeorder(all):={c,r,m}% 
+
+% Cover background images
+% \thesiscover(phd,1-1,bgcolor):={LightBlue}
+% \thesiscover(phd,1-2,bgcolor):={LightBlue}
+% \thesiscover(phd,1,back,bgcolor):={LightBlue}
+\thesiscover(phd,1-1,bgcolor):={white}
+\thesiscover(phd,1-1,image):={cover-phd-std}
+\thesiscover(phdplan,1-1,image):={cover-phd-std}
+\thesiscover(phdprop,1-1,image):={cover-phd-std}
+\thesiscover(msc,1-1,image):={cover-msc-std}
+\thesiscover(mscplan,1-1,image):={cover-msc-std}
+\thesiscover(bsc,1-1,image):={cover-bsc-std}
+\thesiscover(plain,1-1,image):={cover-plain-std}
+% \thesiscover(phd,cd,1-1,image):={cd-cover-phd}
+% \thesiscover(phd,cd,inlay,image):={cd-inlay-phd}
+% \thesiscover(phdplan,cd,1-1,image):={cd-cover-phd}
+% \thesiscover(phdplan,cd,inlay,image):={cd-inlay-phd}
+% \thesiscover(phdprop,cd,1-1,image):={cd-cover-phd}
+% \thesiscover(phdprop,cd,inlay,image):={cd-inlay-phd}
+% \thesiscover(msc,cd,1-1,image):={cd-cover-msc}
+% \thesiscover(msc,cd,inlay,image):={cd-inlay-msc}
+% \thesiscover(mscplan,cd,1-1,image):={cd-cover-msc}
+% \thesiscover(mscplan,cd,inlay,image):={cd-inlay-msc}
+% \thesiscover(bsc,cd,1-1,image):={cd-cover-msc}
+% \thesiscover(bsc,cd,inlay,image):={cd-inlay-msc}
+% \thesiscover(plain,cd,1-1,image):={cd-cover-msc}
+% \thesiscover(plain,cd,inlay,image):={cd-inlay-msc}
+
+% Spine info
+\spine(logo):={logoNOVA}
+\spine(author):={\theauthorshortname}
+\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(year):={\thentdateyear}
+
+% Set margins for "normal" pages
+\margin(screen,top):={3.5cm}
+\margin(screen,bottom):={2.5cm}
+\margin(screen,left):={3.0cm}
+\margin(screen,right):={3.0cm}
+\margin(paper,top):={3.5cm}
+\margin(paper,bottom):={2.5cm}
+\margin(paper,left):={2.5cm}
+\margin(paper,right):={3.5cm}
+
+% Set margins for cover pages
+\margin(phd,top):={3.9cm}
+\margin(phd,bottom):={1.4cm}
+\margin(phd,left):={5.5cm}
+\margin(phd,right):={2.5cm}
+\margin(phdplan,top):={3.9cm}
+\margin(phdplan,bottom):={1.4cm}
+\margin(phdplan,left):={5.5cm}
+\margin(phdplan,right):={2.5cm}
+\margin(phdprop,top):={3.9cm}
+\margin(phdprop,bottom):={1.4cm}
+\margin(phdprop,left):={5.5cm}
+\margin(phdprop,right):={2.5cm}
+\margin(msc,top):={4.0cm}
+\margin(msc,bottom):={1.3cm}
+\margin(msc,left):={4.5cm}
+\margin(msc,right):={3.3cm}
+\margin(mscplan,top):={4.0cm}
+\margin(mscplan,bottom):={1.3cm}
+\margin(mscplan,left):={4.5cm}
+\margin(mscplan,right):={3.3cm}
+\margin(bsc,top):={4.0cm}
+\margin(bsc,bottom):={1.3cm}
+\margin(bsc,left):={4.5cm}
+\margin(bsc,right):={3.3cm}
+\margin(plain,top):={4.0cm}
+\margin(plain,bottom):={1.3cm}
+\margin(plain,left):={4.5cm}
+\margin(plain,right):={3.3cm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NOVA guidelines:
+% The pages should be numbered consecutively at the bottom centre of the
+% page.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \makepagestyle{novathesis@myvf}
+% \makeoddfoot{novathesis@myvf}{}{\thepage}{}
+% \makeevenfoot{novathesis@myvf}{}{\thepage}{}
+% \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}
+% \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}
+% \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
+% \pagestyle{novathesis@myvf}
+
+% \NTAddToHook{abstract/pre}{%
+%   % \rule{\textwidth}{0.2mm} ~\\[-3.5ex]%
+% }
+% \NTAddToHook{abstract/post}{%
+%   % \null\\[2ex]\rule{\textwidth}{0.2mm}%
+% }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtEndPreamble{%
+  \LoadHelveticaLikeFont%
+}
+
+\NTAddToHook{cover/1-1/pretext}{%
+  \sffamily%
+}
+\NTAddToHook{cover/2-1/pretext}{%
+  \sffamily%
+}
+
+% Author name
+\ntaddtocover[vspace=0cm]{1-1}{%
+  \fontsize{14}{14}\selectfont
+  \textbf{\theauthorname}
+}
+
+% Academic qualifications
+\ntaddtocover[vspace=0.25cm]{1-1}{%
+  \fontsize{11}{11}\selectfont
+  \theauthordegree
+}
+
+% % Title of Dissertation
+\ntaddtocover[vspace=4.5cm]{1-1}{%
+  \fontsize{16}{16}\selectfont
+  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}
+}
+
+% Degree
+\ntaddtocover[vspace=1.5cm]{1-1}{%
+  \fontsize{11}{11}\selectfont
+  \thepresentationtext
+}
+% Advisers
+\ntaddtocover[vspace=1]{1-1}{%
+  \fontsize{12}{12}\selectfont
+  \ntprintadvisers
+}
+
+% Committee — only print the committee for the main classes
+\ntaddtocover[align=r, vspace=1]{1-1}{%
+  \fontsize{10}{10}\selectfont%
+  \ntprintcommittee%
+}
+
+% Date
+\ntaddtocover[vspace=3.5cm]{1-1}{%
+  \fontsize{11}{11}\selectfont
+  \textbf{\thentdatemonth, \thentdateyear}
+}
+
+%
+% \ntaddtocover{back}{%
+%   BLAHS
+% }
