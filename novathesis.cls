@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-09-11 [6.5.1]
+%% Version 2021-09-19 [6.5.2]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{novathesis}[2021-09-11 novathesis template]
+\ProvidesClass{novathesis}[2021-09-19 novathesis template]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -123,8 +123,12 @@
 \def\ntdepartment(#1)#2{\department(#1):={#2}}
 \def\ntmajorfield(#1)#2{\majorfield(#1):={#2}}
 \def\ntdegreename(#1)#2{%
-  \degreename(#1):={#2}%
-  \majorfield(#1):={#2}%
+  \degreename(#1):={%
+    \ifphddoc{\thephdstring(\option{/novathesis/coverlang}) }{\ifmscdoc{\themscstring(\option{/novathesis/coverlang}) }{}}#2%
+  }%
+  \majorfield(#1):={%
+    \ifphddoc{\thephdstring(\option{/novathesis/coverlang}) }{\ifmscdoc{\themscstring(\option{/novathesis/coverlang}) }{}}#2%
+  }%
 }
 \def\ntspecialization(#1)#2{\specialization(#1):={#2}}
 \def\ntsponsors(#1)#2{\sponsorsstr(#1):={#2}}
@@ -349,6 +353,8 @@
 \providecommand*{\theadviserremainderfont}{\\[-0.5ex]\itshape\scriptsize}
 
 \assocarray{degreename}
+\assocarray{mscstring}
+\assocarray{phdstring}
 
 \assocarray{docdegreestr}
 
@@ -1616,9 +1622,11 @@
 }
 
 \newcommand*{\ntprintannexes}{%
-  \renewcommand{\appendixtocname}{\annexnamepl}%
-  \annex\addappheadtotoc%
-  \@nt@foralllist{file}{annex}{\@ntloadfiles@ii{annex}}%
+  \@nt@ifoptionlinstnotempty{file}{annex}{%
+    \renewcommand{\appendixtocname}{\annexnamepl}%
+    \annex\addappheadtotoc%
+    \@nt@foralllist{file}{annex}{\@ntloadfiles@ii{annex}}%
+  }{}%
 }
 
 \ifdef{\annexcounter}{}{\def\annexcounter{\@Roman}}
