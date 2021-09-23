@@ -494,7 +494,6 @@
 % BABEL STUFF
 \edef\nt@alllangs{}
 \optionlistdo{/novathesis/langsused}{%
-% \optionlistdo{/@nt/langsshort}{%
   \options{/@nt/langshorttolong=#1}%
   \ifoptionequal{/novathesis/mainlang}{#1}%
     {\eappto{\nt@alllangs}{,main=\option{/@nt/langshorttolong}}}%
