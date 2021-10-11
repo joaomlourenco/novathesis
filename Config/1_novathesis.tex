@@ -35,7 +35,7 @@
 %                               %     [ en, pt, fr, it, de, es ]
 %                               % DEFAULT: lang=en
 
-% \ntsetup{glsxindy=true}       % Use am external glossaries processor (this method
+% \ntsetup{glsxindy=true}       % Use an external glossaries processor (this method
 %                               % is faster if you have more than a couple of entries)
 %                               % DEFAULT: glsxindy=false
 
@@ -58,14 +58,13 @@
 %                               %     cover and the book chapters
 %                               % DEFAULT: printfrontmatter=true
 
-% \ntsetup{printcommittee=true}% Shall the committee be printed?
-%                               %     should be 'false' for document versions still
-%                               %     under work/evaluation.   Only final versions 
-%                               %     should have the list of committee members.
+% \ntsetup{printcommittee=true}% Shall the evaluation committee be printed?
+%                               %     the evaluation committee should only be
+%                               %     printed in final versions.
 %                               % DEFAULT: printcommittee=false
 
-% \ntsetup{gnumberlist=false}   % Shall the page numbers that appear after
-%                               %     the entries in glossaries br printed?
+% \ntsetup{gnumberlist=false}   % Shall the glossary entries list the page numbers where
+%                               %     those entries are used?  (as a reverse index!)
 %                               % DEFAULT: gnumberlist=true
 
 % \ntsetup{secondcover=true}    % Shall a second cover page be forced?
@@ -83,7 +82,7 @@
 
 
 %\ntsetup{copyrightmodifier=by-sa-nc} % Modifier for the Creative Commons license.   
-%                               % Ignore otherwise
+%                               % Ignored otherwise
 %                               % DEFAULT: CC by-sa-nc license
 
 
@@ -98,16 +97,18 @@
 %                               % DEFAULT: tocintoc=false
 
 % \ntsetup{fontstyle=erewhon}   % The font set to be used in the document
-%                               %     [ kpfonts bookman libertine, scholax 
-%                               %       calibri(*), kieranhealy(*) ] 
-%                               %     (*) only for xelatex/lualatex)
+%                               %     [ bookman, erewho, kpfont, libertin,
+%                               %       schola, stix2,
+%                               %       newsgot(*), calibr(*), kieranhealy(*) ] 
+%                               %     (*) available only for xelatex/lualatex)
 %                               % DEFAULT: fontstyle=kpfonts
 
 %\ntsetup{chapstyle=elegant}   % The chapter style to be used
-%                               %     [ elegantbianchi bluebox default ell hansen ist
-%                               %       lyhne madsen pedersen section southall veelo
-%                               %       vz34 vz43 ]
-%                               % DEFAULT: chapstyle=elegant
+%                               %     [ bar, bianchi, bluebox, compact, default, 
+%                               %       elegant, ell, hansen, ist, lyhne, madsen, 
+%                               %       pedersen, section, southall, veelo, vz34,
+%                               %       vz43 ]
+%                               % DEFAULT: chapstyle=bar
 
 % \ntsetup{coverlang=en}        % The language for the cover (and second cover) page 
 %                               %     defaults to main document language
