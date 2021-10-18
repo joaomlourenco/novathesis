@@ -7,6 +7,10 @@
 
 \typeout{NT FILE nova/ims/defaults.ldf}
 
+
+% Redefinition of "Master in" to "Master of Science in"
+\mscstring(en):={Master of Science in}
+
 % Faculty / School
 \school(pt):={Information Management School}
 \school(en):={Information Management School}
@@ -146,9 +150,10 @@ of the requirements for the degree of\\[1ex]%
 \dissertationstr(mscplan,en):={Dissertaion plan submitted in partial fulfillment\\%
 of the requirements for the degree of\\[1ex]%
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(msc,en):={Dissertaion submitted in partial fulfillment\\%
+\dissertationstr(msc,en):={Dissertation submitted in partial fulfillment\\%
 of the requirements for the degree of\\[1ex]%
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}}
+% \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in
+ {\themajorfield(\option{/novathesis/coverlang})}}
 
 \dissertationstr(phdplan,pt):={A thesis plan submitted in partial fulfillment %
 of the requirements for the degree of %
