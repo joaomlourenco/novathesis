@@ -291,8 +291,18 @@ of the requirements for the degree of %
 \ntaddtocover[align=l, vspace=1, degree=msc]{1-1,2-1}{%
   \fontsize{17}{17}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}\\[0.25ex]%
-  \fontsize{16}{16}\selectfont%
-  \textcolor{imslightgrey}{\thespecialization(\option{/novathesis/coverlang})}%
+  \ifaadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
+    \\[2mm]%
+    \textcolor{imsmidgrey}{
+      \fontsize{15}{15}\selectfont%
+      \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover)}%
+    }%
+  }{}%
+  % \fontsize{16}{16}\selectfont
+  % \textcolor{imsmidgrey}{%
+  %   \textbf{\thespecializationstr(\option{/novathesis/coverlang})
+  %   \thespecialization(\option{/novathesis/coverlang})}%
+  % }%
 }
 
 % Author name
