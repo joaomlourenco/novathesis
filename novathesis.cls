@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-10-11 [6.5.3]
+%% Version 2021-10-28 [6.5.4]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{novathesis}[2021-10-11 novathesis template]
+\ProvidesClass{novathesis}[2021-10-28 novathesis template]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -680,7 +680,7 @@
 
 %============================================================
 % Adding list_of
-\newcommand*{\netaddlistof}[1]{%
+\newcommand*{\ntaddlistof}[1]{%
   \IfStrEqCase{#1}{%
       {tableofcontents}{\options{/@nt/list/listof/.cpush={%
                             \iftoggle{/novathesis/tocintoc}{%
@@ -695,12 +695,15 @@
                                 \hypertarget{loltarget}{\listoflistings}%
                         }}}%
       {listofalgorithms}{\options{/@nt/list/listof/.cpush = {%
-                                \addcontentsline{toc}{chapter}{List of Algorithms}%
+                                \phantomsection\pdfbookmark{\listalgorithmcfname}{loatarget}%
+                                \hypertarget{loatarget}{\listofalgorithms}%
+                                % \addcontentsline{toc}{chapter}{List of Algorithms}%
                                 %  Add space between chapters #170
-                                \appto{\insertchapterspace}{\addtocontents{loa}{\protect\addvspace{10pt}}}%
+                                % \appto{\insertchapterspace}{\addtocontents{loa}{\protect\addvspace{10pt}}}%
                                 % Numbering algorithms as chapter.number #169
-                                \renewcommand\thealgorithm{\thechapter.\arabic{algorithm}}%
-                                \@addtoreset{algorithm}{chapter}%
+                                % \renewcommand\thealgorithm{\thechapter.\arabic{algorithm}}%
+                                % \renewcommand{\thealgocf}{A\arabic{algocf}}%
+                                % \@addtoreset{algorithm}{chapter}%
                         }}}
       {listsofglossaries}{\options{/@nt/list/listof/.cpush={%
                               \iftoggle{/novathesis/glsxindy}%

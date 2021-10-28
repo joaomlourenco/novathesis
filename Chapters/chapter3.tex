@@ -271,6 +271,34 @@ Blah…
 
 Blah…
 
+\section{Test for algorithms}
+\label{sec:test_for_algorithms}
+
+Uncomment the algorithms source below and add the following to file “\verb!7_packages.tex!”
+\begin{verbatim}
+  \usepackage{algorithm2e}
+  \RestyleAlgo{ruled}
+\end{verbatim}
+and uncomment
+\begin{verbatim}
+\ntaddlistof{listofalgorithms}
+\end{verbatim}
+in file “\verb!8_list_og.tex!”.
+
+% \begin{algorithm}
+% $i\gets 10$\;
+% \eIf{$i\geq 5$}
+% {
+%     $i\gets i-1$\;
+% }{
+%     \If{$i\leq 3$}
+%     {
+%         $i\gets i+2$\;
+%     }
+% }
+% \caption{This is an algorithm.}
+% \end{algorithm}
+
 % section test_for_listings (end)
 
 % \printbibliography[heading=subbibliography, segment=\therefsegment, title={\bibname\ for chapter~\thechapter}]

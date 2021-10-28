@@ -8,16 +8,17 @@
 
 %=============================================================================
 % WHICH LISTS/INDEXES TO PRINT?
-%         syntax: \netaddlistof{list-name}
+%         syntax: \ntaddlistof{list-name}
 %   You may add more lists if you want to, but please notice that the 
 %   initial "\" is always omited in the “list-name”
 %=============================================================================
 
-\netaddlistof{tableofcontents}    % The Table of Contents. Probably you want ot leave this as is! ;)
-\netaddlistof{listoffigures}      % The List of Figures. Comment to omit.
-\netaddlistof{listoftables}       % The List of Tables. Comment to omit.
+\ntaddlistof{tableofcontents}    % The Table of Contents. Probably you want ot leave this as is! ;)
+\ntaddlistof{listoffigures}      % The List of Figures. Comment to omit.
+\ntaddlistof{listoftables}       % The List of Tables. Comment to omit.
+% \ntaddlistof{listofalgorithms}   % The List of Algorithms for Algorithm2e
 \@ifpackageloaded{listings}%      % The List of Listings for package “listings”. Automatic if package loaded
-    {\netaddlistof{lstlistoflistings}}{}
+    {\ntaddlistof{lstlistoflistings}}{}
 \@ifpackageloaded{minted}%        % The List of Listings for the “minted” package. Automatic if package loaded
-    {\netaddlistof{listoflistings}}{}
-\netaddlistof{listsofglossaries}  % The Glossary, and the lists of Acronyms and Symbols
+    {\ntaddlistof{listoflistings}}{}
+\ntaddlistof{listsofglossaries}  % The Glossary, and the lists of Acronyms and Symbols
