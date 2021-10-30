@@ -43,7 +43,7 @@
 --------
 ## About
 
-The “*novathesis*” LaTeX template is an Open Source project for writing thesis, dissertations, and other monograph-like documents.
+The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathesis/) is an Open Source project for writing thesis, dissertations, and other monograph-like documents.
 
 The “*novathesis*” LaTeX template…
 
