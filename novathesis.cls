@@ -319,20 +319,23 @@
   }%
 }
 
-\assocarray{frontmatterstring}
-\assocarray{backmatterstring}
-\assocarray{spinestring}
-\assocarray{coverstring}
-\assocarray{frontpagestring}
-\assocarray{backcoverstring}
-\assocarray{copyrightstring}
-\assocarray{statementstring}
-\assocarray{dedicatorystring}
-\assocarray{acknowledgementsstring}
-\assocarray{quotestring}
-\assocarray{abstractstring}
-\assocarray{keywordsstring}
+% For PDF bookmakrs
+\assocarray{coverbkmstring}
+\assocarray{frontpagebkmstring}
+\assocarray{copyrightbkmstring}
+\assocarray{statementbkmstring}
+\assocarray{dedicatorybkmstring}
+\assocarray{acknowledgementsbkmstring}
+\assocarray{quotebkmstring}
+\assocarray{abstractbkmstring}
+\assocarray{frontmatterbkmstring}
+\assocarray{backmatterbkmstring}
+\assocarray{spinebkmstring}
+\assocarray{backcoverbkmstring}
+
+
 \assocarray{notdefined}
+\assocarray{keywordsstring}
 \assocarray{specializationstr}
 \assocarray{departmentofstr}
 \assocarray{sponsorsstr}
@@ -945,17 +948,17 @@
 
 \newcommand{\ntprintbackcover}{%
   \ifocverdefined[N-1]{%
-    \phantomsection\pdfbookmark[-1]{\thebackmatterstring(\option{/novathesis/coverlang})}{bmbackmatter}%
+    \phantomsection\pdfbookmark[-1]{\thebackmatterbkmstring(\option{/novathesis/coverlang})}{bmbackmatter}%
   }{%
     \ifocverdefined[N-2]{%
-      \phantomsection\pdfbookmark[-1]{\thebackmatterstring(\option{/novathesis/coverlang})}{bmbackmatter}%
+      \phantomsection\pdfbookmark[-1]{\thebackmatterbkmstring(\option{/novathesis/coverlang})}{bmbackmatter}%
     }{}%
   }%
   \ntprintcoverpair{N}%
 }
 
 \newcommand{\ntprintcovers}[1][1,2]{%
-  \phantomsection\pdfbookmark[-1]{\thefrontmatterstring(\option{/novathesis/coverlang})}{bmfrontmatter}%
+  \phantomsection\pdfbookmark[-1]{\thefrontmatterbkmstring(\option{/novathesis/coverlang})}{bmfrontmatter}%
   \NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
   \forcsvlist{\ntprintcoverpair}{#1}%
 }
@@ -1127,13 +1130,13 @@
 
 \options{/@ntcoveropts/.new family
   % titles for PDF bookmark / list of contents
-  , bookmark/.new choice = {1-1=\thecoverstring(\option{/novathesis/coverlang})
+  , bookmark/.new choice = {1-1=\thecoverbkmstring(\option{/novathesis/coverlang})
                           , 1-2={}
-                          , 2-1=\thefrontpagestring(\option{/novathesis/coverlang})
+                          , 2-1=\thefrontpagebkmstring(\option{/novathesis/coverlang})
                           , 2-2={}
                           , N-1={}
-                          , N-2=\thebackcoverstring(\option{/novathesis/coverlang})
-                          , spine=\thespinestring(\option{/novathesis/coverlang})}
+                          , N-2=\thebackcoverbkmstring(\option{/novathesis/coverlang})
+                          , spine=\thespinebkmstring(\option{/novathesis/coverlang})}
   % letter to macro for horizontal alignment
   , alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft}
   % filters / conditional printing
@@ -1256,7 +1259,7 @@
           }%
       }%
       \ntselectlang{\option{/novathesis/mainlang}}%
-      \phantomsection\pdfbookmark[1]{\csuse{thestatementstring}(\option{/novathesis/mainlang})}{bmstatement}%
+      \phantomsection\pdfbookmark[1]{\csuse{thestatementbkmstring}(\option{/novathesis/mainlang})}{bmstatement}%
       \@ntloadfiles@ii{statement}%
       \NTRunHook{statement/post}%
       \clearforchapter%
@@ -1531,7 +1534,7 @@
 	\ifmaindoc{% THEN it is a main document
     \ifoptiondefined{/@nt/file/#1/VAL}{%
       \ntselectlang{\option{/novathesis/mainlang}}%
-      \phantomsection\pdfbookmark[1]{\csuse{the#1string}(\option{/novathesis/mainlang})}{bm#1}
+      \phantomsection\pdfbookmark[1]{\csuse{the#1bkmstring}(\option{/novathesis/mainlang})}{bm#1}
       \@ntloadfiles@ii{#1}%
     }{\typeout{NT LOAD #1 undefined}}%
 	}{% ELSE
@@ -1561,7 +1564,7 @@
   % \typeout{NT PRINT ABSTRACT #1}%
   \ifoptiondefined{/@nt/file/abstract/#1}{%
     \setabstractlang{#1}%
-    \phantomsection\pdfbookmark[1]{\theabstractstring(#1)}{bmabstract#1}
+    \phantomsection\pdfbookmark[1]{\theabstractbkmstring(#1)}{bmabstract#1}
     \NTRunHook{abstract/pre}%
     \NTRunHook{abstract/#1/pre}%
     \printabstracttitle{#1}%
@@ -1693,7 +1696,7 @@
   \iftoggle{/novathesis/printcopyright}{%
     \ifmaindoc{%
       \ntselectlang{\option{/novathesis/copyrightlang}}%
-      \phantomsection\pdfbookmark[1]{\csuse{thecopyrightstring}(\option{/novathesis/mainlang})}{bmcopyright}%
+      \phantomsection\pdfbookmark[1]{\csuse{thecopyrightbkmstring}(\option{/novathesis/mainlang})}{bmcopyright}%
       \NTRunHook{copyright/pre}%
       \ntprintcopyrightpage%
       \NTRunHook{copyright/post}%
@@ -1746,7 +1749,7 @@
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{ntacknowledgements}{%
-  \chapter*{\theacknowledgementsstring(\option{/novathesis/mainlang})}%
+  \chapter*{\theacknowledgementsbkmstring(\option{/novathesis/mainlang})}%
 }{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1758,7 +1761,7 @@
   \renewcommand*{\@nt@keywordsstr}{\thekeywordsstring(#1)}%
 }
 \newcommand*{\printabstracttitle}[1]{%
-	\chapter*{\theabstractstring(#1)}%
+	\chapter*{\theabstractbkmstring(#1)}%
 }
 
 
