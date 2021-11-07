@@ -118,8 +118,8 @@
 
 % Advisers
 \ntaddtocover[vspace=2,align=r]{1-1,2-1}{%
-  \gdef\theadviserstrfont{\bfseries}%
-  \gdef\thecoadviserstrfont{\bfseries}%
+  \adviserstringfont(a):={\bfseries}%
+  \adviserstringfont(c):={\bfseries}%
   \fontsize{12}{12}\selectfont%
   \ntprintadvisers[0.65]%
 }
@@ -128,8 +128,8 @@
 % Committee — only print the committee for the main classes
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \ifmaindoc{%
-    \gdef\thecommitteetitlestrfont{\fontsize{14}{14}\selectfont\bfseries}%
-    \gdef\thecommitteememberstrfont{\bfseries}%
+    \committeetitlestringfont():={\fontsize{14}{14}\selectfont\bfseries}%
+    \committeestringfont():={\bfseries}%
     \fontsize{12}{12}\selectfont%
     \ntprintcommittee%
   }%

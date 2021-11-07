@@ -64,26 +64,26 @@
 \docdegreestring(phd,it):={Tesi di Dottorato}
 
 \committeetitlestring(it):={Commissione Esaminatrice}
-\committestring(c,1,m,it):={Presidente}
-\committestring(c,1,f,it):={Presidentessa}
-\committestring(c,2,m,it):={Presidenti}
-\committestring(c,2,f,it):={Presidentesse}
-\committestring(r,1,m,it):={Controrelatore}
-\committestring(r,2,f,it):={Controrelatrice}
-\committestring(r,1,m,it):={Controrelatori}
-\committestring(r,2,f,it):={Controrelatrici}
-\committestring(a,1,m,it):={Relatore}
-\committestring(a,2,f,it):={Relatrice}
-\committestring(a,1,m,it):={Relatori}
-\committestring(a,2,f,it):={Relatrici}
-\committestring(m,1,m,it):={Membro}
-\committestring(m,1,f,it):={Membro}
-\committestring(m,2,m,it):={Membri}
-\committestring(m,2,f,it):={Membri}
-\committestring(g,1,m,fr):={Invitato}
-\committestring(g,1,f,fr):={Invitata}
-\committestring(g,2,m,fr):={invitati}
-\committestring(g,2,f,fr):={invitate}
+\committeestring(c,1,m,it):={Presidente}
+\committeestring(c,1,f,it):={Presidentessa}
+\committeestring(c,2,m,it):={Presidenti}
+\committeestring(c,2,f,it):={Presidentesse}
+\committeestring(r,1,m,it):={Controrelatore}
+\committeestring(r,2,f,it):={Controrelatrice}
+\committeestring(r,1,m,it):={Controrelatori}
+\committeestring(r,2,f,it):={Controrelatrici}
+\committeestring(a,1,m,it):={Relatore}
+\committeestring(a,2,f,it):={Relatrice}
+\committeestring(a,1,m,it):={Relatori}
+\committeestring(a,2,f,it):={Relatrici}
+\committeestring(m,1,m,it):={Membro}
+\committeestring(m,1,f,it):={Membro}
+\committeestring(m,2,m,it):={Membri}
+\committeestring(m,2,f,it):={Membri}
+\committeestring(g,1,m,fr):={Invitato}
+\committeestring(g,1,f,fr):={Invitata}
+\committeestring(g,2,m,fr):={invitati}
+\committeestring(g,2,f,fr):={invitate}
 	
 \dissertationstring(bsc,it):={Documento sottomesso per ottenere il Grado di\\[1.25ex]%
   \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}

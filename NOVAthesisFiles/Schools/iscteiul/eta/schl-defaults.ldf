@@ -12,10 +12,10 @@
 \school(en):={School of Technology and Architecture}
 
 % Font customization
-\def\adviserstringfont{\bfseries}%
-\def\cviserstrfont{\bfseries}%
-\def\citteetitlestrfont{\fontsize{14}{14}\selectfont\bfseries}%
-\def\citteememberstrfont{\bfseries}%
+\adviserstringfont(a):={\bfseries}%
+% \def\cviserstringfont{\bfseries}%
+% \def\citteetitlestringfont{\fontsize{14}{14}\selectfont\bfseries}%
+% \def\citteememberstringfont{\bfseries}%
 
 % Comiittee printing order
 \committeeorder(all):={c,r,a,m}% 

@@ -174,8 +174,8 @@
   \end{minipage}%
   \hspace{0.65cm}%
   \begin{minipage}[t]{0.55\textwidth}%
-    \theadviserstrfont{\bfseries}%
-    \thecoadviserstrfont{\bfseries}%
+    \adviserstringfont(a):={\bfseries}%
+    \adviserstringfont(c):={\bfseries}%
     \fontsize{11}{11}\selectfont%
     \ntprintadvisers%
   \end{minipage}%
@@ -202,8 +202,8 @@
   % \hspace{0.65cm}%
   \begin{minipage}[t]{0.75\textwidth}%
     \ifmaindoc{%
-      \thecommitteetitlestrfont{\fontsize{14}{14}\selectfont\bfseries}%
-      \thecommitteememberstrfont{\bfseries}%
+      \committeetitlestringfont():={\fontsize{14}{14}\selectfont\bfseries}%
+      \committeestringfont():={\bfseries}%
       \fontsize{12}{12}\selectfont\ntprintcommittee[1]%
     }%
     {}%

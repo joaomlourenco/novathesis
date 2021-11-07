@@ -62,26 +62,26 @@
 \docdegreestring(phd,es):={Tesis Doctoral}
 
 \committeetitlestring(es):={Tribunal de tesis}
-\committestring(c,1,m,es):={Presidente}% male, singular
-\committestring(c,1,f,es):={Presidenta}% female, singular
-\committestring(c,2,m,es):={Presidentes}% male, plural
-\committestring(c,2,f,es):={Presidentas}% female, plural
-\committestring(r,1,m,es):={Vocal}% male, singular
-\committestring(r,1,f,es):={Vocales}% female, singular
-\committestring(r,2,m,es):={Vocal}% male, plural
-\committestring(r,2,f,es):={Vocales}% female, plural
-\committestring(a,1,m,es):={Director}% male, singular
-\committestring(a,1,f,es):={Directora}% female, singular
-\committestring(a,2,m,es):={Directores}% male, plural
-\committestring(a,2,f,es):={Directoras}% female, plural
-\committestring(m,1,m,es):={Miembro}% male, singular
-\committestring(m,1,f,es):={Miembro}% female, singular
-\committestring(m,2,m,es):={Miembros}% male, plural
-\committestring(m,2,f,es):={Miembros}% female, plural
-\committestring(g,1,m,es):={Miembro invitado}% male, singular
-\committestring(g,1,f,es):={Miembro invitada}% female, singular
-\committestring(g,2,m,es):={Miembros invitados}% male, plural
-\committestring(g,2,f,em):={Miembros invitadas}% female, plural
+\committeestring(c,1,m,es):={Presidente}% male, singular
+\committeestring(c,1,f,es):={Presidenta}% female, singular
+\committeestring(c,2,m,es):={Presidentes}% male, plural
+\committeestring(c,2,f,es):={Presidentas}% female, plural
+\committeestring(r,1,m,es):={Vocal}% male, singular
+\committeestring(r,1,f,es):={Vocales}% female, singular
+\committeestring(r,2,m,es):={Vocal}% male, plural
+\committeestring(r,2,f,es):={Vocales}% female, plural
+\committeestring(a,1,m,es):={Director}% male, singular
+\committeestring(a,1,f,es):={Directora}% female, singular
+\committeestring(a,2,m,es):={Directores}% male, plural
+\committeestring(a,2,f,es):={Directoras}% female, plural
+\committeestring(m,1,m,es):={Miembro}% male, singular
+\committeestring(m,1,f,es):={Miembro}% female, singular
+\committeestring(m,2,m,es):={Miembros}% male, plural
+\committeestring(m,2,f,es):={Miembros}% female, plural
+\committeestring(g,1,m,es):={Miembro invitado}% male, singular
+\committeestring(g,1,f,es):={Miembro invitada}% female, singular
+\committeestring(g,2,m,es):={Miembros invitados}% male, plural
+\committeestring(g,2,f,em):={Miembros invitadas}% female, plural
 	
 \dissertationstring(bsc,es):={Informe entregado para el cumplimiento de los requisitos para el título de\\[1.25ex]%
   \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
