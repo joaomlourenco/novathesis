@@ -1309,7 +1309,7 @@
 %% LABELS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \providecommand\thepresentationtext{%
-	\thedissertationstringfont\thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+	\thedissertationstringfont()\thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
 }
 
 \providecommand\thecopyrightstr{%
@@ -1402,7 +1402,7 @@
   % #1=width
   % %2={adviser,coadviser}
   \ifoptiondefined{/@nt/#2//full}{%
-    {\csuse{the#2stringfont}%
+    {\csuse{the#2stringfont}()%
     \csuse{the#2str}(\option{/novathesis/coverlang})}\\[1ex]%
     \begin{minipage}[t]{#1\linewidth}%
       \centering
@@ -1433,7 +1433,7 @@
       \@nt@reducegender{/@nt/#1//gender}{\mygender}%
       \@nt@reducenumber{/@nt/#1//full}{\mynumber}%
       \medskip%
-      \csuse{the#1stringfont}%
+      \csuse{the#1stringfont}()%
       \csuse{the#1str}(\mynumber,\mygender,\option{/novathesis/coverlang}): & %
       \begin{minipage}[t]{\linewidth}\raggedright%
       \optionlistdo{/@nt/#1//full}{\ntprintoneadviser{##1}\\[0.4ex]}%
@@ -1466,7 +1466,7 @@
     % committeetitlestr[…] is empty
   \else%
     % \multicolumn{2}{c}{{%%
-            & \thecommitteetitlestringfont%
+            & \thecommitteetitlestringfont()%
             \thecommitteetitlestr(\option{/novathesis/coverlang}):%}%
           % }%
   \fi%
@@ -1478,7 +1478,7 @@
     \@nt@reducegender{/@nt/committee/#1/gender}{\mygender}%
     \@nt@reducenumber{/@nt/committee/#1/full}{\mynumber}%
     \medskip%
-    \thecommitteestringfont%
+    \thecommitteestringfont()%
     \thecommitteestring(#1,\mynumber,\mygender,\option{/novathesis/coverlang}): & %
     \begin{minipage}[t]{\linewidth}\raggedright%
     \optionlistdo{/@nt/committee/#1/full}{\ntprintonename{committee}{##1}\\[0.3ex]}%
