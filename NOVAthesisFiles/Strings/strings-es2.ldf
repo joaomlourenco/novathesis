@@ -27,14 +27,14 @@
 \specializationstr(es):={Especialidad en}
 \departmentofstr(es):={Departamento de}
 
-\adviserstr(1,m,es):={Director}% male, singular
-\adviserstr(1,f,es):={Directora}% female, singular
-\adviserstr(2,m,es):={Directores}% male, plural
-\adviserstr(2,f,es):={Directoras}% female, plural
-\coadviserstr(1,m,es):={Codirector}% male, singular
-\coadviserstr(1,f,es):={Codirectora}% female, singular
-\coadviserstr(2,m,es):={Codirectores}% male, plural
-\coadviserstr(2,f,es):={Codirectoras}% female, plural
+\adviserstr(a,1,m,es):={Director}% male, singular
+\adviserstr(a,1,f,es):={Directora}% female, singular
+\adviserstr(a,2,m,es):={Directores}% male, plural
+\adviserstr(a,2,f,es):={Directoras}% female, plural
+\adviserstr(c,1,m,es):={Codirector}% male, singular
+\adviserstr(c,1,f,es):={Codirectora}% female, singular
+\adviserstr(c,2,m,es):={Codirectores}% male, plural
+\adviserstr(c,2,f,es):={Codirectoras}% female, plural
 
 \degreestr(bsc,m,es):={Grado}
 \degreestr(bsc,f,es):={Grado}

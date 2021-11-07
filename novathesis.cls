@@ -226,17 +226,21 @@
 
 \def\@ntaddperson@iv#1[#2,#3]#4{%
   % syntax: \ntaddperson{class}[key,gender]{filename}
-  % #1={author, adviser, committee, …}
-  % #2={c,r,a,m,g}
-  %     c=chair
-  %     r=rapporteur/referee
-  %     a=adviser
-  %     m=other members
-  %     g=guests
+  % #1=adviser | committee
+  % #2={a,c}            {c,r,a,m,g}
+  %     a=adviser        c=chair
+  %     c=coadviser      r=rapporteur/referee
+  %                      a=adviser
+  %                      m=other members
+  %                      g=guests
   % #3={m,f}
-  % #4={committee member name, position, etc}
-  \options{/@nt/#1/#2/gender/.cpush={#3}}%
-  \options{/@nt/#1/#2/name/.cpush={#4}}%
+  % #4={person name, position, etc}
+  \StrCut{#4}{,}\@nt@personname\@nt@dummy%
+  \options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
+  \options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
+  \options{/@nt/#1/#2/gender/.expanded/.cpush={#3}}%
+  % \letoptionlist{/@nt/#1/#2/name}{\@nt@dummy}%
+  % \typeout{ADDPERSONLIST=\arabic{\option{/@nt/#1/#2/name/@size}}[\@nt@dummy]}%
 }
 
 
@@ -276,7 +280,7 @@
   }%
   % \typeout{NT ntload ADDFILE [#1] [#2] [#3] [\@nt@filewithpath]}%
   \expanded{\options{/@nt/#1/#2/#3/.cpush={\@nt@filewithpath}}}%
-  \typeout{NT ADDED FILE [/@nt/#1/#2/#3=\@nt@filewithpath]}%
+  % \typeout{NT ADDED FILE [/@nt/#1/#2/#3=\@nt@filewithpath]}%
 }
 
 \newcommand*{\@nt@ifoptionlinstnotempty}[3][VAL]{%
@@ -341,15 +345,14 @@
 \assocarray{sponsorsstr}
 \assocarray{andstring}
 \assocarray{commastring}
-% \initassocarray{,}{commastring}
 \optionlistdo{/@nt/langsshort}{
-  \commastring(#1):={,}%
+  \commastring(#1):={, }%
 }
 
 \assocarray{adviserstr}
 \providecommand*{\theadviserstrfont}{}
-\assocarray{coadviserstr}
-\providecommand*{\thecoadviserstrfont}{}
+% \assocarray{coadviserstr}
+% \providecommand*{\thecoadviserstrfont}{}
 \assocarray{degreestr}
 \providecommand*{\thedegreestrfont}{}
 \providecommand*{\theadvisernamefont}{}
@@ -1291,60 +1294,76 @@
  
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print advisers
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ntprintadvisers}[1][0.9]{%
+  \ntprintpersons{#1}{2}{adviser}{a,c}%
+}
+\newcommand{\ntprintpersons}[4][0.90]{%
+  % #1 = width in % of textwidth
+  % #2 = number of columns
+  % #3 = adviser | committee
+  % #4 = {a,c} | {c,r,a,m,g}
+  \IfStrEqCase{#2}{%
+    {0}{\@ntprintpersonsaslist{#3}{#4}}%
+    {1}{\@ntprintpersonsasonecolumn{#1}{#3}{#4}}%
+    {2}{\@ntprintpersonsastwocolumns{#1}{#3}{#4}}%
+  }[\ClassError{novathesis}{Ivalid argument [#2] to ntprintadvisers[#1][#2][#3][#4]}{}]%
+}
 
 %============================================================
 % Print advisers as list
 %============================================================
-\newcommand{\ntprintadvisersaslist}[1][adviser,coadviser]{%
-  \def\@nt@addviserslist{}%
-  \setnewcounter{@nt@advisertotal}{0}%
-  \forcsvlist\@nt@getadvisername{#1}%
-  \setnewcounter{@nt@advisern}{0}%
-  \expandnext{\forcsvlist\@nt@printadvisersaslist}{\@nt@addviserslist}%
-}
-
-\newcommand{\@nt@getadvisername}[1]{%
-  \optionlistdo{/@nt/#1//name}{%
-    \StrCut{##1}{,}\@nt@tmpl\@nt@tmpr%
-    \xdef\@nt@addviserslist{\@nt@addviserslist,\@nt@tmpl}%
-    \stepcounter{@nt@advisertotal}%
+\newcommand{\@ntprintpersonsaslist}[2]{%
+  % #1 = adviser | committee
+  % #2 = {a,c} | {c,r,a,m,g}
+  \def\@nt@personlist{}%
+  \forcsvlist{\@nt@addtopersonlist{#1}}{#2}%
+  \StrSubstitute{\@nt@personlist}{,}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist]%
+  \StrCount{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist@last]%
+  % Replace last comma with "and"
+  \IfStrEq{0}{\@nt@personlist@last}{}{%
+    \StrCut[\@nt@personlist@last]{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}%
+                                     \@nt@listleft\@nt@listright%
+    \def\@nt@personlist{\@nt@listleft\theandstring(\option{/novathesis/coverlang})\@nt@listright}%
   }%
+  \@nt@personlist%
 }
 
-\newcommand{\@nt@printadvisersaslist}[1]{%
-  \stepcounter{@nt@advisern}%
-  \ifnum\value{@nt@advisern}=\value{@nt@advisertotal}%
-    {\normalfont\ \theandstring(\option{/novathesis/coverlang}) }%
-  \else\ifnum\value{@nt@advisern}>1%
-    {\normalfont\thecommastring(\option{/novathesis/coverlang}) }%
-  \fi\fi%
-  #1%
+\newcommand{\@nt@addtopersonlist}[2]{%
+  % #1 = adviser | committee
+  % #2 = {a,c} | {c,r,a,m,g}
+  \ifoptiondefined{/@nt/#1/#2/name}{%
+    \letoptionlist{/@nt/#1/#2/name}\@nt@list%
+    \IfStrEq{\@nt@personlist}{}{\def\@nt@comma{}}{\def\@nt@comma{,}}%
+    \xappto\@nt@personlist{\@nt@comma\@nt@list}%
+  }{}%
 }
+
+
 
 %============================================================
-% Print advisers as list
+% Print advisers in 1 column
 %============================================================
-\newcommand{\ntprintadvisers}[1][0.90]{%
-  % \begin{minipage}{#1\textwidth}
-  % #1=Percentage of \textwidth used by the advisers list
-  \begin{tabularx}{#1\textwidth}{@{}rX@{}}%
-  \forcsvlist{\@nt@printadvisergroup}{adviser,coadviser}%
-  \end{tabularx}%
-  % \end{minipage}
-}
-
+% \newcommand{\ntprintadvisers}[1][0.90]{%
+%   % \begin{minipage}{#1\textwidth}
+%   % #1=Percentage of \textwidth used by the advisers list
+%   \begin{tabularx}{#1\textwidth}{@{}rX@{}}%
+%   \forcsvlist{\@nt@printadvisergroup}{adviser,coadviser}%
+%   \end{tabularx}%
+%   % \end{minipage}
+% }
+%
 \newcommand{\ntprintadvisersgroup}[2][0.90]{%
   % #1=width
   % %2={adviser,coadviser}
-  \ifoptiondefined{/@nt/#2//name}{%
+  \ifoptiondefined{/@nt/#2//full}{%
     {\csuse{the#2strfont}%
     \csuse{the#2str}(\option{/novathesis/coverlang})}\\[1ex]%
     \begin{minipage}[t]{#1\linewidth}%
       \centering
-      \optionlistdo{/@nt/#2//name}{\@nt@printadvisersgroup##1,\@nil}%
+      \optionlistdo{/@nt/#2//full}{\@nt@printadvisersgroup##1,\@nil}%
     \end{minipage}%
   }%
   {}%
@@ -1367,14 +1386,14 @@
 
 \newcommand{\@nt@printadvisergroup}[1]{%
   % #1={adviser,coadviser}
-    \ifoptiondefined{/@nt/#1//name}{%
+    \ifoptiondefined{/@nt/#1//full}{%
       \@nt@reducegender{/@nt/#1//gender}{\mygender}%
-      \@nt@reducenumber{/@nt/#1//name}{\mynumber}%
+      \@nt@reducenumber{/@nt/#1//full}{\mynumber}%
       \medskip%
       \csuse{the#1strfont}%
       \csuse{the#1str}(\mynumber,\mygender,\option{/novathesis/coverlang}): & %
       \begin{minipage}[t]{\linewidth}\raggedright%
-      \optionlistdo{/@nt/#1//name}{\ntprintoneadviser{##1}\\[0.4ex]}%
+      \optionlistdo{/@nt/#1//full}{\ntprintoneadviser{##1}\\[0.4ex]}%
       \end{minipage}\\%
     }%
     {}%
@@ -1412,14 +1431,14 @@
 
 \newcommand{\@ntprintcommitteegroup}[1]{%
   % #1={c,r,a,m,g}
-  \ifoptiondefined{/@nt/committee/#1/name}{%
+  \ifoptiondefined{/@nt/committee/#1/full}{%
     \@nt@reducegender{/@nt/committee/#1/gender}{\mygender}%
-    \@nt@reducenumber{/@nt/committee/#1/name}{\mynumber}%
+    \@nt@reducenumber{/@nt/committee/#1/full}{\mynumber}%
     \medskip%
     \thecommitteememberstrfont%
     \thecommitteememberstr(#1,\mynumber,\mygender,\option{/novathesis/coverlang}): & %
     \begin{minipage}[t]{\linewidth}\raggedright%
-    \optionlistdo{/@nt/committee/#1/name}{\ntprintonename{committee}{##1}\\[0.3ex]}%
+    \optionlistdo{/@nt/committee/#1/full}{\ntprintonename{committee}{##1}\\[0.3ex]}%
     \end{minipage}\\%
   }%
   {}%

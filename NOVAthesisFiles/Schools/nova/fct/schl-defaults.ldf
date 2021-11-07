@@ -255,7 +255,7 @@
   \def\theadviserstrfont{\bfseries}
   \def\thecoadviserstrfont{\bfseries}
   \fontsize{11}{11}\selectfont
-  \ntprintadvisers%
+  \ntprintpersons[0.9]{0}{adviser}{a,c}%
 }
 
 % The committee

@@ -27,18 +27,18 @@
 \notdefined(en):={UNDEFINED}
 \specializationstr(en):={Specialization in}
 \departmentofstr(en):={Department of}
-\andstring(en):={and}
+\andstring(en):={ and }
 \mscstring(en):={Master in}
 \phdstring(en):={Doctorate in}
 
-\adviserstr(1,m,en):={Adviser}
-\adviserstr(1,f,en):={Adviser}
-\adviserstr(2,m,en):={Advisers}
-\adviserstr(2,f,en):={Advisers}
-\coadviserstr(1,m,en):={Co-adviser}
-\coadviserstr(1,f,en):={Co-adviser}
-\coadviserstr(2,m,en):={Co-advisers}
-\coadviserstr(2,f,en):={Co-advisers}
+\adviserstr(a,1,m,en):={Adviser}
+\adviserstr(a,1,f,en):={Adviser}
+\adviserstr(a,2,m,en):={Advisers}
+\adviserstr(a,2,f,en):={Advisers}
+\adviserstr(c,1,m,en):={Co-adviser}
+\adviserstr(c,1,f,en):={Co-adviser}
+\adviserstr(c,2,m,en):={Co-advisers}
+\adviserstr(c,2,f,en):={Co-advisers}
 
 \degreestr(bsc,m,en):={Bachelor}
 \degreestr(bsc,f,en):={Bachelor}

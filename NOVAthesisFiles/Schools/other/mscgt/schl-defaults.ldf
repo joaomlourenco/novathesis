@@ -16,8 +16,8 @@
 
 \ntdegreename(en){Master of Science in Geospatial Technologies}
 
-\adviserstr(en):={Dissertation supervised by:}
-\coadviserstr(en):={Co-supervised by:}
+\adviserstr(a,a,en):={Dissertation supervised by:}
+\adviserstr(a,c,en):={Co-supervised by:}
 
 \def\theadviserstrfont{\bfseries}
 \def\thecoadviserstrfont{\bfseries}

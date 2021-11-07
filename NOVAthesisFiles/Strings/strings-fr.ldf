@@ -27,18 +27,18 @@
 \keywordsstring(fr):={Mots-clés}
 \notdefined(fr):={INDÉFINI}
 \specializationstr(fr):={Département de}
-\andstring(fr):={et}
+\andstring(fr):={ et }
 \mscstring(fr):={Master en}
 \phdstring(fr):={Doctorat en}
 
-\adviserstr(1,m,fr):={Directeur de thèse}
-\adviserstr(1,f,fr):={Directrice de thèse}
-\adviserstr(2,m,fr):={Directeurs de thèse}
-\adviserstr(2,f,fr):={Directrices de thèse}
-\coadviserstr(1,m,fr):={Co-Directeur de thèse}
-\coadviserstr(1,f,fr):={Co-Directrice de thèse}
-\coadviserstr(2,m,fr):={Co-Directeurs de thèse}
-\coadviserstr(2,f,fr):={Co-Directrices de thèse}
+\adviserstr(a,1,m,fr):={Directeur de thèse}
+\adviserstr(a,1,f,fr):={Directrice de thèse}
+\adviserstr(a,2,m,fr):={Directeurs de thèse}
+\adviserstr(a,2,f,fr):={Directrices de thèse}
+\adviserstr(c,1,m,fr):={Co-Directeur de thèse}
+\adviserstr(c,1,f,fr):={Co-Directrice de thèse}
+\adviserstr(c,2,m,fr):={Co-Directeurs de thèse}
+\adviserstr(c,2,f,fr):={Co-Directrices de thèse}
 
 \committeetitlestr(fr):={Jury}
 \committeememberstr(c,1,m,fr):={Président}

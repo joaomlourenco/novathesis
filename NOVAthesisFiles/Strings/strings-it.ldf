@@ -29,19 +29,19 @@
 \notdefined(it):={INDEFINITO}
 \specializationstr(it):={Specializzazione in}
 \departmentofstr(it):={Dipartimento di}
-\andstring(it):={e}
+\andstring(it):={ e }
 \mscstring(it):={Laurea Specialistica in}
 \phdstring(it):={Dottorato in}
 
 
-\adviserstr(1,m,it):={Relatore}
-\adviserstr(1,f,it):={Relatrice}
-\adviserstr(2,m,it):={Relatori}
-\adviserstr(2,f,it):={Relatrici}
-\coadviserstr(1,m,it):={Correlatore}
-\coadviserstr(1,f,it):={Correlatrice}
-\coadviserstr(2,m,it):={Correlatori}
-\coadviserstr(2,f,it):={Correlatrici}
+\adviserstr(a,1,m,it):={Relatore}
+\adviserstr(a,1,f,it):={Relatrice}
+\adviserstr(a,2,m,it):={Relatori}
+\adviserstr(a,2,f,it):={Relatrici}
+\adviserstr(c,1,m,it):={Correlatore}
+\adviserstr(c,1,f,it):={Correlatrice}
+\adviserstr(c,2,m,it):={Correlatori}
+\adviserstr(c,2,f,it):={Correlatrici}
 
 \degreestr(bsc,m,it):={Laurea Triennale}
 \degreestr(bsc,f,it):={Laurea Triennale}

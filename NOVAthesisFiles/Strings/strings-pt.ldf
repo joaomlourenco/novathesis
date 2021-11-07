@@ -27,18 +27,18 @@
 \notdefined(pt):={INDEFINIDO}
 \specializationstr(pt):={Especialização em}
 \departmentofstr(pt):={Departamento de}
-\andstring(pt):={e}
+\andstring(pt):={ e }
 \mscstring(pt):={Mestrado em}
 \phdstring(pt):={Doutoramento em}
 
-\adviserstr(1,m,pt):={Orientador}
-\adviserstr(1,f,pt):={Orientadora}
-\adviserstr(2,m,pt):={Orientadores}
-\adviserstr(2,f,pt):={Orientadoras}
-\coadviserstr(1,m,pt):={Coorientador}
-\coadviserstr(1,f,pt):={Coorientadora}
-\coadviserstr(2,m,pt):={Coorientadores}
-\coadviserstr(2,f,pt):={Coorientadoras}
+\adviserstr(a,1,m,pt):={Orientador}
+\adviserstr(a,1,f,pt):={Orientadora}
+\adviserstr(a,2,m,pt):={Orientadores}
+\adviserstr(a,2,f,pt):={Orientadoras}
+\adviserstr(c,1,m,pt):={Coorientador}
+\adviserstr(c,1,f,pt):={Coorientadora}
+\adviserstr(c,2,m,pt):={Coorientadores}
+\adviserstr(c,2,f,pt):={Coorientadoras}
 
 \committeetitlestr(pt):={Júri}
 \committeememberstr(c,1,m,pt):={Presidente}

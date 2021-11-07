@@ -27,18 +27,18 @@
 \notdefined(de):={UNDEFINIERT}
 \specializationstr(de):={Spezialisierung in}
 \departmentofstr(de):={Abteilung für}
-\andstring(de):={und}
+\andstring(de):={ und }
 \mscstring(de):={Master in}
 \phdstring(de):={Doctorate in}
 
-\adviserstr(1,m,de):={Betreuer}% male, singular
-\adviserstr(1,f,de):={Betreuerin}% female, singular
-\adviserstr(2,m,de):={Betreuer}% male, plural
-\adviserstr(2,f,de):={Betreuerinnen}% female, plural
-\coadviserstr(1,m,de):={Zweitbetreuer}% male, singular
-\coadviserstr(1,f,de):={Zweitbetreuerin}% female, singular
-\coadviserstr(2,m,de):={Zweitbetreuer}% male, plural
-\coadviserstr(2,f,de):={Zweitbetreuerin}% female, plural
+\adviserstr(a,1,m,de):={Betreuer}% male, singular
+\adviserstr(a,1,f,de):={Betreuerin}% female, singular
+\adviserstr(a,2,m,de):={Betreuer}% male, plural
+\adviserstr(a,2,f,de):={Betreuerinnen}% female, plural
+\adviserstr(c,1,m,de):={Zweitbetreuer}% male, singular
+\adviserstr(c,1,f,de):={Zweitbetreuerin}% female, singular
+\adviserstr(c,2,m,de):={Zweitbetreuer}% male, plural
+\adviserstr(c,2,f,de):={Zweitbetreuerin}% female, plural
 
 \degreestr(bsc,m,de):={Bachelor}
 \degreestr(bsc,f,de):={Bachelor}
