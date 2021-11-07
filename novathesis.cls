@@ -349,31 +349,63 @@
   \commastring(#1):={, }%
 }
 
-\assocarray{adviserstring}
-\providecommand*{\theadviserstrfont}{}
 
 \assocarray{degreestring}
-\providecommand*{\thedegreestrfont}{}
-\providecommand*{\theadvisernamefont}{}
-\providecommand*{\theadviserremainderfont}{\\[-0.5ex]\itshape\scriptsize}
+\assocarray{degreestringfont}
 
 \assocarray{degreename}
+\assocarray{degreenamefont}
+
 \assocarray{mscstring}
+\assocarray{mscstringfont}
+
 \assocarray{phdstring}
+\assocarray{phdstringfont}
 
 \assocarray{docdegreestring}
+\assocarray{docdegreestringfont}
+
+
+
+\assocarray{adviserstring}            % e.g., "Adviser", "Co-adviser"
+\assocarray{adviserstringfont}
+\assocarray{adviserstringpre}
+\assocarray{adviserstringpost}
+
+\assocarray{advisernamepre}
+\assocarray{advisernamepost}
+\assocarray{advisernamefont}
+
+\assocarray{adviserremainderpre}
+\assocarray{adviserremainderpost}
+\assocarray{adviserremainderfont}
+\adviserremainderfont():={\\[-0.5ex]\itshape\scriptsize}
 
 % Committee stuff
 \assocarray{committeeorder}         %e.g., "{c,r,a,m,g}"
+
 \assocarray{committeetitlestring}      %e.g., "Examinaiton Committee"
-\providecommand*{\thecommitteetitlestrfont}{}
+\assocarray{committeetitlestringpre}
+\assocarray{committeetitlestringpost}
+\assocarray{committeetitlestringfont}
+
 \assocarray{committestring}
-\providecommand*{\thecommitteememberstrfont}{}
-\providecommand*{\thecommitteenamefont}{}
-\providecommand*{\thecommitteeremainderfont}{\\[-0.5ex]\itshape\scriptsize}
+\assocarray{committestringpre}
+\assocarray{committestringpost}
+\assocarray{committestringfont}
+
+\assocarray{committenamepre}
+\assocarray{committenamepost}
+\assocarray{committenamefont}
+
+\assocarray{committeremainderpre}
+\assocarray{committeremainderpost}
+\assocarray{committeremainderfont}
+\committeremainderfont:={\\[-0.5ex]\itshape\scriptsize}
 
 \assocarray{dissertationstring}
-\providecommand*{\thedissertationstringfont}{}
+\assocarray{dissertationstringfont}
+
 \assocarray{copyrighttextstring}
 \assocarray{acknowledgmentsstring}
 
@@ -1295,11 +1327,12 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Print advisers
+%%% Print persons list {advisers | committee}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintadvisers}[1][0.9]{%
   \ntprintpersons{#1}{2}{adviser}{a,c}%
 }
+
 \newcommand{\ntprintpersons}[4][0.90]{%
   % #1 = width in % of textwidth
   % #2 = number of columns
@@ -1313,7 +1346,7 @@
 }
 
 %============================================================
-% Print advisers as list
+% Print persons list {advisers | committee} as list
 %============================================================
 \newcommand{\@ntprintpersonsaslist}[2]{%
   % #1 = adviser | committee
@@ -1341,6 +1374,16 @@
   }{}%
 }
 
+
+
+%============================================================
+% Print persons list {advisers | committee} as two columns
+%============================================================
+\newcommand{\@ntprintpersonsastwocolumns}[3]{%
+  % #1 = width in % of textwidth
+  % #2 = adviser | committee
+  % #3 = {a,c} | {c,r,a,m,g}
+}
 
 
 %============================================================
