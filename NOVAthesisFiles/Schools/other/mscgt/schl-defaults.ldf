@@ -16,13 +16,13 @@
 
 \ntdegreename(en){Master of Science in Geospatial Technologies}
 
-\adviserstr(a,a,en):={Dissertation supervised by:}
-\adviserstr(a,c,en):={Co-supervised by:}
+\adviserstring(a,a,en):={Dissertation supervised by:}
+\adviserstring(a,c,en):={Co-supervised by:}
 
 \def\theadviserstrfont{\bfseries}
 \def\thecoadviserstrfont{\bfseries}
 
-\dissertationstr(msc,en):={Dissertation submitted in partial fulfillment of the requirements\\
+\dissertationstring(msc,en):={Dissertation submitted in partial fulfillment of the requirements\\
 for the degree of \emph{\thedegreename(en)}}
 
 
@@ -203,7 +203,7 @@ for the degree of \emph{\thedegreename(en)}}
 
 \ntaddtocover[vspace=0mm,height=70.5mm,align=l,inalign=t]{1-1}{%
   \fontsize{13}{13}\selectfont%
-  \thedissertationstr(msc,en)%
+  \thedissertationstring(msc,en)%
 }
 
 \ntaddtocover[vspace=0mm,height=1mm,align=l,inalign=t]{1-1}{%

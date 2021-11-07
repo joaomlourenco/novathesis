@@ -126,18 +126,18 @@
 \provisionalstring(fr):={TBD}
 \provisionalstring(it):={TBD}
 
-\dissertationstr(phdplan,pt):={Documento especialmente elaborado para a obtenção do grau de  %
+\dissertationstring(phdplan,pt):={Documento especialmente elaborado para a obtenção do grau de  %
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
-\dissertationstr(phdprop,pt):={Documento especialmente elaborado para a obtenção do grau de  %
+\dissertationstring(phdprop,pt):={Documento especialmente elaborado para a obtenção do grau de  %
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
-\dissertationstr(phd,pt):={Documento especialmente elaborado para a obtenção do grau de  %
+\dissertationstring(phd,pt):={Documento especialmente elaborado para a obtenção do grau de  %
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
 
-\dissertationstr(phdplan,en):={Document written to earn the degree of %
+\dissertationstring(phdplan,en):={Document written to earn the degree of %
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
-\dissertationstr(phdprop,en):={Document written to earn the degree of %
+\dissertationstring(phdprop,en):={Document written to earn the degree of %
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
-\dissertationstr(phd,en):={Document written to earn the degree of %
+\dissertationstring(phd,en):={Document written to earn the degree of %
 \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
 
 
@@ -263,7 +263,7 @@
 \ntaddtocover[height=1cm, vspace=2]{2-1}{%
   % \fontseries{mc}
   \fontsize{10}{10}\selectfont%
-  \thesponsorsstr(\option{/novathesis/coverlang})%
+  \thesponsorsstring(\option{/novathesis/coverlang})%
 }
 
 % Document purpose

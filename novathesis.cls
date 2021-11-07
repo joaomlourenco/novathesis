@@ -131,7 +131,7 @@
   }%
 }
 \def\ntspecialization(#1)#2{\specialization(#1):={#2}}
-\def\ntsponsors(#1)#2{\sponsorsstr(#1):={#2}}
+\def\ntsponsors(#1)#2{\sponsorsstring(#1):={#2}}
 
 
 % --------------------------------------------------------
@@ -340,20 +340,19 @@
 
 \assocarray{notdefined}
 \assocarray{keywordsstring}
-\assocarray{specializationstr}
-\assocarray{departmentofstr}
-\assocarray{sponsorsstr}
+\assocarray{specializationstring}
+\assocarray{departmentofstring}
+\assocarray{sponsorsstring}
 \assocarray{andstring}
 \assocarray{commastring}
 \optionlistdo{/@nt/langsshort}{
   \commastring(#1):={, }%
 }
 
-\assocarray{adviserstr}
+\assocarray{adviserstring}
 \providecommand*{\theadviserstrfont}{}
-% \assocarray{coadviserstr}
-% \providecommand*{\thecoadviserstrfont}{}
-\assocarray{degreestr}
+
+\assocarray{degreestring}
 \providecommand*{\thedegreestrfont}{}
 \providecommand*{\theadvisernamefont}{}
 \providecommand*{\theadviserremainderfont}{\\[-0.5ex]\itshape\scriptsize}
@@ -362,20 +361,21 @@
 \assocarray{mscstring}
 \assocarray{phdstring}
 
-\assocarray{docdegreestr}
+\assocarray{docdegreestring}
 
-\assocarray{committeeorder}
-\assocarray{committeetitlestr}
+% Committee stuff
+\assocarray{committeeorder}         %e.g., "{c,r,a,m,g}"
+\assocarray{committeetitlestring}      %e.g., "Examinaiton Committee"
 \providecommand*{\thecommitteetitlestrfont}{}
-\assocarray{committeememberstr}
+\assocarray{committestring}
 \providecommand*{\thecommitteememberstrfont}{}
 \providecommand*{\thecommitteenamefont}{}
 \providecommand*{\thecommitteeremainderfont}{\\[-0.5ex]\itshape\scriptsize}
 
-\assocarray{dissertationstr}
-\providecommand*{\thedissertationstrfont}{}
-\assocarray{copyrighttextstr}
-\assocarray{acknowledgmentsstr}
+\assocarray{dissertationstring}
+\providecommand*{\thedissertationstringfont}{}
+\assocarray{copyrighttextstring}
+\assocarray{acknowledgmentsstring}
 
 \assocarray{majorfield}
 \assocarray{specialization}
@@ -1239,7 +1239,7 @@
   \refsection%
     \begin{minipage}{\linewidth}%
       \bibfont%
-      \theacknowledgmentsstr(\option{/novathesis/coverlang})%
+      \theacknowledgmentsstring(\option{/novathesis/coverlang})%
       \vspace*{-20ex}
       \printbibliography[heading=none]%
     \end{minipage}%
@@ -1277,7 +1277,7 @@
 %% LABELS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \providecommand\thepresentationtext{%
-	\thedissertationstrfont\thedissertationstr(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+	\thedissertationstringfont\thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
 }
 
 \providecommand\thecopyrightstr{%
@@ -1285,7 +1285,7 @@
   \noindent%
   Copyright \textcopyright\ \theauthorname, %
   \theschool(\option{/novathesis/copyrightlang}), \theuniversity(\option{/novathesis/copyrightlang}).\\%
-  \thecopyrighttextstr(\option{/novathesis/copyrightlang})%
+  \thecopyrighttextstring(\option{/novathesis/copyrightlang})%
   \ntselectlang{\option{/novathesis/mainlang}}
 }
 
