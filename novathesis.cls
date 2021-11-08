@@ -219,9 +219,13 @@
 \def\ntaddperson#1[#2]{%
   % syntax: \ntaddperson{class}[key]{name}
   % See "\@ntaddperson@iv" below
-  \IfSubStr{#2}{,}%
-    {\@ntaddperson@iv{#1}[#2]}%
-    {\@ntaddperson@iv{#1}[,#2]}%
+  \StrCount{#2}{,}[\@nt@ncommas]%
+  \typeout{NT COMMAS \@nt@ncommas}%
+  \IfStrEq{\@nt@ncommas}{1}{}{%
+    \ClassError{novathesis}{Invalid role or gender in \string\ntaddperson{#2}}%
+                           {Please see file “5_cover.tex” for the correct syntax.}%
+  }%
+  \@ntaddperson@iv{#1}[#2]%
 }
 
 \def\@ntaddperson@iv#1[#2,#3]#4{%
@@ -1337,7 +1341,7 @@
     {0}{\@ntprintpersonsaslist{#3}{#4}}%
     {1}{\@ntprintpersonsasonecolumn{#1}{#3}{#4}}%
     {2}{\@ntprintpersonsastwocolumns{#1}{#3}{#4}}%
-  }[\ClassError{novathesis}{Ivalid argument [#2] to ntprintpersons[#1][#2][#3][#4]}{}]%
+  }[\ClassError{novathesis}{Ivalid argument [#2] to \string\ntprintpersons{#1}{#2}{#3}{#4}}{}]%
 }
 
 %============================================================
