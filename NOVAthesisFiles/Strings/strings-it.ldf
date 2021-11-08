@@ -86,18 +86,18 @@
 \committeestring(g,2,f,fr):={invitate}
 	
 \dissertationstring(bsc,it):={Documento sottomesso per ottenere il Grado di\\[1.25ex]%
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstring(mscplan,it):={Piano di Tesi per ottenere il Grado di\\[1.25ex]%
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstring(msc,it):={Tesi sottomessa per ottenere il Grado di\\[1.25ex]%
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstring(phdplan,it):={Piano di Tesi per ottenere il Grado dI\\[1.25ex]%
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstring(phdprop,it):={Proposta di Tesi per ottenere il Grado dI\\[1.25ex]%
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstring(phd,it):={Thesis submitted in partial fulfillment\\%
 % of the requirements for the degree of\\[1.25ex]%
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 
 \copyrighttextstring(it):={La \theschool(\option{/novathesis/copyrightlang})\ e \theuniversity(\option{/novathesis/copyrightlang})\ hanno il diritto perpetuo e senza limiti geografici, di archiviare e pubblicare questa tesi attraverso esemplari stampati in formato cartaceo o digitale, o attraverso qualsiasi altro mezzo consciuto o che possa essere inventato, e di disseminare tramite repositori scientifici e permettere la sua copia e distribuzione per scopi non commerciali, didattici o di ricerca, a patto che sia dato credito all'autore e editore.}
 \acknowledgmentsstring(it):={Questo documento é stato creato usando (pdf/Xe/Lua)\LaTeX, sulla base del template \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template, sviluppato nel \href{http://www.di.fct.unl.pt}{Dep.\ Informática di FCT-NOVA} da \href{https://docentes.fct.unl.pt/joao-lourenco}{João M. Lourenço}.~\cite{novathesis-manual}}

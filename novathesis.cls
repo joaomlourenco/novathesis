@@ -379,7 +379,7 @@
 \assocarray{adviserremainderpre}
 \assocarray{adviserremainderpost}
 \assocarray{adviserremainderfont}
-\adviserremainderfont():={\\[-0.5ex]\itshape\scriptsize}
+\adviserremainderfont():={\itshape\scriptsize}
 
 % Committee stuff
 \assocarray{committeeorder}         %e.g., "{c,r,a,m,g}"
@@ -401,7 +401,7 @@
 \assocarray{committeeremainderpre}
 \assocarray{committeeremainderpost}
 \assocarray{committeeremainderfont}
-\committeeremainderfont():={\\[-0.5ex]\itshape\scriptsize}
+\committeeremainderfont():={\itshape\scriptsize}
 
 \assocarray{dissertationstring}
 \assocarray{dissertationstringfont}
@@ -1027,14 +1027,13 @@
   \bgroup
     \def\@nt@covernumber{#1}%
     \ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1,textcolor)%
-        {\color{\thethesiscover(\option{/novathesis/docdegree},#1,textcolor)}}{}
+        {\color{\thethesiscover(\option{/novathesis/docdegree},#1,textcolor)}}{}%
     \ntselectlang{\option{/novathesis/coverlang}}%
     \options{/@ntcoveropts/bookmark=#1}%
     \IfStrEq{\option{/@ntcoveropts/bookmark}}{}{}{%
       \phantomsection\pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
     }%
     \@ntmakeboxwithcover{#1}{\@fullcover@box}%
-    % \@nt@flushcoverbox{#1}{\@fullcover@box}%
     \newpage%
   \egroup%
 }
@@ -1329,10 +1328,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print persons list {advisers | committee}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\ntprintadvisers}[1][0.9]{%
-  \ntprintpersons{#1}{2}{adviser}{a,c}%
-}
-
 \newcommand{\ntprintpersons}[4][0.90]{%
   % #1 = width in % of textwidth
   % #2 = number of columns
@@ -1342,7 +1337,7 @@
     {0}{\@ntprintpersonsaslist{#3}{#4}}%
     {1}{\@ntprintpersonsasonecolumn{#1}{#3}{#4}}%
     {2}{\@ntprintpersonsastwocolumns{#1}{#3}{#4}}%
-  }[\ClassError{novathesis}{Ivalid argument [#2] to ntprintadvisers[#1][#2][#3][#4]}{}]%
+  }[\ClassError{novathesis}{Ivalid argument [#2] to ntprintpersons[#1][#2][#3][#4]}{}]%
 }
 
 %============================================================
@@ -1352,7 +1347,7 @@
   % #1 = adviser | committee
   % #2 = {a,c} | {c,r,a,m,g}
   \def\@nt@personlist{}%
-  \forcsvlist{\@nt@addtopersonlist{#1}}{#2}%
+  \expandnext{\forcsvlist{\@nt@addtopersonlist{#1}}}{\expanded{#2}}%
   \StrSubstitute{\@nt@personlist}{,}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist]%
   \StrCount{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist@last]%
   % Replace last comma with "and"
@@ -1377,114 +1372,90 @@
 
 
 %============================================================
-% Print persons list {advisers | committee} as two columns
+% Print persons list {advisers | committee} as one and two columns
 %============================================================
+\newcommand{\@ntprintpersonsasonecolumn}[3]{%
+  % #1 = width in % of textwidth
+  % #2 = adviser | committee
+  % #3 = {a,c} | {c,r,a,m,g}
+  \csuse{#2stringpost}():={:\\[0.5ex]}%
+  \csuse{#2stringpre}(c):={\\[-3ex]}%
+  \csuse{#2namepost}():={\\[-0.5ex]}%
+  \csuse{#2remainderpost}():={\\[2pt]}%
+  \begin{tabularx}{#1\linewidth}[t]{@{}X@{}}%
+    % \ifaadefined{#2titlestring}(\options{/novathesis/coverlang}){%
+    %   \aadefault{#2titlestringpre}(#3)%
+    %   \aadefault{#2titlestringfont}(#3)%
+    %   \aadefault{#2titlestring}()%
+    %   \aadefault{#2titlestringpost}(#3)%
+    % }{}%
+    \expandnext{\forcsvlist{\@nt@ntprintpersongroup{1}{#2}}}{\expanded{#3}}%
+  \end{tabularx}%
+}
+
 \newcommand{\@ntprintpersonsastwocolumns}[3]{%
   % #1 = width in % of textwidth
   % #2 = adviser | committee
   % #3 = {a,c} | {c,r,a,m,g}
+  \csuse{#2stringpost}():={:}%
+  \csuse{#2stringpre}():={\\[-1.5ex]}%
+  \csuse{#2namepost}():={\\[-0.5ex]}%
+  \csuse{#2remainderpost}():={\\[1pt]}%
+  \csuse{adviserstringpre}(a):={}%
+  \csuse{committeestringpre}(c):={}%
+  \csuse{committeetitlestringpre}():={&}%
+  \csuse{committeetitlestringpost}():={\\[0.5ex]}%
+  \begin{tabularx}{#1\linewidth}[t]{@{}r@{~~}X@{}}%
+    \ifaadefined{#2titlestring}(\option{/novathesis/coverlang}){%
+      \aadefault{#2titlestringpre}(\expanded{#3})%
+      \aadefault{#2titlestringfont}(\expanded{#3})%
+      \csuse{the#2titlestring}(\option{/novathesis/coverlang})%
+      \aadefault{#2titlestringpost}(\expanded{#3})%
+    }{}%
+    \expandnext{\forcsvlist{\@nt@ntprintpersongroup{2}{#2}}}{\expanded{#3}}%
+  \end{tabularx}%
 }
 
-
-%============================================================
-% Print advisers in 1 column
-%============================================================
-% \newcommand{\ntprintadvisers}[1][0.90]{%
-%   % \begin{minipage}{#1\textwidth}
-%   % #1=Percentage of \textwidth used by the advisers list
-%   \begin{tabularx}{#1\textwidth}{@{}rX@{}}%
-%   \forcsvlist{\@nt@printadvisergroup}{adviser,coadviser}%
-%   \end{tabularx}%
-%   % \end{minipage}
-% }
-%
-\newcommand{\ntprintadvisersgroup}[2][0.90]{%
-  % #1=width
-  % %2={adviser,coadviser}
-  \ifoptiondefined{/@nt/#2//full}{%
-    {\csuse{the#2stringfont}()%
-    \csuse{the#2str}(\option{/novathesis/coverlang})}\\[1ex]%
-    \begin{minipage}[t]{#1\linewidth}%
-      \centering
-      \optionlistdo{/@nt/#2//full}{\@nt@printadvisersgroup##1,\@nil}%
+\newcommand{\@nt@ntprintpersongroup}[3]{%
+  % #1 = {1 | 2}
+  % #2 = {adviser | committee}
+  % #3 = {a,c} | {c,r,a,m,g}
+  % [#1][#2][#3]\\%[#4]\\
+  \ifoptiondefined{/@nt/#2/#3/full}{%
+    \@nt@reducegender{/@nt/#2/#3/gender}{\@nt@advgender}%
+    \@nt@reducenumber{/@nt/#2/#3/full}{\@nt@advnumber}%
+    \aadefault{#2stringpre}(#3)%
+    \aadefault{#2stringfont}(#3)%
+    \aadefault{#2string}(#3,\@nt@advnumber,\@nt@advgender,\option{/novathesis/coverlang})%
+    \aadefault{#2stringpost}(#3)%
+    \IfStrEq{#1}{2}{&}{}%
+    \begin{minipage}[t]{\linewidth}%
+        \optionlistdo{/@nt/#2/#3/full}{\@nt@printonename{#2}{##1}}%
     \end{minipage}%
-  }%
-  {}%
+    \\%
+  }{}%
 }
 
-\def\@nt@printadvisersgroup#1,#2\@nil{%
-  \mbox{}#1\\
-  \IfStrEq{#2}{}{\medskip}{\@nt@printadvisersgroup#2\@nil}%
-}
-
-\newcommand{\ntprintoneadviser}[1]{%
-  \ntprintonename{adviser}{#1}%
-}
-
-\newcommand{\ntprintonename}[2]{%
-  \StrCut{#2}{,}\@nt@name\@nt@remainder%
-  {\csuse{the#1namefont}\ignorespaces\@nt@name}%
-  {\csuse{the#1remainderfont}\ignorespaces\@nt@remainder}%
-}
-
-\newcommand{\@nt@printadvisergroup}[1]{%
-  % #1={adviser,coadviser}
-    \ifoptiondefined{/@nt/#1//full}{%
-      \@nt@reducegender{/@nt/#1//gender}{\mygender}%
-      \@nt@reducenumber{/@nt/#1//full}{\mynumber}%
-      \medskip%
-      \csuse{the#1stringfont}()%
-      \csuse{the#1str}(\mynumber,\mygender,\option{/novathesis/coverlang}): & %
-      \begin{minipage}[t]{\linewidth}\raggedright%
-      \optionlistdo{/@nt/#1//full}{\ntprintoneadviser{##1}\\[0.4ex]}%
-      \end{minipage}\\%
-    }%
-    {}%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Print committee
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\ntprintcommittee}[1][0.75]{\ifmaindoc{\@nt@printcommittee@i{#1}}{}}
-
-\newcommand{\@nt@printcommittee@i}[1]{%
-  \iftoggle{/novathesis/printcommittee}{% TRUE
-    % \begin{minipage}{#1\textwidth}%
-    % #1=Percentage of \textwidth used by the committee list
-    \begin{tabularx}{#1\textwidth}{@{}rX@{}}%
-    \@ntprintcommitteetitlestr\\[1ex]%
-    \forcsvlist{\@ntprintcommitteegroup}{c,r,a,m,g}%
-    \end{tabularx}%
-    % \end{minipage}
-  }{}%% NO PRINT COMMITTEE
-}
-
-\newcommand*{\@ntprintcommitteetitlestr}{%
-  % \ifx\@nt@tmp\@empty%
-  \expandnext{\ifx}{\thecommitteetitlestr(\option{/novathesis/coverlang})}\@empty%
-    % committeetitlestr[…] is empty
-  \else%
-    % \multicolumn{2}{c}{{%%
-            & \thecommitteetitlestringfont()%
-            \thecommitteetitlestr(\option{/novathesis/coverlang}):%}%
-          % }%
-  \fi%
-}
-
-\newcommand{\@ntprintcommitteegroup}[1]{%
-  % #1={c,r,a,m,g}
-  \ifoptiondefined{/@nt/committee/#1/full}{%
-    \@nt@reducegender{/@nt/committee/#1/gender}{\mygender}%
-    \@nt@reducenumber{/@nt/committee/#1/full}{\mynumber}%
-    \medskip%
-    \thecommitteestringfont()%
-    \thecommitteestring(#1,\mynumber,\mygender,\option{/novathesis/coverlang}): & %
-    \begin{minipage}[t]{\linewidth}\raggedright%
-    \optionlistdo{/@nt/committee/#1/full}{\ntprintonename{committee}{##1}\\[0.3ex]}%
-    \end{minipage}\\%
-  }%
-  {}%
+%============================================================
+% Print person aux funcitons
+%============================================================
+\newcommand{\@nt@printonename}[2]{%
+  % #1 = adviser | coadviser | committee
+  % #2 = (co)adviser info
+  \raggedright%
+  \StrCut{#2}{,}\@nt@name\@nt@remainder% split name from remainder
+  \csuse{the#1namepre}()%
+  \bgroup%
+    \csuse{the#1namefont}()%
+    \ignorespaces\@nt@name%
+  \egroup%
+  \csuse{the#1namepost}()%
+  \csuse{the#1remainderpre}()%
+  \bgroup%
+    \csuse{the#1remainderfont}()%
+    \ignorespaces\@nt@remainder%
+  \egroup%
+  \csuse{the#1remainderpost}()%
 }
 
 \newcommand*{\@nt@reducegender}[2]{%
@@ -1503,14 +1474,6 @@
     \gdef#2{2}%
   \fi%
 }
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Include the School's defaults
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/defaults.ldf}{}{}
 
 
 

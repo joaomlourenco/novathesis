@@ -25,7 +25,7 @@
 
 
 % Comiittee printing order
-\committeeorder(all):={c,r,a,m}% 
+\committeeorder():={c,r,a,m}% 
 
 % Cover background images
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
@@ -127,18 +127,18 @@
 \provisionalstring(it):={TBD}
 
 \dissertationstring(phdplan,pt):={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
+\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
 \dissertationstring(phdprop,pt):={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
+\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
 \dissertationstring(phd,pt):={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
+\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
 
 \dissertationstring(phdplan,en):={Document written to earn the degree of %
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
+\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
 \dissertationstring(phdprop,en):={Document written to earn the degree of %
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
+\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
 \dissertationstring(phd,en):={Document written to earn the degree of %
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
+\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -238,20 +238,20 @@
 \ntaddtocover[degree=phd/phdprop/phdplan, vspace=2.0cm]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
   \theadviserslabel(\option{/novathesis/docdegree},\option{/novathesis/coverlang})\\[3mm]%
-  \ntprintadvisersaslist%
+  \ntprintpersons{0}{adviser}{a,c}%
 }
 
 % Advisers
 \ntaddtocover[degree=msc/mscplan, vspace=1.0cm]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
   \theadviserslabel(\option{/novathesis/docdegree},\option{/novathesis/coverlang})\\[3mm]%
-  \ntprintadvisersaslist%
+  \ntprintpersons{0}{adviser}{a,c}%
 }
 %
 %
 % % Committee — only print the committee for the main classes
 % \ntaddtocover[vspace=1]{1-1,2-1}{%
-%     \ntprintcommittee%
+%     \ntprintpersons[0.9]{2}{committee}{\thecommitteeorder()}%
 % }
 %
 

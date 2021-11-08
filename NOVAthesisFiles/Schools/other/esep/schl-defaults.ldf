@@ -36,7 +36,7 @@
 \degreename(en):={$<$Degree Name$>$}
 
 % Comiittee printing order
-\committeeorder(all):={c,r,m}% 
+\committeeorder():={c,r,m}% 
 
 % Cover background images
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
@@ -173,7 +173,7 @@
   \parbox[t][4cm]{\textwidth}{%
     \centering%
     \fontsize{11}{11}\selectfont%
-    \parbox{0.80\textwidth}{\ntprintadvisers[0.75]}%
+    \ntprintpersons[0.8]{2}{adviser}{a,c}%
   }%
 }
 \ntaddtocover[vspace=2cm]{1-1}{%

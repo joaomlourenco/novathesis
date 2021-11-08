@@ -83,17 +83,17 @@
 \docdegreestring(phd,fr):={Thèse de doctorat}
 
 \dissertationstring(bsc,fr):={Rapport pour obtention du degré de %
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstring(mscplan,fr):={Rapport intermédiaire pour obtention du degré de %
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstring(msc,fr):={Dissertation pour obtention du degré de %
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstring(phdplan,fr):={Rapport intermédiaire pour obtention du degré de %
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstring(phdprop,fr):={Proposition de dissertation pour obtention du degré de %
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstring(phd,fr):={Dissertation pour obtention du degré de %
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 
 \copyrighttextstring(fr):={La \theschool(\option{/novathesis/copyrightlang})\ e a \theuniversity(\option{/novathesis/copyrightlang})\ ont le droit, perpetuel et sans limites géographiques, d'archiver et de publiquer cette dissertation à travers d'exemplaires imprimés, reproduits en papier ou en format digital, ou à travers de n'importe quel autre moyen connu ou qui pourra être inventé, et de la divulguer à travers des dépôts scientifiques et d'admettre sa copie et distribution seulement en contextes didactiques ou de recherche, et jamais comerciaux, à condition que les droits d'auteur et editeur soient respectés.}
 \acknowledgmentsstring(fr):={Ce document a été crée en utilisant le processeur (pdf/Xe/Lua)\LaTeX, basé sur le modèle \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis}, développé aus \href{http://www.di.fct.unl.pt}{Dep.\ Informática de FCT-NOVA} par \href{https://docentes.fct.unl.pt/joao-lourenco}{João M. Lourenço}.~\cite{novathesis-manual}}

@@ -80,6 +80,9 @@
 \def\ifaaempty#1(#2){%
   \ifcsvoid{@aa@#1@#2}%
 }
+\def\aadefault#1(#2){%
+  \ifaadefined{#1}(#2){\csuse{the#1}(#2)}{\csuse{the#1}()}%
+}
 \newcommand*{\assocarray}[1]{%
   \csdef{#1}(##1){%
     \@ifnextchar:{\expandafter\@aa@def@ii#1\expandafter(##1)}%
