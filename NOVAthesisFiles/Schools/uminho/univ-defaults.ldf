@@ -141,7 +141,7 @@
 \university(logo,GRAY):={UMINHO-logo-GRAY}
 
 % Comiittee printing order
-\committeeorder(all):={c,r,m}%  
+\committeeorder():={c,r,m}%  
 
 % Cover background images
 \thesiscover(phd,1-1,textcolor):={white}
@@ -306,14 +306,14 @@
 \ntaddtocover[vspace=0,align=l]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \theadvisersrt(\option{/novathesis/coverlang})\\%
-  \textbf{\ntprintadvisersaslist}%
+  \textbf{\ntprintpersons{0}{adviser}{a,c}}%
 }
 
 % Committee — only print the committee for the main classes
 % \ntaddtocover[align=r, vspace=1]{1-1}{%
 %   \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
 %   \fontsize{10}{10}\selectfont%
-%   \ntprintcommittee%
+%   \ntprintpersons[0.9]{2}{committee}{\thecommitteeorder()}%
 % }
 
 % Date

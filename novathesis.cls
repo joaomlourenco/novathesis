@@ -131,7 +131,7 @@
   }%
 }
 \def\ntspecialization(#1)#2{\specialization(#1):={#2}}
-\def\ntsponsors(#1)#2{\sponsorsstr(#1):={#2}}
+\def\ntsponsors(#1)#2{\sponsorsstring(#1):={#2}}
 
 
 % --------------------------------------------------------
@@ -226,17 +226,21 @@
 
 \def\@ntaddperson@iv#1[#2,#3]#4{%
   % syntax: \ntaddperson{class}[key,gender]{filename}
-  % #1={author, adviser, committee, …}
-  % #2={c,r,a,m,g}
-  %     c=chair
-  %     r=rapporteur/referee
-  %     a=adviser
-  %     m=other members
-  %     g=guests
+  % #1=adviser | committee
+  % #2={a,c}            {c,r,a,m,g}
+  %     a=adviser        c=chair
+  %     c=coadviser      r=rapporteur/referee
+  %                      a=adviser
+  %                      m=other members
+  %                      g=guests
   % #3={m,f}
-  % #4={committee member name, position, etc}
-  \options{/@nt/#1/#2/gender/.cpush={#3}}%
-  \options{/@nt/#1/#2/name/.cpush={#4}}%
+  % #4={person name, position, etc}
+  \StrCut{#4}{,}\@nt@personname\@nt@dummy%
+  \options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
+  \options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
+  \options{/@nt/#1/#2/gender/.expanded/.cpush={#3}}%
+  % \letoptionlist{/@nt/#1/#2/name}{\@nt@dummy}%
+  % \typeout{ADDPERSONLIST=\arabic{\option{/@nt/#1/#2/name/@size}}[\@nt@dummy]}%
 }
 
 
@@ -276,7 +280,7 @@
   }%
   % \typeout{NT ntload ADDFILE [#1] [#2] [#3] [\@nt@filewithpath]}%
   \expanded{\options{/@nt/#1/#2/#3/.cpush={\@nt@filewithpath}}}%
-  \typeout{NT ADDED FILE [/@nt/#1/#2/#3=\@nt@filewithpath]}%
+  % \typeout{NT ADDED FILE [/@nt/#1/#2/#3=\@nt@filewithpath]}%
 }
 
 \newcommand*{\@nt@ifoptionlinstnotempty}[3][VAL]{%
@@ -319,57 +323,91 @@
   }%
 }
 
-\assocarray{frontmatterstring}
-\assocarray{backmatterstring}
-\assocarray{spinestring}
-\assocarray{coverstring}
-\assocarray{frontpagestring}
-\assocarray{backcoverstring}
-\assocarray{copyrightstring}
-\assocarray{statementstring}
-\assocarray{dedicatorystring}
-\assocarray{acknowledgementsstring}
-\assocarray{quotestring}
-\assocarray{abstractstring}
-\assocarray{keywordsstring}
+% For PDF bookmakrs
+\assocarray{coverbkmstring}
+\assocarray{frontpagebkmstring}
+\assocarray{copyrightbkmstring}
+\assocarray{statementbkmstring}
+\assocarray{dedicatorybkmstring}
+\assocarray{acknowledgementsbkmstring}
+\assocarray{quotebkmstring}
+\assocarray{abstractbkmstring}
+\assocarray{frontmatterbkmstring}
+\assocarray{backmatterbkmstring}
+\assocarray{spinebkmstring}
+\assocarray{backcoverbkmstring}
+
+
 \assocarray{notdefined}
-\assocarray{specializationstr}
-\assocarray{departmentofstr}
-\assocarray{sponsorsstr}
+\assocarray{keywordsstring}
+\assocarray{specializationstring}
+\assocarray{departmentofstring}
+\assocarray{sponsorsstring}
 \assocarray{andstring}
 \assocarray{commastring}
-% \initassocarray{,}{commastring}
 \optionlistdo{/@nt/langsshort}{
-  \commastring(#1):={,}%
+  \commastring(#1):={, }%
 }
 
-\assocarray{adviserstr}
-\providecommand*{\theadviserstrfont}{}
-\assocarray{coadviserstr}
-\providecommand*{\thecoadviserstrfont}{}
-\assocarray{degreestr}
-\providecommand*{\thedegreestrfont}{}
-\providecommand*{\theadvisernamefont}{}
-\providecommand*{\theadviserremainderfont}{\\[-0.5ex]\itshape\scriptsize}
+
+\assocarray{degreestring}
+\assocarray{degreestringfont}
 
 \assocarray{degreename}
+\assocarray{degreenamefont}
+
 \assocarray{mscstring}
+\assocarray{mscstringfont}
+
 \assocarray{phdstring}
+\assocarray{phdstringfont}
 
-\assocarray{docdegreestr}
+\assocarray{docdegreestring}
+\assocarray{docdegreestringfont}
 
-\assocarray{committeeorder}
-\assocarray{committeetitlestr}
-\providecommand*{\thecommitteetitlestrfont}{}
-\assocarray{committeememberstr}
-\providecommand*{\thecommitteememberstrfont}{}
-\providecommand*{\thecommitteenamefont}{}
-\providecommand*{\thecommitteeremainderfont}{\\[-0.5ex]\itshape\scriptsize}
 
-\assocarray{dissertationstr}
-\providecommand*{\thedissertationstrfont}{}
-\assocarray{copyrighttextstr}
-\assocarray{acknowledgmentsstr}
+
+\assocarray{adviserstring}            % e.g., "Adviser", "Co-adviser"
+\assocarray{adviserstringfont}
+\assocarray{adviserstringpre}
+\assocarray{adviserstringpost}
+
+\assocarray{advisernamepre}
+\assocarray{advisernamepost}
+\assocarray{advisernamefont}
+
+\assocarray{adviserremainderpre}
+\assocarray{adviserremainderpost}
+\assocarray{adviserremainderfont}
+\adviserremainderfont():={\itshape\scriptsize}
+
+% Committee stuff
+\assocarray{committeeorder}         %e.g., "{c,r,a,m,g}"
+
+\assocarray{committeetitlestring}      %e.g., "Examinaiton Committee"
+\assocarray{committeetitlestringpre}
+\assocarray{committeetitlestringpost}
+\assocarray{committeetitlestringfont}
+
+\assocarray{committeestring}
+\assocarray{committeestringpre}
+\assocarray{committeestringpost}
+\assocarray{committeestringfont}
+
+\assocarray{committeenamepre}
+\assocarray{committeenamepost}
+\assocarray{committeenamefont}
+
+\assocarray{committeeremainderpre}
+\assocarray{committeeremainderpost}
+\assocarray{committeeremainderfont}
+\committeeremainderfont():={\itshape\scriptsize}
+
+\assocarray{dissertationstring}
+\assocarray{dissertationstringfont}
+
+\assocarray{copyrighttextstring}
+\assocarray{acknowledgmentsstring}
 
 \assocarray{majorfield}
 \assocarray{specialization}
@@ -945,17 +983,17 @@
 
 \newcommand{\ntprintbackcover}{%
   \ifocverdefined[N-1]{%
-    \phantomsection\pdfbookmark[-1]{\thebackmatterstring(\option{/novathesis/coverlang})}{bmbackmatter}%
+    \phantomsection\pdfbookmark[-1]{\thebackmatterbkmstring(\option{/novathesis/coverlang})}{bmbackmatter}%
   }{%
     \ifocverdefined[N-2]{%
-      \phantomsection\pdfbookmark[-1]{\thebackmatterstring(\option{/novathesis/coverlang})}{bmbackmatter}%
+      \phantomsection\pdfbookmark[-1]{\thebackmatterbkmstring(\option{/novathesis/coverlang})}{bmbackmatter}%
     }{}%
   }%
   \ntprintcoverpair{N}%
 }
 
 \newcommand{\ntprintcovers}[1][1,2]{%
-  \phantomsection\pdfbookmark[-1]{\thefrontmatterstring(\option{/novathesis/coverlang})}{bmfrontmatter}%
+  \phantomsection\pdfbookmark[-1]{\thefrontmatterbkmstring(\option{/novathesis/coverlang})}{bmfrontmatter}%
   \NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
   \forcsvlist{\ntprintcoverpair}{#1}%
 }
@@ -989,14 +1027,13 @@
   \bgroup
     \def\@nt@covernumber{#1}%
     \ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1,textcolor)%
-        {\color{\thethesiscover(\option{/novathesis/docdegree},#1,textcolor)}}{}
+        {\color{\thethesiscover(\option{/novathesis/docdegree},#1,textcolor)}}{}%
     \ntselectlang{\option{/novathesis/coverlang}}%
     \options{/@ntcoveropts/bookmark=#1}%
     \IfStrEq{\option{/@ntcoveropts/bookmark}}{}{}{%
       \phantomsection\pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
     }%
     \@ntmakeboxwithcover{#1}{\@fullcover@box}%
-    % \@nt@flushcoverbox{#1}{\@fullcover@box}%
     \newpage%
   \egroup%
 }
@@ -1127,13 +1164,13 @@
 
 \options{/@ntcoveropts/.new family
   % titles for PDF bookmark / list of contents
-  , bookmark/.new choice = {1-1=\thecoverstring(\option{/novathesis/coverlang})
+  , bookmark/.new choice = {1-1=\thecoverbkmstring(\option{/novathesis/coverlang})
                           , 1-2={}
-                          , 2-1=\thefrontpagestring(\option{/novathesis/coverlang})
+                          , 2-1=\thefrontpagebkmstring(\option{/novathesis/coverlang})
                           , 2-2={}
                           , N-1={}
-                          , N-2=\thebackcoverstring(\option{/novathesis/coverlang})
-                          , spine=\thespinestring(\option{/novathesis/coverlang})}
+                          , N-2=\thebackcoverbkmstring(\option{/novathesis/coverlang})
+                          , spine=\thespinebkmstring(\option{/novathesis/coverlang})}
   % letter to macro for horizontal alignment
   , alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft}
   % filters / conditional printing
@@ -1233,7 +1270,7 @@
   \refsection%
     \begin{minipage}{\linewidth}%
       \bibfont%
-      \theacknowledgmentsstr(\option{/novathesis/coverlang})%
+      \theacknowledgmentsstring(\option{/novathesis/coverlang})%
       \vspace*{-20ex}
       \printbibliography[heading=none]%
     \end{minipage}%
@@ -1256,7 +1293,7 @@
           }%
       }%
       \ntselectlang{\option{/novathesis/mainlang}}%
-      \phantomsection\pdfbookmark[1]{\csuse{thestatementstring}(\option{/novathesis/mainlang})}{bmstatement}%
+      \phantomsection\pdfbookmark[1]{\csuse{thestatementbkmstring}(\option{/novathesis/mainlang})}{bmstatement}%
       \@ntloadfiles@ii{statement}%
       \NTRunHook{statement/post}%
       \clearforchapter%
@@ -1271,7 +1308,7 @@
 %% LABELS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \providecommand\thepresentationtext{%
-	\thedissertationstrfont\thedissertationstr(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+	\thedissertationstringfont()\thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
 }
 
 \providecommand\thecopyrightstr{%
@@ -1279,7 +1316,7 @@
   \noindent%
   Copyright \textcopyright\ \theauthorname, %
   \theschool(\option{/novathesis/copyrightlang}), \theuniversity(\option{/novathesis/copyrightlang}).\\%
-  \thecopyrighttextstr(\option{/novathesis/copyrightlang})%
+  \thecopyrighttextstring(\option{/novathesis/copyrightlang})%
   \ntselectlang{\option{/novathesis/mainlang}}
 }
 
@@ -1288,138 +1325,137 @@
  
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Print advisers
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%============================================================
-% Print advisers as list
-%============================================================
-\newcommand{\ntprintadvisersaslist}[1][adviser,coadviser]{%
-  \def\@nt@addviserslist{}%
-  \setnewcounter{@nt@advisertotal}{0}%
-  \forcsvlist\@nt@getadvisername{#1}%
-  \setnewcounter{@nt@advisern}{0}%
-  \expandnext{\forcsvlist\@nt@printadvisersaslist}{\@nt@addviserslist}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Print persons list {advisers | committee}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ntprintpersons}[4][0.90]{%
+  % #1 = width in % of textwidth
+  % #2 = number of columns
+  % #3 = adviser | committee
+  % #4 = {a,c} | {c,r,a,m,g}
+  \IfStrEqCase{#2}{%
+    {0}{\@ntprintpersonsaslist{#3}{#4}}%
+    {1}{\@ntprintpersonsasonecolumn{#1}{#3}{#4}}%
+    {2}{\@ntprintpersonsastwocolumns{#1}{#3}{#4}}%
+  }[\ClassError{novathesis}{Ivalid argument [#2] to ntprintpersons[#1][#2][#3][#4]}{}]%
 }
 
-\newcommand{\@nt@getadvisername}[1]{%
-  \optionlistdo{/@nt/#1//name}{%
-    \StrCut{##1}{,}\@nt@tmpl\@nt@tmpr%
-    \xdef\@nt@addviserslist{\@nt@addviserslist,\@nt@tmpl}%
-    \stepcounter{@nt@advisertotal}%
+%============================================================
+% Print persons list {advisers | committee} as list
+%============================================================
+\newcommand{\@ntprintpersonsaslist}[2]{%
+  % #1 = adviser | committee
+  % #2 = {a,c} | {c,r,a,m,g}
+  \def\@nt@personlist{}%
+  \expandnext{\forcsvlist{\@nt@addtopersonlist{#1}}}{\expanded{#2}}%
+  \StrSubstitute{\@nt@personlist}{,}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist]%
+  \StrCount{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist@last]%
+  % Replace last comma with "and"
+  \IfStrEq{0}{\@nt@personlist@last}{}{%
+    \StrCut[\@nt@personlist@last]{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}%
+                                     \@nt@listleft\@nt@listright%
+    \def\@nt@personlist{\@nt@listleft\theandstring(\option{/novathesis/coverlang})\@nt@listright}%
   }%
+  \@nt@personlist%
 }
 
-\newcommand{\@nt@printadvisersaslist}[1]{%
-  \stepcounter{@nt@advisern}%
-  \ifnum\value{@nt@advisern}=\value{@nt@advisertotal}%
-    {\normalfont\ \theandstring(\option{/novathesis/coverlang}) }%
-  \else\ifnum\value{@nt@advisern}>1%
-    {\normalfont\thecommastring(\option{/novathesis/coverlang}) }%
-  \fi\fi%
-  #1%
+\newcommand{\@nt@addtopersonlist}[2]{%
+  % #1 = adviser | committee
+  % #2 = {a,c} | {c,r,a,m,g}
+  \ifoptiondefined{/@nt/#1/#2/name}{%
+    \letoptionlist{/@nt/#1/#2/name}\@nt@list%
+    \IfStrEq{\@nt@personlist}{}{\def\@nt@comma{}}{\def\@nt@comma{,}}%
+    \xappto\@nt@personlist{\@nt@comma\@nt@list}%
+  }{}%
 }
 
+
+
 %============================================================
-% Print advisers as list
+% Print persons list {advisers | committee} as one and two columns
 %============================================================
-\newcommand{\ntprintadvisers}[1][0.90]{%
-  % \begin{minipage}{#1\textwidth}
-  % #1=Percentage of \textwidth used by the advisers list
-  \begin{tabularx}{#1\textwidth}{@{}rX@{}}%
-  \forcsvlist{\@nt@printadvisergroup}{adviser,coadviser}%
+\newcommand{\@ntprintpersonsasonecolumn}[3]{%
+  % #1 = width in % of textwidth
+  % #2 = adviser | committee
+  % #3 = {a,c} | {c,r,a,m,g}
+  \csuse{#2stringpost}():={:\\[0.5ex]}%
+  \csuse{#2stringpre}(c):={\\[-3ex]}%
+  \csuse{#2namepost}():={\\[-0.5ex]}%
+  \csuse{#2remainderpost}():={\\[2pt]}%
+  \begin{tabularx}{#1\linewidth}[t]{@{}X@{}}%
+    % \ifaadefined{#2titlestring}(\options{/novathesis/coverlang}){%
+    %   \aadefault{#2titlestringpre}(#3)%
+    %   \aadefault{#2titlestringfont}(#3)%
+    %   \aadefault{#2titlestring}()%
+    %   \aadefault{#2titlestringpost}(#3)%
+    % }{}%
+    \expandnext{\forcsvlist{\@nt@ntprintpersongroup{1}{#2}}}{\expanded{#3}}%
   \end{tabularx}%
-  % \end{minipage}
 }
 
-\newcommand{\ntprintadvisersgroup}[2][0.90]{%
-  % #1=width
-  % %2={adviser,coadviser}
-  \ifoptiondefined{/@nt/#2//name}{%
-    {\csuse{the#2strfont}%
-    \csuse{the#2str}(\option{/novathesis/coverlang})}\\[1ex]%
-    \begin{minipage}[t]{#1\linewidth}%
-      \centering
-      \optionlistdo{/@nt/#2//name}{\@nt@printadvisersgroup##1,\@nil}%
+\newcommand{\@ntprintpersonsastwocolumns}[3]{%
+  % #1 = width in % of textwidth
+  % #2 = adviser | committee
+  % #3 = {a,c} | {c,r,a,m,g}
+  \csuse{#2stringpost}():={:}%
+  \csuse{#2stringpre}():={\\[-1.5ex]}%
+  \csuse{#2namepost}():={\\[-0.5ex]}%
+  \csuse{#2remainderpost}():={\\[1pt]}%
+  \csuse{adviserstringpre}(a):={}%
+  \csuse{committeestringpre}(c):={}%
+  \csuse{committeetitlestringpre}():={&}%
+  \csuse{committeetitlestringpost}():={\\[0.5ex]}%
+  \begin{tabularx}{#1\linewidth}[t]{@{}r@{~~}X@{}}%
+    \ifaadefined{#2titlestring}(\option{/novathesis/coverlang}){%
+      \aadefault{#2titlestringpre}(\expanded{#3})%
+      \aadefault{#2titlestringfont}(\expanded{#3})%
+      \csuse{the#2titlestring}(\option{/novathesis/coverlang})%
+      \aadefault{#2titlestringpost}(\expanded{#3})%
+    }{}%
+    \expandnext{\forcsvlist{\@nt@ntprintpersongroup{2}{#2}}}{\expanded{#3}}%
+  \end{tabularx}%
+}
+
+\newcommand{\@nt@ntprintpersongroup}[3]{%
+  % #1 = {1 | 2}
+  % #2 = {adviser | committee}
+  % #3 = {a,c} | {c,r,a,m,g}
+  % [#1][#2][#3]\\%[#4]\\
+  \ifoptiondefined{/@nt/#2/#3/full}{%
+    \@nt@reducegender{/@nt/#2/#3/gender}{\@nt@advgender}%
+    \@nt@reducenumber{/@nt/#2/#3/full}{\@nt@advnumber}%
+    \aadefault{#2stringpre}(#3)%
+    \aadefault{#2stringfont}(#3)%
+    \aadefault{#2string}(#3,\@nt@advnumber,\@nt@advgender,\option{/novathesis/coverlang})%
+    \aadefault{#2stringpost}(#3)%
+    \IfStrEq{#1}{2}{&}{}%
+    \begin{minipage}[t]{\linewidth}%
+        \optionlistdo{/@nt/#2/#3/full}{\@nt@printonename{#2}{##1}}%
     \end{minipage}%
-  }%
-  {}%
+    \\%
+  }{}%
 }
 
-\def\@nt@printadvisersgroup#1,#2\@nil{%
-  \mbox{}#1\\
-  \IfStrEq{#2}{}{\medskip}{\@nt@printadvisersgroup#2\@nil}%
-}
-
-\newcommand{\ntprintoneadviser}[1]{%
-  \ntprintonename{adviser}{#1}%
-}
-
-\newcommand{\ntprintonename}[2]{%
-  \StrCut{#2}{,}\@nt@name\@nt@remainder%
-  {\csuse{the#1namefont}\ignorespaces\@nt@name}%
-  {\csuse{the#1remainderfont}\ignorespaces\@nt@remainder}%
-}
-
-\newcommand{\@nt@printadvisergroup}[1]{%
-  % #1={adviser,coadviser}
-    \ifoptiondefined{/@nt/#1//name}{%
-      \@nt@reducegender{/@nt/#1//gender}{\mygender}%
-      \@nt@reducenumber{/@nt/#1//name}{\mynumber}%
-      \medskip%
-      \csuse{the#1strfont}%
-      \csuse{the#1str}(\mynumber,\mygender,\option{/novathesis/coverlang}): & %
-      \begin{minipage}[t]{\linewidth}\raggedright%
-      \optionlistdo{/@nt/#1//name}{\ntprintoneadviser{##1}\\[0.4ex]}%
-      \end{minipage}\\%
-    }%
-    {}%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Print committee
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\ntprintcommittee}[1][0.75]{\ifmaindoc{\@nt@printcommittee@i{#1}}{}}
-
-\newcommand{\@nt@printcommittee@i}[1]{%
-  \iftoggle{/novathesis/printcommittee}{% TRUE
-    % \begin{minipage}{#1\textwidth}%
-    % #1=Percentage of \textwidth used by the committee list
-    \begin{tabularx}{#1\textwidth}{@{}rX@{}}%
-    \@ntprintcommitteetitlestr\\[1ex]%
-    \forcsvlist{\@ntprintcommitteegroup}{c,r,a,m,g}%
-    \end{tabularx}%
-    % \end{minipage}
-  }{}%% NO PRINT COMMITTEE
-}
-
-\newcommand*{\@ntprintcommitteetitlestr}{%
-  % \ifx\@nt@tmp\@empty%
-  \expandnext{\ifx}{\thecommitteetitlestr(\option{/novathesis/coverlang})}\@empty%
-    % committeetitlestr[…] is empty
-  \else%
-    % \multicolumn{2}{c}{{%%
-            & \thecommitteetitlestrfont%
-            \thecommitteetitlestr(\option{/novathesis/coverlang}):%}%
-          % }%
-  \fi%
-}
-
-\newcommand{\@ntprintcommitteegroup}[1]{%
-  % #1={c,r,a,m,g}
-  \ifoptiondefined{/@nt/committee/#1/name}{%
-    \@nt@reducegender{/@nt/committee/#1/gender}{\mygender}%
-    \@nt@reducenumber{/@nt/committee/#1/name}{\mynumber}%
-    \medskip%
-    \thecommitteememberstrfont%
-    \thecommitteememberstr(#1,\mynumber,\mygender,\option{/novathesis/coverlang}): & %
-    \begin{minipage}[t]{\linewidth}\raggedright%
-    \optionlistdo{/@nt/committee/#1/name}{\ntprintonename{committee}{##1}\\[0.3ex]}%
-    \end{minipage}\\%
-  }%
-  {}%
+%============================================================
+% Print person aux funcitons
+%============================================================
+\newcommand{\@nt@printonename}[2]{%
+  % #1 = adviser | coadviser | committee
+  % #2 = (co)adviser info
+  \raggedright%
+  \StrCut{#2}{,}\@nt@name\@nt@remainder% split name from remainder
+  \csuse{the#1namepre}()%
+  \bgroup%
+    \csuse{the#1namefont}()%
+    \ignorespaces\@nt@name%
+  \egroup%
+  \csuse{the#1namepost}()%
+  \csuse{the#1remainderpre}()%
+  \bgroup%
+    \csuse{the#1remainderfont}()%
+    \ignorespaces\@nt@remainder%
+  \egroup%
+  \csuse{the#1remainderpost}()%
 }
 
 \newcommand*{\@nt@reducegender}[2]{%
@@ -1438,14 +1474,6 @@
     \gdef#2{2}%
   \fi%
 }
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Include the School's defaults
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/defaults.ldf}{}{}
 
 
 
@@ -1531,7 +1559,7 @@
 	\ifmaindoc{% THEN it is a main document
     \ifoptiondefined{/@nt/file/#1/VAL}{%
       \ntselectlang{\option{/novathesis/mainlang}}%
-      \phantomsection\pdfbookmark[1]{\csuse{the#1string}(\option{/novathesis/mainlang})}{bm#1}
+      \phantomsection\pdfbookmark[1]{\csuse{the#1bkmstring}(\option{/novathesis/mainlang})}{bm#1}
       \@ntloadfiles@ii{#1}%
     }{\typeout{NT LOAD #1 undefined}}%
 	}{% ELSE
@@ -1561,7 +1589,7 @@
   % \typeout{NT PRINT ABSTRACT #1}%
   \ifoptiondefined{/@nt/file/abstract/#1}{%
     \setabstractlang{#1}%
-    \phantomsection\pdfbookmark[1]{\theabstractstring(#1)}{bmabstract#1}
+    \phantomsection\pdfbookmark[1]{\theabstractbkmstring(#1)}{bmabstract#1}
     \NTRunHook{abstract/pre}%
     \NTRunHook{abstract/#1/pre}%
     \printabstracttitle{#1}%
@@ -1693,7 +1721,7 @@
   \iftoggle{/novathesis/printcopyright}{%
     \ifmaindoc{%
       \ntselectlang{\option{/novathesis/copyrightlang}}%
-      \phantomsection\pdfbookmark[1]{\csuse{thecopyrightstring}(\option{/novathesis/mainlang})}{bmcopyright}%
+      \phantomsection\pdfbookmark[1]{\csuse{thecopyrightbkmstring}(\option{/novathesis/mainlang})}{bmcopyright}%
       \NTRunHook{copyright/pre}%
       \ntprintcopyrightpage%
       \NTRunHook{copyright/post}%
@@ -1746,7 +1774,7 @@
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{ntacknowledgements}{%
-  \chapter*{\theacknowledgementsstring(\option{/novathesis/mainlang})}%
+  \chapter*{\theacknowledgementsbkmstring(\option{/novathesis/mainlang})}%
 }{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1758,7 +1786,7 @@
   \renewcommand*{\@nt@keywordsstr}{\thekeywordsstring(#1)}%
 }
 \newcommand*{\printabstracttitle}[1]{%
-	\chapter*{\theabstractstring(#1)}%
+	\chapter*{\theabstractbkmstring(#1)}%
 }
 
 
