@@ -16,7 +16,7 @@
 \school(it):={NOVA School of Science and Technology}
 
 % Comiittee printing order
-\committeeorder(all):={c,r,m}% 
+\committeeorder():={c,r,m}% 
 
 % Cover background images
 % \thesiscover(phd,1-1,bgcolor):={LightBlue}
@@ -154,13 +154,13 @@
 % Advisers
 \ntaddtocover[vspace=1]{1-1}{%
   \fontsize{12}{12}\selectfont
-  \ntprintadvisers
+  \ntprintpersons{2}{adviser}{a,c}%
 }
 
 % Committee — only print the committee for the main classes
 \ntaddtocover[align=r, vspace=1]{1-1}{%
   \fontsize{10}{10}\selectfont%
-  \ntprintcommittee%
+  \ntprintpersons[0.9]{2}{committee}{\thecommitteeorder()}%
 }
 
 % Date

@@ -27,77 +27,77 @@
 \abstractbkmstring(it):={Sommario}
 \keywordsstring(it):={Parole Chiave}
 \notdefined(it):={INDEFINITO}
-\specializationstr(it):={Specializzazione in}
-\departmentofstr(it):={Dipartimento di}
-\andstring(it):={e}
+\specializationstring(it):={Specializzazione in}
+\departmentofstring(it):={Dipartimento di}
+\andstring(it):={ e }
 \mscstring(it):={Laurea Specialistica in}
 \phdstring(it):={Dottorato in}
 
 
-\adviserstr(1,m,it):={Relatore}
-\adviserstr(1,f,it):={Relatrice}
-\adviserstr(2,m,it):={Relatori}
-\adviserstr(2,f,it):={Relatrici}
-\coadviserstr(1,m,it):={Correlatore}
-\coadviserstr(1,f,it):={Correlatrice}
-\coadviserstr(2,m,it):={Correlatori}
-\coadviserstr(2,f,it):={Correlatrici}
+\adviserstring(a,1,m,it):={Relatore}
+\adviserstring(a,1,f,it):={Relatrice}
+\adviserstring(a,2,m,it):={Relatori}
+\adviserstring(a,2,f,it):={Relatrici}
+\adviserstring(c,1,m,it):={Correlatore}
+\adviserstring(c,1,f,it):={Correlatrice}
+\adviserstring(c,2,m,it):={Correlatori}
+\adviserstring(c,2,f,it):={Correlatrici}
 
-\degreestr(bsc,m,it):={Laurea Triennale}
-\degreestr(bsc,f,it):={Laurea Triennale}
-\degreestr(msc,m,it):={Laurea Specialistica}
-\degreestr(msc,f,it):={Laurea Specialistica}
-\degreestr(mscplan,m,it):={Laurea Specialistica}
-\degreestr(mscplan,f,it):={Laurea Specialistica}
-\degreestr(phd,m,it):={Dottore}
-\degreestr(phd,f,it):={Dottoressa}
-\degreestr(phdplan,m,it):={Dottore}
-\degreestr(phdplan,f,it):={Dottoressa}
-\degreestr(phdprop,m,it):={Dottore}
-\degreestr(phdprop,f,it):={Dottoressa}
+\degreestring(bsc,m,it):={Laurea Triennale}
+\degreestring(bsc,f,it):={Laurea Triennale}
+\degreestring(msc,m,it):={Laurea Specialistica}
+\degreestring(msc,f,it):={Laurea Specialistica}
+\degreestring(mscplan,m,it):={Laurea Specialistica}
+\degreestring(mscplan,f,it):={Laurea Specialistica}
+\degreestring(phd,m,it):={Dottore}
+\degreestring(phd,f,it):={Dottoressa}
+\degreestring(phdplan,m,it):={Dottore}
+\degreestring(phdplan,f,it):={Dottoressa}
+\degreestring(phdprop,m,it):={Dottore}
+\degreestring(phdprop,f,it):={Dottoressa}
 
-\docdegreestr(bsc,it):={Tesi di Laurea Triennale}
-\docdegreestr(msc,it):={Tesi di Laurea Specialistica}
-\docdegreestr(mscplan,it):={Piano per Tesi di Laurea Specialistica}
-\docdegreestr(phdplan,it):={Piano per Tesi di Dottorato}
-\docdegreestr(phdprop,it):={Proposta di Tesi di Dottorato}
-\docdegreestr(phd,it):={Tesi di Dottorato}
+\docdegreestring(bsc,it):={Tesi di Laurea Triennale}
+\docdegreestring(msc,it):={Tesi di Laurea Specialistica}
+\docdegreestring(mscplan,it):={Piano per Tesi di Laurea Specialistica}
+\docdegreestring(phdplan,it):={Piano per Tesi di Dottorato}
+\docdegreestring(phdprop,it):={Proposta di Tesi di Dottorato}
+\docdegreestring(phd,it):={Tesi di Dottorato}
 
-\committeetitlestr(it):={Commissione Esaminatrice}
-\committeememberstr(c,1,m,it):={Presidente}
-\committeememberstr(c,1,f,it):={Presidentessa}
-\committeememberstr(c,2,m,it):={Presidenti}
-\committeememberstr(c,2,f,it):={Presidentesse}
-\committeememberstr(r,1,m,it):={Controrelatore}
-\committeememberstr(r,2,f,it):={Controrelatrice}
-\committeememberstr(r,1,m,it):={Controrelatori}
-\committeememberstr(r,2,f,it):={Controrelatrici}
-\committeememberstr(a,1,m,it):={Relatore}
-\committeememberstr(a,2,f,it):={Relatrice}
-\committeememberstr(a,1,m,it):={Relatori}
-\committeememberstr(a,2,f,it):={Relatrici}
-\committeememberstr(m,1,m,it):={Membro}
-\committeememberstr(m,1,f,it):={Membro}
-\committeememberstr(m,2,m,it):={Membri}
-\committeememberstr(m,2,f,it):={Membri}
-\committeememberstr(g,1,m,fr):={Invitato}
-\committeememberstr(g,1,f,fr):={Invitata}
-\committeememberstr(g,2,m,fr):={invitati}
-\committeememberstr(g,2,f,fr):={invitate}
+\committeetitlestring(it):={Commissione Esaminatrice}
+\committeestring(c,1,m,it):={Presidente}
+\committeestring(c,1,f,it):={Presidentessa}
+\committeestring(c,2,m,it):={Presidenti}
+\committeestring(c,2,f,it):={Presidentesse}
+\committeestring(r,1,m,it):={Controrelatore}
+\committeestring(r,2,f,it):={Controrelatrice}
+\committeestring(r,1,m,it):={Controrelatori}
+\committeestring(r,2,f,it):={Controrelatrici}
+\committeestring(a,1,m,it):={Relatore}
+\committeestring(a,2,f,it):={Relatrice}
+\committeestring(a,1,m,it):={Relatori}
+\committeestring(a,2,f,it):={Relatrici}
+\committeestring(m,1,m,it):={Membro}
+\committeestring(m,1,f,it):={Membro}
+\committeestring(m,2,m,it):={Membri}
+\committeestring(m,2,f,it):={Membri}
+\committeestring(g,1,m,fr):={Invitato}
+\committeestring(g,1,f,fr):={Invitata}
+\committeestring(g,2,m,fr):={invitati}
+\committeestring(g,2,f,fr):={invitate}
 	
-\dissertationstr(bsc,it):={Documento sottomesso per ottenere il Grado di\\[1.25ex]%
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(mscplan,it):={Piano di Tesi per ottenere il Grado di\\[1.25ex]%
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(msc,it):={Tesi sottomessa per ottenere il Grado di\\[1.25ex]%
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(phdplan,it):={Piano di Tesi per ottenere il Grado dI\\[1.25ex]%
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(phdprop,it):={Proposta di Tesi per ottenere il Grado dI\\[1.25ex]%
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(phd,it):={Thesis submitted in partial fulfillment\\%
+\dissertationstring(bsc,it):={Documento sottomesso per ottenere il Grado di\\[1.25ex]%
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstring(mscplan,it):={Piano di Tesi per ottenere il Grado di\\[1.25ex]%
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstring(msc,it):={Tesi sottomessa per ottenere il Grado di\\[1.25ex]%
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstring(phdplan,it):={Piano di Tesi per ottenere il Grado dI\\[1.25ex]%
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstring(phdprop,it):={Proposta di Tesi per ottenere il Grado dI\\[1.25ex]%
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstring(phd,it):={Thesis submitted in partial fulfillment\\%
 % of the requirements for the degree of\\[1.25ex]%
-  \thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 
-\copyrighttextstr(it):={La \theschool(\option{/novathesis/copyrightlang})\ e \theuniversity(\option{/novathesis/copyrightlang})\ hanno il diritto perpetuo e senza limiti geografici, di archiviare e pubblicare questa tesi attraverso esemplari stampati in formato cartaceo o digitale, o attraverso qualsiasi altro mezzo consciuto o che possa essere inventato, e di disseminare tramite repositori scientifici e permettere la sua copia e distribuzione per scopi non commerciali, didattici o di ricerca, a patto che sia dato credito all'autore e editore.}
-\acknowledgmentsstr(it):={Questo documento é stato creato usando (pdf/Xe/Lua)\LaTeX, sulla base del template \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template, sviluppato nel \href{http://www.di.fct.unl.pt}{Dep.\ Informática di FCT-NOVA} da \href{https://docentes.fct.unl.pt/joao-lourenco}{João M. Lourenço}.~\cite{novathesis-manual}}
+\copyrighttextstring(it):={La \theschool(\option{/novathesis/copyrightlang})\ e \theuniversity(\option{/novathesis/copyrightlang})\ hanno il diritto perpetuo e senza limiti geografici, di archiviare e pubblicare questa tesi attraverso esemplari stampati in formato cartaceo o digitale, o attraverso qualsiasi altro mezzo consciuto o che possa essere inventato, e di disseminare tramite repositori scientifici e permettere la sua copia e distribuzione per scopi non commerciali, didattici o di ricerca, a patto che sia dato credito all'autore e editore.}
+\acknowledgmentsstring(it):={Questo documento é stato creato usando (pdf/Xe/Lua)\LaTeX, sulla base del template \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template, sviluppato nel \href{http://www.di.fct.unl.pt}{Dep.\ Informática di FCT-NOVA} da \href{https://docentes.fct.unl.pt/joao-lourenco}{João M. Lourenço}.~\cite{novathesis-manual}}

@@ -24,7 +24,7 @@
 \degreename(en):={“Degree Name”}
 
 % Comiittee printing order
-\committeeorder(all):={c,r,m}% 
+\committeeorder():={c,r,m}% 
 
 % Cover background images
 % \thesiscover(phd,front,image):={}
@@ -163,7 +163,7 @@
 % Advisers
 \ntaddtocover[vspace=1]{2-1}{%
   \fontsize{12}{12}\selectfont
-  \ntprintadvisers[0.75]
+  \ntprintpersons[0.75]{2}{adviser}{a,c}%
 }
 
 % Date

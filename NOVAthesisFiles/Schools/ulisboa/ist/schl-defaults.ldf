@@ -18,10 +18,9 @@
 % \majorfield(en):={Computer Science and Engineering}
 
 % Comiittee printing order
-\committeeorder(all):={c,r,a,m}% 
+\committeeorder():={c,r,a,m}% 
 
 % Cover background images
-\ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
 \thesiscover(phd,1-1,bgcolor):={white}
 % \thesiscover(phd,front,image):={}
 % \thesiscover(phdplan,front,image):={}
@@ -77,21 +76,21 @@
 \margin(plain,left):={2.5cm}
 \margin(plain,right):={2.5cm}
 
-\dissertationstr(bsc,pt):={Relatório para obtenção do Grau de %
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(mscplan,pt):={Relatório intermédio para obtenção do Grau de %
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(msc,pt):={Dissertação para obtenção do Grau de %
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(phdplan,pt):={Relatório intermédio para obtenção do Grau de %
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(phdprop,pt):={Proposta de dissertação para obtenção do Grau de %
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstr(phd,pt):={Dissertação para obtenção do Grau de %
-\thedegreestr(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
-\copyrighttextstr(pt):={O \theschool(\option{/novathesis/coverlang})\ e a \theuniversity(\option{/novathesis/coverlang})\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+\dissertationstring(bsc,pt):={Relatório para obtenção do Grau de %
+\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstring(mscplan,pt):={Relatório intermédio para obtenção do Grau de %
+\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstring(msc,pt):={Dissertação para obtenção do Grau de %
+\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstring(phdplan,pt):={Relatório intermédio para obtenção do Grau de %
+\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstring(phdprop,pt):={Proposta de dissertação para obtenção do Grau de %
+\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+\dissertationstring(phd,pt):={Dissertação para obtenção do Grau de %
+\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+\copyrighttextstring(pt):={O \theschool(\option{/novathesis/coverlang})\ e a \theuniversity(\option{/novathesis/coverlang})\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
 
-\copyrighttextstr(en):={The \theschool(\option{/novathesis/coverlang})\ and the \theuniversity(\option{/novathesis/coverlang})\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+\copyrighttextstring(en):={The \theschool(\option{/novathesis/coverlang})\ and the \theuniversity(\option{/novathesis/coverlang})\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -155,20 +154,19 @@
 
 % Advisers
 \ntaddtocover[vspace=2]{1-1,2-1}{%
-  \gdef\theadviserstrfont{\bfseries}%
-  \gdef\thecoadviserstrfont{\bfseries}%
+  \adviserstringfont():={\bfseries}%
   \fontsize{12}{12}\selectfont%
-  \ntprintadvisers%
+  \ntprintpersons{2}{adviser}{a,c}%  
 }
 
 
 % Committee — only print the committee for the main classes
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \ifmaindoc{%
-    \gdef\thecommitteetitlestrfont{\fontsize{14}{14}\selectfont\bfseries}%
-    \gdef\thecommitteememberstrfont{\bfseries}%
+    \committeetitlestringfont():={\fontsize{14}{14}\selectfont\bfseries}%
+    \committeestringfont():={\bfseries}%
     \fontsize{12}{12}\selectfont%
-    \ntprintcommittee%
+    \ntprintpersons[0.9]{2}{committee}{\thecommitteeorder()}%
   }%
   {}%
 }
