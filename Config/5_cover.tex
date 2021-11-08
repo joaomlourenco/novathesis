@@ -71,29 +71,29 @@
 
 %%------------------------------------------------------------
 % Advisers' gender and info (name, position, school, etc)
-%   use [f] for female and [m] for male
-%   use "\\" to break the lines in the appropriate place
-%   syntax: \ntaddperson{adviser}[gender]{Name, Position, School}
+%   syntax: \ntaddperson{adviser}[role,gender]{Name, Position, School}
+%   For [role] use: [a] for aaviser
+%                   [c] for co-adviser
+%   Use [f] for female and [m] for male
+%   Use "\\" to force line breaks
+% Advisers(s)
 \ntaddperson{adviser}[a,f]{Mary Doe Adviser Name, Full Professor, NOVA University Lisbon}
 % \ntaddperson{adviser}[a,f]{Mary Doe other Adviser Name, Full Professor, NOVA University Lisbon}
 % \ntaddperson{adviser}[a,f]{{Mary Doe yet another Adviser Name, Full Professor, NOVA University Lisbon}}
-
-%%------------------------------------------------------------
-% Co-Advisers' gender and info (name, position, school, etc)
-%   use [f] for female and [m] for male
-%   use "\\" to break the lines in the appropriate place
-%   syntax: \ntaddperson{coadviser}[gender]{Name, Position, School}
+% Co-advisers(s)
 \ntaddperson{adviser}[c,f]{John Doe Co-Adviser Name, Associate Professor, NOVA University Lisbon}
 \ntaddperson{adviser}[c,f]{John Doe other Co-Adviser Name, Full Professor, NOVA University Lisbon}
 
 %%------------------------------------------------------------
 % Committee members
+%   syntax: \ntaddperson{committee}[role,gender]{Name, Position, School}
 %   For [role] use: [c] for committee chair
 %                   [r] for rapporteurs
 %                   [a] for advisers
 %                   [m] for remaining members
 %                   [g] for guests
-%   syntax: \ntaddperson{committee}[role,gender]{Name, Position, School}
+%   Use [f] for female and [m] for male
+%   Use "\\" to force line breaks
 \ntaddperson{committee}[c,m]{Name of the committee chairperson, Full Professor, FCT-NOVA}
 \ntaddperson{committee}[r,m]{Name of a rapporteur, Associate Professor, Another University}
 % \ntaddperson{committee}[r,m]{Name of another rapporteur, \\Assistant Professor, Another University}
