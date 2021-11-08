@@ -732,6 +732,14 @@
                                 \hypertarget{toctarget}{\tableofcontents*}%
                             }%
                         }}}%
+      {listoffigures*}{\options{/@nt/list/listof/.cpush={%
+                                \phantomsection\pdfbookmark{\listfigurename}{loftarget}%
+                                \hypertarget{loftarget}{\listoffigures*}%
+                        }}}%
+      {listoftables*}{\options{/@nt/list/listof/.cpush={%
+                                \phantomsection\pdfbookmark{\listtablename}{lottarget}%
+                                \hypertarget{lottarget}{\listoftables*}%
+                        }}}%
       {listoflistings}{\options{/@nt/list/listof/.cpush={%
                                 \phantomsection\pdfbookmark{\listoflistingscaption}{loltarget}%
                                 \hypertarget{loltarget}{\listoflistings}%
@@ -739,15 +747,15 @@
       {listofalgorithms}{\options{/@nt/list/listof/.cpush = {%
                                 \phantomsection\pdfbookmark{\listalgorithmcfname}{loatarget}%
                                 \hypertarget{loatarget}{\listofalgorithms}%
-                                % \addcontentsline{toc}{chapter}{List of Algorithms}%
-                                %  Add space between chapters #170
-                                % \appto{\insertchapterspace}{\addtocontents{loa}{\protect\addvspace{10pt}}}%
-                                % Numbering algorithms as chapter.number #169
-                                % \renewcommand\thealgorithm{\thechapter.\arabic{algorithm}}%
-                                % \renewcommand{\thealgocf}{A\arabic{algocf}}%
-                                % \@addtoreset{algorithm}{chapter}%
-                        }}}
+                        }}}%
       {listsofglossaries}{\options{/@nt/list/listof/.cpush={%
+                              \glstoctrue%
+                              \iftoggle{/novathesis/glsxindy}%
+                                  {\printglossaries}%
+                                  {\printnoidxglossaries}%
+                          }}}%
+      {listsofglossaries*}{\options{/@nt/list/listof/.cpush={%
+                              \glstocfalse%
                               \iftoggle{/novathesis/glsxindy}%
                                   {\printglossaries}%
                                   {\printnoidxglossaries}%
