@@ -83,8 +83,53 @@
 \RequirePackage[nobeamer]{graphbox}% improved version of "graphicx"
 \graphicspath{{Chapters/Figures/}}
 \DeclareGraphicsExtensions{.pdf,.png,.jpg,.tif}
-\providecommand*\appendtographicspath[1]{\gappto\Ginput@path{#1}}
-\providecommand*\prependtographicspath[1]{\gpreto\Ginput@path{#1}}
+\providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
+\providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
+
+% \newif\ifgraphicexist
+% \catcode`\*=11
+% \newcommand\@nt@imagetest[1]{%
+%  \begingroup
+%  \global\graphicexisttrue
+%    \let\input@path\Ginput@path
+%   \filename@parse{#1}%
+%   \ifx\filename@ext\relax
+%     \@for\Gin@temp:=\Gin@extensions\do{%
+%       \ifx\Gin@ext\relax
+%         \Gin@getbase\Gin@temp
+%       \fi}%
+%   \else
+%     \Gin@getbase{\Gin@sepdefault\filename@ext}%
+%     \ifx\Gin@ext\relax
+%        \global\graphicexistfalse
+%        \def\Gin@base{\filename@area\filename@base}%
+%        \edef\Gin@ext{\Gin@sepdefault\filename@ext}%
+%     \fi
+%   \fi
+%   \ifx\Gin@ext\relax
+%          \global\graphicexistfalse
+%     \else
+%        \@ifundefined{Gin@rule@\Gin@ext}%
+%          {\global\graphicexistfalse}%
+%          {}%
+%     \fi
+%   \ifx\Gin@ext\relax
+%    \gdef\imageextension{unknown}%
+%   \else
+%    \xdef\imageextension{\Gin@ext}%
+%   \fi
+%  \endgroup
+%  \ifgraphicexist
+%   \expandafter \@firstoftwo
+%  \else
+%   \expandafter \@secondoftwo
+%  \fi
+%  }
+% \catcode`\*=12
+%
+% \newcommand\@nt@includegraphics[2][]{%
+%   \@nt@imagetest{#2}{\includegraphics[#1]{#2}}{\missingfigure{\detokenize{#2}}}%
+% }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -126,9 +171,7 @@
   \degreename(#1):={%
     \ifphddoc{\thephdstring(\option{/novathesis/coverlang}) }{\ifmscdoc{\themscstring(\option{/novathesis/coverlang}) }{}}#2%
   }%
-  \majorfield(#1):={%
-    \ifphddoc{\thephdstring(\option{/novathesis/coverlang}) }{\ifmscdoc{\themscstring(\option{/novathesis/coverlang}) }{}}#2%
-  }%
+  \majorfield(#1):={#2}%
 }
 \def\ntspecialization(#1)#2{\specialization(#1):={#2}}
 \def\ntsponsors(#1)#2{\sponsorsstring(#1):={#2}}
@@ -460,6 +503,7 @@
                                 \@nt@schooloption@i#1\@nil%
     }
   , school = {nova/fct}
+  , degree/.new value = {},
   , langsused/.new list = {en,pt}
   , docstatus/.new choice = {final, provisional, draft, working},
   , chapstyle/.new choice = {bar, bianchi, bluebox, default, elegant, 
@@ -1053,6 +1097,23 @@
 \newcommand{\@ntmakeboxwithcover}[2]{%
   % #1 = cover ID (major-minor)
   % #2 = box name
+    \gdef\@nt@margin@top{}%
+    \gdef\@nt@margin@bottom{}%
+    \gdef\@nt@margin@left{}%
+    \gdef\@nt@margin@right{}%
+    \ifaadefined{margin}(\option{/novathesis/docdegree},#1,top){%
+      \edef\@nt@margin@top{\themargin(\option{/novathesis/docdegree},#1,top)}%
+      \edef\@nt@margin@bottom{\themargin(\option{/novathesis/docdegree},#1,bottom)}%
+      \edef\@nt@margin@left{\themargin(\option{/novathesis/docdegree},#1,left)}%
+      \edef\@nt@margin@right{\themargin(\option{/novathesis/docdegree},#1,right)}%
+    }{\ifaadefined{margin}(\option{/novathesis/docdegree},top){%
+      \edef\@nt@margin@top{\themargin(\option{/novathesis/docdegree},top)}%
+      \edef\@nt@margin@bottom{\themargin(\option{/novathesis/docdegree},bottom)}%
+      \edef\@nt@margin@left{\themargin(\option{/novathesis/docdegree},left)}%
+      \edef\@nt@margin@right{\themargin(\option{/novathesis/docdegree},right)}%
+    }{%
+      \ClassError{novathesis}{Margins for cover of type “\option{/novathesis/docdegree}” undefined! Please define the margins in the School's definition file!}{}%
+    }}
   \defifundef{#2}{\newsavebox}%
   \@ntmakecoverbgcolor{#1}{\@cover@bgcolor@box}%
   \@ntmakecoverimage{#1}{\@cover@image@box}%
@@ -1064,8 +1125,8 @@
       \node[inner sep=0, anchor=north]  at (current page.north)  {\usebox{\@cover@image@box}};
       \node[inner sep=0
             , anchor=north west
-            , xshift=\expanded{\themargin(\option{/novathesis/docdegree},left)}
-            , yshift=-\expanded{\themargin(\option{/novathesis/docdegree},top)}]  
+            , xshift=\expanded{\@nt@margin@left}
+            , yshift=-\expanded{\@nt@margin@top}]  
                       at (current page.north west)  {\usebox{\@cover@text@box}};
     \end{tikzpicture}%
   % \end{lrbox}%
@@ -1116,11 +1177,39 @@
       {\savebox{#2}{\@ntcoverimage{#1}}}{}
 }
 
+\newif\ifgraphicexist
 \newcommand*{\@ntcoverimage}[1]{%
   % #1 = cover ID (major-minor)
   \NTRunHook{cover/#1/preimage}%
-  \includegraphics[width=\paperwidth,height=\paperheight]%
-                  {\thethesiscover(\option{/novathesis/docdegree},#1,image)}%
+  \global\graphicexistfalse
+  \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/%
+          \thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image).pdf}{%
+    \global\graphicexisttrue
+  }{}%
+  \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/Images/%
+          \thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image).pdf}{%
+    \global\graphicexisttrue
+  }{}%
+  \ifgraphicexist
+    \includegraphics[width=\paperwidth,height=\paperheight]%
+                    {\thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image)}
+  \else
+    \global\graphicexistfalse
+    \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/%
+            \thethesiscover(\option{/novathesis/docdegree},#1,image).pdf}{%
+      \global\graphicexisttrue
+    }{}%
+    \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/Images/%
+            \thethesiscover(\option{/novathesis/docdegree},#1,image).pdf}{%
+      \global\graphicexisttrue
+    }{}%
+    \ifgraphicexist
+      \includegraphics[width=\paperwidth,height=\paperheight]%
+                      {\thethesiscover(\option{/novathesis/docdegree},#1,image)}
+    \else
+      \ClassError{novathesis}{Cover image not found: “#1.pdf”}
+    \fi
+  \fi
   \NTRunHook{cover/#1/postimage}%
 }
 
@@ -1129,24 +1218,14 @@
   % #2 = box name
   \defifundef{#2}{\newsavebox}%
   \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{%
-    \ifaadefined{margin}(\option{/novathesis/docdegree},top){%
       \begin{lrbox}{#2}%
         \begin{minipage}[l]
-                        [\dimexpr\paperheight
-                                      -\themargin(\option{/novathesis/docdegree},top)%
-                                      -\themargin(\option{/novathesis/docdegree},bottom)%
-                        ]
-                        {\dimexpr\paperwidth
-                                      -\themargin(\option{/novathesis/docdegree},left)%
-                                      -\themargin(\option{/novathesis/docdegree},right)%
-                        }%
+                        [\dimexpr\paperheight-\@nt@margin@top-\@nt@margin@bottom]
+                        {\dimexpr\paperwidth-\@nt@margin@left-\@nt@margin@right}%
           \@ntcovertext{#1}%
         \end{minipage}%
       \end{lrbox}%
-    }{%
-      \ClassError{novathesis}{Margins for cover of type “\option{/novathesis/docdegree}” undefined! Please define the margins in the School's definition file!}{}%
-    }
-  }{}
+  }{}%
 }
 
 \newcommand{\@ntcovertext}[1]{%
@@ -1428,22 +1507,29 @@
   \end{tabularx}%
 }
 
-\newcommand{\@nt@ntprintpersongroup}[3]{%
-  % #1 = {1 | 2}
-  % #2 = {adviser | committee}
-  % #3 = {a,c} | {c,r,a,m,g}
-  % [#1][#2][#3]\\%[#4]\\
-  \ifoptiondefined{/@nt/#2/#3/full}{%
-    \@nt@reducegender{/@nt/#2/#3/gender}{\@nt@advgender}%
-    \@nt@reducenumber{/@nt/#2/#3/full}{\@nt@advnumber}%
-    \aadefault{#2stringpre}(#3)%
-    \aadefault{#2stringfont}(#3)%
-    \aadefault{#2string}(#3,\@nt@advnumber,\@nt@advgender,\option{/novathesis/coverlang})%
-    \aadefault{#2stringpost}(#3)%
-    \IfStrEq{#1}{2}{&}{}%
-    \begin{minipage}[t]{\linewidth}%
-        \optionlistdo{/@nt/#2/#3/full}{\@nt@printonename{#2}{##1}}%
-    \end{minipage}%
+\newcommand{\@nt@ntprintpersongroup}[4][full]{%
+  % #1 = { name | full}
+  % #2 = {1 | 2}
+  % #3 = {adviser | committee}
+  % #4 = {a,c} | {c,r,a,m,g}
+  % [#2][#3][#4]\\%[#4]\\
+  \ifoptiondefined{/@nt/#3/#4/full}{%
+    \@nt@reducegender{/@nt/#3/#4/gender}{\@nt@advgender}%
+    \@nt@reducenumber{/@nt/#3/#4/full}{\@nt@advnumber}%
+    \aadefault{#3stringpre}(#4)%
+    \bgroup
+      \aadefault{#3stringfont}(#4)%
+      \aadefault{#3string}(#4,\@nt@advnumber,\@nt@advgender,\option{/novathesis/coverlang})%
+    \egroup
+    \aadefault{#3stringpost}(#4)%
+    \IfStrEq{#2}{2}{&}{}%
+    \IfStrEq{#1}{full}{%
+      \begin{minipage}[t]{\linewidth}%
+          \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename[#1]{#3}{##1}}%
+      \end{minipage}%
+    }{%
+      \@ntprintpersonsaslist{#3}{#4}%
+    }%
     \\%
   }{}%
 }
@@ -1451,23 +1537,26 @@
 %============================================================
 % Print person aux funcitons
 %============================================================
-\newcommand{\@nt@printonename}[2]{%
-  % #1 = adviser | coadviser | committee
-  % #2 = (co)adviser info
+\newcommand{\@nt@printonename}[3][full]{%
+  % #1 = { name | full}
+  % #2 = adviser | coadviser | committee
+  % #3 = (co)adviser info
   \raggedright%
-  \StrCut{#2}{,}\@nt@name\@nt@remainder% split name from remainder
-  \csuse{the#1namepre}()%
+  \StrCut{#3}{,}\@nt@name\@nt@remainder% split name from remainder
+  \csuse{the#2namepre}()%
   \bgroup%
-    \csuse{the#1namefont}()%
+    \csuse{the#2namefont}()%
     \ignorespaces\@nt@name%
   \egroup%
-  \csuse{the#1namepost}()%
-  \csuse{the#1remainderpre}()%
-  \bgroup%
-    \csuse{the#1remainderfont}()%
-    \ignorespaces\@nt@remainder%
-  \egroup%
-  \csuse{the#1remainderpost}()%
+  \csuse{the#2namepost}()%
+  \IfStrEq{#1}{full}{%
+    \csuse{the#2remainderpre}()%
+    \bgroup%
+      \csuse{the#2remainderfont}()%
+      \ignorespaces\@nt@remainder%
+    \egroup%
+    \csuse{the#2remainderpost}()%
+  }{}%
 }
 
 \newcommand*{\@nt@reducegender}[2]{%
