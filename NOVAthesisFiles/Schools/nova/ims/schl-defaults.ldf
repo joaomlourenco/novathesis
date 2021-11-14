@@ -12,10 +12,10 @@
 \mscstring(en):={Master of Science in}
 
 % Faculty / School
-\school(pt):={Information Management School}
-\school(en):={Information Management School}
-\school(fr):={Information Management School}
-\school(it):={Information Management School}
+\school(pt):={Instituto Superior de Estatística e Gestão de Informação}
+\school(en):={NOVA Information Management School}
+\school(fr):={NOVA Information Management School}
+\school(it):={NOVA Information Management School}
 
 % Scientific filed
 % \majorfield(pt):={Gestão de Informação}
@@ -24,27 +24,33 @@
 % Comiittee printing order
 \committeeorder():={c,r,m}% 
 
+\ntsetup{secondcover=true}
+
 % Cover background images
-\thesiscover(phd,1-1,bgcolor):={white}
-\thesiscover(phd,1-1,image):={nova-ims-front-cover-phd}
-\thesiscover(phd,N-2,image):={nova-ims-back-cover}
-\thesiscover(phd,spine,image):={nova-ims-book-spine}
-\thesiscover(phdprop,1-1,image):={nova-ims-front-cover-phd}
-\thesiscover(phdprop,N-2,image):={nova-ims-back-cover}
-\thesiscover(phdprop,spine,image):={nova-ims-book-spine}
-\thesiscover(phdplan,1-1,image):={nova-ims-front-cover-phd}
-\thesiscover(phdplan,N-2,image):={nova-ims-back-cover}
-\thesiscover(phdplan,spine,image):={nova-ims-book-spine}
-\thesiscover(msc,1-1,image):={nova-ims-front-cover-megi}
-\thesiscover(msc,N-2,image):={nova-ims-back-cover}
-\thesiscover(msc,spine,image):={nova-ims-book-spine}
-\thesiscover(mscplan,1-1,image):={nova-ims-front-cover-megi}
-\thesiscover(mscplan,N-2,image):={nova-ims-back-cover}
-\thesiscover(mscplan,spine,image):={nova-ims-book-spine}
-\thesiscover(bsc,1-1,image):={nova-ims-front-cover-generic}
-\thesiscover(bsc,N-2,image):={nova-ims-back-cover}
-\thesiscover(bsc,spine,image):={nova-ims-book-spine}
-\thesiscover(plain,1-1,image):={nova-ims-front-cover-generic}
+% \thesiscover(phd,1-1,bgcolor):={white}
+\thesiscover(phd,1-1,image):={cover-nova-ims-phd}
+\thesiscover(phd,N-2,image):={backcover-nova-ims}
+\thesiscover(phd,spine,image):={spine-nova-ims}
+\thesiscover(phdprop,1-1,image):={cover-nova-ims-phd}
+\thesiscover(phdprop,N-2,image):={backcover-nova-ims}
+\thesiscover(phdprop,spine,image):={spine-nova-ims}
+\thesiscover(phdplan,1-1,image):={cover-nova-ims-phd}
+\thesiscover(phdplan,N-2,image):={backcover-nova-ims}
+\thesiscover(phdplan,spine,image):={spine-nova-ims}
+\thesiscover(msc,1-1,image):={genericcover-nova-ims}
+\thesiscover(msc,N-2,image):={backcover-nova-ims}
+\thesiscover(msc,spine,image):={spine-nova-ims}
+\thesiscover(msc,megi,1-1,image):={cover-nova-ims-megi}
+\thesiscover(msc,mgi,1-1,image):={cover-nova-ims-mgi}
+\thesiscover(msc,mmaa,1-1,image):={cover-nova-ims-mmaa}
+\thesiscover(mscplan,spine,image):={spine-nova-ims}
+\thesiscover(mscplan,megi,1-1,image):={cover-nova-ims-megi}
+\thesiscover(mscplan,mgi,1-1,image):={cover-nova-ims-mgi}
+\thesiscover(mscplan,mmaa,1-1,image):={cover-nova-ims-mmaa}
+\thesiscover(bsc,1-1,image):={genericcover-nova-ims}
+\thesiscover(bsc,N-2,image):={backcover-nova-ims}
+\thesiscover(bsc,spine,image):={spine-nova-ims}
+\thesiscover(plain,1-1,image):={genericcover-nova-ims}
 
 % Rename Doctor degree
 \degreestring(phd,m,en):={Doctor}
@@ -125,6 +131,11 @@
 \margin(plain,bottom):={6.0cm}
 \margin(plain,left):={6.8cm}
 \margin(plain,right):={2.0cm}
+\margin(msc,2-1,top):={3cm}
+\margin(msc,2-1,bottom):={3cm}
+\margin(msc,2-1,left):={3cm}
+\margin(msc,2-1,right):={3cm}
+
 
 \dissertationstring(bsc,pt):={Relatório apresentado como requisito parcial para obtenção do Grau de\\[1.25ex] %
 \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em {\themajorfield(\option{/novathesis/coverlang})}}
@@ -147,11 +158,12 @@
 \dissertationstring(bsc,en):={Report submitted in partial fulfillment\\%
 of the requirements for the degree of\\[1ex]%
 \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}}
+
 \dissertationstring(mscplan,en):={Dissertaion plan submitted in partial fulfillment\\%
 of the requirements for the degree of\\[1ex]%
 \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in {\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstring(msc,en):={Dissertation submitted in partial fulfillment\\%
-of the requirements for the degree of\\[1ex]%
+
+\dissertationstring(msc,en):={Dissertation presented as partial requirement for obtaining the Master’s degree in %\\[0.5ex]%
 % \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in
  {\themajorfield(\option{/novathesis/coverlang})}}
 
@@ -222,17 +234,17 @@ of the requirements for the degree of %
   \sffamily%
 }
   % PHD PROGRAM
-% \ntaddtocover[align=l, vspace=0cm, degree=phd]{1-1,2-1}{%
+% \ntaddtocover[align=l, vspace=0cm, degree=phd]{1-1}{%
 %   \ntcoverbackground%
 % }
 % INFORMATION MANAGEMENT
-\ntaddtocover[align=l, vspace=0cm, degree=phd]{1-1,2-1}{%
+\ntaddtocover[align=l, vspace=0cm, degree=phd]{1-1}{%
   \fontsize{16}{16}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\themajorfield(\option{/novathesis/coverlang})}}%
 }
 
 % SPECIALIZATION IN
-\ntaddtocover[align=l, vspace=0.7cm, degree=phd]{1-1,2-1}{%
+\ntaddtocover[align=l, vspace=0.7cm, degree=phd]{1-1}{%
   \fontsize{16}{16}\selectfont
   \textcolor{imsmidgrey}{%
     \textbf{\thespecializationstring(\option{/novathesis/coverlang})
@@ -241,19 +253,19 @@ of the requirements for the degree of %
 }
 
 % DISSERTATION TITLE
-\ntaddtocover[align=l, vspace=1.8cm, degree=phd]{1-1,2-1}{%
+\ntaddtocover[align=l, vspace=1.8cm, degree=phd]{1-1}{%
   \fontsize{16}{16}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
 }
 
 % AUTHOR NAME
-\ntaddtocover[align=l, vspace=0.4cm, degree=phd]{1-1,2-1}{%
+\ntaddtocover[align=l, vspace=0.4cm, degree=phd]{1-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
 }
 
 % DISSERTATION TEXT
-\ntaddtocover[align=l, vspace=5, degree=phd]{1-1,2-1}{%
+\ntaddtocover[align=l, vspace=5, degree=phd]{1-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{%
     \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
@@ -261,7 +273,7 @@ of the requirements for the degree of %
 }%
 
 % DATE
-\ntaddtocover[align=l, vspace=1cm, degree=phd]{1-1,2-1}{%
+\ntaddtocover[align=l, vspace=1cm, degree=phd]{1-1}{%
   \fontsize{11}{11}\selectfont%
   \textcolor{imsdarkgrey}{%
     \textbf{\thentdatemonth, \thentdateyear}%
@@ -269,13 +281,13 @@ of the requirements for the degree of %
 }
 
 % SCHOOL
-\ntaddtocover[align=l, vspace=1cm, degree=phd]{1-1,2-1}{%
+\ntaddtocover[align=l, vspace=1cm, degree=phd]{1-1}{%
   \fontsize{11}{11}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\theschool(en)}}%
 }
 
 % UNIVERSITY
-\ntaddtocover[align=l, vspace=0.0cm, degree=phd]{1-1,2-1}{%
+\ntaddtocover[align=l, vspace=0.0cm, degree=phd]{1-1}{%
   \fontsize{11}{11}\selectfont%
   \textcolor{imsdarkgrey}{\theuniversity(\option{/novathesis/coverlang})}%
 }
@@ -283,42 +295,88 @@ of the requirements for the degree of %
 
   % MSc PROGRAM
 % % Title of Dissertation
-% \ntaddtocover[align=l, vspace=0cm, degree=msc]{1-1,2-1}{%
+% \ntaddtocover[align=l, vspace=0cm, degree=msc]{1-1}{%
 %   \ntcoverbackground%
 % }
 
 % % Title of Dissertation
-\ntaddtocover[align=l, vspace=1, degree=msc]{1-1,2-1}{%
+\ntaddtocover[align=l, vspace=1, degree=msc]{1-1}{%
   \fontsize{17}{17}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}\\[0.25ex]%
+  \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}}\\[0.25ex]%
   \ifaadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
-    \\[2mm]%
+    ~\\[-1.5ex]%
     \textcolor{imsmidgrey}{
       \fontsize{15}{15}\selectfont%
       \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover)}%
     }%
   }{}%
-  % \fontsize{16}{16}\selectfont
-  % \textcolor{imsmidgrey}{%
-  %   \textbf{\thespecializationstring(\option{/novathesis/coverlang})
-  %   \thespecialization(\option{/novathesis/coverlang})}%
-  % }%
 }
 
 % Author name
-\ntaddtocover[align=l, vspace=1, degree=msc]{1-1,2-1}{%
+\ntaddtocover[align=l, vspace=2, degree=msc]{1-1}{%
   \fontsize{15}{15}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
 }
 
 % Degree
-\ntaddtocover[align=l, vspace=1, degree=msc]{1-1,2-1}{%
+\ntaddtocover[align=l, vspace=2, degree=msc]{1-1}{%
   \fontsize{14}{14}\selectfont%
-  \textcolor{imsdarkgrey}{\thepresentationtext}%
+  \textcolor{imsdarkgrey}{%
+    \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+  }%
 }
 
 % Date
-\ntaddtocover[vspace=1, degree=msc]{1-1,2-1}{%
+\ntaddtocover[vspace=2, degree=msc]{1-1}{%
   ~
 }%
 
+\ntaddtocover[align=c, vspace=0, degree=msc]{2-1}{%
+  \fontsize{14}{14}\selectfont%
+  \textbf{\theschool(en)}\\
+  \textbf{\theschool(pt)}\\
+  \theuniversity(pt)\\
+}
+
+\ntaddtocover[align=c, vspace=1, degree=msc]{2-1}{%
+  \fontsize{16}{16}\selectfont%
+  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
+}
+
+\ntaddtocover[align=c, vspace=1, degree=msc]{2-1}{%
+  \fontsize{14}{14}\selectfont%
+  by%
+}
+
+\ntaddtocover[align=c, vspace=1, degree=msc]{2-1}{%
+  \fontsize{14}{14}\selectfont%
+  \theauthorname%
+}
+
+% Degree
+\ntaddtocover[align=c, vspace=4, degree=msc]{2-1}{%
+  \fontsize{14}{14}\selectfont%
+  \textcolor{imsdarkgrey}{%
+    \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+  }%
+}
+
+% The committee
+\ntaddtocover[vspace=2,align=l]{2-1}{%
+  \fontsize{12}{12}\selectfont%
+  \adviserstringpre():={}%
+  \adviserstringpost():={:&}%
+  \adviserstringfont():={\bfseries}%
+  \begin{tabularx}{\textwidth}[t]{@{}lX@{}}
+    \@nt@ntprintpersongroup[name]{0}{adviser}{a}\\
+  \end{tabularx}\\[-1ex]
+  \begin{tabularx}{\textwidth}[t]{@{}lX@{}}
+    \@nt@ntprintpersongroup[name]{0}{adviser}{c}\\
+  \end{tabularx}
+  % \textbf{\theadviserstring(\option{/novathesis/coverlang}):} \ntprintpersons[1.0]{0}{adviser}{a}%
+}
+
+% Date
+\ntaddtocover[align=c, vspace=2, degree=msc]{2-1}{%
+  \thentdatemonth, \thentdateyear%
+}%
