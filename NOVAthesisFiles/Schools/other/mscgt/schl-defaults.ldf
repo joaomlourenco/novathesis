@@ -243,19 +243,19 @@ for the degree of \emph{\thedegreename(en)}}
 
 % Advisers
 \ntaddtocover[vspace=3cm]{2-1}{%
-  \ntprintpersons{2}{adviser}{a}%
+  \ntprintpersons{0.9}{2}{adviser}{a}%
 }
 
 % Co-advisers
 \ntaddtocover[vspace=1cm]{2-1}{%
-  \ntprintpersons{2}{adviser}{c}%
+  \ntprintpersons{0.9}{2}{adviser}{c}%
 }
 
 
 % Committee — only print the committee for the main classes
 % \ntaddtocover[align=r, vspace=2]{1-1,2-1}{%
 %   \fontsize{10}{10}\selectfont%
-%   \ntprintpersons[0.9]{2}{committee}{\thecommitteeorder()}%
+%   \ntprintpersons{0.9}{2}{committee}{\thecommitteeorder()}%
 % }
 
 

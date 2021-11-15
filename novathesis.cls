@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-11-08 [6.6.1]
+%% Version 2021-11-14 [6.6.2]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{novathesis}[2021-11-08 novathesis template]
+\ProvidesClass{novathesis}[2021-11-14 novathesis template]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1419,16 +1419,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print persons list {advisers | committee}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\ntprintpersons}[4][0.90]{%
-  % #1 = width in % of textwidth
-  % #2 = number of columns
-  % #3 = adviser | committee
-  % #4 = {a,c} | {c,r,a,m,g}
-  \IfStrEqCase{#2}{%
-    {0}{\@ntprintpersonsaslist{#3}{#4}}%
-    {1}{\@ntprintpersonsasonecolumn{#1}{#3}{#4}}%
-    {2}{\@ntprintpersonsastwocolumns{#1}{#3}{#4}}%
-  }[\ClassError{novathesis}{Ivalid argument [#2] to \string\ntprintpersons{#1}{#2}{#3}{#4}}{}]%
+\newcommand{\ntprintpersons}[5][full]{%
+  % #1 = { name | full}
+  % #2 = width in % of textwidth
+  % #3 = number of columns
+  % #4 = adviser | committee
+  % #5 = {a,c} | {c,r,a,m,g}
+  \IfStrEqCase{#3}{%
+    {0}{\@ntprintpersonsaslist{#4}{#5}}%
+    {1}{\@ntprintpersonsasonecolumn[#1]{#2}{#4}{#5}}%
+    {2}{\@ntprintpersonsastwocolumns[#1]{#2}{#4}{#5}}%
+  }[\ClassError{novathesis}{Ivalid argument [#3] to \string\ntprintpersons{0.9}{#2}{#3}{#4}{#5}}{}]%
 }
 
 %============================================================
@@ -1465,45 +1466,47 @@
 %============================================================
 % Print persons list {advisers | committee} as one and two columns
 %============================================================
-\newcommand{\@ntprintpersonsasonecolumn}[3]{%
-  % #1 = width in % of textwidth
-  % #2 = adviser | committee
-  % #3 = {a,c} | {c,r,a,m,g}
-  \csuse{#2stringpost}():={:\\[0.5ex]}%
-  \csuse{#2stringpre}(c):={\\[-3ex]}%
-  \csuse{#2namepost}():={\\[-0.5ex]}%
-  \csuse{#2remainderpost}():={\\[2pt]}%
-  \begin{tabularx}{#1\linewidth}[t]{@{}X@{}}%
-    % \ifaadefined{#2titlestring}(\options{/novathesis/coverlang}){%
-    %   \aadefault{#2titlestringpre}(#3)%
-    %   \aadefault{#2titlestringfont}(#3)%
-    %   \aadefault{#2titlestring}()%
-    %   \aadefault{#2titlestringpost}(#3)%
+\newcommand{\@ntprintpersonsasonecolumn}[4][full]{%
+  % #1 = { name | full}
+  % #2 = width in % of textwidth
+  % #3 = adviser | committee
+  % #4 = {a,c} | {c,r,a,m,g}
+  \csuse{#3stringpost}():={:\\[0.5ex]}%
+  \csuse{#3stringpre}(c):={\\[-3ex]}%
+  \csuse{#3namepost}():={\\[-0.5ex]}%
+  \csuse{#3remainderpost}():={\\[2pt]}%
+  \begin{tabularx}{#2\linewidth}[t]{@{}X@{}}%
+    % \ifaadefined{#3titlestringpre}(\options{/novathesis/coverlang}){%
+    %   \aadefault{#3titlestringpre}(#4)%
+    %   \aadefault{#3titlestringfont}(#4)%
+    %   \aadefault{#3titlestring}()%
+    %   \aadefault{#3titlestringpost}(#4)%
     % }{}%
-    \expandnext{\forcsvlist{\@nt@ntprintpersongroup{1}{#2}}}{\expanded{#3}}%
+    \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}%
   \end{tabularx}%
 }
 
-\newcommand{\@ntprintpersonsastwocolumns}[3]{%
+\newcommand{\@ntprintpersonsastwocolumns}[4][full]{%
+  % #1 = { name | full}
   % #1 = width in % of textwidth
   % #2 = adviser | committee
   % #3 = {a,c} | {c,r,a,m,g}
-  \csuse{#2stringpost}():={:}%
-  \csuse{#2stringpre}():={\\[-1.5ex]}%
-  \csuse{#2namepost}():={\\[-0.5ex]}%
-  \csuse{#2remainderpost}():={\\[1pt]}%
+  \csuse{#3stringpost}():={:}%
+  \csuse{#3stringpre}():={\\[-1.5ex]}%
+  \csuse{#3namepost}():={\\[-0.5ex]}%
+  \csuse{#3remainderpost}():={\\[1pt]}%
   \csuse{adviserstringpre}(a):={}%
   \csuse{committeestringpre}(c):={}%
   \csuse{committeetitlestringpre}():={&}%
   \csuse{committeetitlestringpost}():={\\[0.5ex]}%
-  \begin{tabularx}{#1\linewidth}[t]{@{}r@{~~}X@{}}%
-    \ifaadefined{#2titlestring}(\option{/novathesis/coverlang}){%
-      \aadefault{#2titlestringpre}(\expanded{#3})%
-      \aadefault{#2titlestringfont}(\expanded{#3})%
-      \csuse{the#2titlestring}(\option{/novathesis/coverlang})%
-      \aadefault{#2titlestringpost}(\expanded{#3})%
+  \begin{tabularx}{#2\linewidth}[t]{@{}r@{~~}X@{}}%
+    \ifaadefined{#3titlestring}(\option{/novathesis/coverlang}){%
+      \aadefault{#3titlestringpre}(\expanded{#4})%
+      \aadefault{#3titlestringfont}(\expanded{#4})%
+      \csuse{the#3titlestring}(\option{/novathesis/coverlang})%
+      \aadefault{#3titlestringpost}(\expanded{#4})%
     }{}%
-    \expandnext{\forcsvlist{\@nt@ntprintpersongroup{2}{#2}}}{\expanded{#3}}%
+    \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{2}{#3}}}{\expanded{#4}}%
   \end{tabularx}%
 }
 
