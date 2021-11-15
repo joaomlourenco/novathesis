@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-11-14 [6.6.2]
+%% Version 2021-11-15 [6.6.2]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -521,6 +521,7 @@
                        /novathesis/coverlang=#1}
   , mainlang/.new choice = {en, pt, fr, it, de, es}
   , printfrontmatter/.new toggle = true
+  , printadviser/.new toggle = true     % fake option - adviser should always be printed
   , printcommittee/.new toggle = false
   , printcopyright/.new toggle = true
   , secondcover/.new toggle = false
@@ -1425,11 +1426,13 @@
   % #3 = number of columns
   % #4 = adviser | committee
   % #5 = {a,c} | {c,r,a,m,g}
-  \IfStrEqCase{#3}{%
-    {0}{\@ntprintpersonsaslist{#4}{#5}}%
-    {1}{\@ntprintpersonsasonecolumn[#1]{#2}{#4}{#5}}%
-    {2}{\@ntprintpersonsastwocolumns[#1]{#2}{#4}{#5}}%
-  }[\ClassError{novathesis}{Ivalid argument [#3] to \string\ntprintpersons{0.9}{#2}{#3}{#4}{#5}}{}]%
+  \iftoggle{/novathesis/print#4}{%
+    \IfStrEqCase{#3}{%
+      {0}{\@ntprintpersonsaslist{#4}{#5}}%
+      {1}{\@ntprintpersonsasonecolumn[#1]{#2}{#4}{#5}}%
+      {2}{\@ntprintpersonsastwocolumns[#1]{#2}{#4}{#5}}%
+    }[\ClassError{novathesis}{Ivalid argument [#3] to \string\ntprintpersons{0.9}{#2}{#3}{#4}{#5}}{}]%
+  }{}%
 }
 
 %============================================================
