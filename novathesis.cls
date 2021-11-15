@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-11-15 [6.6.3]
+%% Version 2021-11-15 [6.6.4]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -194,7 +194,7 @@
       {\usepackage[scaled=0.95]{helvet}}%
       {\IfFileExists{gillius2.sty}%
         {\usepackage{gillius2}}%
-        {\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}
+        {\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}%
       }%
   }%
 }
@@ -283,9 +283,14 @@
   % #3={m,f}
   % #4={person name, position, etc}
   \StrCut{#4}{,}\@nt@personname\@nt@dummy%
-  \options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
-  \options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
-  \options{/@nt/#1/#2/gender/.expanded/.cpush={#3}}%
+  \options{/@nt/#1/#2/.cd
+          , name/.expanded/.cpush={\@nt@personname}
+          , full/.expanded/.cpush={#4}
+          , gender/.expanded/.cpush={#3}
+  }%
+  % \options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
+  % \options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
+  % \options{/@nt/#1/#2/gender/.expanded/.cpush={#3}}%
   % \letoptionlist{/@nt/#1/#2/name}{\@nt@dummy}%
   % \typeout{ADDPERSONLIST=\arabic{\option{/@nt/#1/#2/name/@size}}[\@nt@dummy]}%
 }
@@ -320,7 +325,7 @@
   %         #4=filename
   % \typeout{NT addtolist [#1] [#2] [#3] [#4]}%
   \IfSubStr{#4}{/}{%
-    \def\@nt@filewithpath{#4}
+    \def\@nt@filewithpath{#4}%
   }{%
     \options{/@nt/folders=#2}%
     \def\@nt@filewithpath{\expanded{\option{/@nt/folders}/#4}}%
@@ -351,7 +356,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntselectlang}[1]{%
   % #1=lang {pt, en, fr, it}
-  \options{/@nt/currentlang=#1}
+  \options{/@nt/currentlang=#1}%
   \options{/@nt/langshorttolong=#1}%
   % \edef\@nt@tmp{\option{/@nt/langshorttolong}}%
   % \typeout{'NT SWITCHING LANG TO='\nt@tmp}%
@@ -364,7 +369,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\@nt@undefined}[1][]{\embrace{#1 \thenotdefined(\option{/novathesis/mainlang})}}
 
-\newcommand*{\initassocarray}[2][\embrace{\thenotdefined(\option{/novathesis/coverlang})}]{
+\newcommand*{\initassocarray}[2][\embrace{\thenotdefined(\option{/novathesis/coverlang})}]{%
   \optionlistdo{/@nt/langsshort}{%
     \csuse{#2}(##1):={#1}%
   }%
@@ -392,7 +397,7 @@
 \assocarray{sponsorsstring}
 \assocarray{andstring}
 \assocarray{commastring}
-\optionlistdo{/@nt/langsshort}{
+\optionlistdo{/@nt/langsshort}{%
   \commastring(#1):={, }%
 }
 
@@ -520,6 +525,7 @@
   , lang/.new style = {/novathesis/mainlang=#1,/novathesis/copyrightlang=#1,
                        /novathesis/coverlang=#1}
   , mainlang/.new choice = {en, pt, fr, it, de, es}
+  , numberallpages/.new toggle = false
   , printfrontmatter/.new toggle = true
   , printadviser/.new toggle = true     % fake option - adviser should always be printed
   , printcommittee/.new toggle = false
@@ -568,11 +574,11 @@
   \PassOptionsToClass{#1}{memoir}%
 }
 
-\newcommand*{\NTAddToHook}[2]{
+\newcommand*{\NTAddToHook}[2]{%
   \options{/@nt/hook/#1/.cpush={#2}}%
 }
 
-\newcommand*{\NTRunHook}[1]{
+\newcommand*{\NTRunHook}[1]{%
   \optionlistdo{/@nt/hook/#1}{##1}%
 }
 
@@ -626,7 +632,7 @@
               {}%
               {\InputIfFileExists{NOVAthesisFiles/cdcover.tex}{}{}}}%
     \csuse{ntprintcdcover}%
-    \ntprintcdcover%  
+    \ntprintcdcover%
     \ntprintcdinlay%
   }{}%
 }
@@ -640,7 +646,7 @@
   \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
     {}%
     {\ClassError{novathesis}{Missing “strings-#1” file!}{Add a file with the translations for this language.}}%
-}%
+}
 
 
 
@@ -726,7 +732,7 @@
       \def\\{\ }#1%
 }
       
-\newcommand*{\@nttitle}[3]{
+\newcommand*{\@nttitle}[3]{%
   % #1 = type (main, sub) title
   % #2 = lang
   % #3 = value
@@ -758,7 +764,7 @@
   \renewcommand*{\theauthorgender}{#1}%
   \renewcommand*{\theauthorname}{#2}%
   \renewcommand*{\theauthorshortname}{#3}%
-  \AtBeginDocument{\hypersetup{pdfauthor={#2}}}
+  \AtBeginDocument{\hypersetup{pdfauthor={#2}}}%
 }
 
 \newcommand*{\ntauthordegree}[1]{%
@@ -874,16 +880,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
     \prependtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/Images/}}%
-}{}%
+}{}
 
 \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
     \prependtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/}}%
-}{}%
+}{}
 
 \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/univ-defaults.ldf}{}%
-    {\PackageWarning{novathesis}{Missing file “univ-defaults.ldf” for ”\@nt@univ”}}%
+    {\PackageWarning{novathesis}{Missing file “univ-defaults.ldf” for ”\@nt@univ”}}
+
 \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/schl-defaults.ldf}{}%
-    {\PackageWarning{novathesis}{Missing file “schl-defaults.ldf” for ”\@nt@univ/\@nt@schl”}}%
+    {\PackageWarning{novathesis}{Missing file “schl-defaults.ldf” for ”\@nt@univ/\@nt@schl”}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING MEMOIR
@@ -896,17 +903,21 @@
 
 % --------------------------------------------------------
 % Customize the pagestyle
-\makepagestyle{novathesis@myvf} 
-\makeoddfoot{novathesis@myvf}{}{\thepage}{} 
-\makeevenfoot{novathesis@myvf}{}{\thepage}{} 
-\makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness} 
-\makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{} 
-\makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
+\makepagestyle{novathesis@mainmatter} 
+\makeoddfoot{novathesis@mainmatter}{}{\thepage}{} 
+\makeevenfoot{novathesis@mainmatter}{}{\thepage}{} 
+\makeheadrule{novathesis@mainmatter}{\textwidth}{\normalrulethickness} 
+\makeevenhead{novathesis@mainmatter}{\small\textsc{\leftmark}}{}{} 
+\makeoddhead{novathesis@mainmatter}{}{}{\small\textsc{\rightmark}}
 
-\ifoptionequal{/novathesis/media}{paper}{%
-  \ntsetup{linkscolor=Black}%
-}{%
-}
+\makepagestyle{novathesis@frontmatter} 
+\makeoddfoot{novathesis@frontmatter}{}{\thepage}{} 
+\makeevenfoot{novathesis@frontmatter}{}{\thepage}{} 
+% \makeheadrule{novathesis@almostempty}{\textwidth}{\normalrulethickness}
+% \makeevenhead{novathesis@almostempty}{\small\textsc{\leftmark}}{}{}
+% \makeoddhead{novathesis@almostempty}{}{}{\small\textsc{\rightmark}}
+
+\ifoptionequal{/novathesis/media}{paper}{\ntsetup{linkscolor=Black}}{}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -958,7 +969,7 @@
         % \externaldocument{#1}% from package 'xr'
     }{%
         \typeout{NT LOADING “#1” failed}%
-    }
+    }%
 }
 
 \newcommand{\@ntloadfiles@ii}[2][VAL]{%
@@ -968,7 +979,7 @@
     % \typeout{NT ntloadfiles [#2] [#1] [/@nt/file/#2/#1]}% [\expanded{\option{/@nt/folders}}]}
     \ifoptiondefined{/@nt/file/#2/#1}%
         {\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}%
-        {}
+        {}%
 }
 
 % --------------------------------------------------------
@@ -1064,7 +1075,7 @@
   }{%
     \ntprintcoversingle{#1}{1}%
     \ntprintcoversingle{#1}{2}%
-  }
+  }%
   \clearforchapter%
 }
 
@@ -1081,7 +1092,7 @@
 
 \newcommand{\@ntprintcover@i}[1]{%
   % #1 = cover ID (major-minor)
-  \bgroup
+  \bgroup%
     \def\@nt@covernumber{#1}%
     \ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1,textcolor)%
         {\color{\thethesiscover(\option{/novathesis/docdegree},#1,textcolor)}}{}%
@@ -1114,7 +1125,7 @@
       \edef\@nt@margin@right{\themargin(\option{/novathesis/docdegree},right)}%
     }{%
       \ClassError{novathesis}{Margins for cover of type “\option{/novathesis/docdegree}” undefined! Please define the margins in the School's definition file!}{}%
-    }}
+    }}%
   \defifundef{#2}{\newsavebox}%
   \@ntmakecoverbgcolor{#1}{\@cover@bgcolor@box}%
   \@ntmakecoverimage{#1}{\@cover@image@box}%
@@ -1157,7 +1168,7 @@
   % #2 = box name
   \defifundef{#2}{\newsavebox}%
   \ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1,bgcolor)%
-      {\savebox{#2}{\@ntcoverbgcolor{#1}}}{}
+      {\savebox{#2}{\@ntcoverbgcolor{#1}}}{}%
 }
 
 \newcommand*{\@ntcoverbgcolor}[1]{%
@@ -1175,42 +1186,42 @@
   % #2 = box name
   \defifundef{#2}{\newsavebox}%
   \ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1,image)%
-      {\savebox{#2}{\@ntcoverimage{#1}}}{}
+      {\savebox{#2}{\@ntcoverimage{#1}}}{}%
 }
 
 \newif\ifgraphicexist
 \newcommand*{\@ntcoverimage}[1]{%
   % #1 = cover ID (major-minor)
   \NTRunHook{cover/#1/preimage}%
-  \global\graphicexistfalse
+  \global\graphicexistfalse%
   \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/%
           \thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image).pdf}{%
-    \global\graphicexisttrue
+    \global\graphicexisttrue%
   }{}%
   \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/Images/%
           \thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image).pdf}{%
-    \global\graphicexisttrue
+    \global\graphicexisttrue%
   }{}%
-  \ifgraphicexist
+  \ifgraphicexist%
     \includegraphics[width=\paperwidth,height=\paperheight]%
-                    {\thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image)}
-  \else
-    \global\graphicexistfalse
+                    {\thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image)}%
+  \else%
+    \global\graphicexistfalse%
     \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/%
             \thethesiscover(\option{/novathesis/docdegree},#1,image).pdf}{%
-      \global\graphicexisttrue
+      \global\graphicexisttrue%
     }{}%
     \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/Images/%
             \thethesiscover(\option{/novathesis/docdegree},#1,image).pdf}{%
-      \global\graphicexisttrue
+      \global\graphicexisttrue%
     }{}%
-    \ifgraphicexist
+    \ifgraphicexist%
       \includegraphics[width=\paperwidth,height=\paperheight]%
-                      {\thethesiscover(\option{/novathesis/docdegree},#1,image)}
-    \else
-      \ClassError{novathesis}{Cover image not found: “#1.pdf”}
-    \fi
-  \fi
+                      {\thethesiscover(\option{/novathesis/docdegree},#1,image)}%
+    \else%
+      \ClassError{novathesis}{Cover image not found: “#1.pdf”}%
+    \fi%
+  \fi%
   \NTRunHook{cover/#1/postimage}%
 }
 
@@ -1220,8 +1231,8 @@
   \defifundef{#2}{\newsavebox}%
   \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{%
       \begin{lrbox}{#2}%
-        \begin{minipage}[l]
-                        [\dimexpr\paperheight-\@nt@margin@top-\@nt@margin@bottom]
+        \begin{minipage}[l]%
+                        [\dimexpr\paperheight-\@nt@margin@top-\@nt@margin@bottom]%
                         {\dimexpr\paperwidth-\@nt@margin@left-\@nt@margin@right}%
           \@ntcovertext{#1}%
         \end{minipage}%
@@ -1247,8 +1258,8 @@
     \StrCount{\option{/@ntcoveropts/status}}{\option{/novathesis/docstatus}}[\@nt@instatus]%
     \StrCount{\option{/@ntcoveropts/degree}}{\option{/novathesis/docdegree}}[\@nt@indegree]%
     \ifthenelse{%
-              \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND
-              \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}
+              \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND%
+              \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}%
       {\@ntcoverelement@ii{#1}{#3}}%
       {}%
   }%
@@ -1335,7 +1346,7 @@
               \option{/@ntcoveropts/alignmap}%
               #2%
           \endminipage%
-  \end{lrbox}
+  \end{lrbox}%
   \begin{lrbox}{#3}%
     % Add  round color if necessary
     \ifoptionblank{/@ntcoveropts/bgcolor}%
@@ -1344,30 +1355,29 @@
   \end{lrbox}%
 }
 
-\newenvironment{tinywhite}[1][white]
-  {%
-    \begin{Spacing}{1}%
-      \sffamily%
-      \fontsize{10.01}{10.01}\selectfont%
-      \hypersetup{allcolors=#1}%
-      \color{#1}%
-  }%
-  {%
-    \end{Spacing}\ignorespacesafterend%
-  }
+\newenvironment{tinywhite}[1][white]{%
+  \begin{Spacing}{1}%
+    \sffamily%
+    \fontsize{10.01}{10.01}\selectfont%
+    \hypersetup{allcolors=#1}%
+    \color{#1}%
+}{%
+  \end{Spacing}\ignorespacesafterend%
+}
 
 \newcommand{\@ntfixspacing}[2]{%
   \renewcommand*{\bibfont}{\hypersetup{allcolors=#1}\color{#1}%
-                           \sffamily\fontsize{#2}{#2}\selectfont}
+                           \sffamily\fontsize{#2}{#2}\selectfont}%
   \refsection%
     \begin{minipage}{\linewidth}%
       \bibfont%
       \theacknowledgmentsstring(\option{/novathesis/coverlang})%
-      \vspace*{-20ex}
+      \vspace*{-20ex}%
       \printbibliography[heading=none]%
     \end{minipage}%
   \endrefsection%
 }
+
 \newcommand{\ntfixspacing}{%
   \@ntfixspacing{white}{0.01}%
 }
@@ -1380,7 +1390,7 @@
         \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}%
           {\ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}}%
           {\IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}%
-            {\ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}}
+            {\ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}}%
             {\ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} nor in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” or “NOVAthesisFiles/Schools/\@nt@univ”}{}}%
           }%
       }%
@@ -1404,12 +1414,12 @@
 }
 
 \providecommand\thecopyrightstr{%
-  \thispagestyle{empty}%
+  \iftoggle{/novathesis/numberallpages}{\thispagestyle{novathesis@frontmatter}}{\thispagestyle{empty}}%
   \noindent%
   Copyright \textcopyright\ \theauthorname, %
   \theschool(\option{/novathesis/copyrightlang}), \theuniversity(\option{/novathesis/copyrightlang}).\\%
   \thecopyrighttextstring(\option{/novathesis/copyrightlang})%
-  \ntselectlang{\option{/novathesis/mainlang}}
+  \ntselectlang{\option{/novathesis/mainlang}}%
 }
 
 
@@ -1523,10 +1533,10 @@
     \@nt@reducegender{/@nt/#3/#4/gender}{\@nt@advgender}%
     \@nt@reducenumber{/@nt/#3/#4/full}{\@nt@advnumber}%
     \aadefault{#3stringpre}(#4)%
-    \bgroup
+    \bgroup%
       \aadefault{#3stringfont}(#4)%
       \aadefault{#3string}(#4,\@nt@advnumber,\@nt@advgender,\option{/novathesis/coverlang})%
-    \egroup
+    \egroup%
     \aadefault{#3stringpost}(#4)%
     \IfStrEq{#2}{2}{&}{}%
     \IfStrEq{#1}{full}{%
@@ -1576,7 +1586,7 @@
   % #1=number
   % #2=result
   \ifnum\value{\option{#1/@size}}=1%
-    \gdef#2{1}%.
+    \gdef#2{1}%
   \else%
     \gdef#2{2}%
   \fi%
@@ -1592,8 +1602,8 @@
 
 \newcommand*{\ntsetlayout}{%
   % \synctex=1% Use synctex
-  \brokenpenalty=10000
-  \settypeoutlayoutunit{mm}
+  \brokenpenalty=10000%
+  \settypeoutlayoutunit{mm}%
   \setulmarginsandblock%
     {\themargin(\option{/novathesis/media},top)}%
     {\themargin(\option{/novathesis/media},bottom)}%
@@ -1603,7 +1613,7 @@
     {\themargin(\option{/novathesis/media},right)}%
     {*}%
   \checkandfixthelayout%
-  \ifoptionequal{/novathesis/media}{paper}{\openright}{}
+  \ifoptionequal{/novathesis/media}{paper}{\openright}{}%
 }
 
 %% For debugging the page layout
@@ -1666,12 +1676,12 @@
 	\ifmaindoc{% THEN it is a main document
     \ifoptiondefined{/@nt/file/#1/VAL}{%
       \ntselectlang{\option{/novathesis/mainlang}}%
-      \phantomsection\pdfbookmark[1]{\csuse{the#1bkmstring}(\option{/novathesis/mainlang})}{bm#1}
+      \phantomsection\pdfbookmark[1]{\csuse{the#1bkmstring}(\option{/novathesis/mainlang})}{bm#1}%
       \@ntloadfiles@ii{#1}%
     }{\typeout{NT LOAD #1 undefined}}%
 	}{% ELSE
     % It is a plan or proposal type document
-	}%  
+	}%
   \NTRunHook{#1/post}%
 }
 
@@ -1689,14 +1699,14 @@
 \newcommand{\ntprintabstracts}{%
   \xdef\@nt@tmp{\theabstractorder(\option{/novathesis/mainlang})}%
   \expandnext{\forcsvlist{\@ntprintabstract}}{\@nt@tmp}%
-  \ntselectlang{\option{/novathesis/mainlang}}%  
+  \ntselectlang{\option{/novathesis/mainlang}}%
 }
 
 \newcommand{\@ntprintabstract}[1]{%
   % \typeout{NT PRINT ABSTRACT #1}%
   \ifoptiondefined{/@nt/file/abstract/#1}{%
     \setabstractlang{#1}%
-    \phantomsection\pdfbookmark[1]{\theabstractbkmstring(#1)}{bmabstract#1}
+    \phantomsection\pdfbookmark[1]{\theabstractbkmstring(#1)}{bmabstract#1}%
     \NTRunHook{abstract/pre}%
     \NTRunHook{abstract/#1/pre}%
     \printabstracttitle{#1}%
@@ -1704,14 +1714,14 @@
     \@ntloadfiles@ii[#1]{abstract}%
     \NTRunHook{abstract/#1/post}%
     \NTRunHook{abstract/post}%
-  }{}
+  }{}%
 }
 
 
 \newcommand*{\ntthesisfrontmatter}{%
   \NTRunHook{frontmatter/pre}%
   \frontmatter%
-  \pagestyle{novathesis@myvf}%
+  \pagestyle{novathesis@frontmatter}%
   \ntselectlang{\option{/novathesis/mainlang}}%
   \pagenumbering{roman}%
   % \setlength{\headheight}{15pt}%
@@ -1722,7 +1732,7 @@
   \NTRunHook{mainmatter/pre}%
   % enables protrusion locally for the remainder of the document
 	\mainmatter%
-  \pagestyle{novathesis@myvf}%
+  \pagestyle{novathesis@mainmatter}%
   \ifxeorlua{}{\microtypesetup{protrusion=true}}%
   % \pagenumbering{arabic}%
   % \setlength{\headheight}{15pt}%
@@ -1767,13 +1777,13 @@
 }
 
 \ifdef{\annexcounter}{}{\def\annexcounter{\@Roman}}
-\newcommand*{\annex}{
+\newcommand*{\annex}{%
   \xdef\Hy@chapapp{annex}%
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
   \gdef\@chapapp{\annexname}%
   \gdef\thechapter{\annexcounter\c@chapter}%
-  }
+}
 
 
 
@@ -1843,7 +1853,7 @@
 %% Dedicatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{ntdedicatory}{%
-  \thispagestyle{empty}%
+  \iftoggle{/novathesis/numberallpages}{\thispagestyle{novathesis@frontmatter}}{\thispagestyle{empty}}%
   \NTRunHook{dedicatory/pre}%
   ~\\[2cm]%
   \minipage{\linewidth}%
@@ -1862,7 +1872,7 @@
 %% Quote
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{ntquote}{%
-  \thispagestyle{empty}%
+  \iftoggle{/novathesis/numberallpages}{\thispagestyle{novathesis@frontmatter}}{\thispagestyle{empty}}%
   \NTRunHook{quote/pre}%
   ~\\[2cm]%
   \minipage{\linewidth}%
