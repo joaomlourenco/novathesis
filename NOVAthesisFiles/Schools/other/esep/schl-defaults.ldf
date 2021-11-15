@@ -173,7 +173,7 @@
   \parbox[t][4cm]{\textwidth}{%
     \centering%
     \fontsize{11}{11}\selectfont%
-    \ntprintpersons[0.8]{2}{adviser}{a,c}%
+    \ntprintpersons{0.8}{2}{adviser}{a,c}%
   }%
 }
 \ntaddtocover[vspace=2cm]{1-1}{%
