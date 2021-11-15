@@ -222,37 +222,18 @@
     \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em
     {\themajorfield(\option{/novathesis/coverlang})}}
  
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% NOVA guidelines:
-% The pages should be numbered consecutively at the bottom centre of the
-% page.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% \AtEndPreamble{%
-%   \makepagestyle{novathesis@myvf}%
-%   \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
-%   \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
-%   \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
-%   \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
-%   \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
-%   \pagestyle{novathesis@myvf}%
-% }
-% %
-%\frenchspacing
-
-% Use arabic numerals for Appendixes
-% \patchcmd{\HyOrg@appendix}{\@Alph}{\@Roman}{}{}
-% \patchcmd{\appendix}{\@Alph}{\@arabic}{}{}
 
 
-\definecolor{imsdarkgrey}{RGB}{100,100,100}
-\definecolor{imsmidgrey}{RGB}{190,190,190}
-\definecolor{imslightgrey}{RGB}{240,240,240}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{imsdarkgrey}{RGB}{100,100,100}
+\definecolor{imsmidgrey}{RGB}{190,190,190}
+\definecolor{imslightgrey}{RGB}{240,240,240}
+
+
 \AtEndPreamble{% 
   \LoadHelveticaLikeFont%
   % \usepackage{gillius2}%

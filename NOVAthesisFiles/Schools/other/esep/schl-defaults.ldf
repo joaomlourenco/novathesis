@@ -115,22 +115,6 @@
 \margin(plain,right):={1.0cm}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ESEP guidelines:
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% \AtEndPreamble{%
-%   \makepagestyle{novathesis@myvf}%
-%   \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
-%   \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
-%   \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
-%   \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
-%   \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
-%   \pagestyle{novathesis@myvf}%
-% }
-%
-%\frenchspacing
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -141,13 +125,13 @@
 \ntaddtocover[vspace=2.2cm]{1-1,2-1}{%
   \noindent%
   \fontsize{15}{15}\selectfont%
-  \textbf{\MakeTextUppercase{\theschool(\option{/novathesis/coverlang})}}
+  \textbf{\MakeTextUppercase{\theschool(\option{/novathesis/coverlang})}}%
 }
 
 % Degree name
 \ntaddtocover[vspace=0.5cm]{1-1,2-1}{%
-  \fontsize{15}{15}\selectfont
-  \thedegreename(\option{/novathesis/coverlang})
+  \fontsize{15}{15}\selectfont%
+  \thedegreename(\option{/novathesis/coverlang})%
 }
 
 % Title of Dissertation 1

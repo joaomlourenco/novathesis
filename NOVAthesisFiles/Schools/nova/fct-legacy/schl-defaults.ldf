@@ -92,27 +92,6 @@
 \margin(plain,right):={3.3cm}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% NOVA guidelines:
-% The pages should be numbered consecutively at the bottom centre of the
-% page.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% \makepagestyle{novathesis@myvf}
-% \makeoddfoot{novathesis@myvf}{}{\thepage}{}
-% \makeevenfoot{novathesis@myvf}{}{\thepage}{}
-% \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}
-% \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}
-% \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
-% \pagestyle{novathesis@myvf}
-
-% \NTAddToHook{abstract/pre}{%
-%   % \rule{\textwidth}{0.2mm} ~\\[-3.5ex]%
-% }
-% \NTAddToHook{abstract/post}{%
-%   % \null\\[2ex]\rule{\textwidth}{0.2mm}%
-% }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
