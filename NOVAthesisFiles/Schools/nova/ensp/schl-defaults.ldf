@@ -96,25 +96,6 @@
 \margin(plain,right):={1.0cm}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% NOVA guidelines:
-% The pages should be numbered consecutively at the bottom centre of the
-% page.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% \AtEndPreamble{%
-%   \makepagestyle{novathesis@myvf}%
-%   \makeoddfoot{novathesis@myvf}{}{\thepage}{}%
-%   \makeevenfoot{novathesis@myvf}{}{\thepage}{}%
-%   \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}%
-%   \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}%
-%   \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}%
-%   \pagestyle{novathesis@myvf}%
-% }
-%
-%\frenchspacing
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page

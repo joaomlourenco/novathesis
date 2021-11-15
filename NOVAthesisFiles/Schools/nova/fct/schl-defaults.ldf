@@ -119,22 +119,6 @@
 \margin(grid,right):={0pt}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% NOVA guidelines:
-% The pages should be numbered consecutively at the bottom centre of the
-% page.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% \AtEndPreamble{%
-%   \makepagestyle{novathesis@myvf}
-%   \makeoddfoot{novathesis@myvf}{}{\thepage}{}
-%   \makeevenfoot{novathesis@myvf}{}{\thepage}{}
-%   \makeheadrule{novathesis@myvf}{\textwidth}{\normalrulethickness}
-%   \makeevenhead{novathesis@myvf}{\small\textsc{\leftmark}}{}{}
-%   \makeoddhead{novathesis@myvf}{}{}{\small\textsc{\rightmark}}
-%   \pagestyle{novathesis@myvf}
-% }
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -157,13 +141,13 @@
 \ntaddtocover[color=white,vspace=1.25mm,align=l,hspace=6.1cm,height=2.0cm,inalign=t]{1-1}{%
   % \ntcoverbackground%
   \fontsize{14}{14}\selectfont%
-  \MakeTextUppercase{\thedepartment(\option{/novathesis/coverlang})}
+  \MakeTextUppercase{\thedepartment(\option{/novathesis/coverlang})}%
 }
 
 % Title of Dissertation (PhD) / The author name (MSc)
 \ntaddtocover[color={white},vspace=5.3cm,align=l,height=3.0cm,inalign=c]{1-1}{%
   \ifphddoc{%
-    \fontsize{22}{21}\selectfont
+    \fontsize{22}{21}\selectfont%
     \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
     \ifaadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
       \\[4mm]%
@@ -171,22 +155,22 @@
       \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover,caps)}%
     }{}%
   }{%
-    \fontsize{17}{17}\selectfont
-    \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]
-    \fontsize{17}{17}\selectfont
+    \fontsize{17}{17}\selectfont%
+    \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]%
+    \fontsize{17}{17}\selectfont%
     \theauthordegree%
-  }
+  }%
 }
 
 % The author name (PhD) / Title of Dissertation (MSc)
 \ntaddtocover[color={white},vspace=3.0cm,align=l,height=3cm,inalign=c]{1-1}{%
   \ifphddoc{%
-    \fontsize{17}{17}\selectfont
-    \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]
-    \fontsize{17}{17}\selectfont
+    \fontsize{17}{17}\selectfont%
+    \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]%
+    \fontsize{17}{17}\selectfont%
     \theauthordegree%
   }{%
-    \fontsize{22}{21}\selectfont
+    \fontsize{22}{21}\selectfont%
     \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
     \ifaadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
       \\[4mm]%
@@ -198,9 +182,9 @@
 
 % Date
 \ntaddtocover[color={white},vspace=1,align=l]{1-1}{%
-  \fontsize{14}{13}\selectfont
-  \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[3mm]
-  \theuniversity(\option{/novathesis/coverlang})\\
+  \fontsize{14}{13}\selectfont%
+  \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[3mm]%
+  \theuniversity(\option{/novathesis/coverlang})\\%
   \thentdatemonth, \thentdateyear%
 }
 
@@ -210,37 +194,37 @@
 
 % LOGOS
 \ntaddtocover[color=black, vspace=1.0mm,hspace=-2.6cm,align=l,height=2.0cm,inalign=t]{2-1}{%
-  \vspace*{-4mm}
-  \begin{minipage}[b]{8.7cm}
+  \vspace*{-4mm}%
+  \begin{minipage}[b]{8.7cm}%
   \includegraphics[width=2.15cm]{\expanded{\theuniversity(logo)}}%
   \hspace{3.5mm}\rule{0.5mm}{2cm}\hspace{5mm}%
   \raisebox{2.5mm}{\includegraphics[width=3.52cm]{\expanded{\theschool(logo)}}}%
   \end{minipage}%
   \raisebox{9mm}{%
-  \begin{minipage}[b]{9cm}
+  \begin{minipage}[b]{9cm}%
     \fontsize{14}{14}\selectfont%
     \MakeTextUppercase{\thedepartment(\option{/novathesis/coverlang})}%
   \end{minipage}%
   }\\[4ex]%
-  \hrule
+  \hrule%
 }
 
 % Title of Dissertation (PhD)
 \ntaddtocover[vspace=3cm,align=l]{2-1}{%
-  \fontsize{17}{17}\selectfont
+  \fontsize{17}{17}\selectfont%
   \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
   \ifaadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
     \\[4mm]%
-    \fontsize{12}{12}\selectfont
+    \fontsize{12}{12}\selectfont%
     \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover,caps)}%
   }{}%
 }
 
 % The author name
 \ntaddtocover[vspace=1,align=l]{2-1}{%
-  \fontsize{14}{14}\selectfont
-  \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]
-  \fontsize{14}{14}\selectfont
+  \fontsize{14}{14}\selectfont%
+  \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]%
+  \fontsize{14}{14}\selectfont%
   \theauthordegree%
 }
 
@@ -267,9 +251,9 @@
 
 % Date
 \ntaddtocover[vspace=1,align=l]{2-1}{%
-  \fontsize{10}{10}\selectfont
-  \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[1.25ex]
-  \theuniversity(\option{/novathesis/coverlang})\\
+  \fontsize{10}{10}\selectfont%
+  \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[1.25ex]%
+  \theuniversity(\option{/novathesis/coverlang})\\%
   \thentdatemonth, \thentdateyear%
 }
 
