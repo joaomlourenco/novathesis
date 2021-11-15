@@ -177,7 +177,7 @@
     \adviserstringfont(a):={\bfseries}%
     \adviserstringfont(c):={\bfseries}%
     \fontsize{11}{11}\selectfont%
-    \ntprintpersons{2}{adviser}{a,c}%
+    \ntprintpersons{0.9}{2}{adviser}{a,c}%
   \end{minipage}%
 }
 
@@ -204,7 +204,7 @@
     \ifmaindoc{%
       \committeetitlestringfont():={\fontsize{14}{14}\selectfont\bfseries}%
       \committeestringfont():={\bfseries}%
-      \fontsize{12}{12}\selectfont\ntprintpersons[1]{2}{committee}{\thecommitteeorder()}%
+      \fontsize{12}{12}\selectfont\ntprintpersons{1}{2}{committee}{\thecommitteeorder()}%
     }%
     {}%
   \end{minipage}%
