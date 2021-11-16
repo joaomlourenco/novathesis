@@ -283,14 +283,14 @@
   % #3={m,f}
   % #4={person name, position, etc}
   \StrCut{#4}{,}\@nt@personname\@nt@dummy%
-  \options{/@nt/#1/#2/.cd
-          , name/.expanded/.cpush={\@nt@personname}
-          , full/.expanded/.cpush={#4}
-          , gender/.expanded/.cpush={#3}
-  }%
-  % \options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
-  % \options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
-  % \options{/@nt/#1/#2/gender/.expanded/.cpush={#3}}%
+  % \options{/@nt/#1/#2/.cd
+  %         , name/.expanded/.cpush={\@nt@personname}
+  %         , full/.expanded/.cpush={#4}
+  %         , gender/.expanded/.cpush={#3}
+  % }%
+  \options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
+  \options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
+  \options{/@nt/#1/#2/gender/.expanded/.cpush={#3}}%
   % \letoptionlist{/@nt/#1/#2/name}{\@nt@dummy}%
   % \typeout{ADDPERSONLIST=\arabic{\option{/@nt/#1/#2/name/@size}}[\@nt@dummy]}%
 }
