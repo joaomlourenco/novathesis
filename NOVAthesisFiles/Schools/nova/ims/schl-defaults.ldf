@@ -7,6 +7,10 @@
 
 \typeout{NT FILE nova/ims/defaults.ldf}
 
+\iftoggle{/novathesis/spine}{%
+  \RequirePackage{environ}% http://ctan.org/pkg/environ
+}{}
+
 
 % Redefinition of "Master in" to "Master of Science in"
 \mscstring(en):={Master of Science in}
@@ -27,6 +31,13 @@
 \ntdegreename(csig,pt){Ciência e Sistemas de Informação Geográfica}
 \ntdegreename(gt,en){Geospatial Technologies}
 \ntdegreename(gt,pt){Tecnologias Geo-Espaciais}
+
+\assocarray{degreeacronym}
+\degreeacronym(mmaa):={MAA}
+\degreeacronym(mgi):={MGI}
+\degreeacronym(megi):={MEGI}
+\degreeacronym(csig):={C&SIG}
+\degreeacronym(gt):={MGT}
 
 % Scientific filed
 % \majorfield(pt):={Gestão de Informação}
@@ -57,6 +68,7 @@
 \thesiscover(msc,megi,1-1,image):={cover-nova-ims-megi}
 \thesiscover(msc,mgi,1-1,image):={cover-nova-ims-mgi}
 \thesiscover(msc,mmaa,1-1,image):={cover-nova-ims-mmaa}
+\thesiscover(msc,mmaa,spine,image):={spine-nova-ims-mmaa}
 
 \thesiscover(mscplan,1-1,image):={genericcover-nova-ims}
 \thesiscover(mscplan,N-2,image):={backcover-nova-ims}
@@ -64,6 +76,7 @@
 \thesiscover(mscplan,megi,1-1,image):={cover-nova-ims-megi}
 \thesiscover(mscplan,mgi,1-1,image):={cover-nova-ims-mgi}
 \thesiscover(mscplan,mmaa,1-1,image):={cover-nova-ims-mmaa}
+\thesiscover(mscplan,mmaa,spine,image):={spine-nova-ims-mmaa}
 
 \thesiscover(bsc,1-1,image):={genericcover-nova-ims}
 \thesiscover(bsc,N-2,image):={backcover-nova-ims}
@@ -112,19 +125,13 @@
 \spine(logo,msc,angle):={90}
 \spine(logo,msc,scale):={1.5}
 \spine(logo,msc,raise):={0.075}
-\spine(author):={\theauthorshortname}
+\spine(author):={\theauthorname}
 \spine(title):={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year):={\thentdateyear}
 % \spine(top):={116pt}
 \spine(top):={3.5cm}
 \spine(bottom):={2.1cm}
 
-% Spine info
-% \spine(logo):={logo-NOVA}
-% \spine(logotwo):={logo-NOVA-IMS}
-\spine(author):={\theauthorshortname}
-\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main)}
-\spine(year):={\thentdateyear}
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.0cm}
