@@ -582,6 +582,10 @@
   \optionlistdo{/@nt/hook/#1}{##1}%
 }
 
+\newcommand*{\NTIfHook}[1]{%
+  \ifoptiondefined{/@nt/hook/#1}%
+}
+
 
 % --------------------------------------------------------
 % BABEL STUFF
@@ -1081,9 +1085,12 @@
 
 \newcommand{\ntprintcoversingle}[2]{%
   % #1 = major cover ID
+  % #2 = minor cover ID
+  \def\@nt@newpage{}%
   \IfStrEq{#2}{2}{%
-    \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{empty}\null\newpage}}{\def\@nt@newpage{}}%
-  }{\def\@nt@newpage{}}%
+    % \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{empty}\null\newpage}}{\def\@nt@newpage{}}%
+    \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{cleared}\cleartoevenpage}}{\clearpage}%
+  }{}%
   \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1-#2}{\@nt@newpage\@ntprintcover@i{#1-#2}}%
   {\ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,bgcolor){\@nt@newpage\@ntprintcover@i{#1-#2}}%
   {\ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,image){\@nt@newpage\@ntprintcover@i{#1-#2}}%
