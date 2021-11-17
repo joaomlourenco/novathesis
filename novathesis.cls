@@ -822,7 +822,7 @@
 % Print document “regions”
 \newcommand*{\ntprint}[1]{%
   \IfStrEqCase{#1}{%
-    {frontmatter}{\iftoggle{/novathesis/printfrontmatter}{\ntprintlist{/@nt/doc#1}}{}}%
+    {frontmatter}{\iftoggle{/novathesis/secondcover}{}{\setcounter{page}{1}}\iftoggle{/novathesis/printfrontmatter}{\ntprintlist{/@nt/doc#1}}{}}%
     {mainmatter}{\ntprintlist{/@nt/doc#1}}%
   }[\csuse{ntprint#1}]%
   \ignorespaces%
@@ -1091,6 +1091,7 @@
     % \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{empty}\null\newpage}}{\def\@nt@newpage{}}%
     \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{cleared}\cleartoevenpage}}{\clearpage}%
   }{}%
+  \IfStrEq{#1,#2}{2,1}{\setcounter{page}{1}}{}%
   \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1-#2}{\@nt@newpage\@ntprintcover@i{#1-#2}}%
   {\ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,bgcolor){\@nt@newpage\@ntprintcover@i{#1-#2}}%
   {\ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,image){\@nt@newpage\@ntprintcover@i{#1-#2}}%
