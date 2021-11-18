@@ -100,4 +100,5 @@
   \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
 
 \copyrighttextstring(it):={La \theschool(\option{/novathesis/copyrightlang})\ e \theuniversity(\option{/novathesis/copyrightlang})\ hanno il diritto perpetuo e senza limiti geografici, di archiviare e pubblicare questa tesi attraverso esemplari stampati in formato cartaceo o digitale, o attraverso qualsiasi altro mezzo consciuto o che possa essere inventato, e di disseminare tramite repositori scientifici e permettere la sua copia e distribuzione per scopi non commerciali, didattici o di ricerca, a patto che sia dato credito all'autore e editore.}
-\acknowledgmentsstring(it):={Questo documento é stato creato usando (pdf/Xe/Lua)\LaTeX, sulla base del template \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion), sviluppato nel \href{http://www.di.fct.unl.pt}{Dep.\ Informática di FCT-NOVA} da \href{https://docentes.fct.unl.pt/joao-lourenco}{João M. Lourenço}.~\cite{novathesis-manual}}
+
+\acknowledgmentsstring(it):={Questo documento é stato creato usando (pdf/Xe/Lua)\LaTeX\ e il modello \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\cite{novathesis-manual}.}

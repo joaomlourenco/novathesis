@@ -529,6 +529,7 @@
   , printfrontmatter/.new toggle = true
   , printadviser/.new toggle = true     % fake option - adviser should always be printed
   , printcommittee/.new toggle = false
+  , printackblock/.new toggle = true    % print the acknowledgments block at the bottom of the copyright page
   , printcopyright/.new toggle = true
   , secondcover/.new toggle = false
   , statement/.new toggle = false
@@ -1106,7 +1107,7 @@
         {\color{\thethesiscover(\option{/novathesis/docdegree},#1,textcolor)}}{}%
     \ntselectlang{\option{/novathesis/coverlang}}%
     \options{/@ntcoveropts/bookmark=#1}%
-    \IfStrEq{\option{/@ntcoveropts/bookmark}}{}{}{%
+    \ifoptionequal{/@ntcoveropts/bookmark}{}{}{%
       \phantomsection\pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
     }%
     \@ntmakeboxwithcover{#1}{\@fullcover@box}%
@@ -1842,6 +1843,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Copyright page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ntprintacknowledgementsblock}[1][\scriptsize]{%
+  \noindent\parbox{\linewidth}{\vspace*{2.5ex}\footnoterule#1\theacknowledgmentsstring(\option{/novathesis/mainlang})}
+}
+
 \newcommand*{\ntprintcopyright}{%
   \iftoggle{/novathesis/printcopyright}{%
     \ifmaindoc{%
@@ -1850,6 +1855,7 @@
       \NTRunHook{copyright/pre}%
       \ntprintcopyrightpage%
       \NTRunHook{copyright/post}%
+      \iftoggle{/novathesis/printackblock}{\ntprintacknowledgementsblock}{}%
     }{}%
   }{}%
 }
