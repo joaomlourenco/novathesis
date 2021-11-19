@@ -242,7 +242,13 @@
 \cs_generate_variant:Nn \joao_xstrcut:nnNN { V }
 \ExplSyntaxOff
 
-% \renewcommand{\xStrCut}{\StrCut}
+% \newcommand{\myStrCut}[4]{\@myStrCut#1\@nil#3#4}
+%
+% \def\@myStrCut#1,#2\@nil#3#4{%
+%   \def#3{#1}%
+%   \def#4{#2}%
+% }
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -298,7 +304,6 @@
   % syntax: \ntaddperson{class}[key]{name}
   % See "\@ntaddperson@iv" below
   \StrCount{#2}{,}[\@nt@ncommas]%
-  \typeout{NT COMMAS \@nt@ncommas}%
   \IfStrEq{\@nt@ncommas}{1}{}{%
     \ClassError{novathesis}{Invalid role or gender in \string\ntaddperson{#2}}%
                            {Please see file “5_cover.tex” for the correct syntax.}%
