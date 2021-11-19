@@ -210,6 +210,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% xstring StrCut replacement
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifdefined\NewDocumentCommand
+\else
+  \RequirePackage{xparse}
+\fi
 \ExplSyntaxOn
 \NewDocumentCommand{\xStrCut}{smmmm}
  {
