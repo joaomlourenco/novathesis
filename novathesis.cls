@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-11-18 [6.6.6]
+%% Version 2021-11-18 [6.6.7]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -199,15 +199,56 @@
   }%
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% INTERNAL KEY-VAL STUFF
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \options{/@nt/.new family
   , langsshort/.new list={en, pt, fr, it, de, es}
   , currentlang/.new choice={en, pt, fr, it, de, es}
   , langshorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish}
   , biblatex/.new list
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% xstring StrCut replacement
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ExplSyntaxOn
+\NewDocumentCommand{\xStrCut}{smmmm}
+ {
+  % #1 = optional *
+  % #2 = tokens
+  % #3 = separator where to split at
+  % #4 = macro where to store the first part
+  % #5 = macro where to store the second part
+  \IfBooleanTF{#1}
+   {
+    \joao_xstrcut:VnNN #2 { #3 } #4 #5
+   }
+   {
+    \joao_xstrcut:nnNN { #2 } { #3 } #4 #5
+   }
+ }
+
+\seq_new:N \l_joao_strcut_parts_seq
+\tl_new:N \l_joao_strcut_head_tl
+\tl_new:N \l_joao_strcut_tail_tl
+
+\cs_new_protected:Nn \joao_xstrcut:nnNN
+ {
+  \tl_if_exist:NF #3 { \tl_new:N #3 }
+  \tl_if_exist:NF #4 { \tl_new:N #4 }
+  \seq_set_split:Nnn \l_joao_strcut_parts_seq { #2 } { #1 }
+  \seq_pop_left:NN \l_joao_strcut_parts_seq #3
+  \tl_set:Nx #4 { \seq_use:Nn \l_joao_strcut_parts_seq { #2 } }
+ }
+\cs_generate_variant:Nn \joao_xstrcut:nnNN { V }
+\ExplSyntaxOff
+
+% \newcommand{\myStrCut}[4]{\@myStrCut#1\@nil#3#4}
+%
+% \def\@myStrCut#1,#2\@nil#3#4{%
+%   \def#3{#1}%
+%   \def#4{#2}%
+% }
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -263,7 +304,6 @@
   % syntax: \ntaddperson{class}[key]{name}
   % See "\@ntaddperson@iv" below
   \StrCount{#2}{,}[\@nt@ncommas]%
-  \typeout{NT COMMAS \@nt@ncommas}%
   \IfStrEq{\@nt@ncommas}{1}{}{%
     \ClassError{novathesis}{Invalid role or gender in \string\ntaddperson{#2}}%
                            {Please see file “5_cover.tex” for the correct syntax.}%
@@ -282,7 +322,7 @@
   %                      g=guests
   % #3={m,f}
   % #4={person name, position, etc}
-  \StrCut{#4}{,}\@nt@personname\@nt@dummy%
+  \xStrCut{#4}{,}\@nt@personname\@nt@dummy%
   % \options{/@nt/#1/#2/.cd
   %         , name/.expanded/.cpush={\@nt@personname}
   %         , full/.expanded/.cpush={#4}
@@ -398,7 +438,7 @@
 \assocarray{andstring}
 \assocarray{commastring}
 \optionlistdo{/@nt/langsshort}{%
-  \commastring(#1):={, }%
+  \commastring(#1):={,\ }%
 }
 
 
@@ -1466,7 +1506,7 @@
   \StrCount{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist@last]%
   % Replace last comma with "and"
   \IfStrEq{0}{\@nt@personlist@last}{}{%
-    \StrCut[\@nt@personlist@last]{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}%
+    \xStrCut[\@nt@personlist@last]{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}%
                                      \@nt@listleft\@nt@listright%
     \def\@nt@personlist{\@nt@listleft\theandstring(\option{/novathesis/coverlang})\@nt@listright}%
   }%
@@ -1809,7 +1849,7 @@
 % \def\option@listmatch@getval#1=#2{#2}
 \newcommand*{\option@listmatch}[2]{
   % \typeout{NT LISTMATCH [#1] [#2]}%
-  \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%
+  \xStrCut{#2}{=}\option@listmatch@key\option@listmatch@value%
   % \typeout{K=\option@listmatch@key ~V=\option@listmatch@value}
   \IfStrEq{#1}{\option@listmatch@key}{\listbreak}{}%
 }%
