@@ -168,9 +168,7 @@
 \def\ntdepartment(#1)#2{\department(#1):={#2}}
 \def\ntmajorfield(#1)#2{\majorfield(#1):={#2}}
 \def\ntdegreename(#1)#2{%
-  \degreename(#1):={%
-    \ifphddoc{\thephdstring(\option{/novathesis/coverlang}) }{\ifmscdoc{\themscstring(\option{/novathesis/coverlang}) }{}}#2%
-  }%
+  \degreename(#1):={\csuse{the\option{/novathesis/docdegree}string}(\option{/novathesis/coverlang}) #2}%
   \majorfield(#1):={#2}%
 }
 \def\ntspecialization(#1)#2{\specialization(#1):={#2}}
@@ -199,7 +197,6 @@
   }%
 }
 
-
 \options{/@nt/.new family
   , langsshort/.new list={en, pt, fr, it, de, es}
   , currentlang/.new choice={en, pt, fr, it, de, es}
@@ -212,7 +209,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ifdefined\NewDocumentCommand
 \else
-  \RequirePackage{xparse}
+  \RequirePackage{xparse}  % load xparse if necessary
 \fi
 \ExplSyntaxOn
 \NewDocumentCommand{\xStrCut}{smmmm}
@@ -260,6 +257,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \options{/@nt/folders/.new choice={
   bib=Bibliography, 
+  copyright=., 
   dedicatory=Chapters, 
   acknowledgements=Chapters, 
   quote=Chapters, 
@@ -327,16 +325,9 @@
   % #3={m,f}
   % #4={person name, position, etc}
   \xStrCut{#4}{,}\@nt@personname\@nt@dummy%
-  % \options{/@nt/#1/#2/.cd
-  %         , name/.expanded/.cpush={\@nt@personname}
-  %         , full/.expanded/.cpush={#4}
-  %         , gender/.expanded/.cpush={#3}
-  % }%
   \options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
   \options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
   \options{/@nt/#1/#2/gender/.expanded/.cpush={#3}}%
-  % \letoptionlist{/@nt/#1/#2/name}{\@nt@dummy}%
-  % \typeout{ADDPERSONLIST=\arabic{\option{/@nt/#1/#2/name/@size}}[\@nt@dummy]}%
 }
 
 
@@ -348,7 +339,6 @@
   %         #1=file family (quote, abstract, chapter, etc)
   %         #2=[file lang] (OPTIONAL)
   %         #3=filename
-  % \typeout{NT ntaddfile [#1]}
   \@nt@addtolist{file}{#1}%
 }
 
@@ -368,23 +358,15 @@
   %         #3=optional file lang
   %         #4=filename
   % \typeout{NT addtolist [#1] [#2] [#3] [#4]}%
-  \IfSubStr{#4}{/}{%
-    \def\@nt@filewithpath{#4}%
-  }{%
+  \StrLeft{#4}{1}[\@nt@firstchar]%
+  \IfStrEqCase{\@nt@firstchar}{%
+    {/}{\xdef\@nt@filewithpath{#4}}%
+    {.}{\xdef\@nt@filewithpath{#4}}%
+  }[%
     \options{/@nt/folders=#2}%
-    \def\@nt@filewithpath{\expanded{\option{/@nt/folders}/#4}}%
-  }%
-  % \typeout{NT ntload ADDFILE [#1] [#2] [#3] [\@nt@filewithpath]}%
-  \expanded{\options{/@nt/#1/#2/#3/.cpush={\@nt@filewithpath}}}%
-  % \typeout{NT ADDED FILE [/@nt/#1/#2/#3=\@nt@filewithpath]}%
-}
-
-\newcommand*{\@nt@ifoptionlinstnotempty}[3][VAL]{%
-  % #1={file, person}
-  % #2=file family (quote, abstract, chapter, etc)
-  % #3=optional file lang
-  \ifoptiondefined{/@nt/#2/#3/#1}%
-  % \ifthenelse{\value{\option{/@nt/#2/#3/#1/@size}} = 0}%
+    \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}%
+  ]%
+  \options{/@nt/#1/#2/#3/.expanded/.cpush={\@nt@filewithpath}}%
 }
 
 \newcommand*{\@nt@foralllist}[3]{%
@@ -402,8 +384,6 @@
   % #1=lang {pt, en, fr, it}
   \options{/@nt/currentlang=#1}%
   \options{/@nt/langshorttolong=#1}%
-  % \edef\@nt@tmp{\option{/@nt/langshorttolong}}%
-  % \typeout{'NT SWITCHING LANG TO='\nt@tmp}%
   \expandafter\selectlanguage\expandafter{\expanded{\option{/@nt/langshorttolong}}}%
 }
 
@@ -544,6 +524,11 @@
 % --------------------------------------------------------
 % PROCESS PACKAGE OPTIONS
 % \input{NOVAthesisFiles/options.tex}
+% \assocarray{@ntschool}
+% \def\@nt@schooloption@i#1/#2\@nil{%
+%   \@ntschool(univ):={#1}%
+%   \@ntschool(schl){#2}%
+% }
 \def\@nt@schooloption@i#1/#2\@nil{\gdef\@nt@univ{#1}\gdef\@nt@schl{#2}}
 
 \options{/novathesis/.new family
@@ -553,22 +538,16 @@
     }
   , school = {nova/fct}
   , degree/.new value = {},
-  , langsused/.new list = {en,pt}
   , docstatus/.new choice = {final, provisional, draft, working},
-  , chapstyle/.new choice = {bar, bianchi, bluebox, default, elegant, 
-                             ell, hansen, ist, lyhne, madsen,
-                            pedersen, section, southall, veelo,
-                            vz34, vz43, compact}
-  , chapstyle=bar        % set "bar" chapter style as the default
-  , fontstyle/.new choice = {kpfonts, bookman, erewhon, libertine, scholax,
-                             calibri, kieranhealy, newsgott}
-  , fontstyle=kpfonts        % set kpfonts as the default
+  , chapstyle/.new value = {bar}        % use "bar" chapter style by default
+  , fontstyle/.new value = {kpfonts}    % use “kpfonts” by default
+  , langsused/.new list = {en,pt}
   , coverlang/.new choice = {en, pt, fr, it, de, es}
   , copyrightlang/.new choice = {en, pt, fr, it, de, es}
-  , copyrightmodifier/.new choice = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd}
   , lang/.new style = {/novathesis/mainlang=#1,/novathesis/copyrightlang=#1,
                        /novathesis/coverlang=#1}
   , mainlang/.new choice = {en, pt, fr, it, de, es}
+  , copyrightmodifier/.new choice = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd}
   , numberallpages/.new toggle = false
   , printfrontmatter/.new toggle = true
   , printadviser/.new toggle = true     % fake option - adviser should always be printed
@@ -579,9 +558,7 @@
   , statement/.new toggle = false
   , gnumberlist/.new toggle = true
   , tocintoc/.new toggle = false
-  , urlstyle/.new cmd = {%
-            \AfterPreamble{\urlstyle{#1}}%
-  }
+  , urlstyle/.new cmd = {\AfterPreamble{\urlstyle{#1}}}
   , debugcover/.new toggle = false
   , spine/.new toggle = false%
   , cdcover/.new toggle = false%
@@ -603,10 +580,7 @@
 % --------------------------------------------------------
 % NTSETUP
 \newcommand*{\ntsetup}[1]{%
-    % \ntgetkeyval{#1}\@nt@opt\@nt@value%
-    % \options{/novathesis/\@nt@opt = {\@nt@value}}%
     \options{/novathesis/#1}%
-    % \option{/@nt/handler/\@nt@opt}%
 }
 
 \newcommand*{\ntbibsetup}[1]{%
@@ -638,8 +612,8 @@
 \optionlistdo{/novathesis/langsused}{%
   \options{/@nt/langshorttolong=#1}%
   \ifoptionequal{/novathesis/mainlang}{#1}%
-    {\eappto{\nt@alllangs}{,main=\option{/@nt/langshorttolong}}}%
-    {\eappto{\nt@alllangs}{,\option{/@nt/langshorttolong}}}%
+    {\eappto\nt@alllangs{,main=\option{/@nt/langshorttolong}}}%
+    {\eappto\nt@alllangs{,\option{/@nt/langshorttolong}}}%
 }
 % \typeout{'NT PASSING TO BABEL = '\nt@alllangs}
 \PassOptionsToPackage{\nt@alllangs}{babel}%
@@ -662,30 +636,37 @@
 \PassOptionsToClass{\nt@remaining}{memoir}
 
 
+% \options{/@nt/path/.cd,
+%       tex/.new list={
+%          {NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl}
+%         ,{NOVAthesisFiles/Schools/\@nt@univ}
+%         ,{NOVAthesisFiles}
+%       },
+%       graphics/.new list={%
+%          {Chapters/Figures/}
+%          {NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/spine.tex}
+%         ,{NOVAthesisFiles/Schools/\@nt@univ/spine.tex}
+%       }
+% }
 
 %% If options for printing book spine and/or cd cover are active
 %% load the correspondig file by order: @school, @university, @default
-\AtEndDocument{%
-  \iftoggle{/novathesis/spine}{%
-    \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/spine.tex}%
-          {}%
-          {\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/spine.tex}%
-              {}%
-              {\InputIfFileExists{NOVAthesisFiles/spine.tex}{}{}}}%
-    \csuse{ntprintspine}%
-  }{}%
-  \iftoggle{/novathesis/cdcover}{%
-    \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/cdcover.tex}%
-          {}%
-          {\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/cdcover.tex}%
-              {}%
-              {\InputIfFileExists{NOVAthesisFiles/cdcover.tex}{}{}}}%
-    \csuse{ntprintcdcover}%
-    \ntprintcdcover%
-    \ntprintcdinlay%
-  }{}%
+\newcommand{\@nt@InputIfFileExists}[2]{%
+  \expandnext{\forcsvlist{\@nt@InputIfFileExists@i{#1}}}{#2}%
 }
 
+\newcommand{\@nt@InputIfFileExists@i}[2]{\IfFileExists{#2#1}{\input{#2#1}\listbreak}{}}
+
+\AtEndDocument{%
+  \iftoggle{/novathesis/spine}{%
+    \@nt@InputIfFileExists{spine.tex}{%
+         {NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/}%
+        ,{NOVAthesisFiles/Schools/\@nt@univ/}%
+        ,{NOVAthesisFiles/}%
+    }%
+    \csuse{ntprintspine}%
+  }{}%
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -694,7 +675,8 @@
 \optionlistdo{/novathesis/langsused}{%
   \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
     {}%
-    {\ClassError{novathesis}{Missing “strings-#1” file!}{Add a file with the translations for this language.}}%
+    {\ClassError{novathesis}{File not found: “NOVAthesisFiles/Strings/strings-#1.ldf” file!}%
+                {Add a file with the translations for this language.}}%
 }
 
 
@@ -867,8 +849,11 @@
 % Print document “regions”
 \newcommand*{\ntprint}[1]{%
   \IfStrEqCase{#1}{%
-    {frontmatter}{\iftoggle{/novathesis/secondcover}{}{\setcounter{page}{1}}\iftoggle{/novathesis/printfrontmatter}{\ntprintlist{/@nt/doc#1}}{}}%
-    {mainmatter}{\ntprintlist{/@nt/doc#1}}%
+    {frontmatter}{%
+      \iftoggle{/novathesis/secondcover}{}{\setcounter{page}{1}}%
+      \iftoggle{/novathesis/printfrontmatter}{\ntprintlist{/@nt/print/#1}}{}%
+    }%
+    {mainmatter}{\ntprintlist{/@nt/print/#1}}%
   }[\csuse{ntprint#1}]%
   \ignorespaces%
 }
@@ -880,7 +865,7 @@
 \newcommand*{\ntsetprintorder}[2]{%
 % #1 = frontmatter, mainmatter
 % #2 = list
-  \option@setlist{/@nt/doc#1}{#2}%
+  \option@setlist{/@nt/print/#1}{#2}%
 }
 
 % --------------------------------------------------------
@@ -1013,11 +998,7 @@
     % \typeout{NT TRYING TO LOAD #1}%
     \IfFileExists{#1}{%
         \input{#1}%
-        \clearforchapter%
-        \typeout{NT LOADING “#1” succeeded}%
-        % \externaldocument{#1}% from package 'xr'
     }{%
-        \typeout{NT LOADING “#1” failed}%
     }%
 }
 
@@ -1027,7 +1008,7 @@
     % \options{/@nt/folders=#2}%
     % \typeout{NT ntloadfiles [#2] [#1] [/@nt/file/#2/#1]}% [\expanded{\option{/@nt/folders}}]}
     \ifoptiondefined{/@nt/file/#2/#1}%
-        {\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}%
+        {\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}\clearforchapter}}%
         {}%
 }
 
@@ -1041,21 +1022,18 @@
 
 % --------------------------------------------------------
 % LOAD A DEFAULT COPYRIGHT PAGE DEFINITION
+\newcommand{\@nt@AddFileIfExists}[3]{%
+  \expandnext{\forcsvlist{\@nt@AddFileIfExists@i{#1}{#2}}}{#3}%
+}
+
+\newcommand{\@nt@AddFileIfExists@i}[3]{\IfFileExists{#3#2}{\ntaddfile{#1}{#3#2}\listbreak}{}}
+
 \ifmaindoc{% only print if a main document
   \iftoggle{/novathesis/printcopyright}{% if copuyright toggle is on
-    \ifoptiondefined{/@nt/file/copyright/VAL}{}{% copyright file was not defined, use default one
-      \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/copyright.ldf}%
-        {\ntaddfile{copyright}{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/copyright.ldf}}%
-        {\IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/copyright.ldf}%
-          {\ntaddfile{copyright}{NOVAthesisFiles/Schools/\@nt@univ/copyright.ldf}}%
-          {\IfFileExists{NOVAthesisFiles/copyright.ldf}%
-            {\ntaddfile{copyright}{NOVAthesisFiles/copyright.ldf}}%
-            {\ClassError{novathesis}%
-               {No “copyright.ldf” found! Not defined with  \string\ntaddfile{copyright}{filename.ldf} nor as “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/copyright.ldf” nor as “NOVAthesisFiles/Schools/\@nt@univ/copyright.ldf”}%
-               {}%
-            }%
-          }%
-        }%
+    \@nt@AddFileIfExists{copyright}{copyright.ldf}{%
+       {NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/}%
+      ,{NOVAthesisFiles/Schools/\@nt@univ/}%
+      ,{NOVAthesisFiles/}%
     }%
     \@ntloadfiles@ii{copyright}%
   }{}%
@@ -1201,20 +1179,6 @@
     \NTRunHook{cover/#1/postgrid}%
   }{}%
 }
-
-% \newcommand*{\@nt@flushcoverbox}[2]{%
-%   % #1 = cover ID (major-minor)
-%   % #2 Cover box anme
-%   \thispagestyle{empty}%
-%   \begin{tikzpicture}[remember picture, overlay]
-%     \node[inner sep=0,anchor=north]  at (current page.north)  {\usebox{#2}};
-%   \end{tikzpicture}%
-%   \iftoggle{/novathesis/debugcover}{%
-%     \NTRunHook{cover/#1/pregrid}%
-%     \debuggrid%
-%     \NTRunHook{cover/#1/postgrid}%
-%   }{}%
-% }
 
 \newcommand*{\@ntmakecoverbgcolor}[2]{%
   % #1 = cover ID (major-minor)
@@ -1814,7 +1778,7 @@
  }
 
 \newcommand*{\ntprintappendices}{%
-  \@nt@ifoptionlinstnotempty{file}{appendix}{%
+  \ifoptiondefined{/@nt/file/appendix/VAL}{%
     \renewcommand{\appendixtocname}{\appendixnamepl}%
     \appendix\addappheadtotoc%
     \@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
@@ -1822,7 +1786,7 @@
 }
 
 \newcommand*{\ntprintannexes}{%
-  \@nt@ifoptionlinstnotempty{file}{annex}{%
+  \ifoptiondefined{/@nt/file/annex/VAL}{%
     \renewcommand{\appendixtocname}{\annexnamepl}%
     \annex\addappheadtotoc%
     \@nt@foralllist{file}{annex}{\@ntloadfiles@ii{annex}}%
@@ -2008,6 +1972,10 @@
 % Text style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.ldf}{}{}%
-\InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/fontstyle}.ldf}{}{}%
+\InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.ldf}{}{%
+  \ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/chapstyle}}{}%
+}%
+\InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/fontstyle}.ldf}{}{%
+  \ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/fontstyle}}{}%
+}%
 
