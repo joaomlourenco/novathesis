@@ -124,9 +124,6 @@
 % Remainder customization
 %-----------------------------------------------------------------
 
-\ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
-%\definecolor{uminhoGREY}{RGB}{152,152,154}%{98989a}
-%\definecolor{uminhoRED}{RGB}{167,52,57}%{a73439}
 % Colorscheme as viewed in PDF Reader
 \definecolor{uminhoGREY}{RGB}{145,143,144}
 \definecolor{uminhoRED}{RGB}{158, 26, 37}
@@ -157,27 +154,6 @@
 \thesiscover(msc,N-1,bgcolor):={uminhoGREY}
 \thesiscover(msc,N-2,bgcolor):={white}
 
-% \thesiscover(phd,2,image):={capa2-debug.pdf}
-% \thesiscover(phdplan,front,image):={cover-phd-std}
-% \thesiscover(phdprop,front,image):={cover-phd-std}
-% \thesiscover(msc,front,image):={capa-debug.pdf}
-% \thesiscover(mscplan,front,image):={cover-msc-std}
-% \thesiscover(bsc,front,image):={cover-bsc-std}
-% \thesiscover(plain,front,image):={cover-plain-std}
-% \thesiscover(phd,cdfront,image):={cd-cover-phd}
-% \thesiscover(phd,cdinlay,image):={cd-inlay-phd}
-% \thesiscover(phdplan,cdfront,image):={cd-cover-phd}
-% \thesiscover(phdplan,cdinlay,image):={cd-inlay-phd}
-% \thesiscover(phdprop,cdfront,image):={cd-cover-phd}
-% \thesiscover(phdprop,cdinlay,image):={cd-inlay-phd}
-% \thesiscover(msc,cdfront,image):={cd-cover-msc}
-% \thesiscover(msc,cdinlay,image):={cd-inlay-msc}
-% \thesiscover(mscplan,cdfront,image):={cd-cover-msc}
-% \thesiscover(mscplan,cdinlay,image):={cd-inlay-msc}
-% \thesiscover(bsc,cdfront,image):={cd-cover-msc}
-% \thesiscover(bsc,cdinlay,image):={cd-inlay-msc}
-% \thesiscover(plain,cdfront,image):={cd-cover-msc}
-% \thesiscover(plain,cdinlay,image):={cd-inlay-msc}
 
 % Spine info
 \spine(logo,university):={\theuniversity(logo,RGB)}
@@ -231,21 +207,6 @@
 \margin(plain,left):={7.87cm}
 \margin(plain,right):={2.0cm}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Define your own pagestyle if you want to…
-% Leave the "\AtEndPreamble{…}"
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% \AtEndPreamble{%
-%   \makepagestyle{mypagestyle}
-%   \makeoddfoot{mypagestyle}{}{\thepage}{}
-%   \makeevenfoot{mypagestyle}{}{\thepage}{}
-%   \makeheadrule{mypagestyle}{\textwidth}{\normalrulethickness}
-%   \makeevenhead{mypagestyle}{\small\textsc{\leftmark}}{}{}
-%   \makeoddhead{mypagestyle}{}{}{\small\textsc{\rightmark}}
-%   \pagestyle{mypagestyle}
-% }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -308,13 +269,6 @@
   \theadvisersrt(\option{/novathesis/coverlang})\\%
   \textbf{\ntprintpersons{0.9}{0}{adviser}{a,c}}%
 }
-
-% Committee — only print the committee for the main classes
-% \ntaddtocover[align=r, vspace=1]{1-1}{%
-%   \ifphddoc{\color{\phdtextcolor}}{\color{\msctextcolor}}%
-%   \fontsize{10}{10}\selectfont%
-%   \ntprintpersons{0.9}{2}{committee}{\thecommitteeorder()}%
-% }
 
 % Date
 \ntaddtocover[vspace=1,align=l]{1-1,2-1}{%
