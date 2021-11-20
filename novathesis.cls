@@ -258,6 +258,7 @@
 \options{/@nt/folders/.new choice={
   bib=Bibliography, 
   copyright=., 
+  statement=., 
   dedicatory=Chapters, 
   acknowledgements=Chapters, 
   quote=Chapters, 
@@ -1474,7 +1475,7 @@
   \StrCount{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist@last]%
   % Replace last comma with "and"
   \IfStrEq{0}{\@nt@personlist@last}{}{%
-    \xStrCut[\@nt@personlist@last]{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}%
+    \StrCut[\@nt@personlist@last]{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}%
                                      \@nt@listleft\@nt@listright%
     \def\@nt@personlist{\@nt@listleft\theandstring(\option{/novathesis/coverlang})\@nt@listright}%
   }%
