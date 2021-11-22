@@ -73,8 +73,9 @@
 \RequirePackage{etoolbox}
 \RequirePackage{xifthen}
 \RequirePackage{xstring}
-\RequirePackage{NOVAthesisFiles/nt-options}
-\RequirePackage{NOVAthesisFiles/assocarray}
+\RequirePackage{NOVAthesisFiles/options2}
+% \RequirePackage{NOVAthesisFiles/assocarray}
+\RequirePackage{NOVAthesisFiles/memory2}
 \RequirePackage{NOVAthesisFiles/nt-version}
 % \RequirePackage{nt-repeat}
 % To process lists and other stuff
@@ -150,6 +151,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand*{\defifundef}[2]{\ifundef{#1}{#2{#1}}{}}
+
+% \newcommand{\xforcsvlist}{\expandafter\forcsvlist\expandafter\@firstoftwo\expandafter\@secondoftwo}
+\newcommand{\xforcsvlist}[2]{%
+    \@for\@nt@item:={#2}\do
+      {\xdef\@nt@item{\@nt@item}#1{\@nt@item}}%
+}
 
 % --------------------------------------------------------
 % If necessary create, then initialize the counter
@@ -394,113 +401,113 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\@nt@undefined}[1][]{\embrace{#1 \thenotdefined(\option{/novathesis/mainlang})}}
 
-\newcommand*{\initassocarray}[2][\embrace{\thenotdefined(\option{/novathesis/coverlang})}]{%
+\newcommand*{\initmemory}[2][\embrace{\thenotdefined(\option{/novathesis/coverlang})}]{%
   \optionlistdo{/@nt/langsshort}{%
     \csuse{#2}(##1):={#1}%
   }%
 }
 
 % For PDF bookmakrs
-\assocarray{coverbkmstring}
-\assocarray{frontpagebkmstring}
-\assocarray{copyrightbkmstring}
-\assocarray{statementbkmstring}
-\assocarray{dedicatorybkmstring}
-\assocarray{acknowledgementsbkmstring}
-\assocarray{quotebkmstring}
-\assocarray{abstractbkmstring}
-\assocarray{frontmatterbkmstring}
-\assocarray{backmatterbkmstring}
-\assocarray{spinebkmstring}
-\assocarray{backcoverbkmstring}
+\newdata{coverbkmstring}
+\newdata{frontpagebkmstring}
+\newdata{copyrightbkmstring}
+\newdata{statementbkmstring}
+\newdata{dedicatorybkmstring}
+\newdata{acknowledgementsbkmstring}
+\newdata{quotebkmstring}
+\newdata{abstractbkmstring}
+\newdata{frontmatterbkmstring}
+\newdata{backmatterbkmstring}
+\newdata{spinebkmstring}
+\newdata{backcoverbkmstring}
 
 
-\assocarray{notdefined}
-\assocarray{keywordsstring}
-\assocarray{specializationstring}
-\assocarray{departmentofstring}
-\assocarray{sponsorsstring}
-\assocarray{andstring}
-\assocarray{commastring}
+\newdata{notdefined}
+\newdata{keywordsstring}
+\newdata{specializationstring}
+\newdata{departmentofstring}
+\newdata{sponsorsstring}
+\newdata{andstring}
+\newdata{commastring}
 \optionlistdo{/@nt/langsshort}{%
   \commastring(#1):={,\ }%
 }
 
 
-\assocarray{degreestring}
-\assocarray{degreestringfont}
+\newdata{degreestring}
+\newdata{degreestringfont}
 
-\assocarray{degreename}
-\assocarray{degreenamefont}
+\newdata{degreename}
+\newdata{degreenamefont}
 
-\assocarray{mscstring}
-\assocarray{mscstringfont}
+\newdata{mscstring}
+\newdata{mscstringfont}
 
-\assocarray{phdstring}
-\assocarray{phdstringfont}
+\newdata{phdstring}
+\newdata{phdstringfont}
 
-\assocarray{docdegreestring}
-\assocarray{docdegreestringfont}
+\newdata{docdegreestring}
+\newdata{docdegreestringfont}
 
 
 
-\assocarray{adviserstring}            % e.g., "Adviser", "Co-adviser"
-\assocarray{adviserstringfont}
-\assocarray{adviserstringpre}
-\assocarray{adviserstringpost}
+\newdata{adviserstring}            % e.g., "Adviser", "Co-adviser"
+\newdata{adviserstringfont}
+\newdata{adviserstringpre}
+\newdata{adviserstringpost}
 
-\assocarray{advisernamepre}
-\assocarray{advisernamepost}
-\assocarray{advisernamefont}
+\newdata{advisernamepre}
+\newdata{advisernamepost}
+\newdata{advisernamefont}
 
-\assocarray{adviserremainderpre}
-\assocarray{adviserremainderpost}
-\assocarray{adviserremainderfont}
-\adviserremainderfont():={\itshape\scriptsize}
+\newdata{adviserremainderpre}
+\newdata{adviserremainderpost}
+\newdata{adviserremainderfont}
+\adviserremainderfont()={\itshape\scriptsize}
 
 % Committee stuff
-\assocarray{committeeorder}         %e.g., "{c,r,a,m,g}"
+\newdata{committeeorder}         %e.g., "{c,r,a,m,g}"
 
-\assocarray{committeetitlestring}      %e.g., "Examinaiton Committee"
-\assocarray{committeetitlestringpre}
-\assocarray{committeetitlestringpost}
-\assocarray{committeetitlestringfont}
+\newdata{committeetitlestring}      %e.g., "Examinaiton Committee"
+\newdata{committeetitlestringpre}
+\newdata{committeetitlestringpost}
+\newdata{committeetitlestringfont}
 
-\assocarray{committeestring}
-\assocarray{committeestringpre}
-\assocarray{committeestringpost}
-\assocarray{committeestringfont}
+\newdata{committeestring}
+\newdata{committeestringpre}
+\newdata{committeestringpost}
+\newdata{committeestringfont}
 
-\assocarray{committeenamepre}
-\assocarray{committeenamepost}
-\assocarray{committeenamefont}
+\newdata{committeenamepre}
+\newdata{committeenamepost}
+\newdata{committeenamefont}
 
-\assocarray{committeeremainderpre}
-\assocarray{committeeremainderpost}
-\assocarray{committeeremainderfont}
-\committeeremainderfont():={\itshape\scriptsize}
+\newdata{committeeremainderpre}
+\newdata{committeeremainderpost}
+\newdata{committeeremainderfont}
+\committeeremainderfont()={\itshape\scriptsize}
 
-\assocarray{dissertationstring}
-\assocarray{dissertationstringfont}
+\newdata{dissertationstring}
+\newdata{dissertationstringfont}
 
-\assocarray{copyrighttextstring}
-\assocarray{acknowledgmentsstring}
+\newdata{copyrighttextstring}
+\newdata{acknowledgmentsstring}
 
-\assocarray{majorfield}
-\assocarray{specialization}
+\newdata{majorfield}
+\newdata{specialization}
 
-\assocarray{spine}
-\assocarray{thesiscover}
-\assocarray{margin}
-\assocarray{frontpageimage}
+\newdata{spine}
+\newdata{thesiscover}
+\newdata{margin}
+\newdata{frontpageimage}
 
-\newcommand*{\@nt@newassocarray}[1]{%
-  \assocarray{#1}%
-  \initassocarray[\embrace{\MakeUppercase{#1}}]{#1}%
+\newcommand*{\@nt@newmemory}[1]{%
+  \newdata{#1}%
+  \initmemory[\embrace{\MakeUppercase{#1}}]{#1}%
 }
-\forcsvlist{\@nt@newassocarray}{university,school,department}
+\forcsvlist{\@nt@newmemory}{university,school,department}
 
-\assocarray{doctitle}
+\newdata{doctitle}
 
 
 
@@ -514,7 +521,7 @@
 
 % For each main language, list which abstracts shall be printed and in which order
 % may have more than two (just be sure you include the languages above as well)
-\assocarray{abstractorder}
+\newdata{abstractorder}
 \abstractorder(pt):={pt,en}
 \abstractorder(en):={en,pt}
 \abstractorder(fr):={fr,en}
@@ -1069,12 +1076,13 @@
   % #1 = cover number
   % #2 = true branch
   % #3 = false branch
-  \def\@coverdefined{false}%
+  \defifundef{\ifcoverdefined}{\newif}
+  \coverdefinedfalse%
   \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{\def\@coverdefined{true}}%
-  {\ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1,bgcolor){\def\@coverdefined{true}}%
-  {\ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1,image){\def\@coverdefined{true}}%
+  {\ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},#1,bgcolor){\coverdefinedtrue}%
+  {\ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},#1,image){\coverdefinedtrue}%
   {}}}%
-  \IfStrEq{\@coverdefined}{true}{\@firstoftwo}{\@secondoftwo}%
+  \ifcoverdefined\@firstoftwo\else\@secondoftwo\fi%
 }
 
 \newcommand{\ntprintbackcover}{%
@@ -1117,8 +1125,8 @@
   }{}%
   \IfStrEq{#1,#2}{2,1}{\setcounter{page}{1}}{}%
   \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1-#2}{\@nt@newpage\@ntprintcover@i{#1-#2}}%
-  {\ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,bgcolor){\@nt@newpage\@ntprintcover@i{#1-#2}}%
-  {\ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,image){\@nt@newpage\@ntprintcover@i{#1-#2}}%
+  {\ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,bgcolor){\@nt@newpage\@ntprintcover@i{#1-#2}}%
+  {\ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,image){\@nt@newpage\@ntprintcover@i{#1-#2}}%
   {}}}%
 }
 
@@ -1126,7 +1134,7 @@
   % #1 = cover ID (major-minor)
   \bgroup%
     \def\@nt@covernumber{#1}%
-    \ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1,textcolor)%
+    \ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},#1,textcolor)%
         {\color{\thethesiscover(\option{/novathesis/docdegree},#1,textcolor)}}{}%
     \ntselectlang{\option{/novathesis/coverlang}}%
     \options{/@ntcoveropts/bookmark=#1}%
@@ -1145,15 +1153,15 @@
     \gdef\@nt@margin@bottom{}%
     \gdef\@nt@margin@left{}%
     \gdef\@nt@margin@right{}%
-    \ifaadefined{margin}(\option{/novathesis/docdegree},#1,top){%
+    \ifmemorydefined{margin}(\option{/novathesis/docdegree},#1,top){%
       \edef\@nt@margin@top{\themargin(\option{/novathesis/docdegree},#1,top)}%
       \edef\@nt@margin@bottom{\themargin(\option{/novathesis/docdegree},#1,bottom)}%
       \edef\@nt@margin@left{\themargin(\option{/novathesis/docdegree},#1,left)}%
       \edef\@nt@margin@right{\themargin(\option{/novathesis/docdegree},#1,right)}%
-    }{\ifaadefined{margin}(\option{/novathesis/docdegree},top){%
-      \edef\@nt@margin@top{\themargin(\option{/novathesis/docdegree},top)}%
-      \edef\@nt@margin@bottom{\themargin(\option{/novathesis/docdegree},bottom)}%
-      \edef\@nt@margin@left{\themargin(\option{/novathesis/docdegree},left)}%
+    }{\ifmemorydefined{margin}(\option{/novathesis/docdegree},top){%
+      \def\@nt@margin@top{\themargin(\option{/novathesis/docdegree},top)}%
+      \def\@nt@margin@bottom{\themargin(\option{/novathesis/docdegree},bottom)}%
+      \def\@nt@margin@left{\themargin(\option{/novathesis/docdegree},left)}%
       \edef\@nt@margin@right{\themargin(\option{/novathesis/docdegree},right)}%
     }{%
       \ClassError{novathesis}{Margins for cover of type “\option{/novathesis/docdegree}” undefined! Please define the margins in the School's definition file!}{}%
@@ -1185,7 +1193,7 @@
   % #1 = cover ID (major-minor)
   % #2 = box name
   \defifundef{#2}{\newsavebox}%
-  \ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1,bgcolor)%
+  \ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},#1,bgcolor)%
       {\savebox{#2}{\@ntcoverbgcolor{#1}}}{}%
 }
 
@@ -1203,43 +1211,50 @@
   % #1 = cover ID (major-minor)
   % #2 = box name
   \defifundef{#2}{\newsavebox}%
-  \ifaadefined{thesiscover}(\option{/novathesis/docdegree},#1,image)%
+  \ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},#1,image)%
       {\savebox{#2}{\@ntcoverimage{#1}}}{}%
 }
 
-\newif\ifgraphicexist
+% \newif\ifgraphicexist
 \newcommand*{\@ntcoverimage}[1]{%
   % #1 = cover ID (major-minor)
   \NTRunHook{cover/#1/preimage}%
-  \global\graphicexistfalse%
-  \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/%
-          \thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image).pdf}{%
-    \global\graphicexisttrue%
-  }{}%
-  \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/Images/%
-          \thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image).pdf}{%
-    \global\graphicexisttrue%
-  }{}%
-  \ifgraphicexist%
+  % \global\graphicexistfalse%
+  \ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image){%
     \includegraphics[width=\paperwidth,height=\paperheight]%
                     {\thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image)}%
-  \else%
-    \global\graphicexistfalse%
-    \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/%
-            \thethesiscover(\option{/novathesis/docdegree},#1,image).pdf}{%
-      \global\graphicexisttrue%
-    }{}%
-    \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/Images/%
-            \thethesiscover(\option{/novathesis/docdegree},#1,image).pdf}{%
-      \global\graphicexisttrue%
-    }{}%
-    \ifgraphicexist%
+  }{\ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},#1,image){%
       \includegraphics[width=\paperwidth,height=\paperheight]%
                       {\thethesiscover(\option{/novathesis/docdegree},#1,image)}%
-    \else%
-      \ClassError{novathesis}{Cover image not found: “#1.pdf”}%
-    \fi%
-  \fi%
+  }{}}%
+  % \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/\@nt@filename}{%
+  %   \global\graphicexisttrue%
+  % }{}%
+  % \aaaaaa
+  % \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/Images/%
+  %         \thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image).pdf}{%
+  %   \global\graphicexisttrue%
+  % }{}%
+  % \ifgraphicexist%
+  %   \includegraphics[width=\paperwidth,height=\paperheight]%
+  %                   {\thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image)}%
+  % \else%
+  %   \global\graphicexistfalse%
+  %   \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/%
+  %           \thethesiscover(\option{/novathesis/docdegree},#1,image).pdf}{%
+  %     \global\graphicexisttrue%
+  %   }{}%
+  %   \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/Images/%
+  %           \thethesiscover(\option{/novathesis/docdegree},#1,image).pdf}{%
+  %     \global\graphicexisttrue%
+  %   }{}%
+  %   \ifgraphicexist%
+  %     \includegraphics[width=\paperwidth,height=\paperheight]%
+  %                     {\thethesiscover(\option{/novathesis/docdegree},#1,image)}%
+  %   \else%
+  %     \ClassError{novathesis}{Cover image not found: “#1.pdf”}%
+  %   \fi%
+  % \fi%
   \NTRunHook{cover/#1/postimage}%
 }
 
@@ -1456,9 +1471,9 @@
   % #5 = {a,c} | {c,r,a,m,g}
   \iftoggle{/novathesis/print#4}{%
     \IfStrEqCase{#3}{%
-      {0}{\@ntprintpersonsaslist{#4}{#5}}%
-      {1}{\@ntprintpersonsasonecolumn[#1]{#2}{#4}{#5}}%
-      {2}{\@ntprintpersonsastwocolumns[#1]{#2}{#4}{#5}}%
+      {0}{\@ntprintpersonsaslist{#4}{\expanded{#5}}}%
+      {1}{\@ntprintpersonsasonecolumn[#1]{#2}{#4}{\expanded{#5}}}%
+      {2}{\@ntprintpersonsastwocolumns[#1]{#2}{#4}{\expanded{#5}}}%
     }[\ClassError{novathesis}{Ivalid argument [#3] to \string\ntprintpersons{0.9}{#2}{#3}{#4}{#5}}{}]%
   }{}%
 }
@@ -1470,7 +1485,7 @@
   % #1 = adviser | committee
   % #2 = {a,c} | {c,r,a,m,g}
   \def\@nt@personlist{}%
-  \expandnext{\forcsvlist{\@nt@addtopersonlist{#1}}}{\expanded{#2}}%
+  \xforcsvlist{\@nt@addtopersonlist{#1}}{#2}%
   \StrSubstitute{\@nt@personlist}{,}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist]%
   \StrCount{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist@last]%
   % Replace last comma with "and"
@@ -1507,7 +1522,7 @@
   \csuse{#3namepost}():={\\[-0.5ex]}%
   \csuse{#3remainderpost}():={\\[2pt]}%
   \begin{tabularx}{#2\linewidth}[t]{@{}X@{}}%
-    % \ifaadefined{#3titlestringpre}(\options{/novathesis/coverlang}){%
+    % \ifmemorydefined{#3titlestringpre}(\options{/novathesis/coverlang}){%
     %   \aadefault{#3titlestringpre}(#4)%
     %   \aadefault{#3titlestringfont}(#4)%
     %   \aadefault{#3titlestring}()%
@@ -1519,9 +1534,9 @@
 
 \newcommand{\@ntprintpersonsastwocolumns}[4][full]{%
   % #1 = { name | full}
-  % #1 = width in % of textwidth
-  % #2 = adviser | committee
-  % #3 = {a,c} | {c,r,a,m,g}
+  % #2 = width in % of textwidth
+  % #3 = adviser | committee
+  % #4 = {a,c} | {c,r,a,m,g}
   \csuse{#3stringpost}():={:}%
   \csuse{#3stringpre}():={\\[-1.5ex]}%
   \csuse{#3namepost}():={\\[-0.5ex]}%
@@ -1531,13 +1546,15 @@
   \csuse{committeetitlestringpre}():={&}%
   \csuse{committeetitlestringpost}():={\\[0.5ex]}%
   \begin{tabularx}{#2\linewidth}[t]{@{}r@{~~}X@{}}%
-    \ifaadefined{#3titlestring}(\option{/novathesis/coverlang}){%
-      \aadefault{#3titlestringpre}(\expanded{#4})%
-      \aadefault{#3titlestringfont}(\expanded{#4})%
+    \ifmemorydefined{#3titlestring}(\option{/novathesis/coverlang}){%
+      \memorydefault{#3titlestringpre}()%
+      \memorydefault{#3titlestringfont}()%
       \csuse{the#3titlestring}(\option{/novathesis/coverlang})%
-      \aadefault{#3titlestringpost}(\expanded{#4})%
+      \memorydefault{#3titlestringpost}()%
     }{}%
-    \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{2}{#3}}}{\expanded{#4}}%
+    \xforcsvlist{\@nt@ntprintpersongroup[#1]{2}{#3}}{#4}%
+    % \@for\@nt@item:={#4}\do
+    %   {\xdef\@nt@item{\@nt@item}\@nt@ntprintpersongroup[#1]{2}{#3}{\@nt@item}}
   \end{tabularx}%
 }
 
@@ -1550,12 +1567,12 @@
   \ifoptiondefined{/@nt/#3/#4/full}{%
     \@nt@reducegender{/@nt/#3/#4/gender}{\@nt@advgender}%
     \@nt@reducenumber{/@nt/#3/#4/full}{\@nt@advnumber}%
-    \aadefault{#3stringpre}(#4)%
+    \memorydefault{#3stringpre}(#4)%
     \bgroup%
-      \aadefault{#3stringfont}(#4)%
-      \aadefault{#3string}(#4,\@nt@advnumber,\@nt@advgender,\option{/novathesis/coverlang})%
+      \memorydefault{#3stringfont}(#4)%
+      \memorydefault{#3string}(#4,\@nt@advnumber,\@nt@advgender,\option{/novathesis/coverlang})%
     \egroup%
-    \aadefault{#3stringpost}(#4)%
+    \memorydefault{#3stringpost}(#4)%
     \IfStrEq{#2}{2}{&}{}%
     \IfStrEq{#1}{full}{%
       \begin{minipage}[t]{\linewidth}%
@@ -1716,7 +1733,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
   \xdef\@nt@tmp{\theabstractorder(\option{/novathesis/mainlang})}%
-  \expandnext{\forcsvlist{\@ntprintabstract}}{\@nt@tmp}%
+  \xforcsvlist\@ntprintabstract{\@nt@tmp}%
   \ntselectlang{\option{/novathesis/mainlang}}%
 }
 

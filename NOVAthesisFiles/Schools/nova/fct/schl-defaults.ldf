@@ -149,7 +149,7 @@
   \ifphddoc{%
     \fontsize{22}{21}\selectfont%
     \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
-    \ifaadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
+    \ifmemorydefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
       \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover,caps)}%
@@ -172,7 +172,7 @@
   }{%
     \fontsize{22}{21}\selectfont%
     \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
-    \ifaadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
+    \ifmemorydefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
       \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover,caps)}%
@@ -213,7 +213,7 @@
 \ntaddtocover[vspace=3cm,align=l]{2-1}{%
   \fontsize{17}{17}\selectfont%
   \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
-  \ifaadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
+  \ifmemorydefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
     \\[4mm]%
     \fontsize{12}{12}\selectfont%
     \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover,caps)}%
@@ -228,12 +228,6 @@
   \theauthordegree%
 }
 
-% % The presentation text
-% \ntaddtocover[vspace=2,align=l]{2-1}{%
-%   \fontsize{12}{12}\selectfont%
-%   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}%
-% }
-%
 % The advisers
 \ntaddtocover[vspace=1,align=l]{2-1}{%
   \adviserstringfont():={\bfseries}%
@@ -256,8 +250,3 @@
   \theuniversity(\option{/novathesis/coverlang})\\%
   \thentdatemonth, \thentdateyear%
 }
-
-
-% \ntaddtocover{back}{%
-%   \ntcoverbackground[\thethesiscover(\option{/novathesis/docdegree},back)]
-% }
