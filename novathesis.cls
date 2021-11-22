@@ -1079,8 +1079,8 @@
   \defifundef{\ifcoverdefined}{\newif}
   \coverdefinedfalse%
   \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{\def\@coverdefined{true}}%
-  {\ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},#1,bgcolor){\coverdefinedtrue}%
-  {\ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},#1,image){\coverdefinedtrue}%
+  {\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,bgcolor){\coverdefinedtrue}%
+  {\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,image){\coverdefinedtrue}%
   {}}}%
   \ifcoverdefined\@firstoftwo\else\@secondoftwo\fi%
 }
@@ -1125,8 +1125,8 @@
   }{}%
   \IfStrEq{#1,#2}{2,1}{\setcounter{page}{1}}{}%
   \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1-#2}{\@nt@newpage\@ntprintcover@i{#1-#2}}%
-  {\ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,bgcolor){\@nt@newpage\@ntprintcover@i{#1-#2}}%
-  {\ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,image){\@nt@newpage\@ntprintcover@i{#1-#2}}%
+  {\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,bgcolor){\@nt@newpage\@ntprintcover@i{#1-#2}}%
+  {\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,image){\@nt@newpage\@ntprintcover@i{#1-#2}}%
   {}}}%
 }
 
@@ -1134,7 +1134,7 @@
   % #1 = cover ID (major-minor)
   \bgroup%
     \def\@nt@covernumber{#1}%
-    \ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},#1,textcolor)%
+    \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,textcolor)%
         {\color{\thethesiscover(\option{/novathesis/docdegree},#1,textcolor)}}{}%
     \ntselectlang{\option{/novathesis/coverlang}}%
     \options{/@ntcoveropts/bookmark=#1}%
@@ -1153,12 +1153,12 @@
     \gdef\@nt@margin@bottom{}%
     \gdef\@nt@margin@left{}%
     \gdef\@nt@margin@right{}%
-    \ifmemorydefined{margin}(\option{/novathesis/docdegree},#1,top){%
+    \ifdatadefined{margin}(\option{/novathesis/docdegree},#1,top){%
       \edef\@nt@margin@top{\themargin(\option{/novathesis/docdegree},#1,top)}%
       \edef\@nt@margin@bottom{\themargin(\option{/novathesis/docdegree},#1,bottom)}%
       \edef\@nt@margin@left{\themargin(\option{/novathesis/docdegree},#1,left)}%
       \edef\@nt@margin@right{\themargin(\option{/novathesis/docdegree},#1,right)}%
-    }{\ifmemorydefined{margin}(\option{/novathesis/docdegree},top){%
+    }{\ifdatadefined{margin}(\option{/novathesis/docdegree},top){%
       \def\@nt@margin@top{\themargin(\option{/novathesis/docdegree},top)}%
       \def\@nt@margin@bottom{\themargin(\option{/novathesis/docdegree},bottom)}%
       \def\@nt@margin@left{\themargin(\option{/novathesis/docdegree},left)}%
@@ -1193,7 +1193,7 @@
   % #1 = cover ID (major-minor)
   % #2 = box name
   \defifundef{#2}{\newsavebox}%
-  \ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},#1,bgcolor)%
+  \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,bgcolor)%
       {\savebox{#2}{\@ntcoverbgcolor{#1}}}{}%
 }
 
@@ -1211,7 +1211,7 @@
   % #1 = cover ID (major-minor)
   % #2 = box name
   \defifundef{#2}{\newsavebox}%
-  \ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},#1,image)%
+  \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,image)%
       {\savebox{#2}{\@ntcoverimage{#1}}}{}%
 }
 
@@ -1220,10 +1220,10 @@
   % #1 = cover ID (major-minor)
   \NTRunHook{cover/#1/preimage}%
   % \global\graphicexistfalse%
-  \ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image){%
+  \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image){%
     \includegraphics[width=\paperwidth,height=\paperheight]%
                     {\thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image)}%
-  }{\ifmemorydefined{thesiscover}(\option{/novathesis/docdegree},#1,image){%
+  }{\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,image){%
       \includegraphics[width=\paperwidth,height=\paperheight]%
                       {\thethesiscover(\option{/novathesis/docdegree},#1,image)}%
   }{}}%
@@ -1522,7 +1522,7 @@
   \csuse{#3namepost}():={\\[-0.5ex]}%
   \csuse{#3remainderpost}():={\\[2pt]}%
   \begin{tabularx}{#2\linewidth}[t]{@{}X@{}}%
-    % \ifmemorydefined{#3titlestringpre}(\options{/novathesis/coverlang}){%
+    % \ifdatadefined{#3titlestringpre}(\options{/novathesis/coverlang}){%
     %   \aadefault{#3titlestringpre}(#4)%
     %   \aadefault{#3titlestringfont}(#4)%
     %   \aadefault{#3titlestring}()%
@@ -1546,11 +1546,11 @@
   \csuse{committeetitlestringpre}():={&}%
   \csuse{committeetitlestringpost}():={\\[0.5ex]}%
   \begin{tabularx}{#2\linewidth}[t]{@{}r@{~~}X@{}}%
-    \ifmemorydefined{#3titlestring}(\option{/novathesis/coverlang}){%
-      \memorydefault{#3titlestringpre}()%
-      \memorydefault{#3titlestringfont}()%
+    \ifdatadefined{#3titlestring}(\option{/novathesis/coverlang}){%
+      \datadefault{#3titlestringpre}()%
+      \datadefault{#3titlestringfont}()%
       \csuse{the#3titlestring}(\option{/novathesis/coverlang})%
-      \memorydefault{#3titlestringpost}()%
+      \datadefault{#3titlestringpost}()%
     }{}%
     \xforcsvlist{\@nt@ntprintpersongroup[#1]{2}{#3}}{#4}%
     % \@for\@nt@item:={#4}\do
@@ -1567,12 +1567,12 @@
   \ifoptiondefined{/@nt/#3/#4/full}{%
     \@nt@reducegender{/@nt/#3/#4/gender}{\@nt@advgender}%
     \@nt@reducenumber{/@nt/#3/#4/full}{\@nt@advnumber}%
-    \memorydefault{#3stringpre}(#4)%
+    \datadefault{#3stringpre}(#4)%
     \bgroup%
-      \memorydefault{#3stringfont}(#4)%
-      \memorydefault{#3string}(#4,\@nt@advnumber,\@nt@advgender,\option{/novathesis/coverlang})%
+      \datadefault{#3stringfont}(#4)%
+      \datadefault{#3string}(#4,\@nt@advnumber,\@nt@advgender,\option{/novathesis/coverlang})%
     \egroup%
-    \memorydefault{#3stringpost}(#4)%
+    \datadefault{#3stringpost}(#4)%
     \IfStrEq{#2}{2}{&}{}%
     \IfStrEq{#1}{full}{%
       \begin{minipage}[t]{\linewidth}%

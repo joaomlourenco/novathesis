@@ -136,9 +136,9 @@
 
 \ntaddtocover[vspace=0.5cm,height=8cm,inalign=c]{1-1,2-1}{%
   % \typeout{NT thefrontpageimage=[\thefrontpageimage()]}
-  \ifaaempty{frontpageimage}()
-    {~}%
+  \ifdatadefined{frontpageimage}()
     {\includegraphics[height=8cm]{\thefrontpageimage()}}%
+    {~}%
 }
 
 % % Title of Dissertation

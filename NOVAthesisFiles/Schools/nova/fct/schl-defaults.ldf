@@ -149,7 +149,7 @@
   \ifphddoc{%
     \fontsize{22}{21}\selectfont%
     \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
-    \ifmemorydefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
+    \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
       \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover,caps)}%
@@ -172,7 +172,7 @@
   }{%
     \fontsize{22}{21}\selectfont%
     \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
-    \ifmemorydefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
+    \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
       \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover,caps)}%
@@ -213,7 +213,7 @@
 \ntaddtocover[vspace=3cm,align=l]{2-1}{%
   \fontsize{17}{17}\selectfont%
   \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
-  \ifmemorydefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
+  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
     \\[4mm]%
     \fontsize{12}{12}\selectfont%
     \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover,caps)}%
