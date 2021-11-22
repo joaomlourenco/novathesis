@@ -50,7 +50,7 @@
   {\small\url{\doclicenseURL}}
 }
 
-\assocarray{umcopyrightlabel}
+\newdata{umcopyrightlabel}
 \umcopyrightlabel(pt):={Licença concedida aos utilizadores deste trabalho}
 \umcopyrightlabel(en):={License granted to the users of this work}
 
@@ -58,7 +58,7 @@
 %% ============================================================
 %% COPYRIGHT TEXT
 %% ============================================================
-\assocarray{umcopyrighttext}
+\newdata{umcopyrighttext}
 
 \umcopyrighttext(pt):={%
   \begin{center}%

@@ -102,8 +102,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Use array helper defined in novathesis.csl
-\assocarray{adviserslabel}
-\assocarray{provisionalstring}
+\newdata{adviserslabel}
+\newdata{provisionalstring}
 
 \adviserslabel(phd,pt):={Tese orientada por:}
 \adviserslabel(phd,en):={Thesis supervised by:}

@@ -65,25 +65,25 @@
 %-----------------------------------------------------------------
 % local strings
 %-----------------------------------------------------------------
-\assocarray{ofstr}
+\newdata{ofstr}
 \ofstr(pt):={ de }
 \ofstr(en):={, }
 
-\assocarray{doctype}
+\newdata{doctype}
 \doctype(pt,phd):={Tese de Doutoramento}
 \doctype(en,phd):={Doctorate Thesis}
 \doctype(pt,msc):={Dissertação de Mestrado}
 \doctype(en,msc):={Master Thesis}
 
-\assocarray{advisersrt}
+\newdata{advisersrt}
 \advisersrt(pt):={Trabalho efetuado sob a orientação de:}
 \advisersrt(en):={Work developed under the supervision of:}
 
-\assocarray{placestr}
+\newdata{placestr}
 \placestr(pt):={Local}
 \placestr(en):={Place}
 
-\assocarray{datestr}
+\newdata{datestr}
 \datestr(pt):={Data}
 \datestr(en):={Date}
 

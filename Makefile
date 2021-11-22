@@ -19,14 +19,6 @@ $(T): $(S)
 pdf: $(S)
 	$(L) -pdf $(SILENT) $(B)
 
-.PHONY: verb verbose
-verb verbose:
-	$(L) -pdf $(B)
-
-.PHONY: 2019 2020
-2019 2020 2021:
-	PATH="/usr/local/texlive/$@/bin/x86_64-darwin/:$(PATH)" $(L) $(X) $(SILENT) $(B)
-
 .PHONY: xe lua
 xe lua: $(S)
 	$(L) -pdf$@ $(SILENT) $(B)
@@ -34,6 +26,14 @@ xe lua: $(S)
 .PHONY: v view
 v view: $(T)
 	$(V) $(T)
+
+.PHONY: verb verbose
+verb verbose:
+	$(L) -pdf $(B)
+
+.PHONY: 2019 2020
+2019 2020 2021:
+	PATH="/usr/local/texlive/$@/bin/x86_64-darwin/:$(PATH)" $(L) $(X) $(SILENT) $(B)
 
 .PHONY: clean
 clean:
@@ -50,3 +50,5 @@ rcb:
 	rm -rf `biber -cache`
 	biber -cache
 
+school:
+	Scripts/validate-schools.sh $S
