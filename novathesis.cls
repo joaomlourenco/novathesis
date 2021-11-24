@@ -74,11 +74,8 @@
 \RequirePackage{xifthen}
 \RequirePackage{xstring}
 \RequirePackage{NOVAthesisFiles/options2}
-% \RequirePackage{NOVAthesisFiles/assocarray}
 \RequirePackage{NOVAthesisFiles/memory2}
 \RequirePackage{NOVAthesisFiles/nt-version}
-% \RequirePackage{nt-repeat}
-% To process lists and other stuff
 
 %%%%% Configure Graphics
 \RequirePackage[nobeamer]{graphbox}% improved version of "graphicx"
