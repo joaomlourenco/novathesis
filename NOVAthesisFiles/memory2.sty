@@ -21,7 +21,7 @@
 %% version 2006/05/20 or later.
 %% 
 \NeedsTeXFormat{LaTeX2e}[2003/12/01]
-\ProvidesPackage{memory}
+\ProvidesPackage{NOVAthesisFiles/memory2}
   [2013/05/13 v1.2 containers for data of object and array in LaTeX]
 
 \def\ifdatadefined#1(#2)#3#4{\ifcsname @#1@#2@memory\endcsname#3\else#4\fi}
@@ -32,19 +32,18 @@
 \def\eset@memory#1#2=#3{\if#1*\expandafter\xdef\csname#2\endcsname{#3}%
                          \else\expandafter\protected@edef\csname#2\endcsname{#3}\fi}
 \def\etest@memory#1#2:{\@ifnextchar={\eset@memory{#1}{#2}}
-                                    {\csname #2\endcsname:}}
+                                    {\PackageError{memory}{Please use “=” or “:=”.}{}}}
 \def\data@memory#1#2{\@ifnextchar={\set@memory{#1}{@#2@memory}}
                                   {\@ifnextchar:{\etest@memory{#1}{@#2@memory}}
                                                 {\PackageError{memory}{Please use \string\the#2 macro instead of \string\#2.}{}}}}
-                                                % {\csname @#2@memory\endcsname}}}
-\def\array@memory#1#2(#3){\data@memory{#1}{\expanded{#2}@#3}}
-\def\newdata@memory#1#2{\@ifundefined{\expanded{#2}}
+\def\array@memory#1#2(#3){\data@memory{#1}{#2@#3}}
+\def\newdata@memory#1#2{\@ifundefined{#2}
   {\if#1*
-      \expandafter\gdef\csname\expanded{#2}\endcsname{\array@memory{#1}{#2}}
-      \expandafter\gdef\csname the\expanded{#2}\endcsname(##1){\csname #2@##1@memory\endcsname}
+      \expandafter\gdef\csname#2\endcsname{\array@memory{#1}{#2}}
+      \expandafter\gdef\csname the#2\endcsname(##1){\csname @#2@\expanded{##1}@memory\endcsname}
    \else
-       \expandafter\def\csname\expanded{#2}\endcsname{\array@memory{#1}{\expanded{#2}}}
-      \expandafter\def\csname the\expanded{#2}\endcsname(##1){\csname @\expanded{#2}@\expanded{##1}@memory\endcsname}
+      \expandafter\def\csname#2\endcsname{\array@memory{#1}{#2}}
+      \expandafter\def\csname the#2\endcsname(##1){\csname @#2@\expanded{##1}@memory\endcsname}
    \fi}
   {\PackageWarningNoLine{memory}{`#2' already defined.
                                  Macro `newdata' ignored!}}}

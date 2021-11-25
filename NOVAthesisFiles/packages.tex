@@ -56,103 +56,70 @@
 % To use a wide range of color names
 \RequirePackage[svgnames]{xcolor}%
 
-
 \RequirePackage{colortbl}
 \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
 
-
-%%%%% Configure Graphics
-% \RequirePackage[nobeamer]{graphbox}% improved version of "graphicx"
-% \graphicspath{{Chapters/Figures/}}
-% \DeclareGraphicsExtensions{.pdf, .png, .jpg, .tif}
-% \newcommand\prependtographicspath[1]{\gappto\Ginput@path{#1}}
-% \newcommand\prependtographicspath[1]{\gpreto\Ginput@path{#1}}
-
-
-
-\RequirePackage{xkeyval}
 \RequirePackage{tikz}
-% \usetikzlibrary{backgrounds}
-% \RequirePackage{tikzpagenodes}
-
-
-% Refer to labels in external docuemnts
-% \RequirePackage{xr}
-
 
 % Fixing autoref in yperref
 \RequirePackage{NOVAthesisFiles/fix-hyperref}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% HOOKS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \AtEndClass{novathesis}{%
-%   \prependtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/}}%
-%   \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/defaults.ldf}{}%
-%     {\PackageWarning{novathesis}%
-%                      {Missing file “defaults.ldf” for ”\@nt@univ/\@nt@schl”}}%
-% }
+%--------------------------------
+% “biblatex” stuff
+\ntaddfile{bib}{./NOVAthesisFiles/fix-bib.bib}%
+% \AtEndDocument{\nocite{novathesis-manual}}%
+\letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
+\RequirePackage[hyperref=auto,defernumbers=true,\@nt@biblatex@opts]{biblatex}%
+\setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
+\optionlistdo{/@nt/file/bib/VAL}{%
+  \addbibresource{#1}%
+}%
 
-% \NTAddToHook{packages}
-% {%
-  %--------------------------------
-  % “biblatex” stuff
-  \ntaddfile{bib}{./NOVAthesisFiles/fix-bib.bib}%
-  % \AtEndDocument{\nocite{novathesis-manual}}%
-  \letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
-  \RequirePackage[hyperref=auto,defernumbers=true,\@nt@biblatex@opts]{biblatex}%
-  \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
-  \optionlistdo{/@nt/file/bib/VAL}{%
-    \addbibresource{#1}%
-  }%
-  %--------------------------------
-  % “hyperref” stuff
-  \RequirePackage[%
-    , bookmarksnumbered%
-    , breaklinks%
-    , colorlinks=true%
-    , pdfdisplaydoctitle%
-    , unicode%
-  ]{hyperref}%
-  \@nt@fixhyperref%
-  \pdfstringdefDisableCommands{%
-    \def\\{}%
-    \def\texttt#1{#1}%
-  }%
-  \RequirePackage{bookmark}%
-  \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
-  \RequirePackage[all]{hypcap}%
-  %--------------------------------
-  % Define page layout - after hyperref
-  % \RequirePackage{geometry}
-  %--------------------------------
-  % To handle subfigures - ????
-  \newsubfloat{figure}
-  %--------------------------------
-  % “glossasries” stuff - after hyperref
-  \RequirePackage[%
-    % , nonumberlist
-    , translate=babel
-    , acronym           % add acronyms listing
-    , symbols           % add symbols listing
-    % , sanitizesort=false% allow \gls inside descriptions
-    % , automake
-    , nolong
-    , nosuper
-    , nolist
-    , notree
-    , nostyles
-  ]{glossaries-extra}% To create glossaries
-  \RequirePackage{NOVAthesisFiles/glossary-xltabular}%
-  \setglossarystyle{xltabular}%
-  \setabbreviationstyle[acronym]{long-short}%
-  \renewcommand{\glsnamefont}[1]{\textbf{#1}}%
-  \iftoggle{/novathesis/glsxindy}%
-      {\makeglossaries}% use xindy to sort
-      {\makenoidxglossaries}% use TeX to sort
-  
-  %--------------------------------
-  % “Process gnumberlist” option - after glossaries
-  \iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}%
-  \AtEndPreamble{\@loadglossaryfiles}%
-% }
+%--------------------------------
+% “hyperref” stuff
+\RequirePackage[%
+  , bookmarksnumbered%
+  , breaklinks%
+  , colorlinks=true%
+  , pdfdisplaydoctitle%
+  , unicode%
+]{hyperref}%
+\@nt@fixhyperref%
+\pdfstringdefDisableCommands{%
+  \def\\{}%
+  \def\texttt#1{#1}%
+}%
+\RequirePackage{bookmark}%
+\RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
+
+%--------------------------------
+% To handle subfigures - ????
+\newsubfloat{figure}
+
+%--------------------------------
+% “glossasries” stuff - after hyperref
+\RequirePackage[%
+  % , nonumberlist
+  , translate=babel
+  , acronym           % add acronyms listing
+  , symbols           % add symbols listing
+  % , sanitizesort=false% allow \gls inside descriptions
+  % , automake
+  , nolong
+  , nosuper
+  , nolist
+  , notree
+  , nostyles
+]{glossaries-extra}% To create glossaries
+\RequirePackage{NOVAthesisFiles/glossary-xltabular}%
+\setglossarystyle{xltabular}%
+\setabbreviationstyle[acronym]{long-short}%
+\renewcommand{\glsnamefont}[1]{\textbf{#1}}%
+\iftoggle{/novathesis/glsxindy}%
+    {\makeglossaries}% use xindy to sort
+    {\makenoidxglossaries}% use TeX to sort
+
+%--------------------------------
+% “Process gnumberlist” option - after glossaries
+\iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}%
+\AtEndPreamble{\@loadglossaryfiles}%
