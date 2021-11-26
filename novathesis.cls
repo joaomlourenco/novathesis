@@ -1763,7 +1763,14 @@
 \newcommand*{\ntthesismainmatter}{%
   \NTRunHook{mainmatter/pre}%
   % enables protrusion locally for the remainder of the document
-	\mainmatter%
+  \ifbool{@openright}{}{% openany=true
+    \let\oldcleardoublepage\cleardoublepage%
+    \renewcommand{\cleardoublepage}{\clearpage}%
+  }%
+  \mainmatter%
+  \ifbool{@openright}{}{% openany=true
+    \let\cleardoublepage\oldcleardoublepage%
+  }%
   \pagestyle{novathesis@mainmatter}%
   \ifxeorlua{}{\microtypesetup{protrusion=true}}%
   % \pagenumbering{arabic}%

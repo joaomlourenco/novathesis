@@ -117,20 +117,20 @@
 %% LIGHT GREY 200,203,206
 
 % Spine info
-\spine(logo,phd):={\theuniversity(logo,neg)}
-\spine(logo,phd,angle):={0}
-\spine(logo,phd,scale):={1}
-\spine(logo,phd,raise):={0}
-\spine(logo,msc):={\theschool(logo,neg)}
-\spine(logo,msc,angle):={90}
-\spine(logo,msc,scale):={1.5}
-\spine(logo,msc,raise):={0.075}
-\spine(author):={\theauthorname}
-\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main)}
-\spine(year):={\thentdateyear}
-% \spine(top):={116pt}
-\spine(top):={3.5cm}
-\spine(bottom):={2.1cm}
+\spine(logo,phd)={\theuniversity(logo,neg)}
+\spine(logo,phd,angle)={0}
+\spine(logo,phd,scale)={1}
+\spine(logo,phd,raise)={0}
+\spine(logo,msc)={\theschool(logo,neg)}
+\spine(logo,msc,angle)={90}
+\spine(logo,msc,scale)={1.5}
+\spine(logo,msc,raise)={0.075}
+\spine(author)={\theauthorname}
+\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(year)={\thentdateyear}
+% \spine(top)={116pt}
+\spine(top)={3.5cm}
+\spine(bottom)={2.1cm}
 
 
 % Set margins for "normal" pages
