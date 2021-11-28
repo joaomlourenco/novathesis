@@ -1,9 +1,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% nova/ims/defaults.ldf
-%% NOVA thesis configuration file
+%% NOVA thesis document template
 %%
-%% Customization for NOVA-IMS (strings and cover)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
+%%
+%% Authors / Contributors:
+%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT FILE nova/ims/defaults.ldf}
 
@@ -125,7 +131,7 @@
 \spine(logo,msc,angle)={90}
 \spine(logo,msc,scale)={1.5}
 \spine(logo,msc,raise)={0.075}
-\spine(author)={\theauthorname}
+\spine(author)={\thedocauthor(name)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year)={\thentdateyear}
 % \spine(top)={116pt}
@@ -188,45 +194,45 @@
 
 
 \dissertationstring(phd,en)={Thesis presented as partial requirement for obtaining the
-    \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ degree in
+    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ degree in
     {\themajorfield(\option{/novathesis/coverlang})}}
  \dissertationstring(phdprop,en)={Thesis proposal presented as partial requirement for obtaining the
-     \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ degree in
+     \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ degree in
      {\themajorfield(\option{/novathesis/coverlang})}}
  \dissertationstring(phdplan,en)={Thesis plan presented as partial requirement for obtaining the
-     \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ degree in
+     \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ degree in
      {\themajorfield(\option{/novathesis/coverlang})}}
 
 \dissertationstring(phd,pt)={Tese apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em
+    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ em
     {\themajorfield(\option{/novathesis/coverlang})}}
  \dissertationstring(phdprop,pt)={Proposta de tese apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em
+    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ em
     {\themajorfield(\option{/novathesis/coverlang})}}
  \dissertationstring(phdplan,pt)={Plano de tese apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em
+    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ em
     {\themajorfield(\option{/novathesis/coverlang})}}
 
 \dissertationstring(msc,en)={Dissertation presented as partial requirement for obtaining the
-    \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ degree in
+    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ degree in
     {\themajorfield(\option{/novathesis/coverlang})}}
  \dissertationstring(mscplan,en)={Dissertation plan presented as partial requirement for obtaining the
-     \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ degree in
+     \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ degree in
      {\themajorfield(\option{/novathesis/coverlang})}}
 
 \dissertationstring(msc,pt)={Dissertatação apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em
+    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ em
     {\themajorfield(\option{/novathesis/coverlang})}}
  \dissertationstring(mscplan,pt)={Plano de dissertação apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em
+    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ em
     {\themajorfield(\option{/novathesis/coverlang})}}
 
 \dissertationstring(bsc,en)={Report presented as partial requirement for obtaining the
-    \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ degree in
+    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ degree in
     {\themajorfield(\option{/novathesis/coverlang})}}
 
 \dissertationstring(bsc,pt)={Relatório apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em
+    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ em
     {\themajorfield(\option{/novathesis/coverlang})}}
  
 
@@ -280,7 +286,7 @@
 % AUTHOR NAME
 \ntaddtocover[align=l, vspace=0.4cm, degree=phd]{1-1}{%
   \fontsize{14}{14}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
+  \textcolor{imsdarkgrey}{\textbf{\thedocauthor(name)}}%
 }
 
 % DISSERTATION TEXT
@@ -334,7 +340,7 @@
 % Author name
 \ntaddtocover[align=l, vspace=2, degree=msc]{1-1}{%
   \fontsize{15}{15}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{\theauthorname}}%
+  \textcolor{imsdarkgrey}{\textbf{\thedocauthor(name)}}%
 }
 
 % Degree
@@ -369,7 +375,7 @@
 
 \ntaddtocover[align=c, vspace=1]{2-1}{%
   \fontsize{14}{14}\selectfont%
-  \theauthorname%
+  \thedocauthor(name)%
 }
 
 % Degree

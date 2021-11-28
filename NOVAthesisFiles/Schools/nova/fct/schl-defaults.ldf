@@ -1,11 +1,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% nova/fct/schl-defaults.ldf
-%% NOVA thesis configuration file
+%% NOVA thesis document template
 %%
-%% Customization for FCT-NOVA (strings and cover)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
+%%
+%% Authors / Contributors:
+%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT FILE nova/fct/schl-defaults.ldf}
+
+\iftoggle{/novathesis/spine}{%
+  \RequirePackage{environ}% http://ctan.org/pkg/environ
+}{}
 
 % FCT-NOVA specific customization
 \ntmemoirsetup{openany}
@@ -56,21 +66,42 @@
 \thesiscover(msc,cd1-1,image):={cd-cover-msc}
 \thesiscover(msc,cdinlay):={cd-inlay-msc}
 
+
+
 % Spine info
 \spine(logo,phd)={\theuniversity(logo,neg)}
 \spine(logo,phd,angle)={0}
 \spine(logo,phd,scale)={1}
 \spine(logo,phd,raise)={0}
+
 \spine(logo,msc)={\theschool(logo,neg)}
 \spine(logo,msc,angle)={90}
 \spine(logo,msc,scale)={1.5}
 \spine(logo,msc,raise)={0.075}
-\spine(author)={\theauthorshortname}
+
+\spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main,caps)}
-\spine(year)={\thentdateyear}
-% \spine(top)={116pt}
-\spine(top)={4.075cm}
-\spine(margin)={5mm}
+\spine(date)={\thentdateyear}
+
+\spine(top)={3.5cm}
+\spine(bottom)={2.1cm}
+
+\spine(text,color)={white}
+% \spine(box,color)={white}
+\spine(box,spacing)={0.5cm}
+\spine(box,margin)={1.0mm}
+
+\spine(box,top,title)={4.5cm}
+\spine(box,len,title)={17.5cm}
+
+\spine(box,top,author)={\thespine(box,top,title)+\thespine(box,len,title)+\thespine(box,spacing)}
+\spine(box,len,author)={4.0cm}
+
+\spine(box,top,date)={\thespine(box,top,author)+\thespine(box,len,author)+\thespine(box,spacing)}
+\spine(box,len,date)={1.5cm}
+
+
+
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
@@ -156,9 +187,9 @@
     }{}%
   }{%
     \fontsize{17}{17}\selectfont%
-    \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]%
+    \textbf{\MakeTextUppercase{\thedocauthor(name)}}\\[2mm]%
     \fontsize{17}{17}\selectfont%
-    \theauthordegree%
+    \thedocauthor(degree)%
   }%
 }
 
@@ -166,9 +197,9 @@
 \ntaddtocover[color={white},vspace=3.0cm,align=l,height=3cm,inalign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{17}{17}\selectfont%
-    \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]%
+    \textbf{\MakeTextUppercase{\thedocauthor(name)}}\\[2mm]%
     \fontsize{17}{17}\selectfont%
-    \theauthordegree%
+    \thedocauthor(degree)%
   }{%
     \fontsize{22}{21}\selectfont%
     \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
@@ -223,9 +254,9 @@
 % The author name
 \ntaddtocover[vspace=1,align=l]{2-1}{%
   \fontsize{14}{14}\selectfont%
-  \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]%
+  \textbf{\MakeTextUppercase{\thedocauthor(name)}}\\[2mm]%
   \fontsize{14}{14}\selectfont%
-  \theauthordegree%
+  \thedocauthor(degree)%
 }
 
 % The advisers

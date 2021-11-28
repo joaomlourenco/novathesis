@@ -791,20 +791,21 @@
 
 %============================================================
 % Author identification
-\newcommand*{\theauthorname}{\@nt@undefined[Author Name]}
-\newcommand*{\theauthorshortname}{\@nt@undefined[Author Short Name]}
-\newcommand*{\theauthorgender}{\@nt@undefined[Author Gender]}
-\newcommand*{\theauthordegree}{\@nt@undefined[Author Degree]}
+\newdata{docauthor}
+\docauthor(name):={\@nt@undefined[Author Name]}
+\docauthor(name,short):={\@nt@undefined[Author Short Name]}
+\docauthor(gender):={\@nt@undefined[Author Gender]}
+\docauthor(degree):={\@nt@undefined[Author Previous Degree]}
 
 \newcommand{\ntauthorname}[3][m]{% [m|f]{Long name}{Short name}
-  \renewcommand*{\theauthorgender}{#1}%
-  \renewcommand*{\theauthorname}{#2}%
-  \renewcommand*{\theauthorshortname}{#3}%
+  \docauthor(gender):={#1}%
+  \docauthor(name):={#2}%
+  \docauthor(name,short):={#3}%
   \AtBeginDocument{\hypersetup{pdfauthor={#2}}}%
 }
 
 \newcommand*{\ntauthordegree}[1]{%
-  \renewcommand*{\theauthordegree}{#1}%
+  \docauthor(degree):={#1}%
 }
 
 %============================================================
@@ -1446,7 +1447,7 @@
 \providecommand\thecopyrightstr{%
   \iftoggle{/novathesis/numberallpages}{\thispagestyle{novathesis@frontmatter}}{\thispagestyle{empty}}%
   \noindent%
-  Copyright \textcopyright\ \theauthorname, %
+  Copyright \textcopyright\ \thedocauthor(name), %
   \theschool(\option{/novathesis/copyrightlang}), \theuniversity(\option{/novathesis/copyrightlang}).\\%
   \thecopyrighttextstring(\option{/novathesis/copyrightlang})%
   \ntselectlang{\option{/novathesis/mainlang}}%

@@ -70,7 +70,7 @@ for the degree of \emph{\thedegreename(en)}}
 % Spine info
 \spine(logo)={ball}
 \spine(font)={\normalsize}
-\spine(author)={\theauthorname}
+\spine(author)={\thedocauthor(name)}
 \spine(title)={\textbf{\emph{\thedoctitle(\option{/novathesis/coverlang},main,caps)}}}
 \spine(year)={\thentdateyear}
 \spine(top)={3cm}
@@ -194,7 +194,7 @@ for the degree of \emph{\thedegreename(en)}}
 % Author name
 \ntaddtocover[vspace=0mm,height=1.7cm,align=l]{1-1}{%
     \fontsize{16}{16}\selectfont%
-    \theauthorname%
+    \thedocauthor(name)%
 }
 
 \ntaddtocover[vspace=0mm,height=7.5mm,align=l,inalign=t]{1-1}{%

@@ -47,7 +47,7 @@
 
 % Spine info
 \spine(logo)={logoNOVA}
-\spine(author)={\theauthorshortname}
+\spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year)={\thentdateyear}
 
@@ -110,13 +110,13 @@
 % Author name
 \ntaddtocover[vspace=0cm]{1-1}{%
   \fontsize{14}{14}\selectfont
-  \textbf{\theauthorname}
+  \textbf{\thedocauthor(name)}
 }
 
 % Academic qualifications
 \ntaddtocover[vspace=0.25cm]{1-1}{%
   \fontsize{11}{11}\selectfont
-  \theauthordegree
+  \thedocauthor(degree)
 }
 
 % % Title of Dissertation

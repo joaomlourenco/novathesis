@@ -51,7 +51,7 @@
 
 % Spine info
 \spine(logo)={\theuniversity(logo)}
-\spine(author)={\theauthorshortname}
+\spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main,caps)}
 \spine(year)={\thentdateyear}
 
@@ -132,7 +132,7 @@
 % Author name
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont
-  \textbf{\theauthorname}
+  \textbf{\thedocauthor(name)}
 }
 
 % Degree

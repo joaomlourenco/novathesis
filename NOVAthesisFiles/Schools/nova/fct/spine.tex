@@ -9,7 +9,6 @@
 %%
 %% Authors / Contributors:
 %%      - João Lourenço <joao.lourenco@fct.unl.pt>
-%%      - Tomás Monteiro <monteiro.tomas@gmail.com>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT FILE nova/fct/spine.tex}
@@ -25,14 +24,12 @@
 
 \input{NOVAthesisFiles/fitbox.sty}
 
-\newdata{novaims}
-\novaims(title,box,len):={8.55cm}
-\novaims(author,box,len):={5.1cm}
-\novaims(title,text,len):={\dimexpr \thenovaims(title,box,len)-1mm}
-\novaims(author,text,len):={\dimexpr \thenovaims(author,box,len)-1mm}
+\spine(text,len,title):={\thespine(box,len,title)-\thespine(box,margin)-\thespine(box,margin)}
+\spine(text,len,author):={\thespine(box,len,author)-\thespine(box,margin)-\thespine(box,margin)}
+\spine(text,len,date):={\thespine(box,len,date)-\thespine(box,margin)-\thespine(box,margin)}
 
 \newlength{\novathesis@spinewidth}%
-\setlength{\novathesis@spinewidth}{1mm * (\thelastsheet+ 19) / 20}% replace \thelastsheet by 1581 to get 80mm width folder label or any other value as long as the width is bigger than 50mm 
+\setlength{\novathesis@spinewidth}{\thespine(box,margin) * (\thelastsheet+ 19) / 20}% replace \thelastsheet by 1581 to get 80mm width folder label or any other value as long as the width is bigger than 50mm 
 
 \newlength{\novathesis@boxwidth}
 \ifdim\novathesis@spinewidth > 6mm
@@ -41,42 +38,14 @@
   \setlength{\novathesis@boxwidth}{4mm}%
 \fi
 \newlength{\novathesis@spinetextwidth}
-\setlength{\novathesis@spinetextwidth}{\novathesis@boxwidth-1mm}%
-
-
-\newlength{\spine@len@top}
-\setlength{\spine@len@top}{\thespine(top)}
-\newlength{\spine@len@bottom}
-\setlength{\spine@len@bottom}{\thespine(bottom)}
-\newlength{\spine@len@name}
-\setlength{\spine@len@name}{\widthof{\thespine(author)}}
-\newlength{\spine@len@title}
-\setlength{\spine@len@title}{\widthof{\thespine(title)}}
-\newlength{\spine@len@year}
-\setlength{\spine@len@year}{\widthof{\thespine(year)}}
-\newlength{\spine@len@all}
-\setlength{\spine@len@all}{\spine@len@year+\spine@len@name+\spine@len@title
-                           +\spine@len@top+\spine@len@bottom}
-\newlength{\spine@len@gap}
-\setlength{\spine@len@gap}{\stockheight-\spine@len@all}
-  
-\newcommand{\spinetext}{%
-  \thespine(font)%
-  \hspace*{\spine@len@bottom}%
-  \thespine(year)%
-  \hspace*{0.33\spine@len@gap}%
-  \thespine(title)%
-  \hspace*{0.34\spine@len@gap}%
-  \thespine(author)%
-  \hspace*{0.33\spine@len@gap}%
-  \hspace*{\spine@len@top}%
-}
+\setlength{\novathesis@spinetextwidth}{\novathesis@boxwidth-\thespine(box,margin)}%
 
 \newcommand{\ntprintspine}[1][]{%
   % \printlen%
+  \ifdatadefined{spine}(text,color){\color{\thespine(text,color)}}{}%
   \defifundef{\myauthorbox}{\newsavebox}%%
   \begin{lrbox}{\myauthorbox}%
-    \begin{minipage}[t][\novathesis@boxwidth][c]{\thenovaims(author,text,len)}%
+    \begin{minipage}[t][\novathesis@boxwidth][c]{\thespine(text,len,author)}%
       \begin{fitbox}{\linewidth}{\novathesis@spinetextwidth}%
         \thespine(author)%
       \end{fitbox}%
@@ -84,9 +53,19 @@
   \end{lrbox}%
   \defifundef{\mytitlebox}{\newsavebox}%%
   \begin{lrbox}{\mytitlebox}%
-      \begin{fitbox}{\thenovaims(title,text,len)}{\novathesis@spinetextwidth}%
+    \begin{minipage}[t][\novathesis@boxwidth][c]{\thespine(text,len,title)}%
+      \begin{fitbox}{\linewidth}{\novathesis@spinetextwidth}%
         \thespine(title)%
       \end{fitbox}%
+    \end{minipage}%
+  \end{lrbox}%
+  \defifundef{\mydatebox}{\newsavebox}%%
+  \begin{lrbox}{\mydatebox}%
+    \begin{minipage}[t][\novathesis@boxwidth][c]{\thespine(text,len,date)}%
+      \begin{fitbox}{\linewidth}{\novathesis@spinetextwidth}%
+        \thespine(date)%
+      \end{fitbox}%
+    \end{minipage}%
   \end{lrbox}%
   \options{/@ntcoveropts/bookmark=spine}%
   \phantomsection\currentpdfbookmark{\option{/@ntcoveropts/bookmark}}{sipne}%
@@ -108,22 +87,50 @@
   \thispagestyle{empty}%
   \begin{tikzpicture}[remember picture, overlay]
   % draw image
-    \node[inner sep=0] at (current page.center)
-            {\includegraphics[width=\novathesis@spinewidth,height=\stockheight]%
-                             {\thethesiscover(\option{/novathesis/docdegree},spine,image)}%
-            };
-    \node[inner sep=0,anchor=north,yshift=-5.3cm] at (current page.north)
-            {\color{white}\rule{\novathesis@boxwidth}{\thenovaims(author,box,len)}};
-    \node[inner sep=0,anchor=north,yshift=-5.35cm] at (current page.north)
+    % print bg color
+    \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,bgcolor){%
+      \node[inner sep=0] at (current page.center)
+              {{\color{\thethesiscover{\option{/novathesis/docdegree},spine,bgcolor}}%
+               \rule{\novathesis@spinewidth}{\paperheight}}};
+    }{}%
+    % print bg image
+    \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,image){%
+      \node[inner sep=0] at (current page.center)
+              {\includegraphics[width=\novathesis@spinewidth,height=\paperheight]%
+                               {\thethesiscover(\option{/novathesis/docdegree},spine,image)}%
+              };
+    }{}%
+    % print author
+    \ifdatadefined{spine}(box,color){%
+      \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,top,author)})]
+           at (current page.north)
+              {{\color{\thespine(box,color)}\rule{\novathesis@boxwidth}{\thespine(box,len,author)}}};
+    }{}
+    \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,top,author)+\thespine(box,margin)})]
+         at (current page.north)
             {\rotatebox{90}{\usebox{\myauthorbox}}};
-    \node[inner sep=0,anchor=north,yshift=-15.8cm] at (current page.north) 
-            {\color{white}\rule{\novathesis@boxwidth}{\thenovaims(title,box,len)}};
-    \node[inner sep=0,anchor=north,yshift=-15.85cm] at (current page.north)
+    % print title
+    \ifdatadefined{spine}(box,color){%
+      \node[inner sep=0,anchor=north,yshift=-\expanded{\thespine(box,top,title)}]
+           at (current page.north)
+              {{\color{\thespine(box,color)}\rule{\novathesis@boxwidth}{\thespine(box,len,title)}}};
+    }{}
+    \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,top,title)+\thespine(box,margin)})]
+         at (current page.north)
             {\rotatebox{90}{\usebox{\mytitlebox}}};
-    \node[inner sep=0,anchor=north,yshift=-1.75cm] at (current page.north)
-            {\rotatebox{90}{\color{white}\parbox{1.7cm}{\centering\Large\thedegreeacronym(\option{/novathesis/degree})}}};
-    \node[inner sep=0,anchor=south,yshift=1.75cm] at (current page.south)
-            {\rotatebox{90}{\parbox{1.7cm}{\centering\small\thentdateyear}}};
+    % print degree
+    % \node[inner sep=0,anchor=north,yshift=-1.75cm]
+         % at (current page.north)
+    %         {\rotatebox{90}{{\color{white}\parbox{1.7cm}{\centering\Large\thedegreeacronym(\option{/novathesis/degree})}}}};
+    % print date
+    \ifdatadefined{spine}(box,color){%
+      \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,top,date)})]
+           at (current page.north)
+              {{\color{\thespine(box,color)}\rule{\novathesis@boxwidth}{\thespine(box,len,date)}}};
+    }{}
+    \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,top,date)+\thespine(box,margin)})]
+         at (current page.north)
+            {\rotatebox{90}{\usebox{\mydatebox}}};
   \end{tikzpicture}
   \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
   \NTRunHook{spine/post}%
