@@ -34,6 +34,7 @@
 \committeeorder():={c,r,a,m}%  
 
 % Cover background images
+\thesiscover(phd,1-1,bgcolor):={black}
 \thesiscover(phd,1-1,image):={phd_front_cover}
 \thesiscover(phd,N-2,image):={phd_back_cover}
 \thesiscover(phd,spine,image):={phd_spine}
