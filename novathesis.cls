@@ -1205,10 +1205,17 @@
 \newcommand*{\@ntcoverbgcolor}[1]{%
   % #1 = cover ID (major-minor)
   \NTRunHook{cover/#1/prebgcolor}%
-  \begingroup%
-    \color{\thethesiscover(\option{/novathesis/docdegree},#1,bgcolor)}%
-    \rule{\paperwidth}{\paperheight}%
-  \endgroup%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[inner sep=0, anchor=center,
+          rectangle, minimum width=\paperwidth, minimum height=\paperheight,
+          fill=\expanded{\thethesiscover(\option{/novathesis/docdegree},#1,bgcolor)}]
+         at (current page.center)
+            {};
+  % \begingroup%
+  %   \color{\thethesiscover(\option{/novathesis/docdegree},#1,bgcolor)}%
+  %   \rule{\paperwidth}{\paperheight}%
+  % \endgroup%
+  \end{tikzpicture}
   \NTRunHook{cover/#1/postgcolor}%
 }
 
@@ -1225,13 +1232,19 @@
   % #1 = cover ID (major-minor)
   \NTRunHook{cover/#1/preimage}%
   % \global\graphicexistfalse%
-  \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,image){%
-    \includegraphics[width=\paperwidth,height=\paperheight]%
-                    {\thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,image)}%
-  }{\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,image){%
-      \includegraphics[width=\paperwidth,height=\paperheight]%
-                      {\thethesiscover(\option{/novathesis/docdegree},#1,image)}%
-  }{}}%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[inner sep=0, anchor=center]
+         at (current page.center)
+            {%
+                \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,image){%
+                  \includegraphics[width=\paperwidth,height=\paperheight]%
+                                  {\thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,image)}%
+                }{\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,image){%
+                    \includegraphics[width=\paperwidth,height=\paperheight]%
+                                    {\thethesiscover(\option{/novathesis/docdegree},#1,image)}%
+                }{}}%
+            };
+  \end{tikzpicture}
   % \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/\@nt@filename}{%
   %   \global\graphicexisttrue%
   % }{}%
