@@ -1,4 +1,3 @@
-%!TEX root = ../template.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% spine.tex
 %% NOVA thesis document template
@@ -10,307 +9,292 @@
 %%
 %% Authors / Contributors:
 %%      - João Lourenço <joao.lourenco@fct.unl.pt>
-%%      - Tomás Monteiro <monteiro.tomas@gmail.com>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE spine.tex}
-
+\typeout{NT FILE spine.tex}%
 
 % Draw the book spine
 % usable range: 145 to 425 pages, maximum characters for the title 140 and 22 for the author name
 % usable range: 75 to 145 pages, maximum characters for the title 70 and 22 for the author name
 
-
 \makeatletter
 
-\newlength{\@nt@spinewidth}%
-\setlength{\@nt@spinewidth}{0.5mm + 1mm * (\thelastsheet) / 20}% replace \thelastsheet by 1600 to get 80mm width folder label or any other value as long as the width is bigger than 50mm 
+\input{NOVAthesisFiles/fitbox2.sty}
 
-% Make a box with the logo
-\newbox{\@nt@spine@box@logo}%
-\newlength{\@nt@spine@box@logo@width}%
-\newlength{\@nt@spine@box@logo@height}%
-\newcommand{\@nt@spine@box@logoangle}{-90}%
-\newcommand{\make@spine@box@logo}[2]{%
-  \savebox{\@nt@spine@box@logo}{%
-	\includegraphics%
-	  [origin=c,angle=\@nt@spine@box@logoangle,height=0.95\@nt@spinewidth,#1]%
-	  {#2}%
-  }%
-\ifdim\@nt@spinewidth > 22.2mm%
-	  \savebox{\@nt@spine@box@logo}{%
-	   \includegraphics%
-	    [origin=c,angle=\@nt@spine@box@logoangle,height=22.2mm,#1]%
-    {#2}
-  }%
-  \fi%
-  \settowidth{\@nt@spine@box@logo@width}{\usebox{\@nt@spine@box@logo}}%
-  \settototalheight{\@nt@spine@box@logo@height}{\usebox{\@nt@spine@box@logo}}%
+\RequirePackage{anysize}
+
+\def\def@ult#1(#2):=#3{%
+  \ifdatadefined{#1}(#2){}{\csname#1\endcsname(#2)={#3}}%
 }
+\def@ult{spine}(box,margin):={0.0cm}
+\def@ult{spine}(author):={\thedocauthor(name,short)}
+\def@ult{spine}(title):={\thedoctitle(\option{/novathesis/coverlang},main,caps)}
+\def@ult{spine}(date):={\thentdateyear}
 
-% Make a box with the logo2
-\newbox{\@nt@spine@box@logotwo}%
-\newlength{\@nt@spine@box@logotwo@width}%
-\newlength{\@nt@spine@box@logotwo@height}%
-\newcommand{\@nt@spine@box@logotwoangle}{-90}%
-\newcommand{\make@spine@box@logotwo}[2]{%
-  \savebox{\@nt@spine@box@logotwo}{%
-	\includegraphics%
-	  [origin=c,angle=\@nt@spine@box@logotwoangle,height=0.95\@nt@spinewidth,#1]%
-	  {#2}%
+\def@ult{spine}(text,angle):={90}
+% \def@ult{spine}(text,color):={white}
+% \def@ult{spine}(box,color):={blue}
+\def@ult{spine}(box,spacing):={0.5cm}
+\def@ult{spine}(box,margin):={0.5mm}
+
+\def@ult{spine}(box,logo,top):={0.0cm}
+\def@ult{spine}(box,logo,len):={4.1cm}
+\def@ult{spine}(box,logo,align):={c}
+
+\def@ult{spine}(box,author,top):={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
+\def@ult{spine}(box,author,len):={4.0cm}
+
+\def@ult{spine}(box,title,top):={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
+\def@ult{spine}(box,title,len):={16.7cm}
+% \spine(box,title,align)={l}
+% \spine(box,author,align)={l}
+
+\def@ult{spine}(box,date,top):={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
+\def@ult{spine}(box,date,len):={2.0cm}
+% \spine(box,lodatego,align)={l}
+
+\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,bgcolor){}{%
+  \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,image){}{%
+    \def@ult{thesiscover}(\option{/novathesis/docdegree},spine,framecolor):={black!20}%
   }%
-\ifdim\@nt@spinewidth > 22.2mm%
-	  \savebox{\@nt@spine@box@logotwo}{%
-   \includegraphics%
-    [origin=c,angle=\@nt@spine@box@logotwoangle,height=22.2mm,#1]%
-    {#2}
-  }%
-  \fi%
-  \settowidth{\@nt@spine@box@logotwo@width}{\usebox{\@nt@spine@box@logotwo}}%
-  \settototalheight{\@nt@spine@box@logotwo@height}{\usebox{\@nt@spine@box@logotwo}}%
-}
-
-% Make a box with the date
-\newbox{\@nt@spine@box@date}%
-\newlength{\@nt@spine@box@date@width}%
-\newlength{\@nt@spine@box@date@height}%
-\newcommand{\make@spine@box@date}{%
-% Print year into box
-  \savebox{\@nt@spine@box@date}{\thespine(year)}%
-% Get date box width and height
-  \settowidth{\@nt@spine@box@date@width}{\usebox{\@nt@spine@box@date}}%
-  \settototalheight{\@nt@spine@box@date@height}{\usebox{\@nt@spine@box@date}}%
-% Check if can print the date perpndicular to the book spine
-  \ifdim\@nt@spine@box@date@width < 0.9\@nt@spinewidth%
-  \savebox{\@nt@spine@box@date}{%
-	    \rotatebox[origin=c]{-90}{\usebox{\@nt@spine@box@date}}%
-  }%
-  \fi%
-% Get date box width and height again 
-  \settowidth{\@nt@spine@box@date@width}{\usebox{\@nt@spine@box@date}}%
-  \settototalheight{\@nt@spine@box@date@height}{\usebox{\@nt@spine@box@date}}%
-% If larger than 95% spine width, resize to that dimension
-  \ifdim\@nt@spine@box@date@height > 0.9\@nt@spinewidth%
-  \savebox{\@nt@spine@box@date}{%
-	    \resizebox{!}{0.9\@nt@spinewidth}{\usebox{\@nt@spine@box@date}}%
-  }%
-  \fi%
-% Get date box width and height yet again 
-  \settowidth{\@nt@spine@box@date@width}{\usebox{\@nt@spine@box@date}}%
-  \settototalheight{\@nt@spine@box@date@height}{\usebox{\@nt@spine@box@date}}%
-}
-
-
-
-
-% Make a box with the title
-\newbox{\@nt@spine@box@title}%
-\newlength{\@nt@spine@box@title@width}%
-\newlength{\@nt@spine@box@title@height}%
-\newlength{\@nt@spine@box@middlewidth}%
-\newcommand{\make@spine@box@title}[1]{%
-% Find out how much is left for the title and author name
-  \setlength{\@nt@spine@box@middlewidth}{%
-	  \dimexpr\paperheight-\@nt@spine@box@logo@height-\@nt@spine@box@date@height%
-  }%
-% Let's print the title in a single line and see how it looks
-\savebox{\@nt@spine@box@title}{\bfseries\thespine(title)}
-% Get title height
-  \settototalheight{\@nt@spine@box@title@height}{\usebox{\@nt@spine@box@title}}%
-% Check if height is larger than spine width, resize to spine width if necessary
-\ifdim\@nt@spine@box@title@height > 0.75\@nt@spinewidth%
- \savebox{\@nt@spine@box@title}{%
-   \resizebox{!}{0.75\@nt@spinewidth}{\usebox{\@nt@spine@box@title}}%
-  }%
-\fi
-% Get title width
-  \settowidth{\@nt@spine@box@title@width}{\usebox{\@nt@spine@box@title}}%
-% Check if width is larger than 70% of middlewidth, resize if necessary
-\ifdim\@nt@spine@box@title@width > 0.70\@nt@spine@box@middlewidth%
- \savebox{\@nt@spine@box@title}{%
-   \resizebox{0.70\@nt@spine@box@middlewidth}{!}{\usebox{\@nt@spine@box@title}}%
-  }%
-\fi
- \savebox{\@nt@spine@box@title}{%
-   \setlength{\fboxsep}{0pt}
-   \parbox{0.70\@nt@spine@box@middlewidth}{\centering\usebox{\@nt@spine@box@title}}%
-   % \framebox[0.70\@nt@spine@box@middlewidth]{\usebox{\@nt@spine@box@title}}%
-  }%
-  \settowidth{\@nt@spine@box@title@width}{\usebox{\@nt@spine@box@title}}%
-  \settototalheight{\@nt@spine@box@title@height}{\usebox{\@nt@spine@box@title}}%
-}
-
-
-% Make a box with the author
-\newbox{\@nt@spine@box@author}%
-\newlength{\@nt@spine@box@author@width}%
-\newlength{\@nt@spine@box@author@height}%
-\newcommand{\make@spine@box@author}[1]{%
-% Find out how much is left for the author and author name
-  \setlength{\@nt@spine@box@middlewidth}{%
-	  \dimexpr\paperheight-\@nt@spine@box@logo@height-\@nt@spine@box@date@height%
-  }%
-% Let's print the author in a single line and see how it looks
-\savebox{\@nt@spine@box@author}{\bfseries\thespine(author)}
-% Get author height
-  \settototalheight{\@nt@spine@box@author@height}{\usebox{\@nt@spine@box@author}}%
-% Check if height is larger than spine width, resize to spine width if necessary
-\ifdim\@nt@spine@box@author@height > 0.75\@nt@spinewidth%
- \savebox{\@nt@spine@box@author}{%
-   \resizebox{!}{0.75\@nt@spinewidth}{\usebox{\@nt@spine@box@author}}%
-  }%
-\fi
-% Get author width
-  \settowidth{\@nt@spine@box@author@width}{\usebox{\@nt@spine@box@author}}%
-% Check if width is larger than 70% of middlewidth, resize if necessary
-\ifdim\@nt@spine@box@author@width > 0.25\@nt@spine@box@middlewidth%
- \savebox{\@nt@spine@box@author}{%
-   \resizebox{0.25\@nt@spine@box@middlewidth}{!}{\usebox{\@nt@spine@box@author}}%
-  }%
-\fi
- \savebox{\@nt@spine@box@author}{%
-   \setlength{\fboxsep}{0pt}
-   \parbox{0.25\@nt@spine@box@middlewidth}{\centering\usebox{\@nt@spine@box@author}}%
-   % \framebox[0.25\@nt@spine@box@middlewidth]{\usebox{\@nt@spine@box@author}}%
-  }%
-  \settowidth{\@nt@spine@box@author@width}{\usebox{\@nt@spine@box@author}}%
-  \settototalheight{\@nt@spine@box@author@height}{\usebox{\@nt@spine@box@author}}%
-}
-
-
-
-% Make the titleauthor group
-\newbox{\@nt@spine@box@titleauthor}%
-\newlength{\@nt@spine@box@titleauthor@width}%
-\newlength{\@nt@spine@box@titleauthor@height}%
-\newcommand{\make@spine@box@titleauthor}{%
-  \make@spine@box@title{0.8}%
-  \make@spine@box@author{0.8}%
-  \savebox{\@nt@spine@box@titleauthor}{%
-	\parbox{0.8\@nt@spine@box@middlewidth}{%
-	  % \vfill%
-	  \usebox{\@nt@spine@box@title}%
-	  \vfill%
-	  \usebox{\@nt@spine@box@author}%
-	  % \vfill%
-	}%
-  }%
-  \settowidth{\@nt@spine@box@titleauthor@width}%
-	{\usebox{\@nt@spine@box@titleauthor}}%
-  \settototalheight{\@nt@spine@box@titleauthor@height}%
-	{\usebox{\@nt@spine@box@titleauthor}}%
-  \ifdim\@nt@spine@box@titleauthor@height > 0.90\@nt@spinewidth%
-	\make@spine@box@title{0.90}%
-	\make@spine@box@author{0.35}%
-	\savebox{\@nt@spine@box@titleauthor}{%
-	  \usebox{\@nt@spine@box@title}%  
-	 \qquad~\qquad~\quad%
-	  \usebox{\@nt@spine@box@author}%
-	}%
-  \fi%
-
-  \settowidth{\@nt@spine@box@titleauthor@width}%
-	{\usebox{\@nt@spine@box@titleauthor}}%
-  \settototalheight{\@nt@spine@box@titleauthor@height}%
-	{\usebox{\@nt@spine@box@titleauthor}}%
-  \ifdim\@nt@spine@box@titleauthor@height > 0.90\@nt@spinewidth%
-	\savebox{\@nt@spine@box@titleauthor}{%
-	  \resizebox{!}{0.90\@nt@spinewidth}{\usebox{\@nt@spine@box@titleauthor}}%
-	}%
-  \fi%
-  \settowidth{\@nt@spine@box@titleauthor@width}%
-	{\usebox{\@nt@spine@box@titleauthor}}%
-  \settototalheight{\@nt@spine@box@titleauthor@height}%
-	{\usebox{\@nt@spine@box@titleauthor}}%
-}
-
-
-
-% start drawing things
-
-\newcommand{\AtStockLowerCenter}[1]{%
-  \AtPageUpperLeft{% 
-	\put(\LenToUnit{(\paperwidth-\@nt@spinewidth)/2},%
-		 \LenToUnit{-\paperheight}){#1}%
-  }%
-}
-
-
-\newbox{\@nt@spine@box}%
-
-\newcommand{\ntprintspine}{%
-  \thispagestyle{empty}%
-  \ifaadefined{spine}(logo){\make@spine@box@logo{}{\thespine(logo)}}{}%
-  \ifaadefined{spine}(logotwo){%
-	\make@spine@box@logotwo{}{\thespine(logotwo)}%
-  }
-  \make@spine@box@date%
-  \make@spine@box@titleauthor%
-  \savebox{\@nt@spine@box}{%
-	\rotatebox{90}{%
-  \setlength{\fboxsep}{0pt}%
-	  \framebox[\stockheight]{%
-		~~\hfill
-		\parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@date@width}%
-		  {\usebox{\@nt@spine@box@date}}%
-  \ifaadefined{spine}(logotwo){%
-		  \parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@logotwo@width}%
-			{\hspace*{3mm}\usebox{\@nt@spine@box@logotwo}}%
-		}
-%	        \hfill%
-%	        \parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@titleauthor@width}%
-%	          {\usebox{\@nt@spine@box@titleauthor}}%
-		\hfill%
-		\parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@title@width}%
-		  {\usebox{\@nt@spine@box@title}}%
-		\hfill%
-		\parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@author@width}%
-		  {\usebox{\@nt@spine@box@author}}%
-		\hfill
-		\parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@logo@width}%
-		  {\usebox{\@nt@spine@box@logo}}%
-		\hfill~~
-	  }%
-	}%
-  }%
-  
-  \ifdim\@nt@spinewidth > 50mm%
-  \savebox{\@nt@spine@box}{%
-	\rotatebox{90}{%
-	  \framebox[0.8\stockheight]{%
-		~
-		\parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@date@width}%
-		  {\usebox{\@nt@spine@box@date}}%
-  \ifaadefined{spine}(logotwo){%
-		  \parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@logotwo@width}%
-			{\hspace*{3mm}\usebox{\@nt@spine@box@logotwo}}%
-		}
-%	        \hfill%
-%	        \parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@titleauthor@width}%
-%	          {\usebox{\@nt@spine@box@titleauthor}}%
-		\hfill%
-		\parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@title@width}%
-		  {\usebox{\@nt@spine@box@title}}%
-		\hfill%
-		\parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@author@width}%
-		  {\usebox{\@nt@spine@box@author}}%
-		\qquad
-		\parbox[c][\@nt@spinewidth][c]{\@nt@spine@box@logo@width}%
-		  {\usebox{\@nt@spine@box@logo}}%
-		~
-	  }%
-	}%
-  }%
-  \fi%
-% \AddToShipoutPictureFG*{%
-%       \AtStockLowerCenter{{\usebox{\@nt@spine@box}}}%
-% }%
-\thispagestyle{empty}%
-\begin{tikzpicture}[remember picture, overlay]
-  \node[inner sep=0] at (current page.center) {\usebox{\@nt@spine@box}};
-\end{tikzpicture}
-  % ~% This space is important here so that the spine page is not empty anymore!
-  % \clearforchapter%
 }%
 
-\makeatother
+
+\ifdatadefined{spine}(author){%
+  \spine(text,author,len):={\dimexpr\thespine(box,author,len)-\thespine(box,margin)-\thespine(box,margin)}
+}{}
+\ifdatadefined{spine}(title){%
+  \spine(text,title,len):={\dimexpr\thespine(box,title,len)-\thespine(box,margin)-\thespine(box,margin)}
+}{}
+\ifoptionvoid{/novathesis/degreeacr}{}{%
+  \spine(text,degreeacr,len):={\dimexpr\thespine(box,degreeacr,len)-\thespine(box,margin)-\thespine(box,margin)}
+}
+\ifdatadefined{spine}(date){%
+  \spine(text,date,len):={\dimexpr\thespine(box,date,len)-\thespine(box,margin)-\thespine(box,margin)}
+}{}
+
+
+\newcommand{\@spinetextalin}[1]{%
+  \raggedright%
+  \IfStrEqCase{\thespine(box,#1,align)}{%
+    {l}{\raggedright}%
+    {c}{\centering}%
+    {r}{\raggedleft}%
+  }%
+}
+
+\newcommand{\@spinetextcolor}[1]{%
+  \ifdatadefined{spine}(box,#1,textcolor){%
+    \color{\thespine(box,#1,textcolor)}%
+  }{\ifdatadefined{spine}(text,color){%
+    \color{\thespine(text,color)}%
+  }{}%
+  }%
+}
+
+\newcommand{\ntprintspine}[1][]{%
+  \sffamily%
+  \footnotesize
+  \newlength{\novathesis@spinewidth}%
+  % \setlength{\novathesis@spinewidth}{\dimexpr0.11mm*\thelastsheet/2}% replace \thelastsheet by 1581 to get 80mm width folder label or any other value as long as the width is bigger than 50mm
+  \setlength{\novathesis@spinewidth}{1mm * (\thelastsheet+ 19) / 20}% replace \thelastsheet by 1581 to get 80mm width folder label or any other value as long as the width is bigger than 50mm
+  \typeout{NT SPINE width(\thelastsheet)=\the\novathesis@spinewidth}%
+  \ifdim\novathesis@spinewidth < 6mm%
+    \setlength{\novathesis@spinewidth}{6mm}%
+    \typeout{NT SPINE forcing spine(width)=6mm}%
+  \fi%
+  \newlength{\novathesis@boxwidth}%
+  \setlength{\novathesis@boxwidth}{\novathesis@spinewidth-1mm}%
+  \newlength{\novathesis@spinetextwidth}%
+  \setlength{\novathesis@spinetextwidth}{\dimexpr\novathesis@boxwidth-\thespine(box,margin)-\thespine(box,margin)}%
+  % \printlen%
+  \typeout{NT SPINE thespine(sipne,width)=\the\novathesis@spinewidth}%
+  \typeout{NT SPINE thespine(sipne,boxwidth)=\the\novathesis@boxwidth}%
+  \typeout{NT SPINE thespine(sipne,textwidth)=\the\novathesis@spinetextwidth}%
+  \ifdatadefined{spine}(author){%
+    \typeout{NT SPINE \string\thespine(box,author,len)=\thespine(box,author,len)}%
+    \typeout{NT SPINE \string\thespine(text,author,len)=\thespine(text,author,len)}%
+    \begin{fitboxfontsize}{\thespine(text,author,len)}{\novathesis@spinetextwidth}{\fnts@author}%
+      {\thespine(author)}%
+    \end{fitboxfontsize}
+    \typeout{NT SPINE \string\fontsize(author)=\fnts@author}%
+  }{\def\fnts@author{100pt}\def\blsk@author{100pt}}%
+  \ifdatadefined{spine}(title){%
+    \typeout{NT SPINE \string\thespine(box,title,len)=\thespine(box,title,len)}%
+    \typeout{NT SPINE \string\thespine(text,title,len)=\thespine(text,title,len)}%
+    \begin{fitboxfontsize}{\thespine(text,title,len)}{\novathesis@spinetextwidth}{\fnts@title}%
+      {X\thespine(title)}%
+    \end{fitboxfontsize}
+    \typeout{NT SPINE \string\fontsize(title)=\fnts@title}%
+  }{\def\fnts@title{100pt}\def\blsk@title{100pt}}%
+  % \begin{fitbox}{\thespine(text,date,len)}{\novathesis@spinetextwidth}{\@datesize}%
+  %   \thespine(date)%
+  % \end{fitbox}%
+  % author=\@authorsize\par
+  % title=\@titlesize\par
+  \let\fnts@spine\fnts@author
+  % \let\blsk@spine\blsk@author
+  \ifdim\fnts@title<\fnts@spine\relax
+    \let\fnts@spine\fnts@title
+    % \let\blsk@spine\blsk@title
+  \fi
+  % \StrCut{\fnts@spine}{.}\@fsleft\@fsright%
+  % \fontsize{\@fsleft-2pt}{1}\selectfont%
+  \fontsize{\fnts@spine}{\fnts@spine}\selectfont
+  \typeout{NT SPINE \string\fontsize(author)=\fnts@author}%
+  \typeout{NT SPINE \string\fontsize(title)=\fnts@title}%
+  \typeout{NT SPINE \string\fontsize(final)=\fnts@spine}%
+  \ifdatadefined{spine}(author){%
+    \defifundef{\myauthorbox}{\newsavebox}%%
+    \begin{lrbox}{\myauthorbox}%
+      \begin{minipage}[c][\novathesis@spinetextwidth][c]{\thespine(text,author,len)}%
+        % \begin{fitbox}{\linewidth}{\novathesis@boxwidth}%
+          \@spinetextalin{author}%
+          \@spinetextcolor{author}%
+          \thespine(author)%
+        % \end{fitbox}%
+      \end{minipage}%
+    \end{lrbox}%
+  }{}%
+  \ifdatadefined{spine}(title){%
+    \defifundef{\mytitlebox}{\newsavebox}%%
+    \begin{lrbox}{\mytitlebox}%
+      \begin{minipage}[c][\novathesis@spinetextwidth][c]{\thespine(text,title,len)}%
+        % \begin{fitbox}{\linewidth}{\novathesis@boxwidth}%
+          \@spinetextalin{title}%
+          \@spinetextcolor{title}%
+          \thespine(title)%
+        % \end{fitbox}%
+      \end{minipage}%
+    \end{lrbox}%
+  }{}%
+  \ifdatadefined{spine}(date){%
+    \defifundef{\mydatebox}{\newsavebox}%%
+    \begin{lrbox}{\mydatebox}%
+      \begin{minipage}[c][\novathesis@spinetextwidth][c]{\thespine(text,date,len)}%
+        % \begin{fitbox}{\linewidth}{\novathesis@boxwidth}%
+          \@spinetextalin{date}%
+          \@spinetextcolor{date}%
+          \thespine(date)%
+        % \end{fitbox}%
+      \end{minipage}%
+    \end{lrbox}%
+  }{}%
+  \ifoptionvoid{/novathesis/degreeacr}{}{%
+    \defifundef{\mydegreeacrbox}{\newsavebox}%%
+    \begin{lrbox}{\mydegreeacrbox}%
+      % \begin{fitbox}{\novathesis@spinetextwidth}{\thespine(text,degreeacr,len)}%
+      % \fbox{\begin{minipage}[c][\novathesis@boxwidth][b]{\thespine(text,degreeacr,len)}%
+          \Large
+          \@spinetextalin{degreeacr}%
+          \@spinetextcolor{degreeacr}%
+          \ifdatadefined{degreeacr}(\option{/novathesis/degreeacr}){%
+            \MakeTextUppercase{\thedegreeacr(\option{/novathesis/degreeacr})}%
+          }{%
+            \MakeTextUppercase{\option{/novathesis/degreeacr}}%
+          }
+      % \end{minipage}}
+      % \end{fitbox}%
+    \end{lrbox}%
+  }%
+  \options{/@ntcoveropts/bookmark=spine}%
+  \phantomsection\currentpdfbookmark{\option{/@ntcoveropts/bookmark}}{sipne}%
+  \NTRunHook{spine/pre}%
+  \IfStrEq{#1}{trim}{
+    \setstocksize{\paperheight}{\novathesis@spinewidth}
+    \settrimmedsize{\stockheight}{\stockwidth}{*}%
+    \setlrmarginsandblock{0pt}{0pt}{*}%
+    \setulmarginsandblock{0pt}{*}{1}%
+    \setheadfoot{0pt}{0pt}%
+    \setheaderspaces{0pt}{*}{*}%
+    \checkandfixthelayout[fixed]%
+    \ifluatex
+        \pagewidth=\novathesis@spinewidth% \pageheight=3in
+    \else
+        \pdfpagewidth=\novathesis@spinewidth% \pdfpageheight=3in
+    \fi
+  }{}%
+  \thispagestyle{empty}%
+  \begin{tikzpicture}[remember picture, overlay]
+  % draw image
+    % print bg color IF DEFINED
+    \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,bgcolor){%
+      \node[inner sep=0, anchor=center,
+            rectangle, minimum width=\novathesis@spinewidth, minimum height=\paperheight,
+            fill=\expanded{\thethesiscover(\option{/novathesis/docdegree},spine,bgcolor)}]
+           at (current page.center)
+              {};
+    }{}%
+    \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,framecolor){%
+      \node[inner sep=0, anchor=center,
+            rectangle, minimum width=\novathesis@spinewidth, minimum height=\paperheight,
+            draw=\expanded{\thethesiscover(\option{/novathesis/docdegree},spine,framecolor)},fill=none]
+           at (current page.center)
+              {};
+    }{}%
+    % print bg image IF DEFINED
+    \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,image){%
+      \node[inner sep=0] at (current page.center)
+              {\includegraphics[width=\novathesis@spinewidth,height=\paperheight]%
+                               {\thethesiscover(\option{/novathesis/docdegree},spine,image)}%
+              };
+    }{}%
+    % print logo IF DEFINED
+    \ifdatadefined{spine}(logo,\option{/novathesis/docdegree}){%
+      \node[inner sep=0,anchor=center,yshift=-0.5*\expanded{\thespine(box,logo,len)}
+            ,xshift=-\novathesis@boxwidth*\expanded{\thespine(logo,\option{/novathesis/docdegree},raise)}]
+           at (current page.north)
+              {\includegraphics[width=\novathesis@boxwidth
+                               ,angle=\expanded{\thespine(logo,\option{/novathesis/docdegree},angle)}
+                               ,scale=\expanded{\thespine(logo,\option{/novathesis/docdegree},scale)}%
+                               ]{\thespine(logo,\option{/novathesis/docdegree})}%
+              };
+    }{}
+    % print author
+    \ifdatadefined{spine}(author){%
+      \def\@node@fillcolor{none}%
+      \ifdatadefined{spine}(box,color){\edef\@node@fillcolor{\thespine(box,color)}}{}%
+      \ifdatadefined{spine}(box,author,color){\edef\@node@fillcolor{\thespine(box,author,color)}}{}%
+      \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,author,top)})
+            ,rectangle,minimum width=\novathesis@boxwidth,minimum height=\expanded{\thespine(box,author,len)}
+            ,fill=\@node@fillcolor]
+           at (current page.north)
+              {\rotatebox{\thespine(text,angle)}{\hspace*{\thespine(box,margin)}\usebox{\myauthorbox}}};
+    }{}
+    % print title
+    \ifdatadefined{spine}(title){%
+      \def\@node@fillcolor{none}%
+      \ifdatadefined{spine}(box,color){\edef\@node@fillcolor{\thespine(box,color)}}{}%
+      \ifdatadefined{spine}(box,title,color){\edef\@node@fillcolor{\thespine(box,title,color)}}{}%
+      \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,title,top)})
+            ,rectangle,minimum width=\novathesis@boxwidth,minimum height=\expanded{\thespine(box,title,len)}
+            ,fill=\@node@fillcolor]
+           at (current page.north) 
+              {\rotatebox{\thespine(text,angle)}{\hspace*{\thespine(box,margin)}\usebox{\mytitlebox}}};
+    }{}
+    % print degree IF DEFINED
+    \ifoptionvoid{/novathesis/degreeacr}{}{%
+      \def\@node@fillcolor{none}%
+      \ifdatadefined{spine}(box,color){\edef\@node@fillcolor{\thespine(box,color)}}{}%
+      \ifdatadefined{spine}(box,degreeacr,color){\edef\@node@fillcolor{\thespine(box,degreeacr,color)}}{}%
+      \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,degreeacr,top)})
+            ,rectangle,minimum width=\novathesis@boxwidth,minimum height=\expanded{\thespine(box,degreeacr,len)}
+            ,fill=\@node@fillcolor]
+           at (current page.north)
+              {\rotatebox{\thespine(text,angle)}{\usebox{\mydegreeacrbox}}};
+    }
+    % print date
+    \ifdatadefined{spine}(date){%
+      \def\@node@fillcolor{none}%
+      \ifdatadefined{spine}(box,color){\edef\@node@fillcolor{\thespine(box,color)}}{}%
+      \ifdatadefined{spine}(box,date,color){\edef\@node@fillcolor{\thespine(box,date,color)}}{}%
+      \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,date,top)})
+            ,rectangle,minimum width=\novathesis@boxwidth,minimum height=\expanded{\thespine(box,date,len)}
+            ,fill=\@node@fillcolor]
+           at (current page.north)
+              {\rotatebox{\thespine(text,angle)}{\usebox{\mydatebox}}};
+    }{}
+  \end{tikzpicture}
+  \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
+  \NTRunHook{spine/post}%
+}

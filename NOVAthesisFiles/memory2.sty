@@ -24,7 +24,7 @@
 \ProvidesPackage{NOVAthesisFiles/memory2}
   [2013/05/13 v1.2 containers for data of object and array in LaTeX]
 
-\def\ifdatadefined#1(#2)#3#4{\ifcsname @#1@#2@memory\endcsname#3\else#4\fi}
+\def\ifdatadefined#1(#2)#3#4{\ifcsname @\expanded{#1}@\expanded{#2}@memory\endcsname#3\else#4\fi}
 \def\datadefault#1(#2){\ifdatadefined{#1}(#2){\csname the#1\endcsname(#2)}{\csname the#1\endcsname()}}
 
 \def\set@memory#1#2=#3{\if#1*\expandafter\gdef\csname#2\endcsname{#3}%

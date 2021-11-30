@@ -5,7 +5,7 @@
 %% Customization for UNIVERSIDADE DO MINHO (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE uminho/univ-defaults.ldf}
+\typeout{NT FILE uminho/univ-defaults.ldf}%
 
 %-----------------------------------------------------------------
 % memoir customization
@@ -158,7 +158,7 @@
 % Spine info
 \spine(logo,university)={\theuniversity(logo,RGB)}
 \spine(logo,school)={\theschool(logo,RGB)}
-\spine(author)={\theauthorshortname}
+\spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year)={\thentdateyear}
 % \spine(top)={116pt}
@@ -243,7 +243,7 @@
 \ntaddtocover[vspace=0mm,align=l]{1-1,2-1}{%
   \fontsize{16}{16}\selectfont%
   \addfontfeature{LetterSpace=3.5}%
-  \theauthorname%
+  \thedocauthor(name)%
 }
 
 % Title of Dissertation

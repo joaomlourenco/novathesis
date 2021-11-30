@@ -151,7 +151,7 @@
 
 % \newcommand{\xforcsvlist}{\expandafter\forcsvlist\expandafter\@firstoftwo\expandafter\@secondoftwo}
 \newcommand{\xforcsvlist}[2]{%
-    \@for\@nt@item:={#2}\do
+    \@for\@nt@item:={#2}\do%
       {\xdef\@nt@item{\@nt@item}#1{\@nt@item}}%
 }
 
@@ -216,6 +216,12 @@
   \RequirePackage{xparse}  % load xparse if necessary
 \fi
 \ExplSyntaxOn
+\NewExpandableDocumentCommand{\compareStrings}{mm}
+ {
+  \str_if_eq:eeTF { \str_lower_case:f { #1 } } { \str_lower_case:f { #2 } }
+   { \equalStrings{#1}{#2} }
+   { \differentStrings{#1}{#2} }
+}
 \NewDocumentCommand{\xStrCut}{smmmm}
  {
   % #1 = optional *
@@ -542,7 +548,7 @@
                                 \@nt@schooloption@i#1\@nil%
     }
   , school = {nova/fct}
-  , degree/.new value = {},
+  , degreeacr/.new value = {},
   , docstatus/.new choice = {final, provisional, draft, working},
   , chapstyle/.new value = {bar}        % use "bar" chapter style by default
   , fontstyle/.new value = {kpfonts}    % use “kpfonts” by default
@@ -566,7 +572,6 @@
   , urlstyle/.new cmd = {\AfterPreamble{\urlstyle{#1}}}
   , debugcover/.new toggle = false
   , spine/.new toggle = false%
-  , cdcover/.new toggle = false%
   , media/.new choice = {screen, paper}
   , glsxindy/.new toggle = false
   , linkscolor/.new cmd = {%
@@ -620,7 +625,7 @@
     {\eappto\nt@alllangs{,main=\option{/@nt/langshorttolong}}}%
     {\eappto\nt@alllangs{,\option{/@nt/langshorttolong}}}%
 }
-% \typeout{'NT PASSING TO BABEL = '\nt@alllangs}
+% \typeout{'NT PASSING TO BABEL = '\nt@alllangs}%
 \PassOptionsToPackage{\nt@alllangs}{babel}%
 
 % --------------------------------------------------------
@@ -637,7 +642,7 @@
 % --------------------------------------------------------
 % Pass the remaining options to memoir
 \letoptionlist{/options/remaining}\nt@remaining
-% \typeout{'NT PASSING TO MEMOIR='\nt@remaining}
+% \typeout{'NT PASSING TO MEMOIR='\nt@remaining}%
 \PassOptionsToClass{\nt@remaining}{memoir}
 
 
@@ -662,16 +667,6 @@
 
 \newcommand{\@nt@InputIfFileExists@i}[2]{\IfFileExists{#2#1}{\input{#2#1}\listbreak}{}}
 
-\AtEndDocument{%
-  \iftoggle{/novathesis/spine}{%
-    \@nt@InputIfFileExists{spine.tex}{%
-         {NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/}%
-        ,{NOVAthesisFiles/Schools/\@nt@univ/}%
-        ,{NOVAthesisFiles/}%
-    }%
-    \csuse{ntprintspine}%
-  }{}%
-}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -791,20 +786,21 @@
 
 %============================================================
 % Author identification
-\newcommand*{\theauthorname}{\@nt@undefined[Author Name]}
-\newcommand*{\theauthorshortname}{\@nt@undefined[Author Short Name]}
-\newcommand*{\theauthorgender}{\@nt@undefined[Author Gender]}
-\newcommand*{\theauthordegree}{\@nt@undefined[Author Degree]}
+\newdata{docauthor}
+\docauthor(name):={\@nt@undefined[Author Name]}
+\docauthor(name,short):={\@nt@undefined[Author Short Name]}
+\docauthor(gender):={\@nt@undefined[Author Gender]}
+\docauthor(degree):={\@nt@undefined[Author Previous Degree]}
 
 \newcommand{\ntauthorname}[3][m]{% [m|f]{Long name}{Short name}
-  \renewcommand*{\theauthorgender}{#1}%
-  \renewcommand*{\theauthorname}{#2}%
-  \renewcommand*{\theauthorshortname}{#3}%
+  \docauthor(gender):={#1}%
+  \docauthor(name):={#2}%
+  \docauthor(name,short):={#3}%
   \AtBeginDocument{\hypersetup{pdfauthor={#2}}}%
 }
 
 \newcommand*{\ntauthordegree}[1]{%
-  \renewcommand*{\theauthordegree}{#1}%
+  \docauthor(degree):={#1}%
 }
 
 %============================================================
@@ -901,7 +897,7 @@
   % #1 = cover atrtibutes
   % #2 = list of covers where the code block should be applied
   % #3 = the block code
-  % \typeout{NT ntaddtocover [/@nt/cover/\@nt@univ/\@nt@schl/element=#1]}
+  % \typeout{NT ntaddtocover [/@nt/cover/\@nt@univ/\@nt@schl/element=#1]}%
   \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
 }
 
@@ -1011,7 +1007,7 @@
     % #1=KEY
     % #2=file class
     % \options{/@nt/folders=#2}%
-    % \typeout{NT ntloadfiles [#2] [#1] [/@nt/file/#2/#1]}% [\expanded{\option{/@nt/folders}}]}
+    % \typeout{NT ntloadfiles [#2] [#1] [/@nt/file/#2/#1]}% [\expanded{\option{/@nt/folders}}]}%
     \ifoptiondefined{/@nt/file/#2/#1}%
         {\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}\clearforchapter}}%
         {}%
@@ -1045,6 +1041,17 @@
 }{}
 
 
+\iftoggle{/novathesis/spine}{%
+  % \RequirePackage{fp,anyfontsize}
+  \@nt@InputIfFileExists{spine.tex}{%
+       {NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/}%
+      ,{NOVAthesisFiles/Schools/\@nt@univ/}%
+      ,{NOVAthesisFiles/}%
+  }%
+  \AtEndDocument{%
+    \csuse{ntprintspine}%
+  }
+}{}%
 
 
 
@@ -1069,7 +1076,7 @@
   \end{tikzpicture}%
 }
 
-\newcommand*{\ifocverdefined}[1][1]{%
+\newcommand*{\ifocverdefined}[3][1]{%
   % #1 = cover number
   % #2 = true branch
   % #3 = false branch
@@ -1079,7 +1086,7 @@
   {\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,bgcolor){\coverdefinedtrue}%
   {\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,image){\coverdefinedtrue}%
   {}}}%
-  \ifcoverdefined\@firstoftwo\else\@secondoftwo\fi%
+  \ifcoverdefined#2\else#3\fi%
 }
 
 \newcommand{\ntprintbackcover}{%
@@ -1096,6 +1103,7 @@
 \newcommand{\ntprintcovers}[1][1,2]{%
   \phantomsection\pdfbookmark[-1]{\thefrontmatterbkmstring(\option{/novathesis/coverlang})}{bmfrontmatter}%
   \NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
+  % \vspace*{-1.75pt}%
   \forcsvlist{\ntprintcoverpair}{#1}%
 }
 
@@ -1197,6 +1205,13 @@
 \newcommand*{\@ntcoverbgcolor}[1]{%
   % #1 = cover ID (major-minor)
   \NTRunHook{cover/#1/prebgcolor}%
+  % \begin{tikzpicture}[remember picture, overlay]
+  %   \node[inner sep=0, anchor=center,
+  %         rectangle, minimum width=\paperwidth, minimum height=\paperheight,
+  %         fill=\expanded{\thethesiscover(\option{/novathesis/docdegree},#1,bgcolor)}]
+  %        at (current page.center)
+  %           {};
+  % \end{tikzpicture}
   \begingroup%
     \color{\thethesiscover(\option{/novathesis/docdegree},#1,bgcolor)}%
     \rule{\paperwidth}{\paperheight}%
@@ -1216,42 +1231,26 @@
 \newcommand*{\@ntcoverimage}[1]{%
   % #1 = cover ID (major-minor)
   \NTRunHook{cover/#1/preimage}%
-  % \global\graphicexistfalse%
-  \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image){%
+  % \begin{tikzpicture}[remember picture, overlay]
+  %   \node[inner sep=0, anchor=center]
+  %        at (current page.center)
+  %           {%
+  %               \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,image){%
+  %                 \includegraphics[width=\paperwidth,height=\paperheight]%
+  %                                 {\thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,image)}%
+  %               }{\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,image){%
+  %                   \includegraphics[width=\paperwidth,height=\paperheight]%
+  %                                   {\thethesiscover(\option{/novathesis/docdegree},#1,image)}%
+  %               }{}}%
+  %           };
+  % \end{tikzpicture}
+  \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,image){%
     \includegraphics[width=\paperwidth,height=\paperheight]%
-                    {\thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image)}%
+                    {\thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,image)}%
   }{\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,image){%
       \includegraphics[width=\paperwidth,height=\paperheight]%
                       {\thethesiscover(\option{/novathesis/docdegree},#1,image)}%
   }{}}%
-  % \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/\@nt@filename}{%
-  %   \global\graphicexisttrue%
-  % }{}%
-  % \aaaaaa
-  % \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/Images/%
-  %         \thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image).pdf}{%
-  %   \global\graphicexisttrue%
-  % }{}%
-  % \ifgraphicexist%
-  %   \includegraphics[width=\paperwidth,height=\paperheight]%
-  %                   {\thethesiscover(\option{/novathesis/docdegree},\option{/novathesis/degree},#1,image)}%
-  % \else%
-  %   \global\graphicexistfalse%
-  %   \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/%
-  %           \thethesiscover(\option{/novathesis/docdegree},#1,image).pdf}{%
-  %     \global\graphicexisttrue%
-  %   }{}%
-  %   \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/Images/%
-  %           \thethesiscover(\option{/novathesis/docdegree},#1,image).pdf}{%
-  %     \global\graphicexisttrue%
-  %   }{}%
-  %   \ifgraphicexist%
-  %     \includegraphics[width=\paperwidth,height=\paperheight]%
-  %                     {\thethesiscover(\option{/novathesis/docdegree},#1,image)}%
-  %   \else%
-  %     \ClassError{novathesis}{Cover image not found: “#1.pdf”}%
-  %   \fi%
-  % \fi%
   \NTRunHook{cover/#1/postimage}%
 }
 
@@ -1446,7 +1445,7 @@
 \providecommand\thecopyrightstr{%
   \iftoggle{/novathesis/numberallpages}{\thispagestyle{novathesis@frontmatter}}{\thispagestyle{empty}}%
   \noindent%
-  Copyright \textcopyright\ \theauthorname, %
+  Copyright \textcopyright\ \thedocauthor(name), %
   \theschool(\option{/novathesis/copyrightlang}), \theuniversity(\option{/novathesis/copyrightlang}).\\%
   \thecopyrighttextstring(\option{/novathesis/copyrightlang})%
   \ntselectlang{\option{/novathesis/mainlang}}%
@@ -1630,7 +1629,7 @@
 %% PAGE LAYOUT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\AtEndPreamble{\typeout{NT AtEndPreamble ntsetlayout}\ntsetlayout}
+\AtEndPreamble{\typeout{NT AtEndPreamble ntsetlayout}\ntsetlayout}%
 
 \newcommand*{\ntsetlayout}{%
   % \synctex=1% Use synctex
@@ -1840,7 +1839,7 @@
 \newcommand*{\option@listmatch}[2]{
   % \typeout{NT LISTMATCH [#1] [#2]}%
   \xStrCut{#2}{=}\option@listmatch@key\option@listmatch@value%
-  % \typeout{K=\option@listmatch@key ~V=\option@listmatch@value}
+  % \typeout{K=\option@listmatch@key ~V=\option@listmatch@value}%
   \IfStrEq{#1}{\option@listmatch@key}{\listbreak}{}%
 }%
 \options{/handlers/getval/.new operation={%

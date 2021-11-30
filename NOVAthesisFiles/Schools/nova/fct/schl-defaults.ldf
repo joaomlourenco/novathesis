@@ -1,11 +1,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% nova/fct/schl-defaults.ldf
-%% NOVA thesis configuration file
+%% NOVA thesis document template
 %%
-%% Customization for FCT-NOVA (strings and cover)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
+%%
+%% Authors / Contributors:
+%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE nova/fct/schl-defaults.ldf}
+\typeout{NT FILE nova/fct/schl-defaults.ldf}%
 
 % FCT-NOVA specific customization
 \ntmemoirsetup{openany}
@@ -25,7 +31,7 @@
 \school(logo,neg):={fct_logo_negativo}
 
 % Comiittee printing order
-\committeeorder():={c,r,m}%  
+\committeeorder():={c,r,a,m}%  
 
 % Cover background images
 \thesiscover(phd,1-1,image):={phd_front_cover}
@@ -56,21 +62,46 @@
 \thesiscover(msc,cd1-1,image):={cd-cover-msc}
 \thesiscover(msc,cdinlay):={cd-inlay-msc}
 
+
+
 % Spine info
 \spine(logo,phd)={\theuniversity(logo,neg)}
 \spine(logo,phd,angle)={0}
 \spine(logo,phd,scale)={1}
 \spine(logo,phd,raise)={0}
+
 \spine(logo,msc)={\theschool(logo,neg)}
 \spine(logo,msc,angle)={90}
 \spine(logo,msc,scale)={1.5}
 \spine(logo,msc,raise)={0.075}
-\spine(author)={\theauthorshortname}
+
+\spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main,caps)}
-\spine(year)={\thentdateyear}
-% \spine(top)={116pt}
-\spine(top)={4.075cm}
-\spine(margin)={5mm}
+\spine(date)={\thentdateyear}
+
+\spine(text,angle)={90}
+\spine(text,color)={white}
+% \spine(box,color)={blue}
+\spine(box,spacing)={0.5cm}
+\spine(box,margin)={0.5mm}
+
+\spine(box,logo,top)={0.0cm}
+\spine(box,logo,len)={4.1cm}
+\spine(box,logo,align)={c}
+
+\spine(box,author,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
+\spine(box,author,len)={4.0cm}
+
+\spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
+\spine(box,title,len)={16.7cm}
+% \spine(box,title,align)={l}
+% \spine(box,author,align)={l}
+
+\spine(box,date,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
+\spine(box,date,len)={2.0cm}
+% \spine(box,lodatego,align)={l}
+
+
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
@@ -156,9 +187,9 @@
     }{}%
   }{%
     \fontsize{17}{17}\selectfont%
-    \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]%
+    \textbf{\MakeTextUppercase{\thedocauthor(name)}}\\[2mm]%
     \fontsize{17}{17}\selectfont%
-    \theauthordegree%
+    \thedocauthor(degree)%
   }%
 }
 
@@ -166,9 +197,9 @@
 \ntaddtocover[color={white},vspace=3.0cm,align=l,height=3cm,inalign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{17}{17}\selectfont%
-    \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]%
+    \textbf{\MakeTextUppercase{\thedocauthor(name)}}\\[2mm]%
     \fontsize{17}{17}\selectfont%
-    \theauthordegree%
+    \thedocauthor(degree)%
   }{%
     \fontsize{22}{21}\selectfont%
     \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
@@ -223,9 +254,9 @@
 % The author name
 \ntaddtocover[vspace=1,align=l]{2-1}{%
   \fontsize{14}{14}\selectfont%
-  \textbf{\MakeTextUppercase{\theauthorname}}\\[2mm]%
+  \textbf{\MakeTextUppercase{\thedocauthor(name)}}\\[2mm]%
   \fontsize{14}{14}\selectfont%
-  \theauthordegree%
+  \thedocauthor(degree)%
 }
 
 % The advisers
