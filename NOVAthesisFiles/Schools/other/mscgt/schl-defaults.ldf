@@ -46,6 +46,8 @@ for the degree of \emph{\thedegreename(en)}}
 % \thesiscover(phd,front,image):={}
 % \thesiscover(phdplan,front,image):={}
 % \thesiscover(phdprop,front,image):={}
+% \thesiscover(msc,spine,bgcolor):={yellow}
+\thesiscover(msc,spine,framecolor):={black!20}
 \thesiscover(mscp,1-1,bgcolor):={white}
 \thesiscover(msc,1-1,image):={atom}
 \thesiscover(msc,N-2,image):={atom-back}
@@ -67,15 +69,39 @@ for the degree of \emph{\thedegreename(en)}}
 % \thesiscover(plain,cdfront,image):={}
 % \thesiscover(plain,cdinlay,image):={}
 
+
 % Spine info
-\spine(logo)={ball}
-\spine(font)={\normalsize}
+\spine(logo,msc)={ball}
+\spine(logo,msc,angle)={0}
+\spine(logo,msc,scale)={1}
+\spine(logo,msc,raise)={0}
+
 \spine(author)={\thedocauthor(name)}
 \spine(title)={\textbf{\emph{\thedoctitle(\option{/novathesis/coverlang},main,caps)}}}
-\spine(year)={\thentdateyear}
-\spine(top)={3cm}
-\spine(bottom)={1cm}
-\spine(margin)={0.5cm}
+\spine(date)={\thentdateyear}
+
+\spine(text,angle)={90}
+\spine(text,color)={black}
+% \spine(box,color)={blue}
+\spine(box,spacing)={0.5cm}
+\spine(box,margin)={0.5mm}
+
+\spine(box,logo,top)={0.0cm}
+\spine(box,logo,len)={4.1cm}
+\spine(box,logo,align)={c}
+
+\spine(box,author,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
+\spine(box,author,len)={4.0cm}
+
+\spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
+\spine(box,title,len)={16.7cm}
+% \spine(box,title,align)={l}
+% \spine(box,author,align)={l}
+
+\spine(box,date,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
+\spine(box,date,len)={2.0cm}
+% \spine(box,lodatego,align)={l}
+
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}

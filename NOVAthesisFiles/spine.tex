@@ -183,8 +183,15 @@
     % print bg color IF DEFINED
     \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,bgcolor){%
       \node[inner sep=0, anchor=center,
-            rectangle, minimum width=\paperwidth, minimum height=\paperheight,
+            rectangle, minimum width=\novathesis@spinewidth, minimum height=\paperheight,
             fill=\expanded{\thethesiscover(\option{/novathesis/docdegree},spine,bgcolor)}]
+           at (current page.center)
+              {};
+    }{}%
+    \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,framecolor){%
+      \node[inner sep=0, anchor=center,
+            rectangle, minimum width=\novathesis@spinewidth, minimum height=\paperheight,
+            draw=\expanded{\thethesiscover(\option{/novathesis/docdegree},spine,framecolor)},fill=none]
            at (current page.center)
               {};
     }{}%
