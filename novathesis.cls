@@ -1077,7 +1077,7 @@
   \end{tikzpicture}%
 }
 
-\newcommand*{\ifocverdefined}[1][1]{%
+\newcommand*{\ifocverdefined}[3][1]{%
   % #1 = cover number
   % #2 = true branch
   % #3 = false branch
@@ -1087,7 +1087,7 @@
   {\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,bgcolor){\coverdefinedtrue}%
   {\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,image){\coverdefinedtrue}%
   {}}}%
-  \ifcoverdefined\@firstoftwo\else\@secondoftwo\fi%
+  \ifcoverdefined#2\else#3\fi%
 }
 
 \newcommand{\ntprintbackcover}{%
