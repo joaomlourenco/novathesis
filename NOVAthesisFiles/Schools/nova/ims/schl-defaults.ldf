@@ -38,12 +38,12 @@
 \ntdegreename(gt,en){Geospatial Technologies}
 \ntdegreename(gt,pt){Tecnologias Geo-Espaciais}
 
-\newdata{degreeacronym}
-\degreeacronym(mmaa):={MAA}
-\degreeacronym(mgi):={MGI}
-\degreeacronym(megi):={MEGI}
-\degreeacronym(csig):={C&SIG}
-\degreeacronym(gt):={MGT}
+\newdata{degreeacr}
+\degreeacr(mmaa):={MAA}
+\degreeacr(mgi):={MGI}
+\degreeacr(megi):={MEGI}
+\degreeacr(csig):={CSIG}
+\degreeacr(gt):={MGT}
 
 % Scientific filed
 % \majorfield(pt):={Gestão de Informação}
@@ -123,34 +123,38 @@
 %% LIGHT GREY 200,203,206
 
 % Spine info
-\spine(row)={1.75cm}
+\spine(row)={1.745cm}
 
-\spine(author)={\thedocauthor(name,)}
-% \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
-% \spine(date)={\thentdateyear}
+\spine(author)={\thedocauthor(name)}
+\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(date)={\thentdateyear}
 
 \spine(text,angle)={90}
 % \spine(text,color)=black
 \spine(box,color)={white}
 \spine(box,spacing)={0.5cm}
-\spine(box,margin)={1.0mm}
+\spine(box,margin)={0.5mm}
 
-\spine(box,degree,top):={\thespine(row)}
-\spine(box,degree,len):={\thespine(row)}
-\spine(box,degree,color):={none}
-\spine(box,degree,align):={c}
+\spine(box,degreeacr,top):={\thespine(row)}
+\spine(box,degreeacr,len):={\thespine(row)}
+\spine(box,degreeacr,color):={none}
+\spine(box,degreeacr,align):={c}
+\spine(box,degreeacr,textcolor):={white}
 
-\spine(box,author,top):={5.25cm}
-\spine(box,author,len):={5.25cm}
-\spine(box,author,align)={l}
+\spine(box,author,top)={3*\thespine(row)+\thespine(box,margin)}
+\spine(box,author,len)={5.235cm-\thespine(box,margin)-\thespine(box,margin)}
+\spine(box,author,align)={c}
 
-% \spine(box,title,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
-% \spine(box,title,len)={16.7cm}
-% % \spine(box,title,align)={l}
-%
-% \spine(box,date,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
-% \spine(box,date,len)={2.0cm}
-% % \spine(box,lodatego,align)={l}
+\spine(box,title,top)={7*\thespine(row)+\thespine(box,margin)}
+\spine(box,title,len)={12.215cm-\thespine(box,margin)-\thespine(box,margin)}
+\spine(box,title,align)={c}
+
+\spine(box,date,top):={15*\thespine(row)}
+\spine(box,date,len):={\thespine(row)}
+\spine(box,date,color):={none}
+\spine(box,date,align):={c}
+% \spine(box,degreeacr,textcolor):={white}
+
 
 
 % Set margins for "normal" pages

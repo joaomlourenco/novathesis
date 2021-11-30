@@ -18,7 +18,6 @@
 % usable range: 75 to 145 pages, maximum characters for the title 70 and 22 for the author name
 
 \makeatletter
-\sffamily
 
 \input{NOVAthesisFiles/fitbox2.sty}
 
@@ -31,7 +30,7 @@
   \spine(text,title,len):={\dimexpr\thespine(box,title,len)-\thespine(box,margin)-\thespine(box,margin)}
 }{}
 \ifoptionvoid{/novathesis/degreeacr}{}{%
-  \spine(text,degree,len):={\dimexpr\thespine(box,degree,len)-\thespine(box,margin)-\thespine(box,margin)}
+  \spine(text,degreeacr,len):={\dimexpr\thespine(box,degreeacr,len)-\thespine(box,margin)-\thespine(box,margin)}
 }
 \ifdatadefined{spine}(date){%
   \spine(text,date,len):={\dimexpr\thespine(box,date,len)-\thespine(box,margin)-\thespine(box,margin)}
@@ -57,6 +56,7 @@
 }
 
 \newcommand{\ntprintspine}[1][]{%
+  \sffamily%
   \footnotesize
   \newlength{\novathesis@spinewidth}%
   % \setlength{\novathesis@spinewidth}{\dimexpr0.11mm*\thelastsheet/2}% replace \thelastsheet by 1581 to get 80mm width folder label or any other value as long as the width is bigger than 50mm
@@ -144,15 +144,20 @@
     \end{lrbox}%
   }{}%
   \ifoptionvoid{/novathesis/degreeacr}{}{%
-    \defifundef{\mydegreebox}{\newsavebox}%%
-    \begin{lrbox}{\mydegreebox}%
-      \begin{minipage}[c][\novathesis@spinetextwidth][c]{\thespine(text,degree,len)}%
-        % \begin{fitbox}{\linewidth}{\novathesis@boxwidth}%
-          \@spinetextalin{degree}%
-          \@spinetextcolor{degree}%
-          \MakeTextUppercase{\option{/novathesis/degreeacr}}%
-        % \end{fitbox}%
-      \end{minipage}%
+    \defifundef{\mydegreeacrbox}{\newsavebox}%%
+    \begin{lrbox}{\mydegreeacrbox}%
+      % \begin{fitbox}{\novathesis@spinetextwidth}{\thespine(text,degreeacr,len)}%
+      % \fbox{\begin{minipage}[c][\novathesis@boxwidth][b]{\thespine(text,degreeacr,len)}%
+          \Large
+          \@spinetextalin{degreeacr}%
+          \@spinetextcolor{degreeacr}%
+          \ifdatadefined{degreeacr}(\option{/novathesis/degreeacr}){%
+            \MakeTextUppercase{\thedegreeacr(\option{/novathesis/degreeacr})}%
+          }{%
+            \MakeTextUppercase{\option{/novathesis/degreeacr}}%
+          }
+      % \end{minipage}}
+      % \end{fitbox}%
     \end{lrbox}%
   }%
   \options{/@ntcoveropts/bookmark=spine}%
@@ -204,8 +209,8 @@
     % print author
     \ifdatadefined{spine}(author){%
       \def\@node@fillcolor{none}%
-      \ifdatadefined{spine}(box,author,color){\edef\@node@fillcolor{\thespine(box,author,color)}}{}%
       \ifdatadefined{spine}(box,color){\edef\@node@fillcolor{\thespine(box,color)}}{}%
+      \ifdatadefined{spine}(box,author,color){\edef\@node@fillcolor{\thespine(box,author,color)}}{}%
       \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,author,top)})
             ,rectangle,minimum width=\novathesis@boxwidth,minimum height=\expanded{\thespine(box,author,len)}
             ,fill=\@node@fillcolor]
@@ -215,8 +220,8 @@
     % print title
     \ifdatadefined{spine}(title){%
       \def\@node@fillcolor{none}%
-      \ifdatadefined{spine}(box,title,color){\edef\@node@fillcolor{\thespine(box,title,color)}}{}%
       \ifdatadefined{spine}(box,color){\edef\@node@fillcolor{\thespine(box,color)}}{}%
+      \ifdatadefined{spine}(box,title,color){\edef\@node@fillcolor{\thespine(box,title,color)}}{}%
       \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,title,top)})
             ,rectangle,minimum width=\novathesis@boxwidth,minimum height=\expanded{\thespine(box,title,len)}
             ,fill=\@node@fillcolor]
@@ -226,24 +231,24 @@
     % print degree IF DEFINED
     \ifoptionvoid{/novathesis/degreeacr}{}{%
       \def\@node@fillcolor{none}%
-      \ifdatadefined{spine}(box,degree,color){\edef\@node@fillcolor{\thespine(box,degree,color)}}{}%
       \ifdatadefined{spine}(box,color){\edef\@node@fillcolor{\thespine(box,color)}}{}%
-      \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,degree,top)})
-            ,rectangle,minimum width=\novathesis@boxwidth,minimum height=\expanded{\thespine(box,degree,len)}
+      \ifdatadefined{spine}(box,degreeacr,color){\edef\@node@fillcolor{\thespine(box,degreeacr,color)}}{}%
+      \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,degreeacr,top)})
+            ,rectangle,minimum width=\novathesis@boxwidth,minimum height=\expanded{\thespine(box,degreeacr,len)}
             ,fill=\@node@fillcolor]
            at (current page.north)
-              {\hspace*{\thespine(box,margin)}\rotatebox{\thespine(text,angle)}{\usebox{\mydegreebox}}};
+              {\rotatebox{\thespine(text,angle)}{\usebox{\mydegreeacrbox}}};
     }
     % print date
     \ifdatadefined{spine}(date){%
       \def\@node@fillcolor{none}%
-      \ifdatadefined{spine}(box,date,color){\edef\@node@fillcolor{\thespine(box,date,color)}}{}%
       \ifdatadefined{spine}(box,color){\edef\@node@fillcolor{\thespine(box,color)}}{}%
+      \ifdatadefined{spine}(box,date,color){\edef\@node@fillcolor{\thespine(box,date,color)}}{}%
       \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,date,top)})
             ,rectangle,minimum width=\novathesis@boxwidth,minimum height=\expanded{\thespine(box,date,len)}
             ,fill=\@node@fillcolor]
            at (current page.north)
-              {\rotatebox{\thespine(text,angle)}{\hspace*{\thespine(box,margin)}\usebox{\mydatebox}}};
+              {\rotatebox{\thespine(text,angle)}{\usebox{\mydatebox}}};
     }{}
   \end{tikzpicture}
   \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
