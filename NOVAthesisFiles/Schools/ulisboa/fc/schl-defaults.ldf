@@ -5,7 +5,7 @@
 %% Customization for FC-UL (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE ul/fc/defaults.ldf}
+\typeout{NT FILE ul/fc/defaults.ldf}%
 
 \ifphddoc{\ntsetup{secondcover=true}}{}
 
@@ -46,10 +46,10 @@
 % \thesiscover(plain,front,image):={}
 
 % Spine info
-\spine(logo):={logoFCUL3}
-\spine(author):={\theauthorshortname}
-\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main)}
-\spine(year):={\thentdateyear}
+\spine(logo)={logoFCUL3}
+\spine(author)={\thedocauthor(name,short)}
+\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(year)={\thentdateyear}
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
@@ -127,18 +127,18 @@
 \provisionalstring(it):={TBD}
 
 \dissertationstring(phdplan,pt)={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
 \dissertationstring(phdprop,pt)={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
 \dissertationstring(phd,pt)={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
 
 \dissertationstring(phdplan,en)={Document written to earn the degree of %
-\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
 \dissertationstring(phdprop,en)={Document written to earn the degree of %
-\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
 \dissertationstring(phd,en)={Document written to earn the degree of %
-\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})}
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -206,7 +206,7 @@
 \ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.4cm, height=2.5cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
   \thedegreename(\option{/novathesis/coverlang})
-  \ifaadefined{specialization}(\option{/novathesis/coverlang})%
+  \ifdatadefined{specialization}(\option{/novathesis/coverlang})%
     {\\[2mm]\thespecialization(\option{/novathesis/coverlang})}%
     {}%
 }%
@@ -216,7 +216,7 @@
 % Author name
 \ntaddtocover[vspace=3.0cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
-  \theauthorname%
+  \thedocauthor(name)%
 }
 
 % Degree
@@ -224,7 +224,7 @@
 \ntaddtocover[degree=msc/mscplan, vspace=1.8cm, height=2.5cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
   \thedegreename(\option{/novathesis/coverlang})
-  \ifaadefined{specialization}(\option{/novathesis/coverlang})%
+  \ifdatadefined{specialization}(\option{/novathesis/coverlang})%
     {\\[2mm]\thespecialization(\option{/novathesis/coverlang})}%
     {}%
 }%

@@ -5,7 +5,7 @@
 %% Customization for FCT-NOVA (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE nova/fct-legacy/schl-defaults.ldf}
+\typeout{NT FILE nova/fct-legacy/schl-defaults.ldf}%
 
 
 
@@ -46,10 +46,10 @@
 % \thesiscover(plain,cd,inlay,image):={cd-inlay-msc}
 
 % Spine info
-\spine(logo):={logoNOVA}
-\spine(author):={\theauthorshortname}
-\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main)}
-\spine(year):={\thentdateyear}
+\spine(logo)={logoNOVA}
+\spine(author)={\thedocauthor(name,short)}
+\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(year)={\thentdateyear}
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
@@ -110,13 +110,13 @@
 % Author name
 \ntaddtocover[vspace=0cm]{1-1}{%
   \fontsize{14}{14}\selectfont
-  \textbf{\theauthorname}
+  \textbf{\thedocauthor(name)}
 }
 
 % Academic qualifications
 \ntaddtocover[vspace=0.25cm]{1-1}{%
   \fontsize{11}{11}\selectfont
-  \theauthordegree
+  \thedocauthor(degree)
 }
 
 % % Title of Dissertation

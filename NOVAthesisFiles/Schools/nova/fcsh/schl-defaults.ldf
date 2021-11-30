@@ -5,7 +5,7 @@
 %% Customization for FCSH-NOVA (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE nova/fsch/defaults.ldf}
+\typeout{NT FILE nova/fsch/defaults.ldf}%
 
 \ntsetup{secondcover=true}
 
@@ -32,10 +32,10 @@
 % \thesiscover(plain,1-1,image):={}
 
 % Spine info
-\spine(logo):={\theuniversity(logo)}
-\spine(author):={\theauthorshortname}
-\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main)}
-\spine(year):={\thentdateyear}
+\spine(logo)={\theuniversity(logo)}
+\spine(author)={\thedocauthor(name,short)}
+\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(year)={\thentdateyear}
 
 % Set margins for "normal" pages
 \margin(screen,top):={2.5cm}
@@ -144,7 +144,7 @@
 % Author name
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\theauthorname}}%
+  \textcolor{fcshblue}{\textbf{\thedocauthor(name)}}%
 }
 
 % Degree

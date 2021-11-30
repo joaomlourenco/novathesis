@@ -7,7 +7,7 @@ S = $(B).tex
 L = latexmk $(F)
 V = open -a skim
 
-AUXFILES=$(shell ls $(B).* | fgrep -v .tex | fgrep -v $(B).pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
+AUXFILES=$(shell ls $(B).* *.fls | fgrep -v .tex | fgrep -v $(B).pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
 
 
 default: pdf

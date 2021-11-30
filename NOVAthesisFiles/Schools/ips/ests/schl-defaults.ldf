@@ -5,7 +5,7 @@
 %% Customization for ESTS-IPS (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE ips/ests/defaults.ldf}
+\typeout{NT FILE ips/ests/defaults.ldf}%
 
 % Faculty / School
 \school(pt):={Escola Superior de Tecnologia de Setúbal}
@@ -35,10 +35,10 @@
 % \thesiscover(plain,front,image):={}
 
 % Spine info
-\spine(logo):={logoESTS}
-\spine(author):={\theauthorshortname}
-\spine(title):={\textbf{\emph{\thedoctitle(\option{/novathesis/coverlang},main)}}}
-\spine(year):={\thentdateyear}
+\spine(logo)={logoESTS}
+\spine(author)={\thedocauthor(name,short)}
+\spine(title)={\textbf{\emph{\thedoctitle(\option{/novathesis/coverlang},main)}}}
+\spine(year)={\thentdateyear}
 
 % Set margins for "normal" pages
 \margin(screen,top):={2.0cm}
@@ -81,17 +81,17 @@
 \margin(plain,right):={2.0cm}
 
 \dissertationstring(bsc,pt)={Relatório para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstring(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstring(msc,pt)={Dissertação de natureza científica para obtenção do grau de  %
-\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstring(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstring(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
 \dissertationstring(phd,pt)={Dissertação para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/docdegree},\theauthorgender,\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
 \copyrighttextstring(pt)={A \theschool(\option{/novathesis/coverlang})\ e o \theuniversity(\option{/novathesis/coverlang})\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
 
 \copyrighttextstring(en)={The \theschool(\option{/novathesis/coverlang})\ and the \theuniversity(\option{/novathesis/coverlang})\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
@@ -133,7 +133,7 @@
   % Author name
   \begin{minipage}[t]{0.37\textwidth}%
     \fontsize{16}{16}\selectfont\raggedleft%
-    \theauthorname%  
+    \thedocauthor(name)%  
   \end{minipage}%
   \hspace{0.65cm}%
   % Title of Dissertation

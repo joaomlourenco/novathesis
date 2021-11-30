@@ -603,14 +603,14 @@
   \fi%
 }
 \newrobustcmd*{\option@adjustlistsize}[1]{%
-  % \typeout{NT option@adjustlistsize [#1]}
+  % \typeout{NT option@adjustlistsize [#1]}%
   \stepcounter{#1/@sizecnt}%
   % \edef\opt@list@size{\@nameuse{the#1/@sizecnt}}%
-  % \typeout{NT letoption [#1/@size=\opt@list@size]}
+  % \typeout{NT letoption [#1/@size=\opt@list@size]}%
   \option@eset{#1/@size}{#1/@sizecnt}
 }
 \newrobustcmd*{\option@neworzerocounter}[1]{%
-  % \typeout{NT option@neworzerocounter [#1]}
+  % \typeout{NT option@neworzerocounter [#1]}%
   \ifcsname c@#1\endcsname\else\newcounter{#1}\fi%
   \setcounter{#1}{0}%
 }
