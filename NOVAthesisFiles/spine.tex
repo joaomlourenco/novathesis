@@ -23,6 +23,43 @@
 
 \RequirePackage{anysize}
 
+\def\def@ult#1(#2):=#3{%
+  \ifdatadefined{#1}(#2){}{\csname#1\endcsname(#2)={#3}}%
+}
+\def@ult{spine}(box,margin):={0.0cm}
+\def@ult{spine}(author):={\thedocauthor(name,short)}
+\def@ult{spine}(title):={\thedoctitle(\option{/novathesis/coverlang},main,caps)}
+\def@ult{spine}(date):={\thentdateyear}
+
+\def@ult{spine}(text,angle):={90}
+% \def@ult{spine}(text,color):={white}
+% \def@ult{spine}(box,color):={blue}
+\def@ult{spine}(box,spacing):={0.5cm}
+\def@ult{spine}(box,margin):={0.5mm}
+
+\def@ult{spine}(box,logo,top):={0.0cm}
+\def@ult{spine}(box,logo,len):={4.1cm}
+\def@ult{spine}(box,logo,align):={c}
+
+\def@ult{spine}(box,author,top):={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
+\def@ult{spine}(box,author,len):={4.0cm}
+
+\def@ult{spine}(box,title,top):={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
+\def@ult{spine}(box,title,len):={16.7cm}
+% \spine(box,title,align)={l}
+% \spine(box,author,align)={l}
+
+\def@ult{spine}(box,date,top):={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
+\def@ult{spine}(box,date,len):={2.0cm}
+% \spine(box,lodatego,align)={l}
+
+\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,bgcolor){}{%
+  \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,image){}{%
+    \def@ult{thesiscover}(\option{/novathesis/docdegree},spine,framecolor):={black!20}%
+  }%
+}%
+
+
 \ifdatadefined{spine}(author){%
   \spine(text,author,len):={\dimexpr\thespine(box,author,len)-\thespine(box,margin)-\thespine(box,margin)}
 }{}
