@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-11-30 [6.7.1]
+%% Version 2021-11-30 [6.7.2]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -860,33 +860,33 @@
 }
 
 \newcommand*{\ntprintlist}[1]{%
-  \optionlistdo{#1}{\csuse{ntprint##1}\clearforchapter}%
+  \optionlistdo{#1}{\ifdefmacro{##1}{##1}{\csuse{ntprint##1}}\clearforchapter}%
 }
 
 \newcommand*{\ntsetprintorder}[2]{%
 % #1 = frontmatter, mainmatter
 % #2 = list
-  \option@setlist{/@nt/print/#1}{#2}%
+  \option@setlist[;]{/@nt/print/#1}{#2}%
 }
 
 % --------------------------------------------------------
 % DEFAULT VALUES FOR frontmatter AND mainmatter
 \ntsetprintorder{frontmatter}{
-  statement,       % The statement page
-  copyright,       % (*) The copyright page
-  dedicatory,      % (*) Print the dedicatory
-  acknowledgements,% (*) Print the acknowledgments
-  quote,           % (*) Print the quote
-  abstracts,       % Print abstracts in multiple languages.
-  alllistof,       % Print all the listof defined in “8_list_of.tex”
+  statement;       % The statement page
+  copyright;       % (*) The copyright page
+  dedicatory;      % (*) Print the dedicatory
+  acknowledgements;% (*) Print the acknowledgments
+  quote;           % (*) Print the quote
+  abstracts;       % Print abstracts in multiple languages.
+  alllistof;       % Print all the listof defined in “8_list_of.tex”
 }
 
 \ntsetprintorder{mainmatter}{
-  chapters,        % Print document chapters
-  bib,             % Print the bibliography.  Change to
+  chapters;        % Print document chapters
+  bib;             % Print the bibliography.  Change to
                    %    “bib[title=⟨title⟩]” to redefine the title!
-  appendices,      % Print appendices, if any!
-  annexes,         % Print annexes, if any!
+  appendices;      % Print appendices; if any!
+  annexes;         % Print annexes; if any!
 }
 
 

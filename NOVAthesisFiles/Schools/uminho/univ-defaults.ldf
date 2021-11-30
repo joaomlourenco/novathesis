@@ -23,12 +23,12 @@
 % --------------------------------------------------------
 % PRINT ORDER FOR frontmatter AND mainmatter
 \ntsetprintorder{frontmatter}{
-  copyright,       % (*) The copyright page
-  acknowledgements,% (*) Print the acknowledgments
-  statement,       % The statement page
-  quote,           % (*) Print the quote
-  abstracts,       % Print abstracts in multiple languages.
-  alllistof,       % Print all the listof defined in “7_list_of.tex”
+  copyright;       % (*) The copyright page
+  acknowledgements;% (*) Print the acknowledgments
+  statement;       % The statement page
+  quote;           % (*) Print the quote
+  abstracts;       % Print abstracts in multiple languages.
+  alllistof;       % Print all the listof defined in “7_list_of.tex”
 }
 
 % \ntsetprintorder{mainmatter}{
