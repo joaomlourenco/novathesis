@@ -572,7 +572,6 @@
   , urlstyle/.new cmd = {\AfterPreamble{\urlstyle{#1}}}
   , debugcover/.new toggle = false
   , spine/.new toggle = false%
-  , cdcover/.new toggle = false%
   , media/.new choice = {screen, paper}
   , glsxindy/.new toggle = false
   , linkscolor/.new cmd = {%
