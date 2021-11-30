@@ -860,33 +860,33 @@
 }
 
 \newcommand*{\ntprintlist}[1]{%
-  \optionlistdo{#1}{\csuse{ntprint##1}\clearforchapter}%
+  \optionlistdo{#1}{\ifdefmacro{##1}{##1}{\csuse{ntprint##1}}\clearforchapter}%
 }
 
 \newcommand*{\ntsetprintorder}[2]{%
 % #1 = frontmatter, mainmatter
 % #2 = list
-  \option@setlist{/@nt/print/#1}{#2}%
+  \option@setlist[;]{/@nt/print/#1}{#2}%
 }
 
 % --------------------------------------------------------
 % DEFAULT VALUES FOR frontmatter AND mainmatter
 \ntsetprintorder{frontmatter}{
-  statement,       % The statement page
-  copyright,       % (*) The copyright page
-  dedicatory,      % (*) Print the dedicatory
-  acknowledgements,% (*) Print the acknowledgments
-  quote,           % (*) Print the quote
-  abstracts,       % Print abstracts in multiple languages.
-  alllistof,       % Print all the listof defined in “8_list_of.tex”
+  statement;       % The statement page
+  copyright;       % (*) The copyright page
+  dedicatory;      % (*) Print the dedicatory
+  acknowledgements;% (*) Print the acknowledgments
+  quote;           % (*) Print the quote
+  abstracts;       % Print abstracts in multiple languages.
+  alllistof;       % Print all the listof defined in “8_list_of.tex”
 }
 
 \ntsetprintorder{mainmatter}{
-  chapters,        % Print document chapters
-  bib,             % Print the bibliography.  Change to
+  chapters;        % Print document chapters
+  bib;             % Print the bibliography.  Change to
                    %    “bib[title=⟨title⟩]” to redefine the title!
-  appendices,      % Print appendices, if any!
-  annexes,         % Print annexes, if any!
+  appendices;      % Print appendices; if any!
+  annexes;         % Print annexes; if any!
 }
 
 

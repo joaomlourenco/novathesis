@@ -624,10 +624,11 @@
   \forlistcsloop{\csuse{opt@@do#1}}{optk@#1}%
 }
 
-\newrobustcmd*\option@setlist[2]{\option@setnil{#1}\option@concat{#1}{#2}}
+
+\newrobustcmd*\option@setlist[3][,]{\undef{\forcsvlist@setlis}\DeclareListParser*{\forcsvlist@setlis}{#1}\option@setnil{#2}\option@concat{#2}{#3}}
 \newrobustcmd*\option@concat[2]{%
   \def\opt@do@concat##1{\option@push{#1}{##1}}%
-  \expandnext{\forcsvlist\opt@do@concat}{#2}%
+  \expandnext{\forcsvlist@setlis\opt@do@concat}{#2}%
 }
 \newcommand*\letoptionlist[2]{%
   \def#2{}%
