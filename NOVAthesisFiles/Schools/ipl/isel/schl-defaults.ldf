@@ -5,7 +5,7 @@
 %% Customization for ISEL-IPL (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE ipl/isel/defaults.ldf}
+\typeout{NT FILE ipl/isel/defaults.ldf}%
 
 % Faculty / School
 \school(pt):={Instituto Superior de Engenharia de Lisboa}
@@ -135,7 +135,7 @@
 }
 
 \ntaddtocover[vspace=0.5cm,height=8cm,inalign=c]{1-1,2-1}{%
-  % \typeout{NT thefrontpageimage=[\thefrontpageimage()]}
+  % \typeout{NT thefrontpageimage=[\thefrontpageimage()]}%
   \ifdatadefined{frontpageimage}()
     {\includegraphics[height=8cm]{\thefrontpageimage()}}%
     {~}%

@@ -5,7 +5,7 @@
 %% Customization for FC-UL (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE ul/fc/defaults.ldf}
+\typeout{NT FILE ul/fc/defaults.ldf}%
 
 \ifphddoc{\ntsetup{secondcover=true}}{}
 
@@ -206,7 +206,7 @@
 \ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.4cm, height=2.5cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
   \thedegreename(\option{/novathesis/coverlang})
-  \ifaadefined{specialization}(\option{/novathesis/coverlang})%
+  \ifdatadefined{specialization}(\option{/novathesis/coverlang})%
     {\\[2mm]\thespecialization(\option{/novathesis/coverlang})}%
     {}%
 }%
@@ -224,7 +224,7 @@
 \ntaddtocover[degree=msc/mscplan, vspace=1.8cm, height=2.5cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
   \thedegreename(\option{/novathesis/coverlang})
-  \ifaadefined{specialization}(\option{/novathesis/coverlang})%
+  \ifdatadefined{specialization}(\option{/novathesis/coverlang})%
     {\\[2mm]\thespecialization(\option{/novathesis/coverlang})}%
     {}%
 }%

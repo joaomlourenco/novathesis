@@ -11,7 +11,7 @@
 %%      - João Lourenço <joao.lourenco@fct.unl.pt>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE nova/ims/defaults.ldf}
+\typeout{NT FILE nova/ims/defaults.ldf}%
 
 \iftoggle{/novathesis/spine}{%
   \RequirePackage{environ}% http://ctan.org/pkg/environ
@@ -123,20 +123,34 @@
 %% LIGHT GREY 200,203,206
 
 % Spine info
-\spine(logo,phd)={\theuniversity(logo,neg)}
-\spine(logo,phd,angle)={0}
-\spine(logo,phd,scale)={1}
-\spine(logo,phd,raise)={0}
-\spine(logo,msc)={\theschool(logo,neg)}
-\spine(logo,msc,angle)={90}
-\spine(logo,msc,scale)={1.5}
-\spine(logo,msc,raise)={0.075}
-\spine(author)={\thedocauthor(name)}
-\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
-\spine(year)={\thentdateyear}
-% \spine(top)={116pt}
-\spine(top)={3.5cm}
-\spine(bottom)={2.1cm}
+\spine(row)={1.75cm}
+
+\spine(author)={\thedocauthor(name,)}
+% \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+% \spine(date)={\thentdateyear}
+
+\spine(text,angle)={90}
+% \spine(text,color)=black
+\spine(box,color)={white}
+\spine(box,spacing)={0.5cm}
+\spine(box,margin)={1.0mm}
+
+\spine(box,degree,top):={\thespine(row)}
+\spine(box,degree,len):={\thespine(row)}
+\spine(box,degree,color):={none}
+\spine(box,degree,align):={c}
+
+\spine(box,author,top):={5.25cm}
+\spine(box,author,len):={5.25cm}
+\spine(box,author,align)={l}
+
+% \spine(box,title,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
+% \spine(box,title,len)={16.7cm}
+% % \spine(box,title,align)={l}
+%
+% \spine(box,date,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
+% \spine(box,date,len)={2.0cm}
+% % \spine(box,lodatego,align)={l}
 
 
 % Set margins for "normal" pages
@@ -194,45 +208,45 @@
 
 
 \dissertationstring(phd,en)={Thesis presented as partial requirement for obtaining the
-    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ degree in
+    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ degree in
     {\themajorfield(\option{/novathesis/coverlang})}}
  \dissertationstring(phdprop,en)={Thesis proposal presented as partial requirement for obtaining the
-     \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ degree in
+     \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ degree in
      {\themajorfield(\option{/novathesis/coverlang})}}
  \dissertationstring(phdplan,en)={Thesis plan presented as partial requirement for obtaining the
-     \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ degree in
+     \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ degree in
      {\themajorfield(\option{/novathesis/coverlang})}}
 
 \dissertationstring(phd,pt)={Tese apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ em
+    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em
     {\themajorfield(\option{/novathesis/coverlang})}}
  \dissertationstring(phdprop,pt)={Proposta de tese apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ em
+    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em
     {\themajorfield(\option{/novathesis/coverlang})}}
  \dissertationstring(phdplan,pt)={Plano de tese apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ em
+    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em
     {\themajorfield(\option{/novathesis/coverlang})}}
 
 \dissertationstring(msc,en)={Dissertation presented as partial requirement for obtaining the
-    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ degree in
+    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ degree in
     {\themajorfield(\option{/novathesis/coverlang})}}
  \dissertationstring(mscplan,en)={Dissertation plan presented as partial requirement for obtaining the
-     \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ degree in
+     \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ degree in
      {\themajorfield(\option{/novathesis/coverlang})}}
 
 \dissertationstring(msc,pt)={Dissertatação apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ em
+    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em
     {\themajorfield(\option{/novathesis/coverlang})}}
  \dissertationstring(mscplan,pt)={Plano de dissertação apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ em
+    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em
     {\themajorfield(\option{/novathesis/coverlang})}}
 
 \dissertationstring(bsc,en)={Report presented as partial requirement for obtaining the
-    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ degree in
+    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ degree in
     {\themajorfield(\option{/novathesis/coverlang})}}
 
 \dissertationstring(bsc,pt)={Relatório apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\thedocauthor(gender),\option{/novathesis/coverlang})\ em
+    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em
     {\themajorfield(\option{/novathesis/coverlang})}}
  
 
@@ -328,7 +342,7 @@
 \ntaddtocover[align=l, vspace=1, degree=msc]{1-1}{%
   \fontsize{17}{17}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}}\\[0.25ex]%
-  \ifaadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
+  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
     ~\\[-1.5ex]%
     \textcolor{imsmidgrey}{
       \fontsize{15}{15}\selectfont%

@@ -11,11 +11,7 @@
 %%      - João Lourenço <joao.lourenco@fct.unl.pt>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE nova/fct/schl-defaults.ldf}
-
-\iftoggle{/novathesis/spine}{%
-  \RequirePackage{environ}% http://ctan.org/pkg/environ
-}{}
+\typeout{NT FILE nova/fct/schl-defaults.ldf}%
 
 % FCT-NOVA specific customization
 \ntmemoirsetup{openany}
@@ -35,7 +31,7 @@
 \school(logo,neg):={fct_logo_negativo}
 
 % Comiittee printing order
-\committeeorder():={c,r,m}%  
+\committeeorder():={c,r,a,m}%  
 
 % Cover background images
 \thesiscover(phd,1-1,image):={phd_front_cover}
@@ -83,22 +79,27 @@
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main,caps)}
 \spine(date)={\thentdateyear}
 
-\spine(top)={3.5cm}
-\spine(bottom)={2.1cm}
-
+\spine(text,angle)={90}
 \spine(text,color)={white}
-% \spine(box,color)={white}
+% \spine(box,color)={blue}
 \spine(box,spacing)={0.5cm}
-\spine(box,margin)={1.0mm}
+\spine(box,margin)={0.5mm}
 
-\spine(box,top,title)={4.5cm}
-\spine(box,len,title)={17.5cm}
+\spine(box,logo,top)={0.0cm}
+\spine(box,logo,len)={4.1cm}
+\spine(box,logo,align)={c}
 
-\spine(box,top,author)={\thespine(box,top,title)+\thespine(box,len,title)+\thespine(box,spacing)}
-\spine(box,len,author)={4.0cm}
+\spine(box,title,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
+\spine(box,title,len)={16.7cm}
+% \spine(box,title,align)={l}
 
-\spine(box,top,date)={\thespine(box,top,author)+\thespine(box,len,author)+\thespine(box,spacing)}
-\spine(box,len,date)={1.5cm}
+\spine(box,author,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
+\spine(box,author,len)={4.0cm}
+% \spine(box,author,align)={l}
+
+\spine(box,date,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
+\spine(box,date,len)={2.0cm}
+% \spine(box,lodatego,align)={l}
 
 
 
