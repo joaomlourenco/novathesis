@@ -1123,7 +1123,7 @@
 \newcommand{\ntprintcoversingle}[2]{%
   % #1 = major cover ID
   % #2 = minor cover ID
-  \def\@nt@newpage{\pagecolor{white}}%
+  \def\@nt@newpage{}%
   \IfStrEq{#2}{2}{%
     % \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{empty}\null\newpage}}{\def\@nt@newpage{}}%
     \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{cleared}\cleartoevenpage}}{\clearpage}%
@@ -1212,11 +1212,10 @@
   %        at (current page.center)
   %           {};
   % \end{tikzpicture}
-  % \begingroup%
-  %   \color{\thethesiscover(\option{/novathesis/docdegree},#1,bgcolor)}%
-  %   \rule{\paperwidth}{\paperheight}%
-  % \endgroup%
-  \pagecolor{black}%
+  \begingroup%
+    \color{\thethesiscover(\option{/novathesis/docdegree},#1,bgcolor)}%
+    \rule{\paperwidth}{\paperheight}%
+  \endgroup%
   \NTRunHook{cover/#1/postgcolor}%
 }
 
