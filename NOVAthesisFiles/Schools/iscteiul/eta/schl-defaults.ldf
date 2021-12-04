@@ -33,7 +33,7 @@
 % Spine info
 % \spine(logo)={cover-iscte-iul}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main,cover)}
+\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year)={\thentdateyear}
 
 % Set margins for "normal" pages
