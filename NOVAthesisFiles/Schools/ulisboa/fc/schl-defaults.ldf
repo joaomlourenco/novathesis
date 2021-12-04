@@ -46,7 +46,7 @@
 % \thesiscover(plain,front,image):={}
 
 % Spine info
-\spine(logo)={logoFCUL3}
+\spine(logo)={ulisboa-fc-logo}
 \spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year)={\thentdateyear}
@@ -180,8 +180,8 @@
 % Logo
 \ntaddtocover[vspace=0.5cm, height=5cm, inalign=t]{1-1,2-1}{%
 	\ifphddoc%
-    {\hspace*{7mm}\includegraphics[height=4.55cm]{logoFCUL}}%
-    {\includegraphics[width=7cm]{logoFCUL2}}%
+    {\hspace*{7mm}\includegraphics[height=4.55cm]{ulisboa-fc-logo-vert}}%
+    {\includegraphics[width=7cm]{ulisboa-fc-logo-horiz}}%
 }
 
 % PhD Title of Dissertation
