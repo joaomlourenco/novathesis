@@ -266,10 +266,17 @@
       \node[inner sep=0, anchor=center, yshift=-0.5*\expanded{\thespine(box,logo,len)}
             , xshift=-\novathesis@boxwidth*\expanded{\thespine(\arg,raise)}]
            at (current page.north)
-              {\includegraphics[width=\novathesis@boxwidth
-                               ,angle=\expanded{\thespine(\arg,angle)}
-                               ,scale=\expanded{\thespine(\arg,scale)}%
-                               ]{\thespine(\arg)}%
+              {\ifdataequal{spine}(\arg,angle){0}{%
+                 \includegraphics[ width=\novathesis@boxwidth
+                                 , angle=\expanded{\thespine(\arg,angle)}
+                                 , scale=\expanded{\thespine(\arg,scale)}%
+                                 ]{\thespine(\arg)}%
+               }{%
+                 \includegraphics[ height=\novathesis@boxwidth
+                                 , angle=\expanded{\thespine(\arg,angle)}
+                                 , scale=\expanded{\thespine(\arg,scale)}%
+                                 ]{\thespine(\arg)}%
+               }%
               };
     }{}%
     % print author

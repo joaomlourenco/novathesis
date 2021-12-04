@@ -25,20 +25,14 @@
 \committeeorder():={c,r,a,m}% 
 
 % Cover background images
-\frontpageimage():={logoISEL} % don't add the .jpg extension
+\frontpageimage():={isel-photo} % don't add the .jpg extension
 \thesiscover(phd,1-1,bgcolor):={white}
-% \thesiscover(phd,front,image):={}
-% \thesiscover(phdplan,front,image):={}
-% \thesiscover(phdprop,front,image):={}
-% \thesiscover(msc,front,image):={}
-% \thesiscover(mscplan,front,image):={}
-% \thesiscover(bsc,front,image):={}
-% \thesiscover(plain,front,image):={}
 
 % Spine info
-\spine(logo)={logoISEL}
+\spine(logo)={ipl-isel-logo}
+\spine(logo,angle)={90}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\textbf{\emph{\thedoctitle(\option{/novathesis/coverlang},main)}}}
+\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year)={\thentdateyear}
 
 % Set margins for "normal" pages
@@ -123,7 +117,7 @@
 
 % LOGO
 \ntaddtocover[vspace=0cm,align=c]{1-1,2-1}{%
-  \includegraphics[height=1.5cm]{logoISEL}%
+  \includegraphics[height=1.5cm]{ipl-isel-logo-horiz}%
 }
 
 % School%

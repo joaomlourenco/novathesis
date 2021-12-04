@@ -50,6 +50,10 @@
   \ifmemorybre@k#5\fi%
 }
 \def\ifdatadefined#1(#2)#3#4{\ifcsname @\expanded{#1}@\expanded{#2}@memory\endcsname#3\else#4\fi}
+\def\ifdataequal#1(#2)#3#4#5{\ifdatadefined#1(#2){%
+      \edef\@data@tmp{\csname @\expanded{#1}@\expanded{#2}@memory\endcsname}%
+      \if\@data@tmp#3\relax#4\else#5\fi%
+    }{#5}}
 \def\datadefault#1(#2){\ifdatadefined{#1}(#2){\csname the#1\endcsname(#2)}{\csname the#1\endcsname()}}
 
 \def\set@memory#1#2=#3{\if#1*\expandafter\gdef\csname#2\endcsname{#3}%
