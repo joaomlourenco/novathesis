@@ -22,6 +22,7 @@
 \committeeorder():={c,r,a,m}% 
 
 % Spine info
+\spine(logo)={ips-logo}
 \spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year)={\thentdateyear}
