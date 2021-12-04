@@ -56,39 +56,37 @@
 
 % Cover background images
 % \thesiscover(phd,1-1,bgcolor):={white}
-\thesiscover(phd,1-1,image):={cover-nova-ims-phd}
-\thesiscover(phd,N-2,image):={backcover-nova-ims}
-\thesiscover(phd,spine,image):={spine-nova-ims}
+\thesiscover(phd,1-1,image):={nova-ims-phd-cover}
+\thesiscover(phd,N-2,image):={nova-ims-backcover}
+\thesiscover(phd,spine,image):={nova-ims-spine}
 
-\thesiscover(phdprop,1-1,image):={cover-nova-ims-phd}
-\thesiscover(phdprop,N-2,image):={backcover-nova-ims}
-\thesiscover(phdprop,spine,image):={spine-nova-ims}
+\thesiscover(phdprop,1-1,image):={nova-ims-phd-cover}
+\thesiscover(phdprop,N-2,image):={nova-ims-backcover}
+\thesiscover(phdprop,spine,image):={nova-ims-spine}
 
-\thesiscover(phdplan,1-1,image):={cover-nova-ims-phd}
-\thesiscover(phdplan,N-2,image):={backcover-nova-ims}
-\thesiscover(phdplan,spine,image):={spine-nova-ims}
+\thesiscover(phdplan,1-1,image):={nova-ims-phd-cover}
+\thesiscover(phdplan,N-2,image):={nova-ims-backcover}
+\thesiscover(phdplan,spine,image):={nova-ims-spine}
 
-\thesiscover(msc,1-1,image):={genericcover-nova-ims}
-\thesiscover(msc,N-2,image):={backcover-nova-ims}
-\thesiscover(msc,spine,image):={spine-nova-ims}
-\thesiscover(msc,megi,1-1,image):={cover-nova-ims-megi}
-\thesiscover(msc,mgi,1-1,image):={cover-nova-ims-mgi}
-\thesiscover(msc,mmaa,1-1,image):={cover-nova-ims-mmaa}
-\thesiscover(msc,mmaa,spine,image):={spine-nova-ims-mmaa}
+\thesiscover(msc,1-1,image):={nova-ims-generic-cover}
+\thesiscover(msc,N-2,image):={nova-ims-backcover}
+\thesiscover(msc,spine,image):={nova-ims-spine}
+\thesiscover(msc,megi,1-1,image):={nova-ims-megi-cover}
+\thesiscover(msc,mgi,1-1,image):={nova-ims-mgi-cover}
+\thesiscover(msc,mmaa,1-1,image):={nova-ims-mmaa-cover}
 
-\thesiscover(mscplan,1-1,image):={genericcover-nova-ims}
-\thesiscover(mscplan,N-2,image):={backcover-nova-ims}
-\thesiscover(mscplan,spine,image):={spine-nova-ims}
-\thesiscover(mscplan,megi,1-1,image):={cover-nova-ims-megi}
-\thesiscover(mscplan,mgi,1-1,image):={cover-nova-ims-mgi}
-\thesiscover(mscplan,mmaa,1-1,image):={cover-nova-ims-mmaa}
-\thesiscover(mscplan,mmaa,spine,image):={spine-nova-ims-mmaa}
+\thesiscover(mscplan,1-1,image):={nova-ims-generic-cover}
+\thesiscover(mscplan,N-2,image):={nova-ims-backcover}
+\thesiscover(mscplan,spine,image):={nova-ims-spine}
+\thesiscover(mscplan,megi,1-1,image):={nova-ims-megi-cover}
+\thesiscover(mscplan,mgi,1-1,image):={nova-ims-mgi-cover}
+\thesiscover(mscplan,mmaa,1-1,image):={nova-ims-mmaa-cover}
 
-\thesiscover(bsc,1-1,image):={genericcover-nova-ims}
-\thesiscover(bsc,N-2,image):={backcover-nova-ims}
-\thesiscover(bsc,spine,image):={spine-nova-ims}
+\thesiscover(bsc,1-1,image):={nova-ims-generic-cover}
+\thesiscover(bsc,N-2,image):={nova-ims-backcover}
+\thesiscover(bsc,spine,image):={nova-ims-spine}
 
-\thesiscover(plain,1-1,image):={genericcover-nova-ims}
+\thesiscover(plain,1-1,image):={nova-ims-generic-cover}
 
 
 % Rename Doctor degree
