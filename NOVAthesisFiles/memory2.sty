@@ -24,6 +24,19 @@
 \ProvidesPackage{NOVAthesisFiles/memory2}
   [2013/05/13 v1.2 containers for data of object and array in LaTeX]
 
+\newif\ifmemorybre@k
+\def\memoryforbreak{\memorybre@kfalse}
+\long\def\@memoryfor#1:=#2\do#3{%
+  \memorybre@ktrue
+  \@for#1:=#2\do{\ifmemorybre@k#3\fi}%
+}
+
+\def\ifdatadefinedlist#1(#2)#3#4{%
+  \@memoryfor\arg:=#2\do{%
+    \ifcsname @\expanded{#1}@\expanded{#2}@memory\endcsname#3\memoryforbreak\fi%
+  }%
+  \ifmemorybre@k#4\fi%
+}
 \def\ifdatadefined#1(#2)#3#4{\ifcsname @\expanded{#1}@\expanded{#2}@memory\endcsname#3\else#4\fi}
 \def\datadefault#1(#2){\ifdatadefined{#1}(#2){\csname the#1\endcsname(#2)}{\csname the#1\endcsname()}}
 

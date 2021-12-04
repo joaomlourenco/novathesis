@@ -155,6 +155,14 @@
       {\xdef\@nt@item{\@nt@item}#1{\@nt@item}}%
 }
 
+\newif\ifntbre@k
+\def\ntforbreak{\ntbre@kfalse}
+\long\def\@ntfor#1:=#2\do#3{%
+  \ntbre@ktrue
+  \@for#1:=#2\do{\ifntbre@k#3\fi}%
+}
+
+
 % --------------------------------------------------------
 % If necessary create, then initialize the counter
 \newcommand*{\setnewcounter}[2]{%

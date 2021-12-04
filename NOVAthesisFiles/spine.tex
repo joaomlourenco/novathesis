@@ -53,6 +53,14 @@
 \def@ult{spine}(box,date,len):={2.0cm}
 % \spine(box,lodatego,align)={l}
 
+\def@ult{spine}(logo,\option{/novathesis/docdegree},angle):={0}
+\def@ult{spine}(logo,\option{/novathesis/docdegree},raise):={0pt}
+\def@ult{spine}(logo,\option{/novathesis/docdegree},scale):={1}
+
+\def@ult{spine}(logo,angle):={0}
+\def@ult{spine}(logo,raise):={0pt}
+\def@ult{spine}(logo,scale):={1}
+
 \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,bgcolor){}{%
   \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,image){}{%
     \def@ult{thesiscover}(\option{/novathesis/docdegree},spine,framecolor):={black!20}%
@@ -218,6 +226,7 @@
   \begin{tikzpicture}[remember picture, overlay]
   % draw image
     % print bg color IF DEFINED
+    % \ifdatadefinedlist{thesiscover}({\option{/novathesis/docdegree},spine,bgcolor},{spine,bgcolor}){%
     \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,bgcolor){%
       \node[inner sep=0, anchor=center,
             rectangle, minimum width=\novathesis@spinewidth, minimum height=\paperheight,
@@ -225,6 +234,7 @@
            at (current page.center)
               {};
     }{}%
+    % \ifdatadefinedlist{thesiscover}({\option{/novathesis/docdegree},spine,framecolor},{spine,framecolor}){%
     \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,framecolor){%
       \node[inner sep=0, anchor=center,
             rectangle, minimum width=\novathesis@spinewidth, minimum height=\paperheight,
@@ -233,6 +243,7 @@
               {};
     }{}%
     % print bg image IF DEFINED
+    % \ifdatadefinedlist{thesiscover}({\option{/novathesis/docdegree},spine,image},{spine,image}){%
     \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,image){%
       \node[inner sep=0] at (current page.center)
               {\includegraphics[width=\novathesis@spinewidth,height=\paperheight]%
@@ -240,16 +251,17 @@
               };
     }{}%
     % print logo IF DEFINED
-    \ifdatadefined{spine}(logo,\option{/novathesis/docdegree}){%
+    \ifdatadefinedlist{spine}({logo,\option{/novathesis/docdegree}},{logo}){%
+    % \ifdatadefined{spine}({logo,\option{/novathesis/docdegree}},{logo}){%
       \node[inner sep=0,anchor=center,yshift=-0.5*\expanded{\thespine(box,logo,len)}
             ,xshift=-\novathesis@boxwidth*\expanded{\thespine(logo,\option{/novathesis/docdegree},raise)}]
            at (current page.north)
               {\includegraphics[width=\novathesis@boxwidth
                                ,angle=\expanded{\thespine(logo,\option{/novathesis/docdegree},angle)}
                                ,scale=\expanded{\thespine(logo,\option{/novathesis/docdegree},scale)}%
-                               ]{\thespine(logo,\option{/novathesis/docdegree})}%
+                               ]{\thespine(\arg)}%
               };
-    }{}
+    }{}%
     % print author
     \ifdatadefined{spine}(author){%
       \def\@node@fillcolor{none}%
