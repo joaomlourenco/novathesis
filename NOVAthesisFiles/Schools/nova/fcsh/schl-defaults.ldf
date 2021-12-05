@@ -32,7 +32,7 @@
 % \thesiscover(plain,1-1,image):={}
 
 % Spine info
-\spine(logo)={nova-fcsh-insignia-mono-horiz}
+\spine(logo)={nova-fcsh-insignia-color}
 \spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year)={\thentdateyear}
