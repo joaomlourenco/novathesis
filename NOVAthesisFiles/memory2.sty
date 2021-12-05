@@ -24,7 +24,36 @@
 \ProvidesPackage{NOVAthesisFiles/memory2}
   [2013/05/13 v1.2 containers for data of object and array in LaTeX]
 
+\newif\ifmemorybre@k
+\def\memoryforbreak{\memorybre@kfalse}
+\long\def\@memoryfor#1:=#2\do#3{%
+  \memorybre@ktrue
+  \@for#1:=#2\do{\ifmemorybre@k#3\fi}%
+}
+
+\def\ifdatadefinedand#1#2(#3)#4#5{%
+  % \typeout{MEMORY LIST #1(#2)}%
+  \@memoryfor#1:=#3\do{%
+    % \typeout{MEMORY LIST -- #1(\arg)}%
+    \ifmemorybre@k%
+      \ifcsname @\expanded{#2}@\expanded{#1}@memory\endcsname\else\memorybre@kfalse\fi%
+    \fi
+  }%
+  \ifmemorybre@k\expandafter#4\else\expandafter#5\fi%
+}
+\def\ifdatadefinedor#1#2(#3)#4#5{%
+  % \typeout{MEMORY LIST #1(#2)}%
+  \@memoryfor#1:=#3\do{%
+    % \typeout{MEMORY LIST -- #1(\arg)}%
+    \ifcsname @\expanded{#2}@\expanded{#1}@memory\endcsname#4\memoryforbreak\fi%
+  }%
+  \ifmemorybre@k#5\fi%
+}
 \def\ifdatadefined#1(#2)#3#4{\ifcsname @\expanded{#1}@\expanded{#2}@memory\endcsname#3\else#4\fi}
+\def\ifdataequal#1(#2)#3#4#5{\ifdatadefined#1(#2){%
+      \edef\@data@tmp{\csname @\expanded{#1}@\expanded{#2}@memory\endcsname}%
+      \if\@data@tmp#3\relax#4\else#5\fi%
+    }{#5}}
 \def\datadefault#1(#2){\ifdatadefined{#1}(#2){\csname the#1\endcsname(#2)}{\csname the#1\endcsname()}}
 
 \def\set@memory#1#2=#3{\if#1*\expandafter\gdef\csname#2\endcsname{#3}%

@@ -31,7 +31,7 @@
 % \thesiscover(plain,front,image):={}
 
 % Spine info
-\spine(logo)={logoIST2}
+\spine(logo)={ulisboa-ist-logo}
 \spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year)={\thentdateyear}
@@ -123,7 +123,7 @@
 
 % LOGO
 \ntaddtocover[align=l, vspace=0cm]{1-1,2-1}{%
-  \includegraphics[width=5cm]{logoIST}%
+  \includegraphics[width=5cm]{ulisboa-ist-logo-horiz}%
 }
 
 % School

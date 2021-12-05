@@ -7,6 +7,8 @@
 
 \typeout{NT FILE ipl/isel/defaults.ldf}%
 
+\ntsetup{secondcover=true}
+
 % Faculty / School
 \school(pt):={Instituto Superior de Engenharia de Lisboa}
 \school(en):={Instituto Superior de Engenharia de Lisboa}
@@ -25,20 +27,14 @@
 \committeeorder():={c,r,a,m}% 
 
 % Cover background images
-\frontpageimage():={logoISEL} % don't add the .jpg extension
+\frontpageimage():={isel-photo} % don't add the .jpg extension
 \thesiscover(phd,1-1,bgcolor):={white}
-% \thesiscover(phd,front,image):={}
-% \thesiscover(phdplan,front,image):={}
-% \thesiscover(phdprop,front,image):={}
-% \thesiscover(msc,front,image):={}
-% \thesiscover(mscplan,front,image):={}
-% \thesiscover(bsc,front,image):={}
-% \thesiscover(plain,front,image):={}
 
 % Spine info
-\spine(logo)={logoISEL}
+\spine(logo)={ipl-isel-logo}
+\spine(logo,angle)={90}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\textbf{\emph{\thedoctitle(\option{/novathesis/coverlang},main)}}}
+\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year)={\thentdateyear}
 
 % Set margins for "normal" pages
@@ -110,7 +106,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtEndPreamble{% 
   \LoadHelveticaLikeFont%
-  % \usepackage{gillius2}%
 }
 
 \NTAddToHook{cover/1-1/pretext}{%
@@ -123,7 +118,7 @@
 
 % LOGO
 \ntaddtocover[vspace=0cm,align=c]{1-1,2-1}{%
-  \includegraphics[height=1.5cm]{logoISEL}%
+  \includegraphics[height=1.5cm]{ipl-isel-logo-horiz}%
 }
 
 % School%
@@ -142,21 +137,21 @@
 }
 
 % % Title of Dissertation
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vspace=0.5cm,]{1-1,2-1}{%
   \fontsize{18}{20}\selectfont%
   \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
 }
 
 % Author name
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vspace=2]{1-1,2-1}{%
   \fontsize{16}{16}\selectfont%
-  \textbf{\thedocauthor(name)}\\[1ex]
-  \fontsize{14}{14}\selectfont%
-  (\thedocauthor(degree))%
+  \textbf{\thedocauthor(name)}%\\[1ex]
+  % \fontsize{14}{14}\selectfont%
+  % (\thedocauthor(degree))%
 }
 
 % Degree
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vspace=2]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
   \thepresentationtext%
 }
@@ -171,7 +166,7 @@
 
 
 % Committee — only print the committee for the main classes
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vspace=0]{1-1,2-1}{%
   \ifmaindoc{%
     \committeetitlestringfont():={\fontsize{14}{14}\selectfont\bfseries}%
     \committeestringfont():={\bfseries}%
@@ -182,7 +177,7 @@
 
 
 % Date
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vspace=2]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
     \textbf{\thentdatemonth, \thentdateyear}
 }

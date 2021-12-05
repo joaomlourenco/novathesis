@@ -32,7 +32,7 @@
 % \thesiscover(plain,1-1,image):={}
 
 % Spine info
-\spine(logo)={\theuniversity(logo)}
+\spine(logo)={nova-fcsh-insignia-color}
 \spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year)={\thentdateyear}
@@ -47,7 +47,7 @@
 \margin(paper,left):={3.0cm}
 \margin(paper,right):={3.5cm}
 
-% Set margins for cover pages
+% Set margins for cover pages 
 \margin(phd,top):={0.0cm}
 \margin(phd,bottom):={0.0cm}
 \margin(phd,left):={0.0cm}
@@ -120,14 +120,14 @@
 \ntaddtocover[align=l, vspace=1.0cm]{1-1}{%
   \null%
   \begin{tabular*}{{0.5\stockwidth}}[c]{@{\hspace*{0.8cm}}l@{}}%
-    \includegraphics[width=9cm]{novologo_cores_crop}%
+    \includegraphics[width=9cm]{nova-fcsh-logo-color-horiz}%
   \end{tabular*}%
 }
 
 \ntaddtocover[align=l, vspace=1.0cm]{2-1}{%
   \null%
   \begin{tabular*}{{0.5\stockwidth}}[c]{@{\hspace*{0.8cm}}l@{}}%
-    \includegraphics[width=9cm]{novologo_cores_crop}%
+    \includegraphics[width=9cm]{nova-fcsh-logo-color-horiz}%
   \end{tabular*}%
   \begin{tabular*}{{0.5\stockwidth}}[c]{@{}l@{}}%
     \textcolor{fcshblue}{\rule{0.5\stockwidth}{4pt}}%

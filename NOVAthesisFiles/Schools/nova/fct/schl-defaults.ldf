@@ -27,41 +27,36 @@
 \school(en):={NOVA School of Science and Technology}
 \school(fr):={NOVA School of Science and Technology}
 \school(it):={NOVA School of Science and Technology}
-\school(logo):={fct_logo}
-\school(logo,neg):={fct_logo_negativo}
+\school(logo):={nova-fct-logo}
+\school(logo,neg):={nova-fct-logo-negative}
 
 % Comiittee printing order
 \committeeorder():={c,r,a,m}%  
 
 % Cover background images
 \thesiscover(phd,1-1,bgcolor):={black}
-\thesiscover(phd,1-1,image):={phd_front_cover}
-\thesiscover(phd,N-2,image):={phd_back_cover}
-\thesiscover(phd,spine,image):={phd_spine}
+\thesiscover(phd,1-1,image):={nova-fct-phd-cover}
+\thesiscover(phd,N-2,image):={nova-fct-phd-cover-back}
+\thesiscover(phd,spine,image):={nova-fct-phd-spine}
 
-\thesiscover(phdprop,1-1,image):={phd_front_cover}
-\thesiscover(phdprop,N-2,image):={phd_back_cover}
-\thesiscover(phdprop,spine,image):={phd_spine}
+\thesiscover(phdprop,1-1,image):={nova-fct-phd-cover}
+\thesiscover(phdprop,N-2,image):={nova-fct-phd-cover-back}
+\thesiscover(phdprop,spine,image):={nova-fct-phd-spine}
 
-\thesiscover(phdplan,1-1,image):={phd_front_cover}
-\thesiscover(phdplan,N-2,image):={phd_back_cover}
-\thesiscover(phphdpland,spine,image):={phd_spine}
+\thesiscover(phdplan,1-1,image):={nova-fct-phd-cover}
+\thesiscover(phdplan,N-2,image):={nova-fct-phd-cover-back}
+\thesiscover(phphdpland,spine,image):={nova-fct-phd-spine}
 
-\thesiscover(msc,1-1,image):={msc_front_cover}
-\thesiscover(msc,N-2,image):={msc_back_cover}
-\thesiscover(msc,spine,image):={msc_spine}
+\thesiscover(msc,1-1,image):={nova-fct-cover}
+\thesiscover(msc,N-2,image):={nova-fct-cover-back}
+\thesiscover(msc,spine,image):={nova-fct-msc-spine}
 
-\thesiscover(mscplan,1-1,image):={msc_front_cover}
-\thesiscover(mscplan,N-2,image):={msc_back_cover}
-\thesiscover(mscplan,spine,image):={msc_spine}
+\thesiscover(mscplan,1-1,image):={nova-fct-cover}
+\thesiscover(mscplan,N-2,image):={nova-fct-cover-back}
+\thesiscover(mscplan,spine,image):={nova-fct-msc-spine}
 
 \thesiscover(bsc,1-1,image):={}
 \thesiscover(plain,1-1,image):={}
-
-\thesiscover(phd,cd1-1,image):={cd-cover-phd}
-\thesiscover(phd,cdinlay):={cd-inlay-phd}
-\thesiscover(msc,cd1-1,image):={cd-cover-msc}
-\thesiscover(msc,cdinlay):={cd-inlay-msc}
 
 
 
@@ -81,7 +76,7 @@
 \spine(date)={\thentdateyear}
 
 \spine(text,angle)={90}
-\spine(text,color)={white}
+\spine(box,textcolor)={white}
 % \spine(box,color)={blue}
 \spine(box,spacing)={0.5cm}
 \spine(box,margin)={0.5mm}

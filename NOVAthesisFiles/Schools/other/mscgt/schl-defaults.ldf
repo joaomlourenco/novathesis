@@ -42,7 +42,7 @@ for the degree of \emph{\thedegreename(en)}}
 \committeeorder():={c,r,m}% 
 
 % Cover background images
-\ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
+% \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
 % \thesiscover(phd,front,image):={}
 % \thesiscover(phdplan,front,image):={}
 % \thesiscover(phdprop,front,image):={}
@@ -54,34 +54,18 @@ for the degree of \emph{\thedegreename(en)}}
 % \thesiscover(mscplan,1-1,image):={cover-msc-consortium-gt}
 % \thesiscover(bsc,front,image):={}
 % \thesiscover(plain,front,image):={}
-% \thesiscover(phd,cdfront,image):={}
-% \thesiscover(phd,cdinlay,image):={}
-% \thesiscover(phdplan,cdfront,image):={}
-% \thesiscover(phdplan,cdinlay,image):={}
-% \thesiscover(phdprop,cdfront,image):={}
-% \thesiscover(phdprop,cdinlay,image):={}
-% \thesiscover(msc,cdfront,image):={}
-% \thesiscover(msc,cdinlay,image):={}
-% \thesiscover(mscplan,cdfront,image):={}
-% \thesiscover(mscplan,cdinlay,image):={}
-% \thesiscover(bsc,cdfront,image):={}
-% \thesiscover(bsc,cdinlay,image):={}
-% \thesiscover(plain,cdfront,image):={}
-% \thesiscover(plain,cdinlay,image):={}
+
 
 
 % Spine info
 \spine(logo,msc)={ball}
-\spine(logo,msc,angle)={0}
-\spine(logo,msc,scale)={1}
-\spine(logo,msc,raise)={0}
 
 \spine(author)={\thedocauthor(name)}
 \spine(title)={\textbf{\emph{\thedoctitle(\option{/novathesis/coverlang},main,caps)}}}
 \spine(date)={\thentdateyear}
 
 \spine(text,angle)={90}
-\spine(text,color)={black}
+\spine(box,textcolor)={black}
 % \spine(box,color)={blue}
 \spine(box,spacing)={0.5cm}
 \spine(box,margin)={0.5mm}
@@ -114,7 +98,7 @@ for the degree of \emph{\thedegreename(en)}}
 \margin(paper,right):={3.0cm}
 
 % Set margins for cover pages
-\margin(msc,top):={1.0cm}
+\margin(msc,top):={2.0cm}
 \margin(msc,bottom):={1.35cm}
 \margin(msc,left):={1.45cm}
 \margin(msc,right):={1.5cm}

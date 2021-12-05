@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-11-30 [6.7.2]
+%% Version 2021-12-05 [6.7.3]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -148,12 +148,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand*{\defifundef}[2]{\ifundef{#1}{#2{#1}}{}}
+\newcommand*{\csdefifundef}[2]{\ifcsname#1\endcsname\else\expandafter\def\csname#2\endcsname{#1}\fi}
 
 % \newcommand{\xforcsvlist}{\expandafter\forcsvlist\expandafter\@firstoftwo\expandafter\@secondoftwo}
 \newcommand{\xforcsvlist}[2]{%
     \@for\@nt@item:={#2}\do%
       {\xdef\@nt@item{\@nt@item}#1{\@nt@item}}%
 }
+
+\newif\ifntbre@k
+\def\ntforbreak{\ntbre@kfalse}
+\long\def\@ntfor#1:=#2\do#3{%
+  \ntbre@ktrue
+  \@for#1:=#2\do{\ifntbre@k#3\fi}%
+}
+
 
 % --------------------------------------------------------
 % If necessary create, then initialize the counter
