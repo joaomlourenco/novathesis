@@ -7,6 +7,8 @@
 
 \typeout{NT FILE ipl/isel/defaults.ldf}%
 
+\ntsetup{secondcover=true}
+
 % Faculty / School
 \school(pt):={Instituto Superior de Engenharia de Lisboa}
 \school(en):={Instituto Superior de Engenharia de Lisboa}
@@ -104,7 +106,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtEndPreamble{% 
   \LoadHelveticaLikeFont%
-  % \usepackage{gillius2}%
 }
 
 \NTAddToHook{cover/1-1/pretext}{%
@@ -136,21 +137,21 @@
 }
 
 % % Title of Dissertation
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vspace=0.5cm,]{1-1,2-1}{%
   \fontsize{18}{20}\selectfont%
   \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
 }
 
 % Author name
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vspace=2]{1-1,2-1}{%
   \fontsize{16}{16}\selectfont%
-  \textbf{\thedocauthor(name)}\\[1ex]
-  \fontsize{14}{14}\selectfont%
-  (\thedocauthor(degree))%
+  \textbf{\thedocauthor(name)}%\\[1ex]
+  % \fontsize{14}{14}\selectfont%
+  % (\thedocauthor(degree))%
 }
 
 % Degree
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vspace=2]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
   \thepresentationtext%
 }
@@ -165,7 +166,7 @@
 
 
 % Committee — only print the committee for the main classes
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vspace=0]{1-1,2-1}{%
   \ifmaindoc{%
     \committeetitlestringfont():={\fontsize{14}{14}\selectfont\bfseries}%
     \committeestringfont():={\bfseries}%
@@ -176,7 +177,7 @@
 
 
 % Date
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vspace=2]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
     \textbf{\thentdatemonth, \thentdateyear}
 }
