@@ -151,16 +151,16 @@
   % \typeout{NT SPINE \string\fontsize(final)=\fnts@spine}%
   % \@for\arg:={author,title,spine}\do{%
   %   \ifdatadefined{spine}(\arg){%
-  %     \defifundef{\csuse{my\arg box}}{\newsavebox}%%
-  %     \begin{lrbox}{\csuse{my\arg box}}%
+  %     \expandafter\newsavebox\csname my\arg box\endcsname%
+  %     \expandafter\savebox\csname my\arg box\endcsname{%
   %       \begin{minipage}[c][\novathesis@spinetextwidth][c]{\thespine(text,\arg,len)}%
   %         % \begin{fitbox}{\linewidth}{\novathesis@boxwidth}%
   %           \@spinetextalin{\arg}%
   %           \@spinetextcolor{\arg}%
   %           \thespine(\arg)%
   %         % \end{fitbox}%
-  %       \end{minipage}%
-  %     \end{lrbox}%
+  %       \end{minipage}}%
+  %     % \end{lrbox}%
   %   }{}%
   % }%
   \ifdatadefined{spine}(author){%
