@@ -89,12 +89,12 @@
 \spine(box,author,len)={4.0cm}
 
 \spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
-\spine(box,title,len)={16.7cm}
+\spine(box,title,len)={17.2cm}
 % \spine(box,title,align)={l}
 % \spine(box,author,align)={l}
 
 \spine(box,date,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
-\spine(box,date,len)={2.0cm}
+\spine(box,date,len)={1.5cm}
 % \spine(box,lodatego,align)={l}
 
 

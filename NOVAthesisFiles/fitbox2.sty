@@ -1,314 +1,50 @@
 %=================================================================
 % From https://tex.stackexchange.com/questions/26002/fit-text-into-given-box-by-adjusting-the-fontsize
 
-\RequirePackage{environ}
+\RequirePackage{fp}
 
-\newdimen\fontdim
-\newdimen\upperfontdim
-\newdimen\lowerfontdim
-\newif\ifmoreiterations
-\fontdim12pt
+\newcommand{\fitboxratio}[4]{%
+  % #1 = ratio
+  % #2 = width
+  % #3 = height
+  % #4 = text
+  \@tempdima#3
+  \edef\@wd{\strip@pt\dimexpr#2\relax}
+  \@temptokena={\mbox{#4}}
+  \setbox0=\hbox{\the\@temptokena}
+  \@tempdimb=\dimexpr\ht0+\dp0\relax
+  \FPdiv\vr@tio{\strip@pt\@tempdima}{\strip@pt\@tempdimb}
+  \@tempdimc=\dimexpr\wd0\relax
+  \FPdiv\hr@tio{\@wd}{\strip@pt\@tempdimc}
+  \FPmin\r@tio{\hr@tio}{\vr@tio}
+  \def#1{\r@tio}
+  \ignorespaces
+}
 
-\newbox\trialbox
-\newbox\linebox
-\global\newcount\maxbad
-\newcount\linebad
-\newcount\currenthbadness
+\newcommand{\fitboxprint}[2]{%
+  \scalebox{#1}{#2}%\ignorespaces
+}
 
+\newcommand{\fitboxmin}[2]{%
+  \gdef#1{99999999}
+  \@for\@fbx:={#2}\do{%
+    \FPmin#1{\@fbx}{#1}
+  }
+}
 
-\NewEnviron{fitbox}[2]{% \begin{fitbox}{<width>}{<height>} stuff \end{fitbox}
-    % Store environment body
-    \def\stuff{%
-        \BODY%
-    }%
-    % prepare badness box
-    \def\badnessbox{%
-        \global\maxbad=0\relax%
-        \message{Starting measureline recursion with width #1^^J}%
-        \bgroup
-        \hbadness=10000000\relax% prevent TeX from reporting overfull boxes
-        \everypar{\setbox\trialbox=\vbox\bgroup\everypar{}
-            \hsize#1\relax%
-            \fontsize{\fontdim}{1.14\fontdim}%
-            \selectfont%
-            \def\par{\endgraf\measurelines\egroup\endgraf}}
-        \setbox0=\vbox{
-            \stuff\par
-        }
-        \egroup
-        \message{Measured badness: \the\maxbad\space at Fontsize: \the\fontdim\space^^J}%
-    }
-    % prepare recursion to measure line badness
-    \def\measurelines{%
-        \message{Iteration of measurelines^^J}%
-        \begingroup%
-            \setbox\linebox=\lastbox% get the last line
-            \setbox0=\hbox to \hsize{\unhcopy\linebox}% put the last line into box0 to provoke badness calculation
-            \linebad=\the\badness\relax% \badness now reflects the last typeset box, i.e. box0
-            \message{Badness: \the\badness\space\the\linebad\space with max \the\maxbad\space at Fontsize: \the\fontdim\space^^J}%
-            \ifnum\linebad>\maxbad% store the maximum badness
-                \global\maxbad=\linebad% Uncomment this line to ignore overfull hboxes!
-            \fi%
-            \ifvoid% end of recursion
-                \linebox%
-            \else%
-                \unskip\unpenalty\measurelines% do the recursion
-                \ifhmode%
-                    \newline%
-                \fi%
-                \noindent\box\linebox% do the output
-            \fi%
-        \endgroup%
-    }%
-    % Prepare measurement box
-    \def\buildbox{%
-        \badnessbox% measure badness
-        \setbox0\vbox{% measure height
-            \hbox{%
-                \fontsize{\fontdim}{1.14\fontdim}%
-                \selectfont%
-                \minipage{#1}%
-                    \vbox{%                     
-                        \stuff%\par%
-                    }%
-                \endminipage%
-            }%
-        }%
-        \message{Measured badness: \the\maxbad\space at Fontsize: \the\fontdim\space^^J}%
-        \dimen@\ht0
-        \advance\dimen@\dp0
-        \message{Measured box height: \the\dimen@\space^^J}%
-    }%
-    \def\shrinkheight{%
-        \loop
-            \fontdim.5\fontdim % Reduce font size by half
-            \buildbox
-            \message{Shrinking, new box height: \the\dimen@\space at Fontsize: \the\fontdim\space^^J}%
-        \ifdim\dimen@>#2 \repeat
-        \lowerfontdim\fontdim
-        \upperfontdim2\fontdim
-        \fontdim1.5\fontdim
-    }%
-    \def\shrinkwidth{%
-        \loop
-            \fontdim.5\fontdim % Reduce font size by half
-            \buildbox
-        \ifnum\maxbad>10000 \repeat
-        \lowerfontdim\fontdim
-        \upperfontdim2\fontdim
-        \fontdim1.5\fontdim
-    }%
-    \def\growheight{%
-        \loop
-            \fontdim2\fontdim % Double font size
-            \buildbox
-            \message{Growing, new box height: \the\dimen@\space at Fontsize: \the\fontdim\space^^J}%
-        \ifdim\dimen@<#2 \repeat
-        \upperfontdim\fontdim
-        \lowerfontdim.5\fontdim
-        \fontdim.75\fontdim
-    }%
-    \buildbox
-    % Compute upper and lower bounds
-    \ifdim\dimen@>#2
-        \message{Need to shrink box height: \the\dimen@\space^^J}%
-        \shrinkheight
-    \else
-        \message{Need to grow box height: \the\dimen@\space to target: #2^^J}%
-        \growheight
-    \fi
-    \message{Max font: \the\upperfontdim\space^^J}%
-    \message{Min font: \the\lowerfontdim\space^^J}%
-    % Potentially further reduce bounds for overfull box
-    \ifnum\maxbad>10000
-        \shrinkwidth
-    \fi 
-    \message{Max font adjusted: \the\upperfontdim\space^^J}%
-    \message{Min font adjusted: \the\lowerfontdim\space^^J}%
-    % Now try to find the optimum height and width
-    \loop
-        \buildbox
-        \message{Height: \the\dimen@\space^^J}%
-        \ifdim\dimen@>#2
-            \moreiterationstrue
-            \upperfontdim\fontdim
-            \advance\fontdim\lowerfontdim
-            \fontdim.5\fontdim
-        \else
-            \ifnum\maxbad>10000
-                \moreiterationstrue
-                \upperfontdim\fontdim
-                \advance\fontdim\lowerfontdim
-                \fontdim.5\fontdim
-            \else
-                \advance\dimen@-#2
-                \ifdim\dimen@<10pt
-                    \lowerfontdim\fontdim
-                    \advance\fontdim\upperfontdim
-                    \fontdim.5\fontdim
-                    \dimen@\upperfontdim
-                    \advance\dimen@-\lowerfontdim
-                    \ifdim\dimen@<.2pt
-                        \moreiterationsfalse
-                    \else
-                        \moreiterationstrue
-                    \fi
-                \else
-                    \moreiterationsfalse
-                \fi
-            \fi
-        \fi
-    \ifmoreiterations \repeat
-    \message{Selected font: \the\fontdim\space^^J}%
-    \box0% Typeset content
-    % \vbox to #2{\box0\hbox{}}% Typeset content
-}%
-
-\NewEnviron{fitboxfontsize}[3]{% \begin{fitbox}{<width>}{<height>}{<\result>} stuff \end{fitbox}
-    % Store environment body
-    \def\stuff{%
-        \BODY%
-    }%
-    % prepare badness box
-    \def\badnessbox{%
-        \global\maxbad=0\relax%
-        \message{Starting measureline recursion with width #1^^J}%
-        \bgroup
-        \hbadness=10000000\relax% prevent TeX from reporting overfull boxes
-        \everypar{\setbox\trialbox=\vbox\bgroup\everypar{}
-            \hsize#1\relax%
-            \fontsize{\fontdim}{1.14\fontdim}%
-            \selectfont%
-            \def\par{\endgraf\measurelines\egroup\endgraf}}
-        \setbox0=\vbox{
-            \stuff\par
-        }
-        \egroup
-        \message{Measured badness: \the\maxbad\space at Fontsize: \the\fontdim\space^^J}%
-    }
-    % prepare recursion to measure line badness
-    \def\measurelines{%
-        \message{Iteration of measurelines^^J}%
-        \begingroup%
-            \setbox\linebox=\lastbox% get the last line
-            \setbox0=\hbox to \hsize{\unhcopy\linebox}% put the last line into box0 to provoke badness calculation
-            \linebad=\the\badness\relax% \badness now reflects the last typeset box, i.e. box0
-            \message{Badness: \the\badness\space\the\linebad\space with max \the\maxbad\space at Fontsize: \the\fontdim\space^^J}%
-            \ifnum\linebad>\maxbad% store the maximum badness
-                \global\maxbad=\linebad% Uncomment this line to ignore overfull hboxes!
-            \fi%
-            \ifvoid% end of recursion
-                \linebox%
-            \else%
-                \unskip\unpenalty\measurelines% do the recursion
-                \ifhmode%
-                    \newline%
-                \fi%
-                \noindent\box\linebox% do the output
-            \fi%
-        \endgroup%
-    }%
-    % Prepare measurement box
-    \def\buildbox{%
-        \badnessbox% measure badness
-        \setbox0\vbox{% measure height
-            \hbox{%
-                \fontsize{\fontdim}{1.14\fontdim}%
-                \selectfont%
-                \minipage{#1}%
-                    \vbox{%                     
-                        \stuff%\par%
-                    }%
-                \endminipage%
-            }%
-        }%
-        \message{Measured badness: \the\maxbad\space at Fontsize: \the\fontdim\space^^J}%
-        \dimen@\ht0
-        \advance\dimen@\dp0
-        \message{Measured box height: \the\dimen@\space^^J}%
-    }%
-    \def\shrinkheight{%
-        \loop
-            \fontdim.5\fontdim % Reduce font size by half
-            \buildbox
-            \message{Shrinking, new box height: \the\dimen@\space at Fontsize: \the\fontdim\space^^J}%
-        \ifdim\dimen@>#2 \repeat
-        \lowerfontdim\fontdim
-        \upperfontdim2\fontdim
-        \fontdim1.5\fontdim
-    }%
-    \def\shrinkwidth{%
-        \loop
-            \fontdim.5\fontdim % Reduce font size by half
-            \buildbox
-        \ifnum\maxbad>10000 \repeat
-        \lowerfontdim\fontdim
-        \upperfontdim2\fontdim
-        \fontdim1.5\fontdim
-    }%
-    \def\growheight{%
-        \loop
-            \fontdim2\fontdim % Double font size
-            \buildbox
-            \message{Growing, new box height: \the\dimen@\space at Fontsize: \the\fontdim\space^^J}%
-        \ifdim\dimen@<#2 \repeat
-        \upperfontdim\fontdim
-        \lowerfontdim.5\fontdim
-        \fontdim.75\fontdim
-    }%
-    \buildbox
-    % Compute upper and lower bounds
-    \ifdim\dimen@>#2
-        \message{Need to shrink box height: \the\dimen@\space^^J}%
-        \shrinkheight
-    \else
-        \message{Need to grow box height: \the\dimen@\space to target: #2^^J}%
-        \growheight
-    \fi
-    \message{Max font: \the\upperfontdim\space^^J}%
-    \message{Min font: \the\lowerfontdim\space^^J}%
-    % Potentially further reduce bounds for overfull box
-    \ifnum\maxbad>10000
-        \shrinkwidth
-    \fi 
-    \message{Max font adjusted: \the\upperfontdim\space^^J}%
-    \message{Min font adjusted: \the\lowerfontdim\space^^J}%
-    % Now try to find the optimum height and width
-    \loop
-        \buildbox
-        \message{Height: \the\dimen@\space^^J}%
-        \ifdim\dimen@>#2
-            \moreiterationstrue
-            \upperfontdim\fontdim
-            \advance\fontdim\lowerfontdim
-            \fontdim.5\fontdim
-        \else
-            \ifnum\maxbad>10000
-                \moreiterationstrue
-                \upperfontdim\fontdim
-                \advance\fontdim\lowerfontdim
-                \fontdim.5\fontdim
-            \else
-                \advance\dimen@-#2
-                \ifdim\dimen@<10pt
-                    \lowerfontdim\fontdim
-                    \advance\fontdim\upperfontdim
-                    \fontdim.5\fontdim
-                    \dimen@\upperfontdim
-                    \advance\dimen@-\lowerfontdim
-                    \ifdim\dimen@<.2pt
-                        \moreiterationsfalse
-                    \else
-                        \moreiterationstrue
-                    \fi
-                \else
-                    \moreiterationsfalse
-                \fi
-            \fi
-        \fi
-    \ifmoreiterations \repeat
-    \message{Selected font: \the\fontdim\space^^J}%
-    \xdef#3{\the\fontdim}
-    % \box0% Typeset content
-    % \vbox to #2{\box0\hbox{}}% Typeset content
-}%
+\newcommand{\fitbox}[3]{%
+  % #1 = width
+  % #2 = height
+  % #3 = text
+  \@tempdima#2
+  \edef\@wd{\strip@pt\dimexpr#1\relax}
+  \@temptokena={\mbox{#3}}
+  \setbox0=\hbox{\the\@temptokena}
+  \@tempdimb=\dimexpr\ht0+\dp0\relax
+  \FPdiv\vr@tio{\strip@pt\@tempdima}{\strip@pt\@tempdimb}
+  \@tempdimc=\dimexpr\wd0\relax
+  \FPdiv\hr@tio{\@wd}{\strip@pt\@tempdimc}
+  \FPmin\r@tio{\hr@tio}{\vr@tio}
+  \setbox0=\hbox{\scalebox{\r@tio}{#3}}
+  \box0
+}
