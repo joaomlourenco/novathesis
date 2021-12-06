@@ -21,8 +21,6 @@
 
 \input{NOVAthesisFiles/fitbox2.sty}
 
-\RequirePackage{anysize}
-
 \def\def@ult#1(#2)=#3{%
   \ifdatadefined{#1}(#2){}{\csname#1\endcsname(#2)={#3}}%
 }
@@ -112,43 +110,16 @@
   \setlength{\novathesis@boxwidth}{\novathesis@spinewidth-1mm}%
   \newlength{\novathesis@spinetextwidth}%
   \setlength{\novathesis@spinetextwidth}{\dimexpr\novathesis@boxwidth-\thespine(box,margin)-\thespine(box,margin)}%
-  % \printlen%
-  % \typeout{NT SPINE thespine(sipne,width)=\the\novathesis@spinewidth}%
-  % \typeout{NT SPINE thespine(sipne,boxwidth)=\the\novathesis@boxwidth}%
-  % \typeout{NT SPINE thespine(sipne,textwidth)=\the\novathesis@spinetextwidth}%
+
   \ifdatadefined{spine}(author){%
-    % \typeout{NT SPINE \string\thespine(box,author,len)=\thespine(box,author,len)}%
-    % \typeout{NT SPINE \string\thespine(text,author,len)=\thespine(text,author,len)}%
-    \begin{fitboxfontsize}{\thespine(text,author,len)}{\novathesis@spinetextwidth}{\fnts@author}%
-      {\thespine(author)}%
-    \end{fitboxfontsize}
-    % \typeout{NT SPINE \string\fontsize(author)=\fnts@author}%
-  }{\def\fnts@author{100pt}\def\blsk@author{100pt}}%
+    \fitboxratio{\@authorRT}{\thespine(text,author,len)}{\novathesis@spinetextwidth}
+                {\thespine(author)}
+  }{\def\@authorRT{99999}}%
   \ifdatadefined{spine}(title){%
-    % \typeout{NT SPINE \string\thespine(box,title,len)=\thespine(box,title,len)}%
-    % \typeout{NT SPINE \string\thespine(text,title,len)=\thespine(text,title,len)}%
-    \begin{fitboxfontsize}{\thespine(text,title,len)}{\novathesis@spinetextwidth}{\fnts@title}%
-      {X\thespine(title)}%
-    \end{fitboxfontsize}
-    % \typeout{NT SPINE \string\fontsize(title)=\fnts@title}%
-  }{\def\fnts@title{100pt}\def\blsk@title{100pt}}%
-  % \begin{fitbox}{\thespine(text,date,len)}{\novathesis@spinetextwidth}{\@datesize}%
-  %   \thespine(date)%
-  % \end{fitbox}%
-  % author=\@authorsize\par
-  % title=\@titlesize\par
-  \let\fnts@spine\fnts@author
-  % \let\blsk@spine\blsk@author
-  \ifdim\fnts@title<\fnts@spine\relax
-    \let\fnts@spine\fnts@title
-    % \let\blsk@spine\blsk@title
-  \fi
-  % \StrCut{\fnts@spine}{.}\@fsleft\@fsright%
-  % \fontsize{\@fsleft-2pt}{1}\selectfont%
-  \fontsize{\fnts@spine}{\fnts@spine}\selectfont
-  % \typeout{NT SPINE \string\fontsize(author)=\fnts@author}%
-  % \typeout{NT SPINE \string\fontsize(title)=\fnts@title}%
-  % \typeout{NT SPINE \string\fontsize(final)=\fnts@spine}%
+    \fitboxratio{\@titleRT}{\thespine(text,title,len)}{\novathesis@spinetextwidth}
+                {\thespine(title)}
+  }{\def\@titleRT{99999}}%
+  \fitboxmin{\@fbratio}{\@authorRT,\@titleRT}
   % \@for\arg:={author,title,spine}\do{%
   %   \ifdatadefined{spine}(\arg){%
   %     \expandafter\newsavebox\csname my\arg box\endcsname%
@@ -170,7 +141,7 @@
         % \begin{fitbox}{\linewidth}{\novathesis@boxwidth}%
           \@spinetextalin{author}%
           \@spinetextcolor{author}%
-          \thespine(author)%
+          \fitboxprint{\@fbratio}{\thespine(author)}%
         % \end{fitbox}%
       \end{minipage}%
     \end{lrbox}%
@@ -182,7 +153,7 @@
         % \begin{fitbox}{\linewidth}{\novathesis@boxwidth}%
           \@spinetextalin{title}%
           \@spinetextcolor{title}%
-          \thespine(title)%
+          \fitboxprint{\@fbratio}{\thespine(title)}%
         % \end{fitbox}%
       \end{minipage}%
     \end{lrbox}%
@@ -194,7 +165,7 @@
         % \begin{fitbox}{\linewidth}{\novathesis@boxwidth}%
           \@spinetextalin{date}%
           \@spinetextcolor{date}%
-          \thespine(date)%
+          \fitboxprint{\@fbratio}{\thespine(date)}%
         % \end{fitbox}%
       \end{minipage}%
     \end{lrbox}%
@@ -204,13 +175,13 @@
     \begin{lrbox}{\mydegreeacrbox}%
       % \begin{fitbox}{\novathesis@spinetextwidth}{\thespine(text,degreeacr,len)}%
       % \fbox{\begin{minipage}[c][\novathesis@boxwidth][b]{\thespine(text,degreeacr,len)}%
-          \Large
+          % \Large
           \@spinetextalin{degreeacr}%
           \@spinetextcolor{degreeacr}%
           \ifdatadefined{degreeacr}(\option{/novathesis/degreeacr}){%
-            \MakeTextUppercase{\thedegreeacr(\option{/novathesis/degreeacr})}%
+            \fitboxprint{\@fbratio}{\MakeTextUppercase{\thedegreeacr(\option{/novathesis/degreeacr})}}%
           }{%
-            \MakeTextUppercase{\option{/novathesis/degreeacr}}%
+            \fitboxprint{\@fbratio}{\MakeTextUppercase{\option{/novathesis/degreeacr}}}%
           }
       % \end{minipage}}
       % \end{fitbox}%
