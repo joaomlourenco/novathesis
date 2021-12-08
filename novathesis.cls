@@ -499,6 +499,9 @@
 \newdata{committeeremainderfont}
 \committeeremainderfont()={\itshape\scriptsize}
 
+\newdata{personpost}
+\newdata{persongrouppost}
+
 \newdata{dissertationstring}
 \newdata{dissertationstringfont}
 
@@ -1133,6 +1136,7 @@
   % #1 = major cover ID
   % #2 = minor cover ID
   \def\@nt@newpage{}%
+  \gdef\@covernumber{#1-#2}%
   \IfStrEq{#2}{2}{%
     % \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{empty}\null\newpage}}{\def\@nt@newpage{}}%
     \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{cleared}\cleartoevenpage}}{\clearpage}%
@@ -1147,7 +1151,6 @@
 \newcommand{\@ntprintcover@i}[1]{%
   % #1 = cover ID (major-minor)
   \bgroup%
-    \def\@nt@covernumber{#1}%
     \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,textcolor)%
         {\color{\thethesiscover(\option{/novathesis/docdegree},#1,textcolor)}}{}%
     \ntselectlang{\option{/novathesis/coverlang}}%
@@ -1522,10 +1525,12 @@
   % #2 = width in % of textwidth
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
-  \csuse{#3stringpost}():={:\\[0.5ex]}%
-  \csuse{#3stringpre}(c):={\\[-3ex]}%
+  \csuse{#3stringpost}():={:\\[0pt]}%
+  % \csuse{#3stringpre}(c):={\\[-3ex]}%
   \csuse{#3namepost}():={\\[-0.5ex]}%
-  \csuse{#3remainderpost}():={\\[2pt]}%
+  \csuse{#3remainderpost}():={\vspace{1pt}}%
+  \personpost():={~\\}%
+  \persongrouppost():={~\\[12pt]}
   \begin{tabularx}{#2\linewidth}[t]{@{}X@{}}%
     % \ifdatadefined{#3titlestringpre}(\options{/novathesis/coverlang}){%
     %   \aadefault{#3titlestringpre}(#4)%
@@ -1542,14 +1547,15 @@
   % #2 = width in % of textwidth
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
-  \csuse{#3stringpost}():={:}%
   \csuse{#3stringpre}():={\\[-1.5ex]}%
+  \csuse{#3stringpost}():={:}%
   \csuse{#3namepost}():={\\[-0.5ex]}%
   \csuse{#3remainderpost}():={\\[1pt]}%
-  \csuse{adviserstringpre}(a):={}%
-  \csuse{committeestringpre}(c):={}%
-  \csuse{committeetitlestringpre}():={&}%
-  \csuse{committeetitlestringpost}():={\\[0.5ex]}%
+  \adviserstringpre(a):={}%
+  \committeestringpre(c):={}%
+  \committeetitlestringpre():={&}%
+  \committeetitlestringpost():={\\[0.5ex]}%
+  \persongrouppost():={~\\}
   \begin{tabularx}{#2\linewidth}[t]{@{}r@{~~}X@{}}%
     \ifdatadefined{#3titlestring}(\option{/novathesis/coverlang}){%
       \datadefault{#3titlestringpre}()%
@@ -1586,7 +1592,7 @@
     }{%
       \@ntprintpersonsaslist{#3}{#4}%
     }%
-    \\%
+    \thepersongrouppost()%
   }{}%
 }
 
@@ -1613,6 +1619,7 @@
     \egroup%
     \csuse{the#2remainderpost}()%
   }{}%
+  \thepersonpost()%
 }
 
 \newcommand*{\@nt@reducegender}[2]{%
