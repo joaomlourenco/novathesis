@@ -1,0 +1,250 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ulisboa/fmv/defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for FC-UL (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE ulisboa/fmv/defaults.ldf}%
+
+\ifphddoc{\ntsetup{secondcover=true}}{}
+
+% Faculty / School
+\school(pt):={Faculdade de Medicina Veterinária}
+\school(en):={Faculty of Veterinary Medicine}
+\school(fr):={Faculty of Veterinary Medicine}
+\school(it):={Faculty of Veterinary Medicine}
+
+% Department field
+\department(pt):={\embrace{Designação do Departamento}}
+\department(en):={\embrace{Department Name}}
+
+% Specialization field
+\specialization(pt):={\embrace{Especialidade}}
+\specialization(en):={\embrace{Specialization}}
+
+
+% Comiittee printing order
+\committeeorder():={c,r,a,m}% 
+
+% Cover background images
+% \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
+% \thesiscover(phd,final,1-1,bgcolor):={white}
+% \thesiscover(phd,1-1,image):={final_1}
+% \thesiscover(phd,final,2-1,image):={final_1}
+% \thesiscover(phd,provisional,1-1,image):={provisional_1}
+% \thesiscover(phd,provisional,2-1,image):={provisional_1}
+% \thesiscover(msc,final,1-1,image):={cover}
+% \thesiscover(msc,final,2-1,image):={final_1}
+% \thesiscover(msc,provisional,1-1,image):={provisional_1}
+% \thesiscover(msc,provisional,2-1,image):={provisional_1}
+% \thesiscover(phd,front,image):={}
+% \thesiscover(phdplan,front,image):={}
+% \thesiscover(phdprop,front,image):={}
+% \thesiscover(msc,front,image):={}
+% \thesiscover(mscplan,front,image):={}
+% \thesiscover(bsc,front,image):={}
+% \thesiscover(plain,front,image):={}
+
+% Spine info
+\spine(logo)={ulisboa-fmv-insignia-color}
+\spine(author)={\thedocauthor(name,short)}
+\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(year)={\thentdateyear}
+
+% Set margins for "normal" pages
+\margin(screen,top):={2.5cm}
+\margin(screen,bottom):={2.5cm}
+\margin(screen,left):={3.0cm}
+\margin(screen,right):={3.0cm}
+\margin(paper,top):={3.5cm}
+\margin(paper,bottom):={2.5cm}
+\margin(paper,left):={2.5cm}
+\margin(paper,right):={3.5cm}
+
+%% Set margins for cover pages
+\margin(phd,top):={2.5cm}
+\margin(phd,bottom):={3.3cm}
+\margin(phd,left):={2.5cm}
+\margin(phd,right):={2.5cm}
+
+\margin(phdplan,top):={1.1cm}
+\margin(phdplan,bottom):={1.5cm}
+\margin(phdplan,left):={2.5cm}
+\margin(phdplan,right):={2.5cm}
+
+\margin(phdprop,top):={1.1cm}
+\margin(phdprop,bottom):={1.5cm}
+\margin(phdprop,left):={2.5cm}
+\margin(phdprop,right):={2.5cm}
+
+\margin(msc,top):={1.1cm}
+\margin(msc,bottom):={0.8cm}
+\margin(msc,left):={2.5cm}
+\margin(msc,right):={2.5cm}
+
+\margin(mscplan,top):={1.1cm}
+\margin(mscplan,bottom):={1.5cm}
+\margin(mscplan,left):={2.5cm}
+\margin(mscplan,right):={2.5cm}
+
+\margin(bsc,top):={1.1cm}
+\margin(bsc,bottom):={1.5cm}
+\margin(bsc,left):={2.5cm}
+\margin(bsc,right):={2.5cm}
+
+\margin(plain,top):={1.1cm}
+\margin(plain,bottom):={1.5cm}
+\margin(plain,left):={2.5cm}
+\margin(plain,right):={2.5cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% String re-definition; original definitions in string-X.ldf
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use array helper defined in novathesis.csl
+\newdata{adviserslabel}
+\adviserslabel(phd,pt):={Tese orientada por:}
+\adviserslabel(phd,en):={Thesis supervised by:}
+\adviserslabel(phdprop,pt):={Tese orientada por:}
+\adviserslabel(phdprop,en):={Thesis supervised by:}
+\adviserslabel(phdplan,pt):={Tese orientada por:}
+\adviserslabel(phdplan,en):={Thesis supervised by:}
+\adviserslabel(msc,pt):={Dissertação orientada por:}
+\adviserslabel(msc,en):={Dissertation supervised by:}
+\adviserslabel(mscplan,pt):={Dissertação orientada por:}
+\adviserslabel(mscplan,en):={Dissertation supervised by:}
+\adviserslabel(de):={TBD}
+\adviserslabel(es):={TBD}
+\adviserslabel(fr):={TBD}
+\adviserslabel(it):={TBD}
+
+\newdata{provisionalstring}
+\provisionalstring(pt):={Documento Provisório}
+\provisionalstring(en):={Provisional Document}
+\provisionalstring(de):={TBD}
+\provisionalstring(es):={TBD}
+\provisionalstring(fr):={TBD}
+\provisionalstring(it):={TBD}
+
+\dissertationstring(phdplan,pt)={Documento especialmente elaborado para a obtenção do grau de  %
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
+\dissertationstring(phdprop,pt)={Documento especialmente elaborado para a obtenção do grau de  %
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
+\dissertationstring(phd,pt)={Documento especialmente elaborado para a obtenção do grau de  %
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
+
+\dissertationstring(phdplan,en)={Document written to earn the degree of %
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
+\dissertationstring(phdprop,en)={Document written to earn the degree of %
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
+\dissertationstring(phd,en)={Document written to earn the degree of %
+\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FCUL guidelines:
+% The pages should be numbered consecutively at the bottom centre of the
+% page.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Temporary macro to use in conditional expressions;
+\AtEndPreamble{% 
+  \LoadHelveticaLikeFont%
+  % \usepackage{gillius2}%
+}
+
+\NTAddToHook{cover/1-1/pretext}{%
+  \sffamily%
+}
+\NTAddToHook{cover/2-1/pretext}{%
+  \sffamily%
+}
+
+% School
+\ntaddtocover[height=2.5cm, inalign=c]{1-1,2-1}{%
+  \fontsize{12}{12}\selectfont%
+  \MakeUppercase{\theuniversity(\option{/novathesis/coverlang})}\\[4mm]%
+  \MakeUppercase{\theschool(\option{/novathesis/coverlang})}%
+} 
+
+% Logo
+\ntaddtocover[vspace=0.25cm, height=3cm, inalign=t]{1-1,2-1}{%
+  \includegraphics[height=1.6cm,align=c]{ulisboa-logo-lolor}%
+  \hspace{1.3cm}%
+  \includegraphics[height=2.5cm,align=c]{ulisboa-fmv-insignia-color}%
+}
+
+% PhD Title of Dissertation
+\ntaddtocover[vspace=2.6cm, height=2cm, inalign=t]{1-1,2-1}{%
+  \fontsize{12}{12}\selectfont%
+  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
+}
+
+
+% Doc Status
+\ntaddtocover[vspace=0cm, height=1.3cm]{1-1,2-1}{%
+  \ifdocfinal{~}{\emph{\theprovisionalstring(\option{/novathesis/coverlang})}}%
+}
+%
+% Author name
+\ntaddtocover[vspace=0.0cm, height=1.0cm]{1-1,2-1}{%
+  \fontsize{12}{12}\selectfont%
+  \MakeTextUppercase{\thedocauthor(name)}%
+}
+
+% Degree
+% In this position only if it is a phd doc;
+% \ntaddtocover[vspace=0.0cm, height=2.5cm]{1-1,2-1}{%
+%   \fontseries{mc}\fontsize{14}{14}\selectfont%
+%   \thedegreename(\option{/novathesis/coverlang})
+%   \ifdatadefined{specialization}(\option{/novathesis/coverlang})%
+%     {\\[2mm]\thespecialization(\option{/novathesis/coverlang})}%
+%     {}%
+% }%
+
+
+% Committee and Advisers
+\ntaddtocover[vspace=2.0cm, align=l]{1-1,2-1}{%
+  \fontsize{10}{10}\selectfont%
+  \committeestringfont():={\bfseries}%
+  % \advisertitlestringfont():={\bfseries}%
+  \adviserstringfont():={\bfseries}%
+  \begin{minipage}[t]{0.48\textwidth}
+    \IfStrEq{\@covernumber}{2-1}%
+      {\ifdocfinal{\ntprintpersons{1}{1}{committee}{\thecommitteeorder()}}{~}}%
+      {~}
+  \end{minipage}%
+  \hspace{0.04\textwidth}%
+  \begin{minipage}[t]{0.48\textwidth}
+    \ntprintpersons{1}{1}{adviser}{a,c}%
+  \end{minipage}%
+  % \theadviserslabel(\option{/novathesis/docdegree},\option{/novathesis/coverlang})\\[3mm]%
+  % \ntprintpersons{0.5}{1}{adviser}{a,c}%
+}
+
+% Sponsor
+% \ntaddtocover[height=1cm, vspace=2]{1-1}{%
+%   % \fontseries{mc}
+%   ~
+% }
+
+% Document purpose
+% Only if it is a phd doc;
+% \ntaddtocover[degree=phd/phdprop/phdplan, vspace=1]{1-1,2-1}{%
+%   % \fontseries{mc}
+%   \fontsize{10}{10}\selectfont%
+%   \thepresentationtext%
+% }%
+
+% Date
+\ntaddtocover[vspace=1]{1-1,2-1}{%
+  % \fontseries{mc}
+  \fontsize{14}{14}\selectfont%
+    \thentdateyear%
+}
