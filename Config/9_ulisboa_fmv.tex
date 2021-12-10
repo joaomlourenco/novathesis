@@ -1,0 +1,21 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ulisboa/fmv/defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for ULISBOA-FMV
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%------------------------------------------------------------
+% UNIVERSITY / SCHOOL SPECIFIC STUFF
+%------------------------------------------------------------
+
+%------------------------------------------------------------
+% ULISBOA - FMV
+% The standard citation commands in ULISBOA-FMV are \textcite which yields “Author (year)”
+% and \parencite which yields “(Author, year)”
+\ulfmvdocemxadate(year){\embrace{ano}}
+\ulfmvdocemxadate(month){\embrace{mês}}
+\ulfmvdocemxadate(day){\embrace{dia}}
+\ulfmvscientificarea{C}% C=Clinica; MF=Produção Animal e Segurança Alimentar; PASA=Morfologia e Função; SA=Sanidade Animal
+\ulfmvavailability(period){I}% I=Immediate; 6=Available after 6 months; 12=Available after 12 months
+\ulfmvavailability(justification){Motivo do embargo temporário.}
+\ulfmvavailability(reproduction){I}% I=Integral; P=partial; N=None
