@@ -315,8 +315,8 @@
 
 \newcommand{\ifdocfinal}{\ifoptionequal{/novathesis/docstatus}{final}}
 \newcommand{\ifdocprovisional}{\ifoptionequal{/novathesis/docstatus}{provisional}}
-\newcommand{\ifdocdraft}{\ifoptionequal{/novathesis/docstatus}{draft}}
 \newcommand{\ifdocworking}{\ifoptionequal{/novathesis/docstatus}{working}}
+\newcommand{\ifdocunset}{\ifoptionequal{/novathesis/docstatus}{unset}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -555,50 +555,45 @@
 \def\@nt@schooloption@i#1/#2\@nil{\gdef\@nt@univ{#1}\gdef\@nt@schl{#2}}
 
 \options{/novathesis/.new family
-  , docdegree/.new choice = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
-  , school/.new cmd = {         \typeout{NT school [#1]}%
-                                \@nt@schooloption@i#1\@nil%
-    }
-  , school = {nova/fct}
-  , degreeacr/.new value = {},
-  , docstatus/.new choice = {final, provisional, draft, working},
-  , chapstyle/.new value = {bar}        % use "bar" chapter style by default
-  , fontstyle/.new value = {kpfonts}    % use “kpfonts” by default
-  , langsused/.new list = {en,pt}
-  , coverlang/.new choice = {en, pt, fr, it, de, es}
-  , copyrightlang/.new choice = {en, pt, fr, it, de, es}
-  , lang/.new style = {/novathesis/mainlang=#1,/novathesis/copyrightlang=#1,
-                       /novathesis/coverlang=#1}
-  , mainlang/.new choice = {en, pt, fr, it, de, es}
+  , docdegree/.new choice         = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
+  , school/.new cmd               = {\@nt@schooloption@i#1\@nil}
+  , school                        = {nova/fct}
+  , degreeacr/.new value          = {},
+  , docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
+  , chapstyle/.new value          = {bar}        % use "bar" chapter style by default
+  , fontstyle/.new value          = {kpfonts}    % use “kpfonts” by default
+  , langsused/.new list           = {en,pt}
+  , coverlang/.new choice         = {en, pt, fr, it, de, es}
+  , copyrightlang/.new choice         = {en, pt, fr, it, de, es}
+  , lang/.new style               = {/novathesis/mainlang=#1, /novathesis/copyrightlang=#1,
+                                     /novathesis/coverlang=#1}
+  , mainlang/.new choice          = {en, pt, fr, it, de, es}
   , copyrightmodifier/.new choice = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd}
-  , numberallpages/.new toggle = false
-  , printfrontmatter/.new toggle = true
-  , printadviser/.new toggle = true     % fake option - adviser should always be printed
-  , printcommittee/.new toggle = false
-  , printackblock/.new toggle = true    % print the acknowledgments block at the bottom of the copyright page
-  , printcopyright/.new toggle = true
-  , secondcover/.new toggle = false
-  , statement/.new toggle = false
-  , gnumberlist/.new toggle = true
-  , tocintoc/.new toggle = false
-  , urlstyle/.new cmd = {\AfterPreamble{\urlstyle{#1}}}
-  , debugcover/.new toggle = false
-  , spine/.new toggle = false%
-  , media/.new choice = {screen, paper}
-  , glsxindy/.new toggle = false
-  , linkscolor/.new cmd = {%
-            \@ifpackageloaded{hyperref}%
-              {\hypersetup{allcolors=#1}}%
-              {\PassOptionsToPackage{allcolors=#1}{hyperref}}%
-  }
+  , numberallpages/.new toggle    = false
+  , printfrontmatter/.new toggle  = true
+  , printadviser/.new toggle      = true     % fake option - adviser should always be printed
+  , printcommittee/.new toggle    = false
+  , printackblock/.new toggle     = true    % print the acknowledgments block at the bottom of the copyright page
+  , printcopyright/.new toggle    = true
+  , secondcover/.new toggle       = false
+  , statement/.new toggle         = false
+  , gnumberlist/.new toggle       = true
+  , tocintoc/.new toggle          = false
+  , urlstyle/.new cmd             = {\AfterPreamble{\urlstyle{#1}}}
+  , debugcover/.new toggle        = false
+  , spine/.new toggle             = false%
+  , media/.new choice             = {screen, paper}
+  , glsxindy/.new toggle          = false
+  , linkscolor/.new cmd           = {\@ifpackageloaded{hyperref}%
+                                       {\hypersetup{allcolors=#1}}%
+                                       {\PassOptionsToPackage{allcolors=#1}{hyperref}}}
 }
 
 
 
 % --------------------------------------------------------
 % PROCESSING CLASS OPTIONS
-\options@ProcessOptions{/novathesis}%
-
+\options@ProcessOptions{/novathesis}
 % --------------------------------------------------------
 % NTSETUP
 \newcommand*{\ntsetup}[1]{%
@@ -722,31 +717,6 @@
 %============================================================
 \input{Config/2_biblatex}
 % \NTRunHook{biblatex}
-
-%============================================================
-% DEGREE CUSTOMIZATION
-%   Please open and edit the appropriate
-%       configuration file “Config/3a_degree_phd.tex”
-%       or “Config/3b_degree_msc.tex”
-%       or “Config/3c_degree_other.tex”
-%============================================================
-\ifphddoc{% Standard names for PhD programs
-  \input{Config/3a_degree_phd}%
-}{\ifmscdoc{% Standard names for MSc programs
-  \input{Config/3b_degree_msc}%
-}{% Customizable name for other programm (not PhD nor MSc)
-  \input{Config/3c_degree_other}%
-}}
-% \NTRunHook{degree}
-
-
-%============================================================
-% DEPARTMENT CUSTOMIZATION
-%   Please open and edit the appropriate
-%       configuration file “Config/4_department.tex”
-%============================================================
-\input{Config/4_department}
-% \NTRunHook{department}
 
 
 
@@ -1011,6 +981,8 @@
 \InputIfFileExists{Config/9_\@nt@univ_\@nt@schl.tex}{}{}%
 % \NTRunHook{list_of}
 
+\ifdocunset{\ntsetup{docstatus=working}}{}
+\ifdocfinal{\ntsetup{printcommittee=true}}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING ADDITINAL FILES AFTER LOADING MEMOIR

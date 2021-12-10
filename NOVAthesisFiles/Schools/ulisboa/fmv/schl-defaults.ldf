@@ -90,14 +90,14 @@
 \spine(box,author,top)={2.0cm}
 \spine(box,author,len)={4.0cm}
 
-\spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
+\spine(box,title,top)={\dimexpr\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
 \spine(box,title,len)={16.7cm}
 
-\spine(box,logo,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
+\spine(box,logo,top)={\dimexpr\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
 \spine(box,logo,len)={2.1cm}
 \spine(box,logo,align)={c}
 
-\spine(box,date,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
+\spine(box,date,top)={\dimexpr\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
 \spine(box,date,len)={2.0cm}
 
 
@@ -255,10 +255,12 @@
   \fontsize{12}{12}\selectfont%
   \IfStrEq{\@covernumber}{2-1}{\thedoctype(\option{/novathesis/coverlang},\option{/novathesis/docdegree})
                                \thedegreename(\option{/novathesis/coverlang})
-                               \ifdatadefined{specialization}(\option{/novathesis/coverlang})%
-                                         {\thespecializationstring(\option{/novathesis/coverlang})
-                                          \thespecialization(\option{/novathesis/coverlang})}{~}}%
-                              {~}%
+                               \ifphddoc{%
+                                 \ifdatadefined{specialization}(\option{/novathesis/coverlang})%
+                                           {\thespecializationstring(\option{/novathesis/coverlang})
+                                            \thespecialization(\option{/novathesis/coverlang})}{~}}%
+                                {~}%
+                               }{~}
 }%
 
 
@@ -270,8 +272,8 @@
   \adviserstringfont():={\bfseries}%
   \begin{minipage}[t]{0.48\textwidth}
     \IfStrEq{\@covernumber}{2-1}%
-      {\ifdocfinal{\ntprintpersons{1}{1}{committee}{\thecommitteeorder()}}{~}}%
-      {~}
+      {\ifdocfinal{\ntprintpersons{1}{1}{committee}{\thecommitteeorder()}\mbox{}}{\mbox{}}}%
+      {\mbox{}}
   \end{minipage}%
   \hspace{0.04\textwidth}%
   \begin{minipage}[t]{0.48\textwidth}
