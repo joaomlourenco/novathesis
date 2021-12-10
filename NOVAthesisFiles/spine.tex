@@ -24,7 +24,6 @@
 \def\def@ult#1(#2)=#3{%
   \ifdatadefined{#1}(#2){}{\csname#1\endcsname(#2)={#3}}%
 }
-\def@ult{spine}(box,margin)={0.0cm}
 \def@ult{spine}(author)={\thedocauthor(name,short)}
 \def@ult{spine}(title)={\thedoctitle(\option{/novathesis/coverlang},main,caps)}
 \def@ult{spine}(date)={\thentdateyear}
@@ -33,7 +32,7 @@
 % \def@ult{spine}(text,color)={white}
 % \def@ult{spine}(box,color)={blue}
 \def@ult{spine}(box,spacing)={0.5cm}
-\def@ult{spine}(box,margin)={0.5mm}
+\def@ult{spine}(box,margin)={0.0cm}
 
 \def@ult{spine}(box,logo,top)={0.0cm}
 \def@ult{spine}(box,logo,len)={4.1cm}
@@ -235,18 +234,20 @@
     }{}%
     % print logo IF DEFINED
     \ifdatadefinedor{\arg}{spine}({logo,\option{/novathesis/docdegree}},{logo}){%
-      \node[inner sep=0, anchor=center, yshift=-0.5*\expanded{\thespine(box,logo,len)}
+      \node[inner sep=0, anchor=north, yshift=-\expanded{\thespine(box,logo,top))-0.5*\thespine(box,logo,len)+0.5*\novathesis@boxwidth}
             , xshift=-\novathesis@boxwidth*\expanded{\thespine(\arg,raise)}]
            at (current page.north)
               {\ifdataequal{spine}(\arg,angle){0}{%
                  \includegraphics[ width=\novathesis@boxwidth
                                  , angle=\expanded{\thespine(\arg,angle)}
                                  , scale=\expanded{\thespine(\arg,scale)}%
+                                 , align=c
                                  ]{\thespine(\arg)}%
                }{%
                  \includegraphics[ height=\novathesis@boxwidth
                                  , angle=\expanded{\thespine(\arg,angle)}
                                  , scale=\expanded{\thespine(\arg,scale)}%
+                                 , align=c
                                  ]{\thespine(\arg)}%
                }%
               };

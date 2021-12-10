@@ -1003,17 +1003,19 @@
 \AtEndPreamble{\makeatletter\input{Config/8_list_of}}
 % \NTRunHook{list_of}
 
+%============================================================
+%  UNIVERSITY/SCHOOL SPECIFIC MATERIALS
+%   Please open and edit the appropriate
+%       configuration file “Config/9_<university>_<school>.tex”
+%============================================================
+\InputIfFileExists{Config/9_\@nt@univ_\@nt@schl.tex}{}{}%
+% \NTRunHook{list_of}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING ADDITINAL FILES AFTER LOADING MEMOIR
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\@ntloadfile@i}[1]{%
-    % \typeout{NT TRYING TO LOAD #1}%
-    \IfFileExists{#1}{%
-        \input{#1}%
-    }{%
-    }%
-}
+\newcommand{\@ntloadfile@i}[1]{\IfFileExists{#1}{\input{#1}}{}}
 
 \newcommand{\@ntloadfiles@ii}[2][VAL]{%
     % #1=KEY
@@ -1120,6 +1122,7 @@
 }
 
 \newcommand{\ntprintcoverpair}[1]{%
+  % #1 = major cover ID
   \IfStrEq{#1}{2}{%
     \iftoggle{/novathesis/secondcover}{%
       \ntprintcoversingle{#1}{1}%
@@ -1141,7 +1144,7 @@
     % \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{empty}\null\newpage}}{\def\@nt@newpage{}}%
     \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{cleared}\cleartoevenpage}}{\clearpage}%
   }{}%
-  \IfStrEq{#1,#2}{2,1}{\setcounter{page}{1}}{}%
+  \IfStrEq{#1-#2}{2-1}{\setcounter{page}{1}}{}%
   \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1-#2}{\@nt@newpage\@ntprintcover@i{#1-#2}}%
   {\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,bgcolor){\@nt@newpage\@ntprintcover@i{#1-#2}}%
   {\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,image){\@nt@newpage\@ntprintcover@i{#1-#2}}%
@@ -1150,6 +1153,7 @@
 
 \newcommand{\@ntprintcover@i}[1]{%
   % #1 = cover ID (major-minor)
+  \NTRunHook{cover/#1/pre}
   \bgroup%
     \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,textcolor)%
         {\color{\thethesiscover(\option{/novathesis/docdegree},#1,textcolor)}}{}%
@@ -1161,6 +1165,7 @@
     \@ntmakeboxwithcover{#1}{\@fullcover@box}%
     \newpage%
   \egroup%
+  \NTRunHook{cover/#1/post}
 }
 
 \newcommand{\@ntmakeboxwithcover}[2]{%
@@ -1316,12 +1321,12 @@
                           , N-2=\thebackcoverbkmstring(\option{/novathesis/coverlang})
                           , spine=\thespinebkmstring(\option{/novathesis/coverlang})}
   % letter to macro for horizontal alignment
-  , alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft}
+  , alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft,j=\null}
   % filters / conditional printing
   , status/.new value
   , degree/.new value
   % horizontal alighment and vertical alignments inside the box
-  , align/.new choice={c, l, r}
+  , align/.new choice={c, l, r, j}
   , inalign/.new choice={c, t, b}
   % height of the box (default = the natural height for the contents)
   , height/.new value

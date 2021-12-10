@@ -2,12 +2,50 @@
 %% ulisboa/fmv/defaults.ldf
 %% NOVA thesis configuration file
 %%
-%% Customization for FC-UL (strings and cover)
+%% Customization for ULISBOA-FMV (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT FILE ulisboa/fmv/defaults.ldf}%
 
-\ifphddoc{\ntsetup{secondcover=true}}{}
+
+% --------------------------------------------------------
+% FMV-like required data/information
+\usepackage{indentfirst}
+\setlength{\parindent}{1.25cm}
+\ifdocfinal{\ntsetup{secondcover=true}}{}
+\definecolor{fmvyellow}{RGB}{253,241,81}
+\definecolor{lightyellow}{RGB}{254,254,230}
+\ntbibsetup{style=apa}
+% \ntbibsetup{style=chicago-authordate}
+\AtEndPreamble{\let\cite\textcite}
+\ntsetprintorder{frontmatter}{
+  % statement;       % The statement page
+  % copyright;       % (*) The copyright page
+  dedicatory;      % (*) Print the dedicatory
+  acknowledgements;% (*) Print the acknowledgments
+  quote;           % (*) Print the quote
+  abstracts;       % Print abstracts in multiple languages.
+  alllistof;       % Print all the listof defined in “8_list_of.tex”
+}
+
+\newdata{doctype}
+\doctype(pt,phd):={Tese especialmente elaborada para obtenção do grau de Doutor em}
+\doctype(en,phd):={Thesis specially designed to earn the degree of Doctor in}
+\doctype(pt,msc):={Dissertação de Mestrado em}
+\doctype(en,msc):={Master Thesis in}
+
+\newdata{docemxadate}
+\def\ulfmvdocemxadate(#1)#2{\docemxadate(#1):={#2}}
+
+\newdata{scientificarea}
+\def\ulfmvscientificarea#1{\scientificarea(#1):={}}
+
+\newdata{availability}
+\def\ulfmvavailability(#1)#2{\availability(#1):={#2}}
+
+% --------------------------------------------------------
+\specializationstring(pt):={na especialidade de}
+\specializationstring(en):={with specialization in}
 
 % Faculty / School
 \school(pt):={Faculdade de Medicina Veterinária}
@@ -15,21 +53,17 @@
 \school(fr):={Faculty of Veterinary Medicine}
 \school(it):={Faculty of Veterinary Medicine}
 
-% Department field
-\department(pt):={\embrace{Designação do Departamento}}
-\department(en):={\embrace{Department Name}}
-
-% Specialization field
-\specialization(pt):={\embrace{Especialidade}}
-\specialization(en):={\embrace{Specialization}}
-
 
 % Comiittee printing order
 \committeeorder():={c,r,a,m}% 
 
 % Cover background images
 % \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
-% \thesiscover(phd,final,1-1,bgcolor):={white}
+% \thesiscover(phd,1-1,bgcolor):={lightyellow}%LemonChiffon,lightyellow
+% \thesiscover(phd,N-2,bgcolor):={lightyellow}%LemonChiffon,lightyellow
+% \thesiscover(msc,1-1,bgcolor):={lightyellow}%LemonChiffon,lightyellow
+% \thesiscover(msc,N-2,bgcolor):={lightyellow}%LemonChiffon,lightyellow
+% \thesiscover(spine,bgcolor):={lightyellow}%LemonChiffon,lightyellow
 % \thesiscover(phd,1-1,image):={final_1}
 % \thesiscover(phd,final,2-1,image):={final_1}
 % \thesiscover(phd,provisional,1-1,image):={provisional_1}
@@ -51,6 +85,21 @@
 \spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(year)={\thentdateyear}
+\spine(text,angle)={-90}
+
+\spine(box,author,top)={2.0cm}
+\spine(box,author,len)={4.0cm}
+
+\spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
+\spine(box,title,len)={16.7cm}
+
+\spine(box,logo,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
+\spine(box,logo,len)={2.1cm}
+\spine(box,logo,align)={c}
+
+\spine(box,date,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
+\spine(box,date,len)={2.0cm}
+
 
 % Set margins for "normal" pages
 \margin(screen,top):={2.5cm}
@@ -127,19 +176,6 @@
 \provisionalstring(fr):={TBD}
 \provisionalstring(it):={TBD}
 
-\dissertationstring(phdplan,pt)={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
-\dissertationstring(phdprop,pt)={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
-\dissertationstring(phd,pt)={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
-
-\dissertationstring(phdplan,en)={Document written to earn the degree of %
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
-\dissertationstring(phdprop,en)={Document written to earn the degree of %
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
-\dissertationstring(phd,en)={Document written to earn the degree of %
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -165,6 +201,21 @@
 \NTAddToHook{cover/2-1/pretext}{%
   \sffamily%
 }
+\NTAddToHook{mainmatter/post}{%
+  \counterwithout{figure}{chapter}%
+  \counterwithout{table}{chapter}%
+}
+\ifdocprovisional{
+  \AtEndPreamble{\usepackage[pagewise]{lineno}}
+  \NTAddToHook{acknowledgements/pre}{\linenumbers}
+  \NTAddToHook{acknowledgements/post}{\nolinenumbers}
+  \NTAddToHook{abstract/pre}{\linenumbers}
+  \NTAddToHook{abstract/post}{\nolinenumbers}
+  \NTAddToHook{mainmatter/pre}{\linenumbers}
+  \NTAddToHook{cover/N-1/pre}{\nolinenumbers}
+  \NTAddToHook{cover/N-2/pre}{\nolinenumbers}
+}
+
 
 % School
 \ntaddtocover[height=2.5cm, inalign=c]{1-1,2-1}{%
@@ -191,7 +242,7 @@
 \ntaddtocover[vspace=0cm, height=1.3cm]{1-1,2-1}{%
   \ifdocfinal{~}{\emph{\theprovisionalstring(\option{/novathesis/coverlang})}}%
 }
-%
+
 % Author name
 \ntaddtocover[vspace=0.0cm, height=1.0cm]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
@@ -200,13 +251,15 @@
 
 % Degree
 % In this position only if it is a phd doc;
-% \ntaddtocover[vspace=0.0cm, height=2.5cm]{1-1,2-1}{%
-%   \fontseries{mc}\fontsize{14}{14}\selectfont%
-%   \thedegreename(\option{/novathesis/coverlang})
-%   \ifdatadefined{specialization}(\option{/novathesis/coverlang})%
-%     {\\[2mm]\thespecialization(\option{/novathesis/coverlang})}%
-%     {}%
-% }%
+\ntaddtocover[vspace=1cm, height=0.5cm]{1-1,2-1}{%
+  \fontsize{12}{12}\selectfont%
+  \IfStrEq{\@covernumber}{2-1}{\thedoctype(\option{/novathesis/coverlang},\option{/novathesis/docdegree})
+                               \thedegreename(\option{/novathesis/coverlang})
+                               \ifdatadefined{specialization}(\option{/novathesis/coverlang})%
+                                         {\thespecializationstring(\option{/novathesis/coverlang})
+                                          \thespecialization(\option{/novathesis/coverlang})}{~}}%
+                              {~}%
+}%
 
 
 % Committee and Advisers
@@ -248,3 +301,11 @@
   \fontsize{14}{14}\selectfont%
     \thentdateyear%
 }
+
+\ifdocfinal{
+  \ntaddtocover[align=j]{2-2}{%
+    \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}{}%
+        {\PackageWarning{novathesis}{Missing statement file “statement.tex” for ”\@nt@univ/\@nt@schl”}}
+  }%
+}
+
