@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-12-10 [6.8.0]
+%% Version 2021-12-12 [6.8.1]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -851,6 +851,12 @@
   \option@setlist[;]{/@nt/print/#1}{#2}%
 }
 
+\newcommand*{\ntremovefromprintorder}[2]{%
+% #1 = frontmatter, mainmatter
+% #2 =single item to remove
+  \@for\@nt@item:=#2\do{\options{/@nt/print/#1/.remove = {\@nt@item}}}%
+}
+
 % --------------------------------------------------------
 % DEFAULT VALUES FOR frontmatter AND mainmatter
 \ntsetprintorder{frontmatter}{
@@ -983,6 +989,7 @@
 
 \ifdocunset{\ntsetup{docstatus=working}}{}
 \ifdocfinal{\ntsetup{printcommittee=true}}{}
+\ifdocworking{\ntremovefromprintorder{frontmatter}{statement,copyright,dedicatory,acknowledgements,quote}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING ADDITINAL FILES AFTER LOADING MEMOIR
