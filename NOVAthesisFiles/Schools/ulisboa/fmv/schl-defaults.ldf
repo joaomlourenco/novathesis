@@ -18,15 +18,17 @@
 \ntbibsetup{style=apa}
 % \ntbibsetup{style=chicago-authordate}
 \AtEndPreamble{\let\cite\textcite}
-\ntsetprintorder{frontmatter}{
-  % statement;       % The statement page
-  % copyright;       % (*) The copyright page
-  dedicatory;      % (*) Print the dedicatory
-  acknowledgements;% (*) Print the acknowledgments
-  quote;           % (*) Print the quote
-  abstracts;       % Print abstracts in multiple languages.
-  alllistof;       % Print all the listof defined in “8_list_of.tex”
-}
+\ntremovefromprintorder{frontmatter}{statement,copyright}
+% \ntremovefromprintorder{frontmatter}{copyright}
+% \ntsetprintorder{frontmatter}{
+%   % statement;       % The statement page
+%   % copyright;       % (*) The copyright page
+%   dedicatory;      % (*) Print the dedicatory
+%   acknowledgements;% (*) Print the acknowledgments
+%   quote;           % (*) Print the quote
+%   abstracts;       % Print abstracts in multiple languages.
+%   alllistof;       % Print all the listof defined in “8_list_of.tex”
+% }
 
 \newdata{doctype}
 \doctype(pt,phd):={Tese especialmente elaborada para obtenção do grau de Doutor em}
@@ -240,7 +242,9 @@
 
 % Doc Status
 \ntaddtocover[vspace=0cm, height=1.3cm]{1-1,2-1}{%
-  \ifdocfinal{~}{\emph{\theprovisionalstring(\option{/novathesis/coverlang})}}%
+  \ifdocworking{Draft: \today}{}%
+  \ifdocprovisional{\emph{\theprovisionalstring(\option{/novathesis/coverlang})}}{}%
+  \ifdocfinal{~}{}%
 }
 
 % Author name

@@ -45,7 +45,7 @@
 \providecommand*\@swaptwo[2]{#2#1}
 \providecommand*\expandnextcmds[2]{\expandafter\@swaptwo\expandafter{#2}{#1}}
 
-% unsafe expand next if the command is a single token..
+% unsafe expand next if the command is a single token
 \providecommand*\expandnextsingle[2]{\expandafter#1\expandafter{#2}}
 
 \providecommand*\eifstrequal[1]{\expandnextsingle\ifstrequal{#1}}
@@ -614,7 +614,9 @@
   \ifcsname c@#1\endcsname\else\newcounter{#1}\fi%
   \setcounter{#1}{0}%
 }
-% \newrobustcmd*\option@remove[2]{\typeout{NT LIST REMOVE [#2] from \@nameuse{optk@#1}}\listcsremove{optk@#1}{#2}\typeout{NT LIST REMOVE \@nameuse{optk@#1}}}%
+\newrobustcmd*\option@remove[2]{%
+    \expandnext{\listcsremove{optk@#1}}{#2}%
+    \option@adjustlistsize{#1}}%
 \newrobustcmd*\option@setnil[1]{\option@set{#1}{}\option@neworzerocounter{#1/@sizecnt}}%
 \newrobustcmd*\option@push[2]{\listcsadd{optk@#1}{#2}\option@adjustlistsize{#1}}%
 \newrobustcmd*\option@epush[2]{\listcseadd{optk@#1}{#2}\option@adjustlistsize{#1}}%
@@ -1112,6 +1114,7 @@
     #1/.initial   = {#2},
   },
   /handlers/show/list/.new cmd    = \letoptionlist{#1}\opt@list\option@showvalue{\opt@list},
+  /handlers/remove/.new operation   = \option@remove{#1}{#2},
   /handlers/push/.new operation   = \option@push{#1}{#2},
   /handlers/cpush/.new operation = {%
           \expandnextsingle\ifoptiondefined{#1}{}{\expandnextsingle\options{#1/.new list}}%
