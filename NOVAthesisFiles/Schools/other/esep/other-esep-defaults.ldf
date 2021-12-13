@@ -1,0 +1,216 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% other/esep/defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for ESEP/ESENF (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE other/esep/defaults.ldf}%
+
+\ntsetup{fontstyle=calibri}
+
+%%% RGB = 41, 141, 187
+
+\ntsetup{secondcover=true}    % Shall a second cover page be forced?
+\ntsetup{fontstyle=calibri}
+\nttitle[en]{Please define the title in english}
+
+% University
+\university(pt):={Escola Superior de Enfermagem do Porto}
+\university(en):={Nursing School of Porto}%%TBD
+\university(fr):={Escola Superior de Enfermagem do Porto}%%TBD
+\university(it):={Escola Superior de Enfermagem do Porto}%%TBD
+
+% Faculty / School
+\school(pt):={Escola Superior de Enfermagem do Porto}
+\school(en):={Nursing School of Porto}%%TBD
+\school(fr):={Escola Superior de Enfermagem do Porto}%%TBD
+\school(it):={Escola Superior de Enfermagem do Porto}%%TBD
+%
+% % Scientific filed
+% \majorfield(pt):={«Área Científica»}
+% \majorfield(en):={“Scientific Field”}
+
+% Degree name
+\degreename(pt):={Enfermagem em Saúde Mental e Psiquiatria}
+\degreename(en):={$<$Degree Name$>$}
+
+% Comiittee printing order
+\committeeorder():={c,r,m}% 
+
+% Cover background images
+\ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
+\thesiscover(phd,1-1,bgcolor):={white}
+\thesiscover(phd,1-1,image):={other-esep-cover}
+\thesiscover(phdplan,1-1,bgcolor):={white}
+\thesiscover(phdplan,1-1,image):={other-esep-cover}
+\thesiscover(phdprop,1-1,image):={other-esep-cover}
+\thesiscover(msc,1-1,bgcolor):={white}
+\thesiscover(msc,1-1,image):={other-esep-cover}
+\thesiscover(mscplan,1-1,bgcolor):={white}
+\thesiscover(mscplan,1-1,image):={other-esep-cover}
+\thesiscover(bsc,1-1,bgcolor):={white}
+\thesiscover(bsc,1-1,image):={other-esep-cover}
+\thesiscover(plain,1-1,bgcolor):={white}
+\thesiscover(plain,1-1,image):={other-esep-cover}
+
+% Spine info
+\spine(logo)={other-esep-logo_horiz}
+\spine(logo,angle)={90}
+\spine(author)={\thedocauthor(name,short)}
+\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(year)={\thentdateyear}
+
+% Set margins for "normal" pages
+\margin(screen,top):={2.5cm}
+\margin(screen,bottom):={2.5cm}
+\margin(screen,left):={3.25cm}
+\margin(screen,right):={3.25cm}
+\margin(paper,top):={2.5cm}
+\margin(paper,bottom):={2.5cm}
+\margin(paper,left):={4cm}
+\margin(paper,right):={2.5cm}
+
+% Set margins for cover pages
+\margin(phd,top):={1.0cm}
+\margin(phd,bottom):={1.5cm}
+\margin(phd,left):={7cm}
+\margin(phd,right):={0.5cm}
+\margin(phdplan,top):={1.0cm}
+\margin(phdplan,bottom):={1.5cm}
+\margin(phdplan,left):={7cm}
+\margin(phdplan,right):={1.0cm}
+\margin(phdprop,top):={1.0cm}
+\margin(phdprop,bottom):={1.5cm}
+\margin(phdprop,left):={7cm}
+\margin(phdprop,right):={1.0cm}
+\margin(msc,top):={1.0cm}
+\margin(msc,bottom):={1.5cm}
+\margin(msc,left):={7cm}
+\margin(msc,right):={0.5cm}
+\margin(mscplan,top):={1.0cm}
+\margin(mscplan,bottom):={1.5cm}
+\margin(mscplan,left):={7cm}
+\margin(mscplan,right):={1.0cm}
+\margin(bsc,top):={1.0cm}
+\margin(bsc,bottom):={1.5cm}
+\margin(bsc,left):={7cm}
+\margin(bsc,right):={1.0cm}
+\margin(plain,top):={1.0cm}
+\margin(plain,bottom):={1.5cm}
+\margin(plain,left):={7cm}
+\margin(plain,right):={1.0cm}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ESEP logo
+\ntaddtocover[vspace=2.2cm]{1-1,2-1}{%
+  \noindent%
+  \fontsize{15}{15}\selectfont%
+  \textbf{\MakeTextUppercase{\theschool(\option{/novathesis/coverlang})}}%
+}
+
+% Degree name
+\ntaddtocover[vspace=0.5cm]{1-1,2-1}{%
+  \fontsize{15}{15}\selectfont%
+  \thedegreename(\option{/novathesis/coverlang})%
+}
+
+% Title of Dissertation 1
+\ntaddtocover[vspace=6.5cm, height=4cm, inalign=t]{1-1}{%
+    \centering%
+    \fontsize{15}{15}\selectfont%
+    \thedoctitle(\option{/novathesis/coverlang},main,cover,caps)\\[1ex]%
+    \fontsize{12}{12}\selectfont%
+    Dissertação%
+}
+
+% % Title of Dissertation 2
+\ntaddtocover[vspace=6.5cm, height=4cm, inalign=t]{2-1}{%
+    \centering%
+    \fontsize{15}{15}\selectfont\scshape%
+    \thedoctitle(\option{/novathesis/coverlang},main,cover)\\[1ex]%
+    \thedoctitle(en,main,cover)%
+}
+
+% Advisers 2
+\ntaddtocover[vspace=2cm]{2-1}{%
+  % \fontseries{mc}
+  \parbox[t][4cm]{\textwidth}{%
+    \centering%
+    \fontsize{11}{11}\selectfont%
+    \ntprintpersons{0.8}{2}{adviser}{a,c}%
+  }%
+}
+\ntaddtocover[vspace=2cm]{1-1}{%
+  \parbox[t][4cm]{\textwidth}{%
+  ~%
+  }%
+}
+
+% Author name
+\ntaddtocover[vspace=1]{1-1,2-1}{%
+  \fontsize{12}{12}\selectfont
+  \textbf{\thedocauthor(name)}
+}
+
+% Date
+\ntaddtocover[vspace=2]{1-1,2-1}{%
+  \fontsize{12}{12}\selectfont
+    \textbf{\thentdatemonth, \thentdateyear}
+}
+
+%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %% Draw the second cover page
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% % ESEP logo
+% \ntaddtocover[vspace=2.2cm]{2-1}{%
+%   \ntcoverbackground
+%   \fontsize{15}{15}\selectfont
+%   \expandafter\MakeUppercase\expandafter{\textbf{\theschool(\option{/novathesis/coverlang})}}
+% }
+%
+% % % Degree name
+% \ntaddtocover[vspace=0.5cm]{2-1}{%
+%   \fontsize{15}{15}\selectfont
+%   \thedegreename(\option{/novathesis/coverlang})
+% }
+%
+% % % Title of Dissertation
+% \ntaddtocover[vspace=6.5cm]{2-1}{%
+%   % \fontseries{mc}
+%   \fontsize{15}{15}\selectfont
+%   \scshape
+%   \thedoctitle(\option{/novathesis/coverlang},main,cover)\\[1ex]
+%   \thedoctitle(\option{/novathesis/coverlang},main,cover)[en]
+% }
+%
+% % Author name
+% \ntaddtocover[vspace=1]{2-1}{%
+%   \fontsize{12}{12}\selectfont
+%   \textbf{\thedocauthor(name)}
+% }
+%
+% % Date
+% \ntaddtocover[vspace=1]{2-1}{%
+%   \fontsize{12}{12}\selectfont
+%   \ifdraftdoc
+%     \textbf{DRAFT: \today}
+%   \else
+%     \thentdatemonth, \thentdateyear
+%   \fi
+% }
+%
+% % % Final space
+% \ntaddtocover[vspace=1cm]{2-1}{%
+%   ~
+% }
+%
+%

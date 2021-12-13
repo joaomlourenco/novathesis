@@ -328,7 +328,7 @@
   \StrCount{#2}{,}[\@nt@ncommas]%
   \IfStrEq{\@nt@ncommas}{1}{}{%
     \ClassError{novathesis}{Invalid role or gender in \string\ntaddperson{#2}}%
-                           {Please see file “5_cover.tex” for the correct syntax.}%
+                           {Please see file “3_cover.tex” for the correct syntax.}%
   }%
   \@ntaddperson@iv{#1}[#2]%
 }
@@ -866,7 +866,7 @@
   acknowledgements;% (*) Print the acknowledgments
   quote;           % (*) Print the quote
   abstracts;       % Print abstracts in multiple languages.
-  alllistof;       % Print all the listof defined in “8_list_of.tex”
+  alllistof;       % Print all the listof defined in “6_list_of.tex”
 }
 
 \ntsetprintorder{mainmatter}{
@@ -909,11 +909,11 @@
     \prependtographicspath{{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/Images/}}%
 }{}
 
-\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/univ-defaults.ldf}{}%
-    {\PackageWarning{novathesis}{Missing file “univ-defaults.ldf” for ”\@nt@univ”}}
+\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@univ-defaults.ldf}{}%
+    {\PackageWarning{novathesis}{Missing file “\@nt@univ-defaults.ldf” for ”\@nt@univ”}}
 
-\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/schl-defaults.ldf}{}%
-    {\PackageWarning{novathesis}{Missing file “schl-defaults.ldf” for ”\@nt@univ/\@nt@schl”}}
+\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/\@nt@univ-\@nt@schl-defaults.ldf}{}%
+    {\PackageWarning{novathesis}{Missing file “\@nt@univ-\@nt@schl-defaults.ldf” for ”\@nt@univ/\@nt@schl”}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING MEMOIR
@@ -950,17 +950,17 @@
 %============================================================
 %  THESIS/DISSERTATION COVER DATA (title, author, etc)
 %   Please open and edit the appropriate
-%       configuration file “Config/5_cover.tex”
+%       configuration file “Config/3_cover.tex”
 %============================================================
-\input{Config/5_cover}
+\input{Config/3_cover}
 % \NTRunHook{cover}
 
 %============================================================
 %  THESIS/DISSERTATION FILES
 %   Please open and edit the appropriate
-%       configuration file “Config/6_files.tex”
+%       configuration file “Config/4_files.tex”
 %============================================================
-\input{Config/6_files}
+\input{Config/4_files}
 % \NTRunHook{files}
 
 %============================================================
@@ -968,15 +968,15 @@
 %      Please open and edit the appropriate
 %       configuration file “Config/8_packages.tex”
 %============================================================
-\AtEndPreamble{\input{Config/7_packages}}
+\AtEndPreamble{\input{Config/5_packages}}
 % \NTRunHook{packages}
 
 %============================================================
 %  WHICH LIST_OF TO PRINT
 %   Please open and edit the appropriate
-%       configuration file “Config/8_list_of.tex”
+%       configuration file “Config/6_list_of.tex”
 %============================================================
-\AtEndPreamble{\makeatletter\input{Config/8_list_of}}
+\AtEndPreamble{\makeatletter\input{Config/6_list_of}}
 % \NTRunHook{list_of}
 
 %============================================================
@@ -984,7 +984,8 @@
 %   Please open and edit the appropriate
 %       configuration file “Config/9_<university>_<school>.tex”
 %============================================================
-\InputIfFileExists{Config/9_\@nt@univ_\@nt@schl.tex}{}{}%
+\IfFileExists{Config/9_\@nt@univ_\@nt@schl.tex}{\input{Config/9_\@nt@univ_\@nt@schl.tex}}
+    {\InputIfFileExists{Config/9_\@nt@univ.tex}{}{}}
 % \NTRunHook{list_of}
 
 \ifdocunset{\ntsetup{docstatus=working}}{}

@@ -1,0 +1,16 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% iscte-iul/univ-defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for ISCTE - INSTITUTO UNIVERSITÁRIO DE LISBOA (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE iscte-iul/univ-defaults.ldf}%
+
+% University
+\university(pt):={Iscte — Instituto Universitário de Lisboa}
+\university(en):={Iscte – University Institute of Lisbon}
+\university(fr):={Iscte – University Institute of Lisbon}
+\university(it):={Iscte – University Institute of Lisbon}
+% \university(logo):={nova-insignia}
+% \university(logo,neg):={nova-insignia-negative}
