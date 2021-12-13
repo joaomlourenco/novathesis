@@ -1885,7 +1885,7 @@
       \NTRunHook{copyright/pre}%
       \ntprintcopyrightpage%
       \NTRunHook{copyright/post}%
-      \iftoggle{/novathesis/printackblock}{\ntprintacknowledgementsblock}{}%
+      \ntprintacknowledgementsblock%
     }{}%
   }{}%
 }
