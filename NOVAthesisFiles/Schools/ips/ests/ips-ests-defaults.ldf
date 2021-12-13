@@ -1,0 +1,18 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ips/ests/defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for ESTS-IPS (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE ips/ests/defaults.ldf}%
+
+% Faculty / School
+\school(pt):={Escola Superior de Tecnologia de Setúbal}
+\school(en):={Escola Superior de Tecnologia de Setúbal}
+\school(fr):={Escola Superior de Tecnologia de Setúbal}
+\school(it):={Escola Superior de Tecnologia de Setúbal}
+
+% School customization
+\school(logo):={ips-ests-logo-vert}
+\frontpageimage():={ests-photo } % don't add the .jpg extension

@@ -1,0 +1,16 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova/univ-defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for UNIVERSIADE NOVA DE LISBOA (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE nova/univ-defaults.ldf}%
+
+% University
+\university(pt):={Universidade NOVA de Lisboa}
+\university(en):={NOVA University Lisbon}
+\university(fr):={NOVA University Lisbon}
+\university(it):={NOVA University Lisbon}
+\university(logo):={nova-insignia}
+\university(logo,neg):={nova-insignia-negative}

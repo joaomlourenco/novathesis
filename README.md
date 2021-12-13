@@ -84,10 +84,10 @@ The “*novathesis*” LaTeX template…
     * “*3b_degree_msc.tex*” — if you are writing a MSc dissertation configure your degree here
     * “*3c_degree_other.tex*” — otherwise configure your document type here
     * “*4_department.tex*” — configure your Department name here
-    * “*5_cover.tex*” — configure cover contents here (e.g., author's name, thesis/dissertation title, etc)
-    * “*6_files.tex*” — add here the the  files for chapters, appendices, annexes, etc…
-    * “*7_packages.tex*” — add here your additional packages and commands
-    * “*8_list_of.tex*” — configure which lists should be printed (table of contents, list of figures, etc)
+    * “*3_cover.tex*” — configure cover contents here (e.g., author's name, thesis/dissertation title, etc)
+    * “*4_files.tex*” — add here the the  files for chapters, appendices, annexes, etc…
+    * “*5_packages.tex*” — add here your additional packages and commands
+    * “*6_list_of.tex*” — configure which lists should be printed (table of contents, list of figures, etc)
 5. Recompile de document:
 	* See 3. above.
 6. You're done with a beautifully formatted thesis/dissertation! 😃

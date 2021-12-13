@@ -1,0 +1,24 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% uminho/iibbb/schl-defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for IIBBB-UMINHO (strings and cover)
+%%
+%%      This customization had the collaboration and support
+%%      from Bruno Pereira (b-pereira @ github), who built
+%%      the initial support in a fork of version 4.x
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE uminho/iibbb/schl-defaults.ldf}%
+
+%-----------------------------------------------------------------
+% Remainder customization
+%-----------------------------------------------------------------
+% Faculty / School
+\school(pt):={Instituto de Investigação em Biomateriais, \\Biodegradáveis e Biomiméticos​}
+\school(en):={Instituto de Investigação em Biomateriais, \\Biodegradáveis e Biomiméticos​}
+\school(fr):={Instituto de Investigação em Biomateriais, \\Biodegradáveis e Biomiméticos​}
+\school(it):={Instituto de Investigação em Biomateriais, \\Biodegradáveis e Biomiméticos​}
+\school(logo,RGB):={uminho-iibbb-insignia-color}
+\school(logo,GRAY):={uminho-iibbb-insignia-mono}

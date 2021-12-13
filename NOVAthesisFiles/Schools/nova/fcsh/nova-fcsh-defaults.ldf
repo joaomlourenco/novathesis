@@ -1,0 +1,173 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova/fcsh/defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for FCSH-NOVA (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE nova/fsch/defaults.ldf}%
+
+\ntsetup{secondcover=true}
+
+% Faculty / School
+\school(pt):={Faculdade de Ciências Sociais e Humanas}
+\school(en):={School of Social Sciences and Humanities}
+\school(fr):={School of Social Sciences and Humanities}
+\school(it):={School of Social Sciences and Humanities}
+
+% Scientific filed
+\majorfield(pt):={«Área Científica»}
+\majorfield(en):={“Scientific Field”}
+
+% Comiittee printing order
+\committeeorder():={c,r,a,m}% 
+
+% Cover background images
+% \thesiscover(phd,1-1,image):={}
+% \thesiscover(phdplan,1-1,image):={}
+% \thesiscover(phdprop,1-1,image):={}
+% \thesiscover(msc,1-1,image):={}
+% \thesiscover(mscplan,1-1,image):={}
+% \thesiscover(bsc,1-1,image):={}
+% \thesiscover(plain,1-1,image):={}
+
+% Spine info
+\spine(logo)={nova-fcsh-insignia-color}
+\spine(author)={\thedocauthor(name,short)}
+\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(year)={\thentdateyear}
+
+% Set margins for "normal" pages
+\margin(screen,top):={2.5cm}
+\margin(screen,bottom):={2.5cm}
+\margin(screen,left):={3.0cm}
+\margin(screen,right):={3.0cm}
+\margin(paper,top):={2.5cm}
+\margin(paper,bottom):={2.5cm}
+\margin(paper,left):={3.0cm}
+\margin(paper,right):={3.5cm}
+
+% Set margins for cover pages 
+\margin(phd,top):={0.0cm}
+\margin(phd,bottom):={0.0cm}
+\margin(phd,left):={0.0cm}
+\margin(phd,right):={0.0cm}
+\margin(phdplan,top):={0.0cm}
+\margin(phdplan,bottom):={0.0cm}
+\margin(phdplan,left):={0.0cm}
+\margin(phdplan,right):={0.0cm}
+\margin(phdprop,top):={0.0cm}
+\margin(phdprop,bottom):={0.0cm}
+\margin(phdprop,left):={0.0cm}
+\margin(phdprop,right):={0.0cm}
+\margin(msc,top):={0.0cm}
+\margin(msc,bottom):={0.0cm}
+\margin(msc,left):={0.0cm}
+\margin(msc,right):={0.0cm}
+\margin(mscplan,top):={0.0cm}
+\margin(mscplan,bottom):={0.0cm}
+\margin(mscplan,left):={0.0cm}
+\margin(mscplan,right):={0.0cm}
+\margin(bsc,top):={0.0cm}
+\margin(bsc,bottom):={0.0cm}
+\margin(bsc,left):={0.0cm}
+\margin(bsc,right):={0.0cm}
+\margin(plain,top):={0.0cm}
+\margin(plain,bottom):={0.0cm}
+\margin(plain,left):={0.0cm}
+\margin(plain,right):={0.0cm}
+
+% \dissertationstring(phd,pt)={\thedocdegreestr(phd,pt)\ em\\[1ex] \textbf{\themajorfield(pt)}}
+% \dissertationstring(phd,en)={\thedocdegreestr(phd,en)\ in\\[1ex] \textbf{\themajorfield(en)}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FCSH guidelines:
+% The pages should be numbered consecutively at the bottom centre of the
+% page.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use romman numerals for Appendixes
+% \patchcmd{\HyOrg@appendix}{\@Alph}{\@Roman}{}{}
+\patchcmd{\appendix}{\@Alph}{\@Roman}{}{}
+
+\frenchspacing
+
+% Fazer indentação parágrafos
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{6pt plus 3pt minus 1pt}
+
+\usepackage{indentfirst}  % To also indent the first paragraph in the chapter/section/subsection/…
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtEndPreamble{% 
+  \LoadHelveticaLikeFont%
+  % \usepackage{gillius2}%
+}
+
+\NTAddToHook{cover/1-1/pretext}{%
+  \sffamily%
+}
+\NTAddToHook{cover/2-1/pretext}{%
+  \sffamily%
+}
+\definecolor{fcshblue}{RGB}{25,61,108}% Background title color
+
+
+\ntaddtocover[align=l, vspace=1.0cm]{1-1}{%
+  \null%
+  \begin{tabular*}{{0.5\stockwidth}}[c]{@{\hspace*{0.8cm}}l@{}}%
+    \includegraphics[width=9cm]{nova-fcsh-logo-color-horiz}%
+  \end{tabular*}%
+}
+
+\ntaddtocover[align=l, vspace=1.0cm]{2-1}{%
+  \null%
+  \begin{tabular*}{{0.5\stockwidth}}[c]{@{\hspace*{0.8cm}}l@{}}%
+    \includegraphics[width=9cm]{nova-fcsh-logo-color-horiz}%
+  \end{tabular*}%
+  \begin{tabular*}{{0.5\stockwidth}}[c]{@{}l@{}}%
+    \textcolor{fcshblue}{\rule{0.5\stockwidth}{4pt}}%
+  \end{tabular*}%
+}
+
+
+% % Title of Dissertation
+\ntaddtocover[vspace=1]{1-1,2-1}{%
+  \fontsize{18}{18}\selectfont%
+  \textcolor{fcshblue}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
+}
+
+% Author name
+\ntaddtocover[vspace=1]{1-1,2-1}{%
+  \fontsize{18}{18}\selectfont%
+  \textcolor{fcshblue}{\textbf{\thedocauthor(name)}}%
+}
+
+% Degree
+\ntaddtocover[vspace=1]{1-1,2-1}{%
+  \fontsize{18}{18}\selectfont%
+  \textcolor{fcshblue}{\textbf{\thepresentationtext}}%
+}
+
+% Date
+\ntaddtocover[vspace=1]{1-1,2-1}{%
+  \fontsize{14}{14}\selectfont%
+  \textcolor{fcshblue}{%%
+      \textbf{\thentdatemonth, \thentdateyear}
+  }%
+}
+
+\ntaddtocover[vspace=2.0cm]{1-1}{%
+  \null
+}
+
+\ntaddtocover[vspace=1cm]{2-1}{%
+ \raisebox{-1cm}{%
+   \textcolor{fcshblue}{\rule{\stockwidth}{0.75cm}}%
+ }%
+}
+
