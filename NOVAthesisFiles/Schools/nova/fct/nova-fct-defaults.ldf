@@ -35,6 +35,8 @@
 
 % Cover background images
 \thesiscover(phd,1-1,bgcolor):={black}
+\thesiscover(phd,1-1,textcolor):={white}
+\thesiscover(phd,2-1,textcolor):={black}
 \thesiscover(phd,1-1,image):={nova-fct-phd-cover}
 \thesiscover(phd,N-2,image):={nova-fct-phd-cover-back}
 \thesiscover(phd,spine,image):={nova-fct-phd-spine}
@@ -47,6 +49,9 @@
 \thesiscover(phdplan,N-2,image):={nova-fct-phd-cover-back}
 \thesiscover(phphdpland,spine,image):={nova-fct-phd-spine}
 
+\thesiscover(msc,1-1,bgcolor):={black}
+\thesiscover(msc,1-1,textcolor):={white}
+\thesiscover(msc,2-1,textcolor):={black}
 \thesiscover(msc,1-1,image):={nova-fct-cover}
 \thesiscover(msc,N-2,image):={nova-fct-cover-back}
 \thesiscover(msc,spine,image):={nova-fct-msc-spine}
@@ -152,7 +157,7 @@
 %% Draw the cover pages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NTAddToHook{cover/1-1/pretext}{%
-  \color{white}\sffamily%
+  \sffamily%
 }
 \NTAddToHook{cover/2-1/pretext}{%
   \sffamily%
@@ -165,14 +170,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Department name
-\ntaddtocover[color=white,vspace=1.25mm,align=l,hspace=6.1cm,height=2.0cm,inalign=t]{1-1}{%
+\ntaddtocover[vspace=1.25mm,align=l,hspace=6.1cm,height=2.0cm,inalign=t]{1-1}{%
   % \ntcoverbackground%
   \fontsize{14}{14}\selectfont%
   \MakeTextUppercase{\thedepartment(\option{/novathesis/coverlang})}%
 }
 
 % Title of Dissertation (PhD) / The author name (MSc)
-\ntaddtocover[color={white},vspace=5.3cm,align=l,height=3.0cm,inalign=c]{1-1}{%
+\ntaddtocover[vspace=5.3cm,align=l,height=3.0cm,inalign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{22}{21}\selectfont%
     \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
@@ -190,7 +195,7 @@
 }
 
 % The author name (PhD) / Title of Dissertation (MSc)
-\ntaddtocover[color={white},vspace=3.0cm,align=l,height=3cm,inalign=c]{1-1}{%
+\ntaddtocover[vspace=3.0cm,align=l,height=3cm,inalign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{17}{17}\selectfont%
     \textbf{\MakeTextUppercase{\thedocauthor(name)}}\\[2mm]%
@@ -207,8 +212,13 @@
   }%
 }
 
+
+\ntaddtocover[color=yellow,vspace=1,align=l]{1-1}{%
+    \ifdocworking{\emph{\textbf{Draft:} \today}}{~}%%
+}
+
 % Date
-\ntaddtocover[color={white},vspace=1,align=l]{1-1}{%
+\ntaddtocover[vspace=1,align=l]{1-1}{%
   \fontsize{14}{13}\selectfont%
   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[3mm]%
   \theuniversity(\option{/novathesis/coverlang})\\%
@@ -220,11 +230,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % LOGOS
-\ntaddtocover[color=black, vspace=1.0mm,hspace=-2.6cm,align=l,height=2.0cm,inalign=t]{2-1}{%
+\ntaddtocover[vspace=1.0mm,hspace=-2.6cm,align=l,height=2.0cm,inalign=t]{2-1}{%
   \vspace*{-4mm}%
   \begin{minipage}[b]{8.7cm}%
   \includegraphics[width=2.15cm]{\expanded{\theuniversity(logo)}}%
-  \hspace{3.5mm}\rule{0.5mm}{2cm}\hspace{5mm}%
+  \hspace{3.5mm}\rule{0.15mm}{2cm}\hspace{5mm}%
   \raisebox{2.5mm}{\includegraphics[width=3.52cm]{\expanded{\theschool(logo)}}}%
   \end{minipage}%
   \raisebox{9mm}{%
@@ -268,6 +278,10 @@
   \committeestringfont():={\bfseries}%
   \fontsize{10}{10}\selectfont%
   \ntprintpersons{0.9}{2}{committee}{\thecommitteeorder()}%
+}
+
+\ntaddtocover[color=red,vspace=1,align=l]{2-1}{%
+    \ifdocworking{\emph{\textbf{Draft:} \today}}{~}%%
 }
 
 % Date

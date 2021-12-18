@@ -1369,12 +1369,13 @@
       \ifoptionblank{/@ntcoveropts/height}%
           {\minipage[t][][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
           {\minipage[t][\@mkcvelemheight][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
+              \ifoptionblank{/@ntcoveropts/color}{}{\color{\option{/@ntcoveropts/color}}}%
               \option{/@ntcoveropts/alignmap}%
               #2%
           \endminipage%
   \end{lrbox}%
   \begin{lrbox}{#3}%
-    % Add  round color if necessary
+    % Add background color if necessary
     \ifoptionblank{/@ntcoveropts/bgcolor}%
       {\usebox{#3}}%
       {\colorbox{\option{/@ntcoveropts/bgcolor}}{\usebox{#2}}}%
