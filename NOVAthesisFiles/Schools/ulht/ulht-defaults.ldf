@@ -152,6 +152,6 @@
 % Date
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
-    \textbf{\thentdatemonth, \thentdateyear}%
+    \textbf{\thentdocdate(month), \thentdocdate(year)}%
 }
 

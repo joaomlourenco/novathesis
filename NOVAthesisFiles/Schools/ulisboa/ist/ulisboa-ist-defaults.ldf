@@ -34,7 +34,7 @@
 \spine(logo)={ulisboa-ist-logo}
 \spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
-\spine(year)={\thentdateyear}
+\spine(year)={\thentdocdate(year)}
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
@@ -175,6 +175,6 @@
 % Date
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
-    \textbf{\thentdatemonth, \thentdateyear}
+    \textbf{\thentdocdate(month), \thentdocdate(year)}
 }
 

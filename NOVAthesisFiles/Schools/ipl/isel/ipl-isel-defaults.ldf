@@ -35,7 +35,7 @@
 \spine(logo,angle)={90}
 \spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
-\spine(year)={\thentdateyear}
+\spine(year)={\thentdocdate(year)}
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
@@ -179,6 +179,6 @@
 % Date
 \ntaddtocover[vspace=2]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
-    \textbf{\thentdatemonth, \thentdateyear}
+    \textbf{\thentdocdate(month), \thentdocdate(year)}
 }
 

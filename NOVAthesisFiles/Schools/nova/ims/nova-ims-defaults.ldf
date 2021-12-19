@@ -125,7 +125,7 @@
 
 \spine(author)={\thedocauthor(name)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
-\spine(date)={\thentdateyear}
+\spine(date)={\thentdocdate(year)}
 
 \spine(text,angle)={90}
 % \spine(text,color)=black
@@ -317,7 +317,7 @@
 \ntaddtocover[align=l, vspace=1cm, degree=phd]{1-1}{%
   \fontsize{11}{11}\selectfont%
   \textcolor{imsdarkgrey}{%
-    \textbf{\thentdatemonth, \thentdateyear}%
+    \textbf{\thentdocdate(month), \thentdocdate(year)}%
   }%
 }
 
@@ -414,5 +414,5 @@
 
 % Date
 \ntaddtocover[align=c, vspace=2]{2-1}{%
-  \thentdatemonth, \thentdateyear%
+  \thentdocdate(month), \thentdocdate(year)%
 }%
