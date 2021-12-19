@@ -161,7 +161,7 @@
 \long\def\ntfor#1:=#2\do#3{\@ifnextchar[{\ntfor@i#1:=#2\do#3}{\ntfor@i#1:=#2\do#3[]}}
 \long\def\ntfor@i#1:=#2\do#3[#4]{%
   \ntstopfalse
-  \@for#1:=#2\do{\ifntstop\else#3\fi}%
+  \@for#1:=#2\do{\edef#1{#1}\ifntstop\else#3\fi}%
   \ifntstop\else#4\fi
 }
 
@@ -1531,7 +1531,7 @@
   % #1 = adviser | committee
   % #2 = {a,c} | {c,r,a,m,g}
   \def\@nt@personlist{}%
-  \xforcsvlist{\@nt@addtopersonlist{#1}}{#2}%
+  \ntfor\listitem:=#2\do{\@nt@addtopersonlist{#1}{\listitem}}
   \StrSubstitute{\@nt@personlist}{,}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist]%
   \StrCount{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist@last]%
   % Replace last comma with "and"
@@ -1601,6 +1601,7 @@
       \csuse{the#3titlestring}(\option{/novathesis/coverlang})%
       \datadefault{#3titlestringpost}()%
     }{}%
+    % \ntfor\listitem:=#4\do{\@nt@ntprintpersongroup[#1]{2}{#3}{\listitem}}
     \xforcsvlist{\@nt@ntprintpersongroup[#1]{2}{#3}}{#4}%
     % \@for\@nt@item:={#4}\do
     %   {\xdef\@nt@item{\@nt@item}\@nt@ntprintpersongroup[#1]{2}{#3}{\@nt@item}}
@@ -1668,13 +1669,9 @@
 }
 
 \newcommand*{\@nt@reducenumber}[2]{%
-  % #1=number
-  % #2=result
-  \ifnum\value{\option{#1/@size}}=1%
-    \gdef#2{1}%
-  \else%
-    \gdef#2{2}%
-  \fi%
+  % #1=options list
+  % #2=result (1|2)
+  \ifnum\value{\option{#1/@size}}=1\gdef#2{1}\else\gdef#2{2}\fi
 }
 
 
@@ -1683,7 +1680,7 @@
 %% PAGE LAYOUT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\AtEndPreamble{\typeout{NT AtEndPreamble ntsetlayout}\ntsetlayout}%
+\AtEndPreamble{\ntsetlayout}%
 
 \newcommand*{\ntsetlayout}{%
   % \synctex=1% Use synctex
@@ -1764,9 +1761,7 @@
       \phantomsection\pdfbookmark[1]{\csuse{the#1bkmstring}(\option{/novathesis/mainlang})}{bm#1}%
       \@ntloadfiles@ii{#1}%
     }{\typeout{NT LOAD #1 undefined}}%
-	}{% ELSE
-    % It is a plan or proposal type document
-	}%
+	}{}% It is a plan or proposal type document
   \NTRunHook{#1/post}%
 }
 
@@ -1782,8 +1777,7 @@
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
-  \xdef\@nt@tmp{\theabstractorder(\option{/novathesis/mainlang})}%
-  \xforcsvlist\@ntprintabstract{\@nt@tmp}%
+  \ntfor\listitem:=\expanded{\theabstractorder(\option{/novathesis/mainlang})}\do{\@ntprintabstract{\listitem}}%
   \ntselectlang{\option{/novathesis/mainlang}}%
 }
 
@@ -1903,12 +1897,10 @@
 }
 
 \newcommand*{\@loadglossaryfiles}{%
-  \ifoptiondefined{/@nt/file/glossaries/glossary}%
-    {\optionlistdo{/@nt/file/glossaries/glossary}{\@ntloadfile@i{##1}}}{}%
-  \ifoptiondefined{/@nt/file/glossaries/acronyms}%
-  {\optionlistdo{/@nt/file/glossaries/acronyms}{\@ntloadfile@i{##1}}}{}%
-  \ifoptiondefined{/@nt/file/glossaries/symbols}%
-  {\optionlistdo{/@nt/file/glossaries/symbols}{\@ntloadfile@i{##1}}}{}%
+  \@for\listitem:={glossary,acronyms,symbols}\do{%
+    \ifoptiondefined{/@nt/file/glossaries/\listitem}
+      {\optionlistdo{/@nt/file/glossaries/\listitem}{\@ntloadfile@i{##1}}}{}%
+  }
 }
 
 
@@ -1927,7 +1919,8 @@
 %% Copyright page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintacknowledgementsblock}[1][\scriptsize]{%
-  \noindent\parbox{\linewidth}{\vspace*{2.5ex}\footnoterule#1\theacknowledgmentsstring(\option{/novathesis/mainlang})}
+  \noindent\parbox{\linewidth}{%
+      \vspace*{2.5ex}\footnoterule#1\theacknowledgmentsstring(\option{/novathesis/mainlang})}
 }
 
 \newcommand*{\ntprintcopyright}{%
