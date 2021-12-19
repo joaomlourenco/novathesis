@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-12-13 [6.8.2]
+%% Version 2021-12-19 [6.8.3]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -156,11 +156,13 @@
       {\xdef\@nt@item{\@nt@item}#1{\@nt@item}}%
 }
 
-\newif\ifntbre@k
-\def\ntforbreak{\ntbre@kfalse}
-\long\def\@ntfor#1:=#2\do#3{%
-  \ntbre@ktrue
-  \@for#1:=#2\do{\ifntbre@k#3\fi}%
+\newif\ifntstop
+\def\ntforbreak{\ntstoptrue}
+\long\def\ntfor#1:=#2\do#3{\@ifnextchar[{\ntfor@i#1:=#2\do#3}{\ntfor@i#1:=#2\do#3[]}}
+\long\def\ntfor@i#1:=#2\do#3[#4]{%
+  \ntstopfalse
+  \@for#1:=#2\do{\ifntstop\else#3\fi}%
+  \ifntstop\else#4\fi
 }
 
 
@@ -181,7 +183,15 @@
 \def\ntdepartment(#1)#2{\department(#1):={#2}}
 \def\ntmajorfield(#1)#2{\majorfield(#1):={#2}}
 \def\ntdegreename(#1)#2{%
-  \degreename(#1):={\csuse{the\option{/novathesis/docdegree}string}(\option{/novathesis/coverlang}) #2}%
+  \options{/@nt/document/fallback=\option{/novathesis/docdegree}}%
+  \ifdatadefinedor{\match}{degreenameprefix}(%
+                        {\option{/novathesis/docdegree},\option{/novathesis/coverlang}},%
+                        {\option{/@nt/document/fallback},\option{/novathesis/coverlang}}%
+  ){%
+    \degreename(#1):={\thedegreenameprefix(\match) #2}%
+  }{%
+    \ClassError{novathesis}{Degreestring undefined!}{}%
+  }
   \majorfield(#1):={#2}%
 }
 \def\ntspecialization(#1)#2{\specialization(#1):={#2}}
@@ -293,7 +303,7 @@
 %% MANAGE DOCUMENT CLASSES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \options{/@nt/document/.cd
-  , fallback/.new list={phdprop=phd, phdplan=phd, mscplan=msc}
+  , fallback/.new choice={phd=phd, phdprop=phd, phdplan=phd, msc=msc, mscplan=msc}
   , class/phd/.new list={phd, phdprop, phdplan}
   , class/msc/.new list={msc, mscplan}
   , class/bsc/.new list={bsc}
@@ -452,11 +462,8 @@
 \newdata{degreename}
 \newdata{degreenamefont}
 
-\newdata{mscstring}
-\newdata{mscstringfont}
-
-\newdata{phdstring}
-\newdata{phdstringfont}
+\newdata{degreenameprefix}
+\newdata{degreenameprefixfont}
 
 \newdata{docdegreestring}
 \newdata{docdegreestringfont}
@@ -573,7 +580,7 @@
   , printfrontmatter/.new toggle  = true
   , printadviser/.new toggle      = true     % fake option - adviser should always be printed
   , printcommittee/.new toggle    = false
-  , printackblock/.new toggle     = true    % print the acknowledgments block at the bottom of the copyright page
+  , printtimestamp/.new toggle    = true
   , printcopyright/.new toggle    = true
   , secondcover/.new toggle       = false
   , statement/.new toggle         = false
@@ -1070,16 +1077,18 @@
   \end{tikzpicture}%
 }
 
-\newcommand*{\ifocverdefined}[3][1]{%
+\newcommand*{\ifocverdefined}[3][1-1]{%
   % #1 = cover number
   % #2 = true branch
   % #3 = false branch
-  \defifundef{\ifcoverdefined}{\newif}
+  \defifundef{\ifcoverdefined}{\newif}%
   \coverdefinedfalse%
-  \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{\def\@coverdefined{true}}%
-  {\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,bgcolor){\coverdefinedtrue}%
-  {\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,image){\coverdefinedtrue}%
-  {}}}%
+  \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{\coverdefinedtrue}{%
+    \options{/@nt/document/fallback=\option{/novathesis/docdegree}}%
+    \ifdatadefinedor{\match}{thesiscover}({\option{/novathesis/docdegree},#1,bgcolor},%
+                                          {\option{/@nt/document/fallback},#1,bgcolor},%
+                                          {#1,bgcolor}){\coverdefinedtrue}{}
+  }%
   \ifcoverdefined#2\else#3\fi%
 }
 
@@ -1125,18 +1134,21 @@
     \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{cleared}\cleartoevenpage}}{\clearpage}%
   }{}%
   \IfStrEq{#1-#2}{2-1}{\setcounter{page}{1}}{}%
-  \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1-#2}{\@nt@newpage\@ntprintcover@i{#1-#2}}%
-  {\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,bgcolor){\@nt@newpage\@ntprintcover@i{#1-#2}}%
-  {\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1-#2,image){\@nt@newpage\@ntprintcover@i{#1-#2}}%
-  {}}}%
+  \ifocverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}%
 }
 
 \newcommand{\@ntprintcover@i}[1]{%
   % #1 = cover ID (major-minor)
-  \NTRunHook{cover/#1/pre}
   \bgroup%
-    \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,textcolor)%
-        {\color{\thethesiscover(\option{/novathesis/docdegree},#1,textcolor)}}{}%
+    \NTRunHook{cover/#1/pre}
+    \options{/@nt/document/fallback=\option{/novathesis/docdegree}}%
+    \ifdatadefinedor{\match}{thesiscover}({\option{/novathesis/docdegree},#1,textcolor},%
+                                          {\option{/@nt/document/fallback},#1,textcolor},%
+                                          {#1,textcolor}){\color{\thethesiscover(\match)}}{}
+    % \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,textcolor)%
+    %     {\color{\thethesiscover(\option{/novathesis/docdegree},#1,textcolor)}}%
+    %     {\ifdatadefined{thesiscover}()%
+    %     {\color{\thethesiscover(#1,textcolor)}}{}}%
     \ntselectlang{\option{/novathesis/coverlang}}%
     \options{/@ntcoveropts/bookmark=#1}%
     \ifoptionequal{/@ntcoveropts/bookmark}{}{}{%
@@ -1144,8 +1156,8 @@
     }%
     \@ntmakeboxwithcover{#1}{\@fullcover@box}%
     \newpage%
+    \NTRunHook{cover/#1/post}
   \egroup%
-  \NTRunHook{cover/#1/post}
 }
 
 \newcommand{\@ntmakeboxwithcover}[2]{%
@@ -1155,19 +1167,32 @@
     \gdef\@nt@margin@bottom{}%
     \gdef\@nt@margin@left{}%
     \gdef\@nt@margin@right{}%
-    \ifdatadefined{margin}(\option{/novathesis/docdegree},#1,top){%
-      \edef\@nt@margin@top{\themargin(\option{/novathesis/docdegree},#1,top)}%
-      \edef\@nt@margin@bottom{\themargin(\option{/novathesis/docdegree},#1,bottom)}%
-      \edef\@nt@margin@left{\themargin(\option{/novathesis/docdegree},#1,left)}%
-      \edef\@nt@margin@right{\themargin(\option{/novathesis/docdegree},#1,right)}%
-    }{\ifdatadefined{margin}(\option{/novathesis/docdegree},top){%
-      \def\@nt@margin@top{\themargin(\option{/novathesis/docdegree},top)}%
-      \def\@nt@margin@bottom{\themargin(\option{/novathesis/docdegree},bottom)}%
-      \def\@nt@margin@left{\themargin(\option{/novathesis/docdegree},left)}%
-      \edef\@nt@margin@right{\themargin(\option{/novathesis/docdegree},right)}%
+    \options{/@nt/document/fallback=\option{/novathesis/docdegree}}%
+    \ifdatadefinedor{\match}{margin}({\option{/novathesis/docdegree},#1,top},%
+                                     {\option{/@nt/document/fallback},#1,top},%
+                                     {\option{/novathesis/docdegree},top},%
+                                     {\option{/@nt/document/fallback},top}){%
+      \StrGobbleRight{\match}{4}[\match]%
+      \edef\@nt@margin@top{\themargin(\match,top)}%
+      \edef\@nt@margin@bottom{\themargin(\match,bottom)}%
+      \edef\@nt@margin@left{\themargin(\match,left)}%
+      \edef\@nt@margin@right{\themargin(\match,right)}%      
     }{%
       \ClassError{novathesis}{Margins for cover of type “\option{/novathesis/docdegree}” undefined! Please define the margins in the School's definition file!}{}%
-    }}%
+    }
+    % \ifdatadefined{margin}(\option{/novathesis/docdegree},#1,top){%
+    %   \edef\@nt@margin@top{\themargin(\option{/novathesis/docdegree},#1,top)}%
+    %   \edef\@nt@margin@bottom{\themargin(\option{/novathesis/docdegree},#1,bottom)}%
+    %   \edef\@nt@margin@left{\themargin(\option{/novathesis/docdegree},#1,left)}%
+    %   \edef\@nt@margin@right{\themargin(\option{/novathesis/docdegree},#1,right)}%
+    % }{\ifdatadefined{margin}(\option{/novathesis/docdegree},top){%
+    %   \def\@nt@margin@top{\themargin(\option{/novathesis/docdegree},top)}%
+    %   \def\@nt@margin@bottom{\themargin(\option{/novathesis/docdegree},bottom)}%
+    %   \def\@nt@margin@left{\themargin(\option{/novathesis/docdegree},left)}%
+    %   \edef\@nt@margin@right{\themargin(\option{/novathesis/docdegree},right)}%
+    % }{%
+    %   \ClassError{novathesis}{Margins for cover of type “\option{/novathesis/docdegree}” undefined! Please define the margins in the School's definition file!}{}%
+    % }}%
   \defifundef{#2}{\newsavebox}%
   \@ntmakecoverbgcolor{#1}{\@cover@bgcolor@box}%
   \@ntmakecoverimage{#1}{\@cover@image@box}%
@@ -1196,32 +1221,32 @@
   % #2 = box name
   \defifundef{#2}{\newsavebox}%
   \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,bgcolor)%
-      {\savebox{#2}{\@ntcoverbgcolor{#1}}}{}%
+      {\savebox{#2}{\@ntcoverbgcolor{#1}{\thethesiscover(\option{/novathesis/docdegree},#1,bgcolor)}}}%
+      {\ifdatadefined{thesiscover}(#1,bgcolor)%
+                    {\savebox{#2}{\@ntcoverbgcolor{#1}{\thethesiscover(#1,bgcolor)}}}{}}%
 }
 
-\newcommand*{\@ntcoverbgcolor}[1]{%
+\newcommand*{\@ntcoverbgcolor}[2]{%
   % #1 = cover ID (major-minor)
-  \NTRunHook{cover/#1/prebgcolor}%
-  % \begin{tikzpicture}[remember picture, overlay]
-  %   \node[inner sep=0, anchor=center,
-  %         rectangle, minimum width=\paperwidth, minimum height=\paperheight,
-  %         fill=\expanded{\thethesiscover(\option{/novathesis/docdegree},#1,bgcolor)}]
-  %        at (current page.center)
-  %           {};
-  % \end{tikzpicture}
+  % #2 = color
   \begingroup%
-    \color{\thethesiscover(\option{/novathesis/docdegree},#1,bgcolor)}%
+    \color{#2}%
+    \NTRunHook{cover/#1/prebgcolor}%
     \rule{\paperwidth}{\paperheight}%
+    \NTRunHook{cover/#1/postgcolor}%
   \endgroup%
-  \NTRunHook{cover/#1/postgcolor}%
 }
 
 \newcommand*{\@ntmakecoverimage}[2]{%
   % #1 = cover ID (major-minor)
   % #2 = box name
   \defifundef{#2}{\newsavebox}%
-  \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},#1,image)%
-      {\savebox{#2}{\@ntcoverimage{#1}}}{}%
+  \options{/@nt/document/fallback=\option{/novathesis/docdegree}}%
+  \ifdatadefinedor{\match}{thesiscover}({\option{/novathesis/docdegree},#1,image},%
+                                        {\option{/@nt/document/fallback},#1,image},%
+                                        {#1,image})%
+      {\savebox{#2}{\includegraphics[width=\paperwidth,height=\paperheight]{\thethesiscover(\match)}}}{}%
+      % {\savebox{#2}{\@ntcoverimage{#1}}}{}%
 }
 
 % \newif\ifgraphicexist
@@ -1414,13 +1439,28 @@
     \ifmaindoc{%
       \NTRunHook{statement/pre}%
       \ifoptiondefined{/@nt/file/statement/VAL}{}{%ELSE
-        \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}%
-          {\ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}}%
-          {\IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}%
-            {\ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}}%
-            {\ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} nor in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” or “NOVAthesisFiles/Schools/\@nt@univ”}{}}%
-          }%
-      }%
+        \ntfor\match:={%
+          NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement-\option{/novathesis/mainlang}.tex,%
+          NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex,%
+          NOVAthesisFiles/Schools/\@nt@univ/statement-\option{/novathesis/mainlang}.tex,%
+          NOVAthesisFiles/Schools/\@nt@univ/statement.tex%
+        }\do{%
+          \IfFileExists{\match}{%
+            \ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}%
+            \@nt@breakcsvlistdo
+          }{}%
+        }
+        
+        {%
+          \ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” nor “NOVAthesisFiles/Schools/\@nt@univ”}{}
+        }%
+        % \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}%
+        %   {\ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}}%
+        %   {\IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}%
+        %     {\ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}}%
+        %     {\ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} nor in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” or “NOVAthesisFiles/Schools/\@nt@univ”}{}}%
+        %   }%
+      }{}%
       \ntselectlang{\option{/novathesis/mainlang}}%
       \phantomsection\pdfbookmark[1]{\csuse{thestatementbkmstring}(\option{/novathesis/mainlang})}{bmstatement}%
       \@ntloadfiles@ii{statement}%

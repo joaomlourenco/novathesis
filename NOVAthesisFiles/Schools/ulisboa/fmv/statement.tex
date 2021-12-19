@@ -17,14 +17,15 @@
     \ifmemorycross\memoryxbox\else\memoryemptybox\fi%
   \egroup
 }
-\def\IfStrEqOr#1#2{%
-  \defifundef{\ifstreq}{\newif}%
-  \streqfalse
-  \@memoryfor\@str@item:=#2\do{%
-    \IfStrEq{\@str@item}{#1}{\streqtrue\memoryforbreak}{}%
-  }%
-  \ifstreq\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi
+% \IfStrEqOr{string}{{val1},…}{true}{false}
+\long\def\IfStrEqOr#1#2#3#4{%
+  \@IfStrEqOr#2,\@nil{#1}{#3}{#4}%
 }
+% \@IfStrEqOr{{val1},…}{string}{true}{false}
+\long\def\@IfStrEqOr#1,#2\@nil#3#4#5{%
+  \IfStrEq{#3}{#1}{#4}{\ifx\@nil#2\@nil\relax#5\else\@IfStrEqOr#2\@nil{#3}{#4}{#5}\fi}%
+}
+
 %-----------------------------------------------------------------
 % STATEMENT OF INTEGRITY
 %-----------------------------------------------------------------
