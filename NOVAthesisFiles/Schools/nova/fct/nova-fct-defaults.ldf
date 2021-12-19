@@ -63,7 +63,7 @@
 
 \spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main,caps)}
-\spine(date)={\thentdateyear}
+\spine(date)={\thentdocdate(year)}
 
 \spine(text,angle)={90}
 \spine(box,textcolor)={white}
@@ -156,7 +156,7 @@
     \fontsize{17}{17}\selectfont%
     \textbf{\MakeTextUppercase{\thedocauthor(name)}}\\[2mm]%
     \fontsize{17}{17}\selectfont%
-    \thedocauthor(degree)%
+    \thedocauthor(degree,\option{/novathesis/coverlang})%
   }%
 }
 
@@ -166,7 +166,7 @@
     \fontsize{17}{17}\selectfont%
     \textbf{\MakeTextUppercase{\thedocauthor(name)}}\\[2mm]%
     \fontsize{17}{17}\selectfont%
-    \thedocauthor(degree)%
+    \thedocauthor(degree,\option{/novathesis/coverlang})%
   }{%
     \fontsize{22}{21}\selectfont%
     \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
@@ -184,8 +184,8 @@
   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[3mm]%
   \theuniversity(\option{/novathesis/coverlang})\\[1pt]%
   \iftoggle{/novathesis/printtimestamp}{%
-    \ifdocworking{\emph{\color{yellow}\textbf{Draft:} \today}}{\thentdatemonth, \thentdateyear}%
-  }{\thentdatemonth, \thentdateyear}%
+    \ifdocworking{\emph{\color{yellow}\textbf{Draft:} \today}}{\thentdocdate(month), \thentdocdate(year)}%
+  }{\thentdocdate(month), \thentdocdate(year)}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -225,7 +225,7 @@
   \fontsize{14}{14}\selectfont%
   \textbf{\MakeTextUppercase{\thedocauthor(name)}}\\[2mm]%
   \fontsize{14}{14}\selectfont%
-  \thedocauthor(degree)%
+  \thedocauthor(degree,\option{/novathesis/coverlang})%
 }
 
 % The advisers
@@ -249,6 +249,6 @@
   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[1.25ex]%
   \theuniversity(\option{/novathesis/coverlang})\\[1pt]%
   \iftoggle{/novathesis/printtimestamp}{%
-    \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}{\thentdatemonth, \thentdateyear}%
-  }{\thentdatemonth, \thentdateyear}%
+    \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}{\thentdocdate(month), \thentdocdate(year)}%
+  }{\thentdocdate(month), \thentdocdate(year)}%
 }

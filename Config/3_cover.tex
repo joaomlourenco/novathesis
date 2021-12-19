@@ -15,16 +15,16 @@
 % SYNTAX: \nttitle[lang]{title}
 %         You may use "\\" to force line breaks
 %-------------------------------------------------------------------
-\nttitle[en]{A Very Long and Impressive\\Thesis Title with a Forced Line Break}%
-\nttitle[pt]{Um Título de Tese Longo\\e com uma Mudança de Linha Forçada}%
+\nttitle(main,en){A Very Long and Impressive\\Thesis Title with a Forced Line Break}%
+\nttitle(main,pt){Um Título de Tese Longo\\e com uma Mudança de Linha Forçada}%
 
 %-------------------------------------------------------------------
 % Thesis/Dissertation subtitle (valid for all languages unless redefined as below)
 % SYNTAX: \nttitle{title}
 %         You may use "\\" to force line breaks
 %-------------------------------------------------------------------
-\ntsubtitle[en]{Some thoughts on the Life, the Universe,\\and Everything Else}%
-\ntsubtitle[pt]{Algumas considerações sobre a Vida,\\o Universo e Tudo o Mais}%
+\nttitle(sub,en){Some thoughts on the Life, the Universe,\\and Everything Else}%
+\nttitle(sub,pt){Algumas considerações sobre a Vida,\\o Universo e Tudo o Mais}%
 
 %-------------------------------------------------------------------
 % DEPARTMENT NAME customization
@@ -76,21 +76,20 @@
 % SYNTAX: \ntauthorname[gender]{full name}{abbreviated name}
 %         Use [f] for female and [m] for male
 %-------------------------------------------------------------------
-\ntauthorname[m]{John Very Longname Doe}{John Doe}
+\ntauthorname(m){John Very Longname Doe}{John Doe}
 
 %-------------------------------------------------------------------
 % AUTHOR previous degree
 % SYNTAX: \ntauthordegree{degree}
 %-------------------------------------------------------------------
-\ntauthordegree{Master/BSc in \embrace{name of previous degree}}
+\ntauthordegree(en){Master/BSc in \embrace{name of previous degree}}
 
 %-------------------------------------------------------------------
 % SUBMISSION DATE
-% SYNTAX: \ntdatemonth{month}
-%         \ntdateyear{year}
+% SYNTAX: \ntdate{year,month}
+%         \ntdate{year}
 %-------------------------------------------------------------------
-\ntdatemonth{\embrace{month}}
-\ntdateyear{\embrace{year}}
+\ntdate{\embrace{year},\embrace{month}}
 
 %-------------------------------------------------------------------
 % ADVISERS LIST
@@ -102,10 +101,10 @@
 %                           [m] for male
 %         You may use "\\" to force line breaks
 % Advisers(s)
-\ntaddperson{adviser}[a,f]{Mary Doe Adviser Name, Full Professor, NOVA University Lisbon}
+\ntaddperson{adviser}(a,f){Mary Doe Adviser Name, Full Professor, NOVA University Lisbon}
 % Co-advisers(s)
-\ntaddperson{adviser}[c,m]{John Doe Co-Adviser Name, Associate Professor, NOVA University Lisbon}
-\ntaddperson{adviser}[c,f]{John Doe other Co-Adviser Name, Full Professor, NOVA University Lisbon}
+\ntaddperson{adviser}(c,m){John Doe Co-Adviser Name, Associate Professor, NOVA University Lisbon}
+\ntaddperson{adviser}(c,f){John Doe other Co-Adviser Name, Full Professor, NOVA University Lisbon}
 
 %-------------------------------------------------------------------
 % COMMITTEE MEMBERS
@@ -118,10 +117,10 @@
 %         For [gender] use: [f] for female
 %                           [m] for male
 %         You may use "\\" to force line breaks
-\ntaddperson{committee}[c,m]{Name of the committee chairperson, Full Professor, FCT-NOVA}
-\ntaddperson{committee}[r,m]{Name of a rapporteur, Associate Professor, Another University}
-% \ntaddperson{committee}[r,m]{Name of another rapporteur, Assistant Professor, Another University}
-% \ntaddperson{committee}[a,m]{Name of the adviser present in defense, Associate Professor, Some University}
-\ntaddperson{committee}[m,f]{Another member of the committee, Full Professor, Another University}
-\ntaddperson{committee}[m,f]{Yet another member of the committee, Assistant Professor, Another University}
-% \ntaddperson{committee}[g,m]{Guest member of the committee, Position, University}
+\ntaddperson{committee}(c,m){Name of the committee chairperson, Full Professor, FCT-NOVA}
+\ntaddperson{committee}(r,m){Name of a rapporteur, Associate Professor, Another University}
+% \ntaddperson{committee}(r,m){Name of another rapporteur, Assistant Professor, Another University}
+% \ntaddperson{committee}(a,m){Name of the adviser present in defense, Associate Professor, Some University}
+\ntaddperson{committee}(m,f){Another member of the committee, Full Professor, Another University}
+\ntaddperson{committee}(m,f){Yet another member of the committee, Assistant Professor, Another University}
+% \ntaddperson{committee}(g,m){Guest member of the committee, Position, University}

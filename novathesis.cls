@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-12-19 [6.8.3]
+%% Version 2021-12-19 [6.8.4]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -332,7 +332,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE PERSON LISTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\ntaddperson#1[#2]{%
+\def\ntaddperson#1(#2){%
   % syntax: \ntaddperson{class}[key]{name}
   % See "\@ntaddperson@iv" below
   \StrCount{#2}{,}[\@nt@ncommas]%
@@ -340,10 +340,10 @@
     \ClassError{novathesis}{Invalid role or gender in \string\ntaddperson{#2}}%
                            {Please see file “3_cover.tex” for the correct syntax.}%
   }%
-  \@ntaddperson@iv{#1}[#2]%
+  \@ntaddperson@iv{#1}(#2)%
 }
 
-\def\@ntaddperson@iv#1[#2,#3]#4{%
+\def\@ntaddperson@iv#1(#2,#3)#4{%
   % syntax: \ntaddperson{class}[key,gender]{filename}
   % #1=adviser | committee
   % #2={a,c}            {c,r,a,m,g}
@@ -732,17 +732,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %============================================================
 % Title
-\newcommand*{\nttitle}[2][\option{/novathesis/coverlang}]{%
-  % #1 = lang
-  % #2 = value
-  \@nttitle{#1}{main}{#2}%
-}
+\def\nttitle(#1)#2{\@nttitle@aux(#1,){#2}}
+\def\@nttitle@aux(#1,#2)#3{%
+  % \typeout{NT @nttitleaux [#1] [#2] [#3]}%
+  \IfStrEq{#2}{}{\def\@ntlang{\option{/novathesis/coverlang}}}{\StrGobbleRight{#2}{1}[\@ntlang]}%
+  \@nttitle{\@ntlang}{#1}{#3}}
+% \newcommand*{\nttitle}[2][\option{/novathesis/coverlang}]{%
+%   % #1 = lang
+%   % #2 = value
+%   \@nttitle{#1}{main}{#2}%
+% }
 
-\newcommand*{\ntsubtitle}[2][\option{/novathesis/coverlang}]{%
-  % #1 = lang
-  % #2 = value
-  \@nttitle{#1}{sub}{#2}%
-}
+% \newcommand*{\ntsubtitle}[2][\option{/novathesis/coverlang}]{%
+%   % #1 = lang
+%   % #2 = value
+%   \@nttitle{#1}{sub}{#2}%
+% }
 
 % \newcommand{\removelinebreaks}[1]{%
 %       \def\\{\relax}#1%
@@ -756,7 +761,7 @@
   % #1 = type (main, sub) title
   % #2 = lang
   % #3 = value
-  % \typeout{NT @nttitle [#1] [#2] [#3]}%
+  \typeout{NT @nttitle [#1] [#2] [#3]}%
   \doctitle(#1,#2):={\replacelinebreakwithspace{#3}}%
   \doctitle(#1,#2,caps):={\replacelinebreakwithspace{\expandafter\MakeUppercase\expandafter{#3}}}%
   \doctitle(#1,#2,cover):={#3}%
@@ -767,11 +772,18 @@
 
 %============================================================
 % Date and month
-\newcommand*{\thentdatemonth}{\@nt@undefined[Month]}
-\newcommand*{\thentdateyear}{\@nt@undefined[Year]}
+\newdata{ntdocdate}
+\ntdocdate(year):={\@nt@undefined[Year]}
+\ntdocdate(month):={\@nt@undefined[month]}
 
-\newcommand*{\ntdatemonth}[1]{\renewcommand*{\thentdatemonth}{#1}}
-\newcommand*{\ntdateyear}[1]{\renewcommand*{\thentdateyear}{#1}}
+\def\ntdate#1{\@ntdate@i(#1,)}
+\def\@ntdate@i(#1,#2){%
+  \StrGobbleRight{#2}{1}[\@ntmonth]%
+  \ntdocdate(year)={#1}%
+  \ntdocdate(month)={\@ntmonth}%
+}
+
+
 
 %============================================================
 % Author identification
@@ -779,17 +791,17 @@
 \docauthor(name):={\@nt@undefined[Author Name]}
 \docauthor(name,short):={\@nt@undefined[Author Short Name]}
 \docauthor(gender):={\@nt@undefined[Author Gender]}
-\docauthor(degree):={\@nt@undefined[Author Previous Degree]}
+\docauthor(degree,\option{/novathesis/coverlang}):={\@nt@undefined[Author Previous Degree]}
 
-\newcommand{\ntauthorname}[3][m]{% [m|f]{Long name}{Short name}
+\def\ntauthorname(#1)#2#3{% [m|f]{Long name}{Short name}
   \docauthor(gender):={#1}%
   \docauthor(name):={#2}%
   \docauthor(name,short):={#3}%
   \AtBeginDocument{\hypersetup{pdfauthor={#2}}}%
 }
 
-\newcommand*{\ntauthordegree}[1]{%
-  \docauthor(degree):={#1}%
+\def\ntauthordegree(#1)#2{%
+  \docauthor(degree,#1):={#2}%
 }
 
 %============================================================

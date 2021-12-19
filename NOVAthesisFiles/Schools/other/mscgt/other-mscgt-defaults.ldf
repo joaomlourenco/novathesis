@@ -62,7 +62,7 @@ for the degree of \emph{\thedegreename(en)}}
 
 \spine(author)={\thedocauthor(name)}
 \spine(title)={\textbf{\emph{\thedoctitle(\option{/novathesis/coverlang},main,caps)}}}
-\spine(date)={\thentdateyear}
+\spine(date)={\thentdocdate(year)}
 
 \spine(text,angle)={90}
 \spine(box,textcolor)={black}
@@ -272,7 +272,7 @@ for the degree of \emph{\thedegreename(en)}}
 % Date
 \ntaddtocover[vspace=1]{2-1}{%
   \fontsize{11}{11}\selectfont
-    \textbf{\thentdatemonth, \thentdateyear}
+    \textbf{\thentdocdate(month), \thentdocdate(year)}
 }
 
 

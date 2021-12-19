@@ -75,7 +75,7 @@
 \spine(logo)={ulisboa-fmv-insignia-color}
 \spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
-\spine(year)={\thentdateyear}
+\spine(year)={\thentdocdate(year)}
 \spine(text,angle)={-90}
 
 \spine(box,author,top)={2.0cm}
@@ -287,7 +287,7 @@
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   % \fontseries{mc}
   \fontsize{14}{14}\selectfont%
-    \thentdateyear%
+    \thentdocdate(year)%
 }
 
 \ifdocfinal{
