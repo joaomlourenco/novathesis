@@ -292,8 +292,15 @@
 
 \ifdocfinal{
   \ntaddtocover[align=j]{2-2}{%
-    \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}{}%
-        {\PackageWarning{novathesis}{Missing statement file “statement.tex” for ”\@nt@univ/\@nt@schl”}}
+    \ntfor\match:={%
+      NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement-\option{/novathesis/mainlang}.tex,%
+      NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex%
+    }\do{\IfFileExists{\match}{\input{\match}\ntforbreak}{}}%
+    [%
+      \ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” nor “NOVAthesisFiles/Schools/\@nt@univ”}{}
+    ]%
+    % \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}{}%
+        % {\PackageWarning{novathesis}{Missing statement file “statement.tex” for ”\@nt@univ/\@nt@schl”}}
   }%
 }
 

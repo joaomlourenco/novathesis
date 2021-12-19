@@ -41,27 +41,12 @@
 \thesiscover(phd,N-2,image):={nova-fct-phd-cover-back}
 \thesiscover(phd,spine,image):={nova-fct-phd-spine}
 
-\thesiscover(phdprop,1-1,image):={nova-fct-phd-cover}
-\thesiscover(phdprop,N-2,image):={nova-fct-phd-cover-back}
-\thesiscover(phdprop,spine,image):={nova-fct-phd-spine}
-
-\thesiscover(phdplan,1-1,image):={nova-fct-phd-cover}
-\thesiscover(phdplan,N-2,image):={nova-fct-phd-cover-back}
-\thesiscover(phphdpland,spine,image):={nova-fct-phd-spine}
-
 \thesiscover(msc,1-1,bgcolor):={black}
 \thesiscover(msc,1-1,textcolor):={white}
 \thesiscover(msc,2-1,textcolor):={black}
 \thesiscover(msc,1-1,image):={nova-fct-cover}
 \thesiscover(msc,N-2,image):={nova-fct-cover-back}
 \thesiscover(msc,spine,image):={nova-fct-msc-spine}
-
-\thesiscover(mscplan,1-1,image):={nova-fct-cover}
-\thesiscover(mscplan,N-2,image):={nova-fct-cover-back}
-\thesiscover(mscplan,spine,image):={nova-fct-msc-spine}
-
-\thesiscover(bsc,1-1,image):={}
-\thesiscover(plain,1-1,image):={}
 
 
 
@@ -119,37 +104,18 @@
 \margin(phd,bottom):={1.5cm}
 \margin(phd,left):={3.55cm}
 \margin(phd,right):={2.0cm}
-\margin(phdplan,top):={1.0cm}
-\margin(phdplan,bottom):={1.5cm}
-\margin(phdplan,left):={3.55cm}
-\margin(phdplan,right):={2.0cm}
-\margin(phdprop,top):={1.0cm}
-\margin(phdprop,bottom):={1.5cm}
-\margin(phdprop,left):={3.55cm}
-\margin(phdprop,right):={2.0cm}
 \margin(msc,top):={1.0cm}
 \margin(msc,bottom):={1.5cm}
 \margin(msc,left):={3.55cm}
 \margin(msc,right):={2.0cm}
-\margin(mscplan,top):={1.0cm}
-\margin(mscplan,bottom):={1.5cm}
-\margin(mscplan,left):={3.55cm}
-\margin(mscplan,right):={2.0cm}
-\margin(bsc,top):={1.0cm}
-\margin(bsc,bottom):={1.5cm}
-\margin(bsc,left):={3.55cm}
-\margin(bsc,right):={2.0cm}
-\margin(plain,top):={1.0cm}
-\margin(plain,bottom):={1.5cm}
-\margin(plain,left):={3.55cm}
-\margin(plain,right):={2.0cm}
-
-% Set margins for "debug grid"
-\margin(grid,top):={0pt}
-\margin(grid,bottom):={0pt}
-\margin(grid,left):={0pt}
-\margin(grid,right):={0pt}
-
+% \margin(bsc,top):={1.0cm}
+% \margin(bsc,bottom):={1.5cm}
+% \margin(bsc,left):={3.55cm}
+% \margin(bsc,right):={2.0cm}
+% \margin(plain,top):={1.0cm}
+% \margin(plain,bottom):={1.5cm}
+% \margin(plain,left):={3.55cm}
+% \margin(plain,right):={2.0cm}
 
 
 
@@ -212,17 +178,14 @@
   }%
 }
 
-
-\ntaddtocover[color=yellow,vspace=1,align=l]{1-1}{%
-    \ifdocworking{\emph{\textbf{Draft:} \today}}{~}%%
-}
-
 % Date
 \ntaddtocover[vspace=1,align=l]{1-1}{%
   \fontsize{14}{13}\selectfont%
   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[3mm]%
-  \theuniversity(\option{/novathesis/coverlang})\\%
-  \thentdatemonth, \thentdateyear%
+  \theuniversity(\option{/novathesis/coverlang})\\[1pt]%
+  \iftoggle{/novathesis/printtimestamp}{%
+    \ifdocworking{\emph{\color{yellow}\textbf{Draft:} \today}}{\thentdatemonth, \thentdateyear}%
+  }{\thentdatemonth, \thentdateyear}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -280,14 +243,12 @@
   \ntprintpersons{0.9}{2}{committee}{\thecommitteeorder()}%
 }
 
-\ntaddtocover[color=red,vspace=1,align=l]{2-1}{%
-    \ifdocworking{\emph{\textbf{Draft:} \today}}{~}%%
-}
-
 % Date
 \ntaddtocover[vspace=1,align=l]{2-1}{%
   \fontsize{10}{10}\selectfont%
   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[1.25ex]%
-  \theuniversity(\option{/novathesis/coverlang})\\%
-  \thentdatemonth, \thentdateyear%
+  \theuniversity(\option{/novathesis/coverlang})\\[1pt]%
+  \iftoggle{/novathesis/printtimestamp}{%
+    \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}{\thentdatemonth, \thentdateyear}%
+  }{\thentdatemonth, \thentdateyear}%
 }
