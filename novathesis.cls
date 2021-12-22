@@ -84,51 +84,6 @@
 \providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
 \providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
 
-% \newif\ifgraphicexist
-% \catcode`\*=11
-% \newcommand\@nt@imagetest[1]{%
-%  \begingroup
-%  \global\graphicexisttrue
-%    \let\input@path\Ginput@path
-%   \filename@parse{#1}%
-%   \ifx\filename@ext\relax
-%     \@for\Gin@temp:=\Gin@extensions\do{%
-%       \ifx\Gin@ext\relax
-%         \Gin@getbase\Gin@temp
-%       \fi}%
-%   \else
-%     \Gin@getbase{\Gin@sepdefault\filename@ext}%
-%     \ifx\Gin@ext\relax
-%        \global\graphicexistfalse
-%        \def\Gin@base{\filename@area\filename@base}%
-%        \edef\Gin@ext{\Gin@sepdefault\filename@ext}%
-%     \fi
-%   \fi
-%   \ifx\Gin@ext\relax
-%          \global\graphicexistfalse
-%     \else
-%        \@ifundefined{Gin@rule@\Gin@ext}%
-%          {\global\graphicexistfalse}%
-%          {}%
-%     \fi
-%   \ifx\Gin@ext\relax
-%    \gdef\imageextension{unknown}%
-%   \else
-%    \xdef\imageextension{\Gin@ext}%
-%   \fi
-%  \endgroup
-%  \ifgraphicexist
-%   \expandafter \@firstoftwo
-%  \else
-%   \expandafter \@secondoftwo
-%  \fi
-%  }
-% \catcode`\*=12
-%
-% \newcommand\@nt@includegraphics[2][]{%
-%   \@nt@imagetest{#2}{\includegraphics[#1]{#2}}{\missingfigure{\detokenize{#2}}}%
-% }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHECK IF USING LUALATEX OR XELATEX
@@ -146,6 +101,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlength{\@novathesisheight}
+\newcommand{\novathesis}{\settoheight{\@novathesisheight}{X}\includegraphics[height=1.17\@novathesisheight,vshift=-0.35pt]{NOVAthesisFiles/Images/novathesis-text}}
+
 
 \newcommand*{\defifundef}[2]{\ifundef{#1}{#2{#1}}{}}
 \newcommand*{\csdefifundef}[2]{\ifcsname#1\endcsname\else\expandafter\def\csname#2\endcsname{#1}\fi}
