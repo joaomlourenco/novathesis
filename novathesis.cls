@@ -1044,12 +1044,14 @@
   % #3 = false branch
   \defifundef{\ifcoverdefined}{\newif}%
   \coverdefinedfalse%
-  \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{\coverdefinedtrue}{%
-    \options{/@nt/document/fallback=\option{/novathesis/docdegree}}%
-    \ifdatadefinedor{\match}{thesiscover}({\option{/novathesis/docdegree},#1,bgcolor},%
+  \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{\coverdefinedtrue}{}%
+  \options{/@nt/document/fallback=\option{/novathesis/docdegree}}%
+  \ifdatadefinedor{\match}{thesiscover}({\option{/novathesis/docdegree},#1,bgcolor},%
                                           {\option{/@nt/document/fallback},#1,bgcolor},%
-                                          {#1,bgcolor}){\coverdefinedtrue}{}
-  }%
+                                          {#1,bgcolor},%
+                                          {\option{/novathesis/docdegree},#1,image},%
+                                          {\option{/@nt/document/fallback},#1,image},%
+                                          {#1,image}){\coverdefinedtrue}{}
   \ifcoverdefined#2\else#3\fi%
 }
 
