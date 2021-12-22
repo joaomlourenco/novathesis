@@ -108,19 +108,10 @@
 \newcommand*{\defifundef}[2]{\ifundef{#1}{#2{#1}}{}}
 \newcommand*{\csdefifundef}[2]{\ifcsname#1\endcsname\else\expandafter\def\csname#2\endcsname{#1}\fi}
 
-% \newcommand{\xforcsvlist}{\expandafter\forcsvlist\expandafter\@firstoftwo\expandafter\@secondoftwo}
-\newcommand{\xforcsvlist}[2]{%
-    \@for\@nt@item:={#2}\do%
-      {\xdef\@nt@item{\@nt@item}#1{\@nt@item}}%
-}
-
-\newif\ifntstop
-\def\ntforbreak{\ntstoptrue}
 \long\def\ntfor#1:=#2\do#3{\@ifnextchar[{\ntfor@i#1:=#2\do#3}{\ntfor@i#1:=#2\do#3[]}}
 \long\def\ntfor@i#1:=#2\do#3[#4]{%
-  \ntstopfalse
-  \@for#1:=#2\do{\edef#1{#1}\ifntstop\else#3\fi}%
-  \ifntstop\else#4\fi
+  \@for#1:={#2}\do{\xdef#1{#1}#3}%
+  \if@endfor\else#4\fi
 }
 
 
@@ -1420,16 +1411,9 @@
             \@nt@breakcsvlistdo
           }{}%
         }
-        
-        {%
+        [%
           \ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” nor “NOVAthesisFiles/Schools/\@nt@univ”}{}
-        }%
-        % \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}%
-        %   {\ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}}%
-        %   {\IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}%
-        %     {\ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}}%
-        %     {\ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} nor in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” or “NOVAthesisFiles/Schools/\@nt@univ”}{}}%
-        %   }%
+        ]%
       }{}%
       \ntselectlang{\option{/novathesis/mainlang}}%
       \phantomsection\pdfbookmark[1]{\csuse{thestatementbkmstring}(\option{/novathesis/mainlang})}{bmstatement}%
@@ -1489,7 +1473,7 @@
   % #1 = adviser | committee
   % #2 = {a,c} | {c,r,a,m,g}
   \def\@nt@personlist{}%
-  \ntfor\listitem:=#2\do{\@nt@addtopersonlist{#1}{\listitem}}
+  \@for\listitem:=#2\do{\@nt@addtopersonlist{#1}{\listitem}}
   \StrSubstitute{\@nt@personlist}{,}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist]%
   \StrCount{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist@last]%
   % Replace last comma with "and"
@@ -1559,10 +1543,7 @@
       \csuse{the#3titlestring}(\option{/novathesis/coverlang})%
       \datadefault{#3titlestringpost}()%
     }{}%
-    % \ntfor\listitem:=#4\do{\@nt@ntprintpersongroup[#1]{2}{#3}{\listitem}}
-    \xforcsvlist{\@nt@ntprintpersongroup[#1]{2}{#3}}{#4}%
-    % \@for\@nt@item:={#4}\do
-    %   {\xdef\@nt@item{\@nt@item}\@nt@ntprintpersongroup[#1]{2}{#3}{\@nt@item}}
+    \@for\listitemi:={#4}\do{\xdef\listitemi{\listitemi}\@nt@ntprintpersongroup[#1]{2}{#3}{\listitemi}}
   \end{tabularx}%
 }
 
@@ -1735,7 +1716,7 @@
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
-  \ntfor\listitem:=\expanded{\theabstractorder(\option{/novathesis/mainlang})}\do{\@ntprintabstract{\listitem}}%
+  \@for\listitem:=\expanded{\theabstractorder(\option{/novathesis/mainlang})}\do{\@ntprintabstract{\listitem}}%
   \ntselectlang{\option{/novathesis/mainlang}}%
 }
 
