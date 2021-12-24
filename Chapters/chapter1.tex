@@ -18,32 +18,42 @@
 \setlength\epigraphwidth{12.5cm}
 \setlength\epigraphrule{0pt}
 
+\includegraphics[width=\linewidth]{NOVAthesisFiles/Images/novathesis-text}
+
+\noindent This is the \novathesis\ \LaTeX\ template Version \novathesisversion\ from \novathesisdate.
+
 \epigraph{
   This work is licensed under the \href{LaTeX project public license}{\LaTeX\ Project Public License v1.3c}.
   To view a copy of this license, visit \url{LaTeX project public license}.
 }
 
-This is the \novathesis\ \LaTeX\ template version v\novathesisversion\ from \novathesisdate.
-
 \section{If You Use this Template…} 
 \label{sub:if_you_use_this_template}
 
-This Chapter presents an introduction to the template and how it is organized. In the next chapter you can find some specific instructions. Please read the next sections carefully.
+This first Chapter introduces the \gls{novathesis} template and how it is organized. In Chapter~\ref{cha:users_manual} you can find some specific instructions on how to use the \gls{novathesis} template.  Chapter~\ref{cha:a_short_latex_tutorial_with_examples} shows some examples and give some hints on how to write your text. Please read these next Chapters carefully.
 
-Someone spent a few dozens of hours working on this template to make your life easier and to allow you to be more productive.  Those working hours were not paid and were “stolen” from family.
-If you use this template, please go to the
-\href{https://github.com/joaomlourenco/novathesis_word}{project web page in GitGub}
-and:
+\begin{quote}
+  \rule{\linewidth}{2pt}
+If you are going to spend zillions of hours writing your thesis/dissertation using this \gls{novathesis} template, be wise and spend a couple of hours learning how to use it properly.  And even a few more hours learning some \LaTeX.  I am sure the time you invest now will pay itself countless times before you submit your thesis/dissertation.
+\hfill \raisebox{-1ex}{\itshape João Lourenço}\\[-1ex]
+  \rule{\linewidth}{2pt}
+\end{quote}
+
+\subsection{Appeal}
+\label{sub:appeal}
+
+The \gls{novathesis} tempalte was born in~1996, and what you see now accumulates to thousands of working hours, unpaid and stollen from family and friends.  This work is available to the community under the \href{LaTeX project public license}{\LaTeX\ Project Public License v1.3c}, which means you are entitled to use it for free.  However, if you decide to use this template to write your thesis/dissertation, \textbf{be fair to the developers} and:
 \begin{enumerate}
-  \item Cite it~\cite{novathesis-manual} in your thesis/disseration with “\verb!\cite{novathesis-manual}!”, any place you think it makes sense.  If you cite it this way, the correct entry will be added automatically to your bibliography (there no need to add it to your BibTeX file);
-  \item Give the project a star (marked with a red ellipse at the top-right in Figure~\ref{fig:github}); and
-  \item Make a small donation (marked with a red ellipse at the bottom-left in Figure~\ref{fig:github}).
+  \item Cite the \gls{novathesis} manual~\cite{novathesis-manual} in a place of your choice (e.g., in the \emph{Acknowledgments}) of your thesis/disseration with “\verb!\cite{novathesis-manual}!” .  If you cite it this way, the correct entry will be added automatically to your bibliography (no need to worry with the necessary BibTeX entry, as it will be added automatically);
+  \item Go to the
+\href{https://github.com/joaomlourenco/novathesis}{project web page in GitGub} and give the project a star (marked with a red ellipse at the top-right in Figure~\ref{fig:github}); and
+  \item Make a donation by clicking in the button marked with a green ellipse at the top-center in Figure~\ref{fig:github}).
 \end{enumerate}
 
 \begin{figure}[htbp]
   \centering
-    \includegraphics[width=\textwidth]{github1}
-  \caption{The \novathesis{} project web page in GitHub.}
+    \includegraphics[width=0.8\textwidth]{github1}
+  \caption{The \novathesis\ project web page in GitHub.}
   \label{fig:github}
 \end{figure}
 
@@ -63,7 +73,11 @@ and:
     % #3 = School URL
     \iftoggle{ntRow}{\rowcolor{GhostWhite}\global\togglefalse{ntRow}}{\global\toggletrue{ntRow}}
     \setlength{\fboxsep}{0pt}%
-    \makecell*[cc]{\fbox{\colorbox{White}{\includegraphics[width=\mysmallcoversize]{#1}}}}
+    \def\myspace{}%
+    \makecell*[cc]{%
+      \@for\listitem:=#1\do{%
+        \myspace\fbox{\colorbox{White}{\includegraphics[width=\mysmallcoversize]{\listitem}}}\def\myspace{~}}%
+    }
     & #2 \href{#4}{(#3)}\\%
 }
 
@@ -79,17 +93,17 @@ and:
     \endxltabular%
 }
 
-The \gls{novathesis} was initially directed to the PhD and MSc students thesis at \gls{DI} of the \gls{FCT} of the \gls{NOVA}, Portugal, but currently it supports other Universities and Schools, namely:
+The \gls{novathesis} template was initially directed to the PhD and MSc thesis/dissertations at the \gls{DI} of  \gls{FCT} of \gls{NOVA}, Portugal.  But the user base grew to other Departments of FCT-NOVA, then to other Schools and later to other Universities.  Currently more than 25 Schools are natively supported by the \gls{novathesis} teamplte.
 
 \begin{ntUniversity}{NOVA University Lisbon}
-    \ntSchool{cover-nova-fct-phd}%
+    \ntSchool{cover-nova-fct-phd,cover-nova-fct-msc}%
                   {NOVA School of Science and Technology [PhD]}%
                   {FCT-NOVA}%
                   {https://www.fct.unl.pt}
-    \ntSchool{cover-nova-fct-msc}%
-                  {NOVA School of Science and Technology [MSc]}%
-                  {FCT-NOVA}%
-                  {https://www.fct.unl.pt}
+    % \ntSchool{cover-nova-fct-msc}%
+    %               {NOVA School of Science and Technology [MSc]}%
+    %               {FCT-NOVA}%
+    %               {https://www.fct.unl.pt}
     \ntSchool{cover-nova-fcsh-phd}%
                   {NOVA School of Social Sciences and Humanities}%
                   {FCSH-NOVA}%

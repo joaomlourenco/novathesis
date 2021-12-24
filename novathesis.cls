@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-12-19 [6.8.4]
+%% Version 2021-12-24 [6.8.5]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -84,51 +84,6 @@
 \providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
 \providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
 
-% \newif\ifgraphicexist
-% \catcode`\*=11
-% \newcommand\@nt@imagetest[1]{%
-%  \begingroup
-%  \global\graphicexisttrue
-%    \let\input@path\Ginput@path
-%   \filename@parse{#1}%
-%   \ifx\filename@ext\relax
-%     \@for\Gin@temp:=\Gin@extensions\do{%
-%       \ifx\Gin@ext\relax
-%         \Gin@getbase\Gin@temp
-%       \fi}%
-%   \else
-%     \Gin@getbase{\Gin@sepdefault\filename@ext}%
-%     \ifx\Gin@ext\relax
-%        \global\graphicexistfalse
-%        \def\Gin@base{\filename@area\filename@base}%
-%        \edef\Gin@ext{\Gin@sepdefault\filename@ext}%
-%     \fi
-%   \fi
-%   \ifx\Gin@ext\relax
-%          \global\graphicexistfalse
-%     \else
-%        \@ifundefined{Gin@rule@\Gin@ext}%
-%          {\global\graphicexistfalse}%
-%          {}%
-%     \fi
-%   \ifx\Gin@ext\relax
-%    \gdef\imageextension{unknown}%
-%   \else
-%    \xdef\imageextension{\Gin@ext}%
-%   \fi
-%  \endgroup
-%  \ifgraphicexist
-%   \expandafter \@firstoftwo
-%  \else
-%   \expandafter \@secondoftwo
-%  \fi
-%  }
-% \catcode`\*=12
-%
-% \newcommand\@nt@includegraphics[2][]{%
-%   \@nt@imagetest{#2}{\includegraphics[#1]{#2}}{\missingfigure{\detokenize{#2}}}%
-% }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHECK IF USING LUALATEX OR XELATEX
@@ -146,23 +101,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlength{\@novathesisheight}
+\newcommand{\novathesis}{\settoheight{\@novathesisheight}{X}\includegraphics[height=1.17\@novathesisheight,vshift=-0.35pt]{NOVAthesisFiles/Images/novathesis-text}}
+
 
 \newcommand*{\defifundef}[2]{\ifundef{#1}{#2{#1}}{}}
 \newcommand*{\csdefifundef}[2]{\ifcsname#1\endcsname\else\expandafter\def\csname#2\endcsname{#1}\fi}
 
-% \newcommand{\xforcsvlist}{\expandafter\forcsvlist\expandafter\@firstoftwo\expandafter\@secondoftwo}
-\newcommand{\xforcsvlist}[2]{%
-    \@for\@nt@item:={#2}\do%
-      {\xdef\@nt@item{\@nt@item}#1{\@nt@item}}%
-}
-
-\newif\ifntstop
-\def\ntforbreak{\ntstoptrue}
 \long\def\ntfor#1:=#2\do#3{\@ifnextchar[{\ntfor@i#1:=#2\do#3}{\ntfor@i#1:=#2\do#3[]}}
 \long\def\ntfor@i#1:=#2\do#3[#4]{%
-  \ntstopfalse
-  \@for#1:=#2\do{\edef#1{#1}\ifntstop\else#3\fi}%
-  \ifntstop\else#4\fi
+  \@for#1:={#2}\do{\xdef#1{#1}#3}%
+  \if@endfor\else#4\fi
 }
 
 
@@ -565,7 +514,6 @@
   , docdegree/.new choice         = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
   , school/.new cmd               = {\@nt@schooloption@i#1\@nil}
   , school                        = {nova/fct}
-  , degreeacr/.new value          = {},
   , docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
   , chapstyle/.new value          = {bar}        % use "bar" chapter style by default
   , fontstyle/.new value          = {kpfonts}    % use “kpfonts” by default
@@ -594,6 +542,10 @@
   , linkscolor/.new cmd           = {\@ifpackageloaded{hyperref}%
                                        {\hypersetup{allcolors=#1}}%
                                        {\PassOptionsToPackage{allcolors=#1}{hyperref}}}
+% nova/ims
+  , degreeacr/.new value          = {},
+% nova/itqb
+  , covercolor/.new choice        = {gray, green}
 }
 
 
@@ -1095,12 +1047,14 @@
   % #3 = false branch
   \defifundef{\ifcoverdefined}{\newif}%
   \coverdefinedfalse%
-  \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{\coverdefinedtrue}{%
-    \options{/@nt/document/fallback=\option{/novathesis/docdegree}}%
-    \ifdatadefinedor{\match}{thesiscover}({\option{/novathesis/docdegree},#1,bgcolor},%
+  \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{\coverdefinedtrue}{}%
+  \options{/@nt/document/fallback=\option{/novathesis/docdegree}}%
+  \ifdatadefinedor{\match}{thesiscover}({\option{/novathesis/docdegree},#1,bgcolor},%
                                           {\option{/@nt/document/fallback},#1,bgcolor},%
-                                          {#1,bgcolor}){\coverdefinedtrue}{}
-  }%
+                                          {#1,bgcolor},%
+                                          {\option{/novathesis/docdegree},#1,image},%
+                                          {\option{/@nt/document/fallback},#1,image},%
+                                          {#1,image}){\coverdefinedtrue}{}
   \ifcoverdefined#2\else#3\fi%
 }
 
@@ -1462,16 +1416,9 @@
             \@nt@breakcsvlistdo
           }{}%
         }
-        
-        {%
+        [%
           \ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” nor “NOVAthesisFiles/Schools/\@nt@univ”}{}
-        }%
-        % \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}%
-        %   {\ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}}%
-        %   {\IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}%
-        %     {\ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/statement.tex}}%
-        %     {\ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} nor in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” or “NOVAthesisFiles/Schools/\@nt@univ”}{}}%
-        %   }%
+        ]%
       }{}%
       \ntselectlang{\option{/novathesis/mainlang}}%
       \phantomsection\pdfbookmark[1]{\csuse{thestatementbkmstring}(\option{/novathesis/mainlang})}{bmstatement}%
@@ -1531,7 +1478,7 @@
   % #1 = adviser | committee
   % #2 = {a,c} | {c,r,a,m,g}
   \def\@nt@personlist{}%
-  \ntfor\listitem:=#2\do{\@nt@addtopersonlist{#1}{\listitem}}
+  \@for\listitem:=#2\do{\@nt@addtopersonlist{#1}{\listitem}}
   \StrSubstitute{\@nt@personlist}{,}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist]%
   \StrCount{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist@last]%
   % Replace last comma with "and"
@@ -1601,10 +1548,7 @@
       \csuse{the#3titlestring}(\option{/novathesis/coverlang})%
       \datadefault{#3titlestringpost}()%
     }{}%
-    % \ntfor\listitem:=#4\do{\@nt@ntprintpersongroup[#1]{2}{#3}{\listitem}}
-    \xforcsvlist{\@nt@ntprintpersongroup[#1]{2}{#3}}{#4}%
-    % \@for\@nt@item:={#4}\do
-    %   {\xdef\@nt@item{\@nt@item}\@nt@ntprintpersongroup[#1]{2}{#3}{\@nt@item}}
+    \@for\listitemi:={#4}\do{\xdef\listitemi{\listitemi}\@nt@ntprintpersongroup[#1]{2}{#3}{\listitemi}}
   \end{tabularx}%
 }
 
@@ -1777,7 +1721,7 @@
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
-  \ntfor\listitem:=\expanded{\theabstractorder(\option{/novathesis/mainlang})}\do{\@ntprintabstract{\listitem}}%
+  \@for\listitem:=\expanded{\theabstractorder(\option{/novathesis/mainlang})}\do{\@ntprintabstract{\listitem}}%
   \ntselectlang{\option{/novathesis/mainlang}}%
 }
 
@@ -2011,7 +1955,7 @@
   \ifoptionequal{/@nt/currentlang}{\option{/novathesis/mainlang}}%
       {\hypersetup{pdfkeywords={\usebox{\ntkwbox}}}}%
       {}%
-  \usebox{\ntkwbox}%
+  \noindent\usebox{\ntkwbox}%
 }
 
 
