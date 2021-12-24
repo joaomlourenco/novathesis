@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-12-19 [6.8.4]
+%% Version 2021-12-24 [6.8.5]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -514,7 +514,6 @@
   , docdegree/.new choice         = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
   , school/.new cmd               = {\@nt@schooloption@i#1\@nil}
   , school                        = {nova/fct}
-  , degreeacr/.new value          = {},
   , docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
   , chapstyle/.new value          = {bar}        % use "bar" chapter style by default
   , fontstyle/.new value          = {kpfonts}    % use “kpfonts” by default
@@ -543,6 +542,10 @@
   , linkscolor/.new cmd           = {\@ifpackageloaded{hyperref}%
                                        {\hypersetup{allcolors=#1}}%
                                        {\PassOptionsToPackage{allcolors=#1}{hyperref}}}
+% nova/ims
+  , degreeacr/.new value          = {},
+% nova/itqb
+  , covercolor/.new choice        = {gray, green}
 }
 
 
@@ -1952,7 +1955,7 @@
   \ifoptionequal{/@nt/currentlang}{\option{/novathesis/mainlang}}%
       {\hypersetup{pdfkeywords={\usebox{\ntkwbox}}}}%
       {}%
-  \usebox{\ntkwbox}%
+  \noindent\usebox{\ntkwbox}%
 }
 
 
