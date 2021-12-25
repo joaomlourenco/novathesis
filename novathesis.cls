@@ -1510,12 +1510,10 @@
   % #2 = width in % of textwidth
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
-  \csuse{#3stringpost}():={:\\[0pt]}%
-  % \csuse{#3stringpre}(c):={\\[-3ex]}%
-  \csuse{#3namepost}():={\\[-0.5ex]}%
-  \csuse{#3remainderpost}():={\vspace{1pt}}%
-  \personpost():={~\\}%
-  \persongrouppost():={~\\[12pt]}
+  \csuse{#3stringpost}():={:\\[2pt]}%
+  \csuse{#3remainderpre}():={\\}%
+  \personpost():={\\[4pt]}%
+  \persongrouppost():={\\[-6pt]}
   \begin{tabularx}{#2\linewidth}[t]{@{}X@{}}%
     % \ifdatadefined{#3titlestringpre}(\options{/novathesis/coverlang}){%
     %   \aadefault{#3titlestringpre}(#4)%
@@ -1532,16 +1530,12 @@
   % #2 = width in % of textwidth
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
-  % \csuse{#3stringpre}():={\\[-1.5ex]}%
   \csuse{#3stringpost}():={:}%
-  \csuse{#3namepost}():={\\[-2pt]}%
-  % \csuse{#3remainderpost}():={}%
-  % \adviserstringpre(a):={}%
-  % \committeestringpre(c):={X}%
-  \committeetitlestringpre():={&}%
-  \committeetitlestringpost():={\\[7pt]}%
+  \csuse{#3remainderpre}():={\\}%
   \personpost():={\\[4pt]}%
   \persongrouppost():={\\[-6pt]}
+  \committeetitlestringpre():={&}%
+  \committeetitlestringpost():={\\[7pt]}%
   \begin{tabularx}{#2\linewidth}[t]{@{}r@{~~}X@{}}%
     \ifdatadefined{#3titlestring}(\option{/novathesis/coverlang}){%
       \datadefault{#3titlestringpre}()%
@@ -1597,12 +1591,14 @@
   \egroup%
   \csuse{the#2namepost}()%
   \IfStrEq{#1}{full}{%
-    \csuse{the#2remainderpre}()%
-    \bgroup%
-      \csuse{the#2remainderfont}()%
-      \ignorespaces\@nt@remainder%
-    \egroup%
-    \csuse{the#2remainderpost}()%
+    \IfStrEq{\@nt@remainder}{}{}{%
+      \csuse{the#2remainderpre}()%
+      \bgroup%
+        \csuse{the#2remainderfont}()%
+        \ignorespaces\@nt@remainder%
+      \egroup%
+      \csuse{the#2remainderpost}()%
+    }%
   }{}%
   \endgroup
   \thepersonpost()%
