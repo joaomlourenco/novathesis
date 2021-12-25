@@ -1532,15 +1532,16 @@
   % #2 = width in % of textwidth
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
-  \csuse{#3stringpre}():={\\[-1.5ex]}%
+  % \csuse{#3stringpre}():={\\[-1.5ex]}%
   \csuse{#3stringpost}():={:}%
-  \csuse{#3namepost}():={\\[-0.5ex]}%
-  \csuse{#3remainderpost}():={\\[1pt]}%
-  \adviserstringpre(a):={}%
-  \committeestringpre(c):={}%
+  \csuse{#3namepost}():={\\[-2pt]}%
+  % \csuse{#3remainderpost}():={}%
+  % \adviserstringpre(a):={}%
+  % \committeestringpre(c):={X}%
   \committeetitlestringpre():={&}%
-  \committeetitlestringpost():={\\[0.5ex]}%
-  \persongrouppost():={~\\}
+  \committeetitlestringpost():={\\[7pt]}%
+  \personpost():={\\[4pt]}%
+  \persongrouppost():={\\[-6pt]}
   \begin{tabularx}{#2\linewidth}[t]{@{}r@{~~}X@{}}%
     \ifdatadefined{#3titlestring}(\option{/novathesis/coverlang}){%
       \datadefault{#3titlestringpre}()%
@@ -1586,6 +1587,7 @@
   % #1 = { name | full}
   % #2 = adviser | coadviser | committee
   % #3 = (co)adviser info
+  \begingroup
   \raggedright%
   \StrCut{#3}{,}\@nt@name\@nt@remainder% split name from remainder
   \csuse{the#2namepre}()%
@@ -1602,6 +1604,7 @@
     \egroup%
     \csuse{the#2remainderpost}()%
   }{}%
+  \endgroup
   \thepersonpost()%
 }
 
@@ -1686,12 +1689,6 @@
 
 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Fonts
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\quotefont}{\normalfont\normalsize}
-\newcommand*{\quotefonti}{\itshape\normalsize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Printing chapters and similars
@@ -1886,40 +1883,36 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Dedicatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newenvironment{ntdedicatory}{%
-  \iftoggle{/novathesis/numberallpages}{\thispagestyle{novathesis@frontmatter}}{\thispagestyle{empty}}%
-  \NTRunHook{dedicatory/pre}%
-  ~\\[2cm]%
-  \minipage{\linewidth}%
-    \raggedleft%
-    \minipage{100mm}%
-      \raggedleft%
-      \quotefonti%
-}{%
-      \normalfont%
-    \endminipage%
-  \endminipage%
-  \NTRunHook{dedicatory/post}%
-}
+\newenvironment{ntdedicatory}[1][100mm]{%
+  \begin{ntquoting}[#1]{dedicatory}
+}{\end{ntquoting}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Quote
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newenvironment{ntquote}{%
+\newenvironment{ntquote}[1][100mm]{%
+  \begin{ntquoting}[#1]{quote}
+}{\end{ntquoting}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Quoting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{ntquoting}[2][10cm]{%
   \iftoggle{/novathesis/numberallpages}{\thispagestyle{novathesis@frontmatter}}{\thispagestyle{empty}}%
-  \NTRunHook{quote/pre}%
+  \gdef\@ntquoting{#2}
+  \NTRunHook{#2/pre}%
   ~\\[2cm]%
   \minipage{\linewidth}%
     \raggedleft%
-    \minipage{100mm}%
-      \raggedleft%
-      \quotefonti%
+    \minipage{#1}%
+      \raggedleft\normalsize\itshape%
 }{%
       \normalfont%
     \endminipage%
   \endminipage%
-  \NTRunHook{quote/post}%
+  \NTRunHook{\@ntquoting/post}%
 }
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Acknowledgements
