@@ -40,19 +40,19 @@
 
 % Cover background images
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
-\thesiscover(phd,1-1,bgcolor):={white}
-\thesiscover(phd,1-1,image):={other-esep-cover}
-\thesiscover(phdplan,1-1,bgcolor):={white}
-\thesiscover(phdplan,1-1,image):={other-esep-cover}
-\thesiscover(phdprop,1-1,image):={other-esep-cover}
-\thesiscover(msc,1-1,bgcolor):={white}
-\thesiscover(msc,1-1,image):={other-esep-cover}
-\thesiscover(mscplan,1-1,bgcolor):={white}
-\thesiscover(mscplan,1-1,image):={other-esep-cover}
-\thesiscover(bsc,1-1,bgcolor):={white}
-\thesiscover(bsc,1-1,image):={other-esep-cover}
-\thesiscover(plain,1-1,bgcolor):={white}
-\thesiscover(plain,1-1,image):={other-esep-cover}
+\thesiscover(1-1,bgcolor):={white}
+\thesiscover(1-1,image):={other-esep-cover}
+\thesiscover(1-1,bgcolor):={white}
+\thesiscover(1-1,image):={other-esep-cover}
+\thesiscover(1-1,image):={other-esep-cover}
+\thesiscover(1-1,bgcolor):={white}
+\thesiscover(1-1,image):={other-esep-cover}
+\thesiscover(1-1,bgcolor):={white}
+\thesiscover(1-1,image):={other-esep-cover}
+\thesiscover(1-1,bgcolor):={white}
+\thesiscover(1-1,image):={other-esep-cover}
+\thesiscover(1-1,bgcolor):={white}
+\thesiscover(1-1,image):={other-esep-cover}
 
 % Spine info
 \spine(logo)={other-esep-logo_horiz}
@@ -72,34 +72,10 @@
 \margin(paper,right):={2.5cm}
 
 % Set margins for cover pages
-\margin(phd,top):={1.0cm}
-\margin(phd,bottom):={1.5cm}
-\margin(phd,left):={7cm}
-\margin(phd,right):={0.5cm}
-\margin(phdplan,top):={1.0cm}
-\margin(phdplan,bottom):={1.5cm}
-\margin(phdplan,left):={7cm}
-\margin(phdplan,right):={1.0cm}
-\margin(phdprop,top):={1.0cm}
-\margin(phdprop,bottom):={1.5cm}
-\margin(phdprop,left):={7cm}
-\margin(phdprop,right):={1.0cm}
-\margin(msc,top):={1.0cm}
-\margin(msc,bottom):={1.5cm}
-\margin(msc,left):={7cm}
-\margin(msc,right):={0.5cm}
-\margin(mscplan,top):={1.0cm}
-\margin(mscplan,bottom):={1.5cm}
-\margin(mscplan,left):={7cm}
-\margin(mscplan,right):={1.0cm}
-\margin(bsc,top):={1.0cm}
-\margin(bsc,bottom):={1.5cm}
-\margin(bsc,left):={7cm}
-\margin(bsc,right):={1.0cm}
-\margin(plain,top):={1.0cm}
-\margin(plain,bottom):={1.5cm}
-\margin(plain,left):={7cm}
-\margin(plain,right):={1.0cm}
+\margin(cover,top):={1.0cm}
+\margin(cover,bottom):={1.5cm}
+\margin(cover,left):={7cm}
+\margin(cover,right):={0.5cm}
 
 
 

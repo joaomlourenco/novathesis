@@ -23,38 +23,17 @@
 
 % Cover background images
 \frontpageimage():={cover}
-\thesiscover(bsc,1-1,bgcolor):={white}
-\thesiscover(bsc,1-1,image):={\thefrontpageimage()}
-\thesiscover(msc,1-1,image):={\thefrontpageimage()}
-\thesiscover(phd,1-1,image):={\thefrontpageimage()}
+\thesiscover(1-1,bgcolor):={white}
+\thesiscover(1-1,image):={\thefrontpageimage()}
+\thesiscover(1-1,image):={\thefrontpageimage()}
+\thesiscover(1-1,image):={\thefrontpageimage()}
 
 % Set margins for cover pages
-\margin(bsc,top):={2.9cm}
-\margin(bsc,bottom):={1.3cm}
-\margin(bsc,left):={2.5cm}
-\margin(bsc,right):={2.5cm}
+\margin(cover,top):={2.9cm}
+\margin(cover,bottom):={1.3cm}
+\margin(cover,left):={2.5cm}
+\margin(cover,right):={2.5cm}
 
-\margin(msc,top):={2.9cm}
-\margin(msc,bottom):={1.3cm}
-\margin(msc,left):={2.5cm}
-\margin(msc,right):={2.5cm}
-\margin(mscplan,top):={2.9cm}
-\margin(mscplan,bottom):={1.3cm}
-\margin(mscplan,left):={2.5cm}
-\margin(mscplan,right):={2.5cm}
-
-\margin(phd,top):={2.9cm}
-\margin(phd,bottom):={1.3cm}
-\margin(phd,left):={2.5cm}
-\margin(phd,right):={2.5cm}
-\margin(phdprop,top):={2.9cm}
-\margin(phdprop,bottom):={1.3cm}
-\margin(phdprop,left):={2.5cm}
-\margin(phdprop,right):={2.5cm}
-\margin(phdplan,top):={2.9cm}
-\margin(phdplan,bottom):={1.3cm}
-\margin(phdplan,left):={2.5cm}
-\margin(phdplan,right):={2.5cm}
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}

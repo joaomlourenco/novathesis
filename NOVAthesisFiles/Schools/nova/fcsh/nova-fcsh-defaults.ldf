@@ -48,34 +48,10 @@
 \margin(paper,right):={3.5cm}
 
 % Set margins for cover pages 
-\margin(phd,top):={0.0cm}
-\margin(phd,bottom):={0.0cm}
-\margin(phd,left):={0.0cm}
-\margin(phd,right):={0.0cm}
-\margin(phdplan,top):={0.0cm}
-\margin(phdplan,bottom):={0.0cm}
-\margin(phdplan,left):={0.0cm}
-\margin(phdplan,right):={0.0cm}
-\margin(phdprop,top):={0.0cm}
-\margin(phdprop,bottom):={0.0cm}
-\margin(phdprop,left):={0.0cm}
-\margin(phdprop,right):={0.0cm}
-\margin(msc,top):={0.0cm}
-\margin(msc,bottom):={0.0cm}
-\margin(msc,left):={0.0cm}
-\margin(msc,right):={0.0cm}
-\margin(mscplan,top):={0.0cm}
-\margin(mscplan,bottom):={0.0cm}
-\margin(mscplan,left):={0.0cm}
-\margin(mscplan,right):={0.0cm}
-\margin(bsc,top):={0.0cm}
-\margin(bsc,bottom):={0.0cm}
-\margin(bsc,left):={0.0cm}
-\margin(bsc,right):={0.0cm}
-\margin(plain,top):={0.0cm}
-\margin(plain,bottom):={0.0cm}
-\margin(plain,left):={0.0cm}
-\margin(plain,right):={0.0cm}
+\margin(cover,top):={0.0cm}
+\margin(cover,bottom):={0.0cm}
+\margin(cover,left):={0.0cm}
+\margin(cover,right):={0.0cm}
 
 % \dissertationstring(phd,pt)={\thedocdegreestr(phd,pt)\ em\\[1ex] \textbf{\themajorfield(pt)}}
 % \dissertationstring(phd,en)={\thedocdegreestr(phd,en)\ in\\[1ex] \textbf{\themajorfield(en)}}

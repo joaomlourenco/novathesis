@@ -60,27 +60,12 @@
 \thesiscover(phd,N-2,image):={nova-ims-backcover}
 \thesiscover(phd,spine,image):={nova-ims-spine}
 
-\thesiscover(phdprop,1-1,image):={nova-ims-phd-cover}
-\thesiscover(phdprop,N-2,image):={nova-ims-backcover}
-\thesiscover(phdprop,spine,image):={nova-ims-spine}
-
-\thesiscover(phdplan,1-1,image):={nova-ims-phd-cover}
-\thesiscover(phdplan,N-2,image):={nova-ims-backcover}
-\thesiscover(phdplan,spine,image):={nova-ims-spine}
-
 \thesiscover(msc,1-1,image):={nova-ims-front-cover-generic}
 \thesiscover(msc,N-2,image):={nova-ims-backcover}
 \thesiscover(msc,spine,image):={nova-ims-spine}
 \thesiscover(msc,megi,1-1,image):={nova-ims-megi-cover}
 \thesiscover(msc,mgi,1-1,image):={nova-ims-mgi-cover}
 \thesiscover(msc,mmaa,1-1,image):={nova-ims-mmaa-cover}
-
-\thesiscover(mscplan,1-1,image):={nova-ims-front-cover-generic}
-\thesiscover(mscplan,N-2,image):={nova-ims-backcover}
-\thesiscover(mscplan,spine,image):={nova-ims-spine}
-\thesiscover(mscplan,megi,1-1,image):={nova-ims-megi-cover}
-\thesiscover(mscplan,mgi,1-1,image):={nova-ims-mgi-cover}
-\thesiscover(mscplan,mmaa,1-1,image):={nova-ims-mmaa-cover}
 
 \thesiscover(bsc,1-1,image):={nova-ims-front-cover-generic}
 \thesiscover(bsc,N-2,image):={nova-ims-backcover}
@@ -166,46 +151,14 @@
 \margin(paper,right):={3.0cm}
 
 % Set margins for cover pages
-\margin(phd,top):={10.0cm}
-\margin(phd,bottom):={2.4cm}
-\margin(phd,left):={7.0cm}
-\margin(phd,right):={2.0cm}
-\margin(phdplan,top):={8.5cm}
-\margin(phdplan,bottom):={6.0cm}
-\margin(phdplan,left):={6.8cm}
-\margin(phdplan,right):={2.0cm}
-\margin(phdprop,top):={8.5cm}
-\margin(phdprop,bottom):={6.0cm}
-\margin(phdprop,left):={6.8cm}
-\margin(phdprop,right):={2.0cm}
-\margin(msc,top):={8.5cm}
-\margin(msc,bottom):={6.0cm}
-\margin(msc,left):={6.8cm}
-\margin(msc,right):={2.0cm}
-\margin(mscplan,top):={8.5cm}
-\margin(mscplan,bottom):={6.0cm}
-\margin(mscplan,left):={6.8cm}
-\margin(mscplan,right):={2.0cm}
-\margin(bsc,top):={8.5cm}
-\margin(bsc,bottom):={6.0cm}
-\margin(bsc,left):={6.8cm}
-\margin(bsc,right):={2.0cm}
-\margin(plain,top):={8.5cm}
-\margin(plain,bottom):={6.0cm}
-\margin(plain,left):={6.8cm}
-\margin(plain,right):={2.0cm}
-\margin(phd,2-1,top):={3cm}
-\margin(phd,2-1,bottom):={3cm}
-\margin(phd,2-1,left):={3cm}
-\margin(phd,2-1,right):={3cm}
-\margin(msc,2-1,top):={3cm}
-\margin(msc,2-1,bottom):={3cm}
-\margin(msc,2-1,left):={3cm}
-\margin(msc,2-1,right):={3cm}
-\margin(bsc,2-1,top):={3cm}
-\margin(bsc,2-1,bottom):={3cm}
-\margin(bsc,2-1,left):={3cm}
-\margin(bsc,2-1,right):={3cm}
+\margin(cover,top):={10.0cm}
+\margin(cover,bottom):={2.4cm}
+\margin(cover,left):={7.0cm}
+\margin(cover,right):={2.0cm}
+\margin(cover,2-1,top):={3cm}
+\margin(cover,2-1,bottom):={3cm}
+\margin(cover,2-1,left):={3cm}
+\margin(cover,2-1,right):={3cm}
 
 
 

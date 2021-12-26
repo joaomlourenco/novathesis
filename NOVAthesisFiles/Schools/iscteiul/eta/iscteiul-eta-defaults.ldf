@@ -47,34 +47,10 @@
 \margin(paper,right):={3.5cm}
 
 % Set margins for cover pages
-\margin(phd,top):={2.0cm}
-\margin(phd,bottom):={1.5cm}
-\margin(phd,left):={2.5cm}
-\margin(phd,right):={2.5cm}
-\margin(phdplan,top):={2.0cm}
-\margin(phdplan,bottom):={1.5cm}
-\margin(phdplan,left):={2.5cm}
-\margin(phdplan,right):={2.5cm}
-\margin(phdprop,top):={2.0cm}
-\margin(phdprop,bottom):={1.5cm}
-\margin(phdprop,left):={2.5cm}
-\margin(phdprop,right):={2.5cm}
-\margin(msc,top):={2.0cm}
-\margin(msc,bottom):={1.5cm}
-\margin(msc,left):={2.5cm}
-\margin(msc,right):={2.5cm}
-\margin(mscplan,top):={2.0cm}
-\margin(mscplan,bottom):={1.5cm}
-\margin(mscplan,left):={2.5cm}
-\margin(mscplan,right):={2.5cm}
-\margin(bsc,top):={2.0cm}
-\margin(bsc,bottom):={1.5cm}
-\margin(bsc,left):={2.5cm}
-\margin(bsc,right):={2.5cm}
-\margin(plain,top):={2.0cm}
-\margin(plain,bottom):={1.5cm}
-\margin(plain,left):={2.5cm}
-\margin(plain,right):={2.5cm}
+\margin(cover,top):={2.0cm}
+\margin(cover,bottom):={1.5cm}
+\margin(cover,left):={2.5cm}
+\margin(cover,right):={2.5cm}
 
 \dissertationstring(bsc,pt)={Relatório para obtenção do Grau de %
 \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
