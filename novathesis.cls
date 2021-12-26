@@ -108,6 +108,7 @@
 \newcommand*{\defifundef}[2]{\ifundef{#1}{#2{#1}}{}}
 \newcommand*{\csdefifundef}[2]{\ifcsname#1\endcsname\else\expandafter\def\csname#2\endcsname{#1}\fi}
 
+\def\ntforbreak{\@endfortrue}
 \long\def\ntfor#1:=#2\do#3{\@ifnextchar[{\ntfor@i#1:=#2\do#3}{\ntfor@i#1:=#2\do#3[]}}
 \long\def\ntfor@i#1:=#2\do#3[#4]{%
   \@for#1:={#2}\do{\xdef#1{#1}#3}%
