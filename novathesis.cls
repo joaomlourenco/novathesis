@@ -742,37 +742,33 @@
                             \iftoggle{/novathesis/tocintoc}{%
                                 \tableofcontents%
                             }{%
-                                \phantomsection\pdfbookmark[1]{\contentsname}{toctarget}%
+                                \pdfbookmark[1]{\contentsname}{toctarget}%
                                 \hypertarget{toctarget}{\tableofcontents*}%
                             }%
                         }}}%
       {listoffigures*}{\options{/@nt/list/listof/.cpush={%
-                                \phantomsection\pdfbookmark{\listfigurename}{loftarget}%
+                                \pdfbookmark{\listfigurename}{loftarget}%
                                 \hypertarget{loftarget}{\listoffigures*}%
                         }}}%
       {listoftables*}{\options{/@nt/list/listof/.cpush={%
-                                \phantomsection\pdfbookmark{\listtablename}{lottarget}%
+                                \pdfbookmark{\listtablename}{lottarget}%
                                 \hypertarget{lottarget}{\listoftables*}%
                         }}}%
       {listoflistings}{\options{/@nt/list/listof/.cpush={%
-                                \phantomsection\pdfbookmark{\listoflistingscaption}{loltarget}%
+                                \pdfbookmark{\listoflistingscaption}{loltarget}%
                                 \hypertarget{loltarget}{\listoflistings}%
                         }}}%
       {listofalgorithms}{\options{/@nt/list/listof/.cpush = {%
-                                \phantomsection\pdfbookmark{\listalgorithmcfname}{loatarget}%
-                                \hypertarget{loatarget}{\listofalgorithms}%
+                                \listofalgorithms
+                                \addcontentsline{toc}{chapter}{\listalgorithmcfname}
                         }}}%
       {listsofglossaries}{\options{/@nt/list/listof/.cpush={%
-                              \glstoctrue%
-                              \iftoggle{/novathesis/glsxindy}%
-                                  {\printglossaries}%
-                                  {\printnoidxglossaries}%
+                              \glstoctrue
+                              \printglossaries
                           }}}%
       {listsofglossaries*}{\options{/@nt/list/listof/.cpush={%
-                              \glstocfalse%
-                              \iftoggle{/novathesis/glsxindy}%
-                                  {\printglossaries}%
-                                  {\printnoidxglossaries}%
+                              \glstocfalse
+                              \printglossaries
                           }}}%
   }[\options{/@nt/list/listof/.cpush={\csuse{#1}}}]%
 }
@@ -1600,50 +1596,6 @@
   \checkandfixthelayout%
   \ifoptionequal{/novathesis/media}{paper}{\openright}{}%
 }
-
-%% For debugging the page layout
-% \newcommand*{\@nt@typetwolengths}[4]{%
-%   % #1=text before
-%   % #2=first length
-%   % #3=text between
-%   % #4=second length
-%   \setlength\@tempdimc{\mem@tl@unitperpt #2}%
-%   \edef\l@first{\strip@pt\@tempdimc}%
-%   \setlength\@tempdimc{\mem@tl@unitperpt #4}%
-%   \edef\l@second{\strip@pt\@tempdimc}%
-%   #1: \l@first\mem@tl@unit\space#3\space\l@second\mem@tl@unit%
-% }
-%
-% \newcommand*{\@nt@typeonelength}[2]{%
-%   % #1=text before
-%   % #2=first length
-%   \setlength\@tempdimc{\mem@tl@unitperpt #2}%
-%   \edef\l@first{\strip@pt\@tempdimc}%
-%   #1: \l@first\mem@tl@unit%
-% }
-%
-% \newcommand*{\typelayout}{%
-%   \hrule%
-%   \@nt@typetwolengths{Stock height and width}{\stockheight}{by}{\stockwidth}\\%
-%   \@nt@typetwolengths{Top and edge trims}{\trimtop}{and}{\trimedge}\\%
-%   \@nt@typetwolengths{Page height and width}{\paperheight}{by}{\paperwidth}\\%
-%   \@nt@typetwolengths{Text height and width}{\textheight}{by}{\textwidth}\\%
-%   \@nt@typetwolengths{Spine and edge margins}{\spinemargin}{and}{\foremargin}\\%
-%   \@nt@typetwolengths{Upper and lower margins}{\uppermargin}{and}{\lowermargin}\\%
-%   \@nt@typetwolengths{Headheight and headsep}{\headheight}{and}{\headsep}\\%
-%   \@nt@typeonelength{Footskip}{\footskip}\\%
-%   \@nt@typetwolengths{Columnsep and columnseprule}{\columnsep}{and}{\columnseprule}\\%
-%   \@nt@typetwolengths{Marginparsep and marginparwidth}{\marginparsep}{and}{\marginparwidth}\\%
-%   \@nt@typetwolengths{Sidecapsep and sidecapwidth}{\sidecapsep}{and}{\sidecapwidth}\\%
-%   \@nt@typetwolengths{Sidebarhsep and sidebarwidth}{\sidebarhsep}{and}{\sidebarwidth}\\%
-%   \@nt@typetwolengths{Sidebarvsep and sidebartopsep}{\sidebarvsep}{and}{\sidebartopsep}\\%
-%   \@nt@typeonelength{Sidebarheight}{\dimen\sideins}\\%
-%   \@nt@typetwolengths{Sidefoothsep and sidefootwidth}{\sidefoothsep}{and}{\sidefootwidth}\\%
-%   \@nt@typetwolengths{Sidefootvsep and sidefootheight}{\sidefootvsep}{and}{\sidefootheight}\\%
-%   \hrule%
-% }
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
