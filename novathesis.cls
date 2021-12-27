@@ -138,7 +138,7 @@
                         {\option{/novathesis/docdegree},\option{/novathesis/coverlang}},%
                         {\option{/@nt/document/fallback},\option{/novathesis/coverlang}}%
   )%
-  \degreename(#1):={\match #2}%
+  \degreename(#1):={\match\ #2}%
   \majorfield(#1):={#2}%
 }
 \def\ntspecialization(#1)#2{\specialization(#1):={#2}}
