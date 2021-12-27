@@ -43,9 +43,7 @@
 --------
 ## About
 
-The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathesis/) is an Open Source project for writing thesis, dissertations, and other monograph-like documents.
-
-The “*novathesis*” LaTeX template…
+The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathesis/) is an Open Source project for writing thesis, dissertations, and other monograph-like documents, which…
 
 * **Is very easy to use for the LaTeX beginners:**
     * Just fill the cover data and your chapters with text!
@@ -65,6 +63,8 @@ The “*novathesis*” LaTeX template…
 
 *[See below](#with-a-remote-cloud-based-service) for alternatives to a local LaTeX installation*
 
+*See “[minimal installation](minimal_installation)” for instructions on how to build/use a minimal installation of LaTeX (<100 MB vs. 5GB for tex-live), which is just enough to compile the template successfully*
+
 1. Download LaTeX:
 	* **Windows:** install either [MikTeX](https://miktex.org) or [TeX-Live](https://www.tug.org/texlive/).
 	* **Linux:** install [TeX-Live](https://www.tug.org/texlive/).
@@ -76,18 +76,25 @@ The “*novathesis*” LaTeX template…
 	* The main file is named “*template.tex*”.  
 	* Either load it in your favorite [LaTeX text editor](https://en.wikipedia.org/wiki/Comparison_of_TeX_editors) or compile it in the terminal with
 <kbd>latexmk -pdf template</kbd>.
-	* If Murphy is elsewhere, LaTeX will create the file “*template.pdf*”, which you may open with your favorite PDF viewer.
+	* If Murphy is elsewhere, LaTeX will create the file “`template.pdf`”, which you may open with your favorite PDF viewer.
 4. Edit the files in the “*Config*” folder:
-    * “*1_novathesis.tex*” — configure the document type, your school, etc
-    * “*2_biblatex.tex*” — configure the bibliography
-    * “*3a_degree_phd.tex*” — if you are writing a PhD thesis configure your degree here
-    * “*3b_degree_msc.tex*” — if you are writing a MSc dissertation configure your degree here
-    * “*3c_degree_other.tex*” — otherwise configure your document type here
-    * “*4_department.tex*” — configure your Department name here
-    * “*3_cover.tex*” — configure cover contents here (e.g., author's name, thesis/dissertation title, etc)
-    * “*4_files.tex*” — add here the the  files for chapters, appendices, annexes, etc…
-    * “*5_packages.tex*” — add here your additional packages and commands
-    * “*6_list_of.tex*” — configure which lists should be printed (table of contents, list of figures, etc)
+
+| File                      | Contents                                                           |
+|---------------------------|--------------------------------------------------------------------|
+| `0_memoir.tex`            | Options specific for the `memoir` package.  _Don't touch this file unless you know what you are doing!_                                                                              |
+| `1_novathesis.tex`        | Configure the template, i.e., the document type, the school, etc.  |
+| **`2_biblatex.tex`**      | **Configure the bibliography.**                                        |
+| **`3_cover.tex`**         | **Configure cover contents (e.g., author's name, thesis/dissertation title, advisers, committee, etc)**                                                                        |
+| **`4_files.tex`**         | **Configure the the files for chapters, appendices, annexes, etc…**     |
+| **`5_packages.tex`**      | **Configure additional packages and commands**                     |
+| `6_list_of.tex`           | Configure the lists to be printed (table of contents, list of figures, list of tables, list of listings, etc).  _Don't touch this file unless you know what you are doing!_       |
+|                           |                                                                    |
+| `9_nova_fct.tex`          | Configuration specific to **nova/fct**                             |
+| `9_nova_ims.tex`          | Configuration specific to **nova/ims**                             |
+| `9_nova_itqb.tex`         | Configuration specific to **nova/itqb**                            |
+| `9_ulisboa_fmv.tex`       | Configuration specific to **ulisboa/fmv**                          |
+| `9_uminho.tex`            | Configuration specific to **uminho** (all schools)                 |
+
 5. Recompile de document:
 	* See 3. above.
 6. You're done with a beautifully formatted thesis/dissertation! 😃
@@ -153,26 +160,28 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
     * [NOVA Information Management School](https://www.novaims.unl.pt) (NOVA-IMS)
     * [National School of Public Heath](https://www.ensp.unl.pt) (ENSP-NOVA)
     * [Faculdade de Ciências Humanas e Sociais](https://www.fcsh.unl.pt) (FCSH-NOVA)
+    * [Faculdade de Ciências Humanas e Sociais](https://www.fcsh.unl.pt) (FCSH-NOVA)
+    * [Instituto de Tecnologia Química e Biologica Antonio Xavier](https://www.itqb.unl.pt) (ITQB-NOVA)
 * University of Lisbon
-    * [Instituto Superior Técnico from Universidade de Lisboa](https://tecnico.ulisboa.pt) (IST-UL)
-    * [Faculdade de Ciências from  Universidade de Lisboa](https://ciencias.ulisboa.pt) (FC-UL)
+    * [Instituto Superior Técnico from Universidade de Lisboa](https://tecnico.ulisboa.pt) (IST-ULISBOA)
+    * [Faculdade de Ciências from  Universidade de Lisboa](https://ciencias.ulisboa.pt) (FC-ULISBOA)
 * University of Minho
-    * [Escola de Arquitetura](https://www.arquitetura.uminho.pt) (EA-UM)
-    * [Escola de Ciências](https://www.ecum.uminho.pt) (EC-UM)
-    * [Escola de Direito](https://www.direito.uminho.pt) (ED-UM)
-    * [Escola de Economia e Gestão](https://www.eeg.uminho.pt) (EEG-UM)
-    * [Escolha de Engenharia](https://www.eng.uminho.pt) (EE-UM)
-    * [Escola de Medicina](https://www.med.uminho.pt) (EM-UM)
-    * [Escola de Psicologia](https://www.psi.uminho.pt) (EP-UM)
-    * [Escola Superior de Enfermagem](https://www.ese.uminho.pt) (ESE-UM)
-    * [Instituto de Ciências Sociais](https://www.ese.uminho.pt) (ICS-UM)
-    * [Instituto de Educação](https://www.ie.uminho.pt) (IE-UM)
-    * [Instituto de Letras e Ciências Humanas](https://www.ilch.uminho.pt) (ILCH-UM)
-    * [Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos](https://i3bs.uminho.pt) (I3Bs-UM)
+    * [Escola de Arquitetura](https://www.arquitetura.uminho.pt) (EA-UMIMHO)
+    * [Escola de Ciências](https://www.ecum.uminho.pt) (EC-UMIMHO)
+    * [Escola de Direito](https://www.direito.uminho.pt) (ED-UMIMHO)
+    * [Escola de Economia e Gestão](https://www.eeg.uminho.pt) (EEG-UMIMHO)
+    * [Escolha de Engenharia](https://www.eng.uminho.pt) (EE-UMIMHO)
+    * [Escola de Medicina](https://www.med.uminho.pt) (EM-UMIMHO)
+    * [Escola de Psicologia](https://www.psi.uminho.pt) (EP-UMIMHO)
+    * [Escola Superior de Enfermagem](https://www.ese.uminho.pt) (ESE-UMIMHO)
+    * [Instituto de Ciências Sociais](https://www.ese.uminho.pt) (ICS-UMIMHO)
+    * [Instituto de Educação](https://www.ie.uminho.pt) (IE-UMIMHO)
+    * [Instituto de Letras e Ciências Humanas](https://www.ilch.uminho.pt) (ILCH-UMIMHO)
+    * [Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos](https://i3bs.uminho.pt) (I3Bs-UMIMHO)
 * Universidade Lusófona de Humanidades e Tecnologias
     * [Departamento de Engenharia Informática e Sistemas de Informação](http://informatica.ulusofona.ptpt) (ULHT-DEISI)
 * ISCTE – Instituto Universitário de Lisboa
-    * [Escola de Tecnologia e Arquitectura](https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura) (ETA-ISCTE-IUL)
+    * [Escola de Tecnologia e Arquitectura](https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura) (ETA-ISCTE-IUL) _NOTE: this template is outdated (there are new covers/specifications)_
 * Instituto Politécnico de Lisboa
     * [Instituto Superior de Engenharia de Lisboa](https://www.isel.pt) (ISEL-IPL)
 * Instituto Politécnico de Setúbal
