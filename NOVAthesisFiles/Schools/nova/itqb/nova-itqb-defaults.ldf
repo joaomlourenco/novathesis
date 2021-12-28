@@ -155,13 +155,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover pages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NTAddToHook{cover/1-1/pretext}{%
+\NTAddToHook{cover/1-1/text/pre}{%
   \sffamily%
 }
-\NTAddToHook{cover/2-1/pretext}{%
+\NTAddToHook{cover/2-1/text/pre}{%
   \sffamily%
 }
-\NTAddToHook{cover/N-2/pretext}{%
+\NTAddToHook{cover/N-2/text/pre}{%
   \sffamily%
 }
 

@@ -6,16 +6,36 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %------------------------------------------------------------
 % UNIVERSITY / SCHOOL SPECIFIC STUFF
+% ULISBOA - FMV
 %------------------------------------------------------------
 
-%------------------------------------------------------------
-% ULISBOA - FMV
-% The standard citation commands in ULISBOA-FMV are \textcite which yields “Author (year)”
-% and \parencite which yields “(Author, year)”
+% The standard citation commands in ULISBOA-FMV are 
+% \textcite which yields “Author (year)”; and
+% \parencite which yields “(Author, year)”
+
+% The date of the exam
 \ulfmvdocemxadate(year){\embrace{ano}}
 \ulfmvdocemxadate(month){\embrace{mês}}
 \ulfmvdocemxadate(day){\embrace{dia}}
-\ulfmvscientificarea{C}% C=Clinica; MF=Produção Animal e Segurança Alimentar; PASA=Morfologia e Função; SA=Sanidade Animal
-\ulfmvavailability(period){I}% I=Immediate; 6=Available after 6 months; 12=Available after 12 months
+
+% Scientifica area
+%      C = Clinica
+%     MF = Produção Animal e Segurança Alimentar
+%   PASA = Morfologia e Função
+%     SA = Sanidade Animal
+\ulfmvscientificarea{C}
+
+% Embargo period
+%      I = Immediate
+%      6 = Available after 6 months
+%     12 = Available after 12 months
+\ulfmvavailability(period){I}
+
+% Embargo justification (only relevant if embargo period above is 6 or 12)
 \ulfmvavailability(justification){Motivo do embargo temporário.}
-\ulfmvavailability(reproduction){I}% I=Integral; P=partial; N=None
+
+% Copyright
+%      I = Integral
+%      P = partial
+%      N = None
+\ulfmvavailability(reproduction){I}
