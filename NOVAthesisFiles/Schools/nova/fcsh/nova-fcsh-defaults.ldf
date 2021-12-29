@@ -84,10 +84,10 @@
   % \usepackage{gillius2}%
 }
 
-\NTAddToHook{cover/1-1/pretext}{%
+\NTAddToHook{cover/1-1/text/pre}{%
   \sffamily%
 }
-\NTAddToHook{cover/2-1/pretext}{%
+\NTAddToHook{cover/2-1/text/pre}{%
   \sffamily%
 }
 \definecolor{fcshblue}{RGB}{25,61,108}% Background title color

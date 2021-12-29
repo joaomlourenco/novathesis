@@ -149,10 +149,10 @@
   \LoadHelveticaLikeFont%
 }
 
-\NTAddToHook{cover/1-1/pretext}{%
+\NTAddToHook{cover/1-1/text/pre}{%
   \sffamily%
 }
-\NTAddToHook{cover/2-1/pretext}{%
+\NTAddToHook{cover/2-1/text/pre}{%
   \sffamily%
 }
 \NTAddToHook{mainmatter/post}{%
