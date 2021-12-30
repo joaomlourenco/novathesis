@@ -464,6 +464,7 @@
 \newdata{acknowledgmentsstring}
 
 \newdata{majorfield}
+\newdata{minorfield}
 \newdata{specialization}
 
 \newdata{spine}
@@ -677,8 +678,19 @@
   \majorfield(#1):={#2}%
 }
 % --------------------------------------------------------
-\def\ntspecialization(#1)#2{\specialization(#1):={#2}}
 % Specialization
+\def\ntspecialization(#1)#2{\specialization(#1):={#2}}
+\def\ntminorfield(#1)#2{\minorfield(#1):={#2}}
+\def\ntspecialization(#1)#2{%
+  \options{/@nt/document/fallback=\option{/novathesis/docdegree}}%
+  \datamatch{\match}{specializationstring}(%
+                        {\option{/novathesis/docdegree},\option{/novathesis/coverlang}},%
+                        {\option{/@nt/document/fallback},\option{/novathesis/coverlang}},%
+                        {\option{/novathesis/coverlang}}%
+  )%
+  \specialization(#1):={\match\ #2}%
+  \minorfield(#1):={#2}%
+}
 
 % --------------------------------------------------------
 % Sponsors
