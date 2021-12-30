@@ -464,7 +464,7 @@
 \newdata{acknowledgmentsstring}
 
 \newdata{majorfield}
-\newdata{miorfield}
+\newdata{minorfield}
 \newdata{specialization}
 
 \newdata{spine}
