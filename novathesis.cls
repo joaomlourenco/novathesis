@@ -61,7 +61,7 @@
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\NeedsTeXFormat{LaTeX2e}
+\NeedsTeXFormat{LaTeX2e}[2019-10-01]
 \ProvidesClass{novathesis}[2021-11-14 novathesis template]
 
 
@@ -464,7 +464,7 @@
 \newdata{acknowledgmentsstring}
 
 \newdata{majorfield}
-\newdata{minorfield}
+\newdata{miorfield}
 \newdata{specialization}
 
 \newdata{spine}
