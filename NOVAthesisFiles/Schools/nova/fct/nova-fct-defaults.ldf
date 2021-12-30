@@ -169,7 +169,10 @@
 % Date
 \ntaddtocover[vspace=1,align=l]{1-1}{%
   \fontsize{14}{13}\selectfont%
-  \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[3mm]%
+  \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}
+  {\ifdatadefined{specialization}(\option{/novathesis/coverlang}){%
+  \fontsize{11}{11}\selectfont
+  \\\MakeTextUppercase{\thespecialization(\option{/novathesis/coverlang})}}{}}\\[3mm]%
   \theuniversity(\option{/novathesis/coverlang})\\[1pt]%
   \iftoggle{/novathesis/printtimestamp}{%
     \ifdocworking{\emph{\color{yellow}\textbf{Draft:} \today}}{\thentdocdate(month), \thentdocdate(year)}%
@@ -234,7 +237,10 @@
 % Date
 \ntaddtocover[vspace=1,align=l]{2-1}{%
   \fontsize{10}{10}\selectfont%
-  \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[1.25ex]%
+  \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}
+  {\ifdatadefined{specialization}(\option{/novathesis/coverlang}){%
+  \fontsize{8}{9}\selectfont
+  \\\MakeTextUppercase{\thespecialization(\option{/novathesis/coverlang})}}{}}\\[1.25ex]%
   \theuniversity(\option{/novathesis/coverlang})\\[1pt]%
   \iftoggle{/novathesis/printtimestamp}{%
     \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}{\thentdocdate(month), \thentdocdate(year)}%

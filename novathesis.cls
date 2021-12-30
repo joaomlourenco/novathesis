@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2021-12-27 [6.8.7]
+%% Version 2021-12-30 [6.8.8]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -61,7 +61,7 @@
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\NeedsTeXFormat{LaTeX2e}
+\NeedsTeXFormat{LaTeX2e}[2019-10-01]
 \ProvidesClass{novathesis}[2021-11-14 novathesis template]
 
 
@@ -464,6 +464,7 @@
 \newdata{acknowledgmentsstring}
 
 \newdata{majorfield}
+\newdata{minorfield}
 \newdata{specialization}
 
 \newdata{spine}
@@ -677,8 +678,19 @@
   \majorfield(#1):={#2}%
 }
 % --------------------------------------------------------
-\def\ntspecialization(#1)#2{\specialization(#1):={#2}}
 % Specialization
+\def\ntspecialization(#1)#2{\specialization(#1):={#2}}
+\def\ntminorfield(#1)#2{\minorfield(#1):={#2}}
+\def\ntspecialization(#1)#2{%
+  \options{/@nt/document/fallback=\option{/novathesis/docdegree}}%
+  \datamatch{\match}{specializationstring}(%
+                        {\option{/novathesis/docdegree},\option{/novathesis/coverlang}},%
+                        {\option{/@nt/document/fallback},\option{/novathesis/coverlang}},%
+                        {\option{/novathesis/coverlang}}%
+  )%
+  \specialization(#1):={\match\ #2}%
+  \minorfield(#1):={#2}%
+}
 
 % --------------------------------------------------------
 % Sponsors
