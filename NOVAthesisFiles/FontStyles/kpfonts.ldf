@@ -13,5 +13,7 @@
   \IfFileExists{kpfonts-otf}
       {\RequirePackage{kpfonts-otf}}%
       {}%
+  \setmonofont{Inconsolatazi4-Regular.otf}
 }{%
+  \RequirePackage{inconsolata}
 }
