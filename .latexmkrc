@@ -3,13 +3,13 @@ add_cus_dep('acn', 'acr', 0, 'makeglo2gls');
 add_cus_dep('slo', 'sls', 0, 'makeglo2gls');
 
 sub makeglo2gls {
-    my ($base_name, $path) = fileparse( $_[0] ); #handle -outdir param by splitting path and file, ...
+    my ($base_name, $dir) = fileparse( $_[0] ); #handle -outdir param by splitting path and file, ...
     if ( $silent ) {
-        system "makeglossaries -q '$base_name'"; #unix
+        system "makeglossaries -d '$dir' -q '$base_name'"; #unix
         # system "makeglossaries", "-q", "$base_name"; #windows
     }
     else {
-        system "makeglossaries '$base_name'"; #unix
+        system "makeglossaries -d '$dir' '$base_name'"; #unix
         # system "makeglossaries", "$base_name"; #windows
     };
 }
