@@ -140,7 +140,7 @@
   % #2 = data@memory
   % #3 = list of values
   % Search and match first value from the list, error if no match is found
-  \datamatchtf{#1}{#2}(#3){}{\ClassError{novathesis}{Could not find “#2” defined with none of “(#3)”!}{}}%
+  \datamatchtf{#1}{#2}(#3){}{\ClassError{novathesis}{Could not find “#2” defined with any of “(#3)”!}{}}%
 }
 \def\datamatchtf#1#2(#3)#4#5{%
   % #1 = macro to set
@@ -150,7 +150,7 @@
   % #5 = false branch
   % Search and match first value from the list, true (found) and not true (not found) branches
   \ifdatadefinedor{\@match}{#2}(#3)%
-           {\xdef#1{\csuse{the#2}(\@match)}#4}%
+           {\protect\xdef#1{\csuse{the#2}(\@match)}#4}%
            {\xdef#1{datanotfound}#5}%
 }
 
@@ -670,7 +670,8 @@
   \options{/@nt/document/fallback=\option{/novathesis/docdegree}}%
   \datamatch{\match}{degreenameprefix}(%
                         {\option{/novathesis/docdegree},\option{/novathesis/coverlang}},%
-                        {\option{/@nt/document/fallback},\option{/novathesis/coverlang}}%
+                        {\option{/@nt/document/fallback},\option{/novathesis/coverlang}},%
+                        {\option{/novathesis/coverlang}}%
   )%
   \degreename(#1):={\match\ #2}%
   \majorfield(#1):={#2}%
