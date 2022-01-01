@@ -9,6 +9,8 @@ sub makeglo2gls {
         # system "makeglossaries", "-q", "$base_name"; #windows
     }
     else {
+        system "echo '$dir' > /tmp/a";
+        system "echo '$base_name' >> /tmp/a";
         system "makeglossaries -d '$dir' '$base_name'"; #unix
         # system "makeglossaries", "$base_name"; #windows
     };
