@@ -5,7 +5,7 @@ add_cus_dep('slo', 'sls', 0, 'makeglo2gls');
 sub makeglo2gls {
     my ($base_name, $dir) = fileparse( $_[0] ); #handle -outdir param by splitting path and file, ...
     if ( $silent ) {
-        system "makeglossaries -d '$dir' -q '$base_name'"; #unix
+        system "makeglossaries -q -d '$dir' '$base_name'"; #unix
         # system "makeglossaries", "-q", "$base_name"; #windows
     }
     else {
