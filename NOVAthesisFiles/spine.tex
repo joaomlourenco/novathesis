@@ -21,9 +21,8 @@
 
 \input{NOVAthesisFiles/fitbox2.sty}
 
-\def\def@ult#1(#2)=#3{%
-  \ifdatadefined{#1}(#2){}{\csname#1\endcsname(#2)={#3}}%
-}
+\def\def@ult#1(#2)=#3{\ifdatadefined{#1}(#2){}{\csname#1\endcsname(#2)={#3}}}
+
 \def@ult{spine}(author)={\thedocauthor(name,short)}
 \def@ult{spine}(title)={\thedoctitle(\option{/novathesis/coverlang},main,caps)}
 \def@ult{spine}(date)={\thentdocdate(year)}
@@ -58,12 +57,9 @@
 \def@ult{spine}(logo,raise)={0pt}
 \def@ult{spine}(logo,scale)={1}
 
-\ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,bgcolor){}{%
-  \ifdatadefined{thesiscover}(spine,bgcolor){}{%
-    \def@ult{thesiscover}(\option{/novathesis/docdegree},spine,framecolor)={black!20}%
-  }%
-}%
-
+\datamatchtf{\match}{thesiscover}({\option{/novathesis/docdegree},spine,bgcolor},{spine,bgcolor})%
+                {}%
+                {\def@ult{thesiscover}(spine,framecolor)={black!20}}
 
 \ifdatadefined{spine}(author){%
   \spine(text,author,len)={\dimexpr\thespine(box,author,len)-\thespine(box,margin)-\thespine(box,margin)}
@@ -88,28 +84,24 @@
   }%
 }
 
-\newcommand{\@spinetextcolor}[1]{%
-  \ifdatadefinedor{\arg}{spine}({box,#1,textcolor},{box,textcolor}){%
-    \color{\thespine(\arg)}%
-  }{}%
+\newcommand{\@spinetextcolor}[1]{%\option{/novathesis/docdegree},
+  \ifdatadefinedor{\arg}{spine}({box,#1,textcolor},{box,textcolor}){\color{\thespine(\arg)}}{}%
 }
 
-\newcommand{\ntprintspine}[1][]{%
+\newcommand{\ntprintspine}{%
   \sffamily%
-  \footnotesize
+  \footnotesize%
   \newlength{\novathesis@spinewidth}%
-  % \setlength{\novathesis@spinewidth}{\dimexpr0.11mm*\thelastsheet/2}% replace \thelastsheet by 1581 to get 80mm width folder label or any other value as long as the width is bigger than 50mm
-  \setlength{\novathesis@spinewidth}{1mm * (\thelastsheet+ 19) / 20}% replace \thelastsheet by 1581 to get 80mm width folder label or any other value as long as the width is bigger than 50mm
-  % \typeout{NT SPINE width(\thelastsheet)=\the\novathesis@spinewidth}%
-  \ifdim\novathesis@spinewidth < 6mm%
+  \setlength{\novathesis@spinewidth}{1mm * (\thelastsheet+ 19) / 20}%
+  \ifdim\novathesis@spinewidth < 6mm% Force book spine to be at least 6mm
     \setlength{\novathesis@spinewidth}{6mm}%
-    % \typeout{NT SPINE forcing spine(width)=6mm}%
   \fi%
   \newlength{\novathesis@boxwidth}%
-  \setlength{\novathesis@boxwidth}{\novathesis@spinewidth-1mm}%
+  \setlength{\novathesis@boxwidth}{\dimexpr\novathesis@spinewidth-1mm}%
   \newlength{\novathesis@spinetextwidth}%
-  \setlength{\novathesis@spinetextwidth}{\dimexpr\novathesis@boxwidth-\thespine(box,margin)-\thespine(box,margin)}%
-
+  \setlength{\novathesis@spinetextwidth}%
+            {\dimexpr\novathesis@boxwidth-\thespine(box,margin)-\thespine(box,margin)}%
+            
   \ifdatadefined{spine}(author){%
     \fitboxratio{\@authorRT}{\thespine(text,author,len)}{\novathesis@spinetextwidth}
                 {\thespine(author)}
@@ -118,30 +110,16 @@
     \fitboxratio{\@titleRT}{\thespine(text,title,len)}{\novathesis@spinetextwidth}
                 {\thespine(title)}
   }{\def\@titleRT{99999}}%
-  \fitboxmin{\@fbratio}{\@authorRT,\@titleRT}
-  % \@for\arg:={author,title,spine}\do{%
-  %   \ifdatadefined{spine}(\arg){%
-  %     \expandafter\newsavebox\csname my\arg box\endcsname%
-  %     \expandafter\savebox\csname my\arg box\endcsname{%
-  %       \begin{minipage}[c][\novathesis@spinetextwidth][c]{\thespine(text,\arg,len)}%
-  %         % \begin{fitbox}{\linewidth}{\novathesis@boxwidth}%
-  %           \@spinetextalin{\arg}%
-  %           \@spinetextcolor{\arg}%
-  %           \thespine(\arg)%
-  %         % \end{fitbox}%
-  %       \end{minipage}}%
-  %     % \end{lrbox}%
-  %   }{}%
-  % }%
+  
+  \fitboxmin{\@fbratio}{\@authorRT,\@titleRT}%
+  
   \ifdatadefined{spine}(author){%
-    \defifundef{\myauthorbox}{\newsavebox}%%
+    \defifundef{\myauthorbox}{\newsavebox}%
     \begin{lrbox}{\myauthorbox}%
       \begin{minipage}[c][\novathesis@spinetextwidth][c]{\thespine(text,author,len)}%
-        % \begin{fitbox}{\linewidth}{\novathesis@boxwidth}%
           \@spinetextalin{author}%
           \@spinetextcolor{author}%
           \fitboxprint{\@fbratio}{\thespine(author)}%
-        % \end{fitbox}%
       \end{minipage}%
     \end{lrbox}%
   }{}%
@@ -149,11 +127,9 @@
     \defifundef{\mytitlebox}{\newsavebox}%%
     \begin{lrbox}{\mytitlebox}%
       \begin{minipage}[c][\novathesis@spinetextwidth][c]{\thespine(text,title,len)}%
-        % \begin{fitbox}{\linewidth}{\novathesis@boxwidth}%
           \@spinetextalin{title}%
           \@spinetextcolor{title}%
           \fitboxprint{\@fbratio}{\thespine(title)}%
-        % \end{fitbox}%
       \end{minipage}%
     \end{lrbox}%
   }{}%
@@ -161,20 +137,15 @@
     \defifundef{\mydatebox}{\newsavebox}%%
     \begin{lrbox}{\mydatebox}%
       \begin{minipage}[c][\novathesis@spinetextwidth][c]{\thespine(text,date,len)}%
-        % \begin{fitbox}{\linewidth}{\novathesis@boxwidth}%
           \@spinetextalin{date}%
           \@spinetextcolor{date}%
           \fitboxprint{\@fbratio}{\thespine(date)}%
-        % \end{fitbox}%
       \end{minipage}%
     \end{lrbox}%
   }{}%
   \ifoptionvoid{/novathesis/degreeacr}{}{%
     \defifundef{\mydegreeacrbox}{\newsavebox}%%
     \begin{lrbox}{\mydegreeacrbox}%
-      % \begin{fitbox}{\novathesis@spinetextwidth}{\thespine(text,degreeacr,len)}%
-      % \fbox{\begin{minipage}[c][\novathesis@boxwidth][b]{\thespine(text,degreeacr,len)}%
-          % \Large
           \@spinetextalin{degreeacr}%
           \@spinetextcolor{degreeacr}%
           \ifdatadefined{degreeacr}(\option{/novathesis/degreeacr}){%
@@ -182,14 +153,12 @@
           }{%
             \fitboxprint{\@fbratio}{\MakeTextUppercase{\option{/novathesis/degreeacr}}}%
           }
-      % \end{minipage}}
-      % \end{fitbox}%
     \end{lrbox}%
   }%
+  
   \options{/@ntcoveropts/bookmark=spine}%
-  \phantomsection\currentpdfbookmark{\option{/@ntcoveropts/bookmark}}{sipne}%
-  \NTRunHook{spine/pre}%
-  \IfStrEq{#1}{trim}{
+  \currentpdfbookmark{\option{/@ntcoveropts/bookmark}}{sipne}%
+  \ifoptionequal{/novathesis/spine}{trim}{%
     \setstocksize{\paperheight}{\novathesis@spinewidth}
     \settrimmedsize{\stockheight}{\stockwidth}{*}%
     \setlrmarginsandblock{0pt}{0pt}{*}%
@@ -204,91 +173,76 @@
     \fi
   }{}%
   \thispagestyle{empty}%
+  \NTRunHook{spine/pre}%
   \begin{tikzpicture}[remember picture, overlay]
   % draw image
     % print bg color IF DEFINED
-    \ifdatadefinedor{\arg}{thesiscover}({\option{/novathesis/docdegree},spine,bgcolor},{spine,bgcolor}){%
-    % \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,bgcolor){%
+    \datamatchtf{\arg}{thesiscover}({\option{/novathesis/docdegree},spine,bgcolor},{spine,bgcolor}){%
       \node[inner sep=0, anchor=center,
             rectangle, minimum width=\novathesis@spinewidth, minimum height=\paperheight,
-            fill=\expanded{\thethesiscover(\arg)}]
+            fill=\arg]
            at (current page.center)
               {};
     }{}%
     % print frame IF DEFINED
-    \ifdatadefinedor{\arg}{thesiscover}({\option{/novathesis/docdegree},spine,framecolor},{spine,framecolor}){%
-    % \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,framecolor){%
+    \datamatchtf{\arg}{thesiscover}({\option{/novathesis/docdegree},spine,framecolor},{spine,framecolor}){%
       \node[inner sep=0, anchor=center,
             rectangle, minimum width=\novathesis@spinewidth, minimum height=\paperheight,
-            draw=\expanded{\thethesiscover(\arg)},fill=none]
+            draw=\arg,fill=none]
            at (current page.center)
               {};
     }{}%
     % print bg image IF DEFINED
-    \ifdatadefinedor{\arg}{thesiscover}({\option{/novathesis/docdegree},spine,image},{spine,image}){%
-    % \ifdatadefined{thesiscover}(\option{/novathesis/docdegree},spine,image){%
+    \datamatchtf{\arg}{thesiscover}({\option{/novathesis/docdegree},spine,image},{spine,image}){%
       \node[inner sep=0] at (current page.center)
-              {\includegraphics[width=\novathesis@spinewidth,height=\paperheight]%
-                               {\thethesiscover(\arg)}%
-              };
+              {\includegraphics[width=\novathesis@spinewidth,height=\paperheight]{\arg}};
     }{}%
     % print logo IF DEFINED
     \ifdatadefinedor{\arg}{spine}({logo,\option{/novathesis/docdegree}},{logo}){%
-      \node[inner sep=0, anchor=center, yshift=-\expanded{\thespine(box,logo,top))-0.5*\thespine(box,logo,len)}
+      \node[inner sep=0, anchor=center, yshift=-\expanded{\thespine(box,logo,top)-0.5*\thespine(box,logo,len)}
             , xshift=-\novathesis@boxwidth*\expanded{\thespine(\arg,raise)}]
            at (current page.north)
-              {\ifdataequal{spine}(\arg,angle){0}{%
-                 \includegraphics[ width=\novathesis@boxwidth
-                                 , angle=\expanded{\thespine(\arg,angle)}
+              {\ifdataequal{spine}(\arg,angle){0}{\setkeys{Gin}{height=\novathesis@boxwidth}}%
+                                                 {\setkeys{Gin}{width=\novathesis@boxwidth}}%
+                 \includegraphics[ angle=\expanded{\thespine(\arg,angle)}
                                  , scale=\expanded{\thespine(\arg,scale)}%
                                  , align=c
                                  ]{\thespine(\arg)}%
-               }{%
-                 \includegraphics[ height=\novathesis@boxwidth
-                                 , angle=\expanded{\thespine(\arg,angle)}
-                                 , scale=\expanded{\thespine(\arg,scale)}%
-                                 , align=c
-                                 ]{\thespine(\arg)}%
-               }%
               };
     }{}%
     % print author
     \ifdatadefined{spine}(author){%
-      \def\@node@fillcolor{none}%
-      \ifdatadefinedor{\arg}{spine}({box,author,color},{box,color}){\xdef\@node@fillcolor{\thespine(\arg)}}{}%
-      \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,author,top)})
-            ,rectangle,minimum width=\novathesis@boxwidth,minimum height=\expanded{\thespine(box,author,len)}
-            ,fill=\@node@fillcolor]
+      \datamatchtf{\@node@fillcolor}{spine}({box,author,color},{box,color}){}{\def\@node@fillcolor{none}}%
+      \node[inner sep=0, anchor=north, yshift=-(\expanded{\thespine(box,author,top)})
+            , rectangle, minimum width=\novathesis@boxwidth, minimum height=\expanded{\thespine(box,author,len)}
+            , fill=\@node@fillcolor]
            at (current page.north)
               {\rotatebox{\thespine(text,angle)}{\hspace*{\thespine(box,margin)}\usebox{\myauthorbox}}};
     }{}
     % print title
     \ifdatadefined{spine}(title){%
-      \def\@node@fillcolor{none}%
-      \ifdatadefinedor{\arg}{spine}({box,title,color},{box,color}){\xdef\@node@fillcolor{\thespine(\arg)}}{}%
-      \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,title,top)})
-            ,rectangle,minimum width=\novathesis@boxwidth,minimum height=\expanded{\thespine(box,title,len)}
-            ,fill=\@node@fillcolor]
+      \datamatchtf{\@node@fillcolor}{spine}({box,title,color},{box,color}){}{\def\@node@fillcolor{none}}%
+      \node[inner sep=0, anchor=north, yshift=-(\expanded{\thespine(box,title,top)})
+            , rectangle, minimum width=\novathesis@boxwidth, minimum height=\expanded{\thespine(box,title,len)}
+            , fill=\@node@fillcolor]
            at (current page.north) 
               {\rotatebox{\thespine(text,angle)}{\hspace*{\thespine(box,margin)}\usebox{\mytitlebox}}};
     }{}
     % print degree IF DEFINED
     \ifoptionvoid{/novathesis/degreeacr}{}{%
-      \def\@node@fillcolor{none}%
-      \ifdatadefinedor{\arg}{spine}({box,degreeacr,color},{box,color}){\xdef\@node@fillcolor{\thespine(\arg)}}{}%
-      \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,degreeacr,top)})
-            ,rectangle,minimum width=\novathesis@boxwidth,minimum height=\expanded{\thespine(box,degreeacr,len)}
-            ,fill=\@node@fillcolor]
+      \datamatchtf{\@node@fillcolor}{spine}({box,degreeacr,color},{box,color}){}{\def\@node@fillcolor{none}}%
+      \node[inner sep=0,anchor=north, yshift=-(\expanded{\thespine(box,degreeacr,top)})
+            , rectangle,minimum width=\novathesis@boxwidth, minimum height=\expanded{\thespine(box,degreeacr,len)}
+            , fill=\@node@fillcolor]
            at (current page.north)
               {\rotatebox{\thespine(text,angle)}{\usebox{\mydegreeacrbox}}};
     }
     % print date
     \ifdatadefined{spine}(date){%
-      \def\@node@fillcolor{none}%
-      \ifdatadefinedor{\arg}{spine}({box,date,color},{box,color}){\xdef\@node@fillcolor{\thespine(\arg)}}{}%
-      \node[inner sep=0,anchor=north,yshift=-(\expanded{\thespine(box,date,top)})
-            ,rectangle,minimum width=\novathesis@boxwidth,minimum height=\expanded{\thespine(box,date,len)}
-            ,fill=\@node@fillcolor]
+      \datamatchtf{\@node@fillcolor}{spine}({box,date,color},{box,color}){}{\def\@node@fillcolor{none}}%
+      \node[inner sep=0,anchor=north, yshift=-(\expanded{\thespine(box,date,top)})
+            , rectangle,minimum width=\novathesis@boxwidth, minimum height=\expanded{\thespine(box,date,len)}
+            , fill=\@node@fillcolor]
            at (current page.north)
               {\rotatebox{\thespine(text,angle)}{\usebox{\mydatebox}}};
     }{}

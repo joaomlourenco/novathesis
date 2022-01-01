@@ -529,7 +529,7 @@
   , tocintoc/.new toggle          = false
   , urlstyle/.new cmd             = {\AfterPreamble{\urlstyle{#1}}}
   , debugcover/.new toggle        = false
-  , spine/.new toggle             = false%
+  , spine/.new choice             = {no, full, trim}
   , media/.new choice             = {screen, paper}
   , linkscolor/.new cmd           = {\@ifpackageloaded{hyperref}%
                                        {\hypersetup{allcolors=#1}}%
@@ -600,16 +600,14 @@
 % --------------------------------------------------------
 % Pass the remaining options to memoir
 \letoptionlist{/options/remaining}\nt@remaining
-% \typeout{'NT PASSING TO MEMOIR='\nt@remaining}%
 \PassOptionsToClass{\nt@remaining}{memoir}
 
 
-%% If options for printing book spine and/or cd cover are active
-%% load the correspondig file by order: @school, @university, @default
+% --------------------------------------------------------
+% Input the first file from the list (if any)
 \newcommand{\@nt@InputIfFileExists}[2]{%
   \expandnext{\forcsvlist{\@nt@InputIfFileExists@i{#1}}}{#2}%
 }
-
 \newcommand{\@nt@InputIfFileExists@i}[2]{\IfFileExists{#2#1}{\input{#2#1}\listbreak}{}}
 
 
@@ -991,8 +989,7 @@
   }{}%
 }{}
 
-
-\iftoggle{/novathesis/spine}{%
+\ifoptionequal{/novathesis/spine}{no}{}{%
   \@nt@InputIfFileExists{spine.tex}{%
        {NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/}%
       ,{NOVAthesisFiles/Schools/\@nt@univ/}%
@@ -1001,7 +998,7 @@
   \AtEndDocument{%
     \csuse{ntprintspine}%
   }
-}{}%
+}
 
 
 
@@ -1058,30 +1055,29 @@
   % #3 = false branch
   \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{#2}{%
     \options{/@nt/document/fallback=\option{/novathesis/docdegree}}%
-    \datamatchtf{\match}{thesiscover}({\option{/novathesis/docdegree},#1,bgcolor},%
-                                            {\option{/@nt/document/fallback},#1,bgcolor},%
-                                            {#1,bgcolor},%
-                                            {\option{/novathesis/docdegree},#1,image},%
-                                            {\option{/@nt/document/fallback},#1,image},%
-                                            {#1,image}){#2}{#3}%
+    \datamatchtf{\match}{thesiscover}({\option{/novathesis/docdegree},#1,bgcolor}%
+                                     ,{\option{/@nt/document/fallback},#1,bgcolor}%
+                                     ,{#1,bgcolor}%
+                                     ,{\option{/novathesis/docdegree},#1,image}%
+                                     ,{\option{/@nt/document/fallback},#1,image}%
+                                     ,{#1,image}){#2}{#3}%
   }%
 }
 
 \newcommand{\ntprintbackcover}{%
   \ifocverdefined[N-1]{%
-    \phantomsection\pdfbookmark[-1]{\thebackmatterbkmstring(\option{/novathesis/coverlang})}{bmbackmatter}%
+    \pdfbookmark[-1]{\thebackmatterbkmstring(\option{/novathesis/coverlang})}{bmbackmatter}%
   }{%
     \ifocverdefined[N-2]{%
-      \phantomsection\pdfbookmark[-1]{\thebackmatterbkmstring(\option{/novathesis/coverlang})}{bmbackmatter}%
+      \pdfbookmark[-1]{\thebackmatterbkmstring(\option{/novathesis/coverlang})}{bmbackmatter}%
     }{}%
   }%
   \ntprintcoverpair{N}%
 }
 
 \newcommand{\ntprintcovers}[1][1,2]{%
-  \phantomsection\pdfbookmark[-1]{\thefrontmatterbkmstring(\option{/novathesis/coverlang})}{bmfrontmatter}%
+  \pdfbookmark[-1]{\thefrontmatterbkmstring(\option{/novathesis/coverlang})}{bmfrontmatter}%
   \NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
-  % \vspace*{-1.75pt}%
   \forcsvlist{\ntprintcoverpair}{#1}%
 }
 
@@ -1105,7 +1101,6 @@
   \def\@nt@newpage{}%
   \gdef\@covernumber{#1-#2}%
   \IfStrEq{#2}{2}{%
-    % \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{empty}\null\newpage}}{\def\@nt@newpage{}}%
     \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{cleared}\cleartoevenpage}}{\clearpage}%
   }{}%
   \IfStrEq{#1-#2}{2-1}{\setcounter{page}{1}}{}%
@@ -1124,7 +1119,7 @@
     \ntselectlang{\option{/novathesis/coverlang}}%
     \options{/@ntcoveropts/bookmark=#1}%
     \ifoptionequal{/@ntcoveropts/bookmark}{}{}{%
-      \phantomsection\pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
+      \pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
     }%
     \@ntmakeboxwithcover{#1}{\@fullcover@box}%
     \newpage%
@@ -1613,7 +1608,7 @@
 	\ifmaindoc{% THEN it is a main document
     \ifoptiondefined{/@nt/file/#1/VAL}{%
       \ntselectlang{\option{/novathesis/mainlang}}%
-      \phantomsection\pdfbookmark[1]{\csuse{the#1bkmstring}(\option{/novathesis/mainlang})}{bm#1}%
+      \pdfbookmark[1]{\csuse{the#1bkmstring}(\option{/novathesis/mainlang})}{bm#1}%
       \@ntloadfiles@ii{#1}%
     }{\typeout{NT LOAD #1 undefined}}%
 	}{}% It is a plan or proposal type document
@@ -1640,7 +1635,7 @@
   % \typeout{NT PRINT ABSTRACT #1}%
   \ifoptiondefined{/@nt/file/abstract/#1}{%
     \setabstractlang{#1}%
-    \phantomsection\pdfbookmark[1]{\theabstractbkmstring(#1)}{bmabstract#1}%
+    \pdfbookmark[1]{\theabstractbkmstring(#1)}{bmabstract#1}%
     \NTRunHook{abstract/pre}%
     \NTRunHook{abstract/#1/pre}%
     \printabstracttitle{#1}%
@@ -1658,13 +1653,11 @@
   \pagestyle{novathesis@frontmatter}%
   \ntselectlang{\option{/novathesis/mainlang}}%
   \pagenumbering{roman}%
-  % \setlength{\headheight}{15pt}%
   \NTRunHook{frontmatter/post}%
 }
 
 \newcommand*{\ntthesismainmatter}{%
   \NTRunHook{mainmatter/pre}%
-  % enables protrusion locally for the remainder of the document
   \ifbool{@openright}{}{% openany=true
     \let\oldcleardoublepage\cleardoublepage%
     \renewcommand{\cleardoublepage}{\clearpage}%
@@ -1675,8 +1668,6 @@
   }%
   \pagestyle{novathesis@mainmatter}%
   \ifxeorlua{}{\microtypesetup{protrusion=true}}%
-  % \pagenumbering{arabic}%
-  % \setlength{\headheight}{15pt}%
   \NTRunHook{mainmatter/post}%
 }
 
@@ -1755,7 +1746,7 @@
   \@for\listitem:={glossary,acronyms,symbols}\do{%
     \ifoptiondefined{/@nt/file/glossaries/\listitem}
       {\optionlistdo{/@nt/file/glossaries/\listitem}{\@ntloadfile@i{##1}}}{}%
-  }
+  }%
 }
 
 
@@ -1782,7 +1773,7 @@
   \iftoggle{/novathesis/printcopyright}{%
     \ifmaindoc{%
       \ntselectlang{\option{/novathesis/copyrightlang}}%
-      \phantomsection\pdfbookmark[1]{\csuse{thecopyrightbkmstring}(\option{/novathesis/mainlang})}{bmcopyright}%
+      \pdfbookmark[1]{\csuse{thecopyrightbkmstring}(\option{/novathesis/mainlang})}{bmcopyright}%
       \NTRunHook{copyright/pre}%
       \ntprintcopyrightpage%
       \NTRunHook{copyright/post}%
