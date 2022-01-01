@@ -24,20 +24,24 @@
 \ProvidesPackage{NOVAthesisFiles/memory2}
   [2013/05/13 v1.2 containers for data of object and array in LaTeX]
 
+\RequirePackage{xfor}
+
 \def\memoryemptybox{{\setlength{\fboxsep}{0pt}\LARGE\setbox0=\hbox{$\times$}\fbox{\rule{\wd0}{0pt}\rule{0pt}{\ht0}}}}
 \def\memoryxbox{{\setlength{\fboxsep}{0pt}\LARGE\fbox{$\times$}}}
 \def\datacrossiftrue#1(#2){%
-  \defifundef{\ifmemorycross}{\newif}%
-  \memorycrossfalse
-  \@for\@memory@it:=#2\do{\ifdatadefined{#1}(#2){\memorycrosstrue}{}}%
+  \@for\@memory@it:=#2\do{\ifdatadefined{#1}(#2){\@endfortrue}{}}%
   \bgroup
-    \ifmemorycross\memoryxbox\else\memoryemptybox\fi%
+    \if@endfor\memoryxbox\else\memoryemptybox\fi
   \egroup
 }
 
 % \ifdatadefinedor{\match}{dataname}({val1},…){true}{false}
-\def\ifdatadefinedor#1#2(#3){%
-  \@ifddor(#3,\@nil){#1}{#2}%
+\def\ifdatadefinedor#1#2(#3)#4#5{%
+  \@for\@memitem:={#3}\do{%
+    \ifdatadefined{#2}(\@memitem){\def#1{\@memitem}#4\@endfortrue}{}%
+  }%
+  \if@endfor\else#5\fi
+  % \@ifddor(#3,\@nil){#1}{#2}%
 }
 % \ifdatadefinedor({val1},…){\match}{dataname}{true}{false}
 \def\@ifddor(#1,#2\@nil)#3#4#5#6{%
