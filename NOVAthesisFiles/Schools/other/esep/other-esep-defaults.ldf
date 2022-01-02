@@ -7,13 +7,8 @@
 
 \typeout{NT FILE other/esep/defaults.ldf}%
 
-\ntsetup{fontstyle=calibri}
-
-%%% RGB = 41, 141, 187
-
 \ntsetup{secondcover=true}    % Shall a second cover page be forced?
 \ntsetup{fontstyle=calibri}
-\nttitle[en]{Please define the title in english}
 
 % University
 \university(pt):={Escola Superior de Enfermagem do Porto}
@@ -26,31 +21,12 @@
 \school(en):={Nursing School of Porto}%%TBD
 \school(fr):={Escola Superior de Enfermagem do Porto}%%TBD
 \school(it):={Escola Superior de Enfermagem do Porto}%%TBD
-%
-% % Scientific filed
-% \majorfield(pt):={«Área Científica»}
-% \majorfield(en):={“Scientific Field”}
-
-% Degree name
-\degreename(pt):={Enfermagem em Saúde Mental e Psiquiatria}
-\degreename(en):={$<$Degree Name$>$}
 
 % Comiittee printing order
 \committeeorder():={c,r,m}% 
 
 % Cover background images
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
-\thesiscover(1-1,bgcolor):={white}
-\thesiscover(1-1,image):={other-esep-cover}
-\thesiscover(1-1,bgcolor):={white}
-\thesiscover(1-1,image):={other-esep-cover}
-\thesiscover(1-1,image):={other-esep-cover}
-\thesiscover(1-1,bgcolor):={white}
-\thesiscover(1-1,image):={other-esep-cover}
-\thesiscover(1-1,bgcolor):={white}
-\thesiscover(1-1,image):={other-esep-cover}
-\thesiscover(1-1,bgcolor):={white}
-\thesiscover(1-1,image):={other-esep-cover}
 \thesiscover(1-1,bgcolor):={white}
 \thesiscover(1-1,image):={other-esep-cover}
 

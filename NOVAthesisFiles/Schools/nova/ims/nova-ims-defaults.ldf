@@ -13,10 +13,6 @@
 
 \typeout{NT FILE nova/ims/defaults.ldf}%
 
-\iftoggle{/novathesis/spine}{%
-  \RequirePackage{environ}% http://ctan.org/pkg/environ
-}{}
-
 
 % Redefinition of "Master in" to "Master of Science in"
 \degreenameprefix(msc,en):={Master of Science in}
