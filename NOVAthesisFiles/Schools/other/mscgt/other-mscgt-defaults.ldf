@@ -8,7 +8,6 @@
 \typeout{NT FILE other/msc-gt/defaults.ldf}%
 
 \ntmemoirsetup{openany}
-\ntsetup{secondcover=true}
 \ntsetup{printcopyright=false}
 \ntsetup{secondcover=true}
 \ntsetup{coverlang=en}        % The language for the cover (and second cover) page
@@ -98,10 +97,10 @@ for the degree of \emph{\thedegreename(en)}}
 \margin(paper,right):={3.0cm}
 
 % Set margins for cover pages
-\margin(covertop):={2.0cm}
-\margin(coverbottom):={1.35cm}
-\margin(coverleft):={1.45cm}
-\margin(coverright):={1.5cm}
+\margin(cover,top):={2.0cm}
+\margin(cover,bottom):={1.35cm}
+\margin(cover,left):={1.45cm}
+\margin(cover,right):={1.5cm}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
