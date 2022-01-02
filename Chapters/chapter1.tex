@@ -34,7 +34,7 @@ This first Chapter introduces the \gls{novathesis} template and how it is organi
 
 \begin{quote}
   \rule{\linewidth}{2pt}
-If you are going to spend zillions of hours writing your thesis/dissertation using this \gls{novathesis} template, be wise and spend a couple of hours learning how to use it properly and read this manual.  And then spend even a few more hours \href{https://github.com/joaomlourenco/novathesis/wiki#learning-latex}{learning some \LaTeX}.  I am sure the time you invest now will pay itself countless times before you submit your thesis/dissertation.
+If you are going to spend zillions of hours writing your thesis/dissertation using this \gls{novathesis} template, be wise and spend a couple of hours learning how to use it properly by reading this manual.  And then be even wiser and spend a few more hours \href{https://github.com/joaomlourenco/novathesis/wiki#learning-latex}{learning some \LaTeX}.  I am sure that the time you are investing now will pay itself countless times before you submit your thesis/dissertation.
 \hfill \raisebox{-1ex}{\itshape João Lourenço}\\[-1ex]
   \rule{\linewidth}{2pt}
 \end{quote}
@@ -71,19 +71,18 @@ The \gls{novathesis} tempalte was born in~1996, and what you see now accumulates
     % #2 = School name
     % #3 = School acronym
     % #3 = School URL
-    \iftoggle{ntRow}{\rowcolor{GhostWhite}\global\togglefalse{ntRow}}{\global\toggletrue{ntRow}}
     \setlength{\fboxsep}{0pt}%
     \def\myspace{}%
-    \makecell*[cc]{%
+    % \makecell*[lc]{%
       \@for\listitem:=#1\do{%
         \myspace\fbox{\colorbox{White}{\includegraphics[width=\mysmallcoversize]{\listitem}}}\def\myspace{~}}%
-    }
+    % }
     & #2 \href{#4}{(#3)}\\%
 }
 
 \newenvironment{ntUniversity}[1]{
-    \togglefalse{ntRow}
-    \xltabular{\linewidth}{lX}%
+  \rowcolors{1}{}{GhostWhite}
+    \xltabular{\linewidth}{cX}%
     \toprule%
     \rowcolor{Gainsboro}%
     & \Gape[1.5ex]{\thead[l]{#1}}\\
@@ -93,17 +92,13 @@ The \gls{novathesis} tempalte was born in~1996, and what you see now accumulates
     \endxltabular%
 }
 
-The \gls{novathesis} template was initially directed to the PhD and MSc thesis/dissertations at the \gls{DI} of  \gls{FCT} of \gls{NOVA}, Portugal.  But the user base grew to other Departments of FCT-NOVA, then to other Schools and later to other Universities.  Currently more than 25 Schools are natively supported by the \gls{novathesis} teamplte.
+The \gls{novathesis} template was born at the \gls{DI} of  \gls{FCT} of \gls{NOVA}, Portugal.  But the user base grew… initially to other Departments of FCT-NOVA, then to other Schools of NOVA, and later to other Schools of other Universities.  Currently more than 25 Schools are natively supported by the \gls{novathesis} teamplte.
 
 \begin{ntUniversity}{NOVA University Lisbon}
     \ntSchool{cover-nova-fct-phd,cover-nova-fct-msc}%
                   {NOVA School of Science and Technology [PhD]}%
                   {FCT-NOVA}%
                   {https://www.fct.unl.pt}
-    % \ntSchool{cover-nova-fct-msc}%
-    %               {NOVA School of Science and Technology [MSc]}%
-    %               {FCT-NOVA}%
-    %               {https://www.fct.unl.pt}
     \ntSchool{cover-nova-fcsh-phd}%
                   {NOVA School of Social Sciences and Humanities}%
                   {FCSH-NOVA}%
