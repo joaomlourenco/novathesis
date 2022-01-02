@@ -18,7 +18,8 @@
 \setlength\epigraphwidth{12.5cm}
 \setlength\epigraphrule{0pt}
 
-\includegraphics[width=\linewidth]{NOVAthesisFiles/Images/novathesis-text}
+\includegraphics[width=0.1\linewidth]{NOVAthesisFiles/Images/novathesis-insignia}\hfill
+\includegraphics[width=0.875\linewidth]{NOVAthesisFiles/Images/novathesis-text}
 
 \noindent This is the \novathesis\ \LaTeX\ template Version \novathesisversion\ from \novathesisdate.
 
@@ -73,14 +74,16 @@ The \gls{novathesis} tempalte was born in~1996, and what you see now accumulates
     % #3 = School URL
     \setlength{\fboxsep}{0pt}%
     \def\myspace{}%
-    % \makecell*[lc]{%
-      \@for\listitem:=#1\do{%
-        \myspace\fbox{\colorbox{White}{\includegraphics[width=\mysmallcoversize]{\listitem}}}\def\myspace{~}}%
-    % }
+    \gape{
+    \@for\listitem:=#1\do{%
+      \myspace\fbox{\colorbox{White}{\includegraphics[align=c,width=\mysmallcoversize]{\listitem}}}%
+      \def\myspace{~}%
+    }}%
     & #2 \href{#4}{(#3)}\\%
 }
 
 \newenvironment{ntUniversity}[1]{
+  \renewcommand\cellgape{\Gape[5pt]}
   \rowcolors{1}{}{GhostWhite}
     \xltabular{\linewidth}{cX}%
     \toprule%
@@ -299,7 +302,7 @@ The \href{https://github.com/joaomlourenco/novathesis/wiki#donators}{list of \em
 \section{Disclaimer}
 \label{sec:disclaimer}
 
-Although the \gls{novathesis} template is endorsed by the FCT-NOVA (even \href{https://www.fct.unl.pt/estudante/informacao-academica}{linked from its web site}), this not an official template.
+Although the \gls{novathesis} template is endorsed by the FCT-NOVA (even \href{https://www.fct.unl.pt/estudante/informacao-academica}{linked from its web site}), \textbf{this not an official template}.
 %
-This template exists to make your life easier and we do our best to make it compliant to the supported Schools' regulations, but in the end of the line you and only you are accountable for both the look and the contents of the document you submit as your thesis/dissertation.
+This template exists to make your life easier and we do our best to make it compliant to the supported ($+25$) Schools' regulations but, in the end of the line, you and only you are accountable for both the look and the contents of the document you submit as your thesis/dissertation.
 
