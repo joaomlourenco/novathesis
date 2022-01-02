@@ -202,8 +202,8 @@
       \node[inner sep=0, anchor=center, yshift=-\expanded{\thespine(box,logo,top)-0.5*\thespine(box,logo,len)}
             , xshift=-\novathesis@boxwidth*\expanded{\thespine(\arg,raise)}]
            at (current page.north)
-              {\ifdataequal{spine}(\arg,angle){0}{\setkeys{Gin}{height=\novathesis@boxwidth}}%
-                                                 {\setkeys{Gin}{width=\novathesis@boxwidth}}%
+              {\ifdataequal{spine}(\arg,angle){0}{\setkeys{Gin}{width=\novathesis@boxwidth}}%
+                                                 {\setkeys{Gin}{height=\novathesis@boxwidth}}%
                  \includegraphics[ angle=\expanded{\thespine(\arg,angle)}
                                  , scale=\expanded{\thespine(\arg,scale)}%
                                  , align=c
