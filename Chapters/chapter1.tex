@@ -239,7 +239,7 @@ Once you have an account, please access the \gls{novathesis} template in \href{h
 
 \bgroup
   \itshape
-  Please notice that the version currently available in Overleaf (v6.5.3) is slightly outdated. A new version will be submitted to Overleaf soon.  Until then, please:
+  Please notice that the version currently available in Overleaf (v6.5.3) is slightly outdated (current version is v\novathesisversion). A new version will be submitted to Overleaf soon.  Until then, please:
   \begin{enumerate}
     \item Download the \href{https://github.com/joaomlourenco/novathesis/archive/master.zip}{latest version} from the GitHub repository as a Zip file.
     \item Login to your favorite LaTeX cloud service. I recommend \href{https://www.overleaf.com/?r=f5160636&rm=d&rs=b}{Overleaf} but there are alternatives (these instructions apply to Overleaf and you'll have to adapt for other providers).
@@ -253,40 +253,54 @@ Once you have an account, please access the \gls{novathesis} template in \href{h
 \subsection{Using a Local \LaTeX\ Installation}
 \label{sub:using_local_latex}
 
+\newcommand{\MikTeX}{Mik\TeX}
+\newcommand{\TeXLive}{\TeX Live}
+
+First of all, start by installing \LaTeX\ in your computer.  There are two main distributions, \href{https://miktex.org}{\MikTeX}\ and \href{https://www.tug.org/texlive/}{\TeXLive}, and both of them are available for the~3 most popular Operating Systems: Linux, macOS and Windows.
+
 \begin{wrapfigure}{r}{0.5\linewidth}
-\vspace*{-15ex}\includegraphics[width=\linewidth]{github}%
+\includegraphics[width=\linewidth]{github}%
 \end{wrapfigure}
 
-Just access the \gls{novathesis} repository in \href{https://github.com/joaomlourenco/novathesis}{GitHub}, select the green button \emph{Code} and then \emph{download} (or \emph{clone}) the template.  You will always get the latest version of the template (currently v5.1.8).
+Be aware that a full installation of \MikTeX\ or \TeXLive\ will take near~5\,GB of hard disk space.  So, think twice before installing the full distribution.  See the \gls{novathesis} Wiki for the \href{https://github.com/joaomlourenco/novathesis/wiki/installing-latex#minimal-installation-in-any-of-the-systems-above}{list of packages required to compile the template}.
+
+Once you have \LaTeX\ up and running, remember to install a good \LaTeX\ text editor.  I recommend you to take a look at  \href{https://tex.stackexchange.com/questions/339/latex-editors-ides}{this post} in the \url{tex.stackexchange.com} site.  If you want a quick and dirty recommendation, try \href{https://www.texstudio.org/}{TeXStudio}.
+
+Now, you must access the \gls{novathesis} repository in \href{https://github.com/joaomlourenco/novathesis}{GitHub}, select the green button \emph{Code} and then \emph{download} (or \emph{clone}) the template.  You will always get the latest version of the template (currently v\novathesisversion\ from \novathesisdate).
 
 
 \section{Getting Help}
 \label{sec:getting_help}
+Let's start with some simple suggestions:
 
-Help is available in the forums listed below!
+\begin{enumerate}
+  \item No! You don't have to use this template to write your thesis.  You don't even have to use \LaTeX.  However, writing a thesis is serious stuff, and which tool you shall use to write it is not a decision to make lighthearted.
+  \item \LaTeX\ is hard enough by itself.  This template aims at making your life easier, but not easy. If you choose to use this template to write your thesis, you are very welcome.  However, don't expect me to provide you help with \LaTeX.  Look for help with your friends (you have some friends, don't you?), or search the web, or try even to read some book(s) on \LaTeX. In the end you will certainly find the experience rewarding.
+  \item So, don't forget, when you come to the point of “\emph{How do I do this with \LaTeX?}” look for help!  Google is your best friend. You may also ask for help in the \gls{novathesis} \href{https://www.facebook.com/groups/novathesis}{NOVAtheis Facebook group} or the \href{https://github.com/joaomlourenco/novathesis/discussions}{GitHub Discussions page}.  If you can't find help there from previous posts/messages, then post your own question. Hopefully someone will answer you. There were huge changes from version 4.x.y to version \novathesisversion, so \textbf{always} state the version number you are using when asking for help.
+\end{enumerate}
 
 \begin{center}  
-  \fbox{\parbox{0.95\textwidth}{\begin{center}\large\textbf{Please do not attempt to contact me directly (email, Messenger, etc)…\\I WILL NOT REPLY!}\end{center}}}
+  \fcolorbox{red}{gray!15}{\parbox{\textwidth}{\begin{center}\large\textbf{Please do not attempt to contact me directly (email, Messenger, etc)…\\I WILL NOT REPLY!}\end{center}}}
 \end{center}
  
-\subsection{Google}
-\label{sub:group_google}
+% \subsection{Google Help}
+% \label{sub:group_google}
+%
+% Remember, when looking for hints or help, \emph{\href{google.com}{Google} is your best friend}!   And if you prefix your Google query with “\emph{LaTeX}”, your fist link will most probably direct you to \texttt{tex.stackexchange.com}.
+%
+% \subsection{Group Support Help}
+% \label{sub:group_support}
+%
+% To get directed help on the \gls{novathesis} please join:
+% \begin{itemize}
+%   \item the \href{https://www.facebook.com/groups/novathesis}{NOVAtheis Facebook group}, or
+%   \item the \href{https://github.com/joaomlourenco/novathesis/discussions}{GitHub Discussions page}.
+% \end{itemize}
+%
+% There were huge changes from version 4.x.y to version \novathesisversion\ so, please, \textbf{always} state the version number you are using when asking for help.
 
-Remember, when looking for hints or help, \emph{\href{google.com}{Google} is your best friend}!   And if you prefix your Google query with “\emph{LaTeX}”, your fist link will most probably direct you to \texttt{tex.stackexchange.com}.
-
-\subsection{Group Support}
-\label{sub:group_support}
-
-To get directed help on the \gls{novathesis} please join:
-\begin{itemize}
-  \item the \href{https://www.facebook.com/groups/novathesis}{NOVAtheis Facebook group}, or
-  \item the \href{https://github.com/joaomlourenco/novathesis/discussions}{GitHub Discussions page}.
-\end{itemize}
-
-There were huge changes from version 4.x.y to version 6.a.b so, please, \textbf{always} state the version number you are using when asking for help.
-
-\subsection{Reporting Problems}
-\label{sub:reporting_problems}
+\section{Reporting Problems}
+\label{sec:reporting_problems}
 
 If you just need some help, see above \Autoref{sub:group_google} and \Autoref{sub:group_support}.
 
@@ -302,7 +316,7 @@ The \href{https://github.com/joaomlourenco/novathesis/wiki#donators}{list of \em
 \section{Disclaimer}
 \label{sec:disclaimer}
 
-Although the \gls{novathesis} template is endorsed by the FCT-NOVA (even \href{https://www.fct.unl.pt/estudante/informacao-academica}{linked from its web site}), \textbf{this not an official template}.
-%
-This template exists to make your life easier and we do our best to make it compliant to the supported ($+25$) Schools' regulations but, in the end of the line, you and only you are accountable for both the look and the contents of the document you submit as your thesis/dissertation.
+Although the \gls{novathesis} template is endorsed by some Schools (e.g., \href{https://www.fct.unl.pt/estudante/informacao-academica/teses-e-dissertacoes}{linked from FCT-NOVA web site}), the \gls{novathesis} template \textbf{this not an official template} for any School.
+
+The \gls{novathesis} template exists to make your life easier and we do our best to make it compliant to the supported ($+25$) Schools' regulations but, in the end of the line, you and only you are accountable for both the look and the contents of the document you submit as your thesis/dissertation.
 
