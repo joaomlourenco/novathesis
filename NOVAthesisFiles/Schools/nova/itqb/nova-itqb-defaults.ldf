@@ -191,11 +191,11 @@
   %                                    {cover,\option{/@nt/document/fallback},bottom},%
   %                                    {cover,bottom})%
   \datamatch{\@nt@margin@left}{margin}({cover,\option{/novathesis/docdegree},1-1,left},%
-                                     {cover,\option{/@nt/document/fallback},1-1,left},%
-                                      {cover,1-1,left},
-                                     {cover,\option{/novathesis/docdegree},left},%
-                                     {cover,\option{/@nt/document/fallback},left},%
-                                     {cover,left})%
+                                       {cover,\option{/@nt/document/fallback},1-1,left},%
+                                       {cover,1-1,left},
+                                       {cover,\option{/novathesis/docdegree},left},%
+                                       {cover,\option{/@nt/document/fallback},left},%
+                                       {cover,left})%
   % \datamatch{\@nt@margin@right}{margin}({cover,\option{/novathesis/docdegree},#1,right},%
   %                                    {cover,\option{/@nt/document/fallback},#1,right},%
   %                                     {cover,#1,right},
@@ -245,7 +245,8 @@
     \node [inner sep=0pt,anchor=north west,
            yshift=-23.75cm] 
                            {\fontsize{16}{16}\selectfont
-                           \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})};
+                           \thedissertationstring(\option{/@nt/document/fallback},%
+                                                  \option{/novathesis/coverlang})};
     % Title
     \node [inner sep=0pt,anchor=north west,
            yshift=-24.75cm] 
@@ -275,7 +276,6 @@
 }
 
 \ntaddtocover{N-2}{%
-\ntdate{2021,December}
   \setbox0=\hbox{\scalebox{2}{\bfseries\thentdocdate(year)}}
   \begin{tikzpicture}[remember picture, overlay, shift=(current page.north west)]
     % Filling back cover
