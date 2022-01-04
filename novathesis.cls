@@ -667,6 +667,8 @@
 % Degree
 \def\ntmajorfield(#1)#2{\majorfield(#1):={#2}}
 \def\ntdegreename(#1)#2{%
+  % #2 = lang
+  % #3 = value
   \datamatch{\match}{degreenameprefix}(%
                         {\option{/novathesis/docdegree},\option{/novathesis/coverlang}},%
                         {\option{/@nt/document/fallback},\option{/novathesis/coverlang}},%
