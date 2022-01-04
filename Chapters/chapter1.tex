@@ -18,7 +18,8 @@
 \setlength\epigraphwidth{12.5cm}
 \setlength\epigraphrule{0pt}
 
-\includegraphics[width=\linewidth]{NOVAthesisFiles/Images/novathesis-text}
+\includegraphics[width=0.1\linewidth]{NOVAthesisFiles/Images/novathesis-insignia}\hfill
+\includegraphics[width=0.875\linewidth]{NOVAthesisFiles/Images/novathesis-text}
 
 \noindent This is the \novathesis\ \LaTeX\ template Version \novathesisversion\ from \novathesisdate.
 
@@ -32,6 +33,12 @@
 
 This first Chapter introduces the \gls{novathesis} template and how it is organized. In Chapter~\ref{cha:users_manual} you can find some specific instructions on how to use the \gls{novathesis} template.  Chapter~\ref{cha:a_short_latex_tutorial_with_examples} shows some examples and give some hints on how to write your text. Please read these next Chapters carefully.
 
+\subsection{Your Time is Valuable}
+\label{sub:time_is_money}
+
+Did you learn how to drive by sitting by the wheel and throwing your car into the road?  Or did you take your time \emph{learning the rules} and \emph{practicing} first?  Thus, it is not wise to throw yourself at the task of writing a thesis/dissertation without seriously considering the following statement!
+
+% subsection subsection_name (end)
 \begin{quote}
   \rule{\linewidth}{2pt}
 If you are going to spend zillions of hours writing your thesis/dissertation using this \gls{novathesis} template, be wise and spend a couple of hours learning how to use it properly by reading this manual.  And then be even wiser and spend a few more hours \href{https://github.com/joaomlourenco/novathesis/wiki#learning-latex}{learning some \LaTeX}.  I am sure that the time you are investing now will pay itself countless times before you submit your thesis/dissertation.
@@ -52,11 +59,10 @@ The \gls{novathesis} tempalte was born in~1996, and what you see now accumulates
 
 \begin{figure}[htbp]
   \centering
-    \includegraphics[width=0.8\textwidth]{github1}
+    \includegraphics[width=0.7\textwidth]{github1}
   \caption{The \novathesis\ project web page in GitHub.}
   \label{fig:github}
 \end{figure}
-
 
 \section{The \emph{NOVAthesis} template}
 \label{sec:a_bit_of_history}
@@ -66,21 +72,33 @@ The \gls{novathesis} tempalte was born in~1996, and what you see now accumulates
 \definecolor{Schlgray}{gray}{0.95}  
 \newtoggle{ntRow}
 
-\newcommand{\ntSchool}[4]{%
+\newcommand{\ntSchool}[2]{%
     % #1 = cover image
     % #2 = School name
     % #3 = School acronym
     % #3 = School URL
     \setlength{\fboxsep}{0pt}%
     \def\myspace{}%
-    % \makecell*[lc]{%
-      \@for\listitem:=#1\do{%
-        \myspace\fbox{\colorbox{White}{\includegraphics[width=\mysmallcoversize]{\listitem}}}\def\myspace{~}}%
-    % }
-    & #2 \href{#4}{(#3)}\\%
+    \gape{
+    \@for\listitem:=#1\do{%
+      \myspace\fbox{\colorbox{White}{\includegraphics[align=c,width=\mysmallcoversize]{\listitem}}}%
+      \def\myspace{~}%
+    }}%
+    &
+    \parbox[c]{\linewidth}{%
+    \def\mynewline{}
+    \@for\listitem:=#2\do{%
+      % \@ntschldata(\listitem)
+      \StrCut{\listitem}{;}\schlname\@remainder%
+      \StrCut{\@remainder}{;}\schlacrn\schlurl%
+      \mynewline\schlname\ \href{\schlurl}{(\schlacrn)}%
+      \def\mynewline{\newline}
+    }}\\
 }
+% \def\@ntschldata(#1;#2;#3){}%#4#5#6{\def#4{#1}\def#5{#2}\def#6{#3}}
 
 \newenvironment{ntUniversity}[1]{
+  \renewcommand\cellgape{\Gape[5pt]}
   \rowcolors{1}{}{GhostWhite}
     \xltabular{\linewidth}{cX}%
     \toprule%
@@ -96,119 +114,67 @@ The \gls{novathesis} template was born at the \gls{DI} of  \gls{FCT} of \gls{NOV
 
 \begin{ntUniversity}{NOVA University Lisbon}
     \ntSchool{cover-nova-fct-phd,cover-nova-fct-msc}%
-                  {NOVA School of Science and Technology [PhD]}%
-                  {FCT-NOVA}%
-                  {https://www.fct.unl.pt}
+                  {{NOVA School of Science and Technology [PhD]};{FCT-NOVA};{https://www.fct.unl.pt},%
+                  {NOVA School of Science and Technology [MSc]};{FCT-NOVA};{https://www.fct.unl.pt}}
     \ntSchool{cover-nova-fcsh-phd}%
-                  {NOVA School of Social Sciences and Humanities}%
-                  {FCSH-NOVA}%
-                  {https://www.fcsh.unl.pt}
+                  {{NOVA School of Social Sciences and  Humanities};{FCSH-NOVA};{https://www.fcsh.unl.pt}}
     \ntSchool{cover-nova-ims-phd}%
-                  {NOVA Information Management School}%
-                  {NOVA-IMS}%
-                  {https://www.novaims.unl.pt}
+                  {{NOVA Information Management School};{NOVA-IMS};{https://www.novaims.unl.pt}}
     \ntSchool{cover-nova-ensp-phd}%
-                  {National School of Public Heath}%
-                  {ENSP-NOVA}%
-                  {https://www.ensp.unl.pt}
+                  {{National School of Public Heath};{ENSP-NOVA};{https://www.ensp.unl.pt}}
 \end{ntUniversity}
 
 \begin{ntUniversity}{University of Lisbon}
     \ntSchool{cover-ulisboa-ist-phd}%
-                  {Instituto Superior Técnico}%
-                  {IST-UL}%
-                  {https://tecnico.ulisboa.pt}
+                  {{Instituto Superior Técnico};{IST-UL};{https://tecnico.ulisboa.pt}}
     \ntSchool{cover-ulisboa-fc-phd}%
-                  {Faculdade de Ciências [PhD]}%
-                  {FCUL}%
-                  {https://ciencias.ulisboa}
+                  {{Faculdade de Ciências [PhD]};{FCUL};{https://ciencias.ulisboa}}
     \ntSchool{cover-ulisboa-fc-msc}%
-                  {Faculdade de Ciências [MSc]}%
-                  {FCUL}%
-                  {https://ciencias.ulisboa}
+                  {{Faculdade de Ciências [MSc]};{FCUL};{https://ciencias.ulisboa}}
 \end{ntUniversity}
 
 \begin{ntUniversity}{University of Minho}
-    \ntSchool{cover-uminho-ea-phd}%
-                  {Escola de Arquitetura}%
-                  {EA-UM}%
-                  {https://www.arquitetura.uminho.pt}
-    \ntSchool{cover-uminho-ec-phd}%
-                  {Escola de Ciências}%
-                  {EC-UM}%
-                  {https://www.ecum.uminho.pt}
-    \ntSchool{cover-uminho-ed-phd}%
-                  {Escola de Direito}%
-                  {ED-UM}%
-                  {https://www.direito.uminho.pt}
-    \ntSchool{cover-uminho-eeg-phd}%
-                  {Escola de Economia e Gestão}%
-                  {EEG-UM}%
-                  {https://www.eeg.uminho.pt}
-    \ntSchool{cover-uminho-ee-phd}%
-                  {Escolha de Engenharia}%
-                  {EE-UM}%
-                  {https://www.eng.uminho.pt}
-    \ntSchool{cover-uminho-em-phd}%
-                  {Escola de Medicina}%
-                  {EM-UM}%
-                  {https://www.med.uminho.pt}
-    \ntSchool{cover-uminho-ep-phd}%
-                  {Escola de Psicologia}%
-                  {EP-UM}%
-                  {https://www.psi.uminho.pt}
-    \ntSchool{cover-uminho-ese-phd}%
-                  {Escola Superior de Enfermagem}%
-                  {ESE-UM}%
-                  {https://www.ese.uminho.pt}
-    \ntSchool{cover-uminho-ics-phd}%
-                  {Instituto de Ciências Sociais}%
-                  {ICS-UM}%
-                  {https://www.ilch.uminho.pt}
-    \ntSchool{cover-uminho-ie-phd}%
-                  {Instituto de Educação}%
-                  {IE-UM}%
-                  {https://www.ie.uminho.pt}
-    \ntSchool{cover-uminho-ilch-phd}%
-                  {Instituto de Letras e Ciências Humanas}%
-                  {ILCH-UM}%
-                  {https://www.ilch.uminho.pt}
-    \ntSchool{cover-uminho-i3b-phd}%
-                  {Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos}%
-                  {I3B-UM}%
-                  {https://i3bs.uminho.pt}
+    \ntSchool{cover-uminho-ea-phd,cover-uminho-ec-phd,cover-uminho-ed-phd}%
+                  {{{Escola de Arquitetura};{EA-UM};{https://www.arquitetura.uminho.pt}},%
+                  {{Escola de Ciências};{EC-UM};{https://www.ecum.uminho.pt}},%
+                  {{Escola de Direito};{ED-UM};{https://www.direito.uminho.pt}}}
+    \ntSchool{cover-uminho-ec-phd,cover-uminho-ed-phd,cover-uminho-eeg-phd}%
+                  {{{Escola de Ciências};{EC-UM};{https://www.ecum.uminho.pt}},%
+                  {{Escola de Direito};{ED-UM};{https://www.direito.uminho.pt}},%
+                  {{Escola de Economia e Gestão};{EEG-UM};{https://www.eeg.uminho.pt}}}
+    \ntSchool{cover-uminho-ee-phd,cover-uminho-em-phd,cover-uminho-ep-phd}%
+                  {{{Escolha de Engenharia};{EE-UM};{https://www.eng.uminho.pt}},%
+                  {{Escola de Medicina};{EM-UM};{https://www.med.uminho.pt}},%
+                  {{Escola de Psicologia};{EP-UM};{https://www.psi.uminho.pt}}}
+    \ntSchool{cover-uminho-ese-phd,cover-uminho-ics-phd,cover-uminho-ie-phd}%
+                  {{{Escola Superior de Enfermagem};{ESE-UM};{https://www.ese.uminho.pt}},%
+                  {{Instituto de Ciências Sociais};{ICS-UM};{https://www.ilch.uminho.pt}},%
+                  {{Instituto de Educação};{IE-UM};{https://www.ie.uminho.pt}}}
+    \ntSchool{cover-uminho-ilch-phd,cover-uminho-i3b-phd}%
+                  {{{Instituto de Letras e Ciências Humanas};{ILCH-UM};{https://www.ilch.uminho.pt}},%
+                  {{Instituto de Investigação em Biomateriais; Biodegradáveis e Biomiméticos};{I3B-UM};{https://i3bs.uminho.pt}}}
 \end{ntUniversity}
-
-\begin{ntUniversity}{ISCTE — Instituto Universitário de Lisboa}
-    \ntSchool{cover-iscteiul-eta-phd}%
-             {Escola de Tecnologias e Arquitectura}%
-             {ETA-ISCTE-IUL}%
-             {https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura}%
-\end{ntUniversity}
+%
+% \begin{ntUniversity}{ISCTE — Instituto Universitário de Lisboa}
+%     \ntSchool{cover-iscteiul-eta-phd}%
+%              {Escola{ de Tecnologias e Arquitectura};{ETA-ISCTE-IUL};{https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura}%}
+% \end{ntUniversity}
 
 \begin{ntUniversity}{Instituto Politécnico de Lisboa}
     \ntSchool{cover-ipl-isel-msc}%
-             {Instituto Superior de Engenharia de Lisboa}%
-             {ISEL-IPL}%
-             {https://www.isel.pt}%
+             {{Instituto Superior de Engenharia de Lisboa};{ISEL-IPL};{https://www.isel.pt}}
 \end{ntUniversity}
 
 \begin{ntUniversity}{Instituto Politécnico de Setúbal}
     \ntSchool{cover-ips-ests-msc}%
-             {Escola Superior de Tecnologia de Setúbal}%
-             {ISEL-IPL}%
-             {https://www.estbarreiro.ips}%
+             {{Escola Superior de Tecnologia de Setúbal};{ISEL-IPL};{https://www.estbarreiro.ips}}%
 \end{ntUniversity}
 
 \begin{ntUniversity}{Other Universities/Schools/Degrees}
     \ntSchool{cover-other-esep-phd}%
-             {Escola Superior de Enfermagem do Porto}%
-             {ESEP}%
-             {https://www.esenf.pt/pt}%
+             {{Escola Superior de Enfermagem do Porto};{ESEP};{https://www.esenf.pt/pt}}%
     \ntSchool{cover-other-mscgt-msc}%
-             {Masters Program in Geospatial Technologies}%
-             {GT}%
-             {https://mastergeotech.info}%
+             {{Masters Program in Geospatial Technologies};{GT};{https://mastergeotech.info}}%
 \end{ntUniversity}
 
 
@@ -226,8 +192,9 @@ The template provides an \emph{easy to use} setting for you to write your thesis
 \subsection{Using Overleaf}
 \label{sub:using_overleaf}
 
-\begin{wrapfigure}{r}{0.5\linewidth}
-\vspace*{-15ex}\includegraphics[width=\linewidth]{overleaf}%
+\begin{wrapfigure}{r}{0.3\linewidth}
+\vspace*{-10ex}\includegraphics[width=\linewidth]{overleaf}%
+\caption{NOVAthesis template in Overleaf.}
 \end{wrapfigure}
 
 If you do not have an account in \href{https://www.overleaf.com?r=f5160636&rm=d&rs=b}{Overleaf}, you must \href{https://www.overleaf.com?r=f5160636&rm=d&rs=b}{create one first}.
@@ -236,7 +203,7 @@ Once you have an account, please access the \gls{novathesis} template in \href{h
 
 \bgroup
   \itshape
-  Please notice that the version currently available in Overleaf (v6.5.3) is slightly outdated. A new version will be submitted to Overleaf soon.  Until then, please:
+  Please notice that the version currently available in Overleaf (v6.5.3) is slightly outdated (current version is v\novathesisversion). A new version will be submitted to Overleaf soon.  Until then, please:
   \begin{enumerate}
     \item Download the \href{https://github.com/joaomlourenco/novathesis/archive/master.zip}{latest version} from the GitHub repository as a Zip file.
     \item Login to your favorite LaTeX cloud service. I recommend \href{https://www.overleaf.com/?r=f5160636&rm=d&rs=b}{Overleaf} but there are alternatives (these instructions apply to Overleaf and you'll have to adapt for other providers).
@@ -250,40 +217,55 @@ Once you have an account, please access the \gls{novathesis} template in \href{h
 \subsection{Using a Local \LaTeX\ Installation}
 \label{sub:using_local_latex}
 
-\begin{wrapfigure}{r}{0.5\linewidth}
-\vspace*{-15ex}\includegraphics[width=\linewidth]{github}%
+\newcommand{\MikTeX}{Mik\TeX}
+\newcommand{\TeXLive}{\TeX Live}
+
+First of all, start by installing \LaTeX\ in your computer.  There are two main distributions, \href{https://miktex.org}{\MikTeX}\ and \href{https://www.tug.org/texlive/}{\TeXLive}, and both of them are available for the~3 most popular Operating Systems: Linux, macOS and Windows.
+
+\begin{wrapfigure}{r}{0.3\linewidth}
+\includegraphics[width=\linewidth]{github}%
+\caption{The NOVAthesis Project page in GitHub.}
 \end{wrapfigure}
 
-Just access the \gls{novathesis} repository in \href{https://github.com/joaomlourenco/novathesis}{GitHub}, select the green button \emph{Code} and then \emph{download} (or \emph{clone}) the template.  You will always get the latest version of the template (currently v5.1.8).
+Be aware that a full installation of \MikTeX\ or \TeXLive\ will take near~5\,GB of hard disk space.  So, think twice before installing the full distribution.  See the \gls{novathesis} Wiki for the \href{https://github.com/joaomlourenco/novathesis/wiki/installing-latex#minimal-installation-in-any-of-the-systems-above}{list of packages required to compile the template}.
+
+Once you have \LaTeX\ up and running, remember to install a good \LaTeX\ text editor.  I recommend you to take a look at  \href{https://tex.stackexchange.com/questions/339/latex-editors-ides}{this post} in the \url{tex.stackexchange.com} site.  If you want a quick and dirty recommendation, try \href{https://www.texstudio.org/}{TeXStudio}.
+
+Now, you must access the \gls{novathesis} repository in \href{https://github.com/joaomlourenco/novathesis}{GitHub}, select the green button \emph{Code} and then \emph{download} (or \emph{clone}) the template.  You will always get the latest version of the template (currently v\novathesisversion\ from \novathesisdate).
 
 
 \section{Getting Help}
 \label{sec:getting_help}
+Let's start with some simple suggestions:
 
-Help is available in the forums listed below!
+\begin{enumerate}
+  \item No! You don't have to use this template to write your thesis.  You don't even have to use \LaTeX.  However, writing a thesis is serious stuff, and which tool you shall use to write it is not a decision to make lighthearted.
+  \item \LaTeX\ is hard enough by itself.  This template aims at making your life easier, but not easy. If you choose to use this template to write your thesis, you are very welcome.  However, don't expect me to provide you help with \LaTeX.  Look for help with your friends (you have some friends, don't you?), or search the web, or try even to read some book(s) on \LaTeX. In the end you will certainly find the experience rewarding.
+  \item So, don't forget, when you come to the point of “\emph{How do I do this with \LaTeX?}” look for help!  Google is your best friend. You may also ask for help in the \gls{novathesis} \href{https://www.facebook.com/groups/novathesis}{NOVAtheis Facebook group} or the \href{https://github.com/joaomlourenco/novathesis/discussions}{GitHub Discussions page}.  If you can't find help there from previous posts/messages, then post your own question. Hopefully someone will answer you. There were huge changes from version 4.x.y to version \novathesisversion, so \textbf{always} state the version number you are using when asking for help.
+\end{enumerate}
 
 \begin{center}  
-  \fbox{\parbox{0.95\textwidth}{\begin{center}\large\textbf{Please do not attempt to contact me directly (email, Messenger, etc)…\\I WILL NOT REPLY!}\end{center}}}
+  \fcolorbox{red}{gray!15}{\parbox{\textwidth}{\begin{center}\large\textbf{Please do not attempt to contact me directly (email, Messenger, etc)…\\I WILL NOT REPLY!}\end{center}}}
 \end{center}
  
-\subsection{Google}
-\label{sub:group_google}
+% \subsection{Google Help}
+% \label{sub:group_google}
+%
+% Remember, when looking for hints or help, \emph{\href{google.com}{Google} is your best friend}!   And if you prefix your Google query with “\emph{LaTeX}”, your fist link will most probably direct you to \texttt{tex.stackexchange.com}.
+%
+% \subsection{Group Support Help}
+% \label{sub:group_support}
+%
+% To get directed help on the \gls{novathesis} please join:
+% \begin{itemize}
+%   \item the \href{https://www.facebook.com/groups/novathesis}{NOVAtheis Facebook group}, or
+%   \item the \href{https://github.com/joaomlourenco/novathesis/discussions}{GitHub Discussions page}.
+% \end{itemize}
+%
+% There were huge changes from version 4.x.y to version \novathesisversion\ so, please, \textbf{always} state the version number you are using when asking for help.
 
-Remember, when looking for hints or help, \emph{\href{google.com}{Google} is your best friend}!   And if you prefix your Google query with “\emph{LaTeX}”, your fist link will most probably direct you to \texttt{tex.stackexchange.com}.
-
-\subsection{Group Support}
-\label{sub:group_support}
-
-To get directed help on the \gls{novathesis} please join:
-\begin{itemize}
-  \item the \href{https://www.facebook.com/groups/novathesis}{NOVAtheis Facebook group}, or
-  \item the \href{https://github.com/joaomlourenco/novathesis/discussions}{GitHub Discussions page}.
-\end{itemize}
-
-There were huge changes from version 4.x.y to version 6.a.b so, please, \textbf{always} state the version number you are using when asking for help.
-
-\subsection{Reporting Problems}
-\label{sub:reporting_problems}
+\section{Reporting Problems}
+\label{sec:reporting_problems}
 
 If you just need some help, see above \Autoref{sub:group_google} and \Autoref{sub:group_support}.
 
@@ -299,7 +281,7 @@ The \href{https://github.com/joaomlourenco/novathesis/wiki#donators}{list of \em
 \section{Disclaimer}
 \label{sec:disclaimer}
 
-Although the \gls{novathesis} template is endorsed by the FCT-NOVA (even \href{https://www.fct.unl.pt/estudante/informacao-academica}{linked from its web site}), this not an official template.
-%
-This template exists to make your life easier and we do our best to make it compliant to the supported Schools' regulations, but in the end of the line you and only you are accountable for both the look and the contents of the document you submit as your thesis/dissertation.
+Although the \gls{novathesis} template is endorsed by some Schools (e.g., \href{https://www.fct.unl.pt/estudante/informacao-academica/teses-e-dissertacoes}{linked from FCT-NOVA web site}), the \gls{novathesis} template \textbf{this not an official template} for any School.
+
+The \gls{novathesis} template exists to make your life easier and we do our best to make it compliant to the supported ($+25$) Schools' regulations but, in the end of the line, you and only you are accountable for both the look and the contents of the document you submit as your thesis/dissertation.
 

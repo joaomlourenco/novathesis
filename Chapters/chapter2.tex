@@ -18,41 +18,24 @@
     This manual is outdated and must be revised!}
 \end{center}
 
-\section{Introduction} % (fold)
+\section{Introduction}
 \label{sec:introduction}
 
-This chapter describes how to use the \gls{novathesis}\ and the \gls{novathesisclass} file.
+This chapter describes how to use the \gls{novathesis}\ Template and the \gls{novathesisclass} file.  I will assume you have a working installation of \LaTeX, wither local (in your own computer) or remote (in Overleaf), and that it compiled successfully the default configuration (PhD for \gls{FCT}).
 
-Let's start with some simple suggestions: \cite{Moss85,DBLP:conf/atva/2004}.
 
-% \printbibliography[heading=subbibliography, segment=\therefsegment, title={\bibname\ for chapter~\thechapter}]
-
-\begin{enumerate}
-  \item No! You don't have to use this template to write your thesis.  You don't even have to use \LaTeX.  However, writing a thesis is serious stuff, and which tool you shall use to write it is not a decision to make lighthearted.
-  \item \LaTeX\ is hard enough by itself.  This template aims at making your life easier, but not easy. If you choose to use this template to write your thesis, you are very welcome.  However, don't expect me to provide you help with \LaTeX.  Look for help with your friends (you have some friends, don't you?), or search the web, or try even to read some book(s) on \LaTeX. In the end you will certainly find the experience rewarding.
-  \item So, don't forget, when you come to the point of “\emph{How do I do this with \LaTeX?}” look for help!  Google is your best friend. 
-  \item If you believe the difficulty is related with the \gls{novathesis}\ template itself (and not with \LaTeX), please \textbf{do not} send me an email asking for help.  Please look for help in the \gls{novathesis}\ Google Group (URL) and the \gls{novathesis}\ Facebook group (URL).  If you can't find help there from previous posts/messages, then post your own question. Hopefully someone will answer you.
-\end{enumerate}
-
-Now, let's go to a major issue for Windows users.  Characters have to be encoded in files as numbers, and that is how character encodings were born. ASCII and EBCDIC standards are long lost in the past.  The world now uses UTF-8.  Well, not all the world… Windows is still stick in its \emph{codepages}, and “latin1” is what windows uses as the codepage for Western Europe. This messes up with the template. Please be sure you use an editor with UTF-8 support.  \emph{Go to the preferences/options/… of your text editor and set up its default file encoding as UTF-8.}
-
-% section introduction (end)
-
-% ====================
-% = Folder Structure =
-% ====================
-\section{Folder Structure} % (fold)
+\section{Folder Structure}
 \label{sec:folder_structure}
 
-The \gls{novathesis}\ template is organized into files and folders. At the main level it includes the following files and folders:
+The \gls{novathesis} template is organized into many files and folders. At the main level it includes the following files and folders:
 
-\noindent
-\begin{tabularx}{\linewidth}{>{\ttfamily}l>{\itshape}l>{\upshape}X}
+\noindent\rowcolors{1}{GhostWhite}{}
+\begin{xltabular}{\linewidth}{>{\ttfamily}l>{\itshape}l>{\upshape}X}
 novathesis.cls     & file    & 
-The main class file. It will include additional files from \texttt{NOVAthesisFiles} folder. 
+The main class file. It will include additional files from \texttt{NOVAthesisFiles} folder and its sub-folders. 
 \\ 
 template.tex      & file    & 
-The main user file. Use this file as the main file for your thesis. 
+The main template file. You need to \emph{compile} this file with one of pdf\LaTeX, \XeLaTeX, or \LuaLaTeX\ to obtain the \texttt{template.pdf} file.
 \\
 bibliography.bib  & file    & 
 An example of a bibliography file. You may have has many as you want. \\
@@ -68,7 +51,7 @@ Scripts           & folder  & Some (possibly useful) scripts for Unix-based syst
 NOVAthesisFiles   & folder  & 
 Additional files for the \gls{novathesisclass}\ file.  Unless you know what you are doing, avoid messing up with the files and folders inside this folder (except for deleting the unused Schools, see below). 
 \\
-\end{tabularx}
+\end{xltabular}
 
 The \texttt{NOVAthesisFiles} folder contains additional files and folders that complement the main \gls{novathesisclass}\ file.  These are:
 
@@ -126,7 +109,7 @@ The folder for the \href{http:www.novaims.unl.pt}{\emph{Information and Manageme
 % ===================
 % = Package options =
 % ===================
-\section{\glsfmtshort{novathesisclass}\ Class Options} % (fold)
+\section{\glsfmtshort{novathesisclass}\ Class Options}
 \label{sec:package_options}
 
 The \gls{novathesisclass}\ can be customized with the options listed below.
@@ -190,12 +173,12 @@ The \gls{novathesisclass}\ can be customized with the options listed below.
     \bottomrule
 \end{ctabular}
 
-\section{Additional considerations about the class options} % (fold)
+\section{Additional considerations about the class options}
 \label{sec:additional_considerations}
 
 In this section we will provide some additional considerations about some of the customizations available as class options.
 
-\subsection{The main language} % (fold)
+\subsection{The main language}
 \label{sub:the_main_language}
 
 The choice of the main language with the option “\texttt{lang=OPT}” affects:
@@ -213,7 +196,7 @@ No mater which language you chose, you will always have the appropriate hyphenat
 % section additional_consideration (end)
 
 
-\subsection{Class of Text} % (fold)
+\subsection{Class of Text}
 \label{sub:class_of_text}
 
 You must choose the class of text for the document. The available options are:
@@ -231,7 +214,7 @@ You must choose the class of text for the document. The available options are:
 % ============
 % = Printing =
 % ============
-\subsection{Printing} % (fold)
+\subsection{Printing}
 \label{sub:printing}
 
 You must choose how your document will be printed. The available options are:
@@ -244,7 +227,7 @@ You must choose how your document will be printed. The available options are:
 % =============
 % = Font Size =
 % =============
-\subsection{Font Size} % (fold)
+\subsection{Font Size}
 \label{ssec:font_size}
 
 You must select the encoding for your text. The available options are:
@@ -257,7 +240,7 @@ You must select the encoding for your text. The available options are:
 % =================
 % = Text encoding =
 % =================
-\subsection{Text Encoding} % (fold)
+\subsection{Text Encoding}
 \label{ssec:text_encoding}
 
 You must choose the font size for your document. The available options are:
@@ -270,7 +253,7 @@ You must choose the font size for your document. The available options are:
 % ============
 % = Examples =
 % ============
-\subsection{Examples} % (fold)
+\subsection{Examples}
 \label{ssec:examples}
 
 Let's have a look at a couple of examples:
@@ -283,7 +266,7 @@ Let's have a look at a couple of examples:
 \end{itemize}
 % subsection examples (end)
 
-\section{How to Write Using \LaTeX} % (fold)
+\section{How to Write Using \LaTeX}
 \label{sec:how_to_write_using_latex}
 
 Please have a look at Chapter~\ref{cha:a_short_latex_tutorial_with_examples}, where you may find many examples of \LaTeX constructs, such as Sectioning, inserting Figures and Tables, writing Equations, Theorems and algorithms, exhibit code listings, etc.
