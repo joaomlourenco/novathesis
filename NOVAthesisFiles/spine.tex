@@ -218,15 +218,27 @@
                       {logo,\option{/@nt/document/fallback}},%
                       {logo}%
     ){%
+      \datamatch{\@angle}{spine}(%
+                        {logo,\option{/novathesis/docdegree},angle},%
+                        {logo,\option{/@nt/document/fallback},angle},%
+                        {logo,angle}%
+      )%
+      \datamatch{\@scale}{spine}(%
+                        {logo,\option{/novathesis/docdegree},scale},%
+                        {logo,\option{/@nt/document/fallback},scale},%
+                        {logo,scale}%
+      )%
+      \datamatch{\@raise}{spine}(%
+                        {logo,\option{/novathesis/docdegree},raise},%
+                        {logo,\option{/@nt/document/fallback},raise},%
+                        {logo,raise}%
+      )%
       \node[inner sep=0, anchor=center, yshift=-\expanded{\thespine(box,logo,top)-0.5*\thespine(box,logo,len)}
-            , xshift=-\novathesis@boxwidth*\expanded{\thespine(\arg,raise)}]
+            , xshift=-\novathesis@boxwidth*\@raise]
            at (current page.north)
-              {\ifdataequal{spine}(\arg,angle){0}{\setkeys{Gin}{width=\novathesis@boxwidth}}%
-                                                 {\setkeys{Gin}{height=\novathesis@boxwidth}}%
-                 \includegraphics[ angle=\expanded{\thespine(\arg,angle)}
-                                 , scale=\expanded{\thespine(\arg,scale)}%
-                                 , align=c
-                                 ]{\thespine(\arg)}%
+              {\IfStrEq{\@angle}{0}{\setkeys{Gin}{width=\novathesis@boxwidth}}%
+                                   {\setkeys{Gin}{height=\novathesis@boxwidth}}%
+                 \includegraphics[angle=\@angle, scale=\@scale, align=c]{\thespine(\arg)}%
               };
     }{}%
     % print author
