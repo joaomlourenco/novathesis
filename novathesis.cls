@@ -69,6 +69,7 @@
 %% SOME ESSENTIAL PACKAGES
 %%    Others will be loaded later, in the file “packages.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{xfor}
 \RequirePackage{iftex}
 \RequirePackage{etoolbox}
 \RequirePackage{xifthen}
@@ -536,7 +537,7 @@
                                        {\hypersetup{allcolors=#1}}%
                                        {\PassOptionsToPackage{allcolors=#1}{hyperref}}}
 % nova/ims
-  , degreeacr/.new value          = {},
+  , degreeacr/.new value          = {none},
 % nova/itqb
   , covercolor/.new choice        = {gray, green}
 }
@@ -866,16 +867,31 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING SCHOOLS's “defaults.ldf”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\@for\match:={\@nt@univ,\@nt@univ/\@nt@schl}\do{%
+\ntfor\match:={\@nt@univ,\@nt@univ/\@nt@schl}\do{%
   \IfFileExists{NOVAthesisFiles/Schools/\match/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
       \prependtographicspath{{NOVAthesisFiles/Schools/\match/Images/}}%
   }{}%
 }
 
-\@for\match:={\@nt@univ/\@nt@univ,\@nt@univ/\@nt@schl/\@nt@univ-\@nt@schl}\do{%
-\InputIfFileExists{NOVAthesisFiles/Schools/\match-defaults.ldf}{}%
-    {\PackageWarning{novathesis}{Missing file “\match-defaults.ldf”}}
-}
+
+%============================================================
+%  UNIVERSITY/SCHOOL SPECIFIC MATERIALS
+%  configuration file “Config/9_<university>_<school>.tex”
+%============================================================
+\IfFileExists{Config/9_\@nt@univ_\@nt@schl.tex}{\input{Config/9_\@nt@univ_\@nt@schl.tex}}
+    {\InputIfFileExists{Config/9_\@nt@univ.tex}{}{}}
+
+% \@for\match:={\@nt@univ/\@nt@univ,\@nt@univ/\@nt@schl/\@nt@univ-\@nt@schl}\do{%
+% \InputIfFileExists{NOVAthesisFiles/Schools/\match-defaults.ldf}{}%
+%     {\PackageWarning{novathesis}{Missing file “\match-defaults.ldf”}}
+% }
+\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@univ-defaults.ldf}{}
+                  {\PackageWarning{novathesis}{Missing file “\match-defaults.ldf”}}
+
+\ntfor\match:={\@nt@univ/\@nt@schl/\@nt@univ-\@nt@schl-\option{/novathesis/degreeacr},%
+              \@nt@univ/\@nt@schl/\@nt@univ-\@nt@schl}\do{%
+  \InputIfFileExists{NOVAthesisFiles/Schools/\match-defaults.ldf}{\ntforbreak}{}%
+}[\PackageWarning{novathesis}{Missing file “\match-defaults.ldf”}]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING MEMOIR
@@ -937,14 +953,6 @@
 %============================================================
 \AtEndPreamble{\makeatletter\input{Config/6_list_of}}
 % \NTRunHook{list_of}
-
-%============================================================
-%  UNIVERSITY/SCHOOL SPECIFIC MATERIALS
-%   Please open and edit the appropriate
-%       configuration file “Config/9_<university>_<school>.tex”
-%============================================================
-\IfFileExists{Config/9_\@nt@univ_\@nt@schl.tex}{\input{Config/9_\@nt@univ_\@nt@schl.tex}}
-    {\InputIfFileExists{Config/9_\@nt@univ.tex}{}{}}
 
 \ifdocunset{\ntsetup{docstatus=working}}{}
 \ifdocfinal{\ntsetup{printcommittee=true}}{}
