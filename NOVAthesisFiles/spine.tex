@@ -177,7 +177,12 @@
   \begin{tikzpicture}[remember picture, overlay]
   % draw image
     % print bg color IF DEFINED
-    \datamatchtf{\arg}{thesiscover}({\option{/novathesis/docdegree},spine,bgcolor},{spine,bgcolor}){%
+    \datamatchtf{\arg}{thesiscover}(%
+                      {\option{/novathesis/docdegree},spine,bgcolor},%
+                      {\option{/@nt/document/fallback},spine,bgcolor},%
+                      {spine,bgcolor},%
+                      {bgcolor}%
+    ){%
       \node[inner sep=0, anchor=center,
             rectangle, minimum width=\novathesis@spinewidth, minimum height=\paperheight,
             fill=\arg]
@@ -185,7 +190,12 @@
               {};
     }{}%
     % print frame IF DEFINED
-    \datamatchtf{\arg}{thesiscover}({\option{/novathesis/docdegree},spine,framecolor},{spine,framecolor}){%
+    \datamatchtf{\arg}{thesiscover}(%
+                      {\option{/novathesis/docdegree},spine,framecolor},%
+                      {\option{/@nt/document/fallback},spine,framecolor},%
+                      {spine,framecolor},%
+                      {framecolor}%
+    ){%
       \node[inner sep=0, anchor=center,
             rectangle, minimum width=\novathesis@spinewidth, minimum height=\paperheight,
             draw=\arg,fill=none]
@@ -193,12 +203,21 @@
               {};
     }{}%
     % print bg image IF DEFINED
-    \datamatchtf{\arg}{thesiscover}({\option{/novathesis/docdegree},spine,image},{spine,image}){%
+    \datamatchtf{\arg}{thesiscover}(%
+                      {\option{/novathesis/docdegree},spine,image},%
+                      {\option{/@nt/document/fallback},spine,image},%
+                      {spine,image},%
+                      {image}%
+    ){%
       \node[inner sep=0] at (current page.center)
               {\includegraphics[width=\novathesis@spinewidth,height=\paperheight]{\arg}};
     }{}%
     % print logo IF DEFINED
-    \ifdatadefinedor{\arg}{spine}({logo,\option{/novathesis/docdegree}},{logo}){%
+    \ifdatadefinedor{\arg}{spine}(%
+                      {logo,\option{/novathesis/docdegree}},%
+                      {logo,\option{/@nt/document/fallback}},%
+                      {logo}%
+    ){%
       \node[inner sep=0, anchor=center, yshift=-\expanded{\thespine(box,logo,top)-0.5*\thespine(box,logo,len)}
             , xshift=-\novathesis@boxwidth*\expanded{\thespine(\arg,raise)}]
            at (current page.north)

@@ -671,6 +671,7 @@
   % #1 = lang
   % #2 = value
   \datamatch{\match}{degreenameprefix}(%
+                        {\option{/novathesis/docdegree},\option{/novathesis/coverlang}},%
                         {\option{/@nt/document/fallback},\option{/novathesis/coverlang}},%
                         {\option{/novathesis/coverlang}}%
   )%
@@ -683,6 +684,7 @@
 \def\ntminorfield(#1)#2{\minorfield(#1):={#2}}
 \def\ntspecialization(#1)#2{%
   \datamatch{\match}{specializationstring}(%
+                        {\option{/novathesis/docdegree},\option{/novathesis/coverlang}},%
                         {\option{/@nt/document/fallback},\option{/novathesis/coverlang}},%
                         {\option{/novathesis/coverlang}}%
   )%
@@ -1006,20 +1008,31 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\debuggrid}[1][orange]{%
-  \datamatch{\@nt@margin@top}{margin}({cover,\option{/@nt/document/fallback},#1,top},%
+  \datamatch{\@nt@margin@top}{margin}(%
+                                      {cover,\option{/novathesis/docdegree},#1,top},%
+                                      {cover,\option{/@nt/document/fallback},#1,top},%
                                       {cover,#1,top},%
                                       {cover,\option{/@nt/document/fallback},top},%
                                       {cover,top})%
-  \datamatch{\@nt@margin@bottom}{margin}({cover,\option{/@nt/document/fallback},#1,bottom},%
+  \datamatch{\@nt@margin@bottom}{margin}(%
+                                      {cover,\option{/novathesis/docdegree},#1,bottom},%
+                                      {cover,\option{/@nt/document/fallback},#1,bottom},%
                                       {cover,#1,bottom},%
+                                      {cover,\option{/novathesis/docdegree},bottom},%
                                       {cover,\option{/@nt/document/fallback},bottom},%
                                       {cover,bottom})%
-  \datamatch{\@nt@margin@left}{margin}({cover,\option{/@nt/document/fallback},#1,left},%
+  \datamatch{\@nt@margin@left}{margin}(%
+                                      {cover,\option{/novathesis/docdegree},#1,left},%
+                                      {cover,\option{/@nt/document/fallback},#1,left},%
                                       {cover,#1,left},%
+                                      {cover,\option{/novathesis/docdegree},left},%
                                       {cover,\option{/@nt/document/fallback},left},%
                                       {cover,left})%
-  \datamatch{\@nt@margin@right}{margin}({cover,\option{/@nt/document/fallback},#1,right},%
+  \datamatch{\@nt@margin@right}{margin}(%
+                                      {cover,\option{/novathesis/docdegree},#1,right},%
+                                      {cover,\option{/@nt/document/fallback},#1,right},%
                                       {cover,#1,right},%
+                                      {cover,\option{/novathesis/docdegree},right},%
                                       {cover,\option{/@nt/document/fallback},right},%
                                       {cover,right})%
   \begin{tikzpicture}[remember picture, semitransparent, overlay, shift=(current page.north west)]%
@@ -1045,8 +1058,11 @@
   % #2 = true branch
   % #3 = false branch
   \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{#2}{%
-    \datamatchtf{\match}{thesiscover}({\option{/@nt/document/fallback},#1,bgcolor}%
+    \datamatchtf{\match}{thesiscover}(%
+                                      {\option{/novathesis/docdegree},#1,bgcolor}%
+                                      {\option{/@nt/document/fallback},#1,bgcolor}%
                                      ,{#1,bgcolor}%
+                                     ,{\option{/novathesis/docdegree},#1,image}%
                                      ,{\option{/@nt/document/fallback},#1,image}%
                                      ,{#1,image},{image}){#2}{#3}%
   }%
@@ -1099,7 +1115,9 @@
   % #1 = cover ID (major-minor)
   \bgroup%
     \NTRunHook{cover/#1/pre}
-    \datamatchtf{\match}{thesiscover}({\option{/@nt/document/fallback},#1,textcolor},%
+    \datamatchtf{\match}{thesiscover}(%
+                                      {\option{/novathesis/docdegree},#1,textcolor},%
+                                      {\option{/@nt/document/fallback},#1,textcolor},%
                                       {#1,textcolor},{textcolor})%
                 {\color{\match}}{}%
     \ntselectlang{\option{/novathesis/coverlang}}%
@@ -1117,23 +1135,31 @@
   % #1 = cover ID (major-minor)
   % #2 = box name
   \datamatch{\@nt@margin@top}{margin}(%
+                      {cover,\option{/novathesis/docdegree},#1,top},%
                       {cover,\option{/@nt/document/fallback},#1,top},%
                       {cover,#1,top},%
+                      {cover,\option{/novathesis/docdegree},top},%
                       {cover,\option{/@nt/document/fallback},top},%
                       {cover,top})%
   \datamatch{\@nt@margin@bottom}{margin}(%
+                      {cover,\option{/novathesis/docdegree},#1,bottom},%
                       {cover,\option{/@nt/document/fallback},#1,bottom},%
                       {cover,#1,bottom},%
+                      {cover,\option{/novathesis/docdegree},bottom},%
                       {cover,\option{/@nt/document/fallback},bottom},%
                       {cover,bottom})%
   \datamatch{\@nt@margin@left}{margin}(%
+                      {cover,\option{/novathesis/docdegree},#1,left},%
                       {cover,\option{/@nt/document/fallback},#1,left},%
                       {cover,#1,left},%
+                      {cover,\option{/novathesis/docdegree},left},%
                       {cover,\option{/@nt/document/fallback},left},%
                       {cover,left})%
   \datamatch{\@nt@margin@right}{margin}(%
+                      {cover,\option{/novathesis/docdegree},#1,right},%
                       {cover,\option{/@nt/document/fallback},#1,right},%
                       {cover,#1,right},%
+                      {cover,\option{/novathesis/docdegree},right},%
                       {cover,\option{/@nt/document/fallback},right},%
                       {cover,right})%
   \defifundef{#2}{\newsavebox}%
@@ -1164,6 +1190,7 @@
   % #2 = box name
   \defifundef{#2}{\newsavebox}%
   \datamatchtf{\match}{thesiscover}(%
+                    {\option{/novathesis/docdegree},#1,bgcolor},%
                     {\option{/@nt/document/fallback},#1,bgcolor},%
                     {#1,bgcolor},{bgcolor})%
               {\savebox{#2}{\@ntcoverbgcolor{#1}{\match}}}{}%
@@ -1185,9 +1212,13 @@
   % #2 = box name
   \NTRunHook{cover/#1/image/pre}%
   \defifundef{#2}{\newsavebox}%
-  \datamatchtf{\match}{thesiscover}({\option{/@nt/document/fallback},#1,image},%
-                                    {#1,image},%
-                                    {image})%
+  \datamatchtf{\match}{thesiscover}(%
+                          {\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,image},%
+                          {\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,image},%
+                          {\option{/novathesis/docdegree},#1,image},%
+                          {\option{/@nt/document/fallback},#1,image},%
+                          {#1,image},%
+                          {image})%
       {\savebox{#2}{\includegraphics[width=\paperwidth,height=\paperheight]{\match}}}{}%
   \ifdatadefined{thesiscover}(phd,1-1,bgcolor){}{}%
   \NTRunHook{cover/#1/image/post}%
@@ -1223,8 +1254,8 @@
     \options{/@ntcoveropts,defaults}%.
     \options{/@ntcoveropts,#2}%
     \options{/@ntcoveropts,alignmap=\option{/@ntcoveropts/align}}%
-    \StrCount{\option{/@ntcoveropts/status}}{\option{/novathesis/docstatus}}[\@nt@instatus]%
-    \StrCount{\option{/@ntcoveropts/degree}}{\option{/novathesis/docdegree}}[\@nt@indegree]%
+    \StrCount{\option{/@ntcoveropts/status}}{\option{/@nt/document/fallback}}[\@nt@instatus]%
+    \StrCount{\option{/@ntcoveropts/degree}}{\option{/@nt/document/fallback}}[\@nt@indegree]%
     \ifthenelse{%
               \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND%
               \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}%
@@ -1829,7 +1860,12 @@
 %% LABELS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \providecommand\thepresentationtext{%
-	\thedissertationstringfont()\thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+  \thedissertationstringfont()%
+  \ifdatadefined{issertationstring}(\option{/novathesis/docdegree},\option{/novathesis/coverlang}){%
+    \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+  }{%
+    \thedissertationstring(\option{/@nt/document/fallback},\option{/novathesis/coverlang})%
+  }
 }
 
 \providecommand\thecopyrightstr{%
@@ -1869,9 +1905,10 @@
 
 \InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.ldf}{}{%
   \ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/chapstyle}}{}%
-}%
+}
 \InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/fontstyle}.ldf}{}{%
   \ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/fontstyle}}{}%
-}%
+}
 
-\options{/@nt/document/fallback=\option{/novathesis/docdegree}}%
+\options{/@nt/document/fallback=\option{/novathesis/docdegree}}
+\ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}

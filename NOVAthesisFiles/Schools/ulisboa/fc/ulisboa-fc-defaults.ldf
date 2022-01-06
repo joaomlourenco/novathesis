@@ -28,8 +28,7 @@
 \committeeorder():={c,r,a,m}% 
 
 % Cover background images
-\ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
-\thesiscover(bgcolor):={nearlywhite}
+\thesiscover(bgcolor):={white}
 
 % Spine info
 \spine(logo)={ulisboa-fc-logo}

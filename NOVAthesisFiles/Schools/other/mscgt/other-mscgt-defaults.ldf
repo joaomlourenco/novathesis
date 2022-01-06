@@ -41,8 +41,7 @@ for the degree of \emph{\thedegreename(en)}}
 \committeeorder():={c,r,m}% 
 
 % Cover background images
-% \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
-% \thesiscover(phd,front,image):={}
+% % \thesiscover(phd,front,image):={}
 % \thesiscover(phdplan,front,image):={}
 % \thesiscover(phdprop,front,image):={}
 % \thesiscover(msc,spine,bgcolor):={yellow}

@@ -172,11 +172,6 @@
 %% COVER 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Logo
-% \ntaddtocover[hspace=-1.75pt,align=l,height=2.0cm,inalign=t]{1-1,2-1}{%
-%   \includegraphics[height=2.01cm]{nova-itqb-logo}
-% }
-
 \ntaddtocover{1-1}{%
   % \datamatch{\@nt@margin@top}{margin}({cover,\option{/novathesis/docdegree},#1,top},%
   %                                     {cover,\option{/@nt/document/fallback},#1,top},%
