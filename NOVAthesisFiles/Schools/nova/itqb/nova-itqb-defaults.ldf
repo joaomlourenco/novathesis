@@ -53,7 +53,7 @@
 % \thesiscover(msc,1-1,image):={nova-itqb-cover}
 % \thesiscover(msc,N-2,image):={nova-itqb-cover-back}
 
-\thesiscover(spine,bgcolor)={\theitqbcolor(\option{/novathesis/covercolor},spine)}
+\thesiscover(spine,bgcolor)={\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},spine)}
 
 
 
@@ -206,7 +206,7 @@
                             {\includegraphics[height=2.01cm]{nova-itqb-logo}};
     % Date at top-right
     \node [inner sep=0pt,anchor=north east,
-           color={\expanded{\theitqbcolor(\option{/novathesis/covercolor},front,date)}},
+           color={\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},front,date)}},
            xshift=\paperwidth-0.9cm-\@nt@margin@left,
            yshift=-2.2cm]
                            {\rotatebox{90}{\makebox[0pt][l]{%
@@ -253,7 +253,7 @@
                            {\fontsize{14}{14}\selectfont
                            \mbox{O}eiras, \thentdocdate(month), \thentdocdate(year)};
     % Rectangle
-    \fill [xshift=-\@nt@margin@left, {\expanded{\theitqbcolor(\option{/novathesis/covercolor},front,rectangle)}}]
+    \fill [xshift=-\@nt@margin@left, {\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},front,rectangle)}}]
                    (\therectangle(itqb,left),{\therectangle(itqb,top)})
                 -- (\therectangle(itqb,right),{\therectangle(itqb,top)})
                 -- (\therectangle(itqb,right),{\therectangle(itqb,bottom)})
@@ -274,7 +274,7 @@
   \setbox0=\hbox{\scalebox{2}{\bfseries\thentdocdate(year)}}
   \begin{tikzpicture}[remember picture, overlay, shift=(current page.north west)]
     % Filling back cover
-    \fill [color={\expanded{\theitqbcolor(\option{/novathesis/covercolor},back)}}]
+    \fill [color={\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},back)}}]
                 (0,0) rectangle (\paperwidth,-\paperheight);
     % Logo above rectangle
     \node [inner sep=0pt,anchor=north west,xshift=1.1cm,yshift=-23.85cm]
@@ -290,7 +290,7 @@
       % Text in rectangle
       \node [inner sep=0pt, anchor=east, 
              xshift=-{\@nt@margin@left+1mm}, yshift={\therectangle(itqb,top)-0.65cm},
-             color={\theitqbcolor(\option{/novathesis/covercolor},back,text)}] 
+             color={\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},back,text)}]
                   {\fontsize{11}{11}\selectfont
                   \theschool(address)};
     \end{scope}

@@ -25,7 +25,7 @@
 \options{/@nt/langshorttolong=\option{/novathesis/copyrightlang}}
 
 \PassOptionsToPackage{lang=\option{/@nt/langshorttolong}}{doclicense}
-\PassOptionsToPackage{modifier=\option{/novathesis/copyrightmodifier}}{doclicense}
+\PassOptionsToPackage{modifier=\option{/novathesis/uminho/copyrightmodifier}}{doclicense}
 
 %%%%%%%%% Important package for the licensing. 
 \RequirePackage[
