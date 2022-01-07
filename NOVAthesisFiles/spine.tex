@@ -92,7 +92,7 @@
   \sffamily%
   \footnotesize%
   \newlength{\novathesis@spinewidth}%
-  \setlength{\novathesis@spinewidth}{1mm * (\thelastsheet+ 19) / 20}%
+  \setlength{\novathesis@spinewidth}{\dimexpr1mm * (\thelastsheet+ 19) / 20}%
   \ifdim\novathesis@spinewidth < 6mm% Force book spine to be at least 6mm
     \setlength{\novathesis@spinewidth}{6mm}%
   \fi%
@@ -244,7 +244,7 @@
     % print author
     \ifdatadefined{spine}(author){%
       \datamatchtf{\@node@fillcolor}{spine}({box,author,color},{box,color}){}{\def\@node@fillcolor{none}}%
-      \node[inner sep=0, anchor=north, yshift=-(\expanded{\thespine(box,author,top)})
+      \node[inner sep=0, anchor=north, yshift=-(\dimexpr\expanded{\thespine(box,author,top)})
             , rectangle, minimum width=\novathesis@boxwidth, minimum height=\expanded{\thespine(box,author,len)}
             , fill=\@node@fillcolor]
            at (current page.north)
@@ -253,7 +253,7 @@
     % print title
     \ifdatadefined{spine}(title){%
       \datamatchtf{\@node@fillcolor}{spine}({box,title,color},{box,color}){}{\def\@node@fillcolor{none}}%
-      \node[inner sep=0, anchor=north, yshift=-(\expanded{\thespine(box,title,top)})
+      \node[inner sep=0, anchor=north, yshift=-(\dimexpr\expanded{\thespine(box,title,top)})
             , rectangle, minimum width=\novathesis@boxwidth, minimum height=\expanded{\thespine(box,title,len)}
             , fill=\@node@fillcolor]
            at (current page.north) 
@@ -262,7 +262,7 @@
     % print degree IF DEFINED
     \ifoptionvoid{/novathesis/degreeacr}{}{%
       \datamatchtf{\@node@fillcolor}{spine}({box,degreeacr,color},{box,color}){}{\def\@node@fillcolor{none}}%
-      \node[inner sep=0,anchor=north, yshift=-(\expanded{\thespine(box,degreeacr,top)})
+      \node[inner sep=0,anchor=north, yshift=-(\dimexpr\expanded{\thespine(box,degreeacr,top)})
             , rectangle,minimum width=\novathesis@boxwidth, minimum height=\expanded{\thespine(box,degreeacr,len)}
             , fill=\@node@fillcolor]
            at (current page.north)
@@ -271,7 +271,7 @@
     % print date
     \ifdatadefined{spine}(date){%
       \datamatchtf{\@node@fillcolor}{spine}({box,date,color},{box,color}){}{\def\@node@fillcolor{none}}%
-      \node[inner sep=0,anchor=north, yshift=-(\expanded{\thespine(box,date,top)})
+      \node[inner sep=0,anchor=north, yshift=-(\dimexpr\expanded{\thespine(box,date,top)})
             , rectangle,minimum width=\novathesis@boxwidth, minimum height=\expanded{\thespine(box,date,len)}
             , fill=\@node@fillcolor]
            at (current page.north)

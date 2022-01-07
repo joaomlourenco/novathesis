@@ -535,7 +535,7 @@
   , linkscolor/.new cmd           = {\@ifpackageloaded{hyperref}%
                                        {\hypersetup{allcolors=#1}}%
                                        {\PassOptionsToPackage{allcolors=#1}{hyperref}}}
-  , degreeacr/.new value          = {none}
+  , degreeacr/.new value          = {}
 % nova/itqb
   , nova/itqb/covercolor/.new choice        = {gray, green}
 % uminho
