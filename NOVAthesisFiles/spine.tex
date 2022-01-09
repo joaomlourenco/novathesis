@@ -68,7 +68,10 @@
   \spine(text,title,len)={\dimexpr\thespine(box,title,len)-\thespine(box,margin)-\thespine(box,margin)}
 }{}
 \ifoptionvoid{/novathesis/degreeacr}{}{%
-  \spine(text,degreeacr,len)={\dimexpr\thespine(box,degreeacr,len)-\thespine(box,margin)-\thespine(box,margin)}
+  \ifdatadefined{spine}(box,degreeacr,len){%
+    \spine(text,degreeacr,len)=%
+      {\dimexpr\thespine(box,degreeacr,len)-\thespine(box,margin)-\thespine(box,margin)}
+  }{}%
 }
 \ifdatadefined{spine}(date){%
   \spine(text,date,len)={\dimexpr\thespine(box,date,len)-\thespine(box,margin)-\thespine(box,margin)}
@@ -146,6 +149,7 @@
   \ifoptionvoid{/novathesis/degreeacr}{}{%
     \defifundef{\mydegreeacrbox}{\newsavebox}%%
     \begin{lrbox}{\mydegreeacrbox}%
+      \ifdatadefined{spine}(box,degreeacr,len){%
           \@spinetextalin{degreeacr}%
           \@spinetextcolor{degreeacr}%
           \ifdatadefined{degreeacr}(\option{/novathesis/degreeacr}){%
@@ -153,6 +157,7 @@
           }{%
             \fitboxprint{\@fbratio}{\MakeTextUppercase{\option{/novathesis/degreeacr}}}%
           }
+      }{}%
     \end{lrbox}%
   }%
   
@@ -261,12 +266,15 @@
     }{}
     % print degree IF DEFINED
     \ifoptionvoid{/novathesis/degreeacr}{}{%
-      \datamatchtf{\@node@fillcolor}{spine}({box,degreeacr,color},{box,color}){}{\def\@node@fillcolor{none}}%
-      \node[inner sep=0,anchor=north, yshift=-(\dimexpr\expanded{\thespine(box,degreeacr,top)})
-            , rectangle,minimum width=\novathesis@boxwidth, minimum height=\expanded{\thespine(box,degreeacr,len)}
-            , fill=\@node@fillcolor]
-           at (current page.north)
-              {\rotatebox{\thespine(text,angle)}{\usebox{\mydegreeacrbox}}};
+      \ifdatadefined{spine}(box,degreeacr,len){%
+        \datamatchtf{\@node@fillcolor}%
+                    {spine}({box,degreeacr,color},{box,color}){}{\def\@node@fillcolor{none}}%
+        \node[inner sep=0,anchor=north, yshift=-\dimexpr\expanded{\thespine(box,degreeacr,top)}
+              , rectangle,minimum width=\novathesis@boxwidth, minimum height=\expanded{\thespine(box,degreeacr,len)}
+              , fill=\@node@fillcolor]
+             at (current page.north)
+                {\rotatebox{\thespine(text,angle)}{\usebox{\mydegreeacrbox}}};
+      }{}%
     }
     % print date
     \ifdatadefined{spine}(date){%
