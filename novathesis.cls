@@ -558,9 +558,9 @@
     \typeout{NTSETUP2 \@ntopt == \@ntval}%
     \ifoptiondefined{/novathesis/\@ntopt}%
                     {\options{/novathesis/#1}}%
-                    {\ifoptiondefine{\options{/novathesis/\@ntsetuplevel/\@ntopt}}%
-                                    {\options{/novathesis/\@ntsetuplevel/#1}}%
-                                    {\ClassError{Invalid class option: \ntopt}{}{}}}%
+                    {\ifoptiondefined{\options{/novathesis/\@ntsetuplevel/\@ntopt}}%
+                                     {\options{/novathesis/\@ntsetuplevel/#1}}%
+                                     {\ClassError{Invalid class option: \ntopt}{}{}}}%
   }%
 }
 
@@ -908,7 +908,9 @@
 
 \ntfor\match:={\@nt@univ/\@nt@schl/\@nt@univ-\@nt@schl-\option{/novathesis/degreeacr},%
               \@nt@univ/\@nt@schl/\@nt@univ-\@nt@schl}\do{%
-  \InputIfFileExists{NOVAthesisFiles/Schools/\match-defaults.ldf}{\ntforbreak}{}%
+  \IfFileExists{NOVAthesisFiles/Schools/\match-defaults.ldf}
+        {\input{NOVAthesisFiles/Schools/\match-defaults.ldf}\ntforbreak}{}
+  % \InputIfFileExists{NOVAthesisFiles/Schools/\match-defaults.ldf}{\ntforbreak}{}%
 }[\PackageWarning{novathesis}{Missing file “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl-defaults.ldf”}]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1531,7 +1533,7 @@
   \persongrouppost():={\\[-6pt]}
   \committeetitlestringpre():={&}%
   \committeetitlestringpost():={\\[7pt]}%
-  \begin{tabularx}{#2\linewidth}[t]{@{}r@{~~}X@{}}%
+  \begin{tabularx}{#2\linewidth}[t]{@{}r@{~~}>{\raggedright\arraybackslash}X@{}}%
     \ifdatadefined{#3titlestring}(\option{/novathesis/coverlang}){%
       \datadefault{#3titlestringpre}()%
       \datadefault{#3titlestringfont}()%
@@ -1589,7 +1591,7 @@
       \csuse{the#2remainderpre}()%
       \bgroup%
         \csuse{the#2remainderfont}()%
-        \ignorespaces\@nt@remainder%
+        \ignorespaces\raggedright\@nt@remainder%
       \egroup%
       \csuse{the#2remainderpost}()%
     }%
