@@ -8,6 +8,12 @@
 
 \typeout{NT FILE packages.tex}%
 
+\ifxetexorluatex
+  % xelatex or lualatex
+  \RequirePackage{fontspec}%
+  \defaultfontfeatures{Ligatures=TeX}
+\fi
+
 % Load additional symbols
 % \RequirePackage[full]{textcomp}
 
