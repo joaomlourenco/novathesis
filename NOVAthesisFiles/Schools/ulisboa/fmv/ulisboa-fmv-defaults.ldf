@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ulisboa/fmv/defaults.ldf
+%% ulisboa/fmv/ulisboa-fmv-defaults.ldf
 %% NOVA thesis configuration file
 %%
 %% Customization for ULISBOA-FMV (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE ulisboa/fmv/defaults.ldf}%
+\typeout{NT FILE ulisboa/fmv/ulisboa-fmv-defaults.ldf}%
 
 
 % --------------------------------------------------------
@@ -26,14 +26,6 @@
 \doctype(pt,msc):={Dissertação de Mestrado em}
 \doctype(en,msc):={Master Thesis in}
 
-\newdata{docemxadate}
-\def\ulfmvdocemxadate(#1)#2{\docemxadate(#1):={#2}}
-
-\newdata{scientificarea}
-\def\ulfmvscientificarea#1{\scientificarea(#1):={}}
-
-\newdata{availability}
-\def\ulfmvavailability(#1)#2{\availability(#1):={#2}}
 
 % --------------------------------------------------------
 \specializationstring(pt):={na especialidade de}
@@ -81,14 +73,14 @@
 \spine(box,author,top)={2.0cm}
 \spine(box,author,len)={4.0cm}
 
-\spine(box,title,top)={\dimexpr\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
+\spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
 \spine(box,title,len)={16.7cm}
 
-\spine(box,logo,top)={\dimexpr\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
+\spine(box,logo,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
 \spine(box,logo,len)={2.1cm}
 \spine(box,logo,align)={c}
 
-\spine(box,date,top)={\dimexpr\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
+\spine(box,date,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
 \spine(box,date,len)={2.0cm}
 
 

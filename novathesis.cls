@@ -99,6 +99,18 @@
 \newcommand{\ifxeorlua}{\ifthenelse{\boolean{luatex}\OR\boolean{xetex}}}
 \newcommand{\ifxetexorluatex}{\iftutex}
 
+\ifxetexorluatex
+  % xelatex or lualatex
+  \RequirePackage{fontspec}%
+  \defaultfontfeatures{Ligatures=TeX}
+\else% pdflatex
+  %%%%% Configure font encoding
+  \RequirePackage[T1]{fontenc}    % Use new T1 fonts
+
+  %%%%% Configure input encoding
+  \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
+\fi
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -153,7 +165,7 @@
   % \typeout{#2(#3)}%
   \ifdatadefinedor{\@match}{#2}(#3)%
            {\protect\xdef#1{\csuse{the#2}(\@match)}#4}%
-           {\xdef#1{datanotfound}#5}%
+           {\protect\xdef#1{}#5}%
 }
 
 % --------------------------------------------------------
@@ -474,11 +486,14 @@
 \newdata{margin}
 \newdata{frontpageimage}
 
-\newcommand*{\@nt@newmemory}[1]{%
-  \newdata{#1}%
-  \initmemory[\embrace{\MakeUppercase{#1}}]{#1}%
-}
-\forcsvlist{\@nt@newmemory}{university,school,department}
+% \newcommand*{\@nt@newmemory}[1]{%
+%   \newdata{#1}%
+%   % \initmemory[\embrace{\MakeUppercase{#1}}]{#1}%
+% }
+% \forcsvlist{\@nt@newmemory}{university,school,department}
+\newdata{university}
+\newdata{school}
+\newdata{department}
 
 \newdata{doctitle}
 
@@ -537,30 +552,37 @@
                                        {\PassOptionsToPackage{allcolors=#1}{hyperref}}}
   , degreeacr/.new value          = {}
 % nova/itqb
-  , nova/itqb/covercolor/.new choice        = {gray, green}
+  , nova/itqb/covercolor/.new choice      = {gray, green}
 % uminho
-  , uminho/copyrightmodifier/.new choice = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd}
-  , uminho/skipblankcovers/.new toggle = false
+  , uminho/copyrightmodifier/.new choice  = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd}
+  , uminho/skipblankcovers/.new toggle    = false
+% ulisboa/fmv
+  , ulisboa/fmv/examdate/year/.new value      = {\embrace{year}}
+  , ulisboa/fmv/examdate/month/.new value     = {\embrace{month}}
+  , ulisboa/fmv/examdate/day/.new value       = {\embrace{day}}
+  , ulisboa/fmv/scientificarea/.new choice    = {C, MF, PASA, SA}
+  , ulisboa/fmv/embargo/period/.new choice    = {I, 6, 12}
+  , ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.}
+  , ulisboa/fmv/reproduction/.new choice      = {I, P, N}
 }
-
 
 
 % --------------------------------------------------------
 % PROCESSING CLASS OPTIONS
 \options@ProcessOptions{/novathesis}
 % --------------------------------------------------------
-% NTSETUP
+% NTSETUP2
 \def\@ntsetuplevel{}
 \newcommand*{\ntsetup}[1]{%
-  \typeout{NTSETUP #1}%
-  \ntfor\arg:=#1\do{%
+  % \typeout{NTSETUP #1}%
+  \ntfor\arg:={#1}\do{%
     \StrCut{\arg}{=}{\@ntopt}{\@ntval}%
-    \typeout{NTSETUP2 \@ntopt == \@ntval}%
+    % \typeout{NTSETUP2 [\@ntopt] = [\@ntval]}%
     \ifoptiondefined{/novathesis/\@ntopt}%
                     {\options{/novathesis/#1}}%
-                    {\ifoptiondefined{\options{/novathesis/\@ntsetuplevel/\@ntopt}}%
-                                     {\options{/novathesis/\@ntsetuplevel/#1}}%
-                                     {\ClassError{Invalid class option: \ntopt}{}{}}}%
+                    {\ifoptiondefined{/novathesis/\@ntsetuplevel\@ntopt}%
+                                     {\options{/novathesis/\@ntsetuplevel#1}}%
+                                     {\ClassError{Invalid class option: \@ntopt}{}{}}}%
   }%
 }
 
@@ -675,7 +697,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % --------------------------------------------------------
 % Department
-\def\ntdepartment(#1)#2{\department(#1):={#2}}
+\def\ntdepartment(#1)#2{\ifdatadefined{department}(#1){}{\department(#1):={#2}}}
 
 % --------------------------------------------------------
 % Degree
@@ -899,10 +921,6 @@
              {\def\@ntsetuplevel{\@nt@univ/}\InputIfFileExists{Config/9_\@nt@univ.tex}{}{}}
 \def\@ntsetuplevel{}
 
-% \@for\match:={\@nt@univ/\@nt@univ,\@nt@univ/\@nt@schl/\@nt@univ-\@nt@schl}\do{%
-% \InputIfFileExists{NOVAthesisFiles/Schools/\match-defaults.ldf}{}%
-%     {\PackageWarning{novathesis}{Missing file “\match-defaults.ldf”}}
-% }
 \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@univ-defaults.ldf}{}
                   {\PackageWarning{novathesis}{Missing file “/\@nt@univ/\@nt@univ-defaults.ldf”}}
 
