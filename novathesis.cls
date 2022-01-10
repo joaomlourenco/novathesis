@@ -100,9 +100,6 @@
 \newcommand{\ifxetexorluatex}{\iftutex}
 
 \ifxetexorluatex
-  % xelatex or lualatex
-  \RequirePackage{fontspec}%
-  \defaultfontfeatures{Ligatures=TeX}
 \else% pdflatex
   %%%%% Configure font encoding
   \RequirePackage[T1]{fontenc}    % Use new T1 fonts
