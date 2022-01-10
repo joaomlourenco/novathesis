@@ -54,18 +54,18 @@
 \margin(cover,right):={2.5cm}
 
 
-\dissertationstring(bsc,pt)={Relatório para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstring(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstring(msc,pt)={Dissertação de natureza científica para obtenção do grau de  %
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstring(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstring(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
-\dissertationstring(phd,pt)={Dissertação para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+% \dissertationstring(bsc,pt)={Relatório para obtenção do Grau de %
+% \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+% \dissertationstring(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
+% \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+% \dissertationstring(msc,pt)={Dissertação de natureza científica para obtenção do grau de  %
+% \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+% \dissertationstring(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
+% \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+% \dissertationstring(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
+% \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+% \dissertationstring(phd,pt)={Dissertação para obtenção do Grau de %
+% \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
 \copyrighttextstring(pt)={O \theschool(\option{/novathesis/coverlang})\ e o \theuniversity(\option{/novathesis/coverlang})\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
 
 \copyrighttextstring(en)={The \theschool(\option{/novathesis/coverlang})\ and the \theuniversity(\option{/novathesis/coverlang})\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
@@ -134,20 +134,28 @@
 }
 
 % Advisers
-\ntaddtocover[vspace=2]{1-1,2-1}{%
-  \adviserstringfont(a):={\bfseries}%
-  \adviserstringfont(c):={\bfseries}%
-  \fontsize{11}{11}\selectfont%
-  \ntprintpersons{0.9}{2}{adviser}{a,c}%
-}
+% \ntaddtocover[vspace=2]{1-1,2-1}{%
+%   \adviserstringfont(a):={\bfseries}%
+%   \adviserstringfont(c):={\bfseries}%
+%   \fontsize{11}{11}\selectfont%
+%   \ntprintpersons{0.9}{2}{adviser}{a,c}%
+% }
 
 
 % Committee — only print the committee for the main classes
-\ntaddtocover[vspace=0]{1-1,2-1}{%
+\ntaddtocover[vspace=2]{1-1,2-1}{%
   \ifmaindoc{%
     \committeetitlestringfont():={\fontsize{14}{14}\selectfont\bfseries}%
     \committeestringfont():={\bfseries}%
-    \fontsize{11}{11}\selectfont\ntprintpersons{1}{2}{committee}{\thecommitteeorder()}%
+    \fontsize{11}{11}\selectfont
+    \begin{minipage}[t]{0.48\textwidth}
+        \ifdocfinal{\ntprintpersons{1}{1}{committee}{\thecommitteeorder()}\mbox{}}{\mbox{}}%
+    \end{minipage}%
+    \hfill%
+    \adviserstringfont():={\bfseries}%
+    \begin{minipage}[t]{0.48\textwidth}
+      \ntprintpersons{1}{1}{adviser}{a,c}%
+    \end{minipage}%
   }%
   {}%
 }

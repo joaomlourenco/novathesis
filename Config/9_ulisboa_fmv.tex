@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ulisboa/fmv/defaults.ldf
+%% Config/9_ulisboa_fmv.ldf
 %% NOVA thesis configuration file
 %%
 %% Customization for ULISBOA-FMV
@@ -10,32 +10,29 @@
 %------------------------------------------------------------
 
 % The standard citation commands in ULISBOA-FMV are 
-% \textcite which yields “Author (year)”; and
-% \parencite which yields “(Author, year)”
+%     \textcite which yields “Author (year)”; and
+%     \parencite which yields “(Author, year)”
 
-% The date of the exam
-\ulfmvdocemxadate(year){\embrace{ano}}
-\ulfmvdocemxadate(month){\embrace{mês}}
-\ulfmvdocemxadate(day){\embrace{dia}}
-
-% Scientifica area
-%      C = Clinica
-%     MF = Produção Animal e Segurança Alimentar
-%   PASA = Morfologia e Função
-%     SA = Sanidade Animal
-\ulfmvscientificarea{C}
-
-% Embargo period
-%      I = Immediate
-%      6 = Available after 6 months
-%     12 = Available after 12 months
-\ulfmvavailability(period){I}
-
-% Embargo justification (only relevant if embargo period above is 6 or 12)
-\ulfmvavailability(justification){Motivo do embargo temporário.}
-
-% Copyright
-%      I = Integral
-%      P = partial
-%      N = None
-\ulfmvavailability(reproduction){I}
+% \ntsetup{examdate/year=2099}    % The date of the exam
+% \ntsetup{examdate/month=Fevereiro}
+% \ntsetup{examdate/day=30}
+%
+% \ntsetup{scientificarea=SA}     % Scientific area
+%                                 %      C = Clinica
+%                                 %     MF = Produção Animal e Segurança Alimentar
+%                                 %   PASA = Morfologia e Função
+%                                 %     SA = Sanidade Animal
+%
+% \ntsetup{embargo/period=6}      % Embargo period
+%                                 %      I = Immediate
+%                                 %      6 = Available after 6 months
+%                                 %     12 = Available after 12 months
+%
+% \ntsetup[embargo/justification]{Motivo do embargo temporário.}
+%                                 % Embargo justification (only relevant if embargo period
+%                                 % is above is 6 or 12)
+%
+% \ntsetup{reproduction=P}        % Copyright
+%                                 %      I = Integral
+%                                 %      P = partial
+%                                 %      N = None

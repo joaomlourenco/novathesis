@@ -53,7 +53,7 @@
 % \thesiscover(msc,1-1,image):={nova-itqb-cover}
 % \thesiscover(msc,N-2,image):={nova-itqb-cover-back}
 
-\thesiscover(spine,bgcolor)={\theitqbcolor(\option{/novathesis/covercolor},spine)}
+\thesiscover(spine,bgcolor)={\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},spine)}
 
 
 
@@ -172,10 +172,16 @@
 %% COVER 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Logo
-% \ntaddtocover[hspace=-1.75pt,align=l,height=2.0cm,inalign=t]{1-1,2-1}{%
-%   \includegraphics[height=2.01cm]{nova-itqb-logo}
-% }
+\newcommand{\@resizetowidth}[2]{%
+  \setbox0=\hbox{#2}%
+  \@tempdima=\dimexpr#1%
+  \ifdim\wd0>\@tempdima\relax%
+    \resizebox{\@tempdima}{!}{\box0}%
+  \else
+    \box0%
+  \fi
+}
+
 
 \ntaddtocover{1-1}{%
   % \datamatch{\@nt@margin@top}{margin}({cover,\option{/novathesis/docdegree},#1,top},%
@@ -191,11 +197,11 @@
   %                                    {cover,\option{/@nt/document/fallback},bottom},%
   %                                    {cover,bottom})%
   \datamatch{\@nt@margin@left}{margin}({cover,\option{/novathesis/docdegree},1-1,left},%
-                                     {cover,\option{/@nt/document/fallback},1-1,left},%
-                                      {cover,1-1,left},
-                                     {cover,\option{/novathesis/docdegree},left},%
-                                     {cover,\option{/@nt/document/fallback},left},%
-                                     {cover,left})%
+                                       {cover,\option{/@nt/document/fallback},1-1,left},%
+                                       {cover,1-1,left},
+                                       {cover,\option{/novathesis/docdegree},left},%
+                                       {cover,\option{/@nt/document/fallback},left},%
+                                       {cover,left})%
   % \datamatch{\@nt@margin@right}{margin}({cover,\option{/novathesis/docdegree},#1,right},%
   %                                    {cover,\option{/@nt/document/fallback},#1,right},%
   %                                     {cover,#1,right},
@@ -204,34 +210,30 @@
   %                                    {cover,right})%
     % Text in rectangle
   \setbox0=\hbox{\scalebox{2}{\bfseries\thentdocdate(year)}}
-  \begin{tikzpicture}[remember picture, overlay, shift=(current page.north west),xshift=\@nt@margin@left]
+  \begin{tikzpicture}[remember picture, overlay,
+                      shift=(current page.north west), xshift=\@nt@margin@left]
     % Logo at top-left
-    \node [inner sep=0pt, anchor=north west, 
-           xshift=1.95cm-\@nt@margin@left, yshift=-1.76cm]
-                            {\includegraphics[height=2.01cm]{nova-itqb-logo}};
+    \node [inner sep=0pt, anchor=north west, xshift=1.95cm-\@nt@margin@left, yshift=-1.76cm]
+                    {\includegraphics[height=2.01cm]{nova-itqb-logo}};
     % Date at top-right
-    \node [inner sep=0pt,anchor=north east,
-           color={\expanded{\theitqbcolor(\option{/novathesis/covercolor},front,date)}},
-           xshift=\paperwidth-0.9cm-\@nt@margin@left,
-           yshift=-2.2cm]
-                           {\rotatebox{90}{\makebox[0pt][l]{%
-                                 \raisebox{\dimexpr\ht0+7pt}{\rule{\wd0}{2pt}}}\box0}};
+    \node [inner sep=0pt,anchor=north east, 
+           xshift=\paperwidth-0.9cm-\@nt@margin@left, yshift=-2.2cm,
+           color={\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},front,date)}}]
+                    {\rotatebox{90}{\makebox[0pt][l]%
+                               {\raisebox{\dimexpr\ht0+7pt}{\rule{\wd0}{2pt}}}\box0}};
     % Title
-    \node [inner sep=0pt, anchor=south west,
-           yshift=-6.1cm] 
-                           {\fontsize{21}{21}\selectfont
-                            \parbox{\dimexpr\paperwidth-\@nt@margin@left}{%
-                                 \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}};
+    \node [inner sep=0pt, anchor=south west, yshift=-6.1cm] 
+                    {\fontsize{21}{21}\selectfont%
+                     \parbox{\dimexpr\paperwidth-\@nt@margin@left-\@nt@margin@right}%
+                            {\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}};
     % Subtitle
-    \node [inner sep=0pt, anchor=north west,
-           yshift=-6.7cm] 
-                           {\fontsize{21}{21}\selectfont
-                            \parbox{\dimexpr\paperwidth-\@nt@margin@left}{%
-                                 {\thedoctitle(\option{/novathesis/coverlang},sub)}}};
+    \node [inner sep=0pt, anchor=north west, yshift=-6.7cm] 
+                    {\fontsize{21}{21}\selectfont%
+                     \@resizetowidth{\paperwidth-\@nt@margin@left-\@nt@margin@right}%
+                                    {\thedoctitle(\option{/novathesis/coverlang},sub)}};
     % Author
-    \node [inner sep=0pt, anchor=north west,
-           yshift=-8.0cm] 
-                           {\fontsize{18.5}{18.5}\selectfont\textbf{\thedocauthor(name)}};
+    \node [inner sep=0pt, anchor=north west, yshift=-8.0cm] 
+                    {\fontsize{18.5}{18.5}\selectfont\textbf{\thedocauthor(name)}};
     % Photo
     \edef\@itqbheight{\therectangle(photo,height)}
     \draw [path picture={\node at (path picture bounding box.center)
@@ -240,24 +242,23 @@
                     ({\therectangle(photo,left)},\therectangle(photo,top))
                     rectangle
                     (\expanded{\therectangle(photo,left)+\therectangle(photo,width)},
-                                    \expanded{\therectangle(photo,top)-\therectangle(photo,height)});
+                               \expanded{\therectangle(photo,top)-\therectangle(photo,height)});
     % Title
-    \node [inner sep=0pt,anchor=north west,
-           yshift=-23.75cm] 
-                           {\fontsize{16}{16}\selectfont
-                           \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})};
+    \node [inner sep=0pt,anchor=north west, yshift=-23.75cm] 
+                    {\fontsize{16}{16}\selectfont
+                     \thedissertationstring(\option{/@nt/document/fallback},%
+                                            \option{/novathesis/coverlang})};
     % Title
-    \node [inner sep=0pt,anchor=north west,
-           yshift=-24.75cm] 
-                           {\fontsize{16}{16}\selectfont
-                           \themajorfield(\option{/novathesis/coverlang})};
+    \node [inner sep=0pt,anchor=north west, yshift=-24.75cm] 
+                    {\fontsize{16}{16}\selectfont
+                     \themajorfield(\option{/novathesis/coverlang})};
     % Title
-    \node [inner sep=0pt,anchor=north west,
-           yshift=-26.2cm] 
-                           {\fontsize{14}{14}\selectfont
-                           \mbox{O}eiras, \thentdocdate(month), \thentdocdate(year)};
+    \node [inner sep=0pt,anchor=north west, yshift=-26.2cm] 
+                    {\fontsize{14}{14}\selectfont
+                     \mbox{O}eiras, \thentdocdate(month), \thentdocdate(year)};
     % Rectangle
-    \fill [xshift=-\@nt@margin@left, {\expanded{\theitqbcolor(\option{/novathesis/covercolor},front,rectangle)}}]
+    \fill [xshift=-\@nt@margin@left,
+           \expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},front,rectangle)}]
                    (\therectangle(itqb,left),{\therectangle(itqb,top)})
                 -- (\therectangle(itqb,right),{\therectangle(itqb,top)})
                 -- (\therectangle(itqb,right),{\therectangle(itqb,bottom)})
@@ -265,8 +266,7 @@
                 -- (\therectangle(itqb,left),{\therectangle(itqb,bottom)})}
                 -- cycle {};
     % Text in rectangle
-    \node [inner sep=0pt, anchor=west, 
-           xshift={1mm}, yshift={\therectangle(itqb,top)-0.65cm}] 
+    \node [inner sep=0pt, anchor=west, xshift={1mm}, yshift={\therectangle(itqb,top)-0.65cm}] 
                   {\fontsize{11}{11}\selectfont
                   {\color{white}INSTITUTO DE TECNOLOGIA QUÍMICA E BIOLÓGICA }
                   {\color{itqbgray207}ANTÓNIO XAVIER}
@@ -275,15 +275,14 @@
 }
 
 \ntaddtocover{N-2}{%
-\ntdate{2021,December}
   \setbox0=\hbox{\scalebox{2}{\bfseries\thentdocdate(year)}}
   \begin{tikzpicture}[remember picture, overlay, shift=(current page.north west)]
     % Filling back cover
-    \fill [color={\expanded{\theitqbcolor(\option{/novathesis/covercolor},back)}}]
-                (0,0) rectangle (\paperwidth,-\paperheight);
+    \fill [color={\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},back)}}]
+                    (0,0) rectangle (\paperwidth,-\paperheight);
     % Logo above rectangle
     \node [inner sep=0pt,anchor=north west,xshift=1.1cm,yshift=-23.85cm]
-                            {\includegraphics[height=2.5cm]{nova-itqb-logo-mono}};
+                    {\includegraphics[height=2.5cm]{nova-itqb-logo-mono}};
     \begin{scope}[xscale=-1,xshift=-\paperwidth]
       % Rectangle
       \fill [color=white] (\therectangle(itqb,left),{\therectangle(itqb,top)})
@@ -295,9 +294,9 @@
       % Text in rectangle
       \node [inner sep=0pt, anchor=east, 
              xshift=-{\@nt@margin@left+1mm}, yshift={\therectangle(itqb,top)-0.65cm},
-             color={\theitqbcolor(\option{/novathesis/covercolor},back,text)}] 
-                  {\fontsize{11}{11}\selectfont
-                  \theschool(address)};
+             color={\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},back,text)}]
+                    {\fontsize{11}{11}\selectfont
+                     \theschool(address)};
     \end{scope}
   \end{tikzpicture}
 }

@@ -8,17 +8,10 @@
 
 \typeout{NT FILE packages.tex}%
 
-
 \ifxetexorluatex
   % xelatex or lualatex
   \RequirePackage{fontspec}%
   \defaultfontfeatures{Ligatures=TeX}
-\else% pdflatex
-  %%%%% Configure font encoding
-  \RequirePackage[T1]{fontenc}    % Use new T1 fonts
-
-  %%%%% Configure input encoding
-  \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
 \fi
 
 % Load additional symbols

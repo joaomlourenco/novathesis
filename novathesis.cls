@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-01-02 [6.8.9]
+%% Version 2022-01-10 [6.9.0]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -69,6 +69,7 @@
 %% SOME ESSENTIAL PACKAGES
 %%    Others will be loaded later, in the file “packages.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{xfor}
 \RequirePackage{iftex}
 \RequirePackage{etoolbox}
 \RequirePackage{xifthen}
@@ -97,6 +98,15 @@
 
 \newcommand{\ifxeorlua}{\ifthenelse{\boolean{luatex}\OR\boolean{xetex}}}
 \newcommand{\ifxetexorluatex}{\iftutex}
+
+\ifxetexorluatex
+\else% pdflatex
+  %%%%% Configure font encoding
+  \RequirePackage[T1]{fontenc}    % Use new T1 fonts
+
+  %%%%% Configure input encoding
+  \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
@@ -149,9 +159,10 @@
   % #4 = true branch
   % #5 = false branch
   % Search and match first value from the list, true (found) and not true (not found) branches
+  % \typeout{#2(#3)}%
   \ifdatadefinedor{\@match}{#2}(#3)%
            {\protect\xdef#1{\csuse{the#2}(\@match)}#4}%
-           {\xdef#1{datanotfound}#5}%
+           {\protect\xdef#1{}#5}%
 }
 
 % --------------------------------------------------------
@@ -472,11 +483,14 @@
 \newdata{margin}
 \newdata{frontpageimage}
 
-\newcommand*{\@nt@newmemory}[1]{%
-  \newdata{#1}%
-  \initmemory[\embrace{\MakeUppercase{#1}}]{#1}%
-}
-\forcsvlist{\@nt@newmemory}{university,school,department}
+% \newcommand*{\@nt@newmemory}[1]{%
+%   \newdata{#1}%
+%   % \initmemory[\embrace{\MakeUppercase{#1}}]{#1}%
+% }
+% \forcsvlist{\@nt@newmemory}{university,school,department}
+\newdata{university}
+\newdata{school}
+\newdata{department}
 
 \newdata{doctitle}
 
@@ -516,7 +530,6 @@
   , lang/.new style               = {/novathesis/mainlang=#1, /novathesis/copyrightlang=#1,
                                      /novathesis/coverlang=#1}
   , mainlang/.new choice          = {en, pt, fr, it, de, es}
-  , copyrightmodifier/.new choice = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd}
   , numberallpages/.new toggle    = false
   , printfrontmatter/.new toggle  = true
   , printadviser/.new toggle      = true     % fake option - adviser should always be printed
@@ -534,21 +547,40 @@
   , linkscolor/.new cmd           = {\@ifpackageloaded{hyperref}%
                                        {\hypersetup{allcolors=#1}}%
                                        {\PassOptionsToPackage{allcolors=#1}{hyperref}}}
-% nova/ims
-  , degreeacr/.new value          = {},
+  , degreeacr/.new value          = {}
 % nova/itqb
-  , covercolor/.new choice        = {gray, green}
+  , nova/itqb/covercolor/.new choice      = {gray, green}
+% uminho
+  , uminho/copyrightmodifier/.new choice  = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd}
+  , uminho/skipblankcovers/.new toggle    = false
+% ulisboa/fmv
+  , ulisboa/fmv/examdate/year/.new value      = {\embrace{year}}
+  , ulisboa/fmv/examdate/month/.new value     = {\embrace{month}}
+  , ulisboa/fmv/examdate/day/.new value       = {\embrace{day}}
+  , ulisboa/fmv/scientificarea/.new choice    = {C, MF, PASA, SA}
+  , ulisboa/fmv/embargo/period/.new choice    = {I, 6, 12}
+  , ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.}
+  , ulisboa/fmv/reproduction/.new choice      = {I, P, N}
 }
-
 
 
 % --------------------------------------------------------
 % PROCESSING CLASS OPTIONS
 \options@ProcessOptions{/novathesis}
 % --------------------------------------------------------
-% NTSETUP
+% NTSETUP2
+\def\@ntsetuplevel{}
 \newcommand*{\ntsetup}[1]{%
-    \options{/novathesis/#1}%
+  % \typeout{NTSETUP #1}%
+  \ntfor\arg:={#1}\do{%
+    \StrCut{\arg}{=}{\@ntopt}{\@ntval}%
+    % \typeout{NTSETUP2 [\@ntopt] = [\@ntval]}%
+    \ifoptiondefined{/novathesis/\@ntopt}%
+                    {\options{/novathesis/#1}}%
+                    {\ifoptiondefined{/novathesis/\@ntsetuplevel\@ntopt}%
+                                     {\options{/novathesis/\@ntsetuplevel#1}}%
+                                     {\ClassError{Invalid class option: \@ntopt}{}{}}}%
+  }%
 }
 
 \newcommand*{\ntbibsetup}[1]{%
@@ -644,6 +676,7 @@
 %       configuration file “Config/1_novathesis.tex”
 %============================================================
 \input{Config/1_novathesis}
+\options{/@nt/document/fallback=\option{/novathesis/docdegree}}
 % \NTRunHook{novathesis}
 
 %============================================================
@@ -661,12 +694,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % --------------------------------------------------------
 % Department
-\def\ntdepartment(#1)#2{\department(#1):={#2}}
+\def\ntdepartment(#1)#2{\ifdatadefined{department}(#1){}{\department(#1):={#2}}}
 
 % --------------------------------------------------------
 % Degree
 \def\ntmajorfield(#1)#2{\majorfield(#1):={#2}}
 \def\ntdegreename(#1)#2{%
+  % #1 = lang
+  % #2 = value
   \datamatch{\match}{degreenameprefix}(%
                         {\option{/novathesis/docdegree},\option{/novathesis/coverlang}},%
                         {\option{/@nt/document/fallback},\option{/novathesis/coverlang}},%
@@ -856,23 +891,42 @@
   % #1 = cover atrtibutes
   % #2 = the block code
   % #3 = covers where the code block should be applied
-  \options{/@nt/cover/\@nt@univ/\@nt@schl/#3/.cpush={{#1}=*={#2}}}%
+  \ntfor\arg:={#3}\do{%
+  % \edef\xyz{/@nt/cover/\@nt@univ/\@nt@schl/\arg}
+  % \show\xyz
+    \options{/@nt/cover/\@nt@univ/\@nt@schl/\arg/.cpush={{#1}=*={#2}}}%
+  }%
 }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING SCHOOLS's “defaults.ldf”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\@for\match:={\@nt@univ,\@nt@univ/\@nt@schl}\do{%
+\ntfor\match:={\@nt@univ,\@nt@univ/\@nt@schl}\do{%
   \IfFileExists{NOVAthesisFiles/Schools/\match/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
       \prependtographicspath{{NOVAthesisFiles/Schools/\match/Images/}}%
   }{}%
 }
 
-\@for\match:={\@nt@univ/\@nt@univ,\@nt@univ/\@nt@schl/\@nt@univ-\@nt@schl}\do{%
-\InputIfFileExists{NOVAthesisFiles/Schools/\match-defaults.ldf}{}%
-    {\PackageWarning{novathesis}{Missing file “\match-defaults.ldf”}}
-}
+
+%============================================================
+%  UNIVERSITY/SCHOOL SPECIFIC MATERIALS
+%  configuration file “Config/9_<university>_<school>.tex”
+%============================================================
+\IfFileExists{Config/9_\@nt@univ_\@nt@schl.tex}
+             {\def\@ntsetuplevel{\@nt@univ/\@nt@schl/}\input{Config/9_\@nt@univ_\@nt@schl.tex}}
+             {\def\@ntsetuplevel{\@nt@univ/}\InputIfFileExists{Config/9_\@nt@univ.tex}{}{}}
+\def\@ntsetuplevel{}
+
+\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@univ-defaults.ldf}{}
+                  {\PackageWarning{novathesis}{Missing file “/\@nt@univ/\@nt@univ-defaults.ldf”}}
+
+\ntfor\match:={\@nt@univ/\@nt@schl/\@nt@univ-\@nt@schl-\option{/novathesis/degreeacr},%
+              \@nt@univ/\@nt@schl/\@nt@univ-\@nt@schl}\do{%
+  \IfFileExists{NOVAthesisFiles/Schools/\match-defaults.ldf}
+        {\input{NOVAthesisFiles/Schools/\match-defaults.ldf}\ntforbreak}{}
+  % \InputIfFileExists{NOVAthesisFiles/Schools/\match-defaults.ldf}{\ntforbreak}{}%
+}[\PackageWarning{novathesis}{Missing file “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl-defaults.ldf”}]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING MEMOIR
@@ -934,14 +988,6 @@
 %============================================================
 \AtEndPreamble{\makeatletter\input{Config/6_list_of}}
 % \NTRunHook{list_of}
-
-%============================================================
-%  UNIVERSITY/SCHOOL SPECIFIC MATERIALS
-%   Please open and edit the appropriate
-%       configuration file “Config/9_<university>_<school>.tex”
-%============================================================
-\IfFileExists{Config/9_\@nt@univ_\@nt@schl.tex}{\input{Config/9_\@nt@univ_\@nt@schl.tex}}
-    {\InputIfFileExists{Config/9_\@nt@univ.tex}{}{}}
 
 \ifdocunset{\ntsetup{docstatus=working}}{}
 \ifdocfinal{\ntsetup{printcommittee=true}}{}
@@ -1005,25 +1051,28 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\debuggrid}[1][orange]{%
-  \datamatch{\@nt@margin@top}{margin}({cover,\option{/novathesis/docdegree},#1,top},%
+  \datamatch{\@nt@margin@top}{margin}(%
+                                      {cover,\option{/novathesis/docdegree},#1,top},%
                                       {cover,\option{/@nt/document/fallback},#1,top},%
                                       {cover,#1,top},%
-                                      {cover,\option{/novathesis/docdegree},top},%
                                       {cover,\option{/@nt/document/fallback},top},%
                                       {cover,top})%
-  \datamatch{\@nt@margin@bottom}{margin}({cover,\option{/novathesis/docdegree},#1,bottom},%
+  \datamatch{\@nt@margin@bottom}{margin}(%
+                                      {cover,\option{/novathesis/docdegree},#1,bottom},%
                                       {cover,\option{/@nt/document/fallback},#1,bottom},%
-                                      {cover,\option{/novathesis/docdegree},bottom},%
                                       {cover,#1,bottom},%
+                                      {cover,\option{/novathesis/docdegree},bottom},%
                                       {cover,\option{/@nt/document/fallback},bottom},%
                                       {cover,bottom})%
-  \datamatch{\@nt@margin@left}{margin}({cover,\option{/novathesis/docdegree},#1,left},%
+  \datamatch{\@nt@margin@left}{margin}(%
+                                      {cover,\option{/novathesis/docdegree},#1,left},%
                                       {cover,\option{/@nt/document/fallback},#1,left},%
                                       {cover,#1,left},%
                                       {cover,\option{/novathesis/docdegree},left},%
                                       {cover,\option{/@nt/document/fallback},left},%
                                       {cover,left})%
-  \datamatch{\@nt@margin@right}{margin}({cover,\option{/novathesis/docdegree},#1,right},%
+  \datamatch{\@nt@margin@right}{margin}(%
+                                      {cover,\option{/novathesis/docdegree},#1,right},%
                                       {cover,\option{/@nt/document/fallback},#1,right},%
                                       {cover,#1,right},%
                                       {cover,\option{/novathesis/docdegree},right},%
@@ -1047,25 +1096,31 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PRINT DOCUMENT PARTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\ifocverdefined}[3][1-1]{%
+\newcommand*{\ifcoverdefined}[3][1-1]{%
   % #1 = cover number
   % #2 = true branch
   % #3 = false branch
+  % \edef\asd{/@nt/cover/\@nt@univ/\@nt@schl/#1}
+  % \show\asd
   \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{#2}{%
-    \datamatchtf{\match}{thesiscover}({\option{/novathesis/docdegree},#1,bgcolor}%
+    \datamatchtf{\match}{thesiscover}(%
+                                      {\option{/novathesis/docdegree},#1,bgcolor}%
                                      ,{\option{/@nt/document/fallback},#1,bgcolor}%
                                      ,{#1,bgcolor}%
+                                     ,{bgcolor}%
                                      ,{\option{/novathesis/docdegree},#1,image}%
                                      ,{\option{/@nt/document/fallback},#1,image}%
-                                     ,{#1,image},{image}){#2}{#3}%
+                                     ,{#1,image}%
+                                     ,{image}%
+    ){#2}{}%
   }%
 }
 
 \newcommand{\ntprintbackcover}{%
-  \ifocverdefined[N-1]{%
+  \ifcoverdefined[N-1]{%
     \pdfbookmark[-1]{\thebackmatterbkmstring(\option{/novathesis/coverlang})}{bmbackmatter}%
   }{%
-    \ifocverdefined[N-2]{%
+    \ifcoverdefined[N-2]{%
       \pdfbookmark[-1]{\thebackmatterbkmstring(\option{/novathesis/coverlang})}{bmbackmatter}%
     }{}%
   }%
@@ -1080,16 +1135,12 @@
 
 \newcommand{\ntprintcoverpair}[1]{%
   % #1 = major cover ID
-  \IfStrEq{#1}{2}{%
-    \iftoggle{/novathesis/secondcover}{%
-      \ntprintcoversingle{#1}{1}%
-      \ntprintcoversingle{#1}{2}%
-    }{}%
-  }{%
-    \ntprintcoversingle{#1}{1}%
-    \ntprintcoversingle{#1}{2}%
-  }%
-  \clearforchapter%
+  \IfStrEqCase{#1}{%
+    {1}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}\clearforchapter}%
+    {2}{\iftoggle{/novathesis/secondcover}
+                 {\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}\clearforchapter}{}}%
+    {N}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}}%
+  }[\ClassWarning{Invalid cover number: #1}{}]%
 }
 
 \newcommand{\ntprintcoversingle}[2]{%
@@ -1101,60 +1152,72 @@
     \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{cleared}\cleartoevenpage}}{\clearpage}%
   }{}%
   \IfStrEq{#1-#2}{2-1}{\setcounter{page}{1}}{}%
-  \ifocverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}%
+  \edef\@cvn{#1-#2}
+  \edef\@cvnonetwo{1-2}
+  \edef\@cvnNone{N-1}
+  \ifx\@cvn\@cvnonetwo\relax
+    \iftoggle{/novathesis/uminho/skipblankcovers}{}
+                       {\ifcoverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}}%
+  \else\ifx\@cvn\@cvnNone\relax
+    \iftoggle{/novathesis/uminho/skipblankcovers}{}
+                       {\ifcoverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}}%
+  \else
+    \ifcoverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}%a
+  \fi\fi
 }
 
 \newcommand{\@ntprintcover@i}[1]{%
   % #1 = cover ID (major-minor)
-  \bgroup%
-    \NTRunHook{cover/#1/pre}
-    \datamatchtf{\match}{thesiscover}({\option{/novathesis/docdegree},#1,textcolor},%
-                                      {\option{/@nt/document/fallback},#1,textcolor},%
-                                      {#1,textcolor},{textcolor})%
-                {\color{\match}}{}%
+  \begingroup%
+    \NTRunHook{cover/#1/pre}%
+    \datamatchtf{\match}{thesiscover}(%
+                         {\option{/novathesis/docdegree},#1,textcolor}%
+                        ,{\option{/@nt/document/fallback},#1,textcolor}%
+                        ,{#1,textcolor}%
+                        ,{textcolor}%
+    ){\color{\match}}{}%
     \ntselectlang{\option{/novathesis/coverlang}}%
     \options{/@ntcoveropts/bookmark=#1}%
     \ifoptionequal{/@ntcoveropts/bookmark}{}{}{%
       \pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
     }%
     \@ntmakeboxwithcover{#1}{\@fullcover@box}%
-    \newpage%
-    \NTRunHook{cover/#1/post}
-  \egroup%
+    \NTRunHook{cover/#1/post}%
+  \endgroup%
 }
 
 \newcommand{\@ntmakeboxwithcover}[2]{%
   % #1 = cover ID (major-minor)
   % #2 = box name
   \datamatch{\@nt@margin@top}{margin}(%
-                      {\option{/novathesis/docdegree},#1,top},%
+                      {cover,\option{/novathesis/docdegree},#1,top},%
                       {cover,\option{/@nt/document/fallback},#1,top},%
                       {cover,#1,top},%
                       {cover,\option{/novathesis/docdegree},top},%
                       {cover,\option{/@nt/document/fallback},top},%
                       {cover,top})%
   \datamatch{\@nt@margin@bottom}{margin}(%
-                      {\option{/novathesis/docdegree},#1,bottom},%
+                      {cover,\option{/novathesis/docdegree},#1,bottom},%
                       {cover,\option{/@nt/document/fallback},#1,bottom},%
                       {cover,#1,bottom},%
                       {cover,\option{/novathesis/docdegree},bottom},%
                       {cover,\option{/@nt/document/fallback},bottom},%
                       {cover,bottom})%
   \datamatch{\@nt@margin@left}{margin}(%
-                      {\option{/novathesis/docdegree},#1,left},%
+                      {cover,\option{/novathesis/docdegree},#1,left},%
                       {cover,\option{/@nt/document/fallback},#1,left},%
                       {cover,#1,left},%
                       {cover,\option{/novathesis/docdegree},left},%
                       {cover,\option{/@nt/document/fallback},left},%
                       {cover,left})%
   \datamatch{\@nt@margin@right}{margin}(%
-                      {\option{/novathesis/docdegree},#1,right},%
+                      {cover,\option{/novathesis/docdegree},#1,right},%
                       {cover,\option{/@nt/document/fallback},#1,right},%
                       {cover,#1,right},%
                       {cover,\option{/novathesis/docdegree},right},%
                       {cover,\option{/@nt/document/fallback},right},%
                       {cover,right})%
-  \defifundef{#2}{\newsavebox}%
+  % \defifundef{#2}{\newsavebox}%
   \@ntmakecoverbgcolor{#1}{\@cover@bgcolor@box}%
   \@ntmakecoverimage{#1}{\@cover@image@box}%
   \@ntmakecovertext{#1}{\@cover@text@box}%
@@ -1182,10 +1245,13 @@
   % #2 = box name
   \defifundef{#2}{\newsavebox}%
   \datamatchtf{\match}{thesiscover}(%
-                    {\option{/novathesis/docdegree},#1,bgcolor},%
-                    {\option{/@nt/document/fallback},#1,bgcolor},%
-                    {#1,bgcolor},{bgcolor})%
-              {\savebox{#2}{\@ntcoverbgcolor{#1}{\match}}}{}%
+                     {\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,bgcolor},%
+                    ,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,bgcolor},%
+                    ,{\option{/novathesis/docdegree},#1,bgcolor}%
+                    ,{\option{/@nt/document/fallback},#1,bgcolor}%
+                    ,{#1,bgcolor}%
+                    ,{bgcolor}%
+  ){\savebox{#2}{\@ntcoverbgcolor{#1}{\match}}}{}%
 }
 
 \newcommand*{\@ntcoverbgcolor}[2]{%
@@ -1204,10 +1270,13 @@
   % #2 = box name
   \NTRunHook{cover/#1/image/pre}%
   \defifundef{#2}{\newsavebox}%
-  \datamatchtf{\match}{thesiscover}({\option{/novathesis/docdegree},#1,image},%
-                                    {\option{/@nt/document/fallback},#1,image},%
-                                    {#1,image},%
-                                    {image})%
+  \datamatchtf{\match}{thesiscover}(%
+                          {\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,image},%
+                          {\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,image},%
+                          {\option{/novathesis/docdegree},#1,image},%
+                          {\option{/@nt/document/fallback},#1,image},%
+                          {#1,image},%
+                          {image})%
       {\savebox{#2}{\includegraphics[width=\paperwidth,height=\paperheight]{\match}}}{}%
   \ifdatadefined{thesiscover}(phd,1-1,bgcolor){}{}%
   \NTRunHook{cover/#1/image/post}%
@@ -1243,8 +1312,8 @@
     \options{/@ntcoveropts,defaults}%.
     \options{/@ntcoveropts,#2}%
     \options{/@ntcoveropts,alignmap=\option{/@ntcoveropts/align}}%
-    \StrCount{\option{/@ntcoveropts/status}}{\option{/novathesis/docstatus}}[\@nt@instatus]%
-    \StrCount{\option{/@ntcoveropts/degree}}{\option{/novathesis/docdegree}}[\@nt@indegree]%
+    \StrCount{\option{/@ntcoveropts/status}}{\option{/@nt/document/fallback}}[\@nt@instatus]%
+    \StrCount{\option{/@ntcoveropts/degree}}{\option{/@nt/document/fallback}}[\@nt@indegree]%
     \ifthenelse{%
               \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND%
               \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}%
@@ -1479,7 +1548,7 @@
   \persongrouppost():={\\[-6pt]}
   \committeetitlestringpre():={&}%
   \committeetitlestringpost():={\\[7pt]}%
-  \begin{tabularx}{#2\linewidth}[t]{@{}r@{~~}X@{}}%
+  \begin{tabularx}{#2\linewidth}[t]{@{}r@{~~}>{\raggedright\arraybackslash}X@{}}%
     \ifdatadefined{#3titlestring}(\option{/novathesis/coverlang}){%
       \datadefault{#3titlestringpre}()%
       \datadefault{#3titlestringfont}()%
@@ -1537,7 +1606,7 @@
       \csuse{the#2remainderpre}()%
       \bgroup%
         \csuse{the#2remainderfont}()%
-        \ignorespaces\@nt@remainder%
+        \ignorespaces\raggedright\@nt@remainder%
       \egroup%
       \csuse{the#2remainderpost}()%
     }%
@@ -1849,7 +1918,12 @@
 %% LABELS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \providecommand\thepresentationtext{%
-	\thedissertationstringfont()\thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+  \thedissertationstringfont()%
+  \ifdatadefined{issertationstring}(\option{/novathesis/docdegree},\option{/novathesis/coverlang}){%
+    \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+  }{%
+    \thedissertationstring(\option{/@nt/document/fallback},\option{/novathesis/coverlang})%
+  }
 }
 
 \providecommand\thecopyrightstr{%
@@ -1889,9 +1963,9 @@
 
 \InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.ldf}{}{%
   \ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/chapstyle}}{}%
-}%
+}
 \InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/fontstyle}.ldf}{}{%
   \ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/fontstyle}}{}%
-}%
+}
 
-\options{/@nt/document/fallback=\option{/novathesis/docdegree}}%
+\ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}

@@ -16,8 +16,8 @@
 \school(it):={Faculty of Sciences}
 
 % Department field
-\department(pt):={\embrace{Designação do Departamento}}
-\department(en):={\embrace{Department Name}}
+\ntdepartment(pt){Departamento de \embrace{Nome do Departamento}}
+\ntdepartment(en){Department of \embrace{Name of the Department}}
 
 % Specialization field
 \specialization(pt):={\embrace{Especialidade}}
@@ -28,8 +28,7 @@
 \committeeorder():={c,r,a,m}% 
 
 % Cover background images
-\ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
-\thesiscover(bgcolor):={nearlywhite}
+\thesiscover(bgcolor):={white}
 
 % Spine info
 \spine(logo)={ulisboa-fc-logo}

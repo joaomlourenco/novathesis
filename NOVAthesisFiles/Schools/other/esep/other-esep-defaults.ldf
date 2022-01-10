@@ -26,7 +26,6 @@
 \committeeorder():={c,r,m}% 
 
 % Cover background images
-\ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
 \thesiscover(1-1,bgcolor):={white}
 \thesiscover(1-1,image):={other-esep-cover}
 

@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% other/msc-gt/defaults.ldf
+%% mova/ims/mova-ims-mgt-defaults.ldf
 %% NOVA thesis configuration file
 %%
 %% Customization for FCT-NOVA (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE other/msc-gt/defaults.ldf}%
+\typeout{NT FILE mova/ims/mova-ims-mgt-defaults.ldf}%
 
 \ntmemoirsetup{openany}
 \ntsetup{printcopyright=false}
@@ -41,15 +41,14 @@ for the degree of \emph{\thedegreename(en)}}
 \committeeorder():={c,r,m}% 
 
 % Cover background images
-% \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}%
-% \thesiscover(phd,front,image):={}
+% % \thesiscover(phd,front,image):={}
 % \thesiscover(phdplan,front,image):={}
 % \thesiscover(phdprop,front,image):={}
 % \thesiscover(msc,spine,bgcolor):={yellow}
 \thesiscover(msc,spine,framecolor):={black!20}
 \thesiscover(mscp,1-1,bgcolor):={white}
-\thesiscover(msc,1-1,image):={atom}
-\thesiscover(msc,N-2,image):={atom-back}
+\thesiscover(msc,1-1,image):={nova-ims-mgt-cover-atom}
+\thesiscover(msc,N-2,image):={nova-ims-mgt-cover-atom-back}
 % \thesiscover(mscplan,1-1,image):={cover-msc-consortium-gt}
 % \thesiscover(bsc,front,image):={}
 % \thesiscover(plain,front,image):={}
@@ -57,7 +56,7 @@ for the degree of \emph{\thedegreename(en)}}
 
 
 % Spine info
-\spine(logo,msc)={ball}
+\spine(logo,msc)={nova-ims-mgt-cover-ball}
 
 \spine(author)={\thedocauthor(name)}
 \spine(title)={\textbf{\emph{\thedoctitle(\option{/novathesis/coverlang},main,caps)}}}
@@ -68,6 +67,7 @@ for the degree of \emph{\thedegreename(en)}}
 % \spine(box,color)={blue}
 \spine(box,spacing)={0.5cm}
 \spine(box,margin)={0.5mm}
+
 
 \spine(box,logo,top)={0.0cm}
 \spine(box,logo,len)={4.1cm}
@@ -166,9 +166,9 @@ for the degree of \emph{\thedegreename(en)}}
 
 % Title of Degree
 \ntaddtocover[vspace=0mm,height=6.35cm,align=l,inalign=t]{1-1}{%
-  \includegraphics[height=5.8cm]{cover-msc-gt-text-lines}%
+  \includegraphics[height=5.8cm]{nova-ims-mgt-cover-text-lines}%
   \hfill%
-  \raisebox{2mm}{\includegraphics[height=2.7cm]{ball}}%
+  \raisebox{2mm}{\includegraphics[height=2.7cm]{nova-ims-mgt-cover-ball}}%
 }
 
 \ntaddtocover[vspace=1.5mm,height=8mm,align=l,inalign=t]{1-1}{%
@@ -214,13 +214,13 @@ for the degree of \emph{\thedegreename(en)}}
 \ntaddtocover[vspace=1,,align=l]{1-1}{%
   % \begin{tabular}{@{}l@{\hspace{1cm}}l@{\hspace{1cm}}l@{}}
   \begin{minipage}{2.5cm}
-  \includegraphics[width=13mm]{Nova-IMS-BW}
+  \includegraphics[width=13mm]{nova-ims-insignia-BW}
   \end{minipage}%
   \begin{minipage}{3.2cm}
-  \includegraphics[width=21mm]{Universitat-Jaume-I-BW} 
+  \includegraphics[width=21mm]{universitat-jaume-i-insignia-bw} 
   \end{minipage}%
   \begin{minipage}{3.5cm}
-  \includegraphics[width=27mm]{University-Munster-BW}
+  \includegraphics[width=27mm]{university-munster-insignia-bw}
   \end{minipage}
 }
 
@@ -273,9 +273,9 @@ for the degree of \emph{\thedegreename(en)}}
 
 % Title of Degree
 \ntaddtocover[vspace=10mm,height=6.35cm,align=r,inalign=t]{N-2}{%
-  \raisebox{2mm}{\includegraphics[height=2.7cm]{ball}}%
+  \raisebox{2mm}{\includegraphics[height=2.7cm]{nova-ims-mgt-cover-ball}}%
   \hfill%
-  \includegraphics[height=5.8cm]{cover-msc-gt-text-lines}%
+  \includegraphics[height=5.8cm]{nova-ims-mgt-cover-text-lines}%
 }
 
 \ntaddtocover[vspace=1.5mm,height=15mm,align=l,inalign=t]{N-2}{%

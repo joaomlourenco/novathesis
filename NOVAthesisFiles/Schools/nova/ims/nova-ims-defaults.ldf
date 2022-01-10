@@ -62,7 +62,6 @@
 \thesiscover(msc,megi,1-1,image):={nova-ims-megi-cover}
 \thesiscover(msc,mgi,1-1,image):={nova-ims-mgi-cover}
 \thesiscover(msc,mmaa,1-1,image):={nova-ims-mmaa-cover}
-
 \thesiscover(bsc,1-1,image):={nova-ims-front-cover-generic}
 \thesiscover(bsc,N-2,image):={nova-ims-backcover}
 \thesiscover(bsc,spine,image):={nova-ims-spine}
@@ -120,15 +119,15 @@
 \spine(box,degreeacr,align):={c}
 \spine(box,degreeacr,textcolor):={white}
 
-\spine(box,author,top)={3*\thespine(row)+\thespine(box,margin)}
+\spine(box,author,top)={\dimexpr3\thespine(row)+\thespine(box,margin)}
 \spine(box,author,len)={5.235cm-\thespine(box,margin)-\thespine(box,margin)}
 \spine(box,author,align)={c}
 
-\spine(box,title,top)={7*\thespine(row)+\thespine(box,margin)}
+\spine(box,title,top)={\dimexpr7\thespine(row)+\thespine(box,margin)}
 \spine(box,title,len)={12.215cm-\thespine(box,margin)-\thespine(box,margin)}
 \spine(box,title,align)={c}
 
-\spine(box,date,top):={15*\thespine(row)}
+\spine(box,date,top):={\dimexpr15\thespine(row)}
 \spine(box,date,len):={\thespine(row)}
 \spine(box,date,color):={none}
 \spine(box,date,align):={c}

@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% nova/fcsh/defaults.ldf
+%% nova/fcsh/nova-fcsh-defaults.ldf
 %% NOVA thesis configuration file
 %%
 %% Customization for FCSH-NOVA (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE nova/fsch/defaults.ldf}%
+\typeout{NT FILE nova/fsch/nova-fcsh-defaults.ldf}%
 
 \ntsetup{secondcover=true}
 
@@ -50,8 +50,8 @@
 % Set margins for cover pages 
 \margin(cover,top):={0.0cm}
 \margin(cover,bottom):={0.0cm}
-\margin(cover,left):={0.0cm}
-\margin(cover,right):={0.0cm}
+\margin(cover,left):={2.0cm}
+\margin(cover,right):={2.0cm}
 
 % \dissertationstring(phd,pt)={\thedocdegreestr(phd,pt)\ em\\[1ex] \textbf{\themajorfield(pt)}}
 % \dissertationstring(phd,en)={\thedocdegreestr(phd,en)\ in\\[1ex] \textbf{\themajorfield(en)}}
@@ -93,20 +93,17 @@
 \definecolor{fcshblue}{RGB}{25,61,108}% Background title color
 
 
-\ntaddtocover[align=l, vspace=1.0cm]{1-1}{%
-  \null%
-  \begin{tabular*}{{0.5\stockwidth}}[c]{@{\hspace*{0.8cm}}l@{}}%
+\ntaddtocover[align=l, vspace=1.0cm, hspace=-1.2cm]{1-1}{%
     \includegraphics[width=9cm]{nova-fcsh-logo-color-horiz}%
-  \end{tabular*}%
 }
 
-\ntaddtocover[align=l, vspace=1.0cm]{2-1}{%
+\ntaddtocover[align=l, vspace=1.0cm, hspace=-1.2cm]{2-1}{%
   \null%
-  \begin{tabular*}{{0.5\stockwidth}}[c]{@{\hspace*{0.8cm}}l@{}}%
+  \begin{tabular*}{{0.5\stockwidth}}[c]{@{}l@{}}%
     \includegraphics[width=9cm]{nova-fcsh-logo-color-horiz}%
   \end{tabular*}%
   \begin{tabular*}{{0.5\stockwidth}}[c]{@{}l@{}}%
-    \textcolor{fcshblue}{\rule{0.5\stockwidth}{4pt}}%
+    \textcolor{fcshblue}{\rule{\linewidth}{4pt}}%
   \end{tabular*}%
 }
 
@@ -141,7 +138,7 @@
   \null
 }
 
-\ntaddtocover[vspace=1cm]{2-1}{%
+\ntaddtocover[vspace=1cm,hspace=-\expanded{\themargin(cover,left)}]{2-1}{%
  \raisebox{-1cm}{%
    \textcolor{fcshblue}{\rule{\stockwidth}{0.75cm}}%
  }%
