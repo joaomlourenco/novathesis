@@ -107,10 +107,10 @@
 \RequirePackage{NOVAthesisFiles/glossary-xltabular}%
 \setglossarystyle{xltabular}%
 \setabbreviationstyle[acronym]{long-short}%
-\makeglossaries
+
 \renewcommand{\glsnamefont}[1]{\textbf{#1}}%
 
 %--------------------------------
 % “Process gnumberlist” option - after glossaries
 \iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}%
-\AtEndPreamble{\@loadglossaryfiles}%
+\AtEndPreamble{\@loadglossaryfiles\makeglossaries}%
