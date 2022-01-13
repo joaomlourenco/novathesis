@@ -16,7 +16,6 @@
 *.cb
 *.cb2
 .*.lb
-*.ist
 
 ## Intermediate documents:
 *.dvi
@@ -118,9 +117,11 @@ acs-*.bib
 *.glsdefs
 *.lzo
 *.lzs
-
+*.chg
+*.cho
+*.chs
 # uncomment this for glossaries-extra (will ignore makeindex's style files!)
-# *.ist
+*.ist
 
 # gnuplottex
 *-gnuplottex-*
