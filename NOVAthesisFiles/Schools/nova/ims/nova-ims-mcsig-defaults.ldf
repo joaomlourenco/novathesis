@@ -1,0 +1,231 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova/ims/nova-ims-csig-defaults.ldf
+%% NOVA thesis document template
+%%
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
+%%
+%% Authors / Contributors:
+%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE nova/ims/nova-ims-csig-defaults.ldf}%
+
+
+
+% Faculty / School
+\school(pt):={Instituto Superior de Estatística e Gestão de Informação}
+\school(en):={NOVA Information Management School}
+\school(fr):={NOVA Information Management School}
+\school(it):={NOVA Information Management School}
+
+% Redefinition of "Master in" to "Master of Science in"
+\degreenameprefix(mcsig,en):={Master of Science in}
+\degreenameprefix(mcsig,pt):={Mestre em}
+\ntdegreename(mcsig,en){Geographical Information Systems and Science}
+\ntdegreename(mcsig,pt){Ciência e Sistemas de Informação Geográfica}
+
+
+% Comiittee printing order
+\committeeorder():={c,r,m}% 
+
+\ntsetup{secondcover=true}
+
+% Cover background images
+% \thesiscover(phd,1-1,bgcolor):={white}
+\thesiscover(msc,mcsig,1-1,image):={nova-ims-mcsig-cover-front}
+\thesiscover(msc,mcsig,N-2,image):={nova-ims-mcsig-cover-back}
+
+
+% Rename Doctor degree
+% \degreestring(msc,m,en):={Master's}
+% \degreestring(msc,f,en):={Master's}
+% \degreestring(mscplan,m,en):={Master's}
+% \degreestring(mscplan,f,en):={Master's}
+%
+% \degreestring(msc,m,pt):={Mestre}
+% \degreestring(msc,f,pt):={Mestre}
+% \degreestring(mscplan,m,pt):={Mestre}
+% \degreestring(mscplan,f,pt):={Mestre}
+%
+% \degreestring(bsc,m,pt):={Licenciado}
+% \degreestring(bsc,f,pt):={Licenciada}
+
+%% DARK GREY  112,121,128
+%% LIGHT GREY 200,203,206
+
+% Spine info
+\spine(logo,msc)={nova-ims-mcsig-insignia}
+\spine(logo,msc,angle)={0}
+\spine(logo,msc,scale)={1}
+\spine(logo,msc,raise)={0}
+
+\spine(author)={\thedocauthor(name)}
+\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(date)={\thentdocdate(year)}
+
+\spine(text,angle)={90}
+\spine(box,textcolor)={black}
+% \spine(box,color)={blue}
+\spine(box,spacing)={0.5cm}
+\spine(box,margin)={0.5mm}
+
+\spine(box,logo,top)={0.0cm}
+\spine(box,logo,len)={4.1cm}
+\spine(box,logo,align)={c}
+
+\spine(box,author,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
+\spine(box,author,len)={4.0cm}
+
+\spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
+\spine(box,title,len)={17.2cm}
+% \spine(box,title,align)={l}
+% \spine(box,author,align)={l}
+
+\spine(box,date,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
+\spine(box,date,len)={1.5cm}
+% \spine(box,lodatego,align)={l}
+
+
+
+% Set margins for "normal" pages
+\margin(screen,top):={3.0cm}
+\margin(screen,bottom):={3.0cm}
+\margin(screen,left):={3.25cm}
+\margin(screen,right):={3.25cm}
+\margin(paper,top):={3.0cm}
+\margin(paper,bottom):={3.0cm}
+\margin(paper,left):={3.5cm}
+\margin(paper,right):={3.0cm}
+
+% Set margins for cover pages
+\margin(cover,top):={13.9cm}
+\margin(cover,bottom):={3.5cm}
+\margin(cover,left):={6.9cm}
+\margin(cover,right):={1.6cm}
+\margin(cover,2-1,top):={3cm}
+\margin(cover,2-1,bottom):={3cm}
+\margin(cover,2-1,left):={3cm}
+\margin(cover,2-1,right):={3cm}
+
+
+
+
+
+
+
+\dissertationstring(msc,en)={Dissertation presented as partial requirement for obtaining the degree of \thedegreename(mcsig,\option{/novathesis/coverlang})}
+\dissertationstring(mscplan,en)={Dissertation plan presented as partial requirement for obtaining the degree of \thedegreename(mcsig,\option{/novathesis/coverlang})}
+
+\dissertationstring(msc,pt)={Dissertatação apresentada como requisito parcial para obtenção do grau de \thedegreename(mcsig,\option{/novathesis/coverlang})}
+\dissertationstring(mscplan,pt)={Plano de dissertação apresentado como requisito parcial para obtenção do grau de \thedegreename(mcsig,\option{/novathesis/coverlang})}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{imsdarkgrey}{RGB}{100,100,100}
+\definecolor{imsmidgrey}{RGB}{190,190,190}
+\definecolor{imslightgrey}{RGB}{240,240,240}
+
+
+\AtEndPreamble{% 
+  \LoadHelveticaLikeFont%
+  % \usepackage{gillius2}%
+}
+
+\NTAddToHook{cover/1-1/text/pre}{%
+  \sffamily%
+}
+\NTAddToHook{cover/2-1/text/pre}{%
+  \sffamily%
+}
+
+  % MSc PROGRAM
+% % Title of Dissertation
+% \ntaddtocover[align=l, vspace=0cm]{1-1}{%
+%   \ntcoverbackground%
+% }
+
+% % Title of Dissertation
+\ntaddtocover[align=l, vspace=0, height=3cm, inalign=c]{1-1}{%
+  \fontsize{17}{17}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}}%
+  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
+    % ~\\[-2ex]%
+    \\
+    \textcolor{imsmidgrey}{
+      \fontsize{15}{15}\selectfont%
+      \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover)}%
+    }%
+  }{}%
+}
+
+% Author name
+\ntaddtocover[align=l, vspace=0cm, height=2.2cm, inalign=c]{1-1}{%
+  \fontsize{15}{15}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\thedocauthor(name)}}%
+}
+
+% Degree
+\ntaddtocover[align=l, vspace=3mm]{1-1}{%
+  \fontsize{12}{12}\selectfont%
+  \textcolor{imsdarkgrey}{%
+    \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+  }%
+}
+
+% Date
+\ntaddtocover[vspace=1, align=l]{1-1}{%
+  \textcolor{imsdarkgrey}{\textbf{\theschool(en)}}%
+}%
+
+\ntaddtocover[align=c, vspace=0]{2-1}{%
+  \fontsize{14}{14}\selectfont%
+  \textbf{\theschool(en)}\\
+  \textbf{\theschool(pt)}\\
+  \theuniversity(pt)\\
+}
+
+\ntaddtocover[align=c, vspace=1]{2-1}{%
+  \fontsize{16}{16}\selectfont%
+  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
+}
+
+\ntaddtocover[align=c, vspace=1]{2-1}{%
+  \fontsize{14}{14}\selectfont%
+  by%
+}
+
+\ntaddtocover[align=c, vspace=1]{2-1}{%
+  \fontsize{14}{14}\selectfont%
+  \thedocauthor(name)%
+}
+
+% Degree
+\ntaddtocover[align=c, vspace=4]{2-1}{%
+  \fontsize{14}{14}\selectfont%
+  \textcolor{imsdarkgrey}{%
+    \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+  }%
+}
+
+% The committee
+\ntaddtocover[vspace=2,align=l]{2-1}{%
+  \fontsize{12}{12}\selectfont%
+  \adviserstringpre():={}%
+  \adviserstringpost():={:&}%
+  \adviserstringfont():={\bfseries}%
+  \ntprintpersons[name]{1.0}{2}{adviser}{a}\\
+  \ntprintpersons[name]{1.0}{2}{adviser}{c}\\
+}
+
+% Date
+\ntaddtocover[align=c, vspace=2]{2-1}{%
+  \thentdocdate(month), \thentdocdate(year)%
+}%
