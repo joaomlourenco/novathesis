@@ -40,7 +40,7 @@ clean:
 	# @$(L) -c $(B)
 	# @rm -f $(AUXFILES)
 
-gitclean:
+gclean:
 	git clean -fdx -e Scripts -e Fonts
 
 .PHONY: rc
