@@ -24,6 +24,8 @@
 \ProvidesPackage{NOVAthesisFiles/memory2}
   [2013/05/13 v1.2 containers for data of object and array in LaTeX]
 
+% \RequirePackage{trimspaces}
+
 \def\memoryemptybox{{\setlength{\fboxsep}{0pt}\LARGE\setbox0=\hbox{$\times$}\fbox{\rule{\wd0}{0pt}\rule{0pt}{\ht0}}}}
 \def\memoryxbox{{\setlength{\fboxsep}{0pt}\LARGE\fbox{$\times$}}}
 \def\datacrossiftrue#1(#2){%
@@ -41,8 +43,11 @@
 }
 % \ifdatadefinedor({val1},…){\match}{dataname}{true}{false}
 \def\@ifddor(#1,#2\@nil)#3#4#5#6{%
-  % \typeout{MEMORY ddor=#4(#1)(#2)}%
-  \ifdatadefined{#4}(#1){%
+  \edef\@argone{#1}
+  % \trim@spaces@in\@argone
+  % \edef\@argone{\zap@space#1 \@empty}
+  % \typeout{MEMORY ddor=#4(\@argone)(#2)}%
+  \ifdatadefined{#4}(\@argone){%
     % \typeout{MEMORY >>> FOUND: #4(#1)}%
     \edef#3{#1}#5
   }{\ifx\@nil#2\@nil\relax#6\else\@ifddor(#2\@nil){#3}{#4}{#5}{#6}\fi}%

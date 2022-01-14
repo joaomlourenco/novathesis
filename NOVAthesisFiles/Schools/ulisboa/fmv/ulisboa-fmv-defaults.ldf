@@ -17,7 +17,7 @@
 \definecolor{lightyellow}{RGB}{254,254,230}
 \ntbibsetup{style=apa}
 \ntremovefromprintorder{frontmatter}{statement,copyright}
-\AtEndPreamble{\let\cite\textcite}
+\AtEndPreamble{\let\cite\parencite}
 
 
 \newdata{doctype}

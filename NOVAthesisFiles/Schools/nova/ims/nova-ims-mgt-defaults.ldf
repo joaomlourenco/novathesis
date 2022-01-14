@@ -127,7 +127,7 @@ for the degree of \emph{\thedegreename(en)}}
         \textbf{\Large\thedoctitle(\option{/@nt/currentlang},main,cover,caps)}%
         \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
           \\[6mm]%
-          \textbf{\Large\thedoctitle(\option{/novathesis/coverlang},sub,cover)}%
+          \textbf{\Large\thedoctitle(\option{/@nt/currentlang},sub,cover)}%
         }{}%
       \end{center}%
     \end{minipage}%
