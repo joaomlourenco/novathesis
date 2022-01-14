@@ -1171,7 +1171,7 @@
                ,{\option{/@nt/document/fallback},#1,image}%
                ,{#1,image}%
                ,{image}%
-    ){#2}{}%
+    ){#2}{#3}%
   }%
 }
 
@@ -1537,6 +1537,8 @@
       \NTRunHook{statement/pre}%
       \ifoptiondefined{/@nt/file/statement/VAL}{}{%ELSE
         \ntfor\match:={%
+          \@nt@univ/\@nt@schl/statement-\option{/novathesis/degreeacr}-\option{/novathesis/mainlang},%
+          \@nt@univ/\@nt@schl/statement-\option{/novathesis/degreeacr},%
           \@nt@univ/\@nt@schl/statement-\option{/novathesis/mainlang},%
           \@nt@univ/\@nt@schl/statement,%
           \@nt@univ/statement-\option{/novathesis/mainlang},%
@@ -1784,6 +1786,7 @@
     \NTRunHook{abstract/pre}%
     \NTRunHook{abstract/#1/pre}%
     \printabstracttitle{#1}%
+    \NTRunHook{abstract/#1/mid}%
     \NTRunHook{abstract/mid}%
     \@ntloadfiles@ii[#1]{abstract}%
     \NTRunHook{abstract/#1/post}%
