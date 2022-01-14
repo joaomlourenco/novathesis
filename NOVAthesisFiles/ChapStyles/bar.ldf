@@ -34,7 +34,7 @@
 }%
 
 \renewcommand*{\printchaptertitle}[1]{%
-  \raggedleft {\chaptitlefont\normalfont\scshape #1\par}\nobreak
+  {\raggedleft\normalfont\scshape\chaptitlefont #1\par}\nobreak
 }
 
 % \gappto{\secheadstyle}{\sffamily}

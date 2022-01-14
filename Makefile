@@ -37,8 +37,11 @@ verb verbose:
 
 .PHONY: clean
 clean:
-	@$(L) -c $(B)
-	@rm -f $(AUXFILES)
+	# @$(L) -c $(B)
+	# @rm -f $(AUXFILES)
+
+gclean:
+	git clean -fdx -e Scripts -e Fonts
 
 .PHONY: rc
 rc:
@@ -49,6 +52,3 @@ rcb:
 	Scripts/latex-clean-temp.sh
 	rm -rf `biber -cache`
 	biber -cache
-
-school:
-	Scripts/validate-schools.sh $S
