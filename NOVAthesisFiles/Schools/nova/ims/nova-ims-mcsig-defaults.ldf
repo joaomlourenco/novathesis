@@ -31,7 +31,12 @@
 % Comiittee printing order
 \committeeorder():={c,r,m}% 
 
+\ntmemoirsetup{openany}
 \ntsetup{secondcover=true}
+\ntsetup{statement=true}
+\ntsetup{printcopyright=false}
+\ntbibsetup{style=apa}
+\AtEndPreamble{\let\cite\parencite}
 
 % Cover background images
 % \thesiscover(phd,1-1,bgcolor):={white}
@@ -111,19 +116,11 @@
 \margin(cover,2-1,right):={3cm}
 
 
-
-
-
-
-
 \dissertationstring(msc,en)={Dissertation presented as partial requirement for obtaining the degree of \thedegreename(mcsig,\option{/novathesis/coverlang})}
 \dissertationstring(mscplan,en)={Dissertation plan presented as partial requirement for obtaining the degree of \thedegreename(mcsig,\option{/novathesis/coverlang})}
 
 \dissertationstring(msc,pt)={Dissertatação apresentada como requisito parcial para obtenção do grau de \thedegreename(mcsig,\option{/novathesis/coverlang})}
 \dissertationstring(mscplan,pt)={Plano de dissertação apresentado como requisito parcial para obtenção do grau de \thedegreename(mcsig,\option{/novathesis/coverlang})}
-
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -144,6 +141,26 @@
 }
 \NTAddToHook{cover/2-1/text/pre}{%
   \sffamily%
+}
+
+\NTAddToHook{abstract/pre}{%
+  \let\oldchapterheadstart=\chapterheadstart%
+  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\option{/@nt/currentlang},main)}}%
+  \preto{\chapterheadstart}{%
+    \noindent\begin{minipage}[t][0pt][t]{\textwidth}
+      \begin{center}%
+        \textbf{\Large\thedoctitle(\option{/@nt/currentlang},main,cover,caps)}%
+        \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
+          \\[6mm]%
+          \textbf{\Large\thedoctitle(\option{/@nt/currentlang},sub,cover)}%
+        }{}%
+      \end{center}%
+    \end{minipage}%
+  }%
+  \appto{\chaptitlefont}{\centering}%
+}
+\NTAddToHook{abstract/post}{%
+  \let\chapterheadstart=\oldchapterheadstart%
 }
 
   % MSc PROGRAM
