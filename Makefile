@@ -37,8 +37,8 @@ verb verbose:
 
 .PHONY: clean
 clean:
-	# @$(L) -c $(B)
-	# @rm -f $(AUXFILES)
+	@$(L) -c $(B)
+	@rm -f $(AUXFILES)
 
 gclean:
 	git clean -fdx -e Scripts -e Fonts
