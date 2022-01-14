@@ -1432,6 +1432,8 @@
   , inalign/.new choice={c, t, b}
   % height of the box (default = the natural height for the contents)
   , height/.new value
+  % minheight of the box (default = the natural height for the contents)
+  , minheight/.new value
   % width of the box (default = full width)
   , width/.new value
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
@@ -1446,7 +1448,7 @@
   % background color for the box (default = transparent)
   , bgcolor/.new color
   % default values
-  , defaults/.new style*={status={}, degree={}, align=c, inalign=c, height={}, width={}, 
+  , defaults/.new style*={status={}, degree={}, align=c, inalign=c, height={}, minheight=0pt, width={}, 
                           vspace=0pt, hspace=0pt, newpar=true, color={}, bgcolor={}}
   % set defaults
   , defaults
@@ -1487,6 +1489,7 @@
   % Create destination boxes if undefined and save to it
   \defifundef{#3}{\newsavebox}%
   \begin{lrbox}{#3}%
+    \begin{minipage}[t][0pt][t]{0pt}\color{blue}\rule{0.000000000000001pt}{\option{/@ntcoveropts/minheight}}\end{minipage}
     % Minipage definition is different if element height is given or not
       \ifoptionblank{/@ntcoveropts/height}%
           {\minipage[t][][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
