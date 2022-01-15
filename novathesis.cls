@@ -1994,31 +1994,53 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Keywords
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{environ}
 \keywordsprefix():={\vskip\baselineskip\noindent}
 \keywordsstringprefix():={}
-\keywordsstringsuffix():={: }
+\keywordsstringsuffix():={:\quad}
 \keywordsstringfont():={\bfseries}
 \keywordsseparator():={, }
-\newenvironment{keywords}[1][\option{/@nt/langshorttolong}]{%
+% \newenvironment{keywords}{%
+%   \defifundef{\ntkwstrbox}{\newsavebox}%
+%   \savebox{\ntkwstrbox}{%
+%     \thekeywordsstringfont()%
+%     \thekeywordsstring(\option{/@nt/currentlang})%
+%     \thekeywordsstringsuffix()%
+%   }
+%   \defifundef{\ntkwbox}{\newsavebox}%
+%   \begin{lrbox}{\ntkwbox}%
+%     \minipage[t]{\textwidth-\widthof{\usebox{\ntkwstrbox}}}%
+% }{%
+%     \endminipage%
+%   \end{lrbox}%
+%   \ifoptionequal{/@nt/currentlang}{\option{/novathesis/mainlang}}
+%       {\hypersetup{pdfkeywords={\usebox{\ntkwbox}}}}
+%       {}%
+%   \noindent
+%   \thekeywordsprefix()%
+%   \usebox{\ntkwstrbox}%
+%   \usebox{\ntkwbox}%
+% }
+\NewEnviron{keywords}{%
+  \@temptokena={%
+    \ntfor\i:=\BODY\do{\i%
+      \ifx\@xfor@nextelement\@nnil\relax
+         % last iteration, do nothing
+       \else
+         \thekeywordsseparator()% not last iteration
+      \fi
+    }
+  }
   \defifundef{\ntkwstrbox}{\newsavebox}%
   \savebox{\ntkwstrbox}{%
     \thekeywordsstringfont()%
     \thekeywordsstring(\option{/@nt/currentlang})%
     \thekeywordsstringsuffix()%
-  }
-  \defifundef{\ntkwbox}{\newsavebox}%
-  \begin{lrbox}{\ntkwbox}%
-    \minipage[t]{\textwidth-\widthof{\usebox{\ntkwstrbox}}}%
-}{%
-    \endminipage%
-  \end{lrbox}%
-  \ifoptionequal{/@nt/currentlang}{\option{/novathesis/mainlang}}
-      {\hypersetup{pdfkeywords={\usebox{\ntkwbox}}}}
-      {}%
-  \noindent
-  \thekeywordsprefix()%
-  \usebox{\ntkwstrbox}%
-  \usebox{\ntkwbox}%
+  }%
+  \noindent\usebox{\ntkwstrbox}%
+  \parbox[t]{\textwidth-\widthof{\usebox{\ntkwstrbox}}}{\the\@temptokena}%
+  \IfStrEq{\option{/@nt/currentlang}}{\option{/novathesis/mainlang}}%
+      {\hypersetup{pdfkeywords={\BODY}}}{}%
 }
 
 
