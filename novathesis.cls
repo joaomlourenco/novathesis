@@ -404,7 +404,12 @@
 
 
 \newdata{notdefined}
+\newdata{keywordsprefix}
 \newdata{keywordsstring}
+\newdata{keywordsstringprefix}
+\newdata{keywordsstringsuffix}
+\newdata{keywordsstringfont}
+\newdata{keywordsseparator}
 \newdata{specializationstring}
 \newdata{departmentofstring}
 \newdata{sponsorsstring}
@@ -1980,10 +1985,7 @@
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\@nt@keywordsstr}{}
-\newcommand*{\setabstractlang}[1]{%
-	\ntselectlang{#1}%
-  \renewcommand*{\@nt@keywordsstr}{\thekeywordsstring(#1)}%
-}
+\newcommand*{\setabstractlang}[1]{\ntselectlang{#1}}
 \newcommand*{\printabstracttitle}[1]{%
 	\chapter*{\theabstractbkmstring(#1)}%
 }
@@ -1992,18 +1994,31 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Keywords
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\keywordsprefix():={\vskip\baselineskip\noindent}
+\keywordsstringprefix():={}
+\keywordsstringsuffix():={: }
+\keywordsstringfont():={\bfseries}
+\keywordsseparator():={, }
 \newenvironment{keywords}[1][\option{/@nt/langshorttolong}]{%
+  \defifundef{\ntkwstrbox}{\newsavebox}%
+  \savebox{\ntkwstrbox}{%
+    \thekeywordsstringfont()%
+    \thekeywordsstring(\option{/@nt/currentlang})%
+    \thekeywordsstringsuffix()%
+  }
   \defifundef{\ntkwbox}{\newsavebox}%
   \begin{lrbox}{\ntkwbox}%
-    \minipage[t]{\linewidth}%
-      \par\vskip\baselineskip\noindent{\bfseries\@nt@keywordsstr: }%
+    \minipage[t]{\textwidth-\widthof{\usebox{\ntkwstrbox}}}%
 }{%
     \endminipage%
   \end{lrbox}%
-  \ifoptionequal{/@nt/currentlang}{\option{/novathesis/mainlang}}%
-      {\hypersetup{pdfkeywords={\usebox{\ntkwbox}}}}%
+  \ifoptionequal{/@nt/currentlang}{\option{/novathesis/mainlang}}
+      {\hypersetup{pdfkeywords={\usebox{\ntkwbox}}}}
       {}%
-  \noindent\usebox{\ntkwbox}%
+  \noindent
+  \thekeywordsprefix()%
+  \usebox{\ntkwstrbox}%
+  \usebox{\ntkwbox}%
 }
 
 
