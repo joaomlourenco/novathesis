@@ -57,14 +57,22 @@
 \NTAddToHook{keywords/en/pre}
             {\options{/@nt/kwprint = \theabstractorder(\option{/@nt/currentlang})}\clearpage}
 
-% declaração de originalidade,
-% agradecimentos,
-% resumo,
-% abstract,
-% palavras-chave,
-% acrónimos,
-% índice de tabelas,
-% índice de figuras
+\NTAddToHook{list_of/post}{
+  \options{/@nt/list/listof = {}}
+\ntaddlistof{listsofglossaries}  % The Glossary, and the lists of Acronyms and Symbols
+\ntaddlistof{tableofcontents}    % The Table of Contents. Probably you want ot leave this as is! ;)
+\ntaddlistof{listoftables}       % The List of Tables. Comment to omit.
+\ntaddlistof{listoffigures}      % The List of Figures. Comment to omit.
+\@ifpackageloaded{algorithm2e}   % The List of Algorithms for package “algorithm2e”.
+    {\ntaddlistof{listofalgorithms}}{}   % The List of Algorithms for Algorithm2e
+\@ifpackageloaded{algorithms}    % The List of Algorithms for package “algorithms”.
+    {\ntaddlistof{lstlistoflistings}}{}
+\@ifpackageloaded{listings}      % The List of Listings for package “listings”.
+    {\ntaddlistof{lstlistoflistings}}{}
+\@ifpackageloaded{minted}        % The List of Listings for the “minted” package.
+    {\ntaddlistof{listoflistings}}{}
+}
+
 
 % Cover background images
 % \thesiscover(phd,1-1,bgcolor):={white}
@@ -197,8 +205,13 @@
 %   \ntcoverbackground%
 % }
 
+\newcommand{\mcsigdashes}{\hspace*{-4.7cm}\textcolor{imsmidgrey}{\hbox to 6.8cm{\leaders\hbox to 8.05pt{\hss \rule{4pt}{0.75pt} \hss}\hfil}}\\}
+
 % % Title of Dissertation
-\ntaddtocover[align=l, vspace=0, height=3cm, inalign=c]{1-1}{%
+\ntaddtocover[align=l, vspace=0pt, height=1cm, inalign=t]{1-1}{%
+  \mcsigdashes
+}
+\ntaddtocover[align=l, vspace=-1cm+7pt, minheight=3cm, inalign=c]{1-1}{%
   \fontsize{17}{17}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}}%
   \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
@@ -210,15 +223,21 @@
     }%
   }{}%
 }
+\ntaddtocover[align=l, vspace=7pt, height=1cm, inalign=t]{1-1}{%
+  \mcsigdashes
+}
 
 % Author name
-\ntaddtocover[align=l, vspace=0cm, height=2.2cm, inalign=c]{1-1}{%
+\ntaddtocover[align=l, vspace=-1cm+7pt, height=1.5cm, inalign=c]{1-1}{%
   \fontsize{15}{15}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\thedocauthor(name)}}%
 }
+\ntaddtocover[align=l, vspace=7pt, height=1cm, inalign=t]{1-1}{%
+  \mcsigdashes
+}
 
 % Degree
-\ntaddtocover[align=l, vspace=3mm]{1-1}{%
+\ntaddtocover[align=l, vspace=-1cm+7pt]{1-1}{%
   \fontsize{12}{12}\selectfont%
   \textcolor{imsdarkgrey}{%
     \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%

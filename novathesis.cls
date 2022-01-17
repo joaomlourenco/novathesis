@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-01-14 [6.9.2]
+%% Version 2022-01-17 [6.9.3]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -817,7 +817,7 @@
                             \iftoggle{/novathesis/tocintoc}{%
                                 \tableofcontents%
                             }{%
-                                \pdfbookmark[1]{\contentsname}{toctarget}%
+                                \pdfbookmark{\contentsname}{toctarget}%
                                 \hypertarget{toctarget}{\tableofcontents*}%
                             }%
                         }}}%
@@ -1009,8 +1009,7 @@
 %   Please open and edit the appropriate
 %       configuration file “Config/6_list_of.tex”
 %============================================================
-\AtEndPreamble{\makeatletter\input{Config/6_list_of}}
-% \NTRunHook{list_of}
+\AtEndPreamble{\makeatletter\NTRunHook{list_of/pre}\input{Config/6_list_of}\NTRunHook{list_of/post}}
 
 \ifdocunset{\ntsetup{docstatus=working}}{}
 \ifoptionequal{/novathesis/spine}{unset}
@@ -1449,6 +1448,8 @@
   , inalign/.new choice={c, t, b}
   % height of the box (default = the natural height for the contents)
   , height/.new value
+  % minheight of the box (default = the natural height for the contents)
+  , minheight/.new value
   % width of the box (default = full width)
   , width/.new value
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
@@ -1463,7 +1464,7 @@
   % background color for the box (default = transparent)
   , bgcolor/.new color
   % default values
-  , defaults/.new style*={status={}, degree={}, align=c, inalign=c, height={}, width={}, 
+  , defaults/.new style*={status={}, degree={}, align=c, inalign=c, height={}, minheight=0pt, width={}, 
                           vspace=0pt, hspace=0pt, newpar=true, color={}, bgcolor={}}
   % set defaults
   , defaults
@@ -1491,10 +1492,10 @@
 }
 
 \newcommand{\@nt@makeboxwithcoverelement@iii}[3]{%
-  % #1 = code
-  % #2 = boxname
-  % Create temp box if undefined
-  \defifundef{\@mkcvelemwidth}{\newlength}%
+  % #1 = cover ID (major-minor)
+  % #2 = code
+  % #3 = boxname
+novathesis.cls  \defifundef{\@mkcvelemwidth}{\newlength}%
   \ifoptionblank{/@ntcoveropts/width}%
     {\setlength{\@mkcvelemwidth}{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}\relax}}%
     {\option{/@ntcoveropts/width}}%
@@ -1504,14 +1505,17 @@
   % Create destination boxes if undefined and save to it
   \defifundef{#3}{\newsavebox}%
   \begin{lrbox}{#3}%
+    \begin{minipage}[t][0pt][t]{0pt}%
+      \color{blue}\rule{0.000000000000001pt}{\option{/@ntcoveropts/minheight}}%
+    \end{minipage}
     % Minipage definition is different if element height is given or not
-      \ifoptionblank{/@ntcoveropts/height}%
-          {\minipage[t][][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
-          {\minipage[t][\@mkcvelemheight][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
-              \ifoptionblank{/@ntcoveropts/color}{}{\color{\option{/@ntcoveropts/color}}}%
-              \option{/@ntcoveropts/alignmap}%
-              #2%
-          \endminipage%
+    \ifoptionblank{/@ntcoveropts/height}%
+        {\minipage[t][][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
+        {\minipage[t][\@mkcvelemheight][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
+            \ifoptionblank{/@ntcoveropts/color}{}{\color{\option{/@ntcoveropts/color}}}%
+            \option{/@ntcoveropts/alignmap}%
+            #2%
+        \endminipage%
   \end{lrbox}%
   \begin{lrbox}{#3}%
     % Add background color if necessary
