@@ -1525,31 +1525,23 @@ novathesis.cls  \defifundef{\@mkcvelemwidth}{\newlength}%
   \end{lrbox}%
 }
 
-\newenvironment{tinywhite}[1][white]{%
-  \begin{Spacing}{1}%
-    \sffamily%
-    \fontsize{10.01}{10.01}\selectfont%
-    \hypersetup{allcolors=#1}%
-    \color{#1}%
-}{%
-  \end{Spacing}\ignorespacesafterend%
-}
-
 \newcommand{\@ntfixspacing}[2]{%
   \renewcommand*{\bibfont}{\hypersetup{allcolors=#1}\color{#1}%
                            \sffamily\fontsize{#2}{#2}\selectfont}%
+  \defbibheading{bibliography}[\bibname]{%
+    \ \textbf{##1}\\[-20pt]}
   \refsection%
     \begin{minipage}{\linewidth}%
       \bibfont%
       \theacknowledgmentsstring(\option{/novathesis/coverlang})%
-      \vspace*{-20ex}%
-      \printbibliography[heading=none]%
+      \printbibliography[title=12cc90221730b8ba41bb3b1f8b517acd]%
     \end{minipage}%
   \endrefsection%
 }
 
 \newcommand{\ntfixspacing}{%
   \@ntfixspacing{white}{0.01}%
+  % \@ntfixspacing{blue}{16}%
 }
 
 \newcommand*{\ntprintstatement}{%
