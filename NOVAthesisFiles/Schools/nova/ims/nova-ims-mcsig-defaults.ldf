@@ -37,6 +37,34 @@
 \ntsetup{printcopyright=false}
 \ntbibsetup{style=apa}
 \AtEndPreamble{\let\cite\parencite}
+\ntremovefromprintorder{frontmatter}{copyright,dedicatory,quote}
+\abstractorder(pt):={pt,en}
+\abstractorder(en):={pt,en}
+
+% \keywordsenvpre()={}
+% \keywordsenvpost()={}
+\keywordsblockpre()={\mbox{}\\[1cm]}
+\keywordsblockpost()={}
+% \keywordsblocksuffix()={\\[\parskip]}
+\keywordsstringpre()={\begin{center}}
+\keywordsstringpost()={\end{center}}
+% \keywordstringpre()={&}
+\keywordsstringfont()={\bfseries\Large}
+\keywordsstringsuffix()={}
+\keywordspost()={\\[1ex]}
+\keywordsboxlen()={\textwidth}
+\NTAddToHook{keywords/pt/pre}{\options{/@nt/kwprint = {}}}
+\NTAddToHook{keywords/en/pre}
+            {\options{/@nt/kwprint = \theabstractorder(\option{/@nt/currentlang})}\clearpage}
+
+% declaração de originalidade,
+% agradecimentos,
+% resumo,
+% abstract,
+% palavras-chave,
+% acrónimos,
+% índice de tabelas,
+% índice de figuras
 
 % Cover background images
 % \thesiscover(phd,1-1,bgcolor):={white}
