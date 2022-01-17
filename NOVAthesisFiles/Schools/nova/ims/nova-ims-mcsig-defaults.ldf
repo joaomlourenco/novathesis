@@ -57,14 +57,22 @@
 \NTAddToHook{keywords/en/pre}
             {\options{/@nt/kwprint = \theabstractorder(\option{/@nt/currentlang})}\clearpage}
 
-% declaração de originalidade,
-% agradecimentos,
-% resumo,
-% abstract,
-% palavras-chave,
-% acrónimos,
-% índice de tabelas,
-% índice de figuras
+\NTAddToHook{list_of/post}{
+  \options{/@nt/list/listof = {}}
+\ntaddlistof{listsofglossaries}  % The Glossary, and the lists of Acronyms and Symbols
+\ntaddlistof{tableofcontents}    % The Table of Contents. Probably you want ot leave this as is! ;)
+\ntaddlistof{listoftables}       % The List of Tables. Comment to omit.
+\ntaddlistof{listoffigures}      % The List of Figures. Comment to omit.
+\@ifpackageloaded{algorithm2e}   % The List of Algorithms for package “algorithm2e”.
+    {\ntaddlistof{listofalgorithms}}{}   % The List of Algorithms for Algorithm2e
+\@ifpackageloaded{algorithms}    % The List of Algorithms for package “algorithms”.
+    {\ntaddlistof{lstlistoflistings}}{}
+\@ifpackageloaded{listings}      % The List of Listings for package “listings”.
+    {\ntaddlistof{lstlistoflistings}}{}
+\@ifpackageloaded{minted}        % The List of Listings for the “minted” package.
+    {\ntaddlistof{listoflistings}}{}
+}
+
 
 % Cover background images
 % \thesiscover(phd,1-1,bgcolor):={white}
