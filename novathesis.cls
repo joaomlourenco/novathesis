@@ -404,12 +404,25 @@
 
 
 \newdata{notdefined}
-\newdata{keywordsprefix}
+\newdata{keywordsenvpre}
+\newdata{keywordsenvpost}
+\newdata{keywordsblockpre}
+\newdata{keywordsblockpost}
+\newdata{keywordspre}
+\newdata{keywordspost}
+\newdata{keywordsboxlen}
 \newdata{keywordsstring}
+\newdata{keywordsstringpre}
+\newdata{keywordsstringpost}
 \newdata{keywordsstringprefix}
 \newdata{keywordsstringsuffix}
 \newdata{keywordsstringfont}
-\newdata{keywordsseparator}
+\keywordsblockpre()={\bigskip}
+\keywordsstringsuffix()={:\quad}
+\keywordsstringfont()={\bfseries}
+\keywordspost()={,}
+\keywordsboxlen()={\textwidth-\widthof{\usebox{\keywordsstringbox}}}
+
 \newdata{specializationstring}
 \newdata{departmentofstring}
 \newdata{sponsorsstring}
@@ -500,14 +513,6 @@
 \newdata{doctitle}
 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% LOADING ADDITINAL FILES BEFORE LOADING MEMOIR
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% --------------------------------------------------------
-% SOME PRELIMINARY LANGUAGE DEFINITIONS
-
 % For each main language, list which abstracts shall be printed and in which order
 % may have more than two (just be sure you include the languages above as well)
 \newdata{abstractorder}
@@ -517,6 +522,12 @@
 \abstractorder(it):={it,en}
 \abstractorder(es):={es,en}
 \abstractorder(de):={de,en}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LOADING ADDITINAL FILES BEFORE LOADING MEMOIR
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % --------------------------------------------------------
 % PROCESS PACKAGE OPTIONS
@@ -546,6 +557,7 @@
   , gnumberlist/.new toggle       = true
   , tocintoc/.new toggle          = false
   , urlstyle/.new cmd             = {\AfterPreamble{\urlstyle{#1}}}
+  , kwncols/.new value            = 2
   , debugcover/.new toggle        = false
   , spine/.new choice             = {unset, no, full, trim}
   , media/.new choice             = {screen, paper}
@@ -1786,7 +1798,7 @@
 \newcommand{\@ntprintabstract}[1]{%
   % \typeout{NT PRINT ABSTRACT #1}%
   \ifoptiondefined{/@nt/file/abstract/#1}{%
-    \setabstractlang{#1}%
+    \ntselectlang{#1}%
     \pdfbookmark[1]{\theabstractbkmstring(#1)}{bmabstract#1}%
     \NTRunHook{abstract/pre}%
     \NTRunHook{abstract/#1/pre}%
@@ -1984,8 +1996,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\@nt@keywordsstr}{}
-\newcommand*{\setabstractlang}[1]{\ntselectlang{#1}}
 \newcommand*{\printabstracttitle}[1]{%
 	\chapter*{\theabstractbkmstring(#1)}%
 }
@@ -1995,54 +2005,53 @@
 %% Keywords
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{environ}
-\keywordsprefix():={\vskip\baselineskip\noindent}
-\keywordsstringprefix():={}
-\keywordsstringsuffix():={:\quad}
-\keywordsstringfont():={\bfseries}
-\keywordsseparator():={, }
-% \newenvironment{keywords}{%
-%   \defifundef{\ntkwstrbox}{\newsavebox}%
-%   \savebox{\ntkwstrbox}{%
-%     \thekeywordsstringfont()%
-%     \thekeywordsstring(\option{/@nt/currentlang})%
-%     \thekeywordsstringsuffix()%
-%   }
-%   \defifundef{\ntkwbox}{\newsavebox}%
-%   \begin{lrbox}{\ntkwbox}%
-%     \minipage[t]{\textwidth-\widthof{\usebox{\ntkwstrbox}}}%
-% }{%
-%     \endminipage%
-%   \end{lrbox}%
-%   \ifoptionequal{/@nt/currentlang}{\option{/novathesis/mainlang}}
-%       {\hypersetup{pdfkeywords={\usebox{\ntkwbox}}}}
-%       {}%
-%   \noindent
-%   \thekeywordsprefix()%
-%   \usebox{\ntkwstrbox}%
-%   \usebox{\ntkwbox}%
-% }
-\NewEnviron{keywords}{%
-  \@temptokena={%
-    \ntfor\i:=\BODY\do{\i%
-      \ifx\@xfor@nextelement\@nnil\relax
-         % last iteration, do nothing
-       \else
-         \thekeywordsseparator()% not last iteration
-      \fi
-    }
-  }
-  \defifundef{\ntkwstrbox}{\newsavebox}%
-  \savebox{\ntkwstrbox}{%
-    \thekeywordsstringfont()%
-    \thekeywordsstring(\option{/@nt/currentlang})%
-    \thekeywordsstringsuffix()%
+
+\options{/@nt/kwprint/.new value}
+
+\newcommand{\printkeywords}[2]{%
+  \csxdef{@savedkws/#1}{#2}
+  \options{/@nt/kwprint/.expanded = #1}
+  \NTRunHook{keywords/pre}%
+  \NTRunHook{keywords/#1/pre}%
+  \ifoptionvoid{/@nt/kwprint}{}{%
+    \begingroup
+    \defifundef{\keywordsstringbox}{\newsavebox}
+    \datadefault{keywordsenvpre}(#1)%
+    \@for\i:=\expanded{\option{/@nt/kwprint}}\do{%
+      \savebox{\keywordsstringbox}{%
+        \datadefault{keywordsstringprefix}(\i)%
+        \datadefault{keywordsstringfont}(\i)\csuse{thekeywordsstring}(\i)%
+        \datadefault{keywordsstringsuffix}(\i)%
+      }
+      \noindent
+      \datadefault{keywordsblockpre}(\i)%
+      \datadefault{keywordsstringpre}(\i)%
+      \usebox{\keywordsstringbox}%
+      \datadefault{keywordsstringpost}(\i)%
+      \begin{minipage}[t]{\expanded{\datadefault{keywordsboxlen}(\i)}}
+        \@for\ii:=\expanded{\csuse{@savedkws/\i}}\do{%
+          \datadefault{keywordstringpre}(#1)
+          \ii%
+          \ifx\@xfor@nextelement\@nnil
+            % last iteration
+          \else
+            \datadefault{keywordspost}(\i)% not last iteration
+          \fi
+        }%
+      \end{minipage}
+      \datadefault{keywordsblockpost}(\i)%
+    }%
+    \datadefault{keywordsenvpost}(#1)%
+    \endgroup
   }%
-  \noindent\usebox{\ntkwstrbox}%
-  \parbox[t]{\textwidth-\widthof{\usebox{\ntkwstrbox}}}{\the\@temptokena}%
-  \IfStrEq{\option{/@nt/currentlang}}{\option{/novathesis/mainlang}}%
-      {\hypersetup{pdfkeywords={\BODY}}}{}%
+  \NTRunHook{keywords/#1/post}%
+  \NTRunHook{keywords/post}%\
 }
 
+\NewEnviron{keywords}{%
+  \printkeywords{\option{/@nt/currentlang}}{\BODY}%
+}
+  
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
