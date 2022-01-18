@@ -759,15 +759,16 @@
   \IfStrEq{#2}{}{\def\@ntlang{\option{/novathesis/coverlang}}}{\StrGobbleRight{#2}{1}[\@ntlang]}%
   \@nttitle{\@ntlang}{#1}{#3}%
 }
-\newcommand{\replacelinebreakwithspace}[1]{%
-      \def\\{\ }#1%
+\newcommand{\replacelinebreakwithspace}[2]{%
+      {\def\\{\ }\xdef#2{#1}}%
 }
 \newcommand*{\@nttitle}[3]{%
   % #1 = lang
   % #2 = type (main, sub) title
   % #3 = value
-  \doctitle(#1,#2):={\replacelinebreakwithspace{#3}}%
-  \doctitle(#1,#2,caps):={\replacelinebreakwithspace{\expandafter\MakeUppercase\expandafter{#3}}}%
+  \replacelinebreakwithspace{#3}{\@nttitletemp}
+  \doctitle(#1,#2):={\@nttitletemp}%
+  \doctitle(#1,#2,caps):={\expandafter\MakeUppercase\expandafter{\@nttitletemp}}%
   \doctitle(#1,#2,cover):={#3}%
   \doctitle(#1,#2,cover,caps):={\expandafter\MakeUppercase\expandafter{#3}}%
 }
