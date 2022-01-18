@@ -53,6 +53,7 @@
 \keywordsstringsuffix()={}
 \keywordspost()={\\[1ex]}
 \keywordsboxlen()={\textwidth}
+
 \NTAddToHook{keywords/pt/pre}{\options{/@nt/kwprint = {}}}
 \NTAddToHook{keywords/en/pre}
             {\options{/@nt/kwprint = \theabstractorder(\option{/@nt/currentlang})}\clearpage}
