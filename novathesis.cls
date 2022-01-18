@@ -1078,58 +1078,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\debuggrid}[1][orange]{%
-  % \datamatch{\@nt@margin@top}{margin}(%
-  %              ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,top}%
-  %              ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,top}%
-  %              ,{cover,\option{/novathesis/degreeacr},#1,top}%
-  %              ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},top}%
-  %              ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},top}%
-  %              ,{cover,\option{/novathesis/degreeacr},top})%
-  %              ,{cover,\option{/novathesis/docdegree},#1,top}%
-  %              ,{cover,\option{/@nt/document/fallback},#1,top}%
-  %              ,{cover,#1,top}%
-  %              ,{cover,\option{/novathesis/docdegree},top}%
-  %              ,{cover,\option{/@nt/document/fallback},top}%
-  %              ,{cover,top})%
-  % \datamatch{\@nt@margin@bottom}{margin}(%
-  %              ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,bottom}%
-  %              ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,bottom}%
-  %              ,{cover,\option{/novathesis/degreeacr},#1,bottom}%
-  %              ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},bottom}%
-  %              ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},bottom}%
-  %              ,{cover,\option{/novathesis/degreeacr},bottom})%
-  %              ,{cover,\option{/novathesis/docdegree},#1,bottom}%
-  %              ,{cover,\option{/@nt/document/fallback},#1,bottom}%
-  %              ,{cover,#1,bottom}%
-  %              ,{cover,\option{/novathesis/docdegree},bottom}%
-  %              ,{cover,\option{/@nt/document/fallback},bottom}%
-  %              ,{cover,bottom})%
-  % \datamatch{\@nt@margin@left}{margin}(%
-  %              ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,left}%
-  %              ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,left}%
-  %              ,{cover,\option{/novathesis/degreeacr},#1,left}%
-  %              ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},left}%
-  %              ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},left}%
-  %              ,{cover,\option{/novathesis/degreeacr},left})%
-  %              ,{cover,\option{/novathesis/docdegree},#1,left}%
-  %              ,{cover,\option{/@nt/document/fallback},#1,left}%
-  %              ,{cover,#1,left}%
-  %              ,{cover,\option{/novathesis/docdegree},left}%
-  %              ,{cover,\option{/@nt/document/fallback},left}%
-  %              ,{cover,left})%
-  % \datamatch{\@nt@margin@right}{margin}(%
-  %              ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,right}%
-  %              ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,right}%
-  %              ,{cover,\option{/novathesis/degreeacr},#1,right}%
-  %              ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},right}%
-  %              ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},right}%
-  %              ,{cover,\option{/novathesis/degreeacr},right})%
-  %              ,{cover,\option{/novathesis/docdegree},#1,right}%
-  %              ,{cover,\option{/@nt/document/fallback},#1,right}%
-  %              ,{cover,#1,right}%
-  %              ,{cover,\option{/novathesis/docdegree},right}%
-  %              ,{cover,\option{/@nt/document/fallback},right}%
-  %              ,{cover,right})%
   \begin{tikzpicture}[remember picture, semitransparent, overlay, shift=(current page.north west)]%
         \draw[step=1mm, line width=0.1mm, #1!30!white, yscale=-1] 
             (\@nt@margin@left, \@nt@margin@top)
@@ -2036,10 +1984,6 @@
         \optionlistdo{/@nt/keywords/\i}{%
           \datadefault{keywordstringpre}(#1)%
           \process##1%
-          % \ifnum\the\option{/@nt/keywords/\i/@n}=\the\option{/@nt/keywords/\i/@size}\relax
-          % \else
-          %   \datadefault{keywordspost}(\i)%
-          % \fi
         }%
       \end{minipage}
       \datadefault{keywordsblockpost}(\i)%
