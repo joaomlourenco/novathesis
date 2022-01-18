@@ -420,7 +420,7 @@
 \keywordsblockpre()={\bigskip}
 \keywordsstringsuffix()={:\quad}
 \keywordsstringfont()={\bfseries}
-\keywordspost()={,}
+\keywordspost()={, }
 \keywordsboxlen()={\textwidth-\widthof{\usebox{\keywordsstringbox}}}
 
 \newdata{specializationstring}
@@ -763,8 +763,8 @@
       \def\\{\ }#1%
 }
 \newcommand*{\@nttitle}[3]{%
-  % #1 = type (main, sub) title
-  % #2 = lang
+  % #1 = lang
+  % #2 = type (main, sub) title
   % #3 = value
   \doctitle(#1,#2):={\replacelinebreakwithspace{#3}}%
   \doctitle(#1,#2,caps):={\replacelinebreakwithspace{\expandafter\MakeUppercase\expandafter{#3}}}%
@@ -802,7 +802,7 @@
   \docauthor(gender):={#1}%
   \docauthor(name):={#2}%
   \docauthor(name,short):={#3}%
-  \AtBeginDocument{\hypersetup{pdfauthor={#2}}}%
+  % \AtBeginDocument{\hypersetup{pdfauthor={#2}}}%
 }
 
 \def\ntauthordegree(#1)#2{%
@@ -1495,7 +1495,7 @@
   % #1 = cover ID (major-minor)
   % #2 = code
   % #3 = boxname
-novathesis.cls  \defifundef{\@mkcvelemwidth}{\newlength}%
+  \defifundef{\@mkcvelemwidth}{\newlength}%
   \ifoptionblank{/@ntcoveropts/width}%
     {\setlength{\@mkcvelemwidth}{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}\relax}}%
     {\option{/@ntcoveropts/width}}%
@@ -2004,15 +2004,21 @@ novathesis.cls  \defifundef{\@mkcvelemwidth}{\newlength}%
 
 \options{/@nt/kwprint/.new value}
 
-\newcommand{\printkeywords}[2]{%
-  \csxdef{@savedkws/#1}{#2}
+\def\removenewline#1`\^^M\@nil{%
+      #1%
+}
+
+\newread\kwsfile
+\newcommand{\printkeywords}[1]{%
+  % #1 = current lang
+  % \csxdef{@savedkws/#1}{#2}
   \options{/@nt/kwprint/.expanded = #1}
   \NTRunHook{keywords/pre}%
   \NTRunHook{keywords/#1/pre}%
   \ifoptionvoid{/@nt/kwprint}{}{%
-    \begingroup
     \defifundef{\keywordsstringbox}{\newsavebox}
     \datadefault{keywordsenvpre}(#1)%
+    \def\@ntkwsin{}
     \@for\i:=\expanded{\option{/@nt/kwprint}}\do{%
       \savebox{\keywordsstringbox}{%
         \datadefault{keywordsstringprefix}(\i)%
@@ -2025,27 +2031,29 @@ novathesis.cls  \defifundef{\@mkcvelemwidth}{\newlength}%
       \usebox{\keywordsstringbox}%
       \datadefault{keywordsstringpost}(\i)%
       \begin{minipage}[t]{\expanded{\datadefault{keywordsboxlen}(\i)}}
-        \@for\ii:=\expanded{\csuse{@savedkws/\i}}\do{%
-          \datadefault{keywordstringpre}(#1)
-          \ii%
-          \ifx\@xfor@nextelement\@nnil
-            % last iteration
-          \else
-            \datadefault{keywordspost}(\i)% not last iteration
-          \fi
+        \def\process{\def\process{\datadefault{keywordspost}(\i)}}
+        \optionlistdo{/@nt/keywords/\i}{%
+          \datadefault{keywordstringpre}(#1)%
+          \process##1%
+          % \ifnum\the\option{/@nt/keywords/\i/@n}=\the\option{/@nt/keywords/\i/@size}\relax
+          % \else
+          %   \datadefault{keywordspost}(\i)%
+          % \fi
         }%
       \end{minipage}
       \datadefault{keywordsblockpost}(\i)%
     }%
     \datadefault{keywordsenvpost}(#1)%
-    \endgroup
   }%
   \NTRunHook{keywords/#1/post}%
   \NTRunHook{keywords/post}%\
 }
 
-\NewEnviron{keywords}{%
-  \printkeywords{\option{/@nt/currentlang}}{\BODY}%
+\newenvironment{keywords}{%
+  \filecontents[overwrite,nosearch,noheader]{\jobname.k\option{/@nt/currentlang}}
+}{%
+  \endfilecontents%
+  \printkeywords{\option{/@nt/currentlang}}
 }
   
 
@@ -2105,3 +2113,23 @@ novathesis.cls  \defifundef{\@mkcvelemwidth}{\newlength}%
 }
 
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
+
+\AtBeginDocument{%
+  \def\@ntkwsi{}
+  \@for\@it:=\expanded{\theabstractorder(\option{/novathesis/mainlang})}\do{%
+    \openin\kwsfile=\expanded{\jobname.k\@it}
+    \ifeof\kwsfile\else
+      \read\kwsfile to \@ntkwsi
+      \closein\kwsfile
+      % \show\@ntkwsi
+      \options{/@nt/keywords/\@it/.expanded/.new list = \@ntkwsi}%
+      \IfStrEq{\@it}{\option{/novathesis/mainlang}}
+              {\hypersetup{pdfkeywords={\@ntkwsi}}}{}%
+    \fi
+  }%
+  \hypersetup{%
+    pdfauthor={\expanded{\thedocauthor(name)}},
+    pdftitle={\expanded{\thedoctitle(\option{/novathesis/mainlang},main)}},
+    pdfsubject={\expanded{\thedoctitle(\option{/novathesis/mainlang},sub)}},
+  }
+}
