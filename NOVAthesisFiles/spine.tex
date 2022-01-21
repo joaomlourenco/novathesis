@@ -88,7 +88,7 @@
 }
 
 \newcommand{\@spinetextcolor}[1]{%\option{/novathesis/docdegree},
-  \ifdatadefinedor{\arg}{spine}({box,#1,textcolor},{box,textcolor}){\color{\thespine(\arg)}}{}%
+  \datamatchtf{\arg}{spine}({box,#1,textcolor},{box,textcolor}){\color{\arg}}{}%
 }
 
 \newcommand{\ntprintspine}{%
