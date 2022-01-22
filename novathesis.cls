@@ -711,14 +711,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % --------------------------------------------------------
 % Department
-\def\ntdepartment(#1)#2{\ifdatadefined{department}(#1){}{\department(#1):={#2}}}
+\def\ntdepartment{\@ifnextchar*{\@ntdepartmentifundef}{\@ntdepartment{}}}
+\def\@ntdepartmentifundef#1(#2)#3{\ifdatadefined{department}(#2){}{\@ntdepartment{}(#2){#3}}}
+\def\@ntdepartment#1(#2)#3{\typeout{NTDEP [#2] [#3]}\department(#2):={#3}}
 
 % --------------------------------------------------------
 % Degree
-\def\ntmajorfield(#1)#2{\majorfield(#1):={#2}}
-\def\ntdegreename(#1)#2{%
-  % #1 = lang
-  % #2 = value
+\def\ntmajorfield{\@ifnextchar*{\@ntmajorfieldifundef}{\@ntmajorfield{}}}
+\def\@ntmajorfieldifundef#1(#2)#3{\ifdatadefined{majorfield}(#2){}{\@ntmajorfield{}(#2){#3}}}
+\def\@ntmajorfield#1(#2)#3{\majorfield(#2):={#3}}
+
+\def\ntdegreename{\@ifnextchar*{\@ntdegreenameifundef}{\@ntdegreename{}}}
+\def\@ntdegreenameifundef#1(#2)#3{\ifdatadefined{degreename}(#2){}{\@ntdegreename{}(#2){#3}}}
+\def\@ntdegreename#1(#2)#3{%
+  % #1 = ignored
+  % #2 = lang
+  % #3 = value
   \datamatch{\match}{degreenameprefix}(%
               {\option{/novathesis/docdegree},\option{/novathesis/degreeacr},\option{/novathesis/coverlang}}%
              ,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr},\option{/novathesis/coverlang}}%
@@ -727,14 +735,18 @@
              ,{\option{/@nt/document/fallback},\option{/novathesis/coverlang}}%
              ,{\option{/novathesis/coverlang}}%
   )%
-  \ifblank{\match}{\degreename(#1):={#2}}{\degreename(#1):={\match\ #2}}%
-  \majorfield(#1):={#2}%
+  \ifblank{\match}{\degreename(#2):={#3}}{\degreename(#2):={\match\ #3}}%
+  \majorfield*(#2):={#3}%
 }
 % --------------------------------------------------------
 % Specialization
-\def\ntspecialization(#1)#2{\specialization(#1):={#2}}
-\def\ntminorfield(#1)#2{\minorfield(#1):={#2}}
-\def\ntspecialization(#1)#2{%
+\def\ntminorfield{\@ifnextchar*{\@ntminorfieldifundef}{\@ntminorfield{}}}
+\def\@ntminorfieldifundef#1(#2)#3{\ifdatadefined{minorfield}(#2){}{\@ntminorfield{}(#2){#3}}}
+\def\@ntminorfield#1(#2)#3{\minorfield(#2):={#3}}
+
+\def\ntspecialization{\@ifnextchar*{\@ntspecializationifundef}{\@ntspecialization{}}}
+\def\@ntspecializationifundef#1(#2)#3{\ifdatadefined{specialization}(#2){}{\@ntspecialization{}(#2){#3}}}
+\def\@ntspecialization#1(#2)#3{%
   \datamatch{\match}{specializationstring}(%
                 {\option{/novathesis/docdegree},\option{/novathesis/degreeacr},\option{/novathesis/coverlang}}%
                ,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr},\option{/novathesis/coverlang}}%
@@ -743,8 +755,8 @@
                ,{\option{/@nt/document/fallback},\option{/novathesis/coverlang}}%
                ,{\option{/novathesis/coverlang}}%
   )%
-  \ifblank{\match}{\specialization(#1):={#2}}{\specialization(#1):={\match\ #2}}%
-  \minorfield(#1):={#2}%
+  \ifblank{\match}{\specialization(#2):={#3}}{\specialization(#2):={\match\ #3}}%
+  \minorfield*(#2):={#3}%
 }
 
 % --------------------------------------------------------
