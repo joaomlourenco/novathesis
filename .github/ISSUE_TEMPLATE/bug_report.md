@@ -21,8 +21,8 @@ Say no if you use a cloud-based service.
 **What went wrong?**
 A clear and concise description of the *observed* behaviour.
 
-**What was expect?*
-A clear and concise description of what *you expected* to happen.
+**Expected behavior**
+A clear and concise description of what you expected to happen.
 
 **Instructions to Reproduce the Error**
 Steps to reproduce the behavior:
@@ -31,9 +31,6 @@ Steps to reproduce the behavior:
 3. …
 3. In the main text, add the text "ABC" or the command "XYZ"
 4. See error
-
-**Expected behavior**
-A clear and concise description of what you expected to happen.
 
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
