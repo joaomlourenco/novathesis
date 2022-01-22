@@ -858,7 +858,7 @@
                               \glstocfalse
                               \printglossaries
                           }}}%
-  }[\options{/@nt/list/listof/.cpush={\csuse{#1}}}]%
+  }[\options{/@nt/list/listof/.cpush={\ifdefmacro{#1}{#1}{\csuse{#1}}}}]%
 }
 
 %============================================================
