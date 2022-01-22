@@ -711,14 +711,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % --------------------------------------------------------
 % Department
-\def\ntdepartment(#1)#2{\ifdatadefined{department}(#1){}{\department(#1):={#2}}}
+\def\ntdepartment{\@ifnextchar*{\@ntdepartmentifundef}{\@ntdepartment{}}}
+\def\@ntdepartmentifundef#1(#2)#3{\ifdatadefined{department}(#2){}{\@ntdepartment{}(#2){#3}}}
+\def\@ntdepartment#1(#2)#3{\typeout{NTDEP [#2] [#3]}\department(#2):={#3}}
 
 % --------------------------------------------------------
 % Degree
-\def\ntmajorfield(#1)#2{\majorfield(#1):={#2}}
-\def\ntdegreename(#1)#2{%
-  % #1 = lang
-  % #2 = value
+\def\ntmajorfield{\@ifnextchar*{\@ntmajorfieldifundef}{\@ntmajorfield{}}}
+\def\@ntmajorfieldifundef#1(#2)#3{\ifdatadefined{majorfield}(#2){}{\@ntmajorfield{}(#2){#3}}}
+\def\@ntmajorfield#1(#2)#3{\majorfield(#2):={#3}}
+
+\def\ntdegreename{\@ifnextchar*{\@ntdegreenameifundef}{\@ntdegreename{}}}
+\def\@ntdegreenameifundef#1(#2)#3{\ifdatadefined{degreename}(#2){}{\@ntdegreename{}(#2){#3}}}
+\def\@ntdegreename#1(#2)#3{%
+  % #1 = ignored
+  % #2 = lang
+  % #3 = value
   \datamatch{\match}{degreenameprefix}(%
               {\option{/novathesis/docdegree},\option{/novathesis/degreeacr},\option{/novathesis/coverlang}}%
              ,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr},\option{/novathesis/coverlang}}%
@@ -727,14 +735,18 @@
              ,{\option{/@nt/document/fallback},\option{/novathesis/coverlang}}%
              ,{\option{/novathesis/coverlang}}%
   )%
-  \ifblank{\match}{\degreename(#1):={#2}}{\degreename(#1):={\match\ #2}}%
-  \majorfield(#1):={#2}%
+  \ifblank{\match}{\degreename(#2):={#3}}{\degreename(#2):={\match\ #3}}%
+  \majorfield*(#2):={#3}%
 }
 % --------------------------------------------------------
 % Specialization
-\def\ntspecialization(#1)#2{\specialization(#1):={#2}}
-\def\ntminorfield(#1)#2{\minorfield(#1):={#2}}
-\def\ntspecialization(#1)#2{%
+\def\ntminorfield{\@ifnextchar*{\@ntminorfieldifundef}{\@ntminorfield{}}}
+\def\@ntminorfieldifundef#1(#2)#3{\ifdatadefined{minorfield}(#2){}{\@ntminorfield{}(#2){#3}}}
+\def\@ntminorfield#1(#2)#3{\minorfield(#2):={#3}}
+
+\def\ntspecialization{\@ifnextchar*{\@ntspecializationifundef}{\@ntspecialization{}}}
+\def\@ntspecializationifundef#1(#2)#3{\ifdatadefined{specialization}(#2){}{\@ntspecialization{}(#2){#3}}}
+\def\@ntspecialization#1(#2)#3{%
   \datamatch{\match}{specializationstring}(%
                 {\option{/novathesis/docdegree},\option{/novathesis/degreeacr},\option{/novathesis/coverlang}}%
                ,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr},\option{/novathesis/coverlang}}%
@@ -743,8 +755,8 @@
                ,{\option{/@nt/document/fallback},\option{/novathesis/coverlang}}%
                ,{\option{/novathesis/coverlang}}%
   )%
-  \ifblank{\match}{\specialization(#1):={#2}}{\specialization(#1):={\match\ #2}}%
-  \minorfield(#1):={#2}%
+  \ifblank{\match}{\specialization(#2):={#3}}{\specialization(#2):={\match\ #3}}%
+  \minorfield*(#2):={#3}%
 }
 
 % --------------------------------------------------------
@@ -1078,58 +1090,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\debuggrid}[1][orange]{%
-  % \datamatch{\@nt@margin@top}{margin}(%
-  %              ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,top}%
-  %              ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,top}%
-  %              ,{cover,\option{/novathesis/degreeacr},#1,top}%
-  %              ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},top}%
-  %              ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},top}%
-  %              ,{cover,\option{/novathesis/degreeacr},top})%
-  %              ,{cover,\option{/novathesis/docdegree},#1,top}%
-  %              ,{cover,\option{/@nt/document/fallback},#1,top}%
-  %              ,{cover,#1,top}%
-  %              ,{cover,\option{/novathesis/docdegree},top}%
-  %              ,{cover,\option{/@nt/document/fallback},top}%
-  %              ,{cover,top})%
-  % \datamatch{\@nt@margin@bottom}{margin}(%
-  %              ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,bottom}%
-  %              ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,bottom}%
-  %              ,{cover,\option{/novathesis/degreeacr},#1,bottom}%
-  %              ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},bottom}%
-  %              ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},bottom}%
-  %              ,{cover,\option{/novathesis/degreeacr},bottom})%
-  %              ,{cover,\option{/novathesis/docdegree},#1,bottom}%
-  %              ,{cover,\option{/@nt/document/fallback},#1,bottom}%
-  %              ,{cover,#1,bottom}%
-  %              ,{cover,\option{/novathesis/docdegree},bottom}%
-  %              ,{cover,\option{/@nt/document/fallback},bottom}%
-  %              ,{cover,bottom})%
-  % \datamatch{\@nt@margin@left}{margin}(%
-  %              ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,left}%
-  %              ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,left}%
-  %              ,{cover,\option{/novathesis/degreeacr},#1,left}%
-  %              ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},left}%
-  %              ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},left}%
-  %              ,{cover,\option{/novathesis/degreeacr},left})%
-  %              ,{cover,\option{/novathesis/docdegree},#1,left}%
-  %              ,{cover,\option{/@nt/document/fallback},#1,left}%
-  %              ,{cover,#1,left}%
-  %              ,{cover,\option{/novathesis/docdegree},left}%
-  %              ,{cover,\option{/@nt/document/fallback},left}%
-  %              ,{cover,left})%
-  % \datamatch{\@nt@margin@right}{margin}(%
-  %              ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,right}%
-  %              ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,right}%
-  %              ,{cover,\option{/novathesis/degreeacr},#1,right}%
-  %              ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},right}%
-  %              ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},right}%
-  %              ,{cover,\option{/novathesis/degreeacr},right})%
-  %              ,{cover,\option{/novathesis/docdegree},#1,right}%
-  %              ,{cover,\option{/@nt/document/fallback},#1,right}%
-  %              ,{cover,#1,right}%
-  %              ,{cover,\option{/novathesis/docdegree},right}%
-  %              ,{cover,\option{/@nt/document/fallback},right}%
-  %              ,{cover,right})%
   \begin{tikzpicture}[remember picture, semitransparent, overlay, shift=(current page.north west)]%
         \draw[step=1mm, line width=0.1mm, #1!30!white, yscale=-1] 
             (\@nt@margin@left, \@nt@margin@top)
@@ -2036,10 +1996,6 @@
         \optionlistdo{/@nt/keywords/\i}{%
           \datadefault{keywordstringpre}(#1)%
           \process##1%
-          % \ifnum\the\option{/@nt/keywords/\i/@n}=\the\option{/@nt/keywords/\i/@size}\relax
-          % \else
-          %   \datadefault{keywordspost}(\i)%
-          % \fi
         }%
       \end{minipage}
       \datadefault{keywordsblockpost}(\i)%
