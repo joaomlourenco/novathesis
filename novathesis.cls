@@ -736,7 +736,7 @@
              ,{\option{/novathesis/coverlang}}%
   )%
   \ifblank{\match}{\degreename(#2):={#3}}{\degreename(#2):={\match\ #3}}%
-  \majorfield*(#2):={#3}%
+  \majorfield(#2):={#3}%
 }
 % --------------------------------------------------------
 % Specialization
@@ -1444,7 +1444,7 @@
   \noindent%
   \hspace*{\option{/@ntcoveropts/hspace}}%
   \iftoggle{/novathesis/debugcover}{% If in debug mode surround element in box
-    \setlength{\fboxsep}{0pt}\setlength{\fboxrule}{1pt}%
+    \setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.5pt}%
     \vspace*{-\fboxrule}\hspace*{-\fboxrule}%
     \fbox{\usebox{\@nt@coverelement}}%
   }{\usebox{\@nt@coverelement}}%
