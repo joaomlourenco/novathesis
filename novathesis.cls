@@ -1026,8 +1026,7 @@
 
 \ifdocunset{\ntsetup{docstatus=working}}{}
 \ifoptionequal{/novathesis/spine}{unset}
-          {\ifdocfinal{\ifmaindoc{\ntsetup{spine=trim}}{\ntsetup{spine=no}}}
-                                 {\ntsetup{spine=no}}}
+          {\ifdocworking{\ntsetup{spine=no}}{\ifmaindoc{\ntsetup{spine=trim}}{\ntsetup{spine=no}}}}
           {}
 \ifdocfinal{\ntsetup{printcommittee=true}}{}
 \ifdocworking{\ntremovefromprintorder{frontmatter}{statement,copyright,dedicatory,acknowledgements,quote}}
@@ -1132,7 +1131,7 @@
                ,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,image}%
                ,{\option{/novathesis/degreeacr},#1,image}%
                ,{\option{/novathesis/degreeacr},image}%
-                {\option{/novathesis/docdegree},#1,bgcolor}%
+               ,{\option{/novathesis/docdegree},#1,bgcolor}%
                ,{\option{/@nt/document/fallback},#1,bgcolor}%
                ,{#1,bgcolor}%
                ,{bgcolor}%
@@ -1230,7 +1229,7 @@
   % #1 = cover ID (major-minor)
   % #2 = box name
   \datamatch{\@nt@margin@top}{margin}(%
-               ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,top}%
+                {cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,top}%
                ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,top}%
                ,{cover,\option{/novathesis/degreeacr},#1,top}%
                ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},top}%
@@ -1243,7 +1242,7 @@
                ,{cover,\option{/@nt/document/fallback},top}%
                ,{cover,top})%
   \datamatch{\@nt@margin@bottom}{margin}(%
-               ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,bottom}%
+                {cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,bottom}%
                ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,bottom}%
                ,{cover,\option{/novathesis/degreeacr},#1,bottom}%
                ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},bottom}%
@@ -1256,7 +1255,7 @@
                ,{cover,\option{/@nt/document/fallback},bottom}%
                ,{cover,bottom})%
   \datamatch{\@nt@margin@left}{margin}(%
-               ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,left}%
+                {cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,left}%
                ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,left}%
                ,{cover,\option{/novathesis/degreeacr},#1,left}%
                ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},left}%
@@ -1269,7 +1268,7 @@
                ,{cover,\option{/@nt/document/fallback},left}%
                ,{cover,left})%
   \datamatch{\@nt@margin@right}{margin}(%
-               ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,right}%
+                {cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,right}%
                ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,right}%
                ,{cover,\option{/novathesis/degreeacr},#1,right}%
                ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr},right}%
