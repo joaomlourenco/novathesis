@@ -2088,4 +2088,5 @@
     pdftitle={\expanded{\thedoctitle(\option{/novathesis/mainlang},main)}},
     pdfsubject={\expanded{\thedoctitle(\option{/novathesis/mainlang},sub)}},
   }
+  \makeatother
 }
