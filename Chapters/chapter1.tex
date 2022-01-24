@@ -11,7 +11,7 @@
 \chapter{Introduction}
 \label{cha:introduction}
 
-\prependtographicspath{{Chapters/Figures/Covers/phd/}{Chapters/Figures/Covers/msc/}}
+\prependtographicspath{{Chapters/Figures/Covers/}}
 
 % epigraph configuration
 \epigraphfontsize{\small\itshape}
@@ -72,11 +72,11 @@ The \gls{novathesis} tempalte was born in~1996, and what you see now accumulates
 \definecolor{Schlgray}{gray}{0.95}  
 \newtoggle{ntRow}
 
-\newcommand{\ntSchool}[2]{%
-    % #1 = cover image
-    % #2 = School name
-    % #3 = School acronym
-    % #3 = School URL
+\makeatletter
+\newcommand{\ntSchool}[3]{%
+    % #1 = list of cover images
+    % #2 = School <name;acronym;url>
+    % #3 = List of degrees <name;acronym;url>
     \setlength{\fboxsep}{0pt}%
     \def\myspace{}%
     \gape{
@@ -85,16 +85,20 @@ The \gls{novathesis} tempalte was born in~1996, and what you see now accumulates
       \def\myspace{~}%
     }}%
     &
-    \parbox[c]{\linewidth}{%
-    \def\mynewline{}
-    \@for\listitem:=#2\do{%
-      % \@ntschldata(\listitem)
-      \StrCut{\listitem}{;}\schlname\@remainder%
+    \parbox[c]{\linewidth}{
+      \StrCut{#2}{;}\schlname\@remainder%
       \StrCut{\@remainder}{;}\schlacrn\schlurl%
-      \mynewline\schlname\ \href{\schlurl}{(\schlacrn)}%
-      \def\mynewline{\newline}
+      \textbf{\schlname\IfStrEq{\schlacrn}{}{}{\ \href{\schlurl}{(\schlacrn)}\newline}}
+      \def\mynewline{\hspace*{2em}}\small
+      \@for\listitem:=#3\do{%
+        % \@ntschldata(\listitem)
+        \StrCut{\listitem}{;}\schlname\@remainder%
+        \StrCut{\@remainder}{;}\schlacrn\schlurl%
+        \mynewline\schlname\IfStrEq{\schlacrn}{}{}{\ \href{\schlurl}{(\schlacrn)}}%
+        \def\mynewline{\newline\hspace*{2em}}
     }}\\
 }
+\makeatother
 % \def\@ntschldata(#1;#2;#3){}%#4#5#6{\def#4{#1}\def#5{#2}\def#6{#3}}
 
 \newenvironment{ntUniversity}[1]{
@@ -113,68 +117,112 @@ The \gls{novathesis} tempalte was born in~1996, and what you see now accumulates
 The \gls{novathesis} template was born at the \gls{DI} of  \gls{FCT} of \gls{NOVA}, Portugal.  But the user base grew… initially to other Departments of FCT-NOVA, then to other Schools of NOVA, and later to other Schools of other Universities.  Currently more than 25 Schools are natively supported by the \gls{novathesis} teamplte.
 
 \begin{ntUniversity}{NOVA University Lisbon}
-    \ntSchool{cover-nova-fct-phd,cover-nova-fct-msc}%
-                  {{NOVA School of Science and Technology [PhD]};{FCT-NOVA};{https://www.fct.unl.pt},%
-                  {NOVA School of Science and Technology [MSc]};{FCT-NOVA};{https://www.fct.unl.pt}}
-    \ntSchool{cover-nova-fcsh-phd}%
-                  {{NOVA School of Social Sciences and  Humanities};{FCSH-NOVA};{https://www.fcsh.unl.pt}}
-    \ntSchool{cover-nova-ims-phd}%
-                  {{NOVA Information Management School};{NOVA-IMS};{https://www.novaims.unl.pt}}
-    \ntSchool{cover-nova-ensp-phd}%
-                  {{National School of Public Heath};{ENSP-NOVA};{https://www.ensp.unl.pt}}
+    \ntSchool{nova-fct-phd-en,nova-fct-msc-en}%
+             {{NOVA School of Science and Technology};{FCT-NOVA};{https://www.fct.unl.pt}}
+             {{All PhD Programs};{PhD};{https://www.fct.unl.pt/en/education/phd-programmes},%
+              {All MSc Programs};{MSc};{https://www.fct.unl.pt/en/education/master-degrees}}
+    \ntSchool{nova-fcsh-phd-en,nova-fcsh-msc-en}%
+             {{NOVA School of Social Sciences and  Humanities};{FCSH-NOVA};{https://www.fcsh.unl.pt}}
+             {{All PhD Programs};{PhD};{https://www.fcsh.unl.pt/cursos/\#doutoramentos},%
+              {All MSc Programs};{MSc};{https://www.fcsh.unl.pt/cursos/\#mestrados}}
+    \ntSchool{nova-ims-phd-en,nova-ims-msc-mmaa-en}%
+             {{NOVA Information Management School};{NOVA-IMS};{https://www.novaims.unl.pt}}
+             {{All PhD Programs};{PhD};{https://www.novaims.unl.pt},%
+              {Master's in Data Science and Advanced Analytics};{MMAA};{https://www.novaims.unl.pt/mdsaa-ba}}
+    \ntSchool{nova-ims-msc-megi-en,nova-ims-msc-mgi-en}%
+             {;;}
+             {{Master's in in Statistics and Information Management};{MEGI};{https://www.novaims.unl.pt},%
+              {Master's in Information Management};{MGI};{https://www.novaims.unl.pt}}
+    \ntSchool{nova-ims-msc-mcsig-en,nova-ims-msc-mgt-en}%
+             {;;}
+             {{Master's in Geographic Information Systems and Science};{MCSIG};{https://www.novaims.unl.pt/unigis},%
+              {Master's in Geospatial Technologies};{GeoTech};{https://www.novaims.unl.pt/geotech}}
+    \ntSchool{nova-ensp-phd-en,nova-ensp-msc-en}%
+             {{National School of Public Heath};{ENSP-NOVA};{https://www.ensp.unl.pt}}
+             {{All PhD Programs};{PhD};{https://www.ensp.unl.pt/courses/phds},%
+              {All MSc Programs};{MSc};{https://www.ensp.unl.pt/courses/masters}}
+    \ntSchool{nova-itqb-phd-gray-en,nova-itqb-phd-green-en}%
+             {{Instituto de Tecnologia Química e Biológica};{ITQB-NOVA};{https://www.itqb.unl.pt}}
+             {{All PhD Programs};{PhD};{https://www.itqb.unl.pt/education/PhD\%20Programs}}
+    \ntSchool{nova-itqb-msc-gray-en,nova-itqb-msc-green-en}%
+             {;;}
+             {{All MSc Programs};{MSc};{https://www.itqb.unl.pt/education/masters-courses}}
 \end{ntUniversity}
 
 \begin{ntUniversity}{University of Lisbon}
-    \ntSchool{cover-ulisboa-ist-phd}%
-                  {{Instituto Superior Técnico};{IST-UL};{https://tecnico.ulisboa.pt}}
-    \ntSchool{cover-ulisboa-fc-phd}%
-                  {{Faculdade de Ciências [PhD]};{FCUL};{https://ciencias.ulisboa}}
-    \ntSchool{cover-ulisboa-fc-msc}%
-                  {{Faculdade de Ciências [MSc]};{FCUL};{https://ciencias.ulisboa}}
+    \ntSchool{ulisboa-ist-phd-en,ulisboa-ist-msc-en}%
+             {{Instituto Superior Técnico};{IST-UL};{https://tecnico.ulisboa.pt}}
+             {{All PhD Programs};{PhD};{https://tecnico.ulisboa.pt/en/education/courses/phd-programmes/},%
+              {All MSc Programs};{MSc};{https://tecnico.ulisboa.pt/en/education/courses/masters-programmes}}
+    \ntSchool{ulisboa-fc-phd-en,ulisboa-fc-msc-en}%
+             {{Faculdade de Ciências};{FCUL};{https://ciencias.ulisboa.pt}}
+             {{All PhD Programs};{PhD};{https://ciencias.ulisboa.pt/en/educational-offer/},%
+              {All MSc Programs};{MSc};{https://ciencias.ulisboa.pt/en/educational-offer}}
+    \ntSchool{ulisboa-fmv-phd-en,ulisboa-fmv-msc-en}%
+             {{Faculdade de Medicina Veterinária};{FMV-UL};{https://www.fmv.ulisboa.pt}}
+             {{All PhD Programs};{PhD};{https://www.fmv.ulisboa.pt/en/study/phd},%
+              {All MSc Programs};{MSc};{https://www.fmv.ulisboa.pt/pt/ensino/mestrados}}
 \end{ntUniversity}
 
+
+\newdata*{schlname}
+\newdata*{schlurl}
+\schlname(ea):={School of Architecture}
+\schlurl(ea):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/School-of-Architecture.aspx}
+\schlname(ec):={School of Sciences}
+\schlurl(ec):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-sciences.aspx}
+\schlname(ed):={School of Law}
+\schlurl(ed):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-law.aspx}
+\schlname(ee):={School of Engineering}
+\schlurl(ee):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-Engineering.aspx}
+\schlname(eeg):={School of Economics and Management}
+\schlurl(eeg):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-economics-and-management.aspx}
+\schlname(em):={School of Medicine}
+\schlurl(em):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-Medicine.aspx}
+\schlname(ep):={School of Psychology}
+\schlurl(ep):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-psychology.aspx}
+\schlname(ese):={School of Nursing}
+\schlurl(ese):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-nursing.aspx}
+\schlname(i3b):={Research Institute 13Bs}
+\schlurl(i3b):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/Institute-I3Bs.aspx}
+\schlname(ics):={Institute of Social Sciences}
+\schlurl(ics):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/institute-of-social-sciences.aspx}
+\schlname(ie):={Institute of Education}
+\schlurl(ie):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/institute-of-education.aspx}
+\schlname(ilch):={School of Arts and Humanities}
+\schlurl(ilch):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-arts-and-humanities.aspx}
+
+
 \begin{ntUniversity}{University of Minho}
-    \ntSchool{cover-uminho-ea-phd,cover-uminho-ec-phd,cover-uminho-ed-phd}%
-                  {{{Escola de Arquitetura};{EA-UM};{https://www.arquitetura.uminho.pt}},%
-                  {{Escola de Ciências};{EC-UM};{https://www.ecum.uminho.pt}},%
-                  {{Escola de Direito};{ED-UM};{https://www.direito.uminho.pt}}}
-    \ntSchool{cover-uminho-ec-phd,cover-uminho-ed-phd,cover-uminho-eeg-phd}%
-                  {{{Escola de Ciências};{EC-UM};{https://www.ecum.uminho.pt}},%
-                  {{Escola de Direito};{ED-UM};{https://www.direito.uminho.pt}},%
-                  {{Escola de Economia e Gestão};{EEG-UM};{https://www.eeg.uminho.pt}}}
-    \ntSchool{cover-uminho-ee-phd,cover-uminho-em-phd,cover-uminho-ep-phd}%
-                  {{{Escolha de Engenharia};{EE-UM};{https://www.eng.uminho.pt}},%
-                  {{Escola de Medicina};{EM-UM};{https://www.med.uminho.pt}},%
-                  {{Escola de Psicologia};{EP-UM};{https://www.psi.uminho.pt}}}
-    \ntSchool{cover-uminho-ese-phd,cover-uminho-ics-phd,cover-uminho-ie-phd}%
-                  {{{Escola Superior de Enfermagem};{ESE-UM};{https://www.ese.uminho.pt}},%
-                  {{Instituto de Ciências Sociais};{ICS-UM};{https://www.ilch.uminho.pt}},%
-                  {{Instituto de Educação};{IE-UM};{https://www.ie.uminho.pt}}}
-    \ntSchool{cover-uminho-ilch-phd,cover-uminho-i3b-phd}%
-                  {{{Instituto de Letras e Ciências Humanas};{ILCH-UM};{https://www.ilch.uminho.pt}},%
-                  {{Instituto de Investigação em Biomateriais; Biodegradáveis e Biomiméticos};{I3B-UM};{https://i3bs.uminho.pt}}}
+  \ntfor\i:={ea,ec,ed,ee,eeg,em,ep,ese,ics,ie,ilch,i3b}\do{%
+    \ntSchool{uminho-\i-phd-en,uminho-\i-msc-en}
+             {\theschlname(\i);\uppercase{\i}-UMINHO;\theschlurl(\i)}
+             {{All PhD Programs};{PhD};{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx},%
+              {All MSc Programs};{MSc};{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}}
+  }%
 \end{ntUniversity}
-%
+
 % \begin{ntUniversity}{ISCTE — Instituto Universitário de Lisboa}
 %     \ntSchool{cover-iscteiul-eta-phd}%
 %              {Escola{ de Tecnologias e Arquitectura};{ETA-ISCTE-IUL};{https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura}%}
 % \end{ntUniversity}
 
 \begin{ntUniversity}{Instituto Politécnico de Lisboa}
-    \ntSchool{cover-ipl-isel-msc}%
+    \ntSchool{ipl-isel-msc-en}%
              {{Instituto Superior de Engenharia de Lisboa};{ISEL-IPL};{https://www.isel.pt}}
+             {{All MSc Programs};{MSc};{https://www.isel.pt/candidatos/candidaturas/mestrados}}
 \end{ntUniversity}
 
 \begin{ntUniversity}{Instituto Politécnico de Setúbal}
-    \ntSchool{cover-ips-ests-msc}%
-             {{Escola Superior de Tecnologia de Setúbal};{ISEL-IPL};{https://www.estbarreiro.ips}}%
+    \ntSchool{ips-ests-msc-en}%
+             {{Escola Superior de Tecnologia de Setúbal};{ISEL-IPL};{https://www.estbarreiro.ips.pt}}
+             {{All MSc Programs};{MSc};{https://www.estbarreiro.ips.pt/candidaturas/mestrados}}
 \end{ntUniversity}
 
 \begin{ntUniversity}{Other Universities/Schools/Degrees}
-    \ntSchool{cover-other-esep-phd}%
-             {{Escola Superior de Enfermagem do Porto};{ESEP};{https://www.esenf.pt/pt}}%
-    \ntSchool{cover-other-mscgt-msc}%
-             {{Masters Program in Geospatial Technologies};{GT};{https://mastergeotech.info}}%
+    \ntSchool{other-esep-msc-en}%
+             {{Escola Superior de Enfermagem do Porto};{ESEP};{https://www.esenf.pt/pt}}
+             {{All MSc Programs};{MSc};{https://estudar.esenf.pt/mestrados}}
 \end{ntUniversity}
 
 
