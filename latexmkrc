@@ -1,3 +1,16 @@
+if ( ! $silent ) {
+    if ($^O =~ /darwin/) {
+       print "DIAGNOSTICS = Operating System Detected: Mac OSX\n";
+       $filesep = '/'
+    } elsif ($^O =~ /linux/) {
+       print "DIAGNOSTICS = Operating System: Linux\n";
+       $filesep = '/'
+    } else {
+       print "DIAGNOSTICS = Operating System: Windows\n";
+       $filesep = '\\'
+    }
+}
+
 add_cus_dep('glo', 'gls', 0, 'makeglo2gls');
 add_cus_dep('acn', 'acr', 0, 'makeglo2gls');
 add_cus_dep('slo', 'sls', 0, 'makeglo2gls');
@@ -6,14 +19,24 @@ add_cus_dep('cho', 'chs', 0, 'makeglo2gls');
 sub makeglo2gls {
     my ($base_name, $dir) = fileparse( $_[0] ); #handle -outdir param by splitting path and file, ...
     if ( $silent ) {
-        system "makeglossaries -q -d '$dir' '$base_name'"; #unix
-        # system "makeglossaries", "-q", "$base_name"; #windows
+        if ($^O =~ /darwin/) {        
+            system "makeglossaries -q -d '$dir' '$base_name'"; #unix
+        } elsif ($^O =~ /linux/) {
+            system "makeglossaries -q -d '$dir' '$base_name'"; #unix
+        } else {
+            system "makeglossaries", "-q", "-d", "$dir", "$base_name"; #windows
+        }
     }
     else {
         system "echo '$dir' > /tmp/a";
         system "echo '$base_name' >> /tmp/a";
-        system "makeglossaries -d '$dir' '$base_name'"; #unix
-        # system "makeglossaries", "$base_name"; #windows
+        if ($^O =~ /darwin/) {        
+            system "makeglossaries -d '$dir' '$base_name'"; #unix
+        } elsif ($^O =~ /linux/) {
+            system "makeglossaries -d '$dir' '$base_name'"; #unix
+        } else {
+            system "makeglossaries", "-d", "$dir", "$base_name"; #windows
+        }
     };
 }
 

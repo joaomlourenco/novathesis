@@ -317,6 +317,7 @@
   \options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
   \options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
   \options{/@nt/#1/#2/gender/.expanded/.cpush={#3}}%
+  \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
 }
 
 
@@ -417,7 +418,7 @@
 \newdata{keywordsstringprefix}
 \newdata{keywordsstringsuffix}
 \newdata{keywordsstringfont}
-\keywordsblockpre()={\bigskip}
+\keywordsblockpre()={\bigskip\noindent}
 \keywordsstringsuffix()={:\quad}
 \keywordsstringfont()={\bfseries}
 \keywordspost()={, }
@@ -623,6 +624,66 @@
 }
 
 
+
+
+% --------------------------------------------------------
+% Pass the remaining options to memoir
+\letoptionlist{/options/remaining}\nt@remaining
+\PassOptionsToClass{\nt@remaining}{memoir}
+
+
+% --------------------------------------------------------
+% Input the first file from the list (if any)
+\newcommand{\@nt@InputIfFileExists}[2]{%
+  \expandnext{\forcsvlist{\@nt@InputIfFileExists@i{#1}}}{#2}%
+}
+\newcommand{\@nt@InputIfFileExists@i}[2]{\IfFileExists{#2#1}{\input{#2#1}\listbreak}{}}
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LOADING CUSTOMIZATION STUFF - part 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%============================================================
+%  MEMOIR CUSTOMIZATION / OPTIONS
+%      Please open and edit the appropriate
+%       configuration file “Config/0_memoir.tex”
+%============================================================
+\input{Config/0_memoir}
+% \NTRunHook{memoir}
+
+%============================================================
+%  TEMPLATE CUSTOMIZATION / OPTIONS
+%      Please open and edit the appropriate
+%       configuration file “Config/1_novathesis.tex”
+%============================================================
+\input{Config/1_novathesis}
+\options{/@nt/document/fallback=\option{/novathesis/docdegree}}
+% \NTRunHook{novathesis}
+
+%============================================================
+% BIBLATEX CUSTOMIZATION
+%      Please open and edit the appropriate
+%       configuration file “Config/2_biblatex.tex”
+%============================================================
+\input{Config/2_biblatex}
+% \NTRunHook{biblatex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Include strings for all the languages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\optionlistdo{/novathesis/langsused}{%
+  \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
+    {}%
+    {\ClassError{novathesis}{File not found: “NOVAthesisFiles/Strings/strings-#1.ldf” file!}%
+                {Add a file with the translations for this language.}}%
+}
+
 % --------------------------------------------------------
 % BABEL STUFF
 \edef\nt@alllangs{}
@@ -643,67 +704,6 @@
   , copyrightlang = \option{/novathesis/mainlang}
   , linkscolor = DarkBlue
 }
-
-
-
-% --------------------------------------------------------
-% Pass the remaining options to memoir
-\letoptionlist{/options/remaining}\nt@remaining
-\PassOptionsToClass{\nt@remaining}{memoir}
-
-
-% --------------------------------------------------------
-% Input the first file from the list (if any)
-\newcommand{\@nt@InputIfFileExists}[2]{%
-  \expandnext{\forcsvlist{\@nt@InputIfFileExists@i{#1}}}{#2}%
-}
-\newcommand{\@nt@InputIfFileExists@i}[2]{\IfFileExists{#2#1}{\input{#2#1}\listbreak}{}}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Include strings for all the languages
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\optionlistdo{/novathesis/langsused}{%
-  \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
-    {}%
-    {\ClassError{novathesis}{File not found: “NOVAthesisFiles/Strings/strings-#1.ldf” file!}%
-                {Add a file with the translations for this language.}}%
-}
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% LOADING CUSTOMIZATION STUFF - part 1
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%============================================================
-%  MEMOIR CUSTOMIZATION / OPTIONS
-%      Please open and edit the appropriate
-%       configuration file “Config/0_memoir.tex”
-%============================================================
-\input{Config/0_memoir}
-% \NTRunHook{memoir}
-
-  
-%============================================================
-%  TEMPLATE CUSTOMIZATION / OPTIONS
-%      Please open and edit the appropriate
-%       configuration file “Config/1_novathesis.tex”
-%============================================================
-\input{Config/1_novathesis}
-\options{/@nt/document/fallback=\option{/novathesis/docdegree}}
-% \NTRunHook{novathesis}
-
-%============================================================
-% BIBLATEX CUSTOMIZATION
-%      Please open and edit the appropriate
-%       configuration file “Config/2_biblatex.tex”
-%============================================================
-\input{Config/2_biblatex}
-% \NTRunHook{biblatex}
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -736,7 +736,7 @@
              ,{\option{/novathesis/coverlang}}%
   )%
   \ifblank{\match}{\degreename(#2):={#3}}{\degreename(#2):={\match\ #3}}%
-  \majorfield*(#2):={#3}%
+  \majorfield(#2):={#3}%
 }
 % --------------------------------------------------------
 % Specialization
@@ -1444,7 +1444,7 @@
   \noindent%
   \hspace*{\option{/@ntcoveropts/hspace}}%
   \iftoggle{/novathesis/debugcover}{% If in debug mode surround element in box
-    \setlength{\fboxsep}{0pt}\setlength{\fboxrule}{1pt}%
+    \setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.5pt}%
     \vspace*{-\fboxrule}\hspace*{-\fboxrule}%
     \fbox{\usebox{\@nt@coverelement}}%
   }{\usebox{\@nt@coverelement}}%
@@ -1562,14 +1562,21 @@
   % #1 = adviser | committee
   % #2 = {a,c} | {c,r,a,m,g}
   \def\@nt@personlist{}%
-  \@for\listitem:=#2\do{\@nt@addtopersonlist{#1}{\listitem}}
-  \StrSubstitute{\@nt@personlist}{,}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist]%
-  \StrCount{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}[\@nt@personlist@last]%
-  % Replace last comma with "and"
-  \IfStrEq{0}{\@nt@personlist@last}{}{%
-    \StrCut[\@nt@personlist@last]{\@nt@personlist}{\thecommastring(\option{/novathesis/coverlang})}%
-                                     \@nt@listleft\@nt@listright%
-    \def\@nt@personlist{\@nt@listleft\theandstring(\option{/novathesis/coverlang})\@nt@listright}%
+  \@for\listitem:={#2}\do{%
+    \letoptionlist{/@nt/#1/\listitem/name}\@nt@personname%
+    \IfStrEq{\@nt@personname}{}{}{%
+      \eappto\@nt@personlist{,\@nt@personname}%
+    }%
+  }%
+  \StrGobbleLeft{\@nt@personlist}{1}[\@nt@personlist]%
+  \StrCount{\@nt@personlist}{,}[\@ncommas]%
+  \IfStrEq{\@ncommas}{0}{}{%
+    \StrSubstitute[\the\numexpr\@ncommas-1]{\@nt@personlist}%
+                  {,}{+}[\@nt@personlist]%
+    \StrSubstitute{\@nt@personlist}%
+                  {,}{\theandstring(\option{/@nt/currentlang})}[\@nt@personlist]%
+    \StrSubstitute{\@nt@personlist}%
+                  {+}{\thecommastring(\option{/@nt/currentlang})}[\@nt@personlist]%
   }%
   \@nt@personlist%
 }
@@ -1747,7 +1754,8 @@
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
-  \@for\listitem:=\expanded{\theabstractorder(\option{/novathesis/mainlang})}\do{\@ntprintabstract{\listitem}}%
+  \@for\listitem:=\expanded{\theabstractorder(\option{/novathesis/mainlang})}\do{%
+                \@ntprintabstract{\listitem}}%
   \ntselectlang{\option{/novathesis/mainlang}}%
 }
 
@@ -1964,10 +1972,6 @@
 
 \options{/@nt/kwprint/.new value}
 
-\def\removenewline#1`\^^M\@nil{%
-      #1%
-}
-
 \newread\kwsfile
 \newcommand{\printkeywords}[1]{%
   % #1 = current lang
@@ -1985,7 +1989,7 @@
         \datadefault{keywordsstringfont}(\i)\csuse{thekeywordsstring}(\i)%
         \datadefault{keywordsstringsuffix}(\i)%
       }
-      \noindent
+      \par
       \datadefault{keywordsblockpre}(\i)%
       \datadefault{keywordsstringpre}(\i)%
       \usebox{\keywordsstringbox}%
@@ -2088,4 +2092,5 @@
     pdftitle={\expanded{\thedoctitle(\option{/novathesis/mainlang},main)}},
     pdfsubject={\expanded{\thedoctitle(\option{/novathesis/mainlang},sub)}},
   }
+  \makeatother
 }

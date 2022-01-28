@@ -31,7 +31,9 @@
   alllistof;       % Print all the listof defined in “7_list_of.tex”
 }
 
-
+%-----------------------------------------------------------------
+% Other stuff
+%-----------------------------------------------------------------
 \abstractorder(pt):={pt,en}
 \abstractorder(en):={pt,en}
 \abstractorder(fr):={pt,fr}
