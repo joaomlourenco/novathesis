@@ -71,6 +71,11 @@
     \renewcommand*{\glsgroupskip}{ & \tabularnewline}%
   \fi
 }
+\newglossarystyle{xltabularonethree}{%
+  \setglossarystyle{xltabular}%
+  \renewenvironment{theglossary}{%
+    \xltabular{\linewidth}{>{\raggedright\arraybackslash}p{0.25\linewidth}X}}{\endxltabular}%
+}
 \newglossarystyle{xltabularborder}{%
   \setglossarystyle{xltabular}%
   \renewenvironment{theglossary}{%
