@@ -1894,8 +1894,10 @@
 %% Copyright page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintacknowledgementsblock}[1][\scriptsize]{%
+  \NTRunHook{acknowledgementsblock/pre}%
   \noindent\parbox{\linewidth}{%
       \vspace*{2.5ex}\footnoterule#1\theacknowledgmentsstring(\option{/novathesis/mainlang})}
+  \NTRunHook{acknowledgementsblock/post}%
 }
 
 \newcommand*{\ntprintcopyright}{%
@@ -2092,5 +2094,11 @@
     pdftitle={\expanded{\thedoctitle(\option{/novathesis/mainlang},main)}},
     pdfsubject={\expanded{\thedoctitle(\option{/novathesis/mainlang},sub)}},
   }
+
+  %--------------------------------
+  % If subcaptin is laoded, let it hand handle subfigures
+  % otherwise use memoir subfigures
+  \@ifpackageloaded{subcaption}{}{\newsubfloat{figure}}
+
   \makeatother
 }
