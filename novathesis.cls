@@ -2077,6 +2077,7 @@
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
 
 \AtBeginDocument{%
+  \makeatletter
   \def\@ntkwsi{}
   \@for\@it:=\expanded{\theabstractorder(\option{/novathesis/mainlang})}\do{%
     \openin\kwsfile=\expanded{\jobname.k\@it}
@@ -2099,6 +2100,6 @@
   % If subcaptin is laoded, let it hand handle subfigures
   % otherwise use memoir subfigures
   \@ifpackageloaded{subcaption}{}{\newsubfloat{figure}}
-
+% \@setfontsize\normalsize{12bp}{14.5bp}
   \makeatother
 }
