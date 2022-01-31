@@ -33,18 +33,27 @@
 
 This first Chapter introduces the \gls{novathesis} template and how it is organized. In Chapter~\ref{cha:users_manual} you can find some specific instructions on how to use the \gls{novathesis} template.  Chapter~\ref{cha:a_short_latex_tutorial_with_examples} shows some examples and give some hints on how to write your text. Please read these next Chapters carefully.
 
-\subsection{Your Time is Valuable}
+\subsection{Your Time is Precious}
 \label{sub:time_is_money}
 
-Did you learn how to drive by sitting by the wheel and throwing your car into the road?  Or did you take your time \emph{learning the rules} and \emph{practicing} first?  Thus, it is not wise to throw yourself at the task of writing a thesis/dissertation without seriously considering the following statement!
+Did you learn how to drive by sitting by the wheel and throwing your car into the road?  Most probably you did take your time \emph{learning the rules} and \emph{practicing} first! Likewise, it is not wise to throw yourself at the task of writing a thesis/dissertation in \LaTeX\ without seriously considering the following statement!
 
 % subsection subsection_name (end)
-\begin{quote}
-  \rule{\linewidth}{2pt}
-If you are going to spend zillions of hours writing your thesis/dissertation using this \gls{novathesis} template, be wise and spend a couple of hours learning how to use it properly by reading this manual.  And then be even wiser and spend a few more hours \href{https://github.com/joaomlourenco/novathesis/wiki#learning-latex}{learning some \LaTeX}.  I am sure that the time you are investing now will pay itself countless times before you submit your thesis/dissertation.
-\hfill \raisebox{-1ex}{\itshape João Lourenço}\\[-1ex]
-  \rule{\linewidth}{2pt}
-\end{quote}
+% \begin{quote}
+%   \rule{\linewidth}{2pt}
+% If you are going to spend zillions of hours writing your thesis/dissertation using this \gls{novathesis} template, be wise and spend a couple of hours learning how to use it properly by reading this manual.  And then be even wiser and spend a few more hours \href{https://github.com/joaomlourenco/novathesis/wiki#learning-latex}{learning some \LaTeX}.  I am sure that the time you are investing now will pay itself countless times before you submit your thesis/dissertation.
+% \hfill \raisebox{-1ex}{\itshape João Lourenço}\\[-1ex]
+%   \rule{\linewidth}{2pt}
+% \end{quote}
+\bgroup
+\renewcommand{\mkcitation}[1]{\\[0ex]\parbox{\linewidth}{\hfill\textbf{#1}}}
+\blockquote[João Lourenço]{%
+  \rule{\linewidth}{2pt}\\\itshape
+  If you are going to spend zillions of hours writing your thesis/dissertation using this \gls{novathesis} template, be wise and spend a couple of hours learning how to use it properly by reading this manual.  And then, be even wiser, and spend a few more hours \href{https://github.com/joaomlourenco/novathesis/wiki\#learning-latex}{learning some \LaTeX}.  I am sure that the time you are investing now will pay itself countless times before you submit your thesis/dissertation.\\\nopagebreak
+  % \hfill \raisebox{-1ex}{\itshape João Lourenço}\\[-1ex]
+  \rule{\linewidth}{2pt}%
+}
+\egroup
 
 \subsection{Appeal}
 \label{sub:appeal}

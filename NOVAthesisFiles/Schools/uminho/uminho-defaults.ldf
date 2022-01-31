@@ -90,7 +90,7 @@
 \datestr(en):={Date}
 
 
-
+\AtBeginDocument{\makeatletter\@setfontsize\normalsize{12bp}{14.5bp}\makeatother}
 
 %-----------------------------------------------------------------
 % Abstracts
