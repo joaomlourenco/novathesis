@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-01-18 [6.9.4]
+%% Version 2022-02-02 [6.9.5]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -2100,6 +2100,5 @@
   % If subcaptin is laoded, let it hand handle subfigures
   % otherwise use memoir subfigures
   \@ifpackageloaded{subcaption}{}{\newsubfloat{figure}}
-% \@setfontsize\normalsize{12bp}{14.5bp}
   \makeatother
 }
