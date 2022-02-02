@@ -2100,6 +2100,5 @@
   % If subcaptin is laoded, let it hand handle subfigures
   % otherwise use memoir subfigures
   \@ifpackageloaded{subcaption}{}{\newsubfloat{figure}}
-% \@setfontsize\normalsize{12bp}{14.5bp}
   \makeatother
 }
