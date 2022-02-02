@@ -32,18 +32,21 @@
   BoldItalicFont=n015006t.ttf,
   BoldSlantedFeatures={FakeSlant=0.15},
   BoldItalicFeatures={FakeSlant=0.15},
+  Scale=1.003764115,
 ]
 
 \setfontfamily\newsgott{n015003t.ttf}[
   Ligatures=TeX,
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
+  Scale=1.003764115,
 ]
 
 \setfontfamily\newsgottbf{n015006t.ttf}[
   Ligatures=TeX,
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
+  Scale=1.003764115,
 ]
 
 \setfontfamily\newsgottbfit{n015006t.ttf}[
@@ -51,6 +54,7 @@
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
   BoldItalicFeatures={FakeSlant=0.15},
+  Scale=1.003764115,
 ]
 
 \setfontfamily\newsgottit{n015003t.ttf}[
@@ -58,6 +62,7 @@
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
   ItalicFeatures={FakeSlant=0.15},
+  Scale=1.003764115,
 ]
 
 \setfontfamily\newsgottsl{n015003t.ttf}[
@@ -65,12 +70,14 @@
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
   AutoFakeSlant=0.15,
+  Scale=1.003764115,
 ]
 
 \setfontfamily\newsgottlig{n015002t.ttf}[
   Ligatures=TeX,
   Mapping=tex-text,
   Path = NOVAthesisFiles/FontStyles/Fonts/,
+  Scale=1.003764115,
 ]
 
 %
