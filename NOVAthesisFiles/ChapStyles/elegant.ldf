@@ -10,7 +10,6 @@
 %%%%% Configure chapters, headers, footers, and page numbering
 \RequirePackage{soul}
 
-%\makeatletter
 \undef{\@nt@elegant@chapter}
 \newsavebox{\@nt@elegant@chapter}
 \undef{\@nt@elegant@part}
