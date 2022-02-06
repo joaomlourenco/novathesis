@@ -13,7 +13,7 @@
     % \begin{adjustwidth}{}{-\chapindent}
     \IfStrEq{#1}{}{% Unnumbered chapter
       \hfill\begin{tabular}{r@{}}%|emacs
-        \leavevmode\chapnumfont #1\vphantom{1}%
+        \leavevmode\chapnumfont\normalfont #1\vphantom{1}%
         \hspace*{3.6pt}%
         \rule[-13.5pt]{0pt}{14.8mm}%
         \\%
@@ -21,7 +21,7 @@
       \end{tabular}%
     }{%
       \hfill\begin{tabular}{|r@{}}%|emacs
-        \leavevmode\chapnumfont ~#1\vphantom{1}%
+        \leavevmode\chapnumfont\normalfont ~#1\vphantom{1}%
         \hspace*{3.6pt}%
         \rule[-13.5pt]{0pt}{14.8mm}%
         \\%
@@ -33,9 +33,9 @@
 }%
 
 \renewcommand*{\printchaptertitle}[1]{%
-  {\raggedleft\normalfont\scshape\chaptitlefont #1\par}\nobreak
+  {\raggedleft\chaptitlefont\normalfont\scshape #1\par}\nobreak
 }
 
-% \gappto{\secheadstyle}{\sffamily}
-% \gappto{\subsecheadstyle}{\sffamily}
-% \gappto{\subsubsecheadstyle}{\sffamily}
+\@for\i:={sec,subsec,subsubsec}\do{%
+  \expandafter\gappto\csname \i headstyle\endcsname{\sffamily}%
+}
