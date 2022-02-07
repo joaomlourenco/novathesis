@@ -36,6 +36,6 @@
   {\raggedleft\chaptitlefont\normalfont\scshape #1\par}\nobreak
 }
 
-\@for\i:={sec,subsec,subsubsec}\do{%
-  \expandafter\gappto\csname \i headstyle\endcsname{\sffamily}%
-}
+% \@for\i:={sec,subsec,subsubsec}\do{%
+%   \expandafter\gappto\csname \i headstyle\endcsname{\sffamily}%
+% }
