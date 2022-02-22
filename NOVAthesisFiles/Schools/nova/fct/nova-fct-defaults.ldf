@@ -62,7 +62,7 @@
 \spine(logo,msc,raise)={0.075}
 
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main,caps)}
+\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
 \spine(date)={\thentdocdate(year)}
 
 \spine(text,angle)={90}
@@ -169,7 +169,9 @@
 % Date
 \ntaddtocover[vspace=1,align=l]{1-1}{%
   \fontsize{14}{13}\selectfont%
-  \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}\\[3mm]%
+  \ifoptionequal{/novathesis/docdegree}{mscplan}{Dissertation Plan\\[1pt]}{}%
+  \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}%
+  \\[3mm]%
   % {\ifdatadefined{specialization}(\option{/novathesis/coverlang}){%
   % \fontsize{11}{11}\selectfont
   % \\\MakeTextUppercase{\thespecialization(\option{/novathesis/coverlang})}}{}}
@@ -237,6 +239,7 @@
 % Date
 \ntaddtocover[vspace=1,align=l]{2-1}{%
   \fontsize{10}{10}\selectfont%
+  \ifoptionequal{/novathesis/docdegree}{mscplan}{Dissertation Plan\\[1pt]}{}%
   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}
   {\ifdatadefined{specialization}(\option{/novathesis/coverlang}){%
   \fontsize{8}{9}\selectfont
