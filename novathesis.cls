@@ -649,6 +649,15 @@
 %% LOADING CUSTOMIZATION STUFF - part 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% --------------------------------------------------------
+% Define DEFAULT VALUES for COVER and COPYRIGHT languages
+%     and HYPERLINK color
+\options{/novathesis/.cd%
+  , coverlang = \option{/novathesis/mainlang}
+  , copyrightlang = \option{/novathesis/mainlang}
+  , linkscolor = DarkBlue
+}
+
 %============================================================
 %  MEMOIR CUSTOMIZATION / OPTIONS
 %      Please open and edit the appropriate
@@ -695,15 +704,6 @@
 }
 % \typeout{'NT PASSING TO BABEL = '\nt@alllangs}%
 \PassOptionsToPackage{\nt@alllangs}{babel}%
-
-% --------------------------------------------------------
-% Define DEFAULT VALUES for COVER and COPYRIGHT languages
-%     and HYPERLINK color
-\options{/novathesis/.cd%
-  , coverlang = \option{/novathesis/mainlang}
-  , copyrightlang = \option{/novathesis/mainlang}
-  , linkscolor = DarkBlue
-}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
