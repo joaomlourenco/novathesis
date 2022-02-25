@@ -848,7 +848,13 @@
                         }}}%
       {listofalgorithms}{\options{/@nt/list/listof/.cpush = {%
                                 \listofalgorithms
-                                \addcontentsline{toc}{chapter}{\listalgorithmcfname}
+                                \ifdefined\listalgorithmname>%
+                                  \addcontentsline{toc}{chapter}{\listalgorithmname}%
+                                \else\ifdefined\listalgorithmcfname%
+                                  \addcontentsline{toc}{chapter}{\listalgorithmcfname}%
+                                \else
+                                  \ClassError{novathesis}{Can't make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
+                                \fi\fi
                         }}}%
       {listsofglossaries}{\options{/@nt/list/listof/.cpush={%
                               \glstoctrue
