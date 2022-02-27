@@ -858,10 +858,12 @@
                         }}}%
       {listsofglossaries}{\options{/@nt/list/listof/.cpush={%
                               \glstoctrue
+                              \ifoptionvoid{/@nt/file/glossaries/glossary}{\patchcmd{\@glo@types}{,main}{}{}{}}{}%
                               \printglossaries
                           }}}%
       {listsofglossaries*}{\options{/@nt/list/listof/.cpush={%
                               \glstocfalse
+                              \ifoptionvoid{/@nt/file/glossaries/glossary}{\patchcmd{\@glo@types}{,main}{}{}{}}{}%
                               \printglossaries
                           }}}%
   }[\options{/@nt/list/listof/.cpush={\ifdefmacro{#1}{#1}{\csuse{#1}}}}]%
@@ -1879,7 +1881,7 @@
 
 \newcommand*{\@loadglossaryfiles}{%
   \@for\listitem:={glossary,acronyms,symbols}\do{%
-    \ifoptiondefined{/@nt/file/glossaries/\listitem}
+    \ifoptiondefined{/@nt/file/glossaries/\listitem}%
       {\optionlistdo{/@nt/file/glossaries/\listitem}{\@ntloadfile@i{##1}}}{}%
   }%
 }
