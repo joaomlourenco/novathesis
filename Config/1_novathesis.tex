@@ -13,8 +13,16 @@
 %%-------------------------------- ----------------------------
 %% THE MOST IMPORTANT/POPULAR OPTIONS
 %%------------------------------------------------------------
+
 % \ntsetup{docdegree=msc}       % The type of document
-%                               %     [ phd, phdplan, phdprop, msc, mscplan, bsc, plain ]
+%                               %     [     phd —> PhD thesis
+%                               %       phdplan —> PhD thesis plan
+%                               %       phdprop —> PhD thesis proposal
+%                               %           msc —> MSc dissertation
+%                               %       mscplan —> MSc dissertation plan
+%                               %           bsc —> BSc report
+%                               %         plain —> Other report
+%                               %     ]
 %                               % DEFAULT: docdegree=phd
 
 % \ntsetup{school=uminho/ee}    % The school id
@@ -24,53 +32,60 @@
 %                               %       uminho/eeg, uminho/em, uminho/ep, uminho/ese, 
 %                               %       uminho/ics, uminho/ie, uminho/ilch, uminho/i3b, 
 %                               %       iscteiul/eta, ips/ests, ipl/isel, ulht/deisi
-%                               %       other/esep, other/mscgt ]
+%                               %       other/esep, other/mscgt
+%                               %     ]
 %                               % DEFAULT: school=nova/fct
 
-% \ntsetup{docstatus=final}   % The status of the document
-%                             %     [ working     —> working version of the document
-%                                                    skips some “frontmatter” stuff,
-%                                     provisional —> submission version (no committee),
-%                                     final       —> final version (with committee)
-%                                                    (if you want the book spine, 
-%                                                     activete "spine=true" yourself) ]
-%                             % DEFAULT: docstatus=working
+% \ntsetup{docstatus=final}     % The status of the document
+%                               %     [     working —> working version of the document
+%                                                      skips some “frontmatter” stuff,
+%                                       provisional —> submission version (no committee),
+%                                             final —> final version (with committee)
+%                                                      (if you want the book spine, 
+%                                                       activete "spine=true" yourself)
+%                               %     ]
+%                               % DEFAULT: docstatus=working
 
-% \ntsetup{langsused={en,pt,de}}  % List of languages are used in the document
-%                               %     [ en, pt, fr, it, de, es ]
+% \ntsetup{langsused={en,pt,fr,de}}  % List of languages are used in the document
+%                               % following ISO 3166-1 (alfa-2)
+%                               %     [ en, pt, fr, it, de, es —> valid languages
+%                               %     ]
 %                               % DEFAULT: langsused=en,pt
 
 % \ntsetup{lang=pt}             % The main language for the document text
-%                               %     [ en, pt, fr, it, de, es ]
+%                               % following ISO 3166-1 (alfa-2)
+%                               %     [ en, pt, fr, it, de, es —> valid languages
+%                               %     ]
 %                               % DEFAULT: lang=en
 
-% \ntsetup{linkscolor=SteelBlue}% The color for the hyperlinks (URLs, 
-%                               %     cross references, citations)
-%                               %     for valid color names, look at "svgname" 
-%                               %     in the "xcolor" package documentation
-%                               % DEFAULT: whatever hyperref uses as default
+% \ntsetup{linkscolor=SteelBlue}% The color for the hyperlinks (URLs, cross references, citations)
+%                               %     Valid color names  —> look at "svgname" in the "xcolor"
+%                               %                           package documentation
+%                               % DEFAULT: a customized dark blue color
 
 % \ntsetup{media=paper}         % The target media for the PDF
-%                               %     [ screen, paper ]
-%                               %     SCREEN ==> left and right margins are 
-%                               %                equal, colored links
-%                               %     PAPER  ==> left and right margins are 
-%                               %                 different, black links
+%                               %     [ screen —> left and right margins are equal, colored links
+%                               %        paper —> left and right margins are, black links
+%                               %     ]
 %                               % DEFAULT: media=screen
-
-% \ntsetup{printfrontmatter=false}% Print the front matter
-%                               %     set to false to generate a PDF with only the
-%                               %     cover and the book chapters
-%                               % DEFAULT: printfrontmatter=true
-
-% \ntsetup{printcommittee=true}% Shall the evaluation committee be printed?
-%                               %     the evaluation committee should only be
-%                               %     printed in final versions.
-%                               % DEFAULT: printcommittee=false
 
 % \ntsetup{gnumberlist=false}   % Shall the glossary entries list the page numbers where
 %                               %     those entries are used?  (as a reverse index!)
 %                               % DEFAULT: gnumberlist=true
+
+% \ntsetup{spine=trim}          % Print the “book spine” at the end of the document?
+%                               %     [   no —> do not print the book spine
+%                               %       full —> print the book spine in a full page
+%                               %       trim —> print and trim the page to the width
+%                               %               of the book spine
+%                               %     ]
+%                               % DEFAULT: spine=trim <— if (docstatus=final)
+%                               %          spine=no   <— otherwise
+
+
+%%------------------------------------------------------------
+%% THE LESS IMPORTANT/POPULAR OPTIONS
+%%------------------------------------------------------------
 
 % \ntsetup{secondcover=true}    % Shall a second cover page be forced?
 %                               %     if the contents for the second page are not 
@@ -78,21 +93,19 @@
 %                               %     of the first cover.
 %                               % DEFAULT: secondcover=false
 
-% \ntsetup{spine=trim}          % Print the “book spine” at the end of the document?
-%                               %     [ no, full, trim ]
-%                               %        NO  ==> do not print the book spine
-%                               %      FULL  ==> print the book spine in a full page
-%                               %      TRIM  ==> print and trim the page to the width
-%                               %                of the book spine
-%                               % DEFAULT: spine=no
-
 % \ntsetup{urlstyle=same}       % Use the same (main) font in URLs
 %                               % DEFAULT: whatever hyperref uses as default
 
+% \ntsetup{printcommittee=true}% Shall the evaluation committee be printed?
+%                               %     the evaluation committee should only be
+%                               %     printed in final versions.
+%                               % DEFAULT: printcommittee=false
 
-%%------------------------------------------------------------
-%% THE LESS IMPORTANT/POPULAR OPTIONS
-%%------------------------------------------------------------
+% \ntsetup{printfrontmatter=false}% Print the front matter
+%                               %     set to false to generate a PDF with only the
+%                               %     cover and the book chapters
+%                               % DEFAULT: printfrontmatter=true
+
 % \ntsetup{numberallpages=true} % Shall all the pages (except cover) be numbered?
 %                               % DEFAULT: numberallpages=false
 
