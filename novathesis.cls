@@ -776,13 +776,22 @@
 }
 \newcommand*{\@nttitle}[3]{%
   % #1 = lang
-  % #2 = type (main, sub) title
+  % #2 = type (main, sub, spine) title
   % #3 = value
-  \replacelinebreakwithspace{#3}{\@nttitletemp}
-  \doctitle(#1,#2):={\@nttitletemp}%
-  \doctitle(#1,#2,caps):={\expandafter\MakeUppercase\expandafter{\@nttitletemp}}%
-  \doctitle(#1,#2,cover):={#3}%
-  \doctitle(#1,#2,cover,caps):={\expandafter\MakeUppercase\expandafter{#3}}%
+  \IfStrEq{#2}{main}{%
+    \replacelinebreakwithspace{#3}{\@nttitletemp}
+    \doctitle(#1,#2):={\@nttitletemp}%
+    \doctitle(#1,#2,caps):={\expandafter\MakeUppercase\expandafter{\@nttitletemp}}%
+    \doctitle(#1,#2,cover):={#3}%
+    \doctitle(#1,#2,cover,caps):={\expandafter\MakeUppercase\expandafter{#3}}%
+    \ifdatadefined{doctitle}(#1,spine){}{%
+      \doctitle(#1,spine):={\@nttitletemp}%
+      \doctitle(#1,spine,caps):={\expandafter\MakeUppercase\expandafter{\@nttitletemp}}%
+    }%
+  }{%
+    \doctitle(#1,#2):={#3}%
+    \doctitle(#1,#2,caps):={\expandafter\MakeUppercase\expandafter{#3}}%
+  }%
 }
 % --------------------------------------------------------
 
