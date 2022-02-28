@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-02-02 [6.9.5]
+%% Version 2022-02-28 [6.9.6]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -649,6 +649,15 @@
 %% LOADING CUSTOMIZATION STUFF - part 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% --------------------------------------------------------
+% Define DEFAULT VALUES for COVER and COPYRIGHT languages
+%     and HYPERLINK color
+\options{/novathesis/.cd%
+  , coverlang = \option{/novathesis/mainlang}
+  , copyrightlang = \option{/novathesis/mainlang}
+  , linkscolor = DarkBlue
+}
+
 %============================================================
 %  MEMOIR CUSTOMIZATION / OPTIONS
 %      Please open and edit the appropriate
@@ -696,37 +705,28 @@
 % \typeout{'NT PASSING TO BABEL = '\nt@alllangs}%
 \PassOptionsToPackage{\nt@alllangs}{babel}%
 
-% --------------------------------------------------------
-% Define DEFAULT VALUES for COVER and COPYRIGHT languages
-%     and HYPERLINK color
-\options{/novathesis/.cd%
-  , coverlang = \option{/novathesis/mainlang}
-  , copyrightlang = \option{/novathesis/mainlang}
-  , linkscolor = DarkBlue
-}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% DEFINITIONS FOR THE REMINDER OF CUSTOMIZATION STUFF
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % --------------------------------------------------------
 % Department
-\def\ntdepartment{\@ifnextchar*{\@ntdepartmentifundef}{\@ntdepartment{}}}
-\def\@ntdepartmentifundef#1(#2)#3{\ifdatadefined{department}(#2){}{\@ntdepartment{}(#2){#3}}}
-\def\@ntdepartment#1(#2)#3{\typeout{NTDEP [#2] [#3]}\department(#2):={#3}}
+\def\ntdepartment{\@ifstar{\@ntdepartmentifundef}{\@ntdepartment}}
+\def\@ntdepartmentifundef(#1)#2{\ifdatadefined{department}(#1){}{\@ntdepartment(#1){#2}}}
+\def\@ntdepartment(#1)#2{\department(#1):={#2}}
 
 % --------------------------------------------------------
 % Degree
-\def\ntmajorfield{\@ifnextchar*{\@ntmajorfieldifundef}{\@ntmajorfield{}}}
-\def\@ntmajorfieldifundef#1(#2)#3{\ifdatadefined{majorfield}(#2){}{\@ntmajorfield{}(#2){#3}}}
-\def\@ntmajorfield#1(#2)#3{\majorfield(#2):={#3}}
+\def\ntmajorfield{\@ifstar{\@ntmajorfieldifundef}{\@ntmajorfield}}
+\def\@ntmajorfieldifundef(#1)#2{\ifdatadefined{majorfield}(#1){}{\@ntmajorfield(#1){#2}}}
+\def\@ntmajorfield(#1)#2{\majorfield(#1):={#2}}
 
-\def\ntdegreename{\@ifnextchar*{\@ntdegreenameifundef}{\@ntdegreename{}}}
-\def\@ntdegreenameifundef#1(#2)#3{\ifdatadefined{degreename}(#2){}{\@ntdegreename{}(#2){#3}}}
-\def\@ntdegreename#1(#2)#3{%
+\def\ntdegreename{\@ifstar{\@ntdegreenameifundef}{\@ntdegreename}}
+\def\@ntdegreenameifundef(#1)#2{\ifdatadefined{degreename}(#1){}{\@ntdegreename(#1){#2}}}
+\def\@ntdegreename(#1)#2{%
   % #1 = ignored
-  % #2 = lang
-  % #3 = value
+  % #1 = lang
+  % #2 = value
   \datamatch{\match}{degreenameprefix}(%
               {\option{/novathesis/docdegree},\option{/novathesis/degreeacr},\option{/novathesis/coverlang}}%
              ,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr},\option{/novathesis/coverlang}}%
@@ -735,18 +735,18 @@
              ,{\option{/@nt/document/fallback},\option{/novathesis/coverlang}}%
              ,{\option{/novathesis/coverlang}}%
   )%
-  \ifblank{\match}{\degreename(#2):={#3}}{\degreename(#2):={\match\ #3}}%
-  \majorfield(#2):={#3}%
+  \ifblank{\match}{\degreename(#1):={#2}}{\degreename(#1):={\match\ #2}}%
+  \majorfield(#1):={#2}%
 }
 % --------------------------------------------------------
 % Specialization
-\def\ntminorfield{\@ifnextchar*{\@ntminorfieldifundef}{\@ntminorfield{}}}
-\def\@ntminorfieldifundef#1(#2)#3{\ifdatadefined{minorfield}(#2){}{\@ntminorfield{}(#2){#3}}}
-\def\@ntminorfield#1(#2)#3{\minorfield(#2):={#3}}
+\def\ntminorfield{\@ifstar{\@ntminorfieldifundef}{\@ntminorfield}}
+\def\@ntminorfieldifundef(#1)#2{\ifdatadefined{minorfield}(#1){}{\@ntminorfield(#1){#2}}}
+\def\@ntminorfield(#1)#2{\minorfield(#1):={#2}}
 
-\def\ntspecialization{\@ifnextchar*{\@ntspecializationifundef}{\@ntspecialization{}}}
-\def\@ntspecializationifundef#1(#2)#3{\ifdatadefined{specialization}(#2){}{\@ntspecialization{}(#2){#3}}}
-\def\@ntspecialization#1(#2)#3{%
+\def\ntspecialization{\@ifstar{\@ntspecializationifundef}{\@ntspecialization}}
+\def\@ntspecializationifundef(#1)#2{\ifdatadefined{specialization}(#1){}{\@ntspecialization(#1){#2}}}
+\def\@ntspecialization(#1)#2{%
   \datamatch{\match}{specializationstring}(%
                 {\option{/novathesis/docdegree},\option{/novathesis/degreeacr},\option{/novathesis/coverlang}}%
                ,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr},\option{/novathesis/coverlang}}%
@@ -755,8 +755,8 @@
                ,{\option{/@nt/document/fallback},\option{/novathesis/coverlang}}%
                ,{\option{/novathesis/coverlang}}%
   )%
-  \ifblank{\match}{\specialization(#2):={#3}}{\specialization(#2):={\match\ #3}}%
-  \minorfield*(#2):={#3}%
+  \ifblank{\match}{\specialization(#1):={#2}}{\specialization(#1):={\match\ #2}}%
+  \minorfield*(#1):={#2}%
 }
 
 % --------------------------------------------------------
@@ -776,13 +776,22 @@
 }
 \newcommand*{\@nttitle}[3]{%
   % #1 = lang
-  % #2 = type (main, sub) title
+  % #2 = type (main, sub, spine) title
   % #3 = value
-  \replacelinebreakwithspace{#3}{\@nttitletemp}
-  \doctitle(#1,#2):={\@nttitletemp}%
-  \doctitle(#1,#2,caps):={\expandafter\MakeUppercase\expandafter{\@nttitletemp}}%
-  \doctitle(#1,#2,cover):={#3}%
-  \doctitle(#1,#2,cover,caps):={\expandafter\MakeUppercase\expandafter{#3}}%
+  \IfStrEq{#2}{main}{%
+    \replacelinebreakwithspace{#3}{\@nttitletemp}
+    \doctitle(#1,#2):={\@nttitletemp}%
+    \doctitle(#1,#2,caps):={\expandafter\MakeUppercase\expandafter{\@nttitletemp}}%
+    \doctitle(#1,#2,cover):={#3}%
+    \doctitle(#1,#2,cover,caps):={\expandafter\MakeUppercase\expandafter{#3}}%
+    \ifdatadefined{doctitle}(#1,spine){}{%
+      \doctitle(#1,spine):={\@nttitletemp}%
+      \doctitle(#1,spine,caps):={\expandafter\MakeUppercase\expandafter{\@nttitletemp}}%
+    }%
+  }{%
+    \doctitle(#1,#2):={#3}%
+    \doctitle(#1,#2,caps):={\expandafter\MakeUppercase\expandafter{#3}}%
+  }%
 }
 % --------------------------------------------------------
 
@@ -848,14 +857,22 @@
                         }}}%
       {listofalgorithms}{\options{/@nt/list/listof/.cpush = {%
                                 \listofalgorithms
-                                \addcontentsline{toc}{chapter}{\listalgorithmcfname}
+                                \ifdefined\listalgorithmname>%
+                                  \addcontentsline{toc}{chapter}{\listalgorithmname}%
+                                \else\ifdefined\listalgorithmcfname%
+                                  \addcontentsline{toc}{chapter}{\listalgorithmcfname}%
+                                \else
+                                  \ClassError{novathesis}{Can't make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
+                                \fi\fi
                         }}}%
       {listsofglossaries}{\options{/@nt/list/listof/.cpush={%
                               \glstoctrue
+                              \ifoptionvoid{/@nt/file/glossaries/glossary}{\patchcmd{\@glo@types}{,main}{}{}{}}{}%
                               \printglossaries
                           }}}%
       {listsofglossaries*}{\options{/@nt/list/listof/.cpush={%
                               \glstocfalse
+                              \ifoptionvoid{/@nt/file/glossaries/glossary}{\patchcmd{\@glo@types}{,main}{}{}{}}{}%
                               \printglossaries
                           }}}%
   }[\options{/@nt/list/listof/.cpush={\ifdefmacro{#1}{#1}{\csuse{#1}}}}]%
@@ -1873,7 +1890,7 @@
 
 \newcommand*{\@loadglossaryfiles}{%
   \@for\listitem:={glossary,acronyms,symbols}\do{%
-    \ifoptiondefined{/@nt/file/glossaries/\listitem}
+    \ifoptiondefined{/@nt/file/glossaries/\listitem}%
       {\optionlistdo{/@nt/file/glossaries/\listitem}{\@ntloadfile@i{##1}}}{}%
   }%
 }
