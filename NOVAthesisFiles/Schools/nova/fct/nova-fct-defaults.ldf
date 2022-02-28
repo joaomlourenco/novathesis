@@ -61,10 +61,6 @@
 \spine(logo,msc,scale)={1.5}
 \spine(logo,msc,raise)={0.075}
 
-\spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
-\spine(date)={\thentdocdate(year)}
-
 \spine(text,angle)={90}
 \spine(box,textcolor)={white}
 % \spine(box,color)={blue}

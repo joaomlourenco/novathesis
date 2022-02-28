@@ -12,19 +12,23 @@
 
 %-------------------------------------------------------------------
 % Thesis/Dissertation title (valid for all languages unless redefined as below)
-% SYNTAX: \nttitle[lang]{title}
-%         You may use "\\" to force line breaks
+% SYNTAX: \nttitle(type,lang){title}
+%         For [type] use: [main]  for main title
+%                         [sub]   for sub-title
+%                         [spine] for a book spine version of the title
+%                                 (if omittted defaults to main title without line breaks)
 %-------------------------------------------------------------------
+%         You may use "\\" to force line breaks
 \nttitle(main,en){A Very Long and Impressive\\Thesis Title with a Forced Line Break}%
 \nttitle(main,pt){Um Título de Tese Longo\\e com uma Mudança de Linha Forçada}%
 
-%-------------------------------------------------------------------
-% Thesis/Dissertation subtitle (valid for all languages unless redefined as below)
-% SYNTAX: \nttitle{title}
 %         You may use "\\" to force line breaks
-%-------------------------------------------------------------------
 \nttitle(sub,en){Some thoughts on the Life, the Universe,\\and Everything Else}%
 \nttitle(sub,pt){Algumas considerações sobre a Vida,\\o Universo e Tudo o Mais}%
+
+%         You may NOT use "\\" to force line breaks
+% \nttitle(spine,en){A Very Long and Impressive Thesis Title}%
+% \nttitle(spine,pt){Um Título de Tese Longo e Impressionante}%
 
 %-------------------------------------------------------------------
 % DEPARTMENT NAME customization
@@ -51,10 +55,6 @@
 %-------------------------------------------------------------------
 \ntdegreename*(pt){\embrace{Nome do Programa de Estudos}}
 \ntdegreename*(en){\embrace{Study Program Name}}
-\ntdegreename*(de){\embrace{Name des Studienprogramms}}
-\ntdegreename*(es){\embrace{Nombre del Programa de Estudios}}
-\ntdegreename*(fr){\embrace{Nom du Programme d'Études}}
-\ntdegreename*(it){\embrace{Nome del Programma di Studio}}
 
 %-------------------------------------------------------------------
 % DEGREE SPECIALIZATION customization
@@ -78,7 +78,7 @@
 %-------------------------------------------------------------------
 % AUTHOR customization
 %    Author gender, full name, abd abbreviated name
-% SYNTAX: \ntauthorname[gender]{full name}{abbreviated name}
+% SYNTAX: \ntauthorname(gender){full name}{abbreviated name}
 %         Use [f] for female and [m] for male
 %-------------------------------------------------------------------
 \ntauthorname(m){John Very Longname Doe}{John Doe}
@@ -99,7 +99,7 @@
 %-------------------------------------------------------------------
 % ADVISERS LIST
 % Advisers' gender and info (name, position, school)
-% SYNTAX: \ntaddperson{adviser}[role,gender]{Name, Position, School}
+% SYNTAX: \ntaddperson{adviser}(role,gender){Name, Position, School}
 %         For [role] use: [a] for adviser
 %                         [c] for co-adviser
 %         For [gender] use: [f] for female
@@ -113,7 +113,7 @@
 
 %-------------------------------------------------------------------
 % COMMITTEE MEMBERS
-% SYNTAX: \ntaddperson{committee}[role,gender]{Name, Position, School}
+% SYNTAX: \ntaddperson{committee}(role,gender){Name, Position, School}
 %         For [role] use: [c] for committee chair
 %                         [r] for rapporteurs
 %                         [a] for advisers
