@@ -103,7 +103,8 @@
 \RequirePackage{NOVAthesisFiles/glossary-xltabular}%
 \setglossarystyle{xltabular}%
 \setabbreviationstyle[acronym]{long-short}%
-
+\GlsXtrEnablePreLocationTag{\small\itshape(p. }{\small\itshape(pp. }
+\renewcommand{\GlsXtrFormatLocationList}[1]{#1)\normalsize\upshape}
 \renewcommand{\glsnamefont}[1]{\textbf{#1}}%
 
 %--------------------------------
