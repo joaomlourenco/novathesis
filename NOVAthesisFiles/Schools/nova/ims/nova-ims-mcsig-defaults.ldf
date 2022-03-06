@@ -215,7 +215,7 @@
 \ntaddtocover[align=l, vspace=-1cm+7pt, minheight=3cm, inalign=c]{1-1}{%
   \fontsize{17}{17}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}}%
-  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
+  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,caps){%
     % ~\\[-2ex]%
     \\
     \textcolor{imsmidgrey}{
