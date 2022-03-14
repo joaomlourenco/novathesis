@@ -19,8 +19,18 @@
 
 %%%%% Configure multilingual language support
 \RequirePackage{csquotes}
-\RequirePackage{babel}			% Support for bilingual documents
 \RequirePackage{url}
+\RequirePackage{babel}			% Support for bilingual documents
+\newcommand{\definelanguagealias}[2]{%
+  \@namedef{languagealias@#1}{#2}%
+}
+\definelanguagealias{portuguese}{portuges}
+% \letoptionchoices{/@nt/langshorttolong}\opt@choices
+% \@for\i:=\opt@choices\do{%
+%   \options{/@nt/langshorttolong=\i}
+%   \typeout{CHOICE [\i, \option{/@nt/langshorttolong}]}%
+%   \definelanguagealias{\expanded{\i}}{\expanded{\option{/@nt/langshorttolong}}}%
+% }
 
 % \RequirePackage{appendix}
 
