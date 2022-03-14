@@ -190,7 +190,7 @@
 \options{/@nt/.new family
   , langsshort/.new list={en, pt, fr, it, de, es}
   , currentlang/.new choice={en, pt, fr, it, de, es}
-  , langshorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish}
+  , langshorttolong/.new choice={en=english, pt=portuges, fr=french, it=italian, de=german, es=spanish}
   , biblatex/.new list
 }
 
@@ -1064,6 +1064,14 @@
 % --------------------------------------------------------
 % LOAD ADDITIONAL PACKAGES
 \input{NOVAthesisFiles/packages.tex}
+
+% Patch month from number to string in the proper language
+\IfInteger{\thentdocdate(month)}{%
+  \RequirePackage{datetime}%
+  \edef\@nt@datemonth{\thentdocdate(month)}%
+  \ntdocdate(month)={\bgroup\ntselectlang{\option{/novathesis/coverlang}}\monthname[\@nt@datemonth]\egroup}%
+}{}
+
 
 % --------------------------------------------------------
 % FIX BABEL TRANSLATION
