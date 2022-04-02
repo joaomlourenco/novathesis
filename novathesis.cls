@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-03-06 [6.9.10]
+%% Version 2022-04-02 [6.9.11]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -69,6 +69,9 @@
 %% SOME ESSENTIAL PACKAGES
 %%    Others will be loaded later, in the file “packages.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\PassOptionsToPackage{table,svgnames}{xcolor}%
+\RequirePackage{tabularray}
+\UseTblrLibrary{booktabs}
 \RequirePackage{xfor}
 \RequirePackage{iftex}
 \RequirePackage{etoolbox}
@@ -190,7 +193,7 @@
 \options{/@nt/.new family
   , langsshort/.new list={en, pt, fr, it, de, es}
   , currentlang/.new choice={en, pt, fr, it, de, es}
-  , langshorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish}
+  , langshorttolong/.new choice={en=english, pt=portuges, fr=french, it=italian, de=german, es=spanish}
   , biblatex/.new list
 }
 
@@ -1064,6 +1067,14 @@
 % --------------------------------------------------------
 % LOAD ADDITIONAL PACKAGES
 \input{NOVAthesisFiles/packages.tex}
+
+% Patch month from number to string in the proper language
+\IfInteger{\thentdocdate(month)}{%
+  \RequirePackage{datetime}%
+  \edef\@nt@datemonth{\thentdocdate(month)}%
+  \ntdocdate(month)={\bgroup\ntselectlang{\option{/novathesis/coverlang}}\monthname[\@nt@datemonth]\egroup}%
+}{}
+
 
 % --------------------------------------------------------
 % FIX BABEL TRANSLATION

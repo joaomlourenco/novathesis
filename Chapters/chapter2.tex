@@ -18,93 +18,158 @@
     This manual is outdated and must be revised!}
 \end{center}
 
-Referência ao Potássio é \gls{chem:potassio} e Sódio também \gls{chem:sodio}.
 
 \section{Introduction}
 \label{sec:introduction}
 
-This chapter describes how to use the \gls{novathesis}\ Template and the \gls{novathesisclass} file.  I will assume you have a working installation of \LaTeX, wither local (in your own computer) or remote (in Overleaf), and that it compiled successfully the default configuration (PhD for \gls{FCT}).
+This Chapter describes how to use the \gls{novathesis}\ template.  It is assumed that you have a working installation of \LaTeX, either local (in your own computer) or remote (in Overleaf), and that you were able to generate a PDF for the default configuration of the template: a PhD thesis for \gls{FCT}.
 
 
-\section{Folder Structure}
-\label{sec:folder_structure}
+\section{Quick Start}
+\label{sec:quick_started}
 
-The \gls{novathesis} template is organized into many files and folders. At the main level it includes the following files and folders:
+\subsection{With a Local \LaTeX\ Installation} % (fold)
+\label{sub:with_a_local_latex_installation}
 
-\noindent\rowcolors{1}{GhostWhite}{}
-\begin{xltabular}{\linewidth}{>{\ttfamily}l>{\itshape}l>{\upshape}X}
-novathesis.cls     & file    & 
-The main class file. It will include additional files from \texttt{NOVAthesisFiles} folder and its sub-folders. 
+Follow these steps to get started with a local \LaTeX\ installation:
+
+\begin{enumerate}
+  \item Download \LaTeX.  There are two major \LaTeX\ distributions — \href{https://miktex.org/}{\MikTeX} and \href{https://www.tug.org/texlive/}{\TeXLive} — that share lots of similarity, and \LaTeX\ documents are portable between them. This means that, for most users, both systems are equally usable.
+  \begin{description}
+    \item [\TeX-Live] is maintained by (La)\TeX\ developers and is certainly the best distribution you may install in your computer:  However, the default distribution will take more than 5\,GB on your hard disk… so, if you are not short on disk space, install \TeXLive!
+    \item[Mik\TeX] will, by default, install only a minimal set of packages. The extra/additional packages will be installed on the fly.  Installing packages on the fly is useful if disk space is limited, but has its own caveats in the longer term.  Definitely choose \MikTeX\ if you're short on disk space.
+  \end{description}
+  Which one to download?  There are \href{https://tex.stackexchange.com/questions/20036/what-are-the-advantages-of-tex-live-over-miktex}{pros and cons for both distributions} so it is essentially a question of where does your hear falls first!  Mine is in \TeXLive, but yours can be elsewhere!  \emojiSmile
+  \item Install \LaTeX.
+  \begin{description}
+    \item [Full distribution:] Installing a full distribution (valid for both \TeXLive\ and \MikTeX) means you will have all the possibly relevant files in your computer.  Almost any \LaTeX\ file from almost any source will compile successfully in your computer.
+    \item [Basic/minimal distribution:] Installing a basic/minimal distribution (also valid for both \TeXLive\ and \MikTeX) means your \LaTeX\ installation will be able to compile simple documents, but you will have to add additional packages (extensions) whenever required by more complex \LaTeX\ documents.  \MikTeX\ makes the user's live very easy by downloading these packages automatically, while \TeXLive\ expects the user to identify and install the required packages.
+  \end{description}
+  \item Download the \gls{novathesis} template by either:
+  \begin{itemize}
+    \item Cloning the \href{https://github.com/joaomlourenco/novathesis}{GitHub repository} with
+    \begin{verbatim}    git clone --depth=1 https://github.com/joaomlourenco/novathesis.git\end{verbatim}%
+    or
+    \item Downloading the \href{https://github.com/joaomlourenco/novathesis/archive/master.zip}{latest version from the GitHub repository as a Zip file}.
+  \end{itemize}
+  \item Download additional School specific files if applicable:
+  \begin{description}
+    \item[Universidade do Minho (UMINHO)] download the required \emph{NewsGotT} font files from\\
+    \url{https://github.com/joaomlourenco/novathesis-extras/raw/main/Fonts/NewsGotT.zip}\\
+    then unzip the file and copy the~3~font files “\verb!n015002t.ttf!”, “\verb!n015003t.ttf!”, and “\verb!n015006t.ttf!” to the folder “\verb!NOVAthesisFiles/FontStyles/Fonts!”.
+    \item[Escola Superior de Enfermagem do Porto (ESEP)] download the required \emph{Calibri} font files from\\
+    \url{https://github.com/joaomlourenco/novathesis-extras/raw/main/Fonts/Calibri.zip}\\
+    then unzip the file and copy the~4~font files “\verb!Calibri.ttf!”, “\verb!Calibrib.ttf!”, “\verb!Calibrii.ttf!”, and “\verb!Calibriz.ttf!” to the folder “\verb!NOVAthesisFiles/FontStyles/Fonts!”.
+  \end{description}
+  \item \label{it:project_available} Compile the document with you favorite LaTeX processor (pdfLaTeX, XeLaTeX or LuaLaTeX).  
+  \begin{itemize}
+    \item The main file is named “\verb!template.tex!”, but you are free to rename it as you please.
+    \item Either load the main file in your favorite \href{https://en.wikipedia.org/wiki/Comparison_of_TeX_editors}{LaTeX text editor} and press the appropriate (\emph{magic}) button to generate a PDF file, or open a terminal and compile it with “\verb!latexmk -pdf template!”. If you use a \LaTeX\ text editor, please notice that the \gls{novathesis} template uses “\verb!biber!” and not “\verb!bibtex!” to process the bibliography, which means that most probably you have to open the \emph{Editor Preferences} and somewhere (depending on the Editor you are using) change “\verb!bibtex!” to “\verb!biber!”.
+    \item Notice that, due to the external font sets used, \pdfLaTeX\ will not work for both \textbf{UMINHO} and \textbf{ESEP}, and you have to use either \XeLaTeX\ or \LuaLaTeX.
+  \end{itemize}
+  \item Edit the files in the “Config” folder:
+    \begin{longtblr}[
+        presep = 0pt,
+        % caption = {My long table},
+        % label = {tab:longtblr?}
+        label=none,
+    ]{  colspec = {Q[l,t,font=\ttfamily]X[j,t]},
+        rowhead = {1},
+        row{odd} = {GhostWhite},
+        % row{even} = {yellow},
+        row{1} = {font=\bfseries, l, Schlgray, ht=0.75cm},
+        hline{9} = {dashed},
+        % col{1} = {font=\bfseries},
+        % preto{1} = {\verb!},
+        % appto{1} = {!},
+    }      
+        \toprule
+        File & Contents \\
+        \midrule
+0\_memoir.tex       & Options specific for the memoir package. \emph{Don't touch this file unless you know what you are doing!}\\
+1\_novathesis.tex   & Configure the template (e.g., the document type, the school, the languages used, etc.)\\
+2\_biblatex.tex     & Configure the bibliography.\\
+3\_cover.tex        & Configure cover contents (e.g., author's name, thesis/dissertation title, advisers, committee, etc)\\
+4\_files.tex        & Configure the files for chapters, appendices, annexes, abstracts, glossaries, etc…\\
+5\_packages.tex     & Configure additional packages and commands.\\
+6\_list\_of.tex     & Configure the lists to be printed (table of contents, list of figures, list of tables, list of listings, etc). \emph{Don't touch this file unless you know what you are doing!}\\
+9\_nova\_fct.tex    & Configuration specific to NOVA-FCT.\\
+9\_nova\_ims.tex    & Configuration specific to NOVA-IMS.\\
+9\_nova\_itqb.tex   & Configuration specific to NOVA-ITQB.\\
+9\_ulisboa\_fmv.tex & Configuration specific to ULISBOA-FMV.\\
+9\_uminho.tex       & Configuration specific to UMINHO (all Schools).\\
+        \bottomrule
+    \end{longtblr}
+    \item Recompile de document.
+    \item And you're done with a beautifully formatted thesis/dissertation! {\setlength{\twemojiDefaultHeight}{1.5\twemojiDefaultHeight}\emojiSmile}
+\end{enumerate}
+
+% subsection with_a_local_latex_installation (end)
+
+\subsection{With a Remote Cloud-based Service} % (fold)
+\label{sub:with_a_remote_cloud_based_service}
+
+Follow these steps to get started with a remote \LaTeX\ installation:
+
+\begin{itemize}
+  \item Download the \href{https://github.com/joaomlourenco/novathesis/archive/master.zip}{latest version from the GitHub repository as a Zip file}.
+  \item Login to your favorite LaTeX cloud service. I recommend \href{https://www.overleaf.com/?r=f5160636&rm=d&rs=b}{Overleaf} but there are alternatives. These instructions apply to Overleaf and you'll have to adapt for other providers.
+  \item In the menu select \fbox{New project}$\rightarrow$\fbox{Upload project}.
+  \item Select “\verb!template.tex!” as the main file.
+  \item Follow from Step~\ref{it:project_available} above in Section~\ref{sub:with_a_local_latex_installation} (\nameref{sub:with_a_local_latex_installation}).
+\end{itemize}
+
+% subsection with_a_remote_cloud_based_service (end)
+
+
+\section{Folder and Files}
+\label{sec:folders_and_files}
+
+The \gls{novathesis} template is organized into many files and folders. At the main level it includes the following files and folders listed in Table~\ref{tab:folders_and_files}.
+
+\newcommand{\accessAllowed}{\includegraphics[align=c,width=3em]{access_allowed}}
+\newcommand{\accessForbiden}{\includegraphics[align=c,width=3em]{access_forbidden}}
+
+    \begin{longtblr}[
+        % presep = 5pt,
+        caption = {The folders and files.},
+        label = {tab:folders_and_files}
+        % label=none,
+    ]{  colspec = {Q[l,m,font=\ttfamily]Q[l,m,font=\itshape]Q[c,m]X[j,m]},
+        rowhead = {1},
+        row{odd} = {GhostWhite},
+        % row{even} = {yellow},
+        % col{2} = {font=\itshape},
+        row{1} = {font=\bfseries, l, Schlgray, ht=0.75cm},
+        % hline{9} = {dashed},
+        % preto{1} = {\itshape},
+        % appto{1} = {!},
+        verb,
+    }      
+        \toprule
+        Name & Type & Access & Contents \\
+        \midrule
+novathesis.cls     & file    & \accessForbiden &
+The main class file. %It will include additional files from “\texttt{NOVAthesisFiles}” folder and its sub-folders.
 \\ 
-template.tex      & file    & 
-The main template file. You need to \emph{compile} this file with one of pdf\LaTeX, \XeLaTeX, or \LuaLaTeX\ to obtain the \texttt{template.pdf} file.
+template.tex      & file    & \accessForbiden &
+The main template file. You need to \emph{compile} this file with one of \pdfLaTeX, \XeLaTeX, or \LuaLaTeX\ to obtain the PDF file (“\texttt{template.pdf}”).
 \\
-bibliography.bib  & file    & 
-An example of a bibliography file. You may have has many as you want. \\
-template.pdf      & file    & 
-A possible result of applying pdf\LaTeX\ to the \texttt{template.tex} file. The template supports multiple types of documents (e.g., MSc dissertation, PhD thesis, …) and multiple Schools (e.g., FCT-NOVA, FCSH-NOVA, IST-UL, FC-UL, …) and each will produce different results.
+template.pdf      & file    & \accessAllowed &
+A possible result of applying \pdfLaTeX\ to the “\texttt{template.tex}” file. The look and feel of the document will depend on the parametrization/configuration (e.g., School) of this template.
 \\
-Chapters          & folder  & Examples of thesis chapters. Replace them with your own chapters. 
+Chapters          & folder  & \accessAllowed &
+Examples of document contents, including Chapters, Appendices, Annexes, Abstracts, Glossaries, Lists of Symbols, etc. Replace them with your own.
 \\
-Examples          & folder  & Some more examples of the use of the template for different document types and Schools. 
+Bibliography      & folder    & \accessAllowed &
+Where all your bibliography files should be located. You may have has many as you want, as long as you add them to the template with “\verb!\ntaddfile{bib}{FILENAME.bib}!”. \\
 \\
-Scripts           & folder  & Some (possibly useful) scripts for Unix-based systems (Linux, Mac OSx). If you are a windows user, ignore this folder (you may safely delete it if you want). 
+NOVAthesisFiles   & folder  & \accessForbiden &
+Additional files for the \gls{novathesis} template.  Unless you know what you are doing, avoid messing up with the files and folders inside this folder.
 \\
-NOVAthesisFiles   & folder  & 
-Additional files for the \gls{novathesisclass}\ file.  Unless you know what you are doing, avoid messing up with the files and folders inside this folder (except for deleting the unused Schools, see below). 
-\\
-\end{xltabular}
+        \bottomrule
+    \end{longtblr}
 
-The \texttt{NOVAthesisFiles} folder contains additional files and folders that complement the main \gls{novathesisclass}\ file.  These are:
-
-\noindent
-\begin{tabularx}{\linewidth}{>{\ttfamily}l>{\itshape}l>{\upshape}X}
-README.txt      & file    &
-A file that should be read!  :) 
-\\
-fix-babel.tex   & file    &
-Simple fixes to the \texttt{babel} package.
-\\
-lang-text.ldf   & file    &
-Translations of important strings used in the template.  Currently fully supported are Portuguese and English, but French is on the way.  If you add translations for your own language, please be so kind and send them to me. Thank you!
-\\
-options.tex     & file    &
-Processing of \gls{novathesisclass}\ options.  \emph{Don't mess with this!}
-\\
-packages.tex    & file    &
-Additional packages to be loaded into the \gls{novathesis}\ template. \emph{You should not mess with this!}
-\\
-spine.tex       & file    &
-This file is loaded only if the option \texttt{spine=full} or \texttt{spine=trim}, and includes the typesetting of the book spine.
-\\
-ChapStyles      & folder  &
-Contains a lot of files, one for each chapter style.  If you really know what you are doing, you may add your own chapter style here.
-\\
-FontStyles      & folder  &
-Contains a few files, one for each set of fonts (main text font, chapter font, section font, subsection font, etc).  If you really know what you are doing, you may add your own set here.
-\\
-Schools         & folder  &
-Configuration files for each school.  This folder is organized into subfolders, one for each university.  \emph{You may safely delete all the subfolders except the one for your University.}  Then open the subfolder of your University and \emph{you may safely delete all the subfolders except the one for your School/Faculty}.
-\\
-\end{tabularx}
-
-As stated above, the \texttt{Schools} folder contains per-university folders and per-school (faculty) subfolders.  Currently these are the available folders:
-
-\noindent
-\begin{tabularx}{\linewidth}{>{\ttfamily}r@{~/~}>{\ttfamily}l>{\itshape}l>{\upshape}X}
-ul     & ist    & folder  & 
-The folder for the \href{http://www.tecnico.ulisboa.pt}{\emph{Instituto Superior Técnico}} of the \emph{University of Lisbon}.
-\\
-nova    & fcsh   & folder  & 
-The folder for the \href{http:www.fcsh.unl.pt}{\emph{Faculty of Human and Social Sciences}}  of the \emph{NOVA University of Lisbon}.
-\\
-nova    & fct    & folder  & 
-The folder for the \href{http:www.fct.unl.pt}{\emph{Faculty of Sciences and Technology}} of the \emph{NOVA University of Lisbon}.
-\\
-nova    & novaims    & folder  & 
-The folder for the \href{http:www.novaims.unl.pt}{\emph{Information and Management School}} of the \emph{NOVA University of Lisbon}.
-\\
-\end{tabularx}
 
 % section folder_structure (end)
 
@@ -284,6 +349,9 @@ Please have a look at Chapter~\ref{cha:a_short_latex_tutorial_with_examples}, wh
 This is the first occurrence of an abbreviation: \gls{abbrev}. And now the second occurrence of the same abbreviation: \gls{abbrev}. And a new acronym with capital letter: \Gls{xpt} and reused \gls{xpt}.  Let's also use a few other acronyms such as \gls{aaa}, \gls{aab}, \gls{aba}, \gls{bbb} and \gls{xpt}.
 In geometry, the area enclosed by a circle of radius \gls{r} is $\pi r^2$. Here the Greek letter \gls{pi} is equal to the ratio of the circumference of any circle to its diameter.
 Lets add ``\gls{computer}'' to the glossary! Be carefull with mathematical symbols in acronyms, please see the definition of \gls{mu}.
+
+Reference to Potassium \gls{chem:potassio} and Sodium \gls{chem:sodio} as well.
+
 %
 % Please note that
 % \begin{center}

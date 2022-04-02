@@ -55,8 +55,8 @@ Did you learn how to drive by sitting by the wheel and throwing your car into th
 }
 \egroup
 
-\subsection{Appeal}
-\label{sub:appeal}
+\subsection{Recognition}
+\label{sub:recognition}
 
 The \gls{novathesis} tempalte was born in~1996, and what you see now accumulates to many many hundreds (thousands?!) of working hours, unpaid and stollen from family and friends.  This work is available to the community under the \href{LaTeX project public license}{\LaTeX\ Project Public License v1.3c}, which means you are entitled to use it for free.  However, if you decide to use this template to write your thesis/dissertation, \textbf{be fair to the developers} and:
 \begin{enumerate}
@@ -76,101 +76,113 @@ The \gls{novathesis} tempalte was born in~1996, and what you see now accumulates
 \section{The \emph{NOVAthesis} template}
 \label{sec:a_bit_of_history}
 
-\newcommand{\mysmallcoversize}{0.09\linewidth}
-\renewcommand{\theadfont}{\large\bfseries}
-\definecolor{Schlgray}{gray}{0.95}  
-\newtoggle{ntRow}
-
-\makeatletter
-\newcommand{\ntSchool}[3]{%
-    % #1 = list of cover images
-    % #2 = School <name;acronym;url>
-    % #3 = List of degrees <name;acronym;url>
-    \setlength{\fboxsep}{0pt}%
-    \def\myspace{}%
-    \gape{
-    \@for\listitem:=#1\do{%
-      \myspace\fbox{\colorbox{White}{\includegraphics[align=c,width=\mysmallcoversize]{\listitem}}}%
-      \def\myspace{~}%
-    }}%
-    &
-    \parbox[c]{\linewidth}{
-      \StrCut{#2}{;}\schlname\@remainder%
-      \StrCut{\@remainder}{;}\schlacrn\schlurl%
-      \textbf{\schlname\IfStrEq{\schlacrn}{}{}{\ \href{\schlurl}{(\schlacrn)}\newline}}
-      \def\mynewline{\hspace*{2em}}\small
-      \@for\listitem:=#3\do{%
-        % \@ntschldata(\listitem)
-        \StrCut{\listitem}{;}\schlname\@remainder%
-        \StrCut{\@remainder}{;}\schlacrn\schlurl%
-        \mynewline\schlname\IfStrEq{\schlacrn}{}{}{\ \href{\schlurl}{(\schlacrn)}}%
-        \def\mynewline{\newline\hspace*{2em}}
-    }}\\
-}
-\makeatother
-% \def\@ntschldata(#1;#2;#3){}%#4#5#6{\def#4{#1}\def#5{#2}\def#6{#3}}
+\definecolor{Schlgray}{gray}{0.95}
 
 \newenvironment{ntUniversity}[1]{
-  \renewcommand\cellgape{\Gape[5pt]}
-  \rowcolors{1}{}{GhostWhite}
-    \xltabular{\linewidth}{cX}%
-    \toprule%
-    \rowcolor{Gainsboro}%
-    & \Gape[1.5ex]{\thead[l]{#1}}\\
-    \midrule%
+    \begin{longtblr}[
+        % presep = 1ex,
+        % postsep = 1ex,
+        caption = {#1's Schools supported by the \novathesis\ template.},
+        label = {tab:supported_schools_#1},
+        % label=none,
+    ]{colspec = {Q[c,m]X[j,m]},
+        rowhead = {1},
+        row{odd} = {GhostWhite},
+        % row{even} = {yellow},
+        row{1}  = {font=\bfseries, l, Schlgray, ht=1cm},
+    }      
+        \toprule
+     ~ & #1 \\
+        \midrule
 }{%
-    \bottomrule
-    \endxltabular%
+        \bottomrule
+    \end{longtblr}
 }
 
-The \gls{novathesis} template was born at the \gls{DI} of  \gls{FCT} of \gls{NOVA}, Portugal.  But the user base grew… initially to other Departments of FCT-NOVA, then to other Schools of NOVA, and later to other Schools of other Universities.  Currently more than 25 Schools are natively supported by the \gls{novathesis} teamplte.
+The \gls{novathesis} template was born at the \gls{DI} of  \gls{FCT} of \gls{NOVA}, Portugal.  But the user base grew… initially to other Departments of FCT-NOVA, then to other Schools of NOVA, and later to other Schools of other Universities.  Currently more than~25 Schools are natively supported by the \gls{novathesis} template (see Tables~\ref{tab:supported_schools_NOVA University Lisbon}, \ref{tab:supported_schools_University of Lisbon}, \ref{tab:supported_schools_University of Minho}, \ref{tab:supported_schools_Instituto Politécnico de Lisboa}, \ref{tab:supported_schools_Instituto Politécnico de Setúbal}, and \ref{tab:supported_schools_Other Universities/Schools/Degrees}).
+
+\newcommand{\docCover}[1]{\setlength{\fboxsep}{0pt}\fbox{\colorbox{White}{\includegraphics[align=c,width=1.5cm]{#1}}}}
+\newcommand{\schlName}[3]{\textbf{#1} (\href{#3}{#2})}
+\newcommand{\degreeName}[3]{\\\null\quad • #1 \href{#3}{(#2)}}
 
 \begin{ntUniversity}{NOVA University Lisbon}
-    \ntSchool{nova-fct-phd-en,nova-fct-msc-en}%
-             {{NOVA School of Science and Technology};{FCT-NOVA};{https://www.fct.unl.pt}}
-             {{All PhD Programs};{PhD};{https://www.fct.unl.pt/en/education/phd-programmes},%
-              {All MSc Programs};{MSc};{https://www.fct.unl.pt/en/education/master-degrees}}
-    \ntSchool{nova-fcsh-phd-en,nova-fcsh-msc-en}%
-             {{NOVA School of Social Sciences and  Humanities};{FCSH-NOVA};{https://www.fcsh.unl.pt}}
-             {{All PhD Programs};{PhD};{https://www.fcsh.unl.pt/cursos/\#doutoramentos},%
-              {All MSc Programs};{MSc};{https://www.fcsh.unl.pt/cursos/\#mestrados}}
-    \ntSchool{nova-ims-phd-en,nova-ims-msc-mmaa-en}%
-             {{NOVA Information Management School};{NOVA-IMS};{https://www.novaims.unl.pt}}
-             {{All PhD Programs};{PhD};{https://www.novaims.unl.pt},%
-              {Master's in Data Science and Advanced Analytics};{MMAA};{https://www.novaims.unl.pt/mdsaa-ba}}
-    \ntSchool{nova-ims-msc-megi-en,nova-ims-msc-mgi-en}%
-             {;;}
-             {{Master's in in Statistics and Information Management};{MEGI};{https://www.novaims.unl.pt},%
-              {Master's in Information Management};{MGI};{https://www.novaims.unl.pt}}
-    \ntSchool{nova-ims-msc-mcsig-en,nova-ims-msc-mgt-en}%
-             {;;}
-             {{Master's in Geographic Information Systems and Science};{MCSIG};{https://www.novaims.unl.pt/unigis},%
-              {Master's in Geospatial Technologies};{GeoTech};{https://www.novaims.unl.pt/geotech}}
-    \ntSchool{nova-ensp-phd-en,nova-ensp-msc-en}%
-             {{National School of Public Heath};{ENSP-NOVA};{https://www.ensp.unl.pt}}
-             {{All PhD Programs};{PhD};{https://www.ensp.unl.pt/courses/phds},%
-              {All MSc Programs};{MSc};{https://www.ensp.unl.pt/courses/masters}}
-    \ntSchool{nova-itqb-phd-gray-en,nova-itqb-phd-green-en}%
-             {{Instituto de Tecnologia Química e Biológica};{ITQB-NOVA};{https://www.itqb.unl.pt}}
-             {{All PhD Programs};{PhD};{https://www.itqb.unl.pt/education/PhD\%20Programs}}
-    \ntSchool{nova-itqb-msc-gray-en,nova-itqb-msc-green-en}%
-             {;;}
-             {{All MSc Programs};{MSc};{https://www.itqb.unl.pt/education/masters-courses}}
+  {
+    \docCover{nova-fct-phd-en}
+    \docCover{nova-fct-msc-en}
+  } &  {
+    \schlName{NOVA School of Science and Technology}{FCT-NOVA}{https://www.fct.unl.pt}
+    \degreeName{All PhD Programs}{PhD}{https://www.fct.unl.pt/en/education/phd-programmes}
+    \degreeName{All MSc Programs}{MSc}{https://www.fct.unl.pt/en/education/master-degrees}
+  }\\
+  {
+    \docCover{nova-fcsh-phd-en}
+    \docCover{nova-fcsh-msc-en}
+  } &  {
+    \schlName{NOVA School of Social Sciences and Humanities}{FCSH-NOVA}{https://www.fcsh.unl.pt}
+    \degreeName{All PhD Programs}{PhD}{https://www.fcsh.unl.pt/cursos/\#doutoramentos}
+    \degreeName{All MSc Programs}{MSc}{https://www.fcsh.unl.pt/cursos/\#mestrados}
+  }\\
+  {
+    \docCover{nova-ims-phd-en}
+    \docCover{nova-ims-msc-mmaa-en}\\
+    \docCover{nova-ims-msc-megi-en}
+    \docCover{nova-ims-msc-mgi-en}\\
+    \docCover{nova-ims-msc-mcsig-en}
+    \docCover{nova-ims-msc-mgt-en}\\
+  } &  {
+    \schlName{NOVA Information Management School}{NOVA-IMS}{https://www.novaims.unl.pt}
+    \degreeName{All PhD Programs}{PhD}{https://www.novaims.unl.pt}
+    \degreeName{Master's in Data Science and Advanced Analytics}{MMAA}{https://www.novaims.unl.pt/mdsaa-ba}
+    \degreeName{Master's in in Statistics and Information Management}{MEGI}{https://www.novaims.unl.pt}
+    \degreeName{Master's in Information Management}{MGI}{https://www.novaims.unl.pt}
+    \degreeName{Master's in Geographic Information Systems and Science}{MCSIG}{https://www.novaims.unl.pt/unigis}
+    \degreeName{Master's in Geospatial Technologies}{GeoTech}{https://www.novaims.unl.pt/geotech}
+  }\\
+  {
+    \docCover{nova-ensp-phd-en}
+    \docCover{nova-ensp-msc-en}
+  } &  {
+    \schlName{National School of Public Heath}{ENSP-NOVA}{https://www.ensp.unl.pt}
+    \degreeName{All PhD Programs}{PhD}{https://www.ensp.unl.pt/courses/phds}
+    \degreeName{All MSc Programs}{MSc}{https://www.ensp.unl.pt/courses/masters}
+  }\\
+  {
+    \docCover{nova-itqb-phd-green-en}
+    \docCover{nova-itqb-msc-green-en}\\
+    \docCover{nova-itqb-phd-gray-en}
+    \docCover{nova-itqb-msc-gray-en}
+  } & {
+    \schlName{Instituto de Tecnologia Química e Biológica}{ITQB-NOVA}{https://www.itqb.unl.pt}
+    \degreeName{All PhD Programs}{PhD}{https://www.itqb.unl.pt/education/PhD\%20Programs}
+    \degreeName{All MSc Programs}{MSc}{https://www.itqb.unl.pt/education/masters-courses}
+  }\\
 \end{ntUniversity}
 
 \begin{ntUniversity}{University of Lisbon}
-    \ntSchool{ulisboa-ist-phd-en,ulisboa-ist-msc-en}%
-             {{Instituto Superior Técnico};{IST-UL};{https://tecnico.ulisboa.pt}}
-             {{All PhD Programs};{PhD};{https://tecnico.ulisboa.pt/en/education/courses/phd-programmes/},%
-              {All MSc Programs};{MSc};{https://tecnico.ulisboa.pt/en/education/courses/masters-programmes}}
-    \ntSchool{ulisboa-fc-phd-en,ulisboa-fc-msc-en}%
-             {{Faculdade de Ciências};{FCUL};{https://ciencias.ulisboa.pt}}
-             {{All PhD Programs};{PhD};{https://ciencias.ulisboa.pt/en/educational-offer/},%
-              {All MSc Programs};{MSc};{https://ciencias.ulisboa.pt/en/educational-offer}}
-    \ntSchool{ulisboa-fmv-phd-en,ulisboa-fmv-msc-en}%
-             {{Faculdade de Medicina Veterinária};{FMV-UL};{https://www.fmv.ulisboa.pt}}
-             {{All PhD Programs};{PhD};{https://www.fmv.ulisboa.pt/en/study/phd},%
-              {All MSc Programs};{MSc};{https://www.fmv.ulisboa.pt/pt/ensino/mestrados}}
+  {
+    \docCover{ulisboa-ist-phd-en}
+    \docCover{ulisboa-ist-msc-en}
+  } & {
+    \schlName{Instituto Superior Técnico}{IST-UL}{https://tecnico.ulisboa.pt}
+    \degreeName{All PhD Programs}{PhD}{https://tecnico.ulisboa.pt/en/education/courses/phd-programmes/}
+    \degreeName{All MSc Programs}{MSc}{https://tecnico.ulisboa.pt/en/education/courses/masters-programmes}
+  }\\
+  {
+    \docCover{ulisboa-fc-phd-en}
+    \docCover{ulisboa-fc-msc-en}
+  } & {
+    \schlName{Faculdade de Ciências}{FCUL}{https://ciencias.ulisboa.pt}
+    \degreeName{All PhD Programs}{PhD}{https://ciencias.ulisboa.pt/en/educational-offer/}
+    \degreeName{All MSc Programs}{MSc}{https://ciencias.ulisboa.pt/en/educational-offer/}
+  }\\
+  {
+    \docCover{ulisboa-fmv-phd-en}
+    \docCover{ulisboa-fmv-msc-en}
+  } & {
+    \schlName{Faculdade de Medicina Veterinária}{FMV-UL}{https://www.fmv.ulisboa.pt}
+    \degreeName{All PhD Programs}{PhD}{https://www.fmv.ulisboa.pt/en/study/phd}
+    \degreeName{All MSc Programs}{MSc}{https://www.fmv.ulisboa.pt/pt/ensino/mestrados}
+  }\\
 \end{ntUniversity}
 
 
@@ -201,37 +213,135 @@ The \gls{novathesis} template was born at the \gls{DI} of  \gls{FCT} of \gls{NOV
 \schlname(ilch):={School of Arts and Humanities}
 \schlurl(ilch):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-arts-and-humanities.aspx}
 
-
 \begin{ntUniversity}{University of Minho}
-  \ntfor\i:={ea,ec,ed,ee,eeg,em,ep,ese,ics,ie,ilch,i3b}\do{%
-    \ntSchool{uminho-\i-phd-en,uminho-\i-msc-en}
-             {\theschlname(\i);\uppercase{\i}-UMINHO;\theschlurl(\i)}
-             {{All PhD Programs};{PhD};{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx},%
-              {All MSc Programs};{MSc};{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}}
-  }%
+    {
+      \docCover{uminho-ea-phd-en}
+      \docCover{uminho-ea-msc-en}
+    } & {
+      \schlName{\theschlname(ea)}{\uppercase{ea}-UMINHO}{\theschlurl(ea)}
+      \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
+      \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
+    }\\
+    {
+      \docCover{uminho-ec-phd-en}
+      \docCover{uminho-ec-msc-en}
+    } & {
+      \schlName{\theschlname(ec)}{\uppercase{ec}-UMINHO}{\theschlurl(ec)}
+      \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
+      \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
+    }\\
+    {
+      \docCover{uminho-ed-phd-en}
+      \docCover{uminho-ed-msc-en}
+    } & {
+      \schlName{\theschlname(ed)}{\uppercase{ed}-UMINHO}{\theschlurl(ed)}
+      \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
+      \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
+    }\\
+    {
+      \docCover{uminho-ee-phd-en}
+      \docCover{uminho-ee-msc-en}
+    } & {
+      \schlName{\theschlname(ee)}{\uppercase{ee}-UMINHO}{\theschlurl(ee)}
+      \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
+      \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
+    }\\
+    {
+      \docCover{uminho-eeg-phd-en}
+      \docCover{uminho-eeg-msc-en}
+    } & {
+      \schlName{\theschlname(eeg)}{\uppercase{eeg}-UMINHO}{\theschlurl(eeg)}
+      \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
+      \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
+    }\\
+    {
+      \docCover{uminho-em-phd-en}
+      \docCover{uminho-em-msc-en}
+    } & {
+      \schlName{\theschlname(em)}{\uppercase{em}-UMINHO}{\theschlurl(em)}
+      \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
+      \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
+    }\\
+    {
+      \docCover{uminho-ep-phd-en}
+      \docCover{uminho-ep-msc-en}
+    } & {
+      \schlName{\theschlname(ep)}{\uppercase{ep}-UMINHO}{\theschlurl(ep)}
+      \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
+      \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
+    }\\
+    {
+      \docCover{uminho-ese-phd-en}
+      \docCover{uminho-ese-msc-en}
+    } & {
+      \schlName{\theschlname(ese)}{\uppercase{ese}-UMINHO}{\theschlurl(ese)}
+      \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
+      \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
+    }\\
+    {
+      \docCover{uminho-ics-phd-en}
+      \docCover{uminho-ics-msc-en}
+    } & {
+      \schlName{\theschlname(ics)}{\uppercase{ics}-UMINHO}{\theschlurl(ics)}
+      \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
+      \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
+    }\\
+    {
+      \docCover{uminho-ie-phd-en}
+      \docCover{uminho-ie-msc-en}
+    } & {
+      \schlName{\theschlname(ie)}{\uppercase{ie}-UMINHO}{\theschlurl(ie)}
+      \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
+      \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
+    }\\
+    {
+      \docCover{uminho-ilch-phd-en}
+      \docCover{uminho-ilch-msc-en}
+    } & {
+      \schlName{\theschlname(ilch)}{\uppercase{ilch}-UMINHO}{\theschlurl(ilch)}
+      \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
+      \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
+    }\\
+    {
+      \docCover{uminho-i3b-phd-en}
+      \docCover{uminho-i3b-msc-en}
+    } & {
+      \schlName{\theschlname(i3b)}{\uppercase{i3b}-UMINHO}{\theschlurl(i3b)}
+      \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
+      \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
+    }\\
 \end{ntUniversity}
-
-% \begin{ntUniversity}{ISCTE — Instituto Universitário de Lisboa}
-%     \ntSchool{cover-iscteiul-eta-phd}%
-%              {Escola{ de Tecnologias e Arquitectura};{ETA-ISCTE-IUL};{https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura}%}
-% \end{ntUniversity}
-
+%
+% % \begin{ntUniversity}{ISCTE — Instituto Universitário de Lisboa}
+% %     \ntSchool{cover-iscteiul-eta-phd}%
+% %              {Escola{ de Tecnologias e Arquitectura};{ETA-ISCTE-IUL};{https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura}%}
+% % \end{ntUniversity}
+%
 \begin{ntUniversity}{Instituto Politécnico de Lisboa}
-    \ntSchool{ipl-isel-msc-en}%
-             {{Instituto Superior de Engenharia de Lisboa};{ISEL-IPL};{https://www.isel.pt}}
-             {{All MSc Programs};{MSc};{https://www.isel.pt/candidatos/candidaturas/mestrados}}
+    {
+      \docCover{ipl-isel-msc-en}
+    } & {
+      \schlName{Instituto Superior de Engenharia de Lisboa}{ISEL-IPL}{https://www.isel.pt}
+      \degreeName{All MSc Programs}{MSc}{https://www.isel.pt/candidatos/candidaturas/mestrados}
+    }\\
 \end{ntUniversity}
 
 \begin{ntUniversity}{Instituto Politécnico de Setúbal}
-    \ntSchool{ips-ests-msc-en}%
-             {{Escola Superior de Tecnologia de Setúbal};{ISEL-IPL};{https://www.estbarreiro.ips.pt}}
-             {{All MSc Programs};{MSc};{https://www.estbarreiro.ips.pt/candidaturas/mestrados}}
+    {
+      \docCover{ips-ests-msc-en}
+    } & {
+      \schlName{Escola Superior de Tecnologia de Setúbal}{ISEL-IPL}{https://www.estbarreiro.ips.pt}
+      \degreeName{All MSc Programs}{MSc}{https://www.estbarreiro.ips.pt/candidaturas/mestrados}
+    }\\
 \end{ntUniversity}
 
 \begin{ntUniversity}{Other Universities/Schools/Degrees}
-    \ntSchool{other-esep-msc-en}%
-             {{Escola Superior de Enfermagem do Porto};{ESEP};{https://www.esenf.pt/pt}}
-             {{All MSc Programs};{MSc};{https://estudar.esenf.pt/mestrados}}
+    {
+      \docCover{other-esep-msc-en}
+    } & {
+      \schlName{Escola Superior de Enfermagem do Porto}{ESEP}{https://www.esenf.pt/pt}
+      \degreeName{All MSc Programs}{MSc}{https://estudar.esenf.pt/mestrados}
+    }\\
 \end{ntUniversity}
 
 
@@ -250,13 +360,15 @@ The template provides an \emph{easy to use} setting for you to write your thesis
 \label{sub:using_overleaf}
 
 \begin{wrapfigure}{r}{0.3\linewidth}
-\vspace*{-10ex}\includegraphics[width=\linewidth]{overleaf}%
+\vspace*{-10ex}
+\includegraphics[width=\linewidth]{overleaf}%
 \caption{NOVAthesis template in Overleaf.}
+\label{fig:overleaf}
 \end{wrapfigure}
 
 If you do not have an account in \href{https://www.overleaf.com?r=f5160636&rm=d&rs=b}{Overleaf}, you must \href{https://www.overleaf.com?r=f5160636&rm=d&rs=b}{create one first}.
 
-Once you have an account, please access the \gls{novathesis} template in \href{https://www.overleaf.com/latex/templates/new-university-of-lisbon-universidade-nova-de-lisboa-slash-unl-thesis-template/fwbztcrptjmg}{Overleaf} and select the green button \emph{Open as Template}. 
+Once you have an account, please access the \gls{novathesis} template in \href{https://www.overleaf.com/latex/templates/new-university-of-lisbon-universidade-nova-de-lisboa-slash-unl-thesis-template/fwbztcrptjmg}{Overleaf} and select the green button \emph{Open as Template} (see \Autoref{fig:overleaf}).
 
 \bgroup
   \itshape
@@ -265,7 +377,7 @@ Once you have an account, please access the \gls{novathesis} template in \href{h
     \item Download the \href{https://github.com/joaomlourenco/novathesis/archive/master.zip}{latest version} from the GitHub repository as a Zip file.
     \item Login to your favorite LaTeX cloud service. I recommend \href{https://www.overleaf.com/?r=f5160636&rm=d&rs=b}{Overleaf} but there are alternatives (these instructions apply to Overleaf and you'll have to adapt for other providers).
     \item In the menu select: \texttt{New project} $\rightarrow$ \texttt{Upload project}.
-    \item Upload the zip with all the “novathesis” files.
+    \item Upload the zip file.
     \item Select “template.tex” as the main file.
     \item Let Overleaf compile the document.
   \end{enumerate}
@@ -276,13 +388,17 @@ Once you have an account, please access the \gls{novathesis} template in \href{h
 
 \newcommand{\MikTeX}{Mik\TeX}
 \newcommand{\TeXLive}{\TeX Live}
+\newcommand{\pdfLaTeX}{pdf\LaTeX}
 
-First of all, start by installing \LaTeX\ in your computer.  There are two main distributions, \href{https://miktex.org}{\MikTeX}\ and \href{https://www.tug.org/texlive/}{\TeXLive}, and both of them are available for the~3 most popular Operating Systems: Linux, macOS and Windows.
 
 \begin{wrapfigure}{r}{0.3\linewidth}
+\vspace*{-17ex}
 \includegraphics[width=\linewidth]{github}%
 \caption{The NOVAthesis Project page in GitHub.}
+\label{fig:github2}
 \end{wrapfigure}
+
+First of all, start by installing \LaTeX\ in your computer.  There are two main distributions, \href{https://miktex.org}{\MikTeX}\ and \href{https://www.tug.org/texlive/}{\TeXLive}, and both of them are available for the~3 most popular Operating Systems: Linux, macOS and Windows.
 
 Be aware that a full installation of \MikTeX\ or \TeXLive\ will take near~5\,GB of hard disk space.  So, think twice before installing the full distribution.  See the \gls{novathesis} Wiki for the \href{https://github.com/joaomlourenco/novathesis/wiki/installing-latex#minimal-installation-in-any-of-the-systems-above}{list of packages required to compile the template}.
 
@@ -293,25 +409,43 @@ Now, you must access the \gls{novathesis} repository in \href{https://github.com
 
 \section{Getting Help}
 \label{sec:getting_help}
-Let's start with some simple suggestions:
+
+No! You don't have to use this template to write your thesis.  You don't even have to use \LaTeX.  However, writing a thesis is serious stuff, and which tool you shall use to write it is not a decision to make lighthearted.
+
+\LaTeX\ is hard enough by itself.  This template aims at making your life easier, but not easy. If you choose to use this template to write your thesis, you are very welcome.  However, don't expect me to provide you help with \LaTeX.  Look for help with your friends (you have some friends, don't you?), or search the web, or try even to read some book(s) on \LaTeX. In the end you will certainly find the experience rewarding.
+
+When you come to the point of “\emph{How do I do this with \LaTeX?}”, remember…
 
 \begin{enumerate}
-  \item No! You don't have to use this template to write your thesis.  You don't even have to use \LaTeX.  However, writing a thesis is serious stuff, and which tool you shall use to write it is not a decision to make lighthearted.
-  \item \LaTeX\ is hard enough by itself.  This template aims at making your life easier, but not easy. If you choose to use this template to write your thesis, you are very welcome.  However, don't expect me to provide you help with \LaTeX.  Look for help with your friends (you have some friends, don't you?), or search the web, or try even to read some book(s) on \LaTeX. In the end you will certainly find the experience rewarding.
-  \item So, don't forget, when you come to the point of “\emph{How do I do this with \LaTeX?}” look for help!  Google is your best friend. You may also ask for help in the \gls{novathesis} \href{https://www.facebook.com/groups/novathesis}{NOVAtheis Facebook group} or the \href{https://github.com/joaomlourenco/novathesis/discussions}{GitHub Discussions page}.  If you can't find help there from previous posts/messages, then post your own question. Hopefully someone will answer you. There were huge changes from version 4.x.y to version \novathesisversion, so \textbf{always} state the version number you are using when asking for help.
+  \item To check the \href{https://github.com/joaomlourenco/novathesis/wiki}{\novathesis\ wiki} and have some hope!  \emojiSmile
+  \item Google is your best friend.
+  \item Search the \href{https://github.com/joaomlourenco/novathesis/discussions}{GitHub Discussions page} for a question related to yours.  \emph{If and only if} you don't find one, then post your own question in English please!
+  \item Search the \href{https://www.facebook.com/groups/novathesis}{NOVAtheis Facebook group} for a question related to yours.  \emph{If and only if} you don't find one, then post your own question in either Portuguese or English, at your preference.
 \end{enumerate}
+
+When you post your own question, remember to \textbf{always} state the \novathesis\ version number you are using and referring to.
 
 \begin{center}  
   \fcolorbox{red}{gray!15}{\parbox{\textwidth}{\begin{center}\large\textbf{Please do not attempt to contact me directly (email, Messenger, etc)…\\I WILL NOT REPLY!}\end{center}}}
 \end{center}
  
 
-\section{Reporting Problems}
-\label{sec:reporting_problems}
+\subsection{Suggestions, Bugs and Feature Requests} % (fold)
+\label{sub:suggestions_bugs_and_feature_requests}
 
-If you just need some help, see above \Autoref{sec:getting_help}.
+\begin{description}
+  \item[Help:] If you just need some help, see above \Autoref{sec:getting_help}.
+  \item[Suggestion:] Do you have a suggestion/recommendation? Please add it to the wiki and help other users!
+  \item[Bug:] Did you find a bug? Please open an issue. Thanks!
+  \item[New Feature:] Would you like to request a new feature (or support of a new School)? Please open an issue. Thanks!
 
-If you believe \emph{you found a bug} or if \emph{you need some improvement} in the template, please \href{https://github.com/joaomlourenco/novathesis/issues}{fill an issue} in the \gls{novathesis} \href{https://github.com/joaomlourenco/novathesis/issues}{project page in GitHub}.
+\end{description}
+
+
+
+% subsection suggestions_bugs_and_feature_requests (end)
+
+
 
 
 \section{Donors}
