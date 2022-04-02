@@ -15,44 +15,78 @@
 % Replace "Conteúdo" with "Índice"
 % Replace "Índice" with "Índice Remissivo"
 % "Listings" in Portuguese
-\addto\captionsportuguese{%
-  \def\contentsname{Índice}%
-  \def\listfigurename{Índice de Figuras}%
-  \def\listtablename{Índice de Tabelas}%
-  \def\indexname{Índice Remissivo}%
-  \def\lstlistlistingname{Índice de Listagens}%
-  \def\listoflistingscaption{Índice de Listagens}%
-  \def\lstlistingname{Listagem}%
+
+
+\optionlistdo{/@nt/langsshort}{\options{/novathesis/babel/#1/keys/.new list}}
+
+\AtBeginDocument{%
+  \optionlistdo{/@nt/langsshort}{%
+    \options{/@nt/langshorttolong=#1}%
+    \typeout{KEY(#1/\option{/@nt/langshorttolong})}%
+    \optionlistdo{/novathesis/babel/#1/keys}{%
+      \typeout{KEY(#1)=[##1=\option{/novathesis/babel/#1/##1}]}%
+      \typeout{KEY SET2 (#1/##1)=[\option{/novathesis/babel/#1/##1}]}%
+      \expandnextsingle\addto{\csname captions\option{/@nt/langshorttolong}\endcsname}%
+            {\csdef{##1}{\option{/novathesis/babel/#1/##1}}}%
+    }%
+  }
+}
+
+\def\mysplit#1/#2=#3\@nil#4#5#6{\def#4{#1}\def#5{#2}\def#6{#3}}
+\newcommand{\ntlangsetup}{\@ifstar{\ntlangsetupifndef}{\ntlangsetupdef}}
+\newcommand{\ntlangsetupdef}[1]{%
+  \mysplit#1\@nil{\@ntslang}{\@ntskey}{\@ntsval}%
+  \typeout{KEY SET DEF (/novathesis/babel/\@ntslang/\@ntskey)=[\@ntsval]}%
+  \ifoptiondefined{/novathesis/babel/\@ntslang/\@ntskey}{%
+    \option@undef{/novathesis/babel/\@ntslang/\@ntskey}%
+  }{%
+    \options{/novathesis/babel/\@ntslang/keys/.expanded/.cpush = \@ntskey}%
+  }%
+  \options{/novathesis/babel/\@ntslang/\@ntskey/.expanded/.new value = \@ntsval}%
+}
+\newcommand{\ntlangsetupifndef}[1]{%
+  \mysplit#1\@nil{\@ntslang}{\@ntskey}{\@ntsval}%
+  \ifoptioncontains{/novathesis/babel/\@ntslang/keys/.expanded}{\@ntskey}{}{%
+    \typeout{KEY SET IFNDEF (/novathesis/babel/\@ntslang/\@ntskey)=[\@ntsval]}%
+    \options{/novathesis/babel/\@ntslang/keys/.expanded/.cpush = \@ntskey}%
+    \options{/novathesis/babel/\@ntslang/\@ntskey/.expanded/.new value = \@ntsval}%
+  }
+}
+
+
+\addto\captionsportuges{%
   \defineshorthand{"-}{\babelhyphen{repeat}}% generates a hyphen that will repeat on a new line
-  \gdef\annexname{Anexo}
-  \gdef\annexnamepl{Anexos}
-  \gdef\appendixnamepl{Apêndices}
 }
 
-\addto\captionsenglish{%
-  \def\lstlistlistingname{List of Listings}%
-  \def\listoflistingscaption{List of Listings}%
-  \def\lstlistingname{Listing}%
-  \gdef\annexname{Annex}
-  \gdef\annexnamepl{Annexes}
-  \gdef\appendixnamepl{Appendices}
-}
+\ntlangsetup*{pt/contentsname=Índice}
+\ntlangsetup*{pt/listfigurename=Índice de Figuras}
+\ntlangsetup*{pt/listtablename=Índice de Tabelas}
+\ntlangsetup*{pt/indexname=Índice Remissivo}
+\ntlangsetup*{pt/lstlistlistingname=Índice de Listagens}
+\ntlangsetup*{pt/listoflistingscaption=Índice de Listagens}
+\ntlangsetup*{pt/lstlistingname=Listagem}
+\ntlangsetup*{pt/annexname=Anexo}
+\ntlangsetup*{pt/annexnamepl=Anexos}
+\ntlangsetup*{pt/appendixnamepl=Apêndices}
 
-\addto\captionsfrench{%
-  \def\lstlistlistingname{Listes de Code}%
-  \def\listoflistingscaption{Listes de Code}%
-  \gdef\annexname{Annexe}
-  \gdef\annexnamepl{Annexes}
-  \gdef\appendixnamepl{Appendices}
-}
+\ntlangsetup*{en/lstlistlistingname=List of Listings}%
+\ntlangsetup*{en/listoflistingscaption=List of Listings}%
+\ntlangsetup*{en/lstlistingname=Listing}%
+\ntlangsetup*{en/annexname=Annex}
+\ntlangsetup*{en/annexnamepl=Annexes}
+\ntlangsetup*{en/appendixnamepl=Appendices}
 
-\addto\captionsitalian{%
-  \def\lstlistlistingname{Listatos}%
-  \def\listoflistingscaption{Listatos}%
-  \gdef\annexname{Annesso}
-  \gdef\annexnamepl{Annessi}
-  \gdef\appendixnamepl{Appendici}
-}
+\ntlangsetup*{fr/lstlistlistingname=Listes de Code}%
+\ntlangsetup*{fr/listoflistingscaption=Listes de Code}%
+\ntlangsetup*{fr/annexname=Annexe}
+\ntlangsetup*{fr/annexnamepl=Annexes}
+\ntlangsetup*{fr/appendixnamepl=Appendices}
+
+\ntlangsetup*{it/lstlistlistingname=Listatos}%
+\ntlangsetup*{it/listoflistingscaption=Listatos}%
+\ntlangsetup*{it/annexname=Annesso}
+\ntlangsetup*{it/annexnamepl=Annessi}
+\ntlangsetup*{it/appendixnamepl=Appendici}
 
 % \ifluatex%
 %   \babelposthyphenation{portuguese}{.=.}{%

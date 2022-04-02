@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-04-02 [6.9.11]
+%% Version 2022-04-03 [6.9.12]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -543,7 +543,7 @@
   , school                        = {nova/fct}
   , docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
   , chapstyle/.new value          = {bar}        % use "bar" chapter style by default
-  , fontstyle/.new value          = {kpfonts}    % use “kpfonts” by default
+  , fontstyle/.new value          = {newpx}      % use “newpx” by default
   , langsused/.new list           = {en,pt}
   , coverlang/.new choice         = {en, pt, fr, it, de, es}
   , copyrightlang/.new choice         = {en, pt, fr, it, de, es}
@@ -2099,7 +2099,7 @@
   \ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/chapstyle}}{}%
 }
 \InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/fontstyle}.ldf}{}{%
-  \ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/fontstyle}}{}%
+  \ClassError{novathesis}{Invalid Font Style: \option{/novathesis/fontstyle}}{}%
 }
 
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
@@ -2130,3 +2130,8 @@
   \@ifpackageloaded{subcaption}{}{\newsubfloat{figure}}
   \makeatother
 }
+
+\ifxetexorluatex  % xelatex or lualatex
+  \RequirePackage{fontspec}%
+  \defaultfontfeatures{Ligatures=TeX}
+\fi
