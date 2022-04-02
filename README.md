@@ -70,7 +70,7 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
 	* **Linux:** install [TeX-Live](https://www.tug.org/texlive/).
 	* **macOS:** install [MacTeX](https://www.tug.org/mactex/) (a macOS version of [TeX-Live](https://www.tug.org/texlive/)).
 2. Download “novathesis” by either:
-	* Cloning the [GitHub repository](https://github.com/joaomlourenco/novathesis) with <kbd>git clone https://github.com/joaomlourenco/novathesis.git</kbd>; or
+	* Cloning the [GitHub repository](https://github.com/joaomlourenco/novathesis) with <kbd>git clone --depth=1 https://github.com/joaomlourenco/novathesis.git</kbd>; or
 	* Downloading the [latest version from the GitHub repository as a Zip file](https://github.com/joaomlourenco/novathesis/archive/master.zip)
 3. Compile the document with you favorite LaTeX processor (pdfLaTeX, XeLaTeX or LuaLaTeX):
 	* The main file is named “*template.tex*”.  
