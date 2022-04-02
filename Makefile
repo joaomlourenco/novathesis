@@ -52,3 +52,7 @@ rcb:
 	Scripts/latex-clean-temp.sh
 	rm -rf `biber -cache`
 	biber -cache
+
+.PHONY: publish
+publish:
+	Scripts/publish.sh
