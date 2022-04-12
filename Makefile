@@ -56,3 +56,8 @@ rcb:
 .PHONY: publish
 publish:
 	Scripts/publish.sh
+
+.PHONY: bump
+bump:
+	Scripts/newversion.sh 3
+	make publish

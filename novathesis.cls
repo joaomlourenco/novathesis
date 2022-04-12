@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-04-03 [6.9.12]
+%% Version 2022-04-12 [3]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}[2019-10-01]
-\ProvidesClass{novathesis}[2021-11-14 novathesis template]
+\ProvidesClass{novathesis}[2022-04-12 novathesis template]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -556,6 +556,7 @@
   , printcommittee/.new toggle    = false
   , printtimestamp/.new toggle    = true
   , printcopyright/.new toggle    = true
+  , webography/.new value         = {}        % empty means do not make a separate webography
   , secondcover/.new toggle       = false
   , statement/.new toggle         = false
   , gnumberlist/.new toggle       = true
@@ -922,12 +923,22 @@
   alllistof;       % Print all the listof defined in “6_list_of.tex”
 }
 
-\ntsetprintorder{mainmatter}{
-  chapters;        % Print document chapters
-  bib;             % Print the bibliography.  Change to
-                   %    “bib[title=⟨title⟩]” to redefine the title!
-  appendices;      % Print appendices; if any!
-  annexes;         % Print annexes; if any!
+\ifoptionequal{/novathesis/webography}{}{%
+  \ntsetprintorder{mainmatter}{
+    chapters;        % Print document chapters
+    bib;             % Print the bibliography.  Change to
+                     %    “bib[title=⟨title⟩]” to redefine the title!
+    appendices;      % Print appendices; if any!
+    annexes;         % Print annexes; if any!
+  }
+}{%
+  \ntsetprintorder{mainmatter}{
+    chapters; % Print document chapters
+    \printbibliography[nottype=online]; % Print the bibliography.
+    \printbibliography[title=\option{/novathesis/webography},type=online]; % Print the bibliography.
+    appendices; % Print appendices, if any!
+    annexes; % Print annexes, if any!
+  }
 }
 
 
