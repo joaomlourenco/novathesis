@@ -466,6 +466,8 @@
 \adviserremainderfont()={\itshape\scriptsize}
 
 % Committee stuff
+\newdata{adviserorder}         %e.g., "{a,c}"
+\adviserorder():={a,c}  % By default print advisers and co-advisers
 \newdata{committeeorder}         %e.g., "{c,r,a,m,g}"
 
 \newdata{committeetitlestring}      %e.g., "Examinaiton Committee"
