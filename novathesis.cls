@@ -1527,6 +1527,7 @@
 }
 
 \newcommand{\@ntfixspacing}[2]{%
+  \bgroup%
   \renewcommand*{\bibfont}{\hypersetup{allcolors=#1}\color{#1}%
                            \sffamily\fontsize{#2}{#2}\selectfont}%
   \defbibheading{bibliography}[\bibname]{%
@@ -1538,6 +1539,7 @@
       \printbibliography[title=12cc90221730b8ba41bb3b1f8b517acd]%
     \end{minipage}%
   \endrefsection%
+  \egroup%
 }
 
 \newcommand{\ntfixspacing}{%
