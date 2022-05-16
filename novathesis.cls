@@ -70,8 +70,8 @@
 %%    Others will be loaded later, in the file “packages.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage[table,svgnames]{xcolor}%
-\RequirePackage{tabularray}
-\UseTblrLibrary{booktabs}
+% \RequirePackage{tabularray}
+% \UseTblrLibrary{booktabs}
 \RequirePackage{xfor}
 \RequirePackage{iftex}
 \RequirePackage{etoolbox}
