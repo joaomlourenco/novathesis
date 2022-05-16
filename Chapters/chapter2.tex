@@ -75,22 +75,26 @@ Follow these steps to get started with a local \LaTeX\ installation:
     \item Notice that, due to the external font sets used, \pdfLaTeX\ will not work for both \textbf{UMINHO} and \textbf{ESEP}, and you have to use either \XeLaTeX\ or \LuaLaTeX.
   \end{itemize}
   \item Edit the files in the “Config” folder:
-    \begin{longtblr}[
-        presep = 0pt,
-        % caption = {My long table},
-        % label = {tab:longtblr?}
-        label=none,
-    ]{  colspec = {Q[l,t,font=\ttfamily]X[j,t]},
-        rowhead = {1},
-        row{odd} = {GhostWhite},
-        % row{even} = {yellow},
-        row{1} = {font=\bfseries, l, Schlgray, ht=0.75cm},
-        hline{9} = {dashed},
-        % col{1} = {font=\bfseries},
-        % preto{1} = {\verb!},
-        % appto{1} = {!},
-    }      
+    % \begin{longtblr}[
+    %     presep = 0pt,
+    %     % caption = {My long table},
+    %     % label = {tab:longtblr?}
+    %     label=none,
+    % ]{  colspec = {Q[l,t,font=\ttfamily]X[j,t]},
+    %     rowhead = {1},
+    %     row{odd} = {GhostWhite},
+    %     % row{even} = {yellow},
+    %     row{1} = {font=\bfseries, l, Schlgray, ht=0.75cm},
+    %     hline{9} = {dashed},
+    %     % col{1} = {font=\bfseries},
+    %     % preto{1} = {\verb!},
+    %     % appto{1} = {!},
+    % }
+    \bgroup
+    \rowcolors{1}{}{GhostWhite}
+    \begin{xltabular}{\linewidth}{>{\ttfamily}lX}
         \toprule
+        \rowcolor{Gainsboro}%
         File & Contents \\
         \midrule
 0\_memoir.tex       & Options specific for the memoir package. \emph{Don't touch this file unless you know what you are doing!}\\
@@ -106,7 +110,9 @@ Follow these steps to get started with a local \LaTeX\ installation:
 9\_ulisboa\_fmv.tex & Configuration specific to ULISBOA-FMV.\\
 9\_uminho.tex       & Configuration specific to UMINHO (all Schools).\\
         \bottomrule
-    \end{longtblr}
+    \end{xltabular}
+    \egroup
+    % \end{longtblr}
     \item Recompile de document.
     \item And you're done with a beautifully formatted thesis/dissertation! {\setlength{\twemojiDefaultHeight}{1.5\twemojiDefaultHeight}\emojiSmile}
 \end{enumerate}
@@ -134,26 +140,32 @@ Follow these steps to get started with a remote \LaTeX\ installation:
 
 The \gls{novathesis} template is organized into many files and folders. At the main level it includes the following files and folders listed in Table~\ref{tab:folders_and_files}.
 
-\newcommand{\accessAllowed}{\includegraphics[align=c,width=3em]{access_allowed}}
-\newcommand{\accessForbiden}{\includegraphics[align=c,width=3em]{access_forbidden}}
+\newcommand{\accessAllowed}{\includegraphics[align=c,width=1.5em]{access_allowed}}
+\newcommand{\accessForbiden}{\includegraphics[align=c,width=1.5em]{access_forbidden}}
 
-    \begin{longtblr}[
-        % presep = 5pt,
-        caption = {The folders and files.},
-        label = {tab:folders_and_files}
-        % label=none,
-    ]{  colspec = {Q[l,m,font=\ttfamily]Q[l,m,font=\itshape]Q[c,m]X[j,m]},
-        rowhead = {1},
-        row{odd} = {GhostWhite},
-        % row{even} = {yellow},
-        % col{2} = {font=\itshape},
-        row{1} = {font=\bfseries, l, Schlgray, ht=0.75cm},
-        % hline{9} = {dashed},
-        % preto{1} = {\itshape},
-        % appto{1} = {!},
-        verb,
-    }      
+    % \begin{longtblr}[
+    %     % presep = 5pt,
+    %     caption = {The folders and files.},
+    %     label = {tab:folders_and_files}
+    %     % label=none,
+    % ]{  colspec = {Q[l,m,font=\ttfamily]Q[l,m,font=\itshape]Q[c,m]X[j,m]},
+    %     rowhead = {1},
+    %     row{odd} = {GhostWhite},
+    %     % row{even} = {yellow},
+    %     % col{2} = {font=\itshape},
+    %     row{1} = {font=\bfseries, l, Schlgray, ht=0.75cm},
+    %     % hline{9} = {dashed},
+    %     % preto{1} = {\itshape},
+    %     % appto{1} = {!},
+    %     verb,
+    % }
+\bgroup
+    \rowcolors{1}{}{GhostWhite}
+      \begin{xltabular}{\linewidth}{>{\ttfamily}l>{\itshape}lcX}
+        \caption{The folders and files.}
+        \label{tab:folders_and_files}\\
         \toprule
+        \rowcolor{Gainsboro}%
         Name & Type & Access & Contents \\
         \midrule
 novathesis.cls     & file    & \accessForbiden &
@@ -169,14 +181,328 @@ Chapters          & folder  & \accessAllowed &
 Examples of document contents, including Chapters, Appendices, Annexes, Abstracts, Glossaries, Lists of Symbols, etc. Replace them with your own.
 \\
 Bibliography      & folder    & \accessAllowed &
-Where all your bibliography files should be located. You may have has many as you want, as long as you add them to the template with “\verb!\ntaddfile{bib}{FILENAME.bib}!”. \\
+Where all your bibliography files should be located. You may have has many as you want, as long as you add them to the template with “\texttt{\symbol{`\\}ntaddfile\{bib\}\{FILENAME.bib\}}!”. \\
 \\
 NOVAthesisFiles   & folder  & \accessForbiden &
 Additional files for the \gls{novathesis} template.  Unless you know what you are doing, avoid messing up with the files and folders inside this folder.
 \\
         \bottomrule
-    \end{longtblr}
+        \end{xltabular}
+    % \end{longtblr}
+\egroup
 
+% section folder_structure (end)
+
+% ===================
+% = Package options =
+% ===================
+\section{\glsfmtshort{novathesisclass}\ Class Options}
+\label{sec:package_options}
+
+The \gls{novathesisclass}\ can be customized with the options listed below.
+
+\newcommand{\classoption}[3]{\textbf{#1=OPT}\qquad #2\\\qquad\emph{#3}\\}
+
+\noindent
+% \begin{ctabular}{@{}p{\linewidth}@{}}
+\begin{xltabular}{\linewidth}{@{}p{\linewidth}@{}}
+  \toprule
+  \classoption{docdegree}%
+    {phd(*), phdplan, phdprop, msc, mscplan, bsc}%
+    {The type of the document: PhD Thesis (default), PhD Plan, PhD Proposal, MSc Dissertation, MSc Plan, BSc Report}
+    \midrule
+  \classoption{school}%
+		{nova/fct(*), nova/fcsh, nova/ims, ul/ist, ul/fc}%
+    {The name of the school. This option changes the typesetting of the cover and some School specific formating, like margins, fonts, paragraph spacing and indentation, etc…}
+    \midrule
+  \classoption{lang}%
+    {en(*), pt}%
+    {The main language for the document.  Currently only Portuguese and English are supported.  Other languages are expected to be support in forthcoming versions.}
+    \midrule
+  \classoption{fontstyle}%
+    {bookman, charter, fourier, kpfonts(*), mathpazo1, mathpazo2, newcent}%
+    {The font set to be used in the document.  Please note that a font set include definitions for the main text, headings, maths, etc.}
+    \midrule
+  \classoption{chapstyle}%
+    {bianchi, bluebox, brotherton, dash, default, elegant(*), ell, ger, hansen, ist, jenor, lyhne, madsen, pedersen, veelo, vz14, vz34, vz43}%
+    {The chapter style, i.e., the look of the chapter beginning.}
+    \midrule
+  \classoption{converlang}%
+    {en, pt(*)}%
+    {The language to be used when typesetting the cover page.}
+    \midrule
+  \classoption{otherlistsat}%
+    {front(*), back}%
+    {Where to put the other lists besides the table of contents. The default is (\texttt{front}) before the main text.  But some scientific areas prefer them at the end of the document (\texttt{back}), just before the Appendixes.}
+    \midrule
+  \classoption{statement}%
+    {true, false(*)}%
+    {Include or don't include the contents of the “\texttt{statement}” file. The default is for this file to be ignored (if it exists).}
+    \midrule
+  \classoption{linkscolor}%
+    {darkblue(*), black}%
+    {The color for all the hyperlinks in the PDF file.  The “\texttt{media=paper}” option (see below) will override this option to “\texttt{black}”}
+    \midrule
+  \classoption{spine}%
+    {true, false(*)}%
+    {Generate the book spine and the last page in the PDF.}
+    \midrule
+  \classoption{biblatex}%
+    {OPT=\{list of options for \texttt{biblatex}\}}%
+    {Customize \texttt{biblatex}, the bibliography management system used in this class. Probably you will want to change the value of the \texttt{biblatex} “\texttt{style}” option. For other customizations of \texttt{biblatex} check its manual.}
+    \midrule
+  \classoption{memoir}%
+    {OPT=\{list of options for \texttt{memoir}\}}%
+    {Customize the base class \texttt{memoir}. The \texttt{memoir} manual should be the first document to be consulted when looking for “\textbf{how can I do this?}” You may what to change the base font size from 11pt to a smaller (10pt) or larger (12pt) size.  Also, remember to change the “\texttt{draft}” to final when your document is finished.}
+    \midrule
+  \classoption{media}%
+    {screen(*), paper}%
+    {Behavior to be customized in the school options/configuration. Expected definitions for screen are: left and right margins are equal and use colored links. Expected definitions for paper are: left and right margins are different and use black links.}
+    \bottomrule
+\end{xltabular}
+% \end{ctabular}
+
+\section{Additional considerations about the class options}
+\label{sec:additional_considerations}
+
+In this section we will provide some additional considerations about some of the customizations available as class options.
+
+\subsection{The main language}
+\label{sub:the_main_language}
+
+The choice of the main language with the option “\texttt{lang=OPT}” affects:
+
+\begin{itemize}
+	\item \textbf{The order of the summaries.} First is printed the abstract in the main language and then in the foreign language. This means that if your main language for the document in English, you will see first the “abstract” (in English) and then the “resumo” (in Portuguese). If you switch the main language for the document for Portuguese, it will also automatically switch the order of the summaries to “resumo” and then “abstract”.
+	\item \textbf{The names for document sectioning.} E.g., ``Chapter'' vs.\ ``Capítulo'', ``Table of Contents'' vs.\ ``Índice'', ``Figure'' vs.\ ``Figura'', etc.
+	\item \textbf{The type of documents in the bibliography.} E.g., ``Technical Report'' vs.\ ``Relatório Técnico'', ``PhD Thesis'' vs.\ ``Tese de Doutoramento'', etc.
+\end{itemize} 
+
+No mater which language you chose, you will always have the appropriate hyphenation rules according to the language at that point. You always get Portuguese hyphenation rules in the ``Resumo'', English hyphenation rules in the ``Abstract'', and then the main language hyphenation rules for the rest of the document.
+
+% subsection the_main_language (end).
+
+% section additional_consideration (end)
+
+
+\subsection{Class of Text}
+\label{sub:class_of_text}
+
+You must choose the class of text for the document. The available options are:
+
+\begin{enumerate}
+	\item \textbf{bsc} --- BSc graduation report.
+	\item \textbf{*mscplan} --- Preparation of MSc dissertation. This is a preliminary report graduate students at DI-FCT-NOVA must prepare to conclude the first semester of the two-semesters MSc work. The files specified by \verb!\ntdedicatoryfile! and \verb!\acknowledgmentsfile! are ignored, even if present, for this class of document.
+	\item \textbf{msc} --- MSc dissertation.
+	\item \textbf{phdprop} ---  Proposal for a PhD work. The files specified by \verb!\ntdedicatoryfile! and \verb!\acknowledgmentsfile! are ignored, even if present, for this class of document.
+	\item \textbf{prepphd} ---  Preparation of a PhD thesis. This is a preliminary report PhD students at DI-FCT-NOVA must prepare before the end of the third semester of PhD work. The files specified by \verb!\ntdedicatoryfile! and \verb!\acknowledgmentsfile! are ignored, even if present, for this class of document.
+	\item \textbf{phd} --- PhD dissertation.
+\end{enumerate}
+% subsection class_of_text (end)
+
+% ============
+% = Printing =
+% ============
+\subsection{Printing}
+\label{sub:printing}
+
+You must choose how your document will be printed. The available options are:
+\begin{enumerate}
+	\item \textbf{oneside} --- Single side page printing.
+	\item \textbf{*twoside} --- Double sided page printing.
+\end{enumerate}
+% subsection printing (end)
+
+% =============
+% = Font Size =
+% =============
+\subsection{Font Size}
+\label{ssec:font_size}
+
+You must select the encoding for your text. The available options are:
+\begin{enumerate}
+	\item \textbf{11pt} --- Eleven (11) points font size.
+	\item \textbf{*12pt} --- Twelve (12) points font size. You should really stick to 12pt\ldots
+\end{enumerate}
+% subsection font_size (end)
+
+% =================
+% = Text encoding =
+% =================
+\subsection{Text Encoding}
+\label{ssec:text_encoding}
+
+You must choose the font size for your document. The available options are:
+\begin{enumerate}
+	\item \textbf{latin1} --- Use Latin-1 (\href{http://en.wikipedia.org/wiki/ISO/IEC_8859-1}{ISO 8859-1}) encoding.  Most probably you should use this option if you use Windows;
+	\item \textbf{utf8} --- Use \href{http://en.wikipedia.org/wiki/UTF-8}{UTF8} encoding.    Most probably you should use this option if you are not using Windows.
+\end{enumerate}
+% subsection font_size (end)
+
+% ============
+% = Examples =
+% ============
+\subsection{Examples}
+\label{ssec:examples}
+
+Let's have a look at a couple of examples:
+
+\begin{itemize}
+	\item Preparation of PhD thesis, in portuguese, with 11pt size and to be printed single sided (I wonder why one would do this!)\\
+	\verb!\documentclass[prepphd,pt,11pt,oneside,latin1]{thesisdifct-nova}!
+	\item MSc dissertation, in English, with 12pt size and to be printed double sided\\
+	\verb!\documentclass[msc,en,12pt,twoside,utf8]{thesisdifct-nova}!
+\end{itemize}
+% subsection examples (end)
+
+\section{How to Write Using \LaTeX}
+\label{sec:how_to_write_using_latex}
+
+Please have a look at Chapter~\ref{cha:a_short_latex_tutorial_with_examples}, where you may find many examples of \LaTeX constructs, such as Sectioning, inserting Figures and Tables, writing Equations, Theorems and algorithms, exhibit code listings, etc.
+
+% section how_to_write_using_latex (end)
+
+
+
+\section{Example glossary, acronyms, and symbols}
+%
+% \todo[inline]{A a note in a line by itself.}
+%
+This is the first occurrence of an abbreviation: \gls{abbrev}. And now the second occurrence of the same abbreviation: \gls{abbrev}. And a new acronym with capital letter: \Gls{xpt} and reused \gls{xpt}.  Let's also use a few other acronyms such as \gls{aaa}, \gls{aab}, \gls{aba}, \gls{bbb} and \gls{xpt}.
+In geometry, the area enclosed by a circle of radius \gls{r} is $\pi r^2$. Here the Greek letter \gls{pi} is equal to the ratio of the circumference of any circle to its diameter.
+Lets add ``\gls{computer}'' to the glossary! Be carefull with mathematical symbols in acronyms, please see the definition of \gls{mu}.
+
+Reference to Potassium \gls{chem:potassio} and Sodium \gls{chem:sodio} as well.
+
+%
+% Please note that
+% \begin{center}
+%   \textbf{\large this package and template are not official for FCT/NOVA}.
+% \end{center}
+
+
+
+% \printbibliography[heading=subbibliography, segment=\therefsegment, title={\bibname\ for chapter~\thechapter}]
+
+
+\endinput
+
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% chapter2.tex
+%% NOVA thesis document file
+%%
+%% Chapter with the template manual
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE chapter2.tex}%
+
+\chapter{NOVAthesis Template \emph{User's Manual}}
+\label{cha:users_manual}
+
+\glsresetall
+
+\begin{center}
+  \fbox{\LARGE
+    This manual is outdated and must be revised!}
+\end{center}
+
+Referência ao Potássio é \gls{chem:potassio} e Sódio também \gls{chem:sodio}.
+
+\section{Introduction}
+\label{sec:introduction}
+
+This chapter describes how to use the \gls{novathesis}\ Template and the \gls{novathesisclass} file.  I will assume you have a working installation of \LaTeX, wither local (in your own computer) or remote (in Overleaf), and that it compiled successfully the default configuration (PhD for \gls{FCT}).
+
+
+\section{Folder Structure}
+\label{sec:folder_structure}
+
+The \gls{novathesis} template is organized into many files and folders. At the main level it includes the following files and folders:
+
+\noindent
+\bgroup
+\rowcolors{1}{GhostWhite}{}
+\begin{xltabular}{\linewidth}{>{\ttfamily}l>{\itshape}l>{\upshape}X}
+novathesis.cls     & file    & 
+The main class file. It will include additional files from \texttt{NOVAthesisFiles} folder and its sub-folders. 
+\\ 
+template.tex      & file    & 
+The main template file. You need to \emph{compile} this file with one of pdf\LaTeX, \XeLaTeX, or \LuaLaTeX\ to obtain the \texttt{template.pdf} file.
+\\
+bibliography.bib  & file    & 
+An example of a bibliography file. You may have has many as you want. \\
+template.pdf      & file    & 
+A possible result of applying pdf\LaTeX\ to the \texttt{template.tex} file. The template supports multiple types of documents (e.g., MSc dissertation, PhD thesis, …) and multiple Schools (e.g., FCT-NOVA, FCSH-NOVA, IST-UL, FC-UL, …) and each will produce different results.
+\\
+Chapters          & folder  & Examples of thesis chapters. Replace them with your own chapters. 
+\\
+Examples          & folder  & Some more examples of the use of the template for different document types and Schools. 
+\\
+Scripts           & folder  & Some (possibly useful) scripts for Unix-based systems (Linux, Mac OSx). If you are a windows user, ignore this folder (you may safely delete it if you want). 
+\\
+NOVAthesisFiles   & folder  & 
+Additional files for the \gls{novathesisclass}\ file.  Unless you know what you are doing, avoid messing up with the files and folders inside this folder (except for deleting the unused Schools, see below). 
+\\
+\end{xltabular}
+\egroup
+
+The \texttt{NOVAthesisFiles} folder contains additional files and folders that complement the main \gls{novathesisclass}\ file.  These are:
+
+\noindent
+\bgroup
+\rowcolors{1}{GhostWhite}{}
+\begin{tabularx}{\linewidth}{>{\ttfamily}l>{\itshape}l>{\upshape}X}
+README.txt      & file    &
+A file that should be read!  :) 
+\\
+fix-babel.tex   & file    &
+Simple fixes to the \texttt{babel} package.
+\\
+lang-text.ldf   & file    &
+Translations of important strings used in the template.  Currently fully supported are Portuguese and English, but French is on the way.  If you add translations for your own language, please be so kind and send them to me. Thank you!
+\\
+options.tex     & file    &
+Processing of \gls{novathesisclass}\ options.  \emph{Don't mess with this!}
+\\
+packages.tex    & file    &
+Additional packages to be loaded into the \gls{novathesis}\ template. \emph{You should not mess with this!}
+\\
+spine.tex       & file    &
+This file is loaded only if the option \texttt{spine=full} or \texttt{spine=trim}, and includes the typesetting of the book spine.
+\\
+ChapStyles      & folder  &
+Contains a lot of files, one for each chapter style.  If you really know what you are doing, you may add your own chapter style here.
+\\
+FontStyles      & folder  &
+Contains a few files, one for each set of fonts (main text font, chapter font, section font, subsection font, etc).  If you really know what you are doing, you may add your own set here.
+\\
+Schools         & folder  &
+Configuration files for each school.  This folder is organized into subfolders, one for each university.  \emph{You may safely delete all the subfolders except the one for your University.}  Then open the subfolder of your University and \emph{you may safely delete all the subfolders except the one for your School/Faculty}.
+\\
+\end{tabularx}
+\egroup
+
+As stated above, the \texttt{Schools} folder contains per-university folders and per-school (faculty) subfolders.  Currently these are the available folders:
+
+\noindent
+\bgroup
+\rowcolors{1}{GhostWhite}{}
+\begin{tabularx}{\linewidth}{>{\ttfamily}r@{~/~}>{\ttfamily}l>{\itshape}l>{\upshape}X}
+ul     & ist    & folder  & 
+The folder for the \href{http://www.tecnico.ulisboa.pt}{\emph{Instituto Superior Técnico}} of the \emph{University of Lisbon}.
+\\
+nova    & fcsh   & folder  & 
+The folder for the \href{http:www.fcsh.unl.pt}{\emph{Faculty of Human and Social Sciences}}  of the \emph{NOVA University of Lisbon}.
+\\
+nova    & fct    & folder  & 
+The folder for the \href{http:www.fct.unl.pt}{\emph{Faculty of Sciences and Technology}} of the \emph{NOVA University of Lisbon}.
+\\
+nova    & novaims    & folder  & 
+The folder for the \href{http:www.novaims.unl.pt}{\emph{Information and Management School}} of the \emph{NOVA University of Lisbon}.
+\\
+\end{tabularx}
+\egroup
 
 % section folder_structure (end)
 
@@ -356,9 +682,6 @@ Please have a look at Chapter~\ref{cha:a_short_latex_tutorial_with_examples}, wh
 This is the first occurrence of an abbreviation: \gls{abbrev}. And now the second occurrence of the same abbreviation: \gls{abbrev}. And a new acronym with capital letter: \Gls{xpt} and reused \gls{xpt}.  Let's also use a few other acronyms such as \gls{aaa}, \gls{aab}, \gls{aba}, \gls{bbb} and \gls{xpt}.
 In geometry, the area enclosed by a circle of radius \gls{r} is $\pi r^2$. Here the Greek letter \gls{pi} is equal to the ratio of the circumference of any circle to its diameter.
 Lets add ``\gls{computer}'' to the glossary! Be carefull with mathematical symbols in acronyms, please see the definition of \gls{mu}.
-
-Reference to Potassium \gls{chem:potassio} and Sodium \gls{chem:sodio} as well.
-
 %
 % Please note that
 % \begin{center}

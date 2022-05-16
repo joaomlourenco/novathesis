@@ -38,6 +38,7 @@ This first Chapter introduces the \gls{novathesis} template and how it is organi
 
 Did you learn how to drive by sitting by the wheel and throwing your car into the road?  Most probably you did take your time \emph{learning the rules} and \emph{practicing} first! Likewise, it is not wise to throw yourself at the task of writing a thesis/dissertation in \LaTeX\ without seriously considering the following statement!
 
+
 % subsection subsection_name (end)
 % \begin{quote}
 %   \rule{\linewidth}{2pt}
@@ -76,59 +77,89 @@ The \gls{novathesis} tempalte was born in~1996, and what you see now accumulates
 \section{The \emph{NOVAthesis} template}
 \label{sec:a_bit_of_history}
 
-\definecolor{Schlgray}{gray}{0.95}
+% \newenvironment{ntUniversity}[1]{
+%     \begin{longtblr}[
+%         % presep = 1ex,
+%         % postsep = 1ex,
+%         caption = {#1's Schools supported by the \novathesis\ template.},
+%         label = {tab:supported_schools_#1},
+%         % label=none,
+%     ]{colspec = {Q[c,m]X[j,m]},
+%         rowhead = {1},
+%         row{odd} = {GhostWhite},
+%         % row{even} = {yellow},
+%         row{1}  = {font=\bfseries, l, Schlgray, ht=1cm},
+%     }
+%         \toprule
+%      ~ & #1 \\
+%         \midrule
+% }{%
+%         \bottomrule
+%     \end{longtblr}
+% }
 
-\newenvironment{ntUniversity}[1]{
-    \begin{longtblr}[
-        % presep = 1ex,
-        % postsep = 1ex,
-        caption = {#1's Schools supported by the \novathesis\ template.},
-        label = {tab:supported_schools_#1},
-        % label=none,
-    ]{colspec = {Q[c,m]X[j,m]},
-        rowhead = {1},
-        row{odd} = {GhostWhite},
-        % row{even} = {yellow},
-        row{1}  = {font=\bfseries, l, Schlgray, ht=1cm},
-    }      
-        \toprule
-     ~ & #1 \\
-        \midrule
-}{%
-        \bottomrule
-    \end{longtblr}
-}
 
 The \gls{novathesis} template was born at the \gls{DI} of  \gls{FCT} of \gls{NOVA}, Portugal.  But the user base grew… initially to other Departments of FCT-NOVA, then to other Schools of NOVA, and later to other Schools of other Universities.  Currently more than~25 Schools are natively supported by the \gls{novathesis} template (see Tables~\ref{tab:supported_schools_NOVA University Lisbon}, \ref{tab:supported_schools_University of Lisbon}, \ref{tab:supported_schools_University of Minho}, \ref{tab:supported_schools_Instituto Politécnico de Lisboa}, \ref{tab:supported_schools_Instituto Politécnico de Setúbal}, and \ref{tab:supported_schools_Other Universities/Schools/Degrees}).
 
-\newcommand{\docCover}[1]{\setlength{\fboxsep}{0pt}\fbox{\colorbox{White}{\includegraphics[align=c,width=1.5cm]{#1}}}}
+\newenvironment{ntUniversity}[1]{
+  \renewcommand\tabularxcolumn[1]{m{##1}}% for vertical centering text in X column
+  % \renewcommand\cellgape{\Gape[1cm]}
+  % \setcellgapes{20pt}
+  % \makegapedcells
+  % % \setlength{\extrarowheight}{20pt}
+  % \renewcommand{\arraystretch}{2}
+  \rowcolors{1}{}{GhostWhite}
+    \xltabular{\linewidth}{cX}%
+      \caption{#1's Schools supported by the \novathesis\ template\label{tab:supported_schools_#1}}\\
+    \toprule%
+    \rowcolor{Gainsboro}%
+    & \Gape[1.5ex]{\thead[l]{#1}}\\
+    \midrule%
+}{%
+    \bottomrule
+    \endxltabular%
+}
+
+\makeatletter
+\newtoggle{coverspace}
+\newcommand{\docCover}[1]{%
+  \setlength{\fboxsep}{0pt}%
+  \togglefalse{coverspace}%
+    \Gape[1.5ex]{\begin{mcellbox}[cc]
+    \@for\i:=#1\do{%
+      \fbox{\colorbox{White}{\includegraphics[align=c,width=1.5cm]{1up/\i}}}%
+        \ifx\@xfor@nextelement\@nnil
+          % last iteration
+        \else
+          % not last iteration
+          \iftoggle{coverspace}{\togglefalse{coverspace}\\\\[-14pt]}{\toggletrue{coverspace}~}%
+        \fi
+  }%
+    \end{mcellbox}}
+}
+\makeatother
 \newcommand{\schlName}[3]{\textbf{#1} (\href{#3}{#2})}
-\newcommand{\degreeName}[3]{\\\null\quad • #1 \href{#3}{(#2)}}
+\newcommand{\degreeName}[3]{\newline\null\quad • #1 \href{#3}{(#2)}}
 
 \begin{ntUniversity}{NOVA University Lisbon}
   {
-    \docCover{nova-fct-phd-en}
-    \docCover{nova-fct-msc-en}
+      \docCover{nova-fct-phd-en,nova-fct-msc-en}
   } &  {
     \schlName{NOVA School of Science and Technology}{FCT-NOVA}{https://www.fct.unl.pt}
     \degreeName{All PhD Programs}{PhD}{https://www.fct.unl.pt/en/education/phd-programmes}
     \degreeName{All MSc Programs}{MSc}{https://www.fct.unl.pt/en/education/master-degrees}
   }\\
   {
-    \docCover{nova-fcsh-phd-en}
-    \docCover{nova-fcsh-msc-en}
+      \docCover{nova-fcsh-phd-en,nova-fcsh-msc-en}
   } &  {
     \schlName{NOVA School of Social Sciences and Humanities}{FCSH-NOVA}{https://www.fcsh.unl.pt}
     \degreeName{All PhD Programs}{PhD}{https://www.fcsh.unl.pt/cursos/\#doutoramentos}
     \degreeName{All MSc Programs}{MSc}{https://www.fcsh.unl.pt/cursos/\#mestrados}
   }\\
   {
-    \docCover{nova-ims-phd-en}
-    \docCover{nova-ims-msc-mmaa-en}\\
-    \docCover{nova-ims-msc-megi-en}
-    \docCover{nova-ims-msc-mgi-en}\\
-    \docCover{nova-ims-msc-mcsig-en}
-    \docCover{nova-ims-msc-mgt-en}\\
+      \docCover{nova-ims-phd-en,nova-ims-msc-mmaa-en,%
+                nova-ims-msc-megi-en,nova-ims-msc-mgi-en,%
+                nova-ims-msc-mcsig-en,nova-ims-msc-mgt-en}
   } &  {
     \schlName{NOVA Information Management School}{NOVA-IMS}{https://www.novaims.unl.pt}
     \degreeName{All PhD Programs}{PhD}{https://www.novaims.unl.pt}
@@ -139,18 +170,15 @@ The \gls{novathesis} template was born at the \gls{DI} of  \gls{FCT} of \gls{NOV
     \degreeName{Master's in Geospatial Technologies}{GeoTech}{https://www.novaims.unl.pt/geotech}
   }\\
   {
-    \docCover{nova-ensp-phd-en}
-    \docCover{nova-ensp-msc-en}
+      \docCover{nova-ensp-phd-en,nova-ensp-msc-en}
   } &  {
     \schlName{National School of Public Heath}{ENSP-NOVA}{https://www.ensp.unl.pt}
     \degreeName{All PhD Programs}{PhD}{https://www.ensp.unl.pt/courses/phds}
     \degreeName{All MSc Programs}{MSc}{https://www.ensp.unl.pt/courses/masters}
   }\\
   {
-    \docCover{nova-itqb-phd-green-en}
-    \docCover{nova-itqb-msc-green-en}\\
-    \docCover{nova-itqb-phd-gray-en}
-    \docCover{nova-itqb-msc-gray-en}
+      \docCover{nova-itqb-phd-green-en,nova-itqb-msc-green-en,%
+                nova-itqb-phd-gray-en,nova-itqb-msc-gray-en}
   } & {
     \schlName{Instituto de Tecnologia Química e Biológica}{ITQB-NOVA}{https://www.itqb.unl.pt}
     \degreeName{All PhD Programs}{PhD}{https://www.itqb.unl.pt/education/PhD\%20Programs}
@@ -160,24 +188,21 @@ The \gls{novathesis} template was born at the \gls{DI} of  \gls{FCT} of \gls{NOV
 
 \begin{ntUniversity}{University of Lisbon}
   {
-    \docCover{ulisboa-ist-phd-en}
-    \docCover{ulisboa-ist-msc-en}
+    \docCover{ulisboa-ist-phd-en,ulisboa-ist-msc-en}
   } & {
     \schlName{Instituto Superior Técnico}{IST-UL}{https://tecnico.ulisboa.pt}
     \degreeName{All PhD Programs}{PhD}{https://tecnico.ulisboa.pt/en/education/courses/phd-programmes/}
     \degreeName{All MSc Programs}{MSc}{https://tecnico.ulisboa.pt/en/education/courses/masters-programmes}
   }\\
   {
-    \docCover{ulisboa-fc-phd-en}
-    \docCover{ulisboa-fc-msc-en}
+    \docCover{ulisboa-fc-phd-en,ulisboa-fc-msc-en}
   } & {
     \schlName{Faculdade de Ciências}{FCUL}{https://ciencias.ulisboa.pt}
     \degreeName{All PhD Programs}{PhD}{https://ciencias.ulisboa.pt/en/educational-offer/}
     \degreeName{All MSc Programs}{MSc}{https://ciencias.ulisboa.pt/en/educational-offer/}
   }\\
   {
-    \docCover{ulisboa-fmv-phd-en}
-    \docCover{ulisboa-fmv-msc-en}
+    \docCover{ulisboa-fmv-phd-en,ulisboa-fmv-msc-en}
   } & {
     \schlName{Faculdade de Medicina Veterinária}{FMV-UL}{https://www.fmv.ulisboa.pt}
     \degreeName{All PhD Programs}{PhD}{https://www.fmv.ulisboa.pt/en/study/phd}
@@ -215,96 +240,84 @@ The \gls{novathesis} template was born at the \gls{DI} of  \gls{FCT} of \gls{NOV
 
 \begin{ntUniversity}{University of Minho}
     {
-      \docCover{uminho-ea-phd-en}
-      \docCover{uminho-ea-msc-en}
+      \docCover{uminho-ea-phd-en,uminho-ea-msc-en}
     } & {
       \schlName{\theschlname(ea)}{\uppercase{ea}-UMINHO}{\theschlurl(ea)}
       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
     }\\
     {
-      \docCover{uminho-ec-phd-en}
-      \docCover{uminho-ec-msc-en}
+      \docCover{uminho-ec-phd-en,uminho-ec-msc-en}
     } & {
       \schlName{\theschlname(ec)}{\uppercase{ec}-UMINHO}{\theschlurl(ec)}
       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
     }\\
     {
-      \docCover{uminho-ed-phd-en}
-      \docCover{uminho-ed-msc-en}
+      \docCover{uminho-ed-phd-en,uminho-ed-msc-en}
     } & {
       \schlName{\theschlname(ed)}{\uppercase{ed}-UMINHO}{\theschlurl(ed)}
       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
     }\\
     {
-      \docCover{uminho-ee-phd-en}
-      \docCover{uminho-ee-msc-en}
+      \docCover{uminho-ee-phd-en,uminho-ee-msc-en}
     } & {
       \schlName{\theschlname(ee)}{\uppercase{ee}-UMINHO}{\theschlurl(ee)}
       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
     }\\
     {
-      \docCover{uminho-eeg-phd-en}
-      \docCover{uminho-eeg-msc-en}
+      \docCover{uminho-eeg-phd-en,uminho-eeg-msc-en}
     } & {
       \schlName{\theschlname(eeg)}{\uppercase{eeg}-UMINHO}{\theschlurl(eeg)}
       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
     }\\
     {
-      \docCover{uminho-em-phd-en}
-      \docCover{uminho-em-msc-en}
+      \docCover{uminho-em-phd-en,uminho-em-msc-en}
     } & {
       \schlName{\theschlname(em)}{\uppercase{em}-UMINHO}{\theschlurl(em)}
       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
     }\\
     {
-      \docCover{uminho-ep-phd-en}
-      \docCover{uminho-ep-msc-en}
+      \docCover{uminho-ep-phd-en,uminho-ep-msc-en}
     } & {
       \schlName{\theschlname(ep)}{\uppercase{ep}-UMINHO}{\theschlurl(ep)}
       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
     }\\
     {
-      \docCover{uminho-ese-phd-en}
-      \docCover{uminho-ese-msc-en}
+      \docCover{uminho-ese-phd-en,uminho-ese-msc-en}
     } & {
       \schlName{\theschlname(ese)}{\uppercase{ese}-UMINHO}{\theschlurl(ese)}
       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
     }\\
     {
-      \docCover{uminho-ics-phd-en}
-      \docCover{uminho-ics-msc-en}
+      \docCover{uminho-ics-phd-en,uminho-ics-msc-en}
     } & {
       \schlName{\theschlname(ics)}{\uppercase{ics}-UMINHO}{\theschlurl(ics)}
       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
     }\\
     {
-      \docCover{uminho-ie-phd-en}
-      \docCover{uminho-ie-msc-en}
+      \docCover{uminho-ie-phd-en,uminho-ie-msc-en}
     } & {
       \schlName{\theschlname(ie)}{\uppercase{ie}-UMINHO}{\theschlurl(ie)}
       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
     }\\
     {
-      \docCover{uminho-ilch-phd-en}
-      \docCover{uminho-ilch-msc-en}
+      \docCover{uminho-ilch-phd-en,uminho-ilch-msc-en}
     } & {
       \schlName{\theschlname(ilch)}{\uppercase{ilch}-UMINHO}{\theschlurl(ilch)}
       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
     }\\
     {
-      \docCover{uminho-i3b-phd-en}
-      \docCover{uminho-i3b-msc-en}
+      \docCover{uminho-i3b-phd-en,uminho-i3b-msc-en}
     } & {
       \schlName{\theschlname(i3b)}{\uppercase{i3b}-UMINHO}{\theschlurl(i3b)}
       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
@@ -386,10 +399,6 @@ Once you have an account, please access the \gls{novathesis} template in \href{h
 \subsection{Using a Local \LaTeX\ Installation}
 \label{sub:using_local_latex}
 
-\newcommand{\MikTeX}{Mik\TeX}
-\newcommand{\TeXLive}{\TeX Live}
-\newcommand{\pdfLaTeX}{pdf\LaTeX}
-
 
 \begin{wrapfigure}{r}{0.3\linewidth}
 \vspace*{-17ex}
@@ -460,4 +469,3 @@ The \href{https://github.com/joaomlourenco/novathesis/wiki#donators}{list of \em
 Although the \gls{novathesis} template is endorsed by some Schools (e.g., \href{https://www.fct.unl.pt/estudante/informacao-academica/teses-e-dissertacoes}{linked from FCT-NOVA web site}), the \gls{novathesis} template \textbf{this not an official template} for any School.
 
 The \gls{novathesis} template exists to make your life easier and we do our best to make it compliant to the supported ($+25$) Schools' regulations but, in the end of the line, you and only you are accountable for both the look and the contents of the document you submit as your thesis/dissertation.
-
