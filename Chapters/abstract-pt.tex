@@ -8,20 +8,20 @@
 
 \typeout{NT FILE abstrac-pt.tex}%
 
-Independentemente da língua em que a dissertação esteja redigida, é necessário um resumo na mesma língua do texto principal e outro resumo noutra língua. Pressupõe-se que as duas línguas em questão sejam o português e o inglês.
+Independentemente da língua em que a dissertação está escrita, geralmente esta contém pelo menos dois resumos: um resumo na mesma língua do texto principal e outro resumo numa outra língua.
 
-Os resumos devem aparecer primeiro na língua do texto principal e depois na outra língua. Por exemplo, se a dissertação for redigida em português, o resumo em português aparecerá primeiro, seguido do resumo em inglês (\emph{abstract}), seguido do texto principal em português. Se a dissertação for redigida em inglês, o resumo em inglês (\emph{abstract} aparecerá primeiro, seguido do resumo em português, seguido do texto principal em inglês.
-
-Na versão \LaTeX\, o template NOVAthesis irá ordenar automaticamente os dois resumos tendo em consideração a língua do texto principal. É possível alterar este comportamento adicionando
+A ordem dos resumos varia de acordo com a escola. O comportamento padrão para o template \gls{novathesis} é ter em primeiro lugar o resumo \emph{na mesma língua do texto principal} e depois o resumo \emph{na outra língua}. Por exemplo, se a dissertação for escrita em português, a ordem dos resumos será primeiro em português e depois em inglês, seguido do texto principal em português. Se a dissertação for escrita em inglês, a ordem dos resumos será primeiro em inglês e depois em português, seguido do texto principal em inglês.
+%
+O template \gls{novathesis} (\LaTeX) irá ordenar automaticamente os resumos por uma ordem apropriada. No entanto, esta ordem pode ser personalizada adicionando
 \begin{verbatim}
     \abstractorder(<MAIN_LANG>):={<LANG_1>,...,<LANG_N>}
 \end{verbatim}
-\noindent à zona de customização no preâmbulo do documento, e.g.,
+\noindent ao ficheiro \verb!5_packages.tex!.  Por exemplo, para um documento escrito em Alemão com resumos em Alemão, Inglês e Italiano (por esta ordem), pode usar-se:
 \begin{verbatim}
     \abstractorder(de):={de,en,it}
 \end{verbatim}
 
-Os resumos não devem ultrapassar uma página e, de forma genérica, devem responder às seguintes questões (é essencial adaptá-los às práticas habituais da sua área científica):
+Relativamente ao seu conteúdo, os resumos não devem ultrapassar uma página e frequentemente tentam responder às seguintes questões (é imprescindível a adaptação às práticas habituais da sua área científica):
 
 \begin{enumerate}
   \item Qual é o problema?

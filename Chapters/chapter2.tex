@@ -92,7 +92,7 @@ Follow these steps to get started with a local \LaTeX\ installation:
     % }
     \bgroup
     \rowcolors{1}{}{GhostWhite}
-    \begin{xltabular}{\linewidth}{>{\ttfamily}lX}
+    \begin{xltabular}{\textwidth}{>{\ttfamily}lX}
         \toprule
         \rowcolor{Gainsboro}%
         File & Contents \\
@@ -161,7 +161,7 @@ The \gls{novathesis} template is organized into many files and folders. At the m
     % }
 \bgroup
     \rowcolors{1}{}{GhostWhite}
-      \begin{xltabular}{\linewidth}{>{\ttfamily}l>{\itshape}lcX}
+      \begin{xltabular}{\textwidth}{>{\ttfamily}l>{\itshape}lcX}
         \caption{The folders and files.}
         \label{tab:folders_and_files}\\
         \toprule
@@ -201,65 +201,77 @@ Additional files for the \gls{novathesis} template.  Unless you know what you ar
 
 The \gls{novathesisclass}\ can be customized with the options listed below.
 
-\newcommand{\classoption}[3]{\textbf{#1=OPT}\qquad #2\\\qquad\emph{#3}\\}
+\newcommand{\classoption}[4]{\textbf{#1=OPT}\newline\emph{\small#2}&\textbf{#3}\newline{\small#4}\\}
 
-\noindent
 % \begin{ctabular}{@{}p{\linewidth}@{}}
-\begin{xltabular}{\linewidth}{@{}p{\linewidth}@{}}
+\bgroup
+  % \rowcolors{1}{}{GhostWhite}
+\begin{xltabular}{\linewidth}{>{\hsize=.4\hsize\raggedright\arraybackslash}X>{\hsize=.6\hsize}X}
   \toprule
   \classoption{docdegree}%
-    {phd(*), phdplan, phdprop, msc, mscplan, bsc}%
-    {The type of the document: PhD Thesis (default), PhD Plan, PhD Proposal, MSc Dissertation, MSc Plan, BSc Report}
+    {phd(*), phdplan, phdprop, msc, mscplan, bsc, plain}%
+    {The type of the document.}{
+    \begin{tabular}{r@{ $\rightarrow$ }X}
+        phd & PhD thesis (\emph{deafult})\\
+    phdplan & PhD thesis plan\\
+    phdprop & PhD thesis proposal\\
+        msc & MSc dissertation\\
+    mscplan & MSc dissertation plan\\
+        bsc & BSc report\\
+      plain & Other report\\
+    \end{tabular}    
+    }
     \midrule
   \classoption{school}%
-		{nova/fct(*), nova/fcsh, nova/ims, ul/ist, ul/fc}%
-    {The name of the school. This option changes the typesetting of the cover and some School specific formating, like margins, fonts, paragraph spacing and indentation, etc…}
+		{nova/fct, nova/fcsh, nova/ims, nova/ensp, nova/itqb, ulisboa/ist, ulisboa/fc, ulisboa/fmv, uminho/ea, uminho/ec, uminho/ed, uminho/ee, uminho/eeg, uminho/em, uminho/ep, uminho/ese, uminho/ics, uminho/ie, uminho/ilch, uminho/i3b, iscteiul/eta, ips/ests, ipl/isel, ulht/deisi, other/esep}%
+    {The name of the school.}{This option changes the typesetting of the cover and some School specific formating, like margins, fonts, paragraph spacing and indentation, etc…}
     \midrule
   \classoption{lang}%
     {en(*), pt}%
-    {The main language for the document.  Currently only Portuguese and English are supported.  Other languages are expected to be support in forthcoming versions.}
+    {The main language for the document.}{Currently only Portuguese and English are supported.  Other languages are expected to be support in forthcoming versions.}
     \midrule
   \classoption{fontstyle}%
     {bookman, charter, fourier, kpfonts(*), mathpazo1, mathpazo2, newcent}%
-    {The font set to be used in the document.  Please note that a font set include definitions for the main text, headings, maths, etc.}
+    {The font set to be used in the document.}{Please note that a font set include definitions for the main text, headings, maths, etc.}
     \midrule
   \classoption{chapstyle}%
     {bianchi, bluebox, brotherton, dash, default, elegant(*), ell, ger, hansen, ist, jenor, lyhne, madsen, pedersen, veelo, vz14, vz34, vz43}%
-    {The chapter style, i.e., the look of the chapter beginning.}
+    {The chapter style}{The look of the chapter beginning.}
     \midrule
   \classoption{converlang}%
     {en, pt(*)}%
-    {The language to be used when typesetting the cover page.}
+    {The language to be used when typesetting the cover page.}{}
     \midrule
   \classoption{otherlistsat}%
     {front(*), back}%
-    {Where to put the other lists besides the table of contents. The default is (\texttt{front}) before the main text.  But some scientific areas prefer them at the end of the document (\texttt{back}), just before the Appendixes.}
+    {Where to put the other lists besides the table of contents.}{The default is (\texttt{front}) before the main text.  But some scientific areas prefer them at the end of the document (\texttt{back}), just before the Appendixes.}
     \midrule
   \classoption{statement}%
     {true, false(*)}%
-    {Include or don't include the contents of the “\texttt{statement}” file. The default is for this file to be ignored (if it exists).}
+    {Include or don't include the contents of the “\texttt{statement}” file.}{The default is for this file to be ignored (if it exists).}
     \midrule
   \classoption{linkscolor}%
     {darkblue(*), black}%
-    {The color for all the hyperlinks in the PDF file.  The “\texttt{media=paper}” option (see below) will override this option to “\texttt{black}”}
+    {The color for all the hyperlinks in the PDF file.}{The “\texttt{media=paper}” option (see below) will override this option to “\texttt{black}”}
     \midrule
   \classoption{spine}%
     {true, false(*)}%
-    {Generate the book spine and the last page in the PDF.}
+    {Generate the book spine and the last page in the PDF.}{}
     \midrule
   \classoption{biblatex}%
     {OPT=\{list of options for \texttt{biblatex}\}}%
-    {Customize \texttt{biblatex}, the bibliography management system used in this class. Probably you will want to change the value of the \texttt{biblatex} “\texttt{style}” option. For other customizations of \texttt{biblatex} check its manual.}
+    {Customize \texttt{biblatex}, the bibliography management system used in this class.}{Probably you will want to change the value of the \texttt{biblatex} “\texttt{style}” option. For other customizations of \texttt{biblatex} check its manual.}
     \midrule
   \classoption{memoir}%
     {OPT=\{list of options for \texttt{memoir}\}}%
-    {Customize the base class \texttt{memoir}. The \texttt{memoir} manual should be the first document to be consulted when looking for “\textbf{how can I do this?}” You may what to change the base font size from 11pt to a smaller (10pt) or larger (12pt) size.  Also, remember to change the “\texttt{draft}” to final when your document is finished.}
+    {Customize the base class \texttt{memoir}.}{The \texttt{memoir} manual should be the first document to be consulted when looking for “\textbf{how can I do this?}” You may what to change the base font size from 11pt to a smaller (10pt) or larger (12pt) size.  Also, remember to change the “\texttt{draft}” to final when your document is finished.}
     \midrule
   \classoption{media}%
     {screen(*), paper}%
-    {Behavior to be customized in the school options/configuration. Expected definitions for screen are: left and right margins are equal and use colored links. Expected definitions for paper are: left and right margins are different and use black links.}
+    {Behavior to be customized in the school options/configuration.}{Expected definitions for screen are: left and right margins are equal and use colored links. Expected definitions for paper are: left and right margins are different and use black links.}
     \bottomrule
 \end{xltabular}
+\egroup
 % \end{ctabular}
 
 \section{Additional considerations about the class options}
