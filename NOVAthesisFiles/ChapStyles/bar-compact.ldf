@@ -1,0 +1,11 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ChapterStyle/bar-compact.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for the “NOVA School of Science and Technology” chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE ChapterStyle/bar-compact.ldf}%
+
+\input{NOVAthesisFiles/ChapStyles/bar.ldf}
+\setlength{\beforechapskip}{-20pt}
