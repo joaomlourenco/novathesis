@@ -8,6 +8,7 @@
 \typeout{NT FILE ChapterStyle/vz34.ldf}%
 
 %%%%% Configure chapters, headers, footers, and page numbering
+
 \newif\ifNoChapNumber
 \makechapterstyle{VZ34}{%
   \renewcommand\chapternamenum{}
@@ -16,10 +17,16 @@
   \renewcommand\chapnumfont{\Huge\bfseries}
   \renewcommand\chaptitlefont{\Huge\bfseries\raggedright}
   \renewcommand\printchaptertitle[1]{%
-    \begin{tabular}{@{}p{1cm}|!{\quad}p{\textwidth-1cm-2em-4\tabcolsep }}%
-      \ifNoChapNumber\relax\else\chapnumfont \thechapter\fi%
-      & \chaptitlefont ##1%
-    \end{tabular}%
+    \ifNoChapNumber
+      \begin{tabular}{@{}p{\textwidth}}%
+        \chaptitlefont ##1%
+      \end{tabular}%
+    \else
+      \begin{tabular}{@{}p{1cm}|!{\quad}p{\textwidth-1cm-2em-4\tabcolsep }}%
+        \chapnumfont \thechapter%
+        & \chaptitlefont ##1%
+      \end{tabular}%
+    \fi
     \NoChapNumberfalse%
   }%
   \renewcommand\printchapternonum{\NoChapNumbertrue}
