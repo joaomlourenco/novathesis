@@ -35,6 +35,10 @@
 \adviserstring(c,1,f,es):={Codirectora}% female, singular
 \adviserstring(c,2,m,es):={Codirectores}% male, plural
 \adviserstring(c,2,f,es):={Codirectoras}% female, plural
+\adviserstring(ca,1,m,es):={Codirector}% male, singular
+\adviserstring(ca,1,f,es):={Codirectora}% female, singular
+\adviserstring(ca,2,m,es):={Codirectores}% male, plural
+\adviserstring(ca,2,f,es):={Codirectoras}% female, plural
 
 \degreestring(bsc,m,es):={Grado}
 \degreestring(bsc,f,es):={Grado}
@@ -69,6 +73,10 @@
 \committeestring(a,1,f,es):={Directora}% female, singular
 \committeestring(a,2,m,es):={Directores}% male, plural
 \committeestring(a,2,f,es):={Directoras}% female, plural
+\committeestring(ca,1,m,es):={Codirector}% male, singular
+\committeestring(ca,1,f,es):={Codirectora}% female, singular
+\committeestring(ca,2,m,es):={Codirectores}% male, plural
+\committeestring(ca,2,f,es):={Codirectoras}% female, plural
 \committeestring(m,1,m,es):={Miembro}% male, singular
 \committeestring(m,1,f,es):={Miembro}% female, singular
 \committeestring(m,2,m,es):={Miembros}% male, plural

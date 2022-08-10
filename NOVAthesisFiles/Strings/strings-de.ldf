@@ -39,6 +39,10 @@
 \adviserstring(c,1,f,de):={Zweitbetreuerin}% female, singular
 \adviserstring(c,2,m,de):={Zweitbetreuer}% male, plural
 \adviserstring(c,2,f,de):={Zweitbetreuerin}% female, plural
+\adviserstring(ca,1,m,de):={Zweitbetreuer}% male, singular
+\adviserstring(ca,1,f,de):={Zweitbetreuerin}% female, singular
+\adviserstring(ca,2,m,de):={Zweitbetreuer}% male, plural
+\adviserstring(ca,2,f,de):={Zweitbetreuerin}% female, plural
 
 \degreestring(bsc,m,de):={Bachelor}
 \degreestring(bsc,f,de):={Bachelor}
@@ -79,6 +83,10 @@
 \committeestring(a,1,f,de):={Betreuer}% female, singular
 \committeestring(a,2,m,de):={Betreuer}% male, plural
 \committeestring(a,2,f,de):={Betreuer}% female, plural
+\committeestring(ca,1,m,de):={Zweitbetreuer}% male, singular
+\committeestring(ca,1,f,de):={Zweitbetreuerin}% female, singular
+\committeestring(ca,2,m,de):={Zweitbetreuer}% male, plural
+\committeestring(ca,2,f,de):={Zweitbetreuerin}% female, plural
 \committeestring(m,1,m,de):={Mitglied}% male, singular			
 \committeestring(m,1,f,de):={Mitglied}% female, singular
 \committeestring(m,2,m,de):={Mitglied}% male, plural
