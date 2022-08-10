@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-05-16 [3]
+%% Version 2022-05-16 [6.9.16]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -414,7 +414,7 @@
 \newdata{keywordsblockpost}
 \newdata{keywordspre}
 \newdata{keywordspost}
-\newdata{keywordsboxlen}
+% \newdata{keywordsboxlen}
 \newdata{keywordsstring}
 \newdata{keywordsstringpre}
 \newdata{keywordsstringpost}
@@ -424,8 +424,9 @@
 \keywordsblockpre()={\bigskip\noindent}
 \keywordsstringsuffix()={:\quad}
 \keywordsstringfont()={\bfseries}
+% \keywordspost()={\ \textbf{\Large\textperiodcentered}\ }
 \keywordspost()={, }
-\keywordsboxlen()={\textwidth-\widthof{\usebox{\keywordsstringbox}}}
+% \keywordsboxlen()={\textwidth-\widthof{\usebox{\keywordsstringbox}}}
 
 \newdata{specializationstring}
 \newdata{departmentofstring}
@@ -2027,7 +2028,6 @@
   \ifoptionvoid{/@nt/kwprint}{}{%
     \defifundef{\keywordsstringbox}{\newsavebox}
     \datadefault{keywordsenvpre}(#1)%
-    \def\@ntkwsin{}
     \@for\i:=\expanded{\option{/@nt/kwprint}}\do{%
       \savebox{\keywordsstringbox}{%
         \datadefault{keywordsstringprefix}(\i)%
@@ -2039,13 +2039,13 @@
       \datadefault{keywordsstringpre}(\i)%
       \usebox{\keywordsstringbox}%
       \datadefault{keywordsstringpost}(\i)%
-      \begin{minipage}[t]{\expanded{\datadefault{keywordsboxlen}(\i)}}
+      % \begin{minipage}[t]{\expanded{\datadefault{keywordsboxlen}(\i)}}
         \def\process{\def\process{\datadefault{keywordspost}(\i)}}
         \optionlistdo{/@nt/keywords/\i}{%
           \datadefault{keywordstringpre}(#1)%
           \process##1%
         }%
-      \end{minipage}
+      % \end{minipage}
       \datadefault{keywordsblockpost}(\i)%
     }%
     \datadefault{keywordsenvpost}(#1)%

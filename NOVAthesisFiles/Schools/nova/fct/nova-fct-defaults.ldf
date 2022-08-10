@@ -31,7 +31,8 @@
 \school(logo,neg):={nova-fct-logo-negative}
 
 % Comiittee printing order
-\committeeorder():={c,r,a,m}%
+% \committeeorder():={c,r,a,m}%
+\committeeorder():={c,r,a,ca,m}%
 
 % Cover background images
 \thesiscover(phd,1-1,bgcolor):={black}
