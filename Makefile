@@ -57,7 +57,15 @@ rcb:
 publish:
 	Scripts/publish.sh
 
-.PHONY: bump
-bump:
+.PHONY: bump1 bump2 bump3
+bump1:
+	Scripts/newversion.sh 1
+	make publish
+
+bump2:
+	Scripts/newversion.sh 2
+	make publish
+
+bump3:
 	Scripts/newversion.sh 3
 	make publish
