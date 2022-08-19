@@ -46,7 +46,7 @@
 % \thesiscover(phd,2-1,textcolor):={black}
 % \thesiscover(phd,1-1,image):={nova-itqb-phd-cover}
 % \thesiscover(phd,N-2,image):={nova-itqb-phd-cover-back}
-% \thesiscover(phd,spine,image):={nova-itqb-phd-spine}
+\thesiscover(phd,spine,image):={nova-itqb-phd-spine}
 %
 % \thesiscover(msc,1-1,bgcolor):={black}
 % \thesiscover(msc,1-1,textcolor):={white}
@@ -66,8 +66,8 @@
 
 \spine(logo,msc)={\theschool(logo,neg)}
 \spine(logo,msc,angle)={90}
-\spine(logo,msc,scale)={1.5}
-\spine(logo,msc,raise)={0.075}
+\spine(logo,msc,scale)={1}
+\spine(logo,msc,raise)={0}
 
 \spine(author)={\thedocauthor(name,short)}
 \spine(title)={\textbf{\thedoctitle(\option{/novathesis/coverlang},main)}}
@@ -79,20 +79,20 @@
 \spine(box,spacing)={0.5cm}
 \spine(box,margin)={0.5mm}
 
-\spine(box,logo,top)={0.0cm}
-\spine(box,logo,len)={3.3cm}
+\spine(box,logo,top)={0.7cm}
+\spine(box,logo,len)={2.5cm}
 \spine(box,logo,align)={c}
 
 \spine(box,author,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
-\spine(box,author,len)={4.0cm}
+\spine(box,author,len)={3.3cm}
 
 \spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
-\spine(box,title,len)={15.3cm}
+\spine(box,title,len)={13.0cm}
 % \spine(box,title,align)={l}
 % \spine(box,author,align)={l}
 
 \spine(box,date,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
-\spine(box,date,len)={5.0cm}
+\spine(box,date,len)={3.3cm}
 % \spine(box,lodatego,align)={l}
 
 
@@ -284,8 +284,8 @@
     \fill [color={\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},back)}}]
                     (0,0) rectangle (\paperwidth,-\paperheight);
     % Logo above rectangle
-    \node [inner sep=0pt,anchor=north west,xshift=1.1cm,yshift=-\paperheight+58.5mm]
-                    {\includegraphics[height=2.5cm]{nova-itqb-logo-mono}};
+    \node [inner sep=0pt,anchor=north west,xshift=9.5mm,yshift={3cm+\therectangle(itqb,top)}]
+                    {\includegraphics[width=9.75cm]{nova-itqb-logo-mono}};
     \begin{scope}[xscale=-1,xshift=-\paperwidth]
       % Rectangle
       \fill [color=white] (\therectangle(itqb,left),{\therectangle(itqb,top)})
@@ -296,9 +296,9 @@
                   -- cycle {};
       % Text in rectangle
       \node [inner sep=0pt, anchor=east, 
-             xshift=-{\@nt@margin@left+1mm}, yshift={\therectangle(itqb,top)-0.65cm},
+             xshift=-16.5mm, yshift={\therectangle(itqb,top)-0.55cm},
              color={\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},back,text)}]
-                    {\fontsize{9}{9}\selectfont
+                    {\fontsize{10.15}{10.15}\selectfont
                      \theschool(address)};
     \end{scope}
   \end{tikzpicture}

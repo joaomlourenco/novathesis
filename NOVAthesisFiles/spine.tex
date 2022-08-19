@@ -113,8 +113,12 @@
     \fitboxratio{\@titleRT}{\thespine(text,title,len)}{\novathesis@spinetextwidth}
                 {\thespine(title)}
   }{\def\@titleRT{99999}}%
+  \ifdatadefined{spine}(date){%
+    \fitboxratio{\@dateRT}{\thespine(text,date,len)}{\novathesis@spinetextwidth}
+                {\thespine(date)}
+  }{\def\@titleRT{99999}}%
   
-  \fitboxmin{\@fbratio}{\@authorRT,\@titleRT}%
+  \fitboxmin{\@fbratio}{\@authorRT,\@titleRT,\@dateRT}%
   
   \ifdatadefined{spine}(author){%
     \defifundef{\myauthorbox}{\newsavebox}%
@@ -242,9 +246,31 @@
             yshift=-\expanded{\thespine(box,logo,top)-0.5*\thespine(box,logo,len)},
             xshift=-\novathesis@boxwidth*\@raise]
            at (current page.north)
-              {\IfStrEq{\@angle}{0}{\setkeys{Gin}{width=\novathesis@boxwidth}}%
-                                   {\setkeys{Gin}{height=\novathesis@boxwidth}}%
-                 \includegraphics[angle=\@angle, scale=\@scale, align=c]{\arg}%
+              {\defifundef{\logobox}{\newsavebox}%
+               \defifundef{\logoboxht}{\newlength}%
+               \IfStrEq{\@angle}{0}{%
+                 \savebox{\logobox}{\includegraphics[width=\novathesis@boxwidth,
+                                                     angle=\@angle,
+                                                     scale=\@scale]{\arg}}%
+                 \settoheight{\logoboxht}{\usebox{\logobox}}%
+                 \ifdim\logoboxht>\thespine(box,logo,len)\relax
+                   \savebox{\logobox}{\includegraphics[height={\thespine(box,logo,len)},
+                                                     angle=\@angle,
+                                                     scale=\@scale]{\arg}}%
+                 \fi
+               }{%
+                 \savebox{\logobox}{\includegraphics[height=\novathesis@boxwidth,
+                                                     angle=\@angle,
+                                                     scale=\@scale]{\arg}}%
+                 \settoheight{\logoboxht}{\usebox{\logobox}}%
+                 \ifdim\logoboxht>\thespine(box,logo,len)\relax
+                   \savebox{\logobox}{\includegraphics[width={\thespine(box,logo,len)},
+                                                     angle=\@angle,
+                                                     scale=\@scale]{\arg}}%
+                 \fi
+               }%
+               \usebox{\logobox}%
+               % \includegraphics[angle=\@angle, scale=\@scale, align=c]{\arg}%
               };
     }{}%
     % print author
