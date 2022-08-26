@@ -52,7 +52,6 @@
 \keywordsstringfont()={\bfseries\Large}
 \keywordsstringsuffix()={}
 \keywordspost()={\\[1ex]}
-\keywordsboxlen()={\textwidth}
 
 \NTAddToHook{keywords/pt/pre}{\options{/@nt/kwprint = {}}}
 \NTAddToHook{keywords/en/pre}
