@@ -875,12 +875,10 @@
       {listsofglossaries}{\options{/@nt/list/listof/.cpush={%
                               \glstoctrue
                               \ifoptionvoid{/@nt/file/glossaries/glossary}{\patchcmd{\@glo@types}{,main}{}{}{}}{}%
-                              \printglossaries
                           }}}%
       {listsofglossaries*}{\options{/@nt/list/listof/.cpush={%
                               \glstocfalse
                               \ifoptionvoid{/@nt/file/glossaries/glossary}{\patchcmd{\@glo@types}{,main}{}{}{}}{}%
-                              \printglossaries
                           }}}%
   }[\options{/@nt/list/listof/.cpush={\ifdefmacro{#1}{#1}{\csuse{#1}}}}]%
 }
@@ -894,12 +892,16 @@
       \iftoggle{/novathesis/printfrontmatter}{\ntprintlist{/@nt/print/#1}}{}%
     }%
     {mainmatter}{\ntprintlist{/@nt/print/#1}}%
-  }[\ifdefmacro{#1}{#1}{\csuse{ntprint#1}}\clearforchapter]%
+  }[\ifdefmacro{#1}{#1}{\csuse{ntprint#1}\clearforchapter}]%
   \ignorespaces%
 }
 
 \newcommand*{\ntprintlist}[1]{%
-  \optionlistdo{#1}{\ifdefmacro{##1}{##1}{\csuse{ntprint##1}}\clearforchapter}%
+  \optionlistdo{#1}{%
+    \ifdefmacro{##1}{##1}{%
+      \ifcsmacro{##1}{\NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}}{%
+        \NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}%
+  }}\clearforchapter}%
 }
 
 \newcommand*{\ntsetprintorder}[2]{%
@@ -924,6 +926,7 @@
   quote;           % (*) Print the quote
   abstracts;       % Print abstracts in multiple languages.
   alllistof;       % Print all the listof defined in “6_list_of.tex”
+  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
 }
 
 \ifoptionequal{/novathesis/webography}{}{%
@@ -1824,6 +1827,7 @@
   \NTRunHook{frontmatter/pre}%
   \frontmatter%
   \pagestyle{novathesis@frontmatter}%
+  \copypagestyle{chapter}{novathesis@frontmatter}
   \ntselectlang{\option{/novathesis/mainlang}}%
   \pagenumbering{roman}%
   \NTRunHook{frontmatter/post}%
@@ -1836,6 +1840,7 @@
     \renewcommand{\cleardoublepage}{\clearpage}%
   }%
   \mainmatter%
+  \copypagestyle{chapter}{novathesis@mainmatter}
   \ifbool{@openright}{}{% openany=true
     \let\cleardoublepage\oldcleardoublepage%
   }%
