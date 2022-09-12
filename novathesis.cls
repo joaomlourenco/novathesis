@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-05-16 [6.10.3]
+%% Version 2022-05-16 [6.10.4]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -1826,6 +1826,7 @@
 \newcommand*{\ntthesisfrontmatter}{%
   \NTRunHook{frontmatter/pre}%
   \frontmatter%
+  \begingroup
   \pagestyle{novathesis@frontmatter}%
   \copypagestyle{chapter}{novathesis@frontmatter}
   \ntselectlang{\option{/novathesis/mainlang}}%
@@ -1834,13 +1835,13 @@
 }
 
 \newcommand*{\ntthesismainmatter}{%
+  \endgroup
   \NTRunHook{mainmatter/pre}%
   \ifbool{@openright}{}{% openany=true
     \let\oldcleardoublepage\cleardoublepage%
     \renewcommand{\cleardoublepage}{\clearpage}%
   }%
   \mainmatter%
-  \copypagestyle{chapter}{novathesis@mainmatter}
   \ifbool{@openright}{}{% openany=true
     \let\cleardoublepage\oldcleardoublepage%
   }%
