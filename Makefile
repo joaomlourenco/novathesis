@@ -13,8 +13,9 @@ AUXFILES=$(shell ls $(B)*.* | fgrep -v .tex | fgrep -v $(B).pdf | sed 's: :\\ :g
 
 default: pdf
 
+
 $(T): $(S)
-	make
+	$(MAKE)
 
 .PHONY: pdf
 pdf: $(S)
@@ -61,12 +62,12 @@ publish:
 .PHONY: bump1 bump2 bump3
 bump1:
 	Scripts/newversion.sh 1
-	make publish
+	$(MAKE) publish
 
 bump2:
 	Scripts/newversion.sh 2
-	make publish
+	$(MAKE) publish
 
 bump3:
 	Scripts/newversion.sh 3
-	make publish
+	$(MAKE) publish
