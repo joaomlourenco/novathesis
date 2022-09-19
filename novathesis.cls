@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-05-16 [6.10.4]
+%% Version 2022-05-16 [6.10.5]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -864,7 +864,7 @@
                         }}}%
       {listofalgorithms}{\options{/@nt/list/listof/.cpush = {%
                                 \listofalgorithms
-                                \ifdefined\listalgorithmname>%
+                                \ifdefined\listalgorithmname%
                                   \addcontentsline{toc}{chapter}{\listalgorithmname}%
                                 \else\ifdefined\listalgorithmcfname%
                                   \addcontentsline{toc}{chapter}{\listalgorithmcfname}%
@@ -899,8 +899,8 @@
 \newcommand*{\ntprintlist}[1]{%
   \optionlistdo{#1}{%
     \ifdefmacro{##1}{##1}{%
-      \ifcsmacro{##1}{\NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}}{%
-        \NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}%
+      \ifcsmacro{ntprint##1}{\NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}}{%
+        \ifcsmacro{##1}{\NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}}{\ClassError{novathesis}{Invalid contents for frontmatter or mainmatter}{}}%
   }}\clearforchapter}%
 }
 
@@ -1836,6 +1836,7 @@
 
 \newcommand*{\ntthesismainmatter}{%
   \endgroup
+  \bookmarksetup{startatroot}%
   \NTRunHook{mainmatter/pre}%
   \ifbool{@openright}{}{% openany=true
     \let\oldcleardoublepage\cleardoublepage%
