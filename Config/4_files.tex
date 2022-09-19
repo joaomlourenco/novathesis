@@ -11,13 +11,13 @@
 %=============================================================================
 
 %%------------------------------------------------------------
-%% Except for the bibliography, all the other FILE NAMES below  
-%%     inside braces must correspond to a file with extension 
+%% Except for the bibliography, all the other FILE NAMES below
+%%     inside braces must correspond to a file with extension
 %%     ".tex" and located in the "Chapters" folder
 %%------------------------------------------------------------
 
 %%------------------------------------------------------------
-% BibTeX bibiography files and customization.  
+% BibTeX bibiography files and customization.
 %   May be used multiple times with a single file nae each time.
 %   syntax: \ntaddfile{bib}{filename.bib}
 \ntaddfile{bib}{bibliography.bib}
@@ -27,13 +27,13 @@
 % File with the dedicatory text. Will only be considered for final documents,
 %   i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
 %   syntax: \ntaddfile{dedicatory}{filename}
-\ntaddfile{dedicatory}{dedicatory}
+\ntaddfile{dedicatory}{dg_dedicatory}
 
 %%------------------------------------------------------------
 % File with the acknowledgments text. Will only be considered for final documents,
 %   i.e., "bsc", "msc" and "phd", otherwise, it will be silently ignored
 %   syntax: \ntaddfile{acknowledgements}{filename}
-\ntaddfile{acknowledgements}{acknowledgements}
+\ntaddfile{acknowledgements}{dg_acknowledgements}
 
 %%------------------------------------------------------------
 % File with the quote text. Will only be considered for final documents,
@@ -44,9 +44,9 @@
 %%------------------------------------------------------------
 % Abstract files in multiple languages
 %   syntax: \ntaddfile{abstract}[language]{filename}
-\ntaddfile{abstract}[pt]{abstract-pt}  % Abstract in Portuguese
-\ntaddfile{abstract}[en]{abstract-en}  % Abstract in English
-% \ntaddfile{abstract}[fr]{abstract-fr}  % Abstract in French
+\ntaddfile{abstract}[en]{dg_abstract-en}  % Abstract in English
+\ntaddfile{abstract}[pt]{dg_abstract-pt}  % Abstract in Portuguese
+\ntaddfile{abstract}[de]{dg_abstract-de}  % Abstract in German
 
 %%------------------------------------------------------------
 % Lists of Glossary, Acronyms and Symbols
@@ -59,14 +59,14 @@
 %%------------------------------------------------------------
 % Main text - document chapters
 %   syntax: \ntaddfile{chapter}{filename}
-\ntaddfile{chapter}{chapter1}
-\ntaddfile{chapter}{chapter2}
+\ntaddfile{chapter}{dg_chapter1_intro}
+\ntaddfile{chapter}{dg_chapter2_optopad}
 \ntaddfile{chapter}{chapter3}
-% \ntaddfile{chapter}{chapter4}
-% \ntaddfile{chapter}{chapter-last}
+\ntaddfile{chapter}{chapter4}
+\ntaddfile{chapter}{chapter5}
 
 %%------------------------------------------------------------
-% Text appendices 
+% Text appendices
 % syntax: \ntaddfile{appendix}{filename}
 \ntaddfile{appendix}{appendix1}
 \ntaddfile{appendix}{appendix2}

@@ -1,0 +1,242 @@
+%%%%% !TEX root=template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% novathesis.cls
+%% NOVA thesis document class
+%%
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
+%%
+%% Version 2022-05-16 [6.10.4]
+%% Departamento de Informática (www.di.fct.unl.pt)
+%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Universidade NOVA de Lisboa (www.unl.pt)
+%%
+%% BUGS and SUGGESTIONS: please submit an issue at the project web page
+%%      at: https://github.com/joaomlourenco/novathesis/
+%%
+%% HELP: please DO NOT SEND ME EMAILS about LaTeX or the NOVAthesis template
+%%       please ask for help at GitHub Discussions page at
+%%          https://github.com/joaomlourenco/novathesis/discussions
+%%      or at the NOVAthesis facebook group at
+%%          https://www.facebook.com/groups/novathesis
+%%
+%% AUTHOR @github:
+%%      - joaomlourenco
+%%
+%% CONTRIBUTORS @github:
+%%      https://github.com/joaomlourenco/novathesis/wiki#help-with-the-project-patches-and-new-features
+%%
+%% DONATIONS:
+%%      If you think this template really helped you while writing your thesis, then
+%%          1. Go to the project web page and giv it a star (on the top-right)
+%%          2. Make a small donation using the URL below
+%%                    https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8
+%%             We will keep a list thanking to all the identified donors that identify
+%%             themselves in the “Add special instructions to the seller:” box.
+%%
+%% CITATION:
+%%      If you use this template, please be kind and cite it in your bibliography:
+%%           “João M. Lourenço, The NOVAthesis \LaTeX\ Template User’s Manual,
+%%            NOVA University Lisbon, 2021,
+%%            https://github.com/joaomlourenco/novathesis/raw/master/template.pdf.”
+%%      The BibTeX entry is already in the exxample “bibliography.bib” file:
+%%           @Manual{novathesis-manual,
+%%              title       ={{The NOVAthesis \LaTeX\ Template User's Manual}},
+%%              author      ={João M. Lourenço},
+%%              organization={NOVA University Lisbon},
+%%              year        ={2021},
+%%              url         ={https://github.com/joaomlourenco/novathesis/raw/master/template.pdf},
+%%           }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PLEASE DO NOT CHANGE THIS FILE
+% ALL THE CUSTOMIZATION WAS MOVED TO THE files in the ”Config” FOLDER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%============================================================
+%% BLACK VOID AHEAD!  DON'T TRESPASS!
+%%============================================================
+
+
+
+
+
+
+
+
+
+
+%%============================================================
+%% YOU'VE BEEN WARNED.  GO BACK TO SAFE GROUND. NOW!!!
+%%============================================================
+
+
+
+
+
+
+
+
+
+
+%%============================================================
+%%  DON'T TOUCH BELOW THIS POINT!
+%%  IF YOU DO… YOU DESERVE WHATEVER HAPPENS AFTERWARDS!
+%%============================================================
+
+
+
+
+
+%%------------------------------------------------------------
+%% This class is based in “memoir”.  To set memoir options,
+%% edit “Config/0_memoir.tex”.
+\documentclass{novathesis}
+
+  
+%============================================================
+%  TEMPLATE CUSTOMIZATION / OPTIONS
+%      Please open and edit the appropriate
+%       configuration file “Config/1_novathesis.tex”
+%============================================================
+
+%============================================================
+% BIBLATEX CUSTOMIZATION
+%      Please open and edit the appropriate
+%       configuration file “Config/2_biblatex.tex”
+%============================================================
+
+%============================================================
+% DEGREE CUSTOMIZATION
+%   Please open and edit the appropriate
+%       configuration file “Config/3a_degree_phd.tex”
+%       or “Config/3b_degree_msc.tex”
+%       or “Config/3c_degree_other.tex”
+%============================================================
+
+%============================================================
+% DEPARTMENT CUSTOMIZATION
+%   Please open and edit the appropriate
+%       configuration file “Config/4_department.tex”
+%============================================================
+
+% %============================================================
+% %  THESIS/DISSERTATION COVER DATA (title, author, etc)
+% %   Please open and edit the appropriate
+% %       configuration file “Config/3_cover.tex”
+% %============================================================
+
+%============================================================
+%  THESIS/DISSERTATION FILES
+%   Please open and edit the appropriate
+%       configuration file “Config/4_files.tex”
+%============================================================
+
+%============================================================
+%  WHICH LIST_OF TO PRINT
+%   Please open and edit the appropriate
+%       configuration file “Config/7_list_of.tex”
+%============================================================
+
+%============================================================
+% ADDITIONAL PACKAGES and MACROS
+%      Please open and edit the appropriate
+%       configuration file “Config/8_packages.tex”
+%============================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%============================================================
+%% HAVE I NOT TOLD YOU TO NOT EDIT/CHANGE THIS FILE??? 
+%%============================================================
+
+%%------------------------------------------------------------
+\begin{document}        % Beginning of document
+
+% \optionshowall
+
+
+%%------------------------------------------------------------
+\ntthesisfrontmatter      % Before the main text (TOC, etc) — Roman page numbering
+%%------------------------------------------------------------
+\ntprint{covers}      % The cover page
+\ntprint{frontmatter}     % The default order is listed below, but can be changed 
+%                         % at the School's “defaults.ldf” with
+%                         % "\ntsetprintorder{list_of_items}", where “list_of_items”
+%                         % may be any of:
+%                         %       statement      % The statement page
+%                         %       copyright       % (*) The copyright page
+%                         %       dedicatory      % (*) Print the dedicatory
+%                         %       acknowledgements% (*) Print the acknowledgments
+%                         %       quote           % (*) Print the quote
+%                         %       abstracts       % Print abstracts in multiple languages.
+%                         %       alllistof      % Print all the listof defined in “7_list_of.tex”
+%                         % (*) Will only be printed if adequate for the document type
+% \optionlistdo{/novathesis/docfrontmatter}{\csuse{ntprint#1}}%
+
+%%------------------------------------------------------------
+\ntthesismainmatter     % The main text — Arabic page numbering
+%%------------------------------------------------------------
+% \optionlistdo{/novathesis/docmainmatter}{\csuse{ntprint#1}}%
+\ntprint{mainmatter}      % The default order is listed below, but can be changed 
+%                         % at the School's “defaults.ldf” with
+%                         % "\ntsetprintorder{list_of_items}", where “list_of_items”
+%                         % may be any of:
+%                         %       chapters        % Print document chapters
+%                         %       bib             % Print the bibliography.  Change to
+%                                                 %    bib[title=⟨title⟩]” to redefine the title!
+%                         %       appendices      % Print appendices, if any!
+%                         %       annexes         % Print annexes, if any!
+\ntprint{backcover}       % Print the back cover, if any!
+
+%%------------------------------------------------------------
+\end{document}          % End of document

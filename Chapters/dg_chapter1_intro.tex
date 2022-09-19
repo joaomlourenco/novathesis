@@ -1,0 +1,203 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% chapter1.tex
+%% NOVA thesis document file
+%%
+%% Chapter with introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE chapter1.tex}%
+
+\chapter{General Introduction}
+\label{cha:introduction}
+
+\prependtographicspath{{Chapters/Figures/Covers/}}
+
+% epigraph configuration
+\epigraphfontsize{\small\itshape}
+\setlength\epigraphwidth{12.5cm}
+\setlength\epigraphrule{0pt}
+
+% QUOTE
+
+\begin{quote}
+   \rule{\linewidth}{2pt}
+ Yada Yada Yada...
+ \hfill \raisebox{-1ex}{\itshape Seinfeld, Season 8, Episode 19 (1997)}\\[-1ex]
+   \rule{\linewidth}{2pt}
+ \end{quote}
+
+%\epigraph{
+ % This work is licensed under the \href{https://www.latex-project.org/lppl/lppl-1-3c/}{\LaTeX\ Project Public License v1.3c}.
+ % To view a copy of this license, visit the \href{https://www.latex-project.org/lppl/}{LaTeX project public license}.
+%}
+
+To understand how the brain generates complex behavior is one of the key questions in neuroscience \needscite. Specifically, the field of neuroethology tries to tackle this question by observing behaviors in a naturalistic setting \needscite. The wide spectrum of complex, natural behaviors by animals in the wild is truly astonishing.
+
+Not only do animals have to select appropriate action dynamically, they also have to continuously sense and adapt to changes in internal and external states. Furthermore, behavior is also flexible as the same sensory input may lead to different behaviors. This due to the fact that also internal factors or states affect what behavior is executed. How does the brain integrate many external and internal signals to form an appropriate output? But what is an appropriate output in terms of complex behaviors, like for example foraging for food?
+I argue that a deeper and detailed understanding of complex behavior is the first step towards answering these questions. Moreover, connecting this first step with systematic, large-scale neuronal manipulations and interrogations has the potential to crack the underlying circuit logic and what computations are performed. This will form a comprehensive, integrative approach towards a mechanistic understanding of internal and external information processed by the brain to generate complex, and adaptive behavior, which is required for cognitive tasks such as foraging. Insights and knowledge from such studies will impact not only the field of neuroscience at large, but also others, such as psychology, socio-economics, medicine, ethics and philosophy\needscite(Shadlen \& Kiani, 2013).
+
+In this General Introduction, I first further elaborate how a better understanding and deeper study of behavior is important for understanding how the brain works. Then I describe how recent computational and technological advances led to a new and exciting way to quantify and analyze behavior at high throughput. Secondly, I propose that such behavioral quantification can be used to study more complex cognitive functions, such as the decision-making during food foraging. Thirdly and finally, I introduce the fruit fly Drosophila melanogaster as a tractable model organism to study the underlying neuronal circuits that regulate foraging decisions, as well as what is known about underlying brain structures that could support these computations.
+
+
+\section{Why is behavior important for understanding the brain}
+\label{sec:whybehavior}
+
+This first Chapter introduces the \gls{novathesis} template and how it is organized. In Chapter~\ref{cha:users_manual} you can find some specific instructions on how to use the \gls{novathesis} template.  Chapter~\ref{cha:a_short_latex_tutorial_with_examples} shows some examples and give some hints on how to write your text. Please read these next Chapters carefully.
+
+\subsection{What is behavior}
+\label{sub:whatbehavior}
+
+What does it mean when we say that an organism or system behaves in a certain way? Indeed, this is a complicated question, which many scientists have tried to answer \needscite(Bergner 2011, Calhoun \& El Hady, 2021). Here, I take an “agnostic approach” to the study of behavior — simply stating that behavior is defined by a sequence of dynamically changing, observable variables, such as the movement of an arm for reaching an object \needscite, or escaping a predatory danger \needscite. Observable means that we have ways of measuring and quantifying the behavioral variables. Interestingly, while many behaviors as defined above do not require a brain \needscite(ROBOTICS Dussatour and sponges…), it can be argued that the brain has evolved to generate and optimize behaviors \needscite. A deeper understanding of the evolved behaviors can help us understand how the brain implements its generation \needscite(Krakauer et al, 2017).
+\begin{itemize}
+\item Hierarchy,
+\item drives,
+\item modularity,
+\item variability,
+\item learned vs innate
+\end{itemize}
+
+\subsection{Quantifying behavior}
+\label{sub:quantbehavior}
+
+The way how natural scientists tend to get a better understanding of the world is by quantifying variables which help them to discover underlying patterns that can finally form a mechanistic theory of the studied phenomena. The same can be applied to the study of animal behavior. As I described earlier, behavior can be described as a sequence of movements, and as such, tracking these movements is the first step towards quantifying behavior.
+
+DAMs and capacitance measurements
+
+Video tracking Markerless tracking
+
+Recent advances in Machine Learning and Computer Vision have given rise to many powerful approaches in analyzing behavior \needscite. While the early beginnings of quantitative studies of animal behavior involved manual scoring and tracing of movements, current approaches often involve video recordings of animals.
+
+Markerless tracking, pose estimation etc.
+
+Furthermore, automation of behavioral quantification has led to the These advances have led to new insights into studying causal relationships between neuronal circuits and specific behaviors.
+
+
+\subsection{The new age of high-throughput ethomics}
+\label{sub:newage}
+
+As argued in the previous section, advances in hardware technology as well as software analysis tools have significantly advanced the way to measure and quantify animal behavior. Not only have these new methods led to novel insights into the understanding of behavior, but also due to the standardization and automation of such methods, researchers are now able to scale up experiments to a level that has never been possible before. Namely, high-throughput screening of behaviors or as some defined it as high-throughput ethomics \needscite(Branson et al., 2009) \textemdash in reference to similar -omics approaches seen in molecular and cellular biology — has opened a door into systematically testing how behaviors are affected by certain manipulations, and even quantifying how behavioral variability arises in animals with the same genetic background \needscite(Werkhoven et al., …; De Bivort et al, 2022).
+
+Examples:
+\begin{itemize}
+\item Flies: Robie et al. (2017); Root et al. (2013) and other Scott Lab papers; other silencing screens??? Zlatic screen???
+\item Worms: Andre Brown;
+\item Mice: Bob Datta
+\item Higher-order animals/ non-standard animal models????
+\end{itemize}
+Challenges/Missing points:
+\begin{itemize}
+\item Speed-accuracy trade-off PLUS cost
+\item Complex behaviors are difficult to screen for
+\item How are complex behaviors controlled by the brain
+\item Bridge to foraging
+\end{itemize}
+
+(Figure 1.1 - scheme of neurogenetic behavioral screening approach)
+
+
+\begin{figure}[htbp]
+  \centering
+    \includegraphics[width=0.7\textwidth]{github1}
+  \caption{The \gls{novathesis} project web page in GitHub.}
+  \label{fig:github}
+\end{figure}
+
+\section{Foraging}
+\label{sec:foraging}
+
+Evolution has led to incredible solutions to maximize fitness of animals via natural selection and ... \needscite(CITE Darwin, etc.). All living organisms require and metabolize energy and nutrients from their environment. As such, a wide range of foraging behaviors have evolved for millions of years homo- and analogously in different species. Here I define foraging as all behaviors and decision processes that allow an animal to gather food or information about it. Food or rather its nutrient contents are not only sources of energy, but also important building blocks for the animal to develop, grow and reproduce. Specifically, essential macronutrients—such as carbohydrates, fats, proteins, vitamins, and minerals—are an important part of a healthy diet. Like with many essential variables, there is an optimal range of intake of a given nutrient. Specifically, overconsumption of proteins leads to … . Therefore, foraging provides solutions to the overarching, normative goal of nutrient homeostasis. Moreover, computations related to foraging cannot only act upon nutritional needs reactively, but rather combine reactive and predictive control in order to reach an optimal nutritional diet \needscite(CITE Walker/Goldschmidt; Sterling). Following this, I argue that the normative framework of foraging as defined above should be defined as nutrient allostasis \needscite.
+
+Foraging observed in wild animals is highly complex and generally organized over multiple spatial and temporal scales \needscite(Stephens \& Krebs, 2019; MOREEE). Furthermore, food resources within their habitat are scattered in heterogeneous and irregular patterns \needscite. As such, naturalistic foraging is not only difficult to study and quantify experimentally, but furthermore its high complexity makes it intractable for formulating a theory that could explain all aspects of foraging. I argue that due to these two reasons, different branches of studying foraging have been developed independently over time. In particular, there are three clearly distinct approaches which I will describe in the following sections. While these approaches have diverged from each other, there are parallel ideas and concepts that in the future will lead to a unified view of foraging.
+
+\subsection{Search and food navigation}
+\label{sub:searchnavigation}
+
+Some intro about history. While many navigational behaviors or navigation itself does not have to relate to foraging as defined earlier, it is trivial to understand that navigation is not only a helpful but necessary requirement in order to find and encounter food. Furthermore, once found navigational behaviors also guide the animal in returning back to known food locations. Finally, some animals have evolved navigational feats that include complex planning and internal maps, that allow foraging over large spatial --for example, yakyakayak-- or over large temporal scales, exemplified by food caching in squirrels \needscite and birds \needscite. For the context of this thesis, I briefly describe the former two navigational types:  search and returns.
+How do animals find food? Searching for items is highly relatable behavior, as many of us humans tend to forget about where exactly they left their keys or wallets. Similarly, animals have evolved multiple ways of finding important locations, such as food or nests.
+
+LOCAL Search Patterns
+
+Global search strategies: Random, Levy, Bayesian, etc.
+
+\subsection{Optimal Foraging Theory}
+\label{sub:optimalforaging}
+
+When you are faced with a complicated problem, there are usually optimal strategies to solve it. For example, the game of chess . Similar optimal strategies can be applied to “solve” foraging problems. Specifically, optimal foraging theory is a normative approach to how an animal should make decisions in order to have a higher chance of survival \needscite(Pyke1983, Stephens1986).
+Assumptions
+Decision paradigms
+As animals forage for food or prey in an uncertain environment, encounters occur and an animal can either engage in feeding on this resource or catch the prey, or decide to ignore it for potentially better options. This is generally referred to as patch acceptance or engagement decisions.
+The Marginal Value Theorem (MVT) is a central theorem widely used in ecological models of foraging behavior. First defined by \needscite Charnov (1976), it assumes that patch leaving decisions are governed by an optimal decision rule that balances the cumulative intake by diminishing returns (benefits) against the travel time (costs) between patches. Specifically, when the return rate (increments per time unit) falls below the average travel time, the optimal decision rule would lead the animal to give up on the current patch to forage for potentially better options. As such, assuming constant travel speed, the tangent that crosses x-axis at the travel time between the spots and the curve of cumulative intake determines the time the animal will optimally spend exploiting the patch  \needswork{(see Fig. 1.2)}.
+- MVT
+- Animal studies
+- Suboptimality/Limitations; adjustments
+- Challenges - potential solutions
+- Assumptions
+- Often no internal state or needs
+- Check Ahmed for more
+- Also read critical papers
+
+
+\subsection{Exploration-exploitation trade-offs \& cognition}
+\label{sub:exploreexploit}
+
+Besides testing optimal foraging theoretic concepts in ecological studies, what other ways are there to study foraging decisions. Systems neuroscientists in the 1970s, like XXX tried to tackle this question by “stripping down” foraging decisions to simplified and controlled options, which allowed them to test hypotheses in controlled experimental setups in the laboratory. The idea behind this reduction is to reduce behavioral \& environmental variability, and specifically to control for and to manipulate variables relevant to the foraging decision, such as stimuli or rewards.
+
+\subsection{Integrating foraging with nutritional homeostasis}
+\label{sub:integrativetheory}
+
+While ecological studies focussed on observing foraging behavior in naturalistic environments, such studies largely lacked quantitative accuracy and controlled conditions leading to large behavioral variability. As such, many studies reported suboptimal foraging decisions that were either interpreted by adjustments to the MVT or by and large argue for the MVT to be invalid. Critically, MVT and optimal foraging theory in general has many assumptions that may be invalid in the context of naturalistic foraging as I described above. As such, this approach has led to relatively low yield of explainability of the wide variety of complex foraging decision-making observed in animals. In contrast, systems neuroscientists reduced foraging decisions to low-dimensional decision-making (2AFC tasks) in a controlled laboratory environment in order to reduce variability. This helped to gain insights into the neurobiological mechanisms of decision-making, it however does not describe how such decisions are performed in a natural environment, and what are the ecological and evolutionary forces that shaped these processes \needscite(Krakauer et al., 2017; Mobbs et al., 2018). It remains an open question whether the neural mechanisms for trained behavior are recruited for decisions made in natural settings.
+
+Combining these two… \needswork{add more...}
+
+Furthermore, \needswork{add more about intenal state...}
+
+\needswork{Fig. 1.3 - scheme of integrative framework to foraging behavior}
+
+\section{\textit{Drosophila} as a Model for Studying Complex Behaviors}
+\label{sec:droso}
+
+Systems neuroscience aims at an understanding of mechanistic and causal explanations of how the brain generates complex and adaptive behavior. Key to this is the ability to record and manipulate processes in the brain on a circuit, cellular and molecular level. The fruit fly Drosophila melanogaster has emerged as a powerful model organism in systems neuroscience \needscite. This emergence is due to three major reasons: First, the fast developmental cycle and decoding of its genome \needscite led to high genetic tractability. The GAL4/UAS system\needscite(Brand/Perrimon 1993) has been developed to drive gene expression in a cell-targeted manner. This method allows to express reporters…. Secondly, the fly brain is stereotyped and contains around 100000 neurons makes it a simple enough system to study. This reduced complexity has made it feasible to target individual neurons through transgenic lines which are based on random insertions. For example, the Janelia Research Campus has created a library of more than 7000 GAL4 driver lines \needscite, which have stereotyped expression in specific neurons\needscite(link flylight) and are widely available through maintaining stock centers\needscite(link BDSC). This allows for systematic screening of specific neurons and neuronal populations by means of manipulating or recording neuronal activity. Thirdly, while insects are widely seen as behaving in simple perception-action cycles, they actually  perform a wide variety of complex and adaptive behaviors.
+
+\subsection{Food search and foraging in \textit{Drosophila}}
+\label{sub:foodsearch}
+
+As many might attest from their own experience with encountering fruit flies in their kitchen, fruit flies have remarkable food searching and foraging abilities. Indeed, their navigational abilities to locate food have been shown in an experiment, where marked fruit flies have been released in a barren desert and have been found on feeders tens of kilometers from the release site just \needswork{XX hours} after \needscite. Olfactory and visual senses are driving most of such long-range food search \needscite. Once
+
+Most of what of is known about internal state relates to modulating chemosensory responses.
+
+
+\subsection{Food sensing in \textit{Drosophila}}
+\label{sub:foodsense}
+
+
+\begin{wrapfigure}{r}{0.3\linewidth}
+\vspace*{-17ex}
+\includegraphics[width=\linewidth]{github}%
+\caption{The NOVAthesis Project page in GitHub.}
+\label{fig:github2}
+\end{wrapfigure}
+
+\subsection{Higher-order brain areas in \textit{Drosophila}}
+\label{sub:foodcogn}
+
+The complex and cognitive may require involving higher-order brain areas
+The central complex (CX) is a highly conserved, unpaired neuropil in the insect brain \needscite(Pfeiffer/Homberg, 2013). It consists of four substructures: The protocerebral bridge (PB), the fan-shaped body (FB), the ellipsoid body (EB), and the noduli (NO) \needscite(Hanesch et al., 1989; Williams, 1975; Wolff et al., 2015). A large body of work has linked the CX to several complex behaviors, ranging from gap-crossing \needscite(Triphan et al., 2010) to orientation behaviors \needscite(Neuser et al., 2008). Furthermore, specific neurons that send projections to the EB have shown to carry a visually evoked representation of orientation, like a compass, which is maintained ideothetically as visual input is removed \needscite(Seelig/Jayaraman, 2015). More recently, neurons that project to a specific part in the fan-shaped body have shown to integrate information about the orientation with information about the forward speed to form a representation of the travel direction \needscite(Lyu et al, 2022; Lu et al., 2022). Interestingly, this requires complex vector computations that is achieved by the remarkable anatomical properties and connectivity of these neurons.
+As such, the CX sits at the interface of sensory processing and behavioral control, where external information is transformed into decisions about what to do next. To ensure that appropriate behaviors are carried out in the right context, the central complex also receives and controls metabolic internal states related to sleep \needscite(Donlea et al., 2018), and feeding \needscite(Park et al., 2016; Sareen et al., 2021). Furthermore, it has shown to be required for cognitive tasks that involve memory formation, in particular visual place memory \needscite(Ofstad et al., 2011). As such, the CX presents a tractable substrate for integrating sensory and internal signals (e.g., hunger) to drive appropriate decisions and behaviors during foraging. However, the neuronal circuitry and the underlying computations performed for solving complex explore-exploit trade-offs remains unknown.
+The mushroom bodies (MB) is another widely studied, higher-order neuropil in the insect brain.
+Several mushroom body output neurons (MBONs) have shown to be required and sufficient for food search \needscite(Tsao et al., 2018). Fred Wold Lab
+
+The superior neuropils (SNP) notably receives inputs and outputs from both CX and MB, and h. The so-called SAG neurons is an ascending neuron that sends projections to the superior neuropils. Furthermore, the pars intercerebralis, which is the anterior dorsal part of the SNP contains several neurosecretatory cells that have been involved in the regulation of feeding. Another set of four neurons that release SIFamide modulates processing in olfactory centers to promote appetitive behaviors
+
+
+\section{Aims and Structure of the Thesis}
+\label{sec:aims}
+
+
+\begin{description}
+  \item[Help:] If you just need some help, see above \Autoref{sec:getting_help}.
+  \item[Suggestion:] Do you have a suggestion/recommendation? Please add it to the wiki and help other users!
+  \item[Bug:] Did you find a bug? Please open an issue. Thanks!
+  \item[New Feature:] Would you like to request a new feature (or support of a new School)? Please open an issue. Thanks!
+
+\end{description}

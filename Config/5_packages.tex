@@ -25,11 +25,22 @@
 \newcommand{\TeXLive}{\TeX Live}
 \newcommand{\pdfLaTeX}{pdf\LaTeX}
 \definecolor{Schlgray}{gray}{0.95}
+\definecolor{CelticsGreen}{RGB}{0,122,51}
+\definecolor{CelticsGold}{RGB}{139,111,78}
+\definecolor{HotPink}{RGB}{227,28,121}
+\definecolor{Gold}{RGB}{255,215,0}
+
+\newcommand{\needscite}{\textbf{\textcolor{HotPink}{>>CITE<<}}}
+\newcommand{\needswork}[1]{\textbf{\textcolor{Gold}{>>{#1}<<}}}
+
 
 
 %%============================================================
 %%  ADD YOUR PACKAGES AND OTHER CUSTOMIZATIONS HERE
 %%============================================================
+
+%% Adding German after English and Portuguese abstracts
+\abstractorder(en):={en,pt,de}
 
 % \usepackage{widows-and-orphans} % add warnings about widows and orphans to “template.log”
 % \usepackage{refcheck}     % list used and unused labels

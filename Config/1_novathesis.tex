@@ -14,7 +14,7 @@
 %% THE MOST IMPORTANT/POPULAR OPTIONS
 %%------------------------------------------------------------
 
-% \ntsetup{docdegree=msc}       % The type of document
+\ntsetup{docdegree=phd}       % The type of document
 %                               %     [     phd —> PhD thesis
 %                               %       phdplan —> PhD thesis plan
 %                               %       phdprop —> PhD thesis proposal
@@ -25,34 +25,34 @@
 %                               %     ]
 %                               % DEFAULT: docdegree=phd
 
-% \ntsetup{school=uminho/ee}    % The school id
+\ntsetup{school=nova/itqb}    % The school id
 %                               %     [ nova/fct, nova/fcsh, nova/ims, nova/ensp, nova/itqb,
-%                               %       ulisboa/ist, ulisboa/fc, ulisboa/fmv, 
-%                               %       uminho/ea, uminho/ec, uminho/ed, uminho/ee, 
-%                               %       uminho/eeg, uminho/em, uminho/ep, uminho/ese, 
-%                               %       uminho/ics, uminho/ie, uminho/ilch, uminho/i3b, 
+%                               %       ulisboa/ist, ulisboa/fc, ulisboa/fmv,
+%                               %       uminho/ea, uminho/ec, uminho/ed, uminho/ee,
+%                               %       uminho/eeg, uminho/em, uminho/ep, uminho/ese,
+%                               %       uminho/ics, uminho/ie, uminho/ilch, uminho/i3b,
 %                               %       iscteiul/eta, ips/ests, ipl/isel, ulht/deisi
 %                               %       other/esep
 %                               %     ]
 %                               % DEFAULT: school=nova/fct
 
-% \ntsetup{docstatus=final}     % The status of the document
+\ntsetup{docstatus=provisional}     % The status of the document
 %                               %     [     working —> working version of the document
 %                                                      skips some “frontmatter” stuff,
 %                                       provisional —> submission version (no committee),
 %                                             final —> final version (with committee)
-%                                                      (if you want the book spine, 
+%                                                      (if you want the book spine,
 %                                                       activete "spine=true" yourself)
 %                               %     ]
 %                               % DEFAULT: docstatus=working
 
-% \ntsetup{langsused={en,pt,fr,de}}  % List of languages are used in the document
+\ntsetup{langsused={en,pt,de}}  % List of languages are used in the document
 %                               % following ISO 3166-1 (alfa-2)
 %                               %     [ en, pt, fr, it, de, es —> valid languages
 %                               %     ]
 %                               % DEFAULT: langsused=en,pt
 
-% \ntsetup{lang=pt}             % The main language for the document text
+\ntsetup{lang=en}             % The main language for the document text
 %                               % following ISO 3166-1 (alfa-2)
 %                               %     [ en, pt, fr, it, de, es —> valid languages
 %                               %     ]
@@ -82,8 +82,8 @@
 %%------------------------------------------------------------
 
 % \ntsetup{secondcover=true}    % Shall a second cover page be forced?
-%                               %     if the contents for the second page are not 
-%                               %     defined, the second cover will be a replica 
+%                               %     if the contents for the second page are not
+%                               %     defined, the second cover will be a replica
 %                               %     of the first cover.
 %                               % DEFAULT: secondcover=false
 
@@ -106,21 +106,21 @@
 % \ntsetup{tocintoc=true}       % Shall table of contects be listed in itself?
 %                               % DEFAULT: tocintoc=false
 
-% \ntsetup{fontstyle=newtx}   % The font set to be used in the document
+\ntsetup{fontstyle=libertine}   % The font set to be used in the document
 %                               %     [ bookman, erewho, kpfonts, libertine,
 %                               %       schola, stix2, newpx, newtx
-%                               %       newsgot(*), calibr(*), kieranhealy(*) ] 
+%                               %       newsgot(*), calibr(*), kieranhealy(*) ]
 %                               % (*) available only for xelatex/lualatex)
 %                               % DEFAULT: fontstyle=newpx
 
-%\ntsetup{chapstyle=elegant}   % The chapter style to be used
-%                               %     [ bar, bianchi, bluebox, compact, default, 
-%                               %       elegant, ell, hansen, ist, lyhne, madsen, 
+\ntsetup{chapstyle=gigantisch}  % The chapter style to be used
+%                               %     [ bar, bianchi, bluebox, compact, default,
+%                               %       elegant, ell, gigantisch, hansen, ist, lyhne, madsen,
 %                               %       pedersen, section, southall, veelo, vz34,
 %                               %       vz43 ]
 %                               % DEFAULT: chapstyle=bar
 
-% \ntsetup{coverlang=en}        % The language for the cover (and second cover) page 
+% \ntsetup{coverlang=en}        % The language for the cover (and second cover) page
 %                               %     defaults to main document language
 %                               % DEFAULT: coverlang=the same as “lang”
 
@@ -129,17 +129,17 @@
 %                               % DEFAULT: copyrightlang=the same as “lang”
 
 % \ntsetup{statement=true}     % Does the document have after cover pages??
-%                               %     after cover pages are printed immediately 
+%                               %     after cover pages are printed immediately
 %                               %     after the cover pages
 %                               % DEFAULT: statement=false
 
 %\ntsetup{printcopyright=false} % Shall the copyright message be printed??
 %                               % DEFAULT: printcopyright=true
 
-% \ntsetup{printtimestamp=false} % Print a timestamp (when PDF was generated) in the cover
+\ntsetup{printtimestamp=true} % Print a timestamp (when PDF was generated) in the cover
 %                               % DEFAULT: printtimestamp=true
 
-% \ntsetup{spine=trim}          % Print the “book spine” at the end of the document?
+\ntsetup{spine=no}          % Print the “book spine” at the end of the document?
 %                               %     [   no —> do not print the book spine
 %                               %       full —> print the book spine in a full page
 %                               %       trim —> print and trim the page to the width

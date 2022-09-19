@@ -1,0 +1,76 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ChapterStyle/gigantisch.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for the gigantisch chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE ChapterStyle/gigantisch.ldf}%
+
+%%%%% Configure chapters, headers, footers, and page numbering
+\RequirePackage{soul}
+
+\undef{\@nt@gigantisch@chapter}
+\newsavebox{\@nt@gigantisch@chapter}
+\undef{\@nt@gigantisch@part}
+\newsavebox{\@nt@gigantisch@part}
+
+\providecommand{\@nt@gigantisch@chapter@marker}[1][4cm]{%
+	\sbox\@nt@gigantisch@chapter{%
+		\resizebox{!}{#1}{\fboxsep=1pt%
+			\colorbox{CelticsGreen}{\color{white}\thechapter}%
+		}}%
+		\rotatebox{90}{%
+			\resizebox{%
+				\heightof{\usebox{\@nt@gigantisch@chapter}}+\depthof{\usebox{\@nt@gigantisch@chapter}}}%
+			{!}{\scshape\so\@chapapp}}\quad%
+		\raisebox{\depthof{\usebox{\@nt@gigantisch@chapter}}}{\usebox{\@nt@gigantisch@chapter}}%
+}
+
+\providecommand{\@nt@gigantisch@chm}[1][4cm]{%
+	\sbox\@nt@gigantisch@chapter{\@nt@gigantisch@chapter@marker[#1]}%
+	\makebox[0pt][c]{% aka \rlap
+		\makebox[1cm][r]{\usebox\@nt@gigantisch@chapter}%
+	}%
+}
+
+\providecommand{\@nt@gigantisch@part@marker}[1][4cm]{%
+	\sbox\@nt@gigantisch@part{%
+		\resizebox{!}{#1}{\fboxsep=1pt%
+			\colorbox{CelticsGreen}{\color{CelticsGold}\thepart}%
+		}}%
+		\rotatebox{90}{%
+			\resizebox{%
+				\heightof{\usebox{\@nt@gigantisch@part}}+\depthof{\usebox{\@nt@gigantisch@part}}}%
+			{!}{\scshape\so{\partname}}}\quad%
+		\raisebox{\depthof{\usebox{\@nt@gigantisch@part}}}{\usebox{\@nt@gigantisch@part}}%
+}
+
+\providecommand{\@nt@gigantisch@ptm}[1][4cm]{%
+	\sbox\@nt@gigantisch@part{\@nt@gigantisch@part@marker[#1]}%
+	\makebox[0pt][c]{% aka \rlap
+		\makebox[1cm][r]{\usebox\@nt@gigantisch@part}%
+	}%
+}
+
+
+\makechapterstyle{gigantisch}{%
+	\renewcommand{\chapnamefont}{\normalfont\Large\scshape\raggedleft\so}%
+	\renewcommand{\chaptitlefont}{\normalfont\LARGE\bfseries\scshape}%
+	\renewcommand{\chapternamenum}{}
+	\renewcommand{\printchaptername}{}%
+	\renewcommand{\printchapternum}{\null\hfill\@nt@gigantisch@chm[2.5cm]\hspace*{14pt}\par}%
+	\renewcommand{\afterchapternum}{\par\vskip\midchapskip}%
+	\renewcommand{\printchaptertitle}[1]{\color{CelticsGold}\chaptitlefont\raggedleft ##1\par}%
+	%
+	\renewcommand{\partnamefont}{\chapnamefont}
+	\renewcommand{\parttitlefont}{\chaptitlefont}
+	\renewcommand{\partnamenum}{}
+	\renewcommand{\printpartname}{}%
+	\renewcommand{\thepart}{\Roman{part}}
+	\renewcommand{\printpartnum}{\null\hfill\@nt@gigantisch@ptm[2.5cm]\hspace*{14pt}\par}%
+	% \renewcommand{\afterpartnum}{\par\vskip\midchapskip}%
+	\renewcommand{\printparttitle}[1]{\color{CelticsGreen}\parttitlefont\raggedleft ##1\par}%
+	\renewcommand*{\partnumfont}{\normalfont\scshape\MakeLowercase}
+}
+\chapterstyle{gigantisch}
