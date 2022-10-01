@@ -11,7 +11,10 @@
 \newcommand{\ntprintcopyrightpage}{%
   \null\vfill%
   \noindent%
-  \textbf{\large\thedoctitle(\option{/novathesis/coverlang},main)}\par%
+  \textbf{\large\thedoctitle(\option{/novathesis/coverlang},main)}%
+  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub)%
+                {\\\normalsize\textbf{\thedoctitle(\option{/novathesis/coverlang},sub)}}{}%
+  \par%
   \bigskip%
   \thecopyrightstr\par%
 }

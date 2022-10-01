@@ -65,8 +65,8 @@
 % “biblatex” stuff
 \ntaddfile{bib}{./NOVAthesisFiles/fix-bib.bib}%
 % \AtEndDocument{\nocite{novathesis-manual}}%
-\letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
-\RequirePackage[hyperref=auto,defernumbers=true,\@nt@biblatex@opts]{biblatex}%
+% \letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
+\RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
 \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
 \optionlistdo{/@nt/file/bib/VAL}{%
   \addbibresource{#1}%
