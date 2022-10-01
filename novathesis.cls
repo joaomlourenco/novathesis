@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-05-16 [6.10.5]
+%% Version 2022-05-16 [6.10.6]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -320,7 +320,7 @@
   \options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
   \options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
   \options{/@nt/#1/#2/gender/.expanded/.cpush={#3}}%
-  \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
+  % \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
 }
 
 
@@ -579,9 +579,9 @@
   , uminho/copyrightmodifier/.new choice  = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd}
   , uminho/skipblankcovers/.new toggle    = false
 % ulisboa/fmv
-  , ulisboa/fmv/examdate/year/.new value      = {\embrace{year}}
-  , ulisboa/fmv/examdate/month/.new value     = {\embrace{month}}
-  , ulisboa/fmv/examdate/day/.new value       = {\embrace{day}}
+  , ulisboa/fmv/examdate/year/.new value      = {year}
+  , ulisboa/fmv/examdate/month/.new value     = {month}
+  , ulisboa/fmv/examdate/day/.new value       = {day}
   , ulisboa/fmv/scientificarea/.new choice    = {C, MF, PASA, SA}
   , ulisboa/fmv/embargo/period/.new choice    = {I, 6, 12}
   , ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.}
@@ -611,7 +611,8 @@
 \newcommand*{\ntbibsetup}[1]{%
   \@ifpackageloaded{biblatex}%
     {\bibsetup{#1}}%
-    {\options{/@nt/biblatex/.push={#1}}}%
+    {\PassOptionsToPackage{#1}{biblatex}}%
+    % {\options{/@nt/biblatex/.push={#1}}}%
 }
 
 \newcommand*{\ntmemoirsetup}[1]{%
@@ -626,9 +627,9 @@
   \optionlistdo{/@nt/hook/#1}{##1}%
 }
 
-\newcommand*{\NTIfHook}[1]{%
-  \ifoptiondefined{/@nt/hook/#1}%
-}
+% \newcommand*{\NTIfHook}[1]{%
+%   \ifoptiondefined{/@nt/hook/#1}%
+% }
 
 
 
@@ -779,26 +780,24 @@
   \@nttitle{\@ntlang}{#1}{#3}%
 }
 \newcommand{\replacelinebreakwithspace}[2]{%
-      {\def\\{\ }\xdef#2{#1}}%
+      {\def\\{\ }\csxdef{#2}{#1}}%
 }
 \newcommand*{\@nttitle}[3]{%
   % #1 = lang
   % #2 = type (main, sub, spine) title
   % #3 = value
+  \replacelinebreakwithspace{#3}{@nttitle#2}
+  \doctitle(#1,#2):={\csuse{@nttitle#2}}%
+  \doctitle(#1,#2,caps):={\expandafter\MakeUppercase\expandafter{\csuse{@nttitle#2}}}%
   \IfStrEq{#2}{main}{%
-    \replacelinebreakwithspace{#3}{\@nttitletemp}
-    \doctitle(#1,#2):={\@nttitletemp}%
-    \doctitle(#1,#2,caps):={\expandafter\MakeUppercase\expandafter{\@nttitletemp}}%
     \doctitle(#1,#2,cover):={#3}%
     \doctitle(#1,#2,cover,caps):={\expandafter\MakeUppercase\expandafter{#3}}%
     \ifdatadefined{doctitle}(#1,spine){}{%
-      \doctitle(#1,spine):={\@nttitletemp}%
-      \doctitle(#1,spine,caps):={\expandafter\MakeUppercase\expandafter{\@nttitletemp}}%
+      \doctitle(#1,spine):={\csuse{@nttitle#2}}%
+      \doctitle(#1,spine,caps):={\expandafter\MakeUppercase%
+                                 \expandafter{\csuse{@nttitle#2}}}%
     }%
-  }{%
-    \doctitle(#1,#2):={#3}%
-    \doctitle(#1,#2,caps):={\expandafter\MakeUppercase\expandafter{#3}}%
-  }%
+  }{}%
 }
 % --------------------------------------------------------
 
@@ -2101,7 +2100,9 @@
 }
 
 \providecommand\thecopyrightstr{%
-  \iftoggle{/novathesis/numberallpages}{\thispagestyle{novathesis@frontmatter}}{\thispagestyle{empty}}%
+  \iftoggle{/novathesis/numberallpages}%
+           {\thispagestyle{novathesis@frontmatter}}%
+           {\thispagestyle{empty}}%
   \noindent%
   Copyright \textcopyright\ \thedocauthor(name), %
   \theschool(\option{/novathesis/copyrightlang}), \theuniversity(\option{/novathesis/copyrightlang}).\\%
@@ -2169,6 +2170,7 @@
   % otherwise use memoir subfigures
   \@ifpackageloaded{subcaption}{}{\newsubfloat{figure}}
   \makeatother
+  \newcommand{\@ntcite}[1]{\ifdef{\parencite}{\parencite{#1}}{\cite{#1}}}
 }
 
 \ifxetexorluatex  % xelatex or lualatex
