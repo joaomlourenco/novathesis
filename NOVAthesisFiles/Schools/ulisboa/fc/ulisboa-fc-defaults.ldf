@@ -142,13 +142,13 @@
 % PhD Title of Dissertation
 \ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.2cm, height=2cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{17}{17}\selectfont%
-  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
+  \textbf{\thedoctitle(\option{/novathesis/coverlang},cover)}%
 }
 
 % MSc Title of Dissertation
 \ntaddtocover[degree=msc/mscplan, vspace=2.0cm, height=2cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{17}{17}\selectfont%
-  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
+  \textbf{\thedoctitle(\option{/novathesis/coverlang},cover)}%
 }
 
 % Doc Status

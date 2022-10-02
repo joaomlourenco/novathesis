@@ -76,7 +76,7 @@
 \ntaddtocover[vspace=6.5cm, height=4cm, inalign=t]{1-1}{%
     \centering%
     \fontsize{15}{15}\selectfont%
-    \thedoctitle(\option{/novathesis/coverlang},main,cover,caps)\\[1ex]%
+    \thedoctitle(\option{/novathesis/coverlang},cover,caps)\\[1ex]%
     \fontsize{12}{12}\selectfont%
     Dissertação%
 }
@@ -85,8 +85,8 @@
 \ntaddtocover[vspace=6.5cm, height=4cm, inalign=t]{2-1}{%
     \centering%
     \fontsize{15}{15}\selectfont\scshape%
-    \thedoctitle(\option{/novathesis/coverlang},main,cover)\\[1ex]%
-    \thedoctitle(en,main,cover)%
+    \thedoctitle(\option{/novathesis/coverlang},cover)\\[1ex]%
+    \thedoctitle(en,cover)%
 }
 
 % Advisers 2
@@ -139,8 +139,8 @@
 %   % \fontseries{mc}
 %   \fontsize{15}{15}\selectfont
 %   \scshape
-%   \thedoctitle(\option{/novathesis/coverlang},main,cover)\\[1ex]
-%   \thedoctitle(\option{/novathesis/coverlang},main,cover)[en]
+%   \thedoctitle(\option{/novathesis/coverlang},cover)\\[1ex]
+%   \thedoctitle(\option{/novathesis/coverlang},cover)[en]
 % }
 %
 % % Author name

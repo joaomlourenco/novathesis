@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-05-16 [6.10.6]
+%% Version 2022-05-16 [6.10.7]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -773,31 +773,25 @@
 
 % --------------------------------------------------------
 % Title
-\def\nttitle(#1)#2{\@nttitle@aux(#1,){#2}}
-\def\@nttitle@aux(#1,#2)#3{%
-  % \typeout{NT @nttitleaux [#1] [#2] [#3]}%
-  \IfStrEq{#2}{}{\def\@ntlang{\option{/novathesis/coverlang}}}{\StrGobbleRight{#2}{1}[\@ntlang]}%
-  \@nttitle{\@ntlang}{#1}{#3}%
-}
-\newcommand{\replacelinebreakwithspace}[2]{%
-      {\def\\{\ }\csxdef{#2}{#1}}%
-}
-\newcommand*{\@nttitle}[3]{%
-  % #1 = lang
-  % #2 = type (main, sub, spine) title
+\def\nttitle(#1,#2)#3{%
+  % #1 = type (main, sub, spine) title
+  % #2 = lang
   % #3 = value
-  \replacelinebreakwithspace{#3}{@nttitle#2}
-  \doctitle(#1,#2):={\csuse{@nttitle#2}}%
-  \doctitle(#1,#2,caps):={\expandafter\MakeUppercase\expandafter{\csuse{@nttitle#2}}}%
-  \IfStrEq{#2}{main}{%
-    \doctitle(#1,#2,cover):={#3}%
-    \doctitle(#1,#2,cover,caps):={\expandafter\MakeUppercase\expandafter{#3}}%
-    \ifdatadefined{doctitle}(#1,spine){}{%
-      \doctitle(#1,spine):={\csuse{@nttitle#2}}%
-      \doctitle(#1,spine,caps):={\expandafter\MakeUppercase%
-                                 \expandafter{\csuse{@nttitle#2}}}%
-    }%
+  \typeout{NT TITLE [#1] [#2] [#3]}%
+  \doctitle(#2,#1)={\ntnolinebreak{#3}}%
+  \doctitle(#2,#1,caps)={\ntnolinebreak%
+                                  {\expandafter\MakeUppercase\expandafter{#3}}}%
+  \IfStrEq{#1}{main}{%
+    \doctitle(#2,cover)={#3}%
+    \doctitle(#2,cover,caps)={\expandafter\MakeUppercase\expandafter{#3}}%
+    \doctitle(#2,spine)={\ntnolinebreak{#3}}%
+    \doctitle(#2,spine,caps)={\ntnolinebreak%
+                                    {\expandafter\MakeUppercase\expandafter{#3}}}%
   }{}%
+}
+
+\newcommand{\ntnolinebreak}[1]{%
+      {\def\\{\ }#1}%
 }
 % --------------------------------------------------------
 
