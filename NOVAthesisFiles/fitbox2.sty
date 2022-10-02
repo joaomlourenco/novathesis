@@ -8,17 +8,19 @@
   % #2 = width
   % #3 = height
   % #4 = text
-  \@tempdima#3
-  \edef\@wd{\strip@pt\dimexpr#2\relax}
-  \@temptokena={\mbox{#4}}
-  \setbox0=\hbox{\the\@temptokena}
-  \@tempdimb=\dimexpr\ht0+\dp0\relax
-  \FPdiv\vr@tio{\strip@pt\@tempdima}{\strip@pt\@tempdimb}
-  \@tempdimc=\dimexpr\wd0\relax
-  \FPdiv\hr@tio{\@wd}{\strip@pt\@tempdimc}
-  \FPmin\r@tio{\hr@tio}{\vr@tio}
-  \def#1{\r@tio}
-  \ignorespaces
+  \@tempdima#3%
+  \edef\@wd{\strip@pt\dimexpr#2\relax}%
+  \@temptokena={\mbox{#4}}%
+  \setbox0=\hbox{\the\@temptokena}%
+  \@tempdimb=\dimexpr\ht0+\dp0\relax%
+  \typeout{SPINE DIV1 [{\strip@pt\@tempdima}] [{\strip@pt\@tempdimb}]}%
+  \FPdiv\vr@tio{\strip@pt\@tempdima}{\strip@pt\@tempdimb}%
+  \@tempdimc=\dimexpr\wd0\relax%
+  \FPdiv\hr@tio{\@wd}{\strip@pt\@tempdimc}%
+  \typeout{SPINE DIV2 [{\@wd}] [{\strip@pt\@tempdimc}]}%
+  \FPmin\r@tio{\hr@tio}{\vr@tio}%
+  \def#1{\r@tio}%
+  \ignorespaces%
 }
 
 \newcommand{\fitboxprint}[2]{%
@@ -26,25 +28,25 @@
 }
 
 \newcommand{\fitboxmin}[2]{%
-  \gdef#1{99999999}
+  \gdef#1{99999999}%
   \@for\@fbx:={#2}\do{%
-    \FPmin#1{\@fbx}{#1}
-  }
+    \FPmin#1{\@fbx}{#1}%
+  }%
 }
 
 \newcommand{\fitbox}[3]{%
   % #1 = width
   % #2 = height
   % #3 = text
-  \@tempdima#2
-  \edef\@wd{\strip@pt\dimexpr#1\relax}
-  \@temptokena={\mbox{#3}}
-  \setbox0=\hbox{\the\@temptokena}
-  \@tempdimb=\dimexpr\ht0+\dp0\relax
-  \FPdiv\vr@tio{\strip@pt\@tempdima}{\strip@pt\@tempdimb}
-  \@tempdimc=\dimexpr\wd0\relax
-  \FPdiv\hr@tio{\@wd}{\strip@pt\@tempdimc}
-  \FPmin\r@tio{\hr@tio}{\vr@tio}
-  \setbox0=\hbox{\scalebox{\r@tio}{#3}}
-  \box0
+  \@tempdima#2%
+  \edef\@wd{\strip@pt\dimexpr#1\relax}%
+  \@temptokena={\mbox{#3}}%
+  \setbox0=\hbox{\the\@temptokena}%
+  \@tempdimb=\dimexpr\ht0+\dp0\relax%
+  \FPdiv\vr@tio{\strip@pt\@tempdima}{\strip@pt\@tempdimb}%
+  \@tempdimc=\dimexpr\wd0\relax%
+  \FPdiv\hr@tio{\@wd}{\strip@pt\@tempdimc}%
+  \FPmin\r@tio{\hr@tio}{\vr@tio}%
+  \setbox0=\hbox{\scalebox{\r@tio}{#3}}%
+  \box0%
 }

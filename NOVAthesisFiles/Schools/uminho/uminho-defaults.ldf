@@ -228,7 +228,7 @@
 \ntaddtocover[vspace=0.8cm,align=l,height=7.5cm,inalign=t]{1-1,2-1}{%
   \fontsize{17pt}{20.4bp}\selectfont%
   \addfontfeature{LetterSpace=2.9}%
-  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}
+  \textbf{\thedoctitle(\option{/novathesis/coverlang},cover)}
 }
 
 % Degree info

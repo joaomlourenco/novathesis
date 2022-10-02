@@ -22,10 +22,10 @@
 \AtBeginDocument{%
   \optionlistdo{/@nt/langsshort}{%
     \options{/@nt/langshorttolong=#1}%
-    \typeout{KEY(#1/\option{/@nt/langshorttolong})}%
+    % \typeout{KEY(#1/\option{/@nt/langshorttolong})}%
     \optionlistdo{/novathesis/babel/#1/keys}{%
-      \typeout{KEY(#1)=[##1=\option{/novathesis/babel/#1/##1}]}%
-      \typeout{KEY SET2 (#1/##1)=[\option{/novathesis/babel/#1/##1}]}%
+      % \typeout{KEY(#1)=[##1=\option{/novathesis/babel/#1/##1}]}%
+      % \typeout{KEY SET2 (#1/##1)=[\option{/novathesis/babel/#1/##1}]}%
       \expandnextsingle\addto{\csname captions\option{/@nt/langshorttolong}\endcsname}%
             {\csdef{##1}{\option{/novathesis/babel/#1/##1}}}%
     }%
@@ -36,7 +36,7 @@
 \newcommand{\ntlangsetup}{\@ifstar{\ntlangsetupifndef}{\ntlangsetupdef}}
 \newcommand{\ntlangsetupdef}[1]{%
   \mysplit#1\@nil{\@ntslang}{\@ntskey}{\@ntsval}%
-  \typeout{KEY SET DEF (/novathesis/babel/\@ntslang/\@ntskey)=[\@ntsval]}%
+  % \typeout{KEY SET DEF (/novathesis/babel/\@ntslang/\@ntskey)=[\@ntsval]}%
   \ifoptiondefined{/novathesis/babel/\@ntslang/\@ntskey}{%
     \option@undef{/novathesis/babel/\@ntslang/\@ntskey}%
   }{%
@@ -47,7 +47,7 @@
 \newcommand{\ntlangsetupifndef}[1]{%
   \mysplit#1\@nil{\@ntslang}{\@ntskey}{\@ntsval}%
   \ifoptioncontains{/novathesis/babel/\@ntslang/keys/.expanded}{\@ntskey}{}{%
-    \typeout{KEY SET IFNDEF (/novathesis/babel/\@ntslang/\@ntskey)=[\@ntsval]}%
+    % \typeout{KEY SET IFNDEF (/novathesis/babel/\@ntslang/\@ntskey)=[\@ntsval]}%
     \options{/novathesis/babel/\@ntslang/keys/.expanded/.cpush = \@ntskey}%
     \options{/novathesis/babel/\@ntslang/\@ntskey/.expanded/.new value = \@ntsval}%
   }

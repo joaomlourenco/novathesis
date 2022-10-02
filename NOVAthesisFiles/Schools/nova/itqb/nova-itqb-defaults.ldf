@@ -227,7 +227,7 @@
     \node [inner sep=0pt, anchor=south west, yshift=-\@nt@margin@top-36.5mm] 
                     {\fontsize{18}{18}\selectfont%
                      \parbox{\dimexpr\paperwidth-\@nt@margin@left-\@nt@margin@right}%
-                            {\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}};
+                            {\textbf{\thedoctitle(\option{/novathesis/coverlang},cover)}}};
     % Subtitle
     \node [inner sep=0pt, anchor=north west, yshift=-\@nt@margin@top-42mm] 
                     {\fontsize{21}{21}\selectfont%
