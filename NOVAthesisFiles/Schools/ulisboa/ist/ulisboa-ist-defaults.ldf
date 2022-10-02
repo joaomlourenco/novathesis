@@ -113,7 +113,7 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{18}{20}\selectfont%
-  \textbf{\thedoctitle(\option{/novathesis/coverlang},cover)}%
+  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
 }
 
 % Author name

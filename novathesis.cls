@@ -102,8 +102,7 @@
 \newcommand{\ifxeorlua}{\ifthenelse{\boolean{luatex}\OR\boolean{xetex}}}
 \newcommand{\ifxetexorluatex}{\iftutex}
 
-\ifxetexorluatex
-\else% pdflatex
+\ifxetexorluatex\else% pdflatex
   %%%%% Configure font encoding
   \RequirePackage[T1]{fontenc}    % Use new T1 fonts
 
@@ -117,20 +116,11 @@
 
 % --------------------------------------------------------
 % The NOVAthesis logo
-\newlength{\@novathesisheight}
-\newcommand{\novathesis}{\settoheight{\@novathesisheight}{X}\includegraphics[height=1.17\@novathesisheight,vshift=-0.35pt]{NOVAthesisFiles/Images/novathesis-text}}
+\newcommand{\novathesis}{\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{NOVAthesisFiles/Images/novathesis-text}}
 
 % --------------------------------------------------------
 % Define something (except counters) if undefined
 \newcommand*{\defifundef}[2]{\ifundef{#1}{#2{#1}}{}}
-\newcommand*{\csdefifundef}[2]{\ifcsname#1\endcsname\else\expandafter\def\csname#2\endcsname{#1}\fi}
-
-% --------------------------------------------------------
-% If necessary create, then initialize the counter
-\newcommand*{\setnewcounter}[2]{%
-  \ifcsname c@#1\endcsname\else\newcounter{#1}\fi%
-  \setcounter{#1}{#2}%
-}
 
 % --------------------------------------------------------
 % Variant of \@for with an optional final argument, that is 
@@ -202,44 +192,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ifdefined\NewDocumentCommand\else\RequirePackage{xparse}\fi   % load xparse if necessary
 
-\ExplSyntaxOn
-% \NewExpandableDocumentCommand{\compareStrings}{mm}
-%  {
-%   \str_if_eq:eeTF { \str_lower_case:f { #1 } } { \str_lower_case:f { #2 } }
-%    { \equalStrings{#1}{#2} }
-%    { \differentStrings{#1}{#2} }
-% }
-\NewDocumentCommand{\xStrCut}{smmmm}
- {
-  % #1 = optional *
-  % #2 = tokens
-  % #3 = separator where to split at
-  % #4 = macro where to store the first part
-  % #5 = macro where to store the second part
-  \IfBooleanTF{#1}
-   {
-    \novathesis_xstrcut:VnNN #2 { #3 } #4 #5
-   }
-   {
-    \novathesis_xstrcut:nnNN { #2 } { #3 } #4 #5
-   }
- }
-
-\seq_new:N \l_novathesis_strcut_parts_seq
-\tl_new:N \l_novathesis_strcut_head_tl
-\tl_new:N \l_novathesis_strcut_tail_tl
-
-\cs_new_protected:Nn \novathesis_xstrcut:nnNN
- {
-  \tl_if_exist:NF #3 { \tl_new:N #3 }
-  \tl_if_exist:NF #4 { \tl_new:N #4 }
-  \seq_set_split:Nnn \l_novathesis_strcut_parts_seq { #2 } { #1 }
-  \seq_pop_left:NN \l_novathesis_strcut_parts_seq #3
-  \tl_set:Nx #4 { \seq_use:Nn \l_novathesis_strcut_parts_seq { #2 } }
- }
-\cs_generate_variant:Nn \novathesis_xstrcut:nnNN { V }
-\ExplSyntaxOff
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE FOLDERS PER CLASS
@@ -271,7 +223,7 @@
   , class/main/.new list={phd, msc, bsc}
 }
 
-\newcommand{\@ifdocclass@ii}[2]{%
+\newcommand{\@ifdocclasscontain}[2]{%
   % #1=document type
   % %2=possible document calss 
   \ifoptioncontains{/@nt/document/class/#1}{#2}%
@@ -279,47 +231,39 @@
 
 % --------------------------------------------------------
 % Check if the document is of a specific class, i.e., bsc, msc, phd or main
-\newcommand{\ifmaindoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{main}{#1}}
-\newcommand{\ifphddoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{phd}{#1}}
-\newcommand{\ifmscdoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{msc}{#1}}
-\newcommand{\ifbscdoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{bsc}{#1}}
-\newcommand{\ifplaindoc}[1][\option{/novathesis/docdegree}]{\@ifdocclass@ii{plain}{#1}}
+\newcommand{\ifdoctype}[2][\option{/novathesis/docdegree}]{\ifoptioncontains{/@nt/document/class/#1}{#2}}
+\newcommand{\ifmaindoc}[1][\option{/novathesis/docdegree}]{\ifdoctype[#1]{main}}
+\newcommand{\ifphddoc}[1][\option{/novathesis/docdegree}]{\ifdoctype[#1]{phd}}
+\newcommand{\ifmscdoc}[1][\option{/novathesis/docdegree}]{\ifdoctype[#1]{msc}}
+\newcommand{\ifbscdoc}[1][\option{/novathesis/docdegree}]{\ifdoctype[#1]{bsc}}
+\newcommand{\ifplaindoc}[1][\option{/novathesis/docdegree}]{\ifdoctype[#1]{plain}}
 
-\newcommand{\ifdocfinal}{\ifoptionequal{/novathesis/docstatus}{final}}
-\newcommand{\ifdocprovisional}{\ifoptionequal{/novathesis/docstatus}{provisional}}
-\newcommand{\ifdocworking}{\ifoptionequal{/novathesis/docstatus}{working}}
-\newcommand{\ifdocunset}{\ifoptionequal{/novathesis/docstatus}{unset}}
+\newcommand{\ifdocstatus}[1]{\ifoptionequal{/novathesis/docstatus}{#1}}
+\newcommand{\ifdocfinal}{\ifdocstatus{final}}
+\newcommand{\ifdocprovisional}{\ifdocstatus{provisional}}
+\newcommand{\ifdocworking}{\ifdocstatus{working}}
+\newcommand{\ifdocunset}{\ifdocstatus{unset}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE PERSON LISTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\ntaddperson#1(#2){%
-  % syntax: \ntaddperson{class}[key]{name}
-  % See "\@ntaddperson@iv" below
-  \StrCount{#2}{,}[\@nt@ncommas]%
-  \IfStrEq{\@nt@ncommas}{1}{}{%
-    \ClassError{novathesis}{Invalid role or gender in \string\ntaddperson{#2}}%
-                           {Please see file “3_cover.tex” for the correct syntax.}%
-  }%
-  \@ntaddperson@iv{#1}(#2)%
-}
-
-\def\@ntaddperson@iv#1(#2,#3)#4{%
+\def\ntaddperson#1(#2,#3)#4{%
   % syntax: \ntaddperson{class}[key,gender]{filename}
   % #1=adviser | committee
   % #2={a,c}            {c,r,a,m,g}
   %     a=adviser        c=chair
   %     c=coadviser      r=rapporteur/referee
   %                      a=adviser
+  %                      ca=adviser
   %                      m=other members
   %                      g=guests
   % #3={m,f}
   % #4={person name, position, etc}
-  \xStrCut{#4}{,}\@nt@personname\@nt@dummy%
+  \StrCut{#4}{,}\@nt@personname\@nt@dummy%was xStrCut
   \options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
   \options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
-  \options{/@nt/#1/#2/gender/.expanded/.cpush={#3}}%
+  \options{/@nt/#1/#2/gender/.cpush={#3}}%
   % \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
 }
 
@@ -384,8 +328,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ASSOCARRAY
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\@nt@undefined}[1][]{\embrace{#1 \thenotdefined(\option{/novathesis/mainlang})}}
-
 \newcommand*{\initmemory}[2][\embrace{\thenotdefined(\option{/novathesis/coverlang})}]{%
   \optionlistdo{/@nt/langsshort}{%
     \csuse{#2}(##1):={#1}%
@@ -415,7 +357,7 @@
 \newdata{keywordspre}
 \newdata{keywordspost}
 % \newdata{keywordsboxlen}
-\newdata{keywordsstring}
+\newdata{keywordsname}
 \newdata{keywordsstringpre}
 \newdata{keywordsstringpost}
 \newdata{keywordsstringprefix}
@@ -781,12 +723,11 @@
   \doctitle(#2,#1)={\ntnolinebreak{#3}}%
   \doctitle(#2,#1,caps)={\ntnolinebreak%
                                   {\expandafter\MakeUppercase\expandafter{#3}}}%
+  \doctitle(#2,#1,cover)={#3}%
+  \doctitle(#2,#1,cover,caps)={\expandafter\MakeUppercase\expandafter{#3}}%
   \IfStrEq{#1}{main}{%
-    \doctitle(#2,cover)={#3}%
-    \doctitle(#2,cover,caps)={\expandafter\MakeUppercase\expandafter{#3}}%
     \doctitle(#2,spine)={\ntnolinebreak{#3}}%
-    \doctitle(#2,spine,caps)={\ntnolinebreak%
-                                    {\expandafter\MakeUppercase\expandafter{#3}}}%
+    \doctitle(#2,spine,caps)={\ntnolinebreak{\expandafter\MakeUppercase\expandafter{#3}}}%
   }{}%
 }
 
@@ -800,8 +741,8 @@
 %============================================================
 % Date and month
 \newdata{ntdocdate}
-\ntdocdate(year):={\@nt@undefined[Year]}
-\ntdocdate(month):={\@nt@undefined[month]}
+\ntdocdate(year):={Year}
+\ntdocdate(month):={month}
 
 \def\ntdate#1{\@ntdate@i(#1,)}
 \def\@ntdate@i(#1,#2){%
@@ -815,10 +756,10 @@
 %============================================================
 % Author identification
 \newdata{docauthor}
-\docauthor(name):={\@nt@undefined[Author Name]}
-\docauthor(name,short):={\@nt@undefined[Author Short Name]}
-\docauthor(gender):={\@nt@undefined[Author Gender]}
-\docauthor(degree,\option{/novathesis/coverlang}):={\@nt@undefined[Author Previous Degree]}
+\docauthor(name):={Author Name}
+\docauthor(name,short):={Author Short Name}
+\docauthor(gender):={Author Gender}
+\docauthor(degree,\option{/novathesis/coverlang}):={Author Previous Degree}
 
 \def\ntauthorname(#1)#2#3{% [m|f]{Long name}{Short name}
   \docauthor(gender):={#1}%
@@ -1905,7 +1846,7 @@
 % \def\option@listmatch@getval#1=#2{#2}
 \newcommand*{\option@listmatch}[2]{
   % \typeout{NT LISTMATCH [#1] [#2]}%
-  \xStrCut{#2}{=}\option@listmatch@key\option@listmatch@value%
+  \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%was xStrCut
   % \typeout{K=\option@listmatch@key ~V=\option@listmatch@value}%
   \IfStrEq{#1}{\option@listmatch@key}{\listbreak}{}%
 }%

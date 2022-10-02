@@ -124,10 +124,10 @@ for the degree of \emph{\thedegreename(en)}}
   \preto{\chapterheadstart}{%
     \noindent\begin{minipage}[t][0pt][t]{\textwidth}
       \begin{center}%
-        \textbf{\Large\thedoctitle(\option{/@nt/currentlang},cover,caps)}%
-        \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
+        \textbf{\Large\thedoctitle(\option{/@nt/currentlang},main,cover,caps)}%
+        \ifdatadefined{doctitle}(\option{/novathesis/coverlang}-sub,cover){%
           \\[6mm]%
-          \textbf{\Large\thedoctitle(\option{/@nt/currentlang},sub,cover)}%
+          \textbf{\Large\thedoctitle(\option{/@nt/currentlang}-sub,cover)}%
         }{}%
       \end{center}%
     \end{minipage}%
@@ -180,11 +180,11 @@ for the degree of \emph{\thedegreename(en)}}
 % Title of Dissertation
 \ntaddtocover[vspace=0mm,height=7.4cm,align=l,inalign=b]{1-1}{%
     \fontsize{18}{18}\selectfont
-    \bfseries\itshape\thedoctitle(\option{/novathesis/coverlang},cover,caps)%
-    \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
+    \bfseries\itshape\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)%
+    \ifdatadefined{doctitle}(\option{/novathesis/coverlang}-sub,cover){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
-      \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover)}%
+      \textbf{\thedoctitle(\option{/novathesis/coverlang}-sub,cover)}%
     }{}%
 }
 
@@ -233,11 +233,11 @@ for the degree of \emph{\thedegreename(en)}}
 \ntaddtocover[vspace=2cm]{2-1}{%
     \centering%
     \fontsize{16}{16}\selectfont
-    \bfseries\thedoctitle(\option{/novathesis/coverlang},cover,caps)%
-    \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
+    \bfseries\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)%
+    \ifdatadefined{doctitle}(\option{/novathesis/coverlang}-sub,cover){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
-      \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover)}%
+      \textbf{\thedoctitle(\option{/novathesis/coverlang}-sub,cover)}%
     }{}%
 }
 
