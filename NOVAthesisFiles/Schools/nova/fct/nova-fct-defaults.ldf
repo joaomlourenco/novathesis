@@ -131,11 +131,11 @@
 \ntaddtocover[vspace=5.3cm,align=l,height=3.0cm,inalign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{22}{21}\selectfont%
-    \textbf{\thedoctitle(\option{/novathesis/coverlang},cover,caps)}%
-    \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,caps){%
+    \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
+    \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
-      \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,caps)}%
+      \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover,caps)}%
     }{}%
   }{%
     \fontsize{17}{17}\selectfont%
@@ -154,11 +154,11 @@
     \thedocauthor(degree,\option{/novathesis/coverlang})%
   }{%
     \fontsize{22}{21}\selectfont%
-    \textbf{\thedoctitle(\option{/novathesis/coverlang},cover,caps)}%
-    \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,caps){%
+    \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
+    \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
-      \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,caps)}%
+      \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover,caps)}%
     }{}%
   }%
 }
@@ -202,11 +202,11 @@
 % Title of Dissertation (PhD)
 \ntaddtocover[vspace=3cm,align=l]{2-1}{%
   \fontsize{17}{17}\selectfont%
-  \textbf{\thedoctitle(\option{/novathesis/coverlang},cover,caps)}%
-  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,caps){%
+  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
+  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
     \\[4mm]%
     \fontsize{12}{12}\selectfont%
-    \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,caps)}%
+    \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover,caps)}%
   }{}%
 }
 

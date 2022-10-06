@@ -245,7 +245,7 @@
 % DISSERTATION TITLE
 \ntaddtocover[align=l, vspace=1.8cm, degree=phd]{1-1}{%
   \fontsize{16}{16}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},cover)}}%
+  \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
 }
 
 % AUTHOR NAME
@@ -292,8 +292,8 @@
 % % Title of Dissertation
 \ntaddtocover[align=l, vspace=1, degree=msc]{1-1}{%
   \fontsize{17}{17}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},cover,caps)}}\\[0.25ex]%
-  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,caps){%
+  \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}}\\[0.25ex]%
+  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
     ~\\[-1.5ex]%
     \textcolor{imsmidgrey}{
       \fontsize{15}{15}\selectfont%
@@ -325,7 +325,7 @@
 
 \ntaddtocover[align=c, vspace=1]{2-1}{%
   \fontsize{16}{16}\selectfont%
-  \textbf{\thedoctitle(\option{/novathesis/coverlang},cover,caps)}%
+  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
 }
 
 \ntaddtocover[align=c, vspace=1]{2-1}{%
