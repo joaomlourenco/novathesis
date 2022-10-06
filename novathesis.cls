@@ -231,7 +231,7 @@
 
 % --------------------------------------------------------
 % Check if the document is of a specific class, i.e., bsc, msc, phd or main
-\newcommand{\ifdoctype}[2][\option{/novathesis/docdegree}]{\ifoptioncontains{/@nt/document/class/#1}{#2}}
+\newcommand{\ifdoctype}[2][\option{/novathesis/docdegree}]{\ifoptioncontains{/@nt/document/class/#2}{#1}}
 \newcommand{\ifmaindoc}[1][\option{/novathesis/docdegree}]{\ifdoctype[#1]{main}}
 \newcommand{\ifphddoc}[1][\option{/novathesis/docdegree}]{\ifdoctype[#1]{phd}}
 \newcommand{\ifmscdoc}[1][\option{/novathesis/docdegree}]{\ifdoctype[#1]{msc}}
@@ -719,7 +719,7 @@
   % #1 = type (main, sub, spine) title
   % #2 = lang
   % #3 = value
-  \typeout{NT TITLE [#1] [#2] [#3]}%
+  % \typeout{NT TITLE [#1] [#2] [#3]}%
   \doctitle(#2,#1)={\ntnolinebreak{#3}}%
   \doctitle(#2,#1,caps)={\ntnolinebreak%
                                   {\expandafter\MakeUppercase\expandafter{#3}}}%
@@ -832,9 +832,9 @@
 
 \newcommand*{\ntprintlist}[1]{%
   \optionlistdo{#1}{%
-    \ifdefmacro{##1}{##1}{%
-      \ifcsmacro{ntprint##1}{\NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}}{%
-        \ifcsmacro{##1}{\NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}}{\ClassError{novathesis}{Invalid contents for frontmatter or mainmatter}{}}%
+    \ifdefmacro{##1}{\typeout{NTP macro \string##1}##1}{%
+      \ifcsmacro{ntprint##1}{\typeout{NTP ntprint##1}\NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}}{%
+        \ifcsmacro{##1}{\typeout{NTP csmacro ##1}\NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}}{\ClassError{novathesis}{Invalid contents for frontmatter or mainmatter: [##1]}{}}%
   }}\clearforchapter}%
 }
 
@@ -844,15 +844,17 @@
   \option@setlist[;]{/@nt/print/#1}{#2}%
 }
 
-\newcommand*{\ntremovefromprintorder}[2]{%
-% #1 = frontmatter, mainmatter
-% #2 =single item to remove
-  \@for\@nt@item:=#2\do{\options{/@nt/print/#1/.remove = {\@nt@item}}}%
-}
+% \newcommand*{\ntremovefromprintorder}[2]{%
+% % #1 = frontmatter, mainmatter
+% % #2 =single item to remove
+%   \@for\@nt@item:=#2\do{\options{/@nt/print/#1/.remove = {\@nt@item}}}%
+% }
 
 % --------------------------------------------------------
 % DEFAULT VALUES FOR frontmatter AND mainmatter
-\ntsetprintorder{frontmatter}{
+\newdata{printorder}
+
+\printorder(frontmatter,final):={%
   statement;       % The statement page
   copyright;       % (*) The copyright page
   dedicatory;      % (*) Print the dedicatory
@@ -862,6 +864,25 @@
   alllistof;       % Print all the listof defined in “6_list_of.tex”
   printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
 }
+
+\printorder(frontmatter,provisional):={%
+  statement;       % The statement page
+  copyright;       % (*) The copyright page
+  dedicatory;      % (*) Print the dedicatory
+  acknowledgements;% (*) Print the acknowledgments
+  quote;           % (*) Print the quote
+  abstracts;       % Print abstracts in multiple languages.
+  alllistof;       % Print all the listof defined in “6_list_of.tex”
+  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+}
+
+\printorder(frontmatter,working):={%
+  abstracts;       % Print abstracts in multiple languages.
+  alllistof;       % Print all the listof defined in “6_list_of.tex”
+  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+}
+
+\ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\option{/novathesis/docstatus})}}%
 
 \ifoptionequal{/novathesis/webography}{}{%
   \ntsetprintorder{mainmatter}{
@@ -997,10 +1018,9 @@
 
 \ifdocunset{\ntsetup{docstatus=working}}{}
 \ifoptionequal{/novathesis/spine}{unset}
-          {\ifdocworking{\ntsetup{spine=no}}{\ifmaindoc{\ntsetup{spine=trim}}{\ntsetup{spine=no}}}}
+          {\ifdoctype{working}{\ntsetup{spine=no}}{\ifmaindoc{\ntsetup{spine=trim}}{\ntsetup{spine=no}}}}
           {}
 \ifdocfinal{\ntsetup{printcommittee=true}}{}
-\ifdocworking{\ntremovefromprintorder{frontmatter}{statement,copyright,dedicatory,acknowledgements,quote}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING ADDITINAL FILES AFTER LOADING MEMOIR
