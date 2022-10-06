@@ -13,11 +13,11 @@
   \@temptokena={\mbox{#4}}%
   \setbox0=\hbox{\the\@temptokena}%
   \@tempdimb=\dimexpr\ht0+\dp0\relax%
-  \typeout{SPINE DIV1 [{\strip@pt\@tempdima}] [{\strip@pt\@tempdimb}]}%
+  % \typeout{SPINE DIV1 [{\strip@pt\@tempdima}] [{\strip@pt\@tempdimb}]}%
   \FPdiv\vr@tio{\strip@pt\@tempdima}{\strip@pt\@tempdimb}%
   \@tempdimc=\dimexpr\wd0\relax%
   \FPdiv\hr@tio{\@wd}{\strip@pt\@tempdimc}%
-  \typeout{SPINE DIV2 [{\@wd}] [{\strip@pt\@tempdimc}]}%
+  % \typeout{SPINE DIV2 [{\@wd}] [{\strip@pt\@tempdimc}]}%
   \FPmin\r@tio{\hr@tio}{\vr@tio}%
   \def#1{\r@tio}%
   \ignorespaces%
