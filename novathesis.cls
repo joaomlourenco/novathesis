@@ -961,6 +961,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % --------------------------------------------------------
 % LOAD MAIN CLASS AND ADDITIONAL PACKAGES
+\undef{\stockwidth}
+\undef{\stockheight}
 \LoadClass{memoir}
 \OnehalfSpacing% One-and-half spacing
 
