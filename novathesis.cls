@@ -2045,6 +2045,11 @@
 % Text style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\ifxetexorluatex  % xelatex or lualatex
+  \RequirePackage{fontspec}%
+  \defaultfontfeatures{Ligatures=TeX}
+\fi
+
 \InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.ldf}{}{%
   \ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/chapstyle}}{}%
 }
@@ -2069,8 +2074,3 @@
   \makeatother
   \newcommand{\@ntcite}[1]{\ifdef{\parencite}{\parencite{#1}}{\cite{#1}}}
 }
-
-\ifxetexorluatex  % xelatex or lualatex
-  \RequirePackage{fontspec}%
-  \defaultfontfeatures{Ligatures=TeX}
-\fi
