@@ -1,18 +1,22 @@
-SILENT = -silent
-SYNCTEX = 1
+SILENT:=-silent
+SYNCTEX:=1
 
-B = template
-F = -time -shell-escape -synctex=$(SYNCTEX) $(FLAGS)
-T = $(B).pdf
-S = $(B).tex
-L = latexmk $(F)
-V = open -a skim
+B:=template
+F:=-time -shell-escape -synctex=$(SYNCTEX) $(FLAGS)
+T:=$(B).pdf
+S:=$(B).tex
+L:=latexmk $(F)
+V:=open -a skim
 
-AUXFILES=$(shell ls $(B)*.* | fgrep -v .tex | fgrep -v $(B).pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
+ZIPFILES:=NOVAthesisFiles Bibliography Config Chapters LICENSE Makefile novathesis.cls README.md .gitignore template.tex latexmkrc
+VERSION:=$(shell cat NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
+ZIPTARGET:=$(B)-$(VERSION).zip
+AUXFILES:=$(shell ls $(B)*.* | fgrep -v .tex | fgrep -v $(B).pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
+
+
 
 
 default: pdf
-
 
 $(T): $(S)
 	$(MAKE)
@@ -36,6 +40,11 @@ verb verbose:
 .PHONY: 2019 2020
 2019 2020 2021:
 	PATH="/usr/local/texlive/$@/bin/x86_64-darwin/:$(PATH)" $(L) $(X) $(SILENT) $(B)
+
+.PHONY: zip
+zip:
+	rm -f "$(ZIPTARGET)"
+	zip -r "$(ZIPTARGET)" $(ZIPFILES) 
 
 .PHONY: clean
 clean:
