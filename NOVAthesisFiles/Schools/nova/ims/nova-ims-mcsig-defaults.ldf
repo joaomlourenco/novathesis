@@ -37,25 +37,38 @@
 \ntsetup{printcopyright=false}
 \ntbibsetup{style=apa}
 \AtEndPreamble{\let\cite\parencite}
-\ntremovefromprintorder{frontmatter}{copyright,dedicatory,quote}
 \abstractorder(pt):={pt,en}
 \abstractorder(en):={pt,en}
 
-% \keywordsenvpre()={}
-% \keywordsenvpost()={}
+
+\printorder(frontmatter,final):={%
+  statement;       % The statement page
+  acknowledgements;% (*) Print the acknowledgments
+  abstracts;       % Print abstracts in multiple languages.
+  alllistof;       % Print all the listof defined in “6_list_of.tex”
+  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+}
+
+\printorder(frontmatter,provisional):={%
+  statement;       % The statement page
+  acknowledgements;% (*) Print the acknowledgments
+  abstracts;       % Print abstracts in multiple languages.
+  alllistof;       % Print all the listof defined in “6_list_of.tex”
+  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+}
+
+
 \keywordsblockpre()={\mbox{}\\[1cm]}
 \keywordsblockpost()={}
-% \keywordsblocksuffix()={\\[\parskip]}
-\keywordsstringpre()={\begin{center}}
-\keywordsstringpost()={\end{center}}
-% \keywordstringpre()={&}
+\keywordsstringprefix()={\begin{center}}
+\keywordsstringsuffix()={\end{center}}
 \keywordsstringfont()={\bfseries\Large}
-\keywordsstringsuffix()={}
-\keywordspost()={\\[1ex]}
+\keywordsstringsuffix()={\\[1ex]}
+\keywordssep()={\\[1ex]}
 
-\NTAddToHook{keywords/pt/pre}{\options{/@nt/kwprint = {}}}
-\NTAddToHook{keywords/en/pre}
-            {\options{/@nt/kwprint = \theabstractorder(\option{/@nt/currentlang})}\clearpage}
+% \NTAddToHook{keywords/pt/pre}{\options{/@nt/kwprint = {}}}
+% \NTAddToHook{keywords/en/pre}
+%             {\options{/@nt/kwprint = \theabstractorder(\option{/@nt/currentlang})}\clearpage}
 
 \NTAddToHook{list_of/post}{
   \options{/@nt/list/listof = {}}

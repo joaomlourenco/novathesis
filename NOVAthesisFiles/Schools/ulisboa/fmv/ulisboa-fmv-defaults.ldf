@@ -16,8 +16,26 @@
 \definecolor{fmvyellow}{RGB}{253,241,81}
 \definecolor{lightyellow}{RGB}{254,254,230}
 \ntbibsetup{style=apa}
-\ntremovefromprintorder{frontmatter}{statement,copyright}
 \AtEndPreamble{\let\cite\parencite}
+
+
+\printorder(frontmatter,final):={%
+  dedicatory;      % (*) Print the dedicatory
+  acknowledgements;% (*) Print the acknowledgments
+  quote;           % (*) Print the quote
+  abstracts;       % Print abstracts in multiple languages.
+  alllistof;       % Print all the listof defined in “6_list_of.tex”
+  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+}
+
+\printorder(frontmatter,provisional):={%
+  dedicatory;      % (*) Print the dedicatory
+  acknowledgements;% (*) Print the acknowledgments
+  quote;           % (*) Print the quote
+  abstracts;       % Print abstracts in multiple languages.
+  alllistof;       % Print all the listof defined in “6_list_of.tex”
+  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+}
 
 
 \newdata{doctype}
@@ -173,7 +191,7 @@
 
 % Logo
 \ntaddtocover[vspace=0.25cm, height=3cm, inalign=t]{1-1,2-1}{%
-  \includegraphics[height=1.6cm,align=c]{ulisboa-logo-lolor}%
+  \includegraphics[height=1.6cm,align=c]{ulisboa-logo-color}%
   \hspace{1.3cm}%
   \includegraphics[height=2.5cm,align=c]{ulisboa-fmv-insignia-color}%
 }

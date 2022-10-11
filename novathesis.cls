@@ -355,19 +355,17 @@
 \newdata{keywordsblockpre}
 \newdata{keywordsblockpost}
 \newdata{keywordspre}
-\newdata{keywordspost}
+\newdata{keywordssep}
 % \newdata{keywordsboxlen}
-\newdata{keywordsname}
-\newdata{keywordsstringpre}
-\newdata{keywordsstringpost}
+\newdata{keywordsstring}
 \newdata{keywordsstringprefix}
 \newdata{keywordsstringsuffix}
 \newdata{keywordsstringfont}
 \keywordsblockpre()={\bigskip\noindent}
 \keywordsstringsuffix()={:\enspace}
 \keywordsstringfont()={\bfseries}
-% \keywordspost()={\ \textbf{\Large\textperiodcentered}\ }
-\keywordspost()={, }
+% \keywordssep()={\ \textbf{\Large\textperiodcentered}\ }
+\keywordssep()={, }
 % \keywordsboxlen()={\textwidth-\widthof{\usebox{\keywordsstringbox}}}
 
 \newdata{specializationstring}
@@ -1977,57 +1975,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Keywords
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{environ}
-
-% \options{/@nt/kwprint/.new value}
-%
-% \newread\kwsfile
-% \newcommand{\printkeywords}[1]{%
-%   % #1 = current lang
-%   % \csxdef{@savedkws/#1}{#2}
-%   \options{/@nt/kwprint/.expanded = #1}
-%   \NTRunHook{keywords/pre}%
-%   \NTRunHook{keywords/#1/pre}%
-%   \ifoptionvoid{/@nt/kwprint}{}{%
-%     \defifundef{\keywordsstringbox}{\newsavebox}
-%     \datadefault{keywordsenvpre}(#1)%
-%     \@for\i:=\expanded{\option{/@nt/kwprint}}\do{%
-%       \savebox{\keywordsstringbox}{%
-%         \datadefault{keywordsstringprefix}(\i)%
-%         \datadefault{keywordsstringfont}(\i)\csuse{thekeywordsstring}(\i)%
-%         \datadefault{keywordsstringsuffix}(\i)%
-%       }
-%       \par
-%       \datadefault{keywordsblockpre}(\i)%
-%       \datadefault{keywordsstringpre}(\i)%
-%       \usebox{\keywordsstringbox}%
-%       \datadefault{keywordsstringpost}(\i)%
-%       % \begin{minipage}[t]{\expanded{\datadefault{keywordsboxlen}(\i)}}
-%         \def\process{\def\process{\datadefault{keywordspost}(\i)}}
-%         \optionlistdo{/@nt/keywords/\i}{%
-%           \datadefault{keywordstringpre}(#1)%
-%           \process##1%
-%         }%
-%       % \end{minipage}
-%       \datadefault{keywordsblockpost}(\i)%
-%     }%
-%     \datadefault{keywordsenvpost}(#1)%
-%   }%
-%   \NTRunHook{keywords/#1/post}%
-%   \NTRunHook{keywords/post}%\
-% }
-%
-% \newenvironment{keywords}{%
-%   \filecontents[overwrite,nosearch,noheader]{\jobname.k\option{/@nt/currentlang}}
-% }{%
-%   \endfilecontents%
-%   \printkeywords{\option{/@nt/currentlang}}
-% }
 \providecommand{\keywords}[1]{%  
-  \def\keywordname{ASDF}%
   \NTRunHook{keywords/pre}%
   % \NTRunHook{keywords/#1/pre}%
-  \def\and{\unskip\datadefault{keywordspost}(\option{/@nt/currentlang})}%
+  \def\and{\unskip\datadefault{keywordssep}(\option{/@nt/currentlang})}%
   % \def\and{{\textperiodcentered} }%
   \par\addvspace\baselineskip\noindent%
   \begingroup
@@ -2039,7 +1990,7 @@
   % \enspace
   \ignorespaces#1%
   % \NTRunHook{keywords/#1/post}%
-  % \NTRunHook{keywords/post}%\
+  \NTRunHook{keywords/post}%\
 }%
   
 
@@ -2103,19 +2054,7 @@
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
 
 \AtBeginDocument{%
-  \makeatletter
-  % \def\@ntkwsi{}
-  % \@for\@it:=\expanded{\theabstractorder(\option{/novathesis/mainlang})}\do{%
-  %   \openin\kwsfile=\expanded{\jobname.k\@it}
-  %   \ifeof\kwsfile\else
-  %     \read\kwsfile to \@ntkwsi
-  %     \closein\kwsfile
-  %     % \show\@ntkwsi
-  %     \options{/@nt/keywords/\@it/.expanded/.new list = \@ntkwsi}%
-  %     \IfStrEq{\@it}{\option{/novathesis/mainlang}}
-  %             {\hypersetup{pdfkeywords={\@ntkwsi}}}{}%
-  %   \fi
-  % }%
+  \makeatletter%
   \hypersetup{%
     pdfauthor={\expanded{\thedocauthor(name)}},
     pdftitle={\expanded{\thedoctitle(\option{/novathesis/mainlang},main)}},
