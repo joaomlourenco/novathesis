@@ -880,8 +880,6 @@
   printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
 }
 
-\ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\option{/novathesis/docstatus})}}%
-
 \ifoptionequal{/novathesis/webography}{}{%
   \ntsetprintorder{mainmatter}{
     chapters;        % Print document chapters
@@ -1017,6 +1015,9 @@
 \AtEndPreamble{\makeatletter\NTRunHook{list_of/pre}\input{Config/6_list_of}\NTRunHook{list_of/post}}
 
 \ifdocunset{\ntsetup{docstatus=working}}{}
+
+\ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\option{/novathesis/docstatus})}}%
+
 \ifoptionequal{/novathesis/spine}{unset}
           {\ifdoctype{working}{\ntsetup{spine=no}}{\ifmaindoc{\ntsetup{spine=trim}}{\ntsetup{spine=no}}}}
           {}
