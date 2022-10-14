@@ -2,7 +2,7 @@ SILENT:=-silent
 SYNCTEX:=1
 
 B:=template
-F:=-time -shell-escape -synctex=$(SYNCTEX) $(FLAGS)
+F:=-time -shell-escape -synctex=$(SYNCTEX) -output-format=pdf -use-make $(FLAGS)
 T:=$(B).pdf
 S:=$(B).tex
 L:=latexmk $(F)
