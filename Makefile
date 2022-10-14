@@ -23,12 +23,10 @@ $(T): $(S)
 
 .PHONY: pdf
 pdf: $(S)
-	biber --cache
 	$(L) -pdf $(SILENT) $(B)
 
 .PHONY: xe lua
 xe lua: $(S)
-	biber --cache
 	$(L) -pdf$@ $(SILENT) $(B)
 
 .PHONY: v view
