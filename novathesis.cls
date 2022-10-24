@@ -720,12 +720,12 @@
   % \typeout{NT TITLE [#1] [#2] [#3]}%
   \doctitle(#2,#1)={\ntnolinebreak{#3}}%
   \doctitle(#2,#1,caps)={\ntnolinebreak%
-                                  {\expandafter\MakeUppercase\expandafter{#3}}}%
+                                  {\expandafter\uppercase\expandafter{#3}}}%
   \doctitle(#2,#1,cover)={#3}%
-  \doctitle(#2,#1,cover,caps)={\expandafter\MakeUppercase\expandafter{#3}}%
+  \doctitle(#2,#1,cover,caps)={\expandafter\uppercase\expandafter{#3}}%
   \IfStrEq{#1}{main}{%
     \doctitle(#2,spine)={\ntnolinebreak{#3}}%
-    \doctitle(#2,spine,caps)={\ntnolinebreak{\expandafter\MakeUppercase\expandafter{#3}}}%
+    \doctitle(#2,spine,caps)={\ntnolinebreak{\expandafter\uppercase\expandafter{#3}}}%
   }{}%
 }
 
