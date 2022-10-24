@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-10-11 [6.10.10]
+%% Version 2022-10-24 [6.10.11]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}[2019-10-01]
-\ProvidesClass{novathesis}[2022-10-11 novathesis template]
+\ProvidesClass{novathesis}[2022-10-24 novathesis template]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -100,7 +100,15 @@
 % \newcommand{\ifxeorlua}[2]{\ifxetexorluatex#1\else#2\fi}
 
 \newcommand{\ifxeorlua}{\ifthenelse{\boolean{luatex}\OR\boolean{xetex}}}
-\newcommand{\ifxetexorluatex}{\iftutex}
+\ifdef{\iftutex}{
+  \newcommand{\ifxetexorluatex}{\iftutex}
+}{
+  \newif\ifxetexorluatex
+  \begingroup\catcode94=7 \catcode0=9% ASCII 94 is ^
+  \def\empty{}\def\next{^^^^0000}\expandafter\endgroup
+  \ifx\next\empty\xetexorluatextrue\else\xetexorluatexfalse\fi
+}
+
 
 \ifxetexorluatex\else% pdflatex
   %%%%% Configure font encoding
@@ -116,7 +124,12 @@
 
 % --------------------------------------------------------
 % The NOVAthesis logo
-\newcommand{\novathesis}{\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{NOVAthesisFiles/Images/novathesis-text}}
+\ifdef{\iftutex}{
+  \newcommand{\novathesis}
+      {\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{NOVAthesisFiles/Images/novathesis-text}}
+}{
+  \newcommand{\novathesis}{\textsl{novathesis}}
+}
 
 % --------------------------------------------------------
 % Define something (except counters) if undefined
@@ -720,12 +733,12 @@
   % \typeout{NT TITLE [#1] [#2] [#3]}%
   \doctitle(#2,#1)={\ntnolinebreak{#3}}%
   \doctitle(#2,#1,caps)={\ntnolinebreak%
-                                  {\expandafter\MakeUppercase\expandafter{#3}}}%
+                                  {\expandafter\uppercase\expandafter{#3}}}%
   \doctitle(#2,#1,cover)={#3}%
-  \doctitle(#2,#1,cover,caps)={\expandafter\MakeUppercase\expandafter{#3}}%
+  \doctitle(#2,#1,cover,caps)={\expandafter\uppercase\expandafter{#3}}%
   \IfStrEq{#1}{main}{%
     \doctitle(#2,spine)={\ntnolinebreak{#3}}%
-    \doctitle(#2,spine,caps)={\ntnolinebreak{\expandafter\MakeUppercase\expandafter{#3}}}%
+    \doctitle(#2,spine,caps)={\ntnolinebreak{\expandafter\uppercase\expandafter{#3}}}%
   }{}%
 }
 
@@ -1604,9 +1617,9 @@
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
   \csuse{#3stringpost}():={:\\[2pt]}%
-  \csuse{#3remainderpre}():={\\}%
-  \personpost():={\\[4pt]}%
-  \persongrouppost():={\\[-6pt]}
+  \csuse{#3remainderpre}()={\\}%
+  \personpost()={\\[4pt]}%
+  \persongrouppost()={\\[-6pt]}
   \begin{tabularx}{#2\linewidth}[t]{@{}X@{}}%
     \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}%
   \end{tabularx}%
@@ -1618,11 +1631,11 @@
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
   \csuse{#3stringpost}():={:}%
-  \csuse{#3remainderpre}():={\\}%
-  \personpost():={\\[4pt]}%
-  \persongrouppost():={\\[-6pt]}
-  \committeetitlestringpre():={&}%
-  \committeetitlestringpost():={\\[7pt]}%
+  \csuse{#3remainderpre}()={{\\}}%
+  \personpost()={\\[4pt]}%
+  \persongrouppost()={\\[-6pt]}
+  \committeetitlestringpre()={&}%
+  \committeetitlestringpost()={\\[7pt]}%
   \begin{tabularx}{#2\linewidth}[t]{@{}r@{~~}>{\raggedright\arraybackslash}X@{}}%
     \ifdatadefined{#3titlestring}(\option{/novathesis/coverlang}){%
       \datadefault{#3titlestringpre}()%

@@ -225,24 +225,27 @@
 }
 
 % Title of Dissertation
-\ntaddtocover[vspace=0.8cm,align=l,height=7.5cm,inalign=t]{1-1,2-1}{%
+\ntaddtocover[vspace=0.8cm,align=l,height=5.5cm,inalign=t]{1-1,2-1}{%
   \fontsize{17pt}{20.4bp}\selectfont%
   \addfontfeature{LetterSpace=2.9}%
   \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}
 }
 
 % Degree info
-\ntaddtocover[vspace=0mm,align=l,height=2.4cm,inalign=t]{2-1}{%
+\ntaddtocover[vspace=0mm,align=l,height=3.9cm,inalign=t]{2-1}{%
+  \vfill
   \fontsize{17pt}{20.4bp}\selectfont%
   \thedoctype(\option{/novathesis/coverlang},\option{/novathesis/docdegree})%
   \\%
   \thedegreename(\option{/novathesis/coverlang})%
-  \\%
-  \thespecialization(\option{/novathesis/coverlang})%
+  \ifdatadefined{specialization}(\option{/novathesis/coverlang}){%
+    \\%
+    \thespecialization(\option{/novathesis/coverlang})%
+  }{}%
 }
 
 % Advisers
-\ntaddtocover[vspace=0,align=l]{2-1}{%
+\ntaddtocover[vspace=0.5cm,align=l]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \theadvisersrt(\option{/novathesis/coverlang})\\%
   \textbf{\ntprintpersons{0.9}{0}{adviser}{a,c}}%
