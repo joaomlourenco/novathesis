@@ -100,7 +100,15 @@
 % \newcommand{\ifxeorlua}[2]{\ifxetexorluatex#1\else#2\fi}
 
 \newcommand{\ifxeorlua}{\ifthenelse{\boolean{luatex}\OR\boolean{xetex}}}
-\newcommand{\ifxetexorluatex}{\iftutex}
+\ifdef{\iftutex}{
+  \newcommand{\ifxetexorluatex}{\iftutex}
+}{
+  \newif\ifxetexorluatex
+  \begingroup\catcode94=7 \catcode0=9% ASCII 94 is ^
+  \def\empty{}\def\next{^^^^0000}\expandafter\endgroup
+  \ifx\next\empty\xetexorluatextrue\else\xetexorluatexfalse\fi
+}
+
 
 \ifxetexorluatex\else% pdflatex
   %%%%% Configure font encoding
@@ -116,7 +124,12 @@
 
 % --------------------------------------------------------
 % The NOVAthesis logo
-\newcommand{\novathesis}{\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{NOVAthesisFiles/Images/novathesis-text}}
+\ifdef{\iftutex}{
+  \newcommand{\novathesis}
+      {\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{NOVAthesisFiles/Images/novathesis-text}}
+}{
+  \newcommand{\novathesis}{\textsl{novathesis}}
+}
 
 % --------------------------------------------------------
 % Define something (except counters) if undefined
@@ -1604,9 +1617,9 @@
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
   \csuse{#3stringpost}():={:\\[2pt]}%
-  \csuse{#3remainderpre}():={\\}%
-  \personpost():={\\[4pt]}%
-  \persongrouppost():={\\[-6pt]}
+  \csuse{#3remainderpre}()={\\}%
+  \personpost()={\\[4pt]}%
+  \persongrouppost()={\\[-6pt]}
   \begin{tabularx}{#2\linewidth}[t]{@{}X@{}}%
     \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}%
   \end{tabularx}%
@@ -1618,11 +1631,11 @@
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
   \csuse{#3stringpost}():={:}%
-  \csuse{#3remainderpre}():={\\}%
-  \personpost():={\\[4pt]}%
-  \persongrouppost():={\\[-6pt]}
-  \committeetitlestringpre():={&}%
-  \committeetitlestringpost():={\\[7pt]}%
+  \csuse{#3remainderpre}()={{\\}}%
+  \personpost()={\\[4pt]}%
+  \persongrouppost()={\\[-6pt]}
+  \committeetitlestringpre()={&}%
+  \committeetitlestringpost()={\\[7pt]}%
   \begin{tabularx}{#2\linewidth}[t]{@{}r@{~~}>{\raggedright\arraybackslash}X@{}}%
     \ifdatadefined{#3titlestring}(\option{/novathesis/coverlang}){%
       \datadefault{#3titlestringpre}()%
