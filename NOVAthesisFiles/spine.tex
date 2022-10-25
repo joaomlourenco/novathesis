@@ -94,10 +94,10 @@
 
 \newcommand{\ntprintspine}{%
   \sffamily%
-  \footnotesize%
+  \normalsize%
   \newlength{\novathesis@spinewidth}%
   \setlength{\novathesis@spinewidth}{\dimexpr1mm * (\thelastsheet+ 19) / 20}%
-  \ifdim\novathesis@spinewidth < 6mm% Force book spine to be at least 6mm
+  \ifdim\novathesis@spinewidth < 6mm\relax% Force book spine to be at least 6mm
     \setlength{\novathesis@spinewidth}{6mm}%
   \fi%
   \newlength{\novathesis@boxwidth}%
@@ -106,20 +106,24 @@
   \setlength{\novathesis@spinetextwidth}%
             {\dimexpr\novathesis@boxwidth-\thespine(box,margin)-\thespine(box,margin)}%
             
-  \ifdatadefined{spine}(author){%
-    \fitboxratio{\@authorRT}{\thespine(text,author,len)}{\novathesis@spinetextwidth}
-                {\thespine(author)}
-  }{\def\@authorRT{99999}}%
   \ifdatadefined{spine}(title){%
     \fitboxratio{\@titleRT}{\thespine(text,title,len)}{\novathesis@spinetextwidth}
                 {\thespine(title)}
   }{\def\@titleRT{99999}}%
+  \ifdatadefined{spine}(author){%
+    \fitboxratio{\@authorRT}{\thespine(text,author,len)}{\novathesis@spinetextwidth}
+                {\thespine(author)}
+  }{\def\@authorRT{99999}}%
   \ifdatadefined{spine}(date){%
     \fitboxratio{\@dateRT}{\thespine(text,date,len)}{\novathesis@spinetextwidth}
                 {\thespine(date)}
   }{\def\@titleRT{99999}}%
   
   \fitboxmin{\@fbratio}{\@authorRT,\@titleRT,\@dateRT}%
+  % \show\@authorRT
+  % \show\@titleRT
+  % \show\@dateRT
+  % \show\@fbratio
   
   \ifdatadefined{spine}(author){%
     \defifundef{\myauthorbox}{\newsavebox}%
