@@ -8,22 +8,32 @@
   % #2 = width
   % #3 = height
   % #4 = text
-  \@tempdima#3%
-  \edef\@wd{\strip@pt\dimexpr#2\relax}%
-  \@temptokena={\mbox{#4}}%
-  \setbox0=\hbox{\the\@temptokena}%
-  \@tempdimb=\dimexpr\ht0+\dp0\relax%
-  % \typeout{SPINE DIV1 [{\strip@pt\@tempdima}] [{\strip@pt\@tempdimb}]}%
+  % \typeout{#4}
+  \@temptokena={\mbox{#4}}% text
+  \setbox0=\hbox{\the\@temptokena}% text
+  \@tempdima=\dimexpr#3\relax% height of box
+  % \showthe\@tempdima% height of box
+  \@tempdimb=\dimexpr\ht0+\dp0\relax% height of text
+  % \showthe\@tempdimb% height of text
   \FPdiv\vr@tio{\strip@pt\@tempdima}{\strip@pt\@tempdimb}%
-  \@tempdimc=\dimexpr\wd0\relax%
-  \FPdiv\hr@tio{\@wd}{\strip@pt\@tempdimc}%
+  % \show\vr@tio
+  \@tempdima=\dimexpr#2\relax% width of box
+  % \showthe\@tempdima% width of box
+  \@tempdimb=\dimexpr\wd0\relax%
+  % \showthe\@tempdimb% width of text
+  \FPdiv\hr@tio{\strip@pt\@tempdima}{\strip@pt\@tempdimb}%
+  % \show\hr@tio
+  % \show\vr@tio
+  % \typeout{SPINE DIV1 [{\strip@pt\@tempdima}] [{\strip@pt\@tempdimb}]}%
   % \typeout{SPINE DIV2 [{\@wd}] [{\strip@pt\@tempdimc}]}%
   \FPmin\r@tio{\hr@tio}{\vr@tio}%
-  \def#1{\r@tio}%
+  % \show\r@tio
+  \edef#1{\r@tio}%
   \ignorespaces%
 }
 
 \newcommand{\fitboxprint}[2]{%
+  % \show#1
   \scalebox{#1}{#2}%\ignorespaces
 }
 
