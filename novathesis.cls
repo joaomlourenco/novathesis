@@ -110,7 +110,10 @@
 }
 
 
-\ifxetexorluatex\else% pdflatex
+\ifxetexorluatex  % xelatex or lualatex
+  \RequirePackage{fontspec}%
+  \defaultfontfeatures{Ligatures=TeX}
+\else% pdflatex
   %%%%% Configure font encoding
   \RequirePackage[T1]{fontenc}    % Use new T1 fonts
 
@@ -1599,19 +1602,19 @@
   % \@replacelastcomma{\@nt@personname}%
 }
 
-\def\@replacelastcomma#1{\@replacelastcomma@i{}{}#1,\nil}
-\def\@replacelastcomma@i#1#2#3,#4\nil{%
-  % [#1],[#2]\par
-  \ifx&#4&%
-    % #2 is empty
-    \unskip#2\ignorespaces#3%
-  \else
-    % #2 is nonempty
-    \unskip#1\ignorespaces#3%
-      \@replacelastcomma@i{\thecommastring(\option{/@nt/currentlang})}%
-                          {\theandstring(\option{/@nt/currentlang})}#4\nil%
-  \fi
-}
+% \def\@replacelastcomma#1{\@replacelastcomma@i{}{}#1,\nil}
+% \def\@replacelastcomma@i#1#2#3,#4\nil{%
+%   % [#1],[#2]\par
+%   \ifx&#4&%
+%     % #2 is empty
+%     \unskip#2\ignorespaces#3%
+%   \else
+%     % #2 is nonempty
+%     \unskip#1\ignorespaces#3%
+%       \@replacelastcomma@i{\thecommastring(\option{/@nt/currentlang})}%
+%                           {\theandstring(\option{/@nt/currentlang})}#4\nil%
+%   \fi
+% }
 
 
 
@@ -1754,15 +1757,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\@nt@printifmaindoc@i}[1]{%
   % \typeout{NT Attempt to load #1}%
-  \NTRunHook{#1/pre}%
 	\ifmaindoc{% THEN it is a main document
+  \NTRunHook{#1/pre}%
     \ifoptiondefined{/@nt/file/#1/VAL}{%
       \ntselectlang{\option{/novathesis/mainlang}}%
       \pdfbookmark[1]{\csuse{the#1bkmstring}(\option{/novathesis/mainlang})}{bm#1}%
       \@ntloadfiles@ii{#1}%
-    }{\typeout{NT LOAD #1 undefined}}%
-	}{}% It is a plan or proposal type document
+    }{\typeout{NT PRINTIFMAINDOC #1 undefined}}%
   \NTRunHook{#1/post}%
+	}{}% It is a plan or proposal type document
 }
 
 \newcommand{\ntprintdedicatory}{\@nt@printifmaindoc@i{dedicatory}}
@@ -1777,8 +1780,8 @@
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
-  \@for\listitem:=\expanded{\theabstractorder(\option{/novathesis/mainlang})}\do{%
-                \@ntprintabstract{\listitem}}%
+  \@for\listitem:=\expanded{%
+        \theabstractorder(\option{/novathesis/mainlang})}\do{\@ntprintabstract{\listitem}}%
   \ntselectlang{\option{/novathesis/mainlang}}%
 }
 
@@ -1833,7 +1836,6 @@
 %% Chapters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntchapterfile}[1]{\listgadd{\@nt@chapter@list}{#1}}
-
 
 \newcommand*{\ntprintchapters}{%
     \@nt@foralllist{file}{chapter}{\@ntloadfiles@ii{chapter}}%
@@ -2065,11 +2067,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Text style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\ifxetexorluatex  % xelatex or lualatex
-  \RequirePackage{fontspec}%
-  \defaultfontfeatures{Ligatures=TeX}
-\fi
 
 \InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.ldf}{}{%
   \ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/chapstyle}}{}%
