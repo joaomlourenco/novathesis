@@ -100,14 +100,14 @@
 % \newcommand{\ifxeorlua}[2]{\ifxetexorluatex#1\else#2\fi}
 
 \newcommand{\ifxeorlua}{\ifthenelse{\boolean{luatex}\OR\boolean{xetex}}}
-\ifdef{\iftutex}{
+% \ifdef{\iftutex}{
   \newcommand{\ifxetexorluatex}{\iftutex}
-}{
-  \newif\ifxetexorluatex
-  \begingroup\catcode94=7 \catcode0=9% ASCII 94 is ^
-  \def\empty{}\def\next{^^^^0000}\expandafter\endgroup
-  \ifx\next\empty\xetexorluatextrue\else\xetexorluatexfalse\fi
-}
+% }{
+%   \newif\ifxetexorluatex
+%   \begingroup\catcode94=7 \catcode0=9% ASCII 94 is ^
+%   \def\empty{}\def\next{^^^^0000}\expandafter\endgroup
+%   \ifx\next\empty\xetexorluatextrue\else\xetexorluatexfalse\fi
+% }
 
 
 \ifxetexorluatex  % xelatex or lualatex
