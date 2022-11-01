@@ -111,8 +111,6 @@
 
 
 \ifxetexorluatex  % xelatex or lualatex
-  \RequirePackage{fontspec}%
-  \defaultfontfeatures{Ligatures=TeX}
 \else% pdflatex
   %%%%% Configure font encoding
   \RequirePackage[T1]{fontenc}    % Use new T1 fonts
@@ -975,6 +973,19 @@
 \undef{\stockheight}
 \LoadClass{memoir}
 \OnehalfSpacing% One-and-half spacing
+
+
+
+\ifxetexorluatex  % xelatex or lualatex
+  \RequirePackage{fontspec}%
+  \defaultfontfeatures{Ligatures=TeX}
+\else% pdflatex
+  %%%%% Configure font encoding
+  \RequirePackage[T1]{fontenc}    % Use new T1 fonts
+
+  %%%%% Configure input encoding
+  \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
+\fi
 
 
 % --------------------------------------------------------
