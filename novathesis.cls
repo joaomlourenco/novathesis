@@ -1579,42 +1579,32 @@
   % #2 = {a,c} | {c,r,a,m,g}
   % Build list of names
   \def\@nt@personlist{}%
+  \def\@nt@listsep{}%
   \@for\listitem:={#2}\do{%
     \letoptionlist{/@nt/#1/\listitem/name}\@nt@personname%
     \IfStrEq{\@nt@personname}{}{}{%
-      \eappto\@nt@personlist{,\@nt@personname}%
+      \eappto\@nt@personlist{\@nt@listsep\@nt@personname}\edef\@nt@listsep{,}%
     }%
   }%
-  %  Remove comma before first name
-  \StrGobbleLeft{\@nt@personlist}{1}[\@nt@personlist]%
-  % Replace last comma with “and” (\thecommastring)
-  \StrCount{\@nt@personlist}{,}[\@ncommas]%
-  \IfStrEq{\@ncommas}{0}{}{%
-    \StrSubstitute[\the\numexpr\@ncommas-1]{\@nt@personlist}%
-                  {,}{+}[\@nt@personlist]%
-    \StrSubstitute{\@nt@personlist}%
-                  {,}{\theandstring(\option{/@nt/currentlang})}[\@nt@personlist]%
-    \StrSubstitute{\@nt@personlist}%
-                  {+}{\thecommastring(\option{/@nt/currentlang})}[\@nt@personlist]%
-  }%
-  % print list
-  \@nt@personlist%
-  % \@replacelastcomma{\@nt@personname}%
+  \@replacelastcomma{\@nt@personlist}%
 }
 
-% \def\@replacelastcomma#1{\@replacelastcomma@i{}{}#1,\nil}
-% \def\@replacelastcomma@i#1#2#3,#4\nil{%
-%   % [#1],[#2]\par
-%   \ifx&#4&%
-%     % #2 is empty
-%     \unskip#2\ignorespaces#3%
-%   \else
-%     % #2 is nonempty
-%     \unskip#1\ignorespaces#3%
-%       \@replacelastcomma@i{\thecommastring(\option{/@nt/currentlang})}%
-%                           {\theandstring(\option{/@nt/currentlang})}#4\nil%
-%   \fi
-% }
+\ExplSyntaxOn
+\cs_new_eq:NN \trimspaces \tl_trim_spaces:n
+\ExplSyntaxOff
+
+\def\@replacelastcomma#1{\expandafter\@replacelastcomma@i\expandafter{\expandafter}\expandafter{\expandafter}#1,\nil}
+\def\@replacelastcomma@i#1#2#3,#4\nil{%
+  % [#1],[#2]\par
+  \ifx&#4&%
+    % #2 is empty
+    #2\trimspaces{#3}%
+  \else
+    % #2 is nonempty
+    #1\trimspaces{#3}%
+      \@replacelastcomma@i{\thecommastring(\option{/@nt/currentlang})}{\theandstring(\option{/@nt/currentlang})}#4\nil%
+  \fi
+}
 
 
 
