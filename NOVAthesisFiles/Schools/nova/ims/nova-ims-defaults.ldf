@@ -292,8 +292,8 @@
 % % Title of Dissertation
 \ntaddtocover[align=l, vspace=1, degree=msc]{1-1}{%
   \fontsize{17}{17}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}}\\[0.25ex]%
-  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
+  \textcolor{imsdarkgrey}{\textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}}\\[0.25ex]%
+  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
     ~\\[-1.5ex]%
     \textcolor{imsmidgrey}{
       \fontsize{15}{15}\selectfont%
@@ -325,7 +325,7 @@
 
 \ntaddtocover[align=c, vspace=1]{2-1}{%
   \fontsize{16}{16}\selectfont%
-  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
+  \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
 }
 
 \ntaddtocover[align=c, vspace=1]{2-1}{%
@@ -352,8 +352,8 @@
   \adviserstringpre():={}%
   \adviserstringpost():={:&}%
   \adviserstringfont():={\bfseries}%
-  \ntprintpersons[name]{1.0}{2}{adviser}{a}\\
-  \ntprintpersons[name]{1.0}{2}{adviser}{c}\\
+  \ntprintpersons[list]{1.0}{2}{adviser}{a}\\
+  \ntprintpersons[list]{1.0}{2}{adviser}{c}\\
 }
 
 % Date

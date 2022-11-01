@@ -228,12 +228,9 @@
 %% MANAGE DOCUMENT CLASSES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \options{/@nt/document/.cd
+  , docclass/.new choice={phd=phd, phdprop=phd, phdplan=phd, msc=msc, mscplan=msc, bsc=bsc, plain=plain}
+  , docmain/.new list={phd, msc, bsc, plain}
   , fallback/.new choice={phd=phd, phdprop=phd, phdplan=phd, msc=msc, mscplan=msc}
-  , class/phd/.new list={phd, phdprop, phdplan}
-  , class/msc/.new list={msc, mscplan}
-  , class/bsc/.new list={bsc}
-  , class/plain/.new list={plain}
-  , class/main/.new list={phd, msc, bsc}
 }
 
 \newcommand{\@ifdocclasscontain}[2]{%
@@ -244,12 +241,12 @@
 
 % --------------------------------------------------------
 % Check if the document is of a specific class, i.e., bsc, msc, phd or main
-\newcommand{\ifdoctype}[2][\option{/novathesis/docdegree}]{\ifoptioncontains{/@nt/document/class/#2}{#1}}
-\newcommand{\ifmaindoc}[1][\option{/novathesis/docdegree}]{\ifdoctype[#1]{main}}
-\newcommand{\ifphddoc}[1][\option{/novathesis/docdegree}]{\ifdoctype[#1]{phd}}
-\newcommand{\ifmscdoc}[1][\option{/novathesis/docdegree}]{\ifdoctype[#1]{msc}}
-\newcommand{\ifbscdoc}[1][\option{/novathesis/docdegree}]{\ifdoctype[#1]{bsc}}
-\newcommand{\ifplaindoc}[1][\option{/novathesis/docdegree}]{\ifdoctype[#1]{plain}}
+\newcommand{\ifdocclass}[1]{\ifoptionequal{/@nt/document/docclass}{#1}}
+\newcommand{\ifmaindoc}{\ifdocclass{main}}
+\newcommand{\ifphddoc}{\ifdocclass{phd}}
+\newcommand{\ifmscdoc}{\ifdocclass{msc}}
+\newcommand{\ifbscdoc}{\ifdocclass{bsc}}
+\newcommand{\ifplaindoc}{\ifdocclass{plain}}
 
 \newcommand{\ifdocstatus}[1]{\ifoptionequal{/novathesis/docstatus}{#1}}
 \newcommand{\ifdocfinal}{\ifdocstatus{final}}
@@ -634,6 +631,7 @@
 %============================================================
 \input{Config/1_novathesis}
 \options{/@nt/document/fallback=\option{/novathesis/docdegree}}
+\options{/@nt/document/docclass=\option{/novathesis/docdegree}}
 % \NTRunHook{novathesis}
 
 %============================================================
@@ -732,13 +730,13 @@
   % #3 = value
   % \typeout{NT TITLE [#1] [#2] [#3]}%
   \doctitle(#2,#1)={\ntnolinebreak{#3}}%
-  \doctitle(#2,#1,caps)={\ntnolinebreak%
-                                  {\expandafter\uppercase\expandafter{#3}}}%
+  % \doctitle(#2,#1,caps)={\ntnolinebreak%
+  %                                 {\expandafter\uppercase\expandafter{#3}}}%
   \doctitle(#2,#1,cover)={#3}%
-  \doctitle(#2,#1,cover,caps)={\expandafter\uppercase\expandafter{#3}}%
+  % \doctitle(#2,#1,cover,caps)={\expandafter\uppercase\expandafter{#3}}%
   \IfStrEq{#1}{main}{%
     \doctitle(#2,spine)={\ntnolinebreak{#3}}%
-    \doctitle(#2,spine,caps)={\ntnolinebreak{\expandafter\uppercase\expandafter{#3}}}%
+    % \doctitle(#2,spine,caps)={\ntnolinebreak{\expandafter\uppercase\expandafter{#3}}}%
   }{}%
 }
 
@@ -1032,7 +1030,7 @@
 \ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\option{/novathesis/docstatus})}}%
 
 \ifoptionequal{/novathesis/spine}{unset}
-          {\ifdoctype{working}{\ntsetup{spine=no}}{\ifmaindoc{\ntsetup{spine=trim}}{\ntsetup{spine=no}}}}
+          {\ifdocclass{working}{\ntsetup{spine=no}}{\ifmaindoc{\ntsetup{spine=trim}}{\ntsetup{spine=no}}}}
           {}
 \ifdocfinal{\ntsetup{printcommittee=true}}{}
 
@@ -1556,7 +1554,7 @@
 %%% Print persons list {advisers | committee}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintpersons}[5][full]{%
-  % #1 = { name | full}
+  % #1 = { full | name | list }
   % #2 = width in % of textwidth
   % #3 = number of columns
   % #4 = adviser | committee
@@ -1564,9 +1562,9 @@
   \iftoggle{/novathesis/print#4}{%
     \IfStrEqCase{#3}{%
       {0}{\@ntprintpersonsaslist{#4}{\expanded{#5}}}%
-      {1}{\@ntprintpersonsasonecolumn[#1]{#2}{#4}{\expanded{#5}}}%
-      {2}{\@ntprintpersonsastwocolumns[#1]{#2}{#4}{\expanded{#5}}}%
-    }[\ClassError{novathesis}{Ivalid argument [#3] to \string\ntprintpersons{0.9}{#2}{#3}{#4}{#5}}{}]%
+      {1}{\@ntprintpersonsasonecolumn{#1}{#2}{#4}{\expanded{#5}}}%
+      {2}{\@ntprintpersonsastwocolumns{#1}{#2}{#4}{\expanded{#5}}}%
+    }[\ClassError{novathesis}{Ivalid argument [#3] to \string\ntprintpersons{#1}{#2}{#3}{#4}{#5}}{}]%
   }{}%
 }
 
@@ -1576,6 +1574,7 @@
 \newcommand{\@ntprintpersonsaslist}[2]{%
   % #1 = adviser | committee
   % #2 = {a,c} | {c,r,a,m,g}
+  % Build list of names
   \def\@nt@personlist{}%
   \@for\listitem:={#2}\do{%
     \letoptionlist{/@nt/#1/\listitem/name}\@nt@personname%
@@ -1583,7 +1582,9 @@
       \eappto\@nt@personlist{,\@nt@personname}%
     }%
   }%
+  %  Remove comma before first name
   \StrGobbleLeft{\@nt@personlist}{1}[\@nt@personlist]%
+  % Replace last comma with “and” (\thecommastring)
   \StrCount{\@nt@personlist}{,}[\@ncommas]%
   \IfStrEq{\@ncommas}{0}{}{%
     \StrSubstitute[\the\numexpr\@ncommas-1]{\@nt@personlist}%
@@ -1593,17 +1594,23 @@
     \StrSubstitute{\@nt@personlist}%
                   {+}{\thecommastring(\option{/@nt/currentlang})}[\@nt@personlist]%
   }%
+  % print list
   \@nt@personlist%
+  % \@replacelastcomma{\@nt@personname}%
 }
 
-\newcommand{\@nt@addtopersonlist}[2]{%
-  % #1 = adviser | committee
-  % #2 = {a,c} | {c,r,a,m,g}
-  \ifoptiondefined{/@nt/#1/#2/name}{%
-    \letoptionlist{/@nt/#1/#2/name}\@nt@list%
-    \IfStrEq{\@nt@personlist}{}{\def\@nt@comma{}}{\def\@nt@comma{,}}%
-    \xappto\@nt@personlist{\@nt@comma\@nt@list}%
-  }{}%
+\def\@replacelastcomma#1{\@replacelastcomma@i{}{}#1,\nil}
+\def\@replacelastcomma@i#1#2#3,#4\nil{%
+  % [#1],[#2]\par
+  \ifx&#4&%
+    % #2 is empty
+    \unskip#2\ignorespaces#3%
+  \else
+    % #2 is nonempty
+    \unskip#1\ignorespaces#3%
+      \@replacelastcomma@i{\thecommastring(\option{/@nt/currentlang})}%
+                          {\theandstring(\option{/@nt/currentlang})}#4\nil%
+  \fi
 }
 
 
@@ -1611,8 +1618,8 @@
 %============================================================
 % Print persons list {advisers | committee} as one and two columns
 %============================================================
-\newcommand{\@ntprintpersonsasonecolumn}[4][full]{%
-  % #1 = { name | full}
+\newcommand{\@ntprintpersonsasonecolumn}[4]{%
+  % #1 = { full | name | list }
   % #2 = width in % of textwidth
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
@@ -1621,15 +1628,16 @@
   \personpost()={\\[4pt]}%
   \persongrouppost()={\\[-6pt]}
   \begin{tabularx}{#2\linewidth}[t]{@{}X@{}}%
-    \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}%
+    \expandnext{\forcsvlist{\@nt@ntprintpersongroup{#1}{1}{#3}}}{\expanded{#4}}%
   \end{tabularx}%
 }
 
-\newcommand{\@ntprintpersonsastwocolumns}[4][full]{%
-  % #1 = { name | full}
+\newcommand{\@ntprintpersonsastwocolumns}[4]{%
+  % #1 = { full | name | list }
   % #2 = width in % of textwidth
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
+  % \typeout{[#1] [#2] [#3] [#4]}%
   \csuse{#3stringpost}():={:}%
   \csuse{#3remainderpre}()={{\\}}%
   \personpost()={\\[4pt]}%
@@ -1643,12 +1651,12 @@
       \csuse{the#3titlestring}(\option{/novathesis/coverlang})%
       \datadefault{#3titlestringpost}()%
     }{}%
-    \@for\listitemi:={#4}\do{\xdef\listitemi{\listitemi}\@nt@ntprintpersongroup[#1]{2}{#3}{\listitemi}}
+    \@for\listitemi:={#4}\do{\xdef\listitemi{\listitemi}\@nt@ntprintpersongroup{#1}{2}{#3}{\listitemi}}
   \end{tabularx}%
 }
 
-\newcommand{\@nt@ntprintpersongroup}[4][full]{%
-  % #1 = { name | full}
+\newcommand{\@nt@ntprintpersongroup}[4]{%
+  % #1 = { full | name | list }
   % #2 = {1 | 2}
   % #3 = {adviser | committee}
   % #4 = {a,c} | {c,r,a,m,g}
@@ -1662,12 +1670,12 @@
     \egroup%
     \datadefault{#3stringpost}(#4)%
     \IfStrEq{#2}{2}{&}{}%
-    \IfStrEq{#1}{full}{%
-      \begin{minipage}[t]{\linewidth}%
-          \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename[#1]{#3}{##1}}%
-      \end{minipage}%
-    }{%
+    \IfStrEq{#1}{list}{%
       \@ntprintpersonsaslist{#3}{#4}%
+    }{%
+      \begin{minipage}[t]{\linewidth}%
+          \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{##1}}%
+      \end{minipage}%
     }%
     \thepersongrouppost()%
   }{}%
@@ -1676,8 +1684,8 @@
 %============================================================
 % Print person aux funcitons
 %============================================================
-\newcommand{\@nt@printonename}[3][full]{%
-  % #1 = { name | full}
+\newcommand{\@nt@printonename}[3]{%
+  % #1 = { full | name }
   % #2 = adviser | coadviser | committee
   % #3 = (co)adviser info
   \begingroup
