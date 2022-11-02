@@ -1,4 +1,4 @@
-SILENT:=-silent
+#SILENT:=-silent
 SYNCTEX:=1
 
 B:=template
