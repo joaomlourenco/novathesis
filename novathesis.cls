@@ -1589,6 +1589,12 @@
   % #1 = adviser | committee
   % #2 = {a,c} | {c,r,a,m,g}
   % Build list of names
+    \ifdatadefined{#1titlestring}(\option{/novathesis/coverlang}){%
+      \datadefault{#1titlestringpre}()%
+      \datadefault{#1titlestringfont}()%
+      \csuse{the#1titlestring}(\option{/novathesis/coverlang})%
+      \datadefault{#1titlestringpost}()%
+    }{}%
   \def\@nt@personlist{}%
   \def\@nt@listsep{}%
   \@for\listitem:={#2}\do{%
@@ -1604,16 +1610,22 @@
 \cs_new_eq:NN \trimspaces \tl_trim_spaces:n
 \ExplSyntaxOff
 
-\def\@replacelastcomma#1{\expandafter\@replacelastcomma@i\expandafter{\expandafter}\expandafter{\expandafter}#1,\nil}
+\def\@replacelastcomma#1{%
+  \typeout{REP1 [#1]}%
+  % \@replacelastcomma@i{}{}#1,\nil}
+  \expandafter\@replacelastcomma@i%
+  \expandafter{\expandafter}%
+  \expandafter{\expandafter}#1,\nil}
+
 \def\@replacelastcomma@i#1#2#3,#4\nil{%
-  % [#1],[#2]\par
-  \ifx&#4&%
-    % #2 is empty
+  \typeout{REP2 [#1] [#2] [#3] [#4]}%
+  \if\relax\detokenize{#4}\relax
     #2\trimspaces{#3}%
   \else
     % #2 is nonempty
     #1\trimspaces{#3}%
-      \@replacelastcomma@i{\thecommastring(\option{/@nt/currentlang})}{\theandstring(\option{/@nt/currentlang})}#4\nil%
+      \@replacelastcomma@i{\thecommastring(\option{/@nt/currentlang})}%
+                          {\theandstring(\option{/@nt/currentlang})}#4\nil%
   \fi
 }
 

@@ -352,8 +352,8 @@
   \adviserstringpre():={}%
   \adviserstringpost():={:&}%
   \adviserstringfont():={\bfseries}%
-  \ntprintpersons[list]{1.0}{2}{adviser}{a}\\
-  \ntprintpersons[list]{1.0}{2}{adviser}{c}\\
+  \ntprintpersons[list]{1.0}{1}{adviser}{a}\\[2ex]
+  \ntprintpersons[list]{1.0}{1}{adviser}{c}\\
 }
 
 % Date
