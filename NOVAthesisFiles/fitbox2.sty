@@ -8,12 +8,15 @@
   % #2 = width
   % #3 = height
   % #4 = text
-  % \typeout{#4}
+  % \typeout{w=[#2] h=[#3] t=[#4]}
   \@temptokena={\mbox{#4}}% text
   \setbox0=\hbox{\the\@temptokena}% text
   \@tempdima=\dimexpr#3\relax% height of box
   % \showthe\@tempdima% height of box
   \@tempdimb=\dimexpr\ht0+\dp0\relax% height of text
+  \ifdim \@tempdimb=0pt
+    \PackageError{fitbox2}{Invalid text: [#4]}{}
+  \fi
   % \showthe\@tempdimb% height of text
   \FPdiv\vr@tio{\strip@pt\@tempdima}{\strip@pt\@tempdimb}%
   % \show\vr@tio

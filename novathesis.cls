@@ -82,6 +82,8 @@
 \LoadClass{memoir}
 \OnehalfSpacing% One-and-half spacing
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% SOME ESSENTIAL PACKAGES
 %%    Others will be loaded later, in the file “packages.tex”
@@ -106,6 +108,9 @@
 \DeclareGraphicsExtensions{.pdf,.png,.jpg,.tif}
 \providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
 \providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
+
+\PassOptionsToPackage{scaled=1}{inter}%
+\PassOptionsToPackage{scaled=0.95}{helvet}%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -144,10 +149,10 @@
 % --------------------------------------------------------
 % The NOVAthesis logo
 \ifdef{\iftutex}{
-	\newcommand{\novathesis}
-	{\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{NOVAthesisFiles/Images/novathesis-text}}
+  \newcommand{\novathesis}
+      {\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{NOVAthesisFiles/Images/novathesis-text}}
 }{
-	\newcommand{\novathesis}{\textsl{novathesis}}
+  \newcommand{\novathesis}{\textsl{novathesis}}
 }
 
 % --------------------------------------------------------
@@ -160,8 +165,8 @@
 \def\ntforbreak{\@endfortrue}
 \long\def\ntfor#1:=#2\do#3{\@ifnextchar[{\ntfor@i#1:=#2\do#3}{\ntfor@i#1:=#2\do#3[]}}
 \long\def\ntfor@i#1:=#2\do#3[#4]{%
-	\@for#1:={#2}\do{\xdef#1{#1}#3}%
-	\if@endfor\else#4\fi
+  \@for#1:={#2}\do{\xdef#1{#1}#3}%
+  \if@endfor\else#4\fi
 }
 
 % --------------------------------------------------------
@@ -171,11 +176,11 @@
 % --------------------------------------------------------
 % Search if a data/memory is defined and returns value
 \def\datamatch#1#2(#3){%
-	% #1 = macro to set
-	% #2 = data@memory
-	% #3 = list of values
-	% Search and match first value from the list, error if no match is found
-	\datamatchtf{#1}{#2}(#3){}{\ClassError{novathesis}{Could not find “#2” defined with any of “(#3)”!}{}}%
+  % #1 = macro to set
+  % #2 = data@memory
+  % #3 = list of values
+  % Search and match first value from the list, error if no match is found
+  \datamatchtf{#1}{#2}(#3){}{\ClassError{novathesis}{Could not find “#2” defined with any of “(#3)”!}{}}%
 }
 \def\datamatchtf#1#2(#3)#4#5{%
 	% #1 = macro to set
@@ -535,6 +540,7 @@
 	linkscolor/.new cmd           = {\@ifpackageloaded{hyperref}%
 			 																							{\hypersetup{allcolors=#1}}%
 																										{\PassOptionsToPackage{allcolors=#1}{hyperref}}},
+	degreeacr/.new value          = {},
 	degreeacr/phd/.new value          = {},
 	degreeacr/msc/.new value          = {},
 	degreeacr/bsc/.new value          = {},
@@ -1024,6 +1030,7 @@
 % --------------------------------------------------------
 % LOAD ADDITIONAL PACKAGES
 \input{NOVAthesisFiles/packages.tex}
+\NTRunHook{NOVAthesisFiles/packages}
 
 % Patch month from number to string in the proper language
 \IfInteger{\thentdocdate(month)}{%
@@ -1145,60 +1152,60 @@
 }
 
 \newcommand{\ntprintcoverpair}[1]{%
-	% #1 = major cover ID
-	\IfStrEqCase{#1}{%
-		{1}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}\clearforchapter}%
-		{2}{\iftoggle{/novathesis/secondcover}
-		 					{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}\clearforchapter}{}}%
-		{N}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}}%
-	}[\ClassWarning{Invalid cover number: #1}{}]%
+  % #1 = major cover ID
+  \IfStrEqCase{#1}{%
+    {1}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}\clearforchapter}%
+    {2}{\iftoggle{/novathesis/secondcover}
+                 {\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}\clearforchapter}{}}%
+    {N}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}}%
+  }[\ClassWarning{Invalid cover number: #1}{}]%
 }
 
 \newcommand{\ntprintcoversingle}[2]{%
-		% #1 = major cover ID
-		% #2 = minor cover ID
-		\def\@nt@newpage{}%
-		\gdef\@covernumber{#1-#2}%
-		\IfStrEq{#2}{2}{%
-		\ifbool{@openright}{\def\@nt@newpage{\thispagestyle{cleared}\cleartoevenpage}}{\clearpage}%
-		}{}%
-		\IfStrEq{#1-#2}{2-1}{\setcounter{page}{1}}{}%
-		\edef\@cvn{#1-#2}
-		\edef\@cvnonetwo{1-2}
-		\edef\@cvnNone{N-1}
-		\ifx\@cvn\@cvnonetwo\relax
-		\iftoggle{/novathesis/uminho/skipblankcovers}{}
-		 {\ifcoverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}}%
-		\else\ifx\@cvn\@cvnNone\relax
-		\iftoggle{/novathesis/uminho/skipblankcovers}{}
-		 {\ifcoverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}}%
-		\else
-		\ifcoverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}%a
-		\fi\fi
+  % #1 = major cover ID
+  % #2 = minor cover ID
+  \def\@nt@newpage{}%
+  \gdef\@covernumber{#1-#2}%
+  \IfStrEq{#2}{2}{%
+    \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{cleared}\cleartoevenpage}}{\clearpage}%
+  }{}%
+  \IfStrEq{#1-#2}{2-1}{\setcounter{page}{1}}{}%
+  \edef\@cvn{#1-#2}
+  \edef\@cvnonetwo{1-2}
+  \edef\@cvnNone{N-1}
+  \ifx\@cvn\@cvnonetwo\relax
+    \iftoggle{/novathesis/uminho/skipblankcovers}{}
+                       {\ifcoverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}}%
+  \else\ifx\@cvn\@cvnNone\relax
+    \iftoggle{/novathesis/uminho/skipblankcovers}{}
+                       {\ifcoverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}}%
+  \else
+    \ifcoverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}%a
+  \fi\fi
 }
 
 \newcommand{\@ntprintcover@i}[1]{%
-		% #1 = cover ID (major-minor)
-		\begingroup%
-		\NTRunHook{cover/#1/pre}%
-		\datamatchtf{\match}{thesiscover}(%
-		{\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,textcolor}%
-		 ,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,textcolor}%
-		 ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,textcolor}%
-		 ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},textcolor}%
-		 ,{\option{/novathesis/docdegree},#1,textcolor}%
-		 ,{\option{/@nt/document/fallback},#1,textcolor}%
-		 ,{#1,textcolor}%
-		 ,{textcolor}%
-		){\color{\match}}{}%
-		\ntselectlang{\option{/novathesis/coverlang}}%
-		\options{/@ntcoveropts/bookmark=#1}%
-		\ifoptionequal{/@ntcoveropts/bookmark}{}{}{%
-		\pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
-		}%
-		\@ntmakeboxwithcover{#1}{\@fullcover@box}%
-		\NTRunHook{cover/#1/post}%
-		\endgroup%
+  % #1 = cover ID (major-minor)
+  \begingroup%
+    \NTRunHook{cover/#1/pre}%
+    \datamatchtf{\match}{thesiscover}(%
+                {\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,textcolor}%
+               ,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,textcolor}%
+               ,{\option{/novathesis/degreeacr},#1,textcolor}%
+               ,{\option{/novathesis/degreeacr},textcolor}%
+               ,{\option{/novathesis/docdegree},#1,textcolor}%
+               ,{\option{/@nt/document/fallback},#1,textcolor}%
+               ,{#1,textcolor}%
+               ,{textcolor}%
+    ){\color{\match}}{}%
+    \ntselectlang{\option{/novathesis/coverlang}}%
+    \options{/@ntcoveropts/bookmark=#1}%
+    \ifoptionequal{/@ntcoveropts/bookmark}{}{}{%
+      \pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
+    }%
+    \@ntmakeboxwithcover{#1}{\@fullcover@box}%
+    \NTRunHook{cover/#1/post}%
+  \endgroup%
 }
 
 \newcommand{\@ntmakeboxwithcover}[2]{%
@@ -1348,117 +1355,165 @@
 }
 
 \def\@ntcoverelement@iii#1#2=*=#3{%
-		% #1 = cover ID (major-minor)
-		% #2 = cover element options
-		% #3 = cover element code
-		\ifblank{#3}{}{%
-		\options{/@ntcoveropts,defaults}%.
-		\options{/@ntcoveropts,#2}%
-		\options{/@ntcoveropts,alignmap=\option{/@ntcoveropts/align}}%
-		\StrCount{\option{/@ntcoveropts/status}}{\option{/@nt/document/fallback}}[\@nt@instatus]%
-		\StrCount{\option{/@ntcoveropts/degree}}{\option{/@nt/document/fallback}}[\@nt@indegree]%
-		\ifthenelse{%
-		\(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND%
-		\(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}%
-		{\@ntcoverelement@ii{#1}{#3}}%
-		{}%
-		}%
+  % #1 = cover ID (major-minor)
+  % #2 = cover element options
+  % #3 = cover element code
+  % \typeout{[#1] [#2]}\xxxx
+  \ifblank{#3}{}{%
+    \options{/@ntcoveropts,defaults}%.
+    \options{/@ntcoveropts,#2}%
+    \options{/@ntcoveropts,alignmap=\option{/@ntcoveropts/align}}%
+    \StrCount{\option{/@ntcoveropts/status}}{\option{/@nt/document/fallback}}[\@nt@instatus]%
+    \StrCount{\option{/@ntcoveropts/degree}}{\option{/@nt/document/fallback}}[\@nt@indegree]%
+    \ifthenelse{%
+              \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND%
+              \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}%
+      {\@ntcoverelement@ii{#1}{#3}}%
+      {}%
+  }%
 }
 
 \options{/@ntcoveropts/.new family
-		% titles for PDF bookmark / list of contents
-		, bookmark/.new choice = {1-1=\thecoverbkmstring(\option{/novathesis/coverlang})
-		, 1-2={}
-		, 2-1=\thefrontpagebkmstring(\option{/novathesis/coverlang})
-		, 2-2={}
-		, N-1={}
-		, N-2=\thebackcoverbkmstring(\option{/novathesis/coverlang})
-		, spine=\thespinebkmstring(\option{/novathesis/coverlang})}
-		% letter to macro for horizontal alignment
-		, alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft,j=\null}
-		% filters / conditional printing
-		, status/.new value
-		, degree/.new value
-		% horizontal alighment and vertical alignments inside the box
-		, align/.new choice={c, l, r, j}
-		, inalign/.new choice={c, t, b}
-		% height of the box (default = the natural height for the contents)
-		, height/.new value
-		% minheight of the box (default = the natural height for the contents)
-		, minheight/.new value
-		% width of the box (default = full width)
-		, width/.new value
-		% vertical spacing from precious box (default = 0pt, can also be an integer and,
-		% in this case, it means the weight of the vfill)
-		, vspace/.new value
-		% horizontal spacing from the left margin (or last box in the same line) (default = 0pt)
-		, hspace/.new value
-		% is the last box in the line (default = true)
-		, newpar/.new toggle
-		% text color for the box (default = black)
-		, color/.new color
-		% background color for the box (default = transparent)
-		, bgcolor/.new color
-		% default values
-		, defaults/.new style*={status={}, degree={}, align=c, inalign=c, height={}, minheight=0pt, width={}, 
-		vspace=0pt, hspace=0pt, newpar=true, color={}, bgcolor={}}
-		% set defaults
-		, defaults
+  % titles for PDF bookmark / list of contents
+  , bookmark/.new choice = {1-1=\thecoverbkmstring(\option{/novathesis/coverlang})
+                          , 1-2={}
+                          , 2-1=\thefrontpagebkmstring(\option{/novathesis/coverlang})
+                          , 2-2={}
+                          , N-1={}
+                          , N-2=\thebackcoverbkmstring(\option{/novathesis/coverlang})
+                          , spine=\thespinebkmstring(\option{/novathesis/coverlang})}
+  % letter to macro for horizontal alignment
+  , alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft,j=\null}
+  % filters / conditional printing
+  , status/.new value
+  , degree/.new value
+  % horizontal alighment and vertical alignments inside the box
+  , align/.new choice={c, l, r, j}
+  , inalign/.new choice={c, t, b}
+  % height of the box (default = the natural height for the contents)
+  , height/.new value
+  % height of the box (default = the natural height for the contents)
+  , height/phd/.new value
+  % height of the box (default = the natural height for the contents)
+  , height/msc/.new value
+  % minheight of the box (default = the natural height for the contents)
+  , minheight/.new value
+  % width of the box (default = full width)
+  , width/.new value
+  % vertical spacing from precious box (default = 0pt, can also be an integer and,
+  % in this case, it means the weight of the vfill)
+  , vspace/.new value
+  % vertical spacing from precious box (default = 0pt, can also be an integer and,
+  % in this case, it means the weight of the vfill)
+  , vspace/phd/.new value
+  % vertical spacing from precious box (default = 0pt, can also be an integer and,
+  % in this case, it means the weight of the vfill)
+  , vspace/msc/.new value
+  % vertical spacing from precious box (default = 0pt, can also be an integer and,
+  % in this case, it means the weight of the vfill)
+  , vspace/1-1/.new value
+  % vertical spacing from precious box (default = 0pt, can also be an integer and,
+  % in this case, it means the weight of the vfill)
+  , vspace/2-1/.new value
+  % vertical spacing from precious box (default = 0pt, can also be an integer and,
+  % in this case, it means the weight of the vfill)
+  , vspace/phd/1-1/.new value
+  % vertical spacing from precious box (default = 0pt, can also be an integer and,
+  % in this case, it means the weight of the vfill)
+  , vspace/phd/2-1/.new value
+  % vertical spacing from precious box (default = 0pt, can also be an integer and,
+  % in this case, it means the weight of the vfill)
+  , vspace/msc/1-1/.new value
+  % vertical spacing from precious box (default = 0pt, can also be an integer and,
+  % in this case, it means the weight of the vfill)
+  , vspace/msc/2-1/.new value
+  % horizontal spacing from the left margin (or last box in the same line) (default = 0pt)
+  , hspace/.new value
+  % is the last box in the line (default = true)
+  , newpar/.new toggle
+  % text color for the box (default = black)
+  , color/.new color
+  % background color for the box (default = transparent)
+  , bgcolor/.new color
+  % default values
+  , defaults/.new style*={
+                  vspace=0pt, 
+                  vspace/msc={}, vspace/phd={}, 
+                  vspace/1-1={}, vspace/2-1={},
+                  vspace/msc/1-1={}, vspace/msc/2-1={}, 
+                  vspace/phd/1-1={}, vspace/phd/2-1={}, 
+                  status={}, degree={}, align=c, inalign=c,
+                  height={}, height/phd={}, height/msc={}, 
+                  minheight=0pt, width={}, hspace=0pt, 
+                  newpar=true, color={}, bgcolor={},
+  }
+  % set defaults
+  , defaults
 }
 
+\newcommand{\@ntcovervspace}[1]{%
+  \ifoptionvoid{/@ntcoveropts/#1}{%
+    % \typeout{NT blank [#1=\option{/@ntcoveropts/#1}]}
+  }{%
+    % \typeout{NT notblank [#1=\option{/@ntcoveropts/#1}]}%
+    \IfInteger{\option{/@ntcoveropts/#1}}% USE vspace
+      {\vskip 0pt plus \option{/@ntcoveropts/#1}fill}%
+      {\vspace*{\option{/@ntcoveropts/#1}}}%
+    \ntforbreak
+  }%
+}
 \newcommand{\@ntcoverelement@ii}[2]{%
-		% #1 = cover ID (major-minor)
-		% #2 = code
-		% If vspace is integer then replace by n*\vfill
-		% otherwise it is absolute verstical space
-		\IfInteger{\option{/@ntcoveropts/vspace}}%
-		{\vskip 0pt plus \option{/@ntcoveropts/vspace}fill}%
-		{\vspace*{\option{/@ntcoveropts/vspace}}}%
-		%
-		% Typeset contents in a box
-		\@nt@makeboxwithcoverelement@iii{#1}{#2}{\@nt@coverelement}%
-		\noindent%
-		\hspace*{\option{/@ntcoveropts/hspace}}%
-		\iftoggle{/novathesis/debugcover}{% If in debug mode surround element in box
-		\setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.5pt}%
-		\vspace*{-\fboxrule}\hspace*{-\fboxrule}%
-		\fbox{\usebox{\@nt@coverelement}}%
-		}{\usebox{\@nt@coverelement}}%
-		\iftoggle{/@ntcoveropts/newpar}{\expandafter\par}{}%
+  % #1 = cover ID (major-minor)
+  % #2 = code
+  % If vspace is integer then replace by n*\vfill
+  % otherwise it is absolute verstical space
+  % \typeout{NT testblank [#1] =========}%
+  \ntfor\match:={vspace/\option{/novathesis/docdegree}/#1,vspace/\option{/novathesis/docdegree},vspace/#1,vspace}%
+        \do{\@ntcovervspace{\match}}%
+  % Typeset contents in a box
+  \@nt@makeboxwithcoverelement@iii{#1}{#2}{\@nt@coverelement}%
+  \noindent%
+  \hspace*{\option{/@ntcoveropts/hspace}}%
+  \iftoggle{/novathesis/debugcover}{% If in debug mode surround element in box
+    \setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.5pt}%
+    \vspace*{-\fboxrule}\hspace*{-\fboxrule}%
+    \fbox{\usebox{\@nt@coverelement}}%
+  }{\usebox{\@nt@coverelement}}%
+  \iftoggle{/@ntcoveropts/newpar}{\expandafter\par}{}%
 }
 
 \newcommand{\@nt@makeboxwithcoverelement@iii}[3]{%
-		% #1 = cover ID (major-minor)
-		% #2 = code
-		% #3 = boxname
-		\defifundef{\@mkcvelemwidth}{\newlength}%
-		\ifoptionblank{/@ntcoveropts/width}%
-		{\setlength{\@mkcvelemwidth}{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}\relax}}%
-		{\option{/@ntcoveropts/width}}%
-		\ifoptionblank{/@ntcoveropts/height}%
-		{}%
-		{\edefoption{/@ntcoveropts/height}\@mkcvelemheight}%
-		% Create destination boxes if undefined and save to it
-		\defifundef{#3}{\newsavebox}%
-		\begin{lrbox}{#3}%
-		\begin{minipage}[t][0pt][t]{0pt}%
-		\color{blue}\rule{0.000000000000001pt}{\option{/@ntcoveropts/minheight}}%
-		\end{minipage}
-		% Minipage definition is different if element height is given or not
-		\ifoptionblank{/@ntcoveropts/height}%
-		{\minipage[t][][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
-		{\minipage[t][\@mkcvelemheight][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
-		\ifoptionblank{/@ntcoveropts/color}{}{\color{\option{/@ntcoveropts/color}}}%
-		\option{/@ntcoveropts/alignmap}%
-		#2%
-		\endminipage%
-		\end{lrbox}%
-		\begin{lrbox}{#3}%
-		% Add background color if necessary
-		\ifoptionblank{/@ntcoveropts/bgcolor}%
-		{\usebox{#3}}%
-		{\colorbox{\option{/@ntcoveropts/bgcolor}}{\usebox{#2}}}%
-		\end{lrbox}%
+  % #1 = cover ID (major-minor)
+  % #2 = code
+  % #3 = boxname
+  \defifundef{\@mkcvelemwidth}{\newlength}%
+  \ifoptionblank{/@ntcoveropts/width}%
+    {\setlength{\@mkcvelemwidth}{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}\relax}}%
+    {\option{/@ntcoveropts/width}}%
+  \ifoptionblank{/@ntcoveropts/height}%
+    {}%
+    {\edefoption{/@ntcoveropts/height}\@mkcvelemheight}%
+  % Create destination boxes if undefined and save to it
+  \defifundef{#3}{\newsavebox}%
+  \begin{lrbox}{#3}%
+    \begin{minipage}[t][0pt][t]{0pt}%
+      \color{blue}\rule{0.000000000000001pt}{\option{/@ntcoveropts/minheight}}%
+    \end{minipage}
+    % Minipage definition is different if element height is given or not
+    \ifoptionblank{/@ntcoveropts/height}%
+        {\minipage[t][][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
+        {\minipage[t][\@mkcvelemheight][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
+            \ifoptionblank{/@ntcoveropts/color}{}{\color{\option{/@ntcoveropts/color}}}%
+            \option{/@ntcoveropts/alignmap}%
+            #2%
+        \endminipage%
+  \end{lrbox}%
+  \begin{lrbox}{#3}%
+    % Add background color if necessary
+    \ifoptionblank{/@ntcoveropts/bgcolor}%
+      {\usebox{#3}}%
+      {\colorbox{\option{/@ntcoveropts/bgcolor}}{\usebox{#2}}}%
+  \end{lrbox}%
 }
 
 \newcommand{\@ntfixspacing}[2]{%
@@ -1720,7 +1775,8 @@
 %% Printing chapters and similars
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\@nt@printifmaindoc@i}[1]{%
-		% \typeout{NT Attempt to load #1}%
+  % \typeout{NT Attempt to load #1}%
+  \NTRunHook{#1/pre}%
 	\ifmaindoc{% THEN it is a main document
 		\NTRunHook{#1/pre}%
 		\ifoptiondefined{/@nt/file/#1/VAL}{%
@@ -1730,6 +1786,7 @@
 		}{\typeout{NT PRINTIFMAINDOC #1 undefined}}%
 		\NTRunHook{#1/post}%
 	}{}% It is a plan or proposal type document
+  \NTRunHook{#1/post}%
 }
 
 \newcommand{\ntprintdedicatory}{\@nt@printifmaindoc@i{dedicatory}}
@@ -1878,8 +1935,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand*{\ntprintbib}[1][]{%
-		\printbibliography[#1]%
-		\ntfixspacing%
+  \NTRunHook{printbib/pre}%
+  \printbibliography[#1]%
+  \ntfixspacing%
+  \NTRunHook{printbib/post}%
 }
 
 
