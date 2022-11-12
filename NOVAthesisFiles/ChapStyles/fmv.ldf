@@ -9,7 +9,7 @@
 
 %%%%% Configure chapters, headers, footers, and page numbering
 \chapterstyle{section}
-\setlength{\beforechapskip}{0pt}%{3.5ex \@plus 1ex \@minus .2ex}
+\setlength{\beforechapskip}{-3ex}%{3.5ex \@plus 1ex \@minus .2ex}
 \setlength{\afterchapskip}{2ex \@plus .2ex}
 
 \renewcommand*{\chapnumfont}{\large\bfseries}

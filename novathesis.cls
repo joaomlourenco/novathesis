@@ -255,16 +255,10 @@
 	 fallback/.new choice={phd=phd, phdprop=phd, phdplan=phd, msc=msc, mscplan=msc},
 }
 
-\newcommand{\@ifdocclasscontain}[2]{%
-	% #1=document type
-	% %2=possible document calss 
-	\ifoptioncontains{/@nt/document/class/#1}{#2}%
-}
-
 % --------------------------------------------------------
 % Check if the document is of a specific class, i.e., bsc, msc, phd or main
 \newcommand{\ifdocclass}[1]{\ifoptionequal{/@nt/document/docclass}{#1}}
-\newcommand{\ifmaindoc}{\ifdocclass{main}}
+\newcommand{\ifmaindoc}{\ifoptioncontains{/@nt/document/docmain}{\option{/novathesis/docdegree}}}
 \newcommand{\ifphddoc}{\ifdocclass{phd}}
 \newcommand{\ifmscdoc}{\ifdocclass{msc}}
 \newcommand{\ifbscdoc}{\ifdocclass{bsc}}
@@ -842,7 +836,8 @@
 \newcommand*{\ntsetprintorder}[2]{%
 % #1 = frontmatter, mainmatter
 % #2 = list
-		\option@setlist[;]{/@nt/print/#1}{#2}}
+  % \typeout{[#1] [#2]}
+	\option@setlist[;]{/@nt/print/#1}{#2}}
 
 % \newcommand*{\ntremovefromprintorder}[2]{%
 % % #1 = frontmatter, mainmatter
@@ -1011,6 +1006,7 @@
 
 \ifdocunset{\ntsetup{docstatus=working}}{}
 
+\typeout{\theprintorder(frontmatter,\option{/novathesis/docstatus})}
 \ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\option{/novathesis/docstatus})}}%
 
 \ifoptionequal{/novathesis/spine}{unset}
@@ -1776,7 +1772,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\@nt@printifmaindoc@i}[1]{%
   % \typeout{NT Attempt to load #1}%
-  \NTRunHook{#1/pre}%
 	\ifmaindoc{% THEN it is a main document
 		\NTRunHook{#1/pre}%
 		\ifoptiondefined{/@nt/file/#1/VAL}{%
@@ -1786,7 +1781,6 @@
 		}{\typeout{NT PRINTIFMAINDOC #1 undefined}}%
 		\NTRunHook{#1/post}%
 	}{}% It is a plan or proposal type document
-  \NTRunHook{#1/post}%
 }
 
 \newcommand{\ntprintdedicatory}{\@nt@printifmaindoc@i{dedicatory}}
@@ -1985,8 +1979,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Quoting
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Author in a line by otself
+\renewcommand*{\mkcitation}[1]{\\[0.5ex](#1)}
+
 \newenvironment{ntquoting}[2][10cm]{%
-		\iftoggle{/novathesis/numberallpages}%
+	\iftoggle{/novathesis/numberallpages}%
 		{\thispagestyle{novathesis@frontmatter}}%
 		{\thispagestyle{empty}}%
 		\gdef\@ntquoting{#2}
@@ -1996,7 +1993,7 @@
 		\raggedleft%
 		\minipage{#1}%
 		\raggedleft\normalsize\itshape%
-}{%
+  }{%
 		\normalfont%
 		\endminipage%
 		\endminipage%

@@ -248,8 +248,9 @@
                         {logo,raise}%
       ){}{\def\@raise{0pt}}%
       \node[inner sep=0, anchor=center,
-            yshift=-\expanded{\thespine(box,logo,top)-0.5*\thespine(box,logo,len)},
-            xshift=-\novathesis@boxwidth*\@raise]
+            yshift=-\dimexpr\expanded{\thespine(box,logo,top)+(\thespine(box,logo,len)/2)},
+            xshift=-\novathesis@boxwidth*\@raise,
+					 ]
            at (current page.north)
               {\defifundef{\logobox}{\newsavebox}%
                \defifundef{\logoboxht}{\newlength}%
@@ -274,7 +275,7 @@
                                                      scale=\@scale]{\arg}}%
                  \fi
                }%
-               \usebox{\logobox}%
+               {\usebox{\logobox}}%
                % \includegraphics[angle=\@angle, scale=\@scale, align=c]{\arg}%
               };
     }{}%
@@ -293,7 +294,7 @@
       \node[inner sep=0, anchor=north, yshift=-(\dimexpr\expanded{\thespine(box,title,top)})
             , rectangle, minimum width=\novathesis@boxwidth, minimum height=\expanded{\thespine(box,title,len)}
             , fill=\@fcolor]
-           at (current page.north) 
+           at (current page.north)
               {\rotatebox{\thespine(text,angle)}{\hspace*{\thespine(box,margin)}\usebox{\mytitlebox}}};
     }{}
     % print degree IF DEFINED

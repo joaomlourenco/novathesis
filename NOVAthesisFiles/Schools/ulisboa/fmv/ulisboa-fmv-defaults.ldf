@@ -151,30 +151,10 @@
 \school(fr):={Faculty of Veterinary Medicine}
 \school(it):={Faculty of Veterinary Medicine}
 
-\adviserstring(a,1,m,en):={\MakeUppercase{\theadviserstring(a,1,m,en)}}
-\adviserstring(a,1,f,en):={\MakeUppercase{\theadviserstring(a,1,f,en)}}
-\adviserstring(a,2,m,en):={\MakeUppercase{\theadviserstring(a,2,m,en)}}
-\adviserstring(a,2,f,en):={\MakeUppercase{\theadviserstring(a,2,f,en)}}
-\adviserstring(c,1,m,en):={\MakeUppercase{\theadviserstring(c,1,m,en)}}
-\adviserstring(c,1,f,en):={\MakeUppercase{\theadviserstring(c,1,f,en)}}
-\adviserstring(c,2,m,en):={\MakeUppercase{\theadviserstring(c,2,m,en)}}
-\adviserstring(c,2,f,en):={\MakeUppercase{\theadviserstring(c,2,f,en)}}
-\adviserstring(ca,1,m,en):={\MakeUppercase{\theadviserstring(ca,1,m,en)}}
-\adviserstring(ca,1,f,en):={\MakeUppercase{\theadviserstring(ca,1,f,en)}}
-\adviserstring(ca,2,m,en):={\MakeUppercase{\theadviserstring(ca,2,m,en)}}
-\adviserstring(ca,2,f,en):={\MakeUppercase{\theadviserstring(ca,2,f,en)}}
-\adviserstring(a,1,m,pt):={\MakeUppercase{\theadviserstring(a,1,m,pt)}}
-\adviserstring(a,1,f,pt):={\MakeUppercase{\theadviserstring(a,1,f,pt)}}
-\adviserstring(a,2,m,pt):={\MakeUppercase{\theadviserstring(a,2,m,pt)}}
-\adviserstring(a,2,f,pt):={\MakeUppercase{\theadviserstring(a,2,f,pt)}}
-\adviserstring(c,1,m,pt):={\MakeUppercase{\theadviserstring(c,1,m,pt)}}
-\adviserstring(c,1,f,pt):={\MakeUppercase{\theadviserstring(c,1,f,pt)}}
-\adviserstring(c,2,m,pt):={\MakeUppercase{\theadviserstring(c,2,m,pt)}}
-\adviserstring(c,2,f,pt):={\MakeUppercase{\theadviserstring(c,2,f,pt)}}
-\adviserstring(ca,1,m,pt):={\MakeUppercase{\theadviserstring(ca,1,m,pt)}}
-\adviserstring(ca,1,f,pt):={\MakeUppercase{\theadviserstring(ca,1,f,pt)}}
-\adviserstring(ca,2,m,pt):={\MakeUppercase{\theadviserstring(ca,2,m,pt)}}
-\adviserstring(ca,2,f,pt):={\MakeUppercase{\theadviserstring(ca,2,f,pt)}}
+\@for\i:={a,1,m,en},{a,1,f,en},{a,2,m,en},{a,2,f,en},{c,1,m,en},{c,1,f,en},{c,2,m,en},{c,2,f,en},{ca,1,m,en},{ca,1,f,en},{ca,2,m,en},{ca,2,f,en},{t,1,m,en},{t,1,f,en},{t,2,m,en},{t,2,f,en},{a,1,m,pt},{a,1,f,pt},{a,2,m,pt},{a,2,f,pt},{c,1,m,pt},{c,1,f,pt},{c,2,m,pt},{c,2,f,pt},{ca,1,m,pt},{ca,1,f,pt},{ca,2,m,pt},{ca,2,f,pt},{t,1,m,pt},{t,1,f,pt},{t,2,m,pt},{t,2,f,pt}\do{%
+  \adviserstring(\i):={\MakeUppercase{\theadviserstring(\i)}}
+}
+
 
 \committeetitlestring(en):={\MakeUppercase{\thecommitteetitlestring(en)}}
 \committeetitlestring(pt):={\MakeUppercase{\thecommitteetitlestring(pt)}}
@@ -268,18 +248,19 @@
 \spine(year)={\thentdocdate(year)}
 \spine(text,angle)={-90}
 
-\spine(box,author,top)={2.0cm}
+\spine(box,author,top)={1.0cm}
 \spine(box,author,len)={4.0cm}
 
 \spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
-\spine(box,title,len)={16.7cm}
+\spine(box,title,len)={19.7cm}
 
 \spine(box,logo,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
-\spine(box,logo,len)={2.1cm}
+\spine(box,logo,len)={2.0cm}
 \spine(box,logo,align)={c}
 
 \spine(box,date,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
 \spine(box,date,len)={2.0cm}
+\spine(box,logo,align)={r}
 
 
 % Set margins for "normal" pages
@@ -431,7 +412,7 @@
   \end{minipage}%
   \hfill%
   \begin{minipage}[t]{0.465\textwidth}
-    \ntprintpersons[name]{1}{1}{adviser}{a,c}
+    \ntprintpersons[name]{1}{1}{adviser}{a,c,t}
   \end{minipage}%
   % \theadviserslabel(\option{/novathesis/docdegree},\option{/novathesis/coverlang})\\[3mm]%
   % \ntprintpersons{0.5}{1}{adviser}{a,c}%
