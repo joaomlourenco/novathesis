@@ -932,14 +932,14 @@
 \def\@ntsetuplevel{}
 
 \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@univ-defaults.ldf}{}
-		{\PackageWarning{novathesis}{Missing file “/\@nt@univ/\@nt@univ-defaults.ldf”}}
+		{\PackageError{novathesis}{Missing file “/\@nt@univ/\@nt@univ-defaults.ldf”}{}}
 
 \ntfor\match:={%
 		\@nt@univ/\@nt@schl/\@nt@univ-\@nt@schl-\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
 		\@nt@univ/\@nt@schl/\@nt@univ-\@nt@schl}\do{%
 					\IfFileExists{NOVAthesisFiles/Schools/\match-defaults.ldf}
 											 {\input{NOVAthesisFiles/Schools/\match-defaults.ldf}\ntforbreak}{}}
-[\PackageWarning{novathesis}{Missing file “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl-defaults.ldf”}]
+[\PackageError{novathesis}{Missing file “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl-defaults.ldf”}{}]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING MEMOIR
