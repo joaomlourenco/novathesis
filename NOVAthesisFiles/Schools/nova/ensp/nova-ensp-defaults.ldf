@@ -52,7 +52,7 @@
 % Spine info
 \spine(logo)={\theuniversity(logo)}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main,caps)}
+\spine(title)={\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main)}}
 \spine(year)={\thentdocdate(year)}
 
 % Set margins for "normal" pages

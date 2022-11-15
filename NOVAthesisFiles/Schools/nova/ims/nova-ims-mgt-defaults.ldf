@@ -59,7 +59,7 @@ for the degree of \emph{\thedegreename(en)}}
 \spine(logo,msc)={nova-ims-mgt-cover-ball}
 
 \spine(author)={\thedocauthor(name)}
-\spine(title)={\textbf{\emph{\thedoctitle(\option{/novathesis/coverlang},main,caps)}}}
+\spine(title)={\textbf{\emph{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main)}}}}
 \spine(date)={\thentdocdate(year)}
 
 \spine(text,angle)={90}
@@ -124,7 +124,7 @@ for the degree of \emph{\thedegreename(en)}}
   \preto{\chapterheadstart}{%
     \noindent\begin{minipage}[t][0pt][t]{\textwidth}
       \begin{center}%
-        \textbf{\Large\thedoctitle(\option{/@nt/currentlang},main,cover,caps)}%
+        \textbf{\Large\MakeTextUppercase{\thedoctitle(\option{/@nt/currentlang},main,cover)}}%
         \ifdatadefined{doctitle}(\option{/novathesis/coverlang}-sub,cover){%
           \\[6mm]%
           \textbf{\Large\thedoctitle(\option{/@nt/currentlang}-sub,cover)}%
@@ -180,7 +180,7 @@ for the degree of \emph{\thedegreename(en)}}
 % Title of Dissertation
 \ntaddtocover[vspace=0mm,height=7.4cm,align=l,inalign=b]{1-1}{%
     \fontsize{18}{18}\selectfont
-    \bfseries\itshape\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)%
+    \bfseries\itshape\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
     \ifdatadefined{doctitle}(\option{/novathesis/coverlang}-sub,cover){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
@@ -233,7 +233,7 @@ for the degree of \emph{\thedegreename(en)}}
 \ntaddtocover[vspace=2cm]{2-1}{%
     \centering%
     \fontsize{16}{16}\selectfont
-    \bfseries\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)%
+    \bfseries\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
     \ifdatadefined{doctitle}(\option{/novathesis/coverlang}-sub,cover){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%

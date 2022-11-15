@@ -125,7 +125,8 @@
 %%------------------------------------------------------------
 %% This class is based in “memoir”.  To set memoir options,
 %% edit “Config/0_memoir.tex”.
-\documentclass{novathesis}
+\pdfresettimer
+\documentclass{novathesis} 
 
   
 %============================================================
@@ -207,9 +208,12 @@
 
 %%------------------------------------------------------------
 \ntthesisfrontmatter      % Before the main text (TOC, etc) — Roman page numbering
+\typeout{TIME ntthesisfrontmatter=\the\pdfelapsedtime}
 %%------------------------------------------------------------
 \ntprint{covers}      % The cover page
+\typeout{TIME covers=\the\pdfelapsedtime}
 \ntprint{frontmatter}     % The default order is listed below, but can be changed 
+\typeout{TIME frontmatter=\the\pdfelapsedtime}
 %                         % at the School's “defaults.ldf” with
 %                         % "\ntsetprintorder{list_of_items}", where “list_of_items”
 %                         % may be any of:
@@ -225,9 +229,11 @@
 
 %%------------------------------------------------------------
 \ntthesismainmatter     % The main text — Arabic page numbering
+\typeout{TIME ntthesismainmatter=\the\pdfelapsedtime}
 %%------------------------------------------------------------
 % \optionlistdo{/novathesis/docmainmatter}{\csuse{ntprint#1}}%
 \ntprint{mainmatter}      % The default order is listed below, but can be changed 
+\typeout{TIME mainmatter=\the\pdfelapsedtime}
 %                         % at the School's “defaults.ldf” with
 %                         % "\ntsetprintorder{list_of_items}", where “list_of_items”
 %                         % are separated by ";" and may be any of:
@@ -237,6 +243,7 @@
 %                         %       appendices      % Print appendices, if any!
 %                         %       annexes         % Print annexes, if any!
 \ntprint{backcover}       % Print the back cover, if any!
+\typeout{TIME backcover=\the\pdfelapsedtime}
 
 %%------------------------------------------------------------
 \end{document}          % End of document

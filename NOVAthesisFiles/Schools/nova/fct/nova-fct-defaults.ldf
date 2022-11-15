@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% nova/fct/schl-defaults.ldf
+%% nova/fct//nova-fct-defaults.ldf
 %% NOVA thesis document template
 %%
 %% This work is licensed under the
@@ -11,7 +11,7 @@
 %%      - João Lourenço <joao.lourenco@fct.unl.pt>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE nova/fct/schl-defaults.ldf}%
+\typeout{NT FILE nova/fct//nova-fct-defaults.ldf}%
 
 % FCT-NOVA specific customization
 \ntmemoirsetup{openany}
@@ -136,11 +136,11 @@
 \ntaddtocover[vspace=5.3cm,align=l,height=3.0cm,inalign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{22}{21}\selectfont%
-    \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
-    \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
+    \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
+    \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
-      \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover,caps)}%
+      \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},sub,cover)}}%
     }{}%
   }{%
     \fontsize{17}{17}\selectfont%
@@ -159,11 +159,11 @@
     \thedocauthor(degree,\option{/novathesis/coverlang})%
   }{%
     \fontsize{22}{21}\selectfont%
-    \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
-    \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
+    \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
+    \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
-      \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover,caps)}%
+      \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},sub,cover)}}%
     }{}%
   }%
 }
@@ -208,11 +208,11 @@
 % Title of Dissertation (PhD)
 \ntaddtocover[vspace=3cm,align=l]{2-1}{%
   \fontsize{17}{17}\selectfont%
-  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
-  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
+  \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
+  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
     \\[4mm]%
     \fontsize{12}{12}\selectfont%
-    \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover,caps)}%
+    \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},sub,cover)}}%
   }{}%
 }
 
@@ -225,7 +225,7 @@
 }
 
 % The advisers
-\ntaddtocover[vspace=1,align=l]{2-1}{%
+\ntaddtocover[vspace=2,align=l]{2-1}{%
   \adviserstringfont():={\bfseries}%
   \fontsize{11}{11}\selectfont%
   \ntprintpersons{0.9}{2}{adviser}{\theadviserorder()}%

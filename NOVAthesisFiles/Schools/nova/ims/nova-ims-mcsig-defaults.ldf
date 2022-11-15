@@ -198,7 +198,7 @@
   \preto{\chapterheadstart}{%
     \noindent\begin{minipage}[t][0pt][t]{\textwidth}
       \begin{center}%
-        \textbf{\Large\thedoctitle(\option{/@nt/currentlang},main,cover,caps)}%
+        \textbf{\MakeTextUppercase{\Large\thedoctitle(\option{/@nt/currentlang},main,cover)}}%
         \ifdatadefined{doctitle}(\option{/novathesis/coverlang}-sub,cover){%
           \\[6mm]%
           \textbf{\Large\thedoctitle(\option{/@nt/currentlang}-sub,cover)}%
@@ -226,8 +226,8 @@
 }
 \ntaddtocover[align=l, vspace=-1cm+7pt, minheight=3cm, inalign=c]{1-1}{%
   \fontsize{17}{17}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}}%
-  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover,caps){%
+  \textcolor{imsdarkgrey}{\textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}}%
+  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
     % ~\\[-2ex]%
     \\
     \textcolor{imsmidgrey}{
@@ -271,7 +271,7 @@
 
 \ntaddtocover[align=c, vspace=1]{2-1}{%
   \fontsize{16}{16}\selectfont%
-  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover,caps)}%
+  \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
 }
 
 \ntaddtocover[align=c, vspace=1]{2-1}{%
@@ -298,8 +298,8 @@
   \adviserstringpre():={}%
   \adviserstringpost():={:&}%
   \adviserstringfont():={\bfseries}%
-  \ntprintpersons[name]{1.0}{2}{adviser}{a}\\
-  \ntprintpersons[name]{1.0}{2}{adviser}{c}\\
+  \ntprintpersons[list]{1.0}{2}{adviser}{a}\\
+  \ntprintpersons[list]{1.0}{2}{adviser}{c}\\
 }
 
 % Date
