@@ -2088,8 +2088,12 @@
 % Text style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.ldf}{}{%
-		\ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/chapstyle}}{}%
+\ifcsdef{chs@\option{/novathesis/chapstyle}}{%
+  \chapterstyle{\option{/novathesis/chapstyle}}%
+}{%
+  \InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.ldf}{}{%
+  		\ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/chapstyle}}{}%
+  }%
 }
 \InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/fontstyle}.ldf}{}{%
 		\ClassError{novathesis}{Invalid Font Style: \option{/novathesis/fontstyle}}{}%
@@ -2098,17 +2102,17 @@
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
 
 \AtBeginDocument{%
-		\makeatletter%
-		\hypersetup{%
+	\makeatletter%
+	\hypersetup{%
 		pdfauthor={\expanded{\thedocauthor(name)}},
 		pdftitle={\expanded{\thedoctitle(\option{/novathesis/mainlang},main)}},
 		pdfsubject={\expanded{\thedoctitle(\option{/novathesis/mainlang},sub)}},
-		}
+  }
 
-		%--------------------------------
-		% If subcaptin is laoded, let it hand handle subfigures
-		% otherwise use memoir subfigures
-		\@ifpackageloaded{subcaption}{}{\newsubfloat{figure}}
-		\makeatother
-		\newcommand{\@ntcite}[1]{\ifdef{\parencite}{\parencite{#1}}{\cite{#1}}}
+	%--------------------------------
+	% If subcaptin is laoded, let it hand handle subfigures
+	% otherwise use memoir subfigures
+	\@ifpackageloaded{subcaption}{}{\newsubfloat{figure}}
+	\newcommand{\@ntcite}[1]{\ifdef{\parencite}{\parencite{#1}}{\cite{#1}}}
+	\makeatother
 }
