@@ -252,7 +252,6 @@
 \options{/@nt/document/.cd,
 	 docclass/.new choice={phd=phd, phdprop=phd, phdplan=phd, msc=msc, mscplan=msc, bsc=bsc, plain=plain},
 	 docmain/.new list={phd, msc, bsc, plain},
-	 fallback/.new choice={phd=phd, phdprop=phd, phdplan=phd, msc=msc, mscplan=msc},
 }
 
 % --------------------------------------------------------
@@ -626,7 +625,6 @@
 %       configuration file “Config/1_novathesis.tex”
 %============================================================
 \input{Config/1_novathesis}
-\options{/@nt/document/fallback=\option{/novathesis/docdegree}}
 \options{/@nt/document/docclass=\option{/novathesis/docdegree}}
 % \NTRunHook{novathesis}
 
@@ -686,13 +684,13 @@
 						{\option{/novathesis/docdegree},%
 						 \option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
 						 \option{/novathesis/coverlang}},%
-						{\option{/@nt/document/fallback},%
+						{\option{/@nt/document/docclass},%
 						 \option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
 						 \option{/novathesis/coverlang}},%
 						{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
 						 \option{/novathesis/coverlang}},%
 						{\option{/novathesis/docdegree},\option{/novathesis/coverlang}},%
-						{\option{/@nt/document/fallback},\option{/novathesis/coverlang}},%
+						{\option{/@nt/document/docclass},\option{/novathesis/coverlang}},%
 						{\option{/novathesis/coverlang}}%
 	)%
 	\ifblank{\match}{\degreename(#1):={#2}}{\degreename(#1):={\match\ #2}}%
@@ -711,13 +709,13 @@
 						{\option{/novathesis/docdegree},%
 						 \option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
 						 \option{/novathesis/coverlang}},%
-						{\option{/@nt/document/fallback},%
+						{\option{/@nt/document/docclass},%
 						 \option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
 						 \option{/novathesis/coverlang}}%
 						{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
 						 \option{/novathesis/coverlang}},%
 						{\option{/novathesis/docdegree},\option{/novathesis/coverlang}},%
-						{\option{/@nt/document/fallback},\option{/novathesis/coverlang}},%
+						{\option{/@nt/document/docclass},\option{/novathesis/coverlang}},%
 						{\option{/novathesis/coverlang}}%
 	)%
 	\ifblank{\match}{\specialization(#1):={#2}}{\specialization(#1):={\match\ #2}}%
@@ -1010,7 +1008,7 @@
 \ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\option{/novathesis/docstatus})}}%
 
 \ifoptionequal{/novathesis/spine}{unset}
-		{\ifdocclass{working}{\ntsetup{spine=no}}{\ifmaindoc{\ntsetup{spine=trim}}{\ntsetup{spine=no}}}}{}
+		{\ifdocworking{\ntsetup{spine=no}}{\ifmaindoc{\ntsetup{spine=trim}}{\ntsetup{spine=no}}}}{}
 \ifdocfinal{\ntsetup{printcommittee=true}}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1100,35 +1098,35 @@
 	\ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{#2}{%
 		\datamatchtf{\match}{thesiscover}(%
 			 {\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
-			,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
+			,{\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
 			,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
 			,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},bgcolor}%
 			,{\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
-			,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
+			,{\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
 			,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
 			,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},image}%
 			,{\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
-			,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
+			,{\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
 			,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
 			,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},bgcolor}%
 			,{\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
-			,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
+			,{\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
 			,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
 			,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},image}%
 			,{\option{/novathesis/docdegree},#1,bgcolor}%
-			,{\option{/@nt/document/fallback},#1,bgcolor}%
+			,{\option{/@nt/document/docclass},#1,bgcolor}%
 			,{#1,bgcolor}%
 			,{bgcolor}%
 			,{\option{/novathesis/docdegree},#1,image}%
-			,{\option{/@nt/document/fallback},#1,image}%
+			,{\option{/@nt/document/docclass},#1,image}%
 			,{#1,image}%
 			,{image}%
 			,{\option{/novathesis/docdegree},#1,bgcolor}%
-			,{\option{/@nt/document/fallback},#1,bgcolor}%
+			,{\option{/@nt/document/docclass},#1,bgcolor}%
 			,{#1,bgcolor}%
 			,{bgcolor}%
 			,{\option{/novathesis/docdegree},#1,image}%
-			,{\option{/@nt/document/fallback},#1,image}%
+			,{\option{/@nt/document/docclass},#1,image}%
 			,{#1,image}%
 			,{image}%
 		){#2}{#3}%
@@ -1186,11 +1184,11 @@
     \NTRunHook{cover/#1/pre}%
     \datamatchtf{\match}{thesiscover}(%
                 {\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,textcolor}%
-               ,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr},#1,textcolor}%
+               ,{\option{/@nt/document/docclass},\option{/novathesis/degreeacr},#1,textcolor}%
                ,{\option{/novathesis/degreeacr},#1,textcolor}%
                ,{\option{/novathesis/degreeacr},textcolor}%
                ,{\option{/novathesis/docdegree},#1,textcolor}%
-               ,{\option{/@nt/document/fallback},#1,textcolor}%
+               ,{\option{/@nt/document/docclass},#1,textcolor}%
                ,{#1,textcolor}%
                ,{textcolor}%
     ){\color{\match}}{}%
@@ -1209,55 +1207,55 @@
 		% #2 = box name
 		\datamatch{\@nt@margin@top}{margin}(%
 		{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,top}%
-		 ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,top}%
+		 ,{cover,\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,top}%
 		 ,{cover,\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,top}%
 		 ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},top}%
-		 ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},top}%
+		 ,{cover,\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},top}%
 		 ,{cover,\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},top}%
 		 ,{cover,\option{/novathesis/docdegree},#1,top}%
-		 ,{cover,\option{/@nt/document/fallback},#1,top}%
+		 ,{cover,\option{/@nt/document/docclass},#1,top}%
 		 ,{cover,#1,top}%
 		 ,{cover,\option{/novathesis/docdegree},top}%
-		 ,{cover,\option{/@nt/document/fallback},top}%
+		 ,{cover,\option{/@nt/document/docclass},top}%
 		 ,{cover,top})%
 		\datamatch{\@nt@margin@bottom}{margin}(%
 		{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bottom}%
-		 ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bottom}%
+		 ,{cover,\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bottom}%
 		 ,{cover,\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bottom}%
 		 ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},bottom}%
-		 ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},bottom}%
+		 ,{cover,\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},bottom}%
 		 ,{cover,\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},bottom}%
 		 ,{cover,\option{/novathesis/docdegree},#1,bottom}%
-		 ,{cover,\option{/@nt/document/fallback},#1,bottom}%
+		 ,{cover,\option{/@nt/document/docclass},#1,bottom}%
 		 ,{cover,#1,bottom}%
 		 ,{cover,\option{/novathesis/docdegree},bottom}%
-		 ,{cover,\option{/@nt/document/fallback},bottom}%
+		 ,{cover,\option{/@nt/document/docclass},bottom}%
 		 ,{cover,bottom})%
 		\datamatch{\@nt@margin@left}{margin}(%
 		{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,left}%
-		 ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,left}%
+		 ,{cover,\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,left}%
 		 ,{cover,\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,left}%
 		 ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},left}%
-		 ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},left}%
+		 ,{cover,\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},left}%
 		 ,{cover,\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},left}%
 		 ,{cover,\option{/novathesis/docdegree},#1,left}%
-		 ,{cover,\option{/@nt/document/fallback},#1,left}%
+		 ,{cover,\option{/@nt/document/docclass},#1,left}%
 		 ,{cover,#1,left}%
 		 ,{cover,\option{/novathesis/docdegree},left}%
-		 ,{cover,\option{/@nt/document/fallback},left}%
+		 ,{cover,\option{/@nt/document/docclass},left}%
 		 ,{cover,left})%
 		\datamatch{\@nt@margin@right}{margin}(%
 		{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,right}%
-		 ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,right}%
+		 ,{cover,\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,right}%
 		 ,{cover,\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,right}%
 		 ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},right}%
-		 ,{cover,\option{/@nt/document/fallback},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},right}%
+		 ,{cover,\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},right}%
 		 ,{cover,\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},right}%
 		 ,{cover,\option{/novathesis/docdegree},#1,right}%
-		 ,{cover,\option{/@nt/document/fallback},#1,right}%
+		 ,{cover,\option{/@nt/document/docclass},#1,right}%
 		 ,{cover,#1,right}%
 		 ,{cover,\option{/novathesis/docdegree},right}%
-		 ,{cover,\option{/@nt/document/fallback},right}%
+		 ,{cover,\option{/@nt/document/docclass},right}%
 		 ,{cover,right})%
 		% \defifundef{#2}{\newsavebox}%
 		\@ntmakecoverbgcolor{#1}{\@cover@bgcolor@box}%
@@ -1288,11 +1286,11 @@
 		\defifundef{#2}{\newsavebox}%
 		\datamatchtf{\match}{thesiscover}(%
 		{\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
-		 ,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
+		 ,{\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
 		 ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
 		 ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},bgcolor}%
 		 ,{\option{/novathesis/docdegree},#1,bgcolor}%
-		 ,{\option{/@nt/document/fallback},#1,bgcolor}%
+		 ,{\option{/@nt/document/docclass},#1,bgcolor}%
 		 ,{#1,bgcolor}%
 		 ,{bgcolor}%
 		){\savebox{#2}{\@ntcoverbgcolor{#1}{\match}}}{}%
@@ -1316,11 +1314,11 @@
 		\defifundef{#2}{\newsavebox}%
 		\datamatchtf{\match}{thesiscover}(%
 		{\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
-		 ,{\option{/@nt/document/fallback},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
+		 ,{\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
 		 ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
 		 ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},image}%
 		 ,{\option{/novathesis/docdegree},#1,image}%
-		 ,{\option{/@nt/document/fallback},#1,image}%
+		 ,{\option{/@nt/document/docclass},#1,image}%
 		 ,{#1,image}%
 		 ,{image}%
 		){\savebox{#2}{\includegraphics[width=\paperwidth,height=\paperheight]{\match}}}{}%
@@ -1359,8 +1357,8 @@
     \options{/@ntcoveropts,defaults}%.
     \options{/@ntcoveropts,#2}%
     \options{/@ntcoveropts,alignmap=\option{/@ntcoveropts/align}}%
-    \StrCount{\option{/@ntcoveropts/status}}{\option{/@nt/document/fallback}}[\@nt@instatus]%
-    \StrCount{\option{/@ntcoveropts/degree}}{\option{/@nt/document/fallback}}[\@nt@indegree]%
+    \StrCount{,\option{/@ntcoveropts/status},}{,\option{/@nt/document/docclass},}[\@nt@instatus]%
+    \StrCount{,\option{/@ntcoveropts/degree},}{,\option{/@nt/document/docclass},}[\@nt@indegree]%
     \ifthenelse{%
               \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND%
               \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}%
@@ -2047,7 +2045,7 @@
 		\ifdatadefined{issertationstring}(\option{/novathesis/docdegree},\option{/novathesis/coverlang}){%
 		\thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
 		}{%
-		\thedissertationstring(\option{/@nt/document/fallback},\option{/novathesis/coverlang})%
+		\thedissertationstring(\option{/@nt/document/docclass},\option{/novathesis/coverlang})%
 		}
 }
 
