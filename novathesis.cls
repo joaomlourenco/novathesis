@@ -123,7 +123,7 @@
 %
 % \newcommand{\ifxeorlua}[2]{\ifxetexorluatex#1\else#2\fi}
 
-\newcommand{\ifxeorlua}{\ifthenelse{\boolean{luatex}\OR\boolean{xetex}}}
+\newcommand{\ifxeorlua}{\ifboolexpr{bool{luatex} or bool{xetex}}}
 % \ifdef{\iftutex}{
 		\newcommand{\ifxetexorluatex}{\iftutex}
 % }{
@@ -595,8 +595,10 @@
 
 % --------------------------------------------------------
 % Input the first file from the list (if any)
-\newcommand{\@nt@InputIfFileExists}[2]{\expandnext{\forcsvlist{\@nt@InputIfFileExists@i{#1}}}{#2}}
-\newcommand{\@nt@InputIfFileExists@i}[2]{\IfFileExists{#2#1}{\input{#2#1}\listbreak}{}}
+% \newcommand{\@nt@InputIfFileExists}[2]{\expandnext{\forcsvlist{\@nt@InputIfFileExists@i{#1}}}{#2}}
+% \newcommand{\@nt@InputIfFileExists@i}[2]{\IfFileExists{#2#1}{\input{#2#1}\listbreak}{}}
+\newcommand{\@nt@InputIfFileExists}[2]{\ntfor\arg:=#2\do{\@nt@InputIfFileExists@i{#1}{#2}}}
+\newcommand{\@nt@InputIfFileExists@i}[2]{\IfFileExists{#2#1}{\input{#2#1}\ntforbreak}{}}
 
 
 
@@ -648,15 +650,17 @@
 
 % --------------------------------------------------------
 % BABEL STUFF
-\edef\nt@alllangs{}
+% \edef\nt@alllangs{}
 \optionlistdo{/novathesis/langsused}{%
 	\options{/@nt/langshorttolong=#1}%
 	\ifoptionequal{/novathesis/mainlang}{#1}%
-								{\eappto\nt@alllangs{,main=\option{/@nt/langshorttolong}}}%
-								{\eappto\nt@alllangs{,\option{/@nt/langshorttolong}}}%
+                  {\PassOptionsToPackage{\option{/@nt/langshorttolong}}{babel}}%
+                  {\PassOptionsToPackage{main=\option{/@nt/langshorttolong}}{babel}}%
+                % {\eappto\nt@alllangs{,main=\option{/@nt/langshorttolong}}}%
+                % {\eappto\nt@alllangs{,\option{/@nt/langshorttolong}}}%
 }
 % \typeout{'NT PASSING TO BABEL = '\nt@alllangs}%
-\PassOptionsToPackage{\nt@alllangs}{babel}%
+% \PassOptionsToPackage{\nt@alllangs}{babel}%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1356,7 +1360,7 @@
   \ifblank{#3}{}{%
     \options{/@ntcoveropts,defaults}%.
     \options{/@ntcoveropts,#2}%
-    \options{/@ntcoveropts,alignmap=\option{/@ntcoveropts/align}}%
+    \options{/@ntcoveropts,alignmap=\option{/@ntcoveropts/halign}}%
     \StrCount{,\option{/@ntcoveropts/status},}{,\option{/@nt/document/docclass},}[\@nt@instatus]%
     \StrCount{,\option{/@ntcoveropts/degree},}{,\option{/@nt/document/docclass},}[\@nt@indegree]%
     \ifthenelse{%
@@ -1382,8 +1386,8 @@
   , status/.new value
   , degree/.new value
   % horizontal alighment and vertical alignments inside the box
-  , align/.new choice={c, l, r, j}
-  , inalign/.new choice={c, t, b}
+  , halign/.new choice={c, l, r, j}
+  , valign/.new choice={c, t, b}
   % height of the box (default = the natural height for the contents)
   , height/.new value
   % height of the box (default = the natural height for the contents)
@@ -1436,7 +1440,7 @@
                   vspace/1-1={}, vspace/2-1={},
                   vspace/msc/1-1={}, vspace/msc/2-1={}, 
                   vspace/phd/1-1={}, vspace/phd/2-1={}, 
-                  status={}, degree={}, align=c, inalign=c,
+                  status={}, degree={}, halign=c, valign=c,
                   height={}, height/phd={}, height/msc={}, 
                   minheight=0pt, width={}, hspace=0pt, 
                   newpar=true, color={}, bgcolor={},
@@ -1495,8 +1499,8 @@
     \end{minipage}
     % Minipage definition is different if element height is given or not
     \ifoptionblank{/@ntcoveropts/height}%
-        {\minipage[t][][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
-        {\minipage[t][\@mkcvelemheight][\option{/@ntcoveropts/inalign}]{\@mkcvelemwidth}}%
+        {\minipage[t][][\option{/@ntcoveropts/valign}]{\@mkcvelemwidth}}%
+        {\minipage[t][\@mkcvelemheight][\option{/@ntcoveropts/valign}]{\@mkcvelemwidth}}%
             \ifoptionblank{/@ntcoveropts/color}{}{\color{\option{/@ntcoveropts/color}}}%
             \option{/@ntcoveropts/alignmap}%
             #2%

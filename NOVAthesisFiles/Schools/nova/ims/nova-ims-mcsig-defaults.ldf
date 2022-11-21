@@ -31,7 +31,7 @@
 % Comiittee printing order
 \committeeorder():={c,r,m}% 
 
-\ntmemoirsetup{openany}
+\openany
 \ntsetup{secondcover=true}
 \ntsetup{statement=true}
 \ntsetup{printcopyright=false}
@@ -214,17 +214,17 @@
 
   % MSc PROGRAM
 % % Title of Dissertation
-% \ntaddtocover[align=l, vspace=0cm]{1-1}{%
+% \ntaddtocover[halign=l, vspace=0cm]{1-1}{%
 %   \ntcoverbackground%
 % }
 
 \newcommand{\mcsigdashes}{\hspace*{-4.7cm}\textcolor{imsmidgrey}{\hbox to 6.8cm{\leaders\hbox to 8.05pt{\hss \rule{4pt}{0.75pt} \hss}\hfil}}\\}
 
 % % Title of Dissertation
-\ntaddtocover[align=l, vspace=0pt, height=1cm, inalign=t]{1-1}{%
+\ntaddtocover[halign=l, vspace=0pt, height=1cm, valign=t]{1-1}{%
   \mcsigdashes
 }
-\ntaddtocover[align=l, vspace=-1cm+7pt, minheight=3cm, inalign=c]{1-1}{%
+\ntaddtocover[halign=l, vspace=-1cm+7pt, minheight=3cm, valign=c]{1-1}{%
   \fontsize{17}{17}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}}%
   \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
@@ -236,21 +236,21 @@
     }%
   }{}%
 }
-\ntaddtocover[align=l, vspace=7pt, height=1cm, inalign=t]{1-1}{%
+\ntaddtocover[halign=l, vspace=7pt, height=1cm, valign=t]{1-1}{%
   \mcsigdashes
 }
 
 % Author name
-\ntaddtocover[align=l, vspace=-1cm+7pt, height=1.5cm, inalign=c]{1-1}{%
+\ntaddtocover[halign=l, vspace=-1cm+7pt, height=1.5cm, valign=c]{1-1}{%
   \fontsize{15}{15}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\thedocauthor(name)}}%
 }
-\ntaddtocover[align=l, vspace=7pt, height=1cm, inalign=t]{1-1}{%
+\ntaddtocover[halign=l, vspace=7pt, height=1cm, valign=t]{1-1}{%
   \mcsigdashes
 }
 
 % Degree
-\ntaddtocover[align=l, vspace=-1cm+7pt]{1-1}{%
+\ntaddtocover[halign=l, vspace=-1cm+7pt]{1-1}{%
   \fontsize{12}{12}\selectfont%
   \textcolor{imsdarkgrey}{%
     \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
@@ -258,34 +258,34 @@
 }
 
 % Date
-\ntaddtocover[vspace=1, align=l]{1-1}{%
+\ntaddtocover[vspace=1, halign=l]{1-1}{%
   \textcolor{imsdarkgrey}{\textbf{\theschool(en)}}%
 }%
 
-\ntaddtocover[align=c, vspace=0]{2-1}{%
+\ntaddtocover[halign=c, vspace=0]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \textbf{\theschool(en)}\\
   \textbf{\theschool(pt)}\\
   \theuniversity(pt)\\
 }
 
-\ntaddtocover[align=c, vspace=1]{2-1}{%
+\ntaddtocover[halign=c, vspace=1]{2-1}{%
   \fontsize{16}{16}\selectfont%
   \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
 }
 
-\ntaddtocover[align=c, vspace=1]{2-1}{%
+\ntaddtocover[halign=c, vspace=1]{2-1}{%
   \fontsize{14}{14}\selectfont%
   by%
 }
 
-\ntaddtocover[align=c, vspace=1]{2-1}{%
+\ntaddtocover[halign=c, vspace=1]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \thedocauthor(name)%
 }
 
 % Degree
-\ntaddtocover[align=c, vspace=4]{2-1}{%
+\ntaddtocover[halign=c, vspace=4]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{%
     \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
@@ -293,7 +293,7 @@
 }
 
 % The committee
-\ntaddtocover[vspace=2,align=l]{2-1}{%
+\ntaddtocover[vspace=2,halign=l]{2-1}{%
   \fontsize{12}{12}\selectfont%
   \adviserstringpre():={}%
   \adviserstringpost():={:&}%
@@ -303,6 +303,6 @@
 }
 
 % Date
-\ntaddtocover[align=c, vspace=2]{2-1}{%
+\ntaddtocover[halign=c, vspace=2]{2-1}{%
   \thentdocdate(month), \thentdocdate(year)%
 }%

@@ -85,7 +85,7 @@
 }
 
 % LOGO
-\ntaddtocover[align=r,vspace=0cm]{1-1,2-1}{%
+\ntaddtocover[halign=r,vspace=0cm]{1-1,2-1}{%
   \includegraphics[width=2.9cm, height=3cm]{\theschool(logo)}%
 }
 
@@ -108,7 +108,7 @@
 }
 
 % Advisers
-\ntaddtocover[vspace=2,align=r]{1-1,2-1}{%
+\ntaddtocover[vspace=2,halign=r]{1-1,2-1}{%
   \adviserstringfont(a):={\bfseries}%
   \adviserstringfont(c):={\bfseries}%
   \fontsize{12}{12}\selectfont%

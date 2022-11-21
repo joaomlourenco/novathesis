@@ -93,11 +93,11 @@
 \definecolor{fcshblue}{RGB}{25,61,108}% Background title color
 
 
-\ntaddtocover[align=l, vspace=1.0cm, hspace=-1.2cm]{1-1}{%
+\ntaddtocover[halign=l, vspace=1.0cm, hspace=-1.2cm]{1-1}{%
     \includegraphics[width=9cm]{nova-fcsh-logo-color-horiz}%
 }
 
-\ntaddtocover[align=l, vspace=1.0cm, hspace=-1.2cm]{2-1}{%
+\ntaddtocover[halign=l, vspace=1.0cm, hspace=-1.2cm]{2-1}{%
   \null%
   \begin{tabular*}{{0.5\stockwidth}}[c]{@{}l@{}}%
     \includegraphics[width=9cm]{nova-fcsh-logo-color-horiz}%

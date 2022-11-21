@@ -7,7 +7,7 @@
 
 \typeout{NT FILE mova/ims/mova-ims-mgt-defaults.ldf}%
 
-\ntmemoirsetup{openany}
+\openany
 \ntsetup{printcopyright=false}
 \ntsetup{secondcover=true}
 \ntsetup{coverlang=en}        % The language for the cover (and second cover) page
@@ -165,20 +165,20 @@ for the degree of \emph{\thedegreename(en)}}
 %==================================================================
 
 % Title of Degree
-\ntaddtocover[vspace=0mm,height=6.35cm,align=l,inalign=t]{1-1}{%
+\ntaddtocover[vspace=0mm,height=6.35cm,halign=l,valign=t]{1-1}{%
   \includegraphics[height=5.8cm]{nova-ims-mgt-cover-text-lines}%
   \hfill%
   \raisebox{2mm}{\includegraphics[height=2.7cm]{nova-ims-mgt-cover-ball}}%
 }
 
-\ntaddtocover[vspace=1.5mm,height=8mm,align=l,inalign=t]{1-1}{%
+\ntaddtocover[vspace=1.5mm,height=8mm,halign=l,valign=t]{1-1}{%
   \color{gtblue}\rule{\textwidth}{8mm}%
 }
 
 
 
 % Title of Dissertation
-\ntaddtocover[vspace=0mm,height=7.4cm,align=l,inalign=b]{1-1}{%
+\ntaddtocover[vspace=0mm,height=7.4cm,halign=l,valign=b]{1-1}{%
     \fontsize{18}{18}\selectfont
     \bfseries\itshape\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
     \ifdatadefined{doctitle}(\option{/novathesis/coverlang}-sub,cover){%
@@ -188,30 +188,30 @@ for the degree of \emph{\thedegreename(en)}}
     }{}%
 }
 
-\ntaddtocover[vspace=0mm,height=10.5mm,align=l,inalign=b]{1-1}{%
+\ntaddtocover[vspace=0mm,height=10.5mm,halign=l,valign=b]{1-1}{%
   \color{gtblue}\rule{0.5\textwidth}{4mm}%
 }
 
 % Author name
-\ntaddtocover[vspace=0mm,height=1.7cm,align=l]{1-1}{%
+\ntaddtocover[vspace=0mm,height=1.7cm,halign=l]{1-1}{%
     \fontsize{16}{16}\selectfont%
     \thedocauthor(name)%
 }
 
-\ntaddtocover[vspace=0mm,height=7.5mm,align=l,inalign=t]{1-1}{%
+\ntaddtocover[vspace=0mm,height=7.5mm,halign=l,valign=t]{1-1}{%
   \color{gtblue}\rule{0.5\textwidth}{4mm}%
 }
 
-\ntaddtocover[vspace=0mm,height=70.5mm,align=l,inalign=t]{1-1}{%
+\ntaddtocover[vspace=0mm,height=70.5mm,halign=l,valign=t]{1-1}{%
   \fontsize{13}{13}\selectfont%
   \thedissertationstring(msc,en)%
 }
 
-\ntaddtocover[vspace=0mm,height=1mm,align=l,inalign=t]{1-1}{%
+\ntaddtocover[vspace=0mm,height=1mm,halign=l,valign=t]{1-1}{%
   \color{gtblue}\rule{\textwidth}{0.4mm}%
 }
 
-\ntaddtocover[vspace=1,,align=l]{1-1}{%
+\ntaddtocover[vspace=1,,halign=l]{1-1}{%
   % \begin{tabular}{@{}l@{\hspace{1cm}}l@{\hspace{1cm}}l@{}}
   \begin{minipage}{2.5cm}
   \includegraphics[width=13mm]{nova-ims-insignia-BW}
@@ -254,7 +254,7 @@ for the degree of \emph{\thedegreename(en)}}
 
 
 % Committee — only print the committee for the main classes
-% \ntaddtocover[align=r, vspace=2]{1-1,2-1}{%
+% \ntaddtocover[halign=r, vspace=2]{1-1,2-1}{%
 %   \fontsize{10}{10}\selectfont%
 %   \ntprintpersons{0.9}{2}{committee}{\thecommitteeorder()}%
 % }
@@ -272,28 +272,28 @@ for the degree of \emph{\thedegreename(en)}}
 %==================================================================
 
 % Title of Degree
-\ntaddtocover[vspace=10mm,height=6.35cm,align=r,inalign=t]{N-2}{%
+\ntaddtocover[vspace=10mm,height=6.35cm,halign=r,valign=t]{N-2}{%
   \raisebox{2mm}{\includegraphics[height=2.7cm]{nova-ims-mgt-cover-ball}}%
   \hfill%
   \includegraphics[height=5.8cm]{nova-ims-mgt-cover-text-lines}%
 }
 
-\ntaddtocover[vspace=1.5mm,height=15mm,align=l,inalign=t]{N-2}{%
+\ntaddtocover[vspace=1.5mm,height=15mm,halign=l,valign=t]{N-2}{%
   \color{gtblue}\rule{\textwidth}{8mm}%
 }
 
-\ntaddtocover[vspace=65mm,height=5mm,align=r,inalign=t]{N-2}{%
+\ntaddtocover[vspace=65mm,height=5mm,halign=r,valign=t]{N-2}{%
   \color{gtblue}\rule{0.5\textwidth}{4mm}%
 }
 
-\ntaddtocover[vspace=15mm,height=5mm,align=r,inalign=t]{N-2}{%
+\ntaddtocover[vspace=15mm,height=5mm,halign=r,valign=t]{N-2}{%
   \color{gtblue}\rule{0.5\textwidth}{4mm}%
 }
 
-\ntaddtocover[vspace=1,height=1mm,align=l,inalign=t]{N-2}{%
+\ntaddtocover[vspace=1,height=1mm,halign=l,valign=t]{N-2}{%
   \color{gtblue}\rule{\textwidth}{0.4mm}%
 }
 
-\ntaddtocover[vspace=3mm,align=r]{N-2}{%
+\ntaddtocover[vspace=3mm,halign=r]{N-2}{%
   \includegraphics[width=29mm]{Erasmus-Mundus-BW}
 }

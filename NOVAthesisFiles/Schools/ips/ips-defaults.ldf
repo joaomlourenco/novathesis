@@ -95,7 +95,7 @@
 }
 
 % Author name and Title
-\ntaddtocover[align=l, vspace=5cm]{1-1,2-1}{%
+\ntaddtocover[halign=l, vspace=5cm]{1-1,2-1}{%
   % Author name
   \begin{minipage}[t]{\@leftcol}%
     \fontsize{16}{16}\selectfont\raggedleft%
@@ -110,7 +110,7 @@
 }
 
 % Photo
-\ntaddtocover[align=l, vspace=1]{1-1}{%
+\ntaddtocover[halign=l, vspace=1]{1-1}{%
   \hfill%
   \begin{minipage}[t]{\@rightcol}%
   	\includegraphics[height=5.3cm]{\thefrontpageimage()}%
@@ -118,7 +118,7 @@
 }
 
 % Degree
-\ntaddtocover[align=l, vspace=1]{1-1}{%
+\ntaddtocover[halign=l, vspace=1]{1-1}{%
   \hfill%
   \begin{minipage}[t]{\@rightcol}%
     \fontsize{11}{11}\selectfont\raggedright%

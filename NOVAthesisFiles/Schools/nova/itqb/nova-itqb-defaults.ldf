@@ -16,7 +16,7 @@
 
 % FCT-NOVA specific customization
 \ntmemoirsetup{b5paper}
-\ntmemoirsetup{openany}
+\openany
 \ntsetup{secondcover=true}
 
 % Loading of fonts must be delayed until class "novathesis" is loaded
