@@ -224,17 +224,17 @@
   \sffamily%
 }
   % PHD PROGRAM
-% \ntaddtocover[align=l, vspace=0cm, degree=phd]{1-1}{%
+% \ntaddtocover[halign=l, vspace=0cm, degree=phd]{1-1}{%
 %   \ntcoverbackground%
 % }
 % INFORMATION MANAGEMENT
-\ntaddtocover[align=l, vspace=0cm, degree=phd]{1-1}{%
+\ntaddtocover[halign=l, vspace=0cm, degree=phd]{1-1}{%
   \fontsize{16}{16}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\themajorfield(\option{/novathesis/coverlang})}}%
 }
 
 % SPECIALIZATION IN
-\ntaddtocover[align=l, vspace=0.7cm, degree=phd]{1-1}{%
+\ntaddtocover[halign=l, vspace=0.7cm, degree=phd]{1-1}{%
   \fontsize{16}{16}\selectfont
   \textcolor{imsmidgrey}{%
     \textbf{\thespecializationstring(\option{/novathesis/coverlang})
@@ -243,19 +243,19 @@
 }
 
 % DISSERTATION TITLE
-\ntaddtocover[align=l, vspace=1.8cm, degree=phd]{1-1}{%
+\ntaddtocover[halign=l, vspace=1.8cm, degree=phd]{1-1}{%
   \fontsize{16}{16}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
 }
 
 % AUTHOR NAME
-\ntaddtocover[align=l, vspace=0.4cm, degree=phd]{1-1}{%
+\ntaddtocover[halign=l, vspace=0.4cm, degree=phd]{1-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\thedocauthor(name)}}%
 }
 
 % DISSERTATION TEXT
-\ntaddtocover[align=l, vspace=5, degree=phd]{1-1}{%
+\ntaddtocover[halign=l, vspace=5, degree=phd]{1-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{%
     \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
@@ -263,7 +263,7 @@
 }%
 
 % DATE
-\ntaddtocover[align=l, vspace=1cm, degree=phd]{1-1}{%
+\ntaddtocover[halign=l, vspace=1cm, degree=phd]{1-1}{%
   \fontsize{11}{11}\selectfont%
   \textcolor{imsdarkgrey}{%
     \textbf{\thentdocdate(month), \thentdocdate(year)}%
@@ -271,13 +271,13 @@
 }
 
 % SCHOOL
-\ntaddtocover[align=l, vspace=1cm, degree=phd]{1-1}{%
+\ntaddtocover[halign=l, vspace=1cm, degree=phd]{1-1}{%
   \fontsize{11}{11}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\theschool(en)}}%
 }
 
 % UNIVERSITY
-\ntaddtocover[align=l, vspace=0.0cm, degree=phd]{1-1}{%
+\ntaddtocover[halign=l, vspace=0.0cm, degree=phd]{1-1}{%
   \fontsize{11}{11}\selectfont%
   \textcolor{imsdarkgrey}{\theuniversity(\option{/novathesis/coverlang})}%
 }
@@ -285,12 +285,12 @@
 
   % MSc PROGRAM
 % % Title of Dissertation
-% \ntaddtocover[align=l, vspace=0cm, degree=msc]{1-1}{%
+% \ntaddtocover[halign=l, vspace=0cm, degree=msc]{1-1}{%
 %   \ntcoverbackground%
 % }
 
 % % Title of Dissertation
-\ntaddtocover[align=l, vspace=1, degree=msc]{1-1}{%
+\ntaddtocover[halign=l, vspace=1, degree=msc]{1-1}{%
   \fontsize{17}{17}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}}\\[0.25ex]%
   \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
@@ -303,43 +303,43 @@
 }
 
 % Author name
-\ntaddtocover[align=l, vspace=2, degree=msc]{1-1}{%
+\ntaddtocover[halign=l, vspace=2, degree=msc]{1-1}{%
   \fontsize{15}{15}\selectfont%
   \textcolor{imsdarkgrey}{\textbf{\thedocauthor(name)}}%
 }
 
 % Degree
-\ntaddtocover[align=l, vspace=2, degree=msc]{1-1}{%
+\ntaddtocover[halign=l, vspace=2, degree=msc]{1-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{%
     \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
   }%
 }
 
-\ntaddtocover[align=c, vspace=0]{2-1}{%
+\ntaddtocover[halign=c, vspace=0]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \textbf{\theschool(en)}\\
   \textbf{\theschool(pt)}\\
   \theuniversity(pt)\\
 }
 
-\ntaddtocover[align=c, vspace=1]{2-1}{%
+\ntaddtocover[halign=c, vspace=1]{2-1}{%
   \fontsize{16}{16}\selectfont%
   \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
 }
 
-\ntaddtocover[align=c, vspace=1]{2-1}{%
+\ntaddtocover[halign=c, vspace=1]{2-1}{%
   \fontsize{14}{14}\selectfont%
   by%
 }
 
-\ntaddtocover[align=c, vspace=1]{2-1}{%
+\ntaddtocover[halign=c, vspace=1]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \thedocauthor(name)%
 }
 
 % Degree
-\ntaddtocover[align=c, vspace=4]{2-1}{%
+\ntaddtocover[halign=c, vspace=4]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{%
     \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
@@ -347,7 +347,7 @@
 }
 
 % The committee
-\ntaddtocover[vspace=2,align=l]{2-1}{%
+\ntaddtocover[vspace=2,halign=l]{2-1}{%
   \fontsize{12}{12}\selectfont%
   \adviserstringpre():={}%
   \adviserstringpost():={:&}%
@@ -357,6 +357,6 @@
 }
 
 % Date
-\ntaddtocover[align=c, vspace=2]{2-1}{%
+\ntaddtocover[halign=c, vspace=2]{2-1}{%
   \thentdocdate(month), \thentdocdate(year)%
 }%

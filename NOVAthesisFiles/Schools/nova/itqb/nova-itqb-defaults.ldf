@@ -16,7 +16,7 @@
 
 % FCT-NOVA specific customization
 \ntmemoirsetup{b5paper}
-\ntmemoirsetup{openany}
+\openany
 \ntsetup{secondcover=true}
 
 % Loading of fonts must be delayed until class "novathesis" is loaded
@@ -187,28 +187,28 @@
 
 \ntaddtocover{1-1}{%
   \datamatch{\@nt@margin@top}{margin}({cover,\option{/novathesis/docdegree},1-1,top},%
-                                       {cover,\option{/@nt/document/fallback},1-1,top},%
+                                       {cover,\option{/@nt/document/docclass},1-1,top},%
                                        {cover,1-1,top},
                                        {cover,\option{/novathesis/docdegree},top},%
-                                       {cover,\option{/@nt/document/fallback},top},%
+                                       {cover,\option{/@nt/document/docclass},top},%
                                        {cover,top})%
   % \datamatch{\@nt@margin@bottom}{margin}({cover,\option{/novathesis/docdegree},#1,bottom},%
-  %                                    {cover,\option{/@nt/document/fallback},#1,bottom},%
+  %                                    {cover,\option{/@nt/document/docclass},#1,bottom},%
   %                                    {cover,\option{/novathesis/docdegree},bottom},%
   %                                     {cover,#1,bottom},
-  %                                    {cover,\option{/@nt/document/fallback},bottom},%
+  %                                    {cover,\option{/@nt/document/docclass},bottom},%
   %                                    {cover,bottom})%
   \datamatch{\@nt@margin@left}{margin}({cover,\option{/novathesis/docdegree},1-1,left},%
-                                       {cover,\option{/@nt/document/fallback},1-1,left},%
+                                       {cover,\option{/@nt/document/docclass},1-1,left},%
                                        {cover,1-1,left},
                                        {cover,\option{/novathesis/docdegree},left},%
-                                       {cover,\option{/@nt/document/fallback},left},%
+                                       {cover,\option{/@nt/document/docclass},left},%
                                        {cover,left})%
   \datamatch{\@nt@margin@right}{margin}({cover,\option{/novathesis/docdegree},1-1,right},%
-                                       {cover,\option{/@nt/document/fallback},1-1,right},%
+                                       {cover,\option{/@nt/document/docclass},1-1,right},%
                                        {cover,1-1,right},
                                        {cover,\option{/novathesis/docdegree},right},%
-                                       {cover,\option{/@nt/document/fallback},right},%
+                                       {cover,\option{/@nt/document/docclass},right},%
                                        {cover,right})%
     % Text in rectangle
   \setbox0=\hbox{\scalebox{1.7}{\bfseries\thentdocdate(year)}}
@@ -249,7 +249,7 @@
     % Dissertation string
     \node [inner sep=0pt,anchor=north west, yshift={\therectangle(itqb,top)+31.0mm}]
                     {\fontsize{13}{13}\selectfont
-                     \thedissertationstring(\option{/@nt/document/fallback},%
+                     \thedissertationstring(\option{/@nt/document/docclass},%
                                             \option{/novathesis/coverlang})};
     % Major field
     \node [inner sep=0pt,anchor=north west, yshift={\therectangle(itqb,top)+22.0mm}]

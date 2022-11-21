@@ -11,7 +11,7 @@
 % memoir customization
 %-----------------------------------------------------------------
 \ntmemoirsetup{12pt}   % A4paper with main text at 11pt
-\ntmemoirsetup{openany}         % Two print single paged
+\openany         % Two print single paged
 
 %-----------------------------------------------------------------
 % novathesis customization
@@ -193,13 +193,13 @@
 
 
 % University and School logos
-\ntaddtocover[vspace=-0.6mm,align=l,height=2.6cm]{1-1}{%
+\ntaddtocover[vspace=-0.6mm,halign=l,height=2.6cm]{1-1}{%
   \includegraphics[height=2.5cm]{\theuniversity(logo,RGB)}%
   \includegraphics[height=2.5cm]{\theschool(logo,RGB)}%
 }
 
 % University and School logos
-\ntaddtocover[vspace=-0.6mm,,align=l,height=2.6cm]{2-1}{%
+\ntaddtocover[vspace=-0.6mm,,halign=l,height=2.6cm]{2-1}{%
   \hspace*{-0.5pt}%
   \includegraphics[height=2.5cm]{\theuniversity(logo,GRAY)}%
   \hspace{1pt}%
@@ -208,7 +208,7 @@
 
 
 % University and School names
-\ntaddtocover[vspace=1cm,align=l,height=5.25cm,inalign=t]{1-1,2-1}{%
+\ntaddtocover[vspace=1cm,halign=l,height=5.25cm,valign=t]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
   \addfontfeature{LetterSpace=2.5}%
   \textbf{\theuniversity(\option{/novathesis/coverlang})}%
@@ -218,21 +218,21 @@
 }
 
 % Author name
-\ntaddtocover[vspace=0mm,align=l]{1-1,2-1}{%
+\ntaddtocover[vspace=0mm,halign=l]{1-1,2-1}{%
   \fontsize{16}{16}\selectfont%
   \addfontfeature{LetterSpace=3.5}%
   \thedocauthor(name)%
 }
 
 % Title of Dissertation
-\ntaddtocover[vspace=0.8cm,align=l,height=5.5cm,inalign=t]{1-1,2-1}{%
+\ntaddtocover[vspace=0.8cm,halign=l,height=5.5cm,valign=t]{1-1,2-1}{%
   \fontsize{17pt}{20.4bp}\selectfont%
   \addfontfeature{LetterSpace=2.9}%
   \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}
 }
 
 % Degree info
-\ntaddtocover[vspace=0mm,align=l,height=3.9cm,inalign=t]{2-1}{%
+\ntaddtocover[vspace=0mm,halign=l,height=3.9cm,valign=t]{2-1}{%
   \vfill
   \fontsize{17pt}{20.4bp}\selectfont%
   \thedoctype(\option{/novathesis/coverlang},\option{/novathesis/docdegree})%
@@ -245,14 +245,14 @@
 }
 
 % Advisers
-\ntaddtocover[vspace=0.5cm,align=l]{2-1}{%
+\ntaddtocover[vspace=0.5cm,halign=l]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \theadvisersrt(\option{/novathesis/coverlang})\\%
   \textbf{\ntprintpersons{0.9}{0}{adviser}{a,c}}%
 }
 
 % Date
-\ntaddtocover[vspace=1,align=l]{1-1,2-1}{%
+\ntaddtocover[vspace=1,halign=l]{1-1,2-1}{%
   \fontsize{11}{11}\selectfont%
   % \ifdraftdoc
     % \textbf{DRAFT: \today}

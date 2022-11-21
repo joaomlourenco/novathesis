@@ -123,7 +123,7 @@
 }
 
 % School
-\ntaddtocover[height=2.5cm, inalign=t]{1-1,2-1}{%
+\ntaddtocover[height=2.5cm, valign=t]{1-1,2-1}{%
   \fontseries{mc}\fontsize{12}{12}\selectfont%
   \MakeUppercase{\theuniversity(\option{/novathesis/coverlang})}\\[2mm]%
   \MakeUppercase{\theschool(\option{/novathesis/coverlang})}\\[2mm]%
@@ -133,7 +133,7 @@
 } 
 
 % Logo
-\ntaddtocover[vspace=0.5cm, height=5cm, inalign=t]{1-1,2-1}{%
+\ntaddtocover[vspace=0.5cm, height=5cm, valign=t]{1-1,2-1}{%
 	\ifphddoc%
     {\hspace*{7mm}\includegraphics[height=4.55cm]{ulisboa-fc-logo-vert}}%
     {\includegraphics[width=7cm]{ulisboa-fc-logo-horiz}}%

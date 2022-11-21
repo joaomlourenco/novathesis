@@ -14,7 +14,7 @@
 \typeout{NT FILE nova/fct//nova-fct-defaults.ldf}%
 
 % FCT-NOVA specific customization
-\ntmemoirsetup{openany}
+\openany
 \ntsetup{secondcover=true}
 
 % Loading of fonts must be delayed until class "novathesis" is loaded
@@ -126,14 +126,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Department name
-\ntaddtocover[vspace=1.25mm,align=l,hspace=6.1cm,height=2.0cm,inalign=t]{1-1}{%
+\ntaddtocover[vspace=1.25mm,halign=l,hspace=6.1cm,height=2.0cm,valign=t]{1-1}{%
   % \ntcoverbackground%
   \fontsize{14}{14}\selectfont%
   \MakeTextUppercase{\thedepartment(\option{/novathesis/coverlang})}%
 }
 
 % Title of Dissertation (PhD) / The author name (MSc)
-\ntaddtocover[vspace=5.3cm,align=l,height=3.0cm,inalign=c]{1-1}{%
+\ntaddtocover[vspace=5.3cm,halign=l,height=3.0cm,valign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{22}{21}\selectfont%
     \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
@@ -151,7 +151,7 @@
 }
 
 % The author name (PhD) / Title of Dissertation (MSc)
-\ntaddtocover[vspace=3.0cm,align=l,height=3cm,inalign=c]{1-1}{%
+\ntaddtocover[vspace=3.0cm,halign=l,height=3cm,valign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{17}{17}\selectfont%
     \textbf{\MakeTextUppercase{\thedocauthor(name)}}\\[2mm]%
@@ -169,7 +169,7 @@
 }
 
 % Date
-\ntaddtocover[vspace=1,align=l]{1-1}{%
+\ntaddtocover[vspace=1,halign=l]{1-1}{%
   \fontsize{14}{13}\selectfont%
   \ifmaindoc{}{\thedissertationplan(\option{/novathesis/docdegree})}%
   % \ifoptionequal{/novathesis/docdegree}{mscplan}{Dissertation Plan\\[1pt]}{}%
@@ -189,7 +189,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % LOGOS
-\ntaddtocover[vspace=1.0mm,hspace=-2.6cm,align=l,height=2.0cm,inalign=t]{2-1}{%
+\ntaddtocover[vspace=1.0mm,hspace=-2.6cm,halign=l,height=2.0cm,valign=t]{2-1}{%
   \vspace*{-4mm}%
   \begin{minipage}[b]{8.7cm}%
   \includegraphics[width=2.15cm]{\expanded{\theuniversity(logo)}}%
@@ -206,7 +206,7 @@
 }
 
 % Title of Dissertation (PhD)
-\ntaddtocover[vspace=3cm,align=l]{2-1}{%
+\ntaddtocover[vspace=3cm,halign=l]{2-1}{%
   \fontsize{17}{17}\selectfont%
   \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
   \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
@@ -217,7 +217,7 @@
 }
 
 % The author name
-\ntaddtocover[vspace=1,align=l]{2-1}{%
+\ntaddtocover[vspace=1,halign=l]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \textbf{\MakeTextUppercase{\thedocauthor(name)}}\\[2mm]%
   \fontsize{14}{14}\selectfont%
@@ -225,14 +225,14 @@
 }
 
 % The advisers
-\ntaddtocover[vspace=2,align=l]{2-1}{%
+\ntaddtocover[vspace=2,halign=l]{2-1}{%
   \adviserstringfont():={\bfseries}%
   \fontsize{11}{11}\selectfont%
   \ntprintpersons{0.9}{2}{adviser}{\theadviserorder()}%
 }
 
 % The committee
-\ntaddtocover[vspace=1,hspace=3.5cm,align=l]{2-1}{%
+\ntaddtocover[vspace=1,hspace=3.5cm,halign=l]{2-1}{%
   \committeetitlestringfont():={\bfseries}%
   \committeestringfont():={\bfseries}%
   \fontsize{10}{10}\selectfont%
@@ -240,7 +240,7 @@
 }
 
 % Date
-\ntaddtocover[vspace=1,align=l]{2-1}{%
+\ntaddtocover[vspace=1,halign=l]{2-1}{%
   \fontsize{10}{10}\selectfont%
   \ifoptionequal{/novathesis/docdegree}{mscplan}{Dissertation Plan\\[1pt]}{}%
   \MakeTextUppercase{\thedegreename(\option{/novathesis/coverlang})}

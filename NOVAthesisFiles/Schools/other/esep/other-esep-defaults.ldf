@@ -73,7 +73,7 @@
 }
 
 % Title of Dissertation 1
-\ntaddtocover[vspace=6.5cm, height=4cm, inalign=t]{1-1}{%
+\ntaddtocover[vspace=6.5cm, height=4cm, valign=t]{1-1}{%
     \centering%
     \fontsize{15}{15}\selectfont%
     \MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}\\[1ex]%
@@ -82,7 +82,7 @@
 }
 
 % % Title of Dissertation 2
-\ntaddtocover[vspace=6.5cm, height=4cm, inalign=t]{2-1}{%
+\ntaddtocover[vspace=6.5cm, height=4cm, valign=t]{2-1}{%
     \centering%
     \fontsize{15}{15}\selectfont\scshape%
     \thedoctitle(\option{/novathesis/coverlang},main,cover)\\[1ex]%
