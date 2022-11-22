@@ -1157,10 +1157,10 @@
 
 \newcommand{\ntprintcoverpair}[1]{%
   % #1 = major cover ID
-  \typeout{COVER [#1]}%
-  \ifoptiondefined{/@nt/file/cover/#1}{%
-    \typeout{COVER [\option{/@nt/file/cover/#1}}%
-    \optionlistdo{/@nt/file/cover/#1}{\bgroup\thispagestyle{empty}\@ntloadfile@i{##1}\egroup\clearforchapter}
+  \ifoptiondefined{/@nt/file/cover/1}{%
+    \ifoptiondefined{/@nt/file/cover/#1}{%
+      \optionlistdo{/@nt/file/cover/#1}{\bgroup\thispagestyle{empty}\@ntloadfile@i{##1}\egroup\clearforchapter}
+    }{}%
   }{%
     \IfStrEqCase{#1}{%
       {1}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}\clearforchapter}%
