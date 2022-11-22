@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-10-25 [6.10.12]
+%% Version 2022-11-22 [6.10.13]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}[2019-10-01]
-\ProvidesClass{novathesis}[2022-10-25 novathesis template]
+\ProvidesClass{novathesis}[2022-11-22 novathesis template]
 
 
 %============================================================
@@ -243,6 +243,7 @@
 	chapter=Chapters, 
 	appendix=Chapters, 
 	annex=Chapters,
+	cover=Chapters, 
 }}
 
 
@@ -1156,12 +1157,18 @@
 
 \newcommand{\ntprintcoverpair}[1]{%
   % #1 = major cover ID
-  \IfStrEqCase{#1}{%
-    {1}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}\clearforchapter}%
-    {2}{\iftoggle{/novathesis/secondcover}
-                 {\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}\clearforchapter}{}}%
-    {N}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}}%
-  }[\ClassWarning{Invalid cover number: #1}{}]%
+  \typeout{COVER [#1]}%
+  \ifoptiondefined{/@nt/file/cover/#1}{%
+    \typeout{COVER [\option{/@nt/file/cover/#1}}%
+    \optionlistdo{/@nt/file/cover/#1}{\bgroup\thispagestyle{empty}\@ntloadfile@i{##1}\egroup\clearforchapter}
+  }{%
+    \IfStrEqCase{#1}{%
+      {1}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}\clearforchapter}%
+      {2}{\iftoggle{/novathesis/secondcover}
+                   {\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}\clearforchapter}{}}%
+      {N}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}}%
+    }[\ClassWarning{Invalid cover number: #1}{}]%
+  }
 }
 
 \newcommand{\ntprintcoversingle}[2]{%
