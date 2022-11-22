@@ -737,12 +737,17 @@
 	% #2 = lang
 	% #3 = value
 	% \typeout{NT TITLE [#1] [#2] [#3]}%
-	\doctitle(#2,#1)={\ntnolinebreak{#3}}%
-	\doctitle(#2,#1,cover)={#3}%
-	\IfStrEq{#1}{main}{\doctitle(#2,spine)={\expanded{\ntnolinebreak{#3}}}}{}%
+  \StrSubstitute{#3}{\\}{ }[\@nt@cleantitle]
+  % \typeout{XXXX [\@nt@cleantitle]}\aaa
+	\doctitle(#2,#1):={\@nt@cleantitle}%
+	\doctitle(#2,#1,cover):={#3}%
+	\IfStrEq{#1}{main}{\doctitle(#2,spine):={\@nt@cleantitle}}{}%
+  % \doctitle(#2,#1):={\ntnolinebreak{#3}}%
+  % \doctitle(#2,#1,cover):={#3}%
+  % \IfStrEq{#1}{main}{\doctitle(#2,spine):={\ntnolinebreak{#3}}}{}%
 }
 
-\newcommand{\ntnolinebreak}[1]{{\def\\{\ }#1}}
+% \newcommand{\ntnolinebreak}[1]{{\def\\{\ }#1}}
 % --------------------------------------------------------
 
 
@@ -756,8 +761,8 @@
 \def\ntdate#1{\@ntdate@i(#1,)}
 \def\@ntdate@i(#1,#2){%
 	\StrGobbleRight{#2}{1}[\@ntmonth]%
-	\ntdocdate(year)={#1}%
-	\ntdocdate(month)={\@ntmonth}%
+	\ntdocdate(year):={#1}%
+	\ntdocdate(month):={\@ntmonth}%
 }
 
 
@@ -2021,7 +2026,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Keywords
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\providecommand{\keywords}[1]{%  
+\providecommand{\keywords}[1]{%
 		\NTRunHook{keywords/pre}%
 		% \NTRunHook{keywords/#1/pre}%
 		\def\and{\unskip\datadefault{keywordssep}(\option{/@nt/currentlang})}%
@@ -2104,11 +2109,14 @@
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
 
 \AtBeginDocument{%
-	\makeatletter%
+  % \makeatletter%
+  % \typeout{XXX [\thedocauthor(name)]}
+  % \typeout{XXX [\thedoctitle(\option{/novathesis/mainlang},main)]}
+  % \typeout{XXX [\thedoctitle(\option{/novathesis/mainlang},sub)]}
 	\hypersetup{%
-		pdfauthor={\expanded{\thedocauthor(name)}},
-		pdftitle={\expanded{\thedoctitle(\option{/novathesis/mainlang},main)}},
-		pdfsubject={\expanded{\thedoctitle(\option{/novathesis/mainlang},sub)}},
+		pdfauthor={\thedocauthor(name)},
+		pdftitle={\thedoctitle(\option{/novathesis/mainlang},main)},
+		pdfsubject={\thedoctitle(\option{/novathesis/mainlang},sub)},
   }
 
 	%--------------------------------

@@ -58,8 +58,8 @@
       \if\@data@tmp#3\relax#4\else#5\fi%
     }{#5}}
 % \def\datadefault#1(#2){\ifdatadefined{#1}(#2){\csname the#1\endcsname(#2)}{\csname the#1\endcsname()}}
-\def\datadefault#1(#2){\ifdatadefined{#1}(#2){\csuse{the#1}(#2)}
-                                     {\ifdatadefined{#1}(){\csuse{the#1}()}{}}}
+\def\datadefault#1(#2){\ifdatadefined{#1}(#2){\csname the#1\endcsname(#2)}
+                                     {\ifdatadefined{#1}(){\csname the#1\endcsname()}{}}}
 
 \def\set@memory#1#2=#3{\if#1*\expandafter\gdef\csname#2\endcsname{#3}%
                          \else\expandafter\def\csname#2\endcsname{#3}\fi}
