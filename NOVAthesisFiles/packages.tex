@@ -75,17 +75,17 @@
 %--------------------------------
 % “hyperref” stuff
 \RequirePackage[%
-  , bookmarksnumbered%
-  , breaklinks%
+  , bookmarksnumbered=true%
+  , breaklinks=true%
   , colorlinks=true%
-  , pdfdisplaydoctitle%
-  , unicode%
+  , pdfdisplaydoctitle=true%
+  , unicode=true%
 ]{hyperref}%
 \@nt@fixhyperref%
-\pdfstringdefDisableCommands{%
-  \def\\{}%
-  \def\texttt#1{#1}%
-}%
+% \pdfstringdefDisableCommands{%
+%   \def\\{}%
+%   \def\texttt#1{#1}%
+% }%
 \RequirePackage{bookmark}%
 % \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
 
