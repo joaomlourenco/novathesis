@@ -1026,7 +1026,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING ADDITINAL FILES AFTER LOADING MEMOIR
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\@ntloadfile@i}[1]{\IfFileExists{#1}{\input{#1}}{}}
+\newcommand{\@ntloadfile@i}[2][]{\IfFileExists{#2}{\input{#2}}{#1}}
 
 \newcommand{\@ntloadfiles@ii}[2][VAL]{%
 		% #1=KEY
@@ -1164,7 +1164,7 @@
   % #1 = major cover ID
   \ifoptiondefined{/@nt/file/cover/1}{%
     \ifoptiondefined{/@nt/file/cover/#1}{%
-      \optionlistdo{/@nt/file/cover/#1}{\bgroup\thispagestyle{empty}\@ntloadfile@i{##1}\egroup\clearforchapter}
+      \optionlistdo{/@nt/file/cover/#1}{\bgroup\thispagestyle{empty}\@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}\egroup\clearforchapter}
     }{}%
   }{%
     \IfStrEqCase{#1}{%
