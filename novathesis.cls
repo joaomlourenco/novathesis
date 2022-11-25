@@ -911,7 +911,8 @@
 	% #2 = list of covers where the code block should be applied
 	% #3 = the block code
 	% \typeout{NT ntaddtocover [/@nt/cover/\@nt@univ/\@nt@schl/element=#1]}%
-	\forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
+  % \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
+  \ntfor\arg:={#2}\do{\@ntaddtocover@iii{#1}{#3}{\arg}}%
 }
 
 \newcommand*{\@ntaddtocover@iii}[3]{%
@@ -919,7 +920,8 @@
 	% #1 = cover atrtibutes
 	% #2 = the block code
 	% #3 = covers where the code block should be applied
-	\ntfor\arg:={#3}\do{\options{/@nt/cover/\@nt@univ/\@nt@schl/\arg/.cpush={{#1}=*={#2}}}}}
+	\ntfor\arg:={#3}\do{\options{/@nt/cover/\@nt@univ/\@nt@schl/\arg/.cpush={{#1}=*={#2}}}}%
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1051,10 +1053,12 @@
 % --------------------------------------------------------
 % LOAD A DEFAULT COPYRIGHT PAGE DEFINITION
 \newcommand{\@nt@AddFileIfExists}[3]{%
-	\expandnext{\forcsvlist{\@nt@AddFileIfExists@i{#1}{#2}}}{#3}%
+  % \expandnext{\forcsvlist{\@nt@AddFileIfExists@i{#1}{#2}}}{#3}%
+  \ntfor\arg:=#3\do{\@nt@AddFileIfExists@i{#1}{#2}{\arg}}%
 }
 
-\newcommand{\@nt@AddFileIfExists@i}[3]{\IfFileExists{#3#2}{\ntaddfile{#1}{#3#2}\listbreak}{}}
+\newcommand{\@nt@AddFileIfExists@i}[3]{\IfFileExists{#3#2}{\ntaddfile{#1}{#3#2}\ntforbreak}{}}
+% \newcommand{\@nt@AddFileIfExists@i}[3]{\IfFileExists{#3#2}{\ntaddfile{#1}{#3#2}\listbreak}{}}
 
 \ifmaindoc{% only print if a main document
 	\iftoggle{/novathesis/printcopyright}{% if copuyright toggle is on
@@ -1152,7 +1156,8 @@
 \newcommand{\ntprintcovers}[1][1,2]{%
 	\pdfbookmark[-1]{\thefrontmatterbkmstring(\option{/novathesis/coverlang})}{bmfrontmatter}%
 	\NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
-	\forcsvlist{\ntprintcoverpair}{#1}%
+  % \forcsvlist{\ntprintcoverpair}{#1}%
+  \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
 }
 
 \newcommand{\ntprintcoverpair}[1]{%
@@ -1602,39 +1607,39 @@
 % Print persons list {advisers | committee} as list
 %============================================================
 \newcommand{\@ntprintpersonsaslist}[2]{%
-		% #1 = adviser | committee
-		% #2 = {a,c} | {c,r,a,m,g}
-		% Build list of names
-		\ifdatadefined{#1titlestring}(\option{/novathesis/coverlang}){%
-		\datadefault{#1titlestringpre}()%
-		\datadefault{#1titlestringfont}()%
-		\csuse{the#1titlestring}(\option{/novathesis/coverlang})%
-		\datadefault{#1titlestringpost}()%
-		}{}%
-		\def\@nt@personlist{}%
-		\def\@nt@listsep{}%
-		\@for\listitem:={#2}\do{%
-		\letoptionlist{/@nt/#1/\listitem/name}\@nt@personname%
-		\IfStrEq{\@nt@personname}{}{}{%
-		\eappto\@nt@personlist{\@nt@listsep\@nt@personname}\edef\@nt@listsep{,}%
-		}%
-		}%
-		\@replacelastcomma{\@nt@personlist}%
+  % #1 = adviser | committee
+  % #2 = {a,c} | {c,r,a,m,g}
+  % Build list of names
+  \ifdatadefined{#1titlestring}(\option{/novathesis/coverlang}){%
+    \datadefault{#1titlestringpre}()%
+    \datadefault{#1titlestringfont}()%
+    \csuse{the#1titlestring}(\option{/novathesis/coverlang})%
+    \datadefault{#1titlestringpost}()%
+  }{}%
+  \def\@nt@personlist{}%
+  \def\@nt@listsep{}%
+  \@for\listitem:={#2}\do{%
+    \letoptionlist{/@nt/#1/\listitem/name}\@nt@personname%
+    \IfStrEq{\@nt@personname}{}{}{%
+      \eappto\@nt@personlist{\@nt@listsep\@nt@personname}\edef\@nt@listsep{,}%
+    }%
+  }%
+  \@replacelastcomma{\@nt@personlist}%
 }
 
-\ExplSyntaxOn
-\cs_new_eq:NN \trimspaces \tl_trim_spaces:n
-\ExplSyntaxOff
+% \ExplSyntaxOn
+% \cs_new_eq:NN \trimspaces \tl_trim_spaces:n
+% \ExplSyntaxOff
 
 \def\@replacelastcomma#1{%
-		\typeout{REP1 [#1]}%
+    % \typeout{REP1 [#1]}%
 		% \@replacelastcomma@i{}{}#1,\nil}
 		\expandafter\@replacelastcomma@i%
 		\expandafter{\expandafter}%
 		\expandafter{\expandafter}#1,\nil}
 
 \def\@replacelastcomma@i#1#2#3,#4\nil{%
-		\typeout{REP2 [#1] [#2] [#3] [#4]}%
+    % \typeout{REP2 [#1] [#2] [#3] [#4]}%
 		\if\relax\detokenize{#4}\relax
 		#2\trimspaces{#3}%
 		\else
@@ -1660,7 +1665,8 @@
 		\personpost()={\\[4pt]}%
 		\persongrouppost()={\\[-6pt]}
 		\begin{tabularx}{#2\linewidth}[t]{@{}X@{}}%
-		\expandnext{\forcsvlist{\@nt@ntprintpersongroup{#1}{1}{#3}}}{\expanded{#4}}%
+    % \expandnext{\forcsvlist{\@nt@ntprintpersongroup{#1}{1}{#3}}}{\expanded{#4}}%
+    \ntfor\arg:={#4}\do{\@nt@ntprintpersongroup{#1}{1}{#3}{\arg}}
 		\end{tabularx}%
 }
 
