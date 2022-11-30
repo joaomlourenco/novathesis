@@ -20,6 +20,10 @@
 \ntsetup{fontstyle=newsgott}
 \ntsetup{statement=true}
 
+\ifdocfinal{\ntaddfile{cover}[1]{./NOVAthesisFiles/Schools/uminho/cover-final.tex}}{}
+\ifdocprovisional{\ntsetup{docstatus=final}}{}
+\ntsetup{spine=no}
+
 % --------------------------------------------------------
 % PRINT ORDER FOR frontmatter AND mainmatter
 \ntsetprintorder{frontmatter}{
@@ -126,8 +130,8 @@
 %-----------------------------------------------------------------
 
 % Colorscheme as viewed in PDF Reader
-\definecolor{uminhoGREY}{RGB}{145,143,144}
-\definecolor{uminhoRED}{RGB}{158, 26, 37}
+\definecolor{uminhoGREY}{RGB}{151, 153, 155}
+\definecolor{uminhoRED}{RGB}{164, 52, 58}
 
 
 % University

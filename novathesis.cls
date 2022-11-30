@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-11-22 [6.10.13]
+%% Version 2022-11-30 [6.10.14]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}[2019-10-01]
-\ProvidesClass{novathesis}[2022-11-22 novathesis template]
+\ProvidesClass{novathesis}[2022-11-30 novathesis template]
 
 
 %============================================================
@@ -93,6 +93,7 @@
 % \UseTblrLibrary{booktabs}
 
 
+\ifdefined\NewDocumentCommand\else\RequirePackage{xparse}\fi   % load xparse if necessary
 \RequirePackage{xfor}
 \RequirePackage{iftex}
 \RequirePackage{etoolbox}
@@ -215,17 +216,42 @@
 		{\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}%
 }
 
+
+% --------------------------------------------------------
+% Trim spaces around argument
+\ExplSyntaxOn
+\cs_new_eq:NN \trimspaces \tl_trim_spaces:n
+\ExplSyntaxOff
+
+% --------------------------------------------------------
+% Input the first file from the list (if any)
+% #1 = file name
+% #2 = list of directories
+% #3 = code if succeed [OPTIONAL]
+% #4 = code if fails [OPTIONAL]
+\def\@nt@InputIfFileExists#1#2{%
+  % \typeout{IIFE 1=[#1] 2=[#2]}\aaaa
+  \@ifnextchar[{\@nt@InputIfFileExists@i#1#2}{\@nt@InputIfFileExists@i{#1}#2[]}%
+}
+\def\@nt@InputIfFileExists@i#1#2[#3]{%
+  % \typeout{IIFE 1=[#1] 2=[#2] 3=[#3]}\aaaa
+  \@ifnextchar[{\@nt@InputIfFileExists@ii{#1}#2[#3]}{\@nt@InputIfFileExists@ii{#1}#2[#3][]}%
+}
+\def\@nt@InputIfFileExists@ii#1#2[#3][#4]{
+  % \typeout{IIFE 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\aaaa
+  \ntfor\dir:=#3\do{\IfFileExists{#2#1}{\input{#2#1}#3\ntforbreak}{}}[#4]%
+}
+
+% ][]{\ntfor\arg:=#3\do{\@nt@InputIfFileExists@i{#2}{\arg}}[#1]}
+% \newcommand{\@nt@InputIfFileExists@i}[2]{\IfFileExists{#2#1}{\input{#2#1}\ntforbreak}{}}
+
+
 \options{/@nt/.new family,
 	langsshort/.new list={en, pt, fr, it, de, es},
 	currentlang/.new choice={en, pt, fr, it, de, es},
 	langshorttolong/.new choice={en=english, pt=portuges, fr=french, it=italian, de=german, es=spanish},
 	biblatex/.new list,
 }
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% xstring StrCut replacement
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ifdefined\NewDocumentCommand\else\RequirePackage{xparse}\fi   % load xparse if necessary
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -495,10 +521,6 @@
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% LOADING ADDITINAL FILES BEFORE LOADING MEMOIR
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % --------------------------------------------------------
 % PROCESS PACKAGE OPTIONS
 \def\@nt@schooloption@i#1/#2\@nil{\gdef\@nt@univ{#1}\gdef\@nt@schl{#2}}
@@ -586,21 +608,10 @@
 % }
 
 
-
-
 % --------------------------------------------------------
 % Pass the remaining options to memoir
-\letoptionlist{/options/remaining}\nt@remaining
-\PassOptionsToClass{\nt@remaining}{memoir}
-
-
-% --------------------------------------------------------
-% Input the first file from the list (if any)
-% \newcommand{\@nt@InputIfFileExists}[2]{\expandnext{\forcsvlist{\@nt@InputIfFileExists@i{#1}}}{#2}}
-% \newcommand{\@nt@InputIfFileExists@i}[2]{\IfFileExists{#2#1}{\input{#2#1}\listbreak}{}}
-\newcommand{\@nt@InputIfFileExists}[2]{\ntfor\arg:=#2\do{\@nt@InputIfFileExists@i{#1}{#2}}}
-\newcommand{\@nt@InputIfFileExists@i}[2]{\IfFileExists{#2#1}{\input{#2#1}\ntforbreak}{}}
-
+% \letoptionlist{/options/remaining}\nt@remaining
+% \PassOptionsToClass{\nt@remaining}{memoir}
 
 
 
@@ -945,14 +956,16 @@
 		{\PackageError{novathesis}{Missing file “/\@nt@univ/\@nt@univ-defaults.ldf”}{}}
 
 \ntfor\match:={%
-		\@nt@univ/\@nt@schl/\@nt@univ-\@nt@schl-\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
-		\@nt@univ/\@nt@schl/\@nt@univ-\@nt@schl}\do{%
-					\IfFileExists{NOVAthesisFiles/Schools/\match-defaults.ldf}
-											 {\input{NOVAthesisFiles/Schools/\match-defaults.ldf}\ntforbreak}{}}
+      \@nt@univ-\@nt@schl-\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
+      \@nt@univ-\@nt@schl%
+  }\do{%
+      \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/\match-defaults.ldf}
+              {\input{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/\match-defaults.ldf}\ntforbreak}{}%
+  }
 [\PackageError{novathesis}{Missing file “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl-defaults.ldf”}{}]
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% LOADING MEMOIR
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ifxetexorluatex  % xelatex or lualatex
 	\RequirePackage{fontspec}%
@@ -1024,9 +1037,7 @@
 \ifdocfinal{\ntsetup{printcommittee=true}}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% LOADING ADDITINAL FILES AFTER LOADING MEMOIR
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\@ntloadfile@i}[1]{\IfFileExists{#1}{\input{#1}}{}}
+\newcommand{\@ntloadfile@i}[2][]{\IfFileExists{#2}{\input{#2}}{#1}}
 
 \newcommand{\@ntloadfiles@ii}[2][VAL]{%
 		% #1=KEY
@@ -1052,13 +1063,38 @@
 
 % --------------------------------------------------------
 % LOAD A DEFAULT COPYRIGHT PAGE DEFINITION
-\newcommand{\@nt@AddFileIfExists}[3]{%
-  % \expandnext{\forcsvlist{\@nt@AddFileIfExists@i{#1}{#2}}}{#3}%
-  \ntfor\arg:=#3\do{\@nt@AddFileIfExists@i{#1}{#2}{\arg}}%
+\newcommand{\@nt@AddFileIfExists}[1]{%
+% #1 = class
+% #2 = sub class [OPTIONAL]
+% #3 = file name
+% #4 = dir list
+% #5 = action if not found [OPTIONAL]
+  \@ifnextchar[{\@nt@AddFileIfExists@i{#1}}{\@nt@AddFileIfExists@i{#1}[VAL]}%
 }
 
-\newcommand{\@nt@AddFileIfExists@i}[3]{\IfFileExists{#3#2}{\ntaddfile{#1}{#3#2}\ntforbreak}{}}
-% \newcommand{\@nt@AddFileIfExists@i}[3]{\IfFileExists{#3#2}{\ntaddfile{#1}{#3#2}\listbreak}{}}
+\def\@nt@AddFileIfExists@i#1[#2]#3#4{%
+  \@ifnextchar[{\@nt@AddFileIfExists@ii{#1}[#2]{#3}#4}{\@nt@AddFileIfExists@ii{#1}[#2]{#3}#4[]}%
+}
+
+\long\def\@nt@AddFileIfExists@ii#1[#2]#3#4[#5]{%
+  \ntfor\arg:=#4\do{\IfFileExists{\arg#3}{\ntaddfile{#1}[#2]{\arg#3}\ntforbreak}{}}[#5]%
+}
+
+
+% \newcommand{\@nt@AddFileIfExists}[4][]{%
+% % #1 = OPTIONAL action if not found
+% % #2 = class
+% % #3 = file name
+% % #4 = dir list
+%   \ntfor\arg:=#4\do{\@nt@AddFileIfExists@i{#2}{#3}{\arg}}[#1]%
+% }
+%
+% \newcommand{\@nt@AddFileIfExists@i}[3]{%
+% % #1 = class
+% % #2 = file name
+% % #3 = dir list
+%   \IfFileExists{#3#2}{\ntaddfile{#1}{#3#2}\ntforbreak}{}%
+% }
 
 \ifmaindoc{% only print if a main document
 	\iftoggle{/novathesis/printcopyright}{% if copuyright toggle is on
@@ -1164,7 +1200,7 @@
   % #1 = major cover ID
   \ifoptiondefined{/@nt/file/cover/1}{%
     \ifoptiondefined{/@nt/file/cover/#1}{%
-      \optionlistdo{/@nt/file/cover/#1}{\bgroup\thispagestyle{empty}\@ntloadfile@i{##1}\egroup\clearforchapter}
+      \optionlistdo{/@nt/file/cover/#1}{\bgroup\thispagestyle{empty}\@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}\egroup\clearforchapter}
     }{}%
   }{%
     \IfStrEqCase{#1}{%
@@ -1627,27 +1663,20 @@
   \@replacelastcomma{\@nt@personlist}%
 }
 
-% \ExplSyntaxOn
-% \cs_new_eq:NN \trimspaces \tl_trim_spaces:n
-% \ExplSyntaxOff
-
 \def\@replacelastcomma#1{%
-    % \typeout{REP1 [#1]}%
-		% \@replacelastcomma@i{}{}#1,\nil}
-		\expandafter\@replacelastcomma@i%
-		\expandafter{\expandafter}%
-		\expandafter{\expandafter}#1,\nil}
+  % \typeout{REP1 [#1]}%
+	% \@replacelastcomma@i{}{}#1,\nil}
+	\expandafter\@replacelastcomma@i\expandafter{\expandafter}\expandafter{\expandafter}#1,\nil}
 
 \def\@replacelastcomma@i#1#2#3,#4\nil{%
-    % \typeout{REP2 [#1] [#2] [#3] [#4]}%
-		\if\relax\detokenize{#4}\relax
+  % \typeout{REP2 [#1] [#2] [#3] [#4]}%
+	\if\relax\detokenize{#4}\relax
 		#2\trimspaces{#3}%
-		\else
-		% #2 is nonempty
+	\else % #2 is nonempty
 		#1\trimspaces{#3}%
 		\@replacelastcomma@i{\thecommastring(\option{/@nt/currentlang})}%
-		{\theandstring(\option{/@nt/currentlang})}#4\nil%
-		\fi
+        {\theandstring(\option{/@nt/currentlang})}#4\nil%
+	\fi
 }
 
 
@@ -1784,6 +1813,53 @@
 		{*}%
 		\checkandfixthelayout%
 		\ifoptionequal{/novathesis/media}{paper}{\openright}{}%
+}
+
+\newenvironment{newlayout}[2]{%
+  \clearpage%
+  % \typeout{V=#1 H=#2}\aaaa
+  \@tempdima=\dimexpr#1\relax%
+  \@tempdimb=\dimexpr#2\relax%
+  % \showthe\@tempdima \showthe\@tempdimb
+  \setstocksize{\the\@tempdima}{\the\@tempdimb}%
+  \settrimmedsize{\stockheight}{\stockwidth}{*}%
+  \settrims{0pt}{0pt}%
+  \setlrmarginsandblock{0pt}{*}{*}%
+  \setulmarginsandblock{0pt}{*}{*}%
+  \setlength{\parskip}{0pt}%
+  \setheadfoot{0pt}{0pt}%
+  \setheaderspaces{*}{0pt}{*} %
+  \setmarginnotes{0pt}{0pt}{0pt}%
+  \checkandfixthelayout[fixed]%
+  %
+  %
+  % \settrimmedsize{#2}{#1}{*}%
+  % \settrims{0pt}{0pt}
+  % \setlrmarginsandblock{0pt}{0pt}{*}%
+  % \setulmarginsandblock{0pt}{*}{1}%
+  % \setheadfoot{0pt}{0pt}%
+  % \setheaderspaces{0pt}{*}{*}%
+  % \checkandfixthelayout%
+  \ifluatex%
+    \pageheight=\stockheight% \pageheight=3in
+    \pagewidth=\stockwidth% \pageheight=3in
+  \else%
+    \pdfpageheight=\stockwidth% \pdfpageheight=3in
+    \pdfpagewidth=\stockheight% \pdfpageheight=3in
+  \fi%
+  \setlength{\@colht}{\textheight}%
+  \setlength{\@colroom}{\textheight}%
+  \setlength{\vsize}{\textheight}%
+  \setlength{\columnwidth}{\textwidth}%
+  \if@twocolumn%
+    \advance\columnwidth-\columnsep%
+    \divide\columnwidth\tw@%
+    \@firstcolumntrue%
+  \fi%
+  \setlength{\hsize}{\columnwidth}%
+  \setlength{\linewidth}{\hsize}%
+}{%
+  \clearpage%
 }
 
 
