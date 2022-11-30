@@ -1,0 +1,109 @@
+\newcommand{\myspinewidth}{13mm}
+\newcommand{\umfonta}{\fontsize{14.55}{14.55}\selectfont}
+\newcommand{\umfontb}{\fontsize{17}{17}\selectfont}
+\newcommand{\umfontc}{\fontsize{10}{10}\selectfont}
+
+\newdata{logo}
+\logo(0):={\theuniversity(logo,RGB)}
+\logo(1):={\theschool(logo,RGB)}
+% \logo(2):={\theuniversity(logo,RGB)}
+
+\school(1):={\theschool(pt)}
+% \school(2):={\theuniversity(pt)}
+
+\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main,cover)}
+
+\color{\thethesiscover(\option{/novathesis/docdegree},1-1,textcolor)}
+
+\begin{newlayout}{\stockheight}{2\stockwidth+\myspinewidth}%
+  % \noindent% \Huge HELLO
+\begin{tikzpicture}[remember picture, overlay, transform shape]
+  % BACKGROUND
+  \node [anchor=north west, inner sep=0pt]
+    at (current page.north west) {
+      \begin{tikzpicture}[]
+          % \node [inner sep=0pt]
+          %   at (0,0)
+          %       {\includegraphics[width=\stockwidth,height=\stockheight,align=t]{cover0}};
+          %       %{CAPA-Tese-Doutoramento-EA}};
+          \filldraw [fill=\expanded{\thethesiscover(\option{/novathesis/docdegree},1-1,bgcolor)}] (0,0) rectangle (\stockwidth,-\stockheight);]
+      \end{tikzpicture}
+    };
+  % RIGHT PAGE
+  \node [anchor=north west, inner sep=0pt, xshift=0.5*\myspinewidth]
+    at (current page.north) {
+      \begin{tikzpicture}[remember picture, overlay, xshift=7.9cm]
+          % \node [inner sep=0pt]
+          %   at (0,0)
+          %       {\includegraphics[width=210mm,height=297mm,align=t]{cover1}};
+          % \filldraw [fill=yellow, opacity=0.5] (0,0) rectangle (210mm,-297mm);]
+          % \filldraw [fill=white, opacity=0.5] (0,0) rectangle (\stockwidth,-\stockheight);]
+        \node [anchor=west, inner sep=0pt]
+            at (0,-3.825)
+              {\umfonta\bfseries\theuniversity(pt)};
+        \foreach \i in {0,...,4} {
+            \node [anchor=north west, inner sep=0pt]
+              at (\i*2.6,0)
+                  {\ifdatadefined{logo}(\i){%
+                    \includegraphics[width=2.6cm,align=t]{\thelogo(\i)}%
+                  }{}};
+            \node [anchor=north west, inner sep=0pt]
+              at (0,-3.625-\i*0.6)
+                  {\ifdatadefined{school}(\i){%
+                    \umfonta\theschool(\i)%
+                  }{}};
+        }
+        \node [anchor=north west, inner sep=0pt]
+            at (0,-9)
+              {\umfontb\thedocauthor(name)};
+        \node [anchor=north west, inner sep=0pt]
+            at (0,-10.45)
+              {\umfontb\bfseries\parbox{111mm}{\thedoctitle(\option{/novathesis/coverlang},main,cover)}};
+        \node [anchor=south west, inner sep=0pt]
+            at (0,-28.7)
+              {\umfontc\thentdocdate(month)\theofstr(pt)\thentdocdate(year)};
+      \end{tikzpicture}
+    };
+  % SPINE
+  \node [anchor=north, inner sep=0pt]
+    at (current page.north) {
+      \begin{tikzpicture}[remember picture, overlay]
+        % \filldraw [fill=red, opacity=0.5, xshift=-0.5*\myspinewidth] (0,0) rectangle (\myspinewidth,-297mm);]
+        \foreach \i in {0,...,4} {
+            \node [anchor=north west, inner sep=0pt, xshift=-0.5*\myspinewidth]
+              at (0,-\i*\myspinewidth)
+                  {\ifdatadefined{logo}(\i){%
+                    \includegraphics[width=\myspinewidth,align=t]{\thelogo(\i)}%
+                  }{}};
+        }
+        \node [anchor=east, inner sep=0pt, rotate=90]
+            at (0,-9)
+              {\thespine(font)\parbox{7.75cm}{\raggedright\bfseries\thespine(title)}};
+        \node [anchor=east, inner sep=0pt, rotate=90]
+            at (0,-17.05)
+              {\thespine(font)\thespine(author)};
+        \node [anchor=west, inner sep=0pt, rotate=90]
+            at (0,-28.7)
+              {\thespine(font)UMinho $|$ \thespine(year)};
+          % \filldraw [fill=white, opacity=0.5] (0,0) rectangle (\stockwidth,-\stockheight);]
+      \end{tikzpicture}
+    };
+\end{tikzpicture}
+
+\newpage
+
+\begin{tikzpicture}[remember picture, overlay, transform shape]
+  % BACKGROUND
+  \node [anchor=north west, inner sep=0pt]
+    at (current page.north west) {
+      \begin{tikzpicture}[]
+          % \node [inner sep=0pt]
+          %   at (0,0)
+          %       {\includegraphics[width=\stockwidth,height=\stockheight,align=t]{cover0}};
+          %       %{CAPA-Tese-Doutoramento-EA}};
+          \filldraw [fill=\expanded{\thethesiscover(\option{/novathesis/docdegree},1-2,bgcolor)}] (0,0) rectangle (\stockwidth,-\stockheight);]
+      \end{tikzpicture}
+    };
+\end{tikzpicture}
+
+\end{newlayout}
