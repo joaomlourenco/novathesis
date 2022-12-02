@@ -796,8 +796,8 @@
 
 %============================================================
 % Adding list_of
-\newcommand*{\ntaddlistof}[1]{%
-	\IfStrEqCase{#1}{%
+\newcommand*{\ntaddlistof}[2][]{%
+	\IfStrEqCase{#2}{%
 		{tableofcontents}{\options{/@nt/list/listof/.cpush={%
 						\iftoggle{/novathesis/tocintoc}{\tableofcontents}%
 									{\pdfbookmark{\contentsname}{toctarget}%
@@ -826,7 +826,13 @@
 		{listsofglossaries*}{\options{/@nt/list/listof/.cpush={%
 						\glstocfalse
 		\ifoptionvoid{/@nt/file/glossaries/glossary}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}}}%
-	}[\options{/@nt/list/listof/.cpush={\ifdefmacro{#1}{#1}{\csuse{#1}}}}]%
+	}[%
+            \if\relax\detokenize{#1}\relax
+              \options{/@nt/list/listof/.cpush={\ifdefmacro{#2}{#2}{\csuse{#2}}}}%
+            \else
+              \options{/@nt/list/listof/.cpush={\ifdefmacro{#2}{#2[#1]}{\csuse{#2}[#1]}}}%
+            \fi
+   ]%
 }
 
 %============================================================
