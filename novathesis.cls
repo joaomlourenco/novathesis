@@ -135,13 +135,13 @@
 % }
 
 
-\ifxetexorluatex  % xelatex or lualatex
-\else% pdflatex
-	%%%%% Configure font encoding
-	\RequirePackage[T1]{fontenc}    % Use new T1 fonts
-	%%%%% Configure input encoding
-	\RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
-\fi
+% \ifxetexorluatex  % xelatex or lualatex
+% \else% pdflatex
+%   %%%%% Configure font encoding
+%   \RequirePackage[T1]{fontenc}    % Use new T1 fonts
+%   %%%%% Configure input encoding
+%   \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
+% \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
@@ -247,9 +247,10 @@
 
 
 \options{/@nt/.new family,
-	langsshort/.new list={en, pt, fr, it, de, es},
-	currentlang/.new choice={en, pt, fr, it, de, es},
-	langshorttolong/.new choice={en=english, pt=portuges, fr=french, it=italian, de=german, es=spanish},
+	langsshort/.new list={en, pt, fr, it, de, es, gr},
+	currentlang/.new choice={en, pt, fr, it, de, es, gr},
+	langshorttolong/.new choice={en=english, pt=portuges, fr=french, it=italian, de=german, es=spanish, gr=greek},
+	fontenc/.new choice={en=T1, pt=T1, fr=T1, it=T1, de=T1, es=T1, gr=LGR},
 	biblatex/.new list,
 }
 
@@ -518,6 +519,7 @@
 \abstractorder(it):={it,en}
 \abstractorder(es):={es,en}
 \abstractorder(de):={de,en}
+\abstractorder(gr):={gr,en}
 
 
 
@@ -533,10 +535,10 @@
 	chapstyle/.new value          = {bar},        % use "bar" chapter style by default
 	fontstyle/.new value          = {newpx},      % use “newpx” by default
 	langsused/.new list           = {en,pt},
-	coverlang/.new choice         = {en, pt, fr, it, de, es},
-	copyrightlang/.new choice         = {en, pt, fr, it, de, es},
+	coverlang/.new choice         = {en, pt, fr, it, de, es, gr},
+	copyrightlang/.new choice     = {en, pt, fr, it, de, es, gr},
 	lang/.new style               = {/novathesis/mainlang=#1, /novathesis/copyrightlang=#1, /novathesis/coverlang=#1},
-	mainlang/.new choice          = {en, pt, fr, it, de, es},
+	mainlang/.new choice          = {en, pt, fr, it, de, es, gr},
 	numberallpages/.new toggle    = false,
 	printfrontmatter/.new toggle  = true,
 	printadviser/.new toggle      = true,     % fake option - adviser should always be printed
@@ -662,17 +664,14 @@
 
 % --------------------------------------------------------
 % BABEL STUFF
-% \edef\nt@alllangs{}
+\options{/@nt/langshorttolong=\option{/novathesis/mainlang}}%
+\PassOptionsToPackage{main=\option{/@nt/langshorttolong}}{babel}
+% \typeout{MAIN: [\option{/novathesis/mainlang} \option{/@nt/langshorttolong}]}\aaa
 \optionlistdo{/novathesis/langsused}{%
 	\options{/@nt/langshorttolong=#1}%
-	\ifoptionequal{/novathesis/mainlang}{#1}%
-                  {\PassOptionsToPackage{\option{/@nt/langshorttolong}}{babel}}%
-                  {\PassOptionsToPackage{main=\option{/@nt/langshorttolong}}{babel}}%
-                % {\eappto\nt@alllangs{,main=\option{/@nt/langshorttolong}}}%
-                % {\eappto\nt@alllangs{,\option{/@nt/langshorttolong}}}%
+  \PassOptionsToPackage{\option{/@nt/langshorttolong}}{babel}%
+  % \typeout{USED: [#1] [\option{/@nt/langshorttolong}] [\option{/@nt/fontenc}]}\bbb
 }
-% \typeout{'NT PASSING TO BABEL = '\nt@alllangs}%
-% \PassOptionsToPackage{\nt@alllangs}{babel}%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -977,8 +976,8 @@
 	\RequirePackage{fontspec}%
 	\defaultfontfeatures{Ligatures=TeX}
 \else% pdflatex
-	\RequirePackage[T1]{fontenc}    % Use new T1 fonts
-	\RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
+  % \RequirePackage[T1]{fontenc}    % Use new T1 fonts
+  % \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
 \fi
 
 
@@ -1903,8 +1902,10 @@
 }
 
 \newcommand{\@ntprintabstract}[1]{%
-		% \typeout{NT PRINT ABSTRACT #1}%
-		\ifoptiondefined{/@nt/file/abstract/#1}{%
+  % \typeout{NT PRINT ABSTRACT #1}\aaaa%
+	\ifoptiondefined{/@nt/file/abstract/#1}{%
+    % \begingroup
+    % \typeout{NT PRINT ABSTRACT #1}\bbbb
 		\ntselectlang{#1}%
 		\pdfbookmark[1]{\theabstractbkmstring(#1)}{bmabstract#1}%
 		\NTRunHook{abstract/pre}%
@@ -1915,7 +1916,8 @@
 		\@ntloadfiles@ii[#1]{abstract}%
 		\NTRunHook{abstract/#1/post}%
 		\NTRunHook{abstract/post}%
-		}{}%
+    % \endgroup
+	}{}%
 }
 
 
