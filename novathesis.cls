@@ -239,7 +239,7 @@
 % #4 = code if fails [OPTIONAL]
 \def\@nt@InputIfFileExists#1#2{%
   % \typeout{IIFE 1=[#1] 2=[#2]}\aaaa
-  \@ifnextchar[{\@nt@InputIfFileExists@i#1#2}{\@nt@InputIfFileExists@i{#1}#2[]}%
+  \@ifnextchar[{\@nt@InputIfFileExists@i{#1}#2}{\@nt@InputIfFileExists@i{#1}#2[]}%
 }
 \def\@nt@InputIfFileExists@i#1#2[#3]{%
   % \typeout{IIFE 1=[#1] 2=[#2] 3=[#3]}\aaaa
@@ -247,7 +247,7 @@
 }
 \def\@nt@InputIfFileExists@ii#1#2[#3][#4]{
   % \typeout{IIFE 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\aaaa
-  \ntfor\dir:=#3\do{\IfFileExists{#2#1}{\input{#2#1}#3\ntforbreak}{}}[#4]%
+  \ntfor\dir:=#2\do{\IfFileExists{\dir#1}{\input{\dir#1}#3\ntforbreak}{}}[#4]%
 }
 
 % ][]{\ntfor\arg:=#3\do{\@nt@InputIfFileExists@i{#2}{\arg}}[#1]}
@@ -1131,7 +1131,7 @@
 					 {NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/}%
 					,{NOVAthesisFiles/Schools/\@nt@univ/}%
 					,{NOVAthesisFiles/}%
-	}%
+	}[][\ClassError{novathesis}{No “spine” file found.}{}]%
 	\AtEndDocument{\csuse{ntprintspine}}%
 }
 
