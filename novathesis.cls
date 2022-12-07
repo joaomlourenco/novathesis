@@ -821,10 +821,10 @@
 						\fi\fi}}}%
 		{listsofglossaries}{\options{/@nt/list/listof/.cpush={%
 						\glstoctrue
-						\ifoptionvoid{/@nt/file/glossaries/glossary}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}}}%
+						\iffileadded[glossary]{glossaries}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}}}%
 		{listsofglossaries*}{\options{/@nt/list/listof/.cpush={%
 						\glstocfalse
-		\ifoptionvoid{/@nt/file/glossaries/glossary}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}}}%
+		\iffileadded[glossary]{glossaries}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}}}%
 	}[%
             \if\relax\detokenize{#1}\relax
               \options{/@nt/list/listof/.cpush={\ifdefmacro{#2}{#2}{\csuse{#2}}}}%
@@ -844,6 +844,7 @@
 		{mainmatter}{%
 						\ntprintlist{/@nt/print/#1}}%
 	}[\ifdefmacro{#1}{#1}{\csuse{ntprint#1}\clearforchapter}]%
+  
 	\ignorespaces%
 }
 
@@ -1042,12 +1043,17 @@
 \ifdocfinal{\ntsetup{printcommittee=true}}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\@nt@loadallfiles}[3][]{\optionlistdo{/@nt/file/#3/#2}{\@ntloadfile@i{##1}#1}}
+
 \newcommand{\@ntloadfile@i}[2][]{\IfFileExists{#2}{\input{#2}}{#1}}
 
 \newcommand{\@ntloadfiles@ii}[2][VAL]{%
-		% #1=KEY
-		% #2=file class
-		\ifoptiondefined{/@nt/file/#2/#1}{\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}\clearforchapter}}{}}
+	% #1=KEY
+	% #2=file class
+  \iffileadded[#1]{#2}{\@nt@loadallfiles[\clearforchapter]{#1}{#2}}{}%
+}
+
+\newcommand{\iffileadded}[2][VAL]{\ifoptiondefined{/@nt/file/#2/#1}}
 
 % --------------------------------------------------------
 % LOAD ADDITIONAL PACKAGES
@@ -1203,8 +1209,8 @@
 
 \newcommand{\ntprintcoverpair}[1]{%
   % #1 = major cover ID
-  \ifoptiondefined{/@nt/file/cover/1}{%
-    \ifoptiondefined{/@nt/file/cover/#1}{%
+  \iffileadded[1]{cover}{%
+    \iffileadded[#1]{cover}{%
       \optionlistdo{/@nt/file/cover/#1}{\bgroup\thispagestyle{empty}\@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}\egroup\clearforchapter}
     }{}%
   }{%
@@ -1594,33 +1600,36 @@
 }
 
 \newcommand*{\ntprintstatement}{%
-		\iftoggle{/novathesis/statement}{% if statement toggle is on
-		\ifmaindoc{%
-		\NTRunHook{statement/pre}%
-		\ifoptiondefined{/@nt/file/statement/VAL}{}{%ELSE
-		\ntfor\match:={%
-		\@nt@univ/\@nt@schl/statement-\option{/novathesis/degreeacr/\option{/@nt/document/docclass}}-\option{/novathesis/mainlang},%
-		\@nt@univ/\@nt@schl/statement-\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
-		\@nt@univ/\@nt@schl/statement-\option{/novathesis/mainlang},%
-		\@nt@univ/\@nt@schl/statement,%
-		\@nt@univ/statement-\option{/novathesis/mainlang},%
-		\@nt@univ/statement%
-		}\do{%
-		\IfFileExists{NOVAthesisFiles/Schools/\match.tex}{%
-		\ntaddfile{statement}{NOVAthesisFiles/Schools/\match.tex}%
-		\ntforbreak%
-		}{}%
-		}
-		[%
-		\ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” nor “NOVAthesisFiles/Schools/\@nt@univ”}{}
-		]%
-		}{}%
-		\ntselectlang{\option{/novathesis/mainlang}}%
-		\pdfbookmark[1]{\csuse{thestatementbkmstring}(\option{/novathesis/mainlang})}{bmstatement}%
-		\@ntloadfiles@ii{statement}%
-		\NTRunHook{statement/post}%
-		}{}%
-		}{}%
+  \iftoggle{/novathesis/statement}{% if statement toggle is on
+    \ifmaindoc{%
+      \NTRunHook{statement/pre}%
+      \iffileadded{statement}{}{%ELSE
+        \ntfor\match:={%
+          \@nt@schl/statement-\option{/novathesis/degreeacr/\option{/@nt/document/docclass}}%
+          -\option{/novathesis/mainlang},%
+          \@nt@schl/statement-\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
+          \@nt@schl/statement-\option{/novathesis/mainlang},%
+          \@nt@schl/statement,%
+          statement-\option{/novathesis/mainlang},%
+          statement%
+        }\do{%
+          \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\match.tex}{%
+            \ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/\match.tex}%
+            \ntforbreak%
+          }{}%
+        }[%
+          \ClassError{novathesis}{No “statement.tex” found! Not defined with %
+                                  \string\ntaddfile{statement}{filename} in folders %
+                                  “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” nor %
+                                  “NOVAthesisFiles/Schools/\@nt@univ”}{}
+        ]%
+      }{}%
+      \ntselectlang{\option{/novathesis/mainlang}}%
+      \pdfbookmark[1]{\csuse{thestatementbkmstring}(\option{/novathesis/mainlang})}{bmstatement}%
+      \@ntloadfiles@ii{statement}%
+      \NTRunHook{statement/post}%
+    }{}%
+  }{}%
 }
 
 
@@ -1875,7 +1884,7 @@
   % \typeout{NT Attempt to load #1}%
 	\ifmaindoc{% THEN it is a main document
 		\NTRunHook{#1/pre}%
-		\ifoptiondefined{/@nt/file/#1/VAL}{%
+		\iffileadded{#1}{%
 		\ntselectlang{\option{/novathesis/mainlang}}%
 		\pdfbookmark[1]{\csuse{the#1bkmstring}(\option{/novathesis/mainlang})}{bm#1}%
 		\@ntloadfiles@ii{#1}%
@@ -1903,7 +1912,7 @@
 
 \newcommand{\@ntprintabstract}[1]{%
   % \typeout{NT PRINT ABSTRACT #1}\aaaa%
-	\ifoptiondefined{/@nt/file/abstract/#1}{%
+	\iffileadded[#1]{abstract}{%
     % \begingroup
     % \typeout{NT PRINT ABSTRACT #1}\bbbb
 		\ntselectlang{#1}%
@@ -1922,31 +1931,31 @@
 
 
 \newcommand*{\ntthesisfrontmatter}{%
-		\NTRunHook{frontmatter/pre}%
-		\frontmatter%
-		\begingroup
-		\pagestyle{novathesis@frontmatter}%
-		\copypagestyle{chapter}{novathesis@frontmatter}
-		\ntselectlang{\option{/novathesis/mainlang}}%
-		\pagenumbering{roman}%
-		\NTRunHook{frontmatter/post}%
+	\NTRunHook{frontmatter/pre}%
+	\frontmatter%
+	\begingroup
+	\pagestyle{novathesis@frontmatter}%
+	\copypagestyle{chapter}{novathesis@frontmatter}
+	\ntselectlang{\option{/novathesis/mainlang}}%
+	\pagenumbering{roman}%
+	\NTRunHook{frontmatter/post}%
 }
 
 \newcommand*{\ntthesismainmatter}{%
-		\endgroup
-		\bookmarksetup{startatroot}%
-		\NTRunHook{mainmatter/pre}%
-		\ifbool{@openright}{}{% openany=true
-		\let\oldcleardoublepage\cleardoublepage%
-		\renewcommand{\cleardoublepage}{\clearpage}%
-		}%
-		\mainmatter%
-		\ifbool{@openright}{}{% openany=true
-		\let\cleardoublepage\oldcleardoublepage%
-		}%
-		\pagestyle{novathesis@mainmatter}%
-		\ifxeorlua{}{\microtypesetup{protrusion=true}}%
-		\NTRunHook{mainmatter/post}%
+	\endgroup
+	\bookmarksetup{startatroot}%
+	\NTRunHook{mainmatter/pre}%
+  % \ifbool{@openright}{}{% openany=true
+  %   \let\oldcleardoublepage\cleardoublepage%
+  %   \renewcommand{\cleardoublepage}{\clearforchapter}%
+  % }%
+	\mainmatter%
+  % \ifbool{@openright}{}{% openany=true
+  %   \let\cleardoublepage\oldcleardoublepage%
+  % }%
+	\pagestyle{novathesis@mainmatter}%
+	\microtypesetup{protrusion=true}%
+	\NTRunHook{mainmatter/post}%
 }
 
 
@@ -1970,29 +1979,29 @@
  }
 
 \newcommand*{\ntprintappendices}{%
-		\ifoptiondefined{/@nt/file/appendix/VAL}{%
+	\iffileadded{appendix}{%
 		\renewcommand{\appendixtocname}{\appendixnamepl}%
 		\appendix\addappheadtotoc%
 		\@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
-		}{}%
+	}{}%
 }
 
 \newcommand*{\ntprintannexes}{%
-		\ifoptiondefined{/@nt/file/annex/VAL}{%
-		\renewcommand{\appendixtocname}{\annexnamepl}%
-		\annex\addappheadtotoc%
-		\@nt@foralllist{file}{annex}{\@ntloadfiles@ii{annex}}%
-		}{}%
+  \iffileadded{annex}{%
+    \renewcommand{\appendixtocname}{\annexnamepl}%
+    \annex\addappheadtotoc%
+    \@nt@foralllist{file}{annex}{\@ntloadfiles@ii{annex}}%
+  }{}%
 }
 
 \ifdef{\annexcounter}{}{\def\annexcounter{\@Roman}}
 \newcommand*{\annex}{%
-		\xdef\Hy@chapapp{annex}%
-		\setcounter{chapter}{0}%
-		\setcounter{section}{0}%
-		\gdef\@chapapp{\annexname}%
-		\gdef\thechapter{\annexcounter\c@chapter}%
-}
+  \xdef\Hy@chapapp{annex}%
+  \setcounter{chapter}{0}%
+  \setcounter{section}{0}%
+  \gdef\@chapapp{\annexname}%
+  \gdef\thechapter{\@Roman\c@chapter}%
+}%
 
 
 
@@ -2020,10 +2029,9 @@
 }
 
 \newcommand*{\@loadglossaryfiles}{%
-		\@for\listitem:={glossary,acronyms,symbols}\do{%
-		\ifoptiondefined{/@nt/file/glossaries/\listitem}%
-		{\optionlistdo{/@nt/file/glossaries/\listitem}{\@ntloadfile@i{##1}}}{}%
-		}%
+	\@for\listitem:={glossary,acronyms,symbols}\do{%
+		\iffileadded[\listitem]{glossaries}{\@nt@loadallfiles{\listitem}{glossaries}}{}%
+	}%
 }
 
 
