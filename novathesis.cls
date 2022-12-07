@@ -66,6 +66,14 @@
 
 
 %============================================================
+% Save these definitions asap, to be used later in the “\annex” command,
+% because "\@Roman" and "\Roman" were failing with pdflatex 
+% when loading the "greek" language (and LGR font encofing)
+%============================================================
+\let\oldRoman=\Roman
+\let\old@Roman=\@Roman
+
+%============================================================
 %  MEMOIR CUSTOMIZATION / OPTIONS
 %      Please open and edit the appropriate
 %       configuration file “Config/0_memoir.tex”
@@ -1954,7 +1962,7 @@
   %   \let\cleardoublepage\oldcleardoublepage%
   % }%
 	\pagestyle{novathesis@mainmatter}%
-	\microtypesetup{protrusion=true}%
+	\ifxeorlua{}{\microtypesetup{protrusion=true}}%
 	\NTRunHook{mainmatter/post}%
 }
 
@@ -1994,13 +2002,13 @@
   }{}%
 }
 
-\ifdef{\annexcounter}{}{\def\annexcounter{\@Roman}}
+\ifdef{\annexcounter}{}{\def\annexcounter{\old@Roman}}
 \newcommand*{\annex}{%
   \xdef\Hy@chapapp{annex}%
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
   \gdef\@chapapp{\annexname}%
-  \gdef\thechapter{\@Roman\c@chapter}%
+  \gdef\thechapter{\annexcounter\c@chapter}%
 }%
 
 
