@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-11-30 [6.10.14]
+%% Version 2022-12-10 [6.10.15]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -62,8 +62,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}[2019-10-01]
-\ProvidesClass{novathesis}[2022-11-30 novathesis template]
+\ProvidesClass{novathesis}[2022-12-10 novathesis template]
 
+
+%============================================================
+% Save these definitions asap, to be used later in the “\annex” command,
+% because "\@Roman" and "\Roman" were failing with pdflatex 
+% when loading the "greek" language (and LGR font encofing)
+%============================================================
+\let\oldRoman=\Roman
+\let\old@Roman=\@Roman
 
 %============================================================
 %  MEMOIR CUSTOMIZATION / OPTIONS
@@ -231,7 +239,7 @@
 % #4 = code if fails [OPTIONAL]
 \def\@nt@InputIfFileExists#1#2{%
   % \typeout{IIFE 1=[#1] 2=[#2]}\aaaa
-  \@ifnextchar[{\@nt@InputIfFileExists@i#1#2}{\@nt@InputIfFileExists@i{#1}#2[]}%
+  \@ifnextchar[{\@nt@InputIfFileExists@i{#1}#2}{\@nt@InputIfFileExists@i{#1}#2[]}%
 }
 \def\@nt@InputIfFileExists@i#1#2[#3]{%
   % \typeout{IIFE 1=[#1] 2=[#2] 3=[#3]}\aaaa
@@ -239,7 +247,7 @@
 }
 \def\@nt@InputIfFileExists@ii#1#2[#3][#4]{
   % \typeout{IIFE 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\aaaa
-  \ntfor\dir:=#3\do{\IfFileExists{#2#1}{\input{#2#1}#3\ntforbreak}{}}[#4]%
+  \ntfor\dir:=#2\do{\IfFileExists{\dir#1}{\input{\dir#1}#3\ntforbreak}{}}[#4]%
 }
 
 % ][]{\ntfor\arg:=#3\do{\@nt@InputIfFileExists@i{#2}{\arg}}[#1]}
@@ -850,7 +858,7 @@
 
 \newcommand*{\ntprintlist}[1]{%
 	\optionlistdo{#1}{%
-		\ifdefmacro{##1}{\typeout{NTP macro \string##1}##1}{%
+		\ifdefmacro{##1}{##1}{%
 			\ifcsmacro{ntprint##1}%
 						{\NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}}%
 						{\ifcsmacro{##1}{\NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}}
@@ -1035,7 +1043,7 @@
 
 \ifdocunset{\ntsetup{docstatus=working}}{}
 
-\typeout{\theprintorder(frontmatter,\option{/novathesis/docstatus})}
+% \typeout{\theprintorder(frontmatter,\option{/novathesis/docstatus})}
 \ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\option{/novathesis/docstatus})}}%
 
 \ifoptionequal{/novathesis/spine}{unset}
@@ -1123,7 +1131,7 @@
 					 {NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/}%
 					,{NOVAthesisFiles/Schools/\@nt@univ/}%
 					,{NOVAthesisFiles/}%
-	}%
+	}[][\ClassError{novathesis}{No “spine” file found.}{}]%
 	\AtEndDocument{\csuse{ntprintspine}}%
 }
 
@@ -1580,6 +1588,8 @@
 
 \newcommand{\@ntfixspacing}[2]{%
 		\bgroup%
+    \newdata{ntfixspacingstring}
+    \ntfixspacingstring()={This document was created with the (pdf/Xe/Lua)\LaTeX\ processor and the \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template (v\novathesisversion)~\@ntcite{novathesis-manual}.}
 		\renewcommand*{\bibfont}{\hypersetup{allcolors=#1}\color{#1}%
 		 \sffamily\fontsize{#2}{#2}\selectfont}%
 		\defbibheading{bibliography}[\bibname]{%
@@ -1587,7 +1597,7 @@
 		\refsection%
 		\begin{minipage}{\linewidth}%
 		\bibfont%
-		\theacknowledgmentsstring(\option{/novathesis/coverlang})%
+		\thentfixspacingstring()%
 		\printbibliography[title=12cc90221730b8ba41bb3b1f8b517acd]%
 		\end{minipage}%
 		\endrefsection%
@@ -1595,8 +1605,8 @@
 }
 
 \newcommand{\ntfixspacing}{%
-		\@ntfixspacing{white}{0.01}%
-		% \@ntfixspacing{blue}{16}%
+  \@ntfixspacing{white}{0.01}%
+  % \@ntfixspacing{blue}{16}%
 }
 
 \newcommand*{\ntprintstatement}{%
@@ -1639,18 +1649,19 @@
 %%% Print persons list {advisers | committee}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintpersons}[5][full]{%
-		% #1 = { full | name | list }
-		% #2 = width in % of textwidth
-		% #3 = number of columns
-		% #4 = adviser | committee
-		% #5 = {a,c} | {c,r,a,m,g}
-		\iftoggle{/novathesis/print#4}{%
-		\IfStrEqCase{#3}{%
-		{0}{\@ntprintpersonsaslist{#4}{\expanded{#5}}}%
-		{1}{\@ntprintpersonsasonecolumn{#1}{#2}{#4}{\expanded{#5}}}%
-		{2}{\@ntprintpersonsastwocolumns{#1}{#2}{#4}{\expanded{#5}}}%
-		}[\ClassError{novathesis}{Ivalid argument [#3] to \string\ntprintpersons{#1}{#2}{#3}{#4}{#5}}{}]%
-		}{}%
+  % #1 = { full | name | list }
+  % #2 = width in % of textwidth
+  % #3 = number of columns
+  % #4 = adviser | committee
+  % #5 = {a,c} | {c,r,a,m,g}
+  % \typeout{NTPRINTPERSONS 1=[#1] 2=[#2] 3=[#3] 4=[#4] 5=[#5]}\aaa
+  \iftoggle{/novathesis/print#4}{%
+    \IfStrEqCase{#3}{%
+      {0}{\@ntprintpersonsaslist{#4}{#5}}%
+      {1}{\@ntprintpersonsasonecolumn{#1}{#2}{#4}{#5}}%
+      {2}{\@ntprintpersonsastwocolumns{#1}{#2}{#4}{#5}}%
+    }[\ClassError{novathesis}{Ivalid argument [#3] to \string\ntprintpersons{#1}{#2}{#3}{#4}{#5}}{}]%
+  }{}%
 }
 
 %============================================================
@@ -1668,11 +1679,11 @@
   }{}%
   \def\@nt@personlist{}%
   \def\@nt@listsep{}%
-  \@for\listitem:={#2}\do{%
-    \letoptionlist{/@nt/#1/\listitem/name}\@nt@personname%
-    \IfStrEq{\@nt@personname}{}{}{%
-      \eappto\@nt@personlist{\@nt@listsep\@nt@personname}\edef\@nt@listsep{,}%
-    }%
+  \@for\i:=\expanded{#2}\do{%
+    \ifoptionvoid{/@nt/#1/\i/name}{}{%
+      \letoptionlist{/@nt/#1/\i/name}\@nt@person@sublist%
+      \eappto\@nt@personlist{\@nt@listsep\@nt@person@sublist}\edef\@nt@listsep{,}%
+    }
   }%
   \@replacelastcomma{\@nt@personlist}%
 }
@@ -1686,7 +1697,7 @@
   % \typeout{REP2 [#1] [#2] [#3] [#4]}%
 	\if\relax\detokenize{#4}\relax
 		#2\trimspaces{#3}%
-	\else % #2 is nonempty
+	\else % #4 is not empty
 		#1\trimspaces{#3}%
 		\@replacelastcomma@i{\thecommastring(\option{/@nt/currentlang})}%
         {\theandstring(\option{/@nt/currentlang})}#4\nil%
@@ -1708,88 +1719,93 @@
 		\personpost()={\\[4pt]}%
 		\persongrouppost()={\\[-6pt]}
 		\begin{tabularx}{#2\linewidth}[t]{@{}X@{}}%
-    % \expandnext{\forcsvlist{\@nt@ntprintpersongroup{#1}{1}{#3}}}{\expanded{#4}}%
-    \ntfor\arg:={#4}\do{\@nt@ntprintpersongroup{#1}{1}{#3}{\arg}}
+    \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}%
+    % \@for\arg:=\expanded{#4}\do{\@nt@ntprintpersongroup{#1}{1}{#3}{\arg}}
 		\end{tabularx}%
 }
 
 \newcommand{\@ntprintpersonsastwocolumns}[4]{%
-		% #1 = { full | name | list }
-		% #2 = width in % of textwidth
-		% #3 = adviser | committee
-		% #4 = {a,c} | {c,r,a,m,g}
-		% \typeout{[#1] [#2] [#3] [#4]}%
-		\csuse{#3stringpost}():={:}%
-		\csuse{#3remainderpre}()={{\\}}%
-		\personpost()={\\[4pt]}%
-		\persongrouppost()={\\[-6pt]}
-		\committeetitlestringpre()={&}%
-		\committeetitlestringpost()={\\[7pt]}%
-		\begin{tabularx}{#2\linewidth}[t]{@{}r@{~~}>{\raggedright\arraybackslash}X@{}}%
-		\ifdatadefined{#3titlestring}(\option{/novathesis/coverlang}){%
-		\datadefault{#3titlestringpre}()%
-		\datadefault{#3titlestringfont}()%
-		\csuse{the#3titlestring}(\option{/novathesis/coverlang})%
-		\datadefault{#3titlestringpost}()%
-		}{}%
-		\@for\listitemi:={#4}\do{\xdef\listitemi{\listitemi}\@nt@ntprintpersongroup{#1}{2}{#3}{\listitemi}}
-		\end{tabularx}%
+  % #1 = { full | name | list }
+  % #2 = width in % of textwidth
+  % #3 = adviser | committee
+  % #4 = {a,c} | {c,r,a,m,g}
+  % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] 4=[#4]}%\aaa
+  \csuse{#3stringpost}():={:&}%
+  \csuse{#3remainderpre}()={{\\}}%
+  \personpost()={\\[4pt]}%
+  \persongrouppost()={\\[-6pt]}
+  \committeetitlestringpre()={&}%
+  \committeetitlestringpost()={\\[7pt]}%
+  \begin{tabularx}{#2\linewidth}[t]{@{}r@{~~}>{\raggedright\arraybackslash}X@{}}%
+    \ifdatadefined{#3titlestring}(\option{/novathesis/coverlang}){%
+      \datadefault{#3titlestringpre}()%
+      \datadefault{#3titlestringfont}()%
+      \csuse{the#3titlestring}(\option{/novathesis/coverlang})%
+      \datadefault{#3titlestringpost}()%
+    }{}%
+    \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{2}{#3}}}{\expanded{#4}}%
+    % \@for\i:=\expanded{#4}\do{\typeout{NTPRINTIIIII=\i}\@nt@ntprintpersongroup[#1]{2}{#3}{\i}}%
+  \end{tabularx}%
 }
 
-\newcommand{\@nt@ntprintpersongroup}[4]{%
-		% #1 = { full | name | list }
-		% #2 = {1 | 2}
-		% #3 = {adviser | committee}
-		% #4 = {a,c} | {c,r,a,m,g}
-		\ifoptiondefined{/@nt/#3/#4/full}{%
-		\@nt@reducegender{/@nt/#3/#4/gender}{\@nt@advgender}%
-		\@nt@reducenumber{/@nt/#3/#4/full}{\@nt@advnumber}%
-		\datadefault{#3stringpre}(#4)%
-		\bgroup%
-		\datadefault{#3stringfont}(#4)%
-		\datadefault{#3string}(#4,\@nt@advnumber,\@nt@advgender,\option{/novathesis/coverlang})%
-		\egroup%
-		\datadefault{#3stringpost}(#4)%
-		\IfStrEq{#2}{2}{&}{}%
-		\IfStrEq{#1}{list}{%
-		\@ntprintpersonsaslist{#3}{#4}%
-		}{%
-		\begin{minipage}[t]{\linewidth}%
-		\optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{##1}}%
-		\end{minipage}%
-		}%
-		\thepersongrouppost()%
-		}{}%
+\newcommand{\@nt@ntprintpersongroup}[4][full]{%
+  % #1 = { name | full}
+  % #2 = {1 | 2}
+  % #3 = {adviser | committee}
+  % #4 = {a,c} | {c,r,a,m,g}
+  \ifoptiondefined{/@nt/#3/#4/full}{%
+  % \typeout{NTPRINTPERSONGROUP 1=[#1] 2=[#2] 3=[#3] 4=[#4]}%\aaa
+    \@nt@reducegender{/@nt/#3/#4/gender}{\@nt@advgender}%
+    \@nt@reducenumber{/@nt/#3/#4/full}{\@nt@advnumber}%
+    \datadefault{#3stringpre}(#4)%
+    \bgroup%
+      \datadefault{#3stringfont}(#4)%
+      \datadefault{#3string}(#4,\@nt@advnumber,\@nt@advgender,\option{/novathesis/coverlang})%
+    \egroup%
+    \datadefault{#3stringpost}(#4)%
+    % \if#22\relax&\fi
+    % \IfStrEq{#2}{2}{&}{}%
+    \IfStrEq{#1}{full}{%
+      \begin{minipage}[t]{\linewidth}%
+          \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{##1}}%
+      \end{minipage}%
+    }{%
+      \@ntprintpersonsaslist{#3}{#4}%
+    }%
+    \thepersongrouppost()%
+  }{}%
 }
+
 
 %============================================================
 % Print person aux funcitons
 %============================================================
 \newcommand{\@nt@printonename}[3]{%
-		% #1 = { full | name }
-		% #2 = adviser | coadviser | committee
-		% #3 = (co)adviser info
-		\begingroup
-		\raggedright%
-		\StrCut{#3}{,}\@nt@name\@nt@remainder% split name from remainder
-		\csuse{the#2namepre}()%
-		\bgroup%
-		\csuse{the#2namefont}()%
-		\ignorespaces\@nt@name%
-		\egroup%
-		\csuse{the#2namepost}()%
-		\IfStrEq{#1}{full}{%
-		\IfStrEq{\@nt@remainder}{}{}{%
-		\csuse{the#2remainderpre}()%
-		\bgroup%
-		\csuse{the#2remainderfont}()%
-		\ignorespaces\raggedright\@nt@remainder%
-		\egroup%
-		\csuse{the#2remainderpost}()%
-		}%
-		}{}%
-		\endgroup
-		\thepersonpost()%
+% #1 = { full | name }
+% #2 = adviser | coadviser | committee
+% #3 = (co)adviser info
+% \typeout{NTPRINTONENAME 1=[#1] 2=[#2] 3=[#3]}%\bbb
+\begingroup
+  \raggedright%
+  \StrCut{#3}{,}\@nt@name\@nt@remainder% split name from remainder
+  \csuse{the#2namepre}()%
+  \bgroup%
+    \csuse{the#2namefont}()%
+    \ignorespaces\@nt@name%
+  \egroup%
+  \csuse{the#2namepost}()%
+  \IfStrEq{#1}{full}{%
+    \IfStrEq{\@nt@remainder}{}{}{%
+      \csuse{the#2remainderpre}()%
+      \bgroup%
+        \csuse{the#2remainderfont}()%
+        \ignorespaces\raggedright\@nt@remainder%
+      \egroup%
+      \csuse{the#2remainderpost}()%
+    }%
+  }{}%
+\endgroup
+\thepersonpost()%
 }
 
 \newcommand*{\@nt@reducegender}[2]{%
@@ -1888,7 +1904,7 @@
 		\ntselectlang{\option{/novathesis/mainlang}}%
 		\pdfbookmark[1]{\csuse{the#1bkmstring}(\option{/novathesis/mainlang})}{bm#1}%
 		\@ntloadfiles@ii{#1}%
-		}{\typeout{NT PRINTIFMAINDOC #1 undefined}}%
+		}{}%
 		\NTRunHook{#1/post}%
 	}{}% It is a plan or proposal type document
 }
@@ -1954,7 +1970,7 @@
   %   \let\cleardoublepage\oldcleardoublepage%
   % }%
 	\pagestyle{novathesis@mainmatter}%
-	\microtypesetup{protrusion=true}%
+	\ifxeorlua{}{\microtypesetup{protrusion=true}}%
 	\NTRunHook{mainmatter/post}%
 }
 
@@ -1994,13 +2010,13 @@
   }{}%
 }
 
-\ifdef{\annexcounter}{}{\def\annexcounter{\@Roman}}
+\ifdef{\annexcounter}{}{\def\annexcounter{\old@Roman}}
 \newcommand*{\annex}{%
   \xdef\Hy@chapapp{annex}%
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
   \gdef\@chapapp{\annexname}%
-  \gdef\thechapter{\@Roman\c@chapter}%
+  \gdef\thechapter{\annexcounter\c@chapter}%
 }%
 
 
@@ -2214,7 +2230,7 @@
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
 
 \AtBeginDocument{%
-  % \makeatletter%
+  \makeatletter%
   % \typeout{XXX [\thedocauthor(name)]}
   % \typeout{XXX [\thedoctitle(\option{/novathesis/mainlang},main)]}
   % \typeout{XXX [\thedoctitle(\option{/novathesis/mainlang},sub)]}
