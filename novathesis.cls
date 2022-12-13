@@ -553,6 +553,7 @@
 	printcommittee/.new toggle    = false,
 	printtimestamp/.new toggle    = true,
 	printcopyright/.new toggle    = true,
+  printindex/.new toggle         = false,
 	webography/.new value         = {},        % empty means do not make a separate webography
 	secondcover/.new toggle       = false,
 	statement/.new toggle         = false,
@@ -852,7 +853,6 @@
 		{mainmatter}{%
 						\ntprintlist{/@nt/print/#1}}%
 	}[\ifdefmacro{#1}{#1}{\csuse{ntprint#1}\clearforchapter}]%
-  
 	\ignorespaces%
 }
 
@@ -867,10 +867,18 @@
 }
 
 \newcommand*{\ntsetprintorder}[2]{%
-% #1 = frontmatter, mainmatter
-% #2 = list
+  % #1 = frontmatter, mainmatter
+  % #2 = list
   % \typeout{[#1] [#2]}
-	\option@setlist[;]{/@nt/print/#1}{#2}}
+  \option@setlist[;]{/@nt/print/#1}{#2}%
+}
+
+\newcommand*{\ntaddtoprintorder}[2]{%
+  % #1 = frontmatter, mainmatter
+  % #2 = list
+  % \typeout{[#1] [#2]}
+  \options{/@nt/print/#1/.push=#2}%
+}
 
 % \newcommand*{\ntremovefromprintorder}[2]{%
 % % #1 = frontmatter, mainmatter
@@ -1031,8 +1039,11 @@
 %      Please open and edit the appropriate
 %       configuration file “Config/8_packages.tex”
 %============================================================
+% \newcommand{\BeforeHyperref}[1]{\NTAddToHook{packages/pre}{#1}}
+% \newcommand{\AfterHyperref}[1]{\NTAddToHook{packages/post}{#1}}
+% \NTRunHook{packages/pre}
 \AtEndPreamble{\input{Config/5_packages}}
-% \NTRunHook{packages}
+% \NTRunHook{packages/post}
 
 %============================================================
 %  WHICH LIST_OF TO PRINT
@@ -1944,6 +1955,11 @@
 		\NTRunHook{abstract/post}%
     % \endgroup
 	}{}%
+}
+
+\newcommand{\ntprintindex}{%
+  % \printglossary[type=index]%
+  \printindex
 }
 
 
