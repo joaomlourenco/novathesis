@@ -1745,6 +1745,7 @@
     }{}%
     \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{2}{#3}}}{\expanded{#4}}%
     % \@for\i:=\expanded{#4}\do{\typeout{NTPRINTIIIII=\i}\@nt@ntprintpersongroup[#1]{2}{#3}{\i}}%
+    % \foreach \i [expand list=true] in {#4} {\@nt@ntprintpersongroup{#1}{2}{#3}{\i}}%
   \end{tabularx}%
 }
 
