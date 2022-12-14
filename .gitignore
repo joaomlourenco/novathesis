@@ -125,6 +125,7 @@ acs-*.bib
 *.chs
 # uncomment this for glossaries-extra (will ignore makeindex's style files!)
 *.ist
+!ntindexstyle.ist
 
 # gnuplottex
 *-gnuplottex-*
