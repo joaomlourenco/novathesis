@@ -105,7 +105,6 @@
 \RequirePackage{xfor}
 \RequirePackage{iftex}
 \RequirePackage{etoolbox}
-\RequirePackage{xifthen}
 \RequirePackage{xstring}
 \RequirePackage{NOVAthesisFiles/options2}
 \RequirePackage{NOVAthesisFiles/memory2}
@@ -216,11 +215,11 @@
 % Load and Helvetica-like font as the default SF font
 \newcommand*{\LoadHelveticaLikeFont}{%
 	\IfFileExists{inter.sty}%
-		{\usepackage[scaled=1]{inter}}%
+		{\RequirePackage[scaled=1]{inter}}%
 	{\IfFileExists{helvet.sty}%
-		{\usepackage[scaled=0.95]{helvet}}%
+		{\RequirePackage[scaled=0.95]{helvet}}%
 	{\IfFileExists{gillius2.sty}%
-		{\usepackage{gillius2}}%
+		{\RequirePackage{gillius2}}%
 		{\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}%
 }
 
@@ -1435,6 +1434,9 @@
 		\NTRunHook{cover/#1/text/post}%
 }
 
+\def\instring#1#2{TT\fi\begingroup
+  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
+
 \def\@ntcoverelement@iii#1#2=*=#3{%
   % #1 = cover ID (major-minor)
   % #2 = cover element options
@@ -1444,13 +1446,38 @@
     \options{/@ntcoveropts,defaults}%.
     \options{/@ntcoveropts,#2}%
     \options{/@ntcoveropts,alignmap=\option{/@ntcoveropts/halign}}%
-    \StrCount{,\option{/@ntcoveropts/status},}{,\option{/@nt/document/docclass},}[\@nt@instatus]%
-    \StrCount{,\option{/@ntcoveropts/degree},}{,\option{/@nt/document/docclass},}[\@nt@indegree]%
-    \ifthenelse{%
-              \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND%
-              \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}%
-      {\@ntcoverelement@ii{#1}{#3}}%
-      {}%
+    % \StrCount{,\option{/@ntcoveropts/status},}{,\option{/novathesis/docstatus},}[\@nt@instatus]%
+    % \StrCount{,\option{/@ntcoveropts/degree},}{,\option{/@nt/document/docclass},}[\@nt@indegree]%
+    % \typeout{OPT_DEGREE=[\option{/@ntcoveropts/degree}] DOCCLASS=[\option{/@nt/document/docclass}]}%
+    % \typeout{OPT_STATUS=[\option{/@ntcoveropts/status}] STATUS=[\option{/novathesis/docstatus}]}\aaaaa
+    \defifundef{\ifmatchstatus}{\newif}
+    \defifundef{\ifmatchdegree}{\newif}
+    \matchstatustrue
+    \matchdegreetrue
+    \if&\option{/@ntcoveropts/status}&\relax
+    \else
+      \if\instring{,\option{/novathesis/docstatus},}{,\option{/@ntcoveropts/status},}
+      \else
+        \matchstatusfalse
+      \fi      
+    \fi
+    \if&\option{/@ntcoveropts/degree}&\relax
+    \else
+      \if\instring{,\option{/@nt/document/docclass},}{,\option{/@ntcoveropts/degree},}
+      \else
+        \matchdegreefalse
+      \fi      
+    \fi
+    \ifmatchstatus
+      \ifmatchdegree
+        \@ntcoverelement@ii{#1}{#3}
+      \fi
+    \fi
+     % \ifthenelse{%
+     %          \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND%
+     %          \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}%
+     %  {\@ntcoverelement@ii{#1}{#3}}%
+     %  {}%
   }%
 }
 

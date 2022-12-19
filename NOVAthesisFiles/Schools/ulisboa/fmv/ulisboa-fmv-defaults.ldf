@@ -8,6 +8,10 @@
 \typeout{NT FILE ulisboa/fmv/ulisboa-fmv-defaults.ldf}%
 
 
+\ntsetup{chapstyle=fmv}
+\ntsetup{coverlang=pt}
+\ifdocworking{}{\ntsetup{linkscolor=black}}
+
 % --------------------------------------------------------
 % FMV-like required data/information
 \usepackage{indentfirst}
@@ -22,11 +26,11 @@
   \makeheadrule{novathesis@mainmatter}{0pt}{0pt} 
   \makeevenhead{novathesis@mainmatter}{}{}{} 
   \makeoddhead{novathesis@mainmatter}{}{}{}
-}
-
-
-
-\NTAddToHook{NOVAthesisFiles/packages}{%
+% }
+%
+%
+%
+% \NTAddToHook{NOVAthesisFiles/packages}{%
 	\usepackage{xpatch}
 % Remove commas between family and given names
 	\DeclareNameAlias{sortname}{family-given}
@@ -241,10 +245,12 @@
 % \thesiscover(bsc,front,image):={}
 % \thesiscover(plain,front,image):={}
 
+
+
 % Spine info
 \spine(logo)={ulisboa-fmv-insignia-color}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main,cover)}
 \spine(year)={\thentdocdate(year)}
 \spine(text,angle)={-90}
 
@@ -319,6 +325,11 @@
 \AtEndPreamble{% 
   \LoadHelveticaLikeFont%
   \renewcommand\familydefault{\sfdefault}%
+  \IfStrEq{\option{/novathesis/mainlang}}{\option{/novathesis/coverlang}}{}{
+    % \typeout{DT=\thedoctitle(\option{/novathesis/mainlang},main,cover)}\xxxx
+    \doctitle(\option{/novathesis/coverlang},main,cover)={\thedoctitle(\option{/novathesis/mainlang},main,cover)}
+    % \typeout{DT=\thedoctitle(\option{/novathesis/coverlang},main,cover)}\xxxx
+  }
 }
 
 \NTAddToHook{cover/1-1/text/pre}{%
@@ -343,22 +354,33 @@
   \NTAddToHook{cover/N-2/pre}{\nolinenumbers}
 }
 
+\NTAddToHook{abstract/pre}{%
+  % \typeout{ABSTRACT/PRE/\option{/@nt/currentlang}}\aaa
+  \let\oldchapterheadstart=\chapterheadstart%
+  \preto{\chapterheadstart}%
+  {\begin{center}\noindent\Large\bfseries\MakeTextUppercase{\thedoctitle(\option{/@nt/currentlang},main)}\end{center}\bigskip}%
+}
+
+\NTAddToHook{abstract/post}{%
+  \let\chapterheadstart=\oldchapterheadstart%
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % COVER ELEMENTS
 % School
-\ntaddtocover[vspace=2mm, height=2.0cm, valign=c]{1-1}{%
+\ntaddtocover[vspace=2mm, height=2.0cm, inalign=c]{1-1}{%
   \fontsize{12}{12}\selectfont%
   \MakeUppercase{\theuniversity(\option{/novathesis/coverlang})}\\[4mm]%
   \MakeUppercase{\theschool(\option{/novathesis/coverlang})}%
 } 
-\ntaddtocover[vspace=0mm, height=2.0cm, valign=t]{2-1}{%
+\ntaddtocover[vspace=0mm, height=2.0cm, inalign=t]{2-1}{%
   \fontsize{12}{12}\selectfont%
   \MakeUppercase{\theuniversity(\option{/novathesis/coverlang})}\\[4mm]%
   \MakeUppercase{\theschool(\option{/novathesis/coverlang})}%
 } 
 
 % Logo
-\ntaddtocover[vspace/msc=5mm, vspace/phd=0.25cm, height=2.95cm, valign=t]{1-1,2-1}{%
+\ntaddtocover[vspace/msc=5mm, vspace/phd=0.25cm, height=2.95cm, inalign=t]{1-1,2-1}{%
   \includegraphics[height=1.6cm,align=c]{ulisboa-logo-color}%
   \hspace{16mm}%
   \includegraphics[height=2.5cm,align=c]{ulisboa-fmv-insignia-color}%
@@ -366,21 +388,21 @@
 }
 
 % PhD Title of Dissertation
-\ntaddtocover[vspace/1-1=18mm, vspace/2-1=10mm, height=2.35cm, valign=c]{1-1,2-1}{%
+\ntaddtocover[vspace/1-1=18mm, vspace/2-1=10mm, height=2.35cm, inalign=c]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
   \textbf{\MakeUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
 }
 
 
 % Doc Status
-\ntaddtocover[vspace=0cm, height=1.5cm, valign=c]{1-1,2-1}{%
+\ntaddtocover[vspace=0cm, height=1.5cm, inalign=c]{1-1,2-1}{%
   \ifdocworking{Draft: \today}{}%
   \ifdocprovisional{\emph{\theprovisionalstring(\option{/novathesis/coverlang})}}{}%
   \ifdocfinal{~}{}%
 }
 
 % Author name
-\ntaddtocover[vspace/1-1=0mm, vspace/2-1=4mm, height=1.8cm, valign=c]{1-1,2-1}{%
+\ntaddtocover[vspace/1-1=0mm, vspace/2-1=4mm, height=1.8cm, inalign=c]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
   \MakeTextUppercase{\thedocauthor(name)}%
 }
@@ -400,7 +422,7 @@
 
 
 % Committee and Advisers
-\ntaddtocover[vspace=15mm, height=45mm, valign=c, halign=l]{1-1,2-1}{%
+\ntaddtocover[vspace=15mm, height=45mm, inalign=c, align=l]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
   \committeestringfont():={\bfseries}%
   % \advisertitlestringfont():={\bfseries}%
@@ -446,7 +468,7 @@
 }
 
 \ifdocfinal{
-  \ntaddtocover[halign=j]{2-2}{%
+  \ntaddtocover[align=j]{2-2}{%
     \ntfor\match:={%
       NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement-\option{/novathesis/mainlang}.tex,%
       NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex%
