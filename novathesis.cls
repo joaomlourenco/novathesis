@@ -1229,7 +1229,8 @@
   % #1 = major cover ID
   \iffileadded[1]{cover}{%
     \iffileadded[#1]{cover}{%
-      \optionlistdo{/@nt/file/cover/#1}{\bgroup\thispagestyle{empty}\@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}\egroup\clearforchapter}
+      \optionlistdo{/@nt/file/cover/#1}{\bgroup\thispagestyle{empty}\@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}\egroup\clearforchapter}%
+      \ntprintcoversingle{2}{1}%
     }{}%
   }{%
     \IfStrEqCase{#1}{%
@@ -1721,7 +1722,7 @@
     \ifoptionvoid{/@nt/#1/\i/name}{}{%
       \letoptionlist{/@nt/#1/\i/name}\@nt@person@sublist%
       \eappto\@nt@personlist{\@nt@listsep\@nt@person@sublist}\edef\@nt@listsep{,}%
-    }
+    }%
   }%
   \@replacelastcomma{\@nt@personlist}%
 }

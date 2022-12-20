@@ -20,8 +20,8 @@
 \ntsetup{fontstyle=newsgott}
 \ntsetup{statement=true}
 
-\ifdocfinal{\ntaddfile{cover}[1]{./NOVAthesisFiles/Schools/uminho/cover-final.tex}}{}
 \ifdocprovisional{\ntsetup{docstatus=final}}{}
+\ifdocfinal{\ntaddfile{cover}[1]{./NOVAthesisFiles/Schools/uminho/cover-final.tex}}{}
 \ntsetup{spine=no}
 
 % --------------------------------------------------------
