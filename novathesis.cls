@@ -2153,24 +2153,36 @@
 %% Quoting
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Author in a line by otself
-\renewcommand*{\mkcitation}[1]{\\[0.5ex](#1)}
+
+\newcommand{\hugequote}{%
+  \bgroup%
+    \color{black!30}%
+    \fontsize{75}{80}\selectfont%
+    \fontfamily{ptm}\selectfont%
+    \textit{\glqq}%
+  \egroup%
+}
 
 \newenvironment{ntquoting}[2][10cm]{%
-	\iftoggle{/novathesis/numberallpages}%
-		{\thispagestyle{novathesis@frontmatter}}%
-		{\thispagestyle{empty}}%
-		\gdef\@ntquoting{#2}
-		\NTRunHook{#2/pre}%
-		~\\[2cm]%
-		\minipage{\linewidth}%
-		\raggedleft%
-		\minipage{#1}%
-		\raggedleft\normalsize\itshape%
-  }{%
-		\normalfont%
-		\endminipage%
-		\endminipage%
-		\NTRunHook{\@ntquoting/post}%
+  \bgroup
+    \iftoggle{/novathesis/numberallpages}%
+      {\thispagestyle{novathesis@frontmatter}}%
+      {\thispagestyle{empty}}%
+    \gdef\@ntquoting{#2}
+    \renewcommand*{\mkcitation}[1]{\\[0.5ex]--- ##1}
+    \vspace*{\beforechapskip}%
+    \NTRunHook{\@ntquoting/pre}%
+    \minipage[t]{\linewidth}%
+    \raggedleft%
+    \ifstrequal{#2}{quote}{\hugequote}{}%
+    \minipage[t]{#1}%
+    \raggedleft\normalsize\itshape%
+}{%
+    \normalfont%
+    \endminipage%
+    \endminipage%
+    \NTRunHook{\@ntquoting/post}%
+  \egroup
 }
 
 
