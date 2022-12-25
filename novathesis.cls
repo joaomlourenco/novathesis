@@ -223,7 +223,6 @@
 		{\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}%
 }
 
-
 % --------------------------------------------------------
 % Trim spaces around argument
 \ExplSyntaxOn
@@ -560,7 +559,7 @@
 	tocintoc/.new toggle          = false,
 	urlstyle/.new cmd             = {\AfterPreamble{\urlstyle{#1}}},
 	kwncols/.new value            = 2,
-	debugcover/.new toggle        = false,
+	debug/.new list               = {},
 	spine/.new choice             = {unset, no, full, trim},
 	media/.new choice             = {screen, paper},
 	linkscolor/.new cmd           = {\@ifpackageloaded{hyperref}%
@@ -622,7 +621,6 @@
 % Pass the remaining options to memoir
 % \letoptionlist{/options/remaining}\nt@remaining
 % \PassOptionsToClass{\nt@remaining}{memoir}
-
 
 
 
@@ -1013,6 +1011,17 @@
 \ifoptionequal{/novathesis/media}{paper}{\ntsetup{linkscolor=Black}}{}
 
 
+% --------------------------------------------------------
+% If option “debug={index}” option is active,
+%     highlight index keywords in the main text
+\providecommand*{\debugindexcolor}{red!50}
+\ifoptioncontains{/novathesis/debug}{index}{%
+  % \PassOptionsToPackage{inline}{showlabels}%
+  \AtEndPreamble{\RequirePackage{showlabels}%
+  \showlabels[\color{\debugindexcolor}]{index}}%
+}{}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING CUSTOMIZATION STUFF - part 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1360,7 +1369,7 @@
 		, yshift=-\@nt@margin@top] at (current page.north west)
 		{\usebox{\@cover@text@box}};
 		\end{tikzpicture}%
-		\iftoggle{/novathesis/debugcover}{%
+		\ifoptioncontains{/novathesis/debug}{cover}{%
 		\NTRunHook{cover/#1/grid/pre}%
 		\debuggrid%
 		\NTRunHook{cover/#1/grid/post}%
@@ -1583,7 +1592,7 @@
   \@nt@makeboxwithcoverelement@iii{#1}{#2}{\@nt@coverelement}%
   \noindent%
   \hspace*{\option{/@ntcoveropts/hspace}}%
-  \iftoggle{/novathesis/debugcover}{% If in debug mode surround element in box
+  \ifoptioncontains{/novathesis/debug}{cover}{% If in debug mode surround element in box
     \setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.5pt}%
     \vspace*{-\fboxrule}\hspace*{-\fboxrule}%
     \fbox{\usebox{\@nt@coverelement}}%
@@ -2019,6 +2028,32 @@
 	\NTRunHook{mainmatter/post}%
 }
 
+\newcommand{\ntindex}[2][]{%
+  % \typeout{NTINDEX [#1] [#2]}
+  \bgroup%
+    \ifoptioncontains{/novathesis/debug}{index}{\showlabelsinline}{}%
+    \StrRight{#1}{1}[\@nt@index]%
+    \if\@nt@index!\relax
+      \def\@nt@index{#1#2}%
+    \else
+      \def\@nt@index{#1}%
+    \fi%
+    \index{\@nt@index}#2%
+    % \ifoptioncontains{/novathesis/debug}{index}{}%
+    %                                            {\def\@nt@index{f}}%
+    % \if\@nt@index t\relax
+    %   \marginpar{#1#2}%
+    % \fi%
+  \egroup%
+}
+
+% \newcommand{\ntindex}[2][]{%
+%   \if\relax\detokenize{#1}\relax
+%     \index{#2}#2%
+%   \else
+%     \index{#1}#2%
+%   \fi%
+% }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

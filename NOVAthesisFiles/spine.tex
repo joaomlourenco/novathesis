@@ -319,6 +319,6 @@
               {\rotatebox{\thespine(text,angle)}{\usebox{\mydatebox}}};
     }{}
   \end{tikzpicture}
-  \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
+  \ifoptioncontains{/novathesis/debug}{cover}{\debuggrid}{}%
   \NTRunHook{spine/post}%
 }
