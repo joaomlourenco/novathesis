@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-12-13 [6.10.16]
+%% Version 2022-12-25 [6.10.17]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}[2019-10-01]
-\ProvidesClass{novathesis}[2022-12-13 novathesis template]
+\ProvidesClass{novathesis}[2022-12-25 novathesis template]
 
 
 %============================================================
@@ -105,7 +105,6 @@
 \RequirePackage{xfor}
 \RequirePackage{iftex}
 \RequirePackage{etoolbox}
-\RequirePackage{xifthen}
 \RequirePackage{xstring}
 \RequirePackage{NOVAthesisFiles/options2}
 \RequirePackage{NOVAthesisFiles/memory2}
@@ -216,14 +215,13 @@
 % Load and Helvetica-like font as the default SF font
 \newcommand*{\LoadHelveticaLikeFont}{%
 	\IfFileExists{inter.sty}%
-		{\usepackage[scaled=1]{inter}}%
+		{\RequirePackage[scaled=1]{inter}}%
 	{\IfFileExists{helvet.sty}%
-		{\usepackage[scaled=0.95]{helvet}}%
+		{\RequirePackage[scaled=0.95]{helvet}}%
 	{\IfFileExists{gillius2.sty}%
-		{\usepackage{gillius2}}%
+		{\RequirePackage{gillius2}}%
 		{\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}%
 }
-
 
 % --------------------------------------------------------
 % Trim spaces around argument
@@ -561,7 +559,7 @@
 	tocintoc/.new toggle          = false,
 	urlstyle/.new cmd             = {\AfterPreamble{\urlstyle{#1}}},
 	kwncols/.new value            = 2,
-	debugcover/.new toggle        = false,
+	debug/.new list               = {},
 	spine/.new choice             = {unset, no, full, trim},
 	media/.new choice             = {screen, paper},
 	linkscolor/.new cmd           = {\@ifpackageloaded{hyperref}%
@@ -623,7 +621,6 @@
 % Pass the remaining options to memoir
 % \letoptionlist{/options/remaining}\nt@remaining
 % \PassOptionsToClass{\nt@remaining}{memoir}
-
 
 
 
@@ -1014,6 +1011,17 @@
 \ifoptionequal{/novathesis/media}{paper}{\ntsetup{linkscolor=Black}}{}
 
 
+% --------------------------------------------------------
+% If option “debug={index}” option is active,
+%     highlight index keywords in the main text
+\providecommand*{\debugindexcolor}{red!50}
+\ifoptioncontains{/novathesis/debug}{index}{%
+  % \PassOptionsToPackage{inline}{showlabels}%
+  \AtEndPreamble{\RequirePackage{showlabels}%
+  \showlabels[\color{\debugindexcolor}]{index}}%
+}{}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING CUSTOMIZATION STUFF - part 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1230,7 +1238,8 @@
   % #1 = major cover ID
   \iffileadded[1]{cover}{%
     \iffileadded[#1]{cover}{%
-      \optionlistdo{/@nt/file/cover/#1}{\bgroup\thispagestyle{empty}\@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}\egroup\clearforchapter}
+      \optionlistdo{/@nt/file/cover/#1}{\bgroup\thispagestyle{empty}\@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}\egroup\clearforchapter}%
+      \ntprintcoversingle{2}{1}%
     }{}%
   }{%
     \IfStrEqCase{#1}{%
@@ -1360,7 +1369,7 @@
 		, yshift=-\@nt@margin@top] at (current page.north west)
 		{\usebox{\@cover@text@box}};
 		\end{tikzpicture}%
-		\iftoggle{/novathesis/debugcover}{%
+		\ifoptioncontains{/novathesis/debug}{cover}{%
 		\NTRunHook{cover/#1/grid/pre}%
 		\debuggrid%
 		\NTRunHook{cover/#1/grid/post}%
@@ -1435,6 +1444,9 @@
 		\NTRunHook{cover/#1/text/post}%
 }
 
+\def\instring#1#2{TT\fi\begingroup
+  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
+
 \def\@ntcoverelement@iii#1#2=*=#3{%
   % #1 = cover ID (major-minor)
   % #2 = cover element options
@@ -1444,13 +1456,38 @@
     \options{/@ntcoveropts,defaults}%.
     \options{/@ntcoveropts,#2}%
     \options{/@ntcoveropts,alignmap=\option{/@ntcoveropts/halign}}%
-    \StrCount{,\option{/@ntcoveropts/status},}{,\option{/@nt/document/docclass},}[\@nt@instatus]%
-    \StrCount{,\option{/@ntcoveropts/degree},}{,\option{/@nt/document/docclass},}[\@nt@indegree]%
-    \ifthenelse{%
-              \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND%
-              \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}%
-      {\@ntcoverelement@ii{#1}{#3}}%
-      {}%
+    % \StrCount{,\option{/@ntcoveropts/status},}{,\option{/novathesis/docstatus},}[\@nt@instatus]%
+    % \StrCount{,\option{/@ntcoveropts/degree},}{,\option{/@nt/document/docclass},}[\@nt@indegree]%
+    % \typeout{OPT_DEGREE=[\option{/@ntcoveropts/degree}] DOCCLASS=[\option{/@nt/document/docclass}]}%
+    % \typeout{OPT_STATUS=[\option{/@ntcoveropts/status}] STATUS=[\option{/novathesis/docstatus}]}\aaaaa
+    \defifundef{\ifmatchstatus}{\newif}
+    \defifundef{\ifmatchdegree}{\newif}
+    \matchstatustrue
+    \matchdegreetrue
+    \if&\option{/@ntcoveropts/status}&\relax
+    \else
+      \if\instring{,\option{/novathesis/docstatus},}{,\option{/@ntcoveropts/status},}
+      \else
+        \matchstatusfalse
+      \fi      
+    \fi
+    \if&\option{/@ntcoveropts/degree}&\relax
+    \else
+      \if\instring{,\option{/@nt/document/docclass},}{,\option{/@ntcoveropts/degree},}
+      \else
+        \matchdegreefalse
+      \fi      
+    \fi
+    \ifmatchstatus
+      \ifmatchdegree
+        \@ntcoverelement@ii{#1}{#3}
+      \fi
+    \fi
+     % \ifthenelse{%
+     %          \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND%
+     %          \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}%
+     %  {\@ntcoverelement@ii{#1}{#3}}%
+     %  {}%
   }%
 }
 
@@ -1555,7 +1592,7 @@
   \@nt@makeboxwithcoverelement@iii{#1}{#2}{\@nt@coverelement}%
   \noindent%
   \hspace*{\option{/@ntcoveropts/hspace}}%
-  \iftoggle{/novathesis/debugcover}{% If in debug mode surround element in box
+  \ifoptioncontains{/novathesis/debug}{cover}{% If in debug mode surround element in box
     \setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.5pt}%
     \vspace*{-\fboxrule}\hspace*{-\fboxrule}%
     \fbox{\usebox{\@nt@coverelement}}%
@@ -1694,7 +1731,7 @@
     \ifoptionvoid{/@nt/#1/\i/name}{}{%
       \letoptionlist{/@nt/#1/\i/name}\@nt@person@sublist%
       \eappto\@nt@personlist{\@nt@listsep\@nt@person@sublist}\edef\@nt@listsep{,}%
-    }
+    }%
   }%
   \@replacelastcomma{\@nt@personlist}%
 }
@@ -1991,6 +2028,32 @@
 	\NTRunHook{mainmatter/post}%
 }
 
+\newcommand{\ntindex}[2][]{%
+  % \typeout{NTINDEX [#1] [#2]}
+  \bgroup%
+    \ifoptioncontains{/novathesis/debug}{index}{\showlabelsinline}{}%
+    \StrRight{#1}{1}[\@nt@index]%
+    \if\@nt@index!\relax
+      \def\@nt@index{#1#2}%
+    \else
+      \def\@nt@index{#1}%
+    \fi%
+    \index{\@nt@index}#2%
+    % \ifoptioncontains{/novathesis/debug}{index}{}%
+    %                                            {\def\@nt@index{f}}%
+    % \if\@nt@index t\relax
+    %   \marginpar{#1#2}%
+    % \fi%
+  \egroup%
+}
+
+% \newcommand{\ntindex}[2][]{%
+%   \if\relax\detokenize{#1}\relax
+%     \index{#2}#2%
+%   \else
+%     \index{#1}#2%
+%   \fi%
+% }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2125,24 +2188,36 @@
 %% Quoting
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Author in a line by otself
-\renewcommand*{\mkcitation}[1]{\\[0.5ex](#1)}
+
+\newcommand{\hugequote}{%
+  \bgroup%
+    \color{black!30}%
+    \fontsize{75}{80}\selectfont%
+    \fontfamily{ptm}\selectfont%
+    \textit{\glqq}%
+  \egroup%
+}
 
 \newenvironment{ntquoting}[2][10cm]{%
-	\iftoggle{/novathesis/numberallpages}%
-		{\thispagestyle{novathesis@frontmatter}}%
-		{\thispagestyle{empty}}%
-		\gdef\@ntquoting{#2}
-		\NTRunHook{#2/pre}%
-		~\\[2cm]%
-		\minipage{\linewidth}%
-		\raggedleft%
-		\minipage{#1}%
-		\raggedleft\normalsize\itshape%
-  }{%
-		\normalfont%
-		\endminipage%
-		\endminipage%
-		\NTRunHook{\@ntquoting/post}%
+  \bgroup
+    \iftoggle{/novathesis/numberallpages}%
+      {\thispagestyle{novathesis@frontmatter}}%
+      {\thispagestyle{empty}}%
+    \gdef\@ntquoting{#2}
+    \renewcommand*{\mkcitation}[1]{\\[0.5ex]--- ##1}
+    \vspace*{\beforechapskip}%
+    \NTRunHook{\@ntquoting/pre}%
+    \minipage[t]{\linewidth}%
+    \raggedleft%
+    \ifstrequal{#2}{quote}{\hugequote}{}%
+    \minipage[t]{#1}%
+    \raggedleft\normalsize\itshape%
+}{%
+    \normalfont%
+    \endminipage%
+    \endminipage%
+    \NTRunHook{\@ntquoting/post}%
+  \egroup
 }
 
 

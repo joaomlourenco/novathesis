@@ -70,7 +70,7 @@
     }{}
   \end{tikzpicture}%
   \NTRunHook{spine/mid}%
-  \iftoggle{/novathesis/debugcover}{\debuggrid}{}%
+  \ifoptioncontains{/novathesis/debug}{cover}{\debuggrid}{}%
   % \loadgeometry{maintext}%
   \NTRunHook{spine/post}%
 }

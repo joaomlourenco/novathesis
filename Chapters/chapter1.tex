@@ -21,22 +21,22 @@
 \includegraphics[width=0.1\linewidth]{NOVAthesisFiles/Images/novathesis-insignia}\hfill
 \includegraphics[width=0.875\linewidth]{NOVAthesisFiles/Images/novathesis-text}
 
-\noindent This is the \gls{novathesis} \LaTeX\ template Version \novathesisversion\ from \novathesisdate.
+\noindent This is the \gls{novathesis} \LaTeX\ template \ntindex[Template!]{Version} \novathesisversion\ from   {Template!date}\novathesisdate.
 
 \epigraph{
-  This work is licensed under the \href{https://www.latex-project.org/lppl/lppl-1-3c/}{\LaTeX\ Project Public \index{License} v1.3c}.
-  To view a copy of this license, visit the \href{https://www.latex-project.org/lppl/}{LaTeX project public license}.
+  This work is licensed under the \href{https://www.latex-project.org/lppl/lppl-1-3c/}{\LaTeX\ Project Public License v1.3c}.
+  To view a copy of this \ntindex[Template!license]{license}, visit the \href{https://www.latex-project.org/lppl/}{LaTeX project public license}.
 }
 
 \section{Welcome to the \novathesis\ Template} 
 \label{sub:if_you_use_this_template}
 
-This first Chapter introduces the \gls{novathesis} template and how it is organized. In Chapter~\ref{cha:users_manual} you can find some specific instructions on how to use the \gls{novathesis} template.  Chapter~\ref{cha:a_short_latex_tutorial_with_examples} shows some examples and give some hints on how to write your text. Please read these next Chapters carefully.
+This first Chapter introduces the \gls{novathesis} template and how it is organized. In Chapter~\ref{cha:users_manual} you can find some specific instructions on how to use this template.  Chapter~\ref{cha:a_short_latex_tutorial_with_examples} shows some examples and give some hints on how to write your text. Please read these next Chapters carefully.
 
 \subsection{Your Time is Precious}
 \label{sub:time_is_money}
 
-Did you learn how to drive by sitting by the wheel and throwing your car into the road?  Most probably you did take your time \emph{learning the rules} and \emph{practicing} first! Likewise, it is not wise to throw yourself at the task of writing a thesis/dissertation in \LaTeX\ without seriously considering the following statement!
+Did you learn how to drive by sitting by the wheel and throwing your car into the road?  Most probably you did take your time \emph{learning the rules} and \emph{practicing} first! Likewise, it is not wise to throw yourself at the task of writing a thesis/dissertation in \LaTeX\ without seriously considering the following \ntindex{recommendation}!
 
 
 % subsection subsection_name (end)
@@ -50,21 +50,23 @@ Did you learn how to drive by sitting by the wheel and throwing your car into th
 \renewcommand{\mkcitation}[1]{\\[0ex]\parbox{\linewidth}{\hfill\textbf{#1}}}
 \blockquote[João Lourenço]{%
   \rule{\linewidth}{2pt}\\\itshape
-  If you are going to spend zillions of hours writing your thesis/dissertation using this \gls{novathesis} template, be wise and spend a couple of hours learning how to use it properly by reading this manual.  And then, be even wiser, and spend a few more hours \href{https://github.com/joaomlourenco/novathesis/wiki\#learning-latex}{learning some \LaTeX}.  I am sure that the time you are investing now will pay itself countless times before you submit your thesis/dissertation.\\\nopagebreak
+  If you are going to spend zillions of hours writing your thesis/dissertation using the \gls{novathesis} \LaTeX\ template (or some other \LaTeX\ template), be wise and spend a couple of hours learning how to use it properly by reading its manual.  And then, be even wiser, and spend a few more hours \href{https://github.com/joaomlourenco/novathesis/wiki\#learning-latex}{learning some \LaTeX}.  I am sure that the time you are investing now will pay itself countless times before you submit your thesis/dissertation.\\\nopagebreak
   % \hfill \raisebox{-1ex}{\itshape João Lourenço}\\[-1ex]
   \rule{\linewidth}{2pt}%
 }
 \egroup
 
-\subsection{\index{Recognition}}
+\subsection{Recognition}
 \label{sub:recognition}
 
-The \gls{novathesis} tempalte was born in~1996, and what you see now accumulates to many many hundreds (thousands?!) of working hours, unpaid and stollen from family and friends.  This work is available to the community under the \href{LaTeX project public license}{\LaTeX\ Project Public License v1.3c}, which means you are entitled to use it for free.  However, if you decide to use this template to write your thesis/dissertation, \textbf{be fair to the developers} and:
+\ntindex[Recognition]{}
+
+The \gls{novathesis} tempalte was born in~1996, and what you see now accumulates to many many hundreds (thousands?!) of working hours, unpaid and stollen from family and friends.  This work is available to the community under the \href{LaTeX project public license}{\LaTeX\ Project Public License v1.3c}, which means you are entitled to use it for free and change it at your will.  However, if you decide to use this template to write your thesis/dissertation, \textbf{be fair to the developers} and:
 \begin{enumerate}
-  \item Cite the \gls{novathesis} manual~\cite{novathesis-manual} in a place of your choice (e.g., in the \emph{Acknowledgments}) of your thesis/disseration with “\verb!\cite{novathesis-manual}!” .  If you cite it this way, the correct entry will be added automatically to your bibliography (no need to worry with the necessary BibTeX entry, as it will be added automatically);
+  \item \ntindex[novathesis!Citation]{} Cite the \gls{novathesis} manual~\cite{novathesis-manual} in a place of your choice (e.g., in the \emph{Acknowledgments}) of your thesis/disseration with “\verb!\cite{novathesis-manual}!” .  If you cite it this way, the correct entry will be added automatically to your bibliography (no need to worry with the necessary BibTeX entry, as it will be added automatically);
   \item Go to the
-\href{https://github.com/joaomlourenco/novathesis}{project web page in GitGub} and give the project a star (marked with a red ellipse at the top-right in Figure~\ref{fig:github}); and
-  \item Make a donation by visiting the \gls{novathesis} project page and clicking in the button marked with a green ellipse at the top-center in Figure~\ref{fig:github}).  Alternatively, just click \href{https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8}{\fcolorbox{DarkGreen}{gray!15}{\textbf{~HERE~}}} and your browser will be directed to the right page.
+\href{https://github.com/joaomlourenco/novathesis}{\ntindex[GitHub!project web page]{project web page} in GitHub} and give the project a \ntindex[GitHub!stars]{star} (marked with a red ellipse at the top-right in Figure~\ref{fig:github}); and
+  \item Make a \ntindex[donations]{donation} by visiting the \gls{novathesis} project page and clicking in the button marked with a green ellipse at the top-center in Figure~\ref{fig:github}).  Alternatively, just click \href{https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8}{\fcolorbox{DarkGreen}{gray!15}{\textbf{~HERE~}}} and your browser will be directed to the right page.
 \end{enumerate}
 
 \begin{figure}[htbp]
@@ -74,32 +76,12 @@ The \gls{novathesis} tempalte was born in~1996, and what you see now accumulates
   \label{fig:github}
 \end{figure}
 
-\section{The \emph{NOVAthesis} \index{Template}}
+\section{The \emph{NOVAthesis} Template}
 \label{sec:a_bit_of_history}
 
-% \newenvironment{ntUniversity}[1]{
-%     \begin{longtblr}[
-%         % presep = 1ex,
-%         % postsep = 1ex,
-%         caption = {#1's Schools supported by the \novathesis\ template.},
-%         label = {tab:supported_schools_#1},
-%         % label=none,
-%     ]{colspec = {Q[c,m]X[j,m]},
-%         rowhead = {1},
-%         row{odd} = {GhostWhite},
-%         % row{even} = {yellow},
-%         row{1}  = {font=\bfseries, l, Schlgray, ht=1cm},
-%     }
-%         \toprule
-%      ~ & #1 \\
-%         \midrule
-% }{%
-%         \bottomrule
-%     \end{longtblr}
-% }
+\ntindex[Template]{}
 
-
-The \gls{novathesis} template was born at the \gls{DI} of  \gls{FCT} of \gls{NOVA}, Portugal.  But the user base grew… initially to other Departments of FCT-NOVA, then to other Schools of NOVA, and later to other Schools of other Universities.  Currently more than~25 Schools are natively supported by the \gls{novathesis} template (see Tables~\ref{tab:supported_schools_NOVA University Lisbon}, \ref{tab:supported_schools_University of Lisbon}, \ref{tab:supported_schools_University of Minho}, \ref{tab:supported_schools_Instituto Politécnico de Lisboa}, \ref{tab:supported_schools_Instituto Politécnico de Setúbal}, and \ref{tab:supported_schools_Other Universities/Schools/Degrees}).
+The \gls{novathesis} template was born at the \gls{DI} of  \gls{FCT} of \gls{NOVA}, Portugal.  But the user base grew… initially grew to other Departments of FCT-NOVA, then to other Schools of NOVA, and later to other Schools of other Universities.  Currently more than~25 Schools are natively supported by the \gls{novathesis} template (see Tables~\ref{tab:supported_schools_NOVA University Lisbon}, \ref{tab:supported_schools_University of Lisbon}, \ref{tab:supported_schools_University of Minho}, \ref{tab:supported_schools_Instituto Politécnico de Lisboa}, \ref{tab:supported_schools_Instituto Politécnico de Setúbal}, and \ref{tab:supported_schools_Other Universities/Schools/Degrees}).
 
 \newenvironment{ntUniversity}[1]{
   \renewcommand\tabularxcolumn[1]{m{##1}}% for vertical centering text in X column
@@ -238,6 +220,7 @@ The \gls{novathesis} template was born at the \gls{DI} of  \gls{FCT} of \gls{NOV
 \schlname(ilch):={School of Arts and Humanities}
 \schlurl(ilch):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-arts-and-humanities.aspx}
 
+
 \begin{ntUniversity}{University of Minho}
     {
       \docCover{uminho-ea-phd-en,uminho-ea-msc-en}
@@ -324,6 +307,8 @@ The \gls{novathesis} template was born at the \gls{DI} of  \gls{FCT} of \gls{NOV
       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
     }\\
 \end{ntUniversity}
+
+
 %
 % % \begin{ntUniversity}{ISCTE — Instituto Universitário de Lisboa}
 % %     \ntSchool{cover-iscteiul-eta-phd}%
@@ -369,8 +354,11 @@ The template provides an \emph{easy to use} setting for you to write your thesis
   \item Process using you favorite \LaTeX\ processor (pdf\LaTeX, \XeLaTeX\ or \LuaLaTeX).
 \end{itemize}
 
-\subsection{Using \index{Overleaf}}
+\subsection{Using Overleaf}
 \label{sub:using_overleaf}
+
+\ntindex[Installation!Overleaf]{}
+\ntindex[Using!Overleaf]{}
 
 \begin{wrapfigure}{r}{0.3\linewidth}
 \vspace*{-10ex}
@@ -396,9 +384,11 @@ Once you have an account, please access the \gls{novathesis} template in \href{h
   \end{enumerate}
 \egroup
 
-\subsection{Using a \index{installation!Local \LaTeX\ Installation}}
+\subsection{Using a Local \LaTeX\ Installation Local}
 \label{sub:using_local_latex}
 
+\ntindex[Installation!Local installation]{}
+\ntindex[Using!Local installation]{}
 
 \begin{wrapfigure}{r}{0.3\linewidth}
 \vspace*{-17ex}
@@ -407,17 +397,19 @@ Once you have an account, please access the \gls{novathesis} template in \href{h
 \label{fig:github2}
 \end{wrapfigure}
 
-First of all, start by installing \LaTeX\ in your computer.  There are two main distributions, \href{https://miktex.org}{\index{\MikTeX}}\ and \href{https://www.tug.org/texlive/}{\index{\TeXLive}}, and both of them are available for the~3 most popular Operating Systems: Linux, macOS and Windows.
+First of all, start by installing \LaTeX\ in your computer.  There are two main distributions, \href{https://miktex.org}{\ntindex{\MikTeX}}\ and \href{https://www.tug.org/texlive/}{\ntindex{\TeXLive}}, and both of them are available for the~3 most popular Operating Systems: Linux, macOS and Windows.
 
 Be aware that a full installation of \MikTeX\ or \TeXLive\ will take near~5\,GB of hard disk space.  So, think twice before installing the full distribution.  See the \gls{novathesis} Wiki for the \href{https://github.com/joaomlourenco/novathesis/wiki/installing-latex#minimal-installation-in-any-of-the-systems-above}{list of packages required to compile the template}.
 
-Once you have \LaTeX\ up and running, remember to install a good \LaTeX\ text editor.  I recommend you to take a look at  \href{https://tex.stackexchange.com/questions/339/latex-editors-ides}{this post} in the \url{tex.stackexchange.com} site.  If you want a quick and dirty recommendation, try \href{https://www.texstudio.org/}{\index{TeXStudio}}.
+Once you have \LaTeX\ up and running, remember to install a good \LaTeX\ text editor.  I recommend you to take a look at  \href{https://tex.stackexchange.com/questions/339/latex-editors-ides}{this post} in the \url{tex.stackexchange.com} site.  If you want a quick and dirty recommendation, try \href{https://www.texstudio.org/}{\ntindex{TeXStudio}}.
 
 Now, you must access the \gls{novathesis} repository in \href{https://github.com/joaomlourenco/novathesis}{GitHub}, select the green button \emph{Code} and then \emph{download} (or \emph{clone}) the template.  You will always get the latest version of the template (currently v\novathesisversion\ from \novathesisdate).
 
 
-\section{Getting \index{Help}}
+\section{Getting Help}
 \label{sec:getting_help}
+
+\ntindex[Help]{}
 
 No! You don't have to use this template to write your thesis.  You don't even have to use \LaTeX.  However, writing a thesis is serious stuff, and which tool you shall use to write it is not a decision to make lighthearted.
 
@@ -439,14 +431,14 @@ When you post your own question, remember to \textbf{always} state the \gls{nova
 \end{center}
  
 
-\subsection{\index{Suggestions}, \index{Bugs} and \index{Feature Requests}} % (fold)
+\subsection{Suggestions, Bugs and Feature Requests} % (fold)
 \label{sub:suggestions_bugs_and_feature_requests}
 
 \begin{description}
   \item[Help:] If you just need some help, see above \Autoref{sec:getting_help}.
-  \item[Suggestion:] Do you have a suggestion/recommendation? Please add it to the wiki and help other users!
-  \item[Bug:] Did you find a bug? Please open an issue. Thanks!
-  \item[New Feature:] Would you like to request a new feature (or support of a new School)? Please open an issue. Thanks!
+  \item[Suggestion:] \ntindex[Suggestions]{} Do you have a suggestion/recommendation? Please add it to the wiki and help other users!
+  \item[Bug:] \ntindex[Bugs]{} Did you find a bug? Please open an issue. Thanks!
+  \item[New Feature:] \ntindex[Feature Requests]{} Would you like to request a new feature (or support of a new School)? Please open an issue. Thanks! 
 
 \end{description}
 
@@ -457,14 +449,18 @@ When you post your own question, remember to \textbf{always} state the \gls{nova
 
 
 
-\section{\index{Donors}}
+\section{Donors}
 \label{sec:donations}
+
+\ntindex[Donnations]{}
 
 The \href{https://github.com/joaomlourenco/novathesis/wiki#donators}{list of \emph{Donnors}} is available in the \gls{novathesis} Project page.
 
 
-\section{\index{Disclaimer}}
+\section{Disclaimer}
 \label{sec:disclaimer}
+
+\ntindex[Disclaimer]{}
 
 Although the \gls{novathesis} template is endorsed by some Schools (e.g., \href{https://www.fct.unl.pt/estudante/informacao-academica/teses-e-dissertacoes}{linked from FCT-NOVA web site}), the \gls{novathesis} template \textbf{this not an official template} for any School.
 
