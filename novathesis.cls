@@ -1758,18 +1758,18 @@
 % Print persons list {advisers | committee} as one and two columns
 %============================================================
 \newcommand{\@ntprintpersonsasonecolumn}[4]{%
-		% #1 = { full | name | list }
-		% #2 = width in % of textwidth
-		% #3 = adviser | committee
-		% #4 = {a,c} | {c,r,a,m,g}
-		\csuse{#3stringpost}():={:\\[2pt]}%
-		\csuse{#3remainderpre}()={\\}%
-		\personpost()={\\[4pt]}%
-		\persongrouppost()={\\[-6pt]}
-		\begin{tabularx}{#2\linewidth}[t]{@{}X@{}}%
+  % #1 = { full | name | list }
+  % #2 = width in % of textwidth
+  % #3 = adviser | committee
+  % #4 = {a,c} | {c,r,a,m,g}
+  \csuse{#3stringpost}():={:\\[2pt]}%
+  \csuse{#3remainderpre}()={{\\}}%
+  \personpost()={\\[4pt]}%
+  \persongrouppost()={\\[-4pt]}
+  \begin{tabularx}{#2\linewidth}[t]{@{}X@{}}%
     \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}%
     % \@for\arg:=\expanded{#4}\do{\@nt@ntprintpersongroup{#1}{1}{#3}{\arg}}
-		\end{tabularx}%
+  \end{tabularx}%
 }
 
 \newcommand{\@ntprintpersonsastwocolumns}[4]{%
@@ -1798,7 +1798,7 @@
 }
 
 \newcommand{\@nt@ntprintpersongroup}[4][full]{%
-  % #1 = { name | full}
+  % #1 = { full | name | list }
   % #2 = {1 | 2}
   % #3 = {adviser | committee}
   % #4 = {a,c} | {c,r,a,m,g}
@@ -1814,12 +1814,12 @@
     \datadefault{#3stringpost}(#4)%
     % \if#22\relax&\fi
     % \IfStrEq{#2}{2}{&}{}%
-    \IfStrEq{#1}{full}{%
+    \IfStrEq{#1}{list}{%
+      \@ntprintpersonsaslist{#3}{#4}%
+    }{%
       \begin{minipage}[t]{\linewidth}%
           \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{##1}}%
       \end{minipage}%
-    }{%
-      \@ntprintpersonsaslist{#3}{#4}%
     }%
     \thepersongrouppost()%
   }{}%
