@@ -9,8 +9,9 @@ L:=latexmk $(F)
 V:=open -a skim
 
 ZIPFILES:=NOVAthesisFiles Bibliography Config Chapters LICENSE Makefile novathesis.cls README.md .gitignore template.tex latexmkrc
-VERSION:=$(shell cat NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
-ZIPTARGET:=$(B)-$(VERSION).zip
+VERSION:=$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/')
+DATE:=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
+ZIPTARGET:=$(B)-$(VERSION)@$(DATE).zip
 AUXFILES:=$(shell ls $(B)*.* | fgrep -v .tex | fgrep -v $(B).pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
 
 LUA="other/esep uminho/ea uminho/ec uminho/ed uminho/ee uminho/eeg uminho/em uminho/ep uminho/ese uminho/ics uminho/ie uminho/ilch uminho/i3b"
@@ -94,3 +95,11 @@ bump2:
 bump3:
 	Scripts/newversion.sh 3
 	$(MAKE) publish
+
+tag:
+	@echo Tagging as $(VERSION)
+	# @echo $(DATE)
+	git co master
+	git tag -a "$(VERSION)"
+	git push origin --tags
+	git co develop
