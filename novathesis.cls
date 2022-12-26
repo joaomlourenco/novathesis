@@ -117,6 +117,7 @@
 \providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
 \providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
 
+%%%%% Options to sans serif fonts (will be loaded later)
 \PassOptionsToPackage{scaled=1}{inter}%
 \PassOptionsToPackage{scaled=0.95}{helvet}%
 

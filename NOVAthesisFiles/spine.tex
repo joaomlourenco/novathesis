@@ -24,7 +24,11 @@
 \def\def@ult#1(#2)=#3{\ifdatadefined{#1}(#2){}{\csname#1\endcsname(#2)={#3}}}
 
 \def@ult{spine}(author)={\thedocauthor(name,short)}
-\def@ult{spine}(title)={\thedoctitle(\option{/novathesis/coverlang},spine)}
+\ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub){%
+  \def@ult{spine}(title)={\thedoctitle(\option{/novathesis/coverlang},spine): \thedoctitle(\option{/novathesis/coverlang},sub)}
+}{%
+  \def@ult{spine}(title)={\thedoctitle(\option{/novathesis/coverlang},spine)}
+}
 % \typeout{SPINE=[\option{/novathesis/coverlang}][\thespine(title)]}
 \def@ult{spine}(date)={\thentdocdate(year)}
 
