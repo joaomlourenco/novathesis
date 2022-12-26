@@ -125,8 +125,8 @@
   % \show\@dateRT
   % \show\@fbratio
   
+  \defifundef{\myauthorbox}{\newsavebox}%
   \ifdatadefined{spine}(author){%
-    \defifundef{\myauthorbox}{\newsavebox}%
     \begin{lrbox}{\myauthorbox}%
       \begin{minipage}[c][\novathesis@spinetextwidth][c]{\thespine(text,author,len)}%
           \@spinetextalin{author}%
@@ -135,8 +135,8 @@
       \end{minipage}%
     \end{lrbox}%
   }{}%
+  \defifundef{\mytitlebox}{\newsavebox}%%
   \ifdatadefined{spine}(title){%
-    \defifundef{\mytitlebox}{\newsavebox}%%
     \begin{lrbox}{\mytitlebox}%
       \begin{minipage}[c][\novathesis@spinetextwidth][c]{\thespine(text,title,len)}%
           \@spinetextalin{title}%
@@ -145,8 +145,8 @@
       \end{minipage}%
     \end{lrbox}%
   }{}%
+  \defifundef{\mydatebox}{\newsavebox}%%
   \ifdatadefined{spine}(date){%
-    \defifundef{\mydatebox}{\newsavebox}%%
     \begin{lrbox}{\mydatebox}%
       \begin{minipage}[c][\novathesis@spinetextwidth][c]{\thespine(text,date,len)}%
           \@spinetextalin{date}%
