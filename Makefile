@@ -64,7 +64,7 @@ zip:
 clean:
 	@$(L) -c $(B)
 	@rm -f $(AUXFILES)
-	@find . -name .DS_Store | xargs rm
+	@find . -name .DS_Store -print0 | xargs -0 rm
 
 gclean:
 	git clean -fdx -e Scripts -e Fonts
