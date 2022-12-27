@@ -2016,14 +2016,14 @@
 	\endgroup
 	\bookmarksetup{startatroot}%
 	\NTRunHook{mainmatter/pre}%
-  % \ifbool{@openright}{}{% openany=true
-  %   \let\oldcleardoublepage\cleardoublepage%
-  %   \renewcommand{\cleardoublepage}{\clearforchapter}%
-  % }%
+  \ifbool{@openright}{}{% openany=true
+    \let\oldcleardoublepage\cleardoublepage%
+    \renewcommand{\cleardoublepage}{\clearforchapter}%
+  }%
 	\mainmatter%
-  % \ifbool{@openright}{}{% openany=true
-  %   \let\cleardoublepage\oldcleardoublepage%
-  % }%
+  \ifbool{@openright}{}{% openany=true
+    \let\cleardoublepage\oldcleardoublepage%
+  }%
 	\pagestyle{novathesis@mainmatter}%
 	\ifxeorlua{}{\microtypesetup{protrusion=true}}%
 	\NTRunHook{mainmatter/post}%
