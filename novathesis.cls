@@ -118,9 +118,9 @@
 \providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
 
 %%%%% Options to sans serif fonts (will be loaded later)
-\PassOptionsToPackage{scaled=1}{inter}%
-\PassOptionsToPackage{scaled=0.95}{helvet}%
-
+\PassOptionsToPackage{scaled=0.95}{inter}
+\PassOptionsToPackage{scaled=0.95}{helvet}
+% \PassOptionsToPackage{scaled=0.95}{gillius2}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHECK IF USING LUALATEX OR XELATEX
@@ -191,6 +191,7 @@
   % Search and match first value from the list, error if no match is found
   \datamatchtf{#1}{#2}(#3){}{\ClassError{novathesis}{Could not find “#2” defined with any of “(#3)”!}{}}%
 }
+
 \def\datamatchtf#1#2(#3)#4#5{%
 	% #1 = macro to set
 	% #2 = data@memory
@@ -216,9 +217,9 @@
 % Load and Helvetica-like font as the default SF font
 \newcommand*{\LoadHelveticaLikeFont}{%
 	\IfFileExists{inter.sty}%
-		{\RequirePackage[scaled=1]{inter}}%
+		{\RequirePackage{inter}}%
 	{\IfFileExists{helvet.sty}%
-		{\RequirePackage[scaled=0.95]{helvet}}%
+		{\RequirePackage{helvet}}%
 	{\IfFileExists{gillius2.sty}%
 		{\RequirePackage{gillius2}}%
 		{\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}%
@@ -2017,6 +2018,7 @@
 	\bookmarksetup{startatroot}%
 	\NTRunHook{mainmatter/pre}%
   \ifbool{@openright}{}{% openany=true
+    % Avoid cleardoublepage before "mainmatter"
     \let\oldcleardoublepage\cleardoublepage%
     \renewcommand{\cleardoublepage}{\clearforchapter}%
   }%
