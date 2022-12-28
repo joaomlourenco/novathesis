@@ -257,7 +257,7 @@
 \options{/@nt/.new family,
 	langsshort/.new list={en, pt, fr, it, de, es, gr},
 	currentlang/.new choice={en, pt, fr, it, de, es, gr},
-	langshorttolong/.new choice={en=english, pt=portuges, fr=french, it=italian, de=german, es=spanish, gr=greek},
+	langshorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish, gr=greek},
 	fontenc/.new choice={en=T1, pt=T1, fr=T1, it=T1, de=T1, es=T1, gr=LGR},
 	biblatex/.new list,
 }

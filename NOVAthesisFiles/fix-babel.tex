@@ -19,19 +19,6 @@
 
 \optionlistdo{/@nt/langsshort}{\options{/novathesis/babel/#1/keys/.new list}}
 
-\AtBeginDocument{%
-  \optionlistdo{/@nt/langsshort}{%
-    \options{/@nt/langshorttolong=#1}%
-    % \typeout{KEY(#1/\option{/@nt/langshorttolong})}%
-    \optionlistdo{/novathesis/babel/#1/keys}{%
-      % \typeout{KEY(#1)=[##1=\option{/novathesis/babel/#1/##1}]}%
-      % \typeout{KEY SET2 (#1/##1)=[\option{/novathesis/babel/#1/##1}]}%
-      \expandnextsingle\addto{\csname captions\option{/@nt/langshorttolong}\endcsname}%
-            {\csdef{##1}{\option{/novathesis/babel/#1/##1}}}%
-    }%
-  }
-}
-
 \def\mysplit#1/#2=#3\@nil#4#5#6{\def#4{#1}\def#5{#2}\def#6{#3}}
 \newcommand{\ntlangsetup}{\@ifstar{\ntlangsetupifndef}{\ntlangsetupdef}}
 \newcommand{\ntlangsetupdef}[1]{%
@@ -54,7 +41,7 @@
 }
 
 
-\addto\captionsportuges{%
+\addto\captionsportuguese{%
   \defineshorthand{"-}{\babelhyphen{repeat}}% generates a hyphen that will repeat on a new line
 }
 
@@ -95,3 +82,14 @@
 %     {}%
 %   }%
 % \fi
+
+\optionlistdo{/@nt/langsshort}{%
+\options{/@nt/langshorttolong=#1}%
+% \typeout{KEY(#1/\option{/@nt/langshorttolong})}%
+\optionlistdo{/novathesis/babel/#1/keys}{%
+% \typeout{KEY(#1)=[##1=\option{/novathesis/babel/#1/##1}]}%
+% \typeout{KEY SET2 (#1/##1)=[\option{/novathesis/babel/#1/##1}]}%
+\expandnextsingle\addto{\csname captions\option{/@nt/langshorttolong}\endcsname}%
+{\csdef{##1}{\option{/novathesis/babel/#1/##1}}}%
+}%
+}
