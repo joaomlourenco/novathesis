@@ -60,7 +60,7 @@
 
 \iftoggle{/novathesis/printindex}{%
   \ntaddtoprintorder{mainmatter}{index}%
-  \usepackage{imakeidx}%
+  \RequirePackage{imakeidx}%
   % \makeindex[intoc,columns=2,options=-s myindexstyle]%
   \makeindex[intoc,columns=2,options=-s  NOVAthesisFiles/ntindexstyle]%
 }{}
