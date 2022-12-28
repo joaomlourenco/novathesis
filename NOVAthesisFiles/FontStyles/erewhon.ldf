@@ -8,8 +8,8 @@
 \typeout{NT FILE FontStyles/erewhon.ldf}%
 
 % load babel package and options before erewhon
-\usepackage[p,osf,scaled=.98,space]{erewhon} % scaling by .98 not really necessary
-% \usepackage[scaled=.98]{erewhon-math} % scaling by .98 not really necessary
-\usepackage[varqu,varl]{inconsolata} % typewriter
-\usepackage[type1,scaled=.95]{cabin} % sans serif like Gill Sans
-\usepackage[utopia,vvarbb]{newtxmath}
+\RequirePackage[p,osf,scaled=.98,space]{erewhon} % scaling by .98 not really necessary
+% \RequirePackage[scaled=.98]{erewhon-math} % scaling by .98 not really necessary
+\RequirePackage[varqu,varl]{inconsolata} % typewriter
+\RequirePackage[type1,scaled=.95]{cabin} % sans serif like Gill Sans
+\RequirePackage[utopia,vvarbb]{newtxmath}

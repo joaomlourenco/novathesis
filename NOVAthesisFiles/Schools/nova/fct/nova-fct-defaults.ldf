@@ -19,7 +19,7 @@
 
 % Loading of fonts must be delayed until class "novathesis" is loaded
 \AtEndPreamble{% 
-  \usepackage{gillius2}%
+  \RequirePackage{gillius2}%
 }
 
 % Faculty / School

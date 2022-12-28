@@ -73,7 +73,7 @@
 \setlength{\parindent}{1.25cm}
 \setlength{\parskip}{6pt plus 3pt minus 1pt}
 
-\usepackage{indentfirst}  % To also indent the first paragraph in the chapter/section/subsection/…
+\RequirePackage{indentfirst}  % To also indent the first paragraph in the chapter/section/subsection/…
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -81,7 +81,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtEndPreamble{% 
   \LoadHelveticaLikeFont%
-  % \usepackage{gillius2}%
+  % \RequirePackage{gillius2}%
 }
 
 \NTAddToHook{cover/1-1/text/pre}{%

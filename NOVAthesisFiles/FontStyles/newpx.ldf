@@ -7,5 +7,5 @@
 
 \typeout{NT FILE FontStyles/newpx.ldf}%
 
-\usepackage{newpxtext}
-\usepackage{newpxmath}
+\RequirePackage{newpxtext}
+\RequirePackage{newpxmath}

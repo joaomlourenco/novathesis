@@ -79,11 +79,8 @@
   \HyLang@DeclareLang{hungarian}{magyar}{}
 }
 
-% \endinput
 \AtBeginDocument{
-  \usepackage{catoptions}
-  % \def\figureautorefname{figure}
-  % \def\tableautorefname{table}
+  \RequirePackage{catoptions}
   \def\Autoref#1{%
     \begingroup
     \edef\reserved@a{\cpttrimspaces{#1}}%
