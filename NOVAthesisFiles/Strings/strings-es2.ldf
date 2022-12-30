@@ -53,12 +53,12 @@
 \degreestring(phdprop,m,es):={Doctor}
 \degreestring(phdprop,f,es):={Doctora}
 
-\docdegreestring(bsc,es):={Trabajo de fin de Grado}
-\docdegreestring(msc,es):={Tesis de Máster}
-\docdegreestring(mscplan,es):={Plan de Tesis de Máster}
-\docdegreestring(phdplan,es):={Plan de Tesis Doctoral}
-\docdegreestring(phdprop,es):={Propuesta de Tesis Doctoral}
-\docdegreestring(phd,es):={Tesis Doctoral}
+\doctypestring(bsc,es):={Trabajo de fin de Grado}
+\doctypestring(msc,es):={Tesis de Máster}
+\doctypestring(mscplan,es):={Plan de Tesis de Máster}
+\doctypestring(phdplan,es):={Plan de Tesis Doctoral}
+\doctypestring(phdprop,es):={Propuesta de Tesis Doctoral}
+\doctypestring(phd,es):={Tesis Doctoral}
 
 \committeetitlestring(es):={Tribunal de tesis}
 \committeestring(c,1,m,es):={Presidente}% male, singular
@@ -87,27 +87,27 @@
 \committeestring(g,2,f,em):={Miembros invitadas}% female, plural
 	
 \dissertationstring(bsc,es)={Informe entregado para el cumplimiento de los requisitos para el título de\\[1.25ex]%
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ en\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ en\\ \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 
 \dissertationstring(mscplan,es)={Plan de tesis entregado para el cumplimiento
 de los requisitos para el título de\\[1.25ex]%
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ en\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ en\\ \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 
 \dissertationstring(msc,es)={Tesis entregada para el cumplimiento de los requisitos para el título de\\[1.25ex]%
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ en\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ en\\ \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 
 \dissertationstring(phdplan,es)={Plan de tesis entregada para el cumplimiento de los requisitos del título de\\[1.25ex]%
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ en\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ en\\ \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 
 \dissertationstring(phdprop,es)={Propuesta de tesis entregada para el cumplimiento de los requisitos del título de\\[1.25ex]%
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ en\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ en\\ \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 
 \dissertationstring(phd,es)={Tesis entregada para el cumplimiento de los requisitos del título de\\[1.25ex]%
-\thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ en\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ en\\ \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 
 \copyrighttextstring(es)={La
-\thefaculty(\option{/novathesis/copyrightlang})\ y la
-\theuniversity(\option{/novathesis/copyrightlang})\ tienen el derecho,
+\thefaculty(\option{/novathesis/lang/copyright})\ y la
+\theuniversity(\option{/novathesis/lang/copyright})\ tienen el derecho,
 perpetuo y sin límites greográficos, de publicar esta tesis a
 través de medios físicos como copias impresas o medios
 digitales, o mediante cualquier otro medio que pudiera ser inventado,

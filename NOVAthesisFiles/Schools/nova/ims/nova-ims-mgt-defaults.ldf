@@ -8,9 +8,9 @@
 \typeout{NT FILE mova/ims/mova-ims-mgt-defaults.ldf}%
 
 \openany
-\ntsetup{printcopyright=false}
-\ntsetup{secondcover=true}
-\ntsetup{coverlang=en}        % The language for the cover (and second cover) page
+\ntsetup{print/copyright=false}
+\ntsetup{print/secondcover=true}
+\ntsetup{lang/cover=en}        % The language for the cover (and second cover) page
 \ntbibsetup{style=authoryear-comp, sortcites=true, sorting=nyt}
 
 \ntdegreename(en){Master of Science in Geospatial Technologies}
@@ -59,7 +59,7 @@ for the degree of \emph{\thedegreename(en)}}
 \spine(logo,msc)={nova-ims-mgt-cover-ball}
 
 \spine(author)={\thedocauthor(name)}
-\spine(title)={\textbf{\emph{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main)}}}}
+\spine(title)={\textbf{\emph{\MakeTextUppercase{\thedoctitle(\option{/novathesis/lang/cover},main)}}}}
 \spine(date)={\thentdocdate(year)}
 
 \spine(text,angle)={90}
@@ -125,7 +125,7 @@ for the degree of \emph{\thedegreename(en)}}
     \noindent\begin{minipage}[t][0pt][t]{\textwidth}
       \begin{center}%
         \textbf{\Large\MakeTextUppercase{\thedoctitle(\option{/@nt/currentlang},main,cover)}}%
-        \ifdatadefined{doctitle}(\option{/novathesis/coverlang}-sub,cover){%
+        \ifdatadefined{doctitle}(\option{/novathesis/lang/cover}-sub,cover){%
           \\[6mm]%
           \textbf{\Large\thedoctitle(\option{/@nt/currentlang}-sub,cover)}%
         }{}%
@@ -180,11 +180,11 @@ for the degree of \emph{\thedegreename(en)}}
 % Title of Dissertation
 \ntaddtocover[vspace=0mm,height=7.4cm,halign=l,valign=b]{1-1}{%
     \fontsize{18}{18}\selectfont
-    \bfseries\itshape\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
-    \ifdatadefined{doctitle}(\option{/novathesis/coverlang}-sub,cover){%
+    \bfseries\itshape\MakeTextUppercase{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}%
+    \ifdatadefined{doctitle}(\option{/novathesis/lang/cover}-sub,cover){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
-      \textbf{\thedoctitle(\option{/novathesis/coverlang}-sub,cover)}%
+      \textbf{\thedoctitle(\option{/novathesis/lang/cover}-sub,cover)}%
     }{}%
 }
 
@@ -233,11 +233,11 @@ for the degree of \emph{\thedegreename(en)}}
 \ntaddtocover[vspace=2cm]{2-1}{%
     \centering%
     \fontsize{16}{16}\selectfont
-    \bfseries\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
-    \ifdatadefined{doctitle}(\option{/novathesis/coverlang}-sub,cover){%
+    \bfseries\MakeTextUppercase{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}%
+    \ifdatadefined{doctitle}(\option{/novathesis/lang/cover}-sub,cover){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
-      \textbf{\thedoctitle(\option{/novathesis/coverlang}-sub,cover)}%
+      \textbf{\thedoctitle(\option{/novathesis/lang/cover}-sub,cover)}%
     }{}%
 }
 

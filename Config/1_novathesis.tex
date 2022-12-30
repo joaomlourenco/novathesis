@@ -14,7 +14,7 @@
 %% THE MOST IMPORTANT/POPULAR OPTIONS
 %%------------------------------------------------------------
 
-% \ntsetup{docdegree=msc}       % The type of document
+% \ntsetup{doctype=msc}       % The type of document
 %                               %     [     phd —> PhD thesis
 %                               %       phdplan —> PhD thesis plan
 %                               %       phdprop —> PhD thesis proposal
@@ -23,7 +23,7 @@
 %                               %           bsc —> BSc report
 %                               %         plain —> Other report
 %                               %     ]
-%                               % DEFAULT: docdegree=phd
+%                               % DEFAULT: doctype=phd
 
 % \ntsetup{school=uminho/ee}    % The school id
 %                               %     [ nova/fct, nova/fcsh, nova/ims, nova/ensp, nova/itqb,
@@ -46,11 +46,11 @@
 %                               %     ]
 %                               % DEFAULT: docstatus=working
 
-% \ntsetup{langsused={en,pt}}  % List of languages are used in the document
+% \ntsetup{lang/used={en,pt}}   % List of languages are used in the document
 %                               % following ISO 3166-1 (alfa-2)
-%                               %     [ en, pt, fr, it, de, es —> valid languages
+%                               %     [ en, pt, fr, it, de, es, gr —> valid languages
 %                               %     ]
-%                               % DEFAULT: langsused=en,pt
+%                               % DEFAULT: lang/used=en,pt
 
 % \ntsetup{lang=pt}             % The main language for the document text
 %                               % following ISO 3166-1 (alfa-2)
@@ -69,14 +69,14 @@
 %                               %     ]
 %                               % DEFAULT: media=screen
 
-% \ntsetup{printindex=true}     % Print the (words) index at the end of the document
-%                               % DEFAULT: printindex=false
+% \ntsetup{print/index=true}     % Print the (words) index at the end of the document
+%                               % DEFAULT: print/index=false
 
 % \ntsetup{gnumberlist=false}   % Shall the glossary entries list the page numbers where
 %                               %     those entries are used?  (as a reverse index!)
 %                               % DEFAULT: gnumberlist=true
 
-% \ntsetup{webography=Webography} % Generate a separate bibliography for @online references
+% \ntsetup{print/webography=print/webography} % Generate a separate bibliography for @online references
 %                                 % DEFAULT: All references in a single bibliography
 
 
@@ -84,11 +84,11 @@
 %% THE LESS IMPORTANT/POPULAR OPTIONS
 %%------------------------------------------------------------
 
-% \ntsetup{secondcover=true}    % Shall a second cover page be forced?
+% \ntsetup{print/secondcover=true}    % Shall a second cover page be forced?
 %                               %     if the contents for the second page are not 
 %                               %     defined, the second cover will be a replica 
 %                               %     of the first cover.
-%                               % DEFAULT: secondcover=false
+%                               % DEFAULT: print/secondcover=false
 
 % \ntsetup{urlstyle=same}       % Use the same (main) font in URLs
 %                               % DEFAULT: whatever hyperref uses as default
@@ -128,24 +128,24 @@
 %                               %       fmv, hansen, ist, pedersen, vz34, vz43 ]
 %                               % DEFAULT: chapstyle=bar
 
-% \ntsetup{coverlang=en}        % The language for the cover (and second cover) page 
+% \ntsetup{lang/cover=en}       % The language for the cover (and second cover) page 
 %                               %     defaults to main document language
-%                               % DEFAULT: coverlang=<the same as “lang”>
+%                               % DEFAULT: lang/cover=<the same as “lang”>
 
-% \ntsetup{copyrightlang=en}    % The language for the copyright message
+% \ntsetup{lang/copyright=en}   % The language for the copyright message
 %                               %     defaults to main document language
-%                               % DEFAULT: copyrightlang=<the same as “lang”>
+%                               % DEFAULT: lang/copyright=<the same as “lang”>
 
-% \ntsetup{statement=true}     % Does the document have after cover pages??
+% \ntsetup{statement=true}      % Does the document have after cover pages??
 %                               %     after cover pages are printed immediately 
 %                               %     after the cover pages
 %                               % DEFAULT: statement=false
 
-%\ntsetup{printcopyright=false} % Shall the copyright message be printed??
-%                               % DEFAULT: printcopyright=true
+%\ntsetup{print/copyright=false} % Shall the copyright message be printed??
+%                               % DEFAULT: print/copyright=true
 
-% \ntsetup{printtimestamp=false} % Print a timestamp (when PDF was generated) in the cover
-%                               % DEFAULT: printtimestamp=true
+% \ntsetup{print/timestamp=false} % Print a timestamp (when PDF was generated) in the cover
+%                               % DEFAULT: print/timestamp=true
 
 % \ntsetup{spine=trim}          % Print the “book spine” at the end of the document?
 %                               %     [   no —> do not print the book spine

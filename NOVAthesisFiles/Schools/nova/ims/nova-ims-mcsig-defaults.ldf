@@ -32,9 +32,9 @@
 \committeeorder():={c,r,m}% 
 
 \openany
-\ntsetup{secondcover=true}
+\ntsetup{print/secondcover=true}
 \ntsetup{statement=true}
-\ntsetup{printcopyright=false}
+\ntsetup{print/copyright=false}
 \ntbibsetup{style=apa}
 \AtEndPreamble{\let\cite\parencite}
 \abstractorder(pt):={pt,en}
@@ -117,7 +117,7 @@
 \spine(logo,msc,raise)={0}
 
 \spine(author)={\thedocauthor(name)}
-\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(title)={\thedoctitle(\option{/novathesis/lang/cover},main)}
 \spine(date)={\thentdocdate(year)}
 
 \spine(text,angle)={90}
@@ -165,11 +165,11 @@
 \margin(cover,2-1,right):={3cm}
 
 
-\dissertationstring(msc,en)={Dissertation presented as partial requirement for obtaining the degree of \thedegreename(mcsig,\option{/novathesis/coverlang})}
-\dissertationstring(mscplan,en)={Dissertation plan presented as partial requirement for obtaining the degree of \thedegreename(mcsig,\option{/novathesis/coverlang})}
+\dissertationstring(msc,en)={Dissertation presented as partial requirement for obtaining the degree of \thedegreename(mcsig,\option{/novathesis/lang/cover})}
+\dissertationstring(mscplan,en)={Dissertation plan presented as partial requirement for obtaining the degree of \thedegreename(mcsig,\option{/novathesis/lang/cover})}
 
-\dissertationstring(msc,pt)={Dissertatação apresentada como requisito parcial para obtenção do grau de \thedegreename(mcsig,\option{/novathesis/coverlang})}
-\dissertationstring(mscplan,pt)={Plano de dissertação apresentado como requisito parcial para obtenção do grau de \thedegreename(mcsig,\option{/novathesis/coverlang})}
+\dissertationstring(msc,pt)={Dissertatação apresentada como requisito parcial para obtenção do grau de \thedegreename(mcsig,\option{/novathesis/lang/cover})}
+\dissertationstring(mscplan,pt)={Plano de dissertação apresentado como requisito parcial para obtenção do grau de \thedegreename(mcsig,\option{/novathesis/lang/cover})}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -199,7 +199,7 @@
     \noindent\begin{minipage}[t][0pt][t]{\textwidth}
       \begin{center}%
         \textbf{\MakeTextUppercase{\Large\thedoctitle(\option{/@nt/currentlang},main,cover)}}%
-        \ifdatadefined{doctitle}(\option{/novathesis/coverlang}-sub,cover){%
+        \ifdatadefined{doctitle}(\option{/novathesis/lang/cover}-sub,cover){%
           \\[6mm]%
           \textbf{\Large\thedoctitle(\option{/@nt/currentlang}-sub,cover)}%
         }{}%
@@ -226,13 +226,13 @@
 }
 \ntaddtocover[halign=l, vspace=-1cm+7pt, minheight=3cm, valign=c]{1-1}{%
   \fontsize{17}{17}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}}%
-  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
+  \textcolor{imsdarkgrey}{\textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}}}%
+  \ifdatadefined{doctitle}(\option{/novathesis/lang/cover},sub,cover){%
     % ~\\[-2ex]%
     \\
     \textcolor{imsmidgrey}{
       \fontsize{15}{15}\selectfont%
-      \textbf{\thedoctitle(\option{/novathesis/coverlang}-sub,cover)}%
+      \textbf{\thedoctitle(\option{/novathesis/lang/cover}-sub,cover)}%
     }%
   }{}%
 }
@@ -253,7 +253,7 @@
 \ntaddtocover[halign=l, vspace=-1cm+7pt]{1-1}{%
   \fontsize{12}{12}\selectfont%
   \textcolor{imsdarkgrey}{%
-    \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+    \thedissertationstring(\option{/novathesis/doctype},\option{/novathesis/lang/cover})%
   }%
 }
 
@@ -271,7 +271,7 @@
 
 \ntaddtocover[halign=c, vspace=1]{2-1}{%
   \fontsize{16}{16}\selectfont%
-  \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
+  \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}}%
 }
 
 \ntaddtocover[halign=c, vspace=1]{2-1}{%
@@ -288,7 +288,7 @@
 \ntaddtocover[halign=c, vspace=4]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{%
-    \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+    \thedissertationstring(\option{/novathesis/doctype},\option{/novathesis/lang/cover})%
   }%
 }
 

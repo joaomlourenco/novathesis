@@ -17,7 +17,7 @@
 % FCT-NOVA specific customization
 \ntmemoirsetup{b5paper}
 \openany
-\ntsetup{secondcover=true}
+\ntsetup{print/secondcover=true}
 
 % Loading of fonts must be delayed until class "novathesis" is loaded
 \AtEndPreamble{% 
@@ -70,7 +70,7 @@
 \spine(logo,msc,raise)={0}
 
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\textbf{\thedoctitle(\option{/novathesis/coverlang},main)}}
+\spine(title)={\textbf{\thedoctitle(\option{/novathesis/lang/cover},main)}}
 \spine(date)={\textcolor{itqbgray207}{\theoeiras(),} \textbf{\thentdocdate(month)}, \textbf{\thentdocdate(year)}}
 
 \spine(text,angle)={90}
@@ -186,28 +186,28 @@
 
 
 \ntaddtocover{1-1}{%
-  \datamatch{\@nt@margin@top}{margin}({cover,\option{/novathesis/docdegree},1-1,top},%
+  \datamatch{\@nt@margin@top}{margin}({cover,\option{/novathesis/doctype},1-1,top},%
                                        {cover,\option{/@nt/document/docclass},1-1,top},%
                                        {cover,1-1,top},
-                                       {cover,\option{/novathesis/docdegree},top},%
+                                       {cover,\option{/novathesis/doctype},top},%
                                        {cover,\option{/@nt/document/docclass},top},%
                                        {cover,top})%
-  % \datamatch{\@nt@margin@bottom}{margin}({cover,\option{/novathesis/docdegree},#1,bottom},%
+  % \datamatch{\@nt@margin@bottom}{margin}({cover,\option{/novathesis/doctype},#1,bottom},%
   %                                    {cover,\option{/@nt/document/docclass},#1,bottom},%
-  %                                    {cover,\option{/novathesis/docdegree},bottom},%
+  %                                    {cover,\option{/novathesis/doctype},bottom},%
   %                                     {cover,#1,bottom},
   %                                    {cover,\option{/@nt/document/docclass},bottom},%
   %                                    {cover,bottom})%
-  \datamatch{\@nt@margin@left}{margin}({cover,\option{/novathesis/docdegree},1-1,left},%
+  \datamatch{\@nt@margin@left}{margin}({cover,\option{/novathesis/doctype},1-1,left},%
                                        {cover,\option{/@nt/document/docclass},1-1,left},%
                                        {cover,1-1,left},
-                                       {cover,\option{/novathesis/docdegree},left},%
+                                       {cover,\option{/novathesis/doctype},left},%
                                        {cover,\option{/@nt/document/docclass},left},%
                                        {cover,left})%
-  \datamatch{\@nt@margin@right}{margin}({cover,\option{/novathesis/docdegree},1-1,right},%
+  \datamatch{\@nt@margin@right}{margin}({cover,\option{/novathesis/doctype},1-1,right},%
                                        {cover,\option{/@nt/document/docclass},1-1,right},%
                                        {cover,1-1,right},
-                                       {cover,\option{/novathesis/docdegree},right},%
+                                       {cover,\option{/novathesis/doctype},right},%
                                        {cover,\option{/@nt/document/docclass},right},%
                                        {cover,right})%
     % Text in rectangle
@@ -227,13 +227,13 @@
     \node [inner sep=0pt, anchor=south west, yshift=-\@nt@margin@top-36.5mm] 
                     {\fontsize{18}{18}\selectfont%
                      \parbox{\dimexpr\paperwidth-\@nt@margin@left-\@nt@margin@right}%
-                            {\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}};
+                            {\textbf{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}}};
     % Subtitle
     \node [inner sep=0pt, anchor=north west, yshift=-\@nt@margin@top-42mm] 
                     {\fontsize{21}{21}\selectfont%
                      \parbox{\paperwidth-\@nt@margin@left-\@nt@margin@right}%
                             {\@resizetowidth{\linewidth}%
-                                            {\thedoctitle(\option{/novathesis/coverlang},sub)}}};
+                                            {\thedoctitle(\option{/novathesis/lang/cover},sub)}}};
     % Author
     \node [inner sep=0pt, anchor=north west, yshift=-\@nt@margin@top-52mm] 
                     {\fontsize{16}{16}\selectfont\textbf{\thedocauthor(name)}};
@@ -250,11 +250,11 @@
     \node [inner sep=0pt,anchor=north west, yshift={\therectangle(itqb,top)+31.0mm}]
                     {\fontsize{13}{13}\selectfont
                      \thedissertationstring(\option{/@nt/document/docclass},%
-                                            \option{/novathesis/coverlang})};
+                                            \option{/novathesis/lang/cover})};
     % Major field
     \node [inner sep=0pt,anchor=north west, yshift={\therectangle(itqb,top)+22.0mm}]
                     {\fontsize{13}{13}\selectfont
-                     \themajorfield(\option{/novathesis/coverlang})};
+                     \themajorfield(\option{/novathesis/lang/cover})};
     % Date
     \node [inner sep=0pt,anchor=north west, yshift={\therectangle(itqb,top)+10.4mm}]
                     {\fontsize{11}{11}\selectfont

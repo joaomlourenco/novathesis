@@ -11,9 +11,9 @@
 \school(1):={\theschool(pt)}
 % \school(2):={\theuniversity(pt)}
 
-\spine(title):={\thedoctitle(\option{/novathesis/coverlang},main,cover)}
+\spine(title):={\thedoctitle(\option{/novathesis/lang/cover},main,cover)}
 
-\color{\thethesiscover(\option{/novathesis/docdegree},1-1,textcolor)}
+\color{\thethesiscover(\option{/novathesis/doctype},1-1,textcolor)}
 
 \begin{newlayout}{\stockheight}{2\stockwidth+\myspinewidth}%
   % \noindent% \Huge HELLO
@@ -26,7 +26,7 @@
           %   at (0,0)
           %       {\includegraphics[width=\stockwidth,height=\stockheight,align=t]{cover0}};
           %       %{CAPA-Tese-Doutoramento-EA}};
-          \filldraw [fill=\expanded{\thethesiscover(\option{/novathesis/docdegree},1-1,bgcolor)}] (0,0) rectangle (\stockwidth,-\stockheight);]
+          \filldraw [fill=\expanded{\thethesiscover(\option{/novathesis/doctype},1-1,bgcolor)}] (0,0) rectangle (\stockwidth,-\stockheight);]
       \end{tikzpicture}
     };
   % RIGHT PAGE
@@ -58,7 +58,7 @@
               {\umfontb\thedocauthor(name)};
         \node [anchor=north west, inner sep=0pt]
             at (0,-10.45)
-              {\umfontb\bfseries\parbox{111mm}{\thedoctitle(\option{/novathesis/coverlang},main,cover)}};
+              {\umfontb\bfseries\parbox{111mm}{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}};
         \node [anchor=south west, inner sep=0pt]
             at (0,-28.7)
               {\umfontc\thentdocdate(month)\theofstr(pt)\thentdocdate(year)};
@@ -101,7 +101,7 @@
           %   at (0,0)
           %       {\includegraphics[width=\stockwidth,height=\stockheight,align=t]{cover0}};
           %       %{CAPA-Tese-Doutoramento-EA}};
-          \filldraw [fill=\expanded{\thethesiscover(\option{/novathesis/docdegree},1-2,bgcolor)}] (0,0) rectangle (\stockwidth,-\stockheight);]
+          \filldraw [fill=\expanded{\thethesiscover(\option{/novathesis/doctype},1-2,bgcolor)}] (0,0) rectangle (\stockwidth,-\stockheight);]
       \end{tikzpicture}
     };
 \end{tikzpicture}

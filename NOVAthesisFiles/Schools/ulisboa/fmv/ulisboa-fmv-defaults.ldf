@@ -8,15 +8,15 @@
 \typeout{NT FILE ulisboa/fmv/ulisboa-fmv-defaults.ldf}%
 
 
-\ntsetup{chapstyle=fmv}
-\ntsetup{coverlang=pt}
-\ifdocworking{}{\ntsetup{linkscolor=black}}
+\ntsetup{style/chapter=fmv}
+\ntsetup{lang/cover=pt}
+\ifdocworking{}{\ntsetup{color/links=black}}
 
 % --------------------------------------------------------
 % FMV-like required data/information
 \RequirePackage{indentfirst}
 \setlength{\parindent}{1.25cm}
-% \ifdocfinal{\ntsetup{secondcover=true}}{}
+% \ifdocfinal{\ntsetup{print/secondcover=true}}{}
 \definecolor{fmvyellow}{RGB}{253,241,81}
 \definecolor{lightyellow}{RGB}{254,254,230}
 \ntbibsetup{maxcitenames=2,minbibnames=10,maxbibnames=10,dashed=false,uniquelist=false,style=authoryear}
@@ -250,7 +250,7 @@
 % Spine info
 \spine(logo)={ulisboa-fmv-insignia-color}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(title)={\thedoctitle(\option{/novathesis/lang/cover},main)}
 \spine(year)={\thentdocdate(year)}
 \spine(text,angle)={-90}
 
@@ -325,10 +325,10 @@
 \AtEndPreamble{% 
   \LoadHelveticaLikeFont%
   \renewcommand\familydefault{\sfdefault}%
-  \IfStrEq{\option{/novathesis/mainlang}}{\option{/novathesis/coverlang}}{}{
-    % \typeout{DT=\thedoctitle(\option{/novathesis/mainlang},main,cover)}\xxxx
-    \doctitle(\option{/novathesis/coverlang},main,cover)={\thedoctitle(\option{/novathesis/mainlang},main,cover)}
-    % \typeout{DT=\thedoctitle(\option{/novathesis/coverlang},main,cover)}\xxxx
+  \IfStrEq{\option{/novathesis/lang/main}}{\option{/novathesis/lang/cover}}{}{
+    % \typeout{DT=\thedoctitle(\option{/novathesis/lang/main},main,cover)}\xxxx
+    \doctitle(\option{/novathesis/lang/cover},main,cover)={\thedoctitle(\option{/novathesis/lang/main},main,cover)}
+    % \typeout{DT=\thedoctitle(\option{/novathesis/lang/cover},main,cover)}\xxxx
   }
 }
 
@@ -370,13 +370,13 @@
 % School
 \ntaddtocover[vspace=2mm, height=2.0cm, valign=c]{1-1}{%
   \fontsize{12}{12}\selectfont%
-  \MakeUppercase{\theuniversity(\option{/novathesis/coverlang})}\\[4mm]%
-  \MakeUppercase{\theschool(\option{/novathesis/coverlang})}%
+  \MakeUppercase{\theuniversity(\option{/novathesis/lang/cover})}\\[4mm]%
+  \MakeUppercase{\theschool(\option{/novathesis/lang/cover})}%
 } 
 \ntaddtocover[vspace=0mm, height=2.0cm, valign=t]{2-1}{%
   \fontsize{12}{12}\selectfont%
-  \MakeUppercase{\theuniversity(\option{/novathesis/coverlang})}\\[4mm]%
-  \MakeUppercase{\theschool(\option{/novathesis/coverlang})}%
+  \MakeUppercase{\theuniversity(\option{/novathesis/lang/cover})}\\[4mm]%
+  \MakeUppercase{\theschool(\option{/novathesis/lang/cover})}%
 } 
 
 % Logo
@@ -390,14 +390,14 @@
 % PhD Title of Dissertation
 \ntaddtocover[vspace/1-1=18mm, vspace/2-1=10mm, height=2.35cm, valign=c]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
-  \textbf{\MakeUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
+  \textbf{\MakeUppercase{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}}%
 }
 
 
 % Doc Status
 \ntaddtocover[vspace=0cm, height=1.5cm, valign=c]{1-1,2-1}{%
   \ifdocworking{Draft: \today}{}%
-  \ifdocprovisional{\emph{\theprovisionalstring(\option{/novathesis/coverlang})}}{}%
+  \ifdocprovisional{\emph{\theprovisionalstring(\option{/novathesis/lang/cover})}}{}%
   \ifdocfinal{~}{}%
 }
 
@@ -411,12 +411,12 @@
 % In this position only if it is a phd doc;
 \ntaddtocover[vspace=21mm, height=0.5cm]{2-1}{%
          \fontsize{12}{12}\selectfont%
-         \MakeTextUppercase{\thedoctypestr(\option{/novathesis/coverlang},\option{/novathesis/docdegree})}
-         \MakeTextUppercase{\themajorfield(\option{/novathesis/coverlang})}%
+         \MakeTextUppercase{\thedoctypestr(\option{/novathesis/lang/cover},\option{/novathesis/doctype})}
+         \MakeTextUppercase{\themajorfield(\option{/novathesis/lang/cover})}%
          \ifphddoc{%
-           \ifdatadefined{specialization}(\option{/novathesis/coverlang})%
-                     {\thespecializationstring(\option{/novathesis/coverlang})
-                      \thespecialization(\option{/novathesis/coverlang})}{~}}%
+           \ifdatadefined{specialization}(\option{/novathesis/lang/cover})%
+                     {\thespecializationstring(\option{/novathesis/lang/cover})
+                      \thespecialization(\option{/novathesis/lang/cover})}{~}}%
           {~}%
 }%
 
@@ -436,7 +436,7 @@
   \begin{minipage}[t]{0.465\textwidth}
     \ntprintpersons[name]{1}{1}{adviser}{a,c,t}
   \end{minipage}%
-  % \theadviserslabel(\option{/novathesis/docdegree},\option{/novathesis/coverlang})\\[3mm]%
+  % \theadviserslabel(\option{/novathesis/doctype},\option{/novathesis/lang/cover})\\[3mm]%
   % \ntprintpersons{0.5}{1}{adviser}{a,c}%
 }
 
@@ -470,14 +470,14 @@
 \ifdocfinal{
   \ntaddtocover[halign=j]{2-2}{%
     \ntfor\match:={%
-      NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement-\option{/novathesis/mainlang}.tex,%
-      NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex%
+      NOVAthesisFiles/Schools/\option{/novathesis/school/univ}/\option{/novathesis/school/schl}/statement-\option{/novathesis/lang/main}.tex,%
+      NOVAthesisFiles/Schools/\option{/novathesis/school/univ}/\option{/novathesis/school/schl}/statement.tex%
     }\do{\IfFileExists{\match}{\input{\match}\ntforbreak}{}}%
     [%
-      \ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” nor “NOVAthesisFiles/Schools/\@nt@univ”}{}
+      \ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} in folders “NOVAthesisFiles/Schools/\option{/novathesis/school/univ}/\option{/novathesis/school/schl}” nor “NOVAthesisFiles/Schools/\option{/novathesis/school/univ}”}{}
     ]%
-    % \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}{}%
-        % {\PackageWarning{novathesis}{Missing statement file “statement.tex” for ”\@nt@univ/\@nt@schl”}}
+    % \InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school/univ}/\option{/novathesis/school/schl}/statement.tex}{}%
+        % {\PackageWarning{novathesis}{Missing statement file “statement.tex” for ”\option{/novathesis/school/univ}/\option{/novathesis/school/schl}”}}
   }%
 }
 

@@ -84,25 +84,25 @@
 \degreestring(phdprop,m,fr):={Docteur}
 \degreestring(phdprop,f,fr):={Docteure}
 
-\docdegreestring(bsc,fr):={Projet de licence}
-\docdegreestring(mscplan,fr):={Préparation de la dissertation de master}
-\docdegreestring(msc,fr):={Dissertation de master}
-\docdegreestring(phdplan,fr):={Plan de thèse de doctorat}
-\docdegreestring(phdprop,fr):={Proposition de thèse de doctorat}
-\docdegreestring(phd,fr):={Thèse de doctorat}
+\doctypestring(bsc,fr):={Projet de licence}
+\doctypestring(mscplan,fr):={Préparation de la dissertation de master}
+\doctypestring(msc,fr):={Dissertation de master}
+\doctypestring(phdplan,fr):={Plan de thèse de doctorat}
+\doctypestring(phdprop,fr):={Proposition de thèse de doctorat}
+\doctypestring(phd,fr):={Thèse de doctorat}
 
 \dissertationstring(bsc,fr)={Rapport pour obtention du degré de %
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 \dissertationstring(mscplan,fr)={Rapport intermédiaire pour obtention du degré de %
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 \dissertationstring(msc,fr)={Dissertation pour obtention du degré de %
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 \dissertationstring(phdplan,fr)={Rapport intermédiaire pour obtention du degré de %
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 \dissertationstring(phdprop,fr)={Proposition de dissertation pour obtention du degré de %
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 \dissertationstring(phd,fr)={Dissertation pour obtention du degré de %
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ en\\[1ex] \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 
-\copyrighttextstring(fr)={La \theschool(\option{/novathesis/copyrightlang})\ e a \theuniversity(\option{/novathesis/copyrightlang})\ ont le droit, perpetuel et sans limites géographiques, d'archiver et de publiquer cette dissertation à travers d'exemplaires imprimés, reproduits en papier ou en format digital, ou à travers de n'importe quel autre moyen connu ou qui pourra être inventé, et de la divulguer à travers des dépôts scientifiques et d'admettre sa copie et distribution seulement en contextes didactiques ou de recherche, et jamais comerciaux, à condition que les droits d'auteur et editeur soient respectés.}
+\copyrighttextstring(fr)={La \theschool(\option{/novathesis/lang/copyright})\ e a \theuniversity(\option{/novathesis/lang/copyright})\ ont le droit, perpetuel et sans limites géographiques, d'archiver et de publiquer cette dissertation à travers d'exemplaires imprimés, reproduits en papier ou en format digital, ou à travers de n'importe quel autre moyen connu ou qui pourra être inventé, et de la divulguer à travers des dépôts scientifiques et d'admettre sa copie et distribution seulement en contextes didactiques ou de recherche, et jamais comerciaux, à condition que les droits d'auteur et editeur soient respectés.}
 \acknowledgmentsstring(fr)={Ce document a été crée avec le processeur (pdf/Xe/Lua)\LaTeX et le modèle \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}

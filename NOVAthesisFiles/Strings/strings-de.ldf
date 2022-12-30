@@ -57,18 +57,18 @@
 \degreestring(phdprop,m,de):={Doktors der Naturwissenschaften} % Does not exist in Germany
 \degreestring(phdprop,f,de):={Doktors der Naturwissenschaften} % Does not exist in Germany
 
-\docdegreestring(bsc,de):={Bachelorarbeit}
-\docdegreestring(msc,de):={Masterarbeit}
-\docdegreestring(mscplan,de):={Master of Science Qualification} % Not really sure what this is
-\docdegreestring(phdplan,de):={Doctorate Qualification} % Not really sure what this is
+\doctypestring(bsc,de):={Bachelorarbeit}
+\doctypestring(msc,de):={Masterarbeit}
+\doctypestring(mscplan,de):={Master of Science Qualification} % Not really sure what this is
+\doctypestring(phdplan,de):={Doctorate Qualification} % Not really sure what this is
 %% hr: siehe https://www.di.fct.unl.pt/sites/www.di.fct.unl.pt/files/guidelinesthesisplan.pdf
 %% so richtig gibts das bei uns nicht, am nähesten kommt das Exposé das bei uns in der
 %% Betreuungsvereinbarung vorgesehen ist
-\docdegreestring(phdprop,de):={Doctorate Proposal} % Not really sure what this is
+\doctypestring(phdprop,de):={Doctorate Proposal} % Not really sure what this is
 %% Das ist das Äquivalent von unserem Fakultätsvortrag, nur dass das an der UNL nicht nur ein
 %% Vortrag ist, sondern ein richtiger Text der da vor Thesis-Fertigstellung abgegeben werden muss
 %% Gibt denke ich auch keine gute Übersetzung... 
-\docdegreestring(phd,de):={Dissertation}
+\doctypestring(phd,de):={Dissertation}
 
 \committeetitlestring(de):={Prüfungsausschuss}
 \committeestring(c,1,m,de):={Vorsitzender}% male, singular
@@ -98,29 +98,29 @@
 	
 
 \dissertationstring(bsc,de)={Bachelorarbeit vorgelegt von\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ in der\\ \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 %
 %
 \dissertationstring(mscplan,de)={Exposé für eine Masterarbeit vorgelegt \\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ in der\\ \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 %
 %
 \dissertationstring(msc,de)={Masterarbeit vorgelegt von\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ in der\\ \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 %
 %
 \dissertationstring(phdplan,de)={Exposé für eine Dissertations vorgelegt \\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ in der\\ \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 %
 %
 \dissertationstring(phdprop,de)={Exposé für eine Dissertations vorgelegt\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ in der\\ \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 %
 \dissertationstring(phd,de)={Dissertation\\%
 % zur Erlangung des akademischen Grades eines\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in der\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ in der\\ \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 
 % Probably this is not a legally binding translation
-\copyrighttextstring(de)={Die \theschool(\option{/novathesis/copyrightlang})\ und die \theuniversity(\option{/novathesis/copyrightlang})\ haben das zeitlich und räumlich unbeschränkte Recht, diese Arbeit durch gedruckte Exemplare auf Papier oder in digitaler Form oder durch jedes andere bekannte oder noch zu erfindende Mittel zu archivieren und zu veröffentlichen und über wissenschaftliche Repositorien zu verbreiten und ihre Vervielfältigung und Verbreitung zu nichtkommerziellen, Bildungs- oder Forschungszwecken zuzulassen, solange der Autor und Herausgeber genannt wird.}
+\copyrighttextstring(de)={Die \theschool(\option{/novathesis/lang/copyright})\ und die \theuniversity(\option{/novathesis/lang/copyright})\ haben das zeitlich und räumlich unbeschränkte Recht, diese Arbeit durch gedruckte Exemplare auf Papier oder in digitaler Form oder durch jedes andere bekannte oder noch zu erfindende Mittel zu archivieren und zu veröffentlichen und über wissenschaftliche Repositorien zu verbreiten und ihre Vervielfältigung und Verbreitung zu nichtkommerziellen, Bildungs- oder Forschungszwecken zuzulassen, solange der Autor und Herausgeber genannt wird.}
 
 \acknowledgmentsstring(de)={Dieses Dokument wurde mit Hilfe von (pdf/Xe/Lua)\LaTeX\ erzeugt, und dem Vorlage \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}

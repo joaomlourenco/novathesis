@@ -24,12 +24,12 @@
 \def\def@ult#1(#2)=#3{\ifdatadefined{#1}(#2){}{\csname#1\endcsname(#2)={#3}}}
 
 \def@ult{spine}(author)={\thedocauthor(name,short)}
-\ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub){%
-  \def@ult{spine}(title)={\thedoctitle(\option{/novathesis/coverlang},spine): \thedoctitle(\option{/novathesis/coverlang},sub)}
+\ifdatadefined{doctitle}(\option{/novathesis/lang/cover},sub){%
+  \def@ult{spine}(title)={\thedoctitle(\option{/novathesis/lang/cover},spine): \thedoctitle(\option{/novathesis/lang/cover},sub)}
 }{%
-  \def@ult{spine}(title)={\thedoctitle(\option{/novathesis/coverlang},spine)}
+  \def@ult{spine}(title)={\thedoctitle(\option{/novathesis/lang/cover},spine)}
 }
-% \typeout{SPINE=[\option{/novathesis/coverlang}][\thespine(title)]}
+% \typeout{SPINE=[\option{/novathesis/lang/cover}][\thespine(title)]}
 \def@ult{spine}(date)={\thentdocdate(year)}
 
 \def@ult{spine}(text,angle)={90}
@@ -54,15 +54,15 @@
 \def@ult{spine}(box,date,len)={2.0cm}
 % \spine(box,lodatego,align)={l}
 
-\def@ult{spine}(logo,\option{/novathesis/docdegree},angle)={0}
-\def@ult{spine}(logo,\option{/novathesis/docdegree},raise)={0pt}
-\def@ult{spine}(logo,\option{/novathesis/docdegree},scale)={1}
+\def@ult{spine}(logo,\option{/novathesis/doctype},angle)={0}
+\def@ult{spine}(logo,\option{/novathesis/doctype},raise)={0pt}
+\def@ult{spine}(logo,\option{/novathesis/doctype},scale)={1}
 
 \def@ult{spine}(logo,angle)={0}
 \def@ult{spine}(logo,raise)={0pt}
 \def@ult{spine}(logo,scale)={1}
 
-\datamatchtf{\match}{thesiscover}({\option{/novathesis/docdegree},spine,bgcolor},{spine,bgcolor})%
+\datamatchtf{\match}{thesiscover}({\option{/novathesis/doctype},spine,bgcolor},{spine,bgcolor})%
                 {}%
                 {\def@ult{thesiscover}(spine,framecolor)={black!20}}
 
@@ -92,7 +92,7 @@
   }%
 }
 
-\newcommand{\@spinetextcolor}[1]{%\option{/novathesis/docdegree},
+\newcommand{\@spinetextcolor}[1]{%\option{/novathesis/doctype},
   \datamatchtf{\arg}{spine}({box,#1,textcolor},{box,textcolor}){\color{\arg}}{}%
 }
 
@@ -196,7 +196,7 @@
   % draw image
     % print bg color IF DEFINED
     \datamatchtf{\arg}{thesiscover}(%
-                      {\option{/novathesis/docdegree},spine,bgcolor},%
+                      {\option{/novathesis/doctype},spine,bgcolor},%
                       {\option{/@nt/document/docclass},spine,bgcolor},%
                       {spine,bgcolor},%
                       {bgcolor}%
@@ -209,7 +209,7 @@
     }{}%
     % print frame IF DEFINED
     \datamatchtf{\arg}{thesiscover}(%
-                      {\option{/novathesis/docdegree},spine,framecolor},%
+                      {\option{/novathesis/doctype},spine,framecolor},%
                       {\option{/@nt/document/docclass},spine,framecolor},%
                       {spine,framecolor},%
                       {framecolor}%
@@ -222,7 +222,7 @@
     }{}%
     % print bg image IF DEFINED
     \datamatchtf{\arg}{thesiscover}(%
-                      {\option{/novathesis/docdegree},spine,image},%
+                      {\option{/novathesis/doctype},spine,image},%
                       {\option{/@nt/document/docclass},spine,image},%
                       {spine,image},%
                       {image}%
@@ -232,22 +232,22 @@
     }{}%
     % print logo IF DEFINED
     \datamatchtf{\arg}{spine}(%
-                      {logo,\option{/novathesis/docdegree}},%
+                      {logo,\option{/novathesis/doctype}},%
                       {logo,\option{/@nt/document/docclass}},%
                       {logo}%
     ){%
       \datamatchtf{\@angle}{spine}(%
-                        {logo,\option{/novathesis/docdegree},angle},%
+                        {logo,\option{/novathesis/doctype},angle},%
                         {logo,\option{/@nt/document/docclass},angle},%
                         {logo,angle}%
       ){}{\def\@angle{0}}%
       \datamatchtf{\@scale}{spine}(%
-                        {logo,\option{/novathesis/docdegree},scale},%
+                        {logo,\option{/novathesis/doctype},scale},%
                         {logo,\option{/@nt/document/docclass},scale},%
                         {logo,scale}%
       ){}{\def\@scale{1}}%
       \datamatchtf{\@raise}{spine}(%
-                        {logo,\option{/novathesis/docdegree},raise},%
+                        {logo,\option{/novathesis/doctype},raise},%
                         {logo,\option{/@nt/document/docclass},raise},%
                         {logo,raise}%
       ){}{\def\@raise{0pt}}%

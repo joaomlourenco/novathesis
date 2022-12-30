@@ -7,7 +7,7 @@
 
 \typeout{NT FILE nova/fsch/nova-fcsh-defaults.ldf}%
 
-\ntsetup{secondcover=true}
+\ntsetup{print/secondcover=true}
 
 % Faculty / School
 \school(pt):={Faculdade de Ciências Sociais e Humanas}
@@ -34,7 +34,7 @@
 % Spine info
 \spine(logo)={nova-fcsh-insignia-color}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(title)={\thedoctitle(\option{/novathesis/lang/cover},main)}
 \spine(year)={\thentdocdate(year)}
 
 % Set margins for "normal" pages
@@ -53,8 +53,8 @@
 \margin(cover,left):={2.0cm}
 \margin(cover,right):={2.0cm}
 
-% \dissertationstring(phd,pt)={\thedocdegreestr(phd,pt)\ em\\[1ex] \textbf{\themajorfield(pt)}}
-% \dissertationstring(phd,en)={\thedocdegreestr(phd,en)\ in\\[1ex] \textbf{\themajorfield(en)}}
+% \dissertationstring(phd,pt)={\thedoctypestr(phd,pt)\ em\\[1ex] \textbf{\themajorfield(pt)}}
+% \dissertationstring(phd,en)={\thedoctypestr(phd,en)\ in\\[1ex] \textbf{\themajorfield(en)}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -111,7 +111,7 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
+  \textcolor{fcshblue}{\textbf{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}}%
 }
 
 % Author name
