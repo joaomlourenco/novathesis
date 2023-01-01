@@ -11,18 +11,18 @@
 %%% Portuguese - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\frontmatterbkmstring(pt):={Material Inicial}
-\backmatterbkmstring(pt):={Material Final}
-\coverbkmstring(pt):={Capa}
-\frontpagebkmstring(pt):={Folha de Rosto}
-\backcoverbkmstring(pt):={Contra Capa}
-\spinebkmstring(pt):={Lombada}
-\copyrightbkmstring(pt):={Copyright}
-\statementbkmstring(pt):={Declaração}
-\dedicatorybkmstring(pt):={Dedicatória}
-\acknowledgementsbkmstring(pt):={Agradecimentos}
-\quotebkmstring(pt):={Citação}
-\abstractbkmstring(pt):={Resumo}
+\bkmstring(frontmatter,pt):={Material Inicial}
+\bkmstring(backmatter,pt):={Material Final}
+\bkmstring(cover,pt):={Capa}
+\bkmstring(frontpage,pt):={Folha de Rosto}
+\bkmstring(backcover,pt):={Contra Capa}
+\bkmstring(spine,pt):={Lombada}
+\bkmstring(copyright,pt):={Copyright}
+\bkmstring(statement,pt):={Declaração}
+\bkmstring(dedicatory,pt):={Dedicatória}
+\bkmstring(acknowledgements,pt):={Agradecimentos}
+\bkmstring(quote,pt):={Citação}
+\bkmstring(abstract,pt):={Resumo}
 \keywordsstring(pt):={Palavras-chave}
 \notdefined(pt):={INDEFINIDO}
 \specializationstring(pt):={Especialidade em}

@@ -12,19 +12,19 @@
 %%% Acknowledgments to Paolo Romano <romano@inesc-id.pt>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\frontmatterbkmstring(it):={Materiale Iniziale}
-\backmatterbkmstring(it):={Materiale Finale}
-\coverbkmstring(it):={Copertina}
-\frontpagebkmstring(it):={Foglio di Copertina}
-\backcoverbkmstring(it):={Copertina Posteriore}
-\spinebkmstring(it):={Libro Dorso}
-\copyrightbkmstring(it):={Copyright}
-\statementbkmstring(it):={Dichiarazione}
-\statementbkmstring(it):={Dopo la Copertina}
-\dedicatorybkmstring(it):={Dedicativo}
-\acknowledgementsbkmstring(it):={Ringraziamenti}
-\quotebkmstring(it):={Citazione}
-\abstractbkmstring(it):={Sommario}
+\bkmstring(frontmatter,it):={Materiale Iniziale}
+\bkmstring(backmatter,it):={Materiale Finale}
+\bkmstring(cover,it):={Copertina}
+\bkmstring(frontpage,it):={Foglio di Copertina}
+\bkmstring(backcover,it):={Copertina Posteriore}
+\bkmstring(spine,it):={Libro Dorso}
+\bkmstring(copyright,it):={Copyright}
+\bkmstring(statement,it):={Dichiarazione}
+\bkmstring(statement,it):={Dopo la Copertina}
+\bkmstring(dedicatory,it):={Dedicativo}
+\bkmstring(acknowledgements,it):={Ringraziamenti}
+\bkmstring(quote,it):={Citazione}
+\bkmstring(abstract,it):={Sommario}
 \keywordsstring(it):={Parole Chiave}
 \notdefined(it):={INDEFINITO}
 \specializationstring(it):={Specializzazione in}

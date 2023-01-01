@@ -11,18 +11,18 @@
 %%% English - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\frontmatterbkmstring(gr):={Front Matter}
-\backmatterbkmstring(gr):={Back Matter}
-\coverbkmstring(gr):={Cover}
-\frontpagebkmstring(gr):={Front Page}
-\backcoverbkmstring(gr):={Back Cover}
-\spinebkmstring(gr):={Spine}
-\copyrightbkmstring(gr):={Copyright}
-\dedicatorybkmstring(gr):={Dedicatory}
-\statementbkmstring(gr):={Statement}
-\acknowledgementsbkmstring(gr):={Acknowledgements}
-\quotebkmstring(gr):={Quote}
-\abstractbkmstring(gr):={Περίληψη}
+\bkmstring(frontmatter,gr):={Front Matter}
+\bkmstring(backmatter,gr):={Back Matter}
+\bkmstring(cover,gr):={Cover}
+\bkmstring(frontpage,gr):={Front Page}
+\bkmstring(backcover,gr):={Back Cover}
+\bkmstring(spine,gr):={Spine}
+\bkmstring(copyright,gr):={Copyright}
+\bkmstring(dedicatory,gr):={Dedicatory}
+\bkmstring(statement,gr):={Statement}
+\bkmstring(acknowledgements,gr):={Acknowledgements}
+\bkmstring(quote,gr):={Quote}
+\bkmstring(abstract,gr):={Περίληψη}
 \keywordsstring(gr):={Λέξεις-κλειδιά}
 \notdefined(gr):={UNDEFINED}
 \specializationstring(gr):={Specialization in}

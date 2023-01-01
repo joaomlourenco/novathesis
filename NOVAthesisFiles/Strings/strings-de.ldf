@@ -11,18 +11,18 @@
 %%% German - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\frontmatterbkmstring(de):={Startmaterial}
-\backmatterbkmstring(de):={Endmaterial}
-\coverbkmstring(de):={Buchumschlag}
-\frontpagebkmstring(de):={Titelseite}
-\backcoverbkmstring(de):={Rückseite}
-\spinebkmstring(de):={Buchrücken}
-\copyrightbkmstring(de):={Copyright}
-\statementbkmstring(de):={Erklärung}
-\dedicatorybkmstring(de):={Widmung}
-\acknowledgementsbkmstring(de):={Danksagungen}
-\quotebkmstring(de):={Zitat}
-\abstractbkmstring(de):={Zusammenfassung}
+\bkmstring(frontmatter,de):={Startmaterial}
+\bkmstring(backmatter,de):={Endmaterial}
+\bkmstring(cover,de):={Buchumschlag}
+\bkmstring(frontpage,de):={Titelseite}
+\bkmstring(backcover,de):={Rückseite}
+\bkmstring(spine,de):={Buchrücken}
+\bkmstring(copyright,de):={Copyright}
+\bkmstring(statement,de):={Erklärung}
+\bkmstring(dedicatory,de):={Widmung}
+\bkmstring(acknowledgements,de):={Danksagungen}
+\bkmstring(quote,de):={Zitat}
+\bkmstring(abstract,de):={Zusammenfassung}
 \keywordsstring(de):={Stichwörter}
 \notdefined(de):={UNDEFINIERT}
 \specializationstring(de):={Spezialisierung in}

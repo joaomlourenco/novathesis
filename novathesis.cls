@@ -464,18 +464,7 @@
 	\optionlistdo{/@nt/langsshort}{\csuse{#2}(##1):={#1}}}
 
 % For PDF bookmakrs
-\newdata{coverbkmstring}
-\newdata{frontpagebkmstring}
-\newdata{copyrightbkmstring}
-\newdata{statementbkmstring}
-\newdata{dedicatorybkmstring}
-\newdata{acknowledgementsbkmstring}
-\newdata{quotebkmstring}
-\newdata{abstractbkmstring}
-\newdata{frontmatterbkmstring}
-\newdata{backmatterbkmstring}
-\newdata{spinebkmstring}
-\newdata{backcoverbkmstring}
+\newdata{bkmstring}
 
 
 \newdata{notdefined}
@@ -1240,13 +1229,13 @@
 }
 
 \newcommand{\ntprintbackcover}{%
-	\ifcoverdefined[N-1]{\pdfbookmark[-1]{\thebackmatterbkmstring(\option{/novathesis/lang/cover})}{bmbackmatter}}{%
-	\ifcoverdefined[N-2]{\pdfbookmark[-1]{\thebackmatterbkmstring(\option{/novathesis/lang/cover})}{bmbackmatter}}{}}%
+	\ifcoverdefined[N-1]{\pdfbookmark[-1]{\thebkmstring(backmatter,\option{/novathesis/lang/cover})}{bmbackmatter}}{%
+	\ifcoverdefined[N-2]{\pdfbookmark[-1]{\thebkmstring(backmatter,\option{/novathesis/lang/cover})}{bmbackmatter}}{}}%
 	\ntprintcoverpair{N}%
 }
 
 \newcommand{\ntprintcovers}[1][1,2]{%
-	\pdfbookmark[-1]{\thefrontmatterbkmstring(\option{/novathesis/lang/cover})}{bmfrontmatter}%
+	\pdfbookmark[-1]{\thebkmstring(frontmatter,\option{/novathesis/lang/cover})}{bmfrontmatter}%
 	\NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
   % \forcsvlist{\ntprintcoverpair}{#1}%
   \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
@@ -1509,70 +1498,70 @@
   }%
 }
 
-\options{/@ntcoveropts/.new family
+\options{/@ntcoveropts/.new family,
   % titles for PDF bookmark / list of contents
-  , bookmark/.new choice = {1-1=\thecoverbkmstring(\option{/novathesis/lang/cover})
-                          , 1-2={}
-                          , 2-1=\thefrontpagebkmstring(\option{/novathesis/lang/cover})
-                          , 2-2={}
-                          , N-1={}
-                          , N-2=\thebackcoverbkmstring(\option{/novathesis/lang/cover})
-                          , spine=\thespinebkmstring(\option{/novathesis/lang/cover})}
+  bookmark/.new choice = {1-1={\thebkmstring(cover,\option{/novathesis/lang/cover})},
+                          1-2={},
+                          2-1={\thebkmstring(frontpage,\option{/novathesis/lang/cover})},
+                          2-2={},
+                          N-1={},
+                          N-2={\thebkmstring(backcover,\option{/novathesis/lang/cover})},
+                          spine={\thebkmstring(spine,\option{/novathesis/lang/cover})}},
   % letter to macro for horizontal alignment
-  , alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft,j=\null}
+  alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft,j=\null},
   % filters / conditional printing
-  , status/.new value
-  , degree/.new value
+  status/.new value,
+  degree/.new value,
   % horizontal alighment and vertical alignments inside the box
-  , halign/.new choice={c, l, r, j}
-  , valign/.new choice={c, t, b}
+  halign/.new choice={c, l, r, j},
+  valign/.new choice={c, t, b},
   % height of the box (default = the natural height for the contents)
-  , height/.new value
+  height/.new value,
   % height of the box (default = the natural height for the contents)
-  , height/phd/.new value
+  height/phd/.new value,
   % height of the box (default = the natural height for the contents)
-  , height/msc/.new value
+  height/msc/.new value,
   % minheight of the box (default = the natural height for the contents)
-  , minheight/.new value
+  minheight/.new value,
   % width of the box (default = full width)
-  , width/.new value
+  width/.new value,
+  % vertical spacing from precious box (default = 0ptcan also be an integer and,,
+  % in this caseit means the weight of the vfill),
+  vspace/.new value,
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
   % in this case, it means the weight of the vfill)
-  , vspace/.new value
+  vspace/phd/.new value,
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
   % in this case, it means the weight of the vfill)
-  , vspace/phd/.new value
+  vspace/msc/.new value,
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
   % in this case, it means the weight of the vfill)
-  , vspace/msc/.new value
+  vspace/1-1/.new value,
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
   % in this case, it means the weight of the vfill)
-  , vspace/1-1/.new value
+  vspace/2-1/.new value,
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
   % in this case, it means the weight of the vfill)
-  , vspace/2-1/.new value
+  vspace/phd/1-1/.new value,
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
   % in this case, it means the weight of the vfill)
-  , vspace/phd/1-1/.new value
+  vspace/phd/2-1/.new value,
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
   % in this case, it means the weight of the vfill)
-  , vspace/phd/2-1/.new value
+  vspace/msc/1-1/.new value,
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
   % in this case, it means the weight of the vfill)
-  , vspace/msc/1-1/.new value
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  , vspace/msc/2-1/.new value
+  vspace/msc/2-1/.new value,
   % horizontal spacing from the left margin (or last box in the same line) (default = 0pt)
-  , hspace/.new value
+  hspace/.new value,
   % is the last box in the line (default = true)
-  , newpar/.new toggle
+  newpar/.new toggle,
   % text color for the box (default = black)
-  , color/.new color
+  color/.new color,
   % background color for the box (default = transparent)
-  , bgcolor/.new color
+  bgcolor/.new color,
   % default values
-  , defaults/.new style*={
+  defaults/.new style*={,
                   vspace=0pt, 
                   vspace/msc={}, vspace/phd={}, 
                   vspace/1-1={}, vspace/2-1={},
@@ -1584,7 +1573,7 @@
                   newpar=true, color={}, bgcolor={},
   }
   % set defaults
-  , defaults
+, defaults 
 }
 
 \newcommand{\@ntcovervspace}[1]{%
@@ -1999,7 +1988,7 @@
     % \begingroup
     % \typeout{NT PRINT ABSTRACT #1}\bbbb
 		\ntselectlang{#1}%
-		\pdfbookmark[1]{\theabstractbkmstring(#1)}{bmabstract#1}%
+		\pdfbookmark[1]{\thebkmstring(abstract,#1)}{bmabstract#1}%
 		\NTRunHook{abstract/pre}%
 		\NTRunHook{abstract/#1/pre}%
 		\printabstracttitle{#1}%
@@ -2244,14 +2233,14 @@
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{ntacknowledgements}{%
-		\chapter*{\theacknowledgementsbkmstring(\option{/novathesis/lang/main})}%
+		\chapter*{\thebkmstring(acknowledgements,\option{/novathesis/lang/main})}%
 }{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\printabstracttitle}[1]{%
-	\chapter*{\theabstractbkmstring(#1)}%
+	\chapter*{\thebkmstring(abstract,#1)}%
 }
 
 

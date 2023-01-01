@@ -12,18 +12,18 @@
 %%% Acknowledgments to Sara Ferreira <sarasalomeferreira@gmail.com>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\frontmatterbkmstring(fr):={Materiel de Départ}
-\backmatterbkmstring(fr):={Matériel Final}
-\coverbkmstring(fr):={Couverture}
-\frontpagebkmstring(fr):={Page de Garde}
-\backcoverbkmstring(fr):={Quatrième de couverture}
-\spinebkmstring(fr):={Dos du Livre}
-\copyrightbkmstring(fr):={Copyright}
-\statementbkmstring(fr):={Déclaration}
-\dedicatorybkmstring(fr):={Dédicatoire}
-\acknowledgementsbkmstring(fr):={Remerciements}
-\quotebkmstring(fr):={Citation}
-\abstractbkmstring(fr):={Résumé}
+\bkmstring(frontmatter,fr):={Materiel de Départ}
+\bkmstring(backmatter,fr):={Matériel Final}
+\bkmstring(cover,fr):={Couverture}
+\bkmstring(frontpage,fr):={Page de Garde}
+\bkmstring(backcover,fr):={Quatrième de couverture}
+\bkmstring(spine,fr):={Dos du Livre}
+\bkmstring(copyright,fr):={Copyright}
+\bkmstring(statement,fr):={Déclaration}
+\bkmstring(dedicatory,fr):={Dédicatoire}
+\bkmstring(acknowledgements,fr):={Remerciements}
+\bkmstring(quote,fr):={Citation}
+\bkmstring(abstract,fr):={Résumé}
 \keywordsstring(fr):={Mots-clés}
 \notdefined(fr):={INDÉFINI}
 \specializationstring(fr):={Spécialisation en}
