@@ -1296,10 +1296,13 @@
                ,{textcolor}%
     ){\color{\match}}{}%
     \ntselectlang{\option{/novathesis/lang/cover}}%
-    \options{/@ntcoveropts/bookmark=#1}%
-    \ifoptionequal{/@ntcoveropts/bookmark}{}{}{%
-      \pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
-    }%
+    \ifdatadefined{bkmstring}(#1,\option{/novathesis/lang/cover}){
+      \pdfbookmark[1]{\thebkmkstring(#1,\options{/novathesis/lang/cover})}{\option{/@ntcoveropts/bookmark}}%
+    }{}%
+    % \options{/@ntcoveropts/bookmark=#1}%
+    % \ifoptionequal{/@ntcoveropts/bookmark}{}{}{%
+    %   \pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
+    % }%
     \@ntmakeboxwithcover{#1}{\@fullcover@box}%
     \NTRunHook{cover/#1/post}%
   \endgroup%
@@ -1500,13 +1503,13 @@
 
 \options{/@ntcoveropts/.new family,
   % titles for PDF bookmark / list of contents
-  bookmark/.new choice = {1-1={\thebkmstring(cover,\option{/novathesis/lang/cover})},
-                          1-2={},
-                          2-1={\thebkmstring(frontpage,\option{/novathesis/lang/cover})},
-                          2-2={},
-                          N-1={},
-                          N-2={\thebkmstring(backcover,\option{/novathesis/lang/cover})},
-                          spine={\thebkmstring(spine,\option{/novathesis/lang/cover})}},
+  % bookmark/.new choice = {1-1={\thebkmstring(cover,\option{/novathesis/lang/cover})},
+  %                         1-2={},
+  %                         2-1={\thebkmstring(frontpage,\option{/novathesis/lang/cover})},
+  %                         2-2={},
+  %                         N-1={},
+  %                         N-2={\thebkmstring(backcover,\option{/novathesis/lang/cover})},
+  %                         spine={\thebkmstring(spine,\option{/novathesis/lang/cover})}},
   % letter to macro for horizontal alignment
   alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft,j=\null},
   % filters / conditional printing
@@ -1690,7 +1693,7 @@
         ]%
       }{}%
       \ntselectlang{\option{/novathesis/lang/main}}%
-      \pdfbookmark[1]{\csuse{thestatementbkmstring}(\option{/novathesis/lang/main})}{bmstatement}%
+      \pdfbookmark[1]{\thebkmstring(statement,\option{/novathesis/lang/main})}{bmstatement}%
       \@ntloadfiles@ii{statement}%
       \NTRunHook{statement/post}%
     }{}%
@@ -1958,7 +1961,7 @@
 		\NTRunHook{#1/pre}%
 		\iffileadded{#1}{%
 		\ntselectlang{\option{/novathesis/lang/main}}%
-		\pdfbookmark[1]{\csuse{the#1bkmstring}(\option{/novathesis/lang/main})}{bm#1}%
+		\pdfbookmark[1]{\csuse{thebkmstring}(#1,\option{/novathesis/lang/main})}{bm#1}%
 		\@ntloadfiles@ii{#1}%
 		}{}%
 		\NTRunHook{#1/post}%
@@ -2166,7 +2169,7 @@
 		\iftoggle{/novathesis/print/copyright}{%
 		\ifmaindoc{%
 		\ntselectlang{\option{/novathesis/lang/copyright}}%
-		\pdfbookmark[1]{\csuse{thecopyrightbkmstring}(\option{/novathesis/lang/main})}{bmcopyright}%
+		\pdfbookmark[1]{\csuse{thebkmstring}(copyright,\option{/novathesis/lang/main})}{bmcopyright}%
 		\NTRunHook{copyright/pre}%
 		\ntprintcopyrightpage%
 		\NTRunHook{copyright/post}%
