@@ -947,7 +947,7 @@
 	% #1 = cover atrtibutes
 	% #2 = list of covers where the code block should be applied
 	% #3 = the block code
-	% \typeout{NT ntaddtocover [/@nt/cover/\option{/novathesis/school/univ}/\option{/novathesis/school/schl}/element=#1]}%
+	% \typeout{NT ntaddtocover [/@nt/cover/\@nt@univ/\@nt@schl/element=#1]}%
   % \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
   \ntfor\arg:={#2}\do{\@ntaddtocover@iii{#1}{#3}{\arg}}%
 }
@@ -957,14 +957,14 @@
 	% #1 = cover atrtibutes
 	% #2 = the block code
 	% #3 = covers where the code block should be applied
-	\ntfor\arg:={#3}\do{\options{/@nt/cover/\option{/novathesis/school/univ}/\option{/novathesis/school/schl}/\arg/.cpush={{#1}=*={#2}}}}%
+	\ntfor\arg:={#3}\do{\options{/@nt/cover/\@nt@univ/\@nt@schl/\arg/.cpush={{#1}=*={#2}}}}%
 }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING SCHOOLS's “defaults.ldf”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ntfor\match:={\option{/novathesis/school/univ},\option{/novathesis/school/univ}/\option{/novathesis/school/schl}}\do{%
+\ntfor\match:={\@nt@univ,\@nt@univ/\@nt@schl}\do{%
 		\IfFileExists{NOVAthesisFiles/Schools/\match/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
 						\prependtographicspath{{NOVAthesisFiles/Schools/\match/Images/}}}{}}
 
@@ -973,22 +973,22 @@
 %  UNIVERSITY/SCHOOL SPECIFIC MATERIALS
 %  configuration file “Config/9_<university>_<school>.tex”
 %============================================================
-\IfFileExists{Config/9_\option{/novathesis/school/univ}_\option{/novathesis/school/schl}.tex}
-		 {\def\@ntsetuplevel{\option{/novathesis/school/univ}/\option{/novathesis/school/schl}/}\input{Config/9_\option{/novathesis/school/univ}_\option{/novathesis/school/schl}.tex}}
-		 {\def\@ntsetuplevel{\option{/novathesis/school/univ}/}\InputIfFileExists{Config/9_\option{/novathesis/school/univ}.tex}{}{}}
+\IfFileExists{Config/9_\@nt@univ_\@nt@schl.tex}
+		 {\def\@ntsetuplevel{\@nt@univ/\@nt@schl/}\input{Config/9_\@nt@univ_\@nt@schl.tex}}
+		 {\def\@ntsetuplevel{\@nt@univ/}\InputIfFileExists{Config/9_\@nt@univ.tex}{}{}}
 \def\@ntsetuplevel{}
 
-\InputIfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school/univ}/\option{/novathesis/school/univ}-defaults.ldf}{}
-		{\PackageError{novathesis}{Missing file “/\option{/novathesis/school/univ}/\option{/novathesis/school/univ}-defaults.ldf”}{}}
+\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@univ-defaults.ldf}{}
+		{\PackageError{novathesis}{Missing file “/\@nt@univ/\@nt@univ-defaults.ldf”}{}}
 
 \ntfor\match:={%
-      \option{/novathesis/school/univ}-\option{/novathesis/school/schl}-\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
-      \option{/novathesis/school/univ}-\option{/novathesis/school/schl}%
+      \@nt@univ-\@nt@schl-\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
+      \@nt@univ-\@nt@schl%
   }\do{%
-      \IfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school/univ}/\option{/novathesis/school/schl}/\match-defaults.ldf}
-              {\input{NOVAthesisFiles/Schools/\option{/novathesis/school/univ}/\option{/novathesis/school/schl}/\match-defaults.ldf}\ntforbreak}{}%
+      \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/\match-defaults.ldf}
+              {\input{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/\match-defaults.ldf}\ntforbreak}{}%
   }
-[\PackageError{novathesis}{Missing file “NOVAthesisFiles/Schools/\option{/novathesis/school/univ}/\option{/novathesis/school/schl}-defaults.ldf”}{}]
+[\PackageError{novathesis}{Missing file “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl-defaults.ldf”}{}]
 
 
 
@@ -1144,8 +1144,8 @@
 \ifmaindoc{% only print if a main document
 	\iftoggle{/novathesis/print/copyright}{% if copuyright toggle is on
 		\@nt@AddFileIfExists{copyright}{copyright.ldf}{%
-					 {NOVAthesisFiles/Schools/\option{/novathesis/school/univ}/\option{/novathesis/school/schl}/}%
-					,{NOVAthesisFiles/Schools/\option{/novathesis/school/univ}/}%
+					 {NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/}%
+					,{NOVAthesisFiles/Schools/\@nt@univ/}%
 					,{NOVAthesisFiles/}%
 		}%
 		\@ntloadfiles@ii{copyright}%
@@ -1154,8 +1154,8 @@
 
 \ifoptionequal{/novathesis/spine}{no}{}{%
 	\@nt@InputIfFileExists{spine.tex}{%
-					 {NOVAthesisFiles/Schools/\option{/novathesis/school/univ}/\option{/novathesis/school/schl}/}%
-					,{NOVAthesisFiles/Schools/\option{/novathesis/school/univ}/}%
+					 {NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/}%
+					,{NOVAthesisFiles/Schools/\@nt@univ/}%
 					,{NOVAthesisFiles/}%
 	}[][\ClassError{novathesis}{No “spine” file found.}{}]%
 	\AtEndDocument{\csuse{ntprintspine}}%
@@ -1188,9 +1188,9 @@
 	% #1 = cover number
 	% #2 = true branch
 	% #3 = false branch
-	% \edef\asd{/@nt/cover/\option{/novathesis/school/univ}/\option{/novathesis/school/schl}/#1}
+	% \edef\asd{/@nt/cover/\@nt@univ/\@nt@schl/#1}
 	% \show\asd
-	\ifoptiondefined{/@nt/cover/\option{/novathesis/school/univ}/\option{/novathesis/school/schl}/#1}{#2}{%
+	\ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{#2}{%
 		\datamatchtf{\match}{thesiscover}(%
 			 {\option{/novathesis/doctype},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
 			,{\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
@@ -1436,7 +1436,7 @@
 		% #1 = cover ID (major-minor)
 		% #2 = box name
 		\defifundef{#2}{\newsavebox}%
-		\ifoptiondefined{/@nt/cover/\option{/novathesis/school/univ}/\option{/novathesis/school/schl}/#1}{%
+		\ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{%
 		\begin{lrbox}{#2}%
 		\begin{minipage}[l]%
 		[\dimexpr\paperheight-\@nt@margin@top-\@nt@margin@bottom]%
@@ -1450,7 +1450,7 @@
 \newcommand{\@ntcovertext}[1]{%
 		% #1 = cover ID (major-minor)
 		\NTRunHook{cover/#1/text/pre}%
-		\optionlistdo{/@nt/cover/\option{/novathesis/school/univ}/\option{/novathesis/school/schl}/#1}{\@ntcoverelement@iii{#1}##1}%
+		\optionlistdo{/@nt/cover/\@nt@univ/\@nt@schl/#1}{\@ntcoverelement@iii{#1}##1}%
 		\NTRunHook{cover/#1/text/post}%
 }
 
@@ -1673,23 +1673,23 @@
       \NTRunHook{statement/pre}%
       \iffileadded{statement}{}{%ELSE
         \ntfor\match:={%
-          \option{/novathesis/school/schl}/statement-\option{/novathesis/degreeacr/\option{/@nt/document/docclass}}%
+          \@nt@schl/statement-\option{/novathesis/degreeacr/\option{/@nt/document/docclass}}%
           -\option{/novathesis/lang/main},%
-          \option{/novathesis/school/schl}/statement-\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
-          \option{/novathesis/school/schl}/statement-\option{/novathesis/lang/main},%
-          \option{/novathesis/school/schl}/statement,%
+          \@nt@schl/statement-\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
+          \@nt@schl/statement-\option{/novathesis/lang/main},%
+          \@nt@schl/statement,%
           statement-\option{/novathesis/lang/main},%
           statement%
         }\do{%
-          \IfFileExists{NOVAthesisFiles/Schools/\option{/novathesis/school/univ}/\match.tex}{%
-            \ntaddfile{statement}{NOVAthesisFiles/Schools/\option{/novathesis/school/univ}/\match.tex}%
+          \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\match.tex}{%
+            \ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/\match.tex}%
             \ntforbreak%
           }{}%
         }[%
           \ClassError{novathesis}{No “statement.tex” found! Not defined with %
                                   \string\ntaddfile{statement}{filename} in folders %
-                                  “NOVAthesisFiles/Schools/\option{/novathesis/school/univ}/\option{/novathesis/school/schl}” nor %
-                                  “NOVAthesisFiles/Schools/\option{/novathesis/school/univ}”}{}
+                                  “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” nor %
+                                  “NOVAthesisFiles/Schools/\@nt@univ”}{}
         ]%
       }{}%
       \ntselectlang{\option{/novathesis/lang/main}}%
