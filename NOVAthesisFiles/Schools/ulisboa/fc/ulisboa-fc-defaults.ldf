@@ -128,13 +128,13 @@
   \MakeUppercase{\theuniversity(\option{/novathesis/lang/cover})}\\[2mm]%
   \MakeUppercase{\theschool(\option{/novathesis/lang/cover})}\\[2mm]%
   \ifmscdoc
-	 	{\MakeUppercase{\thedepartment(\option{/novathesis/lang/cover})}}%
+     {\MakeUppercase{\thedepartment(\option{/novathesis/lang/cover})}}%
     {}%
 } 
 
 % Logo
 \ntaddtocover[vspace=0.5cm, height=5cm, valign=t]{1-1,2-1}{%
-	\ifphddoc%
+  \ifphddoc%
     {\hspace*{7mm}\includegraphics[height=4.55cm]{ulisboa-fc-logo-vert}}%
     {\includegraphics[width=7cm]{ulisboa-fc-logo-horiz}}%
 }

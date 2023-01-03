@@ -113,7 +113,7 @@
 \ntaddtocover[halign=l, vspace=1]{1-1}{%
   \hfill%
   \begin{minipage}[t]{\@rightcol}%
-  	\includegraphics[height=5.3cm]{\thefrontpageimage()}%
+    \includegraphics[height=5.3cm]{\thefrontpageimage()}%
   \end{minipage}%
 }
 

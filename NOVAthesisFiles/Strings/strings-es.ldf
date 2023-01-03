@@ -90,7 +90,7 @@
 \committeestring(g,1,f,es):={Miembro invitada}% female, singular
 \committeestring(g,2,m,es):={Miembros invitados}% male, plural
 \committeestring(g,2,f,em):={Miembros invitadas}% female, plural
-	
+  
 \dissertationstring(bsc,es)={Informe entregado para el cumplimiento de los requisitos para el título de\\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ in\\ \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 %

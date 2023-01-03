@@ -31,22 +31,22 @@
 %
 %
 % \NTAddToHook{NOVAthesisFiles/packages}{%
-	\RequirePackage{xpatch}
+  \RequirePackage{xpatch}
 % Remove commas between family and given names
-	\DeclareNameAlias{sortname}{family-given}
-	\renewrobustcmd*{\revsdnamepunct}{}
-	\renewrobustcmd*{\bibinitdelim}{}
+  \DeclareNameAlias{sortname}{family-given}
+  \renewrobustcmd*{\revsdnamepunct}{}
+  \renewrobustcmd*{\bibinitdelim}{}
 % Remove commas between family and given names
-	\renewrobustcmd*{\revsdnamepunct}{}
-	\renewrobustcmd*{\bibinitdelim}{}
+  \renewrobustcmd*{\revsdnamepunct}{}
+  \renewrobustcmd*{\bibinitdelim}{}
 % Remove dot after initials
-	\renewrobustcmd*{\bibinitperiod}{}
+  \renewrobustcmd*{\bibinitperiod}{}
 % Add dot after list of authors (and before year)
-	% \xpretobibmacro{date+extradate}{\setunit{\addperiod\space}}{}{}
+  % \xpretobibmacro{date+extradate}{\setunit{\addperiod\space}}{}{}
 % Remove quotation marks from title
-	\DeclareFieldFormat*{title}{#1}
+  \DeclareFieldFormat*{title}{#1}
 % Remove emphasized from titles
-	\DeclareFieldFormat*{journaltitle}{#1\isdot}
+  \DeclareFieldFormat*{journaltitle}{#1\isdot}
 \DeclareFieldFormat{postnote}{#1}
 \DeclareFieldFormat{multipostnote}{#1}
 \renewcommand*{\bibpagespunct}{\addcolon}
@@ -54,26 +54,26 @@
   \iffieldpages{postnote}
     {\addcolon\space}
     {\addspace}}
-	% \DefineBibliographyStrings{english}{%
-	%   page             = {\ifbibliography{}{p\adddot}},
-	%   pages            = {\ifbibliography{}{pp\adddot}},
-	% }
-	\DefineBibliographyExtras{english}{%
+  % \DefineBibliographyStrings{english}{%
+  %   page             = {\ifbibliography{}{p\adddot}},
+  %   pages            = {\ifbibliography{}{pp\adddot}},
+  % }
+  \DefineBibliographyExtras{english}{%
 % Remove "and" before last author
-	\DeclareFieldFormat{pages}{#1}
-	\DeclareDelimFormat{finalnamedelim}{%
-		\ifnumgreater{\value{liststop}}{2}{%
-			\printdelim{multinamedelim}}{\addspace\bibstring{and}\space}}
-	}
+  \DeclareFieldFormat{pages}{#1}
+  \DeclareDelimFormat{finalnamedelim}{%
+    \ifnumgreater{\value{liststop}}{2}{%
+      \printdelim{multinamedelim}}{\addspace\bibstring{and}\space}}
+  }
 % Add dot after list of authors (and before year) and remove parentheses in date
-	\xpatchbibmacro{date+extradate}{%
-  	\printtext[parens]%
-		}{%
-		\setunit*{\addperiod\space}%
-		\printtext%
-	}{}{}
+  \xpatchbibmacro{date+extradate}{%
+    \printtext[parens]%
+    }{%
+    \setunit*{\addperiod\space}%
+    \printtext%
+  }{}{}
 % Remove "in:" prefix in journal title
-	\renewbibmacro{in:}{}
+  \renewbibmacro{in:}{}
 % Cite as "family initials"
 \DeclareNameFormat{labelname}{%
   \ifcase\value{uniquename}%
@@ -103,15 +103,15 @@
   \fi
   \usebibmacro{name:andothers}}
 % Increase spacing between bib entries
-	\setlength\bibitemsep{1.25\itemsep}
+  \setlength\bibitemsep{1.25\itemsep}
 }
 
 
 \NTAddToHook{printbib/pre}{
 % Always remove "and" before last author
-	\DeclareDelimFormat{finalnamedelim}{%
-			\printdelim{multinamedelim}%
-	}%
+  \DeclareDelimFormat{finalnamedelim}{%
+      \printdelim{multinamedelim}%
+  }%
 }
 
 
