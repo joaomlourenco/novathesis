@@ -9,6 +9,8 @@
 
 \typeout{NT FILE fix-hyperref.sty}%
 
+\def\HyLang@portuguese{\HyLang@portuges}
+
 \newcommand{\@nt@fixhyperref}{
   \def\HyLang@DeclareLang##1##2##3{%
     \@ifpackagewith{babel}{##1}{%
@@ -62,9 +64,9 @@
   \HyLang@DeclareLang{ngerman}{german}{}
   \HyLang@DeclareLang{naustrian}{german}{}
   \HyLang@DeclareLang{russian}{russian}{\noexpand\hypersetup{unicode}}
-  \HyLang@DeclareLang{brazil}{portuges}{}
-  \HyLang@DeclareLang{brazilian}{portuges}{}
-  \HyLang@DeclareLang{portuguese}{portuges}{}
+  \HyLang@DeclareLang{brazil}{portuguese}{}
+  \HyLang@DeclareLang{brazilian}{portuguese}{}
+  \HyLang@DeclareLang{portuguese}{portuguese}{}
   \HyLang@DeclareLang{spanish}{spanish}{}
   \HyLang@DeclareLang{afrikaans}{afrikaans}{}
   \HyLang@DeclareLang{french}{french}{}
@@ -77,11 +79,8 @@
   \HyLang@DeclareLang{hungarian}{magyar}{}
 }
 
-% \endinput
 \AtBeginDocument{
-  \usepackage{catoptions}
-  % \def\figureautorefname{figure}
-  % \def\tableautorefname{table}
+  \RequirePackage{catoptions}
   \def\Autoref#1{%
     \begingroup
     \edef\reserved@a{\cpttrimspaces{#1}}%

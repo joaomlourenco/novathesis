@@ -78,7 +78,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtEndPreamble{% 
   \LoadHelveticaLikeFont%
-  % \usepackage{gillius2}%
+  % \RequirePackage{gillius2}%
 }
 
 \NTAddToHook{cover/1-1/text/pre}{%

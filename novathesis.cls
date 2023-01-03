@@ -117,9 +117,10 @@
 \providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
 \providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
 
-\PassOptionsToPackage{scaled=1}{inter}%
-\PassOptionsToPackage{scaled=0.95}{helvet}%
-
+%%%%% Options to sans serif fonts (will be loaded later)
+\PassOptionsToPackage{scaled=0.95}{inter}
+\PassOptionsToPackage{scaled=0.95}{helvet}
+% \PassOptionsToPackage{scaled=0.95}{gillius2}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHECK IF USING LUALATEX OR XELATEX
@@ -190,6 +191,7 @@
   % Search and match first value from the list, error if no match is found
   \datamatchtf{#1}{#2}(#3){}{\ClassError{novathesis}{Could not find “#2” defined with any of “(#3)”!}{}}%
 }
+
 \def\datamatchtf#1#2(#3)#4#5{%
 	% #1 = macro to set
 	% #2 = data@memory
@@ -215,9 +217,9 @@
 % Load and Helvetica-like font as the default SF font
 \newcommand*{\LoadHelveticaLikeFont}{%
 	\IfFileExists{inter.sty}%
-		{\RequirePackage[scaled=1]{inter}}%
+		{\RequirePackage{inter}}%
 	{\IfFileExists{helvet.sty}%
-		{\RequirePackage[scaled=0.95]{helvet}}%
+		{\RequirePackage{helvet}}%
 	{\IfFileExists{gillius2.sty}%
 		{\RequirePackage{gillius2}}%
 		{\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}%
@@ -255,7 +257,7 @@
 \options{/@nt/.new family,
 	langsshort/.new list={en, pt, fr, it, de, es, gr},
 	currentlang/.new choice={en, pt, fr, it, de, es, gr},
-	langshorttolong/.new choice={en=english, pt=portuges, fr=french, it=italian, de=german, es=spanish, gr=greek},
+	langshorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish, gr=greek},
 	fontenc/.new choice={en=T1, pt=T1, fr=T1, it=T1, de=T1, es=T1, gr=LGR},
 	biblatex/.new list,
 }
@@ -2015,14 +2017,15 @@
 	\endgroup
 	\bookmarksetup{startatroot}%
 	\NTRunHook{mainmatter/pre}%
-  % \ifbool{@openright}{}{% openany=true
-  %   \let\oldcleardoublepage\cleardoublepage%
-  %   \renewcommand{\cleardoublepage}{\clearforchapter}%
-  % }%
+  \ifbool{@openright}{}{% openany=true
+    % Avoid cleardoublepage before "mainmatter"
+    \let\oldcleardoublepage\cleardoublepage%
+    \renewcommand{\cleardoublepage}{\clearforchapter}%
+  }%
 	\mainmatter%
-  % \ifbool{@openright}{}{% openany=true
-  %   \let\cleardoublepage\oldcleardoublepage%
-  % }%
+  \ifbool{@openright}{}{% openany=true
+    \let\cleardoublepage\oldcleardoublepage%
+  }%
 	\pagestyle{novathesis@mainmatter}%
 	\ifxeorlua{}{\microtypesetup{protrusion=true}}%
 	\NTRunHook{mainmatter/post}%

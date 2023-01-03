@@ -14,7 +14,7 @@
 
 % --------------------------------------------------------
 % FMV-like required data/information
-\usepackage{indentfirst}
+\RequirePackage{indentfirst}
 \setlength{\parindent}{1.25cm}
 % \ifdocfinal{\ntsetup{secondcover=true}}{}
 \definecolor{fmvyellow}{RGB}{253,241,81}
@@ -31,7 +31,7 @@
 %
 %
 % \NTAddToHook{NOVAthesisFiles/packages}{%
-	\usepackage{xpatch}
+	\RequirePackage{xpatch}
 % Remove commas between family and given names
 	\DeclareNameAlias{sortname}{family-given}
 	\renewrobustcmd*{\revsdnamepunct}{}
@@ -344,7 +344,7 @@
 }
 
 \ifdocfinal{}{
-  \AtEndPreamble{\usepackage[pagewise]{lineno}}
+  \AtEndPreamble{\RequirePackage[pagewise]{lineno}}
   \NTAddToHook{acknowledgements/pre}{\linenumbers}
   \NTAddToHook{acknowledgements/post}{\nolinenumbers}
   \NTAddToHook{abstract/pre}{\linenumbers}

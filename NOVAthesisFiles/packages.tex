@@ -15,10 +15,10 @@
 \RequirePackage{csquotes}
 \RequirePackage{url}
 \RequirePackage{babel}			% Support for bilingual documents
-\newcommand{\definelanguagealias}[2]{%
-  \@namedef{languagealias@#1}{#2}%
-}
-\definelanguagealias{portuguese}{portuges}
+% \newcommand{\definelanguagealias}[2]{%
+%   \@namedef{languagealias@#1}{#2}%
+% }
+% \definelanguagealias{portuguese}{portuguese}
 % \letoptionchoices{/@nt/langshorttolong}\opt@choices
 % \@for\i:=\opt@choices\do{%
 %   \options{/@nt/langshorttolong=\i}
@@ -60,7 +60,7 @@
 
 \iftoggle{/novathesis/printindex}{%
   \ntaddtoprintorder{mainmatter}{index}%
-  \usepackage{imakeidx}%
+  \RequirePackage{imakeidx}%
   % \makeindex[intoc,columns=2,options=-s myindexstyle]%
   \makeindex[intoc,columns=2,options=-s  NOVAthesisFiles/ntindexstyle]%
 }{}
