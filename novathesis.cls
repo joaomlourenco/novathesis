@@ -98,12 +98,14 @@
   docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
   media/.new choice             = {screen, paper},
   spine/.new choice             = {unset, no, full, trim},
+  abstract deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
+  abstract theorder/.new value  = {unset},
+  abstractorder/.new cmd        = {\optionsalso{/novathesis/abstract theorder={#1}}},%
   % SCHOOL
   school/univ/.new value        = {},
   school/schl/.new value        = {},
   school/.new cmd               = {\splitbyslash#1\relax\@nt@univ\@nt@schl
-                                   \optionsalso{/novathesis,
-                                                school/univ/.expanded=\@nt@univ,
+                                   \optionsalso{school/univ/.expanded=\@nt@univ,
                                                 school/schl/.expanded=\@nt@schl}},
   school                        = nova/fct,
   % STYLES
@@ -118,7 +120,9 @@
   lang/main/.new choice         = {en, pt, fr, it, de, es, gr},
   lang/cover/.new choice        = {en, pt, fr, it, de, es, gr},
   lang/copyright/.new choice    = {en, pt, fr, it, de, es, gr},
-  lang/.new style               = {lang/main=#1, lang/cover=#1, lang/copyright=#1},
+  lang/.new cmd                 = {\optionsalso{/novathesis/lang/main=#1, 
+                                                /novathesis/lang/cover=#1, 
+                                                /novathesis/lang/copyright=#1}},
   lang                          = en,
   % PRINT ON/OFF
   print/committee/.new toggle   = false,
@@ -224,6 +228,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\instring#1#2{TT\fi\begingroup
+  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
 
 % --------------------------------------------------------
 % The NOVAthesis logo
@@ -580,14 +587,14 @@
 
 % For each main language, list which abstracts shall be printed and in which order
 % may have more than two (just be sure you include the languages above as well)
-\newdata{abstractorder}
-\abstractorder(pt):={pt,en}
-\abstractorder(en):={en,pt}
-\abstractorder(fr):={fr,en}
-\abstractorder(it):={it,en}
-\abstractorder(es):={es,en}
-\abstractorder(de):={de,en}
-\abstractorder(gr):={gr,en}
+% \newdata{abstractorder}
+% \abstractorder(pt):={pt,en}
+% \abstractorder(en):={en,pt}
+% \abstractorder(fr):={fr,en}
+% \abstractorder(it):={it,en}
+% \abstractorder(es):={es,en}
+% \abstractorder(de):={de,en}
+% \abstractorder(gr):={gr,en}
 
 
 
@@ -643,8 +650,10 @@
 \options{/novathesis/.cd,
   lang/cover = \option{/novathesis/lang/main},
   lang/copyright = \option{/novathesis/lang/main},
+  % abstractorder = \option{/novathesis/lang/main},
   color/links = DarkBlue,
 }
+
 
 % \NTRunHook{memoir}
 
@@ -661,9 +670,15 @@
 \def\@DOCCLASS{\option{/@nt/document/docclass}}
 
 \def\@LANG@COVER{\option{/novathesis/lang/cover}}
+\def\@LANG@COPYRIGHT{\option{/novathesis/lang/copyright}}
 \def\@LANG@MAIN{\option{/novathesis/lang/main}}
 
 \def\@DEGREEACR{\option{/novathesis/degreeacr/\@DOCCLASS}}
+
+\bkmstring(1-1)={\thebkmstring(cover,\@LANG@COVER)}
+\bkmstring(2-1)={\thebkmstring(frontpage,\@LANG@COVER)}
+\bkmstring(N-2)={\thebkmstring(backcover,\@LANG@COVER)}
+\bkmstring(spine)={\thebkmstring(spine,\@LANG@COVER)}
 % \NTRunHook{novathesis}
 
 %============================================================
@@ -677,12 +692,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Include strings for all the languages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\optionlistdo{/novathesis/lang/used}{%
-    \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
-                      {}%
-                      {\ClassError{novathesis}{File not found: “NOVAthesisFiles/Strings/strings-#1.ldf” file!}%
-                                              {Add a file with the translations for this language.}}%
+\newcommand*{\@nt@loadlangs}[1]{%
+  \optionlistdo{/novathesis/lang/#1}{%
+      \InputIfFileExists{NOVAthesisFiles/Strings/strings-##1.ldf}%
+                        {}%
+                        {\ClassError{novathesis}{File not found: “NOVAthesisFiles/Strings/strings-##1.ldf” file!}%
+                                                {Add a file with the translations for this language.}}%
+  }%
 }
+\@nt@loadlangs{used}
 
 % --------------------------------------------------------
 % BABEL STUFF
@@ -1068,13 +1086,32 @@
 
 \ifdocunset{\ntsetup{docstatus=working}}{}
 
+\ifoptionequal{/novathesis/abstract theorder}{unset}{%
+  \letoptionchoices{/novathesis/abstract deforder}{\@abst@rder@langs}%
+  \if\instring{,\@LANG@MAIN,}{,\@abst@rder@langs,}%
+    \options{/novathesis/abstract deforder=\@LANG@MAIN}%
+  \else
+    \options{/novathesis/abstract deforder=default}%
+  \fi
+  \ntsetup{abstractorder=\option{/novathesis/abstract deforder}}%
+}{}
+% \typeout{\option{/novathesis/abstract theorder}}\asddasasassasdasd
+\def\@nt@loadabstractlangs{%
+  \@for\i:=\expanded{\option{/novathesis/abstract theorder}}\do{%
+      \InputIfFileExists{NOVAthesisFiles/Strings/strings-\i.ldf}%
+                        {}%
+                        {\ClassError{novathesis}{File not found: “NOVAthesisFiles/Strings/strings-\i.ldf” file!}%
+                                                {Add a file with the translations for this language.}}%
+  }%
+}
+\@nt@loadabstractlangs
 
 % \typeout{\theprintorder(frontmatter,\@DOCSTATUS)}
 \ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\@DOCSTATUS)}}%
 
 \ifoptionequal{/novathesis/spine}{unset}
     {\ifdocworking{\ntsetup{spine=no}}{\ifmaindoc{\ntsetup{spine=trim}}{\ntsetup{spine=no}}}}{}
-\ifdocfinal{\ntsetup{printcommittee=true}}{}
+\ifdocfinal{\ntsetup{print/committee=true}}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\@nt@loadallfiles}[3][]{\optionlistdo{/@nt/file/#3/#2}{\@ntloadfile@i{##1}#1}}
@@ -1229,16 +1266,21 @@
 }
 
 \newcommand{\ntprintbackcover}{%
-  \ifcoverdefined[N-1]{\pdfbookmark[-1]{\thebkmstring(backmatter,\@LANG@COVER)}{bmbackmatter}}{%
-  \ifcoverdefined[N-2]{\pdfbookmark[-1]{\thebkmstring(backmatter,\@LANG@COVER)}{bmbackmatter}}{}}%
+  \ifcoverdefined[N-1]{\pdfbookmark[-1]{\thebkmstring(backmatter,\@LANG@COVER)}{bmbackmatter1}}{%
+  \ifcoverdefined[N-2]{\pdfbookmark[-1]{\thebkmstring(backmatter,\@LANG@COVER)}{bmbackmatter2}}{}}%
   \ntprintcoverpair{N}%
 }
 
 \newcommand{\ntprintcovers}[1][1,2]{%
-  \pdfbookmark[-1]{\thebkmstring(frontmatter,\@LANG@COVER)}{bmfrontmatter}%
-  \NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
-  % \forcsvlist{\ntprintcoverpair}{#1}%
-  \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
+  \begingroup
+    \ntselectlang{\@LANG@COVER}%
+    \NTRunHook{printcovers/pre}%
+    \pdfbookmark[-1]{\thebkmstring(frontmatter,\@LANG@COVER)}{bmfrontmatter}%
+    \NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
+    % \forcsvlist{\ntprintcoverpair}{#1}%
+    \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
+    \NTRunHook{printcovers/post}%
+  \endgroup
 }
 
 \newcommand{\ntprintcoverpair}[1]{%
@@ -1284,27 +1326,29 @@
 \newcommand{\@ntprintcover@i}[1]{%
   % #1 = cover ID (major-minor)
   \begingroup%
+    \NTRunHook{cover/pre}%
     \NTRunHook{cover/#1/pre}%
     \datamatchtf{\match}{thesiscover}(%
-                {\@DOCTYPE,\option{/novathesis/degreeacr},#1,textcolor}%
-               ,{\@DOCCLASS,\option{/novathesis/degreeacr},#1,textcolor}%
-               ,{\option{/novathesis/degreeacr},#1,textcolor}%
-               ,{\option{/novathesis/degreeacr},textcolor}%
+                {\@DOCTYPE,\@DEGREEACR,#1,textcolor}%
+               ,{\@DOCCLASS,\@DEGREEACR,#1,textcolor}%
+               ,{\@DEGREEACR,#1,textcolor}%
+               ,{\@DEGREEACR,textcolor}%
                ,{\@DOCTYPE,#1,textcolor}%
                ,{\@DOCCLASS,#1,textcolor}%
                ,{#1,textcolor}%
                ,{textcolor}%
     ){\color{\match}}{}%
-    \ntselectlang{\@LANG@COVER}%
-    \ifdatadefined{bkmstring}(#1,\@LANG@COVER){
-      \pdfbookmark[1]{\thebkmkstring(#1,\options{/novathesis/lang/cover})}{\option{/@ntcoveropts/bookmark}}%
-    }{}%
+    % \ntselectlang{\@LANG@COVER}%
+    % \ifdatadefined{bkmstring}(#1,\@LANG@COVER){
+    \pdfbookmark[1]{\thebkmstring(#1)}{\thebkmstring(#1)}%
+    % }{}%
     % \options{/@ntcoveropts/bookmark=#1}%
     % \ifoptionequal{/@ntcoveropts/bookmark}{}{}{%
     %   \pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
     % }%
     \@ntmakeboxwithcover{#1}{\@fullcover@box}%
     \NTRunHook{cover/#1/post}%
+    \NTRunHook{cover/post}%
   \endgroup%
 }
 
@@ -1468,9 +1512,6 @@
     \optionlistdo{/@nt/cover/\@nt@univ/\@nt@schl/#1}{\@ntcoverelement@iii{#1}##1}%
     \NTRunHook{cover/#1/text/post}%
 }
-
-\def\instring#1#2{TT\fi\begingroup
-  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
 
 \def\@ntcoverelement@iii#1#2=*=#3{%
   % #1 = cover ID (major-minor)
@@ -1706,7 +1747,6 @@
                                   “NOVAthesisFiles/Schools/\@nt@univ”}{}
         ]%
       }{}%
-      \ntselectlang{\@LANG@MAIN}%
       \pdfbookmark[1]{\thebkmstring(statement,\@LANG@MAIN)}{bmstatement}%
       \@ntloadfiles@ii{statement}%
       \NTRunHook{statement/post}%
@@ -1974,9 +2014,8 @@
   \ifmaindoc{% THEN it is a main document
     \NTRunHook{#1/pre}%
     \iffileadded{#1}{%
-    \ntselectlang{\@LANG@MAIN}%
-    \pdfbookmark[1]{\csuse{thebkmstring}(#1,\@LANG@MAIN)}{bm#1}%
-    \@ntloadfiles@ii{#1}%
+      \pdfbookmark[1]{\thebkmstring(#1,\@LANG@MAIN)}{bm#1}%
+      \@ntloadfiles@ii{#1}%
     }{}%
     \NTRunHook{#1/post}%
   }{}% It is a plan or proposal type document
@@ -1994,27 +2033,35 @@
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
-    \@for\listitem:=\expanded{%
-    \theabstractorder(\@LANG@MAIN)}\do{\@ntprintabstract{\listitem}}%
-    \ntselectlang{\@LANG@MAIN}%
+  \letoptionchoices{/novathesis/abstract deforder}{\@abst@rder@langs}%
+  \if\instring{,\@LANG@MAIN,}{,\@abst@rder@langs,}%
+    \options{/novathesis/abstract deforder=\@LANG@MAIN}%
+  \else
+    \options{/novathesis/abstract deforder=default}%
+  \fi
+  % \typeout{NTL=[\languagename] {\@LANG@MAIN}{\@abst@rder@langs} {\option{/novathesis/abstract theorder}}}\AAAAAAA
+  \@for\listitem:=\expanded{\option{/novathesis/abstract theorder}}\do{\@ntprintabstract{\listitem}}%
+  % \typeout{NTL=\languagename}\cccc
+  % \ntselectlang{\@LANG@MAIN}%
 }
 
 \newcommand{\@ntprintabstract}[1]{%
-  % \typeout{NT PRINT ABSTRACT #1}\aaaa%
+  % \typeout{NT PRINT ABSTRACT=[#1]}\aaaa%
   \iffileadded[#1]{abstract}{%
-    % \begingroup
-    % \typeout{NT PRINT ABSTRACT #1}\bbbb
-    \ntselectlang{#1}%
-    \pdfbookmark[1]{\thebkmstring(abstract,#1)}{bmabstract#1}%
-    \NTRunHook{abstract/pre}%
-    \NTRunHook{abstract/#1/pre}%
-    \printabstracttitle{#1}%
-    \NTRunHook{abstract/#1/mid}%
-    \NTRunHook{abstract/mid}%
-    \@ntloadfiles@ii[#1]{abstract}%
-    \NTRunHook{abstract/#1/post}%
-    \NTRunHook{abstract/post}%
-    % \endgroup
+    \begingroup
+      % \typeout{NT PRINT ABSTRACT #1}\bbbb
+      \ntselectlang{#1}%
+      % \typeout{NTL=\languagename [#1]}\bbbb
+      \pdfbookmark[1]{\thebkmstring(abstract,#1)}{bmabstract#1}%
+      \NTRunHook{abstract/pre}%
+      \NTRunHook{abstract/#1/pre}%
+      \printabstracttitle{#1}%
+      \NTRunHook{abstract/#1/mid}%
+      \NTRunHook{abstract/mid}%
+      \@ntloadfiles@ii[#1]{abstract}%
+      \NTRunHook{abstract/#1/post}%
+      \NTRunHook{abstract/post}%
+    \endgroup
   }{}%
 }
 
@@ -2030,7 +2077,7 @@
   \begingroup
   \pagestyle{novathesis@frontmatter}%
   \copypagestyle{chapter}{novathesis@frontmatter}
-  \ntselectlang{\@LANG@MAIN}%
+  % \ntselectlang{\@LANG@MAIN}%
   \pagenumbering{roman}%
   \NTRunHook{frontmatter/post}%
 }
@@ -2180,16 +2227,18 @@
 }
 
 \newcommand*{\ntprintcopyright}{%
-    \iftoggle{/novathesis/print/copyright}{%
+  \iftoggle{/novathesis/print/copyright}{%
     \ifmaindoc{%
-    \ntselectlang{\option{/novathesis/lang/copyright}}%
-    \pdfbookmark[1]{\csuse{thebkmstring}(copyright,\@LANG@MAIN)}{bmcopyright}%
-    \NTRunHook{copyright/pre}%
-    \ntprintcopyrightpage%
-    \NTRunHook{copyright/post}%
-    \ntprintacknowledgementsblock%
+      \begingroup
+        \ntselectlang{\@LANG@COPYRIGHT}%
+        \pdfbookmark[1]{\thebkmstring(copyright,\@LANG@MAIN)}{bmcopyright}%
+        \NTRunHook{copyright/pre}%
+        \ntprintcopyrightpage%
+        \NTRunHook{copyright/post}%
+        \ntprintacknowledgementsblock%
+      \endgroup
     }{}%
-    }{}%
+   }{}%
 }
 
 
@@ -2304,7 +2353,7 @@
     Copyright \textcopyright\ \thedocauthor(name), %
     \theschool(\option{/novathesis/lang/copyright}), \theuniversity(\option{/novathesis/lang/copyright}).\\%
     \thecopyrighttextstring(\option{/novathesis/lang/copyright})%
-    \ntselectlang{\@LANG@MAIN}%
+    % \ntselectlang{\@LANG@MAIN}%
 }
 
 
