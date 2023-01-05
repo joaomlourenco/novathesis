@@ -710,6 +710,7 @@
 \optionlistdo{/novathesis/lang/used}{%
   \options{/@nt/langshorttolong=#1}%
   \PassOptionsToPackage{\option{/@nt/langshorttolong}}{babel}%
+  \PassOptionsToPackage{\option{/@nt/langshorttolong}}{translator}%
   % \typeout{USED: [#1] [\option{/@nt/langshorttolong}] [\option{/@nt/fontenc}]}\bbb
 }
 
@@ -796,14 +797,20 @@
 %============================================================
 % Date and month
 \newdata{ntdocdate}
-\ntdocdate(year):={Year}
+\ntdocdate(year):={year}
 \ntdocdate(month):={month}
 
-\def\ntdate#1{\@ntdate@i(#1,)}
-\def\@ntdate@i(#1,#2){%
-  \StrGobbleRight{#2}{1}[\@ntmonth]%
+\def\ntdate#1{\@ntdate@i#1--\@relax}
+% \def\@ntdate@i#1-#2\@relax{\@ntdate@ii#1-#2-\@relax}
+\def\@ntdate@i#1-#2-#3\@relax{%
+  % year           -> [year] [] []
+  % year-month     -> [year] [month] [-]
+  % year-month-day -> [year] [month] [day--]
+  % \typeout{NTDOCDATE [#1] [#2] [#3]}\NTDOCDATE
   \ntdocdate(year):={#1}%
-  \ntdocdate(month):={\@ntmonth}%
+  \ntdocdate(month):={#2}%
+  \ifstrequal{#3}{-}{\ntdocdate(day):={}}{\StrGobbleRight{#3}{2}[\@nt@date@day]\ntdocdate(day):={\@nt@date@day}}%
+  % \typeout{NTDOCDATE [\thentdocdate(year)] [\thentdocdate(month)] [\thentdocdate(day)]}\NTDOCDATE
 }
 
 
@@ -1133,10 +1140,11 @@
 
 % Patch month from number to string in the proper language
 \IfInteger{\thentdocdate(month)}{%
-  \RequirePackage{datetime}%
-  \edef\@nt@datemonth{\thentdocdate(month)}%
-  \ntdocdate(month)={\bgroup\ntselectlang{\@LANG@COVER}\monthname[\@nt@datemonth]\egroup}}%
-{}
+  % \edef\@nt@datemonth{\thentdocdate(month)}%
+  % \ntdocdate(month):={\bgroup\ntselectlang{\@LANG@COVER}\monthname[\thentdocdate(month)]\egroup}%
+  \RequirePackage{pgfcalendar}%
+  \ntdocdate(month):={\pgfcalendarmonthname{\thentdocdate(month)}}%
+}{}
 
 
 % --------------------------------------------------------
