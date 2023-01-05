@@ -116,7 +116,7 @@
                                                     {\hypersetup{allcolors=#1}}%
                                                     {\PassOptionsToPackage{allcolors=#1}{hyperref}}},
   % LANGUAGES
-  lang/used/.new list           = {pt,en},
+  lang/extra/.new list           = {pt,en},
   lang/main/.new choice         = {en, pt, fr, it, de, es, gr},
   lang/cover/.new choice        = {en, pt, fr, it, de, es, gr},
   lang/copyright/.new choice    = {en, pt, fr, it, de, es, gr},
@@ -700,14 +700,14 @@
                                                 {Add a file with the translations for this language.}}%
   }%
 }
-\@nt@loadlangs{used}
+\@nt@loadlangs{extra}
 
 % --------------------------------------------------------
 % BABEL STUFF
 \options{/@nt/langshorttolong=\@LANG@MAIN}%
 \PassOptionsToPackage{main=\option{/@nt/langshorttolong}}{babel}
 % \typeout{MAIN: [\@LANG@MAIN \option{/@nt/langshorttolong}]}\aaa
-\optionlistdo{/novathesis/lang/used}{%
+\optionlistdo{/novathesis/lang/extra}{%
   \options{/@nt/langshorttolong=#1}%
   \PassOptionsToPackage{\option{/@nt/langshorttolong}}{babel}%
   \PassOptionsToPackage{\option{/@nt/langshorttolong}}{translator}%
