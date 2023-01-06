@@ -22,9 +22,9 @@
 %------------------------------------------------------------------
 
 % Convert copyright language from two letters to language name
-\options{/@nt/langshorttolong=\option{/novathesis/lang/copyright}}
+\options{/@nt/lang/shorttolong=\option{/novathesis/lang/copyright}}
 
-\PassOptionsToPackage{lang=\option{/@nt/langshorttolong}}{doclicense}
+\PassOptionsToPackage{lang=\option{/@nt/lang/shorttolong}}{doclicense}
 \PassOptionsToPackage{modifier=\option{/novathesis/uminho/copyrightmodifier}}{doclicense}
 
 %%%%%%%%% Important package for the licensing. 

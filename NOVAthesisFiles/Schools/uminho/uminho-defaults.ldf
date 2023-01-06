@@ -39,12 +39,12 @@
 %-----------------------------------------------------------------
 % Other stuff
 %-----------------------------------------------------------------
-\abstractorder(pt):={pt,en}
-\abstractorder(en):={pt,en}
-\abstractorder(fr):={pt,fr}
-\abstractorder(it):={pt,it}
-\abstractorder(es):={pt,es}
-\abstractorder(de):={pt,de}
+\setabstractorder(pt):={pt,en}
+\setabstractorder(en):={pt,en}
+\setabstractorder(fr):={pt,fr}
+\setabstractorder(it):={pt,it}
+\setabstractorder(es):={pt,es}
+\setabstractorder(de):={pt,de}
 
 \commastring(pt):={\\}
 \commastring(en):={\\}
@@ -100,12 +100,12 @@
 %-----------------------------------------------------------------
 \NTAddToHook{abstract/pre}{%
   \let\oldchapterheadstart=\chapterheadstart%
-  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\option{/@nt/currentlang},main)}}%
+  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\option{/@nt/lang/current},main)}}%
   \preto{\chapterheadstart}{\vspace*{-2cm}}
 }
 \NTAddToHook{abstract/mid}{%
   % \let\oldchapterheadstart=\chapterheadstart%
-  {{\noindent\newsgottbf\Large\thedoctitle(\option{/@nt/currentlang},main)}\\[1ex]}%
+  {{\noindent\newsgottbf\Large\thedoctitle(\option{/@nt/lang/current},main)}\\[1ex]}%
 }
 \NTAddToHook{abstract/post}{%
   \let\chapterheadstart=\oldchapterheadstart%

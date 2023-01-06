@@ -37,8 +37,8 @@
 \ntsetup{print/copyright=false}
 \ntbibsetup{style=apa}
 \AtEndPreamble{\let\cite\parencite}
-\abstractorder(pt):={pt,en}
-\abstractorder(en):={pt,en}
+\setabstractorder(pt):={pt,en}
+\setabstractorder(en):={pt,en}
 
 
 \printorder(frontmatter,final):={%
@@ -68,7 +68,7 @@
 
 % \NTAddToHook{keywords/pt/pre}{\options{/@nt/kwprint = {}}}
 % \NTAddToHook{keywords/en/pre}
-%             {\options{/@nt/kwprint = \theabstractorder(\option{/@nt/currentlang})}\clearpage}
+%             {\options{/@nt/kwprint = \thesetabstractorder(\option{/@nt/lang/current})}\clearpage}
 
 \NTAddToHook{list_of/post}{
   \options{/@nt/list/listof = {}}
@@ -194,14 +194,14 @@
 
 \NTAddToHook{abstract/pre}{%
   \let\oldchapterheadstart=\chapterheadstart%
-  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\option{/@nt/currentlang},main)}}%
+  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\option{/@nt/lang/current},main)}}%
   \preto{\chapterheadstart}{%
     \noindent\begin{minipage}[t][0pt][t]{\textwidth}
       \begin{center}%
-        \textbf{\MakeTextUppercase{\Large\thedoctitle(\option{/@nt/currentlang},main,cover)}}%
+        \textbf{\MakeTextUppercase{\Large\thedoctitle(\option{/@nt/lang/current},main,cover)}}%
         \ifdatadefined{doctitle}(\option{/novathesis/lang/cover}-sub,cover){%
           \\[6mm]%
-          \textbf{\Large\thedoctitle(\option{/@nt/currentlang}-sub,cover)}%
+          \textbf{\Large\thedoctitle(\option{/@nt/lang/current}-sub,cover)}%
         }{}%
       \end{center}%
     \end{minipage}%

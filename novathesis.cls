@@ -99,8 +99,8 @@
   media/.new choice             = {screen, paper},
   spine/.new choice             = {unset, no, full, trim},
   abstract deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
-  abstract theorder/.new value  = {unset},
-  abstractorder/.new cmd        = {\optionsalso{/novathesis/abstract theorder={#1}}},%
+  abstract theorder/.new list   = {unset},
+  setabstractorder/.new cmd        = {\optionsalso{/novathesis/abstract theorder={#1}}},%
   % SCHOOL
   school/univ/.new value        = {},
   school/schl/.new value        = {},
@@ -116,7 +116,7 @@
                                                     {\hypersetup{allcolors=#1}}%
                                                     {\PassOptionsToPackage{allcolors=#1}{hyperref}}},
   % LANGUAGES
-  lang/extra/.new list           = {pt,en},
+  lang/extra/.new list           = {},
   lang/main/.new choice         = {en, pt, fr, it, de, es, gr},
   lang/cover/.new choice        = {en, pt, fr, it, de, es, gr},
   lang/copyright/.new choice    = {en, pt, fr, it, de, es, gr},
@@ -328,14 +328,12 @@
   \ntfor\dir:=#2\do{\IfFileExists{\dir#1}{\input{\dir#1}#3\ntforbreak}{}}[#4]%
 }
 
-% ][]{\ntfor\arg:=#3\do{\@nt@InputIfFileExists@i{#2}{\arg}}[#1]}
-% \newcommand{\@nt@InputIfFileExists@i}[2]{\IfFileExists{#2#1}{\input{#2#1}\ntforbreak}{}}
-
 
 \options{/@nt/.new family,
-  langsshort/.new list={en, pt, fr, it, de, es, gr},
-  currentlang/.new choice={en, pt, fr, it, de, es, gr},
-  langshorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish, gr=greek},
+  lang/short/.new list={en, pt, fr, it, de, es, gr},
+  lang/current/.new choice={en, pt, fr, it, de, es, gr},
+  lang/loaded/.new list={},
+  lang/shorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish, gr=greek},
   fontenc/.new choice={en=T1, pt=T1, fr=T1, it=T1, de=T1, es=T1, gr=LGR},
   biblatex/.new list,
 }
@@ -458,9 +456,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntselectlang}[1]{%
   % #1=lang {pt, en, fr, it}
-  \options{/@nt/currentlang=#1}%
-  \options{/@nt/langshorttolong=#1}%
-  \expandafter\selectlanguage\expandafter{\expanded{\option{/@nt/langshorttolong}}}%
+  \options{/@nt/lang/current=#1}%
+  \options{/@nt/lang/shorttolong=#1}%
+  \expandafter\selectlanguage\expandafter{\expanded{\option{/@nt/lang/shorttolong}}}%
 }
 
 
@@ -468,7 +466,7 @@
 %% ASSOCARRAY
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\initmemory}[2][\embrace{\thenotdefined(\@LANG@COVER)}]{%
-  \optionlistdo{/@nt/langsshort}{\csuse{#2}(##1):={#1}}}
+  \optionlistdo{/@nt/lang/short}{\csuse{#2}(##1):={#1}}}
 
 % For PDF bookmakrs
 \newdata{bkmstring}
@@ -498,7 +496,7 @@
 \newdata{sponsorsstring}
 \newdata{andstring}
 \newdata{commastring}
-\optionlistdo{/@nt/langsshort}{%
+\optionlistdo{/@nt/lang/short}{%
   \commastring(#1):={,\ }%
 }
 
@@ -587,14 +585,14 @@
 
 % For each main language, list which abstracts shall be printed and in which order
 % may have more than two (just be sure you include the languages above as well)
-% \newdata{abstractorder}
-% \abstractorder(pt):={pt,en}
-% \abstractorder(en):={en,pt}
-% \abstractorder(fr):={fr,en}
-% \abstractorder(it):={it,en}
-% \abstractorder(es):={es,en}
-% \abstractorder(de):={de,en}
-% \abstractorder(gr):={gr,en}
+% \newdata{setabstractorder}
+% \setabstractorder(pt):={pt,en}
+% \setabstractorder(en):={en,pt}
+% \setabstractorder(fr):={fr,en}
+% \setabstractorder(it):={it,en}
+% \setabstractorder(es):={es,en}
+% \setabstractorder(de):={de,en}
+% \setabstractorder(gr):={gr,en}
 
 
 
@@ -650,7 +648,6 @@
 \options{/novathesis/.cd,
   lang/cover = \option{/novathesis/lang/main},
   lang/copyright = \option{/novathesis/lang/main},
-  % abstractorder = \option{/novathesis/lang/main},
   color/links = DarkBlue,
 }
 
@@ -681,6 +678,16 @@
 \bkmstring(spine)={\thebkmstring(spine,\@LANG@COVER)}
 % \NTRunHook{novathesis}
 
+\ifoptioncontains{/novathesis/abstract theorder}{unset}{%
+  \letoptionchoices{/novathesis/abstract deforder}{\@abst@rder@langs}%
+  \if\instring{,\@LANG@MAIN,}{,\@abst@rder@langs,}%
+    \options{/novathesis/abstract deforder=\@LANG@MAIN}%
+  \else
+    \options{/novathesis/abstract deforder=default}%
+  \fi
+  \ntsetup{setabstractorder=\expanded{\option{/novathesis/abstract deforder}}}%
+}{}
+
 %============================================================
 % BIBLATEX CUSTOMIZATION
 %      Please open and edit the appropriate
@@ -689,29 +696,49 @@
 \input{Config/2_biblatex}
 % \NTRunHook{biblatex}
 
+
+%============================================================
+% LOAD ADDITIONAL PACKAGES
+%============================================================
+\input{NOVAthesisFiles/packages.tex}
+\NTRunHook{NOVAthesisFiles/packages}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Include strings for all the languages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\@LANG@LOADED{}
+\def\@langs@loaded@sep{}
 \newcommand*{\@nt@loadlangs}[1]{%
-  \optionlistdo{/novathesis/lang/#1}{%
+  \optionlistdo{/novathesis/#1}{%
+      % \typeout{LL=##1}\LL
       \InputIfFileExists{NOVAthesisFiles/Strings/strings-##1.ldf}%
-                        {}%
+                        {\if\instring{,##1,}{,\@LANG@LOADED,}\else
+                          \eappto{\@LANG@LOADED}{\@langs@loaded@sep##1}\def\@langs@loaded@sep{,}\fi%
+                        }%
                         {\ClassError{novathesis}{File not found: “NOVAthesisFiles/Strings/strings-##1.ldf” file!}%
                                                 {Add a file with the translations for this language.}}%
   }%
 }
-\@nt@loadlangs{extra}
+\@nt@loadlangs{abstract theorder}
+\@nt@loadlangs{lang/extra}
+% \letoptionlist{/@nt/lang/loaded}\LANGLOADED
+% \typeout{LANGLOADED=\@LANG@LOADED}\LLLLL
+\options{/@nt/lang/loaded/.expanded=\@LANG@LOADED}
+
+% --------------------------------------------------------
+% FIX BABEL TRANSLATION
+\input{NOVAthesisFiles/fix-babel.tex}
 
 % --------------------------------------------------------
 % BABEL STUFF
-\options{/@nt/langshorttolong=\@LANG@MAIN}%
-\PassOptionsToPackage{main=\option{/@nt/langshorttolong}}{babel}
-% \typeout{MAIN: [\@LANG@MAIN \option{/@nt/langshorttolong}]}\aaa
+\options{/@nt/lang/shorttolong=\@LANG@MAIN}%
+\PassOptionsToPackage{main=\option{/@nt/lang/shorttolong}}{babel}
+% \typeout{MAIN: [\@LANG@MAIN \option{/@nt/lang/shorttolong}]}\aaa
 \optionlistdo{/novathesis/lang/extra}{%
-  \options{/@nt/langshorttolong=#1}%
-  \PassOptionsToPackage{\option{/@nt/langshorttolong}}{babel}%
-  \PassOptionsToPackage{\option{/@nt/langshorttolong}}{translator}%
-  % \typeout{USED: [#1] [\option{/@nt/langshorttolong}] [\option{/@nt/fontenc}]}\bbb
+  \options{/@nt/lang/shorttolong=#1}%
+  \PassOptionsToPackage{\option{/@nt/lang/shorttolong}}{babel}%
+  \PassOptionsToPackage{\option{/@nt/lang/shorttolong}}{translator}%
+  % \typeout{USED: [#1] [\option{/@nt/lang/shorttolong}] [\option{/@nt/fontenc}]}\bbb
 }
 
 
@@ -1065,6 +1092,14 @@
 \input{Config/3_cover}
 % \NTRunHook{cover}
 
+% Patch month from number to string in the proper language
+\IfInteger{\thentdocdate(month)}{%
+  % \edef\@nt@datemonth{\thentdocdate(month)}%
+  % \ntdocdate(month):={\bgroup\ntselectlang{\@LANG@COVER}\monthname[\thentdocdate(month)]\egroup}%
+  \RequirePackage{pgfcalendar}%
+  \ntdocdate(month):={\pgfcalendarmonthname{\thentdocdate(month)}}%
+}{}
+
 %============================================================
 %  THESIS/DISSERTATION FILES
 %   Please open and edit the appropriate
@@ -1093,26 +1128,6 @@
 
 \ifdocunset{\ntsetup{docstatus=working}}{}
 
-\ifoptionequal{/novathesis/abstract theorder}{unset}{%
-  \letoptionchoices{/novathesis/abstract deforder}{\@abst@rder@langs}%
-  \if\instring{,\@LANG@MAIN,}{,\@abst@rder@langs,}%
-    \options{/novathesis/abstract deforder=\@LANG@MAIN}%
-  \else
-    \options{/novathesis/abstract deforder=default}%
-  \fi
-  \ntsetup{abstractorder=\option{/novathesis/abstract deforder}}%
-}{}
-% \typeout{\option{/novathesis/abstract theorder}}\asddasasassasdasd
-\def\@nt@loadabstractlangs{%
-  \@for\i:=\expanded{\option{/novathesis/abstract theorder}}\do{%
-      \InputIfFileExists{NOVAthesisFiles/Strings/strings-\i.ldf}%
-                        {}%
-                        {\ClassError{novathesis}{File not found: “NOVAthesisFiles/Strings/strings-\i.ldf” file!}%
-                                                {Add a file with the translations for this language.}}%
-  }%
-}
-\@nt@loadabstractlangs
-
 % \typeout{\theprintorder(frontmatter,\@DOCSTATUS)}
 \ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\@DOCSTATUS)}}%
 
@@ -1132,24 +1147,6 @@
 }
 
 \newcommand{\iffileadded}[2][VAL]{\ifoptiondefined{/@nt/file/#2/#1}}
-
-% --------------------------------------------------------
-% LOAD ADDITIONAL PACKAGES
-\input{NOVAthesisFiles/packages.tex}
-\NTRunHook{NOVAthesisFiles/packages}
-
-% Patch month from number to string in the proper language
-\IfInteger{\thentdocdate(month)}{%
-  % \edef\@nt@datemonth{\thentdocdate(month)}%
-  % \ntdocdate(month):={\bgroup\ntselectlang{\@LANG@COVER}\monthname[\thentdocdate(month)]\egroup}%
-  \RequirePackage{pgfcalendar}%
-  \ntdocdate(month):={\pgfcalendarmonthname{\thentdocdate(month)}}%
-}{}
-
-
-% --------------------------------------------------------
-% FIX BABEL TRANSLATION
-\input{NOVAthesisFiles/fix-babel.tex}
 
 % --------------------------------------------------------
 % LOAD A DEFAULT COPYRIGHT PAGE DEFINITION
@@ -1819,8 +1816,8 @@
     #2\trimspaces{#3}%
   \else % #4 is not empty
     #1\trimspaces{#3}%
-    \@replacelastcomma@i{\thecommastring(\option{/@nt/currentlang})}%
-        {\theandstring(\option{/@nt/currentlang})}#4\nil%
+    \@replacelastcomma@i{\thecommastring(\option{/@nt/lang/current})}%
+        {\theandstring(\option{/@nt/lang/current})}#4\nil%
   \fi
 }
 
@@ -2156,7 +2153,7 @@
 
 \newcommand*{\ntprintappendices}{%
   \iffileadded{appendix}{%
-    \renewcommand{\appendixtocname}{\appendixnamepl}%
+    \renewcommand{\appendixtocname}{\appendixplname}%
     \appendix\addappheadtotoc%
     \@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
   }{}%
@@ -2164,7 +2161,8 @@
 
 \newcommand*{\ntprintannexes}{%
   \iffileadded{annex}{%
-    \renewcommand{\appendixtocname}{\annexnamepl}%
+    % \renewcommand{\appendixtocname}{\translate{Annexes}}%
+    \renewcommand{\appendixtocname}{\annexplname}%
     \annex\addappheadtotoc%
     \@nt@foralllist{file}{annex}{\@ntloadfiles@ii{annex}}%
   }{}%
@@ -2324,14 +2322,14 @@
 \providecommand{\keywords}[1]{%
     \NTRunHook{keywords/pre}%
     % \NTRunHook{keywords/#1/pre}%
-    \def\and{\unskip\datadefault{keywordssep}(\option{/@nt/currentlang})}%
+    \def\and{\unskip\datadefault{keywordssep}(\option{/@nt/lang/current})}%
     % \def\and{{\textperiodcentered} }%
     \par\addvspace\baselineskip\noindent%
     \begingroup
-    \datadefault{keywordsstringprefix}(\option{/@nt/currentlang})%
-    \datadefault{keywordsstringfont}(\option{/@nt/currentlang})%
-    \csuse{thekeywordsstring}(\option{/@nt/currentlang})%
-    \datadefault{keywordsstringsuffix}(\option{/@nt/currentlang})%
+    \datadefault{keywordsstringprefix}(\option{/@nt/lang/current})%
+    \datadefault{keywordsstringfont}(\option{/@nt/lang/current})%
+    \csuse{thekeywordsstring}(\option{/@nt/lang/current})%
+    \datadefault{keywordsstringsuffix}(\option{/@nt/lang/current})%
     \endgroup
     % \enspace
     \ignorespaces#1%

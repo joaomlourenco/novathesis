@@ -17,7 +17,7 @@
 % "Listings" in Portuguese
 
 
-\optionlistdo{/@nt/langsshort}{\options{/novathesis/babel/#1/keys/.new list}}
+\optionlistdo{/@nt/lang/short}{\options{/novathesis/babel/#1/keys/.new list}}
 
 \def\mysplit#1/#2=#3\@nil#4#5#6{\def#4{#1}\def#5{#2}\def#6{#3}}
 \newcommand{\ntlangsetup}{\@ifstar{\ntlangsetupifndef}{\ntlangsetupdef}}
@@ -45,35 +45,35 @@
   \defineshorthand{"-}{\babelhyphen{repeat}}% generates a hyphen that will repeat on a new line
 }
 
-\ntlangsetup*{pt/contentsname=Índice}
-\ntlangsetup*{pt/listfigurename=Índice de Figuras}
-\ntlangsetup*{pt/listtablename=Índice de Tabelas}
-\ntlangsetup*{pt/indexname=Índice Remissivo}
-\ntlangsetup*{pt/lstlistlistingname=Índice de Listagens}
+\ntlangsetup*{pt/contents=Índice}
+\ntlangsetup*{pt/listfigure=Índice de Figuras}
+\ntlangsetup*{pt/listtable=Índice de Tabelas}
+\ntlangsetup*{pt/index=Índice Remissivo}
+\ntlangsetup*{pt/lstlistlisting=Índice de Listagens}
 \ntlangsetup*{pt/listoflistingscaption=Índice de Listagens}
-\ntlangsetup*{pt/lstlistingname=Listagem}
-\ntlangsetup*{pt/annexname=Anexo}
-\ntlangsetup*{pt/annexnamepl=Anexos}
-\ntlangsetup*{pt/appendixnamepl=Apêndices}
+\ntlangsetup*{pt/lstlisting=Listagem}
+\ntlangsetup*{pt/annex=Anexo}
+\ntlangsetup*{pt/annexpl=Anexos}
+\ntlangsetup*{pt/appendixpl=Apêndices}
 
-\ntlangsetup*{en/lstlistlistingname=List of Listings}%
+\ntlangsetup*{en/lstlistlisting=List of Listings}%
 \ntlangsetup*{en/listoflistingscaption=List of Listings}%
-\ntlangsetup*{en/lstlistingname=Listing}%
-\ntlangsetup*{en/annexname=Annex}
-\ntlangsetup*{en/annexnamepl=Annexes}
-\ntlangsetup*{en/appendixnamepl=Appendices}
+\ntlangsetup*{en/lstlisting=Listing}%
+\ntlangsetup*{en/annex=Annex}
+\ntlangsetup*{en/annexpl=Annexes}
+\ntlangsetup*{en/appendixpl=Appendices}
 
-\ntlangsetup*{fr/lstlistlistingname=Listes de Code}%
+\ntlangsetup*{fr/lstlistlisting=Listes de Code}%
 \ntlangsetup*{fr/listoflistingscaption=Listes de Code}%
-\ntlangsetup*{fr/annexname=Annexe}
-\ntlangsetup*{fr/annexnamepl=Annexes}
-\ntlangsetup*{fr/appendixnamepl=Appendices}
+\ntlangsetup*{fr/annex=Annexe}
+\ntlangsetup*{fr/annexpl=Annexes}
+\ntlangsetup*{fr/appendixpl=Appendices}
 
-\ntlangsetup*{it/lstlistlistingname=Listatos}%
+\ntlangsetup*{it/lstlistlisting=Listatos}%
 \ntlangsetup*{it/listoflistingscaption=Listatos}%
-\ntlangsetup*{it/annexname=Annesso}
-\ntlangsetup*{it/annexnamepl=Annessi}
-\ntlangsetup*{it/appendixnamepl=Appendici}
+\ntlangsetup*{it/annex=Annesso}
+\ntlangsetup*{it/annexpl=Annessi}
+\ntlangsetup*{it/appendixpl=Appendici}
 
 % \ifluatex%
 %   \babelposthyphenation{portuguese}{.=.}{%
@@ -83,13 +83,16 @@
 %   }%
 % \fi
 
-\optionlistdo{/@nt/langsshort}{%
-\options{/@nt/langshorttolong=#1}%
-% \typeout{KEY(#1/\option{/@nt/langshorttolong})}%
-\optionlistdo{/novathesis/babel/#1/keys}{%
-% \typeout{KEY(#1)=[##1=\option{/novathesis/babel/#1/##1}]}%
-% \typeout{KEY SET2 (#1/##1)=[\option{/novathesis/babel/#1/##1}]}%
-\expandnextsingle\addto{\csname captions\option{/@nt/langshorttolong}\endcsname}%
-{\csdef{##1}{\option{/novathesis/babel/#1/##1}}}%
-}%
+\optionlistdo{/@nt/lang/loaded}{%
+  \options{/@nt/lang/shorttolong=#1}%
+  \edef\@ltu{\option{/@nt/lang/shorttolong}}%
+  % \typeout{KEY=#1/\@ltu}\KEY%
+  \optionlistdo{/novathesis/babel/#1/keys}{%
+    % \typeout{KEY(#1)=[##1=\option{/novathesis/babel/#1/##1}]}%
+    % \typeout{KEY SET2 (#1/##1)=[\option{/novathesis/babel/#1/##1}]}\KEYSETTWO%
+    \expandnextsingle\addto{\csname captions\@ltu\endcsname}%
+                           {\csdef{##1}{\option{/novathesis/babel/#1/##1}}}%
+    % \typeout{KEY SET3={\@ltu}{##1}{\option{/novathesis/babel/#1/##1}}}\KEYSETHREE%
+    \setlocalecaption{\@ltu}{##1}{\option{/novathesis/babel/#1/##1}}%
+  }%
 }

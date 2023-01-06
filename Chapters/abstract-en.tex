@@ -14,11 +14,11 @@ The abstracts' order varies with the school.  The default behaviour for the \gls
 %
 The \gls{novathesis} (\LaTeX) template will automatically order the abstracts by considering this rule. However, this order can be customized by adding
 \begin{verbatim}
-    \abstractorder(<MAIN_LANG>):={<LANG_1>,...,<LANG_N>}
+    \setabstractorder(<MAIN_LANG>):={<LANG_1>,...,<LANG_N>}
 \end{verbatim}
 \noindent to the file \verb!5_packages.tex!.  For example, for a main document written in German with abstracts written in German, English and Italian (by this order) use:
 \begin{verbatim}
-    \abstractorder(de):={de,en,it}
+    \setabstractorder(de):={de,en,it}
 \end{verbatim}
 
 Concerning its contents, the abstracts should not exceed one page and may answer the following questions (it is essential to adapt to the usual practices of your scientific area):

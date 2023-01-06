@@ -355,10 +355,10 @@
 }
 
 \NTAddToHook{abstract/pre}{%
-  % \typeout{ABSTRACT/PRE/\option{/@nt/currentlang}}\aaa
+  % \typeout{ABSTRACT/PRE/\option{/@nt/lang/current}}\aaa
   \let\oldchapterheadstart=\chapterheadstart%
   \preto{\chapterheadstart}%
-  {\begin{center}\noindent\Large\bfseries\MakeTextUppercase{\thedoctitle(\option{/@nt/currentlang},main)}\end{center}\bigskip}%
+  {\begin{center}\noindent\Large\bfseries\MakeTextUppercase{\thedoctitle(\option{/@nt/lang/current},main)}\end{center}\bigskip}%
 }
 
 \NTAddToHook{abstract/post}{%

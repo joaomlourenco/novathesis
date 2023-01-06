@@ -14,11 +14,11 @@ A ordem dos resumos varia de acordo com a escola. O comportamento padrão para o
 %
 O template \gls{novathesis} (\LaTeX) irá ordenar automaticamente os resumos por uma ordem apropriada. No entanto, esta ordem pode ser personalizada adicionando
 \begin{verbatim}
-    \abstractorder(<MAIN_LANG>):={<LANG_1>,...,<LANG_N>}
+    \setabstractorder(<MAIN_LANG>):={<LANG_1>,...,<LANG_N>}
 \end{verbatim}
 \noindent ao ficheiro \verb!5_packages.tex!.  Por exemplo, para um documento escrito em Alemão com resumos em Alemão, Inglês e Italiano (por esta ordem), pode usar-se:
 \begin{verbatim}
-    \abstractorder(de):={de,en,it}
+    \setabstractorder(de):={de,en,it}
 \end{verbatim}
 
 Relativamente ao seu conteúdo, os resumos não devem ultrapassar uma página e frequentemente tentam responder às seguintes questões (é imprescindível a adaptação às práticas habituais da sua área científica):

@@ -14,17 +14,21 @@
 %%%%% Configure multilingual language support
 \RequirePackage{csquotes}
 \RequirePackage{url}
+\RequirePackage{xstring}
+
 \RequirePackage{babel}      % Support for multilingual documents
+\RequirePackage{tikz}
+
 \RequirePackage{translator} % Support month name translations for pgfcalendar
 % \newcommand{\definelanguagealias}[2]{%
 %   \@namedef{languagealias@#1}{#2}%
 % }
 % \definelanguagealias{portuguese}{portuguese}
-% \letoptionchoices{/@nt/langshorttolong}\opt@choices
+% \letoptionchoices{/@nt/lang/shorttolong}\opt@choices
 % \@for\i:=\opt@choices\do{%
-%   \options{/@nt/langshorttolong=\i}
-%   \typeout{CHOICE [\i, \option{/@nt/langshorttolong}]}%
-%   \definelanguagealias{\expanded{\i}}{\expanded{\option{/@nt/langshorttolong}}}%
+%   \options{/@nt/lang/shorttolong=\i}
+%   \typeout{CHOICE [\i, \option{/@nt/lang/shorttolong}]}%
+%   \definelanguagealias{\expanded{\i}}{\expanded{\option{/@nt/lang/shorttolong}}}%
 % }
 
 % \RequirePackage{appendix}
@@ -48,7 +52,6 @@
 }
 
 %%%%% Better support for string manipulation
-\RequirePackage{xstring}
 
 
 % To use a wide range of color names
@@ -57,7 +60,6 @@
 \RequirePackage{colortbl}
 \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
 
-\RequirePackage{tikz}
 
 \iftoggle{/novathesis/print/index}{%
   \ntaddtoprintorder{mainmatter}{index}%
