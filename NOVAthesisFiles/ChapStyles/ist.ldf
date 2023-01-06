@@ -24,12 +24,12 @@
     \color{istchaptercolor}\thechapter%
   }%
 }
-  
+
 \providecommand{\@nt@ist@ptm}[1][4cm]{%
   \@nt@ist@chm{#1}
 }
-  
-  
+
+
 \makechapterstyle{ist}{%
   % \renewcommand{\chapnamefont}{\normalfont\Large\scshape\raggedleft\so}%
   \renewcommand{\chaptitlefont}{\normalfont\huge\bfseries\sffamily}%
@@ -48,6 +48,6 @@
   % \renewcommand{\afterpartnum}{\vspace*{-11ex}}%
   \renewcommand{\printparttitle}[1]{\color{darkgray}\parttitlefont\raggedleft ##1\par}%
   \renewcommand*{\partnumfont}{\normalfont\scshape\MakeLowercase}
-} 
+}
 \chapterstyle{ist}
 

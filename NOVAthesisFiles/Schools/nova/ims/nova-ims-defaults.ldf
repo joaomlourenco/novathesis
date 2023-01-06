@@ -46,7 +46,7 @@
 % \majorfield(en):={Information Management}
 
 % Comiittee printing order
-\committeeorder():={c,r,m}% 
+\committeeorder():={c,r,m}%
 
 \ntsetup{print/secondcover=true}
 
@@ -199,7 +199,7 @@
 \dissertationstring(bsc,pt)={Relatório apresentada como requisito parcial para obter o grau de
     \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ em
     {\themajorfield(\option{/novathesis/lang/cover})}}
- 
+
 
 
 
@@ -212,7 +212,7 @@
 \definecolor{imslightgrey}{RGB}{240,240,240}
 
 
-\AtEndPreamble{% 
+\AtEndPreamble{%
   \LoadHelveticaLikeFont%
   % \RequirePackage{gillius2}%
 }

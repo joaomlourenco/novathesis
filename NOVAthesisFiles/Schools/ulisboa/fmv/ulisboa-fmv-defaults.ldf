@@ -23,8 +23,8 @@
 
 \AtEndPreamble{
   % \let\cite\parencite
-  \makeheadrule{novathesis@mainmatter}{0pt}{0pt} 
-  \makeevenhead{novathesis@mainmatter}{}{}{} 
+  \makeheadrule{novathesis@mainmatter}{0pt}{0pt}
+  \makeevenhead{novathesis@mainmatter}{}{}{}
   \makeoddhead{novathesis@mainmatter}{}{}{}
 % }
 %
@@ -221,7 +221,7 @@
 \committeestring(g,2,f,pt):={\MakeUppercase{\thecommitteestring(g,2,f,pt)}}
 
 % Comiittee printing order
-\committeeorder():={c,r,a,m}% 
+\committeeorder():={c,r,a,m}%
 
 % Cover background images
 % \thesiscover(phd,1-1,bgcolor):={lightyellow}%LemonChiffon,lightyellow
@@ -322,7 +322,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Temporary macro to use in conditional expressions;
-\AtEndPreamble{% 
+\AtEndPreamble{%
   \LoadHelveticaLikeFont%
   \renewcommand\familydefault{\sfdefault}%
   \IfStrEq{\option{/novathesis/lang/main}}{\option{/novathesis/lang/cover}}{}{
@@ -372,12 +372,12 @@
   \fontsize{12}{12}\selectfont%
   \MakeUppercase{\theuniversity(\option{/novathesis/lang/cover})}\\[4mm]%
   \MakeUppercase{\theschool(\option{/novathesis/lang/cover})}%
-} 
+}
 \ntaddtocover[vspace=0mm, height=2.0cm, valign=t]{2-1}{%
   \fontsize{12}{12}\selectfont%
   \MakeUppercase{\theuniversity(\option{/novathesis/lang/cover})}\\[4mm]%
   \MakeUppercase{\theschool(\option{/novathesis/lang/cover})}%
-} 
+}
 
 % Logo
 \ntaddtocover[vspace/msc=5mm, vspace/phd=0.25cm, height=2.95cm, valign=t]{1-1,2-1}{%

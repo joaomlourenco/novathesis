@@ -38,7 +38,7 @@ for the degree of \emph{\thedegreename(en)}}
 \school(it):={\embrace{NONE}}
 
 % Comiittee printing order
-\committeeorder():={c,r,m}% 
+\committeeorder():={c,r,m}%
 
 % Cover background images
 % % \thesiscover(phd,front,image):={}
@@ -145,7 +145,7 @@ for the degree of \emph{\thedegreename(en)}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{% 
+\AtEndPreamble{%
   \LoadHelveticaLikeFont%
   % \RequirePackage{gillius2}%
 }
@@ -217,7 +217,7 @@ for the degree of \emph{\thedegreename(en)}}
   \includegraphics[width=13mm]{nova-ims-insignia-BW}
   \end{minipage}%
   \begin{minipage}{3.2cm}
-  \includegraphics[width=21mm]{universitat-jaume-i-insignia-bw} 
+  \includegraphics[width=21mm]{universitat-jaume-i-insignia-bw}
   \end{minipage}%
   \begin{minipage}{3.5cm}
   \includegraphics[width=27mm]{university-munster-insignia-bw}

@@ -92,7 +92,7 @@
 \committeestring(g,1,f,fr):={Invitata}
 \committeestring(g,2,m,fr):={invitati}
 \committeestring(g,2,f,fr):={invitate}
-  
+
 \dissertationstring(bsc,it)={Documento sottomesso per ottenere il Grado di\\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ in\\ \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
 \dissertationstring(mscplan,it)={Piano di Tesi per ottenere il Grado di\\[1.25ex]%

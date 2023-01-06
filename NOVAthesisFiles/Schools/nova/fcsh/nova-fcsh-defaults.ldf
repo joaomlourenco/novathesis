@@ -20,7 +20,7 @@
 \majorfield(en):={“Scientific Field”}
 
 % Comiittee printing order
-\committeeorder():={c,r,a,m}% 
+\committeeorder():={c,r,a,m}%
 
 % Cover background images
 % \thesiscover(phd,1-1,image):={}
@@ -47,7 +47,7 @@
 \margin(paper,left):={3.0cm}
 \margin(paper,right):={3.5cm}
 
-% Set margins for cover pages 
+% Set margins for cover pages
 \margin(cover,top):={0.0cm}
 \margin(cover,bottom):={0.0cm}
 \margin(cover,left):={2.0cm}
@@ -79,7 +79,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{% 
+\AtEndPreamble{%
   \LoadHelveticaLikeFont%
   % \RequirePackage{gillius2}%
 }

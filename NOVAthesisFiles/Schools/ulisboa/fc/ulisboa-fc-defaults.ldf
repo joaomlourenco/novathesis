@@ -25,7 +25,7 @@
 
 
 % Comiittee printing order
-\committeeorder():={c,r,a,m}% 
+\committeeorder():={c,r,a,m}%
 
 % Cover background images
 \thesiscover(bgcolor):={white}
@@ -108,7 +108,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Temporary macro to use in conditional expressions;
-\AtEndPreamble{% 
+\AtEndPreamble{%
   \LoadHelveticaLikeFont%
   % \RequirePackage{gillius2}%
 }
@@ -130,7 +130,7 @@
   \ifmscdoc
      {\MakeUppercase{\thedepartment(\option{/novathesis/lang/cover})}}%
     {}%
-} 
+}
 
 % Logo
 \ntaddtocover[vspace=0.5cm, height=5cm, valign=t]{1-1,2-1}{%

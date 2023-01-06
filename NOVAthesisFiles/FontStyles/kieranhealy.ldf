@@ -12,7 +12,7 @@
                 BoldItalicFont=MinionPro-Bold-Italic.otf,
                 BoldFont      =MinionPro-Bold.otf,
                 ItalicFont    =MinionPro-Italic.otf,
-                Mapping       ={tex-text}, 
+                Mapping       ={tex-text},
                 Numbers       ={OldStyle},
                 Ligatures     ={Common},,
                 Scale         =1.10,
@@ -30,7 +30,7 @@
                Mapping=tex-text,
                Scale=0.90,
                % Scale=0.72,
-  ]{PragmataPro} 
+  ]{PragmataPro}
 }%
 {\ClassError{novathesis}{Invalid font style: kieranhealy}{This style/font is only available for xelatex and lualatex}}
 

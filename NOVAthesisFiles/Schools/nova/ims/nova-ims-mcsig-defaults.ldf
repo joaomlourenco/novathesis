@@ -29,7 +29,7 @@
 
 
 % Comiittee printing order
-\committeeorder():={c,r,m}% 
+\committeeorder():={c,r,m}%
 
 \openany
 \ntsetup{print/secondcover=true}
@@ -180,7 +180,7 @@
 \definecolor{imslightgrey}{RGB}{240,240,240}
 
 
-\AtEndPreamble{% 
+\AtEndPreamble{%
   \LoadHelveticaLikeFont%
   % \RequirePackage{gillius2}%
 }

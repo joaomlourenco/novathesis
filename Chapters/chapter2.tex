@@ -40,7 +40,7 @@ Follow these steps to get started with a local \LaTeX\ installation:
     \item[Mik\TeX] will, by default, install only a minimal set of packages. The extra/additional packages will be installed on the fly.  Installing packages on the fly is useful if disk space is limited, but has its own caveats in the longer term.  Definitely choose \MikTeX\ if you're short on disk space.
   \end{description}
   Which one to download?  There are \href{https://tex.stackexchange.com/questions/20036/what-are-the-advantages-of-tex-live-over-miktex}{pros and cons for both distributions} so it is essentially a question of where does your heart falls first!  Mine is in \TeXLive, but yours can be elsewhere!  \emojiSmile
-  
+
   \item Install \LaTeX. Installation of \LaTeX\ is as hard as installing any other software.  Just do your best and you will certainly succeed.
   % \begin{description}
   %   \item [Full distribution:] Installing a full distribution (valid for both \TeXLive\ and \MikTeX) means you will have all the possibly relevant files in your computer.  Almost any \LaTeX\ file from almost any source will compile successfully in your computer.
@@ -54,7 +54,7 @@ Follow these steps to get started with a local \LaTeX\ installation:
     or
     \item Downloading the \href{https://github.com/joaomlourenco/novathesis/archive/master.zip}{latest version from the GitHub repository as a Zip file}.
   \end{itemize}
-  
+
   \item Download additional School specific files if applicable:
   \begin{description}
     \item[Universidade do Minho (UMINHO)] download the required \emph{NewsGotT} font files from
@@ -62,8 +62,8 @@ Follow these steps to get started with a local \LaTeX\ installation:
     then unzip the file and copy the~3~font files
 \begin{flushleft}
 \hspace*{0.5cm}“\verb!n015002t.ttf!”, “\verb!n015003t.ttf!”, and “\verb!n015006t.ttf!”
-\end{flushleft}    
-    to the folder 
+\end{flushleft}
+    to the folder
 \begin{flushleft}
 \hspace*{0.5cm}“\verb!NOVAthesisFiles/FontStyles/Fonts!”.
 \end{flushleft}
@@ -78,8 +78,8 @@ Follow these steps to get started with a local \LaTeX\ installation:
 \hspace*{0.5cm}\verb!NOVAthesisFiles/FontStyles/Fonts!.
 \end{flushleft}
   \end{description}
-  
-  \item \label{it:project_available} Compile the document with you favorite LaTeX processor (pdfLaTeX, XeLaTeX or LuaLaTeX).  
+
+  \item \label{it:project_available} Compile the document with you favorite LaTeX processor (pdfLaTeX, XeLaTeX or LuaLaTeX).
   \begin{itemize}
     \item The main file is named “\verb!template.tex!”, but you are free to rename it as you please.
     \item Either load the main file in your favorite \href{https://en.wikipedia.org/wiki/Comparison_of_TeX_editors}{LaTeX text editor} and press the appropriate (\emph{magic}) button to generate a PDF file, or open a terminal and compile it with “\verb!latexmk -pdf template!”. If you use a \LaTeX\ text editor, please notice that the \gls{novathesis} template uses “\verb!biber!” and not “\verb!bibtex!” to process the bibliography, which means that most probably you have to open the \emph{Editor Preferences} and somewhere (depending on the Editor you are using) change “\verb!bibtex!” to “\verb!biber!”.
@@ -181,7 +181,7 @@ The \gls{novathesis} template is organized into many files and folders. At the m
         \midrule
 novathesis.cls     & file    & \accessForbiden &
 The main class file. %It will include additional files from “\texttt{NOVAthesisFiles}” folder and its sub-folders.
-\\ 
+\\
 template.tex      & file    & \accessForbiden &
 The main template file. You need to \emph{compile} this file with one of \pdfLaTeX, \XeLaTeX, or \LuaLaTeX\ to obtain the PDF file (“\texttt{template.pdf}”).
 \\
@@ -230,7 +230,7 @@ The \gls{novathesisclass}\ can be customized with the options listed below.
     mscplan & MSc dissertation plan\\
         bsc & BSc report\\
       plain & Other report\\
-    \end{tabular}    
+    \end{tabular}
     }
     \midrule
   \classoption{school}%
@@ -247,7 +247,7 @@ The \gls{novathesisclass}\ can be customized with the options listed below.
          es & Spanish\\
          it & Italian\\
          de & German\\
-    \end{tabular}    
+    \end{tabular}
     }
     \midrule
   \classoption{fontstyle}%
@@ -308,7 +308,7 @@ The choice of the main language with the option “\texttt{lang=OPT}” affects:
   \item \textbf{The order of the summaries.} First is printed the abstract in the main language and then in the foreign language. This means that if your main language for the document in English, you will see first the “abstract” (in English) and then the “resumo” (in Portuguese). If you switch the main language for the document for Portuguese, it will also automatically switch the order of the summaries to “resumo” and then “abstract”.
   \item \textbf{The names for document sectioning.} E.g., ``Chapter'' vs.\ ``Capítulo'', ``Table of Contents'' vs.\ ``Índice'', ``Figure'' vs.\ ``Figura'', etc.
   \item \textbf{The type of documents in the bibliography.} E.g., ``Technical Report'' vs.\ ``Relatório Técnico'', ``PhD Thesis'' vs.\ ``Tese de Doutoramento'', etc.
-\end{itemize} 
+\end{itemize}
 
 No mater which language you chose, you will always have the appropriate hyphenation rules according to the language at that point. You always get Portuguese hyphenation rules in the ``Resumo'', English hyphenation rules in the ``Abstract'', and then the main language hyphenation rules for the rest of the document.
 
@@ -456,25 +456,25 @@ The \gls{novathesis} template is organized into many files and folders. At the m
 \bgroup
 \rowcolors{1}{GhostWhite}{}
 \begin{xltabular}{\linewidth}{>{\ttfamily}l>{\itshape}l>{\upshape}X}
-novathesis.cls     & file    & 
-The main class file. It will include additional files from \texttt{NOVAthesisFiles} folder and its sub-folders. 
-\\ 
-template.tex      & file    & 
+novathesis.cls     & file    &
+The main class file. It will include additional files from \texttt{NOVAthesisFiles} folder and its sub-folders.
+\\
+template.tex      & file    &
 The main template file. You need to \emph{compile} this file with one of pdf\LaTeX, \XeLaTeX, or \LuaLaTeX\ to obtain the \texttt{template.pdf} file.
 \\
-bibliography.bib  & file    & 
+bibliography.bib  & file    &
 An example of a bibliography file. You may have has many as you want. \\
-template.pdf      & file    & 
+template.pdf      & file    &
 A possible result of applying pdf\LaTeX\ to the \texttt{template.tex} file. The template supports multiple types of documents (e.g., MSc dissertation, PhD thesis, …) and multiple Schools (e.g., FCT-NOVA, FCSH-NOVA, IST-UL, FC-UL, …) and each will produce different results.
 \\
-Chapters          & folder  & Examples of thesis chapters. Replace them with your own chapters. 
+Chapters          & folder  & Examples of thesis chapters. Replace them with your own chapters.
 \\
-Examples          & folder  & Some more examples of the use of the template for different document types and Schools. 
+Examples          & folder  & Some more examples of the use of the template for different document types and Schools.
 \\
-Scripts           & folder  & Some (possibly useful) scripts for Unix-based systems (Linux, Mac OSx). If you are a windows user, ignore this folder (you may safely delete it if you want). 
+Scripts           & folder  & Some (possibly useful) scripts for Unix-based systems (Linux, Mac OSx). If you are a windows user, ignore this folder (you may safely delete it if you want).
 \\
-NOVAthesisFiles   & folder  & 
-Additional files for the \gls{novathesisclass}\ file.  Unless you know what you are doing, avoid messing up with the files and folders inside this folder (except for deleting the unused Schools, see below). 
+NOVAthesisFiles   & folder  &
+Additional files for the \gls{novathesisclass}\ file.  Unless you know what you are doing, avoid messing up with the files and folders inside this folder (except for deleting the unused Schools, see below).
 \\
 \end{xltabular}
 \egroup
@@ -486,7 +486,7 @@ The \texttt{NOVAthesisFiles} folder contains additional files and folders that c
 \rowcolors{1}{GhostWhite}{}
 \begin{tabularx}{\linewidth}{>{\ttfamily}l>{\itshape}l>{\upshape}X}
 README.txt      & file    &
-A file that should be read!  :) 
+A file that should be read!  :)
 \\
 fix-babel.tex   & file    &
 Simple fixes to the \texttt{babel} package.
@@ -521,16 +521,16 @@ As stated above, the \texttt{Schools} folder contains per-university folders and
 \bgroup
 \rowcolors{1}{GhostWhite}{}
 \begin{tabularx}{\linewidth}{>{\ttfamily}r@{~/~}>{\ttfamily}l>{\itshape}l>{\upshape}X}
-ul     & ist    & folder  & 
+ul     & ist    & folder  &
 The folder for the \href{http://www.tecnico.ulisboa.pt}{\emph{Instituto Superior Técnico}} of the \emph{University of Lisbon}.
 \\
-nova    & fcsh   & folder  & 
+nova    & fcsh   & folder  &
 The folder for the \href{http:www.fcsh.unl.pt}{\emph{Faculty of Human and Social Sciences}}  of the \emph{NOVA University of Lisbon}.
 \\
-nova    & fct    & folder  & 
+nova    & fct    & folder  &
 The folder for the \href{http:www.fct.unl.pt}{\emph{Faculty of Sciences and Technology}} of the \emph{NOVA University of Lisbon}.
 \\
-nova    & novaims    & folder  & 
+nova    & novaims    & folder  &
 The folder for the \href{http:www.novaims.unl.pt}{\emph{Information and Management School}} of the \emph{NOVA University of Lisbon}.
 \\
 \end{tabularx}
@@ -619,7 +619,7 @@ The choice of the main language with the option “\texttt{lang=OPT}” affects:
   \item \textbf{The order of the summaries.} First is printed the abstract in the main language and then in the foreign language. This means that if your main language for the document in English, you will see first the “abstract” (in English) and then the “resumo” (in Portuguese). If you switch the main language for the document for Portuguese, it will also automatically switch the order of the summaries to “resumo” and then “abstract”.
   \item \textbf{The names for document sectioning.} E.g., ``Chapter'' vs.\ ``Capítulo'', ``Table of Contents'' vs.\ ``Índice'', ``Figure'' vs.\ ``Figura'', etc.
   \item \textbf{The type of documents in the bibliography.} E.g., ``Technical Report'' vs.\ ``Relatório Técnico'', ``PhD Thesis'' vs.\ ``Tese de Doutoramento'', etc.
-\end{itemize} 
+\end{itemize}
 
 No mater which language you chose, you will always have the appropriate hyphenation rules according to the language at that point. You always get Portuguese hyphenation rules in the ``Resumo'', English hyphenation rules in the ``Abstract'', and then the main language hyphenation rules for the rest of the document.
 

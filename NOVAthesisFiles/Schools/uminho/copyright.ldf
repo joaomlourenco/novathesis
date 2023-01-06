@@ -18,7 +18,7 @@
 
 
 %------------------------------------------------------------------
-% LICENSING 
+% LICENSING
 %------------------------------------------------------------------
 
 % Convert copyright language from two letters to language name
@@ -27,7 +27,7 @@
 \PassOptionsToPackage{lang=\option{/@nt/lang/shorttolong}}{doclicense}
 \PassOptionsToPackage{modifier=\option{/novathesis/uminho/copyrightmodifier}}{doclicense}
 
-%%%%%%%%% Important package for the licensing. 
+%%%%%%%%% Important package for the licensing.
 \RequirePackage[
     type={CC},
     % lang=portuguese,

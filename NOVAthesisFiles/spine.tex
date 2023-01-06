@@ -109,7 +109,7 @@
   \newlength{\novathesis@spinetextwidth}%
   \setlength{\novathesis@spinetextwidth}%
             {\dimexpr\novathesis@boxwidth-\thespine(box,margin)-\thespine(box,margin)}%
-            
+
   \ifdatadefined{spine}(title){%
     \fitboxratio{\@titleRT}{\thespine(text,title,len)}{\novathesis@spinetextwidth}
                 {\thespine(title)}
@@ -122,13 +122,13 @@
     \fitboxratio{\@dateRT}{\thespine(text,date,len)}{\novathesis@spinetextwidth}
                 {\thespine(date)}
   }{\def\@titleRT{99999}}%
-  
+
   \fitboxmin{\@fbratio}{\@authorRT,\@titleRT,\@dateRT}%
   % \show\@authorRT
   % \show\@titleRT
   % \show\@dateRT
   % \show\@fbratio
-  
+
   \defifundef{\myauthorbox}{\newsavebox}%
   \ifdatadefined{spine}(author){%
     \begin{lrbox}{\myauthorbox}%
@@ -173,7 +173,7 @@
       }{}%
     \end{lrbox}%
   }%
-  
+
   % \options{/@ntcoveropts/bookmark=spine}%
   \currentpdfbookmark{sipne,\@LANG@COVER}%
   \ifoptionequal{/novathesis/spine}{trim}{%

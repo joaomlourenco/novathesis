@@ -19,7 +19,7 @@
 \department(en):={Department of \themajorfield(en)}
 
 % Comiittee printing order
-\committeeorder():={c,r,a,m}% 
+\committeeorder():={c,r,a,m}%
 
 % Spine info
 \spine(logo)={ips-logo}
@@ -73,7 +73,7 @@
 \newcommand{\@leftcol}{0.37\linewidth}
 \newcommand{\@rightcol}{0.55\linewidth}
 
-\AtEndPreamble{% 
+\AtEndPreamble{%
   \LoadHelveticaLikeFont%
   % \RequirePackage{gillius2}%
 }
@@ -99,7 +99,7 @@
   % Author name
   \begin{minipage}[t]{\@leftcol}%
     \fontsize{16}{16}\selectfont\raggedleft%
-    \thedocauthor(name)%  
+    \thedocauthor(name)%
   \end{minipage}%
   \hfill%
   % Title of Dissertation

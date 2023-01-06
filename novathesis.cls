@@ -67,7 +67,7 @@
 
 %============================================================
 % Save these definitions asap, to be used later in the “\annex” command,
-% because "\@Roman" and "\Roman" were failing with pdflatex 
+% because "\@Roman" and "\Roman" were failing with pdflatex
 % when loading the "greek" language (and LGR font encofing)
 %============================================================
 \let\oldRoman=\Roman
@@ -120,8 +120,8 @@
   lang/main/.new choice         = {en, pt, fr, it, de, es, gr},
   lang/cover/.new choice        = {en, pt, fr, it, de, es, gr},
   lang/copyright/.new choice    = {en, pt, fr, it, de, es, gr},
-  lang/.new cmd                 = {\optionsalso{/novathesis/lang/main=#1, 
-                                                /novathesis/lang/cover=#1, 
+  lang/.new cmd                 = {\optionsalso{/novathesis/lang/main=#1,
+                                                /novathesis/lang/cover=#1,
                                                 /novathesis/lang/copyright=#1}},
   lang                          = en,
   % PRINT ON/OFF
@@ -159,9 +159,9 @@
   ulisboa/fmv/scientificarea/.new choice       = {C, MF, PASA, SA},
   ulisboa/fmv/embargo/period/.new choice       = {I, 6, 12},
   ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.},
-  ulisboa/fmv/reproduction/.new choice         = {I, P, N},  
+  ulisboa/fmv/reproduction/.new choice         = {I, P, N},
 }
- 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% SOME ESSENTIAL PACKAGES
 %%    Others will be loaded later, in the file “packages.tex”
@@ -246,7 +246,7 @@
 \newcommand*{\defifundef}[2]{\ifundef{#1}{#2{#1}}{}}
 
 % --------------------------------------------------------
-% Variant of \@for with an optional final argument, that is 
+% Variant of \@for with an optional final argument, that is
 % executed iif the loop is not interrupted
 \def\ntforbreak{\@endfortrue}
 \long\def\ntfor#1:=#2\do#3{\@ifnextchar[{\ntfor@i#1:=#2\do#3}{\ntfor@i#1:=#2\do#3[]}}
@@ -343,18 +343,18 @@
 %% MANAGE FOLDERS PER CLASS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \options{/@nt/folders/.new choice={
-  bib=Bibliography, 
-  copyright=., 
-  statement=., 
-  dedicatory=Chapters, 
-  acknowledgements=Chapters, 
-  quote=Chapters, 
-  abstract=Chapters, 
-  glossaries=Chapters, 
-  chapter=Chapters, 
-  appendix=Chapters, 
+  bib=Bibliography,
+  copyright=.,
+  statement=.,
+  dedicatory=Chapters,
+  acknowledgements=Chapters,
+  quote=Chapters,
+  abstract=Chapters,
+  glossaries=Chapters,
+  chapter=Chapters,
+  appendix=Chapters,
   annex=Chapters,
-  cover=Chapters, 
+  cover=Chapters,
 }}
 
 
@@ -1055,16 +1055,16 @@
 
 % --------------------------------------------------------
 % Customize the pagestyle
-\makepagestyle{novathesis@mainmatter} 
-\makeoddfoot{novathesis@mainmatter}{}{\thepage}{} 
-\makeevenfoot{novathesis@mainmatter}{}{\thepage}{} 
-\makeheadrule{novathesis@mainmatter}{\textwidth}{\normalrulethickness} 
-\makeevenhead{novathesis@mainmatter}{\small\textsc{\leftmark}}{}{} 
+\makepagestyle{novathesis@mainmatter}
+\makeoddfoot{novathesis@mainmatter}{}{\thepage}{}
+\makeevenfoot{novathesis@mainmatter}{}{\thepage}{}
+\makeheadrule{novathesis@mainmatter}{\textwidth}{\normalrulethickness}
+\makeevenhead{novathesis@mainmatter}{\small\textsc{\leftmark}}{}{}
 \makeoddhead{novathesis@mainmatter}{}{}{\small\textsc{\rightmark}}
 
-\makepagestyle{novathesis@frontmatter} 
-\makeoddfoot{novathesis@frontmatter}{}{\thepage}{} 
-\makeevenfoot{novathesis@frontmatter}{}{\thepage}{} 
+\makepagestyle{novathesis@frontmatter}
+\makeoddfoot{novathesis@frontmatter}{}{\thepage}{}
+\makeevenfoot{novathesis@frontmatter}{}{\thepage}{}
 
 \ifoptionequal{/novathesis/media}{paper}{\ntsetup{color/links=Black}}{}
 
@@ -1540,14 +1540,14 @@
       \if\instring{,\@DOCSTATUS,}{,\option{/@ntcoveropts/status},}
       \else
         \matchstatusfalse
-      \fi      
+      \fi
     \fi
     \if&\option{/@ntcoveropts/degree}&\relax
     \else
       \if\instring{,\@DOCCLASS,}{,\option{/@ntcoveropts/degree},}
       \else
         \matchdegreefalse
-      \fi      
+      \fi
     \fi
     \ifmatchstatus
       \ifmatchdegree
@@ -1626,18 +1626,18 @@
   bgcolor/.new color,
   % default values
   defaults/.new style*={,
-                  vspace=0pt, 
-                  vspace/msc={}, vspace/phd={}, 
+                  vspace=0pt,
+                  vspace/msc={}, vspace/phd={},
                   vspace/1-1={}, vspace/2-1={},
-                  vspace/msc/1-1={}, vspace/msc/2-1={}, 
-                  vspace/phd/1-1={}, vspace/phd/2-1={}, 
+                  vspace/msc/1-1={}, vspace/msc/2-1={},
+                  vspace/phd/1-1={}, vspace/phd/2-1={},
                   status={}, degree={}, halign=c, valign=c,
-                  height={}, height/phd={}, height/msc={}, 
-                  minheight=0pt, width={}, hspace=0pt, 
+                  height={}, height/phd={}, height/msc={},
+                  minheight=0pt, width={}, hspace=0pt,
                   newpar=true, color={}, bgcolor={},
   }
   % set defaults
-, defaults 
+, defaults
 }
 
 \newcommand{\@ntcovervspace}[1]{%
@@ -2173,7 +2173,7 @@
   \xdef\Hy@chapapp{annex}%
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
-  \gdef\@chapapp{\annexname}%
+  \gdef\@chapapp{\translate{annex}}%
   \gdef\thechapter{\annexcounter\c@chapter}%
 }%
 
@@ -2336,7 +2336,7 @@
     % \NTRunHook{keywords/#1/post}%
     \NTRunHook{keywords/post}%\
 }%
-    
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

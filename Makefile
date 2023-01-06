@@ -23,7 +23,7 @@ endif
 
 
 
-default: 
+default:
 	@echo SCHL=$(SCHL)
 ifeq ($(findstring $(SCHL),$(LUA)),)
 	make pdf
@@ -58,7 +58,7 @@ verb verbose:
 .PHONY: zip
 zip:
 	rm -f "$(ZIPTARGET)"
-	zip -r "$(ZIPTARGET)" $(ZIPFILES) 
+	zip -r "$(ZIPTARGET)" $(ZIPFILES)
 
 .PHONY: clean
 clean:

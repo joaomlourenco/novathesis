@@ -18,7 +18,7 @@
 \ntsetup{print/secondcover=true}
 
 % Loading of fonts must be delayed until class "novathesis" is loaded
-\AtEndPreamble{% 
+\AtEndPreamble{%
   \RequirePackage{gillius2}%
 }
 

@@ -67,7 +67,7 @@
 \doctypestring(phdprop,de):={Doctorate Proposal} % Not really sure what this is
 %% Das ist das Äquivalent von unserem Fakultätsvortrag, nur dass das an der UNL nicht nur ein
 %% Vortrag ist, sondern ein richtiger Text der da vor Thesis-Fertigstellung abgegeben werden muss
-%% Gibt denke ich auch keine gute Übersetzung... 
+%% Gibt denke ich auch keine gute Übersetzung...
 \doctypestring(phd,de):={Dissertation}
 
 \committeetitlestring(de):={Prüfungsausschuss}
@@ -75,11 +75,11 @@
 \committeestring(c,1,f,de):={Vorsitzende}% female, singular
 \committeestring(c,2,m,de):={Vorsitzende}% male, plural
 \committeestring(c,2,f,de):={Vorsitzende}% female, plural
-\committeestring(r,1,m,de):={Gutachter}% male, singular     
+\committeestring(r,1,m,de):={Gutachter}% male, singular
 \committeestring(r,1,f,de):={Gutachterin}% female, singular
 \committeestring(r,2,m,de):={Gutachter}% male, plural
 \committeestring(r,2,f,de):={Gutachterinnen}% female, plural
-\committeestring(a,1,m,de):={Betreuer}% male, singular    
+\committeestring(a,1,m,de):={Betreuer}% male, singular
 \committeestring(a,1,f,de):={Betreuer}% female, singular
 \committeestring(a,2,m,de):={Betreuer}% male, plural
 \committeestring(a,2,f,de):={Betreuer}% female, plural
@@ -87,15 +87,15 @@
 \committeestring(ca,1,f,de):={Zweitbetreuerin}% female, singular
 \committeestring(ca,2,m,de):={Zweitbetreuer}% male, plural
 \committeestring(ca,2,f,de):={Zweitbetreuerin}% female, plural
-\committeestring(m,1,m,de):={Mitglied}% male, singular      
+\committeestring(m,1,m,de):={Mitglied}% male, singular
 \committeestring(m,1,f,de):={Mitglied}% female, singular
 \committeestring(m,2,m,de):={Mitglied}% male, plural
 \committeestring(m,2,f,de):={Mitglied}% female, plural
-\committeestring(g,1,m,de):={Gast}% male, singular      
+\committeestring(g,1,m,de):={Gast}% male, singular
 \committeestring(g,1,f,de):={Gast}% female, singular
 \committeestring(g,2,m,de):={Gäste}% male, plural
 \committeestring(g,2,f,de):={Gäste}% female, plural
-  
+
 
 \dissertationstring(bsc,de)={Bachelorarbeit vorgelegt von\\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ in der\\ \textbf{\themajorfield(\option{/novathesis/lang/cover})}}

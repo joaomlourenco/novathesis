@@ -20,7 +20,7 @@
 \ntsetup{print/secondcover=true}
 
 % Loading of fonts must be delayed until class "novathesis" is loaded
-\AtEndPreamble{% 
+\AtEndPreamble{%
   \RequirePackage{gillius2}%
 }
 
@@ -38,7 +38,7 @@
 % \school(logo,neg):={nova-itqb-logo-negative}
 
 % Comiittee printing order
-\committeeorder():={c,r,a,m}%  
+\committeeorder():={c,r,a,m}%
 
 % Cover background images
 % \thesiscover(phd,1-1,bgcolor):={black}
@@ -218,27 +218,27 @@
     \node [inner sep=0pt, anchor=north west, xshift=0, yshift=-\@nt@margin@top]
                     {\includegraphics[height=1.65cm]{nova-itqb-logo}};
     % Date at top-right
-    \node [inner sep=0pt,anchor=north east, 
+    \node [inner sep=0pt,anchor=north east,
            xshift=\paperwidth-\@nt@margin@left-7mm, yshift=-\@nt@margin@top-4mm,
            color={\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},front,date)}}]
                     {\rotatebox{90}{\makebox[0pt][l]%
                                {\raisebox{\dimexpr\ht0+7pt}{\rule{\wd0}{2pt}}}\box0}};
     % Title
-    \node [inner sep=0pt, anchor=south west, yshift=-\@nt@margin@top-36.5mm] 
+    \node [inner sep=0pt, anchor=south west, yshift=-\@nt@margin@top-36.5mm]
                     {\fontsize{18}{18}\selectfont%
                      \parbox{\dimexpr\paperwidth-\@nt@margin@left-\@nt@margin@right}%
                             {\textbf{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}}};
     % Subtitle
-    \node [inner sep=0pt, anchor=north west, yshift=-\@nt@margin@top-42mm] 
+    \node [inner sep=0pt, anchor=north west, yshift=-\@nt@margin@top-42mm]
                     {\fontsize{21}{21}\selectfont%
                      \parbox{\paperwidth-\@nt@margin@left-\@nt@margin@right}%
                             {\@resizetowidth{\linewidth}%
                                             {\thedoctitle(\option{/novathesis/lang/cover},sub)}}};
     % Author
-    \node [inner sep=0pt, anchor=north west, yshift=-\@nt@margin@top-52mm] 
+    \node [inner sep=0pt, anchor=north west, yshift=-\@nt@margin@top-52mm]
                     {\fontsize{16}{16}\selectfont\textbf{\thedocauthor(name)}};
     % Photo
-    \edef\@itqbheight{\therectangle(photo,height)} 
+    \edef\@itqbheight{\therectangle(photo,height)}
     \draw [path picture={\node at (path picture bounding box.center)
                     {\includegraphics[height=\@itqbheight]{nova-itqb-photo}};},
                     rounded corners=1.25cm, xshift=-\@nt@margin@left]
@@ -269,7 +269,7 @@
                 -- (\therectangle(itqb,left),{\therectangle(itqb,bottom)})}
                 -- cycle {};
     % Text in rectangle
-    \node [inner sep=0pt, anchor=west, xshift={1mm}, yshift={\therectangle(itqb,top)-0.65cm}] 
+    \node [inner sep=0pt, anchor=west, xshift={1mm}, yshift={\therectangle(itqb,top)-0.65cm}]
                   {\fontsize{9}{9}\selectfont
                   {\color{white}INSTITUTO DE TECNOLOGIA QUÍMICA E BIOLÓGICA }
                   {\color{itqbgray207}ANTÓNIO XAVIER}
@@ -295,7 +295,7 @@
                   -- (\therectangle(itqb,left),{\therectangle(itqb,bottom)})}
                   -- cycle {};
       % Text in rectangle
-      \node [inner sep=0pt, anchor=east, 
+      \node [inner sep=0pt, anchor=east,
              xshift=-16.5mm, yshift={\therectangle(itqb,top)-0.55cm},
              color={\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},back,text)}]
                     {\fontsize{10.15}{10.15}\selectfont
