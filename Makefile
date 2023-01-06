@@ -51,8 +51,8 @@ v view: $(T)
 verb verbose:
 	$(L) -pdf $(B)
 
-.PHONY: 2019 2020
-2019 2020 2021:
+.PHONY: 2019 2020 2021 2022
+2019 2020 2021 2022:
 	PATH="/usr/local/texlive/$@/bin/x86_64-darwin/:$(PATH)" $(L) $(X) $(SILENT) $(B)
 
 .PHONY: zip
