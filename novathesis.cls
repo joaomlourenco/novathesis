@@ -669,6 +669,8 @@
 \def\@LANG@COVER{\option{/novathesis/lang/cover}}
 \def\@LANG@COPYRIGHT{\option{/novathesis/lang/copyright}}
 \def\@LANG@MAIN{\option{/novathesis/lang/main}}
+\options{/@nt/lang/shorttolong=\@LANG@MAIN}%
+\edef\@LANG@MAIN@LONG{\option{/@nt/lang/shorttolong}}
 
 \def\@DEGREEACR{\option{/novathesis/degreeacr/\@DOCCLASS}}
 
@@ -700,8 +702,124 @@
 %============================================================
 % LOAD ADDITIONAL PACKAGES
 %============================================================
-\input{NOVAthesisFiles/packages.tex}
-\NTRunHook{NOVAthesisFiles/packages}
+
+% Load additional symbols
+% \RequirePackage[full]{textcomp}
+
+%%%%% Configure multilingual language support
+\RequirePackage{csquotes}
+\RequirePackage{url}
+\RequirePackage{xstring}
+
+\RequirePackage[english]{babel}      % Support for multilingual documents
+\RequirePackage{tikz}
+
+\RequirePackage{translator} % Support month name translations for pgfcalendar
+% \newcommand{\definelanguagealias}[2]{%
+%   \@namedef{languagealias@#1}{#2}%
+% }
+% \definelanguagealias{portuguese}{portuguese}
+% \letoptionchoices{/@nt/lang/shorttolong}\opt@choices
+% \@for\i:=\opt@choices\do{%
+%   \options{/@nt/lang/shorttolong=\i}
+%   \typeout{CHOICE [\i, \option{/@nt/lang/shorttolong}]}%
+%   \definelanguagealias{\expanded{\i}}{\expanded{\option{/@nt/lang/shorttolong}}}%
+% }
+
+% \RequirePackage{appendix}
+
+% \RequirePackage{printlen}
+% \uselengthunit{mm}\printlength{\linewidth}
+
+%%%%% Fine tuning of typesetting
+\ifxeorlua{}{% pdflatex
+  \RequirePackage[%
+    babel=true,
+    activate={true,nocompatibility},  % activate={true,nocompatibility} - activate protrusion and expansion
+    final,            % final - enable microtype; use "draft" to disable
+    tracking=true,    % tracking=true - activate this technique
+    kerning=true,     % kerning=true - activate this technique
+    spacing=true,     % spacing=true - activate this technique
+    factor=1100,      % factor=1100 - add 10% to the protrusion amount (default is 1000)
+    stretch=10,       % stretch=10 - reduce stretchability (default is 20)
+    shrink=10,        % shrink=10 - reduce shrinkability (default is 20)
+  ]{microtype}
+}
+
+%%%%% Better support for string manipulation
+
+
+% To use a wide range of color names
+% \RequirePackage{xcolor}%
+
+\RequirePackage{colortbl}
+\definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
+
+
+\iftoggle{/novathesis/print/index}{%
+  \ntaddtoprintorder{mainmatter}{index}%
+  \RequirePackage{imakeidx}%
+  % \makeindex[intoc,columns=2,options=-s myindexstyle]%
+  \makeindex[intoc,columns=2,options=-s  NOVAthesisFiles/ntindexstyle]%
+}{}
+
+% Fixing autoref in yperref
+\RequirePackage{NOVAthesisFiles/fix-hyperref}
+
+%--------------------------------
+% “biblatex” stuff
+\ntaddfile{bib}{./NOVAthesisFiles/fix-bib.bib}%
+% \AtEndDocument{\nocite{novathesis-manual}}%
+% \letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
+\RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
+
+%--------------------------------
+% “hyperref” stuff
+\RequirePackage[%
+  , bookmarksnumbered=true%
+  , breaklinks=true%
+  , colorlinks=true%
+  , pdfdisplaydoctitle=true%
+  , unicode=true%
+]{hyperref}%
+\@nt@fixhyperref%
+% \pdfstringdefDisableCommands{%
+%   \def\\{}%
+%   \def\texttt#1{#1}%
+% }%
+\RequirePackage{bookmark}%
+% \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
+
+%--------------------------------
+% “glossasries” stuff - after hyperref
+\RequirePackage[%
+  % , nonumberlist
+  translate=babel,
+  acronym,           % add acronyms listing
+  symbols,           % add symbols listing
+  % sanitizesort=false, % allow \gls inside descriptions
+  xindy={language=\@LANG@MAIN@LONG},
+  nolong,
+  nosuper,
+  nolist,
+  notree,
+  nostyles,
+  automake,
+]{glossaries-extra}% To create glossaries
+\RequirePackage{NOVAthesisFiles/glossary-xltabular}%
+\setglossarystyle{xltabular}%
+\setabbreviationstyle[acronym]{long-short}%
+\GlsXtrEnablePreLocationTag{\emph{(\small p.~}}{\emph{(\small pp.~}}
+\patchcmd{\@gls@automake@immediate}{-I xindy}{-q -I xindy}{}{}
+% \renewcommand{\gls@automake@makegloss}{makeglossaries -q}%
+\renewcommand{\GlsXtrFormatLocationList}[1]{\emph{\small#1)}}
+\renewcommand{\glsnamefont}[1]{\textbf{#1}}%
+
+%--------------------------------
+% “Process gnumberlist” option - after glossaries
+\iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}%
+\AtEndPreamble{\@loadglossaryfiles\makeglossaries}%
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Include strings for all the languages
@@ -883,12 +1001,14 @@
             \else
               \ClassError{novathesis}{Can't make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
             \fi\fi}}}%
-    {listsofglossaries}{\options{/@nt/list/listof/.cpush={%
-            \glstoctrue
-            \iffileadded[glossary]{glossaries}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}}}%
-    {listsofglossaries*}{\options{/@nt/list/listof/.cpush={%
-            \glstocfalse
-    \iffileadded[glossary]{glossaries}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}}}%
+    % {listsofglossaries}{\options{/@nt/list/listof/.cpush={%
+    %         \glstoctrue%
+    %         % \iffileadded[glossary]{glossaries}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}%
+    %         }}%
+    % {listsofglossaries*}{\options{/@nt/list/listof/.cpush={%
+    %         \glstocfalse%
+    %         % \iffileadded[glossary]{glossaries}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}%
+    %         }}%
   }[%
             \if\relax\detokenize{#1}\relax
               \options{/@nt/list/listof/.cpush={\ifdefmacro{#2}{#2}{\csuse{#2}}}}%
@@ -1126,6 +1246,12 @@
 %============================================================
 \AtEndPreamble{\makeatletter\NTRunHook{list_of/pre}\input{Config/6_list_of}\NTRunHook{list_of/post}}
 
+\setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
+\optionlistdo{/@nt/file/bib/VAL}{%
+  % \typeout{ADDBIB=#1}\ADDBIB
+  \addbibresource{#1}%
+}%
+
 \ifdocunset{\ntsetup{docstatus=working}}{}
 
 % \typeout{\theprintorder(frontmatter,\@DOCSTATUS)}
@@ -1270,6 +1396,16 @@
   }%
 }
 
+\newcommand{\ntprintspine}{%
+    \iffileadded[spine]{cover}{%
+      \optionlistdo{/@nt/file/cover/spine}{%
+        \bgroup\thispagestyle{empty}%
+        \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
+        \egroup\clearforchapter%
+      }%
+    }{\@ntprintspine}%
+}
+
 \newcommand{\ntprintbackcover}{%
   \ifcoverdefined[N-1]{\pdfbookmark[-1]{\thebkmstring(backmatter,\@LANG@COVER)}{bmbackmatter1}}{%
   \ifcoverdefined[N-2]{\pdfbookmark[-1]{\thebkmstring(backmatter,\@LANG@COVER)}{bmbackmatter2}}{}}%
@@ -1292,7 +1428,11 @@
   % #1 = major cover ID
   \iffileadded[1]{cover}{%
     \iffileadded[#1]{cover}{%
-      \optionlistdo{/@nt/file/cover/#1}{\bgroup\thispagestyle{empty}\@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}\egroup\clearforchapter}%
+      \optionlistdo{/@nt/file/cover/#1}{%
+        \bgroup\thispagestyle{empty}%
+        \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
+        \egroup\clearforchapter%
+      }%
       \ntprintcoversingle{2}{1}%
     }{}%
   }{%
@@ -1563,14 +1703,6 @@
 }
 
 \options{/@ntcoveropts/.new family,
-  % titles for PDF bookmark / list of contents
-  % bookmark/.new choice = {1-1={\thebkmstring(cover,\@LANG@COVER)},
-  %                         1-2={},
-  %                         2-1={\thebkmstring(frontpage,\@LANG@COVER)},
-  %                         2-2={},
-  %                         N-1={},
-  %                         N-2={\thebkmstring(backcover,\@LANG@COVER)},
-  %                         spine={\thebkmstring(spine,\@LANG@COVER)}},
   % letter to macro for horizontal alignment
   alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft,j=\null},
   % filters / conditional printing
@@ -2075,7 +2207,6 @@
   \printindex
 }
 
-
 \newcommand*{\ntthesisfrontmatter}{%
   \NTRunHook{frontmatter/pre}%
   \frontmatter%
@@ -2269,6 +2400,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Author in a line by otself
 
+\newdata{quoteprefix}
+\quoteprefix(quote)={\hugequote}
+\quoteprefix(dedicatory)={}
+
 \newcommand{\hugequote}{%
   \bgroup%
     \color{black!30}%
@@ -2289,7 +2424,8 @@
     \NTRunHook{\@ntquoting/pre}%
     \minipage[t]{\linewidth}%
     \raggedleft%
-    \ifstrequal{#2}{quote}{\hugequote}{}%
+    % \ifstrequal{#2}{quote}{\hugequote}{}%
+    \thequoteprefix(#2)%
     \minipage[t]{#1}%
     \raggedleft\normalsize\itshape%
 }{%

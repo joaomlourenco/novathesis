@@ -96,7 +96,7 @@
   \datamatchtf{\arg}{spine}({box,#1,textcolor},{box,textcolor}){\color{\arg}}{}%
 }
 
-\newcommand{\ntprintspine}{%
+\newcommand{\@ntprintspine}{%
   \sffamily%
   \normalsize%
   \newlength{\novathesis@spinewidth}%
@@ -175,7 +175,7 @@
   }%
 
   % \options{/@ntcoveropts/bookmark=spine}%
-  \currentpdfbookmark{sipne,\@LANG@COVER}%
+  \currentpdfbookmark{sipne}{\@LANG@COVER}%
   \ifoptionequal{/novathesis/spine}{trim}{%
     \setstocksize{\paperheight}{\novathesis@spinewidth}
     \settrimmedsize{\stockheight}{\stockwidth}{*}%
