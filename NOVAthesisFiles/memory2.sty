@@ -69,7 +69,7 @@
                                     {\PackageError{memory}{Please use “=” or “:=”.}{}}}
 \def\data@memory#1#2{\@ifnextchar={\set@memory{#1}{@#2@memory}}
                                   {\@ifnextchar:{\etest@memory{#1}{@#2@memory}}
-                                                {\PackageError{memory}{Please use \string\the#2 macro instead of \string\#2.}{}}}}
+                                                {\PackageError{memory}{Please use \string\the#1 macro instead of \string\#2.}{}}}}
 \def\array@memory#1#2(#3){\data@memory{#1}{#2@#3}}
 \def\newdata@memory#1#2{\@ifundefined{#2}
   {\if#1*
