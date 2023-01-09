@@ -81,7 +81,10 @@
 
 %%------------------------------------------------------------
 % User defined cover instead of standard one
-%   syntax: \ntaddfile{cover}[front,back]{filename}
-% \ntaddfile{cover}[1]{cover-front}  % Abstract in Portuguese
-% \ntaddfile{cover}[N]{cover-back}  % Abstract in English
+%   syntax: \ntaddfile{cover}[1,N,spine]{filename}
+% \ntaddfile{cover}[1]{cover-front}  % front cover
+% \ntaddfile{cover}[N]{cover-back}   % back cover
+% \ntaddfile{cover}[spine]{filename} % book spine
+%
+% To disable printing the second cover, use
 % \ntsetup{print/secondcover=false}%
