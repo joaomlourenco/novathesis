@@ -53,7 +53,8 @@ verb verbose:
 
 .PHONY: 2019 2020 2021 2022
 2019 2020 2021 2022:
-	PATH="/usr/local/texlive/$@/bin/x86_64-darwin/:$(PATH)" $(L) $(X) $(SILENT) $(B)
+	hash -r
+	PATH="/usr/local/texlive/$@/bin/universal-darwin/:$(PATH)" /usr/local/texlive/2022/bin/universal-darwin/$(L) $(X) $(SILENT) $(B)
 
 .PHONY: zip
 zip:
