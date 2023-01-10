@@ -756,6 +756,7 @@
 	% #2 = lang
 	% #3 = value
 	% \typeout{NT TITLE [#1] [#2] [#3]}%
+  \noexpandarg
   \StrSubstitute{#3}{\\}{ }[\@nt@cleantitle]
   % \typeout{XXXX [\@nt@cleantitle]}\aaa
 	\doctitle(#2,#1):={\@nt@cleantitle}%
@@ -764,6 +765,7 @@
   % \doctitle(#2,#1):={\ntnolinebreak{#3}}%
   % \doctitle(#2,#1,cover):={#3}%
   % \IfStrEq{#1}{main}{\doctitle(#2,spine):={\ntnolinebreak{#3}}}{}%
+  \fullexpandarg
 }
 
 % \newcommand{\ntnolinebreak}[1]{{\def\\{\ }#1}}
