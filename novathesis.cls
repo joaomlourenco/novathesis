@@ -1170,7 +1170,7 @@
   \RequirePackage{fontspec}%
   \defaultfontfeatures{Ligatures=TeX}
 \else% pdflatex
-  % \RequirePackage[T1]{fontenc}    % Use new T1 fonts
+  \RequirePackage[T1]{fontenc}    % Use new T1 fonts
   % \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
 \fi
 
