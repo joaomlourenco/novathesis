@@ -386,23 +386,23 @@
 %% MANAGE PERSON LISTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\ntaddperson#1(#2,#3)#4{%
-	% syntax: \ntaddperson{class}[key,gender]{filename}
-	% #1=adviser | committee
-	% #2={a,c}            {c,r,a,m,g}
-	%     a=adviser        c=chair
-	%     c=coadviser      r=rapporteur/referee
-	%                      a=adviser
-	%                      ca=adviser
-	%                      m=other members
-	%                      g=guests
-	% #3={m,f}
-	% #4={person name, position, etc}
+  % syntax: \ntaddperson{class}[key,gender]{filename}
+  % #1=adviser | committee
+  % #2={a,c}            {c,r,a,m,g}
+  %     a=adviser        c=chair
+  %     c=coadviser      r=rapporteur/referee
+  %                      a=adviser
+  %                      ca=adviser
+  %                      m=other members
+  %                      g=guests
+  % #3={m,f}
+  % #4={person name, position, etc}
   \noexpandarg
-	\StrCut{#4}{,}\@nt@personname\@nt@dummy%was xStrCut
-	\options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
-	\options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
-	\options{/@nt/#1/#2/gender/.cpush={#3}}%
-	% \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
+  \StrCut{#4}{,}\@nt@personname\@nt@dummy%was xStrCut
+  \options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
+  \options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
+  \options{/@nt/#1/#2/gender/.cpush={#3}}%
+  % \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
   \fullexpandarg
 }
 
@@ -922,10 +922,10 @@
 % --------------------------------------------------------
 % Title
 \def\nttitle(#1,#2)#3{%
-	% #1 = type (main, sub, spine) title
-	% #2 = lang
-	% #3 = value
-	% \typeout{NT TITLE [#1] [#2] [#3]}%
+  % #1 = type (main, sub, spine) title
+  % #2 = lang
+  % #3 = value
+  % \typeout{NT TITLE [#1] [#2] [#3]}%
   \noexpandarg
   \StrSubstitute{#3}{\\}{ }[\@nt@cleantitle]
   % \typeout{XXXX [\@nt@cleantitle]}\aaa
