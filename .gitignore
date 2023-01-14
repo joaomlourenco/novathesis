@@ -1,6 +1,12 @@
-
 # Created by https://www.toptal.com/developers/gitignore/api/latex,windows,linux,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=latex,windows,linux,macos
+
+### NOVAthesis template ###
+
+# Ignore all template files…
+template.*
+# …except template.tex
+!template.tex
 
 ### LaTeX ###
 ## Core latex/pdflatex auxiliary files:

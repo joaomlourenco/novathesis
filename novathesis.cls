@@ -386,22 +386,24 @@
 %% MANAGE PERSON LISTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\ntaddperson#1(#2,#3)#4{%
-  % syntax: \ntaddperson{class}[key,gender]{filename}
-  % #1=adviser | committee
-  % #2={a,c}            {c,r,a,m,g}
-  %     a=adviser        c=chair
-  %     c=coadviser      r=rapporteur/referee
-  %                      a=adviser
-  %                      ca=adviser
-  %                      m=other members
-  %                      g=guests
-  % #3={m,f}
-  % #4={person name, position, etc}
-  \StrCut{#4}{,}\@nt@personname\@nt@dummy%was xStrCut
-  \options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
-  \options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
-  \options{/@nt/#1/#2/gender/.cpush={#3}}%
-  % \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
+	% syntax: \ntaddperson{class}[key,gender]{filename}
+	% #1=adviser | committee
+	% #2={a,c}            {c,r,a,m,g}
+	%     a=adviser        c=chair
+	%     c=coadviser      r=rapporteur/referee
+	%                      a=adviser
+	%                      ca=adviser
+	%                      m=other members
+	%                      g=guests
+	% #3={m,f}
+	% #4={person name, position, etc}
+  \noexpandarg
+	\StrCut{#4}{,}\@nt@personname\@nt@dummy%was xStrCut
+	\options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
+	\options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
+	\options{/@nt/#1/#2/gender/.cpush={#3}}%
+	% \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
+  \fullexpandarg
 }
 
 
@@ -959,7 +961,6 @@
   \ifstrequal{#3}{-}{\ntdocdate(day):={}}{\StrGobbleRight{#3}{2}[\@nt@date@day]\ntdocdate(day):={\@nt@date@day}}%
   % \typeout{NTDOCDATE [\thentdocdate(year)] [\thentdocdate(month)] [\thentdocdate(day)]}\NTDOCDATE
 }
-
 
 
 %============================================================
@@ -2038,6 +2039,7 @@
 % #3 = (co)adviser info
 % \typeout{NTPRINTONENAME 1=[#1] 2=[#2] 3=[#3]}%\bbb
 \begingroup
+  \noexpandarg
   \raggedright%
   \StrCut{#3}{,}\@nt@name\@nt@remainder% split name from remainder
   \csuse{the#2namepre}()%
@@ -2557,3 +2559,4 @@
   \newcommand{\@ntcite}[1]{\ifdef{\parencite}{\parencite{#1}}{\cite{#1}}}
   \makeatother
 }
+
