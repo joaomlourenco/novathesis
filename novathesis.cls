@@ -64,6 +64,8 @@
 \NeedsTeXFormat{LaTeX2e}[2019-10-01]
 \ProvidesClass{novathesis}[2022-12-25 novathesis template]
 
+\NeedsTeXFormat{LaTeX2e}[2020-10-01]
+
 
 %============================================================
 % Save these definitions asap, to be used later in the “\annex” command,
