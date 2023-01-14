@@ -321,11 +321,13 @@
 	%                      g=guests
 	% #3={m,f}
 	% #4={person name, position, etc}
+  \noexpandarg
 	\StrCut{#4}{,}\@nt@personname\@nt@dummy%was xStrCut
 	\options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
 	\options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
 	\options{/@nt/#1/#2/gender/.cpush={#3}}%
 	% \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
+  \fullexpandarg
 }
 
 
@@ -781,9 +783,11 @@
 
 \def\ntdate#1{\@ntdate@i(#1,)}
 \def\@ntdate@i(#1,#2){%
+  \noexpandarg
 	\StrGobbleRight{#2}{1}[\@ntmonth]%
 	\ntdocdate(year):={#1}%
 	\ntdocdate(month):={\@ntmonth}%
+  \noexpandarg
 }
 
 
@@ -1839,6 +1843,7 @@
 % #3 = (co)adviser info
 % \typeout{NTPRINTONENAME 1=[#1] 2=[#2] 3=[#3]}%\bbb
 \begingroup
+  \noexpandarg
   \raggedright%
   \StrCut{#3}{,}\@nt@name\@nt@remainder% split name from remainder
   \csuse{the#2namepre}()%
@@ -2344,3 +2349,4 @@
 	\newcommand{\@ntcite}[1]{\ifdef{\parencite}{\parencite{#1}}{\cite{#1}}}
 	\makeatother
 }
+
