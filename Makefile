@@ -64,7 +64,7 @@ zip:
 .PHONY: clean
 clean:
 	@$(L) -c $(B)
-	@rm -f $(AUXFILES)
+	@rm -f $(AUXFILES) "*(1)*"
 	@find . -name .DS_Store -print0 | xargs -0 rm
 
 gclean:
