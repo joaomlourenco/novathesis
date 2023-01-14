@@ -1,0 +1,25 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/arial.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization of fonts to use Bookman fontset
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE FontStyles/arial.ldf}%
+
+
+\ntcheckfont{Arial.ttf}{}
+\ntcheckfont{ArialBold.ttf}{}
+\ntcheckfont{ArialItalic.ttf}{}
+\ntcheckfont{ArialBoldItalic.ttf}{}
+
+\ifxeorlua{}{%
+  \ClassError{novathesis}{Font Style “arial” is not compatible with pdfLaTeX. Please use XeLaTeX or LuaLaTeX}{Please use XeLaTeX or LuaLaTeX}%
+}
+
+\setmainfont{Arial.ttf}[
+    Path           = NOVAthesisFiles/FontStyles/Fonts/,
+    % BoldFont       = ArialBold.ttf,
+    % ItalicFont     = ArialItalic.ttf,
+    % BoldItalicFont = ArialBoldItalic.ttf,
+]%
