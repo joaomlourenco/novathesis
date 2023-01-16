@@ -426,7 +426,7 @@
   %         #2=family {quote, abstract, chapter, etc} or {author, adviser, committee}
   %         #3=[file lang] (OPTIONAL)
   %         #4=filename
-  \@ifnextchar[{\@nt@addtolist@iv[#1]#2}{\@nt@addtolist@iv[#1]#2[VAL]}%
+  \@ifnextchar[{\@nt@addtolist@iv[#1]#2}{\@nt@addtolist@iv[#1]#2[\option{/novathesis/doctype}]}%
 }
 
 \def\@nt@addtolist@iv[#1]#2[#3]#4{%
@@ -444,7 +444,10 @@
     \options{/@nt/folders=#2}%
     \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}%
   ]%
-  \options{/@nt/#1/#2/#3/.expanded/.cpush={\@nt@filewithpath}}%
+  \@for\i:=\expanded{#3}\do{%
+    % \typeout{NT addtolist [#1] [#2] [\i] [#4]}\NTaddtolist%
+    \options{/@nt/#1/#2/\i/.expanded/.cpush={\@nt@filewithpath}}%
+  }%
 }
 
 \newcommand*{\@nt@foralllist}[3]{%
@@ -647,7 +650,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % --------------------------------------------------------
-% Define DEFAULT VALUES for COVER and COPYRIGHT languages
+% Define DEFAULT corollaryUES for COVER and COPYRIGHT languages
 %     and HYPERLINK color
 \options{/novathesis/.cd,
   lang/cover = \option{/novathesis/lang/main},
@@ -1133,7 +1136,7 @@
   % #1 = cover atrtibutes
   % #2 = the block code
   % #3 = covers where the code block should be applied
-  \ntfor\arg:={#3}\do{\options{/@nt/cover/\@nt@univ/\@nt@schl/\arg/.cpush={{#1}=*={#2}}}}%
+  \ntfor\arg:={#3}\do{\options{/@nt/cover/\@nt@univ/\@nt@schl/\arg/.cpush={{#1}\@nil{#2}}}}%
 }
 
 
@@ -1252,7 +1255,7 @@
 \AtEndPreamble{\makeatletter\NTRunHook{list_of/pre}\input{Config/6_list_of}\NTRunHook{list_of/post}}
 
 \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
-\optionlistdo{/@nt/file/bib/VAL}{%
+\optionlistdo{/@nt/file/bib/\option{/novathesis/doctype}}{%
   % \typeout{ADDBIB=#1}\ADDBIB
   \addbibresource{#1}%
 }%
@@ -1271,13 +1274,13 @@
 
 \newcommand{\@ntloadfile@i}[2][]{\IfFileExists{#2}{\input{#2}}{#1}}
 
-\newcommand{\@ntloadfiles@ii}[2][VAL]{%
+\newcommand{\@ntloadfiles@ii}[2][\option{/novathesis/doctype}]{%
   % #1=KEY
   % #2=file class
   \iffileadded[#1]{#2}{\@nt@loadallfiles[\clearforchapter]{#1}{#2}}{}%
 }
 
-\newcommand{\iffileadded}[2][VAL]{\ifoptiondefined{/@nt/file/#2/#1}}
+\newcommand{\iffileadded}[2][\option{/novathesis/doctype}]{\ifoptiondefined{/@nt/file/#2/#1}}
 
 % --------------------------------------------------------
 % LOAD A DEFAULT COPYRIGHT PAGE DEFINITION
@@ -1287,7 +1290,7 @@
 % #3 = file name
 % #4 = dir list
 % #5 = action if not found [OPTIONAL]
-  \@ifnextchar[{\@nt@AddFileIfExists@i{#1}}{\@nt@AddFileIfExists@i{#1}[VAL]}%
+  \@ifnextchar[{\@nt@AddFileIfExists@i{#1}}{\@nt@AddFileIfExists@i{#1}[\option{/novathesis/doctype}]}%
 }
 
 \def\@nt@AddFileIfExists@i#1[#2]#3#4{%
@@ -1663,7 +1666,7 @@
     \NTRunHook{cover/#1/text/post}%
 }
 
-\def\@ntcoverelement@iii#1#2=*=#3{%
+\def\@ntcoverelement@iii#1#2\@nil#3{%
   % #1 = cover ID (major-minor)
   % #2 = cover element options
   % #3 = cover element code

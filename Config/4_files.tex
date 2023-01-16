@@ -59,7 +59,11 @@
 
 %%------------------------------------------------------------
 % Main text - document chapters
-%   syntax: \ntaddfile{chapter}{filename}
+%   syntax: \ntaddfile{chapter}[doc-type-list]{filename}
+%         If “doc-type-list” is omitted, add chapter to all doc types
+%   examples:  \ntaddfile{chapter}{my-chapter} % for all documents
+%              \ntaddfile{chapter}[phdplan]{my-chapter} % just for phd documents
+%              \ntaddfile{chapter}[phd,phdplan]{my-chapter} % just both phd and phdplan documents
 \ntaddfile{chapter}{chapter1}
 \ntaddfile{chapter}{chapter2}
 \ntaddfile{chapter}{chapter3}
