@@ -71,7 +71,7 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
 	* **macOS:** install [MacTeX](https://www.tug.org/mactex/) (a macOS version of [TeX-Live](https://www.tug.org/texlive/)).
 2. Download “novathesis” by either:
 	* Cloning the [GitHub repository](https://github.com/joaomlourenco/novathesis) with <kbd>git clone --depth=1 https://github.com/joaomlourenco/novathesis.git</kbd>; or
-	* Downloading the [latest version from the GitHub repository as a Zip file](https://github.com/joaomlourenco/novathesis/archive/master.zip)
+	* Downloading the [latest version from the GitHub repository as a Zip file](https://github.com/joaomlourenco/novathesis/archive/main.zip)
 3. Compile the document with you favorite LaTeX processor (pdfLaTeX, XeLaTeX or LuaLaTeX):
 	* The main file is named “*template.tex*”.  
 	* Either load it in your favorite [LaTeX text editor](https://en.wikipedia.org/wiki/Comparison_of_TeX_editors) or compile it in the terminal with
@@ -105,7 +105,7 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
 
 *NOVAthesis v6.5.3 is available as an [Overleaf template](https://www.overleaf.com/latex/templates/novathesis-v6-dot-5-3/jhqwhtcwbmqc).  Just select <kbd>open as template</kbd> and follow from [step 3 above](#with-a-local-latex-installation)!*
 
-1. Download the [latest version from the GitHub repository as a Zip file](https://github.com/joaomlourenco/novathesis/archive/master.zip).
+1. Download the [latest version from the GitHub repository as a Zip file](https://github.com/joaomlourenco/novathesis/archive/main.zip).
 2. Login to your favorite LaTeX cloud service.  I recommend [Overleaf](https://www.overleaf.com?r=f5160636&rm=d&rs=b) but there are alternatives (these instructions apply to Overleaf  and you'll have to adapt for other providers).
 3. In the menu select <kbd>New project</kbd>-><kbd>Upload project</kbd>
 4. Upload the zip with all the "novathesis" files.
@@ -145,7 +145,7 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
               author       = "João M. Lourenço",
               organization = "NOVA University Lisbon",
               year         = "2021",
-              url          = "https://github.com/joaomlourenco/novathesis/raw/master/template.pdf",
+              url          = "https://github.com/joaomlourenco/novathesis/raw/main/template.pdf",
          }
 
 1.  [**Make a small donation**](https://paypal.me/novathesis). We will [keep a list thanking to all the identified donors](https://github.com/joaomlourenco/novathesis/wiki#-donations) that identify themselves in the “*Add special instructions to the seller:*” box.
