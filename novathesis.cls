@@ -2183,16 +2183,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Dedicatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newenvironment{ntdedicatory}[1][100mm]{%
-		\begin{ntquoting}[#1]{dedicatory}
-}{\end{ntquoting}}
+% \newenvironment{ntdedicatory}[1][100mm]{%
+%     \begin{ntquoting}[#1]{dedicatory}
+% }{\end{ntquoting}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Quote
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newenvironment{ntquote}[1][100mm]{%
-		\begin{ntquoting}[#1]{quote}
-}{\end{ntquoting}}
+% \newenvironment{ntquote}[1][100mm]{%
+%     \begin{ntquoting}[#1]{quote}
+% }{\end{ntquoting}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Quoting
@@ -2208,28 +2208,63 @@
   \egroup%
 }
 
-\newenvironment{ntquoting}[2][10cm]{%
-  \bgroup
-    \iftoggle{/novathesis/numberallpages}%
-      {\thispagestyle{novathesis@frontmatter}}%
-      {\thispagestyle{empty}}%
-    \gdef\@ntquoting{#2}
-    \renewcommand*{\mkcitation}[1]{\\[0.5ex]--- ##1}
-    \vspace*{\beforechapskip}%
-    \NTRunHook{\@ntquoting/pre}%
-    \minipage[t]{\linewidth}%
-    \raggedleft%
-    \ifstrequal{#2}{quote}{\hugequote}{}%
-    \minipage[t]{#1}%
-    \raggedleft\normalsize\itshape%
-}{%
-    \normalfont%
-    \endminipage%
-    \endminipage%
-    \NTRunHook{\@ntquoting/post}%
-  \egroup
-}
+\newcommand{\ntquoteauthor}[1]{{\\[2ex]\footnotesize\bfseries---~#1}}
+\newcommand{\ntquotewhere}[1]{{\footnotesize, #1}}
+\newcommand{\ntquoteprofession}[1]{{\footnotesize\\[-0.75ex](#1)}}
+\newcommand{\ntquotetext}[1]{{\itshape#1}}
+\newcommand{\ntquoteskip}{\chapter*{\vspace*{-3.5ex}}}
 
+\NewDocumentEnvironment{ntquoting}{sO{10cm}O{}O{}O{}O{\option{/novathesis/mainlang}}+b}{%
+% 1 [*] => print big quote
+% 2 [o] => max width of citation box
+% 3 [o] => author name
+% 4 [o] => where/source
+% 5 [o] => profession
+% 6 [o] => lang
+% 7 [b] => quotation
+  % \typeout{
+  %          1=[#1]
+  %          2=[#2]
+  %          3=[#3]
+  %          4=[#4]
+  %          5=[#5]
+  %          6=[#6]
+  %          7=[#7]
+  % }\asdfg
+  \iftoggle{/novathesis/numberallpages}%
+    {\thispagestyle{novathesis@frontmatter}}%
+    {\thispagestyle{empty}}%
+  \defifundef{\ntqbox}{\newsavebox}%
+  \savebox{\ntqbox}{#7}
+  \ifdim\wd\ntqbox<#2\relax
+  \@tempdima=\wd\ntqbox
+  \else
+  \@tempdima=#2
+  \fi
+  \ntquoteskip
+  \begin{flushright}
+    \NTRunHook{ntquote/pre}%
+    \IfBooleanTF{#1}{\hugequote}{}
+    \begin{minipage}[t]{\@tempdima}
+      \raggedleft\normalsize
+      \options{/@nt/langshorttolong=#6}%
+      \IfBooleanTF{#1}{%
+        \foreigntextquote{\option{/@nt/langshorttolong}}{\ntquotetext{#7}}%
+      }{\ntquotetext#7}
+      \ifblank{#3}{}{\ntquoteauthor{#3}}%
+      \ifblank{#4}{}{\ntquotewhere{#4}}%
+      \ifblank{#5}{}{\ntquoteprofession{#5}}%
+    \end{minipage}%
+    \NTRunHook{ntquote/post}%
+  \end{flushright}
+}{}
+
+\ExplSyntaxOn
+\cs_new:cpn {ntquote} {\ntquoting*}
+\cs_new_eq:cN {endntquote} \endntquoting
+\cs_new:cpn {ntdedicatory} {\ntquoting}
+\cs_new_eq:cN {endntdedicatory} \endntquoting
+\ExplSyntaxOff
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Acknowledgements
