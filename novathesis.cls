@@ -2208,7 +2208,7 @@
   \egroup%
 }
 
-\newcommand{\ntquoteauthor}[1]{{\\[2ex]\footnotesize\bfseries---~#1}}
+\newcommand{\ntquoteauthor}[1]{{\\[1.25ex]\footnotesize\bfseries---~#1}}
 \newcommand{\ntquotewhere}[1]{{\footnotesize, #1}}
 \newcommand{\ntquoteprofession}[1]{{\footnotesize\\[-0.75ex](#1)}}
 \newcommand{\ntquotetext}[1]{{\itshape#1}}
@@ -2236,7 +2236,7 @@
     {\thispagestyle{empty}}%
   \defifundef{\ntqbox}{\newsavebox}%
   \savebox{\ntqbox}{#7}
-  \ifdim\wd\ntqbox<#2\relax
+  \ifdim\wd\ntqbox<\ifblank{#2}{\textwidth}{#2}\relax
   \@tempdima=\wd\ntqbox
   \else
   \@tempdima=#2
