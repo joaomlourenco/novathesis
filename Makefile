@@ -100,7 +100,7 @@ bump3:
 tag:
 	@echo Tagging as $(VERSION)
 	# @echo $(DATE)
-	git co master
+	git co main
 	git tag -a "$(VERSION)"
 	git push origin --tags
 	git co develop

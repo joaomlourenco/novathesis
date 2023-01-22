@@ -40,14 +40,14 @@
 %%      If you use this template, please be kind and cite it in your bibliography:
 %%           “João M. Lourenço, The NOVAthesis \LaTeX\ Template User’s Manual,
 %%            NOVA University Lisbon, 2021,
-%%            https://github.com/joaomlourenco/novathesis/raw/master/template.pdf.”
+%%            https://github.com/joaomlourenco/novathesis/raw/main/template.pdf.”
 %%      The BibTeX entry is already in the exxample “bibliography.bib” file:
 %%           @Manual{novathesis-manual,
 %%              title       ={{The NOVAthesis \LaTeX\ Template User's Manual}},
 %%              author      ={João M. Lourenço},
 %%              organization={NOVA University Lisbon},
 %%              year        ={2021},
-%%              url         ={https://github.com/joaomlourenco/novathesis/raw/master/template.pdf},
+%%              url         ={https://github.com/joaomlourenco/novathesis/raw/main/template.pdf},
 %%           }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

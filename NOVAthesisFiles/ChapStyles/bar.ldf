@@ -19,7 +19,7 @@
         \\%
         % \hline%
       \end{tabular}%
-    }{%
+    }{% Numbered chapter
       \hfill\begin{tabular}{|r@{}}%|emacs
         \leavevmode\chapnumfont\normalfont ~#1\vphantom{1}%
         \hspace*{3.6pt}%
