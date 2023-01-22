@@ -1033,7 +1033,7 @@
 \newcommand*{\ntprint}[1]{%
   \IfStrEqCase{#1}{%
     {frontmatter}{%
-          \iftoggle{/novathesis/print/secondcover}{}{\setcounter{page}{1}}%
+          % \iftoggle{/novathesis/print/secondcover}{}{\setcounter{page}{1}}%
           \iftoggle{/novathesis/print/frontmatter}{\ntprintlist{/@nt/print/#1}}{}}%
     {mainmatter}{%
             \ntprintlist{/@nt/print/#1}}%
@@ -1407,16 +1407,20 @@
 }
 
 \newcommand{\ntprintspine}{%
-    \iffileadded[spine]{cover}{%
-      \optionlistdo{/@nt/file/cover/spine}{%
-        \bgroup\thispagestyle{empty}%
-        \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
-        \egroup\clearforchapter%
-      }%
-    }{\@ntprintspine}%
+  \pagenumbering{roman}%
+  \setcounter{page}{0}
+  \iffileadded[spine]{cover}{%
+    \optionlistdo{/@nt/file/cover/spine}{%
+      \bgroup\thispagestyle{empty}%
+      \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
+      \egroup\clearforchapter%
+    }%
+  }{\@ntprintspine}%
 }
 
 \newcommand{\ntprintbackcover}{%
+  \pagenumbering{roman}%
+  \setcounter{page}{0}
   \ifcoverdefined[N-1]{\pdfbookmark[-1]{\thebkmstring(backmatter,\@LANG@COVER)}{bmbackmatter1}}{%
   \ifcoverdefined[N-2]{\pdfbookmark[-1]{\thebkmstring(backmatter,\@LANG@COVER)}{bmbackmatter2}}{}}%
   \ntprintcoverpair{N}%
@@ -1432,6 +1436,7 @@
     \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
     \NTRunHook{printcovers/post}%
   \endgroup
+  \setcounter{page}{1}
 }
 
 \newcommand{\ntprintcoverpair}[1]{%
@@ -1463,7 +1468,8 @@
   \IfStrEq{#2}{2}{%
     \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{cleared}\cleartoevenpage}}{\clearpage}%
   }{}%
-  \IfStrEq{#1-#2}{2-1}{\setcounter{page}{1}}{}%
+  % \IfStrEq{#1-#2}{2-1}{\setcounter{page}{1}}{}%
+  \setcounter{page}{0}
   \edef\@cvn{#1-#2}
   \edef\@cvnonetwo{1-2}
   \edef\@cvnNone{N-1}
@@ -2408,7 +2414,7 @@
 \newcommand{\ntquotetext}[1]{{\itshape#1}}
 \newcommand{\ntquoteskip}{\chapter*{\vspace*{-3.5ex}}}
 
-\NewDocumentEnvironment{ntquoting}{sO{10cm}O{}O{}O{}O{\option{/novathesis/mainlang}}+b}{%
+\NewDocumentEnvironment{ntquoting}{sO{10cm}O{}O{}O{}O{\option{/novathesis/lang/main}}+b}{%
 % 1 [*] => print big quote
 % 2 [o] => max width of citation box
 % 3 [o] => author name
@@ -2441,9 +2447,9 @@
     \IfBooleanTF{#1}{\hugequote}{}
     \begin{minipage}[t]{\@tempdima}
       \raggedleft\normalsize
-      \options{/@nt/langshorttolong=#6}%
+      \options{/@nt/lang/shorttolong=#6}%
       \IfBooleanTF{#1}{%
-        \foreigntextquote{\option{/@nt/langshorttolong}}{\ntquotetext{#7}}%
+        \foreigntextquote{\option{/@nt/lang/shorttolong}}{\ntquotetext{#7}}%
       }{\ntquotetext#7}
       \ifblank{#3}{}{\ntquoteauthor{#3}}%
       \ifblank{#4}{}{\ntquotewhere{#4}}%
