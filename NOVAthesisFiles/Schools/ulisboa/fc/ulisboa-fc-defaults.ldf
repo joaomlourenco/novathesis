@@ -218,7 +218,9 @@
 \ntaddtocover[height=1cm, vspace=2]{2-1}{%
   % \fontseries{mc}
   \fontsize{10}{10}\selectfont%
-  \thesponsorsstring(\option{/novathesis/coverlang})%
+  \foreach \i in {1, ..., 9} {%
+    \thesponsor(\option{/novathesis/coverlang},\i,text)\qquad
+  }%
 }
 
 % Document purpose

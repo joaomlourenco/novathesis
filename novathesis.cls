@@ -430,7 +430,7 @@
 
 \newdata{specializationstring}
 \newdata{departmentofstring}
-\newdata{sponsorsstring}
+\newdata{sponsor}
 \newdata{andstring}
 \newdata{commastring}
 \optionlistdo{/@nt/langsshort}{%
@@ -595,17 +595,21 @@
 \options@ProcessOptions{/novathesis}
 % --------------------------------------------------------
 % NTSETUP2
-\def\@ntsetuplevel{}
-\newcommand*{\ntsetup}[1]{%
-	% \typeout{NTSETUP #1}%
-	\ntfor\arg:={#1}\do{%
-		\StrCut{\arg}{=}{\@ntopt}{\@ntval}%
-		% \typeout{NTSETUP2 [\@ntopt] = [\@ntval]}%
-		\ifoptiondefined{/novathesis/\@ntopt}%
-										{\options{/novathesis/#1}}{%
-		\ifoptiondefined{/novathesis/\@ntsetuplevel\@ntopt}%
-	 									{\options{/novathesis/\@ntsetuplevel#1}}{%
-	  \ClassError{Invalid class option: \@ntopt}{}{}}}}}
+\newcommand*{\ntsetup}[2][]{%
+  % \typeout{NTSETUP [/novathesis/\option{/novathesis/school}/#1/\@ntopt]}\NTSETUP%
+  \ntfor\arg:={#2}\do{%
+    \StrCut{\arg}{=}{\@ntopt}{\@ntval}%
+    % \typeout{NTSETUP2 [\@ntopt] = [\@ntval]}%
+    \ifoptiondefined{/novathesis/\@nt@univ/\@nt@schl/#1/\@ntopt}%
+                    {\options{/novathesis/\@nt@univ/\@nt@schl/#1/#2}}{%
+    \ifoptiondefined{/novathesis/#1/\@ntopt}%
+                    {\options{/novathesis/#1/#2}}{%
+    \ifoptiondefined{/novathesis/\@nt@univ/\@nt@schl/\@ntopt}%
+                     {\options{/novathesis/\@nt@univ/\@nt@schl/#2}}{%
+    \ifoptiondefined{/novathesis/\@ntopt}%
+                    {\options{/novathesis/#2}}{%
+    \ClassError{Invalid class option: \@ntopt}{}{}}}}}}%
+}
 
 \newcommand*{\ntbibsetup}[1]{%
 	\@ifpackageloaded{biblatex}{\bibsetup{#1}}{\PassOptionsToPackage{#1}{biblatex}}%
@@ -749,7 +753,7 @@
 
 % --------------------------------------------------------
 % Sponsors
-\def\ntsponsors(#1)#2{\sponsorsstring(#1):={#2}}
+\def\ntsponsors(#1)#2{\sponsor(#1):={#2}}
 
 % --------------------------------------------------------
 % Title

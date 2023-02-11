@@ -258,3 +258,15 @@
     \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}{\thentdocdate(month), \thentdocdate(year)}%
   }{\thentdocdate(month), \thentdocdate(year)}%
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BACK COVER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ntaddtocover[vspace=1, halign=l]{N-2}{%
+  \foreach \i in {1, ..., 9} {%
+    % \ifdatadefined{sponsor}(\option{/novathesis/coverlang},\i,logo){%
+      \thesponsor(\option{/novathesis/coverlang},\i,logo)\qquad
+    % }{}
+  }
+}
