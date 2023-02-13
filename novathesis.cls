@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2022-12-25 [6.10.17]
+%% Version 2023-02-11 [6.10.18]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}[2019-10-01]
-\ProvidesClass{novathesis}[2022-12-25 novathesis template]
+\ProvidesClass{novathesis}[2023-02-11 novathesis template]
 
 \NeedsTeXFormat{LaTeX2e}[2020-10-01]
 
@@ -500,7 +500,7 @@
 
 \newdata{specializationstring}
 \newdata{departmentofstring}
-\newdata{sponsorsstring}
+\newdata{sponsor}
 \newdata{andstring}
 \newdata{commastring}
 \optionlistdo{/@nt/lang/short}{%
@@ -610,17 +610,21 @@
 \options@ProcessOptions{/novathesis}
 % --------------------------------------------------------
 % NTSETUP2
-\def\@ntsetuplevel{}
-\newcommand*{\ntsetup}[1]{%
-  % \typeout{NTSETUP #1}%
-  \ntfor\arg:={#1}\do{%
+\newcommand*{\ntsetup}[2][]{%
+  % \typeout{NTSETUP [/novathesis/\option{/novathesis/school}/#1/\@ntopt]}\NTSETUP%
+  \ntfor\arg:={#2}\do{%
     \StrCut{\arg}{=}{\@ntopt}{\@ntval}%
     % \typeout{NTSETUP2 [\@ntopt] = [\@ntval]}%
+    \ifoptiondefined{/novathesis/\@nt@univ/\@nt@schl/#1/\@ntopt}%
+                    {\options{/novathesis/\@nt@univ/\@nt@schl/#1/#2}}{%
+    \ifoptiondefined{/novathesis/#1/\@ntopt}%
+                    {\options{/novathesis/#1/#2}}{%
+    \ifoptiondefined{/novathesis/\@nt@univ/\@nt@schl/\@ntopt}%
+                     {\options{/novathesis/\@nt@univ/\@nt@schl/#2}}{%
     \ifoptiondefined{/novathesis/\@ntopt}%
-                    {\options{/novathesis/#1}}{%
-    \ifoptiondefined{/novathesis/\@ntsetuplevel\@ntopt}%
-                     {\options{/novathesis/\@ntsetuplevel#1}}{%
-    \ClassError{Invalid class option: \@ntopt}{}{}}}}}
+                    {\options{/novathesis/#2}}{%
+    \ClassError{Invalid class option: \@ntopt}{}{}}}}}}%
+}
 
 \newcommand*{\ntbibsetup}[1]{%
   \@ifpackageloaded{biblatex}{\bibsetup{#1}}{\PassOptionsToPackage{#1}{biblatex}}%
@@ -924,7 +928,7 @@
 
 % --------------------------------------------------------
 % Sponsors
-\def\ntsponsors(#1)#2{\sponsorsstring(#1):={#2}}
+\def\ntsponsors(#1)#2{\sponsor(#1):={#2}}
 
 % --------------------------------------------------------
 % Title
