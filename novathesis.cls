@@ -100,9 +100,9 @@
   docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
   media/.new choice             = {screen, paper},
   spine/.new choice             = {unset, no, full, trim},
-  abstract deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
-  abstract theorder/.new list   = {unset},
-  setabstractorder/.new cmd        = {\optionsalso{/novathesis/abstract theorder={#1}}},%
+  abstract/deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
+  abstract/theorder/.new list   = {unset},
+  setabstractorder/.new cmd        = {\optionsalso{/novathesis/abstract/theorder={#1}}},%
   % SCHOOL
   school/univ/.new value        = {},
   school/schl/.new value        = {},
@@ -691,14 +691,14 @@
 \bkmstring(spine)={\thebkmstring(spine,\@LANG@COVER)}
 % \NTRunHook{novathesis}
 
-\ifoptioncontains{/novathesis/abstract theorder}{unset}{%
-  \letoptionchoices{/novathesis/abstract deforder}{\@abst@rder@langs}%
+\ifoptioncontains{/novathesis/abstract/theorder}{unset}{%
+  \letoptionchoices{/novathesis/abstract/deforder}{\@abst@rder@langs}%
   \if\instring{,\@LANG@MAIN,}{,\@abst@rder@langs,}%
-    \options{/novathesis/abstract deforder=\@LANG@MAIN}%
+    \options{/novathesis/abstract/deforder=\@LANG@MAIN}%
   \else
-    \options{/novathesis/abstract deforder=default}%
+    \options{/novathesis/abstract/deforder=default}%
   \fi
-  \ntsetup{setabstractorder=\expanded{\option{/novathesis/abstract deforder}}}%
+  \ntsetup{setabstractorder=\expanded{\option{/novathesis/abstract/deforder}}}%
 }{}
 
 %============================================================
@@ -850,7 +850,7 @@
                                                 {Add a file with the translations for this language.}}%
   }%
 }
-\@nt@loadlangs{abstract theorder}
+\@nt@loadlangs{abstract/theorder}
 \@nt@loadlangs{lang/extra}
 % \letoptionlist{/@nt/lang/loaded}\LANGLOADED
 % \typeout{LANGLOADED=\@LANG@LOADED}\LLLLL
@@ -2191,14 +2191,14 @@
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
-  \letoptionchoices{/novathesis/abstract deforder}{\@abst@rder@langs}%
+  \letoptionchoices{/novathesis/abstract/deforder}{\@abst@rder@langs}%
   \if\instring{,\@LANG@MAIN,}{,\@abst@rder@langs,}%
-    \options{/novathesis/abstract deforder=\@LANG@MAIN}%
+    \options{/novathesis/abstract/deforder=\@LANG@MAIN}%
   \else
-    \options{/novathesis/abstract deforder=default}%
+    \options{/novathesis/abstract/deforder=default}%
   \fi
-  % \typeout{NTL=[\languagename] {\@LANG@MAIN}{\@abst@rder@langs} {\option{/novathesis/abstract theorder}}}\AAAAAAA
-  \@for\listitem:=\expanded{\option{/novathesis/abstract theorder}}\do{\@ntprintabstract{\listitem}}%
+  % \typeout{NTL=[\languagename] {\@LANG@MAIN}{\@abst@rder@langs} {\option{/novathesis/abstract/theorder}}}\AAAAAAA
+  \@for\listitem:=\expanded{\option{/novathesis/abstract/theorder}}\do{\@ntprintabstract{\listitem}}%
   % \typeout{NTL=\languagename}\cccc
   % \ntselectlang{\@LANG@MAIN}%
 }
@@ -2208,7 +2208,8 @@
   \iffileadded[#1]{abstract}{%
     \begingroup
       % \typeout{NT PRINT ABSTRACT #1}\bbbb
-      \ntselectlang{#1}%
+      \StrCut{#1}{-}\@ABS@LANG\@dummy%
+  		\ntselectlang{\@ABS@LANG}%
       % \typeout{NTL=\languagename [#1]}\bbbb
       \pdfbookmark[1]{\thebkmstring(abstract,#1)}{bmabstract#1}%
       \NTRunHook{abstract/pre}%
