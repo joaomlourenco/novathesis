@@ -75,6 +75,7 @@
 \let\oldRoman=\Roman
 \let\old@Roman=\@Roman
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  MEMOIR CUSTOMIZATION AND LOADING
 %%      Please open and edit the appropriate
@@ -84,6 +85,10 @@
 \input{Config/0_memoir}
 \LoadClass{memoir}
 \OnehalfSpacing% One-and-half spacing
+
+\newcolumntype{L}{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}X}
+\newcolumntype{C}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}X}
+\newcolumntype{R}{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}X}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Deal with NOVATHESIS options and configuration files
@@ -1472,11 +1477,10 @@
   \IfStrEq{#2}{2}{%
     \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{cleared}\cleartoevenpage}}{\clearpage}%
   }{}%
-  % \IfStrEq{#1-#2}{2-1}{\setcounter{page}{1}}{}%
-  \setcounter{page}{0}
-  \edef\@cvn{#1-#2}
-  \edef\@cvnonetwo{1-2}
-  \edef\@cvnNone{N-1}
+  \setcounter{page}{0}%
+  \edef\@cvn{#1-#2}%
+  \edef\@cvnonetwo{1-2}%
+  \edef\@cvnNone{N-1}%
   \ifx\@cvn\@cvnonetwo\relax
     \iftoggle{/novathesis/uminho/skipblankcovers}{}
                        {\ifcoverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}}%
@@ -1503,14 +1507,7 @@
                ,{#1,textcolor}%
                ,{textcolor}%
     ){\color{\match}}{}%
-    % \ntselectlang{\@LANG@COVER}%
-    % \ifdatadefined{bkmstring}(#1,\@LANG@COVER){
     \pdfbookmark[1]{\thebkmstring(#1)}{\thebkmstring(#1)}%
-    % }{}%
-    % \options{/@ntcoveropts/bookmark=#1}%
-    % \ifoptionequal{/@ntcoveropts/bookmark}{}{}{%
-    %   \pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
-    % }%
     \@ntmakeboxwithcover{#1}{\@fullcover@box}%
     \NTRunHook{cover/#1/post}%
     \NTRunHook{cover/post}%
@@ -1518,96 +1515,42 @@
 }
 
 \newcommand{\@ntmakeboxwithcover}[2]{%
-    % #1 = cover ID (major-minor)
-    % #2 = box name
-    \@for\i:={top,bottom,left,right}\do{%
-      \expandafter\datamatch\csname @nt@margin@\i\endcsname{margin}(%
-        {cover,\@DOCTYPE,\@DEGREEACR,#1,\i}%
-       ,{cover,\@DOCCLASS,\@DEGREEACR,#1,\i}%
-       ,{cover,\@DEGREEACR,#1,\i}%
-       ,{cover,\@DOCTYPE,\@DEGREEACR,\i}%
-       ,{cover,\@DOCCLASS,\@DEGREEACR,\i}%
-       ,{cover,\@DEGREEACR,\i}%
-       ,{cover,\@DOCTYPE,#1,\i}%
-       ,{cover,\@DOCCLASS,#1,\i}%
-       ,{cover,#1,\i}%
-       ,{cover,\@DOCTYPE,\i}%
-       ,{cover,\@DOCCLASS,\i}%
-       ,{cover,\i})%
-    }
-    % \datamatch{\@nt@margin@top}{margin}(%
-    %   {cover,\@DOCTYPE,\@DEGREEACR,#1,top}%
-    %  ,{cover,\@DOCCLASS,\@DEGREEACR,#1,top}%
-    %  ,{cover,\@DEGREEACR,#1,top}%
-    %  ,{cover,\@DOCTYPE,\@DEGREEACR,top}%
-    %  ,{cover,\@DOCCLASS,\@DEGREEACR,top}%
-    %  ,{cover,\@DEGREEACR,top}%
-    %  ,{cover,\@DOCTYPE,#1,top}%
-    %  ,{cover,\@DOCCLASS,#1,top}%
-    %  ,{cover,#1,top}%
-    %  ,{cover,\@DOCTYPE,top}%
-    %  ,{cover,\@DOCCLASS,top}%
-    %  ,{cover,top})%
-    % \datamatch{\@nt@margin@bottom}{margin}(%
-    % {cover,\@DOCTYPE,\@DEGREEACR,#1,bottom}%
-    %  ,{cover,\@DOCCLASS,\@DEGREEACR,#1,bottom}%
-    %  ,{cover,\@DEGREEACR,#1,bottom}%
-    %  ,{cover,\@DOCTYPE,\@DEGREEACR,bottom}%
-    %  ,{cover,\@DOCCLASS,\@DEGREEACR,bottom}%
-    %  ,{cover,\@DEGREEACR,bottom}%
-    %  ,{cover,\@DOCTYPE,#1,bottom}%
-    %  ,{cover,\@DOCCLASS,#1,bottom}%
-    %  ,{cover,#1,bottom}%
-    %  ,{cover,\@DOCTYPE,bottom}%
-    %  ,{cover,\@DOCCLASS,bottom}%
-    %  ,{cover,bottom})%
-    % \datamatch{\@nt@margin@left}{margin}(%
-    % {cover,\@DOCTYPE,\@DEGREEACR,#1,left}%
-    %  ,{cover,\@DOCCLASS,\@DEGREEACR,#1,left}%
-    %  ,{cover,\@DEGREEACR,#1,left}%
-    %  ,{cover,\@DOCTYPE,\@DEGREEACR,left}%
-    %  ,{cover,\@DOCCLASS,\@DEGREEACR,left}%
-    %  ,{cover,\@DEGREEACR,left}%
-    %  ,{cover,\@DOCTYPE,#1,left}%
-    %  ,{cover,\@DOCCLASS,#1,left}%
-    %  ,{cover,#1,left}%
-    %  ,{cover,\@DOCTYPE,left}%
-    %  ,{cover,\@DOCCLASS,left}%
-    %  ,{cover,left})%
-    % \datamatch{\@nt@margin@right}{margin}(%
-    % {cover,\@DOCTYPE,\@DEGREEACR,#1,right}%
-    %  ,{cover,\@DOCCLASS,\@DEGREEACR,#1,right}%
-    %  ,{cover,\@DEGREEACR,#1,right}%
-    %  ,{cover,\@DOCTYPE,\@DEGREEACR,right}%
-    %  ,{cover,\@DOCCLASS,\@DEGREEACR,right}%
-    %  ,{cover,\@DEGREEACR,right}%
-    %  ,{cover,\@DOCTYPE,#1,right}%
-    %  ,{cover,\@DOCCLASS,#1,right}%
-    %  ,{cover,#1,right}%
-    %  ,{cover,\@DOCTYPE,right}%
-    %  ,{cover,\@DOCCLASS,right}%
-    %  ,{cover,right})%
-    % \defifundef{#2}{\newsavebox}%
-    \@ntmakecoverbgcolor{#1}{\@cover@bgcolor@box}%
-    \@ntmakecoverimage{#1}{\@cover@image@box}%
-    \@ntmakecovertext{#1}{\@cover@text@box}%
-    \thispagestyle{empty}%
-    \begin{tikzpicture}[remember picture, overlay]
+  % #1 = cover ID (major-minor)
+  % #2 = box name
+  \@for\i:={top,bottom,left,right}\do{%
+    \expandafter\datamatch\csname @nt@margin@\i\endcsname{margin}(%
+      {cover,\@DOCTYPE,\@DEGREEACR,#1,\i},%
+      {cover,\@DOCCLASS,\@DEGREEACR,#1,\i},%
+      {cover,\@DEGREEACR,#1,\i},%
+      {cover,\@DOCTYPE,\@DEGREEACR,\i},%
+      {cover,\@DOCCLASS,\@DEGREEACR,\i},%
+      {cover,\@DEGREEACR,\i},%
+      {cover,\@DOCTYPE,#1,\i},%
+      {cover,\@DOCCLASS,#1,\i},%
+      {cover,#1,\i},%
+      {cover,\@DOCTYPE,\i},%
+      {cover,\@DOCCLASS,\i},%
+      {cover,\i})%
+  }%
+  \@ntmakecoverbgcolor{#1}{\@cover@bgcolor@box}%
+  \@ntmakecoverimage{#1}{\@cover@image@box}%
+  \@ntmakecovertext{#1}{\@cover@text@box}%
+  \thispagestyle{empty}%
+  \begin{tikzpicture}[remember picture, overlay]
     \node[inner sep=0, anchor=north]  at (current page.north)
-    {\usebox{\@cover@bgcolor@box}};
+            {\usebox{\@cover@bgcolor@box}};
     \node[inner sep=0, anchor=north]  at (current page.north)
-    {\usebox{\@cover@image@box}};
-    \node[inner sep=0
-    , anchor=north west
-    , xshift=\@nt@margin@left
-    , yshift=-\@nt@margin@top] at (current page.north west)
-    {\usebox{\@cover@text@box}};
-    \end{tikzpicture}%
-    \ifoptioncontains{/novathesis/debug}{cover}{%
+            {\usebox{\@cover@image@box}};
+    \node[inner sep=0, anchor=north west,
+          xshift=\@nt@margin@left,
+          yshift=-\@nt@margin@top] at (current page.north west)
+      {\usebox{\@cover@text@box}};
+  \end{tikzpicture}%
+  \ifoptioncontains{/novathesis/debug}{cover}{%
     \NTRunHook{cover/#1/grid/pre}%
     \debuggrid%
     \NTRunHook{cover/#1/grid/post}%
-    }{}%
+  }{}%
 }
 
 \newcommand*{\@ntmakecoverbgcolor}[2]{%
@@ -1691,29 +1634,29 @@
     % \StrCount{,\option{/@ntcoveropts/degree},}{,\@DOCCLASS,}[\@nt@indegree]%
     % \typeout{OPT_DEGREE=[\option{/@ntcoveropts/degree}] DOCCLASS=[\@DOCCLASS]}%
     % \typeout{OPT_STATUS=[\option{/@ntcoveropts/status}] STATUS=[\@DOCSTATUS]}\aaaaa
-    \defifundef{\ifmatchstatus}{\newif}
-    \defifundef{\ifmatchdegree}{\newif}
-    \matchstatustrue
-    \matchdegreetrue
-    \if&\option{/@ntcoveropts/status}&\relax
-    \else
+    \defifundef{\ifmatchstatus}{\newif}%
+    \defifundef{\ifmatchdegree}{\newif}%
+    \matchstatustrue%
+    \matchdegreetrue%
+    \if&\option{/@ntcoveropts/status}&\relax%
+    \else%
       \if\instring{,\@DOCSTATUS,}{,\option{/@ntcoveropts/status},}
-      \else
-        \matchstatusfalse
-      \fi
-    \fi
-    \if&\option{/@ntcoveropts/degree}&\relax
-    \else
-      \if\instring{,\@DOCCLASS,}{,\option{/@ntcoveropts/degree},}
-      \else
-        \matchdegreefalse
-      \fi
-    \fi
-    \ifmatchstatus
-      \ifmatchdegree
-        \@ntcoverelement@ii{#1}{#3}
-      \fi
-    \fi
+      \else%
+        \matchstatusfalse%
+      \fi%
+    \fi%
+    \if&\option{/@ntcoveropts/degree}&\relax%
+    \else%
+      \if\instring{,\@DOCCLASS,}{,\option{/@ntcoveropts/degree},}%
+      \else%
+        \matchdegreefalse%
+      \fi%
+    \fi%
+    \ifmatchstatus%
+      \ifmatchdegree%
+        \@ntcoverelement@ii{#1}{#3}%
+      \fi%
+    \fi%
      % \ifthenelse{%
      %          \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND%
      %          \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}%
@@ -1917,19 +1860,44 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print persons list {advisers | committee}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\ntprintpersons}[5][full]{%
+\newcommand{\ntprintpersons}[2][full]{%
+  % #1* = { full | name | list }
+  % #2  = width in % of textwidth
+  % #3* = positioning
+  % #4  = number of columns
+  % #5  = adviser | committee
+  % #6  = {a,c} | {c,r,a,m,g}
+    \@ifnextchar[{\@ntprintpersons{#1}{#2}}{\@ntprintpersons{#1}{#2}[l]}%
+}
+
+\newcommand*{\@setalignment}[1]{
+  \IfStrEqCase{#1}{%
+    {l}{\raggedright}%
+    {c}{\centering}%
+    {r}{\raggedleft}%
+  }[\ClassError{novathesis}{Invalid alignment '#1'}{}]%
+}
+
+\def\@ntprintpersons#1#2[#3]#4#5#6{
   % #1 = { full | name | list }
   % #2 = width in % of textwidth
-  % #3 = number of columns
-  % #4 = adviser | committee
-  % #5 = {a,c} | {c,r,a,m,g}
-  % \typeout{NTPRINTPERSONS 1=[#1] 2=[#2] 3=[#3] 4=[#4] 5=[#5]}\aaa
-  \iftoggle{/novathesis/print/#4}{%
-    \IfStrEqCase{#3}{%
-      {0}{\@ntprintpersonsaslist{#4}{#5}}%
-      {1}{\@ntprintpersonsasonecolumn{#1}{#2}{#4}{#5}}%
-      {2}{\@ntprintpersonsastwocolumns{#1}{#2}{#4}{#5}}%
-    }[\ClassError{novathesis}{Ivalid argument [#3] to \string\ntprintpersons{#1}{#2}{#3}{#4}{#5}}{}]%
+  % #3 = positioning
+  % #4 = number of columns
+  % #5 = adviser | committee
+  % #6 = {a,c} | {c,r,a,m,g}
+  % \typeout{NTPRINTPERSONS 1=[#1] 2=[#2] 3=[#3] 4=[#4] 5=[#5]}\NTPRINTPERSONS
+  \iftoggle{/novathesis/print/#5}{%
+    \begin{minipage}{\linewidth}%
+      \setlength{\parindent}{0pt}%
+      \@setalignment{#3}%
+      \begin{minipage}{#2\linewidth}%
+        \IfStrEqCase{#4}{%
+          {0}{\@ntprintpersonsaslist{#5}{#6}}%
+          {1}{\@ntprintpersonsasonecolumn{#1}{#2}{#5}{#6}}%
+          {2}{\@ntprintpersonsastwocolumns{#1}{#5}{#6}}%
+        }[\ClassError{novathesis}{Ivalid argument [#4] to \string\ntprintpersons{#1}{#2}{#4}{#5}{#6}}{}]%
+      \end{minipage}
+    \end{minipage}%
   }{}%
 }
 
@@ -1954,6 +1922,7 @@
       \eappto\@nt@personlist{\@nt@listsep\@nt@person@sublist}\def\@nt@listsep{,}%
     }%
   }%
+  \raggedright%
   \@replacelastcomma{\@nt@personlist}%
 }
 
@@ -1987,34 +1956,31 @@
   \csuse{#3remainderpre}()={{\\}}%
   \personpost()={\\[4pt]}%
   \persongrouppost()={\\[-4pt]}
-  \begin{tabularx}{#2\linewidth}[t]{@{}X@{}}%
+  \begin{tabularx}{#2\linewidth}[t]{@{}L@{}}%
     \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}%
     % \@for\arg:=\expanded{#4}\do{\@nt@ntprintpersongroup{#1}{1}{#3}{\arg}}
   \end{tabularx}%
 }
 
-\newcommand{\@ntprintpersonsastwocolumns}[4]{%
+\newcommand{\@ntprintpersonsastwocolumns}[3]{%
   % #1 = { full | name | list }
-  % #2 = width in % of textwidth
-  % #3 = adviser | committee
-  % #4 = {a,c} | {c,r,a,m,g}
+  % #2 = adviser | committee
+  % #3 = {a,c} | {c,r,a,m,g}
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] 4=[#4]}%\aaa
-  \csuse{#3stringpost}():={:&}%
-  \csuse{#3remainderpre}()={{\\}}%
+  \csuse{#2stringpost}():={:&}%
+  \csuse{#2remainderpre}()={{\\}}%
   \personpost()={\\[4pt]}%
-  \persongrouppost()={\\[-6pt]}
+  \persongrouppost()={\\\\[-6pt]}
   \committeetitlestringpre()={&}%
   \committeetitlestringpost()={\\[7pt]}%
-  \begin{tabularx}{#2\linewidth}[t]{@{}r@{~~}>{\raggedright\arraybackslash}X@{}}%
-    \ifdatadefined{#3titlestring}(\@LANG@COVER){%
-      \datadefault{#3titlestringpre}()%
-      \datadefault{#3titlestringfont}()%
-      \csuse{the#3titlestring}(\@LANG@COVER)%
-      \datadefault{#3titlestringpost}()%
+  \begin{tabularx}{\linewidth}[t]{@{}r@{~~}L@{}}%
+    \ifdatadefined{#2titlestring}(\@LANG@COVER){%
+      \datadefault{#2titlestringpre}()%
+      \datadefault{#2titlestringfont}()%
+      \csuse{the#2titlestring}(\@LANG@COVER)%
+      \datadefault{#2titlestringpost}()%
     }{}%
-    \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{2}{#3}}}{\expanded{#4}}%
-    % \@for\i:=\expanded{#4}\do{\typeout{NTPRINTIIIII=\i}\@nt@ntprintpersongroup[#1]{2}{#3}{\i}}%
-    % \foreach \i [expand list=true] in {#4} {\@nt@ntprintpersongroup{#1}{2}{#3}{\i}}%
+    \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{2}{#2}}}{\expanded{#3}}%
   \end{tabularx}%
 }
 
@@ -2039,7 +2005,8 @@
       \@ntprintpersonsaslist{#3}{#4}%
     }{%
       \begin{minipage}[t]{\linewidth}%
-          \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{##1}}%
+        \raggedright%
+        \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{##1}}%
       \end{minipage}%
     }%
     \thepersongrouppost()%
@@ -2209,7 +2176,7 @@
     \begingroup
       % \typeout{NT PRINT ABSTRACT #1}\bbbb
       \StrCut{#1}{-}\@ABS@LANG\@dummy%
-  		\ntselectlang{\@ABS@LANG}%
+      \ntselectlang{\@ABS@LANG}%
       % \typeout{NTL=\languagename [#1]}\bbbb
       \pdfbookmark[1]{\thebkmstring(abstract,#1)}{bmabstract#1}%
       \NTRunHook{abstract/pre}%
