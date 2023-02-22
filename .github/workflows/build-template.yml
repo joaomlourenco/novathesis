@@ -16,7 +16,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout the repository
         uses: actions/checkout@v3.3.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -24,17 +24,17 @@ jobs:
         run: |
           versionrow=$(head -n$ROW_VERSION $VERSION_FILE)
           version="${versionrow:$VERSION_START_POS:-1}"
-      - name: Compile LaTeX document
+          echo $version
+      - name: Compile the LaTeX template
         uses: xu-cheng/latex-action@v2
         with:
           root_file: template.tex
-      - name: Upload PDF file
+      - name: Upload the PDF template file
         uses: actions/upload-artifact@v3
         with:
           name: Template
           path: template.pdf
-
-      - name: Push changes
+      - name: Push changes to the repository
         run: |
           git config --global user.email "joao.lourenco@fct.unl.pt"
           git config --global user.name "joaomlourenco"
