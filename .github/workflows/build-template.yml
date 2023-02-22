@@ -36,7 +36,8 @@ jobs:
           git config --global user.email "joao.lourenco@fct.unl.pt"
           git config --global user.name "joaomlourenco"
           row=$(head -n1 NOVAthesisFiles/nt-version.sty)
-          v="${versionrow:33:-1}"
+          export VERSION="${row:33:-1}"
           git add template.pdf
-          git commit -m "Version $v"
+          echo "$VERSION"
+          git commit -m "Version $VERSION"
           git push
