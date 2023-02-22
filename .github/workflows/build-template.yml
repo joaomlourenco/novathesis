@@ -20,9 +20,7 @@ jobs:
       - name: Extract the template version
         id: extract-version
         run: |
-          row=$(head -n$ROW_VERSION $VERSION_FILE)
-          v="${versionrow:$START_POS_VERSION:-1}"
-          echo "$v" >> $VERSION
+
       - name: Compile the LaTeX template
         uses: xu-cheng/latex-action@v2
         with:
@@ -35,8 +33,11 @@ jobs:
           path: template.pdf
       - name: Push changes to the repository
         run: |
-          git config --global user.email "joao.lourenco@fct.unl.pt"
-          git config --global user.name "joaomlourenco"
+          #git config --global user.email "joao.lourenco@fct.unl.pt"
+          #git config --global user.name "joaomlourenco"
+          
+          row=$(head -n$ROW_VERSION $VERSION_FILE)
+          v="${versionrow:$START_POS_VERSION:-1}"
           git add template.pdf
-          git commit -m "Version ${{ steps.extract-version.outputs.VERSION }}"
+          git commit -m "Version $v"
           git push
