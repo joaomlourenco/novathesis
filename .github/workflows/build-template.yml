@@ -26,6 +26,7 @@ jobs:
       - name: Compile the LaTeX template
         uses: xu-cheng/latex-action@v2
         with:
+          compiler: pdflatex
           root_file: template.tex
       - name: Upload the PDF template file
         uses: actions/upload-artifact@v3
