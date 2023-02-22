@@ -22,4 +22,6 @@ jobs:
           path: template.pdf
       - name: Push changes
         run: |
-          git diff-index --quiet HEAD || git commit -m "chore(codebase): format with black" && git push || echo "No changes" && exit
+          git add template.pdf
+          git commit -m "chore(codebase): format with black"
+          git push
