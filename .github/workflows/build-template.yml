@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v3.3.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Extract the template version
+      - name: Extract the template versions
         id: extract-version
         run: |
 
