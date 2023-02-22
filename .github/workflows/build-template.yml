@@ -1,14 +1,11 @@
 name: Build the LaTeX template
 
-on:
-  push:
-    branches:
-      - main
+on: [ push, pull_request ]
 
 env:
   VERSION_FILE: NOVAthesisFiles/nt-version.sty
   ROW_VERSION: 1
-  VERSION_START_POS: 33
+  START_POS_VERSION: 33
 
 permissions: write-all
 
@@ -20,11 +17,10 @@ jobs:
         uses: actions/checkout@v3.3.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Extract version
+      - name: Extract the template version
         run: |
           versionrow=$(head -n$ROW_VERSION $VERSION_FILE)
-          version="${versionrow:$VERSION_START_POS:-1}"
-          echo $version
+          version="${versionrow:$START_POS_VERSION:-1}"
       - name: Compile the LaTeX template
         uses: xu-cheng/latex-action@v2
         with:
@@ -39,5 +35,5 @@ jobs:
           git config --global user.email "joao.lourenco@fct.unl.pt"
           git config --global user.name "joaomlourenco"
           git add template.pdf
-          git commit -m "Version $version"
+          git commit -m "Version `$version`"
           git push
