@@ -20,9 +20,9 @@ jobs:
       - name: Extract the template version
         id: extract-version
         run: |
-          versionrow=$(head -n$ROW_VERSION $VERSION_FILE)
-          version="${versionrow:$START_POS_VERSION:-1}"
-          echo "$version" >> $VERSION
+          row=$(head -n$ROW_VERSION $VERSION_FILE)
+          v="${versionrow:$START_POS_VERSION:-1}"
+          echo "$v" >> $VERSION
       - name: Compile the LaTeX template
         uses: xu-cheng/latex-action@v2
         with:
