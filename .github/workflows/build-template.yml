@@ -1,0 +1,22 @@
+name: Build the LaTeX template
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.3.0
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: template.tex
+      - name: Upload PDF file
+        uses: actions/upload-artifact@v3
+        with:
+          name: Template
+          path: template.pdf
