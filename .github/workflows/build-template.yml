@@ -26,8 +26,6 @@ jobs:
           path: template.pdf
       - name: Push changes
         run: |
-          git config --global user.email "joao.lourenco@fct.unl.pt"
-          git config --global user.name "github-actions[bot]"
           git add template.pdf
           git commit -m "chore(codebase): format with black"
           git push
