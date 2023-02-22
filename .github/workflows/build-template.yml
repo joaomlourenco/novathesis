@@ -27,6 +27,7 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           compiler: pdflatex
+          args: -shell-escape
           root_file: template.tex
       - name: Upload the PDF template file
         uses: actions/upload-artifact@v3
