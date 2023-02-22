@@ -29,4 +29,4 @@ jobs:
           git config --global user.email "joao.lourenco@fct.unl.pt"
           git config --global user.name "github-actions[bot]"
           git add template.pdf
-          git diff-index --quiet HEAD || git commit -m "chore(codebase): format with black" && git push || echo "No changes" && exit
+          git commit -m "chore(codebase): format with black" && git push
