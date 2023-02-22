@@ -6,6 +6,8 @@ env:
   VERSION_FILE: NOVAthesisFiles/nt-version.sty
   ROW_VERSION: 1
   START_POS_VERSION: 33
+  EMAIL_GITHUB: joao.lourenco@fct.unl.pt
+  USERNAME_GITHUB: joaomlourenco
 
 permissions: write-all
 
@@ -29,10 +31,10 @@ jobs:
           path: template.pdf
       - name: Push changes to the repository
         run: |
-          git config --global user.email "joao.lourenco@fct.unl.pt"
-          git config --global user.name "joaomlourenco"
+          git config --global user.email "$EMAIL_GITHUB"
+          git config --global user.name "$USERNAME_GITHUB"
           row=$(head -n$ROW_VERSION $VERSION_FILE)
-          v="${row:$START_POS_VERSION:-1}"
+          version="${row:$START_POS_VERSION:-1}"
           git add template.pdf
-          git commit -m "Version $v"
+          git commit -m "Version $version"
           git push
