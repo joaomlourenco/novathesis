@@ -17,10 +17,6 @@ jobs:
         uses: actions/checkout@v3.3.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Extract the template versions
-        id: extract-version
-        run: |
-
       - name: Compile the LaTeX template
         uses: xu-cheng/latex-action@v2
         with:
@@ -31,12 +27,14 @@ jobs:
         with:
           name: Template
           path: template.pdf
+      - name: Extract template version
+        run: |
+          row=$(head -n1 NOVAthesisFiles/nt-version.sty)
+          v="${row:33:-1}"
       - name: Push changes to the repository
         run: |
           git config --global user.email "joao.lourenco@fct.unl.pt"
           git config --global user.name "joaomlourenco"
-          row=$(head -n1 NOVAthesisFiles/nt-version.sty)
-          v="${row:33:-1}"
           git add template.pdf
           git commit -m "Version $v"
           git push
