@@ -1,0 +1,44 @@
+name: Build the LaTeX template
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+env:
+  VERSION_FILE: NOVAthesisFiles/nt-version.sty
+  ROW_VERSION: 1
+  START_POS_VERSION: 33
+  EMAIL_GITHUB: joao.lourenco@fct.unl.pt
+  USERNAME_GITHUB: joaomlourenco
+
+permissions: write-all
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3.3.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Compile the LaTeX template
+        uses: xu-cheng/latex-action@v2
+        with:
+          compiler: pdflatex
+          root_file: template.tex
+      - name: Upload the PDF template file
+        uses: actions/upload-artifact@v3
+        with:
+          name: Template
+          path: template.pdf
+      - name: Push changes to the repository
+        run: |
+          git config --global user.email "$EMAIL_GITHUB"
+          git config --global user.name "$USERNAME_GITHUB"
+          row=$(head -n$ROW_VERSION $VERSION_FILE)
+          version="${row:$START_POS_VERSION:-1}"
+          git add template.pdf
+          git commit -m "Version $version"
+          git push
