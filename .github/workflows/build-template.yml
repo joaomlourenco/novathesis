@@ -24,7 +24,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Compile the LaTeX template
-        run: bash build.sh
+        run: bash ./build.sh
       - name: Upload the PDF template file
         uses: actions/upload-artifact@v3
         with:
