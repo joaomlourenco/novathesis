@@ -24,11 +24,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Compile the LaTeX template
-        uses: xu-cheng/latex-action@v2
-        with:
-          compiler: latexmk
-          root_file: template.tex
-          latexmk_shell_escape: true
+        run: bash build.sh
       - name: Upload the PDF template file
         uses: actions/upload-artifact@v3
         with:
