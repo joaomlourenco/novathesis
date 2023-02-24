@@ -90,6 +90,38 @@
 \newcolumntype{C}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}X}
 \newcolumntype{R}{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}X}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SOME ESSENTIAL PACKAGES
+%%    Others will be loaded later, in the file “packages.tex”
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[table,svgnames]{xcolor}%
+% \RequirePackage{tabularray}
+% \UseTblrLibrary{booktabs}
+
+
+\ifdefined\NewDocumentCommand\else\RequirePackage{xparse}\fi   % load xparse if necessary
+\RequirePackage{xfor}
+\RequirePackage{iftex}
+\RequirePackage{etoolbox}
+\RequirePackage{xstring}
+\RequirePackage{NOVAthesisFiles/memory2}
+\RequirePackage{NOVAthesisFiles/nt-version}
+
+
+%%%%% Configure Graphics
+\RequirePackage[nobeamer]{graphbox}% improved version of "graphicx"
+\graphicspath{{Chapters/Figures/}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg,.tif}
+\providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
+\providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
+
+%%%%% Options to sans serif fonts (will be loaded later)
+\PassOptionsToPackage{scaled=0.95}{inter}
+\PassOptionsToPackage{scaled=0.95}{helvet}
+% \PassOptionsToPackage{scaled=0.95}{gillius2}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Deal with NOVATHESIS options and configuration files
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -120,8 +152,8 @@
   style/font/.new value         = newpx,
   style/url/.new cmd            = {\AfterPreamble{\urlstyle{#1}}},
   color/links/.new cmd          = {\@ifpackageloaded{hyperref}%
-                                                    {\hypersetup{allcolors=#1}}%
-                                                    {\PassOptionsToPackage{allcolors=#1}{hyperref}}},
+                                            {\hypersetup{allcolors=#1}}%
+                                            {\PassOptionsToPackage{allcolors=#1}{hyperref}}},
   % LANGUAGES
   lang/extra/.new list           = {},
   lang/main/.new choice         = {en, pt, fr, it, de, es, gr},
@@ -168,40 +200,6 @@
   ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.},
   ulisboa/fmv/reproduction/.new choice         = {I, P, N},
 }
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% SOME ESSENTIAL PACKAGES
-%%    Others will be loaded later, in the file “packages.tex”
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage[table,svgnames]{xcolor}%
-% \RequirePackage{tabularray}
-% \UseTblrLibrary{booktabs}
-
-
-\ifdefined\NewDocumentCommand\else\RequirePackage{xparse}\fi   % load xparse if necessary
-\RequirePackage{xfor}
-\RequirePackage{iftex}
-\RequirePackage{etoolbox}
-\RequirePackage{xstring}
-\RequirePackage{NOVAthesisFiles/memory2}
-\RequirePackage{NOVAthesisFiles/nt-version}
-
-
-
-
-
-
-%%%%% Configure Graphics
-\RequirePackage[nobeamer]{graphbox}% improved version of "graphicx"
-\graphicspath{{Chapters/Figures/}}
-\DeclareGraphicsExtensions{.pdf,.png,.jpg,.tif}
-\providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
-\providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
-
-%%%%% Options to sans serif fonts (will be loaded later)
-\PassOptionsToPackage{scaled=0.95}{inter}
-\PassOptionsToPackage{scaled=0.95}{helvet}
-% \PassOptionsToPackage{scaled=0.95}{gillius2}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHECK IF USING LUALATEX OR XELATEX
@@ -2236,21 +2234,8 @@
       \def\@nt@index{#1}%
     \fi%
     \index{\@nt@index}#2%
-    % \ifoptioncontains{/novathesis/debug}{index}{}%
-    %                                            {\def\@nt@index{f}}%
-    % \if\@nt@index t\relax
-    %   \marginpar{#1#2}%
-    % \fi%
   \egroup%
 }
-
-% \newcommand{\ntindex}[2][]{%
-%   \if\relax\detokenize{#1}\relax
-%     \index{#2}#2%
-%   \else
-%     \index{#1}#2%
-%   \fi%
-% }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
