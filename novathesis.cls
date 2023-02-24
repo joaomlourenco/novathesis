@@ -144,8 +144,8 @@
   school/univ/.new value        = {},
   school/schl/.new value        = {},
   school/.new cmd               = {\splitbyslash#1\relax\@nt@univ\@nt@schl
-                                   \optionsalso{school/univ/.expanded=\@nt@univ,
-                                                school/schl/.expanded=\@nt@schl}},
+                                   \optionsalso{/novathesis/school/univ/.expanded=\@nt@univ,
+                                                /novathesis/school/schl/.expanded=\@nt@schl}},
   school                        = nova/fct,
   % STYLES
   style/chapter/.new value      = bar,
