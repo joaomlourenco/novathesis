@@ -26,7 +26,7 @@ jobs:
       - name: Compile the LaTex template
         uses: xu-cheng/texlive-action/full@v1
         with:
-          run: bash build.sh
+          run: bash .Build/build.sh
       - name: Upload the template PDF file
         uses: actions/upload-artifact@v3
         with:
