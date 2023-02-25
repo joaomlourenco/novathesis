@@ -25,7 +25,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - uses: xu-cheng/texlive-action/full@v1
         with:
-          run: build.sh
+          run: bash build.sh
       - name: Upload the PDF template file
         uses: actions/upload-artifact@v3
         with:
