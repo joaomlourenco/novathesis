@@ -13,7 +13,7 @@ perl -pi -e "s,.*\\\\ntsetup{doctype=.*},\\\\ntsetup{doctype=phd}," $CONF
 perl -pi -e "s,.*\\\\ntsetup{school=.*},\\\\ntsetup{school=nova/fct}," $CONF
 perl -pi -e "s,.*\\\\ntsetup{docstatus=.*},\\\\ntsetup{docstatus=final}," $CONF
 perl -pi -e "s,.*\\\\ntsetup{spine=.*},\\\\ntsetup{spine=trim}," $CONF
-perl -pi -e "s,.*\\\\ntsetup{print/index=.*},\\\\ntsetup{print/index=true}," $CONF
+perl -pi -e "s,.*\\\\ntsetup{printindex=.*},\\\\ntsetup{printindex=true}," $CONF
 
 # build the PDF
 $MAKE
