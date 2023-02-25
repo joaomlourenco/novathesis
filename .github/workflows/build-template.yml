@@ -32,3 +32,12 @@ jobs:
         with:
           name: Template
           path: template.pdf
+      - name: Push changes to the repository
+        run: |
+          git config --global user.email "$EMAIL_GITHUB"
+          git config --global user.name "$USERNAME_GITHUB"
+          row=$(head -n$ROW_VERSION $VERSION_FILE)
+          version="${row:$START_POS_VERSION:-1}"
+          git add template.pdf
+          git commit -m "Version $version"
+          git push
