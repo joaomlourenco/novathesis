@@ -23,14 +23,12 @@ jobs:
         uses: actions/checkout@v3.3.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install LaTeX
-        run: sudo apt install texlive -y
-      - name: Install Latexmk
-        run: sudo apt-get install -y latexmk
       - name: Compile the LaTeX template
-        run: bash ./build.sh
+        uses: dante-ev/latex-action@latest
+        with:
+          entrypoint: ./build.sh
       - name: Upload the PDF template file
         uses: actions/upload-artifact@v3
         with:
           name: Log
-          path: template.log
+          path: template.pdf
