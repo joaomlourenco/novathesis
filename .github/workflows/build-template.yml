@@ -38,6 +38,6 @@ jobs:
           git config --global user.name "$USERNAME_GITHUB"
           row=$(head -n$ROW_VERSION $VERSION_FILE)
           version="${row:$START_POS_VERSION:-1}"
-          git add template.pdf
+          git add -f template.pdf
           git commit -m "Version $version"
           git push
