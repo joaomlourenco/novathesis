@@ -1,5 +1,8 @@
+
 SILENT:=-silent
 SYNCTEX:=1
+
+TEXVERSIONS=$(shell ls /usr/local/texlive/ | fgrep -v texmf-local)
 
 B:=template
 F:=-time -shell-escape -synctex=$(SYNCTEX) -output-format=pdf -file-line-error $(FLAGS)
@@ -51,15 +54,15 @@ v view: $(T)
 verb verbose:
 	$(L) -pdf $(B)
 
-.PHONY: 2019 2020 2021 2022
-2019 2020 2021 2022:
+.PHONY: $(TEXVERSIONS)
+$(TEXVERSIONS):
 	hash -r
 	PATH="$(wildcard /usr/local/texlive/$@/bin/*-darwin/):$(PATH)" $(L) $(X) $(SILENT) -pdf $(B)
 
 .PHONY: zip
 zip:
 	rm -f "$(ZIPTARGET)"
-	zip -r "$(ZIPTARGET)" $(ZIPFILES)
+	zip --exclude .github --exclude .git -r "$(ZIPTARGET)" $(ZIPFILES)
 
 .PHONY: clean
 clean:
