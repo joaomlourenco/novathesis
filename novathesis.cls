@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2023-02-11 [6.10.18]
+%% Version 2023-02-27 [7.0.0]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}[2019-10-01]
-\ProvidesClass{novathesis}[2023-02-11 novathesis template]
+\ProvidesClass{novathesis}[2023-02-27 novathesis template]
 
 \NeedsTeXFormat{LaTeX2e}[2020-10-01]
 
@@ -438,7 +438,7 @@
   %         #2=file family (quote, abstract, chapter, etc)
   %         #3=optional file lang
   %         #4=filename
-  % \typeout{NT addtolist [#1] [#2] [#3] [#4]}%
+  % \typeout{NT ADDTOLIST [#1] [#2] [#3] [#4]}%
   \StrLeft{#4}{1}[\@nt@firstchar]%
   \IfStrEqCase{\@nt@firstchar}{%
     {/}{\xdef\@nt@filewithpath{#4}}%
@@ -448,7 +448,7 @@
     \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}%
   ]%
   \@for\i:=\expanded{#3}\do{%
-    % \typeout{NT addtolist [#1] [#2] [\i] [#4]}\NTaddtolist%
+    % \typeout{NT ADDTOLIST [#1] [#2] [#3] [#4]}%
     \options{/@nt/#1/#2/\i/.expanded/.cpush={\@nt@filewithpath}}%
   }%
 }
@@ -702,6 +702,8 @@
     \options{/novathesis/abstract/deforder=default}%
   \fi
   \ntsetup{setabstractorder=\expanded{\option{/novathesis/abstract/deforder}}}%
+  % \letoptionlist{/novathesis/abstract/theorder}{\@abst@rder@langs}%
+  % \typeout{ABSTRACT/THEORDER [\@abst@rder@langs]}\ABSTRACTTHEORDER
 }{}
 
 %============================================================
@@ -2162,15 +2164,14 @@
   \else
     \options{/novathesis/abstract/deforder=default}%
   \fi
-  % \typeout{NTL=[\languagename] {\@LANG@MAIN}{\@abst@rder@langs} {\option{/novathesis/abstract/theorder}}}\AAAAAAA
-  \@for\listitem:=\expanded{\option{/novathesis/abstract/theorder}}\do{\@ntprintabstract{\listitem}}%
-  % \typeout{NTL=\languagename}\cccc
-  % \ntselectlang{\@LANG@MAIN}%
+  \ntsetup{setabstractorder=\expanded{\option{/novathesis/abstract/deforder}}}%
+  \optionlistdo{/novathesis/abstract/theorder}{\@ntprintabstract{##1}}
 }
 
 \newcommand{\@ntprintabstract}[1]{%
-  % \typeout{NT PRINT ABSTRACT=[#1]}\aaaa%
+  % \typeout{NT PRINT ABSTRACT=[#1]}\NTPRINTABSTRACT%
   \iffileadded[#1]{abstract}{%
+    % \typeout{NT PRINT ABSTRACT 2=[#1]}\NTPRINTABSTRACT%
     \begingroup
       % \typeout{NT PRINT ABSTRACT #1}\bbbb
       \StrCut{#1}{-}\@ABS@LANG\@dummy%
