@@ -26,9 +26,8 @@
   % \typeout{KEY SET DEF (/novathesis/babel/\@ntslang/\@ntskey)=[\@ntsval]}%
   \ifoptiondefined{/novathesis/babel/\@ntslang/\@ntskey}{%
     \option@undef{/novathesis/babel/\@ntslang/\@ntskey}%
-  }{%
-    \options{/novathesis/babel/\@ntslang/keys/.expanded/.cpush = \@ntskey}%
-  }%
+  }{}%
+  \options{/novathesis/babel/\@ntslang/keys/.expanded/.cpush = \@ntskey}%
   \options{/novathesis/babel/\@ntslang/\@ntskey/.expanded/.new value = \@ntsval}%
 }
 \newcommand{\ntlangsetupifndef}[1]{%
@@ -83,6 +82,14 @@
 %   }%
 % \fi
 
+% For compatibility with Babel version < 3.51
+\ifcsname setlocalecaption\endcsname\else
+  \newcommand*{\setlocalecaption}[3]{%
+    % \typeout{SETLOCALECAPTION [#1] [#2] [#3]}\SETLOCALECAPTION
+    \expandafter\addto\csname captions#1\endcsname{\csdef{#2name}{#3}}%
+  }%
+\fi
+
 \optionlistdo{/@nt/lang/loaded}{%
   \options{/@nt/lang/shorttolong=#1}%
   \edef\@ltu{\option{/@nt/lang/shorttolong}}%
@@ -90,8 +97,8 @@
   \optionlistdo{/novathesis/babel/#1/keys}{%
     % \typeout{KEY(#1)=[##1=\option{/novathesis/babel/#1/##1}]}%
     % \typeout{KEY SET2 (#1/##1)=[\option{/novathesis/babel/#1/##1}]}\KEYSETTWO%
-    \expandnextsingle\addto{\csname captions\@ltu\endcsname}%
-                           {\csdef{##1}{\option{/novathesis/babel/#1/##1}}}%
+    % \expandnextsingle\addto{\csname captions\@ltu\endcsname}%
+    %                        {\csdef{##1}{\option{/novathesis/babel/#1/##1}}}%
     % \typeout{KEY SET3={\@ltu}{##1}{\option{/novathesis/babel/#1/##1}}}\KEYSETHREE%
     \setlocalecaption{\@ltu}{##1}{\option{/novathesis/babel/#1/##1}}%
   }%
