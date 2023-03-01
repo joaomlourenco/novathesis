@@ -25,7 +25,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: main
-          token: ${{ secrets.REPO_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Compile the LaTex template
         uses: xu-cheng/texlive-action/full@v1
         with:
