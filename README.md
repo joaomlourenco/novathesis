@@ -46,11 +46,11 @@
 The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathesis/) is an Open Source project for writing thesis, dissertations, and other monograph-like documents, which…
 
 * **Is very easy to use for the LaTeX beginners:**
-    * Just fill the cover data and your chapters with text!
+    * Just select the School, provide the cover info, your chapters with text… and you're done!
 * **Is flexible and adaptable for the LaTeX experts:**
     * It's LaTeX!  What would you expect?! 😉
-* **Includes dozens of options that answer the requests from the large user's community (1000's users):**
-    * e.g., multiple chapter styles, multiple font styles, automatic book spine generation, …
+* **Includes dozens of options that answer the requests from the very large user's community (1000's users):**
+    * E.g., multiple chapter styles, multiple font styles, automatic book spine generation, …
 * **Supports multiples schools:**
     * Currently supports +20 Schools, drawing the covers and typesetting the text according to the rules  of each School.
 
@@ -66,23 +66,23 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
 *See “[minimal installation](minimal_installation)” for instructions on how to build/use a minimal installation of LaTeX (<100 MB vs. 5GB for tex-live), which is just enough to compile the template successfully*
 
 1. Download LaTeX:
-	* **Windows:** install either [MikTeX](https://miktex.org) or [TeX-Live](https://www.tug.org/texlive/).
-	* **Linux:** install [TeX-Live](https://www.tug.org/texlive/).
-	* **macOS:** install [MacTeX](https://www.tug.org/mactex/) (a macOS version of [TeX-Live](https://www.tug.org/texlive/)).
+	* **Windows:** install [TeX-Live](https://www.tug.org/texlive/) or [MikTeX](https://miktex.org).
+	* **Linux:** install [TeX-Live](https://www.tug.org/texlive/) or [MikTeX](https://miktex.org).
+	* **macOS:** install [MacTeX](https://www.tug.org/mactex/) (a macOS version of [TeX-Live](https://www.tug.org/texlive/)) or [MikTeX](https://miktex.org).
 2. Download “novathesis” by either:
 	* Cloning the [GitHub repository](https://github.com/joaomlourenco/novathesis) with <kbd>git clone --depth=1 https://github.com/joaomlourenco/novathesis.git</kbd>; or
 	* Downloading the [latest version from the GitHub repository as a Zip file](https://github.com/joaomlourenco/novathesis/archive/main.zip)
 3. Compile the document with you favorite LaTeX processor (pdfLaTeX, XeLaTeX or LuaLaTeX):
 	* The main file is named “*template.tex*”.  
 	* Either load it in your favorite [LaTeX text editor](https://en.wikipedia.org/wiki/Comparison_of_TeX_editors) or compile it in the terminal with
-<kbd>latexmk -pdf template</kbd>.  If you use a LaTeX text editor, please notice that the NOVAthesis template uses `biber`and not `bibtex` to process the bibliography, which means that most probably you have to open the _Editor Preferences_ and somewhere (depends on the Editor) chage `bibtex`to `biber`.
+<kbd>latexmk -shell-escape -file-line-error  -pdf template</kbd>.  If you use a LaTeX text editor, please notice that the NOVAthesis template uses `biber`and not `bibtex` to process the bibliography, which means that most probably you have to open the _Editor Preferences_ and somewhere (depends on the Editor) change `bibtex`to `biber`.
 	* If Murphy is elsewhere, LaTeX will create the file “`template.pdf`”, which you may open with your favorite PDF viewer.
 4. Edit the files in the “*Config*” folder:
 
 | File                      | Contents                                                           |
 |---------------------------|--------------------------------------------------------------------|
 | `0_memoir.tex`            | Options specific for the `memoir` package.  _Don't touch this file unless you know what you are doing!_                                                                              |
-| `1_novathesis.tex`        | Configure the template, i.e., the document type, the school, etc.  |
+| `1_novathesis.tex`        | Configure the template, i.e., the document type, the school, the used languages, etc.  |
 | **`2_biblatex.tex`**      | **Configure the bibliography.**                                        |
 | **`3_cover.tex`**         | **Configure cover contents (e.g., author's name, thesis/dissertation title, advisers, committee, etc)**                                                                        |
 | **`4_files.tex`**         | **Configure the the files for chapters, appendices, annexes, etc…**     |
@@ -103,7 +103,7 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
 
 *[See above](#with-a-local-latex-installation) for using a local installation of LaTeX*
 
-*NOVAthesis v6.5.3 is available as an [Overleaf template](https://www.overleaf.com/latex/templates/novathesis-v6-dot-5-3/jhqwhtcwbmqc).  Just select <kbd>open as template</kbd> and follow from [step 3 above](#with-a-local-latex-installation)!*
+*NOVAthesis v6.10.10 is available as an [Overleaf template](https://www.overleaf.com/latex/templates/novathesis-v6-dot-10-dot-10/jhqwhtcwbmqc).  Just select <kbd>open as template</kbd> and follow from [step 3 above](#with-a-local-latex-installation)!*
 
 1. Download the [latest version from the GitHub repository as a Zip file](https://github.com/joaomlourenco/novathesis/archive/main.zip).
 2. Login to your favorite LaTeX cloud service.  I recommend [Overleaf](https://www.overleaf.com?r=f5160636&rm=d&rs=b) but there are alternatives (these instructions apply to Overleaf  and you'll have to adapt for other providers).
@@ -125,7 +125,8 @@ If you couldn't find what you were looking for, ask for help in:
 * The [Facebook page](https://www.facebook.com/groups/novathesis/) (PT or EN) at https://www.facebook.com/groups/novathesis.
 * You may also give a look at the [novathesis blog](https://novathesis.blogspot.pt) at [https://novathesis.blogspot.pt](https://novathesis.blogspot.pt).
 
-The [GitHub Discussions page](https://github.com/joaomlourenco/novathesis/discussions) and the [Facebook page](https://www.facebook.com/groups/novathesis/) are the right places to ask for help and support!  *Please don't try to contact me directly for questions or support, by email or any other channel! I will not answer such requests…*
+*Please don't try to contact me directly for questions or support, by email or any other channel! I will not answer such requests…*
+The [GitHub Discussions page](https://github.com/joaomlourenco/novathesis/discussions) and the [Facebook page](https://www.facebook.com/groups/novathesis/) are the right places to ask for help and support!  
 
 ### Suggestions, Bugs and Feature Requests
 
