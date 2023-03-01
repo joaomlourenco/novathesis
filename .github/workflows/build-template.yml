@@ -18,6 +18,7 @@ permissions: write-all
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.actor != 'my_bot_account'
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3.3.0
