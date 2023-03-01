@@ -2100,14 +2100,6 @@
   \setmarginnotes{0pt}{0pt}{0pt}%
   \checkandfixthelayout[fixed]%
   %
-  %
-  % \settrimmedsize{#2}{#1}{*}%
-  % \settrims{0pt}{0pt}
-  % \setlrmarginsandblock{0pt}{0pt}{*}%
-  % \setulmarginsandblock{0pt}{*}{1}%
-  % \setheadfoot{0pt}{0pt}%
-  % \setheaderspaces{0pt}{*}{*}%
-  % \checkandfixthelayout%
   \ifluatex%
     \pageheight=\stockheight% \pageheight=3in
     \pagewidth=\stockwidth% \pageheight=3in
