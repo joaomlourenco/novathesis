@@ -22,7 +22,9 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3.3.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+          ref: main
+          token: ${{ secrets.REPO_TOKEN }}
       - name: Compile the LaTex template
         uses: xu-cheng/texlive-action/full@v1
         with:
