@@ -8,8 +8,6 @@ on:
 
 env:
   VERSION_FILE: NOVAthesisFiles/nt-version.sty
-  ROW_VERSION: 1
-  START_POS_VERSION: 33
   EMAIL_GITHUB: joao.lourenco@fct.unl.pt
   USERNAME_GITHUB: joaomlourenco
 
@@ -18,14 +16,18 @@ permissions: write-all
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.actor != 'my_bot_account'
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3
         with:
-          fetch-depth: 0
           ref: main
-          token: ${{ secrets.REPO_TOKEN }}
-      - name: Compile the LaTex template
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract version number from nt-version.sty
+        run: |
+          version=$(grep novathesisversion $VERSION_FILE | cut -d "{" -f2 | cut -d "}" -f1)
+          echo "Version number is $version"
+      - name: Compile the LaTeX template
         uses: xu-cheng/texlive-action/full@v1
         with:
           run: bash .Build/build.sh
@@ -38,8 +40,6 @@ jobs:
         run: |
           git config --global user.email "$EMAIL_GITHUB"
           git config --global user.name "$USERNAME_GITHUB"
-          row=$(head -n$ROW_VERSION $VERSION_FILE)
-          version="${row:$START_POS_VERSION:-1}"
           git add -f template.pdf
           git commit -m "Version $version"
           git push
