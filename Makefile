@@ -1,6 +1,5 @@
-
-#SILENT;="-silent"
-SILENT:="-interaction=batchmode"
+#SILENT:="-silent"
+SILENT:=-interaction=batchmode
 SYNCTEX:=1
 
 TEXVERSIONS=$(shell ls /usr/local/texlive/ | fgrep -v texmf-local)
