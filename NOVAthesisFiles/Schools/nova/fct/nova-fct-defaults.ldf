@@ -39,17 +39,22 @@
 \thesiscover(1-1,textcolor):={white}
 \thesiscover(2-1,textcolor):={black}
 
+% DEFAULT cover
+\thesiscover(1-1,image):={nova-fct-red-cover}
+\thesiscover(N-2,image):={nova-fct-red-cover-back}
+\thesiscover(spine,image):={nova-fct-red-spine}
+
+% PhD cover
 \thesiscover(phd,1-1,image):={nova-fct-phd-cover}
 \thesiscover(phd,N-2,image):={nova-fct-phd-cover-back}
 \thesiscover(phd,spine,image):={nova-fct-phd-spine}
 
-% \thesiscover(msc,1-1,bgcolor):={black}
-% \thesiscover(msc,1-1,textcolor):={white}
-% \thesiscover(msc,2-1,textcolor):={black}
+% MSc cover
 \thesiscover(msc,1-1,image):={nova-fct-msc-cover}
 \thesiscover(msc,N-2,image):={nova-fct-msc-cover-back}
 \thesiscover(msc,spine,image):={nova-fct-msc-spine}
 
+% BSc cover
 \thesiscover(bsc,1-1,image):={nova-fct-bsc-cover}
 \thesiscover(bsc,N-2,image):={nova-fct-bsc-cover-back}
 \thesiscover(bsc,spine,image):={nova-fct-bsc-spine}

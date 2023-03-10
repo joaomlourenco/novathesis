@@ -709,7 +709,7 @@
   % #1 = ignored
   % #1 = lang
   % #2 = value
-  \datamatch{\match}{degreenameprefix}(%
+  \datamatchtf{\match}{degreenameprefix}(%
             {\option{/novathesis/docdegree},%
              \option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
              \option{/novathesis/coverlang}},%
@@ -721,8 +721,8 @@
             {\option{/novathesis/docdegree},\option{/novathesis/coverlang}},%
             {\option{/@nt/document/docclass},\option{/novathesis/coverlang}},%
             {\option{/novathesis/coverlang}}%
-  )%
-  \ifblank{\match}{\degreename(#1):={#2}}{\degreename(#1):={\match\ #2}}%
+  ){}{}%
+  \IfStrEq{\match}{}{\degreename(#1):={#2}}{\degreename(#1):={\match\ #2}}%
   \majorfield(#1):={#2}%
 }
 % --------------------------------------------------------
