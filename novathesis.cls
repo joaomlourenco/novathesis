@@ -810,13 +810,17 @@
 
 %--------------------------------
 % “glossasries” stuff - after hyperref
+\ifoptioncontains{/novathesis/lang/extra}{gr}{%
+  \PassOptionsToPackage{xindy={language=\@LANG@MAIN@LONG}}{glossaries-extra}
+}{}
+
 \RequirePackage[%
   % , nonumberlist
   translate=babel,
   acronym,           % add acronyms listing
   symbols,           % add symbols listing
   % sanitizesort=false, % allow \gls inside descriptions
-  xindy={language=\@LANG@MAIN@LONG},
+  % xindy={language=\@LANG@MAIN@LONG},
   nolong,
   nosuper,
   nolist,
@@ -847,12 +851,12 @@
 \newcommand*{\@nt@loadlangs}[1]{%
   \optionlistdo{/novathesis/#1}{%
       % \typeout{LL=##1}\LL
-      \InputIfFileExists{NOVAthesisFiles/Strings/strings-##1.ldf}%
-                        {\if\instring{,##1,}{,\@LANG@LOADED,}\else
-                          \eappto{\@LANG@LOADED}{\@langs@loaded@sep##1}\def\@langs@loaded@sep{,}\fi%
-                        }%
+      \if\instring{,##1,}{,\@LANG@LOADED,}\else%
+        \InputIfFileExists{NOVAthesisFiles/Strings/strings-##1.ldf}%
+                        {\eappto{\@LANG@LOADED}{\@langs@loaded@sep##1}\def\@langs@loaded@sep{,}}%
                         {\ClassError{novathesis}{File not found: “NOVAthesisFiles/Strings/strings-##1.ldf” file!}%
                                                 {Add a file with the translations for this language.}}%
+      \fi%
   }%
 }
 \@nt@loadlangs{abstract/theorder}
@@ -2301,7 +2305,7 @@
 }
 
 \newcommand*{\@loadglossaryfiles}{%
-  \@for\listitem:={glossary,acronyms,symbols}\do{%
+  \@for\listitem:={glossary,acronym,symbols}\do{%
     \iffileadded[\listitem]{glossaries}{\@nt@loadallfiles{\listitem}{glossaries}}{}%
   }%
 }
