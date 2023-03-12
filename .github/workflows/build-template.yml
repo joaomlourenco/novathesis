@@ -25,7 +25,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Extract version number from nt-version.sty
         run: |
-          version=$(grep novathesisversion $VERSION_FILE | cut -d "{" -f2 | cut -d "}" -f1)
+          version=$(grep novathesisversion $VERSION_FILE | cut -d "{" -f3 | cut -d "}" -f1)
           echo "Version number is $version"
       - name: Compile the LaTeX template
         uses: xu-cheng/texlive-action/full@v1
