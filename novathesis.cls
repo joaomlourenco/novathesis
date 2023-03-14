@@ -137,9 +137,9 @@
   docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
   media/.new choice             = {screen, paper},
   spine/.new choice             = {unset, no, full, trim},
-  abstract/deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
-  abstract/theorder/.new list   = {unset},
-  setabstractorder/.new cmd        = {\optionsalso{/novathesis/abstract/theorder={#1}}},%
+  % abstract/deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
+  % abstract/theorder/.new list   = {unset},
+  % setabstractorder/.new cmd        = {\optionsalso{/novathesis/abstract/theorder={#1}}},%
   % SCHOOL
   school/univ/.new value        = {},
   school/schl/.new value        = {},
@@ -595,14 +595,7 @@
 
 % For each main language, list which abstracts shall be printed and in which order
 % may have more than two (just be sure you include the languages above as well)
-% \newdata{setabstractorder}
-% \setabstractorder(pt):={pt,en}
-% \setabstractorder(en):={en,pt}
-% \setabstractorder(fr):={fr,en}
-% \setabstractorder(it):={it,en}
-% \setabstractorder(es):={es,en}
-% \setabstractorder(de):={de,en}
-% \setabstractorder(gr):={gr,en}
+\newdata{abstractorder}
 
 
 
@@ -694,17 +687,21 @@
 \bkmstring(spine)={\thebkmstring(spine,\@LANG@COVER)}
 % \NTRunHook{novathesis}
 
-\ifoptioncontains{/novathesis/abstract/theorder}{unset}{%
-  \letoptionchoices{/novathesis/abstract/deforder}{\@abst@rder@langs}%
-  \if\instring{,\@LANG@MAIN,}{,\@abst@rder@langs,}%
-    \options{/novathesis/abstract/deforder=\@LANG@MAIN}%
-  \else
-    \options{/novathesis/abstract/deforder=default}%
-  \fi
-  \ntsetup{setabstractorder=\expanded{\option{/novathesis/abstract/deforder}}}%
-  % \letoptionlist{/novathesis/abstract/theorder}{\@abst@rder@langs}%
-  % \typeout{ABSTRACT/THEORDER [\@abst@rder@langs]}\ABSTRACTTHEORDER
-}{}
+% \ifoptioncontains{/novathesis/abstract/theorder}{unset}{%
+%   \letoptionchoices{/novathesis/abstract/deforder}{\@abst@rder@langs}%
+%   \if\instring{,\@LANG@MAIN,}{,\@abst@rder@langs,}%
+%     \options{/novathesis/abstract/deforder=\@LANG@MAIN}%
+%   \else
+%     \options{/novathesis/abstract/deforder=default}%
+%   \fi
+%   \ntsetup{setabstractorder=\expanded{\option{/novathesis/abstract/deforder}}}%
+%   % \letoptionlist{/novathesis/abstract/theorder}{\@abst@rder@langs}%
+%   % \typeout{ABSTRACT/THEORDER [\@abst@rder@langs]}\ABSTRACTTHEORDER
+% }{}
+
+\abstractorder(\@LANG@MAIN):={\@LANG@MAIN,en}
+\abstractorder(en):={en,pt}
+
 
 %============================================================
 % BIBLATEX CUSTOMIZATION
@@ -848,18 +845,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\@LANG@LOADED{}
 \def\@langs@loaded@sep{}
-\newcommand*{\@nt@loadlangs}[1]{%
-  \optionlistdo{/novathesis/#1}{%
-      % \typeout{LL=##1}\LL
-      \if\instring{,##1,}{,\@LANG@LOADED,}\else%
-        \InputIfFileExists{NOVAthesisFiles/Strings/strings-##1.ldf}%
-                        {\eappto{\@LANG@LOADED}{\@langs@loaded@sep##1}\def\@langs@loaded@sep{,}}%
-                        {\ClassError{novathesis}{File not found: “NOVAthesisFiles/Strings/strings-##1.ldf” file!}%
+\newcommand*{\@nt@loadlang}[1]{%
+      % \typeout{LL=#1}\LL
+      \if\instring{,#1,}{,\@LANG@LOADED,}\else%
+        \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
+                        {\eappto{\@LANG@LOADED}{\@langs@loaded@sep#1}\def\@langs@loaded@sep{,}}%
+                        {\ClassError{novathesis}{File not found: “NOVAthesisFiles/Strings/strings-#1.ldf” file!}%
                                                 {Add a file with the translations for this language.}}%
       \fi%
-  }%
 }
-\@nt@loadlangs{abstract/theorder}
+\newcommand*{\@nt@loadlangs}[1]{%
+  \optionlistdo{/novathesis/#1}{\@nt@loadlang{##1}}%
+}
+\@for\myi:=\expanded{\theabstractorder(\@LANG@MAIN)}\do{\@nt@loadlang{\myi}}
 \@nt@loadlangs{lang/extra}
 % \letoptionlist{/@nt/lang/loaded}\LANGLOADED
 % \typeout{LANGLOADED=\@LANG@LOADED}\LLLLL
@@ -2154,20 +2152,21 @@
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
-  \letoptionchoices{/novathesis/abstract/deforder}{\@abst@rder@langs}%
-  \if\instring{,\@LANG@MAIN,}{,\@abst@rder@langs,}%
-    \options{/novathesis/abstract/deforder=\@LANG@MAIN}%
-  \else
-    \options{/novathesis/abstract/deforder=default}%
-  \fi
-  \ntsetup{setabstractorder=\expanded{\option{/novathesis/abstract/deforder}}}%
-  \optionlistdo{/novathesis/abstract/theorder}{\@ntprintabstract{##1}}
+  % \letoptionchoices{/novathesis/abstract/deforder}{\@abst@rder@langs}%
+  % \if\instring{,\@LANG@MAIN,}{,\@abst@rder@langs,}%
+  %   \options{/novathesis/abstract/deforder=\@LANG@MAIN}%
+  % \else
+  %   \options{/novathesis/abstract/deforder=default}%
+  % \fi
+  % \ntsetup{setabstractorder=\expanded{\option{/novathesis/abstract/deforder}}}%
+  % \optionlistdo{/novathesis/abstract/theorder}{\@ntprintabstract{##1}}
+  \@for\myi:=\expanded{\theabstractorder(\@LANG@MAIN)}\do{\@ntprintabstract{\myi}}%
 }
 
 \newcommand{\@ntprintabstract}[1]{%
-  % \typeout{NT PRINT ABSTRACT=[#1]}\NTPRINTABSTRACT%
+  % \typeout{NT PRINT ABSTRACT=[#1]}\NTPRINTABSTRACT@I%
   \iffileadded[#1]{abstract}{%
-    % \typeout{NT PRINT ABSTRACT 2=[#1]}\NTPRINTABSTRACT%
+    % \typeout{NT PRINT ABSTRACT 2=[#1]}\NTPRINTABSTRACT@II
     \begingroup
       % \typeout{NT PRINT ABSTRACT #1}\bbbb
       \StrCut{#1}{-}\@ABS@LANG\@dummy%
