@@ -355,10 +355,10 @@
 }
 
 \NTAddToHook{abstract/pre}{%
-  % \typeout{ABSTRACT/PRE/\option{/@nt/lang/current}}\aaa
+  % \typeout{ABSTRACT/PRE/\@LSHORT}\aaa
   \let\oldchapterheadstart=\chapterheadstart%
   \preto{\chapterheadstart}%
-  {\begin{center}\noindent\Large\bfseries\MakeTextUppercase{\thedoctitle(\option{/@nt/lang/current},main)}\end{center}\bigskip}%
+  {\begin{center}\noindent\Large\bfseries\MakeTextUppercase{\thedoctitle(\@LSHORT,main)}\end{center}\bigskip}%
 }
 
 \NTAddToHook{abstract/post}{%
@@ -470,14 +470,14 @@
 \ifdocfinal{
   \ntaddtocover[halign=j]{2-2}{%
     \ntfor\match:={%
-      NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement-\option{/novathesis/lang/main}.tex,%
-      NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex%
+      NOVAthesisFiles/Schools/\@UNIV/\@SCHL/statement-\option{/novathesis/lang/main}.tex,%
+      NOVAthesisFiles/Schools/\@UNIV/\@SCHL/statement.tex%
     }\do{\IfFileExists{\match}{\input{\match}\ntforbreak}{}}%
     [%
-      \ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” nor “NOVAthesisFiles/Schools/\@nt@univ”}{}
+      \ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} in folders “NOVAthesisFiles/Schools/\@UNIV/\@SCHL” nor “NOVAthesisFiles/Schools/\@UNIV”}{}
     ]%
-    % \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}{}%
-        % {\PackageWarning{novathesis}{Missing statement file “statement.tex” for ”\@nt@univ/\@nt@schl”}}
+    % \InputIfFileExists{NOVAthesisFiles/Schools/\@UNIV/\@SCHL/statement.tex}{}%
+        % {\PackageWarning{novathesis}{Missing statement file “statement.tex” for ”\@UNIV/\@SCHL”}}
   }%
 }
 

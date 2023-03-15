@@ -21,17 +21,11 @@
 % LICENSING
 %------------------------------------------------------------------
 
-% Convert copyright language from two letters to language name
-\options{/@nt/lang/shorttolong=\option{/novathesis/lang/copyright}}
-
-\PassOptionsToPackage{lang=\option{/@nt/lang/shorttolong}}{doclicense}
-\PassOptionsToPackage{modifier=\option{/novathesis/uminho/copyrightmodifier}}{doclicense}
-
 %%%%%%%%% Important package for the licensing.
 \RequirePackage[
     type={CC},
-    % lang=portuguese,
-    % modifier={by-nc-sa},
+    lang=\@LANG@COPYRIGHT,
+    modifier=\option{/novathesis/uminho/copyrightmodifier},
     version={4.0},
 ]{doclicense} % By default english is used, however  is necessary to
 % explicity define the language if the license is in portuguese. The

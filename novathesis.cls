@@ -131,6 +131,18 @@
 % PROCESS PACKAGE OPTIONS
 \def\splitbyslash#1/#2\relax#3#4{\edef#3{#1}\edef#4{#2}}
 
+\def\@nt@saveabstractorder{}
+\newcommand{\@setabstractorder}{%
+  % \typeout{SAVEABSORDER=[\@nt@saveabstractorder]}\SAVEABSORDER%
+  \StrGobbleRight{\@nt@saveabstractorder}{1}[\@nt@saveabstractorder]%
+  \@for\myi:=\@nt@saveabstractorder\do{%
+    \StrCut{\myi}{=}\@nt@key\@nt@val%
+    \IfStrEq{\@nt@val}{}{\edef\@nt@val{\@nt@key}\def\@nt@key{\@LANG@MAIN}}{}%
+    % \typeout{SETABSORDER (\@nt@key):=[\@nt@val]}\SETABSORDER%
+    \abstractorder(\@nt@key):={\@nt@val}%
+  }%
+}
+
 \options{/novathesis/.new family,
   % DOCUMENT
   doctype/.new choice           = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
@@ -139,7 +151,7 @@
   spine/.new choice             = {unset, no, full, trim},
   % abstract/deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
   % abstract/theorder/.new list   = {unset},
-  % setabstractorder/.new cmd        = {\optionsalso{/novathesis/abstract/theorder={#1}}},%
+  setabstractorder/.new cmd        = {\appto\@nt@saveabstractorder{{#1},}},%
   % SCHOOL
   school/univ/.new value        = {},
   school/schl/.new value        = {},
@@ -325,7 +337,7 @@
   \@ifnextchar[{\@nt@InputIfFileExists@i{#1}#2}{\@nt@InputIfFileExists@i{#1}#2[]}%
 }
 \def\@nt@InputIfFileExists@i#1#2[#3]{%
-  % \typeout{IIFE 1=[#1] 2=[#2] 3=[#3]}\aaaa
+  % \typeout{INPUTIFFILEEXISTS 1=[#1] 2=[#2] 3=[#3]}\INPUTIFFILEEXISTS
   \@ifnextchar[{\@nt@InputIfFileExists@ii{#1}#2[#3]}{\@nt@InputIfFileExists@ii{#1}#2[#3][]}%
 }
 \def\@nt@InputIfFileExists@ii#1#2[#3][#4]{
@@ -336,13 +348,21 @@
 
 \options{/@nt/.new family,
   lang/short/.new list={en, pt, fr, it, de, es, gr},
-  lang/current/.new choice={en, pt, fr, it, de, es, gr},
+  % lang/current/.new choice={en, pt, fr, it, de, es, gr},
   lang/loaded/.new list={},
-  lang/shorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish, gr=greek},
+  % lang/shorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish, gr=greek},
   fontenc/.new choice={en=T1, pt=T1, fr=T1, it=T1, de=T1, es=T1, gr=LGR},
   biblatex/.new list,
 }
 
+\newdata{langlong}
+\langlong(en):={english}
+\langlong(pt):={portuguese}
+\langlong(fr):={french}
+\langlong(it):={italian}
+\langlong(de):={german}
+\langlong(es):={spanish}
+\langlong(gr):={greek}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE FOLDERS PER CLASS
@@ -404,9 +424,9 @@
   % #4={person name, position, etc}
   \noexpandarg
   \StrCut{#4}{,}\@nt@personname\@nt@dummy%was xStrCut
-  \options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
-  \options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
-  \options{/@nt/#1/#2/gender/.cpush={#3}}%
+  \options{/@nt/#1/#2/name/.expanded/.newpush={\@nt@personname}}%
+  \options{/@nt/#1/#2/full/.expanded/.newpush={#4}}%
+  \options{/@nt/#1/#2/gender/.newpush={#3}}%
   % \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
   \fullexpandarg
 }
@@ -447,9 +467,9 @@
     \options{/@nt/folders=#2}%
     \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}%
   ]%
-  \@for\i:=\expanded{#3}\do{%
+  \@for\myi:=\expanded{#3}\do{%
     % \typeout{NT ADDTOLIST [#1] [#2] [#3] [#4]}%
-    \options{/@nt/#1/#2/\i/.expanded/.cpush={\@nt@filewithpath}}%
+    \options{/@nt/#1/#2/\myi/.expanded/.newpush={\@nt@filewithpath}}%
   }%
 }
 
@@ -466,9 +486,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntselectlang}[1]{%
   % #1=lang {pt, en, fr, it}
-  \options{/@nt/lang/current=#1}%
-  \options{/@nt/lang/shorttolong=#1}%
-  \expandafter\selectlanguage\expandafter{\expanded{\option{/@nt/lang/shorttolong}}}%
+  \gdef\@LSHORT{#1}%
+  \xdef\@LLONG{\thelanglong(#1)}%
+  \selectlanguage{\@LLONG}%
+  % \options{/@nt/lang/current=#1}%
+  % \options{/@nt/lang/shorttolong=#1}%
+%%  \expandafter\selectlanguage\expandafter{\expanded{\option{/@nt/lang/shorttolong}}}%
+  % \expandnextsingle\selectlanguage{\expanded{\option{/@nt/lang/shorttolong}}}
 }
 
 
@@ -619,7 +643,7 @@
                      {\options{/novathesis/\@nt@univ/\@nt@schl/#2}}{%
     \ifoptiondefined{/novathesis/\@ntopt}%
                     {\options{/novathesis/#2}}{%
-    \ClassError{Invalid class option: \@ntopt}{}{}}}}}}%
+    \ClassError{novathesis}{Invalid class option: \@ntopt}{}{}}}}}}%
 }
 
 \newcommand*{\ntbibsetup}[1]{%
@@ -627,7 +651,7 @@
   % {\options{/@nt/biblatex/.push={#1}}}%
 }
 
-\newcommand*{\NTAddToHook}[2]{\options{/@nt/hook/#1/.cpush={#2}}}
+\newcommand*{\NTAddToHook}[2]{\options{/@nt/hook/#1/.newpush={#2}}}
 
 \newcommand*{\NTRunHook}[1]{\optionlistdo{/@nt/hook/#1}{##1}}
 
@@ -676,8 +700,7 @@
 \def\@LANG@COVER{\option{/novathesis/lang/cover}}
 \def\@LANG@COPYRIGHT{\option{/novathesis/lang/copyright}}
 \def\@LANG@MAIN{\option{/novathesis/lang/main}}
-\options{/@nt/lang/shorttolong=\@LANG@MAIN}%
-\edef\@LANG@MAIN@LONG{\option{/@nt/lang/shorttolong}}
+\def\@LANG@MAIN@LONG{\thelanglong(\@LANG@MAIN)}
 
 \def\@DEGREEACR{\option{/novathesis/degreeacr/\@DOCCLASS}}
 
@@ -685,22 +708,14 @@
 \bkmstring(2-1)={\thebkmstring(frontpage,\@LANG@COVER)}
 \bkmstring(N-2)={\thebkmstring(backcover,\@LANG@COVER)}
 \bkmstring(spine)={\thebkmstring(spine,\@LANG@COVER)}
-% \NTRunHook{novathesis}
 
-% \ifoptioncontains{/novathesis/abstract/theorder}{unset}{%
-%   \letoptionchoices{/novathesis/abstract/deforder}{\@abst@rder@langs}%
-%   \if\instring{,\@LANG@MAIN,}{,\@abst@rder@langs,}%
-%     \options{/novathesis/abstract/deforder=\@LANG@MAIN}%
-%   \else
-%     \options{/novathesis/abstract/deforder=default}%
-%   \fi
-%   \ntsetup{setabstractorder=\expanded{\option{/novathesis/abstract/deforder}}}%
-%   % \letoptionlist{/novathesis/abstract/theorder}{\@abst@rder@langs}%
-%   % \typeout{ABSTRACT/THEORDER [\@abst@rder@langs]}\ABSTRACTTHEORDER
-% }{}
-
-\abstractorder(\@LANG@MAIN):={\@LANG@MAIN,en}
-\abstractorder(en):={en,pt}
+\@setabstractorder
+\ifdatadefined{abstractorder}(en){}{%
+  \abstractorder(en):={en,pt}
+}
+\ifdatadefined{abstractorder}(\@LANG@MAIN){}{%
+  \abstractorder(\@LANG@MAIN):={\@LANG@MAIN,en}
+}
 
 
 %============================================================
@@ -724,19 +739,17 @@
 \RequirePackage{url}
 \RequirePackage{xstring}
 
-\RequirePackage[english]{babel}      % Support for multilingual documents
 \RequirePackage{tikz}
 
-\RequirePackage{translator} % Support month name translations for pgfcalendar
 % \newcommand{\definelanguagealias}[2]{%
 %   \@namedef{languagealias@#1}{#2}%
 % }
 % \definelanguagealias{portuguese}{portuguese}
 % \letoptionchoices{/@nt/lang/shorttolong}\opt@choices
-% \@for\i:=\opt@choices\do{%
-%   \options{/@nt/lang/shorttolong=\i}
-%   \typeout{CHOICE [\i, \option{/@nt/lang/shorttolong}]}%
-%   \definelanguagealias{\expanded{\i}}{\expanded{\option{/@nt/lang/shorttolong}}}%
+% \@for\myi:=\opt@choices\do{%
+%   \options{/@nt/lang/shorttolong=\myi}
+%   \typeout{CHOICE [\myi, \option{/@nt/lang/shorttolong}]}%
+%   \definelanguagealias{\expanded{\myi}}{\expanded{\option{/@nt/lang/shorttolong}}}%
 % }
 
 % \RequirePackage{appendix}
@@ -744,20 +757,6 @@
 % \RequirePackage{printlen}
 % \uselengthunit{mm}\printlength{\linewidth}
 
-%%%%% Fine tuning of typesetting
-\ifxeorlua{}{% pdflatex
-  \RequirePackage[%
-    babel=true,
-    activate={true,nocompatibility},  % activate={true,nocompatibility} - activate protrusion and expansion
-    final,            % final - enable microtype; use "draft" to disable
-    tracking=true,    % tracking=true - activate this technique
-    kerning=true,     % kerning=true - activate this technique
-    spacing=true,     % spacing=true - activate this technique
-    factor=1100,      % factor=1100 - add 10% to the protrusion amount (default is 1000)
-    stretch=10,       % stretch=10 - reduce stretchability (default is 20)
-    shrink=10,        % shrink=10 - reduce shrinkability (default is 20)
-  ]{microtype}
-}
 
 %%%%% Better support for string manipulation
 
@@ -854,30 +853,57 @@
                                                 {Add a file with the translations for this language.}}%
       \fi%
 }
-\newcommand*{\@nt@loadlangs}[1]{%
-  \optionlistdo{/novathesis/#1}{\@nt@loadlang{##1}}%
-}
-\@for\myi:=\expanded{\theabstractorder(\@LANG@MAIN)}\do{\@nt@loadlang{\myi}}
-\@nt@loadlangs{lang/extra}
+\@for\myi:=\expanded{\@LANG@COVER,\@LANG@COPYRIGHT,\@LANG@MAIN,%
+                     \theabstractorder(\@LANG@MAIN)}\do{\@nt@loadlang{\myi}}
+\optionlistdo{/novathesis/lang/extra}{\@nt@loadlang{##1}}%
+
 % \letoptionlist{/@nt/lang/loaded}\LANGLOADED
 % \typeout{LANGLOADED=\@LANG@LOADED}\LLLLL
 \options{/@nt/lang/loaded/.expanded=\@LANG@LOADED}
-
-% --------------------------------------------------------
-% FIX BABEL TRANSLATION
-\input{NOVAthesisFiles/fix-babel.tex}
+% \typeout{LANGLOADED=\@LANG@LOADED}\LANG@LOADED
 
 % --------------------------------------------------------
 % BABEL STUFF
-\options{/@nt/lang/shorttolong=\@LANG@MAIN}%
-\PassOptionsToPackage{main=\option{/@nt/lang/shorttolong}}{babel}
-% \typeout{MAIN: [\@LANG@MAIN \option{/@nt/lang/shorttolong}]}\aaa
-\optionlistdo{/novathesis/lang/extra}{%
-  \options{/@nt/lang/shorttolong=#1}%
-  \PassOptionsToPackage{\option{/@nt/lang/shorttolong}}{babel}%
-  \PassOptionsToPackage{\option{/@nt/lang/shorttolong}}{translator}%
-  % \typeout{USED: [#1] [\option{/@nt/lang/shorttolong}] [\option{/@nt/fontenc}]}\bbb
+% \options{/@nt/lang/shorttolong=\@LANG@MAIN}%
+\PassOptionsToPackage{main=\@LANG@MAIN@LONG}{babel}
+\@for\myi:=\expanded{\@LANG@LOADED}\do{%
+  % \typeout{BABELLANG=\myi}\BABELLANG%
+  % \options{/@nt/lang/shorttolong=\myi}%
+  \PassOptionsToPackage{\thelanglong(\myi)}{babel}%
+  \PassOptionsToPackage{\thelanglong(\myi)}{translator}%
+}%
+
+% --------------------------------------------------------
+% FIX BABEL TRANSLATION
+\RequirePackage[english]{babel}      % Support for multilingual documents
+\RequirePackage{translator} % Support month name translations for pgfcalendar
+
+\input{NOVAthesisFiles/fix-babel.tex}
+
+%%%%% Fine tuning of typesetting
+\ifxeorlua{}{% pdflatex
+  \RequirePackage[%
+    babel=true,
+    activate={true,nocompatibility},  % activate={true,nocompatibility} - activate protrusion and expansion
+    final,            % final - enable microtype; use "draft" to disable
+    tracking=true,    % tracking=true - activate this technique
+    kerning=true,     % kerning=true - activate this technique
+    spacing=true,     % spacing=true - activate this technique
+    factor=1100,      % factor=1100 - add 10% to the protrusion amount (default is 1000)
+    stretch=10,       % stretch=10 - reduce stretchability (default is 20)
+    shrink=10,        % shrink=10 - reduce shrinkability (default is 20)
+  ]{microtype}
 }
+
+% \options{/@nt/lang/shorttolong=\@LANG@MAIN}%
+% \PassOptionsToPackage{main=\option{/@nt/lang/shorttolong}}{babel}
+% % \typeout{MAIN: [\@LANG@MAIN \option{/@nt/lang/shorttolong}]}\aaa
+% \optionlistdo{/novathesis/lang/extra}{%
+%   \options{/@nt/lang/shorttolong=#1}%
+%   \PassOptionsToPackage{\option{/@nt/lang/shorttolong}}{babel}%
+%   \PassOptionsToPackage{\option{/@nt/lang/shorttolong}}{translator}%
+%   % \typeout{USED: [#1] [\option{/@nt/lang/shorttolong}] [\option{/@nt/fontenc}]}\bbb
+% }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1000,20 +1026,20 @@
 % Adding list_of
 \newcommand*{\ntaddlistof}[2][]{%
   \IfStrEqCase{#2}{%
-    {tableofcontents}{\options{/@nt/list/listof/.cpush={%
+    {tableofcontents}{\options{/@nt/list/listof/.newpush={%
             \iftoggle{/novathesis/tocintoc}{\tableofcontents}%
                   {\pdfbookmark{\contentsname}{toctarget}%
                   \hypertarget{toctarget}{\tableofcontents*}}}}}%
-    {listoffigures*}{\options{/@nt/list/listof/.cpush={%
+    {listoffigures*}{\options{/@nt/list/listof/.newpush={%
             \pdfbookmark{\listfigurename}{loftarget}%
             \hypertarget{loftarget}{\listoffigures*}}}}%
-    {listoftables*}{\options{/@nt/list/listof/.cpush={%
+    {listoftables*}{\options{/@nt/list/listof/.newpush={%
             \pdfbookmark{\listtablename}{lottarget}%
             \hypertarget{lottarget}{\listoftables*}}}}%
-    {listoflistings}{\options{/@nt/list/listof/.cpush={%
+    {listoflistings}{\options{/@nt/list/listof/.newpush={%
             \pdfbookmark{\listoflistingscaption}{loltarget}%
             \hypertarget{loltarget}{\listoflistings}}}}%
-    {listofalgorithms}{\options{/@nt/list/listof/.cpush = {%
+    {listofalgorithms}{\options{/@nt/list/listof/.newpush = {%
             \listofalgorithms
             \ifdefined\listalgorithmname%
               \addcontentsline{toc}{chapter}{\listalgorithmname}%
@@ -1022,19 +1048,19 @@
             \else
               \ClassError{novathesis}{Can't make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
             \fi\fi}}}%
-    % {listsofglossaries}{\options{/@nt/list/listof/.cpush={%
+    % {listsofglossaries}{\options{/@nt/list/listof/.newpush={%
     %         \glstoctrue%
     %         % \iffileadded[glossary]{glossaries}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}%
     %         }}%
-    % {listsofglossaries*}{\options{/@nt/list/listof/.cpush={%
+    % {listsofglossaries*}{\options{/@nt/list/listof/.newpush={%
     %         \glstocfalse%
     %         % \iffileadded[glossary]{glossaries}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}%
     %         }}%
   }[%
             \if\relax\detokenize{#1}\relax
-              \options{/@nt/list/listof/.cpush={\ifdefmacro{#2}{#2}{\csuse{#2}}}}%
+              \options{/@nt/list/listof/.newpush={\ifdefmacro{#2}{#2}{\csuse{#2}}}}%
             \else
-              \options{/@nt/list/listof/.cpush={\ifdefmacro{#2}{#2[#1]}{\csuse{#2}[#1]}}}%
+              \options{/@nt/list/listof/.newpush={\ifdefmacro{#2}{#2[#1]}{\csuse{#2}[#1]}}}%
             \fi
    ]%
 }
@@ -1149,7 +1175,7 @@
   % #1 = cover atrtibutes
   % #2 = the block code
   % #3 = covers where the code block should be applied
-  \ntfor\arg:={#3}\do{\options{/@nt/cover/\@nt@univ/\@nt@schl/\arg/.cpush={{#1}\@nil{#2}}}}%
+  \ntfor\arg:={#3}\do{\options{/@nt/cover/\@nt@univ/\@nt@schl/\arg/.newpush={{#1}\@nil{#2}}}}%
 }
 
 
@@ -1519,20 +1545,20 @@
 \newcommand{\@ntmakeboxwithcover}[2]{%
   % #1 = cover ID (major-minor)
   % #2 = box name
-  \@for\i:={top,bottom,left,right}\do{%
-    \expandafter\datamatch\csname @nt@margin@\i\endcsname{margin}(%
-      {cover,\@DOCTYPE,\@DEGREEACR,#1,\i},%
-      {cover,\@DOCCLASS,\@DEGREEACR,#1,\i},%
-      {cover,\@DEGREEACR,#1,\i},%
-      {cover,\@DOCTYPE,\@DEGREEACR,\i},%
-      {cover,\@DOCCLASS,\@DEGREEACR,\i},%
-      {cover,\@DEGREEACR,\i},%
-      {cover,\@DOCTYPE,#1,\i},%
-      {cover,\@DOCCLASS,#1,\i},%
-      {cover,#1,\i},%
-      {cover,\@DOCTYPE,\i},%
-      {cover,\@DOCCLASS,\i},%
-      {cover,\i})%
+  \@for\myi:={top,bottom,left,right}\do{%
+    \expandafter\datamatch\csname @nt@margin@\myi\endcsname{margin}(%
+      {cover,\@DOCTYPE,\@DEGREEACR,#1,\myi},%
+      {cover,\@DOCCLASS,\@DEGREEACR,#1,\myi},%
+      {cover,\@DEGREEACR,#1,\myi},%
+      {cover,\@DOCTYPE,\@DEGREEACR,\myi},%
+      {cover,\@DOCCLASS,\@DEGREEACR,\myi},%
+      {cover,\@DEGREEACR,\myi},%
+      {cover,\@DOCTYPE,#1,\myi},%
+      {cover,\@DOCCLASS,#1,\myi},%
+      {cover,#1,\myi},%
+      {cover,\@DOCTYPE,\myi},%
+      {cover,\@DOCCLASS,\myi},%
+      {cover,\myi})%
   }%
   \@ntmakecoverbgcolor{#1}{\@cover@bgcolor@box}%
   \@ntmakecoverimage{#1}{\@cover@image@box}%
@@ -1918,9 +1944,9 @@
   }{}%
   \def\@nt@personlist{}%
   \def\@nt@listsep{}%
-  \@for\i:=\expanded{#2}\do{%
-    \ifoptionvoid{/@nt/#1/\i/name}{}{%
-      \letoptionlist{/@nt/#1/\i/name}\@nt@person@sublist%
+  \@for\myi:=\expanded{#2}\do{%
+    \ifoptionvoid{/@nt/#1/\myi/name}{}{%
+      \letoptionlist{/@nt/#1/\myi/name}\@nt@person@sublist%
       \eappto\@nt@personlist{\@nt@listsep\@nt@person@sublist}\def\@nt@listsep{,}%
     }%
   }%
@@ -1939,8 +1965,8 @@
     #2\trimspaces{#3}%
   \else % #4 is not empty
     #1\trimspaces{#3}%
-    \@replacelastcomma@i{\thecommastring(\option{/@nt/lang/current})}%
-        {\theandstring(\option{/@nt/lang/current})}#4\nil%
+    \@replacelastcomma@i{\thecommastring(\@LSHORT)}%
+        {\theandstring(\@LSHORT)}#4\nil%
   \fi
 }
 
@@ -2160,6 +2186,7 @@
   % \fi
   % \ntsetup{setabstractorder=\expanded{\option{/novathesis/abstract/deforder}}}%
   % \optionlistdo{/novathesis/abstract/theorder}{\@ntprintabstract{##1}}
+  % \typeout{ABO=\theabstractorder(\@LANG@MAIN)}\ABO
   \@for\myi:=\expanded{\theabstractorder(\@LANG@MAIN)}\do{\@ntprintabstract{\myi}}%
 }
 
@@ -2400,9 +2427,9 @@
     \IfBooleanTF{#1}{\hugequote}{}
     \begin{minipage}[t]{\@tempdima}
       \raggedleft\normalsize
-      \options{/@nt/lang/shorttolong=#6}%
+      % \options{/@nt/lang/shorttolong=#6}%
       \IfBooleanTF{#1}{%
-        \foreigntextquote{\option{/@nt/lang/shorttolong}}{\ntquotetext{#7}}%
+        \foreigntextquote{\thelanglong(#6)}{\ntquotetext{#7}}%
       }{\ntquotetext#7}
       \ifblank{#3}{}{\ntquoteauthor{#3}}%
       \ifblank{#4}{}{\ntquotewhere{#4}}%
@@ -2440,14 +2467,14 @@
 \providecommand{\keywords}[1]{%
     \NTRunHook{keywords/pre}%
     % \NTRunHook{keywords/#1/pre}%
-    \def\and{\unskip\datadefault{keywordssep}(\option{/@nt/lang/current})}%
+    \def\and{\unskip\datadefault{keywordssep}(\@LSHORT)}%
     % \def\and{{\textperiodcentered} }%
     \par\addvspace\baselineskip\noindent%
     \begingroup
-    \datadefault{keywordsstringprefix}(\option{/@nt/lang/current})%
-    \datadefault{keywordsstringfont}(\option{/@nt/lang/current})%
-    \csuse{thekeywordsstring}(\option{/@nt/lang/current})%
-    \datadefault{keywordsstringsuffix}(\option{/@nt/lang/current})%
+    \datadefault{keywordsstringprefix}(\@LSHORT)%
+    \datadefault{keywordsstringfont}(\@LSHORT)%
+    \csuse{thekeywordsstring}(\@LSHORT)%
+    \datadefault{keywordsstringsuffix}(\@LSHORT)%
     \endgroup
     % \enspace
     \ignorespaces#1%

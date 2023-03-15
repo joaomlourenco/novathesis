@@ -15,6 +15,7 @@
 
 \color{\thethesiscover(\option{/novathesis/doctype},1-1,textcolor)}
 
+\let\oldstockwidth=\stockwidth
 \begin{newlayout}{\stockheight}{2\stockwidth+\myspinewidth}%
   % \noindent% \Huge HELLO
 \begin{tikzpicture}[remember picture, overlay, transform shape]
@@ -29,7 +30,7 @@
           \filldraw [fill=\expanded{\thethesiscover(\option{/novathesis/doctype},1-1,bgcolor)}] (0,0) rectangle (\stockwidth,-\stockheight);]
       \end{tikzpicture}
     };
-  % RIGHT PAGE
+  % FRONT COVER — RIGHT PAGE
   \node [anchor=north west, inner sep=0pt, xshift=0.5*\myspinewidth]
     at (current page.north) {
       \begin{tikzpicture}[remember picture, overlay, xshift=7.9cm]
@@ -87,6 +88,17 @@
               {\thespine(font)UMinho $|$ \thespine(year)};
           % \filldraw [fill=white, opacity=0.5] (0,0) rectangle (\stockwidth,-\stockheight);]
       \end{tikzpicture}
+    };
+  % BACK COVER — LEFT PAGE
+  \node [anchor=south west, inner sep=1cm]
+    at (current page.south west) {
+      \begin{minipage}{19cm}
+          \foreach \myi in {1,...,9} {%
+            \ifdatadefined{sponsor}(\option{/novathesis/lang/cover},\myi,logo){%
+              \thesponsor(\option{/novathesis/lang/cover},\myi,logo)\qquad%
+            }{}%
+          }%
+      \end{minipage}
     };
 \end{tikzpicture}
 

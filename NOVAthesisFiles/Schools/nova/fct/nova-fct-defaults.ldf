@@ -263,10 +263,11 @@
 %% BACK COVER
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Print sponsor logos
 \ntaddtocover[vspace=1, halign=l]{N-2}{%
-  \foreach \i in {1, ..., 9} {%
-    % \ifdatadefined{sponsor}(\option{/novathesis/lang/cover},\i,logo){%
-      \thesponsor(\option{/novathesis/lang/cover},\i,logo)\qquad
-    % }{}
-  }
+  \foreach \myi in {1, ..., 9} {%
+    \ifdatadefined{sponsor}(\option{/novathesis/lang/cover},\myi,logo){%
+      \thesponsor(\option{/novathesis/lang/cover},\myi,logo)\qquad%
+    }{}%
+  }%
 }

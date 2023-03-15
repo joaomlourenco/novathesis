@@ -18,14 +18,14 @@
 Το πρότυπο \gls{novathesis} (\LaTeX) θα ταξινομήσει αυτόματα τις περιλήψεις λαμβάνοντας υπόψη αυτόν τον κανόνα. Ωστόσο, αυτή η παραγγελία μπορεί να προσαρμοστεί με προσθήκη
 \begin{otherlanguage}{english}
 \begin{verbatim}
-    \setabstractorder(<MAIN_LANG>):={<LANG_1>,...,<LANG_N>}
+    \abstractorder(<MAIN_LANG>):={<LANG_1>,...,<LANG_N>}
 \end{verbatim}
 \end{otherlanguage}
 \noindent στο αρχείο \verb!5_packages.tex!. Για παράδειγμα, για ένα κύριο έγγραφο γραμμένο στα γερμανικά με περιλήψεις γραμμένες στα γερμανικά, αγγλικά και ιταλικά (με αυτή τη σειρά) χρησιμοποιήστε:
 \begin{otherlanguage}{english}
 \begin{verbatim}
-    \setabstractorder(en):={en,gr}
-    \setabstractorder(gr):={gr,en}
+    \abstractorder(en):={en,gr}
+    \abstractorder(gr):={gr,en}
 \end{verbatim}
 \end{otherlanguage}
 Όσον αφορά το περιεχόμενό του, οι περιλήψεις δεν πρέπει να υπερβαίνουν τη μία σελίδα και ενδέχεται να απαντούν στις ακόλουθες ερωτήσεις (είναι απαραίτητο να προσαρμοστείτε στις συνήθεις πρακτικές του επιστημονικού σας χώρου):

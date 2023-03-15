@@ -27,14 +27,14 @@
   \ifoptiondefined{/novathesis/babel/\@ntslang/\@ntskey}{%
     \option@undef{/novathesis/babel/\@ntslang/\@ntskey}%
   }{}%
-  \options{/novathesis/babel/\@ntslang/keys/.expanded/.cpush = \@ntskey}%
+  \options{/novathesis/babel/\@ntslang/keys/.expanded/.newpush = \@ntskey}%
   \options{/novathesis/babel/\@ntslang/\@ntskey/.expanded/.new value = \@ntsval}%
 }
 \newcommand{\ntlangsetupifndef}[1]{%
   \mysplit#1\@nil{\@ntslang}{\@ntskey}{\@ntsval}%
   \ifoptioncontains{/novathesis/babel/\@ntslang/keys/.expanded}{\@ntskey}{}{%
     % \typeout{KEY SET IFNDEF (/novathesis/babel/\@ntslang/\@ntskey)=[\@ntsval]}%
-    \options{/novathesis/babel/\@ntslang/keys/.expanded/.cpush = \@ntskey}%
+    \options{/novathesis/babel/\@ntslang/keys/.expanded/.newpush = \@ntskey}%
     \options{/novathesis/babel/\@ntslang/\@ntskey/.expanded/.new value = \@ntsval}%
   }
 }
@@ -64,6 +64,7 @@
 
 \ntlangsetup*{fr/lstlistlisting=Listes de Code}%
 \ntlangsetup*{fr/listoflistingscaption=Listes de Code}%
+\ntlangsetup*{fr/lstlisting=Listing}%
 \ntlangsetup*{fr/annex=Annexe}
 \ntlangsetup*{fr/annexpl=Annexes}
 \ntlangsetup*{fr/appendixpl=Appendices}
@@ -91,8 +92,8 @@
 \fi
 
 \optionlistdo{/@nt/lang/loaded}{%
-  \options{/@nt/lang/shorttolong=#1}%
-  \edef\@ltu{\option{/@nt/lang/shorttolong}}%
+  % \options{/@nt/lang/shorttolong=#1}%
+  % \edef\@ltu{\option{/@nt/lang/shorttolong}}%
   % \typeout{KEY=#1/\@ltu}\KEY%
   \optionlistdo{/novathesis/babel/#1/keys}{%
     % \typeout{KEY(#1)=[##1=\option{/novathesis/babel/#1/##1}]}%
@@ -100,6 +101,6 @@
     % \expandnextsingle\addto{\csname captions\@ltu\endcsname}%
     %                        {\csdef{##1}{\option{/novathesis/babel/#1/##1}}}%
     % \typeout{KEY SET3={\@ltu}{##1}{\option{/novathesis/babel/#1/##1}}}\KEYSETHREE%
-    \setlocalecaption{\@ltu}{##1}{\option{/novathesis/babel/#1/##1}}%
+    \setlocalecaption{\thelanglong(#1)}{##1}{\option{/novathesis/babel/#1/##1}}%
   }%
 }

@@ -17,8 +17,8 @@
 % novathesis customization
 %-----------------------------------------------------------------
 \ntsetup{print/secondcover=true}
+\ntsetup{print/statement=true}
 \ntsetup{style/font=newsgott}
-\ntsetup{statement=true}
 
 \ifdocprovisional{\ntsetup{docstatus=final}}{}
 \ifdocfinal{\ntaddfile{cover}[1]{./NOVAthesisFiles/Schools/uminho/cover-final.tex}}{}
@@ -39,12 +39,12 @@
 %-----------------------------------------------------------------
 % Other stuff
 %-----------------------------------------------------------------
-\setabstractorder(pt):={pt,en}
-\setabstractorder(en):={pt,en}
-\setabstractorder(fr):={pt,fr}
-\setabstractorder(it):={pt,it}
-\setabstractorder(es):={pt,es}
-\setabstractorder(de):={pt,de}
+\abstractorder(pt):={pt,en}
+\abstractorder(en):={pt,en}
+\abstractorder(fr):={pt,fr}
+\abstractorder(it):={pt,it}
+\abstractorder(es):={pt,es}
+\abstractorder(de):={pt,de}
 
 \commastring(pt):={\\}
 \commastring(en):={\\}
@@ -100,12 +100,12 @@
 %-----------------------------------------------------------------
 \NTAddToHook{abstract/pre}{%
   \let\oldchapterheadstart=\chapterheadstart%
-  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\option{/@nt/lang/current},main)}}%
+  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\@LSHORT,main)}}%
   \preto{\chapterheadstart}{\vspace*{-2cm}}
 }
 \NTAddToHook{abstract/mid}{%
   % \let\oldchapterheadstart=\chapterheadstart%
-  {{\noindent\newsgottbf\Large\thedoctitle(\option{/@nt/lang/current},main)}\\[1ex]}%
+  {{\noindent\newsgottbf\Large\thedoctitle(\@LSHORT,main)}\\[1ex]}%
 }
 \NTAddToHook{abstract/post}{%
   \let\chapterheadstart=\oldchapterheadstart%
@@ -265,3 +265,16 @@
   % \fi
 }
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BACK COVER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Print sponsor logos
+\ntaddtocover[vspace=1, halign=l]{N-2}{%
+  \foreach \myi in {1, ..., 9} {%
+    \ifdatadefined{sponsor}(\option{/novathesis/lang/cover},\myi,logo){%
+      \thesponsor(\option{/novathesis/lang/cover},\myi,logo)\qquad%
+    }{}%
+  }%
+}
