@@ -8,11 +8,26 @@
 
 \typeout{NT FILE abstract-it.tex}%
 
-La tesi deve contenere due versioni della astratto, uno nella stessa lingua del testo principale, un altro in una lingua diversa. Il pacchetto presuppone che le due lingue in esame sono sempre portoghese e inglese.
 
-Il pacchetto ordinerà gli abstract nell'ordine appropriato. Ciò significa che il primo estratto sarà nella stessa lingua del testo principale, seguito dal riassunto nell'altra lingua, e poi seguito dal testo principale. Ad esempio, se la tesi è scritto in portoghese, prima verrà la sintesi in portoghese e poi in inglese, seguito dal testo principale in portoghese. Se la tesi è scritto in inglese, prima arriverà la sintesi in inglese e poi in portoghese, seguito dal testo principale in inglese.
+\textbf{¡Esta es una traducción de “Google Translate” de la versión en inglés! ¡Reparaciones y correcciones son bienvenidas!}
 
-L'abstract non shoul superiore a una pagina e deve rispondere alle seguenti domande:
+Independientemente del idioma en el que esté escrita la disertación, generalmente hay al menos dos resúmenes: un resumen en el mismo idioma que el texto principal y otro resumen en algún otro idioma.
+
+El orden de los resúmenes varía según la escuela. Si su escuela tiene regulaciones específicas con respecto al orden de los resúmenes, la plantilla \gls{novathesis} (\LaTeX) las respetará. De lo contrario, la regla por defecto en la plantilla \gls{novathesis} es tener en primer lugar el resumen en \emph{el mismo idioma que el texto principal}, y luego el resumen en \emph{el otro idioma}. Por ejemplo, si la disertación está escrita en portugués, el orden de los resúmenes será primero en portugués y luego en inglés, seguido del texto principal en portugués. Si la disertación está escrita en inglés, el orden de los resúmenes será primero en inglés y luego en portugués, seguido del texto principal en inglés.
+%
+Por ejemplo, para un documento principal escrito en alemán con resúmenes escritos en alemán, inglés e italiano (en este orden) use:
+
+\begin{verbatim}
+    \ntsetup{abstractorder={<LANG_1>,...,<LANG_N>}}
+    \ntsetup{abstractorder={<MAIN_LANG>={<LANG_1>,...,<LANG_N>}}}
+\end{verbatim}
+
+En cuanto a su contenido, los resúmenes no deben exceder una página y pueden responder a las siguientes preguntas (es fundamental adaptarse a las prácticas habituales de su área científica):
+\begin{verbatim}
+    \ntsetup{abstractorder={de={de,en,it}}}
+\end{verbatim}
+
+Per quanto riguarda i suoi contenuti, gli abstract non devono superare una pagina e possono rispondere alle seguenti domande (è essenziale adeguarsi alle pratiche abituali della propria area scientifica):
 
 \begin{itemize}
 \item Qual è il problema?

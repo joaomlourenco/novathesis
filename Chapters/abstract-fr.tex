@@ -8,13 +8,26 @@
 
 \typeout{NT FILE abstrac-fr.tex}%
 
-Quelle que soit la langue que vous écrivez la dissertation, un résumé est nécessaire dans la langue du texte principal et un résumé dans une autre langue. On suppose que les deux langues en question seront toujours portugais et en anglais.
+\textbf{Ceci est une traduction “Google Translate” de la version anglaise ! Les correctifs et les corrections sont les bienvenus !}
 
-Le \emph{template} automatiquement mis d'abord le résumé dans la langue du texte principal, puis le résumé dans l'autre langue. Par exemple, si la thèse est écrit en portugais, apparaît d'abord le résumé en portugais, puis en anglais, suivi par le texte principal en portugais. Si la thèse est écrite en anglais apparaîtra d'abord le résumé en anglais, puis en portugais, suivi par le texte principal en anglais.
+Quelle que soit la langue dans laquelle la thèse est rédigée, il y a généralement au moins deux résumés : un résumé dans la même langue que le texte principal et un autre résumé dans une autre langue.
 
-Le résumé ne doit pas dépasser une page et doit répondre aux questions suivantes:
+L'ordre des résumés varie selon l'école. Si votre école a des règles spécifiques concernant l'ordre des résumés, le modèle \gls{novathesis} (\LaTeX) les respectera. Sinon, la règle par défaut dans le modèle \gls{novathesis} est d'avoir en premier lieu le résumé en \emph{la même langue que le texte principal}, puis le résumé en \emph{l'autre langue}. Par exemple, si la thèse est rédigée en portugais, l'ordre des résumés sera d'abord le portugais puis l'anglais, suivi du texte principal en portugais. Si la thèse est rédigée en anglais, l'ordre des résumés sera d'abord en anglais puis en portugais, suivi du texte principal en anglais.
+%
+Cependant, cet ordre peut être personnalisé en ajoutant l'un des éléments suivants au fichier \verb+5_packages.tex+.
 
-O resumo não deve exceder uma página e deve responder às seguintes questões:
+\begin{verbatim}
+    \ntsetup{abstractorder={<LANG_1>,...,<LANG_N>}}
+    \ntsetup{abstractorder={<MAIN_LANG>={<LANG_1>,...,<LANG_N>}}}
+\end{verbatim}
+
+Par exemple, pour un document principal rédigé en allemand avec des résumés rédigés en allemand, anglais et italien (dans cet ordre), utilisez:
+\begin{verbatim}
+    \ntsetup{abstractorder={de={de,en,it}}}
+\end{verbatim}
+
+Concernant son contenu, les résumés ne doivent pas dépasser une page et peuvent répondre aux questions suivantes (il est indispensable de s'adapter aux pratiques habituelles de votre domaine scientifique):
+
 \begin{itemize}
 % What's the problem?
   \item Quel est le problème?
