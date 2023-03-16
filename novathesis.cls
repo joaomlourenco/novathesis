@@ -151,7 +151,7 @@
   spine/.new choice             = {unset, no, full, trim},
   % abstract/deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
   % abstract/theorder/.new list   = {unset},
-  setabstractorder/.new cmd        = {\appto\@nt@saveabstractorder{{#1},}},%
+  abstractorder/.new cmd        = {\appto\@nt@saveabstractorder{{#1},}},%
   % SCHOOL
   school/univ/.new value        = {},
   school/schl/.new value        = {},
@@ -2178,15 +2178,6 @@
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
-  % \letoptionchoices{/novathesis/abstract/deforder}{\@abst@rder@langs}%
-  % \if\instring{,\@LANG@MAIN,}{,\@abst@rder@langs,}%
-  %   \options{/novathesis/abstract/deforder=\@LANG@MAIN}%
-  % \else
-  %   \options{/novathesis/abstract/deforder=default}%
-  % \fi
-  % \ntsetup{setabstractorder=\expanded{\option{/novathesis/abstract/deforder}}}%
-  % \optionlistdo{/novathesis/abstract/theorder}{\@ntprintabstract{##1}}
-  % \typeout{ABO=\theabstractorder(\@LANG@MAIN)}\ABO
   \@for\myi:=\expanded{\theabstractorder(\@LANG@MAIN)}\do{\@ntprintabstract{\myi}}%
 }
 
