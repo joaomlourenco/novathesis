@@ -38,23 +38,9 @@ This first Chapter introduces the \gls{novathesis} template and how it is organi
 
 Did you learn how to drive by sitting by the wheel and throwing your car into the road?  Most probably you did take your time \emph{learning the rules} and \emph{practicing} first! Likewise, it is not wise to throw yourself at the task of writing a thesis/dissertation in \LaTeX\ without seriously considering the following \ntindex{recommendation}!
 
-
-% subsection subsection_name (end)
-% \begin{quote}
-%   \rule{\linewidth}{2pt}
-% If you are going to spend zillions of hours writing your thesis/dissertation using this \gls{novathesis} template, be wise and spend a couple of hours learning how to use it properly by reading this manual.  And then be even wiser and spend a few more hours \href{https://github.com/joaomlourenco/novathesis/wiki#learning-latex}{learning some \LaTeX}.  I am sure that the time you are investing now will pay itself countless times before you submit your thesis/dissertation.
-% \hfill \raisebox{-1ex}{\itshape João Lourenço}\\[-1ex]
-%   \rule{\linewidth}{2pt}
-% \end{quote}
-\bgroup
-\renewcommand{\mkcitation}[1]{\\[0ex]\parbox{\linewidth}{\hfill\textbf{#1}}}
-\blockquote[João Lourenço]{%
-  \rule{\linewidth}{2pt}\\\itshape
-  If you are going to spend zillions of hours writing your thesis/dissertation using the \gls{novathesis} \LaTeX\ template (or some other \LaTeX\ template), be wise and spend a couple of hours learning how to use it properly by reading its manual.  And then, be even wiser, and spend a few more hours \href{https://github.com/joaomlourenco/novathesis/wiki\#learning-latex}{learning some \LaTeX}.  I am sure that the time you are investing now will pay itself countless times before you submit your thesis/dissertation.\\\nopagebreak
-  % \hfill \raisebox{-1ex}{\itshape João Lourenço}\\[-1ex]
-  \rule{\linewidth}{2pt}%
-}
-\egroup
+\begin{tcolorbox}
+  If you are going to spend zillions of hours writing your thesis/dissertation using the \gls{novathesis} \LaTeX\ template (or some other \LaTeX\ template), be wise and spend a couple of hours learning how to use it properly by reading its manual.  And then, be even wiser, and spend a few more hours \href{https://github.com/joaomlourenco/novathesis/wiki\#learning-latex}{learning some \LaTeX}.  I am sure that the time you are investing now will pay itself countless times before you submit your thesis/dissertation.\hfill{---~\emph{João Lourenço}}
+\end{tcolorbox}
 
 \subsection{Recognition}
 \label{sub:recognition}
@@ -70,10 +56,10 @@ The \gls{novathesis} tempalte was born in~1996, and what you see now accumulates
 \end{enumerate}
 
 \begin{figure}[htbp]
-  \centering
-    \includegraphics[width=0.7\textwidth]{github1}
-  \caption{The \gls{novathesis} project web page in GitHub.}
-  \label{fig:github}
+    \centering
+    \includegraphics[width=0.5\linewidth]{github1}
+    \caption{The \gls{novathesis} project web page in GitHub.}
+    \label{fig:github}
 \end{figure}
 
 \section{The \emph{NOVAthesis} Template}
@@ -360,20 +346,23 @@ The template provides an \emph{easy to use} setting for you to write your thesis
 \ntindex[Installation!Overleaf]{}
 \ntindex[Using!Overleaf]{}
 
+\newcommand{\Overleaf}{\href{https://www.overleaf.com?r=f5160636&rm=d&rs=b}{Overleaf}}
+
 \begin{wrapfigure}{r}{0.3\linewidth}
-\vspace*{-10ex}
+% \vspace*{-10ex}
 \includegraphics[width=\linewidth]{overleaf}%
 \caption{NOVAthesis template in Overleaf.}
 \label{fig:overleaf}
 \end{wrapfigure}
+\mbox{}\Overleaf\ is a collaborative cloud-based LaTeX editor used for writing, editing and publishing scientific documents. Like “Goggle Docs”,  for \LaTeX\ users”). You can edit and compile your \LaTeX\ source on the cloud, without installing software in your own computer, and, much like \emph{Google Docs}, you can share your document with others users and everybody can edit the same file at the same time (this may be dangerous).
 
-If you do not have an account in \href{https://www.overleaf.com?r=f5160636&rm=d&rs=b}{Overleaf}, you must \href{https://www.overleaf.com?r=f5160636&rm=d&rs=b}{create one first}.
+If you do not have an account in \Overleaf, you must \href{https://www.overleaf.com?r=f5160636&rm=d&rs=b}{create one first}.
 
-Once you have an account, please access the \gls{novathesis} template in \href{https://www.overleaf.com/latex/templates/new-university-of-lisbon-universidade-nova-de-lisboa-slash-unl-thesis-template/fwbztcrptjmg}{Overleaf} and select the green button \emph{Open as Template} (see \Autoref{fig:overleaf}).
+Once you have an account, please access the \gls{novathesis} template in \href{https://www.overleaf.com/latex/templates/novathesis-v6-dot-10-dot-10/jhqwhtcwbmqc}{Overleaf} and select the green button \emph{Open as Template} (see \Autoref{fig:overleaf}).
 
 \bgroup
   \itshape
-  Please notice that the version currently available in Overleaf (v6.5.3) is slightly outdated (current version is v\novathesisversion). A new version will be submitted to Overleaf soon.  Until then, please:
+  Please notice that the version currently available in Overleaf (v6.10.10) is slightly outdated (current version is v\novathesisversion). A new version (v7.0.0) will be submitted to Overleaf soon.  Until then, please:
   \begin{enumerate}
     \item Download the \href{https://github.com/joaomlourenco/novathesis/archive/main.zip}{latest version} from the GitHub repository as a Zip file.
     \item Login to your favorite LaTeX cloud service. I recommend \href{https://www.overleaf.com/?r=f5160636&rm=d&rs=b}{Overleaf} but there are alternatives (these instructions apply to Overleaf and you'll have to adapt for other providers).
@@ -415,11 +404,11 @@ No! You don't have to use this template to write your thesis.  You don't even ha
 
 \LaTeX\ is hard enough by itself.  This template aims at making your life easier, but not easy. If you choose to use this template to write your thesis, you are very welcome.  However, don't expect me to provide you help with \LaTeX.  Look for help with your friends (you have some friends, don't you?), or search the web, or try even to read some book(s) on \LaTeX. In the end you will certainly find the experience rewarding.
 
-When you come to the point of “\emph{How do I do this with \LaTeX?}”, remember…
+When you come to the point of “\emph{How do I do this with the \novathesis\ template?}”, remember…
 
 \begin{enumerate}
   \item To check the \href{https://github.com/joaomlourenco/novathesis/wiki}{\gls{novathesis} wiki} and have some hope!  \emojiSmile
-  \item Google is your best friend.
+  \item \href{https://www.google.com}{Google} is your best friend.
   \item Search the \href{https://github.com/joaomlourenco/novathesis/discussions}{GitHub Discussions page} for a question related to yours.  \emph{If and only if} you don't find one, then post your own question in English please!
   \item Search the \href{https://www.facebook.com/groups/novathesis}{NOVAtheis Facebook group} for a question related to yours.  \emph{If and only if} you don't find one, then post your own question in either Portuguese or English, at your preference.
 \end{enumerate}
