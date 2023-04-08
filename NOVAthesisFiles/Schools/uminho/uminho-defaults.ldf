@@ -223,8 +223,8 @@
 
 % Author name
 \ntaddtocover[vspace=0mm,halign=l]{1-1,2-1}{%
-  \fontsize{16}{16}\selectfont%
-  \addfontfeature{LetterSpace=3.5}%
+  \fontsize{17pt}{20.4bp}\selectfont%
+  \addfontfeature{LetterSpace=2.9}%
   \thedocauthor(name)%
 }
 
@@ -238,7 +238,7 @@
 % Degree info
 \ntaddtocover[vspace=0mm,halign=l,height=3.9cm,valign=t]{2-1}{%
   \vfill
-  \fontsize{17pt}{20.4bp}\selectfont%
+  \fontsize{14}{16.8bp}\selectfont%
   \thedoctype(\option{/novathesis/lang/cover},\option{/novathesis/doctype})%
   \\%
   \thedegreename(\option{/novathesis/lang/cover})%
@@ -249,9 +249,9 @@
 }
 
 % Advisers
-\ntaddtocover[vspace=0.5cm,halign=l]{2-1}{%
-  \fontsize{14}{14}\selectfont%
-  \theadvisersrt(\option{/novathesis/lang/cover})\\%
+\ntaddtocover[vspace=0.75cm,halign=l]{2-1}{%
+  \fontsize{14}{16.8bp}\selectfont%
+  \theadvisersrt(\option{/novathesis/lang/cover})\\[-1ex]%
   \textbf{\ntprintpersons{0.9}{0}{adviser}{a,c}}%
 }
 
