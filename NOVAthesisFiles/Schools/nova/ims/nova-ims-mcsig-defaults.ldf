@@ -22,8 +22,9 @@
 \school(it):={NOVA Information Management School}
 
 % Redefinition of "Master in" to "Master of Science in"
-\degreenameprefix(mcsig,en):={Master of Science in}
-\degreenameprefix(mcsig,pt):={Mestre em}
+\degreenameprefix(en):={Master of Science in}
+\degreenameprefix(pt):={Mestre em}
+
 \ntdegreename(mcsig,en){Geographical Information Systems and Science}
 \ntdegreename(mcsig,pt){Ciência e Sistemas de Informação Geográfica}
 
@@ -33,7 +34,7 @@
 
 \openany
 \ntsetup{print/secondcover=true}
-\ntsetup{statement=true}
+\ntsetup{print/statement=true}
 \ntsetup{print/copyright=false}
 \ntbibsetup{style=apa}
 \AtEndPreamble{\let\cite\parencite}
@@ -63,8 +64,8 @@
 \keywordsstringprefix()={\begin{center}}
 \keywordsstringsuffix()={\end{center}}
 \keywordsstringfont()={\bfseries\Large}
-\keywordsstringsuffix()={\\[1ex]}
-\keywordssep()={\\[1ex]}
+\keywordsstringsuffix()={\mbox{}\\[1ex]}
+\keywordssep()={\mbox{}\\[1ex]}
 
 % \NTAddToHook{keywords/pt/pre}{\options{/@nt/kwprint = {}}}
 % \NTAddToHook{keywords/en/pre}
@@ -117,7 +118,7 @@
 \spine(logo,msc,raise)={0}
 
 \spine(author)={\thedocauthor(name)}
-\spine(title)={\thedoctitle(\option{/novathesis/lang/cover},main)}
+\spine(title)={\thedoctitle(\@LANG@COVER,main)}
 \spine(date)={\thentdocdate(year)}
 
 \spine(text,angle)={90}
@@ -165,11 +166,11 @@
 \margin(cover,2-1,right):={3cm}
 
 
-\dissertationstring(msc,en)={Dissertation presented as partial requirement for obtaining the degree of \thedegreename(mcsig,\option{/novathesis/lang/cover})}
-\dissertationstring(mscplan,en)={Dissertation plan presented as partial requirement for obtaining the degree of \thedegreename(mcsig,\option{/novathesis/lang/cover})}
+\dissertationstring(msc,en)={Dissertation presented as partial requirement for obtaining the degree of \thedegreename(mcsig,\@LANG@COVER)}
+\dissertationstring(mscplan,en)={Dissertation plan presented as partial requirement for obtaining the degree of \thedegreename(mcsig,\@LANG@COVER)}
 
-\dissertationstring(msc,pt)={Dissertatação apresentada como requisito parcial para obtenção do grau de \thedegreename(mcsig,\option{/novathesis/lang/cover})}
-\dissertationstring(mscplan,pt)={Plano de dissertação apresentado como requisito parcial para obtenção do grau de \thedegreename(mcsig,\option{/novathesis/lang/cover})}
+\dissertationstring(msc,pt)={Dissertatação apresentada como requisito parcial para obtenção do grau de \thedegreename(mcsig,\@LANG@COVER)}
+\dissertationstring(mscplan,pt)={Plano de dissertação apresentado como requisito parcial para obtenção do grau de \thedegreename(mcsig,\@LANG@COVER)}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -198,8 +199,8 @@
   \preto{\chapterheadstart}{%
     \noindent\begin{minipage}[t][0pt][t]{\textwidth}
       \begin{center}%
-        \textbf{\MakeTextUppercase{\Large\thedoctitle(\@LSHORT,main,cover)}}%
-        \ifdatadefined{doctitle}(\option{/novathesis/lang/cover}-sub,cover){%
+        \textbf{\LARge\thedoctitle(\@LSHORT,main,cover)}%
+        \ifdatadefined{doctitle}(\@LANG@COVER-sub,cover){%
           \\[6mm]%
           \textbf{\Large\thedoctitle(\@LSHORT-sub,cover)}%
         }{}%
@@ -226,13 +227,13 @@
 }
 \ntaddtocover[halign=l, vspace=-1cm+7pt, minheight=3cm, valign=c]{1-1}{%
   \fontsize{17}{17}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}}}%
-  \ifdatadefined{doctitle}(\option{/novathesis/lang/cover},sub,cover){%
+  \textcolor{imsdarkgrey}{\textbf{\THEdoctitle(\@LANG@COVER,main,cover)}}%
+  \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
     % ~\\[-2ex]%
     \\
     \textcolor{imsmidgrey}{
       \fontsize{15}{15}\selectfont%
-      \textbf{\thedoctitle(\option{/novathesis/lang/cover}-sub,cover)}%
+      \textbf{\thedoctitle(\@LANG@COVER-sub,cover)}%
     }%
   }{}%
 }
@@ -253,7 +254,7 @@
 \ntaddtocover[halign=l, vspace=-1cm+7pt]{1-1}{%
   \fontsize{12}{12}\selectfont%
   \textcolor{imsdarkgrey}{%
-    \thedissertationstring(\option{/novathesis/doctype},\option{/novathesis/lang/cover})%
+    \thedissertationstring(\option{/novathesis/doctype},\@LANG@COVER)%
   }%
 }
 
@@ -271,7 +272,7 @@
 
 \ntaddtocover[halign=c, vspace=1]{2-1}{%
   \fontsize{16}{16}\selectfont%
-  \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}}%
+  \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
 }
 
 \ntaddtocover[halign=c, vspace=1]{2-1}{%
@@ -288,7 +289,7 @@
 \ntaddtocover[halign=c, vspace=4]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{%
-    \thedissertationstring(\option{/novathesis/doctype},\option{/novathesis/lang/cover})%
+    \thedissertationstring(\option{/novathesis/doctype},\@LANG@COVER)%
   }%
 }
 
@@ -296,10 +297,10 @@
 \ntaddtocover[vspace=2,halign=l]{2-1}{%
   \fontsize{12}{12}\selectfont%
   \adviserstringpre():={}%
-  \adviserstringpost():={:&}%
+  \adviserstringpost():={: }%
   \adviserstringfont():={\bfseries}%
-  \ntprintpersons[list]{1.0}{2}{adviser}{a}\\
-  \ntprintpersons[list]{1.0}{2}{adviser}{c}\\
+  \ntprintpersons[list]{1.0}{1}{adviser}{a}\\
+  \ntprintpersons[list]{1.0}{1}{adviser}{c}\\
 }
 
 % Date

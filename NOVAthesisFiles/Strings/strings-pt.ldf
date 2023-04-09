@@ -96,17 +96,17 @@
 \doctypestring(phd,pt):={Tese de Doutoramento}
 
 \dissertationstring(bsc,pt)={Relatório para obtenção do Grau de %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ em\\[1ex] \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
 \dissertationstring(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ em\\[1ex] \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
 \dissertationstring(msc,pt)={Dissertação para obtenção do Grau de %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ em\\[1ex] \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
 \dissertationstring(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ em\\[1ex] \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
 \dissertationstring(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ em\\[1ex] \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
 \dissertationstring(phd,pt)={Dissertação para obtenção do Grau de %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\option{/novathesis/lang/cover})\ em\\[1ex] \textbf{\themajorfield(\option{/novathesis/lang/cover})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
 
-\copyrighttextstring(pt)={A \theschool(\option{/novathesis/lang/copyright})\ e a \theuniversity(\option{/novathesis/lang/copyright})\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+\copyrighttextstring(pt)={A \theschool(\@LANG@COPYRIGHT)\ e a \theuniversity(\@LANG@COPYRIGHT)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
 \acknowledgmentsstring(pt)={Este documento foi gerado com o processador (pdf/Xe/Lua)\LaTeX\ e o modelo \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}

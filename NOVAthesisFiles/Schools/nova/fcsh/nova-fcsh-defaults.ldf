@@ -34,7 +34,7 @@
 % Spine info
 \spine(logo)={nova-fcsh-insignia-color}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\option{/novathesis/lang/cover},main)}
+\spine(title)={\thedoctitle(\@LANG@COVER,main)}
 \spine(year)={\thentdocdate(year)}
 
 % Set margins for "normal" pages
@@ -111,7 +111,7 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}}%
+  \textcolor{fcshblue}{\textbf{\thedoctitle(\@LANG@COVER,main,cover)}}%
 }
 
 % Author name

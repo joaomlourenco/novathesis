@@ -21,7 +21,7 @@
 \ntsetup{style/font=newsgott}
 
 \ifdocprovisional{\ntsetup{docstatus=final}}{}
-\ifdocfinal{\ntaddfile{cover}[1]{./NOVAthesisFiles/Schools/uminho/cover-final.tex}}{}
+\ifmaindoc{\ifdocfinal{\ntaddfile{cover}[1]{./NOVAthesisFiles/Schools/uminho/cover-final.tex}}{}}{}
 \ntsetup{spine=no}
 
 % --------------------------------------------------------
@@ -165,7 +165,7 @@
 \spine(logo,university)={\theuniversity(logo,RGB)}
 \spine(logo,school)={\theschool(logo,RGB)}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\option{/novathesis/lang/cover},main)}
+\spine(title)={\thedoctitle(\@LANG@COVER,main)}
 \spine(year)={\thentdocdate(year)}
 % \spine(top)={116pt}
 \spine(top)={9cm}
@@ -215,10 +215,10 @@
 \ntaddtocover[vspace=1cm,halign=l,height=5.25cm,valign=t]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
   \addfontfeature{LetterSpace=2.5}%
-  \textbf{\theuniversity(\option{/novathesis/lang/cover})}%
+  \textbf{\theuniversity(\@LANG@COVER)}%
   \\%
   \addfontfeature{LetterSpace=1.2}%
-  \newsgottlig\theschool(\option{/novathesis/lang/cover})%
+  \newsgottlig\theschool(\@LANG@COVER)%
 }
 
 % Author name
@@ -232,26 +232,26 @@
 \ntaddtocover[vspace=0.8cm,halign=l,height=5.5cm,valign=t]{1-1,2-1}{%
   \fontsize{17pt}{20.4bp}\selectfont%
   \addfontfeature{LetterSpace=2.9}%
-  \textbf{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}
+  \textbf{\thedoctitle(\@LANG@COVER,main,cover)}
 }
 
 % Degree info
 \ntaddtocover[vspace=0mm,halign=l,height=3.9cm,valign=t]{2-1}{%
   \vfill
   \fontsize{14}{16.8bp}\selectfont%
-  \thedoctype(\option{/novathesis/lang/cover},\option{/novathesis/doctype})%
+  \thedoctype(\@LANG@COVER,\option{/novathesis/doctype})%
   \\%
-  \thedegreename(\option{/novathesis/lang/cover})%
-  \ifdatadefined{specialization}(\option{/novathesis/lang/cover}){%
+  \thedegreename(\@LANG@COVER)%
+  \ifdatadefined{specialization}(\@LANG@COVER){%
     \\%
-    \thespecialization(\option{/novathesis/lang/cover})%
+    \thespecialization(\@LANG@COVER)%
   }{}%
 }
 
 % Advisers
 \ntaddtocover[vspace=0.75cm,halign=l]{2-1}{%
   \fontsize{14}{16.8bp}\selectfont%
-  \theadvisersrt(\option{/novathesis/lang/cover})\\[-1ex]%
+  \theadvisersrt(\@LANG@COVER)\\[-1ex]%
   \textbf{\ntprintpersons{0.9}{0}{adviser}{a,c}}%
 }
 
@@ -261,7 +261,7 @@
   % \ifdraftdoc
     % \textbf{DRAFT: \today}
   % \else
-    \thentdocdate(month)\theofstr(\option{/novathesis/lang/cover})\thentdocdate(year)
+    \thentdocdate(month)\theofstr(\@LANG@COVER)\thentdocdate(year)
   % \fi
 }
 
@@ -273,8 +273,8 @@
 % Print sponsor logos
 \ntaddtocover[vspace=1, halign=l]{N-2}{%
   \foreach \myi in {1, ..., 9} {%
-    \ifdatadefined{sponsor}(\option{/novathesis/lang/cover},\myi,logo){%
-      \thesponsor(\option{/novathesis/lang/cover},\myi,logo)\qquad%
+    \ifdatadefined{sponsor}(\@LANG@COVER,\myi,logo){%
+      \thesponsor(\@LANG@COVER,\myi,logo)\qquad%
     }{}%
   }%
 }

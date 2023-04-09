@@ -52,7 +52,7 @@
 % Spine info
 \spine(logo)={\theuniversity(logo)}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\MakeTextUppercase{\thedoctitle(\option{/novathesis/lang/cover},main)}}
+\spine(title)={\THEdoctitle(\@LANG@COVER,main)}
 \spine(year)={\thentdocdate(year)}
 
 % Set margins for "normal" pages
@@ -96,13 +96,13 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont
-  \textbf{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}
+  \textbf{\thedoctitle(\@LANG@COVER,main,cover)}
 }
 
 % % Title of Dissertation
 \ntaddtocover[vspace=1cm]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont
-  \thedegreename(\option{/novathesis/lang/cover})
+  \thedegreename(\@LANG@COVER)
 }
 
 % Author name

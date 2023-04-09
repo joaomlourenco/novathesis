@@ -44,7 +44,8 @@
 % \thesiscover(phd,1-1,bgcolor):={black}
 % \thesiscover(phd,1-1,textcolor):={white}
 % \thesiscover(phd,2-1,textcolor):={black}
-% \thesiscover(phd,1-1,image):={nova-itqb-phd-cover}
+% \thesiscover(1-1,image):={front}
+% \thesiscover(N-2,image):={back}
 % \thesiscover(phd,N-2,image):={nova-itqb-phd-cover-back}
 % \thesiscover(phd,spine,image):={nova-itqb-phd-spine}
 %
@@ -55,6 +56,7 @@
 % \thesiscover(msc,N-2,image):={nova-itqb-cover-back}
 
 \thesiscover(spine,bgcolor)={\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},spine)}
+% \thesiscover(spine,image)={spine}
 
 
 
@@ -70,7 +72,7 @@
 \spine(logo,msc,raise)={0}
 
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\textbf{\thedoctitle(\option{/novathesis/lang/cover},main)}}
+\spine(title)={\textbf{\thedoctitle(\@LANG@COVER,main)}}
 \spine(date)={\textcolor{itqbgray207}{\theoeiras(),} \textbf{\thentdocdate(month)}, \textbf{\thentdocdate(year)}}
 
 \spine(text,angle)={90}
@@ -79,20 +81,20 @@
 \spine(box,spacing)={0.5cm}
 \spine(box,margin)={0.5mm}
 
-\spine(box,logo,top)={0.7cm}
-\spine(box,logo,len)={2.5cm}
+\spine(box,logo,top)={4.5mm}
+\spine(box,logo,len)={3.5cm}
 \spine(box,logo,align)={c}
 
 \spine(box,author,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
-\spine(box,author,len)={3.3cm}
+\spine(box,author,len)={4.15cm}
 
 \spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
-\spine(box,title,len)={13.0cm}
+\spine(box,title,len)={15.5cm}
 % \spine(box,title,align)={l}
 % \spine(box,author,align)={l}
 
 \spine(box,date,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
-\spine(box,date,len)={3.3cm}
+\spine(box,date,len)={3.75cm}
 % \spine(box,lodatego,align)={l}
 
 
@@ -107,10 +109,10 @@
 \margin(paper,right):={3.0cm}
 
 % Set margins for cover pages
-\margin(cover,top):={1.5cm}
+\margin(cover,top):={1.8cm}
 \margin(cover,bottom):={1.0cm}
-\margin(cover,left):={1.7cm}
-\margin(cover,right):={2.3cm}
+\margin(cover,left):={2cm}
+\margin(cover,right):={2cm}
 
 
 \providecolor{itqbgray207}{RGB}{207,207,207}
@@ -139,17 +141,17 @@
 \itqbcolor(green,spine):={itqbgreen}
 \itqbcolor(green,back):={itqbgreen}
 
-\newdata{rectangle}
-\rectangle(itqb,top):={-\paperheight+19.25mm}
-\rectangle(itqb,bottom):={\therectangle(itqb,top)-10.5mm}
-\rectangle(itqb,left):={10mm}
-\rectangle(itqb,right):={\paperwidth}
-\rectangle(itqb,round):={0.6cm}
-\rectangle(photo,top):={-8cm}
-\rectangle(photo,left):={1.5cm}
-\rectangle(photo,height):={11.2cm}
-% \rectangle(photo,height):={13.2cm}
-\rectangle(photo,width)={\paperwidth-\therectangle(photo,left)-\therectangle(photo,left)-4mm}
+\newdata{region}
+\region(itqb,top):={-\paperheight+23.25mm}
+\region(itqb,bottom):={\theregion(itqb,top)-13.5mm}
+\region(itqb,left):={12mm}
+\region(itqb,right):={\paperwidth}
+\region(itqb,round):={0.6cm}
+\region(photo,top):={-96mm}
+\region(photo,left):={20mm}
+\region(photo,height):={13.2cm}
+% \region(photo,height):={13.2cm}
+\region(photo,width)={\paperwidth-\theregion(photo,left)-\theregion(photo,left)}
 
 \dissertationstring(phd,en):={Dissertation presented to obtain the \textbf{Ph.D degree in}}
 \dissertationstring(phd,pt):={Dissertação apresentada para obter o \textbf{grau de Doutor em}}
@@ -211,65 +213,67 @@
                                        {cover,\option{/@nt/document/docclass},right},%
                                        {cover,right})%
     % Text in rectangle
-  \setbox0=\hbox{\scalebox{1.7}{\bfseries\thentdocdate(year)}}
+  \setbox0=\hbox{\scalebox{2.15}{\bfseries\thentdocdate(year)}}
   \begin{tikzpicture}[remember picture, overlay,
                       shift=(current page.north west), xshift=\@nt@margin@left]
     % Logo at top-left
     \node [inner sep=0pt, anchor=north west, xshift=0, yshift=-\@nt@margin@top]
-                    {\includegraphics[height=1.65cm]{nova-itqb-logo}};
+                    {\includegraphics[height=2.0cm]{nova-itqb-logo}};
     % Date at top-right
     \node [inner sep=0pt,anchor=north east,
-           xshift=\paperwidth-\@nt@margin@left-7mm, yshift=-\@nt@margin@top-4mm,
+           xshift=\paperwidth-\@nt@margin@left-8.5mm,
+           yshift=-\@nt@margin@top-3.5mm,
            color={\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},front,date)}}]
                     {\rotatebox{90}{\makebox[0pt][l]%
                                {\raisebox{\dimexpr\ht0+7pt}{\rule{\wd0}{2pt}}}\box0}};
     % Title
-    \node [inner sep=0pt, anchor=south west, yshift=-\@nt@margin@top-36.5mm]
-                    {\fontsize{18}{18}\selectfont%
+    \node [inner sep=0pt, anchor=south west, yshift=-\@nt@margin@top-43mm]
+                    {\fontsize{21.5}{21.5}\selectfont%
                      \parbox{\dimexpr\paperwidth-\@nt@margin@left-\@nt@margin@right}%
-                            {\textbf{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}}};
+                            {\textbf{\thedoctitle(\@LANG@COVER,main,cover)}}};
     % Subtitle
-    \node [inner sep=0pt, anchor=north west, yshift=-\@nt@margin@top-42mm]
-                    {\fontsize{21}{21}\selectfont%
+    \node [inner sep=0pt, anchor=south west, yshift=-\@nt@margin@top-54.3mm]
+                    {\fontsize{21}{21}\selectfont%front.pdf
                      \parbox{\paperwidth-\@nt@margin@left-\@nt@margin@right}%
                             {\@resizetowidth{\linewidth}%
-                                            {\thedoctitle(\option{/novathesis/lang/cover},sub)}}};
+                                            {\thedoctitle(\@LANG@COVER,sub)}}};
     % Author
-    \node [inner sep=0pt, anchor=north west, yshift=-\@nt@margin@top-52mm]
-                    {\fontsize{16}{16}\selectfont\textbf{\thedocauthor(name)}};
+    \node [inner sep=0pt, anchor=west, yshift=-\@nt@margin@top-64.5mm]
+                    {\fontsize{18}{18}\selectfont\textbf{\thedocauthor(name)}};
     % Photo
-    \edef\@itqbheight{\therectangle(photo,height)}
-    \draw [path picture={\node at (path picture bounding box.center)
+    \edef\@itqbheight{\theregion(photo,height)}
+    \draw [path picture={\node at (path picture bounding box.north west)
                     {\includegraphics[height=\@itqbheight]{nova-itqb-photo}};},
                     rounded corners=1.25cm, xshift=-\@nt@margin@left]
-                    ({\therectangle(photo,left)},\therectangle(photo,top))
+                    ({\theregion(photo,left)},\theregion(photo,top))
                     rectangle
-                    (\expanded{\therectangle(photo,left)+\therectangle(photo,width)},
-                               \expanded{\therectangle(photo,top)-\therectangle(photo,height)});
+                    (\expanded{\theregion(photo,left)+\theregion(photo,width)},
+                               \expanded{\theregion(photo,top)-\theregion(photo,height)});
     % Dissertation string
-    \node [inner sep=0pt,anchor=north west, yshift={\therectangle(itqb,top)+31.0mm}]
-                    {\fontsize{13}{13}\selectfont
+    \node [inner sep=0pt,anchor=south west, yshift={\theregion(itqb,top)+31.0mm}]
+                    {\fontsize{15}{15}\selectfont
                      \thedissertationstring(\option{/@nt/document/docclass},%
-                                            \option{/novathesis/lang/cover})};
+                                            \@LANG@COVER)};
     % Major field
-    \node [inner sep=0pt,anchor=north west, yshift={\therectangle(itqb,top)+22.0mm}]
-                    {\fontsize{13}{13}\selectfont
-                     \themajorfield(\option{/novathesis/lang/cover})};
+    \node [inner sep=0pt,anchor=south west, yshift={\theregion(itqb,top)+21.0mm}]
+                    {\fontsize{15}{15}\selectfont
+                     \themajorfield(\@LANG@COVER)};
     % Date
-    \node [inner sep=0pt,anchor=north west, yshift={\therectangle(itqb,top)+10.4mm}]
-                    {\fontsize{11}{11}\selectfont
+    \node [inner sep=0pt,anchor=south west, yshift={\theregion(itqb,top)+7.4mm}]
+                    {\fontsize{13}{13}\selectfont
                      \mbox{O}eiras, \thentdocdate(month), \thentdocdate(year)};
     % Rectangle
     \fill [xshift=-\@nt@margin@left,
            \expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},front,rectangle)}]
-                   (\therectangle(itqb,left),{\therectangle(itqb,top)})
-                -- (\therectangle(itqb,right),{\therectangle(itqb,top)})
-                -- (\therectangle(itqb,right),{\therectangle(itqb,bottom)})
-                {[rounded corners={\therectangle(itqb,round)}]
-                -- (\therectangle(itqb,left),{\therectangle(itqb,bottom)})}
+                   (\theregion(itqb,left),{\theregion(itqb,top)})
+                -- (\theregion(itqb,right),{\theregion(itqb,top)})
+                -- (\theregion(itqb,right),{\theregion(itqb,bottom)})
+                {[rounded corners={\theregion(itqb,round)}]
+                -- (\theregion(itqb,left),{\theregion(itqb,bottom)})}
                 -- cycle {};
     % Text in rectangle
-    \node [inner sep=0pt, anchor=west, xshift={1mm}, yshift={\therectangle(itqb,top)-0.65cm}]
+    \node [inner sep=0pt, anchor=west, xshift={1mm},
+                          yshift={(\theregion(itqb,bottom)+\theregion(itqb,top))/2}]
                   {\fontsize{9}{9}\selectfont
                   {\color{white}INSTITUTO DE TECNOLOGIA QUÍMICA E BIOLÓGICA }
                   {\color{itqbgray207}ANTÓNIO XAVIER}
@@ -284,21 +288,21 @@
     \fill [color={\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},back)}}]
                     (0,0) rectangle (\paperwidth,-\paperheight);
     % Logo above rectangle
-    \node [inner sep=0pt,anchor=north west,xshift=9.5mm,yshift={3cm+\therectangle(itqb,top)}]
-                    {\includegraphics[width=9.75cm]{nova-itqb-logo-mono}};
+    \node [inner sep=0pt,anchor=north west,xshift=11mm,yshift={3.5cm+\theregion(itqb,top)}]
+                    {\includegraphics[width=11.7cm]{nova-itqb-logo-mono}};
     \begin{scope}[xscale=-1,xshift=-\paperwidth]
       % Rectangle
-      \fill [color=white] (\therectangle(itqb,left),{\therectangle(itqb,top)})
-                  -- (\therectangle(itqb,right),{\therectangle(itqb,top)})
-                  -- (\therectangle(itqb,right),{\therectangle(itqb,bottom)})
-                  {[rounded corners={\therectangle(itqb,round)}]
-                  -- (\therectangle(itqb,left),{\therectangle(itqb,bottom)})}
+      \fill [color=white] (\theregion(itqb,left),{\theregion(itqb,top)})
+                  -- (\theregion(itqb,right),{\theregion(itqb,top)})
+                  -- (\theregion(itqb,right),{\theregion(itqb,bottom)})
+                  {[rounded corners={\theregion(itqb,round)}]
+                  -- (\theregion(itqb,left),{\theregion(itqb,bottom)})}
                   -- cycle {};
       % Text in rectangle
-      \node [inner sep=0pt, anchor=east,
-             xshift=-16.5mm, yshift={\therectangle(itqb,top)-0.55cm},
-             color={\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},back,text)}]
-                    {\fontsize{10.15}{10.15}\selectfont
+    \node [inner sep=0pt, anchor=west, xshift={-\paperwidth+11mm},
+                          yshift={(\theregion(itqb,bottom)+\theregion(itqb,top))/2},
+                          color={\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},back,text)}]
+                    {\fontsize{12.3}{12.3}\selectfont
                      \theschool(address)};
     \end{scope}
   \end{tikzpicture}

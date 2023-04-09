@@ -33,7 +33,7 @@
 \spine(logo)={other-esep-logo_horiz}
 \spine(logo,angle)={90}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\option{/novathesis/lang/cover},main)}
+\spine(title)={\thedoctitle(\@LANG@COVER,main)}
 \spine(year)={\thentdocdate(year)}
 
 % Set margins for "normal" pages
@@ -63,20 +63,20 @@
 \ntaddtocover[vspace=2.2cm]{1-1,2-1}{%
   \noindent%
   \fontsize{15}{15}\selectfont%
-  \textbf{\MakeTextUppercase{\theschool(\option{/novathesis/lang/cover})}}%
+  \textbf{{\THEschool(\@LANG@COVER)}}%
 }
 
 % Degree name
 \ntaddtocover[vspace=0.5cm]{1-1,2-1}{%
   \fontsize{15}{15}\selectfont%
-  \thedegreename(\option{/novathesis/lang/cover})%
+  \thedegreename(\@LANG@COVER)%
 }
 
 % Title of Dissertation 1
 \ntaddtocover[vspace=6.5cm, height=4cm, valign=t]{1-1}{%
     \centering%
     \fontsize{15}{15}\selectfont%
-    \MakeTextUppercase{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}\\[1ex]%
+    {\THEdoctitle(\@LANG@COVER,main,cover)}\\[1ex]%
     \fontsize{12}{12}\selectfont%
     Dissertação%
 }
@@ -85,7 +85,7 @@
 \ntaddtocover[vspace=6.5cm, height=4cm, valign=t]{2-1}{%
     \centering%
     \fontsize{15}{15}\selectfont\scshape%
-    \thedoctitle(\option{/novathesis/lang/cover},main,cover)\\[1ex]%
+    \thedoctitle(\@LANG@COVER,main,cover)\\[1ex]%
     \thedoctitle(en,main,cover)%
 }
 
@@ -125,13 +125,13 @@
 % \ntaddtocover[vspace=2.2cm]{2-1}{%
 %   \ntcoverbackground
 %   \fontsize{15}{15}\selectfont
-%   \expandafter\MakeUppercase\expandafter{\textbf{\theschool(\option{/novathesis/lang/cover})}}
+%   \expandafter\MakeUppercase\expandafter{\textbf{\theschool(\@LANG@COVER)}}
 % }
 %
 % % % Degree name
 % \ntaddtocover[vspace=0.5cm]{2-1}{%
 %   \fontsize{15}{15}\selectfont
-%   \thedegreename(\option{/novathesis/lang/cover})
+%   \thedegreename(\@LANG@COVER)
 % }
 %
 % % % Title of Dissertation
@@ -139,8 +139,8 @@
 %   % \fontseries{mc}
 %   \fontsize{15}{15}\selectfont
 %   \scshape
-%   \thedoctitle(\option{/novathesis/lang/cover},main,cover)\\[1ex]
-%   \thedoctitle(\option{/novathesis/lang/cover},main,cover)[en]
+%   \thedoctitle(\@LANG@COVER,main,cover)\\[1ex]
+%   \thedoctitle(\@LANG@COVER,main,cover)[en]
 % }
 %
 % % Author name

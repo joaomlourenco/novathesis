@@ -134,24 +134,24 @@
 \ntaddtocover[vspace=1.25mm,halign=l,hspace=6.1cm,height=2.0cm,valign=t]{1-1}{%
   % \ntcoverbackground%
   \fontsize{14}{14}\selectfont%
-  \MakeTextUppercase{\thedepartment(\option{/novathesis/lang/cover})}%
+  \THEdepartment(\@LANG@COVER)%
 }
 
 % Title of Dissertation (PhD) / The author name (MSc)
 \ntaddtocover[vspace=5.3cm,halign=l,height=3.0cm,valign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{22}{21}\selectfont%
-    \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}}%
-    \ifdatadefined{doctitle}(\option{/novathesis/lang/cover},sub,cover){%
+    \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
+    \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
-      \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/lang/cover},sub,cover)}}%
+      \textbf{\THEdoctitle(\@LANG@COVER,sub,cover)}%
     }{}%
   }{%
     \fontsize{17}{17}\selectfont%
-    \textbf{\MakeTextUppercase{\thedocauthor(name)}}\\[2mm]%
+    \textbf{\THEdocauthor(name)}\\[2mm]%
     \fontsize{17}{17}\selectfont%
-    \thedocauthor(degree,\option{/novathesis/lang/cover})%
+    \thedocauthor(degree,\@LANG@COVER)%
   }%
 }
 
@@ -159,16 +159,16 @@
 \ntaddtocover[vspace=3.0cm,halign=l,height=3cm,valign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{17}{17}\selectfont%
-    \textbf{\MakeTextUppercase{\thedocauthor(name)}}\\[2mm]%
+    \textbf{\THEdocauthor(name)}\\[2mm]%
     \fontsize{17}{17}\selectfont%
-    \thedocauthor(degree,\option{/novathesis/lang/cover})%
+    \thedocauthor(degree,\@LANG@COVER)%
   }{%
     \fontsize{22}{21}\selectfont%
-    \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}}%
-    \ifdatadefined{doctitle}(\option{/novathesis/lang/cover},sub,cover){%
+    \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
+    \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
-      \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/lang/cover},sub,cover)}}%
+      \textbf{\THEdoctitle(\@LANG@COVER,sub,cover)}%
     }{}%
   }%
 }
@@ -178,12 +178,12 @@
   \fontsize{14}{13}\selectfont%
   \ifmaindoc{}{\thedissertationplan(\option{/novathesis/doctype})}%
   % \ifoptionequal{/novathesis/doctype}{mscplan}{Dissertation Plan\\[1pt]}{}%
-  \MakeTextUppercase{\thedegreename(\option{/novathesis/lang/cover})}%
-  {\ifdatadefined{specialization}(\option{/novathesis/lang/cover}){%
+  \THEdegreename(\@LANG@COVER)%
+  {\ifdatadefined{specialization}(\@LANG@COVER){%
   \fontsize{11}{11}\selectfont
-  \\\MakeTextUppercase{\thespecialization(\option{/novathesis/lang/cover})}}{}}%
+  \\\THEspecialization(\@LANG@COVER)}{}}%
   \\[3mm]%
-  \theuniversity(\option{/novathesis/lang/cover})\\[1pt]%
+  \theuniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%
     \ifdocworking{\emph{\color{yellow}\textbf{Draft:} \today}}{\thentdocdate(month), \thentdocdate(year)}%
   }{\thentdocdate(month), \thentdocdate(year)}%
@@ -195,6 +195,7 @@
 
 % LOGOS
 \ntaddtocover[vspace=1.0mm,hspace=-2.6cm,halign=l,height=2.0cm,valign=t]{2-1}{%
+  % \makebox[0pt]{\color{black!50}\rule{15cm}{5cm}}
   \vspace*{-4mm}%
   \begin{minipage}[b]{8.7cm}%
   \includegraphics[width=2.15cm]{\expanded{\theuniversity(logo)}}%
@@ -204,7 +205,7 @@
   \raisebox{9mm}{%
   \begin{minipage}[b]{9cm}%
     \fontsize{14}{14}\selectfont%
-    \MakeTextUppercase{\thedepartment(\option{/novathesis/lang/cover})}%
+    \THEdepartment(\@LANG@COVER)%
   \end{minipage}%
   }\\[4ex]%
   \hrule%
@@ -213,20 +214,20 @@
 % Title of Dissertation (PhD)
 \ntaddtocover[vspace=3cm,halign=l]{2-1}{%
   \fontsize{17}{17}\selectfont%
-  \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/lang/cover},main,cover)}}%
-  \ifdatadefined{doctitle}(\option{/novathesis/lang/cover},sub,cover){%
+  \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
+  \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
     \\[4mm]%
     \fontsize{12}{12}\selectfont%
-    \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/lang/cover},sub,cover)}}%
+    \textbf{\THEdoctitle(\@LANG@COVER,sub,cover)}%
   }{}%
 }
 
 % The author name
 \ntaddtocover[vspace=1,halign=l]{2-1}{%
   \fontsize{14}{14}\selectfont%
-  \textbf{\MakeTextUppercase{\thedocauthor(name)}}\\[2mm]%
+  \textbf{\THEdocauthor(name)}\\[2mm]%
   \fontsize{14}{14}\selectfont%
-  \thedocauthor(degree,\option{/novathesis/lang/cover})%
+  \thedocauthor(degree,\@LANG@COVER)%
 }
 
 % The advisers
@@ -248,12 +249,12 @@
 \ntaddtocover[vspace=1,halign=l]{2-1}{%
   \fontsize{10}{10}\selectfont%
   \ifoptionequal{/novathesis/doctype}{mscplan}{Dissertation Plan\\[1pt]}{}%
-  \MakeTextUppercase{\thedegreename(\option{/novathesis/lang/cover})}
-  {\ifdatadefined{specialization}(\option{/novathesis/lang/cover}){%
+  \THEdegreename(\@LANG@COVER)
+  {\ifdatadefined{specialization}(\@LANG@COVER){%
   \fontsize{8}{9}\selectfont
-  \\\MakeTextUppercase{\thespecialization(\option{/novathesis/lang/cover})}}{}}%
+  \\\THEspecialization(\@LANG@COVER)}{}}%
   \\[1.25ex]%
-  \theuniversity(\option{/novathesis/lang/cover})\\[1pt]%
+  \theuniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%
     \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}{\thentdocdate(month), \thentdocdate(year)}%
   }{\thentdocdate(month), \thentdocdate(year)}%
@@ -266,8 +267,8 @@
 % Print sponsor logos
 \ntaddtocover[vspace=1, halign=l]{N-2}{%
   \foreach \myi in {1, ..., 9} {%
-    \ifdatadefined{sponsor}(\option{/novathesis/lang/cover},\myi,logo){%
-      \thesponsor(\option{/novathesis/lang/cover},\myi,logo)\qquad%
+    \ifdatadefined{sponsor}(\@LANG@COVER,\myi,logo){%
+      \thesponsor(\@LANG@COVER,\myi,logo)\qquad%
     }{}%
   }%
 }

@@ -12,7 +12,7 @@
   \thispagestyle{plain}%
   \null\vfill%
   \noindent%
-  \theumcopyrighttext(\option{/novathesis/lang/copyright})%
+  \theumcopyrighttext(\@LANG@COPYRIGHT)%
   \vfill%
 }
 
@@ -37,7 +37,7 @@
 
 \newcommand{\licenseThis}{%
   \normalsize%
-  \textbf{\emph{\theumcopyrightlabel(\option{/novathesis/lang/cover})}}\\
+  \textbf{\emph{\theumcopyrightlabel(\@LANG@COVER)}}\\
   \doclicenseImage\\[0.5mm]%
   \textbf{\doclicenseLongName}\\[0.5mm]
   \textbf{\doclicenseName}\\[2ex]
@@ -61,7 +61,7 @@
   \indent Este é um trabalho académico que pode ser utilizado por terceiros desde que respeitadas as regras e boas práticas internacionalmente aceites, no que concerne aos direitos de autor e direitos conexos.\\[1ex]
   \indent Assim, o presente trabalho pode ser utilizado nos termos previstos na licença abaixo
 indicada.\\[1ex]
-  \indent Caso o utilizador necessite de permissão para poder fazer um uso do trabalho em condições não previstas no licenciamento indicado, deverá contactar o autor, através do RepositoriUM da \theuniversity(\option{/novathesis/lang/cover}).\\[1cm]
+  \indent Caso o utilizador necessite de permissão para poder fazer um uso do trabalho em condições não previstas no licenciamento indicado, deverá contactar o autor, através do RepositoriUM da \theuniversity(\@LANG@COVER).\\[1cm]
   \licenseThis%
 }
 
@@ -71,6 +71,6 @@ indicada.\\[1ex]
   \end{center}%
   \indent This is academic work that can be used by third parties as long as internationally accepted rules and good practices regarding copyright and related rights are respected.\\[1ex]
   \indent Accordingly, this work may be used under the license provided below.\\[1ex]
-  \indent If the user needs permission to make use of the work under conditions not provided for in the indicated licensing, they should contact the author through the RepositoriUM of \theuniversity(\option{/novathesis/lang/cover}).\\[1cm]
+  \indent If the user needs permission to make use of the work under conditions not provided for in the indicated licensing, they should contact the author through the RepositoriUM of \theuniversity(\@LANG@COVER).\\[1cm]
   \licenseThis%
 }
