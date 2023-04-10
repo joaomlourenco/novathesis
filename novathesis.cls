@@ -1875,7 +1875,7 @@
     {l}{\raggedright}%
     {c}{\centering}%
     {r}{\raggedleft}%
-  }[\ClassError{novathesis}{Invalid alignment '#1'}{}]%
+  }[\ClassError{novathesis}{Invalid alignment “#1”}{}]%
 }
 
 \def\@ntprintpersons#1#2[#3]#4#5#6{
@@ -1970,7 +1970,7 @@
   \csuse{#2stringpost}()?:={:&}%
   \csuse{#2remainderpre}()?:={{\\}}%
   \personpost()?:={\\[2pt]}%
-  \persongrouppost()?:={\\[-7pt]}
+  \persongrouppost()?:={\\[5pt]}
   \committeetitlestringpre()?:={&}%
   \committeetitlestringpost()?:={\\[5pt]}%
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS 
