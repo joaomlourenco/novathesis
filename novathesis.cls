@@ -1168,7 +1168,7 @@
 \def\@ntsetuplevel{}
 
 \InputIfFileExists{NOVAthesisFiles/Schools/\@UNIV/\@UNIV-defaults.ldf}{}
-    {\PackageError{novathesis}{Missing file “/\@UNIV/\@UNIV-defaults.ldf”}{}}
+    {\PackageError{novathesis}{Missing file “NOVAthesisFiles/Schools/\@UNIV/\@UNIV-defaults.ldf”}{}}
 
 \ntfor\match:={%
       \@UNIV-\@SCHL-\@DEGREEACR,%
