@@ -5,36 +5,38 @@
 %% The original source files were:
 %%
 %% memory.dtx  (with options: `memory')
-%%
+%% 
 %% This is a generated file.
-%%
+%% 
 %% Copyright (C) 2013 by Song Zhiwei <songzw@gmail.com>
-%%
+%% 
 %% This file may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3c of this license
 %% or (at your option) any later version. The latest version of this
 %% license is in:
-%%
+%% 
 %%    http://www.latex-project.org/lppl.txt 32
-%%
+%% 
 %% and version 1.3c or later is part of all distributions of LaTeX
 %% version 2006/05/20 or later.
-%%
+%% 
 \NeedsTeXFormat{LaTeX2e}[2003/12/01]
 \ProvidesPackage{NOVAthesisFiles/memory2}
   [2013/05/13 v1.2 containers for data of object and array in LaTeX]
 
 % \RequirePackage{trimspaces}
-
-\def\memoryemptybox{{\setlength{\fboxsep}{0pt}\LARGE\setbox0=\hbox{$\times$}\fbox{\rule{\wd0}{0pt}\rule{0pt}{\ht0}}}}
+\def\memoryemptybox{{%
+  \setlength{\fboxsep}{0pt}\LARGE\setbox0=\hbox{$\times$}%
+  \fbox{\rule{\wd0}{0pt}\rule{0pt}{\ht0}}%
+}}
 \def\memoryxbox{{\setlength{\fboxsep}{0pt}\LARGE\fbox{$\times$}}}
 \def\datacrossiftrue#1(#2){%
   \defifundef{\ifmemorycross}{\newif}%
-  \memorycrossfalse
+  \memorycrossfalse%
   \@for\@memory@it:=#2\do{\ifdatadefined{#1}(#2){\memorycrosstrue}{}}%
-  \bgroup
+  \bgroup%
     \ifmemorycross\memoryxbox\else\memoryemptybox\fi%
-  \egroup
+  \egroup%
 }
 
 % \ifdatadefinedor{\match}{dataname}({val1},…){true}{false}
@@ -52,42 +54,49 @@
     \edef#3{#1}\expandafter#5%
   }{\ifx\@nil#2\@nil\relax\expandafter#6\else\@ifddor(#2\@nil){#3}{#4}{#5}{#6}\fi}%
 }
-\def\ifdatadefined#1(#2)#3#4{\ifcsname @\expanded{#1}@\expanded{#2}@memory\endcsname#3\else#4\fi}
-\def\ifdataequal#1(#2)#3#4#5{\ifdatadefined#1(#2){%
-      \edef\@data@tmp{\csname @\expanded{#1}@\expanded{#2}@memory\endcsname}%
-      \if\@data@tmp#3\relax#4\else#5\fi%
-    }{#5}}
-% \def\datadefault#1(#2){\ifdatadefined{#1}(#2){\csname the#1\endcsname(#2)}{\csname the#1\endcsname()}}
-\def\datadefault#1(#2){\ifdatadefined{#1}(#2){\csname the#1\endcsname(#2)}
-                                     {\ifdatadefined{#1}(){\csname the#1\endcsname()}{}}}
+\def\ifdatadefined#1(#2)#3#4{%
+  \ifcsname @\expanded{#1}@\expanded{#2}@memory\endcsname#3\else#4\fi%
+}
+\def\ifdataequal#1(#2)#3#4#5{%
+  \ifdatadefined#1(#2){%
+    \edef\@data@tmp{\csname @\expanded{#1}@\expanded{#2}@memory\endcsname}%
+    \if\@data@tmp#3\relax#4\else#5\fi%
+  }{#5}%
+}
+\def\datadefault#1(#2){%
+  \ifdatadefined{#1}(#2){%
+    \csname the#1\endcsname(#2)%
+  }{%
+    \ifdatadefined{#1}(){\csname the#1\endcsname()}{}%
+  }%
+}
 
-\def\set@memory#1#2=#3{\if#1*\expandafter\gdef\csname#2\endcsname{#3}%
+\def\set@memory@i#1#2#3{\if#1*\expandafter\gdef\csname#2\endcsname{#3}%
                          \else\expandafter\def\csname#2\endcsname{#3}\fi}
-\def\eset@memory#1#2=#3{\if#1*\expandafter\xdef\csname#2\endcsname{#3}%
+\def\set@cond@memory@i#1#2?#3{\ifcsname#2\endcsname\else\set@memory@i{#1}{#2}{#3}\fi}
+\def\set@memory#1#2={\@ifnextchar?{\set@cond@memory@i{#1}{#2}}{\set@memory@i{#1}{#2}}}
+\def\eset@memory@i#1#2#3{\if#1*\expandafter\xdef\csname#2\endcsname{#3}%
                          \else\expandafter\protected@edef\csname#2\endcsname{#3}\fi}
+\def\eset@cond@memory@i#1#2?#3{\ifcsname#2\endcsname\else\eset@memory@i{#1}{#2}{#3}\fi}
+\def\eset@memory#1#2={\@ifnextchar?{\eset@cond@memory@i{#1}{#2}}{\eset@memory@i{#1}{#2}}}
 \def\etest@memory#1#2:{\@ifnextchar={\eset@memory{#1}{#2}}
                                     {\PackageError{memory}{Please use “=” or “:=”.}{}}}
-\def\data@memory#1#2{\@ifnextchar?{\data@memory@ii{#1}{\@ifmtarg{\csname @#2@memory\endcsname}{@@trash@@}{#2}}}%
-                                  {\data@memory@i{#1}{#2}}}
-\def\data@memory@ii#1#2?{\data@memory@i{#1}{#2}}
-\def\data@memory@i#1#2{\@ifnextchar={\set@memory{#1}{@#2@memory}}
+\def\data@memory#1#2{\@ifnextchar={\set@memory{#1}{@#2@memory}}
                                   {\@ifnextchar:{\etest@memory{#1}{@#2@memory}}
-                                                {\PackageError{memory}{Please use \string\the#2 macro instead of \string\ #2.}{}}}}
-\def\gobble@memory#1#2?{\data@memory@i{#1}{@@trash@@}}
+                                                {\PackageError{memory}{Please use \string\the#2 macro instead of \string\#2.}{}}}}
 \def\array@memory#1#2(#3){\data@memory{#1}{#2@#3}}
 \def\newdata@memory#1#2{\@ifundefined{#2}
   {\if#1*
       \expandafter\gdef\csname#2\endcsname{\array@memory{#1}{#2}}
       \expandafter\gdef\csname the#2\endcsname(##1){\csname @#2@\expanded{##1}@memory\endcsname}
-      \expandafter\gdef\csname THE#2\endcsname(##1){\MyUppercase{\csname @#2@\expanded{##1}@memory\endcsname}}
    \else
       \expandafter\def\csname#2\endcsname{\array@memory{#1}{#2}}
       \expandafter\def\csname the#2\endcsname(##1){\csname @#2@\expanded{##1}@memory\endcsname}
-      \expandafter\def\csname THE#2\endcsname(##1){\MyUppercase{\csname @#2@\expanded{##1}@memory\endcsname}}
    \fi}
   {\PackageWarningNoLine{memory}{`#2' already defined.
                                  Macro `newdata' ignored!}}}
 \def\newdata{\@ifnextchar*{\newdata@memory}{\newdata@memory{}}}
+
 \endinput
 %%
 %% End of file `memory.sty'.
