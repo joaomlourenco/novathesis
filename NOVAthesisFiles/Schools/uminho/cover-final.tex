@@ -54,23 +54,14 @@
   % BACKGROUND
   \node [anchor=north west, inner sep=0pt]
     at (current page.north west) {
-      \begin{tikzpicture}[]
-          % \node [inner sep=0pt]
-          %   at (0,0)
-          %       {\includegraphics[width=\stockwidth,height=\stockheight,align=t]{cover0}};
-          %       %{CAPA-Tese-Doutoramento-EA}};
-          \filldraw [fill=\expanded{\@UM@BGCOLOR@i}] (0,0) rectangle (\stockwidth,-\stockheight);]
+      \begin{tikzpicture}
+          \filldraw [fill=\expanded{\@UM@BGCOLOR@i}] (0,0) rectangle (\stockwidth,-\stockheight);
       \end{tikzpicture}
     };
   % FRONT COVER — RIGHT PAGE
   \node [anchor=north west, inner sep=0pt, xshift=0.5*\myspinewidth]
     at (current page.north) {
       \begin{tikzpicture}[remember picture, overlay, xshift=7.9cm]
-          % \node [inner sep=0pt]
-          %   at (0,0)
-          %       {\includegraphics[width=210mm,height=297mm,align=t]{cover1}};
-          % \filldraw [fill=yellow, opacity=0.5] (0,0) rectangle (210mm,-297mm);]
-          % \filldraw [fill=white, opacity=0.5] (0,0) rectangle (\stockwidth,-\stockheight);]
         \node [anchor=west, inner sep=0pt]
             at (0,-3.825)
               {\umfonta\bfseries\theuniversity(pt)};
@@ -101,7 +92,6 @@
   \node [anchor=north, inner sep=0pt]
     at (current page.north) {
       \begin{tikzpicture}[remember picture, overlay]
-        % \filldraw [fill=red, opacity=0.5, xshift=-0.5*\myspinewidth] (0,0) rectangle (\myspinewidth,-297mm);]
         \foreach \myi in {0,...,4} {
             \node [anchor=north west, inner sep=0pt, xshift=-0.5*\myspinewidth]
               at (0,-\myi*\myspinewidth)
@@ -118,7 +108,6 @@
         \node [anchor=west, inner sep=0pt, rotate=90]
             at (0,-28.7)
               {\thespine(font)UMinho $|$ \thespine(year)};
-          % \filldraw [fill=white, opacity=0.5] (0,0) rectangle (\stockwidth,-\stockheight);]
       \end{tikzpicture}
     };
   % BACK COVER — LEFT PAGE
@@ -140,12 +129,12 @@
   % BACKGROUND
   \node [anchor=north west, inner sep=0pt]
     at (current page.north west) {
-      \begin{tikzpicture}[]
+      \begin{tikzpicture}
           % \node [inner sep=0pt]
           %   at (0,0)
           %       {\includegraphics[width=\stockwidth,height=\stockheight,align=t]{cover0}};
           %       %{CAPA-Tese-Doutoramento-EA}};
-          \filldraw [fill=\expanded{\@UM@BGCOLOR@ii}] (0,0) rectangle (\stockwidth,-\stockheight);]
+          \filldraw [fill=\expanded{\@UM@BGCOLOR@ii}] (0,0) rectangle (\stockwidth,-\stockheight);
       \end{tikzpicture}
     };
 \end{tikzpicture}

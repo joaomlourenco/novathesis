@@ -144,7 +144,7 @@
 }
 
 \newdata{processor}
-\processor(uminho):={lua}
+\processor(uminho):={lua,xe}
 \processor(nova/ims):={pdf,lua}
 \processor(ulisboa/fmv):={xe,lua}
 \processor(other/esep):={xe,lua}
@@ -162,7 +162,7 @@
 }
 \newcommand{\@validate@processor@i}[1]{%
 % 1 = list of acceptable processors
-  \@for\myi:=#1\do{%
+  \@for\myi:=\expanded{#1}\do{%
     % \typeout{@validate@processor@i 1=[\myi]}\@VALIDATE@PROCESSOR@I
     \IfStrEqCase{\myi}{%
       {pdf}{\ifpdftex\processortrue\fi}%
@@ -2135,11 +2135,11 @@
   \checkandfixthelayout[fixed]%
   %
   \ifluatex%
-    \pageheight=\stockheight% \pageheight=3in
-    \pagewidth=\stockwidth% \pageheight=3in
+    \pageheight=\stockheight\relax% \pageheight=3in
+    \pagewidth=\stockwidth\relax% \pageheight=3in
   \else%
-    \pdfpageheight=\stockwidth% \pdfpageheight=3in
-    \pdfpagewidth=\stockheight% \pdfpageheight=3in
+    \pdfpageheight=\stockheight\relax% \pdfpageheight=3in
+    \pdfpagewidth=\stockwidth\relax% \pdfpageheight=3in
   \fi%
   \setlength{\@colht}{\textheight}%
   \setlength{\@colroom}{\textheight}%
