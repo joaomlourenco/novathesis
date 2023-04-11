@@ -13,7 +13,7 @@
 \school(1):={\theschool(pt)}
 % \school(2):={\theuniversity(pt)}
 
-\spine(title):={\thedoctitle(\@LANG@COVER,main,cover)}
+\spine(title):={\thedoctitle(\@LANG@COVER,main)}
 
 % \color{\thethesiscover(\option{/novathesis/doctype},1-1,textcolor)}
 \datamatchtf{\match}{thesiscover}(%
@@ -94,7 +94,7 @@
               {\umfontb\bfseries\parbox{111mm}{\thedoctitle(\@LANG@COVER,main,cover)}};
         \node [anchor=south west, inner sep=0pt]
             at (0,-28.7)
-              {\umfontc\thentdocdate(month)\theofstr(pt)\thentdocdate(year)};
+              {\umfontc\thentdocdate(month)\theofstr(\@LANG@COVER)\thentdocdate(year)};
       \end{tikzpicture}
     };
   % SPINE

@@ -143,6 +143,40 @@
   }%
 }
 
+\newdata{processor}
+\processor(uminho):={lua}
+\processor(nova/ims):={pdf,lua}
+\processor(ulisboa/fmv):={xe,lua}
+\processor(other/esep):={xe,lua}
+\newcommand{\@validate@processor}[2]{%
+% 1 = UNIV
+% 2 = SCHL
+  % \typeout{@validate@processor 1=[#1] 2=[#2]}\@VALIDATE@PROCESSOR
+  \newif\ifprocessor%
+  \processorfalse%
+  \ifdatadefined{processor}(#1/#2){\@validate@processor@i{\theprocessor(#1/#2)}}{%
+  \ifdatadefined{processor}(#1){\@validate@processor@i{\theprocessor(#1)}}{%
+    \processortrue%
+  }}%
+  \ifprocessor\else\ClassError{novathesis}{\pdfprocessor: Invalid processor for “#1/#2”.}{}\fi%
+}
+\newcommand{\@validate@processor@i}[1]{%
+% 1 = list of acceptable processors
+  \@for\myi:=#1\do{%
+    % \typeout{@validate@processor@i 1=[\myi]}\@VALIDATE@PROCESSOR@I
+    \IfStrEqCase{\myi}{%
+      {pdf}{\ifpdftex\processortrue\fi}%
+      {lua}{\ifluatex\processortrue\fi}%
+      {xe}{\ifxetex\processortrue\fi}%
+    }[\ClassError{novathesis}{Invalid processor type “\myi”}{}]%
+  }%
+}
+\newcommand{\pdfprocessor}{%
+  \ifpdftex pdf(la)tex\fi%
+  \ifluatex lua(la)tex\fi%
+  \ifxetex xe(la)tex\fi%
+}
+
 \options{/novathesis/.new family,
   % DOCUMENT
   doctype/.new choice           = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
@@ -153,7 +187,8 @@
   % abstract/theorder/.new list   = {unset},
   abstractorder/.new cmd        = {\appto\@nt@saveabstractorder{{#1},}},%
   % SCHOOL
-  school/.new cmd               = {\splitbyslash#1\relax\@UNIV\@SCHL},
+  school/.new cmd               = {\splitbyslash#1\relax\@UNIV\@SCHL%
+                                   \@validate@processor{\@UNIV}{\@SCHL}},
   school                        = nova/fct,
   % STYLES
   style/chapter/.new value      = bar,
@@ -710,8 +745,6 @@
 \RequirePackage{url}
 \RequirePackage{xstring}
 
-\RequirePackage{tikz}
-
 % \newcommand{\definelanguagealias}[2]{%
 %   \@namedef{languagealias@#1}{#2}%
 % }
@@ -838,10 +871,10 @@
 % \options{/@nt/lang/shorttolong=\@LANG@MAIN}%
 \PassOptionsToPackage{main=\@LANG@MAIN@LONG}{babel}
 \@for\myi:=\expanded{\@LANG@LOADED}\do{%
-  % \typeout{BABELLANG=\myi}\BABELLANG%
+  % \typeout{BABELLANG=\myi \thelanglong(\myi)}\BABELLANG%
   % \options{/@nt/lang/shorttolong=\myi}%
-  \PassOptionsToPackage{\thelanglong(\myi)}{babel}%
-  \PassOptionsToPackage{\thelanglong(\myi)}{translator}%
+  \PassOptionsToPackage{\expanded{\thelanglong(\myi)}}{babel}%
+  \PassOptionsToPackage{\expanded{\thelanglong(\myi)}}{translator}%
 }%
 
 % --------------------------------------------------------
@@ -850,6 +883,8 @@
 \RequirePackage{translator} % Support month name translations for pgfcalendar
 
 \input{NOVAthesisFiles/fix-babel.tex}
+
+\RequirePackage{tikz}
 
 %%%%% Fine tuning of typesetting
 \ifxeorlua{}{% pdflatex
@@ -946,7 +981,7 @@
   % \typeout{XXXX [\@nt@cleantitle]}\aaa
   \doctitle(#2,#1):={\@nt@cleantitle}%
   \doctitle(#2,#1,cover):={#3}%
-  \IfStrEq{#1}{main}{\doctitle(#2,spine):={\@nt@cleantitle}}{}%
+  \IfStrEq{#1}{main}{\doctitle(#2,spine):=?{\@nt@cleantitle}}{}%
   % \doctitle(#2,#1):={\ntnolinebreak{#3}}%
   % \doctitle(#2,#1,cover):={#3}%
   % \IfStrEq{#1}{main}{\doctitle(#2,spine):={\ntnolinebreak{#3}}}{}%
@@ -973,8 +1008,8 @@
   % \typeout{NTDOCDATE [#1] [#2] [#3]}\NTDOCDATE
   \ntdocdate(year):={#1}%
   \ntdocdate(month):={#2}%
-  \ifstrequal{#3}{-}{\ntdocdate(day):={}}{\StrGobbleRight{#3}{2}[\@nt@date@day]\ntdocdate(day):={\@nt@date@day}}%
-  % \typeout{NTDOCDATE [\thentdocdate(year)] [\thentdocdate(month)] [\thentdocdate(day)]}\NTDOCDATE
+  \ifstrequal{#3}{-}{\ntdocdate(day):={}}%
+                    {\StrGobbleRight{#3}{2}[\@nt@date@day]\ntdocdate(day):={\@nt@date@day}}%
 }
 
 
@@ -1042,20 +1077,31 @@
   \IfStrEqCase{#1}{%
     {frontmatter}{%
           % \iftoggle{/novathesis/print/secondcover}{}{\setcounter{page}{1}}%
+          \thispagestyle{novathesis@frontmatter}%
+          \pagestyle{novathesis@frontmatter}%
           \iftoggle{/novathesis/print/frontmatter}{\ntprintlist{/@nt/print/#1}}{}}%
     {mainmatter}{%
-            \ntprintlist{/@nt/print/#1}}%
+          \thispagestyle{novathesis@mainmatter}%
+          \pagestyle{novathesis@mainmatter}%
+          \ntprintlist{/@nt/print/#1}}%
   }[\ifdefmacro{#1}{#1}{\csuse{ntprint#1}}]%
-  \ignorespaces%
 }
 
 \newcommand*{\ntprintlist}[1]{%
   \optionlistdo{#1}{%
-    \ifdefmacro{##1}{##1}{%
-      \ifcsmacro{ntprint##1}%
-            {\NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}\clearforchapter}%
-            {\ifcsmacro{##1}{\NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}}
-                            {\ClassError{novathesis}{Invalid contents for frontmatter or mainmatter: [##1]}{}}}}
+    \ifdefmacro{##1}{##1}{%     ##1 is undefined
+      \ifcsmacro{ntprint##1}{%  \ntprint#1 is defined
+        \NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}%
+      }{%                       \ntprint#1 is undefined
+        \ifcsmacro{##1}{%       \##1 is defined
+          \NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}%
+        }{%                     nothing is defined
+          \ClassError{novathesis}{Invalid contents for frontmatter or mainmatter: [##1]}{}%
+        }%
+      }%
+    }%
+    \clearforchapter%
+    \ignorespaces%
   }%
 }
 
@@ -1234,7 +1280,9 @@
 \IfInteger{\thentdocdate(month)}{%
   % \edef\@nt@datemonth{\thentdocdate(month)}%
   % \ntdocdate(month):={\bgroup\ntselectlang{\@LANG@COVER}\monthname[\thentdocdate(month)]\egroup}%
-  \RequirePackage{pgfcalendar}%
+  % \typeout{@LANG@COVER=\@LANG@COVER}\LANG@COVER
+  \ntselectlang{\@LANG@COVER}%
+  \usetikzlibrary{calendar}%
   \ntdocdate(month):={\pgfcalendarmonthname{\thentdocdate(month)}}%
 }{}
 
@@ -1435,7 +1483,7 @@
 }
 
 \newcommand{\ntprintcovers}[1][1,2]{%
-  \begingroup
+  \begingroup%
     \ntselectlang{\@LANG@COVER}%
     \NTRunHook{printcovers/pre}%
     \pdfbookmark[-1]{\thebkmstring(frontmatter,\@LANG@COVER)}{bmfrontmatter}%
@@ -1443,52 +1491,35 @@
     % \forcsvlist{\ntprintcoverpair}{#1}%
     \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
     \NTRunHook{printcovers/post}%
-  \endgroup
-  \setcounter{page}{1}
+  \endgroup%
+  \setcounter{page}{1}%
 }
 
 \newcommand{\ntprintcoverpair}[1]{%
   % #1 = major cover ID
-  \iffileadded[1]{cover}{%
+  \iffileadded[1]{cover}{% Deal with user-defined cover page
     \iffileadded[#1]{cover}{%
       \optionlistdo{/@nt/file/cover/#1}{%
         \bgroup\thispagestyle{empty}%
         \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
-        \egroup\clearforchapter%
+        \egroup\clearpage%
       }%
-      \ntprintcoversingle{2}{1}%
+      \ntprintcoversingle{2-1}%
     }{}%
-  }{%
+  }{% Pre-defined cover page
     \IfStrEqCase{#1}{%
-      {1}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}\clearforchapter}%
+      {1}{\ntprintcoversingle{#1-1}\ntprintcoversingle{#1-2}}%
       {2}{\iftoggle{/novathesis/print/secondcover}
-                   {\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}\clearforchapter}{}}%
-      {N}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}}%
+                   {\ntprintcoversingle{#1-1}\ntprintcoversingle{#1-2}}{}}%
+      {N}{\ntprintcoversingle{#1-1}\ntprintcoversingle{#1-2}}%
     }[\ClassWarning{Invalid cover number: #1}{}]%
-  }
+  }%
 }
 
-\newcommand{\ntprintcoversingle}[2]{%
-  % #1 = major cover ID
-  % #2 = minor cover ID
-  \def\@nt@newpage{}%
-  \gdef\@covernumber{#1-#2}%
-  \IfStrEq{#2}{2}{%
-    \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{cleared}\cleartoevenpage}}{\clearpage}%
-  }{}%
-  \setcounter{page}{0}%
-  \edef\@cvn{#1-#2}%
-  \edef\@cvnonetwo{1-2}%
-  \edef\@cvnNone{N-1}%
-  \ifx\@cvn\@cvnonetwo\relax
-    \iftoggle{/novathesis/uminho/skipblankcovers}{}
-                       {\ifcoverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}}%
-  \else\ifx\@cvn\@cvnNone\relax
-    \iftoggle{/novathesis/uminho/skipblankcovers}{}
-                       {\ifcoverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}}%
-  \else
-    \ifcoverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}%a
-  \fi\fi
+\newcommand{\ntprintcoversingle}[1]{%
+  % #1 = cover ID “major-minor”
+  \gdef\@covernumber{#1}%
+  \ifcoverdefined[#1]{\setcounter{page}{0}\@ntprintcover@i{#1}}{}%
 }
 
 \newcommand{\@ntprintcover@i}[1]{%
@@ -1511,6 +1542,7 @@
     \NTRunHook{cover/#1/post}%
     \NTRunHook{cover/post}%
   \endgroup%
+  \clearpage%
 }
 
 \newcommand{\@ntmakeboxwithcover}[2]{%
@@ -1823,35 +1855,36 @@
 }
 
 \newcommand*{\ntprintstatement}{%
-  \iftoggle{/novathesis/print/statement}{% if statement toggle is on
-    \ifmaindoc{%
-      \NTRunHook{statement/pre}%
-      \iffileadded{statement}{}{%ELSE
-        \ntfor\match:={%
-          \@SCHL/statement-\@DEGREEACR-\@LANG@MAIN,%
-          \@SCHL/statement-\@DEGREEACR,%
-          \@SCHL/statement-\@LANG@MAIN,%
-          \@SCHL/statement,%
-          statement-\@LANG@MAIN,%
-          statement%
-        }\do{%
-          \IfFileExists{NOVAthesisFiles/Schools/\@UNIV/\match.tex}{%
-            \ntaddfile{statement}{NOVAthesisFiles/Schools/\@UNIV/\match.tex}%
-            \ntforbreak%
-          }{}%
-        }[%
-          \ClassError{novathesis}{No “statement.tex” found! Not defined with %
-                                  \string\ntaddfile{statement}{filename} in folders %
-                                  “NOVAthesisFiles/Schools/\@UNIV/\@SCHL” nor %
-                                  “NOVAthesisFiles/Schools/\@UNIV”}{}
-        ]%
+  \ifdocworking{}{% ONly print statement if provisional or final
+    \ifmaindoc{% Skip thesis plan and similar documents
+      \iftoggle{/novathesis/print/statement}{% if statement toggle is on
+        \NTRunHook{statement/pre}%
+        \iffileadded{statement}{}{%ELSE
+          \ntfor\match:={%
+            \@SCHL/statement-\@DEGREEACR-\@LANG@MAIN,%
+            \@SCHL/statement-\@DEGREEACR,%
+            \@SCHL/statement-\@LANG@MAIN,%
+            \@SCHL/statement,%
+            statement-\@LANG@MAIN,%
+            statement%
+          }\do{%
+            \IfFileExists{NOVAthesisFiles/Schools/\@UNIV/\match.tex}{%
+              \ntaddfile{statement}{NOVAthesisFiles/Schools/\@UNIV/\match.tex}%
+              \ntforbreak%
+            }{}%
+          }[%
+            \ClassError{novathesis}{No “statement.tex” found! Not defined with %
+                                    \string\ntaddfile{statement}{filename} in folders %
+                                    “NOVAthesisFiles/Schools/\@UNIV/\@SCHL” nor %
+                                    “NOVAthesisFiles/Schools/\@UNIV”}{}
+          ]%
+        }{}%
+        \pdfbookmark[1]{\thebkmstring(statement,\@LANG@MAIN)}{bmstatement}%
+        \@ntloadfiles@ii{statement}%
+        \NTRunHook{statement/post}%
       }{}%
-      \pdfbookmark[1]{\thebkmstring(statement,\@LANG@MAIN)}{bmstatement}%
-      \@ntloadfiles@ii{statement}%
-      \NTRunHook{statement/post}%
-      \clearforchapter%%
     }{}%
-  }{}%
+  }%
 }
 
 
@@ -1952,10 +1985,10 @@
   % #2 = width in % of textwidth
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
-  \csuse{#3stringpost}()?:={:\\[2pt]}%
-  \csuse{#3remainderpre}()?:={{\\}}%
-  \personpost()?:={\\[2pt]}%
-  \persongrouppost()?:={\\[-3pt]}
+  \csuse{#3stringpost}():=?{:\\[2pt]}%
+  \csuse{#3remainderpre}():=?{{\\}}%
+  \personpost():=?{\\[2pt]}%
+  \persongrouppost():=?{\\[-5pt]}
   \begin{tabularx}{#2\linewidth}[t]{@{}L@{}}%
     \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}%
     % \@for\arg:=\expanded{#4}\do{\@nt@ntprintpersongroup{#1}{1}{#3}{\arg}}
@@ -1967,12 +2000,12 @@
   % #2 = adviser | committee
   % #3 = {a,c} | {c,r,a,m,g}
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3]}\NTPRINTPERSONSASTWOCOLUMNS
-  \csuse{#2stringpost}()?:={:&}%
-  \csuse{#2remainderpre}()?:={{\\}}%
-  \personpost()?:={\\[2pt]}%
-  \persongrouppost()?:={\\[5pt]}
-  \committeetitlestringpre()?:={&}%
-  \committeetitlestringpost()?:={\\[5pt]}%
+  \csuse{#2stringpost}():=?{:&}%
+  \csuse{#2remainderpre}():=?{{\\[-2pt]}}%
+  \personpost():=?{\\[2pt]}%
+  \persongrouppost():=?{\\[18pt]}
+  \committeetitlestringpre():=?{&}%
+  \committeetitlestringpost():=?{\\[5pt]}%
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS 
   \begin{tabularx}{\linewidth}[t]{@{}r@{~~}L@{}}%
     \ifdatadefined{#2titlestring}(\@LANG@COVER){%

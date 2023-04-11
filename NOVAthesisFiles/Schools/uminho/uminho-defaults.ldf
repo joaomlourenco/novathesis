@@ -16,6 +16,7 @@
 %-----------------------------------------------------------------
 % novathesis customization
 %-----------------------------------------------------------------
+% \ntsetup{lang/cover=pt}
 \ntsetup{print/secondcover=true}
 \ntsetup{print/statement=true}
 \ntsetup{style/font=newsgott}
@@ -26,7 +27,7 @@
 
 % --------------------------------------------------------
 % PRINT ORDER FOR frontmatter AND mainmatter
-\ntsetprintorder{frontmatter}{
+\printorder(frontmatter,final):={
   copyright;       % (*) The copyright page
   acknowledgements;% (*) Print the acknowledgments
   statement;       % The statement page
@@ -35,6 +36,8 @@
   alllistof;       % Print all the listof defined in “7_list_of.tex”
   printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
 }
+
+\printorder(frontmatter,provisional):={\theprintorder(frontmatter,final)}
 
 %-----------------------------------------------------------------
 % Other stuff
@@ -215,10 +218,10 @@
 \ntaddtocover[vspace=1cm,halign=l,height=5.25cm,valign=t]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
   \addfontfeature{LetterSpace=2.5}%
-  \textbf{\theuniversity(\@LANG@COVER)}%
+  \textbf{\theuniversity(pt)}%
   \\%
   \addfontfeature{LetterSpace=1.2}%
-  \newsgottlig\theschool(\@LANG@COVER)%
+  \newsgottlig\theschool(pt)%
 }
 
 % Author name
@@ -232,7 +235,7 @@
 \ntaddtocover[vspace=0.8cm,halign=l,height=5.5cm,valign=t]{1-1,2-1}{%
   \fontsize{17pt}{20.4bp}\selectfont%
   \addfontfeature{LetterSpace=2.9}%
-  \textbf{\thedoctitle(\@LANG@COVER,main,cover)}
+  \textbf{\thedoctitle(\@LANG@MAIN,main,cover)}
 }
 
 % Degree info
@@ -251,7 +254,7 @@
 % Advisers
 \ntaddtocover[vspace=0.75cm,halign=l]{2-1}{%
   \fontsize{14}{16.8bp}\selectfont%
-  \theadvisersrt(\@LANG@COVER)\\[-1ex]%
+  \theadvisersrt(\@LANG@COVER)\\[\dimexpr-\baselineskip+0.5ex]%
   \textbf{\ntprintpersons{0.9}{0}{adviser}{a,c}}%
 }
 
@@ -261,7 +264,7 @@
   % \ifdraftdoc
     % \textbf{DRAFT: \today}
   % \else
-    \thentdocdate(month)\theofstr(\@LANG@COVER)\thentdocdate(year)
+    \thentdocdate(month)\theofstr(\@LANG@COVER)\thentdocdate(year)%
   % \fi
 }
 
