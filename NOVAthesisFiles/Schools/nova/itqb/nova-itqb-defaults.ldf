@@ -242,7 +242,7 @@
                     {\fontsize{18}{18}\selectfont\textbf{\thedocauthor(name)}};
     % Photo
     \edef\@itqbheight{\theregion(photo,height)}
-    \draw [path picture={\node at (path picture bounding box.north west)
+    \draw [path picture={\node at (path picture bounding box.center)
                     {\includegraphics[height=\@itqbheight]{nova-itqb-photo}};},
                     rounded corners=1.25cm, xshift=-\@nt@margin@left]
                     ({\theregion(photo,left)},\theregion(photo,top))
