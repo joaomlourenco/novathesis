@@ -22,6 +22,9 @@
 }
 
 \setcounter{lofdepth}{2}
+\linespread{1.30}
+\captionnamefont{\fontsize{10}{10}\selectfont\bfseries}
+\captiontitlefont{\fontsize{10}{10}\selectfont\bfseries}
 \openany
 
 
@@ -216,18 +219,20 @@
 \spine(year)={\thentdocdate(year)}
 \spine(text,angle)={-90}
 
-\spine(box,author,top)={1.0cm}
+\spine (box, spacing)={0.5cm}
+
+\spine(box,author,top)={1.0cm}% 1.0cm
 \spine(box,author,len)={4.0cm}
 
-\spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
-\spine(box,title,len)={19.7cm}
+\spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}% 5.5cm
+\spine(box,title,len)={18.9cm}
 
-\spine(box,logo,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
+\spine(box,logo,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}% 25,2cm
 \spine(box,logo,len)={2.0cm}
 \spine(box,logo,align)={c}
 
-\spine(box,date,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
-\spine(box,date,len)={2.0cm}
+\spine(box,date,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}% 27,7cm
+\spine(box,date,len)={2.0cm}%29,7cm
 \spine(box,logo,align)={r}
 
 

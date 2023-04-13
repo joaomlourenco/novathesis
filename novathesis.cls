@@ -145,8 +145,7 @@
 
 \newdata{processor}
 \processor(uminho):={lua,xe}
-\processor(nova/ims):={pdf,lua}
-\processor(ulisboa/fmv):={xe,lua}
+\processor(nova/itqb):={pdf,lua}
 \processor(other/esep):={xe,lua}
 \newcommand{\@validate@processor}[2]{%
 % 1 = UNIV
@@ -362,7 +361,6 @@
   lang/loaded/.new list={},
   % lang/shorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish, gr=greek},
   fontenc/.new choice={en=T1, pt=T1, fr=T1, it=T1, de=T1, es=T1, gr=LGR},
-  biblatex/.new list,
 }
 
 \newdata{langlong}
@@ -653,7 +651,7 @@
 }
 
 \newcommand*{\ntbibsetup}[1]{%
-  \@ifpackageloaded{biblatex}{\bibsetup{#1}}{\PassOptionsToPackage{#1}{biblatex}}%
+  \@ifpackageloaded{biblatex}{\ClassError{novathesis}{Please load biblatex options earlier.}{}}{\PassOptionsToPackage{#1}{biblatex}}%
   % {\options{/@nt/biblatex/.push={#1}}}%
 }
 
@@ -789,7 +787,7 @@
 \ntaddfile{bib}{./NOVAthesisFiles/fix-bib.bib}%
 % \AtEndDocument{\nocite{novathesis-manual}}%
 % \letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
-\RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
+% \RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
 
 %--------------------------------
 % “hyperref” stuff
@@ -1225,6 +1223,7 @@
   }
 [\PackageError{novathesis}{Missing file “NOVAthesisFiles/Schools/\@UNIV/\@SCHL-defaults.ldf”}{}]
 
+\RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1988,7 +1987,7 @@
   \csuse{#3stringpost}():=?{:\\[2pt]}%
   \csuse{#3remainderpre}():=?{{\\}}%
   \personpost():=?{\\[2pt]}%
-  \persongrouppost():=?{\\[-5pt]}
+  \persongrouppost():=?{\\[7pt]}
   \begin{tabularx}{#2\linewidth}[t]{@{}L@{}}%
     \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}%
     % \@for\arg:=\expanded{#4}\do{\@nt@ntprintpersongroup{#1}{1}{#3}{\arg}}
