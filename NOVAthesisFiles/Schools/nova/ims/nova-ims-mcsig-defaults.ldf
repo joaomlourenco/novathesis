@@ -188,8 +188,6 @@
 }
 
 \NTAddToHook{abstract/pre}{%
-  \let\oldchapterheadstart=\chapterheadstart%
-  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\@LSHORT,main)}}%
   \preto{\chapterheadstart}{%
     \noindent\begin{minipage}[t][0pt][t]{\textwidth}
       \begin{center}%
@@ -203,7 +201,10 @@
   }%
   \appto{\chaptitlefont}{\centering}%
 }
-\NTAddToHook{abstract/post}{%
+\NTAddToHook{abstracts/pre}{%
+  \let\oldchapterheadstart=\chapterheadstart%
+}
+\NTAddToHook{abstracts/post}{%
   \let\chapterheadstart=\oldchapterheadstart%
 }
 

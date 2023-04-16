@@ -2041,7 +2041,7 @@
   \csuse{#2stringpost}():=?{:&}%
   \csuse{#2remainderpre}():=?{{\\[-2pt]}}%
   \personpost():=?{\\[2pt]}%
-  \persongrouppost():=?{\\[18pt]}
+  \persongrouppost():=?{\\[7pt]}
   \committeetitlestringpre():=?{&}%
   \committeetitlestringpost():=?{\\[5pt]}%
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS 
@@ -2220,7 +2220,9 @@
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
+  \NTRunHook{abstracts/pre}%
   \@for\myi:=\expanded{\theabstractorder(\@LANG@MAIN)}\do{\@ntprintabstract{\myi}}%
+  \NTRunHook{abstracts/post}%
 }
 
 \newcommand{\@ntprintabstract}[1]{%
