@@ -235,13 +235,31 @@
   uminho/copyrightmodifier/.new choice         = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd},
   uminho/skipblankcovers/.new toggle           = false,
 % ULISBOA/FMV
-  ulisboa/fmv/examdate/year/.new value         = {year},
-  ulisboa/fmv/examdate/month/.new value        = {month},
-  ulisboa/fmv/examdate/day/.new value          = {day},
+  examdate/year/.new value         = {yearX},
+  examdate/month/.new value        = {monthX},
+  examdate/day/.new value          = {dayX},
+  examdate/.new cmd                = {\AtEndPreamble{%
+                \@splitdate{#1}{\@exdtYEAR}{\@exdtMONTH}{\@exdtDAY}%
+                % \typeout{PROCESSDATE 1=#1 Y=\@exdtYEAR M=\@exdtMONTH D=\@exdtDAY}\PROCESSDATEYMD%
+                \options{novathesis/examdate/year=\@exdtYEAR,
+                         novathesis/examdate/month=\@exdtMONTH,
+                         novathesis/examdate/day=\@exdtDAY}%
+                                         }},
   ulisboa/fmv/scientificarea/.new choice       = {C, MF, PASA, SA},
   ulisboa/fmv/embargo/period/.new choice       = {I, 6, 12},
   ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.},
   ulisboa/fmv/reproduction/.new choice         = {I, P, N},
+}
+
+\newcommand{\@splitdate}[4]{%
+  % \typeout{PROCESSDATE 1=#1}\PROCESSDATE%
+  \StrCut{#1}{-}#2\@daterest%
+  \StrCut{\@daterest}{-}#3#4%
+  % \typeout{PROCESSDATE 1=#1 Y=#2 M=#3 D=#4}\PROCESSDATEYMD%
+}
+
+\newcommand{\printmonth}[1]{%
+  \IfInteger{#1}{\pgfcalendarmonthname{#1}}{#1}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -999,6 +1017,7 @@
 \newdata{ntdocdate}
 \ntdocdate(year):={year}
 \ntdocdate(month):={month}
+\ntdocdate(day):={day}
 
 \def\ntdate#1{\@ntdate@i#1--\@relax}
 % \def\@ntdate@i#1-#2\@relax{\@ntdate@ii#1-#2-\@relax}
@@ -1279,13 +1298,13 @@
 % \NTRunHook{cover}
 
 % Patch month from number to string in the proper language
+\ntselectlang{\@LANG@COVER}%
+\usetikzlibrary{calendar}%
 \IfInteger{\thentdocdate(month)}{%
-  % \edef\@nt@datemonth{\thentdocdate(month)}%
-  % \ntdocdate(month):={\bgroup\ntselectlang{\@LANG@COVER}\monthname[\thentdocdate(month)]\egroup}%
-  % \typeout{@LANG@COVER=\@LANG@COVER}\LANG@COVER
-  \ntselectlang{\@LANG@COVER}%
-  \usetikzlibrary{calendar}%
   \ntdocdate(month):={\pgfcalendarmonthname{\thentdocdate(month)}}%
+}{}
+\IfInteger{\option{/novathesis/examdate/month}}{%
+  \options{/novathesis/examdate/month=\pgfcalendarmonthname{\option{/novathesis/examdate/month}}}%
 }{}
 
 %============================================================
