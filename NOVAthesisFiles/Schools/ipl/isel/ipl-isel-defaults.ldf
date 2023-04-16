@@ -7,7 +7,7 @@
 
 \typeout{NT FILE ipl/isel/defaults.ldf}%
 
-\ntsetup{print/secondcover=true}
+% \ntsetup{print/secondcover=true}
 
 % Faculty / School
 \school(pt):={Instituto Superior de Engenharia de Lisboa}
@@ -24,7 +24,7 @@
 \department(en):={Department of \themajorfield(en)}
 
 % Comiittee printing order
-\committeeorder():={c,r,a,m}%
+\committeeorder():={c,m}%
 
 % Cover background images
 \frontpageimage():={isel-photo} % don't add the .jpg extension
@@ -86,10 +86,10 @@
 }
 
 \NTAddToHook{cover/1-1/text/pre}{%
-  \sffamily%
+  % \sffamily%
 }
 \NTAddToHook{cover/2-1/text/pre}{%
-  \sffamily%
+  % \sffamily%
 }
 
 
@@ -100,10 +100,10 @@
 
 % School%
 \ntaddtocover[vspace=0cm]{1-1,2-1}{%
-  \fontsize{13}{13}\selectfont%
+  \fontsize{14}{14}\selectfont%
   \textbf{\THEschool(\@LANG@COVER)}\\%
-  \fontsize{10}{10}\selectfont%
-  \textbf{\THEdepartment(\@LANG@COVER)}%
+  \fontsize{14}{14}\selectfont%
+  \textbf{\thedepartment(\@LANG@COVER)}%
 }
 
 \ntaddtocover[vspace=0.5cm,height=8cm,valign=c]{1-1,2-1}{%
@@ -120,7 +120,7 @@
 }
 
 % Author name
-\ntaddtocover[vspace=2]{1-1,2-1}{%
+\ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{16}{16}\selectfont%
   \textbf{\thedocauthor(name)}%\\[1ex]
   % \fontsize{14}{14}\selectfont%
@@ -128,7 +128,7 @@
 }
 
 % Degree
-\ntaddtocover[vspace=2]{1-1,2-1}{%
+\ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
   \thepresentationtext%
 }
@@ -142,22 +142,24 @@
 % }
 
 
-% Committee — only print the committee for the main classes
+% Adviser and Committee — only print the committee for the main classes
 \ntaddtocover[vspace=2]{1-1,2-1}{%
+  \adviserstringfont():={}%
+  \advisernamefont():={\fontsize{11}{11}\selectfont}%
+  \advisernamepre():={\mbox{\qquad}}%
+  \committeestringfont():={}%
+  \committeenamefont():={\fontsize{11}{11}\selectfont}%
+  \committeenamepre():={\mbox{\qquad}}%
+  \committeetitlestringfont():={\fontsize{14}{14}\selectfont}%
+  \begin{minipage}[t]{0.48\textwidth}%
+    \ntprintpersons[name]{1}{1}{adviser}{a,c}%
+  \end{minipage}%
+  \hfill%
+  \begin{minipage}[t]{0.48\textwidth}
   \ifmaindoc{%
-    \committeetitlestringfont():={\fontsize{14}{14}\selectfont\bfseries}%
-    \committeestringfont():={\bfseries}%
-    \fontsize{11}{11}\selectfont
-    \begin{minipage}[t]{0.48\textwidth}
-        \ifdocfinal{\ntprintpersons{1}{1}{committee}{\thecommitteeorder()}\mbox{}}{\mbox{}}%
-    \end{minipage}%
-    \hfill%
-    \adviserstringfont():={\bfseries}%
-    \begin{minipage}[t]{0.48\textwidth}
-      \ntprintpersons{1}{2}{adviser}{a,c}%
-    \end{minipage}%
-  }%
-  {}%
+        \ifdocfinal{\ntprintpersons[name]{1}{1}{committee}{\thecommitteeorder()}\mbox{}}{\mbox{}}%
+    }{\mbox{}}%
+  \end{minipage}%
 }
 
 

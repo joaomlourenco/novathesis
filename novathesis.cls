@@ -105,6 +105,7 @@
 \RequirePackage{iftex}
 \RequirePackage{etoolbox}
 \RequirePackage{xstring}
+\RequirePackage{varwidth}
 \RequirePackage{NOVAthesisFiles/memory2}
 \RequirePackage{NOVAthesisFiles/nt-version}
 
@@ -591,7 +592,9 @@
 \newdata{committeeremainderfont}
 \committeeremainderfont()={\itshape\scriptsize}
 
+\newdata{personpre}
 \newdata{personpost}
+\newdata{persongrouppre}
 \newdata{persongrouppost}
 
 \newdata{dissertationstring}
@@ -1922,13 +1925,13 @@
     \begin{minipage}[t]{\linewidth}%
       \setlength{\parindent}{0pt}%
       \@setalignment{#3}%
-      \begin{minipage}[t]{#2\linewidth}%
+      \begin{varwidth}{#2\linewidth}%
         \IfStrEqCase{#4}{%
           {0}{\@ntprintpersonsaslist{#5}{#6}}%
           {1}{\@ntprintpersonsasonecolumn{#1}{#2}{#5}{#6}}%
           {2}{\@ntprintpersonsastwocolumns{#1}{#5}{#6}}%
         }[\ClassError{novathesis}{Ivalid argument [#4] to \string\ntprintpersons{#1}{#2}{#4}{#5}{#6}}{}]%
-      \end{minipage}
+      \end{varwidth}
     \end{minipage}%
   }{}%
 }
@@ -1985,10 +1988,25 @@
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
   \csuse{#3stringpost}():=?{:\\[2pt]}%
-  \csuse{#3remainderpre}():=?{{\\}}%
+  \csuse{#3namepost}():=?{{\\}}%
+  \csuse{#3remainderpre}():=?{{\\[-2pt]}}%
   \personpost():=?{\\[2pt]}%
   \persongrouppost():=?{\\[7pt]}
+  \committeetitlestringpost():=?{\\[5pt]}%
   \begin{tabularx}{#2\linewidth}[t]{@{}L@{}}%
+    \ifdatadefined{#3titlestring}(\@LANG@COVER){%
+      \datadefault{#3titlestringpre}()%
+      \datadefault{#3titlestringfont}()%
+      \csuse{the#3titlestring}(\@LANG@COVER)%
+      \datadefault{#3titlestringpost}()%
+    }{%
+      \ifdatadefined{committeetitlestring}(\@LANG@COVER){%
+        \datadefault{committeetitlestringpre}()%
+        \datadefault{committeetitlestringfont}()%
+        \strut%
+        \datadefault{committeetitlestringpost}()%
+      }{}%
+    }%
     \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}%
     % \@for\arg:=\expanded{#4}\do{\@nt@ntprintpersongroup{#1}{1}{#3}{\arg}}
   \end{tabularx}%
@@ -2032,8 +2050,6 @@
       \datadefault{#3string}(#4,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
     \egroup%
     \datadefault{#3stringpost}(#4)%
-    % \if#22\relax&\fi
-    % \IfStrEq{#2}{2}{&}{}%
     \IfStrEq{#1}{list}{%
       \@ntprintpersonsaslist{#3}{#4}%
     }{%
@@ -2055,22 +2071,21 @@
 % #2 = adviser | coadviser | committee
 % #3 = (co)adviser info
 % \typeout{NTPRINTONENAME 1=[#1] 2=[#2] 3=[#3]}%\bbb
+\thepersonpre()%
 \begingroup
   \noexpandarg
   \raggedright%
-  \StrCut{#3}{,}\@nt@name\@nt@remainder% split name from remainder
   \csuse{the#2namepre}()%
-  \bgroup%
-    \csuse{the#2namefont}()%
-    \ignorespaces\@nt@name%
-  \egroup%
-  \csuse{the#2namepost}()%
+  \StrCut{#3}{,}\@nt@name\@nt@remainder% split name from remainder
+  \ignorespaces\parbox[b]{\linewidth-\widthof{\csuse{the#2namepre}()}}{%
+    \raggedright\csuse{the#2namefont}()\@nt@name%
+  }%
   \IfStrEq{#1}{full}{%
     \IfStrEq{\@nt@remainder}{}{}{%
       \csuse{the#2remainderpre}()%
       \bgroup%
         \csuse{the#2remainderfont}()%
-        \ignorespaces\raggedright\@nt@remainder%
+        \ignorespaces\parbox[t]{\linewidth-\widthof{\csuse{the#2namepre}()}}{\raggedright\@nt@remainder}%
       \egroup%
       \csuse{the#2remainderpost}()%
     }%
