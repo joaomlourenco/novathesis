@@ -89,11 +89,11 @@
   {\if#1*
       \expandafter\gdef\csname#2\endcsname{\array@memory{#1}{#2}}
       \expandafter\gdef\csname the#2\endcsname(##1){\csname @#2@\expanded{##1}@memory\endcsname}
-      \expandafter\gdef\csname THE#2\endcsname(##1){\uppercase\expandafter{\csname @#2@\expanded{##1}@memory\endcsname}}
+      \expandafter\gdef\csname THE#2\endcsname(##1){\MakeTextUppercase{\csname @#2@\expanded{##1}@memory\endcsname}}
    \else
       \expandafter\def\csname#2\endcsname{\array@memory{#1}{#2}}
       \expandafter\def\csname the#2\endcsname(##1){\csname @#2@\expanded{##1}@memory\endcsname}
-      \expandafter\def\csname THE#2\endcsname(##1){\uppercase\expandafter{\csname @#2@\expanded{##1}@memory\endcsname}}
+      \expandafter\def\csname THE#2\endcsname(##1){\MakeTextUppercase{\csname @#2@\expanded{##1}@memory\endcsname}}
    \fi}
   {\PackageWarningNoLine{memory}{`#2' already defined.
                                  Macro `newdata' ignored!}}}
