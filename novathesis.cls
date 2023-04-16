@@ -217,6 +217,7 @@
   print/webography/.new value   = {},        % empty means do not make a separate webography
   print/statement/.new toggle   = false,
   % MISC
+  countsecondcover/.new toggle  = false,
   numberallpages/.new toggle    = false,
   gnumberlist/.new toggle       = true,
   tocintoc/.new toggle          = false,
@@ -1514,6 +1515,7 @@
     \NTRunHook{printcovers/post}%
   \endgroup%
   \setcounter{page}{1}%
+  \iftoggle{/novathesis/countsecondcover}{\stepcounter{page}}{}%
 }
 
 \newcommand{\ntprintcoverpair}[1]{%
