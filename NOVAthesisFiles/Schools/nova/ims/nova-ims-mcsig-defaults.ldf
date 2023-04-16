@@ -50,13 +50,7 @@
   printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
 }
 
-\printorder(frontmatter,provisional):={%
-  statement;       % The statement page
-  acknowledgements;% (*) Print the acknowledgments
-  abstracts;       % Print abstracts in multiple languages.
-  alllistof;       % Print all the listof defined in “6_list_of.tex”
-  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
-}
+\printorder(frontmatter,provisional):={\theprintorder(frontmatter,final)}
 
 
 \keywordsblockpre()={\mbox{}\\[1cm]}
@@ -73,7 +67,7 @@
 
 \NTAddToHook{list_of/post}{
   \options{/@nt/list/listof = {}}
-\ntaddlistof{listsofglossaries}  % The Glossary, and the lists of Acronyms and Symbols
+% \ntaddlistof{listsofglossaries}  % The Glossary, and the lists of Acronyms and Symbols
 \ntaddlistof{tableofcontents}    % The Table of Contents. Probably you want ot leave this as is! ;)
 \ntaddlistof{listoftables}       % The List of Tables. Comment to omit.
 \ntaddlistof{listoffigures}      % The List of Figures. Comment to omit.
@@ -199,7 +193,7 @@
   \preto{\chapterheadstart}{%
     \noindent\begin{minipage}[t][0pt][t]{\textwidth}
       \begin{center}%
-        \textbf{\LARge\thedoctitle(\@LSHORT,main,cover)}%
+        \textbf{\Large\thedoctitle(\@LSHORT,main,cover)}%
         \ifdatadefined{doctitle}(\@LANG@COVER-sub,cover){%
           \\[6mm]%
           \textbf{\Large\thedoctitle(\@LSHORT-sub,cover)}%
@@ -299,8 +293,8 @@
   \adviserstringpre():={}%
   \adviserstringpost():={: }%
   \adviserstringfont():={\bfseries}%
-  \ntprintpersons[list]{1.0}{1}{adviser}{a}\\
-  \ntprintpersons[list]{1.0}{1}{adviser}{c}\\
+  \ntprintpersons[list]{1.0}{1}{adviser}{a,c}%
+  % \ntprintpersons[list]{1.0}{1}{adviser}{c}
 }
 
 % Date
