@@ -2,6 +2,8 @@
 SILENT:=-interaction=batchmode
 SYNCTEX:=1
 
+TEXVERSIONS=$(shell ls /usr/local/texlive/ | fgrep -v texmf-local)
+
 B:=template
 F:=-time -shell-escape -synctex=$(SYNCTEX) -output-format=pdf -file-line-error $(FLAGS)
 T:=$(B).pdf
@@ -24,7 +26,7 @@ endif
 
 
 
-default: 
+default:
 	@echo SCHL=$(SCHL)
 ifeq ($(findstring $(SCHL),$(LUA)),)
 	make pdf
@@ -52,19 +54,20 @@ v view: $(T)
 verb verbose:
 	$(L) -pdf $(B)
 
-.PHONY: 2019 2020
-2019 2020 2021:
-	PATH="/usr/local/texlive/$@/bin/x86_64-darwin/:$(PATH)" $(L) $(X) $(SILENT) $(B)
+.PHONY: $(TEXVERSIONS)
+$(TEXVERSIONS):
+	hash -r
+	PATH="$(wildcard /usr/local/texlive/$@/bin/*-darwin/):$(PATH)" $(L) $(X) $(SILENT) -pdf $(B)
 
 .PHONY: zip
 zip:
 	rm -f "$(ZIPTARGET)"
-	zip -r "$(ZIPTARGET)" $(ZIPFILES) 
+	zip --exclude .github --exclude .git -r "$(ZIPTARGET)" $(ZIPFILES)
 
 .PHONY: clean
 clean:
 	@$(L) -c $(B)
-	@rm -f $(AUXFILES)
+	@rm -f $(AUXFILES) "*(1)*"
 	@find . -name .DS_Store -print0 | xargs -0 rm
 
 gclean:

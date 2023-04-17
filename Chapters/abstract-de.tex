@@ -8,20 +8,25 @@
 
 \typeout{NT FILE abstrac-de.tex}%
 
-\textbf{This is a “Google Translate” translation from the English version!  Fixes and corrections are welcome!}
+\textbf{Dies ist eine „Google Translate“-Übersetzung der englischen Version! Fixes und Korrekturen sind willkommen!}
 
-Die Dissertation muss zwei Versionen des Abstracts enthalten, eine in derselben Sprache wie der Haupttext und eine in einer anderen Sprache. Das Paket geht davon aus, dass die beiden betrachteten Sprachen immer die Hauptsprache und Englisch sind. Und wenn die Hauptsprache Englisch ist, werden Englisch und Portugiesisch vorausgesetzt. Sie können dieses Verhalten durch Hinzufügen ändern
+Unabhängig von der Sprache, in der die Dissertation verfasst ist, gibt es in der Regel mindestens zwei Abstracts: einen Abstract in der gleichen Sprache wie der Haupttext und einen Abstract in einer anderen Sprache.
+
+Die Reihenfolge der Abstracts variiert je nach Schule. Wenn Ihre Schule spezielle Vorschriften bezüglich der Reihenfolge der Abstracts hat, wird die Vorlage \gls{novathesis} (\LaTeX) diese respektieren. Andernfalls ist die Standardregel in der \gls{novathesis}-Vorlage, zuerst die Zusammenfassung in \emph{der gleichen Sprache wie der Haupttext} zu haben, und dann die Zusammenfassung in \emph{der anderen Sprache}. Wenn die Dissertation beispielsweise auf Portugiesisch verfasst ist, ist die Reihenfolge der Zusammenfassungen zuerst Portugiesisch und dann Englisch, gefolgt vom Haupttext auf Portugiesisch. Wenn die Dissertation in englischer Sprache verfasst ist, ist die Reihenfolge der Abstracts zuerst englisch und dann portugiesisch, gefolgt vom Haupttext in englischer Sprache.
+%
+Diese Reihenfolge kann jedoch angepasst werden, indem der Datei \verb+5_packages.tex+ eines der folgenden Elemente hinzugefügt wird.
+
 \begin{verbatim}
-    \abstractorder(<MAIN_LANG>):={<LANG_1>,...,<LANG_N>}
+    \ntsetup{abstractorder={<LANG_1>,...,<LANG_N>}}
+    \ntsetup{abstractorder={<MAIN_LANG>={<LANG_1>,...,<LANG_N>}}}
 \end{verbatim}
-\noindent e.g.,
+
+Verwenden Sie zum Beispiel für ein auf Deutsch verfasstes Hauptdokument mit Zusammenfassungen auf Deutsch, Englisch und Italienisch (in dieser Reihenfolge):
 \begin{verbatim}
-    \abstractorder(de):={de,en,it}
+    \ntsetup{abstractorder={de={de,en,it}}}
 \end{verbatim}
 
-Das Paket sortiert die Abstracts in der entsprechenden Reihenfolge. Dies bedeutet, dass das erste Abstract in derselben Sprache wie der Haupttext vorliegt, gefolgt vom Abstract in der anderen Sprache und anschließend vom Haupttext. Wenn die Dissertation beispielsweise in Portugiesisch verfasst ist, wird zuerst die Zusammenfassung in Portugiesisch und dann in Englisch angezeigt, gefolgt vom Haupttext in Portugiesisch. Wenn die Dissertation in englischer Sprache verfasst ist, wird zuerst die Zusammenfassung in englischer und dann in portugiesischer Sprache angezeigt, gefolgt vom Haupttext in englischer Sprache.
-
-Das Abstract sollte eine Seite nicht überschreiten und die folgenden Fragen beantworten:
+Inhaltlich sollten die Abstracts eine Seite nicht überschreiten und können folgende Fragen beantworten (unbedingt an die Gepflogenheiten Ihres Fachgebietes anpassen):
 
 \begin{itemize}
   \item Was ist das Problem?
@@ -33,4 +38,4 @@ Das Abstract sollte eine Seite nicht überschreiten und die folgenden Fragen bea
 % Palavras-chave do resumo em Inglês
 \begin{keywords}
 Schlüsselwort 1, Schlüsselwort 2, Schlüsselwort 3
-\end{keywords} 
+\end{keywords}

@@ -11,18 +11,18 @@
 %%% English - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\frontmatterbkmstring(en):={Front Matter}
-\backmatterbkmstring(en):={Back Matter}
-\coverbkmstring(en):={Cover}
-\frontpagebkmstring(en):={Front Page}
-\backcoverbkmstring(en):={Back Cover}
-\spinebkmstring(en):={Spine}
-\copyrightbkmstring(en):={Copyright}
-\dedicatorybkmstring(en):={Dedicatory}
-\statementbkmstring(en):={Statement}
-\acknowledgementsbkmstring(en):={Acknowledgements}
-\quotebkmstring(en):={Quote}
-\abstractbkmstring(en):={Abstract}
+\bkmstring(frontmatter,en):={Front Matter}
+\bkmstring(backmatter,en):={Back Matter}
+\bkmstring(cover,en):={Cover}
+\bkmstring(frontpage,en):={Front Page}
+\bkmstring(backcover,en):={Back Cover}
+\bkmstring(spine,en):={Spine}
+\bkmstring(copyright,en):={Copyright}
+\bkmstring(dedicatory,en):={Dedicatory}
+\bkmstring(statement,en):={Statement}
+\bkmstring(acknowledgements,en):={Acknowledgements}
+\bkmstring(quote,en):={Quote}
+\bkmstring(abstract,en):={Abstract}
 \keywordsstring(en):={Keywords}
 \notdefined(en):={UNDEFINED}
 \specializationstring(en):={Specialization in}
@@ -62,12 +62,12 @@
 \degreestring(phdprop,m,en):={Doctor of Philosophy}
 \degreestring(phdprop,f,en):={Doctor of Philosophy}
 
-\docdegreestring(bsc,en):={Bachelor Report}
-\docdegreestring(msc,en):={Master of Science Dissertation}
-\docdegreestring(mscplan,en):={Master of Science Qualification}
-\docdegreestring(phdplan,en):={Doctorate Qualification}
-\docdegreestring(phdprop,en):={Doctorate Proposal}
-\docdegreestring(phd,en):={Doctorate Dissertation}
+\doctypestring(bsc,en):={Bachelor Report}
+\doctypestring(msc,en):={Master of Science Dissertation}
+\doctypestring(mscplan,en):={Master of Science Qualification}
+\doctypestring(phdplan,en):={Doctorate Qualification}
+\doctypestring(phdprop,en):={Doctorate Proposal}
+\doctypestring(phd,en):={Doctorate Dissertation}
 
 \committeetitlestring(en):={Examination Committee}
 \committeestring(c,1,m,en):={Chair}
@@ -94,30 +94,30 @@
 \committeestring(g,1,f,en):={Guest}
 \committeestring(g,2,m,en):={Guests}
 \committeestring(g,2,f,em):={Guests}
-	
+
 \dissertationstring(bsc,en)={Report submitted in partial fulfillment
 of the requirements for the degree of\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(mscplan,en)={Dissertation plan submitted in partial fulfillment
 of the requirements for the degree of\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(msc,en)={Dissertation submitted in partial fulfillment
 of the requirements for the degree of\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(phdplan,en)={Thesis plan submitted in partial fulfillment
 of the requirements for the degree of\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(phdprop,en)={Thesis proposal submitted in partial fulfillment
 of the requirements for the degree of\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(phd,en)={Thesis submitted in partial fulfillment
 of the requirements for the degree of\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in \textbf{\themajorfield(\@LANG@COVER)}}
 
-\copyrighttextstring(en)={The \theschool(\option{/novathesis/copyrightlang})\ and the \theuniversity(\option{/novathesis/copyrightlang})\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+\copyrighttextstring(en)={The \theschool(\@LANG@COPYRIGHT)\ and the \theuniversity(\@LANG@COPYRIGHT)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
 \acknowledgmentsstring(en)={This document was created with the (pdf/Xe/Lua)\LaTeX\ processor and the \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template (v\novathesisversion)~\@ntcite{novathesis-manual}.}

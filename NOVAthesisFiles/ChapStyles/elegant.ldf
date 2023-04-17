@@ -16,61 +16,61 @@
 \newsavebox{\@nt@elegant@part}
 
 \providecommand{\@nt@elegant@chapter@marker}[1][4cm]{%
-	\sbox\@nt@elegant@chapter{% 
-		\resizebox{!}{#1}{\fboxsep=1pt%
-			\colorbox{lightgray}{\color{white}\thechapter}% 
-		}}%
-		\rotatebox{90}{% 
-			\resizebox{%
-				\heightof{\usebox{\@nt@elegant@chapter}}+\depthof{\usebox{\@nt@elegant@chapter}}}% 
-			{!}{\scshape\so\@chapapp}}\quad%
-		\raisebox{\depthof{\usebox{\@nt@elegant@chapter}}}{\usebox{\@nt@elegant@chapter}}%
+  \sbox\@nt@elegant@chapter{%
+    \resizebox{!}{#1}{\fboxsep=1pt%
+      \colorbox{lightgray}{\color{white}\thechapter}%
+    }}%
+    \rotatebox{90}{%
+      \resizebox{%
+        \heightof{\usebox{\@nt@elegant@chapter}}+\depthof{\usebox{\@nt@elegant@chapter}}}%
+      {!}{\scshape\so\@chapapp}}\quad%
+    \raisebox{\depthof{\usebox{\@nt@elegant@chapter}}}{\usebox{\@nt@elegant@chapter}}%
 }
 
 \providecommand{\@nt@elegant@chm}[1][4cm]{%
-	\sbox\@nt@elegant@chapter{\@nt@elegant@chapter@marker[#1]}% 
-	\makebox[0pt][c]{% aka \rlap
-		\makebox[1cm][r]{\usebox\@nt@elegant@chapter}%
-	}%
+  \sbox\@nt@elegant@chapter{\@nt@elegant@chapter@marker[#1]}%
+  \makebox[0pt][c]{% aka \rlap
+    \makebox[1cm][r]{\usebox\@nt@elegant@chapter}%
+  }%
 }
-	
+
 \providecommand{\@nt@elegant@part@marker}[1][4cm]{%
-	\sbox\@nt@elegant@part{% 
-		\resizebox{!}{#1}{\fboxsep=1pt%
-			\colorbox{lightgray}{\color{white}\thepart}% 
-		}}%
-		\rotatebox{90}{% 
-			\resizebox{%
-				\heightof{\usebox{\@nt@elegant@part}}+\depthof{\usebox{\@nt@elegant@part}}}% 
-			{!}{\scshape\so{\partname}}}\quad%
-		\raisebox{\depthof{\usebox{\@nt@elegant@part}}}{\usebox{\@nt@elegant@part}}%
+  \sbox\@nt@elegant@part{%
+    \resizebox{!}{#1}{\fboxsep=1pt%
+      \colorbox{lightgray}{\color{white}\thepart}%
+    }}%
+    \rotatebox{90}{%
+      \resizebox{%
+        \heightof{\usebox{\@nt@elegant@part}}+\depthof{\usebox{\@nt@elegant@part}}}%
+      {!}{\scshape\so{\partname}}}\quad%
+    \raisebox{\depthof{\usebox{\@nt@elegant@part}}}{\usebox{\@nt@elegant@part}}%
 }
 
 \providecommand{\@nt@elegant@ptm}[1][4cm]{%
-	\sbox\@nt@elegant@part{\@nt@elegant@part@marker[#1]}% 
-	\makebox[0pt][c]{% aka \rlap
-		\makebox[1cm][r]{\usebox\@nt@elegant@part}%
-	}%
+  \sbox\@nt@elegant@part{\@nt@elegant@part@marker[#1]}%
+  \makebox[0pt][c]{% aka \rlap
+    \makebox[1cm][r]{\usebox\@nt@elegant@part}%
+  }%
 }
-	
-  
+
+
 \makechapterstyle{elegant}{%
-	\renewcommand{\chapnamefont}{\normalfont\Large\scshape\raggedleft\so}%
-	\renewcommand{\chaptitlefont}{\normalfont\LARGE\bfseries\scshape}%
-	\renewcommand{\chapternamenum}{} 
-	\renewcommand{\printchaptername}{}%
-	\renewcommand{\printchapternum}{\null\hfill\@nt@elegant@chm[2.5cm]\hspace*{14pt}\par}%
-	\renewcommand{\afterchapternum}{\par\vskip\midchapskip}%
-	\renewcommand{\printchaptertitle}[1]{\color{darkgray}\chaptitlefont\raggedleft ##1\par}%
-	%
-	\renewcommand{\partnamefont}{\chapnamefont}
-	\renewcommand{\parttitlefont}{\chaptitlefont}
-	\renewcommand{\partnamenum}{}
-	\renewcommand{\printpartname}{}%
-	\renewcommand{\thepart}{\Roman{part}}
-	\renewcommand{\printpartnum}{\null\hfill\@nt@elegant@ptm[2.5cm]\hspace*{14pt}\par}%
-	% \renewcommand{\afterpartnum}{\par\vskip\midchapskip}%
-	\renewcommand{\printparttitle}[1]{\color{darkgray}\parttitlefont\raggedleft ##1\par}%
-	\renewcommand*{\partnumfont}{\normalfont\scshape\MakeLowercase}
-} 
+  \renewcommand{\chapnamefont}{\normalfont\Large\scshape\raggedleft\so}%
+  \renewcommand{\chaptitlefont}{\normalfont\LARGE\bfseries\scshape}%
+  \renewcommand{\chapternamenum}{}
+  \renewcommand{\printchaptername}{}%
+  \renewcommand{\printchapternum}{\null\hfill\@nt@elegant@chm[2.5cm]\hspace*{14pt}\par}%
+  \renewcommand{\afterchapternum}{\par\vskip\midchapskip}%
+  \renewcommand{\printchaptertitle}[1]{\color{darkgray}\chaptitlefont\raggedleft ##1\par}%
+  %
+  \renewcommand{\partnamefont}{\chapnamefont}
+  \renewcommand{\parttitlefont}{\chaptitlefont}
+  \renewcommand{\partnamenum}{}
+  \renewcommand{\printpartname}{}%
+  \renewcommand{\thepart}{\Roman{part}}
+  \renewcommand{\printpartnum}{\null\hfill\@nt@elegant@ptm[2.5cm]\hspace*{14pt}\par}%
+  % \renewcommand{\afterpartnum}{\par\vskip\midchapskip}%
+  \renewcommand{\printparttitle}[1]{\color{darkgray}\parttitlefont\raggedleft ##1\par}%
+  \renewcommand*{\partnumfont}{\normalfont\scshape\MakeLowercase}
+}
 \chapterstyle{elegant}

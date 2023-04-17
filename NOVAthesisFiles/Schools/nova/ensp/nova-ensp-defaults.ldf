@@ -7,7 +7,7 @@
 
 \typeout{NT FILE nova/ensp/defaults.ldf}%
 
-\ntsetup{secondcover=true}
+\ntsetup{print/secondcover=true}
 
 % Faculty / School
 \school(pt):={Escola Nacional de Saúde Pública}
@@ -24,7 +24,7 @@
 \degreename(en):={Degree Name}
 
 % Comiittee printing order
-\committeeorder():={c,r,m}% 
+\committeeorder():={c,r,m}%
 
 % Cover background images
 % \thesiscover(phd,front,image):={}
@@ -52,7 +52,7 @@
 % Spine info
 \spine(logo)={\theuniversity(logo)}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main)}}
+\spine(title)={\THEdoctitle(\@LANG@COVER,main)}
 \spine(year)={\thentdocdate(year)}
 
 % Set margins for "normal" pages
@@ -76,7 +76,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{% 
+\AtEndPreamble{%
   \LoadHelveticaLikeFont%
   % \RequirePackage{gillius2}%
 }
@@ -96,13 +96,13 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont
-  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}
+  \textbf{\thedoctitle(\@LANG@COVER,main,cover)}
 }
 
 % % Title of Dissertation
 \ntaddtocover[vspace=1cm]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont
-  \thedegreename(\option{/novathesis/coverlang})
+  \thedegreename(\@LANG@COVER)
 }
 
 % Author name

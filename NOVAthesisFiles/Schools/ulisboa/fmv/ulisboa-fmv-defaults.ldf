@@ -8,45 +8,60 @@
 \typeout{NT FILE ulisboa/fmv/ulisboa-fmv-defaults.ldf}%
 
 
-\ntsetup{chapstyle=fmv}
-\ntsetup{coverlang=pt}
-\ifdocworking{}{\ntsetup{linkscolor=black}}
+\ntsetup{style/chapter=fmv}
+\ntsetup{lang/cover=pt}
+\ntsetup{print/secondcover=true}
+\ntsetup{numberallpages=true}
+\ifdocworking{}{\ntsetup{color/links=black}}
+\ifdocfinal{\ntsetup{print/statement=true}}{}
+
+\IfStrEq{\@LANG@MAIN}{en}{%
+  % \spinebkmstring(pt):=\spinebkmstring(en)
+  \abstractorder(en):={pt,pt-ext,en}
+  \bkmstring(abstract,pt-ext):={Resumo Alargado}
+}
+
+\setcounter{lofdepth}{2}
+\linespread{1.30}
+\captionnamefont{\fontsize{10}{10}\selectfont\bfseries}
+\captiontitlefont{\fontsize{10}{10}\selectfont\bfseries}
+\openany
+
 
 % --------------------------------------------------------
 % FMV-like required data/information
 \RequirePackage{indentfirst}
 \setlength{\parindent}{1.25cm}
-% \ifdocfinal{\ntsetup{secondcover=true}}{}
 \definecolor{fmvyellow}{RGB}{253,241,81}
 \definecolor{lightyellow}{RGB}{254,254,230}
 \ntbibsetup{maxcitenames=2,minbibnames=10,maxbibnames=10,dashed=false,uniquelist=false,style=authoryear}
 
 \AtEndPreamble{
   % \let\cite\parencite
-  \makeheadrule{novathesis@mainmatter}{0pt}{0pt} 
-  \makeevenhead{novathesis@mainmatter}{}{}{} 
+  \makeheadrule{novathesis@mainmatter}{0pt}{0pt}
+  \makeevenhead{novathesis@mainmatter}{}{}{}
   \makeoddhead{novathesis@mainmatter}{}{}{}
 % }
 %
 %
 %
 % \NTAddToHook{NOVAthesisFiles/packages}{%
-	\RequirePackage{xpatch}
+  \RequirePackage{xpatch}
 % Remove commas between family and given names
-	\DeclareNameAlias{sortname}{family-given}
-	\renewrobustcmd*{\revsdnamepunct}{}
-	\renewrobustcmd*{\bibinitdelim}{}
+  \DeclareNameAlias{sortname}{family-given}
+  \renewrobustcmd*{\revsdnamepunct}{}
+  \renewrobustcmd*{\bibinitdelim}{}
 % Remove commas between family and given names
-	\renewrobustcmd*{\revsdnamepunct}{}
-	\renewrobustcmd*{\bibinitdelim}{}
+  \renewrobustcmd*{\revsdnamepunct}{}
+  \renewrobustcmd*{\bibinitdelim}{}
 % Remove dot after initials
-	\renewrobustcmd*{\bibinitperiod}{}
+  \renewrobustcmd*{\bibinitperiod}{}
 % Add dot after list of authors (and before year)
-	% \xpretobibmacro{date+extradate}{\setunit{\addperiod\space}}{}{}
+  % \xpretobibmacro{date+extradate}{\setunit{\addperiod\space}}{}{}
 % Remove quotation marks from title
-	\DeclareFieldFormat*{title}{#1}
+  \DeclareFieldFormat*{title}{#1}
 % Remove emphasized from titles
-	\DeclareFieldFormat*{journaltitle}{#1\isdot}
+  \DeclareFieldFormat*{journaltitle}{#1\isdot}
 \DeclareFieldFormat{postnote}{#1}
 \DeclareFieldFormat{multipostnote}{#1}
 \renewcommand*{\bibpagespunct}{\addcolon}
@@ -54,26 +69,26 @@
   \iffieldpages{postnote}
     {\addcolon\space}
     {\addspace}}
-	% \DefineBibliographyStrings{english}{%
-	%   page             = {\ifbibliography{}{p\adddot}},
-	%   pages            = {\ifbibliography{}{pp\adddot}},
-	% }
-	\DefineBibliographyExtras{english}{%
+  % \DefineBibliographyStrings{english}{%
+  %   page             = {\ifbibliography{}{p\adddot}},
+  %   pages            = {\ifbibliography{}{pp\adddot}},
+  % }
+  \DefineBibliographyExtras{english}{%
 % Remove "and" before last author
-	\DeclareFieldFormat{pages}{#1}
-	\DeclareDelimFormat{finalnamedelim}{%
-		\ifnumgreater{\value{liststop}}{2}{%
-			\printdelim{multinamedelim}}{\addspace\bibstring{and}\space}}
-	}
+  \DeclareFieldFormat{pages}{#1}
+  \DeclareDelimFormat{finalnamedelim}{%
+    \ifnumgreater{\value{liststop}}{2}{%
+      \printdelim{multinamedelim}}{\addspace\bibstring{and}\space}}
+  }
 % Add dot after list of authors (and before year) and remove parentheses in date
-	\xpatchbibmacro{date+extradate}{%
-  	\printtext[parens]%
-		}{%
-		\setunit*{\addperiod\space}%
-		\printtext%
-	}{}{}
+  \xpatchbibmacro{date+extradate}{%
+    \printtext[parens]%
+    }{%
+    \setunit*{\addperiod\space}%
+    \printtext%
+  }{}{}
 % Remove "in:" prefix in journal title
-	\renewbibmacro{in:}{}
+  \renewbibmacro{in:}{}
 % Cite as "family initials"
 \DeclareNameFormat{labelname}{%
   \ifcase\value{uniquename}%
@@ -103,15 +118,15 @@
   \fi
   \usebibmacro{name:andothers}}
 % Increase spacing between bib entries
-	\setlength\bibitemsep{1.25\itemsep}
+  \setlength\bibitemsep{1.25\itemsep}
 }
 
 
 \NTAddToHook{printbib/pre}{
 % Always remove "and" before last author
-	\DeclareDelimFormat{finalnamedelim}{%
-			\printdelim{multinamedelim}%
-	}%
+  \DeclareDelimFormat{finalnamedelim}{%
+      \printdelim{multinamedelim}%
+  }%
 }
 
 
@@ -120,12 +135,13 @@
 \NTAddToHook{printbib/post}{\end{SingleSpacing}}
 
 \printorder(frontmatter,final):={%
+  statement;
   dedicatory;      % (*) Print the dedicatory
   acknowledgements;% (*) Print the acknowledgments
   quote;           % (*) Print the quote
   abstracts;       % Print abstracts in multiple languages.
   alllistof;       % Print all the listof defined in “6_list_of.tex”
-  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+  % printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
 }
 
 \printorder(frontmatter,provisional):={%
@@ -134,7 +150,7 @@
   quote;           % (*) Print the quote
   abstracts;       % Print abstracts in multiple languages.
   alllistof;       % Print all the listof defined in “6_list_of.tex”
-  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+  % printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
 }
 
 
@@ -155,73 +171,22 @@
 \school(fr):={Faculty of Veterinary Medicine}
 \school(it):={Faculty of Veterinary Medicine}
 
-\@for\i:={a,1,m,en},{a,1,f,en},{a,2,m,en},{a,2,f,en},{c,1,m,en},{c,1,f,en},{c,2,m,en},{c,2,f,en},{ca,1,m,en},{ca,1,f,en},{ca,2,m,en},{ca,2,f,en},{t,1,m,en},{t,1,f,en},{t,2,m,en},{t,2,f,en},{a,1,m,pt},{a,1,f,pt},{a,2,m,pt},{a,2,f,pt},{c,1,m,pt},{c,1,f,pt},{c,2,m,pt},{c,2,f,pt},{ca,1,m,pt},{ca,1,f,pt},{ca,2,m,pt},{ca,2,f,pt},{t,1,m,pt},{t,1,f,pt},{t,2,m,pt},{t,2,f,pt}\do{%
-  \adviserstring(\i):={\MakeUppercase{\theadviserstring(\i)}}
+\@for\myi:={a,1,m,en},{a,1,f,en},{a,2,m,en},{a,2,f,en},{c,1,m,en},{c,1,f,en},{c,2,m,en},{c,2,f,en},{ca,1,m,en},{ca,1,f,en},{ca,2,m,en},{ca,2,f,en},{t,1,m,en},{t,1,f,en},{t,2,m,en},{t,2,f,en},{a,1,m,pt},{a,1,f,pt},{a,2,m,pt},{a,2,f,pt},{c,1,m,pt},{c,1,f,pt},{c,2,m,pt},{c,2,f,pt},{ca,1,m,pt},{ca,1,f,pt},{ca,2,m,pt},{ca,2,f,pt},{t,1,m,pt},{t,1,f,pt},{t,2,m,pt},{t,2,f,pt}\do{%
+  \adviserstring(\myi):={{\THEadviserstring(\myi)}}
 }
 
-
-\committeetitlestring(en):={\MakeUppercase{\thecommitteetitlestring(en)}}
-\committeetitlestring(pt):={\MakeUppercase{\thecommitteetitlestring(pt)}}
-\committeetitlestringfont():={\bfseries}
-\committeetitlestringpost():={\\[1ex]}
-\newdata{advisertitlestring}
-\newdata{advisertitlestringpost}
-\advisertitlestring(en):={~}
-\advisertitlestring(pt):={~}
-\advisertitlestringpost():={\\[1ex]}
-
-\committeestring(c,1,m,en):={\MakeUppercase{\thecommitteestring(c,1,m,en)}}
-\committeestring(c,1,f,en):={\MakeUppercase{\thecommitteestring(c,1,f,en)}}
-\committeestring(c,2,m,en):={\MakeUppercase{\thecommitteestring(c,2,m,en)}}
-\committeestring(c,2,f,en):={\MakeUppercase{\thecommitteestring(c,2,f,en)}}
-\committeestring(r,1,m,en):={\MakeUppercase{\thecommitteestring(r,1,m,en)}}
-\committeestring(r,1,f,en):={\MakeUppercase{\thecommitteestring(r,1,f,en)}}
-\committeestring(r,2,m,en):={\MakeUppercase{\thecommitteestring(r,2,m,en)}}
-\committeestring(r,2,f,en):={\MakeUppercase{\thecommitteestring(r,2,f,en)}}
-\committeestring(a,1,m,en):={\MakeUppercase{\thecommitteestring(a,1,m,en)}}
-\committeestring(a,1,f,en):={\MakeUppercase{\thecommitteestring(a,1,f,en)}}
-\committeestring(a,2,m,en):={\MakeUppercase{\thecommitteestring(a,2,m,en)}}
-\committeestring(a,2,f,en):={\MakeUppercase{\thecommitteestring(a,2,f,en)}}
-\committeestring(ca,1,m,en):={\MakeUppercase{\thecommitteestring(ca,1,m,en)}}
-\committeestring(ca,1,f,en):={\MakeUppercase{\thecommitteestring(ca,1,f,en)}}
-\committeestring(ca,2,m,en):={\MakeUppercase{\thecommitteestring(ca,2,m,en)}}
-\committeestring(ca,2,f,en):={\MakeUppercase{\thecommitteestring(ca,2,f,en)}}
-\committeestring(m,1,m,en):={\MakeUppercase{\thecommitteestring(m,1,m,en)}}
-\committeestring(m,1,f,en):={\MakeUppercase{\thecommitteestring(m,1,f,en)}}
-\committeestring(m,2,m,en):={\MakeUppercase{\thecommitteestring(m,2,m,en)}}
-\committeestring(m,2,f,en):={\MakeUppercase{\thecommitteestring(m,2,f,en)}}
-\committeestring(g,1,m,en):={\MakeUppercase{\thecommitteestring(g,1,m,en)}}
-\committeestring(g,1,f,en):={\MakeUppercase{\thecommitteestring(g,1,f,en)}}
-\committeestring(g,2,m,en):={\MakeUppercase{\thecommitteestring(g,2,m,en)}}
-\committeestring(g,2,f,en):={\MakeUppercase{\thecommitteestring(g,2,f,en)}}
-
-\committeestring(c,1,m,pt):={\MakeUppercase{\thecommitteestring(c,1,m,pt)}}
-\committeestring(c,1,f,pt):={\MakeUppercase{\thecommitteestring(c,1,f,pt)}}
-\committeestring(c,2,m,pt):={\MakeUppercase{\thecommitteestring(c,2,m,pt)}}
-\committeestring(c,2,f,pt):={\MakeUppercase{\thecommitteestring(c,2,f,pt)}}
-\committeestring(r,1,m,pt):={\MakeUppercase{\thecommitteestring(r,1,m,pt)}}
-\committeestring(r,1,f,pt):={\MakeUppercase{\thecommitteestring(r,1,f,pt)}}
-\committeestring(r,2,m,pt):={\MakeUppercase{\thecommitteestring(r,2,m,pt)}}
-\committeestring(r,2,f,pt):={\MakeUppercase{\thecommitteestring(r,2,f,pt)}}
-\committeestring(a,1,m,pt):={\MakeUppercase{\thecommitteestring(a,1,m,pt)}}
-\committeestring(a,1,f,pt):={\MakeUppercase{\thecommitteestring(a,1,f,pt)}}
-\committeestring(a,2,m,pt):={\MakeUppercase{\thecommitteestring(a,2,m,pt)}}
-\committeestring(a,2,f,pt):={\MakeUppercase{\thecommitteestring(a,2,f,pt)}}
-\committeestring(ca,1,m,pt):={\MakeUppercase{\thecommitteestring(ca,1,m,pt)}}
-\committeestring(ca,1,f,pt):={\MakeUppercase{\thecommitteestring(ca,1,f,pt)}}
-\committeestring(ca,2,m,pt):={\MakeUppercase{\thecommitteestring(ca,2,m,pt)}}
-\committeestring(ca,2,f,pt):={\MakeUppercase{\thecommitteestring(ca,2,f,pt)}}
-\committeestring(m,1,m,pt):={\MakeUppercase{\thecommitteestring(m,1,m,pt)}}
-\committeestring(m,1,f,pt):={\MakeUppercase{\thecommitteestring(m,1,f,pt)}}
-\committeestring(m,2,m,pt):={\MakeUppercase{\thecommitteestring(m,2,m,pt)}}
-\committeestring(m,2,f,pt):={\MakeUppercase{\thecommitteestring(m,2,f,pt)}}
-\committeestring(g,1,m,pt):={\MakeUppercase{\thecommitteestring(g,1,m,pt)}}
-\committeestring(g,1,f,pt):={\MakeUppercase{\thecommitteestring(g,1,f,pt)}}
-\committeestring(g,2,m,pt):={\MakeUppercase{\thecommitteestring(g,2,m,pt)}}
-\committeestring(g,2,f,pt):={\MakeUppercase{\thecommitteestring(g,2,f,pt)}}
+\@for\myi:={c,r,a,ca,m,g}\do{%
+  \@for\myj:={1,2}\do{%
+    \@for\myk:={m,f}\do{%
+      \@for\myl:={en,pt}\do{%
+        \committeestring(\myi,\myj,\myk,\myl):={\THEcommitteestring(\myi,\myj,\myk,\myl)}%
+      }%
+    }%
+  }%
+}
 
 % Comiittee printing order
-\committeeorder():={c,r,a,m}% 
+\committeeorder():={c,m}%
 
 % Cover background images
 % \thesiscover(phd,1-1,bgcolor):={lightyellow}%LemonChiffon,lightyellow
@@ -250,22 +215,24 @@
 % Spine info
 \spine(logo)={ulisboa-fmv-insignia-color}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(title)={\thedoctitle(\@LANG@MAIN,main)}
 \spine(year)={\thentdocdate(year)}
 \spine(text,angle)={-90}
 
-\spine(box,author,top)={1.0cm}
+\spine (box, spacing)={0.5cm}
+
+\spine(box,author,top)={1.0cm}% 1.0cm
 \spine(box,author,len)={4.0cm}
 
-\spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
-\spine(box,title,len)={19.7cm}
+\spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}% 5.5cm
+\spine(box,title,len)={18.9cm}
 
-\spine(box,logo,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
+\spine(box,logo,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}% 25,2cm
 \spine(box,logo,len)={2.0cm}
 \spine(box,logo,align)={c}
 
-\spine(box,date,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
-\spine(box,date,len)={2.0cm}
+\spine(box,date,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}% 27,7cm
+\spine(box,date,len)={2.0cm}%29,7cm
 \spine(box,logo,align)={r}
 
 
@@ -322,22 +289,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Temporary macro to use in conditional expressions;
-\AtEndPreamble{% 
+\AtEndPreamble{%
   \LoadHelveticaLikeFont%
   \renewcommand\familydefault{\sfdefault}%
-  \IfStrEq{\option{/novathesis/mainlang}}{\option{/novathesis/coverlang}}{}{
-    % \typeout{DT=\thedoctitle(\option{/novathesis/mainlang},main,cover)}\xxxx
-    \doctitle(\option{/novathesis/coverlang},main,cover)={\thedoctitle(\option{/novathesis/mainlang},main,cover)}
-    % \typeout{DT=\thedoctitle(\option{/novathesis/coverlang},main,cover)}\xxxx
-  }
+  \sffamily%
 }
 
-\NTAddToHook{cover/1-1/text/pre}{%
+\NTAddToHook{frontmatter/pre}{%
+  \renewcommand\familydefault{\sfdefault}%
   \sffamily%
 }
-\NTAddToHook{cover/2-1/text/pre}{%
-  \sffamily%
-}
+
+\NTAddToHook{cover/1-1/text/pre}{\sffamily}
+
+\NTAddToHook{cover/2-1/text/pre}{\sffamily}
+
+\NTAddToHook{ntquote/pre}{\vspace*{3cm}}
+
 \NTAddToHook{mainmatter/post}{%
   \counterwithout{figure}{chapter}%
   \counterwithout{table}{chapter}%
@@ -355,10 +323,10 @@
 }
 
 \NTAddToHook{abstract/pre}{%
-  % \typeout{ABSTRACT/PRE/\option{/@nt/currentlang}}\aaa
+  % \typeout{ABSTRACT/PRE/\@LSHORT}\aaa
   \let\oldchapterheadstart=\chapterheadstart%
   \preto{\chapterheadstart}%
-  {\begin{center}\noindent\Large\bfseries\MakeTextUppercase{\thedoctitle(\option{/@nt/currentlang},main)}\end{center}\bigskip}%
+  {\begin{center}\noindent\Large\bfseries{\THEdoctitle(\@LSHORT,main)}\end{center}\bigskip}%
 }
 
 \NTAddToHook{abstract/post}{%
@@ -370,14 +338,14 @@
 % School
 \ntaddtocover[vspace=2mm, height=2.0cm, valign=c]{1-1}{%
   \fontsize{12}{12}\selectfont%
-  \MakeUppercase{\theuniversity(\option{/novathesis/coverlang})}\\[4mm]%
-  \MakeUppercase{\theschool(\option{/novathesis/coverlang})}%
-} 
+  {\THEuniversity(\@LANG@COVER)}\\[4mm]%
+  {\THEschool(\@LANG@COVER)}%
+}
 \ntaddtocover[vspace=0mm, height=2.0cm, valign=t]{2-1}{%
   \fontsize{12}{12}\selectfont%
-  \MakeUppercase{\theuniversity(\option{/novathesis/coverlang})}\\[4mm]%
-  \MakeUppercase{\theschool(\option{/novathesis/coverlang})}%
-} 
+  {\THEuniversity(\@LANG@COVER)}\\[4mm]%
+  {\THEschool(\@LANG@COVER)}%
+}
 
 % Logo
 \ntaddtocover[vspace/msc=5mm, vspace/phd=0.25cm, height=2.95cm, valign=t]{1-1,2-1}{%
@@ -387,36 +355,36 @@
   \hspace{2mm}
 }
 
-% PhD Title of Dissertation
+% Title of Dissertation
 \ntaddtocover[vspace/1-1=18mm, vspace/2-1=10mm, height=2.35cm, valign=c]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
-  \textbf{\MakeUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
+  \textbf{{\THEdoctitle(\@LANG@MAIN,main,cover)}}%
 }
 
 
 % Doc Status
 \ntaddtocover[vspace=0cm, height=1.5cm, valign=c]{1-1,2-1}{%
   \ifdocworking{Draft: \today}{}%
-  \ifdocprovisional{\emph{\theprovisionalstring(\option{/novathesis/coverlang})}}{}%
+  \ifdocprovisional{\emph{\theprovisionalstring(\@LANG@COVER)}}{}%
   \ifdocfinal{~}{}%
 }
 
 % Author name
 \ntaddtocover[vspace/1-1=0mm, vspace/2-1=4mm, height=1.8cm, valign=c]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
-  \MakeTextUppercase{\thedocauthor(name)}%
+  {\THEdocauthor(name)}%
 }
 
 % Degree
 % In this position only if it is a phd doc;
 \ntaddtocover[vspace=21mm, height=0.5cm]{2-1}{%
          \fontsize{12}{12}\selectfont%
-         \MakeTextUppercase{\thedoctypestr(\option{/novathesis/coverlang},\option{/novathesis/docdegree})}
-         \MakeTextUppercase{\themajorfield(\option{/novathesis/coverlang})}%
+         {\THEdoctypestr(\@LANG@COVER,\option{/novathesis/doctype})}
+         {\THEmajorfield(\@LANG@COVER)}%
          \ifphddoc{%
-           \ifdatadefined{specialization}(\option{/novathesis/coverlang})%
-                     {\thespecializationstring(\option{/novathesis/coverlang})
-                      \thespecialization(\option{/novathesis/coverlang})}{~}}%
+           \ifdatadefined{specialization}(\@LANG@COVER)%
+                     {\thespecializationstring(\@LANG@COVER)
+                      \thespecialization(\@LANG@COVER)}{~}}%
           {~}%
 }%
 
@@ -429,30 +397,14 @@
   \adviserstringfont():={\bfseries}%
   \begin{minipage}[t]{0.48\textwidth}
     \IfStrEq{\@covernumber}{2-1}%
-      {\ifdocfinal{\ntprintpersons[name]{1}{0}{committee}{\thecommitteeorder()}\mbox{}}{\mbox{}}}%
+      {\ifdocfinal{\ntprintpersons[name]{1}{1}{committee}{\thecommitteeorder()}\mbox{}}{\mbox{}}}%
       {\mbox{}}
   \end{minipage}%
   \hfill%
   \begin{minipage}[t]{0.465\textwidth}
     \ntprintpersons[name]{1}{1}{adviser}{a,c,t}
   \end{minipage}%
-  % \theadviserslabel(\option{/novathesis/docdegree},\option{/novathesis/coverlang})\\[3mm]%
-  % \ntprintpersons{0.5}{1}{adviser}{a,c}%
 }
-
-% Sponsor
-% \ntaddtocover[height=1cm, vspace=2]{1-1}{%
-%   % \fontseries{mc}
-%   ~
-% }
-
-% Document purpose
-% Only if it is a phd doc;
-% \ntaddtocover[degree=phd/phdprop/phdplan, vspace=1]{1-1,2-1}{%
-%   % \fontseries{mc}
-%   \fontsize{10}{10}\selectfont%
-%   \thepresentationtext%
-% }%
 
 % Date
 \ntaddtocover[vspace=1]{1-1,2-1}{%
@@ -467,17 +419,17 @@
   \null
 }
 
-\ifdocfinal{
-  \ntaddtocover[halign=j]{2-2}{%
-    \ntfor\match:={%
-      NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement-\option{/novathesis/mainlang}.tex,%
-      NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex%
-    }\do{\IfFileExists{\match}{\input{\match}\ntforbreak}{}}%
-    [%
-      \ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} in folders “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” nor “NOVAthesisFiles/Schools/\@nt@univ”}{}
-    ]%
-    % \InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/statement.tex}{}%
-        % {\PackageWarning{novathesis}{Missing statement file “statement.tex” for ”\@nt@univ/\@nt@schl”}}
-  }%
-}
-
+% \ifdocfinal{
+%   \ntaddtocover[halign=j]{2-2}{%
+%     \ntfor\match:={%
+%       NOVAthesisFiles/Schools/\@UNIV/\@SCHL/statement-\@LANG@MAIN.tex,%
+%       NOVAthesisFiles/Schools/\@UNIV/\@SCHL/statement.tex%
+%     }\do{\IfFileExists{\match}{\input{\match}\ntforbreak}{}}%
+%     [%
+%       \ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} in folders “NOVAthesisFiles/Schools/\@UNIV/\@SCHL” nor “NOVAthesisFiles/Schools/\@UNIV”}{}
+%     ]%
+%     % \InputIfFileExists{NOVAthesisFiles/Schools/\@UNIV/\@SCHL/statement.tex}{}%
+%         % {\PackageWarning{novathesis}{Missing statement file “statement.tex” for ”\@UNIV/\@SCHL”}}
+%   }%
+% }
+%

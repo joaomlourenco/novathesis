@@ -25,16 +25,18 @@
   [2013/05/13 v1.2 containers for data of object and array in LaTeX]
 
 % \RequirePackage{trimspaces}
-
-\def\memoryemptybox{{\setlength{\fboxsep}{0pt}\LARGE\setbox0=\hbox{$\times$}\fbox{\rule{\wd0}{0pt}\rule{0pt}{\ht0}}}}
+\def\memoryemptybox{{%
+  \setlength{\fboxsep}{0pt}\LARGE\setbox0=\hbox{$\times$}%
+  \fbox{\rule{\wd0}{0pt}\rule{0pt}{\ht0}}%
+}}
 \def\memoryxbox{{\setlength{\fboxsep}{0pt}\LARGE\fbox{$\times$}}}
 \def\datacrossiftrue#1(#2){%
   \defifundef{\ifmemorycross}{\newif}%
-  \memorycrossfalse
+  \memorycrossfalse%
   \@for\@memory@it:=#2\do{\ifdatadefined{#1}(#2){\memorycrosstrue}{}}%
-  \bgroup
+  \bgroup%
     \ifmemorycross\memoryxbox\else\memoryemptybox\fi%
-  \egroup
+  \egroup%
 }
 
 % \ifdatadefinedor{\match}{dataname}({val1},…){true}{false}
@@ -43,28 +45,40 @@
 }
 % \ifdatadefinedor({val1},…){\match}{dataname}{true}{false}
 \def\@ifddor(#1,#2\@nil)#3#4#5#6{%
-  \edef\@argone{#1}
+  \edef\@argone{#1}%
   % \trim@spaces@in\@argone
   % \edef\@argone{\zap@space#1 \@empty}
   % \typeout{MEMORY ddor=#4(\@argone)(#2)}%
   \ifdatadefined{#4}(\@argone){%
     % \typeout{MEMORY >>> FOUND: #4(#1)}%
-    \edef#3{#1}\expandafter#5
+    \edef#3{#1}\expandafter#5%
   }{\ifx\@nil#2\@nil\relax\expandafter#6\else\@ifddor(#2\@nil){#3}{#4}{#5}{#6}\fi}%
 }
-\def\ifdatadefined#1(#2)#3#4{\ifcsname @\expanded{#1}@\expanded{#2}@memory\endcsname#3\else#4\fi}
-\def\ifdataequal#1(#2)#3#4#5{\ifdatadefined#1(#2){%
-      \edef\@data@tmp{\csname @\expanded{#1}@\expanded{#2}@memory\endcsname}%
-      \if\@data@tmp#3\relax#4\else#5\fi%
-    }{#5}}
-% \def\datadefault#1(#2){\ifdatadefined{#1}(#2){\csname the#1\endcsname(#2)}{\csname the#1\endcsname()}}
-\def\datadefault#1(#2){\ifdatadefined{#1}(#2){\csname the#1\endcsname(#2)}
-                                     {\ifdatadefined{#1}(){\csname the#1\endcsname()}{}}}
+\def\ifdatadefined#1(#2)#3#4{%
+  \ifcsname @\expanded{#1}@\expanded{#2}@memory\endcsname#3\else#4\fi%
+}
+\def\ifdataequal#1(#2)#3#4#5{%
+  \ifdatadefined#1(#2){%
+    \edef\@data@tmp{\csname @\expanded{#1}@\expanded{#2}@memory\endcsname}%
+    \if\@data@tmp#3\relax#4\else#5\fi%
+  }{#5}%
+}
+\def\datadefault#1(#2){%
+  \ifdatadefined{#1}(#2){%
+    \csname the#1\endcsname(#2)%
+  }{%
+    \ifdatadefined{#1}(){\csname the#1\endcsname()}{}%
+  }%
+}
 
-\def\set@memory#1#2=#3{\if#1*\expandafter\gdef\csname#2\endcsname{#3}%
+\def\set@memory@i#1#2#3{\if#1*\expandafter\gdef\csname#2\endcsname{#3}%
                          \else\expandafter\def\csname#2\endcsname{#3}\fi}
-\def\eset@memory#1#2=#3{\if#1*\expandafter\xdef\csname#2\endcsname{#3}%
+\def\set@cond@memory@i#1#2?#3{\ifcsname#2\endcsname\else\set@memory@i{#1}{#2}{#3}\fi}
+\def\set@memory#1#2={\@ifnextchar?{\set@cond@memory@i{#1}{#2}}{\set@memory@i{#1}{#2}}}
+\def\eset@memory@i#1#2#3{\if#1*\expandafter\xdef\csname#2\endcsname{#3}%
                          \else\expandafter\protected@edef\csname#2\endcsname{#3}\fi}
+\def\eset@cond@memory@i#1#2?#3{\ifcsname#2\endcsname\else\eset@memory@i{#1}{#2}{#3}\fi}
+\def\eset@memory#1#2={\@ifnextchar?{\eset@cond@memory@i{#1}{#2}}{\eset@memory@i{#1}{#2}}}
 \def\etest@memory#1#2:{\@ifnextchar={\eset@memory{#1}{#2}}
                                     {\PackageError{memory}{Please use “=” or “:=”.}{}}}
 \def\data@memory#1#2{\@ifnextchar={\set@memory{#1}{@#2@memory}}
@@ -75,13 +89,16 @@
   {\if#1*
       \expandafter\gdef\csname#2\endcsname{\array@memory{#1}{#2}}
       \expandafter\gdef\csname the#2\endcsname(##1){\csname @#2@\expanded{##1}@memory\endcsname}
+      \expandafter\gdef\csname THE#2\endcsname(##1){\MakeTextUppercase{\csname @#2@\expanded{##1}@memory\endcsname}}
    \else
       \expandafter\def\csname#2\endcsname{\array@memory{#1}{#2}}
       \expandafter\def\csname the#2\endcsname(##1){\csname @#2@\expanded{##1}@memory\endcsname}
+      \expandafter\def\csname THE#2\endcsname(##1){\MakeTextUppercase{\csname @#2@\expanded{##1}@memory\endcsname}}
    \fi}
   {\PackageWarningNoLine{memory}{`#2' already defined.
                                  Macro `newdata' ignored!}}}
 \def\newdata{\@ifnextchar*{\newdata@memory}{\newdata@memory{}}}
+
 \endinput
 %%
 %% End of file `memory.sty'.

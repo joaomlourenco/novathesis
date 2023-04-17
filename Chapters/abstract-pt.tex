@@ -10,15 +10,17 @@
 
 Independentemente da língua em que a dissertação está escrita, geralmente esta contém pelo menos dois resumos: um resumo na mesma língua do texto principal e outro resumo numa outra língua.
 
-A ordem dos resumos varia de acordo com a escola. O comportamento padrão para o template \gls{novathesis} é ter em primeiro lugar o resumo \emph{na mesma língua do texto principal} e depois o resumo \emph{na outra língua}. Por exemplo, se a dissertação for escrita em português, a ordem dos resumos será primeiro em português e depois em inglês, seguido do texto principal em português. Se a dissertação for escrita em inglês, a ordem dos resumos será primeiro em inglês e depois em português, seguido do texto principal em inglês.
+A ordem dos resumos varia de acordo com a escola. Se a sua escola tiver regulamentos específicos sobre a ordem dos resumos, o template (\LaTeX) \gls{novathesis} irá respeitá-los. Caso contrário, a regra padrão no template \gls{novathesis} é ter em primeiro lugar o resumo \emph{no mesmo idioma do texto principal} e depois o resumo \emph{no outro idioma}. Por exemplo, se a dissertação for escrita em português, a ordem dos resumos será primeiro o português e depois o inglês, seguido do texto principal em português. Se a dissertação for escrita em inglês, a ordem dos resumos será primeiro em inglês e depois em português, seguida do texto principal em inglês.
 %
-O template \gls{novathesis} (\LaTeX) irá ordenar automaticamente os resumos por uma ordem apropriada. No entanto, esta ordem pode ser personalizada adicionando
+No entanto, esse pedido pode ser personalizado adicionando um dos seguintes ao arquivo \verb+5_packages.tex+.
+
 \begin{verbatim}
     \abstractorder(<MAIN_LANG>):={<LANG_1>,...,<LANG_N>}
 \end{verbatim}
-\noindent ao ficheiro \verb!5_packages.tex!.  Por exemplo, para um documento escrito em Alemão com resumos em Alemão, Inglês e Italiano (por esta ordem), pode usar-se:
+
+Por exemplo, para um documento escrito em Alemão com resumos em Alemão, Inglês e Italiano (por esta ordem), pode usar-se:
 \begin{verbatim}
-    \abstractorder(de):={de,en,it}
+    \ntsetup{abstractorder={de={de,en,it}}}
 \end{verbatim}
 
 Relativamente ao seu conteúdo, os resumos não devem ultrapassar uma página e frequentemente tentam responder às seguintes questões (é imprescindível a adaptação às práticas habituais da sua área científica):

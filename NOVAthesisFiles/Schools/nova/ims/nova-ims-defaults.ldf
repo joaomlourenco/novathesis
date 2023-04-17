@@ -1,5 +1,5 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% nova/ims/defaults.ldf
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%3%%%%%%%%%%%%%%%%%%
+%% nova/ims/nova-ims-defaults.ldf
 %% NOVA thesis document template
 %%
 %% This work is licensed under the
@@ -11,17 +11,18 @@
 %%      - João Lourenço <joao.lourenco@fct.unl.pt>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE nova/ims/defaults.ldf}%
+\typeout{NT FILE nova/ims/nova-ims-defaults.ldf}%
 
-
-% Redefinition of "Master in" to "Master of Science in"
-\degreenameprefix(msc,en):={Master of Science in}
 
 % Faculty / School
 \school(pt):={Instituto Superior de Estatística e Gestão de Informação}
 \school(en):={NOVA Information Management School}
 \school(fr):={NOVA Information Management School}
 \school(it):={NOVA Information Management School}
+
+% Redefinition of "Master in" to "Master of Science in"
+\degreenameprefix(msc,en):={Master of Science in}
+\degreenameprefix(pt):={Mestre em}
 
 \ntdegreename(mmaa,en){Advanced Analytics}
 \ntdegreename(mmaa,pt){Métodos Analíticos Avançados}
@@ -46,9 +47,9 @@
 % \majorfield(en):={Information Management}
 
 % Comiittee printing order
-\committeeorder():={c,r,m}% 
+\committeeorder():={c,r,m}%
 
-\ntsetup{secondcover=true}
+\ntsetup{print/secondcover=true}
 
 % Cover background images
 % \thesiscover(phd,1-1,bgcolor):={white}
@@ -105,7 +106,7 @@
 \spine(row)={1.745cm}
 
 \spine(author)={\thedocauthor(name)}
-\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(title)={\thedoctitle(\@LANG@COVER,main)}
 \spine(date)={\thentdocdate(year)}
 
 \spine(text,angle)={90}
@@ -159,47 +160,47 @@
 
 
 \dissertationstring(phd,en)={Thesis presented as partial requirement for obtaining the
-    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ degree in
-    {\themajorfield(\option{/novathesis/coverlang})}}
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ degree in
+    {\themajorfield(\@LANG@COVER)}}
  \dissertationstring(phdprop,en)={Thesis proposal presented as partial requirement for obtaining the
-     \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ degree in
-     {\themajorfield(\option{/novathesis/coverlang})}}
+     \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ degree in
+     {\themajorfield(\@LANG@COVER)}}
  \dissertationstring(phdplan,en)={Thesis plan presented as partial requirement for obtaining the
-     \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ degree in
-     {\themajorfield(\option{/novathesis/coverlang})}}
+     \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ degree in
+     {\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(phd,pt)={Tese apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em
-    {\themajorfield(\option{/novathesis/coverlang})}}
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em
+    {\themajorfield(\@LANG@COVER)}}
  \dissertationstring(phdprop,pt)={Proposta de tese apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em
-    {\themajorfield(\option{/novathesis/coverlang})}}
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em
+    {\themajorfield(\@LANG@COVER)}}
  \dissertationstring(phdplan,pt)={Plano de tese apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em
-    {\themajorfield(\option{/novathesis/coverlang})}}
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em
+    {\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(msc,en)={Dissertation presented as partial requirement for obtaining the
-    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ degree in
-    {\themajorfield(\option{/novathesis/coverlang})}}
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ degree in
+    {\themajorfield(\@LANG@COVER)}}
  \dissertationstring(mscplan,en)={Dissertation plan presented as partial requirement for obtaining the
-     \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ degree in
-     {\themajorfield(\option{/novathesis/coverlang})}}
+     \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ degree in
+     {\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(msc,pt)={Dissertatação apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em
-    {\themajorfield(\option{/novathesis/coverlang})}}
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em
+    {\themajorfield(\@LANG@COVER)}}
  \dissertationstring(mscplan,pt)={Plano de dissertação apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em
-    {\themajorfield(\option{/novathesis/coverlang})}}
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em
+    {\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(bsc,en)={Report presented as partial requirement for obtaining the
-    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ degree in
-    {\themajorfield(\option{/novathesis/coverlang})}}
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ degree in
+    {\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(bsc,pt)={Relatório apresentada como requisito parcial para obter o grau de
-    \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em
-    {\themajorfield(\option{/novathesis/coverlang})}}
- 
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em
+    {\themajorfield(\@LANG@COVER)}}
+
 
 
 
@@ -212,7 +213,7 @@
 \definecolor{imslightgrey}{RGB}{240,240,240}
 
 
-\AtEndPreamble{% 
+\AtEndPreamble{%
   \LoadHelveticaLikeFont%
   % \RequirePackage{gillius2}%
 }
@@ -230,22 +231,22 @@
 % INFORMATION MANAGEMENT
 \ntaddtocover[halign=l, vspace=0cm, degree=phd]{1-1}{%
   \fontsize{16}{16}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{\themajorfield(\option{/novathesis/coverlang})}}%
+  \textcolor{imsdarkgrey}{\textbf{\themajorfield(\@LANG@COVER)}}%
 }
 
 % SPECIALIZATION IN
 \ntaddtocover[halign=l, vspace=0.7cm, degree=phd]{1-1}{%
   \fontsize{16}{16}\selectfont
   \textcolor{imsmidgrey}{%
-    \textbf{\thespecializationstring(\option{/novathesis/coverlang})
-    \thespecialization(\option{/novathesis/coverlang})}%
+    \textbf{\thespecializationstring(\@LANG@COVER)
+    \thespecialization(\@LANG@COVER)}%
   }%
 }
 
 % DISSERTATION TITLE
 \ntaddtocover[halign=l, vspace=1.8cm, degree=phd]{1-1}{%
   \fontsize{16}{16}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
+  \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\@LANG@COVER,main,cover)}}%
 }
 
 % AUTHOR NAME
@@ -258,7 +259,7 @@
 \ntaddtocover[halign=l, vspace=5, degree=phd]{1-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{%
-    \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+    \thedissertationstring(\option{/novathesis/doctype},\@LANG@COVER)%
   }%
 }%
 
@@ -279,7 +280,7 @@
 % UNIVERSITY
 \ntaddtocover[halign=l, vspace=0.0cm, degree=phd]{1-1}{%
   \fontsize{11}{11}\selectfont%
-  \textcolor{imsdarkgrey}{\theuniversity(\option{/novathesis/coverlang})}%
+  \textcolor{imsdarkgrey}{\theuniversity(\@LANG@COVER)}%
 }
 
 
@@ -292,12 +293,12 @@
 % % Title of Dissertation
 \ntaddtocover[halign=l, vspace=1, degree=msc]{1-1}{%
   \fontsize{17}{17}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}}\\[0.25ex]%
-  \ifdatadefined{doctitle}(\option{/novathesis/coverlang},sub,cover){%
+  \textcolor{imsdarkgrey}{\textbf{\THEdoctitle(\@LANG@COVER,main,cover)}}\\[0.25ex]%
+  \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
     ~\\[-1.5ex]%
     \textcolor{imsmidgrey}{
       \fontsize{15}{15}\selectfont%
-      \textbf{\thedoctitle(\option{/novathesis/coverlang},sub,cover)}%
+      \textbf{\thedoctitle(\@LANG@COVER,sub,cover)}%
     }%
   }{}%
 }
@@ -312,7 +313,7 @@
 \ntaddtocover[halign=l, vspace=2, degree=msc]{1-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{%
-    \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+    \thedissertationstring(\option{/novathesis/doctype},\@LANG@COVER)%
   }%
 }
 
@@ -325,7 +326,7 @@
 
 \ntaddtocover[halign=c, vspace=1]{2-1}{%
   \fontsize{16}{16}\selectfont%
-  \textbf{\MakeTextUppercase{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
+  \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
 }
 
 \ntaddtocover[halign=c, vspace=1]{2-1}{%
@@ -342,7 +343,7 @@
 \ntaddtocover[halign=c, vspace=4]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{%
-    \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+    \thedissertationstring(\option{/novathesis/doctype},\@LANG@COVER)%
   }%
 }
 
@@ -350,10 +351,10 @@
 \ntaddtocover[vspace=2,halign=l]{2-1}{%
   \fontsize{12}{12}\selectfont%
   \adviserstringpre():={}%
-  \adviserstringpost():={:&}%
+  \adviserstringpost():={: }%
   \adviserstringfont():={\bfseries}%
-  \ntprintpersons[list]{1.0}{1}{adviser}{a}\\[2ex]
-  \ntprintpersons[list]{1.0}{1}{adviser}{c}\\
+  \ntprintpersons[list]{1.0}{1}{adviser}{a}
+  \ntprintpersons[list]{1.0}{1}{adviser}{c}
 }
 
 % Date

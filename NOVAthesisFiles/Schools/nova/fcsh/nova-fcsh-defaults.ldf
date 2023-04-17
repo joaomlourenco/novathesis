@@ -7,7 +7,7 @@
 
 \typeout{NT FILE nova/fsch/nova-fcsh-defaults.ldf}%
 
-\ntsetup{secondcover=true}
+\ntsetup{print/secondcover=true}
 
 % Faculty / School
 \school(pt):={Faculdade de Ciências Sociais e Humanas}
@@ -20,7 +20,7 @@
 \majorfield(en):={“Scientific Field”}
 
 % Comiittee printing order
-\committeeorder():={c,r,a,m}% 
+\committeeorder():={c,r,a,m}%
 
 % Cover background images
 % \thesiscover(phd,1-1,image):={}
@@ -34,7 +34,7 @@
 % Spine info
 \spine(logo)={nova-fcsh-insignia-color}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(title)={\thedoctitle(\@LANG@COVER,main)}
 \spine(year)={\thentdocdate(year)}
 
 % Set margins for "normal" pages
@@ -47,14 +47,14 @@
 \margin(paper,left):={3.0cm}
 \margin(paper,right):={3.5cm}
 
-% Set margins for cover pages 
+% Set margins for cover pages
 \margin(cover,top):={0.0cm}
 \margin(cover,bottom):={0.0cm}
 \margin(cover,left):={2.0cm}
 \margin(cover,right):={2.0cm}
 
-% \dissertationstring(phd,pt)={\thedocdegreestr(phd,pt)\ em\\[1ex] \textbf{\themajorfield(pt)}}
-% \dissertationstring(phd,en)={\thedocdegreestr(phd,en)\ in\\[1ex] \textbf{\themajorfield(en)}}
+% \dissertationstring(phd,pt)={\thedoctypestr(phd,pt)\ em\\[1ex] \textbf{\themajorfield(pt)}}
+% \dissertationstring(phd,en)={\thedoctypestr(phd,en)\ in\\[1ex] \textbf{\themajorfield(en)}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -79,7 +79,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{% 
+\AtEndPreamble{%
   \LoadHelveticaLikeFont%
   % \RequirePackage{gillius2}%
 }
@@ -111,7 +111,7 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}}%
+  \textcolor{fcshblue}{\textbf{\thedoctitle(\@LANG@COVER,main,cover)}}%
 }
 
 % Author name

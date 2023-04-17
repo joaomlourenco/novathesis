@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2023-02-11 [6.10.18]
+%% Version 2023-04-17 [7.0.0]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -62,34 +62,33 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}[2019-10-01]
-\ProvidesClass{novathesis}[2023-02-11 novathesis template]
+\ProvidesClass{novathesis}[2023-04-17 novathesis template]
+
+\NeedsTeXFormat{LaTeX2e}[2020-10-01]
 
 
 %============================================================
 % Save these definitions asap, to be used later in the “\annex” command,
-% because "\@Roman" and "\Roman" were failing with pdflatex 
+% because "\@Roman" and "\Roman" were failing with pdflatex
 % when loading the "greek" language (and LGR font encofing)
 %============================================================
 \let\oldRoman=\Roman
 \let\old@Roman=\@Roman
 
-%============================================================
-%  MEMOIR CUSTOMIZATION / OPTIONS
-%      Please open and edit the appropriate
-%       configuration file “Config/0_memoir.tex”
-%============================================================
-\newcommand*{\ntmemoirsetup}[1]{%
-    \PassOptionsToClass{#1}{memoir}%
-}
-\input{Config/0_memoir}
 
-% --------------------------------------------------------
-% LOAD MAIN CLASS AND ADDITIONAL PACKAGES
-% \undef{\stockwidth}
-% \undef{\stockheight}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  MEMOIR CUSTOMIZATION AND LOADING
+%%      Please open and edit the appropriate
+%%       configuration file “Config/0_memoir.tex”
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\ntmemoirsetup}[1]{\PassOptionsToClass{#1}{memoir}}
+\input{Config/0_memoir}
 \LoadClass{memoir}
 \OnehalfSpacing% One-and-half spacing
 
+\newcolumntype{L}{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}X}
+\newcolumntype{C}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}X}
+\newcolumntype{R}{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}X}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -106,54 +105,177 @@
 \RequirePackage{iftex}
 \RequirePackage{etoolbox}
 \RequirePackage{xstring}
-\RequirePackage{NOVAthesisFiles/options2}
+\RequirePackage{varwidth}
 \RequirePackage{NOVAthesisFiles/memory2}
 \RequirePackage{NOVAthesisFiles/nt-version}
+
 
 %%%%% Configure Graphics
 \RequirePackage[nobeamer]{graphbox}% improved version of "graphicx"
 \graphicspath{{Chapters/Figures/}}
-\DeclareGraphicsExtensions{.pdf,.png,.jpg,.tif}
+\DeclareGraphicsExtensions{.pdf,.png,.tif,.jpg}
 \providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
 \providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
 
 %%%%% Options to sans serif fonts (will be loaded later)
 \PassOptionsToPackage{scaled=0.95}{inter}
 \PassOptionsToPackage{scaled=0.95}{helvet}
-% \PassOptionsToPackage{scaled=0.95}{gillius2}
+\PassOptionsToPackage{scaled=0.95}{gillius2}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Deal with NOVATHESIS options and configuration files
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{NOVAthesisFiles/options2}
+
+% --------------------------------------------------------
+% PROCESS PACKAGE OPTIONS
+\def\splitbyslash#1/#2\relax#3#4{\edef#3{#1}\edef#4{#2}}
+
+\def\@nt@saveabstractorder{}
+\newcommand{\@setabstractorder}{%
+  % \typeout{SAVEABSORDER=[\@nt@saveabstractorder]}\SAVEABSORDER%
+  \StrGobbleRight{\@nt@saveabstractorder}{1}[\@nt@saveabstractorder]%
+  \@for\myi:=\@nt@saveabstractorder\do{%
+    \StrCut{\myi}{=}\@nt@key\@nt@val%
+    \IfStrEq{\@nt@val}{}{\edef\@nt@val{\@nt@key}\def\@nt@key{\@LANG@MAIN}}{}%
+    % \typeout{SETABSORDER (\@nt@key):=[\@nt@val]}\SETABSORDER%
+    \abstractorder(\@nt@key):={\@nt@val}%
+  }%
+}
+
+\newdata{processor}
+\processor(uminho):={lua,xe}
+\processor(nova/itqb):={pdf,lua}
+\processor(other/esep):={xe,lua}
+\newcommand{\@validate@processor}[2]{%
+% 1 = UNIV
+% 2 = SCHL
+  % \typeout{@validate@processor 1=[#1] 2=[#2]}\@VALIDATE@PROCESSOR
+  \newif\ifprocessor%
+  \processorfalse%
+  \ifdatadefined{processor}(#1/#2){\@validate@processor@i{\theprocessor(#1/#2)}}{%
+  \ifdatadefined{processor}(#1){\@validate@processor@i{\theprocessor(#1)}}{%
+    \processortrue%
+  }}%
+  \ifprocessor\else\ClassError{novathesis}{\pdfprocessor: Invalid processor for “#1/#2”.}{}\fi%
+}
+\newcommand{\@validate@processor@i}[1]{%
+% 1 = list of acceptable processors
+  \@for\myi:=\expanded{#1}\do{%
+    % \typeout{@validate@processor@i 1=[\myi]}\@VALIDATE@PROCESSOR@I
+    \IfStrEqCase{\myi}{%
+      {pdf}{\ifpdftex\processortrue\fi}%
+      {lua}{\ifluatex\processortrue\fi}%
+      {xe}{\ifxetex\processortrue\fi}%
+    }[\ClassError{novathesis}{Invalid processor type “\myi”}{}]%
+  }%
+}
+\newcommand{\pdfprocessor}{%
+  \ifpdftex pdf(la)tex\fi%
+  \ifluatex lua(la)tex\fi%
+  \ifxetex xe(la)tex\fi%
+}
+
+\options{/novathesis/.new family,
+  % DOCUMENT
+  doctype/.new choice           = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
+  docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
+  media/.new choice             = {screen, paper},
+  spine/.new choice             = {unset, no, full, trim},
+  % abstract/deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
+  % abstract/theorder/.new list   = {unset},
+  abstractorder/.new cmd        = {\appto\@nt@saveabstractorder{{#1},}},%
+  % SCHOOL
+  school/.new cmd               = {\splitbyslash#1\relax\@UNIV\@SCHL%
+                                   \@validate@processor{\@UNIV}{\@SCHL}},
+  school                        = nova/fct,
+  % STYLES
+  style/chapter/.new value      = bar,
+  style/font/.new value         = newpx,
+  style/url/.new cmd            = {\AfterPreamble{\urlstyle{#1}}},
+  color/links/.new cmd          = {\@ifpackageloaded{hyperref}%
+                                            {\hypersetup{allcolors=#1}}%
+                                            {\PassOptionsToPackage{allcolors=#1}{hyperref}}},
+  % LANGUAGES
+  lang/extra/.new list           = {},
+  lang/main/.new choice         = {en, pt, fr, it, de, es, gr},
+  lang/cover/.new choice        = {en, pt, fr, it, de, es, gr},
+  lang/copyright/.new choice    = {en, pt, fr, it, de, es, gr},
+  lang/.new cmd                 = {\optionsalso{/novathesis/lang/main=#1,
+                                                /novathesis/lang/cover=#1,
+                                                /novathesis/lang/copyright=#1}},
+  lang                          = en,
+  % PRINT ON/OFF
+  print/committee/.new toggle   = false,
+  print/adviser/.new toggle     = true,     % fake option - adviser should always be printed
+  print/frontmatter/.new toggle = true,
+  print/secondcover/.new toggle = false,
+  print/copyright/.new toggle   = true,
+  print/timestamp/.new toggle   = true,
+  print/index/.new toggle       = false,
+  print/webography/.new value   = {},        % empty means do not make a separate webography
+  print/statement/.new toggle   = false,
+  % MISC
+  countsecondcover/.new toggle  = false,
+  numberallpages/.new toggle    = false,
+  gnumberlist/.new toggle       = true,
+  tocintoc/.new toggle          = false,
+  % DEBUG
+  debug/.new list               = {},         % cover, index
+  % DEGREEACR (for degree-specific configuration files)
+  degreeacr/.new value          = {},
+  degreeacr/phd/.new value      = {},
+  degreeacr/msc/.new value      = {},
+  degreeacr/bsc/.new value      = {},
+  degreeacr/plain/.new value    = {},
+% SCHOOL specific customization
+% NOVA/ITQB
+  nova/itqb/covercolor/.new choice             = {gray, green},
+% UMINHO
+  uminho/copyrightmodifier/.new choice         = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd},
+  uminho/skipblankcovers/.new toggle           = false,
+% ULISBOA/FMV
+  examdate/year/.new value         = {yearX},
+  examdate/month/.new value        = {monthX},
+  examdate/day/.new value          = {dayX},
+  examdate/.new cmd                = {\AtEndPreamble{%
+                \@splitdate{#1}{\@exdtYEAR}{\@exdtMONTH}{\@exdtDAY}%
+                % \typeout{PROCESSDATE 1=#1 Y=\@exdtYEAR M=\@exdtMONTH D=\@exdtDAY}\PROCESSDATEYMD%
+                \options{novathesis/examdate/year=\@exdtYEAR,
+                         novathesis/examdate/month=\@exdtMONTH,
+                         novathesis/examdate/day=\@exdtDAY}%
+                                         }},
+  ulisboa/fmv/scientificarea/.new choice       = {C, MF, PASA, SA},
+  ulisboa/fmv/embargo/period/.new choice       = {I, 6, 12},
+  ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.},
+  ulisboa/fmv/reproduction/.new choice         = {I, P, N},
+}
+
+\newcommand{\@splitdate}[4]{%
+  % \typeout{PROCESSDATE 1=#1}\PROCESSDATE%
+  \StrCut{#1}{-}#2\@daterest%
+  \StrCut{\@daterest}{-}#3#4%
+  % \typeout{PROCESSDATE 1=#1 Y=#2 M=#3 D=#4}\PROCESSDATEYMD%
+}
+
+\newcommand{\printmonth}[1]{%
+  \IfInteger{#1}{\pgfcalendarmonthname{#1}}{#1}%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHECK IF USING LUALATEX OR XELATEX
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \newif\ifxetexorluatex
-% \begingroup\catcode94=7 \catcode0=9% ASCII 94 is ^
-% \def\empty{}\def\next{^^^^0000}\expandafter\endgroup
-% \ifx\next\empty\xetexorluatextrue\else\xetexorluatexfalse\fi
-%
-% \newcommand{\ifxeorlua}[2]{\ifxetexorluatex#1\else#2\fi}
 
 \newcommand{\ifxeorlua}{\ifboolexpr{bool{luatex} or bool{xetex}}}
-% \ifdef{\iftutex}{
-    \newcommand{\ifxetexorluatex}{\iftutex}
-% }{
-%   \newif\ifxetexorluatex
-%   \begingroup\catcode94=7 \catcode0=9% ASCII 94 is ^
-%   \def\empty{}\def\next{^^^^0000}\expandafter\endgroup
-%   \ifx\next\empty\xetexorluatextrue\else\xetexorluatexfalse\fi
-% }
-
-
-% \ifxetexorluatex  % xelatex or lualatex
-% \else% pdflatex
-%   %%%%% Configure font encoding
-%   \RequirePackage[T1]{fontenc}    % Use new T1 fonts
-%   %%%%% Configure input encoding
-%   \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
-% \fi
+\newcommand{\ifxetexorluatex}{\iftutex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\instring#1#2{TT\fi\begingroup
+  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
 
 % --------------------------------------------------------
 % The NOVAthesis logo
@@ -169,7 +291,7 @@
 \newcommand*{\defifundef}[2]{\ifundef{#1}{#2{#1}}{}}
 
 % --------------------------------------------------------
-% Variant of \@for with an optional final argument, that is 
+% Variant of \@for with an optional final argument, that is
 % executed iif the loop is not interrupted
 \def\ntforbreak{\@endfortrue}
 \long\def\ntfor#1:=#2\do#3{\@ifnextchar[{\ntfor@i#1:=#2\do#3}{\ntfor@i#1:=#2\do#3[]}}
@@ -180,7 +302,8 @@
 
 % --------------------------------------------------------
 % Print string between <...>
-\newcommand*{\embrace}[1]{$\langle$#1$\rangle$}
+\newcommand*{\embrace}[1]{#1}
+% \newcommand*{\embrace}[1]{$\langle$#1$\rangle$}
 
 % --------------------------------------------------------
 % Search if a data/memory is defined and returns value
@@ -229,6 +352,7 @@
 % Trim spaces around argument
 \ExplSyntaxOn
 \cs_new_eq:NN \trimspaces \tl_trim_spaces:n
+\cs_new_eq:NN \MyUppercase \text_uppercase:n
 \ExplSyntaxOff
 
 % --------------------------------------------------------
@@ -242,7 +366,7 @@
   \@ifnextchar[{\@nt@InputIfFileExists@i{#1}#2}{\@nt@InputIfFileExists@i{#1}#2[]}%
 }
 \def\@nt@InputIfFileExists@i#1#2[#3]{%
-  % \typeout{IIFE 1=[#1] 2=[#2] 3=[#3]}\aaaa
+  % \typeout{INPUTIFFILEEXISTS 1=[#1] 2=[#2] 3=[#3]}\INPUTIFFILEEXISTS
   \@ifnextchar[{\@nt@InputIfFileExists@ii{#1}#2[#3]}{\@nt@InputIfFileExists@ii{#1}#2[#3][]}%
 }
 \def\@nt@InputIfFileExists@ii#1#2[#3][#4]{
@@ -250,35 +374,40 @@
   \ntfor\dir:=#2\do{\IfFileExists{\dir#1}{\input{\dir#1}#3\ntforbreak}{}}[#4]%
 }
 
-% ][]{\ntfor\arg:=#3\do{\@nt@InputIfFileExists@i{#2}{\arg}}[#1]}
-% \newcommand{\@nt@InputIfFileExists@i}[2]{\IfFileExists{#2#1}{\input{#2#1}\ntforbreak}{}}
-
 
 \options{/@nt/.new family,
-  langsshort/.new list={en, pt, fr, it, de, es, gr},
-  currentlang/.new choice={en, pt, fr, it, de, es, gr},
-  langshorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish, gr=greek},
+  lang/short/.new list={en, pt, fr, it, de, es, gr},
+  % lang/current/.new choice={en, pt, fr, it, de, es, gr},
+  lang/loaded/.new list={},
+  % lang/shorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish, gr=greek},
   fontenc/.new choice={en=T1, pt=T1, fr=T1, it=T1, de=T1, es=T1, gr=LGR},
-  biblatex/.new list,
 }
 
+\newdata{langlong}
+\langlong(en):={english}
+\langlong(pt):={portuguese}
+\langlong(fr):={french}
+\langlong(it):={italian}
+\langlong(de):={german}
+\langlong(es):={spanish}
+\langlong(gr):={greek}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE FOLDERS PER CLASS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \options{/@nt/folders/.new choice={
-  bib=Bibliography, 
-  copyright=., 
-  statement=., 
-  dedicatory=Chapters, 
-  acknowledgements=Chapters, 
-  quote=Chapters, 
-  abstract=Chapters, 
-  glossaries=Chapters, 
-  chapter=Chapters, 
-  appendix=Chapters, 
+  bib=Bibliography,
+  copyright=.,
+  statement=.,
+  dedicatory=Chapters,
+  acknowledgements=Chapters,
+  quote=Chapters,
+  abstract=Chapters,
+  glossaries=Chapters,
+  chapter=Chapters,
+  appendix=Chapters,
   annex=Chapters,
-  cover=Chapters, 
+  cover=Chapters,
 }}
 
 
@@ -293,7 +422,7 @@
 % --------------------------------------------------------
 % Check if the document is of a specific class, i.e., bsc, msc, phd or main
 \newcommand{\ifdocclass}[1]{\ifoptionequal{/@nt/document/docclass}{#1}}
-\newcommand{\ifmaindoc}{\ifoptioncontains{/@nt/document/docmain}{\option{/novathesis/docdegree}}}
+\newcommand{\ifmaindoc}{\ifoptioncontains{/@nt/document/docmain}{\@DOCTYPE}}
 \newcommand{\ifphddoc}{\ifdocclass{phd}}
 \newcommand{\ifmscdoc}{\ifdocclass{msc}}
 \newcommand{\ifbscdoc}{\ifdocclass{bsc}}
@@ -323,9 +452,9 @@
   % #4={person name, position, etc}
   \noexpandarg
   \StrCut{#4}{,}\@nt@personname\@nt@dummy%was xStrCut
-  \options{/@nt/#1/#2/name/.expanded/.cpush={\@nt@personname}}%
-  \options{/@nt/#1/#2/full/.expanded/.cpush={#4}}%
-  \options{/@nt/#1/#2/gender/.cpush={#3}}%
+  \options{/@nt/#1/#2/name/.expanded/.newpush={\@nt@personname}}%
+  \options{/@nt/#1/#2/full/.expanded/.newpush={#4}}%
+  \options{/@nt/#1/#2/gender/.newpush={#3}}%
   % \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
   \fullexpandarg
 }
@@ -348,7 +477,7 @@
   %         #2=family {quote, abstract, chapter, etc} or {author, adviser, committee}
   %         #3=[file lang] (OPTIONAL)
   %         #4=filename
-  \@ifnextchar[{\@nt@addtolist@iv[#1]#2}{\@nt@addtolist@iv[#1]#2[VAL]}%
+  \@ifnextchar[{\@nt@addtolist@iv[#1]#2}{\@nt@addtolist@iv[#1]#2[\option{/novathesis/doctype}]}%
 }
 
 \def\@nt@addtolist@iv[#1]#2[#3]#4{%
@@ -357,7 +486,7 @@
   %         #2=file family (quote, abstract, chapter, etc)
   %         #3=optional file lang
   %         #4=filename
-  % \typeout{NT addtolist [#1] [#2] [#3] [#4]}%
+  % \typeout{NT ADDTOLIST [#1] [#2] [#3] [#4]}%
   \StrLeft{#4}{1}[\@nt@firstchar]%
   \IfStrEqCase{\@nt@firstchar}{%
     {/}{\xdef\@nt@filewithpath{#4}}%
@@ -366,7 +495,10 @@
     \options{/@nt/folders=#2}%
     \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}%
   ]%
-  \options{/@nt/#1/#2/#3/.expanded/.cpush={\@nt@filewithpath}}%
+  \@for\myi:=\expanded{#3}\do{%
+    % \typeout{NT ADDTOLIST [#1] [#2] [#3] [#4]}%
+    \options{/@nt/#1/#2/\myi/.expanded/.newpush={\@nt@filewithpath}}%
+  }%
 }
 
 \newcommand*{\@nt@foralllist}[3]{%
@@ -382,31 +514,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntselectlang}[1]{%
   % #1=lang {pt, en, fr, it}
-  \options{/@nt/currentlang=#1}%
-  \options{/@nt/langshorttolong=#1}%
-  \expandafter\selectlanguage\expandafter{\expanded{\option{/@nt/langshorttolong}}}%
+  \gdef\@LSHORT{#1}%
+  \xdef\@LLONG{\thelanglong(#1)}%
+  \selectlanguage{\@LLONG}%
 }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ASSOCARRAY
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\initmemory}[2][\embrace{\thenotdefined(\option{/novathesis/coverlang})}]{%
-  \optionlistdo{/@nt/langsshort}{\csuse{#2}(##1):={#1}}}
+\newcommand*{\initmemory}[2][\embrace{\thenotdefined(\@LANG@COVER)}]{%
+  \optionlistdo{/@nt/lang/short}{\csuse{#2}(##1):={#1}}}
 
 % For PDF bookmakrs
-\newdata{coverbkmstring}
-\newdata{frontpagebkmstring}
-\newdata{copyrightbkmstring}
-\newdata{statementbkmstring}
-\newdata{dedicatorybkmstring}
-\newdata{acknowledgementsbkmstring}
-\newdata{quotebkmstring}
-\newdata{abstractbkmstring}
-\newdata{frontmatterbkmstring}
-\newdata{backmatterbkmstring}
-\newdata{spinebkmstring}
-\newdata{backcoverbkmstring}
+\newdata{bkmstring}
 
 
 \newdata{notdefined}
@@ -433,7 +554,7 @@
 \newdata{sponsor}
 \newdata{andstring}
 \newdata{commastring}
-\optionlistdo{/@nt/langsshort}{%
+\optionlistdo{/@nt/lang/short}{%
   \commastring(#1):={,\ }%
 }
 
@@ -447,8 +568,8 @@
 \newdata{degreenameprefix}
 \newdata{degreenameprefixfont}
 
-\newdata{docdegreestring}
-\newdata{docdegreestringfont}
+\newdata{doctypestring}
+\newdata{doctypestringfont}
 
 
 
@@ -490,7 +611,9 @@
 \newdata{committeeremainderfont}
 \committeeremainderfont()={\itshape\scriptsize}
 
+\newdata{personpre}
 \newdata{personpost}
+\newdata{persongrouppre}
 \newdata{persongrouppost}
 
 \newdata{dissertationstring}
@@ -523,71 +646,9 @@
 % For each main language, list which abstracts shall be printed and in which order
 % may have more than two (just be sure you include the languages above as well)
 \newdata{abstractorder}
-\abstractorder(pt):={pt,en}
-\abstractorder(en):={en,pt}
-\abstractorder(fr):={fr,en}
-\abstractorder(it):={it,en}
-\abstractorder(es):={es,en}
-\abstractorder(de):={de,en}
-\abstractorder(gr):={gr,en}
 
 
 
-% --------------------------------------------------------
-% PROCESS PACKAGE OPTIONS
-\def\@nt@schooloption@i#1/#2\@nil{\gdef\@nt@univ{#1}\gdef\@nt@schl{#2}}
-
-\options{/novathesis/.new family,
-  docdegree/.new choice         = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
-  school/.new cmd               = {\@nt@schooloption@i#1\@nil},
-  school                        = {nova/fct},
-  docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
-  chapstyle/.new value          = {bar},        % use "bar" chapter style by default
-  fontstyle/.new value          = {newpx},      % use “newpx” by default
-  langsused/.new list           = {en,pt},
-  coverlang/.new choice         = {en, pt, fr, it, de, es, gr},
-  copyrightlang/.new choice     = {en, pt, fr, it, de, es, gr},
-  lang/.new style               = {/novathesis/mainlang=#1, /novathesis/copyrightlang=#1, /novathesis/coverlang=#1},
-  mainlang/.new choice          = {en, pt, fr, it, de, es, gr},
-  numberallpages/.new toggle    = false,
-  printfrontmatter/.new toggle  = true,
-  printadviser/.new toggle      = true,     % fake option - adviser should always be printed
-  printcommittee/.new toggle    = false,
-  printtimestamp/.new toggle    = true,
-  printcopyright/.new toggle    = true,
-  printindex/.new toggle         = false,
-  webography/.new value         = {},        % empty means do not make a separate webography
-  secondcover/.new toggle       = false,
-  statement/.new toggle         = false,
-  gnumberlist/.new toggle       = true,
-  tocintoc/.new toggle          = false,
-  urlstyle/.new cmd             = {\AfterPreamble{\urlstyle{#1}}},
-  kwncols/.new value            = 2,
-  debug/.new list               = {},
-  spine/.new choice             = {unset, no, full, trim},
-  media/.new choice             = {screen, paper},
-  linkscolor/.new cmd           = {\@ifpackageloaded{hyperref}%
-                                                     {\hypersetup{allcolors=#1}}%
-                                                    {\PassOptionsToPackage{allcolors=#1}{hyperref}}},
-  degreeacr/.new value          = {},
-  degreeacr/phd/.new value          = {},
-  degreeacr/msc/.new value          = {},
-  degreeacr/bsc/.new value          = {},
-  degreeacr/plain/.new value          = {},
-% nova/itqb
-  nova/itqb/covercolor/.new choice      = {gray, green},
-% uminho
-  uminho/copyrightmodifier/.new choice  = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd},
-  uminho/skipblankcovers/.new toggle    = false,
-% ulisboa/fmv
-  ulisboa/fmv/examdate/year/.new value      = {year},
-  ulisboa/fmv/examdate/month/.new value     = {month},
-  ulisboa/fmv/examdate/day/.new value       = {day},
-  ulisboa/fmv/scientificarea/.new choice    = {C, MF, PASA, SA},
-  ulisboa/fmv/embargo/period/.new choice    = {I, 6, 12},
-  ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.},
-  ulisboa/fmv/reproduction/.new choice      = {I, P, N},
-}
 
 
 % --------------------------------------------------------
@@ -600,23 +661,23 @@
   \ntfor\arg:={#2}\do{%
     \StrCut{\arg}{=}{\@ntopt}{\@ntval}%
     % \typeout{NTSETUP2 [\@ntopt] = [\@ntval]}%
-    \ifoptiondefined{/novathesis/\@nt@univ/\@nt@schl/#1/\@ntopt}%
-                    {\options{/novathesis/\@nt@univ/\@nt@schl/#1/#2}}{%
+    \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/#1/\@ntopt}%
+                    {\options{/novathesis/\@UNIV/\@SCHL/#1/#2}}{%
     \ifoptiondefined{/novathesis/#1/\@ntopt}%
                     {\options{/novathesis/#1/#2}}{%
-    \ifoptiondefined{/novathesis/\@nt@univ/\@nt@schl/\@ntopt}%
-                     {\options{/novathesis/\@nt@univ/\@nt@schl/#2}}{%
+    \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/\@ntopt}%
+                     {\options{/novathesis/\@UNIV/\@SCHL/#2}}{%
     \ifoptiondefined{/novathesis/\@ntopt}%
                     {\options{/novathesis/#2}}{%
-    \ClassError{Invalid class option: \@ntopt}{}{}}}}}}%
+    \ClassError{novathesis}{Invalid class option: \@ntopt}{}{}}}}}}%
 }
 
 \newcommand*{\ntbibsetup}[1]{%
-  \@ifpackageloaded{biblatex}{\bibsetup{#1}}{\PassOptionsToPackage{#1}{biblatex}}%
+  \@ifpackageloaded{biblatex}{\ClassError{novathesis}{Please load biblatex options earlier.}{}}{\PassOptionsToPackage{#1}{biblatex}}%
   % {\options{/@nt/biblatex/.push={#1}}}%
 }
 
-\newcommand*{\NTAddToHook}[2]{\options{/@nt/hook/#1/.cpush={#2}}}
+\newcommand*{\NTAddToHook}[2]{\options{/@nt/hook/#1/.newpush={#2}}}
 
 \newcommand*{\NTRunHook}[1]{\optionlistdo{/@nt/hook/#1}{##1}}
 
@@ -639,13 +700,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % --------------------------------------------------------
-% Define DEFAULT VALUES for COVER and COPYRIGHT languages
+% Define DEFAULT corollaryUES for COVER and COPYRIGHT languages
 %     and HYPERLINK color
 \options{/novathesis/.cd,
-  coverlang = \option{/novathesis/mainlang},
-  copyrightlang = \option{/novathesis/mainlang},
-  linkscolor = DarkBlue,
+  lang/cover = \option{/novathesis/lang/main},
+  lang/copyright = \option{/novathesis/lang/main},
+  color/links = DarkBlue,
 }
+
 
 % \NTRunHook{memoir}
 
@@ -655,8 +717,32 @@
 %       configuration file “Config/1_novathesis.tex”
 %============================================================
 \input{Config/1_novathesis}
-\options{/@nt/document/docclass=\option{/novathesis/docdegree}}
-% \NTRunHook{novathesis}
+\def\@DOCTYPE{\option{/novathesis/doctype}}
+\def\@DOCSTATUS{\option{/novathesis/docstatus}}
+
+\options{/@nt/document/docclass=\@DOCTYPE}
+\def\@DOCCLASS{\option{/@nt/document/docclass}}
+
+\def\@LANG@COVER{\option{/novathesis/lang/cover}}
+\def\@LANG@COPYRIGHT{\option{/novathesis/lang/copyright}}
+\def\@LANG@MAIN{\option{/novathesis/lang/main}}
+\def\@LANG@MAIN@LONG{\thelanglong(\@LANG@MAIN)}
+
+\def\@DEGREEACR{\option{/novathesis/degreeacr/\@DOCCLASS}}
+
+\bkmstring(1-1)={\thebkmstring(cover,\@LANG@COVER)}
+\bkmstring(2-1)={\thebkmstring(frontpage,\@LANG@COVER)}
+\bkmstring(N-2)={\thebkmstring(backcover,\@LANG@COVER)}
+\bkmstring(spine)={\thebkmstring(spine,\@LANG@COVER)}
+
+\@setabstractorder
+\ifdatadefined{abstractorder}(en){}{%
+  \abstractorder(en):={en,pt}
+}
+\ifdatadefined{abstractorder}(\@LANG@MAIN){}{%
+  \abstractorder(\@LANG@MAIN):={\@LANG@MAIN,en}
+}
+
 
 %============================================================
 % BIBLATEX CUSTOMIZATION
@@ -666,26 +752,184 @@
 \input{Config/2_biblatex}
 % \NTRunHook{biblatex}
 
+
+%============================================================
+% LOAD ADDITIONAL PACKAGES
+%============================================================
+
+% Load additional symbols
+% \RequirePackage[full]{textcomp}
+
+%%%%% Configure multilingual language support
+\RequirePackage{csquotes}
+\RequirePackage{url}
+\RequirePackage{xstring}
+
+% \newcommand{\definelanguagealias}[2]{%
+%   \@namedef{languagealias@#1}{#2}%
+% }
+% \definelanguagealias{portuguese}{portuguese}
+% \letoptionchoices{/@nt/lang/shorttolong}\opt@choices
+% \@for\myi:=\opt@choices\do{%
+%   \options{/@nt/lang/shorttolong=\myi}
+%   \typeout{CHOICE [\myi, \option{/@nt/lang/shorttolong}]}%
+%   \definelanguagealias{\expanded{\myi}}{\expanded{\option{/@nt/lang/shorttolong}}}%
+% }
+
+% \RequirePackage{appendix}
+
+% \RequirePackage{printlen}
+% \uselengthunit{mm}\printlength{\linewidth}
+
+
+%%%%% Better support for string manipulation
+
+
+% To use a wide range of color names
+% \RequirePackage{xcolor}%
+
+\RequirePackage{colortbl}
+\definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
+
+
+\iftoggle{/novathesis/print/index}{
+  \AtEndPreamble{
+    \ntaddtoprintorder{mainmatter}{index}
+    \RequirePackage{imakeidx}
+    % \makeindex[intoc,columns=2,options=-s myindexstyle]%
+    \makeindex[intoc,columns=2,options=-s  NOVAthesisFiles/ntindexstyle]
+  }
+}{}
+
+% Fixing autoref in yperref
+\RequirePackage{NOVAthesisFiles/fix-hyperref}
+
+%--------------------------------
+% “biblatex” stuff
+\ntaddfile{bib}{./NOVAthesisFiles/fix-bib.bib}%
+% \AtEndDocument{\nocite{novathesis-manual}}%
+% \letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
+% \RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
+
+%--------------------------------
+% “hyperref” stuff
+\RequirePackage[%
+  , bookmarksnumbered=true%
+  , breaklinks=true%
+  , colorlinks=true%
+  , pdfdisplaydoctitle=true%
+  , unicode=true%
+]{hyperref}%
+\@nt@fixhyperref%
+% \pdfstringdefDisableCommands{%
+%   \def\\{}%
+%   \def\texttt#1{#1}%
+% }%
+\RequirePackage{bookmark}%
+% \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
+
+%--------------------------------
+% “glossasries” stuff - after hyperref
+\ifoptioncontains{/novathesis/lang/extra}{gr}{%
+  \PassOptionsToPackage{xindy={language=\@LANG@MAIN@LONG}}{glossaries-extra}
+}{}
+
+\RequirePackage[%
+  % , nonumberlist
+  translate=babel,
+  acronym,           % add acronyms listing
+  symbols,           % add symbols listing
+  % sanitizesort=false, % allow \gls inside descriptions
+  % xindy={language=\@LANG@MAIN@LONG},
+  nolong,
+  nosuper,
+  nolist,
+  notree,
+  nostyles,
+  automake,
+]{glossaries-extra}% To create glossaries
+\RequirePackage{NOVAthesisFiles/glossary-xltabular}%
+\setglossarystyle{xltabular}%
+\setabbreviationstyle[acronym]{long-short}%
+\GlsXtrEnablePreLocationTag{\emph{(\small p.~}}{\emph{(\small pp.~}}
+\patchcmd{\@gls@automake@immediate}{-I xindy}{-q -I xindy}{}{}
+% \renewcommand{\gls@automake@makegloss}{makeglossaries -q}%
+\renewcommand{\GlsXtrFormatLocationList}[1]{\emph{\small#1)}}
+\renewcommand{\glsnamefont}[1]{\textbf{#1}}%
+
+%--------------------------------
+% “Process gnumberlist” option - after glossaries
+\iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}%
+\AtEndPreamble{\@loadglossaryfiles\makeglossaries}%
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Include strings for all the languages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\optionlistdo{/novathesis/langsused}{%
-    \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
-                      {}%
-                      {\ClassError{novathesis}{File not found: “NOVAthesisFiles/Strings/strings-#1.ldf” file!}%
-                                              {Add a file with the translations for this language.}}%
+\def\@LANG@LOADED{}
+\def\@langs@loaded@sep{}
+\newcommand*{\@nt@loadlang}[1]{%
+      % \typeout{LL=#1}\LL
+      \if\instring{,#1,}{,\@LANG@LOADED,}\else%
+        \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
+                        {\eappto{\@LANG@LOADED}{\@langs@loaded@sep#1}\def\@langs@loaded@sep{,}}%
+                        {\ClassError{novathesis}{File not found: “NOVAthesisFiles/Strings/strings-#1.ldf” file!}%
+                                                {Add a file with the translations for this language.}}%
+      \fi%
 }
+\@for\myi:=\expanded{\@LANG@COVER,\@LANG@COPYRIGHT,\@LANG@MAIN,%
+                     \theabstractorder(\@LANG@MAIN)}\do{\@nt@loadlang{\myi}}
+\optionlistdo{/novathesis/lang/extra}{\@nt@loadlang{##1}}%
+
+% \letoptionlist{/@nt/lang/loaded}\LANGLOADED
+% \typeout{LANGLOADED=\@LANG@LOADED}\LLLLL
+\options{/@nt/lang/loaded/.expanded=\@LANG@LOADED}
+% \typeout{LANGLOADED=\@LANG@LOADED}\LANG@LOADED
 
 % --------------------------------------------------------
 % BABEL STUFF
-\options{/@nt/langshorttolong=\option{/novathesis/mainlang}}%
-\PassOptionsToPackage{main=\option{/@nt/langshorttolong}}{babel}
-% \typeout{MAIN: [\option{/novathesis/mainlang} \option{/@nt/langshorttolong}]}\aaa
-\optionlistdo{/novathesis/langsused}{%
-  \options{/@nt/langshorttolong=#1}%
-  \PassOptionsToPackage{\option{/@nt/langshorttolong}}{babel}%
-  % \typeout{USED: [#1] [\option{/@nt/langshorttolong}] [\option{/@nt/fontenc}]}\bbb
+% \options{/@nt/lang/shorttolong=\@LANG@MAIN}%
+\PassOptionsToPackage{main=\@LANG@MAIN@LONG}{babel}
+\@for\myi:=\expanded{\@LANG@LOADED}\do{%
+  % \typeout{BABELLANG=\myi \thelanglong(\myi)}\BABELLANG%
+  % \options{/@nt/lang/shorttolong=\myi}%
+  \PassOptionsToPackage{\expanded{\thelanglong(\myi)}}{babel}%
+  \PassOptionsToPackage{\expanded{\thelanglong(\myi)}}{translator}%
+}%
+
+% --------------------------------------------------------
+% FIX BABEL TRANSLATION
+\RequirePackage[english]{babel}      % Support for multilingual documents
+\RequirePackage{translator} % Support month name translations for pgfcalendar
+
+\input{NOVAthesisFiles/fix-babel.tex}
+
+\RequirePackage{tikz}
+
+%%%%% Fine tuning of typesetting
+\ifxeorlua{}{% pdflatex
+  \RequirePackage[%
+    babel=true,
+    activate={true,nocompatibility},  % activate={true,nocompatibility} - activate protrusion and expansion
+    final,            % final - enable microtype; use "draft" to disable
+    tracking=true,    % tracking=true - activate this technique
+    kerning=true,     % kerning=true - activate this technique
+    spacing=true,     % spacing=true - activate this technique
+    factor=1100,      % factor=1100 - add 10% to the protrusion amount (default is 1000)
+    stretch=10,       % stretch=10 - reduce stretchability (default is 20)
+    shrink=10,        % shrink=10 - reduce shrinkability (default is 20)
+  ]{microtype}
 }
+
+% \options{/@nt/lang/shorttolong=\@LANG@MAIN}%
+% \PassOptionsToPackage{main=\option{/@nt/lang/shorttolong}}{babel}
+% % \typeout{MAIN: [\@LANG@MAIN \option{/@nt/lang/shorttolong}]}\aaa
+% \optionlistdo{/novathesis/lang/extra}{%
+%   \options{/@nt/lang/shorttolong=#1}%
+%   \PassOptionsToPackage{\option{/@nt/lang/shorttolong}}{babel}%
+%   \PassOptionsToPackage{\option{/@nt/lang/shorttolong}}{translator}%
+%   % \typeout{USED: [#1] [\option{/@nt/lang/shorttolong}] [\option{/@nt/fontenc}]}\bbb
+% }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -709,20 +953,15 @@
   % #1 = ignored
   % #1 = lang
   % #2 = value
-  \datamatchtf{\match}{degreenameprefix}(%
-            {\option{/novathesis/docdegree},%
-             \option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
-             \option{/novathesis/coverlang}},%
-            {\option{/@nt/document/docclass},%
-             \option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
-             \option{/novathesis/coverlang}},%
-            {\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
-             \option{/novathesis/coverlang}},%
-            {\option{/novathesis/docdegree},\option{/novathesis/coverlang}},%
-            {\option{/@nt/document/docclass},\option{/novathesis/coverlang}},%
-            {\option{/novathesis/coverlang}}%
-  ){}{}%
-  \IfStrEq{\match}{}{\degreename(#1):={#2}}{\degreename(#1):={\match\ #2}}%
+  \datamatch{\match}{degreenameprefix}(%
+            {\@DOCTYPE,\@DEGREEACR,\@LANG@COVER},%
+            {\@DOCCLASS,\@DEGREEACR,\@LANG@COVER},%
+            {\@DEGREEACR,\@LANG@COVER},%
+            {\@DOCTYPE,\@LANG@COVER},%
+            {\@DOCCLASS,\@LANG@COVER},%
+            {\@LANG@COVER}%
+  )%
+  \ifblank{\match}{\degreename(#1):={#2}}{\degreename(#1):={\match\ #2}}%
   \majorfield(#1):={#2}%
 }
 % --------------------------------------------------------
@@ -735,17 +974,12 @@
 \def\@ntspecializationifundef(#1)#2{\ifdatadefined{specialization}(#1){}{\@ntspecialization(#1){#2}}}
 \def\@ntspecialization(#1)#2{%
   \datamatch{\match}{specializationstring}(%
-            {\option{/novathesis/docdegree},%
-             \option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
-             \option{/novathesis/coverlang}},%
-            {\option{/@nt/document/docclass},%
-             \option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
-             \option{/novathesis/coverlang}}%
-            {\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
-             \option{/novathesis/coverlang}},%
-            {\option{/novathesis/docdegree},\option{/novathesis/coverlang}},%
-            {\option{/@nt/document/docclass},\option{/novathesis/coverlang}},%
-            {\option{/novathesis/coverlang}}%
+            {\@DOCTYPE,\@DEGREEACR,\@LANG@COVER},%
+            {\@DOCCLASS,\@DEGREEACR,\@LANG@COVER}%
+            {\@DEGREEACR,\@LANG@COVER},%
+            {\@DOCTYPE,\@LANG@COVER},%
+            {\@DOCCLASS,\@LANG@COVER},%
+            {\@LANG@COVER}%
   )%
   \ifblank{\match}{\specialization(#1):={#2}}{\specialization(#1):={\match\ #2}}%
   \minorfield*(#1):={#2}%
@@ -767,7 +1001,7 @@
   % \typeout{XXXX [\@nt@cleantitle]}\aaa
   \doctitle(#2,#1):={\@nt@cleantitle}%
   \doctitle(#2,#1,cover):={#3}%
-  \IfStrEq{#1}{main}{\doctitle(#2,spine):={\@nt@cleantitle}}{}%
+  \IfStrEq{#1}{main}{\doctitle(#2,spine):=?{\@nt@cleantitle}}{}%
   % \doctitle(#2,#1):={\ntnolinebreak{#3}}%
   % \doctitle(#2,#1,cover):={#3}%
   % \IfStrEq{#1}{main}{\doctitle(#2,spine):={\ntnolinebreak{#3}}}{}%
@@ -782,18 +1016,22 @@
 %============================================================
 % Date and month
 \newdata{ntdocdate}
-\ntdocdate(year):={Year}
+\ntdocdate(year):={year}
 \ntdocdate(month):={month}
+\ntdocdate(day):={day}
 
-\def\ntdate#1{\@ntdate@i(#1,)}
-\def\@ntdate@i(#1,#2){%
-  \noexpandarg
-  \StrGobbleRight{#2}{1}[\@ntmonth]%
+\def\ntdate#1{\@ntdate@i#1--\@relax}
+% \def\@ntdate@i#1-#2\@relax{\@ntdate@ii#1-#2-\@relax}
+\def\@ntdate@i#1-#2-#3\@relax{%
+  % year           -> [year] [] []
+  % year-month     -> [year] [month] [-]
+  % year-month-day -> [year] [month] [day--]
+  % \typeout{NTDOCDATE [#1] [#2] [#3]}\NTDOCDATE
   \ntdocdate(year):={#1}%
-  \ntdocdate(month):={\@ntmonth}%
-  \noexpandarg
+  \ntdocdate(month):={#2}%
+  \ifstrequal{#3}{-}{\ntdocdate(day):={}}%
+                    {\StrGobbleRight{#3}{2}[\@nt@date@day]\ntdocdate(day):={\@nt@date@day}}%
 }
-
 
 
 %============================================================
@@ -802,7 +1040,7 @@
 \docauthor(name):={Author Name}
 \docauthor(name,short):={Author Short Name}
 \docauthor(gender):={Author Gender}
-\docauthor(degree,\option{/novathesis/coverlang}):={Author Previous Degree}
+\docauthor(degree,\@LANG@COVER):={Author Previous Degree}
 
 \def\ntauthorname(#1)#2#3{% [m|f]{Long name}{Short name}
   \docauthor(gender):={#1}%
@@ -815,20 +1053,20 @@
 % Adding list_of
 \newcommand*{\ntaddlistof}[2][]{%
   \IfStrEqCase{#2}{%
-    {tableofcontents}{\options{/@nt/list/listof/.cpush={%
+    {tableofcontents}{\options{/@nt/list/listof/.newpush={%
             \iftoggle{/novathesis/tocintoc}{\tableofcontents}%
                   {\pdfbookmark{\contentsname}{toctarget}%
                   \hypertarget{toctarget}{\tableofcontents*}}}}}%
-    {listoffigures*}{\options{/@nt/list/listof/.cpush={%
+    {listoffigures*}{\options{/@nt/list/listof/.newpush={%
             \pdfbookmark{\listfigurename}{loftarget}%
             \hypertarget{loftarget}{\listoffigures*}}}}%
-    {listoftables*}{\options{/@nt/list/listof/.cpush={%
+    {listoftables*}{\options{/@nt/list/listof/.newpush={%
             \pdfbookmark{\listtablename}{lottarget}%
             \hypertarget{lottarget}{\listoftables*}}}}%
-    {listoflistings}{\options{/@nt/list/listof/.cpush={%
+    {listoflistings}{\options{/@nt/list/listof/.newpush={%
             \pdfbookmark{\listoflistingscaption}{loltarget}%
             \hypertarget{loltarget}{\listoflistings}}}}%
-    {listofalgorithms}{\options{/@nt/list/listof/.cpush = {%
+    {listofalgorithms}{\options{/@nt/list/listof/.newpush = {%
             \listofalgorithms
             \ifdefined\listalgorithmname%
               \addcontentsline{toc}{chapter}{\listalgorithmname}%
@@ -837,17 +1075,19 @@
             \else
               \ClassError{novathesis}{Can't make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
             \fi\fi}}}%
-    {listsofglossaries}{\options{/@nt/list/listof/.cpush={%
-            \glstoctrue
-            \iffileadded[glossary]{glossaries}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}}}%
-    {listsofglossaries*}{\options{/@nt/list/listof/.cpush={%
-            \glstocfalse
-    \iffileadded[glossary]{glossaries}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}}}%
+    % {listsofglossaries}{\options{/@nt/list/listof/.newpush={%
+    %         \glstoctrue%
+    %         % \iffileadded[glossary]{glossaries}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}%
+    %         }}%
+    % {listsofglossaries*}{\options{/@nt/list/listof/.newpush={%
+    %         \glstocfalse%
+    %         % \iffileadded[glossary]{glossaries}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}%
+    %         }}%
   }[%
             \if\relax\detokenize{#1}\relax
-              \options{/@nt/list/listof/.cpush={\ifdefmacro{#2}{#2}{\csuse{#2}}}}%
+              \options{/@nt/list/listof/.newpush={\ifdefmacro{#2}{#2}{\csuse{#2}}}}%
             \else
-              \options{/@nt/list/listof/.cpush={\ifdefmacro{#2}{#2[#1]}{\csuse{#2}[#1]}}}%
+              \options{/@nt/list/listof/.newpush={\ifdefmacro{#2}{#2[#1]}{\csuse{#2}[#1]}}}%
             \fi
    ]%
 }
@@ -857,22 +1097,33 @@
 \newcommand*{\ntprint}[1]{%
   \IfStrEqCase{#1}{%
     {frontmatter}{%
-          \iftoggle{/novathesis/secondcover}{}{\setcounter{page}{1}}%
-          \iftoggle{/novathesis/printfrontmatter}{\ntprintlist{/@nt/print/#1}}{}}%
+          % \iftoggle{/novathesis/print/secondcover}{}{\setcounter{page}{1}}%
+          \thispagestyle{novathesis@frontmatter}%
+          \pagestyle{novathesis@frontmatter}%
+          \iftoggle{/novathesis/print/frontmatter}{\ntprintlist{/@nt/print/#1}}{}}%
     {mainmatter}{%
-            \ntprintlist{/@nt/print/#1}}%
-  }[\ifdefmacro{#1}{#1}{\csuse{ntprint#1}\clearforchapter}]%
-  \ignorespaces%
+          \thispagestyle{novathesis@mainmatter}%
+          \pagestyle{novathesis@mainmatter}%
+          \ntprintlist{/@nt/print/#1}}%
+  }[\ifdefmacro{#1}{#1}{\csuse{ntprint#1}}]%
 }
 
 \newcommand*{\ntprintlist}[1]{%
   \optionlistdo{#1}{%
-    \ifdefmacro{##1}{##1}{%
-      \ifcsmacro{ntprint##1}%
-            {\NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}}%
-            {\ifcsmacro{##1}{\NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}}
-                            {\ClassError{novathesis}{Invalid contents for frontmatter or mainmatter: [##1]}{}}}}
-    \clearforchapter}%
+    \ifdefmacro{##1}{##1}{%     ##1 is undefined
+      \ifcsmacro{ntprint##1}{%  \ntprint#1 is defined
+        \NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}%
+      }{%                       \ntprint#1 is undefined
+        \ifcsmacro{##1}{%       \##1 is defined
+          \NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}%
+        }{%                     nothing is defined
+          \ClassError{novathesis}{Invalid contents for frontmatter or mainmatter: [##1]}{}%
+        }%
+      }%
+    }%
+    \clearforchapter%
+    \ignorespaces%
+  }%
 }
 
 \newcommand*{\ntsetprintorder}[2]{%
@@ -926,7 +1177,7 @@
   printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
 }
 
-\ifoptionequal{/novathesis/webography}{}{%
+\ifoptionequal{/novathesis/print/webography}{}{%
   \ntsetprintorder{mainmatter}{
     chapters;        % Print document chapters
     bib;             % Print the bibliography.  Change to
@@ -938,7 +1189,7 @@
   \ntsetprintorder{mainmatter}{
     chapters; % Print document chapters
     \printbibliography[nottype=online]; % Print the bibliography.
-    \printbibliography[title=\option{/novathesis/webography},type=online]; % Print the bibliography.
+    \printbibliography[title=\option{/novathesis/print/webography},type=online]; % Print the bibliography.
     appendices; % Print appendices, if any!
     annexes; % Print annexes, if any!
   }%
@@ -952,7 +1203,7 @@
   % #1 = cover atrtibutes
   % #2 = list of covers where the code block should be applied
   % #3 = the block code
-  % \typeout{NT ntaddtocover [/@nt/cover/\@nt@univ/\@nt@schl/element=#1]}%
+  % \typeout{NT ntaddtocover [/@nt/cover/\@UNIV/\@SCHL/element=#1]}%
   % \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
   \ntfor\arg:={#2}\do{\@ntaddtocover@iii{#1}{#3}{\arg}}%
 }
@@ -962,14 +1213,14 @@
   % #1 = cover atrtibutes
   % #2 = the block code
   % #3 = covers where the code block should be applied
-  \ntfor\arg:={#3}\do{\options{/@nt/cover/\@nt@univ/\@nt@schl/\arg/.cpush={{#1}=*={#2}}}}%
+  \ntfor\arg:={#3}\do{\options{/@nt/cover/\@UNIV/\@SCHL/\arg/.newpush={{#1}\@nil{#2}}}}%
 }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% LOADING SCHOOLS's “defaults.ldf”
+%% LOADING SCHOOLS's “defaults.ldf”, including cover design
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ntfor\match:={\@nt@univ,\@nt@univ/\@nt@schl}\do{%
+\ntfor\match:={\@UNIV,\@UNIV/\@SCHL}\do{%
     \IfFileExists{NOVAthesisFiles/Schools/\match/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
             \prependtographicspath{{NOVAthesisFiles/Schools/\match/Images/}}}{}}
 
@@ -978,23 +1229,24 @@
 %  UNIVERSITY/SCHOOL SPECIFIC MATERIALS
 %  configuration file “Config/9_<university>_<school>.tex”
 %============================================================
-\IfFileExists{Config/9_\@nt@univ_\@nt@schl.tex}
-     {\def\@ntsetuplevel{\@nt@univ/\@nt@schl/}\input{Config/9_\@nt@univ_\@nt@schl.tex}}
-     {\def\@ntsetuplevel{\@nt@univ/}\InputIfFileExists{Config/9_\@nt@univ.tex}{}{}}
+\IfFileExists{Config/9_\@UNIV_\@SCHL.tex}
+     {\def\@ntsetuplevel{\@UNIV/\@SCHL/}\input{Config/9_\@UNIV_\@SCHL.tex}}
+     {\def\@ntsetuplevel{\@UNIV/}\InputIfFileExists{Config/9_\@UNIV.tex}{}{}}
 \def\@ntsetuplevel{}
 
-\InputIfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@univ-defaults.ldf}{}
-    {\PackageError{novathesis}{Missing file “/\@nt@univ/\@nt@univ-defaults.ldf”}{}}
+\InputIfFileExists{NOVAthesisFiles/Schools/\@UNIV/\@UNIV-defaults.ldf}{}
+    {\PackageError{novathesis}{Missing file “NOVAthesisFiles/Schools/\@UNIV/\@UNIV-defaults.ldf”}{}}
 
 \ntfor\match:={%
-      \@nt@univ-\@nt@schl-\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
-      \@nt@univ-\@nt@schl%
+      \@UNIV-\@SCHL-\@DEGREEACR,%
+      \@UNIV-\@SCHL%
   }\do{%
-      \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/\match-defaults.ldf}
-              {\input{NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/\match-defaults.ldf}\ntforbreak}{}%
+      \IfFileExists{NOVAthesisFiles/Schools/\@UNIV/\@SCHL/\match-defaults.ldf}
+              {\input{NOVAthesisFiles/Schools/\@UNIV/\@SCHL/\match-defaults.ldf}\ntforbreak}{}%
   }
-[\PackageError{novathesis}{Missing file “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl-defaults.ldf”}{}]
+[\PackageError{novathesis}{Missing file “NOVAthesisFiles/Schools/\@UNIV/\@SCHL-defaults.ldf”}{}]
 
+\RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1002,25 +1254,25 @@
   \RequirePackage{fontspec}%
   \defaultfontfeatures{Ligatures=TeX}
 \else% pdflatex
-  % \RequirePackage[T1]{fontenc}    % Use new T1 fonts
+  \RequirePackage[T1]{fontenc}    % Use new T1 fonts
   % \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
 \fi
 
 
 % --------------------------------------------------------
 % Customize the pagestyle
-\makepagestyle{novathesis@mainmatter} 
-\makeoddfoot{novathesis@mainmatter}{}{\thepage}{} 
-\makeevenfoot{novathesis@mainmatter}{}{\thepage}{} 
-\makeheadrule{novathesis@mainmatter}{\textwidth}{\normalrulethickness} 
-\makeevenhead{novathesis@mainmatter}{\small\textsc{\leftmark}}{}{} 
+\makepagestyle{novathesis@mainmatter}
+\makeoddfoot{novathesis@mainmatter}{}{\thepage}{}
+\makeevenfoot{novathesis@mainmatter}{}{\thepage}{}
+\makeheadrule{novathesis@mainmatter}{\textwidth}{\normalrulethickness}
+\makeevenhead{novathesis@mainmatter}{\small\textsc{\leftmark}}{}{}
 \makeoddhead{novathesis@mainmatter}{}{}{\small\textsc{\rightmark}}
 
-\makepagestyle{novathesis@frontmatter} 
-\makeoddfoot{novathesis@frontmatter}{}{\thepage}{} 
-\makeevenfoot{novathesis@frontmatter}{}{\thepage}{} 
+\makepagestyle{novathesis@frontmatter}
+\makeoddfoot{novathesis@frontmatter}{}{\thepage}{}
+\makeevenfoot{novathesis@frontmatter}{}{\thepage}{}
 
-\ifoptionequal{/novathesis/media}{paper}{\ntsetup{linkscolor=Black}}{}
+\ifoptionequal{/novathesis/media}{paper}{\ntsetup{color/links=Black}}{}
 
 
 % --------------------------------------------------------
@@ -1045,6 +1297,16 @@
 %============================================================
 \input{Config/3_cover}
 % \NTRunHook{cover}
+
+% Patch month from number to string in the proper language
+\ntselectlang{\@LANG@COVER}%
+\usetikzlibrary{calendar}%
+\IfInteger{\thentdocdate(month)}{%
+  \ntdocdate(month):={\pgfcalendarmonthname{\thentdocdate(month)}}%
+}{}
+\IfInteger{\option{/novathesis/examdate/month}}{%
+  \options{/novathesis/examdate/month=\pgfcalendarmonthname{\option{/novathesis/examdate/month}}}%
+}{}
 
 %============================================================
 %  THESIS/DISSERTATION FILES
@@ -1072,44 +1334,33 @@
 %============================================================
 \AtEndPreamble{\makeatletter\NTRunHook{list_of/pre}\input{Config/6_list_of}\NTRunHook{list_of/post}}
 
+\setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
+\optionlistdo{/@nt/file/bib/\option{/novathesis/doctype}}{%
+  % \typeout{ADDBIB=#1}\ADDBIB
+  \addbibresource{#1}%
+}%
+
 \ifdocunset{\ntsetup{docstatus=working}}{}
 
-% \typeout{\theprintorder(frontmatter,\option{/novathesis/docstatus})}
-\ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\option{/novathesis/docstatus})}}%
+% \typeout{\theprintorder(frontmatter,\@DOCSTATUS)}
+\ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\@DOCSTATUS)}}%
 
 \ifoptionequal{/novathesis/spine}{unset}
     {\ifdocworking{\ntsetup{spine=no}}{\ifmaindoc{\ntsetup{spine=trim}}{\ntsetup{spine=no}}}}{}
-\ifdocfinal{\ntsetup{printcommittee=true}}{}
+\ifdocfinal{\ntsetup{print/committee=true}}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\@nt@loadallfiles}[3][]{\optionlistdo{/@nt/file/#3/#2}{\@ntloadfile@i{##1}#1}}
+\newcommand{\@nt@loadallfiles}[2]{\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}
 
 \newcommand{\@ntloadfile@i}[2][]{\IfFileExists{#2}{\input{#2}}{#1}}
 
-\newcommand{\@ntloadfiles@ii}[2][VAL]{%
+\newcommand{\@ntloadfiles@ii}[2][\option{/novathesis/doctype}]{%
   % #1=KEY
   % #2=file class
-  \iffileadded[#1]{#2}{\@nt@loadallfiles[\clearforchapter]{#1}{#2}}{}%
+  \iffileadded[#1]{#2}{\@nt@loadallfiles{#1}{#2}}{}%
 }
 
-\newcommand{\iffileadded}[2][VAL]{\ifoptiondefined{/@nt/file/#2/#1}}
-
-% --------------------------------------------------------
-% LOAD ADDITIONAL PACKAGES
-\input{NOVAthesisFiles/packages.tex}
-\NTRunHook{NOVAthesisFiles/packages}
-
-% Patch month from number to string in the proper language
-\IfInteger{\thentdocdate(month)}{%
-  \RequirePackage{datetime}%
-  \edef\@nt@datemonth{\thentdocdate(month)}%
-  \ntdocdate(month)={\bgroup\ntselectlang{\option{/novathesis/coverlang}}\monthname[\@nt@datemonth]\egroup}}%
-{}
-
-
-% --------------------------------------------------------
-% FIX BABEL TRANSLATION
-\input{NOVAthesisFiles/fix-babel.tex}
+\newcommand{\iffileadded}[2][\option{/novathesis/doctype}]{\ifoptiondefined{/@nt/file/#2/#1}}
 
 % --------------------------------------------------------
 % LOAD A DEFAULT COPYRIGHT PAGE DEFINITION
@@ -1119,7 +1370,7 @@
 % #3 = file name
 % #4 = dir list
 % #5 = action if not found [OPTIONAL]
-  \@ifnextchar[{\@nt@AddFileIfExists@i{#1}}{\@nt@AddFileIfExists@i{#1}[VAL]}%
+  \@ifnextchar[{\@nt@AddFileIfExists@i{#1}}{\@nt@AddFileIfExists@i{#1}[\option{/novathesis/doctype}]}%
 }
 
 \def\@nt@AddFileIfExists@i#1[#2]#3#4{%
@@ -1147,10 +1398,10 @@
 % }
 
 \ifmaindoc{% only print if a main document
-  \iftoggle{/novathesis/printcopyright}{% if copuyright toggle is on
+  \iftoggle{/novathesis/print/copyright}{% if copuyright toggle is on
     \@nt@AddFileIfExists{copyright}{copyright.ldf}{%
-           {NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/}%
-          ,{NOVAthesisFiles/Schools/\@nt@univ/}%
+           {NOVAthesisFiles/Schools/\@UNIV/\@SCHL/}%
+          ,{NOVAthesisFiles/Schools/\@UNIV/}%
           ,{NOVAthesisFiles/}%
     }%
     \@ntloadfiles@ii{copyright}%
@@ -1159,8 +1410,8 @@
 
 \ifoptionequal{/novathesis/spine}{no}{}{%
   \@nt@InputIfFileExists{spine.tex}{%
-           {NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl/}%
-          ,{NOVAthesisFiles/Schools/\@nt@univ/}%
+           {NOVAthesisFiles/Schools/\@UNIV/\@SCHL/}%
+          ,{NOVAthesisFiles/Schools/\@UNIV/}%
           ,{NOVAthesisFiles/}%
   }[][\ClassError{novathesis}{No “spine” file found.}{}]%
   \AtEndDocument{\csuse{ntprintspine}}%
@@ -1193,199 +1444,167 @@
   % #1 = cover number
   % #2 = true branch
   % #3 = false branch
-  % \edef\asd{/@nt/cover/\@nt@univ/\@nt@schl/#1}
+  % \edef\asd{/@nt/cover/\@UNIV/\@SCHL/#1}
   % \show\asd
-  \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{#2}{%
+  \ifoptiondefined{/@nt/cover/\@UNIV/\@SCHL/#1}{#2}{%
     \datamatchtf{\match}{thesiscover}(%
-       {\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
-      ,{\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
-      ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
-      ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},bgcolor}%
-      ,{\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
-      ,{\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
-      ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
-      ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},image}%
-      ,{\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
-      ,{\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
-      ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
-      ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},bgcolor}%
-      ,{\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
-      ,{\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
-      ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
-      ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},image}%
-      ,{\option{/novathesis/docdegree},#1,bgcolor}%
-      ,{\option{/@nt/document/docclass},#1,bgcolor}%
+       {\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
+      ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
+      ,{\@DEGREEACR,#1,bgcolor}%
+      ,{\@DEGREEACR,bgcolor}%
+      ,{\@DOCTYPE,\@DEGREEACR,#1,image}%
+      ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
+      ,{\@DEGREEACR,#1,image}%
+      ,{\@DEGREEACR,image}%
+      ,{\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
+      ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
+      ,{\@DEGREEACR,#1,bgcolor}%
+      ,{\@DEGREEACR,bgcolor}%
+      ,{\@DOCTYPE,\@DEGREEACR,#1,image}%
+      ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
+      ,{\@DEGREEACR,#1,image}%
+      ,{\@DEGREEACR,image}%
+      ,{\@DOCTYPE,#1,bgcolor}%
+      ,{\@DOCCLASS,#1,bgcolor}%
       ,{#1,bgcolor}%
       ,{bgcolor}%
-      ,{\option{/novathesis/docdegree},#1,image}%
-      ,{\option{/@nt/document/docclass},#1,image}%
+      ,{\@DOCTYPE,#1,image}%
+      ,{\@DOCCLASS,#1,image}%
       ,{#1,image}%
       ,{image}%
-      ,{\option{/novathesis/docdegree},#1,bgcolor}%
-      ,{\option{/@nt/document/docclass},#1,bgcolor}%
+      ,{\@DOCTYPE,#1,bgcolor}%
+      ,{\@DOCCLASS,#1,bgcolor}%
       ,{#1,bgcolor}%
       ,{bgcolor}%
-      ,{\option{/novathesis/docdegree},#1,image}%
-      ,{\option{/@nt/document/docclass},#1,image}%
+      ,{\@DOCTYPE,#1,image}%
+      ,{\@DOCCLASS,#1,image}%
       ,{#1,image}%
       ,{image}%
     ){#2}{#3}%
   }%
 }
 
+\newcommand{\ntprintspine}{%
+  \pagenumbering{roman}%
+  \setcounter{page}{0}
+  \iffileadded[spine]{cover}{%
+    \optionlistdo{/@nt/file/cover/spine}{%
+      \bgroup\thispagestyle{empty}%
+      \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
+      \egroup\clearforchapter%
+    }%
+  }{\@ntprintspine}%
+}
+
 \newcommand{\ntprintbackcover}{%
-  \ifcoverdefined[N-1]{\pdfbookmark[-1]{\thebackmatterbkmstring(\option{/novathesis/coverlang})}{bmbackmatter}}{%
-  \ifcoverdefined[N-2]{\pdfbookmark[-1]{\thebackmatterbkmstring(\option{/novathesis/coverlang})}{bmbackmatter}}{}}%
+  \pagenumbering{roman}%
+  \setcounter{page}{0}
+  \ifcoverdefined[N-1]{\pdfbookmark[-1]{\thebkmstring(backmatter,\@LANG@COVER)}{bmbackmatter1}}{%
+  \ifcoverdefined[N-2]{\pdfbookmark[-1]{\thebkmstring(backmatter,\@LANG@COVER)}{bmbackmatter2}}{}}%
   \ntprintcoverpair{N}%
 }
 
 \newcommand{\ntprintcovers}[1][1,2]{%
-  \pdfbookmark[-1]{\thefrontmatterbkmstring(\option{/novathesis/coverlang})}{bmfrontmatter}%
-  \NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
-  % \forcsvlist{\ntprintcoverpair}{#1}%
-  \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
+  \begingroup%
+    \ntselectlang{\@LANG@COVER}%
+    \NTRunHook{printcovers/pre}%
+    \pdfbookmark[-1]{\thebkmstring(frontmatter,\@LANG@COVER)}{bmfrontmatter}%
+    \NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
+    % \forcsvlist{\ntprintcoverpair}{#1}%
+    \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
+    \NTRunHook{printcovers/post}%
+  \endgroup%
+  \setcounter{page}{1}%
+  \iftoggle{/novathesis/countsecondcover}{\stepcounter{page}}{}%
 }
 
 \newcommand{\ntprintcoverpair}[1]{%
   % #1 = major cover ID
-  \iffileadded[1]{cover}{%
+  \iffileadded[1]{cover}{% Deal with user-defined cover page
     \iffileadded[#1]{cover}{%
-      \optionlistdo{/@nt/file/cover/#1}{\bgroup\thispagestyle{empty}\@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}\egroup\clearforchapter}%
-      \ntprintcoversingle{2}{1}%
+      \optionlistdo{/@nt/file/cover/#1}{%
+        \bgroup\thispagestyle{empty}%
+        \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
+        \egroup\clearpage%
+      }%
+      \ntprintcoversingle{2-1}%
     }{}%
-  }{%
+  }{% Pre-defined cover page
     \IfStrEqCase{#1}{%
-      {1}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}\clearforchapter}%
-      {2}{\iftoggle{/novathesis/secondcover}
-                   {\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}\clearforchapter}{}}%
-      {N}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}}%
+      {1}{\ntprintcoversingle{#1-1}\ntprintcoversingle{#1-2}}%
+      {2}{\iftoggle{/novathesis/print/secondcover}
+                   {\ntprintcoversingle{#1-1}\ntprintcoversingle{#1-2}}{}}%
+      {N}{\ntprintcoversingle{#1-1}\ntprintcoversingle{#1-2}}%
     }[\ClassWarning{Invalid cover number: #1}{}]%
-  }
+  }%
 }
 
-\newcommand{\ntprintcoversingle}[2]{%
-  % #1 = major cover ID
-  % #2 = minor cover ID
-  \def\@nt@newpage{}%
-  \gdef\@covernumber{#1-#2}%
-  \IfStrEq{#2}{2}{%
-    \ifbool{@openright}{\def\@nt@newpage{\thispagestyle{cleared}\cleartoevenpage}}{\clearpage}%
-  }{}%
-  \IfStrEq{#1-#2}{2-1}{\setcounter{page}{1}}{}%
-  \edef\@cvn{#1-#2}
-  \edef\@cvnonetwo{1-2}
-  \edef\@cvnNone{N-1}
-  \ifx\@cvn\@cvnonetwo\relax
-    \iftoggle{/novathesis/uminho/skipblankcovers}{}
-                       {\ifcoverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}}%
-  \else\ifx\@cvn\@cvnNone\relax
-    \iftoggle{/novathesis/uminho/skipblankcovers}{}
-                       {\ifcoverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}}%
-  \else
-    \ifcoverdefined[#1-#2]{\@nt@newpage\@ntprintcover@i{#1-#2}}{}%a
-  \fi\fi
+\newcommand{\ntprintcoversingle}[1]{%
+  % #1 = cover ID “major-minor”
+  \gdef\@covernumber{#1}%
+  \ifcoverdefined[#1]{\setcounter{page}{0}\@ntprintcover@i{#1}}{}%
 }
 
 \newcommand{\@ntprintcover@i}[1]{%
   % #1 = cover ID (major-minor)
   \begingroup%
+    \NTRunHook{cover/pre}%
     \NTRunHook{cover/#1/pre}%
     \datamatchtf{\match}{thesiscover}(%
-                {\option{/novathesis/docdegree},\option{/novathesis/degreeacr},#1,textcolor}%
-               ,{\option{/@nt/document/docclass},\option{/novathesis/degreeacr},#1,textcolor}%
-               ,{\option{/novathesis/degreeacr},#1,textcolor}%
-               ,{\option{/novathesis/degreeacr},textcolor}%
-               ,{\option{/novathesis/docdegree},#1,textcolor}%
-               ,{\option{/@nt/document/docclass},#1,textcolor}%
+                {\@DOCTYPE,\@DEGREEACR,#1,textcolor}%
+               ,{\@DOCCLASS,\@DEGREEACR,#1,textcolor}%
+               ,{\@DEGREEACR,#1,textcolor}%
+               ,{\@DEGREEACR,textcolor}%
+               ,{\@DOCTYPE,#1,textcolor}%
+               ,{\@DOCCLASS,#1,textcolor}%
                ,{#1,textcolor}%
                ,{textcolor}%
     ){\color{\match}}{}%
-    \ntselectlang{\option{/novathesis/coverlang}}%
-    \options{/@ntcoveropts/bookmark=#1}%
-    \ifoptionequal{/@ntcoveropts/bookmark}{}{}{%
-      \pdfbookmark[1]{\option{/@ntcoveropts/bookmark}}{\option{/@ntcoveropts/bookmark}}%
-    }%
+    \pdfbookmark[1]{\thebkmstring(#1)}{\thebkmstring(#1)}%
     \@ntmakeboxwithcover{#1}{\@fullcover@box}%
     \NTRunHook{cover/#1/post}%
+    \NTRunHook{cover/post}%
   \endgroup%
+  \clearpage%
 }
 
 \newcommand{\@ntmakeboxwithcover}[2]{%
-    % #1 = cover ID (major-minor)
-    % #2 = box name
-    \datamatch{\@nt@margin@top}{margin}(%
-    {cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,top}%
-     ,{cover,\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,top}%
-     ,{cover,\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,top}%
-     ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},top}%
-     ,{cover,\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},top}%
-     ,{cover,\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},top}%
-     ,{cover,\option{/novathesis/docdegree},#1,top}%
-     ,{cover,\option{/@nt/document/docclass},#1,top}%
-     ,{cover,#1,top}%
-     ,{cover,\option{/novathesis/docdegree},top}%
-     ,{cover,\option{/@nt/document/docclass},top}%
-     ,{cover,top})%
-    \datamatch{\@nt@margin@bottom}{margin}(%
-    {cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bottom}%
-     ,{cover,\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bottom}%
-     ,{cover,\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bottom}%
-     ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},bottom}%
-     ,{cover,\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},bottom}%
-     ,{cover,\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},bottom}%
-     ,{cover,\option{/novathesis/docdegree},#1,bottom}%
-     ,{cover,\option{/@nt/document/docclass},#1,bottom}%
-     ,{cover,#1,bottom}%
-     ,{cover,\option{/novathesis/docdegree},bottom}%
-     ,{cover,\option{/@nt/document/docclass},bottom}%
-     ,{cover,bottom})%
-    \datamatch{\@nt@margin@left}{margin}(%
-    {cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,left}%
-     ,{cover,\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,left}%
-     ,{cover,\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,left}%
-     ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},left}%
-     ,{cover,\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},left}%
-     ,{cover,\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},left}%
-     ,{cover,\option{/novathesis/docdegree},#1,left}%
-     ,{cover,\option{/@nt/document/docclass},#1,left}%
-     ,{cover,#1,left}%
-     ,{cover,\option{/novathesis/docdegree},left}%
-     ,{cover,\option{/@nt/document/docclass},left}%
-     ,{cover,left})%
-    \datamatch{\@nt@margin@right}{margin}(%
-    {cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,right}%
-     ,{cover,\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,right}%
-     ,{cover,\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,right}%
-     ,{cover,\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},right}%
-     ,{cover,\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},right}%
-     ,{cover,\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},right}%
-     ,{cover,\option{/novathesis/docdegree},#1,right}%
-     ,{cover,\option{/@nt/document/docclass},#1,right}%
-     ,{cover,#1,right}%
-     ,{cover,\option{/novathesis/docdegree},right}%
-     ,{cover,\option{/@nt/document/docclass},right}%
-     ,{cover,right})%
-    % \defifundef{#2}{\newsavebox}%
-    \@ntmakecoverbgcolor{#1}{\@cover@bgcolor@box}%
-    \@ntmakecoverimage{#1}{\@cover@image@box}%
-    \@ntmakecovertext{#1}{\@cover@text@box}%
-    \thispagestyle{empty}%
-    \begin{tikzpicture}[remember picture, overlay]
+  % #1 = cover ID (major-minor)
+  % #2 = box name
+  \@for\myi:={top,bottom,left,right}\do{%
+    \expandafter\datamatch\csname @nt@margin@\myi\endcsname{margin}(%
+      {cover,\@DOCTYPE,\@DEGREEACR,#1,\myi},%
+      {cover,\@DOCCLASS,\@DEGREEACR,#1,\myi},%
+      {cover,\@DEGREEACR,#1,\myi},%
+      {cover,\@DOCTYPE,\@DEGREEACR,\myi},%
+      {cover,\@DOCCLASS,\@DEGREEACR,\myi},%
+      {cover,\@DEGREEACR,\myi},%
+      {cover,\@DOCTYPE,#1,\myi},%
+      {cover,\@DOCCLASS,#1,\myi},%
+      {cover,#1,\myi},%
+      {cover,\@DOCTYPE,\myi},%
+      {cover,\@DOCCLASS,\myi},%
+      {cover,\myi})%
+  }%
+  \@ntmakecoverbgcolor{#1}{\@cover@bgcolor@box}%
+  \@ntmakecoverimage{#1}{\@cover@image@box}%
+  \@ntmakecovertext{#1}{\@cover@text@box}%
+  \thispagestyle{empty}%
+  \begin{tikzpicture}[remember picture, overlay]
     \node[inner sep=0, anchor=north]  at (current page.north)
-    {\usebox{\@cover@bgcolor@box}};
+            {\usebox{\@cover@bgcolor@box}};
     \node[inner sep=0, anchor=north]  at (current page.north)
-    {\usebox{\@cover@image@box}};
-    \node[inner sep=0
-    , anchor=north west
-    , xshift=\@nt@margin@left
-    , yshift=-\@nt@margin@top] at (current page.north west)
-    {\usebox{\@cover@text@box}};
-    \end{tikzpicture}%
-    \ifoptioncontains{/novathesis/debug}{cover}{%
+            {\usebox{\@cover@image@box}};
+    \node[inner sep=0, anchor=north west,
+          xshift=\@nt@margin@left,
+          yshift=-\@nt@margin@top] at (current page.north west)
+      {\usebox{\@cover@text@box}};
+  \end{tikzpicture}%
+  \ifoptioncontains{/novathesis/debug}{cover}{%
     \NTRunHook{cover/#1/grid/pre}%
     \debuggrid%
     \NTRunHook{cover/#1/grid/post}%
-    }{}%
+  }{}%
 }
 
 \newcommand*{\@ntmakecoverbgcolor}[2]{%
@@ -1393,12 +1612,12 @@
     % #2 = box name
     \defifundef{#2}{\newsavebox}%
     \datamatchtf{\match}{thesiscover}(%
-    {\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
-     ,{\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
-     ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,bgcolor}%
-     ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},bgcolor}%
-     ,{\option{/novathesis/docdegree},#1,bgcolor}%
-     ,{\option{/@nt/document/docclass},#1,bgcolor}%
+      {\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
+     ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
+     ,{\@DEGREEACR,#1,bgcolor}%
+     ,{\@DEGREEACR,bgcolor}%
+     ,{\@DOCTYPE,#1,bgcolor}%
+     ,{\@DOCCLASS,#1,bgcolor}%
      ,{#1,bgcolor}%
      ,{bgcolor}%
     ){\savebox{#2}{\@ntcoverbgcolor{#1}{\match}}}{}%
@@ -1421,12 +1640,12 @@
     \NTRunHook{cover/#1/image/pre}%
     \defifundef{#2}{\newsavebox}%
     \datamatchtf{\match}{thesiscover}(%
-    {\option{/novathesis/docdegree},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
-     ,{\option{/@nt/document/docclass},\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
-     ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},#1,image}%
-     ,{\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},image}%
-     ,{\option{/novathesis/docdegree},#1,image}%
-     ,{\option{/@nt/document/docclass},#1,image}%
+      {\@DOCTYPE,\@DEGREEACR,#1,image}%
+     ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
+     ,{\@DEGREEACR,#1,image}%
+     ,{\@DEGREEACR,image}%
+     ,{\@DOCTYPE,#1,image}%
+     ,{\@DOCCLASS,#1,image}%
      ,{#1,image}%
      ,{image}%
     ){\savebox{#2}{\includegraphics[width=\paperwidth,height=\paperheight]{\match}}}{}%
@@ -1438,7 +1657,7 @@
     % #1 = cover ID (major-minor)
     % #2 = box name
     \defifundef{#2}{\newsavebox}%
-    \ifoptiondefined{/@nt/cover/\@nt@univ/\@nt@schl/#1}{%
+    \ifoptiondefined{/@nt/cover/\@UNIV/\@SCHL/#1}{%
     \begin{lrbox}{#2}%
     \begin{minipage}[l]%
     [\dimexpr\paperheight-\@nt@margin@top-\@nt@margin@bottom]%
@@ -1452,14 +1671,11 @@
 \newcommand{\@ntcovertext}[1]{%
     % #1 = cover ID (major-minor)
     \NTRunHook{cover/#1/text/pre}%
-    \optionlistdo{/@nt/cover/\@nt@univ/\@nt@schl/#1}{\@ntcoverelement@iii{#1}##1}%
+    \optionlistdo{/@nt/cover/\@UNIV/\@SCHL/#1}{\@ntcoverelement@iii{#1}##1}%
     \NTRunHook{cover/#1/text/post}%
 }
 
-\def\instring#1#2{TT\fi\begingroup
-  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
-
-\def\@ntcoverelement@iii#1#2=*=#3{%
+\def\@ntcoverelement@iii#1#2\@nil#3{%
   % #1 = cover ID (major-minor)
   % #2 = cover element options
   % #3 = cover element code
@@ -1468,33 +1684,33 @@
     \options{/@ntcoveropts,defaults}%.
     \options{/@ntcoveropts,#2}%
     \options{/@ntcoveropts,alignmap=\option{/@ntcoveropts/halign}}%
-    % \StrCount{,\option{/@ntcoveropts/status},}{,\option{/novathesis/docstatus},}[\@nt@instatus]%
-    % \StrCount{,\option{/@ntcoveropts/degree},}{,\option{/@nt/document/docclass},}[\@nt@indegree]%
-    % \typeout{OPT_DEGREE=[\option{/@ntcoveropts/degree}] DOCCLASS=[\option{/@nt/document/docclass}]}%
-    % \typeout{OPT_STATUS=[\option{/@ntcoveropts/status}] STATUS=[\option{/novathesis/docstatus}]}\aaaaa
-    \defifundef{\ifmatchstatus}{\newif}
-    \defifundef{\ifmatchdegree}{\newif}
-    \matchstatustrue
-    \matchdegreetrue
-    \if&\option{/@ntcoveropts/status}&\relax
-    \else
-      \if\instring{,\option{/novathesis/docstatus},}{,\option{/@ntcoveropts/status},}
-      \else
-        \matchstatusfalse
-      \fi      
-    \fi
-    \if&\option{/@ntcoveropts/degree}&\relax
-    \else
-      \if\instring{,\option{/@nt/document/docclass},}{,\option{/@ntcoveropts/degree},}
-      \else
-        \matchdegreefalse
-      \fi      
-    \fi
-    \ifmatchstatus
-      \ifmatchdegree
-        \@ntcoverelement@ii{#1}{#3}
-      \fi
-    \fi
+    % \StrCount{,\option{/@ntcoveropts/status},}{,\@DOCSTATUS,}[\@nt@instatus]%
+    % \StrCount{,\option{/@ntcoveropts/degree},}{,\@DOCCLASS,}[\@nt@indegree]%
+    % \typeout{OPT_DEGREE=[\option{/@ntcoveropts/degree}] DOCCLASS=[\@DOCCLASS]}%
+    % \typeout{OPT_STATUS=[\option{/@ntcoveropts/status}] STATUS=[\@DOCSTATUS]}\aaaaa
+    \defifundef{\ifmatchstatus}{\newif}%
+    \defifundef{\ifmatchdegree}{\newif}%
+    \matchstatustrue%
+    \matchdegreetrue%
+    \if&\option{/@ntcoveropts/status}&\relax%
+    \else%
+      \if\instring{,\@DOCSTATUS,}{,\option{/@ntcoveropts/status},}
+      \else%
+        \matchstatusfalse%
+      \fi%
+    \fi%
+    \if&\option{/@ntcoveropts/degree}&\relax%
+    \else%
+      \if\instring{/\@DOCCLASS/}{/\option{/@ntcoveropts/degree}/}%
+      \else%
+        \matchdegreefalse%
+      \fi%
+    \fi%
+    \ifmatchstatus%
+      \ifmatchdegree%
+        \@ntcoverelement@ii{#1}{#3}%
+      \fi%
+    \fi%
      % \ifthenelse{%
      %          \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND%
      %          \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}%
@@ -1503,82 +1719,74 @@
   }%
 }
 
-\options{/@ntcoveropts/.new family
-  % titles for PDF bookmark / list of contents
-  , bookmark/.new choice = {1-1=\thecoverbkmstring(\option{/novathesis/coverlang})
-                          , 1-2={}
-                          , 2-1=\thefrontpagebkmstring(\option{/novathesis/coverlang})
-                          , 2-2={}
-                          , N-1={}
-                          , N-2=\thebackcoverbkmstring(\option{/novathesis/coverlang})
-                          , spine=\thespinebkmstring(\option{/novathesis/coverlang})}
+\options{/@ntcoveropts/.new family,
   % letter to macro for horizontal alignment
-  , alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft,j=\null}
+  alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft,j=\null},
   % filters / conditional printing
-  , status/.new value
-  , degree/.new value
+  status/.new value,
+  degree/.new value,
   % horizontal alighment and vertical alignments inside the box
-  , halign/.new choice={c, l, r, j}
-  , valign/.new choice={c, t, b}
+  halign/.new choice={c, l, r, j},
+  valign/.new choice={c, t, b},
   % height of the box (default = the natural height for the contents)
-  , height/.new value
+  height/.new value,
   % height of the box (default = the natural height for the contents)
-  , height/phd/.new value
+  height/phd/.new value,
   % height of the box (default = the natural height for the contents)
-  , height/msc/.new value
+  height/msc/.new value,
   % minheight of the box (default = the natural height for the contents)
-  , minheight/.new value
+  minheight/.new value,
   % width of the box (default = full width)
-  , width/.new value
+  width/.new value,
+  % vertical spacing from precious box (default = 0ptcan also be an integer and,,
+  % in this caseit means the weight of the vfill),
+  vspace/.new value,
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
   % in this case, it means the weight of the vfill)
-  , vspace/.new value
+  vspace/phd/.new value,
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
   % in this case, it means the weight of the vfill)
-  , vspace/phd/.new value
+  vspace/msc/.new value,
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
   % in this case, it means the weight of the vfill)
-  , vspace/msc/.new value
+  vspace/1-1/.new value,
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
   % in this case, it means the weight of the vfill)
-  , vspace/1-1/.new value
+  vspace/2-1/.new value,
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
   % in this case, it means the weight of the vfill)
-  , vspace/2-1/.new value
+  vspace/phd/1-1/.new value,
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
   % in this case, it means the weight of the vfill)
-  , vspace/phd/1-1/.new value
+  vspace/phd/2-1/.new value,
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
   % in this case, it means the weight of the vfill)
-  , vspace/phd/2-1/.new value
+  vspace/msc/1-1/.new value,
   % vertical spacing from precious box (default = 0pt, can also be an integer and,
   % in this case, it means the weight of the vfill)
-  , vspace/msc/1-1/.new value
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  , vspace/msc/2-1/.new value
+  vspace/msc/2-1/.new value,
   % horizontal spacing from the left margin (or last box in the same line) (default = 0pt)
-  , hspace/.new value
+  hspace/.new value,
   % is the last box in the line (default = true)
-  , newpar/.new toggle
+  newpar/.new toggle,
   % text color for the box (default = black)
-  , color/.new color
+  color/.new color,
   % background color for the box (default = transparent)
-  , bgcolor/.new color
+  bgcolor/.new color,
   % default values
-  , defaults/.new style*={
-                  vspace=0pt, 
-                  vspace/msc={}, vspace/phd={}, 
+  defaults/.new style*={,
+                  vspace=0pt,
+                  vspace/msc={}, vspace/phd={},
                   vspace/1-1={}, vspace/2-1={},
-                  vspace/msc/1-1={}, vspace/msc/2-1={}, 
-                  vspace/phd/1-1={}, vspace/phd/2-1={}, 
+                  vspace/msc/1-1={}, vspace/msc/2-1={},
+                  vspace/phd/1-1={}, vspace/phd/2-1={},
                   status={}, degree={}, halign=c, valign=c,
-                  height={}, height/phd={}, height/msc={}, 
-                  minheight=0pt, width={}, hspace=0pt, 
+                  height={}, height/phd={}, height/msc={},
+                  minheight=0pt, width={}, hspace=0pt,
                   newpar=true, color={}, bgcolor={},
   }
   % set defaults
-  , defaults
+, defaults
 }
 
 \newcommand{\@ntcovervspace}[1]{%
@@ -1598,7 +1806,7 @@
   % If vspace is integer then replace by n*\vfill
   % otherwise it is absolute verstical space
   % \typeout{NT testblank [#1] =========}%
-  \ntfor\match:={vspace/\option{/novathesis/docdegree}/#1,vspace/\option{/novathesis/docdegree},vspace/#1,vspace}%
+  \ntfor\match:={vspace/\@DOCTYPE/#1,vspace/\@DOCTYPE,vspace/#1,vspace}%
         \do{\@ntcovervspace{\match}}%
   % Typeset contents in a box
   \@nt@makeboxwithcoverelement@iii{#1}{#2}{\@nt@coverelement}%
@@ -1670,36 +1878,36 @@
 }
 
 \newcommand*{\ntprintstatement}{%
-  \iftoggle{/novathesis/statement}{% if statement toggle is on
-    \ifmaindoc{%
-      \NTRunHook{statement/pre}%
-      \iffileadded{statement}{}{%ELSE
-        \ntfor\match:={%
-          \@nt@schl/statement-\option{/novathesis/degreeacr/\option{/@nt/document/docclass}}%
-          -\option{/novathesis/mainlang},%
-          \@nt@schl/statement-\option{/novathesis/degreeacr/\option{/@nt/document/docclass}},%
-          \@nt@schl/statement-\option{/novathesis/mainlang},%
-          \@nt@schl/statement,%
-          statement-\option{/novathesis/mainlang},%
-          statement%
-        }\do{%
-          \IfFileExists{NOVAthesisFiles/Schools/\@nt@univ/\match.tex}{%
-            \ntaddfile{statement}{NOVAthesisFiles/Schools/\@nt@univ/\match.tex}%
-            \ntforbreak%
-          }{}%
-        }[%
-          \ClassError{novathesis}{No “statement.tex” found! Not defined with %
-                                  \string\ntaddfile{statement}{filename} in folders %
-                                  “NOVAthesisFiles/Schools/\@nt@univ/\@nt@schl” nor %
-                                  “NOVAthesisFiles/Schools/\@nt@univ”}{}
-        ]%
+  \ifdocworking{}{% ONly print statement if provisional or final
+    \ifmaindoc{% Skip thesis plan and similar documents
+      \iftoggle{/novathesis/print/statement}{% if statement toggle is on
+        \NTRunHook{statement/pre}%
+        \iffileadded{statement}{}{%ELSE
+          \ntfor\match:={%
+            \@SCHL/statement-\@DEGREEACR-\@LANG@MAIN,%
+            \@SCHL/statement-\@DEGREEACR,%
+            \@SCHL/statement-\@LANG@MAIN,%
+            \@SCHL/statement,%
+            statement-\@LANG@MAIN,%
+            statement%
+          }\do{%
+            \IfFileExists{NOVAthesisFiles/Schools/\@UNIV/\match.tex}{%
+              \ntaddfile{statement}{NOVAthesisFiles/Schools/\@UNIV/\match.tex}%
+              \ntforbreak%
+            }{}%
+          }[%
+            \ClassError{novathesis}{No “statement.tex” found! Not defined with %
+                                    \string\ntaddfile{statement}{filename} in folders %
+                                    “NOVAthesisFiles/Schools/\@UNIV/\@SCHL” nor %
+                                    “NOVAthesisFiles/Schools/\@UNIV”}{}
+          ]%
+        }{}%
+        \pdfbookmark[1]{\thebkmstring(statement,\@LANG@MAIN)}{bmstatement}%
+        \@ntloadfiles@ii{statement}%
+        \NTRunHook{statement/post}%
       }{}%
-      \ntselectlang{\option{/novathesis/mainlang}}%
-      \pdfbookmark[1]{\csuse{thestatementbkmstring}(\option{/novathesis/mainlang})}{bmstatement}%
-      \@ntloadfiles@ii{statement}%
-      \NTRunHook{statement/post}%
     }{}%
-  }{}%
+  }%
 }
 
 
@@ -1708,19 +1916,44 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print persons list {advisers | committee}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\ntprintpersons}[5][full]{%
+\newcommand{\ntprintpersons}[2][full]{%
+  % #1* = { full | name | list }
+  % #2  = width in % of textwidth
+  % #3* = positioning
+  % #4  = number of columns
+  % #5  = adviser | committee
+  % #6  = {a,c} | {c,r,a,m,g}
+    \@ifnextchar[{\@ntprintpersons{#1}{#2}}{\@ntprintpersons{#1}{#2}[l]}%
+}
+
+\newcommand*{\@setalignment}[1]{
+  \IfStrEqCase{#1}{%
+    {l}{\raggedright}%
+    {c}{\centering}%
+    {r}{\raggedleft}%
+  }[\ClassError{novathesis}{Invalid alignment “#1”}{}]%
+}
+
+\def\@ntprintpersons#1#2[#3]#4#5#6{
   % #1 = { full | name | list }
   % #2 = width in % of textwidth
-  % #3 = number of columns
-  % #4 = adviser | committee
-  % #5 = {a,c} | {c,r,a,m,g}
-  % \typeout{NTPRINTPERSONS 1=[#1] 2=[#2] 3=[#3] 4=[#4] 5=[#5]}\aaa
-  \iftoggle{/novathesis/print#4}{%
-    \IfStrEqCase{#3}{%
-      {0}{\@ntprintpersonsaslist{#4}{#5}}%
-      {1}{\@ntprintpersonsasonecolumn{#1}{#2}{#4}{#5}}%
-      {2}{\@ntprintpersonsastwocolumns{#1}{#2}{#4}{#5}}%
-    }[\ClassError{novathesis}{Ivalid argument [#3] to \string\ntprintpersons{#1}{#2}{#3}{#4}{#5}}{}]%
+  % #3 = positioning
+  % #4 = number of columns
+  % #5 = adviser | committee
+  % #6 = {a,c} | {c,r,a,m,g}
+  % \typeout{NTPRINTPERSONS 1=[#1] 2=[#2] 3=[#3] 4=[#4] 5=[#5]}\NTPRINTPERSONS
+  \iftoggle{/novathesis/print/#5}{%
+    \begin{minipage}[t]{\linewidth}%
+      \setlength{\parindent}{0pt}%
+      \@setalignment{#3}%
+      \begin{varwidth}{#2\linewidth}%
+        \IfStrEqCase{#4}{%
+          {0}{\@ntprintpersonsaslist{#5}{#6}}%
+          {1}{\@ntprintpersonsasonecolumn{#1}{#2}{#5}{#6}}%
+          {2}{\@ntprintpersonsastwocolumns{#1}{#5}{#6}}%
+        }[\ClassError{novathesis}{Ivalid argument [#4] to \string\ntprintpersons{#1}{#2}{#4}{#5}{#6}}{}]%
+      \end{varwidth}
+    \end{minipage}%
   }{}%
 }
 
@@ -1731,20 +1964,21 @@
   % #1 = adviser | committee
   % #2 = {a,c} | {c,r,a,m,g}
   % Build list of names
-  \ifdatadefined{#1titlestring}(\option{/novathesis/coverlang}){%
+  \ifdatadefined{#1titlestring}(\@LANG@COVER){%
     \datadefault{#1titlestringpre}()%
     \datadefault{#1titlestringfont}()%
-    \csuse{the#1titlestring}(\option{/novathesis/coverlang})%
+    \csuse{the#1titlestring}(\@LANG@COVER)%
     \datadefault{#1titlestringpost}()%
   }{}%
   \def\@nt@personlist{}%
   \def\@nt@listsep{}%
-  \@for\i:=\expanded{#2}\do{%
-    \ifoptionvoid{/@nt/#1/\i/name}{}{%
-      \letoptionlist{/@nt/#1/\i/name}\@nt@person@sublist%
-      \eappto\@nt@personlist{\@nt@listsep\@nt@person@sublist}\edef\@nt@listsep{,}%
+  \@for\myi:=\expanded{#2}\do{%
+    \ifoptionvoid{/@nt/#1/\myi/name}{}{%
+      \letoptionlist{/@nt/#1/\myi/name}\@nt@person@sublist%
+      \eappto\@nt@personlist{\@nt@listsep\@nt@person@sublist}\def\@nt@listsep{,}%
     }%
   }%
+  \raggedright%
   \@replacelastcomma{\@nt@personlist}%
 }
 
@@ -1759,8 +1993,8 @@
     #2\trimspaces{#3}%
   \else % #4 is not empty
     #1\trimspaces{#3}%
-    \@replacelastcomma@i{\thecommastring(\option{/@nt/currentlang})}%
-        {\theandstring(\option{/@nt/currentlang})}#4\nil%
+    \@replacelastcomma@i{\thecommastring(\@LSHORT)}%
+        {\theandstring(\@LSHORT)}#4\nil%
   \fi
 }
 
@@ -1774,38 +2008,51 @@
   % #2 = width in % of textwidth
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
-  \csuse{#3stringpost}():={:\\[2pt]}%
-  \csuse{#3remainderpre}()={{\\}}%
-  \personpost()={\\[4pt]}%
-  \persongrouppost()={\\[-4pt]}
-  \begin{tabularx}{#2\linewidth}[t]{@{}X@{}}%
+  \csuse{#3stringpost}():=?{:\\[2pt]}%
+  \csuse{#3namepost}():=?{{\\}}%
+  \csuse{#3remainderpre}():=?{{\\[-2pt]}}%
+  \personpost():=?{\\[2pt]}%
+  \persongrouppost():=?{\\[7pt]}
+  \committeetitlestringpost():=?{\\[5pt]}%
+  \begin{tabularx}{#2\linewidth}[t]{@{}L@{}}%
+    \ifdatadefined{#3titlestring}(\@LANG@COVER){%
+      \datadefault{#3titlestringpre}()%
+      \datadefault{#3titlestringfont}()%
+      \csuse{the#3titlestring}(\@LANG@COVER)%
+      \datadefault{#3titlestringpost}()%
+    }{%
+      \ifdatadefined{committeetitlestring}(\@LANG@COVER){%
+        \datadefault{committeetitlestringpre}()%
+        \datadefault{committeetitlestringfont}()%
+        \strut%
+        \datadefault{committeetitlestringpost}()%
+      }{}%
+    }%
     \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}%
     % \@for\arg:=\expanded{#4}\do{\@nt@ntprintpersongroup{#1}{1}{#3}{\arg}}
   \end{tabularx}%
 }
 
-\newcommand{\@ntprintpersonsastwocolumns}[4]{%
+\newcommand{\@ntprintpersonsastwocolumns}[3]{%
   % #1 = { full | name | list }
-  % #2 = width in % of textwidth
-  % #3 = adviser | committee
-  % #4 = {a,c} | {c,r,a,m,g}
-  % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] 4=[#4]}%\aaa
-  \csuse{#3stringpost}():={:&}%
-  \csuse{#3remainderpre}()={{\\}}%
-  \personpost()={\\[4pt]}%
-  \persongrouppost()={\\[-6pt]}
-  \committeetitlestringpre()={&}%
-  \committeetitlestringpost()={\\[7pt]}%
-  \begin{tabularx}{#2\linewidth}[t]{@{}r@{~~}>{\raggedright\arraybackslash}X@{}}%
-    \ifdatadefined{#3titlestring}(\option{/novathesis/coverlang}){%
-      \datadefault{#3titlestringpre}()%
-      \datadefault{#3titlestringfont}()%
-      \csuse{the#3titlestring}(\option{/novathesis/coverlang})%
-      \datadefault{#3titlestringpost}()%
+  % #2 = adviser | committee
+  % #3 = {a,c} | {c,r,a,m,g}
+  % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3]}\NTPRINTPERSONSASTWOCOLUMNS
+  \csuse{#2stringpost}():=?{:&}%
+  \csuse{#2remainderpre}():=?{{\\[-2pt]}}%
+  \personpost():=?{\\[2pt]}%
+  \persongrouppost():=?{\\[14pt]}
+  \committeetitlestringpre():=?{&}%
+  \committeetitlestringpost():=?{\\[5pt]}%
+  % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS 
+  \begin{tabularx}{\linewidth}[t]{@{}r@{~~}L@{}}%
+    \ifdatadefined{#2titlestring}(\@LANG@COVER){%
+      \datadefault{#2titlestringpre}()%
+      \datadefault{#2titlestringfont}()%
+      \csuse{the#2titlestring}(\@LANG@COVER)%
+      \datadefault{#2titlestringpost}()%
     }{}%
-    \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{2}{#3}}}{\expanded{#4}}%
-    % \@for\i:=\expanded{#4}\do{\typeout{NTPRINTIIIII=\i}\@nt@ntprintpersongroup[#1]{2}{#3}{\i}}%
-    % \foreach \i [expand list=true] in {#4} {\@nt@ntprintpersongroup{#1}{2}{#3}{\i}}%
+    \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{2}{#2}}}{\expanded{#3}}%
   \end{tabularx}%
 }
 
@@ -1821,16 +2068,15 @@
     \datadefault{#3stringpre}(#4)%
     \bgroup%
       \datadefault{#3stringfont}(#4)%
-      \datadefault{#3string}(#4,\@nt@advnumber,\@nt@advgender,\option{/novathesis/coverlang})%
+      \datadefault{#3string}(#4,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
     \egroup%
     \datadefault{#3stringpost}(#4)%
-    % \if#22\relax&\fi
-    % \IfStrEq{#2}{2}{&}{}%
     \IfStrEq{#1}{list}{%
       \@ntprintpersonsaslist{#3}{#4}%
     }{%
       \begin{minipage}[t]{\linewidth}%
-          \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{##1}}%
+        \raggedright%
+        \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{##1}}%
       \end{minipage}%
     }%
     \thepersongrouppost()%
@@ -1846,22 +2092,21 @@
 % #2 = adviser | coadviser | committee
 % #3 = (co)adviser info
 % \typeout{NTPRINTONENAME 1=[#1] 2=[#2] 3=[#3]}%\bbb
+\thepersonpre()%
 \begingroup
   \noexpandarg
   \raggedright%
-  \StrCut{#3}{,}\@nt@name\@nt@remainder% split name from remainder
   \csuse{the#2namepre}()%
-  \bgroup%
-    \csuse{the#2namefont}()%
-    \ignorespaces\@nt@name%
-  \egroup%
-  \csuse{the#2namepost}()%
+  \StrCut{#3}{,}\@nt@name\@nt@remainder% split name from remainder
+  \ignorespaces\parbox[b]{\linewidth-\widthof{\csuse{the#2namepre}()}}{%
+    \raggedright\csuse{the#2namefont}()\@nt@name%
+  }%
   \IfStrEq{#1}{full}{%
     \IfStrEq{\@nt@remainder}{}{}{%
       \csuse{the#2remainderpre}()%
       \bgroup%
         \csuse{the#2remainderfont}()%
-        \ignorespaces\raggedright\@nt@remainder%
+        \ignorespaces\parbox[t]{\linewidth-\widthof{\csuse{the#2namepre}()}}{\raggedright\@nt@remainder}%
       \egroup%
       \csuse{the#2remainderpost}()%
     }%
@@ -1924,20 +2169,12 @@
   \setmarginnotes{0pt}{0pt}{0pt}%
   \checkandfixthelayout[fixed]%
   %
-  %
-  % \settrimmedsize{#2}{#1}{*}%
-  % \settrims{0pt}{0pt}
-  % \setlrmarginsandblock{0pt}{0pt}{*}%
-  % \setulmarginsandblock{0pt}{*}{1}%
-  % \setheadfoot{0pt}{0pt}%
-  % \setheaderspaces{0pt}{*}{*}%
-  % \checkandfixthelayout%
   \ifluatex%
-    \pageheight=\stockheight% \pageheight=3in
-    \pagewidth=\stockwidth% \pageheight=3in
+    \pageheight=\stockheight\relax% \pageheight=3in
+    \pagewidth=\stockwidth\relax% \pageheight=3in
   \else%
-    \pdfpageheight=\stockwidth% \pdfpageheight=3in
-    \pdfpagewidth=\stockheight% \pdfpageheight=3in
+    \pdfpageheight=\stockheight\relax% \pdfpageheight=3in
+    \pdfpagewidth=\stockwidth\relax% \pdfpageheight=3in
   \fi%
   \setlength{\@colht}{\textheight}%
   \setlength{\@colroom}{\textheight}%
@@ -1963,11 +2200,11 @@
   \ifmaindoc{% THEN it is a main document
     \NTRunHook{#1/pre}%
     \iffileadded{#1}{%
-    \ntselectlang{\option{/novathesis/mainlang}}%
-    \pdfbookmark[1]{\csuse{the#1bkmstring}(\option{/novathesis/mainlang})}{bm#1}%
-    \@ntloadfiles@ii{#1}%
+      \pdfbookmark[1]{\thebkmstring(#1,\@LANG@MAIN)}{bm#1}%
+      \@ntloadfiles@ii{#1}%
     }{}%
     \NTRunHook{#1/post}%
+    \clearforchapter%
   }{}% It is a plan or proposal type document
 }
 
@@ -1983,35 +2220,39 @@
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
-    \@for\listitem:=\expanded{%
-    \theabstractorder(\option{/novathesis/mainlang})}\do{\@ntprintabstract{\listitem}}%
-    \ntselectlang{\option{/novathesis/mainlang}}%
+  \NTRunHook{abstracts/pre}%
+  \@for\myi:=\expanded{\theabstractorder(\@LANG@MAIN)}\do{\@ntprintabstract{\myi}}%
+  \NTRunHook{abstracts/post}%
 }
 
 \newcommand{\@ntprintabstract}[1]{%
-  % \typeout{NT PRINT ABSTRACT #1}\aaaa%
+  % \typeout{NT PRINT ABSTRACT=[#1]}\NTPRINTABSTRACT@I%
   \iffileadded[#1]{abstract}{%
-    % \begingroup
-    % \typeout{NT PRINT ABSTRACT #1}\bbbb
-    \ntselectlang{#1}%
-    \pdfbookmark[1]{\theabstractbkmstring(#1)}{bmabstract#1}%
-    \NTRunHook{abstract/pre}%
-    \NTRunHook{abstract/#1/pre}%
-    \printabstracttitle{#1}%
-    \NTRunHook{abstract/#1/mid}%
-    \NTRunHook{abstract/mid}%
-    \@ntloadfiles@ii[#1]{abstract}%
-    \NTRunHook{abstract/#1/post}%
-    \NTRunHook{abstract/post}%
-    % \endgroup
+    % \typeout{NT PRINT ABSTRACT 2=[#1]}\NTPRINTABSTRACT@II
+    \begingroup
+      % \typeout{NT PRINT ABSTRACT #1}\bbbb
+      \StrCut{#1}{-}\@ABS@LANG\@dummy%
+      \ntselectlang{\@ABS@LANG}%
+      % \typeout{NTL=\languagename [#1]}\bbbb
+      \pdfbookmark[1]{\thebkmstring(abstract,#1)}{bmabstract#1}%
+      \NTRunHook{abstract/pre}%
+      \NTRunHook{abstract/#1/pre}%
+      \printabstracttitle{#1}%
+      \NTRunHook{abstract/#1/mid}%
+      \NTRunHook{abstract/mid}%
+      \@ntloadfiles@ii[#1]{abstract}%
+      \NTRunHook{abstract/#1/post}%
+      \NTRunHook{abstract/post}%
+    \endgroup%
+    \clearforchapter%
   }{}%
 }
 
 \newcommand{\ntprintindex}{%
   % \printglossary[type=index]%
-  \printindex
+  \printindex%
+  \clearforchapter%
 }
-
 
 \newcommand*{\ntthesisfrontmatter}{%
   \NTRunHook{frontmatter/pre}%
@@ -2019,7 +2260,7 @@
   \begingroup
   \pagestyle{novathesis@frontmatter}%
   \copypagestyle{chapter}{novathesis@frontmatter}
-  \ntselectlang{\option{/novathesis/mainlang}}%
+  % \ntselectlang{\@LANG@MAIN}%
   \pagenumbering{roman}%
   \NTRunHook{frontmatter/post}%
 }
@@ -2053,21 +2294,8 @@
       \def\@nt@index{#1}%
     \fi%
     \index{\@nt@index}#2%
-    % \ifoptioncontains{/novathesis/debug}{index}{}%
-    %                                            {\def\@nt@index{f}}%
-    % \if\@nt@index t\relax
-    %   \marginpar{#1#2}%
-    % \fi%
   \egroup%
 }
-
-% \newcommand{\ntindex}[2][]{%
-%   \if\relax\detokenize{#1}\relax
-%     \index{#2}#2%
-%   \else
-%     \index{#1}#2%
-%   \fi%
-% }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2090,7 +2318,7 @@
 
 \newcommand*{\ntprintappendices}{%
   \iffileadded{appendix}{%
-    \renewcommand{\appendixtocname}{\appendixnamepl}%
+    \renewcommand{\appendixtocname}{\appendixplname}%
     \appendix\addappheadtotoc%
     \@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
   }{}%
@@ -2098,7 +2326,8 @@
 
 \newcommand*{\ntprintannexes}{%
   \iffileadded{annex}{%
-    \renewcommand{\appendixtocname}{\annexnamepl}%
+    % \renewcommand{\appendixtocname}{\translate{Annexes}}%
+    \renewcommand{\appendixtocname}{\annexplname}%
     \annex\addappheadtotoc%
     \@nt@foralllist{file}{annex}{\@ntloadfiles@ii{annex}}%
   }{}%
@@ -2109,7 +2338,7 @@
   \xdef\Hy@chapapp{annex}%
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
-  \gdef\@chapapp{\annexname}%
+  \gdef\@chapapp{\translate{annex}}%
   \gdef\thechapter{\annexcounter\c@chapter}%
 }%
 
@@ -2139,7 +2368,7 @@
 }
 
 \newcommand*{\@loadglossaryfiles}{%
-  \@for\listitem:={glossary,acronyms,symbols}\do{%
+  \@for\listitem:={glossary,acronym,symbols}\do{%
     \iffileadded[\listitem]{glossaries}{\@nt@loadallfiles{\listitem}{glossaries}}{}%
   }%
 }
@@ -2164,45 +2393,29 @@
 \newcommand{\ntprintacknowledgementsblock}[1][\scriptsize]{%
     \NTRunHook{acknowledgementsblock/pre}%
     \noindent\parbox{\linewidth}{%
-    \vspace*{2.5ex}\footnoterule#1\theacknowledgmentsstring(\option{/novathesis/mainlang})}
+    \vspace*{2.5ex}\footnoterule#1\theacknowledgmentsstring(\@LANG@MAIN)}
     \NTRunHook{acknowledgementsblock/post}%
 }
 
 \newcommand*{\ntprintcopyright}{%
-    \iftoggle{/novathesis/printcopyright}{%
+  \iftoggle{/novathesis/print/copyright}{%
     \ifmaindoc{%
-    \ntselectlang{\option{/novathesis/copyrightlang}}%
-    \pdfbookmark[1]{\csuse{thecopyrightbkmstring}(\option{/novathesis/mainlang})}{bmcopyright}%
-    \NTRunHook{copyright/pre}%
-    \ntprintcopyrightpage%
-    \NTRunHook{copyright/post}%
-    \ntprintacknowledgementsblock%
+      \begingroup
+        \ntselectlang{\@LANG@COPYRIGHT}%
+        \pdfbookmark[1]{\thebkmstring(copyright,\@LANG@MAIN)}{bmcopyright}%
+        \NTRunHook{copyright/pre}%
+        \ntprintcopyrightpage%
+        \NTRunHook{copyright/post}%
+        \ntprintacknowledgementsblock%
+      \endgroup
     }{}%
-    }{}%
+   }{}%
 }
 
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Dedicatory
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \newenvironment{ntdedicatory}[1][100mm]{%
-%     \begin{ntquoting}[#1]{dedicatory}
-% }{\end{ntquoting}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Quote
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \newenvironment{ntquote}[1][100mm]{%
-%     \begin{ntquoting}[#1]{quote}
-% }{\end{ntquoting}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Quoting
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Author in a line by otself
-
 \newcommand{\hugequote}{%
   \bgroup%
     \color{black!30}%
@@ -2218,7 +2431,7 @@
 \newcommand{\ntquotetext}[1]{{\itshape#1}}
 \newcommand{\ntquoteskip}{\chapter*{\vspace*{-3.5ex}}}
 
-\NewDocumentEnvironment{ntquoting}{sO{10cm}O{}O{}O{}O{\option{/novathesis/mainlang}}+b}{%
+\NewDocumentEnvironment{ntquoting}{sO{10cm}O{}O{}O{}O{\@LANG@MAIN}+b}{%
 % 1 [*] => print big quote
 % 2 [o] => max width of citation box
 % 3 [o] => author name
@@ -2251,9 +2464,9 @@
     \IfBooleanTF{#1}{\hugequote}{}
     \begin{minipage}[t]{\@tempdima}
       \raggedleft\normalsize
-      \options{/@nt/langshorttolong=#6}%
+      % \options{/@nt/lang/shorttolong=#6}%
       \IfBooleanTF{#1}{%
-        \foreigntextquote{\option{/@nt/langshorttolong}}{\ntquotetext{#7}}%
+        \foreigntextquote{\thelanglong(#6)}{\ntquotetext{#7}}%
       }{\ntquotetext#7}
       \ifblank{#3}{}{\ntquoteauthor{#3}}%
       \ifblank{#4}{}{\ntquotewhere{#4}}%
@@ -2274,14 +2487,14 @@
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{ntacknowledgements}{%
-    \chapter*{\theacknowledgementsbkmstring(\option{/novathesis/mainlang})}%
+    \chapter*{\thebkmstring(acknowledgements,\@LANG@MAIN)}%
 }{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\printabstracttitle}[1]{%
-  \chapter*{\theabstractbkmstring(#1)}%
+  \chapter*{\thebkmstring(abstract,#1)}%
 }
 
 
@@ -2291,21 +2504,21 @@
 \providecommand{\keywords}[1]{%
     \NTRunHook{keywords/pre}%
     % \NTRunHook{keywords/#1/pre}%
-    \def\and{\unskip\datadefault{keywordssep}(\option{/@nt/currentlang})}%
+    \def\and{\unskip\datadefault{keywordssep}(\@LSHORT)}%
     % \def\and{{\textperiodcentered} }%
     \par\addvspace\baselineskip\noindent%
     \begingroup
-    \datadefault{keywordsstringprefix}(\option{/@nt/currentlang})%
-    \datadefault{keywordsstringfont}(\option{/@nt/currentlang})%
-    \csuse{thekeywordsstring}(\option{/@nt/currentlang})%
-    \datadefault{keywordsstringsuffix}(\option{/@nt/currentlang})%
+    \datadefault{keywordsstringprefix}(\@LSHORT)%
+    \datadefault{keywordsstringfont}(\@LSHORT)%
+    \csuse{thekeywordsstring}(\@LSHORT)%
+    \datadefault{keywordsstringsuffix}(\@LSHORT)%
     \endgroup
     % \enspace
     \ignorespaces#1%
     % \NTRunHook{keywords/#1/post}%
     \NTRunHook{keywords/post}%\
 }%
-    
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2313,10 +2526,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \providecommand\thepresentationtext{%
     \thedissertationstringfont()%
-    \ifdatadefined{issertationstring}(\option{/novathesis/docdegree},\option{/novathesis/coverlang}){%
-    \thedissertationstring(\option{/novathesis/docdegree},\option{/novathesis/coverlang})%
+    \ifdatadefined{issertationstring}(\@DOCTYPE,\@LANG@COVER){%
+    \thedissertationstring(\@DOCTYPE,\@LANG@COVER)%
     }{%
-    \thedissertationstring(\option{/@nt/document/docclass},\option{/novathesis/coverlang})%
+    \thedissertationstring(\@DOCCLASS,\@LANG@COVER)%
     }
 }
 
@@ -2326,9 +2539,9 @@
      {\thispagestyle{empty}}%
     \noindent%
     Copyright \textcopyright\ \thedocauthor(name), %
-    \theschool(\option{/novathesis/copyrightlang}), \theuniversity(\option{/novathesis/copyrightlang}).\\%
-    \thecopyrighttextstring(\option{/novathesis/copyrightlang})%
-    \ntselectlang{\option{/novathesis/mainlang}}%
+    \theschool(\@LANG@COPYRIGHT), \theuniversity(\@LANG@COPYRIGHT).\\%
+    \thecopyrighttextstring(\@LANG@COPYRIGHT)%
+    % \ntselectlang{\@LANG@MAIN}%
 }
 
 
@@ -2357,15 +2570,15 @@
 % Text style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ifcsdef{chs@\option{/novathesis/chapstyle}}{%
-  \chapterstyle{\option{/novathesis/chapstyle}}%
+\ifcsdef{chs@\option{/novathesis/style/chapter}}{%
+  \chapterstyle{\option{/novathesis/style/chapter}}%
 }{%
-  \InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/chapstyle}.ldf}{}{%
-      \ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/chapstyle}}{}%
+  \InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/style/chapter}.ldf}{}{%
+      \ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/style/chapter}}{}%
   }%
 }
-\InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/fontstyle}.ldf}{}{%
-    \ClassError{novathesis}{Invalid Font Style: \option{/novathesis/fontstyle}}{}%
+\InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/style/font}.ldf}{}{%
+    \ClassError{novathesis}{Invalid Font Style: \option{/novathesis/style/font}}{}%
 }
 
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
@@ -2373,12 +2586,12 @@
 \AtBeginDocument{%
   \makeatletter%
   % \typeout{XXX [\thedocauthor(name)]}
-  % \typeout{XXX [\thedoctitle(\option{/novathesis/mainlang},main)]}
-  % \typeout{XXX [\thedoctitle(\option{/novathesis/mainlang},sub)]}
+  % \typeout{XXX [\thedoctitle(\@LANG@MAIN,main)]}
+  % \typeout{XXX [\thedoctitle(\@LANG@MAIN,sub)]}
   \hypersetup{%
     pdfauthor={\thedocauthor(name)},
-    pdftitle={\thedoctitle(\option{/novathesis/mainlang},main)},
-    pdfsubject={\thedoctitle(\option{/novathesis/mainlang},sub)},
+    pdftitle={\thedoctitle(\@LANG@MAIN,main)},
+    pdfsubject={\thedoctitle(\@LANG@MAIN,sub)},
   }
 
   %--------------------------------

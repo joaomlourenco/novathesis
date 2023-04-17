@@ -7,9 +7,13 @@
 
 \typeout{NT FILE ulisboa/fmv/statement.tex}%
 
+\makeatletter
+
 \thispagestyle{empty}
 
 \long\def\checkbox#1#2{\ifoptionanyof{/novathesis/ulisboa/fmv/#1}{#2}{\memoryxbox}{\memoryemptybox}}
+
+\null\vfill
 
 %-----------------------------------------------------------------
 % STATEMENT OF INTEGRITY
@@ -18,15 +22,15 @@
 \setlength{\parskip}{1ex plus 1pt minus 1pt}
 \setlength{\parindent}{0cm}
 \sffamily\footnotesize
-\begin{center}  
+\begin{center}
   DECLARAÇÃO RELATIVA ÀS CONDIÇÕES DE REPRODUÇÃO DA TESE OU DISSERTAÇÃO
 \end{center}
 
 Autor: \thedocauthor(name)\par
-Título: \MakeTextUppercase{\thedoctitle(\option{/novathesis/mainlang},main)}\par
-Ano de conclusão: \option{/novathesis/ulisboa/fmv/examdate/year}
+Título: {\THEdoctitle(\@LANG@MAIN,main)}\par
+Ano de conclusão: \option{/novathesis/examdate/year}
 
-Designação do curso: \thedegreename(\option{/novathesis/coverlang})\par
+Designação do curso: \thedegreename(\@LANG@COVER)\par
 Area cientifica em que melhor se enquadra:\par
 \indent\begin{tabular}{l@{\qquad}l}
   \checkbox{scientificarea}{C} Clinica &
@@ -46,7 +50,7 @@ Retenho todos os direitos de autor relativos à tese ou dissertação, e o direi
 Concordo que a minha tese ou dissertação seja colocada no repositório da Faculdade de Medicina Veterinária com seguinte estatuto:
 \begin{enumerate}
   \item \checkbox{embargo/period}{I} Disponibilização imediata do conjunto do trabalho para acesso mundial;
-  \item \checkbox{embargo/period}{6,12} Disponibilização do conjunto do trabalho para acesso exclusivo a Faculdade de Medicina Veterinária durante o periodo de \checkbox{embargo/period}{6} 6 meses, 
+  \item \checkbox{embargo/period}{6,12} Disponibilização do conjunto do trabalho para acesso exclusivo a Faculdade de Medicina Veterinária durante o periodo de \checkbox{embargo/period}{6} 6 meses,
 \checkbox{embargo/period}{12} 12 meses, sendo que após o tempo assinalado autorizo o acesso mundial%
 \ifoptionanyof{/novathesis/ulisboa/fmv/embargo/period}{6,12}{%
   \,$^*$.\par
@@ -65,22 +69,22 @@ Veterinária da Universidade de Lisboa deve constar uma das seguintes declaraç�
   \item [\checkbox{reproduction}{I}] 
         É AUTORIZADA A REPRODUÇÃO INTEGRAL DESTA TESE/DISSERTAÇÃO APENAS PARA EFEITOS DE INVESTIGAÇÃO, 
         MEDIANTE DECLARAÇÃO ESCRITA DO INTERESSADO, QUE A TAL SE COMPROMETE.
-  \item [\checkbox{reproduction}{P}] 
-        É AUTORIZADA A REPRODUÇÃO PARCIAL DESTA TESE/DISSERTAÇÃO APENAS PARA EFEITOS DE INVESTIGAÇÃO, 
+  \item [\checkbox{reproduction}{P}]
+        É AUTORIZADA A REPRODUÇÃO PARCIAL DESTA TESE/DISSERTAÇÃO APENAS PARA EFEITOS DE INVESTIGAÇÃO,
         MEDIANTE DECLARAÇÃO ESCRITA DO INTERESSADO, QUE A TAL SE COMPROMETE.
-  \item [\checkbox{reproduction}{N}] 
-        DE ACORDO COM A LEGISLAÇÃO EM VIGOR, NÃO E PERMITIDA A REPRODUÇÃO DE QUALQUER PARTE DESTA 
+  \item [\checkbox{reproduction}{N}]
+        DE ACORDO COM A LEGISLAÇÃO EM VIGOR, NÃO E PERMITIDA A REPRODUÇÃO DE QUALQUER PARTE DESTA
         TESE/DISSERTAÇÃO.
 \end{enumerate}
-  
-Faculdade de Medicina Veterinária da Universidade de Lisboa, 
-\option{/novathesis/ulisboa/fmv/examdate/day} de
-\option{/novathesis/ulisboa/fmv/examdate/month} de
-\option{/novathesis/ulisboa/fmv/examdate/year}.\par
+
+Faculdade de Medicina Veterinária da Universidade de Lisboa,
+\option{/novathesis/examdate/day} de
+\printmonth{\option{/novathesis/examdate/month}} de
+\option{/novathesis/examdate/year}.\par
 \vspace*{2ex}
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 Assinatura: & \rule{\linewidth}{0.75pt}
 \end{tabularx}
-% \vfill
 % \ntprintacknowledgementsblock
 \egroup
+\vfill\null

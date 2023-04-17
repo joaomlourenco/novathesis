@@ -10,15 +10,18 @@
 
 Regardless of the language in which the dissertation is written, usually there are at least two abstracts: one abstract in the same language as the main text, and another abstract in some other language.
 
-The abstracts' order varies with the school.  The default behaviour for the \gls{novathesis} template is to have in first place the abstract in \emph{the same language as main text}, and then the abstract in \emph{the other language}. For example, if the dissertation is written in Portuguese, the abstract order will be first Portuguese and then English, followed by the main text in Portuguese. If the dissertation is written in English, the abstract order will be first English and then Portuguese, followed by the main text in English. 
+The abstracts' order varies with the school.  If your school has specific regulations concerning the abstracts' order, the \gls{novathesis} (\LaTeX) template will respect them.  Otherwise, the default rule in the \gls{novathesis} template is to have in first place the abstract in \emph{the same language as main text}, and then the abstract in \emph{the other language}. For example, if the dissertation is written in Portuguese, the abstracts' order will be first Portuguese and then English, followed by the main text in Portuguese. If the dissertation is written in English, the abstracts' order will be first English and then Portuguese, followed by the main text in English.
 %
-The \gls{novathesis} (\LaTeX) template will automatically order the abstracts by considering this rule. However, this order can be customized by adding
+However, this order can be customized by adding one of the following to the file \verb+5_packages.tex+.
+
 \begin{verbatim}
-    \abstractorder(<MAIN_LANG>):={<LANG_1>,...,<LANG_N>}
+    \ntsetup{abstractorder={<LANG_1>,...,<LANG_N>}}
+    \ntsetup{abstractorder={<MAIN_LANG>={<LANG_1>,...,<LANG_N>}}}
 \end{verbatim}
-\noindent to the file \verb!5_packages.tex!.  For example, for a main document written in German with abstracts written in German, English and Italian (by this order) use:
+
+For example, for a main document written in German with abstracts written in German, English and Italian (by this order) use:
 \begin{verbatim}
-    \abstractorder(de):={de,en,it}
+    \ntsetup{abstractorder={de={de,en,it}}}
 \end{verbatim}
 
 Concerning its contents, the abstracts should not exceed one page and may answer the following questions (it is essential to adapt to the usual practices of your scientific area):

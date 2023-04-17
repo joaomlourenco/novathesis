@@ -7,7 +7,7 @@
 
 \typeout{NT FILE ipl/isel/defaults.ldf}%
 
-\ntsetup{secondcover=true}
+% \ntsetup{print/secondcover=true}
 
 % Faculty / School
 \school(pt):={Instituto Superior de Engenharia de Lisboa}
@@ -24,7 +24,7 @@
 \department(en):={Department of \themajorfield(en)}
 
 % Comiittee printing order
-\committeeorder():={c,r,a,m}% 
+\committeeorder():={c,m}%
 
 % Cover background images
 \frontpageimage():={isel-photo} % don't add the .jpg extension
@@ -34,7 +34,7 @@
 \spine(logo)={ipl-isel-logo}
 \spine(logo,angle)={90}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(title)={\thedoctitle(\@LANG@COVER,main)}
 \spine(year)={\thentdocdate(year)}
 
 % Set margins for "normal" pages
@@ -55,20 +55,20 @@
 
 
 % \dissertationstring(bsc,pt)={Relatório para obtenção do Grau de %
-% \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
 % \dissertationstring(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
-% \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
 % \dissertationstring(msc,pt)={Dissertação de natureza científica para obtenção do grau de  %
-% \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
 % \dissertationstring(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
-% \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
 % \dissertationstring(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
-% \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
+% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
 % \dissertationstring(phd,pt)={Dissertação para obtenção do Grau de %
-% \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\option{/novathesis/coverlang})}}
-\copyrighttextstring(pt)={O \theschool(\option{/novathesis/coverlang})\ e o \theuniversity(\option{/novathesis/coverlang})\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+\copyrighttextstring(pt)={O \theschool(\@LANG@COVER)\ e o \theuniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
 
-\copyrighttextstring(en)={The \theschool(\option{/novathesis/coverlang})\ and the \theuniversity(\option{/novathesis/coverlang})\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+\copyrighttextstring(en)={The \theschool(\@LANG@COVER)\ and the \theuniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -81,15 +81,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{% 
+\AtEndPreamble{%
   \LoadHelveticaLikeFont%
 }
 
 \NTAddToHook{cover/1-1/text/pre}{%
-  \sffamily%
+  % \sffamily%
 }
 \NTAddToHook{cover/2-1/text/pre}{%
-  \sffamily%
+  % \sffamily%
 }
 
 
@@ -100,10 +100,10 @@
 
 % School%
 \ntaddtocover[vspace=0cm]{1-1,2-1}{%
-  \fontsize{13}{13}\selectfont%
-  \textbf{\MakeUppercase{\theschool(\option{/novathesis/coverlang})}}\\%
-  \fontsize{10}{10}\selectfont%
-  \textbf{\MakeUppercase{\thedepartment(\option{/novathesis/coverlang})}}%
+  \fontsize{14}{14}\selectfont%
+  \textbf{\THEschool(\@LANG@COVER)}\\%
+  \fontsize{14}{14}\selectfont%
+  \textbf{\thedepartment(\@LANG@COVER)}%
 }
 
 \ntaddtocover[vspace=0.5cm,height=8cm,valign=c]{1-1,2-1}{%
@@ -116,11 +116,11 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=0.5cm,]{1-1,2-1}{%
   \fontsize{18}{20}\selectfont%
-  \textbf{\thedoctitle(\option{/novathesis/coverlang},main,cover)}%
+  \textbf{\thedoctitle(\@LANG@COVER,main,cover)}%
 }
 
 % Author name
-\ntaddtocover[vspace=2]{1-1,2-1}{%
+\ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{16}{16}\selectfont%
   \textbf{\thedocauthor(name)}%\\[1ex]
   % \fontsize{14}{14}\selectfont%
@@ -128,7 +128,7 @@
 }
 
 % Degree
-\ntaddtocover[vspace=2]{1-1,2-1}{%
+\ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
   \thepresentationtext%
 }
@@ -142,22 +142,24 @@
 % }
 
 
-% Committee — only print the committee for the main classes
+% Adviser and Committee — only print the committee for the main classes
 \ntaddtocover[vspace=2]{1-1,2-1}{%
+  \adviserstringfont():={}%
+  \advisernamefont():={\fontsize{11}{11}\selectfont}%
+  \advisernamepre():={\mbox{\qquad}}%
+  \committeestringfont():={}%
+  \committeenamefont():={\fontsize{11}{11}\selectfont}%
+  \committeenamepre():={\mbox{\qquad}}%
+  \committeetitlestringfont():={\fontsize{14}{14}\selectfont}%
+  \begin{minipage}[t]{0.48\textwidth}%
+    \ntprintpersons[name]{1}{1}{adviser}{a,c}%
+  \end{minipage}%
+  \hfill%
+  \begin{minipage}[t]{0.48\textwidth}
   \ifmaindoc{%
-    \committeetitlestringfont():={\fontsize{14}{14}\selectfont\bfseries}%
-    \committeestringfont():={\bfseries}%
-    \fontsize{11}{11}\selectfont
-    \begin{minipage}[t]{0.48\textwidth}
-        \ifdocfinal{\ntprintpersons{1}{1}{committee}{\thecommitteeorder()}\mbox{}}{\mbox{}}%
-    \end{minipage}%
-    \hfill%
-    \adviserstringfont():={\bfseries}%
-    \begin{minipage}[t]{0.48\textwidth}
-      \ntprintpersons{1}{1}{adviser}{a,c}%
-    \end{minipage}%
-  }%
-  {}%
+        \ifdocfinal{\ntprintpersons[name]{1}{1}{committee}{\thecommitteeorder()}\mbox{}}{\mbox{}}%
+    }{\mbox{}}%
+  \end{minipage}%
 }
 
 

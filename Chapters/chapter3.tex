@@ -46,28 +46,28 @@ Citing something online~\cite{wiki:shuntingyard,flex,bison}.
 
 % \subsection{Inserting Figures Wrapped with text} % (fold)
 % \label{ssec:inserting_images_wrapped_with_text}
-% 
+%
 % You should only use this feature is \emph{really} necessary. This means, you have a very small image, that will look lonely just with text above and below.
-% 
+%
 % In this case, you must use the \verb!wrapfiure! package.  To use \verb!wrapfig!, you must first add this to the preamble:
-% 
+%
 % \begin{wrapfigure}{l}{2.5cm}
 %   \centering
 %     \includegraphics[width=2cm]{snowman-vectorial}
 %   \caption{A snow-man}
-% \end{wrapfigure}	
-% 
+% \end{wrapfigure}
+%
 % \noindent\verb!\usepackage{wrapfig}!\\
 % This then gives you access to:\\
 % \verb!\begin{wrapfigure}[lineheight]{alignment}{width}!\\
 % Alignment can normally be either ``l'' for left, or ``r'' for right. Lowercase ``l'' or ``r'' forces the figure to start precisely where specified (and may cause it to run over page breaks), while capital ``L'' or ``R'' allows the figure to float. If you defined your document as twosided, the alignment can also be ``i'' for inside or ``o'' for outside, as well as ``I'' or ``O''. The width is obviously the width of the figure. The example above was introduced with:
 % \lstset{language=TeX, morekeywords={\begin,\includegraphics,\caption}, caption=Wrapfig Example, label=lst:latex_example}
 % \begin{lstlisting}
-% 	\begin{wrapfigure}{l}{2.5cm}
-% 	  \centering
-% 	    \includegraphics[width=2cm]{snowman-vectorial}
-% 	  \caption{A snow-man}
-% 	\end{wrapfigure}	
+%   \begin{wrapfigure}{l}{2.5cm}
+%     \centering
+%       \includegraphics[width=2cm]{snowman-vectorial}
+%     \caption{A snow-man}
+%   \end{wrapfigure}
 % \end{lstlisting}
 
 % subsection inserting_images_wrapped_with_text (end)
@@ -155,9 +155,9 @@ Footnotes\footnote{This is a simple footnote.} will be numbered and shown in the
 
 A Tabela~\ref{tab:hla:results} ilustra alguns conceitos importantes associados à contrução de tabelas:
 \begin{asparaenum}[i)]
-	\item Não usar linhas verticais;
-	\item A legenda deve ficar por cima da tabela;
-	\item Usar as macros \verb!\toprule!, \verb!\midrule! e \verb!\bottomrule! para fazer a linha horizontal superior, interiores e inferior, respectivamente.
+  \item Não usar linhas verticais;
+  \item A legenda deve ficar por cima da tabela;
+  \item Usar as macros \verb!\toprule!, \verb!\midrule! e \verb!\bottomrule! para fazer a linha horizontal superior, interiores e inferior, respectivamente.
 \end{asparaenum}
 
 % \begin{longtblr}[
@@ -182,32 +182,32 @@ A Tabela~\ref{tab:hla:results} ilustra alguns conceitos importantes associados �
 \begin{xltabular}{\textwidth}{Xccccc}
   \caption{Test results summary.}
   \label{tab:hla:results}\\
-	\toprule
+  \toprule
   \rowcolor{Gainsboro}%
-	Test 	& Anomalies	& Warnings	& Correct 	& Categories	        	& Missed \\
-	\midrule
-Connection~\cite{Beckman08} 	  & 2       & 2	        & 1	        & \emph{C}			        & 1 \\
-Coordinates'03~\cite{Artho03}   & 1	      & 4	        & 1	        & \emph{2B, 1C}	        & 0 \\
-Local Variable~\cite{Artho03}	  & 1	      & 2	        & 1	        & \emph{A}			        & 0 \\
-NASA~\cite{Artho03}				      & 1	      & 1	        & 1	        & ---					          & 0 \\
-Coordinates'04~\cite{Artho04}	  & 1	      & 4	        & 1	        & \emph{3C}			        & 0 \\
-Buffer~\cite{Artho04}			      & 0	      & 7	        & 0	        & \emph{2A, 1B, 2C, 2D}	& 0 \\
-Double-Check~\cite{Artho04}		  & 0	      & 2	        & 0	        & \emph{1A, 1B}	        & 0 \\
-StringBuffer~\cite{Flanagan04}  & 1	      & 0	        & 0	        & ---					          & 1 \\
-Account~\cite{Praun03}			    & 1	      & 1	        & 1	        & --- 					        & 0 \\
-Jigsaw~\cite{Praun03}			      & 1	      & 2	        & 1	        & \emph{C}			        & 0 \\
-Over-reporting~\cite{Praun03}	  & 0	      & 2	        & 0	        & \emph{1A, 1C}	        & 0 \\
-Under-reporting~\cite{Praun03}  & 1	      & 1	        & 1	        & ---				  	        & 0 \\
-Allocate Vector~\cite{IBM-Rep}  & 1	      & 2	        & 1	        & \emph{C}			        & 0 \\
-Knight Moves~\cite{Beckman08}   & 1	      & 3	        & 1	        & \emph{2B}			        & 0 \\
-	\midrule
+  Test   & Anomalies  & Warnings  & Correct   & Categories            & Missed \\
+  \midrule
+Connection~\cite{Beckman08}     & 2       & 2          & 1          & \emph{C}              & 1 \\
+Coordinates'03~\cite{Artho03}   & 1        & 4          & 1          & \emph{2B, 1C}          & 0 \\
+Local Variable~\cite{Artho03}    & 1        & 2          & 1          & \emph{A}              & 0 \\
+NASA~\cite{Artho03}              & 1        & 1          & 1          & ---                    & 0 \\
+Coordinates'04~\cite{Artho04}    & 1        & 4          & 1          & \emph{3C}              & 0 \\
+Buffer~\cite{Artho04}            & 0        & 7          & 0          & \emph{2A, 1B, 2C, 2D}  & 0 \\
+Double-Check~\cite{Artho04}      & 0        & 2          & 0          & \emph{1A, 1B}          & 0 \\
+StringBuffer~\cite{Flanagan04}  & 1        & 0          & 0          & ---                    & 1 \\
+Account~\cite{Praun03}          & 1        & 1          & 1          & ---                   & 0 \\
+Jigsaw~\cite{Praun03}            & 1        & 2          & 1          & \emph{C}              & 0 \\
+Over-reporting~\cite{Praun03}    & 0        & 2          & 0          & \emph{1A, 1C}          & 0 \\
+Under-reporting~\cite{Praun03}  & 1        & 1          & 1          & ---                    & 0 \\
+Allocate Vector~\cite{IBM-Rep}  & 1        & 2          & 1          & \emph{C}              & 0 \\
+Knight Moves~\cite{Beckman08}   & 1        & 3          & 1          & \emph{2B}              & 0 \\
+  \midrule
   \rowcolor{Gainsboro}%
-Total			                      & 12		  & 33		    & 10			  & 5A, 6B, 10C, 2D 	    & 2 \\
-	\bottomrule
+Total                            & 12      & 33        & 10        & 5A, 6B, 10C, 2D       & 2 \\
+  \bottomrule
   \end{xltabular}
 \egroup
 % \end{longtblr}
-     
+
 % \begin{table}[ht]
 %   \caption{Test results summary.}
 %   \label{tab:hla:results}
@@ -243,36 +243,36 @@ Só deve usar \emph{screenshots} se não tive mesmo nenhuma alternativa.  Em vez
 
 
 \begin{figure}[htbp]
-	\centering
-	\includegraphics[height=1in]{snowman-bitmap}
-	\includegraphics[height=3in]{snowman-bitmap}
-	\includegraphics[height=6in]{snowman-bitmap}
-	\caption{Imagem em formato \emph{bitmap} (JPG)}
-	\label{fig:Figuras_Tree_silhouettes-bitmap}
+  \centering
+  \includegraphics[height=1in]{snowman-bitmap}
+  \includegraphics[height=3in]{snowman-bitmap}
+  \includegraphics[height=6in]{snowman-bitmap}
+  \caption{Imagem em formato \emph{bitmap} (JPG)}
+  \label{fig:Figuras_Tree_silhouettes-bitmap}
 \end{figure}
 
 \begin{figure}[htbp]
-	\centering
-	\includegraphics[height=1in]{snowman-vectorial}
-	\includegraphics[height=3in]{snowman-vectorial}
-	\includegraphics[height=6in]{snowman-vectorial}
-	\caption{Imagem em formato PDF vectorial}
-	\label{fig:Figuras_Tree_silhouettes-vectorial}
+  \centering
+  \includegraphics[height=1in]{snowman-vectorial}
+  \includegraphics[height=3in]{snowman-vectorial}
+  \includegraphics[height=6in]{snowman-vectorial}
+  \caption{Imagem em formato PDF vectorial}
+  \label{fig:Figuras_Tree_silhouettes-vectorial}
 \end{figure}
 
 Para agregar várias figuras numa única… Poderá assim referenciar o conjunto como Figura~\ref{fig:figura-completa} ou as sub-figuras separadamente como~\ref{fig:novelo} e~\ref{fig:nuvem}.
 
 
 \begin{figure}[htbp]
-	\centering
+  \centering
     \subbottom[Novelo de lã]{%
-		\label{fig:novelo}
-		\includegraphics[height=1in]{knitting-vectorial}
+    \label{fig:novelo}
+    \includegraphics[height=1in]{knitting-vectorial}
     }
 \qquad\qquad
     \subbottom[Tempestade com neve]{%
-		\label{fig:nuvem}
-		\includegraphics[height=1in]{snowstorm-vectorial}
+    \label{fig:nuvem}
+    \includegraphics[height=1in]{snowstorm-vectorial}
     }
   \caption{Exemplo de utilização de \emph{subbottom}}
   \label{fig:figura-completa}
@@ -280,10 +280,10 @@ Para agregar várias figuras numa única… Poderá assim referenciar o conjunto
 
 \section{Equações}
 
-O LaTeX é uma ferramenta poderosa para escrever em estilo matemático. Permite inserir fórmulas no meio do texto como por exemplo esta: $ax^2 + bx + c = 0$. Também permite que as fórmulas sejam destacadas numa linha separada e centradas na página 
+O LaTeX é uma ferramenta poderosa para escrever em estilo matemático. Permite inserir fórmulas no meio do texto como por exemplo esta: $ax^2 + bx + c = 0$. Também permite que as fórmulas sejam destacadas numa linha separada e centradas na página
 $$x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$$
 \[x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}\]
-ou numeradas 
+ou numeradas
 \begin{equation}
 aaa
 \label{eq:1}

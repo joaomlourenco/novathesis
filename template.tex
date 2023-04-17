@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2023-02-11 [6.10.18]
+%% Version 2023-04-17 [7.0.0]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -202,7 +202,7 @@
 
 %%------------------------------------------------------------
 \begin{document}        % Beginning of document
-\typeout{TIME after_begin_document=\the\pdfelapsedtime}%
+\typeout{TIME class loading=\the\pdfelapsedtime}%
 
 % \optionshowall
 
@@ -212,9 +212,9 @@
 % \typeout{TIME after_ntthesisfrontmatter=\the\pdfelapsedtime}
 %%------------------------------------------------------------
 \ntprint{covers}      % The cover page
-\typeout{TIME after_print_covers=\the\pdfelapsedtime}%
+\typeout{TIME process covers=\the\pdfelapsedtime}%
 \ntprint{frontmatter}     % The default order is listed below, but can be changed
-\typeout{TIME after_print_frontmatter=\the\pdfelapsedtime}%
+\typeout{TIME process frontmatter=\the\pdfelapsedtime}%
 %                         % at the School's “defaults.ldf” with
 %                         % "\ntsetprintorder{list_of_items}", where “list_of_items”
 %                         % may be any of:
@@ -234,7 +234,7 @@
 %%------------------------------------------------------------
 % \optionlistdo{/novathesis/docmainmatter}{\csuse{ntprint#1}}%
 \ntprint{mainmatter}      % The default order is listed below, but can be changed
-\typeout{TIME after_print_mainmatter=\the\pdfelapsedtime}%
+\typeout{TIME process mainmatter=\the\pdfelapsedtime}%
 %                         % at the School's “defaults.ldf” with
 %                         % "\ntsetprintorder{list_of_items}", where “list_of_items”
 %                         % are separated by ";" and may be any of:
@@ -244,7 +244,7 @@
 %                         %       appendices      % Print appendices, if any!
 %                         %       annexes         % Print annexes, if any!
 \ntprint{backcover}       % Print the back cover, if any!
-\typeout{TIME after_print_backcover=\the\pdfelapsedtime}%
+\typeout{TIME process process backcover=\the\pdfelapsedtime}%
 
 %%------------------------------------------------------------
 \end{document}          % End of document

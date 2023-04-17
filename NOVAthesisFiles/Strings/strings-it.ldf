@@ -12,19 +12,19 @@
 %%% Acknowledgments to Paolo Romano <romano@inesc-id.pt>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\frontmatterbkmstring(it):={Materiale Iniziale}
-\backmatterbkmstring(it):={Materiale Finale}
-\coverbkmstring(it):={Copertina}
-\frontpagebkmstring(it):={Foglio di Copertina}
-\backcoverbkmstring(it):={Copertina Posteriore}
-\spinebkmstring(it):={Libro Dorso}
-\copyrightbkmstring(it):={Copyright}
-\statementbkmstring(it):={Dichiarazione}
-\statementbkmstring(it):={Dopo la Copertina}
-\dedicatorybkmstring(it):={Dedicativo}
-\acknowledgementsbkmstring(it):={Ringraziamenti}
-\quotebkmstring(it):={Citazione}
-\abstractbkmstring(it):={Sommario}
+\bkmstring(frontmatter,it):={Materiale Iniziale}
+\bkmstring(backmatter,it):={Materiale Finale}
+\bkmstring(cover,it):={Copertina}
+\bkmstring(frontpage,it):={Foglio di Copertina}
+\bkmstring(backcover,it):={Copertina Posteriore}
+\bkmstring(spine,it):={Libro Dorso}
+\bkmstring(copyright,it):={Copyright}
+\bkmstring(statement,it):={Dichiarazione}
+\bkmstring(statement,it):={Dopo la Copertina}
+\bkmstring(dedicatory,it):={Dedicativo}
+\bkmstring(acknowledgements,it):={Ringraziamenti}
+\bkmstring(quote,it):={Citazione}
+\bkmstring(abstract,it):={Sommario}
 \keywordsstring(it):={Parole Chiave}
 \notdefined(it):={INDEFINITO}
 \specializationstring(it):={Specializzazione in}
@@ -60,12 +60,12 @@
 \degreestring(phdprop,m,it):={Dottore}
 \degreestring(phdprop,f,it):={Dottoressa}
 
-\docdegreestring(bsc,it):={Tesi di Laurea Triennale}
-\docdegreestring(msc,it):={Tesi di Laurea Specialistica}
-\docdegreestring(mscplan,it):={Piano per Tesi di Laurea Specialistica}
-\docdegreestring(phdplan,it):={Piano per Tesi di Dottorato}
-\docdegreestring(phdprop,it):={Proposta di Tesi di Dottorato}
-\docdegreestring(phd,it):={Tesi di Dottorato}
+\doctypestring(bsc,it):={Tesi di Laurea Triennale}
+\doctypestring(msc,it):={Tesi di Laurea Specialistica}
+\doctypestring(mscplan,it):={Piano per Tesi di Laurea Specialistica}
+\doctypestring(phdplan,it):={Piano per Tesi di Dottorato}
+\doctypestring(phdprop,it):={Proposta di Tesi di Dottorato}
+\doctypestring(phd,it):={Tesi di Dottorato}
 
 \committeetitlestring(it):={Commissione Esaminatrice}
 \committeestring(c,1,m,it):={Presidente}
@@ -92,21 +92,21 @@
 \committeestring(g,1,f,fr):={Invitata}
 \committeestring(g,2,m,fr):={invitati}
 \committeestring(g,2,f,fr):={invitate}
-	
+
 \dissertationstring(bsc,it)={Documento sottomesso per ottenere il Grado di\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
 \dissertationstring(mscplan,it)={Piano di Tesi per ottenere il Grado di\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
 \dissertationstring(msc,it)={Tesi sottomessa per ottenere il Grado di\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
 \dissertationstring(phdplan,it)={Piano di Tesi per ottenere il Grado dI\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
 \dissertationstring(phdprop,it)={Proposta di Tesi per ottenere il Grado dI\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
 \dissertationstring(phd,it)={Thesis submitted in partial fulfillment\\%
 % of the requirements for the degree of\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/docdegree},\expanded{\thedocauthor(gender)},\option{/novathesis/coverlang})\ in\\ \textbf{\themajorfield(\option{/novathesis/coverlang})}}
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
 
-\copyrighttextstring(it)={La \theschool(\option{/novathesis/copyrightlang})\ e \theuniversity(\option{/novathesis/copyrightlang})\ hanno il diritto perpetuo e senza limiti geografici, di archiviare e pubblicare questa tesi attraverso esemplari stampati in formato cartaceo o digitale, o attraverso qualsiasi altro mezzo consciuto o che possa essere inventato, e di disseminare tramite repositori scientifici e permettere la sua copia e distribuzione per scopi non commerciali, didattici o di ricerca, a patto che sia dato credito all'autore e editore.}
+\copyrighttextstring(it)={La \theschool(\@LANG@COPYRIGHT)\ e \theuniversity(\@LANG@COPYRIGHT)\ hanno il diritto perpetuo e senza limiti geografici, di archiviare e pubblicare questa tesi attraverso esemplari stampati in formato cartaceo o digitale, o attraverso qualsiasi altro mezzo consciuto o che possa essere inventato, e di disseminare tramite repositori scientifici e permettere la sua copia e distribuzione per scopi non commerciali, didattici o di ricerca, a patto che sia dato credito all'autore e editore.}
 
 \acknowledgmentsstring(it)={Questo documento é stato creato usando (pdf/Xe/Lua)\LaTeX\ e il modello \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
