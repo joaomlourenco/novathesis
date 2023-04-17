@@ -2041,7 +2041,7 @@
   \csuse{#2stringpost}():=?{:&}%
   \csuse{#2remainderpre}():=?{{\\[-2pt]}}%
   \personpost():=?{\\[2pt]}%
-  \persongrouppost():=?{\\[12pt]}
+  \persongrouppost():=?{\\[14pt]}
   \committeetitlestringpre():=?{&}%
   \committeetitlestringpost():=?{\\[5pt]}%
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS 
