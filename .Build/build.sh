@@ -10,7 +10,7 @@ sed -i'.OLD' -e 's,.*\\ntsetup{doctype=.*},\\ntsetup{doctype=phd},' \
             -e 's,.*\\ntsetup{school=.*},\\ntsetup{school=nova/fct},' \
             -e 's,.*\\ntsetup{docstatus=.*},\\ntsetup{docstatus=final},' \
             -e 's,.*\\ntsetup{spine=.*},\\ntsetup{spine=trim},' \
-            -e 's,.*\\ntsetup{printindex=.*},\\ntsetup{printindex=true},' \
+            -e 's,.*\\ntsetup{print/index=.*},\\ntsetup{print/index=true},' \
             $CONF
 
 # build the PDF
