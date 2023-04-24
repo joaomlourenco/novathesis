@@ -16,3 +16,96 @@
 \school(it):={Departamento de Engenharia Informática e Sistemas de Informação}
 \school(logo):={ulht-deisi-logo}
 
+% Cover background images
+\frontpageimage():={cover}
+\thesiscover(1-1,bgcolor):={white}
+\thesiscover(1-1,image):={\thefrontpageimage()}
+% \thesiscover(1-1,image):={\thefrontpageimage()}
+% \thesiscover(1-1,image):={\thefrontpageimage()}
+
+% Set margins for cover pages
+\margin(cover,top):={2.9cm}
+\margin(cover,bottom):={1.3cm}
+\margin(cover,left):={2.5cm}
+\margin(cover,right):={2.5cm}
+
+% Redefine strings
+\dissertationstring(bsc,pt)={Relatório para obtenção do Grau de %
+\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationstring(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
+\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationstring(msc,pt)={Dissertação para obtenção do Grau de %
+\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationstring(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
+\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationstring(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
+\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationstring(phd,pt)={Dissertação para obtenção do Grau de %
+\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtEndPreamble{%
+  \LoadHelveticaLikeFont%
+  % \RequirePackage{gillius2}%
+}
+
+\NTAddToHook{cover/1-1/text/pre}{%
+  \sffamily%
+}
+\NTAddToHook{cover/2-1/text/pre}{%
+  \sffamily%
+}
+
+% LOGO
+\ntaddtocover[halign=r,vspace=0cm]{1-1,2-1}{%
+  \includegraphics[width=2.9cm, height=3cm]{\theschool(logo)}%
+}
+
+% % Title of Dissertation
+\ntaddtocover[vspace=3.5cm]{1-1,2-1}{%
+  \fontsize{18}{20}\selectfont%
+  \textbf{\thedoctitle(\@LANG@COVER,main,cover)}%
+}
+
+% Author name
+\ntaddtocover[vspace=1]{1-1,2-1}{%
+  \fontsize{14}{14}\selectfont%
+  \textbf{\thedocauthor(name)}%
+}
+
+% Degree
+\ntaddtocover[vspace=1]{1-1,2-1}{%
+  \fontsize{12}{12}\selectfont%
+  \thepresentationtext%
+}
+
+% Advisers
+\ntaddtocover[vspace=2,halign=r]{1-1,2-1}{%
+  \adviserstringfont(a):={\bfseries}%
+  \adviserstringfont(c):={\bfseries}%
+  \fontsize{12}{12}\selectfont%
+  \ntprintpersons{0.65}{2}{adviser}{a,c}%
+}
+
+
+% Committee — only print the committee for the main classes
+\ntaddtocover[vspace=1]{1-1,2-1}{%
+  \ifmaindoc{%
+    \committeetitlestringfont():={\fontsize{14}{14}\selectfont\bfseries}%
+    \committeestringfont():={\bfseries}%
+    \fontsize{12}{12}\selectfont%
+    \ntprintpersons{0.9}{2}{committee}{\thecommitteeorder()}%
+  }%
+  {}%
+}
+
+
+% Date
+\ntaddtocover[vspace=1]{1-1,2-1}{%
+  \fontsize{14}{14}\selectfont%
+    \textbf{\thentdocdate(month), \thentdocdate(year)}%
+}
+

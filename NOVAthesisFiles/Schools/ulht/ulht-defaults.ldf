@@ -10,29 +10,28 @@
 \typeout{NT FILE ulht/univ-defaults.ldf}%
 
 
-% University
-\university(pt):={Universidade Lusófona}
-\university(en):={Universidade Lusófona}
-\university(fr):={Universidade Lusófona}
-\university(it):={Universidade Lusófona}
+% Configure the font set to Times New Roman
+\ntsetup{style/font=newtx}
+\ntsetup{print/secondcover=true}
 
+% University
+\university(pt):={Universidade Lusófona de Humanidades e Tecnologias}
+\university(en):={Universidade Lusófona de Humanidades e Tecnologias}
+\university(logo):={logo_ulht_horiz}
+
+% Faculty / School
+\school(pt):={Nome da Unidade Orgânica}
+\school(en):={School's Name}
 
 % Comiittee printing order
 \committeeorder():={c,r,a,m}%
 
-
 % Cover background images
 \frontpageimage():={cover}
-\thesiscover(1-1,bgcolor):={white}
-\thesiscover(1-1,image):={\thefrontpageimage()}
-\thesiscover(1-1,image):={\thefrontpageimage()}
-\thesiscover(1-1,image):={\thefrontpageimage()}
-
-% Set margins for cover pages
-\margin(cover,top):={2.9cm}
-\margin(cover,bottom):={1.3cm}
-\margin(cover,left):={2.5cm}
-\margin(cover,right):={2.5cm}
+\thesiscover(bgcolor):={white}
+% \thesiscover(1-1,image):={mge-cover1}
+% \thesiscover(2-1,image):={mge-cover2}
+% \thesiscover(1-1,image):={\thefrontpageimage()}
 
 
 % Set margins for "normal" pages
@@ -45,79 +44,130 @@
 \margin(paper,left):={2.5cm}
 \margin(paper,right):={3.5cm}
 
+% Set margins for cover pages
+\margin(cover,top):={1.5cm}
+\margin(cover,bottom):={2.5cm}
+\margin(cover,left):={3cm}
+\margin(cover,right):={3cm}
+
+\newdata{ulht}
+\ulht(dt,phd,pt):={Tese}
+\ulht(dt,msc,pt):={Dissertação}
+\ulht(dt,bsc,pt):={Relatório}
+\ulht(dt,phd,en):={Thesis}
+\ulht(dt,msc,en):={Dissertation}
+\ulht(dt,bsc,en):={Report}
+
+\ulht(dtgender,phd,pt):={a}
+\ulht(dtgender,msc,pt):={a}
+\ulht(dtgender,bsc,pt):={o}
+
 % Redefine strings
-\dissertationstring(bsc,pt)={Relatório para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(msc,pt)={Dissertação para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phd,pt)={Dissertação para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationstring(phd,en)={\theulht(dt,phd,en)\ submitted to obtain the Title of
+                                 \thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)
+                                 in the Degree of \thedegreename(en), given by the \theuniversity(en).}%
+\dissertationstring(phd,pt)={\theulht(dt,phd,pt)\ apresentad\theulht(dtgender,phd,pt)\ para a obtenção do Grau de
+                                 \thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)
+                                 no Curso de \thedegreename(pt), conferido pela \theuniversity(pt).}%
+\dissertationstring(msc,en)={\theulht(dt,msc,en)\ submitted to obtain the Title of
+                                 \thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)
+                                 in the Degree of \thedegreename(en), given by the \theuniversity(en).}%
+\dissertationstring(msc,pt)={\theulht(dt,msc,pt)\ apresentad\theulht(dtgender,msc,pt)\ para a obtenção do Grau de
+                                 \thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)
+                                 no Curso de \thedegreename(pt), conferido pela \theuniversity(pt).}%
+\dissertationstring(bsc,en)={\theulht(dt,bsc,en)\ submitted to obtain the Title of
+                                 \thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)
+                                 in the Degree of \thedegreename(en), given by the \theuniversity(en).}%
+\dissertationstring(bsc,pt)={\theulht(dt,bsc,pt)\ apresentad\theulht(dtgender,bsc,pt)\ para a obtenção do Grau de
+                                 \thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)
+                                 no Curso de \thedegreename(pt), conferido pela \theuniversity(pt).}%
+
 \copyrighttextstring(pt)={O \theschool(\@LANG@COVER)\ e a \theuniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
 
 \copyrighttextstring(en)={The \theschool(\@LANG@COVER)\ and the \theuniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ULHT guidelines:
-% The pages should be numbered consecutively at the bottom centre of the
-% page.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{%
-  \LoadHelveticaLikeFont%
+% \AtEndPreamble{%
+  % \LoadHelveticaLikeFont%
   % \RequirePackage{gillius2}%
-}
+% }
 
-\NTAddToHook{cover/1-1/text/pre}{%
-  \sffamily%
-}
-\NTAddToHook{cover/2-1/text/pre}{%
-  \sffamily%
+% \NTAddToHook{cover/1-1/text/pre}{%
+%   \sffamily%
+% }
+% \NTAddToHook{cover/2-1/text/pre}{%
+%   \sffamily%
+% }
+
+% BORDER
+\newcommand{\borderwidth}{4pt}
+\newcommand{\bordermargin}{3mm}
+\usetikzlibrary{calc}
+\ntaddtocover{1-1,2-1}{%
+  \definecolor{ulhtblue}{RGB}{16,49,84}%
+  \tikz[overlay, remember picture]
+      \draw [line width = \borderwidth,
+             color = ulhtblue]
+             ($(current page.north west)+(\bordermargin,-\bordermargin)$)
+             rectangle ($(current page.south east)+(-\bordermargin,\bordermargin)$);
 }
 
 % LOGO
-\ntaddtocover[halign=r,vspace=0cm]{1-1,2-1}{%
-  \includegraphics[width=2.9cm, height=3cm]{\theschool(logo)}%
-}
-
-% % Title of Dissertation
-\ntaddtocover[vspace=3.5cm]{1-1,2-1}{%
-  \fontsize{18}{20}\selectfont%
-  \textbf{\thedoctitle(\@LANG@COVER,main,cover)}%
+\ntaddtocover[halign=c,valign=t,vspace=-3mm,height=1.4cm]{1-1,2-1}{%
+  \ifcovernum{1-1}{\includegraphics[width=6.3cm,align=t]{\theuniversity(logo)}}{\includegraphics[width=0cm,align=t]{\theuniversity(logo)}}%
 }
 
 % Author name
-\ntaddtocover[vspace=1]{1-1,2-1}{%
-  \fontsize{14}{14}\selectfont%
-  \textbf{\thedocauthor(name)}%
+\ntaddtocover[vspace=0mm,valign=t,height=2cm]{1-1,2-1}{%
+  \fontsize{16}{16}\selectfont%
+  \textbf{\THEdocauthor(name)}%
 }
 
-% Degree
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+% % Title of Dissertation 1-1
+\ntaddtocover[vspace=8.7cm,valign=c,height=2cm]{1-1}{%
+  \fontsize{18}{18}\selectfont%
+  \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
+}
+
+% % Title of Dissertation 2-1
+\ntaddtocover[vspace=7.3 cm,valign=c,height=2cm]{2-1}{%
+  \fontsize{18}{18}\selectfont%
+  \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
+}
+
+% Presentation text
+\ntaddtocover[vspace=1,hspace=6.3cm,halign=l]{2-1}{%
   \fontsize{12}{12}\selectfont%
   \thepresentationtext%
 }
 
-% Advisers
-\ntaddtocover[vspace=2,halign=r]{1-1,2-1}{%
+% Advisers 1-1
+\ntaddtocover[vspace=2,halign=r]{1-1}{%
   \adviserstringfont(a):={\bfseries}%
   \adviserstringfont(c):={\bfseries}%
-  \fontsize{12}{12}\selectfont%
-  \ntprintpersons{0.65}{2}{adviser}{a,c}%
+  \advisernamefont():={\bfseries}%
+  \persongrouppost():=?{\\[4pt]}%
+  \personpost():=?{\\[0pt]}%
+  \fontsize{14}{14}\selectfont%
+  \ntprintpersons[list]{1}[c]{2}{adviser}{a,c}%
+}
+
+% Advisers 2-1
+\ntaddtocover[vspace=7mm,hspace=6.3cm,halign=r]{2-1}{%
+  % \adviserstringfont():={\bfseries}%
+  % \advisernamefont():={\bfseries}%
+  \persongrouppost():=?{\\[4pt]}%
+  \personpost():=?{\\[0pt]}%
+  \fontsize{11}{11}\selectfont%
+  \ntprintpersons[name]{1}{2}{adviser}{a,c}%
 }
 
 
 % Committee — only print the committee for the main classes
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vspace=1]{2-1}{%
   \ifmaindoc{%
     \committeetitlestringfont():={\fontsize{14}{14}\selectfont\bfseries}%
     \committeestringfont():={\bfseries}%
@@ -128,9 +178,17 @@
 }
 
 
-% Date
+% School
 \ntaddtocover[vspace=1]{1-1,2-1}{%
-  \fontsize{14}{14}\selectfont%
-    \textbf{\thentdocdate(month), \thentdocdate(year)}%
+  \fontsize{14}{14}\selectfont\bfseries%
+    \theuniversity(\@LANG@COVER)\\
+  \fontsize{12}{12}\selectfont\bfseries%
+    \theschool(\@LANG@COVER)
+}
+
+% Date
+\ntaddtocover[vspace=2]{1-1,2-1}{%
+  \fontsize{12}{12}\selectfont\bfseries%
+    Lisboa\\\thentdocdate(year)%
 }
 

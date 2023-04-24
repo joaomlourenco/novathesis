@@ -1335,7 +1335,7 @@
 \AtEndPreamble{\makeatletter\NTRunHook{list_of/pre}\input{Config/6_list_of}\NTRunHook{list_of/post}}
 
 \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
-\optionlistdo{/@nt/file/bib/\option{/novathesis/doctype}}{%
+\optionlistdo{/@nt/file/bib/\@DOCTYPE}{%
   % \typeout{ADDBIB=#1}\ADDBIB
   \addbibresource{#1}%
 }%
@@ -1354,13 +1354,13 @@
 
 \newcommand{\@ntloadfile@i}[2][]{\IfFileExists{#2}{\input{#2}}{#1}}
 
-\newcommand{\@ntloadfiles@ii}[2][\option{/novathesis/doctype}]{%
+\newcommand{\@ntloadfiles@ii}[2][\@DOCTYPE]{%
   % #1=KEY
   % #2=file class
   \iffileadded[#1]{#2}{\@nt@loadallfiles{#1}{#2}}{}%
 }
 
-\newcommand{\iffileadded}[2][\option{/novathesis/doctype}]{\ifoptiondefined{/@nt/file/#2/#1}}
+\newcommand{\iffileadded}[2][\@DOCTYPE]{\ifoptiondefined{/@nt/file/#2/#1}}
 
 % --------------------------------------------------------
 % LOAD A DEFAULT COPYRIGHT PAGE DEFINITION
@@ -1370,7 +1370,7 @@
 % #3 = file name
 % #4 = dir list
 % #5 = action if not found [OPTIONAL]
-  \@ifnextchar[{\@nt@AddFileIfExists@i{#1}}{\@nt@AddFileIfExists@i{#1}[\option{/novathesis/doctype}]}%
+  \@ifnextchar[{\@nt@AddFileIfExists@i{#1}}{\@nt@AddFileIfExists@i{#1}[\@DOCTYPE]}%
 }
 
 \def\@nt@AddFileIfExists@i#1[#2]#3#4{%
@@ -1539,9 +1539,12 @@
   }%
 }
 
+\gdef\@COVERNUM{}%
+\newcommand{\ifcovernum}[3]{\IfStrEq{\@COVERNUM}{#1}{#2}{#3}}
+
 \newcommand{\ntprintcoversingle}[1]{%
   % #1 = cover ID “major-minor”
-  \gdef\@covernumber{#1}%
+  \gdef\@COVERNUM{#1}%
   \ifcoverdefined[#1]{\setcounter{page}{0}\@ntprintcover@i{#1}}{}%
 }
 
@@ -1571,6 +1574,7 @@
 \newcommand{\@ntmakeboxwithcover}[2]{%
   % #1 = cover ID (major-minor)
   % #2 = box name
+  % \typeout{NTMAKEBOXWITHCOVER 1=[#1]}\NTMAKEBOXWITHCOVER%
   \@for\myi:={top,bottom,left,right}\do{%
     \expandafter\datamatch\csname @nt@margin@\myi\endcsname{margin}(%
       {cover,\@DOCTYPE,\@DEGREEACR,#1,\myi},%
@@ -1681,7 +1685,7 @@
   % #3 = cover element code
   % \typeout{[#1] [#2]}\xxxx
   \ifblank{#3}{}{%
-    \options{/@ntcoveropts,defaults}%.
+    \options{/@ntcoveropts,defaults}%
     \options{/@ntcoveropts,#2}%
     \options{/@ntcoveropts,alignmap=\option{/@ntcoveropts/halign}}%
     % \StrCount{,\option{/@ntcoveropts/status},}{,\@DOCSTATUS,}[\@nt@instatus]%
@@ -1694,7 +1698,7 @@
     \matchdegreetrue%
     \if&\option{/@ntcoveropts/status}&\relax%
     \else%
-      \if\instring{,\@DOCSTATUS,}{,\option{/@ntcoveropts/status},}
+      \if\instring{,\@DOCSTATUS,}{,\option{/@ntcoveropts/status},}%
       \else%
         \matchstatusfalse%
       \fi%
@@ -1790,14 +1794,14 @@
 }
 
 \newcommand{\@ntcovervspace}[1]{%
+  % \typeout{COVERSPACE [1=#1]}\COVERSPACE%
   \ifoptionvoid{/@ntcoveropts/#1}{%
     % \typeout{NT blank [#1=\option{/@ntcoveropts/#1}]}
   }{%
-    % \typeout{NT notblank [#1=\option{/@ntcoveropts/#1}]}%
     \IfInteger{\option{/@ntcoveropts/#1}}% USE vspace
       {\vskip 0pt plus \option{/@ntcoveropts/#1}fill}%
       {\vspace*{\option{/@ntcoveropts/#1}}}%
-    \ntforbreak
+    \ntforbreak%
   }%
 }
 \newcommand{\@ntcoverelement@ii}[2]{%
@@ -1828,23 +1832,30 @@
   \ifoptionblank{/@ntcoveropts/width}%
     {\setlength{\@mkcvelemwidth}{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}\relax}}%
     {\option{/@ntcoveropts/width}}%
+  \newif\ifntheight%
+  \ntheightfalse%
   \ifoptionblank{/@ntcoveropts/height}%
-    {}%
-    {\edefoption{/@ntcoveropts/height}\@mkcvelemheight}%
+    {\ifoptionblank{/@ntcoveropts/height/\@DOCCLASS}%
+      {}%
+      {\edefoption{/@ntcoveropts/height/\@DOCCLASS}\@mkcvelemheight\ntheighttrue}%
+    }%
+    {\edefoption{/@ntcoveropts/height}\@mkcvelemheight\ntheighttrue}%
   % Create destination boxes if undefined and save to it
   \defifundef{#3}{\newsavebox}%
   \begin{lrbox}{#3}%
     \begin{minipage}[t][0pt][t]{0pt}%
       \color{blue}\rule{0.000000000000001pt}{\option{/@ntcoveropts/minheight}}%
-    \end{minipage}
+    \end{minipage}%
     % Minipage definition is different if element height is given or not
-    \ifoptionblank{/@ntcoveropts/height}%
-        {\minipage[t][][\option{/@ntcoveropts/valign}]{\@mkcvelemwidth}}%
-        {\minipage[t][\@mkcvelemheight][\option{/@ntcoveropts/valign}]{\@mkcvelemwidth}}%
-            \ifoptionblank{/@ntcoveropts/color}{}{\color{\option{/@ntcoveropts/color}}}%
-            \option{/@ntcoveropts/alignmap}%
-            #2%
-        \endminipage%
+    \ifntheight%
+      \minipage[t][\@mkcvelemheight][\option{/@ntcoveropts/valign}]{\@mkcvelemwidth}%
+    \else%
+      \minipage[t][][\option{/@ntcoveropts/valign}]{\@mkcvelemwidth}%
+    \fi%
+        \ifoptionblank{/@ntcoveropts/color}{}{\color{\option{/@ntcoveropts/color}}}%
+        \option{/@ntcoveropts/alignmap}%
+        #2%
+      \endminipage%
   \end{lrbox}%
   \begin{lrbox}{#3}%
     % Add background color if necessary
@@ -1916,6 +1927,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print persons list {advisers | committee}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\@validate@string}[4][,]{
+% 1 = separator
+% 2 = value
+% 3 = list
+% 4 = error
+  \IfSubStr{#1#3#1}{#1#2#1}{}{\ClassError{novathesis}{#4: String “#1#2#1” not in “#1#3#1”}{}}%
+}
+
 \newcommand{\ntprintpersons}[2][full]{%
   % #1* = { full | name | list }
   % #2  = width in % of textwidth
@@ -1923,7 +1942,7 @@
   % #4  = number of columns
   % #5  = adviser | committee
   % #6  = {a,c} | {c,r,a,m,g}
-    \@ifnextchar[{\@ntprintpersons{#1}{#2}}{\@ntprintpersons{#1}{#2}[l]}%
+  \@ifnextchar[{\@ntprintpersons{#1}{#2}}{\@ntprintpersons{#1}{#2}[l]}%
 }
 
 \newcommand*{\@setalignment}[1]{
@@ -1942,6 +1961,7 @@
   % #5 = adviser | committee
   % #6 = {a,c} | {c,r,a,m,g}
   % \typeout{NTPRINTPERSONS 1=[#1] 2=[#2] 3=[#3] 4=[#4] 5=[#5]}\NTPRINTPERSONS
+  \@validate@string{#1}{full,name,list}{@ntprintpersons}%
   \iftoggle{/novathesis/print/#5}{%
     \begin{minipage}[t]{\linewidth}%
       \setlength{\parindent}{0pt}%
@@ -1964,11 +1984,12 @@
   % #1 = adviser | committee
   % #2 = {a,c} | {c,r,a,m,g}
   % Build list of names
+  % \typeout{NTPRINTPERSONSASLIST 1=[#1] 2=[#2]}\NTPRINTPERSONSASLIST%
   \ifdatadefined{#1titlestring}(\@LANG@COVER){%
-    \datadefault{#1titlestringpre}()%
-    \datadefault{#1titlestringfont}()%
+    \datadefault{#1titlestringpre}(\@LANG@COVER)%
+    \datadefault{#1titlestringfont}(\@LANG@COVER)%
     \csuse{the#1titlestring}(\@LANG@COVER)%
-    \datadefault{#1titlestringpost}()%
+    \datadefault{#1titlestringpost}(\@LANG@COVER)%
   }{}%
   \def\@nt@personlist{}%
   \def\@nt@listsep{}%
@@ -1979,6 +2000,7 @@
     }%
   }%
   \raggedright%
+  % \StrGobbleRight{\@nt@personlist}{1}%
   \@replacelastcomma{\@nt@personlist}%
 }
 
@@ -1998,16 +2020,15 @@
   \fi
 }
 
-
-
 %============================================================
 % Print persons list {advisers | committee} as one and two columns
 %============================================================
 \newcommand{\@ntprintpersonsasonecolumn}[4]{%
-  % #1 = { full | name | list }
+  % #1 = { full | name }
   % #2 = width in % of textwidth
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
+  % \@validate@string{#1}{full,name}{@ntprintpersonsasonecolumn}%
   \csuse{#3stringpost}():=?{:\\[2pt]}%
   \csuse{#3namepost}():=?{{\\}}%
   \csuse{#3remainderpre}():=?{{\\[-2pt]}}%
@@ -2034,10 +2055,11 @@
 }
 
 \newcommand{\@ntprintpersonsastwocolumns}[3]{%
-  % #1 = { full | name | list }
+  % #1 = { full | name }
   % #2 = adviser | committee
   % #3 = {a,c} | {c,r,a,m,g}
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3]}\NTPRINTPERSONSASTWOCOLUMNS
+  % \@validate@string{#1}{full,name}{@ntprintpersonsasonecolumn}%
   \csuse{#2stringpost}():=?{:&}%
   \csuse{#2remainderpre}():=?{{\\[-2pt]}}%
   \personpost():=?{\\[2pt]}%
@@ -2071,14 +2093,14 @@
       \datadefault{#3string}(#4,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
     \egroup%
     \datadefault{#3stringpost}(#4)%
-    \IfStrEq{#1}{list}{%
-      \@ntprintpersonsaslist{#3}{#4}%
-    }{%
-      \begin{minipage}[t]{\linewidth}%
-        \raggedright%
-        \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{##1}}%
-      \end{minipage}%
-    }%
+    \begin{minipage}[t]{\linewidth}%
+      \raggedright%
+      \IfStrEq{#1}{list}{%
+        \@ntprintpersonsaslist{#3}{#4}%
+      }{%
+        \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{#4}{##1}}%
+      }%
+    \end{minipage}%
     \thepersongrouppost()%
   }{}%
 }
@@ -2087,32 +2109,33 @@
 %============================================================
 % Print person aux funcitons
 %============================================================
-\newcommand{\@nt@printonename}[3]{%
+\newcommand{\@nt@printonename}[4]{%
 % #1 = { full | name }
 % #2 = adviser | coadviser | committee
-% #3 = (co)adviser info
-% \typeout{NTPRINTONENAME 1=[#1] 2=[#2] 3=[#3]}%\bbb
-\thepersonpre()%
+% #3 = {a,c} | {c,r,a,m,g}
+% #4 = (co)adviser info
+% \typeout{NTPRINTONENAME 1=[#1] 2=[#2] 3=[#4]}%\bbb
+\datadefault{personpre}(#3)%
 \begingroup
   \noexpandarg
   \raggedright%
-  \csuse{the#2namepre}()%
-  \StrCut{#3}{,}\@nt@name\@nt@remainder% split name from remainder
-  \ignorespaces\parbox[b]{\linewidth-\widthof{\csuse{the#2namepre}()}}{%
-    \raggedright\csuse{the#2namefont}()\@nt@name%
+  \datadefault{#2namepre}(#3)%
+  \StrCut{#4}{,}\@nt@name\@nt@remainder% split name from remainder
+  \ignorespaces\parbox[b]{\linewidth-\widthof{\csuse{the#2namepre}()\csuse{the#2namepre}(#3)}}{%
+    \raggedright\csuse{the#2namefont}()\csuse{the#2namefont}(#3)\@nt@name%
   }%
   \IfStrEq{#1}{full}{%
     \IfStrEq{\@nt@remainder}{}{}{%
-      \csuse{the#2remainderpre}()%
+      \csuse{the#2remainderpre}()\csuse{the#2remainderpre}(#3)%
       \bgroup%
-        \csuse{the#2remainderfont}()%
-        \ignorespaces\parbox[t]{\linewidth-\widthof{\csuse{the#2namepre}()}}{\raggedright\@nt@remainder}%
+        \csuse{the#2remainderfont}()\csuse{the#2remainderfont}(#3)%
+        \ignorespaces\parbox[t]{\linewidth-\widthof{\csuse{the#2namepre}()\csuse{the#2namepre}(#3)}}{\raggedright\@nt@remainder}%
       \egroup%
-      \csuse{the#2remainderpost}()%
+      \datadefault{#2remainderpost}(#3)%
     }%
   }{}%
 \endgroup
-\thepersonpost()%
+\datadefault{personpost}(#3)%
 }
 
 \newcommand*{\@nt@reducegender}[2]{%
@@ -2507,16 +2530,16 @@
     \def\and{\unskip\datadefault{keywordssep}(\@LSHORT)}%
     % \def\and{{\textperiodcentered} }%
     \par\addvspace\baselineskip\noindent%
-    \begingroup
+    \begingroup%
     \datadefault{keywordsstringprefix}(\@LSHORT)%
     \datadefault{keywordsstringfont}(\@LSHORT)%
     \csuse{thekeywordsstring}(\@LSHORT)%
     \datadefault{keywordsstringsuffix}(\@LSHORT)%
-    \endgroup
+    \endgroup%
     % \enspace
     \ignorespaces#1%
     % \NTRunHook{keywords/#1/post}%
-    \NTRunHook{keywords/post}%\
+    \NTRunHook{keywords/post}%
 }%
 
 
@@ -2525,12 +2548,12 @@
 %% LABELS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \providecommand\thepresentationtext{%
-    \thedissertationstringfont()%
-    \ifdatadefined{issertationstring}(\@DOCTYPE,\@LANG@COVER){%
+  \thedissertationstringfont()%
+  \ifdatadefined{dissertationstring}(\@DOCTYPE,\@LANG@COVER){%
     \thedissertationstring(\@DOCTYPE,\@LANG@COVER)%
-    }{%
+  }{%
     \thedissertationstring(\@DOCCLASS,\@LANG@COVER)%
-    }
+  }%
 }
 
 \providecommand\thecopyrightstr{%
