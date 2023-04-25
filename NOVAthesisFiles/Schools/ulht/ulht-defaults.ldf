@@ -28,10 +28,8 @@
 
 % Cover background images
 \frontpageimage():={cover}
-\thesiscover(bgcolor):={white}
-% \thesiscover(1-1,image):={mge-cover1}
-% \thesiscover(2-1,image):={mge-cover2}
-% \thesiscover(1-1,image):={\thefrontpageimage()}
+\thesiscover(1-1,bgcolor):={white}
+\thesiscover(2-1,bgcolor):={white}
 
 
 % Set margins for "normal" pages

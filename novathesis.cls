@@ -1586,15 +1586,12 @@
 \newcommand*{\@ntcoverbgcolor}[2]{%
   % #1 = cover ID (major-minor)
   % #2 = color
-  % \begingroup%
-  % \color{#2}%
-  % \NTRunHook{cover/#1/bgcolor/pre}%
-  % \rule{\paperwidth}{\paperheight}%
-  % \NTRunHook{cover/#1/gcolor/post}%
-  % \endgroup%
+  \begingroup%
+  \color{#2}%
   \NTRunHook{cover/#1/bgcolor/pre}%
-  \pagecolor{#2}%
+  \rule{\paperwidth}{\paperheight}%
   \NTRunHook{cover/#1/gcolor/post}%
+  \endgroup%
 }
 
 \newcommand*{\@ntmakecoverimage}[2]{%
@@ -1801,7 +1798,7 @@
         \ifoptionblank{/@ntcoveropts/color}{}{\color{\option{/@ntcoveropts/color}}}%
         \option{/@ntcoveropts/alignmap}%
         #2%
-      \endminipage%
+    \endminipage%
   \end{lrbox}%
   % Add a background color if needed
   \ifoptionblank{/@ntcoveropts/bgcolor}{}{%
@@ -1945,7 +1942,7 @@
   }%
   \raggedright%
   % \StrGobbleRight{\@nt@personlist}{1}%
-  \@replacelastcomma{\@nt@personlist}%
+  \datadefault{#1namefont}(#2)\@replacelastcomma{\@nt@personlist}%
 }
 
 \def\@replacelastcomma#1{%
@@ -2010,8 +2007,15 @@
   \persongrouppost():=?{\\[14pt]}
   \committeetitlestringpre():=?{&}%
   \committeetitlestringpost():=?{\\[5pt]}%
-  % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS 
-  \begin{tabularx}{\linewidth}[t]{@{}r@{~~}L@{}}%
+  % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS
+  \defifundef{\stringlen}{\newdimen}%
+  \defifundef{\maxlen}{\newdimen}%
+  \setlength{\maxlen}{0pt}%
+  \@for\myx:=\expanded{#3}\do{%
+    \setlength{\stringlen}{\widthof{\@nt@printgrouptitle@text{#2}{\myx}~~}}%
+    \ifdim\stringlen>\maxlen\relax\setlength{\maxlen}{\stringlen}\fi%
+  }%
+  \begin{tabular}[t]{@{}r@{~~}l@{}}%
     \ifdatadefined{#2titlestring}(\@LANG@COVER){%
       \datadefault{#2titlestringpre}()%
       \datadefault{#2titlestringfont}()%
@@ -2020,7 +2024,31 @@
     }{}%
     \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{2}{#2}}}{\expanded{#3}}%
     % \@for\myx:={#3}\do{\@nt@ntprintpersongroup[#1]{2}{#2}{\myx}}%
-  \end{tabularx}%
+  \end{tabular}%
+}
+
+\newcommand{\@nt@printgrouptitle@text}[2]{%
+  % #1 = {adviser | committee}
+  % #2 = {a,c} | {c,r,a,m,g}
+    \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
+    \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
+    \bgroup%
+      \datadefault{#1stringfont}(#2)%
+      \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
+    \egroup%
+}
+
+\newcommand{\@nt@printgrouptitle}[2]{%
+  % #1 = {adviser | committee}
+  % #2 = {a,c} | {c,r,a,m,g}
+    \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
+    \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
+    \datadefault{#1stringpre}(#2)%
+    \bgroup%
+      \datadefault{#1stringfont}(#2)%
+      \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
+    \egroup%
+    \datadefault{#1stringpost}(#2)%
 }
 
 \newcommand{\@nt@ntprintpersongroup}[4][full]{%
@@ -2030,24 +2058,26 @@
   % #4 = {a,c} | {c,r,a,m,g}
   \ifoptiondefined{/@nt/#3/#4/full}{%
     % \typeout{NTPRINTPERSONGROUP 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\NTPRINTPERSONGROUP
-    \@nt@reducegender{/@nt/#3/#4/gender}{\@nt@advgender}%
-    \@nt@reducenumber{/@nt/#3/#4/full}{\@nt@advnumber}%
-    \datadefault{#3stringpre}(#4)%
-    \bgroup%
-      \datadefault{#3stringfont}(#4)%
-      \datadefault{#3string}(#4,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
-    \egroup%
-    \datadefault{#3stringpost}(#4)%
-    \begin{minipage}[t]{\linewidth}%
+    \@nt@printgrouptitle{#3}{#4}%
+    % \@nt@reducegender{/@nt/#3/#4/gender}{\@nt@advgender}%
+    % \@nt@reducenumber{/@nt/#3/#4/full}{\@nt@advnumber}%
+    % \datadefault{#3stringpre}(#4)%
+    % \bgroup%
+    %   \datadefault{#3stringfont}(#4)%
+    %   \datadefault{#3string}(#4,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
+    % \egroup%
+    % \datadefault{#3stringpost}(#4)%
+    \begin{varwidth}[t]{\linewidth-\maxlen}%
       \raggedright%
+      % \rule{\linewidth}{5pt}\par
       \IfStrEq{#1}{list}{%
         \@ntprintpersonsaslist{#3}{#4}%
       }{%
         \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{#4}{##1}}%
       }%
-    \end{minipage}%
+    \end{varwidth}%
     \thepersongrouppost()%
-  }{\ClassError{novathesis}{ntprintpersongroup: undefined [/@nt/#3/#4/full]}{}}%
+  }{}%\ClassError{novathesis}{ntprintpersongroup: undefined [/@nt/#3/#4/full]}{}}%
 }
 
 
@@ -2059,22 +2089,22 @@
 % #2 = adviser | coadviser | committee
 % #3 = {a,c} | {c,r,a,m,g}
 % #4 = (co)adviser info
-% \typeout{NTPRINTONENAME 1=[#1] 2=[#2] 3=[#4]}%\bbb
+% \typeout{NTPRINTONENAME 1=[#1] 2=[#2] 3=[#4]}\NTPRINTONENAME
 \datadefault{personpre}(#3)%
 \begingroup
   \noexpandarg
   \raggedright%
   \datadefault{#2namepre}(#3)%
   \StrCut{#4}{,}\@nt@name\@nt@remainder% split name from remainder
-  \ignorespaces\parbox[b]{\linewidth-\widthof{\csuse{the#2namepre}()\csuse{the#2namepre}(#3)}}{%
-    \raggedright\csuse{the#2namefont}()\csuse{the#2namefont}(#3)\@nt@name%
-  }%
+  \ignorespaces\parbox[b]{\linewidth}%
+                         {\raggedright\datadefault{#2namefont}(#3)\@nt@name}%
   \IfStrEq{#1}{full}{%
     \IfStrEq{\@nt@remainder}{}{}{%
-      \csuse{the#2remainderpre}()\csuse{the#2remainderpre}(#3)%
+      \datadefault{#2remainderpre}(#3)%
       \bgroup%
-        \csuse{the#2remainderfont}()\csuse{the#2remainderfont}(#3)%
-        \ignorespaces\parbox[t]{\linewidth-\widthof{\csuse{the#2namepre}()\csuse{the#2namepre}(#3)}}{\raggedright\@nt@remainder}%
+        \datadefault{#2remainderfont}(#3)%
+        \ignorespaces{\parbox[t]{\linewidth}%
+                                   {\raggedright\@nt@remainder}}%
       \egroup%
       \datadefault{#2remainderpost}(#3)%
     }%
