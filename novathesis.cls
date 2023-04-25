@@ -422,7 +422,7 @@
 % --------------------------------------------------------
 % Check if the document is of a specific class, i.e., bsc, msc, phd or main
 \newcommand{\ifdocclass}[1]{\ifoptionequal{/@nt/document/docclass}{#1}}
-\newcommand{\ifmaindoc}{\ifoptioncontains{/@nt/document/docmain}{\@DOCTYPE}}
+\newcommand{\ifmaindoc}{\ifoptioncontains{/@nt/document/docmain}{\@DOCCLASS}}
 \newcommand{\ifphddoc}{\ifdocclass{phd}}
 \newcommand{\ifmscdoc}{\ifdocclass{msc}}
 \newcommand{\ifbscdoc}{\ifdocclass{bsc}}
@@ -450,11 +450,12 @@
   %                      g=guests
   % #3={m,f}
   % #4={person name, position, etc}
+  % \typeout{NTADDPERSON 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\NTADDPERSON%
   \noexpandarg
   \StrCut{#4}{,}\@nt@personname\@nt@dummy%was xStrCut
-  \options{/@nt/#1/#2/name/.expanded/.newpush={\@nt@personname}}%
-  \options{/@nt/#1/#2/full/.expanded/.newpush={#4}}%
-  \options{/@nt/#1/#2/gender/.newpush={#3}}%
+  \options{/@nt/#1/#2/name/.expanded/.newpush={\@nt@personname},
+           /@nt/#1/#2/full/.expanded/.newpush={#4},
+           /@nt/#1/#2/gender/.newpush={#3}}%
   % \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
   \fullexpandarg
 }
@@ -674,7 +675,6 @@
 
 \newcommand*{\ntbibsetup}[1]{%
   \@ifpackageloaded{biblatex}{\ClassError{novathesis}{Please load biblatex options earlier.}{}}{\PassOptionsToPackage{#1}{biblatex}}%
-  % {\options{/@nt/biblatex/.push={#1}}}%
 }
 
 \newcommand*{\NTAddToHook}[2]{\options{/@nt/hook/#1/.newpush={#2}}}
@@ -702,10 +702,9 @@
 % --------------------------------------------------------
 % Define DEFAULT corollaryUES for COVER and COPYRIGHT languages
 %     and HYPERLINK color
-\options{/novathesis/.cd,
-  lang/cover = \option{/novathesis/lang/main},
-  lang/copyright = \option{/novathesis/lang/main},
-  color/links = DarkBlue,
+\options{/novathesis/lang/cover = \option{/novathesis/lang/main},
+         /novathesis/lang/copyright = \option{/novathesis/lang/main},
+         /novathesis/color/links = DarkBlue,
 }
 
 
@@ -764,29 +763,6 @@
 \RequirePackage{csquotes}
 \RequirePackage{url}
 \RequirePackage{xstring}
-
-% \newcommand{\definelanguagealias}[2]{%
-%   \@namedef{languagealias@#1}{#2}%
-% }
-% \definelanguagealias{portuguese}{portuguese}
-% \letoptionchoices{/@nt/lang/shorttolong}\opt@choices
-% \@for\myi:=\opt@choices\do{%
-%   \options{/@nt/lang/shorttolong=\myi}
-%   \typeout{CHOICE [\myi, \option{/@nt/lang/shorttolong}]}%
-%   \definelanguagealias{\expanded{\myi}}{\expanded{\option{/@nt/lang/shorttolong}}}%
-% }
-
-% \RequirePackage{appendix}
-
-% \RequirePackage{printlen}
-% \uselengthunit{mm}\printlength{\linewidth}
-
-
-%%%%% Better support for string manipulation
-
-
-% To use a wide range of color names
-% \RequirePackage{xcolor}%
 
 \RequirePackage{colortbl}
 \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
@@ -920,16 +896,6 @@
     shrink=10,        % shrink=10 - reduce shrinkability (default is 20)
   ]{microtype}
 }
-
-% \options{/@nt/lang/shorttolong=\@LANG@MAIN}%
-% \PassOptionsToPackage{main=\option{/@nt/lang/shorttolong}}{babel}
-% % \typeout{MAIN: [\@LANG@MAIN \option{/@nt/lang/shorttolong}]}\aaa
-% \optionlistdo{/novathesis/lang/extra}{%
-%   \options{/@nt/lang/shorttolong=#1}%
-%   \PassOptionsToPackage{\option{/@nt/lang/shorttolong}}{babel}%
-%   \PassOptionsToPackage{\option{/@nt/lang/shorttolong}}{translator}%
-%   % \typeout{USED: [#1] [\option{/@nt/lang/shorttolong}] [\option{/@nt/fontenc}]}\bbb
-% }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1075,20 +1041,10 @@
             \else
               \ClassError{novathesis}{Can't make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
             \fi\fi}}}%
-    % {listsofglossaries}{\options{/@nt/list/listof/.newpush={%
-    %         \glstoctrue%
-    %         % \iffileadded[glossary]{glossaries}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}%
-    %         }}%
-    % {listsofglossaries*}{\options{/@nt/list/listof/.newpush={%
-    %         \glstocfalse%
-    %         % \iffileadded[glossary]{glossaries}{\patchcmd{\@glo@types}{,main}{}{}{}}{}}%
-    %         }}%
   }[%
-            \if\relax\detokenize{#1}\relax
-              \options{/@nt/list/listof/.newpush={\ifdefmacro{#2}{#2}{\csuse{#2}}}}%
-            \else
-              \options{/@nt/list/listof/.newpush={\ifdefmacro{#2}{#2[#1]}{\csuse{#2}[#1]}}}%
-            \fi
+            \@ifmtarg{#1}%
+              {\options{/@nt/list/listof/.newpush={\ifdefmacro{#2}{#2}{\csuse{#2}}}}}%
+              {\options{/@nt/list/listof/.newpush={\ifdefmacro{#2}{#2[#1]}{\csuse{#2}[#1]}}}}%
    ]%
 }
 
@@ -1335,7 +1291,7 @@
 \AtEndPreamble{\makeatletter\NTRunHook{list_of/pre}\input{Config/6_list_of}\NTRunHook{list_of/post}}
 
 \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
-\optionlistdo{/@nt/file/bib/\@DOCTYPE}{%
+\optionlistdo{/@nt/file/bib/\@DOCCLASS}{%
   % \typeout{ADDBIB=#1}\ADDBIB
   \addbibresource{#1}%
 }%
@@ -1354,13 +1310,13 @@
 
 \newcommand{\@ntloadfile@i}[2][]{\IfFileExists{#2}{\input{#2}}{#1}}
 
-\newcommand{\@ntloadfiles@ii}[2][\@DOCTYPE]{%
+\newcommand{\@ntloadfiles@ii}[2][\@DOCCLASS]{%
   % #1=KEY
   % #2=file class
   \iffileadded[#1]{#2}{\@nt@loadallfiles{#1}{#2}}{}%
 }
 
-\newcommand{\iffileadded}[2][\@DOCTYPE]{\ifoptiondefined{/@nt/file/#2/#1}}
+\newcommand{\iffileadded}[2][\@DOCCLASS]{\ifoptiondefined{/@nt/file/#2/#1}}
 
 % --------------------------------------------------------
 % LOAD A DEFAULT COPYRIGHT PAGE DEFINITION
@@ -1370,7 +1326,7 @@
 % #3 = file name
 % #4 = dir list
 % #5 = action if not found [OPTIONAL]
-  \@ifnextchar[{\@nt@AddFileIfExists@i{#1}}{\@nt@AddFileIfExists@i{#1}[\@DOCTYPE]}%
+  \@ifnextchar[{\@nt@AddFileIfExists@i{#1}}{\@nt@AddFileIfExists@i{#1}[\@DOCCLASS]}%
 }
 
 \def\@nt@AddFileIfExists@i#1[#2]#3#4{%
@@ -1630,12 +1586,15 @@
 \newcommand*{\@ntcoverbgcolor}[2]{%
   % #1 = cover ID (major-minor)
   % #2 = color
-  \begingroup%
-  \color{#2}%
+  % \begingroup%
+  % \color{#2}%
+  % \NTRunHook{cover/#1/bgcolor/pre}%
+  % \rule{\paperwidth}{\paperheight}%
+  % \NTRunHook{cover/#1/gcolor/post}%
+  % \endgroup%
   \NTRunHook{cover/#1/bgcolor/pre}%
-  \rule{\paperwidth}{\paperheight}%
+  \pagecolor{#2}%
   \NTRunHook{cover/#1/gcolor/post}%
-  \endgroup%
 }
 
 \newcommand*{\@ntmakecoverimage}[2]{%
@@ -1653,13 +1612,13 @@
    ,{#1,image}%
    ,{image}%
   ){\savebox{#2}{\includegraphics[width=\paperwidth,height=\paperheight]{\match}}}{}%
-  \ifdatadefined{thesiscover}(phd,1-1,bgcolor){}{}%
+  % \ifdatadefined{thesiscover}(phd,1-1,bgcolor){}{}%
   \NTRunHook{cover/#1/image/post}%
 }
 
 \newcommand{\@ntmakecovertext}[2]{%
-    % #1 = cover ID (major-minor)
-    % #2 = box name
+  % #1 = cover ID (major-minor)
+  % #2 = box name
   \defifundef{#2}{\newsavebox}%
   \ifoptiondefined{/@nt/cover/\@UNIV/\@SCHL/#1}{%
     \begin{lrbox}{#2}%
@@ -1672,7 +1631,7 @@
 }
 
 \newcommand{\@ntcovertext}[1]{%
-    % #1 = cover ID (major-minor)
+  % #1 = cover ID (major-minor)
   \NTRunHook{cover/#1/text/pre}%
   \optionlistdo{/@nt/cover/\@UNIV/\@SCHL/#1}{\@ntcoverelement@iii{#1}##1}%
   \NTRunHook{cover/#1/text/post}%
@@ -1684,13 +1643,7 @@
   % #3 = cover element code
   % \typeout{[#1] [#2]}\xxxx
   \ifblank{#3}{}{%
-    \options{/@ntcoveropts,defaults}%
-    \options{/@ntcoveropts,#2}%
-    \options{/@ntcoveropts,alignmap=\option{/@ntcoveropts/halign}}%
-    % \StrCount{,\option{/@ntcoveropts/status},}{,\@DOCSTATUS,}[\@nt@instatus]%
-    % \StrCount{,\option{/@ntcoveropts/degree},}{,\@DOCCLASS,}[\@nt@indegree]%
-    % \typeout{OPT_DEGREE=[\option{/@ntcoveropts/degree}] DOCCLASS=[\@DOCCLASS]}%
-    % \typeout{OPT_STATUS=[\option{/@ntcoveropts/status}] STATUS=[\@DOCSTATUS]}\aaaaa
+    \options{/@ntcoveropts, defaults, #2, alignmap=\option{/@ntcoveropts/halign}}%
     \defifundef{\ifmatchstatus}{\newif}%
     \defifundef{\ifmatchdegree}{\newif}%
     \matchstatustrue%
@@ -1714,11 +1667,6 @@
         \@ntcoverelement@ii{#1}{#3}%
       \fi%
     \fi%
-     % \ifthenelse{%
-     %          \(\equal{\option{/@ntcoveropts/status}}{}\OR\@nt@instatus>0\)\AND%
-     %          \(\equal{\option{/@ntcoveropts/degree}}{}\OR\@nt@indegree>0\)}%
-     %  {\@ntcoverelement@ii{#1}{#3}}%
-     %  {}%
   }%
 }
 
@@ -1809,7 +1757,7 @@
   % If vspace is integer then replace by n*\vfill
   % otherwise it is absolute verstical space
   % \typeout{NT testblank [#1] =========}%
-  \ntfor\match:={vspace/\@DOCTYPE/#1,vspace/\@DOCTYPE,vspace/#1,vspace}%
+  \ntfor\match:={vspace/\@DOCTYPE/#1,vspace/\@DOCTYPE,vspace/\@DOCCLASS/#1,vspace/\@DOCCLASS,vspace/#1,vspace}%
         \do{\@ntcovervspace{\match}}%
   % Typeset contents in a box
   \@nt@makeboxwithcoverelement@iii{#1}{#2}{\@nt@coverelement}%
@@ -1831,22 +1779,21 @@
   \ifoptionblank{/@ntcoveropts/width}%
     {\setlength{\@mkcvelemwidth}{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}\relax}}%
     {\option{/@ntcoveropts/width}}%
-  \newif\ifntheight%
-  \ntheightfalse%
-  \ifoptionblank{/@ntcoveropts/height}%
-    {\ifoptionblank{/@ntcoveropts/height/\@DOCCLASS}%
-      {}%
-      {\edefoption{/@ntcoveropts/height/\@DOCCLASS}\@mkcvelemheight\ntheighttrue}%
+  \defifundef{\ifheightopt}{\newif}%
+  \heightoptfalse%
+  \ntfor\myh:={height/\@DOCTYPE,height/\@DOCCLASS,height}\do{%
+    \ifoptionblank{/@ntcoveropts/\myh}{}{%
+      \edefoption{/@ntcoveropts/\myh}\@mkcvelemheight\heightopttrue\ntforbreak%
     }%
-    {\edefoption{/@ntcoveropts/height}\@mkcvelemheight\ntheighttrue}%
+  }%
   % Create destination boxes if undefined and save to it
   \defifundef{#3}{\newsavebox}%
   \begin{lrbox}{#3}%
     \begin{minipage}[t][0pt][t]{0pt}%
-      \color{blue}\rule{0.000000000000001pt}{\option{/@ntcoveropts/minheight}}%
+      \color{white}\rule{0.000000000000001pt}{\option{/@ntcoveropts/minheight}}%
     \end{minipage}%
     % Minipage definition is different if element height is given or not
-    \ifntheight%
+    \ifheightopt%
       \minipage[t][\@mkcvelemheight][\option{/@ntcoveropts/valign}]{\@mkcvelemwidth}%
     \else%
       \minipage[t][][\option{/@ntcoveropts/valign}]{\@mkcvelemwidth}%
@@ -1856,12 +1803,10 @@
         #2%
       \endminipage%
   \end{lrbox}%
-  \begin{lrbox}{#3}%
-    % Add background color if necessary
-    \ifoptionblank{/@ntcoveropts/bgcolor}%
-      {\usebox{#3}}%
-      {\colorbox{\option{/@ntcoveropts/bgcolor}}{\usebox{#2}}}%
-  \end{lrbox}%
+  % Add a background color if needed
+  \ifoptionblank{/@ntcoveropts/bgcolor}{}{%
+    \savebox{#3}{\colorbox{\option{/@ntcoveropts/bgcolor}}{\usebox{#3}}}%
+  }%
 }
 
 \newcommand{\@ntfixspacing}[2]{%
@@ -1926,7 +1871,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print persons list {advisers | committee}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\@validate@string}[4][,]{
+\newcommand{\@check@instring}[4][,]{
 % 1 = separator
 % 2 = value
 % 3 = list
@@ -1959,8 +1904,8 @@
   % #4 = number of columns
   % #5 = adviser | committee
   % #6 = {a,c} | {c,r,a,m,g}
-  % \typeout{NTPRINTPERSONS 1=[#1] 2=[#2] 3=[#3] 4=[#4] 5=[#5]}\NTPRINTPERSONS
-  \@validate@string{#1}{full,name,list}{@ntprintpersons}%
+  % \typeout{NTPRINTPERSONS 1=[#1] 2=[#2] 3=[#3] 4=[#4] 5=[#5] 6=[#6]}\NTPRINTPERSONS
+  \@check@instring{#1}{full,name,list}{@ntprintpersons}%
   \iftoggle{/novathesis/print/#5}{%
     \begin{minipage}[t]{\linewidth}%
       \setlength{\parindent}{0pt}%
@@ -2027,7 +1972,7 @@
   % #2 = width in % of textwidth
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
-  % \@validate@string{#1}{full,name}{@ntprintpersonsasonecolumn}%
+  % \@check@instring{#1}{full,name}{@ntprintpersonsasonecolumn}%
   \csuse{#3stringpost}():=?{:\\[2pt]}%
   \csuse{#3namepost}():=?{{\\}}%
   \csuse{#3remainderpre}():=?{{\\[-2pt]}}%
@@ -2058,7 +2003,7 @@
   % #2 = adviser | committee
   % #3 = {a,c} | {c,r,a,m,g}
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3]}\NTPRINTPERSONSASTWOCOLUMNS
-  % \@validate@string{#1}{full,name}{@ntprintpersonsasonecolumn}%
+  % \@check@instring{#1}{full,name}{@ntprintpersonsasonecolumn}%
   \csuse{#2stringpost}():=?{:&}%
   \csuse{#2remainderpre}():=?{{\\[-2pt]}}%
   \personpost():=?{\\[2pt]}%
@@ -2074,6 +2019,7 @@
       \datadefault{#2titlestringpost}()%
     }{}%
     \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{2}{#2}}}{\expanded{#3}}%
+    % \@for\myx:={#3}\do{\@nt@ntprintpersongroup[#1]{2}{#2}{\myx}}%
   \end{tabularx}%
 }
 
@@ -2083,7 +2029,7 @@
   % #3 = {adviser | committee}
   % #4 = {a,c} | {c,r,a,m,g}
   \ifoptiondefined{/@nt/#3/#4/full}{%
-  % \typeout{NTPRINTPERSONGROUP 1=[#1] 2=[#2] 3=[#3] 4=[#4]}%\aaa
+    % \typeout{NTPRINTPERSONGROUP 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\NTPRINTPERSONGROUP
     \@nt@reducegender{/@nt/#3/#4/gender}{\@nt@advgender}%
     \@nt@reducenumber{/@nt/#3/#4/full}{\@nt@advnumber}%
     \datadefault{#3stringpre}(#4)%
@@ -2101,7 +2047,7 @@
       }%
     \end{minipage}%
     \thepersongrouppost()%
-  }{}%
+  }{\ClassError{novathesis}{ntprintpersongroup: undefined [/@nt/#3/#4/full]}{}}%
 }
 
 
@@ -2548,8 +2494,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \providecommand\thepresentationtext{%
   \thedissertationstringfont()%
-  \ifdatadefined{dissertationstring}(\@DOCTYPE,\@LANG@COVER){%
-    \thedissertationstring(\@DOCTYPE,\@LANG@COVER)%
+  \ifdatadefined{dissertationstring}(\@DOCCLASS,\@LANG@COVER){%
+    \thedissertationstring(\@DOCCLASS,\@LANG@COVER)%
   }{%
     \thedissertationstring(\@DOCCLASS,\@LANG@COVER)%
   }%
