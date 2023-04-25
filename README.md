@@ -23,6 +23,7 @@
 ## Table of Contents
 
 * [About](#about)
+* [News](news---version-700)
 * [Getting Started](#getting-started)
 	* [With a Local LaTeX Installation](#with-a-local-latex-installation)
 	* [With a Remote Cloud-based Service](#with-a-remote-cloud-based-service)
@@ -55,6 +56,25 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
     * Currently supports +20 Schools, drawing the covers and typesetting the text according to the rules  of each School.
 
 *This work is licensed under the LaTeX Project Public License v1.3c. To view a copy of this license, visit the [LaTeX project public license](https://www.latex-project.org/lppl/lppl-1-3c/).*
+
+--------
+## NEWS - Version 7.0.0
+
+#### NEW:
+- Support for [Universidade do Minho](https://www.uminho.pt/PT) final covers;
+- Basic support for languages using non-Latin alphabet (e.g., Greek);
+- Support for “Index” (_Índice Remissivo_ in Portuguese);
+- Support for ULISBOA/FMV;
+- Support for NOVA/IMS - _Master in Advanced Analytics_;
+- Support for NOVA/IMS - _Master in Geographical Information Systems and Science_;
+- Support for user-defined covers.
+
+#### BETTER:
+- Lots of minor bugfixes;
+- Fixing compilation with “xelatex” for all the schools (except NOVA/ITQB).
+
+#### FASTER:
+- Faster compilation.
 
 --------
 ## Getting Started
