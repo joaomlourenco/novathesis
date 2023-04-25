@@ -2030,25 +2030,27 @@
 \newcommand{\@nt@printgrouptitle@text}[2]{%
   % #1 = {adviser | committee}
   % #2 = {a,c} | {c,r,a,m,g}
+\ifoptiondefined{/@nt/#1/#2/full}{%
     \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
     \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
     \bgroup%
       \datadefault{#1stringfont}(#2)%
       \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
     \egroup%
+  }{}%
 }
 
 \newcommand{\@nt@printgrouptitle}[2]{%
   % #1 = {adviser | committee}
   % #2 = {a,c} | {c,r,a,m,g}
-    \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
-    \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
-    \datadefault{#1stringpre}(#2)%
-    \bgroup%
-      \datadefault{#1stringfont}(#2)%
-      \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
-    \egroup%
-    \datadefault{#1stringpost}(#2)%
+  \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
+  \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
+  \datadefault{#1stringpre}(#2)%
+  \bgroup%
+    \datadefault{#1stringfont}(#2)%
+    \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
+  \egroup%
+  \datadefault{#1stringpost}(#2)%
 }
 
 \newcommand{\@nt@ntprintpersongroup}[4][full]{%
