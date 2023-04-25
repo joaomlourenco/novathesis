@@ -396,7 +396,7 @@
   % \advisertitlestringfont():={\bfseries}%
   \adviserstringfont():={\bfseries}%
   \begin{minipage}[t]{0.48\textwidth}
-    \IfStrEq{\@covernumber}{2-1}%
+    \IfStrEq{\@COVERNUM}{2-1}%
       {\ifdocfinal{\ntprintpersons[name]{1}{1}{committee}{\thecommitteeorder()}\mbox{}}{\mbox{}}}%
       {\mbox{}}
   \end{minipage}%
