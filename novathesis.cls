@@ -1425,8 +1425,8 @@
 
 \newcommand{\debuggrid}[1][orange]{%
   \begin{tikzpicture}[remember picture, semitransparent, overlay, shift=(current page.north west)]%
-    \draw[step=1mm, line width=0.1mm, #1!30!white, yscale=-1] (\@nt@margin@left, \@nt@margin@top)
-              grid (\paperwidth-\@nt@margin@right, \paperheight-\@nt@margin@bottom);
+    \draw[step=1mm, line width=0.1mm, #1!30!white, yscale=-1] (\\@MRGN@left, \\@MRGN@top)
+              grid (\paperwidth-\\@MRGN@right, \paperheight-\\@MRGN@bottom);
     \draw[step=5mm, line width=0.2mm, #1!40!white] (current page.north west)
               grid (current page.south east);
     \draw[step=1cm, line width=0.3mm, #1!90!white] (current page.north west)
@@ -1576,7 +1576,7 @@
   % #2 = box name
   % \typeout{NTMAKEBOXWITHCOVER 1=[#1]}\NTMAKEBOXWITHCOVER%
   \@for\myi:={top,bottom,left,right}\do{%
-    \expandafter\datamatch\csname @nt@margin@\myi\endcsname{margin}(%
+    \expandafter\datamatch\csname \@MRGN@\myi\endcsname{margin}(%
       {cover,\@DOCTYPE,\@DEGREEACR,#1,\myi},%
       {cover,\@DOCCLASS,\@DEGREEACR,#1,\myi},%
       {cover,\@DEGREEACR,#1,\myi},%
@@ -1600,8 +1600,8 @@
     \node[inner sep=0, anchor=north]  at (current page.north)
             {\usebox{\@cover@image@box}};
     \node[inner sep=0, anchor=north west,
-          xshift=\@nt@margin@left,
-          yshift=-\@nt@margin@top] at (current page.north west)
+          xshift=\\@MRGN@left,
+          yshift=-\\@MRGN@top] at (current page.north west)
       {\usebox{\@cover@text@box}};
   \end{tikzpicture}%
   \ifoptioncontains{/novathesis/debug}{cover}{%
@@ -1660,16 +1660,15 @@
 \newcommand{\@ntmakecovertext}[2]{%
     % #1 = cover ID (major-minor)
     % #2 = box name
-    \defifundef{#2}{\newsavebox}%
-    \ifoptiondefined{/@nt/cover/\@UNIV/\@SCHL/#1}{%
+  \defifundef{#2}{\newsavebox}%
+  \ifoptiondefined{/@nt/cover/\@UNIV/\@SCHL/#1}{%
     \begin{lrbox}{#2}%
-    \begin{minipage}[l]%
-    [\dimexpr\paperheight-\@nt@margin@top-\@nt@margin@bottom]%
-    {\dimexpr\paperwidth-\@nt@margin@left-\@nt@margin@right}%
-    \@ntcovertext{#1}%
-    \end{minipage}%
+      \begin{minipage}[l][\dimexpr\paperheight-\\@MRGN@top-\\@MRGN@bottom]%
+                      {\dimexpr\paperwidth-\\@MRGN@left-\\@MRGN@right}%
+        \@ntcovertext{#1}%
+      \end{minipage}%
     \end{lrbox}%
-    }{}%
+  }{}%
 }
 
 \newcommand{\@ntcovertext}[1]{%

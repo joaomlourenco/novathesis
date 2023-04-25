@@ -188,25 +188,25 @@
 
 
 \ntaddtocover{1-1}{%
-  \datamatch{\@nt@margin@top}{margin}({cover,\option{/novathesis/doctype},1-1,top},%
+  \datamatch{\\@MRGN@top}{margin}({cover,\option{/novathesis/doctype},1-1,top},%
                                        {cover,\option{/@nt/document/docclass},1-1,top},%
                                        {cover,1-1,top},
                                        {cover,\option{/novathesis/doctype},top},%
                                        {cover,\option{/@nt/document/docclass},top},%
                                        {cover,top})%
-  % \datamatch{\@nt@margin@bottom}{margin}({cover,\option{/novathesis/doctype},#1,bottom},%
+  % \datamatch{\\@MRGN@bottom}{margin}({cover,\option{/novathesis/doctype},#1,bottom},%
   %                                    {cover,\option{/@nt/document/docclass},#1,bottom},%
   %                                    {cover,\option{/novathesis/doctype},bottom},%
   %                                     {cover,#1,bottom},
   %                                    {cover,\option{/@nt/document/docclass},bottom},%
   %                                    {cover,bottom})%
-  \datamatch{\@nt@margin@left}{margin}({cover,\option{/novathesis/doctype},1-1,left},%
+  \datamatch{\\@MRGN@left}{margin}({cover,\option{/novathesis/doctype},1-1,left},%
                                        {cover,\option{/@nt/document/docclass},1-1,left},%
                                        {cover,1-1,left},
                                        {cover,\option{/novathesis/doctype},left},%
                                        {cover,\option{/@nt/document/docclass},left},%
                                        {cover,left})%
-  \datamatch{\@nt@margin@right}{margin}({cover,\option{/novathesis/doctype},1-1,right},%
+  \datamatch{\\@MRGN@right}{margin}({cover,\option{/novathesis/doctype},1-1,right},%
                                        {cover,\option{/@nt/document/docclass},1-1,right},%
                                        {cover,1-1,right},
                                        {cover,\option{/novathesis/doctype},right},%
@@ -215,36 +215,36 @@
     % Text in rectangle
   \setbox0=\hbox{\scalebox{2.15}{\bfseries\thentdocdate(year)}}
   \begin{tikzpicture}[remember picture, overlay,
-                      shift=(current page.north west), xshift=\@nt@margin@left]
+                      shift=(current page.north west), xshift=\\@MRGN@left]
     % Logo at top-left
-    \node [inner sep=0pt, anchor=north west, xshift=0, yshift=-\@nt@margin@top]
+    \node [inner sep=0pt, anchor=north west, xshift=0, yshift=-\\@MRGN@top]
                     {\includegraphics[height=2.0cm]{nova-itqb-logo}};
     % Date at top-right
     \node [inner sep=0pt,anchor=north east,
-           xshift=\paperwidth-\@nt@margin@left-8.5mm,
-           yshift=-\@nt@margin@top-3.5mm,
+           xshift=\paperwidth-\\@MRGN@left-8.5mm,
+           yshift=-\\@MRGN@top-3.5mm,
            color={\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},front,date)}}]
                     {\rotatebox{90}{\makebox[0pt][l]%
                                {\raisebox{\dimexpr\ht0+7pt}{\rule{\wd0}{2pt}}}\box0}};
     % Title
-    \node [inner sep=0pt, anchor=south west, yshift=-\@nt@margin@top-43mm]
+    \node [inner sep=0pt, anchor=south west, yshift=-\\@MRGN@top-43mm]
                     {\fontsize{21.5}{21.5}\selectfont%
-                     \parbox{\dimexpr\paperwidth-\@nt@margin@left-\@nt@margin@right}%
+                     \parbox{\dimexpr\paperwidth-\\@MRGN@left-\\@MRGN@right}%
                             {\textbf{\thedoctitle(\@LANG@COVER,main,cover)}}};
     % Subtitle
-    \node [inner sep=0pt, anchor=south west, yshift=-\@nt@margin@top-54.3mm]
+    \node [inner sep=0pt, anchor=south west, yshift=-\\@MRGN@top-54.3mm]
                     {\fontsize{21}{21}\selectfont%front.pdf
-                     \parbox{\paperwidth-\@nt@margin@left-\@nt@margin@right}%
+                     \parbox{\paperwidth-\\@MRGN@left-\\@MRGN@right}%
                             {\@resizetowidth{\linewidth}%
                                             {\thedoctitle(\@LANG@COVER,sub)}}};
     % Author
-    \node [inner sep=0pt, anchor=west, yshift=-\@nt@margin@top-64.5mm]
+    \node [inner sep=0pt, anchor=west, yshift=-\\@MRGN@top-64.5mm]
                     {\fontsize{18}{18}\selectfont\textbf{\thedocauthor(name)}};
     % Photo
     \edef\@itqbheight{\theregion(photo,height)}
     \draw [path picture={\node at (path picture bounding box.center)
                     {\includegraphics[height=\@itqbheight]{nova-itqb-photo}};},
-                    rounded corners=1.25cm, xshift=-\@nt@margin@left]
+                    rounded corners=1.25cm, xshift=-\\@MRGN@left]
                     ({\theregion(photo,left)},\theregion(photo,top))
                     rectangle
                     (\expanded{\theregion(photo,left)+\theregion(photo,width)},
@@ -263,7 +263,7 @@
                     {\fontsize{13}{13}\selectfont
                      \mbox{O}eiras, \thentdocdate(month), \thentdocdate(year)};
     % Rectangle
-    \fill [xshift=-\@nt@margin@left,
+    \fill [xshift=-\\@MRGN@left,
            \expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},front,rectangle)}]
                    (\theregion(itqb,left),{\theregion(itqb,top)})
                 -- (\theregion(itqb,right),{\theregion(itqb,top)})
