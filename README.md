@@ -71,6 +71,7 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
 - Support for user-defined covers. (7.0.0)
 
 #### BETTER:
+- Improved printing of advisers and committee. (7.0.1)
 - Lots of minor bugfixes; (7.0.0)
 - Fixing compilation with “xelatex” for all the schools (except NOVA/ITQB). (7.0.0)
 
