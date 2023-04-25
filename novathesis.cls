@@ -1425,8 +1425,8 @@
 
 \newcommand{\debuggrid}[1][orange]{%
   \begin{tikzpicture}[remember picture, semitransparent, overlay, shift=(current page.north west)]%
-    \draw[step=1mm, line width=0.1mm, #1!30!white, yscale=-1] (\\@MRGN@left, \\@MRGN@top)
-              grid (\paperwidth-\\@MRGN@right, \paperheight-\\@MRGN@bottom);
+    \draw[step=1mm, line width=0.1mm, #1!30!white, yscale=-1] (\@MRGN@left, \@MRGN@top)
+              grid (\paperwidth-\@MRGN@right, \paperheight-\@MRGN@bottom);
     \draw[step=5mm, line width=0.2mm, #1!40!white] (current page.north west)
               grid (current page.south east);
     \draw[step=1cm, line width=0.3mm, #1!90!white] (current page.north west)
@@ -1576,7 +1576,7 @@
   % #2 = box name
   % \typeout{NTMAKEBOXWITHCOVER 1=[#1]}\NTMAKEBOXWITHCOVER%
   \@for\myi:={top,bottom,left,right}\do{%
-    \expandafter\datamatch\csname \@MRGN@\myi\endcsname{margin}(%
+    \expandafter\datamatch\csname @MRGN@\myi\endcsname{margin}(%
       {cover,\@DOCTYPE,\@DEGREEACR,#1,\myi},%
       {cover,\@DOCCLASS,\@DEGREEACR,#1,\myi},%
       {cover,\@DEGREEACR,#1,\myi},%
@@ -1600,8 +1600,8 @@
     \node[inner sep=0, anchor=north]  at (current page.north)
             {\usebox{\@cover@image@box}};
     \node[inner sep=0, anchor=north west,
-          xshift=\\@MRGN@left,
-          yshift=-\\@MRGN@top] at (current page.north west)
+          xshift=\@MRGN@left,
+          yshift=-\@MRGN@top] at (current page.north west)
       {\usebox{\@cover@text@box}};
   \end{tikzpicture}%
   \ifoptioncontains{/novathesis/debug}{cover}{%
@@ -1612,49 +1612,49 @@
 }
 
 \newcommand*{\@ntmakecoverbgcolor}[2]{%
-    % #1 = cover ID (major-minor)
-    % #2 = box name
-    \defifundef{#2}{\newsavebox}%
-    \datamatchtf{\match}{thesiscover}(%
-      {\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
-     ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
-     ,{\@DEGREEACR,#1,bgcolor}%
-     ,{\@DEGREEACR,bgcolor}%
-     ,{\@DOCTYPE,#1,bgcolor}%
-     ,{\@DOCCLASS,#1,bgcolor}%
-     ,{#1,bgcolor}%
-     ,{bgcolor}%
-    ){\savebox{#2}{\@ntcoverbgcolor{#1}{\match}}}{}%
+  % #1 = cover ID (major-minor)
+  % #2 = box name
+  \defifundef{#2}{\newsavebox}%
+  \datamatchtf{\match}{thesiscover}(%
+    {\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
+   ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
+   ,{\@DEGREEACR,#1,bgcolor}%
+   ,{\@DEGREEACR,bgcolor}%
+   ,{\@DOCTYPE,#1,bgcolor}%
+   ,{\@DOCCLASS,#1,bgcolor}%
+   ,{#1,bgcolor}%
+   ,{bgcolor}%
+  ){\savebox{#2}{\@ntcoverbgcolor{#1}{\match}}}{}%
 }
 
 \newcommand*{\@ntcoverbgcolor}[2]{%
-    % #1 = cover ID (major-minor)
-    % #2 = color
-    \begingroup%
-    \color{#2}%
-    \NTRunHook{cover/#1/bgcolor/pre}%
-    \rule{\paperwidth}{\paperheight}%
-    \NTRunHook{cover/#1/gcolor/post}%
-    \endgroup%
+  % #1 = cover ID (major-minor)
+  % #2 = color
+  \begingroup%
+  \color{#2}%
+  \NTRunHook{cover/#1/bgcolor/pre}%
+  \rule{\paperwidth}{\paperheight}%
+  \NTRunHook{cover/#1/gcolor/post}%
+  \endgroup%
 }
 
 \newcommand*{\@ntmakecoverimage}[2]{%
-    % #1 = cover ID (major-minor)
-    % #2 = box name
-    \NTRunHook{cover/#1/image/pre}%
-    \defifundef{#2}{\newsavebox}%
-    \datamatchtf{\match}{thesiscover}(%
-      {\@DOCTYPE,\@DEGREEACR,#1,image}%
-     ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
-     ,{\@DEGREEACR,#1,image}%
-     ,{\@DEGREEACR,image}%
-     ,{\@DOCTYPE,#1,image}%
-     ,{\@DOCCLASS,#1,image}%
-     ,{#1,image}%
-     ,{image}%
-    ){\savebox{#2}{\includegraphics[width=\paperwidth,height=\paperheight]{\match}}}{}%
-    \ifdatadefined{thesiscover}(phd,1-1,bgcolor){}{}%
-    \NTRunHook{cover/#1/image/post}%
+  % #1 = cover ID (major-minor)
+  % #2 = box name
+  \NTRunHook{cover/#1/image/pre}%
+  \defifundef{#2}{\newsavebox}%
+  \datamatchtf{\match}{thesiscover}(%
+    {\@DOCTYPE,\@DEGREEACR,#1,image}%
+   ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
+   ,{\@DEGREEACR,#1,image}%
+   ,{\@DEGREEACR,image}%
+   ,{\@DOCTYPE,#1,image}%
+   ,{\@DOCCLASS,#1,image}%
+   ,{#1,image}%
+   ,{image}%
+  ){\savebox{#2}{\includegraphics[width=\paperwidth,height=\paperheight]{\match}}}{}%
+  \ifdatadefined{thesiscover}(phd,1-1,bgcolor){}{}%
+  \NTRunHook{cover/#1/image/post}%
 }
 
 \newcommand{\@ntmakecovertext}[2]{%
@@ -1663,8 +1663,8 @@
   \defifundef{#2}{\newsavebox}%
   \ifoptiondefined{/@nt/cover/\@UNIV/\@SCHL/#1}{%
     \begin{lrbox}{#2}%
-      \begin{minipage}[l][\dimexpr\paperheight-\\@MRGN@top-\\@MRGN@bottom]%
-                      {\dimexpr\paperwidth-\\@MRGN@left-\\@MRGN@right}%
+      \begin{minipage}[l][\dimexpr\paperheight-\@MRGN@top-\@MRGN@bottom]%
+                      {\dimexpr\paperwidth-\@MRGN@left-\@MRGN@right}%
         \@ntcovertext{#1}%
       \end{minipage}%
     \end{lrbox}%
@@ -1673,9 +1673,9 @@
 
 \newcommand{\@ntcovertext}[1]{%
     % #1 = cover ID (major-minor)
-    \NTRunHook{cover/#1/text/pre}%
-    \optionlistdo{/@nt/cover/\@UNIV/\@SCHL/#1}{\@ntcoverelement@iii{#1}##1}%
-    \NTRunHook{cover/#1/text/post}%
+  \NTRunHook{cover/#1/text/pre}%
+  \optionlistdo{/@nt/cover/\@UNIV/\@SCHL/#1}{\@ntcoverelement@iii{#1}##1}%
+  \NTRunHook{cover/#1/text/post}%
 }
 
 \def\@ntcoverelement@iii#1#2\@nil#3{%
