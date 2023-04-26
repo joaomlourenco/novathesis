@@ -31,22 +31,31 @@
 
 % Redefine strings
 \dissertationstring(bsc,pt)={Relatório para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
+\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
 \dissertationstring(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
+\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
 \dissertationstring(msc,pt)={Dissertação para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
+\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
 \dissertationstring(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
+\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
 \dissertationstring(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
+\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
 \dissertationstring(phd,pt)={Dissertação para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
+\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
 
+\dissertationstring(bsc,en)={Report to obtain the Degree of %
+\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationstring(mscplan,en)={Intermediate dissertation to obtain the Degree of %
+\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationstring(msc,en)={Dissertation to obtain the Degree of %
+\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationstring(phdplan,en)={Thesis plan to obtain the Degree of %
+\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationstring(phdprop,en)={Thesis proposal to obtain the Degree of %
+\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationstring(phd,en)={Thesis to obtain the Degree of %
+\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtEndPreamble{%
   \LoadHelveticaLikeFont%
   % \RequirePackage{gillius2}%
@@ -58,6 +67,11 @@
 \NTAddToHook{cover/2-1/text/pre}{%
   \sffamily%
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ntresetcovers
 
 % LOGO
 \ntaddtocover[halign=r,vspace=0cm]{1-1,2-1}{%
@@ -87,7 +101,7 @@
   \adviserstringfont(a):={\bfseries}%
   \adviserstringfont(c):={\bfseries}%
   \fontsize{12}{12}\selectfont%
-  \ntprintpersons{0.65}{2}{adviser}{a,c}%
+  \ntprintpersons{0.65}[r]{2}{adviser}{a,c}%
 }
 
 
