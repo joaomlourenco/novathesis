@@ -148,7 +148,7 @@
 
 \newdata{validprocessor}
 \validprocessor(uminho):={lua,xe}
-\validprocessor(nova/itqb):={pdf,lua}
+% \validprocessor(nova/itqb):={pdf,lua}
 \validprocessor(other/esep):={xe,lua}
 \newcommand{\@validate@processor}[2]{%
 % 1 = UNIV
