@@ -128,8 +128,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{NOVAthesisFiles/options2}
 
-% --------------------------------------------------------
-% PROCESS PACKAGE OPTIONS
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PACKAGE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\splitbyslash#1/#2\relax#3#4{\edef#3{#1}\edef#4{#2}}
 
 \def\@nt@saveabstractorder{}
@@ -144,30 +146,30 @@
   }%
 }
 
-\newdata{processor}
-\processor(uminho):={lua,xe}
-\processor(nova/itqb):={pdf,lua}
-\processor(other/esep):={xe,lua}
+\newdata{validprocessor}
+\validprocessor(uminho):={lua,xe}
+\validprocessor(nova/itqb):={pdf,lua}
+\validprocessor(other/esep):={xe,lua}
 \newcommand{\@validate@processor}[2]{%
 % 1 = UNIV
 % 2 = SCHL
   % \typeout{@validate@processor 1=[#1] 2=[#2]}\@VALIDATE@PROCESSOR
-  \newif\ifprocessor%
-  \processorfalse%
-  \ifdatadefined{processor}(#1/#2){\@validate@processor@i{\theprocessor(#1/#2)}}{%
-  \ifdatadefined{processor}(#1){\@validate@processor@i{\theprocessor(#1)}}{%
-    \processortrue%
+  \newif\ifvalidprocessor%
+  \validprocessorfalse%
+  \ifdatadefined{processor}(#1/#2){\@validate@processor@i{\thevalidprocessor(#1/#2)}}{%
+  \ifdatadefined{processor}(#1){\@validate@processor@i{\thevalidprocessor(#1)}}{%
+    \validprocessortrue%
   }}%
-  \ifprocessor\else\ClassError{novathesis}{\pdfprocessor: Invalid processor for “#1/#2”.}{}\fi%
+  \ifvalidprocessor\else\ClassError{novathesis}{\pdfprocessor: Invalid processor for “#1/#2”.}{}\fi%
 }
 \newcommand{\@validate@processor@i}[1]{%
 % 1 = list of acceptable processors
   \@for\myi:=\expanded{#1}\do{%
     % \typeout{@validate@processor@i 1=[\myi]}\@VALIDATE@PROCESSOR@I
     \IfStrEqCase{\myi}{%
-      {pdf}{\ifpdftex\processortrue\fi}%
-      {lua}{\ifluatex\processortrue\fi}%
-      {xe}{\ifxetex\processortrue\fi}%
+      {pdf}{\ifpdftex\validprocessortrue\fi}%
+      {lua}{\ifluatex\validprocessortrue\fi}%
+      {xe}{\ifxetex\validprocessortrue\fi}%
     }[\ClassError{novathesis}{Invalid processor type “\myi”}{}]%
   }%
 }
@@ -263,12 +265,6 @@
   \IfInteger{#1}{\pgfcalendarmonthname{#1}}{#1}%
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% CHECK IF USING LUALATEX OR XELATEX
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\ifxeorlua}{\ifboolexpr{bool{luatex} or bool{xetex}}}
-\newcommand{\ifxetexorluatex}{\iftutex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GENERAL PURPOSE MACROS
@@ -862,6 +858,22 @@
 \options{/@nt/lang/loaded/.expanded=\@LANG@LOADED}
 % \typeout{LANGLOADED=\@LANG@LOADED}\LANG@LOADED
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% CHECK IF USING LUALATEX OR XELATEX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\ifxeorlua}{\ifboolexpr{bool{luatex} or bool{xetex}}}
+\newcommand{\ifxetexorluatex}{\iftutex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifxetexorluatex  % xelatex or lualatex
+  \RequirePackage[no-math]{fontspec}%
+  \defaultfontfeatures{Ligatures=TeX}
+\else% pdflatex
+  \RequirePackage[T1]{fontenc}    % Use new T1 fonts
+  % \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
+\fi
+
 % --------------------------------------------------------
 % BABEL STUFF
 % \options{/@nt/lang/shorttolong=\@LANG@MAIN}%
@@ -1211,16 +1223,6 @@
 \RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ifxetexorluatex  % xelatex or lualatex
-  \RequirePackage{fontspec}%
-  \defaultfontfeatures{Ligatures=TeX}
-\else% pdflatex
-  \RequirePackage[T1]{fontenc}    % Use new T1 fonts
-  % \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
-\fi
-
-
 % --------------------------------------------------------
 % Customize the pagestyle
 \makepagestyle{novathesis@mainmatter}
@@ -1381,6 +1383,7 @@
 
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% DEBUG - print grid over covers and spine
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1533,6 +1536,7 @@
   \clearpage%
 }
 
+\newcommand{\@covertikzlist}{}
 \newcommand{\@ntmakeboxwithcover}[2]{%
   % #1 = cover ID (major-minor)
   % #2 = box name
@@ -1561,6 +1565,7 @@
             {\usebox{\@cover@bgcolor@box}};
     \node[inner sep=0, anchor=north]  at (current page.north)
             {\usebox{\@cover@image@box}};
+    \@ifmtarg{\@covertikzlist}{\VOID}{\@covertikzlist}
     \node[inner sep=0, anchor=north west,
           xshift=\@MRGN@left,
           yshift=-\@MRGN@top] at (current page.north west)
@@ -1586,10 +1591,10 @@
    ,{\@DOCCLASS,#1,bgcolor}%
    ,{#1,bgcolor}%
    ,{bgcolor}%
-  ){\savebox{#2}{\@ntcoverbgcolor{#1}{\match}}}{}%
+  ){\savebox{#2}{\@ntcoverbgcolor@i{#1}{\match}}}{}%
 }
 
-\newcommand*{\@ntcoverbgcolor}[2]{%
+\newcommand*{\@ntcoverbgcolor@i}[2]{%
   % #1 = cover ID (major-minor)
   % #2 = color
   \begingroup%
@@ -1635,8 +1640,9 @@
 
 \newcommand{\@ntcovertext}[1]{%
   % #1 = cover ID (major-minor)
+  % \typeout{@NTCOVERTEXT 1=[#1]}\@NTCOVERTEXT%
   \NTRunHook{cover/#1/text/pre}%
-  \optionlistdo{/@nt/cover/\@UNIV/\@SCHL/#1}{\@ntcoverelement@iii{#1}##1}%
+    \optionlistdo{/@nt/cover/\@UNIV/\@SCHL/#1}{\@ntcoverelement@iii{#1}##1}%
   \NTRunHook{cover/#1/text/post}%
 }
 
@@ -1644,32 +1650,38 @@
   % #1 = cover ID (major-minor)
   % #2 = cover element options
   % #3 = cover element code
-  % \typeout{[#1] [#2]}\xxxx
   \ifblank{#3}{}{%
     \options{/@ntcoveropts, defaults, #2, alignmap=\option{/@ntcoveropts/halign}}%
-    \defifundef{\ifmatchstatus}{\newif}%
-    \defifundef{\ifmatchdegree}{\newif}%
-    \matchstatustrue%
-    \matchdegreetrue%
-    \if&\option{/@ntcoveropts/status}&\relax%
-    \else%
-      \if\instring{,\@DOCSTATUS,}{,\option{/@ntcoveropts/status},}%
+    % \typeout{@ntcoverelement@iii 1=[#1] 2=[#2] tikz=\option{/@ntcoveropts/tikz}}\@NTCOVERELEMENT@III
+    \iftoggle{/@ntcoveropts/tikz}{%
+      % \typeout{TIKZ ADD [/@nt/cover/\@UNIV/\@SCHL/#1/tikz]}\TIKZ%
+      \gappto{\@covertikzlist}{#3}%
+      % \optionlistdo{{\option{/@nt/cover/\@UNIV/\@SCHL/#1/tikz}}}{\typeout{##1}\VVVVVVV}
+    }{%
+      \defifundef{\ifmatchstatus}{\newif}%
+      \defifundef{\ifmatchdegree}{\newif}%
+      \matchstatustrue%
+      \matchdegreetrue%
+      \if&\option{/@ntcoveropts/status}&\relax%
       \else%
-        \matchstatusfalse%
+        \if\instring{,\@DOCSTATUS,}{,\option{/@ntcoveropts/status},}%
+        \else%
+          \matchstatusfalse%
+        \fi%
       \fi%
-    \fi%
-    \if&\option{/@ntcoveropts/degree}&\relax%
-    \else%
-      \if\instring{/\@DOCCLASS/}{/\option{/@ntcoveropts/degree}/}%
+      \if&\option{/@ntcoveropts/degree}&\relax%
       \else%
-        \matchdegreefalse%
+        \if\instring{/\@DOCCLASS/}{/\option{/@ntcoveropts/degree}/}%
+        \else%
+          \matchdegreefalse%
+        \fi%
       \fi%
-    \fi%
-    \ifmatchstatus%
-      \ifmatchdegree%
-        \@ntcoverelement@ii{#1}{#3}%
+      \ifmatchstatus%
+        \ifmatchdegree%
+          \@ntcoverelement@ii{#1}{#3}%
+        \fi%
       \fi%
-    \fi%
+    }%
   }%
 }
 
@@ -1727,6 +1739,8 @@
   color/.new color,
   % background color for the box (default = transparent)
   bgcolor/.new color,
+  % tikz cover elements
+  tikz/.new toggle,
   % default values
   defaults/.new style*={,
                   vspace=0pt,
@@ -1738,9 +1752,8 @@
                   height={}, height/phd={}, height/msc={},
                   minheight=0pt, width={}, hspace=0pt,
                   newpar=true, color={}, bgcolor={},
+                  tikz=false,
   }
-  % set defaults
-, defaults
 }
 
 \newcommand{\@ntcovervspace}[1]{%
@@ -2579,12 +2592,14 @@
 \ifcsdef{chs@\option{/novathesis/style/chapter}}{%
   \chapterstyle{\option{/novathesis/style/chapter}}%
 }{%
-  \InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/style/chapter}.ldf}{}{%
-      \ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/style/chapter}}{}%
-  }%
+  \InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/style/chapter}.ldf}{}%
+                    {\ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/style/chapter}}{}}%
 }
-\InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/style/font}.ldf}{}{%
-    \ClassError{novathesis}{Invalid Font Style: \option{/novathesis/style/font}}{}%
+\IfFileExists{\option{/novathesis/style/font}.sty}{%
+  \RequirePackage{\option{/novathesis/style/font}}%
+}{%
+  \InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/style/font}.ldf}{}%
+      {\ClassError{novathesis}{Invalid Font Style: \option{/novathesis/style/font}}{}}%
 }
 
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}

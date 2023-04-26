@@ -92,14 +92,14 @@
 % BORDER
 \newcommand{\borderwidth}{4pt}
 \newcommand{\bordermargin}{3mm}
+\definecolor{ulhtblue}{RGB}{16,49,84}%
 \usetikzlibrary{calc}
-\ntaddtocover{1-1,2-1}{%
-  \definecolor{ulhtblue}{RGB}{16,49,84}%
-  \tikz[overlay, remember picture]
-      \draw [line width = \borderwidth,
-             color = ulhtblue]
-             ($(current page.north west)+(\bordermargin,-\bordermargin)$)
-             rectangle ($(current page.south east)+(-\bordermargin,\bordermargin)$);
+
+\ntaddtocover[tikz]{1-1,2-1}{%
+  \draw [line width = \borderwidth,
+         color = ulhtblue]
+         ($(current page.north west)+(\bordermargin,-\bordermargin)$)
+         rectangle ($(current page.south east)+(-\bordermargin,\bordermargin)$);
 }
 
 % LOGO
@@ -155,14 +155,14 @@
 
 
 % Committee — only print the committee for the main classes
-\ntaddtocover[vspace=1]{2-1}{%
-  \ifmaindoc{%
-    \committeetitlestringfont():={\fontsize{14}{14}\selectfont\bfseries}%
-    \committeestringfont():={\bfseries}%
-    \fontsize{12}{12}\selectfont%
-    \ntprintpersons{0.9}{2}{committee}{\thecommitteeorder()}%
-  }{}%
-}
+% \ntaddtocover[vspace=1]{2-1}{%
+%   \ifmaindoc{%
+%     \committeetitlestringfont():={\fontsize{14}{14}\selectfont\bfseries}%
+%     \committeestringfont():={\bfseries}%
+%     \fontsize{12}{12}\selectfont%
+%     \ntprintpersons[name]{0.9}{2}{committee}{\thecommitteeorder()}%
+%   }{}%
+% }
 
 
 % School
@@ -174,7 +174,7 @@
 }
 
 % Date
-\ntaddtocover[vspace=2]{1-1,2-1}{%
+\ntaddtocover[vspace=3.3cm]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont\bfseries%
     Lisboa\\\thentdocdate(year)%
 }
