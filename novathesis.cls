@@ -1798,7 +1798,7 @@
   \defifundef{\ifheightopt}{\newif}%
   \heightoptfalse%
   \ntfor\myh:={height/\@DOCTYPE,height/\@DOCCLASS,height}\do{%
-    \ifoptionblank{/@ntcoveropts/\myh}{}{%
+    \ifoptionvoid{/@ntcoveropts/\myh}{}{%
       \edefoption{/@ntcoveropts/\myh}\@mkcvelemheight\heightopttrue\ntforbreak%
     }%
   }%
