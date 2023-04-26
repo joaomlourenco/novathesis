@@ -88,17 +88,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \AtEndPreamble{%
-  % \LoadHelveticaLikeFont%
-  % \RequirePackage{gillius2}%
-% }
-
-% \NTAddToHook{cover/1-1/text/pre}{%
-%   \sffamily%
-% }
-% \NTAddToHook{cover/2-1/text/pre}{%
-%   \sffamily%
-% }
 
 % BORDER
 \newcommand{\borderwidth}{4pt}
@@ -115,7 +104,8 @@
 
 % LOGO
 \ntaddtocover[halign=c,valign=t,vspace=-3mm,height=1.4cm]{1-1,2-1}{%
-  \ifcovernum{1-1}{\includegraphics[width=6.3cm,align=t]{\theuniversity(logo)}}{\includegraphics[width=0cm,align=t]{\theuniversity(logo)}}%
+  \ifcovernum{1-1}{\includegraphics[width=6.3cm,align=t]{\theuniversity(logo)}}%
+                  {\includegraphics[width=0cm,align=t]{\theuniversity(logo)}}%
 }
 
 % Author name
@@ -171,8 +161,7 @@
     \committeestringfont():={\bfseries}%
     \fontsize{12}{12}\selectfont%
     \ntprintpersons{0.9}{2}{committee}{\thecommitteeorder()}%
-  }%
-  {}%
+  }{}%
 }
 
 
