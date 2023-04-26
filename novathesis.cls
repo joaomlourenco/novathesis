@@ -1155,6 +1155,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% COVER DEFINITION MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\ntresetcovers}{%
+  \@for\arg:={1-1,1-2,2-1,2-2,N-1,N-2}\do{%
+    \option@setnil{/@nt/cover/\@UNIV/\@SCHL/\arg}%
+  }%
+}
+
 \newcommand*{\ntaddtocover}[3][]{%
   % #1 = cover atrtibutes
   % #2 = list of covers where the code block should be applied
