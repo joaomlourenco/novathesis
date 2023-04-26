@@ -187,7 +187,7 @@
 }
 
 
-\ntaddtocover{1-1}{%
+\ntaddtocover[tikz]{1-1}{%
   \datamatch{\@MRGN@top}{margin}({cover,\option{/novathesis/doctype},1-1,top},%
                                        {cover,\option{/@nt/document/docclass},1-1,top},%
                                        {cover,1-1,top},
@@ -214,8 +214,7 @@
                                        {cover,right})%
     % Text in rectangle
   \setbox0=\hbox{\scalebox{2.15}{\bfseries\thentdocdate(year)}}
-  \begin{tikzpicture}[remember picture, overlay,
-                      shift=(current page.north west), xshift=\@MRGN@left]
+  \begin{scope}[shift=(current page.north west), xshift=\@MRGN@left]
     % Logo at top-left
     \node [inner sep=0pt, anchor=north west, xshift=0, yshift=-\@MRGN@top]
                     {\includegraphics[height=2.0cm]{nova-itqb-logo}};
@@ -278,12 +277,12 @@
                   {\color{white}INSTITUTO DE TECNOLOGIA QUÍMICA E BIOLÓGICA }
                   {\color{itqbgray207}ANTÓNIO XAVIER}
                   {\color{white}$|$ UNIVERSIDADE NOVA DE LISBOA}};
-  \end{tikzpicture}
+  \end{scope}
 }
 
-\ntaddtocover{N-2}{%
+\ntaddtocover[tikz]{N-2}{%
   \setbox0=\hbox{\scalebox{2}{\bfseries\thentdocdate(year)}}
-  \begin{tikzpicture}[remember picture, overlay, shift=(current page.north west)]
+  \begin{scope}[shift=(current page.north west)]
     % Filling back cover
     \fill [color={\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},back)}}]
                     (0,0) rectangle (\paperwidth,-\paperheight);
@@ -305,5 +304,5 @@
                     {\fontsize{12.3}{12.3}\selectfont
                      \theschool(address)};
     \end{scope}
-  \end{tikzpicture}
+  \end{scope}
 }
