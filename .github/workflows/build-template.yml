@@ -42,5 +42,5 @@ jobs:
           git config --global user.email "$EMAIL_GITHUB"
           git config --global user.name "$USERNAME_GITHUB"
           git add -f template.pdf
-          git commit -m "Version $version"
+          git commit -m "Version $(grep novathesisversion NOVAthesisFiles/nt-version.sty | cut -d '{' -f3 | cut -d '}' -f1)"
           git push
