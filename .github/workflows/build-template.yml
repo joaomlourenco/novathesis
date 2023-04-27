@@ -38,6 +38,7 @@ jobs:
           path: template.pdf
       - name: Push changes to the repository
         run: |
+          version=$(grep novathesisversion $VERSION_FILE | cut -d "{" -f3 | cut -d "}" -f1)
           git config --global user.email "$EMAIL_GITHUB"
           git config --global user.name "$USERNAME_GITHUB"
           git add -f template.pdf
