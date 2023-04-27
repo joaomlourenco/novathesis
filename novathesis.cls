@@ -2599,11 +2599,11 @@
   \InputIfFileExists{NOVAthesisFiles/ChapStyles/\option{/novathesis/style/chapter}.ldf}{}%
                     {\ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/style/chapter}}{}}%
 }
-\IfFileExists{\option{/novathesis/style/font}.sty}{%
-  \RequirePackage{\option{/novathesis/style/font}}%
-}{%
-  \InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/style/font}.ldf}{}%
-      {\ClassError{novathesis}{Invalid Font Style: \option{/novathesis/style/font}}{}}%
+\InputIfFileExists{NOVAthesisFiles/FontStyles/\option{/novathesis/style/font}.ldf}{}{%
+  % else
+  \IfFileExists{\option{/novathesis/style/font}.sty}%
+    {\RequirePackage{\option{/novathesis/style/font}}}%
+    {\ClassError{novathesis}{Invalid Font Style: \option{/novathesis/style/font}}{}}%
 }
 
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
