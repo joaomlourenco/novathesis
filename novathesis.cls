@@ -1983,6 +1983,15 @@
 %============================================================
 % Print persons list {advisers | committee} as one and two columns
 %============================================================
+\newcommand{\@ntgetmaxlen}[2]{%
+  \defifundef{\stringlen}{\newdimen}%
+  \defifundef{\maxlen}{\newdimen}%
+  \setlength{\maxlen}{0pt}%
+  \@for\myx:=\expanded{#1}\do{%
+    \setlength{\stringlen}{\widthof{\@nt@printgrouptitle@text{#2}{\myx}~~}}%
+    \ifdim\stringlen>\maxlen\relax\setlength{\maxlen}{\stringlen}\fi%
+  }%
+}
 \newcommand{\@ntprintpersonsasonecolumn}[4]{%
   % #1 = { full | name }
   % #2 = width in % of textwidth
@@ -1995,6 +2004,7 @@
   \personpost():=?{\\[2pt]}%
   \persongrouppost():=?{\\[7pt]}
   \committeetitlestringpost():=?{\\[5pt]}%
+  \@ntgetmaxlen{#3}{#2}%
   \begin{tabularx}{#2\linewidth}[t]{@{}L@{}}%
     \ifdatadefined{#3titlestring}(\@LANG@COVER){%
       \datadefault{#3titlestringpre}()%
@@ -2027,13 +2037,7 @@
   \committeetitlestringpre():=?{&}%
   \committeetitlestringpost():=?{\\[5pt]}%
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS
-  \defifundef{\stringlen}{\newdimen}%
-  \defifundef{\maxlen}{\newdimen}%
-  \setlength{\maxlen}{0pt}%
-  \@for\myx:=\expanded{#3}\do{%
-    \setlength{\stringlen}{\widthof{\@nt@printgrouptitle@text{#2}{\myx}~~}}%
-    \ifdim\stringlen>\maxlen\relax\setlength{\maxlen}{\stringlen}\fi%
-  }%
+  \@ntgetmaxlen{#3}{#2}%
   \begin{tabular}[t]{@{}r@{~~}l@{}}%
     \ifdatadefined{#2titlestring}(\@LANG@COVER){%
       \datadefault{#2titlestringpre}()%
