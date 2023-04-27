@@ -50,15 +50,21 @@ xe lua: $(S)
 v view: $(T)
 	$(V) $(T)
 
-.PHONY: verb verbose
-verb verbose:
+.PHONY: vv verb verbose
+vv verb verbose:
 	$(L) -pdf $(B)
 
 .PHONY: $(TEXVERSIONS)
 $(TEXVERSIONS):
 	hash -r
-	PATH="$(wildcard /usr/local/texlive/$@/bin/*-darwin/):$(PATH)" $(L) $(X) $(SILENT) -pdf $(B)
+	PATH="$(wildcard /usr/local/texlive/$@/bin/*-darwin/):$(PATH)" make $(filter-out mik,$(MAKECMDGOALS))
 
+.PHONY: mik
+mik:
+	hash -r
+	# echo $(filter-out mik,$(MAKECMDGOALS))
+	PATH="$(HOME)/bin:$(PATH)" make $(filter-out mik,$(MAKECMDGOALS))
+	
 .PHONY: zip
 zip:
 	rm -f "$(ZIPTARGET)"
