@@ -1,9 +1,12 @@
-
 # Created by https://www.toptal.com/developers/gitignore/api/latex,windows,linux,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=latex,windows,linux,macos
 
-### NOVAthesis specific ###
-**/Fonts
+### NOVAthesis template ###
+
+# Ignore all template files…
+template.*
+# …except template.tex
+!template.tex
 
 ### LaTeX ###
 ## Core latex/pdflatex auxiliary files:
@@ -28,6 +31,9 @@
 # *.ps
 # *.eps
 # *.pdf
+
+# NOVAthesis keywords aux files
+*.k??
 
 ## Generated if empty string is given at "Please type another file name for output:"
 .pdf
@@ -120,9 +126,12 @@ acs-*.bib
 *.glsdefs
 *.lzo
 *.lzs
-
+*.chg
+*.cho
+*.chs
 # uncomment this for glossaries-extra (will ignore makeindex's style files!)
-# *.ist
+*.ist
+!ntindexstyle.ist
 
 # gnuplottex
 *-gnuplottex-*
@@ -377,9 +386,7 @@ $RECYCLE.BIN/
 ### Fonts ###
 **/Fonts
 
-
-### NOVATHESIS ###
-Scripts
-NOVAthesisFiles
+### Scripts ###
+**/Scripts
 
 # End of https://www.toptal.com/developers/gitignore/api/latex,windows,linux,macos
