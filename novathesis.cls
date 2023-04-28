@@ -418,7 +418,7 @@
 % --------------------------------------------------------
 % Check if the document is of a specific class, i.e., bsc, msc, phd or main
 \newcommand{\ifdocclass}[1]{\ifoptionequal{/@nt/document/docclass}{#1}}
-\newcommand{\ifmaindoc}{\ifoptioncontains{/@nt/document/docmain}{\@DOCCLASS}}
+\newcommand{\ifmaindoc}{\ifoptioncontains{/@nt/document/docmain}{\@DOCTYPE}}
 \newcommand{\ifphddoc}{\ifdocclass{phd}}
 \newcommand{\ifmscdoc}{\ifdocclass{msc}}
 \newcommand{\ifbscdoc}{\ifdocclass{bsc}}
@@ -483,7 +483,7 @@
   %         #2=file family (quote, abstract, chapter, etc)
   %         #3=optional file lang
   %         #4=filename
-  % \typeout{NT ADDTOLIST [#1] [#2] [#3] [#4]}%
+  \typeout{NT ADDTOLIST [#1] [#2] [#3] [#4]}%
   \StrLeft{#4}{1}[\@nt@firstchar]%
   \IfStrEqCase{\@nt@firstchar}{%
     {/}{\xdef\@nt@filewithpath{#4}}%
@@ -1299,7 +1299,7 @@
 \AtEndPreamble{\makeatletter\NTRunHook{list_of/pre}\input{Config/6_list_of}\NTRunHook{list_of/post}}
 
 \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
-\optionlistdo{/@nt/file/bib/\@DOCCLASS}{%
+\optionlistdo{/@nt/file/bib/\@DOCTYPE}{%
   % \typeout{ADDBIB=#1}\ADDBIB
   \addbibresource{#1}%
 }%
@@ -1318,13 +1318,13 @@
 
 \newcommand{\@ntloadfile@i}[2][]{\IfFileExists{#2}{\input{#2}}{#1}}
 
-\newcommand{\@ntloadfiles@ii}[2][\@DOCCLASS]{%
+\newcommand{\@ntloadfiles@ii}[2][\@DOCTYPE]{%
   % #1=KEY
   % #2=file class
   \iffileadded[#1]{#2}{\@nt@loadallfiles{#1}{#2}}{}%
 }
 
-\newcommand{\iffileadded}[2][\@DOCCLASS]{\ifoptiondefined{/@nt/file/#2/#1}}
+\newcommand{\iffileadded}[2][\@DOCTYPE]{\ifoptiondefined{/@nt/file/#2/#1}}
 
 % --------------------------------------------------------
 % LOAD A DEFAULT COPYRIGHT PAGE DEFINITION
@@ -1334,7 +1334,7 @@
 % #3 = file name
 % #4 = dir list
 % #5 = action if not found [OPTIONAL]
-  \@ifnextchar[{\@nt@AddFileIfExists@i{#1}}{\@nt@AddFileIfExists@i{#1}[\@DOCCLASS]}%
+  \@ifnextchar[{\@nt@AddFileIfExists@i{#1}}{\@nt@AddFileIfExists@i{#1}[\@DOCTYPE]}%
 }
 
 \def\@nt@AddFileIfExists@i#1[#2]#3#4{%
@@ -1671,7 +1671,7 @@
       \fi%
       \if&\option{/@ntcoveropts/degree}&\relax%
       \else%
-        \if\instring{/\@DOCCLASS/}{/\option{/@ntcoveropts/degree}/}%
+        \if\instring{/\@DOCTYPE/}{/\option{/@ntcoveropts/degree}/}%
         \else%
           \matchdegreefalse%
         \fi%
@@ -2549,8 +2549,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \providecommand\thepresentationtext{%
   \thedissertationstringfont()%
-  \ifdatadefined{dissertationstring}(\@DOCCLASS,\@LANG@COVER){%
-    \thedissertationstring(\@DOCCLASS,\@LANG@COVER)%
+  \ifdatadefined{dissertationstring}(\@DOCTYPE,\@LANG@COVER){%
+    \thedissertationstring(\@DOCTYPE,\@LANG@COVER)%
   }{%
     \thedissertationstring(\@DOCCLASS,\@LANG@COVER)%
   }%
