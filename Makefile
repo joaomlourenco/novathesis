@@ -17,7 +17,7 @@ DATE:=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(
 ZIPTARGET:=$(B)-$(VERSION)@$(DATE).zip
 AUXFILES:=$(shell ls $(B)*.* | fgrep -v .tex | fgrep -v $(B).pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
 
-LUA="other/esep uminho/ea uminho/ec uminho/ed uminho/ee uminho/eeg uminho/em uminho/ep uminho/ese uminho/ics uminho/ie uminho/ilch uminho/i3b"
+LUA="other/esep uminho/ea uminho/ec uminho/ed uminho/ee uminho/eeg uminho/elach uminho/em uminho/ep uminho/ese uminho/ics uminho/ie uminho/i3b"
 SCHL=$(shell grep -v "^%" Config/1_novathesis.tex | grep "ntsetup{school=" | cut -d "=" -f 2 | cut -d "}" -f 1)
 ifeq ($(SCHL),)
 	SCHL=nova/fct
@@ -31,7 +31,7 @@ default:
 ifeq ($(findstring $(SCHL),$(LUA)),)
 	make pdf
 else
-	make lua
+	make xe
 endif
 
 
