@@ -61,10 +61,8 @@
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\NeedsTeXFormat{LaTeX2e}[2019-10-01]
 \ProvidesClass{novathesis}[2023-05-04 novathesis template]
-
-\NeedsTeXFormat{LaTeX2e}[2020-10-01]
+\NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 
 %============================================================
@@ -513,7 +511,8 @@
   % #1=lang {pt, en, fr, it}
   \gdef\@LSHORT{#1}%
   \xdef\@LLONG{\thelanglong(#1)}%
-  \selectlanguage{\@LLONG}%
+  % \typeout{NTSELECTLANG [#1 / \@LLONG]}%
+  \expandnext{\selectlanguage}{\@LLONG}%
 }
 
 
