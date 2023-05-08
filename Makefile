@@ -57,13 +57,13 @@ vv verb verbose:
 .PHONY: $(TEXVERSIONS)
 $(TEXVERSIONS):
 	hash -r
-	PATH="$(wildcard /usr/local/texlive/$@/bin/*-darwin/):$(PATH)" make $(filter-out mik,$(MAKECMDGOALS))
+	PATH="$(wildcard /usr/local/texlive/$@/bin/*-darwin/):$(PATH)" make $(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: mik
 mik:
 	hash -r
 	# echo $(filter-out mik,$(MAKECMDGOALS))
-	PATH="$(HOME)/bin:$(PATH)" make $(filter-out mik,$(MAKECMDGOALS))
+	PATH="$(HOME)/bin:$(PATH)" make $(filter-out $@,$(MAKECMDGOALS))
 	
 .PHONY: zip
 zip:
