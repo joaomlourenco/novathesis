@@ -8,6 +8,13 @@
 
 \typeout{NT FILE chapter3.tex}%
 
+\makeatletter
+\newcommand{\ntifpkgloaded}{%
+  \@ifpackageloaded%
+}
+\makeatother
+
+
 \chapter{A Short \LaTeX\ Tutorial with Examples}
 \label{cha:a_short_latex_tutorial_with_examples}
 
@@ -300,28 +307,38 @@ b\\
 c\\
 \end{eqnarray}
 
+\newif\ifntlistingsloaded
+\ntifpkgloaded{listings}{\ntlistingsloadedtrue}{\ntlistingsloadedfalse}
+\newif\ifntmintedloaded
+\ntifpkgloaded{minted}{\ntmintedloadedtrue}{\ntmintedloadedfalse}
+
+\ifntlistingsloaded
 \section{Test for listings} % (fold)
 \label{sec:test_for_listings}
 
 Testing the package “listings“…
 
-% \begin{lstlisting}[caption=cap,label=lst:lab,float=htbp]
-%   if(a==b)
-%     puts("YESS!")
-% \end{lstlisting}
+\begin{lstlisting}[caption=cap,label=lst:lab,float=htbp]
+if(a==b)
+  puts("YESS!")
+\end{lstlisting}
+\fi
+
+\ifntmintedloaded
+\section{Test for minted} % (fold)
+\label{sec:test_for_minted}
 
 Testing the package “minted“…
 
-% \begin{listing}[H]
-%   \begin{minted}{C}
-%   if(a==b)
-%     puts("YESS!")
-%   \end{minted}
-%   \caption{Example of a listing.}
-%   \label{lst:lab}
-% \end{listing}
-
-Blah…
+\begin{listing}[H]
+  \begin{minted}{C}
+    if(a==b)
+      puts("YESS!")
+  \end{minted}
+  \caption{Example of a listing.}
+  \label{lst:lab}
+\end{listing}
+\fi
 
 \section{Test for algorithms}
 \label{sec:test_for_algorithms}

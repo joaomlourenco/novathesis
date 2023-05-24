@@ -42,6 +42,8 @@
 
 \addto\captionsportuguese{%
   \defineshorthand{"-}{\babelhyphen{repeat}}% generates a hyphen that will repeat on a new line
+  \renewcommand{\listingscaption}{Listagem}
+  \renewcommand{\listoflistingscaption}{Índice de Listagens}
 }
 
 \ntlangsetup*{pt/contents=Índice}
@@ -51,13 +53,14 @@
 \ntlangsetup*{pt/lstlistlisting=Índice de Listagens}
 \ntlangsetup*{pt/listoflistingscaption=Índice de Listagens}
 \ntlangsetup*{pt/lstlisting=Listagem}
+\ntlangsetup*{pt/listingscaption=Listagem}
 \ntlangsetup*{pt/annex=Anexo}
 \ntlangsetup*{pt/annexpl=Anexos}
 \ntlangsetup*{pt/appendixpl=Apêndices}
 
-\ntlangsetup*{en/lstlistlisting=List of Listings}%
-\ntlangsetup*{en/listoflistingscaption=List of Listings}%
-\ntlangsetup*{en/lstlisting=Listing}%
+% \ntlangsetup*{en/lstlistlistingname=List of Listings}%
+% \ntlangsetup*{en/listoflistingscaption=List of Listings}%
+% \ntlangsetup*{en/lstlisting=Listing}%
 \ntlangsetup*{en/annex=Annex}
 \ntlangsetup*{en/annexpl=Annexes}
 \ntlangsetup*{en/appendixpl=Appendices}
