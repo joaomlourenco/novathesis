@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2023-05-04 [7.0.2]
+%% Version 2023-05-24 [7.0.3]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -61,7 +61,7 @@
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ProvidesClass{novathesis}[2023-05-04 novathesis template]
+\ProvidesClass{novathesis}[2023-05-24 novathesis template]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 
@@ -800,40 +800,6 @@
 \RequirePackage{bookmark}%
 % \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
 
-%--------------------------------
-% “glossasries” stuff - after hyperref
-\ifoptioncontains{/novathesis/lang/extra}{gr}{%
-  \PassOptionsToPackage{xindy={language=\@LANG@MAIN@LONG}}{glossaries-extra}
-}{}
-
-\RequirePackage[%
-  % , nonumberlist
-  translate=babel,
-  acronym,           % add acronyms listing
-  symbols,           % add symbols listing
-  % sanitizesort=false, % allow \gls inside descriptions
-  % xindy={language=\@LANG@MAIN@LONG},
-  nolong,
-  nosuper,
-  nolist,
-  notree,
-  nostyles,
-  automake,
-]{glossaries-extra}% To create glossaries
-\RequirePackage{NOVAthesisFiles/glossary-xltabular}%
-\setglossarystyle{xltabular}%
-\setabbreviationstyle[acronym]{long-short}%
-\GlsXtrEnablePreLocationTag{\emph{(\small p.~}}{\emph{(\small pp.~}}
-\patchcmd{\@gls@automake@immediate}{-I xindy}{-q -I xindy}{}{}
-% \renewcommand{\gls@automake@makegloss}{makeglossaries -q}%
-\renewcommand{\GlsXtrFormatLocationList}[1]{\emph{\small#1)}}
-\renewcommand{\glsnamefont}[1]{\textbf{#1}}%
-
-%--------------------------------
-% “Process gnumberlist” option - after glossaries
-\iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}%
-\AtEndPreamble{\@loadglossaryfiles\makeglossaries}%
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Include strings for all the languages
@@ -892,6 +858,43 @@
 
 \input{NOVAthesisFiles/fix-babel.tex}
 
+
+%--------------------------------
+% “glossasries” stuff - after hyperref
+\ifoptioncontains{/novathesis/lang/extra}{gr}{%
+  \PassOptionsToPackage{xindy={language=\@LANG@MAIN@LONG}}{glossaries-extra}
+}{}
+
+\RequirePackage[%
+  % , nonumberlist
+  translate=babel,
+  acronym,           % add acronyms listing
+  symbols,           % add symbols listing
+  % sanitizesort=false, % allow \gls inside descriptions
+  % xindy={language=\@LANG@MAIN@LONG},
+  nolong,
+  nosuper,
+  nolist,
+  notree,
+  nostyles,
+  automake,
+]{glossaries-extra}% To create glossaries
+\RequirePackage{NOVAthesisFiles/glossary-xltabular}%
+\setglossarystyle{xltabular}%
+\setabbreviationstyle[acronym]{long-short}%
+\GlsXtrEnablePreLocationTag{\emph{(\small p.~}}{\emph{(\small pp.~}}
+\patchcmd{\@gls@automake@immediate}{-I xindy}{-q -I xindy}{}{}
+% \renewcommand{\gls@automake@makegloss}{makeglossaries -q}%
+\renewcommand{\GlsXtrFormatLocationList}[1]{\emph{\small#1)}}
+\renewcommand{\glsnamefont}[1]{\textbf{#1}}%
+
+%--------------------------------
+% “Process gnumberlist” option - after glossaries
+\iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}%
+\AtEndPreamble{\@loadglossaryfiles\makeglossaries}%
+
+%--------------------------------
+% TIKZ
 \RequirePackage{tikz}
 
 %%%%% Fine tuning of typesetting

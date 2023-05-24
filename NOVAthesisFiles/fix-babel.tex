@@ -42,8 +42,10 @@
 
 \addto\captionsportuguese{%
   \defineshorthand{"-}{\babelhyphen{repeat}}% generates a hyphen that will repeat on a new line
-  \renewcommand{\listingscaption}{Listagem}
-  \renewcommand{\listoflistingscaption}{Índice de Listagens}
+  \@ifpackageloaded{minted}{%
+    \renewcommand{\listingscaption}{Listagem}%
+    \renewcommand{\listoflistingscaption}{Índice de Listagens}%
+  }%
 }
 
 \ntlangsetup*{pt/contents=Índice}
