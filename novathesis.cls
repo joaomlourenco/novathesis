@@ -777,7 +777,8 @@
 
 %--------------------------------
 % “biblatex” stuff
-\ntaddfile{bib}{./NOVAthesisFiles/fix-bib.bib}%
+\AtEndPreamble{\ntaddfile{bib}{./NOVAthesisFiles/fix-bib.bib}}
+% \ntaddfile{bib}{./NOVAthesisFiles/fix-bib.bib}%
 % \AtEndDocument{\nocite{novathesis-manual}}%
 % \letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
 % \RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
@@ -1029,6 +1030,7 @@
 %============================================================
 % Adding list_of
 \newcommand*{\ntaddlistof}[2][]{%
+  % \typeout{NTADDLISTOF 1=[#1] 2=[#2]}\NTADDLISTOF%
   \IfStrEqCase{#2}{%
     {tableofcontents}{\options{/@nt/list/listof/.newpush={%
             \iftoggle{/novathesis/tocintoc}{\tableofcontents}%
@@ -1043,6 +1045,9 @@
     {listoflistings}{\options{/@nt/list/listof/.newpush={%
             \pdfbookmark{\listoflistingscaption}{loltarget}%
             \hypertarget{loltarget}{\listoflistings}}}}%
+    {lstlistoflistings}{\options{/@nt/list/listof/.newpush={%
+            \pdfbookmark{\lstlistlistingname}{loltarget}%
+            \hypertarget{loltarget}{\lstlistoflistings}}}}%
     {listofalgorithms}{\options{/@nt/list/listof/.newpush = {%
             \listofalgorithms
             \ifdefined\listalgorithmname%
