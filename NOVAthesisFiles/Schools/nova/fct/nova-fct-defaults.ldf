@@ -114,9 +114,12 @@
 
 
 \newdata{dissertationplan}
-\dissertationplan(mscplan):={Dissertation Plan\\[1pt]}
-\dissertationplan(phdplan):={Thesis Plan\\[1pt]}
-\dissertationplan(phdprop):={Thesis Proposal\\[1pt]}
+\dissertationplan(mscplan,en):={Dissertation Plan}
+\dissertationplan(phdplan,en):={Thesis Plan}
+\dissertationplan(phdprop,en):={Thesis Proposal}
+\dissertationplan(mscplan,pt):={Plano de Dissertação}
+\dissertationplan(phdplan,pt):={Plano de Tese}
+\dissertationplan(phdprop,pt):={Proposta de Tese}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -181,7 +184,7 @@
 % Date
 \ntaddtocover[vspace=1,halign=l]{1-1}{%
   \fontsize{14}{13}\selectfont%
-  \ifmaindoc{}{\thedissertationplan(\option{/novathesis/doctype})}%
+  \ifmaindoc{}{\thedissertationplan(\@DOCTYPE,\@LANG@COVER)\\[1pt]}%
   % \ifoptionequal{/novathesis/doctype}{mscplan}{Dissertation Plan\\[1pt]}{}%
   \THEdegreename(\@LANG@COVER)%
   {\ifdatadefined{specialization}(\@LANG@COVER){%
@@ -253,7 +256,8 @@
 % Date
 \ntaddtocover[vspace=1,halign=l]{2-1}{%
   \fontsize{10}{10}\selectfont%
-  \ifoptionequal{/novathesis/doctype}{mscplan}{Dissertation Plan\\[1pt]}{}%
+  \ifmaindoc{}{\thedissertationplan(\@DOCTYPE,\@LANG@COVER)\\[1pt]}%
+  % \ifoptionequal{/novathesis/doctype}{mscplan}{Dissertation Plan\\[1pt]}{}%
   \THEdegreename(\@LANG@COVER)
   {\ifdatadefined{specialization}(\@LANG@COVER){%
   \fontsize{8}{9}\selectfont
