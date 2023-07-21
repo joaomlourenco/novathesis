@@ -183,6 +183,7 @@
   docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
   media/.new choice             = {screen, paper},
   spine/.new choice             = {unset, no, full, trim},
+  spine/width/.new length       = {2cm},
   % abstract/deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
   % abstract/theorder/.new list   = {unset},
   abstractorder/.new cmd        = {\appto\@nt@saveabstractorder{{#1},}},%

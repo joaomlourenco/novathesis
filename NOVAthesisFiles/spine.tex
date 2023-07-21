@@ -100,9 +100,13 @@
   \sffamily%
   \normalsize%
   \newlength{\novathesis@spinewidth}%
-  \setlength{\novathesis@spinewidth}{\dimexpr1mm * (\thelastsheet+ 19) / 20}%
-  \ifdim\novathesis@spinewidth < 6mm\relax% Force book spine to be at least 6mm
-    \setlength{\novathesis@spinewidth}{6mm}%
+  \ifdim\option{/novathesis/spine/width}=0pt\relax%
+    \setlength{\novathesis@spinewidth}{\dimexpr1mm * (\thelastsheet+ 19) / 20}%
+    \ifdim\novathesis@spinewidth < 6mm\relax% Force book spine to be at least 6mm
+      \setlength{\novathesis@spinewidth}{6mm}%
+    \fi%
+  \else%
+    \setlength{\novathesis@spinewidth}{\option{/novathesis/spine/width}}
   \fi%
   \newlength{\novathesis@boxwidth}%
   \setlength{\novathesis@boxwidth}{\dimexpr\novathesis@spinewidth-1mm}%
