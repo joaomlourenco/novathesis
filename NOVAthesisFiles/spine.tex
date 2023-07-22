@@ -54,15 +54,15 @@
 \spine(box,date,len)=?{2.0cm}
 % \spine(box,lodatego,align)={l}
 
-\spine(logo,\option{/novathesis/doctype},angle)=?{0}
-\spine(logo,\option{/novathesis/doctype},raise)=?{0pt}
-\spine(logo,\option{/novathesis/doctype},scale)=?{1}
+\spine(logo,\@DOCTYPE,angle)=?{0}
+\spine(logo,\@DOCTYPE,raise)=?{0pt}
+\spine(logo,\@DOCTYPE,scale)=?{1}
 
 \spine(logo,angle)=?{0}
 \spine(logo,raise)=?{0pt}
 \spine(logo,scale)=?{1}
 
-\datamatchtf{\match}{thesiscover}({\option{/novathesis/doctype},spine,bgcolor},{spine,bgcolor})%
+\datamatchtf{\match}{thesiscover}({\@DOCTYPE,spine,bgcolor},{spine,bgcolor})%
                 {}%
                 {\thesiscover(spine,framecolor)=?{black!20}}
 
@@ -92,7 +92,7 @@
   }%
 }
 
-\newcommand{\@spinetextcolor}[1]{%\option{/novathesis/doctype},
+\newcommand{\@spinetextcolor}[1]{%\@DOCTYPE,
   \datamatchtf{\arg}{spine}({box,#1,textcolor},{box,textcolor}){\color{\arg}}{}%
 }
 
@@ -200,8 +200,8 @@
   % draw image
     % print bg color IF DEFINED
     \datamatchtf{\arg}{thesiscover}(%
-                      {\option{/novathesis/doctype},spine,bgcolor},%
-                      {\option{/@nt/document/docclass},spine,bgcolor},%
+                      {\@DOCTYPE,spine,bgcolor},%
+                      {\@DOCCLASS,spine,bgcolor},%
                       {spine,bgcolor},%
                       {bgcolor}%
     ){%
@@ -213,8 +213,8 @@
     }{}%
     % print frame IF DEFINED
     \datamatchtf{\arg}{thesiscover}(%
-                      {\option{/novathesis/doctype},spine,framecolor},%
-                      {\option{/@nt/document/docclass},spine,framecolor},%
+                      {\@DOCTYPE,spine,framecolor},%
+                      {\@DOCCLASS,spine,framecolor},%
                       {spine,framecolor},%
                       {framecolor}%
     ){%
@@ -226,8 +226,8 @@
     }{}%
     % print bg image IF DEFINED
     \datamatchtf{\arg}{thesiscover}(%
-                      {\option{/novathesis/doctype},spine,image},%
-                      {\option{/@nt/document/docclass},spine,image},%
+                      {\@DOCTYPE,spine,image},%
+                      {\@DOCCLASS,spine,image},%
                       {spine,image},%
                       {image}%
     ){%
@@ -236,23 +236,23 @@
     }{}%
     % print logo IF DEFINED
     \datamatchtf{\arg}{spine}(%
-                      {logo,\option{/novathesis/doctype}},%
-                      {logo,\option{/@nt/document/docclass}},%
+                      {logo,\@DOCTYPE},%
+                      {logo,\@DOCCLASS},%
                       {logo}%
     ){%
       \datamatchtf{\@angle}{spine}(%
-                        {logo,\option{/novathesis/doctype},angle},%
-                        {logo,\option{/@nt/document/docclass},angle},%
+                        {logo,\@DOCTYPE,angle},%
+                        {logo,\@DOCCLASS,angle},%
                         {logo,angle}%
       ){}{\def\@angle{0}}%
       \datamatchtf{\@scale}{spine}(%
-                        {logo,\option{/novathesis/doctype},scale},%
-                        {logo,\option{/@nt/document/docclass},scale},%
+                        {logo,\@DOCTYPE,scale},%
+                        {logo,\@DOCCLASS,scale},%
                         {logo,scale}%
       ){}{\def\@scale{1}}%
       \datamatchtf{\@raise}{spine}(%
-                        {logo,\option{/novathesis/doctype},raise},%
-                        {logo,\option{/@nt/document/docclass},raise},%
+                        {logo,\@DOCTYPE,raise},%
+                        {logo,\@DOCCLASS,raise},%
                         {logo,raise}%
       ){}{\def\@raise{0pt}}%
       \node[inner sep=0, anchor=center,
