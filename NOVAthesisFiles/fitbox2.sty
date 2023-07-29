@@ -31,7 +31,7 @@
   % \typeout{SPINE DIV2 [{\@wd}] [{\strip@pt\@tempdimc}]}%
   \FPmin\r@tio{\hr@tio}{\vr@tio}%
   % \show\r@tio
-  \edef#1{\r@tio}%
+  % \edef#1{\r@tio}%
   \ignorespaces%
 }
 
@@ -41,10 +41,12 @@
 }
 
 \newcommand{\fitboxmin}[2]{%
-  \gdef#1{99999999}%
+  \gdef\@mymin{99999999}%
   \@for\@fbx:={#2}\do{%
-    \FPmin#1{\@fbx}{#1}%
+    % \typeout{FPMIN \@mymin,\@fbx}
+    \FPmin\@mymin{\@fbx}{\@mymin}%
   }%
+  \FPmin#1{\@mymin}{99999999}%
 }
 
 \newcommand{\fitbox}[3]{%

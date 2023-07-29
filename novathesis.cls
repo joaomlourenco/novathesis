@@ -182,8 +182,8 @@
   doctype/.new choice           = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
   docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
   media/.new choice             = {screen, paper},
-  spine/.new choice             = {unset, no, full, trim},
-  spine/width/.new length       = {2cm},
+  spine/layout/.new choice      = {unset, no, full, trim},
+  spine/width/.new length       = {0pt},
   % abstract/deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
   % abstract/theorder/.new list   = {unset},
   abstractorder/.new cmd        = {\appto\@nt@saveabstractorder{{#1},}},%
@@ -482,7 +482,7 @@
   %         #2=file family (quote, abstract, chapter, etc)
   %         #3=optional file lang
   %         #4=filename
-  \typeout{NT ADDTOLIST [#1] [#2] [#3] [#4]}%
+  % \typeout{NT ADDTOLIST [#1] [#2] [#3] [#4]}%
   \StrLeft{#4}{1}[\@nt@firstchar]%
   \IfStrEqCase{\@nt@firstchar}{%
     {/}{\xdef\@nt@filewithpath{#4}}%
@@ -1097,7 +1097,7 @@
         }%
       }%
     }%
-    \clearforchapter%
+    % \clearforchapter%
     \ignorespaces%
   }%
 }
@@ -1386,7 +1386,7 @@
           ,{NOVAthesisFiles/Schools/\@UNIV/}%
           ,{NOVAthesisFiles/}%
   }[][\ClassError{novathesis}{No “spine” file found.}{}]%
-  \AtEndDocument{\csuse{ntprintspine}}%
+  \AtEndDocument{\clearforchapter\csuse{ntprintspine}}%
 }
 
 
@@ -2332,8 +2332,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Chapters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\ntchapterfile}[1]{\listgadd{\@nt@chapter@list}{#1}}
-
 \newcommand*{\ntprintchapters}{%
     \@nt@foralllist{file}{chapter}{\@ntloadfiles@ii{chapter}}%
 }
@@ -2380,7 +2378,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntprintalllistof}{%
     \NTRunHook{listof/pre}%
-    \optionlistdo{/@nt/list/listof}{##1\clearforchapter}%
+    \optionlistdo{/@nt/list/listof}{\clearforchapter##1}%
     \NTRunHook{listof/post}%
 }
 

@@ -55,7 +55,7 @@
 % \thesiscover(msc,1-1,image):={nova-itqb-cover}
 % \thesiscover(msc,N-2,image):={nova-itqb-cover-back}
 
-\thesiscover(spine,bgcolor)={\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},spine)}
+\spine(bg,color)={\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},spine)}
 % \thesiscover(spine,image)={spine}
 
 
