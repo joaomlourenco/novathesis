@@ -42,7 +42,7 @@
 \spine(default,bg,color):={none}
 \spine(default,frame,color):={black!50}
 \spine(default,text,color):={black}
-\spine(default,text,align):={r}
+\spine(default,text,align):={c}
 \spine(default,margin,top):={1mm}
 \spine(default,margin,bottom):={1mm}
 \spine(default,margin,left):={0.5cm}
@@ -54,7 +54,7 @@
 \spine(default,box,text,color):={black}
 
 \spine(default,box,logo,len):={4.1cm}
-\spine(default,box,logo,align):={l}
+\spine(default,box,logo,align):={c}
 \spine(default,logo,angle):={0}
 \spine(default,logo,raise):={0pt}
 \spine(default,logo,scale):={1}
@@ -62,14 +62,17 @@
 \spine(default,box,logo,margin,right):={0.5cm}
 
 \spine(default,box,author,len):={4.0cm}
+\spine(default,box,author,align):={\thespine(default,text,align)}
 \spine(default,box,author,margin,left):={0pt}
 \spine(default,box,author,margin,right):={0pt}
 
 \spine(default,box,title,len):={16.7cm}
+\spine(default,box,title,align):={\thespine(default,text,align)}
 \spine(default,box,title,margin,left):={0pt}
 \spine(default,box,title,margin,right):={0pt}
 
 \spine(default,box,date,len):={2.0cm}
+\spine(default,box,date,align):={\thespine(default,text,align)}
 \spine(default,box,date,margin,left):={0pt}
 \spine(default,box,date,margin,right):={0pt}
 
@@ -117,6 +120,7 @@
         {order},{angle},{boxsep},{image},{frame,color},{bg,color},{text,color},{text,align},%
         {margin,left},{margin,right},{margin,top},{margin,bottom},%
         {box,margin},{box,bg,color},{box,text,color},%
+        {box,logo,align},{box,author,align},{box,title,align},{box,date,align},%
         {box,logo,len},{box,author,len},{box,title,len},{box,date,len},%
         {box,logo,margin,left},{box,author,margin,left},{box,title,margin,left},{box,date,margin,left},%
         {box,logo,margin,right},{box,author,margin,right},{box,title,margin,right},{box,date,margin,right}%
