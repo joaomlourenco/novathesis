@@ -72,27 +72,12 @@
 \spine(logo,msc,scale)={1}
 \spine(logo,msc,raise)={0.075}
 
-\spine(text,angle)={90}
-\spine(box,textcolor)={white}
+% \spine(text,angle)={90}
+\spine(box,text,color)={white}
 % \spine(box,color)={blue}
-\spine(box,spacing)={0.5cm}
-\spine(box,margin)={0.5mm}
+% \spine(box,spacing)={0.5cm}
+% \spine(box,margin)={0.5mm}
 
-\spine(box,logo,top)={0.0cm}
-\spine(box,logo,len)={4.1cm}
-\spine(box,logo,align)={c}
-
-\spine(box,author,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
-\spine(box,author,len)={4.0cm}
-
-\spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
-\spine(box,title,len)={17.2cm}
-% \spine(box,title,align)={l}
-% \spine(box,author,align)={l}
-
-\spine(box,date,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
-\spine(box,date,len)={1.5cm}
-% \spine(box,lodatego,align)={l}
 
 
 

@@ -1,8 +1,46 @@
 %=================================================================
 % From https://tex.stackexchange.com/questions/26002/fit-text-into-given-box-by-adjusting-the-fontsize
 
-\RequirePackage{fp}
+% \RequirePackage{fp}
 
+\RequirePackage{pbox}
+
+\providecommand*{\DivideLengths}[2]{%
+  \strip@pt\dimexpr\number\numexpr\number\dimexpr#1\relax*65536/\number\dimexpr#2\relax\relax sp\relax
+}
+
+\newsavebox{\@fbbox}
+\newcommand{\fitboxratio}[4]{%
+  % #1 = ratio
+  % #2 = width
+  % #3 = height
+  % #4 = text
+  \@tempdima=\dimexpr#2\relax%
+  % \begin{lrbox}{\@fbbox}#4\end{lrbox}
+  \savebox{\@fbbox}{\pbox{\paperwidth}{#4}}%
+  % \newpage\fbox{\usebox{\@fbbox}}%
+  % \setbox0=\vbox{#4}%
+  \edef\@hratio{\DivideLengths{\@tempdima}{\wd\@fbbox}}%
+  \typeout{FITBOX boxwidth=\the\@tempdima\space textwidth=\the\wd\@fbbox\space hratio=\@hratio}%
+  \@tempdima=\dimexpr#3\relax%
+  \typeout{FITBOX height=\the\@tempdima}%
+  \@tempdimb=\dimexpr\ht\@fbbox+\dp\@fbbox\relax%
+  \edef\@vratio{\DivideLengths{\@tempdima}{\@tempdimb}}%
+  \typeout{FITBOX boxheight=\the\@tempdima\space textheight=\the\@tempdimb\space ratio=\@vratio}%
+  \pgfmathparse{min(\@hratio,\@vratio)}%
+  \typeout{\pgfmathresult}
+% \PAUSETHIS
+  \csedef{#1}{\pgfmathresult}%
+}
+
+\newcommand{\fitboxmin}[2]{%
+  % #1 = minimum (out)
+  % #2 = list (in)
+  \pgfmathparse{min(\expanded{#2})}%
+  \csedef{#1}{\pgfmathresult}%
+}
+
+\endinput
 \newcommand{\fitboxratio}[4]{%
   % #1 = ratio
   % #2 = width

@@ -25,7 +25,8 @@
 
 \spine(author)=?{\thedocauthor(name,short)}
 \ifdatadefined{doctitle}(\@LANG@COVER,sub){%
-  \spine(title)=?{\thedoctitle(\@LANG@COVER,spine): \thedoctitle(\@LANG@COVER,sub)}
+  \spine(title)=?{\thedoctitle(\@LANG@COVER,spine):\\\thedoctitle(\@LANG@COVER,sub)}
+  % \spine(title)=?{aaaaaaaaa\\bbb}
 }{%
   \spine(title)=?{\thedoctitle(\@LANG@COVER,spine)}
 }
@@ -37,25 +38,40 @@
 \spine(default,order):={logo,author,title,date}
 \spine(default,angle):={90}
 \spine(default,boxsep):={0.5cm}
-\spine(default,bg,color):={}
-\spine(default,frame,color):={}
-\spine(default,text,color):={}
+\spine(default,image):={none}
+\spine(default,bg,color):={none}
+\spine(default,frame,color):={black!50}
+\spine(default,text,color):={black}
+\spine(default,text,align):={r}
+\spine(default,margin,top):={1mm}
+\spine(default,margin,bottom):={1mm}
 \spine(default,margin,left):={0.5cm}
-\spine(default,margin,right):={0.5cm}
+\spine(default,margin,right):={0.0cm}
 
 % Defaults for spine boxes
-\spine(default,box,margin):={0pt}
-\spine(default,box,bg,color):={}
-\spine(default,box,text,color):={}
+\spine(default,box,margin):={0.5mm}
+\spine(default,box,bg,color):={none}
+\spine(default,box,text,color):={black}
 
 \spine(default,box,logo,len):={4.1cm}
-\spine(default,box,logo,align):={c}
-\spine(logo,angle):={0}
-\spine(logo,raise):={0pt}
-\spine(logo,scale):={1}
+\spine(default,box,logo,align):={l}
+\spine(default,logo,angle):={0}
+\spine(default,logo,raise):={0pt}
+\spine(default,logo,scale):={1}
+\spine(default,box,logo,margin,left)={0.5cm}
+\spine(default,box,logo,margin,right):={0.5cm}
+
 \spine(default,box,author,len):={4.0cm}
+\spine(default,box,author,margin,left):={0pt}
+\spine(default,box,author,margin,right):={0pt}
+
 \spine(default,box,title,len):={16.7cm}
+\spine(default,box,title,margin,left):={0pt}
+\spine(default,box,title,margin,right):={0pt}
+
 \spine(default,box,date,len):={2.0cm}
+\spine(default,box,date,margin,left):={0pt}
+\spine(default,box,date,margin,right):={0pt}
 
 
 
@@ -98,9 +114,13 @@
 }
 
 \@for\@myitem:={%
-        {order},{angle},{boxsep},{bg,color},{text,color},{margin,left},{margin,right},%
-        {box,margin},{box,bg,color},{box,text,color},{box,logo,len},{box,author,len},{box,title,len},{box,date,len}%    
-}\do{%
+        {order},{angle},{boxsep},{image},{frame,color},{bg,color},{text,color},{text,align},%
+        {margin,left},{margin,right},{margin,top},{margin,bottom},%
+        {box,margin},{box,bg,color},{box,text,color},%
+        {box,logo,len},{box,author,len},{box,title,len},{box,date,len},%
+        {box,logo,margin,left},{box,author,margin,left},{box,title,margin,left},{box,date,margin,left},%
+        {box,logo,margin,right},{box,author,margin,right},{box,title,margin,right},{box,date,margin,right}%
+}\do{
   \@makeeffectife{spine}(\@myitem){,default}
 }
 
@@ -147,8 +167,12 @@
 \newlength{\@displen}
 \newcommand{\displayspinealyout}{
   \@for\@myitem:={%
-          {order},{angle},{boxsep},{bg,color},{text,color},{margin,left},{margin,right},%
-          {box,margin},{box,bg,color},{box,text,color},{box,logo,len},{box,author,len},{box,title,len},{box,date,len}%    
+        {order},{angle},{boxsep},{image},{frame,color},{bg,color},{text,color},{text,align},%
+        {margin,left},{margin,right},{margin,top},{margin,bottom},%
+        {box,margin},{box,bg,color},{box,text,color},%
+        {box,logo,len},{box,author,len},{box,title,len},{box,date,len},%
+        {box,logo,margin,left},{box,author,margin,left},{box,title,margin,left},{box,date,margin,left},%
+        {box,logo,margin,right},{box,author,margin,right},{box,title,margin,right},{box,date,margin,right}%
   }\do{%
     \IfIsDim{\thespine(effective,\@myitem)}{%
       \setlength{\@displen}{\thespine(effective,\@myitem)}
@@ -166,24 +190,33 @@
 % \typeout{SPINELEN[TEMP]=\the\@spinelen}
 % \PAUSETHIS
 
-\newcommand*{\DivideLengths}[2]{%
+\providecommand*{\DivideLengths}[2]{%
   \strip@pt\dimexpr\number\numexpr\number\dimexpr#1\relax*65536/\number\dimexpr#2\relax\relax sp\relax
 }
 
+% If angle is 90 rever the order
+\IfStrEq{\thespine(effective,angle)}{90}{%
+  \def\spineorder{}%
+  \typeout{ORDER BEFORE=\thespine(effective,order)}%
+  \@for\myi:=\expanded{\thespine(effective,order)}\do{%
+    \epreto\spineorder{,\myi}%
+  }%
+  \edef\spineorder{\expandafter\@gobble\spineorder}%
+  \spine(effective,order):={\spineorder}%
+  % \StrGobbleRight{\spineorder}{2}%
+  \typeout{ ORDER AFTER=\thespine(effective,order)}%
+}{}%
+
+% Increase box spacing if necessary
+% Reduce default boxes length and keep given/forces boxes length 
 \newlength{\@newboxsep}
 \ifdim\@spinelen<\paperheight\relax%
   % SPINE boxes do not fill up all the spine, increase spacing
-  \setlength{\@newboxsep}{%
-    \dimexpr ((\paperheight-\@spinelen)+(\expanded{\thespine(effective,boxsep)}*\@spineNBoxes))/\@spineNBoxes\relax
-  }%
-    % \dimexpr{\paperheight-\@spinelen+(\expanded{\thespine(effective,boxsep)}*\@spineNBoxes)/\@spineNBoxes\relax}}%
-  \spine(effective,boxsep):={\the\@newboxsep}%
-\else\ifdim\@spinelen<\paperheight\relax%
-  % reduce default
-  \@foi\myi:=\expanded{\thespine(effective,order)}\do{
-    \ifdatadefined{spine}(box,\myi,len)
-  }%
-\else
+  \@tempdima=\dimexpr\thespine(effective,boxsep)\relax%
+  \typeout{OLD BOXSEP=\the\@tempdima}
+  \@tempdima=\dimexpr((\paperheight-\@spinelen)+(\expanded{\thespine(effective,boxsep)}*\@spineNBoxes))/\@spineNBoxes\relax%
+  \spine(effective,boxsep):={\the\@tempdima}%
+\else\ifdim\@spinelen>\paperheight\relax%
   % SPINE boxes are to large for the spine size, decrease spacing in the not-explictily defined boxes
   \@tempdima=\dimexpr\paperheight-\@spinefixedlen\relax
   % \showthe\@tempdima
@@ -197,14 +230,14 @@
       % Fixed box length, do not touch
     }{%
       % Variable box length, apply ratio
-    \@tempdima=\dimexpr \thespine(effective,box,\myi,len)\relax%
+    \@tempdima=\dimexpr\thespine(effective,box,\myi,len)\relax%
     \typeout{OLD SPINEBOXLEN[\myi]=\the\@tempdima}
     \@tempdima=\dimexpr \@spinevarratio\@tempdima\relax
     \typeout{NEW SPINEBOXLEN[\myi]=\the\@tempdima}
     \spine(effective,box,\myi,len):={\the\@tempdima}
     }%
   }%
-\fi\fi
+\fi\fi%
 
 % \displayspinealyout
 \@getspinelen
@@ -212,7 +245,7 @@
 % \typeout{SPINELEN[FINAL]=\the\@spinelen}
 % \PAUSETHIS
 
-
+% Calculate box[lef], box[len], box[right]
 \@tempdima=\dimexpr\thespine(effective,margin,left)-\thespine(effective,boxsep)\relax%
 \@for\myi:=\expanded{\thespine(effective,order)}\do{
   \@tempdima=\dimexpr\@tempdima+\thespine(effective,boxsep)\relax%
@@ -224,29 +257,32 @@
   \typeout{BOX[\myi,right]=\thespine(effective,box,\myi,right)}
 }%
 
-\datamatchtf{\match}{spine}({\@DOCTYPE,bg,color},{bg,color})%
-                {}%
-                {\spine(frame,color)=?{black!20}}
+% \datamatchtf{\match}{spine}({\@DOCTYPE,bg,color},{\@DOCCLASS,bg,color},{bg,color})%
+%                 {}%
+%                 {\spine(frame,color)=?{black!20}}
 
 \@for\myi:=\expanded{\thespine(effective,order)}\do{%
-  \@tempdima=\dimexpr\thespine(effective,box,\myi,len)-\thespine(effective,box,margin)*2\relax
-  \spine(effective,text,\myi,len):={\the\@tempdima}
-  \typeout{TEXT[\myi,len]=\thespine(effective,text,\myi,len)}  
+  \@tempdima=\dimexpr\thespine(effective,box,\myi,len)\relax
+  \spine(effective,box,\myi,len):={\the\@tempdima}
+  \@tempdima=\dimexpr\@tempdima-\thespine(effective,box,\myi,margin,left)
+                               -\thespine(effective,box,\myi,margin,right)\relax
+  \spine(effective,box,\myi,len2):={\the\@tempdima}
+  \typeout{TEXT[\myi,len]=\thespine(effective,box,\myi,len)}  
+  \typeout{TEXT[\myi,len2]=\thespine(effective,box,\myi,len2)}  
 }
 
 
 \newcommand{\@spinetextalin}[1]{%
-  \raggedright%
-  \IfStrEqCase{\thespine(effective,box,#1,align)}{%
+  \datamatchtf{\arg}{spine}({effective,box,#1,align},{effective,text,align}){}{%
+    \ClassError{novathesis}{Invalid spine text alignment for “#1”}{}%
+  }%
+  \IfStrEqCase{\arg}{%
     {l}{\raggedright}%
     {c}{\centering}%
     {r}{\raggedleft}%
   }%
 }
 
-\newcommand{\@spinetextcolor}[1]{%\@DOCTYPE,
-  \datamatchtf{\arg}{spine}({effective,box,#1,text,color},{effective,box,text,color}){\color{\arg}}{}%
-}
 
 \newcommand{\@setlength}[2]{%
   \defifundef{#1}{\newlength}%
@@ -254,118 +290,229 @@
   \setlength{#1}{\the\@tempdima}%
 }
 
+\newcommand{\ifnotnone}[3][none]{%
+  \IfStrEq{#2}{#1}{}{#3}%
+}
 
 \newcommand{\@ntprintspine}{%
+\ifoptionequal{/novathesis/spine/layout}{none}{}{%
   \parindent=0pt%
   \sffamily%
+  % \huge%
+  \linespread{0.85}%
   \normalsize%
   \ifdim\option{/novathesis/spine/width}=0pt\relax%
-    \ifbool{@openright}{%
-      \@setlength{\@spinewidth}{0.1mm * \thelastsheet}%
-    }{% openany=true
+    % \ifbool{@openright}{%
+    %   \@setlength{\@spinewidth}{0.1mm * \thelastsheet}%
+    % }{% openany=true
       \@setlength{\@spinewidth}{0.05mm * (\thelastsheet+1)}%
-    }%
+    % }%
+    \typeout{NOVATHESIS spine width for \thelastsheet\space pages is \the\@spinewidth!}%
     \ifdim\@spinewidth < 6mm\relax% Force book spine to be at least 6mm
       \typeout{NOVATHESIS spine width was \the\@spinewidth, forcing to 6mm!}%
       \@setlength{\@spinewidth}{6mm}%
     \fi%
   \else%
     \@setlength{\@spinewidth}{\option{/novathesis/spine/width}}%
-    \typeout{NOVATHESIS user forced spine width to \the\@spinewidth!}%
+    \typeout{NOVATHESIS spine width user forced by user to \the\@spinewidth!}%
   \fi%
   \typeout{NOVATHESIS \string\@spinewidth=\the\@spinewidth}%
-  \@setlength{\novathesis@boxwidth}{\@spinewidth-1mm}%
-  \@setlength{\novathesis@spinetextwidth}%
-            {\novathesis@boxwidth-\thespine(effective,box,margin)*2}%
-  \def\@mysep{}%
+  \@setlength{\@thespinewidth}%
+             {\dimexpr\@spinewidth-\thespine(effective,margin,top)-\thespine(effective,margin,bottom)\relax}%
+  \def\@fbratio{9999}
   \@for\myi:=\expanded{\thespine(effective,order)}\do{%
-    \fitboxratio{}{\thespine(effective,text,\myi,len)}{\novathesis@spinetextwidth}%
-                {\thespine(\myi)}%
-    \csedef{@\myi RT}{\r@tio}%
-    % \fitboxmin{\@fbratio}{\@nameuse{@\myi RT}}
-    % \typeout{NOVATHESIS ratio[\myi]=\r@tio}
-    \eappto{\@ratiolist}{\@mysep\csname @\myi RT\endcsname}%
-    \def\@mysep{,}%
+    \IfStrEq{\myi}{logo}{}{%
+      \fitboxratio{@\myi RT}{\thespine(effective,box,\myi,len2)}{\@thespinewidth}{\thespine(\myi)}%
+      % \fitboxmin{\@fbratio}{\@nameuse{@\myi RT}}
+      \typeout{NOVATHESIS RATIO[\myi]=\csuse{@\myi RT}}
+      \pgfmathparse{min(\@fbratio,\csuse{@\myi RT})}
+      \typeout{NOVATHESIS RATIO MIN(\@fbratio,\csuse{@\myi RT})=\pgfmathresult}
+      \edef\@fbratio{\pgfmathresult}
+    }
   }%
-  % \typeout{NOVATHESIS min=\@ratiolist}
-  \fitboxmin{\@fbratio}{\expanded{\@ratiolist}}%
-  % \typeout{NOVATHESIS min=\@fbratio}
-  %
-  % \show\@authorRT
-  % \show\@titleRT
-  % \show\@dateRT
-  % \show\@fbratio
-  %
-  %
-  % \defifundef{\myauthorbox}{\newsavebox}%
-  % \ifdatadefined{spine}(author){%
-  %   \begin{lrbox}{\myauthorbox}%
-  %     \begin{minipage}[c][\novathesis@spinetextwidth][c]{\thespine(effective,text,author,len)}%
-  %         \@spinetextalin{author}%
-  %         \@spinetextcolor{author}%
-  %         \fitboxprint{\@fbratio}{\thespine(author)}%
-  %     \end{minipage}%
-  %   \end{lrbox}%
-  % }{}%
-  % \defifundef{\mytitlebox}{\newsavebox}%%
-  % \ifdatadefined{spine}(title){%
-  %   \begin{lrbox}{\mytitlebox}%
-  %     \begin{minipage}[c][\novathesis@spinetextwidth][c]{\thespine(effective,text,title,len)}%
-  %         \@spinetextalin{title}%
-  %         \@spinetextcolor{title}%
-  %         \fitboxprint{\@fbratio}{\thespine(title)}%
-  %     \end{minipage}%
-  %   \end{lrbox}%
-  % }{}%
-  % \defifundef{\mydatebox}{\newsavebox}%%
-  % \ifdatadefined{spine}(date){%
-  %   \begin{lrbox}{\mydatebox}%
-  %     \begin{minipage}[c][\novathesis@spinetextwidth][c]{\thespine(effective,text,date,len)}%
-  %         \@spinetextalin{date}%
-  %         \@spinetextcolor{date}%
-  %         \fitboxprint{\@fbratio}{\thespine(date)}%
-  %     \end{minipage}%
-  %   \end{lrbox}%
-  % }{}%
-  % \ifoptionvoid{/novathesis/degreeacr}{}{%
-  %   \defifundef{\mydegreeacrbox}{\newsavebox}%%
-  %   \begin{lrbox}{\mydegreeacrbox}%
-  %     \ifdatadefined{spine}(effective,box,degreeacr,len){%
-  %         \@spinetextalin{degreeacr}%
-  %         \@spinetextcolor{degreeacr}%
-  %         \ifdatadefined{degreeacr}(\option{/novathesis/degreeacr}){%
-  %           \fitboxprint{\@fbratio}{\MakeTextUppercase{\thedegreeacr(\option{/novathesis/degreeacr})}}%
-  %         }{%
-  %           \fitboxprint{\@fbratio}{\MakeTextUppercase{\option{/novathesis/degreeacr}}}%
-  %         }
-  %     }{}%
-  %   \end{lrbox}%
-  % }%
-  %
-  % \options{/@ntcoveropts/bookmark=spine}%
+  \typeout{NOVATHESIS RATIO=\@fbratio}
   \currentpdfbookmark{\thebkmstring(spine)}{thespine}%
   \ifoptionequal{/novathesis/spine/layout}{trim}{%
-    \setstocksize{\@spinewidth}{\paperheight}%
-    \settrimmedsize{\stockheight}{\stockwidth}{*}%
-    \setlrmarginsandblock{0pt}{0pt}{*}%
-    \setulmarginsandblock{0pt}{*}{1}%
-    \setheadfoot{0pt}{0pt}%
-    \setheaderspaces{0pt}{*}{*}%
-    \checkandfixthelayout[fixed]%
-    \ifluatex%
-        \pageheight=\@spinewidth% \pageheight=3in
-    \else%
-        \pdfpageheight=\@spinewidth% \pdfpageheight=3in
-    \fi%
-  }{}%
+    \stockwidth=\stockheight%
+    \stockheight=\@spinewidth%
+  }{\ifoptionequal{/novathesis/spine/layout}{full}{%
+    \let\oldstockwidth=\stockwidth
+    \stockwidth=\stockheight%
+    \stockheight=21cm%
+    
+  }{%
+    \ClassError{novathesis}{Unknown page dimensions for “spine/layout=\option{/novathesis/spine/layout}”}
+  }}%
+  \paperwidth=\stockwidth%
+  \paperheight=\stockheight%
+  \setstocksize{\stockheight}{\stockwidth}%
+  \settrimmedsize{\stockheight}{\stockwidth}{*}%
+  % \paperheight=\@spinewidth%
+  \setlrmarginsandblock{0pt}{0pt}{*}%
+  \setulmarginsandblock{0pt}{*}{1}%
+  \setheaderspaces{0pt}{*}{*}%
+  \footskip=0pt%
+  \checkandfixthelayout[fixed]%
+  \ifluatex%
+  \pagewidth=\paperwidth%
+  \pageheight=\paperheight% \pageheight=3in
+  \else%
+  \pdfpagewidth=\paperwidth%
+  \pdfpageheight=\paperheight% \pageheight=3in
+  \fi%
   \thispagestyle{empty}%
   \NTRunHook{spine/pre}%
   % \PAUSETHIS
-  \begin{tikzpicture}[remember picture, overlay,yscale=-1,yshift=-10.75pt]%
-    \draw [draw=black] (0.0,0.0) rectangle (0.1,0.1);
+  % \tikzstyle{box}=[rectangle,draw,fill=black!20,minimum size=1.4em,label={center:ABC}]]
+  \ifoptionequal{/novathesis/spine/layout}{trim}{\@tempdima=0pt}{\@tempdima=\dimexpr(\stockheight-\@spinewidth)/2\relax}%
+  \begin{tikzpicture}[remember picture, overlay,yscale=-1,yshift=-10.75pt+\@tempdima]%
+    % print cover bg color IF DEFINED
+    % \datamatchtf{\arg}{thesiscover}(%
+    %                   {\@DOCTYPE,spine,bgcolor},%
+    %                   {\@DOCCLASS,spine,bgcolor},%
+    %                   {spine,bgcolor},%
+    %                   {\@DOCTYPE,bgcolor},%
+    %                   {\@DOCCLASS,bgcolor},%
+    %                   {bgcolor}%
+    % ){\fill [color=\arg] (0,0) rectangle (\paperwidth,\paperheight);}{}%
+    % print spine bg color IF DEFINED
+    \datamatchtf{\arg}{spine}(%
+                      {effective,\@DOCTYPE,bg,color},%
+                      {effective,\@DOCCLASS,bg,color},%
+                      {effective,bg,color},%
+    ){\ifnotnone{\arg}{\fill [color=\arg] (0,0) rectangle (\paperwidth,\paperheight);}}{%
+      \ClassError{novathesis}{Undefined spine “bg,color”}{}%
+    }%
+    % print frame IF DEFINED
+    \ifoptionequal{/novathesis/spine/layout}{full}{%
+      \datamatchtf{\arg}{spine}(%
+                        {effective,\@DOCTYPE,frame,color},%
+                        {effective,\@DOCCLASS,frame,color},%
+                        {effective,frame,color}%
+      ){\ifnotnone{\arg}{\draw [color=\arg] (0,0) rectangle (\paperwidth-0.4pt,\@spinewidth-0.4pt);}}{%
+        \ClassError{novathesis}{Undefined spine “frame,color”}{}%
+      }%
+    }{}%
+    % print bg image IF DEFINED
+    \datamatchtf{\arg}{spine}(%
+                      {effective,\@DOCTYPE,image},%
+                      {effective,\@DOCCLASS,image},%
+                      {effective,image},%
+    ){\ifnotnone{\arg}{%
+      \node[inner sep=0] at (current page.center)
+              {\includegraphics[width=\paperheight,height=\paperwidth,
+                                angle=-\expanded{\thespine(effective,angle)}]{\arg}};
+    }}{%
+      \ClassError{novathesis}{Undefined spine “image”}{}%
+    }%
+    \@for\myi:=\expanded{\thespine(effective,order)}\do{%
+      \node[rectangle,
+            inner sep = 0pt,
+            anchor = north west,
+            draw, color = red,
+            minimum width = \expanded{\thespine(effective,box,\myi,len)},
+            minimum height = \@thespinewidth,
+      ] (r\myi) at (\thespine(effective,box,\myi,left),\expanded{\thespine(effective,margin,top)}) {};
+      % \node[inner sep = 0pt, anchor=west] at (\thespine(effective,box,\myi,left),0.5\@spinewidth) {\myi};
+      % \node[inner sep = 0pt, anchor=east] at (\thespine(effective,box,\myi,right),0.5\@spinewidth) {\myi};
+      % \node[inner sep = 0pt, anchor=center,color=blue] at (r\myi) {\myi};
+      % \draw [color=red]
+      %         (\thespine(effective,box,\myi,left),\expanded{\thespine(effective,margin,top)})
+      %         rectangle
+      %         (\thespine(effective,box,\myi,right),\dimexpr\the\@spinewidth-\expanded{\thespine(effective,margin,top)}\relax)
+      %         node[pos=.5,color=black,align=left] {};
+      \datamatchtf{\@align}{spine}({effective,box,\myi,align},{effective,text,align}){}{%
+        \ClassError{novathesis}{Invalid spine text alignment for “\myi”}{}%
+      }%
+      \IfStrEqCase{\@align}{%
+        {l}{\node [inner sep=0, anchor=west] at (r\myi.west)
+              {\printspinebox{\myi}{\@fbratio}};}%
+        {c}{\node [inner sep=0] at (r\myi)
+              {\printspinebox{\myi}{\@fbratio}};}%
+        {r}{\node [inner sep=0, anchor=east] at (r\myi.east)
+              {\printspinebox{\myi}{\@fbratio}};}%
+      }%
+    }%
   \end{tikzpicture}%
+}}
+
+\newcommand{\printspinebox}[2]{%
+  % 1=spine box name
+  % 2=ratio
+  \datamatchtf{\@item}{spine}(%
+                    {#1,\@DOCTYPE},%
+                    {#1,\@DOCCLASS},%
+                    {#1}%
+  ){}{\ClassError{novathesis}{Undefined spine element: #1}{}}%
+  \datamatchtf{\@angle}{spine}(%
+                    {#1,\@DOCTYPE,angle},%
+                    {#1,\@DOCCLASS,angle},%
+                    {#1,angle}%
+  ){\edef\@angle{\number\numexpr\@angle-\thespine(effective,angle)\relax}}{\edef\@angle{-\thespine(effective,angle)}}%
+  \datamatchtf{\@scale}{spine}(%
+                    {#1,\@DOCTYPE,scale},%
+                    {#1,\@DOCCLASS,scale},%
+                    {#1,scale}%
+  ){}{\def\@scale{1}}%
+  \datamatchtf{\@raise}{spine}(%
+                    {#1,\@DOCTYPE,raise},%
+                    {#1,\@DOCCLASS,raise},%
+                    {#1,raise}%
+  ){}{\def\@raise{0pt}}%
+  \typeout{PRINT BOX #1  ITEM=\@item}%
+  \typeout{PRINT BOX #1 ANGLE=\@angle}%
+  \typeout{PRINT BOX #1 SCALE=\@scale}%
+  \typeout{PRINT BOX #1 RAISE=\@raise}%
+  \IfStrEq{#1}{logo}{%
+    % IMAGE
+    \def\@boxscale{1}%
+    \setbox0=\hbox{%
+      \IfStrEq{\@angle}{0}{\def\@logowidth{\thespine(effective,box,logo,len2)}}{\def\@logowidth{\@thespinewidth}}%
+      \includegraphics[width=\@logowidth,angle=\@angle]{\@item}%
+    }%
+    \ifdim\wd0>\thespine(effective,box,logo,len2)\relax%
+      \edef\@boxscale{\DivideLengths{\thespine(effective,box,logo,len2)}{\wd0}}%
+    \fi%
+    \ifdim\dimexpr\ht0+\dp0\relax>\@thespinewidth\relax%
+      \edef\@boxscale{\DivideLengths{\@thespinewidth}{\dimexpr\ht0+\dp0\relax}}%
+    \fi%
+    \scalebox{\@scale}{\box0}%
+  }{%
+    % TEXT
+    \scalebox{\@fbratio}{%
+    \datamatchtf{\arg}{spine}({effective,box,#1,text,color},{effective,box,text,color},%
+                              {effective,text,color}){\color{\arg}}{}%
+    \tabular{@{}c@{}}\thespine(#1)\endtabular%
+    }
+  }
+  % \PAUSETHIS
 }
 \endinput
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   \begin{tikzpicture}[remember picture, overlay]
@@ -429,13 +576,13 @@
       ){}{\def\@raise{0pt}}%
       \node[inner sep=0, anchor=center,
             yshift=-\dimexpr\expanded{\thespine(effective,box,logo,top)+(\thespine(effective,box,logo,len)/2)},
-            xshift=-\novathesis@boxwidth*\@raise,
+            xshift=-\@thespinewidth*\@raise,
            ]
            at (current page.north)
               {\defifundef{\logobox}{\newsavebox}%
                \defifundef{\logoboxht}{\newlength}%
                \IfStrEq{\@angle}{0}{%
-                 \savebox{\logobox}{\includegraphics[width=\novathesis@boxwidth,
+                 \savebox{\logobox}{\includegraphics[width=\@thespinewidth,
                                                      angle=\@angle,
                                                      scale=\@scale]{\arg}}%
                  \settoheight{\logoboxht}{\usebox{\logobox}}%
@@ -445,7 +592,7 @@
                                                      scale=\@scale]{\arg}}%
                  \fi
                }{%
-                 \savebox{\logobox}{\includegraphics[height=\novathesis@boxwidth,
+                 \savebox{\logobox}{\includegraphics[height=\@thespinewidth,
                                                      angle=\@angle,
                                                      scale=\@scale]{\arg}}%
                  \settoheight{\logoboxht}{\usebox{\logobox}}%
@@ -456,14 +603,13 @@
                  \fi
                }%
                {\usebox{\logobox}}%
-               % \includegraphics[angle=\@angle, scale=\@scale, align=c]{\arg}%
               };
     }{}%
     % print author
     \ifdatadefined{spine}(author){%
       \datamatchtf{\@fcolor}{spine}({box,author,color},{box,color}){}{\gdef\@fcolor{none}}%
       \node[inner sep=0, anchor=north, yshift=-(\dimexpr\expanded{\thespine(effective,box,author,top)})
-            , rectangle, minimum width=\novathesis@boxwidth, minimum height=\expanded{\thespine(effective,box,author,len)}
+            , rectangle, minimum width=\@thespinewidth, minimum height=\expanded{\thespine(effective,box,author,len)}
             , fill=\@fcolor]
            at (current page.north)
               {\rotatebox{\thespine(effective,text,angle)}{\hspace*{\thespine(effective,box,margin)}\usebox{\myauthorbox}}};
@@ -472,7 +618,7 @@
     \ifdatadefined{spine}(title){%
       \datamatchtf{\@fcolor}{spine}({box,title,color},{box,color}){}{\gdef\@fcolor{none}}%
       \node[inner sep=0, anchor=north, yshift=-(\dimexpr\expanded{\thespine(effective,box,title,top)})
-            , rectangle, minimum width=\novathesis@boxwidth, minimum height=\expanded{\thespine(effective,box,title,len)}
+            , rectangle, minimum width=\@thespinewidth, minimum height=\expanded{\thespine(effective,box,title,len)}
             , fill=\@fcolor]
            at (current page.north)
               {\rotatebox{\thespine(effective,text,angle)}{\hspace*{\thespine(effective,box,margin)}\usebox{\mytitlebox}}};
@@ -483,7 +629,7 @@
         \datamatchtf{\@fcolor}%
                     {spine}({box,degreeacr,color},{box,color}){}{\gdef\@fcolor{none}}%
         \node[inner sep=0,anchor=north, yshift=-\dimexpr\expanded{\thespine(effective,box,degreeacr,top)}
-              , rectangle,minimum width=\novathesis@boxwidth, minimum height=\expanded{\thespine(effective,box,degreeacr,len)}
+              , rectangle,minimum width=\@thespinewidth, minimum height=\expanded{\thespine(effective,box,degreeacr,len)}
               , fill=\@fcolor]
              at (current page.north)
                 {\rotatebox{\thespine(effective,text,angle)}{\usebox{\mydegreeacrbox}}};
@@ -493,7 +639,7 @@
     \ifdatadefined{spine}(date){%
       \datamatchtf{\@fcolor}{spine}({box,date,color},{box,color}){}{\gdef\@fcolor{none}}%
       \node[inner sep=0,anchor=north, yshift=-(\dimexpr\expanded{\thespine(effective,box,date,top)})
-            , rectangle,minimum width=\novathesis@boxwidth, minimum height=\expanded{\thespine(effective,box,date,len)}
+            , rectangle,minimum width=\@thespinewidth, minimum height=\expanded{\thespine(effective,box,date,len)}
             , fill=\@fcolor]
            at (current page.north)
               {\rotatebox{\thespine(effective,text,angle)}{\usebox{\mydatebox}}};
