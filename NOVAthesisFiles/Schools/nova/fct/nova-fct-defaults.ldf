@@ -11,7 +11,7 @@
 %%      - João Lourenço <joao.lourenco@fct.unl.pt>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE nova/fct//nova-fct-defaults.ldf}%
+\typeout{NT FILE schools/nova/fct/nova-fct-defaults.ldf}%
 
 % FCT-NOVA specific customization
 \openany
@@ -62,6 +62,7 @@
 
 
 % Spine info
+% \spine(angle)={0}
 \spine(logo,phd)={\theuniversity(logo,neg)}
 \spine(logo,phd,angle)={0}
 \spine(logo,phd,scale)={1}

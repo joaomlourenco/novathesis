@@ -32,10 +32,7 @@
 
 % Spine info
 \spine(logo)={ipl-isel-logo}
-\spine(logo,angle)={90}
-\spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\@LANG@COVER,main)}
-\spine(year)={\thentdocdate(year)}
+
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}

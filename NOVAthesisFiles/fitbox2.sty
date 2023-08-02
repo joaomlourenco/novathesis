@@ -16,10 +16,11 @@
   % #3 = height
   % #4 = text
   \@tempdima=\dimexpr#2\relax%
-  % \begin{lrbox}{\@fbbox}#4\end{lrbox}
   \savebox{\@fbbox}{\pbox{\paperwidth}{#4}}%
-  % \newpage\fbox{\usebox{\@fbbox}}%
-  % \setbox0=\vbox{#4}%
+  \ifdim\wd\@fbbox=0pt\relax
+    \PackageError{fitbox2}{Invalid text width 0pt for text: “#4”}
+  \fi
+  \typeout{FITBOX boxwidth=\the\@tempdima\space textwidth=\the\wd\@fbbox\space}%
   \edef\@hratio{\DivideLengths{\@tempdima}{\wd\@fbbox}}%
   \typeout{FITBOX boxwidth=\the\@tempdima\space textwidth=\the\wd\@fbbox\space hratio=\@hratio}%
   \@tempdima=\dimexpr#3\relax%
@@ -38,68 +39,4 @@
   % #2 = list (in)
   \pgfmathparse{min(\expanded{#2})}%
   \csedef{#1}{\pgfmathresult}%
-}
-
-\endinput
-\newcommand{\fitboxratio}[4]{%
-  % #1 = ratio
-  % #2 = width
-  % #3 = height
-  % #4 = text
-  % \typeout{w=[#2] h=[#3] t=[#4]}
-  \@temptokena={\mbox{#4}}% text
-  \setbox0=\hbox{\the\@temptokena}% text
-  \@tempdima=\dimexpr#3\relax% height of box
-  % \showthe\@tempdima% height of box
-  \@tempdimb=\dimexpr\ht0+\dp0\relax% height of text
-  \ifdim \@tempdimb=0pt
-    \PackageError{fitbox2}{Invalid text: [#4]}{}
-  \fi
-  % \showthe\@tempdimb% height of text
-  \FPdiv\vr@tio{\strip@pt\@tempdima}{\strip@pt\@tempdimb}%
-  % \show\vr@tio
-  \@tempdima=\dimexpr#2\relax% width of box
-  % \showthe\@tempdima% width of box
-  \@tempdimb=\dimexpr\wd0\relax%
-  % \showthe\@tempdimb% width of text
-  \FPdiv\hr@tio{\strip@pt\@tempdima}{\strip@pt\@tempdimb}%
-  % \show\hr@tio
-  % \show\vr@tio
-  % \typeout{SPINE DIV1 [{\strip@pt\@tempdima}] [{\strip@pt\@tempdimb}]}%
-  % \typeout{SPINE DIV2 [{\@wd}] [{\strip@pt\@tempdimc}]}%
-  \FPmin\r@tio{\hr@tio}{\vr@tio}%
-  % \show\r@tio
-  % \edef#1{\r@tio}%
-  \ignorespaces%
-}
-
-\newcommand{\fitboxprint}[2]{%
-  % \show#1
-  \scalebox{#1}{#2}%\ignorespaces
-}
-
-\newcommand{\fitboxmin}[2]{%
-  \gdef\@mymin{99999999}%
-  \@for\@fbx:={#2}\do{%
-    % \typeout{FPMIN \@mymin,\@fbx}
-    \FPmin\@mymin{\@fbx}{\@mymin}%
-  }%
-  \FPmin#1{\@mymin}{99999999}%
-}
-
-\newcommand{\fitbox}[3]{%
-  % #1 = width
-  % #2 = height
-  % #3 = text
-  \@tempdima#2%
-  \edef\@wd{\strip@pt\dimexpr#1\relax}%
-  \@temptokena={\mbox{#3}}%
-  \setbox0=\hbox{\the\@temptokena}%
-  \@tempdimb=\dimexpr\ht0+\dp0\relax%
-  \FPdiv\vr@tio{\strip@pt\@tempdima}{\strip@pt\@tempdimb}%
-  \@tempdimc=\dimexpr\wd0\relax%
-  \FPdiv\hr@tio{\@wd}{\strip@pt\@tempdimc}%
-  \FPmin\r@tio{\hr@tio}{\vr@tio}%
-  \setbox0=\hbox{\scalebox{\r@tio}{#3}}%
-  \box0%
 }
