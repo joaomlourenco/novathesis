@@ -318,8 +318,11 @@
   % #5 = false branch
   % Search and match first value from the list, true (found) and not true (not found) branches
   % \typeout{#2(#3)}%
+  % \ifdatadefinedor{\@match}{#2}(#3)%
+  %   {\protect\gdef#1{\csuse{the#2}(\@match)}#4}%
+  %   {\protect\gdef#1{}#5}%
   \ifdatadefinedor{\@match}{#2}(#3)%
-    {\protect\xdef#1{\csuse{the#2}(\@match)}#4}%
+    {\protect\xdef#1{\expanded{\csuse{the#2}(\@match)}}#4}%
     {\protect\xdef#1{}#5}%
 }
 
@@ -1317,8 +1320,8 @@
 % \typeout{\theprintorder(frontmatter,\@DOCSTATUS)}
 \ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\@DOCSTATUS)}}%
 
-\ifoptionequal{/novathesis/spine}{unset}
-    {\ifdocworking{\ntsetup{spine=no}}{\ifmaindoc{\ntsetup{spine=trim}}{\ntsetup{spine=no}}}}{}
+\ifoptionequal{/novathesis/spine/layout}{unset}
+    {\ifdocworking{\ntsetup{spine/layout=no}}{\ifmaindoc{\ntsetup{spine/layout=trim}}{\ntsetup{spine/layout=no}}}}{}
 \ifdocfinal{\ntsetup{print/committee=true}}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1380,13 +1383,13 @@
   }{}%
 }{}
 
-\ifoptionequal{/novathesis/spine}{no}{}{%
+\ifoptionequal{/novathesis/spine/layout}{no}{}{%
   \@nt@InputIfFileExists{spine.tex}{%
            {NOVAthesisFiles/Schools/\@UNIV/\@SCHL/}%
           ,{NOVAthesisFiles/Schools/\@UNIV/}%
           ,{NOVAthesisFiles/}%
   }[][\ClassError{novathesis}{No “spine” file found.}{}]%
-  \AtEndDocument{\clearforchapter\csuse{ntprintspine}}%
+  \AtEndDocument{\csuse{ntprintspine}}%
 }
 
 
@@ -1466,10 +1469,11 @@
       \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
       \egroup\clearforchapter%
     }%
-  }{\@ntprintspine}%
+  }{\@ntprintspine\clearforchapter}%
 }
 
 \newcommand{\ntprintbackcover}{%
+  \clearforchapter%
   \pagenumbering{roman}%
   \setcounter{page}{0}
   \ifcoverdefined[N-1]{\pdfbookmark[-1]{\thebkmstring(backmatter,\@LANG@COVER)}{bmbackmatter1}}{%
