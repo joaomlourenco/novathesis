@@ -23,9 +23,9 @@
 
 % Spine info
 \spine(logo)={ips-logo}
-\spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\@LANG@COVER,main)}
-\spine(year)={\thentdocdate(year)}
+% \spine(author)={\thedocauthor(name,short)}
+% \spine(title)={\thedoctitle(\@LANG@COVER,main)}
+% \spine(year)={\thentdocdate(year)}
 
 % Set margins for "normal" pages
 \margin(screen,top):={2.0cm}

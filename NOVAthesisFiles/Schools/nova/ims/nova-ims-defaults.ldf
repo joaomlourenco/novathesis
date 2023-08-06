@@ -70,7 +70,6 @@
 
 \thesiscover(plain,1-1,image):={nova-ims-front-cover-generic}
 
-
 % Rename Doctor degree
 \degreestring(phd,m,en):={Doctor}
 \degreestring(phd,f,en):={Doctor}
@@ -111,9 +110,14 @@
 
 \spine(text,angle)={90}
 % \spine(text,color)=black
-\spine(box,color)={white}
+\spine(box,bg,color)={white}
 \spine(box,spacing)={0.5cm}
-\spine(box,margin)={0.5mm}
+\spine(box,title,margin,left)={0.5mm}
+\spine(box,title,margin,right)={0.5mm}
+\spine(box,author,margin,left)={0.5mm}
+\spine(box,author,margin,right)={0.5mm}
+\spine(box,date,margin,left)={0.5mm}
+\spine(box,date,margin,right)={0.5mm}
 
 \spine(box,degreeacr,top):={\thespine(row)}
 \spine(box,degreeacr,len):={\thespine(row)}

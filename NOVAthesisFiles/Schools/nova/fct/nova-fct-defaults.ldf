@@ -62,16 +62,17 @@
 
 
 % Spine info
-% \spine(angle)={0}
+% \spine(angle)={180}
+
 \spine(logo,phd)={\theuniversity(logo,neg)}
-\spine(logo,phd,angle)={0}
-\spine(logo,phd,scale)={1}
-\spine(logo,phd,raise)={0}
+\spine(box,logo,phd,angle)={90}
+\spine(box,logo,phd,scale)={1}
+\spine(box,logo,phd,raise)={0}
 
 \spine(logo,msc)={\theschool(logo,neg)}
-\spine(logo,msc,angle)={90}
-\spine(logo,msc,scale)={1}
-\spine(logo,msc,raise)={0.075}
+\spine(box,logo,msc,angle)={90}
+\spine(box,logo,msc,scale)={1}
+\spine(box,logo,msc,raise)={0.075}
 
 % \spine(text,angle)={90}
 \spine(box,text,color)={white}
@@ -79,7 +80,7 @@
 % \spine(box,spacing)={0.5cm}
 % \spine(box,margin)={0.5mm}
 
-
+\spine(margin,right):=?{0.0cm}
 
 
 % Set margins for "normal" pages

@@ -34,6 +34,7 @@
 
 
 % Defaults for spine
+\spine(logo):=?{none}
 \spine(order):=?{date,title,author,logo}
 \spine(angle):=?{0}
 \spine(boxsep):=?{0.5cm}
@@ -45,7 +46,7 @@
 \spine(margin,top):=?{1mm}
 \spine(margin,bottom):=?{1mm}
 \spine(margin,left):=?{0.5cm}
-\spine(margin,right):=?{0.0cm}
+\spine(margin,right):=?{0.5cm}
 
 % Defaults for spine boxes
 \spine(box,margin):=?{0.5mm}
@@ -57,8 +58,8 @@
 \spine(box,logo,align):=?{c}
 \spine(box,logo,raise):=?{0pt}
 \spine(box,logo,scale):=?{1}
-\spine(box,logo,margin,left)=?{0.5cm}
-\spine(box,logo,margin,right):=?{0.5cm}
+\spine(box,logo,margin,left)=?{0.0cm}
+\spine(box,logo,margin,right):=?{0.0cm}
 
 \spine(box,author,len):=?{4.0cm}
 \spine(box,author,angle)=?{\thespine(angle)}
@@ -176,6 +177,9 @@
 
 % If angle is 180 rever the order
 \IfStrEq{\thespine(angle)}{180}{%
+  \spine(margin,left2):={\thespine(margin,left)}%
+  \spine(margin,left):={\thespine(margin,right)}%
+  \spine(margin,right):={\thespine(margin,left2)}%
   \def\spineorder{}%
   \typeout{ORDER BEFORE=\thespine(order)}%
   \@for\myi:=\expanded{\thespine(order)}\do{%
@@ -268,8 +272,8 @@
   \setlength{#1}{\the\@tempdima}%
 }
 
-\newcommand{\ifnotnone}[3][none]{%
-  \IfStrEq{#2}{#1}{}{#3}%
+\newcommand{\ifnotnone}[2]{%
+  \IfStrEq{none}{#1}{}{#2}%
 }
 
 \newcommand{\@ntprintspine}{%
@@ -369,18 +373,20 @@
     }{}%
     % print bg image IF DEFINED
     \datamatchtf{\arg}{thesiscover}({\@DOCTYPE,spine,image},{\@DOCCLASS,spine,image},{spine,image}){%
-      \node[inner sep=0] at (current page.center)
-              {\includegraphics[width=\paperheight,height=\paperwidth,
-                                angle=\number\numexpr\thespine(angle)-90\relax]{\arg}};
-    }{
-      \datamatchtf{\arg}{spine}(%
-                        {\@DOCTYPE,image},%
-                        {\@DOCCLASS,image},%
-                        {image},%
-      ){\ifnotnone{\arg}{
+      \ifnotnone{\arg}{%
         \node[inner sep=0] at (current page.center)
                 {\includegraphics[width=\paperheight,height=\paperwidth,
                                   angle=\number\numexpr\thespine(angle)-90\relax]{\arg}};
+      }}{%
+          \datamatchtf{\arg}{spine}(%
+                        {\@DOCTYPE,image},%
+                        {\@DOCCLASS,image},%
+                        {image},%
+      ){%
+          \ifnotnone{\arg}{%
+            \node[inner sep=0] at (current page.center)
+                    {\includegraphics[width=\paperheight,height=\paperwidth,
+                                      angle=\number\numexpr\thespine(angle)-90\relax]{\arg}};
       }}{%
         \ClassError{novathesis}{Undefined spine “image”}{}%
       }%
@@ -390,6 +396,7 @@
             inner sep = 0pt,
             anchor = north west,
             draw, color = red,
+            fill = {\thespine(box,bg,color)},
             minimum width = \expanded{\thespine(box,\myi,len)},
             minimum height = \@thespinewidth,
       ] (r\myi) at (\thespine(box,\myi,left),\expanded{\thespine(margin,top)}) {};
@@ -401,27 +408,32 @@
       %         rectangle
       %         (\thespine(box,\myi,right),\dimexpr\the\@spinewidth-\expanded{\thespine(margin,top)}\relax)
       %         node[pos=.5,color=black,align=left] {};
-      \datamatchtf{\@align}{spine}({box,\myi,align},{text,align}){}{%
+      \datamatchtf{\@align}{spine}({box,\myi,align},{\myi,align}){}{%
         \ClassError{novathesis}{Invalid spine text alignment for “\myi”}{}%
       }%
       \IfStrEqCase{\@align}{%
         {l}{\node [inner sep=0, anchor=west] at (r\myi.west)
               {\printspinebox{\myi}{\@fbratio}};}%
-        {c}{\node [inner sep=0] at (r\myi)
+        {c}{\node [inner sep=0, anchor=center] at (r\myi)
               {\printspinebox{\myi}{\@fbratio}};}%
         {r}{\node [inner sep=0, anchor=east] at (r\myi.east)
               {\printspinebox{\myi}{\@fbratio}};}%
       }%
     }%
   \end{tikzpicture}%
+  \ifoptioncontains{/novathesis/debug}{cover}{%
+    \NTRunHook{cover/spine/grid/pre}%
+    \debuggrid%
+    \NTRunHook{cover/spine/grid/post}%
+  }{}%
 }}
 
 \newcommand{\printspinebox}[2]{%
   % 1=spine box name
   % 2=ratio
   \datamatchtf{\@item}{spine}(%
-                    {#1,\@DOCTYPE},%
                     {#1,\@DOCCLASS},%
+                    {#1,\@DOCTYPE},%
                     {#1}%
   ){}{\ClassError{novathesis}{Undefined spine element: #1}{}}%
   \datamatchtf{\@angle}{spine}(%
@@ -439,7 +451,7 @@
                     {#1,\@DOCTYPE,scale},%
                     {#1,\@DOCCLASS,scale},%
                     {#1,scale}%
-  ){}{\def\@scale{X}}%
+  ){}{\def\@scale{1}}%
   \datamatchtf{\@raise}{spine}(%
                     {box,#1,\@DOCTYPE,raise},%
                     {box,#1,\@DOCCLASS,raise},%
@@ -448,27 +460,34 @@
                     {#1,\@DOCCLASS,raise},%
                     {#1,raise}%
   ){}{\def\@raise{0pt}}%
+  % \typeout{L=[\thespine(logo)] IT(#1)=[\@item]}\AAAA
   \typeout{PRINT BOX #1  ITEM=\@item}%
   \typeout{PRINT BOX #1 ANGLE=\@angle}%
   \typeout{PRINT BOX #1 SCALE=\@scale}%
   \typeout{PRINT BOX #1 RAISE=\@raise}%
   \IfStrEq{#1}{logo}{%
     % IMAGE
-    \def\@boxscale{1}%
-    \ifthenelse{\@angle = 0 \OR \@angle = 180}
-                      {\def\@logowidth{\thespine(box,logo,len2)}\def\@logoheight{\@thespinewidth}}
-                      {\def\@logoheight{\thespine(box,logo,len2)}\def\@logowidth{\@thespinewidth}}%
-    \setbox0=\hbox{\includegraphics[width=\@logowidth,angle=\number\numexpr\@angle\relax]{\@item}}%
-    \ifdim\dimexpr\ht0+\dp0\relax>\@logoheight\relax%
-      \setbox0=\hbox{\includegraphics[height=\@logoheight,angle=\number\numexpr\@angle-90\relax]{\@item}}%
-    \fi%
-    \scalebox{\@scale}{\box0}%
+    \IfStrEq{\@item}{none}{}{%
+      \def\@boxscale{1}%
+      \edef\@logowidth{\thespine(box,logo,len2)}\edef\@logoheight{\@thespinewidth}%
+      % \typeout{W=\@logowidth\space H=\the\@logoheight=\the\@thespinewidth}\XXXX
+      \setbox0=\hbox{\includegraphics[width=\@logowidth,angle=\number\numexpr\@angle\relax]{\@item}}%
+      \ifdim\dimexpr\ht0+\dp0\relax>\@logoheight\relax%
+        \setbox0=\hbox{\includegraphics[height=\@logoheight,angle=\number\numexpr\@angle-90\relax]{\@item}}%
+      \fi%
+      \scalebox{\@scale}{\box0}%
+    }%
   }{%
     % TEXT
     \scalebox{\@fbratio}{%
-    \datamatchtf{\arg}{spine}({box,#1,text,color},{box,text,color},%
-                              {text,color}){\color{\arg}}{}%
-    \tabular{@{}c@{}}\thespine(#1)\endtabular%
+      \datamatchtf{\arg}{spine}({box,#1,text,color},{box,text,color},%
+                                {text,color}){\color{\arg}}{}%
+      % \datamatchtf{\@sptx}{spine}({#1,nova/itqb},{#1}){}{}%
+      \ifdatadefined{spine}(#1,\@UNIV/\@SCHL){%
+        \tabular{@{}c@{}}\thespine(#1,\@UNIV/\@SCHL)\endtabular%
+      }{%
+        \tabular{@{}c@{}}\thespine(#1)\endtabular%
+      }%
     }%
   }%
   % \PAUSETHIS
