@@ -156,14 +156,17 @@
 % \ntsetup{print/timestamp=false} % Print a timestamp (when PDF was generated) in the cover
 %                               % DEFAULT: print/timestamp=true
 
-% \ntsetup{spine=trim}          % Print the “book spine” at the end of the document?
+% \ntsetup{spine/layout=trim}    % Print the “book spine” at the end of the document?
 %                               %     [   no —> do not print the book spine
 %                               %       full —> print the book spine in a full page
 %                               %       trim —> print and trim the page to the width
 %                               %               of the book spine
 %                               %     ]
-%                               % DEFAULT: spine=trim <— if (docstatus=final)
+%                               % DEFAULT: spine/layout=trim <— if (docstatus=final)
 %                               %          spine=no   <— otherwise
+
+% \ntsetup{spine/width=1cm}     % Force the “book spine” width
+%                               % DEFAULT: natural width of book spine for double-sided 80gr paper
 
 % \ntsetup{debug={cover}}       % Cover development and debug: print rulers in the cover page
 %                               % DEFAULT: debug={}

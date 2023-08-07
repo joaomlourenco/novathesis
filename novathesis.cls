@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2023-05-24 [7.0.3]
+%% Version 2023-08-07 [7.1.1]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -61,7 +61,7 @@
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ProvidesClass{novathesis}[2023-05-24 novathesis template]
+\ProvidesClass{novathesis}[2023-08-07 novathesis template]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 
@@ -182,7 +182,8 @@
   doctype/.new choice           = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
   docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
   media/.new choice             = {screen, paper},
-  spine/.new choice             = {unset, no, full, trim},
+  spine/layout/.new choice      = {unset, no, full, trim},
+  spine/width/.new length       = {0pt},
   % abstract/deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
   % abstract/theorder/.new list   = {unset},
   abstractorder/.new cmd        = {\appto\@nt@saveabstractorder{{#1},}},%
@@ -317,8 +318,11 @@
   % #5 = false branch
   % Search and match first value from the list, true (found) and not true (not found) branches
   % \typeout{#2(#3)}%
+  % \ifdatadefinedor{\@match}{#2}(#3)%
+  %   {\protect\gdef#1{\csuse{the#2}(\@match)}#4}%
+  %   {\protect\gdef#1{}#5}%
   \ifdatadefinedor{\@match}{#2}(#3)%
-    {\protect\xdef#1{\csuse{the#2}(\@match)}#4}%
+    {\protect\xdef#1{\expanded{\csuse{the#2}(\@match)}}#4}%
     {\protect\xdef#1{}#5}%
 }
 
@@ -481,7 +485,7 @@
   %         #2=file family (quote, abstract, chapter, etc)
   %         #3=optional file lang
   %         #4=filename
-  \typeout{NT ADDTOLIST [#1] [#2] [#3] [#4]}%
+  % \typeout{NT ADDTOLIST [#1] [#2] [#3] [#4]}%
   \StrLeft{#4}{1}[\@nt@firstchar]%
   \IfStrEqCase{\@nt@firstchar}{%
     {/}{\xdef\@nt@filewithpath{#4}}%
@@ -1096,7 +1100,7 @@
         }%
       }%
     }%
-    \clearforchapter%
+    % \clearforchapter%
     \ignorespaces%
   }%
 }
@@ -1316,8 +1320,8 @@
 % \typeout{\theprintorder(frontmatter,\@DOCSTATUS)}
 \ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\@DOCSTATUS)}}%
 
-\ifoptionequal{/novathesis/spine}{unset}
-    {\ifdocworking{\ntsetup{spine=no}}{\ifmaindoc{\ntsetup{spine=trim}}{\ntsetup{spine=no}}}}{}
+\ifoptionequal{/novathesis/spine/layout}{unset}
+    {\ifdocworking{\ntsetup{spine/layout=no}}{\ifmaindoc{\ntsetup{spine/layout=trim}}{\ntsetup{spine/layout=no}}}}{}
 \ifdocfinal{\ntsetup{print/committee=true}}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1379,7 +1383,7 @@
   }{}%
 }{}
 
-\ifoptionequal{/novathesis/spine}{no}{}{%
+\ifoptionequal{/novathesis/spine/layout}{no}{}{%
   \@nt@InputIfFileExists{spine.tex}{%
            {NOVAthesisFiles/Schools/\@UNIV/\@SCHL/}%
           ,{NOVAthesisFiles/Schools/\@UNIV/}%
@@ -1465,10 +1469,11 @@
       \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
       \egroup\clearforchapter%
     }%
-  }{\@ntprintspine}%
+  }{\@ntprintspine\clearforchapter}%
 }
 
 \newcommand{\ntprintbackcover}{%
+  \clearforchapter%
   \pagenumbering{roman}%
   \setcounter{page}{0}
   \ifcoverdefined[N-1]{\pdfbookmark[-1]{\thebkmstring(backmatter,\@LANG@COVER)}{bmbackmatter1}}{%
@@ -2331,8 +2336,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Chapters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\ntchapterfile}[1]{\listgadd{\@nt@chapter@list}{#1}}
-
 \newcommand*{\ntprintchapters}{%
     \@nt@foralllist{file}{chapter}{\@ntloadfiles@ii{chapter}}%
 }
@@ -2379,7 +2382,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntprintalllistof}{%
     \NTRunHook{listof/pre}%
-    \optionlistdo{/@nt/list/listof}{##1\clearforchapter}%
+    \optionlistdo{/@nt/list/listof}{\clearforchapter##1}%
     \NTRunHook{listof/post}%
 }
 
@@ -2633,4 +2636,5 @@
   \newcommand{\@ntcite}[1]{\ifdef{\parencite}{\parencite{#1}}{\cite{#1}}}
   \makeatother
 }
+
 

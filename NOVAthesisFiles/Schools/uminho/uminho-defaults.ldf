@@ -24,7 +24,7 @@
 
 \ifdocprovisional{\ntsetup{docstatus=final}}{}
 \ifmaindoc{\ifdocfinal{\ntaddfile{cover}[1]{./NOVAthesisFiles/Schools/uminho/cover-final.tex}}{}}{}
-\ntsetup{spine=no}
+% \ntsetup{spine/layout=no}
 
 % --------------------------------------------------------
 % PRINT ORDER FOR frontmatter AND mainmatter
