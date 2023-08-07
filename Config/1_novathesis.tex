@@ -14,7 +14,7 @@
 %% THE MOST IMPORTANT/POPULAR OPTIONS
 %%------------------------------------------------------------
 
-\ntsetup{doctype=msc}       % The type of document
+% \ntsetup{doctype=msc}       % The type of document
 %                               %     [     phd —> PhD thesis
 %                               %       phdplan —> PhD thesis plan
 %                               %       phdprop —> PhD thesis proposal
@@ -25,7 +25,7 @@
 %                               %     ]
 %                               % DEFAULT: doctype=phd
 
-\ntsetup{school=ipl/isel}    % The school id
+% \ntsetup{school=uminho/ee}    % The school id
 %                               %     [ nova/fct, nova/fcsh, nova/ims, nova/ensp, nova/itqb,
 %                               %       ulisboa/ist, ulisboa/fc, ulisboa/fmv,
 %                               %       uminho/ea, uminho/ec, uminho/ed, uminho/ee,
@@ -36,7 +36,7 @@
 %                               %     ]
 %                               % DEFAULT: school=nova/fct
 
-\ntsetup{docstatus=final}     % The status of the document
+% \ntsetup{docstatus=final}     % The status of the document
 %                               %     [     working —> working version of the document
 %                                                      skips some “frontmatter” stuff,
 %                                       provisional —> submission version (no committee),
@@ -156,14 +156,17 @@
 % \ntsetup{print/timestamp=false} % Print a timestamp (when PDF was generated) in the cover
 %                               % DEFAULT: print/timestamp=true
 
-% \ntsetup{spine=trim}          % Print the “book spine” at the end of the document?
+\ntsetup{spine/layout=trim}    % Print the “book spine” at the end of the document?
 %                               %     [   no —> do not print the book spine
 %                               %       full —> print the book spine in a full page
 %                               %       trim —> print and trim the page to the width
 %                               %               of the book spine
 %                               %     ]
-%                               % DEFAULT: spine=trim <— if (docstatus=final)
+%                               % DEFAULT: spine/layout=trim <— if (docstatus=final)
 %                               %          spine=no   <— otherwise
+
+% \ntsetup{spine/width=1cm}     % Force the “book spine” width
+%                               % DEFAULT: natural width of book spine for double-sided 80gr paper
 
 % \ntsetup{debug={cover}}       % Cover development and debug: print rulers in the cover page
 %                               % DEFAULT: debug={}
