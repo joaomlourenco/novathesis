@@ -60,6 +60,7 @@
 \spine(box,logo,scale):=?{1}
 \spine(box,logo,margin,left)=?{0.0cm}
 \spine(box,logo,margin,right):=?{0.0cm}
+\spine(box,logo,margin,sep):=?{1mm}
 
 \spine(box,author,len):=?{4.0cm}
 \spine(box,author,angle)=?{\thespine(angle)}
@@ -112,7 +113,7 @@
 \newlength{\@spinelr} % accumulated left and right length
 \newlength{\@spinevarratio} % ratio for scaling the variable boxes
 \StrCount{\thespine(order)}{,}[\@spineNBoxes]%
-\typeout{NBOXES=\@spineNBoxes}%
+% \typeout{NBOXES=\@spineNBoxes}%
 
 
 \newcommand{\@getspinelen}{%
@@ -124,7 +125,7 @@
   \@for\myi:=\expanded{\thespine(order)}\do{%
     \@tempdima=\dimexpr \thespine(box,\myi,len)\relax%
     \spine(box,\myi,len):={\the\@tempdima}
-    \typeout{SPINEBOXLEN[\myi]=\the\@tempdima}
+    % \typeout{SPINEBOXLEN[\myi]=\the\@tempdima}
     \addtolength{\@spineboxlen}{\@tempdima}
     \ifdatadefined{spine}(box,\myi,len){%
       % Fixed box length
@@ -135,13 +136,13 @@
     }%
   }%
   \setlength{\@spinelen}{\dimexpr \@spinefixedlen+\@spinevarlen\relax}
-  \typeout{SPINELEN[lr]=\the\@spinelr}%
-  \typeout{SPINELEN[boxseplen]=\the\@spineboxseplen}%
-  \typeout{SPINELEN[boxlen]=\the\@spineboxlen}%
-  \typeout{SPINELEN[boxfixedlen]=\the\@spinefixedlen}%
-  \typeout{SPINELEN[boxvarlen]=\the\@spinevarlen}%
-  \typeout{SPINELEN[spinelen]=\the\@spinelen}%
-  \typeout{SPINELEN[spinelen]=\the\@spinelen}%
+  % \typeout{SPINELEN[lr]=\the\@spinelr}%
+  % \typeout{SPINELEN[boxseplen]=\the\@spineboxseplen}%
+  % \typeout{SPINELEN[boxlen]=\the\@spineboxlen}%
+  % \typeout{SPINELEN[boxfixedlen]=\the\@spinefixedlen}%
+  % \typeout{SPINELEN[boxvarlen]=\the\@spinevarlen}%
+  % \typeout{SPINELEN[spinelen]=\the\@spinelen}%
+  % \typeout{SPINELEN[spinelen]=\the\@spinelen}%
 }
 
 \newlength{\@displen}
@@ -157,9 +158,9 @@
   }\do{%
     \IfIsDim{\thespine(\@myitem)}{%
       \setlength{\@displen}{\thespine(\@myitem)}
-      \typeout{\string\thespine(\@myitem)=\thespine(\@myitem)=\the\@displen}
+      % \typeout{\string\thespine(\@myitem)=\thespine(\@myitem)=\the\@displen}
     }{%
-      \typeout{\string\thespine(\@myitem)=\thespine(\@myitem)}
+      % \typeout{\string\thespine(\@myitem)=\thespine(\@myitem)}
     }%
   }%
 }
@@ -181,14 +182,14 @@
   \spine(margin,left):={\thespine(margin,right)}%
   \spine(margin,right):={\thespine(margin,left2)}%
   \def\spineorder{}%
-  \typeout{ORDER BEFORE=\thespine(order)}%
+  % \typeout{ORDER BEFORE=\thespine(order)}%
   \@for\myi:=\expanded{\thespine(order)}\do{%
     \epreto\spineorder{,\myi}%
   }%
   \edef\spineorder{\expandafter\@gobble\spineorder}%
   \spine(order):={\spineorder}%
   % \StrGobbleRight{\spineorder}{2}%
-  \typeout{ ORDER AFTER=\thespine(order)}%
+  % \typeout{ ORDER AFTER=\thespine(order)}%
 }{%
 }%
 
@@ -198,7 +199,7 @@
 \ifdim\@spinelen<\paperheight\relax%
   % SPINE boxes do not fill up all the spine, increase spacing
   \@tempdima=\dimexpr\thespine(boxsep)\relax%
-  \typeout{OLD BOXSEP=\the\@tempdima}
+  % \typeout{OLD BOXSEP=\the\@tempdima}
   \@tempdima=\dimexpr((\paperheight-\@spinelen)+(\expanded{\thespine(boxsep)}*\@spineNBoxes))
                      /\@spineNBoxes\relax%
   \spine(boxsep):={\the\@tempdima}%
@@ -217,9 +218,9 @@
     }{%
       % Variable box length, apply ratio
     \@tempdima=\dimexpr\thespine(box,\myi,len)\relax%
-    \typeout{OLD SPINEBOXLEN[\myi]=\the\@tempdima}
+    % \typeout{OLD SPINEBOXLEN[\myi]=\the\@tempdima}
     \@tempdima=\dimexpr \@spinevarratio\@tempdima\relax
-    \typeout{NEW SPINEBOXLEN[\myi]=\the\@tempdima}
+    % \typeout{NEW SPINEBOXLEN[\myi]=\the\@tempdima}
     \spine(box,\myi,len):={\the\@tempdima}
     }%
   }%
@@ -238,9 +239,9 @@
   \spine(box,\myi,left):={\the\@tempdima}
   \@tempdima=\dimexpr\@tempdima+\thespine(box,\myi,len)\relax%
   \spine(box,\myi,right):={\the\@tempdima}
-  \typeout{BOX[\myi,left]=\thespine(box,\myi,left)}
-  \typeout{BOX[\myi,len]=\thespine(box,\myi,len)}
-  \typeout{BOX[\myi,right]=\thespine(box,\myi,right)}
+  % \typeout{BOX[\myi,left]=\thespine(box,\myi,left)}
+  % \typeout{BOX[\myi,len]=\thespine(box,\myi,len)}
+  % \typeout{BOX[\myi,right]=\thespine(box,\myi,right)}
 }%
 
 \@for\myi:=\expanded{\thespine(order)}\do{%
@@ -249,8 +250,8 @@
   \@tempdima=\dimexpr\@tempdima-\thespine(box,\myi,margin,left)
                                -\thespine(box,\myi,margin,right)\relax
   \spine(box,\myi,len2):={\the\@tempdima}
-  \typeout{TEXT[\myi,len]=\thespine(box,\myi,len)}  
-  \typeout{TEXT[\myi,len2]=\thespine(box,\myi,len2)}  
+  % \typeout{TEXT[\myi,len]=\thespine(box,\myi,len)}
+  % \typeout{TEXT[\myi,len2]=\thespine(box,\myi,len2)}
 }
 
 
@@ -284,16 +285,16 @@
   \normalsize%
   \ifdim\option{/novathesis/spine/width}=0pt\relax%
     \@setlength{\@spinewidth}{0.05mm * (\thelastsheet+1)}%
-    \typeout{NOVATHESIS spine width for \thelastsheet\space pages is \the\@spinewidth!}%
+    % \typeout{NOVATHESIS spine width for \thelastsheet\space pages is \the\@spinewidth!}%
     \ifdim\@spinewidth < 6mm\relax% Force book spine to be at least 6mm
-      \typeout{NOVATHESIS spine width was \the\@spinewidth, forcing to 6mm!}%
+      % \typeout{NOVATHESIS spine width was \the\@spinewidth, forcing to 6mm!}%
       \@setlength{\@spinewidth}{6mm}%
     \fi%
   \else%
     \@setlength{\@spinewidth}{\option{/novathesis/spine/width}}%
-    \typeout{NOVATHESIS spine width user forced by user to \the\@spinewidth!}%
+    % \typeout{NOVATHESIS spine width user forced by user to \the\@spinewidth!}%
   \fi%
-  \typeout{NOVATHESIS \string\@spinewidth=\the\@spinewidth}%
+  % \typeout{NOVATHESIS \string\@spinewidth=\the\@spinewidth}%
   \@setlength{\@thespinewidth}
              {\dimexpr\@spinewidth-\thespine(margin,top)-\thespine(margin,bottom)\relax}%
   \def\@fbratio{9999}%
@@ -313,13 +314,13 @@
     }{}%
     \IfStrEq{\myi}{logo}{}{%
       \fitboxratio{@\myi RT}{\thespine(box,\myi,len2)}{\@thespinewidth}{\thespine(\myi)}%
-      \typeout{NOVATHESIS RATIO[\myi]=\csuse{@\myi RT}}%
+      % \typeout{NOVATHESIS RATIO[\myi]=\csuse{@\myi RT}}%
       \pgfmathparse{min(\@fbratio,\csuse{@\myi RT})}%
-      \typeout{NOVATHESIS RATIO MIN(\@fbratio,\csuse{@\myi RT})=\pgfmathresult}%
+      % \typeout{NOVATHESIS RATIO MIN(\@fbratio,\csuse{@\myi RT})=\pgfmathresult}%
       \edef\@fbratio{\pgfmathresult}%
     }%
   }%
-  \typeout{NOVATHESIS RATIO=\@fbratio}
+  % \typeout{NOVATHESIS RATIO=\@fbratio}
   \currentpdfbookmark{\thebkmstring(spine)}{thespine}%
   \ifoptionequal{/novathesis/spine/layout}{trim}{%
     \stockwidth=\stockheight%
@@ -339,7 +340,7 @@
   \setlrmarginsandblock{0pt}{0pt}{*}%
   \setulmarginsandblock{0pt}{*}{1}%
   \setheaderspaces{0pt}{*}{*}%
-  \footskip=0pt%
+  \footskip = 0pt
   \checkandfixthelayout[fixed]%
   \ifluatex%
   \pagewidth=\paperwidth%
@@ -461,28 +462,33 @@
                     {#1,raise}%
   ){}{\def\@raise{0pt}}%
   % \typeout{L=[\thespine(logo)] IT(#1)=[\@item]}\AAAA
-  \typeout{PRINT BOX #1  ITEM=\@item}%
-  \typeout{PRINT BOX #1 ANGLE=\@angle}%
-  \typeout{PRINT BOX #1 SCALE=\@scale}%
-  \typeout{PRINT BOX #1 RAISE=\@raise}%
+  % \typeout{PRINT BOX #1  ITEM=\@item}%
+  % \typeout{PRINT BOX #1 ANGLE=\@angle}%
+  % \typeout{PRINT BOX #1 SCALE=\@scale}%
+  % \typeout{PRINT BOX #1 RAISE=\@raise}%
   \IfStrEq{#1}{logo}{%
     % IMAGE
     \IfStrEq{\@item}{none}{}{%
-      \def\@boxscale{1}%
-      \edef\@logowidth{\thespine(box,logo,len2)}\edef\@logoheight{\@thespinewidth}%
-      % \typeout{W=\@logowidth\space H=\the\@logoheight=\the\@thespinewidth}\XXXX
-      \setbox0=\hbox{\includegraphics[width=\@logowidth,angle=\number\numexpr\@angle\relax]{\@item}}%
-      \ifdim\dimexpr\ht0+\dp0\relax>\@logoheight\relax%
-        \setbox0=\hbox{\includegraphics[height=\@logoheight,angle=\number\numexpr\@angle-90\relax]{\@item}}%
+      \setbox1=\hbox{\hspace*{-\thespine(box,logo,margin,sep)}}%
+      \@for\myj:={\@item}\do{%
+        \StrCut{\myj}{/}\@lfile\@langle%
+        \@ifmtarg{\@langle}{\edef\@langle{\@angle}}{}%
+        \edef\@logowidth{\thespine(box,logo,len2)}\edef\@logoheight{\@thespinewidth}%
+        \setbox0=\hbox{\includegraphics[width=\@logowidth,angle=\number\numexpr\@langle-90\relax,origin=c]{\@lfile}}%
+        \ifdim\dimexpr\ht0+\dp0\relax>\@logoheight\relax%
+          \setbox0=\hbox{\includegraphics[height=\@logoheight,angle=\number\numexpr\@langle-90\relax,origin=c]{\@lfile}}%
+        \fi%
+        \setbox1=\hbox{\box1\hspace*{\thespine(box,logo,margin,sep)}\box0}%
+      }%
+      \ifdim\dimexpr\wd1\relax>\@logowidth\relax%
+        \setbox1=\hbox{\resizebox{\@logowidth}{!}{\box1}}%
       \fi%
-      \scalebox{\@scale}{\box0}%
+      \scalebox{\@scale}{\box1}%
     }%
   }{%
     % TEXT
     \scalebox{\@fbratio}{%
-      \datamatchtf{\arg}{spine}({box,#1,text,color},{box,text,color},%
-                                {text,color}){\color{\arg}}{}%
-      % \datamatchtf{\@sptx}{spine}({#1,nova/itqb},{#1}){}{}%
+      \datamatchtf{\arg}{spine}({box,#1,text,color},{box,text,color},{text,color}){\color{\arg}}{}%
       \ifdatadefined{spine}(#1,\@UNIV/\@SCHL){%
         \tabular{@{}c@{}}\thespine(#1,\@UNIV/\@SCHL)\endtabular%
       }{%
