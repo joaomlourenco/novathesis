@@ -144,26 +144,60 @@
   }%
 }
 
+
+% --------------------------------------------------------
+% Search if a data/memory is defined and returns value
+\def\datamatch#1#2(#3){%
+  % #1 = macro to set
+  % #2 = data@memory
+  % #3 = list of values
+  % Search and match first value from the list, error if no match is found
+  \datamatchtf{#1}{#2}(#3){}{\ClassError{novathesis}{Could not find “#2” defined with any of “(#3)”!}{}}%
+}
+
+\def\datamatchtf#1#2(#3)#4#5{%
+  % #1 = macro to set
+  % #2 = data@memory
+  % #3 = list of values
+  % #4 = true branch
+  % #5 = false branch
+  % Search and match first value from the list, true (found) and not true (not found) branches
+  % \typeout{#2(#3)}%
+  % \ifdatadefinedor{\@match}{#2}(#3)%
+  %   {\protect\gdef#1{\csuse{the#2}(\@match)}#4}%
+  %   {\protect\gdef#1{}#5}%
+  \ifdatadefinedor{\@match}{#2}(#3)%
+    {\protect\xdef#1{\expanded{\csuse{the#2}(\@match)}}#4}%
+    {\protect\xdef#1{}#5}%
+}
+
+
 \newdata{validprocessor}
 \validprocessor(uminho):={lua,xe}
 % \validprocessor(nova/itqb):={pdf,lua}
 \validprocessor(other/esep):={xe,lua}
-\newcommand{\@validate@processor}[2]{%
+\newcommand{\@validate@ltx@processor}[3]{%
 % 1 = UNIV
 % 2 = SCHL
-  % \typeout{@validate@processor 1=[#1] 2=[#2]}\@VALIDATE@PROCESSOR
+% 3 = DGR
+  % \typeout{@validate@ltx@processor U=[#1] S=[#2] D=[#3]}\@VALIDATE@PROCESSOR
   \newif\ifvalidprocessor%
   \validprocessorfalse%
-  \ifdatadefined{processor}(#1/#2){\@validate@processor@i{\thevalidprocessor(#1/#2)}}{%
-  \ifdatadefined{processor}(#1){\@validate@processor@i{\thevalidprocessor(#1)}}{%
+  \datamatchtf{\@ltxproc}{processor}({#1/#2/#3},{#1/#2},{#1}){% LISTED
+    \@validate@ltx@processor@i(\@ltxproc)%
+  }{% UNLISTED
     \validprocessortrue%
-  }}%
+  }%
+  % \ifdatadefined{processor}(#1/#2){\@validate@ltx@processor@i{\thevalidprocessor(#1/#2)}}{%
+  % \ifdatadefined{processor}(#1){\@validate@ltx@processor@i{\thevalidprocessor(#1)}}{%
+  %   \validprocessortrue%
+  % }}%
   \ifvalidprocessor\else\ClassError{novathesis}{\pdfprocessor: Invalid processor for “#1/#2”.}{}\fi%
 }
-\newcommand{\@validate@processor@i}[1]{%
+\newcommand{\@validate@ltx@processor@i}[1]{%
 % 1 = list of acceptable processors
   \@for\myi:=\expanded{#1}\do{%
-    % \typeout{@validate@processor@i 1=[\myi]}\@VALIDATE@PROCESSOR@I
+    % \typeout{@validate@ltx@processor@i 1=[\myi]}\@VALIDATE@PROCESSOR@I
     \IfStrEqCase{\myi}{%
       {pdf}{\ifpdftex\validprocessortrue\fi}%
       {lua}{\ifluatex\validprocessortrue\fi}%
@@ -188,8 +222,8 @@
   % abstract/theorder/.new list   = {unset},
   abstractorder/.new cmd        = {\appto\@nt@saveabstractorder{{#1},}},%
   % SCHOOL
-  school/.new cmd               = {\splitbyslash#1\relax\@UNIV\@SCHL%
-                                   \@validate@processor{\@UNIV}{\@SCHL}},
+  school/.new cmd               = {\StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR%
+                                   \@validate@ltx@processor{\@UNIV}{\@SCHL}{\@DEGREEACR}},
   school                        = nova/fct,
   % STYLES
   style/chapter/.new value      = bar,
@@ -299,32 +333,6 @@
 % Print string between <...>
 \newcommand*{\embrace}[1]{#1}
 % \newcommand*{\embrace}[1]{$\langle$#1$\rangle$}
-
-% --------------------------------------------------------
-% Search if a data/memory is defined and returns value
-\def\datamatch#1#2(#3){%
-  % #1 = macro to set
-  % #2 = data@memory
-  % #3 = list of values
-  % Search and match first value from the list, error if no match is found
-  \datamatchtf{#1}{#2}(#3){}{\ClassError{novathesis}{Could not find “#2” defined with any of “(#3)”!}{}}%
-}
-
-\def\datamatchtf#1#2(#3)#4#5{%
-  % #1 = macro to set
-  % #2 = data@memory
-  % #3 = list of values
-  % #4 = true branch
-  % #5 = false branch
-  % Search and match first value from the list, true (found) and not true (not found) branches
-  % \typeout{#2(#3)}%
-  % \ifdatadefinedor{\@match}{#2}(#3)%
-  %   {\protect\gdef#1{\csuse{the#2}(\@match)}#4}%
-  %   {\protect\gdef#1{}#5}%
-  \ifdatadefinedor{\@match}{#2}(#3)%
-    {\protect\xdef#1{\expanded{\csuse{the#2}(\@match)}}#4}%
-    {\protect\xdef#1{}#5}%
-}
 
 % --------------------------------------------------------
 % Check if a font file exists
@@ -726,7 +734,7 @@
 \def\@LANG@MAIN{\option{/novathesis/lang/main}}
 \def\@LANG@MAIN@LONG{\thelanglong(\@LANG@MAIN)}
 
-\def\@DEGREEACR{\option{/novathesis/degreeacr/\@DOCCLASS}}
+\@ifmtarg{\@DEGREEACR}{\gdef\@DEGREEACR{\option{/novathesis/degreeacr/\@DOCCLASS}}}{}
 
 \bkmstring(1-1)={\thebkmstring(cover,\@LANG@COVER)}
 \bkmstring(2-1)={\thebkmstring(frontpage,\@LANG@COVER)}
