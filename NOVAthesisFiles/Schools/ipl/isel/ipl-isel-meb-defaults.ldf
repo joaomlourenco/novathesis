@@ -5,155 +5,17 @@
 %% Customization for ISEL-IPL (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE ipl/isel/defaults.ldf}%
+\typeout{NT FILE ipl/isel/ipl-isel-meb-defaults.ldf}%
 
-% \ntsetup{print/secondcover=true}
-
-% Faculty / School
-\school(pt):={Instituto Superior de Engenharia de Lisboa}
-\school(en):={Instituto Superior de Engenharia de Lisboa}
-\school(fr):={Instituto Superior de Engenharia de Lisboa}
-\school(it):={Instituto Superior de Engenharia de Lisboa}
-
-% Scientific field
-% \majorfield(pt):={Engenharia e Gestão Industrial}
-% \majorfield(en):={Industrial Engineering and Management}
-
-% Department
-\department(pt):={Área Departamental de \themajorfield(pt)}
-\department(en):={Department of \themajorfield(en)}
-
-% Comiittee printing order
-\committeeorder():={c,m}%
-
-% Cover background images
-\frontpageimage():={isel-photo} % don't add the .jpg extension
-\thesiscover(phd,1-1,bgcolor):={white}
+\input{NOVAthesisFiles/Schools/ipl/isel/ipl-isel-defaults.ldf}
 
 % Spine info
-\spine(logo)={ipl-isel-logo}
-\spine(logo,angle)={90}
+\spine(logo)={ipl-logo/0,ipl-isel-logo/0/1.5,ipl-isel-meb-logo/0,2cm/meb-text/0/1.8}
+\spine(box,logo,margin,sep):={5mm}
+
+\spine(box,date,angle)={-90}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\@LANG@COVER,main)}
-\spine(year)={\thentdocdate(year)}
 
-% Set margins for "normal" pages
-\margin(screen,top):={2.5cm}
-\margin(screen,bottom):={2.5cm}
-\margin(screen,left):={2.5cm}
-\margin(screen,right):={2.5cm}
-\margin(paper,top):={2.5cm}
-\margin(paper,bottom):={2.5cm}
-\margin(paper,left):={2.5cm}
-\margin(paper,right):={2.5cm}
-
-% Set margins for cover pages
-\margin(cover,top):={1.0cm}
-\margin(cover,bottom):={1.0cm}
-\margin(cover,left):={2.0cm}
-\margin(cover,right):={2.0cm}
-
-
-\copyrighttextstring(pt)={O \theschool(\@LANG@COVER)\ e o \theuniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
-
-\copyrighttextstring(en)={The \theschool(\@LANG@COVER)\ and the \theuniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% IST guidelines:
-% The pages should be numbered consecutively at the bottom centre of the
-% page.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{%
-  \LoadHelveticaLikeFont%
-}
-
-\NTAddToHook{cover/1-1/text/pre}{%
-  % \sffamily%
-}
-\NTAddToHook{cover/2-1/text/pre}{%
-  % \sffamily%
-}
-
-
-% LOGO
-\ntaddtocover[vspace=0cm,halign=c]{1-1,2-1}{%
-  \includegraphics[height=1.5cm]{ipl-isel-logo-horiz}%
-}
-
-% School%
-\ntaddtocover[vspace=0cm]{1-1,2-1}{%
-  \fontsize{14}{14}\selectfont%
-  \textbf{\THEschool(\@LANG@COVER)}\\%
-  \fontsize{14}{14}\selectfont%
-  \textbf{\thedepartment(\@LANG@COVER)}%
-}
-
-\ntaddtocover[vspace=0.5cm,height=8cm,valign=c]{1-1,2-1}{%
-  % \typeout{NT thefrontpageimage=[\thefrontpageimage()]}%
-  \ifdatadefined{frontpageimage}()
-    {\includegraphics[height=8cm]{\thefrontpageimage()}}%
-    {~}%
-}
-
-% % Title of Dissertation
-\ntaddtocover[vspace=0.5cm,]{1-1,2-1}{%
-  \fontsize{18}{20}\selectfont%
-  \textbf{\thedoctitle(\@LANG@COVER,main,cover)}%
-}
-
-% Author name
-\ntaddtocover[vspace=1]{1-1,2-1}{%
-  \fontsize{16}{16}\selectfont%
-  \textbf{\thedocauthor(name)}%\\[1ex]
-  % \fontsize{14}{14}\selectfont%
-  % (\thedocauthor(degree))%
-}
-
-% Degree
-\ntaddtocover[vspace=1]{1-1,2-1}{%
-  \fontsize{12}{12}\selectfont%
-  \thepresentationtext%
-}
-
-% Advisers
-% \ntaddtocover[vspace=2]{1-1,2-1}{%
-%   \adviserstringfont(a):={\bfseries}%
-%   \adviserstringfont(c):={\bfseries}%
-%   \fontsize{11}{11}\selectfont%
-%   \ntprintpersons{0.9}{2}{adviser}{a,c}%
-% }
-
-
-% Adviser and Committee — only print the committee for the main classes
-\ntaddtocover[vspace=2]{1-1,2-1}{%
-  \adviserstringfont():={}%
-  \advisernamefont():={\fontsize{11}{11}\selectfont}%
-  \advisernamepre():={\mbox{\qquad}}%
-  \committeestringfont():={}%
-  \committeenamefont():={\fontsize{11}{11}\selectfont}%
-  \committeenamepre():={\mbox{\qquad}}%
-  \committeetitlestringfont():={\fontsize{14}{14}\selectfont}%
-  \begin{minipage}[t]{0.48\textwidth}%
-    \ntprintpersons[name]{1}{1}{adviser}{a,c}%
-  \end{minipage}%
-  \hfill%
-  \begin{minipage}[t]{0.48\textwidth}
-  \ifmaindoc{%
-        \ifdocfinal{\ntprintpersons[name]{1}{1}{committee}{\thecommitteeorder()}\mbox{}}{\mbox{}}%
-    }{\mbox{}}%
-  \end{minipage}%
-}
-
-
-% Date
-\ntaddtocover[vspace=2]{1-1,2-1}{%
-  \fontsize{10}{10}\selectfont%
-    \textbf{\thentdocdate(month), \thentdocdate(year)}
-}
-
+\spine(box,logo,len):=?{4.1cm}
+\spine(box,date,len):=?{1.0cm}
+% \spine(box,author,len):=?{5.0cm}
