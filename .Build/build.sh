@@ -9,7 +9,8 @@ CONF=Config/1_novathesis.tex
 sed -i'.OLD' -e 's,.*\\ntsetup{doctype=.*},\\ntsetup{doctype=phd},' \
             -e 's,.*\\ntsetup{school=.*},\\ntsetup{school=nova/fct},' \
             -e 's,.*\\ntsetup{docstatus=.*},\\ntsetup{docstatus=final},' \
-            -e 's,.*\\ntsetup{spine=.*},\\ntsetup{spine=trim},' \
+            -e 's,.*\\ntsetup{spine/lauyout=.*},\\ntsetup{spine/lauyout=trim},' \
+            -e 's,.*\\ntsetup{spine/width=.*},\\ntsetup{spine/width=2cm},' \
             -e 's,.*\\ntsetup{print/index=.*},\\ntsetup{print/index=true},' \
             $CONF
 
