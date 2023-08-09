@@ -24,7 +24,7 @@
 
 \ifdocprovisional{\ntsetup{docstatus=final}}{}
 \ifmaindoc{\ifdocfinal{\ntaddfile{cover}[1]{./NOVAthesisFiles/Schools/uminho/cover-final.tex}}{}}{}
-% \ntsetup{spine/layout=no}
+\ntsetup{spine/layout=no}
 
 % --------------------------------------------------------
 % PRINT ORDER FOR frontmatter AND mainmatter
@@ -170,7 +170,7 @@
 \spine(logo,school)={\theschool(logo,RGB)}
 \spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\@LANG@COVER,main)}
-\spine(year)={\thentdocdate(year)}
+\spine(year)={\thentdocdate(submission,year)}
 % \spine(top)={116pt}
 \spine(top)={9cm}
 \spine(margin)={3mm}
@@ -265,7 +265,7 @@
   % \ifdraftdoc
     % \textbf{DRAFT: \today}
   % \else
-    \thentdocdate(month)\theofstr(\@LANG@COVER)\thentdocdate(year)%
+    \thentdocdate(submission,month)\theofstr(\@LANG@COVER)\thentdocdate(submission,year)%
   % \fi
 }
 

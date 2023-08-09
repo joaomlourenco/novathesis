@@ -185,8 +185,9 @@
   \\[3mm]%
   \theuniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%
-    \ifdocworking{\emph{\color{yellow}\textbf{Draft:} \today}}{\thentdocdate(month), \thentdocdate(year)}%
-  }{\thentdocdate(month), \thentdocdate(year)}%
+    \ifdocworking{\emph{\color{yellow}\textbf{Draft:} \today}}%
+                 {\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
+  }{\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -257,8 +258,9 @@
   \\[1.25ex]%
   \theuniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%
-    \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}{\thentdocdate(month), \thentdocdate(year)}%
-  }{\thentdocdate(month), \thentdocdate(year)}%
+    \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}%
+                 {\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
+  }{\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

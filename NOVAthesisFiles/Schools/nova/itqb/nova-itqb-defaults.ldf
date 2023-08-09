@@ -34,7 +34,7 @@
 \school(it):={Instituto de Tecnologia Química e Biológica António Xavier}
 \school(address):={\textbf{ITQB NOVA, Avenida da República, 2780-157 \theoeiras(), Portugal} $|$ Tel +351 214 469 100 $|$ itqb.unl.pt}
 
-\school(logo,neg):={nova-itqb-logo-mono}
+\school(logo,neg):={nova-itqb-logo-mono/90}
 % \school(logo,neg):={nova-itqb-logo-negative}
 
 % Comiittee printing order
@@ -55,7 +55,7 @@
 % \thesiscover(msc,1-1,image):={nova-itqb-cover}
 % \thesiscover(msc,N-2,image):={nova-itqb-cover-back}
 
-\spine(bg,color)={\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},spine)}
+\spine(bg,color)={\theitqbcolor(\option{/novathesis/nova/itqb/cover/color},spine)}
 % \thesiscover(spine,image)={spine}
 
 
@@ -68,11 +68,12 @@
 % \spine(logo,msc)={\theschool(logo,neg)}
 % \spine(logo,msc,angle)={90}
 
-\spine(order):=?{date,title,author,logo}
+\spine(order):={date,title,author,logo}
 
 % \spine(author)={\thedocauthor(name,short)}
 % \spine(title)={\textbf{\thedoctitle(\@LANG@COVER,main)}}
-\spine(date):={\textcolor{itqbgray207}{\theoeiras(),} {\thentdocdate(month)}, {\thentdocdate(year)}}
+\spine(date):={\textcolor{itqbgray207}{\theoeiras(),} %
+               \thentdocdate(submission,month,text), \thentdocdate(submission,year)}
 % \spine(date,1):={\theoeiras(), \color{cyan}\thentdocdate(month), \thentdocdate(year)}
 
 % \spine(text,angle)={0}
@@ -86,15 +87,15 @@
 \spine(box,logo,align)={c}
 
 % \spine(box,author,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
-\spine(box,author,len)={4.15cm}
+% \spine(box,author,len)={4.15cm}
 
 % \spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
-\spine(box,title,len)={15.5cm}
+% \spine(box,title,len)={15.0cm}
 % \spine(box,title,align)={l}
 % \spine(box,author,align)={l}
 
 % \spine(box,date,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
-\spine(box,date,len)={3.75cm}
+\spine(box,date,len)={4.3cm}
 % \spine(box,lodatego,align)={l}
 
 
@@ -213,7 +214,7 @@
                                        {cover,\option{/@nt/document/docclass},right},%
                                        {cover,right})%
     % Text in rectangle
-  \setbox0=\hbox{\scalebox{2.15}{\bfseries\thentdocdate(year)}}
+  \setbox0=\hbox{\scalebox{2.15}{\bfseries\thentdocdate(submission,year)}}
   \begin{scope}[shift=(current page.north west), xshift=\@MRGN@left]
     % Logo at top-left
     \node [inner sep=0pt, anchor=north west, xshift=0, yshift=-\@MRGN@top]
@@ -222,7 +223,7 @@
     \node [inner sep=0pt,anchor=north east,
            xshift=\paperwidth-\@MRGN@left-8.5mm,
            yshift=-\@MRGN@top-3.5mm,
-           color={\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},front,date)}}]
+           color={\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/cover/color},front,date)}}]
                     {\rotatebox{90}{\makebox[0pt][l]%
                                {\raisebox{\dimexpr\ht0+7pt}{\rule{\wd0}{2pt}}}\box0}};
     % Title
@@ -260,10 +261,10 @@
     % Date
     \node [inner sep=0pt,anchor=south west, yshift={\theregion(itqb,top)+7.4mm}]
                     {\fontsize{13}{13}\selectfont
-                     \mbox{O}eiras, \thentdocdate(month), \thentdocdate(year)};
+                     \mbox{O}eiras, \thentdocdate(submission,month,text), \thentdocdate(submission,year)};
     % Rectangle
     \fill [xshift=-\@MRGN@left,
-           \expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},front,rectangle)}]
+           \expanded{\theitqbcolor(\option{/novathesis/nova/itqb/cover/color},front,rectangle)}]
                    (\theregion(itqb,left),{\theregion(itqb,top)})
                 -- (\theregion(itqb,right),{\theregion(itqb,top)})
                 -- (\theregion(itqb,right),{\theregion(itqb,bottom)})
@@ -281,10 +282,10 @@
 }
 
 \ntaddtocover[tikz]{N-2}{%
-  \setbox0=\hbox{\scalebox{2}{\bfseries\thentdocdate(year)}}
+  \setbox0=\hbox{\scalebox{2}{\bfseries\thentdocdate(submission,year)}}
   \begin{scope}[shift=(current page.north west)]
     % Filling back cover
-    \fill [color={\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},back)}}]
+    \fill [color={\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/cover/color},back)}}]
                     (0,0) rectangle (\paperwidth,-\paperheight);
     % Logo above rectangle
     \node [inner sep=0pt,anchor=north west,xshift=11mm,yshift={3.5cm+\theregion(itqb,top)}]
@@ -300,8 +301,8 @@
       % Text in rectangle
     \node [inner sep=0pt, anchor=west, xshift={-\paperwidth+11mm},
                           yshift={(\theregion(itqb,bottom)+\theregion(itqb,top))/2},
-                          color={\theitqbcolor(\option{/novathesis/nova/itqb/covercolor},back,text)}]
-                    {\fontsize{12.3}{12.3}\selectfont
+                          color={\theitqbcolor(\option{/novathesis/nova/itqb/cover/color},back,text)}]
+                    {\fontsize{12}{12}\selectfont
                      \theschool(address)};
     \end{scope}
   \end{scope}

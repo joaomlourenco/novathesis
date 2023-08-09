@@ -34,7 +34,7 @@
 \spine(logo)={ulisboa-ist-logo}
 \spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\@LANG@COVER,main)}
-\spine(year)={\thentdocdate(year)}
+\spine(year)={\thentdocdate(submission,year)}
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
@@ -151,6 +151,6 @@
 % Date
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
-    \textbf{\thentdocdate(month), \thentdocdate(year)}
+    \textbf{\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
 }
 

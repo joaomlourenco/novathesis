@@ -80,10 +80,6 @@
 % \ntsetup{print/index=true}     % Print the (words) index at the end of the document
 %                               % DEFAULT: print/index=false
 
-% \ntsetup{gnumberlist=false}   % Shall the glossary entries list the page numbers where
-%                               %     those entries are used?  (as a reverse index!)
-%                               % DEFAULT: gnumberlist=true
-
 % \ntsetup{print/webography=print/webography} % Generate a separate bibliography for @online references
 %                                 % DEFAULT: All references in a single bibliography
 
@@ -92,14 +88,23 @@
 %% THE LESS IMPORTANT/POPULAR OPTIONS
 %%------------------------------------------------------------
 
+% \ntsetup{gnumberlist=false}   % Shall the glossary entries list the page numbers where
+%                               %     those entries are used?  (as a reverse index!)
+%                               % DEFAULT: gnumberlist=true
+
+% \ntsetup{numberallpages=true} % Shall all the pages (except cover) be numbered?
+%                               % DEFAULT: numberallpages=false
+
+% \ntsetup{tocintoc=true}       % Shall table of contects be listed in itself?
+%                               % DEFAULT: tocintoc=false
+
+% \ntsetup{cover/color=green}   % Only effective for NOVA/ITQB {gray/green}
+
 % \ntsetup{print/secondcover=true}    % Shall a second cover page be forced?
 %                               %     if the contents for the second page are not
 %                               %     defined, the second cover will be a replica
 %                               %     of the first cover.
 %                               % DEFAULT: print/secondcover=false
-
-% \ntsetup{style/url=same}       % Use the same (main) font in URLs
-%                               % DEFAULT: whatever hyperref uses as default
 
 % \ntsetup{print/committee=true}% Shall the evaluation committee be printed?
 %                               %     the evaluation committee should only be
@@ -111,11 +116,19 @@
 %                               %     cover and the book chapters
 %                               % DEFAULT: print/frontmatter=true
 
-% \ntsetup{numberallpages=true} % Shall all the pages (except cover) be numbered?
-%                               % DEFAULT: numberallpages=false
+% \ntsetup{print/statement=true}% Does the document have after cover pages??
+%                               %     after cover pages are printed immediately
+%                               %     after the cover pages
+%                               % DEFAULT: print/statement=false
 
-% \ntsetup{tocintoc=true}       % Shall table of contects be listed in itself?
-%                               % DEFAULT: tocintoc=false
+%\ntsetup{print/copyright=false} % Shall the copyright message be printed??
+%                               % DEFAULT: print/copyright=true
+
+% \ntsetup{print/timestamp=false} % Print a timestamp (when PDF was generated) in the cover
+%                               % DEFAULT: print/timestamp=true
+
+% \ntsetup{style/url=same}       % Use the same (main) font in URLs
+%                               % DEFAULT: whatever hyperref uses as default
 
 % \ntsetup{style/font=newtx}    % You can use any of the default LaTeX style files:
 %                               % Or any of the additional styles
@@ -145,17 +158,6 @@
 %                               %     defaults to main document language
 %                               % DEFAULT: lang/copyright=<the same as “lang”>
 
-% \ntsetup{print/statement=true}% Does the document have after cover pages??
-%                               %     after cover pages are printed immediately
-%                               %     after the cover pages
-%                               % DEFAULT: print/statement=false
-
-%\ntsetup{print/copyright=false} % Shall the copyright message be printed??
-%                               % DEFAULT: print/copyright=true
-
-% \ntsetup{print/timestamp=false} % Print a timestamp (when PDF was generated) in the cover
-%                               % DEFAULT: print/timestamp=true
-
 % \ntsetup{spine/layout=trim}    % Print the “book spine” at the end of the document?
 %                               %     [   no —> do not print the book spine
 %                               %       full —> print the book spine in a full page
@@ -168,5 +170,8 @@
 % \ntsetup{spine/width=2cm}     % Force the “book spine” width
 %                               % DEFAULT: natural width of book spine for double-sided 80gr paper
 
-% \ntsetup{debug={cover}}       % Cover development and debug: print rulers in the cover page
+% \ntsetup{debug={cover,spine}}   % Cover development and debug: print rulers in the cover page
+%                               %     [ cover —> print grid in covers and spine
+%                               %       spine —> print red boxes around spine elements
+%                               %     ]
 %                               % DEFAULT: debug={}

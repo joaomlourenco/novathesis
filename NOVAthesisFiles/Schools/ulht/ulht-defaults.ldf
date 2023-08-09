@@ -176,6 +176,6 @@
 % Date
 \ntaddtocover[vspace=3.3cm]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont\bfseries%
-    Lisboa\\\thentdocdate(year)%
+    Lisboa\\\thentdocdate(submission,year)%
 }
 

@@ -120,6 +120,6 @@
 % Date
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
-    \textbf{\thentdocdate(month), \thentdocdate(year)}%
+    \textbf{\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
 }
 
