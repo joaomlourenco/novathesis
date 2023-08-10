@@ -60,7 +60,7 @@ for the degree of \emph{\thedegreename(en)}}
 
 \spine(author)={\thedocauthor(name)}
 \spine(title)={\textbf{\emph{\THEdoctitle(\@LANG@COVER,main)}}}
-\spine(date)={\thentdocdate(year)}
+\spine(date)={\thentdocdate(submission,year)}
 
 \spine(text,angle)={90}
 \spine(box,textcolor)={black}
@@ -267,7 +267,7 @@ for the degree of \emph{\thedegreename(en)}}
 % Date
 \ntaddtocover[vspace=1]{2-1}{%
   \fontsize{11}{11}\selectfont
-    \textbf{\thentdocdate(month), \thentdocdate(year)}
+    \textbf{\thentdocdate(submission,month,text), \thentdocdate(submission,year)}
 }
 
 

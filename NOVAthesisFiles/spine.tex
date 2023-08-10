@@ -29,7 +29,7 @@
   \spine(title)=?{\thedoctitle(\@LANG@COVER,spine)}
 }
 % \typeout{SPINE=[\@LANG@COVER][\thespine(title)]}
-\spine(date)=?{\thentdocdate(year)}
+\spine(date)=?{\thentdocdate(submission,year)}
 
 
 % Defaults for spine
@@ -59,8 +59,8 @@
 \spine(box,logo,align):=?{c}
 \spine(box,logo,raise):=?{0pt}
 \spine(box,logo,scale):=?{1}
-\spine(box,logo,margin,left)=?{2mm}
-\spine(box,logo,margin,right):=?{2mm}
+\spine(box,logo,margin,left)=?{0mm}
+\spine(box,logo,margin,right):=?{0mm}
 \spine(box,logo,margin,sep):=?{1mm}
 
 \spine(box,author,len):=?{4.0cm}
@@ -105,65 +105,36 @@
   \ifisdim#2\else#3\fi%
 }
 
-
-\newlength{\@spinelen}  % total spine length
-\newlength{\@spineboxlen} % accumulated spine boxes length (= \@spinefixedlen + \@spinevarlen)
-\newlength{\@spinefixedlen} % accumulated spine fixed boxes length
-\newlength{\@spinevarlen} % accumulated spine variable boxes length
-\newlength{\@spineboxseplen} % accumulated box separators length
-\newlength{\@spinelr} % accumulated left and right length
-\newlength{\@spinevar} % ratio for scaling the variable boxes
-\StrCount{\thespine(order)}{,}[\@spineNBoxes]%
-% \typeout{NBOXES=\@spineNBoxes}%
+\ifoptioncontains{/novathesis/debug}{spine}{%
+  \def\@spineboxdrawopacity{1}%
+  \newcommand{\DEBUG}[1]{\typeout{##1}}%
+}{%
+  \def\@spineboxdrawopacity{0}%
+  \newcommand{\DEBUG}[1]{}%
+}%
 
 
-\newcommand{\@getspinelen}{%
-  \setlength{\@spinelr}{\dimexpr\thespine(margin,left)+\thespine(margin,right)\relax}%
-  \setlength{\@spineboxseplen}{\dimexpr \thespine(boxsep)*3\relax}%
-  \setlength{\@spinefixedlen}{\dimexpr \@spinelr+\@spineboxseplen\relax}
-  \setlength{\@spineboxlen}{0pt}
-  \setlength{\@spinevarlen}{0pt}
+\newdimen\@spinelen  % total spine length
+\newcommand{\@checkspinelen}[1][\paperheight]{%
+  \@tempdima=\thespine(margin,left)\relax%
+  \@tempdimb=\thespine(margin,right)\relax%
+  \DEBUG{SPINELEN MARGIN [left] = \the\@tempdima}%
+  \DEBUG{SPINELEN MARGIN [right] = \the\@tempdimb}%
+  \@tempdima=\dimexpr\@tempdima+\@tempdimb\relax%
+  \DEBUG{SPINELEN ACCUMULATED = \the\@tempdima}%
+  \StrCount{\thespine(order)}{,}[\@nBoxSep]%
+  % \@tempdimb=\dimexpr\thespine(boxsep)*\@nBoxSep\relax%
+  % \DEBUG{SPINELEN BOXSEP [all] = \the\@tempdimb}%
+  % \@tempdima=\dimexpr\@tempdima+\@tempdimb\relax%
+  % \DEBUG{SPINELEN ACCUMULATED = \the\@tempdima}%
   \@for\myi:=\expanded{\thespine(order)}\do{%
-    \@tempdima=\dimexpr \thespine(box,\myi,len)\relax%
-    \spine(box,\myi,len):={\the\@tempdima}
-    % \typeout{SPINEBOXLEN[\myi]=\the\@tempdima}
-    \addtolength{\@spineboxlen}{\@tempdima}
-    \ifdatadefined{spine}(box,\myi,len){%
-      % Fixed box length
-      \addtolength{\@spinefixedlen}{\@tempdima}
-    }{%
-      % Variable box length
-      \addtolength{\@spinevarlen}{\@tempdima}
-    }%
-  }%
-  \setlength{\@spinelen}{\dimexpr \@spinefixedlen+\@spinevarlen\relax}
-  % \typeout{SPINELEN[lr]=\the\@spinelr}%
-  % \typeout{SPINELEN[boxseplen]=\the\@spineboxseplen}%
-  % \typeout{SPINELEN[boxlen]=\the\@spineboxlen}%
-  % \typeout{SPINELEN[boxfixedlen]=\the\@spinefixedlen}%
-  % \typeout{SPINELEN[boxvarlen]=\the\@spinevarlen}%
-  % \typeout{SPINELEN[spinelen]=\the\@spinelen}%
-  % \typeout{SPINELEN[spinelen]=\the\@spinelen}%
-}
-
-\newlength{\@displen}
-\newcommand{\displayspinealyout}{
-  \@for\@myitem:={%
-        {order},{angle},{boxsep},{image},{frame,color},{bg,color},{text,color},{text,align},%
-        {margin,left},{margin,right},{margin,top},{margin,bottom},%
-        {box,margin},{box,bg,color},{box,text,color},%
-        {box,logo,angle},{box,author,angle},{box,title,angle},{box,date,angle},%
-        {box,logo,len},{box,author,len},{box,title,len},{box,date,len},%
-        {box,logo,margin,left},{box,author,margin,left},{box,title,margin,left},{box,date,margin,left},%
-        {box,logo,margin,right},{box,author,margin,right},{box,title,margin,right},{box,date,margin,right}%
-  }\do{%
-    \IfIsDim{\thespine(\@myitem)}{%
-      \setlength{\@displen}{\thespine(\@myitem)}
-      % \typeout{\string\thespine(\@myitem)=\thespine(\@myitem)=\the\@displen}
-    }{%
-      % \typeout{\string\thespine(\@myitem)=\thespine(\@myitem)}
-    }%
-  }%
+    \@tempdimb=\thespine(box,\myi,len)\relax%
+    \DEBUG{SPINELEN BOXLEN [\myi] = \the\@tempdimb}%
+    \@tempdima=\dimexpr\@tempdima+\@tempdimb\relax%
+    \DEBUG{SPINELEN ACCUMULATED = \the\@tempdima}%
+  }
+  \DEBUG{SPINELEN MAX = \the#1}%
+  \@spinelen=\@tempdima%
 }
 
 
@@ -178,69 +149,64 @@
 }
 
 
-% \displayspinealyout
-\@getspinelen
-% \typeout{PAPER HEIGHT=\the\paperheight}
-% \typeout{SPINELEN[TEMP]=\the\@spinelen}
-% \PAUSETHIS
-
 \providecommand*{\DivideLengths}[2]{%
   \strip@pt\dimexpr\number\numexpr\number\dimexpr#1\relax*65536/\number\dimexpr#2\relax\relax sp\relax
 }
 
-\@reverelist{\expanded{\thespine(logo)}}\@logoorder%
-\spine(logo):={\@logoorder}
+% If angle is 0 revere the order of the logos
+\IfStrEqCase{\thespine(angle)}{%
+    {0}{\@reverelist{\expanded{\thespine(logo)}}\@logoorder%
+        \spine(logo):={\@logoorder}}%
+  {180}{\spine(margin,left2):={\thespine(margin,left)}%
+        \spine(margin,left):={\thespine(margin,right)}%
+        \spine(margin,right):={\thespine(margin,left2)}%
+        % \spine(box,logo,angle):={\number\numexpr\thespine(box,logo,angle)+180\relax}%
+        \@reverelist{\expanded{\thespine(order)}}\spineorder%
+        \spine(order):={\spineorder}}%
+}[\CalssError{novathesis}{Invalid spine angle: \thespine(angle)! Should be wither “0” or “180”.}{}]
 
-% If angle is 180 rever the order
-\IfStrEq{\thespine(angle)}{180}{%
-  \spine(margin,left2):={\thespine(margin,left)}%
-  \spine(margin,left):={\thespine(margin,right)}%
-  \spine(margin,right):={\thespine(margin,left2)}%
-  % \spine(box,logo,angle):={\number\numexpr\thespine(box,logo,angle)+180\relax}%
-  \@reverelist{\expanded{\thespine(order)}}\spineorder%
-  \spine(order):={\spineorder}%
-  % \StrGobbleRight{\spineorder}{2}%
-  % \typeout{ ORDER AFTER=\thespine(order)}%
-}{%
-}%
+
+\@checkspinelen
 
 % Increase box spacing if necessary
 % Reduce default boxes length and keep given/forces boxes length 
-\newlength{\@newboxsep}
-\ifdim\@spinelen<\paperheight\relax%
-  % SPINE boxes do not fill up all the spine, increase spacing
-  \@tempdima=\dimexpr\thespine(boxsep)\relax%
-  % \typeout{OLD BOXSEP=\the\@tempdima}
-  \@tempdima=\dimexpr((\paperheight-\@spinelen)+(\expanded{\thespine(boxsep)}*\@spineNBoxes))
-                     /\@spineNBoxes\relax%
-  \spine(boxsep):={\the\@tempdima}%
-\else\ifdim\@spinelen>\paperheight\relax%
-  % SPINE boxes are to large for the spine size, decrease spacing in the not-explictily defined boxes
-  \@tempdima=\dimexpr\paperheight-\@spinefixedlen\relax
-  % \showthe\@tempdima
-  \@tempdimb=\dimexpr\@spinelen-\@spinefixedlen\relax
-  % \showthe\@tempdimb
-  % \StrGobbleRight{\the\@tempdimb}{2}[\@SPVAR]
-  \edef\@spinevarratio{\DivideLengths{\@tempdima}{\@tempdimb}}
-  % \show\@spinevarratio
-  \@for\myi:=\expanded{\thespine(order)}\do{%
-    \ifdatadefined{spine}(box,\myi,len){%
-      % Fixed box length, do not touch
-    }{%
-      % Variable box length, apply ratio
-    \@tempdima=\dimexpr\thespine(box,\myi,len)\relax%
-    % \typeout{OLD SPINEBOXLEN[\myi]=\the\@tempdima}
-    \@tempdima=\dimexpr \@spinevarratio\@tempdima\relax
-    % \typeout{NEW SPINEBOXLEN[\myi]=\the\@tempdima}
-    \spine(box,\myi,len):={\the\@tempdima}
-    }%
-  }%
+\@tempdima=\dimexpr\paperheight-\@spinelen\relax%                             = remaining space to fill spine
+\ifdim\@tempdima>0pt\relax%
+  % spine FITS into paper height
+  \@tempdima=\dimexpr\@tempdima/\@nBoxSep\relax%                              = new box sep size
+  % \DEBUG{NEW BOXSEP=\the\@tempdima}
+  \spine(boxsep):={\the\@tempdima}%                                           = set new boxsep
+\else\ifdim\@tempdima<0pt\relax%
+  % spine DOES NOT FIT into paper height
+    \ClassError{novathesis}{Spine is \the\@tempdima\space too long: \the\@spinelen\space instead of \the\paperheight}
+    {Get some insight with “fgrep SPINELEN *.log”}{}
 \fi\fi%
+  % % SPINE boxes are to large for the spine size, decrease spacing in the not-explictily defined boxes
+  % \@tempdima=\dimexpr\paperheight-\@spinefixedlen\relax
+  % % \showthe\@tempdima
+  % \@tempdimb=\dimexpr\@spinelen-\@spinefixedlen\relax
+  % % \showthe\@tempdimb
+  % % \StrGobbleRight{\the\@tempdimb}{2}[\@SPVAR]
+  % \DEBUG{DL 1=[\the\@tempdima] 2=[\the\@tempdimb]}\AAAA
+  % \edef\@spinevarratio{\DivideLengths{\@tempdima}{\@tempdimb}}
+  % % \show\@spinevarratio
+  % \@for\myi:=\expanded{\thespine(order)}\do{%
+  %   \ifdatadefined{spine}(box,\myi,len){%
+  %     % Fixed box length, do not touch
+  %   }{%
+  %     % Variable box length, apply ratio
+  %   \@tempdima=\dimexpr\thespine(box,\myi,len)\relax%
+  %   % \DEBUG{OLD SPINEBOXLEN[\myi]=\the\@tempdima}
+  %   \@tempdima=\dimexpr \@spinevarratio\@tempdima\relax
+  %   % \DEBUG{NEW SPINEBOXLEN[\myi]=\the\@tempdima}
+  %   \spine(box,\myi,len):={\the\@tempdima}
+  %   }%
+  % }%
 
 % \displayspinealyout
-\@getspinelen
-% \typeout{PAPER HEIGHT=\the\paperheight}
-% \typeout{SPINELEN[FINAL]=\the\@spinelen}
+\@checkspinelen
+% \DEBUG{PAPER HEIGHT=\the\paperheight}
+% \DEBUG{SPINELEN[FINAL]=\the\@spinelen}
 % \PAUSETHIS
 
 % Calculate box[lef], box[len], box[right]
@@ -250,9 +216,9 @@
   \spine(box,\myi,left):={\the\@tempdima}
   \@tempdima=\dimexpr\@tempdima+\thespine(box,\myi,len)\relax%
   \spine(box,\myi,right):={\the\@tempdima}
-  % \typeout{BOX[\myi,left]=\thespine(box,\myi,left)}
-  % \typeout{BOX[\myi,len]=\thespine(box,\myi,len)}
-  % \typeout{BOX[\myi,right]=\thespine(box,\myi,right)}
+  % \DEBUG{BOX[\myi,left]=\thespine(box,\myi,left)}
+  % \DEBUG{BOX[\myi,len]=\thespine(box,\myi,len)}
+  % \DEBUG{BOX[\myi,right]=\thespine(box,\myi,right)}
 }%
 
 \@for\myi:=\expanded{\thespine(order)}\do{%
@@ -261,8 +227,8 @@
   \@tempdima=\dimexpr\@tempdima-\thespine(box,\myi,margin,left)
                                -\thespine(box,\myi,margin,right)\relax
   \spine(box,\myi,len2):={\the\@tempdima}
-  % \typeout{TEXT[\myi,len]=\thespine(box,\myi,len)}
-  % \typeout{TEXT[\myi,len2]=\thespine(box,\myi,len2)}
+  % \DEBUG{TEXT[\myi,len]=\thespine(box,\myi,len)}
+  % \DEBUG{TEXT[\myi,len2]=\thespine(box,\myi,len2)}
 }
 
 
@@ -297,16 +263,16 @@
   \normalsize%
   \ifdim\option{/novathesis/spine/width}=0pt\relax%
     \@setlength{\@spinewidth}{0.05mm * (\thelastsheet+1)}%
-    % \typeout{NOVATHESIS spine width for \thelastsheet\space pages is \the\@spinewidth!}%
+    % \DEBUG{NOVATHESIS spine width for \thelastsheet\space pages is \the\@spinewidth!}%
     \ifdim\@spinewidth < 6mm\relax% Force book spine to be at least 6mm
-      % \typeout{NOVATHESIS spine width was \the\@spinewidth, forcing to 6mm!}%
+      % \DEBUG{NOVATHESIS spine width was \the\@spinewidth, forcing to 6mm!}%
       \@setlength{\@spinewidth}{6mm}%
     \fi%
   \else%
     \@setlength{\@spinewidth}{\option{/novathesis/spine/width}}%
-    % \typeout{NOVATHESIS spine width user forced by user to \the\@spinewidth!}%
+    % \DEBUG{NOVATHESIS spine width user forced by user to \the\@spinewidth!}%
   \fi%
-  % \typeout{NOVATHESIS \string\@spinewidth=\the\@spinewidth}%
+  % \DEBUG{NOVATHESIS \string\@spinewidth=\the\@spinewidth}%
   \@setlength{\@thespinewidth}
              {\dimexpr\@spinewidth-\thespine(margin,top)-\thespine(margin,bottom)\relax}%
   \def\@fbratio{9999}%
@@ -318,7 +284,7 @@
       \edef\@tone{\pgfmathresult}%
       \pgfmathparse{\csuse{@\myi 2RT}}%
       \edef\@ttwo{\pgfmathresult}%
-      % \typeout{T1=\@tone\space T2=\@ttwo}\AAAAA%
+      % \DEBUG{T1=\@tone\space T2=\@ttwo}\AAAAA%
       \ifdim\@tone pt < \@ttwo pt\relax%
         % \BBBBBBB%
         \spine(\myi):={\def\\{ }\thespine(\myi)}%
@@ -326,13 +292,13 @@
     }{}%\ASDSDDSAS
     \IfSubStr{,\thespine(order,widthskip),}{,\myi,}{}{%
       \fitboxratio{@\myi RT}{\thespine(box,\myi,len2)}{\@thespinewidth}{\thespine(\myi)}%
-      % \typeout{NOVATHESIS RATIO[\myi]=\csuse{@\myi RT}}%
+      % \DEBUG{NOVATHESIS RATIO[\myi]=\csuse{@\myi RT}}%
       \pgfmathparse{min(\@fbratio,\csuse{@\myi RT})}%
-      % \typeout{NOVATHESIS RATIO MIN(\@fbratio,\csuse{@\myi RT})=\pgfmathresult}%
+      % \DEBUG{NOVATHESIS RATIO MIN(\@fbratio,\csuse{@\myi RT})=\pgfmathresult}%
       \edef\@fbratio{\pgfmathresult}%
     }%
   }%
-  % \typeout{NOVATHESIS RATIO=\@fbratio}
+  % \DEBUG{NOVATHESIS RATIO=\@fbratio}
   \currentpdfbookmark{\thebkmstring(spine)}{thespine}%
   \ifoptionequal{/novathesis/spine/layout}{trim}{%
     \stockwidth=\stockheight%
@@ -408,7 +374,7 @@
       \node[rectangle,
             inner sep = 0pt,
             anchor = north west,
-            draw, color = red,
+            draw, color = red, draw opacity=\@spineboxdrawopacity,
             fill = {\thespine(box,bg,color)},
             minimum width = \expanded{\thespine(box,\myi,len)},
             minimum height = \@thespinewidth,
@@ -426,9 +392,9 @@
       }%
     }%
   \end{tikzpicture}%
-  \ifoptioncontains{/novathesis/debug}{cover}{%
+  \ifoptioncontains{/novathesis/DEBUG}{cover}{%
     \NTRunHook{cover/spine/grid/pre}%
-    \debuggrid%
+    \DEBUGgrid%
     \NTRunHook{cover/spine/grid/post}%
   }{}%
 }%
@@ -466,34 +432,37 @@
                     {#1,\@DOCCLASS,raise},%
                     {#1,raise}%
   ){}{\def\@raise{0pt}}%
-  % \typeout{L=[\thespine(logo)] IT(#1)=[\@item]}\AAAA
-  % \typeout{PRINT BOX #1  ITEM=\@item}%
-  % \typeout{PRINT BOX #1 ANGLE=\@angle}%
-  % \typeout{PRINT BOX #1 SCALE=\@scale}%
-  % \typeout{PRINT BOX #1 RAISE=\@raise}%
+  % \DEBUG{L=[\thespine(logo)] IT(#1)=[\@item]}\AAAA
+  % \DEBUG{PRINT BOX #1  ITEM=\@item}%
+  % \DEBUG{PRINT BOX #1 ANGLE=\@angle}%
+  % \DEBUG{PRINT BOX #1 SCALE=\@scale}%
+  % \DEBUG{PRINT BOX #1 RAISE=\@raise}%
   \IfStrEq{#1}{logo}{%
     % IMAGE
     \IfStrEq{\@item}{none}{}{%
       \edef\@lspace{\thespine(box,logo,margin,sep)}%
       \edef\@lwidth{\thespine(box,logo,len2)}%
       \edef\@lheight{\@thespinewidth}%
-      % \typeout{W=\@lwidth\space H=\the\@lheight\space S=\@lspace}\FILE
+      % \DEBUG{W=\@lwidth\space H=\the\@lheight\space S=\@lspace}\FILE
       \setbox1=\hbox{\hspace*{-\@lspace}}%
       \@for\myj:={\@item}\do{%
         \StrCut{\myj}{/}\@@lspace\@lfile%
-        % \typeout{LS=\@@lspace\space F=\@lfile}\FILE
+        % \DEBUG{LS=\@@lspace\space F=\@lfile}\FILE
         \IfIsDim{\@@lspace}{}{\edef\@lfile{\@@lspace/\@lfile}\edef\@@lspace{0pt}}%
         \StrCut{\@lfile}{/}\@lfile\@langle%
-        % \typeout{F=\@lfile\space A=\@langle}\FILE
+        % \DEBUG{F=\@lfile\space A=\@langle}\FILE
         \StrCut{\@langle}{/}\@langle\@lscale%
-        % \typeout{F=\@lfile\space A=\@langle\space S=\@lscale}\FILE
+        % \DEBUG{F=\@lfile\space A=\@langle\space S=\@lscale}\FILE
         \IfStrEq{\@langle}{}{\edef\@langle{\@angle}}{}%
         \IfStrEq{\@lscale}{}{\edef\@lscale{\@scale}}{}%
-        % \typeout{F=\@lfile\space A=\@langle\space S=\@lscale}\FILE
+        % \DEBUG{F=\@lfile\space A=\@langle\space S=\@lscale}\FILE
         \setbox0=\hbox{\includegraphics[height=\@thespinewidth,angle=\number\numexpr\@langle-90\relax,
                                         scale=\@lscale,origin=c]{\@lfile}}%
         \setbox1=\hbox{\minipage{\wd1}\box1\endminipage\hspace*{\@lspace}\minipage{\wd1}\box0\endminipage\hspace{\@@lspace}}%
       }
+      \ifdim\dimexpr\wd1\relax>\@lwidth\relax%
+        \setbox1=\hbox{\resizebox*{\@lwidth}{!}{\box1}}%
+      \fi%
       \ifdim\dimexpr\ht1+\dp1\relax>\@lheight\relax%
         \setbox1=\hbox{\rotatebox{-90}{\box1}}%
         \setbox1=\hbox{\resizebox*{\@lheight}{!}{\box1}}%

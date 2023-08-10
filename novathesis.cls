@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2023-08-08 [7.1.2]
+%% Version 2023-08-09 [7.1.3]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -61,7 +61,7 @@
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ProvidesClass{novathesis}[2023-08-08 novathesis template]
+\ProvidesClass{novathesis}[2023-08-09 novathesis template]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 
@@ -259,28 +259,28 @@
   % DEBUG
   debug/.new list               = {},         % cover, index
   % DEGREEACR (for degree-specific configuration files)
-  degreeacr/.new value          = {},
-  degreeacr/phd/.new value      = {},
-  degreeacr/msc/.new value      = {},
-  degreeacr/bsc/.new value      = {},
-  degreeacr/plain/.new value    = {},
+  % degreeacr/.new value          = {},
+  % degreeacr/phd/.new value      = {},
+  % degreeacr/msc/.new value      = {},
+  % degreeacr/bsc/.new value      = {},
+  % degreeacr/plain/.new value    = {},
 % SCHOOL specific customization
 % NOVA/ITQB
-  nova/itqb/covercolor/.new choice             = {gray, green},
+  nova/itqb/cover/color/.new choice             = {gray, green},
 % UMINHO
   uminho/copyrightmodifier/.new choice         = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd},
   uminho/skipblankcovers/.new toggle           = false,
 % ULISBOA/FMV
-  examdate/year/.new value         = {yearX},
-  examdate/month/.new value        = {monthX},
-  examdate/day/.new value          = {dayX},
-  examdate/.new cmd                = {\AtEndPreamble{%
-                \@splitdate{#1}{\@exdtYEAR}{\@exdtMONTH}{\@exdtDAY}%
-                % \typeout{PROCESSDATE 1=#1 Y=\@exdtYEAR M=\@exdtMONTH D=\@exdtDAY}\PROCESSDATEYMD%
-                \options{novathesis/examdate/year=\@exdtYEAR,
-                         novathesis/examdate/month=\@exdtMONTH,
-                         novathesis/examdate/day=\@exdtDAY}%
-                                         }},
+  % examdate/year/.new value         = {yearX},
+  % examdate/month/.new value        = {monthX},
+  % examdate/day/.new value          = {dayX},
+  % examdate/.new cmd                = {\AtEndPreamble{%
+  %               \@splitdate{#1}{\@exdtYEAR}{\@exdtMONTH}{\@exdtDAY}%
+  %               % \typeout{PROCESSDATE 1=#1 Y=\@exdtYEAR M=\@exdtMONTH D=\@exdtDAY}\PROCESSDATEYMD%
+  %               \options{novathesis/examdate/year=\@exdtYEAR,
+  %                        novathesis/examdate/month=\@exdtMONTH,
+  %                        novathesis/examdate/day=\@exdtDAY}%
+  %                                        }},
   ulisboa/fmv/scientificarea/.new choice       = {C, MF, PASA, SA},
   ulisboa/fmv/embargo/period/.new choice       = {I, 6, 12},
   ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.},
@@ -1009,22 +1009,43 @@
 %============================================================
 % Date and month
 \newdata{ntdocdate}
-\ntdocdate(year):={year}
-\ntdocdate(month):={month}
-\ntdocdate(day):={day}
+\ntdocdate(submission,year):={year}
+\ntdocdate(submission,month):={month}
+\ntdocdate(submission,day):={day}
+\ntdocdate(exam,year):={year}
+\ntdocdate(exam,month):={month}
+\ntdocdate(exam,day):={day}
 
-\def\ntdate#1{\@ntdate@i#1--\@relax}
-% \def\@ntdate@i#1-#2\@relax{\@ntdate@ii#1-#2-\@relax}
-\def\@ntdate@i#1-#2-#3\@relax{%
-  % year           -> [year] [] []
-  % year-month     -> [year] [month] [-]
-  % year-month-day -> [year] [month] [day--]
-  % \typeout{NTDOCDATE [#1] [#2] [#3]}\NTDOCDATE
-  \ntdocdate(year):={#1}%
-  \ntdocdate(month):={#2}%
-  \ifstrequal{#3}{-}{\ntdocdate(day):={}}%
-                    {\StrGobbleRight{#3}{2}[\@nt@date@day]\ntdocdate(day):={\@nt@date@day}}%
+\def\ntdate{%
+  \@ifnextchar({\@ntdate@i}{\@ntdate@i(submission)}%
 }
+
+\def\@ntdate@i(#1)#2{%
+  \StrCut{#2}{-}\@NTDY\@NTDM%
+  \StrCut{\@NTDM}{-}\@NTDM\@NTDD%
+  % \typeout{NTD(#1) Y=[\@NTDY] M=[\@NTDM] D=[\@NTDD]}\NTDATE%
+  \ntdocdate(#1,year):={\@NTDY}%
+  \ntdocdate(#1,month):={\@NTDM}%
+  \ntdocdate(#1,day):={\@NTDD}%
+  \@for\myi:={year,month,day}\do{%
+    \IfStrEq{\thentdocdate(#1,\myi)}{\myi}{}{%
+      \IfInteger{\thentdocdate(#1,\myi)}{}{\ClassError{The \myi\space(\thentdocdate(#1,\myi)) in \string\ntdocdate(#1){#2} is not a number!}{}{}}%
+    }%
+  }%
+}
+
+% \def\ntdate#1{\@ntdate@i#1--\@relax}
+% \def\@ntdate@i#1-#2\@relax{\@ntdate@ii#1-#2-\@relax}
+% \def\@ntdate@i#1-#2-#3\@relax{%
+%   % year           -> [year] [] []
+%   % year-month     -> [year] [month] [-]
+%   % year-month-day -> [year] [month] [day--]
+%   % \typeout{NTDOCDATE [#1] [#2] [#3]}\NTDOCDATE
+%   \ntdocdate(year):={#1}%
+%   \ntdocdate(month):={#2}%
+%   \ifstrequal{#3}{-}{\ntdocdate(day):={}}%
+%                     {\StrGobbleRight{#3}{2}[\@nt@date@day]\ntdocdate(day):={\@nt@date@day}}%
+% }
 
 
 %============================================================
@@ -1283,13 +1304,18 @@
 
 % Patch month from number to string in the proper language
 \ntselectlang{\@LANG@COVER}%
-\usetikzlibrary{calendar}%
-\IfInteger{\thentdocdate(month)}{%
-  \ntdocdate(month):={\pgfcalendarmonthname{\thentdocdate(month)}}%
-}{}
-\IfInteger{\option{/novathesis/examdate/month}}{%
-  \options{/novathesis/examdate/month=\pgfcalendarmonthname{\option{/novathesis/examdate/month}}}%
-}{}
+\usepackage{pgfcalendar} % LATEX
+
+\@for\myi:={submission,exam}\do{%
+  \IfInteger{\thentdocdate(\myi,month)}{%
+    \ntdocdate(\myi,month,text):={\pgfcalendarmonthname{\thentdocdate(\myi,month)}}%
+  }{%
+    \ntdocdate(\myi,month,text):={\thentdocdate(\myi,month)}%
+  }
+}
+% \IfInteger{\option{/novathesis/examdate/month}}{%
+%   \options{/novathesis/examdate/month=\pgfcalendarmonthname{\option{/novathesis/examdate/month}}}%
+% }{}
 
 %============================================================
 %  THESIS/DISSERTATION FILES
