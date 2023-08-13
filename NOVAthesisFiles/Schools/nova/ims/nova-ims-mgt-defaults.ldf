@@ -58,32 +58,10 @@ for the degree of \emph{\thedegreename(en)}}
 % Spine info
 \spine(logo,msc)={nova-ims-mgt-cover-ball}
 
-\spine(author)={\thedocauthor(name)}
-\spine(title)={\textbf{\emph{\THEdoctitle(\@LANG@COVER,main)}}}
-\spine(date)={\thentdocdate(submission,year)}
-
-\spine(text,angle)={90}
-\spine(box,textcolor)={black}
-% \spine(box,color)={blue}
-\spine(box,spacing)={0.5cm}
-\spine(box,margin)={0.5mm}
-
-
-\spine(box,logo,top)={0.0cm}
-\spine(box,logo,len)={4.1cm}
-\spine(box,logo,align)={c}
-
-\spine(box,author,top)={\thespine(box,logo,top)+\thespine(box,logo,len)+\thespine(box,spacing)}
-\spine(box,author,len)={4.0cm}
-
-\spine(box,title,top)={\thespine(box,author,top)+\thespine(box,author,len)+\thespine(box,spacing)}
-\spine(box,title,len)={16.7cm}
-% \spine(box,title,align)={l}
-% \spine(box,author,align)={l}
-
-\spine(box,date,top)={\thespine(box,title,top)+\thespine(box,title,len)+\thespine(box,spacing)}
-\spine(box,date,len)={2.0cm}
-% \spine(box,lodatego,align)={l}
+% \spine(author)={\thedocauthor(name)}
+\spine(title)={\THEdoctitle(\@LANG@COVER,main)}
+% \spine(date)={\thentdocdate(submission,year)}
+\spine(title,font)={\bfseries\itshape}
 
 
 % Set margins for "normal" pages

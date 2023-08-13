@@ -107,12 +107,11 @@
 
 \ifoptioncontains{/novathesis/debug}{spine}{%
   \def\@spineboxdrawopacity{1}%
-  \newcommand{\DEBUG}[1]{\typeout{##1}}%
+  \newcommand{\DEBUG}[1]{\typeout{#1}}%
 }{%
   \def\@spineboxdrawopacity{0}%
   \newcommand{\DEBUG}[1]{}%
 }%
-
 
 \newdimen\@spinelen  % total spine length
 \newcommand{\@checkspinelen}[1][\paperheight]{%
@@ -128,6 +127,7 @@
   % \@tempdima=\dimexpr\@tempdima+\@tempdimb\relax%
   % \DEBUG{SPINELEN ACCUMULATED = \the\@tempdima}%
   \@for\myi:=\expanded{\thespine(order)}\do{%
+    \DEBUG{SPINELEN BOXLEN [\myi]}%
     \@tempdimb=\thespine(box,\myi,len)\relax%
     \DEBUG{SPINELEN BOXLEN [\myi] = \the\@tempdimb}%
     \@tempdima=\dimexpr\@tempdima+\@tempdimb\relax%
@@ -209,11 +209,15 @@
 % \DEBUG{SPINELEN[FINAL]=\the\@spinelen}
 % \PAUSETHIS
 
-% Calculate box[lef], box[len], box[right]
+% Calculate box[lef], box[len], box[right] if undefined
 \@tempdima=\dimexpr\thespine(margin,left)-\thespine(boxsep)\relax%
 \@for\myi:=\expanded{\thespine(order)}\do{
-  \@tempdima=\dimexpr\@tempdima+\thespine(boxsep)\relax%
-  \spine(box,\myi,left):={\the\@tempdima}
+  \ifdatadefined{spine}(box,\myi,left){%
+    \@tempdima=\thespine(box,\myi,left)%
+  }{%
+    \@tempdima=\dimexpr\@tempdima+\thespine(boxsep)\relax%
+  }%
+  \spine(box,\myi,left):={\the\@tempdima}%
   \@tempdima=\dimexpr\@tempdima+\thespine(box,\myi,len)\relax%
   \spine(box,\myi,right):={\the\@tempdima}
   % \DEBUG{BOX[\myi,left]=\thespine(box,\myi,left)}
@@ -222,27 +226,17 @@
 }%
 
 \@for\myi:=\expanded{\thespine(order)}\do{%
-  \@tempdima=\dimexpr\thespine(box,\myi,len)\relax
-  \spine(box,\myi,len):={\the\@tempdima}
-  \@tempdima=\dimexpr\@tempdima-\thespine(box,\myi,margin,left)
-                               -\thespine(box,\myi,margin,right)\relax
-  \spine(box,\myi,len2):={\the\@tempdima}
+  % \DEBUG{TEXT[\myi]}
+  \datamatchtf{\@boxml}{spine}({box,\myi,margin,left},{box,margin,left}){}{\def\@boxml{0pt}}%
+  \datamatchtf{\@boxmr}{spine}({box,\myi,margin,right},{box,margin,right}){}{\def\@boxmr{0pt}}%
+  % \DEBUG{TEXT[\myi] [\@boxml] [\@boxmr]}
+  \@tempdima=\dimexpr\thespine(box,\myi,len)\relax%
+  \spine(box,\myi,len):={\the\@tempdima}%
+  \@tempdima=\dimexpr\@tempdima-\@boxml-\@boxmr\relax%
+  \spine(box,\myi,len2):={\the\@tempdima}%
   % \DEBUG{TEXT[\myi,len]=\thespine(box,\myi,len)}
   % \DEBUG{TEXT[\myi,len2]=\thespine(box,\myi,len2)}
 }
-
-
-\newcommand{\@spinetextalin}[1]{%
-  \datamatchtf{\arg}{spine}({box,#1,align},{text,align}){}{%
-    \ClassError{novathesis}{Invalid spine text alignment for “#1”}{}%
-  }%
-  \IfStrEqCase{\arg}{%
-    {l}{\raggedright}%
-    {c}{\centering}%
-    {r}{\raggedleft}%
-  }%
-}
-
 
 \newcommand{\@setlength}[2]{%
   \defifundef{#1}{\newlength}%
@@ -371,15 +365,16 @@
       }%
     }%
     \@for\myi:=\expanded{\thespine(order)}\do{%
+      \datamatch{\@boxcolor}{spine}({box,\myi,bg,color},{box,bg,color})%
       \node[rectangle,
             inner sep = 0pt,
             anchor = north west,
             draw, color = red, draw opacity=\@spineboxdrawopacity,
-            fill = {\thespine(box,bg,color)},
+            fill = {\@boxcolor},
             minimum width = \expanded{\thespine(box,\myi,len)},
             minimum height = \@thespinewidth,
       ] (r\myi) at (\thespine(box,\myi,left),\expanded{\thespine(margin,top)}) {};
-      \datamatchtf{\@align}{spine}({box,\myi,align},{\myi,align}){}{%
+      \datamatchtf{\@align}{spine}({box,\myi,align},{\myi,align},{text,align}){}{%
         \ClassError{novathesis}{Invalid spine text alignment for “\myi”}{}%
       }%
       \IfStrEqCase{\@align}{%
@@ -478,7 +473,7 @@
       \ifdatadefined{spine}(#1,\@UNIV/\@SCHL){%
         \tabular{@{}c@{}}\thespine(#1,\@UNIV/\@SCHL)\endtabular%
       }{%
-        \tabular{@{}c@{}}\thespine(#1)\endtabular%
+        \thespine(#1,font)\tabular{@{}c@{}}\thespine(#1)\endtabular%
       }%
     }%
     }%

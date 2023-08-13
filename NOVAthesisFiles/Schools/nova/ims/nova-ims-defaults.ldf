@@ -39,8 +39,8 @@
 \degreeacr(mmaa):={MAA}
 \degreeacr(mgi):={MGI}
 \degreeacr(megi):={MEGI}
-\degreeacr(csig):={CSIG}
-\degreeacr(gt):={MGT}
+\degreeacr(mcsig):={CSIG}
+\degreeacr(mgt):={MGT}
 
 % Scientific filed
 % \majorfield(pt):={Gestão de Informação}
@@ -102,16 +102,26 @@
 %% LIGHT GREY 200,203,206
 
 % Spine info
+\spine(order):=?{date,title,author,degreeacr}
 \spine(row)={1.745cm}
 
-\spine(author)={\thedocauthor(name)}
-\spine(title)={\thedoctitle(\@LANG@COVER,main)}
-\spine(date)={\thentdocdate(submission,year)}
+% \spine(author)={\thedocauthor(name)}
+% \spine(title)={\thedoctitle(\@LANG@COVER,main)}
+% \spine(date)={\thentdocdate(submission,year)}
 
-\spine(text,angle)={90}
+\IfStrEq{\@DEGREEACR}{}{%
+  \spine(degreeacr)={\mbox{ }}%
+}{%
+  \spine(degreeacr)={\thedegreeacr(\@DEGREEACR)}%
+}
+
+\spine(text,angle)={0}
 % \spine(text,color)=black
 \spine(box,bg,color)={white}
-\spine(box,spacing)={0.5cm}
+\spine(box,inspace)={1mm}
+
+\spine(margin,left)={\thespine(row)}
+
 \spine(box,title,margin,left)={0.5mm}
 \spine(box,title,margin,right)={0.5mm}
 \spine(box,author,margin,left)={0.5mm}
@@ -119,25 +129,20 @@
 \spine(box,date,margin,left)={0.5mm}
 \spine(box,date,margin,right)={0.5mm}
 
-\spine(box,degreeacr,top):={\thespine(row)}
-\spine(box,degreeacr,len):={\thespine(row)}
-\spine(box,degreeacr,color):={none}
-\spine(box,degreeacr,align):={c}
-\spine(box,degreeacr,textcolor):={white}
+\spine(box,date,bg,color)={none}
 
-\spine(box,author,top)={\dimexpr3\thespine(row)+\thespine(box,margin)}
-\spine(box,author,len)={5.235cm-\thespine(box,margin)-\thespine(box,margin)}
-\spine(box,author,align)={c}
+\spine(box,title,left)={\dimexpr\thespine(row)*3+\thespine(box,inspace)\relax}
+\spine(box,author,left)={\dimexpr\thespine(row)*11+\thespine(box,inspace)\relax}
 
-\spine(box,title,top)={\dimexpr7\thespine(row)+\thespine(box,margin)}
-\spine(box,title,len)={12.215cm-\thespine(box,margin)-\thespine(box,margin)}
-\spine(box,title,align)={c}
-
-\spine(box,date,top):={\dimexpr15\thespine(row)}
 \spine(box,date,len):={\thespine(row)}
-\spine(box,date,color):={none}
-\spine(box,date,align):={c}
-% \spine(box,degreeacr,textcolor):={white}
+\spine(box,title,len)={\dimexpr\thespine(row)*7-\thespine(box,inspace)*2\relax}
+\spine(box,author,len)={\dimexpr\thespine(row)*3-\thespine(box,inspace)*2\relax}
+
+\spine(box,degreeacr,len):={\thespine(row)}
+\spine(box,degreeacr,left):={\dimexpr\thespine(row)*15\relax}
+\spine(box,degreeacr,bg,color)={none}
+\spine(box,degreeacr,text,color):={white}
+
 
 
 
