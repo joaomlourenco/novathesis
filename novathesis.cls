@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2023-08-14 [7.1.4]
+%% Version 2023-08-14 [7.1.5]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -789,7 +789,6 @@
 
 %--------------------------------
 % “biblatex” stuff
-\AtEndPreamble{\ntaddfile{bib}{./NOVAthesisFiles/fix-bib.bib}}
 % \ntaddfile{bib}{./NOVAthesisFiles/fix-bib.bib}%
 % \AtEndDocument{\nocite{novathesis-manual}}%
 % \letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
@@ -1323,6 +1322,7 @@
 %       configuration file “Config/4_files.tex”
 %============================================================
 \input{Config/4_files}
+\ntaddfile{bib}{./NOVAthesisFiles/fix-bib.bib}
 % \NTRunHook{files}
 
 %============================================================
@@ -2632,7 +2632,6 @@
 % Fix spacing for pages with roman numerals in ToC
 \renewcommand*{\@pnumwidth}{2.5em}% default is 1.55em
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Text style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2670,5 +2669,4 @@
   \newcommand{\@ntcite}[1]{\ifdef{\parencite}{\parencite{#1}}{\cite{#1}}}
   \makeatother
 }
-
 
