@@ -2474,6 +2474,7 @@
         \ntprintcopyrightpage%
         \NTRunHook{copyright/post}%
         \ntprintacknowledgementsblock%
+        \clearforchapter%
       \endgroup
     }{}%
    }{}%
@@ -2496,7 +2497,14 @@
 \newcommand{\ntquotewhere}[1]{{\footnotesize, #1}}
 \newcommand{\ntquoteprofession}[1]{{\footnotesize\\[-0.75ex](#1)}}
 \newcommand{\ntquotetext}[1]{{\itshape#1}}
-\newcommand{\ntquoteskip}{\chapter*{\vspace*{-3.5ex}}}
+\newcommand{\ntquoteskip}{%
+  \vphantom{%
+    \begin{minipage}{\textwidth}%
+      \chapter*{ASDF}%
+      % \vspace*{\midchapskip}%
+    \end{minipage}%
+  }%
+}
 
 \NewDocumentEnvironment{ntquoting}{sO{10cm}O{}O{}O{}O{\@LANG@MAIN}+b}{%
 % 1 [*] => print big quote
