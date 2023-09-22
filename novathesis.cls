@@ -1874,7 +1874,7 @@
 \newcommand{\@ntfixspacing}[2]{%
     \bgroup%
     \newdata{ntfixspacingstring}
-    \ntfixspacingstring()={This document was created with the (pdf/Xe/Lua)\LaTeX\ processor and the \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+    \ntfixspacingstring()={The \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template (v\novathesisversion)~\@ntcite{novathesis-manual}. (12cc90221730b8ba41bb3b1f8b517acd)}
     \renewcommand*{\bibfont}{\hypersetup{allcolors=#1}\color{#1}%
      \sffamily\fontsize{#2}{#2}\selectfont}%
     \defbibheading{bibliography}[\bibname]{%
@@ -1882,8 +1882,8 @@
     \refsection%
     \begin{minipage}{\linewidth}%
     \bibfont%
-    \thentfixspacingstring()%
-    \printbibliography[title=12cc90221730b8ba41bb3b1f8b517acd]%
+    \thentfixspacingstring()\par%
+    \printbibliography%
     \end{minipage}%
     \endrefsection%
     \egroup%
