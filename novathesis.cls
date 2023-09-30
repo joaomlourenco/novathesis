@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2023-08-14 [7.1.5]
+%% Version 2023-09-30 [7.1.6]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -61,7 +61,7 @@
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ProvidesClass{novathesis}[2023-08-14 novathesis template]
+\ProvidesClass{novathesis}[2023-09-30 novathesis template]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 
@@ -2221,44 +2221,46 @@
     \ifoptionequal{/novathesis/media}{paper}{\openright}{}%
 }
 
-\newenvironment{newlayout}[2]{%
-  \clearpage%
-  % \typeout{V=#1 H=#2}\aaaa
-  \@tempdima=\dimexpr#1\relax%
-  \@tempdimb=\dimexpr#2\relax%
-  % \showthe\@tempdima \showthe\@tempdimb
-  \setstocksize{\the\@tempdima}{\the\@tempdimb}%
-  \settrimmedsize{\stockheight}{\stockwidth}{*}%
-  \settrims{0pt}{0pt}%
-  \setlrmarginsandblock{0pt}{*}{*}%
-  \setulmarginsandblock{0pt}{*}{*}%
-  \setlength{\parskip}{0pt}%
-  \setheadfoot{0pt}{0pt}%
-  \setheaderspaces{*}{0pt}{*} %
-  \setmarginnotes{0pt}{0pt}{0pt}%
-  \checkandfixthelayout[fixed]%
-  %
-  \ifluatex%
-    \pageheight=\stockheight\relax% \pageheight=3in
-    \pagewidth=\stockwidth\relax% \pageheight=3in
-  \else%
-    \pdfpageheight=\stockheight\relax% \pdfpageheight=3in
-    \pdfpagewidth=\stockwidth\relax% \pdfpageheight=3in
-  \fi%
-  \setlength{\@colht}{\textheight}%
+\newcommand*{\setpdftexpagesize}{%
+  \ifundef{\pdfpagewidth}{%
+    \ifundef{\pagewidth}{}{\pagewidth=\paperwidth}%
+  }{\pdfpagewidth=\paperwidth}%
+  \ifundef{\pdfpageheight}{%
+    \ifundef{\pageheight}{}{\pageheight=\paperheight}%
+  }{\pdfpageheight=\paperheight}%
+}
+
+\newenvironment{newpdflayout}[3][]{%
+  \clearforchapter
+  \begingroup
+  \setstocksize{#2}{#3}
+  \settrimmedsize{#2}{#3}{*}
+  \paperwidth=\stockwidth
+  \paperheight=\stockheight
+  \setlrmarginsandblock%
+    {\themargin(\option{/novathesis/media},left)}%
+    {\themargin(\option{/novathesis/media},right)}%
+    {*}%
+  \setulmarginsandblock%
+    {\themargin(\option{/novathesis/media},top)}%
+    {\themargin(\option{/novathesis/media},bottom)}%
+    {*}%
+  #1%
+  \checkandfixthelayout[fixed]
+  \setpdftexpagesize
+  % From geometry
+  \setlength{\@colht}{\textheight}
   \setlength{\@colroom}{\textheight}%
-  \setlength{\vsize}{\textheight}%
+  \setlength{\vsize}{\textheight}
   \setlength{\columnwidth}{\textwidth}%
   \if@twocolumn%
-    \advance\columnwidth-\columnsep%
+    \advance\columnwidth-\columnsep
     \divide\columnwidth\tw@%
     \@firstcolumntrue%
   \fi%
   \setlength{\hsize}{\columnwidth}%
   \setlength{\linewidth}{\hsize}%
-}{%
-  \clearpage%
-}
+}{\clearforchapter\endgroup}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
