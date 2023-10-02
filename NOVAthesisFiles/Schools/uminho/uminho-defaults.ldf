@@ -265,7 +265,7 @@
   % \ifdraftdoc
     % \textbf{DRAFT: \today}
   % \else
-    \thentdocdate(submission,month)\theofstr(\@LANG@COVER)\thentdocdate(submission,year)%
+    \thentdocdate(submission,month,text)\theofstr(\@LANG@COVER)\thentdocdate(submission,year)%
   % \fi
 }
 

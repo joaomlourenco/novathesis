@@ -96,15 +96,15 @@ publish:
 .PHONY: bump1 bump2 bump3
 bump1:
 	Scripts/newversion.sh 1
-	$(MAKE) publish
+	# $(MAKE) publish
 
 bump2:
 	Scripts/newversion.sh 2
-	$(MAKE) publish
+	# $(MAKE) publish
 
 bump3:
 	Scripts/newversion.sh 3
-	$(MAKE) publish
+	# $(MAKE) publish
 
 tag:
 	@echo Tagging as $(VERSION)
