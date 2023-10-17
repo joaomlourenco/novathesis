@@ -88,7 +88,7 @@
 % For compatibility with Babel version < 3.51
 % \ifcsname setlocalecaption\endcsname\else
   \renewcommand*{\setlocalecaption}[3]{%
-    \typeout{SETLOCALECAPTION [#1] [#2] [#3]}\SETLOCALECAPTION
+    % \typeout{SETLOCALECAPTION [#1] [#2] [#3]}\SETLOCALECAPTION
     \expandafter\addto\csname captions#1\endcsname{\csdef{#2}{#3}}%
   }%
 % \fi
