@@ -270,6 +270,7 @@
 % UMINHO
   uminho/copyrightmodifier/.new choice         = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd},
   uminho/skipblankcovers/.new toggle           = false,
+  uminho/signatureline/.new toggle             = true,
 % ULISBOA/FMV
   % examdate/year/.new value         = {yearX},
   % examdate/month/.new value        = {monthX},
@@ -665,7 +666,7 @@
 % --------------------------------------------------------
 % NTSETUP2
 \newcommand*{\ntsetup}[2][]{%
-  % \typeout{NTSETUP [/novathesis/\option{/novathesis/school}/#1/\@ntopt]}\NTSETUP%
+  % \typeout{NTSETUP [/novathesis/\@UNIV/\@SCHL/#1/#2]}\NTSETUP%
   \ntfor\arg:={#2}\do{%
     \StrCut{\arg}{=}{\@ntopt}{\@ntval}%
     % \typeout{NTSETUP2 [\@ntopt] = [\@ntval]}%
@@ -675,9 +676,11 @@
                     {\options{/novathesis/#1/#2}}{%
     \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/\@ntopt}%
                      {\options{/novathesis/\@UNIV/\@SCHL/#2}}{%
+    \ifoptiondefined{/novathesis/\@UNIV/\@ntopt}%
+                     {\options{/novathesis/\@UNIV/#2}}{%
     \ifoptiondefined{/novathesis/\@ntopt}%
                     {\options{/novathesis/#2}}{%
-    \ClassError{novathesis}{Invalid class option: \@ntopt}{}{}}}}}}%
+    \ClassError{novathesis}{Invalid class option: \@ntopt}{}{}}}}}}}%
 }
 
 \newcommand*{\ntbibsetup}[1]{%
