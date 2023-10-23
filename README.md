@@ -125,7 +125,7 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
 
 *[See above](#with-a-local-latex-installation) for using a local installation of LaTeX*
 
-*NOVAthesis v6.10.10 is available as an [Overleaf template](https://www.overleaf.com/latex/templates/novathesis-v6-dot-10-dot-10/jhqwhtcwbmqc).  Just select <kbd>open as template</kbd> and follow from [step 3 above](#with-a-local-latex-installation)!*
+*NOVAthesis v6.10.10 is available as an [Overleaf template](https://www.overleaf.com/latex/templates/novathesis-v7-dot-1-5/jhqwhtcwbmqc).  Just select <kbd>open as template</kbd> and follow from [step 3 above](#with-a-local-latex-installation)!*
 
 1. Download the [latest version from the GitHub repository as a Zip file](https://github.com/joaomlourenco/novathesis/archive/main.zip).
 2. Login to your favorite LaTeX cloud service.  I recommend [Overleaf](https://www.overleaf.com?r=f5160636&rm=d&rs=b) but there are alternatives (these instructions apply to Overleaf  and you'll have to adapt for other providers).
@@ -133,6 +133,12 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
 4. Upload the zip with all the "novathesis" files.
 5. Select “*template.tex*” as the main file.
 6. Follow from [step 3 above](#with-a-local-latex-installation)
+
+*WARNING: Overleaf reduced the compile time*
+![image](https://github.com/joaomlourenco/novathesis/assets/2064643/a3ffeeef-011e-45cd-974a-c22191267c18)
+There is no way you can compile yout thesis/dissertation (using this template) within the new (20 seconds) time limit.  This means you have two options:
+* Install LaTeX in your computer and [use a the template locally](#with-a-local-latex-installation)!
+* Opt for a hassle free solution and [buy a (student) plan in Overleaf](https://www.overleaf.com/user/subscription/plans).
 
 --------
 ## Getting Help
