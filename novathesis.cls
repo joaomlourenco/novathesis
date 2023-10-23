@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2023-10-17 [7.1.8]
+%% Version 2023-10-23 [7.1.9]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -61,7 +61,7 @@
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ProvidesClass{novathesis}[2023-10-17 novathesis template]
+\ProvidesClass{novathesis}[2023-10-23 novathesis template]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 
@@ -270,6 +270,7 @@
 % UMINHO
   uminho/copyrightmodifier/.new choice         = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd},
   uminho/skipblankcovers/.new toggle           = false,
+  uminho/signatureline/.new toggle             = true,
 % ULISBOA/FMV
   % examdate/year/.new value         = {yearX},
   % examdate/month/.new value        = {monthX},
@@ -665,7 +666,7 @@
 % --------------------------------------------------------
 % NTSETUP2
 \newcommand*{\ntsetup}[2][]{%
-  % \typeout{NTSETUP [/novathesis/\option{/novathesis/school}/#1/\@ntopt]}\NTSETUP%
+  % \typeout{NTSETUP [/novathesis/\@UNIV/\@SCHL/#1/#2]}\NTSETUP%
   \ntfor\arg:={#2}\do{%
     \StrCut{\arg}{=}{\@ntopt}{\@ntval}%
     % \typeout{NTSETUP2 [\@ntopt] = [\@ntval]}%
@@ -675,9 +676,11 @@
                     {\options{/novathesis/#1/#2}}{%
     \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/\@ntopt}%
                      {\options{/novathesis/\@UNIV/\@SCHL/#2}}{%
+    \ifoptiondefined{/novathesis/\@UNIV/\@ntopt}%
+                     {\options{/novathesis/\@UNIV/#2}}{%
     \ifoptiondefined{/novathesis/\@ntopt}%
                     {\options{/novathesis/#2}}{%
-    \ClassError{novathesis}{Invalid class option: \@ntopt}{}{}}}}}}%
+    \ClassError{novathesis}{Invalid class option: \@ntopt}{}{}}}}}}}%
 }
 
 \newcommand*{\ntbibsetup}[1]{%

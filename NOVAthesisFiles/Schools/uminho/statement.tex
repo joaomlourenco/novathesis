@@ -35,7 +35,7 @@
 
 \newdata{signatureline}
 
-\signatureline(pt):={%
+\signatureline(pt):=?{%
   \begin{tabular}{c@{~}c}%
   \rule{10em}{0.5pt}, & \rule{16em}{0.5pt}\\[-1ex]%
   (\theplacestr(\@LANG@MAIN)) & (\thedatestr(\@LANG@MAIN))%
@@ -47,11 +47,14 @@
   \end{center}%
 }
 
-\signatureline(en):={\thesignatureline(pt)}
+\signatureline(en):=?{\thesignatureline(pt)}
 
 \thispagestyle{plain}%
 \null%
 \vfill%
 \thestatementofintegritytextstr(\@LANG@MAIN)\\[1.5cm]
-\thesignatureline(\@LANG@MAIN)
+\ontoggle{/novathesis/uminho/signatureline}{%
+  \thesignatureline(\@LANG@MAIN)%
+}%
 \vfill%
+\clearforchapter
