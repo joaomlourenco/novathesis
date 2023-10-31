@@ -110,7 +110,7 @@ commit:
 	git cam "Version $(VERSION)."
 	git checkout main
 	git pull
-	git merge -m \"Merge branch 'develop'\" develop
+	git merge -m "Merge branch 'develop'" develop
 	git tag -a "$(VERSION)"
 	git push --all --tags
 	git checkout develop
