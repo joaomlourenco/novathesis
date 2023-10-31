@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2023-10-23 [7.1.9]
+%% Version 2023-10-31 [7.1.10]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -61,7 +61,7 @@
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ProvidesClass{novathesis}[2023-10-23 novathesis template]
+\ProvidesClass{novathesis}[2023-10-31 novathesis template]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 
@@ -361,6 +361,15 @@
 \cs_new_eq:NN \trimspaces \tl_trim_spaces:n
 \cs_new_eq:NN \MyUppercase \text_uppercase:n
 \ExplSyntaxOff
+
+% --------------------------------------------------------
+% Change main font size on the fly
+\newcommand{\setmemoirfontsize}[1]{%
+  % do something here to change the all the font sizes
+  % \makeatletter
+  \input{mem#1.clo} % does not work
+  % \makeatother
+}
 
 % --------------------------------------------------------
 % Input the first file from the list (if any)

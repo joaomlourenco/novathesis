@@ -10,7 +10,7 @@
 %-----------------------------------------------------------------
 % memoir customization
 %-----------------------------------------------------------------
-\ntmemoirsetup{12pt}   % A4paper with main text at 11pt
+\setmemoirfontsize{12}   % A4paper with main text at 12pt
 \openany         % Two print single paged
 
 %-----------------------------------------------------------------
