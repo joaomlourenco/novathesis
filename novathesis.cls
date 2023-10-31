@@ -363,6 +363,15 @@
 \ExplSyntaxOff
 
 % --------------------------------------------------------
+% Change main font size on the fly
+\newcommand{\setmemoirfontsize}[1]{%
+  % do something here to change the all the font sizes
+  % \makeatletter
+  \input{mem#1.clo} % does not work
+  % \makeatother
+}
+
+% --------------------------------------------------------
 % Input the first file from the list (if any)
 % #1 = file name
 % #2 = list of directories
