@@ -12,7 +12,7 @@ L:=latexmk $(F)
 V:=open -a skim
 
 ZIPFILES:=NOVAthesisFiles Bibliography Config Chapters LICENSE Makefile novathesis.cls README.md .gitignore template.tex latexmkrc
-VERSION:=$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/')
+VERSION=$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/')
 DATE:=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
 ZIPTARGET:=$(B)-$(VERSION)@$(DATE).zip
 AUXFILES:=$(shell ls $(B)*.* | fgrep -v .tex | fgrep -v $(B).pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
@@ -106,10 +106,19 @@ bump3:
 	Scripts/newversion.sh 3
 	# $(MAKE) publish
 
+commit:
+	git cam "Version $(VERSION)."
+	git checkout main
+	git pull
+	git merge -m \"Merge branch 'develop'\" develop
+	git tag -a "$(VERSION)"
+	git push --all --tags
+	git checkout develop
+
 tag:
 	@echo Tagging as $(VERSION)
 	# @echo $(DATE)
 	git co main
 	git tag -a "$(VERSION)"
-	git push origin --tags
+	git push origin --tags --all
 	git co develop
