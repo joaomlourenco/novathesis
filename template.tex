@@ -125,6 +125,14 @@
 %%------------------------------------------------------------
 %% This class is based in “memoir”.  To set memoir options,
 %% edit “Config/0_memoir.tex”.
+\RequirePackage{l3benchmark}
+\ExplSyntaxOn
+\cs_new_eq:NN \benchmarktic \benchmark_tic:
+\cs_new_eq:NN \benchmarktoc \benchmark_toc:
+\ExplSyntaxOff
+
+\benchmarktic
+
 \RequirePackage{NOVAthesisFiles/fix-profiling}
 \documentclass{novathesis}
 
@@ -203,6 +211,8 @@
 %%------------------------------------------------------------
 \begin{document}        % Beginning of document
 \typeout{TIME class loading=\the\pdfelapsedtime}%
+\benchmarktoc
+\benchmarktic
 
 % \optionshowall
 
@@ -213,8 +223,12 @@
 %%------------------------------------------------------------
 \ntprint{covers}      % The cover page
 \typeout{TIME process covers=\the\pdfelapsedtime}%
+\benchmarktoc
+\benchmarktic
 \ntprint{frontmatter}     % The default order is listed below, but can be changed
 \typeout{TIME process frontmatter=\the\pdfelapsedtime}%
+\benchmarktoc
+\benchmarktic
 %                         % at the School's “defaults.ldf” with
 %                         % "\ntsetprintorder{list_of_items}", where “list_of_items”
 %                         % may be any of:
@@ -235,6 +249,8 @@
 % \optionlistdo{/novathesis/docmainmatter}{\csuse{ntprint#1}}%
 \ntprint{mainmatter}      % The default order is listed below, but can be changed
 \typeout{TIME process mainmatter=\the\pdfelapsedtime}%
+\benchmarktoc
+\benchmarktic
 %                         % at the School's “defaults.ldf” with
 %                         % "\ntsetprintorder{list_of_items}", where “list_of_items”
 %                         % are separated by ";" and may be any of:
@@ -244,7 +260,8 @@
 %                         %       appendices      % Print appendices, if any!
 %                         %       annexes         % Print annexes, if any!
 \ntprint{backcover}       % Print the back cover, if any!
-\typeout{TIME process process backcover=\the\pdfelapsedtime}%
+\typeout{TIME process backcover=\the\pdfelapsedtime}%
+\benchmarktoc
 
 %%------------------------------------------------------------
 \end{document}          % End of document
