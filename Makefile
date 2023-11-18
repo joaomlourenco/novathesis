@@ -41,10 +41,12 @@ $(T): $(S)
 .PHONY: pdf
 pdf: $(S)
 	$(L) -pdf $(SILENT) $(B)
+	Scripts/times.sh
 
 .PHONY: xe lua
 xe lua: $(S)
 	$(L) -pdf$@ $(SILENT) $(B)
+	Scripts/times.sh
 
 .PHONY: v view
 v view: $(T)
@@ -53,6 +55,7 @@ v view: $(T)
 .PHONY: vv verb verbose
 vv verb verbose:
 	$(L) -pdf $(B)
+	Scripts/times.sh
 
 .PHONY: $(TEXVERSIONS)
 $(TEXVERSIONS):

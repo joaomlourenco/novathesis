@@ -17,6 +17,28 @@
 
 [![GitHub license](https://img.shields.io/badge/SAY%20THANKS-€5-orange.svg)](https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8)
 
+--------
+
+<picture>
+  <source
+    media="(prefers-color-scheme: dark)"
+    srcset="
+      https://api.star-history.com/svg?repos=joaomlourenco/novathesis&type=Date&theme=dark
+    "
+  />
+  <source
+    media="(prefers-color-scheme: light)"
+    srcset="
+      https://api.star-history.com/svg?repos=joaomlourenco/novathesis&type=Date
+    "
+  />
+  <img
+    width="500"
+    alt="Star History Chart"
+    src="https://api.star-history.com/svg?repos=joaomlourenco/novathesis&type=Date"
+  />
+</picture>
+
 
 
 --------
