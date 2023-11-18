@@ -17,6 +17,25 @@
 
 [![GitHub license](https://img.shields.io/badge/SAY%20THANKS-€5-orange.svg)](https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8)
 
+
+--------
+## Table of Contents
+
+* [About](#about)
+* [News](news---version-700)
+* [Getting Started](#getting-started)
+	* [With a Local LaTeX Installation](#with-a-local-latex-installation)
+	* [With a Remote Cloud-based Service](#with-a-remote-cloud-based-service)
+* [Getting Help](#getting-help)
+	* [Problems and Difficulties](#problems-and-difficulties)
+	* [Suggestions, Bugs and Feature Requests](#suggestions-bugs-and-feature-requests)
+* [Recognition](#recognition)
+* [List of Supported Schools](#list-of-supported-schools)
+    * [Showcase](#showcase)
+* [Disclaimer](#disclaimer)
+* [Microsoft Word Templates](#word-templates)
+
+
 --------
 
 <picture>
@@ -39,29 +58,7 @@
   />
 </picture>
 
-
-
---------
-## Table of Contents
-
-* [About](#about)
-* [News](news---version-700)
-* [Getting Started](#getting-started)
-	* [With a Local LaTeX Installation](#with-a-local-latex-installation)
-	* [With a Remote Cloud-based Service](#with-a-remote-cloud-based-service)
-* [Getting Help](#getting-help)
-	* [Problems and Difficulties](#problems-and-difficulties)
-	* [Suggestions, Bugs and Feature Requests](#suggestions-bugs-and-feature-requests)
-* [Recognition](#recognition)
-* [List of Supported Schools](#list-of-supported-schools)
-    * [Showcase](#showcase)
-* [Disclaimer](#disclaimer)
-* [Microsoft Word Templates](#word-templates)
-
-
---------
-
-**If you opt for using this project, please give it a star by clicking the (⭐️) at the top right of the [project's page at GitHub](https://github.com/joaomlourenco/novathesis).**
+**If you opt for using this project, please give it a star by clicking the (⭐️) at the top right of the [project's page](https://github.com/joaomlourenco/novathesis).**
 
 --------
 ## About
