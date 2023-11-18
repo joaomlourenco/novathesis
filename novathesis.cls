@@ -1125,6 +1125,7 @@
           \pagestyle{novathesis@mainmatter}%
           \ntprintlist{/@nt/print/#1}}%
   }[\ifdefmacro{#1}{#1}{\csuse{ntprint#1}}]%
+  \relax%
 }
 
 \newcommand*{\ntprintlist}[1]{%
