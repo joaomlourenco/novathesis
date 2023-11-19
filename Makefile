@@ -3,6 +3,13 @@ SILENT:=-interaction=batchmode
 SYNCTEX:=1
 
 TEXVERSIONS=$(shell ls /usr/local/texlive/ | fgrep -v texmf-local)
+TIMES=$(shell printf "TIMMINGS for last run:" ;\
+	fgrep "TIME process" -A 1 *.log | while read a; do \
+	  read b; read c; \
+	  S=`echo $$a | cut -d ' '  -f3 | cut -d '=' -f 1`; \
+	  T=`echo $$b | cut -d ':' -f 2 | cut -d ' ' -f 2`; \
+	  printf "\n%12s = %7.2f s" "$$S" "$$T"; \
+	done  | tr '\n ' '\1\2')
 
 B:=template
 F:=-time -shell-escape -synctex=$(SYNCTEX) -output-format=pdf -file-line-error $(FLAGS)
@@ -41,12 +48,12 @@ $(T): $(S)
 .PHONY: pdf
 pdf: $(S)
 	$(L) -pdf $(SILENT) $(B)
-	Scripts/times.sh
+	@echo $(TIMES)  | tr '\1@\2' '\n\t '
 
 .PHONY: xe lua
 xe lua: $(S)
 	$(L) -pdf$@ $(SILENT) $(B)
-	Scripts/times.sh
+	@echo $(TIMES)  | tr '\1@\2' '\n\t '
 
 .PHONY: v view
 v view: $(T)
@@ -55,7 +62,7 @@ v view: $(T)
 .PHONY: vv verb verbose
 vv verb verbose:
 	$(L) -pdf $(B)
-	Scripts/times.sh
+	@echo $(TIMES)  | tr '\1@\2' '\n\t '
 
 .PHONY: $(TEXVERSIONS)
 $(TEXVERSIONS):
@@ -108,6 +115,16 @@ bump2:
 bump3:
 	Scripts/newversion.sh 3
 	# $(MAKE) publish
+
+.PHONY: times
+times:
+	@echo $(TIMES)  | tr '\1@\2' '\n\t '
+# fgrep "TIME process" -A 1 *.log | while read a; do \
+#   read b; read c; \
+#   S=`echo $$a | cut -d ' '  -f3 | cut -d '=' -f 1`; \
+#   T=`echo $$b | cut -d ':' -f 2`; \
+#   echo TIME $$S =$$T; \
+# done
 
 commit:
 	git cam "Version $(VERSION)."
