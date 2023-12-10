@@ -17,24 +17,22 @@
 
 [![GitHub license](https://img.shields.io/badge/SAY%20THANKS-€5-orange.svg)](https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8)
 
-
 --------
+
 ## Table of Contents
 
 * [About](#about)
-* [News](news---version-700)
 * [Getting Started](#getting-started)
-	* [With a Local LaTeX Installation](#with-a-local-latex-installation)
-	* [With a Remote Cloud-based Service](#with-a-remote-cloud-based-service)
+* * [With a Local LaTeX Installation](#with-a-local-latex-installation)
+  * [With a Remote Cloud-based Service](#with-a-remote-cloud-based-service)
 * [Getting Help](#getting-help)
-	* [Problems and Difficulties](#problems-and-difficulties)
-	* [Suggestions, Bugs and Feature Requests](#suggestions-bugs-and-feature-requests)
+  * [Problems and Difficulties](#problems-and-difficulties)
+  * [Suggestions, Bugs and Feature Requests](#suggestions-bugs-and-feature-requests)
 * [Recognition](#recognition)
 * [List of Supported Schools](#list-of-supported-schools)
-    * [Showcase](#showcase)
+  * [Showcase](#showcase)
 * [Disclaimer](#disclaimer)
 * [Microsoft Word Templates](#word-templates)
-
 
 --------
 
@@ -61,43 +59,24 @@
 **If you opt for using this project, please give it a star by clicking the (⭐️) at the top right of the [project's page](https://github.com/joaomlourenco/novathesis).**
 
 --------
+
 ## About
 
 The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathesis/) is an Open Source project for writing thesis, dissertations, and other monograph-like documents, which…
 
 * **Is very easy to use for the LaTeX beginners:**
-    * Just select the School, provide the cover info, your chapters with text… and you're done!
+  * Just select the School, provide the cover info, your chapters with text… and you're done!
 * **Is flexible and adaptable for the LaTeX experts:**
-    * It's LaTeX!  What would you expect?! 😉
+  * It's LaTeX!  What would you expect?! 😉
 * **Includes dozens of options that answer the requests from the very large user's community (1000's users):**
-    * E.g., multiple chapter styles, multiple font styles, automatic book spine generation, …
+  * E.g., multiple chapter styles, multiple font styles, automatic book spine generation, …
 * **Supports multiples schools:**
-    * Currently supports +20 Schools, drawing the covers and typesetting the text according to the rules  of each School.
+  * Currently supports +20 Schools, drawing the covers and typesetting the text according to the rules  of each School.
 
 *This work is licensed under the LaTeX Project Public License v1.3c. To view a copy of this license, visit the [LaTeX project public license](https://www.latex-project.org/lppl/lppl-1-3c/).*
 
 --------
-## NEWS - Version 7.x.y
 
-#### NEW:
-- Support for ULHT/MGE; (7.0.1)
-- Support for [Universidade do Minho](https://www.uminho.pt/PT) final covers; (7.0.0)
-- Basic support for languages using non-Latin alphabet (e.g., Greek); (7.0.0)
-- Support for “Index” (_Índice Remissivo_ in Portuguese); (7.0.0)
-- Support for ULISBOA/FMV; (7.0.0)
-- Support for NOVA/IMS - _Master in Advanced Analytics_; (7.0.0)
-- Support for NOVA/IMS - _Master in Geographical Information Systems and Science_; (7.0.0)
-- Support for user-defined covers. (7.0.0)
-
-#### BETTER:
-- Improved printing of advisers and committee. (7.0.1)
-- Lots of minor bugfixes; (7.0.0)
-- Fixing compilation with “xelatex” for all the schools (except NOVA/ITQB). (7.0.0)
-
-#### FASTER:
-- Faster compilation. (7.0.0)
-
---------
 ## Getting Started
 
 ### With a Local LaTeX Installation
@@ -107,37 +86,37 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
 *See “[minimal installation](minimal_installation)” for instructions on how to build/use a minimal installation of LaTeX (<100 MB vs. 5GB for tex-live), which is just enough to compile the template successfully*
 
 1. Download LaTeX:
-	* **Windows:** install [TeX-Live](https://www.tug.org/texlive/) or [MikTeX](https://miktex.org).
-	* **Linux:** install [TeX-Live](https://www.tug.org/texlive/) or [MikTeX](https://miktex.org).
-	* **macOS:** install [MacTeX](https://www.tug.org/mactex/) (a macOS version of [TeX-Live](https://www.tug.org/texlive/)) or [MikTeX](https://miktex.org).
+   * **Windows:** install [TeX-Live](https://www.tug.org/texlive/) or [MikTeX](https://miktex.org).
+   * **Linux:** install [TeX-Live](https://www.tug.org/texlive/) or [MikTeX](https://miktex.org).
+   * **macOS:** install [MacTeX](https://www.tug.org/mactex/) (a macOS version of [TeX-Live](https://www.tug.org/texlive/)) or [MikTeX](https://miktex.org).
 2. Download “novathesis” by either:
-	* Cloning the [GitHub repository](https://github.com/joaomlourenco/novathesis) with <kbd>git clone --depth=1 https://github.com/joaomlourenco/novathesis.git</kbd>; or
-	* Downloading the [latest version from the GitHub repository as a Zip file](https://github.com/joaomlourenco/novathesis/archive/main.zip)
+   * Cloning the [GitHub repository](https://github.com/joaomlourenco/novathesis) with <kbd>git clone --depth=1 https://github.com/joaomlourenco/novathesis.git</kbd>; or
+   * Downloading the [latest version from the GitHub repository as a Zip file](https://github.com/joaomlourenco/novathesis/archive/main.zip)
 3. Compile the document with you favorite LaTeX processor (pdfLaTeX, XeLaTeX or LuaLaTeX):
-	* The main file is named “*template.tex*”.
-	* Either load it in your favorite [LaTeX text editor](https://en.wikipedia.org/wiki/Comparison_of_TeX_editors) or compile it in the terminal with
-<kbd>latexmk -shell-escape -file-line-error  -pdf template</kbd>.  If you use a LaTeX text editor, please notice that the NOVAthesis template uses `biber`and not `bibtex` to process the bibliography, which means that most probably you have to open the _Editor Preferences_ and somewhere (depends on the Editor) change `bibtex`to `biber`.
-	* If Murphy is elsewhere, LaTeX will create the file “`template.pdf`”, which you may open with your favorite PDF viewer.
+   * The main file is named “*template.tex*”.
+   * Either load it in your favorite [LaTeX text editor](https://en.wikipedia.org/wiki/Comparison_of_TeX_editors) or compile it in the terminal with
+     <kbd>latexmk -shell-escape -file-line-error  -pdf template</kbd>.  If you use a LaTeX text editor, please notice that the NOVAthesis template uses `biber`and not `bibtex` to process the bibliography, which means that most probably you have to open the _Editor Preferences_ and somewhere (depends on the Editor) change `bibtex`to `biber`.
+   * If Murphy is elsewhere, LaTeX will create the file “`template.pdf`”, which you may open with your favorite PDF viewer.
 4. Edit the files in the “*Config*” folder:
 
-| File                      | Contents                                                           |
-|---------------------------|--------------------------------------------------------------------|
-| `0_memoir.tex`            | Options specific for the `memoir` package.  _Don't touch this file unless you know what you are doing!_                                                                              |
-| `1_novathesis.tex`        | Configure the template, i.e., the document type, the school, the used languages, etc.  |
-| **`2_biblatex.tex`**      | **Configure the bibliography.**                                        |
-| **`3_cover.tex`**         | **Configure cover contents (e.g., author's name, thesis/dissertation title, advisers, committee, etc)**                                                                        |
-| **`4_files.tex`**         | **Configure the the files for chapters, appendices, annexes, etc…**     |
-| **`5_packages.tex`**      | **Configure additional packages and commands**                     |
-| `6_list_of.tex`           | Configure the lists to be printed (table of contents, list of figures, list of tables, list of listings, etc).  _Don't touch this file unless you know what you are doing!_       |
-|                           |                                                                    |
-| `9_nova_fct.tex`          | Configuration specific to **nova/fct**                             |
-| `9_nova_ims.tex`          | Configuration specific to **nova/ims**                             |
-| `9_nova_itqb.tex`         | Configuration specific to **nova/itqb**                            |
-| `9_ulisboa_fmv.tex`       | Configuration specific to **ulisboa/fmv**                          |
-| `9_uminho.tex`            | Configuration specific to **uminho** (all schools)                 |
+| File                 | Contents                                                                                                                                                                    |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `0_memoir.tex`       | Options specific for the `memoir` package.  _Don't touch this file unless you know what you are doing!_                                                                     |
+| `1_novathesis.tex`   | Configure the template, i.e., the document type, the school, the used languages, etc.                                                                                       |
+| **`2_biblatex.tex`** | **Configure the bibliography.**                                                                                                                                             |
+| **`3_cover.tex`**    | **Configure cover contents (e.g., author's name, thesis/dissertation title, advisers, committee, etc)**                                                                     |
+| **`4_files.tex`**    | **Configure the the files for chapters, appendices, annexes, etc…**                                                                                                         |
+| **`5_packages.tex`** | **Configure additional packages and commands**                                                                                                                              |
+| `6_list_of.tex`      | Configure the lists to be printed (table of contents, list of figures, list of tables, list of listings, etc).  _Don't touch this file unless you know what you are doing!_ |
+|                      |                                                                                                                                                                             |
+| `9_nova_fct.tex`     | Configuration specific to **nova/fct**                                                                                                                                      |
+| `9_nova_ims.tex`     | Configuration specific to **nova/ims**                                                                                                                                      |
+| `9_nova_itqb.tex`    | Configuration specific to **nova/itqb**                                                                                                                                     |
+| `9_ulisboa_fmv.tex`  | Configuration specific to **ulisboa/fmv**                                                                                                                                   |
+| `9_uminho.tex`       | Configuration specific to **uminho** (all schools)                                                                                                                          |
 
 5. Recompile de document:
-	* See 3. above.
+   * See 3. above.
 6. You're done with a beautifully formatted thesis/dissertation! 😃
 
 ### With a Remote Cloud-based Service
@@ -160,6 +139,7 @@ There is no way you can compile yout thesis/dissertation (using this template) w
 * Opt for a hassle free solution and [buy a (student) plan in Overleaf](https://www.overleaf.com/user/subscription/plans).
 
 --------
+
 ## Getting Help
 
 ### Problems and Difficulties
@@ -182,12 +162,13 @@ The [GitHub Discussions page](https://github.com/joaomlourenco/novathesis/discus
 * **Would you like to request a new feature (or support of a new School)?**  Please [open an issue](https://github.com/joaomlourenco/novathesis/issues). Thanks!
 
 --------
+
 ## Recognition
 
 This template is the result of hundreds (yes! *hundreds*) of hours of work from the main developer.  If you use this template, please be kind and give something back by choosing at least one of the following:
 
 1. Cite the NOVAthesis manual in your thesis/dissertation.  Just use `\cite{novathesis-manual}` (the correct bibliographic reference, as shown below, will be added automatically).
-
+   
          @Manual{novathesis-manual,
               title        = "{The NOVAthesis Template User's Manual}",
               author       = "João M. Lourenço",
@@ -196,65 +177,68 @@ This template is the result of hundreds (yes! *hundreds*) of hours of work from 
               url          = "https://github.com/joaomlourenco/novathesis/raw/main/template.pdf",
          }
 
-1.  [**Make a small donation**](https://paypal.me/novathesis). We will [keep a list thanking to all the identified donors](https://github.com/joaomlourenco/novathesis/wiki#-donations) that identify themselves in the “*Add special instructions to the seller:*” box.
+2. [**Make a small donation**](https://paypal.me/novathesis). We will [keep a list thanking to all the identified donors](https://github.com/joaomlourenco/novathesis/wiki#-donations) that identify themselves in the “*Add special instructions to the seller:*” box.
 
-1. Give the NOVAthesis project a star in GitHub by clicking in the star at the top-right of the [project's home page](https://github.com/joaomlourenco/novathesis).
+3. Give the NOVAthesis project a star in GitHub by clicking in the star at the top-right of the [project's home page](https://github.com/joaomlourenco/novathesis).
 
 --------
+
 ## List of Supported Schools
 
 * NOVA University Lisbon
-    * [NOVA School for Science and Technology](https://www.fct.unl.pt) (FCT-NOVA)
-    * [NOVA Information Management School](https://www.novaims.unl.pt) (NOVA-IMS)
-        * [PhD in Information Management](https://www.novaims.unl.pt/doutoramento)
-        * [Master in Geographical Information Systems and Science](https://www.novaims.unl.pt/unigis)
-        * [Master in Statistics and Information Management](https://www.novaims.unl.pt/megi)
-        * [Master in Information Management](https://www.novaims.unl.pt/mgi)
-        * [Master in Geospatial Technologies](https://www.novaims.unl.pt/geotech)
-        * [Master in Data Science and Advanced Analytics](https://www.novaims.unl.pt/mdsaa)
-        * [Masters in Geospatial Technologies](https://mastergeotech.info)
-    * [National School of Public Heath](https://www.ensp.unl.pt) (ENSP-NOVA)
-    * [Faculdade de Ciências Humanas e Sociais](https://www.fcsh.unl.pt) (FCSH-NOVA)
-    * [Instituto de Tecnologia Química e Biologica Antonio Xavier](https://www.itqb.unl.pt) (ITQB-NOVA)
+  * [NOVA School for Science and Technology](https://www.fct.unl.pt) (FCT-NOVA)
+  * [NOVA Information Management School](https://www.novaims.unl.pt) (NOVA-IMS)
+    * [PhD in Information Management](https://www.novaims.unl.pt/doutoramento)
+    * [Master in Geographical Information Systems and Science](https://www.novaims.unl.pt/unigis)
+    * [Master in Statistics and Information Management](https://www.novaims.unl.pt/megi)
+    * [Master in Information Management](https://www.novaims.unl.pt/mgi)
+    * [Master in Geospatial Technologies](https://www.novaims.unl.pt/geotech)
+    * [Master in Data Science and Advanced Analytics](https://www.novaims.unl.pt/mdsaa)
+    * [Masters in Geospatial Technologies](https://mastergeotech.info)
+  * [National School of Public Heath](https://www.ensp.unl.pt) (ENSP-NOVA)
+  * [Faculdade de Ciências Humanas e Sociais](https://www.fcsh.unl.pt) (FCSH-NOVA)
+  * [Instituto de Tecnologia Química e Biologica Antonio Xavier](https://www.itqb.unl.pt) (ITQB-NOVA)
 * University of Lisbon
-    * [Instituto Superior Técnico](https://tecnico.ulisboa.pt) (IST-ULISBOA)
-    * [Faculdade de Ciências](https://ciencias.ulisboa.pt) (FC-ULISBOA)
-    * [Faculdade de Medicina Veterinária](https://www.fmv.ulisboa.pt) (FMV-ULISBOA)
+  * [Instituto Superior Técnico](https://tecnico.ulisboa.pt) (IST-ULISBOA)
+  * [Faculdade de Ciências](https://ciencias.ulisboa.pt) (FC-ULISBOA)
+  * [Faculdade de Medicina Veterinária](https://www.fmv.ulisboa.pt) (FMV-ULISBOA)
 * University of Minho
-    * [Escola de Arquitetura](https://www.arquitetura.uminho.pt) (EA-UMIMHO)
-    * [Escola de Ciências](https://www.ecum.uminho.pt) (EC-UMIMHO)
-    * [Escola de Direito](https://www.direito.uminho.pt) (ED-UMIMHO)
-    * [Escola de Economia e Gestão](https://www.eeg.uminho.pt) (EEG-UMIMHO)
-    * [Escolha de Engenharia](https://www.eng.uminho.pt) (EE-UMIMHO)
-    * [Escola de Medicina](https://www.med.uminho.pt) (EM-UMIMHO)
-    * [Escola de Psicologia](https://www.psi.uminho.pt) (EP-UMIMHO)
-    * [Escola Superior de Enfermagem](https://www.ese.uminho.pt) (ESE-UMIMHO)
-    * [Instituto de Ciências Sociais](https://www.ese.uminho.pt) (ICS-UMIMHO)
-    * [Instituto de Educação](https://www.ie.uminho.pt) (IE-UMIMHO)
-    * [Instituto de Letras e Ciências Humanas](https://www.elach.uminho.pt) (ILCH-UMIMHO)
-    * [Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos](https://i3bs.uminho.pt) (I3Bs-UMIMHO)
+  * [Escola de Arquitetura](https://www.arquitetura.uminho.pt) (EA-UMIMHO)
+  * [Escola de Ciências](https://www.ecum.uminho.pt) (EC-UMIMHO)
+  * [Escola de Direito](https://www.direito.uminho.pt) (ED-UMIMHO)
+  * [Escola de Economia e Gestão](https://www.eeg.uminho.pt) (EEG-UMIMHO)
+  * [Escolha de Engenharia](https://www.eng.uminho.pt) (EE-UMIMHO)
+  * [Escola de Medicina](https://www.med.uminho.pt) (EM-UMIMHO)
+  * [Escola de Psicologia](https://www.psi.uminho.pt) (EP-UMIMHO)
+  * [Escola Superior de Enfermagem](https://www.ese.uminho.pt) (ESE-UMIMHO)
+  * [Instituto de Ciências Sociais](https://www.ese.uminho.pt) (ICS-UMIMHO)
+  * [Instituto de Educação](https://www.ie.uminho.pt) (IE-UMIMHO)
+  * [Instituto de Letras e Ciências Humanas](https://www.elach.uminho.pt) (ILCH-UMIMHO)
+  * [Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos](https://i3bs.uminho.pt) (I3Bs-UMIMHO)
 * Universidade Lusófona de Humanidades e Tecnologias
-    * [Departamento de Engenharia Informática e Sistemas de Informação](http://informatica.ulusofona.ptpt) (ULHT-DEISI)
-<!-- * ISCTE – Instituto Universitário de Lisboa
-    * [Escola de Tecnologia e Arquitectura](https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura) (ETA-ISCTE-IUL) _NOTE: this template is outdated (there are new covers/specifications)_ -->
+  * [Departamento de Engenharia Informática e Sistemas de Informação](http://informatica.ulusofona.ptpt) (ULHT-DEISI)
+    
+    <!-- * ISCTE – Instituto Universitário de Lisboa
+  * [Escola de Tecnologia e Arquitectura](https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura) (ETA-ISCTE-IUL) _NOTE: this template is outdated (there are new covers/specifications)_ -->
 * Instituto Politécnico de Lisboa
-    * [Instituto Superior de Engenharia de Lisboa](https://www.isel.pt) (ISEL-IPL)
+  * [Instituto Superior de Engenharia de Lisboa](https://www.isel.pt) (ISEL-IPL)
 * Instituto Politécnico de Setúbal
-    <!-- * [Escola Superior de Saúde](https://www.ess.ips.pt) (ESS-IPS) -->
-    * [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt) (ESTB-IPS)
+  
+  <!-- * [Escola Superior de Saúde](https://www.ess.ips.pt) (ESS-IPS) -->
+  * [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt) (ESTB-IPS)
 * Other Schools/Degrees
-    * [Escola Superior de Enfermagem do Porto](https://www.esenf.pt/pt/) (ESEP)
+  * [Escola Superior de Enfermagem do Porto](https://www.esenf.pt/pt/) (ESEP)
 
 <!-- -------- -->
+
 ### Showcase
 
 Although the template goes far beyond the cover… some covers from the supported schools are is display below.
 
 <kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/ipl-isel-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/ips-ests-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-ensp-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-ensp-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-fcsh-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-fcsh-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-fct-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-fct-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-ims-msc-mcsig-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-ims-msc-megi-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-ims-msc-mgi-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-ims-msc-mgt-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-ims-msc-mmaa-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-ims-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-itqb-msc-gray-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-itqb-msc-green-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-itqb-phd-gray-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-itqb-phd-green-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/other-esep-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/ulht-deisi-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/ulht-deisi-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/ulisboa-fc-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/ulisboa-fc-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/ulisboa-fmv-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/ulisboa-fmv-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/ulisboa-ist-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/ulisboa-ist-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-ea-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-ea-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-ec-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-ec-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-ed-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-ed-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-ee-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-ee-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-eeg-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-eeg-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-em-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-em-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-ep-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-ep-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-ese-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-ese-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-i3b-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-i3b-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-ics-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-ics-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-ie-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-ie-phd-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-elach-msc-en.svg" border="1" width="100"/></kbd>&nbsp;&nbsp;<kbd><img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/uminho-elach-phd-en.svg" border="1" width="100"/></kbd>
 
-
-
 --------
+
 ## Disclaimer
 
 These are not official templates for FCT-NOVA nor any other School, although we have done our best to make it fully compliant to each School regulations for thesis/dissertation presentation.
@@ -262,6 +246,7 @@ These are not official templates for FCT-NOVA nor any other School, although we 
 All [contributors](https://github.com/joaomlourenco/novathesis/wiki#help-with-the-project-patches-and-new-features), both sporadic and regular, are welcome. :) Please [contact me](http://docentes.fct.unl.pt/joao-lourenco) to join the team.
 
 --------
+
 ## Word Templates
 
 *If you are here looking for the (deprecated) Word templates (not maintained anymore), please go to [this other repository](https://github.com/joaomlourenco/novathesis_word).*
