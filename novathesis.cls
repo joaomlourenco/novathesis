@@ -232,6 +232,7 @@
   color/links/.new cmd          = {\@ifpackageloaded{hyperref}%
                                             {\hypersetup{allcolors=#1}}%
                                             {\PassOptionsToPackage{allcolors=#1}{hyperref}}},
+  color/gls/.new cmd             = {\AtEndPreamble{\renewcommand*{\glstextformat}[1]{\textcolor{#1}{##1}}}},
   % LANGUAGES
   lang/extra/.new list           = {},
   lang/main/.new choice         = {en, pt, fr, it, de, es, gr},
@@ -724,6 +725,7 @@
 \options{/novathesis/lang/cover = \option{/novathesis/lang/main},
          /novathesis/lang/copyright = \option{/novathesis/lang/main},
          /novathesis/color/links = DarkBlue,
+         /novathesis/color/gls = Black,
 }
 
 
