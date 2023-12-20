@@ -150,6 +150,7 @@ If you couldn't find what you were looking for, ask for help in:
 
 * The [GitHub Discussions page](https://github.com/joaomlourenco/novathesis/discussions) (only EN please) at https://github.com/joaomlourenco/novathesis/discussions.
 * The [Facebook page](https://www.facebook.com/groups/novathesis/) (PT or EN) at https://www.facebook.com/groups/novathesis.
+* The [Reddit novathesis community](https://www.reddit.com/r/novathesis/) at [`r/novathesis`](https://www.reddit.com/r/novathesis/).
 * You may also give a look at the [novathesis blog](https://novathesis.blogspot.pt) at [https://novathesis.blogspot.pt](https://novathesis.blogspot.pt).
 
 *Please don't try to contact me directly for questions or support, by email or any other channel! I will not answer such requests…*
