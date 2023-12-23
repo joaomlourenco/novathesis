@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2023-12-10 [7.1.12]
+%% Version 2023-12-23 [7.1.13]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -61,7 +61,7 @@
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ProvidesClass{novathesis}[2023-12-10 novathesis template]
+\ProvidesClass{novathesis}[2023-12-23 novathesis template]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 
@@ -2100,7 +2100,7 @@
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS
   \@ntgetmaxlen{#3}{#2}%
   \begin{tabular}[t]{@{}r@{~~}l@{}}%
-    \ifdatadefined{#2titlestring}(\@LANG@COVER){%
+    \ifdataequal{#2titlestring}(\@LANG@COVER){}{}{%
       \datadefault{#2titlestringpre}()%
       \datadefault{#2titlestringfont}()%
       \csuse{the#2titlestring}(\@LANG@COVER)%
@@ -2145,17 +2145,8 @@
   \ifoptiondefined{/@nt/#3/#4/full}{%
     % \typeout{NTPRINTPERSONGROUP 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\NTPRINTPERSONGROUP
     \@nt@printgrouptitle{#3}{#4}%
-    % \@nt@reducegender{/@nt/#3/#4/gender}{\@nt@advgender}%
-    % \@nt@reducenumber{/@nt/#3/#4/full}{\@nt@advnumber}%
-    % \datadefault{#3stringpre}(#4)%
-    % \bgroup%
-    %   \datadefault{#3stringfont}(#4)%
-    %   \datadefault{#3string}(#4,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
-    % \egroup%
-    % \datadefault{#3stringpost}(#4)%
     \begin{varwidth}[t]{\linewidth-\maxlen}%
       \raggedright%
-      % \rule{\linewidth}{5pt}\par
       \IfStrEq{#1}{list}{%
         \@ntprintpersonsaslist{#3}{#4}%
       }{%
@@ -2163,7 +2154,7 @@
       }%
     \end{varwidth}%
     \thepersongrouppost()%
-  }{}%\ClassError{novathesis}{ntprintpersongroup: undefined [/@nt/#3/#4/full]}{}}%
+  }{}%
 }
 
 
@@ -2182,15 +2173,17 @@
   \raggedright%
   \datadefault{#2namepre}(#3)%
   \StrCut{#4}{,}\@nt@name\@nt@remainder% split name from remainder
-  \ignorespaces\parbox[b]{\linewidth}%
-                         {\raggedright\datadefault{#2namefont}(#3)\@nt@name}%
+  % \ignorespaces\parbox[b]{\linewidth}%
+  %                        {\raggedright\datadefault{#2namefont}(#3)\@nt@name}%
+  \datadefault{#2namefont}(#3)\@nt@name%
   \IfStrEq{#1}{full}{%
     \IfStrEq{\@nt@remainder}{}{}{%
       \datadefault{#2remainderpre}(#3)%
       \bgroup%
         \datadefault{#2remainderfont}(#3)%
-        \ignorespaces{\parbox[t]{\linewidth}%
-                                   {\raggedright\@nt@remainder}}%
+        % \ignorespaces{\parbox[t]{\linewidth}%
+        %                            {\raggedright\@nt@remainder}}%
+        \@nt@remainder%
       \egroup%
       \datadefault{#2remainderpost}(#3)%
     }%
