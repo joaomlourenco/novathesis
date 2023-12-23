@@ -9,6 +9,16 @@
 
 \input{NOVAthesisFiles/Schools/ipl/isel/ipl-isel-defaults.ldf}
 
+\ntsetup{print/secondcover=true}
+
+\def\@LANG@COVER{pt}%
+
+% Faculty / School 
+\school(estsl,pt):={Escola Superior de Tecnologia da Saúde de Lisboa}
+\school(estsl,en):={Escola Superior de Tecnologia da Saúde de Lisboa}
+\school(estsl,fr):={Escola Superior de Tecnologia da Saúde de Lisboa}
+\school(estsl,it):={Escola Superior de Tecnologia da Saúde de Lisboa}
+
 % Spine info
 \spine(logo)={ipl-logo/0,ipl-isel-logo/0/1.5,ipl-isel-meb-logo/0,2cm/meb-text/0/1.8}
 \spine(box,logo,margin,sep):={5mm}
@@ -19,3 +29,134 @@
 \spine(box,logo,len):=?{4.1cm}
 \spine(box,date,len):=?{1.0cm}
 % \spine(box,author,len):=?{5.0cm}
+
+
+% Set margins for cover pages
+\margin(cover,top):={1.175cm}
+\margin(cover,bottom):={1.5cm}
+\margin(cover,left):={2.1cm}
+\margin(cover,right):={2.1cm}
+
+\frontpageimage():={isel-meb-photo}
+
+% \thesiscover(1-1,image):={MEB_CapaVersaoDefinitiva_TFM_v02}
+
+\dissertationstring(bsc,pt)={Trabalho Final de Licenciatura para obtenção do grau de\\%
+Mestre em Engenharia Biomédica}
+\dissertationstring(mscplan,pt)={Trabalho Final de Mestrado para obtenção do grau de\\%
+Mestre em Engenharia Biomédica}
+\dissertationstring(msc,pt)={Trabalho Final de Mestrado para obtenção do grau de\\%
+Mestre em Engenharia Biomédica}
+\dissertationstring(bsc,en)={Trabalho Final de Licenciatura para obtenção do grau de\\%
+Mestre em Engenharia Biomédica}
+\dissertationstring(mscplan,en)={Trabalho Final de Mestrado para obtenção do grau de\\%
+Mestre em Engenharia Biomédica}
+\dissertationstring(msc,en)={Trabalho Final de Mestrado para obtenção do grau de\\%
+Mestre em Engenharia Biomédica}
+
+
+\ntresetcovers
+
+\AtEndPreamble{%
+  \LoadHelveticaLikeFont%
+}
+
+\NTAddToHook{cover/1-1/text/pre}{%
+  \sffamily%
+}
+\NTAddToHook{cover/2-1/text/pre}{%
+  \sffamily%
+}
+
+
+% % School%
+
+%% IPL
+\ntaddtocover[vspace=0cm, halign=l, hspace=0.5mm, height=1.225cm, valign=c]{1-1,2-1}{%
+  \includegraphics[height=1.225cm,align=c]{ipl-logo}%
+  \hspace*{2.6cm}%
+  \fontsize{12.9}{13}\selectfont%
+  \textbf{\THEuniversity(pt)}%
+}
+
+%% ISEL e ESTSL
+\ntaddtocover[vspace=3mm, halign=l, hspace=-0.5mm, height=10mm, valign=c]{1-1,2-1}{%
+  \includegraphics[height=10.5mm,align=c]{ipl-isel-logo}%
+  \hspace*{2mm}
+  \includegraphics[height=7.7mm,align=c]{ipl-isel-meb-logo2}%
+  \hspace*{3.5mm}%
+  \fontsize{12}{12}\selectfont%
+  \begin{tabular}{@{}ll}
+    \theschool(\@LANG@COVER)\\%
+    \theschool(estsl,\@LANG@COVER)%
+  \end{tabular}%
+}
+
+\ntaddtocover[vspace=1.6cm,height=9cm,valign=c]{1-1,2-1}{%
+  % \typeout{NT thefrontpageimage=[\thefrontpageimage()]}%
+  \ifdatadefined{frontpageimage}()
+    {\includegraphics[height=9cm]{\thefrontpageimage()}}%
+    {~}%
+}
+
+% % Title of Dissertation
+\ntaddtocover[vspace=1.5cm,]{1-1,2-1}{%
+  \fontsize{16.5}{16}\selectfont%
+  \bfseries%
+  \textbf{\thedoctitle(\@LANG@COVER,main,cover)}%
+}
+
+% Author name
+\ntaddtocover[vspace=1.4cm]{1-1,2-1}{%
+  \fontsize{14}{14}\selectfont%
+  \thedocauthor(name)%\\[1ex]
+  % \fontsize{14}{14}\selectfont%
+  % (\thedocauthor(degree))%
+}
+
+% Degree
+\ntaddtocover[vspace=9mm]{1-1,2-1}{%
+  \fontsize{11}{11}\selectfont%
+  \thepresentationtext%
+}
+
+% Provisional
+\ntaddtocover[vspace=10mm,status={working,provisional}]{1-1,2-1}{%
+  \fontsize{11}{11}\selectfont%
+  (Versão Provisória)%
+}
+
+% Advisers
+\ntaddtocover[vspace=8.75mm,valign=t]{1-1,2-1}{%
+  % \adviserstringfont(a):={}%
+  % \adviserstringfont(c):={\bfseries}%
+  \commastring(pt)={\\}
+  \andstring(pt)={\\}
+  \fontsize{11}{11}\selectfont%
+  \underline{\@nt@printgrouptitle@text{adviser}{a}}\\[1ex]%
+  \ntprintpersons[name]{0.9}[c]{0}{adviser}{a}%
+}
+
+%
+% Committee — only print the committee for the main classes
+\ntaddtocover[vspace=1,status=final]{1-1,2-1}{%
+  \ifmaindoc{%
+    \fontsize{11}{11}\selectfont%
+    \underline{\csuse{thecommitteetitlestring}(\@LANG@COVER)}\\[4pt]%
+    \persongrouppost():={\\[5pt]}
+    \personpost():={\\[-1pt]}
+    \committeetitlestring(pt):={}%
+    \ifdocfinal{\ntprintpersons[name]{1}[c]{2}{committee}{\thecommitteeorder()}\mbox{}}{\mbox{}}%
+  }{\mbox{}}%
+}
+
+
+% Date
+\ntaddtocover[vspace=2]{1-1,2-1}{%
+  \fontsize{11}{11}\selectfont%
+  \iftoggle{/novathesis/print/timestamp}{%
+    \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}%
+                 {\thentdocdate(submission,month,text) de \thentdocdate(submission,year)}%
+  }{\thentdocdate(submission,month,text) de \thentdocdate(submission,year)}%
+}
+
