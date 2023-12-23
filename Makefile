@@ -131,7 +131,7 @@ commit:
 	git checkout main
 	git pull
 	git merge -m "Merge branch 'develop'" develop
-	git tag -a "$(VERSION)"
+	git tag -a "$(VERSION)" -m "Version $(VERSION)."
 	git push --all --tags
 	git checkout develop
 
