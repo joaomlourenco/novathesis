@@ -126,7 +126,8 @@ times:
 #   echo TIME $$S =$$T; \
 # done
 
-commit:
+# merge, tag and push
+mtp:
 	git cam "Version $(VERSION)."
 	git checkout main
 	git pull
@@ -135,12 +136,3 @@ commit:
 	git push --all
 	git push --tags
 	git checkout develop
-
-tag:
-	@echo Tagging as $(VERSION)
-	# @echo $(DATE)
-	git co main
-	git tag -a "$(VERSION)"
-	git push origin --tags --all
-	git co develop
-
