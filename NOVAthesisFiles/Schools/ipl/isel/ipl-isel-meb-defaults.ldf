@@ -134,7 +134,7 @@ Mestre em Engenharia Biomédica}
   \andstring(pt)={\\}
   \fontsize{11}{11}\selectfont%
   \underline{\@nt@printgrouptitle@text{adviser}{a}}\\[1ex]%
-  \ntprintpersons[name]{0.9}[c]{0}{adviser}{a}%
+  \ntprintpersons[name]{0.9}[c]{0}{adviser}{a,c}%
 }
 
 %
