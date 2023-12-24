@@ -21,6 +21,8 @@
 %%          https://github.com/joaomlourenco/novathesis/discussions
 %%      or at the NOVAthesis facebook group at
 %%          https://www.facebook.com/groups/novathesis
+%%      or in the subreddit r/novathesis
+%%          https://www.reddit.com/r/novathesis/
 %%
 %% AUTHOR @github:
 %%      - joaomlourenco
@@ -37,18 +39,7 @@
 %%             themselves in the “Add special instructions to the seller:” box.
 %%
 %% CITATION:
-%%      If you use this template, please be kind and cite it in your bibliography:
-%%           “João M. Lourenço, The NOVAthesis \LaTeX\ Template User’s Manual,
-%%            NOVA University Lisbon, 2021,
-%%            https://github.com/joaomlourenco/novathesis/raw/main/template.pdf.”
-%%      The BibTeX entry is already in the example “bibliography.bib” file:
-%%           @Manual{novathesis-manual,
-%%              title       ={{The NOVAthesis \LaTeX\ Template User's Manual}},
-%%              author      ={João M. Lourenço},
-%%              organization={NOVA University Lisbon},
-%%              year        ={2021},
-%%              url         ={https://github.com/joaomlourenco/novathesis/raw/main/template.pdf},
-%%           }
+%%      If you use this template, please be kind and \cite{novathesis-manual} somethwew in your document.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -88,7 +79,7 @@
 
 
 %%============================================================
-%% BLACK VOID AHEAD!  DON'T TRESPASS!
+%% BLACK VOID AHEAD!  DO NOT TRESPASS!
 %%============================================================
 
 
@@ -101,7 +92,7 @@
 
 
 %%============================================================
-%% YOU'VE BEEN WARNED.  GO BACK TO SAFE GROUND. NOW!!!
+%% YOU'VE BEEN WARNED.  GO BACK TO SAFE GROUND.  NOW!!!
 %%============================================================
 
 
@@ -114,7 +105,7 @@
 
 
 %%============================================================
-%%  DON'T TOUCH BELOW THIS POINT!
+%%  DO NOT GO BEYOND THIS POINT!
 %%  IF YOU DO… YOU DESERVE WHATEVER HAPPENS AFTERWARDS!
 %%============================================================
 
@@ -123,51 +114,36 @@
 
 
 %%------------------------------------------------------------
-%% This class is based in “memoir”.  To set memoir options,
-%% edit “Config/0_memoir.tex”.
-\RequirePackage{l3benchmark}
-\ExplSyntaxOn
-\cs_new_eq:NN \benchmarktic \benchmark_tic:
-\cs_new_eq:NN \benchmarktoc \benchmark_toc:
-\ExplSyntaxOff
-
-\benchmarktic
-
+%% Thhe novathesis class is based in “memoir”.  To set memoir
+%%  options, edit “Config/0_memoir.tex”.
 \RequirePackage{NOVAthesisFiles/fix-profiling}
+\benchmarktic
 \documentclass{novathesis}
 
 
 %============================================================
-%  TEMPLATE CUSTOMIZATION / OPTIONS
+%  MEMOIR CUSTOMIZATION
+%      Please open and edit the appropriate
+%       configuration file “Config/0_memoir.tex”
+%============================================================
+
+%============================================================
+%  TEMPLATE CUSTOMIZATION / OPTIONS (document type, university, school, etc)
 %      Please open and edit the appropriate
 %       configuration file “Config/1_novathesis.tex”
 %============================================================
 
 %============================================================
-% BIBLATEX CUSTOMIZATION
+% BIBLATEX CUSTOMIZATION (cictation and bibliography styles)
 %      Please open and edit the appropriate
 %       configuration file “Config/2_biblatex.tex”
 %============================================================
 
 %============================================================
-% DEGREE CUSTOMIZATION
+%  COVER COSTUNMIZATION (title, author, etc)
 %   Please open and edit the appropriate
-%       configuration file “Config/3a_degree_phd.tex”
-%       or “Config/3b_degree_msc.tex”
-%       or “Config/3c_degree_other.tex”
+%       configuration file “Config/3_cover.tex”
 %============================================================
-
-%============================================================
-% DEPARTMENT CUSTOMIZATION
-%   Please open and edit the appropriate
-%       configuration file “Config/4_department.tex”
-%============================================================
-
-% %============================================================
-% %  THESIS/DISSERTATION COVER DATA (title, author, etc)
-% %   Please open and edit the appropriate
-% %       configuration file “Config/3_cover.tex”
-% %============================================================
 
 %============================================================
 %  THESIS/DISSERTATION FILES
@@ -176,15 +152,21 @@
 %============================================================
 
 %============================================================
+%  PERSONAL (YOUR) CUSTOMIZATION
+%   Please open and edit the appropriate
+%       configuration file “Config/5_packages.tex”
+%============================================================
+
+%============================================================
 %  WHICH LIST_OF TO PRINT
 %   Please open and edit the appropriate
-%       configuration file “Config/7_list_of.tex”
+%       configuration file “Config/6_list_of.tex”
 %============================================================
 
 %============================================================
-% ADDITIONAL PACKAGES and MACROS
+% SPECIAL UNIVERSITY/SCHOOL CUSTOMIZATION
 %      Please open and edit the appropriate
-%       configuration file “Config/8_packages.tex”
+%       configuration file “Config/9_UNIVERSITY.tex”
 %============================================================
 
 
@@ -205,63 +187,38 @@
 
 
 %%============================================================
-%% HAVE I NOT TOLD YOU TO NOT EDIT/CHANGE THIS FILE???
+%% HAVE I NOT TOLD YOU TO NOT EDIT/CHANGE THIS FILE???  YES I DID!!!
 %%============================================================
 
 %%------------------------------------------------------------
-\begin{document}        % Beginning of document
+\begin{document}          % Beginning of document
+\benchmarktoc
 \typeout{TIME class loading=\the\pdfelapsedtime}%
-\benchmarktoc
+%%------------------------------------------------------------
+%% Print covers
 \benchmarktic
-
-% \optionshowall
-
-
-%%------------------------------------------------------------
 \ntthesisfrontmatter      % Before the main text (TOC, etc) — Roman page numbering
-% \typeout{TIME after_ntthesisfrontmatter=\the\pdfelapsedtime}
-%%------------------------------------------------------------
-\ntprint{covers}      % The cover page
-\typeout{TIME process covers=\the\pdfelapsedtime}%
+\ntprint{covers}          % The cover page
 \benchmarktoc
+\typeout{TIME process covers=\the\pdfelapsedtime}%
+%%------------------------------------------------------------
+%% Print front matter
 \benchmarktic
 \ntprint{frontmatter}     % The default order is listed below, but can be changed
+\benchmarktoc
 \typeout{TIME process frontmatter=\the\pdfelapsedtime}%
-\benchmarktoc
-\benchmarktic
-%                         % at the School's “defaults.ldf” with
-%                         % "\ntsetprintorder{list_of_items}", where “list_of_items”
-%                         % may be any of:
-%                         %       statement      % The statement page
-%                         %       copyright       % (*) The copyright page
-%                         %       dedicatory      % (*) Print the dedicatory
-%                         %       acknowledgements% (*) Print the acknowledgments
-%                         %       quote           % (*) Print the quote
-%                         %       abstracts       % Print abstracts in multiple languages.
-%                         %       alllistof      % Print all the listof defined in “7_list_of.tex”
-%                         % (*) Will only be printed if adequate for the document type
-% \optionlistdo{/novathesis/docfrontmatter}{\csuse{ntprint#1}}%
-
 %%------------------------------------------------------------
+%% Print main matter
+\benchmarktic
 \ntthesismainmatter     % The main text — Arabic page numbering
-% \typeout{TIME after_ntthesismainmatter=\the\pdfelapsedtime}
-%%------------------------------------------------------------
-% \optionlistdo{/novathesis/docmainmatter}{\csuse{ntprint#1}}%
 \ntprint{mainmatter}      % The default order is listed below, but can be changed
+\benchmarktoc
 \typeout{TIME process mainmatter=\the\pdfelapsedtime}%
-\benchmarktoc
+%%------------------------------------------------------------
+%% Print back cover and spine
 \benchmarktic
-%                         % at the School's “defaults.ldf” with
-%                         % "\ntsetprintorder{list_of_items}", where “list_of_items”
-%                         % are separated by ";" and may be any of:
-%                         %       chapters        % Print document chapters
-%                         %       bib             % Print the bibliography.  Change to
-%                                                 %    bib[title=⟨title⟩]” to redefine the title!
-%                         %       appendices      % Print appendices, if any!
-%                         %       annexes         % Print annexes, if any!
 \ntprint{backcover}       % Print the back cover, if any!
-\typeout{TIME process backcover=\the\pdfelapsedtime}%
 \benchmarktoc
-
+\typeout{TIME process backcover=\the\pdfelapsedtime}%
 %%------------------------------------------------------------
 \end{document}          % End of document

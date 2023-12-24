@@ -21,6 +21,8 @@
 %%          https://github.com/joaomlourenco/novathesis/discussions
 %%      or at the NOVAthesis facebook group at
 %%          https://www.facebook.com/groups/novathesis
+%%      or in the subreddit r/novathesis
+%%          https://www.reddit.com/r/novathesis/
 %%
 %% AUTHOR @github:
 %%      - joaomlourenco
@@ -37,19 +39,9 @@
 %%             themselves in the “Add special instructions to the seller:” box.
 %%
 %% CITATION:
-%%      If you use this template, please be kind and cite it in your bibliography:
-%%           “João M. Lourenço, The NOVAthesis \LaTeX\ Template User’s Manual,
-%%            NOVA University Lisbon, 2021,
-%%            https://github.com/joaomlourenco/novathesis/raw/main/template.pdf.”
-%%      The BibTeX entry is already in the exxample “bibliography.bib” file:
-%%           @Manual{novathesis-manual,
-%%              title       ={{The NOVAthesis \LaTeX\ Template User's Manual}},
-%%              author      ={João M. Lourenço},
-%%              organization={NOVA University Lisbon},
-%%              year        ={2021},
-%%              url         ={https://github.com/joaomlourenco/novathesis/raw/main/template.pdf},
-%%           }
+%%      If you use this template, please be kind and \cite{novathesis-manual} somethwew in your document.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
@@ -60,6 +52,7 @@
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \ProvidesClass{novathesis}[2023-12-23 novathesis template]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
