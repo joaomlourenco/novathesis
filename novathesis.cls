@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2023-12-27 [7.1.14]
+%% Version 2024-01-15 [7.1.15]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -54,7 +54,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\ProvidesClass{novathesis}[2023-12-27 novathesis template]
+\ProvidesClass{novathesis}[2024-01-15 novathesis template]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 
@@ -1559,7 +1559,7 @@
 }
 
 \gdef\@COVERNUM{}%
-\newcommand{\ifcovernum}[3]{\IfStrEq{\@COVERNUM}{#1}{#2}{#3}}
+\newcommand{\ifcovernum}[2]{\IfStrEq{\@COVERNUM}{#1}{#2}}
 
 \newcommand{\ntprintcoversingle}[1]{%
   % #1 = cover ID “major-minor”
@@ -1587,7 +1587,7 @@
     \NTRunHook{cover/#1/post}%
     \NTRunHook{cover/post}%
   \endgroup%
-  \clearpage%
+  \ifoptionequal{/novathesis/media}{paper}{\newpage ~\thispagestyle{empty}\newpage}{\clearforchapter}
 }
 
 \newcommand{\@covertikzlist}{}
