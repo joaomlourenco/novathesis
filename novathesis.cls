@@ -1559,7 +1559,7 @@
 }
 
 \gdef\@COVERNUM{}%
-\newcommand{\ifcovernum}[3]{\IfStrEq{\@COVERNUM}{#1}{#2}{#3}}
+\newcommand{\ifcovernum}[2]{\IfStrEq{\@COVERNUM}{#1}{#2}}
 
 \newcommand{\ntprintcoversingle}[1]{%
   % #1 = cover ID “major-minor”
@@ -1587,7 +1587,7 @@
     \NTRunHook{cover/#1/post}%
     \NTRunHook{cover/post}%
   \endgroup%
-  \clearpage%
+  \ifoptionequal{/novathesis/media}{paper}{\newpage ~\thispagestyle{empty}\newpage}{\clearforchapter}
 }
 
 \newcommand{\@covertikzlist}{}
