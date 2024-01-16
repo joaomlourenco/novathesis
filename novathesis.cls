@@ -2093,7 +2093,7 @@
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS
   \@ntgetmaxlen{#3}{#2}%
   \begin{tabular}[t]{@{}r@{~~}l@{}}%
-    \ifdataequal{#2titlestring}(\@LANG@COVER){}{}{%
+    \ifdatadefined{#2titlestring}(\@LANG@COVER){%
       \datadefault{#2titlestringpre}()%
       \datadefault{#2titlestringfont}()%
       \csuse{the#2titlestring}(\@LANG@COVER)%
