@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2024-01-15 [7.1.15]
+%% Version 2024-01-16 [7.1.16]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -54,7 +54,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\ProvidesClass{novathesis}[2024-01-15 novathesis template]
+\ProvidesClass{novathesis}[2024-01-16 novathesis template]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 
@@ -2093,7 +2093,7 @@
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS
   \@ntgetmaxlen{#3}{#2}%
   \begin{tabular}[t]{@{}r@{~~}l@{}}%
-    \ifdataequal{#2titlestring}(\@LANG@COVER){}{}{%
+    \ifdatadefined{#2titlestring}(\@LANG@COVER){%
       \datadefault{#2titlestringpre}()%
       \datadefault{#2titlestringfont}()%
       \csuse{the#2titlestring}(\@LANG@COVER)%
