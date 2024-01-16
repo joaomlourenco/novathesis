@@ -201,7 +201,7 @@
 \provisional(msc,en):={Draft}
 \provisional(phd,en):={Draft}
 
-\ntaddtocover[vspace=1.4cm,height=1.25cm,valign=t]{1-1,2-1}{%
+\ntaddtocover[vspace=1.4cm,height=1.25cm,valign=t,status={working,provisional}]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
   \theprovisional(\@DOCTYPE,\@LANG@COVER)%
 }

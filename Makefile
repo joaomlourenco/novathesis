@@ -84,7 +84,7 @@ zip:
 clean:
 	@$(L) -c $(B)
 	@rm -f $(AUXFILES) "*(1)*"
-	@find . -name .DS_Store -o -name '_minted*' -print0 | xargs -0 rm -rf
+	@find . -name .DS_Store -o -name '_minted*' | xargs rm -rf
 
 gclean:
 	git clean -fdx -e Scripts -e Fonts
@@ -106,14 +106,17 @@ publish:
 .PHONY: bump1 bump2 bump3
 bump1:
 	Scripts/newversion.sh 1
+	@echo make mtp
 	# $(MAKE) publish
 
 bump2:
 	Scripts/newversion.sh 2
+	@echo make mtp
 	# $(MAKE) publish
 
 bump3:
 	Scripts/newversion.sh 3
+	@echo make mtp
 	# $(MAKE) publish
 
 .PHONY: times
