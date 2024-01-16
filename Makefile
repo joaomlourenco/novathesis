@@ -106,14 +106,17 @@ publish:
 .PHONY: bump1 bump2 bump3
 bump1:
 	Scripts/newversion.sh 1
+	@echo make mtp
 	# $(MAKE) publish
 
 bump2:
 	Scripts/newversion.sh 2
+	@echo make mtp
 	# $(MAKE) publish
 
 bump3:
 	Scripts/newversion.sh 3
+	@echo make mtp
 	# $(MAKE) publish
 
 .PHONY: times
