@@ -131,6 +131,7 @@ times:
 
 # merge, tag and push
 mtp:
+	make clean
 	git cam "Version $(VERSION)."
 	git checkout main
 	git pull
