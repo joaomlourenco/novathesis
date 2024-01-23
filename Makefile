@@ -33,7 +33,9 @@ endif
 
 
 
+.PHONY: default
 default:
+	git status | fgrep -q README.md && (Scripts/toc_readme.sh; git add README.md; git commit -m 'Updated README.md')
 	@echo SCHL=$(SCHL)
 ifeq ($(findstring $(SCHL),$(LUA)),)
 	make pdf
@@ -119,7 +121,7 @@ bump3:
 	@echo make mtp
 	# $(MAKE) publish
 
-.PHONY: times
+.PHONY: times mtp
 times:
 	@echo $(TIMES)  | tr '\1@\2' '\n\t '
 # fgrep "TIME process" -A 1 *.log | while read a; do \
