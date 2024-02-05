@@ -874,8 +874,6 @@
 \RequirePackage[english]{babel}      % Support for multilingual documents
 \RequirePackage{translator} % Support month name translations for pgfcalendar
 
-\input{NOVAthesisFiles/fix-babel.tex}
-
 
 %--------------------------------
 % “glossasries” stuff - after hyperref
@@ -1435,6 +1433,12 @@
 }
 
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FIX BABEL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{NOVAthesisFiles/fix-babel.tex}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
