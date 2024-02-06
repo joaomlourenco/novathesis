@@ -35,7 +35,7 @@ endif
 
 .PHONY: default
 default:
-	git status \| "fgrep --quiet" README.md && (Scripts/toc_readme.sh; git add README.md; git commit -m 'Updated README.md')
+	@$(shell git status | fgrep README.md && (Scripts/toc_readme.sh; git add README.md; git commit -m 'Updated README.md'))
 	@echo SCHL=$(SCHL)
 ifeq ($(findstring $(SCHL),$(LUA)),)
 	make pdf
