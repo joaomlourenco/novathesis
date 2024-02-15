@@ -112,7 +112,7 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
 | `1_novathesis.tex`   | Configure the template, i.e., the document type, the school, the used languages, etc.                                                                                       |
 | **`2_biblatex.tex`** | **Configure the bibliography.**                                                                                                                                             |
 | **`3_cover.tex`**    | **Configure cover contents (e.g., author's name, thesis/dissertation title, advisers, committee, etc)**                                                                     |
-| **`4_files.tex`**    | **Configure the the files for chapters, appendices, annexes, etc…**                                                                                                         |
+| **`4_files.tex`**    | **Configure the files for chapters, appendices, annexes, etc…**                                                                                                         |
 | **`5_packages.tex`** | **Configure additional packages and commands**                                                                                                                              |
 | `6_list_of.tex`      | Configure the lists to be printed (table of contents, list of figures, list of tables, list of listings, etc).  _Don't touch this file unless you know what you are doing!_ |
 |                      |                                                                                                                                                                             |
@@ -141,9 +141,9 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
 
 *WARNING: Overleaf reduced the compile time*
 ![image](https://github.com/joaomlourenco/novathesis/assets/2064643/a3ffeeef-011e-45cd-974a-c22191267c18)
-There is no way you can compile yout thesis/dissertation (using this template) within the new (20 seconds) time limit.  This means you have two options:
-* Install LaTeX in your computer and [use a the template locally](#with-a-local-latex-installation)!
-* Opt for a hassle free solution and [buy a (student) plan in Overleaf](https://www.overleaf.com/user/subscription/plans).
+There is no way you can compile your thesis/dissertation (using this template) within the new (20 seconds) time limit.  This means you have two options:
+* Install LaTeX in your computer and [use the template locally](#with-a-local-latex-installation)!
+* Opt for a hassle-free solution and [buy a (student) plan in Overleaf](https://www.overleaf.com/user/subscription/plans).
 
 --------
 
