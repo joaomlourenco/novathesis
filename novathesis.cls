@@ -39,7 +39,7 @@
 %%             themselves in the “Add special instructions to the seller:” box.
 %%
 %% CITATION:
-%%      If you use this template, please be kind and \cite{novathesis-manual} somethwew in your document.
+%%      If you use this template, please be kind and \cite{novathesis-manual} somewhere in your document.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -2678,7 +2678,7 @@
   }
 
   %--------------------------------
-  % If subcaptin is laoded, let it hand handle subfigures
+  % If subcaption is loaded, let it handle subfigures
   % otherwise use memoir subfigures
   \@ifpackageloaded{subcaption}{}{\newsubfloat{figure}}
   \newcommand{\@ntcite}[1]{\ifdef{\parencite}{\parencite{#1}}{\cite{#1}}}
