@@ -1,0 +1,47 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% abstract-es.tex
+%% NOVA thesis document file
+%%
+%% Abstract in Spanish
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE abstract-es.tex}%
+
+
+\textbf{¡Esta es una traducción de “Google Translate” de la versión en inglés! ¡Reparaciones y correcciones son bienvenidas!}
+
+Independientemente del idioma en el que esté escrita la tesis, normalmente hay al menos dos resúmenes: uno en el mismo idioma que el texto principal y otro en algún otro idioma.
+
+El orden de los resúmenes varía según la escuela. Si su escuela tiene regulaciones específicas sobre el orden de los resúmenes, la plantilla \gls{novathesis} (\LaTeX) las respetará. De lo contrario, la regla predeterminada en la plantilla \gls{novathesis} es tener en primer lugar el resumen en \emph{el mismo idioma que el texto principal}, y luego el resumen en \emph{el otro idioma}. Por ejemplo, si la disertación está escrita en portugués, el orden de los resúmenes será primero en portugués y luego en inglés, seguido del texto principal en portugués. Si la disertación está escrita en inglés, el orden de los resúmenes será primero inglés y luego portugués, seguido del texto principal en inglés.
+%
+Sin embargo, este orden se puede personalizar agregando uno de los siguientes al archivo \verb+5_packages.tex+.
+%
+
+\begin{verbatim}
+    \ntsetup{abstractorder={<LANG_1>,...,<LANG_N>}}
+    \ntsetup{abstractorder={<MAIN_LANG>={<LANG_1>,...,<LANG_N>}}}
+\end{verbatim}
+
+Por ejemplo, para un documento principal escrito en alemán con resúmenes escritos en alemán, inglés e italiano (por este orden), utilice:
+\begin{verbatim}
+    \ntsetup{abstractorder={de={de,en,it}}}
+\end{verbatim}
+
+En cuanto a su contenido, los resúmenes no deben exceder una página y podrán responder a las siguientes preguntas (es imprescindible adaptarse a las prácticas habituales de su área científica):
+
+\begin{itemize}
+  \item ¿Cuál es el problema?
+  \item ¿Por qué este problema es interesante/desafiante?
+  \item ¿Cuál es el enfoque/solución/contribución propuesta?
+  \item ¿Qué resulta (implicaciones/consecuencias) de la solución?
+\end{itemize}
+
+% Palavras-chave do resumo em Espanhol
+\keywords{
+  Una palabra clave \and
+  Otra palabra clave \and
+  Otra palabra clave más \and
+  Una palabra clave más \and
+  La última palabra clave
+}
