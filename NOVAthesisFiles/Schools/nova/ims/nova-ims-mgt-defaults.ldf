@@ -13,7 +13,8 @@
 \ntsetup{lang/cover=en}        % The language for the cover (and second cover) page
 \ntbibsetup{style=authoryear-comp,sortcites=true,sorting=nyt}
 
-\ntdegreename(en){Master of Science in Geospatial Technologies}
+\degreenameprefix(msc,en):={Master of Science in}
+\ntdegreename(en){Geospatial Technologies}
 
 \adviserstring(a,a,en):={Dissertation supervised by:}
 \adviserstring(a,c,en):={Co-supervised by:}
@@ -22,7 +23,7 @@
 \adviserstringfont(c):={\bfseries}
 
 \dissertationstring(msc,en)={Dissertation submitted in partial fulfillment of the requirements\\
-for the degree of \emph{\thedegreename(en)}}
+for the Degree of \emph{\thedegreename(en)}}
 
 
 % University
@@ -33,7 +34,7 @@ for the degree of \emph{\thedegreename(en)}}
 
 % Faculty / School
 \school(pt):={\embrace{NONE}}
-\school(en):={\embrace{NONE}}
+\school(en):={\embrace{NOVA Information Management School}}
 \school(fr):={\embrace{NONE}}
 \school(it):={\embrace{NONE}}
 
