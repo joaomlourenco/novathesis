@@ -26,14 +26,7 @@
 
 \datamatch{\match}{doctitle}({\@LANG@COVER,spine,cover},{\@LANG@COVER,spine})%
 \spine(title):=?{\match}
-\typeout{XXXXXXXXXX \match}\AAAA
 
-% \ifdatadefined{doctitle}(\@LANG@COVER,sub){%
-%   \spine(title)=?{\thedoctitle(\@LANG@COVER,spine,cover):\\%
-%                                 \thedoctitle(\@LANG@COVER,sub)}
-% }{%
-%   \spine(title)=?{\thedoctitle(\@LANG@COVER,spine,cover)}
-% }
 % \typeout{SPINE=[\@LANG@COVER][\thespine(title)]}
 \spine(date)=?{\thentdocdate(submission,year)}
 
