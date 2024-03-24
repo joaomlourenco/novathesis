@@ -23,11 +23,17 @@
 
 % \def\def@ult#1(#2)=#3{\ifdatadefined{#1}(#2){}{\csname#1\endcsname(#2)={#3}}}
 \spine(author)=?{\thedocauthor(name,short)}
-\ifdatadefined{doctitle}(\@LANG@COVER,sub){%
-  \spine(title)=?{\thedoctitle(\@LANG@COVER,spine,cover):\\\thedoctitle(\@LANG@COVER,sub)}
-}{%
-  \spine(title)=?{\thedoctitle(\@LANG@COVER,spine,cover)}
-}
+
+\datamatch{\match}{doctitle}({\@LANG@COVER,spine,cover},{\@LANG@COVER,spine})%
+\spine(title):=?{\match}
+\typeout{XXXXXXXXXX \match}\AAAA
+
+% \ifdatadefined{doctitle}(\@LANG@COVER,sub){%
+%   \spine(title)=?{\thedoctitle(\@LANG@COVER,spine,cover):\\%
+%                                 \thedoctitle(\@LANG@COVER,sub)}
+% }{%
+%   \spine(title)=?{\thedoctitle(\@LANG@COVER,spine,cover)}
+% }
 % \typeout{SPINE=[\@LANG@COVER][\thespine(title)]}
 \spine(date)=?{\thentdocdate(submission,year)}
 
