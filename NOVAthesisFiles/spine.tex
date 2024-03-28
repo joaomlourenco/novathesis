@@ -23,11 +23,10 @@
 
 % \def\def@ult#1(#2)=#3{\ifdatadefined{#1}(#2){}{\csname#1\endcsname(#2)={#3}}}
 \spine(author)=?{\thedocauthor(name,short)}
-\ifdatadefined{doctitle}(\@LANG@COVER,sub){%
-  \spine(title)=?{\thedoctitle(\@LANG@COVER,spine):\\\thedoctitle(\@LANG@COVER,sub)}
-}{%
-  \spine(title)=?{\thedoctitle(\@LANG@COVER,spine)}
-}
+
+\datamatch{\match}{doctitle}({\@LANG@COVER,spine,cover},{\@LANG@COVER,spine})%
+\spine(title):=?{\match}
+
 % \typeout{SPINE=[\@LANG@COVER][\thespine(title)]}
 \spine(date)=?{\thentdocdate(submission,year)}
 
@@ -181,7 +180,7 @@
     \ClassError{novathesis}{Spine is \the\@tempdima\space too long: \the\@spinelen\space instead of \the\paperheight}
     {Get some insight with “fgrep SPINELEN *.log”}{}
 \fi\fi%
-  % % SPINE boxes are to large for the spine size, decrease spacing in the not-explictily defined boxes
+  % % SPINE boxes are to large for the spine size, decrease spacing in the not-explicitly defined boxes
   % \@tempdima=\dimexpr\paperheight-\@spinefixedlen\relax
   % % \showthe\@tempdima
   % \@tempdimb=\dimexpr\@spinelen-\@spinefixedlen\relax
