@@ -1270,12 +1270,20 @@
 
 % --------------------------------------------------------
 % Customize the pagestyle
+\newcommand{\rightorleftmark}{%
+  \setbox0=\hbox{\rightmark}
+  \ifdim\wd0>0.1pt\relax
+    \rightmark
+  \else
+    \leftmark
+  \fi
+}
 \makepagestyle{novathesis@mainmatter}
 \makeoddfoot{novathesis@mainmatter}{}{\thepage}{}
 \makeevenfoot{novathesis@mainmatter}{}{\thepage}{}
 \makeheadrule{novathesis@mainmatter}{\textwidth}{\normalrulethickness}
 \makeevenhead{novathesis@mainmatter}{\small\textsc{\leftmark}}{}{}
-\makeoddhead{novathesis@mainmatter}{}{}{\small\textsc{\rightmark}}
+\makeoddhead{novathesis@mainmatter}{}{}{\small\rightorleftmark}
 
 \makepagestyle{novathesis@frontmatter}
 \makeoddfoot{novathesis@frontmatter}{}{\thepage}{}
@@ -2236,6 +2244,11 @@
 }
 
 \newenvironment{newpdflayout}[3][]{%
+  % \typeout{textheight=\the\textheight}
+  % \typeout{textwidth=\the\textwidth}
+  % \AAAA
+  \let\oldstockheight=\stockheight
+  \let\oldstockwidth=\stockwidth
   \clearforchapter
   \begingroup
   \setstocksize{#2}{#3}
@@ -2254,6 +2267,9 @@
   \checkandfixthelayout[fixed]
   \setpdftexpagesize
   % From geometry
+  % \typeout{textheight=\the\textheight}
+  % \typeout{textwidth=\the\textwidth}
+  % \BBBB
   \setlength{\@colht}{\textheight}
   \setlength{\@colroom}{\textheight}%
   \setlength{\vsize}{\textheight}
@@ -2265,7 +2281,37 @@
   \fi%
   \setlength{\hsize}{\columnwidth}%
   \setlength{\linewidth}{\hsize}%
-}{\clearforchapter\endgroup}
+}{%
+  \clearforchapter%
+  \endgroup%
+  \setstocksize{\oldstockheight}{\oldstockwidth}
+  \settrimmedsize{\oldstockheight}{\oldstockwidth}{*}
+  \paperwidth=\stockwidth
+  \paperheight=\stockheight
+  \setlrmarginsandblock%
+    {\themargin(\option{/novathesis/media},left)}%
+    {\themargin(\option{/novathesis/media},right)}%
+    {*}%
+  \setulmarginsandblock%
+    {\themargin(\option{/novathesis/media},top)}%
+    {\themargin(\option{/novathesis/media},bottom)}%
+    {*}%
+  \checkandfixthelayout[fixed]
+  \setpdftexpagesize
+  % From geometry
+  \setlength{\@colht}{\textheight}
+  \setlength{\@colroom}{\textheight}%
+  \setlength{\vsize}{\textheight}
+  \setlength{\columnwidth}{\textwidth}%
+  \if@twocolumn%
+    \advance\columnwidth-\columnsep
+    \divide\columnwidth\tw@%
+    \@firstcolumntrue%
+  \fi%
+  \setlength{\hsize}{\columnwidth}%
+  \setlength{\linewidth}{\hsize}%
+  \clearforchapter%
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
