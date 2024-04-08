@@ -1,41 +1,65 @@
-#SILENT:="-silent"
-SILENT:=-interaction=batchmode
-SYNCTEX:=1
+#############################################################################
+# CUSTOMIZATION AREA HERE
+#############################################################################
+# If you want to force the name of the main file, uncomment the following command
+# MF:="YOUR_MAIN_TEX_FILE" # without the ".tex" extension
 
-TEXVERSIONS=$(shell ls /usr/local/texlive/ | fgrep -v texmf-local)
-TIMES=$(shell printf "TIMMINGS for last run:" ;\
-	fgrep "TIME process" -A 1 *.log | while read a; do \
-	  read b; read c; \
-	  S=`echo $$a | cut -d ' '  -f3 | cut -d '=' -f 1`; \
-	  T=`echo $$b | cut -d ':' -f 2 | cut -d ' ' -f 2`; \
-	  printf "\n%12s = %7.2f s" "$$S" "$$T"; \
-	done  | tr '\n ' '\1\2')
-
-B:=template
-F:=-time -shell-escape -synctex=$(SYNCTEX) -output-format=pdf -file-line-error $(FLAGS)
-T:=$(B).pdf
-S:=$(B).tex
-L:=latexmk $(F)
+# Define V to the ommand to the name of your PDF viewer
 V:=open -a skim
 
-ZIPFILES:=NOVAthesisFiles Bibliography Config Chapters LICENSE Makefile novathesis.cls README.md .gitignore template.tex latexmkrc
+
+
+#############################################################################
+# DO NOT TOUCH BELOW THIS POINT
+#############################################################################
+
+# If a file "tempalte.tex" is found, use it as the main file
+# otherwise, use the first (alphabetically) .tex file found as the main file
+ifeq ($(MF),)
+TEX:=$(patsubst %.tex,%,$(wildcard *.tex))
+MF:=$(findstring template,$(TEX)})
+ifeq ($(MF),)
+MF:=$(word 1,$(TEX))
+endif
+endif
+
+# Find out which versions of TeX live are available (works for macos)
+TEXVERSIONS=$(shell ls /usr/local/texlive/ | fgrep -v texmf-local)
+
+# Customize latex compilation
+SILENT:=-interaction=batchmode #-silent
+SYNCTEX:=1
+B:=$(MF)
+T:=$(MF).pdf
+S:=$(MF).tex
+
+L:=latexmk $(F)
+F:=-time -shell-escape -synctex=$(SYNCTEX) -output-format=pdf -file-line-error $(FLAGS)
+
+# target and files to be incldued in "make zip"
+ZIPFILES:=NOVAthesisFiles Bibliography Config Chapters LICENSE Makefile novathesis.cls README.md .gitignore template.tex
+ZIPTARGET:=$(B)-$(VERSION)@$(DATE).zip
+
+# extract version and date of the template
 VERSION=$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/')
 DATE:=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
-ZIPTARGET:=$(B)-$(VERSION)@$(DATE).zip
-AUXFILES:=$(shell ls $(B)*.* | fgrep -v .tex | fgrep -v $(B).pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
 
+# aux files
+AUXFILES:=$(shell ls $(B)*.* | fgrep -v .tex | fgrep -v .pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
+
+# schools requiring XeLaTeX or LuaLaTeX (incompatible with pdfLaTeX)
 LUA="other/esep uminho/ea uminho/ec uminho/ed uminho/ee uminho/eeg uminho/elach uminho/em uminho/ep uminho/ese uminho/ics uminho/ie uminho/i3b"
+
+# Extract school being built
 SCHL=$(shell grep -v "^%" Config/1_novathesis.tex | grep "ntsetup{school=" | cut -d "=" -f 2 | cut -d "}" -f 1)
 ifeq ($(SCHL),)
 	SCHL=nova/fct
 endif
 
 
-
-
 .PHONY: default
 default:
-	@$(shell git status | fgrep README.md && (Scripts/toc_readme.sh; git add README.md; git commit -m 'Updated README.md'))
+	# @$(shell if test -f Scripts/toc_readme.sh; then git status | fgrep README.md && (Scripts/toc_readme.sh; git add README.md; git commit -m 'Updated README.md'; fi))
 	@echo SCHL=$(SCHL)
 ifeq ($(findstring $(SCHL),$(LUA)),)
 	make pdf
@@ -44,94 +68,115 @@ else
 endif
 
 
-$(T): $(S)
-	$(MAKE)
+#############################################################################
+# Main targets:  
+# pdf/xe/lua		build with Tex-Live
+# tl pdf/xe/lua	build with Tex-Live
+# mik pdf/xe/lua	build with MikTeX
+# year pdf/xe/lua	build with Tex-Live release for <year> (if available, otherwise defaults release)
+# v/view			build with pdfLaTeX
+# zip				build a ZIP archive with the source files
+#############################################################################
 
-.PHONY: pdf
-pdf: $(S)
-	$(L) -pdf $(SILENT) $(B)
-	@echo $(TIMES)  | tr '\1@\2' '\n\t '
+#————————————————————————————————————————————————————————————————————————————
+# TeX-Live
+.PHONY: tl
+tl:
+	hash -r
+	make $(filter-out $@,$(MAKECMDGOALS))
 
-.PHONY: xe lua
-xe lua: $(S)
-	$(L) -pdf$@ $(SILENT) $(B)
-	@echo $(TIMES)  | tr '\1@\2' '\n\t '
+#————————————————————————————————————————————————————————————————————————————
+# MikTeX
+.PHONY: mik
+mik:
+	hash -r
+	PATH="$(HOME)/bin:$(PATH)" make $(filter-out $@,$(MAKECMDGOALS))
 
-.PHONY: v view
-v view: $(T)
-	$(V) $(T)
-
-.PHONY: vv verb verbose
-vv verb verbose:
-	$(L) -pdf $(B)
-	@echo $(TIMES)  | tr '\1@\2' '\n\t '
-
+#————————————————————————————————————————————————————————————————————————————
+# TL Release (e.g., 2022)
 .PHONY: $(TEXVERSIONS)
 $(TEXVERSIONS):
 	hash -r
 	PATH="$(wildcard /usr/local/texlive/$@/bin/*-darwin/):$(PATH)" make $(filter-out $@,$(MAKECMDGOALS))
 
-.PHONY: mik
-mik:
-	hash -r
-	# echo $(filter-out mik,$(MAKECMDGOALS))
-	PATH="$(HOME)/bin:$(PATH)" make $(filter-out $@,$(MAKECMDGOALS))
-	
+#————————————————————————————————————————————————————————————————————————————
+.PHONY: pdf xe lua
+pdf xe lua: $(S)
+	$(L) -pdf$(patsubst pdf%,%,$@) $(SILENT) $(B)
+	@echo $(TIMES)  | tr '\1@\2' '\n\t '
+	@$(call times)
+
+#————————————————————————————————————————————————————————————————————————————
+.PHONY: v view
+v view: $(T)
+	$(V) $(T)
+
+#————————————————————————————————————————————————————————————————————————————
+$(T): $(S)
+	make default
+
+#————————————————————————————————————————————————————————————————————————————
+.PHONY: vv verb verbose
+vv verb verbose:
+	$(L) -pdf $(B)
+	@echo $(TIMES)  | tr '\1@\2' '\n\t '
+
+#————————————————————————————————————————————————————————————————————————————
 .PHONY: zip
 zip:
 	rm -f "$(ZIPTARGET)"
 	zip --exclude .github --exclude .git -r "$(ZIPTARGET)" $(ZIPFILES)
 
+
+#————————————————————————————————————————————————————————————————————————————
 .PHONY: clean
 clean:
 	@$(L) -c $(B)
 	@rm -f $(AUXFILES) "*(1)*"
 	@find . -name .DS_Store -o -name '_minted*' | xargs rm -rf
 
+#————————————————————————————————————————————————————————————————————————————
+.PHONY: gclean
 gclean:
 	git clean -fdx -e Scripts -e Fonts
 
-.PHONY: rc
-rc:
-	Scripts/latex-clean-temp.sh
-
-.PHONY: rcb
-rcb:
-	Scripts/latex-clean-temp.sh
+#————————————————————————————————————————————————————————————————————————————
+.PHONY: bclean
+bclean:
 	rm -rf `biber -cache`
 	biber -cache
+	make clean
 
+#————————————————————————————————————————————————————————————————————————————
 .PHONY: publish
 publish:
+ifneq (, $(shell ls Scripts/publish.sh))	
 	Scripts/publish.sh
+endif
 
+#————————————————————————————————————————————————————————————————————————————
 .PHONY: bump1 bump2 bump3
-bump1:
-	Scripts/newversion.sh 1
+bump1 bump2 bump3:
+ifneq (, $(shell ls Scripts/newversion.sh))
+	Scripts/newversion.sh $(subst bump,,$@)
 	@echo make mtp
-	# $(MAKE) publish
+endif
 
-bump2:
-	Scripts/newversion.sh 2
-	@echo make mtp
-	# $(MAKE) publish
+#————————————————————————————————————————————————————————————————————————————
+define times
+	@printf "TIMES FROM THE LAST EXECUTION\n"
+	@declare TIMES="$(shell grep -e 'l3benchmark. + TOC'  *.log | cut -d ' ' -f 4)";\
+	declare PHASES="$(shell fgrep TIME *.log | cut -d ' ' -f 2-3 | cut -d '=' -f 1 | tr ' ' '_')";\
+	declare -a TM=($${TIMES});\
+	declare -a PH=($${PHASES});\
+	for i in `seq 1 $$(($${#TM[@]}-1))`; do\
+	      printf "%20s = %6.2f\n" "$${PH[$$i]}" "$${TM[$$i]}";\
+	done
+endef
 
-bump3:
-	Scripts/newversion.sh 3
-	@echo make mtp
-	# $(MAKE) publish
-
-.PHONY: times mtp
-times:
-	@echo $(TIMES)  | tr '\1@\2' '\n\t '
-# fgrep "TIME process" -A 1 *.log | while read a; do \
-#   read b; read c; \
-#   S=`echo $$a | cut -d ' '  -f3 | cut -d '=' -f 1`; \
-#   T=`echo $$b | cut -d ':' -f 2`; \
-#   echo TIME $$S =$$T; \
-# done
-
+#————————————————————————————————————————————————————————————————————————————
 # merge, tag and push
+.PHONY: mtp
 mtp:
 	make clean
 	git cam "Version $(VERSION)."
