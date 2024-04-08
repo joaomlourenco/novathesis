@@ -59,7 +59,7 @@ endif
 
 .PHONY: default
 default:
-	# @$(shell if test -f Scripts/toc_readme.sh; then git status | fgrep README.md && (Scripts/toc_readme.sh; git add README.md; git commit -m 'Updated README.md'; fi))
+#	@$(shell if test -f Scripts/toc_readme.sh; then git status | fgrep README.md && (Scripts/toc_readme.sh; git add README.md; git commit -m 'Updated README.md'; fi))
 	@echo SCHL=$(SCHL)
 ifeq ($(findstring $(SCHL),$(LUA)),)
 	make pdf
@@ -103,7 +103,6 @@ $(TEXVERSIONS):
 .PHONY: pdf xe lua
 pdf xe lua: $(S)
 	$(L) -pdf$(patsubst pdf%,%,$@) $(SILENT) $(B)
-	@echo $(TIMES)  | tr '\1@\2' '\n\t '
 	@$(call times)
 
 #————————————————————————————————————————————————————————————————————————————
@@ -119,7 +118,7 @@ $(T): $(S)
 .PHONY: vv verb verbose
 vv verb verbose:
 	$(L) -pdf $(B)
-	@echo $(TIMES)  | tr '\1@\2' '\n\t '
+	@$(call times)
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: zip
@@ -166,6 +165,7 @@ endif
 # FUNCTIONS
 #############################################################################
 #————————————————————————————————————————————————————————————————————————————
+ifneq (, $(findstring jml,${USER}))
 define times
 	@printf "TIMES FROM THE LAST EXECUTION\n"
 	@declare TIMES="$(shell grep -e 'l3benchmark. + TOC'  *.log | cut -d ' ' -f 4)";\
@@ -176,6 +176,7 @@ define times
 	      printf "%20s = %6.2f\n" "$${PH[$$i]}" "$${TM[$$i]}";\
 	done
 endef
+endif
 
 # merge, tag and push
 define mtp
