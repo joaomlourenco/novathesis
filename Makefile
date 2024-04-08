@@ -159,9 +159,12 @@ endif
 bump1 bump2 bump3:
 ifneq (, $(shell ls Scripts/newversion.sh))
 	Scripts/newversion.sh $(subst bump,,$@)
-	@echo make mtp
+	@$(call mtp)
 endif
 
+#############################################################################
+# FUNCTIONS
+#############################################################################
 #————————————————————————————————————————————————————————————————————————————
 define times
 	@printf "TIMES FROM THE LAST EXECUTION\n"
@@ -174,10 +177,8 @@ define times
 	done
 endef
 
-#————————————————————————————————————————————————————————————————————————————
 # merge, tag and push
-.PHONY: mtp
-mtp:
+define mtp
 	make clean
 	git cam "Version $(VERSION)."
 	git checkout main
@@ -187,3 +188,4 @@ mtp:
 	git push --all
 	git push --tags
 	git checkout develop
+endef
