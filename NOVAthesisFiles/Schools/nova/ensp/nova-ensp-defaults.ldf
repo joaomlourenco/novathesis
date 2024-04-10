@@ -48,6 +48,8 @@
 % \thesiscover(bsc,cdinlay,image):={}
 % \thesiscover(plain,cdfront,image):={}
 % \thesiscover(plain,cdinlay,image):={}
+\thesiscover(logo,1):={width=4cm,nova-ensp-logo}
+
 
 % Spine info
 \spine(logo)={\theuniversity(logo)}
@@ -89,8 +91,18 @@
 }
 
 % ENSP logo
-\ntaddtocover[vspace=1cm]{1-1,2-1}{%
-  \noindent\includegraphics[width=0.4\textwidth]{nova-ensp-logo-pt}
+\ntaddtocover[vspace=1cm,halign=c,valign=t]{1-1,2-1}{%
+  \@for\myi:={1,2,3,4,5}\do{%
+    % \typeout{MYI=\myi}
+    \datamatchtf{\match}{thesiscover}({logo,\myi},){%
+      % \typeout{MYI=\myi,[\thethesiscover(logo,\myi)]}\AAA
+      \StrCut{\match}{,}\myflg\myfile%
+      \ifnum\myi>1\hspace{1cm}\fi
+      \expanded{\includegraphics[\myflg,align=t]{\myfile}}%
+    }{%
+      % \typeout{MYI=\myi,[\thethesiscover(logo,\myi)]}\BBB
+    }%
+  }%
 }
 
 % % Title of Dissertation
