@@ -8,18 +8,16 @@
 
 \typeout{NT FILE chapter4.tex}%
 
-\chapter{Lorem Ipsum}
-\label{cha:lorem_ipsum}
+\chapter{Adding Support to a New School}
+\label{cha:porting_novathesis}
 
-\lipsum[1-100]
-\lipsum[1-100]
-\lipsum[1-100]
-% \lipsum[1-100]
-% \lipsum[1-700]
-% \lipsum[1-700]
-% \lipsum[1-700]
-% \lipsum[1-700]
-% \lipsum[1-700]
-% \lipsum[1-700]
-% \lipsum[1-700]
-% \lipsum[1-700]
+\begin{enumerate}
+  \item Try all the already supported schools and check which one is closer to your needs;
+  \begin{enumerate}
+    \item Edit \verb!Config/1_novathesis.tex! and near line 28 uncomment the line with key \verb!\ntsetup{school=<SOMETHING>}!;
+    \item For each school supported (see the comment), replace \verb!<SOMETHING>! with the school name, e.g., make it \verb!\ntsetup{school=ulisboa/fmv}!
+    \item Recompile and check the document.  Particularly, check the cover layout, the front-page (second cover) layout, the front-matter contents, the bibliography style;
+    \item Repeat for the next school, until you find one close enough.
+  \end{enumerate}
+  \item 
+\end{enumerate}
