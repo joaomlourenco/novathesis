@@ -179,7 +179,7 @@ define times
 	declare PHASES="$(shell fgrep TIME *.log | cut -d ' ' -f 2-3 | cut -d '=' -f 1 | tr ' ' '_')";\
 	declare -a TM=($${TIMES});\
 	declare -a PH=($${PHASES});\
-	for i in `seq 1 $$(($${#TM[@]}-1))`; do\
+	for i in `seq 0 $$(($${#TM[@]}-1))`; do\
 	      printf "%20s = %6.2f\n" "$${PH[$$i]}" "$${TM[$$i]}";\
 	done
 endef
