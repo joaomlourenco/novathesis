@@ -26,6 +26,7 @@
 \spine(box,date,angle)={-90}
 \spine(author)={\thedocauthor(name,short)}
 
+\spine(order):=?{date,author,title,logo}
 \spine(box,logo,len):=?{4.1cm}
 \spine(box,date,len):=?{1.0cm}
 % \spine(box,author,len):=?{5.0cm}

@@ -152,6 +152,20 @@
   \strip@pt\dimexpr\number\numexpr\number\dimexpr#1\relax*65536/\number\dimexpr#2\relax\relax sp\relax
 }
 
+
+\newcommand{\@setlength}[2]{%
+  \defifundef{#1}{\newlength}%
+  \@tempdima=\dimexpr#2\relax%
+  \setlength{#1}{\the\@tempdima}%
+}
+
+\newcommand{\ifnotnone}[2]{%
+  \IfStrEq{none}{#1}{}{#2}%
+}
+
+
+
+\newcommand{\@ntprintspine}{%x§
 % If angle is 0 revere the order of the logos
 \IfStrEqCase{\thespine(angle)}{%
     {0}{\@reverelist{\expanded{\thespine(logo)}}\@logoorder%
@@ -236,19 +250,6 @@
   % \DEBUG{TEXT[\myi,len]=\thespine(box,\myi,len)}
   % \DEBUG{TEXT[\myi,len2]=\thespine(box,\myi,len2)}
 }
-
-\newcommand{\@setlength}[2]{%
-  \defifundef{#1}{\newlength}%
-  \@tempdima=\dimexpr#2\relax%
-  \setlength{#1}{\the\@tempdima}%
-}
-
-\newcommand{\ifnotnone}[2]{%
-  \IfStrEq{none}{#1}{}{#2}%
-}
-
-
-\newcommand{\@ntprintspine}{%x§
 \ifoptionequal{/novathesis/spine/layout}{none}{}{%
   \parindent=0pt%
   \sffamily%
