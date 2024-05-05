@@ -38,7 +38,7 @@ F:=-time -shell-escape -synctex=$(SYNCTEX) -output-format=pdf -file-line-error $
 
 # target and files to be incldued in "make zip"
 ZIPFILES:=NOVAthesisFiles Bibliography Config Chapters LICENSE Makefile novathesis.cls README.md .gitignore template.tex
-ZIPTARGET:=$(B)-$(VERSION)@$(DATE).zip
+ZIPTARGET=$(B)-$(VERSION)@$(DATE).zip
 
 # extract version and date of the template
 VERSION=$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/')
@@ -161,6 +161,13 @@ ifneq (, $(shell ls Scripts/newversion.sh))
 	Scripts/newversion.sh $(subst bump,,$@)
 	@$(call mtp)
 endif
+
+
+
+#————————————————————————————————————————————————————————————————————————————
+.PHONY: mtp
+mtp:
+	@$(call mtp)
 
 
 
