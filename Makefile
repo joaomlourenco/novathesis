@@ -103,7 +103,7 @@ $(TEXVERSIONS):
 .PHONY: pdf xe lua
 pdf xe lua: $(S)
 	$(L) -pdf$(patsubst pdf%,%,$@) $(SILENT) $(B)
-	@$(call times)
+	@ eval "$$printtimes"
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: v view
@@ -118,7 +118,8 @@ $(T): $(S)
 .PHONY: vv verb verbose
 vv verb verbose:
 	$(L) -pdf $(B)
-	@$(call times)
+	@ eval "$$printtimes"
+
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: zip
@@ -165,24 +166,28 @@ endif
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: time
-time:
-	@$(call times)
+time times:
+	@ eval "$$printtimes"
 
 #############################################################################
 # FUNCTIONS
 #############################################################################
 #————————————————————————————————————————————————————————————————————————————
-ifneq (, $(findstring jml,${USER}))
-define times
-	@printf "TIMES FROM THE LAST EXECUTION\n"
-	@declare TIMES="$(shell grep -e 'l3benchmark. + TOC'  *.log | cut -d ' ' -f 4)";\
-	declare PHASES="$(shell fgrep TIME *.log | cut -d ' ' -f 2-3 | cut -d '=' -f 1 | tr ' ' '_')";\
-	declare -a TM=($${TIMES});\
-	declare -a PH=($${PHASES});\
-	for i in `seq 0 $$(($${#TM[@]}-1))`; do\
-	      printf "%20s = %6.2f\n" "$${PH[$$i]}" "$${TM[$$i]}";\
-	done
+define _printtimes
+printf "TIMES FROM THE LAST EXECUTION\n"
+TIMES="$(grep -e 'l3benchmark. + TOC'  *.log | cut -d ' ' -f 4 | xargs)"
+PHASES="$(fgrep TIME *.log | cut -d ' ' -f 2-3 | cut -d '=' -f 1 | tr ' ' '_' | xargs)"
+declare -a TM=($TIMES)
+declare -a PH=($PHASES)
+for i in `seq 0 $((${#TM[@]}-1))`; do
+	printf "%20s = %6.2f\n" "${PH[$i]}" "${TM[$i]}"
+done
 endef
+
+ifneq (, $(findstring jml,${USER}))
+export printtimes = $(value _printtimes)
+else
+export printtimes = $(shell true)
 endif
 
 # merge, tag and push
@@ -197,3 +202,7 @@ define mtp
 	git push --tags
 	git checkout develop
 endef
+
+
+run:
+	@ eval "$$script"
