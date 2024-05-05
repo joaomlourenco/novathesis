@@ -260,7 +260,7 @@
   % degreeacr/plain/.new value    = {},
 % SCHOOL specific customization
 % NOVA/ITQB
-  nova/itqb/cover/color/.new choice             = {gray, green},
+  nova/itqb/cover/color/.new choice            = {gray, green},
 % UMINHO
   uminho/copyrightmodifier/.new choice         = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd},
   uminho/skipblankcovers/.new toggle           = false,
@@ -280,6 +280,9 @@
   ulisboa/fmv/embargo/period/.new choice       = {I, 6, 12},
   ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.},
   ulisboa/fmv/reproduction/.new choice         = {I, P, N},
+% ULISBOA/IST
+  ulisboa/ist/classification/.new value = {},
+  ulisboa/ist/funding/.new value        = {},
 }
 
 \newcommand{\@splitdate}[4]{%
