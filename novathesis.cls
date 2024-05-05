@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2024-05-05 [7.1.26]
+%% Version 2024-05-05 [7.1.27]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -260,7 +260,7 @@
   % degreeacr/plain/.new value    = {},
 % SCHOOL specific customization
 % NOVA/ITQB
-  nova/itqb/cover/color/.new choice             = {gray, green},
+  nova/itqb/cover/color/.new choice            = {gray, green},
 % UMINHO
   uminho/copyrightmodifier/.new choice         = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd},
   uminho/skipblankcovers/.new toggle           = false,
@@ -280,6 +280,9 @@
   ulisboa/fmv/embargo/period/.new choice       = {I, 6, 12},
   ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.},
   ulisboa/fmv/reproduction/.new choice         = {I, P, N},
+% ULISBOA/IST
+  ulisboa/ist/classification/.new value = {},
+  ulisboa/ist/funding/.new value        = {},
 }
 
 \newcommand{\@splitdate}[4]{%
