@@ -69,7 +69,7 @@ endif
 
 
 #############################################################################
-# Main targets:  
+# Main targets:
 # pdf/xe/lua		build with Tex-Live
 # tl pdf/xe/lua	build with Tex-Live
 # mik pdf/xe/lua	build with MikTeX
@@ -150,14 +150,14 @@ bclean:
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: publish
 publish:
-ifneq (, $(shell ls Scripts/publish.sh))	
+ifneq (, $(wildcard Scripts/publish.sh))
 	Scripts/publish.sh
 endif
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: bump1 bump2 bump3
 bump1 bump2 bump3:
-ifneq (, $(shell ls Scripts/newversion.sh))
+ifneq (, $(wildcard Scripts/newversion.sh))
 	Scripts/newversion.sh $(subst bump,,$@)
 	@$(call mtp)
 endif
