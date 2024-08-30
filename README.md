@@ -218,14 +218,14 @@ This template is the result of hundreds (yes! *many hundreds*) of hours of work 
 * Universidade Lusófona de Humanidades e Tecnologias
   * [Departamento de Engenharia Informática e Sistemas de Informação](http://informatica.ulusofona.ptpt) (ULHT-DEISI)
     
-    <!-- * ISCTE – Instituto Universitário de Lisboa
-  * [Escola de Tecnologia e Arquitectura](https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura) (ETA-ISCTE-IUL) _NOTE: this template is outdated (there are new covers/specifications)_ -->
+    <!-- * ISCTE – Instituto Universitário de Lisboa -->
+  <!-- * [Escola de Tecnologia e Arquitectura](https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura) (ETA-ISCTE-IUL) _NOTE: this template is outdated (there are new covers/specifications)_ -->
 * Instituto Politécnico de Lisboa
   * [Instituto Superior de Engenharia de Lisboa](https://www.isel.pt) (ISEL-IPL)
-* Instituto Politécnico de Setúbal
-  
+* Instituto Politécnico de Setúbal  
   <!-- * [Escola Superior de Saúde](https://www.ess.ips.pt) (ESS-IPS) -->
   * [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt) (ESTB-IPS)
+
 * Other Schools/Degrees
   * [Escola Superior de Enfermagem do Porto](https://www.esenf.pt/pt/) (ESEP)
 
