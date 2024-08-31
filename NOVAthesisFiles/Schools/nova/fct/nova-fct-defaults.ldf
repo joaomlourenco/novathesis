@@ -27,8 +27,12 @@
 \school(en):={NOVA School of Science and Technology}
 \school(fr):={NOVA School of Science and Technology}
 \school(it):={NOVA School of Science and Technology}
-\school(logo):={nova-fct-logo}
-\school(logo,neg):={nova-fct-logo-negative}
+\school(logo,pt):={nova-fct-logo-pt}
+\school(logo,neg,pt):={nova-fct-logo-negative-pt}
+\school(logo,en):={nova-fct-logo-en}
+\school(logo,neg,en):={nova-fct-logo-negative-en}
+\school(logo):={\theschool(logo,\@LANG@COVER)}
+\school(logo,neg):={\theschool(logo,neg,\@LANG@COVER)}
 
 % Comiittee printing order
 % \committeeorder():={c,r,a,m}%
@@ -39,42 +43,41 @@
 \thesiscover(1-1,textcolor):={white}
 \thesiscover(2-1,textcolor):={black}
 
+
 % DEFAULT cover
-\thesiscover(1-1,image):={nova-fct-red-cover}
-\thesiscover(N-2,image):={nova-fct-red-cover-back}
-\thesiscover(spine,image):={nova-fct-red-spine}
+\thesiscover(1-1,image):={nova-fct-cover-red-front}
+\thesiscover(N-2,image):={nova-fct-cover-red-back}
+\thesiscover(spine,image):={nova-fct-spine-red}
 
 % PhD cover
-\thesiscover(phd,1-1,image):={nova-fct-phd-cover}
-\thesiscover(phd,N-2,image):={nova-fct-phd-cover-back}
-\thesiscover(phd,spine,image):={nova-fct-phd-spine}
+\thesiscover(phd,1-1,image):={nova-fct-cover-phd-front}
+\thesiscover(phd,N-2,image):={nova-fct-cover-phd-back}
+\thesiscover(phd,spine,image):={nova-fct-spine-phd}
 
 % MSc cover
-\thesiscover(msc,1-1,image):={nova-fct-msc-cover}
-\thesiscover(msc,N-2,image):={nova-fct-msc-cover-back}
-\thesiscover(msc,spine,image):={nova-fct-msc-spine}
+\thesiscover(msc,1-1,image):={nova-fct-cover-msc-front}
+\thesiscover(msc,N-2,image):={nova-fct-cover-msc-back}
+\thesiscover(msc,spine,image):={nova-fct-spine-msc}
 
 % BSc cover
-\thesiscover(bsc,1-1,image):={nova-fct-bsc-cover}
-\thesiscover(bsc,N-2,image):={nova-fct-bsc-cover-back}
-\thesiscover(bsc,spine,image):={nova-fct-bsc-spine}
+\thesiscover(bsc,1-1,image):={nova-fct-cover-bsc-front}
+\thesiscover(bsc,N-2,image):={nova-fct-cover-bsc-back}
+\thesiscover(bsc,spine,image):={nova-fct-spine-bsc}
 
 
 
 % Spine info
 % \spine(angle)={180}
-
-\spine(logo,phd)={\theuniversity(logo,neg)}
-
 \spine(box,logo,margin,left)={2mm}
 \spine(box,logo,margin,right)={2mm}
 \spine(box,logo,margin,sep)={2mm}
 
+\spine(logo,phd):={\theuniversity(logo,neg)}
 \spine(box,logo,phd,angle)={0}
 \spine(box,logo,phd,scale)={1}
 \spine(box,logo,phd,raise)={0}
 
-\spine(logo,msc)={\theschool(logo,neg)}
+\spine(logo,msc):={\theschool(logo,neg)}
 \spine(box,logo,msc,angle)={90}
 \spine(box,logo,msc,scale)={1}
 \spine(box,logo,msc,raise)={0.075}
@@ -130,10 +133,19 @@
 %% COVER 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\ntaddtocover[vspace=-0.69mm,halign=l,hspace=-2.57cm,height=0.0cm,valign=t]{1-1}{%
+  \setlength{\fboxsep}{-0.5pt}%
+  \setlength{\fboxrule}{0.5pt}%
+  \includegraphics[width=21mm,align=t]{\expanded{\theuniversity(logo,neg)}}%
+  \hspace{4.2mm}\vrule\hspace{5.0mm}%
+  \includegraphics[width=35.3mm,align=t]{\expanded{\theschool(logo,neg)}}%
+}
+
 % Department name
 \ntaddtocover[vspace=1.25mm,halign=l,hspace=6.1cm,height=2.0cm,valign=t]{1-1}{%
   % \ntcoverbackground%
   \fontsize{14}{14}\selectfont%
+  \vspace*{-\baselineskip}
   \THEdepartment(\@LANG@COVER)%
 }
 
