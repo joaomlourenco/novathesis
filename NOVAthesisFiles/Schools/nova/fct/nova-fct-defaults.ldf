@@ -134,8 +134,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ntaddtocover[vspace=-0.69mm,halign=l,hspace=-2.57cm,height=0.0cm,valign=t]{1-1}{%
-  \setlength{\fboxsep}{-0.5pt}%
-  \setlength{\fboxrule}{0.5pt}%
   \includegraphics[width=21mm,align=t]{\expanded{\theuniversity(logo,neg)}}%
   \hspace{4.2mm}\vrule\hspace{5.0mm}%
   \includegraphics[width=35.3mm,align=t]{\expanded{\theschool(logo,neg)}}%
