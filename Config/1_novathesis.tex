@@ -52,6 +52,33 @@
 %                               %     ]
 %                               % DEFAULT: lang=en
 
+% \ntsetup{media=paper}         % The target media for the PDF
+%                               %     [ screen —> left and right margins are equal, colored links
+%                               %        paper —> left and right margins are, black links
+%                               %     ]
+%                               % DEFAULT: media=screen
+
+% \ntsetup{print/webography=Webography} % Generate a separate bibliography for @online references
+%                                 % DEFAULT: All references in a single bibliography
+
+% \ntsetup{color/links=SteelBlue}% The color for the hyperlinks (URLs, cross references, citations)
+%                               %     Valid color names  —> look at "svgname" in the "xcolor"
+%                               %                           package documentation
+%                               % DEFAULT: a customized dark blue color
+
+% \ntsetup{color/gls=SteelBlue} % The color for the glossary managed hyperlinks (glossary, symbols, etc)
+%                               %     Valid color names  —> look at "svgname" in the "xcolor"
+%                               %                           package documentation
+%                               % DEFAULT: black
+
+% \ntsetup{print/index=true}     % Print the (words) index at the end of the document
+%                               % DEFAULT: print/index=false
+
+
+%%------------------------------------------------------------
+%% THE LESS IMPORTANT/POPULAR OPTIONS
+%%------------------------------------------------------------
+
 % \ntsetup{abstractorder={en,pt,fr}}   % The order for abstracts for the main language
 % \ntsetup{abstractorder={pt={en,pt,fr}}}   % The order for abstracts for a specific language
 %                               %     [ de, en, es, fr, gr, it, pt, —> valid languages
@@ -66,33 +93,6 @@
 %                               %     ]
 %                               % DEFAULT: lang/extra=en,pt
 
-% \ntsetup{color/links=SteelBlue}% The color for the hyperlinks (URLs, cross references, citations)
-%                               %     Valid color names  —> look at "svgname" in the "xcolor"
-%                               %                           package documentation
-%                               % DEFAULT: a customized dark blue color
-
-% \ntsetup{color/gls=SteelBlue} % The color for the glossary managed hyperlinks (glossary, symbols, etc)
-%                               %     Valid color names  —> look at "svgname" in the "xcolor"
-%                               %                           package documentation
-%                               % DEFAULT: black
-
-% \ntsetup{media=paper}         % The target media for the PDF
-%                               %     [ screen —> left and right margins are equal, colored links
-%                               %        paper —> left and right margins are, black links
-%                               %     ]
-%                               % DEFAULT: media=screen
-
-% \ntsetup{print/index=true}     % Print the (words) index at the end of the document
-%                               % DEFAULT: print/index=false
-
-% \ntsetup{print/webography=print/webography} % Generate a separate bibliography for @online references
-%                                 % DEFAULT: All references in a single bibliography
-
-
-%%------------------------------------------------------------
-%% THE LESS IMPORTANT/POPULAR OPTIONS
-%%------------------------------------------------------------
-
 % \ntsetup{gnumberlist=false}   % Shall the glossary entries list the page numbers where
 %                               %     those entries are used?  (as a reverse index!)
 %                               % DEFAULT: gnumberlist=true
@@ -102,8 +102,6 @@
 
 % \ntsetup{tocintoc=true}       % Shall table of contects be listed in itself?
 %                               % DEFAULT: tocintoc=false
-
-% \ntsetup{cover/color=green}   % Only effective for NOVA/ITQB {gray/green}
 
 % \ntsetup{print/secondcover=true}    % Shall a second cover page be forced?
 %                               %     if the contents for the second page are not
