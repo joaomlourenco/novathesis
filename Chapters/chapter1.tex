@@ -38,7 +38,7 @@ This first Chapter introduces the \gls{novathesis} template and how it is organi
 
 Did you learn how to drive by sitting by the wheel and throwing your car into the road?  Most probably you did take your time \emph{learning the rules} and \emph{practicing} first! Likewise, it is not wise to throw yourself at the task of writing a thesis/dissertation in \LaTeX\ without seriously considering the following \ntindex{recommendation}!
 
-\begin{tcolorbox}
+\begin{tcolorbox}[colback=green!8]
   If you are going to spend zillions of hours writing your thesis/dissertation using the \gls{novathesis} \LaTeX\ template (or some other \LaTeX\ template), be wise and spend a couple of hours learning how to use it properly by reading its manual.  And then, be even wiser, and spend a few more hours \href{https://github.com/joaomlourenco/novathesis/wiki\#learning-latex}{learning some \LaTeX}.  I am sure that the time you are investing now will pay itself countless times before you submit your thesis/dissertation.\\\parbox{\linewidth}{\raggedleft---~\emph{João Lourenço}}
 \end{tcolorbox}
 
@@ -358,11 +358,11 @@ The template provides an \emph{easy to use} setting for you to write your thesis
 
 If you do not have an account in \Overleaf, you must \href{https://www.overleaf.com?r=f5160636&rm=d&rs=b}{create one first}.
 
-Once you have an account, please access the \gls{novathesis} template in \href{https://www.overleaf.com/latex/templates/novathesis-v6-dot-10-dot-10/jhqwhtcwbmqc}{Overleaf} and select the green button \emph{Open as Template} (see \Autoref{fig:overleaf}).
+Once you have an account, please access the \gls{novathesis} template in \href{https://www.overleaf.com/latex/templates/novathesis-v7-dot-1-18/jhqwhtcwbmqc}{Overleaf} and select the green button \emph{Open as Template} (see \Autoref{fig:overleaf}).
 
 \bgroup
   \itshape
-  Please notice that the version currently available in Overleaf (v6.10.10) is slightly outdated (current version is v\novathesisversion). A new version (v7.0.0) will be submitted to Overleaf soon.  Until then, please:
+  Please notice that the version currently available in Overleaf (v7.1.18) is slightly outdated (current version is v\novathesisversion). A new version (v7.1.29) will be submitted to Overleaf soon.  Until then, please:
   \begin{enumerate}
     \item Download the \href{https://github.com/joaomlourenco/novathesis/archive/main.zip}{latest version} from the GitHub repository as a Zip file.
     \item Login to your favorite LaTeX cloud service. I recommend \href{https://www.overleaf.com/?r=f5160636&rm=d&rs=b}{Overleaf} but there are alternatives (these instructions apply to Overleaf and you'll have to adapt for other providers).
@@ -373,6 +373,10 @@ Once you have an account, please access the \gls{novathesis} template in \href{h
   \end{enumerate}
 \egroup
 
+\begin{tcolorbox}[colback=red!8]
+	Notice that you need a (student) subscription to compile the \novathesis\ template in Overleaf, otherwise your compilation will always time out.
+\end{tcolorbox}
+
 \subsection{Using a Local \LaTeX\ Installation Local}
 \label{sub:using_local_latex}
 
@@ -380,7 +384,7 @@ Once you have an account, please access the \gls{novathesis} template in \href{h
 \ntindex[Using!Local installation]{}
 
 \begin{wrapfigure}{r}{0.3\linewidth}
-\vspace*{-17ex}
+\vspace*{-7ex}
 \includegraphics[width=\linewidth]{github}%
 \caption{The NOVAthesis Project page in GitHub.}
 \label{fig:github2}
@@ -415,9 +419,10 @@ When you come to the point of “\emph{How do I do this with the \novathesis\ te
 
 When you post your own question, remember to \textbf{always} state the \gls{novathesis} version number you are using and referring to.
 
-\begin{center}
-  \fcolorbox{red}{gray!15}{\parbox{\textwidth}{\begin{center}\large\textbf{Please do not attempt to contact me directly (email, Messenger, etc)…\\I WILL NOT REPLY!}\end{center}}}
-\end{center}
+\begin{tcolorbox}[colback=blue!8]
+	\centering
+Please do not attempt to contact me directly (email, Messenger, etc)…\\I WILL NOT REPLY!
+\end{tcolorbox}
 
 
 \subsection{Suggestions, Bugs and Feature Requests} % (fold)

@@ -133,57 +133,27 @@ You may process the same source files with both \verb!latex! or \verb!pdflatex!.
 % subsection dealing_with_images (end)
 
 
-\subsection{Creating Source Files Compatible with both latex and pdflatex} % (fold)
-\label{ssec:creating_source_files_compatible_with_both_latex_and_pdflatex}
-
-Do not include the extension of the file in the \verb!\includegraphics! command. E.g., use\\
-\verb!\includegraphics{sonwman}!\\
-and not\\
-\verb!\includegraphics{sonwman.eps}!.\\
-If you use the first form, \verb!latex! or \verb!pdflatex! will add an appropriate file extension.
-
-This means that, if you plan to use only \verb!pdflatex!, you need only to keep (preferably) a PDF version of all the images. If you plan to use also \verb!latex!, then you also need an EPS version of each image.
-% subsection creating_source_files_compatible_with_both_latex_and_pdflatex (end)
-
-% section generating_pdfs_from_latex (end)
-
-
-\newpage
-
-{\Large To be included in the sections above}\\
+\subsection{Dealing with Citations} % (fold)
 
 Para fazer citações, deverá usar-se a chave da referência no ficheiro BibTeX. Se for uma única referência~\cite{Artho04}, usar um ``\verb!~!'' para ligar o \verb!\cite{...}! à palavra que o precede (\ldots\verb!referência~\cite{Artho04}!).  Caso queira fazer múltiplas citações~\cite{Shavit95,Silberschatz06,Moss85}, deverá agrupá-las dentro de um úinico \verb!\cite{...}!.
 
 Note que o ficheiro de bibliografia pode ter tantas entradas quantas quiser. Apenas aquelas cuja chave seja referenciada no texto é que serão incluidas na listagem de bibliografia.
 
 
+\subsection{Footnotes} % (fold)
+
 Footnotes\footnote{This is a simple footnote.} will be numbered and shown in the bottom of the page.
 
 
-A Tabela~\ref{tab:hla:results} ilustra alguns conceitos importantes associados à construção de tabelas:
+\subsection{Tables} % (fold)
+
+The Table~\ref{tab:hla:results} illustrates some important concepts associated with table construction:
 \begin{asparaenum}[i)]
-  \item Não usar linhas verticais;
-  \item A legenda deve ficar por cima da tabela;
-  \item Usar as macros \verb!\toprule!, \verb!\midrule! e \verb!\bottomrule! para fazer a linha horizontal superior, interiores e inferior, respectivamente.
+\item Do not use vertical lines;
+\item The caption should be above the table;
+\item Use the macros \verb!\toprule!, \verb!\midrule! and \verb!\bottomrule! to make the top, inner and bottom horizontal lines, respectively.
 \end{asparaenum}
 
-% \begin{longtblr}[
-%     % presep = 0pt,
-%     caption = {Test results summary.},
-%     label = {tab:hla:results}
-%     % label=none,
-% ]{  colspec = {lccccc},%{Q[l,t,font=\ttfamily]X[j,t]},
-%     rowhead = 1,
-%     rowfoot = 1,
-%     row{odd} = {GhostWhite},
-%     % row{even} = {yellow},
-%     row{1} = {font=\bfseries, l, Schlgray, ht=0.75cm},
-%     row{Z} = {font=\bfseries, Schlgray}
-%     % hline{9} = {dashed},
-%     % col{1} = {font=\bfseries},
-%     % preto{1} = {\verb!},
-%     % appto{1} = {!},
-% }
 \bgroup
 \rowcolors{1}{}{GhostWhite}
 \begin{xltabular}{\textwidth}{Xccccc}
@@ -213,49 +183,20 @@ Total                            & 12      & 33        & 10        & 5A, 6B, 10C
   \bottomrule
   \end{xltabular}
 \egroup
-% \end{longtblr}
 
-% \begin{table}[ht]
-%   \caption{Test results summary.}
-%   \label{tab:hla:results}
-% \centering
-% \begin{tabular}{lccccc}
-%   \toprule
-%   \multicolumn{1}{c}{\textbf{Test}}   & \textbf{Anomalies}  & \textbf{Warnings}  & \textbf{Correct}   & \textbf{Categories}    & \textbf{Missed} \\
-%   \midrule
-% \cite{Beckman08}~Connection   & 2 & 2  & 1  & \emph{C}        & 1 \\
-% \cite{Artho03}~Coordinates'03   & 1  & 4  & 1  & \emph{2B, 1C}      & 0 \\
-% \cite{Artho03}~Local Variable  & 1  & 2  & 1  & \emph{A}        & 0 \\
-% \cite{Artho03}~NASA        & 1  & 1  & 1  & ---          & 0 \\
-% \cite{Artho04}~Coordinates'04  & 1  & 4  & 1  & \emph{3C}        & 0 \\
-% \cite{Artho04}~Buffer      & 0  & 7  & 0  & \emph{2A, 1B, 2C, 2D}  & 0 \\
-% \cite{Artho04}~Double-Check    & 0  & 2  & 0  & \emph{1A, 1B}      & 0 \\
-% \cite{Flanagan04}~StringBuffer  & 1  & 0  & 0  & ---          & 1 \\
-% \cite{Praun03}~Account      & 1  & 1  & 1  & ---          & 0 \\
-% \cite{Praun03}~Jigsaw      & 1  & 2  & 1  & \emph{C}        & 0 \\
-% \cite{Praun03}~Over-reporting  & 0  & 2  & 0  & \emph{1A, 1C}      & 0 \\
-% \cite{Praun03}~Under-reporting  & 1  & 1  & 1  & ---          & 0 \\
-% \cite{IBM-Rep}~Allocate Vector  & 1  & 2  & 1  & \emph{C}        & 0 \\
-% Knight Moves          & 1  & 3  & 1  & \emph{2B}        & 0 \\
-%   \midrule
-%   \textbf{Total}      & \textbf{12}    & \textbf{33}    & \textbf{10}      & \textbf{5A, 6B, 10C, 2D}  & \textbf{2} \\
-%   \bottomrule
-% \end{tabular}
-% \end{table}
+\subsection{Figures} % (fold)
 
+The images inserted in the document must be of good quality, preferably in vector format (vector PDF) and not in \emph{bitmap} (PNG, JPG, etc.). \emph{bitmap} images (Figure~\ref{fig:Figures_Tree_silhouettes-bitmap}) do not scale well and have negative effects on the quality of your document. On the other hand, \emph{vector} images {Figure~\ref{fig:Figures_Tree_silhouettes-vectorial}} scale as much as necessary without degrading the quality of the image.
 
-As figuras a inserir no documento deverão ser de qualidade, preferencialmente em formato vectorial (PDF vectorial) e não em \emph{bitmap} (PNG, JPG, etc). As imagens \emph{bitmap} (Figura~\ref{fig:Figuras_Tree_silhouettes-bitmap}) não escalam bem e têm reflexos negatives na qualidade do seu documento.  Pelo contrário, as imagens \emph{vectoriais} {Figura~\ref{fig:Figuras_Tree_silhouettes-vectorial}} escalam muito tanto quanto o necessário sem degradar a qualidade da imagem.
-
-Só deve usar \emph{screenshots} se não tive mesmo nenhuma alternativa.  Em vez e gerar um \emph{screenshot}, tente usar uma impressora virtual PDF e imprimir para um ficheiro PDF. Regra geral obterá um PDF vetorial. Mesmo que o seu PDF contenha imagens, elas terão sempre qualidade maior ou igual à que obteria com um \emph{screenshot}.
-
+You should only use \emph{screenshots} for your plots, charts, etc, if you absolutely have no other alternative. Instead of generating a \emph{screenshot}, try using a virtual PDF printer and printing to a PDF file. As a general rule, you will get a vector PDF. Even if your PDF contains images, they will always be of higher or equal quality than what you would get with a \emph{screenshot}.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[height=1in]{snowman-bitmap}
   \includegraphics[height=3in]{snowman-bitmap}
   \includegraphics[height=6in]{snowman-bitmap}
-  \caption{Imagem em formato \emph{bitmap} (JPG)}
-  \label{fig:Figuras_Tree_silhouettes-bitmap}
+  \caption{Bitmap image (JPG/PNG)}
+  \label{fig:Figures_Tree_silhouettes-bitmap}
 \end{figure}
 
 \begin{figure}[htbp]
@@ -263,49 +204,37 @@ Só deve usar \emph{screenshots} se não tive mesmo nenhuma alternativa.  Em vez
   \includegraphics[height=1in]{snowman-vectorial}
   \includegraphics[height=3in]{snowman-vectorial}
   \includegraphics[height=6in]{snowman-vectorial}
-  \caption{Imagem em formato PDF vectorial}
-  \label{fig:Figuras_Tree_silhouettes-vectorial}
+  \caption{Vectorial image (PDF)}
+  \label{fig:Figures_Tree_silhouettes-vectorial}
 \end{figure}
 
-Para agregar várias figuras numa única… Poderá assim referenciar o conjunto como Figura~\ref{fig:figura-completa} ou as sub-figuras separadamente como~\ref{fig:novelo} e~\ref{fig:nuvem}.
-
+To combine several figures into a single one… You can then reference the set as Figure~\ref{fig:complete-figure} or the sub-figures separately as~\ref{fig:woolball} and~\ref{fig:cloud}.
 
 \begin{figure}[htbp]
   \centering
     \subbottom[Novelo de lã]{%
-    \label{fig:novelo}
+    \label{fig:woolball}
     \includegraphics[height=1in]{knitting-vectorial}
     }
 \qquad\qquad
     \subbottom[Tempestade com neve]{%
-    \label{fig:nuvem}
+    \label{fig:cloud}
     \includegraphics[height=1in]{snowstorm-vectorial}
     }
   \caption{Exemplo de utilização de \emph{subbottom}}
-  \label{fig:figura-completa}
+  \label{fig:complete-figure}
 \end{figure}
 
-\section{Equações}
+\section{Equations}
 
-O LaTeX é uma ferramenta poderosa para escrever em estilo matemático. Permite inserir fórmulas no meio do texto como por exemplo esta: $ax^2 + bx + c = 0$. Também permite que as fórmulas sejam destacadas numa linha separada e centradas na página
-$$x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$$
-\[x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}\]
-ou numeradas
+LaTeX is a powerful tool for writing in a mathematical style. It allows you to insert formulas into the text, such as this: $ax^2 + bx + c = 0$. It also allows formulas to be highlighted on a separate line and centered on the page.
+\[ x = \frac{-b \pm \sqrt{b^2-4ac}}{2a} \]
+or numbererd
 \begin{equation}
-aaa
+e = mc^2
 \label{eq:1}
 \end{equation}
-que depois pode ser referida no texto como sendo a equação~\ref{eq:1}
-$$\begin{array}{l}
-aa
-\end{array}
-$$
-
-\begin{eqnarray}
-a\\
-b\\
-c\\
-\end{eqnarray}
+which can latter be referenced as equation~\ref{eq:1}
 
 \newif\ifntlistingsloaded
 \ntifpkgloaded{listings}{\ntlistingsloadedtrue}{\ntlistingsloadedfalse}
