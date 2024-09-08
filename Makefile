@@ -4,7 +4,7 @@
 # If you want to force the name of the main file, uncomment the following command
 # MF:="YOUR_MAIN_TEX_FILE" # without the ".tex" extension
 
-# Define V to the ommand to the name of your PDF viewer
+# Define V command to the name of your PDF viewer
 V:=open -a skim
 
 
@@ -34,7 +34,7 @@ T:=$(MF).pdf
 S:=$(MF).tex
 
 L:=latexmk $(F)
-F:=-time -shell-escape -synctex=$(SYNCTEX) -output-format=pdf -file-line-error $(FLAGS)
+F:=-time -shell-escape -synctex=$(SYNCTEX) -file-line-error $(FLAGS)
 
 # target and files to be incldued in "make zip"
 ZIPFILES:=NOVAthesisFiles Bibliography Config Chapters LICENSE Makefile novathesis.cls README.md .gitignore template.tex
@@ -59,7 +59,6 @@ endif
 
 .PHONY: default
 default:
-#	@$(shell if test -f Scripts/toc_readme.sh; then git status | fgrep README.md && (Scripts/toc_readme.sh; git add README.md; git commit -m 'Updated README.md'; fi))
 	@echo SCHL=$(SCHL)
 ifeq ($(findstring $(SCHL),$(LUA)),)
 	make pdf
@@ -102,7 +101,7 @@ $(TEXVERSIONS):
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: pdf xe lua
 pdf xe lua: $(S)
-	$(L) -pdf$(patsubst pdf%,%,$@) $(SILENT) $(B)
+	$(L) -pdf$(patsubst pdf%,%,$@) $(SILENT) $(F) $(B)
 	@ eval "$$printtimes"
 
 #————————————————————————————————————————————————————————————————————————————
@@ -200,7 +199,7 @@ endif
 # merge, tag and push
 define mtp
 	make clean
-	git cam "Version $(VERSION)."
+	git commit --all --message "Version $(VERSION)."
 	git checkout main
 	git pull
 	git merge -m "Merge branch 'develop'" develop
