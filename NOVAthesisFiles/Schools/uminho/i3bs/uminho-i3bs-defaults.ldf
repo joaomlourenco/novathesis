@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% uminho/ep/schl-defaults.ldf
+%% uminho/i3bs/schl-defaults.ldf
 %% NOVA thesis configuration file
 %%
-%% Customization for EP-UMINHO (strings and cover)
+%% Customization for IIBBB-UMINHO (strings and cover)
 %%
 %%      This customization had the collaboration and support
 %%      from Bruno Pereira (b-pereira @ github), who built
@@ -10,15 +10,15 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE uminho/ep/schl-defaults.ldf}%
+\typeout{NT FILE uminho/i3bs/schl-defaults.ldf}%
 
 %-----------------------------------------------------------------
 % Remainder customization
 %-----------------------------------------------------------------
 % Faculty / School
-\school(pt):={Escola de Psicologia}
-\school(en):={School of Psychology}
-\school(fr):={School of Psychology}
-\school(it):={School of Psychology}
-\school(logo,RGB):={uminho-ep-insignia-color}
-\school(logo,GRAY):={uminho-ep-insignia-mono}
+\school(pt):={Instituto de Investigação em Biomateriais, \\Biodegradáveis e Biomiméticos​}
+\school(en):={Research Institute 13Bs}
+\school(fr):=\tehschool(en)
+\school(it):=\tehschool(en)
+\school(logo,RGB):={uminho-iibbb-insignia-color}
+\school(logo,GRAY):={uminho-iibbb-insignia-mono}

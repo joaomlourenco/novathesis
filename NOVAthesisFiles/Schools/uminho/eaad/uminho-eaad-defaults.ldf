@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% uminho/em/schl-defaults.ldf
+%% uminho/eaad/schl-defaults.ldf
 %% NOVA thesis configuration file
 %%
-%% Customization for EM-UMINHO (strings and cover)
+%% Customization for EA-UMINHO (strings and cover)
 %%
 %%      This customization had the collaboration and support
 %%      from Bruno Pereira (b-pereira @ github), who built
@@ -10,15 +10,15 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE uminho/em/schl-defaults.ldf}%
+\typeout{NT FILE uminho/eaad/schl-defaults.ldf}%
 
 %-----------------------------------------------------------------
 % Remainder customization
 %-----------------------------------------------------------------
 % Faculty / School
-\school(pt):={Escola de Medicina​}
-\school(en):={School of Medicine​}
-\school(fr):={School of Medicine​}
-\school(it):={School of Medicine​}
-\school(logo,RGB):={uminho-em-insignia-color}
-\school(logo,GRAY):={uminho-em-insignia-mono}
+\school(pt):={Escola de Arquitetura, Arte e Design}
+\school(en):={School of Architecture, Art, and Design}
+\school(fr):=\tehschool(en)
+\school(it):=\tehschool(en)
+\school(logo,RGB):={uminho-ea-insignia-color}
+\school(logo,GRAY):={uminho-ea-insignia-mono}
