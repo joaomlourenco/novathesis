@@ -199,6 +199,7 @@ endif
 # merge, tag and push
 define mtp
 	make clean
+	echo "VERSION IS $(VERSION)"
 	git commit --all --message "Version $(VERSION)."
 	git checkout main
 	git pull
