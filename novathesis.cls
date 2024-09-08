@@ -306,11 +306,12 @@
 
 % --------------------------------------------------------
 % The NOVAthesis logo
+\def\novathesisimg{\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{NOVAthesisFiles/Images/novathesis-text}}
+\def\novathesistxt{\textsl{novathesis}}
 \ifdef{\iftutex}{
-  \newcommand{\novathesis}
-      {\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{NOVAthesisFiles/Images/novathesis-text}}
+  \newcommand{\novathesis}{\novathesisimg}
 }{
-  \newcommand{\novathesis}{\textsl{novathesis}}
+  \newcommand{\novathesis}{\novathesistxt}
 }
 
 % --------------------------------------------------------
