@@ -918,7 +918,9 @@
 \RequirePackage{tikz}
 
 %%%%% Fine tuning of typesetting
-\ifxeorlua{}{% pdflatex
+\ifxeorlua{%
+    \newcommand{\textls}[2][25]{{\addfontfeature{LetterSpace=\the\numexpr#1/9\relax}#2}}
+}{% pdflatex
   \RequirePackage[%
     babel=true,
     activate={true,nocompatibility},  % activate={true,nocompatibility} - activate protrusion and expansion
