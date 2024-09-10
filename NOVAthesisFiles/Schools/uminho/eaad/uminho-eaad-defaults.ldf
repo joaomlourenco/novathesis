@@ -18,7 +18,7 @@
 % Faculty / School
 \school(pt):={Escola de Arquitetura, Arte e Design}
 \school(en):={School of Architecture, Art, and Design}
-\school(fr):=\tehschool(en)
-\school(it):=\tehschool(en)
+\school(fr):={\theschool(en)}
+\school(it):={\theschool(en)}
 \school(logo,RGB):={uminho-ea-insignia-color}
 \school(logo,GRAY):={uminho-ea-insignia-mono}

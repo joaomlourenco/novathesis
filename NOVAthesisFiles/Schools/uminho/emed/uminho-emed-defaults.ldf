@@ -18,7 +18,7 @@
 % Faculty / School
 \school(pt):={Escola de Medicina​}
 \school(en):={School of Medicine​}
-\school(fr):=\tehschool(en)
-\school(it):=\tehschool(en)
+\school(fr):={\theschool(en)}
+\school(it):={\theschool(en)}
 \school(logo,RGB):={uminho-em-insignia-color}
 \school(logo,GRAY):={uminho-em-insignia-mono}

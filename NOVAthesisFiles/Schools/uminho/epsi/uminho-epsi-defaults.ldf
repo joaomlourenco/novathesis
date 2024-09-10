@@ -18,7 +18,7 @@
 % Faculty / School
 \school(pt):={Escola de Psicologia}
 \school(en):={School of Psychology}
-\school(fr):=\tehschool(en)
-\school(it):=\tehschool(en)
+\school(fr):={\theschool(en)}
+\school(it):={\theschool(en)}
 \school(logo,RGB):={uminho-ep-insignia-color}
 \school(logo,GRAY):={uminho-ep-insignia-mono}

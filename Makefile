@@ -48,7 +48,7 @@ DATE:=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(
 AUXFILES:=$(shell ls $(B)*.* | fgrep -v .tex | fgrep -v .pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
 
 # schools requiring XeLaTeX or LuaLaTeX (incompatible with pdfLaTeX)
-LUA="other/esep uminho/ea uminho/ec uminho/ed uminho/ee uminho/eeg uminho/elach uminho/em uminho/ep uminho/ese uminho/ics uminho/ie uminho/i3b"
+LUA="uminho/eaad uminho/ec uminho/ed uminho/eeg uminho/eeng uminho/elach uminho/emed uminho/epsi uminho/ese uminho/i3bs uminho/ics uminho/ie other/esep"
 
 # Extract school being built
 SCHL=$(shell grep -v "^%" Config/1_novathesis.tex | grep "ntsetup{school=" | cut -d "=" -f 2 | cut -d "}" -f 1)
@@ -70,7 +70,7 @@ endif
 #############################################################################
 # Main targets:
 # pdf/xe/lua		build with Tex-Live
-# tl pdf/xe/lua	build with Tex-Live
+# tl pdf/xe/lua		build with Tex-Live
 # mik pdf/xe/lua	build with MikTeX
 # year pdf/xe/lua	build with Tex-Live release for <year> (if available, otherwise defaults release)
 # v/view			build with pdfLaTeX
