@@ -225,7 +225,13 @@
   color/links/.new cmd          = {\@ifpackageloaded{hyperref}%
                                             {\hypersetup{allcolors=#1}}%
                                             {\PassOptionsToPackage{allcolors=#1}{hyperref}}},
-  color/gls/.new cmd             = {\AtEndPreamble{\renewcommand*{\glstextformat}[1]{\textcolor{#1}{##1}}}},
+  color/gls/.new cmd             = {\AtEndPreamble{%\textcolor{#1}{##1}
+                                      \IfStrEq{#1}{None}{%
+                                          \let\@glslink\glsplainhyperlink%
+                                      }{%
+                                          \renewcommand*{\glstextformat}[1]{\textcolor{#1}{##1}}%
+                                      }%
+                                   }},
   % LANGUAGES
   lang/extra/.new list           = {},
   lang/main/.new choice         = {en, pt, fr, it, de, es, gr},
@@ -722,7 +728,7 @@
 \options{/novathesis/lang/cover = \option{/novathesis/lang/main},
          /novathesis/lang/copyright = \option{/novathesis/lang/main},
          /novathesis/color/links = DarkBlue,
-         /novathesis/color/gls = Black,
+         /novathesis/color/gls = None,
 }
 
 
@@ -907,6 +913,12 @@
 % \renewcommand{\gls@automake@makegloss}{makeglossaries -q}%
 \renewcommand{\GlsXtrFormatLocationList}[1]{\emph{\small#1)}}
 \renewcommand{\glsnamefont}[1]{\textbf{#1}}%
+\newcommand*{\glsplainhyperlink}[2]{%
+    \begingroup%
+      \hypersetup{hidelinks}%
+      \hyperlink{#1}{#2}%
+    \endgroup%
+}%
 
 %--------------------------------
 % “Process gnumberlist” option - after glossaries
