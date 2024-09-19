@@ -1,0 +1,246 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ul/iseg/defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for IST-UL (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE ul/iseg/defaults.ldf}%
+
+\ifdocfinal{\ntsetup{print/secondcover=true}}{}
+
+% Faculty / School
+\school(pt):={Instituto Superior de Economia e Gestão}
+\school(en):={Lisbon School of Economics \& Management}
+\school(fr):={\theschool(en)}
+\school(it):={\theschool(en)}
+
+\newdata{ulisboaiseg}
+\ulisboaiseg(image):={iseg-image.jpg}
+
+\adviserstring(a,1,m,en):={Supervisor}
+\adviserstring(a,1,f,en):={Supervisor}
+\adviserstring(a,2,m,en):={Supervisor}
+\adviserstring(a,2,f,en):={Supervisor}
+\adviserstring(c,1,m,en):={Co-supervisor}
+\adviserstring(c,1,f,en):={Co-supervisor}
+\adviserstring(c,2,m,en):={Co-supervisor}
+\adviserstring(c,2,f,en):={Co-supervisor}
+\adviserstring(ca,1,m,en):={Co-supervisor}
+\adviserstring(ca,1,f,en):={Co-supervisor}
+\adviserstring(ca,2,m,en):={Co-supervisor}
+\adviserstring(ca,2,f,en):={Co-supervisor}
+
+\degreestring(bsc,m,en):={BSc}
+\degreestring(bsc,f,en):={BSc}
+\degreestring(msc,m,en):={MSc}
+\degreestring(msc,f,en):={MSc}
+\degreestring(mscplan,m,en):={MSc}
+\degreestring(mscplan,f,en):={MSc}
+\degreestring(phd,m,en):={PhD Degree}
+\degreestring(phd,f,en):={PhD Degree}
+\degreestring(phdplan,m,en):={PhD Degree}
+\degreestring(phdplan,f,en):={PhD Degree}
+\degreestring(phdprop,m,en):={PhD Degree}
+% \degreestring(phd,m,en):={PhD Degree}
+% \degreestring(phd,f,en):={PhD Degree}
+% \degreestring(phdplan,m,en):={PhD Degree}
+% \degreestring(phdplan,f,en):={PhD Degree}
+% \degreestring(phdprop,m,en):={PhD Degree}
+% \degreestring(phdprop,f,en):={PhD Degree}
+
+% Scientific field
+% \majorfield(pt):={Engenharia Informática e de Computadores}
+% \majorfield(en):={Computer Science and Engineering}
+
+% Comiittee printing order
+\committeeorder():={c,m}%
+
+% Cover background images
+\thesiscover(phd,1-1,bgcolor):={white}
+% \thesiscover(phd,1-1,image):={modelo-capa-definitiva-tese-de-doutoramento-1}
+% \thesiscover(phd,2-1,image):={modelo-capa-definitiva-tese-de-doutoramento-2}
+% \thesiscover(phdplan,front,image):={}
+% \thesiscover(phdprop,front,image):={}
+% \thesiscover(msc,front,image):={}
+% \thesiscover(mscplan,front,image):={}
+% \thesiscover(bsc,front,image):={}
+% \thesiscover(plain,front,image):={}
+
+% Spine info
+\spine(logo)={ulisboa-iseg-logo}
+\spine(author)={\thedocauthor(name,short)}
+\spine(title)={\thedoctitle(\@LANG@COVER,main)}
+\spine(year)={\thentdocdate(submission,year)}
+
+% Set margins for "normal" pages
+\margin(screen,top):={3.5cm}
+\margin(screen,bottom):={2.5cm}
+\margin(screen,left):={3.0cm}
+\margin(screen,right):={3.0cm}
+\margin(paper,top):={3.5cm}
+\margin(paper,bottom):={2.5cm}
+\margin(paper,left):={2.5cm}
+\margin(paper,right):={3.5cm}
+
+% Set margins for cover pages
+\margin(cover,top):={2cm}
+\margin(cover,bottom):={2cm}
+\margin(cover,left):={3.0cm}
+\margin(cover,right):={3.0cm}
+
+
+\ntbibsetup{style=apa}
+\AtEndPreamble{\let\cite\parencite}
+
+  \dissertationstring(bsc,pt)={Relatório especialmente elaborado para obtenção do Grau de %
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\%
+    {\fontsize{10.75}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+  \dissertationstring(mscplan,pt)={Relatório intermédio especialmente elaborado para obtenção do Grau de %
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\%
+    {\fontsize{10.75}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+  \dissertationstring(msc,pt)={Dissertação especialmente elaborada para obtenção do Grau de %
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\%
+    {\fontsize{10.75}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+  \dissertationstring(phdplan,pt)={Relatório intermédio especialmente elaborado para obtenção do Grau de %
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\%
+    {\fontsize{10.75}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+  \dissertationstring(phdprop,pt)={Proposta de tese especialmente elaborada para obtenção do Grau de %
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\%
+    {\fontsize{10.75}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+  \dissertationstring(phd,pt)={Tese especialmente elaborada para obtenção do Grau de %
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\%
+    {\fontsize{10.75}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+
+  \dissertationstring(bsc,en)={Report specifically prepared to obtain the %
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\%
+    {\fontsize{10.75}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+  \dissertationstring(mscplan,en)={Dissertation plan specifically prepared to obtain the %
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\%
+    {\fontsize{10.75}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+  \dissertationstring(msc,en)={Dissertation specifically prepared to obtain the %
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\%
+    {\fontsize{10.75}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+  \dissertationstring(phdplan,en)={Thesis plan specifically prepared to obtain the %
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\%
+    {\fontsize{10.75}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+  \dissertationstring(phdprop,en)={Thesis proposal specifically prepared to obtain the %
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\%
+    {\fontsize{10.75}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+  \dissertationstring(phd,en)={Thesis specifically prepared to obtain the %
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\%
+    {\fontsize{10.75}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+
+\copyrighttextstring(pt)={O \theschool(\@LANG@COVER)\ e a \theuniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e disegribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+
+\copyrighttextstring(en)={The \theschool(\@LANG@COVER)\ and the \theuniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and disegribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IST guidelines:
+% The pages should be numbered consecutively at the bottom centre of the
+% page.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\frenchspacing
+
+% Fazer indentação parágrafos
+% \setlength{\parindent}{17pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtEndPreamble{%
+  \LoadHelveticaLikeFont%
+  % \RequirePackage{gillius2}%
+}
+
+% \NTAddToHook{cover/1-1/text/pre}{%
+  % \sffamily%
+% }
+% \NTAddToHook{cover/2-1/text/pre}{%
+%   \sffamily%
+% }
+
+
+% School
+\ntaddtocover[vspace=0mm]{1-1,2-1}{%
+    \fontsize{13}{17}\selectfont%
+  % \SetTracking[ spacing = {25*,166, } ]{ encoding = * }{ 25 }%
+  \textbf{\textls[25]{\THEuniversity(\@LANG@COVER)}}\\%
+  \vspace{2mm}%
+  \textbf{\textls[25]{\THEschool(\@LANG@COVER)}}%
+}
+
+% LOGO
+\ntaddtocover[halign=c, vspace=1cm]{1-1,2-1}{%
+  \includegraphics[height=2cm,align=c]{ulisboa-iseg-logo-horiz}%
+  \hspace{2cm}%
+  \includegraphics[height=1.0cm,align=c]{ulisboa-logo-color}
+}
+
+% Images
+\IfFileExists{\theulisboaiseg(image)}{
+    \ntaddtocover[vspace=1.62cm,height=5cm]{1-1}{%
+        \includegraphics[height=5cm]{iseg-image}%
+    }%
+}{
+\ntaddtocover[vspace=1.62cm,height=1cm]{1-1}{%
+    ~%
+}
+}%
+\ntaddtocover[vspace=1.62cm,height=1cm]{2-1}{%
+    ~%
+}
+
+% % Title of Dissertation
+\ntaddtocover[vspace=1.2cm,height=1.35cm,valign=c]{1-1,2-1}{%
+    \fontsize{13}{15}\selectfont%
+  \textbf{\thedoctitle(\@LANG@COVER,main,cover)}%
+}
+
+% Author name
+\ntaddtocover[vspace=1.0cm,height=1.05cm]{1-1,2-1}{%
+    \fontsize{11}{12}\selectfont%
+  \textbf{\thedocauthor(name)}%
+}
+
+% Advisers
+\ntaddtocover[vspace=1.7cm,height=3.0cm,valign=t]{1-1,2-1}{%
+    \adviserstringfont():={\bfseries}%
+  \fontsize{11}{12}\selectfont%
+  \ntprintpersons[name]{0.9}{2}{adviser}{a,c}%
+}
+
+% Degree
+\ntaddtocover[vspace=1,height=1.6cm,valign=t]{1-1,2-1}{%
+    \fontsize{10.75}{12}\selectfont%
+  \thepresentationtext%
+}
+
+
+% Committee
+\ntaddtocover[vspace=1,valign=t]{2-1}{%
+    \fontsize{11}{12}\selectfont%
+  \ntprintpersons[full]{0.9}{2}{committee}{\thecommitteeorder()}%
+}
+
+% Funding
+\ntaddtocover[vspace=1,height=1.25cm,valign=t,halign=l,status={final}]{2-1}{%
+  \ifoptionvoid{/novathesis/ulisboa/iseg/funding}{}{%
+    \newdata{funding}
+    \funding(pt):={Instituições Financiadoras:}
+    \funding(en):={Funding Institutions:}
+    \fontsize{11}{11}\selectfont%
+    \thefunding(\@LANG@COVER)\\[0.75ex]%
+    \@for\myi:=\expanded{\option{/novathesis/ulisboa/iseg/funding}}\do{\hspace*{0.5cm}\myi\\}
+  }%
+}
+
+% Date
+\ntaddtocover[vspace=1,height=8.5mm,valign=b]{1-1,2-1}{%
+    \fontsize{12}{12}\selectfont%
+    {\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
+}
+
