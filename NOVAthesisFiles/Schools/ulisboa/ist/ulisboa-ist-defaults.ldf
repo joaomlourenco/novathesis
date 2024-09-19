@@ -299,7 +299,7 @@
     \funding(en):={Funding Institutions:}
     \fontsize{11}{11}\selectfont%
     \thefunding(\@LANG@COVER)\\[0.75ex]%
-    \@for\myi:=\expanded{\option{/novathesis/ulisboa/ist/funding}}\do{\hspace*{0.5cm}\myi]\\}
+    \@for\myi:=\expanded{\option{/novathesis/ulisboa/ist/funding}}\do{\hspace*{0.5cm}\myi\\}
   }%
 }
 
