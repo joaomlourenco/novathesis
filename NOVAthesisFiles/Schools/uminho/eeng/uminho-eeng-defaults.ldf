@@ -18,7 +18,7 @@
 % Faculty / School
 \school(pt):={Escola de Engenharia}
 \school(en):={School of Engineering}
-\school(fr):=\tehschool(en)
-\school(it):=\tehschool(en)
+\school(fr):={\theschool(en)}
+\school(it):={\theschool(en)}
 \school(logo,RGB):={uminho-ee-insignia-color}
 \school(logo,GRAY):={uminho-ee-insignia-mono}

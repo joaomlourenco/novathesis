@@ -123,8 +123,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PACKAGE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\splitbyslash#1/#2\relax#3#4{\edef#3{#1}\edef#4{#2}}
-
 \def\@nt@saveabstractorder{}
 \newcommand{\@setabstractorder}{%
   % \typeout{SAVEABSORDER=[\@nt@saveabstractorder]}\SAVEABSORDER%
@@ -225,7 +223,13 @@
   color/links/.new cmd          = {\@ifpackageloaded{hyperref}%
                                             {\hypersetup{allcolors=#1}}%
                                             {\PassOptionsToPackage{allcolors=#1}{hyperref}}},
-  color/gls/.new cmd             = {\AtEndPreamble{\renewcommand*{\glstextformat}[1]{\textcolor{#1}{##1}}}},
+  color/gls/.new cmd             = {\AtEndPreamble{%\textcolor{#1}{##1}
+                                      \IfStrEq{#1}{None}{%
+                                          \let\@glslink\glsplainhyperlink%
+                                      }{%
+                                          \renewcommand*{\glstextformat}[1]{\textcolor{#1}{##1}}%
+                                      }%
+                                   }},
   % LANGUAGES
   lang/extra/.new list           = {},
   lang/main/.new choice         = {en, pt, fr, it, de, es, gr},
@@ -252,12 +256,6 @@
   tocintoc/.new toggle          = false,
   % DEBUG
   debug/.new list               = {},         % cover, index
-  % DEGREEACR (for degree-specific configuration files)
-  % degreeacr/.new value          = {},
-  % degreeacr/phd/.new value      = {},
-  % degreeacr/msc/.new value      = {},
-  % degreeacr/bsc/.new value      = {},
-  % degreeacr/plain/.new value    = {},
 % SCHOOL specific customization
 % NOVA/ITQB
   nova/itqb/cover/color/.new choice            = {gray, green},
@@ -266,16 +264,6 @@
   uminho/skipblankcovers/.new toggle           = false,
   uminho/signatureline/.new toggle             = true,
 % ULISBOA/FMV
-  % examdate/year/.new value         = {yearX},
-  % examdate/month/.new value        = {monthX},
-  % examdate/day/.new value          = {dayX},
-  % examdate/.new cmd                = {\AtEndPreamble{%
-  %               \@splitdate{#1}{\@exdtYEAR}{\@exdtMONTH}{\@exdtDAY}%
-  %               % \typeout{PROCESSDATE 1=#1 Y=\@exdtYEAR M=\@exdtMONTH D=\@exdtDAY}\PROCESSDATEYMD%
-  %               \options{novathesis/examdate/year=\@exdtYEAR,
-  %                        novathesis/examdate/month=\@exdtMONTH,
-  %                        novathesis/examdate/day=\@exdtDAY}%
-  %                                        }},
   ulisboa/fmv/scientificarea/.new choice       = {C, MF, PASA, SA},
   ulisboa/fmv/embargo/period/.new choice       = {I, 6, 12},
   ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.},
@@ -308,11 +296,9 @@
 % The NOVAthesis logo
 \def\novathesisimg{\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{NOVAthesisFiles/Images/novathesis-text}}
 \def\novathesistxt{\textsl{novathesis}}
-\ifdef{\iftutex}{
-  \newcommand{\novathesis}{\novathesisimg}
-}{
-  \newcommand{\novathesis}{\novathesistxt}
-}
+\ifdef{\iftutex}
+    {\newcommand{\novathesis}{\novathesisimg}}
+    {\newcommand{\novathesis}{\novathesistxt}}
 
 % --------------------------------------------------------
 % Define something (except counters) if undefined
@@ -362,12 +348,7 @@
 
 % --------------------------------------------------------
 % Change main font size on the fly
-\newcommand{\setmemoirfontsize}[1]{%
-  % do something here to change the all the font sizes
-  % \makeatletter
-  \input{mem#1.clo} % does not work
-  % \makeatother
-}
+\newcommand{\setmemoirfontsize}[1]{\input{mem#1.clo}}
 
 % --------------------------------------------------------
 % Input the first file from the list (if any)
@@ -722,7 +703,7 @@
 \options{/novathesis/lang/cover = \option{/novathesis/lang/main},
          /novathesis/lang/copyright = \option{/novathesis/lang/main},
          /novathesis/color/links = DarkBlue,
-         /novathesis/color/gls = Black,
+         /novathesis/color/gls = None,
 }
 
 
@@ -907,6 +888,12 @@
 % \renewcommand{\gls@automake@makegloss}{makeglossaries -q}%
 \renewcommand{\GlsXtrFormatLocationList}[1]{\emph{\small#1)}}
 \renewcommand{\glsnamefont}[1]{\textbf{#1}}%
+\newcommand*{\glsplainhyperlink}[2]{%
+    \begingroup%
+      \hypersetup{hidelinks}%
+      \hyperlink{#1}{#2}%
+    \endgroup%
+}%
 
 %--------------------------------
 % “Process gnumberlist” option - after glossaries
@@ -918,7 +905,9 @@
 \RequirePackage{tikz}
 
 %%%%% Fine tuning of typesetting
-\ifxeorlua{}{% pdflatex
+\ifxeorlua{%
+    \newcommand{\textls}[2][25]{{\addfontfeature{LetterSpace=\the\numexpr#1/9\relax}#2}}
+}{% pdflatex
   \RequirePackage[%
     babel=true,
     activate={true,nocompatibility},  % activate={true,nocompatibility} - activate protrusion and expansion
