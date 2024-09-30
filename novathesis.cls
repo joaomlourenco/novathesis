@@ -1979,17 +1979,11 @@
   % #5 = adviser | committee
   % #6 = {a,c} | {c,r,a,m,g}
   % \typeout{NTPRINTPERSONS 1=[#1] 2=[#2] 3=[#3] 4=[#4] 5=[#5] 6=[#6]}\NTPRINTPERSONS
-  \textcolor{blue}{X}%
   \@check@instring{#1}{full,name,list}{@ntprintpersons}%
-  \textcolor{blue}{X}%
   \iftoggle{/novathesis/print/#5}{%
-  \textcolor{blue}{X}%
     \begin{minipage}[t]{\linewidth}%
-  \textcolor{blue}{X}%
       \setlength{\parindent}{0pt}%
-  \textcolor{blue}{X}%
       \@setalignment{#3}%
-  \textcolor{blue}{X}%
       \begin{varwidth}{#2\linewidth}%
         \IfStrEqCase{#4}{%
           {0}{\@ntprintpersonsaslist{#5}{#6}}%
