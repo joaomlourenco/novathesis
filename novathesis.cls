@@ -934,13 +934,14 @@
 % --------------------------------------------------------
 % Degree
 \def\ntmajorfield{\@ifstar{\@ntmajorfieldifundef}{\@ntmajorfield}}
+  % #1 = lang
+  % #2 = value
 \def\@ntmajorfieldifundef(#1)#2{\ifdatadefined{majorfield}(#1){}{\@ntmajorfield(#1){#2}}}
 \def\@ntmajorfield(#1)#2{\majorfield(#1):={#2}}
 
 \def\ntdegreename{\@ifstar{\@ntdegreenameifundef}{\@ntdegreename}}
 \def\@ntdegreenameifundef(#1)#2{\ifdatadefined{degreename}(#1){}{\@ntdegreename(#1){#2}}}
 \def\@ntdegreename(#1)#2{%
-  % #1 = ignored
   % #1 = lang
   % #2 = value
   \datamatch{\match}{degreenameprefix}(%
@@ -961,7 +962,7 @@
 \def\@ntminorfield(#1)#2{\minorfield(#1):={#2}}
 
 \def\ntspecialization{\@ifstar{\@ntspecializationifundef}{\@ntspecialization}}
-\def\@ntspecializationifundef(#1)#2{\ifdatadefined{specialization}(#1){}{\@ntspecialization(#1){#2}}}
+\def\@ntspecializationifundef(#1)#2{\ifdatadefined{minorfield}(#1){}{\@ntspecialization(#1){#2}}}
 \def\@ntspecialization(#1)#2{%
   \datamatch{\match}{specializationstring}(%
             {\@DOCTYPE,\@DEGREEACR,\@LANG@COVER},%
@@ -972,7 +973,7 @@
             {\@LANG@COVER}%
   )%
   \ifblank{\match}{\specialization(#1):={#2}}{\specialization(#1):={\match\ #2}}%
-  \minorfield*(#1):={#2}%
+  \minorfield(#1):={#2}%
 }
 
 % --------------------------------------------------------
@@ -1595,7 +1596,6 @@
   \ifoptionequal{/novathesis/media}{paper}{\newpage ~\thispagestyle{empty}\newpage}{\clearforchapter}
 }
 
-\newcommand{\@covertikzlist}{}
 \newcommand{\@ntmakeboxwithcover}[2]{%
   % #1 = cover ID (major-minor)
   % #2 = box name
@@ -1624,7 +1624,7 @@
             {\usebox{\@cover@bgcolor@box}};
     \node[inner sep=0, anchor=north]  at (current page.north)
             {\usebox{\@cover@image@box}};
-    \@ifmtarg{\@covertikzlist}{\VOID}{\@covertikzlist}
+    \expandafter\@ifmtarg\expandafter{\csname @covertikzlist#1\endcsname}{\VOID}{\csuse{@covertikzlist@#1}}
     \node[inner sep=0, anchor=north west,
           xshift=\@MRGN@left,
           yshift=-\@MRGN@top] at (current page.north west)
@@ -1712,35 +1712,34 @@
   \ifblank{#3}{}{%
     \options{/@ntcoveropts, defaults, #2, alignmap=\option{/@ntcoveropts/halign}}%
     % \typeout{@ntcoverelement@iii 1=[#1] 2=[#2] tikz=\option{/@ntcoveropts/tikz}}\@NTCOVERELEMENT@III
-    \iftoggle{/@ntcoveropts/tikz}{%
-      % \typeout{TIKZ ADD [/@nt/cover/\@UNIV/\@SCHL/#1/tikz]}\TIKZ%
-      \gappto{\@covertikzlist}{#3}%
-      % \optionlistdo{{\option{/@nt/cover/\@UNIV/\@SCHL/#1/tikz}}}{\typeout{##1}\VVVVVVV}
-    }{%
-      \defifundef{\ifmatchstatus}{\newif}%
-      \defifundef{\ifmatchdegree}{\newif}%
-      \matchstatustrue%
-      \matchdegreetrue%
-      \if&\option{/@ntcoveropts/status}&\relax%
+    \defifundef{\ifmatchstatus}{\newif}%
+    \defifundef{\ifmatchdegree}{\newif}%
+    \matchstatustrue%
+    \matchdegreetrue%
+    \if&\option{/@ntcoveropts/status}&\relax%
+    \else%
+      \if\instring{,\@DOCSTATUS,}{,\option{/@ntcoveropts/status},}%
       \else%
-        \if\instring{,\@DOCSTATUS,}{,\option{/@ntcoveropts/status},}%
-        \else%
-          \matchstatusfalse%
-        \fi%
+        \matchstatusfalse%
       \fi%
-      \if&\option{/@ntcoveropts/degree}&\relax%
+    \fi%
+    \if&\option{/@ntcoveropts/degree}&\relax%
+    \else%
+      \if\instring{/\@DOCTYPE/}{/\option{/@ntcoveropts/degree}/}%
       \else%
-        \if\instring{/\@DOCTYPE/}{/\option{/@ntcoveropts/degree}/}%
-        \else%
-          \matchdegreefalse%
-        \fi%
+        \matchdegreefalse%
       \fi%
-      \ifmatchstatus%
-        \ifmatchdegree%
+    \fi%
+    \ifmatchstatus%
+      \ifmatchdegree%
+        \iftoggle{/@ntcoveropts/tikz}{%
+          % \typeout{TIKZ ADD [/@nt/cover/\@UNIV/\@SCHL/#1/tikz]}\TIKZ%
+          \expandafter\gappto\expandafter{\csname @covertikzlist@#1\endcsname}{#3}%
+        }{%
           \@ntcoverelement@ii{#1}{#3}%
-        \fi%
+        }%
       \fi%
-    }%
+    \fi%
   }%
 }
 
@@ -1980,11 +1979,17 @@
   % #5 = adviser | committee
   % #6 = {a,c} | {c,r,a,m,g}
   % \typeout{NTPRINTPERSONS 1=[#1] 2=[#2] 3=[#3] 4=[#4] 5=[#5] 6=[#6]}\NTPRINTPERSONS
+  \textcolor{blue}{X}%
   \@check@instring{#1}{full,name,list}{@ntprintpersons}%
+  \textcolor{blue}{X}%
   \iftoggle{/novathesis/print/#5}{%
+  \textcolor{blue}{X}%
     \begin{minipage}[t]{\linewidth}%
+  \textcolor{blue}{X}%
       \setlength{\parindent}{0pt}%
+  \textcolor{blue}{X}%
       \@setalignment{#3}%
+  \textcolor{blue}{X}%
       \begin{varwidth}{#2\linewidth}%
         \IfStrEqCase{#4}{%
           {0}{\@ntprintpersonsaslist{#5}{#6}}%

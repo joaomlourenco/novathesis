@@ -379,7 +379,7 @@
          {\THEmajorfield(\@LANG@COVER)}%
          \ifphddoc{%
            \ifdatadefined{specialization}(\@LANG@COVER)%
-                     {\thespecializationstring(\@LANG@COVER)
+                     {\thebarheight(\@LANG@COVER)
                       \thespecialization(\@LANG@COVER)}{~}}%
           {~}%
 }%

@@ -24,9 +24,553 @@
 \degreenameprefix(msc,en):={Master of Science in}
 \degreenameprefix(pt):={Mestre em}
 
+\ntdegreename(ddm,en){Data-Driven Marketing}
+\ntdegreename(ddm,pt){Data-Driven Marketing}
+\ntdegreename(dsaa,en){Data Science and Advanced Analytics}
+\ntdegreename(dsaa,pt){Data Science and Advanced Analytics}
+\ntdegreename(egi,en){Statistics and Information Management}
+\ntdegreename(egi,pt){Estatística e Gestão de Informação}
+\ntdegreename(gi,en){Information Management}
+\ntdegreename(gi,pt){Gestão de Informação}
+\ntdegreename(csig,en){Geographical Information Systems and Science}
+\ntdegreename(csig,pt){Ciência e Sistemas de Informação Geográfica}
+\ntdegreename(gt,en){Geospatial Technologies}
+\ntdegreename(gt,pt){Tecnologias Geo-Espaciais}
+
+\newdata{degreeacr}
+\degreeacr(mddm):={MDDM}
+\degreeacr(mdsaa):={MDSAA}
+\degreeacr(megi):={MEGI}
+\degreeacr(mgi):={MGI}
+\degreeacr(mcsig):={CSIG}
+\degreeacr(mgt):={MGT}
+
+\newdata{by}
+\by(en):={by}
+\by(pt):={por}
+
+% Scientific filed
+% \majorfield(pt):={Gestão de Informação}
+% \majorfield(en):={Information Management}
+
+% Comiittee printing order
+\committeeorder():={c,r,m}%
+
+\ntsetup{print/secondcover=true}
+
+% Cover background images
+% \thesiscover(phd,1-1,bgcolor):={white}
+% \thesiscover(phd,1-1,image):={1-phd-front-cover}
+\thesiscover(phd,2-1,image):={2-phd-front-cover}
+\thesiscover(phd,N-2,image):={3-back-cover}
+% \thesiscover(phd,spine,image):={3-back-cover}
+
+\thesiscover(msc,1-1,image):={nova-ims-front-cover-generic}
+\thesiscover(msc,N-2,image):={nova-ims-backcover}
+\thesiscover(msc,spine,image):={nova-ims-spine}
+\thesiscover(msc,mmaa,1-1,image):={nova-ims-mmaa-cover}
+\thesiscover(msc,mgi,1-1,image):={nova-ims-mgi-cover}
+\thesiscover(msc,megi,1-1,image):={nova-ims-megi-cover}
+\thesiscover(msc,csig,1-1,image):={nova-ims-csig-cover-debug}
+\thesiscover(bsc,1-1,image):={nova-ims-front-cover-generic}
+\thesiscover(bsc,N-2,image):={nova-ims-backcover}
+\thesiscover(bsc,spine,image):={nova-ims-spine}
+
+\thesiscover(plain,1-1,image):={nova-ims-front-cover-generic}
+
+% Rename Doctor degree
+\degreestring(phd,m,en):={Doctor}
+\degreestring(phd,f,en):={Doctor}
+\degreestring(phdplan,m,en):={Doctor}
+\degreestring(phdplan,f,en):={Doctor}
+\degreestring(phdprop,m,en):={Doctor}
+\degreestring(phdprop,f,en):={Doctor}
+
+\degreestring(phd,m,en,x):={PhD}
+\degreestring(phd,f,en,x):={PhD}
+\degreestring(phdplan,m,en,x):={PhD}
+\degreestring(phdplan,f,en,x):={PhD}
+\degreestring(phdprop,m,en,x):={PhD}
+\degreestring(phdprop,f,en,x):={PhD}
+
+\degreestring(phd,m,pt):={Doutor}
+\degreestring(phd,f,pt):={Doutora}
+\degreestring(phdplan,m,pt):={Doutor}
+\degreestring(phdplan,f,pt):={Doutora}
+\degreestring(phdprop,m,pt):={Doutor}
+\degreestring(phdprop,f,pt):={Doutora}
+
+\degreestring(phd,m,pt,x):={Doutoramento}
+\degreestring(phd,f,pt,x):={Doutoramento}
+\degreestring(phdplan,m,pt,x):={Doutoramento}
+\degreestring(phdplan,f,pt,x):={Doutoramento}
+\degreestring(phdprop,m,pt,x):={Doutoramento}
+\degreestring(phdprop,f,pt,x):={Doutoramento}
+
+\degreestring(msc,m,en):={Master's}
+\degreestring(msc,f,en):={Master's}
+\degreestring(mscplan,m,en):={Master's}
+\degreestring(mscplan,f,en):={Master's}
+
+\degreestring(msc,m,pt):={Mestre}
+\degreestring(msc,f,pt):={Mestre}
+\degreestring(mscplan,m,pt):={Mestre}
+\degreestring(mscplan,f,pt):={Mestre}
+
+\degreestring(bsc,m,pt):={Licenciado}
+\degreestring(bsc,f,pt):={Licenciada}
+
+%% DARK GREY  112,121,128
+%% LIGHT GREY 200,203,206
+
+% Spine info
+\spine(order):=?{date,title,author,degreeacr}
+\spine(row)={1.745cm}
+
+% \spine(author)={\thedocauthor(name)}
+% \spine(title)={\thedoctitle(\@LANG@COVER,main)}
+% \spine(date)={\thentdocdate(submission,year)}
+
+\IfStrEq{\@DEGREEACR}{}{%
+  \spine(degreeacr)={\mbox{ }}%
+}{%
+  \spine(degreeacr)={\thedegreeacr(\@DEGREEACR)}%
+}
+
+\spine(text,angle)={0}
+% \spine(text,color)=black
+\spine(box,bg,color)={white}
+\spine(box,inspace)={1mm}
+
+\spine(margin,left)={\thespine(row)}
+
+\spine(box,title,margin,left)={0.5mm}
+\spine(box,title,margin,right)={0.5mm}
+\spine(box,author,margin,left)={0.5mm}
+\spine(box,author,margin,right)={0.5mm}
+\spine(box,date,margin,left)={0.5mm}
+\spine(box,date,margin,right)={0.5mm}
+
+\spine(box,date,bg,color)={none}
+
+\spine(box,title,left)={\dimexpr\thespine(row)*3+\thespine(box,inspace)\relax}
+\spine(box,author,left)={\dimexpr\thespine(row)*11+\thespine(box,inspace)\relax}
+
+\spine(box,date,len):={\thespine(row)}
+\spine(box,title,len)={\dimexpr\thespine(row)*7-\thespine(box,inspace)*2\relax}
+\spine(box,author,len)={\dimexpr\thespine(row)*3-\thespine(box,inspace)*2\relax}
+
+\spine(box,degreeacr,len):={\thespine(row)}
+\spine(box,degreeacr,left):={\dimexpr\thespine(row)*15\relax}
+\spine(box,degreeacr,bg,color)={none}
+\spine(box,degreeacr,text,color):={white}
+
+
+
+
+% Set margins for "normal" pages
+\margin(screen,top):={3.0cm}
+\margin(screen,bottom):={3.0cm}
+\margin(screen,left):={3.25cm}
+\margin(screen,right):={3.25cm}
+\margin(paper,top):={3.0cm}
+\margin(paper,bottom):={3.0cm}
+\margin(paper,left):={3.5cm}
+\margin(paper,right):={3.0cm}
+
+% Set margins for cover pages
+\margin(cover,1-1,top):={15.2cm}
+\margin(cover,1-1,bottom):={3.05cm}
+\margin(cover,1-1,left):={1.5cm}
+\margin(cover,1-1,right):={1.5cm}
+\margin(cover,top):={2.6cm}
+\margin(cover,bottom):={3cm}
+\margin(cover,left):={2.5cm}
+\margin(cover,right):={2.5cm}
+
+\adviserstring(a,1,m,en):={Supervisor}
+\adviserstring(a,1,f,en):={Supervisor}
+\adviserstring(a,2,m,en):={Supervisor}
+\adviserstring(a,2,f,en):={Supervisor}
+\adviserstring(c,1,m,en):={Co-supervisor}
+\adviserstring(c,1,f,en):={Co-supervisor}
+\adviserstring(c,2,m,en):={Co-supervisor}
+\adviserstring(c,2,f,en):={Co-supervisor}
+\adviserstring(ca,1,m,en):={Co-supervisor}
+\adviserstring(ca,1,f,en):={Co-supervisor}
+\adviserstring(ca,2,m,en):={Co-supervisor}
+\adviserstring(ca,2,f,en):={Co-supervisor}
+\adviserstring(t,1,m,en):={Tutor}
+\adviserstring(t,1,f,en):={Tutor}
+\adviserstring(t,2,m,en):={Tutors}
+\adviserstring(t,2,f,en):={Tutors}
+
+
+\dissertationstring(phd,en)={A thesis submitted in partial fulfilment of the requirements\\for the degree of
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
+    {\themajorfield(\@LANG@COVER)}}
+ \dissertationstring(phdprop,en)={A thesis proposal submitted in partial fulfilment of the requirements\\for the degree of
+     \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
+     {\themajorfield(\@LANG@COVER)}}
+ \dissertationstring(phdplan,en)={A thesis pan submitted in partial fulfilment of the requirements\\for the degree of
+     \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
+     {\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phd,pt)={Uma tese apresentada em cumprimento parcial dos requisitos\\para o grau de
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em
+    {\themajorfield(\@LANG@COVER)}}
+ \dissertationstring(phdprop,pt)={Uma proposata de tese apresentada em cumprimento parcial dos requisitos\\para o grau de
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em
+    {\themajorfield(\@LANG@COVER)}}
+ \dissertationstring(phdplan,pt)={Um plano de tese apresentada em cumprimento parcial dos requisitos\\para o grau de
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em
+    {\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(msc,en)={A dissertation submitted in partial fulfilment of the requirements\\for the degree of
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
+    {\themajorfield(\@LANG@COVER)}}
+ \dissertationstring(mscplan,en)={Dissertation plan presented as partial requirement for obtaining the degree of
+     \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
+     {\themajorfield(\@LANG@COVER)}}
+ 
+
+\dissertationstring(msc,pt)={Dissertação apresentada como requisito parcial para obtenção do grau de
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em
+    {\themajorfield(\@LANG@COVER)}}
+ \dissertationstring(mscplan,pt)={Plano de dissertação apresentada como requisito parcial para obtenção do grau de
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em
+    {\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(bsc,en)={Report submitted in partial fulfilment of the requirements\\for the degree of
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
+    {\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(bsc,pt)={Replatório apresentado como requisito parcial para obtenção do grau de
+    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em
+    {\themajorfield(\@LANG@COVER)}}
+
+
+\newdata{phdmsc}
+\phdmsc(phd,en):={Doctoral thesis}
+\phdmsc(phd,pt):={Tese de doutoramento}
+\phdmsc(msc,en):={Dissertation}
+\phdmsc(msc,pt):={Dissertação}
+
+\newdata{dissertationstringii}
+\dissertationstringii(en)={\thephdmsc(\@DOCTYPE,\@LANG@COVER) presented as partial requirement for obtaining the \thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER,x) degree in \themajorfield(\@DEGREEACR,\@LANG@COVER)}
+\dissertationstringii(specialization,en)={\StrLen{\theminorfield(\@LANG@COVER)}[\@xpto]\IfStrEq{\@xpto}{1}{}{, with a specialization in \theminorfield(\@LANG@COVER)}}
+
+\newdata{dissertationstringii}
+\dissertationstringii(pt)={\thephdmsc(\@DOCTYPE,\@LANG@COVER) apresentada como requisito parcial para obtenção do grau de \thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER,x) in \themajorfield(\@DEGREEACR,\@LANG@COVER)}
+\dissertationstringii(specialization,pt)={\StrLen{\theminorfield(\@LANG@COVER)}[\@xpto]\IfStrEq{\@xpto}{1}{}{, com especialização em \theminorfield(\@LANG@COVER)}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Draw the cover page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{imsdarkgrey}{RGB}{100,100,100}
+\definecolor{imsmidgrey}{RGB}{175,175,175}
+\definecolor{imslightgrey}{RGB}{240,240,240}
+
+
+\AtEndPreamble{%
+  \LoadHelveticaLikeFont%
+  % \RequirePackage{gillius2}%
+}
+
+\NTAddToHook{cover/1-1/text/pre}{%
+  \sffamily%
+}
+\NTAddToHook{cover/2-1/text/pre}{%
+  \sffamily%
+}
+
+\usetikzlibrary{calc}
+
+\def\barheight{2.97cm}
+\def\areaheight{11cm}
+
+\ntaddtocover[tikz]{1-1}{%
+  \fill [color=imsdarkgrey]
+         ($(current page.north west)$)
+         rectangle ($(current page.north east)+(0cm,-\barheight)$);
+  \begin{scope}
+    \clip ($(current page.north west)$)
+         rectangle ($(current page.north east)+(0cm,-\barheight)$);
+    \foreach \i in {0, 1, 2, ..., 163} { % Change 10 to the number of lines you want    
+        \draw[very thick,imsmidgrey] ($(current page.north west) + (\i*2.4mm,0)$) -- ++(-\barheight-1mm,-\barheight-1mm);
+    }    
+  \end{scope}
+  \fill [color=imslightgrey]
+         ($(current page.north west)+(0,-\barheight)$)
+         rectangle ($(current page.north east)+(0cm,-\barheight-\areaheight)$);
+  \node[anchor=north west] at (-2.3,1.7) {\includegraphics[width=3.3cm]{logo-novaims}};
+}
+
+\ntaddtocover[tikz]{1-1}{%
+  \color{imsdarkgrey}\sffamily%
+  \node[anchor=center] (title) at ($(current page.center)+(0,6.6)$) {%
+    \fontsize{51}{45}\selectfont\bfseries%
+    \makecell{DOCTORAL\\PROGRAMME}%
+  };
+  \node[anchor=center] (title) at ($(current page.center)+(0,3.15)$) {%
+    \fontsize{24.5}{24}\selectfont\bfseries%
+    \themajorfield(\@DEGREEACR,\@LANG@COVER)%
+  };
+}
+
+\ntaddtocover[halign=c,valign=c,height=1.8cm]{1-1}{%
+  \color{imsdarkgrey}%
+  \fontsize{17.5}{17.5}\selectfont\bfseries%
+  \THEdoctitle(\@LANG@COVER,main,cover)
+}
+
+\ntaddtocover[halign=c,vspace=1.5mm]{1-1}{%
+  \color{imsmidgrey}%
+  \fontsize{15.8}{17.5}\selectfont%
+  \thedoctitle(\@LANG@COVER,sub,cover)
+  ~\\~
+}
+
+\ntaddtocover[halign=c,vspace=1]{1-1}{%
+  \color{imsdarkgrey}%
+  \fontsize{15}{17.5}\selectfont%
+  \thedocauthor(name)%
+}
+
+
+\ntaddtocover[halign=c,vspace=1]{1-1}{%
+  \color{imsdarkgrey}%
+  \fontsize{12.0}{18.0}\selectfont%
+  \thepresentationtext%
+}
+
+\ntaddtocover[halign=c,vspace=1]{1-1}{%
+  \color{imsdarkgrey}%
+  \fontsize{12.3}{15.5}\selectfont%
+  \textbf{\theschool(en)}\\
+  \textbf{\theschool(pt)}\\
+  \fontsize{9.7}{15.5}\selectfont%
+  \theuniversity(pt)
+}
+
+
+
+\ntaddtocover[halign=c]{2-1}{%
+  \color{red}%
+  \fontsize{12.3}{15.5}\selectfont%
+  \textbf{\theschool(en)}\\
+  \textbf{\theschool(pt)}\\
+  \fontsize{10.7}{15}\selectfont%
+  \theuniversity(pt)
+}
+
+\ntaddtocover[vspace=5.3cm,halign=c,valign=c,height=1.8cm]{2-1}{%
+  \color{red}%
+  \fontsize{16.5}{21}\selectfont\bfseries%
+  \THEdoctitle(\@LANG@COVER,main,cover)
+}
+
+
+\ntaddtocover[halign=c,vspace=1cm]{2-1}{%
+  \color{red}%
+  \fontsize{15}{17.5}\selectfont%
+  \theby(\@LANG@COVER)%
+}
+
+
+\ntaddtocover[halign=c,vspace=8mm]{2-1}{%
+  \color{red}%
+  \fontsize{12}{12}\selectfont%
+  \thedocauthor(name)%
+}
+
+
+\ntaddtocover[halign=l,vspace=2.9cm]{2-1}{%
+  \color{red}%
+  \fontsize{11.5}{16}\selectfont%
+  \thedissertationstringii(\@LANG@COVER)%
+  \thedissertationstringii(specialization,\@LANG@COVER)%
+}
+
+\ntaddtocover[vspace=1cm,halign=l]{2-1}{%
+  \color{red}%
+  \fontsize{12}{12}\selectfont%
+  \adviserstringpre():={}%
+  \adviserstringpost():={: }%
+  \adviserremainderpre():={}%
+  \personpre():={}%
+  \persongrouppre():={}%
+  \adviserstringfont():={\bfseries}%
+  \ntprintpersons[list]{1.0}{1}{adviser}{a}%
+  \ntprintpersons[list]{1.0}{1}{adviser}{c}%
+}
+
+
+\endinput
+
+
+
+
+
+
+
+  % PHD PROGRAM
+% \ntaddtocover[halign=l, vspace=0cm, degree=phd]{1-1}{%
+%   \ntcoverbackground%
+% }
+% INFORMATION MANAGEMENT
+\ntaddtocover[halign=l, vspace=0cm, degree=phd]{1-1}{%
+  \fontsize{16}{16}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\themajorfield(\@LANG@COVER)}}%
+}
+
+% SPECIALIZATION IN
+\ntaddtocover[halign=l, vspace=0.7cm, degree=phd]{1-1}{%
+  \fontsize{16}{16}\selectfont
+  \textcolor{imsmidgrey}{%
+    \textbf{\thespecializationstring(\@LANG@COVER)
+    \thespecialization(\@LANG@COVER)}%
+  }%
+}
+
+% DISSERTATION TITLE
+\ntaddtocover[halign=l, vspace=1.8cm, degree=phd]{1-1}{%
+  \fontsize{16}{16}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\thedoctitle(\@LANG@COVER,main,cover)}}%
+}
+
+% AUTHOR NAME
+\ntaddtocover[halign=l, vspace=0.4cm, degree=phd]{1-1}{%
+  \fontsize{14}{14}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\thedocauthor(name)}}%
+}
+
+% DISSERTATION TEXT
+\ntaddtocover[halign=l, vspace=5, degree=phd]{1-1}{%
+  \fontsize{14}{14}\selectfont%
+  \textcolor{imsdarkgrey}{%
+    \thedissertationstring(\option{/novathesis/doctype},\@LANG@COVER)%
+  }%
+}%
+
+% DATE
+\ntaddtocover[halign=l, vspace=1cm, degree=phd]{1-1}{%
+  \fontsize{11}{11}\selectfont%
+  \textcolor{imsdarkgrey}{%
+    \textbf{\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
+  }%
+}
+
+% SCHOOL
+\ntaddtocover[halign=l, vspace=1cm, degree=phd]{1-1}{%
+  \fontsize{11}{11}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\theschool(en)}}%
+}
+
+% UNIVERSITY
+\ntaddtocover[halign=l, vspace=0.0cm, degree=phd]{1-1}{%
+  \fontsize{11}{11}\selectfont%
+  \textcolor{imsdarkgrey}{\theuniversity(\@LANG@COVER)}%
+}
+
+
+  % MSc PROGRAM
+% % Title of Dissertation
+% \ntaddtocover[halign=l, vspace=0cm, degree=msc]{1-1}{%
+%   \ntcoverbackground%
+% }
+
+% % Title of Dissertation
+\ntaddtocover[halign=l, vspace=1, degree=msc]{1-1}{%
+  \fontsize{17}{17}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\THEdoctitle(\@LANG@COVER,main,cover)}}\\[0.25ex]%
+  \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
+    ~\\[-1.5ex]%
+    \textcolor{imsmidgrey}{
+      \fontsize{15}{15}\selectfont%
+      \textbf{\thedoctitle(\@LANG@COVER,sub,cover)}%
+    }%
+  }{}%
+}
+
+% Author name
+\ntaddtocover[halign=l, vspace=2, degree=msc]{1-1}{%
+  \fontsize{15}{15}\selectfont%
+  \textcolor{imsdarkgrey}{\textbf{\thedocauthor(name)}}%
+}
+
+% Degree
+\ntaddtocover[halign=l, vspace=2, degree=msc]{1-1}{%
+  \fontsize{14}{14}\selectfont%
+  \textcolor{imsdarkgrey}{%
+    \thedissertationstring(\option{/novathesis/doctype},\@LANG@COVER)%
+  }%
+}
+
+\ntaddtocover[halign=c, vspace=0]{2-1}{%
+  \fontsize{14}{14}\selectfont%
+  \textbf{\theschool(en)}\\
+  \textbf{\theschool(pt)}\\
+  \theuniversity(pt)\\
+}
+
+\ntaddtocover[halign=c, vspace=1]{2-1}{%
+  \fontsize{16}{16}\selectfont%
+  \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
+}
+
+\ntaddtocover[halign=c, vspace=1]{2-1}{%
+  \fontsize{14}{14}\selectfont%
+  by%
+}
+
+\ntaddtocover[halign=c, vspace=1]{2-1}{%
+  \fontsize{14}{14}\selectfont%
+  \thedocauthor(name)%
+}
+
+% Degree
+\ntaddtocover[halign=c, vspace=4]{2-1}{%
+  \fontsize{14}{14}\selectfont%
+  \textcolor{imsdarkgrey}{%
+    \thedissertationstring(\option{/novathesis/doctype},\@LANG@COVER)%
+  }%
+}
+
+% The committee
+\ntaddtocover[vspace=2,halign=l]{2-1}{%
+  \fontsize{12}{12}\selectfont%
+  \adviserstringpre():={}%
+  \adviserstringpost()%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%3%%%%%%%%%%%%%%%%%%
+%% nova/ims/nova-ims-defaults.ldf
+%% NOVA thesis document template
+%%
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
+%%
+%% Authors / Contributors:
+%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE nova/ims/nova-ims-defaults.ldf}%
+
+
+% Faculty / School
+\school(pt):={Instituto Superior de Estatística e Gestão de Informação}
+\school(en):={NOVA Information Management School}
+\school(fr):={NOVA Information Management School}
+\school(it):={NOVA Information Management School}
+
+% Redefinition of "Master in" to "Master of Science in"
+\degreenameprefix(msc,en):={Master of Science in}
+\degreenameprefix(pt):={Mestre em}
+
 \ntdegreename(mmaa,en){Advanced Analytics}
 \ntdegreename(mmaa,pt){Métodos Analíticos Avançados}
-\ntdegreename(mgi,en){Information Management}
+  \ntdegreename(mgi,en){Information Management}
 \ntdegreename(mgi,pt){Gestão de Informação}
 \ntdegreename(megi,en){Statistics and Information Management}
 \ntdegreename(megi,pt){Estatística e Gestão de Informação}
@@ -53,9 +597,9 @@
 
 % Cover background images
 % \thesiscover(phd,1-1,bgcolor):={white}
-\thesiscover(phd,1-1,image):={nova-ims-phd-cover}
-\thesiscover(phd,N-2,image):={nova-ims-backcover}
-\thesiscover(phd,spine,image):={nova-ims-spine}
+\thesiscover(phd,1-1,image):={1-phd-front-cover}
+\thesiscover(phd,N-2,image):={2-phd-front-cover}
+\thesiscover(phd,spine,image):={3-back-cover}
 
 \thesiscover(msc,1-1,image):={nova-ims-front-cover-generic}
 \thesiscover(msc,N-2,image):={nova-ims-backcover}
@@ -157,10 +701,10 @@
 \margin(paper,right):={3.0cm}
 
 % Set margins for cover pages
-\margin(cover,top):={10.0cm}
-\margin(cover,bottom):={6.5cm}
-\margin(cover,left):={6.7cm}
-\margin(cover,right):={2.0cm}
+\margin(cover,top):={15.2cm}
+\margin(cover,bottom):={3.0cm}
+\margin(cover,left):={1.5cm}
+\margin(cover,right):={1.5cm}
 \margin(cover,2-1,top):={3cm}
 \margin(cover,2-1,bottom):={3cm}
 \margin(cover,2-1,left):={3cm}
@@ -218,7 +762,7 @@
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \definecolor{imsdarkgrey}{RGB}{100,100,100}
-\definecolor{imsmidgrey}{RGB}{190,190,190}
+\definecolor{imsmidgrey}{RGB}{175,175,175}
 \definecolor{imslightgrey}{RGB}{240,240,240}
 
 
@@ -233,6 +777,75 @@
 \NTAddToHook{cover/2-1/text/pre}{%
   \sffamily%
 }
+
+\usetikzlibrary{calc}
+
+\def\barheight{2.97cm}
+\def\areaheight{11cm}
+
+\ntaddtocover[tikz]{1-1}{%
+  \fill [color=imsdarkgrey]
+         ($(current page.north west)$)
+         rectangle ($(current page.north east)+(0cm,-\barheight)$);
+  \foreach \i in {0, 1, 2, ..., 163} { % Change 10 to the number of lines you want    
+      \draw[very thick,imsmidgrey] ($(current page.north west) + (\i*2.4mm,0)$) -- ++(-\barheight,-\barheight);
+   barheighte] (\i*2, 0) -- (\i*2 + 5, -10); % 10 is the length of the line}
+  }
+  \fill [color=imslightgrey]
+         ($(current page.north west)+(,-\barheight)$)
+         rectangle ($(current page.north east)+(0cm,-\barheight-\areaheight)$);
+  \node[anchor=north west] at (-2.3,1.7) {\includegraphics[width=3.3cm]{logo-novaims}};
+}
+
+\ntaddtocover[tikz]{1-1}{%
+  \color{imsdarkgrey}\sffamily%
+  \node[anchor=center] (title) at ($(current page.center)+(0,6.6)$) {%
+    \fontsize{51}{45}\selectfont\bfseries%
+    \makecell{DOCTORAL\\PROGRAMME}%
+  };
+  \node[anchor=center] (title) at ($(current page.center)+(0,3.15)$) {%
+    \fontsize{24.5}{24}\selectfont\bfseries%
+    Information Management%
+  };
+}
+
+\ntaddtocover[halign=c,valign=c,height=1.8cm]{1-1}{%
+  \color{imsdarkgrey}%
+  \fontsize{17.5}{17.5}\selectfont\bfseries%
+  Indicators for Data-Driven Cities and Regions
+  % \thedoctitle(\@LANG@COVER,main,cover)
+}
+
+\ntaddtocover[halign=c,vspace=1.5mm]{1-1}{%
+  \color{imsmidgrey}%
+  \fontsize{15.8}{17.5}\selectfont%
+  Paving the path to sustainable development
+  % \thedoctitle(\@LANG@COVER,main,cover)
+}
+
+\ntaddtocover[halign=c,vspace=1]{1-1}{%
+  \color{imsdarkgrey}%
+  \fontsize{15}{17.5}\selectfont%
+  João Bruno Morais de Sousa Jardim
+  % \thedoctitle(\@LANG@COVER,main,cover)
+}
+
+
+\ntaddtocover[halign=c,vspace=1]{1-1}{%
+~
+}
+
+\ntaddtocover[halign=c,vspace=1]{1-1}{%
+~
+}
+\endinput
+
+
+
+
+
+
+
   % PHD PROGRAM
 % \ntaddtocover[halign=l, vspace=0cm, degree=phd]{1-1}{%
 %   \ntcoverbackground%
@@ -361,6 +974,16 @@
   \fontsize{12}{12}\selectfont%
   \adviserstringpre():={}%
   \adviserstringpost():={: }%
+  \adviserstringfont():={\bfseries}%
+  \ntprintpersons[list]{1.0}{1}{adviser}{a}
+  \ntprintpersons[list]{1.0}{1}{adviser}{c}
+}
+
+% Date
+\ntaddtocover[halign=c, vspace=2]{2-1}{%
+  \thentdocdate(submission,month,text), \thentdocdate(submission,year)%
+}%
+:={: }%
   \adviserstringfont():={\bfseries}%
   \ntprintpersons[list]{1.0}{1}{adviser}{a}
   \ntprintpersons[list]{1.0}{1}{adviser}{c}
