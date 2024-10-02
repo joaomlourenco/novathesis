@@ -56,10 +56,18 @@
 % Comiittee printing order
 \committeeorder():={c,r,m}%
 
+\openany
 \ntsetup{print/secondcover=true}
+\ntsetup{numberallpages=true}
+\AtEndPreamble{
+  \ifdocworking{}{\ntsetup{print/statement=true}}
+  \ntlangsetup*{pt/acronym=Lista de Siglas e Abreviaturas}
+  \ntlangsetup*{en/acronym=List of Acronyms and Abbreviations}
+}
 
 % Cover background images
-% \thesiscover(phd,1-1,bgcolor):={white}
+\thesiscover(1-1,bgcolor):={white}
+\thesiscover(N-2,bgcolor):={white}
 % \thesiscover(phd,1-1,image):={1-phd-front-cover}
 % \thesiscover(phd,2-1,image):={2-phd-front-cover}
 % \thesiscover(phd,N-2,image):={3-back-cover}
@@ -122,12 +130,13 @@
 %% LIGHT GREY 200,203,206
 
 % Spine info
-\spine(order):=?{date,title,author,degreeacr}
+\spine(order):=?{date,title,author,logo}
 \spine(row)={1.745cm}
 
 % \spine(author)={\thedocauthor(name)}
 % \spine(title)={\thedoctitle(\@LANG@COVER,main)}
 % \spine(date)={\thentdocdate(submission,year)}
+\spine(logo)={logo-novaims}
 
 \IfStrEq{\@DEGREEACR}{}{%
   \spine(degreeacr)={\mbox{ }}%
@@ -137,10 +146,11 @@
 
 \spine(text,angle)={0}
 % \spine(text,color)=black
-\spine(box,bg,color)={white}
+% \spine(spine,bg,color)={white}
 \spine(box,inspace)={1mm}
 
 \spine(margin,left)={\thespine(row)}
+\spine(margin,right)={\dimexpr\barheight+1cm+1pt\relax}
 
 \spine(box,title,margin,left)={0.5mm}
 \spine(box,title,margin,right)={0.5mm}
@@ -149,7 +159,7 @@
 \spine(box,date,margin,left)={0.5mm}
 \spine(box,date,margin,right)={0.5mm}
 
-\spine(box,date,bg,color)={none}
+% \spine(box,bg,color)={yellow}
 
 \spine(box,title,left)={\dimexpr\thespine(row)*3+\thespine(box,inspace)\relax}
 \spine(box,author,left)={\dimexpr\thespine(row)*11+\thespine(box,inspace)\relax}
@@ -157,9 +167,11 @@
 \spine(box,date,len):={\thespine(row)}
 \spine(box,title,len)={\dimexpr\thespine(row)*7-\thespine(box,inspace)*2\relax}
 \spine(box,author,len)={\dimexpr\thespine(row)*3-\thespine(box,inspace)*2\relax}
+\spine(box,logo,len):={1cm}
+\spine(box,logo,align):={r}
 
 \spine(box,degreeacr,len):={\thespine(row)}
-\spine(box,degreeacr,left):={\dimexpr\thespine(row)*15\relax}
+\spine(box,degreeacr,left):={28cm}
 \spine(box,degreeacr,bg,color)={none}
 \spine(box,degreeacr,text,color):={white}
 
@@ -300,6 +312,39 @@
 \def\areaheight{11cm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Add hook to print the SDG goals with the abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \AddToHook{abstract/\theabstractorder(\@LANG@MAIN)/post}{\fbox{XXXXXXXXXX}\LKJJHLHJKKHHJ}
+\AtEndPreamble{%
+\NTAddToHook{abstract/\@LANG@MAIN/post}{%
+  \newcounter{sdgcnt}%
+  \vfill%
+  \raggedright%
+  \textbf{Sustainable Development Goals (SDG):}\\[1ex]
+  \noindent
+  \optionlistdo{/novathesis/nova/ims/sdg}{%
+    \stepcounter{sdgcnt}%
+    \ifnum\value{sdgcnt}=10\relax\\[2pt]\fi%
+    \includegraphics[width=1.5cm]{sdg-\@LANG@MAIN/sdg-\@LANG@MAIN-#1}\ 
+  }
+}
+\NTAddToHook{spine/pre}{%
+  \begin{tikzpicture}[remember picture, overlay]
+      \fill [color=imsdarkgrey]
+             ($(current page.north east)$)
+             rectangle ($(current page.south east)+(-\barheight,0cm)$);
+      \begin{scope}[]
+        \clip ($(current page.north east)$)
+             rectangle ($(current page.south east)+(-\barheight,0cm)$);
+        \foreach \i in {0, 1, 2, ..., 163} { % Change 10 to the number of lines you want
+            \draw[very thick,imsmidgrey] ($(current page.north east) + (0,-\i*2.4mm)$) -- ++(-\barheight-1mm,\barheight-1mm);
+        }
+      \end{scope}
+  \end{tikzpicture}
+}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ntaddtocover[tikz]{1-1}{%
@@ -382,6 +427,9 @@
   \theuniversity(pt)
 }
 
+\ntaddtocover[]{1-2}{%
+  ~
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

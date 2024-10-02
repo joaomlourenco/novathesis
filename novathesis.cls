@@ -257,6 +257,8 @@
   % DEBUG
   debug/.new list               = {},         % cover, index
 % SCHOOL specific customization
+% NOVA/IMS
+  nova/ims/sdg/.new list        = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17},
 % NOVA/ITQB
   nova/itqb/cover/color/.new choice            = {gray, green},
 % UMINHO
@@ -522,6 +524,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\initmemory}[2][\embrace{\thenotdefined(\@LANG@COVER)}]{%
   \optionlistdo{/@nt/lang/short}{\csuse{#2}(##1):={#1}}}
+
 
 % For PDF bookmakrs
 \newdata{bkmstring}
@@ -1007,43 +1010,30 @@
 %============================================================
 % Date and month
 \newdata{ntdocdate}
-\ntdocdate(submission,year):={year}
-\ntdocdate(submission,month):={month}
-\ntdocdate(submission,day):={day}
-\ntdocdate(exam,year):={year}
-\ntdocdate(exam,month):={month}
-\ntdocdate(exam,day):={day}
 
 \def\ntdate{%
   \@ifnextchar({\@ntdate@i}{\@ntdate@i(submission)}%
 }
 
+\usepackage{pgfcalendar} % For converting month names
+
 \def\@ntdate@i(#1)#2{%
   \StrCut{#2}{-}\@NTDY\@NTDM%
   \StrCut{\@NTDM}{-}\@NTDM\@NTDD%
   % \typeout{NTD(#1) Y=[\@NTDY] M=[\@NTDM] D=[\@NTDD]}\NTDATE%
+  \ntdocdate(#1):={#2}%
   \ntdocdate(#1,year):={\@NTDY}%
   \ntdocdate(#1,month):={\@NTDM}%
   \ntdocdate(#1,day):={\@NTDD}%
   \@for\myi:={year,month,day}\do{%
-    \IfStrEq{\thentdocdate(#1,\myi)}{\myi}{}{%
-      \IfInteger{\thentdocdate(#1,\myi)}{}{\ClassError{The \myi\space(\thentdocdate(#1,\myi)) in \string\ntdocdate(#1){#2} is not a number!}{}{}}%
-    }%
+    \IfInteger{\thentdocdate(#1,\myi)}{}
+              {\ClassError{The \myi in \string\ntdocdate(#1){#2} is not a number!}{}{}}%
   }%
+  \ntdocdate(#1,month,text):={\pgfcalendarmonthname{\thentdocdate(#1,month)}}%
 }
-
-% \def\ntdate#1{\@ntdate@i#1--\@relax}
-% \def\@ntdate@i#1-#2\@relax{\@ntdate@ii#1-#2-\@relax}
-% \def\@ntdate@i#1-#2-#3\@relax{%
-%   % year           -> [year] [] []
-%   % year-month     -> [year] [month] [-]
-%   % year-month-day -> [year] [month] [day--]
-%   % \typeout{NTDOCDATE [#1] [#2] [#3]}\NTDOCDATE
-%   \ntdocdate(year):={#1}%
-%   \ntdocdate(month):={#2}%
-%   \ifstrequal{#3}{-}{\ntdocdate(day):={}}%
-%                     {\StrGobbleRight{#3}{2}[\@nt@date@day]\ntdocdate(day):={\@nt@date@day}}%
-% }
+\ntdocdate(default):={2000-09-01}
+\ntdate(submission){\thentdocdate(default)}
+\ntdate(exam){\thentdocdate(default)}
 
 
 %============================================================
@@ -1235,7 +1225,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ntfor\match:={\@UNIV,\@UNIV/\@SCHL}\do{%
     \IfFileExists{NOVAthesisFiles/Schools/\match/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
-            \prependtographicspath{{NOVAthesisFiles/Schools/\match/Images/}}}{}}
+            \prependtographicspath{{NOVAthesisFiles/Schools/\match/Images/},}}{}%
+}
 
 
 %============================================================
@@ -1311,18 +1302,6 @@
 
 % Patch month from number to string in the proper language
 \ntselectlang{\@LANG@COVER}%
-\usepackage{pgfcalendar} % LATEX
-
-\@for\myi:={submission,exam}\do{%
-  \IfInteger{\thentdocdate(\myi,month)}{%
-    \ntdocdate(\myi,month,text):={\pgfcalendarmonthname{\thentdocdate(\myi,month)}}%
-  }{%
-    \ntdocdate(\myi,month,text):={\thentdocdate(\myi,month)}%
-  }
-}
-% \IfInteger{\option{/novathesis/examdate/month}}{%
-%   \options{/novathesis/examdate/month=\pgfcalendarmonthname{\option{/novathesis/examdate/month}}}%
-% }{}
 
 %============================================================
 %  THESIS/DISSERTATION FILES
@@ -1913,12 +1892,12 @@
         \NTRunHook{statement/pre}%
         \iffileadded{statement}{}{%ELSE
           \ntfor\match:={%
-            \@SCHL/statement-\@DEGREEACR-\@LANG@MAIN,%
-            \@SCHL/statement-\@DEGREEACR,%
-            \@SCHL/statement-\@LANG@MAIN,%
-            \@SCHL/statement,%
-            statement-\@LANG@MAIN,%
-            statement%
+            \@SCHL/statement-\@UNIV-\@SCHL-\@DEGREEACR-\@LANG@MAIN,%
+            \@SCHL/statement-\@UNIV-\@SCHL-\@DEGREEACR,%
+            \@SCHL/statement-\@UNIV-\@SCHL-\@LANG@MAIN,%
+            \@SCHL/statement-\@UNIV-\@SCHL,%
+            statement-\@UNIV-\@LANG@MAIN,%
+            statement-\@UNIV%
           }\do{%
             \IfFileExists{NOVAthesisFiles/Schools/\@UNIV/\match.tex}{%
               \ntaddfile{statement}{NOVAthesisFiles/Schools/\@UNIV/\match.tex}%
