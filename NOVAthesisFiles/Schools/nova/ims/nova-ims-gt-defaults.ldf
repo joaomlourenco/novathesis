@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% nova/ims/nova-ims-mgt-defaults.ldf
+%% nova/ims/nova-ims-gt-defaults.ldf
 %% NOVA thesis configuration file
 %%
 %% Customization for FCT-NOVA (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE nova/ims/nova-ims-mgt-defaults.ldf}%
+\typeout{NT FILE nova/ims/nova-ims-gt-defaults.ldf}%
 
 \openany
 \ntsetup{print/copyright=false}
@@ -48,8 +48,8 @@ for the Degree of \emph{\thedegreename(en)}}
 % \thesiscover(msc,spine,bgcolor):={yellow}
 \thesiscover(msc,spine,framecolor):={black!20}
 \thesiscover(mscp,1-1,bgcolor):={white}
-\thesiscover(msc,1-1,image):={nova-ims-mgt-cover-atom}
-\thesiscover(msc,N-2,image):={nova-ims-mgt-cover-atom-back}
+\thesiscover(msc,1-1,image):={nova-ims-gt-cover-atom}
+\thesiscover(msc,N-2,image):={nova-ims-gt-cover-atom-back}
 % \thesiscover(mscplan,1-1,image):={cover-msc-consortium-gt}
 % \thesiscover(bsc,front,image):={}
 % \thesiscover(plain,front,image):={}
@@ -57,7 +57,7 @@ for the Degree of \emph{\thedegreename(en)}}
 
 
 % Spine info
-\spine(logo,msc)={nova-ims-mgt-cover-ball}
+\spine(logo,msc)={nova-ims-gt-cover-ball}
 
 % \spine(author)={\thedocauthor(name)}
 \spine(title)={\THEdoctitle(\@LANG@COVER,main)}
@@ -143,9 +143,9 @@ for the Degree of \emph{\thedegreename(en)}}
 
 % Title of Degree
 \ntaddtocover[vspace=0mm,height=6.35cm,halign=l,valign=t]{1-1}{%
-  \includegraphics[height=5.8cm]{nova-ims-mgt-cover-text-lines}%
+  \includegraphics[height=5.8cm]{nova-ims-gt-cover-text-lines}%
   \hfill%
-  \raisebox{2mm}{\includegraphics[height=2.7cm]{nova-ims-mgt-cover-ball}}%
+  \raisebox{2mm}{\includegraphics[height=2.7cm]{nova-ims-gt-cover-ball}}%
 }
 
 \ntaddtocover[vspace=1.5mm,height=8mm,halign=l,valign=t]{1-1}{%
@@ -256,9 +256,9 @@ for the Degree of \emph{\thedegreename(en)}}
 
 % Title of Degree
 \ntaddtocover[vspace=10mm,height=6.35cm,halign=r,valign=t]{N-2}{%
-  \raisebox{2mm}{\includegraphics[height=2.7cm]{nova-ims-mgt-cover-ball}}%
+  \raisebox{2mm}{\includegraphics[height=2.7cm]{nova-ims-gt-cover-ball}}%
   \hfill%
-  \includegraphics[height=5.8cm]{nova-ims-mgt-cover-text-lines}%
+  \includegraphics[height=5.8cm]{nova-ims-gt-cover-text-lines}%
 }
 
 \ntaddtocover[vspace=1.5mm,height=15mm,halign=l,valign=t]{N-2}{%

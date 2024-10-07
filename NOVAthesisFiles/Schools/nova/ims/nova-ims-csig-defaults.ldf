@@ -25,8 +25,8 @@
 \degreenameprefix(en):={Master of Science in}
 \degreenameprefix(pt):={Mestre em}
 
-\ntdegreename(mcsig,en){Geographical Information Systems and Science}
-\ntdegreename(mcsig,pt){Ciência e Sistemas de Informação Geográfica}
+\ntdegreename(csig,en){Geographical Information Systems and Science}
+\ntdegreename(csig,pt){Ciência e Sistemas de Informação Geográfica}
 
 
 % Comiittee printing order
@@ -84,8 +84,8 @@
 
 % Cover background images
 % \thesiscover(phd,1-1,bgcolor):={white}
-\thesiscover(msc,mcsig,1-1,image):={nova-ims-mcsig-cover-front}
-\thesiscover(msc,mcsig,N-2,image):={nova-ims-mcsig-cover-back}
+\thesiscover(msc,csig,1-1,image):={nova-ims-csig-cover-front}
+\thesiscover(msc,csig,N-2,image):={nova-ims-csig-cover-back}
 
 
 % Rename Doctor degree
@@ -106,7 +106,7 @@
 %% LIGHT GREY 200,203,206
 
 % Spine info
-\spine(logo,msc)={nova-ims-mcsig-insignia}
+\spine(logo,msc)={nova-ims-csig-insignia}
 \spine(logo,msc,angle)={0}
 \spine(logo,msc,scale)={1}
 \spine(logo,msc,raise)={0}
@@ -160,11 +160,11 @@
 \margin(cover,2-1,right):={3cm}
 
 
-\dissertationstring(msc,en)={Dissertation presented as partial requirement for obtaining the degree of \thedegreename(mcsig,\@LANG@COVER)}
-\dissertationstring(mscplan,en)={Dissertation plan presented as partial requirement for obtaining the degree of \thedegreename(mcsig,\@LANG@COVER)}
+\dissertationstring(msc,en)={Dissertation presented as partial requirement for obtaining the degree of \thedegreename(csig,\@LANG@COVER)}
+\dissertationstring(mscplan,en)={Dissertation plan presented as partial requirement for obtaining the degree of \thedegreename(csig,\@LANG@COVER)}
 
-\dissertationstring(msc,pt)={Dissertatação apresentada como requisito parcial para obtenção do grau de \thedegreename(mcsig,\@LANG@COVER)}
-\dissertationstring(mscplan,pt)={Plano de dissertação apresentado como requisito parcial para obtenção do grau de \thedegreename(mcsig,\@LANG@COVER)}
+\dissertationstring(msc,pt)={Dissertatação apresentada como requisito parcial para obtenção do grau de \thedegreename(csig,\@LANG@COVER)}
+\dissertationstring(mscplan,pt)={Plano de dissertação apresentado como requisito parcial para obtenção do grau de \thedegreename(csig,\@LANG@COVER)}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
