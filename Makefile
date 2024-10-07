@@ -34,7 +34,7 @@ T:=$(MF).pdf
 S:=$(MF).tex
 
 L:=latexmk $(F)
-F:=-time -shell-escape -synctex=$(SYNCTEX) -file-line-error $(FLAGS)
+F:=-time -shell-escape -synctex=$(SYNCTEX) -file-line-error -f $(FLAGS)
 
 # target and files to be incldued in "make zip"
 ZIPFILES:=NOVAthesisFiles Bibliography Config Chapters LICENSE Makefile novathesis.cls README.md .gitignore template.tex
