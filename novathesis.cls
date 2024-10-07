@@ -1892,12 +1892,12 @@
         \NTRunHook{statement/pre}%
         \iffileadded{statement}{}{%ELSE
           \ntfor\match:={%
-            \@SCHL/statement-\@UNIV-\@SCHL-\@DEGREEACR-\@LANG@MAIN,%
-            \@SCHL/statement-\@UNIV-\@SCHL-\@DEGREEACR,%
-            \@SCHL/statement-\@UNIV-\@SCHL-\@LANG@MAIN,%
-            \@SCHL/statement-\@UNIV-\@SCHL,%
-            statement-\@UNIV-\@LANG@MAIN,%
-            statement-\@UNIV%
+            \@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-\@LANG@MAIN-statement,%
+            \@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-statement,%
+            \@SCHL/\@UNIV-\@SCHL-\@LANG@MAIN-statement,%
+            \@SCHL/\@UNIV-\@SCHL-statement,%
+            \@UNIV-\@LANG@MAIN-statement,%
+            \@UNIV-statement,%
           }\do{%
             \IfFileExists{NOVAthesisFiles/Schools/\@UNIV/\match.tex}{%
               \ntaddfile{statement}{NOVAthesisFiles/Schools/\@UNIV/\match.tex}%
