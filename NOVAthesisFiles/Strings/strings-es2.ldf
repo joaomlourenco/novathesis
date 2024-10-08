@@ -11,6 +11,15 @@
 %%% Spanish - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\AtEndPreamble{
+\StartBabelCommands*{spanish}{date}
+  \SetStringLoop{month#1name}{%
+      Enero,Febrero,Marzo,Abril,Mayo,Junio,%.
+      Julio,Agosto,Septiembre,Octubre,Noviembre,%.
+      Diciembre}
+\EndBabelCommands
+}
+
 \bkmstring(frontmatter,es):={Material de Partida}
 \bkmstring(backmatter,es):={Material Final}
 \bkmstring(cover,es):={Tapa}

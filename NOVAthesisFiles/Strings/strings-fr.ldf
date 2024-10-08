@@ -12,6 +12,15 @@
 %%% Acknowledgments to Sara Ferreira <sarasalomeferreira@gmail.com>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\AtEndPreamble{
+\StartBabelCommands*{french}{date}
+  \SetStringLoop{month#1name}{%
+    Janvier,Février,Mars,Avril,mai,Juin,% 
+    Juillet,Août,Septembre,Octobre,Novembre,%      
+    Décembre}
+\EndBabelCommands
+}
+
 \bkmstring(frontmatter,fr):={Materiel de Départ}
 \bkmstring(backmatter,fr):={Matériel Final}
 \bkmstring(cover,fr):={Couverture}

@@ -12,6 +12,15 @@
 %%% Acknowledgments to Paolo Romano <romano@inesc-id.pt>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\AtEndPreamble{
+\StartBabelCommands*{italian}{date}
+  \SetStringLoop{month#1name}{%
+      gennaio,febbraio,marzo,aprile,maggio,giugno,%
+      luglio,agosto,settembre,ottobre,novembre,%
+      dicembre}
+ \EndBabelCommands     
+ }
+
 \bkmstring(frontmatter,it):={Materiale Iniziale}
 \bkmstring(backmatter,it):={Materiale Finale}
 \bkmstring(cover,it):={Copertina}

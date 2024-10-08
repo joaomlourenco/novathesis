@@ -11,6 +11,15 @@
 %%% English - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\AtEndPreamble{
+\StartBabelCommands*{english}{date}
+  \SetStringLoop{month#1name}{%
+      January,February,March,April,May,June,%
+      July,August,September,October,November,%
+      December}
+\EndBabelCommands
+}
+
 \bkmstring(frontmatter,gr):={Front Matter}
 \bkmstring(backmatter,gr):={Back Matter}
 \bkmstring(cover,gr):={Cover}

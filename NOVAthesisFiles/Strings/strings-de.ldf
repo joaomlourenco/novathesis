@@ -11,6 +11,15 @@
 %%% German - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\AtEndPreamble{
+\StartBabelCommands*{german}{date}
+  \SetStringLoop{month#1name}{%
+      Januar,Februar,März,April,Mai,Juni,%
+      Juli,August,September,Oktober,November%
+      Dezember}
+\EndBabelCommands
+}
+
 \bkmstring(frontmatter,de):={Startmaterial}
 \bkmstring(backmatter,de):={Endmaterial}
 \bkmstring(cover,de):={Buchumschlag}

@@ -11,6 +11,15 @@
 %%% Portuguese - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\AtEndPreamble{
+\StartBabelCommands*{portuguese}{date}
+  \SetStringLoop{month#1name}{%
+      Janeiro,Fevereiro,Março,Abril,Maio,Junho, %
+      Julho,Agosto,Setembro,Outubro,Novembro,%
+      Dezembro}
+\EndBabelCommands
+}
+
 \bkmstring(frontmatter,pt):={Material Inicial}
 \bkmstring(backmatter,pt):={Material Final}
 \bkmstring(cover,pt):={Capa}

@@ -324,7 +324,9 @@
   \thispagestyle{empty}%
   \NTRunHook{spine/pre}%
   % \PAUSETHIS
-  \ifoptionequal{/novathesis/spine/layout}{trim}{\@tempdima=0pt}{\@tempdima=\dimexpr(\stockheight-\@spinewidth)/2\relax}%
+ \ifoptionequal{/novathesis/spine/layout}{trim}
+               {\@tempdima=0pt}
+               {\@tempdima=\dimexpr(\stockheight-\@spinewidth)/2\relax}%
   \begin{tikzpicture}[remember picture, overlay,yscale=-1,yshift=-10.75pt+\@tempdima]%
     % print spine bg color IF DEFINED
     \datamatchtf{\arg}{spine}(%
@@ -469,7 +471,7 @@
     % TEXT
     \rotatebox[origin=c]{\@angle}{%
     \scalebox{\@fbratio}{%
-      \datamatchtf{\arg}{spine}({box,#1,text,color},{box,text,color},{text,color}){\color{\arg}}{}%
+      \datamatchtf{\arg}{spine}({box,#1,text,gz},{box,text,color},{text,color}){\color{\arg}}{}%
       \ifdatadefined{spine}(#1,\@UNIV/\@SCHL){%
         \tabular{@{}c@{}}\thespine(#1,\@UNIV/\@SCHL)\endtabular%
       }{%

@@ -1015,7 +1015,9 @@
   \@ifnextchar({\@ntdate@i}{\@ntdate@i(submission)}%
 }
 
-\usepackage{pgfcalendar} % For converting month names
+% \usepackage{pgfcalendar} % For converting month names
+
+\newcommand{\monthtotext}[1][\month]{\csuse{month\romannumeral#1 name}}
 
 \def\@ntdate@i(#1)#2{%
   \StrCut{#2}{-}\@NTDY\@NTDM%
@@ -1029,7 +1031,8 @@
     \IfInteger{\thentdocdate(#1,\myi)}{}
               {\ClassError{The \myi in \string\ntdocdate(#1){#2} is not a number!}{}{}}%
   }%
-  \ntdocdate(#1,month,text):={\pgfcalendarmonthname{\thentdocdate(#1,month)}}%
+  % \ntdocdate(#1,month,text):={\pgfcalendarmonthname{\thentdocdate(#1,month)}}%
+  \ntdocdate(#1,month,text):={\monthtotext[\@NTDM]}%
 }
 \ntdocdate(default):={2000-09-01}
 \ntdate(submission){\thentdocdate(default)}
