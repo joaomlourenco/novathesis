@@ -13,7 +13,7 @@ V:=open -a skim
 # DO NOT TOUCH BELOW THIS POINT
 #############################################################################
 
-# If a file "tempalte.tex" is found, use it as the main file
+# If a file "tempalte.tex" is found, usennn it as the main file
 # otherwise, use the first (alphabetically) .tex file found as the main file
 ifeq ($(MF),)
 TEX:=$(patsubst %.tex,%,$(wildcard *.tex))
@@ -27,14 +27,15 @@ endif
 TEXVERSIONS=$(shell ls /usr/local/texlive/ | fgrep -v texmf-local)
 
 # Customize latex compilation
-SILENT:=-interaction=batchmode #-silent
-SYNCTEX:=1
 B:=$(MF)
 T:=$(MF).pdf
 S:=$(MF).tex
 
-L:=latexmk $(F)
-F:=-time -shell-escape -synctex=$(SYNCTEX) -file-line-error -f $(FLAGS)
+MK:=latexmk $(MKF)
+MKF:=-time -interaction=batchmode -shell-escape -synctex=1 -file-line-error -f $(FLAGS)
+
+CT=cluttex $(CTF)
+CFT:=
 
 # target and files to be incldued in "make zip"
 ZIPFILES:=NOVAthesisFiles Bibliography Config Chapters LICENSE Makefile novathesis.cls README.md .gitignore template.tex
@@ -66,6 +67,16 @@ else
 	make xe
 endif
 
+.PHONY: ct mk
+ct mk:
+ifeq ($@,ct)
+	@echo Using cluttex
+else
+ifeq ($@,mk)
+	@echo Using latexmk
+endif
+endif
+	make CTMK=$@ $(filter-out $@,$(MAKECMDGOALS))
 
 #############################################################################
 # Main targets:
@@ -101,7 +112,11 @@ $(TEXVERSIONS):
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: pdf xe lua
 pdf xe lua: $(S)
-	$(L) -pdf$(patsubst pdf%,%,$@) $(SILENT) $(F) $(B)
+ifeq ($(CTMK),ct)	
+	$(CT) -e pdf$(patsubst pdf%,%,$@)latex $(CTF) $(B)
+else
+	$(MK) -pdf$(patsubst pdf%,%,$@) $(MKF) $(B)
+endif
 	@ eval "$$printtimes"
 
 #————————————————————————————————————————————————————————————————————————————
@@ -130,7 +145,7 @@ zip:
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: clean
 clean:
-	@$(L) -c $(B)
+	@$(MK) -c $(B)
 	@rm -f $(AUXFILES) "*(1)*"
 	@find . -name .DS_Store -o -name '_minted*' | xargs rm -rf
 
