@@ -65,6 +65,11 @@
   \ntlangsetup*{en/acronym=List of Acronyms and Abbreviations}
 }
 
+\ntbibsetup{style=apa}
+\ntsetup{spine/layout=no}
+\AtEndPreamble{\let\cite\parencite}
+
+
 % Cover background images
 \thesiscover(1-1,bgcolor):={white}
 \thesiscover(N-2,bgcolor):={white}
@@ -124,7 +129,7 @@
 
 \newdata{degreeprefix}
 \degreeprefix(msc,en)={Master's Degree Program in}
-\degreeprefix(msc,pt)={Mestardo em}
+\degreeprefix(msc,pt)={Mestrado em}
 
 %% DARK GREY  112,121,128
 %% LIGHT GREY 200,203,206
@@ -474,7 +479,7 @@
   \fontsize{12}{12}\selectfont%
   \adviserstringpre():={\hfill}%
   \adviserstringpost():={:\hfill\null\\[1.5ex]}%
-  \adviserremainderpre():={}%
+  \adviserremainderpre():={, }%
   \adviserremainderfont():={}%
   \personpre():={}%
   \persongrouppre():={}%
