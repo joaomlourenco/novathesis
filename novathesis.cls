@@ -2287,6 +2287,8 @@
 \newcounter{pdfnewlytlevel}
 \RequirePackage{atbegshi}
 \newenvironment{newpdflayout}[3][]{%
+  % #1 = page height
+  % #2 = page width
   % \typeout{textheight=\the\textheight}
   % \typeout{textwidth=\the\textwidth}
   % \AAAA
