@@ -162,8 +162,8 @@
 
 
 % --------------------------------------------------------
-\specializationstring(pt):={na especialidade de}
-\specializationstring(en):={with specialization in}
+\specializationstring(pt):={, na especialidade de}
+\specializationstring(en):={, with specialization in}
 
 % Faculty / School
 \school(pt):={Faculdade de Medicina Veterinária}
@@ -379,8 +379,8 @@
          {\THEmajorfield(\@LANG@COVER)}%
          \ifphddoc{%
            \ifdatadefined{specialization}(\@LANG@COVER)%
-                     {\thebarheight(\@LANG@COVER)
-                      \thespecialization(\@LANG@COVER)}{~}}%
+                     {% \thebarheight(\@LANG@COVER)
+                      \THEspecialization(\@LANG@COVER)}{~}}%
           {~}%
 }%
 
