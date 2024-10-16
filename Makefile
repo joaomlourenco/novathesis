@@ -219,7 +219,7 @@ define mtp
 	git checkout main
 	git pull
 	git merge -m "Merge branch 'develop'" develop
-	git tag -a "v$(VERSION)" -m "Version $(VERSION)."
+	git tag -f -a "v$(VERSION)" -m "Version $(VERSION)."
 	git push --all
 	git push --tags
 	git checkout develop
