@@ -45,24 +45,24 @@
 
 
 % DEFAULT cover
-\thesiscover(1-1,image):={nova-fct-cover-red-front}
-\thesiscover(N-2,image):={nova-fct-cover-red-back}
-\thesiscover(spine,image):={nova-fct-spine-red}
+\thesiscover(1-1,image):=?{nova-fct-cover-red-front}
+\thesiscover(N-2,image):=?{nova-fct-cover-red-back}
+\thesiscover(spine,image):=?{nova-fct-spine-red}
 
 % PhD cover
-\thesiscover(phd,1-1,image):={nova-fct-cover-phd-front}
-\thesiscover(phd,N-2,image):={nova-fct-cover-phd-back}
-\thesiscover(phd,spine,image):={nova-fct-spine-phd}
+\thesiscover(phd,1-1,image):=?{nova-fct-cover-green-front}
+\thesiscover(phd,N-2,image):=?{nova-fct-cover-green-back}
+\thesiscover(phd,spine,image):=?{nova-fct-spine-green}
 
 % MSc cover
-\thesiscover(msc,1-1,image):={nova-fct-cover-msc-front}
-\thesiscover(msc,N-2,image):={nova-fct-cover-msc-back}
-\thesiscover(msc,spine,image):={nova-fct-spine-msc}
+\thesiscover(msc,1-1,image):=?{nova-fct-cover-blue-front}
+\thesiscover(msc,N-2,image):=?{nova-fct-cover-blue-back}
+\thesiscover(msc,spine,image):=?{nova-fct-spine-blue}
 
 % BSc cover
-\thesiscover(bsc,1-1,image):={nova-fct-cover-bsc-front}
-\thesiscover(bsc,N-2,image):={nova-fct-cover-bsc-back}
-\thesiscover(bsc,spine,image):={nova-fct-spine-bsc}
+\thesiscover(bsc,1-1,image):=?{nova-fct-cover-brown-front}
+\thesiscover(bsc,N-2,image):=?{nova-fct-cover-brown-back}
+\thesiscover(bsc,spine,image):=?{nova-fct-spine-brown}
 
 
 

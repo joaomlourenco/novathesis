@@ -1,0 +1,20 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova/fct//nova-fct-blue-defaults.ldf
+%% NOVA thesis document template
+%%
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
+%%
+%% Authors / Contributors:
+%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE schools/nova/fct/nova-fct-blue-defaults.ldf}%
+
+\thesiscover(\@DOCTYPE,1-1,image):={nova-fct-cover-blue-front}
+\thesiscover(\@DOCTYPE,N-2,image):={nova-fct-cover-blue-back}
+\thesiscover(\@DOCTYPE,spine,image):={nova-fct-spine-blue}
+
+\input{NOVAthesisFiles/Schools/nova/fct/nova-fct-defaults.ldf}
