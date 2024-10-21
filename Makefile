@@ -216,13 +216,13 @@ define mtp
 	make clean
 	echo "VERSION IS $(VERSION)"
 	test -n "$(shell git status --porcelain)" &&  git commit --all --message "Version $(VERSION)."
-	git checkout main
-	git pull
-	git merge -m "Merge branch 'develop'" develop
-	git tag -f -a "v$(VERSION)" -m "Version $(VERSION)."
-	git push --all
-	git push --tags
-	git checkout develop
+	# git checkout main
+	# git pull
+	# git merge -m "Merge branch 'develop'" develop
+	# git tag -f -a "v$(VERSION)" -m "Version $(VERSION)."
+	# git push --all
+	# git push --tags
+	# git checkout develop
 endef
 
 
