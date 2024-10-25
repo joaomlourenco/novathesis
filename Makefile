@@ -217,6 +217,7 @@ define mtp
 	echo "VERSION IS $(VERSION)"
 	git commit --all --message "Version $(VERSION)." || true
 	git checkout main
+	git rerset template.pdf
 	git pull
 	git merge -m "Merge branch 'develop'" develop
 	git tag -f -a "v$(VERSION)" -m "Version $(VERSION)."
