@@ -1,0 +1,53 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova/fct//nova-fct-red-defaults.ldf
+%% NOVA thesis document template
+%%
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
+%%
+%% Authors / Contributors:
+%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE schools/nova/fct/nova-fct-di-adc-defaults.ldf}%
+
+\input{NOVAthesisFiles/Schools/nova/fct/nova-fct-red-defaults.ldf}
+
+\printorder(frontmatter,final):={%
+  copyright;       % (*) The copyright page
+  abstracts;       % Print abstracts in multiple languages.
+  alllistof;       % Print all the listof defined in “6_list_of.tex”
+  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+}
+
+\printorder(frontmatter,provisional):={\theprintorder(frontmatter,final)}
+
+\printorder(frontmatter,working):={%
+  abstracts;       % Print abstracts in multiple languages.
+  alllistof;       % Print all the listof defined in “6_list_of.tex”
+  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+}
+
+\copyrighttextstring(pt)={A \theschool(\@LANG@COPYRIGHT)\ e a \theuniversity(\@LANG@COPYRIGHT)\ têm o direito perpétuo de arquivar este relatório em exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, comprometendo-se a manter o mesmo com acesso controlado e restrito, de forma a responder às suas obrigações legais.}
+
+
+\copyrighttextstring(en)={The \theschool(\@LANG@COPYRIGHT)\ and the \theuniversity(\@LANG@COPYRIGHT)\ have the perpetual right to archive this report in printed copies reproduced on paper or digitally, or by any other means known or invented, undertaking to keep it under controlled and restricted access in order to meet their legal obligations.}
+
+\ntsetup{spine/layout=no}
+
+\AtEndPreamble{
+\ntdepartment(pt){Departamento de\\Informática}
+\ntdepartment(en){Department of\\Computer Science}
+\ntdegreename(pt){Informática}
+\ntdegreename(en){Computer Science}
+\specialization(pt):={APDC — Relatório de Estágio em Empresa\ifoptionvoid{/novathesis/nova/fct/company/name}{}{ — \option{/novathesis/nova/fct/company/name}}}%
+\specialization(en):={APDC — Company Internship Report\ifoptionvoid{/novathesis/nova/fct/company/name}{}{ — \option{/novathesis/nova/fct/company/name}}}
+\ntauthordegree(pt){}
+\ntauthordegree(en){}
+\ntresetperson{committee}(c,m)
+\ntresetperson{committee}(c,f)
+\ntresetperson{committee}(r,m)
+\ntresetperson{committee}(r,f)
+}

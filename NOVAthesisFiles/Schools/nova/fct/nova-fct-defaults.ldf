@@ -60,9 +60,9 @@
 \thesiscover(msc,spine,image):=?{nova-fct-spine-blue}
 
 % BSc cover
-\thesiscover(bsc,1-1,image):=?{nova-fct-cover-brown-front}
-\thesiscover(bsc,N-2,image):=?{nova-fct-cover-brown-back}
-\thesiscover(bsc,spine,image):=?{nova-fct-spine-brown}
+\thesiscover(bsc,1-1,image):=?{nova-fct-cover-red-front}
+\thesiscover(bsc,N-2,image):=?{nova-fct-cover-red-back}
+\thesiscover(bsc,spine,image):=?{nova-fct-spine-red}
 
 
 
@@ -133,18 +133,39 @@
 %% COVER 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ntaddtocover[vspace=-0.69mm,halign=l,hspace=-2.57cm,height=0.0cm,valign=t]{1-1}{%
-  \includegraphics[width=21mm,align=t]{\expanded{\theuniversity(logo,neg)}}%
-  \hspace{4.2mm}\vrule\hspace{5.0mm}%
-  \includegraphics[width=35.3mm,align=t]{\expanded{\theschool(logo,neg)}}%
-}
+% \ntaddtocover[vspace=-0.69mm,halign=l,hspace=-2.57cm,height=0.0cm,valign=t]{1-1}{%
+%   \includegraphics[width=21mm,align=t]{\expanded{\theuniversity(logo,neg)}}%
+%   \hspace{4.2mm}\vrule\hspace{5.0mm}%
+%   \includegraphics[width=35.3mm,align=t]{\expanded{\theschool(logo,neg)}}%
+% }
 
-% Department name
-\ntaddtocover[vspace=1.25mm,halign=l,hspace=6.1cm,height=2.0cm,valign=t]{1-1}{%
+% Department name 
+\ntaddtocover[vspace=2.5mm,halign=l,hspace=6.1cm,height=2.0cm,valign=t]{1-1,2-1}{%
   % \ntcoverbackground%
   \fontsize{14}{14}\selectfont%
-  \vspace*{-\baselineskip}
+  % \vspace*{-\baselineskip}
   \THEdepartment(\@LANG@COVER)%
+}
+
+\ntaddtocover[tikz]{1-1}{%
+  \node[anchor=center] at ($(current page.north west) + (20mm,-20mm)$)
+    {\includegraphics[width=21mm]{\expanded{\theuniversity(logo,neg)}}};%
+  \draw[thick] ($(current page.north west) + (3.5cm,-1cm)$) -- ++(0cm,-2cm);%
+  \node[anchor=west] at ($(current page.north west) + (40mm,-19mm)$)
+    {\includegraphics[width=35.3mm]{\expanded{\theschool(logo,neg)}}};%
+}
+
+% Company logo
+\ntaddtocover[tikz]{1-1,2-1}{%
+  \ifoptionvoid{/novathesis/nova/fct/company/logo}{}{%
+    \ifoptionequal{/novathesis/doctype}{bsc}{%
+      \ifoptionequal{/novathesis/schoolgiven}{nova/fct/di-adc}{%
+        \node[anchor=east] at ($(current page.north east) + (-1cm,-2cm)$)
+              {\includegraphics[width=40mm,height=21mm,keepaspectratio]
+                               {\option{/novathesis/nova/fct/company/logo}}};%
+      }{}%
+    }{}%
+  }%
 }
 
 % Title of Dissertation (PhD) / The author name (MSc)
@@ -205,22 +226,46 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % LOGOS
-\ntaddtocover[vspace=1.0mm,hspace=-2.6cm,halign=l,height=2.0cm,valign=t]{2-1}{%
-  % \makebox[0pt]{\color{black!50}\rule{15cm}{5cm}}
-  \vspace*{-4mm}%
-  \begin{minipage}[b]{8.7cm}%
-  \includegraphics[width=2.15cm]{\expanded{\theuniversity(logo)}}%
-  \hspace{3.5mm}\rule{0.15mm}{2cm}\hspace{5mm}%
-  \raisebox{2.5mm}{\includegraphics[width=3.52cm]{\expanded{\theschool(logo)}}}%
-  \end{minipage}%
-  \raisebox{9mm}{%
-  \begin{minipage}[b]{9cm}%
-    \fontsize{14}{14}\selectfont%
-    \THEdepartment(\@LANG@COVER)%
-  \end{minipage}%
-  }\\[4ex]%
-  \hrule width 19cm%
+% \ntaddtocover[vspace=1.0mm,hspace=-2.6cm,halign=l,height=2.0cm,valign=t]{2-1}{%
+%   % \makebox[0pt]{\color{black!50}\rule{15cm}{5cm}}
+%   \vspace*{-4mm}%
+%   \begin{minipage}[b]{8.7cm}%
+%   \includegraphics[width=2.15cm]{\expanded{\theuniversity(logo)}}%
+%   \hspace{3.5mm}\rule{0.15mm}{2cm}\hspace{5mm}%
+%   \raisebox{2.5mm}{\includegraphics[width=3.52cm]{\expanded{\theschool(logo)}}}%
+%   \end{minipage}%
+%   \raisebox{9mm}{%
+%   \begin{minipage}[b]{9cm}%
+%     \fontsize{14}{14}\selectfont%
+%     \THEdepartment(\@LANG@COVER)%
+%   \end{minipage}%
+%   }\\[4ex]%
+%   \hrule width 19cm%
+% }
+
+
+\ntaddtocover[tikz]{2-1}{%
+  \node[anchor=center] at ($(current page.north west) + (20mm,-20mm)$)
+    {\includegraphics[width=21mm]{\expanded{\theuniversity(logo)}}};%
+  \draw[thick] ($(current page.north west) + (3.5cm,-1cm)$) -- ++(0cm,-2cm);%
+  \node[anchor=west] at ($(current page.north west) + (40mm,-19mm)$)
+    {\includegraphics[width=35.3mm]{\expanded{\theschool(logo)}}};%
+  \draw[thick] ($(current page.north west) + (1cm,-4.1cm)$) -- ++(\paperwidth-2cm,0cm);%
 }
+
+% Company logo
+\ntaddtocover[tikz]{1-1,2-1}{%
+  \ifoptionvoid{/novathesis/nova/fct/company/logo}{}{%
+    \ifoptionequal{/novathesis/doctype}{bsc}{%
+      \ifoptionequal{/novathesis/schoolgiven}{nova/fct/di-adc}{%
+        \node[anchor=east] at ($(current page.north east) + (-1cm,-2cm)$)
+              {\includegraphics[width=40mm,height=21mm,keepaspectratio]
+                               {\option{/novathesis/nova/fct/company/logo}}};%
+      }{}%
+    }{}%
+  }%
+}
+
 
 % Title of Dissertation (PhD)
 \ntaddtocover[vspace=3cm,halign=l]{2-1}{%
