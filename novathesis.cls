@@ -213,7 +213,9 @@
   % abstract/theorder/.new list   = {unset},
   abstractorder/.new cmd        = {\appto\@nt@saveabstractorder{{#1},}},%
   % SCHOOL
-  school/.new cmd               = {\StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR%
+  schoolgiven/.new value        = {},
+  school/.new cmd               = {\optionsalso{/novathesis/schoolgiven=#1}%
+                                   \StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR%
                                    \@validate@ltx@processor{\@UNIV}{\@SCHL}{\@DEGREEACR}},
   school                        = nova/fct,
   % STYLES
@@ -257,8 +259,11 @@
   % DEBUG
   debug/.new list               = {},         % cover, index
 % SCHOOL specific customization
+% NOVA/FCT
+  nova/fct/company/logo/.new value              = {},
+  nova/fct/company/name/.new value              = {},
 % NOVA/IMS
-  nova/ims/sdg/.new list        = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17},
+  nova/ims/sdg/.new list                       = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17},
 % NOVA/ITQB
   nova/itqb/cover/color/.new choice            = {gray, green},
 % UMINHO
@@ -455,6 +460,13 @@
            /@nt/#1/#2/gender/.newpush={#3}}%
   % \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
   \fullexpandarg
+}
+
+\def\ntresetperson#1(#2,#3){%
+  % #1 = class
+  \option@setnil{/@nt/#1/#2/name}%
+  \option@setnil{/@nt/#1/#2/full}%
+  \option@setnil{/@nt/#1/#2/gender}%
 }
 
 
@@ -906,6 +918,7 @@
 %--------------------------------
 % TIKZ
 \RequirePackage{tikz}
+\usetikzlibrary{calc}
 
 %%%%% Fine tuning of typesetting
 \ifxeorlua{%
@@ -975,8 +988,8 @@
             {\@DOCCLASS,\@LANG@COVER},%
             {\@LANG@COVER}%
   )%
-  \ifblank{\match}{\specialization(#1):={#2}}{\specialization(#1):={\match\ #2}}%
-  \minorfield(#1):={#2}%
+  \ifblank{\match}{\specialization(#1)={#2}}{\specialization(#1)={\match\ #2}}%
+  \minorfield(#1)={#2}%
 }
 
 % --------------------------------------------------------
@@ -1972,7 +1985,7 @@
           {1}{\@ntprintpersonsasonecolumn{#1}{#2}{#5}{#6}}%
           {2}{\@ntprintpersonsastwocolumns{#1}{#5}{#6}}%
         }[\ClassError{novathesis}{Ivalid argument [#4] to \string\ntprintpersons{#1}{#2}{#4}{#5}{#6}}{}]%
-      \end{varwidth}
+      \end{varwidth}%
     \end{minipage}%
   }{}%
 }
@@ -2093,19 +2106,23 @@
 \newcommand{\@nt@printgrouptitle@text}[2]{%
   % #1 = {adviser | committee}
   % #2 = {a,c} | {c,r,a,m,g}
-\ifoptiondefined{/@nt/#1/#2/full}{%
+  \ifoptiondefined{/@nt/#1/#2/full}{%
+  \ifnum\value{\option{/@nt/#1/#2/full/@size}}>0\relax%
+  % \typeout{/@nt/#1/#2/full=\arabic{\option{/@nt/#1/#2/full/@size}}}\AAAAA
     \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
     \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
     \bgroup%
       \datadefault{#1stringfont}(#2)%
       \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
     \egroup%
+  \fi%
   }{}%
 }
 
 \newcommand{\@nt@printgrouptitle}[2]{%
   % #1 = {adviser | committee}
   % #2 = {a,c} | {c,r,a,m,g}
+  \ifnum\value{\option{/@nt/#1/#2/full/@size}}>0\relax%
   \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
   \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
   \datadefault{#1stringpre}(#2)%
@@ -2114,6 +2131,7 @@
     \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
   \egroup%
   \datadefault{#1stringpost}(#2)%
+  \fi%
 }
 
 \newcommand{\@nt@ntprintpersongroup}[4][full]{%
@@ -2122,6 +2140,7 @@
   % #3 = {adviser | committee}
   % #4 = {a,c} | {c,r,a,m,g}
   \ifoptiondefined{/@nt/#3/#4/full}{%
+  \ifnum\value{\option{/@nt/#3/#4/full/@size}}>0\relax%
     % \typeout{NTPRINTPERSONGROUP 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\NTPRINTPERSONGROUP
     \@nt@printgrouptitle{#3}{#4}%
     \begin{varwidth}[t]{\linewidth-\maxlen}%
@@ -2133,6 +2152,7 @@
       }%
     \end{varwidth}%
     \thepersongrouppost()%
+  \fi%
   }{}%
 }
 

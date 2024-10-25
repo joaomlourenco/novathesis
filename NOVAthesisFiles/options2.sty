@@ -595,7 +595,7 @@
 \newrobustcmd*{\option@listsize}[1]{%
   % \typeout{NT option@listsize [#1]}%
   \ifcsname c@#1/@sizecnt\endcsname%
-    \arabic{#1/@sizecnt}%
+    \arabic{c@#1/@sizecnt}%
   \else%
     0%
   \fi%
