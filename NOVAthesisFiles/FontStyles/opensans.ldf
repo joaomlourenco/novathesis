@@ -1,0 +1,10 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/opensans.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization of font to use a Linux Libertine font set
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE FontStyles/opensans.ldf}%
+
+\RequirePackage[default,scale=0.95]{opensans}

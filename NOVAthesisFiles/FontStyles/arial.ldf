@@ -8,10 +8,10 @@
 \typeout{NT FILE FontStyles/arial.ldf}%
 
 
-\ntcheckfont{Arial.ttf}{}
-\ntcheckfont{ArialBold.ttf}{}
-\ntcheckfont{ArialItalic.ttf}{}
-\ntcheckfont{ArialBoldItalic.ttf}{}
+\ntcheckfont{Arial.ttf}{https://github.com/joaomlourenco/novathesis-extras/raw/main/Fonts/Arial.zip}
+\ntcheckfont{ArialBold.ttf}{https://github.com/joaomlourenco/novathesis-extras/raw/main/Fonts/Arial.zip}
+\ntcheckfont{ArialItalic.ttf}{https://github.com/joaomlourenco/novathesis-extras/raw/main/Fonts/Arial.zip}
+\ntcheckfont{ArialBoldItalic.ttf}{https://github.com/joaomlourenco/novathesis-extras/raw/main/Fonts/Arial.zip}
 
 \ifxeorlua{}{%
   \ClassError{novathesis}{Font Style “arial” is not compatible with pdfLaTeX. Please use XeLaTeX or LuaLaTeX}{Please use XeLaTeX or LuaLaTeX}%

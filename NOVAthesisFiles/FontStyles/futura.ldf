@@ -1,0 +1,91 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/futura.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization of font to use a Linux Libertine font set
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE FontStyles/futura.ldf}%
+
+
+\ntcheckfont{Futura-Medium.ttf}
+            {https://github.com/joaomlourenco/novathesis-extras/raw/main/Fonts/Futura.zip}
+\ntcheckfont{Futura-MediumItalic.ttf}
+            {https://github.com/joaomlourenco/novathesis-extras/raw/main/Fonts/Futura.zip}
+\ntcheckfont{Futura-Bold.ttf}
+            {https://github.com/joaomlourenco/novathesis-extras/raw/main/Fonts/Futura.zip}
+
+\ifxeorlua{}{%
+  \ClassError{novathesis}{Font Style “futura” is not compatible with pdfLaTeX. Please use XeLaTeX or LuaLaTeX}{Please use XeLaTeX or LuaLaTeX}%
+}
+
+
+\AtEndPreamble{%
+\RequirePackage[type1]{cabin}% used only by \mathsf
+\RequirePackage{amsthm}% load before newtxmath
+\RequirePackage[libertine,vvarbb]{newtxmath}% does not load minfutura because another Roman text package was specified
+
+\setmainfont{Futura}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+  UprightFont=Futura-Medium.ttf,
+  ItalicFont=Futura-MediumItalic.ttf,
+  BoldFont=Futura-Bold.ttf,
+  BoldItalicFont=Futura-MediumItalic.ttf,
+  BoldItalicFeatures={FakeBold=1.5},
+]
+
+\setfontfamily\futura{Futura-Medium.ttf}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+]
+
+\setfontfamily\futurait{Futura-MediumItalic.ttf}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+]
+
+\setfontfamily\futurabf{Futura-Bold.ttf}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+]
+
+\setfontfamily\futurabfit{Futura-MediumItalic.ttf}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+  BoldItalicFeatures={FakeBold=1.5},
+]
+
+\setfontfamily\futurasl{Futura-Medium.ttf}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+  AutoFakeSlant=0.15,
+]
+
+\setfontfamily\futurabfsl{Futura-Bold.ttf}[
+  Ligatures=TeX,
+  Mapping=tex-text,
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+  AutoFakeSlant=0.15,
+]
+
+
+%
+% %https://sourcefoundry.org/hack/
+% \setmonofont{Hack}[
+% %Scale=MatchLowercase,
+% Scale=0.8,
+% Path = novathesis-files/FontStyles/fonts/,
+% Extension = .ttf,
+% Mapping=tex-text,
+% UprightFont=*-Regular,
+% BoldFont=*-Bold,
+% ItalicFont=*-Italic,
+% BoldItalicFont=*-BoldItalic]
+}
