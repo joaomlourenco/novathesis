@@ -222,7 +222,7 @@ define mtp
 	git merge -m "Merge branch 'develop'" develop
 	git tag -f -a "v$(VERSION)" -m "Version $(VERSION)."
 	git push --all
-	git push --tags
+	git push -f --tags
 	git checkout develop
 endef
 
