@@ -199,24 +199,24 @@
 
 
 \ntaddtocover[tikz]{1-1}{%
-  \datamatch{\@MRGN@top}{margin}({cover,\option{/novathesis/doctype},1-1,top},%
-                                       {cover,\option{/@nt/document/docclass},1-1,top},%
-                                       {cover,1-1,top},
-                                       {cover,\option{/novathesis/doctype},top},%
-                                       {cover,\option{/@nt/document/docclass},top},%
-                                       {cover,top})%
-  \datamatch{\@MRGN@left}{margin}({cover,\option{/novathesis/doctype},1-1,left},%
-                                       {cover,\option{/@nt/document/docclass},1-1,left},%
-                                       {cover,1-1,left},
-                                       {cover,\option{/novathesis/doctype},left},%
-                                       {cover,\option{/@nt/document/docclass},left},%
-                                       {cover,left})%
-  \datamatch{\@MRGN@right}{margin}({cover,\option{/novathesis/doctype},1-1,right},%
-                                       {cover,\option{/@nt/document/docclass},1-1,right},%
-                                       {cover,1-1,right},
-                                       {cover,\option{/novathesis/doctype},right},%
-                                       {cover,\option{/@nt/document/docclass},right},%
-                                       {cover,right})%
+  % \datamatch{\@MRGN@top}{margin}({cover,\option{/novathesis/doctype},1-1,top},%
+  %                                      {cover,\option{/@nt/document/docclass},1-1,top},%
+  %                                      {cover,1-1,top},
+  %                                      {cover,\option{/novathesis/doctype},top},%
+  %                                      {cover,\option{/@nt/document/docclass},top},%
+  %                                      {cover,top})%
+  % \datamatch{\@MRGN@left}{margin}({cover,\option{/novathesis/doctype},1-1,left},%
+  %                                      {cover,\option{/@nt/document/docclass},1-1,left},%
+  %                                      {cover,1-1,left},
+  %                                      {cover,\option{/novathesis/doctype},left},%
+  %                                      {cover,\option{/@nt/document/docclass},left},%
+  %                                      {cover,left})%
+  % \datamatch{\@MRGN@right}{margin}({cover,\option{/novathesis/doctype},1-1,right},%
+  %                                      {cover,\option{/@nt/document/docclass},1-1,right},%
+  %                                      {cover,1-1,right},
+  %                                      {cover,\option{/novathesis/doctype},right},%
+  %                                      {cover,\option{/@nt/document/docclass},right},%
+  %                                      {cover,right})%
     % Text in rectangle
   \setbox0=\hbox{\scalebox{2.15}{\bfseries\thentdocdate(submission,year)}}
   \begin{scope}[shift=(current page.north west), xshift=\@MRGN@left]
