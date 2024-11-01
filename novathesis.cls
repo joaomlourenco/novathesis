@@ -1214,9 +1214,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntresetcovers}{%
   \@for\arg:={1-1,1-2,2-1,2-2,N-1,N-2}\do{%
-    \option@setnil{/@nt/cover/\@UNIV/\@SCHL/\arg}%
+    \ntresetonecover{\arg}%
   }%
 }
+
+\newcommand*{\ntresetonecover}[1]{%
+    \option@setnil{/@nt/cover/\@UNIV/\@SCHL/#1}%
+}
+
 
 \newcommand*{\ntaddtocover}[3][]{%
   % #1 = cover atrtibutes
