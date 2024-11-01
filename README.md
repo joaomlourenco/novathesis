@@ -132,7 +132,7 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
 
 *[See above](#with-a-local-latex-installation) for using a local installation of LaTeX*
 
-*NOVAthesis v6.10.10 is available as an [Overleaf template](https://www.overleaf.com/latex/templates/novathesis-v7-dot-1-5/jhqwhtcwbmqc).  Just select <kbd>open as template</kbd> and follow from [step 3 above](#with-a-local-latex-installation)!*
+*NOVAthesis is available as an [Overleaf template](https://www.overleaf.com/latex/templates/novathesis-v7-dot-2-1/jhqwhtcwbmqc).  Just select <kbd>open as template</kbd> and follow from [step 3 above](#with-a-local-latex-installation)!*
 
 1. Download the [latest version from the GitHub repository as a Zip file](https://github.com/joaomlourenco/novathesis/archive/main.zip).
 2. Login to your favorite LaTeX cloud service.  I recommend [Overleaf](https://www.overleaf.com?r=f5160636&rm=d&rs=b) but there are alternatives (these instructions apply to Overleaf  and you'll have to adapt for other providers).
@@ -142,8 +142,7 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
 6. Follow from [step 3 above](#with-a-local-latex-installation)
 
 *WARNING: Overleaf reduced the compile time*
-![image](https://github.com/joaomlourenco/novathesis/assets/2064643/a3ffeeef-011e-45cd-974a-c22191267c18)
-There is no way you can compile your thesis/dissertation (using this template) within the new (20 seconds) time limit.  This means you have two options:
+There is no way you can compile your thesis/dissertation (using this template) within the new (20 seconds) time limit given by the free Oveleaf plan.  This means you have two options:
 * Install LaTeX in your computer and [use the template locally](#with-a-local-latex-installation)!
 * Opt for a hassle-free solution and [buy a (student) plan in Overleaf](https://www.overleaf.com/user/subscription/plans).
 
@@ -188,44 +187,45 @@ This template is the result of hundreds (yes! *many hundreds*) of hours of work 
 ## List of Supported Schools
 
 * NOVA University Lisbon
-  * [NOVA School for Science and Technology](https://www.fct.unl.pt) (FCT-NOVA)
-  * [NOVA Information Management School](https://www.novaims.unl.pt) (NOVA-IMS)
+  * [NOVA School for Science and Technology](https://www.fct.unl.pt) (NOVA FCT)
+  * [NOVA Information Management School](https://www.novaims.unl.pt) (NOVA IMS)
     * [PhD in Information Management](https://www.novaims.unl.pt/doutoramento)
-    * [Master in Geographical Information Systems and Science](https://www.novaims.unl.pt/unigis)
     * [Master in Statistics and Information Management](https://www.novaims.unl.pt/megi)
     * [Master in Information Management](https://www.novaims.unl.pt/mgi)
-    * [Master in Geospatial Technologies](https://www.novaims.unl.pt/geotech)
+    * [Master in Geographical Information Systems and Science](https://www.novaims.unl.pt/unigis)
     * [Master in Data Science and Advanced Analytics](https://www.novaims.unl.pt/mdsaa)
-    * [Masters in Geospatial Technologies](https://mastergeotech.info)
+    * [Master in Geospatial Technologies](https://www.novaims.unl.pt/geotech)
   * [National School of Public Heath](https://www.ensp.unl.pt) (ENSP-NOVA)
-  * [Faculdade de Ciências Humanas e Sociais](https://www.fcsh.unl.pt) (FCSH-NOVA)
-  * [Instituto de Tecnologia Química e Biologica Antonio Xavier](https://www.itqb.unl.pt) (ITQB-NOVA)
+  * [Faculdade de Ciências Humanas e Sociais](https://www.fcsh.unl.pt) (NOVA FCSH)
+  * [Instituto de Tecnologia Química e Biologica Antonio Xavier](https://www.itqb.unl.pt) (NOVA ITQB)
 * University of Lisbon
-  * [Instituto Superior Técnico](https://tecnico.ulisboa.pt) (IST-ULISBOA)
-  * [Faculdade de Ciências](https://ciencias.ulisboa.pt) (FC-ULISBOA)
-  * [Faculdade de Medicina Veterinária](https://www.fmv.ulisboa.pt) (FMV-ULISBOA)
+  * [Lisbon School of Economics and Management](https://www.iseg.ulisboa.pt) (ULISBOA ISEG)
+  * [Instituto Superior Técnico](https://tecnico.ulisboa.pt) (ULISBOA IST)
+  * [Faculdade de Ciências](https://ciencias.ulisboa.pt) (ULISBOA FC)
+  * [Faculdade de Medicina Veterinária](https://www.fmv.ulisboa.pt) (ULISBOA FMV)
 * University of Minho
-  * [Escola de Arquitetura](https://www.arquitetura.uminho.pt) (EA-UMIMHO)
-  * [Escola de Ciências](https://www.ecum.uminho.pt) (EC-UMIMHO)
-  * [Escola de Direito](https://www.direito.uminho.pt) (ED-UMIMHO)
-  * [Escola de Economia e Gestão](https://www.eeg.uminho.pt) (EEG-UMIMHO)
-  * [Escolha de Engenharia](https://www.eng.uminho.pt) (EE-UMIMHO)
-  * [Escola de Medicina](https://www.med.uminho.pt) (EM-UMIMHO)
-  * [Escola de Psicologia](https://www.psi.uminho.pt) (EP-UMIMHO)
-  * [Escola Superior de Enfermagem](https://www.ese.uminho.pt) (ESE-UMIMHO)
-  * [Instituto de Ciências Sociais](https://www.ese.uminho.pt) (ICS-UMIMHO)
-  * [Instituto de Educação](https://www.ie.uminho.pt) (IE-UMIMHO)
-  * [Instituto de Letras e Ciências Humanas](https://www.elach.uminho.pt) (ILCH-UMIMHO)
-  * [Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos](https://i3bs.uminho.pt) (I3Bs-UMIMHO)
+  * [Escola de Arquitetura](https://www.arquitetura.uminho.pt) (UMIMHO EA)
+  * [Escola de Ciências](https://www.ecum.uminho.pt) (UMIMHO EC)
+  * [Escola de Direito](https://www.direito.uminho.pt) (UMIMHO ED)
+  * [Escola de Economia e Gestão](https://www.eeg.uminho.pt) (UMIMHO EEG)
+  * [Escolha de Engenharia](https://www.eng.uminho.pt) (UMIMHO EE)
+  * [Escola de Medicina](https://www.med.uminho.pt) (UMIMHO EM)
+  * [Escola de Psicologia](https://www.psi.uminho.pt) (UMIMHO EP)
+  * [Escola Superior de Enfermagem](https://www.ese.uminho.pt) (UMIMHO ESE)
+  * [Instituto de Ciências Sociais](https://www.ese.uminho.pt) (UMIMHO ICS)
+  * [Instituto de Educação](https://www.ie.uminho.pt) (UMIMHO IE)
+  * [Instituto de Letras e Ciências Humanas](https://www.elach.uminho.pt) (UMIMHO ILCH)
+  * [Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos](https://i3bs.uminho.pt) (UMIMHO I3Bs)
 * Universidade Lusófona de Humanidades e Tecnologias
-  * [Departamento de Engenharia Informática e Sistemas de Informação](http://informatica.ulusofona.ptpt) (ULHT-DEISI)
+  * [Departamento de Engenharia Informática e Sistemas de Informação](http://informatica.ulusofona.ptpt) (ULHT DEISI)
+  * [Escola de Ciências Econômicas e das Organizações](https://www.ulusofona.pt/faculdades-e-escolas/cul/eceo) (ULHC ECEO)
     
     <!-- * ISCTE – Instituto Universitário de Lisboa -->
   <!-- * [Escola de Tecnologia e Arquitectura](https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura) (ETA-ISCTE-IUL) _NOTE: this template is outdated (there are new covers/specifications)_ -->
 * Instituto Politécnico de Lisboa
-  * [Instituto Superior de Engenharia de Lisboa](https://www.isel.pt) (ISEL-IPL)
+  * [Instituto Superior de Engenharia de Lisboa](https://www.isel.pt) (ISEL IPL)
 * Instituto Politécnico de Setúbal  
-  <!-- * [Escola Superior de Saúde](https://www.ess.ips.pt) (ESS-IPS) -->
+  <!-- * [Escola Superior de Saúde](https://www.ess.ips.pt) (ESS IPS) -->
   * [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt) (ESTB-IPS)
 
 * Other Schools/Degrees
@@ -243,7 +243,7 @@ Although the template goes far beyond the cover… some covers from the supporte
 
 ## Disclaimer
 
-These are not official templates for FCT-NOVA nor any other School, although we have done our best to make it fully compliant to each School regulations for thesis/dissertation presentation.
+These are not official templates for NOVA FCT nor any other School, although we have done our best to make it fully compliant to each School regulations for thesis/dissertation presentation.
 
 All [contributors](https://github.com/joaomlourenco/novathesis/wiki#help-with-the-project-patches-and-new-features), both sporadic and regular, are welcome. :) Please [contact me](http://docentes.fct.unl.pt/joao-lourenco) to join the team.
 
