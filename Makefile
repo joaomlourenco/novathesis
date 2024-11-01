@@ -213,6 +213,8 @@ endif
 
 # merge, tag and push
 define mtp
+	VERSION=$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/')
+	DATE=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
 	make clean
 	echo "VERSION IS $(VERSION)"
 	git commit --all --message "Version $(VERSION)." || true
