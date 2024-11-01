@@ -118,11 +118,11 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
 | **`5_packages.tex`** | **Configure additional packages and commands**                                                                                                                              |
 | `6_list_of.tex`      | Configure the lists to be printed (table of contents, list of figures, list of tables, list of listings, etc).  _Don't touch this file unless you know what you are doing!_ |
 |                      |                                                                                                                                                                             |
-| `9_nova_fct.tex`     | Configuration specific to **nova/fct**                                                                                                                                      |
-| `9_nova_ims.tex`     | Configuration specific to **nova/ims**                                                                                                                                      |
-| `9_nova_itqb.tex`    | Configuration specific to **nova/itqb**                                                                                                                                     |
-| `9_ulisboa_fmv.tex`  | Configuration specific to **ulisboa/fmv**                                                                                                                                   |
-| `9_uminho.tex`       | Configuration specific to **uminho** (all schools)                                                                                                                          |
+| `9_nova_fct.tex`     | Configuration specific to **nova/fct** (NOVA FCT)                 |
+| `9_nova_ims.tex`     | Configuration specific to **nova/ims** (NOVA IMS)                 |
+| `9_ulisboa_fmv.tex`  | Configuration specific to **ulisboa/fmv** (ULISBOA FMV)           |
+| `9_nova_iseg.tex`    | Configuration specific to **nova/iseg** (ULISBOA ISEG)            |
+| `9_uminho.tex`       | Configuration specific to **uminho** (all schools)                |
 
 5. Recompile de document:
    * See 3. above.
