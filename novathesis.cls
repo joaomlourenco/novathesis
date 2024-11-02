@@ -1541,6 +1541,7 @@
   \endgroup%
   \setcounter{page}{1}%
   \iftoggle{/novathesis/countsecondcover}{\stepcounter{page}}{}%
+  \pagecolor{white}%
 }
 
 \newcommand{\ntprintcoverpair}[1]{%
@@ -1578,28 +1579,67 @@
   \begingroup%
     \NTRunHook{cover/pre}%
     \NTRunHook{cover/#1/pre}%
-    \datamatchtf{\match}{thesiscover}(%
-                {\@DOCTYPE,\@DEGREEACR,#1,textcolor}%
-               ,{\@DOCCLASS,\@DEGREEACR,#1,textcolor}%
-               ,{\@DEGREEACR,#1,textcolor}%
-               ,{\@DEGREEACR,textcolor}%
-               ,{\@DOCTYPE,#1,textcolor}%
-               ,{\@DOCCLASS,#1,textcolor}%
-               ,{#1,textcolor}%
-               ,{textcolor}%
-    ){\color{\match}}{}%
     \pdfbookmark[1]{\thebkmstring(#1)}{\thebkmstring(#1)}%
-    \@ntmakeboxwithcover{#1}{\@fullcover@box}%
+    \thispagestyle{empty}%
+    \setcoverbgcolor{#1}%
+    \setcoverbgimage{#1}%
+    \setcovertext{#1}%
+    % \@ntmakeboxwithcover{#1}{\@fullcover@box}%
     \NTRunHook{cover/#1/post}%
     \NTRunHook{cover/post}%
   \endgroup%
   \ifoptionequal{/novathesis/media}{paper}{\newpage ~\thispagestyle{empty}\newpage}{\clearforchapter}
 }
 
-\newcommand{\@ntmakeboxwithcover}[2]{%
-  % #1 = cover ID (major-minor)
-  % #2 = box name
-  % \typeout{NTMAKEBOXWITHCOVER 1=[#1]}\NTMAKEBOXWITHCOVER%
+\newcommand{\setcoverbgcolor}[1]{
+  \null%
+  \NTRunHook{cover/#1/bgcolor/pre}%
+  \datamatchtf{\match}{thesiscover}(%
+    {\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
+   ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
+   ,{\@DEGREEACR,#1,bgcolor}%
+   ,{\@DEGREEACR,bgcolor}%
+   ,{\@DOCTYPE,#1,bgcolor}%
+   ,{\@DOCCLASS,#1,bgcolor}%
+   ,{#1,bgcolor}%
+   ,{bgcolor}%
+  ){\pagecolor{\match}}{\pagecolor{white}}%
+  \NTRunHook{cover/#1/bgcolor/post}%
+}
+
+\newcommand{\setcoverbgimage}[1]{
+  \null%
+  \NTRunHook{cover/#1/image/pre}%
+  \datamatchtf{\match}{thesiscover}(%
+    {\@DOCTYPE,\@DEGREEACR,#1,image}%
+   ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
+   ,{\@DEGREEACR,#1,image}%
+   ,{\@DEGREEACR,image}%
+   ,{\@DOCTYPE,#1,image}%
+   ,{\@DOCCLASS,#1,image}%
+   ,{#1,image}%
+   ,{image}%
+  ){%
+    \begin{tikzpicture}[remember picture, overlay]%
+      \node[anchor=center] at (current page.center) 
+              {\includegraphics[width=\paperwidth,height=\paperheight]{\match}};
+    \end{tikzpicture}%
+  }{}%
+  \NTRunHook{cover/#1/image/post}%
+}
+
+\newcommand{\setcovertext}[1]{
+  \null%
+  \datamatchtf{\match}{thesiscover}(%
+              {\@DOCTYPE,\@DEGREEACR,#1,textcolor}%
+             ,{\@DOCCLASS,\@DEGREEACR,#1,textcolor}%
+             ,{\@DEGREEACR,#1,textcolor}%
+             ,{\@DEGREEACR,textcolor}%
+             ,{\@DOCTYPE,#1,textcolor}%
+             ,{\@DOCCLASS,#1,textcolor}%
+             ,{#1,textcolor}%
+             ,{textcolor}%
+  ){\color{\match}}{}%
   \@for\myi:={top,bottom,left,right}\do{%
     \expandafter\datamatch\csname @MRGN@\myi\endcsname{margin}(%
       {cover,\@DOCTYPE,\@DEGREEACR,#1,\myi},%
@@ -1615,86 +1655,25 @@
       {cover,\@DOCCLASS,\myi},%
       {cover,\myi})%
   }%
-  \@ntmakecoverbgcolor{#1}{\@cover@bgcolor@box}%
-  \@ntmakecoverimage{#1}{\@cover@image@box}%
-  \@ntmakecovertext{#1}{\@cover@text@box}%
-  \thispagestyle{empty}%
-  \begin{tikzpicture}[remember picture, overlay]
-    \node[inner sep=0, anchor=north]  at (current page.north)
-            {\usebox{\@cover@bgcolor@box}};
-    \node[inner sep=0, anchor=north]  at (current page.north)
-            {\usebox{\@cover@image@box}};
-    \expandafter\@ifmtarg\expandafter{\csname @covertikzlist#1\endcsname}{\VOID}{\csuse{@covertikzlist@#1}}
-    \node[inner sep=0, anchor=north west,
-          xshift=\@MRGN@left,
-          yshift=-\@MRGN@top] at (current page.north west)
-      {\usebox{\@cover@text@box}};
-  \end{tikzpicture}%
+  \newdimen{\covertextheight}%
+  \newdimen{\covertextwidth}%
+  \covertextheight=\dimexpr\paperheight-\@MRGN@top-\@MRGN@bottom\relax%
+  \covertextwidth=\dimexpr\paperwidth-\@MRGN@left-\@MRGN@right\relax%
   \ifoptioncontains{/novathesis/debug}{cover}{%
     \NTRunHook{cover/#1/grid/pre}%
     \debuggrid%
     \NTRunHook{cover/#1/grid/post}%
   }{}%
-}
-
-\newcommand*{\@ntmakecoverbgcolor}[2]{%
-  % #1 = cover ID (major-minor)
-  % #2 = box name
-  \defifundef{#2}{\newsavebox}%
-  \datamatchtf{\match}{thesiscover}(%
-    {\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
-   ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
-   ,{\@DEGREEACR,#1,bgcolor}%
-   ,{\@DEGREEACR,bgcolor}%
-   ,{\@DOCTYPE,#1,bgcolor}%
-   ,{\@DOCCLASS,#1,bgcolor}%
-   ,{#1,bgcolor}%
-   ,{bgcolor}%
-  ){\savebox{#2}{\@ntcoverbgcolor@i{#1}{\match}}}{}%
-}
-
-\newcommand*{\@ntcoverbgcolor@i}[2]{%
-  % #1 = cover ID (major-minor)
-  % #2 = color
-  \begingroup%
-  \color{#2}%
-  \NTRunHook{cover/#1/bgcolor/pre}%
-  \rule{\paperwidth}{\paperheight}%
-  \NTRunHook{cover/#1/gcolor/post}%
-  \endgroup%
-}
-
-\newcommand*{\@ntmakecoverimage}[2]{%
-  % #1 = cover ID (major-minor)
-  % #2 = box name
-  \NTRunHook{cover/#1/image/pre}%
-  \defifundef{#2}{\newsavebox}%
-  \datamatchtf{\match}{thesiscover}(%
-    {\@DOCTYPE,\@DEGREEACR,#1,image}%
-   ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
-   ,{\@DEGREEACR,#1,image}%
-   ,{\@DEGREEACR,image}%
-   ,{\@DOCTYPE,#1,image}%
-   ,{\@DOCCLASS,#1,image}%
-   ,{#1,image}%
-   ,{image}%
-  ){\savebox{#2}{\includegraphics[width=\paperwidth,height=\paperheight]{\match}}}{}%
-  % \ifdatadefined{thesiscover}(phd,1-1,bgcolor){}{}%
-  \NTRunHook{cover/#1/image/post}%
-}
-
-\newcommand{\@ntmakecovertext}[2]{%
-  % #1 = cover ID (major-minor)
-  % #2 = box name
-  \defifundef{#2}{\newsavebox}%
-  \ifoptiondefined{/@nt/cover/\@UNIV/\@SCHL/#1}{%
-    \begin{lrbox}{#2}%
-      \begin{minipage}[l][\dimexpr\paperheight-\@MRGN@top-\@MRGN@bottom]%
-                      {\dimexpr\paperwidth-\@MRGN@left-\@MRGN@right}%
+  \begin{tikzpicture}[remember picture, overlay]%
+    \node[anchor=north west,inner sep=0,xshift=\@MRGN@left, yshift=-\@MRGN@top] 
+          at (current page.north west) {%
+      \begin{minipage}[t][\covertextheight]%
+                      [t]{\covertextwidth}%
         \@ntcovertext{#1}%
       \end{minipage}%
-    \end{lrbox}%
-  }{}%
+    };
+    \expandafter\@ifmtarg\expandafter{\csname @covertikzlist#1\endcsname}{}{\csuse{@covertikzlist@#1}}%
+  \end{tikzpicture}%
 }
 
 \newcommand{\@ntcovertext}[1]{%
@@ -1733,7 +1712,7 @@
     \ifmatchstatus%
       \ifmatchdegree%
         \iftoggle{/@ntcoveropts/tikz}{%
-          % \typeout{TIKZ ADD [/@nt/cover/\@UNIV/\@SCHL/#1/tikz]}\TIKZ%
+          % \typeout{TIKZ ADD [@covertikzlist@#1]}\TIKZ%
           \expandafter\gappto\expandafter{\csname @covertikzlist@#1\endcsname}{#3}%
         }{%
           \@ntcoverelement@ii{#1}{#3}%
