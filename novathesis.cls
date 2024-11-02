@@ -1237,7 +1237,7 @@
   % #1 = cover atrtibutes
   % #2 = the block code
   % #3 = covers where the code block should be applied
-  \ntfor\arg:={#3}\do{\options{/@nt/cover/\@UNIV/\@SCHL/\arg/.newpush={{#1}\@nil{#2}}}}%
+  \options{/@nt/cover/\@UNIV/\@SCHL/#3/.newpush={{#1}\@nil{#2}}}%
 }
 
 
@@ -1804,6 +1804,7 @@
     \ntforbreak%
   }%
 }
+
 \newcommand{\@ntcoverelement@ii}[2]{%
   % #1 = cover ID (major-minor)
   % #2 = code
