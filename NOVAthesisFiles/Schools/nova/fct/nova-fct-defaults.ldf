@@ -13,6 +13,17 @@
 
 \typeout{NT FILE schools/nova/fct/nova-fct-defaults.ldf}%
 
+\definecolor{fctlightgreen}{RGB}{67,140,74}%
+\definecolor{fctdarkgreen}{RGB}{67,140,74}%
+\definecolor{fctlightblue}{RGB}{67,120,188}%
+\definecolor{fctdarkblue}{RGB}{46,108,195}%
+\definecolor{fctlightred}{RGB}{95,5,44}%
+\definecolor{fctdarkred}{RGB}{117,37,60}%
+\definecolor{fctlightbrown}{RGB}{129,87,36}%
+\definecolor{fctdarkbrown}{RGB}{142,112,51}%
+
+\def\@fctblackheight{4.088cm}
+
 % FCT-NOVA specific customization
 \openany
 \ntsetup{print/secondcover=true}
@@ -47,7 +58,7 @@
 % DEFAULT cover
 \thesiscover(1-1,image):=?{nova-fct-cover-red-front}
 \thesiscover(N-2,image):=?{nova-fct-cover-red-back}
-\thesiscover(spine,image):=?{nova-fct-spine-red}
+% \thesiscover(spine,image):=?{nova-fct-spine-red}
 
 % PhD cover
 \thesiscover(phd,1-1,image):=?{nova-fct-cover-green-front}
@@ -152,6 +163,7 @@
 % }
 % \ntAddToCoverTikz<\draw>[thick]($(current page.north west) + (3.5cm,1cm)$)[-- ++(0cm,2cm)]{1-1}{%
 % }
+
 
 % -------------------------------------------------------------------------------
 % Department
@@ -317,7 +329,7 @@
   \fontsize{10}{10}\selectfont%
   \ifmaindoc{}{\thedissertationplan(\@DOCTYPE,\@LANG@COVER)\\[1pt]}%
   % \ifoptionequal{/novathesis/doctype}{mscplan}{Dissertation Plan\\[1pt]}{}%
-  \THEdegreename(\@LANG@COVER)
+  \THEdegreename(\@LANG@COVER)%
   {\ifdatadefined{specialization}(\@LANG@COVER){%
   \fontsize{8}{9}\selectfont
   \\\THEspecialization(\@LANG@COVER)}{}}%
