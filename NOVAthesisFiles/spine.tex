@@ -47,6 +47,7 @@
 \spine(margin,bottom):=?{1mm}
 \spine(margin,left):=?{0.5cm}
 \spine(margin,right):=?{0.5cm}
+\spine(tikzbg):=?{}
 
 % Defaults for spine boxes
 \spine(box,margin):=?{0.5mm}
@@ -160,7 +161,7 @@
 }
 
 \newcommand{\ifnotnone}[2]{%
-  \IfStrEq{none}{#1}{}{#2}%
+  \IfStrEq{#1}{none}{}{#2}%
 }
 
 
@@ -333,7 +334,7 @@
                       {\@DOCTYPE,bg,color},%
                       {\@DOCCLASS,bg,color},%
                       {bg,color}%
-    ){\ifnotnone{\arg}{\fill [color=\arg] (0,0) rectangle (\paperwidth,\paperheight);}}{%
+    ){\ifnotnone{\arg}{\pagecolor{\arg}}}{%
       \ClassError{novathesis}{Undefined spine “bg,color”}{}%
     }%
     % print frame IF DEFINED

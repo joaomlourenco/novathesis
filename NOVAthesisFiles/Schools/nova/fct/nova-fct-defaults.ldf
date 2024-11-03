@@ -13,6 +13,17 @@
 
 \typeout{NT FILE schools/nova/fct/nova-fct-defaults.ldf}%
 
+\definecolor{fctlightgreen}{RGB}{67,140,74}%
+\definecolor{fctdarkgreen}{RGB}{67,140,74}%
+\definecolor{fctlightblue}{RGB}{67,120,188}%
+\definecolor{fctdarkblue}{RGB}{46,108,195}%
+\definecolor{fctlightred}{RGB}{95,5,44}%
+\definecolor{fctdarkred}{RGB}{117,37,60}%
+\definecolor{fctlightbrown}{RGB}{129,87,36}%
+\definecolor{fctdarkbrown}{RGB}{142,112,51}%
+
+\def\@fctblackheight{4.088cm}
+
 % FCT-NOVA specific customization
 \openany
 \ntsetup{print/secondcover=true}
@@ -39,15 +50,15 @@
 \committeeorder():={c,r,a,ca,m}%
 
 % Cover background images
-\thesiscover(1-1,bgcolor):={black}
+% \thesiscover(1-1,bgcolor):={black}
 \thesiscover(1-1,textcolor):={white}
-\thesiscover(2-1,textcolor):={black}
+% \thesiscover(2-1,textcolor):={black}
 
 
 % DEFAULT cover
 \thesiscover(1-1,image):=?{nova-fct-cover-red-front}
 \thesiscover(N-2,image):=?{nova-fct-cover-red-back}
-\thesiscover(spine,image):=?{nova-fct-spine-red}
+% \thesiscover(spine,image):=?{nova-fct-spine-red}
 
 % PhD cover
 \thesiscover(phd,1-1,image):=?{nova-fct-cover-green-front}
@@ -102,10 +113,11 @@
 \margin(paper,right):={3.0cm}
 
 % Set margins for cover pages
-\margin(cover,top):={1.0cm}
+\margin(cover,top):={8.6cm}
 \margin(cover,bottom):={1.5cm}
 \margin(cover,left):={3.55cm}
 \margin(cover,right):={2.0cm}
+\margin(cover,2-1,top):={6.6cm}
 
 
 \newdata{dissertationplan}
@@ -133,20 +145,8 @@
 %% COVER 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \ntaddtocover[vspace=-0.69mm,halign=l,hspace=-2.57cm,height=0.0cm,valign=t]{1-1}{%
-%   \includegraphics[width=21mm,align=t]{\expanded{\theuniversity(logo,neg)}}%
-%   \hspace{4.2mm}\vrule\hspace{5.0mm}%
-%   \includegraphics[width=35.3mm,align=t]{\expanded{\theschool(logo,neg)}}%
-% }
-
-% Department name 
-\ntaddtocover[vspace=2.5mm,halign=l,hspace=6.1cm,height=2.0cm,valign=t]{1-1,2-1}{%
-  % \ntcoverbackground%
-  \fontsize{14}{14}\selectfont%
-  % \vspace*{-\baselineskip}
-  \THEdepartment(\@LANG@COVER)%
-}
-
+% -------------------------------------------------------------------------------
+% University and school logo
 \ntaddtocover[tikz]{1-1}{%
   \node[anchor=center] at ($(current page.north west) + (20mm,-20mm)$)
     {\includegraphics[width=21mm]{\expanded{\theuniversity(logo,neg)}}};%
@@ -155,7 +155,25 @@
     {\includegraphics[width=35.3mm]{\expanded{\theschool(logo,neg)}}};%
 }
 
-% Company logo
+% \ntAddToCoverTikz[anchor=center]($(current page.north west) + (20mm,20mm)$){1-1}{%
+%   \includegraphics[width=21mm]{\expanded{\theuniversity(logo,neg)}}
+% }
+% \ntAddToCoverTikz[anchor=west]($(current page.north west) + (40mm,19mm)$){1-1}{%
+%   \includegraphics[width=35.3mm]{\expanded{\theschool(logo,neg)}}
+% }
+% \ntAddToCoverTikz<\draw>[thick]($(current page.north west) + (3.5cm,1cm)$)[-- ++(0cm,2cm)]{1-1}{%
+% }
+
+
+% -------------------------------------------------------------------------------
+% Department
+\ntAddToCoverTikz[anchor=north west]($(current page.north west) + (96.45mm,11.4mm)$){1-1,2-1}{%
+  \fontsize{14}{14}\sffamily%
+  \makecell[tl]{\THEdepartment(\@LANG@COVER)}%
+}
+
+% -------------------------------------------------------------------------------
+% Company logo — only for fct/di-adc bsc documents
 \ntaddtocover[tikz]{1-1,2-1}{%
   \ifoptionvoid{/novathesis/nova/fct/company/logo}{}{%
     \ifoptionequal{/novathesis/doctype}{bsc}{%
@@ -168,8 +186,9 @@
   }%
 }
 
+% -------------------------------------------------------------------------------
 % Title of Dissertation (PhD) / The author name (MSc)
-\ntaddtocover[vspace=5.3cm,halign=l,height=3.0cm,valign=c]{1-1}{%
+\ntaddtocover[halign=l,height=3.0cm,valign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{22}{21}\selectfont%
     \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
@@ -186,6 +205,7 @@
   }%
 }
 
+% -------------------------------------------------------------------------------
 % The author name (PhD) / Title of Dissertation (MSc)
 \ntaddtocover[vspace=3.0cm,halign=l,height=3cm,valign=c]{1-1}{%
   \ifphddoc{%
@@ -204,7 +224,8 @@
   }%
 }
 
-% Date
+% -------------------------------------------------------------------------------
+% Degrere name, Specialization, Date
 \ntaddtocover[vspace=1,halign=l]{1-1}{%
   \fontsize{14}{13}\selectfont%
   \ifmaindoc{}{\thedissertationplan(\@DOCTYPE,\@LANG@COVER)\\[1pt]}%
@@ -220,6 +241,8 @@
                  {\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
   }{\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
 }
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% COVER 2
@@ -268,7 +291,7 @@
 
 
 % Title of Dissertation (PhD)
-\ntaddtocover[vspace=3cm,halign=l]{2-1}{%
+\ntaddtocover[halign=l]{2-1}{%
   \fontsize{17}{17}\selectfont%
   \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
   \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
@@ -306,7 +329,7 @@
   \fontsize{10}{10}\selectfont%
   \ifmaindoc{}{\thedissertationplan(\@DOCTYPE,\@LANG@COVER)\\[1pt]}%
   % \ifoptionequal{/novathesis/doctype}{mscplan}{Dissertation Plan\\[1pt]}{}%
-  \THEdegreename(\@LANG@COVER)
+  \THEdegreename(\@LANG@COVER)%
   {\ifdatadefined{specialization}(\@LANG@COVER){%
   \fontsize{8}{9}\selectfont
   \\\THEspecialization(\@LANG@COVER)}{}}%
