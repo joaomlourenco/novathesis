@@ -980,7 +980,7 @@
 \def\ntspecialization{\@ifstar{\@ntspecializationifundef}{\@ntspecialization}}
 \def\@ntspecializationifundef(#1)#2{\ifdatadefined{minorfield}(#1){}{\@ntspecialization(#1){#2}}}
 \def\@ntspecialization(#1)#2{%
-  \datamatch{\match}{specializationstring}(%
+  \datamatch{\specmatch}{specializationstring}(%
             {\@DOCTYPE,\@DEGREEACR,\@LANG@COVER},%
             {\@DOCCLASS,\@DEGREEACR,\@LANG@COVER}%
             {\@DEGREEACR,\@LANG@COVER},%
@@ -988,7 +988,7 @@
             {\@DOCCLASS,\@LANG@COVER},%
             {\@LANG@COVER}%
   )%
-  \ifblank{\match}{\specialization(#1)={#2}}{\specialization(#1)={\match\ #2}}%
+  \ifblank{\match}{\specialization(#1)={#2}}{\specialization(#1)={\specmatch\ #2}}%
   \minorfield(#1)={#2}%
 }
 
@@ -1239,6 +1239,55 @@
   % #3 = covers where the code block should be applied
   \options{/@nt/cover/\@UNIV/\@SCHL/#3/.newpush={{#1}\@nil{#2}}}%
 }
+
+%==========================================
+\NewDocumentCommand{\ntAddToCoverTikz}{d<>O{}r()O{}mm}{%
+  % #1=Command
+  % #2=Options
+  % #3=Position
+  % #4=Rest of command
+  % #5=CIDLIST
+  % #6=Code
+  \ntfor\cvids:={#5}\do{\ntAddToOneCoverTikz{#1}{#2}{#3}{#4}{\cvids}{#6}}%
+}
+
+\NewDocumentCommand{\ntAddToOneCoverTikz}{mmmmmm}{%
+  % #1=Command
+  % #2=Options
+  % #3=Position
+  % #4=Rest of command
+  % #5=CID
+  % #6=Code
+  \options{/@nt/coverTikz/\@UNIV/\@SCHL/#5/.newpush={{#1}\@nil{#2}\@nil{#3}\@nil{#4}\@nil{#6}}}%
+}
+
+\NewDocumentCommand{\printCoverTikz}{m}{%
+  % #1 = cover ID (major-minor)
+  % \typeout{@NTCOVERTEXT 1=[#1]}\@NTCOVERTEXT%
+  \ifoptiondefined{/@nt/coverTikz/\@UNIV/\@SCHL/#1}{%
+    \NTRunHook{coverTikz/#1/text/pre}%
+    \begin{tikzpicture}[remember picture, overlay, yscale=-1, every node/.style={inner sep=0pt}]%
+      \optionlistdo{/@nt/coverTikz/\@UNIV/\@SCHL/#1}{%
+        \printCoverElementTikz#1\@nil##1%
+      }%
+    \end{tikzpicture}%
+    \NTRunHook{coverTikz/#1/text/post}%
+  }{}%
+}
+
+\def\printCoverElementTikz#1\@nil#2\@nil#3\@nil#4\@nil#5\@nil#6{%
+  % #1=CID
+  % #2=Command
+  % #3=Options
+  % #4=Position
+  % #5=Rest of command
+  % #6=Code
+  % \node[inner sep=0,#2] at (#1) {Pos=[#1] Opt=[#2] CID=[#3] COD=[#4]};
+  % \typeout{ CID=[#1] CMD=\string#2[#3] at (#4) --#5--}\TIKZCOVER
+  \IfNoValueTF {#2} {\node[#3] at (#4) #5 {#6}} {#2[#3] (#4) #5};
+}
+%==========================================
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1581,17 +1630,18 @@
     \NTRunHook{cover/#1/pre}%
     \pdfbookmark[1]{\thebkmstring(#1)}{\thebkmstring(#1)}%
     \thispagestyle{empty}%
-    \setcoverbgcolor{#1}%
-    \setcoverbgimage{#1}%
-    \setcovertext{#1}%
+    \setCoverBgColor{#1}%
+    \setCoverBgImage{#1}%
+    \prrintCoverText{#1}%
     % \@ntmakeboxwithcover{#1}{\@fullcover@box}%
+    \printCoverTikz{#1}%
     \NTRunHook{cover/#1/post}%
     \NTRunHook{cover/post}%
   \endgroup%
   \ifoptionequal{/novathesis/media}{paper}{\newpage ~\thispagestyle{empty}\newpage}{\clearforchapter}
 }
 
-\newcommand{\setcoverbgcolor}[1]{
+\newcommand{\setCoverBgColor}[1]{
   \null%
   \NTRunHook{cover/#1/bgcolor/pre}%
   \datamatchtf{\match}{thesiscover}(%
@@ -1607,7 +1657,7 @@
   \NTRunHook{cover/#1/bgcolor/post}%
 }
 
-\newcommand{\setcoverbgimage}[1]{
+\newcommand{\setCoverBgImage}[1]{
   \null%
   \NTRunHook{cover/#1/image/pre}%
   \datamatchtf{\match}{thesiscover}(%
@@ -1628,7 +1678,7 @@
   \NTRunHook{cover/#1/image/post}%
 }
 
-\newcommand{\setcovertext}[1]{
+\newcommand{\prrintCoverText}[1]{
   \null%
   \datamatchtf{\match}{thesiscover}(%
               {\@DOCTYPE,\@DEGREEACR,#1,textcolor}%
