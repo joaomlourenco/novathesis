@@ -106,6 +106,7 @@
 \margin(cover,bottom):={1.5cm}
 \margin(cover,left):={3.55cm}
 \margin(cover,right):={2.0cm}
+\margin(cover,2-1,top):={6.6cm}
 
 
 \newdata{dissertationplan}
@@ -154,7 +155,7 @@
 
 % -------------------------------------------------------------------------------
 % Department
-\ntAddToCoverTikz[anchor=north west]($(current page.north west) + (96.45mm,11.4mm)$){1-1}{%
+\ntAddToCoverTikz[anchor=north west]($(current page.north west) + (96.45mm,11.4mm)$){1-1,2-1}{%
   \fontsize{14}{14}\sffamily%
   \makecell[tl]{\THEdepartment(\@LANG@COVER)}%
 }
@@ -278,7 +279,7 @@
 
 
 % Title of Dissertation (PhD)
-\ntaddtocover[vspace=3cm,halign=l]{2-1}{%
+\ntaddtocover[halign=l]{2-1}{%
   \fontsize{17}{17}\selectfont%
   \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
   \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
