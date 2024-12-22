@@ -31,8 +31,13 @@ B:=$(MF)
 T:=$(MF).pdf
 S:=$(MF).tex
 
+ifndef AUXDIR
+AUXDIR:=./AUXDIR
+export AUX_DIR=$(AUXDIR)
+endif
+
 MK:=latexmk $(MKF)
-MKF:=-time -interaction=batchmode -shell-escape -synctex=1 -file-line-error -f $(FLAGS)
+MKF:=-time -interaction=batchmode -shell-escape -synctex=1 -file-line-error -f -auxdir=$(AUXDIR) $(FLAGS)
 
 CT=cluttex $(CTF)
 CFT:=
@@ -147,6 +152,7 @@ zip:
 clean:
 	@$(MK) -c $(B)
 	@rm -f $(AUXFILES) "*(1)*"
+	@rm -rf $(AUXDIR)
 	@find . -name .DS_Store -o -name '_minted*' | xargs rm -rf
 
 #————————————————————————————————————————————————————————————————————————————
@@ -187,6 +193,7 @@ mtp:
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: time
+
 time times:
 	@ eval "$$printtimes"
 
@@ -196,8 +203,8 @@ time times:
 #————————————————————————————————————————————————————————————————————————————
 define _printtimes
 printf "TIMES FROM THE LAST EXECUTION\n"
-TIMES="$(grep -e 'l3benchmark. + TOC'  *.log | cut -d ' ' -f 4 | xargs)"
-PHASES="$(fgrep TIME *.log | cut -d ' ' -f 2-3 | cut -d '=' -f 1 | tr ' ' '_' | xargs)"
+TIMES="$(grep -e 'l3benchmark. + TOC'  ${AUX_DIR}/*.log | cut -d ' ' -f 4 | xargs)"
+PHASES="$(fgrep TIME ${AUX_DIR}/*.log | cut -d ' ' -f 2-3 | cut -d '=' -f 1 | tr ' ' '_' | xargs)"
 declare -a TM=($TIMES)
 declare -a PH=($PHASES)
 for i in `seq 0 $((${#TM[@]}-1))`; do
