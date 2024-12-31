@@ -124,7 +124,7 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
 | `9_nova_iseg.tex`    | Configuration specific to **nova/iseg** (ULISBOA ISEG)            |
 | `9_uminho.tex`       | Configuration specific to **uminho** (all schools)                |
 
-5. Recompile de document:
+5. Recompile the document:
    * See 3. above.
 6. You're done with a beautifully formatted thesis/dissertation! 😃
 
