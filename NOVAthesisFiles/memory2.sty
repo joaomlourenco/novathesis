@@ -45,13 +45,13 @@
 }
 % \ifdatadefinedor({val1},…){\match}{dataname}{true}{false}
 \def\@ifddor(#1,#2\@nil)#3#4#5#6{%
-  \edef\@argone{#1}%
+  % \edef\@argone{#1}%
   % \trim@spaces@in\@argone
   % \edef\@argone{\zap@space#1 \@empty}
   % \typeout{MEMORY ddor=#4(\@argone)(#2)}%
-  \ifdatadefined{#4}(\@argone){%
+  \ifdatadefined{#4}(\expanded{#1}){%
     % \typeout{MEMORY >>> FOUND: #4(#1)}%
-    \def#3{#1}\expandafter#5%
+    \edef#3{#1}#5%
   }{\ifx\@nil#2\@nil\relax\expandafter#6\else\@ifddor(#2\@nil){#3}{#4}{#5}{#6}\fi}%
 }
 \def\ifdatadefined#1(#2)#3#4{%

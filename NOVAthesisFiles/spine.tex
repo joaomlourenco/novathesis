@@ -21,15 +21,16 @@
 
 \input{NOVAthesisFiles/fitbox2.sty}
 
+\spine(tab,spec):=?{{@{}c@{}}}
+
 % \def\def@ult#1(#2)=#3{\ifdatadefined{#1}(#2){}{\csname#1\endcsname(#2)={#3}}}
-\spine(author)=?{\thedocauthor(name,short)}
+\spine(author):=?{\thedocauthor(name,short)}
 
 \datamatch{\match}{doctitle}({\@LANG@COVER,spine,cover},{\@LANG@COVER,spine})%
 \spine(title):=?{\match}
 
 % \typeout{SPINE=[\@LANG@COVER][\thespine(title)]}
 \spine(date)=?{\thentdocdate(submission,year)}
-
 
 % Defaults for spine
 \spine(logo):=?{none}
@@ -387,7 +388,8 @@
               {\printspinebox{\myi}{\@fbratio}};}%
         {r}{\node [inner sep=0, anchor=east] at (r\myi.east)
               {\printspinebox{\myi}{\@fbratio}};}%
-      }%
+      }[{\node [inner sep=0, anchor=center] at (r\myi)
+              {\printspinebox{\myi}{\@fbratio}};}]%
     }%
   \end{tikzpicture}%
   \ifoptioncontains{/novathesis/DEBUG}{cover}{%
@@ -430,11 +432,12 @@
                     {#1,\@DOCCLASS,raise},%
                     {#1,raise}%
   ){}{\def\@raise{0pt}}%
-  % \DEBUG{L=[\thespine(logo)] IT(#1)=[\@item]}\AAAA
+  % \DEBUG{L=[\thespine(logo)] IT(#1)=[\@item]}%
   % \DEBUG{PRINT BOX #1  ITEM=\@item}%
   % \DEBUG{PRINT BOX #1 ANGLE=\@angle}%
   % \DEBUG{PRINT BOX #1 SCALE=\@scale}%
   % \DEBUG{PRINT BOX #1 RAISE=\@raise}%
+  % \AAAA%
   \IfStrEq{#1}{logo}{%
     % IMAGE
     \IfStrEq{\@item}{none}{}{%
@@ -454,7 +457,7 @@
         \IfStrEq{\@langle}{}{\edef\@langle{\@angle}}{}%
         \IfStrEq{\@lscale}{}{\edef\@lscale{\@scale}}{}%
         % \DEBUG{F=\@lfile\space A=\@langle\space S=\@lscale}\FILE
-        \setbox0=\hbox{\includegraphics[height=\@thespinewidth,angle=\number\numexpr\@langle-90\relax,
+        \setbox0=\hbox to \thespine(box,logo,len){\includegraphics[height=\@thespinewidth,angle=\number\numexpr\@langle-90\relax,
                                         scale=\@lscale,origin=c]{\@lfile}}%
         \setbox1=\hbox{\minipage{\wd1}\box1\endminipage\hspace*{\@lspace}\minipage{\wd1}\box0\endminipage\hspace{\@@lspace}}%
       }
@@ -469,6 +472,7 @@
       \box1%
     }%
   }{%
+    % \DEBUG{IT=[#1] V=[\thespine(#1)]}\AAAAA%
     % TEXT
     \rotatebox[origin=c]{\@angle}{%
     \scalebox{\@fbratio}{%
@@ -476,7 +480,17 @@
       \ifdatadefined{spine}(#1,\@UNIV/\@SCHL){%
         \tabular{@{}c@{}}\thespine(#1,\@UNIV/\@SCHL)\endtabular%
       }{%
-        \thespine(#1,font)\tabular{@{}c@{}}\thespine(#1)\endtabular%
+        \edef\@IT{#1}
+        \edef\@TABSPEC{\thespine(tab,spec)}%
+        \thespine(#1,font)\expandafter\tabular\@TABSPEC%
+        \ifdatadefined{spine}(#1,1)
+            {\@for\myi:={1,2,3,4,5,6,7,8,9}\do{%
+                \ifdatadefined{spine}(\@IT,\myi)
+                    {\thespine(\@IT,\myi)}
+                    {}%
+                }}
+            {\thespine(#1)}%
+        \endtabular%
       }%
     }%
     }%

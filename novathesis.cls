@@ -156,7 +156,7 @@
   % \typeout{#2(#3)}%
   % \ifdatadefinedor{\@match}{#2}(#3)%
   %   {\protect\gdef#1{\csuse{the#2}(\@match)}#4}%
-  %   {\protect\gdef#1{}#5}%
+  %   {\protect\gdef#1{}#5}%  
   \ifdatadefinedor{\@match}{#2}(#3)%
     {\protect\xdef#1{\expanded{\csuse{the#2}(\@match)}}#4}%
     {\protect\xdef#1{}#5}%
