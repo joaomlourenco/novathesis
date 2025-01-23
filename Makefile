@@ -48,7 +48,7 @@ ZIPTARGET=$(B)-$(VERSION)@$(DATE).zip
 
 # extract version and date of the template
 VERSION=$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/')
-DATE:=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
+DATE=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
 
 # aux files
 AUXFILES:=$(shell ls $(B)*.* | fgrep -v .tex | fgrep -v .pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
@@ -187,7 +187,19 @@ endif
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: mtp
 mtp:
-	@$(call mtp)
+	VERSIONMTP=$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/')
+	DATEMTP=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
+	make clean
+	echo "VERSION IS $(VERSIONMTP) -  - $(DATEMTP)."
+	git commit --all --message "Version $(VERSIONMTP) - $(DATEMTP)." || true
+	git checkout main
+	git reset template.pdf
+	git pull
+	git merge -m "Merge branch 'develop'" develop
+	git tag -f -a "v$(VERSIONMTP)" -m "Version $(VERSIONMTP) - $(DATEMTP)."
+	git push --all
+	git push -f --tags
+	git checkout develop
 
 
 
@@ -220,10 +232,23 @@ endif
 
 # merge, tag and push
 define mtp
+	VERSIONMTP="$(shell echo aaa)"
+	# DATEMTP=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
+	make clean
+	echo "VERSION IS $(VERSIONMTP) -  - $(DATEMTP)."
+endef
+
+
+run:
+	@ eval "$$script"
+
+
+
+x:
 	VERSIONMTP=$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/')
 	DATEMTP=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
 	make clean
-	echo "VERSION IS $(VERSIONMTP)"
+	echo "VERSION IS $(VERSIONMTP) -  - $(DATEMTP)."
 	git commit --all --message "Version $(VERSIONMTP) - $(DATEMTP)." || true
 	git checkout main
 	git reset template.pdf
@@ -233,8 +258,3 @@ define mtp
 	git push --all
 	git push -f --tags
 	git checkout develop
-endef
-
-
-run:
-	@ eval "$$script"
