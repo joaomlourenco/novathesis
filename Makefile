@@ -179,7 +179,7 @@ endif
 bump1 bump2 bump3:
 ifneq (, $(wildcard Scripts/newversion.sh))
 	Scripts/newversion.sh $(subst bump,,$@)
-	@$(call mtp)
+	make mtp
 endif
 
 
@@ -189,18 +189,9 @@ endif
 mtp:
 	VERSIONMTP=$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/')
 	DATEMTP=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
-	make clean
-	echo "VERSION IS $(VERSIONMTP) -  - $(DATEMTP)."
-	git commit --all --message "Version $(VERSIONMTP) - $(DATEMTP)." || true
-	git checkout main
-	git reset template.pdf
-	git pull
-	git merge -m "Merge branch 'develop'" develop
-	git tag -f -a "v$(VERSIONMTP)" -m "Version $(VERSIONMTP) - $(DATEMTP)."
-	git push --all
-	git push -f --tags
-	git checkout develop
+	@echo VERSIONMTP=$(VERSIONMTP) DATEMTP=$(DATEMTP) 
 
+	# @$(call mtp)
 
 
 #————————————————————————————————————————————————————————————————————————————
@@ -232,21 +223,6 @@ endif
 
 # merge, tag and push
 define mtp
-	VERSIONMTP="$(shell echo aaa)"
-	# DATEMTP=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
-	make clean
-	echo "VERSION IS $(VERSIONMTP) -  - $(DATEMTP)."
-endef
-
-
-run:
-	@ eval "$$script"
-
-
-
-x:
-	VERSIONMTP=$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/')
-	DATEMTP=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
 	make clean
 	echo "VERSION IS $(VERSIONMTP) -  - $(DATEMTP)."
 	git commit --all --message "Version $(VERSIONMTP) - $(DATEMTP)." || true
@@ -258,3 +234,14 @@ x:
 	git push --all
 	git push -f --tags
 	git checkout develop
+endef
+
+define setversions
+# echo "—----"
+# VERSIONMTP=`head -1 NOVAthesisFiles/nt-version.sty`
+# echo "—----"
+echo "${VERSIONMTP}"
+echo "—----"
+echo DATEMTP="$(tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')"
+echo "—----"
+endef
