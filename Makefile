@@ -179,20 +179,13 @@ endif
 bump1 bump2 bump3:
 ifneq (, $(wildcard Scripts/newversion.sh))
 	Scripts/newversion.sh $(subst bump,,$@)
-	make mtp
+	@$(call _mtp,$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/'),$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/'))
 endif
-
-
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: mtp
 mtp:
-	VERSIONMTP=$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/')
-	DATEMTP=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
-	@echo VERSIONMTP=$(VERSIONMTP) DATEMTP=$(DATEMTP) 
-
-	# @$(call mtp)
-
+	@$(call _mtp,$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/'),$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/'))
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: time
@@ -222,26 +215,19 @@ export printtimes = $(shell true)
 endif
 
 # merge, tag and push
-define mtp
+define _mtp
+	echo "VERSION=$(1) - DATE=$(2)."
 	make clean
-	echo "VERSION IS $(VERSIONMTP) -  - $(DATEMTP)."
-	git commit --all --message "Version $(VERSIONMTP) - $(DATEMTP)." || true
+	git reset template.pdf
+	git checkout origin template.pdf
+	git commit --all --message "Version $(1) - $(2)." || true
 	git checkout main
 	git reset template.pdf
+	git checkout origin template.pdf
 	git pull
 	git merge -m "Merge branch 'develop'" develop
-	git tag -f -a "v$(VERSIONMTP)" -m "Version $(VERSIONMTP) - $(DATEMTP)."
+	git tag -f -a "v$(1)" -m "Version $(1) - $(2)."
 	git push --all
 	git push -f --tags
 	git checkout develop
-endef
-
-define setversions
-# echo "—----"
-# VERSIONMTP=`head -1 NOVAthesisFiles/nt-version.sty`
-# echo "—----"
-echo "${VERSIONMTP}"
-echo "—----"
-echo DATEMTP="$(tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')"
-echo "—----"
 endef
