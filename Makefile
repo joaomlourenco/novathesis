@@ -48,7 +48,7 @@ ZIPTARGET=$(B)-$(VERSION)@$(DATE).zip
 
 # extract version and date of the template
 VERSION=$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/')
-DATE:=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
+DATE=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
 
 # aux files
 AUXFILES:=$(shell ls $(B)*.* | fgrep -v .tex | fgrep -v .pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
@@ -179,17 +179,13 @@ endif
 bump1 bump2 bump3:
 ifneq (, $(wildcard Scripts/newversion.sh))
 	Scripts/newversion.sh $(subst bump,,$@)
-	@$(call mtp)
+	@$(call _mtp,$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/'),$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/'))
 endif
-
-
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: mtp
 mtp:
-	@$(call mtp)
-
-
+	@$(call _mtp,$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/'),$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/'))
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: time
@@ -219,22 +215,19 @@ export printtimes = $(shell true)
 endif
 
 # merge, tag and push
-define mtp
-	VERSION=$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/')
-	DATE=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
+define _mtp
+	echo "VERSION=$(1) - DATE=$(2)."
 	make clean
-	echo "VERSION IS $(VERSION)"
-	git commit --all --message "Version $(VERSION)." || true
+	git reset template.pdf
+	git checkout origin template.pdf
+	git commit --all --message "Version $(1) - $(2)." || true
 	git checkout main
 	git reset template.pdf
+	git checkout origin template.pdf
 	git pull
 	git merge -m "Merge branch 'develop'" develop
-	git tag -f -a "v$(VERSION)" -m "Version $(VERSION)."
+	git tag -f -a "v$(1)" -m "Version $(1) - $(2)."
 	git push --all
 	git push -f --tags
 	git checkout develop
 endef
-
-
-run:
-	@ eval "$$script"

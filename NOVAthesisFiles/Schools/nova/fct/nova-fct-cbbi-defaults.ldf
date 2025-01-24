@@ -150,7 +150,7 @@
   \sffamily%
 }
 
-
+\definecolor{msccbbigray}{RGB}{110,110,110}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% COVER 1
@@ -170,7 +170,7 @@
 
 \ntaddtocover[tikz]{1-1}{%
   \node[anchor=north west] at ($(current page.north west) + (13mm,-76mm)$)
-    {\fontsize{52}{52}\selectfont\textbf{\sffamily MScCBBi}};%
+    {\fontsize{52}{52}\selectfont\textbf{\sffamily \textcolor{msccbbigray}{MSc}CBBi}};%
 }
 
 \ntaddtocover[tikz]{1-1}{%
