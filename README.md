@@ -188,6 +188,9 @@ This template is the result of hundreds (yes! *many hundreds*) of hours of work 
 
 * NOVA University Lisbon
   * [NOVA School for Science and Technology](https://www.fct.unl.pt) (NOVA FCT)
+    * All PhD degrees (*NOVA FCT standar cover*)
+    * All MSc degrees (*NOVA FCT standar cover*)
+    * Master in Computational Biology and Bioinformatics (*specific cover*)
   * [NOVA Information Management School](https://www.novaims.unl.pt) (NOVA IMS)
     * [PhD in Information Management](https://www.novaims.unl.pt/doutoramento)
     * [Master in Statistics and Information Management](https://www.novaims.unl.pt/megi)
