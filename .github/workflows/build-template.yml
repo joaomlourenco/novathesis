@@ -19,7 +19,7 @@ jobs:
     if: github.actor != 'my_bot_account'
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -32,7 +32,7 @@ jobs:
         with:
           run: bash .Build/build.sh
       - name: Upload the template PDF file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Template
           path: template.pdf
