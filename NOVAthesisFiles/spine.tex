@@ -457,8 +457,8 @@
         \IfStrEq{\@langle}{}{\edef\@langle{\@angle}}{}%
         \IfStrEq{\@lscale}{}{\edef\@lscale{\@scale}}{}%
         % \DEBUG{F=\@lfile\space A=\@langle\space S=\@lscale}\FILE
-        \setbox0=\hbox to \thespine(box,logo,len){\includegraphics[height=\@thespinewidth,angle=\number\numexpr\@langle-90\relax,
-                                        scale=\@lscale,origin=c]{\@lfile}}%
+        % \setbox0=\hbox to \thespine(box,logo,len){\includegraphics[height=\@thespinewidth,angle=\number\numexpr\@langle-90\relax,scale=\@lscale,origin=c]{\@lfile}}%
+        \setbox0=\hbox{\includegraphics[height=\@thespinewidth,angle=\number\numexpr\@langle-90\relax,scale=\@lscale,origin=c]{\@lfile}}%
         \setbox1=\hbox{\minipage{\wd1}\box1\endminipage\hspace*{\@lspace}\minipage{\wd1}\box0\endminipage\hspace{\@@lspace}}%
       }
       \ifdim\dimexpr\wd1\relax>\@lwidth\relax%
