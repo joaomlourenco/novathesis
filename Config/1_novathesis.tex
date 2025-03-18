@@ -6,14 +6,12 @@
 
 \typeout{NT FILE Config/1_novathesis.tex}%
 
+
 %%============================================================
-%%  TEMPLATE CUSTOMIZATION / OPTIONS
+%% THE MOST IMPORTANT/POPULAR TEMPLATE CUSTOMIZATION / OPTIONS
 %%============================================================
 
-%%-------------------------------- ----------------------------
-%% THE MOST IMPORTANT/POPULAR OPTIONS
-%%------------------------------------------------------------
-
+%-------------------------------------------------------------
 % \ntsetup{doctype=msc}       % The type of document
 %                               %     [     phd —> PhD thesis
 %                               %       phdplan —> PhD thesis plan
@@ -25,6 +23,9 @@
 %                               %     ]
 %                               % DEFAULT: doctype=phd
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{school=uminho/eeng}    % The school id
 %                               %     [ nova/fct, nova/fct/di-adc, nova/fct/cbbi,
 %                               %       nova/fct/blue, nova/fct/green, nova/fct/brown, nova/fct/red,
@@ -40,6 +41,9 @@
 %                               %     ]
 %                               % DEFAULT: school=nova/fct
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{docstatus=final}     % The status of the document
 %                               %     [     working —> working version of the document
 %                                                      skips some “frontmatter” stuff,
@@ -56,33 +60,46 @@
 %                               %     ]
 %                               % DEFAULT: lang=en
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{media=paper}         % The target media for the PDF
 %                               %     [ screen —> left and right margins are equal, colored links
 %                               %        paper —> left and right margins are, black links
 %                               %     ]
 %                               % DEFAULT: media=screen
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{print/webography=Webography} % Generate a separate bibliography for @online references
 %                                 % DEFAULT: All references in a single bibliography
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{color/links=SteelBlue}% The color for the hyperlinks (URLs, cross references, citations)
 %                               %     Valid color names  —> look at "svgname" in the "xcolor"
 %                               %                           package documentation
 %                               % DEFAULT: a customized dark blue color
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{color/gls=SteelBlue} % The color for the glossary managed hyperlinks (glossary, symbols, etc)
 %                               %     Valid color names  —> look at "svgname" in the "xcolor"
 %                               %                           package documentation
 %                               % DEFAULT: black
 
-% \ntsetup{print/index=true}     % Print the (words) index at the end of the document
-%                               % DEFAULT: print/index=false
 
 
-%%------------------------------------------------------------
-%% THE LESS IMPORTANT/POPULAR OPTIONS
-%%------------------------------------------------------------
 
+
+%%============================================================
+%% THE LESS IMPORTANT/POPULAR TEMPLATE CUSTOMIZATION / OPTIONS
+%%============================================================
+
+%-------------------------------------------------------------
 % \ntsetup{abstractorder={en,pt,fr}}   % The order for abstracts for the main language
 % \ntsetup{abstractorder={pt={en,pt,fr}}}   % The order for abstracts for a specific language
 %                               %     [ de, en, es, fr, gr, it, pt, —> valid languages
@@ -90,6 +107,9 @@
 %                               % DEFAULT for 'en':     abstractorder={en={en,pt}}
 %                               % DEFAULT for lang 'L': abstractorder={L={L,en}}
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{lang/extra={de,es}}   % List of additional languages are used in the document
                                 % besides the ones used in the abstracts (above)
 %                               % following ISO 3166-1 (alfa-2)
@@ -97,54 +117,94 @@
 %                               %     ]
 %                               % DEFAULT: lang/extra=en,pt
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{gnumberlist=false}   % Shall the glossary entries list the page numbers where
 %                               %     those entries are used?  (as a reverse index!)
 %                               % DEFAULT: gnumberlist=true
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{numberallpages=true} % Shall all the pages (except cover) be numbered?
 %                               % DEFAULT: numberallpages=false
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{tocintoc=true}       % Shall table of contects be listed in itself?
 %                               % DEFAULT: tocintoc=false
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{print/secondcover=true}    % Shall a second cover page be forced?
 %                               %     if the contents for the second page are not
 %                               %     defined, the second cover will be a replica
 %                               %     of the first cover.
 %                               % DEFAULT: print/secondcover=false
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{print/committee=true}% Shall the evaluation committee be printed?
 %                               %     the evaluation committee should only be
 %                               %     printed in final versions.
 %                               % DEFAULT: print/committee=false
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{print/frontmatter=false}% Print the front matter
 %                               %     set to false to generate a PDF with only the
 %                               %     cover and the book chapters
 %                               % DEFAULT: print/frontmatter=true
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{print/statement=true}% Does the document have after cover pages??
 %                               %     after cover pages are printed immediately
 %                               %     after the cover pages
 %                               % DEFAULT: print/statement=false
 
+
+
+%-------------------------------------------------------------
 %\ntsetup{print/copyright=false} % Shall the copyright message be printed??
 %                               % DEFAULT: print/copyright=true
 
+% \ntsetup{print/index=true}     % Print the (words) index at the end of the document
+%                               % DEFAULT: print/index=false
+
+
+
+%-------------------------------------------------------------
 % \ntsetup{print/timestamp=false} % Print a timestamp (when PDF was generated) in the cover
 %                               % DEFAULT: print/timestamp=true
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{style/url=same}       % Use the same (main) font in URLs
 %                               % DEFAULT: whatever hyperref uses as default
 
-% \ntsetup{style/font=futura}    % You can use any of the default LaTeX style files:
-%                               % Or any of the additional styles
-%                               %     [ bookman, erewho, kpfonts, libertine,
-%                               %       schola, stix2, newpx, newtx
-%                               %       newsgot(*), calibr(*), kieranhealy(*), futura(*) ]
+
+
+%-------------------------------------------------------------
+% \ntsetup{style/font=futura}   % You can use any of the default LaTeX style files:
 %                               % (*) available only for xelatex/lualatex)
+%                               % Or any of the additional styles
+%                               %     [ bookman, erewhon, libertine,
+%                               %       newpx, opensans, scholax,
+%                               %       arial(*), callibri(*), newsgot(*), 
+%                               %       kieranhealy(*), futura(*) ]
 %                               % DEFAULT: style/font=newpx
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{style/chapter=default}   % The chapter style to be used
 %                               % You can use any of the default memoir style files:
 %                               %     [ default, section, hangnum, article, bianchi,
@@ -157,14 +217,23 @@
 %                               %       fmv, hansen, ist, vz34, vz43 ]
 %                               % DEFAULT: style/chapter=bar
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{lang/cover=en}       % The language for the cover (and second cover) page
 %                               %     defaults to main document language
 %                               % DEFAULT: lang/cover=<the same as “lang”>
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{lang/copyright=en}   % The language for the copyright message
 %                               %     defaults to main document language
 %                               % DEFAULT: lang/copyright=<the same as “lang”>
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{spine/layout=trim}    % Print the “book spine” at the end of the document?
 %                               %     [   no —> do not print the book spine
 %                               %       full —> print the book spine in a full page
@@ -174,6 +243,9 @@
 %                               % DEFAULT: spine/layout=trim <— if (docstatus=final)
 %                               %          spine=no   <— otherwise
 
+
+
+%-------------------------------------------------------------
 % \ntsetup{spine/width=2cm}     % Force the “book spine” width
 %                               % DEFAULT: natural width of book spine for double-sided 80gr paper
 
