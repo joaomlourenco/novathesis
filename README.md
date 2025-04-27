@@ -55,7 +55,6 @@ Table of Contents
     "
   />
   <img
-    width="500"
     alt="Star History Chart"
     src="https://api.star-history.com/svg?repos=joaomlourenco/novathesis&type=Date"
   />
