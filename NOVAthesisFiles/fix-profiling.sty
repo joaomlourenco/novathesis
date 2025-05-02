@@ -1,7 +1,9 @@
 \providecommand{\pdfresettimer}{}
 \ifcsname pdfelapsedtime\endcsname\else\newcount{\pdfelapsedtime}\pdfelapsedtime=0\fi
 
-\RequirePackage{l3benchmark}
+\IfFileExists{l3benchmark}{
+  \RequirePackage{l3benchmark}
+}{}
 \ExplSyntaxOn
 \cs_new_eq:NN \benchmarktic \benchmark_tic:
 \cs_new_eq:NN \benchmarktoc \benchmark_toc:
