@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2025-03-18 [7.3.4]
+%% Version 2025-05-25 [7.3.7]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -117,7 +117,7 @@
 %% The novathesis class is based in “memoir”.  To set memoir
 %%  options, edit “Config/0_memoir.tex”.
 \RequirePackage{NOVAthesisFiles/fix-profiling}
-\benchmarktic
+\texprof{\benchmarktic}
 \documentclass{novathesis}
 
 
@@ -192,33 +192,33 @@
 
 %%------------------------------------------------------------
 \begin{document}          % Beginning of document
-\benchmarktoc
-\typeout{TIME class loading=\the\pdfelapsedtime}%
+\texprof{\benchmarktoc}
+\texprof{\typeout{TIME class loading=\the\pdfelapsedtime}}
 %%------------------------------------------------------------
 %% Print covers
-\benchmarktic
+\texprof{\benchmarktic}
 \ntthesisfrontmatter      % Before the main text (TOC, etc) — Roman page numbering
 \ntprint{covers}          % The cover page
-\benchmarktoc
-\typeout{TIME process covers=\the\pdfelapsedtime}%
+\texprof{\benchmarktoc}
+\texprof{\typeout{TIME process covers=\the\pdfelapsedtime}}
 %%------------------------------------------------------------
 %% Print front matter
-\benchmarktic
+\texprof{\benchmarktic}
 \ntprint{frontmatter}     % The default order is listed below, but can be changed
-\benchmarktoc
-\typeout{TIME process frontmatter=\the\pdfelapsedtime}%
+\texprof{\benchmarktoc}
+\texprof{\typeout{TIME process frontmatter=\the\pdfelapsedtime}}
 %%------------------------------------------------------------
 %% Print main matter
-\benchmarktic
+\texprof{\benchmarktic}
 \ntthesismainmatter     % The main text — Arabic page numbering
 \ntprint{mainmatter}      % The default order is listed below, but can be changed
-\benchmarktoc
-\typeout{TIME process mainmatter=\the\pdfelapsedtime}%
+\texprof{\benchmarktoc}
+\texprof{\typeout{TIME process mainmatter=\the\pdfelapsedtime}}
 %%------------------------------------------------------------
 %% Print back cover and spine
-\benchmarktic
+\texprof{\benchmarktic}
 \ntprint{backcover}       % Print the back cover, if any!
-\benchmarktoc
-\typeout{TIME process backcover=\the\pdfelapsedtime}%
+\texprof{\benchmarktoc}
+\texprof{\typeout{TIME process backcover=\the\pdfelapsedtime}}
 %%------------------------------------------------------------
 \end{document}          % End of document

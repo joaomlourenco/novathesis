@@ -23,6 +23,15 @@ MF:=$(word 1,$(TEX))
 endif
 endif
 
+# Turn of PROFILING for the developer
+WHOAMI:=$(shell whoami)
+ifeq ($(WHOAMI),jml)
+PROFILING:=-usepretex="\def\PROFILING{1}"
+else
+PROFILING:=-usepretex="\def\PROFILING{0}"
+endif
+
+
 # Find out which versions of TeX live are available (works for macos)
 TEXVERSIONS=$(shell ls /usr/local/texlive/ | fgrep -v texmf-local)
 
@@ -37,7 +46,7 @@ export AUX_DIR=$(AUXDIR)
 endif
 
 MK:=latexmk $(MKF)
-MKF:=-time -interaction=batchmode -shell-escape -synctex=1 -file-line-error -f -auxdir=$(AUXDIR) $(FLAGS)
+MKF:=-time -interaction=batchmode -shell-escape -synctex=1 -file-line-error -f -auxdir=$(AUXDIR) $(PROFILING) $(FLAGS)
 
 CT=cluttex $(CTF)
 CFT:=
