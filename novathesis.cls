@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2025-03-18 [7.3.4]
+%% Version 2025-05-25 [7.3.5]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -54,7 +54,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\ProvidesClass{novathesis}[2025-03-18 novathesis template]
+\ProvidesClass{novathesis}[2025-05-25 novathesis template]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 
