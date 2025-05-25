@@ -280,6 +280,7 @@
   ulisboa/ist/funding/.new value        = {},
 }
 
+
 \newcommand{\@splitdate}[4]{%
   % \typeout{PROCESSDATE 1=#1}\PROCESSDATE%
   \StrCut{#1}{-}#2\@daterest%

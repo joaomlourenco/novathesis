@@ -1,10 +1,14 @@
-\providecommand{\pdfresettimer}{}
 \ifcsname pdfelapsedtime\endcsname\else\newcount{\pdfelapsedtime}\pdfelapsedtime=0\fi
+\providecommand{\pdfresettimer}{}
 
-\IfFileExists{l3benchmark}{
-  \RequirePackage{l3benchmark}
-}{}
-\ExplSyntaxOn
-\cs_new_eq:NN \benchmarktic \benchmark_tic:
-\cs_new_eq:NN \benchmarktoc \benchmark_toc:
-\ExplSyntaxOff
+\ifnum\PROFILING=0\relax
+  \newcommand{\texprof}[1]{}
+\else
+  \newcommand{\texprof}[1]{#1}
+
+  \IfFileExists{l3benchmark}{\RequirePackage{l3benchmark}}{}
+  \ExplSyntaxOn
+  \cs_new_eq:NN \benchmarktic \benchmark_tic:
+  \cs_new_eq:NN \benchmarktoc \benchmark_toc:
+  \ExplSyntaxOff
+\fi
