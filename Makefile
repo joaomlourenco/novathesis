@@ -27,8 +27,6 @@ endif
 WHOAMI:=$(shell whoami)
 ifeq ($(WHOAMI),jml)
 PROFILING:=-usepretex="\def\PROFILING{1}"
-else
-PROFILING:=-usepretex="\def\PROFILING{0}"
 endif
 
 
