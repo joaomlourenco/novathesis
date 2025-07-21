@@ -12,6 +12,8 @@ env:
   USERNAME_GITHUB: joaomlourenco
 
 permissions: write-all
+permissions:
+  contents: write
 
 jobs:
   build:
