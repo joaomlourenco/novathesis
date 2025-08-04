@@ -207,7 +207,7 @@
 }
 
 % University and School logos
-\ntaddtocover[vspace=-0.6mm,,halign=l,height=2.6cm]{2-1}{%
+\ntaddtocover[vspace=-0.6mm,halign=l,height=2.6cm]{2-1}{%
   \hspace*{-0.5pt}%
   \includegraphics[height=2.5cm]{\theuniversity(logo,GRAY)}%
   \hspace{1pt}%
@@ -236,7 +236,7 @@
 \ntaddtocover[vspace=0.8cm,halign=l,height=5.5cm,valign=t]{1-1,2-1}{%
   \fontsize{17pt}{20.4bp}\selectfont%
   \addfontfeature{LetterSpace=2.9}%
-  \textbf{\thedoctitle(\@LANG@MAIN,main,cover)}
+  \textbf{\thedoctitle(\@LANG@MAIN,main,cover)}%
 }
 
 % Degree info
@@ -260,7 +260,7 @@
 }
 
 % Date
-\ntaddtocover[vspace=1,halign=l]{1-1,2-1}{%
+\ntaddtocover[vspace=1cm,halign=l]{1-1,2-1}{%
   \fontsize{11}{11}\selectfont%
   % \ifdraftdoc
     % \textbf{DRAFT: \today}
@@ -269,13 +269,21 @@
   % \fi
 }
 
+% Empty placeholder for cover position 1-2
+\ntaddtocover[]{1-2}{%
+}
+
+% Empty placeholder for cover position N-1
+\ntaddtocover[]{N-1}{%
+}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% BACK COVER
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Print sponsor logos
-\ntaddtocover[vspace=1, halign=l]{N-2}{%
+\ntaddtocover[vspace=1cm, halign=l]{N-2}{%
   \foreach \myi in {1, ..., 9} {%
     \ifdatadefined{sponsor}(\@LANG@COVER,\myi,logo){%
       \thesponsor(\@LANG@COVER,\myi,logo)\qquad%
