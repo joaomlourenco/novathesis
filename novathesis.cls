@@ -2597,8 +2597,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintacknowledgementsblock}[1][\scriptsize]{%
     \NTRunHook{acknowledgementsblock/pre}%
-    \noindent\parbox{\linewidth}{%
-    \vspace*{2.5ex}\footnoterule#1\theacknowledgmentsstring(\@LANG@MAIN)}
+    \noindent\parbox{\textwidth}{%
+      \refsection%
+      \renewcommand{\@ntcite}[1]{\nocite{##1}}
+      \vspace*{2.5ex}\footnoterule#1\theacknowledgmentsstring(\@LANG@MAIN)%
+      \renewcommand*{\chapterheadstart}{\vspace*{0pt}}%
+      \vspace*{-2.5\baselineskip}%
+      \renewcommand*{\bibfont}{#1}%
+      \defbibheading{bibliography}[\refname]{%
+        \section*{\fontsize{0.1}{0.1}\selectfont\color{red}\bibname}}%
+      \setlength{\labelnumberwidth}{10pt}%
+      \renewbibmacro*{pageref}{}% suppress backrefs
+      \defbibenvironment{bibliography}
+        {\list{}{\leftmargin0pt}}
+        {\endlist}
+        {\item}
+      \printbibliography%
+      \endrefsection%
+    }
     \NTRunHook{acknowledgementsblock/post}%
 }
 
