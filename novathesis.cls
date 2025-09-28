@@ -1323,6 +1323,18 @@
 
 \RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
 
+% Prefer: DOI, else eprint, else URL
+\renewbibmacro*{doi+eprint+url}{%
+  \iffieldundef{doi}
+    {%
+      \iffieldundef{eprint}
+        {\usebibmacro{url+urldate}}% no doi/eprint → URL (with date if available)
+        {\usebibmacro{eprint}}% no doi, but eprint → eprint
+    }%
+    {\printfield{doi}}% doi present → DOI
+}
+
+
 
 % --------------------------------------------------------
 % Customize the pagestyle
@@ -2763,9 +2775,9 @@
 }
 
 \providecommand\thecopyrightstr{%
-    \iftoggle{/novathesis/numberallpages}%
+    % \iftoggle{/novathesis/numberallpages}%
      {\thispagestyle{novathesis@frontmatter}}%
-     {\thispagestyle{empty}}%
+     % {\thispagestyle{empty}}%
     \noindent%
     Copyright \textcopyright\ \thedocauthor(name), %
     \theschool(\@LANG@COPYRIGHT), \theuniversity(\@LANG@COPYRIGHT).\\%
