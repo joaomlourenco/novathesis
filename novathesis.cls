@@ -1,4 +1,5 @@
 %!TEX root=template.tex
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% novathesis.cls
 %% NOVA thesis document class
@@ -234,9 +235,9 @@
                                    }},
   % LANGUAGES
   lang/extra/.new list           = {},
-  lang/main/.new choice         = {en, pt, fr, it, de, es, gr},
-  lang/cover/.new choice        = {en, pt, fr, it, de, es, gr},
-  lang/copyright/.new choice    = {en, pt, fr, it, de, es, gr},
+  lang/main/.new choice         = {en, pt, fr, it, de, es, gr, uk},
+  lang/cover/.new choice        = {en, pt, fr, it, de, es, gr, uk},
+  lang/copyright/.new choice    = {en, pt, fr, it, de, es, gr, uk},
   lang/.new cmd                 = {\optionsalso{/novathesis/lang/main=#1,
                                                 /novathesis/lang/cover=#1,
                                                 /novathesis/lang/copyright=#1}},
@@ -379,11 +380,11 @@
 
 
 \options{/@nt/.new family,
-  lang/short/.new list={en, pt, fr, it, de, es, gr},
+  lang/short/.new list={en, pt, fr, it, de, es, gr, uk},
   % lang/current/.new choice={en, pt, fr, it, de, es, gr},
   lang/loaded/.new list={},
   % lang/shorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish, gr=greek},
-  fontenc/.new choice={en=T1, pt=T1, fr=T1, it=T1, de=T1, es=T1, gr=LGR},
+  fontenc/.new choice={en=T1, pt=T1, fr=T1, it=T1, de=T1, es=T1, gr=LGR, uk=T2A},
 }
 
 \newdata{langlong}
@@ -394,6 +395,7 @@
 \langlong(de):={german}
 \langlong(es):={spanish}
 \langlong(gr):={greek}
+\langlong(uk):={ukrainian}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE FOLDERS PER CLASS
@@ -851,11 +853,20 @@
 \newcommand{\ifxetexorluatex}{\iftutex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\@fontencs{}
+\def\@fontencs@sep{}
+\@for\myi:=\@LANG@LOADED\do{
+  \options{/@nt/fontenc=\myi}
+  \if\instring{,\option{/@nt/fontenc},}{,\@fontencs,}%
+  \else\eappto{\@fontencs}{\@fontencs@sep\option{/@nt/fontenc}}\def\@fontencs@sep{,}%
+  \fi%
+}
+% \typeout{FONTENCS=\@fontencs}\FONTENCS
 \ifxetexorluatex  % xelatex or lualatex
   \RequirePackage[no-math]{fontspec}%
   \defaultfontfeatures{Ligatures=TeX}
 \else% pdflatex
-  \RequirePackage[T1]{fontenc}    % Use new T1 fonts
+  \RequirePackage[\@fontencs]{fontenc}    % Use new T1 fonts
   % \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
 \fi
 
