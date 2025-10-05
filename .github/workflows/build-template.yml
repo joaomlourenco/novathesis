@@ -32,17 +32,17 @@ jobs:
       - name: Compile the LaTeX template
         uses: xu-cheng/texlive-action/full@v1
         with:
-          run: bash .Build/build.sh
-      - name: Upload the template PDF file
-        uses: actions/upload-artifact@v4
-        with:
-          name: Template
-          path: template.pdf
-      - name: Push changes to the repository
-        run: |
-          version=$(grep novathesisversion $VERSION_FILE | cut -d "{" -f3 | cut -d "}" -f1)
-          git config --global user.email "$EMAIL_GITHUB"
-          git config --global user.name "$USERNAME_GITHUB"
-          git add -f template.pdf
-          git commit -m "Version $(grep novathesisversion $VERSION_FILE | cut -d '{' -f3 | cut -d '}' -f1)"
-          git push
+          run: bash .Build/build.sh nova/fct
+      # - name: Upload the template PDF file
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: Template
+      #     path: template.pdf
+      # - name: Push changes to the repository
+      #   run: |
+      #     version=$(grep novathesisversion $VERSION_FILE | cut -d "{" -f3 | cut -d "}" -f1)
+      #     git config --global user.email "$EMAIL_GITHUB"
+      #     git config --global user.name "$USERNAME_GITHUB"
+      #     git add -f template.pdf
+      #     git commit -m "Version $(grep novathesisversion $VERSION_FILE | cut -d '{' -f3 | cut -d '}' -f1)"
+      #     git push
