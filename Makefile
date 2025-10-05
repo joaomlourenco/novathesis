@@ -218,6 +218,7 @@ endif
 define _mtp
 	echo "VERSION=$(1) - DATE=$(2)."
 	make clean
+	.Build/build.sh nova/fct
 	git commit --all --message "Version $(1) - $(2)." || true
 	git checkout main
 	git pull
