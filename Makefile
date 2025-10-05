@@ -175,17 +175,10 @@ bclean:
 	make clean
 
 #————————————————————————————————————————————————————————————————————————————
-.PHONY: publish
-publish:
-ifneq (, $(wildcard Scripts/publish.sh))
-	Scripts/publish.sh
-endif
-
-#————————————————————————————————————————————————————————————————————————————
 .PHONY: bump1 bump2 bump3
 bump1 bump2 bump3:
 ifneq (, $(wildcard Scripts/newversion.sh))
-	Scripts/newversion.sh $(subst bump,,$@)
+	@Scripts/newversion.sh $(subst bump,,$@)
 	@$(call _mtp,$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/'),$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/'))
 endif
 
@@ -225,12 +218,8 @@ endif
 define _mtp
 	echo "VERSION=$(1) - DATE=$(2)."
 	make clean
-	git reset template.pdf
-	git checkout origin template.pdf
 	git commit --all --message "Version $(1) - $(2)." || true
 	git checkout main
-	git reset template.pdf
-	git checkout origin template.pdf
 	git pull
 	git merge -m "Merge branch 'develop'" develop
 	git tag -f -a "v$(1)" -m "Version $(1) - $(2)."
