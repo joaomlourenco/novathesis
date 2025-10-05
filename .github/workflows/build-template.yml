@@ -26,4 +26,4 @@ jobs:
       - name: Compile the LaTeX template
         uses: xu-cheng/texlive-action/full@v1
         with:
-          run: bash .Build/build.py nova/fct
+          run: python .Build/build.py nova/fct
