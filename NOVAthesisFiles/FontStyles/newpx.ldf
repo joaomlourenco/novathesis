@@ -7,5 +7,20 @@
 
 \typeout{NT FILE FontStyles/newpx.ldf}%
 
-\RequirePackage{newpxtext}
-\RequirePackage{newpxmath}
+\ifxeorlua{%
+  \IfFontExistsTF{Palatino}%
+      {\setmainfont{Palatino}[
+              Scale=1.0,
+              Ligatures={Common,Discretionary,TeX}]}%
+  {  \IfFontExistsTF{Palatino Linotype}%
+      {\setmainfont{Palatino Linotype}[
+              Scale=1.0,
+              Ligatures={Common,Discretionary,TeX}]}%
+      {\setmainfont{TeX Gyre Pagella}[
+              Scale=1.0,
+              Ligatures={Common,Discretionary,TeX}]}
+  }
+}{%
+  \RequirePackage{newpxtext}
+  \RequirePackage{newpxmath}
+}

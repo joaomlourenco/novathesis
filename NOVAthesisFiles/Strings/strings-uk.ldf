@@ -1,0 +1,131 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Strings/uk.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for language depedent strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE Strings/uk.ldf}%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Ukrainian - strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\AtEndPreamble{
+\StartBabelCommands*{ukrainian}{date}
+  \SetStringLoop{month#1name}{%
+      Січень,лютий,березень,квітень,травень,червень, %
+      Липень,серпень,вересень,жовтень,листопад,%
+      грудень}
+\EndBabelCommands
+}
+
+\bkmstring(frontmatter,uk)      := {Лицьовий аркуш}
+\bkmstring(backmatter,uk)       := {Зворотний бік}
+\bkmstring(cover,uk)            := {Обкладинка}
+\bkmstring(frontpage,uk)        := {Обкладинка}
+\bkmstring(backcover,uk)        := {Задня обкладинка}
+\bkmstring(spine,uk)            := {Корінець}
+\bkmstring(copyright,uk)        := {Копірайт}
+\bkmstring(dedicatory,uk)       := {Присвята}
+\bkmstring(statement,uk)        := {Заява}
+\bkmstring(acknowledgements,uk) := {Подяки}
+\bkmstring(quote,uk)            := {Цитата}
+\bkmstring(abstract,uk)         := {Анотація}
+\keywordsstring(uk)             := {Ключові слова}
+\notdefined(uk)                 := {Невизначено}
+\specializationstring(uk)       := {Спеціалізація в}
+\departmentofstring(uk)         := {Кафедра}
+\andstring(uk)                  := { та }
+\degreenameprefix(bsc,uk)       := {Бакалавр в}
+\degreenameprefix(msc,uk)       := {Магістратура}
+\degreenameprefix(phd,uk)       := {Докторантура}
+
+\adviserstring(a,1,m,uk)        := {Консультант}
+\adviserstring(a,1,f,uk)        := {Керівник}
+\adviserstring(a,2,m,uk)        := {Порадники}
+\adviserstring(a,2,f,uk)        := {Advisers}
+\adviserstring(c,1,m,uk)        := {Співрадник}
+\adviserstring(c,1,f,uk)        := {Співрадник}
+\adviserstring(c,2,m,uk)        := {Співрадник}
+\adviserstring(c,2,f,uk)        := {Співрадник}
+\adviserstring(ca,1,m,uk)       := {Співрадник}
+\adviserstring(ca,1,f,uk)       := {Співрадник}
+\adviserstring(ca,2,m,uk)       := {Співрадник}
+\adviserstring(ca,2,f,uk)       := {Співрадник}
+\adviserstring(t,1,m,uk)        := {Тутор}
+\adviserstring(t,1,f,uk)        := {Тутор}
+\adviserstring(t,2,m,uk)        := {Тутори}
+\adviserstring(t,2,f,uk)        := {Tutors}
+
+\degreestring(bsc,m,uk)         := {Бакалавр наук}
+\degreestring(bsc,f,uk)         := {Бакалавр природничих наук}
+\degreestring(msc,m,uk)         := {Магістр наук}
+\degreestring(msc,f,uk)         := {Магістр наук}
+\degreestring(mscplan,m,uk)     := {Магістр наук}
+\degreestring(mscplan,f,uk)     := {Магістр наук}
+\degreestring(phd,m,uk)         := {Доктор філософії}
+\degreestring(phdplan,m,uk)     := {Доктор філософії}
+\degreestring(phdplan,f,uk)     := {Доктор філософії}
+\degreestring(phdprop,m,uk)     := {Доктор філософії}
+\degreestring(phdprop,f,uk)     := {Доктор філософії}
+
+\doctypestring(bsc,uk)          := {Бакалаврська робота}
+\doctypestring(msc,uk)          := {Магістерська дисертація}
+\doctypestring(mscplan,uk)      := {Кваліфікація магістра наук}
+\doctypestring(phdplan,uk)      := {Кваліфікація доктора філософії}
+\doctypestring(phdprop,uk)      := {Пропозиція на здобуття докторського ступеня}
+\doctypestring(phd,uk)          := {Докторська дисертація}
+
+\committeetitlestring(uk)   := {Екзаменаційна комісія}
+\committeestring(c,1,m,uk)  := {Керівник}
+\committeestring(c,1,f,uk)  := {Голова}
+\committeestring(c,2,m,uk)  := {Столики}
+\committeestring(c,2,f,uk)  := {Chairs}
+\committeestring(r,1,m,uk)  := {Доповідач}
+\committeestring(r,1,f,uk)  := {Доповідач}
+\committeestring(r,2,m,uk)  := {Доповідачі}
+\committeestring(r,2,f,uk)  := {Доповідачі}
+\committeestring(a,1,m,uk)  := {Доповідач}
+\committeestring(a,1,f,uk)  := {Доповідач}
+\committeestring(a,2,m,uk)  := {Порадники}
+\committeestring(a,2,f,uk)  := {Advisers}
+\committeestring(ca,1,m,uk) := {Співрадник}
+\committeestring(ca,1,f,uk) := {Співрадник}
+\committeestring(ca,2,m,uk) := {Співрадник}
+\committeestring(ca,2,f,uk) := {Співрадник}
+\committeestring(m,1,m,uk)  := {Член}
+\committeestring(m,1,f,uk)  := {Член}
+\committeestring(m,2,m,uk)  := {Members}
+\committeestring(m,2,f,uk)  := {Members}
+\committeestring(g,1,m,uk)  := {Гость}
+\committeestring(g,1,f,uk)  := {Гость}
+\committeestring(g,2,m,uk)  := {Гості}
+\committeestring(g,2,f,uk)  := {Гості}
+
+\dissertationstring(bsc,uk)={Доповідь подано з частковим виконанням
+вимог до наукового ступеня на\\[1.25ex]%
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(mscplan,uk)={План дисертації подано з частковим виконанням
+вимог до наукового ступеня\\[1.25ex]%
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(msc,uk)={Дисертація подана на здобуття наукового ступеня
+вимог до наукового ступеня\\[1.25ex]%
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phdplan,uk)={Дисертація подана з частковим виконанням
+вимог до наукового ступеня\\[1.25ex]%
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phdprop,uk)={Дисертація подана на часткове виконання
+вимог до наукового ступеня\\[1.25ex]%
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phd,uk)={Дисертацію подано на здобуття наукового ступеня
+вимог до наукового ступеня\\[1.25ex]%
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in \textbf{\themajorfield(\@LANG@COVER)}}
+
+\copyrighttextstring(uk)={Школа \theschool(\@LANG@COPYRIGHT)\ та університет \theuniversity(\@LANG@COPYRIGHT)\ мають право, безстрокове і без географічних кордонів, подавати і публікувати цю дисертацію через друковані копії, відтворені на папері або в цифровій формі, або будь-якими іншими відомими чи винайденими засобами, а також розповсюджувати через наукові репозиторії та дозволяти її копіювання і розповсюдження з некомерційною, освітньою або дослідницькою метою, за умови посилання на автора та редактора.}
+\acknowledgmentsstring(uk)={Цей документ було створено за допомогою процесора (pdf/Xe/Lua)\LaTeX\ та шаблону \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template (v\novathesisversion)~\@ntcite{novathesis-manual}.}

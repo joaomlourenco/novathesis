@@ -7,7 +7,6 @@ on:
   pull_request:
 
 env:
-  VERSION_FILE: NOVAthesisFiles/nt-version.sty
   EMAIL_GITHUB: joao.lourenco@fct.unl.pt
   USERNAME_GITHUB: joaomlourenco
 
@@ -23,24 +22,7 @@ jobs:
         with:
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Extract version number from nt-version.sty
-        run: |
-          version=$(grep novathesisversion $VERSION_FILE | cut -d "{" -f3 | cut -d "}" -f1)
-          echo "Version number is $version"
       - name: Compile the LaTeX template
         uses: xu-cheng/texlive-action/full@v1
         with:
-          run: bash .Build/build.sh
-      - name: Upload the template PDF file
-        uses: actions/upload-artifact@v4
-        with:
-          name: Template
-          path: template.pdf
-      - name: Push changes to the repository
-        run: |
-          version=$(grep novathesisversion $VERSION_FILE | cut -d "{" -f3 | cut -d "}" -f1)
-          git config --global user.email "$EMAIL_GITHUB"
-          git config --global user.name "$USERNAME_GITHUB"
-          git add -f template.pdf
-          git commit -m "Version $(grep novathesisversion $VERSION_FILE | cut -d '{' -f3 | cut -d '}' -f1)"
-          git push
+          run: python .Build/build.py nova/fct
