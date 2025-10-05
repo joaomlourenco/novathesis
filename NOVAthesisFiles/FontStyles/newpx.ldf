@@ -8,12 +8,12 @@
 \typeout{NT FILE FontStyles/newpx.ldf}%
 
 \ifxeorlua{%
-  \IfFontExistsTF{Palatino Linotype}%
-      {\setmainfont{Palatino Linotype}[
+  \IfFontExistsTF{Palatino}%
+      {\setmainfont{Palatino}[
               Scale=1.0,
               Ligatures={Common,Discretionary,TeX}]}%
-  {  \IfFontExistsTF{Palatino}%
-      {\setmainfont{Palatino}[
+  {  \IfFontExistsTF{Palatino Linotype}%
+      {\setmainfont{Palatino Linotype}[
               Scale=1.0,
               Ligatures={Common,Discretionary,TeX}]}%
       {\setmainfont{TeX Gyre Pagella}[
