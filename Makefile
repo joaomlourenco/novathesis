@@ -175,10 +175,10 @@ bclean:
 	make clean
 
 #————————————————————————————————————————————————————————————————————————————
-.PHONY: bump1 bump2 bump3
-bump1 bump2 bump3:
+	.PHONY: bump1 bump2 bump3
+bump%:
 ifneq (, $(wildcard Scripts/newversion.sh))
-	@Scripts/newversion.sh $(subst bump,,$@)
+	@Scripts/newversion.sh $*
 	@$(call _mtp,$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/'),$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/'))
 endif
 
@@ -218,7 +218,7 @@ endif
 define _mtp
 	echo "VERSION=$(1) - DATE=$(2)."
 	make clean
-	.Build/build.sh nova/fct
+	.Build/build.py nova/fct
 	git commit --all --message "Version $(1) - $(2)." || true
 	git checkout main
 	git pull
