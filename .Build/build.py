@@ -5,7 +5,7 @@ import sys
 import subprocess
 from pathlib import Path
 
-CONFDIR="Config"
+CONFDIR="0-Config"
 
 # --- Global map of filename → pattern set ---
 PATTERN_MAP = {
@@ -135,7 +135,7 @@ def main():
     changes4 = process_file(filepath4, new_school_id)
 
     # Only call make + revert if something was changed
-    if changes1 + changes4 > 0:
+    if changes1 + changes4 >= 0:
         run_make_and_revert([filepath1, filepath4])
     else:
         print("ℹ️  No changes detected — skipping `make` and revert.")

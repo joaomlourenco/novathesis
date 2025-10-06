@@ -20,116 +20,118 @@
 \EndBabelCommands
 }
 
-\bkmstring(frontmatter,de):={Startmaterial}
-\bkmstring(backmatter,de):={Endmaterial}
-\bkmstring(cover,de):={Buchumschlag}
-\bkmstring(frontpage,de):={Titelseite}
-\bkmstring(backcover,de):={Rückseite}
-\bkmstring(spine,de):={Buchrücken}
-\bkmstring(copyright,de):={Copyright}
-\bkmstring(statement,de):={Erklärung}
-\bkmstring(dedicatory,de):={Widmung}
-\bkmstring(acknowledgements,de):={Danksagungen}
-\bkmstring(quote,de):={Zitat}
-\bkmstring(abstract,de):={Zusammenfassung}
-\keywordsstring(de):={Stichwörter}
-\notdefined(de):={UNDEFINIERT}
-\specializationstring(de):={Spezialisierung in}
-\departmentofstring(de):={Abteilung für}
-\andstring(de):={ und }
-\degreenameprefix(msc,de):={Master in}
-\degreenameprefix(phd,de):={Doctorate in}
+\bkmstring(frontmatter,de)        := {Startmaterial}
+\bkmstring(backmatter,de)         := {Endmaterial}
+\bkmstring(cover,de)              := {Buchumschlag}
+\bkmstring(frontpage,de)          := {Titelseite}
+\bkmstring(backcover,de)          := {Rückseite}
+\bkmstring(spine,de)              := {Buchrücken}
+\bkmstring(copyright,de)          := {Copyright}
+\bkmstring(statement,de)          := {Erklärung}
+\bkmstring(dedicatory,de)         := {Widmung}
+\bkmstring(acknowledgements,de)   := {Danksagungen}
+\bkmstring(quote,de)              := {Zitat}
+\bkmstring(abstract,de)           := {Zusammenfassung}
+\bkmstring(listof,de)             := {Liste der…}
+\bkmstring(glossaries,de)         := {Glossare}
+\keywordsstring(de)               := {Stichwörter}
+\notdefined(de)                   := {UNDEFINIERT}
+\specializationstring(de)         := {Spezialisierung in}
+\departmentofstring(de)           := {Abteilung für}
+\andstring(de)                    := { und }
+\degreenameprefix(msc,de)         := {Master in}
+\degreenameprefix(phd,de)         := {Doctorate in}
 
-\adviserstring(a,1,m,de):={Betreuer}% male, singular
-\adviserstring(a,1,f,de):={Betreuerin}% female, singular
-\adviserstring(a,2,m,de):={Betreuer}% male, plural
-\adviserstring(a,2,f,de):={Betreuerinnen}% female, plural
-\adviserstring(c,1,m,de):={Zweitbetreuer}% male, singular
-\adviserstring(c,1,f,de):={Zweitbetreuerin}% female, singular
-\adviserstring(c,2,m,de):={Zweitbetreuer}% male, plural
-\adviserstring(c,2,f,de):={Zweitbetreuerin}% female, plural
-\adviserstring(ca,1,m,de):={Zweitbetreuer}% male, singular
-\adviserstring(ca,1,f,de):={Zweitbetreuerin}% female, singular
-\adviserstring(ca,2,m,de):={Zweitbetreuer}% male, plural
-\adviserstring(ca,2,f,de):={Zweitbetreuerin}% female, plural
+\adviserstring(a,1,m,de)          := {Betreuer}% male, singular
+\adviserstring(a,1,f,de)          := {Betreuerin}% female, singular
+\adviserstring(a,2,m,de)          := {Betreuer}% male, plural
+\adviserstring(a,2,f,de)          := {Betreuerinnen}% female, plural
+\adviserstring(c,1,m,de)          := {Zweitbetreuer}% male, singular
+\adviserstring(c,1,f,de)          := {Zweitbetreuerin}% female, singular
+\adviserstring(c,2,m,de)          := {Zweitbetreuer}% male, plural
+\adviserstring(c,2,f,de)          := {Zweitbetreuerin}% female, plural
+\adviserstring(ca,1,m,de)         := {Zweitbetreuer}% male, singular
+\adviserstring(ca,1,f,de)         := {Zweitbetreuerin}% female, singular
+\adviserstring(ca,2,m,de)         := {Zweitbetreuer}% male, plural
+\adviserstring(ca,2,f,de)         := {Zweitbetreuerin}% female, plural
 
-\degreestring(bsc,m,de):={Bachelor}
-\degreestring(bsc,f,de):={Bachelor}
-\degreestring(msc,m,de):={Master of Science}
-\degreestring(msc,f,de):={Master of Science}
-\degreestring(mscplan,m,de):={Master of Science}
-\degreestring(mscplan,f,de):={Master of Science}
-\degreestring(phd,m,de):={Doktors der Naturwissenschaften}
-\degreestring(phd,f,de):={Doktors der Naturwissenschaften}
-\degreestring(phdplan,m,de):={Doktors der Naturwissenschaften} % Does not exist in Germany
-\degreestring(phdplan,f,de):={Doktors der Naturwissenschaften} % Does not exist in Germany
-\degreestring(phdprop,m,de):={Doktors der Naturwissenschaften} % Does not exist in Germany
-\degreestring(phdprop,f,de):={Doktors der Naturwissenschaften} % Does not exist in Germany
+\degreestring(bsc,m,de)           := {Bachelor}
+\degreestring(bsc,f,de)           := {Bachelor}
+\degreestring(msc,m,de)           := {Master of Science}
+\degreestring(msc,f,de)           := {Master of Science}
+\degreestring(mscplan,m,de)       := {Master of Science}
+\degreestring(mscplan,f,de)       := {Master of Science}
+\degreestring(phd,m,de)           := {Doktors der Naturwissenschaften}
+\degreestring(phd,f,de)           := {Doktors der Naturwissenschaften}
+\degreestring(phdplan,m,de)       := {Doktors der Naturwissenschaften} % Does not exist in Germany
+\degreestring(phdplan,f,de)       := {Doktors der Naturwissenschaften} % Does not exist in Germany
+\degreestring(phdprop,m,de)       := {Doktors der Naturwissenschaften} % Does not exist in Germany
+\degreestring(phdprop,f,de)       := {Doktors der Naturwissenschaften} % Does not exist in Germany
 
-\doctypestring(bsc,de):={Bachelorarbeit}
-\doctypestring(msc,de):={Masterarbeit}
-\doctypestring(mscplan,de):={Master of Science Qualification} % Not really sure what this is
-\doctypestring(phdplan,de):={Doctorate Qualification} % Not really sure what this is
+\doctypestring(bsc,de)            := {Bachelorarbeit}
+\doctypestring(msc,de)            := {Masterarbeit}
+\doctypestring(mscplan,de)        := {Master of Science Qualification} % Not really sure what this is
+\doctypestring(phdplan,de)        := {Doctorate Qualification} % Not really sure what this is
 %% hr: siehe https://www.di.fct.unl.pt/sites/www.di.fct.unl.pt/files/guidelinesthesisplan.pdf
 %% so richtig gibts das bei uns nicht, am nähesten kommt das Exposé das bei uns in der
 %% Betreuungsvereinbarung vorgesehen ist
-\doctypestring(phdprop,de):={Doctorate Proposal} % Not really sure what this is
+\doctypestring(phdprop,de)        := {Doctorate Proposal} % Not really sure what this is
 %% Das ist das Äquivalent von unserem Fakultätsvortrag, nur dass das an der UNL nicht nur ein
 %% Vortrag ist, sondern ein richtiger Text der da vor Thesis-Fertigstellung abgegeben werden muss
 %% Gibt denke ich auch keine gute Übersetzung...
-\doctypestring(phd,de):={Dissertation}
+\doctypestring(phd,de)            := {Dissertation}
 
-\committeetitlestring(de):={Prüfungsausschuss}
-\committeestring(c,1,m,de):={Vorsitzender}% male, singular
-\committeestring(c,1,f,de):={Vorsitzende}% female, singular
-\committeestring(c,2,m,de):={Vorsitzende}% male, plural
-\committeestring(c,2,f,de):={Vorsitzende}% female, plural
-\committeestring(r,1,m,de):={Gutachter}% male, singular
-\committeestring(r,1,f,de):={Gutachterin}% female, singular
-\committeestring(r,2,m,de):={Gutachter}% male, plural
-\committeestring(r,2,f,de):={Gutachterinnen}% female, plural
-\committeestring(a,1,m,de):={Betreuer}% male, singular
-\committeestring(a,1,f,de):={Betreuer}% female, singular
-\committeestring(a,2,m,de):={Betreuer}% male, plural
-\committeestring(a,2,f,de):={Betreuer}% female, plural
-\committeestring(ca,1,m,de):={Zweitbetreuer}% male, singular
-\committeestring(ca,1,f,de):={Zweitbetreuerin}% female, singular
-\committeestring(ca,2,m,de):={Zweitbetreuer}% male, plural
-\committeestring(ca,2,f,de):={Zweitbetreuerin}% female, plural
-\committeestring(m,1,m,de):={Mitglied}% male, singular
-\committeestring(m,1,f,de):={Mitglied}% female, singular
-\committeestring(m,2,m,de):={Mitglied}% male, plural
-\committeestring(m,2,f,de):={Mitglied}% female, plural
-\committeestring(g,1,m,de):={Gast}% male, singular
-\committeestring(g,1,f,de):={Gast}% female, singular
-\committeestring(g,2,m,de):={Gäste}% male, plural
-\committeestring(g,2,f,de):={Gäste}% female, plural
+\committeetitlestring(de)         := {Prüfungsausschuss}
+\committeestring(c,1,m,de)        := {Vorsitzender}% male, singular
+\committeestring(c,1,f,de)        := {Vorsitzende}% female, singular
+\committeestring(c,2,m,de)        := {Vorsitzende}% male, plural
+\committeestring(c,2,f,de)        := {Vorsitzende}% female, plural
+\committeestring(r,1,m,de)        := {Gutachter}% male, singular
+\committeestring(r,1,f,de)        := {Gutachterin}% female, singular
+\committeestring(r,2,m,de)        := {Gutachter}% male, plural
+\committeestring(r,2,f,de)        := {Gutachterinnen}% female, plural
+\committeestring(a,1,m,de)        := {Betreuer}% male, singular
+\committeestring(a,1,f,de)        := {Betreuer}% female, singular
+\committeestring(a,2,m,de)        := {Betreuer}% male, plural
+\committeestring(a,2,f,de)        := {Betreuer}% female, plural
+\committeestring(ca,1,m,de)       := {Zweitbetreuer}% male, singular
+\committeestring(ca,1,f,de)       := {Zweitbetreuerin}% female, singular
+\committeestring(ca,2,m,de)       := {Zweitbetreuer}% male, plural
+\committeestring(ca,2,f,de)       := {Zweitbetreuerin}% female, plural
+\committeestring(m,1,m,de)        := {Mitglied}% male, singular
+\committeestring(m,1,f,de)        := {Mitglied}% female, singular
+\committeestring(m,2,m,de)        := {Mitglied}% male, plural
+\committeestring(m,2,f,de)        := {Mitglied}% female, plural
+\committeestring(g,1,m,de)        := {Gast}% male, singular
+\committeestring(g,1,f,de)        := {Gast}% female, singular
+\committeestring(g,2,m,de)        := {Gäste}% male, plural
+\committeestring(g,2,f,de)        := {Gäste}% female, plural
 
 
-\dissertationstring(bsc,de)={Bachelorarbeit vorgelegt von\\[1.25ex]%
+\dissertationstring(bsc,de)       = {Bachelorarbeit vorgelegt von\\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in der\\ \textbf{\themajorfield(\@LANG@COVER)}}
 %
 %
-\dissertationstring(mscplan,de)={Exposé für eine Masterarbeit vorgelegt \\[1.25ex]%
+\dissertationstring(mscplan,de)   = {Exposé für eine Masterarbeit vorgelegt \\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in der\\ \textbf{\themajorfield(\@LANG@COVER)}}
 %
 %
-\dissertationstring(msc,de)={Masterarbeit vorgelegt von\\[1.25ex]%
+\dissertationstring(msc,de)       = {Masterarbeit vorgelegt von\\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in der\\ \textbf{\themajorfield(\@LANG@COVER)}}
 %
 %
-\dissertationstring(phdplan,de)={Exposé für eine Dissertations vorgelegt \\[1.25ex]%
+\dissertationstring(phdplan,de)   = {Exposé für eine Dissertations vorgelegt \\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in der\\ \textbf{\themajorfield(\@LANG@COVER)}}
 %
 %
-\dissertationstring(phdprop,de)={Exposé für eine Dissertations vorgelegt\\[1.25ex]%
+\dissertationstring(phdprop,de)   = {Exposé für eine Dissertations vorgelegt\\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in der\\ \textbf{\themajorfield(\@LANG@COVER)}}
 %
-\dissertationstring(phd,de)={Dissertation\\%
+\dissertationstring(phd,de)       = {Dissertation\\%
 % zur Erlangung des akademischen Grades eines\\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in der\\ \textbf{\themajorfield(\@LANG@COVER)}}
 
 % Probably this is not a legally binding translation
-\copyrighttextstring(de)={Die \theschool(\@LANG@COPYRIGHT)\ und die \theuniversity(\@LANG@COPYRIGHT)\ haben das zeitlich und räumlich unbeschränkte Recht, diese Arbeit durch gedruckte Exemplare auf Papier oder in digitaler Form oder durch jedes andere bekannte oder noch zu erfindende Mittel zu archivieren und zu veröffentlichen und über wissenschaftliche Repositorien zu verbreiten und ihre Vervielfältigung und Verbreitung zu nichtkommerziellen, Bildungs- oder Forschungszwecken zuzulassen, solange der Autor und Herausgeber genannt wird.}
+\copyrighttextstring(de)          = {Die \theschool(\@LANG@COPYRIGHT)\ und die \theuniversity(\@LANG@COPYRIGHT)\ haben das zeitlich und räumlich unbeschränkte Recht, diese Arbeit durch gedruckte Exemplare auf Papier oder in digitaler Form oder durch jedes andere bekannte oder noch zu erfindende Mittel zu archivieren und zu veröffentlichen und über wissenschaftliche Repositorien zu verbreiten und ihre Vervielfältigung und Verbreitung zu nichtkommerziellen, Bildungs- oder Forschungszwecken zuzulassen, solange der Autor und Herausgeber genannt wird.}
 
-\acknowledgmentsstring(de)={Dieses Dokument wurde mit Hilfe von (pdf/Xe/Lua)\LaTeX\ erzeugt, und dem Vorlage \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+\acknowledgmentsstring(de)        = {Dieses Dokument wurde mit Hilfe von (pdf/Xe/Lua)\LaTeX\ erzeugt, und dem Vorlage \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}

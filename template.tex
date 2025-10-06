@@ -197,10 +197,9 @@
 %%------------------------------------------------------------
 %% Print covers
 \texprof{\benchmarktic}
-\ntthesisfrontmatter      % Before the main text (TOC, etc) — Roman page numbering
-\ntprint{covers}          % The cover page
+\ntprint{frontcover}          % The cover page
 \texprof{\benchmarktoc}
-\texprof{\typeout{TIME process covers=\the\pdfelapsedtime}}
+\texprof{\typeout{TIME process front cover=\the\pdfelapsedtime}}
 %%------------------------------------------------------------
 %% Print front matter
 \texprof{\benchmarktic}
@@ -214,6 +213,13 @@
 \ntprint{mainmatter}      % The default order is listed below, but can be changed
 \texprof{\benchmarktoc}
 \texprof{\typeout{TIME process mainmatter=\the\pdfelapsedtime}}
+%%------------------------------------------------------------
+%% Print back matter
+\texprof{\benchmarktic}
+\ntthesisbackmatter     % The back text — Arabic page numbering
+\ntprint{backmatter}      % The default order is listed below, but can be changed
+\texprof{\benchmarktoc}
+\texprof{\typeout{TIME process backmatter=\the\pdfelapsedtime}}
 %%------------------------------------------------------------
 %% Print back cover and spine
 \texprof{\benchmarktic}

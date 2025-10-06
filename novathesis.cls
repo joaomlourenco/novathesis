@@ -68,13 +68,22 @@
 \let\old@Roman=\@Roman
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\DIR@CONFIG{0-Config}
+\def\DIR@FRONTMATTER{1-FrontMatter}
+\def\DIR@MAINMATTER{2-MainMatter}
+\def\DIR@BACKMATTER{3-BackMatter}
+\def\DIR@BIBLIOGRAPHY{4-Bibliography}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  MEMOIR CUSTOMIZATION AND LOADING
 %%      Please open and edit the appropriate
-%%       configuration file “Config/0_memoir.tex”
+%%       configuration file “0-Config/0_memoir.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntmemoirsetup}[1]{\PassOptionsToClass{#1}{memoir}}
-\input{Config/0_memoir}
+\input{\DIR@CONFIG/0_memoir}
 \LoadClass{memoir}
 \OnehalfSpacing% One-and-half spacing
 
@@ -104,7 +113,7 @@
 
 %%%%% Configure Graphics
 \RequirePackage[nobeamer]{graphbox}% improved version of "graphicx"
-\graphicspath{{Chapters/Figures/}}
+\graphicspath{{5-Figures/}}
 \DeclareGraphicsExtensions{.pdf,.png,.tif,.jpg}
 \providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
 \providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
@@ -404,18 +413,18 @@
 %% MANAGE FOLDERS PER CLASS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \options{/@nt/folders/.new choice={
-  bib=Bibliography,
   copyright=.,
   statement=.,
-  dedicatory=Chapters,
-  acknowledgements=Chapters,
-  quote=Chapters,
-  abstract=Chapters,
-  glossaries=Chapters,
-  chapter=Chapters,
-  appendix=Chapters,
-  annex=Chapters,
-  cover=Chapters,
+  dedicatory=\DIR@FRONTMATTER,
+  acknowledgements=\DIR@FRONTMATTER,
+  quote=\DIR@FRONTMATTER,
+  abstract=\DIR@FRONTMATTER,
+  glossaries=\DIR@FRONTMATTER,
+  cover=\DIR@FRONTMATTER,
+  chapter=\DIR@MAINMATTER,
+  appendix=\DIR@BACKMATTER,
+  annex=\DIR@BACKMATTER,
+  bib=\DIR@BIBLIOGRAPHY,
 }}
 
 
@@ -423,7 +432,10 @@
 %% MANAGE DOCUMENT CLASSES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \options{/@nt/document/.cd,
-   docclass/.new choice={phd=phd, phdprop=phd, phdplan=phd, msc=msc, mscplan=msc, bsc=bsc, plain=plain},
+   docclass/.new choice={phd=phd, phdprop=phd, phdplan=phd, 
+                         msc=msc, mscplan=msc, 
+                         bsc=bsc, 
+                         plain=plain},
    docmain/.new list={phd, msc, bsc, plain},
 }
 
@@ -733,9 +745,9 @@
 %============================================================
 %  TEMPLATE CUSTOMIZATION / OPTIONS
 %      Please open and edit the appropriate
-%       configuration file “Config/1_novathesis.tex”
+%       configuration file “0-Config/1_novathesis.tex”
 %============================================================
-\input{Config/1_novathesis}
+\input{\DIR@CONFIG/1_novathesis}
 \def\@DOCTYPE{\option{/novathesis/doctype}}
 \def\@DOCSTATUS{\option{/novathesis/docstatus}}
 
@@ -766,9 +778,9 @@
 %============================================================
 % BIBLATEX CUSTOMIZATION
 %      Please open and edit the appropriate
-%       configuration file “Config/2_biblatex.tex”
+%       configuration file “0-Config/2_biblatex.tex”
 %============================================================
-\input{Config/2_biblatex}
+\input{\DIR@CONFIG/2_biblatex}
 % \NTRunHook{biblatex}
 
 
@@ -790,7 +802,7 @@
 
 \iftoggle{/novathesis/print/index}{
   \AtEndPreamble{
-    \ntaddtoprintorder{mainmatter}{index}
+    \ntaddtoprintorder{backmatter}{index}
     \RequirePackage{imakeidx}
     % \makeindex[intoc,columns=2,options=-s myindexstyle]%
     \makeindex[intoc,columns=2,options=-s  NOVAthesisFiles/ntindexstyle]
@@ -1089,20 +1101,33 @@
   \IfStrEqCase{#2}{%
     {tableofcontents}{\options{/@nt/list/listof/.newpush={%
             \iftoggle{/novathesis/tocintoc}{\tableofcontents}%
-                  {\pdfbookmark{\contentsname}{toctarget}%
-                  \hypertarget{toctarget}{\tableofcontents*}}}}}%
+                  {\hypertarget{toctarget}{\tableofcontents*}%
+                   \bookmark[dest=toctarget]{\contentsname}}%
+    }}}%
     {listoffigures*}{\options{/@nt/list/listof/.newpush={%
-            \pdfbookmark{\listfigurename}{loftarget}%
-            \hypertarget{loftarget}{\listoffigures*}}}}%
+            \hypertarget{loftarget}{\listoffigures*}%
+            \bookmark[dest=loftarget]{\listfigurename}%
+    }}}%
+    {listoffigures}{\options{/@nt/list/listof/.newpush={%
+            \hypertarget{loftarget}{\listoffigures*}%
+            \bookmark[dest=loftarget,level=1]{\listfigurename}%
+    }}}%
     {listoftables*}{\options{/@nt/list/listof/.newpush={%
-            \pdfbookmark{\listtablename}{lottarget}%
-            \hypertarget{lottarget}{\listoftables*}}}}%
+            \hypertarget{lottarget}{\listoftables*}%
+            \bookmark[dest=lottarget]{\listtablename}%
+    }}}%
+    {listoftables}{\options{/@nt/list/listof/.newpush={%
+            \hypertarget{lottarget}{\listoftables*}%
+            \bookmark[dest=lottarget]{\listtablename}%
+    }}}%
     {listoflistings}{\options{/@nt/list/listof/.newpush={%
-            \pdfbookmark{\listoflistingscaption}{loltarget}%
-            \hypertarget{loltarget}{\listoflistings}}}}%
+            \hypertarget{loltarget}{\listoflistings}%
+            \bookmark[dest=loltarget]{\listoflistingscaption}%
+    }}}%
     {lstlistoflistings}{\options{/@nt/list/listof/.newpush={%
-            \pdfbookmark{\lstlistlistingname}{loltarget}%
-            \hypertarget{loltarget}{\lstlistoflistings}}}}%
+            \hypertarget{loltarget}{\lstlistoflistings}%
+            \bookmark[dest=loltarget]{\lstlistlistingname}%
+    }}}%
     {listofalgorithms}{\options{/@nt/list/listof/.newpush = {%
             \listofalgorithms
             \ifdefined\listalgorithmname%
@@ -1113,6 +1138,7 @@
               \ClassError{novathesis}{Can't make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
             \fi\fi}}}%
   }[%
+            % \bookmarksetup{startatroot=false}\bookmarksetupnext{level=1}%
             \@ifmtarg{#1}%
               {\options{/@nt/list/listof/.newpush={\ifdefmacro{#2}{#2}{\csuse{#2}}}}}%
               {\options{/@nt/list/listof/.newpush={\ifdefmacro{#2}{#2[#1]}{\csuse{#2}[#1]}}}}%
@@ -1123,17 +1149,37 @@
 % Print document “parts/sections/regions”
 \newcommand*{\ntprint}[1]{%
   \IfStrEqCase{#1}{%
+    {frontcover}{%
+          \thispagestyle{empty}%
+          \pagestyle{empty}%
+          \ntprintcovers%
+    }%
     {frontmatter}{%
-          % \iftoggle{/novathesis/print/secondcover}{}{\setcounter{page}{1}}%
-          \thispagestyle{novathesis@frontmatter}%
-          \pagestyle{novathesis@frontmatter}%
-          \iftoggle{/novathesis/print/frontmatter}{\ntprintlist{/@nt/print/#1}}{}}%
+          \ntthesisfrontmatter% Before the main text (TOC, etc) — Roman page numbering
+          \hypertarget{bmfrontmatter}{}%
+          \bookmark[level=0,dest=bmfrontmatter]{}%
+          \bookmark[level=0,dest=bmfrontmatter]{\thebkmstring(frontmatter,\@LANG@COVER)}%
+          \bookmarksetup{startatroot=false,level=1,keeplevel}%
+          \iftoggle{/novathesis/print/frontmatter}{\ntprintlist{/@nt/print/#1}}{}%
+    }%
     {mainmatter}{%
+          \bookmarksetup{level=0}%
           \thispagestyle{novathesis@mainmatter}%
           \pagestyle{novathesis@mainmatter}%
-          \ntprintlist{/@nt/print/#1}}%
+          \ntprintlist{/@nt/print/#1}%
+    }%
+    {backmatter}{%
+          % \hypertarget{bmbackmatter}{}
+          % \bookmark[level=0,dest=bmbackmatter1]{\thebkmstring(backmatter,\@LANG@COVER)}
+          \ntprintlist{/@nt/print/#1}%
+    }%
+    {backcover}{%
+          \bookmarksetup{level=0}%
+          \thispagestyle{empty}%
+          \pagestyle{empty}%
+          \ntprintbackcover%
+    }%
   }[\ifdefmacro{#1}{#1}{\csuse{ntprint#1}}]%
-  \relax%
 }
 
 \newcommand*{\ntprintlist}[1]{%
@@ -1173,6 +1219,17 @@
 % % #2 =single item to remove
 %   \@for\@nt@item:=#2\do{\options{/@nt/print/#1/.remove = {\@nt@item}}}}
 
+\newcommand{\myprintglossaries}{%
+  \hypertarget{bmglossaries}{}%
+  \bookmark[level=0,dest=bmglossaries]{\thebkmstring(glossaries,\@LANG@COVER)}%
+  \bookmarksetupnext{level=1,keeplevel}%
+  \printglossary%
+  \bookmarksetupnext{level=1,keeplevel}%
+  \printglossary[type=\acronymtype]%
+  \bookmarksetupnext{level=1,keeplevel}%
+  \printglossary[type=symbols]%  
+}
+
 % --------------------------------------------------------
 % DEFAULT VALUES FOR frontmatter AND mainmatter
 \newdata{printorder}
@@ -1185,7 +1242,7 @@
   quote;           % (*) Print the quote
   abstracts;       % Print abstracts in multiple languages.
   alllistof;       % Print all the listof defined in “6_list_of.tex”
-  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+  myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
 }
 
 \printorder(frontmatter,provisional):={%
@@ -1196,7 +1253,7 @@
   quote;           % (*) Print the quote
   abstracts;       % Print abstracts in multiple languages.
   alllistof;       % Print all the listof defined in “6_list_of.tex”
-  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+  myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
 }
 
 \printorder(frontmatter,working):={%
@@ -1205,23 +1262,42 @@
   printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
 }
 
+\printorder(mainmatter):={
+  chapters;        % Print document chapters
+}%
+
 \ifoptionequal{/novathesis/print/webography}{}{%
-  \ntsetprintorder{mainmatter}{
-    chapters;        % Print document chapters
+  \printorder(backmatter):={
     bib;             % Print the bibliography.  Change to
      %    “bib[title=⟨title⟩]” to redefine the title!
     appendices;      % Print appendices; if any!
     annexes;         % Print annexes; if any!
   }%
 }{%
-  \ntsetprintorder{mainmatter}{
-    chapters; % Print document chapters
+  \printorder(backmatter):={
     \printbibliography[nottype=online]; % Print the bibliography.
     \printbibliography[title=\option{/novathesis/print/webography},type=online]; % Print the bibliography.
     appendices; % Print appendices, if any!
     annexes; % Print annexes, if any!
   }%
 }
+% \ifoptionequal{/novathesis/print/webography}{}{%
+%   \ntsetprintorder{mainmatter}{
+%     chapters;        % Print document chapters
+%     bib;             % Print the bibliography.  Change to
+%      %    “bib[title=⟨title⟩]” to redefine the title!
+%     appendices;      % Print appendices; if any!
+%     annexes;         % Print annexes; if any!
+%   }%
+% }{%
+%   \ntsetprintorder{mainmatter}{
+%     chapters; % Print document chapters
+%     \printbibliography[nottype=online]; % Print the bibliography.
+%     \printbibliography[title=\option{/novathesis/print/webography},type=online]; % Print the bibliography.
+%     appendices; % Print appendices, if any!
+%     annexes; % Print annexes, if any!
+%   }%
+% }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1316,11 +1392,11 @@
 
 %============================================================
 %  UNIVERSITY/SCHOOL SPECIFIC MATERIALS
-%  configuration file “Config/9_<university>_<school>.tex”
+%  configuration file “0-Config/9_<university>_<school>.tex”
 %============================================================
-\IfFileExists{Config/9_\@UNIV_\@SCHL.tex}
-     {\def\@ntsetuplevel{\@UNIV/\@SCHL/}\input{Config/9_\@UNIV_\@SCHL.tex}}
-     {\def\@ntsetuplevel{\@UNIV/}\InputIfFileExists{Config/9_\@UNIV.tex}{}{}}
+\IfFileExists{\DIR@CONFIG/9_\@UNIV_\@SCHL.tex}
+     {\def\@ntsetuplevel{\@UNIV/\@SCHL/}\input{\DIR@CONFIG/9_\@UNIV_\@SCHL.tex}}
+     {\def\@ntsetuplevel{\@UNIV/}\InputIfFileExists{\DIR@CONFIG/9_\@UNIV.tex}{}{}}
 \def\@ntsetuplevel{}
 
 \InputIfFileExists{NOVAthesisFiles/Schools/\@UNIV/\@UNIV-defaults.ldf}{}
@@ -1392,9 +1468,9 @@
 %============================================================
 %  THESIS/DISSERTATION COVER DATA (title, author, etc)
 %   Please open and edit the appropriate
-%       configuration file “Config/3_cover.tex”
+%       configuration file “0-Config/3_cover.tex”
 %============================================================
-\input{Config/3_cover}
+\input{\DIR@CONFIG/3_cover}
 % \NTRunHook{cover}
 
 % Patch month from number to string in the proper language
@@ -1403,29 +1479,29 @@
 %============================================================
 %  THESIS/DISSERTATION FILES
 %   Please open and edit the appropriate
-%       configuration file “Config/4_files.tex”
+%       configuration file “0-Config/4_files.tex”
 %============================================================
-\input{Config/4_files}
+\input{\DIR@CONFIG/4_files}
 \ntaddfile{bib}{./NOVAthesisFiles/fix-bib.bib}
 % \NTRunHook{files}
 
 %============================================================
 % ADDITIONAL PACKAGES and MACROS
 %      Please open and edit the appropriate
-%       configuration file “Config/8_packages.tex”
+%       configuration file “0-Config/8_packages.tex”
 %============================================================
 % \newcommand{\BeforeHyperref}[1]{\NTAddToHook{packages/pre}{#1}}
 % \newcommand{\AfterHyperref}[1]{\NTAddToHook{packages/post}{#1}}
 % \NTRunHook{packages/pre}
-\AtEndPreamble{\input{Config/5_packages}}
+\AtEndPreamble{\input{\DIR@CONFIG/5_packages}}
 % \NTRunHook{packages/post}
 
 %============================================================
 %  WHICH LIST_OF TO PRINT
 %   Please open and edit the appropriate
-%       configuration file “Config/6_list_of.tex”
+%       configuration file “0-Config/6_list_of.tex”
 %============================================================
-\AtEndPreamble{\makeatletter\NTRunHook{list_of/pre}\input{Config/6_list_of}\NTRunHook{list_of/post}}
+\AtEndPreamble{\makeatletter\NTRunHook{list_of/pre}\input{\DIR@CONFIG/6_list_of}\NTRunHook{list_of/post}}
 
 \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
 \optionlistdo{/@nt/file/bib/\@DOCTYPE}{%
@@ -1437,9 +1513,12 @@
 
 % \typeout{\theprintorder(frontmatter,\@DOCSTATUS)}
 \ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\@DOCSTATUS)}}%
+\ntsetprintorder{mainmatter}{\expanded{\theprintorder(mainmatter)}}%
+\ntsetprintorder{backmatter}{\expanded{\theprintorder(backmatter)}}%
 
 \ifoptionequal{/novathesis/spine/layout}{unset}
-    {\ifdocworking{\ntsetup{spine/layout=no}}{\ifmaindoc{\ntsetup{spine/layout=trim}}{\ntsetup{spine/layout=no}}}}{}
+    {\ifdocworking{\ntsetup{spine/layout=no}}
+                  {\ifmaindoc{\ntsetup{spine/layout=trim}}{\ntsetup{spine/layout=no}}}}{}
 \ifdocfinal{\ntsetup{print/committee=true}}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1600,8 +1679,6 @@
   \clearforchapter%
   \pagenumbering{roman}%
   \setcounter{page}{0}
-  \ifcoverdefined[N-1]{\pdfbookmark[-1]{\thebkmstring(backmatter,\@LANG@COVER)}{bmbackmatter1}}{%
-  \ifcoverdefined[N-2]{\pdfbookmark[-1]{\thebkmstring(backmatter,\@LANG@COVER)}{bmbackmatter2}}{}}%
   \ntprintcoverpair{N}%
 }
 
@@ -1609,7 +1686,6 @@
   \begingroup%
     \ntselectlang{\@LANG@COVER}%
     \NTRunHook{printcovers/pre}%
-    \pdfbookmark[-1]{\thebkmstring(frontmatter,\@LANG@COVER)}{bmfrontmatter}%
     \NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
     % \forcsvlist{\ntprintcoverpair}{#1}%
     \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
@@ -1655,7 +1731,9 @@
   \begingroup%
     \NTRunHook{cover/pre}%
     \NTRunHook{cover/#1/pre}%
-    \pdfbookmark[1]{\thebkmstring(#1)}{\thebkmstring(#1)}%
+    \hypertarget{\thebkmstring(#1)}{}%
+    \bookmark[dest=\thebkmstring(#1)]{\thebkmstring(#1)}%
+    \bookmarksetupnext{level=1}%
     \thispagestyle{empty}%
     \setCoverBgColor{#1}%
     \setCoverBgImage{#1}%
@@ -1988,7 +2066,8 @@
                                     “NOVAthesisFiles/Schools/\@UNIV”}{}
           ]%
         }{}%
-        \pdfbookmark[1]{\thebkmstring(statement,\@LANG@MAIN)}{bmstatement}%
+        \hypertarget{bmstatement}{}%
+        \bookmark[dest=bmstatement]{\thebkmstring(statement,\@LANG@MAIN)}%
         \@ntloadfiles@ii{statement}%
         \NTRunHook{statement/post}%
       }{}%
@@ -2433,7 +2512,8 @@
   \ifmaindoc{% THEN it is a main document
     \NTRunHook{#1/pre}%
     \iffileadded{#1}{%
-      \pdfbookmark[1]{\thebkmstring(#1,\@LANG@MAIN)}{bm#1}%
+      \hypertarget{bm#1}{}%
+      \bookmark[dest=bm#1]{\thebkmstring(#1,\@LANG@MAIN)}%
       \@ntloadfiles@ii{#1}%
     }{}%
     \NTRunHook{#1/post}%
@@ -2467,7 +2547,8 @@
       \StrCut{#1}{-}\@ABS@LANG\@dummy%
       \ntselectlang{\@ABS@LANG}%
       % \typeout{NTL=\languagename [#1]}\bbbb
-      \pdfbookmark[1]{\thebkmstring(abstract,#1)}{bmabstract#1}%
+      \hypertarget{bmabstract#1}{}%
+      \bookmark[dest=bmabstract#1]{\thebkmstring(abstract,#1)}%
       \NTRunHook{abstract/pre}%
       \NTRunHook{abstract/#1/pre}%
       \printabstracttitle{#1}%
@@ -2516,6 +2597,8 @@
   \NTRunHook{mainmatter/post}%
 }
 
+\newcommand*{\ntthesisbackmatter}{%
+}
 \newcommand{\ntindex}[2][]{%
   % \typeout{NTINDEX [#1] [#2]}
   \bgroup%
@@ -2580,6 +2663,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntprintalllistof}{%
     \NTRunHook{listof/pre}%
+    \hypertarget{bmlistof}{}%
+    \bookmark[level=0,dest=bmlistof]{\thebkmstring(listof,\@LANG@COVER)}%
     \optionlistdo{/@nt/list/listof}{\clearforchapter##1}%
     \NTRunHook{listof/post}%
 }
@@ -2649,7 +2734,8 @@
     \ifmaindoc{%
       \begingroup
         \ntselectlang{\@LANG@COPYRIGHT}%
-        \pdfbookmark[1]{\thebkmstring(copyright,\@LANG@MAIN)}{bmcopyright}%
+        \hypertarget{bmcopyright}{}%
+        \bookmark[dest=bmcopyright]{\thebkmstring(copyright,\@LANG@MAIN)}%
         \NTRunHook{copyright/pre}%
         \ntprintcopyrightpage%
         \NTRunHook{copyright/post}%
