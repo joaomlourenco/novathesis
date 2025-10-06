@@ -50,7 +50,7 @@ CT=cluttex $(CTF)
 CFT:=
 
 # target and files to be incldued in "make zip"
-ZIPFILES:=NOVAthesisFiles Bibliography Config Chapters LICENSE Makefile novathesis.cls README.md .gitignore template.tex
+ZIPFILES:=NOVAthesisFiles [0-5]-* LICENSE novathesis.cls template.tex README.md .gitignore  Makefile
 ZIPTARGET=$(B)-$(VERSION)@$(DATE).zip
 
 # extract version and date of the template
@@ -64,7 +64,7 @@ AUXFILES:=$(shell ls $(B)*.* | fgrep -v .tex | fgrep -v .pdf | sed 's: :\\ :g' |
 LUA="uminho/eaad uminho/ec uminho/ed uminho/eeg uminho/eeng uminho/elach uminho/emed uminho/epsi uminho/ese uminho/i3bs uminho/ics uminho/ie other/esep"
 
 # Extract school being built
-SCHL=$(shell grep -v "^%" Config/1_novathesis.tex | grep "ntsetup{school=" | cut -d "=" -f 2 | cut -d "}" -f 1)
+SCHL=$(shell grep -v "^%" 0-Config/1_novathesis.tex | grep "ntsetup{school=" | cut -d "=" -f 2 | cut -d "}" -f 1)
 ifeq ($(SCHL),)
 	SCHL=nova/fct
 endif
@@ -217,6 +217,7 @@ endif
 # merge, tag and push
 define _mtp
 	echo "VERSION=$(1) - DATE=$(2)."
+	git commit --all --message "Version $(1) - $(2)." || true
 	make clean
 	.Build/build.py nova/fct
 	git commit --all --message "Version $(1) - $(2)." || true

@@ -58,9 +58,9 @@ def prepare_file(filepath_str: str) -> Path:
         print(f"❌ Error: File '{filepath}' not found.")
         sys.exit(1)
 
-    backup_path = filepath.with_suffix(filepath.suffix + ".bak")
-    shutil.copy(filepath, backup_path)
-    print(f"📦 Backup created: {backup_path.name}")
+    # backup_path = filepath.with_suffix(filepath.suffix + ".bak")
+    # shutil.copy(filepath, backup_path)
+    # print(f"📦 Backup created: {backup_path.name}")
     return filepath
 
 
