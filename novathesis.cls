@@ -279,6 +279,9 @@
 % ULISBOA/IST
   ulisboa/ist/classification/.new value = {},
   ulisboa/ist/funding/.new value        = {},
+% UPORTO/FC
+  uporto/fc/classification/.new value = {},
+  uporto/fc/funding/.new value        = {},
 }
 
 
