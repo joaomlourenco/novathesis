@@ -1156,8 +1156,7 @@
     }%
     {frontmatter}{%
           \ntthesisfrontmatter% Before the main text (TOC, etc) — Roman page numbering
-          \hypertarget{bmfrontmatter}{}%
-          \bookmark[level=0,dest=bmfrontmatter]{}%
+          \bookmarksetupnext{level=0}%
           \bookmark[level=0,dest=bmfrontmatter]{\thebkmstring(frontmatter,\@LANG@COVER)}%
           \bookmarksetup{startatroot=false,level=1,keeplevel}%
           \iftoggle{/novathesis/print/frontmatter}{\ntprintlist{/@nt/print/#1}}{}%
