@@ -58,9 +58,9 @@ def prepare_file(filepath_str: str) -> Path:
         print(f"❌ Error: File '{filepath}' not found.")
         sys.exit(1)
 
-    # backup_path = filepath.with_suffix(filepath.suffix + ".bak")
-    # shutil.copy(filepath, backup_path)
-    # print(f"📦 Backup created: {backup_path.name}")
+    backup_path = filepath.with_suffix(filepath.suffix + ".bak")
+    shutil.copy(filepath, backup_path)
+    print(f"📦 Backup created: {backup_path.name}")
     return filepath
 
 
@@ -95,7 +95,7 @@ def process_file(filepath: Path, new_school_id: str) -> int:
 
 def run_make_and_revert(filepaths: list[Path]) -> None:
     """
-    Runs `make` and then reverts the file using `git checkout`.
+    Runs `make` and then reverts the file from .bak copy.
     """
     print("🛠️  Running `make`lua ...")
     try:
@@ -105,12 +105,16 @@ def run_make_and_revert(filepaths: list[Path]) -> None:
         print("❌ `make` failed. The file will still be reverted.")
     
     for p in filepaths:
-        print(f"♻️  Reverting changes in '{p.name}' using git checkout...")
-        try:
-            subprocess.run(["git", "checkout", "--", str(p)], check=True)
-            print(f"✅ Reverted '{p.name}' to original state.")
-        except subprocess.CalledProcessError:
-            print("⚠️  Warning: Failed to revert file via git. Please check manually.")
+        backup_path = p.with_suffix(p.suffix + ".bak")
+        print(f"♻️  Reverting changes in '{p}' from backup file '{backup_path}'")
+        shutil.move(backup_path, p)
+        print(f"✅ Reverted '{p.name}' to original state.")
+        # print(f"♻️  Reverting changes in '{p.name}' using git checkout...")
+        # try:
+        #     subprocess.run(["git", "checkout", "--", str(p)], check=True)
+        #     print(f"✅ Reverted '{p.name}' to original state.")
+        # except subprocess.CalledProcessError:
+        #     print("⚠️  Warning: Failed to revert file via git. Please check manually.")
 
 
 def main():
