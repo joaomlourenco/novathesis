@@ -1,13 +1,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ul/fc/defaults.ldf
+%% ulisboa/fcul/defaults.ldf
 %% NOVA thesis configuration file
 %%
-%% Customization for FC-UL (strings and cover)
+%% Customization for FCUL (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE ul/fc/defaults.ldf}%
+\typeout{NT FILE ulisboa/fcul/defaults.ldf}%
 
-\ifphddoc{\ntsetup{print/secondcover=true}}{}
+\ifdocfinal{\ntsetup{print/secondcover=true}}{}
 
 % Faculty / School
 \school(pt):={Faculdade de Ciências}
@@ -16,25 +16,25 @@
 \school(it):={Faculty of Sciences}
 
 % Department field
-\ntdepartment(pt){Departamento de \embrace{Nome do Departamento}}
-\ntdepartment(en){Department of \embrace{Name of the Department}}
+\ntdepartment(pt){Departamento de Nome do Departamento}
+\ntdepartment(en){Department of Name of the Department}
 
 % Specialization field
-\specialization(pt):={\embrace{Especialidade}}
-\specialization(en):={\embrace{Specialization}}
-
+\specialization(pt):={Especialidade}
+\specialization(en):={Specialization}
 
 % Comiittee printing order
 \committeeorder():={c,r,a,m}%
 
 % Cover background images
-\thesiscover(bgcolor):={white}
+\thesiscover(phd,bgcolor):={white}
+\thesiscover(msc,bgcolor):={white}
 
 % Spine info
 \spine(logo)={ulisboa-fc-logo}
-% \spine(author)={\thedocauthor(name,short)}
-% \spine(title)={\thedoctitle(\@LANG@COVER,main)}
-% \spine(year)={\thentdocdate(year)}
+\spine(author)={\thedocauthor(name,short)}
+\spine(title)={\thedoctitle(\@LANG@COVER,main)}
+\spine(year)={\thentdocdate(submission,year)}
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
@@ -51,6 +51,7 @@
 \margin(cover,bottom):={0.8cm}
 \margin(cover,left):={2.5cm}
 \margin(cover,right):={2.5cm}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % String re-definition; original definitions in string-X.ldf
