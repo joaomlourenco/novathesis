@@ -41,6 +41,9 @@
 \school(logo):={\theschool(logo,\@LANG@COVER)}
 \school(logo,neg):={\theschool(logo,neg,\@LANG@COVER)}
 
+\ntdegreename(pt){Biologia Computacional\\\& Bioinformática}
+\ntdegreename(en){Computational Biology\\\& Bioinformatics}
+
 % Comiittee printing order
 % \committeeorder():={c,r,a,m}%
 \committeeorder():={c,r,a,ca,m}%
@@ -177,9 +180,11 @@
   \node[anchor=north west] at ($(current page.north west) + (14.6mm,-97.25mm)$)
     {\fontsize{16.25}{14.5}\selectfont\sffamily%
       \makecell[tl]{
-      MASTER IN\\
-      \bfseries COMPUTATIONAL BIOLOGY\\
-      \bfseries \& BIOINFORMATICS 
+      \THEdegreenameprefix(\@DOCTYPE,\@LANG@COVER)\\
+      \let\oldnewline\\%
+      \renewcommand{\\}{\oldnewline\bfseries}%
+      \bfseries%
+      \THEmajorfield(\@LANG@COVER)%
       }%
     };%
 }
