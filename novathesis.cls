@@ -286,11 +286,11 @@
   ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.},
   ulisboa/fmv/reproduction/.new choice         = {I, P, N},
 % ULISBOA/IST
-  ulisboa/ist/classification/.new value = {},
-  ulisboa/ist/funding/.new value        = {},
+  ulisboa/ist/classification/.new value        = {},
+  ulisboa/ist/funding/.new value               = {},
 % UPORTO/FC
-  uporto/fc/classification/.new value = {},
-  uporto/fc/funding/.new value        = {},
+  uporto/fcup/classification/.new value        = {},
+  uporto/fcup/funding/.new value               = {},
 }
 
 
