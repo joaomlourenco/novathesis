@@ -1163,12 +1163,15 @@
           \iftoggle{/novathesis/print/frontmatter}{\ntprintlist{/@nt/print/#1}}{}%
     }%
     {mainmatter}{%
+          \ntthesismainmatter% Mainn text — Arabic page numbering
           \bookmarksetup{level=0}%
           \thispagestyle{novathesis@mainmatter}%
           \pagestyle{novathesis@mainmatter}%
           \ntprintlist{/@nt/print/#1}%
     }%
     {backmatter}{%
+          \ntthesisbackmatter     % The back text — Arabic page numbering
+          \bookmarksetup{level=0}%
           % \hypertarget{bmbackmatter}{}
           % \bookmark[level=0,dest=bmbackmatter1]{\thebkmstring(backmatter,\@LANG@COVER)}
           \ntprintlist{/@nt/print/#1}%
