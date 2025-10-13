@@ -201,11 +201,13 @@ define _printtimes
 printf "TIMES FROM THE LAST EXECUTION\n"
 TIMES="$(grep -e 'l3benchmark. + TOC'  ${AUX_DIR}/*.log | cut -d ' ' -f 4 | xargs)"
 PHASES="$(fgrep TIME ${AUX_DIR}/*.log | cut -d ' ' -f 2-3 | cut -d '=' -f 1 | tr ' ' '_' | xargs)"
-declare -a TM=($TIMES)
-declare -a PH=($PHASES)
-for i in `seq 0 $((${#TM[@]}-1))`; do
-	printf "%20s = %6.2f\n" "${PH[$i]}" "${TM[$i]}"
-done
+if [[ -n "$TIMES" && -n "$PHASES" ]]; then
+	declare -a TM=($TIMES)
+	declare -a PH=($PHASES)
+	for i in `seq 0 $((${#TM[@]}-1))`; do
+		printf "%20s = %6.2f\n" "${PH[$i]}" "${TM[$i]}"
+	done
+fi
 endef
 
 ifneq (, $(findstring jml,${USER}))
