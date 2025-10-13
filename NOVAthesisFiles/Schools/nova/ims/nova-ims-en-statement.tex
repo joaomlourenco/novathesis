@@ -20,17 +20,15 @@
   \textbf{STATEMENT OF INTEGRITY}
 \end{center}
 
-I, \thedocauthor(name,short), hereby declare having conducted this academic work with integrity. 
-I confirm that I have not used plagiarism or any form of undue use of information or falsification of results along the process leading to its elaboration. 
+I, \thedocauthor(name,short), hereby declare having conducted this academic work with integrity.
+I confirm that I have not used plagiarism or any form of undue use of information or falsification of results along the process leading to its elaboration.
 I further declare that I have fully acknowledge the Rules of Conduct and Code of Honor from the \theschool(en).
 
 \bigskip
 
-Lisbon,
-\IfStrEq{\thentdocdate(exam)}{\thentdocdate(default)}{%
-  \localedate{\thentdocdate(submission,year)}{\thentdocdate(submission,month)}{\thentdocdate(submission,day)}
-}{%
-  \localedate{\thentdocdate((exam),year)}{\thentdocdate((exam),month)}{\thentdocdate((exam),day)}
-}
+\IfStrEq{\thentdocdate(exam)}{\thentdocdate(default)}{\def\@DATE{submission}}{\def\@DATE{exam}}
+
+Lisbon, \thentdocdate(\@DATE,month,text) \thentdocdate(\@DATE,day), \thentdocdate(\@DATE,year)
+
 \endgroup
 \clearforchapter

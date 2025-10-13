@@ -1066,14 +1066,15 @@
   \ntdocdate(#1):={#2}%
   \ntdocdate(#1,year):={\@NTDY}%
   \ntdocdate(#1,month):={\@NTDM}%
-  \ntdocdate(#1,day):={\@NTDD}%
+  \ntdocdate(#1,day,0):={\@NTDD}%
   \@for\myi:={year,month,day}\do{%
     \IfInteger{\thentdocdate(#1,\myi)}{}
               {\ClassError{The \myi in \string\ntdocdate(#1){#2} is not a number!}{}{}}%
   }%
-  % \ntdocdate(#1,month,text):={\pgfcalendarmonthname{\thentdocdate(#1,month)}}%
   \ntdocdate(#1,month,text):={\monthtotext[\@NTDM]}%
-}
+  \IfBeginWith{\@NTDD}{0}{\StrGobbleLeft{\@NTDD}{1}[\@NTDDNZ]}{\edef\@NTDDNZ{\@NTDD}}%
+  \ntdocdate(#1,day):={\@NTDDNZ}
+}}
 \ntdocdate(default):={2000-09-01}
 \ntdate(submission){\thentdocdate(default)}
 \ntdate(exam){\thentdocdate(default)}

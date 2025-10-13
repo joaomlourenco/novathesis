@@ -25,11 +25,9 @@ Declaro ainda que tenho conhecimento das Regras de Conduta e do Código de Honra
 
 \bigskip
 
-Lisboa,
-\IfStrEq{\thentdocdate(exam)}{\thentdocdate(default)}{%
-  \localedate{\thentdocdate(submission,year)}{\thentdocdate(submission,month)}{\thentdocdate(submission,day)}
-}{%
-  \localedate{\thentdocdate((exam),year)}{\thentdocdate((exam),month)}{\thentdocdate((exam),day)}
-}
+\IfStrEq{\thentdocdate(exam)}{\thentdocdate(default)}{\def\@DATE{submission}}{\def\@DATE{exam}}
+
+Lisboa, \thentdocdate(\@DATE,day) de \thentdocdate(\@DATE,month,text) de \thentdocdate(\@DATE,year)
+
 \endgroup
 \clearforchapter
