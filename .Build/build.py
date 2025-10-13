@@ -12,37 +12,37 @@ PATTERN_MAP = {
     # Original rules for 1_novathesis.tex
     "1_novathesis.tex": lambda new_school_id: {
         # Replace any doctype=... with doctype=phd and uncomment
-        r"%\s*\\ntsetup\{doctype=[^}]+\}.*": lambda line: re.sub(
-            r"^%\s*", "", re.sub(r"doctype=[^}]+", "doctype=phd", line)
-        ),
+        # r"%?\s*\\ntsetup\{doctype=[^}]+\}.*": lambda line: re.sub(
+        #     r"^%?\s*", "", re.sub(r"doctype=[^}]+", "doctype=phd", line)
+        # ),
         # Replace any school=... with school=ARGUMENT and uncomment
-        r"%\s*\\ntsetup\{school=[^}]+\}.*": lambda line: re.sub(
-            r"^%\s*", "", re.sub(r"school=[^}]+", f"school={new_school_id}", line)
+        r"%?\s*\\ntsetup\{school=[^}]+\}.*": lambda line: re.sub(
+            r"^%?\s*", "", re.sub(r"school=[^}]+", f"school={new_school_id}", line)
         ),
         # Replace any docstatus=... with docstatus=final and uncomment
-        r"%\s*\\ntsetup\{docstatus=[^}]+\}.*": lambda line: re.sub(
-            r"^%\s*", "", re.sub(r"docstatus=[^}]+", "docstatus=final", line)
+        r"%?\s*\\ntsetup\{docstatus=[^}]+\}.*": lambda line: re.sub(
+            r"^%?\s*", "", re.sub(r"docstatus=[^}]+", "docstatus=final", line)
         ),
         # Replace any spine/layout=... with spine/layout=trim and uncomment
-        r"%\s*\\ntsetup\{spine/layout=[^}]+\}.*": lambda line: re.sub(
-            r"^%\s*", "", re.sub(r"spine/layout=[^}]+", "spine/layout=trim", line)
+        r"%?\s*\\ntsetup\{spine/layout=[^}]+\}.*": lambda line: re.sub(
+            r"^%?\s*", "", re.sub(r"spine/layout=[^}]+", "spine/layout=trim", line)
         ),
         # Replace any spine/width=... with spine/width=2cm and uncomment
-        r"%\s*\\ntsetup\{spine/width=[^}]+\}.*": lambda line: re.sub(
-            r"^%\s*", "", re.sub(r"spine/width=[^}]+", "spine/width=2cm", line)
+        r"%?\s*\\ntsetup\{spine/width=[^}]+\}.*": lambda line: re.sub(
+            r"^%?\s*", "", re.sub(r"spine/width=[^}]+", "spine/width=2cm", line)
         ),
         # Replace any print/index=... with print/index=true and uncomment
-        r"%\s*\\ntsetup\{print/index=[^}]+\}.*": lambda line: re.sub(
-            r"^%\s*", "", re.sub(r"print/index=[^}]+", "print/index=true", line)
+        r"%?\s*\\ntsetup\{print/index=[^}]+\}.*": lambda line: re.sub(
+            r"^%?\s*", "", re.sub(r"print/index=[^}]+", "print/index=true", line)
         ),
         # Uncomment abstractorder={en,pt,uk,gr}
-        r"%\s*\\ntsetup\{abstractorder=\{en,pt,uk,gr\}\}.*": lambda line: re.sub(r"^%\s*", "", line),
+        r"%?\s*\\ntsetup\{abstractorder=\{en,pt,uk,gr\}\}.*": lambda line: re.sub(r"^%?\s*", "", line),
     },
     "4_files.tex": lambda _new_school_id: {
         # Uncomment: % \ntaddfile{abstract}[gr]{abstract-gr}
-        r"%\s*\\ntaddfile\{abstract\}\[gr\]\{abstract-gr\}.*": lambda line: re.sub(r"^%\s*", "", line),
+        r"%?\s*\\ntaddfile\{abstract\}\[gr\]\{abstract-gr\}.*": lambda line: re.sub(r"^%?\s*", "", line),
         # Uncomment: % \ntaddfile{abstract}[uk]{abstract-uk}
-        r"%\s*\\ntaddfile\{abstract\}\[uk\]\{abstract-uk\}.*": lambda line: re.sub(r"^%\s*", "", line),
+        r"%?\s*\\ntaddfile\{abstract\}\[uk\]\{abstract-uk\}.*": lambda line: re.sub(r"^%?\s*", "", line),
     },
 }
 
