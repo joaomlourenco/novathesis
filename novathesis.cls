@@ -1073,8 +1073,8 @@
   }%
   \ntdocdate(#1,month,text):={\monthtotext[\@NTDM]}%
   \IfBeginWith{\@NTDD}{0}{\StrGobbleLeft{\@NTDD}{1}[\@NTDDNZ]}{\edef\@NTDDNZ{\@NTDD}}%
-  \ntdocdate(#1,day):={\@NTDDNZ}
-}}
+  \ntdocdate(#1,day):={\@NTDDNZ}%
+}
 \ntdocdate(default):={2000-09-01}
 \ntdate(submission){\thentdocdate(default)}
 \ntdate(exam){\thentdocdate(default)}
