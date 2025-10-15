@@ -461,7 +461,7 @@
 % DATE
 \ntaddtocover[halign=c, vspace=1]{2-1}{%
   \fontsize{11}{11}\selectfont%
-  \thentdocdate(submission,month,text), \thentdocdate(submission,year)%
+  \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

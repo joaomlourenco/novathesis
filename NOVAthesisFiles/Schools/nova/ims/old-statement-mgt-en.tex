@@ -27,9 +27,7 @@ This work has not been previously evaluated or submitted to \theschool(en) or el
 \bigskip
 \theschool(en),
 % Accessing /novathesis/examdate/month gives None, currently replaced by \thentdocdate
-\thentdocdate(exam,month,text)
-\thentdocdate(exam,day),
-\thentdocdate(exam,year).\par
+\printisodate{\thentdocdate(exam,year)-\thentdocdate(exam,month)-\thentdocdate(exam,day)}\par
 \vspace*{2cm}
 \begin{tabular}{@{}c@{}}
 \toprule

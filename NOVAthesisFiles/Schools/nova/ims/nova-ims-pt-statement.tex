@@ -27,7 +27,7 @@ Declaro ainda que tenho conhecimento das Regras de Conduta e do Código de Honra
 
 \IfStrEq{\thentdocdate(exam)}{\thentdocdate(default)}{\def\@DATE{submission}}{\def\@DATE{exam}}
 
-Lisboa, \thentdocdate(\@DATE,day) de \thentdocdate(\@DATE,month,text) de \thentdocdate(\@DATE,year)
+Lisboa, \printisodate{\thentdocdate(\@DATE,year)-\thentdocdate(\@DATE,month)-\thentdocdate(\@DATE,day)}
 
 \endgroup
 \clearforchapter

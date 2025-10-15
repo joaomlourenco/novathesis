@@ -245,8 +245,8 @@
   \fontsize{18}{17}\selectfont%
   \iftoggle{/novathesis/print/timestamp}
     {\ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}%
-                  {\thentdocdate(submission,month,text), \thentdocdate(submission,year)}}%
-    {\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
+                  {\printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}}}%
+    {\printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}}%
 }
 
 
@@ -345,8 +345,8 @@
   \theuniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%
     \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}%
-                 {\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
-  }{\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
+                 {\printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}}%
+  }{\printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

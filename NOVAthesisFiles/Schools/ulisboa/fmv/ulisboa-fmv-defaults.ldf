@@ -406,7 +406,7 @@
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   % \fontseries{mc}
   \fontsize{14}{14}\selectfont%
-    \thentdocdate(submission,year)%
+    \printisodate{\thentdocdate(submission,year)}%
 }
 
 % Extra vspace for conver 1-1

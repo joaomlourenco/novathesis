@@ -1049,6 +1049,34 @@
 
 %============================================================
 % Date and month
+
+% \babelmonthname{<1..12>} → localized month name (current babel language)
+\newcommand{\babelmonthname}[1]{%
+  \csname month\romannumeral\numexpr#1\relax name\endcsname
+}
+
+% \printisodate{2022-12-25} -> localized date, e.g., December 20, 2022; 20 de dezembro de 2022
+% \printisodate{2022-12}    -> e.g., December 20, 2022; Dezembro, 2022
+% \printisodate{2022}       -> e.g., 2022
+\newcommand{\printisodate}[2][, ]{\printisodate@i[#1]#2---\@nil}
+
+\def\printisodate@i[#1]#2-#3-#4-#5\@nil{%
+  % 1=$<$#1$>$ $<$#2$>$ $<$#3$>$ $<$#4$>$\par
+  \edef\@iso@one{#2}%
+  \edef\@iso@two{#3}%
+  \edef\@iso@three{#4}%
+  \ifx\@iso@three\@empty
+    \ifx\@iso@two\@empty
+      \@iso@one%
+    \else
+      \MakeTitlecase{\babelmonthname{\@iso@two}}#1\@iso@one%
+    \fi
+  \else
+    \localedate{2025}{10}{13}%
+  \fi
+}
+
+
 \newdata{ntdocdate}
 
 \def\ntdate{%

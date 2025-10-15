@@ -301,7 +301,7 @@
 
 % Date
 \ntaddtocover[halign=c, vspace=2]{2-1}{%
-  \thentdocdate(submission,month,text), \thentdocdate(submission,year)%
+  \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}%
 }%
 
 

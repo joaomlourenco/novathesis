@@ -142,7 +142,7 @@
   \hfill%
   \begin{minipage}[t]{\@rightcol}%
     \fontsize{10}{10}\selectfont%
-    \thentdocdate(submission,month,text), \thentdocdate(submission,year)%
+    \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}%
   \end{minipage}%
 }
 

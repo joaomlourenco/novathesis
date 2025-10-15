@@ -28,7 +28,7 @@ I further declare that I have fully acknowledge the Rules of Conduct and Code of
 
 \IfStrEq{\thentdocdate(exam)}{\thentdocdate(default)}{\def\@DATE{submission}}{\def\@DATE{exam}}
 
-Lisbon, \thentdocdate(\@DATE,month,text) \thentdocdate(\@DATE,day), \thentdocdate(\@DATE,year)
+Lisbon, \printisodate{\thentdocdate(\@DATE,year)-\thentdocdate(\@DATE,month)-\thentdocdate(\@DATE,day)}
 
 \endgroup
 \clearforchapter

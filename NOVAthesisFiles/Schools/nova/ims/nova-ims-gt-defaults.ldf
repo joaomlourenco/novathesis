@@ -247,7 +247,7 @@ for the Degree of \emph{\thedegreename(en)}}
 % Date
 \ntaddtocover[vspace=1]{2-1}{%
   \fontsize{11}{11}\selectfont
-    \textbf{\thentdocdate(submission,month,text), \thentdocdate(submission,year)}
+    \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}
 }
 
 
