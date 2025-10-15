@@ -1062,18 +1062,18 @@
 \def\@ntdate@i(#1)#2{%
   \StrCut{#2}{-}\@NTDY\@NTDM%
   \StrCut{\@NTDM}{-}\@NTDM\@NTDD%
-  % \typeout{NTD(#1) Y=[\@NTDY] M=[\@NTDM] D=[\@NTDD]}\NTDATE%
   \ntdocdate(#1):={#2}%
   \ntdocdate(#1,year):={\@NTDY}%
   \ntdocdate(#1,month):={\@NTDM}%
   \ntdocdate(#1,day,0):={\@NTDD}%
-  \@for\myi:={year,month,day}\do{%
-    \IfInteger{\thentdocdate(#1,\myi)}{}
-              {\ClassError{The \myi in \string\ntdocdate(#1){#2} is not a number!}{}{}}%
-  }%
-  \ntdocdate(#1,month,text):={\monthtotext[\@NTDM]}%
   \IfBeginWith{\@NTDD}{0}{\StrGobbleLeft{\@NTDD}{1}[\@NTDDNZ]}{\edef\@NTDDNZ{\@NTDD}}%
   \ntdocdate(#1,day):={\@NTDDNZ}%
+  % \typeout{NTD(#1) Y=[\@NTDY] M=[\@NTDM] D=[\@NTDD]}\NTDATE%
+  \@for\myi:={year,month,day}\do{%
+    \IfInteger{\thentdocdate(#1,\myi)}{}
+              {\ClassError{The \myi\ in \string\ntdocdate(#1){#2} is not a number!}{}{}}%
+  }%
+  \ntdocdate(#1,month,text):={\monthtotext[\@NTDM]}%
 }
 \ntdocdate(default):={2000-09-01}
 \ntdate(submission){\thentdocdate(default)}
