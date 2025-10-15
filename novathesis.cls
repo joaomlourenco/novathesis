@@ -540,14 +540,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Multilingual support
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\ntselectlang}[1]{%
-  % #1=lang {pt, en, fr, it}
-  \gdef\@LSHORT{#1}%
-  \xdef\@LLONG{\thelanglong(#1)}%
-  % \typeout{NTSELECTLANG [#1 / \@LLONG]}%
-  \expandnext{\selectlanguage}{\@LLONG}%
-}
+% \newcommand*{\ntselectlang}[1]{%
+%   % #1=lang {pt, en, fr, it}
+%   \gdef\@LSHORT{#1}%
+%   \xdef\@LLONG{\thelanglong(#1)}%
+%   % \typeout{NTSELECTLANG [#1 / \@LLONG]}%
+%   \expandnext{\selectlanguage}{\@LLONG}%
+% }
 
+\newcommand*{\ntselectlang}[1]{%
+  \xdef\@LSHORT{#1}%
+  \xdef\@LLONG{\thelanglong(#1)}%
+  \selectlanguage{\@LSHORT}%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ASSOCARRAY
@@ -733,12 +738,10 @@
 % --------------------------------------------------------
 % Define DEFAULT corollaryUES for COVER and COPYRIGHT languages
 %     and HYPERLINK color
-\options{/novathesis/lang/cover = \option{/novathesis/lang/main},
-         /novathesis/lang/copyright = \option{/novathesis/lang/main},
+\options{/novathesis/lang = \option{/novathesis/lang/main},
          /novathesis/color/links = DarkBlue,
          /novathesis/color/gls = None,
 }
-
 
 % \NTRunHook{memoir}
 
@@ -900,7 +903,10 @@
 % FIX BABEL TRANSLATION
 \RequirePackage[english]{babel}      % Support for multilingual documents
 \RequirePackage{translator} % Support month name translations for pgfcalendar
-
+\babeladjust{
+  autoload.bcp47 = on
+}
+\ntselectlang{en}
 
 %--------------------------------
 % “glossasries” stuff - after hyperref
@@ -911,6 +917,7 @@
 \RequirePackage[%
   % , nonumberlist
   translate=babel,
+  % languages={\@LANG@LOADED},
   acronym,           % add acronyms listing
   symbols,           % add symbols listing
   % sanitizesort=false, % allow \gls inside descriptions
@@ -1252,6 +1259,7 @@
 %   \@for\@nt@item:=#2\do{\options{/@nt/print/#1/.remove = {\@nt@item}}}}
 
 \newcommand{\myprintglossaries}{%
+  \ntselectlang{\@LANG@COVER}%
   \hypertarget{bmglossaries}{}%
   \bookmark[level=0,dest=bmglossaries]{\thebkmstring(glossaries,\@LANG@COVER)}%
   \bookmarksetupnext{level=1,keeplevel}%
