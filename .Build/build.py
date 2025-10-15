@@ -107,9 +107,9 @@ def main() -> None:
         help="Directory with LaTeX config files (default: 0-Config)"
     )
     ap.add_argument(
-        "--ltxprocessor",
+        "-p", "--processor",
         default="lua",
-        help="Make ltxprocessor to run (default: lua)"
+        help="Select the LaTeX 'processor' (default: lua)"
     )
     ap.add_argument(
         "--dry-run",
@@ -156,7 +156,7 @@ def main() -> None:
             return
 
         if changes_total > 0:
-            rc = run_make(args.ltxprocessor)
+            rc = run_make(args.processor)
             # Regardless of rc, we restore originals to leave the tree clean
         else:
             print("ℹ️  No changes detected — skipping `make`.")
