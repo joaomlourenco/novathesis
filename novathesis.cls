@@ -1255,11 +1255,12 @@
   \hypertarget{bmglossaries}{}%
   \bookmark[level=0,dest=bmglossaries]{\thebkmstring(glossaries,\@LANG@COVER)}%
   \bookmarksetupnext{level=1,keeplevel}%
-  \printglossary%
-  \bookmarksetupnext{level=1,keeplevel}%
-  \printglossary[type=\acronymtype]%
-  \bookmarksetupnext{level=1,keeplevel}%
-  \printglossary[type=symbols]%  
+  \printglossaries
+  % \printglossary%
+  % \bookmarksetupnext{level=1,keeplevel}%
+  % \printglossary[type=\acronymtype]%
+  % \bookmarksetupnext{level=1,keeplevel}%
+  % \printglossary[type=symbols]%
 }
 
 % --------------------------------------------------------
