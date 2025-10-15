@@ -1,148 +1,173 @@
 #!/usr/bin/env python3
+import argparse
 import re
 import shutil
-import sys
 import subprocess
+import sys
 from pathlib import Path
+from typing import Dict, Callable, List
 
-CONFDIR="0-Config"
+# --- Pattern builders -------------------------------------------------
 
-# --- Global map of filename → pattern set ---
-PATTERN_MAP = {
-    # Original rules for 1_novathesis.tex
-    "1_novathesis.tex": lambda new_school_id: {
-        # Replace any doctype=... with doctype=phd and uncomment
-        # r"%?\s*\\ntsetup\{doctype=[^}]+\}.*": lambda line: re.sub(
-        #     r"^%?\s*", "", re.sub(r"doctype=[^}]+", "doctype=phd", line)
-        # ),
-        # Replace any school=... with school=ARGUMENT and uncomment
-        r"%?\s*\\ntsetup\{school=[^}]+\}.*": lambda line: re.sub(
-            r"^%?\s*", "", re.sub(r"school=[^}]+", f"school={new_school_id}", line)
-        ),
-        # Replace any docstatus=... with docstatus=final and uncomment
-        r"%?\s*\\ntsetup\{docstatus=[^}]+\}.*": lambda line: re.sub(
-            r"^%?\s*", "", re.sub(r"docstatus=[^}]+", "docstatus=final", line)
-        ),
-        # Replace any spine/layout=... with spine/layout=trim and uncomment
-        r"%?\s*\\ntsetup\{spine/layout=[^}]+\}.*": lambda line: re.sub(
-            r"^%?\s*", "", re.sub(r"spine/layout=[^}]+", "spine/layout=trim", line)
-        ),
-        # Replace any spine/width=... with spine/width=2cm and uncomment
-        r"%?\s*\\ntsetup\{spine/width=[^}]+\}.*": lambda line: re.sub(
-            r"^%?\s*", "", re.sub(r"spine/width=[^}]+", "spine/width=2cm", line)
-        ),
-        # Replace any print/index=... with print/index=true and uncomment
-        r"%?\s*\\ntsetup\{print/index=[^}]+\}.*": lambda line: re.sub(
-            r"^%?\s*", "", re.sub(r"print/index=[^}]+", "print/index=true", line)
-        ),
-        # Uncomment abstractorder={en,pt,uk,gr}
-        r"%?\s*\\ntsetup\{abstractorder=\{en,pt,uk,gr\}\}.*": lambda line: re.sub(r"^%?\s*", "", line),
-    },
-    "4_files.tex": lambda _new_school_id: {
-        # Uncomment: % \ntaddfile{abstract}[gr]{abstract-gr}
-        r"%?\s*\\ntaddfile\{abstract\}\[gr\]\{abstract-gr\}.*": lambda line: re.sub(r"^%?\s*", "", line),
-        # Uncomment: % \ntaddfile{abstract}[uk]{abstract-uk}
-        r"%?\s*\\ntaddfile\{abstract\}\[uk\]\{abstract-uk\}.*": lambda line: re.sub(r"^%?\s*", "", line),
-    },
-}
+def build_patterns(new_school_id: str, new_lang_code: str) -> Dict[str, Dict[re.Pattern, Callable[[str], str]]]:
+    """Return filename -> {compiled_pattern: transformer}."""
+    # helper: uncomment & replace key=value inside \ntsetup{...}
+    def _uncomment_replace(key: str, value: str):
+        # Escape key in case it contains regex metacharacters like '/'
+        key_re = re.compile(rf"({re.escape(key)}\s*=\s*)[^}},]+", re.IGNORECASE)
 
+        def _transform(line: str) -> str:
+            orig = line
+            # Uncomment while preserving indentation
+            line = re.sub(r"^(\s*)%+\s*", r"\1", line)
+            # Use a callable to avoid '\1' + digit turning into '\12'
+            line = key_re.sub(lambda m: m.group(1) + value, line)
+            return line if line != orig else orig
 
-def prepare_file(filepath_str: str) -> Path:
-    """
-    Ensure the given file exists and create a backup copy.
-    Returns a Path object to the validated file.
-    """
-    filepath_str = CONFDIR + "/" + filepath_str
-    filepath = Path(filepath_str)
-    if not filepath.exists():
-        print(f"❌ Error: File '{filepath}' not found.")
-        sys.exit(1)
+        return _transform
 
-    backup_path = filepath.with_suffix(filepath.suffix + ".bak")
-    shutil.copy(filepath, backup_path)
-    print(f"📦 Backup created: {backup_path.name}")
-    return filepath
+    file_1_patterns = {
+        # %   \ntsetup{school=...}
+        re.compile(r"^\s*%?\s*\\ntsetup\{\s*school\s*=\s*[^}]+\}\s*.*$"): _uncomment_replace("school", new_school_id),
+        re.compile(r"^\s*%?\s*\\ntsetup\{\s*lang\s*=\s*[^}]+\}\s*.*$"): _uncomment_replace("lang", new_lang_code),
+        re.compile(r"^\s*%?\s*\\ntsetup\{\s*docstatus\s*=\s*[^}]+\}\s*.*$"): _uncomment_replace("docstatus", "final"),
+        re.compile(r"^\s*%?\s*\\ntsetup\{\s*spine/layout\s*=\s*[^}]+\}\s*.*$"): _uncomment_replace("spine/layout", "trim"),
+        re.compile(r"^\s*%?\s*\\ntsetup\{\s*spine/width\s*=\s*[^}]+\}\s*.*$"): _uncomment_replace("spine/width", "2cm"),
+        re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/index\s*=\s*[^}]+\}\s*.*$"): _uncomment_replace("print/index", "true"),
+        # exact abstractorder line → just uncomment
+        re.compile(r"^\s*%?\s*\\ntsetup\{\s*abstractorder=\{en,pt,uk,gr\}\}\s*.*$"):
+            lambda line: re.sub(r"^(\s*)%+\s*", r"\1", line),
+    }
 
+    file_4_patterns = {
+        re.compile(r"^\s*%?\s*\\ntaddfile\{abstract\}\[gr\]\{abstract-gr\}\s*.*$"):
+            lambda line: re.sub(r"^(\s*)%+\s*", r"\1", line),
+        re.compile(r"^\s*%?\s*\\ntaddfile\{abstract\}\[uk\]\{abstract-uk\}\s*.*$"):
+            lambda line: re.sub(r"^(\s*)%+\s*", r"\1", line),
+    }
 
-def process_file(filepath: Path, new_school_id: str) -> int:
-    """
-    Reads, updates, and writes back the LaTeX file.
-    Returns the number of modified lines.
-    """
-    filename = filepath.name
-    if filename not in PATTERN_MAP:
-        print(f"⚠️  No pattern set defined for '{filename}'. No changes made.")
-        return 0
+    return {
+        "1_novathesis.tex": file_1_patterns,
+        "4_files.tex": file_4_patterns,
+    }
 
-    patterns = PATTERN_MAP[filename](new_school_id)
+# --- Core helpers -----------------------------------------------------
 
-    lines = filepath.read_text(encoding="utf-8").splitlines()
-    new_lines = []
-    changes = 0
+def backup_file(p: Path) -> Path:
+    bak = p.with_suffix(p.suffix + ".bak")
+    shutil.copy2(p, bak)
+    print(f"📦 Backup created: {bak.name}")
+    return bak
+
+def process_file(p: Path, patterns: Dict[re.Pattern, Callable[[str], str]], dry_run: bool=False) -> int:
+    lines = p.read_text(encoding="utf-8").splitlines()
+    changed = 0
+    out_lines: List[str] = []
 
     for line in lines:
-        for pattern, action in patterns.items():
-            if re.match(pattern, line):
-                line = action(line)
-                changes += 1
+        new_line = line
+        for pat, action in patterns.items():
+            if pat.match(new_line):
+                transformed = action(new_line)
+                if transformed != new_line:
+                    new_line = transformed
+                    changed += 1
                 break
-        new_lines.append(line)
+        out_lines.append(new_line)
 
-    filepath.write_text("\n".join(new_lines), encoding="utf-8")
-    print(f"✅ Updated '{filename}' — {changes} lines modified.")
-    return changes
+    if not dry_run and changed > 0:
+        p.write_text("\n".join(out_lines) + "\n", encoding="utf-8")
 
+    print(f"{'🔎 (dry-run) ' if dry_run else ''}✅ {p.name}: {changed} line(s) modified.")
+    return changed
 
-def run_make_and_revert(filepaths: list[Path]) -> None:
-    """
-    Runs `make` and then reverts the file from .bak copy.
-    """
-    print("🛠️  Running `make`lua ...")
+def run_make(ltxprocessor: str) -> int:
+    print(f"🛠️  Running `make {ltxprocessor}` ...")
     try:
-        subprocess.run(["make", "lua"], check=True)
+        subprocess.run(["make", ltxprocessor], check=True)
         print("✅ `make` completed successfully.")
-    except subprocess.CalledProcessError:
-        print("❌ `make` failed. The file will still be reverted.")
+        return 0
+    except subprocess.CalledProcessError as e:
+        print("❌ `make` failed.")
+        return e.returncode
+
+# --- CLI --------------------------------------------------------------
+
+def main() -> None:
+    ap = argparse.ArgumentParser(
+        description="Uncomment/normalize specific ntsetup lines and run make, then restore originals."
+    )
+    ap.add_argument(
+        "school_id",
+        help="School ID like 'nova/fct' or 'nova/fct/cbbi' (must contain '/')"
+    )
+    ap.add_argument(
+        "--confdir",
+        default="0-Config",
+        help="Directory with LaTeX config files (default: 0-Config)"
+    )
+    ap.add_argument(
+        "--ltxprocessor",
+        default="lua",
+        help="Make ltxprocessor to run (default: lua)"
+    )
+    ap.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Show what would change without writing files or running make"
+    )
+    ap.add_argument(
+        "-l", "--lang",
+        default="en",
+        help="Two-letter language code to set in \\ntsetup{school=...} (default: en)"
+    )
+    args = ap.parse_args()
+
+    if "/" not in args.school_id:
+        print("❌ Error: The school ID must contain '/'. Example: nova/fct")
+        sys.exit(2)
     
-    for p in filepaths:
-        backup_path = p.with_suffix(p.suffix + ".bak")
-        print(f"♻️  Reverting changes in '{p}' from backup file '{backup_path}'")
-        shutil.move(backup_path, p)
-        print(f"✅ Reverted '{p.name}' to original state.")
-        # print(f"♻️  Reverting changes in '{p.name}' using git checkout...")
-        # try:
-        #     subprocess.run(["git", "checkout", "--", str(p)], check=True)
-        #     print(f"✅ Reverted '{p.name}' to original state.")
-        # except subprocess.CalledProcessError:
-        #     print("⚠️  Warning: Failed to revert file via git. Please check manually.")
+    if not re.fullmatch(r"[A-Za-z]{2}", args.lang):
+        print("❌ Error: --lang must be a two-letter code, e.g., en, pt, uk, gr")
+        sys.exit(2)
+    
+    confdir = Path(args.confdir)
+    files = [confdir / "1_novathesis.tex", confdir / "4_files.tex"]
+    for f in files:
+        if not f.exists():
+            print(f"❌ Error: File not found: {f}")
+            sys.exit(1)
 
+    patterns_by_file = build_patterns(args.school_id.lower(), args.lang.lower())
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: python uncomment_ntsetup.py <new_school_id>")
-        sys.exit(1)
+    backups: List[Path] = []
+    changes_total = 0
 
-    # get school name
-    new_school_id = sys.argv[1]
+    try:
+        if not args.dry_run:
+            backups = [backup_file(f) for f in files]
 
-    # --- Enforce that the school ID contains a "/" ---
-    if "/" not in new_school_id:
-        print("❌ Error: The school ID must contain at least one '/'. Example: nova/fct")
-        sys.exit(1)
+        for f in files:
+            patterns = patterns_by_file.get(f.name, {})
+            changes_total += process_file(f, patterns, dry_run=args.dry_run)
 
-    # Process 1_novathesis.tex
-    filepath1 = prepare_file("1_novathesis.tex")
-    changes1 = process_file(filepath1, new_school_id)
+        if args.dry_run:
+            print("ℹ️  Dry-run: skipping make and restore.")
+            return
 
-    # Process 4_files.tex
-    filepath4 = prepare_file("4_files.tex")
-    changes4 = process_file(filepath4, new_school_id)
-
-    # Only call make + revert if something was changed
-    if changes1 + changes4 >= 0:
-        run_make_and_revert([filepath1, filepath4])
-    else:
-        print("ℹ️  No changes detected — skipping `make` and revert.")
+        if changes_total > 0:
+            rc = run_make(args.ltxprocessor)
+            # Regardless of rc, we restore originals to leave the tree clean
+        else:
+            print("ℹ️  No changes detected — skipping `make`.")
+    finally:
+        if backups:
+            for f in files:
+                bak = f.with_suffix(f.suffix + ".bak")
+                if bak.exists():
+                    print(f"♻️  Restoring '{f.name}' from '{bak.name}'")
+                    shutil.move(bak, f)
+            print("✅ Files restored.")
 
 if __name__ == "__main__":
     main()
