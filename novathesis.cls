@@ -133,6 +133,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PACKAGE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\IfStartsWithAnyOf}[4]{%
+  \begingroup
+  \def\result{#4}% default = false branch
+  % Remove all spaces from the comma-separated list
+  \StrSubstitute{#2}{ }{}[\charlisttmp]%
+  \def\do##1{%
+    \IfBeginWith{#1}{##1}{%
+      \def\result{#3}\breakforeach
+    }{}%
+  }%
+  \docsvlist{\charlisttmp}%
+  \expandafter\endgroup\result
+}
+
+% --------------------------------------------------------
 \def\@nt@saveabstractorder{}
 \newcommand{\@setabstractorder}{%
   % \typeout{SAVEABSORDER=[\@nt@saveabstractorder]}\SAVEABSORDER%
@@ -491,6 +507,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE FILE LISTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newcommand*{\ntaddfile}[1]{%
   % syntax: \ntaddfile{class}[key]{filename}
   %         #1=file family (quote, abstract, chapter, etc)
@@ -499,32 +516,22 @@
   \@nt@addtolist{file}{#1}%
 }
 
-\newcommand*{\@nt@addtolist}[2]{%
+\options{/@nt/listtypes/.new list={}}
+\NewDocumentCommand {\@nt@addtolist}
+                    {m m O{\option{/novathesis/doctype}} m} {%
   % syntax: \ntaddto{type}{class}[key]{filename}
   %         #1 ={file, person}
   %         #2=family {quote, abstract, chapter, etc} or {author, adviser, committee}
-  %         #3=[file lang] (OPTIONAL)
+  %         #3=[file-lang, sub-family] (OPTIONAL)
   %         #4=filename
-  \@ifnextchar[{\@nt@addtolist@iv[#1]#2}{\@nt@addtolist@iv[#1]#2[\option{/novathesis/doctype}]}%
-}
-
-\def\@nt@addtolist@iv[#1]#2[#3]#4{%
-  % syntax: \@ntaddfile@iii{type}{class}[key]{filename}
-  %         #1 ={file, person}
-  %         #2=file family (quote, abstract, chapter, etc)
-  %         #3=optional file lang
-  %         #4=filename
-  % \typeout{NT ADDTOLIST [#1] [#2] [#3] [#4]}%
-  \StrLeft{#4}{1}[\@nt@firstchar]%
-  \IfStrEqCase{\@nt@firstchar}{%
-    {/}{\xdef\@nt@filewithpath{#4}}%
-    {.}{\xdef\@nt@filewithpath{#4}}%
-  }[%
-    \options{/@nt/folders=#2}%
-    \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}%
-  ]%
+  \ifoptioncontains{/@nt/listtypes}{#2}{}
+      {\options{/@nt/listtypes/.newpush={#2}}}
+  \IfStartsWithAnyOf{#4}{/,.}
+      {\xdef\@nt@filewithpath{#4}}
+      {\options{/@nt/folders=#2}%
+       \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}}
   \@for\myi:=\expanded{#3}\do{%
-    % \typeout{NT ADDTOLIST [#1] [#2] [#3] [#4]}%
+    % \typeout{NT ADDTOLIST [#1] [#2] [\myi] [\@nt@filewithpath]}\ADDTILIST%
     \options{/@nt/#1/#2/\myi/.expanded/.newpush={\@nt@filewithpath}}%
   }%
 }
@@ -551,7 +558,7 @@
 \newcommand*{\ntselectlang}[1]{%
   \xdef\@LSHORT{#1}%
   \xdef\@LLONG{\thelanglong(#1)}%
-  \selectlanguage{\@LSHORT}%
+  \selectlanguage{\@LLONG}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -943,6 +950,11 @@
       \hyperlink{#1}{#2}%
     \endgroup%
 }%
+\let\printglossaryORIG\printglossary
+\def\printglossary{%
+  \bookmarksetupnext{level=1,keeplevel}%
+  \printglossaryORIG%
+}
 
 %--------------------------------
 % “Process gnumberlist” option - after glossaries
@@ -1259,16 +1271,19 @@
 %   \@for\@nt@item:=#2\do{\options{/@nt/print/#1/.remove = {\@nt@item}}}}
 
 \newcommand{\myprintglossaries}{%
-  \ntselectlang{\@LANG@COVER}%
-  \hypertarget{bmglossaries}{}%
-  \bookmark[level=0,dest=bmglossaries]{\thebkmstring(glossaries,\@LANG@COVER)}%
-  \bookmarksetupnext{level=1,keeplevel}%
-  \printglossaries
-  % \printglossary%
-  % \bookmarksetupnext{level=1,keeplevel}%
-  % \printglossary[type=\acronymtype]%
-  % \bookmarksetupnext{level=1,keeplevel}%
-  % \printglossary[type=symbols]%
+  % ignore if no glossaries were defined
+  \ifoptioncontains{/@nt/listtypes}{glossaries}{
+    \ntselectlang{\@LANG@COVER}%
+    \hypertarget{bmglossaries}{}%
+    \bookmark[level=0,dest=bmglossaries]
+            {\thebkmstring(glossaries,\@LANG@COVER)}%
+    \printglossaries
+    % \printglossary%
+    % \bookmarksetupnext{level=1,keeplevel}%
+    % \printglossary[type=\acronymtype]%
+    % \bookmarksetupnext{level=1,keeplevel}%
+    % \printglossary[type=symbols]%
+  }{}%
 }
 
 % --------------------------------------------------------
@@ -1300,7 +1315,7 @@
 \printorder(frontmatter,working):={%
   abstracts;       % Print abstracts in multiple languages.
   alllistof;       % Print all the listof defined in “6_list_of.tex”
-  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+  myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
 }
 
 \printorder(mainmatter):={
