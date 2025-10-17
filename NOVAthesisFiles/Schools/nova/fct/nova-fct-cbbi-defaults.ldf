@@ -19,6 +19,7 @@
 
 % FCT-NOVA specific customization
 \openany
+\ntsetup{doctype=msc}
 \ntsetup{print/secondcover=true}
 \ntsetup{spine/width=3cm}     % Force the “book spine” width
 
@@ -40,6 +41,9 @@
 \school(logo,neg,en):={nova-fct-logo-negative-en}
 \school(logo):={\theschool(logo,\@LANG@COVER)}
 \school(logo,neg):={\theschool(logo,neg,\@LANG@COVER)}
+
+\ntdegreename(pt){Biologia Computacional\\\& Bioinformática}
+\ntdegreename(en){Computational Biology\\\& Bioinformatics}
 
 % Comiittee printing order
 % \committeeorder():={c,r,a,m}%
@@ -177,9 +181,11 @@
   \node[anchor=north west] at ($(current page.north west) + (14.6mm,-97.25mm)$)
     {\fontsize{16.25}{14.5}\selectfont\sffamily%
       \makecell[tl]{
-      MASTER IN\\
-      \bfseries COMPUTATIONAL BIOLOGY\\
-      \bfseries \& BIOINFORMATICS 
+      \THEdegreenameprefix(\@DOCTYPE,\@LANG@COVER)\\
+      \let\oldnewline\\%
+      \renewcommand{\\}{\oldnewline\bfseries}%
+      \bfseries%
+      \THEmajorfield(\@LANG@COVER)%
       }%
     };%
 }
@@ -239,8 +245,8 @@
   \fontsize{18}{17}\selectfont%
   \iftoggle{/novathesis/print/timestamp}
     {\ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}%
-                  {\thentdocdate(submission,month,text), \thentdocdate(submission,year)}}%
-    {\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
+                  {\printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}}}%
+    {\printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}}%
 }
 
 
@@ -339,8 +345,8 @@
   \theuniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%
     \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}%
-                 {\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
-  }{\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
+                 {\printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}}%
+  }{\printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

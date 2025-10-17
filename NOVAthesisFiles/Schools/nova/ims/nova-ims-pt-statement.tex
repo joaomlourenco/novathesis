@@ -25,19 +25,9 @@ Declaro ainda que tenho conhecimento das Regras de Conduta e do Código de Honra
 
 \bigskip
 
-\babeladjust{
-  autoload.bcp47 = on, 
-  autoload.bcp47.options = import
-}
+\IfStrEq{\thentdocdate(exam)}{\thentdocdate(default)}{\def\@DATE{submission}}{\def\@DATE{exam}}
 
+Lisboa, \printisodate{\thentdocdate(\@DATE,year)-\thentdocdate(\@DATE,month)-\thentdocdate(\@DATE,day)}
 
-\selectlanguage{pt} 
-
-Lisboa,
-\IfStrEq{\thentdocdate(exam)}{\thentdocdate(default)}{%
-  \localedate{\thentdocdate(submission,year)}{\thentdocdate(submission,month)}{\thentdocdate(submission,day)}
-}{%
-  \localedate{\thentdocdate((exam),year)}{\thentdocdate((exam),month)}{\thentdocdate((exam),day)}
-}
 \endgroup
 \clearforchapter

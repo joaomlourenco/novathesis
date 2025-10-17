@@ -116,8 +116,6 @@
 %%------------------------------------------------------------
 %% The novathesis class is based in “memoir”.  To set memoir
 %%  options, edit “Config/0_memoir.tex”.
-\RequirePackage{NOVAthesisFiles/fix-profiling}
-\texprof{\benchmarktic}
 \documentclass{novathesis}
 
 
@@ -192,39 +190,20 @@
 
 %%------------------------------------------------------------
 \begin{document}          % Beginning of document
-\texprof{\benchmarktoc}
-\texprof{\typeout{TIME class loading=\the\pdfelapsedtime}}
 %%------------------------------------------------------------
 %% Print covers
-\texprof{\benchmarktic}
 \ntprint{frontcover}          % The cover page
-\texprof{\benchmarktoc}
-\texprof{\typeout{TIME process front cover=\the\pdfelapsedtime}}
 %%------------------------------------------------------------
 %% Print front matter
-\texprof{\benchmarktic}
 \ntprint{frontmatter}     % The default order is listed below, but can be changed
-\texprof{\benchmarktoc}
-\texprof{\typeout{TIME process frontmatter=\the\pdfelapsedtime}}
 %%------------------------------------------------------------
 %% Print main matter
-\texprof{\benchmarktic}
-\ntthesismainmatter     % The main text — Arabic page numbering
 \ntprint{mainmatter}      % The default order is listed below, but can be changed
-\texprof{\benchmarktoc}
-\texprof{\typeout{TIME process mainmatter=\the\pdfelapsedtime}}
 %%------------------------------------------------------------
 %% Print back matter
-\texprof{\benchmarktic}
-\ntthesisbackmatter     % The back text — Arabic page numbering
 \ntprint{backmatter}      % The default order is listed below, but can be changed
-\texprof{\benchmarktoc}
-\texprof{\typeout{TIME process backmatter=\the\pdfelapsedtime}}
 %%------------------------------------------------------------
 %% Print back cover and spine
-\texprof{\benchmarktic}
 \ntprint{backcover}       % Print the back cover, if any!
-\texprof{\benchmarktoc}
-\texprof{\typeout{TIME process backcover=\the\pdfelapsedtime}}
 %%------------------------------------------------------------
 \end{document}          % End of document

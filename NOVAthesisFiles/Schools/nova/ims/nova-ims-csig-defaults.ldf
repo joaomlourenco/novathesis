@@ -33,6 +33,7 @@
 \committeeorder():={c,r,m}%
 
 \openany
+\ntsetup{doctype=msc}
 \ntsetup{print/secondcover=true}
 \ntsetup{print/statement=true}
 \ntsetup{print/copyright=false}
@@ -300,5 +301,12 @@
 
 % Date
 \ntaddtocover[halign=c, vspace=2]{2-1}{%
-  \thentdocdate(submission,month,text), \thentdocdate(submission,year)%
+  \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}%
+}%
+
+
+
+% Dummy
+\ntaddtocover[halign=c, vspace=2]{N-2}{%
+  ~
 }%

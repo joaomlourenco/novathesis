@@ -90,7 +90,7 @@
 % \spine(title)={\textbf{\thedoctitle(\@LANG@COVER,main)}}
 
 \spine(date)={\textcolor{itqbgray207}{\theoeiras()},
-              \csuse{month\romannumeral\thentdocdate(submission,month) name}, \thentdocdate(submission,year)}
+              \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}
 % \spine(date2):={\color{itqbgray207}{\theoeiras(),} %
 %                \thentdocdate(submission,month,text), \thentdocdate(submission,year)}
 
@@ -265,7 +265,8 @@
     % Date
     \node [inner sep=0pt,anchor=south west, yshift={\theregion(itqb,top)+7.4mm}]
                     {\fontsize{13}{13}\selectfont
-                     \mbox{O}eiras, \thentdocdate(submission,month,text), \thentdocdate(submission,year)};
+                     \mbox{O}eiras,
+                     \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)};
     % Rectangle
     \fill [xshift=-\@MRGN@left,
            \expanded{\theitqbcolor(\option{/novathesis/nova/itqb/cover/color},front,rectangle)}]

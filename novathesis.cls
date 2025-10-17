@@ -133,6 +133,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PACKAGE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\IfStartsWithAnyOf}[4]{%
+  \begingroup
+  \def\result{#4}% default = false branch
+  % Remove all spaces from the comma-separated list
+  \StrSubstitute{#2}{ }{}[\charlisttmp]%
+  \def\do##1{%
+    \IfBeginWith{#1}{##1}{%
+      \def\result{#3}\breakforeach
+    }{}%
+  }%
+  \docsvlist{\charlisttmp}%
+  \expandafter\endgroup\result
+}
+
+% --------------------------------------------------------
 \def\@nt@saveabstractorder{}
 \newcommand{\@setabstractorder}{%
   % \typeout{SAVEABSORDER=[\@nt@saveabstractorder]}\SAVEABSORDER%
@@ -286,11 +302,11 @@
   ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.},
   ulisboa/fmv/reproduction/.new choice         = {I, P, N},
 % ULISBOA/IST
-  ulisboa/ist/classification/.new value = {},
-  ulisboa/ist/funding/.new value        = {},
+  ulisboa/ist/classification/.new value        = {},
+  ulisboa/ist/funding/.new value               = {},
 % UPORTO/FC
-  uporto/fc/classification/.new value = {},
-  uporto/fc/funding/.new value        = {},
+  uporto/fcup/classification/.new value        = {},
+  uporto/fcup/funding/.new value               = {},
 }
 
 
@@ -491,6 +507,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE FILE LISTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newcommand*{\ntaddfile}[1]{%
   % syntax: \ntaddfile{class}[key]{filename}
   %         #1=file family (quote, abstract, chapter, etc)
@@ -499,32 +516,22 @@
   \@nt@addtolist{file}{#1}%
 }
 
-\newcommand*{\@nt@addtolist}[2]{%
+\options{/@nt/listtypes/.new list={}}
+\NewDocumentCommand {\@nt@addtolist}
+                    {m m O{\option{/novathesis/doctype}} m} {%
   % syntax: \ntaddto{type}{class}[key]{filename}
   %         #1 ={file, person}
   %         #2=family {quote, abstract, chapter, etc} or {author, adviser, committee}
-  %         #3=[file lang] (OPTIONAL)
+  %         #3=[file-lang, sub-family] (OPTIONAL)
   %         #4=filename
-  \@ifnextchar[{\@nt@addtolist@iv[#1]#2}{\@nt@addtolist@iv[#1]#2[\option{/novathesis/doctype}]}%
-}
-
-\def\@nt@addtolist@iv[#1]#2[#3]#4{%
-  % syntax: \@ntaddfile@iii{type}{class}[key]{filename}
-  %         #1 ={file, person}
-  %         #2=file family (quote, abstract, chapter, etc)
-  %         #3=optional file lang
-  %         #4=filename
-  % \typeout{NT ADDTOLIST [#1] [#2] [#3] [#4]}%
-  \StrLeft{#4}{1}[\@nt@firstchar]%
-  \IfStrEqCase{\@nt@firstchar}{%
-    {/}{\xdef\@nt@filewithpath{#4}}%
-    {.}{\xdef\@nt@filewithpath{#4}}%
-  }[%
-    \options{/@nt/folders=#2}%
-    \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}%
-  ]%
+  \ifoptioncontains{/@nt/listtypes}{#2}{}
+      {\options{/@nt/listtypes/.newpush={#2}}}
+  \IfStartsWithAnyOf{#4}{/,.}
+      {\xdef\@nt@filewithpath{#4}}
+      {\options{/@nt/folders=#2}%
+       \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}}
   \@for\myi:=\expanded{#3}\do{%
-    % \typeout{NT ADDTOLIST [#1] [#2] [#3] [#4]}%
+    % \typeout{NT ADDTOLIST [#1] [#2] [\myi] [\@nt@filewithpath]}\ADDTILIST%
     \options{/@nt/#1/#2/\myi/.expanded/.newpush={\@nt@filewithpath}}%
   }%
 }
@@ -540,14 +547,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Multilingual support
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\ntselectlang}[1]{%
-  % #1=lang {pt, en, fr, it}
-  \gdef\@LSHORT{#1}%
-  \xdef\@LLONG{\thelanglong(#1)}%
-  % \typeout{NTSELECTLANG [#1 / \@LLONG]}%
-  \expandnext{\selectlanguage}{\@LLONG}%
-}
+% \newcommand*{\ntselectlang}[1]{%
+%   % #1=lang {pt, en, fr, it}
+%   \gdef\@LSHORT{#1}%
+%   \xdef\@LLONG{\thelanglong(#1)}%
+%   % \typeout{NTSELECTLANG [#1 / \@LLONG]}%
+%   \expandnext{\selectlanguage}{\@LLONG}%
+% }
 
+\newcommand*{\ntselectlang}[1]{%
+  \xdef\@LSHORT{#1}%
+  \xdef\@LLONG{\thelanglong(#1)}%
+  \selectlanguage{\@LLONG}%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ASSOCARRAY
@@ -733,12 +745,10 @@
 % --------------------------------------------------------
 % Define DEFAULT corollaryUES for COVER and COPYRIGHT languages
 %     and HYPERLINK color
-\options{/novathesis/lang/cover = \option{/novathesis/lang/main},
-         /novathesis/lang/copyright = \option{/novathesis/lang/main},
+\options{/novathesis/lang = \option{/novathesis/lang/main},
          /novathesis/color/links = DarkBlue,
          /novathesis/color/gls = None,
 }
-
 
 % \NTRunHook{memoir}
 
@@ -900,7 +910,10 @@
 % FIX BABEL TRANSLATION
 \RequirePackage[english]{babel}      % Support for multilingual documents
 \RequirePackage{translator} % Support month name translations for pgfcalendar
-
+\babeladjust{
+  autoload.bcp47 = on
+}
+\ntselectlang{en}
 
 %--------------------------------
 % “glossasries” stuff - after hyperref
@@ -911,6 +924,7 @@
 \RequirePackage[%
   % , nonumberlist
   translate=babel,
+  % languages={\@LANG@LOADED},
   acronym,           % add acronyms listing
   symbols,           % add symbols listing
   % sanitizesort=false, % allow \gls inside descriptions
@@ -936,6 +950,11 @@
       \hyperlink{#1}{#2}%
     \endgroup%
 }%
+\let\printglossaryORIG\printglossary
+\def\printglossary{%
+  \bookmarksetupnext{level=1,keeplevel}%
+  \printglossaryORIG%
+}
 
 %--------------------------------
 % “Process gnumberlist” option - after glossaries
@@ -1049,6 +1068,34 @@
 
 %============================================================
 % Date and month
+
+% \babelmonthname{<1..12>} → localized month name (current babel language)
+\newcommand{\babelmonthname}[1]{%
+  \csname month\romannumeral\numexpr#1\relax name\endcsname
+}
+
+% \printisodate{2022-12-25} -> localized date, e.g., December 20, 2022; 20 de dezembro de 2022
+% \printisodate{2022-12}    -> e.g., December 20, 2022; Dezembro, 2022
+% \printisodate{2022}       -> e.g., 2022
+\newcommand{\printisodate}[2][, ]{\printisodate@i[#1]#2---\@nil}
+
+\def\printisodate@i[#1]#2-#3-#4-#5\@nil{%
+  % 1=$<$#1$>$ $<$#2$>$ $<$#3$>$ $<$#4$>$\par
+  \edef\@iso@one{#2}%
+  \edef\@iso@two{#3}%
+  \edef\@iso@three{#4}%
+  \ifx\@iso@three\@empty
+    \ifx\@iso@two\@empty
+      \@iso@one%
+    \else
+      \MakeTitlecase{\babelmonthname{\@iso@two}}#1\@iso@one%
+    \fi
+  \else
+    \localedate{2025}{10}{13}%
+  \fi
+}
+
+
 \newdata{ntdocdate}
 
 \def\ntdate{%
@@ -1062,16 +1109,17 @@
 \def\@ntdate@i(#1)#2{%
   \StrCut{#2}{-}\@NTDY\@NTDM%
   \StrCut{\@NTDM}{-}\@NTDM\@NTDD%
-  % \typeout{NTD(#1) Y=[\@NTDY] M=[\@NTDM] D=[\@NTDD]}\NTDATE%
   \ntdocdate(#1):={#2}%
   \ntdocdate(#1,year):={\@NTDY}%
   \ntdocdate(#1,month):={\@NTDM}%
-  \ntdocdate(#1,day):={\@NTDD}%
+  \ntdocdate(#1,day,0):={\@NTDD}%
+  \IfBeginWith{\@NTDD}{0}{\StrGobbleLeft{\@NTDD}{1}[\@NTDDNZ]}{\edef\@NTDDNZ{\@NTDD}}%
+  \ntdocdate(#1,day):={\@NTDDNZ}%
+  % \typeout{NTD(#1) Y=[\@NTDY] M=[\@NTDM] D=[\@NTDD]}\NTDATE%
   \@for\myi:={year,month,day}\do{%
     \IfInteger{\thentdocdate(#1,\myi)}{}
-              {\ClassError{The \myi in \string\ntdocdate(#1){#2} is not a number!}{}{}}%
+              {\ClassError{The \myi\ in \string\ntdocdate(#1){#2} is not a number!}{}{}}%
   }%
-  % \ntdocdate(#1,month,text):={\pgfcalendarmonthname{\thentdocdate(#1,month)}}%
   \ntdocdate(#1,month,text):={\monthtotext[\@NTDM]}%
 }
 \ntdocdate(default):={2000-09-01}
@@ -1157,17 +1205,21 @@
     {frontmatter}{%
           \ntthesisfrontmatter% Before the main text (TOC, etc) — Roman page numbering
           \bookmarksetupnext{level=0}%
+          \hypertarget{bmfrontmatter}{}%
           \bookmark[level=0,dest=bmfrontmatter]{\thebkmstring(frontmatter,\@LANG@COVER)}%
           \bookmarksetup{startatroot=false,level=1,keeplevel}%
           \iftoggle{/novathesis/print/frontmatter}{\ntprintlist{/@nt/print/#1}}{}%
     }%
     {mainmatter}{%
+          \ntthesismainmatter% Mainn text — Arabic page numbering
           \bookmarksetup{level=0}%
           \thispagestyle{novathesis@mainmatter}%
           \pagestyle{novathesis@mainmatter}%
           \ntprintlist{/@nt/print/#1}%
     }%
     {backmatter}{%
+          \ntthesisbackmatter     % The back text — Arabic page numbering
+          \bookmarksetup{level=0}%
           % \hypertarget{bmbackmatter}{}
           % \bookmark[level=0,dest=bmbackmatter1]{\thebkmstring(backmatter,\@LANG@COVER)}
           \ntprintlist{/@nt/print/#1}%
@@ -1219,14 +1271,19 @@
 %   \@for\@nt@item:=#2\do{\options{/@nt/print/#1/.remove = {\@nt@item}}}}
 
 \newcommand{\myprintglossaries}{%
-  \hypertarget{bmglossaries}{}%
-  \bookmark[level=0,dest=bmglossaries]{\thebkmstring(glossaries,\@LANG@COVER)}%
-  \bookmarksetupnext{level=1,keeplevel}%
-  \printglossary%
-  \bookmarksetupnext{level=1,keeplevel}%
-  \printglossary[type=\acronymtype]%
-  \bookmarksetupnext{level=1,keeplevel}%
-  \printglossary[type=symbols]%  
+  % ignore if no glossaries were defined
+  \ifoptioncontains{/@nt/listtypes}{glossaries}{
+    \ntselectlang{\@LANG@COVER}%
+    \hypertarget{bmglossaries}{}%
+    \bookmark[level=0,dest=bmglossaries]
+            {\thebkmstring(glossaries,\@LANG@COVER)}%
+    \printglossaries
+    % \printglossary%
+    % \bookmarksetupnext{level=1,keeplevel}%
+    % \printglossary[type=\acronymtype]%
+    % \bookmarksetupnext{level=1,keeplevel}%
+    % \printglossary[type=symbols]%
+  }{}%
 }
 
 % --------------------------------------------------------
@@ -1258,7 +1315,7 @@
 \printorder(frontmatter,working):={%
   abstracts;       % Print abstracts in multiple languages.
   alllistof;       % Print all the listof defined in “6_list_of.tex”
-  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+  myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
 }
 
 \printorder(mainmatter):={
@@ -2711,18 +2768,15 @@
       \refsection%
       \renewcommand{\@ntcite}[1]{\nocite{##1}}
       \vspace*{2.5ex}\footnoterule#1\theacknowledgmentsstring(\@LANG@MAIN)%
-      \renewcommand*{\chapterheadstart}{\vspace*{0pt}}%
-      \vspace*{-2.5\baselineskip}%
       \renewcommand*{\bibfont}{#1}%
-      \defbibheading{bibliography}[\refname]{%
-        \section*{\fontsize{0.1}{0.1}\selectfont\color{red}\bibname}}%
       \setlength{\labelnumberwidth}{10pt}%
       \renewbibmacro*{pageref}{}% suppress backrefs
       \defbibenvironment{bibliography}
-        {\list{}{\leftmargin0pt}}
+        {\vspace*{-1ex}\tiny\list{}{\leftmargin0pt}}
         {\endlist}
         {\item}
-      \printbibliography%
+      \par{\fontsize{0.1}{0.1}\selectfont\bibname}\vspace*{-\baselineskip}
+      \printbibliography[heading=none]%
       \endrefsection%
     }
     \NTRunHook{acknowledgementsblock/post}%

@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% uporto/fc/defaults.ldf
+%% uporto/fcup/defaults.ldf
 %% NOVA thesis configuration file
 %%
 %% Customization for FCUP (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE uporto/fc/defaults.ldf}%
+\typeout{NT FILE uporto/fcup/defaults.ldf}%
 
 \ifdocfinal{\ntsetup{print/secondcover=true}}{}
 
@@ -262,16 +262,16 @@
 \covermsg(phd,pt,prov):={Tese Provisória}
 \covermsg(msc,en,prov):={Draft}
 \covermsg(phd,en,prov):={Draft}
-\ifoptionequal{/novathesis/uporto/fc/classification}{}{
+\ifoptionequal{/novathesis/uporto/fcup/classification}{}{
   \covermsg(msc,pt,final):={}
   \covermsg(phd,pt,final):={}
   \covermsg(msc,en,final):={}
   \covermsg(phd,en,final):={}
 }{
-  \covermsg(msc,pt,final):={Qualificação atribuída pelo Júri: \option{/novathesis/uporto/fc/classification}}
-  \covermsg(phd,pt,final):={Qualificação atribuída pelo Júri: \option{/novathesis/uporto/fc/classification}}
-  \covermsg(msc,en,final):={Jury final classification: \option{/novathesis/uporto/fc/classification}}
-  \covermsg(phd,en,final):={Jury final classification: \option{/novathesis/uporto/fc/classification}}
+  \covermsg(msc,pt,final):={Qualificação atribuída pelo Júri: \option{/novathesis/uporto/fcup/classification}}
+  \covermsg(phd,pt,final):={Qualificação atribuída pelo Júri: \option{/novathesis/uporto/fcup/classification}}
+  \covermsg(msc,en,final):={Jury final classification: \option{/novathesis/uporto/fcup/classification}}
+  \covermsg(phd,en,final):={Jury final classification: \option{/novathesis/uporto/fcup/classification}}
 }
 
 % Provisional/draf message
@@ -288,19 +288,19 @@
 
 % Funding
 \ntaddtocover[vspace=1,height=1.25cm,valign=t,halign=l,status={final}]{2-1}{%
-  \ifoptionequal{/novathesis/uporto/fc/funding}{}{}{%
+  \ifoptionequal{/novathesis/uporto/fcup/funding}{}{}{%
     \newdata{funding}
     \funding(pt):={Instituições Financiadoras:}
     \funding(en):={Funding Institutions:}
     \fontsize{11}{11}\selectfont%
     \thefunding(\@LANG@COVER)\\[0.75ex]%
-    \@for\myi:=\expanded{\option{/novathesis/uporto/fc/funding}}\do{\hspace*{0.5cm}\myi\\}
+    \@for\myi:=\expanded{\option{/novathesis/uporto/fcup/funding}}\do{\hspace*{0.5cm}\myi\\}
   }%
 }
 
 % Date
 \ntaddtocover[vspace=1,height=8.5mm,valign=b]{1-1,2-1}{%
     \fontsize{12}{12}\selectfont%
-    {\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
+    \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}%
 }
 

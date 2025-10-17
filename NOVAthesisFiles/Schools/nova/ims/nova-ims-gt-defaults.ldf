@@ -8,6 +8,7 @@
 \typeout{NT FILE nova/ims/nova-ims-gt-defaults.ldf}%
 
 \openany
+\ntsetup{doctype=msc}
 \ntsetup{print/copyright=false}
 \ntsetup{print/secondcover=true}
 \ntsetup{lang/cover=en}        % The language for the cover (and second cover) page
@@ -246,7 +247,7 @@ for the Degree of \emph{\thedegreename(en)}}
 % Date
 \ntaddtocover[vspace=1]{2-1}{%
   \fontsize{11}{11}\selectfont
-    \textbf{\thentdocdate(submission,month,text), \thentdocdate(submission,year)}
+    \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}
 }
 
 
