@@ -134,17 +134,16 @@
 % PACKAGE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\IfStartsWithAnyOf}[4]{%
+\newcommand{\IfBeginsWithAnyOf}[4]{%
   \begingroup
   \def\result{#4}% default = false branch
   % Remove all spaces from the comma-separated list
   \StrSubstitute{#2}{ }{}[\charlisttmp]%
-  \def\do##1{%
-    \IfBeginWith{#1}{##1}{%
-      \def\result{#3}\breakforeach
+  \ntfor\myi:={\charlisttmp}\do{%
+    \IfBeginWith{#1}{\myi}{%
+      \def\result{#3}\ntforbreak
     }{}%
   }%
-  \docsvlist{\charlisttmp}%
   \expandafter\endgroup\result
 }
 
@@ -526,7 +525,7 @@
   %         #4=filename
   \ifoptioncontains{/@nt/listtypes}{#2}{}
       {\options{/@nt/listtypes/.newpush={#2}}}
-  \IfStartsWithAnyOf{#4}{/,.}
+  \IfBeginsWithAnyOf{#4}{/,.}
       {\xdef\@nt@filewithpath{#4}}
       {\options{/@nt/folders=#2}%
        \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}}
@@ -1144,39 +1143,41 @@
 
 %============================================================
 % Adding list_of
-\newcommand*{\ntaddlistof}[2][]{%
+\newcommand*{\ntaddlistof}[2][frontmatter]{%
+  % #1 = frontmatter, backmatter
+  % #2 = the list of SOMETHING without the initial "\"
   % \typeout{NTADDLISTOF 1=[#1] 2=[#2]}\NTADDLISTOF%
   \IfStrEqCase{#2}{%
-    {tableofcontents}{\options{/@nt/list/listof/.newpush={%
+    {tableofcontents}{\options{/@nt/list/listof/#1/.newpush={%
             \iftoggle{/novathesis/tocintoc}{\tableofcontents}%
                   {\hypertarget{toctarget}{\tableofcontents*}%
                    \bookmark[dest=toctarget]{\contentsname}}%
     }}}%
-    {listoffigures*}{\options{/@nt/list/listof/.newpush={%
+    {listoffigures*}{\options{/@nt/list/listof/#1/.newpush={%
             \hypertarget{loftarget}{\listoffigures*}%
             \bookmark[dest=loftarget]{\listfigurename}%
     }}}%
-    {listoffigures}{\options{/@nt/list/listof/.newpush={%
+    {listoffigures}{\options{/@nt/list/listof/#1/.newpush={%
             \hypertarget{loftarget}{\listoffigures*}%
             \bookmark[dest=loftarget,level=1]{\listfigurename}%
     }}}%
-    {listoftables*}{\options{/@nt/list/listof/.newpush={%
+    {listoftables*}{\options{/@nt/list/listof/#1/.newpush={%
             \hypertarget{lottarget}{\listoftables*}%
             \bookmark[dest=lottarget]{\listtablename}%
     }}}%
-    {listoftables}{\options{/@nt/list/listof/.newpush={%
+    {listoftables}{\options{/@nt/list/listof/#1/.newpush={%
             \hypertarget{lottarget}{\listoftables*}%
             \bookmark[dest=lottarget]{\listtablename}%
     }}}%
-    {listoflistings}{\options{/@nt/list/listof/.newpush={%
+    {listoflistings}{\options{/@nt/list/listof/#1/.newpush={%
             \hypertarget{loltarget}{\listoflistings}%
             \bookmark[dest=loltarget]{\listoflistingscaption}%
     }}}%
-    {lstlistoflistings}{\options{/@nt/list/listof/.newpush={%
+    {lstlistoflistings}{\options{/@nt/list/listof/#1/.newpush={%
             \hypertarget{loltarget}{\lstlistoflistings}%
             \bookmark[dest=loltarget]{\lstlistlistingname}%
     }}}%
-    {listofalgorithms}{\options{/@nt/list/listof/.newpush = {%
+    {listofalgorithms}{\options{/@nt/list/listof/#1/.newpush = {%
             \listofalgorithms
             \ifdefined\listalgorithmname%
               \addcontentsline{toc}{chapter}{\listalgorithmname}%
@@ -1186,10 +1187,7 @@
               \ClassError{novathesis}{Can't make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
             \fi\fi}}}%
   }[%
-            % \bookmarksetup{startatroot=false}\bookmarksetupnext{level=1}%
-            \@ifmtarg{#1}%
-              {\options{/@nt/list/listof/.newpush={\ifdefmacro{#2}{#2}{\csuse{#2}}}}}%
-              {\options{/@nt/list/listof/.newpush={\ifdefmacro{#2}{#2[#1]}{\csuse{#2}[#1]}}}}%
+      \options{/@nt/list/listof/#1/.newpush={\ifdefmacro{#2}{#2}{\csuse{#2}}}}%
    ]%
 }
 
@@ -2624,9 +2622,11 @@
   \clearforchapter%
 }
 
+\newif\if@frontmatter
 \newcommand*{\ntthesisfrontmatter}{%
   \NTRunHook{frontmatter/pre}%
   \frontmatter%
+  \@frontmattertrue
   \begingroup
   \pagestyle{novathesis@frontmatter}%
   \copypagestyle{chapter}{novathesis@frontmatter}
@@ -2645,6 +2645,7 @@
     \renewcommand{\cleardoublepage}{\clearforchapter}%
   }%
   \mainmatter%
+  \@frontmatterfalse
   \ifbool{@openright}{}{% openany=true
     \let\cleardoublepage\oldcleardoublepage%
   }%
@@ -2721,7 +2722,13 @@
     \NTRunHook{listof/pre}%
     \hypertarget{bmlistof}{}%
     \bookmark[level=0,dest=bmlistof]{\thebkmstring(listof,\@LANG@COVER)}%
-    \optionlistdo{/@nt/list/listof}{\clearforchapter##1}%
+    \if@frontmatter
+      \def\@matter{frontmatter}
+    \else
+      \def\@matter{backmatter}
+    \fi
+    % \typeout{PRINTALLLISTOF=#1}\PRINTALLLISTOF
+    \optionlistdo{/@nt/list/listof/\@matter}{\clearforchapter##1}%
     \NTRunHook{listof/post}%
 }
 
