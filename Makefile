@@ -179,7 +179,8 @@ bclean:
 bump%:
 ifneq (, $(wildcard Scripts/newversion.sh))
 	@Scripts/newversion.sh $*
-	@$(call _mtp,$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/'),$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/'))
+	make mtp
+	# @$(call _mtp,$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/'),$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/'))
 endif
 
 #————————————————————————————————————————————————————————————————————————————
