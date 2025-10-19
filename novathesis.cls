@@ -139,12 +139,11 @@
   \def\result{#4}% default = false branch
   % Remove all spaces from the comma-separated list
   \StrSubstitute{#2}{ }{}[\charlisttmp]%
-  \def\do##1{%
-    \IfBeginWith{#1}{##1}{%
-      \def\result{#3}\breakforeach
+  \ntfor\myi:={\charlisttmp}\do{%
+    \IfBeginWith{#1}{\myi}{%
+      \def\result{#3}\ntforbreak%
     }{}%
   }%
-  \docsvlist{\charlisttmp}%
   \expandafter\endgroup\result
 }
 
