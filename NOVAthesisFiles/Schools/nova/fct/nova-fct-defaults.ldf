@@ -167,9 +167,9 @@
 
 % -------------------------------------------------------------------------------
 % Department
-\ntAddToCoverTikz[anchor=north west]($(current page.north west) + (96.45mm,11.4mm)$){1-1,2-1}{%
+\ntAddToCoverTikz[align=left,anchor=north west]($(current page.north west) + (96.45mm,12.2mm)$){1-1,2-1}{%
   \fontsize{14}{14}\sffamily%
-  \makecell[tl]{\THEdepartment(\@LANG@COVER)}%
+  \parbox{\dimexpr\paperwidth-96.45mm\relax}{\THEdepartment(\@LANG@COVER)}%
 }
 
 % -------------------------------------------------------------------------------
