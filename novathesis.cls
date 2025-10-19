@@ -1405,7 +1405,8 @@
   % #4=Rest of command
   % #5=CID
   % #6=Code
-  \options{/@nt/coverTikz/\@UNIV/\@SCHL/#5/.newpush={{#1}\@nil{#2}\@nil{#3}\@nil{#4}\@nil{#6}}}%
+  \options{/@nt/coverTikz/\@UNIV/\@SCHL/#5/.newpush=
+            {{#1}\@nil{#2}\@nil{#3}\@nil{#4}\@nil{#6}\@nil}}%
 }
 
 \NewDocumentCommand{\printCoverTikz}{m}{%
@@ -1422,7 +1423,7 @@
   }{}%
 }
 
-\def\printCoverElementTikz#1\@nil#2\@nil#3\@nil#4\@nil#5\@nil#6{%
+\def\printCoverElementTikz#1\@nil#2\@nil#3\@nil#4\@nil#5\@nil#6\@nil{%
   % #1=CID
   % #2=Command
   % #3=Options
