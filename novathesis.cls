@@ -1393,6 +1393,7 @@
   % #4=Rest of command
   % #5=CIDLIST
   % #6=Code
+  % \typeout{Command=[#1]  Options=[#2]  Position=[#3]  Rest of command=[#4]  CIDLIST=[#5]  Code=[]}\NTADDTOCOVERTIKZ
   \ntfor\cvids:={#5}\do{\ntAddToOneCoverTikz{#1}{#2}{#3}{#4}{\cvids}{#6}}%
 }
 
@@ -1403,7 +1404,9 @@
   % #4=Rest of command
   % #5=CID
   % #6=Code
-  \options{/@nt/coverTikz/\@UNIV/\@SCHL/#5/.newpush={{#1}\@nil{#2}\@nil{#3}\@nil{#4}\@nil{#6}}}%
+  % \typeout{Command=[#1]  Options=[#2]  Position=[#3]  Rest of command=[#4]  CIDLIST=[#5]  Code=[]}\NTADDTOONECOVERTIKZ
+  \options{/@nt/coverTikz/\@UNIV/\@SCHL/#5/.newpush=
+                {{#1}\@nil{#2}\@nil{#3}\@nil{#4}\@nil{#6}}}%
 }
 
 \NewDocumentCommand{\printCoverTikz}{m}{%
@@ -1413,14 +1416,14 @@
     \NTRunHook{coverTikz/#1/text/pre}%
     \begin{tikzpicture}[remember picture, overlay, yscale=-1, every node/.style={inner sep=0pt}]%
       \optionlistdo{/@nt/coverTikz/\@UNIV/\@SCHL/#1}{%
-        \printCoverElementTikz#1\@nil##1%
+        \printCoverElementTikz#1\@nil##1\@nil\@nil%
       }%
     \end{tikzpicture}%
     \NTRunHook{coverTikz/#1/text/post}%
   }{}%
 }
 
-\def\printCoverElementTikz#1\@nil#2\@nil#3\@nil#4\@nil#5\@nil#6{%
+\def\printCoverElementTikz#1\@nil#2\@nil#3\@nil#4\@nil#5\@nil#6\@nil{%
   % #1=CID
   % #2=Command
   % #3=Options
