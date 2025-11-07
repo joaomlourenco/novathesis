@@ -226,9 +226,9 @@ define _mtp
 	git commit --all --message "Version $(1) - $(2)." || true
 	git checkout main
 	git pull
-	git merge -m "Merge branch 'develop'" develop
+	git merge --strategy-option theirs -m "Merge branch 'develop'" develop
 	git tag -f -a "v$(1)" -m "Version $(1) - $(2)."
-	git push --all
+	git push -f --all
 	git push -f --tags
 	git checkout develop
 endef
