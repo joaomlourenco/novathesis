@@ -230,38 +230,44 @@ def _update_progress_bar(current_line: int, total_lines: int, bar_length: int = 
 def _copytree_symlinking(src: Path, dst: Path, ignore=None) -> None:
     """
     Replicate directory tree from src to dst, creating symlinks for files.
-    
-    Args:
-        src: Source directory path
-        dst: Destination directory path  
-        ignore: Pattern for files to ignore (passed to shutil.copytree)
+
+    - The 'Scripts' directory (anywhere in src) is completely ignored.
     """
     def _symlink_copy(s: str, d: str, *, follow_symlinks=True):
         """Copy function that creates symlinks instead of copying file content."""
         target_path = Path(d)
         target_path.parent.mkdir(parents=True, exist_ok=True)
-        
-        # Check if source exists
+
         if not Path(s).exists():
-            print(f"{YELLOW}⚠️  Source does not exist: {s}{RESET}")
+            print(f"⚠️  Source does not exist: {s}")
             return d
 
         try:
-            # Use absolute path for symlink to avoid relative path issues
             abs_s = os.path.abspath(s)
             os.symlink(abs_s, d)
         except FileExistsError:
             pass
         except OSError as e:
-            print(f"{YELLOW}⚠️  Could not create symlink {s} → {d}: {e}{RESET}")
+            print(f"⚠️  Could not create symlink {s} → {d}: {e}")
         return d
+
+    # Extend ignore behavior to always skip "Scripts"
+    def _ignore_with_scripts(directory, entries):
+        ignored = set()
+        # Always ignore the Scripts directory itself
+        if "Scripts" in entries:
+            ignored.add("Scripts")
+        # Apply any user-provided ignore filter as well
+        if ignore is not None:
+            ignored.update(ignore(directory, entries))
+        return ignored
 
     shutil.copytree(
         src,
         dst,
         dirs_exist_ok=True,
         copy_function=_symlink_copy,
-        ignore=ignore
+        ignore=_ignore_with_scripts
     )
 
 def prepare_temp_workspace(project_root: Path) -> Path:
