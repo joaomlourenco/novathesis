@@ -8,87 +8,78 @@
 V:=open -a skim
 
 
-
 #############################################################################
 # DO NOT TOUCH BELOW THIS POINT
 #############################################################################
 
-# If a file "tempalte.tex" is found, usennn it as the main file
-# otherwise, use the first (alphabetically) .tex file found as the main file
-ifeq ($(MF),)
-TEX:=$(patsubst %.tex,%,$(wildcard *.tex))
-MF:=$(findstring template,$(TEX)})
-ifeq ($(MF),)
-MF:=$(word 1,$(TEX))
+#————————————————————————————————————————————————————————————————————————————
+# Prevents the “each line is a new shell” pitfall and simplifies variable flow
+.ONESHELL:
+SHELL := /bin/sh
+.SHELLFLAGS := -eu -c -o pipefail
+#————————————————————————————————————————————————————————————————————————————
+# Define commans
+GREP := grep -F
+
+#————————————————————————————————————————————————————————————————————————————
+# Automatically discover the main file:
+# 	1) the first file containing "\documentclass"
+#	2) ; if none found, raises an error
+LTXFILE := $(firstword $(shell $(GREP) -F -l -m1 '\documentclass' -- *.tex 2>/dev/null))
+ifeq ($(LTXFILE),)
+$(error No .tex file found with "\documentclass")
 endif
-endif
+BASENAME := $(patsubst %.tex,%,$(LTXFILE))
+LTXCLS := $(BASENAME).cls
+PDFFILE := $(BASENAME).pdf
 
-# Turn of PROFILING for the developer
-WHOAMI:=$(shell whoami)
-ifeq ($(WHOAMI),jml)
-PROFILING:=-usepretex="\def\PROFILING{1}"
-endif
+#————————————————————————————————————————————————————————————————————————————
+# Possible compilation modes
+MODEITRT :=
+MODENSTP := -interaction=nonstopmode
+MODEBTCH := -interaction=batchmode
 
+#————————————————————————————————————————————————————————————————————————————
+# LUA cache file
+CACHE=.nopdflatex
 
-# Find out which versions of TeX live are available (works for macos)
-TEXVERSIONS=$(shell ls /usr/local/texlive/ | fgrep -v texmf-local)
-
-# Customize latex compilation
-B:=$(MF)
-T:=$(MF).pdf
-S:=$(MF).tex
-
+#————————————————————————————————————————————————————————————————————————————
+# AUXDIR to avoid cluttering workspace
 ifndef AUXDIR
 AUXDIR:=./AUXDIR
 export AUX_DIR=$(AUXDIR)
 endif
 
-MK:=latexmk $(MKF)
-MKF:=-time -interaction=batchmode -shell-escape -synctex=1 -file-line-error -f -auxdir=$(AUXDIR) $(PROFILING) $(FLAGS)
+#————————————————————————————————————————————————————————————————————————————
+# latexmk and its flags
+LTXMK:=latexmk
+LTXFLAGS:=-time -f -file-line-error -shell-escape -synctex=1 -auxdir=$(AUXDIR) $(MODE) $(FLAGS)
 
-CT=cluttex $(CTF)
-CFT:=
-
-# target and files to be incldued in "make zip"
-ZIPFILES:=NOVAthesisFiles [0-5]-* LICENSE novathesis.cls template.tex README.md .gitignore  Makefile
-ZIPTARGET=$(B)-$(VERSION)@$(DATE).zip
-
+#————————————————————————————————————————————————————————————————————————————
 # extract version and date of the template
-VERSION=$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/')
-DATE=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
+VERSION_FILE=NOVAthesisFiles/nt-version.sty
 
-# aux files
-AUXFILES:=$(shell ls $(B)*.* | fgrep -v .tex | fgrep -v .pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
+ORIGVERSION:=$(shell awk -F'[{}]' '/\\novathesisversion/ {print $$4; exit}' '$(VERSION_FILE)')
+ORIGDATE:=$(shell awk   -F'[{}]' '/\\novathesisdate/    {print $$4; exit}' '$(VERSION_FILE)')
 
-# schools requiring XeLaTeX or LuaLaTeX (incompatible with pdfLaTeX)
-LUA="uminho/eaad uminho/ec uminho/ed uminho/eeg uminho/eeng uminho/elach uminho/emed uminho/epsi uminho/ese uminho/i3bs uminho/ics uminho/ie other/esep"
+#————————————————————————————————————————————————————————————————————————————
+# Print progress bar if exists
+PROGRESS:=$(if $(wildcard Scripts/progress.py),Scripts/progress.py -s,"")
+PROGRESSVERB:=$(if $(wildcard Scripts/progress.py),Scripts/progress.py,"")
 
+#————————————————————————————————————————————————————————————————————————————
+# Find out which versions of TeX live are available (works for macos)
+TEXVERSIONS:=$(shell ls /usr/local/texlive/ | $(GREP) -v texmf-local)
+
+#————————————————————————————————————————————————————————————————————————————
 # Extract school being built
-SCHL=$(shell grep -v "^%" 0-Config/1_novathesis.tex | grep "ntsetup{school=" | cut -d "=" -f 2 | cut -d "}" -f 1)
+SCHL := $(shell sed -n 's/.*ntsetup{school=\([^}]*\)}.*/\1/p' 0-Config/1_novathesis.tex | head -1)
 ifeq ($(SCHL),)
-	SCHL=nova/fct
+SCHL := nova/fct
 endif
 
 
-.PHONY: default
-default:
-	@echo SCHL=$(SCHL)
-ifeq ($(findstring $(SCHL),$(LUA)),)
-	make pdf
-else
-	make xe
-endif
 
-.PHONY: ct mk
-ct mk:
-ifeq ($@,ct)
-	@echo Using cluttex
-else
-ifeq ($@,mk)
-	@echo Using latexmk
-endif
-endif
-	make CTMK=$@ $(filter-out $@,$(MAKECMDGOALS))
 
 #############################################################################
 # Main targets:
@@ -98,130 +89,335 @@ endif
 # year pdf/xe/lua	build with Tex-Live release for <year> (if available, otherwise defaults release)
 # v/view			build with pdfLaTeX
 # zip				build a ZIP archive with the source files
+# help              print help message
 #############################################################################
 
 #————————————————————————————————————————————————————————————————————————————
-# TeX-Live
+# Automatically use the right latex compiler and compile
+.PHONY: default
+default: validate-config $(CACHE)
+	$(eval LUA=$(shell cat $(CACHE)))
+	@ echo SCHL=$(SCHL)
+ifeq ($(findstring $(SCHL),$(LUA)),)
+	$(MAKE) pdf
+else
+	$(MAKE) lua
+endif
+
+#————————————————————————————————————————————————————————————————————————————
+# The main targets
+# e.g. '$(MAKE) lua'
+.PHONY: pdf xe lua
+pdf xe lua: check-env $(LTXFILE) $(LTXCLS)
+ifeq ($(MODE),)
+	$(MAKE) $(MAKECMDGOALS) MODE=$(MODENSTP) 
+else
+ifeq ($(PROGRESS),)
+	$(LTXMK) -pdf$(patsubst pdf%,%,$@) $(LTXFLAGS) $(BASENAME)
+else
+	$(LTXMK) -pdf$(patsubst pdf%,%,$@) $(LTXFLAGS) $(BASENAME) | $(PROGRESS)
+endif
+endif
+
+#————————————————————————————————————————————————————————————————————————————
+# Btach mode
+.PHONY: verbose verb vv
+verbose verb vv:
+	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) MODE=$(MODENSTP) PROGRESS="$(PROGRESSVERB)" 
+
+#————————————————————————————————————————————————————————————————————————————
+# Btach mode
+.PHONY: batch btch bt
+batch btch bt:
+	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) MODE=$(MODEBTCH) PROGRESS=""
+
+#————————————————————————————————————————————————————————————————————————————
+# Interactive mode
+.PHONY: interactive itrtv itrt it
+interactive itrtv itrt it:
+	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) MODE="$(MODEITRT)" PROGRESS=""
+
+#————————————————————————————————————————————————————————————————————————————
+# Use TeX-Live and excute next target
+# e.g. '$(MAKE) tl lua'
 .PHONY: tl
 tl:
-	hash -r
-	make $(filter-out $@,$(MAKECMDGOALS))
+	@ hash -r
+	$(MAKE) $(filter-out $@,$(MAKECMDGOALS))
 
 #————————————————————————————————————————————————————————————————————————————
-# MikTeX
+# Use MikTeX and excute next target
+# e.g. '$(MAKE) mik lua'
 .PHONY: mik
 mik:
-	hash -r
-	PATH="$(HOME)/bin:$(PATH)" make $(filter-out $@,$(MAKECMDGOALS))
+	@ hash -r
+	PATH="$(HOME)/bin:$(PATH)" $(MAKE) $(filter-out $@,$(MAKECMDGOALS))
 
 #————————————————————————————————————————————————————————————————————————————
-# TL Release (e.g., 2022)
+# Use a specific TeX-Live release and excute next target
+# e.g. '$(MAKE) 2024 lua'
 .PHONY: $(TEXVERSIONS)
 $(TEXVERSIONS):
-	hash -r
-	PATH="$(wildcard /usr/local/texlive/$@/bin/*-darwin/):$(PATH)" make $(filter-out $@,$(MAKECMDGOALS))
-
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: pdf xe lua
-pdf xe lua: $(S)
-ifeq ($(CTMK),ct)	
-	$(CT) -e pdf$(patsubst pdf%,%,$@)latex $(CTF) $(B)
+	@ hash -r
+	$(eval TEXBIN := $(firstword $(wildcard /usr/local/texlive/$@/bin/*-darwin/)))
+ifeq ($(TEXBIN),)
+	@ echo "TeX Live $@ not found; using default on PATH"
+	$(MAKE) $(filter-out $@,$(MAKECMDGOALS))
 else
-	$(MK) -pdf$(patsubst pdf%,%,$@) $(MKF) $(B)
+	PATH="$(TEXBIN):$(PATH)" $(MAKE) $(filter-out $@,$(MAKECMDGOALS))
 endif
-	@ eval "$$printtimes"
-
 #————————————————————————————————————————————————————————————————————————————
+# Build and display the PDF
 .PHONY: v view
-v view: $(T)
-	$(V) $(T)
+v view: $(PDFFILE)
+	$(V) $(PDFFILE)
 
 #————————————————————————————————————————————————————————————————————————————
-$(T): $(S)
-	make default
+# Build the PDF
+$(PDFFILE): $(LTXFILE)
+	$(MAKE) default
 
 #————————————————————————————————————————————————————————————————————————————
-.PHONY: vv verb verbose
-vv verb verbose:
-	$(L) -pdf $(B)
-	@ eval "$$printtimes"
+# Add fail-safe for critical commands
+.PHONY: check-env
+check-env:
+	@command -v $(LTXMK) >/dev/null 2>&1 || { echo "Error: latexmk not found"; exit 1; }
 
+#————————————————————————————————————————————————————————————————————————————
+.PHONY: validate-config
+validate-config:
+	@if [ -z "$(SCHL)" ]; then \
+		echo "Error: School configuration not found in 0-Config/1_novathesis.tex"; \
+		exit 1; \
+	fi
+	@echo "Building for school: $(SCHL)"
+
+
+#############################################################################
+# HELP & DDEBUG
+#############################################################################
+
+#————————————————————————————————————————————————————————————————————————————
+# Help
+.PHONY: help
+help:
+	@echo "NOVAthesis Makefile Help"
+	@echo "========================"
+	@echo "Main targets:"
+	@echo "  pdf, xe, lua    - Build with different engines"
+	@echo "  view/v          - Build and view PDF"
+	@echo "  clean           - Remove build artifacts"
+	@echo "  zip             - Create distribution package"
+	@echo "  bump1/2/3       - Bump version numbers"
+	@echo ""
+	@echo "Advanced:"
+	@echo "  tl/mik TARGET   - Use specific TeX distribution"
+	@echo "  YEAR TARGET     - Use specific TeX Live version"
+	@echo "  verb/btch/itrt  - Verbose/Batch/Interactive mode"
+	
+#————————————————————————————————————————————————————————————————————————————
+# Debug
+.PHONY: dry-run debug-vars
+dry-run:
+	@echo "Would build with: SCHOOL=$(SCHL), MODE=$(MODE)"
+	@echo "Main file: $(BASENAME).tex"
+	@echo "Compiler: $(LTXMK) $(LTXFLAGS)"
+
+debug-vars:
+	@echo "SCHOOL: $(SCHL)"
+	@echo "VERSION: $(ORIGVERSION)"
+	@echo "MAIN FILE: $(BASENAME)"
+	@echo "TEX VERSIONS: $(TEXVERSIONS)"
+	@echo "LUA SCHOOLS: $(shell cat .nopdflatex 2>/dev/null || echo 'not computed')"
+
+
+
+#############################################################################
+# Create a ZIP file (no .git and similar folder)
+#############################################################################
+
+#————————————————————————————————————————————————————————————————————————————
+# target and files to be incldued in "$(MAKE) zip"
+VERSION=$(shell awk -F'[{}]' '/\\novathesisversion/ {print $$4; exit}' '$(VERSION_FILE)')
+DATE=$(shell awk   -F'[{}]' '/\\novathesisdate/    {print $$4; exit}' '$(VERSION_FILE)')
+ZIPFILES:=NOVAthesisFiles [0-5]-* LICENSE Makefile README.md Scripts novathesis.cls template.pdf template.tex .gitignore
+ZIPTARGET=$(BASENAME)-$(VERSION)@$(DATE).zip
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: zip
-zip:
-	rm -f "$(ZIPTARGET)"
-	zip --exclude .github --exclude .git -r "$(ZIPTARGET)" $(ZIPFILES)
+zip: clean
+	@ echo "Creating archive: $(ZIPTARGET)"
+	@ rm -f "$(ZIPTARGET)"
+	@ zip $(ZIPTARGET) -r -q $(ZIPFILES)  -x 'Scripts/*'
+	@ echo "Archive created: $(ZIPTARGET) ($(shell stat -f%z "$(ZIPTARGET)" 2>/dev/null || stat -c%s "$(ZIPTARGET)" ) bytes)"
 
+
+#############################################################################
+# Cleaning targets
+#	clean -> standard clean
+#	bclean -> also cleans biber cache
+#	gclean -> uses git clean (removes all untracked files)
+#############################################################################
+
+#————————————————————————————————————————————————————————————————————————————
+# aux files
+# AUXFILES:=$(shell ls $(BASENAME)*.* | $(GREP) -v .tex | $(GREP) -v .pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
+
+GOODFILES := LICENSE Makefile %.cls %.md .gitignore %.tex %.pdf
+AUXFILES := $(filter-out $(GOODFILES),$(wildcard $(BASENAME).*)) $(CACHE)
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: clean
 clean:
-	@$(MK) -c $(B)
-	@rm -f $(AUXFILES) "*(1)*"
-	@rm -rf $(AUXDIR)
-	@find . -name .DS_Store -o -name '_minted*' | xargs rm -rf
-
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: gclean
-gclean:
-	git clean -fdx -e Scripts -e Fonts
+	@ $(LTXMK) -c $(BASENAME)
+	@ rm -f $(AUXFILES) "*(1)*"
+	@ rm -rf $(AUXDIR) _minted*
+	@ find . -name .DS_Store | xargs rm -rf
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: bclean
 bclean:
-	rm -rf `biber -cache`
-	biber -cache
-	make clean
+	@ rm -rf `biber -cache`
+	@ biber -cache
+	@ $(MAKE) clean
 
 #————————————————————————————————————————————————————————————————————————————
-	.PHONY: bump1 bump2 bump3
-bump%:
-ifneq (, $(wildcard Scripts/newversion.sh))
-	@Scripts/newversion.sh $*
-	make mtp
-	# @$(call _mtp,$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/'),$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/'))
-endif
+.PHONY: gclean
+gclean:
+	@ git clean -fx -e Scripts -e Fonts
+
+
+#############################################################################
+# Bump up the template version
+#	bump1 -> increase major version number
+#	bump2 -> increase mid version number
+#	bump3 -> increase minor version number
+#############################################################################
+
+#————————————————————————————————————————————————————————————————————————————
+# File containing version info
+VERSION_FILE = NOVAthesisFiles/nt-version.sty
+
+.PHONY: bump1 bump2 bump3
+bump1 bump2 bump3:
+	@ BI='$(patsubst bump%,%,$@)'; \
+	OLDVERSION='$(ORIGVERSION)'; \
+	OLDDATE='$(ORIGDATE)'; \
+	[ -n "$$OLDVERSION" ] || { echo "ERROR: parse version" >&2; exit 1; }; \
+	NEWVERSION=$$(awk -v bi="$$BI" -v ver="$$OLDVERSION" 'BEGIN{ \
+	  n=split(ver,a,"."); if(bi<1||bi>n){print ver; exit} \
+	  a[bi]++; for(i=bi+1;i<=n;i++) a[i]=0; \
+	  for(i=1;i<=n;i++){ printf "%s",a[i]; if(i<n)printf "." } }'); \
+	NEWDATE=$$(date +%F); \
+	echo; echo "Bumping: $$BI"; \
+	echo "Version: $$OLDVERSION -> $$NEWVERSION"; \
+	echo "   Date: $$OLDDATE   -> $$NEWDATE"; echo; \
+	cp -v '$(VERSION_FILE)' '$(VERSION_FILE).bak'; \
+	awk -v newver="$$NEWVERSION" -v newdate="$$NEWDATE" ' \
+	  /\\novathesisversion/ { sub(/\{[^}]*\}$$/, "{" newver "}"); } \
+	  /\\novathesisdate/    { sub(/\{[^}]*\}$$/, "{" newdate "}"); } \
+	  { print }' '$(VERSION_FILE).bak' > '$(VERSION_FILE)'; \
+	rm -f '$(VERSION_FILE).bak'; \
+	echo "Updated $(VERSION_FILE)"; \
+	@ echo ""
+	@ echo "New content:"
+	@ grep -E 'novathesis(version|date)' $(VERSION_FILE) || true
+	@ rm -f $(VERSION_FILE).bak
+	$(MAKE) mtp
+
+# More robust version extraction and update
+# .PHONY: bump-version
+# bump-version:
+# 	$(eval MAJOR := $(shell echo $(ORIGVERSION) | cut -d. -f1))
+# 	$(eval MINOR := $(shell echo $(ORIGVERSION) | cut -d. -f2))
+# 	$(eval PATCH := $(shell echo $(ORIGVERSION) | cut -d. -f3))
+#
+# 	@case $@ in \
+# 		bump1) NEWVERSION=$$((MAJOR + 1)).0.0 ;; \
+# 		bump2) NEWVERSION=$(MAJOR).$$((MINOR + 1)).0 ;; \
+# 		bump3) NEWVERSION=$(MAJOR).$(MINOR).$$((PATCH + 1)) ;; \
+# 	esac; \
+#	... rest of update logic ...
+
+
+# .PHONY: bump1 bump2 bump3
+# bump1 bump2 bump3:
+# 	$(eval BI:=$(patsubst bump%,%,$@))
+# 	@ if [ -z "$(ORIGVERSION)" ]; then \
+# 	  echo "ERROR: could not parse version from $(VERSION_FILE)" >&2; exit 1; \
+# 	fi; \
+# 	$(eval NEWVERSION:=$(shell awk -v bi="$(BI)" -v ver="$(ORIGVERSION)" 'BEGIN{ \
+# 	  n=split(ver,a,"."); \
+# 	  if (bi<1 || bi>n) { print ver; exit } \
+# 	  a[bi]++; \
+# 	  for (i=bi+1;i<=n;i++) a[i]=0; \
+# 	  for (i=1;i<=n;i++){ \
+# 	    printf "%s", a[i]; \
+# 	    if (i<n) printf "."; \
+# 	  } \
+# 	}'))
+# 	$(eval NEWDATE:=$(shell date +%F))
+# 	@ echo ""
+# 	@ echo "Bumping: $(BI)"
+# 	@ echo "Version: $(ORIGVERSION) -> $(NEWVERSION)"
+# 	@ echo "   Date: $(ORIGDATE) -> $(NEWDATE)"
+# 	@ echo ""
+# 	@ cp $(VERSION_FILE) $(VERSION_FILE).bak; \
+# 	\
+# 	# Use awk for replacement
+# 	@ awk -v newver="$(NEWVERSION)" -v newdate="$(NEWDATE)" ' \
+# 	  /\\novathesisversion/ { sub(/\{[^}]*\}$$/, "{" newver "}"); } \
+# 	  /\\novathesisdate/    { sub(/\{[^}]*\}$$/, "{" newdate "}"); } \
+# 	  { print }' $(VERSION_FILE).bak > $(VERSION_FILE); \
+# 	# Verify the update
+# 	@ echo "Updated $(VERSION_FILE)"
+# 	@ echo ""
+# 	@ echo "New content:"
+# 	@ grep -E 'novathesis(version|date)' $(VERSION_FILE)
+# 	@ rm -f $(VERSION_FILE).bak
+# 	@ $(MAKE) mtp
+
+
+#############################################################################
+# Find out which templates cannot be compiled with 'pdflatex'
+# i.e., that must be compiled with 'lualatex' or 'xelatex'
+#############################################################################
+
+#————————————————————————————————————————————————————————————————————————————
+.PHONY: nopdflatex
+NOPDFALLCMD=$(shell $(GREP) -rl "is not compatible with pdfLaTeX" NOVAthesisFiles/FontStyles | cut -d / -f 3 | cut -d . -f 1 | $(GREP) -ril -f - NOVAthesisFiles/Schools | $(GREP) .ldf | sed -e "s,.*/,," -e "s,-defaults.ldf,," | tr - /)
+# Keep only the words that do NOT contain a slash
+NOPDFUNIVSCMD=$(foreach word,$(NOPDFALL),$(if $(findstring /,$(word)),,$(word)))
+NOPDFSCHOOLSCMD=$(foreach word,$(NOPDFALL),$(if $(findstring /,$(word)),$(word),))
+NOPDFSCHLSFROMUNIV=$(NOPDFSCHOOLS) $(foreach univ,$(NOPDFUNIVS),$(shell find NOVAthesisFiles/Schools/$(univ) -type d -mindepth 1 -maxdepth 1 | grep -v '/Images' | cut -d / -f 3-4))
+
+nopdflatex:
+	$(eval NOPDFALL:=$(NOPDFALLCMD))
+	$(eval NOPDFUNIVS:=$(NOPDFUNIVSCMD))
+	$(eval NOPDFSCHOOLS:=$(NOPDFSCHOOLSCMD))
+	$(eval NOPDFSCHLSFROMU:=$(NOPDFSCHLSFROMUNIV))
+	@ echo $(NOPDFSCHLSFROMUNIV) > .nopdflatex
+	
+# Add a real dependency for the cache file
+.nopdflatex: $(shell find NOVAthesisFiles -name "*.sty" -o -name "*.ldf")
+	$(MAKE) --no-print-directory nopdflatex
+
+#############################################################################
+# MERGE-TAG-PUSH FUNCTION
+#############################################################################
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: mtp
 mtp:
-	@$(call _mtp,$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/'),$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/'))
-
+	$(eval VERSION := $(shell awk -F'[{}]' '/\\novathesisversion/ {print $$4; exit}' $(VERSION_FILE)))
+	$(eval DATE    := $(shell awk -F'[{}]' '/\\novathesisdate/    {print $$4; exit}' $(VERSION_FILE)))
+	@ $(call _mtp,$(VERSION),$(DATE))
 #————————————————————————————————————————————————————————————————————————————
-.PHONY: time
-
-time times:
-	@ eval "$$printtimes"
-
-#############################################################################
-# FUNCTIONS
-#############################################################################
-#————————————————————————————————————————————————————————————————————————————
-define _printtimes
-printf "TIMES FROM THE LAST EXECUTION\n"
-TIMES="$(grep -e 'l3benchmark. + TOC'  ${AUX_DIR}/*.log | cut -d ' ' -f 4 | xargs)"
-PHASES="$(fgrep TIME ${AUX_DIR}/*.log | cut -d ' ' -f 2-3 | cut -d '=' -f 1 | tr ' ' '_' | xargs)"
-if [[ -n "$TIMES" && -n "$PHASES" ]]; then
-	declare -a TM=($TIMES)
-	declare -a PH=($PHASES)
-	for i in `seq 0 $((${#TM[@]}-1))`; do
-		printf "%20s = %6.2f\n" "${PH[$i]}" "${TM[$i]}"
-	done
-fi
-endef
-
-ifneq (, $(findstring jml,${USER}))
-export printtimes = $(value _printtimes)
-else
-export printtimes = $(shell true)
-endif
-
 # merge, tag and push
 define _mtp
 	echo "VERSION=$(1) - DATE=$(2)."
 	git commit --all --message "Version $(1) - $(2)." || true
-	make clean
+	$(MAKE) clean
 	.Build/build.py nova/fct
 	git commit --all --message "Version $(1) - $(2)." || true
 	git checkout main
