@@ -30,8 +30,8 @@ ifeq ($(LTXFILE),)
 $(error No .tex file found with "\documentclass")
 endif
 BASENAME := $(patsubst %.tex,%,$(LTXFILE))
-LTXCLS := $(BASENAME).cls
 PDFFILE := $(BASENAME).pdf
+LTXCLS := novathesis.cls
 
 #————————————————————————————————————————————————————————————————————————————
 # Possible compilation modes
