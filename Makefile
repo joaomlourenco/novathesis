@@ -407,18 +407,35 @@ nopdflatex:
 #############################################################################
 
 #————————————————————————————————————————————————————————————————————————————
-.PHONY: mtp
-mtp:
+.PHONY: mtp mtp2
+mtp mtp2:
 	$(eval VERSION := $(shell awk -F'[{}]' '/\\novathesisversion/ {print $$4; exit}' $(VERSION_FILE)))
 	$(eval DATE    := $(shell awk -F'[{}]' '/\\novathesisdate/    {print $$4; exit}' $(VERSION_FILE)))
-	@ $(call _mtp,$(VERSION),$(DATE))
+	@ $(call _$@,$(VERSION),$(DATE))
+
 #————————————————————————————————————————————————————————————————————————————
-# merge, tag and push
+# commit, build, merge, tag and push
 define _mtp
 	echo "VERSION=$(1) - DATE=$(2)."
 	git commit --all --message "Version $(1) - $(2)." || true
 	$(MAKE) clean
 	.Build/build.py nova/fct
+	git commit --all --message "Version $(1) - $(2)." || true
+	git checkout main
+	git pull
+	git merge --strategy-option theirs -m "Merge branch 'develop'" develop
+	git tag -f -a "v$(1)" -m "Version $(1) - $(2)."
+	git push -f --all
+	git push -f --tags
+	git checkout develop
+endef
+
+#————————————————————————————————————————————————————————————————————————————
+# commit, NO BUILD, merge, tag and push
+define _mtp2
+	echo "VERSION=$(1) - DATE=$(2)."
+	git commit --all --message "Version $(1) - $(2)." || true
+	$(MAKE) clean
 	git commit --all --message "Version $(1) - $(2)." || true
 	git checkout main
 	git pull
