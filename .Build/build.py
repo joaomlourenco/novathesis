@@ -1,4 +1,16 @@
 #!/usr/bin/env python3
+"""
+NOVATHESIS Build Assistant
+
+This script automates the process of building NOVATHESIS documents by:
+1. Creating a temporary workspace with symlinks to the original project files
+2. Localizing and modifying configuration files for specific school, document type, and language
+3. Running the LaTeX build process in the temporary workspace
+4. Copying the resulting PDF to an output directory
+
+The script handles both cover-only builds and full document builds with appropriate
+configuration adjustments.
+"""
 
 import argparse
 import time
@@ -9,9 +21,9 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
-from typing import Dict, Callable, List
+from typing import Dict, Callable, List, Pattern
 
-# --- Colors -------------------------------------------------
+# --- ANSI Color Codes for Terminal Output ------------------------------------
 RESET = "\033[0m"
 
 # Regular text colors
@@ -34,16 +46,37 @@ BRIGHT_MAGENTA = "\033[95m"
 BRIGHT_CYAN    = "\033[96m"
 BRIGHT_WHITE   = "\033[97m"
 
-# --- Pattern builders -------------------------------------------------
+# --- Pattern Builders -------------------------------------------------------
 
-def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, cover_only: bool) -> dict[str, dict[re.Pattern, Callable[[str], str]]]:
-    """Return filename -> {compiled_pattern: transformer}."""
-    # helper: uncomment & replace key=value inside \ntsetup{...}
+def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, cover_only: bool) -> dict[str, dict[Pattern, Callable[[str], str]]]:
+    """
+    Build regex patterns and transformation functions for configuration file processing.
+    
+    Args:
+        new_doc_type: Document type (e.g., 'phd', 'msc', 'bsc')
+        new_school_id: School identifier (e.g., 'nova/fct')
+        new_lang_code: Language code (e.g., 'en', 'pt', 'uk', 'gr')
+        cover_only: Whether to build cover-only version
+    
+    Returns:
+        Dictionary mapping filenames to pattern-transformer dictionaries
+    """
     def _uncomment_replace(key: str, value: str):
+        """
+        Create a transformer function that uncomments and replaces key-value pairs in \ntsetup{}.
+        
+        Args:
+            key: The key to replace in \ntsetup{}
+            value: The new value to set for the key
+            
+        Returns:
+            Function that transforms a line of LaTeX code
+        """
         # Escape key in case it contains regex metacharacters like '/'
         key_re = re.compile(rf"({re.escape(key)}\s*=\s*)[^}},]+", re.IGNORECASE)
 
         def _transform(line: str) -> str:
+            """Transform a line by uncommenting and replacing the specified key."""
             orig = line
             # Uncomment while preserving indentation
             line = re.sub(r"^(\s*)%+\s*", r"\1", line)
@@ -53,6 +86,7 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, co
 
         return _transform
 
+    # Patterns for 1_novathesis.tex - core document configuration
     file_1_patterns = {
         re.compile(r"^\s*%?\s*\\ntsetup\{\s*doctype\s*=\s*[^}]+\}\s*.*$"): 
             _uncomment_replace("doctype", new_doc_type),
@@ -77,7 +111,7 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, co
     }
     
     if cover_only:
-        # In the cover_only branch
+        # Cover-only build: disable copyright and comment out file inclusions
         file_1_patterns |= {
             re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/copyright\s*=\s*[^}]+\}\s*.*$"): 
                 _uncomment_replace("print/copyright", "false"),
@@ -97,7 +131,7 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, co
             "6_list_of.tex": file_6_patterns,
         }
     else:
-        # conver and contents
+        # Full build: include additional abstract files
         file_4_patterns = {
             re.compile(r"^\s*%?\s*\\ntaddfile\{abstract\}\[gr\]\{abstract-gr\}\s*.*$"):
                 lambda line: re.sub(r"^(\s*)%+\s*", r"\1", line),
@@ -109,10 +143,29 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, co
         }
     return result
 
-# --- Core helpers -----------------------------------------------------
+# --- Core Processing Functions ----------------------------------------------
 
-def process_file(p: Path, patterns: Dict[re.Pattern, Callable[[str], str]], dry_run: bool=False) -> int:
-    lines = p.read_text(encoding="utf-8").splitlines()
+def process_file(p: Path, patterns: Dict[re.Pattern, Callable[[str], str]], dry_run: bool = False) -> int:
+    """
+    Process a file by applying pattern transformations.
+    
+    Args:
+        p: Path to the file to process
+        patterns: Dictionary of regex patterns and their transformation functions
+        dry_run: If True, only show what would change without writing
+    
+    Returns:
+        Number of lines that were changed
+    """
+    try:
+        lines = p.read_text(encoding="utf-8").splitlines()
+    except FileNotFoundError:
+        print(f"{RED}❌ File not found: {p}{RESET}")
+        return 0
+    except UnicodeDecodeError:
+        print(f"{RED}❌ Could not decode {p} as UTF-8{RESET}")
+        return 0
+    
     changed = 0
     out_lines: List[str] = []
     for line in lines:
@@ -127,27 +180,80 @@ def process_file(p: Path, patterns: Dict[re.Pattern, Callable[[str], str]], dry_
         out_lines.append(new_line)
 
     if not dry_run and changed > 0:
-        p.write_text("\n".join(out_lines) + "\n", encoding="utf-8")
-        print(f"{YELLOW}✅ modified {p.name} {changed} lines{RESET}")
+        try:
+            p.write_text("\n".join(out_lines) + "\n", encoding="utf-8")
+            print(f"{YELLOW}✅ modified {p.name} {changed} lines{RESET}")
+        except Exception as e:
+            print(f"{RED}❌ Failed to write {p}: {e}{RESET}")
     return changed
 
-def _print_filtered(stream_text: str) -> None:
-    for line in stream_text.splitlines():
-        if line.startswith("Run number") or line.startswith("Running") or line.startswith("Logging"):
-            print(line)
+def _print_filtered(stream_text: str, verbose: bool = False) -> None:
+    """
+    Filter and print make output based on verbosity setting.
+    
+    Args:
+        stream_text: The output text from make process
+        verbose: If True, show all output; if False, show only important lines
+    """
+    if verbose:
+        print(stream_text)
+    else:
+        for line in stream_text.splitlines():
+            if (line.startswith("Run number") or 
+                line.startswith("Running") or 
+                line.startswith("Logging") or
+                line.startswith("Latexmk:") or
+                "error" in line.lower() or
+                "warning" in line.lower()):
+                print(line)
 
-# --- New: temp mirror & build ----------------------------------------
+def _update_progress_bar(current_line: int, total_lines: int, bar_length: int = 40) -> None:
+    """
+    Update and display a progress bar based on the current line count.
+    
+    Args:
+        current_line: Current line number being processed
+        total_lines: Total expected lines for completion
+        bar_length: Visual length of the progress bar in characters
+    """
+    progress = min(current_line / total_lines, 1.0)
+    filled_length = int(bar_length * progress)
+    bar = '█' * filled_length + '░' * (bar_length - filled_length)
+    percentage = progress * 100
+    
+    # Use carriage return to overwrite the same line
+    sys.stdout.write(f'\r{BRIGHT_CYAN}🔄 Progress: {BRIGHT_WHITE}|{bar}| {percentage:5.1f}% ({current_line}/{total_lines} lines){RESET}')
+    sys.stdout.flush()
+
+# --- Temporary Workspace Management -----------------------------------------
 
 def _copytree_symlinking(src: Path, dst: Path, ignore=None) -> None:
     """
     Replicate directory tree from src to dst, creating symlinks for files.
+    
+    Args:
+        src: Source directory path
+        dst: Destination directory path  
+        ignore: Pattern for files to ignore (passed to shutil.copytree)
     """
     def _symlink_copy(s: str, d: str, *, follow_symlinks=True):
-        Path(d).parent.mkdir(parents=True, exist_ok=True)
+        """Copy function that creates symlinks instead of copying file content."""
+        target_path = Path(d)
+        target_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # Check if source exists
+        if not Path(s).exists():
+            print(f"{YELLOW}⚠️  Source does not exist: {s}{RESET}")
+            return d
+
         try:
-            os.symlink(s, d)
+            # Use absolute path for symlink to avoid relative path issues
+            abs_s = os.path.abspath(s)
+            os.symlink(abs_s, d)
         except FileExistsError:
             pass
+        except OSError as e:
+            print(f"{YELLOW}⚠️  Could not create symlink {s} → {d}: {e}{RESET}")
         return d
 
     shutil.copytree(
@@ -159,9 +265,19 @@ def _copytree_symlinking(src: Path, dst: Path, ignore=None) -> None:
     )
 
 def prepare_temp_workspace(project_root: Path) -> Path:
+    """
+    Create a temporary workspace with symlinks to project files.
+    
+    Args:
+        project_root: Root directory of the NOVATHESIS project
+        
+    Returns:
+        Path to the temporary workspace directory
+    """
     tmpdir = Path(tempfile.mkdtemp(prefix="ntbuild-", dir="/tmp"))
     print(f"{CYAN}🧪 Temp workspace: {tmpdir}{RESET}")
 
+    # Ignore build artifacts and version control files
     ignore = shutil.ignore_patterns(
         "*.aux", "*.log", "*.toc", "*.out", "*.fls", "*.fdb_latexmk",
         "*.synctex*", "*.bbl", "*.blg",
@@ -172,13 +288,19 @@ def prepare_temp_workspace(project_root: Path) -> Path:
 
 def localize_and_process_files(tmp_root: Path, confdir: Path, patterns: dict[str, Dict[re.Pattern, Callable[[str], str]]], dry_run: bool) -> bool:
     """
-    In the TEMP tree: for each target file
-      - if it's a symlink, make a local copy, remove the symlink, rename local copy to original name
-      - process the local file with regex transforms
-    Returns True if any file had changes.
+    Localize configuration files in temp workspace and apply transformations.
+    
+    Args:
+        tmp_root: Root of temporary workspace
+        confdir: Configuration directory name
+        patterns: Pattern transformers for different files
+        dry_run: If True, don't actually write changes
+        
+    Returns:
+        True if any files were modified, False otherwise
     """
     changed_any = False
-    # Paths in the temp tree
+    # Target configuration files to process
     targets = [tmp_root / confdir / "1_novathesis.tex", tmp_root / confdir / "4_files.tex", tmp_root / confdir / "6_list_of.tex"]
 
     for p in targets:
@@ -203,70 +325,156 @@ def localize_and_process_files(tmp_root: Path, confdir: Path, patterns: dict[str
     return changed_any
 
 def safe_outname(school: str, doctype: str, lang: str) -> str:
-    """Return a safe output filename for the given parameters."""
+    """
+    Generate a safe filename for the output PDF.
+    
+    Args:
+        school: School identifier
+        doctype: Document type
+        lang: Language code
+        
+    Returns:
+        Safe filename string
+    """
     school_safe = school.replace("/", "-").replace(" ", "_")
     doctype_safe = doctype.replace(" ", "_")
     lang_safe = lang.replace(" ", "_")
     return f"{school_safe}-{doctype_safe}-{lang_safe}.pdf"
 
-def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype: str, lang: str, outdir: Path) -> int:
+def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype: str, lang: str, outdir: Path, verbose: bool, progress: bool = False, total_lines: int = 4400, keep_tmp = False) -> int:
+    """
+    Run make command in temporary workspace and handle output.
+    
+    Args:
+        tmp_root: Temporary workspace directory
+        ltxprocessor: LaTeX processor to use (e.g., 'lua', 'pdf')
+        school_id: School identifier
+        doctype: Document type
+        lang: Language code
+        outdir: Output directory for final PDF
+        verbose: Whether to show verbose output
+        progress: Whether to show a progress bar
+        total_lines: Total expected lines of output for progress calculation
+        keep_tmp: Whether to keep the building dir
+        
+    Returns:
+        Exit code from make process (0 for success)
+    """
     print(f"{CYAN}📦 Running 'make {ltxprocessor}' in {tmp_root}{RESET}")
     start_time = time.perf_counter()
+    
     try:
-        proc = subprocess.run(
-            ["make", ltxprocessor],
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-            cwd=tmp_root
-        )
+        if progress:
+            # Run with progress bar
+            print(f"{BRIGHT_CYAN}📊 Progress tracking enabled: expecting ~{total_lines} lines of output{RESET}")
+            
+            # Start the subprocess with stdout and stderr piped
+            proc = subprocess.Popen(
+                ["make", "verbose", ltxprocessor],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                bufsize=1,  # Line buffered
+                universal_newlines=True,
+                cwd=tmp_root
+            )
+            
+            line_count = 0
+            important_lines = []
+            
+            # Read output line by line and update progress
+            for line in proc.stdout:
+                line_count += 1
+                
+                # Update progress bar
+                _update_progress_bar(line_count, total_lines)
+                
+                # Collect important lines for display
+                if (line.startswith("Run number") or 
+                    line.startswith("Running") or 
+                    line.startswith("Logging") or
+                    line.startswith("Latexmk:") or
+                    "error" in line.lower() or
+                    "warning" in line.lower()):
+                    important_lines.append(line)
+            
+            # Wait for process to complete and get return code
+            returncode = proc.wait()
+            
+            # Clear the progress bar line
+            sys.stdout.write('\r' + ' ' * 100 + '\r')
+            sys.stdout.flush()
+            
+            # Print collected important lines
+            for line in important_lines:
+                print(line, end='')
+                
+        else:
+            # Original behavior without progress bar
+            proc = subprocess.run(
+                ["make", ltxprocessor],
+                check=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                cwd=tmp_root
+            )
+            returncode = 0
+            _print_filtered(proc.stdout, verbose=verbose)
+        
         end_time = time.perf_counter()
         elapsed = end_time - start_time
-        # _print_filtered(proc.stdout)
-        print(f"{CYAN}✅ 'make' succeeded in {RED}{elapsed:.2f}{YELLOW} seconds{RESET}")
+        
+        if returncode == 0:
+            print(f"{CYAN}✅ 'make' succeeded in {RED}{elapsed:.2f}{CYAN} seconds{RESET}")
 
-        # Success → copy template.pdf to "{school-doctype-lang}.pdf"
-        src_pdf = tmp_root / "template.pdf"
-        dest_pdf = outdir / safe_outname(school_id, doctype, lang)
-        if src_pdf.exists():
-            outdir.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(src_pdf, dest_pdf)
-            print(f"{YELLOW}✅ saved '{src_pdf.name}' to '{dest_pdf}'{RESET}")
-            shutil.rmtree(tmp_root)
-            print(f"{CYAN}🧪 Temp workspace removed: {tmp_root}{RESET}")
+            # Success → copy template.pdf to "{school-doctype-lang}.pdf"
+            src_pdf = tmp_root / "template.pdf"
+            dest_pdf = outdir / safe_outname(school_id, doctype, lang)
+            if src_pdf.exists():
+                outdir.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(src_pdf, dest_pdf)
+                print(f"{GREEN}✅ saved '{src_pdf.name}' to '{dest_pdf}'{RESET}")
+                # Only remove temp workspace if we created it temporarily
+                if "ntbuild-" in str(tmp_root) and not keep_tmp:
+                    shutil.rmtree(tmp_root)
+                    print(f"{CYAN}🧪 Temp workspace removed: {tmp_root}{RESET}")
+                else:
+                    print(f"{YELLOW}📁 Preserving build directory: {tmp_root}{RESET}")
+            else:
+                print(f"{RED}❌ '{src_pdf}' missing{RESET}")
+            return 0
         else:
-            print(f"{ref}❌ '{src_pdf}' missing{RESET}")
-        return 0
+            print(f"{RED}❌ 'make' failed with exit code {returncode}{RESET}")
+            print(f"{YELLOW}🧪 Temp workspace kept for debugging: {tmp_root}{RESET}")
+            return returncode
+            
     except subprocess.CalledProcessError as e:
         out = e.stdout if hasattr(e, "stdout") and isinstance(e.stdout, str) else ""
         print(out)
-        print("❌ 'make' failed")
-        print(f"{RED}🧪 Temp workspace kept: {tmp_root}{RESET}")
+        print(f"{RED}❌ 'make' failed with exit code {e.returncode}{RESET}")
+        print(f"{YELLOW}🧪 Temp workspace kept for debugging: {tmp_root}{RESET}")
         return e.returncode
 
-# --- CLI --------------------------------------------------------------
+# --- Command Line Interface -------------------------------------------------
 
 def main() -> None:
+    """Main entry point for the NOVATHESIS build assistant."""
     ap = argparse.ArgumentParser(
-        description="Replicate project to /tmp (symlinks), localize & edit config files there, build, then copy PDF to output directory."
+        description="NOVATHESIS Build Assistant: Replicate project to temporary workspace, "
+                   "localize & edit config files, build, and copy PDF to output directory."
     )
 
+    # Required arguments
     ap.add_argument(
         "school_id",
-        help="School ID like 'nova/fct' or 'nova/fct/cbbi' (must contain '/')"
+        help="School ID in format 'faculty/school' (e.g., 'nova/fct', 'nova/fct/cbbi')"
     )
-
+    
     ap.add_argument(
-        "--confdir",
-        default="0-Config",
-        help="Directory with LaTeX config files (default: 0-Config)"
-    )
-
-    ap.add_argument(
-        "-p", "--processor",
-        default="lua",
-        help="Select the LaTeX 'processor' (default: lua)"
+        "-v", "--verbose",
+        action="store_true",
+        help="Enable verbose output for debugging"
     )
 
     ap.add_argument(
@@ -276,48 +484,112 @@ def main() -> None:
     )
 
     ap.add_argument(
+        "-t", "--doctype",
+        default="msc",
+        help="Document type: 'phd', 'msc', 'bsc' (default: msc)"
+    )
+
+    ap.add_argument(
         "-l", "--lang",
         default="en",
-        help="Two-letter language code to set in \\ntsetup{lang=...} (default: en)"
+        help="Two-letter language code for document (default: en)"
     )
 
     ap.add_argument(
-        "-d", "--doctype",
-        default="msc",
-        help="The document type, usually 'phd' or 'msc', and sometimes 'bsc' (default: msc)"
-    )
-
-    ap.add_argument(
-        "-c", "--cover-only",
-        action="store_true",
-        default=False,
-        help="Builds an empty document, just with the covers (deafult: False)"
+        "-p", "--processor",
+        default="lua",
+        help="LaTeX processor to use with make (default: lua)"
     )
     
     ap.add_argument(
         "-b", "--build-directory",
         default=None,
-        help="Directory where to build the project (default: /tmp/ntbuild-…)"
+        help="Custom build directory (default: auto-create in /tmp)"
     )
     
     ap.add_argument(
         "-o", "--output-directory",
         default=".",
-        help="Directory to receive the resulting PDF (default: project root)"
+        help="Output directory for generated PDF (default: current directory)"
+    )
+    
+    ap.add_argument(
+        "-k", "--keep-tmp",
+        action="store_true",
+        default=False,
+        help="Always keep build dir (even in case of success)"
+    )
+
+    ap.add_argument(
+        "--progress",
+        action="store_true",
+        default=True,
+        help="Show progress bar during compilation (default: True)"
+    )
+
+    ap.add_argument(
+        "-np", "--no-progress",
+        dest="progress",
+        action="store_false",
+        help="Disable the progress bar"
+    )
+    
+    ap.add_argument(
+        "--lines",
+        type=int,
+        default=4400,
+        help="Expected number of output lines for progress calculation (default: 3300)"
+    )
+
+    ap.add_argument(
+        "--cover-only",
+        action="store_true",
+        default=False,
+        help="Build cover-only version without main content (default: False)"
+    )
+
+    # Optional arguments
+    ap.add_argument(
+        "--confdir",
+        default="0-Config",
+        help="Directory containing LaTeX configuration files (default: 0-Config)"
     )
 
     args = ap.parse_args()
+    
+    # redefine --lines if --cover-only is active
+    if args.cover_only:
+        args.lines = 2400
 
+    # Validate school_id format
     if "/" not in args.school_id:
         print("❌ Error: The school ID must contain '/'. Example: nova/fct")
         sys.exit(2)
 
-    # (Left as-is from your original, though it checks school_id format while the error message mentions --lang)
+    # Validate language code format
     if not re.fullmatch(r"(?!/)(?:[^/\s]+(?:/[^/\s]+)*)", args.school_id):
         print("❌ Error: --lang must be a two-letter code, e.g., en, pt, uk, gr")
         sys.exit(2)
 
     project_root = Path.cwd()
+    
+    # Validate configuration directory exists
+    confdir_path = Path(args.confdir)
+    if not (project_root / confdir_path).exists():
+        print(f"{RED}❌ Configuration directory not found: {args.confdir}{RESET}")
+        sys.exit(1)
+    
+    # Validate or create output directory
+    outdir_path = Path(args.output_directory)
+    if not outdir_path.exists():
+        try:
+            outdir_path.mkdir(parents=True, exist_ok=True)
+            print(f"{YELLOW}📁 Created output directory: {outdir_path}{RESET}")
+        except Exception as e:
+            print(f"{RED}❌ Could not create output directory {outdir_path}: {e}{RESET}")
+            sys.exit(1)
+    
+    # Set up temporary workspace
     tmp_root = prepare_temp_workspace(project_root) if not args.build_directory else Path(args.build_directory)
 
     # Build regex patterns using CLI args
@@ -335,6 +607,7 @@ def main() -> None:
         print("ℹ️  Dry-run: skipping make.")
         return
 
+    # Run the build process
     if changed_any:
         outdir = (project_root / args.output_directory).resolve()
         rc = run_make_in_temp(
@@ -343,7 +616,11 @@ def main() -> None:
             school_id=args.school_id,
             doctype=args.doctype,
             lang=args.lang,
-            outdir=outdir
+            outdir=outdir,
+            verbose=args.verbose,
+            progress=args.progress,
+            total_lines=args.lines,
+            keep_tmp = args.keep_tmp
         )
         if rc != 0:
             sys.exit(rc)
@@ -356,7 +633,10 @@ def main() -> None:
             school_id=args.school_id,
             doctype=args.doctype,
             lang=args.lang,
-            outdir=outdir
+            outdir=outdir,
+            verbose=args.verbose,
+            progress=args.progress,
+            total_lines=args.lines
         )
         if rc != 0:
             sys.exit(rc)
