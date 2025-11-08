@@ -230,47 +230,87 @@ def _update_progress_bar(current_line: int, total_lines: int, bar_length: int = 
 def _copytree_symlinking(src: Path, dst: Path, ignore=None) -> None:
     """
     Replicate directory tree from src to dst, creating symlinks for files.
-
-    - The 'Scripts' directory (anywhere in src) is completely ignored.
+    
+    - The 'Scripts' directory is copied with all its contents preserved as-is,
+      including existing symlinks.
+    - Regular files in other directories are symlinked to their original locations.
+    
+    Args:
+        src: Source directory path
+        dst: Destination directory path  
+        ignore: Pattern for files to ignore (passed to shutil.copytree)
     """
-    def _symlink_copy(s: str, d: str, *, follow_symlinks=True):
-        """Copy function that creates symlinks instead of copying file content."""
+    def _smart_copy(s: str, d: str, *, follow_symlinks=True):
+        """Copy function that handles Scripts directory differently."""
         target_path = Path(d)
         target_path.parent.mkdir(parents=True, exist_ok=True)
-
-        if not Path(s).exists():
-            print(f"⚠️  Source does not exist: {s}")
+        
+        source_path = Path(s)
+        if not source_path.exists():
+            print(f"{YELLOW}⚠️  Source does not exist: {s}{RESET}")
             return d
 
-        try:
-            abs_s = os.path.abspath(s)
-            os.symlink(abs_s, d)
-        except FileExistsError:
-            pass
-        except OSError as e:
-            print(f"⚠️  Could not create symlink {s} → {d}: {e}")
+        # Check if we're dealing with a file in the Scripts directory
+        is_in_scripts = 'Scripts' in source_path.parts
+        
+        if is_in_scripts:
+            # For Scripts directory: preserve existing symlinks as-is, copy regular files
+            if source_path.is_symlink():
+                # Preserve the original symlink
+                link_target = source_path.readlink()
+                try:
+                    # Create a new symlink pointing to the same target
+                    if link_target.is_absolute():
+                        os.symlink(link_target, d)
+                    else:
+                        # For relative symlinks, we need to reconstruct the proper relative path
+                        # from the new location in the temp directory
+                        relative_target = os.path.relpath(
+                            source_path.parent / link_target, 
+                            source_path.parent
+                        )
+                        os.symlink(relative_target, d)
+                except FileExistsError:
+                    pass
+                except OSError as e:
+                    print(f"{YELLOW}⚠️  Could not recreate symlink {s} → {d}: {e}{RESET}")
+            else:
+                # For regular files in Scripts, copy the actual content
+                shutil.copy2(s, d)
+        else:
+            # For non-Scripts files: create symlinks to original files
+            try:
+                abs_s = os.path.abspath(s)
+                os.symlink(abs_s, d)
+            except FileExistsError:
+                pass
+            except OSError as e:
+                print(f"{YELLOW}⚠️  Could not create symlink {s} → {d}: {e}{RESET}")
+        
         return d
 
-    # Extend ignore behavior to always skip "Scripts"
-    def _ignore_with_scripts(directory, entries):
+    # Original ignore patterns (build artifacts, etc.)
+    original_ignore = ignore
+    
+    def _combined_ignore(path, names):
+        """Combine original ignore patterns with our custom logic."""
         ignored = set()
-        # Always ignore the Scripts directory itself
-        if "Scripts" in entries:
-            ignored.add("Scripts")
-        # Apply any user-provided ignore filter as well
-        if ignore is not None:
-            ignored.update(ignore(directory, entries))
+        
+        # Apply original ignore patterns if provided
+        if original_ignore:
+            ignored.update(original_ignore(path, names))
+        
         return ignored
 
     shutil.copytree(
         src,
         dst,
         dirs_exist_ok=True,
-        copy_function=_symlink_copy,
-        ignore=_ignore_with_scripts
+        copy_function=_smart_copy,
+        ignore=_combined_ignore
     )
 
-def prepare_temp_workspace(project_root: Path) -> Path:
+def prepare_temp_workspace(project_root: Path, build_dir: str) -> Path:
     """
     Create a temporary workspace with symlinks to project files.
     
@@ -280,7 +320,10 @@ def prepare_temp_workspace(project_root: Path) -> Path:
     Returns:
         Path to the temporary workspace directory
     """
-    tmpdir = Path(tempfile.mkdtemp(prefix="ntbuild-", dir="/tmp"))
+    if build_dir:
+        tmpdir = Path(build_dir).resolve()
+    else:
+        tmpdir = Path(tempfile.mkdtemp(prefix="ntbuild-", dir="/tmp"))
     print(f"{CYAN}🧪 Temp workspace: {tmpdir}{RESET}")
 
     # Ignore build artifacts and version control files
@@ -508,7 +551,7 @@ def main() -> None:
     )
     
     ap.add_argument(
-        "-b", "--build-directory",
+        "-b", "--build-dir",
         default=None,
         help="Custom build directory (default: auto-create in /tmp)"
     )
@@ -596,7 +639,7 @@ def main() -> None:
             sys.exit(1)
     
     # Set up temporary workspace
-    tmp_root = prepare_temp_workspace(project_root) if not args.build_directory else Path(args.build_directory)
+    tmp_root = prepare_temp_workspace(project_root, args.build_dir)
 
     # Build regex patterns using CLI args
     patterns = build_patterns(args.doctype, args.school_id, args.lang, args.cover_only)
@@ -642,7 +685,8 @@ def main() -> None:
             outdir=outdir,
             verbose=args.verbose,
             progress=args.progress,
-            total_lines=args.lines
+            total_lines=args.lines,
+            keep_tmp = args.keep_tmp
         )
         if rc != 0:
             sys.exit(rc)
