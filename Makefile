@@ -123,19 +123,19 @@ endif
 # Btach mode
 .PHONY: verbose verb vv
 verbose verb vv:
-	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) MODE=$(MODENSTP) PROGRESS="$(PROGRESSVERB)" 
+	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) MODE=$(MODENSTP) PROGRESS=$(PROGRESSVERB)
 
 #————————————————————————————————————————————————————————————————————————————
 # Btach mode
 .PHONY: batch btch bt
 batch btch bt:
-	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) MODE=$(MODEBTCH) PROGRESS=""
+	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) MODE=$(MODEBTCH) PROGRESS=
 
 #————————————————————————————————————————————————————————————————————————————
 # Interactive mode
 .PHONY: interactive itrtv itrt it
 interactive itrtv itrt it:
-	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) MODE="$(MODEITRT)" PROGRESS=""
+	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) MODE="$(MODEITRT)" PROGRESS=
 
 #————————————————————————————————————————————————————————————————————————————
 # Use TeX-Live and excute next target
