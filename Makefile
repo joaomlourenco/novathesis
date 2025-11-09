@@ -370,9 +370,9 @@ commit:
 	# 2) Create the commit
 	@echo ""
 	@echo "💾 Creating commit..."
-	@if git commit -m "$$COMMIT_MESSAGE 2>& /dev/null"; then \
+	@if git commit -m "$(COMMIT_MESSAGE)"; then \
 		echo "✅ Commit created successfully"; \
-		COMMIT_HASH=$$(git rev-parse --short HEAD 2>& /dev/null); \
+		COMMIT_HASH=$$(git rev-parse --short HEAD); \
 		echo ""; \
 		echo "📦 Commit Summary:"; \
 		echo "   Hash:    $$COMMIT_HASH"; \
@@ -380,7 +380,7 @@ commit:
 		echo "   Message: $$FINAL_MESSAGE"; \
 		echo ""; \
 		echo "📊 Files committed:"; \
-		git show --stat --oneline $$COMMIT_HASH 2>& /dev/null | tail -n +2; \
+		git show --stat --oneline $$COMMIT_HASH | tail -n +2; \
 	else \
 		echo "❌ Failed to create commit"; \
 		echo "   This might be because there were no changes to commit after staging"; \
@@ -402,7 +402,7 @@ rebase:
 	
 	# 1) Check if we are in branch develop
 	@echo "📋 Checking current branch..."
-	@if [ "$(shell git branch --show-current 2>& /dev/null)" != "develop" ]; then \
+	@if [ "$(shell git branch --show-current)" != "develop" ]; then \
 		echo "❌ Error: You must be on the 'develop' branch to run this target"; \
 		exit 1; \
 	fi
@@ -410,16 +410,16 @@ rebase:
 	
 	# 2) Check for pending/modified files
 	@echo "📋 Checking for pending changes..."
-	@if [ -n "$$(git status --porcelain 2>& /dev/null)" ]; then \
+	@if [ -n "$$(git status --porcelain)" ]; then \
 		echo "❌ Error: You have uncommitted changes. Please commit or stash them first."; \
-		git status --short 2>& /dev/null; \
+		git status --short; \
 		exit 1; \
 	fi
 	@echo "✅ No pending changes"
 	
 	# 3) Checkout main and rebase
 	@echo "🔄 Switching to main branch..."
-	@git checkout main 2>& /dev/null || { echo "❌ Failed to checkout main branch"; exit 1; }
+	@git checkout main || { echo "❌ Failed to checkout main branch"; exit 1; }
 	
 	@echo "🔄 Rebasing main onto develop..."
 	@if git rebase develop; then \
@@ -427,7 +427,7 @@ rebase:
 	else \
 		echo "⚠️  Rebase encountered conflicts. Resolving automatically using develop version..."; \
 		git rebase --abort 2>/dev/null || true; \
-		git merge develop -X theirs -m "$$(MERGE_MESSAGE)" 2>& /dev/null || { \
+		git merge develop -X theirs -m "$$(MERGE_MESSAGE)" || { \
 			echo "❌ Failed to merge with develop version"; \
 			exit 1; \
 		}; \
@@ -436,7 +436,7 @@ rebase:
 	
 	# 4) If no error, checkout develop
 	@echo "🔄 Switching back to develop branch..."
-	@git checkout develop 2>& /dev/null || { echo "❌ Failed to checkout develop branch"; exit 1; }
+	@git checkout develop || { echo "❌ Failed to checkout develop branch"; exit 1; }
 	
 	@echo "🎉 Rebase process completed successfully!"
 
