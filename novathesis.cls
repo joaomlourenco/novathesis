@@ -81,7 +81,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\ProvidesClass{novathesis}[2025-05-25 novathesis template]
+\ProvidesClass{novathesis}[novathesis template — Version 1.1.1 (2025-05-25)]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 
