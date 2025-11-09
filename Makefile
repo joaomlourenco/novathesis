@@ -369,7 +369,7 @@ define _mtp
 	printf "$(CYAN)VERSION=$(YELLOW)$(1)$(CYAN) - DATE=$(YELLOW)$(2).$(RESET)\n"
 	git commit --all --message "Version $(1) - $(2)." || true
 	$(MAKE) clean
-	.Build/build.py nova/fct --no-rername
+	.Build/build.py nova/fct --no-rename
 	git commit --all --message "Version $(1) - $(2)." || true
 	git checkout main
 	git pull
