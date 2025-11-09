@@ -401,7 +401,7 @@ MERGE_MESSAGE ?= Merged $(VERSION) - $(DATE).
 .PHONY: rebase
 rebase:
 	@echo "🚀 Starting rebase process..."
-	printf "$(CYAN)VERSION=$(YELLOW)$(1)$(CYAN) - DATE=$(YELLOW)$(2).$(RESET)\n"
+	@printf "$(CYAN)VERSION=$(YELLOW)$(VERSION)$(CYAN) - DATE=$(YELLOW)$(DATE).$(RESET)\n"
 	
 # 1) Check if we are in branch develop
 	@echo "📋 Checking current branch..."
