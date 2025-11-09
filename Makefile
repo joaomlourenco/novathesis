@@ -312,18 +312,18 @@ bump1 bump2 bump3:
 	printf "$(CYAN)Bumping: $(YELLOW)$$BI$(RESET)\n"; \
 	printf "$(CYAN)Version: $(YELLOW)$$OLDVERSION -> $$NEWVERSION$(RESET)\n"; \
 	printf "$(CYAN)   Date: $(YELLOW)$$OLDDATE    -> $$NEWDATE$(RESET)\n"; echo; \
-	cp -v '$(VERSION_FILE)' '$(VERSION_FILE).bak'; \
+	cp '$(VERSION_FILE)' '$(VERSION_FILE).bak'; \
 	awk -v newver="$$NEWVERSION" -v newdate="$$NEWDATE" ' \
 	  /\\novathesisversion/ { sub(/\{[^}]*\}$$/, "{" newver "}"); } \
 	  /\\novathesisdate/    { sub(/\{[^}]*\}$$/, "{" newdate "}"); } \
 	  { print }' '$(VERSION_FILE).bak' > '$(VERSION_FILE)'; \
 	rm -f '$(VERSION_FILE).bak'; \
 	printf "$(CYAN)Updated $(YELLOW)$(VERSION_FILE)$(RESET)\n"; \
-	@ printf "\n"; \
-	@ printf "$(CYAN)New content:$(RESET)\n$(GREEN)"; \
-	@ grep -E 'novathesis(version|date)' $(VERSION_FILE) || true; \
-	@ printf "$(RESET)\n"; \
-	@ rm -f $(VERSION_FILE).bak; \
+	printf "\n"; \
+	printf "$(CYAN)New content:$(RESET)\n$(GREEN)"; \
+	grep -E 'novathesis(version|date)' $(VERSION_FILE) || true; \
+	printf "$(RESET)\n"; \
+	rm -f $(VERSION_FILE).bak; \
 	$(MAKE) mtp
 
 
