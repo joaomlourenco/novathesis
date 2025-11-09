@@ -327,8 +327,10 @@ commit-untracked:
 	make commit COMMIT_INCLUDE_UNTRACKED=yes
 
 commit:
+	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
 	@echo "📝 Starting commit process..."
 	@printf "$(CYAN)VERSION=$(YELLOW)$(VERSION)$(CYAN) - DATE=$(YELLOW)$(DATE)$(RESET).\n"
+	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
 	
 # 1) Comprehensive pre-commit checks
 	@echo "📋 Running pre-commit checks..."
@@ -400,8 +402,10 @@ MERGE_MESSAGE ?= Merged $(VERSION) - $(DATE).
 
 .PHONY: rebase
 rebase:
-	@echo "🚀 Starting rebase process..."
+	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
+	@printf "🚀 Starting rebase process...\n"
 	@printf "$(CYAN)VERSION=$(YELLOW)$(VERSION)$(CYAN) - DATE=$(YELLOW)$(DATE).$(RESET)\n"
+	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
 	
 # 1) Check if we are in branch develop
 	@echo "📋 Checking current branch..."
@@ -445,12 +449,222 @@ rebase:
 
 
 
-.PHONY: tag 
-tag:
-	printf "\n"
-	printf "$(RED)Tagging$(RESET)\n"
-	printf "$(CYAN)VERSION=$(YELLOW)$(1)$(CYAN) - DATE=$(YELLOW)$(2).$(RESET)\n"
+#————————————————————————————————————————————————————————————————————————————
+# TAG
+TAG_VERSION ?= $(VERSION)
+TAG_DATE ?= $(DATE)
+TAG_MESSAGE ?= Version $(TAG_VERSION) - $(TAG_DATE).
 
+.PHONY: tag
+tag:
+	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
+	@echo "🏷️ Starting tagging process..."
+	@printf "$(CYAN)VERSION=$(YELLOW)$(VERSION)$(CYAN) - DATE=$(YELLOW)$(DATE)$(RESET).\n"
+	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
+	
+# 1) Check conditions for tagging
+	@echo "📋 Checking tag conditions..."
+	
+# Check if we're in a git repository
+	@if ! git rev-parse --git-dir > /dev/null 2>&1; then \
+		echo "❌ Error: Not in a git repository"; \
+		exit 1; \
+	fi
+	@echo "✅ In a git repository"
+	
+# Check if we're on develop branch
+	@echo "📋 Checking current branch..."
+	@CURRENT_BRANCH=$$(git branch --show-current); \
+	if [ "$$CURRENT_BRANCH" != "develop" ]; then \
+		echo "❌ Error: You must be on the 'develop' branch to run this target (currently on '$$CURRENT_BRANCH')"; \
+		exit 1; \
+	fi
+	@echo "✅ Currently on 'develop' branch"
+	
+# Check for pending/modified files
+	@echo "📋 Checking for pending changes..."
+	@if [ -n "$$(git status --porcelain)" ]; then \
+		echo "❌ Error: You have uncommitted changes. Please commit or stash them first."; \
+		git status --short; \
+		exit 1; \
+	fi
+	@echo "✅ No pending changes"
+	
+# Check if version is provided
+	@echo "📋 Checking version..."
+	@if [ -z "$(TAG_VERSION)" ]; then \
+		echo "❌ Error: TAG_VERSION is required"; \
+		echo "   Usage: make tag TAG_VERSION=x.y.z"; \
+		echo "   Example: make tag TAG_VERSION=7.5.1"; \
+		exit 1; \
+	fi
+	@echo "✅ Version: $(TAG_VERSION)"
+	@echo "✅ Date: $(TAG_DATE)"
+	@echo "✅ Message: $(TAG_MESSAGE)"
+	
+# Check if tag already exists
+	@echo "📋 Checking if tag already exists..."
+	@if git rev-parse "v$(TAG_VERSION)" >/dev/null 2>&1; then \
+		echo "⚠️ Warining: Tag 'v$(TAG_VERSION)' already exists. Will overwrite."; \
+	else\
+		echo "✅ Tag 'v$(TAG_VERSION)' is available"; \
+	fi
+	
+# Check if main branch exists and is up to date
+	@echo "📋 Checking main branch..."
+	@if ! git show-ref --verify --quiet refs/heads/main; then \
+		echo "❌ Error: main branch does not exist"; \
+		exit 1; \
+	fi
+	
+	@echo "🔄 Fetching latest changes..."
+	@git fetch origin 2>/dev/null || echo "⚠️  Could not fetch from origin, continuing with local branches"
+	
+# 2) Create tag on develop branch
+	@echo ""
+	@echo "🏷️  Creating tag on develop branch..."
+	@if git tag -a "v$(TAG_VERSION)" -m "$(TAG_MESSAGE)" 2>/dev/null; then \
+		echo "✅ Tag created on main branch"; \
+	else \
+		echo "⚠️  Tag already exists on main (or conflict), forcing update..."; \
+		git tag -d "v$(TAG_VERSION)" 2>/dev/null || true; \
+		git tag -a "v$(TAG_VERSION)" -m "$(TAG_MESSAGE)" || { \
+			echo "❌ Failed to create tag on main branch"; \
+			exit 1; \
+		}; \
+		echo "✅ Tag forced on develop branch"; \
+	fi
+	
+# 3) Switch to main and create the same tag
+	@echo ""
+	@echo "🔄 Switching to main branch..."
+	@git checkout main 2>/dev/null || { echo "❌ Failed to checkout main branch"; exit 1; }
+	
+	@echo "🏷️  Creating tag on main branch..."
+# Check if we need to force the tag (if main is behind develop)
+	@if git tag -a "v$(TAG_VERSION)" -m "$(TAG_MESSAGE)" 2>/dev/null; then \
+		echo "✅ Tag created on main branch"; \
+	else \
+		echo "⚠️  Tag already exists on main (or conflict), forcing update..."; \
+		git tag -d "v$(TAG_VERSION)" 2>/dev/null || true; \
+		git tag -a "v$(TAG_VERSION)" -m "$(TAG_MESSAGE)" || { \
+			echo "❌ Failed to create tag on main branch"; \
+			exit 1; \
+		}; \
+		echo "✅ Tag forced on main branch"; \
+	fi
+	
+# 4) Return to develop branch
+	@echo ""
+	@echo "🔄 Returning to develop branch..."
+	@git checkout develop 2>/dev/null || { echo "❌ Failed to checkout develop branch"; exit 1; }
+	
+# 5) Show tag information
+	@echo ""
+	@echo "📋 Tag information:"
+	@echo "   Tag: v$(TAG_VERSION)"
+	@echo "   Message: $(TAG_MESSAGE)"
+	@echo "   Commit: $$(git rev-parse --short v$(TAG_VERSION))"
+	# @echo ""
+	# @echo "📋 To push tags to remote:"
+	# @echo "   git push origin v$(TAG_VERSION)"
+	# @echo "   or push all tags: git push --tags"
+	
+	@echo "🎉 Tagging process completed successfully!"
+
+
+
+# Target to push the created tags
+.PHONY: tag-push
+tag-push:
+	@echo "🚀 Pushing tag v$(TAG_VERSION) to remote..."
+	@if [ -z "$(TAG_VERSION)" ]; then \
+		echo "❌ Error: TAG_VERSION is required"; \
+		echo "   Usage: make tag-push TAG_VERSION=x.y.z"; \
+		exit 1; \
+	fi
+	
+	@if git push origin "v$(TAG_VERSION)"; then \
+		echo "✅ Tag v$(TAG_VERSION) pushed to remote"; \
+	else \
+		echo "❌ Failed to push tag v$(TAG_VERSION)"; \
+		exit 1; \
+	fi
+
+# Target to delete tags (for cleanup)
+.PHONY: tag-delete
+tag-delete:
+	@echo "🗑️  Deleting tag v$(TAG_VERSION)..."
+	@if [ -z "$(TAG_VERSION)" ]; then \
+		echo "❌ Error: TAG_VERSION is required"; \
+		echo "   Usage: make tag-delete TAG_VERSION=x.y.z"; \
+		exit 1; \
+	fi
+	
+	@echo "📋 Deleting local tag..."
+	@git tag -d "v$(TAG_VERSION)" 2>/dev/null && echo "✅ Local tag deleted" || echo "⚠️  Local tag not found"
+	
+	@echo "📋 Deleting remote tag..."
+	@git push --delete origin "v$(TAG_VERSION)" 2>/dev/null && echo "✅ Remote tag deleted" || echo "⚠️  Remote tag not found or no permission"
+
+# Dry run to show what would be tagged
+.PHONY: tag-dry-run
+tag-dry-run:
+	@echo "🚧 TAG DRY RUN - No tags will be created"
+	@echo "========================================"
+	
+	@if ! git rev-parse --git-dir > /dev/null 2>&1; then \
+		echo "❌ Error: Not in a git repository"; \
+		exit 1; \
+	fi
+	
+	@CURRENT_BRANCH=$$(git branch --show-current); \
+	if [ "$$CURRENT_BRANCH" != "develop" ]; then \
+		echo "❌ Error: You must be on the 'develop' branch (currently on '$$CURRENT_BRANCH')"; \
+		exit 1; \
+	fi
+	
+	@if [ -z "$(TAG_VERSION)" ]; then \
+		echo "❌ Error: TAG_VERSION is required"; \
+		exit 1; \
+	fi
+	
+	@echo "✅ Conditions met for tagging"
+	@echo ""
+	@echo "📋 Would create tag:"
+	@echo "   Name: v$(TAG_VERSION)"
+	@echo "   Message: $(TAG_MESSAGE)"
+	@echo "   On branches: develop and main"
+	@echo ""
+	@echo "📋 Current commit that would be tagged:"
+	@git log --oneline -1
+	@echo ""
+	@echo "🚧 This was a dry run. Use 'make tag TAG_VERSION=$(TAG_VERSION)' to actually create the tag."
+
+# Helper to show recent tags
+.PHONY: tag-list
+tag-list:
+	@echo "📋 Recent tags:"
+	@git tag -l --sort=-version:refname "v*" | head -10
+
+# Helper to show tag details
+.PHONY: tag-show
+tag-show:
+	@if [ -z "$(TAG_VERSION)" ]; then \
+		echo "❌ Error: TAG_VERSION is required"; \
+		echo "   Usage: make tag-show TAG_VERSION=x.y.z"; \
+		exit 1; \
+	fi
+	
+	@if git show "v$(TAG_VERSION)" >/dev/null 2>&1; then \
+		echo "📋 Details for tag v$(TAG_VERSION):"; \
+		git show "v$(TAG_VERSION)" --quiet --pretty=fuller; \
+	else \
+		echo "❌ Tag v$(TAG_VERSION) not found"; \
+	fi
+	
+	
+	
 .PHONY: push
 push:
 
