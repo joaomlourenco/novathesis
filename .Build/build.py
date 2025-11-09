@@ -679,7 +679,7 @@ def main() -> None:
             progress=args.progress,
             total_lines=args.lines,
             keep_tmp=args.keep_tmp,
-            ren_pdf = args.rename
+            rename = args.rename
         )
         if rc != 0:
             sys.exit(rc)
@@ -696,7 +696,7 @@ def main() -> None:
             progress=args.progress,
             total_lines=args.lines,
             keep_tmp=args.keep_tmp,
-            ren_pdf = args.rename
+            rename = args.rename
         )
         if rc != 0:
             sys.exit(rc)
