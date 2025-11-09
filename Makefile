@@ -319,7 +319,7 @@ build-phd-final-en: validate-config check-env check-build
 
 #————————————————————————————————————————————————————————————————————————————
 # Commit
-COMMIT_MESSAGE ?= Version $(1) - $(2). Auto-commit.
+COMMIT_MESSAGE ?= Version $(VERSION) - $(DATE). Auto-commit.
 COMMIT_INCLUDE_UNTRACKED ?= no
 
 .PHONY: commit
