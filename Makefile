@@ -72,11 +72,9 @@ TEXVERSIONS:=$(shell ls /usr/local/texlive/ | $(GREP) -v texmf-local)
 
 #————————————————————————————————————————————————————————————————————————————
 # Extract school being built
-SCHL := $(shell sed -n 's/.*ntsetup{school=\([^}]*\)}.*/\1/p' 0-Config/1_novathesis.tex | head -1)
-ifeq ($(SCHL),)
-SCHL := nova/fct
-endif
-
+# SCHL := $(shell sed -n 's/.*ntsetup{school=\([^}]*\)}.*/\1/p' 0-Config/1_novathesis.tex | head -1)
+SCHL := $(shell sed -n '/^[[:space:]]*%/d; s/.*ntsetup{school=\([^}]*\)}.*/\1/p' 0-Config/1_novathesis.tex | head -1)
+SCHL := $(if $(SCHL),$(SCHL),nova/fct)
 
 
 
@@ -98,9 +96,9 @@ default: validate-config $(CACHE)
 	$(eval LUA=$(shell cat $(CACHE)))
 	@ echo SCHL=$(SCHL)
 ifeq ($(findstring $(SCHL),$(LUA)),)
-	$(MAKE) pdf
+	$(MAKE) pdf $(filter-out $@,$(MAKECMDGOALS))
 else
-	$(MAKE) lua
+	$(MAKE) lua $(filter-out $@,$(MAKECMDGOALS))
 endif
 
 #————————————————————————————————————————————————————————————————————————————
