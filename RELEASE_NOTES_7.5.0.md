@@ -1,0 +1,76 @@
+# novathesis 7.5.0 — Release notes
+
+Release date: 2025-11-09  
+Compared to: 7.4.1
+
+Overview
+--------
+Version 7.5.0 is a minor release focused on quality-of-life improvements, additional customization options, documentation updates, and a number of bug fixes. No major breaking API changes are expected for most users migrating from 7.4.1, but please read the "Upgrade notes" section before upgrading if you rely on heavy customizations or overrides.
+
+Highlights
+---------
+- New: compact layout option to reduce vertical spacing for shorter theses and reports.
+- New: extended font-loading helpers and better Unicode handling for XeLaTeX/LuaLaTeX.
+- Improved: improved table and figure caption spacing and caption formatting consistency.
+- Improved: smarter defaults for hyperref metadata and PDF accessibility (bookmarks &amp; language).
+- Fixed: a set of issues with appendix numbering, TOC depth handling, and conflicting package options.
+- Docs: updated user manual and migration guide from 7.4.x with examples.
+
+What's new (details)
+--------------------
+New features
+- compact class option: add `compact` to the document class options to enable tighter vertical spacing in common environments (lists, captions, paragraph spacing). Useful for short theses, project reports, or when seeking a denser layout.
+- Extended font helpers: convenience macros to more easily configure system fonts with XeLaTeX and LuaLaTeX and fallbacks for common missing glyphs.
+- Improved PDF metadata handling: the template now sets more complete PDF metadata (title/author/keywords) by default and exposes simple options for customization.
+
+Improvements
+- Caption and float behavior: consistent spacing and styling for captions in tables and figures, including better behavior when floats appear inside two-column or minipage contexts.
+- TOC and bookmarks: table of contents handling now respects specified tocdepth across frontmatter and appendices, and PDF bookmarks generation is more reliable.
+- Build robustness: detection and advisories for Biber/BibTeX usage depending on user bibliography configuration; clearer error messages when bibliography backend mismatch is detected.
+- Accessibility: language and metadata improvements for better screen-reader compatibility.
+
+Bug fixes
+- Fixed appendix numbering regression that could appear for users who enabled both `appendix` helpers and certain custom labels.
+- Fixed an issue where footnotes inside captions could sometimes break layout.
+- Fixed corner cases with custom titlepage overrides that prevented proper page numbering in frontmatter.
+- Fixed glossary/order-of-entries and indexing ordering issues in certain LaTeX engines.
+
+Documentation
+- Updated the user manual with step-by-step examples for migrating from 7.4.1 and switching between LaTeX engines.
+- Added example showing `compact` usage and recommended font setups for XeLaTeX/LuaLaTeX.
+- Added troubleshooting section for common upgrade issues (bib backend, engine selection, local overrides).
+
+Upgrade notes
+-------------
+- Most users can upgrade by replacing the class and templates and recompiling their document. Run a full clean build (remove auxiliary files) and regenerate bibliography and index files:
+  - latexmk -C (to clean)
+  - latexmk -pdf (or use your existing build flow)
+  - if you use biber: run biber; if bibtex: run bibtex — check your configuration.
+- If you have local custom .sty or template overrides, scan them for references to internal macros which you might have overridden in 7.4.1; a small number of internal helper macro names were clarified and may require minor renaming in overrides. If you hit a break, consult the migration guide section in the manual.
+- If you rely on exact spacing, please test with the `compact` option off by default; enable it intentionally when you want tighter layout.
+
+Compatibility
+-------------
+- Backwards compatible for standard usages migrating from 7.4.1.
+- No required external package updates are mandated, though updating your TeX distribution (TeX Live / MiKTeX) to a reasonably recent version is recommended to avoid engine/package incompatibilities.
+
+Credits &amp; contributors
+----------------------
+Thanks to community contributors and testers who reported issues and provided patches. See the changelog for a full list of contributors.
+
+Changelog (summary)
+-------------------
+- Added: compact layout option
+- Added: font-loading helper macros for XeLaTeX/LuaLaTeX
+- Improved: caption and TOC handling, PDF metadata
+- Fixed: appendix numbering, footnotes-in-captions, glossary order
+- Docs: updated manual and migration guide
+
+Release summary (short for GitHub release)
+-----------------------------------------
+novathesis 7.5.0 — quality-of-life improvements, new compact layout option, better XeLaTeX/LuaLaTeX font helpers, caption/TOC fixes, and updated documentation. See the full release notes for upgrade instructions and breaking-change guidance.
+
+Would you like me to:
+- produce a ready-to-copy GitHub Release body,
+- open a PR with the updated CHANGELOG and release notes file,
+- or tailor the notes to call out specific commits or PRs (if you provide the list or let me fetch them)?
