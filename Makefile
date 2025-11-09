@@ -38,6 +38,10 @@ LTXCLS := novathesis.cls
 MODEITRT :=
 MODENSTP := -interaction=nonstopmode
 MODEBTCH := -interaction=batchmode
+ifeq ($(MODE),)
+MODE := $(MODENSTP)
+endif
+
 
 #————————————————————————————————————————————————————————————————————————————
 # LUA cache file
@@ -53,7 +57,7 @@ endif
 #————————————————————————————————————————————————————————————————————————————
 # latexmk and its flags
 LTXMK:=latexmk
-LTXFLAGS:=-time -f -file-line-error -shell-escape -synctex=1 -auxdir=$(AUXDIR) $(MODE) $(FLAGS)
+LTXFLAGS=-time -f -file-line-error -shell-escape -synctex=1 -auxdir=$(AUXDIR) $(MODE) $(FLAGS)
 
 #————————————————————————————————————————————————————————————————————————————
 # extract version and date of the template
@@ -61,11 +65,6 @@ VERSION_FILE=NOVAthesisFiles/nt-version.sty
 
 ORIGVERSION:=$(shell awk -F'[{}]' '/\\novathesisversion/ {print $$4; exit}' '$(VERSION_FILE)')
 ORIGDATE:=$(shell awk   -F'[{}]' '/\\novathesisdate/    {print $$4; exit}' '$(VERSION_FILE)')
-
-#————————————————————————————————————————————————————————————————————————————
-# Print progress bar if exists
-PROGRESS:=$(if $(wildcard Scripts/progress.py),Scripts/progress.py -s,"")
-PROGRESSVERB:=$(if $(wildcard Scripts/progress.py),Scripts/progress.py,"")
 
 #————————————————————————————————————————————————————————————————————————————
 # Find out which versions of TeX live are available (works for macos)
@@ -109,15 +108,7 @@ endif
 # e.g. '$(MAKE) lua'
 .PHONY: pdf xe lua
 pdf xe lua: check-env $(LTXFILE) $(LTXCLS)
-ifeq ($(MODE),)
-	$(MAKE) $(MAKECMDGOALS) MODE=$(MODENSTP) 
-else
-ifeq ($(PROGRESS),)
 	$(LTXMK) -pdf$(patsubst pdf%,%,$@) $(LTXFLAGS) $(BASENAME)
-else
-	$(LTXMK) -pdf$(patsubst pdf%,%,$@) $(LTXFLAGS) $(BASENAME) | $(PROGRESS)
-endif
-endif
 
 #————————————————————————————————————————————————————————————————————————————
 # Btach mode
