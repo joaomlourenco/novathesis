@@ -368,20 +368,21 @@ def safe_outname(school: str, doctype: str, lang: str) -> str:
     lang_safe = lang.replace(" ", "_")
     return f"{school_safe}-{doctype_safe}-{lang_safe}.pdf"
 
-def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype: str, lang: str, outdir: Path, progress: int = 1, total_lines: int = 4400, keep_tmp: bool = False) -> int:
+def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype: str, lang: str, outdir: Path, progress: int = 1, total_lines: int = 4400, keep_tmp: bool = False, rename = True) -> int:
     """
     Run make command in temporary workspace and handle output.
     
     Args:
-        tmp_root: Temporary workspace directory
+        tmp_root:     Temporary workspace directory
         ltxprocessor: LaTeX processor to use (e.g., 'lua', 'pdf')
-        school_id: School identifier
-        doctype: Document type
-        lang: Language code
-        outdir: Output directory for final PDF
-        progress: Progress display mode (0: silent, 1: progress bar, 2: real-time output)
-        total_lines: Total expected lines of output for progress calculation
-        keep_tmp: Whether to keep the building dir
+        school_id:    School identifier
+        doctype:      Document type
+        lang:         Language code
+        outdir:       Output directory for final PDF
+        progress:     Progress display mode (0: silent, 1: progress bar, 2: real-time output)
+        total_lines:  Total expected lines of output for progress calculation
+        keep_tmp:     Whether to keep the building dir
+        rename:       Whether to keep the building dir
         
     Returns:
         Exit code from make process (0 for success)
@@ -486,7 +487,10 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
 
             # Success → copy template.pdf to "{school-doctype-lang}.pdf"
             src_pdf = tmp_root / "template.pdf"
-            dest_pdf = outdir / safe_outname(school_id, doctype, lang)
+            if rename:
+                dest_pdf = outdir / safe_outname(school_id, doctype, lang)
+            else:
+                dest_pdf = outdir / "template.pdf"
             if src_pdf.exists():
                 outdir.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(src_pdf, dest_pdf)
@@ -587,6 +591,21 @@ def main() -> None:
     )
 
     ap.add_argument(
+        "-r", "--rename-pdf",
+        action="store_true",
+        dest="rename",
+        default=True,
+        help="Rename the PDF from 'template.tex' to a 'univ-schl-type-lanf' (default: True)"
+    )
+
+    ap.add_argument(
+        "-nr", "--no-rename-pdf",
+        action="store_false",
+        dest="rename",
+        help="Keep the PDF name as 'template.tex'"
+    )
+
+    ap.add_argument(
         "--cover-only",
         action="store_true",
         default=False,
@@ -659,7 +678,8 @@ def main() -> None:
             outdir=outdir,
             progress=args.progress,
             total_lines=args.lines,
-            keep_tmp=args.keep_tmp
+            keep_tmp=args.keep_tmp,
+            rename = args.rename
         )
         if rc != 0:
             sys.exit(rc)
@@ -675,7 +695,8 @@ def main() -> None:
             outdir=outdir,
             progress=args.progress,
             total_lines=args.lines,
-            keep_tmp=args.keep_tmp
+            keep_tmp=args.keep_tmp,
+            rename = args.rename
         )
         if rc != 0:
             sys.exit(rc)

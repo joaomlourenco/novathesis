@@ -58,6 +58,7 @@ endif
 # latexmk and its flags
 LTXMK:=latexmk
 LTXFLAGS=-time -f -file-line-error -shell-escape -synctex=1 -auxdir=$(AUXDIR) $(MODE) $(FLAGS)
+BUILD:=.Build/build.py
 
 #————————————————————————————————————————————————————————————————————————————
 # extract version and date of the template
@@ -72,11 +73,8 @@ TEXVERSIONS:=$(shell ls /usr/local/texlive/ | $(GREP) -v texmf-local)
 
 #————————————————————————————————————————————————————————————————————————————
 # Extract school being built
-SCHL := $(shell sed -n 's/.*ntsetup{school=\([^}]*\)}.*/\1/p' 0-Config/1_novathesis.tex | head -1)
-ifeq ($(SCHL),)
-SCHL := nova/fct
-endif
-
+SCHL := $(shell sed -n '/^[[:space:]]*%/d; s/.*ntsetup{school=\([^}]*\)}.*/\1/p' 0-Config/1_novathesis.tex | head -1)
+SCHL := $(if $(SCHL),$(SCHL),nova/fct)
 
 
 
@@ -94,20 +92,15 @@ endif
 #————————————————————————————————————————————————————————————————————————————
 # Automatically use the right latex compiler and compile
 .PHONY: default
-default: validate-config $(CACHE)
-	$(eval LUA=$(shell cat $(CACHE)))
-	@ echo SCHL=$(SCHL)
-ifeq ($(findstring $(SCHL),$(LUA)),)
-	$(MAKE) pdf
-else
-	$(MAKE) lua
-endif
+LUA=$(shell cat $(CACHE))
+default: validate-config check-env check-build
+	$(BUILD) $(SCHL)
 
 #————————————————————————————————————————————————————————————————————————————
 # The main targets
 # e.g. '$(MAKE) lua'
 .PHONY: pdf xe lua
-pdf xe lua: check-env $(LTXFILE) $(LTXCLS)
+pdf xe lua: validate-config check-env $(CACHE) $(LTXFILE) $(LTXCLS)
 	$(LTXMK) -pdf$(patsubst pdf%,%,$@) $(LTXFLAGS) $(BASENAME)
 
 #————————————————————————————————————————————————————————————————————————————
@@ -152,7 +145,7 @@ $(TEXVERSIONS):
 	@ hash -r
 	$(eval TEXBIN := $(firstword $(wildcard /usr/local/texlive/$@/bin/*-darwin/)))
 ifeq ($(TEXBIN),)
-	@ echo "TeX Live $@ not found; using default on PATH"
+	@ printf "$(RED)TeX Live $@ not found; using default on PATH$(RESET)\n"
 	$(MAKE) $(filter-out $@,$(MAKECMDGOALS))
 else
 	PATH="$(TEXBIN):$(PATH)" $(MAKE) $(filter-out $@,$(MAKECMDGOALS))
@@ -170,18 +163,21 @@ $(PDFFILE): $(LTXFILE)
 
 #————————————————————————————————————————————————————————————————————————————
 # Add fail-safe for critical commands
-.PHONY: check-env
+.PHONY: check-env check-build
 check-env:
-	@command -v $(LTXMK) >/dev/null 2>&1 || { echo "Error: latexmk not found"; exit 1; }
+	@command -v $(LTXMK) >/dev/null 2>&1 || { printf "$(RED)Error: $(LTXMK) not found$(RESET)\n"; exit 1; }
+
+check-build:
+	@command -v $(BUILD) -h >/dev/null 2>&1 || { printf "$(RED)Error: $(BUILD) not found$(RESET)\n"; exit 1; }
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: validate-config
 validate-config:
 	@if [ -z "$(SCHL)" ]; then \
-		echo "Error: School configuration not found in 0-Config/1_novathesis.tex"; \
+		printf "$(RED)Error: School configuration not found in 0-Config/1_novathesis.tex$(RESET)\n"; \
 		exit 1; \
 	fi
-	@echo "Building for school: $(SCHL)"
+	@printf "$(CYAN)Building for school: $(YELLOW)$(SCHL)$(RESET)\n"
 
 
 #############################################################################
@@ -192,34 +188,46 @@ validate-config:
 # Help
 .PHONY: help
 help:
-	@echo "NOVAthesis Makefile Help"
-	@echo "========================"
-	@echo "Main targets:"
-	@echo "  pdf, xe, lua    - Build with different engines"
-	@echo "  view/v          - Build and view PDF"
-	@echo "  clean           - Remove build artifacts"
-	@echo "  zip             - Create distribution package"
-	@echo "  bump1/2/3       - Bump version numbers"
-	@echo ""
-	@echo "Advanced:"
-	@echo "  tl/mik TARGET   - Use specific TeX distribution"
-	@echo "  YEAR TARGET     - Use specific TeX Live version"
-	@echo "  verb/btch/itrt  - Verbose/Batch/Interactive mode"
+	@printf "$(CYAN)NOVAthesis Makefile Help$(RESET)\n"
+	@printf "$(CYAN)========================$(RESET)\n"
+	@printf "$(CYAN)Main targets:$(RESET)\n"
+	@printf "$(CYAN)  pdf, xe, lua    - Build with different engines$(RESET)\n"
+	@printf "$(CYAN)  view/v          - Build and view PDF$(RESET)\n"
+	@printf "$(CYAN)  clean           - Remove build artifacts$(RESET)\n"
+	@printf "$(CYAN)  zip             - Create distribution package$(RESET)\n"
+	@printf "$(CYAN)  bump1/2/3       - Bump version numbers$(RESET)\n"
+	@printf "\n"
+	@printf "$(CYAN)Advanced:$(RESET)\n"
+	@printf "$(CYAN)  tl/mik TARGET   - Use specific TeX distribution$(RESET)\n"
+	@printf "$(CYAN)  YEAR TARGET     - Use specific TeX Live version$(RESET)\n"
+	@printf "$(CYAN)  verb/btch/itrt  - Verbose/Batch/Interactive mode$(RESET)\n"
 	
 #————————————————————————————————————————————————————————————————————————————
 # Debug
 .PHONY: dry-run debug-vars
 dry-run:
-	@echo "Would build with: SCHOOL=$(SCHL), MODE=$(MODE)"
-	@echo "Main file: $(BASENAME).tex"
-	@echo "Compiler: $(LTXMK) $(LTXFLAGS)"
+	@printf "$(CYAN)Would build with: SCHOOL=$(SCHL), MODE=$(MODE)$(RESET)\n"
+	@printf "$(CYAN)Main file: $(BASENAME).tex$(RESET)\n"
+	@printf "$(CYAN)Compiler: $(LTXMK) $(LTXFLAGS)$(RESET)\n"
 
 debug-vars:
-	@echo "SCHOOL: $(SCHL)"
-	@echo "VERSION: $(ORIGVERSION)"
-	@echo "MAIN FILE: $(BASENAME)"
-	@echo "TEX VERSIONS: $(TEXVERSIONS)"
-	@echo "LUA SCHOOLS: $(shell cat .nopdflatex 2>/dev/null || echo 'not computed')"
+	@printf "$(CYAN)SCHOOL: $(SCHL)$(RESET)\n"
+	@printf "$(CYAN)VERSION: $(ORIGVERSION)$(RESET)\n"
+	@printf "$(CYAN)MAIN FILE: $(BASENAME)$(RESET)\n"
+	@printf "$(CYAN)TEX VERSIONS: $(TEXVERSIONS)$(RESET)\n"
+	@printf "$(CYAN)LUA SCHOOLS: $(shell cat .nopdflatex 2>/dev/null || $(MAGENTA)'not computed'$(RESET))$(RESET)\n"
+
+#————————————————————————————————————————————————————————————————————————————
+# Color definitions
+RED := \033[0;31m
+GREEN := \033[0;32m
+YELLOW := \033[0;33m
+BLUE := \033[0;34m
+MAGENTA := \033[0;35m
+CYAN := \033[0;36m
+WHITE := \033[0;37m
+BOLD := \033[1m
+RESET := \033[0m
 
 
 
@@ -237,10 +245,10 @@ ZIPTARGET=$(BASENAME)-$(VERSION)@$(DATE).zip
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: zip
 zip: clean
-	@ echo "Creating archive: $(ZIPTARGET)"
+	@ printf "$(YELLOW)Creating archive: $(ZIPTARGET)$(RESET)\n"
 	@ rm -f "$(ZIPTARGET)"
 	@ zip $(ZIPTARGET) -r -q $(ZIPFILES)  -x 'Scripts/*'
-	@ echo "Archive created: $(ZIPTARGET) ($(shell stat -f%z "$(ZIPTARGET)" 2>/dev/null || stat -c%s "$(ZIPTARGET)" ) bytes)"
+	@ printf "$(YELLOW)Archive created: $(ZIPTARGET) ($(shell stat -f%$(RESET)z "$(ZIPTARGET)" 2>/dev/null || stat -c%s "$(ZIPTARGET)" ) bytes)\n"
 
 
 #############################################################################
@@ -294,79 +302,30 @@ bump1 bump2 bump3:
 	@ BI='$(patsubst bump%,%,$@)'; \
 	OLDVERSION='$(ORIGVERSION)'; \
 	OLDDATE='$(ORIGDATE)'; \
-	[ -n "$$OLDVERSION" ] || { echo "ERROR: parse version" >&2; exit 1; }; \
+	[ -n "$$OLDVERSION" ] || { printf "$(RED)ERROR: parse version$(RESET)\n" >&2; exit 1; }; \
 	NEWVERSION=$$(awk -v bi="$$BI" -v ver="$$OLDVERSION" 'BEGIN{ \
 	  n=split(ver,a,"."); if(bi<1||bi>n){print ver; exit} \
 	  a[bi]++; for(i=bi+1;i<=n;i++) a[i]=0; \
 	  for(i=1;i<=n;i++){ printf "%s",a[i]; if(i<n)printf "." } }'); \
 	NEWDATE=$$(date +%F); \
-	echo; echo "Bumping: $$BI"; \
-	echo "Version: $$OLDVERSION -> $$NEWVERSION"; \
-	echo "   Date: $$OLDDATE   -> $$NEWDATE"; echo; \
-	cp -v '$(VERSION_FILE)' '$(VERSION_FILE).bak'; \
+	@ printf "\n"; \
+	printf "$(CYAN)Bumping: $(YELLOW)$$BI$(RESET)\n"; \
+	printf "$(CYAN)Version: $(YELLOW)$$OLDVERSION -> $$NEWVERSION$(RESET)\n"; \
+	printf "$(CYAN)   Date: $(YELLOW)$$OLDDATE    -> $$NEWDATE$(RESET)\n"; echo; \
+	cp '$(VERSION_FILE)' '$(VERSION_FILE).bak'; \
 	awk -v newver="$$NEWVERSION" -v newdate="$$NEWDATE" ' \
 	  /\\novathesisversion/ { sub(/\{[^}]*\}$$/, "{" newver "}"); } \
 	  /\\novathesisdate/    { sub(/\{[^}]*\}$$/, "{" newdate "}"); } \
 	  { print }' '$(VERSION_FILE).bak' > '$(VERSION_FILE)'; \
 	rm -f '$(VERSION_FILE).bak'; \
-	echo "Updated $(VERSION_FILE)"; \
-	@ echo ""
-	@ echo "New content:"
-	@ grep -E 'novathesis(version|date)' $(VERSION_FILE) || true
-	@ rm -f $(VERSION_FILE).bak
+	printf "$(CYAN)Updated $(YELLOW)$(VERSION_FILE)$(RESET)\n"; \
+	printf "\n"; \
+	printf "$(CYAN)New content:$(RESET)\n$(GREEN)"; \
+	grep -E 'novathesis(version|date)' $(VERSION_FILE) || true; \
+	printf "$(RESET)\n"; \
+	rm -f $(VERSION_FILE).bak; \
 	$(MAKE) mtp
 
-# More robust version extraction and update
-# .PHONY: bump-version
-# bump-version:
-# 	$(eval MAJOR := $(shell echo $(ORIGVERSION) | cut -d. -f1))
-# 	$(eval MINOR := $(shell echo $(ORIGVERSION) | cut -d. -f2))
-# 	$(eval PATCH := $(shell echo $(ORIGVERSION) | cut -d. -f3))
-#
-# 	@case $@ in \
-# 		bump1) NEWVERSION=$$((MAJOR + 1)).0.0 ;; \
-# 		bump2) NEWVERSION=$(MAJOR).$$((MINOR + 1)).0 ;; \
-# 		bump3) NEWVERSION=$(MAJOR).$(MINOR).$$((PATCH + 1)) ;; \
-# 	esac; \
-#	... rest of update logic ...
-
-
-# .PHONY: bump1 bump2 bump3
-# bump1 bump2 bump3:
-# 	$(eval BI:=$(patsubst bump%,%,$@))
-# 	@ if [ -z "$(ORIGVERSION)" ]; then \
-# 	  echo "ERROR: could not parse version from $(VERSION_FILE)" >&2; exit 1; \
-# 	fi; \
-# 	$(eval NEWVERSION:=$(shell awk -v bi="$(BI)" -v ver="$(ORIGVERSION)" 'BEGIN{ \
-# 	  n=split(ver,a,"."); \
-# 	  if (bi<1 || bi>n) { print ver; exit } \
-# 	  a[bi]++; \
-# 	  for (i=bi+1;i<=n;i++) a[i]=0; \
-# 	  for (i=1;i<=n;i++){ \
-# 	    printf "%s", a[i]; \
-# 	    if (i<n) printf "."; \
-# 	  } \
-# 	}'))
-# 	$(eval NEWDATE:=$(shell date +%F))
-# 	@ echo ""
-# 	@ echo "Bumping: $(BI)"
-# 	@ echo "Version: $(ORIGVERSION) -> $(NEWVERSION)"
-# 	@ echo "   Date: $(ORIGDATE) -> $(NEWDATE)"
-# 	@ echo ""
-# 	@ cp $(VERSION_FILE) $(VERSION_FILE).bak; \
-# 	\
-# 	# Use awk for replacement
-# 	@ awk -v newver="$(NEWVERSION)" -v newdate="$(NEWDATE)" ' \
-# 	  /\\novathesisversion/ { sub(/\{[^}]*\}$$/, "{" newver "}"); } \
-# 	  /\\novathesisdate/    { sub(/\{[^}]*\}$$/, "{" newdate "}"); } \
-# 	  { print }' $(VERSION_FILE).bak > $(VERSION_FILE); \
-# 	# Verify the update
-# 	@ echo "Updated $(VERSION_FILE)"
-# 	@ echo ""
-# 	@ echo "New content:"
-# 	@ grep -E 'novathesis(version|date)' $(VERSION_FILE)
-# 	@ rm -f $(VERSION_FILE).bak
-# 	@ $(MAKE) mtp
 
 
 #############################################################################
@@ -407,10 +366,10 @@ mtp mtp2:
 #————————————————————————————————————————————————————————————————————————————
 # commit, build, merge, tag and push
 define _mtp
-	echo "VERSION=$(1) - DATE=$(2)."
+	printf "$(CYAN)VERSION=$(YELLOW)$(1)$(CYAN) - DATE=$(YELLOW)$(2).$(RESET)\n"
 	git commit --all --message "Version $(1) - $(2)." || true
 	$(MAKE) clean
-	.Build/build.py nova/fct
+	.Build/build.py nova/fct --no-rename
 	git commit --all --message "Version $(1) - $(2)." || true
 	git checkout main
 	git pull
@@ -424,7 +383,7 @@ endef
 #————————————————————————————————————————————————————————————————————————————
 # commit, NO BUILD, merge, tag and push
 define _mtp2
-	echo "VERSION=$(1) - DATE=$(2)."
+	printf "$(CYAN)VERSION=$(YELLOW)$(1)$(CYAN) - DATE=$(YELLOW)$(2).$(RESET)\n"
 	git commit --all --message "Version $(1) - $(2)." || true
 	$(MAKE) clean
 	git commit --all --message "Version $(1) - $(2)." || true
