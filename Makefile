@@ -322,9 +322,12 @@ build-phd-final-en: validate-config check-env check-build
 COMMIT_MESSAGE ?= Version $(VERSION) - $(DATE). Auto-commit.
 COMMIT_INCLUDE_UNTRACKED ?= no
 
-.PHONY: commit
+.PHONY: commit commit-untracked
+commit-untracked:
+	make commit COMMIT_INCLUDE_UNTRACKED=yes
+
 commit:
-	@echo "📝 Starting enhanced commit process..."
+	@echo "📝 Starting commit process..."
 	@printf "$(CYAN)VERSION=$(YELLOW)$(VERSION)$(CYAN) - DATE=$(YELLOW)$(DATE)$(RESET).\n"
 	
 # 1) Comprehensive pre-commit checks
@@ -336,28 +339,28 @@ commit:
 		exit 1; \
 	fi
 	
-	# Branch check
-	@CURRENT_BRANCH=$$(git branch --show-current || echo "detached"); \
-	if [ "$$CURRENT_BRANCH" = "detached" ]; then \
+# Branch check
+	$(eval CURRENT_BRANCH=$(shell git branch --show-current || echo "detached"))
+	@if [ "$(CURRENT_BRANCH)" = "detached" ]; then \
 		echo "❌ Error: Not on a branch (detached HEAD state)"; \
 		exit 1; \
 	else \
-		echo "✅ On branch: $$CURRENT_BRANCH"; \
+		echo "✅ On branch: $(CURRENT_BRANCH)"; \
 	fi
 	
-	# Modified files check
+# Modified files check
 	@if [ -z "$$(git status --porcelain)" ]; then \
 		echo "❌ Error: No modified files to commit"; \
 		exit 1; \
 	fi
 	
-	# Show what will be committed
+# Show what will be committed
 	@echo ""
 	@echo "📋 Files to be committed:"
 	@git status --short
 	@echo ""
 	
-	# Handle untracked files based on setting
+# Handle untracked files based on setting
 	@if [ "$(COMMIT_INCLUDE_UNTRACKED)" = "yes" ]; then \
 		echo "📋 Adding untracked files..."; \
 		git add .; \
@@ -367,7 +370,7 @@ commit:
 		echo "✅ Staged modified files (excluding untracked)"; \
 	fi
 	
-	# 2) Create the commit
+# 2) Create the commit
 	@echo ""
 	@echo "💾 Creating commit..."
 	@if git commit -m "$(COMMIT_MESSAGE)"; then \
@@ -376,8 +379,8 @@ commit:
 		echo ""; \
 		echo "📦 Commit Summary:"; \
 		echo "   Hash:    $$COMMIT_HASH"; \
-		echo "   Branch:  $$CURRENT_BRANCH"; \
-		echo "   Message: $$FINAL_MESSAGE"; \
+		echo "   Branch:  $(CURRENT_BRANCH)"; \
+		echo "   Message: $(COMMIT_MESSAGE)"; \
 		echo ""; \
 		echo "📊 Files committed:"; \
 		git show --stat --oneline $$COMMIT_HASH | tail -n +2; \
@@ -387,20 +390,20 @@ commit:
 		exit 1; \
 	fi
 	
-	@echo "🎉 Commit process completed successfully!"
+	@printf "\n🎉 Commit process completed successfully!\n\n"
 
 
 
 #————————————————————————————————————————————————————————————————————————————
 # REBASE -> if rebase fails, tries MERGE
-MERGE_MESSAGE ?= Merged $(1) - $(2).
+MERGE_MESSAGE ?= Merged $(VERSION) - $(DATE).
 
 .PHONY: rebase
 rebase:
 	@echo "🚀 Starting rebase process..."
 	printf "$(CYAN)VERSION=$(YELLOW)$(1)$(CYAN) - DATE=$(YELLOW)$(2).$(RESET)\n"
 	
-	# 1) Check if we are in branch develop
+# 1) Check if we are in branch develop
 	@echo "📋 Checking current branch..."
 	@if [ "$(shell git branch --show-current)" != "develop" ]; then \
 		echo "❌ Error: You must be on the 'develop' branch to run this target"; \
@@ -408,7 +411,7 @@ rebase:
 	fi
 	@echo "✅ Currently on 'develop' branch"
 	
-	# 2) Check for pending/modified files
+# 2) Check for pending/modified files
 	@echo "📋 Checking for pending changes..."
 	@if [ -n "$$(git status --porcelain)" ]; then \
 		echo "❌ Error: You have uncommitted changes. Please commit or stash them first."; \
@@ -417,7 +420,7 @@ rebase:
 	fi
 	@echo "✅ No pending changes"
 	
-	# 3) Checkout main and rebase
+# 3) Checkout main and rebase
 	@echo "🔄 Switching to main branch..."
 	@git checkout main || { echo "❌ Failed to checkout main branch"; exit 1; }
 	
@@ -434,7 +437,7 @@ rebase:
 		echo "✅ Merge completed using develop version"; \
 	fi
 	
-	# 4) If no error, checkout develop
+# 4) If no error, checkout develop
 	@echo "🔄 Switching back to develop branch..."
 	@git checkout develop || { echo "❌ Failed to checkout develop branch"; exit 1; }
 	
