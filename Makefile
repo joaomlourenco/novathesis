@@ -69,8 +69,10 @@ BUILD:=.Build/build.py
 # extract version and date of the template
 VERSION_FILE=NOVAthesisFiles/nt-version.sty
 
-ORIGVERSION:=$(shell awk -F'[{}]' '/\\novathesisversion/ {print $$4; exit}' '$(VERSION_FILE)')
-ORIGDATE:=$(shell awk   -F'[{}]' '/\\novathesisdate/    {print $$4; exit}' '$(VERSION_FILE)')
+VERSION		= $(shell awk -F'[{}]' '/\\novathesisversion/ {print $$4; exit}' '$(VERSION_FILE)')
+DATE		= $(shell awk -F'[{}]' '/\\novathesisdate/    {print $$4; exit}' '$(VERSION_FILE)')
+ORIGVERSION := $(VERSION)
+ORIGDATE	:= $(DATE)
 
 #————————————————————————————————————————————————————————————————————————————
 # Find out which versions of TeX live are available (works for macos)
@@ -242,8 +244,6 @@ RESET := \033[0m
 
 #————————————————————————————————————————————————————————————————————————————
 # target and files to be incldued in "$(MAKE) zip"
-VERSION=$(shell awk -F'[{}]' '/\\novathesisversion/ {print $$4; exit}' '$(VERSION_FILE)')
-DATE=$(shell awk   -F'[{}]' '/\\novathesisdate/    {print $$4; exit}' '$(VERSION_FILE)')
 ZIPFILES:=NOVAthesisFiles [0-5]-* LICENSE Makefile README.md Scripts novathesis.cls template.pdf template.tex .gitignore
 ZIPTARGET=$(BASENAME)-$(VERSION)@$(DATE).zip
 
@@ -302,60 +302,156 @@ gclean:
 # File containing version info
 VERSION_FILE = NOVAthesisFiles/nt-version.sty
 
-.PHONY: bump1 bump2 bump3
+.PHONY: bump0 bump1 bump2 bump3
 bump1 bump2 bump3:
-	@ BI='$(patsubst bump%,%,$@)'; \
-	OLDVERSION='$(ORIGVERSION)'; \
-	OLDDATE='$(ORIGDATE)'; \
-	[ -n "$$OLDVERSION" ] || { printf "$(RED)ERROR: parse version$(RESET)\n" >&2; exit 1; }; \
-	NEWVERSION=$$(awk -v bi="$$BI" -v ver="$$OLDVERSION" 'BEGIN{ \
-	  n=split(ver,a,"."); if(bi<1||bi>n){print ver; exit} \
-	  a[bi]++; for(i=bi+1;i<=n;i++) a[i]=0; \
-	  for(i=1;i<=n;i++){ printf "%s",a[i]; if(i<n)printf "." } }'); \
-	NEWDATE=$$(date +%F); \
-	@ printf "\n"; \
-	printf "$(CYAN)Bumping: $(YELLOW)$$BI$(RESET)\n"; \
-	printf "$(CYAN)Version: $(YELLOW)$$OLDVERSION -> $$NEWVERSION$(RESET)\n"; \
-	printf "$(CYAN)   Date: $(YELLOW)$$OLDDATE    -> $$NEWDATE$(RESET)\n"; echo; \
-	cp '$(VERSION_FILE)' '$(VERSION_FILE).bak'; \
-	awk -v newver="$$NEWVERSION" -v newdate="$$NEWDATE" ' \
-	  /\\novathesisversion/ { sub(/\{[^}]*\}$$/, "{" newver "}"); } \
-	  /\\novathesisdate/    { sub(/\{[^}]*\}$$/, "{" newdate "}"); } \
-	  { print }' '$(VERSION_FILE).bak' > '$(VERSION_FILE)'; \
-	rm -f '$(VERSION_FILE).bak'; \
-	printf "$(CYAN)Updated $(YELLOW)$(VERSION_FILE)$(RESET)\n"; \
-	printf "\n"; \
-	printf "$(CYAN)New content:$(RESET)\n$(GREEN)"; \
-	grep -E 'novathesis(version|date)' $(VERSION_FILE) || true; \
-	printf "$(RESET)\n"; \
-	rm -f $(VERSION_FILE).bak; \
-	$(MAKE) mtp
+	$(eval BI='$(patsubst bump%,%,$@)')
+	Scripts/bump.py -b $(BI)
+	$(MAKE) bcmtp
+
+.PHONY: bcmtp
+bcmtp: build-phd-final-en commit rebase tag push
+
+.PHONY: build-phd-final-en
+build-phd-final-en: validate-config check-env check-build
+	$(BUILD) $(SCHL) -t phd -s final -l en -p lua
 
 
-
-#############################################################################
-# Find out which templates cannot be compiled with 'pdflatex'
-# i.e., that must be compiled with 'lualatex' or 'xelatex'
-#############################################################################
 
 #————————————————————————————————————————————————————————————————————————————
-.PHONY: nopdflatex
-NOPDFALLCMD=$(shell $(GREP) -rl "is not compatible with pdfLaTeX" NOVAthesisFiles/FontStyles | cut -d / -f 3 | cut -d . -f 1 | $(GREP) -ril -f - NOVAthesisFiles/Schools | $(GREP) .ldf | sed -e "s,.*/,," -e "s,-defaults.ldf,," | tr - /)
-# Keep only the words that do NOT contain a slash
-NOPDFUNIVSCMD=$(foreach word,$(NOPDFALL),$(if $(findstring /,$(word)),,$(word)))
-NOPDFSCHOOLSCMD=$(foreach word,$(NOPDFALL),$(if $(findstring /,$(word)),$(word),))
-NOPDFSCHLSFROMUNIV=$(NOPDFSCHOOLS) $(foreach univ,$(NOPDFUNIVS),$(shell find NOVAthesisFiles/Schools/$(univ) -type d -mindepth 1 -maxdepth 1 | grep -v '/Images' | cut -d / -f 3-4))
+# Commit
+COMMIT_MESSAGE ?= Version $(1) - $(2). Auto-commit.
+COMMIT_INCLUDE_UNTRACKED ?= no
 
-nopdflatex:
-	$(eval NOPDFALL:=$(NOPDFALLCMD))
-	$(eval NOPDFUNIVS:=$(NOPDFUNIVSCMD))
-	$(eval NOPDFSCHOOLS:=$(NOPDFSCHOOLSCMD))
-	$(eval NOPDFSCHLSFROMU:=$(NOPDFSCHLSFROMUNIV))
-	@ echo $(NOPDFSCHLSFROMUNIV) > .nopdflatex
+.PHONY: commit
+commit:
+	@echo "📝 Starting enhanced commit process..."
+	@printf "$(CYAN)VERSION=$(YELLOW)$(VERSION)$(CYAN) - DATE=$(YELLOW)$(DATE)$(RESET).\n"
 	
-# Add a real dependency for the cache file
-.nopdflatex: $(shell find NOVAthesisFiles -name "*.sty" -o -name "*.ldf")
-	$(MAKE) --no-print-directory nopdflatex
+# 1) Comprehensive pre-commit checks
+	@echo "📋 Running pre-commit checks..."
+	
+# Git repository check
+	@if ! git rev-parse --git-dir; then \
+		echo "❌ Error: Not in a git repository"; \
+		exit 1; \
+	fi
+	
+	# Branch check
+	@CURRENT_BRANCH=$$(git branch --show-current || echo "detached"); \
+	if [ "$$CURRENT_BRANCH" = "detached" ]; then \
+		echo "❌ Error: Not on a branch (detached HEAD state)"; \
+		exit 1; \
+	else \
+		echo "✅ On branch: $$CURRENT_BRANCH"; \
+	fi
+	
+	# Modified files check
+	@if [ -z "$$(git status --porcelain)" ]; then \
+		echo "❌ Error: No modified files to commit"; \
+		exit 1; \
+	fi
+	
+	# Show what will be committed
+	@echo ""
+	@echo "📋 Files to be committed:"
+	@git status --short
+	@echo ""
+	
+	# Handle untracked files based on setting
+	@if [ "$(COMMIT_INCLUDE_UNTRACKED)" = "yes" ]; then \
+		echo "📋 Adding untracked files..."; \
+		git add .; \
+		echo "✅ Added all files (including untracked)"; \
+	else \
+		git add -u; \
+		echo "✅ Staged modified files (excluding untracked)"; \
+	fi
+	
+	# 2) Create the commit
+	@echo ""
+	@echo "💾 Creating commit..."
+	@if git commit -m "$$COMMIT_MESSAGE 2>& /dev/null"; then \
+		echo "✅ Commit created successfully"; \
+		COMMIT_HASH=$$(git rev-parse --short HEAD 2>& /dev/null); \
+		echo ""; \
+		echo "📦 Commit Summary:"; \
+		echo "   Hash:    $$COMMIT_HASH"; \
+		echo "   Branch:  $$CURRENT_BRANCH"; \
+		echo "   Message: $$FINAL_MESSAGE"; \
+		echo ""; \
+		echo "📊 Files committed:"; \
+		git show --stat --oneline $$COMMIT_HASH 2>& /dev/null | tail -n +2; \
+	else \
+		echo "❌ Failed to create commit"; \
+		echo "   This might be because there were no changes to commit after staging"; \
+		exit 1; \
+	fi
+	
+	@echo "🎉 Commit process completed successfully!"
+
+
+
+#————————————————————————————————————————————————————————————————————————————
+# REBASE -> if rebase fails, tries MERGE
+MERGE_MESSAGE ?= Merged $(1) - $(2).
+
+.PHONY: rebase
+rebase:
+	@echo "🚀 Starting rebase process..."
+	printf "$(CYAN)VERSION=$(YELLOW)$(1)$(CYAN) - DATE=$(YELLOW)$(2).$(RESET)\n"
+	
+	# 1) Check if we are in branch develop
+	@echo "📋 Checking current branch..."
+	@if [ "$(shell git branch --show-current 2>& /dev/null)" != "develop" ]; then \
+		echo "❌ Error: You must be on the 'develop' branch to run this target"; \
+		exit 1; \
+	fi
+	@echo "✅ Currently on 'develop' branch"
+	
+	# 2) Check for pending/modified files
+	@echo "📋 Checking for pending changes..."
+	@if [ -n "$$(git status --porcelain 2>& /dev/null)" ]; then \
+		echo "❌ Error: You have uncommitted changes. Please commit or stash them first."; \
+		git status --short 2>& /dev/null; \
+		exit 1; \
+	fi
+	@echo "✅ No pending changes"
+	
+	# 3) Checkout main and rebase
+	@echo "🔄 Switching to main branch..."
+	@git checkout main 2>& /dev/null || { echo "❌ Failed to checkout main branch"; exit 1; }
+	
+	@echo "🔄 Rebasing main onto develop..."
+	@if git rebase develop; then \
+		echo "✅ Rebase completed successfully"; \
+	else \
+		echo "⚠️  Rebase encountered conflicts. Resolving automatically using develop version..."; \
+		git rebase --abort 2>/dev/null || true; \
+		git merge develop -X theirs -m "$$(MERGE_MESSAGE)" 2>& /dev/null || { \
+			echo "❌ Failed to merge with develop version"; \
+			exit 1; \
+		}; \
+		echo "✅ Merge completed using develop version"; \
+	fi
+	
+	# 4) If no error, checkout develop
+	@echo "🔄 Switching back to develop branch..."
+	@git checkout develop 2>& /dev/null || { echo "❌ Failed to checkout develop branch"; exit 1; }
+	
+	@echo "🎉 Rebase process completed successfully!"
+
+
+
+.PHONY: tag 
+tag:
+	printf "\n"
+	printf "$(RED)Tagging$(RESET)\n"
+	printf "$(CYAN)VERSION=$(YELLOW)$(1)$(CYAN) - DATE=$(YELLOW)$(2).$(RESET)\n"
+
+.PHONY: push
+push:
+
+
 
 #############################################################################
 # MERGE-TAG-PUSH FUNCTION
@@ -364,8 +460,6 @@ nopdflatex:
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: mtp mtp2
 mtp mtp2:
-	$(eval VERSION := $(shell awk -F'[{}]' '/\\novathesisversion/ {print $$4; exit}' $(VERSION_FILE)))
-	$(eval DATE    := $(shell awk -F'[{}]' '/\\novathesisdate/    {print $$4; exit}' $(VERSION_FILE)))
 	@ $(call _$@,$(VERSION),$(DATE))
 
 #————————————————————————————————————————————————————————————————————————————
@@ -400,3 +494,28 @@ define _mtp2
 	git push -f --tags
 	git checkout develop
 endef
+
+
+#############################################################################
+# Find out which templates cannot be compiled with 'pdflatex'
+# i.e., that must be compiled with 'lualatex' or 'xelatex'
+#############################################################################
+
+#————————————————————————————————————————————————————————————————————————————
+.PHONY: nopdflatex
+NOPDFALLCMD=$(shell $(GREP) -rl "is not compatible with pdfLaTeX" NOVAthesisFiles/FontStyles | cut -d / -f 3 | cut -d . -f 1 | $(GREP) -ril -f - NOVAthesisFiles/Schools | $(GREP) .ldf | sed -e "s,.*/,," -e "s,-defaults.ldf,," | tr - /)
+# Keep only the words that do NOT contain a slash
+NOPDFUNIVSCMD=$(foreach word,$(NOPDFALL),$(if $(findstring /,$(word)),,$(word)))
+NOPDFSCHOOLSCMD=$(foreach word,$(NOPDFALL),$(if $(findstring /,$(word)),$(word),))
+NOPDFSCHLSFROMUNIV=$(NOPDFSCHOOLS) $(foreach univ,$(NOPDFUNIVS),$(shell find NOVAthesisFiles/Schools/$(univ) -type d -mindepth 1 -maxdepth 1 | grep -v '/Images' | cut -d / -f 3-4))
+
+nopdflatex:
+	$(eval NOPDFALL:=$(NOPDFALLCMD))
+	$(eval NOPDFUNIVS:=$(NOPDFUNIVSCMD))
+	$(eval NOPDFSCHOOLS:=$(NOPDFSCHOOLSCMD))
+	$(eval NOPDFSCHLSFROMU:=$(NOPDFSCHLSFROMUNIV))
+	@ echo $(NOPDFSCHLSFROMUNIV) > .nopdflatex
+	
+# Add a real dependency for the cache file
+.nopdflatex: $(shell find NOVAthesisFiles -name "*.sty" -o -name "*.ldf")
+	$(MAKE) --no-print-directory nopdflatex
