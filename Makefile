@@ -331,7 +331,7 @@ commit:
 	@echo "📋 Running pre-commit checks..."
 	
 # Git repository check
-	@if ! git rev-parse --git-dir; then \
+	@if ! git rev-parse --git-dir >& /dev/null; then \
 		echo "❌ Error: Not in a git repository"; \
 		exit 1; \
 	fi
