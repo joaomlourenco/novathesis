@@ -413,7 +413,7 @@ rebase:
 	
 # 2) Check for pending/modified files
 	@echo "📋 Checking for pending changes..."
-	@if [ "$$(git status --porcelain 2>/dev/null | grep -Fv '??' | wc -c)" -eq 0 ]; then \
+	@if [ -n "$$(git status --porcelain 2>/dev/null | grep -Fv '??')" ]; then \
 		echo "❌ Error: You have uncommitted changes. Please commit or stash them first."; \
 		git status --short; \
 		exit 1; \
