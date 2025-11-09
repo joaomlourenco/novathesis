@@ -490,7 +490,7 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
             if rename:
                 dest_pdf = outdir / safe_outname(school_id, doctype, lang)
             else:
-                outdir / "template.pdf"
+                dest_pdf = outdir / "template.pdf"
             if src_pdf.exists():
                 outdir.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(src_pdf, dest_pdf)
