@@ -145,14 +145,13 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, co
 
 # --- Core Processing Functions ----------------------------------------------
 
-def process_file(p: Path, patterns: Dict[re.Pattern, Callable[[str], str]], dry_run: bool = False) -> int:
+def process_file(p: Path, patterns: Dict[re.Pattern, Callable[[str], str]]) -> int:
     """
     Process a file by applying pattern transformations.
     
     Args:
         p: Path to the file to process
         patterns: Dictionary of regex patterns and their transformation functions
-        dry_run: If True, only show what would change without writing
     
     Returns:
         Number of lines that were changed
@@ -179,33 +178,13 @@ def process_file(p: Path, patterns: Dict[re.Pattern, Callable[[str], str]], dry_
                 break
         out_lines.append(new_line)
 
-    if not dry_run and changed > 0:
+    if changed > 0:
         try:
             p.write_text("\n".join(out_lines) + "\n", encoding="utf-8")
             print(f"{YELLOW}✅ modified {p.name} {changed} lines{RESET}")
         except Exception as e:
             print(f"{RED}❌ Failed to write {p}: {e}{RESET}")
     return changed
-
-def _print_filtered(stream_text: str, verbose: bool = False) -> None:
-    """
-    Filter and print make output based on verbosity setting.
-    
-    Args:
-        stream_text: The output text from make process
-        verbose: If True, show all output; if False, show only important lines
-    """
-    if verbose:
-        print(stream_text)
-    else:
-        for line in stream_text.splitlines():
-            if (line.startswith("Run number") or 
-                line.startswith("Running") or 
-                line.startswith("Logging") or
-                line.startswith("Latexmk:") or
-                "error" in line.lower() or
-                "warning" in line.lower()):
-                print(line)
 
 def _update_progress_bar(current_line: int, total_lines: int, bar_length: int = 40) -> None:
     """
@@ -335,7 +314,7 @@ def prepare_temp_workspace(project_root: Path, build_dir: str) -> Path:
     _copytree_symlinking(project_root, tmpdir, ignore=ignore)
     return tmpdir
 
-def localize_and_process_files(tmp_root: Path, confdir: Path, patterns: dict[str, Dict[re.Pattern, Callable[[str], str]]], dry_run: bool) -> bool:
+def localize_and_process_files(tmp_root: Path, confdir: Path, patterns: dict[str, Dict[re.Pattern, Callable[[str], str]]]) -> bool:
     """
     Localize configuration files in temp workspace and apply transformations.
     
@@ -343,7 +322,6 @@ def localize_and_process_files(tmp_root: Path, confdir: Path, patterns: dict[str
         tmp_root: Root of temporary workspace
         confdir: Configuration directory name
         patterns: Pattern transformers for different files
-        dry_run: If True, don't actually write changes
         
     Returns:
         True if any files were modified, False otherwise
@@ -368,7 +346,7 @@ def localize_and_process_files(tmp_root: Path, confdir: Path, patterns: dict[str
             print(f"{YELLOW}🔗→📄 localized '{p.name}' (replaced symlink with real file){RESET}")
 
         # Now p is a real file in the temp tree — process it
-        changed = process_file(p, patterns.get(p.name, {}), dry_run=dry_run)
+        changed = process_file(p, patterns.get(p.name, {}))
         changed_any = changed_any or (changed > 0)
 
     return changed_any
@@ -390,7 +368,7 @@ def safe_outname(school: str, doctype: str, lang: str) -> str:
     lang_safe = lang.replace(" ", "_")
     return f"{school_safe}-{doctype_safe}-{lang_safe}.pdf"
 
-def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype: str, lang: str, outdir: Path, verbose: bool, progress: bool = False, total_lines: int = 4400, keep_tmp = False) -> int:
+def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype: str, lang: str, outdir: Path, progress: int = 1, total_lines: int = 4400, keep_tmp: bool = False) -> int:
     """
     Run make command in temporary workspace and handle output.
     
@@ -401,8 +379,7 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
         doctype: Document type
         lang: Language code
         outdir: Output directory for final PDF
-        verbose: Whether to show verbose output
-        progress: Whether to show a progress bar
+        progress: Progress display mode (0: silent, 1: progress bar, 2: real-time output)
         total_lines: Total expected lines of output for progress calculation
         keep_tmp: Whether to keep the building dir
         
@@ -413,13 +390,13 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
     start_time = time.perf_counter()
     
     try:
-        if progress:
+        if progress == 1:
             # Run with progress bar
             print(f"{BRIGHT_CYAN}📊 Progress tracking enabled: expecting ~{total_lines} lines of output{RESET}")
             
             # Start the subprocess with stdout and stderr piped
             proc = subprocess.Popen(
-                ["make", "verbose", ltxprocessor],
+                ["make", ltxprocessor],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 text=True,
@@ -458,18 +435,48 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
             for line in important_lines:
                 print(line, end='')
                 
-        else:
-            # Original behavior without progress bar
+        elif progress == 2:
+            # Real-time output mode - print everything as it comes
+            print(f"{BRIGHT_CYAN}📝 Real-time output mode{RESET}")
+            
+            proc = subprocess.Popen(
+                ["make", "verbose", ltxprocessor],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                bufsize=1,  # Line buffered
+                universal_newlines=True,
+                cwd=tmp_root
+            )
+            
+            # Print output in real-time
+            for line in proc.stdout:
+                print(line, end='')
+            
+            returncode = proc.wait()
+            
+        else:  # progress == 0 (silent mode)
+            # Silent mode - only show errors and important messages
+            print(f"{BRIGHT_CYAN}🔇 Silent mode - showing only important messages{RESET}")
+            
             proc = subprocess.run(
                 ["make", ltxprocessor],
-                check=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 text=True,
                 cwd=tmp_root
             )
-            returncode = 0
-            _print_filtered(proc.stdout, verbose=verbose)
+            returncode = proc.returncode
+            
+            # Filter and print important lines
+            for line in proc.stdout.splitlines():
+                if (line.startswith("Run number") or 
+                    line.startswith("Running") or 
+                    line.startswith("Logging") or
+                    line.startswith("Latexmk:") or
+                    "error" in line.lower() or
+                    "warning" in line.lower()):
+                    print(line)
         
         end_time = time.perf_counter()
         elapsed = end_time - start_time
@@ -527,12 +534,6 @@ def main() -> None:
     )
 
     ap.add_argument(
-        "-n", "--dry-run",
-        action="store_true",
-        help="Show what would change without writing files or running make"
-    )
-
-    ap.add_argument(
         "-t", "--doctype",
         default="msc",
         help="Document type: 'phd', 'msc', 'bsc' (default: msc)"
@@ -569,25 +570,20 @@ def main() -> None:
         help="Always keep build dir (even in case of success)"
     )
 
+    # Progress argument as integer with three modes
     ap.add_argument(
         "--progress",
-        action="store_true",
-        default=True,
-        help="Show progress bar during compilation (default: True)"
-    )
-
-    ap.add_argument(
-        "-np", "--no-progress",
-        dest="progress",
-        action="store_false",
-        help="Disable the progress bar"
+        type=int,
+        choices=[0, 1, 2],
+        default=1,
+        help="Output mode: 0 (silent), 1 (progress bar), 2 (real-time output) (default: 1)"
     )
     
     ap.add_argument(
         "--lines",
         type=int,
         default=4400,
-        help="Expected number of output lines for progress calculation (default: 3300)"
+        help="Expected number of output lines for progress calculation (default: 4400)"
     )
 
     ap.add_argument(
@@ -648,13 +644,8 @@ def main() -> None:
     changed_any = localize_and_process_files(
         tmp_root=tmp_root,
         confdir=Path(args.confdir),
-        patterns=patterns,
-        dry_run=args.dry_run
+        patterns=patterns
     )
-
-    if args.dry_run:
-        print("ℹ️  Dry-run: skipping make.")
-        return
 
     # Run the build process
     if changed_any:
@@ -666,10 +657,9 @@ def main() -> None:
             doctype=args.doctype,
             lang=args.lang,
             outdir=outdir,
-            verbose=args.verbose,
             progress=args.progress,
             total_lines=args.lines,
-            keep_tmp = args.keep_tmp
+            keep_tmp=args.keep_tmp
         )
         if rc != 0:
             sys.exit(rc)
@@ -683,10 +673,9 @@ def main() -> None:
             doctype=args.doctype,
             lang=args.lang,
             outdir=outdir,
-            verbose=args.verbose,
             progress=args.progress,
             total_lines=args.lines,
-            keep_tmp = args.keep_tmp
+            keep_tmp=args.keep_tmp
         )
         if rc != 0:
             sys.exit(rc)

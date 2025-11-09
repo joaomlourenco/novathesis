@@ -25,4 +25,4 @@ jobs:
       - name: Compile the LaTeX template
         uses: xu-cheng/texlive-action/full@v1
         with:
-          run: python .Build/build.py nova/fct --build-dir=AUXDIR -np
+          run: python .Build/build.py nova/fct --build-dir=AUXDIR --progress=2
