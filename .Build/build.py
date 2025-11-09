@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 """
+-----------------------------------------------------------------------------
 NOVATHESIS Build Assistant
+
+Version 1.1.1 (1999-12-12)
+Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+-----------------------------------------------------------------------------
+
 This script automates the process of building NOVATHESIS documents by:
 1. Creating a temporary workspace with symlinks to the original project files
 2. Localizing and modifying configuration files for specific school, document type, and language

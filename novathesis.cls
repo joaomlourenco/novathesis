@@ -1,15 +1,11 @@
 %!TEX root=template.tex
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% novathesis.cls
-%% NOVA thesis document class
-%%
-%% This work is licensed under the
-%% The LaTeX project public license (LPPL), version 1.3c
-%% To view a copy of this license, visit
-%% https://www.latex-project.org/lppl/lppl-1-3c/
-%%
-%% Version 2025-05-25 [7.3.7]
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — novathesis.cls
+%% ----------------------------------------------------------------------------
+%% 
+%% Version 1.1.1 (1999-12-12)
+%% Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -20,16 +16,14 @@
 %% HELP: please DO NOT SEND ME EMAILS about LaTeX or the NOVAthesis template
 %%       please ask for help at GitHub Discussions page at
 %%          https://github.com/joaomlourenco/novathesis/discussions
-%%      or at the NOVAthesis facebook group at
-%%          https://www.facebook.com/groups/novathesis
 %%      or in the subreddit r/novathesis
 %%          https://www.reddit.com/r/novathesis/
 %%
 %% AUTHOR @github:
-%%      - joaomlourenco
+%%      - https://github.com/joaomlourenco (joaomlourenco)
 %%
 %% CONTRIBUTORS @github:
-%%      https://github.com/joaomlourenco/novathesis/wiki#help-with-the-project-patches-and-new-features
+%%      - https://github.com/joaomlourenco/novathesis/wiki#help-with-the-project-patches-and-new-features
 %%
 %% DONATIONS:
 %%      If you think this template really helped you while writing your thesis, then
@@ -40,8 +34,17 @@
 %%             themselves in the “Add special instructions to the seller:” box.
 %%
 %% CITATION:
-%%      If you use this template, please be kind and \cite{novathesis-manual} somewhere in your document.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%      If you use this template, please be kind and \cite{novathesis-manual}
+%%      somewhere in your document.
+%%
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
+%%
+%% ----------------------------------------------------------------------------
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

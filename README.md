@@ -1,3 +1,13 @@
+<!--
+-----------------------------------------------------------------------------
+NOVATHESIS — README.md
+
+Version 1.1.1 (1999-12-12)
+Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+-----------------------------------------------------------------------------
+-->
+
+
 <meta property="og:image" content="http://joaomlourenco.github.io/novathesis/novathesis-latex-logo-v5.svg" />
 <div>
 <img src="http://joaomlourenco.github.io/novathesis/novathesis-latex-logo-v5.jpg" width="400"/>

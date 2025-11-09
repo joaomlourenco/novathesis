@@ -1,8 +1,12 @@
-#############################################################################
+#----------------------------------------------------------------------------
+# NOVATHESIS — Makefile
+#----------------------------------------------------------------------------
+#
+# Version 1.1.1 (1999-12-12)
+# Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+
+#----------------------------------------------------------------------------
 # CUSTOMIZATION AREA HERE
-#############################################################################
-# If you want to force the name of the main file, uncomment the following command
-# MF:="YOUR_MAIN_TEX_FILE" # without the ".tex" extension
 
 # Define V command to the name of your PDF viewer
 V:=open -a skim
