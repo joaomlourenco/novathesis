@@ -609,7 +609,7 @@ rebase:
 	
 # 2) Check for pending/modified files
 	@echo "📋 Checking for pending changes..."
-	@if [ -n "$$(git status --porcelain 2>/dev/null | grep -Fv '??')" ]; then \
+	@if [ -n "$$(git status --porcelain 2>/dev/null)" ]; then \
 		echo "❌ Error: You have uncommitted changes. Please commit or stash them first."; \
 		git status --short; \
 		exit 1; \
@@ -677,7 +677,7 @@ tag:
 	
 # Check for pending/modified files
 	@echo "📋 Checking for pending changes..."
-	@if [ -n "$$(git status --porcelain 2>/dev/null | grep -Fv '??')" ]; then \
+	@if [ -n "$$(git status --porcelain 2>/dev/null)" ]; then \
 		echo "❌ Error: You have uncommitted changes. Please commit or stash them first."; \
 		git status --short; \
 		exit 1; \
