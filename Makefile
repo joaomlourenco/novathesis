@@ -2,7 +2,7 @@
 # NOVATHESIS — Makefile
 #----------------------------------------------------------------------------
 #
-# Version 1.1.1 (1999-12-12)
+# Version 7.6.0 (2025-11-10)
 # Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 
 
@@ -311,9 +311,14 @@ bump1 bump2 bump3:
 .PHONY: bcmtp
 bcmtp: build-phd-final-en commit rebase tag push
 
+
+
+#############################################################################
+# BUILD
+#############################################################################
 .PHONY: build-phd-final-en
 build-phd-final-en: validate-config check-env check-build
-	$(BUILD) $(SCHL) -t phd -s final -l en -p lua
+	$(BUILD) $(SCHL) -t phd -s final -l en -p lua -nr
 
 
 
@@ -335,7 +340,7 @@ commit:
 	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
 	
 # 1) Comprehensive pre-commit checks
-	@echo "📋 Running pre-commit checks..."
+#	@echo "📋 Running pre-commit checks..."
 	
 # Git repository check
 	@if ! git rev-parse --git-dir >& /dev/null; then \
@@ -348,9 +353,13 @@ commit:
 	@if [ "$(CURRENT_BRANCH)" = "detached" ]; then \
 		echo "❌ Error: Not on a branch (detached HEAD state)"; \
 		exit 1; \
-	else \
-		echo "✅ On branch: $(CURRENT_BRANCH)"; \
 	fi
+# @if [ "$(CURRENT_BRANCH)" = "detached" ]; then \
+# 	echo "❌ Error: Not on a branch (detached HEAD state)"; \
+# 	exit 1; \
+# else \
+# 	echo "✅ On branch: $(CURRENT_BRANCH)"; \
+# fi
 	
 # Modified files check
 	@if [ -z "$$(git status --porcelain)" ]; then \
@@ -364,31 +373,45 @@ commit:
 	
 # Handle untracked files based on setting
 	@if [ "$(COMMIT_INCLUDE_UNTRACKED)" = "yes" ]; then \
-		echo "📋 Adding untracked files..."; \
 		git add .; \
-		echo "✅ Added all files (including untracked)"; \
 	else \
 		git add -u; \
-		echo "✅ Staged modified files (excluding untracked)"; \
 	fi
+#	@if [ "$(COMMIT_INCLUDE_UNTRACKED)" = "yes" ]; then \
+#		echo "📋 Adding untracked files..."; \
+#		git add .; \
+#		echo "✅ Added all files (including untracked)"; \
+#	else \
+#		git add -u; \
+#		echo "✅ Staged modified files (excluding untracked)"; \
+#	fi
 	
 # 2) Create the commit
-	@echo "💾 Creating commit..."
 	@if git commit -m "$(COMMIT_MESSAGE)"; then \
-		echo "✅ Commit created successfully"; \
 		COMMIT_HASH=$$(git rev-parse --short HEAD); \
 		echo "📦 Commit Summary:"; \
 		echo "   Hash:    $$COMMIT_HASH"; \
 		echo "   Branch:  $(CURRENT_BRANCH)"; \
 		echo "   Message: $(COMMIT_MESSAGE)"; \
-		echo "📊 Files committed:"; \
-		git show --stat --oneline $$COMMIT_HASH | tail -n +2; \
 	else \
 		echo "❌ Failed to create commit"; \
 		echo "   This might be because there were no changes to commit after staging"; \
 		exit 1; \
 	fi
-	
+#	@if git commit -m "$(COMMIT_MESSAGE)"; then \
+#		echo "✅ Commit created successfully"; \
+#		COMMIT_HASH=$$(git rev-parse --short HEAD); \
+#		echo "📦 Commit Summary:"; \
+#		echo "   Hash:    $$COMMIT_HASH"; \
+#		echo "   Branch:  $(CURRENT_BRANCH)"; \
+#		echo "   Message: $(COMMIT_MESSAGE)"; \
+#		echo "📊 Files committed:"; \
+#		git show --stat --oneline $$COMMIT_HASH | tail -n +2; \
+#	else \
+#		echo "❌ Failed to create commit"; \
+#		echo "   This might be because there were no changes to commit after staging"; \
+#		exit 1; \
+#	fi
 	@printf "🎉 Commit process completed successfully!\n\n"
 
 #————————————————————————————————————————————————————————————————————————————
@@ -400,45 +423,50 @@ commit-push:
 	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
 	
 # 1) Check conditions
-	@echo "📋 Checking push conditions..."
+#	@echo "📋 Checking push conditions..."
 	
 # Check if we're in a git repository
 	@if ! git rev-parse --git-dir > /dev/null 2>&1; then \
 		echo "❌ Error: Not in a git repository"; \
 		exit 1; \
 	fi
-	@echo "✅ In a git repository"
+#	@echo "✅ In a git repository"
 	
 # Check for pending/modified files
-	@echo "📋 Checking for uncommitted changes..."
+#	@echo "📋 Checking for uncommitted changes..."
 	@if [ -n "$$(git status --porcelain 2>/dev/null | grep -Fv '??')" ]; then \
 		echo "❌ Error: You have uncommitted changes. Please commit them first."; \
 		git status --short; \
 		exit 1; \
 	fi
-	@echo "✅ No uncommitted changes"
+#	@echo "✅ No uncommitted changes"
 	
 # Check if we have commits to push
-	@echo "📋 Checking for pending commits..."
+#	@echo "📋 Checking for pending commits..."
 	@CURRENT_BRANCH=$$(git branch --show-current); \
 	if [ -z "$$CURRENT_BRANCH" ]; then \
 		echo "❌ Error: Not on a valid branch"; \
 		exit 1; \
 	fi
-	@echo "✅ Current branch: $$CURRENT_BRANCH"
+#	@echo "✅ Current branch: $$CURRENT_BRANCH"
 	
 # 2) Push current branch first
 	@echo "🔄 Pushing current branch ($$CURRENT_BRANCH)..."
-	@if git push $(PUSH_REMOTE) $$CURRENT_BRANCH; then \
-		echo "✅ Successfully pushed $$CURRENT_BRANCH"; \
-	else \
+	@if ! git push $(PUSH_REMOTE) $$CURRENT_BRANCH; then \
 		echo "❌ Failed to push $$CURRENT_BRANCH"; \
 		echo "   You may need to pull changes first: git pull $(PUSH_REMOTE) $$CURRENT_BRANCH"; \
 		exit 1; \
 	fi
+#	@if git push $(PUSH_REMOTE) $$CURRENT_BRANCH; then \
+#		echo "✅ Successfully pushed $$CURRENT_BRANCH"; \
+#	else \
+#		echo "❌ Failed to push $$CURRENT_BRANCH"; \
+#		echo "   You may need to pull changes first: git pull $(PUSH_REMOTE) $$CURRENT_BRANCH"; \
+#		exit 1; \
+#	fi
 	
 # 3) Push the other branch (main or develop)
-	@echo "📋 Checking other branch to push..."
+#	@echo "📋 Checking other branch to push..."
 	@if [ "$$CURRENT_BRANCH" = "develop" ]; then \
 		OTHER_BRANCH="main"; \
 	elif [ "$$CURRENT_BRANCH" = "main" ]; then \
@@ -451,9 +479,7 @@ commit-push:
 	@if [ -n "$$OTHER_BRANCH" ]; then \
 		echo "🔄 Pushing $$OTHER_BRANCH branch..."; \
 		if git show-ref --verify --quiet refs/heads/$$OTHER_BRANCH; then \
-			if git push $(PUSH_REMOTE) $$OTHER_BRANCH; then \
-				echo "✅ Successfully pushed $$OTHER_BRANCH"; \
-			else \
+			if ! git push $(PUSH_REMOTE) $$OTHER_BRANCH; then \
 				echo "⚠️  Failed to push $$OTHER_BRANCH (branch exists but push failed)"; \
 				echo "   You may need to: git pull $(PUSH_REMOTE) $$OTHER_BRANCH"; \
 			fi; \
@@ -461,6 +487,19 @@ commit-push:
 			echo "⚠️  Branch $$OTHER_BRANCH does not exist locally. Skipping."; \
 		fi; \
 	fi
+#	@if [ -n "$$OTHER_BRANCH" ]; then \
+#		echo "🔄 Pushing $$OTHER_BRANCH branch..."; \
+#		if git show-ref --verify --quiet refs/heads/$$OTHER_BRANCH; then \
+#			if git push $(PUSH_REMOTE) $$OTHER_BRANCH; then \
+#				echo "✅ Successfully pushed $$OTHER_BRANCH"; \
+#			else \
+#				echo "⚠️  Failed to push $$OTHER_BRANCH (branch exists but push failed)"; \
+#				echo "   You may need to: git pull $(PUSH_REMOTE) $$OTHER_BRANCH"; \
+#			fi; \
+#		else \
+#			echo "⚠️  Branch $$OTHER_BRANCH does not exist locally. Skipping."; \
+#		fi; \
+#	fi
 	
 # 4) Show push summary
 	@echo "📋 Push Summary:"
@@ -473,7 +512,6 @@ commit-push:
 			echo "   ⚠️  Status: $$OTHER_BRANCH (see above)"; \
 		fi; \
 	fi
-	
 	@echo "🎉 Commit push process completed!"
 
 #————————————————————————————————————————————————————————————————————————————
@@ -586,6 +624,7 @@ commit-push-dry-run:
 	
 	@echo "🚧 This was a dry run. Use 'make commit-push' to actually push."
 
+
 #############################################################################
 # REBASE -> if rebase fails, tries MERGE
 #############################################################################
@@ -600,43 +639,50 @@ rebase:
 	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
 	
 # 1) Check if we are in branch develop
-	@echo "📋 Checking current branch..."
+#	@echo "📋 Checking current branch..."
 	@if [ "$(shell git branch --show-current)" != "develop" ]; then \
 		echo "❌ Error: You must be on the 'develop' branch to run this target"; \
 		exit 1; \
 	fi
-	@echo "✅ Currently on 'develop' branch"
+#	@echo "✅ Currently on 'develop' branch"
 	
 # 2) Check for pending/modified files
-	@echo "📋 Checking for pending changes..."
+#	@echo "📋 Checking for pending changes..."
 	@if [ -n "$$(git status --porcelain 2>/dev/null | grep -Fv '??')" ]; then \
 		echo "❌ Error: You have uncommitted changes. Please commit or stash them first."; \
 		git status --short; \
 		exit 1; \
 	fi
-	@echo "✅ No pending changes"
+#	@echo "✅ No pending changes"
 	
 # 3) Checkout main and rebase
-	@echo "🔄 Switching to main branch..."
+#	@echo "🔄 Switching to main branch..."
 	@git checkout main || { echo "❌ Failed to checkout main branch"; exit 1; }
 	
-	@echo "🔄 Rebasing main onto develop..."
-	@if git rebase develop; then \
-		echo "✅ Rebase completed successfully"; \
-	else \
+#	@echo "🔄 Rebasing main onto develop..."
+	@if ! git rebase develop; then \
 		echo "⚠️  Rebase encountered conflicts. Resolving automatically using develop version..."; \
 		git rebase --abort 2>/dev/null || true; \
 		git merge develop -X theirs -m "$$(MERGE_MESSAGE)" || { \
 			echo "❌ Failed to merge with develop version"; \
 			exit 1; \
 		}; \
-		echo "✅ Merge completed using develop version"; \
 	fi
+#	@if git rebase develop; then \
+#		echo "✅ Rebase completed successfully"; \
+#	else \
+#		echo "⚠️  Rebase encountered conflicts. Resolving automatically using develop version..."; \
+#		git rebase --abort 2>/dev/null || true; \
+#		git merge develop -X theirs -m "$$(MERGE_MESSAGE)" || { \
+#			echo "❌ Failed to merge with develop version"; \
+#			exit 1; \
+#		}; \
+#		echo "✅ Merge completed using develop version"; \
+#	fi
 	
 # 4) If no error, checkout develop
-	@echo "🔄 Switching back to develop branch..."
+#	@echo "🔄 Switching back to develop branch..."
 	@git checkout develop || { echo "❌ Failed to checkout develop branch"; exit 1; }
-	
 	@printf "🎉 Rebase process completed successfully!\n\n"
 
 
@@ -657,35 +703,35 @@ tag:
 	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
 	
 # 1) Check conditions for tagging
-	@echo "📋 Checking tag conditions..."
+#	@echo "📋 Checking tag conditions..."
 	
 # Check if we're in a git repository
 	@if ! git rev-parse --git-dir > /dev/null 2>&1; then \
 		echo "❌ Error: Not in a git repository"; \
 		exit 1; \
 	fi
-	@echo "✅ In a git repository"
+#	@echo "✅ In a git repository"
 	
 # Check if we're on develop branch
-	@echo "📋 Checking current branch..."
+#	@echo "📋 Checking current branch..."
 	@CURRENT_BRANCH=$$(git branch --show-current); \
 	if [ "$$CURRENT_BRANCH" != "develop" ]; then \
 		echo "❌ Error: You must be on the 'develop' branch to run this target (currently on '$$CURRENT_BRANCH')"; \
 		exit 1; \
 	fi
-	@echo "✅ Currently on 'develop' branch"
+#	@echo "✅ Currently on 'develop' branch"
 	
 # Check for pending/modified files
-	@echo "📋 Checking for pending changes..."
+#	@echo "📋 Checking for pending changes..."
 	@if [ -n "$$(git status --porcelain 2>/dev/null | grep -Fv '??')" ]; then \
 		echo "❌ Error: You have uncommitted changes. Please commit or stash them first."; \
 		git status --short; \
 		exit 1; \
 	fi
-	@echo "✅ No pending changes"
+#	@echo "✅ No pending changes"
 	
 # Check if version is provided
-	@echo "📋 Checking version..."
+#	@echo "📋 Checking version..."
 	@if [ -z "$(TAG_VERSION)" ]; then \
 		echo "❌ Error: TAG_VERSION is required"; \
 		echo "   Usage: make tag TAG_VERSION=x.y.z"; \
@@ -697,25 +743,28 @@ tag:
 	@echo "✅ Message: $(TAG_MESSAGE)"
 	
 # Check if tag already exists
-	@echo "📋 Checking if tag already exists..."
+#	@echo "📋 Checking if tag already exists..."
 	@if git rev-parse "v$(TAG_VERSION)" >/dev/null 2>&1; then \
 		echo "⚠️ Warining: Tag 'v$(TAG_VERSION)' already exists. Will overwrite."; \
-	else\
-		echo "✅ Tag 'v$(TAG_VERSION)' is available"; \
 	fi
+#	@if git rev-parse "v$(TAG_VERSION)" >/dev/null 2>&1; then \
+#		echo "⚠️ Warining: Tag 'v$(TAG_VERSION)' already exists. Will overwrite."; \
+#	else\
+#		echo "✅ Tag 'v$(TAG_VERSION)' is available"; \
+#	fi
 	
 # Check if main branch exists and is up to date
-	@echo "📋 Checking main branch..."
+#	@echo "📋 Checking main branch..."
 	@if ! git show-ref --verify --quiet refs/heads/main; then \
 		echo "❌ Error: main branch does not exist"; \
 		exit 1; \
 	fi
 	
-	@echo "🔄 Fetching latest changes..."
+#	@echo "🔄 Fetching latest changes..."
 	@git fetch origin 2>/dev/null || echo "⚠️  Could not fetch from origin, continuing with local branches"
 	
 # 2) Create tag on develop branch
-	@echo "🏷️  Creating tag on develop branch..."
+#	@echo "🏷️  Creating tag on develop branch..."
 	@if git tag -a "v$(TAG_VERSION)" -m "$(TAG_MESSAGE)" 2>/dev/null; then \
 		echo "✅ Tag created on main branch"; \
 	else \
@@ -729,10 +778,10 @@ tag:
 	fi
 	
 # 3) Switch to main and create the same tag
-	@echo "🔄 Switching to main branch..."
+	# @echo "🔄 Switching to main branch..."
 	@git checkout main 2>/dev/null || { echo "❌ Failed to checkout main branch"; exit 1; }
 	
-	@echo "🏷️  Creating tag on main branch..."
+	# @echo "🏷️  Creating tag on main branch..."
 # Check if we need to force the tag (if main is behind develop)
 	@if git tag -a "v$(TAG_VERSION)" -m "$(TAG_MESSAGE)" 2>/dev/null; then \
 		echo "✅ Tag created on main branch"; \
@@ -747,7 +796,7 @@ tag:
 	fi
 	
 # 4) Return to develop branch
-	@echo "🔄 Returning to develop branch..."
+	# @echo "🔄 Returning to develop branch..."
 	@git checkout develop 2>/dev/null || { echo "❌ Failed to checkout develop branch"; exit 1; }
 	
 # 5) Show tag information
@@ -755,7 +804,7 @@ tag:
 	@echo "   Tag: v$(TAG_VERSION)"
 	@echo "   Message: $(TAG_MESSAGE)"
 	@echo "   Commit: $$(git rev-parse --short v$(TAG_VERSION))"
-
+	
 	@printf "🎉 Tagging process completed successfully!\n\n"
 
 #————————————————————————————————————————————————————————————————————————————
@@ -768,12 +817,16 @@ tag-push:
 		exit 1; \
 	fi
 	
-	@if git push origin "v$(TAG_VERSION)"; then \
-		echo "✅ Tag v$(TAG_VERSION) pushed to remote"; \
-	else \
+	@if ! git push origin "v$(TAG_VERSION)"; then \
 		echo "❌ Failed to push tag v$(TAG_VERSION)"; \
 		exit 1; \
 	fi
+#	@if git push origin "v$(TAG_VERSION)"; then \
+#		echo "✅ Tag v$(TAG_VERSION) pushed to remote"; \
+#	else \
+#		echo "❌ Failed to push tag v$(TAG_VERSION)"; \
+#		exit 1; \
+#	fi
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: tag-delete
@@ -853,8 +906,15 @@ tag-show:
 PUSH_REMOTE ?= origin
 
 #————————————————————————————————————————————————————————————————————————————
-.PHONY: push
-push: commit-push tag-push
+.PHONY: push push-header
+push: push-header commit-push tag-push
+
+push-header:
+	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
+	@echo "🏷️ Starting pushing process..."
+	@printf "$(CYAN)VERSION=$(YELLOW)$(VERSION)$(CYAN) - DATE=$(YELLOW)$(DATE)$(RESET).\n"
+	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
+	
 
 #————————————————————————————————————————————————————————————————————————————
 # Helper to show remote status
@@ -880,7 +940,7 @@ define _mtp
 	printf "$(CYAN)VERSION=$(YELLOW)$(1)$(CYAN) - DATE=$(YELLOW)$(2).$(RESET)\n"
 	git commit --all --message "Version $(1) - $(2)." || true
 	$(MAKE) clean
-	.Build/build.py nova/fct --no-rename
+	python .Build/build.py nova/fct --no-rename
 	git commit --all --message "Version $(1) - $(2)." || true
 	git checkout main
 	git pull

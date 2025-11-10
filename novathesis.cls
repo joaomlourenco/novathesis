@@ -4,7 +4,7 @@
 %%  NOVATHESIS — novathesis.cls
 %% ----------------------------------------------------------------------------
 %% 
-%% Version 1.1.1 (1999-12-12)
+%% Version 7.6.0 (2025-11-10)
 %% Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -69,7 +69,6 @@
 %%    ██    ██   ██  ███   ██████          ██       ███   ███████  ███████
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 %%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
@@ -81,7 +80,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\ProvidesClass{novathesis}[novathesis template — Version 1.1.1 (2025-05-25)]
+\ProvidesClass{novathesis}[novathesis template Version 1.1.1] % (2025-05-25)
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 
