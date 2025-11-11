@@ -8,47 +8,418 @@
 
 \typeout{NT FILE chapter4.tex}%
 
-\chapter{Adding Support to a New School (work in progress)}
-\label{cha:porting_novathesis}
+\chapter{Configuration}
+\label{chap:configuration}
 
-My advice to customize the \novathesis\ template to another School/University/Department/Degree is to browse the existing supported degrees to find one that is \emph{close enough}, and depart from there!
+\section{Overview}
 
-The multitude of layouts supported by the \novathesis\ template is based in a three-tier naming scheme, separated by slashes: University / School / Department-or-Degree.  This three-tier naming scheme is also reflected in a three-tier directory (folder) structure in: \verb!<project_root>a/NOVAthesiFiles/Schools/…!.  For example:
+This chapter documents the \gls{novathesis} configuration subsystem as shipped in version~7.6.0.  
+All user-facing configuration is centralized under \texttt{0-Config/}. The design separates \emph{global class behaviour} from \emph{project content} and \emph{institutional presets}. Users should edit only the files in \texttt{0-Config/} and content folders; the class file \texttt{novathesis.cls} and internal assets under \texttt{\gls{novathesis}Files/} must remain unchanged.
+
+\begin{flushleft}
+\textbf{Configuration files (as shipped):}
+\end{flushleft}
 
 \begin{verbatim}
-…
-| 
-+—— nova
-|   +—— Images
-|   +—— fct
-|   |   \—— Images
-|   +—— ims
-|   |   \—— Images
-|   …
-|   
-\—— uminho
-    +—— Images
-    +—— ea
-    |   \—— Images
-    +—— ec
-    |   \—— Images
-    …
+0-Config/
+  0_memoir.tex      % Memoir-class options (low-level layout toggles)
+  1_novathesis.tex  % Main \gls{novathesis} options (doctype, language, media, styles…)
+  2_biblatex.tex    % Bibliography backend and style
+  3_cover.tex       % Cover/front-matter metadata and committee
+  4_files.tex       % List of included files: abstracts, chapters, appendices…
+  5_packages.tex    % Extra (user) packages and demo setup
+  6_list_of.tex     % Which lists to print (figures/tables/algorithms/listings…)
+  9_*.tex           % Institutional presets (FCT NOVA, IMS, IST, ISEG, FMV, UMinho, UPorto/FC)
 \end{verbatim}
 
-The directory \verb!uminho! contains the customization for all Schools of Universidade do Minho.  This university is an example of the case where the regulations are defined at University level and all the schools apply the same thesis layout and organization.  So, the all the customization is done in the file \verb!uminho/uminho-defaults.ldf!, except the definition of the name and logo of each individual school.
+Unless stated otherwise, options are applied via the key–value interface
+\verb|\ntsetup{<key>=<value>}|.
+Bibliography options use \verb|\ntbibsetup{…}|.
+Language-string overrides use \verb|\ntlangsetup{…}|.
 
-As another example, the directory \verb!nova! contains the customization for all Schools from NOVA University Lisbon. This university grants a lot of freedom in the definition of the thesis layouts.  In some cases, they are defined at the School level (e.g., NOVA FCT), while is some other cases they are defined separately for each degree (e.g., NOVA IMS).
+\paragraph{Editing policy.}
+\begin{itemize}
+  \item Keep your changes \emph{in place} inside \texttt{0-Config/}. Do not modify \texttt{novathesis.cls}.
+  \item Prefer uncommenting documented options over inventing new macros.
+  \item When in doubt, search for the option name in the shipped \texttt{.tex} files; most defaults are indicated in comments.
+\end{itemize}
 
+\section{\texorpdfstring{\texttt{0\_memoir.tex}}{0\_memoir.tex}: Memoir Options}
+\label{sec:cfg-memoir}
 
+\texttt{0\_memoir.tex} is reserved for options supported by the \texttt{memoir} class (page layout, trims, headers/footers, etc.). Use this file if you need low-level control beyond \gls{novathesis}’ high-level keys.
 
+\begin{itemize}
+  \item Place any \texttt{memoir} options or setup here (see the \textit{memman} manual).
+  \item Institution-specific stubs may appear here (e.g., final classification or funding notes for some presets). Keep these commented unless applicable.
+\end{itemize}
+
+\section{\texorpdfstring{\texttt{1\_novathesis.tex}}{1\_novathesis.tex}: Main Options}
+\label{sec:cfg-main}
+
+This is the primary configuration file. It exposes the document’s global behaviour and presentation. The file is extensively commented; below we summarize the keys as they appear in the shipped template.
+
+\subsection*{Document identity and lifecycle}
+\begin{description}
+  \item[\texttt{doctype}] The document kind.
+  \begin{flushleft}
+  \verb|\ntsetup{doctype=<value>}|\quad where \verb|<value>| is one of:
+  \verb|phd|, \verb|phdplan|, \verb|phdprop|, \verb|msc|, \verb|mscplan|,
+  \verb|bsc|, \verb|plain|.
+  \end{flushleft}
+
+  \item[\texttt{school}] Institutional preset identifier (activates \texttt{0-Config/9\_<…>.tex} and internal assets).\par
+  Example identifiers as shipped (non-exhaustive; see comments in the file):
+  \begin{quote}
+  \small
+  \verb|nova/fct|, \verb|nova/fct/di-adc|, \verb|nova/fct/cbbi|, \verb|nova/fct/blue|, \verb|nova/fct/green|, \verb|nova/fct/brown|, \verb|nova/fct/red|, \verb|nova/itqb/gray|, \verb|nova/itqb/green|, \verb|nova/fcsh|, \verb|nova/ensp|,\newline
+  \verb|nova/ims|, \verb|nova/ims/csig|, \verb|nova/ims/ddm|, \verb|nova/ims/dsaa|, \verb|nova/ims/egi|, \verb|nova/ims/gi|, \verb|nova/ims/gt|,\newline
+  \verb|ulisboa/ist|, \verb|ulisboa/fc|, \verb|ulisboa/fmv|, \verb|ulisboa/iseg|,\newline
+  \verb|uminho/ead|, \verb|uminho/ese|, \verb|uminho/eeng|, \verb|uminho/elach|, \verb|uminho/ed|, \verb|uminho/ec|, \verb|uminho/i3bs|, \verb|uminho/emed|, \verb|uminho/ie|, \verb|uminho/ics|, \verb|uminho/epsi|, \verb|uminho/eeg|,\newline
+  \verb|iscteiul/eta|, \verb|ips/ests|, \verb|ipl/isel|, \verb|ipl/isel/meb|,\newline
+  \verb|ulht/deisi|, \verb|ulht/mge|, \verb|uporto/fc|, \verb|other/esep|.
+  \end{quote}
+
+  \item[\texttt{docstatus}] Working stage of the document:
+  \verb|working| (reduced front matter), \verb|provisional| (submission, no committee), \verb|final| (final, committee included).
+\end{description}
+
+\subsection*{Languages and abstracts}
+\begin{description}
+  \item[\texttt{lang}] Main document language (ISO-639-1 two-letter): \verb|en|, \verb|pt|, \verb|fr|, \verb|it|, \verb|de|, \verb|es|, \verb|gr| (Greek), \verb|uk| (Ukrainian).
+  \item[\texttt{abstractorder}] Controls which abstracts print and in which order.  
+  Examples:
+\begin{verbatim}
+\ntsetup{abstractorder={en,pt,uk,gr}}
+\ntsetup{abstractorder={pt={en,pt,fr}}}
+\end{verbatim}
+  Default for \texttt{en}: \texttt{en,pt}.  
+  For language \texttt{L}: \texttt{L,en}.
+  \item[\texttt{lang/extra}] Additional languages used in the document (beyond those in abstracts), e.g.,
+\begin{verbatim}
+\ntsetup{lang/extra={de,es}}
+\end{verbatim}
+\end{description}
+
+\subsection*{Media and pagination}
+\begin{description}
+  \item[\texttt{media}] \verb|screen| (equal margins, coloured links) or \verb|paper| (bookish margins, black links).
+  \item[\texttt{numberallpages}] Whether to number all pages (except the cover); default \texttt{false}.
+  \item[\texttt{print/index}] Print a word index at the end; default \texttt{false}.
+  \item[\texttt{print/timestamp}] Print the PDF build timestamp on the cover; default \texttt{true}.
+\end{description}
+
+\subsection*{Glossaries and indices}
+\begin{description}
+  \item[\texttt{gnumberlist}] Whether glossary entries list the pages on which they occur (reverse-index behaviour); default \texttt{true}.
+\end{description}
+
+\subsection*{Typography and style}
+\begin{description}
+  \item[\texttt{style/url}] Use the main text font for URLs; default = the \texttt{hyperref} default (set explicitly to \verb|same| to match body font).
+  \item[\texttt{style/font}] Font theme. Shipped style modules under \texttt{\gls{novathesis}Files/FontStyles/}:
+  \begin{quote}
+  \small
+  \verb|bookman|, \verb|erewhon|, \verb|libertine|, \verb|newpx|, \verb|opensans|, \verb|scholax|,\newline
+  \verb|arial|*, \verb|calibri|*, \verb|newsgott|*, \verb|kieranhealy|*, \verb|futura|*.
+  \end{quote}
+  The styles marked with (*) require XeLaTeX/LuaLaTeX (system/OpenType fonts).
+\end{description}
+
+\subsection*{Book spine and debugging}
+\begin{description}
+  \item[\texttt{spine/layout}] \verb|no| (do not print), \verb|full| (full page), \verb|trim| (print and crop to spine width). Default \verb|trim| for \texttt{docstatus=final}, otherwise \verb|no|.
+  \item[\texttt{spine/width}] Force a specific spine width (e.g., \verb|2cm|). Default is an automatic width assuming double-sided 80\,g/m\textsuperscript{2} paper.
+  \item[\texttt{debug}] \verb|{cover,spine}| prints cover grids and spine markers for development.
+\end{description}
+
+\section{\texorpdfstring{\texttt{2\_biblatex.tex}}{2\_biblatex.tex}: Bibliography}
+\label{sec:cfg-biblatex}
+
+This file configures the bibliography backend and common styles via \verb|\ntbibsetup|. The shipped defaults favour \texttt{biblatex}+\texttt{biber}.
+
+\begin{description}
+  \item[\texttt{backend}] \verb|biber| (default) or \verb|bibtex|.
+  \item[\texttt{style}] Exemplos provided (uncomment exactly one):
+\begin{verbatim}
+% Numeric styles:
+% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=none}
+% Alphabetic style:
+% \ntbibsetup{style=alphabetic, sortcites=true, sorting=nyt}
+% Author–year (compact):
+% \ntbibsetup{style=authoryear-comp, sortcites=true, sorting=nyt}
+% APA-like (natbib compatibility):
+% \ntbibsetup{backend=biber,natbib=true,style=apa}
+\end{verbatim}
+\end{description}
+
+\paragraph{Notes.}
+\begin{itemize}
+  \item Use \verb|\textcite| for “Author (year)” and \verb|\parencite| for “(Author, year)”.
+  \item When switching backends, \emph{clean} the build (\texttt{make clean}) and recompile.
+\end{itemize}
+
+\section{\texorpdfstring{\texttt{3\_cover.tex}}{3\_cover.tex}: Cover and Front Matter}
+\label{sec:cfg-cover}
+
+Cover metadata, degree names, optional specialization, sponsors, and committee are defined here using high-level macros.
+
+\subsection*{Titles}
+Use \verb|\nttitle(type,lang){text}| with:
+\verb|type| \(\in\) \verb|{main, sub, spine}|\,, \verb|lang| \(\in\) available languages.
+
+\begin{verbatim}
+\nttitle(main,en){A Very Long and Impressive\\Thesis Title}
+\nttitle(main,pt){Um Título de Tese Longo\\e Impressionante}
+\nttitle(sub,en){Some thoughts on the Life, the Universe,\\and Everything Else}
+% \nttitle(spine,en){A Very Long and Impressive Thesis Title} % (no manual line breaks)
+\end{verbatim}
+
+\subsection*{Degree, specialization, sponsors}
+\begin{verbatim}
+% Degree label (only defines if still undefined elsewhere):
+\ntdegreename*(pt){Nome do Programa de Estudos}
+\ntdegreename*(en){Study Program Name}
+
+% Optional specialization (defines if undefined):
+\ntspecialization*(pt){Designação da Especialidade}
+\ntspecialization*(en){Specialization Name}
+
+% Optional list of sponsors (per language):
+% \ntsponsors(en){Company A, Grant X, ...}
+% \ntsponsors(pt){Empresa A, Bolsa X, ...}
+\end{verbatim}
+
+\subsection*{Committee}
+Add committee members with role and gender markers:
+\begin{quote}
+\small
+\verb|\ntaddperson{committee}(<role>,<gender>){Name, Position, Institution}|
+\end{quote}
+Roles: \verb|c| (chair), \verb|r| (rapporteur), \verb|a| (adviser), \verb|ca| (co-adviser), \verb|m| (member), \verb|g| (guest).  
+Gender: \verb|m| (male), \verb|f| (female).
+
+\begin{verbatim}
+\ntaddperson{committee}(c,m){Chair Name, Full Professor, FCT-NOVA}
+\ntaddperson{committee}(r,m){Rapporteur Name, Associate Professor, Other Univ.}
+\ntaddperson{committee}(m,f){Member Name, Assistant Professor, Another Univ.}
+% \ntaddperson{committee}(a,m){Adviser present, Assoc. Prof., University}
+% \ntaddperson{committee}(ca,f){Co-adviser present, Assoc. Prof., University}
+% \ntaddperson{committee}(g,m){Guest member, Title, Institution}
+\end{verbatim}
+
+\paragraph{Institution-specific guidance.}
+Some Schools request additional fields (e.g., sponsors, SDGs, exam date, embargo). See Section~\ref{sec:cfg-schools}.
+
+\section{\texorpdfstring{\texttt{4\_files.tex}}{4\_files.tex}: File Inventory}
+\label{sec:cfg-files}
+
+This file enumerates the content files that compose your thesis. Use \verb|\ntaddfile| with the appropriate \emph{kind}:
+
+\begin{description}
+  \item[\texttt{bib}] Bibliography databases (\texttt{.bib}):
+\begin{verbatim}
+\ntaddfile{bib}{bibliography.bib}
+% \ntaddfile{bib}{another.bib}
+\end{verbatim}
+
+  \item[\texttt{dedicatory}, \texttt{acknowledgements}, \texttt{quote}] Printed only for final document types (\texttt{bsc}, \texttt{msc}, \texttt{phd}):
+\begin{verbatim}
+\ntaddfile{dedicatory}{dedicatory}
+\ntaddfile{acknowledgements}{acknowledgements}
+\ntaddfile{quote}{quote}
+\end{verbatim}
+
+  \item[\texttt{abstract}[lang]] Abstracts in multiple languages:
+\begin{verbatim}
+\ntaddfile{abstract}[pt]{abstract-pt}
+\ntaddfile{abstract}[en]{abstract-en}
+% \ntaddfile{abstract}[de]{abstract-de}
+% \ntaddfile{abstract}[es]{abstract-es}
+% \ntaddfile{abstract}[fr]{abstract-fr}
+\end{verbatim}
+
+  \item[\texttt{chapter}] Chapters (optionally restricted to some doctypes):
+\begin{verbatim}
+\ntaddfile{chapter}{chapter1}
+\ntaddfile{chapter}{chapter2}
+\ntaddfile{chapter}{chapter3}
+\ntaddfile{chapter}{chapter4}
+% Examples:
+% \ntaddfile{chapter}[phd]{my-chapter}
+% \ntaddfile{chapter}[phd,phdplan]{proposal-background}
+\end{verbatim}
+
+  \item[\texttt{appendix}, \texttt{annex}] Back matter:
+\begin{verbatim}
+\ntaddfile{appendix}{appendix1}
+\ntaddfile{appendix}{appendix2}
+\ntaddfile{annex}{annex1}
+\end{verbatim}
+
+  \item[\texttt{cover}[slot]] User-defined covers (override standard ones): \verb|slot| \(\in\) \verb|1| (front), \verb|N| (back), \verb|spine|.
+\begin{verbatim}
+% \ntaddfile{cover}[1]{cover-front}
+% \ntaddfile{cover}[N]{cover-back}
+% \ntaddfile{cover}[spine]{cover-spine}
+% Disable second cover if needed:
+% \ntsetup{print/secondcover=false}
+\end{verbatim}
+\end{description}
+
+\section{\texorpdfstring{\texttt{5\_packages.tex}}{5\_packages.tex}: Extra Packages}
+\label{sec:cfg-packages}
+
+This file is intended for user-level package additions and language-string overrides. The shipped file includes \emph{demo packages} for examples (e.g., \texttt{float}, \texttt{wrapfig}); remove these in production.
+
+\paragraph{Language-string overrides.}
+Use \verb|\ntlangsetup{<lang>/<key>=<value>}| to redefine localized strings (e.g., ToC name):
+
+\begin{verbatim}
+% \ntlangsetup{pt/contentsname=O MEU ÍNDICE}
+% \ntlangsetup{en/contentsname=MY TABLE OF CONTENTS}
+\end{verbatim}
+
+\paragraph{Listings and minted.}
+If you enable \texttt{listings} or \texttt{minted}, Section~\ref{sec:cfg-listof} shows how the corresponding “List of Listings” is enabled automatically.
+
+\section{\texorpdfstring{\texttt{6\_list\_of.tex}}{6\_list\_of.tex}: Lists to Print}
+\label{sec:cfg-listof}
+
+Controls which \emph{lists} appear (List of Figures, Tables, Algorithms, Listings, etc.) using \verb|\ntaddlistof{<name>}|. The file also contains logic that adds certain lists automatically if the corresponding package is loaded.
+
+\begin{verbatim}
+\ntaddlistof{listoffigures}
+\ntaddlistof{listoftables}
+\end{verbatim}
+
+Algorithm lists are added depending on the package in use (\texttt{algorithm2e}, \texttt{algorithms}, \texttt{algorithm}, or \texttt{coloredtheorem}).  
+Listings are added for \texttt{listings} (\verb|lstlistoflistings|) or \texttt{minted} (\verb|listoflistings|).
+
+\paragraph{Glossaries.}
+To print the glossaries-related lists, uncomment:
+\begin{verbatim}
+% \ntaddlistof{listsofglossaries}
+\end{verbatim}
+
+\section{Institutional Presets (\texorpdfstring{\texttt{9\_*.tex}}{9\_*.tex})}
+\label{sec:cfg-schools}
+
+The files \texttt{9\_*.tex} specialize cover metadata, degree names, and School-specific requirements. Select the preset with \verb|\ntsetup{school=<id>}| in \texttt{1\_novathesis.tex}. Below are the salient controls present in the shipped presets.
+
+\subsection*{NOVA / FCT (\texttt{9\_nova\_fct.tex})}
+
+\begin{itemize}
+  \item \textbf{Department.} Uncomment exactly one \verb|\ntdepartment(lang){…}| pair to set your Department (Portuguese and English variants are provided; list updated as of 2024--09--08).
+  \item \textbf{Degree name.} A comprehensive catalogue of \verb|\ntdegreename(pt){…}| and \verb|\ntdegreename(en){…}| entries is provided for both PhD and MSc programmes. Uncomment the pair corresponding to your degree.
+  \item \textbf{ADC report (DI).} Optional company fields for DI/ADC reports:
+\begin{verbatim}
+% \ntsetup{nova/fct/company/logo=google-logo}
+% \ntsetup{nova/fct/company/name=Google}
+\end{verbatim}
+\end{itemize}
+
+\subsection*{NOVA / IMS (\texttt{9\_nova\_ims.tex})}
+
+\begin{itemize}
+  \item \textbf{Sustainable Development Goals (SDGs).} The file lists SDG labels (EN/PT). Add the SDGs relevant to your work to the internal list as instructed in the comments (keep labels consistent).
+\end{itemize}
+
+\subsection*{ULisboa / IST (\texttt{9\_ulisboa\_ist.tex})}
+
+\begin{itemize}
+  \item \textbf{Final classification.} Set the final grade for the statement if required:
+\begin{verbatim}
+\ntsetup{classification=Aprovado com …}
+\end{verbatim}
+  \item \textbf{Funding.} Optionally list funding agencies:
+\begin{verbatim}
+% \ntsetup{funding={{FCT, projeto #1234 1234 1234},{UE, projeto #9876 ABCD}}}
+\end{verbatim}
+\end{itemize}
+
+\subsection*{ULisboa / ISEG (\texttt{9\_ulisboa\_iseg.tex})}
+
+\begin{itemize}
+  \item \textbf{Funding.} Same mechanism as above (uncomment and edit).
+\end{itemize}
+
+\subsection*{ULisboa / FMV (\texttt{9\_ulisboa\_fmv.tex})}
+
+\begin{itemize}
+  \item \textbf{Exam date.} Uncomment and set the year if mandated.
+  \item \textbf{Embargo.} Period \verb|I| (Immediate), \verb|6|, or \verb|12| months; optional justification text.
+\begin{verbatim}
+% \ntsetup{embargo/period=6}
+% \ntsetup[embargo/justification]{Motivo do embargo temporário.}
+\end{verbatim}
+  \item \textbf{Reproduction rights.} \verb|I| (integral), \verb|P| (partial), \verb|N| (none).
+\end{itemize}
+
+\subsection*{UMinho (all) (\texttt{9\_uminho.tex})}
+
+\begin{itemize}
+  \item \textbf{Creative Commons modifier.} Select a CC variant (default is \texttt{by-nc-sa}); uncomment to override:
+\begin{verbatim}
+% \ntsetup{copyrightmodifier=by-nc-sa}
+\end{verbatim}
+  \item \textbf{Covers.} Skip the verso pages of covers for certain doctypes:
+\begin{verbatim}
+% \ntsetup{skipblankcovers=true}
+\end{verbatim}
+  \item \textbf{Integrity statement.} Optionally remove the signature line:
+\begin{verbatim}
+% \ntsetup{signatureline=false}
+\end{verbatim}
+\end{itemize}
+
+\subsection*{UPorto / FC (\texttt{9\_uporto\_fc.tex})}
+
+\begin{itemize}
+  \item \textbf{Final classification and funding.} Same mechanisms as IST; uncomment and edit if applicable.
+\end{itemize}
+
+\section{Fonts and Engine Selection}
+\label{sec:cfg-fonts}
+
+If you choose a font style that relies on system/OpenType fonts (\texttt{arial}, \texttt{calibri}, \texttt{newsgott}, \texttt{kieranhealy}, \texttt{futura}), compile with XeLaTeX or LuaLaTeX:
+\begin{verbatim}
+make xe   % or: latexmk -xelatex template.tex
+make lua  % or: latexmk -lualatex template.tex
+\end{verbatim}
+Classical LaTeX font packages (\texttt{bookman}, \texttt{erewhon}, \texttt{libertine}, \texttt{newpx}, \texttt{opensans}, \texttt{scholax}) work with pdfLaTeX as well.
+
+\section{Abstracts and Multilingual Documents}
+\label{sec:cfg-languages}
+
+Abstract files are declared per language in \texttt{4\_files.tex}. The language order is controlled by \texttt{abstractorder} (Section~\ref{sec:cfg-main}). Additional per-language string overrides can be placed in \texttt{5\_packages.tex} using \verb|\ntlangsetup|.  
+Language definitions and default strings reside under \texttt{\gls{novathesis}Files/Strings/} (EN, PT, ES, FR, DE, IT, GR, UK).
+
+\section{Lists, Indices, and Glossaries}
+\label{sec:cfg-lists}
+
+Adjust which lists appear via \texttt{6\_list\_of.tex}. The template auto-detects algorithms/listings packages and adds corresponding lists when present. To generate glossaries/acronyms/symbols, ensure the relevant packages are loaded in \texttt{5\_packages.tex} and add \verb|listsofglossaries| if desired.
+
+\section{Best Practices and Validation}
+\label{sec:cfg-bestpractices}
+
+\begin{itemize}
+  \item \textbf{Change one thing at a time.} After editing \texttt{1\_novathesis.tex}, run a clean build (\verb|make clean|) before testing typography or cover changes.
+  \item \textbf{Keep institutional choices localized.} Prefer editing only the corresponding \texttt{9\_<school>.tex}.
+  \item \textbf{Avoid conflicts.} Do not redefine class internals in \texttt{5\_packages.tex}; use documented keys or language overrides.
+  \item \textbf{Back up configuration.} Before upgrading the template, copy your \texttt{0-Config/} and \texttt{4-Bibliography/} folders.
+\end{itemize}
+
+\section{Minimal Configuration Checklist}
+\label{sec:cfg-checklist}
 
 \begin{enumerate}
-  \item Try all the already supported schools and check which one is closer to your needs;
-  \begin{enumerate}
-    \item Edit \verb!Config/1_novathesis.tex! and near line 28 uncomment the line with key \verb!\ntsetup{school=<SOMETHING>}!;
-    \item For each school supported (see the comment), replace \verb!<SOMETHING>! with the school name, e.g., make it \verb!\ntsetup{school=ulisboa/fmv}!
-    \item Recompile and check the document.  Particularly, check the cover layout, the front-page (second cover) layout, the front-matter contents, the bibliography style;
-    \item Repeat for the next school, until you find one close enough.
-  \end{enumerate}
-  \item 
+  \item Set \verb|doctype| and \verb|docstatus| in \texttt{1\_novathesis.tex}.
+  \item Select \verb|school| and complete the corresponding \texttt{9\_<school>.tex} entries (Department, Degree name, SDGs, exam date/embargo if required).
+  \item Configure \verb|lang|, \verb|abstractorder|, and declare abstracts in \texttt{4\_files.tex}.
+  \item Choose \verb|style/font| and compile with the appropriate engine (pdfLaTeX vs. XeLaTeX/LuaLaTeX).
+  \item Confirm bibliography backend/style in \texttt{2\_biblatex.tex}; ensure \texttt{biber} is available.
+  \item Review lists in \texttt{6\_list\_of.tex}; add/remove as required.
+  \item Remove demo packages from \texttt{5\_packages.tex} and add only what your project needs.
+  \item Build with \verb|make xe| (or \verb|make pdf|/\verb|make lua|), inspect the cover, lists, and bibliography.
 \end{enumerate}

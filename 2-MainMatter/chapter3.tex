@@ -8,296 +8,263 @@
 
 \typeout{NT FILE chapter3.tex}%
 
-\makeatletter
-\newcommand{\ntifpkgloaded}{%
-  \@ifpackageloaded%
+\chapter{Getting Started}
+\label{chap:getting-started}
+
+\section{Purpose of this Chapter}
+
+This chapter provides a step-by-step guide for first-time users of the \gls{novathesis} template.  
+It describes the project layout, configuration workflow, and basic compilation commands required to produce the initial document.  
+By the end of this chapter, the user should be able to compile a complete sample thesis and understand where to insert their own content.
+
+\section{Project Layout}
+
+The \gls{novathesis} project follows a clear and modular directory structure.  
+Each directory serves a specific role in the composition of the thesis.
+
+\begin{verbatim}
+_
+|—— 0-Config/         Configuration files (edit here)
+|—— 1-FrontMatter/    Abstracts, acknowledgments, acronyms, etc.
+|—— 2-MainMatter/     Chapters and main content
+|—— 3-BackMatter/     Appendices, lists, glossary, index
+|—— 4-Bibliography/   Bibliographic databases (.bib files)
+|—— 5-Figures/        Figures and illustrations
+|—— \gls{novathesis}Files/  Internal assets (do not modify)
+|—— template.tex      Main document file
+|—— novathesis.cls    Class definition (do not modify)
+|—— Makefile          Build automation tool
+\end{verbatim}
+
+Users should restrict their edits to the configuration and content directories.  
+All other files are maintained by the template and should remain unchanged to ensure compatibility with future versions.
+
+\section{The Role of \texttt{template.tex}}
+
+The file \texttt{template.tex} serves as the entry point of the entire project.  
+It loads the \texttt{novathesis.cls} class, applies the selected configuration, and defines the logical order of document parts:
+
+\begin{itemize}
+  \item Front matter (cover, abstract, acknowledgments);
+  \item Main matter (chapters);
+  \item Back matter (appendices, lists, and bibliography).
+\end{itemize}
+
+Users are not expected to modify \texttt{template.tex} beyond minor customizations such as adjusting the sequence of included chapters.  
+All document-level settings are controlled through configuration files located in \texttt{0-Config/}.
+
+\section{Configuration Overview}
+
+The configuration subsystem is divided into modular files that correspond to different functional areas.  
+Each file can be opened and edited independently.
+
+\begin{itemize}
+  \item \texttt{0-Config/1\_novathesis.tex} – Main template configuration (document type, language, school, author, title, year);
+  \item \texttt{0-Config/2\_biblatex.tex} – Bibliography and citation options;
+  \item \texttt{0-Config/3\_cover.tex} – Cover page customization;
+  \item \texttt{0-Config/4\_files.tex}, \texttt{5\_packages.tex}, \texttt{6\_list\_of.tex} – File management and auxiliary packages;
+  \item \texttt{0-Config/9\_<school>.tex} – Institutional presets (logos, formatting rules).
+\end{itemize}
+
+The most common user actions involve editing \texttt{1\_novathesis.tex} to set document metadata and institutional parameters.
+
+\section{First-Time Setup}
+
+To create a new thesis, follow the procedure below.
+
+\subsection{Step 1: Copy the Template}
+
+Create a working copy of the template directory in your preferred location.  
+For example:
+
+\begin{verbatim}
+cp -r novathesis ~/Documents/MyThesis
+cd ~/Documents/MyThesis
+\end{verbatim}
+
+\subsection{Step 2: Edit the Main Configuration File}
+
+Open \texttt{0-Config/1\_novathesis.tex} in a text editor and review the default configuration.  
+Update the following fields as appropriate:
+
+\begin{verbatim}
+\ntsetup{
+  doctype=msc,
+  school=nova/fct,
+  mainlanguage=en,
+  title={Deep Learning for Image Segmentation},
+  author={John Doe},
+  degree={Master of Science in Computer Engineering},
+  department={Department of Electrical and Computer Engineering},
+  year=2025
 }
-\makeatother
-
-
-\chapter{A Short \LaTeX\ Tutorial with Examples}
-\label{cha:a_short_latex_tutorial_with_examples}
-
-This Chapter aims at exemplifying how to do common stuff with \LaTeX. We also show some stuff which is not that common! ;)
-
-Please, use these examples as a starting point, but you should always consider using the \emph{Big Oracle} (aka, \href{http://www.google.com}{Google}, your best friend) to search for additional information or al-ternative ways for achieving similar results.
-
-\section{Document Structure} % (fold)
-\label{sec:document_structure}
-
-% section document_structure (end)
-
-
-\section{Dealing with Bibliography} % (fold)
-\label{sec:dealing_with_bibliography}
-
-Citing something online~\cite{wiki:shuntingyard,flex,bison}.
-
-% section dealing_with_bibliography (end)
-
-
-\section{Inserting Tables} % (fold)
-\label{sec:inserting_tables}
-
-% section inserting_tables (end)
-
-
-\section{Importing Images} % (fold)
-\label{sec:importing_images}
-
-% section importing_images (end)
-
-
-\section{Floats, Figures and Captions} % (fold)
-\label{sec:floats_figures_and_captions}
-
-% \subsection{Inserting Figures Wrapped with text} % (fold)
-% \label{ssec:inserting_images_wrapped_with_text}
-%
-% You should only use this feature is \emph{really} necessary. This means, you have a very small image, that will look lonely just with text above and below.
-%
-% In this case, you must use the \verb!wrapfigure! package.  To use \verb!wrapfig!, you must first add this to the preamble:
-%
-% \begin{wrapfigure}{l}{2.5cm}
-%   \centering
-%     \includegraphics[width=2cm]{snowman-vectorial}
-%   \caption{A snow-man}
-% \end{wrapfigure}
-%
-% \noindent\verb!\usepackage{wrapfig}!\\
-% This then gives you access to:\\
-% \verb!\begin{wrapfigure}[lineheight]{alignment}{width}!\\
-% Alignment can normally be either ``l'' for left, or ``r'' for right. Lowercase ``l'' or ``r'' forces the figure to start precisely where specified (and may cause it to run over page breaks), while capital ``L'' or ``R'' allows the figure to float. If you defined your document as twosided, the alignment can also be ``i'' for inside or ``o'' for outside, as well as ``I'' or ``O''. The width is obviously the width of the figure. The example above was introduced with:
-% \lstset{language=TeX, morekeywords={\begin,\includegraphics,\caption}, caption=Wrapfig Example, label=lst:latex_example}
-% \begin{lstlisting}
-%   \begin{wrapfigure}{l}{2.5cm}
-%     \centering
-%       \includegraphics[width=2cm]{snowman-vectorial}
-%     \caption{A snow-man}
-%   \end{wrapfigure}
-% \end{lstlisting}
-
-% subsection inserting_images_wrapped_with_text (end)
-
-% section floats_figures_and_captions (end)
-
-\lipsum[1-3]
-
-\begin{figure}[htbp]
-  \centering
-  \subbottom[One sub-figure\label{fig:leftsubfig}]{%
-    \includegraphics[width=0.5\linewidth]{knitting-vectorial}}%
-  \subbottom[Another sub-figure\label{fig:rightsubfig}]{%
-    \includegraphics[width=0.5\linewidth]{knitting-vectorial}}%
-  \caption{A figure with two sub-figures!}
-  \label{fig:fig2subfig}
-\end{figure}
-
-\textbf{And this is a small text that references the Figure~\ref{fig:fig2subfig} and its Subfigures~\ref{fig:leftsubfig} and~\ref{fig:rightsubfig}.}
-
-\lipsum[1-3]
-
-
-\section{Text Formatting} % (fold)
-\label{sec:text_formatting}
-
-% section text_formatting (end)
-
-
-\section{Generating PDFs from \LaTeX} % (fold)
-\label{sec:generating_pdfs_from_latex}
-
-\subsection{Generating PDFs with pdflatex} % (fold)
-\label{ssec:generating_pdfs_with_pdflatex}
-
-You may create PDF files either by using \verb!latex! to generate a DVI file, and then use one of the many DVI-2-PDF converters, such as \verb!dvipdfm!.
-
-Alternatively, you may use \verb!pdflatex!, which will immediately generate a PDF with no intermediate DVI or PS files. In some systems, such as Apple, PDF is already the default format for \LaTeX. I strongly recommend you to use this approach, unless you have a very good argument to go for \verb!latex! + \verb!dvipdfm!.
-
-A typical pass for a document with figures, cross-references and a bibliography would be:
-\begin{verbatim}
-$ pdflatex template
-$ bibtex template
-$ pdflatex template
-$ pdflatex template
 \end{verbatim}
-You will notice that there is a new PDF file in the working directory called \verb!template.pdf!. Simple :)
 
-Please note that, to be sure all table of contents, cross-references and bibliographic citations are up-to-date, you must run \verb!latex! once, then \verb!bibtex!, and then \verb!latex! twice.
-% section generating_pdfs_with_pdflatex (end)
+Each option may be commented or adjusted according to your requirements.  
+The \texttt{school} parameter activates the corresponding institutional preset.
 
-\subsection{Dealing with Images} % (fold)
-\label{sub:dealing_with_images}
+\subsection{Step 3: Verify Language Settings}
 
-You may process the same source files with both \verb!latex! or \verb!pdflatex!. But, if your text include images, you must be careful. \verb!latex! and \verb!pdflatex! accept images in different (exclusive) formats.  For \verb!latex! you may use EPS ou PS figures. For \verb!pdflatex! you may use JPG, PNG or PDF figures.  I strongly recommend you to use PDF figures in vectorial format (do not use bitmap images unless you have no other choice).
-% subsection dealing_with_images (end)
+The option \texttt{mainlanguage} determines the automatic translation of all structural elements (captions, lists, and headings).  
+Supported values include:
 
+\begin{quote}
+\texttt{en}, \texttt{pt}, \texttt{es}, \texttt{fr}, \texttt{de}, \texttt{it}, \texttt{gr}, \texttt{uk}.
+\end{quote}
 
-\subsection{Dealing with Citations} % (fold)
+Changing the main language automatically loads the corresponding translation file from \texttt{\gls{novathesis}Files/Strings/}.
 
-Para fazer citações, deverá usar-se a chave da referência no ficheiro BibTeX. Se for uma única referência~\cite{Artho04}, usar um ``\verb!~!'' para ligar o \verb!\cite{...}! à palavra que o precede (\ldots\verb!referência~\cite{Artho04}!).  Caso queira fazer múltiplas citações~\cite{Shavit95,Silberschatz06,Moss85}, deverá agrupá-las dentro de um úinico \verb!\cite{...}!.
+\subsection{Step 4: Configure the Bibliography}
 
-Note que o ficheiro de bibliografia pode ter tantas entradas quantas quiser. Apenas aquelas cuja chave seja referenciada no texto é que serão incluidas na listagem de bibliografia.
+Open \texttt{0-Config/2\_biblatex.tex} and ensure that the bibliography processor and citation style are correctly set.  
+For most users, the default configuration is appropriate:
 
-
-\subsection{Footnotes} % (fold)
-
-Footnotes\footnote{This is a simple footnote.} will be numbered and shown in the bottom of the page.
-
-
-\subsection{Tables} % (fold)
-
-The Table~\ref{tab:hla:results} illustrates some important concepts associated with table construction:
-\begin{asparaenum}[i)]
-\item Do not use vertical lines;
-\item The caption should be above the table;
-\item Use the macros \verb!\toprule!, \verb!\midrule! and \verb!\bottomrule! to make the top, inner and bottom horizontal lines, respectively.
-\end{asparaenum}
-
-\bgroup
-\rowcolors{1}{}{GhostWhite}
-\begin{xltabular}{\textwidth}{Xccccc}
-  \caption{Test results summary.}
-  \label{tab:hla:results}\\
-  \toprule
-  \rowcolor{Gainsboro}%
-  Test   & Anomalies  & Warnings  & Correct   & Categories            & Missed \\
-  \midrule
-Connection~\cite{Beckman08}     & 2       & 2          & 1          & \emph{C}              & 1 \\
-Coordinates'03~\cite{Artho03}   & 1        & 4          & 1          & \emph{2B, 1C}          & 0 \\
-Local Variable~\cite{Artho03}    & 1        & 2          & 1          & \emph{A}              & 0 \\
-NASA~\cite{Artho03}              & 1        & 1          & 1          & ---                    & 0 \\
-Coordinates'04~\cite{Artho04}    & 1        & 4          & 1          & \emph{3C}              & 0 \\
-Buffer~\cite{Artho04}            & 0        & 7          & 0          & \emph{2A, 1B, 2C, 2D}  & 0 \\
-Double-Check~\cite{Artho04}      & 0        & 2          & 0          & \emph{1A, 1B}          & 0 \\
-StringBuffer~\cite{Flanagan04}  & 1        & 0          & 0          & ---                    & 1 \\
-Account~\cite{Praun03}          & 1        & 1          & 1          & ---                   & 0 \\
-Jigsaw~\cite{Praun03}            & 1        & 2          & 1          & \emph{C}              & 0 \\
-Over-reporting~\cite{Praun03}    & 0        & 2          & 0          & \emph{1A, 1C}          & 0 \\
-Under-reporting~\cite{Praun03}  & 1        & 1          & 1          & ---                    & 0 \\
-Allocate Vector~\cite{IBM-Rep}  & 1        & 2          & 1          & \emph{C}              & 0 \\
-Knight Moves~\cite{Beckman08}   & 1        & 3          & 1          & \emph{2B}              & 0 \\
-  \midrule
-  \rowcolor{Gainsboro}%
-Total                            & 12      & 33        & 10        & 5A, 6B, 10C, 2D       & 2 \\
-  \bottomrule
-  \end{xltabular}
-\egroup
-
-\subsection{Figures} % (fold)
-
-The images inserted in the document must be of good quality, preferably in vector format (vector PDF) and not in \emph{bitmap} (PNG, JPG, etc.). \emph{bitmap} images (Figure~\ref{fig:Figures_Tree_silhouettes-bitmap}) do not scale well and have negative effects on the quality of your document. On the other hand, \emph{vector} images {Figure~\ref{fig:Figures_Tree_silhouettes-vectorial}} scale as much as necessary without degrading the quality of the image.
-
-You should only use \emph{screenshots} for your plots, charts, etc, if you absolutely have no other alternative. Instead of generating a \emph{screenshot}, try using a virtual PDF printer and printing to a PDF file. As a general rule, you will get a vector PDF. Even if your PDF contains images, they will always be of higher or equal quality than what you would get with a \emph{screenshot}.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[height=1in]{snowman-bitmap}
-  \includegraphics[height=3in]{snowman-bitmap}
-  \includegraphics[height=6in]{snowman-bitmap}
-  \caption{Bitmap image (JPG/PNG)}
-  \label{fig:Figures_Tree_silhouettes-bitmap}
-\end{figure}
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[height=1in]{snowman-vectorial}
-  \includegraphics[height=3in]{snowman-vectorial}
-  \includegraphics[height=6in]{snowman-vectorial}
-  \caption{Vectorial image (PDF)}
-  \label{fig:Figures_Tree_silhouettes-vectorial}
-\end{figure}
-
-To combine several figures into a single one… You can then reference the set as Figure~\ref{fig:complete-figure} or the sub-figures separately as~\ref{fig:woolball} and~\ref{fig:cloud}.
-
-\begin{figure}[htbp]
-  \centering
-    \subbottom[Novelo de lã]{%
-    \label{fig:woolball}
-    \includegraphics[height=1in]{knitting-vectorial}
-    }
-\qquad\qquad
-    \subbottom[Tempestade com neve]{%
-    \label{fig:cloud}
-    \includegraphics[height=1in]{snowstorm-vectorial}
-    }
-  \caption{Exemplo de utilização de \emph{subbottom}}
-  \label{fig:complete-figure}
-\end{figure}
-
-\section{Equations}
-
-LaTeX is a powerful tool for writing in a mathematical style. It allows you to insert formulas into the text, such as this: $ax^2 + bx + c = 0$. It also allows formulas to be highlighted on a separate line and centered on the page.
-\[ x = \frac{-b \pm \sqrt{b^2-4ac}}{2a} \]
-or numbererd
-\begin{equation}
-e = mc^2
-\label{eq:1}
-\end{equation}
-which can latter be referenced as equation~\ref{eq:1}
-
-\newif\ifntlistingsloaded
-\ntifpkgloaded{listings}{\ntlistingsloadedtrue}{\ntlistingsloadedfalse}
-\newif\ifntmintedloaded
-\ntifpkgloaded{minted}{\ntmintedloadedtrue}{\ntmintedloadedfalse}
-
-\ifntlistingsloaded
-\section{Test for listings} % (fold)
-\label{sec:test_for_listings}
-
-Testing the package “listings“…
-
-\begin{lstlisting}[caption=cap,label=lst:lab,float=htbp]
-if(a==b)
-  puts("YESS!")
-\end{lstlisting}
-\fi
-
-\ifntmintedloaded
-\section{Test for minted} % (fold)
-\label{sec:test_for_minted}
-
-Testing the package “minted“…
-
-\begin{listing}[H]
-  \begin{minted}{C}
-    if(a==b)
-      puts("YESS!")
-  \end{minted}
-  \caption{Example of a listing.}
-  \label{lst:lab}
-\end{listing}
-\fi
-
-\section{Test for algorithms}
-\label{sec:test_for_algorithms}
-
-Uncomment the algorithms source below and add the following to file “\verb!5_packages.tex!”
 \begin{verbatim}
-  \usepackage{algorithm2e}
-  \RestyleAlgo{ruled}
+\ntbibsetup{
+  backend=biber,
+  style=authoryear-comp,
+  sorting=nyt
+}
 \end{verbatim}
-and uncomment
+
+The bibliography database is located in \texttt{4-Bibliography/bibliography.bib}.  
+Add your references to this file following the standard Bib\LaTeX{} syntax.
+
+\section{Compiling the Document}
+
+Compilation may be performed either through the provided \texttt{Makefile} or manually using \texttt{latexmk}.  
+The Makefile automates all steps required to produce the final PDF, including multiple compilation passes and bibliography generation.
+
+\subsection{Using the Makefile}
+
+In the project root directory, execute one of the following commands:
+
 \begin{verbatim}
-\ntaddlistof{listofalgorithms}
+make pdf     # Build with pdfLaTeX
+make xe      # Build with XeLaTeX (recommended for modern fonts)
+make lua     # Build with LuaLaTeX
+make clean   # Remove temporary files
+make view    # Compile and open the resulting PDF
 \end{verbatim}
-in file “\verb!8_list_og.tex!”.
 
-% \begin{algorithm}
-% $i\gets 10$\;
-% \eIf{$i\geq 5$}
-% {
-%     $i\gets i-1$\;
-% }{
-%     \If{$i\leq 3$}
-%     {
-%         $i\gets i+2$\;
-%     }
-% }
-% \caption{This is an algorithm.}
-% \end{algorithm}
+The Makefile automatically detects the configuration from \texttt{1\_novathesis.tex}.  
+Users do not need to specify the school or language explicitly.
 
-% section test_for_listings (end)
+\subsection{Manual Compilation with \texttt{latexmk}}
 
-% \printbibliography[heading=subbibliography, segment=\therefsegment, title={\bibname\ for chapter~\thechapter}]
+For environments without \texttt{make}, the document may be compiled directly as follows:
 
+\begin{verbatim}
+latexmk -xelatex template.tex
+\end{verbatim}
+
+or, for a pdf\LaTeX{} build:
+
+\begin{verbatim}
+latexmk -pdf template.tex
+\end{verbatim}
+
+To clean intermediate files, use:
+
+\begin{verbatim}
+latexmk -c
+\end{verbatim}
+
+\section{Viewing the Output}
+
+Upon successful compilation, a file named \texttt{template.pdf} will be generated in the same directory.  
+Open this file with a PDF viewer to verify that:
+
+\begin{enumerate}
+  \item The title page contains your name, title, and institution;
+  \item Chapter headings and page numbering appear correctly;
+  \item The sample text compiles without missing references or citations.
+\end{enumerate}
+
+\section{Editing Content Files}
+
+After confirming that the template builds correctly, begin replacing the sample material with your own content.
+
+\subsection{Front Matter}
+
+Edit the files located in \texttt{1-FrontMatter/}:
+\begin{itemize}
+  \item \texttt{abstract.tex} – Abstract of the thesis;
+  \item \texttt{acknowledgments.tex} – Acknowledgment section;
+  \item \texttt{acronyms.tex} – List of acronyms and abbreviations.
+\end{itemize}
+
+\subsection{Main Matter}
+
+Each chapter resides in \texttt{2-MainMatter/}.  
+To add a new chapter, duplicate an existing file and update the chapter title:
+
+\begin{verbatim}
+\chapter{Background and Literature Review}
+\label{chap:background}
+\end{verbatim}
+
+Include the new file in \texttt{template.tex} in the appropriate order.
+
+\subsection{Back Matter}
+
+The \texttt{3-BackMatter/} directory contains appendices, glossaries, and the bibliography.  
+By default, the bibliography is automatically appended at the end of the document.  
+Additional appendices may be defined using:
+
+\begin{verbatim}
+\appendix
+\chapter{Supplementary Results}
+\end{verbatim}
+
+\section{Verifying Bibliography Compilation}
+
+If citations appear as question marks (``?''), this indicates that the bibliography has not yet been processed.  
+Execute the following command sequence manually to rebuild:
+
+\begin{verbatim}
+latexmk -xelatex template.tex
+biber template
+latexmk -xelatex template.tex
+\end{verbatim}
+
+Alternatively, running \texttt{make xe} will perform these steps automatically.
+
+\section{Changing the Document Type}
+
+The \texttt{doctype} parameter defines the overall structure of the document.  
+Changing its value automatically adjusts formatting elements such as title page content and numbering depth.  
+Supported types include:
+
+\begin{quote}
+\texttt{msc}, \texttt{phd}, \texttt{bsc}, \texttt{report}, \texttt{article}, \texttt{book}.
+\end{quote}
+
+For example:
+
+\begin{verbatim}
+\ntsetup{doctype=phd}
+\end{verbatim}
+
+\section{Customizing the Institutional Preset}
+
+If your institution is already supported, set the \texttt{school} option accordingly.  
+If not, you may define a custom preset by creating a new file \texttt{0-Config/9\_<school>.tex}.  
+Use one of the existing presets as a template and modify logo placement, cover design, or metadata fields as needed.
+
+\section{Common Issues During First Compilation}
+
+\begin{itemize}
+  \item \textbf{Fonts not found:} Ensure the required fonts for your selected theme are installed. Use XeLaTeX or LuaLaTeX for system fonts.
+  \item \textbf{Bibliography missing:} Confirm that \texttt{biber} is installed and that your references are properly formatted in the \texttt{.bib} file.
+  \item \textbf{Undefined control sequence:} This usually indicates a missing package. Install the full distribution (\texttt{texlive-full} or equivalent).
+  \item \textbf{Images not displaying:} Check that figures are located in the \texttt{5-Figures/} directory and referenced with the correct relative path.
+\end{itemize}
+
+\section{Next Steps}
+
+After the initial compilation and configuration are successful, the user may proceed to customize fonts, language options, and bibliography styles as described in Chapter~\ref{chap:configuration}.  
+Subsequent chapters detail advanced features, including institutional extensions, font themes, and multi-language support.
+
+At this stage, the \gls{novathesis} environment is fully operational.  
+The remaining tasks involve adapting the template to the specific content and academic requirements of your degree program.

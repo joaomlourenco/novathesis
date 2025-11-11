@@ -6,20 +6,305 @@
 %% Chapter with lots of dummy text
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE chapter5.tex}%
+\typeout{NT FILE chapter6.tex}%
 
-\chapter{Lorem Ipsum}
-\label{cha:lorem_ipsum}
+\chapter{Document Structure}
+\label{chap:document-structure}
 
-\lipsum[1-100]
-\lipsum[1-100]
-\lipsum[1-100]
-% \lipsum[1-100]
-% \lipsum[1-700]
-% \lipsum[1-700]
-% \lipsum[1-700]
-% \lipsum[1-700]
-% \lipsum[1-700]
-% \lipsum[1-700]
-% \lipsum[1-700]
-% \lipsum[1-700]
+\section{Overview}
+
+This chapter describes the logical and physical structure of a \gls{novathesis} document.  
+It explains how the thesis is partitioned into front matter, main matter, and back matter; how content files are organized on disk; and how structural elements such as tables of contents, lists, figures, tables, appendices, glossaries, and the bibliography are orchestrated.  
+The intent is to provide a clear, reproducible workflow for authoring and maintaining a large academic document.
+
+\section{Physical Layout (Project Folders)}
+
+\gls{novathesis} separates configuration, content, and internal assets into distinct directories:
+
+\begin{verbatim}
+.
+├── 0-Config/         % User-editable configuration (Chapter~\ref{chap:configuration})
+├── 1-FrontMatter/    % Abstracts, acknowledgments, acronyms, dedication, quotes
+├── 2-MainMatter/     % Chapters (content of the thesis)
+├── 3-BackMatter/     % Appendices, annexes, optional lists (glossaries/index if used)
+├── 4-Bibliography/   % Bibliographic databases (.bib files)
+├── 5-Figures/        % Figures and illustrations (optional subfolders)
+├── \gls{novathesis}Files/  % Internal assets (do not modify)
+├── template.tex      % Main entry point (load class + orchestrate parts)
+└── novathesis.cls    % Class definition (do not modify)
+\end{verbatim}
+
+Content files (\texttt{.tex}) live under the \texttt{1-}, \texttt{2-}, and \texttt{3-} directories.  
+The inclusion order is defined declaratively in \texttt{0-Config/4\_files.tex}, which the class reads to assemble the final document.
+
+\section{Logical Layout (Front/Main/Back Matter)}
+\label{sec:logical-layout}
+
+\gls{novathesis} adopts the conventional \emph{front matter} / \emph{main matter} / \emph{back matter} partitioning set by the \texttt{memoir} class, and augments it with institutional and multilingual features.
+
+\subsection{Front Matter}
+Front matter contains the cover, the title and formal pages required by the institution, and optional elements such as dedication, acknowledgments, quotes, and multilingual abstracts.  
+Typical elements include:
+
+\begin{itemize}
+  \item Cover (front, verso, optional second cover; generated from metadata in \texttt{0-Config/3\_cover.tex} and the selected preset);
+  \item Title and approval pages (preset-dependent);
+  \item Dedication (\texttt{1-FrontMatter/dedicatory.tex}, optional);
+  \item Acknowledgments (\texttt{1-FrontMatter/acknowledgements.tex}, optional);
+  \item Quotes/epigraphs (\texttt{1-FrontMatter/quote.tex}, optional);
+  \item Abstracts in one or more languages (files declared in \texttt{4\_files.tex});
+  \item Table of Contents and lists (Figures, Tables, etc.), depending on \texttt{0-Config/6\_list\_of.tex}.
+\end{itemize}
+
+Front matter pages are typically numbered with lowercase Roman numerals, per standard academic convention, unless otherwise specified by the institutional preset.
+
+\subsection{Main Matter}
+Main matter includes the core scientific content—chapters and their subordinate sections.  
+Each chapter is a separate file under \texttt{2-MainMatter/} and is declared in \texttt{0-Config/4\_files.tex} using the \texttt{chapter} kind.  
+Arabic page numbering begins at the first page of the main matter.
+
+\subsection{Back Matter}
+Back matter includes appendices or annexes, glossaries, indices, and the bibliography.  
+Appendices are regular chapter-level units declared with the kinds \texttt{appendix} or \texttt{annex} in \texttt{4\_files.tex}.  
+The bibliography is automatically placed at the end and is built from the \texttt{.bib} files declared in \texttt{4\_files.tex}.
+
+\section{Orchestration via \texttt{0-Config/4\_files.tex}}
+\label{sec:orchestration}
+
+The file \texttt{0-Config/4\_files.tex} serves as the canonical inventory of document parts.  
+Use \verb|\ntaddfile{<kind>}[<selector>]{<name>}| to register files, where \texttt{<name>} is the basename without extension.
+
+\subsection*{Front Matter examples}
+\begin{verbatim}
+% Dedication / Acknowledgments / Quote (optional)
+\ntaddfile{dedicatory}{dedicatory}
+\ntaddfile{acknowledgements}{acknowledgements}
+\ntaddfile{quote}{quote}
+
+% Abstracts for given languages (file names under 1-FrontMatter/)
+\ntaddfile{abstract}[en]{abstract-en}
+\ntaddfile{abstract}[pt]{abstract-pt}
+\end{verbatim}
+
+\subsection*{Chapters (Main Matter)}
+\begin{verbatim}
+% Chapters in order (files under 2-MainMatter/)
+\ntaddfile{chapter}{chapter1}
+\ntaddfile{chapter}{chapter2}
+\ntaddfile{chapter}{chapter3}
+
+% Restrict a chapter to specific doctypes if needed:
+% \ntaddfile{chapter}[phd]{literature-review}
+% \ntaddfile{chapter}[phd,phdplan]{proposal-background}
+\end{verbatim}
+
+\subsection*{Back Matter}
+\begin{verbatim}
+% Appendices / Annexes (files under 3-BackMatter/)
+\ntaddfile{appendix}{appendixA}
+\ntaddfile{appendix}{appendixB}
+\ntaddfile{annex}{annex1}
+
+% Bibliography databases (files under 4-Bibliography/)
+\ntaddfile{bib}{bibliography.bib}
+% \ntaddfile{bib}{secondary.bib}
+\end{verbatim}
+
+\subsection*{Covers (optional override)}
+\begin{verbatim}
+% User-supplied covers (override preset cover pages)
+% \ntaddfile{cover}[1]{cover-front}
+% \ntaddfile{cover}[N]{cover-back}
+% \ntaddfile{cover}[spine]{cover-spine}
+
+% Disable versus/second cover if your institution does not require it:
+% \ntsetup{print/secondcover=false}
+\end{verbatim}
+
+\paragraph{Best practice.}  
+Maintain the master sequence in \texttt{4\_files.tex} only. Avoid manual \verb|\input| in \texttt{template.tex}, which is reserved for class-level orchestration.
+
+\section{Chapters and Sectioning}
+\label{sec:chapters}
+
+A typical chapter file under \texttt{2-MainMatter/} begins with a chapter declaration, an optional label, and freely-structured sections:
+
+\begin{verbatim}
+\chapter{Background and Related Work}
+\label{chap:background}
+
+\section{Problem Setting}
+...
+
+\subsection{Assumptions}
+...
+
+\section{Related Work}
+...
+\end{verbatim}
+
+\paragraph{Numbering and depth.}  
+Section numbering and ToC depth follow the class defaults and may be tuned via \texttt{memoir} options in \texttt{0-Config/0\_memoir.tex} if strictly required by the institution.
+
+\paragraph{Labels and references.}  
+Label chapters as \verb|\label{chap:<name>}| and sections as \verb|\label{sec:<name>}|.  
+Use \verb|\ref| for numbered references, \verb|\nameref| for titles, and \verb|\autoref| when \texttt{hyperref} is active.  
+For figures and tables, prefer \verb|\vref| (from \texttt{varioref}) if you require “on the next page” messages.
+
+\section{Figures, Tables, Algorithms, and Listings}
+\label{sec:floats}
+
+\subsection{Figures}
+\begin{verbatim}
+\begin{figure}
+  \centering
+  \includegraphics[width=.8\linewidth]{5-Figures/method/overview}
+  \caption{Method overview.}
+  \label{fig:method-overview}
+\end{figure}
+\end{verbatim}
+
+Store graphics under \texttt{5-Figures/} and reference using relative paths. For vector material, prefer PDF; for bitmap, PNG at print resolution.
+
+\subsection{Tables}
+\begin{verbatim}
+\begin{table}
+  \centering
+  \caption{Hyperparameters used in all experiments.}
+  \label{tab:hyperparams}
+  \begin{tabular}{lcl}
+    \toprule
+    Name & Value & Notes\\
+    \midrule
+    Batch size & 64 & --- \\
+    Learning rate & 1e-3 & warm-up 1k steps \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\end{verbatim}
+
+Use \texttt{booktabs} rules (\verb|\toprule|/\verb|\midrule|/\verb|\bottomrule|) for professional tables.
+
+\subsection{Algorithms and Listings}
+\gls{novathesis} detects algorithm/listing packages and adds corresponding “List of …” entries when enabled.  
+Select one algorithm package (e.g., \texttt{algorithm2e} or \texttt{algorithms}) and optionally \texttt{listings} or \texttt{minted} for code.
+
+\begin{verbatim}
+% In 5_packages.tex (example)
+% \usepackage[ruled,vlined]{algorithm2e}
+% \usepackage{listings} % or: \usepackage{minted}
+\end{verbatim}
+
+Then enable the lists in \texttt{0-Config/6\_list\_of.tex} (see Chapter~\ref{chap:configuration}).
+
+\section{Tables of Contents and Lists}
+\label{sec:tocs-and-lists}
+
+The Table of Contents (ToC) is generated automatically.  
+Additional lists (Figures, Tables, Algorithms, Listings, Glossaries) are controlled by \texttt{0-Config/6\_list\_of.tex}:
+
+\begin{verbatim}
+\ntaddlistof{listoffigures}
+\ntaddlistof{listoftables}
+% auto: listofalgorithms, lstlistoflistings or listoflistings (if packages loaded)
+% glossaries bundle (if in use):
+% \ntaddlistof{listsofglossaries}
+\end{verbatim}
+
+\paragraph{ToC naming and localization.}  
+Override localized names via \verb|\ntlangsetup| in \texttt{5\_packages.tex} if your institution uses nonstandard terminology.
+
+\section{Mathematics, Theorems, and Cross-Referencing}
+
+For formal statements, you may use standard theorem packages.  
+When institutional requirements demand a \emph{List of Theorems}, enable the corresponding package support (some presets leverage \texttt{coloredtheorem}).  
+Cross-reference theorems with \verb|\label|/\verb|\ref|, and ensure numbering schemes are consistent across chapters.
+
+\section{Appendices and Annexes}
+\label{sec:appendices}
+
+Appendices and annexes are separate streams of chapter-level content placed after the main matter.  
+Declare them in \texttt{0-Config/4\_files.tex}:
+
+\begin{verbatim}
+\ntaddfile{appendix}{appendixA}
+\ntaddfile{annex}{annex1}
+\end{verbatim}
+
+Within the appendix file, \texttt{\gls{novathesis}} switches to appendix mode automatically; you should structure content with \verb|\chapter{...}| and optional sections as needed.
+
+\section{Glossaries, Acronyms, and Symbols}
+\label{sec:glossaries}
+
+If your thesis uses glossaries or a list of acronyms, load the relevant packages in \texttt{5\_packages.tex} and define entries in dedicated files (commonly under \texttt{1-FrontMatter/}).  
+When enabled, add the glossaries list in \texttt{6\_list\_of.tex}:
+
+\begin{verbatim}
+% \ntaddlistof{listsofglossaries}
+\end{verbatim}
+
+Ensure the build toolchain includes the glossary make step when required by your chosen package (the provided Makefile and \texttt{latexmk} rules typically handle it).
+
+\section{Bibliography Integration}
+\label{sec:bibliography-structure}
+
+Bibliographic databases are declared in \texttt{0-Config/4\_files.tex} with the \texttt{bib} kind:
+
+\begin{verbatim}
+\ntaddfile{bib}{bibliography.bib}
+% \ntaddfile{bib}{bibliography_doi.bib}
+\end{verbatim}
+
+Citation style and backend settings are defined in \texttt{0-Config/2\_biblatex.tex}.  
+Use \verb|\textcite|, \verb|\parencite|, and related commands consistently.  
+The bibliography renders at the end of the back matter as part of the class’ standard sequence.
+
+\section{Language and Multi-Abstract Handling}
+\label{sec:language-structure}
+
+Abstracts are per-language files declared in \texttt{4\_files.tex}.  
+The order in which abstracts appear is governed by \texttt{abstractorder} in \texttt{1\_novathesis.tex} (see Chapter~\ref{chap:configuration}).  
+Localization of structural strings (captions, list titles, ToC labels) is automatic based on the main language; override specific strings using \verb|\ntlangsetup|.
+
+\section{Cover, Second Cover, and Spine}
+\label{sec:cover-structure}
+
+Covers and spine are generated from metadata in \texttt{0-Config/3\_cover.tex} and the selected institutional preset.  
+If institutional rules require a second cover, it is produced automatically; disable it if not needed:
+
+\begin{verbatim}
+% 0-Config/4_files.tex (override behaviour if allowed by your School)
+% \ntsetup{print/secondcover=false}
+\end{verbatim}
+
+User-supplied cover pages may be injected via the \texttt{cover} kind (Section~\ref{sec:orchestration}).  
+Spine layout can be toggled and dimensioned through the keys documented in Chapter~\ref{chap:configuration}.
+
+\section{Common Structural Variations}
+
+\begin{itemize}
+  \item \textbf{Proposal / Plan Documents} (\texttt{doctype=phdplan, mscplan}): restrict included chapters via the optional selector in \texttt{4\_files.tex} (e.g., include only background and methodology).
+  \item \textbf{Articles or Reports} (\texttt{doctype=article, plain}): keep the structure minimal—front matter, a single main file, and the bibliography; remove redundant lists in \texttt{6\_list\_of.tex}.
+  \item \textbf{Bilingual Documents}: declare multiple abstracts; set \texttt{lang/extra} for additional localized strings; ensure figure/table captions meet the main language rules unless your program mandates bilingual captions.
+\end{itemize}
+
+\section{Quality Assurance Checklist}
+
+Before sharing drafts with supervisors or submitting to institutional repositories, verify:
+
+\begin{enumerate}
+  \item \textbf{Sequencing}: \texttt{4\_files.tex} lists all parts in the intended order.
+  \item \textbf{Labels}: every float and structural unit has a unique, descriptive \verb|\label|.
+  \item \textbf{References}: no unresolved references (\texttt{??}) or citations (\texttt{??}).
+  \item \textbf{Lists}: only the required lists are enabled (Figures/Tables/Algorithms/Listings/Glossaries).
+  \item \textbf{Appendices}: numbering and headings conform to institutional rules.
+  \item \textbf{Language}: abstract order and ToC/labels reflect the main language and institutional policy.
+  \item \textbf{Cover}: metadata, committee, sponsors/funding (if applicable) are accurate and consistent.
+\end{enumerate}
+
+\section{Summary}
+
+\gls{novathesis} enforces a clean separation between configuration and content while adhering to academic structuring conventions.  
+Define content files in \texttt{0-Config/4\_files.tex}, keep chapter files modular under \texttt{2-MainMatter/}, and allow the class to assemble front matter, lists, back matter, and bibliography in a predictable sequence.  
+Following the practices outlined in this chapter ensures maintainability and compliance with institutional requirements.
+

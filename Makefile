@@ -10,7 +10,9 @@
 # CUSTOMIZATION AREA HERE
 
 # Define V command to the name of your PDF viewer
-V:=open -a skim
+V		:= open -a skim
+# Define EDITOR command to open text files
+EDITOR 	?= mate
 
 
 #############################################################################
@@ -62,7 +64,7 @@ endif
 #————————————————————————————————————————————————————————————————————————————
 # latexmk and its flags
 LTXMK:=latexmk
-LTXFLAGS=-time -f -file-line-error -shell-escape -synctex=1 -auxdir=$(AUXDIR) $(MODE) $(FLAGS)
+LTXFLAGS=-time -f -file-line-error -halt-on-error -shell-escape -synctex=1 -auxdir=$(AUXDIR) $(MODE) $(FLAGS)
 BUILD:=.Build/build.py
 
 #————————————————————————————————————————————————————————————————————————————
@@ -98,9 +100,11 @@ SCHL := $(if $(SCHL),$(SCHL),nova/fct)
 
 #————————————————————————————————————————————————————————————————————————————
 # Automatically use the right latex compiler and compile
-.PHONY: default
+.PHONY: default build
 LUA=$(shell cat $(CACHE))
-default: validate-config check-env check-build
+default: validate-config check-env check-build build
+
+build:
 	$(BUILD) $(SCHL) --build-dir $(AUXDIR) --keep-tmp --user-mode --no-rename-pdf
 
 #————————————————————————————————————————————————————————————————————————————
@@ -108,7 +112,7 @@ default: validate-config check-env check-build
 # e.g. '$(MAKE) lua'
 .PHONY: pdf xe lua
 pdf xe lua: validate-config check-env $(CACHE) $(LTXFILE) $(LTXCLS)
-	$(LTXMK) -pdf$(patsubst pdf%,%,$@) $(LTXFLAGS) $(BASENAME)
+	$(LTXMK) -pdf$(patsubst pdf%,%,$@) $(LTXFLAGS) $(EXTRAFLAGS) $(BASENAME)
 
 #————————————————————————————————————————————————————————————————————————————
 # Btach mode
@@ -157,11 +161,18 @@ ifeq ($(TEXBIN),)
 else
 	PATH="$(TEXBIN):$(PATH)" $(MAKE) $(filter-out $@,$(MAKECMDGOALS))
 endif
+
 #————————————————————————————————————————————————————————————————————————————
 # Build and display the PDF
 .PHONY: v view
 v view: $(PDFFILE)
 	$(V) $(PDFFILE)
+
+#————————————————————————————————————————————————————————————————————————————
+# View the log file
+.PHONY: log
+log:
+	$(EDITOR) $(AUXDIR)/$(AUXDIR)/$(BASENAME).log
 
 #————————————————————————————————————————————————————————————————————————————
 # Build the PDF

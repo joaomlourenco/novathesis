@@ -9,456 +9,190 @@
 \typeout{NT FILE chapter1.tex}%
 
 \chapter{Introduction}
-\label{cha:introduction}
+\label{chap:introduction}
 
-\prependtographicspath{{5-Figures/Covers/}}
+\section{Purpose and Scope}
 
-% epigraph configuration
-\epigraphfontsize{\small\itshape}
-\setlength\epigraphwidth{12.5cm}
-\setlength\epigraphrule{0pt}
+The \gls{novathesis} template is a comprehensive \LaTeX{} class and project skeleton designed to simplify the preparation of academic theses and dissertations. Representing a synthesis of many years of practical experience in producing academic documents with \LaTeX{}, its objective is not only to provide a consistent visual identity but also to encourage good typesetting practices and reproducible workflows. It provides a robust, extensible, and highly configurable foundation for students, researchers, and supervisors who require professional-quality documents that conform to institutional standards. 
 
-\includegraphics[width=0.1\linewidth]{NOVAthesisFiles/Images/novathesis-insignia}\hfill
-\includegraphics[width=0.875\linewidth]{NOVAthesisFiles/Images/novathesis-text}
-
-\noindent This is the \gls{novathesis} \LaTeX\ template \ntindex[Template!]{Version} \novathesisversion\ from   {Template!date}\novathesisdate.
-
-\epigraph{
-  This work is licensed under the \href{https://www.latex-project.org/lppl/lppl-1-3c/}{\LaTeX\ Project Public License v1.3c}.
-  To view a copy of this \ntindex[Template!]{license}, visit the \href{https://www.latex-project.org/lppl/}{LaTeX project public license}.
-}
-
-% \section{Welcome to the \novathesis\ Template}
-% \label{sec:if_you_use_this_template}
-
-This first Chapter introduces the \gls{novathesis} template and how it is organized. In Chapter~\ref{cha:users_manual} you can find some specific instructions on how to use this template.  Chapter~\ref{cha:a_short_latex_tutorial_with_examples} shows some examples and give some hints on how to write your text. Please read these next Chapters carefully.
-
-\section{The \emph{NOVAthesis} Template}
-\label{sec:a_bit_of_history}
-
-\ntindex[Template]{}
-
-The \gls{novathesis} template was born at the \gls{DI} of  \gls{FCT} of \gls{NOVA}, Portugal.  But the user base grew… initially grew to other Departments of FCT-NOVA, then to other Schools of NOVA, and later to other Schools of other Universities.  Currently more than~25 Schools are natively supported by the \gls{novathesis} template.  The full list of supported Schools can be founf at the
-\href{https://github.com/joaomlourenco/novathesis}{Project's GitHub page}.
-
-% (see Tables~\ref{tab:supported_schools_NOVA University Lisbon}, \ref{tab:supported_schools_University of Lisbon}, \ref{tab:supported_schools_University of Minho}, \ref{tab:supported_schools_Instituto Politécnico de Lisboa}, \ref{tab:supported_schools_Instituto Politécnico de Setúbal}, and \ref{tab:supported_schools_Other Universities/Schools/Degrees}).
-%
-% \newenvironment{ntUniversity}[1]{
-%   \renewcommand\tabularxcolumn[1]{m{##1}}% for vertical centering text in X column
-%   % \renewcommand\cellgape{\Gape[1cm]}
-%   % \setcellgapes{20pt}
-%   % \makegapedcells
-%   % % \setlength{\extrarowheight}{20pt}
-%   % \renewcommand{\arraystretch}{2}
-%   \rowcolors{1}{}{GhostWhite}
-%     \xltabular{\linewidth}{cX}%
-%       \caption{#1's Schools supported by the \gls{novathesis} template\label{tab:supported_schools_#1}}\\
-%     \toprule%
-%     \rowcolor{Gainsboro}%
-%     & \Gape[1.5ex]{\thead[l]{#1}}\\
-%     \midrule%
-% }{%
-%     \bottomrule
-%     \endxltabular%
-% }
-%
-% \makeatletter
-% \newtoggle{coverspace}
-% \newcommand{\docCover}[1]{%
-%   \setlength{\fboxsep}{0pt}%
-%   \togglefalse{coverspace}%
-%     \Gape[1.5ex]{\begin{mcellbox}[cc]
-%     \@for\myi:=#1\do{%
-%       \fbox{\colorbox{White}{\includegraphics[align=c,width=1.5cm]{1up/\myi}}}%
-%         \ifx\@xfor@nextelement\@nnil
-%           % last iteration
-%         \else
-%           % not last iteration
-%           \iftoggle{coverspace}{\togglefalse{coverspace}\\\\[-14pt]}{\toggletrue{coverspace}~}%
-%         \fi
-%   }%
-%     \end{mcellbox}}
-% }
-% \makeatother
-% \newcommand{\schlName}[3]{\textbf{#1} (\href{#3}{#2})}
-% \newcommand{\degreeName}[3]{\newline\null\quad • #1 \href{#3}{(#2)}}
-%
-% \begin{ntUniversity}{NOVA University Lisbon}
-%   % {
-%   %     \docCover{nova-fct-phd-en,nova-fct-msc-en}
-%   % } &  {
-%   %   \schlName{NOVA School of Science and Technology}{FCT-NOVA}{https://www.fct.unl.pt}
-%   %   \degreeName{All PhD Programs}{PhD}{https://www.fct.unl.pt/en/education/phd-programmes}
-%   %   \degreeName{All MSc Programs}{MSc}{https://www.fct.unl.pt/en/education/master-degrees}
-%   % }\\
-%   % {
-%   %     \docCover{nova-fcsh-phd-en,nova-fcsh-msc-en}
-%   % } &  {
-%   %   \schlName{NOVA School of Social Sciences and Humanities}{FCSH-NOVA}{https://www.fcsh.unl.pt}
-%   %   \degreeName{All PhD Programs}{PhD}{https://www.fcsh.unl.pt/cursos/\#doutoramentos}
-%   %   \degreeName{All MSc Programs}{MSc}{https://www.fcsh.unl.pt/cursos/\#mestrados}
-%   % }\\
-%   {
-%       \docCover{nova-ims-phd-en,nova-ims-msc-mmaa-en,%
-%                 nova-ims-msc-megi-en,nova-ims-msc-mgi-en,%
-%                 nova-ims-msc-mcsig-en,nova-ims-msc-mgt-en}
-%   } &  {
-%     \schlName{NOVA Information Management School}{NOVA-IMS}{https://www.novaims.unl.pt}
-%     \degreeName{All PhD Programs}{PhD}{https://www.novaims.unl.pt}
-%     \degreeName{Master's in Data Science and Advanced Analytics}{MMAA}{https://www.novaims.unl.pt/mdsaa-ba}
-%     \degreeName{Master's in in Statistics and Information Management}{MEGI}{https://www.novaims.unl.pt}
-%     \degreeName{Master's in Information Management}{MGI}{https://www.novaims.unl.pt}
-%     \degreeName{Master's in Geographic Information Systems and Science}{MCSIG}{https://www.novaims.unl.pt/unigis}
-%     \degreeName{Master's in Geospatial Technologies}{GeoTech}{https://www.novaims.unl.pt/geotech}
-%   }\\
-%   % {
-%   %     \docCover{nova-ensp-phd-en,nova-ensp-msc-en}
-%   % } &  {
-%   %   \schlName{National School of Public Heath}{ENSP-NOVA}{https://www.ensp.unl.pt}
-%   %   \degreeName{All PhD Programs}{PhD}{https://www.ensp.unl.pt/courses/phds}
-%   %   \degreeName{All MSc Programs}{MSc}{https://www.ensp.unl.pt/courses/masters}
-%   % }\\
-%   % {
-%   %     \docCover{nova-itqb-phd-green-en,nova-itqb-msc-green-en,%
-%   %               nova-itqb-phd-gray-en,nova-itqb-msc-gray-en}
-%   % } & {
-%   %   \schlName{Instituto de Tecnologia Química e Biológica}{ITQB-NOVA}{https://www.itqb.unl.pt}
-%   %   \degreeName{All PhD Programs}{PhD}{https://www.itqb.unl.pt/education/PhD\%20Programs}
-%   %   \degreeName{All MSc Programs}{MSc}{https://www.itqb.unl.pt/education/masters-courses}
-%   % }\\
-% \end{ntUniversity}
-%
-% \begin{ntUniversity}{University of Lisbon}
-%   {
-%     \docCover{ulisboa-ist-phd-en,ulisboa-ist-msc-en}
-%   } & {
-%     \schlName{Instituto Superior Técnico}{IST-UL}{https://tecnico.ulisboa.pt}
-%     \degreeName{All PhD Programs}{PhD}{https://tecnico.ulisboa.pt/en/education/courses/phd-programmes/}
-%     \degreeName{All MSc Programs}{MSc}{https://tecnico.ulisboa.pt/en/education/courses/masters-programmes}
-%   }\\
-%   {
-%     \docCover{ulisboa-fc-phd-en,ulisboa-fc-msc-en}
-%   } & {
-%     \schlName{Faculdade de Ciências}{FCUL}{https://ciencias.ulisboa.pt}
-%     \degreeName{All PhD Programs}{PhD}{https://ciencias.ulisboa.pt/en/educational-offer/}
-%     \degreeName{All MSc Programs}{MSc}{https://ciencias.ulisboa.pt/en/educational-offer/}
-%   }\\
-%   {
-%     \docCover{ulisboa-fmv-phd-en,ulisboa-fmv-msc-en}
-%   } & {
-%     \schlName{Faculdade de Medicina Veterinária}{FMV-UL}{https://www.fmv.ulisboa.pt}
-%     \degreeName{All PhD Programs}{PhD}{https://www.fmv.ulisboa.pt/en/study/phd}
-%     \degreeName{All MSc Programs}{MSc}{https://www.fmv.ulisboa.pt/pt/ensino/mestrados}
-%   }\\
-% \end{ntUniversity}
-%
-%
-% \newdata*{schlname}
-% \newdata*{schlurl}
-% \schlname(ea):={School of Architecture}
-% \schlurl(ea):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/School-of-Architecture.aspx}
-% \schlname(ec):={School of Sciences}
-% \schlurl(ec):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-sciences.aspx}
-% \schlname(ed):={School of Law}
-% \schlurl(ed):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-law.aspx}
-% \schlname(ee):={School of Engineering}
-% \schlurl(ee):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-Engineering.aspx}
-% \schlname(eeg):={School of Economics and Management}
-% \schlurl(eeg):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-economics-and-management.aspx}
-% \schlname(em):={School of Medicine}
-% \schlurl(em):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-Medicine.aspx}
-% \schlname(ep):={School of Psychology}
-% \schlurl(ep):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-psychology.aspx}
-% \schlname(ese):={School of Nursing}
-% \schlurl(ese):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-nursing.aspx}
-% \schlname(i3b):={Research Institute 13Bs}
-% \schlurl(i3b):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/Institute-I3Bs.aspx}
-% \schlname(ics):={Institute of Social Sciences}
-% \schlurl(ics):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/institute-of-social-sciences.aspx}
-% \schlname(ie):={Institute of Education}
-% \schlurl(ie):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/institute-of-education.aspx}
-% \schlname(elach):={School of Arts and Humanities}
-% \schlurl(elach):={https://www.uminho.pt/EN/uminho/Units/schools-and-institutes/Pages/school-of-arts-and-humanities.aspx}
-%
-%
-% \begin{ntUniversity}{University of Minho}
-%     {
-%       \docCover{uminho-ea-phd-en,uminho-ea-msc-en}
-%     } & {
-%       \schlName{\theschlname(ea)}{\uppercase{ea}-UMINHO}{\theschlurl(ea)}
-%       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
-%       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
-%     }\\
-%     {
-%       \docCover{uminho-ec-phd-en,uminho-ec-msc-en}
-%     } & {
-%       \schlName{\theschlname(ec)}{\uppercase{ec}-UMINHO}{\theschlurl(ec)}
-%       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
-%       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
-%     }\\
-%     {
-%       \docCover{uminho-ed-phd-en,uminho-ed-msc-en}
-%     } & {
-%       \schlName{\theschlname(ed)}{\uppercase{ed}-UMINHO}{\theschlurl(ed)}
-%       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
-%       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
-%     }\\
-%     {
-%       \docCover{uminho-ee-phd-en,uminho-ee-msc-en}
-%     } & {
-%       \schlName{\theschlname(ee)}{\uppercase{ee}-UMINHO}{\theschlurl(ee)}
-%       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
-%       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
-%     }\\
-%     {
-%       \docCover{uminho-eeg-phd-en,uminho-eeg-msc-en}
-%     } & {
-%       \schlName{\theschlname(eeg)}{\uppercase{eeg}-UMINHO}{\theschlurl(eeg)}
-%       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
-%       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
-%     }\\
-%     {
-%       \docCover{uminho-em-phd-en,uminho-em-msc-en}
-%     } & {
-%       \schlName{\theschlname(em)}{\uppercase{em}-UMINHO}{\theschlurl(em)}
-%       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
-%       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
-%     }\\
-%     {
-%       \docCover{uminho-ep-phd-en,uminho-ep-msc-en}
-%     } & {
-%       \schlName{\theschlname(ep)}{\uppercase{ep}-UMINHO}{\theschlurl(ep)}
-%       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
-%       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
-%     }\\
-%     {
-%       \docCover{uminho-ese-phd-en,uminho-ese-msc-en}
-%     } & {
-%       \schlName{\theschlname(ese)}{\uppercase{ese}-UMINHO}{\theschlurl(ese)}
-%       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
-%       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
-%     }\\
-%     {
-%       \docCover{uminho-ics-phd-en,uminho-ics-msc-en}
-%     } & {
-%       \schlName{\theschlname(ics)}{\uppercase{ics}-UMINHO}{\theschlurl(ics)}
-%       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
-%       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
-%     }\\
-%     {
-%       \docCover{uminho-ie-phd-en,uminho-ie-msc-en}
-%     } & {
-%       \schlName{\theschlname(ie)}{\uppercase{ie}-UMINHO}{\theschlurl(ie)}
-%       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
-%       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
-%     }\\
-%     {
-%       \docCover{uminho-elach-phd-en,uminho-elach-msc-en}
-%     } & {
-%       \schlName{\theschlname(elach)}{\uppercase{elach}-UMINHO}{\theschlurl(elach)}
-%       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
-%       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
-%     }\\
-%     {
-%       \docCover{uminho-i3b-phd-en,uminho-i3b-msc-en}
-%     } & {
-%       \schlName{\theschlname(i3b)}{\uppercase{i3b}-UMINHO}{\theschlurl(i3b)}
-%       \degreeName{All PhD Programs}{PhD}{https://www.uminho.pt/EN/education/educational-offer/Pages/PhD-degrees.aspx}
-%       \degreeName{All MSc Programs}{MSc}{https://www.uminho.pt/EN/education/educational-offer/Pages/Master-degrees.aspx}
-%     }\\
-% \end{ntUniversity}
-%
-%
-% %
-% % % \begin{ntUniversity}{ISCTE — Instituto Universitário de Lisboa}
-% % %     \ntSchool{cover-iscteiul-eta-phd}%
-% % %              {Escola{ de Tecnologias e Arquitectura};{ETA-ISCTE-IUL};{https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura}%}
-% % % \end{ntUniversity}
-% %
-% \begin{ntUniversity}{Instituto Politécnico de Lisboa}
-%     {
-%       \docCover{ipl-isel-msc-en}
-%     } & {
-%       \schlName{Instituto Superior de Engenharia de Lisboa}{ISEL-IPL}{https://www.isel.pt}
-%       \degreeName{All MSc Programs}{MSc}{https://www.isel.pt/candidatos/candidaturas/mestrados}
-%     }\\
-% \end{ntUniversity}
-%
-% \begin{ntUniversity}{Instituto Politécnico de Setúbal}
-%     {
-%       \docCover{ips-ests-msc-en}
-%     } & {
-%       \schlName{Escola Superior de Tecnologia de Setúbal}{ISEL-IPL}{https://www.estbarreiro.ips.pt}
-%       \degreeName{All MSc Programs}{MSc}{https://www.estbarreiro.ips.pt/candidaturas/mestrados}
-%     }\\
-% \end{ntUniversity}
-%
-% \begin{ntUniversity}{Other Universities/Schools/Degrees}
-%     {
-%       \docCover{other-esep-msc-en}
-%     } & {
-%       \schlName{Escola Superior de Enfermagem do Porto}{ESEP}{https://www.esenf.pt/pt}
-%       \degreeName{All MSc Programs}{MSc}{https://estudar.esenf.pt/mestrados}
-%     }\\
-% \end{ntUniversity}
-    
-\subsection{Your Time is Precious}
-\label{sub:time_is_money}
-
-Did you learn how to drive by sitting by the wheel and throwing your car into the road?  Most probably you did take your time \emph{learning the rules} and \emph{practicing} first! Likewise, it is not wise to throw yourself at the task of writing a thesis/dissertation in \LaTeX\ without seriously considering the following \ntindex{recommendation}!
-
-\begin{tcolorbox}[colback=green!8]
-  If you are going to spend zillions of hours writing your thesis/dissertation using the \gls{novathesis} \LaTeX\ template (or some other \LaTeX\ template), be wise and spend a couple of hours learning how to use it properly by reading its manual.  And then, be even wiser, and spend a few more hours \href{https://github.com/joaomlourenco/novathesis/wiki\#learning-latex}{learning some \LaTeX}.  I am sure that the time you are investing now will pay itself countless times before you submit your thesis/dissertation.\\\parbox{\linewidth}{\raggedleft---~\emph{João Lourenço}}
-\end{tcolorbox}
-
-\subsection{Recognition}
-\label{sub:recognition}
-
-\ntindex[Recognition]{}
-
-The \gls{novathesis} template was born in~1996, and what you see now accumulates to many many hundreds (thousands?!) of working hours, unpaid and stolen from family and friends.  This work is available to the community under the \href{LaTeX project public license}{\LaTeX\ Project Public License v1.3c}, which means you are entitled to use it for free and change it at your will.  However, if you decide to use this template to write your thesis/dissertation, \textbf{be fair to the developers} and:
-\begin{enumerate}
-  \item \ntindex[novathesis!Citation]{} Cite the \gls{novathesis} manual~\cite{novathesis-manual} in a place of your choice (e.g., in the \emph{Acknowledgments}) of your thesis/dissertation with “\verb!\cite{novathesis-manual}!” .  If you cite it this way, the correct entry will be added automatically to your bibliography (no need to worry with the necessary BibTeX entry, as it will be added automatically);
-  \item Go to the
-\href{https://github.com/joaomlourenco/novathesis}{\ntindex[GitHub!project web page]{project web page} in GitHub} and give the project a \ntindex[GitHub!stars]{star} (marked with a red ellipse at the top-right in Figure~\ref{fig:github}); and
-  \item Make a \ntindex[donations]{donation} by visiting the \gls{novathesis} project page and clicking in the button marked with a green ellipse at the top-center in Figure~\ref{fig:github}).  Alternatively, just click \href{https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8}{\fcolorbox{DarkGreen}{gray!15}{\textbf{~HERE~}}} and your browser will be directed to the right page.
-\end{enumerate}
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.5\linewidth]{github1}
-    \caption{The \gls{novathesis} project web page in GitHub.}
-    \label{fig:github}
-\end{figure}
-
-
-\section{Getting Started}
-\label{sec:getting_started}
-
-The template provides an \emph{easy to use} setting for you to write your thesis/dissertation in \LaTeX:
+The primary goals of the \gls{novathesis} template are:
 \begin{itemize}
-  \item  Select your school;
-  \item Fill your thesis metadata (title, research field, etc) in the file “\texttt{template.tex}”;
-  \item Create your thesis/dissertation contents using the files in folder “\texttt{Chapters}”; and
-  \item Process using you favorite \LaTeX\ processor (pdf\LaTeX, \XeLaTeX\ or \LuaLaTeX).
+  \item To ensure \textbf{consistency} across theses produced by different students and institutions;
+  \item To provide \textbf{institutional presets} that reproduce the visual identity of each supported school;
+  \item To maintain a clear \textbf{separation between content and style}, allowing users to focus on writing rather than formatting;
+  \item To support \textbf{multi-language documents} with automatic translation of structural elements (titles, captions, lists, etc.);
+  \item To integrate \textbf{modern bibliography management} through \texttt{biblatex} and \texttt{biber};
+  \item To offer a \textbf{modular and automated build system} through \texttt{make} and \texttt{latexmk} (and a \texttt{build.py} Python script).
 \end{itemize}
 
-\subsection{Using Overleaf}
-\label{sub:using_overleaf}
+This manual explains how to install, configure, and use the \gls{novathesis} template.  
+It is intended for users with a basic knowledge of \LaTeX{}, but it also serves as a detailed reference for advanced customization and class maintenance.
 
-\ntindex[Installation!Overleaf]{}
-\ntindex[Using!Overleaf]{}
+\section{Design Philosophy}
 
-\newcommand{\Overleaf}{\href{https://www.overleaf.com?r=f5160636&rm=d&rs=b}{Overleaf}}
+The \gls{novathesis} system is built on three principles: \emph{modularity}, \emph{transparency}, and \emph{maintainability}.
 
-\begin{wrapfigure}{r}{0.3\linewidth}
-% \vspace*{-10ex}
-\includegraphics[width=\linewidth]{overleaf}%
-\caption{NOVAthesis template in Overleaf.}
-\label{fig:overleaf}
-\end{wrapfigure}
-\mbox{}\Overleaf\ is a collaborative cloud-based LaTeX editor used for writing, editing and publishing scientific documents. Like “Google Docs”,  for \LaTeX\ users. You can edit and compile your \LaTeX\ source on the cloud, without installing software in your own computer, and, much like \emph{Google Docs}, you can share your document with others users and everybody can edit the same file at the same time (this may be dangerous).
+\subsection{Modularity}
 
-If you do not have an account in \Overleaf, you must \href{https://www.overleaf.com?r=f5160636&rm=d&rs=b}{create one first}.
+Every component of the template has a clearly defined role.  
+Configuration files are isolated from the main document; each thematic area—fonts, bibliography, cover page, lists—has its own configuration module.  
+This structure allows users to modify or extend a specific feature without affecting unrelated parts of the document.
 
-Once you have an account, please access the \gls{novathesis} template in \href{https://www.overleaf.com/latex/templates/novathesis-v7-dot-1-18/jhqwhtcwbmqc}{Overleaf} and select the green button \emph{Open as Template} (see \Autoref{fig:overleaf}).
+\subsection{Transparency}
 
-\bgroup
-  \itshape
-  Please notice that the version currently available in Overleaf (v7.1.18) is slightly outdated (current version is v\novathesisversion). A new version (v7.1.29) will be submitted to Overleaf soon.  Until then, please:
-  \begin{enumerate}
-    \item Download the \href{https://github.com/joaomlourenco/novathesis/archive/main.zip}{latest version} from the GitHub repository as a Zip file.
-    \item Login to your favorite LaTeX cloud service. I recommend \href{https://www.overleaf.com/?r=f5160636&rm=d&rs=b}{Overleaf} but there are alternatives (these instructions apply to Overleaf and you'll have to adapt for other providers).
-    \item In the menu select: \texttt{New project} $\rightarrow$ \texttt{Upload project}.
-    \item Upload the zip file.
-    \item Select “template.tex” as the main file.
-    \item Let Overleaf compile the document.
-  \end{enumerate}
-\egroup
+All configuration is done through plain-text files in the \texttt{0-Config/} directory.  
+There are no hidden or hard-coded dependencies: every visual and logical choice is traceable and user-accessible.  
+This transparency makes the system easy to audit, debug, and adapt to institutional requirements.
 
-\begin{tcolorbox}[colback=red!8]
-	Notice that you need a (student) subscription to compile the \novathesis\ template in Overleaf, otherwise your compilation will always time out.
-\end{tcolorbox}
+\subsection{Maintainability}
 
-\subsection{Using a Local \LaTeX\ Installation Local}
-\label{sub:using_local_latex}
+The template evolves with each new version of \LaTeX{} and the supported class packages.  
+It favors standard packages, ensuring long-term compatibility and minimizing maintenance overhead.
 
-\ntindex[Installation!Local installation]{}
-\ntindex[Using!Local installation]{}
+\section{Supported Document Types}
 
-\begin{wrapfigure}{r}{0.3\linewidth}
-\vspace*{-7ex}
-\includegraphics[width=\linewidth]{github}%
-\caption{The NOVAthesis Project page in GitHub.}
-\label{fig:github2}
-\end{wrapfigure}
+\gls{novathesis} can produce various document types through a single configuration parameter.  
+The \texttt{doctype} option automatically adjusts the document covers, headings, titles, and certain layout dimensions to each degree level and school.  
 
-First of all, start by installing \LaTeX\ in your computer.  There are two main distributions, \href{https://miktex.org}{\ntindex{\MikTeX}}\ and \href{https://www.tug.org/texlive/}{\ntindex{\TeXLive}}, and both of them are available for the~3 most popular Operating Systems: Linux, macOS and Windows.
+The supported document types include:
 
-Be aware that a full installation of \MikTeX\ or \TeXLive\ will take near~5\,GB of hard disk space.  So, think twice before installing the full distribution.  See the \gls{novathesis} Wiki for the \href{https://github.com/joaomlourenco/novathesis/wiki/installing-latex#minimal-installation-in-any-of-the-systems-above}{list of packages required to compile the template}.
+\begin{itemize}
+  \item \texttt{phd} – Doctoral dissertation;
+  \item \texttt{msc} – Master's thesis;
+  \item \texttt{bsc} – Bachelor's dissertation.
+\end{itemize}
 
-Once you have \LaTeX\ up and running, remember to install a good \LaTeX\ text editor.  I recommend you to take a look at  \href{https://tex.stackexchange.com/questions/339/latex-editors-ides}{this post} in the \url{tex.stackexchange.com} site.  If you want a quick and dirty recommendation, try \href{https://www.texstudio.org/}{\ntindex{TeXStudio}}.
+\section{Institutional Support}
 
-Now, you must access the \gls{novathesis} repository in \href{https://github.com/joaomlourenco/novathesis}{GitHub}, select the green button \emph{Code} and then \emph{download} (or \emph{clone}) the template.  You will always get the latest version of the template (currently v\novathesisversion\ from \novathesisdate).
+The \gls{novathesis} template supports multiple institutions and departments by means of preset configuration profiles.  
+Each profile defines the official layout, logos, colors, and front-matter fields required by the corresponding institution.
 
+As of version~7.6.0, the template includes presets for:
 
-\section{Getting Help}
-\label{sec:getting_help}
+\begin{itemize}
+  
+  \item Universidade do Porto
+  \begin{itemize}
+    \item \texttt{uporto/fcup} – Faculdade de Ciências da Universidade do Porto;
+  \end{itemize}
 
-\ntindex[Help]{}
+  \item Instituto Politécnico de Setúbal
+  \begin{itemize}
+    \item \texttt{ips/ests} – Escola Superior de Tecnologia de Setúbal;
+  \end{itemize}
 
-No! You don't have to use this template to write your thesis.  You don't even have to use \LaTeX.  However, writing a thesis is serious stuff, and which tool you shall use to write it is not a decision to make lighthearted.
+  \item Instituto Universitário de Lisboa
+  \begin{itemize}
+    \item \texttt{iscteiul/eta} – Escola de Tecnologia e Arquitectura;
+  \end{itemize}
+  
+  \item \texttt{uminho} – University of Minho;
+  \begin{itemize}
+    \item \texttt{uminho/eaad} - Escola de Arquitetura, Arte e Design;
+    \item \texttt{uminho/ec} - Escola de Ciências;
+    \item \texttt{uminho/ed} - Escola de Direito;
+    \item \texttt{uminho/eeng} - Escola de Engenharia;
+    \item \texttt{uminho/elach} - Escola de Letras, Artes e Ciências Humanas​;
+    \item \texttt{uminho/emed} - Escola de Medicina​;
+    \item \texttt{uminho/epsi} - Escola de Psicologia;
+    \item \texttt{uminho/ese} - Escola Superior de Enfermagem;
+    \item \texttt{uminho/ics} - Instituto de Ciencias Sociais;
+    \item \texttt{uminho/ie} - Instituto de Educação;
+    \item \texttt{uminho/i3bs} - Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos​;
+  \end{itemize}
 
-\LaTeX\ is hard enough by itself.  This template aims at making your life easier, but not easy. If you choose to use this template to write your thesis, you are very welcome.  However, don't expect me to provide you help with \LaTeX.  Look for help with your friends (you have some friends, don't you?), or search the web, or try even to read some book(s) on \LaTeX. In the end you will certainly find the experience rewarding.
+  \item Universidade de Lisboa
+  \begin{itemize}
+    \item \texttt{ulisboa/ist} — Instituto Superior Técnico;
+    \item \texttt{ulisboa/iseg} — Instituto Superior de Economia e Gestão;
+    \item \texttt{ulisboa/fmv} — Faculdade de Medicina Veterinária;
+    \item \texttt{ulisboa/fcul} — Faculdade de Ciências da Universidade de Lisboa;
+  \end{itemize}
 
-When you come to the point of “\emph{How do I do this with the \novathesis\ template?}”, remember…
+  \item Outras Instituições de Ensino Superior
+  \begin{itemize}
+    \item \texttt{other/esep} — Escola Superior de Enfermagem do Porto
+  \end{itemize}
 
-\begin{enumerate}
-  \item To check the \href{https://github.com/joaomlourenco/novathesis/wiki}{\gls{novathesis} wiki} and have some hope!  \emojiSmile
-  \item \href{https://www.google.com}{Google} is your best friend.
-  \item Search the \href{https://github.com/joaomlourenco/novathesis/discussions}{GitHub Discussions page} for a question related to yours.  \emph{If and only if} you don't find one, then post your own question in English please!
-  \item Search the \href{https://www.facebook.com/groups/novathesis}{NOVAtheis Facebook group} for a question related to yours.  \emph{If and only if} you don't find one, then post your own question in either Portuguese or English, at your preference.
-\end{enumerate}
+  \item Universidade NOVA de Lisboa
+  \begin{itemize}
+    \item \texttt{nova/itqb} - Instituto de Tecnologia Química e Biológica António Xavier;
+    \item \texttt{nova/ims} – NOVA Information Management School;
+    \item \texttt{nova/fct} – Faculdade de Ciências e Tecnologia;
+    \item \texttt{nova/ensp} - Escola Nacional de Saúde Pública;
+    \item \texttt{nova/fcsh} - Faculdade de Ciências Sociais e Humanas;
+  \end{itemize}
+  
+  \item Universidade de Lisboa
+  \begin{itemize}
+    \item \texttt{ulisboa/fmv} – Faculty of Veterinary Medicine;
+    \item \texttt{ulisboa/iseg} – School of Economics and Management;
+    \item \texttt{ulisboa/ist} – Instituto Superior Técnico;
+  \end{itemize}
+  
+\end{itemize}
 
-When you post your own question, remember to \textbf{always} state the \gls{novathesis} version number you are using and referring to.
+Institutional presets are easily activated by uncommenting and editing a single configuration line in \texttt{0-Config/1\_novathesis.tex}:
+\begin{verbatim}
+\ntsetup{school=nova/fct}
+\end{verbatim}
 
-\begin{tcolorbox}[colback=blue!8]
-	\centering
-Please do not attempt to contact me directly (email, Messenger, etc)…\\I WILL NOT REPLY!
-\end{tcolorbox}
+Advanced users may also define their own institution by creating a configuration files under \texttt{NOVAthesisFiles/Schools/UNIVERSITY/SCHOOL} and referencing \texttt{UNIVERSITY/SCHOOL} in the setup.
 
+\section{Project Layout Overview}
 
-\subsection{Suggestions, Bugs and Feature Requests} % (fold)
-\label{sub:suggestions_bugs_and_feature_requests}
+The \gls{novathesis} project is organized to separate configuration, content, and auxiliary resources into dedicated directories.  
+A simplified view of the structure is shown below:
 
-\begin{description}
-  \item[Help:] If you just need some help, see above \Autoref{sec:getting_help}.
-  \item[Suggestion:] \ntindex[Suggestions]{} Do you have a suggestion/recommendation? Please add it to the wiki and help other users!
-  \item[Bug:] \ntindex[Bugs]{} Did you find a bug? Please open an issue. Thanks!
-  \item[New Feature:] \ntindex[Feature Requests]{} Would you like to request a new feature (or support of a new School)? Please open an issue. Thanks!
+\begin{verbatim}
+_
+|—— 0-Config/         Configuration files
+|—— 1-FrontMatter/    Abstracts, acknowledgments, acronyms, etc.
+|—— 2-MainMatter/     Main text chapters
+|—— 3-BackMatter/     Appendices and Annexes
+|—— 4-Bibliography/   BibTeX/BibLaTeX databases
+|—— 5-Figures/        Image resources for figures
+|—— template.tex      Main document entry point
+|—— novathesis.cls    Class definition
+|—— NOVAthesisFiles/  Internal class files and strings
+|—— Makefile          Automated build system
+\end{verbatim}
 
-\end{description}
+Users are encouraged to keep the directory layout unchanged, as some internal macros rely on relative paths for file inclusion.
 
+\section{Conventions Used in This Manual}
 
+Throughout this manual, filenames and paths appear in \texttt{typewriter font}, \LaTeX{} macros in \verb|\verb| notation, and code examples are presented in shaded blocks.  
+When an option or parameter is introduced, its default value is indicated in parentheses.
 
-% subsection suggestions_bugs_and_feature_requests (end)
+For example:
+\begin{quote}
+  \verb|\ntsetup{doctype=msc}| \hfill (default: \texttt{msc})
+\end{quote}
 
+Optional configuration values are denoted as:
+\begin{quote}
+  \verb|\ntsetup{school=<identifier>}|, where \texttt{<identifier>} may be one of
+  \texttt{nova/fct}, \texttt{ulisboa/ist}, etc.
+\end{quote}
 
+\section{Target Audience}
 
+This manual addresses:
+\begin{itemize}
+  \item \textbf{Students} preparing academic theses or dissertations;
+  \item \textbf{Supervisors} and \textbf{faculty} defining institutional guidelines;
+  \item \textbf{Template maintainers} who need to extend or adapt the class;
+  \item \textbf{System administrators} deploying \LaTeX{} environments for academic use.
+\end{itemize}
 
-\section{Donors}
-\label{sec:donations}
+It assumes a basic working knowledge of \LaTeX{}, including compilation, referencing, and package usage.
 
-\ntindex[Donations]{}
+\section{Reading Guide}
 
-The \href{https://github.com/joaomlourenco/novathesis/wiki#donators}{list of \emph{Donnors}} is available in the \gls{novathesis} Project page.
+Chapters~\ref{chap:installation} and~\ref{chap:getting-started} provide step-by-step instructions for installation and first compilation.  
+Subsequent chapters describe the configuration system, document structure, and build tools in depth.  
+Advanced topics—such as creating new institutional profiles, customizing the cover, or defining new font themes—are discussed later in the manual.
 
+Readers who only wish to produce a thesis using a supported preset may safely skip the technical sections and focus on Chapters~\ref{chap:getting-started} through~\ref{chap:document-structure}.
 
-\section{Disclaimer}
-\label{sec:disclaimer}
-
-\ntindex[Disclaimer]{}
-
-Although the \gls{novathesis} template is endorsed by some Schools (e.g., \href{https://www.fct.unl.pt/estudante/informacao-academica/teses-e-dissertacoes}{linked from FCT-NOVA web site}), the \gls{novathesis} template \textbf{this not an official template} for any School.
-
-The \gls{novathesis} template exists to make your life easier and we do our best to make it compliant to the supported ($+25$) Schools' regulations but, in the end of the line, you and only you are accountable for both the look and the contents of the document you submit as your thesis/dissertation.

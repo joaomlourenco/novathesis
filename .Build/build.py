@@ -507,7 +507,12 @@ def main() -> None:
         default=False,
         help="Always keep build dir (even in case of success)"
     )
-    # Progress argument as integer with three modes
+    ap.add_argument(
+        "-f", "--force",
+        action="store_true",
+        default=False,
+        help="Force building withh 'latexmk'"
+    )
     ap.add_argument(
         "--progress",
         type=int,
