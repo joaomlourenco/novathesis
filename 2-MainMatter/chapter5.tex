@@ -23,15 +23,15 @@ The intent is to provide a clear, reproducible workflow for authoring and mainta
 
 \begin{verbatim}
 .
-├── 0-Config/         % User-editable configuration (Chapter~\ref{chap:configuration})
-├── 1-FrontMatter/    % Abstracts, acknowledgments, acronyms, dedication, quotes
-├── 2-MainMatter/     % Chapters (content of the thesis)
-├── 3-BackMatter/     % Appendices, annexes, optional lists (glossaries/index if used)
-├── 4-Bibliography/   % Bibliographic databases (.bib files)
-├── 5-Figures/        % Figures and illustrations (optional subfolders)
-├── \gls{novathesis}Files/  % Internal assets (do not modify)
-├── template.tex      % Main entry point (load class + orchestrate parts)
-└── novathesis.cls    % Class definition (do not modify)
+|—— 0-Config/         % User-editable configuration (Chapter~\ref{chap:configuration})
+|—— 1-FrontMatter/    % Abstracts, acknowledgments, acronyms, dedication, quotes
+|—— 2-MainMatter/     % Chapters (content of the thesis)
+|—— 3-BackMatter/     % Appendices, annexes, optional lists (glossaries/index if used)
+|—— 4-Bibliography/   % Bibliographic databases (.bib files)
+|—— 5-Figures/        % Figures and illustrations (optional subfolders)
+|—— \gls{novathesis}Files/  % Internal assets (do not modify)
+|—— template.tex      % Main entry point (load class + orchestrate parts)
+|—— novathesis.cls    % Class definition (do not modify)
 \end{verbatim}
 
 Content files (\texttt{.tex}) live under the \texttt{1-}, \texttt{2-}, and \texttt{3-} directories.  
