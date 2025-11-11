@@ -340,7 +340,7 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
         progress:     Progress display mode (0: silent, 1: progress bar, 2: real-time output)
         total_lines:  Total expected lines of output for progress calculation
         keep_tmp:     Whether to keep the building dir
-        rename:       Whether to keep the building dir
+        rename:       Should the final file be renamed (otherwise 'template.pdd')
     Returns:
         Exit code from make process (0 for success)
     """
