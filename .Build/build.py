@@ -55,7 +55,7 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, co
         new_lang_code: Language code (e.g., 'en', 'pt', 'uk', 'gr')
         cover_only: Whether to build cover-only version
         doc_status: Document status (e.g., 'working', 'provisional', 'final', 'keep')
-        demo: Whether to build demo version with abstracts in multiple languages
+        demo: Whether to build demo version with all abstracts
     Returns:
         Dictionary mapping filenames to pattern-transformer dictionaries
     """
@@ -340,7 +340,7 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
         progress:     Progress display mode (0: silent, 1: progress bar, 2: real-time output)
         total_lines:  Total expected lines of output for progress calculation
         keep_tmp:     Whether to keep the building dir
-        rename:       Should the final file be renamed (otherwise 'template.pdd')
+        rename:       Whether to keep the building dir
     Returns:
         Exit code from make process (0 for success)
     """
@@ -553,7 +553,7 @@ def main() -> None:
         "-d", "--demo-mode",
         action="store_true",
         dest="demo",
-        help="Demo mode: modify configuration files to include abstracts in multiple languagesand set status to final"
+        help="Demo mode: modify configuration files to include all abstracts and set status to final"
     )
     # Optional arguments
     ap.add_argument(
