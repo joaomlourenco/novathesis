@@ -101,7 +101,7 @@ SCHL := $(if $(SCHL),$(SCHL),nova/fct)
 .PHONY: default
 LUA=$(shell cat $(CACHE))
 default: validate-config check-env check-build
-	$(BUILD) $(SCHL) --build-dir BUILDDIR --keep-tmp --user-mode --no-rename-pdf
+	$(BUILD) $(SCHL) --build-dir $(AUXDIR) --keep-tmp --user-mode --no-rename-pdf
 
 #————————————————————————————————————————————————————————————————————————————
 # The main targets
@@ -321,7 +321,7 @@ bcmtp: build-phd-final-en commit rebase tag push
 #############################################################################
 .PHONY: build-phd-final-en
 build-phd-final-en: validate-config check-env check-build
-	$(BUILD) $(SCHL) --build-dir BUILDDIR --keep --demo-mode
+	$(BUILD) $(SCHL) --build-dir $(AUXDIR) --keep --demo-mode
 
 
 
@@ -770,15 +770,16 @@ tag:
 #	@echo "🏷️  Creating tag on develop branch..."
 	@if git tag -a "v$(TAG_VERSION)" -f -m "$(TAG_MESSAGE)" 2>/dev/null; then \
 		echo "✅ Tag created on main branch"; \
-	# else \
-	# 	echo "⚠️  Tag already exists on main (or conflict), forcing update..."; \
-	# 	git tag -d "v$(TAG_VERSION)" 2>/dev/null || true; \
-	# 	git tag -a "v$(TAG_VERSION)" -m "$(TAG_MESSAGE)" || { \
-	# 		echo "❌ Failed to create tag on main branch"; \
-	# 		exit 1; \
-	# 	}; \
-	# 	echo "✅ Tag forced on develop branch"; \
 	fi
+#	else \
+#		echo "⚠️  Tag already exists on main (or conflict), forcing update..."; \
+#		git tag -d "v$(TAG_VERSION)" 2>/dev/null || true; \
+#		git tag -a "v$(TAG_VERSION)" -m "$(TAG_MESSAGE)" || { \
+#			echo "❌ Failed to create tag on main branch"; \
+#			exit 1; \
+#		}; \
+#		echo "✅ Tag forced on develop branch"; \
+f	fi
 	
 # 3) Switch to main and create the same tag
 	# @echo "🔄 Switching to main branch..."
@@ -788,14 +789,15 @@ tag:
 # Check if we need to force the tag (if main is behind develop)
 	@if git tag -a "v$(TAG_VERSION)" -f -m "$(TAG_MESSAGE)" 2>/dev/null; then \
 		echo "✅ Tag created on main branch"; \
-	# else \
-	# 	echo "⚠️  Tag already exists on main (or conflict), forcing update..."; \
-	# 	git tag -d "v$(TAG_VERSION)" 2>/dev/null || true; \
-	# 	git tag -a "v$(TAG_VERSION)" -m "$(TAG_MESSAGE)" || { \
-	# 		echo "❌ Failed to create tag on main branch"; \
-	# 		exit 1; \
-	# 	}; \
-	# 	echo "✅--- Tag forced on main branch"; \
+	fi
+#	else \
+#		echo "⚠️  Tag already exists on main (or conflict), forcing update..."; \
+#		git tag -d "v$(TAG_VERSION)" 2>/dev/null || true; \
+#		git tag -a "v$(TAG_VERSION)" -m "$(TAG_MESSAGE)" || { \
+#			echo "❌ Failed to create tag on main branch"; \
+#			exit 1; \
+#		}; \
+#		echo "✅--- Tag forced on main branch"; \
 	fi
 	
 # 4) Return to develop branch
