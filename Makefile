@@ -2,7 +2,7 @@
 # NOVATHESIS — Makefile
 #----------------------------------------------------------------------------
 #
-# Version 7.5.2 (2025-11-11)
+# Version 7.5.3 (2025-11-11)
 # Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 
 
@@ -10,8 +10,10 @@
 # CUSTOMIZATION AREA HERE
 
 # Define V command to the name of your PDF viewer
-V:=open -a skim
+PDFVIEWER ?= open -a skim
 
+# Define the text Editor
+EDITOR ?= mate
 
 #############################################################################
 # DO NOT TOUCH BELOW THIS POINT
@@ -100,8 +102,10 @@ SCHL := $(if $(SCHL),$(SCHL),nova/fct)
 # Automatically use the right latex compiler and compile
 .PHONY: default
 LUA=$(shell cat $(CACHE))
+BUILDFLAGS=--build-dir $(AUXDIR) --keep-tmp --user-mode --no-copy
+
 default: validate-config check-env check-build
-	$(BUILD) $(SCHL) --build-dir $(AUXDIR) --keep-tmp --user-mode --no-rename-pdf
+	$(BUILD) $(SCHL) $(BUILDFLAGS)
 
 #————————————————————————————————————————————————————————————————————————————
 # The main targets
@@ -157,11 +161,18 @@ ifeq ($(TEXBIN),)
 else
 	PATH="$(TEXBIN):$(PATH)" $(MAKE) $(filter-out $@,$(MAKECMDGOALS))
 endif
+
 #————————————————————————————————————————————————————————————————————————————
 # Build and display the PDF
 .PHONY: v view
 v view: $(PDFFILE)
-	$(V) $(PDFFILE)
+	$(PDFVIEWER) $(PDFFILE)
+
+#————————————————————————————————————————————————————————————————————————————
+# Display the log file
+.PHONY: log
+log:
+	$(EDITOR) $$(find . -name "$(BASENAME).log" -print0 | xargs -0)
 
 #————————————————————————————————————————————————————————————————————————————
 # Build the PDF

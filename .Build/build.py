@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------------
 NOVATHESIS Build Assistant
 
-Version 7.5.2 (2025-11-11)
+Version 7.5.3 (2025-11-11)
 Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 -----------------------------------------------------------------------------
 
@@ -430,15 +430,16 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
             else:
                 dest_pdf = outdir / "template.pdf"
             if src_pdf.exists():
-                outdir.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(src_pdf, dest_pdf)
-                print(f"{GREEN}✅ saved '{src_pdf.name}' to '{dest_pdf}'{RESET}")
-                # Only remove temp workspace if we created it temporarily
-                if "ntbuild-" in str(tmp_root) and not keep_tmp:
-                    shutil.rmtree(tmp_root)
-                    print(f"{CYAN}🧪 Temp workspace removed: {tmp_root}{RESET}")
-                else:
-                    print(f"{YELLOW}📁 Preserving build directory: {tmp_root}{RESET}")
+                if src_pdf != src_pdf:
+                    outdir.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(src_pdf, src_pdf)
+                    print(f"{GREEN}✅ saved '{src_pdf.name}' to '{dest_pdf}'{RESET}")
+                    # Only remove temp workspace if we created it temporarily
+                    if "ntbuild-" in str(tmp_root) and not keep_tmp:
+                        shutil.rmtree(tmp_root)
+                        print(f"{CYAN}🧪 Temp workspace removed: {tmp_root}{RESET}")
+                    else:
+                        print(f"{YELLOW}📁 Preserving build directory: {tmp_root}{RESET}")
             else:
                 print(f"{RED}❌ '{src_pdf}' missing{RESET}")
             return 0
@@ -555,6 +556,13 @@ def main() -> None:
         dest="demo",
         help="Demo mode: modify configuration files to include all abstracts and set status to final"
     )
+    # No-copy option - implies user-mode and uses current directory as build dir
+    ap.add_argument(
+        "-nc", "--no-copy",
+        action="store_true",
+        default=False,
+        help="Skip directory duplication and use current directory as build directory (implies --user-mode)"
+    )
     # Optional arguments
     ap.add_argument(
         "--confdir",
@@ -562,6 +570,13 @@ def main() -> None:
         help="Directory containing LaTeX configuration files (default: 0-Config)"
     )
     args = ap.parse_args()
+    
+    # If no-copy mode is active, force user-mode and set build directory to current directory
+    if args.no_copy:
+        args.demo = False
+        args.rename = False
+        args.build_dir = "."
+        print(f"{BRIGHT_CYAN}🚫 No-copy mode: using current directory as build directory{RESET}")
     
     # If demo mode is active, override status to "final"
     if args.demo:
@@ -595,7 +610,11 @@ def main() -> None:
             print(f"{RED}❌ Could not create output directory {outdir_path}: {e}{RESET}")
             sys.exit(1)
     # Set up temporary workspace
-    tmp_root = prepare_temp_workspace(project_root, args.build_dir)
+    if args.no_copy:
+        tmp_root = project_root
+        print(f"{CYAN}📁 Using current directory as build directory: {tmp_root}{RESET}")
+    else:
+        tmp_root = prepare_temp_workspace(project_root, args.build_dir)
     # Build regex patterns using CLI args - only if in demo mode
     patterns = {}
     if args.demo:
