@@ -63,6 +63,8 @@ _minted-template
 # latexrun
 latex.out/
 AUXDIR/
+BUILDDIR/
+.nopdflatex
 
 ## Auxiliary and intermediate files from other packages:
 # algorithms

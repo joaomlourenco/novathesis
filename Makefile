@@ -2,7 +2,7 @@
 # NOVATHESIS — Makefile
 #----------------------------------------------------------------------------
 #
-# Version 7.6.0 (2025-11-10)
+# Version 7.5.2 (2025-11-11)
 # Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 
 
@@ -101,7 +101,7 @@ SCHL := $(if $(SCHL),$(SCHL),nova/fct)
 .PHONY: default
 LUA=$(shell cat $(CACHE))
 default: validate-config check-env check-build
-	$(BUILD) $(SCHL)
+	$(BUILD) $(SCHL) --build-dir BUILDDIR --keep-tmp --user-mode --no-rename-pdf
 
 #————————————————————————————————————————————————————————————————————————————
 # The main targets
@@ -166,7 +166,7 @@ v view: $(PDFFILE)
 #————————————————————————————————————————————————————————————————————————————
 # Build the PDF
 $(PDFFILE): $(LTXFILE)
-	$(MAKE) default
+	$(MAKE) default --user-mode --no-rename-pdf
 
 #————————————————————————————————————————————————————————————————————————————
 # Add fail-safe for critical commands
@@ -202,7 +202,7 @@ help:
 	@printf "$(CYAN)  view/v          - Build and view PDF$(RESET)\n"
 	@printf "$(CYAN)  clean           - Remove build artifacts$(RESET)\n"
 	@printf "$(CYAN)  zip             - Create distribution package$(RESET)\n"
-	@printf "$(CYAN)  bump1/2/3       - Bump version numbers$(RESET)\n"
+	@printf "$(CYAN)  bump0/1/2/3     - Bump version numbers$(RESET)\n"
 	@printf "\n"
 	@printf "$(CYAN)Advanced:$(RESET)\n"
 	@printf "$(CYAN)  tl/mik TARGET   - Use specific TeX distribution$(RESET)\n"
@@ -222,7 +222,7 @@ debug-vars:
 	@printf "$(CYAN)VERSION: $(ORIGVERSION)$(RESET)\n"
 	@printf "$(CYAN)MAIN FILE: $(BASENAME)$(RESET)\n"
 	@printf "$(CYAN)TEX VERSIONS: $(TEXVERSIONS)$(RESET)\n"
-	@printf "$(CYAN)LUA SCHOOLS: $(shell cat .nopdflatex 2>/dev/null || $(MAGENTA)'not computed'$(RESET))$(RESET)\n"
+	@printf "$(CYAN)LUA SCHOOLS: $(shell cat $(CACHE) 2>/dev/null || $(MAGENTA)'not computed'$(RESET))$(RESET)\n"
 
 #————————————————————————————————————————————————————————————————————————————
 # Color definitions
@@ -293,6 +293,7 @@ gclean:
 
 #############################################################################
 # Bump up the template version
+#	bump0 -> do not increase version number
 #	bump1 -> increase major version number
 #	bump2 -> increase mid version number
 #	bump3 -> increase minor version number
@@ -303,9 +304,11 @@ gclean:
 VERSION_FILE = NOVAthesisFiles/nt-version.sty
 
 .PHONY: bump0 bump1 bump2 bump3
-bump1 bump2 bump3:
+bump0 bump1 bump2 bump3:
+ifneq ($@,bump0)
 	$(eval BI='$(patsubst bump%,%,$@)')
-	Scripts/bump.py -b $(BI)
+	@ Scripts/bump.py -b $(BI)
+endif
 	$(MAKE) bcmtp
 
 .PHONY: bcmtp
@@ -987,7 +990,7 @@ nopdflatex:
 	$(eval NOPDFSCHOOLS:=$(NOPDFSCHOOLSCMD))
 	$(eval NOPDFSCHLSFROMU:=$(NOPDFSCHLSFROMUNIV))
 	@ echo $(NOPDFSCHLSFROMUNIV) > .nopdflatex
-	
+
 # Add a real dependency for the cache file
 .nopdflatex: $(shell find NOVAthesisFiles -name "*.sty" -o -name "*.ldf")
 	$(MAKE) --no-print-directory nopdflatex
