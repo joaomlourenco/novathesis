@@ -321,7 +321,7 @@ bcmtp: build-phd-final-en commit rebase tag push
 #############################################################################
 .PHONY: build-phd-final-en
 build-phd-final-en: validate-config check-env check-build
-	$(BUILD) $(SCHL) -t phd -s final -l en -p lua -nr --demo-mode
+	$(BUILD) $(SCHL) --build-dir BUILDDIR --keep --demo-mode
 
 
 
@@ -768,7 +768,7 @@ tag:
 	
 # 2) Create tag on develop branch
 #	@echo "🏷️  Creating tag on develop branch..."
-	@if git tag -f -a "v$(TAG_VERSION)" -m "$(TAG_MESSAGE)" 2>/dev/null; then \
+	@if git tag -a "v$(TAG_VERSION)" -f -m "$(TAG_MESSAGE)" 2>/dev/null; then \
 		echo "✅ Tag created on main branch"; \
 	# else \
 	# 	echo "⚠️  Tag already exists on main (or conflict), forcing update..."; \
@@ -786,7 +786,7 @@ tag:
 	
 	# @echo "🏷️  Creating tag on main branch..."
 # Check if we need to force the tag (if main is behind develop)
-	@if git tag -f -a "v$(TAG_VERSION)" -m "$(TAG_MESSAGE)" 2>/dev/null; then \
+	@if git tag -a "v$(TAG_VERSION)" -f -m "$(TAG_MESSAGE)" 2>/dev/null; then \
 		echo "✅ Tag created on main branch"; \
 	# else \
 	# 	echo "⚠️  Tag already exists on main (or conflict), forcing update..."; \
@@ -795,7 +795,7 @@ tag:
 	# 		echo "❌ Failed to create tag on main branch"; \
 	# 		exit 1; \
 	# 	}; \
-	# 	echo "✅ Tag forced on main branch"; \
+	# 	echo "✅--- Tag forced on main branch"; \
 	fi
 	
 # 4) Return to develop branch
