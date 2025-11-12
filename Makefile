@@ -51,7 +51,7 @@ endif
 
 #————————————————————————————————————————————————————————————————————————————
 # LUA cache file
-CACHE=.nopdflatex
+NEEDLUALATEX=.needlualatex
 
 #————————————————————————————————————————————————————————————————————————————
 # AUXDIR to avoid cluttering workspace
@@ -100,8 +100,6 @@ SCHL := $(if $(SCHL),$(SCHL),nova/fct)
 #————————————————————————————————————————————————————————————————————————————
 # Automatically use the right latex compiler and compile
 .PHONY: default
-LUA=$(shell cat $(CACHE))
-
 default: validate-config check-env check-build
 	$(BUILD) $(SCHL)
 
@@ -109,7 +107,7 @@ default: validate-config check-env check-build
 # The main targets
 # e.g. '$(MAKE) lua'
 .PHONY: pdf xe lua
-pdf xe lua: validate-config check-env $(CACHE) $(LTXFILE) $(LTXCLS)
+pdf xe lua: validate-config check-env $(NEEDLUALATEX) $(LTXFILE) $(LTXCLS)
 	$(LTXMK) -pdf$(patsubst pdf%,%,$@) $(LTXFLAGS) $(BASENAME)
 
 #————————————————————————————————————————————————————————————————————————————
@@ -234,7 +232,7 @@ debug-vars:
 	@printf "$(CYAN)VERSION: $(ORIGVERSION)$(RESET)\n"
 	@printf "$(CYAN)MAIN FILE: $(BASENAME)$(RESET)\n"
 	@printf "$(CYAN)TEX VERSIONS: $(TEXVERSIONS)$(RESET)\n"
-	@printf "$(CYAN)LUA SCHOOLS: $(shell cat $(CACHE) 2>/dev/null || $(MAGENTA)'not computed'$(RESET))$(RESET)\n"
+	@printf "$(CYAN)LUA SCHOOLS: $(shell cat $(NEEDLUALATEX) 2>/dev/null || $(MAGENTA)'not computed'$(RESET))$(RESET)\n"
 
 #————————————————————————————————————————————————————————————————————————————
 # Color definitions
@@ -281,7 +279,7 @@ zip: clean
 # AUXFILES:=$(shell ls $(BASENAME)*.* | $(GREP) -v .tex | $(GREP) -v .pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
 
 GOODFILES := LICENSE Makefile %.cls %.md .gitignore %.tex %.pdf
-AUXFILES := $(filter-out $(GOODFILES),$(wildcard $(BASENAME).*)) $(CACHE)
+AUXFILES := $(filter-out $(GOODFILES),$(wildcard $(BASENAME).*)) $(NEEDLUALATEX)
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: clean
@@ -349,7 +347,11 @@ COMMIT_INCLUDE_UNTRACKED ?= no
 
 .PHONY: commit commit-untracked commit-push commit-push-force
 commit commit-push commit-push-force:
-	@ @VERSION="$(VERSION)" DATE="$(DATE)" .Build/$@.sh
+	@ VERSION="$(VERSION)" \
+	DATE="$(DATE)" \
+	COMMIT_MESSAGE="$(COMMIT_MESSAGE)" \
+	COMMIT_INCLUDE_UNTRACKED="$(COMMIT_INCLUDE_UNTRACKED)" \
+	.Build/$@.sh
 
 commit-untracked:
 	make commit COMMIT_INCLUDE_UNTRACKED=yes
@@ -363,7 +365,10 @@ MERGE_MESSAGE ?= Merged $(VERSION) - $(DATE).
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: rebase
 rebase:
-	@MERGE_MESSAGE="$(MERGE_MESSAGE)" VERSION="$(VERSION)" DATE="$(DATE)" .Build/rebase.sh
+	@MERGE_MESSAGE="$(MERGE_MESSAGE)" \
+	VERSION="$(VERSION)" \
+	DATE="$(DATE)" \
+	.Build/rebase.sh
 
 
 
@@ -376,7 +381,12 @@ TAG_MESSAGE ?= Version $(TAG_VERSION) - $(TAG_DATE).
 
 .PHONY: tag tag-push tag-delete tag-dry-run tag-show tag-list
 tag tag-push tag-delete tag-dry-run tag-show:
-	@VERSION="$(VERSION)" DATE="$(DATE)" TAG_VERSION="$(TAG_VERSION)" TAG_DATE="$(TAG_DATE)" TAG_MESSAGE="$(TAG_MESSAGE)" .Build/$@.sh
+	@VERSION="$(VERSION)" \
+	DATE="$(DATE)" \
+	TAG_VERSION="$(TAG_VERSION)" \
+	TAG_DATE="$(TAG_DATE)" \
+	TAG_MESSAGE="$(TAG_MESSAGE)" \
+	.Build/$@.sh
 
 tag-list:
 	@echo "📋 Recent tags:"
@@ -419,19 +429,9 @@ push-status:
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: nopdflatex
-NOPDFALLCMD=$(shell $(GREP) -rl "is not compatible with pdfLaTeX" NOVAthesisFiles/FontStyles | cut -d / -f 3 | cut -d . -f 1 | $(GREP) -ril -f - NOVAthesisFiles/Schools | $(GREP) .ldf | sed -e "s,.*/,," -e "s,-defaults.ldf,," | tr - /)
-# Keep only the words that do NOT contain a slash
-NOPDFUNIVSCMD=$(foreach word,$(NOPDFALL),$(if $(findstring /,$(word)),,$(word)))
-NOPDFSCHOOLSCMD=$(foreach word,$(NOPDFALL),$(if $(findstring /,$(word)),$(word),))
-NOPDFSCHLSFROMUNIV=$(NOPDFSCHOOLS) $(foreach univ,$(NOPDFUNIVS),$(shell find NOVAthesisFiles/Schools/$(univ) -type d -mindepth 1 -maxdepth 1 | grep -v '/Images' | cut -d / -f 3-4))
-
-nopdflatex:
-	$(eval NOPDFALL:=$(NOPDFALLCMD))
-	$(eval NOPDFUNIVS:=$(NOPDFUNIVSCMD))
-	$(eval NOPDFSCHOOLS:=$(NOPDFSCHOOLSCMD))
-	$(eval NOPDFSCHLSFROMU:=$(NOPDFSCHLSFROMUNIV))
-	@ echo $(NOPDFSCHLSFROMUNIV) > .nopdflatex
+needlua needlualatex:
+	@ .Build/need_lualatex.sh
 
 # Add a real dependency for the cache file
-.nopdflatex: $(shell find NOVAthesisFiles -name "*.sty" -o -name "*.ldf")
+$(NEEDLUALATEX): $(shell find NOVAthesisFiles -name "*.sty" -o -name "*.ldf")
 	$(MAKE) --no-print-directory nopdflatex

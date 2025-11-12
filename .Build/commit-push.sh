@@ -30,7 +30,6 @@ fi
 
 # Determine current branch
 CURRENT_BRANCH=$(git branch --show-current 2>/dev/null)
-printf "${RED}CURRENT_BRANCH=${CURRENT_BRANCH}${RESET}\n"
 if [ -z "$CURRENT_BRANCH" ]; then
     echo "❌ Error: Not on a valid branch"
     exit 1
