@@ -176,7 +176,7 @@ log:
 #————————————————————————————————————————————————————————————————————————————
 # Build the PDF
 $(PDFFILE): $(LTXFILE)
-	$(MAKE) default --user-mode --no-rename-pdf
+	$(MAKE) default
 
 #————————————————————————————————————————————————————————————————————————————
 # Add fail-safe for critical commands
@@ -939,48 +939,6 @@ push-status:
 	@git remote show $(PUSH_REMOTE) | grep -E "(HEAD branch|Local branch|pushes to|local out of date)" || true
 
 
-
-#############################################################################
-# MERGE-TAG-PUSH FUNCTION
-#############################################################################
-
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: mtp mtp2
-mtp mtp2:
-	@ $(call _$@,$(VERSION),$(DATE))
-
-#————————————————————————————————————————————————————————————————————————————
-# commit, build, merge, tag and push
-define _mtp
-	printf "$(CYAN)VERSION=$(YELLOW)$(1)$(CYAN) - DATE=$(YELLOW)$(2).$(RESET)\n"
-	git commit --all --message "Version $(1) - $(2)." || true
-	$(MAKE) clean
-	python .Build/build.py nova/fct --no-rename
-	git commit --all --message "Version $(1) - $(2)." || true
-	git checkout main
-	git pull
-	git merge --strategy-option theirs -m "Merge branch 'develop'" develop
-	git tag -f -a "v$(1)" -m "Version $(1) - $(2)."
-	git push -f --all
-	git push -f --tags
-	git checkout develop
-endef
-
-#————————————————————————————————————————————————————————————————————————————
-# commit, NO BUILD, merge, tag and push
-define _mtp2
-	printf "$(CYAN)VERSION=$(YELLOW)$(1)$(CYAN) - DATE=$(YELLOW)$(2).$(RESET)\n"
-	git commit --all --message "Version $(1) - $(2)." || true
-	$(MAKE) clean
-	git commit --all --message "Version $(1) - $(2)." || true
-	git checkout main
-	git pull
-	git merge --strategy-option theirs -m "Merge branch 'develop'" develop
-	git tag -f -a "v$(1)" -m "Version $(1) - $(2)."
-	git push -f --all
-	git push -f --tags
-	git checkout develop
-endef
 
 
 #############################################################################

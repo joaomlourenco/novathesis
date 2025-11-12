@@ -518,8 +518,8 @@ def main() -> None:
     ap.add_argument(
         "-r", "--rename-pdf",
         action="store_true",
-        default=True,
-        help="Rename the PDF from 'template.pdf' to 'univ-school-type-lang.pdf' (default: True)"
+        default=False,
+        help="Rename the PDF from 'template.pdf' to 'univ-school-type-lang.pdf' (default: False)"
     )
     # Mode selection - replaces user/demo/cover modes
     ap.add_argument(
