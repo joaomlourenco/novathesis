@@ -323,10 +323,16 @@ ifneq ($@,bump0)
 	$(eval BI='$(patsubst bump%,%,$@)')
 	@ Scripts/bump.py -b $(BI)
 endif
-	$(MAKE) bcmtp
+	$(MAKE) bcrtp
 
-.PHONY: bcmtp
-bcmtp: build-phd-final-en commit rebase tag push
+.PHONY: bcrtp crtp rtp tp
+bcrtp: build-phd-final-en crtp
+
+crtp: commit rtp
+
+rtp: rebase
+
+tp: tag push
 
 
 
