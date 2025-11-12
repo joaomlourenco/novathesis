@@ -330,7 +330,7 @@ bcrtp: build-phd-final-en crtp
 
 crtp: commit rtp
 
-rtp: rebase
+rtp: rebase tp
 
 tp: tag push
 
