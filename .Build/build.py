@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------------
 NOVATHESIS Build Assistant
 
-Version 7.5.3 (2025-11-11)
+Version 7.5.3 (2025-11-12)
 Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 -----------------------------------------------------------------------------
 
@@ -204,12 +204,12 @@ def _copytree_symlinking(src: Path, dst: Path, ignore=None) -> None:
     """
     def _smart_copy(s: str, d: str, *, follow_symlinks=True):
         """Copy function that handles Scripts directory differently."""
-        target_path = Path(d)
-        target_path.parent.mkdir(parents=True, exist_ok=True)
         source_path = Path(s)
         if not source_path.exists():
             print(f"{YELLOW}⚠️  Source does not exist: {s}{RESET}")
             return d
+        target_path = Path(d)
+        target_path.parent.mkdir(parents=True, exist_ok=True)
         # Check if we're dealing with a file in the Scripts directory
         is_in_scripts = 'Scripts' in source_path.parts
         if is_in_scripts:
@@ -255,13 +255,17 @@ def _copytree_symlinking(src: Path, dst: Path, ignore=None) -> None:
         if original_ignore:
             ignored.update(original_ignore(path, names))
         return ignored
-    shutil.copytree(
-        src,
-        dst,
-        dirs_exist_ok=True,
-        copy_function=_smart_copy,
-        ignore=_combined_ignore
-    )
+    if src == dst:
+        print(f"{YELLOW}⚠️  Source and dest are the same: '{src}'.  No symlinking will be done.{RESET}")
+    else:
+        shutil.copytree(
+            src,
+            dst,
+            dirs_exist_ok=True,
+            copy_function=_smart_copy,
+            ignore=_combined_ignore
+        )
+
 def prepare_temp_workspace(project_root: Path, build_dir: str) -> Path:
     """
     Create a temporary workspace with symlinks to project files.
@@ -327,7 +331,7 @@ def safe_outname(school: str, doctype: str, lang: str) -> str:
     doctype_safe = doctype.replace(" ", "_")
     lang_safe = lang.replace(" ", "_")
     return f"{school_safe}-{doctype_safe}-{lang_safe}.pdf"
-def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype: str, lang: str, outdir: Path, progress: int = 1, total_lines: int = 4400, keep_tmp: bool = False, rename = True) -> int:
+def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype: str, lang: str, outdir: Path, progress: int = 1, total_lines: int = 4400, keep_bdir: bool = False, rename = True) -> int:
     """
     Run make command in temporary workspace and handle output.
     Args:
@@ -339,8 +343,8 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
         outdir:       Output directory for final PDF
         progress:     Progress display mode (0: silent, 1: progress bar, 2: real-time output)
         total_lines:  Total expected lines of output for progress calculation
-        keep_tmp:     Whether to keep the building dir
-        rename:       Whether to keep the building dir
+        keep_bdir:    Whether to keep the building dir
+        rename:       Whether to rename the final PDF to 'univ-school-lang.pdf'
     Returns:
         Exit code from make process (0 for success)
     """
@@ -435,7 +439,7 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
                     shutil.copy2(src_pdf, src_pdf)
                     print(f"{GREEN}✅ saved '{src_pdf.name}' to '{dest_pdf}'{RESET}")
                     # Only remove temp workspace if we created it temporarily
-                    if "ntbuild-" in str(tmp_root) and not keep_tmp:
+                    if "ntbuild-" in str(tmp_root) and not keep_bdir:
                         shutil.rmtree(tmp_root)
                         print(f"{CYAN}🧪 Temp workspace removed: {tmp_root}{RESET}")
                     else:
@@ -493,17 +497,7 @@ def main() -> None:
         help="LaTeX processor to use with make (default: lua)"
     )
     ap.add_argument(
-        "-b", "--build-dir",
-        default=None,
-        help="Custom build directory (default: auto-create in /tmp)"
-    )
-    ap.add_argument(
-        "-o", "--output-directory",
-        default=".",
-        help="Output directory for generated PDF (default: current directory)"
-    )
-    ap.add_argument(
-        "-k", "--keep-tmp",
+        "-k", "--keep-bdir",
         action="store_true",
         default=False,
         help="Always keep build dir (even in case of success)"
@@ -520,23 +514,17 @@ def main() -> None:
         "--lines",
         type=int,
         default=4400,
-        help="Expected number of output lines for progress calculation (default: 4400)"
+        help="Expected number of output lines in the 'log' file, for progress calculation (default: 4400)"
     )
     ap.add_argument(
         "-r", "--rename-pdf",
         action="store_true",
         dest="rename",
-        default=True,
-        help="Rename the PDF from 'template.tex' to a 'univ-schl-type-lanf' (default: True)"
+        default=False,
+        help="Rename the PDF from 'template.tex' to a 'univ-schl-type-lang.pdf' (default: False)"
     )
     ap.add_argument(
-        "-nr", "--no-rename-pdf",
-        action="store_false",
-        dest="rename",
-        help="Keep the PDF name as 'template.tex'"
-    )
-    ap.add_argument(
-        "--cover-only",
+        "-cv", "--cover-only",
         action="store_true",
         default=False,
         help="Build cover-only version without main content (default: False)"
@@ -563,11 +551,21 @@ def main() -> None:
         default=False,
         help="Skip directory duplication and use current directory as build directory (implies --user-mode)"
     )
-    # Optional arguments
+    # Dir configurations
     ap.add_argument(
-        "--confdir",
+        "-cdir", "--confdir",
         default="0-Config",
         help="Directory containing LaTeX configuration files (default: 0-Config)"
+    )
+    ap.add_argument(
+        "-bdir", "--build-dir",
+        default=None,
+        help="Custom build directory (default: auto-create in /tmp)"
+    )
+    ap.add_argument(
+        "-o", "--output-dir",
+        default=".",
+        help="Output directory for generated PDF (default: current directory)"
     )
     args = ap.parse_args()
     
@@ -601,7 +599,7 @@ def main() -> None:
         print(f"{RED}❌ Configuration directory not found: {args.confdir}{RESET}")
         sys.exit(1)
     # Validate or create output directory
-    outdir_path = Path(args.output_directory)
+    outdir_path = Path(args.output_dir)
     if not outdir_path.exists():
         try:
             outdir_path.mkdir(parents=True, exist_ok=True)
@@ -621,6 +619,7 @@ def main() -> None:
         patterns = build_patterns(args.doctype, args.school_id, args.lang, args.cover_only, args.status, args.demo)
         print(f"{BRIGHT_CYAN}🎯 Demo mode: configuration files will be modified{RESET}")
     else:
+        args.build_dir = "."
         print(f"{BRIGHT_CYAN}👤 User mode: configuration files will not be modified{RESET}")
     
     # Localize & process the target files inside the TEMP tree
@@ -631,7 +630,7 @@ def main() -> None:
     )
     # Run the build process
     if changed_any:
-        outdir = (project_root / args.output_directory).resolve()
+        outdir = (project_root / args.output_dir).resolve()
         rc = run_make_in_temp(
             tmp_root=tmp_root,
             ltxprocessor=args.processor,
@@ -641,14 +640,14 @@ def main() -> None:
             outdir=outdir,
             progress=args.progress,
             total_lines=args.lines,
-            keep_tmp=args.keep_tmp,
+            keep_bdir=args.keep_bdir,
             rename = args.rename
         )
         if rc != 0:
             sys.exit(rc)
     else:
         print("ℹ️  No changes detected — still building in temp (in case previous artifacts differ).")
-        outdir = (project_root / args.output_directory).resolve()
+        outdir = (project_root / args.output_dir).resolve()
         rc = run_make_in_temp(
             tmp_root=tmp_root,
             ltxprocessor=args.processor,
@@ -658,7 +657,7 @@ def main() -> None:
             outdir=outdir,
             progress=args.progress,
             total_lines=args.lines,
-            keep_tmp=args.keep_tmp,
+            keep_bdir=args.keep_bdir,
             rename = args.rename
         )
         if rc != 0:
