@@ -335,7 +335,6 @@ rtp: rebase tp
 tp: tag push
 
 
-
 #############################################################################
 # BUILD
 #############################################################################
@@ -351,7 +350,7 @@ build-phd-final-en: validate-config check-env check-build
 COMMIT_MESSAGE ?= Version $(VERSION) - $(DATE). Auto-commit.
 COMMIT_INCLUDE_UNTRACKED ?= no
 
-.PHONY: commit commit-untracked commit-push commit-push-force
+.PHONY: commit commit-untracked commit-push commit-push-force crp
 commit commit-push commit-push-force:
 	@ VERSION="$(VERSION)" \
 	DATE="$(DATE)" \
@@ -362,6 +361,7 @@ commit commit-push commit-push-force:
 commit-untracked:
 	make commit COMMIT_INCLUDE_UNTRACKED=yes
 
+crp: commit rebase push
 
 
 #############################################################################
