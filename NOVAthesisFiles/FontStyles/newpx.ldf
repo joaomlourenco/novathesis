@@ -8,18 +8,21 @@
 \typeout{NT FILE FontStyles/newpx.ldf}%
 
 \ifxeorlua{%
-  \IfFontExistsTF{Palatino}%
-      {\setmainfont{Palatino}[
-              Scale=1.0,
-              Ligatures={Common,Discretionary,TeX}]}%
-  {  \IfFontExistsTF{Palatino Linotype}%
-      {\setmainfont{Palatino Linotype}[
-              Scale=1.0,
-              Ligatures={Common,Discretionary,TeX}]}%
+  \IfFontExistsTF{TeX Gyre Pagella}%
       {\setmainfont{TeX Gyre Pagella}[
               Scale=1.0,
+              Ligatures={Common,Discretionary,TeX}]}{%
+  \IfFontExistsTF{Palatino Linotype}%
+      {\setmainfont{Palatino Linotype}[
+              Scale=1.0,
+              Ligatures={Common,Discretionary,TeX}]}{%
+  \IfFontExistsTF{Palatino}{%
+      \setmainfont{Palatino}[
+              Scale=1.0,
               Ligatures={Common,Discretionary,TeX}]}
-  }
+  }{%
+    \PackageError{newpx.ldf}{'Palatino' font not found.  Please select another font in '0-Config/1_novathesis.tex'}%
+  }}
 }{%
   \RequirePackage{newpxtext}
   \RequirePackage{newpxmath}
