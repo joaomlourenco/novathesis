@@ -465,14 +465,15 @@ commit-push:
 # Check if we have commits to push
 #	@echo "📋 Checking for pending commits..."
 	@CURRENT_BRANCH=$$(git branch --show-current 2>/dev/null); \
-	echo $(RED)CURRENT_BRANCH=$$CURRENT_BRANCH$(RESET);\
+	printf "$(RED)CURRENT_BRANCH=$$CURRENT_BRANCH$(RESET)\n";\
 	if [ -z "$$CURRENT_BRANCH" ]; then \
 		echo "❌ Error: Not on a valid branch"; \
 		exit 1; \
 	fi
 #	@echo "✅ Current branch: $$CURRENT_BRANCH"
-	
+#	
 # 2) Push current branch first
+	printf "$(RED)CURRENT_BRANCH=$$CURRENT_BRANCH$(RESET)\n";\
 	@echo "🔄 Pushing current branch ($$CURRENT_BRANCH)..."
 	@if ! git push $(PUSH_REMOTE) $$CURRENT_BRANCH; then \
 		echo "❌ Failed to push $$CURRENT_BRANCH"; \
