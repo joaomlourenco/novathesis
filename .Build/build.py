@@ -331,7 +331,7 @@ def safe_outname(school: str, doctype: str, lang: str) -> str:
     doctype_safe = doctype.replace(" ", "_")
     lang_safe = lang.replace(" ", "_")
     return f"{school_safe}-{doctype_safe}-{lang_safe}.pdf"
-def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype: str, lang: str, outdir: Path, progress: int = 1, total_lines: int = 4400, keep_bdir: bool = False, rename = True) -> int:
+def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype: str, lang: str, outdir: Path, progress: int = 1, total_lines: int = 4400, keep_bdir: bool = False, rename = False) -> int:
     """
     Run make command in temporary workspace and handle output.
     Args:
@@ -431,21 +431,21 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
             src_pdf = tmp_root / "template.pdf"
             if rename:
                 dest_pdf = outdir / safe_outname(school_id, doctype, lang)
+                if src_pdf.exists():
+                    outdir.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(src_pdf, dest_pdf)
+                    print(f"{GREEN}✅ saved '{src_pdf.name}' to '{dest_pdf}'{RESET}")
+                    # Only remove temp workspace if we created it temporarily
+                    if "ntbuild-" in str(tmp_root) and not keep_bdir:
+                        shutil.rmtree(tmp_root)
+                        print(f"{CYAN}🧪 Temp workspace removed: {tmp_root}{RESET}")
+                    else:
+                        print(f"{YELLOW}📁 Preserving build directory: {tmp_root}{RESET}")
+                else:
+                    print(f"{RED}❌ '{src_pdf}' missing{RESET}")
+                return 0
             else:
                 dest_pdf = outdir / "template.pdf"
-            if src_pdf.exists():
-                outdir.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(src_pdf, dest_pdf)
-                print(f"{GREEN}✅ saved '{src_pdf.name}' to '{dest_pdf}'{RESET}")
-                # Only remove temp workspace if we created it temporarily
-                if "ntbuild-" in str(tmp_root) and not keep_bdir:
-                    shutil.rmtree(tmp_root)
-                    print(f"{CYAN}🧪 Temp workspace removed: {tmp_root}{RESET}")
-                else:
-                    print(f"{YELLOW}📁 Preserving build directory: {tmp_root}{RESET}")
-            else:
-                print(f"{RED}❌ '{src_pdf}' missing{RESET}")
-            return 0
         else:
             print(f"{RED}❌ 'make' failed with exit code {returncode}{RESET}")
             print(f"{YELLOW}🧪 Temp workspace kept for debugging: {tmp_root}{RESET}")
