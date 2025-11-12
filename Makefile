@@ -349,7 +349,7 @@ COMMIT_INCLUDE_UNTRACKED ?= no
 
 .PHONY: commit commit-untracked commit-push commit-push-force
 commit commit-push commit-push-force:
-	@ .Build/$@.sh
+	@ @VERSION="$(VERSION)" DATE="$(DATE)" .Build/$@.sh
 
 commit-untracked:
 	make commit COMMIT_INCLUDE_UNTRACKED=yes
@@ -363,7 +363,7 @@ MERGE_MESSAGE ?= Merged $(VERSION) - $(DATE).
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: rebase
 rebase:
-	@MERGE_MESSAGE="$(MERGE_MESSAGE)" VERSION="$(VERSION)" DATE="$(DATE)" ./bin/rebase.sh
+	@MERGE_MESSAGE="$(MERGE_MESSAGE)" VERSION="$(VERSION)" DATE="$(DATE)" .Build/rebase.sh
 
 
 
