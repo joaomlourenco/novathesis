@@ -287,6 +287,7 @@ clean:
 	@ rm -f $(AUXFILES) "*(1)*"
 	@ rm -rf $(AUXDIR) _minted*
 	@ find . -name .DS_Store | xargs rm -rf
+	@ rm -rf $(wildcard /tmp/ntbuild-*)
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: bclean
@@ -299,6 +300,7 @@ bclean:
 .PHONY: gclean
 gclean:
 	@ git clean -fx -e Scripts -e Fonts
+	@ rm -rf $(wildcard /tmp/ntbuild-*)
 
 
 #############################################################################
