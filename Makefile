@@ -846,7 +846,7 @@ tag-push:
 		exit 1; \
 	fi
 	
-	@if ! git push origin "v$(TAG_VERSION)"; then \
+	@if ! git push origin "v$(TAG_VERSION)" -f; then \
 		echo "❌ Failed to push tag v$(TAG_VERSION)"; \
 		exit 1; \
 	fi
