@@ -1,0 +1,24 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/palatino-gyre-pagella.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization of font to use a Palatino-like font style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\typeout{NT FILE FontStyles/palatino-gyre-pagella.ldf}
+
+\ifxeorlua{
+  \IfFontExistsTF{PalatinoTeX Gyre Pagella}
+      {\setmainfont{PalatinoTeX Gyre Pagella}[
+              Scale=1.0,
+              Ligatures={Common,Discretionary,TeX}]
+        \IfFontExistsTF{PalatinoTeX Gyre Pagella}{
+          \setmathfont{TeX Gyre Pagella Math}
+        }{}
+      }{
+  \PackageError{newpx.ldf}{'PalatinoTeX Gyre Pagella' font not found.  Please select another font style in '0-Config/1_novathesis.tex'}
+  }
+}{
+  \PackageError{newpx.ldf}{This font style is only available with 'lualatex' or 'xelatex'.}
+}
