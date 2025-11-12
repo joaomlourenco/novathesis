@@ -465,6 +465,7 @@ commit-push:
 # Check if we have commits to push
 #	@echo "📋 Checking for pending commits..."
 	@CURRENT_BRANCH=$$(git branch --show-current 2>/dev/null); \
+	echo $(RED)CURRENT_BRANCH=$$CURRENT_BRANCH$(RESET);\
 	if [ -z "$$CURRENT_BRANCH" ]; then \
 		echo "❌ Error: Not on a valid branch"; \
 		exit 1; \
