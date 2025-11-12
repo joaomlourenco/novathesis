@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------------
 NOVATHESIS Build Assistant
 
-Version 7.5.3 (2025-11-12)
+Version 7.5.4 (2025-11-12)
 Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 -----------------------------------------------------------------------------
 
@@ -134,9 +134,9 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, co
                 re.compile(r"^\s*%?\s*\\ntaddfile\{abstract\}\[uk\]\{abstract-uk\}\s*.*$"):
                     lambda line: re.sub(r"^(\s*)%+\s*", r"\1", line),
             }
-        result |= {
-            "4_files.tex": file_4_patterns,
-        }
+        # result |= {
+        #     "4_files.tex": file_4_patterns,
+        # }
     return result
 # --- Core Processing Functions ----------------------------------------------
 def process_file(p: Path, patterns: Dict[re.Pattern, Callable[[str], str]]) -> int:
@@ -344,7 +344,7 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
         progress:     Progress display mode (0: silent, 1: progress bar, 2: real-time output)
         total_lines:  Total expected lines of output for progress calculation
         keep_bdir:    Whether to keep the building dir
-        rename:       Whether to rename the final PDF to 'univ-school-lang.pdf'
+        rename:       Whether to rename the final PDF to 'univ-school-type-lang.pdf'
     Returns:
         Exit code from make process (0 for success)
     """
@@ -434,16 +434,15 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
             else:
                 dest_pdf = outdir / "template.pdf"
             if src_pdf.exists():
-                if src_pdf != src_pdf:
-                    outdir.mkdir(parents=True, exist_ok=True)
-                    shutil.copy2(src_pdf, src_pdf)
-                    print(f"{GREEN}✅ saved '{src_pdf.name}' to '{dest_pdf}'{RESET}")
-                    # Only remove temp workspace if we created it temporarily
-                    if "ntbuild-" in str(tmp_root) and not keep_bdir:
-                        shutil.rmtree(tmp_root)
-                        print(f"{CYAN}🧪 Temp workspace removed: {tmp_root}{RESET}")
-                    else:
-                        print(f"{YELLOW}📁 Preserving build directory: {tmp_root}{RESET}")
+                outdir.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(src_pdf, dest_pdf)
+                print(f"{GREEN}✅ saved '{src_pdf.name}' to '{dest_pdf}'{RESET}")
+                # Only remove temp workspace if we created it temporarily
+                if "ntbuild-" in str(tmp_root) and not keep_bdir:
+                    shutil.rmtree(tmp_root)
+                    print(f"{CYAN}🧪 Temp workspace removed: {tmp_root}{RESET}")
+                else:
+                    print(f"{YELLOW}📁 Preserving build directory: {tmp_root}{RESET}")
             else:
                 print(f"{RED}❌ '{src_pdf}' missing{RESET}")
             return 0
@@ -477,13 +476,13 @@ def main() -> None:
     ap.add_argument(
         "-t", "--doctype",
         default="msc",
+        choices=["phd", "msc", "bsc"],
         help="Document type: 'phd', 'msc', 'bsc' (default: msc)"
     )
     ap.add_argument(
         "-s", "--docstatus",
         default="keep",
         choices=["working", "provisional", "final", "keep"],
-        dest="status",
         help="Document status: 'working', 'provisional', 'final', or 'keep' to leave unchanged (default: keep)"
     )
     ap.add_argument(
@@ -500,7 +499,7 @@ def main() -> None:
         "-k", "--keep-bdir",
         action="store_true",
         default=False,
-        help="Always keep build dir (even in case of success)"
+        help="Keep build directory even in case of success (only relevant when using -bdir)"
     )
     # Progress argument as integer with three modes
     ap.add_argument(
@@ -514,53 +513,31 @@ def main() -> None:
         "--lines",
         type=int,
         default=4400,
-        help="Expected number of output lines in the 'log' file, for progress calculation (default: 4400)"
+        help="Expected number of output lines for progress calculation (default: 4400)"
     )
     ap.add_argument(
         "-r", "--rename-pdf",
         action="store_true",
-        dest="rename",
-        default=False,
-        help="Rename the PDF from 'template.tex' to a 'univ-schl-type-lang.pdf' (default: False)"
+        default=True,
+        help="Rename the PDF from 'template.pdf' to 'univ-school-type-lang.pdf' (default: True)"
     )
+    # Mode selection - replaces user/demo/cover modes
     ap.add_argument(
-        "-cv", "--cover-only",
-        action="store_true",
-        default=False,
-        help="Build cover-only version without main content (default: False)"
+        "-m", "--mode",
+        type=int,
+        choices=[0, 1, 2],
+        default=0,
+        help="Build mode: 0 (user), 1 (demo), 2 (cover) (default: 0)"
     )
-    # Demo/user mode group - mutually exclusive
-    demo_group = ap.add_mutually_exclusive_group()
-    demo_group.add_argument(
-        "-u", "--user-mode",
-        action="store_false",
-        dest="demo",
-        default=False,
-        help="User mode: do not modify configuration files (default)"
-    )
-    demo_group.add_argument(
-        "-d", "--demo-mode",
-        action="store_true",
-        dest="demo",
-        help="Demo mode: modify configuration files to include all abstracts and set status to final"
-    )
-    # No-copy option - implies user-mode and uses current directory as build dir
-    ap.add_argument(
-        "-nc", "--no-copy",
-        action="store_true",
-        default=False,
-        help="Skip directory duplication and use current directory as build directory (implies --user-mode)"
-    )
-    # Dir configurations
-    ap.add_argument(
-        "-cdir", "--confdir",
-        default="0-Config",
-        help="Directory containing LaTeX configuration files (default: 0-Config)"
-    )
+    # Build directory with optional argument
     ap.add_argument(
         "-bdir", "--build-dir",
-        default=None,
-        help="Custom build directory (default: auto-create in /tmp)"
+        nargs="?",
+        const="",  # Empty string means create temp directory
+        default=None,  # None means use current directory
+        help="Build directory: if not present, use current directory; "
+             "if present with no argument, create temp directory; "
+             "if present with argument, use specified directory"
     )
     ap.add_argument(
         "-o", "--output-dir",
@@ -569,35 +546,65 @@ def main() -> None:
     )
     args = ap.parse_args()
     
-    # If no-copy mode is active, force user-mode and set build directory to current directory
-    if args.no_copy:
-        args.demo = False
-        args.rename = False
-        args.build_dir = "."
-        print(f"{BRIGHT_CYAN}🚫 No-copy mode: using current directory as build directory{RESET}")
+    # Map mode to demo and cover_only flags
+    demo = (args.mode == 1)
+    cover_only = (args.mode == 2)
     
     # If demo mode is active, override status to "final"
-    if args.demo:
-        args.status = "final"
+    if demo:
+        args.docstatus = "final"
         print(f"{BRIGHT_CYAN}🎯 Demo mode: setting docstatus to 'final'{RESET}")
     
-    # redefine --lines if --cover-only is active
-    if args.cover_only:
+    # Adjust expected lines for cover-only mode
+    if cover_only:
         args.lines = 2400
+        print(f"{BRIGHT_CYAN}📔 Cover mode: building cover-only version{RESET}")
+    
+    # Force -bdir for demo and cover modes if -bdir was omitted
+    if (demo or cover_only) and args.build_dir is None:
+        args.build_dir = ""
+        print(f"{BRIGHT_CYAN}🔧 Forcing temporary build directory for {'demo' if demo else 'cover'} mode{RESET}")
+    
     # Validate school_id format
     if "/" not in args.school_id:
         print("❌ Error: The school ID must contain '/'. Example: nova/fct")
         sys.exit(2)
+    
     # Validate language code format
-    if not re.fullmatch(r"(?!/)(?:[^/\s]+(?:/[^/\s]+)*)", args.school_id):
+    if not re.fullmatch(r"[a-z]{2}", args.lang): 
         print("❌ Error: --lang must be a two-letter code, e.g., en, pt, uk, gr")
         sys.exit(2)
+    
     project_root = Path.cwd()
+    
+    # Handle build directory logic
+    if args.build_dir is None:
+        # No -bdir option: use current directory (no copy, no symlinks)
+        tmp_root = project_root
+        print(f"{CYAN}📁 Using current directory as build directory: {tmp_root}{RESET}")
+        # In this mode, we don't want to keep the build directory since it's the project root
+        args.keep_bdir = False
+    elif args.build_dir == "":
+        # -bdir with no argument: create temp directory (with symlinks)
+        tmp_root = prepare_temp_workspace(project_root, None)
+    else:
+        # -bdir with argument: use specified directory (with symlinks)
+        build_path = Path(args.build_dir).resolve()
+        current_path = project_root.resolve()
+        
+        # Check if build directory is current directory or its direct ancestor
+        if build_path == current_path or current_path.is_relative_to(build_path):
+            print(f"{RED}❌ Build directory cannot be current directory or its ancestor{RESET}")
+            sys.exit(1)
+        
+        tmp_root = prepare_temp_workspace(project_root, args.build_dir)
+    
     # Validate configuration directory exists
-    confdir_path = Path(args.confdir)
+    confdir_path = Path("0-Config")  # Fixed default as per requirements
     if not (project_root / confdir_path).exists():
-        print(f"{RED}❌ Configuration directory not found: {args.confdir}{RESET}")
+        print(f"{RED}❌ Configuration directory not found: 0-Config{RESET}")
         sys.exit(1)
+    
     # Validate or create output directory
     outdir_path = Path(args.output_dir)
     if not outdir_path.exists():
@@ -607,60 +614,40 @@ def main() -> None:
         except Exception as e:
             print(f"{RED}❌ Could not create output directory {outdir_path}: {e}{RESET}")
             sys.exit(1)
-    # Set up temporary workspace
-    if args.no_copy:
-        tmp_root = project_root
-        print(f"{CYAN}📁 Using current directory as build directory: {tmp_root}{RESET}")
-    else:
-        tmp_root = prepare_temp_workspace(project_root, args.build_dir)
-    # Build regex patterns using CLI args - only if in demo mode
+    
+    # Build regex patterns for demo and cover modes
     patterns = {}
-    if args.demo:
-        patterns = build_patterns(args.doctype, args.school_id, args.lang, args.cover_only, args.status, args.demo)
-        print(f"{BRIGHT_CYAN}🎯 Demo mode: configuration files will be modified{RESET}")
+    if demo or cover_only:
+        patterns = build_patterns(args.doctype, args.school_id, args.lang, cover_only, args.docstatus, demo)
+        mode_name = "demo" if demo else "cover"
+        print(f"{BRIGHT_CYAN}🎯 {mode_name.capitalize()} mode: configuration files will be modified{RESET}")
     else:
-        args.build_dir = "."
         print(f"{BRIGHT_CYAN}👤 User mode: configuration files will not be modified{RESET}")
     
-    # Localize & process the target files inside the TEMP tree
+    # Localize & process the target files inside the build tree
     changed_any = localize_and_process_files(
         tmp_root=tmp_root,
-        confdir=Path(args.confdir),
+        confdir=confdir_path,
         patterns=patterns
     )
+    
     # Run the build process
-    if changed_any:
-        outdir = (project_root / args.output_dir).resolve()
-        rc = run_make_in_temp(
-            tmp_root=tmp_root,
-            ltxprocessor=args.processor,
-            school_id=args.school_id,
-            doctype=args.doctype,
-            lang=args.lang,
-            outdir=outdir,
-            progress=args.progress,
-            total_lines=args.lines,
-            keep_bdir=args.keep_bdir,
-            rename = args.rename
-        )
-        if rc != 0:
-            sys.exit(rc)
-    else:
-        print("ℹ️  No changes detected — still building in temp (in case previous artifacts differ).")
-        outdir = (project_root / args.output_dir).resolve()
-        rc = run_make_in_temp(
-            tmp_root=tmp_root,
-            ltxprocessor=args.processor,
-            school_id=args.school_id,
-            doctype=args.doctype,
-            lang=args.lang,
-            outdir=outdir,
-            progress=args.progress,
-            total_lines=args.lines,
-            keep_bdir=args.keep_bdir,
-            rename = args.rename
-        )
-        if rc != 0:
-            sys.exit(rc)
+    outdir = (project_root / args.output_dir).resolve()
+    rc = run_make_in_temp(
+        tmp_root=tmp_root,
+        ltxprocessor=args.processor,
+        school_id=args.school_id,
+        doctype=args.doctype,
+        lang=args.lang,
+        outdir=outdir,
+        progress=args.progress,
+        total_lines=args.lines,
+        keep_bdir=args.keep_bdir,
+        rename=args.rename_pdf
+    )
+    
+    if rc != 0:
+        sys.exit(rc)
+
 if __name__ == "__main__":
     main()

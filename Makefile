@@ -2,7 +2,7 @@
 # NOVATHESIS — Makefile
 #----------------------------------------------------------------------------
 #
-# Version 7.5.3 (2025-11-11)
+# Version 7.5.4 (2025-11-12)
 # Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 
 
@@ -102,10 +102,9 @@ SCHL := $(if $(SCHL),$(SCHL),nova/fct)
 # Automatically use the right latex compiler and compile
 .PHONY: default
 LUA=$(shell cat $(CACHE))
-BUILDFLAGS=--build-dir $(AUXDIR) --keep-tmp --user-mode --no-copy
 
 default: validate-config check-env check-build
-	$(BUILD) $(SCHL) $(BUILDFLAGS)
+	$(BUILD) $(SCHL)
 
 #————————————————————————————————————————————————————————————————————————————
 # The main targets
@@ -332,7 +331,7 @@ bcmtp: build-phd-final-en commit rebase tag push
 #############################################################################
 .PHONY: build-phd-final-en
 build-phd-final-en: validate-config check-env check-build
-	$(BUILD) $(SCHL) --build-dir $(AUXDIR) --keep --demo-mode
+	$(BUILD) $(SCHL) --mode 1
 
 
 
