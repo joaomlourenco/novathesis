@@ -445,49 +445,48 @@ commit-push:
 	
 # 1) Check conditions
 #	@echo "📋 Checking push conditions..."
-	
+#
 # Check if we're in a git repository
 	@if ! git rev-parse --git-dir > /dev/null 2>&1; then \
 		echo "❌ Error: Not in a git repository"; \
 		exit 1; \
-	fi
+	fi; \
 #	@echo "✅ In a git repository"
-	
+#
 # Check for pending/modified files
 #	@echo "📋 Checking for uncommitted changes..."
-	@if [ -n "$$(git status --porcelain 2>/dev/null | grep -Fv '??')" ]; then \
+	if [ -n "$$(git status --porcelain 2>/dev/null | grep -Fv '??')" ]; then \
 		echo "❌ Error: You have uncommitted changes. Please commit them first."; \
 		git status --short; \
 		exit 1; \
-	fi
+	fi; \
 #	@echo "✅ No uncommitted changes"
-	
+#	
 # Check if we have commits to push
 #	@echo "📋 Checking for pending commits..."
-	@CURRENT_BRANCH=$$(git branch --show-current 2>/dev/null); \
+	CURRENT_BRANCH=$$(git branch --show-current 2>/dev/null); \
 	printf "$(RED)CURRENT_BRANCH=$$CURRENT_BRANCH$(RESET)\n";\
 	if [ -z "$$CURRENT_BRANCH" ]; then \
 		echo "❌ Error: Not on a valid branch"; \
 		exit 1; \
-	fi
+	fi; \
 #	@echo "✅ Current branch: $$CURRENT_BRANCH"
 #	
 # 2) Push current branch first
-	printf "$(RED)CURRENT_BRANCH=$$CURRENT_BRANCH$(RESET)\n";\
-	@echo "🔄 Pushing current branch ($$CURRENT_BRANCH)..."
-	@if ! git push $(PUSH_REMOTE) $$CURRENT_BRANCH; then \
+	echo "🔄 Pushing current branch ($$CURRENT_BRANCH)..."; \
+	if ! git push $(PUSH_REMOTE) $$CURRENT_BRANCH; then \
 		echo "❌ Failed to push $$CURRENT_BRANCH"; \
 		echo "   You may need to pull changes first: git pull $(PUSH_REMOTE) $$CURRENT_BRANCH"; \
 		exit 1; \
-	fi
+	fi; \
 #	@if git push $(PUSH_REMOTE) $$CURRENT_BRANCH; then \
 #		echo "✅ Successfully pushed $$CURRENT_BRANCH"; \
 #	else \
 #		echo "❌ Failed to push $$CURRENT_BRANCH"; \
 #		echo "   You may need to pull changes first: git pull $(PUSH_REMOTE) $$CURRENT_BRANCH"; \
 #		exit 1; \
-#	fi
-	
+#	fi; \
+#
 # 3) Push the other branch (main or develop)
 #	@echo "📋 Checking other branch to push..."
 	@if [ "$$CURRENT_BRANCH" = "develop" ]; then \
@@ -497,8 +496,8 @@ commit-push:
 	else \
 		echo "⚠️  Current branch is neither main nor develop. Only pushed $$CURRENT_BRANCH"; \
 		OTHER_BRANCH=""; \
-	fi
-	
+	fi; \
+#
 	@if [ -n "$$OTHER_BRANCH" ]; then \
 		echo "🔄 Pushing $$OTHER_BRANCH branch..."; \
 		if git show-ref --verify --quiet refs/heads/$$OTHER_BRANCH; then \
@@ -509,7 +508,7 @@ commit-push:
 		else \
 			echo "⚠️  Branch $$OTHER_BRANCH does not exist locally. Skipping."; \
 		fi; \
-	fi
+	fi; \
 #	@if [ -n "$$OTHER_BRANCH" ]; then \
 #		echo "🔄 Pushing $$OTHER_BRANCH branch..."; \
 #		if git show-ref --verify --quiet refs/heads/$$OTHER_BRANCH; then \
@@ -522,20 +521,20 @@ commit-push:
 #		else \
 #			echo "⚠️  Branch $$OTHER_BRANCH does not exist locally. Skipping."; \
 #		fi; \
-#	fi
-	
+#	fi; \
+#
 # 4) Show push summary
-	@echo "📋 Push Summary:"
-	@echo "   ✅ Pushed: $$CURRENT_BRANCH"
-	@if [ -n "$$OTHER_BRANCH" ]; then \
+	echo "📋 Push Summary:"; \
+	echo "   ✅ Pushed: $$CURRENT_BRANCH"; \
+	if [ -n "$$OTHER_BRANCH" ]; then \
 		if git show-ref --verify --quiet refs/heads/$$OTHER_BRANCH 2>/dev/null && \
 		   git push $(PUSH_REMOTE) $$OTHER_BRANCH --dry-run 2>&1 | grep -q "up to date"; then \
 			echo "   ✅ Pushed: $$OTHER_BRANCH"; \
 		else \
 			echo "   ⚠️  Status: $$OTHER_BRANCH (see above)"; \
 		fi; \
-	fi
-	@echo "🎉 Commit push process completed!"
+	fi; \
+	echo "🎉 Commit push process completed!"
 
 #————————————————————————————————————————————————————————————————————————————
 # Enhanced version that checks commit status before pushing
