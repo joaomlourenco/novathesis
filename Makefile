@@ -286,7 +286,7 @@ AUXFILES := $(filter-out $(GOODFILES),$(wildcard $(BASENAME).*)) $(NEEDLUALATEX)
 .ONESHELL:
 clean:
 	@ $(LTXMK) -c $(BASENAME)
-	@ rm -f $(AUXFILES) "*(1)*"
+	@ rm -f $(AUXFILES) "*(1)*" $(NEEDLUALATEX)
 	@ rm -rf $(AUXDIR) _minted*
 	@ find . -name .DS_Store | xargs rm -rf
 	@ rm -rf $(wildcard /tmp/ntbuild-*)
@@ -434,10 +434,10 @@ push-status:
 #############################################################################
 
 #————————————————————————————————————————————————————————————————————————————
-.PHONY: nopdflatex
+.PHONY: needlua needlualatex
 needlua needlualatex:
 	@ .Build/need_lualatex.sh
 
 # Add a real dependency for the cache file
 $(NEEDLUALATEX): $(shell find NOVAthesisFiles -name "*.sty" -o -name "*.ldf")
-	$(MAKE) --no-print-directory nopdflatex
+	$(MAKE) --no-print-directory needlualatex

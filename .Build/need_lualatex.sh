@@ -6,6 +6,8 @@
 TMPFILE="$(mktemp)"
 GREP="${GREP:-grep -F}"
 
+OUT=.needlualatex
+
 # Collect all affected identifiers
 NEED_LUALATEX_ALL="$(
   $GREP -rl "is not compatible with pdfLaTeX" NOVAthesisFiles/FontStyles |
@@ -27,7 +29,7 @@ for word in $NEED_LUALATEX_ALL; do
 done >>"$TMPFILE" 
 
 # Deduplicate, sort, and write final list
-sort -u "$TMPFILE" > .needlua
+sort -u "$TMPFILE" > ${OUT}
 rm -f "$TMPFILE"
 
-echo "✅ Saved list to .needlualatex"
+echo "✅ Saved list to ${OUT}"

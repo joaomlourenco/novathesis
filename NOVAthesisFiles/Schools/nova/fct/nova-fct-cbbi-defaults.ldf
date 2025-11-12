@@ -17,7 +17,7 @@
   \ClassError{novathesis}{Invalid document type: `\@DOCTYPE'.  Must be `msc'!}{}{}%
 }
 
-% FCT-NOVA specific customization
+% NOVA FCT specific customization
 \openany
 \ntsetup{doctype=msc}
 \ntsetup{print/secondcover=true}

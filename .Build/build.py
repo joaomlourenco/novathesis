@@ -287,6 +287,76 @@ def prepare_temp_workspace(project_root: Path, build_dir: str) -> Path:
     )
     _copytree_symlinking(project_root, tmpdir, ignore=ignore)
     return tmpdir
+
+def restore_config_symlinks(tmp_root: Path, project_root: Path, confdir: Path) -> None:
+    """
+    Restore symlinks for configuration files that were customized (are real files and not symlinks).
+    This is needed when reusing a temp-root folder in demo or cover modes.
+    Args:
+        tmp_root: Temporary workspace directory
+        project_root: Original project root directory
+        confdir: Configuration directory name
+    """
+    config_dir = tmp_root / confdir
+    if not config_dir.exists():
+        return
+    
+    # Get all files in the configuration directory
+    for file_path in config_dir.iterdir():
+        # Skip directories, only process files
+        if not file_path.is_file():
+            continue
+            
+        original_file = project_root / confdir / file_path.name
+        
+        # Only process if the file exists and is a real file (not a symlink)
+        # and the original file exists in the project
+        if (file_path.exists() and 
+            file_path.is_file() and 
+            not file_path.is_symlink() and
+            original_file.exists()):
+            try:
+                # Remove the real file and create a symlink to the original
+                file_path.unlink()
+                file_path.symlink_to(original_file)
+                print(f"{GREEN}🔗 Restored symlink for {file_path.name}{RESET}")
+            except Exception as e:
+                print(f"{YELLOW}⚠️  Could not restore symlink for {file_path.name}: {e}{RESET}")
+
+def store_keep_dir(temp_root: Path) -> None:
+    """
+    Store the path of the temp directory in a cache file ".keep-dir".
+    Args:
+        temp_root: Path to the temporary directory to store
+    """
+    cache_file = Path(".keep-dir")
+    try:
+        cache_file.write_text(str(temp_root), encoding="utf-8")
+        print(f"{GREEN}💾 Stored temp directory path in {cache_file}: {temp_root}{RESET}")
+    except Exception as e:
+        print(f"{YELLOW}⚠️  Could not write to {cache_file}: {e}{RESET}")
+
+def read_keep_dir() -> Path | None:
+    """
+    Read the temp directory path from the ".keep-dir" cache file.
+    Returns:
+        Path to the temp directory if it exists and is valid, None otherwise
+    """
+    cache_file = Path(".keep-dir")
+    if not cache_file.exists():
+        return None
+    
+    try:
+        temp_path = Path(cache_file.read_text(encoding="utf-8").strip())
+        if temp_path.exists():
+            return temp_path
+        else:
+            print(f"{YELLOW}⚠️  Cached temp directory does not exist: {temp_path}{RESET}")
+            return None
+    except Exception as e:
+        print(f"{YELLOW}⚠️  Could not read or parse {cache_file}: {e}{RESET}")
+        return None
+
 def localize_and_process_files(tmp_root: Path, confdir: Path, patterns: dict[str, Dict[re.Pattern, Callable[[str], str]]]) -> bool:
     """
     Localize configuration files in temp workspace and apply transformations.
@@ -427,10 +497,13 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
         elapsed = end_time - start_time
         if returncode == 0:
             print(f"{CYAN}✅ 'make' succeeded in {RED}{elapsed:.2f}{CYAN} seconds{RESET}")
-            # Success → copy template.pdf to "{school-doctype-lang}.pdf"
+            # Success → copy template.pdf to "{university-school-doctype-lang}.pdf"
             src_pdf = tmp_root / "template.pdf"
             if rename:
                 dest_pdf = outdir / safe_outname(school_id, doctype, lang)
+            else:
+                dest_pdf = outdir / "template.pdf"
+            if src_pdf != dest_pdf:
                 if src_pdf.exists():
                     outdir.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(src_pdf, dest_pdf)
@@ -444,8 +517,6 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
                 else:
                     print(f"{RED}❌ '{src_pdf}' missing{RESET}")
                 return 0
-            else:
-                dest_pdf = outdir / "template.pdf"
         else:
             print(f"{RED}❌ 'make' failed with exit code {returncode}{RESET}")
             print(f"{YELLOW}🧪 Temp workspace kept for debugging: {tmp_root}{RESET}")
@@ -537,7 +608,8 @@ def main() -> None:
         default=None,  # None means use current directory
         help="Build directory: if not present, use current directory; "
              "if present with no argument, create temp directory; "
-             "if present with argument, use specified directory"
+             "if present with argument, use specified directory; "
+             "if '-', use cached directory from .keep-dir file"
     )
     ap.add_argument(
         "-o", "--output-dir",
@@ -578,15 +650,43 @@ def main() -> None:
     project_root = Path.cwd()
     
     # Handle build directory logic
+    reusing_temp_dir = False
     if args.build_dir is None:
         # No -bdir option: use current directory (no copy, no symlinks)
         tmp_root = project_root
         print(f"{CYAN}📁 Using current directory as build directory: {tmp_root}{RESET}")
         # In this mode, we don't want to keep the build directory since it's the project root
         args.keep_bdir = False
+    elif args.build_dir == "-":
+        # Special case: -bdir - means use cached directory from .keep-dir file
+        cached_temp_root = read_keep_dir()
+        if cached_temp_root is None:
+            # If .keep-dir doesn't exist or is invalid, proceed as if -bdir was given with no argument
+            print(f"{YELLOW}⚠️  No cached temp directory found, creating new temp directory{RESET}")
+            tmp_root = prepare_temp_workspace(project_root, None)
+            # Store the new temp directory and assume --keep-bdir for future executions
+            store_keep_dir(tmp_root)
+            args.keep_bdir = True
+            print(f"{BRIGHT_CYAN}🔧 Created new temp directory and stored for future use{RESET}")
+        else:
+            # Use the cached temp directory
+            tmp_root = cached_temp_root
+            reusing_temp_dir = True
+            print(f"{CYAN}📁 Using cached temp directory: {tmp_root}{RESET}")
+            # Implicitly set --keep-bdir when using cached directory
+            args.keep_bdir = True
+            print(f"{BRIGHT_CYAN}🔧 Implicitly setting --keep-bdir for cached directory{RESET}")
+            
+            # When reusing temp directory in demo or cover mode, restore symlinks for config files
+            if (demo or cover_only) and tmp_root != project_root:
+                print(f"{BRIGHT_CYAN}🔧 Restoring config file symlinks for reuse in {'demo' if demo else 'cover'} mode{RESET}")
+                restore_config_symlinks(tmp_root, project_root, Path("0-Config"))
     elif args.build_dir == "":
         # -bdir with no argument: create temp directory (with symlinks)
         tmp_root = prepare_temp_workspace(project_root, None)
+        # Store the temp directory path if keep_bdir is set
+        if args.keep_bdir:
+            store_keep_dir(tmp_root)
     else:
         # -bdir with argument: use specified directory (with symlinks)
         build_path = Path(args.build_dir).resolve()
@@ -598,6 +698,9 @@ def main() -> None:
             sys.exit(1)
         
         tmp_root = prepare_temp_workspace(project_root, args.build_dir)
+        # Store the temp directory path if keep_bdir is set
+        if args.keep_bdir:
+            store_keep_dir(tmp_root)
     
     # Validate configuration directory exists
     confdir_path = Path("0-Config")  # Fixed default as per requirements
