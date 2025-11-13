@@ -102,7 +102,7 @@ The [“*novathesis*” LaTeX template](https://joaomlourenco.github.io/novathes
 
 *[See below](#with-a-remote-cloud-based-service) for alternatives to a local LaTeX installation*
 
-*See “[minimal installation](minimal_installation)” for instructions on how to build/use a minimal installation of LaTeX (<100 MB vs. 5GB for tex-live), which is just enough to compile the template successfully*
+*See “[minimal installation](minimal_installation)” for instructions on how to build/use a minimal installation of LaTeX (<100 MB vs. +6GB for tex-live), which is just enough to compile the template successfully*
 
 1. Download LaTeX:
    * **Windows:** install [TeX-Live](https://www.tug.org/texlive/) or [MikTeX](https://miktex.org).
