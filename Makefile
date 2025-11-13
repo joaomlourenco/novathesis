@@ -330,7 +330,7 @@ bcrtp: build-phd-final-en crtp
 
 bcrp: build-phd-final-en crp
 
-brp: build-phd-final-en commit push
+bcp: build-phd-final-en commit push
 
 crp: commit rebase push
 
