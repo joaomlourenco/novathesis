@@ -9,6 +9,9 @@ template.*
 !template.tex
 !template.pdf
 
+# Ignore temp files
+.needlualatex
+
 ### LaTeX ###
 ## Core latex/pdflatex auxiliary files:
 *.aux
@@ -391,7 +394,7 @@ $RECYCLE.BIN/
 ~*
 
 ### Fonts ###
-**/Fonts
+# **/Fonts
 
 ### Scripts ###
 **/Scripts

@@ -4,7 +4,7 @@
 %%  NOVATHESIS — novathesis.cls
 %% ----------------------------------------------------------------------------
 %% 
-%% Version 7.5.2 (2025-11-11)
+%% Version 7.5.5 (2025-11-13)
 %% Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -380,11 +380,157 @@
 \newcommand*{\embrace}[1]{#1}
 % \newcommand*{\embrace}[1]{$\langle$#1$\rangle$}
 
+
 % --------------------------------------------------------
+
+\ifluatex
+\RequirePackage{luacode}
+\begin{luacode}
+-- timing helper (prefers wall time, otherwise CPU time)
+local function now()
+  local ok, socket = pcall(require, "socket")
+  if ok and socket.gettime then return socket.gettime() end
+  return os.clock()
+end
+
+-- mkdir -p using lfs when possible, else shell out
+local function mkdir_p(path)
+  path = (path or ""):gsub("\\","/")               -- normalize separators
+  if path == "" then return true end
+  local ok, lfs = pcall(require, "lfs")
+  if ok and lfs then
+    local accum = ""
+    -- keep leading "/" or drive letters intact
+    if path:match("^/") then accum = "/" end
+    if path:match("^[A-Za-z]:") then accum = path:sub(1,2) end
+    for part in path:gmatch("[^/]+") do
+      if accum == "" or accum:match("^[A-Za-z]:$") then
+        accum = accum .. part
+      elseif accum == "/" then
+        accum = "/" .. part
+      else
+        accum = accum .. "/" .. part
+      end
+      if not lfs.attributes(accum, "mode") then
+        local okmk = lfs.mkdir(accum)
+        if not okmk then return false end
+      end
+    end
+    return true
+  else
+    local is_win = package.config:sub(1,1) == "\\"
+    local cmd = is_win and ('mkdir "%s" >NUL 2>&1'):format(path)
+                     or ('mkdir -p "%s"'):format(path)
+    local rc = os.execute(cmd)
+    return rc == true or rc == 0
+  end
+end
+
+-- get last path element of URL
+local function last_segment(url)
+  if not url or url == "" then return "" end
+  -- strip trailing slash
+  url = url:gsub("/+$","")
+  -- take everything after last "/"
+  local last = url:match("([^/]+)$") or url
+  -- if the last part looks like query-only, keep it verbatim
+  return last
+end
+
+-- download URL -> filepath; returns ok, elapsed_seconds
+local function download_to(url, filepath)
+  -- try pure Lua (socket/http or ssl.https), else fallback to curl
+  local start_t = now()
+  local ok_socket, http = pcall(require, "socket.http")
+  local ltn12
+  if ok_socket then ltn12 = require("ltn12") end
+
+  local scheme = url:match("^(%w+):") or "http"
+  local ok = false
+
+  if scheme == "https" then
+    local ok_https, https = pcall(require, "ssl.https")
+    if ok_https and ltn12 then
+      local f, ferr = io.open(filepath, "wb")
+      if f then
+        local _, code = https.request{ url = url, sink = ltn12.sink.file(f) }
+        f:close()
+        ok = (code == 200)
+      end
+    end
+  elseif scheme == "http" and ok_socket and ltn12 then
+    local f, ferr = io.open(filepath, "wb")
+    if f then
+      local _, code = http.request{ url = url, sink = ltn12.sink.file(f) }
+      f:close()
+      ok = (code == 200)
+    end
+  end
+
+  if not ok then
+    -- fallback via curl (requires --shell-escape and curl in PATH)
+    local cmd = ('curl -L -s -o "%s" "%s"'):format(filepath, url)
+    local rc = os.execute(cmd)
+    ok = (rc == true or rc == 0)
+  end
+
+  local elapsed = now() - start_t
+  return ok, elapsed
+end
+
+function download_font(url, folder)
+  local last = last_segment(url)
+  local file = (folder:gsub("\\","/") .. "/" .. last):gsub("//+","/")
+
+  local made = mkdir_p(folder)
+  local ok, elapsed = false, 0.0
+  if made then ok, elapsed = download_to(url, file) end
+
+  -- Define LaTeX macros:
+  tex.print("\\def\\URL{" .. url .. "}")
+  tex.print("\\def\\FOLDER{" .. folder .. "}")
+  tex.print("\\def\\FilePath{" .. file .. "}")
+  tex.print("\\def\\ElapsedSeconds{" .. string.format("%.3f", elapsed) .. "}")
+  tex.print("\\def\\DownloadStatus{" .. (ok and "OK" or "FAILED") .. "}")
+end
+\end{luacode}
+
+% \DownloadFont{<URL>}{<FOLDER>}
+\newcommand{\DownloadFont}[2]{%
+  % Safely escape to Lua:
+  \directlua{download_font("\luaescapestring{#1}","\luaescapestring{#2}")}%
+  \typeout{         URL: \texttt{\URL}}
+  \typeout{      FOLDER: \texttt{\FOLDER}}
+  \typeout{        FILE: \texttt{\FilePath}}
+  \typeout{     SUCCESS: \texttt{\DownloadStatus}}
+  \typeout{TIME ELAPSED: \texttt{\ElapsedSeconds~s}}
+}
+\fi
+
+
 % Check if a font file exists
-\newcommand*{\ntcheckfont}[2]{%
-  \IfFileExists{NOVAthesisFiles/FontStyles/Fonts/#1}{}%
-    {\ClassError{novathesis}{Missing font “#1”! Please download from: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}{Please download from: “#2” and copy it to “NOVAthesisFiles/FontStyles/Fonts/#1”}}%
+\newcommand*{\ntcheckfonts}[5][ttf]{%
+% #1 = font format
+% #2 = Font name
+% #3 = Variants to load: Regular,Italic,Bold,Boldltalic
+% #4 = Repository URL
+% #5 = Fonts folder in Repo 
+%    XeTeX: manual download from "URL/ZIP/FONTNAME.zip"
+% luaLaTeX: automatic download from "URL/FONTNAME/FONTNAME-VARIANT.FORMAT"
+    \ntfor\myi:={#3}\do{
+      \typeout{------------------NOVAthesisFiles/FontStyles/Fonts/#2-\myi.#1}
+      \IfFileExists{NOVAthesisFiles/FontStyles/Fonts/#2-\myi.#1}{\typeout{FONT '#2-\myi.#1' is available.}}%
+          {%
+          \ifluatex          
+              \typeout{Missing font “#2-\myi.#1”!  Downloading from “#4/#5/#2/#2-\myi.#1”}
+              \DownloadFont{#4/raw/refs/heads/main/#5/#2/#2-\myi.#1}{NOVAthesisFiles/FontStyles/Fonts}
+          \else
+              \ClassError{novathesis}
+                         {Missing font “#2-\myi.#1”! Please download from: “#4/ZIP/#2.zip” and expand it to “NOVAthesisFiles/FontStyles/Fonts/#2-\myi.#1”}
+                         {Please download from: “#4/ZIP/#2.zip” and expand it to “NOVAthesisFiles/FontStyles/Fonts/#2-\myi.#1”}%
+          \fi
+      }%
+    }
 }
 
 
@@ -3031,4 +3177,3 @@
   \newcommand{\@ntcite}[1]{\ifdef{\parencite}{\parencite{#1}}{\cite{#1}}}
   \makeatother
 }
-

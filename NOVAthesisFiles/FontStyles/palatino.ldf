@@ -1,0 +1,21 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/palatino.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization of font to use a Palatino-like font style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\typeout{NT FILE FontStyles/palatino.ldf}
+
+\ifxeorlua{
+  \IfFontExistsTF{Palatino}
+      {\setmainfont{Palatino}[
+              Scale=1.0,
+              Ligatures={Common,Discretionary,TeX}]
+      }{
+  \PackageError{newpx.ldf}{'Palatino' font not found.  Please select another font style in '0-Config/1_novathesis.tex'}
+  }
+}{
+  \PackageError{newpx.ldf}{This font style is only available with 'lualatex' or 'xelatex'.}
+}

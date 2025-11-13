@@ -2,7 +2,7 @@
 # NOVATHESIS — Makefile
 #----------------------------------------------------------------------------
 #
-# Version 7.5.2 (2025-11-11)
+# Version 7.5.5 (2025-11-13)
 # Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 
 
@@ -10,10 +10,10 @@
 # CUSTOMIZATION AREA HERE
 
 # Define V command to the name of your PDF viewer
-V		:= open -a skim
-# Define EDITOR command to open text files
-EDITOR 	?= mate
+PDFVIEWER ?= open -a skim
 
+# Define the text Editor
+EDITOR ?= mate
 
 #############################################################################
 # DO NOT TOUCH BELOW THIS POINT
@@ -21,7 +21,6 @@ EDITOR 	?= mate
 
 #————————————————————————————————————————————————————————————————————————————
 # Prevents the “each line is a new shell” pitfall and simplifies variable flow
-.ONESHELL:
 SHELL := /bin/sh
 .SHELLFLAGS := -eu -c -o pipefail
 #————————————————————————————————————————————————————————————————————————————
@@ -52,7 +51,7 @@ endif
 
 #————————————————————————————————————————————————————————————————————————————
 # LUA cache file
-CACHE=.nopdflatex
+NEEDLUALATEX=.needlualatex
 
 #————————————————————————————————————————————————————————————————————————————
 # AUXDIR to avoid cluttering workspace
@@ -100,19 +99,16 @@ SCHL := $(if $(SCHL),$(SCHL),nova/fct)
 
 #————————————————————————————————————————————————————————————————————————————
 # Automatically use the right latex compiler and compile
-.PHONY: default build
-LUA=$(shell cat $(CACHE))
-default: validate-config check-env check-build build
-
-build:
-	$(BUILD) $(SCHL) --build-dir $(AUXDIR) --keep-tmp --user-mode --no-rename-pdf
+.PHONY: default
+default: validate-config check-env check-build
+	$(BUILD) $(SCHL)
 
 #————————————————————————————————————————————————————————————————————————————
 # The main targets
 # e.g. '$(MAKE) lua'
 .PHONY: pdf xe lua
-pdf xe lua: validate-config check-env $(CACHE) $(LTXFILE) $(LTXCLS)
-	$(LTXMK) -pdf$(patsubst pdf%,%,$@) $(LTXFLAGS) $(EXTRAFLAGS) $(BASENAME)
+pdf xe lua: validate-config check-env $(NEEDLUALATEX) $(LTXFILE) $(LTXCLS)
+	$(LTXMK) -pdf$(patsubst pdf%,%,$@) $(LTXFLAGS) $(BASENAME)
 
 #————————————————————————————————————————————————————————————————————————————
 # Btach mode
@@ -166,7 +162,13 @@ endif
 # Build and display the PDF
 .PHONY: v view
 v view: $(PDFFILE)
-	$(V) $(PDFFILE)
+	$(PDFVIEWER) $(PDFFILE)
+
+#————————————————————————————————————————————————————————————————————————————
+# Display the log file
+.PHONY: log
+log:
+	$(EDITOR) $$(find . -name "$(BASENAME).log" -print0 | xargs -0)
 
 #————————————————————————————————————————————————————————————————————————————
 # View the log file
@@ -177,7 +179,7 @@ log:
 #————————————————————————————————————————————————————————————————————————————
 # Build the PDF
 $(PDFFILE): $(LTXFILE)
-	$(MAKE) default --user-mode --no-rename-pdf
+	$(MAKE) default
 
 #————————————————————————————————————————————————————————————————————————————
 # Add fail-safe for critical commands
@@ -205,6 +207,7 @@ validate-config:
 #————————————————————————————————————————————————————————————————————————————
 # Help
 .PHONY: help
+.ONESHELL:
 help:
 	@printf "$(CYAN)NOVAthesis Makefile Help$(RESET)\n"
 	@printf "$(CYAN)========================$(RESET)\n"
@@ -223,17 +226,19 @@ help:
 #————————————————————————————————————————————————————————————————————————————
 # Debug
 .PHONY: dry-run debug-vars
+.ONESHELL:
 dry-run:
 	@printf "$(CYAN)Would build with: SCHOOL=$(SCHL), MODE=$(MODE)$(RESET)\n"
 	@printf "$(CYAN)Main file: $(BASENAME).tex$(RESET)\n"
 	@printf "$(CYAN)Compiler: $(LTXMK) $(LTXFLAGS)$(RESET)\n"
 
+.ONESHELL:
 debug-vars:
 	@printf "$(CYAN)SCHOOL: $(SCHL)$(RESET)\n"
 	@printf "$(CYAN)VERSION: $(ORIGVERSION)$(RESET)\n"
 	@printf "$(CYAN)MAIN FILE: $(BASENAME)$(RESET)\n"
 	@printf "$(CYAN)TEX VERSIONS: $(TEXVERSIONS)$(RESET)\n"
-	@printf "$(CYAN)LUA SCHOOLS: $(shell cat $(CACHE) 2>/dev/null || $(MAGENTA)'not computed'$(RESET))$(RESET)\n"
+	@printf "$(CYAN)LUA SCHOOLS: $(shell cat $(NEEDLUALATEX) 2>/dev/null || $(MAGENTA)'not computed'$(RESET))$(RESET)\n"
 
 #————————————————————————————————————————————————————————————————————————————
 # Color definitions
@@ -260,6 +265,7 @@ ZIPTARGET=$(BASENAME)-$(VERSION)@$(DATE).zip
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: zip
+.ONESHELL:
 zip: clean
 	@ printf "$(YELLOW)Creating archive: $(ZIPTARGET)$(RESET)\n"
 	@ rm -f "$(ZIPTARGET)"
@@ -279,15 +285,17 @@ zip: clean
 # AUXFILES:=$(shell ls $(BASENAME)*.* | $(GREP) -v .tex | $(GREP) -v .pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
 
 GOODFILES := LICENSE Makefile %.cls %.md .gitignore %.tex %.pdf
-AUXFILES := $(filter-out $(GOODFILES),$(wildcard $(BASENAME).*)) $(CACHE)
+AUXFILES := $(filter-out $(GOODFILES),$(wildcard $(BASENAME).*)) $(NEEDLUALATEX)
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: clean
+.ONESHELL:
 clean:
 	@ $(LTXMK) -c $(BASENAME)
-	@ rm -f $(AUXFILES) "*(1)*"
+	@ rm -f $(AUXFILES) "*(1)*" $(NEEDLUALATEX)
 	@ rm -rf $(AUXDIR) _minted*
 	@ find . -name .DS_Store | xargs rm -rf
+	@ rm -rf $(wildcard /tmp/ntbuild-*)&
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: bclean
@@ -300,6 +308,7 @@ bclean:
 .PHONY: gclean
 gclean:
 	@ git clean -fx -e Scripts -e Fonts
+	@ rm -rf $(wildcard /tmp/ntbuild-*)&
 
 
 #############################################################################
@@ -320,10 +329,26 @@ ifneq ($@,bump0)
 	$(eval BI='$(patsubst bump%,%,$@)')
 	@ Scripts/bump.py -b $(BI)
 endif
-	$(MAKE) bcmtp
+	$(MAKE) bcrtp
 
-.PHONY: bcmtp
-bcmtp: build-phd-final-en commit rebase tag push
+.PHONY: bcrtp crtp rtp tp bcrp crp
+bcrtp: build-phd-final-en crtp
+
+bcrp: build-phd-final-en crp
+
+bcp: build-phd-final-en commit push
+
+crp: commit rebase push
+
+cp: commit push
+
+crtp: commit rtp
+
+rtp: rebase tp
+
+tp: tag push
+
+
 
 
 
@@ -332,7 +357,7 @@ bcmtp: build-phd-final-en commit rebase tag push
 #############################################################################
 .PHONY: build-phd-final-en
 build-phd-final-en: validate-config check-env check-build
-	$(BUILD) $(SCHL) --build-dir $(AUXDIR) --keep --demo-mode
+	$(BUILD) $(SCHL) --mode 1
 
 
 
@@ -342,362 +367,31 @@ build-phd-final-en: validate-config check-env check-build
 COMMIT_MESSAGE ?= Version $(VERSION) - $(DATE). Auto-commit.
 COMMIT_INCLUDE_UNTRACKED ?= no
 
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: commit commit-untracked
+.PHONY: commit commit-untracked commit-push commit-push-force crp
+commit commit-push commit-push-force:
+	@ VERSION="$(VERSION)" \
+	DATE="$(DATE)" \
+	COMMIT_MESSAGE="$(COMMIT_MESSAGE)" \
+	COMMIT_INCLUDE_UNTRACKED="$(COMMIT_INCLUDE_UNTRACKED)" \
+	.Build/$@.sh
+
 commit-untracked:
 	make commit COMMIT_INCLUDE_UNTRACKED=yes
 
-commit:
-	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
-	@echo "📝 Starting commit process..."
-	@printf "$(CYAN)VERSION=$(YELLOW)$(VERSION)$(CYAN) - DATE=$(YELLOW)$(DATE)$(RESET).\n"
-	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
-	
-# 1) Comprehensive pre-commit checks
-#	@echo "📋 Running pre-commit checks..."
-	
-# Git repository check
-	@if ! git rev-parse --git-dir >& /dev/null; then \
-		echo "❌ Error: Not in a git repository"; \
-		exit 1; \
-	fi
-	
-# Branch check
-	$(eval CURRENT_BRANCH=$(shell git branch --show-current || echo "detached"))
-	@if [ "$(CURRENT_BRANCH)" = "detached" ]; then \
-		echo "❌ Error: Not on a branch (detached HEAD state)"; \
-		exit 1; \
-	fi
-# @if [ "$(CURRENT_BRANCH)" = "detached" ]; then \
-# 	echo "❌ Error: Not on a branch (detached HEAD state)"; \
-# 	exit 1; \
-# else \
-# 	echo "✅ On branch: $(CURRENT_BRANCH)"; \
-# fi
-	
-# Modified files check
-	@if [ -z "$$(git status --porcelain)" ]; then \
-		echo "❌ Error: No modified files to commit"; \
-		exit 1; \
-	fi
-	
-# Show what will be committed
-	@echo "📋 Files to be committed:"
-	@git status --short
-	
-# Handle untracked files based on setting
-	@if [ "$(COMMIT_INCLUDE_UNTRACKED)" = "yes" ]; then \
-		git add .; \
-	else \
-		git add -u; \
-	fi
-#	@if [ "$(COMMIT_INCLUDE_UNTRACKED)" = "yes" ]; then \
-#		echo "📋 Adding untracked files..."; \
-#		git add .; \
-#		echo "✅ Added all files (including untracked)"; \
-#	else \
-#		git add -u; \
-#		echo "✅ Staged modified files (excluding untracked)"; \
-#	fi
-	
-# 2) Create the commit
-	@if git commit -m "$(COMMIT_MESSAGE)"; then \
-		COMMIT_HASH=$$(git rev-parse --short HEAD); \
-		echo "📦 Commit Summary:"; \
-		echo "   Hash:    $$COMMIT_HASH"; \
-		echo "   Branch:  $(CURRENT_BRANCH)"; \
-		echo "   Message: $(COMMIT_MESSAGE)"; \
-	else \
-		echo "❌ Failed to create commit"; \
-		echo "   This might be because there were no changes to commit after staging"; \
-		exit 1; \
-	fi
-#	@if git commit -m "$(COMMIT_MESSAGE)"; then \
-#		echo "✅ Commit created successfully"; \
-#		COMMIT_HASH=$$(git rev-parse --short HEAD); \
-#		echo "📦 Commit Summary:"; \
-#		echo "   Hash:    $$COMMIT_HASH"; \
-#		echo "   Branch:  $(CURRENT_BRANCH)"; \
-#		echo "   Message: $(COMMIT_MESSAGE)"; \
-#		echo "📊 Files committed:"; \
-#		git show --stat --oneline $$COMMIT_HASH | tail -n +2; \
-#	else \
-#		echo "❌ Failed to create commit"; \
-#		echo "   This might be because there were no changes to commit after staging"; \
-#		exit 1; \
-#	fi
-	@printf "🎉 Commit process completed successfully!\n\n"
-
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: commit-push
-commit-push:
-	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
-	@echo "🚀 Starting commit-push process..."
-	@printf "$(CYAN)VERSION=$(YELLOW)$(VERSION)$(CYAN) - DATE=$(YELLOW)$(DATE)$(RESET).\n"
-	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
-	
-# 1) Check conditions
-#	@echo "📋 Checking push conditions..."
-	
-# Check if we're in a git repository
-	@if ! git rev-parse --git-dir > /dev/null 2>&1; then \
-		echo "❌ Error: Not in a git repository"; \
-		exit 1; \
-	fi
-#	@echo "✅ In a git repository"
-	
-# Check for pending/modified files
-#	@echo "📋 Checking for uncommitted changes..."
-	@if [ -n "$$(git status --porcelain 2>/dev/null | grep -Fv '??')" ]; then \
-		echo "❌ Error: You have uncommitted changes. Please commit them first."; \
-		git status --short; \
-		exit 1; \
-	fi
-#	@echo "✅ No uncommitted changes"
-	
-# Check if we have commits to push
-#	@echo "📋 Checking for pending commits..."
-	@CURRENT_BRANCH=$$(git branch --show-current); \
-	if [ -z "$$CURRENT_BRANCH" ]; then \
-		echo "❌ Error: Not on a valid branch"; \
-		exit 1; \
-	fi
-#	@echo "✅ Current branch: $$CURRENT_BRANCH"
-	
-# 2) Push current branch first
-	@echo "🔄 Pushing current branch ($$CURRENT_BRANCH)..."
-	@if ! git push $(PUSH_REMOTE) $$CURRENT_BRANCH; then \
-		echo "❌ Failed to push $$CURRENT_BRANCH"; \
-		echo "   You may need to pull changes first: git pull $(PUSH_REMOTE) $$CURRENT_BRANCH"; \
-		exit 1; \
-	fi
-#	@if git push $(PUSH_REMOTE) $$CURRENT_BRANCH; then \
-#		echo "✅ Successfully pushed $$CURRENT_BRANCH"; \
-#	else \
-#		echo "❌ Failed to push $$CURRENT_BRANCH"; \
-#		echo "   You may need to pull changes first: git pull $(PUSH_REMOTE) $$CURRENT_BRANCH"; \
-#		exit 1; \
-#	fi
-	
-# 3) Push the other branch (main or develop)
-#	@echo "📋 Checking other branch to push..."
-	@if [ "$$CURRENT_BRANCH" = "develop" ]; then \
-		OTHER_BRANCH="main"; \
-	elif [ "$$CURRENT_BRANCH" = "main" ]; then \
-		OTHER_BRANCH="develop"; \
-	else \
-		echo "⚠️  Current branch is neither main nor develop. Only pushed $$CURRENT_BRANCH"; \
-		OTHER_BRANCH=""; \
-	fi
-	
-	@if [ -n "$$OTHER_BRANCH" ]; then \
-		echo "🔄 Pushing $$OTHER_BRANCH branch..."; \
-		if git show-ref --verify --quiet refs/heads/$$OTHER_BRANCH; then \
-			if ! git push $(PUSH_REMOTE) $$OTHER_BRANCH; then \
-				echo "⚠️  Failed to push $$OTHER_BRANCH (branch exists but push failed)"; \
-				echo "   You may need to: git pull $(PUSH_REMOTE) $$OTHER_BRANCH"; \
-			fi; \
-		else \
-			echo "⚠️  Branch $$OTHER_BRANCH does not exist locally. Skipping."; \
-		fi; \
-	fi
-#	@if [ -n "$$OTHER_BRANCH" ]; then \
-#		echo "🔄 Pushing $$OTHER_BRANCH branch..."; \
-#		if git show-ref --verify --quiet refs/heads/$$OTHER_BRANCH; then \
-#			if git push $(PUSH_REMOTE) $$OTHER_BRANCH; then \
-#				echo "✅ Successfully pushed $$OTHER_BRANCH"; \
-#			else \
-#				echo "⚠️  Failed to push $$OTHER_BRANCH (branch exists but push failed)"; \
-#				echo "   You may need to: git pull $(PUSH_REMOTE) $$OTHER_BRANCH"; \
-#			fi; \
-#		else \
-#			echo "⚠️  Branch $$OTHER_BRANCH does not exist locally. Skipping."; \
-#		fi; \
-#	fi
-	
-# 4) Show push summary
-	@echo "📋 Push Summary:"
-	@echo "   ✅ Pushed: $$CURRENT_BRANCH"
-	@if [ -n "$$OTHER_BRANCH" ]; then \
-		if git show-ref --verify --quiet refs/heads/$$OTHER_BRANCH 2>/dev/null && \
-		   git push $(PUSH_REMOTE) $$OTHER_BRANCH --dry-run 2>&1 | grep -q "up to date"; then \
-			echo "   ✅ Pushed: $$OTHER_BRANCH"; \
-		else \
-			echo "   ⚠️  Status: $$OTHER_BRANCH (see above)"; \
-		fi; \
-	fi
-	@echo "🎉 Commit push process completed!"
-
-#————————————————————————————————————————————————————————————————————————————
-# Enhanced version that checks commit status before pushing
-.PHONY: commit-push-check
-commit-push-check:
-	@echo "🔍 Checking commit status before push..."
-	
-	@if ! git rev-parse --git-dir > /dev/null 2>&1; then \
-		echo "❌ Error: Not in a git repository"; \
-		exit 1; \
-	fi
-	
-	@CURRENT_BRANCH=$$(git branch --show-current); \
-	echo "📋 Current branch: $$CURRENT_BRANCH"
-	
-	@echo "📋 Commits to push in $$CURRENT_BRANCH:"
-	@if git log @{u}.. --oneline | grep -q .; then \
-		git log @{u}.. --oneline; \
-	else \
-		echo "   No commits to push in $$CURRENT_BRANCH"; \
-	fi
-	
-	@if [ "$$CURRENT_BRANCH" = "develop" ] || [ "$$CURRENT_BRANCH" = "main" ]; then \
-		if [ "$$CURRENT_BRANCH" = "develop" ]; then \
-			OTHER_BRANCH="main"; \
-		else \
-			OTHER_BRANCH="develop"; \
-		fi; \
-		if git show-ref --verify --quiet refs/heads/$$OTHER_BRANCH; then \
-			echo ""; \
-			echo "📋 Commits to push in $$OTHER_BRANCH:"; \
-			git checkout $$OTHER_BRANCH --quiet 2>/dev/null; \
-			if git log @{u}.. --oneline | grep -q .; then \
-				git log @{u}.. --oneline; \
-			else \
-				echo "   No commits to push in $$OTHER_BRANCH"; \
-			fi; \
-			git checkout $$CURRENT_BRANCH --quiet 2>/dev/null; \
-		fi; \
-	fi
-	
-	@read -p "Continue with push? (y/N): " confirm; \
-	if [ "$$confirm" != "y" ] && [ "$$confirm" != "Y" ]; then \
-		echo "❌ Push cancelled by user"; \
-		exit 1; \
-	fi
-	
-	@$(MAKE) commit-push
-
-
-#————————————————————————————————————————————————————————————————————————————
-# Target to push with force (use with caution)
-.PHONY: commit-push-force
-commit-push-force:
-	@echo "💥 FORCE PUSH MODE - Use with caution!"
-	@read -p "Are you sure you want to force push? (y/N): " confirm; \
-	if [ "$$confirm" != "y" ] && [ "$$confirm" != "Y" ]; then \
-		echo "❌ Force push cancelled by user"; \
-		exit 1; \
-	fi
-	
-	@CURRENT_BRANCH=$$(git branch --show-current); \
-	echo "🔄 Force pushing $$CURRENT_BRANCH..."; \
-	git push $(PUSH_REMOTE) $$CURRENT_BRANCH --force; \
-	echo "✅ Force push completed"
-
-
-#————————————————————————————————————————————————————————————————————————————
-# Dry run to see what would be pushed
-.PHONY: commit-push-dry-run
-commit-push-dry-run:
-	@echo "🚧 PUSH DRY RUN - No changes will be made"
-	@echo "========================================="
-	
-	@if ! git rev-parse --git-dir > /dev/null 2>&1; then \
-		echo "❌ Error: Not in a git repository"; \
-		exit 1; \
-	fi
-	
-	@CURRENT_BRANCH=$$(git branch --show-current); \
-	echo "📋 Current branch: $$CURRENT_BRANCH"
-	
-	@echo "📋 Would push the following commits:"
-	@echo "From $$CURRENT_BRANCH:"
-	@if git log @{u}.. --oneline | grep -q .; then \
-		git log @{u}.. --oneline; \
-	else \
-		echo "   No commits to push"; \
-	fi
-	
-	@if [ "$$CURRENT_BRANCH" = "develop" ] || [ "$$CURRENT_BRANCH" = "main" ]; then \
-		if [ "$$CURRENT_BRANCH" = "develop" ]; then \
-			OTHER_BRANCH="main"; \
-		else \
-			OTHER_BRANCH="develop"; \
-		fi; \
-		if git show-ref --verify --quiet refs/heads/$$OTHER_BRANCH; then \
-			echo ""; \
-			echo "From $$OTHER_BRANCH:"; \
-			git checkout $$OTHER_BRANCH --quiet 2>/dev/null; \
-			if git log @{u}.. --oneline | grep -q .; then \
-				git log @{u}.. --oneline; \
-			else \
-				echo "   No commits to push"; \
-			fi; \
-			git checkout $$CURRENT_BRANCH --quiet 2>/dev/null; \
-		fi; \
-	fi
-	
-	@echo "🚧 This was a dry run. Use 'make commit-push' to actually push."
+crp: commit rebase push
 
 
 #############################################################################
 # REBASE -> if rebase fails, tries MERGE
 #############################################################################
 MERGE_MESSAGE ?= Merged $(VERSION) - $(DATE).
-
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: rebase
 rebase:
-	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
-	@printf "🚀 Starting rebase process...\n"
-	@printf "$(CYAN)VERSION=$(YELLOW)$(VERSION)$(CYAN) - DATE=$(YELLOW)$(DATE).$(RESET)\n"
-	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
-	
-# 1) Check if we are in branch develop
-#	@echo "📋 Checking current branch..."
-	@if [ "$(shell git branch --show-current)" != "develop" ]; then \
-		echo "❌ Error: You must be on the 'develop' branch to run this target"; \
-		exit 1; \
-	fi
-#	@echo "✅ Currently on 'develop' branch"
-	
-# 2) Check for pending/modified files
-#	@echo "📋 Checking for pending changes..."
-	@if [ -n "$$(git status --porcelain 2>/dev/null | grep -Fv '??')" ]; then \
-		echo "❌ Error: You have uncommitted changes. Please commit or stash them first."; \
-		git status --short; \
-		exit 1; \
-	fi
-#	@echo "✅ No pending changes"
-	
-# 3) Checkout main and rebase
-#	@echo "🔄 Switching to main branch..."
-	@git checkout main || { echo "❌ Failed to checkout main branch"; exit 1; }
-	
-#	@echo "🔄 Rebasing main onto develop..."
-	@if ! git rebase develop; then \
-		echo "⚠️  Rebase encountered conflicts. Resolving automatically using develop version..."; \
-		git rebase --abort 2>/dev/null || true; \
-		git merge develop -X theirs -m "$$(MERGE_MESSAGE)" || { \
-			echo "❌ Failed to merge with develop version"; \
-			exit 1; \
-		}; \
-	fi
-#	@if git rebase develop; then \
-#		echo "✅ Rebase completed successfully"; \
-#	else \
-#		echo "⚠️  Rebase encountered conflicts. Resolving automatically using develop version..."; \
-#		git rebase --abort 2>/dev/null || true; \
-#		git merge develop -X theirs -m "$$(MERGE_MESSAGE)" || { \
-#			echo "❌ Failed to merge with develop version"; \
-#			exit 1; \
-#		}; \
-#		echo "✅ Merge completed using develop version"; \
-#	fi
-	
-# 4) If no error, checkout develop
-#	@echo "🔄 Switching back to develop branch..."
-	@git checkout develop || { echo "❌ Failed to checkout develop branch"; exit 1; }
-	@printf "🎉 Rebase process completed successfully!\n\n"
+	@MERGE_MESSAGE="$(MERGE_MESSAGE)" \
+	VERSION="$(VERSION)" \
+	DATE="$(DATE)" \
+	.Build/rebase.sh
 
 
 
@@ -708,211 +402,20 @@ TAG_VERSION ?= $(VERSION)
 TAG_DATE ?= $(DATE)
 TAG_MESSAGE ?= Version $(TAG_VERSION) - $(TAG_DATE).
 
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: tag
-tag:
-	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
-	@echo "🏷️ Starting tagging process..."
-	@printf "$(CYAN)VERSION=$(YELLOW)$(VERSION)$(CYAN) - DATE=$(YELLOW)$(DATE)$(RESET).\n"
-	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
-	
-# 1) Check conditions for tagging
-#	@echo "📋 Checking tag conditions..."
-	
-# Check if we're in a git repository
-	@if ! git rev-parse --git-dir > /dev/null 2>&1; then \
-		echo "❌ Error: Not in a git repository"; \
-		exit 1; \
-	fi
-#	@echo "✅ In a git repository"
-	
-# Check if we're on develop branch
-#	@echo "📋 Checking current branch..."
-	@CURRENT_BRANCH=$$(git branch --show-current); \
-	if [ "$$CURRENT_BRANCH" != "develop" ]; then \
-		echo "❌ Error: You must be on the 'develop' branch to run this target (currently on '$$CURRENT_BRANCH')"; \
-		exit 1; \
-	fi
-#	@echo "✅ Currently on 'develop' branch"
-	
-# Check for pending/modified files
-#	@echo "📋 Checking for pending changes..."
-	@if [ -n "$$(git status --porcelain 2>/dev/null | grep -Fv '??')" ]; then \
-		echo "❌ Error: You have uncommitted changes. Please commit or stash them first."; \
-		git status --short; \
-		exit 1; \
-	fi
-#	@echo "✅ No pending changes"
-	
-# Check if version is provided
-#	@echo "📋 Checking version..."
-	@if [ -z "$(TAG_VERSION)" ]; then \
-		echo "❌ Error: TAG_VERSION is required"; \
-		echo "   Usage: make tag TAG_VERSION=x.y.z"; \
-		echo "   Example: make tag TAG_VERSION=7.5.1"; \
-		exit 1; \
-	fi
-	@echo "✅ Version: $(TAG_VERSION)"
-	@echo "✅ Date: $(TAG_DATE)"
-	@echo "✅ Message: $(TAG_MESSAGE)"
-	
-# Check if tag already exists
-#	@echo "📋 Checking if tag already exists..."
-	@if git rev-parse "v$(TAG_VERSION)" >/dev/null 2>&1; then \
-		echo "⚠️ Warining: Tag 'v$(TAG_VERSION)' already exists. Will overwrite."; \
-	fi
-#	@if git rev-parse "v$(TAG_VERSION)" >/dev/null 2>&1; then \
-#		echo "⚠️ Warining: Tag 'v$(TAG_VERSION)' already exists. Will overwrite."; \
-#	else\
-#		echo "✅ Tag 'v$(TAG_VERSION)' is available"; \
-#	fi
-	
-# Check if main branch exists and is up to date
-#	@echo "📋 Checking main branch..."
-	@if ! git show-ref --verify --quiet refs/heads/main; then \
-		echo "❌ Error: main branch does not exist"; \
-		exit 1; \
-	fi
-	
-#	@echo "🔄 Fetching latest changes..."
-	@git fetch origin 2>/dev/null || echo "⚠️  Could not fetch from origin, continuing with local branches"
-	
-# 2) Create tag on develop branch
-#	@echo "🏷️  Creating tag on develop branch..."
-	@if git tag -a "v$(TAG_VERSION)" -f -m "$(TAG_MESSAGE)" 2>/dev/null; then \
-		echo "✅ Tag created on main branch"; \
-	fi
-#	else \
-#		echo "⚠️  Tag already exists on main (or conflict), forcing update..."; \
-#		git tag -d "v$(TAG_VERSION)" 2>/dev/null || true; \
-#		git tag -a "v$(TAG_VERSION)" -m "$(TAG_MESSAGE)" || { \
-#			echo "❌ Failed to create tag on main branch"; \
-#			exit 1; \
-#		}; \
-#		echo "✅ Tag forced on develop branch"; \
-f	fi
-	
-# 3) Switch to main and create the same tag
-	# @echo "🔄 Switching to main branch..."
-	@git checkout main 2>/dev/null || { echo "❌ Failed to checkout main branch"; exit 1; }
-	
-	# @echo "🏷️  Creating tag on main branch..."
-# Check if we need to force the tag (if main is behind develop)
-	@if git tag -a "v$(TAG_VERSION)" -f -m "$(TAG_MESSAGE)" 2>/dev/null; then \
-		echo "✅ Tag created on main branch"; \
-	fi
-#	else \
-#		echo "⚠️  Tag already exists on main (or conflict), forcing update..."; \
-#		git tag -d "v$(TAG_VERSION)" 2>/dev/null || true; \
-#		git tag -a "v$(TAG_VERSION)" -m "$(TAG_MESSAGE)" || { \
-#			echo "❌ Failed to create tag on main branch"; \
-#			exit 1; \
-#		}; \
-#		echo "✅--- Tag forced on main branch"; \
-	fi
-	
-# 4) Return to develop branch
-	# @echo "🔄 Returning to develop branch..."
-	@git checkout develop 2>/dev/null || { echo "❌ Failed to checkout develop branch"; exit 1; }
-	
-# 5) Show tag information
-	@echo "📋 Tag information:"
-	@echo "   Tag: v$(TAG_VERSION)"
-	@echo "   Message: $(TAG_MESSAGE)"
-	@echo "   Commit: $$(git rev-parse --short v$(TAG_VERSION))"
-	
-	@printf "🎉 Tagging process completed successfully!\n\n"
+.PHONY: tag tag-push tag-delete tag-dry-run tag-show tag-list
+tag tag-push tag-delete tag-dry-run tag-show:
+	@VERSION="$(VERSION)" \
+	DATE="$(DATE)" \
+	TAG_VERSION="$(TAG_VERSION)" \
+	TAG_DATE="$(TAG_DATE)" \
+	TAG_MESSAGE="$(TAG_MESSAGE)" \
+	.Build/$@.sh
 
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: tag-push
-tag-push:
-	@echo "🚀 Pushing tag v$(TAG_VERSION) to remote..."
-	@if [ -z "$(TAG_VERSION)" ]; then \
-		echo "❌ Error: TAG_VERSION is required"; \
-		echo "   Usage: make tag-push TAG_VERSION=x.y.z"; \
-		exit 1; \
-	fi
-	
-	@if ! git push origin "v$(TAG_VERSION)"; then \
-		echo "❌ Failed to push tag v$(TAG_VERSION)"; \
-		exit 1; \
-	fi
-#	@if git push origin "v$(TAG_VERSION)"; then \
-#		echo "✅ Tag v$(TAG_VERSION) pushed to remote"; \
-#	else \
-#		echo "❌ Failed to push tag v$(TAG_VERSION)"; \
-#		exit 1; \
-#	fi
-
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: tag-delete
-tag-delete:
-	@echo "🗑️  Deleting tag v$(TAG_VERSION)..."
-	@if [ -z "$(TAG_VERSION)" ]; then \
-		echo "❌ Error: TAG_VERSION is required"; \
-		echo "   Usage: make tag-delete TAG_VERSION=x.y.z"; \
-		exit 1; \
-	fi
-	
-	@echo "📋 Deleting local tag..."
-	@git tag -d "v$(TAG_VERSION)" 2>/dev/null && echo "✅ Local tag deleted" || echo "⚠️  Local tag not found"
-	
-	@echo "📋 Deleting remote tag..."
-	@git push --delete origin "v$(TAG_VERSION)" 2>/dev/null && echo "✅ Remote tag deleted" || echo "⚠️  Remote tag not found or no permission"
-
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: tag-dry-run
-tag-dry-run:
-	@echo "🚧 TAG DRY RUN - No tags will be created"
-	@echo "========================================"
-	
-	@if ! git rev-parse --git-dir > /dev/null 2>&1; then \
-		echo "❌ Error: Not in a git repository"; \
-		exit 1; \
-	fi
-	
-	@CURRENT_BRANCH=$$(git branch --show-current); \
-	if [ "$$CURRENT_BRANCH" != "develop" ]; then \
-		echo "❌ Error: You must be on the 'develop' branch (currently on '$$CURRENT_BRANCH')"; \
-		exit 1; \
-	fi
-	
-	@if [ -z "$(TAG_VERSION)" ]; then \
-		echo "❌ Error: TAG_VERSION is required"; \
-		exit 1; \
-	fi
-	
-	@echo "✅ Conditions met for tagging"
-	@echo "📋 Would create tag:"
-	@echo "   Name: v$(TAG_VERSION)"
-	@echo "   Message: $(TAG_MESSAGE)"
-	@echo "   On branches: develop and main"
-	@echo "📋 Current commit that would be tagged:"
-	@git log --oneline -1
-	@echo "🚧 This was a dry run. Use 'make tag TAG_VERSION=$(TAG_VERSION)' to actually create the tag."
-
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: tag-list
 tag-list:
 	@echo "📋 Recent tags:"
 	@git tag -l --sort=-version:refname "v*" | head -10
 
-# Helper to show tag details
-.PHONY: tag-show
-tag-show:
-	@if [ -z "$(TAG_VERSION)" ]; then \
-		echo "❌ Error: TAG_VERSION is required"; \
-		echo "   Usage: make tag-show TAG_VERSION=x.y.z"; \
-		exit 1; \
-	fi
-	
-	@if git show "v$(TAG_VERSION)" >/dev/null 2>&1; then \
-		echo "📋 Details for tag v$(TAG_VERSION):"; \
-		git show "v$(TAG_VERSION)" --quiet --pretty=fuller; \
-	else \
-		echo "❌ Tag v$(TAG_VERSION) not found"; \
-	fi
-	
+
 	
 	
 
@@ -941,48 +444,6 @@ push-status:
 
 
 
-#############################################################################
-# MERGE-TAG-PUSH FUNCTION
-#############################################################################
-
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: mtp mtp2
-mtp mtp2:
-	@ $(call _$@,$(VERSION),$(DATE))
-
-#————————————————————————————————————————————————————————————————————————————
-# commit, build, merge, tag and push
-define _mtp
-	printf "$(CYAN)VERSION=$(YELLOW)$(1)$(CYAN) - DATE=$(YELLOW)$(2).$(RESET)\n"
-	git commit --all --message "Version $(1) - $(2)." || true
-	$(MAKE) clean
-	python .Build/build.py nova/fct --no-rename
-	git commit --all --message "Version $(1) - $(2)." || true
-	git checkout main
-	git pull
-	git merge --strategy-option theirs -m "Merge branch 'develop'" develop
-	git tag -f -a "v$(1)" -m "Version $(1) - $(2)."
-	git push -f --all
-	git push -f --tags
-	git checkout develop
-endef
-
-#————————————————————————————————————————————————————————————————————————————
-# commit, NO BUILD, merge, tag and push
-define _mtp2
-	printf "$(CYAN)VERSION=$(YELLOW)$(1)$(CYAN) - DATE=$(YELLOW)$(2).$(RESET)\n"
-	git commit --all --message "Version $(1) - $(2)." || true
-	$(MAKE) clean
-	git commit --all --message "Version $(1) - $(2)." || true
-	git checkout main
-	git pull
-	git merge --strategy-option theirs -m "Merge branch 'develop'" develop
-	git tag -f -a "v$(1)" -m "Version $(1) - $(2)."
-	git push -f --all
-	git push -f --tags
-	git checkout develop
-endef
-
 
 #############################################################################
 # Find out which templates cannot be compiled with 'pdflatex'
@@ -990,20 +451,10 @@ endef
 #############################################################################
 
 #————————————————————————————————————————————————————————————————————————————
-.PHONY: nopdflatex
-NOPDFALLCMD=$(shell $(GREP) -rl "is not compatible with pdfLaTeX" NOVAthesisFiles/FontStyles | cut -d / -f 3 | cut -d . -f 1 | $(GREP) -ril -f - NOVAthesisFiles/Schools | $(GREP) .ldf | sed -e "s,.*/,," -e "s,-defaults.ldf,," | tr - /)
-# Keep only the words that do NOT contain a slash
-NOPDFUNIVSCMD=$(foreach word,$(NOPDFALL),$(if $(findstring /,$(word)),,$(word)))
-NOPDFSCHOOLSCMD=$(foreach word,$(NOPDFALL),$(if $(findstring /,$(word)),$(word),))
-NOPDFSCHLSFROMUNIV=$(NOPDFSCHOOLS) $(foreach univ,$(NOPDFUNIVS),$(shell find NOVAthesisFiles/Schools/$(univ) -type d -mindepth 1 -maxdepth 1 | grep -v '/Images' | cut -d / -f 3-4))
-
-nopdflatex:
-	$(eval NOPDFALL:=$(NOPDFALLCMD))
-	$(eval NOPDFUNIVS:=$(NOPDFUNIVSCMD))
-	$(eval NOPDFSCHOOLS:=$(NOPDFSCHOOLSCMD))
-	$(eval NOPDFSCHLSFROMU:=$(NOPDFSCHLSFROMUNIV))
-	@ echo $(NOPDFSCHLSFROMUNIV) > .nopdflatex
+.PHONY: needlua needlualatex
+needlua needlualatex:
+	@ .Build/need_lualatex.sh
 
 # Add a real dependency for the cache file
-.nopdflatex: $(shell find NOVAthesisFiles -name "*.sty" -o -name "*.ldf")
-	$(MAKE) --no-print-directory nopdflatex
+$(NEEDLUALATEX): $(shell find NOVAthesisFiles -name "*.sty" -o -name "*.ldf")
+	$(MAKE) --no-print-directory needlualatex

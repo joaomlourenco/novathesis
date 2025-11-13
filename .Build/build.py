@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------------
 NOVATHESIS Build Assistant
 
-Version 7.5.2 (2025-11-11)
+Version 7.5.5 (2025-11-13)
 Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 -----------------------------------------------------------------------------
 
@@ -93,8 +93,8 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, co
             _uncomment_replace("spine/width", "2cm"),
         re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/index\s*=\s*[^}]+\}\s*.*$"):
             _uncomment_replace("print/index", "true"),
-        re.compile(r"^\s*%?\s*\\ntsetup\{\s*abstractorder=\{en,pt,uk,gr\}\}\s*.*$"):
-            lambda line: re.sub(r"^(\s*)%+\s*", r"\1", line),
+        # re.compile(r"^\s*%?\s*\\ntsetup\{\s*abstractorder=\{en,pt,uk,gr\}\}\s*.*$"):
+        #     lambda line: re.sub(r"^(\s*)%+\s*", r"\1", line),
     }
     
     # Only add docstatus pattern if it's not "keep"
@@ -134,9 +134,9 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, co
                 re.compile(r"^\s*%?\s*\\ntaddfile\{abstract\}\[uk\]\{abstract-uk\}\s*.*$"):
                     lambda line: re.sub(r"^(\s*)%+\s*", r"\1", line),
             }
-        result |= {
-            "4_files.tex": file_4_patterns,
-        }
+        # result |= {
+        #     "4_files.tex": file_4_patterns,
+        # }
     return result
 # --- Core Processing Functions ----------------------------------------------
 def process_file(p: Path, patterns: Dict[re.Pattern, Callable[[str], str]]) -> int:
@@ -204,12 +204,12 @@ def _copytree_symlinking(src: Path, dst: Path, ignore=None) -> None:
     """
     def _smart_copy(s: str, d: str, *, follow_symlinks=True):
         """Copy function that handles Scripts directory differently."""
-        target_path = Path(d)
-        target_path.parent.mkdir(parents=True, exist_ok=True)
         source_path = Path(s)
         if not source_path.exists():
             print(f"{YELLOW}⚠️  Source does not exist: {s}{RESET}")
             return d
+        target_path = Path(d)
+        target_path.parent.mkdir(parents=True, exist_ok=True)
         # Check if we're dealing with a file in the Scripts directory
         is_in_scripts = 'Scripts' in source_path.parts
         if is_in_scripts:
@@ -255,13 +255,17 @@ def _copytree_symlinking(src: Path, dst: Path, ignore=None) -> None:
         if original_ignore:
             ignored.update(original_ignore(path, names))
         return ignored
-    shutil.copytree(
-        src,
-        dst,
-        dirs_exist_ok=True,
-        copy_function=_smart_copy,
-        ignore=_combined_ignore
-    )
+    if src == dst:
+        print(f"{YELLOW}⚠️  Source and dest are the same: '{src}'.  No symlinking will be done.{RESET}")
+    else:
+        shutil.copytree(
+            src,
+            dst,
+            dirs_exist_ok=True,
+            copy_function=_smart_copy,
+            ignore=_combined_ignore
+        )
+
 def prepare_temp_workspace(project_root: Path, build_dir: str) -> Path:
     """
     Create a temporary workspace with symlinks to project files.
@@ -283,6 +287,76 @@ def prepare_temp_workspace(project_root: Path, build_dir: str) -> Path:
     )
     _copytree_symlinking(project_root, tmpdir, ignore=ignore)
     return tmpdir
+
+def restore_config_symlinks(tmp_root: Path, project_root: Path, confdir: Path) -> None:
+    """
+    Restore symlinks for configuration files that were customized (are real files and not symlinks).
+    This is needed when reusing a temp-root folder in demo or cover modes.
+    Args:
+        tmp_root: Temporary workspace directory
+        project_root: Original project root directory
+        confdir: Configuration directory name
+    """
+    config_dir = tmp_root / confdir
+    if not config_dir.exists():
+        return
+    
+    # Get all files in the configuration directory
+    for file_path in config_dir.iterdir():
+        # Skip directories, only process files
+        if not file_path.is_file():
+            continue
+            
+        original_file = project_root / confdir / file_path.name
+        
+        # Only process if the file exists and is a real file (not a symlink)
+        # and the original file exists in the project
+        if (file_path.exists() and 
+            file_path.is_file() and 
+            not file_path.is_symlink() and
+            original_file.exists()):
+            try:
+                # Remove the real file and create a symlink to the original
+                file_path.unlink()
+                file_path.symlink_to(original_file)
+                print(f"{GREEN}🔗 Restored symlink for {file_path.name}{RESET}")
+            except Exception as e:
+                print(f"{YELLOW}⚠️  Could not restore symlink for {file_path.name}: {e}{RESET}")
+
+def store_keep_dir(temp_root: Path) -> None:
+    """
+    Store the path of the temp directory in a cache file ".keep-dir".
+    Args:
+        temp_root: Path to the temporary directory to store
+    """
+    cache_file = Path(".keep-dir")
+    try:
+        cache_file.write_text(str(temp_root), encoding="utf-8")
+        print(f"{GREEN}💾 Stored temp directory path in {cache_file}: {temp_root}{RESET}")
+    except Exception as e:
+        print(f"{YELLOW}⚠️  Could not write to {cache_file}: {e}{RESET}")
+
+def read_keep_dir() -> Path | None:
+    """
+    Read the temp directory path from the ".keep-dir" cache file.
+    Returns:
+        Path to the temp directory if it exists and is valid, None otherwise
+    """
+    cache_file = Path(".keep-dir")
+    if not cache_file.exists():
+        return None
+    
+    try:
+        temp_path = Path(cache_file.read_text(encoding="utf-8").strip())
+        if temp_path.exists():
+            return temp_path
+        else:
+            print(f"{YELLOW}⚠️  Cached temp directory does not exist: {temp_path}{RESET}")
+            return None
+    except Exception as e:
+        print(f"{YELLOW}⚠️  Could not read or parse {cache_file}: {e}{RESET}")
+        return None
+
 def localize_and_process_files(tmp_root: Path, confdir: Path, patterns: dict[str, Dict[re.Pattern, Callable[[str], str]]]) -> bool:
     """
     Localize configuration files in temp workspace and apply transformations.
@@ -327,7 +401,7 @@ def safe_outname(school: str, doctype: str, lang: str) -> str:
     doctype_safe = doctype.replace(" ", "_")
     lang_safe = lang.replace(" ", "_")
     return f"{school_safe}-{doctype_safe}-{lang_safe}.pdf"
-def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype: str, lang: str, outdir: Path, progress: int = 1, total_lines: int = 4400, keep_tmp: bool = False, rename = True) -> int:
+def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype: str, lang: str, outdir: Path, progress: int = 1, total_lines: int = 4400, keep_bdir: bool = False, rename = False) -> int:
     """
     Run make command in temporary workspace and handle output.
     Args:
@@ -339,8 +413,8 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
         outdir:       Output directory for final PDF
         progress:     Progress display mode (0: silent, 1: progress bar, 2: real-time output)
         total_lines:  Total expected lines of output for progress calculation
-        keep_tmp:     Whether to keep the building dir
-        rename:       Whether to keep the building dir
+        keep_bdir:    Whether to keep the building dir
+        rename:       Whether to rename the final PDF to 'univ-school-type-lang.pdf'
     Returns:
         Exit code from make process (0 for success)
     """
@@ -423,25 +497,26 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
         elapsed = end_time - start_time
         if returncode == 0:
             print(f"{CYAN}✅ 'make' succeeded in {RED}{elapsed:.2f}{CYAN} seconds{RESET}")
-            # Success → copy template.pdf to "{school-doctype-lang}.pdf"
+            # Success → copy template.pdf to "{university-school-doctype-lang}.pdf"
             src_pdf = tmp_root / "template.pdf"
             if rename:
                 dest_pdf = outdir / safe_outname(school_id, doctype, lang)
             else:
                 dest_pdf = outdir / "template.pdf"
-            if src_pdf.exists():
-                outdir.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(src_pdf, dest_pdf)
-                print(f"{GREEN}✅ saved '{src_pdf.name}' to '{dest_pdf}'{RESET}")
-                # Only remove temp workspace if we created it temporarily
-                if "ntbuild-" in str(tmp_root) and not keep_tmp:
-                    shutil.rmtree(tmp_root)
-                    print(f"{CYAN}🧪 Temp workspace removed: {tmp_root}{RESET}")
+            if src_pdf != dest_pdf:
+                if src_pdf.exists():
+                    outdir.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(src_pdf, dest_pdf)
+                    print(f"{GREEN}✅ saved '{src_pdf.name}' to '{dest_pdf}'{RESET}")
+                    # Only remove temp workspace if we created it temporarily
+                    if "ntbuild-" in str(tmp_root) and not keep_bdir:
+                        shutil.rmtree(tmp_root)
+                        print(f"{CYAN}🧪 Temp workspace removed: {tmp_root}{RESET}")
+                    else:
+                        print(f"{YELLOW}📁 Preserving build directory: {tmp_root}{RESET}")
                 else:
-                    print(f"{YELLOW}📁 Preserving build directory: {tmp_root}{RESET}")
-            else:
-                print(f"{RED}❌ '{src_pdf}' missing{RESET}")
-            return 0
+                    print(f"{RED}❌ '{src_pdf}' missing{RESET}")
+                return 0
         else:
             print(f"{RED}❌ 'make' failed with exit code {returncode}{RESET}")
             print(f"{YELLOW}🧪 Temp workspace kept for debugging: {tmp_root}{RESET}")
@@ -472,13 +547,13 @@ def main() -> None:
     ap.add_argument(
         "-t", "--doctype",
         default="msc",
+        choices=["phd", "msc", "bsc"],
         help="Document type: 'phd', 'msc', 'bsc' (default: msc)"
     )
     ap.add_argument(
         "-s", "--docstatus",
         default="keep",
         choices=["working", "provisional", "final", "keep"],
-        dest="status",
         help="Document status: 'working', 'provisional', 'final', or 'keep' to leave unchanged (default: keep)"
     )
     ap.add_argument(
@@ -492,20 +567,10 @@ def main() -> None:
         help="LaTeX processor to use with make (default: lua)"
     )
     ap.add_argument(
-        "-b", "--build-dir",
-        default=None,
-        help="Custom build directory (default: auto-create in /tmp)"
-    )
-    ap.add_argument(
-        "-o", "--output-directory",
-        default=".",
-        help="Output directory for generated PDF (default: current directory)"
-    )
-    ap.add_argument(
-        "-k", "--keep-tmp",
+        "-k", "--keep-bdir",
         action="store_true",
         default=False,
-        help="Always keep build dir (even in case of success)"
+        help="Keep build directory even in case of success (only relevant when using -bdir)"
     )
     ap.add_argument(
         "-f", "--force",
@@ -529,69 +594,127 @@ def main() -> None:
     ap.add_argument(
         "-r", "--rename-pdf",
         action="store_true",
-        dest="rename",
-        default=True,
-        help="Rename the PDF from 'template.tex' to a 'univ-schl-type-lanf' (default: True)"
-    )
-    ap.add_argument(
-        "-nr", "--no-rename-pdf",
-        action="store_false",
-        dest="rename",
-        help="Keep the PDF name as 'template.tex'"
-    )
-    ap.add_argument(
-        "--cover-only",
-        action="store_true",
         default=False,
-        help="Build cover-only version without main content (default: False)"
+        help="Rename the PDF from 'template.pdf' to 'univ-school-type-lang.pdf' (default: False)"
     )
-    # Demo/user mode group - mutually exclusive
-    demo_group = ap.add_mutually_exclusive_group()
-    demo_group.add_argument(
-        "-u", "--user-mode",
-        action="store_false",
-        dest="demo",
-        default=False,
-        help="User mode: do not modify configuration files (default)"
-    )
-    demo_group.add_argument(
-        "-d", "--demo-mode",
-        action="store_true",
-        dest="demo",
-        help="Demo mode: modify configuration files to include all abstracts and set status to final"
-    )
-    # Optional arguments
+    # Mode selection - replaces user/demo/cover modes
     ap.add_argument(
-        "--confdir",
-        default="0-Config",
-        help="Directory containing LaTeX configuration files (default: 0-Config)"
+        "-m", "--mode",
+        type=int,
+        choices=[0, 1, 2],
+        default=0,
+        help="Build mode: 0 (user), 1 (demo), 2 (cover) (default: 0)"
+    )
+    # Build directory with optional argument
+    ap.add_argument(
+        "-bdir", "--build-dir",
+        nargs="?",
+        const="",  # Empty string means create temp directory
+        default=None,  # None means use current directory
+        help="Build directory: if not present, use current directory; "
+             "if present with no argument, create temp directory; "
+             "if present with argument, use specified directory; "
+             "if '-', use cached directory from .keep-dir file"
+    )
+    ap.add_argument(
+        "-o", "--output-dir",
+        default=".",
+        help="Output directory for generated PDF (default: current directory)"
     )
     args = ap.parse_args()
     
+    # Map mode to demo and cover_only flags
+    demo = (args.mode == 1)
+    cover_only = (args.mode == 2)
+    
     # If demo mode is active, override status to "final"
-    if args.demo:
-        args.status = "final"
+    if demo:
+        args.docstatus = "final"
         print(f"{BRIGHT_CYAN}🎯 Demo mode: setting docstatus to 'final'{RESET}")
     
-    # redefine --lines if --cover-only is active
-    if args.cover_only:
+    # Adjust expected lines for cover-only mode
+    if cover_only:
         args.lines = 2400
+        print(f"{BRIGHT_CYAN}📔 Cover mode: building cover-only version{RESET}")
+    
+    # Force -bdir for demo and cover modes if -bdir was omitted
+    if (demo or cover_only) and args.build_dir is None:
+        args.build_dir = ""
+        print(f"{BRIGHT_CYAN}🔧 Forcing temporary build directory for {'demo' if demo else 'cover'} mode{RESET}")
+    
     # Validate school_id format
     if "/" not in args.school_id:
         print("❌ Error: The school ID must contain '/'. Example: nova/fct")
         sys.exit(2)
+    
     # Validate language code format
-    if not re.fullmatch(r"(?!/)(?:[^/\s]+(?:/[^/\s]+)*)", args.school_id):
+    if not re.fullmatch(r"[a-z]{2}", args.lang): 
         print("❌ Error: --lang must be a two-letter code, e.g., en, pt, uk, gr")
         sys.exit(2)
+    
     project_root = Path.cwd()
+    
+    # Handle build directory logic
+    reusing_temp_dir = False
+    if args.build_dir is None:
+        # No -bdir option: use current directory (no copy, no symlinks)
+        tmp_root = project_root
+        print(f"{CYAN}📁 Using current directory as build directory: {tmp_root}{RESET}")
+        # In this mode, we don't want to keep the build directory since it's the project root
+        args.keep_bdir = False
+    elif args.build_dir == "-":
+        # Special case: -bdir - means use cached directory from .keep-dir file
+        cached_temp_root = read_keep_dir()
+        if cached_temp_root is None:
+            # If .keep-dir doesn't exist or is invalid, proceed as if -bdir was given with no argument
+            print(f"{YELLOW}⚠️  No cached temp directory found, creating new temp directory{RESET}")
+            tmp_root = prepare_temp_workspace(project_root, None)
+            # Store the new temp directory and assume --keep-bdir for future executions
+            store_keep_dir(tmp_root)
+            args.keep_bdir = True
+            print(f"{BRIGHT_CYAN}🔧 Created new temp directory and stored for future use{RESET}")
+        else:
+            # Use the cached temp directory
+            tmp_root = cached_temp_root
+            reusing_temp_dir = True
+            print(f"{CYAN}📁 Using cached temp directory: {tmp_root}{RESET}")
+            # Implicitly set --keep-bdir when using cached directory
+            args.keep_bdir = True
+            print(f"{BRIGHT_CYAN}🔧 Implicitly setting --keep-bdir for cached directory{RESET}")
+            
+            # When reusing temp directory in demo or cover mode, restore symlinks for config files
+            if (demo or cover_only) and tmp_root != project_root:
+                print(f"{BRIGHT_CYAN}🔧 Restoring config file symlinks for reuse in {'demo' if demo else 'cover'} mode{RESET}")
+                restore_config_symlinks(tmp_root, project_root, Path("0-Config"))
+    elif args.build_dir == "":
+        # -bdir with no argument: create temp directory (with symlinks)
+        tmp_root = prepare_temp_workspace(project_root, None)
+        # Store the temp directory path if keep_bdir is set
+        if args.keep_bdir:
+            store_keep_dir(tmp_root)
+    else:
+        # -bdir with argument: use specified directory (with symlinks)
+        build_path = Path(args.build_dir).resolve()
+        current_path = project_root.resolve()
+        
+        # Check if build directory is current directory or its direct ancestor
+        if build_path == current_path or current_path.is_relative_to(build_path):
+            print(f"{RED}❌ Build directory cannot be current directory or its ancestor{RESET}")
+            sys.exit(1)
+        
+        tmp_root = prepare_temp_workspace(project_root, args.build_dir)
+        # Store the temp directory path if keep_bdir is set
+        if args.keep_bdir:
+            store_keep_dir(tmp_root)
+    
     # Validate configuration directory exists
-    confdir_path = Path(args.confdir)
+    confdir_path = Path("0-Config")  # Fixed default as per requirements
     if not (project_root / confdir_path).exists():
-        print(f"{RED}❌ Configuration directory not found: {args.confdir}{RESET}")
+        print(f"{RED}❌ Configuration directory not found: 0-Config{RESET}")
         sys.exit(1)
+    
     # Validate or create output directory
-    outdir_path = Path(args.output_directory)
+    outdir_path = Path(args.output_dir)
     if not outdir_path.exists():
         try:
             outdir_path.mkdir(parents=True, exist_ok=True)
@@ -599,55 +722,40 @@ def main() -> None:
         except Exception as e:
             print(f"{RED}❌ Could not create output directory {outdir_path}: {e}{RESET}")
             sys.exit(1)
-    # Set up temporary workspace
-    tmp_root = prepare_temp_workspace(project_root, args.build_dir)
-    # Build regex patterns using CLI args - only if in demo mode
+    
+    # Build regex patterns for demo and cover modes
     patterns = {}
-    if args.demo:
-        patterns = build_patterns(args.doctype, args.school_id, args.lang, args.cover_only, args.status, args.demo)
-        print(f"{BRIGHT_CYAN}🎯 Demo mode: configuration files will be modified{RESET}")
+    if demo or cover_only:
+        patterns = build_patterns(args.doctype, args.school_id, args.lang, cover_only, args.docstatus, demo)
+        mode_name = "demo" if demo else "cover"
+        print(f"{BRIGHT_CYAN}🎯 {mode_name.capitalize()} mode: configuration files will be modified{RESET}")
     else:
         print(f"{BRIGHT_CYAN}👤 User mode: configuration files will not be modified{RESET}")
     
-    # Localize & process the target files inside the TEMP tree
+    # Localize & process the target files inside the build tree
     changed_any = localize_and_process_files(
         tmp_root=tmp_root,
-        confdir=Path(args.confdir),
+        confdir=confdir_path,
         patterns=patterns
     )
+    
     # Run the build process
-    if changed_any:
-        outdir = (project_root / args.output_directory).resolve()
-        rc = run_make_in_temp(
-            tmp_root=tmp_root,
-            ltxprocessor=args.processor,
-            school_id=args.school_id,
-            doctype=args.doctype,
-            lang=args.lang,
-            outdir=outdir,
-            progress=args.progress,
-            total_lines=args.lines,
-            keep_tmp=args.keep_tmp,
-            rename = args.rename
-        )
-        if rc != 0:
-            sys.exit(rc)
-    else:
-        print("ℹ️  No changes detected — still building in temp (in case previous artifacts differ).")
-        outdir = (project_root / args.output_directory).resolve()
-        rc = run_make_in_temp(
-            tmp_root=tmp_root,
-            ltxprocessor=args.processor,
-            school_id=args.school_id,
-            doctype=args.doctype,
-            lang=args.lang,
-            outdir=outdir,
-            progress=args.progress,
-            total_lines=args.lines,
-            keep_tmp=args.keep_tmp,
-            rename = args.rename
-        )
-        if rc != 0:
-            sys.exit(rc)
+    outdir = (project_root / args.output_dir).resolve()
+    rc = run_make_in_temp(
+        tmp_root=tmp_root,
+        ltxprocessor=args.processor,
+        school_id=args.school_id,
+        doctype=args.doctype,
+        lang=args.lang,
+        outdir=outdir,
+        progress=args.progress,
+        total_lines=args.lines,
+        keep_bdir=args.keep_bdir,
+        rename=args.rename_pdf
+    )
+    
+    if rc != 0:
+        sys.exit(rc)
+
 if __name__ == "__main__":
     main()
