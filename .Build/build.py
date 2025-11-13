@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------------
 NOVATHESIS Build Assistant
 
-Version 7.5.5 (2025-11-12)
+Version 7.5.5 (2025-11-13)
 Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 -----------------------------------------------------------------------------
 
@@ -93,8 +93,8 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, co
             _uncomment_replace("spine/width", "2cm"),
         re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/index\s*=\s*[^}]+\}\s*.*$"):
             _uncomment_replace("print/index", "true"),
-        re.compile(r"^\s*%?\s*\\ntsetup\{\s*abstractorder=\{en,pt,uk,gr\}\}\s*.*$"):
-            lambda line: re.sub(r"^(\s*)%+\s*", r"\1", line),
+        # re.compile(r"^\s*%?\s*\\ntsetup\{\s*abstractorder=\{en,pt,uk,gr\}\}\s*.*$"):
+        #     lambda line: re.sub(r"^(\s*)%+\s*", r"\1", line),
     }
     
     # Only add docstatus pattern if it's not "keep"
