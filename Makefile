@@ -289,7 +289,7 @@ clean:
 	@ rm -f $(AUXFILES) "*(1)*" $(NEEDLUALATEX)
 	@ rm -rf $(AUXDIR) _minted*
 	@ find . -name .DS_Store | xargs rm -rf
-	@ rm -rf $(wildcard /tmp/ntbuild-*)
+	@ rm -rf $(wildcard /tmp/ntbuild-*)&
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: bclean
@@ -302,7 +302,7 @@ bclean:
 .PHONY: gclean
 gclean:
 	@ git clean -fx -e Scripts -e Fonts
-	@ rm -rf $(wildcard /tmp/ntbuild-*)
+	@ rm -rf $(wildcard /tmp/ntbuild-*)&
 
 
 #############################################################################
@@ -328,17 +328,22 @@ endif
 .PHONY: bcrtp crtp rtp tp bcrp crp
 bcrtp: build-phd-final-en crtp
 
-rtp: commit rtp
+bcrp: build-phd-final-en crp
+
+brp: build-phd-final-en commit push
+
+crp: commit rebase push
+
+cp: commit push
+
+crtp: commit rtp
 
 rtp: rebase tp
 
 tp: tag push
 
-bcrp: build-phd-final-en crp
 
-crp: commit rebase push
 
-brp: build-phd-final-en commit push
 
 
 #############################################################################
