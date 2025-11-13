@@ -438,6 +438,16 @@ push-status:
 
 
 
+#############################################################################
+# PUSH
+#############################################################################
+CDIR=$(shell basename $$(pwd))
+update:
+	git checkout $(CDIR)
+	git pull upstream main
+	git checkout main
+	git merge -X theirs $(CDIR)
+	make bcp
 
 #############################################################################
 # Find out which templates cannot be compiled with 'pdflatex'
