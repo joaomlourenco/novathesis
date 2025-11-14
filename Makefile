@@ -332,6 +332,8 @@ bcrp: build-phd-final-en crp
 
 bcp: build-phd-final-en commit push
 
+bcp-f: build-phd-final-en commit push-force
+
 crp: commit rebase push
 
 cp: commit push
@@ -449,7 +451,7 @@ update:
 	git pull -X theirs upstream $(BRANCH)
 	git checkout main
 	git rebase -X theirs $(CDIR)
-	make bcp
+	make bcp-f
 
 #############################################################################
 # Find out which templates cannot be compiled with 'pdflatex'
