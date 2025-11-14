@@ -441,11 +441,11 @@ push-status:
 #############################################################################
 # PUSH
 #############################################################################
-CDIR = $(shell basename $$(pwd))
-B   ?= main
+CDIR    = $(shell basename $$(pwd))
+BRANCH ?= main
 update:
 	git checkout $(CDIR)
-	git pull upstream $(B)
+	git pull -X theirs upstream $(BRANCH)
 	git checkout main
 	git merge -X theirs $(CDIR)
 	make bcp
