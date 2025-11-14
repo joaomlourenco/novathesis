@@ -447,7 +447,7 @@ update:
 	git checkout $(CDIR)
 	git pull -X theirs upstream $(BRANCH)
 	git checkout main
-	git merge -X theirs $(CDIR)
+	git rebase -X theirs $(CDIR)
 	make bcp
 
 #############################################################################
