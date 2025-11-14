@@ -336,7 +336,11 @@ bcp-f: build-phd-final-en commit push-force
 
 crp: commit rebase push
 
+crp-f: commit rebase push-force
+
 cp: commit push
+
+cp-f: commit push-force
 
 crtp: commit rtp
 
@@ -366,8 +370,8 @@ build-pt build-phd-final-pt: validate-config check-env check-build
 COMMIT_MESSAGE ?= Version $(VERSION) - $(DATE). Auto-commit.
 COMMIT_INCLUDE_UNTRACKED ?= no
 
-.PHONY: commit commit-untracked commit-push commit-push-force
-commit commit-push commit-push-force:
+.PHONY: commit commit-untracked push push-force
+commit push push-force:
 	@ VERSION="$(VERSION)" \
 	DATE="$(DATE)" \
 	COMMIT_MESSAGE="$(COMMIT_MESSAGE)" \
@@ -423,7 +427,7 @@ PUSH_REMOTE ?= origin
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: push push-header
-push: push-header commit-push tag-push
+push: push-header push tag-push
 
 push-header:
 	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
