@@ -451,11 +451,11 @@ push-status:
 CDIR    = $(shell basename $$(pwd))
 BRANCH ?= main
 update:
-	git checkout $(CDIR)
-	git pull -X theirs upstream $(BRANCH)
-	git checkout main
-	git rebase -X theirs $(CDIR)
-	make bcp-f
+	@ git checkout $(CDIR)
+	@ git pull -X theirs upstream $(BRANCH)
+	@ git checkout main
+	@ git rebase -X theirs $(CDIR)
+	@ echo y | make bcp-f
 
 #############################################################################
 # Find out which templates cannot be compiled with 'pdflatex'
