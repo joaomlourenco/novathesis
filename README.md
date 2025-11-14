@@ -52,6 +52,7 @@ Say thanks! ➡️ <img/ src="https://github.com/user-attachments/assets/8434a46
 - [Showcase](#showcase)
 - [Disclaimer](#disclaimer)
 - [Deprecated Word Templates](#deprecated-word-templates)
+- [Please give this repository a ⭐️](#please-give-this-repository-a-%EF%B8%8F)
 
 ---
 
