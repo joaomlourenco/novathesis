@@ -325,7 +325,7 @@ ifneq ($@,bump0)
 endif
 	$(MAKE) bcrtp
 
-.PHONY: bcrtp crtp rtp tp bcrp crp
+.PHONY: bcrtp bcrp bcp crp cp crtp rtp tp 
 bcrtp: build-phd-final-en crtp
 
 bcrp: build-phd-final-en crp
@@ -344,14 +344,17 @@ tp: tag push
 
 
 
-
-
 #############################################################################
 # BUILD
 #############################################################################
-.PHONY: build-phd-final-en
-build-phd-final-en: validate-config check-env check-build
-	$(BUILD) $(SCHL) --mode 1
+.PHONY: build build-en build-phd-final-en build-pt build-phd-final-pt
+build: build-en
+
+build-en build-phd-final-en: validate-config check-env check-build
+	$(BUILD) $(SCHL) --mode 1 --lang en
+
+build-pt build-phd-final-pt: validate-config check-env check-build
+	$(BUILD) $(SCHL) --mode 1 --lang pt
 
 
 
@@ -361,7 +364,7 @@ build-phd-final-en: validate-config check-env check-build
 COMMIT_MESSAGE ?= Version $(VERSION) - $(DATE). Auto-commit.
 COMMIT_INCLUDE_UNTRACKED ?= no
 
-.PHONY: commit commit-untracked commit-push commit-push-force crp
+.PHONY: commit commit-untracked commit-push commit-push-force
 commit commit-push commit-push-force:
 	@ VERSION="$(VERSION)" \
 	DATE="$(DATE)" \
@@ -371,8 +374,6 @@ commit commit-push commit-push-force:
 
 commit-untracked:
 	make commit COMMIT_INCLUDE_UNTRACKED=yes
-
-crp: commit rebase push
 
 
 #############################################################################
