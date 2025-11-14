@@ -453,6 +453,7 @@ BRANCH ?= main
 update:
 	@ git checkout $(CDIR)
 	@ git pull -X theirs upstream $(BRANCH)
+	@ echo y | make push-force
 	@ git checkout main
 	@ git rebase -X theirs $(CDIR)
 	@ echo y | make bcp-f
