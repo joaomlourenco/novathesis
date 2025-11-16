@@ -2,7 +2,7 @@
 # NOVATHESIS — Makefile
 #----------------------------------------------------------------------------
 #
-# Version 7.5.5 (2025-11-14)
+# Version 7.5.6 (2025-11-16)
 # Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 
 
