@@ -354,6 +354,22 @@
   \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
 
 % --------------------------------------------------------
+
+\newcommand{\printcm}[1]{%
+  \number\numexpr\dimexpr#1\relax*100/7227\relax.%
+  \ifnum\numexpr\dimexpr#1\relax*10000/7227-\numexpr\dimexpr#1\relax*100/7227\relax*100<10 0\fi
+  \number\numexpr\dimexpr#1\relax*10000/7227-\numexpr\dimexpr#1\relax*100/7227\relax*100\relax\,cm (#1)%
+}
+
+\newcommand{\NTDEBUG}[2][]{%
+  \if\relax\detokenize{#1}\relax
+    \typeout{#2}%
+  \else
+    \typeout{#2 = \printcm{#1}}%
+  \fi
+}
+
+% --------------------------------------------------------
 % The NOVAthesis logo
 \def\novathesisimg{\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{NOVAthesisFiles/Images/novathesis-text}}
 \def\novathesistxt{\textsl{novathesis}}
