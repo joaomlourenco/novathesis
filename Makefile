@@ -325,7 +325,7 @@ ifneq ($@,bump0)
 endif
 	$(MAKE) bcrtp
 
-.PHONY: bcrtp bcrp bcp crp cp crtp rtp tp 
+.PHONY: bcrtp bcrp bcp crp cp rp crtp rtp tp 
 bcrtp: build-phd-final-en crtp
 
 bcrp: build-phd-final-en crp
@@ -335,6 +335,8 @@ bcp: build-phd-final-en commit push
 bcp-f: build-phd-final-en commit push-force
 
 crp: commit rebase push
+
+rp: rebase push
 
 crp-f: commit rebase push-force
 
