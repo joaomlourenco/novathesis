@@ -454,12 +454,12 @@ CDIR    = $(shell basename $$(pwd))
 BRANCH ?= main
 update:
 	@ git checkout $(CDIR)
-	@ git pull --theirs upstream $(BRANCH)
+	@ git pull -X theirs upstream $(BRANCH)
 	@ echo y | make push-force
 	@ git checkout main
-	@ git checkout --theirs $(PDFFILE)
+	@ git checkout $(CDIR) $(PDFFILE)
 	@ git add $(PDFFILE)
-	@ git rebase --theirs $(CDIR)
+	@ git rebase -X theirs $(CDIR)
 	@ echo y | make bcp-f
 
 #############################################################################
