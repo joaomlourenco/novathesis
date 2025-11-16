@@ -1247,23 +1247,71 @@ end
 % \printisodate{2022-12-25} -> localized date, e.g., December 20, 2022; 20 de dezembro de 2022
 % \printisodate{2022-12}    -> e.g., December 20, 2022; Dezembro, 2022
 % \printisodate{2022}       -> e.g., 2022
-\newcommand{\printisodate}[2][, ]{\printisodate@i[#1]#2---\@nil}
-
-\def\printisodate@i[#1]#2-#3-#4-#5\@nil{%
-  % 1=$<$#1$>$ $<$#2$>$ $<$#3$>$ $<$#4$>$\par
-  \edef\@iso@one{#2}%
-  \edef\@iso@two{#3}%
-  \edef\@iso@three{#4}%
-  \ifx\@iso@three\@empty
-    \ifx\@iso@two\@empty
-      \@iso@one%
-    \else
-      \MakeTitlecase{\babelmonthname{\@iso@two}}#1\@iso@one%
-    \fi
-  \else
-    \localedate{2025}{10}{13}%
-  \fi
+\ExplSyntaxOn
+\NewDocumentCommand{\printisodate}{ O{, } m }
+{
+  \karl_print_isodate:nn { #1 } { #2 }
 }
+
+\cs_new_protected:Npn \karl_print_isodate:nn #1 #2
+{
+  \seq_set_split:Nnn \l_tmpa_seq { - } { #2 }
+  \int_case:nnF { \seq_count:N \l_tmpa_seq }
+  {
+    { 1 } { \karl_print_isodate_year:n { #2 } }  % YYYY
+    { 2 } { \karl_print_isodate_year_month:nn { #1 } { #2 } }  % YYYY-MM
+    { 3 } { \karl_print_isodate_full:nnn { #2 } }  % YYYY-MM-DD
+  }
+  {
+    \msg_error:nnx { printisodatex } { invalid-format } { #2 }
+  }
+}
+
+\cs_new_protected:Npn \karl_print_isodate_year:n #1
+{
+  #1  % Just output the year
+}
+
+\cs_new_protected:Npn \karl_print_isodate_year_month:nn #1 #2
+{
+  \seq_set_split:Nnn \l_tmpa_seq { - } { #2 }
+  \MakeTitlecase { \babelmonthname { \seq_item:Nn \l_tmpa_seq { 2 } } }
+  #1  % separator
+  \seq_item:Nn \l_tmpa_seq { 1 }  % year
+}
+
+\cs_new_protected:Npn \karl_print_isodate_full:nnn #1
+{
+  \seq_set_split:Nnn \l_tmpa_seq { - } { #1 }
+  \localedate
+    { \seq_item:Nn \l_tmpa_seq { 1 } }  % year
+    { \seq_item:Nn \l_tmpa_seq { 2 } }  % month
+    { \seq_item:Nn \l_tmpa_seq { 3 } }  % day
+}
+
+\msg_new:nnn { printisodatex } { invalid-format }
+{
+  Invalid~date~format~'#1'.~Expected~YYYY,~YYYY-MM,~or~YYYY-MM-DD.
+}
+\ExplSyntaxOff
+% \newcommand{\printisodate}[2][, ]{\printisodate@i[#1]#2---\@nil}
+%
+% \def\printisodate@i[#1]#2-#3-#4-#5\@nil{%
+%   % 1=$<$#1$>$ $<$#2$>$ $<$#3$>$ $<$#4$>$\par
+%   \edef\@iso@one{#2}%
+%   \edef\@iso@two{#3}%
+%   \edef\@iso@three{#4}%
+%   \ifx\@iso@three\@empty
+%     \ifx\@iso@two\@empty
+%       \@iso@one%
+%     \else
+%       \MakeTitlecase{\babelmonthname{\@iso@two}}#1\@iso@one%
+%     \fi
+%   \else
+%     \localedate{\@iso@one}{\@iso@two}{\@iso@three}%
+%   \fi
+% }
+
 
 
 \newdata{ntdocdate}
