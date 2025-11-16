@@ -82,7 +82,11 @@
 \spine(box,date,margin,left):=?{0pt}
 \spine(box,date,margin,right):=?{0pt}
 
-
+% \typeout{spine(box,logo,len)   = \thespine(box,logo,len)}
+% \typeout{spine(box,logo,align) = \thespine(box,logo,align)}
+% \typeout{spine(box,author,len) = \thespine(box,author,len)}
+% \typeout{spine(box,title,len)  = \thespine(box,title,len)}
+% \typeout{spine(box,date,len)   = \thespine(box,date,len)}
 
 \newif\ifisdim
 \newcommand{\@setifisdim}[1]{%
@@ -108,33 +112,28 @@
 
 \ifoptioncontains{/novathesis/debug}{spine}{%
   \def\@spineboxdrawopacity{1}%
-  \newcommand{\DEBUG}[1]{\typeout{#1}}%
+  \newcommand{\DEBUG}{\NTDEBUG}%
 }{%
   \def\@spineboxdrawopacity{0}%
-  \newcommand{\DEBUG}[1]{}%
+  \newcommand{\DEBUG}[2][]{}%
 }%
 
 \newdimen\@spinelen  % total spine length
 \newcommand{\@checkspinelen}[1][\paperheight]{%
   \@tempdima=\thespine(margin,left)\relax%
   \@tempdimb=\thespine(margin,right)\relax%
-  \DEBUG{SPINELEN MARGIN [left] = \the\@tempdima}%
-  \DEBUG{SPINELEN MARGIN [right] = \the\@tempdimb}%
+  \DEBUG[\@tempdima]{SPINELEN MARGIN [left]}%
+  \DEBUG[\@tempdimb]{SPINELEN MARGIN [right]}%
   \@tempdima=\dimexpr\@tempdima+\@tempdimb\relax%
-  \DEBUG{SPINELEN ACCUMULATED = \the\@tempdima}%
+  \DEBUG[\@tempdima]{SPINELEN ACCUMULATED}%
   \StrCount{\thespine(order)}{,}[\@nBoxSep]%
-  % \@tempdimb=\dimexpr\thespine(boxsep)*\@nBoxSep\relax%
-  % \DEBUG{SPINELEN BOXSEP [all] = \the\@tempdimb}%
-  % \@tempdima=\dimexpr\@tempdima+\@tempdimb\relax%
-  % \DEBUG{SPINELEN ACCUMULATED = \the\@tempdima}%
   \@for\myi:=\expanded{\thespine(order)}\do{%
-    \DEBUG{SPINELEN BOXLEN [\myi]}%
     \@tempdimb=\thespine(box,\myi,len)\relax%
-    \DEBUG{SPINELEN BOXLEN [\myi] = \the\@tempdimb}%
+    \DEBUG[\@tempdimb]{SPINELEN BOXLEN [\myi]}%
     \@tempdima=\dimexpr\@tempdima+\@tempdimb\relax%
-    \DEBUG{SPINELEN ACCUMULATED = \the\@tempdima}%
+    \DEBUG[\@tempdima]{SPINELEN ACCUMULATED}%
   }
-  \DEBUG{SPINELEN MAX = \the#1}%
+  \DEBUG[#1]{SPINELEN MAX}%
   \@spinelen=\@tempdima%
 }
 
@@ -189,7 +188,7 @@
 \ifdim\@tempdima>0pt\relax%
   % spine FITS into paper height
   \@tempdima=\dimexpr\@tempdima/\@nBoxSep\relax%                              = new box sep size
-  % \DEBUG{NEW BOXSEP=\the\@tempdima}
+  % \DEBUG[\@tempdima]{NEW BOXS}
   \spine(boxsep):={\the\@tempdima}%                                           = set new boxsep
 \else\ifdim\@tempdima<0pt\relax%
   % spine DOES NOT FIT into paper height
@@ -220,8 +219,8 @@
 
 % \displayspinealyout
 \@checkspinelen
-% \DEBUG{PAPER HEIGHT=\the\paperheight}
-% \DEBUG{SPINELEN[FINAL]=\the\@spinelen}
+% \DEBUG[\paperheight]{PAPER HEIG}
+% \DEBUG[\@spinelen]{SPINELEN[FINA}
 % \PAUSETHIS
 
 % Calculate box[lef], box[len], box[right] if undefined
@@ -235,9 +234,9 @@
   \spine(box,\myi,left):={\the\@tempdima}%
   \@tempdima=\dimexpr\@tempdima+\thespine(box,\myi,len)\relax%
   \spine(box,\myi,right):={\the\@tempdima}
-  % \DEBUG{BOX[\myi,left]=\thespine(box,\myi,left)}
-  % \DEBUG{BOX[\myi,len]=\thespine(box,\myi,len)}
-  % \DEBUG{BOX[\myi,right]=\thespine(box,\myi,right)}
+  \DEBUG[\thespine(box,\myi,left)]{BOX[\myi,left]}
+  \DEBUG[\thespine(box,\myi,len)]{BOX[\myi,len]}
+  \DEBUG[\thespine(box,\myi,right)]{BOX[\myi,right]}
 }%
 
 \@for\myi:=\expanded{\thespine(order)}\do{%
