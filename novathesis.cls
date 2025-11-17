@@ -100,6 +100,7 @@
 \def\DIR@MAINMATTER{2-MainMatter}
 \def\DIR@BACKMATTER{3-BackMatter}
 \def\DIR@BIBLIOGRAPHY{4-Bibliography}
+\def\DIR@FIGURES{5-Figures}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -139,7 +140,7 @@
 
 %%%%% Configure Graphics
 \RequirePackage[nobeamer]{graphbox}% improved version of "graphicx"
-\graphicspath{{5-Figures/}}
+\expandafter\graphicspath\expandafter{\expandafter{\DIR@FIGURES/}}
 \DeclareGraphicsExtensions{.pdf,.png,.tif,.jpg}
 \providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
 \providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
@@ -662,7 +663,7 @@ end
 %% MANAGE PERSON LISTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\ntaddperson#1(#2,#3)#4{%
-  % syntax: \ntaddperson{class}[key,gender]{filename}
+  % syntax: \ntaddperson{class}(key,gender){person name, position, etc}
   % #1=adviser | committee
   % #2={a,c}            {c,r,a,m,g}
   %     a=adviser        c=chair
@@ -683,7 +684,7 @@ end
   \fullexpandarg
 }
 
-\def\ntresetperson#1(#2,#3){%
+\def\ntresetperson#1(#2){%
   % #1 = class
   \option@setnil{/@nt/#1/#2/name}%
   \option@setnil{/@nt/#1/#2/full}%
@@ -1095,12 +1096,12 @@ end
 
 % --------------------------------------------------------
 % FIX BABEL TRANSLATION
-\RequirePackage[english]{babel}      % Support for multilingual documents
+\RequirePackage{babel}      % Support for multilingual documents
 \RequirePackage{translator} % Support month name translations for pgfcalendar
 \babeladjust{
   autoload.bcp47 = on
 }
-\ntselectlang{en}
+\ntselectlang{\@LANG@MAIN}
 
 %--------------------------------
 % “glossasries” stuff - after hyperref
