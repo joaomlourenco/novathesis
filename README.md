@@ -39,24 +39,24 @@ Say thanks! ➡️ <img/ src="https://github.com/user-attachments/assets/8434a46
 
 # Table of Contents
 
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Who Is This For?](#who-is-this-for)
-- [Installation Options](#installation-options)
-  - [Local LaTeX Installation](#local-latex-installation)
-  - [Cloud Services (Overleaf)](#cloud-services-overleaf)
-- [Project Structure](#project-structure)
-- [Getting Help](#getting-help)
-- [Contributing](#contributing)
-- [Supported Schools](#supported-schools)
-- [Showcase](#showcase)
-- [Disclaimer](#disclaimer)
-- [Deprecated Word Templates](#deprecated-word-templates)
-- [Please give this repository a ⭐️](#please-give-this-repository-a-%EF%B8%8F)
+* [1\. Overview](#1-overview)
+* [2\. Key Features](#2-key-features)
+* [3\. Who Is This For?](#3-who-is-this-for)
+* [4\. Installation Options](#4-installation-options)
+  * [4\.1\. Local LaTeX Installation](#41-local-latex-installation)
+  * [4\.2\. Cloud Services (Overleaf)](#42-cloud-services-overleaf)
+* [5\. Project Structure](#5-project-structure)
+* [6\. Getting Help](#6-getting-help)
+* [7\. Contributing](#7-contributing)
+* [8\. Supported Schools](#8-supported-schools)
+* [9\. Showcase](#9-showcase)
+* [10\. Disclaimer](#10-disclaimer)
+* [11\. Deprecated Word Templates](#11-deprecated-word-templates)
+* [12\. Please give this repository a ⭐️](#12-please-give-this-repository-a-️%EF%B8%8F)
 
 ---
 
-# Overview
+# 1. Overview
 
 **NOVAthesis** is a complete LaTeX template for academic theses and dissertations. It provides:
 
@@ -69,7 +69,7 @@ The template is open‑source and actively maintained.
 
 ---
 
-# Key Features
+# 2. Key Features
 
 ### ✔ Beginner‑Friendly
 
@@ -96,7 +96,7 @@ The template is open‑source and actively maintained.
 
 ---
 
-# Who Is This For?
+# 3. Who Is This For?
 
 - MSc and PhD students
 - Supervisors preparing guidelines or templates
@@ -105,27 +105,72 @@ The template is open‑source and actively maintained.
 
 ---
 
-# Installation Options
+# 4. Installation Options
 
-## Local LaTeX Installation
+## 4.1. Local LaTeX Installation
 
 This is the preferred option, especially for large projects.
 
-### 1. Install LaTeX
+### 4.1.1. Install LaTeX
 
 - **Windows:** [TeX Live](www.tug.org) or [MikTeX](miktex.org)
 - **macOS:** [MacTeX](www.tug.org/mactex/) or [MikTeX](miktex.org)
 - **Linux:** [TeX Live](www.tug.org) or [MikTeX](miktex.org)
 
-### 2. Download NOVAthesis
+### 4.1.2. Download NOVAthesis
+
+Preferably, download from the specially tailored version.  
+
+If you school is not in the list, download the default/main repository..
+
+#### 4.1.2.1 Specially tailored repositories
+
+To clone a tailored repository, use the command below, replacing REPO witht the link from *Clone Link*.
 
 ```bash
-git clone --depth=1 https://github.com/joaomlourenco/novathesis.git
+git clone --depth=1 --single-branch REPO.git
 ```
 
-Or [download the latest ZIP release](https://github.com/joaomlourenco/novathesis/archive/refs/heads/main.zip).
+* **Universidade Nova de Lisboa**
+  
+  * Faculdade de Ciências e Tecnologia
+    
+    * **nova-fct** — generic template for PhD and MSc
+      [Clone link](https://github.com/novathesis/nova-fct.git) — [Zip download](https://github.com/novathesis/nova-fct/archive/refs/heads/main.zip)
+    
+    * **nova-fct-cbbi** — Mestrado em Biologia Computacional & Bioinformática
+      
+      [Clone link](https://github.com/novathesis/nova-fct-cbbi.git) — [Zip download](https://github.com/novathesis/nova-fct-cbbi/archive/refs/heads/main.zip)
+    
+    * **nova-fct-di-adc** —Dep. Informática / Atividade de Desenvolvimento Curricular— [Clone link](https://github.com/novathesis/nova-fct-di-adc.git) — [Zip download](https://github.com/novathesis/nova-fct-di-adc/archive/refs/heads/main.zip)
+  
+  * **nova-itqb** — Instituto de Tecnologia Química e Biológica António Xavier
+    [Clone link](https://github.com/novathesis/nova-fct-itqb.git) — [Zip download](https://github.com/novathesis/nova-itqb/archive/refs/heads/main.zip)
 
-### 3. Compile
+* **Universidade de Lisboa**
+  
+  * **ulisboa-fcul** — Faculdade de Ciências da Universidade de Lisboa
+    [Clone link](https://github.com/novathesis/ulisboa-fcul.git) — https://github.com/novathesis/ulisboa-fcul/archive/refs/heads/main.zip
+
+#### 4.1.2.2 Default/main NOVAthesis repository
+
+Clone the Git repository with the following command:
+
+```bash
+git clone --depth=1 --single-branch https://github.com/joaomlourenco/novathesis.git
+```
+
+or [download the latest ZIP release](https://github.com/joaomlourenco/novathesis/archive/refs/heads/main.zip).
+
+### 4.1.3. Compile
+
+If you have `make` installed in your computer, simply run
+
+```bash
+make
+```
+
+otherwise run
 
 ```bash
 latexmk -shell-escape -file-line-error -luapdf template
@@ -133,9 +178,9 @@ latexmk -shell-escape -file-line-error -luapdf template
 
 **Important:** The template uses **`biber`** by default, not `bibtex`.  However, `bibtex` can be also be used.
 
-### 4. Configure
+### 4.1.4. Configure
 
-Edit the files inside the `0-Config/` directory to set your document metadata, e.g.:
+**Carefully edit** the files inside the `0-Config/` directory to set your document metadata, e.g.:
 
 - Document type;
 - School;
@@ -146,21 +191,21 @@ Edit the files inside the `0-Config/` directory to set your document metadata, e
 
 ---
 
-## Cloud Services (Overleaf)
+## 4.2. Cloud Services (Overleaf)
 
 NOVAthesis is available as an official Overleaf template.  Despite the regular updates, the version in Overleaf, although fully operational, may be slightly outdated.
 
-1. [Download the ZIP](https://github.com/joaomlourenco/novathesis/archive/refs/heads/main.zip);
+1. Download the ZIP (follow the instructions above in Section 4.1.2.1. Specially tailored repositories);
 2. [Upload it to Overleaf](www.overleaf.com);
 3. Set `template.tex` as the root document;
 4. Compile;
-5. Follow the steps above (4. Configure) to customize you document.
+5. Follow the steps above (*4.1.4. Configure*) to customize you document.
 
 **Warning:** You will need a paid Overleaf account. The template will not compile under Overleaf Free Plan, which has a 20‑second compilation limit.
 
 ---
 
-# Project Structure
+# 5. Project Structure
 
 ```
 template.tex            # Document main file (do not change this file)
@@ -184,13 +229,13 @@ Each configuration file has a single, well‑defined purpose to keep the project
 
 ---
 
-# Getting Help
+# 6. Getting Help
 
-### 📘 Documentation
+### Documentation
 
 - Complete wiki: https://github.com/joaomlourenco/novathesis/wiki
 
-### 💬 Community Support
+### Community Support
 
 - GitHub Discussions: https://github.com/joaomlourenco/novathesis/discussions
 - Reddit: [r/novathesis](https://www.reddit.com/r/novathesis/)
@@ -199,7 +244,7 @@ Each configuration file has a single, well‑defined purpose to keep the project
 
 ---
 
-# Contributing
+# 7. Contributing
 
 Contributions are welcome:
 
@@ -210,7 +255,7 @@ Contributions are welcome:
 
 ---
 
-# Supported Schools
+# 8. Supported Schools
 
 A large and growing list including:
 
@@ -226,27 +271,27 @@ A large and growing list including:
 
 ---
 
-# Showcase
+# 9. Showcase
 
 Sample covers from the supported schools are available in the Wiki's **Showcase** page.
 
 ---
 
-# Disclaimer
+# 10. Disclaimer
 
 This is **not** an official template from any school.  
 Compliance has been ensured to the best extent possible using public documentation.
 
 ---
 
-# Deprecated Word Templates
+# 11. Deprecated Word Templates
 
 The Word templates (unmaintained) can be found in  
 [https://github.com/joaomlourenco/novathesis_word]()
 
 --------
 
-# Please give this repository a ⭐️
+# 12. Please give this repository a ⭐️
 
 <picture>
   <source
