@@ -132,6 +132,7 @@
 \RequirePackage{etoolbox}
 \RequirePackage{xstring}
 \RequirePackage{varwidth}
+\RequirePackage{textcase}
 \RequirePackage{NOVAthesisFiles/memory2}
 \RequirePackage{NOVAthesisFiles/nt-version}
 
