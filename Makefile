@@ -453,11 +453,13 @@ push-status:
 CDIR    = $(shell basename $$(pwd))
 BRANCH ?= main
 update:
+	@ git reset $(PDFFILE)
 	@ git checkout $(PDFFILE)
 	@ git checkout $(CDIR)
 	@ git pull -X theirs upstream $(BRANCH)
 	@ echo y | make push-force
 	@ git checkout main
+	@ git reset $(PDFFILE)
 	@ git checkout $(CDIR) $(PDFFILE)
 	@ git add $(PDFFILE)
 	@ git rebase -X theirs $(CDIR)
