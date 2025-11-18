@@ -451,19 +451,8 @@ push-status:
 # UPDATE
 #############################################################################
 CDIR    = $(shell basename $$(pwd))
-BRANCH ?= main
 update:
-	@ git reset $(PDFFILE)
-	@ git checkout $(PDFFILE)
-	@ git checkout $(CDIR)
-	@ git pull -X theirs upstream $(BRANCH)
-	@ echo y | make push-force
-	@ git checkout main
-	@ git reset $(PDFFILE)
-	@ git checkout $(CDIR) $(PDFFILE)
-	@ git add $(PDFFILE)
-	@ git rebase -X theirs $(CDIR)
-	@ echo y | make bcp-f
+	@ .Build/nt-safe-update.sh $(CDIR)
 
 #############################################################################
 # Find out which templates cannot be compiled with 'pdflatex'
