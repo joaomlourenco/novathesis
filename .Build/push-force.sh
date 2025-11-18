@@ -8,12 +8,12 @@ RESET="\033[0m"
 echo "${RED}💥 FORCE PUSH MODE - Use with caution!${RESET}"
 
 # Ask for confirmation
-printf "${YELLOW}Are you sure you want to force push? (y/N): ${RESET}"
-read confirm
-if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
-    echo "❌ Force push cancelled by user"
-    exit 1
-fi
+# printf "${YELLOW}Are you sure you want to force push? (y/N): ${RESET}"
+# read confirm
+# if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
+#     echo "❌ Force push cancelled by user"
+#     exit 1
+# fi
 
 # Detect current branch
 CURRENT_BRANCH=$(git branch --show-current 2>/dev/null)

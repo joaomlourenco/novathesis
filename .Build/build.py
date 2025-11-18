@@ -16,6 +16,7 @@ The script handles both cover-only builds and full document builds with appropri
 configuration adjustments.
 """
 import argparse
+import fcntl
 import time
 import os
 import re
@@ -387,6 +388,7 @@ def localize_and_process_files(tmp_root: Path, confdir: Path, patterns: dict[str
         changed = process_file(p, patterns.get(p.name, {}))
         changed_any = changed_any or (changed > 0)
     return changed_any
+    
 def safe_outname(school: str, doctype: str, lang: str) -> str:
     """
     Generate a safe filename for the output PDF.
@@ -401,7 +403,19 @@ def safe_outname(school: str, doctype: str, lang: str) -> str:
     doctype_safe = doctype.replace(" ", "_")
     lang_safe = lang.replace(" ", "_")
     return f"{school_safe}-{doctype_safe}-{lang_safe}.pdf"
-def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype: str, lang: str, outdir: Path, progress: int = 1, total_lines: int = 4400, keep_bdir: bool = False, rename = False) -> int:
+    
+def run_make_in_temp(
+    tmp_root: Path,
+    ltxprocessor: str,
+    school_id: str,
+    doctype: str,
+    lang: str,
+    outdir: Path,
+    progress: int = 1,
+    total_lines: int = 4400,
+    keep_bdir: bool = False,
+    rename: bool = False,
+) -> int:
     """
     Run make command in temporary workspace and handle output.
     Args:
@@ -418,13 +432,81 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
     Returns:
         Exit code from make process (0 for success)
     """
+
+    print(f"{CYAN}📦 Intercepting 'biber'")
+
+    # ------------------------------------------------------------------
+    # 1) Locate real biber
+    # ------------------------------------------------------------------
+    try:
+        result = subprocess.run(
+            ["which", "biber"],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        BIBER = result.stdout.strip()
+        print(f"biber found: {BIBER}")
+    except subprocess.CalledProcessError:
+        BIBER = None
+        print("biber not found")
+
+    # ------------------------------------------------------------------
+    # 2) Prepare environment and biber locking wrapper
+    # ------------------------------------------------------------------
+    env = os.environ.copy()
+
+    if BIBER:
+        lockfile_path = "/tmp/novathesis-biber.lock"
+        wrapper_path = tmp_root / "biber"  # this will shadow the real 'biber'
+
+        wrapper_code = f"""#!/usr/bin/env python3
+import fcntl
+import os
+import subprocess
+import sys
+
+LOCKFILE = {lockfile_path!r}
+REAL_BIBER = {BIBER!r}
+
+def main():
+    # Open (and create if needed) a lock file shared by all processes
+    with open(LOCKFILE, "w") as lf:
+        # Acquire exclusive lock (blocks until available)
+        fcntl.flock(lf, fcntl.LOCK_EX)
+        try:
+            # Forward all arguments to the real biber
+            rc = subprocess.call([REAL_BIBER] + sys.argv[1:])
+        finally:
+            # Explicit unlock (also happens automatically on close)
+            fcntl.flock(lf, fcntl.LOCK_UN)
+    sys.exit(rc)
+
+if __name__ == "__main__":
+    main()
+"""
+
+        wrapper_path.write_text(wrapper_code)
+        wrapper_path.chmod(0o755)
+
+        # Prepend tmp_root to PATH so our wrapper is found first
+        env["PATH"] = f"{tmp_root}{os.pathsep}{env.get('PATH', '')}"
+        print(f"{CYAN}🔒 biber calls will be serialized using {lockfile_path}{RESET}")
+    else:
+        print(f"{YELLOW}⚠️ biber not found; no locking wrapper installed{RESET}")
+
+    # ------------------------------------------------------------------
+    # 3) Run make (with env including our PATH override)
+    # ------------------------------------------------------------------
     print(f"{CYAN}📦 Running 'make {ltxprocessor}' in {tmp_root}{RESET}")
     start_time = time.perf_counter()
     try:
         if progress == 1:
             # Run with progress bar
-            print(f"{BRIGHT_CYAN}📊 Progress tracking enabled: expecting ~{total_lines} lines of output{RESET}")
-            # Start the subprocess with stdout and stderr piped
+            print(
+                f"{BRIGHT_CYAN}📊 Progress tracking enabled: "
+                f"expecting ~{total_lines} lines of output{RESET}"
+            )
             proc = subprocess.Popen(
                 ["make", ltxprocessor],
                 stdout=subprocess.PIPE,
@@ -432,31 +514,39 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
                 text=True,
                 bufsize=1,  # Line buffered
                 universal_newlines=True,
-                cwd=tmp_root
+                cwd=tmp_root,
+                env=env,
             )
             line_count = 0
             important_lines = []
+
             # Read output line by line and update progress
             for line in proc.stdout:
                 line_count += 1
                 # Update progress bar
                 _update_progress_bar(line_count, total_lines)
                 # Collect important lines for display
-                if (line.startswith("Run number") or
-                    line.startswith("Running") or
-                    line.startswith("Logging") or
-                    line.startswith("Latexmk:") or
-                    "error" in line.lower() or
-                    "warning" in line.lower()):
+                if (
+                    line.startswith("Run number")
+                    or line.startswith("Running")
+                    or line.startswith("Logging")
+                    or line.startswith("Latexmk:")
+                    or "error" in line.lower()
+                    or "warning" in line.lower()
+                ):
                     important_lines.append(line)
+
             # Wait for process to complete and get return code
             returncode = proc.wait()
+
             # Clear the progress bar line
-            sys.stdout.write('\r' + ' ' * 100 + '\r')
+            sys.stdout.write("\r" + " " * 100 + "\r")
             sys.stdout.flush()
+
             # Print collected important lines
             for line in important_lines:
-                print(line, end='')
+                print(line, end="")
+
         elif progress == 2:
             # Real-time output mode - print everything as it comes
             print(f"{BRIGHT_CYAN}📝 Real-time output mode{RESET}")
@@ -467,12 +557,14 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
                 text=True,
                 bufsize=1,  # Line buffered
                 universal_newlines=True,
-                cwd=tmp_root
+                cwd=tmp_root,
+                env=env,
             )
             # Print output in real-time
             for line in proc.stdout:
-                print(line, end='')
+                print(line, end="")
             returncode = proc.wait()
+
         else:  # progress == 0 (silent mode)
             # Silent mode - only show errors and important messages
             print(f"{BRIGHT_CYAN}🔇 Silent mode - showing only important messages{RESET}")
@@ -481,39 +573,55 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 text=True,
-                cwd=tmp_root
+                cwd=tmp_root,
+                env=env,
             )
             returncode = proc.returncode
+
             # Filter and print important lines
             for line in proc.stdout.splitlines():
-                if (line.startswith("Run number") or
-                    line.startswith("Running") or
-                    line.startswith("Logging") or
-                    line.startswith("Latexmk:") or
-                    "error" in line.lower() or
-                    "warning" in line.lower()):
+                if (
+                    line.startswith("Run number")
+                    or line.startswith("Running")
+                    or line.startswith("Logging")
+                    or line.startswith("Latexmk:")
+                    or "error" in line.lower()
+                    or "warning" in line.lower()
+                ):
                     print(line)
+
         end_time = time.perf_counter()
         elapsed = end_time - start_time
+
         if returncode == 0:
-            print(f"{CYAN}✅ 'make' succeeded in {RED}{elapsed:.2f}{CYAN} seconds{RESET}")
+            print(
+                f"{CYAN}✅ 'make' succeeded in {RED}{elapsed:.2f}{CYAN} seconds{RESET}"
+            )
             # Success → copy template.pdf to "{university-school-doctype-lang}.pdf"
             src_pdf = tmp_root / "template.pdf"
             if rename:
                 dest_pdf = outdir / safe_outname(school_id, doctype, lang)
             else:
                 dest_pdf = outdir / "template.pdf"
+
             if src_pdf != dest_pdf:
                 if src_pdf.exists():
                     outdir.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(src_pdf, dest_pdf)
-                    print(f"{GREEN}✅ saved '{src_pdf.name}' to '{dest_pdf}'{RESET}")
+                    print(
+                        f"{GREEN}✅ saved '{src_pdf.name}' to '{dest_pdf}'{RESET}"
+                    )
                     # Only remove temp workspace if we created it temporarily
                     if "ntbuild-" in str(tmp_root) and not keep_bdir:
                         shutil.rmtree(tmp_root)
-                        print(f"{CYAN}🧪 Temp workspace removed: {tmp_root}{RESET}")
+                        print(
+                            f"{CYAN}🧪 Temp workspace removed: {tmp_root}{RESET}"
+                        )
                     else:
-                        print(f"{YELLOW}📁 Preserving build directory: {tmp_root}{RESET}")
+                        print(
+                            f"{YELLOW}📁 Preserving build directory: "
+                            f"{tmp_root}{RESET}"
+                        )
                 else:
                     print(f"{RED}❌ '{src_pdf}' missing{RESET}")
                 return 0
@@ -521,12 +629,19 @@ def run_make_in_temp(tmp_root: Path, ltxprocessor: str, school_id: str, doctype:
             print(f"{RED}❌ 'make' failed with exit code {returncode}{RESET}")
             print(f"{YELLOW}🧪 Temp workspace kept for debugging: {tmp_root}{RESET}")
             return returncode
+
     except subprocess.CalledProcessError as e:
-        out = e.stdout if hasattr(e, "stdout") and isinstance(e.stdout, str) else ""
+        out = (
+            e.stdout
+            if hasattr(e, "stdout") and isinstance(e.stdout, str)
+            else ""
+        )
         print(out)
         print(f"{RED}❌ 'make' failed with exit code {e.returncode}{RESET}")
         print(f"{YELLOW}🧪 Temp workspace kept for debugging: {tmp_root}{RESET}")
         return e.returncode
+
+
 # --- Command Line Interface -------------------------------------------------
 def main() -> None:
     """Main entry point for the NOVATHESIS build assistant."""
