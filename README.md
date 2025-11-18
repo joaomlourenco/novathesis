@@ -128,7 +128,7 @@ If you school is not in the list, download the default/main repository..
 To clone a tailored repository, use the command below, replacing REPO witht the link from *Clone Link*.
 
 ```bash
-git clone --depth=1 --single-branch CLONE_LINK.git
+git clone CLONE_LINK.git
 ```
 
 otherwise, follow the link to the ZIP file.
