@@ -128,29 +128,39 @@ If you school is not in the list, download the default/main repository..
 To clone a tailored repository, use the command below, replacing REPO witht the link from *Clone Link*.
 
 ```bash
-git clone --depth=1 --single-branch REPO.git
+git clone --depth=1 --single-branch CLONE_LINK.git
 ```
+
+otherwise, follow the link to the ZIP file.
 
 * **Universidade Nova de Lisboa**
   
-  * Faculdade de Ciências e Tecnologia
-    
-    * **nova-fct** — generic template for PhD and MSc
-      [Clone link](https://github.com/novathesis/nova-fct.git) — [Zip download](https://github.com/novathesis/nova-fct/archive/refs/heads/main.zip)
+  * **nova-fct** — Faculdade de Ciências e Tecnologia
+      — [[Clone link]](https://github.com/novathesis/nova-fct.git) — [[Zip download]](https://github.com/novathesis/nova-fct/archive/refs/heads/main.zip)
     
     * **nova-fct-cbbi** — Mestrado em Biologia Computacional & Bioinformática
-      
-      [Clone link](https://github.com/novathesis/nova-fct-cbbi.git) — [Zip download](https://github.com/novathesis/nova-fct-cbbi/archive/refs/heads/main.zip)
+      — [[Clone link]](https://github.com/novathesis/nova-fct-cbbi.git) — [[Zip download]](https://github.com/novathesis/nova-fct-cbbi/archive/refs/heads/main.zip)
     
-    * **nova-fct-di-adc** —Dep. Informática / Atividade de Desenvolvimento Curricular— [Clone link](https://github.com/novathesis/nova-fct-di-adc.git) — [Zip download](https://github.com/novathesis/nova-fct-di-adc/archive/refs/heads/main.zip)
+    * **nova-fct-di-adc** —Dep. Informática / Atividade de Desenvolvimento Curricular— — [[Clone link]](https://github.com/novathesis/nova-fct-di-adc.git) — [[Zip download]](https://github.com/novathesis/nova-fct-di-adc/archive/refs/heads/main.zip)
+  
+  * **nova-fcsh** — Faculdade de Ciências Sociais e Humanas
+    — [[Clone link]](https://github.com/novathesis/nova-fcsh.git) — [[Zip download]](https://github.com/novathesis/nova-fcsh/archive/refs/heads/main.zip)
   
   * **nova-itqb** — Instituto de Tecnologia Química e Biológica António Xavier
-    [Clone link](https://github.com/novathesis/nova-fct-itqb.git) — [Zip download](https://github.com/novathesis/nova-itqb/archive/refs/heads/main.zip)
+    — [[Clone link]](https://github.com/novathesis/nova-itqb.git) — [[Zip download]](https://github.com/novathesis/nova-itqb/archive/refs/heads/main.zip)
 
 * **Universidade de Lisboa**
   
   * **ulisboa-fcul** — Faculdade de Ciências da Universidade de Lisboa
-    [Clone link](https://github.com/novathesis/ulisboa-fcul.git) — https://github.com/novathesis/ulisboa-fcul/archive/refs/heads/main.zip
+    — [[Clone link]](https://github.com/novathesis/ulisboa-fcul.git) — [[Zip download]](https://github.com/novathesis/ulisboa-fcul/archive/refs/heads/main.zip)
+  
+  * **ulisboa-ist** — Instituto Superior Técnico da Universidade de Lisboa
+    — [[Clone link]](https://github.com/novathesis/ulisboa-ist.git) — [[Zip download]](https://github.com/novathesis/ulisboa-ist/archive/refs/heads/main.zip)
+
+* **Universidade do Porto**
+  
+  * **uporto-fcup** — Faculdade de Ciências da Universidade do Porto
+    — [[Clone link]](https://github.com/novathesis/uporto-fcup.git) — [[Zip download]](https://github.com/novathesis/uporto-fcupfcul/archive/refs/heads/main.zip)
 
 #### 4.1.2.2 Default/main NOVAthesis repository
 
