@@ -18,12 +18,16 @@ UPSTREAM_REPO="https://github.com/joaomlourenco/novathesis.git"
 # ----------------------------------------------------------------------
 
 if [[ $# -lt 1 ]]; then
-    echo "Usage: $0 <course-repo-name>" >&2
-    echo "Example: $0 novathesis-msc-template" >&2
-    exit 1
+    # echo "Usage: $0 <course-repo-name>" >&2
+    # echo "Example: $0 novathesis-msc-template" >&2
+    # exit 1
+	CDIR=$(basename $0)
+	cd ..
+else
+	CDIR="$1"
 fi
+echo "Updating '$CDIR'…"
 
-CDIR="$1"
 
 # ----------------------------------------------------------------------
 # Check that the GitHub repo ORIGIN_USER/CDIR exists
