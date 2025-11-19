@@ -21,8 +21,14 @@ if [[ $# -lt 1 ]]; then
     # echo "Usage: $0 <course-repo-name>" >&2
     # echo "Example: $0 novathesis-msc-template" >&2
     # exit 1
-	CDIR=$(basename $0)
+	CDIR=$(basename $PWD)
 	cd ..
+	REPOSDIR=$(basename $PWD)
+	if [ "$REPOSDIR" != "Repos" ]; then
+		echo "Cant update from this folder '$CDIR', parent '$REPOSDIR."
+		echo "Must be either in the folder to update or the parent 'Repos' folder."
+		exit 1
+	fi
 else
 	CDIR="$1"
 fi
