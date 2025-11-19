@@ -24,6 +24,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import atexit
 from pathlib import Path
 from typing import Dict, Callable, List, Pattern
 # --- ANSI Color Codes for Terminal Output ------------------------------------
@@ -407,7 +408,15 @@ def safe_outname(school: str, doctype: str, lang: str) -> str:
     doctype_safe = doctype.replace(" ", "_")
     lang_safe = lang.replace(" ", "_")
     return f"{school_safe}-{doctype_safe}-{lang_safe}.pdf"
-    
+
+
+class Cleanup:
+     file = None
+def remove_file():
+    if Cleanup.file and os.path.exists(Cleanup.file):
+        os.remove(Cleanup.file)
+
+
 def run_make_in_temp(
     tmp_root: Path,
     ltxprocessor: str,
@@ -463,6 +472,7 @@ def run_make_in_temp(
     if BIBER:
         lockfile_path = "/tmp/novathesis-biber.lock"
         wrapper_path = tmp_root / "biber"  # this will shadow the real 'biber'
+        Cleanup.file = wrapper_path
 
         wrapper_code = f"""#!/usr/bin/env python3
 import fcntl
