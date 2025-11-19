@@ -351,7 +351,6 @@ rtp: rebase tp
 tp: tag push
 
 
-
 #############################################################################
 # BUILD
 #############################################################################
@@ -367,9 +366,9 @@ build-pt build-phd-final-pt: validate-config check-env check-build
 
 
 #############################################################################
-# COMMIT
+# COMMIT / PUSH
 #############################################################################
-COMMIT_MESSAGE ?= Version $(VERSION) - $(DATE). Auto-commit.
+COMMIT_MESSAGE ?= Version $(VERSION) - $(DATE). $(CM)
 COMMIT_INCLUDE_UNTRACKED ?= no
 
 .PHONY: commit commit-untracked push push-force
@@ -382,6 +381,14 @@ commit push push-force:
 
 commit-untracked:
 	make commit COMMIT_INCLUDE_UNTRACKED=yes
+
+#————————————————————————————————————————————————————————————————————————————
+# Helper to show remote status
+PUSH_REMOTE ?= origin
+.PHONY: push-status
+push-status:
+	@echo "📋 Remote status for all branches:"
+	@git remote show $(PUSH_REMOTE) | grep -E "(HEAD branch|Local branch|pushes to|local out of date)" || true
 
 
 #############################################################################
@@ -422,28 +429,6 @@ tag-list:
 	
 	
 
-#############################################################################
-# PUSH
-#############################################################################
-PUSH_REMOTE ?= origin
-
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: push push-header
-push: push-header push tag-push
-
-push-header:
-	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
-	@echo "🏷️ Starting pushing process..."
-	@printf "$(CYAN)VERSION=$(YELLOW)$(VERSION)$(CYAN) - DATE=$(YELLOW)$(DATE)$(RESET).\n"
-	@printf "$(RED)-------------------------------------------------------------$(RESET)\n"
-	
-
-#————————————————————————————————————————————————————————————————————————————
-# Helper to show remote status
-.PHONY: push-status
-push-status:
-	@echo "📋 Remote status for all branches:"
-	@git remote show $(PUSH_REMOTE) | grep -E "(HEAD branch|Local branch|pushes to|local out of date)" || true
 
 
 
