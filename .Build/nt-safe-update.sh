@@ -74,9 +74,9 @@ cd "${CDIR}"
 
 if git remote | grep -qx "upstream"; then
     # Make sure URL is correct
-    git remote set-url upstream "${UPSTREAM_REPO}"
+    git remote set-url upstream "$UPSTREAM_REPO"
 else
-    git remote add upstream "${UPSTREAM_REPO}"
+    git remote add upstream "$UPSTREAM_REPO"
 fi
 
 echo "🔧 Using upstream: $(git remote get-url upstream)"
