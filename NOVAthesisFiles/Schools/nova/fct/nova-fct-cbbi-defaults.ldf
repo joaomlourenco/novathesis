@@ -13,10 +13,6 @@
 
 \typeout{NT FILE schools/nova/fct/nova-fct-cbbi-defaults.ldf}%
 
-\ifmscdoc{}{%
-  \ClassError{novathesis}{Invalid document type: `\@DOCTYPE'.  Must be `msc'!}{}{}%
-}
-
 % NOVA FCT specific customization
 \openany
 \ntsetup{doctype=msc}
