@@ -47,14 +47,15 @@ BRIGHT_MAGENTA = "\033[95m"
 BRIGHT_CYAN    = "\033[96m"
 BRIGHT_WHITE   = "\033[97m"
 # --- Pattern Builders -------------------------------------------------------
-def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, cover_only: bool, doc_status: str, demo: bool) -> dict[str, dict[Pattern, Callable[[str], str]]]:
+def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, 
+                   mode: int, doc_status: str, force: bool
+                  ) -> dict[str, dict[Pattern, Callable[[str], str]]]:
     """
     Build regex patterns and transformation functions for configuration file processing.
     Args:
         new_doc_type: Document type (e.g., 'phd', 'msc', 'bsc')
         new_school_id: School identifier (e.g., 'nova/fct')
         new_lang_code: Language code (e.g., 'en', 'pt', 'uk', 'gr')
-        cover_only: Whether to build cover-only version
         doc_status: Document status (e.g., 'working', 'provisional', 'final', 'keep')
         demo: Whether to build demo version with all abstracts
     Returns:
@@ -80,41 +81,45 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, co
             line = key_re.sub(lambda m: m.group(1) + value, line)
             return line if line != orig else orig
         return _transform
+
     # Patterns for 1_novathesis.tex - core document configuration
-    file_1_patterns = {
-        re.compile(r"^\s*%?\s*\\ntsetup\{\s*doctype\s*=\s*[^}]+\}\s*.*$"):
-            _uncomment_replace("doctype", new_doc_type),
-        re.compile(r"^\s*%?\s*\\ntsetup\{\s*school\s*=\s*[^}]+\}\s*.*$"):
-            _uncomment_replace("school", new_school_id),
-        re.compile(r"^\s*%?\s*\\ntsetup\{\s*lang\s*=\s*[^}]+\}\s*.*$"):
-            _uncomment_replace("lang", new_lang_code),
-        re.compile(r"^\s*%?\s*\\ntsetup\{\s*spine/layout\s*=\s*[^}]+\}\s*.*$"):
-            _uncomment_replace("spine/layout", "trim"),
-        re.compile(r"^\s*%?\s*\\ntsetup\{\s*spine/width\s*=\s*[^}]+\}\s*.*$"):
-            _uncomment_replace("spine/width", "2cm"),
-        re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/index\s*=\s*[^}]+\}\s*.*$"):
-            _uncomment_replace("print/index", "true"),
-        # re.compile(r"^\s*%?\s*\\ntsetup\{\s*abstractorder=\{en,pt,uk,gr\}\}\s*.*$"):
-        #     lambda line: re.sub(r"^(\s*)%+\s*", r"\1", line),
-    }
+    result = {}
+    if doc_status != "keep" or force:
+        file_1_patterns = {
+            re.compile(r"^\s*%?\s*\\ntsetup\{\s*doctype\s*=\s*[^}]+\}\s*.*$"):
+                _uncomment_replace("doctype", new_doc_type),
+            re.compile(r"^\s*%?\s*\\ntsetup\{\s*school\s*=\s*[^}]+\}\s*.*$"):
+                _uncomment_replace("school", new_school_id),
+            re.compile(r"^\s*%?\s*\\ntsetup\{\s*lang\s*=\s*[^}]+\}\s*.*$"):
+                _uncomment_replace("lang", new_lang_code),
+            re.compile(r"^\s*%?\s*\\ntsetup\{\s*spine/layout\s*=\s*[^}]+\}\s*.*$"):
+                _uncomment_replace("spine/layout", "trim"),
+            re.compile(r"^\s*%?\s*\\ntsetup\{\s*spine/width\s*=\s*[^}]+\}\s*.*$"):
+                _uncomment_replace("spine/width", "2cm"),
+            re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/index\s*=\s*[^}]+\}\s*.*$"):
+                _uncomment_replace("print/index", "true"),
+            re.compile(r"^\s*%?\s*\\ntsetup\{\s*docstatus\s*=\s*[^}]+\}\s*.*$"):
+                _uncomment_replace("docstatus", doc_status)
+            # re.compile(r"^\s*%?\s*\\ntsetup\{\s*abstractorder=\{en,pt,uk,gr\}\}\s*.*$"):
+            #     lambda line: re.sub(r"^(\s*)%+\s*", r"\1", line),
+        }    
+        result |= {
+            "1_novathesis.tex": file_1_patterns,
+        }
     
-    # Only add docstatus pattern if it's not "keep"
-    if doc_status != "keep":
-        file_1_patterns[re.compile(r"^\s*%?\s*\\ntsetup\{\s*docstatus\s*=\s*[^}]+\}\s*.*$")] = _uncomment_replace("docstatus", doc_status)
-    
-    result = {
-        "1_novathesis.tex": file_1_patterns,
-    }
-    if cover_only:
-        # Cover-only build: disable copyright and comment out file inclusions
+    if mode == 2: 
+        # Cover only, remove contents
+        # Ddisable copyright
         file_1_patterns |= {
             re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/copyright\s*=\s*[^}]+\}\s*.*$"):
                 _uncomment_replace("print/copyright", "false"),
         }
+        # Comment out file inclusions (do not print chapters/appendices/annexes)
         file_4_patterns = {
             re.compile(r"^\s*\\ntaddfile.*$"):
                 lambda line: re.sub(r"^(\s*\\ntaddfile.*)", r"% \1", line),
         }
+        # Do not print any listof
         file_6_patterns = {
             # Match any line that does NOT start with optional spaces followed by '%'
             re.compile(r"^(?!\s*%).*$"):
@@ -126,18 +131,17 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, co
             "6_list_of.tex": file_6_patterns,
         }
     else:
-        # Full build: only include additional abstract files in demo mode
-        file_4_patterns = {}
-        if demo:
+        # Full build: Add Greek and Ukrainian abstracts as demo of other languages
+        if mode == 1:
             file_4_patterns = {
                 re.compile(r"^\s*%?\s*\\ntaddfile\{abstract\}\[gr\]\{abstract-gr\}\s*.*$"):
                     lambda line: re.sub(r"^(\s*)%+\s*", r"\1", line),
                 re.compile(r"^\s*%?\s*\\ntaddfile\{abstract\}\[uk\]\{abstract-uk\}\s*.*$"):
                     lambda line: re.sub(r"^(\s*)%+\s*", r"\1", line),
             }
-        # result |= {
-        #     "4_files.tex": file_4_patterns,
-        # }
+            # result |= {
+            #     "4_files.tex": file_4_patterns,
+            # }
     return result
 # --- Core Processing Functions ----------------------------------------------
 def process_file(p: Path, patterns: Dict[re.Pattern, Callable[[str], str]]) -> int:
@@ -660,6 +664,11 @@ def main() -> None:
         help="Enable verbose output for debugging"
     )
     ap.add_argument(
+        "-f", "--force-school",
+        action="store_true",
+        help="Force applying the school to Config file"
+    )
+    ap.add_argument(
         "-t", "--doctype",
         default="msc",
         choices=["phd", "msc", "bsc"],
@@ -808,8 +817,8 @@ def main() -> None:
         current_path = project_root.resolve()
         
         # Check if build directory is current directory or its direct ancestor
-        if build_path == current_path or current_path.is_relative_to(build_path):
-            print(f"{RED}❌ Build directory cannot be current directory or its ancestor{RESET}")
+        if build_path == current_path.is_relative_to(build_path):
+            print(f"{RED}❌ Build directory cannot be ancestor of current directoy {RESET}")
             sys.exit(1)
         
         tmp_root = prepare_temp_workspace(project_root, args.build_dir)
@@ -835,9 +844,13 @@ def main() -> None:
     
     # Build regex patterns for demo and cover modes
     patterns = {}
-    if demo or cover_only:
-        patterns = build_patterns(args.doctype, args.school_id, args.lang, cover_only, args.docstatus, demo)
-        mode_name = "demo" if demo else "cover"
+    if demo or cover_only or args.force_school:
+        patterns = build_patterns(args.doctype, args.school_id, args.lang, args.mode, 
+                                  args.docstatus, args.force_school)
+        match args.mode:
+            case 0: mode_name = "user"
+            case 1: mode_name = "demo"
+            case 2: mode_name = "cover"
         print(f"{BRIGHT_CYAN}🎯 {mode_name.capitalize()} mode: configuration files will be modified{RESET}")
     else:
         print(f"{BRIGHT_CYAN}👤 User mode: configuration files will not be modified{RESET}")
