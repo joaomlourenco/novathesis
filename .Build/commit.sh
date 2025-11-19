@@ -46,6 +46,7 @@ fi
 
 # 2) Create the commit
 # -------------------------------------------------------------
+COMMIT_MESSAGE="${COMMIT_MESSAGE:-$(CM) ($VERSION - $DATE)}"
 if git commit -m "$COMMIT_MESSAGE"; then
   COMMIT_HASH="$(git rev-parse --short HEAD)"
   echo "📦 Commit Summary:"

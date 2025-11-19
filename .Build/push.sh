@@ -1,5 +1,5 @@
 #!/bin/sh
-# commit-push.sh — performs safe commit/push for main/develop branches
+# push.sh — performs safe push for main/develop branches
 
 # ANSI colors (same as Makefile variables)
 RED="\033[31m"
@@ -35,14 +35,21 @@ if [ -z "$CURRENT_BRANCH" ]; then
     exit 1
 fi
 
-# 2) Push current branch
+# 2) Pull + Push current branch
 # -------------------------------------------------------------
 PUSH_REMOTE="${PUSH_REMOTE:-origin}"
+
+echo "🔄 Pulling current branch (${CURRENT_BRANCH})..."
+if ! git pull "$PUSH_REMOTE" "$CURRENT_BRANCH"; then
+    echo "❌ Failed to pull $CURRENT_BRANCH"
+    exit 1
+fi
+
+# -------------------------------------------------------------
 
 echo "🔄 Pushing current branch (${CURRENT_BRANCH})..."
 if ! git push "$PUSH_REMOTE" "$CURRENT_BRANCH"; then
     echo "❌ Failed to push $CURRENT_BRANCH"
-    echo "   You may need to pull changes first: git pull $PUSH_REMOTE $CURRENT_BRANCH"
     exit 1
 fi
 
