@@ -92,7 +92,7 @@ echo "📐 Rebasing with 'theirs' strategy..."
 git rebase -X theirs
 
 echo "🏗️  make build"
-make build
+.Build/build.py  -bdir . -m 1 -f nova/ensp
 
 echo "📝 git commit"
 git add .

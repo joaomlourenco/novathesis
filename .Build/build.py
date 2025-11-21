@@ -448,6 +448,9 @@ def run_make_in_temp(
 
     print(f"{CYAN}📦 Intercepting 'biber'")
 
+    # Track the wrapper so we can ALWAYS remove it (success, failure, Ctrl-C, etc.)
+    wrapper_path: Path | None = None
+
     # ------------------------------------------------------------------
     # 1) Locate real biber
     # ------------------------------------------------------------------
@@ -511,150 +514,175 @@ if __name__ == "__main__":
 
     # ------------------------------------------------------------------
     # 3) Run make (with env including our PATH override)
+    #    and ALWAYS remove the wrapper on exit (finally)
     # ------------------------------------------------------------------
-    print(f"{CYAN}📦 Running 'make {ltxprocessor}' in {tmp_root}{RESET}")
-    start_time = time.perf_counter()
     try:
-        if progress == 1:
-            # Run with progress bar
-            print(
-                f"{BRIGHT_CYAN}📊 Progress tracking enabled: "
-                f"expecting ~{total_lines} lines of output{RESET}"
-            )
-            proc = subprocess.Popen(
-                ["make", ltxprocessor],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True,
-                bufsize=1,  # Line buffered
-                universal_newlines=True,
-                cwd=tmp_root,
-                env=env,
-            )
-            line_count = 0
-            important_lines = []
+        print(f"{CYAN}📦 Running 'make {ltxprocessor}' in {tmp_root}{RESET}")
+        start_time = time.perf_counter()
+        try:
+            if progress == 1:
+                # Run with progress bar
+                print(
+                    f"{BRIGHT_CYAN}📊 Progress tracking enabled: "
+                    f"expecting ~{total_lines} lines of output{RESET}"
+                )
+                proc = subprocess.Popen(
+                    ["make", ltxprocessor],
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                    bufsize=1,  # Line buffered
+                    universal_newlines=True,
+                    cwd=tmp_root,
+                    env=env,
+                )
+                line_count = 0
+                important_lines = []
 
-            # Read output line by line and update progress
-            for line in proc.stdout:
-                line_count += 1
-                # Update progress bar
-                _update_progress_bar(line_count, total_lines)
-                # Collect important lines for display
-                if (
-                    line.startswith("Run number")
-                    or line.startswith("Running")
-                    or line.startswith("Logging")
-                    or line.startswith("Latexmk:")
-                    or "error" in line.lower()
-                    or "warning" in line.lower()
-                ):
-                    important_lines.append(line)
+                # Read output line by line and update progress
+                for line in proc.stdout:
+                    line_count += 1
+                    # Update progress bar
+                    _update_progress_bar(line_count, total_lines)
+                    # Collect important lines for display
+                    if (
+                        line.startswith("Run number")
+                        or line.startswith("Running")
+                        or line.startswith("Logging")
+                        or line.startswith("Latexmk:")
+                        or "error" in line.lower()
+                        or "warning" in line.lower()
+                    ):
+                        important_lines.append(line)
 
-            # Wait for process to complete and get return code
-            returncode = proc.wait()
+                # Wait for process to complete and get return code
+                returncode = proc.wait()
 
-            # Clear the progress bar line
-            sys.stdout.write("\r" + " " * 100 + "\r")
-            sys.stdout.flush()
+                # Clear the progress bar line
+                sys.stdout.write("\r" + " " * 100 + "\r")
+                sys.stdout.flush()
 
-            # Print collected important lines
-            for line in important_lines:
-                print(line, end="")
+                # Print collected important lines
+                for line in important_lines:
+                    print(line, end="")
 
-        elif progress == 2:
-            # Real-time output mode - print everything as it comes
-            print(f"{BRIGHT_CYAN}📝 Real-time output mode{RESET}")
-            proc = subprocess.Popen(
-                ["make", "verbose", ltxprocessor],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True,
-                bufsize=1,  # Line buffered
-                universal_newlines=True,
-                cwd=tmp_root,
-                env=env,
-            )
-            # Print output in real-time
-            for line in proc.stdout:
-                print(line, end="")
-            returncode = proc.wait()
+            elif progress == 2:
+                # Real-time output mode - print everything as it comes
+                print(f"{BRIGHT_CYAN}📝 Real-time output mode{RESET}")
+                proc = subprocess.Popen(
+                    ["make", "verbose", ltxprocessor],
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                    bufsize=1,  # Line buffered
+                    universal_newlines=True,
+                    cwd=tmp_root,
+                    env=env,
+                )
+                # Print output in real-time
+                for line in proc.stdout:
+                    print(line, end="")
+                returncode = proc.wait()
 
-        else:  # progress == 0 (silent mode)
-            # Silent mode - only show errors and important messages
-            print(f"{BRIGHT_CYAN}🔇 Silent mode - showing only important messages{RESET}")
-            proc = subprocess.run(
-                ["make", ltxprocessor],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True,
-                cwd=tmp_root,
-                env=env,
-            )
-            returncode = proc.returncode
+            else:  # progress == 0 (silent mode)
+                # Silent mode - only show errors and important messages
+                print(
+                    f"{BRIGHT_CYAN}🔇 Silent mode - showing only important messages{RESET}"
+                )
+                proc = subprocess.run(
+                    ["make", ltxprocessor],
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                    cwd=tmp_root,
+                    env=env,
+                )
+                returncode = proc.returncode
 
-            # Filter and print important lines
-            for line in proc.stdout.splitlines():
-                if (
-                    line.startswith("Run number")
-                    or line.startswith("Running")
-                    or line.startswith("Logging")
-                    or line.startswith("Latexmk:")
-                    or "error" in line.lower()
-                    or "warning" in line.lower()
-                ):
-                    print(line)
+                # Filter and print important lines
+                for line in proc.stdout.splitlines():
+                    if (
+                        line.startswith("Run number")
+                        or line.startswith("Running")
+                        or line.startswith("Logging")
+                        or line.startswith("Latexmk:")
+                        or "error" in line.lower()
+                        or "warning" in line.lower()
+                    ):
+                        print(line)
 
-        end_time = time.perf_counter()
-        elapsed = end_time - start_time
+            end_time = time.perf_counter()
+            elapsed = end_time - start_time
 
-        if returncode == 0:
-            print(
-                f"{CYAN}✅ 'make' succeeded in {RED}{elapsed:.2f}{CYAN} seconds{RESET}"
-            )
-            # Success → copy template.pdf to "{university-school-doctype-lang}.pdf"
-            src_pdf = tmp_root / "template.pdf"
-            if rename:
-                dest_pdf = outdir / safe_outname(school_id, doctype, lang)
-            else:
-                dest_pdf = outdir / "template.pdf"
-
-            if src_pdf != dest_pdf:
-                if src_pdf.exists():
-                    outdir.mkdir(parents=True, exist_ok=True)
-                    shutil.copy2(src_pdf, dest_pdf)
-                    print(
-                        f"{GREEN}✅ saved '{src_pdf.name}' to '{dest_pdf}'{RESET}"
-                    )
-                    # Only remove temp workspace if we created it temporarily
-                    if "ntbuild-" in str(tmp_root) and not keep_bdir:
-                        shutil.rmtree(tmp_root)
-                        print(
-                            f"{CYAN}🧪 Temp workspace removed: {tmp_root}{RESET}"
-                        )
-                    else:
-                        print(
-                            f"{YELLOW}📁 Preserving build directory: "
-                            f"{tmp_root}{RESET}"
-                        )
+            if returncode == 0:
+                print(
+                    f"{CYAN}✅ 'make' succeeded in {RED}{elapsed:.2f}{CYAN} seconds{RESET}"
+                )
+                # Success → copy template.pdf to "{university-school-doctype-lang}.pdf"
+                src_pdf = tmp_root / "template.pdf"
+                if rename:
+                    dest_pdf = outdir / safe_outname(school_id, doctype, lang)
                 else:
-                    print(f"{RED}❌ '{src_pdf}' missing{RESET}")
-                return 0
-        else:
-            print(f"{RED}❌ 'make' failed with exit code {returncode}{RESET}")
-            print(f"{YELLOW}🧪 Temp workspace kept for debugging: {tmp_root}{RESET}")
-            return returncode
+                    dest_pdf = outdir / "template.pdf"
 
-    except subprocess.CalledProcessError as e:
-        out = (
-            e.stdout
-            if hasattr(e, "stdout") and isinstance(e.stdout, str)
-            else ""
-        )
-        print(out)
-        print(f"{RED}❌ 'make' failed with exit code {e.returncode}{RESET}")
-        print(f"{YELLOW}🧪 Temp workspace kept for debugging: {tmp_root}{RESET}")
-        return e.returncode
+                if src_pdf != dest_pdf:
+                    if src_pdf.exists():
+                        outdir.mkdir(parents=True, exist_ok=True)
+                        shutil.copy2(src_pdf, dest_pdf)
+                        print(
+                            f"{GREEN}✅ saved '{src_pdf.name}' to '{dest_pdf}'{RESET}"
+                        )
+                        # Only remove temp workspace if we created it temporarily
+                        if "ntbuild-" in str(tmp_root) and not keep_bdir:
+                            shutil.rmtree(tmp_root)
+                            print(
+                                f"{CYAN}🧪 Temp workspace removed: {tmp_root}{RESET}"
+                            )
+                        else:
+                            print(
+                                f"{YELLOW}📁 Preserving build directory: "
+                                f"{tmp_root}{RESET}"
+                            )
+                    else:
+                        print(f"{RED}❌ '{src_pdf}' missing{RESET}")
+                    return 0
+            else:
+                print(f"{RED}❌ 'make' failed with exit code {returncode}{RESET}")
+                print(
+                    f"{YELLOW}🧪 Temp workspace kept for debugging: {tmp_root}{RESET}"
+                )
+                return returncode
 
+        except subprocess.CalledProcessError as e:
+            out = (
+                e.stdout
+                if hasattr(e, "stdout") and isinstance(e.stdout, str)
+                else ""
+            )
+            print(out)
+            print(f"{RED}❌ 'make' failed with exit code {e.returncode}{RESET}")
+            print(
+                f"{YELLOW}🧪 Temp workspace kept for debugging: {tmp_root}{RESET}"
+            )
+            return e.returncode
+
+    finally:
+        # ------------------------------------------------------------------
+        # 4) ALWAYS remove the temporary 'biber' wrapper if it was created
+        # ------------------------------------------------------------------
+        if wrapper_path is not None:
+            try:
+                if wrapper_path.exists():
+                    wrapper_path.unlink()
+                    print(
+                        f"{CYAN}🧹 Removed temporary biber wrapper: {wrapper_path}{RESET}"
+                    )
+            except Exception as e:
+                # Best-effort cleanup; do not mask the original error/return code
+                print(
+                    f"{YELLOW}⚠️ Could not remove temporary biber wrapper "
+                    f"{wrapper_path}: {e}{RESET}"
+                )
 
 # --- Command Line Interface -------------------------------------------------
 def main() -> None:
