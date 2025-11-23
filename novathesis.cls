@@ -297,6 +297,8 @@
   print/committee/.new toggle   = false,
   print/adviser/.new toggle     = true,     % fake option - adviser should always be printed
   print/frontmatter/.new toggle = true,
+  print/otherlists/.new value   = frontmatter,  % print other lists (lof, lof, lol, …) in the front matter
+  print/glossaries/.new value   = frontmatter,  % print glossaries in the front matter
   print/secondcover/.new toggle = false,
   print/copyright/.new toggle   = true,
   print/timestamp/.new toggle   = true,
@@ -1140,7 +1142,7 @@ end
 }%
 \let\printglossaryORIG\printglossary
 \def\printglossary{%
-  \bookmarksetupnext{level=1,keeplevel}%
+  \bookmarksetupnext{level=1}%
   \printglossaryORIG%
 }
 
@@ -1380,41 +1382,46 @@ end
 
 %============================================================
 % Adding list_of
-\newcommand*{\ntaddlistof}[2][frontmatter]{%
+\newcommand*{\ntaddlistof}[2][]{%
   % #1 = frontmatter, backmatter
   % #2 = the list of SOMETHING without the initial "\"
-  % \typeout{NTADDLISTOF 1=[#1] 2=[#2]}\NTADDLISTOF%
+  \@ifmtarg{#1}{%
+    \edef\@listofat{\option{/novathesis/print/otherlists}}%
+  }{%
+    \edef\@listofat{#1}%
+  }
+  % \typeout{\ISTOF 1=[\@listofat] 2=[#2]}\NTADDLISTOF%
   \IfStrEqCase{#2}{%
-    {tableofcontents}{\options{/@nt/list/listof/#1/.newpush={%
+    {tableofcontents}{\options{/@nt/listof/\@listofat/.newpush={%
             \iftoggle{/novathesis/tocintoc}{\tableofcontents}%
                   {\hypertarget{toctarget}{\tableofcontents*}%
                    \bookmark[dest=toctarget]{\contentsname}}%
     }}}%
-    {listoffigures*}{\options{/@nt/list/listof/#1/.newpush={%
+    {listoffigures*}{\options{/@nt/listof/\@listofat/.newpush={%
             \hypertarget{loftarget}{\listoffigures*}%
             \bookmark[dest=loftarget]{\listfigurename}%
     }}}%
-    {listoffigures}{\options{/@nt/list/listof/#1/.newpush={%
+    {listoffigures}{\options{/@nt/listof/\@listofat/.newpush={%
             \hypertarget{loftarget}{\listoffigures*}%
             \bookmark[dest=loftarget,level=1]{\listfigurename}%
     }}}%
-    {listoftables*}{\options{/@nt/list/listof/#1/.newpush={%
+    {listoftables*}{\options{/@nt/listof/\@listofat/.newpush={%
             \hypertarget{lottarget}{\listoftables*}%
             \bookmark[dest=lottarget]{\listtablename}%
     }}}%
-    {listoftables}{\options{/@nt/list/listof/#1/.newpush={%
+    {listoftables}{\options{/@nt/listof/\@listofat/.newpush={%
             \hypertarget{lottarget}{\listoftables*}%
             \bookmark[dest=lottarget]{\listtablename}%
     }}}%
-    {listoflistings}{\options{/@nt/list/listof/#1/.newpush={%
+    {listoflistings}{\options{/@nt/listof/\@listofat/.newpush={%
             \hypertarget{loltarget}{\listoflistings}%
             \bookmark[dest=loltarget]{\listoflistingscaption}%
     }}}%
-    {lstlistoflistings}{\options{/@nt/list/listof/#1/.newpush={%
+    {lstlistoflistings}{\options{/@nt/listof/\@listofat/.newpush={%
             \hypertarget{loltarget}{\lstlistoflistings}%
             \bookmark[dest=loltarget]{\lstlistlistingname}%
     }}}%
-    {listofalgorithms}{\options{/@nt/list/listof/#1/.newpush = {%
+    {listofalgorithms}{\options{/@nt/listof/\@listofat/.newpush = {%
             \listofalgorithms
             \ifdefined\listalgorithmname%
               \addcontentsline{toc}{chapter}{\listalgorithmname}%
@@ -1424,7 +1431,7 @@ end
               \ClassError{novathesis}{Can't make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
             \fi\fi}}}%
   }[%
-      \options{/@nt/list/listof/#1/.newpush={\ifdefmacro{#2}{#2}{\csuse{#2}}}}%
+      \options{/@nt/listof/\@listofat/.newpush={\ifdefmacro{#2}{#2}{\csuse{#2}}}}%
    ]%
 }
 
@@ -1448,6 +1455,7 @@ end
     {mainmatter}{%
           \ntthesismainmatter% Mainn text — Arabic page numbering
           \bookmarksetup{level=0}%
+          \bookmarksetupnext{level=0}%
           \thispagestyle{novathesis@mainmatter}%
           \pagestyle{novathesis@mainmatter}%
           \ntprintlist{/@nt/print/#1}%
@@ -1455,6 +1463,7 @@ end
     {backmatter}{%
           \ntthesisbackmatter     % The back text — Arabic page numbering
           \bookmarksetup{level=0}%
+          \bookmarksetupnext{level=0}%
           % \hypertarget{bmbackmatter}{}
           % \bookmark[level=0,dest=bmbackmatter1]{\thebkmstring(backmatter,\@LANG@COVER)}
           \ntprintlist{/@nt/print/#1}%
@@ -1508,16 +1517,23 @@ end
 \newcommand{\myprintglossaries}{%
   % ignore if no glossaries were defined
   \ifoptioncontains{/@nt/listtypes}{glossaries}{
-    \ntselectlang{\@LANG@COVER}%
-    \hypertarget{bmglossaries}{}%
-    \bookmark[level=0,dest=bmglossaries]
-            {\thebkmstring(glossaries,\@LANG@COVER)}%
-    \printglossaries
-    % \printglossary%
-    % \bookmarksetupnext{level=1,keeplevel}%
-    % \printglossary[type=\acronymtype]%
-    % \bookmarksetupnext{level=1,keeplevel}%
-    % \printglossary[type=symbols]%
+    \ifoptionequal{/novathesis/print/glossaries}{no}
+      {}{%
+        \edef\@printglossariesat{\option{/novathesis/print/glossaries}}%
+        \csname if@\@printglossariesat\endcsname%
+          \ntselectlang{\@LANG@MAIN}%
+          \hypertarget{bmglossaries}{}%
+          \bookmarksetupnext{level=0}%
+          \bookmark[level=0,dest=bmglossaries]
+                  {\thebkmstring(glossaries,\@LANG@MAIN)}%
+          \printglossaries
+          % \printglossary%
+          % \bookmarksetupnext{level=1,keeplevel}%
+          % \printglossary[type=\acronymtype]%
+          % \bookmarksetupnext{level=1,keeplevel}%
+          % \printglossary[type=symbols]%
+        \fi%
+      }%
   }{}%
 }
 
@@ -1559,17 +1575,21 @@ end
 
 \ifoptionequal{/novathesis/print/webography}{}{%
   \printorder(backmatter):={
-    bib;             % Print the bibliography.  Change to
-     %    “bib[title=⟨title⟩]” to redefine the title!
     appendices;      % Print appendices; if any!
     annexes;         % Print annexes; if any!
+    bib;             % Print the bibliography.  Change to
+     %    “bib[title=⟨title⟩]” to redefine the title!
+    alllistof;       % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
   }%
 }{%
   \printorder(backmatter):={
-    \printbibliography[nottype=online]; % Print the bibliography.
-    \printbibliography[title=\option{/novathesis/print/webography},type=online]; % Print the bibliography.
     appendices; % Print appendices, if any!
     annexes; % Print annexes, if any!
+    \printbibliography[nottype=online]; % Print the bibliography.
+    \printbibliography[title=\option{/novathesis/print/webography},type=online]; % Print the bibliography.
+    alllistof;       % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
   }%
 }
 % \ifoptionequal{/novathesis/print/webography}{}{%
@@ -1795,7 +1815,14 @@ end
 %   Please open and edit the appropriate
 %       configuration file “0-Config/6_list_of.tex”
 %============================================================
-\AtEndPreamble{\makeatletter\NTRunHook{list_of/pre}\input{\DIR@CONFIG/6_list_of}\NTRunHook{list_of/post}}
+\AtEndPreamble{ 
+% is only loaded after school's configuration
+% can be changhed with "\ntsetup{print/other}"
+  \makeatletter
+  \NTRunHook{list_of/pre}
+  \input{\DIR@CONFIG/6_list_of}
+  \NTRunHook{list_of/post}
+}
 
 \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
 \optionlistdo{/@nt/file/bib/\@DOCTYPE}{%
@@ -2872,11 +2899,13 @@ end
   \copypagestyle{chapter}{novathesis@frontmatter}
   % \ntselectlang{\@LANG@MAIN}%
   \pagenumbering{roman}%
-  \NTRunHook{frontmatter/post}%
 }
 
+\newif\if@mainmatter
 \newcommand*{\ntthesismainmatter}{%
+  \@frontmatterfalse
   \endgroup
+  \NTRunHook{frontmatter/post}%
   \bookmarksetup{startatroot}%
   \NTRunHook{mainmatter/pre}%
   \ifbool{@openright}{}{% openany=true
@@ -2884,17 +2913,22 @@ end
     \let\oldcleardoublepage\cleardoublepage%
     \renewcommand{\cleardoublepage}{\clearforchapter}%
   }%
+  \NTRunHook{mainmatter/pre}%
   \mainmatter%
-  \@frontmatterfalse
+  \@mainmattertrue
   \ifbool{@openright}{}{% openany=true
     \let\cleardoublepage\oldcleardoublepage%
   }%
   \pagestyle{novathesis@mainmatter}%
   \ifxeorlua{}{\microtypesetup{protrusion=true}}%
-  \NTRunHook{mainmatter/post}%
 }
 
+\newif\if@backmatter
 \newcommand*{\ntthesisbackmatter}{%
+  \@mainmatterfalse
+  \NTRunHook{mainmatter/post}%
+  \@backmattertrue
+  \NTRunHook{backmatter/pre}%
 }
 \newcommand{\ntindex}[2][]{%
   % \typeout{NTINDEX [#1] [#2]}
@@ -2960,15 +2994,22 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntprintalllistof}{%
     \NTRunHook{listof/pre}%
-    \hypertarget{bmlistof}{}%
-    \bookmark[level=0,dest=bmlistof]{\thebkmstring(listof,\@LANG@COVER)}%
-    \if@frontmatter
-      \def\@matter{frontmatter}
-    \else
+    \if@backmatter
       \def\@matter{backmatter}
+    \else
+      \def\@matter{frontmatter}
     \fi
-    % \typeout{PRINTALLLISTOF=#1}\PRINTALLLISTOF
-    \optionlistdo{/@nt/list/listof/\@matter}{\clearforchapter##1}%
+    \ifoptiondefined{/@nt/listof/\@matter}{
+      \ifnum\value{\option{/@nt/listof/\@matter/@size}}>1\relax
+        \hypertarget{bmlistof\@matter}{}%
+        \bookmark[level=0,dest=bmlistof\@matter]{\thebkmstring(listof,\@LANG@COVER)}%
+        \bookmarksetupnext{level=1}%
+      \else
+        \bookmarksetupnext{level=0}%
+      \fi
+      % \typeout{PRINTALLLISTOF=\@matter}\PRINTALLLISTOF
+      \optionlistdo{/@nt/listof/\@matter}{\clearforchapter##1\bookmarksetupnext{level=1}}%
+    }{}
     \NTRunHook{listof/post}%
 }
 

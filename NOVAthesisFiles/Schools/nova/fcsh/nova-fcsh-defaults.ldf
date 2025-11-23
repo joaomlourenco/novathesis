@@ -84,6 +84,9 @@
 
 \RequirePackage{indentfirst}  % To also indent the first paragraph in the chapter/section/subsection/…
 
+\ntsetup{print/otherlists=backmatter}
+\ntsetup{print/glossaries=backmatter}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
