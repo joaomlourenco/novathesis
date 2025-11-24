@@ -350,6 +350,10 @@ rtp: rebase tp
 
 tp: tag push
 
+custom:
+	@ $(eval SCHL=$(shell printf "%s" "$(notdir $(CURDIR))" | sed -e 's,-,/,; s,-,/,'))
+	@ sed -i '' -E 's|[[:space:]]*%?[[:space:]]*(\\ntsetup\{school=)[^}]*}|\1'$(SCHL)'\}|' 0-Config/1_novathesis.tex
+	@ make bcp SCHL="$(SCHL)" BFLAGS="-f"
 
 #############################################################################
 # BUILD
@@ -358,10 +362,10 @@ tp: tag push
 build: build-en
 
 build-en build-phd-final-en: validate-config check-env check-build
-	$(BUILD) $(SCHL) --mode 1 --lang en
+	$(BUILD) $(SCHL) --mode 1 --lang en $(BFLAGS)
 
 build-pt build-phd-final-pt: validate-config check-env check-build
-	$(BUILD) $(SCHL) --mode 1 --lang pt
+	$(BUILD) $(SCHL) --mode 1 --lang pt $(BFLAGS)
 
 
 
