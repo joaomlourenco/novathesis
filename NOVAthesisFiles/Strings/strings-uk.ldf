@@ -105,6 +105,8 @@
 \committeestring(g,2,m,uk)  := {Гості}
 \committeestring(g,2,f,uk)  := {Гості}
 
+\sdgstring(uk)              :=  {Цілі сталого розвитку (ЦСР)}
+
 \dissertationstring(bsc,uk)={Доповідь подано з частковим виконанням
 вимог до наукового ступеня на\\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in \textbf{\themajorfield(\@LANG@COVER)}}

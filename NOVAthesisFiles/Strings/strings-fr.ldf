@@ -102,6 +102,8 @@
 \doctypestring(phdprop,fr):={Proposition de thèse de doctorat}
 \doctypestring(phd,fr):={Thèse de doctorat}
 
+\sdgstring(fr):={Objectifs de développement durable (ODD)}
+
 \dissertationstring(bsc,fr)={Rapport pour obtention du degré de %
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
 \dissertationstring(mscplan,fr)={Rapport intermédiaire pour obtention du degré de %

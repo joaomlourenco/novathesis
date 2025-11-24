@@ -21,103 +21,105 @@
  \EndBabelCommands     
  }
 
-\bkmstring(frontmatter,it):={Materiale Iniziale}
-\bkmstring(backmatter,it):={Materiale Finale}
-\bkmstring(cover,it):={Copertina}
-\bkmstring(frontpage,it):={Foglio di Copertina}
-\bkmstring(backcover,it):={Copertina Posteriore}
-\bkmstring(spine,it):={Libro Dorso}
-\bkmstring(copyright,it):={Copyright}
-\bkmstring(statement,it):={Dichiarazione}
-\bkmstring(statement,it):={Dopo la Copertina}
-\bkmstring(dedicatory,it):={Dedicativo}
-\bkmstring(acknowledgements,it):={Ringraziamenti}
-\bkmstring(quote,it):={Citazione}
-\bkmstring(abstract,it):={Sommario}
-\bkmstring(listof,it):={Elenco delle…}
-\bkmstring(glossaries,it):={Glossari}
-\keywordsstring(it):={Parole Chiave}
-\notdefined(it):={INDEFINITO}
-\specializationstring(it):={Specializzazione in}
-\departmentofstring(it):={Dipartimento di}
-\andstring(it):={ e }
-\degreenameprefix(msc,it):={Laurea Specialistica in}
-\degreenameprefix(phd,it):={Dottorato in}
+\bkmstring(frontmatter,it)      := {Materiale Iniziale}
+\bkmstring(backmatter,it)       := {Materiale Finale}
+\bkmstring(cover,it)            := {Copertina}
+\bkmstring(frontpage,it)        := {Foglio di Copertina}
+\bkmstring(backcover,it)        := {Copertina Posteriore}
+\bkmstring(spine,it)            := {Libro Dorso}
+\bkmstring(copyright,it)        := {Copyright}
+\bkmstring(statement,it)        := {Dichiarazione}
+\bkmstring(statement,it)        := {Dopo la Copertina}
+\bkmstring(dedicatory,it)       := {Dedicativo}
+\bkmstring(acknowledgements,it) := {Ringraziamenti}
+\bkmstring(quote,it)            := {Citazione}
+\bkmstring(abstract,it)         := {Sommario}
+\bkmstring(listof,it)           := {Elenco delle…}
+\bkmstring(glossaries,it)       := {Glossari}
+\keywordsstring(it)             := {Parole Chiave}
+\notdefined(it)                 := {INDEFINITO}
+\specializationstring(it)       := {Specializzazione in}
+\departmentofstring(it)         := {Dipartimento di}
+\andstring(it)                  := { e }
+\degreenameprefix(msc,it)        := {Laurea Specialistica in}
+\degreenameprefix(phd,it)        := {Dottorato in}
+
+\adviserstring(a,1,m,it)        := {Relatore}
+\adviserstring(a,1,f,it)        := {Relatrice}
+\adviserstring(a,2,m,it)        := {Relatori}
+\adviserstring(a,2,f,it)        := {Relatrici}
+\adviserstring(c,1,m,it)        := {Correlatore}
+\adviserstring(c,1,f,it)        := {Correlatrice}
+\adviserstring(c,2,m,it)        := {Correlatori}
+\adviserstring(c,2,f,it)        := {Correlatrici}
+\adviserstring(ca,1,m,it)       := {Correlatore}
+\adviserstring(ca,1,f,it)       := {Correlatrice}
+\adviserstring(ca,2,m,it)       := {Correlatori}
+\adviserstring(ca,2,f,it)       := {Correlatrici}
+
+\degreestring(bsc,m,it)         := {Laurea Triennale}
+\degreestring(bsc,f,it)         := {Laurea Triennale}
+\degreestring(msc,m,it)         := {Laurea Specialistica}
+\degreestring(msc,f,it)         := {Laurea Specialistica}
+\degreestring(mscplan,m,it)     := {Laurea Specialistica}
+\degreestring(mscplan,f,it)     := {Laurea Specialistica}
+\degreestring(phd,m,it)         := {Dottore}
+\degreestring(phd,f,it)         := {Dottoressa}
+\degreestring(phdplan,m,it)     := {Dottore}
+\degreestring(phdplan,f,it)     := {Dottoressa}
+\degreestring(phdprop,m,it)     := {Dottore}
+\degreestring(phdprop,f,it)     := {Dottoressa}
+
+\doctypestring(bsc,it)          := {Tesi di Laurea Triennale}
+\doctypestring(msc,it)          := {Tesi di Laurea Specialistica}
+\doctypestring(mscplan,it)      := {Piano per Tesi di Laurea Specialistica}
+\doctypestring(phdplan,it)      := {Piano per Tesi di Dottorato}
+\doctypestring(phdprop,it)      := {Proposta di Tesi di Dottorato}
+\doctypestring(phd,it)          := {Tesi di Dottorato}
+
+\committeetitlestring(it)       := {Commissione Esaminatrice}
+\committeestring(c,1,m,it)      := {Presidente}
+\committeestring(c,1,f,it)      := {Presidentessa}
+\committeestring(c,2,m,it)      := {Presidenti}
+\committeestring(c,2,f,it)      := {Presidentesse}
+\committeestring(r,1,m,it)      := {Controrelatore}
+\committeestring(r,1,f,it)      := {Controrelatrice}
+\committeestring(r,2,m,it)      := {Controrelatori}
+\committeestring(r,2,f,it)      := {Controrelatrici}
+\committeestring(a,1,m,it)      := {Relatore}
+\committeestring(a,1,f,it)      := {Relatrice}
+\committeestring(a,2,m,it)      := {Relatori}
+\committeestring(a,2,f,it)      := {Relatrici}
+\committeestring(ca,1,m,it)     := {Correlatore}
+\committeestring(ca,1,f,it)     := {Correlatrice}
+\committeestring(ca,2,m,it)     := {Correlatori}
+\committeestring(ca,2,f,it)     := {Correlatrici}
+\committeestring(m,1,m,it)      := {Membro}
+\committeestring(m,1,f,it)      := {Membro}
+\committeestring(m,2,m,it)      := {Membri}
+\committeestring(m,2,f,it)      := {Membri}
+\committeestring(g,1,m,it)      := {Invitato}
+\committeestring(g,1,f,it)      := {Invitata}
+\committeestring(g,2,m,it)      := {Invitati}
+\committeestring(g,2,f,it)      := {Invitate}\
+
+\sdgstring(it):={Obiettivi di sviluppo sostenibile (OSS)}
 
 
-\adviserstring(a,1,m,it):={Relatore}
-\adviserstring(a,1,f,it):={Relatrice}
-\adviserstring(a,2,m,it):={Relatori}
-\adviserstring(a,2,f,it):={Relatrici}
-\adviserstring(c,1,m,it):={Correlatore}
-\adviserstring(c,1,f,it):={Correlatrice}
-\adviserstring(c,2,m,it):={Correlatori}
-\adviserstring(c,2,f,it):={Correlatrici}
-\adviserstring(ca,1,m,it):={Correlatore}
-\adviserstring(ca,1,f,it):={Correlatrice}
-\adviserstring(ca,2,m,it):={Correlatori}
-\adviserstring(ca,2,f,it):={Correlatrici}
-
-\degreestring(bsc,m,it):={Laurea Triennale}
-\degreestring(bsc,f,it):={Laurea Triennale}
-\degreestring(msc,m,it):={Laurea Specialistica}
-\degreestring(msc,f,it):={Laurea Specialistica}
-\degreestring(mscplan,m,it):={Laurea Specialistica}
-\degreestring(mscplan,f,it):={Laurea Specialistica}
-\degreestring(phd,m,it):={Dottore}
-\degreestring(phd,f,it):={Dottoressa}
-\degreestring(phdplan,m,it):={Dottore}
-\degreestring(phdplan,f,it):={Dottoressa}
-\degreestring(phdprop,m,it):={Dottore}
-\degreestring(phdprop,f,it):={Dottoressa}
-
-\doctypestring(bsc,it):={Tesi di Laurea Triennale}
-\doctypestring(msc,it):={Tesi di Laurea Specialistica}
-\doctypestring(mscplan,it):={Piano per Tesi di Laurea Specialistica}
-\doctypestring(phdplan,it):={Piano per Tesi di Dottorato}
-\doctypestring(phdprop,it):={Proposta di Tesi di Dottorato}
-\doctypestring(phd,it):={Tesi di Dottorato}
-
-\committeetitlestring(it):={Commissione Esaminatrice}
-\committeestring(c,1,m,it):={Presidente}
-\committeestring(c,1,f,it):={Presidentessa}
-\committeestring(c,2,m,it):={Presidenti}
-\committeestring(c,2,f,it):={Presidentesse}
-\committeestring(r,1,m,it):={Controrelatore}
-\committeestring(r,2,f,it):={Controrelatrice}
-\committeestring(r,1,m,it):={Controrelatori}
-\committeestring(r,2,f,it):={Controrelatrici}
-\committeestring(a,1,m,it):={Relatore}
-\committeestring(a,2,f,it):={Relatrice}
-\committeestring(a,1,m,it):={Relatori}
-\committeestring(a,2,f,it):={Relatrici}
-\committeestring(ca,1,m,it):={Correlatore}
-\committeestring(ca,1,f,it):={Correlatrice}
-\committeestring(ca,2,m,it):={Correlatori}
-\committeestring(ca,2,f,it):={Correlatrici}
-\committeestring(m,1,m,it):={Membro}
-\committeestring(m,1,f,it):={Membro}
-\committeestring(m,2,m,it):={Membri}
-\committeestring(m,2,f,it):={Membri}
-\committeestring(g,1,m,fr):={Invitato}
-\committeestring(g,1,f,fr):={Invitata}
-\committeestring(g,2,m,fr):={invitati}
-\committeestring(g,2,f,fr):={invitate}
-
-\dissertationstring(bsc,it)={Documento sottomesso per ottenere il Grado di\\[1.25ex]%
+\dissertationstring(bsc,it)     = {Documento sottomesso per ottenere il Grado di\\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
-\dissertationstring(mscplan,it)={Piano di Tesi per ottenere il Grado di\\[1.25ex]%
+\dissertationstring(mscplan,it) = {Piano di Tesi per ottenere il Grado di\\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
-\dissertationstring(msc,it)={Tesi sottomessa per ottenere il Grado di\\[1.25ex]%
+\dissertationstring(msc,it)     = {Tesi sottomessa per ottenere il Grado di\\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phdplan,it)={Piano di Tesi per ottenere il Grado dI\\[1.25ex]%
+\dissertationstring(phdplan,it) = {Piano di Tesi per ottenere il Grado dI\\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phdprop,it)={Proposta di Tesi per ottenere il Grado dI\\[1.25ex]%
+\dissertationstring(phdprop,it) = {Proposta di Tesi per ottenere il Grado dI\\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phd,it)={Thesis submitted in partial fulfillment\\%
+\dissertationstring(phd,it)     = {Thesis submitted in partial fulfillment\\%
 % of the requirements for the degree of\\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
 
-\copyrighttextstring(it)={La \theschool(\@LANG@COPYRIGHT)\ e \theuniversity(\@LANG@COPYRIGHT)\ hanno il diritto perpetuo e senza limiti geografici, di archiviare e pubblicare questa tesi attraverso esemplari stampati in formato cartaceo o digitale, o attraverso qualsiasi altro mezzo consciuto o che possa essere inventato, e di disseminare tramite repositori scientifici e permettere la sua copia e distribuzione per scopi non commerciali, didattici o di ricerca, a patto che sia dato credito all'autore e editore.}
+\copyrighttextstring(it)        = {La \theschool(\@LANG@COPYRIGHT)\ e \theuniversity(\@LANG@COPYRIGHT)\ hanno il diritto perpetuo e senza limiti geografici, di archiviare e pubblicare questa tesi attraverso esemplari stampati in formato cartaceo o digitale, o attraverso qualsiasi altro mezzo consciuto o che possa essere inventato, e di disseminare tramite repositori scientifici e permettere la sua copia e distribuzione per scopi non commerciali, didattici o di ricerca, a patto che sia dato credito all'autore e editore.}
 
-\acknowledgmentsstring(it)={Questo documento é stato creato usando (pdf/Xe/Lua)\LaTeX\ e il modello \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+\acknowledgmentsstring(it).     = {Questo documento é stato creato usando (pdf/Xe/Lua)\LaTeX\ e il modello \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}

@@ -20,104 +20,109 @@
 \EndBabelCommands
 }
 
-\bkmstring(frontmatter,pt):={Material Inicial}
-\bkmstring(backmatter,pt):={Material Final}
-\bkmstring(cover,pt):={Capa}
-\bkmstring(frontpage,pt):={Folha de Rosto}
-\bkmstring(backcover,pt):={Contra Capa}
-\bkmstring(spine,pt):={Lombada}
-\bkmstring(copyright,pt):={Copyright}
-\bkmstring(statement,pt):={Declaração}
-\bkmstring(dedicatory,pt):={Dedicatória}
-\bkmstring(acknowledgements,pt):={Agradecimentos}
-\bkmstring(quote,pt):={Citação}
-\bkmstring(abstract,pt):={Resumo}
-\bkmstring(listof,pt):={Lista de…}
-\bkmstring(glossaries,pt):={Glossários}
-\keywordsstring(pt):={Palavras-chave}
-\notdefined(pt):={INDEFINIDO}
-\specializationstring(pt):={Especialidade em}
-\departmentofstring(pt):={Departamento de}
-\andstring(pt):={ e }
-\degreenameprefix(bsc,pt):={Licenciatura em}
-\degreenameprefix(msc,pt):={Mestrado em}
-\degreenameprefix(phd,pt):={Doutoramento em}
+\bkmstring(frontmatter,pt)      := {Material Inicial}
+\bkmstring(backmatter,pt)       := {Material Final}
+\bkmstring(cover,pt)            := {Capa}
+\bkmstring(frontpage,pt)        := {Folha de Rosto}
+\bkmstring(backcover,pt)        := {Contra Capa}
+\bkmstring(spine,pt)            := {Lombada}
+\bkmstring(copyright,pt)        := {Copyright}
+\bkmstring(statement,pt)        := {Declaração}
+\bkmstring(dedicatory,pt)       := {Dedicatória}
+\bkmstring(acknowledgements,pt) := {Agradecimentos}
+\bkmstring(quote,pt)            := {Citação}
+\bkmstring(abstract,pt)         := {Resumo}
+\bkmstring(listof,pt)           := {Lista de…}
+\bkmstring(glossaries,pt)       := {Glossários}
+\keywordsstring(pt)             := {Palavras-chave}
+\notdefined(pt)                 := {INDEFINIDO}
+\specializationstring(pt)       := {Especialidade em}
+\departmentofstring(pt)         := {Departamento de}
+\andstring(pt)                  := { e }
+\degreenameprefix(bsc,pt)       := {Licenciatura em}
+\degreenameprefix(msc,pt)       := {Mestrado em}
+\degreenameprefix(phd,pt)       := {Doutoramento em}
 
-\adviserstring(a,1,m,pt):={Orientador}
-\adviserstring(a,1,f,pt):={Orientadora}
-\adviserstring(a,2,m,pt):={Orientadores}
-\adviserstring(a,2,f,pt):={Orientadoras}
-\adviserstring(c,1,m,pt):={Coorientador}
-\adviserstring(c,1,f,pt):={Coorientadora}
-\adviserstring(c,2,m,pt):={Coorientadores}
-\adviserstring(c,2,f,pt):={Coorientadoras}
-\adviserstring(ca,1,m,pt):={Coorientador}
-\adviserstring(ca,1,f,pt):={Coorientadora}
-\adviserstring(ca,2,m,pt):={Coorientadores}
-\adviserstring(ca,2,f,pt):={Coorientadoras}
-\adviserstring(t,1,m,pt):={Tutor}
-\adviserstring(t,1,f,pt):={Tutor}
-\adviserstring(t,2,m,pt):={Tutores}
-\adviserstring(t,2,f,pt):={Tutores}
+\adviserstring(a,1,m,pt)        := {Orientador}
+\adviserstring(a,1,f,pt)        := {Orientadora}
+\adviserstring(a,2,m,pt)        := {Orientadores}
+\adviserstring(a,2,f,pt)        := {Orientadoras}
+\adviserstring(c,1,m,pt)        := {Coorientador}
+\adviserstring(c,1,f,pt)        := {Coorientadora}
+\adviserstring(c,2,m,pt)        := {Coorientadores}
+\adviserstring(c,2,f,pt)        := {Coorientadoras}
+\adviserstring(ca,1,m,pt)       := {Coorientador}
+\adviserstring(ca,1,f,pt)       := {Coorientadora}
+\adviserstring(ca,2,m,pt)       := {Coorientadores}
+\adviserstring(ca,2,f,pt)       := {Coorientadoras}
+\adviserstring(t,1,m,pt)        := {Tutor}
+\adviserstring(t,1,f,pt)        := {Tutor}
+\adviserstring(t,2,m,pt)        := {Tutores}
+\adviserstring(t,2,f,pt)        := {Tutores}
 
-\committeetitlestring(pt):={Júri}
-\committeestring(c,1,m,pt):={Presidente}
-\committeestring(c,1,f,pt):={Presidente}
-\committeestring(c,2,m,pt):={Presidentes}
-\committeestring(c,2,f,pt):={Presidentes}
-\committeestring(r,1,m,pt):={Arguente}
-\committeestring(r,1,f,pt):={Arguente}
-\committeestring(r,2,m,pt):={Arguentes}
-\committeestring(r,2,f,pt):={Arguentes}
-\committeestring(a,1,m,pt):={Orientador}
-\committeestring(a,1,f,pt):={Orientadora}
-\committeestring(a,2,m,pt):={Orientadores}
-\committeestring(a,2,f,pt):={Orientadoras}
-\committeestring(ca,1,m,pt):={Coorientador}
-\committeestring(ca,1,f,pt):={Coorientadora}
-\committeestring(ca,2,m,pt):={Coorientadores}
-\committeestring(ca,2,f,pt):={Coorientadoras}
-\committeestring(m,1,m,pt):={Vogal}
-\committeestring(m,1,f,pt):={Vogal}
-\committeestring(m,2,m,pt):={Vogais}
-\committeestring(m,2,f,pt):={Vogais}
-\committeestring(g,1,m,pt):={Convidado}
-\committeestring(g,1,f,pt):={Convidada}
-\committeestring(g,2,m,pt):={Convidados}
-\committeestring(g,2,f,pt):={Convidadas}
+\committeetitlestring(pt)       := {Júri}
 
-\degreestring(bsc,m,pt):={Licenciado}
-\degreestring(bsc,f,pt):={Licenciada}
-\degreestring(msc,m,pt):={Mestre}
-\degreestring(msc,f,pt):={Mestre}
-\degreestring(mscplan,m,pt):={Mestre}
-\degreestring(mscplan,f,pt):={Mestre}
-\degreestring(phd,m,pt):={Doutor}
-\degreestring(phd,f,pt):={Doutora}
-\degreestring(phdplan,m,pt):={Doutor}
-\degreestring(phdplan,f,pt):={Doutora}
-\degreestring(phdprop,m,pt):={Doutor}
-\degreestring(phdprop,f,pt):={Doutora}
+\committeestring(c,1,m,pt)      := {Presidente}
+\committeestring(c,1,f,pt)      := {Presidente}
+\committeestring(c,2,m,pt)      := {Presidentes}
+\committeestring(c,2,f,pt)      := {Presidentes}
+\committeestring(r,1,m,pt)      := {Arguente}
+\committeestring(r,1,f,pt)      := {Arguente}
+\committeestring(r,2,m,pt)      := {Arguentes}
+\committeestring(r,2,f,pt)      := {Arguentes}
+\committeestring(a,1,m,pt)      := {Orientador}
+\committeestring(a,1,f,pt)      := {Orientadora}
+\committeestring(a,2,m,pt)      := {Orientadores}
+\committeestring(a,2,f,pt)      := {Orientadoras}
+\committeestring(ca,1,m,pt)     := {Coorientador}
+\committeestring(ca,1,f,pt)     := {Coorientadora}
+\committeestring(ca,2,m,pt)     := {Coorientadores}
+\committeestring(ca,2,f,pt)     := {Coorientadoras}
+\committeestring(m,1,m,pt)      := {Vogal}
+\committeestring(m,1,f,pt)      := {Vogal}
+\committeestring(m,2,m,pt)      := {Vogais}
+\committeestring(m,2,f,pt)      := {Vogais}
+\committeestring(g,1,m,pt)      := {Convidado}
+\committeestring(g,1,f,pt)      := {Convidada}
+\committeestring(g,2,m,pt)      := {Convidados}
+\committeestring(g,2,f,pt)      := {Convidadas}
 
-\doctypestring(bsc,pt):={Projeto de Licenciatura}
-\doctypestring(mscplan,pt):={Preparação de Dissertação de Mestrado}
-\doctypestring(msc,pt):={Dissertação de Mestrado}
-\doctypestring(phdplan,pt):={Plano de Tese de Doutoramento}
-\doctypestring(phdprop,pt):={Proposta de Tese de Doutoramento}
-\doctypestring(phd,pt):={Tese de Doutoramento}
+\degreestring(bsc,m,pt)         := {Licenciado}
+\degreestring(bsc,f,pt)         := {Licenciada}
+\degreestring(msc,m,pt)         := {Mestre}
+\degreestring(msc,f,pt)         := {Mestre}
+\degreestring(mscplan,m,pt)     := {Mestre}
+\degreestring(mscplan,f,pt)     := {Mestre}
+\degreestring(phd,m,pt)         := {Doutor}
+\degreestring(phd,f,pt)         := {Doutora}
+\degreestring(phdplan,m,pt)     := {Doutor}
+\degreestring(phdplan,f,pt)     := {Doutora}
+\degreestring(phdprop,m,pt)     := {Doutor}
+\degreestring(phdprop,f,pt)     := {Doutora}
 
-\dissertationstring(bsc,pt)={Relatório para obtenção do Grau de %
+\doctypestring(bsc,pt)          := {Projeto de Licenciatura}
+\doctypestring(mscplan,pt)      := {Preparação de Dissertação de Mestrado}
+\doctypestring(msc,pt)          := {Dissertação de Mestrado}
+\doctypestring(phdplan,pt)      := {Plano de Tese de Doutoramento}
+\doctypestring(phdprop,pt)      := {Proposta de Tese de Doutoramento}
+\doctypestring(phd,pt)          := {Tese de Doutoramento}
+
+\sdgstring(pt)                  := {Objetivos de Desenvolvimento Sustentável (ODS)}
+
+
+\dissertationstring(bsc,pt)     = {Relatório para obtenção do Grau de %
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
-\dissertationstring(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
+\dissertationstring(mscplan,pt) = {Relatório intermédio para obtenção do Grau de %
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
-\dissertationstring(msc,pt)={Dissertação para obtenção do Grau de %
+\dissertationstring(msc,pt)     = {Dissertação para obtenção do Grau de %
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
+\dissertationstring(phdplan,pt) = {Relatório intermédio para obtenção do Grau de %
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
+\dissertationstring(phdprop,pt) = {Proposta de dissertação para obtenção do Grau de %
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phd,pt)={Dissertação para obtenção do Grau de %
+\dissertationstring(phd,pt)     = {Dissertação para obtenção do Grau de %
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
 
-\copyrighttextstring(pt)={A \theschool(\@LANG@COPYRIGHT)\ e a \theuniversity(\@LANG@COPYRIGHT)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
-\acknowledgmentsstring(pt)={Este documento foi gerado com o processador (pdf/Xe/Lua)\LaTeX\ e o modelo \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+\copyrighttextstring(pt)        = {A \theschool(\@LANG@COPYRIGHT)\ e a \theuniversity(\@LANG@COPYRIGHT)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+
+\acknowledgmentsstring(pt)      = {Este documento foi gerado com o processador (pdf/Xe/Lua)\LaTeX\ e o modelo \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
