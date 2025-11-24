@@ -107,6 +107,8 @@
 \committeestring(g,2,m,de)        := {Gäste}% male, plural
 \committeestring(g,2,f,de)        := {Gäste}% female, plural
 
+\sdgstring(de):={Ziele für nachhaltige Entwicklung (SDG)}
+
 
 \dissertationstring(bsc,de)       = {Bachelorarbeit vorgelegt von\\[1.25ex]%
   \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in der\\ \textbf{\themajorfield(\@LANG@COVER)}}
