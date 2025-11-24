@@ -1521,8 +1521,12 @@ end
   \ifoptioncontains{/@nt/listtypes}{glossaries}{
     \ifoptionequal{/novathesis/print/glossaries}{no}
       {}{%
-        \edef\@printglossariesat{\option{/novathesis/print/glossaries}}%
-        \csname if@\@printglossariesat\endcsname%
+        \if@backmatter
+          \def\@matter{backmatter}
+        \else
+          \def\@matter{frontmatter}
+        \fi
+        \IfStrEq{\option{/novathesis/print/glossaries}}{\@matter}{
           \ntselectlang{\@LANG@MAIN}%
           \hypertarget{bmglossaries}{}%
           \bookmarksetupnext{level=0}%
@@ -1534,7 +1538,7 @@ end
           % \printglossary[type=\acronymtype]%
           % \bookmarksetupnext{level=1,keeplevel}%
           % \printglossary[type=symbols]%
-        \fi%
+        }{}%
       }%
   }{}%
 }
