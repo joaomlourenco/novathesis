@@ -27,6 +27,7 @@ import tempfile
 import atexit
 from pathlib import Path
 from typing import Dict, Callable, List, Pattern
+
 # --- ANSI Color Codes for Terminal Output ------------------------------------
 RESET = "\033[0m"
 # Regular text colors
@@ -47,9 +48,10 @@ BRIGHT_BLUE    = "\033[94m"
 BRIGHT_MAGENTA = "\033[95m"
 BRIGHT_CYAN    = "\033[96m"
 BRIGHT_WHITE   = "\033[97m"
+
 # --- Pattern Builders -------------------------------------------------------
 def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, 
-                   mode: int, doc_status: str, force: bool
+                   mode: int, new_doc_status: str, new_sdgs_list: str, force: bool
                   ) -> dict[str, dict[Pattern, Callable[[str], str]]]:
     """
     Build regex patterns and transformation functions for configuration file processing.
@@ -57,7 +59,7 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str,
         new_doc_type: Document type (e.g., 'phd', 'msc', 'bsc')
         new_school_id: School identifier (e.g., 'nova/fct')
         new_lang_code: Language code (e.g., 'en', 'pt', 'uk', 'gr')
-        doc_status: Document status (e.g., 'working', 'provisional', 'final', 'keep')
+        new_doc_status: Document status (e.g., 'working', 'provisional', 'final', 'keep')
         demo: Whether to build demo version with all abstracts
     Returns:
         Dictionary mapping filenames to pattern-transformer dictionaries
@@ -65,27 +67,45 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str,
     def _uncomment_replace(key: str, value: str):
         """
         Create a transformer function that uncomments and replaces key-value pairs in \ntsetup{}.
-        Args:
-            key: The key to replace in \ntsetup{}
-            value: The new value to set for the key
-        Returns:
-            Function that transforms a line of LaTeX code
+
+        Works for:
+            \ntsetup{key=value}
+            \ntsetup{key={value}}
+
+        If the original value is braced ({...}), the replacement will also be braced.
         """
-        # Escape key in case it contains regex metacharacters like '/'
-        key_re = re.compile(rf"({re.escape(key)}\s*=\s*)[^}},]+", re.IGNORECASE)
+        # Match "key = <value>", where <value> is either "{...}" or unbraced up to ',' or '}'.
+        key_re = re.compile(
+            rf"({re.escape(key)}\s*=\s*)"
+            r"(\{[^}]*\}|[^,}]+)",
+            re.IGNORECASE,
+        )
+
         def _transform(line: str) -> str:
-            """Transform a line by uncommenting and replacing the specified key."""
             orig = line
             # Uncomment while preserving indentation
             line = re.sub(r"^(\s*)%+\s*", r"\1", line)
-            # Use a callable to avoid '\1' + digit turning into '\12'
-            line = key_re.sub(lambda m: m.group(1) + value, line)
+
+            def repl(m: re.Match) -> str:
+                prefix = m.group(1)
+                old_val = m.group(2).strip()
+                new_val = value.strip()
+
+                # If the original value was braced, keep braces in the replacement
+                if old_val.startswith("{") and old_val.endswith("}"):
+                    new_val = new_val.strip("{}").strip()
+                    return f"{prefix}{{{new_val}}}"
+                else:
+                    return f"{prefix}{new_val}"
+
+            line = key_re.sub(repl, line)
             return line if line != orig else orig
+
         return _transform
 
     # Patterns for 1_novathesis.tex - core document configuration
     result = {}
-    if doc_status != "keep" or force:
+    if new_doc_status != "keep" or force:
         file_1_patterns = {
             re.compile(r"^\s*%?\s*\\ntsetup\{\s*doctype\s*=\s*[^}]+\}\s*.*$"):
                 _uncomment_replace("doctype", new_doc_type),
@@ -99,32 +119,29 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str,
                 _uncomment_replace("spine/width", "2cm"),
             re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/index\s*=\s*[^}]+\}\s*.*$"):
                 _uncomment_replace("print/index", "true"),
-            re.compile(r"^\s*%?\s*\\ntsetup\{\s*docstatus\s*=\s*[^}]+\}\s*.*$"):
-                _uncomment_replace("docstatus", doc_status)
+            re.compile(r"^\s*%?\s*\\ntsetup\{\s*docstatus\s*=\s*\{?[^}]+\}\s*.*$"):
+                _uncomment_replace("docstatus", new_doc_status),
+            re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/sdgs/list\s*=\s*\{?[^}]+\}\s*.*$"):
+                _uncomment_replace("print/sdgs/list", new_sdgs_list),
             # re.compile(r"^\s*%?\s*\\ntsetup\{\s*abstractorder=\{en,pt,uk,gr\}\}\s*.*$"):
             #     lambda line: re.sub(r"^(\s*)%+\s*", r"\1", line),
-        }    
+        }
         result |= {
             "1_novathesis.tex": file_1_patterns,
         }
-    
+
     if mode == 2: 
         # Cover only, remove contents
-        # Ddisable copyright
         file_1_patterns |= {
             re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/copyright\s*=\s*[^}]+\}\s*.*$"):
                 _uncomment_replace("print/copyright", "false"),
         }
-        # Comment out file inclusions (do not print chapters/appendices/annexes)
         file_4_patterns = {
             re.compile(r"^\s*\\ntaddfile.*$"):
                 lambda line: re.sub(r"^(\s*\\ntaddfile.*)", r"% \1", line),
         }
-        # Do not print any listof
         file_6_patterns = {
-            # Match any line that does NOT start with optional spaces followed by '%'
             re.compile(r"^(?!\s*%).*$"):
-                # Prepend '% ' to those lines
                 lambda line: re.sub(r"^(?!\s*%)(.*)$", r"% \1", line),
         }
         result |= {
@@ -132,7 +149,6 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str,
             "6_list_of.tex": file_6_patterns,
         }
     else:
-        # Full build: Add Greek and Ukrainian abstracts as demo of other languages
         if mode == 1:
             file_4_patterns = {
                 re.compile(r"^\s*%?\s*\\ntaddfile\{abstract\}\[gr\]\{abstract-gr\}\s*.*$"):
@@ -144,6 +160,7 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str,
             #     "4_files.tex": file_4_patterns,
             # }
     return result
+
 # --- Core Processing Functions ----------------------------------------------
 def process_file(p: Path, patterns: Dict[re.Pattern, Callable[[str], str]]) -> int:
     """
@@ -196,6 +213,7 @@ def _update_progress_bar(current_line: int, total_lines: int, bar_length: int = 
     # Use carriage return to overwrite the same line
     sys.stdout.write(f'\r{BRIGHT_CYAN}🔄 Progress: {BRIGHT_WHITE}|{bar}| {percentage:5.1f}% ({current_line}/{total_lines} lines){RESET}')
     sys.stdout.flush()
+    
 # --- Temporary Workspace Management -----------------------------------------
 def _copytree_symlinking(src: Path, dst: Path, ignore=None) -> None:
     """
@@ -696,6 +714,7 @@ def main() -> None:
         "school_id",
         help="School ID in format 'faculty/school' (e.g., 'nova/fct', 'nova/fct/cbbi')"
     )
+    # Optional arguments
     ap.add_argument(
         "-v", "--verbose",
         action="store_true",
@@ -721,6 +740,11 @@ def main() -> None:
     ap.add_argument(
         "-l", "--lang",
         default="en",
+        help="Two-letter language code for document (default: en)"
+    )
+    ap.add_argument(
+        "--sdgs",
+        default="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17",
         help="Two-letter language code for document (default: en)"
     )
     ap.add_argument(
@@ -884,7 +908,7 @@ def main() -> None:
     patterns = {}
     if demo or cover_only or args.force_school:
         patterns = build_patterns(args.doctype, args.school_id, args.lang, args.mode, 
-                                  args.docstatus, args.force_school)
+                                  args.docstatus, args.sdgs, args.force_school)
         match args.mode:
             case 0: mode_name = "user"
             case 1: mode_name = "demo"
