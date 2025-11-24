@@ -27,6 +27,7 @@ import tempfile
 import atexit
 from pathlib import Path
 from typing import Dict, Callable, List, Pattern
+
 # --- ANSI Color Codes for Terminal Output ------------------------------------
 RESET = "\033[0m"
 # Regular text colors
@@ -212,6 +213,7 @@ def _update_progress_bar(current_line: int, total_lines: int, bar_length: int = 
     # Use carriage return to overwrite the same line
     sys.stdout.write(f'\r{BRIGHT_CYAN}🔄 Progress: {BRIGHT_WHITE}|{bar}| {percentage:5.1f}% ({current_line}/{total_lines} lines){RESET}')
     sys.stdout.flush()
+    
 # --- Temporary Workspace Management -----------------------------------------
 def _copytree_symlinking(src: Path, dst: Path, ignore=None) -> None:
     """
