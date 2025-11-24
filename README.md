@@ -148,6 +148,9 @@ otherwise, follow the link to the ZIP file.
   
   * **nova-itqb** — Instituto de Tecnologia Química e Biológica António Xavier
     — [[Clone link]](https://github.com/novathesis/nova-itqb.git) — [[Zip download]](https://github.com/novathesis/nova-itqb/archive/refs/heads/main.zip)
+  
+  * **nova-ensp** — Escola Nacional de Saúde Pública
+    — [[Clone link]](https://github.com/novathesis/nova-ensp.git) — [[Zip download]](https://github.com/novathesis/nova-ensp/archive/refs/heads/main.zip)
 
 * **Universidade de Lisboa**
   
