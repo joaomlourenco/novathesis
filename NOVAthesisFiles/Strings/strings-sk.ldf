@@ -1,0 +1,180 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Strings/sk.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for language dependent strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE Strings/sk.ldf}%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Slovak - strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\AtEndPreamble{
+\StartBabelCommands*{slovak}{date}
+  \SetStringLoop{month#1name}{%
+      Január,Február,Marec,Apríl,Máj,Jún,%
+      Júl,August,September,Október,November,%
+      December}
+\EndBabelCommands
+}
+
+\bkmstring(frontmatter,sk)      := {Úvodná časť}
+\bkmstring(backmatter,sk)       := {Záverečná časť a prílohy}
+\bkmstring(cover,sk)            := {Obálka}
+\bkmstring(frontpage,sk)        := {Titulný list}
+\bkmstring(backcover,sk)        := {Zadná obálka}
+\bkmstring(spine,sk)            := {Chrbát knihy}
+\bkmstring(copyright,sk)        := {Autorské právo}
+\bkmstring(statement,sk)        := {Vyhlásenie}
+\bkmstring(dedicatory,sk)       := {Venovanie}
+\bkmstring(acknowledgements,sk) := {Poďakovanie}
+\bkmstring(quote,sk)            := {Citát}
+\bkmstring(abstract,sk)         := {Abstrakt}
+\bkmstring(listof,sk)           := {Zoznam…}
+\bkmstring(glossaries,sk)       := {Glosáre}
+\keywordsstring(sk)             := {Kľúčové slová}
+\notdefined(sk)                 := {NEDEFINOVANÉ}
+\specializationstring(sk)       := {Špecializácia v}
+\departmentofstring(sk)         := {Katedra}
+\andstring(sk)                  := { a }
+\degreenameprefix(bsc,sk)       := {Bakalár v}
+\degreenameprefix(msc,sk)       := {Magister v}
+\degreenameprefix(phd,sk)       := {Doktorát v}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Adviser strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\adviserstring(a,1,m,sk)        := {Školiteľ}
+\adviserstring(a,1,f,sk)        := {Školiteľka}
+\adviserstring(a,2,m,sk)        := {Školitelia}
+\adviserstring(a,2,f,sk)        := {Školiteľky}
+
+\adviserstring(c,1,m,sk)        := {Koordinátor študijného programu}
+\adviserstring(c,1,f,sk)        := {Koordinátorka študijného programu}
+\adviserstring(c,2,m,sk)        := {Koordinátori študijného programu}
+\adviserstring(c,2,f,sk)        := {Koordinátorky študijného programu}
+
+\adviserstring(ca,1,m,sk)       := {Spoluškoliteľ}
+\adviserstring(ca,1,f,sk)       := {Spoluškoliteľka}
+\adviserstring(ca,2,m,sk)       := {Spoluškolitelia}
+\adviserstring(ca,2,f,sk)       := {Spoluškoliteľky}
+
+\adviserstring(t,1,m,sk)        := {Tutor}
+\adviserstring(t,1,f,sk)        := {Tutorka}
+\adviserstring(t,2,m,sk)        := {Tutori}
+\adviserstring(t,2,f,sk)        := {Tutorky}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Degree names
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\degreestring(bsc,m,sk)         := {Bakalár}
+\degreestring(bsc,f,sk)         := {Bakalárka}
+
+\degreestring(msc,m,sk)         := {Magister}
+\degreestring(msc,f,sk)         := {Magistra}
+\degreestring(mscplan,m,sk)     := {Magister}
+\degreestring(mscplan,f,sk)     := {Magistra}
+
+\degreestring(phd,m,sk)         := {Doktor}
+\degreestring(phd,f,sk)         := {Doktorka}
+\degreestring(phdplan,m,sk)     := {Doktorand}
+\degreestring(phdplan,f,sk)     := {Doktorandka}
+\degreestring(phdprop,m,sk)     := {Doktorand}
+\degreestring(phdprop,f,sk)     := {Doktorandka}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Document types
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\doctypestring(bsc,sk)          := {Bakalárska práca}
+\doctypestring(mscplan,sk)      := {Plán diplomovej práce}
+\doctypestring(msc,sk)          := {Diplomová práca}
+\doctypestring(phdplan,sk)      := {Plán dizertačnej práce}
+\doctypestring(phdprop,sk)      := {Návrh dizertačnej práce}
+\doctypestring(phd,sk)          := {Dizertačná práca}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% SDG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\sdgstring(sk)                  := {Ciele udržateľného rozvoja (CÚR)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Committee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\committeetitlestring(sk)       := {Skúšobná komisia}
+
+\committeestring(c,1,m,sk)      := {Predseda komisie}
+\committeestring(c,1,f,sk)      := {Predsedníčka komisie}
+\committeestring(c,2,m,sk)      := {Predsedovia komisie}
+\committeestring(c,2,f,sk)      := {Predsedníčky komisie}
+
+\committeestring(r,1,m,sk)      := {Oponent}
+\committeestring(r,1,f,sk)      := {Oponentka}
+\committeestring(r,2,m,sk)      := {Oponenti}
+\committeestring(r,2,f,sk)      := {Oponentky}
+
+\committeestring(a,1,m,sk)      := {Školiteľ}
+\committeestring(a,1,f,sk)      := {Školiteľka}
+\committeestring(a,2,m,sk)      := {Školitelia}
+\committeestring(a,2,f,sk)      := {Školiteľky}
+
+\committeestring(ca,1,m,sk)     := {Spoluškoliteľ}
+\committeestring(ca,1,f,sk)     := {Spoluškoliteľka}
+\committeestring(ca,2,m,sk)     := {Spoluškolitelia}
+\committeestring(ca,2,f,sk)     := {Spoluškoliteľky}
+
+\committeestring(m,1,m,sk)      := {Člen komisie}
+\committeestring(m,1,f,sk)      := {Členka komisie}
+\committeestring(m,2,m,sk)      := {Členovia komisie}
+\committeestring(m,2,f,sk)      := {Členky komisie}
+
+\committeestring(g,1,m,sk)      := {Prizvaný odborník}
+\committeestring(g,1,f,sk)      := {Prizvaná odborníčka}
+\committeestring(g,2,m,sk)      := {Prizvaní odborníci}
+\committeestring(g,2,f,sk)      := {Prizvané odborníčky}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Dissertation strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\dissertationstring(bsc,sk)     = {Práca predložená na získanie akademického titulu %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v študijnom odbore\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(mscplan,sk) = {Medzivýkaz predložený na získanie akademického titulu %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v študijnom odbore\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(msc,sk)     = {Diplomová práca predložená na získanie akademického titulu %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v študijnom odbore\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phdplan,sk) = {Plán dizertačnej práce predložený na získanie akademického titulu %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v študijnom odbore\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phdprop,sk) = {Návrh dizertačnej práce predložený na získanie akademického titulu %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v študijnom odbore\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phd,sk)     = {Dizertačná práca predložená na získanie akademického titulu %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v študijnom odbore\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Copyright
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\copyrighttextstring(sk)        = {Katedra \theschool(\@LANG@COPYRIGHT)\ a \theuniversity(\@LANG@COPYRIGHT)\ majú trvalé a územne neobmedzené právo archivovať a publikovať túto prácu v tlačenej alebo digitálnej forme, prípadne akýmkoľvek iným existujúcim alebo budúcim spôsobom, šíriť ju prostredníctvom vedeckých repozitárov a umožniť jej kopírovanie a distribúciu na nekomerčné vzdelávacie alebo výskumné účely za predpokladu, že bude riadne uvedený autor a vydavateľ.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Acknowledgements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\acknowledgmentsstring(sk)      = {Tento dokument bol vytvorený pomocou sádzacieho systému (pdf/Xe/Lua)\LaTeX\ a šablóny \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}

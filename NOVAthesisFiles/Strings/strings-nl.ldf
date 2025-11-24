@@ -1,0 +1,180 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Strings/nl.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for language dependent strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE Strings/nl.ldf}%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Dutch - strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\AtEndPreamble{
+\StartBabelCommands*{dutch}{date}
+  \SetStringLoop{month#1name}{%
+      Januari,Februari,Maart,April,Mei,Juni,%
+      Juli,Augustus,September,Oktober,November,%
+      December}
+\EndBabelCommands
+}
+
+\bkmstring(frontmatter,nl)      := {Voorwerk}
+\bkmstring(backmatter,nl)       := {Nawerk}
+\bkmstring(cover,nl)            := {Omslag}
+\bkmstring(frontpage,nl)        := {Titelblad}
+\bkmstring(backcover,nl)        := {Achterzijde van de omslag}
+\bkmstring(spine,nl)            := {Rug}
+\bkmstring(copyright,nl)        := {Auteursrecht}
+\bkmstring(statement,nl)        := {Verklaring}
+\bkmstring(dedicatory,nl)       := {Opdracht}
+\bkmstring(acknowledgements,nl) := {Dankwoord}
+\bkmstring(quote,nl)            := {Citaat}
+\bkmstring(abstract,nl)         := {Samenvatting}
+\bkmstring(listof,nl)           := {Lijst van…}
+\bkmstring(glossaries,nl)       := {Glossaria}
+\keywordsstring(nl)             := {Trefwoorden}
+\notdefined(nl)                 := {NIET GEDEFINIEERD}
+\specializationstring(nl)       := {Specialisatie in}
+\departmentofstring(nl)         := {Afdeling}
+\andstring(nl)                  := { en }
+\degreenameprefix(bsc,nl)       := {Bachelor in}
+\degreenameprefix(msc,nl)       := {Master in}
+\degreenameprefix(phd,nl)       := {Doctoraat in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Adviser strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\adviserstring(a,1,m,nl)        := {Begeleider}
+\adviserstring(a,1,f,nl)        := {Begeleidster}
+\adviserstring(a,2,m,nl)        := {Begeleiders}
+\adviserstring(a,2,f,nl)        := {Begeleidsters}
+
+\adviserstring(c,1,m,nl)        := {Opleidingscoördinator}
+\adviserstring(c,1,f,nl)        := {Opleidingscoördinatrice}
+\adviserstring(c,2,m,nl)        := {Opleidingscoördinatoren}
+\adviserstring(c,2,f,nl)        := {Opleidingscoördinatrices}
+
+\adviserstring(ca,1,m,nl)       := {Co-begeleider}
+\adviserstring(ca,1,f,nl)       := {Co-begeleidster}
+\adviserstring(ca,2,m,nl)       := {Co-begeleiders}
+\adviserstring(ca,2,f,nl)       := {Co-begeleidsters}
+
+\adviserstring(t,1,m,nl)        := {Tutor}
+\adviserstring(t,1,f,nl)        := {Tutor}
+\adviserstring(t,2,m,nl)        := {Tutoren}
+\adviserstring(t,2,f,nl)        := {Tutoren}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Degree names
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\degreestring(bsc,m,nl)         := {Bachelor}
+\degreestring(bsc,f,nl)         := {Bachelor}
+
+\degreestring(msc,m,nl)         := {Master of Science}
+\degreestring(msc,f,nl)         := {Master of Science}
+\degreestring(mscplan,m,nl)     := {Master of Science}
+\degreestring(mscplan,f,nl)     := {Master of Science}
+
+\degreestring(phd,m,nl)         := {Doctor}
+\degreestring(phd,f,nl)         := {Doctor}
+\degreestring(phdplan,m,nl)     := {Promovendus}
+\degreestring(phdplan,f,nl)     := {Promovenda}
+\degreestring(phdprop,m,nl)     := {Promovendus}
+\degreestring(phdprop,f,nl)     := {Promovenda}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Document types
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\doctypestring(bsc,nl)          := {Bachelorproject}
+\doctypestring(mscplan,nl)      := {Plan van de masterscriptie}
+\doctypestring(msc,nl)          := {Masterscriptie}
+\doctypestring(phdplan,nl)      := {Plan van het proefschrift}
+\doctypestring(phdprop,nl)      := {Voorstel voor een proefschrift}
+\doctypestring(phd,nl)          := {Proefschrift}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% SDG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\sdgstring(nl)                  := {Duurzameontwikkelingsdoelstellingen (SDG)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Committee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\committeetitlestring(nl)       := {Examencommissie}
+
+\committeestring(c,1,m,nl)      := {Voorzitter}
+\committeestring(c,1,f,nl)      := {Voorzitster}
+\committeestring(c,2,m,nl)      := {Voorzitters}
+\committeestring(c,2,f,nl)      := {Voorzitters}
+
+\committeestring(r,1,m,nl)      := {Examinator}
+\committeestring(r,1,f,nl)      := {Examinatrice}
+\committeestring(r,2,m,nl)      := {Examinatoren}
+\committeestring(r,2,f,nl)      := {Examinatrices}
+
+\committeestring(a,1,m,nl)      := {Begeleider}
+\committeestring(a,1,f,nl)      := {Begeleidster}
+\committeestring(a,2,m,nl)      := {Begeleiders}
+\committeestring(a,2,f,nl)      := {Begeleidsters}
+
+\committeestring(ca,1,m,nl)     := {Co-begeleider}
+\committeestring(ca,1,f,nl)     := {Co-begeleidster}
+\committeestring(ca,2,m,nl)     := {Co-begeleiders}
+\committeestring(ca,2,f,nl)     := {Co-begeleidsters}
+
+\committeestring(m,1,m,nl)      := {Lid}
+\committeestring(m,1,f,nl)      := {Lid}
+\committeestring(m,2,m,nl)      := {Leden}
+\committeestring(m,2,f,nl)      := {Leden}
+
+\committeestring(g,1,m,nl)      := {Gastlid}
+\committeestring(g,1,f,nl)      := {Gastlid}
+\committeestring(g,2,m,nl)      := {Gastleden}
+\committeestring(g,2,f,nl)      := {Gastleden}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Dissertation strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\dissertationstring(bsc,nl)     = {Verslag ingediend ter verkrijging van de graad van %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(mscplan,nl) = {Tussentijds verslag ingediend ter verkrijging van de graad van %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(msc,nl)     = {Masterscriptie ingediend ter verkrijging van de graad van %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phdplan,nl) = {Proefschriftplan ingediend ter verkrijging van de graad van %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phdprop,nl) = {Voorstel voor een proefschrift ingediend ter verkrijging van de graad van %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phd,nl)     = {Proefschrift ingediend ter verkrijging van de graad van %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Copyright
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\copyrighttextstring(nl)        = {De \theschool(\@LANG@COPYRIGHT)\ en de \theuniversity(\@LANG@COPYRIGHT)\ hebben het eeuwigdurende en onbeperkte recht om dit proefschrift in gedrukte of digitale vorm, of met elk ander bestaand of toekomstig middel, te archiveren en te publiceren, het via wetenschappelijke repositories te verspreiden en de reproductie en distributie ervan voor niet-commerciële onderwijs- en onderzoeksdoeleinden toe te staan, mits de auteur en de uitgever correct worden vermeld.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Acknowledgements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\acknowledgmentsstring(nl)      = {Dit document is opgesteld met het (pdf/Xe/Lua)\LaTeX-systeem en het \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis}-sjabloon (v\novathesisversion)~\@ntcite{novathesis-manual}.}
