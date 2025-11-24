@@ -321,18 +321,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \AddToHook{abstract/\theabstractorder(\@LANG@MAIN)/post}{\fbox{XXXXXXXXXX}\LKJJHLHJKKHHJ}
 \AtEndPreamble{%
-\NTAddToHook{abstract/\@LANG@MAIN/post}{%
-  \newcounter{sdgcnt}%
-  \vfill%
-  \raggedright%
-  \textbf{Sustainable Development Goals (SDG):}\\[1ex]
-  \noindent
-  \optionlistdo{/novathesis/nova/ims/sdg}{%
-    \stepcounter{sdgcnt}%
-    \ifnum\value{sdgcnt}=10\relax\\[2pt]\fi%
-    \includegraphics[width=1.5cm]{sdg-\@LANG@MAIN/sdg-\@LANG@MAIN-#1}\ 
-  }
-}
 \NTAddToHook{spine/pre}{%
   \begin{tikzpicture}[remember picture, overlay]
       \fill [color=imsdarkgrey]

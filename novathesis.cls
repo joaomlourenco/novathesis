@@ -295,7 +295,7 @@
   lang                          = en,
   % PRINT ON/OFF
   print/committee/.new toggle   = false,
-  print/adviser/.new toggle     = true,     % fake option - adviser should always be printed
+  print/adviser/.new toggle     = true,    % fake option - adviser should always be printed
   print/frontmatter/.new toggle = true,
   print/otherlists/.new value   = frontmatter,  % print other lists (lof, lof, lol, …) in the front matter
   print/glossaries/.new value   = frontmatter,  % print glossaries in the front matter
@@ -303,8 +303,12 @@
   print/copyright/.new toggle   = true,
   print/timestamp/.new toggle   = true,
   print/index/.new toggle       = false,
-  print/webography/.new value   = {},        % empty means do not make a separate webography
+  print/webography/.new value   = {},      % empty means do not make a separate webography
   print/statement/.new toggle   = false,
+  print/sdgs/list/.new list     = {},      % {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}
+  print/sdgs/size/.new dim      = {2cm},   % any measure
+  print/sdgs/hspace/.new dim    = {5mm},   % any measure
+  print/sdgs/vspace/.new dim    = {4mm},   % any measure
   % MISC
   countsecondcover/.new toggle  = false,
   numberallpages/.new toggle    = false,
@@ -316,8 +320,6 @@
 % NOVA/FCT
   nova/fct/company/logo/.new value              = {},
   nova/fct/company/name/.new value              = {},
-% NOVA/IMS
-  nova/ims/sdg/.new list                       = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17},
 % NOVA/ITQB
   nova/itqb/cover/color/.new choice            = {gray, green},
 % UMINHO
@@ -803,7 +805,7 @@ end
 \newdata{doctypestring}
 \newdata{doctypestringfont}
 
-
+\newdata{sdgstring}
 
 \newdata{adviserstring}            % e.g., "Adviser", "Co-adviser"
 \newdata{adviserstringfont}
@@ -2850,14 +2852,60 @@ end
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%% Abstract, Acronyms and Glossary
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Print Sustainable Development Goals (SDG)
+%% To be called from \ntprintabstracts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{sdgcnt}%
+\newdimen{\sdgdim}%
+\newcommand*{\ntprintsdgs}{
+  \@tempdima=\option{/novathesis/print/sdgs/hspace}%
+  \@tempdimb=\option{/novathesis/print/sdgs/vspace}%
+  \setcounter{sdgcnt}{0}%
+  \sdgdim=0pt%
+  \ifoptionnil{/novathesis/print/sdgs/list}{}{%
+      \vfill%
+      \raggedright\noindent%
+      \textbf{\thesdgstring(\@LSHORT):}\\[1ex]
+      \def\@ntsep{}
+      \noindent%\linespread{1.5}\selectfont
+      \optionlistdo{/novathesis/print/sdgs/list}{%
+        \stepcounter{sdgcnt}%
+        \setbox0=\hbox{%
+          \@ntsep%
+          \includegraphics[width=\option{/novathesis/print/sdgs/size}]
+                          {NOVAthesisFiles/Images/sdg-\@LSHORT/sdg-\@LSHORT-##1}%
+        }%
+        \def\@ntsep{\hspace*{\@tempdima}}%
+        \sdgdim=\dimexpr\sdgdim + \wd0\relax
+        \ifdim \sdgdim > \textwidth\relax%
+          \\[\@tempdimb]
+          \sdgdim=\dimexpr\sdgdim - \wd0\relax
+          \setbox0=\hbox{%
+            \includegraphics[width=\option{/novathesis/print/sdgs/size}]
+                            {NOVAthesisFiles/Images/sdg-\@LSHORT/sdg-\@LSHORT-##1}%
+          }%
+          \sdgdim=\wd0%
+        \fi%
+        \usebox0%
+      }%
+  }%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Print Abstracts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
   \NTRunHook{abstracts/pre}%
   \@for\myi:=\expanded{\theabstractorder(\@LANG@MAIN)}\do{\@ntprintabstract{\myi}}%
   \NTRunHook{abstracts/post}%
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Abstract, Acronyms and Glossary
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\@ntprintabstract}[1]{%
   % \typeout{NT PRINT ABSTRACT=[#1]}\NTPRINTABSTRACT@I%
@@ -2876,6 +2924,7 @@ end
       \NTRunHook{abstract/#1/mid}%
       \NTRunHook{abstract/mid}%
       \@ntloadfiles@ii[#1]{abstract}%
+      \ntprintsdgs%
       \NTRunHook{abstract/#1/post}%
       \NTRunHook{abstract/post}%
     \endgroup%
@@ -3032,7 +3081,6 @@ end
     \iffileadded[\listitem]{glossaries}{\@nt@loadallfiles{\listitem}{glossaries}}{}%
   }%
 }
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
