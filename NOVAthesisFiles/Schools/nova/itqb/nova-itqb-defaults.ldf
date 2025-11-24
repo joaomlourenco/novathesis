@@ -15,16 +15,9 @@
 
 
 % ITQB-NOVA specific customization
-\ntmemoirsetup{b5paper} % Does not work
-% \setstocksize{9.8in}{6.9in}
-% \settrimmedsize{\stockheight}{\stockwidth}{*}
-% \setlrmarginsandblock{3.5cm}{2.5cm}{*}
-% \setulmarginsandblock{2.5cm}{3.0cm}{*}
-% % \setlrmargins{0in}{*}{*}
-% % \setulmargins{0.8in}{*}{*}
-% \paperwidth=\stockwidth
-% \paperheight=\stockheight
-% \checkandfixthelayout
+\AtBeginDocument{% set paper as b5paper
+  \newpdflayout{250mm}{176mm}%
+}
 
 \openany
 \ntsetup{print/secondcover=true}

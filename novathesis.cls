@@ -2703,12 +2703,6 @@ end
   \@ifundefined{pagewidth}{}{\pagewidth=\the\stockwidth}
   \@ifundefined{pdfvorigin}{}{\ifdim\pdfvorigin=0pt\pdfvorigin=1in\fi}
   \@ifundefined{pdfhorigin}{}{\ifdim\pdfhorigin=0pt\pdfhorigin=1in\fi}
-  % \ifundef{\pdfpagewidth}{%
-  %   \ifundef{\pagewidth}{}{\pagewidth=\paperwidth}%
-  % }{\pdfpagewidth=\paperwidth}%
-  % \ifundef{\pdfpageheight}{%
-  %   \ifundef{\pageheight}{}{\pageheight=\paperheight}%
-  % }{\pdfpageheight=\paperheight}%
 }
 
 \DeclareRobustCommand\nt@changelayout{%
