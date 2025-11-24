@@ -1,132 +1,180 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Strings/gr.ldf
 %% NOVA thesis configuration file
 %%
-%% Customization for language depedent strings
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Customization for language dependent strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT FILE Strings/gr.ldf}%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% English - strings
+%%%  Greek - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \AtEndPreamble{
 \StartBabelCommands*{greek}{date}
   \SetStringLoop{month#1name}{%
-      Ιανουάριος, Φεβρουάριος, Μάρτιος, Απρίλιος, Μάιος, Ιούνιος,%
-      Ιούλιος, Αύγουστος, Σεπτέμβριος, Οκτώβριος, Νοέμβριος,%
+      Ιανουάριος,Φεβρουάριος,Μάρτιος,Απρίλιος,Μάιος,Ιούνιος,%
+      Ιούλιος,Αύγουστος,Σεπτέμβριος,Οκτώβριος,Νοέμβριος,%
       Δεκέμβριος}
 \EndBabelCommands
 }
 
-\bkmstring(frontmatter,pt)      := {Προμετωπίδα}
-\bkmstring(backmatter,pt)       := {Οπισθόφυλλο}
-\bkmstring(cover,pt)            := {Εξώφυλλο}
-\bkmstring(frontpage,pt)        := {Σελίδα τίτλου}
-\bkmstring(backcover,pt)        := {Οπισθόφυλλο εξωφύλλου}
-\bkmstring(spine,pt)            := {Ράχη βιβλίου}
-\bkmstring(copyright,pt)        := {Πνευματικά δικαιώματα}
-\bkmstring(statement,pt)        := {Δήλωση}
-\bkmstring(dedicatory,pt)       := {Αφιέρωση}
-\bkmstring(acknowledgements,pt) := {Ευχαριστίες}
-\bkmstring(quote,pt)            := {Παράθεμα}
-\bkmstring(abstract,pt)         := {Περίληψη}
-\bkmstring(listof,pt)           := {Κατάλογος…}
-\bkmstring(glossaries,pt)       := {Γλωσσάρια}
-\keywordsstring(pt)             := {Λέξεις-κλειδιά}
-\notdefined(pt)                 := {ΜΗ ΟΡΙΣΜΕΝΟ}
-\specializationstring(pt)       := {Ειδίκευση σε}
-\departmentofstring(pt)         := {Τμήμα}
-\andstring(pt)                  := { και }
-\degreenameprefix(bsc,pt)       := {Πτυχίο στη}
-\degreenameprefix(msc,pt)       := {Μεταπτυχιακό στη}
-\degreenameprefix(phd,pt)       := {Διδακτορικό στη}
+\bkmstring(frontmatter,gr)      := {Προλογικό τμήμα}
+\bkmstring(backmatter,gr)       := {Τελικό τμήμα και παραρτήματα}
+\bkmstring(cover,gr)            := {Εξώφυλλο}
+\bkmstring(frontpage,gr)        := {Σελίδα τίτλου}
+\bkmstring(backcover,gr)        := {Οπισθόφυλλο}
+\bkmstring(spine,gr)            := {Ράχη βιβλίου}
+\bkmstring(copyright,gr)        := {Πνευματικά δικαιώματα}
+\bkmstring(statement,gr)        := {Δήλωση}
+\bkmstring(dedicatory,gr)       := {Αφιέρωση}
+\bkmstring(acknowledgements,gr) := {Ευχαριστίες}
+\bkmstring(quote,gr)            := {Παράθεμα}
+\bkmstring(abstract,gr)         := {Περίληψη}
+\bkmstring(listof,gr)           := {Κατάλογος…}
+\bkmstring(glossaries,gr)       := {Γλωσσάρια}
+\keywordsstring(gr)             := {Λέξεις-κλειδιά}
+\notdefined(gr)                 := {ΜΗ ΟΡΙΣΜΕΝΟ}
+\specializationstring(gr)       := {Ειδίκευση σε}
+\departmentofstring(gr)         := {Τμήμα}
+\andstring(gr)                  := { και }
+\degreenameprefix(bsc,gr)       := {Πτυχίο στη}
+\degreenameprefix(msc,gr)       := {Μεταπτυχιακό στη}
+\degreenameprefix(phd,gr)       := {Διδακτορικό στη}
 
-\adviserstring(a,1,m,pt)        := {Επιβλέπων}
-\adviserstring(a,1,f,pt)        := {Επιβλέπουσα}
-\adviserstring(a,2,m,pt)        := {Επιβλέποντες}
-\adviserstring(a,2,f,pt)        := {Επιβλέπουσες}
-\adviserstring(c,1,m,pt)        := {Συνεπιβλέπων}
-\adviserstring(c,1,f,pt)        := {Συνεπιβλέπουσα}
-\adviserstring(c,2,m,pt)        := {Συνεπιβλέποντες}
-\adviserstring(c,2,f,pt)        := {Συνεπιβλέπουσες}
-\adviserstring(ca,1,m,pt)       := {Συνεπιβλέπων}
-\adviserstring(ca,1,f,pt)       := {Συνεπιβλέπουσα}
-\adviserstring(ca,2,m,pt)       := {Συνεπιβλέποντες}
-\adviserstring(ca,2,f,pt)       := {Συνεπιβλέπουσες}
-\adviserstring(t,1,m,pt)        := {Καθηγητής-σύμβουλος}
-\adviserstring(t,1,f,pt)        := {Καθηγήτρια-σύμβουλος}
-\adviserstring(t,2,m,pt)        := {Καθηγητές-σύμβουλοι}
-\adviserstring(t,2,f,pt)        := {Καθηγήτριες-σύμβουλοι}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Adviser strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\committeetitlestring(pt)       := {Εξεταστική επιτροπή}
+\adviserstring(a,1,m,gr)        := {Επιβλέπων}
+\adviserstring(a,1,f,gr)        := {Επιβλέπουσα}
+\adviserstring(a,2,m,gr)        := {Επιβλέποντες}
+\adviserstring(a,2,f,gr)        := {Επιβλέπουσες}
 
-\committeestring(c,1,m,pt)      := {Πρόεδρος}
-\committeestring(c,1,f,pt)      := {Πρόεδρος}
-\committeestring(c,2,m,pt)      := {Πρόεδροι}
-\committeestring(c,2,f,pt)      := {Πρόεδροι}
-\committeestring(r,1,m,pt)      := {Εισηγητής}
-\committeestring(r,1,f,pt)      := {Εισηγήτρια}
-\committeestring(r,2,m,pt)      := {Εισηγητές}
-\committeestring(r,2,f,pt)      := {Εισηγήτριες}
-\committeestring(a,1,m,pt)      := {Επιβλέπων}
-\committeestring(a,1,f,pt)      := {Επιβλέπουσα}
-\committeestring(a,2,m,pt)      := {Επιβλέποντες}
-\committeestring(a,2,f,pt)      := {Επιβλέπουσες}
-\committeestring(ca,1,m,pt)     := {Συνεπιβλέπων}
-\committeestring(ca,1,f,pt)     := {Συνεπιβλέπουσα}
-\committeestring(ca,2,m,pt)     := {Συνεπιβλέποντες}
-\committeestring(ca,2,f,pt)     := {Συνεπιβλέπουσες}
-\committeestring(m,1,m,pt)      := {Μέλος}
-\committeestring(m,1,f,pt)      := {Μέλος}
-\committeestring(m,2,m,pt)      := {Μέλη}
-\committeestring(m,2,f,pt)      := {Μέλη}
-\committeestring(g,1,m,pt)      := {Προσκεκλημένος}
-\committeestring(g,1,f,pt)      := {Προσκεκλημένη}
-\committeestring(g,2,m,pt)      := {Προσκεκλημένοι}
-\committeestring(g,2,f,pt)      := {Προσκεκλημένες}
+\adviserstring(c,1,m,gr)        := {Συνεπιβλέπων}
+\adviserstring(c,1,f,gr)        := {Συνεπιβλέπουσα}
+\adviserstring(c,2,m,gr)        := {Συνεπιβλέποντες}
+\adviserstring(c,2,f,gr)        := {Συνεπιβλέπουσες}
 
-\degreestring(bsc,m,pt)         := {Πτυχιούχος}
-\degreestring(bsc,f,pt)         := {Πτυχιούχος}
-\degreestring(msc,m,pt)         := {Κάτοχος Μεταπτυχιακού Διπλώματος}
-\degreestring(msc,f,pt)         := {Κάτοχος Μεταπτυχιακού Διπλώματος}
-\degreestring(mscplan,m,pt)     := {Κάτοχος Μεταπτυχιακού Διπλώματος}
-\degreestring(mscplan,f,pt)     := {Κάτοχος Μεταπτυχιακού Διπλώματος}
-\degreestring(phd,m,pt)         := {Διδάκτωρ}
-\degreestring(phd,f,pt)         := {Διδάκτωρ}
-\degreestring(phdplan,m,pt)     := {Διδάκτωρ}
-\degreestring(phdplan,f,pt)     := {Διδάκτωρ}
-\degreestring(phdprop,m,pt)     := {Διδάκτωρ}
-\degreestring(phdprop,f,pt)     := {Διδάκτωρ}
+\adviserstring(ca,1,m,gr)       := {Ακαδημαϊκός σύμβουλος}
+\adviserstring(ca,1,f,gr)       := {Ακαδημαϊκή σύμβουλος}
+\adviserstring(ca,2,m,gr)       := {Ακαδημαϊκοί σύμβουλοι}
+\adviserstring(ca,2,f,gr)       := {Ακαδημαϊκές σύμβουλοι}
 
-\doctypestring(bsc,pt)          := {Πτυχιακή εργασία}
-\doctypestring(mscplan,pt)      := {Σχέδιο μεταπτυχιακής διατριβής}
-\doctypestring(msc,pt)          := {Μεταπτυχιακή διατριβή}
-\doctypestring(phdplan,pt)      := {Σχέδιο διδακτορικής διατριβής}
-\doctypestring(phdprop,pt)      := {Πρόταση διδακτορικής διατριβής}
-\doctypestring(phd,pt)          := {Διδακτορική διατριβή}
+\adviserstring(t,1,m,gr)        := {Καθηγητής-σύμβουλος}
+\adviserstring(t,1,f,gr)        := {Καθηγήτρια-σύμβουλος}
+\adviserstring(t,2,m,gr)        := {Καθηγητές-σύμβουλοι}
+\adviserstring(t,2,f,gr)        := {Καθηγήτριες-σύμβουλοι}
 
-\sdgstring(pt)                  := {Στόχοι Βιώσιμης Ανάπτυξης (ΣΒΑ)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Degree names
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\dissertationstring(bsc,pt)     = {Έκθεση που υποβάλλεται για την απόκτηση του τίτλου %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ στη\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
+\degreestring(bsc,m,gr)         := {Πτυχιούχος}
+\degreestring(bsc,f,gr)         := {Πτυχιούχος}
 
-\dissertationstring(mscplan,pt) = {Ενδιάμεση έκθεση που υποβάλλεται για την απόκτηση του τίτλου %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ στη\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
+\degreestring(msc,m,gr)         := {Κάτοχος Μεταπτυχιακού Διπλώματος Ειδίκευσης}
+\degreestring(msc,f,gr)         := {Κάτοχος Μεταπτυχιακού Διπλώματος Ειδίκευσης}
+\degreestring(mscplan,m,gr)     := {Υποψήφιος μεταπτυχιακός φοιτητής}
+\degreestring(mscplan,f,gr)     := {Υποψήφια μεταπτυχιακή φοιτήτρια}
 
-\dissertationstring(msc,pt)     = {Διατριβή που υποβάλλεται για την απόκτηση του τίτλου %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ στη\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
+\degreestring(phd,m,gr)         := {Διδάκτορας}
+\degreestring(phd,f,gr)         := {Διδάκτωρ}
+\degreestring(phdplan,m,gr)     := {Υποψήφιος διδάκτορας}
+\degreestring(phdplan,f,gr)     := {Υποψήφια διδάκτορας}
+\degreestring(phdprop,m,gr)     := {Υποψήφιος διδάκτορας}
+\degreestring(phdprop,f,gr)     := {Υποψήφια διδάκτορας}
 
-\dissertationstring(phdplan,pt) = {Ενδιάμεση έκθεση που υποβάλλεται για την απόκτηση του τίτλου %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ στη\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Document types
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\dissertationstring(phdprop,pt) = {Πρόταση διατριβής που υποβάλλεται για την απόκτηση του τίτλου %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ στη\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
+\doctypestring(bsc,gr)          := {Πτυχιακή εργασία}
+\doctypestring(mscplan,gr)      := {Σχέδιο μεταπτυχιακής διατριβής}
+\doctypestring(msc,gr)          := {Μεταπτυχιακή διατριβή}
+\doctypestring(phdplan,gr)      := {Σχέδιο διδακτορικής διατριβής}
+\doctypestring(phdprop,gr)      := {Πρόταση διδακτορικής διατριβής}
+\doctypestring(phd,gr)          := {Διδακτορική διατριβή}
 
-\dissertationstring(phd,pt)     = {Διατριβή που υποβάλλεται για την απόκτηση του τίτλου %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ στη\\[1ex] \textbf{\themajorfield(\@LANG@COVER)}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% SDG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\copyrighttextstring(pt)        = {Η \theschool(\@LANG@COPYRIGHT)\ και το \theuniversity(\@LANG@COPYRIGHT)\ έχουν το δικαίωμα, διαρκές και χωρίς γεωγραφικούς περιορισμούς, να αρχειοθετούν και να δημοσιεύουν αυτή τη διατριβή μέσω έντυπων αντιτύπων σε χαρτί ή σε ψηφιακή μορφή, ή με οποιοδήποτε άλλο γνωστό ή μελλοντικό μέσο, καθώς και να τη διανέμουν μέσω επιστημονικών αποθετηρίων και να επιτρέπουν την αντιγραφή και διάδοσή της για μη εμπορικούς, εκπαιδευτικούς ή ερευνητικούς σκοπούς, υπό την προϋπόθεση ότι αποδίδεται αναγνώριση στον συγγραφέα και στον εκδότη.}
+\sdgstring(gr)                  := {Στόχοι Βιώσιμης Ανάπτυξης (ΣΒΑ)}
 
-\acknowledgmentsstring(pt)      = {Το παρόν έγγραφο δημιουργήθηκε με τον επεξεργαστή (pdf/Xe/Lua)\LaTeX\ και το πρότυπο \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Committee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\committeetitlestring(gr)       := {Εξεταστική επιτροπή}
+
+\committeestring(c,1,m,gr)      := {Προεδρεύων}
+\committeestring(c,1,f,gr)      := {Προεδρεύουσα}
+\committeestring(c,2,m,gr)      := {Προεδρεύοντες}
+\committeestring(c,2,f,gr)      := {Προεδρεύουσες}
+
+\committeestring(r,1,m,gr)      := {Αναθεωρητής}
+\committeestring(r,1,f,gr)      := {Αναθεωρήτρια}
+\committeestring(r,2,m,gr)      := {Αναθεωρητές}
+\committeestring(r,2,f,gr)      := {Αναθεωρήτριες}
+
+\committeestring(a,1,m,gr)      := {Επιβλέπων}
+\committeestring(a,1,f,gr)      := {Επιβλέπουσα}
+\committeestring(a,2,m,gr)      := {Επιβλέποντες}
+\committeestring(a,2,f,gr)      := {Επιβλέπουσες}
+
+\committeestring(ca,1,m,gr)     := {Συνεπιβλέπων}
+\committeestring(ca,1,f,gr)     := {Συνεπιβλέπουσα}
+\committeestring(ca,2,m,gr)     := {Συνεπιβλέποντες}
+\committeestring(ca,2,f,gr)     := {Συνεπιβλέπουσες}
+
+\committeestring(m,1,m,gr)      := {Μέλος}
+\committeestring(m,1,f,gr)      := {Μέλος}
+\committeestring(m,2,m,gr)      := {Μέλη}
+\committeestring(m,2,f,gr)      := {Μέλη}
+
+\committeestring(g,1,m,gr)      := {Προσκεκλημένος εμπειρογνώμονας}
+\committeestring(g,1,f,gr)      := {Προσκεκλημένη εμπειρογνώμονας}
+\committeestring(g,2,m,gr)      := {Προσκεκλημένοι εμπειρογνώμονες}
+\committeestring(g,2,f,gr)      := {Προσκεκλημένες εμπειρογνώμονες}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Dissertation strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\dissertationstring(bsc,gr)     = {Η παρούσα εργασία υποβάλλεται για την απονομή του τίτλου %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ στη\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(mscplan,gr) = {Το παρόν ενδιάμεσο κείμενο υποβάλλεται για την εκπλήρωση των απαιτήσεων απονομής του τίτλου %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ στη\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(msc,gr)     = {Η παρούσα μεταπτυχιακή διατριβή υποβάλλεται για την απονομή του τίτλου %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ στη\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phdplan,gr) = {Το παρόν σχέδιο διδακτορικής διατριβής υποβάλλεται για την εκπλήρωση των απαιτήσεων απονομής του τίτλου %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ στη\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phdprop,gr) = {Η παρούσα πρόταση διδακτορικής διατριβής υποβάλλεται για την εκπλήρωση των απαιτήσεων απονομής του τίτλου %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ στη\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phd,gr)     = {Η παρούσα διδακτορική διατριβή υποβάλλεται για την απονομή του τίτλου %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ στη\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Copyright
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\copyrighttextstring(gr)        = {Η \theschool(\@LANG@COPYRIGHT)\ και το \theuniversity(\@LANG@COPYRIGHT)\ διατηρούν το διαρκές και χωρίς γεωγραφικούς περιορισμούς δικαίωμα να αρχειοθετούν και να δημοσιεύουν την παρούσα διατριβή σε έντυπη ή ψηφιακή μορφή, ή με οποιονδήποτε άλλο γνωστό ή μελλοντικό τρόπο, καθώς και να τη διανέμουν μέσω επιστημονικών αποθετηρίων και να επιτρέπουν την αναπαραγωγή και διανομή της για μη εμπορικούς εκπαιδευτικούς ή ερευνητικούς σκοπούς, υπό την προϋπόθεση ότι γίνεται η δέουσα αναφορά στον συγγραφέα και στον εκδότη.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Acknowledgements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\acknowledgmentsstring(gr)      = {Το παρόν έγγραφο δημιουργήθηκε με το σύστημα στοιχειοθεσίας (pdf/Xe/Lua)\LaTeX\ και το πρότυπο \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}

@@ -1,125 +1,180 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Strings/it.ldf
 %% NOVA thesis configuration file
 %%
-%% Customization for language depedent strings
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Customization for language dependent strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT FILE Strings/it.ldf}%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Italian - strings
-%%% Acknowledgments to Paolo Romano <romano@inesc-id.pt>
+%%%  Italian - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \AtEndPreamble{
 \StartBabelCommands*{italian}{date}
   \SetStringLoop{month#1name}{%
-      gennaio,febbraio,marzo,aprile,maggio,giugno,%
-      luglio,agosto,settembre,ottobre,novembre,%
-      dicembre}
- \EndBabelCommands     
- }
+      Gennaio,Febbraio,Marzo,Aprile,Maggio,Giugno,%
+      Luglio,Agosto,Settembre,Ottobre,Novembre,%
+      Dicembre}
+\EndBabelCommands
+}
 
-\bkmstring(frontmatter,it)      := {Materiale Iniziale}
-\bkmstring(backmatter,it)       := {Materiale Finale}
+\bkmstring(frontmatter,it)      := {Materiale preliminare}
+\bkmstring(backmatter,it)       := {Materiale finale}
 \bkmstring(cover,it)            := {Copertina}
-\bkmstring(frontpage,it)        := {Foglio di Copertina}
-\bkmstring(backcover,it)        := {Copertina Posteriore}
-\bkmstring(spine,it)            := {Libro Dorso}
+\bkmstring(frontpage,it)        := {Pagina del titolo}
+\bkmstring(backcover,it)        := {Quarta di copertina}
+\bkmstring(spine,it)            := {Dorso}
 \bkmstring(copyright,it)        := {Copyright}
 \bkmstring(statement,it)        := {Dichiarazione}
-\bkmstring(statement,it)        := {Dopo la Copertina}
-\bkmstring(dedicatory,it)       := {Dedicativo}
+\bkmstring(dedicatory,it)       := {Dedica}
 \bkmstring(acknowledgements,it) := {Ringraziamenti}
 \bkmstring(quote,it)            := {Citazione}
 \bkmstring(abstract,it)         := {Sommario}
-\bkmstring(listof,it)           := {Elenco delle…}
+\bkmstring(listof,it)           := {Elenco di…}
 \bkmstring(glossaries,it)       := {Glossari}
-\keywordsstring(it)             := {Parole Chiave}
-\notdefined(it)                 := {INDEFINITO}
+\keywordsstring(it)             := {Parole chiave}
+\notdefined(it)                 := {NON DEFINITO}
 \specializationstring(it)       := {Specializzazione in}
 \departmentofstring(it)         := {Dipartimento di}
 \andstring(it)                  := { e }
-\degreenameprefix(msc,it)        := {Laurea Specialistica in}
-\degreenameprefix(phd,it)        := {Dottorato in}
+\degreenameprefix(bsc,it)       := {Laurea triennale in}
+\degreenameprefix(msc,it)       := {Laurea magistrale in}
+\degreenameprefix(phd,it)       := {Dottorato di ricerca in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Adviser strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \adviserstring(a,1,m,it)        := {Relatore}
 \adviserstring(a,1,f,it)        := {Relatrice}
 \adviserstring(a,2,m,it)        := {Relatori}
 \adviserstring(a,2,f,it)        := {Relatrici}
-\adviserstring(c,1,m,it)        := {Correlatore}
-\adviserstring(c,1,f,it)        := {Correlatrice}
-\adviserstring(c,2,m,it)        := {Correlatori}
-\adviserstring(c,2,f,it)        := {Correlatrici}
+
+\adviserstring(c,1,m,it)        := {Coordinatore del corso}
+\adviserstring(c,1,f,it)        := {Coordinatrice del corso}
+\adviserstring(c,2,m,it)        := {Coordinatori del corso}
+\adviserstring(c,2,f,it)        := {Coordinatrici del corso}
+
 \adviserstring(ca,1,m,it)       := {Correlatore}
 \adviserstring(ca,1,f,it)       := {Correlatrice}
 \adviserstring(ca,2,m,it)       := {Correlatori}
 \adviserstring(ca,2,f,it)       := {Correlatrici}
 
-\degreestring(bsc,m,it)         := {Laurea Triennale}
-\degreestring(bsc,f,it)         := {Laurea Triennale}
-\degreestring(msc,m,it)         := {Laurea Specialistica}
-\degreestring(msc,f,it)         := {Laurea Specialistica}
-\degreestring(mscplan,m,it)     := {Laurea Specialistica}
-\degreestring(mscplan,f,it)     := {Laurea Specialistica}
-\degreestring(phd,m,it)         := {Dottore}
-\degreestring(phd,f,it)         := {Dottoressa}
-\degreestring(phdplan,m,it)     := {Dottore}
-\degreestring(phdplan,f,it)     := {Dottoressa}
-\degreestring(phdprop,m,it)     := {Dottore}
-\degreestring(phdprop,f,it)     := {Dottoressa}
+\adviserstring(t,1,m,it)        := {Tutor accademico}
+\adviserstring(t,1,f,it)        := {Tutrice accademica}
+\adviserstring(t,2,m,it)        := {Tutor accademici}
+\adviserstring(t,2,f,it)        := {Tutrici accademiche}
 
-\doctypestring(bsc,it)          := {Tesi di Laurea Triennale}
-\doctypestring(msc,it)          := {Tesi di Laurea Specialistica}
-\doctypestring(mscplan,it)      := {Piano per Tesi di Laurea Specialistica}
-\doctypestring(phdplan,it)      := {Piano per Tesi di Dottorato}
-\doctypestring(phdprop,it)      := {Proposta di Tesi di Dottorato}
-\doctypestring(phd,it)          := {Tesi di Dottorato}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Degree names
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\committeetitlestring(it)       := {Commissione Esaminatrice}
+\degreestring(bsc,m,it)         := {Laureato}
+\degreestring(bsc,f,it)         := {Laureata}
+
+\degreestring(msc,m,it)         := {Laureato magistrale}
+\degreestring(msc,f,it)         := {Laureata magistrale}
+\degreestring(mscplan,m,it)     := {Laureato magistrale}
+\degreestring(mscplan,f,it)     := {Laureata magistrale}
+
+\degreestring(phd,m,it)         := {Dottore di ricerca}
+\degreestring(phd,f,it)         := {Dottoressa di ricerca}
+\degreestring(phdplan,m,it)     := {Dottorando}
+\degreestring(phdplan,f,it)     := {Dottoranda}
+\degreestring(phdprop,m,it)     := {Dottorando}
+\degreestring(phdprop,f,it)     := {Dottoranda}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Document types
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\doctypestring(bsc,it)          := {Tesi di laurea triennale}
+\doctypestring(mscplan,it)      := {Piano di tesi di laurea magistrale}
+\doctypestring(msc,it)          := {Tesi di laurea magistrale}
+\doctypestring(phdplan,it)      := {Piano di tesi di dottorato}
+\doctypestring(phdprop,it)      := {Proposta di tesi di dottorato}
+\doctypestring(phd,it)          := {Tesi di dottorato}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% SDG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\sdgstring(it)                  := {Obiettivi di sviluppo sostenibile (OSS)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Committee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\committeetitlestring(it)       := {Commissione d’esame}
+
 \committeestring(c,1,m,it)      := {Presidente}
-\committeestring(c,1,f,it)      := {Presidentessa}
+\committeestring(c,1,f,it)      := {Presidente}
 \committeestring(c,2,m,it)      := {Presidenti}
-\committeestring(c,2,f,it)      := {Presidentesse}
-\committeestring(r,1,m,it)      := {Controrelatore}
-\committeestring(r,1,f,it)      := {Controrelatrice}
-\committeestring(r,2,m,it)      := {Controrelatori}
-\committeestring(r,2,f,it)      := {Controrelatrici}
+\committeestring(c,2,f,it)      := {Presidenti}
+
+\committeestring(r,1,m,it)      := {Relatore}
+\committeestring(r,1,f,it)      := {Relatrice}
+\committeestring(r,2,m,it)      := {Relatori}
+\committeestring(r,2,f,it)      := {Relatrici}
+
 \committeestring(a,1,m,it)      := {Relatore}
 \committeestring(a,1,f,it)      := {Relatrice}
 \committeestring(a,2,m,it)      := {Relatori}
 \committeestring(a,2,f,it)      := {Relatrici}
+
 \committeestring(ca,1,m,it)     := {Correlatore}
 \committeestring(ca,1,f,it)     := {Correlatrice}
 \committeestring(ca,2,m,it)     := {Correlatori}
 \committeestring(ca,2,f,it)     := {Correlatrici}
-\committeestring(m,1,m,it)      := {Membro}
-\committeestring(m,1,f,it)      := {Membro}
-\committeestring(m,2,m,it)      := {Membri}
-\committeestring(m,2,f,it)      := {Membri}
-\committeestring(g,1,m,it)      := {Invitato}
-\committeestring(g,1,f,it)      := {Invitata}
-\committeestring(g,2,m,it)      := {Invitati}
-\committeestring(g,2,f,it)      := {Invitate}\
 
-\sdgstring(it):={Obiettivi di sviluppo sostenibile (OSS)}
+\committeestring(m,1,m,it)      := {Membro della commissione}
+\committeestring(m,1,f,it)      := {Membro della commissione}
+\committeestring(m,2,m,it)      := {Membri della commissione}
+\committeestring(m,2,f,it)      := {Membri della commissione}
 
+\committeestring(g,1,m,it)      := {Membro invitato}
+\committeestring(g,1,f,it)      := {Membro invitata}
+\committeestring(g,2,m,it)      := {Membri invitati}
+\committeestring(g,2,f,it)      := {Membri invitate}
 
-\dissertationstring(bsc,it)     = {Documento sottomesso per ottenere il Grado di\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
-\dissertationstring(mscplan,it) = {Piano di Tesi per ottenere il Grado di\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
-\dissertationstring(msc,it)     = {Tesi sottomessa per ottenere il Grado di\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phdplan,it) = {Piano di Tesi per ottenere il Grado dI\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phdprop,it) = {Proposta di Tesi per ottenere il Grado dI\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phd,it)     = {Thesis submitted in partial fulfillment\\%
-% of the requirements for the degree of\\[1.25ex]%
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\ \textbf{\themajorfield(\@LANG@COVER)}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Dissertation strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\copyrighttextstring(it)        = {La \theschool(\@LANG@COPYRIGHT)\ e \theuniversity(\@LANG@COPYRIGHT)\ hanno il diritto perpetuo e senza limiti geografici, di archiviare e pubblicare questa tesi attraverso esemplari stampati in formato cartaceo o digitale, o attraverso qualsiasi altro mezzo consciuto o che possa essere inventato, e di disseminare tramite repositori scientifici e permettere la sua copia e distribuzione per scopi non commerciali, didattici o di ricerca, a patto che sia dato credito all'autore e editore.}
+\dissertationstring(bsc,it)     = {Elaborato presentato per il conseguimento del titolo di %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
 
-\acknowledgmentsstring(it).     = {Questo documento é stato creato usando (pdf/Xe/Lua)\LaTeX\ e il modello \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+\dissertationstring(mscplan,it) = {Relazione intermedia presentata per il conseguimento del titolo di %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(msc,it)     = {Tesi di laurea magistrale presentata per il conseguimento del titolo di %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phdplan,it) = {Piano di tesi presentato per il conseguimento del titolo di %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phdprop,it) = {Proposta di tesi presentata per il conseguimento del titolo di %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phd,it)     = {Tesi di dottorato presentata per il conseguimento del titolo di %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Copyright
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\copyrighttextstring(it)        = {La \theschool(\@LANG@COPYRIGHT)\ e la \theuniversity(\@LANG@COPYRIGHT)\ detengono il diritto perpetuo e senza limiti geografici di archiviare e pubblicare questa tesi in formato cartaceo o digitale, o con qualsiasi altro mezzo esistente o futuro, nonché di diffonderla tramite archivi scientifici e di consentirne la copia e la distribuzione per scopi didattici o di ricerca, non commerciali, purché siano correttamente citati l’autore e l’editore.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Acknowledgements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\acknowledgmentsstring(it)      = {Questo documento è stato prodotto con il sistema di composizione (pdf/Xe/Lua)\LaTeX\ e il modello \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
