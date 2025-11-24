@@ -1,0 +1,185 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Strings/dk.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for language dependent strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE Strings/dk.ldf}%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Danish - strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\AtEndPreamble{
+\StartBabelCommands*{danish}{date}
+  \SetStringLoop{month#1name}{%
+      Januar,Februar,Marts,April,Maj,Juni,%
+      Juli,August,September,Oktober,November,%
+      December}
+\EndBabelCommands
+}
+
+\bkmstring(frontmatter,dk)      := {Indledende materiale}
+\bkmstring(backmatter,dk)       := {Afsluttende materiale}
+\bkmstring(cover,dk)            := {Forside}
+\bkmstring(frontpage,dk)        := {Titelblad}
+\bkmstring(backcover,dk)        := {Bagside}
+\bkmstring(spine,dk)            := {Ryg}
+\bkmstring(copyright,dk)        := {Ophavsret}
+\bkmstring(statement,dk)        := {Erklæring}
+\bkmstring(dedicatory,dk)       := {Dedikation}
+\bkmstring(acknowledgements,dk) := {Tak}
+\bkmstring(quote,dk)            := {Citat}
+\bkmstring(abstract,dk)         := {Resumé}
+\bkmstring(listof,dk)           := {Liste over…}
+\bkmstring(glossaries,dk)       := {Ordlister}
+\keywordsstring(dk)             := {Nøgleord}
+\notdefined(dk)                 := {IKKE DEFINERET}
+\specializationstring(dk)       := {Specialisering i}
+\departmentofstring(dk)         := {Institut for}
+\andstring(dk)                  := { og }
+\degreenameprefix(bsc,dk)       := {Bachelor i}
+\degreenameprefix(msc,dk)       := {Kandidat i}
+\degreenameprefix(phd,dk)       := {Ph.d. i}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Adviser strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\adviserstring(a,1,m,dk)        := {Vejleder}
+\adviserstring(a,1,f,dk)        := {Vejleder}
+\adviserstring(a,2,m,dk)        := {Vejledere}
+\adviserstring(a,2,f,dk)        := {Vejledere}
+
+\adviserstring(c,1,m,dk)        := {Studieleder}
+\adviserstring(c,1,f,dk)        := {Studieleder}
+\adviserstring(c,2,m,dk)        := {Studieledere}
+\adviserstring(c,2,f,dk)        := {Studieledere}
+
+\adviserstring(ca,1,m,dk)       := {Medvejleder}
+\adviserstring(ca,1,f,dk)       := {Medvejleder}
+\adviserstring(ca,2,m,dk)       := {Medvejledere}
+\adviserstring(ca,2,f,dk)       := {Medvejledere}
+
+\adviserstring(t,1,m,dk)        := {Tutor}
+\adviserstring(t,1,f,dk)        := {Tutor}
+\adviserstring(t,2,m,dk)        := {Tutorer}
+\adviserstring(t,2,f,dk)        := {Tutorer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Degree names
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\degreestring(bsc,m,dk)         := {Bachelor}
+\degreestring(bsc,f,dk)         := {Bachelor}
+
+\degreestring(msc,m,dk)         := {Kandidat}
+\degreestring(msc,f,dk)         := {Kandidat}
+\degreestring(mscplan,m,dk)     := {Kandidat}
+\degreestring(mscplan,f,dk)     := {Kandidat}
+
+\degreestring(phd,m,dk)         := {Ph.d.}
+\degreestring(phd,f,dk)         := {Ph.d.}
+\degreestring(phdplan,m,dk)     := {Ph.d.}
+\degreestring(phdplan,f,dk)     := {Ph.d.}
+\degreestring(phdprop,m,dk)     := {Ph.d.}
+\degreestring(phdprop,f,dk)     := {Ph.d.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Document types
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\doctypestring(bsc,dk)          := {Bachelorprojekt}
+\doctypestring(mscplan,dk)      := {Plan for kandidatspeciale}
+\doctypestring(msc,dk)          := {Kandidatspeciale}
+\doctypestring(phdplan,dk)      := {Plan for ph.d.-afhandling}
+\doctypestring(phdprop,dk)      := {Forslag til ph.d.-afhandling}
+\doctypestring(phd,dk)          := {Ph.d.-afhandling}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% SDG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\sdgstring(dk)                  := {Verdensmålene for bæredygtig udvikling (SDG)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Committee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\committeetitlestring(dk)       := {Bedømmelsesudvalg}
+
+\committeestring(c,1,m,dk)      := {Formand}
+\committeestring(c,1,f,dk)      := {Formand}
+\committeestring(c,2,m,dk)      := {Formænd}
+\committeestring(c,2,f,dk)      := {Formænd}
+
+\committeestring(r,1,m,dk)      := {Opponent}
+\committeestring(r,1,f,dk)      := {Opponent}
+\committeestring(r,2,m,dk)      := {Opponenter}
+\committeestring(r,2,f,dk)      := {Opponenter}
+
+\committeestring(a,1,m,dk)      := {Vejleder}
+\committeestring(a,1,f,dk)      := {Vejleder}
+\committeestring(a,2,m,dk)      := {Vejledere}
+\committeestring(a,2,f,dk)      := {Vejledere}
+
+\committeestring(ca,1,m,dk)     := {Medvejleder}
+\committeestring(ca,1,f,dk)     := {Medvejleder}
+\committeestring(ca,2,m,dk)     := {Medvejledere}
+\committeestring(ca,2,f,dk)     := {Medvejledere}
+
+\committeestring(m,1,m,dk)      := {Medlem}
+\committeestring(m,1,f,dk)      := {Medlem}
+\committeestring(m,2,m,dk)      := {Medlemmer}
+\committeestring(m,2,f,dk)      := {Medlemmer}
+
+\committeestring(g,1,m,dk)      := {Gæst}
+\committeestring(g,1,f,dk)      := {Gæst}
+\committeestring(g,2,m,dk)      := {Gæster}
+\committeestring(g,2,f,dk)      := {Gæster}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Dissertation strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\dissertationstring(bsc,dk)     = {Rapport indleveret til opnåelse af graden %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(mscplan,dk) = {Foreløbig rapport indleveret til opnåelse af graden %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(msc,dk)     = {Speciale indleveret til opnåelse af graden %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phdplan,dk) = {Planrapport indleveret til opnåelse af graden %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phdprop,dk) = {Forslag til afhandling indleveret til opnåelse af graden %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+\dissertationstring(phd,dk)     = {Afhandling indleveret til opnåelse af graden %
+  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+  \textbf{\themajorfield(\@LANG@COVER)}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Copyright
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\copyrighttextstring(dk)        = {\theschool(\@LANG@COPYRIGHT)\ og \theuniversity(\@LANG@COPYRIGHT)\ har en evig og
+uden geografiske begrænsninger gældende ret til at arkivere og offentliggøre denne afhandling i trykt eller digital form,
+eller ved enhver anden nuværende eller fremtidig metode, samt til at gøre den tilgængelig gennem videnskabelige repositorier
+og til at tillade kopiering og distribution til ikke-kommercielle undervisnings- og forskningsformål, forudsat at der gives
+behørig kredit til forfatteren og udgiveren.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Acknowledgements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\acknowledgmentsstring(dk)      = {Dette dokument er udarbejdet med sætningssystemet (pdf/Xe/Lua)\LaTeX\ og skabelonen
+\href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
