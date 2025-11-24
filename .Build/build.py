@@ -105,7 +105,15 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str,
 
     # Patterns for 1_novathesis.tex - core document configuration
     result = {}
-    if new_doc_status != "keep" or force:
+    if force:
+        file_1_patterns = {
+            re.compile(r"^\s*%?\s*\\ntsetup\{\s*school\s*=\s*[^}]+\}\s*.*$"):
+                _uncomment_replace("school", new_school_id),
+        }
+        result |= {
+            "1_novathesis.tex": file_1_patterns,
+        }
+    if new_doc_status != "keep":
         file_1_patterns = {
             re.compile(r"^\s*%?\s*\\ntsetup\{\s*doctype\s*=\s*[^}]+\}\s*.*$"):
                 _uncomment_replace("doctype", new_doc_type),
@@ -824,7 +832,17 @@ def main() -> None:
         print(f"{BRIGHT_CYAN}🔧 Forcing temporary build directory for {'demo' if demo else 'cover'} mode{RESET}")
     
     # Validate school_id format
-    if "/" not in args.school_id:
+    def _normalize_school(s: str) -> str:
+        # If it already contains a "/", return unchanged
+        if "/" in s:
+            return s
+    
+        # Replace at most two "-" with "/"
+        parts = s.split("-", 2)  # allows at most 3 parts → at most 2 replacements
+        return "/".join(parts)
+    
+    schl = _normalize_school(args.school_id)
+    if "/" not in schl:
         print("❌ Error: The school ID must contain '/'. Example: nova/fct")
         sys.exit(2)
     
@@ -907,7 +925,7 @@ def main() -> None:
     # Build regex patterns for demo and cover modes
     patterns = {}
     if demo or cover_only or args.force_school:
-        patterns = build_patterns(args.doctype, args.school_id, args.lang, args.mode, 
+        patterns = build_patterns(args.doctype, schl, args.lang, args.mode, 
                                   args.docstatus, args.sdgs, args.force_school)
         match args.mode:
             case 0: mode_name = "user"
@@ -929,7 +947,7 @@ def main() -> None:
     rc = run_make_in_temp(
         tmp_root=tmp_root,
         ltxprocessor=args.processor,
-        school_id=args.school_id,
+        school_id=schl,
         doctype=args.doctype,
         lang=args.lang,
         outdir=outdir,
