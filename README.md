@@ -170,7 +170,7 @@ If you don't find your school below, or if you want support for languages other 
 
 
 <table>
-<tr><th>ULISBOA FCUL</th><th>ULISBOA IST</th><th></th><th>UPORTO FCUL</th><th></th><th>NOVAthesis</th></tr>
+<tr><th>ULISBOA FCUL</th><th>ULISBOA IST</th><th>ULISBOA ISEG</th><th>UPORTO FCUL</th><th></th><th>NOVAthesis</th></tr>
 <tr><td align="center">
 
 | <img height="50" alt="ulisboa-fcul" src="https://github.com/user-attachments/assets/07930d8c-69fa-466f-8523-a0fd419b15a7" /> |
@@ -179,16 +179,15 @@ If you don't find your school below, or if you want support for languages other 
 
 </td><td align="center">
 
-
 | <img height="50" alt="ulisboa-ist" src="https://github.com/user-attachments/assets/fa9e1eb7-4b7c-4587-aa6e-ba23d8287ac1" />  |
 |:---------:|
 | [📦](https://github.com/novathesis/ulisboa-ist/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/ulisboa-ist.git) |
 
 </td><td align="center">
 
-|   |
+| <img height="50" alt="ulisboa-iseg" src="https://github.com/user-attachments/assets/594e1a5b-5e3c-4db0-94f1-d23e8e27bc20" />  |
 |:---------:|
-|  |
+| [📦](https://github.com/novathesis/ulisboa-iseg/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/ulisboa-iseg.git) |
 
 </td><td align="center">
 
