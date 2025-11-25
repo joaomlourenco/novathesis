@@ -119,58 +119,96 @@ This is the preferred option, especially for large projects.
 
 ### 4.1.2. Download NOVAthesis
 
-Preferably, download from the specially tailored version.  
+Search for your school below.
 
-If you school is not in the list, download the default/main repository..
+- 📦 —> Download ZIP file
+- <img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" /> -> Clone git repository with `git clone CLONE_LINK.git`
 
-#### 4.1.2.1 Specially tailored repositories
+If you don't find your school below, or if you want support for languages other than English and Portuguese, download the _NOVAthesis generic version_. 
+<img height="20" alt="novathesis" src="https://github.com/user-attachments/assets/9c19097a-a7b7-49ce-95ff-70694767b350" />
 
-To clone a tailored repository, use the command below, replacing REPO witht the link from *Clone Link*.
 
-```bash
-git clone CLONE_LINK.git
-```
+<table>
+<tr><th>NOVA FCT</th><th>NOVA FCT CBBI</th><th>NOVA FCT DI-ADC</th><th>NOVA FCSH</th><th>NOVA ITQB</th><th>NOVA ENSP</th></tr>
+<tr><td align="center">
 
-otherwise, follow the link to the ZIP file.
+| <img height="50" alt="nova-fct-phd" src="https://github.com/user-attachments/assets/a8203ab6-0ae9-4d17-8bc2-79f5d1657895" />   <img height="50" alt="nova-fct-msc" src="https://github.com/user-attachments/assets/7f36f3d6-c673-4e34-afa6-5a5c788713ab" /> |
+|:---------:|
+| [📦](https://github.com/novathesis/nova-fct/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/nova-fct.git) |
 
-* **Universidade Nova de Lisboa**
-  
-  * **nova-fct** — Faculdade de Ciências e Tecnologia
-      — [[Clone link]](https://github.com/novathesis/nova-fct) — [[Zip download]](https://github.com/novathesis/nova-fct/archive/refs/heads/main.zip)
-    
-    * **nova-fct-cbbi** — Mestrado em Biologia Computacional & Bioinformática
-      — [[Clone link]](https://github.com/novathesis/nova-fct-cbbi) — [[Zip download]](https://github.com/novathesis/nova-fct-cbbi/archive/refs/heads/main.zip)
-    
-    * **nova-fct-di-adc** —Dep. Informática / Atividade de Desenvolvimento Curricular— — [[Clone link]](https://github.com/novathesis/nova-fct-di-adc) — [[Zip download]](https://github.com/novathesis/nova-fct-di-adc/archive/refs/heads/main.zip)
-  
-  * **nova-fcsh** — Faculdade de Ciências Sociais e Humanas
-    — [[Clone link]](https://github.com/novathesis/nova-fcsh) — [[Zip download]](https://github.com/novathesis/nova-fcsh/archive/refs/heads/main.zip)
-  
-  * **nova-itqb** — Instituto de Tecnologia Química e Biológica António Xavier
-    — [[Clone link]](https://github.com/novathesis/nova-itqb) — [[Zip download]](https://github.com/novathesis/nova-itqb/archive/refs/heads/main.zip)
+</td><td align="center">
 
-* **Universidade de Lisboa**
-  
-  * **ulisboa-fcul** — Faculdade de Ciências da Universidade de Lisboa
-    — [[Clone link]](https://github.com/novathesis/ulisboa-fcul) — [[Zip download]](https://github.com/novathesis/ulisboa-fcul/archive/refs/heads/main.zip)
-  
-  * **ulisboa-ist** — Instituto Superior Técnico da Universidade de Lisboa
-    — [[Clone link]](https://github.com/novathesis/ulisboa-ist) — [[Zip download]](https://github.com/novathesis/ulisboa-ist/archive/refs/heads/main.zip)
+| <img height="50" alt="nova-fct-di-adc" src="https://github.com/user-attachments/assets/4bc5c85e-8674-4847-9fa9-960cef45d3eb" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/nova-fct-di-adc/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/nova-fct-di-adc.git) |
 
-* **Universidade do Porto**
-  
-  * **uporto-fcup** — Faculdade de Ciências da Universidade do Porto
-    — [[Clone link]](https://github.com/novathesis/uporto-fcup) — [[Zip download]](https://github.com/novathesis/uporto-fcupfcul/archive/refs/heads/main.zip)
+</td><td align="center">
 
-#### 4.1.2.2 Default/main NOVAthesis repository
+| <img height="50" alt="nova-fct-cbbi" src="https://github.com/user-attachments/assets/13c2c6aa-86e0-4ec9-8fe5-173661577cb4" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/nova-fct-cbbi/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/nova-fct-cbbi.git) |
 
-Clone the Git repository with the following command:
+</td><td align="center">
 
-```bash
-git clone --depth=1 --single-branch https://github.com/joaomlourenco/novathesis.git
-```
+| <img height="50" alt="nova-fcsh" src="https://github.com/user-attachments/assets/b4497919-4414-418d-977b-41fcf71b5976" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/nova-fcsh/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/nova-fcsh.git) |
 
-or [download the latest ZIP release](https://github.com/joaomlourenco/novathesis/archive/refs/heads/main.zip).
+</td><td align="center">
+
+| <img height="50" alt="nova-itqb" src="https://github.com/user-attachments/assets/dd2cebb4-afdc-45f2-afa2-4b4c3d62033a" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/nova-itqb/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/nova-itqb.git) |
+
+</td><td align="center">
+
+| <img height="50" alt="nova-ensp" src="https://github.com/user-attachments/assets/148cb148-b4e8-4fd4-a914-5f53a50d7134" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/nova-ensp/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/nova-ensp.git) |
+
+</td></tr> </table>
+
+
+<table>
+<tr><th>ULISBOA FCUL</th><th>ULISBOA IST</th><th></th><th>UPORTO FCUL</th><th></th><th>NOVAthesis</th></tr>
+<tr><td align="center">
+
+| <img height="50" alt="ulisboa-fcul" src="https://github.com/user-attachments/assets/07930d8c-69fa-466f-8523-a0fd419b15a7" /> |
+|:---------:|
+| [📦](https://github.com/novathesis/ulisboa-fcul/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/ulisboa-fcul.git) |
+
+</td><td align="center">
+
+
+| <img height="50" alt="ulisboa-ist" src="https://github.com/user-attachments/assets/fa9e1eb7-4b7c-4587-aa6e-ba23d8287ac1" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/ulisboa-ist/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/ulisboa-ist.git) |
+
+</td><td align="center">
+
+|   |
+|:---------:|
+|  |
+
+</td><td align="center">
+
+| <img height="50" alt="uporto-fcul" src="https://github.com/user-attachments/assets/11788b92-e608-4e25-8bf1-5aa98b11efc7" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/uporto-fcul/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/uporto-fcul.git) |
+
+</td><td align="center">
+
+|   |
+|:---------:|
+|  |
+
+</td><td align="center">
+
+| <img height="50" alt="novathesis" src="https://github.com/user-attachments/assets/9c19097a-a7b7-49ce-95ff-70694767b350" />  |
+|:---------:|
+| [📦](https://github.com/joaomlourenco/novathesis/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/joaomlourenco/novathesis.git) |
+
+</td></tr> </table>
 
 ### 4.1.3. Compile
 
@@ -201,7 +239,7 @@ latexmk -shell-escape -file-line-error -luapdf template
 
 ---
 
-## 4.2. Cloud Services (Overleaf)
+## 4.2. Cloud Services (Overleaf) Installation
 
 NOVAthesis is available as an official Overleaf template.  Despite the regular updates, the version in Overleaf, although fully operational, may be slightly outdated.
 
