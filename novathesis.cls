@@ -306,6 +306,7 @@
   print/webography/.new value   = {},      % empty means do not make a separate webography
   print/statement/.new toggle   = false,
   print/sdgs/list/.new list     = {},      % {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}
+  print/sgds/type/.new choice   = {inverted=i, normal=n, mono=m},   % any measure
   print/sdgs/size/.new dim      = {2cm},   % any measure
   print/sdgs/hspace/.new dim    = {5mm},   % any measure
   print/sdgs/vspace/.new dim    = {4mm},   % any measure
@@ -2866,27 +2867,20 @@ end
       \vfill%
       \raggedright\noindent%
       \textbf{\thesdgstring(\@LSHORT):}\\[1ex]
-      \def\@ntsep{}
       \noindent%\linespread{1.5}\selectfont
       \optionlistdo{/novathesis/print/sdgs/list}{%
         \stepcounter{sdgcnt}%
+        \edef\@sdgtype{\option{/novathesis/print/sgds/type}}
         \setbox0=\hbox{%
-          \@ntsep%
-          \includegraphics[width=\option{/novathesis/print/sdgs/size}]
-                          {NOVAthesisFiles/Images/sdg-\@LSHORT/sdg-\@LSHORT-##1}%
-        }%
-        \def\@ntsep{\hspace*{\@tempdima}}%
-        \sdgdim=\dimexpr\sdgdim + \wd0\relax
-        \ifdim \sdgdim > \textwidth\relax%
-          \\[\@tempdimb]
-          \sdgdim=\dimexpr\sdgdim - \wd0\relax
-          \setbox0=\hbox{%
+          % \typeout{FILE=NOVAthesisFiles/Images/sdg-\@LSHORT/##1-\XPTO}
             \includegraphics[width=\option{/novathesis/print/sdgs/size}]
-                            {NOVAthesisFiles/Images/sdg-\@LSHORT/sdg-\@LSHORT-##1}%
-          }%
-          \sdgdim=\wd0%
-        \fi%
-        \usebox0%
+                            {NOVAthesisFiles/Images/sdg-\@LSHORT/##1-\@sdgtype}%
+        }%
+        \ifdim \dimexpr\sdgdim + \wd0\relax > \textwidth\relax%
+            \\[\@tempdimb]
+            \sdgdim=\wd0%
+        \fi
+        \usebox0\hspace{\@tempdima}%
       }%
   }%
 }
