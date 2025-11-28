@@ -1900,7 +1900,7 @@ end
 
 \ifmaindoc{% only print if a main document
   \iftoggle{/novathesis/print/copyright}{% if copuyright toggle is on
-    \@nt@AddFileIfExists{copyright}{copyright.ldf}{%
+    \@nt@AddFileIfExists{copyright}{copyright.tex}{%
            {NOVAthesisFiles/Schools/\@UNIV/\@SCHL/}%
           ,{NOVAthesisFiles/Schools/\@UNIV/}%
           ,{NOVAthesisFiles/}%
