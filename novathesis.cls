@@ -602,22 +602,29 @@ end
 
 
 \options{/@nt/.new family,
-  lang/short/.new list={en, pt, fr, it, de, es, gr, uk},
-  % lang/current/.new choice={en, pt, fr, it, de, es, gr},
   lang/loaded/.new list={},
   % lang/shorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish, gr=greek},
-  fontenc/.new choice={en=T1, pt=T1, fr=T1, it=T1, de=T1, es=T1, gr=LGR, uk=T2A},
+  fontenc/.new choice={cat=T1, cz=T1, de=T1, dk=T1, en=T1, es=T1, fr=T1, gr=LGR, %
+                       it=T1, nl=T1, pl=T1, pt=T1, sk=T1, uk=T2A},
 }
 
+
 \newdata{langlong}
-\langlong(en):={english}
-\langlong(pt):={portuguese}
-\langlong(fr):={french}
-\langlong(it):={italian}
+\langlong(cat):={catalan}
+\langlong(cz):={czech}
 \langlong(de):={german}
+\langlong(dk):={danish}
+\langlong(en):={english}
 \langlong(es):={spanish}
+\langlong(fr):={french}
 \langlong(gr):={greek}
+\langlong(it):={italian}
+\langlong(nl):={dutch}
+\langlong(pl):={polish}
+\langlong(pt):={portuguese}
+\langlong(sk):={slovak}
 \langlong(uk):={ukrainian}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE FOLDERS PER CLASS
@@ -759,7 +766,7 @@ end
 %% ASSOCARRAY
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\initmemory}[2][\embrace{\thenotdefined(\@LANG@COVER)}]{%
-  \optionlistdo{/@nt/lang/short}{\csuse{#2}(##1):={#1}}}
+  \optionlistdo{/novathesis/lang/all}{\csuse{#2}(##1):={#1}}}
 
 
 % For PDF bookmakrs
@@ -790,7 +797,7 @@ end
 \newdata{sponsor}
 \newdata{andstring}
 \newdata{commastring}
-\optionlistdo{/@nt/lang/short}{%
+\optionlistdo{/novathesis/lang/all}{%
   \commastring(#1):={,\ }%
 }
 
