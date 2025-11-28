@@ -1,42 +1,65 @@
-%=================================================================
-% From https://tex.stackexchange.com/questions/26002/fit-text-into-given-box-by-adjusting-the-fontsize
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fitbox2}[2025/11/28 v1.1 Fit text into box ratio calculator]
 
-% \RequirePackage{fp}
-
+% Dependency for \pbox used to measure natural width/wrapping
 \RequirePackage{pbox}
+% Dependency for \csedef and expansion control
+\RequirePackage{etoolbox}
+% Dependency for math parsing (min function)
+\RequirePackage{pgfmath}
 
-\providecommand*{\DivideLengths}[2]{%
+% Internal helper: Divide length #1 by #2 and return a dimensionless ratio
+\newcommand*{\fb@divide}[2]{%
   \strip@pt\dimexpr\number\numexpr\number\dimexpr#1\relax*65536/\number\dimexpr#2\relax\relax sp\relax
 }
 
-\newsavebox{\@fbbox}
 \newcommand{\fitboxratio}[4]{%
-  % #1 = ratio
-  % #2 = width
-  % #3 = height
-  % #4 = text
-  \@tempdima=\dimexpr#2\relax%
-  \savebox{\@fbbox}{\pbox{\paperwidth}{#4}}%
-  \ifdim\wd\@fbbox=0pt\relax
-    \PackageError{fitbox2}{Invalid text width 0pt for text: “#4”}
+  % #1 = output macro name for the ratio
+  % #2 = target width
+  % #3 = target height
+  % #4 = text content to fit
+  %
+  % 1. Measure the target dimensions
+  \@tempdima=\dimexpr#2\relax % Target Width
+  \@tempdimb=\dimexpr#3\relax % Target Height
+  %
+  % 2. Typeset content into a box to measure natural dimensions
+  %    Using \pbox allows for line breaking if needed, up to \paperwidth.
+  \box0=\pbox{\paperwidth}{#4}%
+  %
+  % 3. Calculate Horizontal Ratio (Target Width / Content Width)
+  \ifdim\wd0>0pt
+    \edef\fb@hratio{\fb@divide{\@tempdima}{\wd0}}%
+  \else
+    \PackageWarning{fitbox2}{Content width is 0pt for text: "#4". Defaulting h-ratio to 1.}%
+    \def\fb@hratio{1.0}%
   \fi
-  \typeout{FITBOX boxwidth=\the\@tempdima\space textwidth=\the\wd\@fbbox\space}%
-  \edef\@hratio{\DivideLengths{\@tempdima}{\wd\@fbbox}}%
-  \typeout{FITBOX boxwidth=\the\@tempdima\space textwidth=\the\wd\@fbbox\space hratio=\@hratio}%
-  \@tempdima=\dimexpr#3\relax%
-  \typeout{FITBOX height=\the\@tempdima}%
-  \@tempdimb=\dimexpr\ht\@fbbox+\dp\@fbbox\relax%
-  \edef\@vratio{\DivideLengths{\@tempdima}{\@tempdimb}}%
-  \typeout{FITBOX boxheight=\the\@tempdima\space textheight=\the\@tempdimb\space ratio=\@vratio}%
-  \pgfmathparse{min(\@hratio,\@vratio)}%
-  \typeout{\pgfmathresult}
-% \PAUSETHIS
+  %
+  % 4. Calculate Vertical Ratio (Target Height / Content Height)
+  %    Height = height + depth (total vertical extent)
+  \@tempdimc=\dimexpr\ht0+\dp0\relax
+  \ifdim\@tempdimc>0pt
+    \edef\fb@vratio{\fb@divide{\@tempdimb}{\@tempdimc}}%
+  \else
+    \def\fb@vratio{1.0}%
+  \fi
+  %
+  % 5. Determine the limiting ratio (min of h and v) using PGF
+  \pgfmathparse{min(\fb@hratio,\fb@vratio)}%
+  %
+  % 6. Save result to the provided macro name (#1)
   \csedef{#1}{\pgfmathresult}%
 }
 
 \newcommand{\fitboxmin}[2]{%
-  % #1 = minimum (out)
-  % #2 = list (in)
+  % #1 = output macro name
+  % #2 = comma separated list of values (e.g., ratios)
+  %
+  % Finds the minimum value in a list.
+  % Uses \expanded (modern engine primitive) or falls back if needed.
+  % Assuming modern TeX Live (2019+), \expanded is safe.
   \pgfmathparse{min(\expanded{#2})}%
   \csedef{#1}{\pgfmathresult}%
 }
+
+\endinput
