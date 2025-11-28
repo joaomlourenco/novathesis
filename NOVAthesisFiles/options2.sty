@@ -654,6 +654,18 @@
 \newrobustcmd*\option@pushifnew[2]{\ifoptioncontains{#1}{#2}{}{\option@push{#1}{#2}}}
 
 
+% #1 = destination list path  (e.g. /b)
+% #2 = source list path       (e.g. /a)
+\newrobustcmd*\option@copylist[2]{%
+  \begingroup
+    % Turn list at #2 into a comma-separated macro
+    \letoptionlist{#2}\opt@copytmp
+    % And set list #1 to that comma-separated list
+    \option@setlist{#1}{\opt@copytmp}%
+  \endgroup
+}
+
+
 % --------------------------------------------------------
 % Choices: these functions are used for the choice type
 % --------------------------------------------------------
@@ -723,6 +735,37 @@
   \ifx\opt@firstchoicename\@empty
     \def\opt@firstchoicename{#1}%
   \fi
+}
+
+% #1 = destination choice path (e.g. /b)
+% #2 = source list path       (e.g. /a)
+% \newcommand*\option@copychoice[2]{%
+%   \begingroup
+%     % Get comma-separated contents of list #2 into \opt@copytmp
+%     \letoptionlist{#2}\opt@copytmp
+%     % Build a \options{#1/.new choice = {<list>}} call
+%     \xdef\option@tmp{%
+%       \noexpand\options{#1/.new choice = {\opt@copytmp}}%
+%     }%
+%   \endgroup
+%   % Execute outside the group
+%   \option@tmp
+% }
+
+% #1 = destination choice path (e.g. /b)
+% #2 = source list path       (e.g. /a)
+\newcommand*\option@copychoice[2]{%
+    % 1. Check if the source option (#2) exists
+    \ifoptiondefined{#2}{%
+       % 2. Extract the CSV list from the source option into a temporary macro
+       \letoptionlist{#2}\opt@templist
+       % 3. Define a temporary helper macro that takes the list content as an argument
+       \def\opt@setup##1{\optionsalso{#1/.new choice={##1}}}%
+       % 4. Use \expandnextsingle to expand \opt@templist once before passing it to \opt@setup
+       \expandnextsingle\opt@setup\opt@templist
+    }{%
+       \optionerror{#1}{Source list "#2" is not defined}%
+    }%
 }
 
 
@@ -1123,6 +1166,7 @@
   % /handlers/remove/.new operation   = \option@remove{#1}{#2},
   /handlers/size/.new operation*   = \option@listsize{#1},
   /handlers/concat/.new operation = \option@concat{#1}{#2},
+  /handlers/copy list/.new operation = \option@copylist{#1}{#2},
   %
   /handlers/new choice/.new handler={%
     \opt@choices@parse{#1}{#2}% sets \opt@choices & opt@firstchoicename
@@ -1149,6 +1193,7 @@
     \letoptionchoices{#1}\opt@choices
     choices=\option@showvalue{\opt@choices}%
   },
+  /handlers/copy choice/.new operation = \option@copychoice{#1}{#2},
   %
   /handlers/new color/.new handler=[black]{%
     %\opt@ensurexcolor{#1}%

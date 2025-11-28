@@ -285,10 +285,11 @@
                                       }%
                                    }},
   % LANGUAGES
-  lang/extra/.new list           = {},
-  lang/main/.new choice         = {en, pt, fr, it, de, es, gr, uk},
-  lang/cover/.new choice        = {en, pt, fr, it, de, es, gr, uk},
-  lang/copyright/.new choice    = {en, pt, fr, it, de, es, gr, uk},
+  lang/extra/.new list          = {},
+  lang/all/.new list            = {ca,cz,de,dk,en,es,fr,gr,it,nl,pl,pt,sk,uk},
+  lang/main/.copy choice        = {/novathesis/lang/all},
+  lang/cover/.copy choice       = {/novathesis/lang/all},
+  lang/copyright/.copy choice   = {/novathesis/lang/all},
   lang/.new cmd                 = {\optionsalso{/novathesis/lang/main=#1,
                                                 /novathesis/lang/cover=#1,
                                                 /novathesis/lang/copyright=#1}},
