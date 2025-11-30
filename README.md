@@ -119,17 +119,18 @@ This is the preferred option, especially for large projects.
 
 ### 4.1.2. Download NOVAthesis
 
-Preferably, download the tailored version for your school.  
+If listed, download the tailored version for your school.
 
-If you school does not have a tailored version, download the default/main repository.
+Otherwise, download the default/main repository.
 
-#### 4.1.2.2 Default/main NOVAthesis repository
 
-Clone the Git repository with the following command:
+### How to download
 
-```bash
-git clone --depth=1 --single-branch https://github.com/joaomlourenco/novathesis.git
-```
+- 📦 => Download ZIP archive;
+- <img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" /> => Clone the git repository.
+
+
+### The NOVAthesis repositories
 
 <table>
 <tr><th colspan="6">Universidade NOVA de Lisboa</th></tr>
