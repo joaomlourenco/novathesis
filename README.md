@@ -15,7 +15,6 @@ Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 
 <div>
 <img/ src="http://joaomlourenco.github.io/novathesis/novathesis-latex-logo-v5.jpg" width="400"/>
-Say thanks! ➡️ <img/ src="https://github.com/user-attachments/assets/8434a462-3599-4d3c-a2fd-04995db03fe3" width="100"/>
 </div>
 
 [![GitHub forks](https://img.shields.io/github/forks/joaomlourenco/novathesis.svg?style=social&label=Fork)](https://github.com/joaomlourenco/novathesis)
@@ -33,7 +32,6 @@ Say thanks! ➡️ <img/ src="https://github.com/user-attachments/assets/8434a46
 ![![Last commit](https://github.com/joaomlourenco/novathesis)](https://img.shields.io/github/last-commit/joaomlourenco/novathesis?color=blue)
 
 [![GitHub license](https://img.shields.io/badge/SAY%20THANKS-€5-orange.svg)](https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8)
---------
 
 ---
 
@@ -367,10 +365,17 @@ The Word templates (unmaintained) can be found in
   />
 </picture>
 
-**If you choose to use this project, please:**
 
-1. **Give it a star** by clicking the (⭐️) at the top right of the [project's page](https://github.com/joaomlourenco/novathesis).
-2. **Make a [small donation](https://paypal.me/novathesis)** (*pay me a beer!*)
+---
+
+# 12. Say thank you!
+
+1. **Star this repository** by clicking the (⭐️) at the top right of the [project's page](https://github.com/joaomlourenco/novathesis).
+2. **Make a [small donation](https://paypal.me/novathesis)** (*pay me a beer!*)  
 3. **Cite the NOVAthesis manual** in your thesis/dissertation (e.g., in the acknowledgments) with `\cite{novathesis-manual}` (the correct bibliographic reference will be added automatically).
 
---------
+<img src="https://github.com/user-attachments/assets/8434a462-3599-4d3c-a2fd-04995db03fe3" width="100" />
+
+[![GitHub license](https://img.shields.io/badge/SAY%20THANKS-€5-orange.svg)](https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8)
+
+---
