@@ -50,8 +50,9 @@ endif
 
 
 #————————————————————————————————————————————————————————————————————————————
-# LUA cache file
+# Cache files
 NEEDLUALATEX=.needlualatex
+KEEPDIR=.keep-dir
 
 #————————————————————————————————————————————————————————————————————————————
 # AUXDIR to avoid cluttering workspace
@@ -286,7 +287,7 @@ AUXFILES := $(filter-out $(GOODFILES),$(wildcard $(BASENAME).*)) $(NEEDLUALATEX)
 .ONESHELL:
 clean:
 	@ $(LTXMK) -c $(BASENAME)
-	@ rm -f $(AUXFILES) "*(1)*" $(NEEDLUALATEX)
+	@ rm -f $(AUXFILES) "*(1)*" $(NEEDLUALATEX) $(KEEPDIR)
 	@ rm -rf $(AUXDIR) _minted*
 	@ find . -name .DS_Store | xargs rm -rf
 	@ rm -rf $(wildcard /tmp/ntbuild-*)&
