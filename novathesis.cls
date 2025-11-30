@@ -158,21 +158,153 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% PACKAGE
+% UTILITIES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\IfBeginsWithAnyOf}[4]{%
-  \begingroup
-  \def\result{#4}% default = false branch
-  % Remove all spaces from the comma-separated list
-  \StrSubstitute{#2}{ }{}[\charlisttmp]%
-  \ntfor\myi:={\charlisttmp}\do{%
-    \IfBeginWith{#1}{\myi}{%
-      \def\result{#3}\ntforbreak
-    }{}%
-  }%
-  \expandafter\endgroup\result
-}
+\ExplSyntaxOn
+
+
+%=======================================================================
+% \IfBeginsWithAnyOf {text} {comma_sep_list_of_prefixes} {true} {false}
+%=======================================================================
+
+% Define a boolean to track if a match was found
+\bool_new:N \l__user_match_found_bool
+
+\NewDocumentCommand{\IfBeginsWithAnyOf}{ m m +m +m }
+  {
+    % 1. Reset the boolean flag
+    \bool_set_false:N \l__user_match_found_bool
+    
+    % 2. Map through the comma-separated list.
+    % \clist_map_inline:nn automatically trims spaces *around* items (foo, bar)
+    % but keeps spaces *inside* items (Hello World).
+    \clist_map_inline:nn { #2 }
+      {
+        % Check if the string (#1) starts with the current item (##1).
+        % We extract the first N characters of #1, where N is length of ##1.
+        \str_if_eq:eeT
+          { \str_range:nnn { #1 } { 1 } { \str_count:n { ##1 } } }
+          { ##1 }
+          {
+            % If match found: set flag to true and break the loop
+            \bool_set_true:N \l__user_match_found_bool
+            \clist_map_break:
+          }
+      }
+      
+    % 3. Execute the appropriate branch
+    \bool_if:NTF \l__user_match_found_bool { #3 } { #4 }
+  }
+
+
+
+
+
+%=======================================================================
+% \AddValidProcessor {univ[/school]} {comma_sep_list_of_processors}
+% \ValidateLtxProcessor {univ} {school} {degree}
+%=======================================================================
+
+% ---------------------------------------------------------
+% 1. Variables and Data Storage
+% ---------------------------------------------------------
+
+% Store the rules (Univ/School -> Allowed Engines)
+\prop_new:N \g_novathesis_proc_rules_prop
+
+% Store the current engine name (pdf, lua, or xe)
+\str_new:N \g_novathesis_current_engine_str
+\tl_new:N  \l_novathesis_found_rule_tl
+\bool_new:N \l_novathesis_rule_found_bool
+
+% Detect the current engine immediately
+\sys_if_engine_pdftex:T { \str_gset:Nn \g_novathesis_current_engine_str {pdf} }
+\sys_if_engine_luatex:T { \str_gset:Nn \g_novathesis_current_engine_str {lua} }
+\sys_if_engine_xetex:T  { \str_gset:Nn \g_novathesis_current_engine_str {xe} }
+
+% ---------------------------------------------------------
+% 2. User Interface to Add Rules (Replament for \validprocessor)
+% ---------------------------------------------------------
+
+% Syntax: \AddValidProcessor{key}{list,of,engines}
+\NewDocumentCommand{\AddValidProcessor}{ m m }
+  {
+    \prop_gput:Nnn \g_novathesis_proc_rules_prop { #1 } { #2 }
+  }
+
+% ---------------------------------------------------------
+% 3. The Main Validator
+% ---------------------------------------------------------
+
+% Message definition for the error
+\msg_new:nnnn { novathesis } { invalid-processor }
+  { Invalid~processor~for~"#1". }
+  { You~are~using~\g_novathesis_current_engine_str (la)tex,~but~"#1"~only~allows:~#2. }
+
+\NewDocumentCommand{\ValidateLtxProcessor}{ m m m }
+  {
+    % #1 = Univ, #2 = School, #3 = Degree
+    
+    % Reset flags
+    \bool_set_false:N \l_novathesis_rule_found_bool
+    
+    % -----------------------------------------------------
+    % A. Hierarchy Lookup (Univ/Sch/Deg -> Univ/Sch -> Univ)
+    % -----------------------------------------------------
+    
+    % 1. Check Univ/School/Degree
+    \prop_get:NeNTF \g_novathesis_proc_rules_prop { #1/#2/#3 } \l_novathesis_found_rule_tl
+      { \bool_set_true:N \l_novathesis_rule_found_bool }
+      {
+        % 2. Check Univ/School
+        \prop_get:NeNTF \g_novathesis_proc_rules_prop { #1/#2 } \l_novathesis_found_rule_tl
+          { \bool_set_true:N \l_novathesis_rule_found_bool }
+          {
+            % 3. Check Univ
+            \prop_get:NnNTF \g_novathesis_proc_rules_prop { #1 } \l_novathesis_found_rule_tl
+              { \bool_set_true:N \l_novathesis_rule_found_bool }
+              { 
+                % No rule found: Do nothing (Implicitly Valid)
+              }
+          }
+      }
+
+    % -----------------------------------------------------
+    % B. Validation Logic
+    % -----------------------------------------------------
+    
+    \bool_if:NT \l_novathesis_rule_found_bool
+      {
+        % Check if the current engine is in the allowed list
+        \clist_if_in:NVF \l_novathesis_found_rule_tl \g_novathesis_current_engine_str
+          {
+            % ERROR: Engine not found in allowed list
+            \msg_error:nnxx { novathesis } { invalid-processor } 
+              { #1/#2/#3 } 
+              { \clist_use:Nn \l_novathesis_found_rule_tl { ,~ } }
+          }
+      }
+  }
+
+% ---------------------------------------------------------
+% 4. Helper: Print current processor name (The \pdfprocessor equivalent)
+% ---------------------------------------------------------
+\NewDocumentCommand{\PrintProcessorName}{ }
+  {
+    \str_case:Vn \g_novathesis_current_engine_str
+      {
+        {pdf} { pdf(La)\TeX }
+        {lua} { lua(La)\TeX }
+        {xe}  { Xe(La)\TeX }
+      }
+  }
+
+\ExplSyntaxOff
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PACKAGE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % --------------------------------------------------------
 \def\@nt@saveabstractorder{}
@@ -215,44 +347,6 @@
 }
 
 
-\newdata{validprocessor}
-\validprocessor(uminho):={lua,xe}
-% \validprocessor(nova/itqb):={pdf,lua}
-\validprocessor(other/esep):={xe,lua}
-\newcommand{\@validate@ltx@processor}[3]{%
-% 1 = UNIV
-% 2 = SCHL
-% 3 = DGR
-  % \typeout{@validate@ltx@processor U=[#1] S=[#2] D=[#3]}\@VALIDATE@PROCESSOR
-  \newif\ifvalidprocessor%
-  \validprocessorfalse%
-  \datamatchtf{\@ltxproc}{processor}({#1/#2/#3},{#1/#2},{#1}){% LISTED
-    \@validate@ltx@processor@i(\@ltxproc)%
-  }{% UNLISTED
-    \validprocessortrue%
-  }%
-  % \ifdatadefined{processor}(#1/#2){\@validate@ltx@processor@i{\thevalidprocessor(#1/#2)}}{%
-  % \ifdatadefined{processor}(#1){\@validate@ltx@processor@i{\thevalidprocessor(#1)}}{%
-  %   \validprocessortrue%
-  % }}%
-  \ifvalidprocessor\else\ClassError{novathesis}{\pdfprocessor: Invalid processor for “#1/#2”.}{}\fi%
-}
-\newcommand{\@validate@ltx@processor@i}[1]{%
-% 1 = list of acceptable processors
-  \@for\myi:=\expanded{#1}\do{%
-    % \typeout{@validate@ltx@processor@i 1=[\myi]}\@VALIDATE@PROCESSOR@I
-    \IfStrEqCase{\myi}{%
-      {pdf}{\ifpdftex\validprocessortrue\fi}%
-      {lua}{\ifluatex\validprocessortrue\fi}%
-      {xe}{\ifxetex\validprocessortrue\fi}%
-    }[\ClassError{novathesis}{Invalid processor type “\myi”}{}]%
-  }%
-}
-\newcommand{\pdfprocessor}{%
-  \ifpdftex pdf(la)tex\fi%
-  \ifluatex lua(la)tex\fi%
-  \ifxetex xe(la)tex\fi%
-}
 
 \options{/novathesis/.new family,
   % DOCUMENT
@@ -268,7 +362,7 @@
   schoolgiven/.new value        = {},
   school/.new cmd               = {\optionsalso{/novathesis/schoolgiven=#1}%
                                    \StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR%
-                                   \@validate@ltx@processor{\@UNIV}{\@SCHL}{\@DEGREEACR}},
+                                  },
   school                        = nova/fct,
   % STYLES
   style/chapter/.new value      = bar,
@@ -973,7 +1067,10 @@ end
 \@ifmtarg{\@DEGREEACR}{\gdef\@DEGREEACR{\option{/novathesis/degreeacr/\@DOCCLASS}}}{}
 
 \bkmstring(1-1)={\thebkmstring(cover,\@LANG@COVER)}
+\bkmstring(1-2)={\thebkmstring(incover,\@LANG@COVER)}
 \bkmstring(2-1)={\thebkmstring(frontpage,\@LANG@COVER)}
+\bkmstring(2-2)={\thebkmstring(infrontpage,\@LANG@COVER)}
+\bkmstring(N-1)={\thebkmstring(inbackcover,\@LANG@COVER)}
 \bkmstring(N-2)={\thebkmstring(backcover,\@LANG@COVER)}
 \bkmstring(spine)={\thebkmstring(spine,\@LANG@COVER)}
 
@@ -1711,7 +1808,7 @@ end
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% LOADING SCHOOLS's “defaults.ldf”, including cover design
+%% Update Schoold's images folder
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ntfor\match:={\@UNIV,\@UNIV/\@SCHL}\do{%
     \IfFileExists{NOVAthesisFiles/Schools/\match/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
@@ -1739,6 +1836,8 @@ end
               {\input{NOVAthesisFiles/Schools/\@UNIV/\@SCHL/\match-defaults.ldf}\ntforbreak}{}%
   }
 [\PackageError{novathesis}{Missing file “NOVAthesisFiles/Schools/\@UNIV/\@SCHL-defaults.ldf”}{}]
+
+\ValidateLtxProcessor{\@UNIV}{\@SCHL}{\@DEGREEACR}
 
 \RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
 

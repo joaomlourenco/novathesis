@@ -7,6 +7,12 @@
 
 \typeout{NT FILE uminho/uminho-defaults.ldf}%
 
+
+%-----------------------------------------------------------------
+% Do not accept pdfLaTex
+%-----------------------------------------------------------------
+\AddValidProcessor{uminho}{lua,xe}
+
 %-----------------------------------------------------------------
 % memoir customization
 %-----------------------------------------------------------------
@@ -222,7 +228,7 @@
   \textbf{\theuniversity(pt)}%
   \\%
   \addfontfeature{LetterSpace=1.2}%
-  \newsgottlig\theschool(pt)%
+  \theschool(pt)%
 }
 
 % Author name
