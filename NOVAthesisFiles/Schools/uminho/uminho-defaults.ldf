@@ -9,6 +9,17 @@
 
 
 %-----------------------------------------------------------------
+% New global properties
+%-----------------------------------------------------------------
+\options{/novathesis,
+% UMINHO
+  uminho/copyrightmodifier/.new choice = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd},
+  uminho/skipblankcovers/.new toggle   = false,
+  uminho/signatureline/.new toggle     = true,
+}
+
+
+%-----------------------------------------------------------------
 % Do not accept pdfLaTex
 %-----------------------------------------------------------------
 \AddValidProcessor{uminho}{lua,xe}

@@ -13,6 +13,17 @@
 
 \typeout{NT FILE schools/nova/fct/nova-fct-defaults.ldf}%
 
+
+%-----------------------------------------------------------------
+% New global properties
+%-----------------------------------------------------------------
+\options{/novathesis,
+% NOVA/FCT
+  nova/fct/company/logo/.new value = {},
+  nova/fct/company/name/.new value = {},
+}
+
+
 \definecolor{fctlightgreen}{RGB}{67,140,74}%
 \definecolor{fctdarkgreen}{RGB}{67,140,74}%
 \definecolor{fctlightblue}{RGB}{67,120,188}%
