@@ -13,6 +13,17 @@
 
 \typeout{NT FILE schools/nova/fct/nova-fct-cbbi-defaults.ldf}%
 
+
+%-----------------------------------------------------------------
+% New global properties
+%-----------------------------------------------------------------
+\options{/novathesis,
+% NOVA/FCT
+  nova/fct/company/logo/.new value = {},
+  nova/fct/company/name/.new value = {},
+}
+
+
 % NOVA FCT specific customization
 \openany
 \ntsetup{doctype=msc}
