@@ -14,6 +14,15 @@
 \typeout{NT FILE nova/itqb/schl-defaults.ldf}%
 
 
+%-----------------------------------------------------------------
+% New global properties
+%-----------------------------------------------------------------
+\options{/novathesis,
+% NOVA/ITQB
+  nova/itqb/cover/color/.new choice = {gray, green},
+}
+
+
 % ITQB-NOVA specific customization
 \AtBeginDocument{% set paper as b5paper
   \newpdflayout{250mm}{176mm}%

@@ -413,26 +413,6 @@
   % DEBUG
   debug/.new list               = {},         % cover, index
 % SCHOOL specific customization
-% NOVA/FCT
-  nova/fct/company/logo/.new value              = {},
-  nova/fct/company/name/.new value              = {},
-% NOVA/ITQB
-  nova/itqb/cover/color/.new choice            = {gray, green},
-% UMINHO
-  uminho/copyrightmodifier/.new choice         = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd},
-  uminho/skipblankcovers/.new toggle           = false,
-  uminho/signatureline/.new toggle             = true,
-% ULISBOA/FMV
-  ulisboa/fmv/scientificarea/.new choice       = {C, MF, PASA, SA},
-  ulisboa/fmv/embargo/period/.new choice       = {I, 6, 12},
-  ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.},
-  ulisboa/fmv/reproduction/.new choice         = {I, P, N},
-% ULISBOA/IST
-  ulisboa/ist/classification/.new value        = {},
-  ulisboa/ist/funding/.new value               = {},
-% UPORTO/FC
-  uporto/fcup/classification/.new value        = {},
-  uporto/fcup/funding/.new value               = {},
 }
 
 
@@ -1820,24 +1800,29 @@ end
 %  UNIVERSITY/SCHOOL SPECIFIC MATERIALS
 %  configuration file “0-Config/9_<university>_<school>.tex”
 %============================================================
-\IfFileExists{\DIR@CONFIG/9_\@UNIV_\@SCHL.tex}
-     {\def\@ntsetuplevel{\@UNIV/\@SCHL/}\input{\DIR@CONFIG/9_\@UNIV_\@SCHL.tex}}
-     {\def\@ntsetuplevel{\@UNIV/}\InputIfFileExists{\DIR@CONFIG/9_\@UNIV.tex}{}{}}
-\def\@ntsetuplevel{}
-
-\InputIfFileExists{NOVAthesisFiles/Schools/\@UNIV/\@UNIV-defaults.ldf}{}
-    {\PackageError{novathesis}{Missing file “NOVAthesisFiles/Schools/\@UNIV/\@UNIV-defaults.ldf”}{}}
+\InputIfFileExists{NOVAthesisFiles/Schools/\@UNIV/\@UNIV-defaults.ldf}
+    {}
+    {\PackageError{novathesis}
+                  {Missing file “NOVAthesisFiles/Schools/\@UNIV/\@UNIV-defaults.ldf”}{}}
 
 \ntfor\match:={%
       \@UNIV-\@SCHL-\@DEGREEACR,%
       \@UNIV-\@SCHL%
   }\do{%
       \IfFileExists{NOVAthesisFiles/Schools/\@UNIV/\@SCHL/\match-defaults.ldf}
-              {\input{NOVAthesisFiles/Schools/\@UNIV/\@SCHL/\match-defaults.ldf}\ntforbreak}{}%
+          {\input{NOVAthesisFiles/Schools/\@UNIV/\@SCHL/\match-defaults.ldf}\ntforbreak}
+          {}%
   }
-[\PackageError{novathesis}{Missing file “NOVAthesisFiles/Schools/\@UNIV/\@SCHL-defaults.ldf”}{}]
+[\PackageError{novathesis}
+              {Missing file “NOVAthesisFiles/Schools/\@UNIV/\@SCHL-defaults.ldf”}
+              {}]
 
 \ValidateLtxProcessor{\@UNIV}{\@SCHL}{\@DEGREEACR}
+
+\IfFileExists{\DIR@CONFIG/9_\@UNIV_\@SCHL.tex}
+     {\def\@ntsetuplevel{\@UNIV/\@SCHL/}\input{\DIR@CONFIG/9_\@UNIV_\@SCHL.tex}}
+     {\def\@ntsetuplevel{\@UNIV/}\InputIfFileExists{\DIR@CONFIG/9_\@UNIV.tex}{}{}}
+\def\@ntsetuplevel{}
 
 \RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
 

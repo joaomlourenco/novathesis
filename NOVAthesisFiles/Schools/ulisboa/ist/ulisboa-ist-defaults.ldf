@@ -7,6 +7,16 @@
 
 \typeout{NT FILE ul/ist/defaults.ldf}%
 
+%-----------------------------------------------------------------
+% New global properties
+%-----------------------------------------------------------------
+\options{/novathesis,
+% ULISBOA/IST
+  ulisboa/ist/classification/.new value = {},
+  ulisboa/ist/funding/.new value        = {},
+}
+
+
 \ifdocfinal{\ntsetup{print/secondcover=true}}{}
 
 % Faculty / School

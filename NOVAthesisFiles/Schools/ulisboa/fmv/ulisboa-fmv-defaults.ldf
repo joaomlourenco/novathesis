@@ -8,6 +8,18 @@
 \typeout{NT FILE ulisboa/fmv/ulisboa-fmv-defaults.ldf}%
 
 
+%-----------------------------------------------------------------
+% New global properties
+%-----------------------------------------------------------------
+\options{/novathesis,
+% ULISBOA/FMV
+  ulisboa/fmv/scientificarea/.new choice       = {C, MF, PASA, SA},
+  ulisboa/fmv/embargo/period/.new choice       = {I, 6, 12},
+  ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.},
+  ulisboa/fmv/reproduction/.new choice         = {I, P, N},
+}
+
+
 \ntsetup{style/chapter=fmv}
 \ntsetup{lang/cover=pt}
 \ntsetup{print/secondcover=true}
