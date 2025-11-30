@@ -164,12 +164,13 @@ git clone --depth=1 --single-branch https://github.com/joaomlourenco/novathesis.
 |:---------:|
 | [📦](https://github.com/novathesis/nova-itqb/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-itqb.git) |
 
-</td></tr> </table>
+</td></tr>
+</table>
 
 
 <table>
-<tr><th colspan="3">Universidade de Lisboa</th><th colspan="1">Universidade do Porto</th><th colspan="1"></th><th colspan="1">NOVAtheis</th></tr>
-<tr><th>FCUL</th><th>IST</th><th>ISEG</th><th>FCUL</th><th></th><th>main repo</th></tr>
+<tr><th colspan="3">Universidade de Lisboa</th><th colspan="1">Universidade do Porto</th><th colspan="1">Universidade do Minho</th></tr>
+<tr><th>FCUL</th><th>IST</th><th>ISEG</th><th>FCUL</th><th>(all / todas)</th></tr>
 <tr><td align="center">
 
 | <img height="50" alt="ulisboa-fcul" src="https://github.com/user-attachments/assets/07930d8c-69fa-466f-8523-a0fd419b15a7" /> |
@@ -196,11 +197,17 @@ git clone --depth=1 --single-branch https://github.com/joaomlourenco/novathesis.
 
 </td><td align="center">
 
-|   |
+| <img height="50" alt="uminho" alt="uminho-phd" src="https://github.com/user-attachments/assets/b08da764-ba7a-4cde-b4f9-df17e87ff035" />  &nbsp; <img height="50" alt="uminho" alt="uminho-phd" src="https://github.com/user-attachments/assets/12f8d058-a74a-4426-bcfb-d637826b653f" />  |
 |:---------:|
-|  |
+| [📦](https://github.com/novathesis/uminho/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/uminho.git) |
 
-</td><td align="center">
+</td></tr> 
+</table>
+
+<table>
+<tr><th>NOVAthesis</th></tr>
+<tr><th>main repo</th></tr>
+<tr><td align="center">
 
 | <img height="50" alt="novathesis" src="https://github.com/user-attachments/assets/9c19097a-a7b7-49ce-95ff-70694767b350" />  |
 |:---------:|
