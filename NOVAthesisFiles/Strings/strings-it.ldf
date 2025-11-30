@@ -22,10 +22,12 @@
 
 \bkmstring(frontmatter,it)      := {Materiale preliminare}
 \bkmstring(backmatter,it)       := {Materiale finale}
-\bkmstring(cover,it)            := {Copertina}
-\bkmstring(frontpage,it)        := {Pagina del titolo}
+\bkmstring(cover,it)            := {Prima di copertina}
+\bkmstring(incover,it)          := {Seconda di copertina}
+\bkmstring(frontpage,it)        := {Frontespizio}
+\bkmstring(infrontpage,it)      := {Retro del frontespizio}
 \bkmstring(backcover,it)        := {Quarta di copertina}
-\bkmstring(spine,it)            := {Dorso}
+\bkmstring(inbackcover,it)      := {Terza di copertina}\bkmstring(spine,it)            := {Dorso}
 \bkmstring(copyright,it)        := {Copyright}
 \bkmstring(statement,it)        := {Dichiarazione}
 \bkmstring(dedicatory,it)       := {Dedica}

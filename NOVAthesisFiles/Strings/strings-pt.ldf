@@ -23,8 +23,11 @@
 \bkmstring(frontmatter,pt)      := {Materiais Preliminares}
 \bkmstring(backmatter,pt)       := {Materiais Finais}
 \bkmstring(cover,pt)            := {Capa}
-\bkmstring(frontpage,pt)        := {Folha de Rosto}
-\bkmstring(backcover,pt)        := {Quarta Capa}
+\bkmstring(incover,pt)          := {Segunda capa}
+\bkmstring(frontpage,pt)        := {Folha de rosto}
+\bkmstring(infrontpage,pt)      := {Verso da folha de rosto}
+\bkmstring(backcover,pt)        := {Contracapa}
+\bkmstring(inbackcover,pt)      := {Terceira capa}
 \bkmstring(spine,pt)            := {Lombada}
 \bkmstring(copyright,pt)        := {Copyright}
 \bkmstring(statement,pt)        := {Declaração}

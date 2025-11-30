@@ -22,9 +22,12 @@
 
 \bkmstring(frontmatter,fr)      := {Parties préliminaires}
 \bkmstring(backmatter,fr)       := {Parties finales}
-\bkmstring(cover,fr)            := {Couverture}
+\bkmstring(cover,fr)            := {Première de couverture}
+\bkmstring(incover,fr)          := {Deuxième de couverture}
 \bkmstring(frontpage,fr)        := {Page de titre}
+\bkmstring(infrontpage,fr)      := {Verso de la page de titre}
 \bkmstring(backcover,fr)        := {Quatrième de couverture}
+\bkmstring(inbackcover,fr)      := {Troisième de couverture}
 \bkmstring(spine,fr)            := {Dos du livre}
 \bkmstring(copyright,fr)        := {Droits d’auteur}
 \bkmstring(statement,fr)        := {Déclaration}

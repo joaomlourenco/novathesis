@@ -22,9 +22,12 @@
 
 \bkmstring(frontmatter,ca)      := {Materials preliminars}
 \bkmstring(backmatter,ca)       := {Materials finals}
-\bkmstring(cover,ca)            := {Coberta}
-\bkmstring(frontpage,ca)        := {Pàgina de títol}
-\bkmstring(backcover,ca)        := {Coberta posterior}
+\bkmstring(cover,cat)           := {Coberta}
+\bkmstring(incover,cat)         := {Segona de coberta}
+\bkmstring(frontpage,cat)       := {Portada}
+\bkmstring(infrontpage,cat)     := {Vers de la portada}
+\bkmstring(backcover,cat)       := {Contracoberta}
+\bkmstring(inbackcover,cat)     := {Tercera de coberta}
 \bkmstring(spine,ca)            := {Llombada}
 \bkmstring(copyright,ca)        := {Drets d’autor}
 \bkmstring(statement,ca)        := {Declaració}
