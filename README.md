@@ -119,48 +119,9 @@ This is the preferred option, especially for large projects.
 
 ### 4.1.2. Download NOVAthesis
 
-Preferably, download from the specially tailored version.  
+Preferably, download the tailored version for your school.  
 
-If you school is not in the list, download the default/main repository..
-
-#### 4.1.2.1 Specially tailored repositories
-
-To clone a tailored repository, use the command below, replacing REPO witht the link from *Clone Link*.
-
-```bash
-git clone CLONE_LINK.git
-```
-
-otherwise, follow the link to the ZIP file.
-
-* **Universidade Nova de Lisboa**
-  
-  * **nova-fct** — Faculdade de Ciências e Tecnologia
-      — [[Clone link]](https://github.com/novathesis/nova-fct) — [[Zip download]](https://github.com/novathesis/nova-fct/archive/refs/heads/main.zip)
-    
-    * **nova-fct-cbbi** — Mestrado em Biologia Computacional & Bioinformática
-      — [[Clone link]](https://github.com/novathesis/nova-fct-cbbi) — [[Zip download]](https://github.com/novathesis/nova-fct-cbbi/archive/refs/heads/main.zip)
-    
-    * **nova-fct-di-adc** —Dep. Informática / Atividade de Desenvolvimento Curricular— — [[Clone link]](https://github.com/novathesis/nova-fct-di-adc) — [[Zip download]](https://github.com/novathesis/nova-fct-di-adc/archive/refs/heads/main.zip)
-  
-  * **nova-fcsh** — Faculdade de Ciências Sociais e Humanas
-    — [[Clone link]](https://github.com/novathesis/nova-fcsh) — [[Zip download]](https://github.com/novathesis/nova-fcsh/archive/refs/heads/main.zip)
-  
-  * **nova-itqb** — Instituto de Tecnologia Química e Biológica António Xavier
-    — [[Clone link]](https://github.com/novathesis/nova-itqb) — [[Zip download]](https://github.com/novathesis/nova-itqb/archive/refs/heads/main.zip)
-
-* **Universidade de Lisboa**
-  
-  * **ulisboa-fcul** — Faculdade de Ciências da Universidade de Lisboa
-    — [[Clone link]](https://github.com/novathesis/ulisboa-fcul) — [[Zip download]](https://github.com/novathesis/ulisboa-fcul/archive/refs/heads/main.zip)
-  
-  * **ulisboa-ist** — Instituto Superior Técnico da Universidade de Lisboa
-    — [[Clone link]](https://github.com/novathesis/ulisboa-ist) — [[Zip download]](https://github.com/novathesis/ulisboa-ist/archive/refs/heads/main.zip)
-
-* **Universidade do Porto**
-  
-  * **uporto-fcup** — Faculdade de Ciências da Universidade do Porto
-    — [[Clone link]](https://github.com/novathesis/uporto-fcup) — [[Zip download]](https://github.com/novathesis/uporto-fcupfcul/archive/refs/heads/main.zip)
+If you school does not have a tailored version, download the default/main repository.
 
 #### 4.1.2.2 Default/main NOVAthesis repository
 
@@ -170,7 +131,60 @@ Clone the Git repository with the following command:
 git clone --depth=1 --single-branch https://github.com/joaomlourenco/novathesis.git
 ```
 
-or [download the latest ZIP release](https://github.com/joaomlourenco/novathesis/archive/refs/heads/main.zip).
+</td><td align="center">
+
+| <img height="50" alt="nova-itqb" src="https://github.com/user-attachments/assets/dd2cebb4-afdc-45f2-afa2-4b4c3d62033a" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/nova-itqb/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/nova-itqb.git) |
+
+</td><td align="center">
+
+| <img height="50" alt="nova-ensp" src="https://github.com/user-attachments/assets/148cb148-b4e8-4fd4-a914-5f53a50d7134" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/nova-ensp/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/nova-ensp.git) |
+
+</td></tr> </table>
+
+
+<table>
+<tr><th>ULISBOA FCUL</th><th>ULISBOA IST</th><th>ULISBOA ISEG</th><th>UPORTO FCUL</th><th></th><th>NOVAthesis</th></tr>
+<tr><td align="center">
+
+| <img height="50" alt="ulisboa-fcul" src="https://github.com/user-attachments/assets/07930d8c-69fa-466f-8523-a0fd419b15a7" /> |
+|:---------:|
+| [📦](https://github.com/novathesis/ulisboa-fcul/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/ulisboa-fcul.git) |
+
+</td><td align="center">
+
+| <img height="50" alt="ulisboa-ist" src="https://github.com/user-attachments/assets/fa9e1eb7-4b7c-4587-aa6e-ba23d8287ac1" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/ulisboa-ist/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/ulisboa-ist.git) |
+
+</td><td align="center">
+
+| <img height="50" alt="ulisboa-iseg" src="https://github.com/user-attachments/assets/594e1a5b-5e3c-4db0-94f1-d23e8e27bc20" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/ulisboa-iseg/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/ulisboa-iseg.git) |
+
+</td><td align="center">
+
+| <img height="50" alt="uporto-fcul" src="https://github.com/user-attachments/assets/11788b92-e608-4e25-8bf1-5aa98b11efc7" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/uporto-fcul/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/uporto-fcul.git) |
+
+</td><td align="center">
+
+|   |
+|:---------:|
+|  |
+
+</td><td align="center">
+
+| <img height="50" alt="novathesis" src="https://github.com/user-attachments/assets/9c19097a-a7b7-49ce-95ff-70694767b350" />  |
+|:---------:|
+| [📦](https://github.com/joaomlourenco/novathesis/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/joaomlourenco/novathesis.git) |
+
+</td></tr> </table>
 
 ### 4.1.3. Compile
 
