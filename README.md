@@ -131,23 +131,37 @@ Clone the Git repository with the following command:
 git clone --depth=1 --single-branch https://github.com/joaomlourenco/novathesis.git
 ```
 
+<table>
+<tr><th colspan="6">Universidade NOVA de Lisboa</th></tr>
+<tr><th>FCT</th><th>FCT CBBI</th><th>FCT DI-ADC</th><th>ENSP</th><th>ITQB</th></tr>
+<tr><td align="center">
+
+| <img height="50" alt="nova-fct-phd" src="https://github.com/user-attachments/assets/efcbc6b0-175f-43e4-866a-126ab7889ab8" /> &nbsp; <img height="50" alt="nova-fct-msc" src="https://github.com/user-attachments/assets/4b153d74-e4ec-4445-b16d-0a7fcea38d35" /> |
+|:---------:|
+| [📦](https://github.com/novathesis/nova-ensp/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/nova-ensp.git) |
+
+ </td><td align="center">
+
+ </td><td align="center">
+
+ </td><td align="center">
+  
+| <img height="50" alt="nova-ensp" src="https://github.com/user-attachments/assets/148cb148-b4e8-4fd4-a914-5f53a50d7134" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/nova-ensp/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/nova-ensp.git) |
+
 </td><td align="center">
 
 | <img height="50" alt="nova-itqb" src="https://github.com/user-attachments/assets/dd2cebb4-afdc-45f2-afa2-4b4c3d62033a" />  |
 |:---------:|
 | [📦](https://github.com/novathesis/nova-itqb/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/nova-itqb.git) |
 
-</td><td align="center">
-
-| <img height="50" alt="nova-ensp" src="https://github.com/user-attachments/assets/148cb148-b4e8-4fd4-a914-5f53a50d7134" />  |
-|:---------:|
-| [📦](https://github.com/novathesis/nova-ensp/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/42c29671-a5d1-465b-99ad-b12efa1f2ed0" />](https://github.com/novathesis/nova-ensp.git) |
-
 </td></tr> </table>
 
 
 <table>
-<tr><th>ULISBOA FCUL</th><th>ULISBOA IST</th><th>ULISBOA ISEG</th><th>UPORTO FCUL</th><th></th><th>NOVAthesis</th></tr>
+<tr><th colspan="3">Universidade de Lisboa</th><th colspan="1">Universidade do Porto</th><th colspan="1"></th><th colspan="1">NOVAtheis</th></tr>
+<tr><th>FCUL</th><th>IST</th><th>ISEG</th><th>FCUL</th><th></th><th>main repo</th></tr>
 <tr><td align="center">
 
 | <img height="50" alt="ulisboa-fcul" src="https://github.com/user-attachments/assets/07930d8c-69fa-466f-8523-a0fd419b15a7" /> |
