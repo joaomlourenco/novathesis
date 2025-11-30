@@ -473,14 +473,10 @@
   \if@endfor\else#4\fi
 }
 
-% --------------------------------------------------------
-% Print string between <...>
-\newcommand*{\embrace}[1]{#1}
-% \newcommand*{\embrace}[1]{$\langle$#1$\rangle$}
-
 
 % --------------------------------------------------------
-
+% Automatically download necessary fonts if using lualatex
+% --------------------------------------------------------
 \ifluatex
 \RequirePackage{luacode}
 \begin{luacode}
@@ -839,7 +835,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ASSOCARRAY
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\initmemory}[2][\embrace{\thenotdefined(\@LANG@COVER)}]{%
+\newcommand*{\initmemory}[2][\thenotdefined(\@LANG@COVER)]{%
   \optionlistdo{/novathesis/lang/all}{\csuse{#2}(##1):={#1}}}
 
 
@@ -948,11 +944,6 @@ end
 \newdata{margin}
 \newdata{frontpageimage}
 
-% \newcommand*{\@nt@newmemory}[1]{%
-%   \newdata{#1}%
-%   % \initmemory[\embrace{\MakeUppercase{#1}}]{#1}%
-% }
-% \forcsvlist{\@nt@newmemory}{university,school,department}
 \newdata{university}
 \newdata{school}
 \newdata{department}
