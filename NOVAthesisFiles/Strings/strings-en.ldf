@@ -22,9 +22,12 @@
 
 \bkmstring(frontmatter,en)      := {Front Matter}
 \bkmstring(backmatter,en)       := {Back Matter}
-\bkmstring(cover,en)            := {Cover}
-\bkmstring(frontpage,en)        := {Title Page}
+\bkmstring(cover,en)            := {Front Cover}
+\bkmstring(incover,en)          := {Inside \thebkmstring(cover,en)}
+\bkmstring(frontpage,en)        := {Front Page}
+\bkmstring(infrontpage,en)      := {Inside \thebkmstring(frontpage,en)}
 \bkmstring(backcover,en)        := {Back Cover}
+\bkmstring(inbackcover,en)      := {Inside \thebkmstring(backcover,en)}
 \bkmstring(spine,en)            := {Spine}
 \bkmstring(copyright,en)        := {Copyright}
 \bkmstring(statement,en)        := {Statement}

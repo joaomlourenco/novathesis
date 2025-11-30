@@ -23,9 +23,11 @@
 \bkmstring(frontmatter,nl)      := {Voorwerk}
 \bkmstring(backmatter,nl)       := {Nawerk}
 \bkmstring(cover,nl)            := {Omslag}
-\bkmstring(frontpage,nl)        := {Titelblad}
-\bkmstring(backcover,nl)        := {Achterzijde van de omslag}
-\bkmstring(spine,nl)            := {Rug}
+\bkmstring(incover,nl)          := {Binnenzijde omslag}
+\bkmstring(frontpage,nl)        := {Titelpagina}
+\bkmstring(infrontpage,nl)      := {Colofon}
+\bkmstring(backcover,nl)        := {Achterplat}
+\bkmstring(inbackcover,nl)      := {Binnenzijde achterplat}\bkmstring(spine,nl)            := {Rug}
 \bkmstring(copyright,nl)        := {Auteursrecht}
 \bkmstring(statement,nl)        := {Verklaring}
 \bkmstring(dedicatory,nl)       := {Opdracht}

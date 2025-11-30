@@ -22,9 +22,12 @@
 
 \bkmstring(frontmatter,uk)      := {Початкові матеріали}
 \bkmstring(backmatter,uk)       := {Завершальні матеріали}
-\bkmstring(cover,uk)            := {Обкладинка}
-\bkmstring(frontpage,uk)        := {Титульна сторінка}
-\bkmstring(backcover,uk)        := {Задня обкладинка}
+\bkmstring(cover,uk)            := {Перша сторінка обкладинки}
+\bkmstring(incover,uk)          := {Друга сторінка обкладинки}
+\bkmstring(frontpage,uk)        := {Титульний аркуш}
+\bkmstring(infrontpage,uk)      := {Зворот титульного аркуша}
+\bkmstring(backcover,uk)        := {Четверта сторінка обкладинки}
+\bkmstring(inbackcover,uk)      := {Третя сторінка обкладинки}
 \bkmstring(spine,uk)            := {Корінець}
 \bkmstring(copyright,uk)        := {Авторське право}
 \bkmstring(statement,uk)        := {Заява}

@@ -22,9 +22,12 @@
 
 \bkmstring(frontmatter,dk)      := {Indledende materiale}
 \bkmstring(backmatter,dk)       := {Afsluttende materiale}
-\bkmstring(cover,dk)            := {Forside}
-\bkmstring(frontpage,dk)        := {Titelblad}
+\bkmstring(cover,dk)            := {Omslag}
+\bkmstring(incover,dk)          := {Omslagets inderside}
+\bkmstring(frontpage,dk)        := {Titelside}
+\bkmstring(infrontpage,dk)      := {Kolofonside}
 \bkmstring(backcover,dk)        := {Bagside}
+\bkmstring(inbackcover,dk)      := {Bagsidens inderside}
 \bkmstring(spine,dk)            := {Ryg}
 \bkmstring(copyright,dk)        := {Ophavsret}
 \bkmstring(statement,dk)        := {Erklæring}

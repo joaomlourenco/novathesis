@@ -7,6 +7,16 @@
 
 \typeout{NT FILE other/esep/defaults.ldf}%
 
+
+%-----------------------------------------------------------------
+% Do not accept pdfLaTex
+%-----------------------------------------------------------------
+\AddValidProcessor{other/esp}{lua,xe}
+
+
+%-----------------------------------------------------------------
+% novathesis customization
+%-----------------------------------------------------------------
 \ntsetup{print/secondcover=true}    % Shall a second cover page be forced?
 \ntsetup{style/font=calibri}
 

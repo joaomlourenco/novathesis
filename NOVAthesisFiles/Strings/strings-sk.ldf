@@ -22,9 +22,12 @@
 
 \bkmstring(frontmatter,sk)      := {Úvodná časť}
 \bkmstring(backmatter,sk)       := {Záverečná časť a prílohy}
-\bkmstring(cover,sk)            := {Obálka}
+\bkmstring(cover,sk)            := {Predná obálka}
+\bkmstring(incover,sk)          := {Vnútorná strana prednej obálky}
 \bkmstring(frontpage,sk)        := {Titulný list}
+\bkmstring(infrontpage,sk)      := {Rub titulného listu}
 \bkmstring(backcover,sk)        := {Zadná obálka}
+\bkmstring(inbackcover,sk)      := {Vnútorná strana zadnej obálky}
 \bkmstring(spine,sk)            := {Chrbát knihy}
 \bkmstring(copyright,sk)        := {Autorské právo}
 \bkmstring(statement,sk)        := {Vyhlásenie}

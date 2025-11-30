@@ -22,9 +22,12 @@
 
 \bkmstring(frontmatter,pl)      := {Materiały wstępne}
 \bkmstring(backmatter,pl)       := {Materiały końcowe}
-\bkmstring(cover,pl)            := {Okładka}
+\bkmstring(cover,pl)            := {Pierwsza strona okładki}
+\bkmstring(incover,pl)          := {Druga strona okładki}
 \bkmstring(frontpage,pl)        := {Strona tytułowa}
-\bkmstring(backcover,pl)        := {Tylna okładka}
+\bkmstring(infrontpage,pl)      := {Metryka książki}
+\bkmstring(backcover,pl)        := {Czwarta strona okładki}
+\bkmstring(inbackcover,pl)      := {Trzecia strona okładki}
 \bkmstring(spine,pl)            := {Grzbiet}
 \bkmstring(copyright,pl)        := {Prawa autorskie}
 \bkmstring(statement,pl)        := {Oświadczenie}
