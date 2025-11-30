@@ -580,6 +580,10 @@ if __name__ == "__main__":
                         or "warning" in line.lower()
                     ):
                         important_lines.append(line)
+                    n = sum(s.startswith("Running") for s in important_lines)
+                    if n >= 6:
+                        Path('.Build/.n_lines.txt').write_text(str(line_count))
+                        
 
                 # Wait for process to complete and get return code
                 returncode = proc.wait()
@@ -777,7 +781,7 @@ def main() -> None:
     ap.add_argument(
         "--lines",
         type=int,
-        default=4400,
+        default=-1,
         help="Expected number of output lines for progress calculation (default: 4400)"
     )
     ap.add_argument(
@@ -820,10 +824,16 @@ def main() -> None:
     if demo:
         args.docstatus = "final"
         print(f"{BRIGHT_CYAN}🎯 Demo mode: setting docstatus to 'final'{RESET}")
+
+    # Adjust expected lines
+    lines = args.lines
+    cache_file=".Build/.n_lines.txt"
+    if lines == -1:
+        lines = int(Path(cache_file).read_text()) if Path(cache_file).exists() else 3500
     
     # Adjust expected lines for cover-only mode
     if cover_only:
-        args.lines = 2400
+        lines = 2400
         print(f"{BRIGHT_CYAN}📔 Cover mode: building cover-only version{RESET}")
     
     # Force -bdir for demo and cover modes if -bdir was omitted
@@ -952,7 +962,7 @@ def main() -> None:
         lang=args.lang,
         outdir=outdir,
         progress=args.progress,
-        total_lines=args.lines,
+        total_lines=lines,
         keep_bdir=args.keep_bdir,
         rename=args.rename_pdf
     )

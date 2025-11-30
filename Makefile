@@ -102,7 +102,7 @@ SCHL := $(if $(SCHL),$(SCHL),nova/fct)
 # Automatically use the right latex compiler and compile
 .PHONY: default
 default: validate-config check-env check-build
-	$(BUILD) $(SCHL)
+	$(BUILD) $(SCHL) ${BFLAGS}
 
 #————————————————————————————————————————————————————————————————————————————
 # The main targets
