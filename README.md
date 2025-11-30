@@ -232,7 +232,7 @@ latexmk -shell-escape -file-line-error -luapdf template
 
 **Important:** The template uses **`biber`** by default, not `bibtex`.  However, `bibtex` can be also be used.
 
-### 4.1.4. Configure
+### 4.1.4. Configure & Recompile
 
 **Carefully edit** the files inside the `0-Config/` directory to set your document metadata, e.g.:
 
@@ -249,11 +249,11 @@ latexmk -shell-escape -file-line-error -luapdf template
 
 NOVAthesis is available as an official Overleaf template.  Despite the regular updates, the version in Overleaf, although fully operational, may be slightly outdated.
 
-1. Download the ZIP (follow the instructions above in Section 4.1.2.1. Specially tailored repositories);
-2. [Upload it to Overleaf](www.overleaf.com);
+1. Follow the instructions above and **download the ZIP**;
+2. [Upload the ZIP to Overleaf](www.overleaf.com);
 3. Set `template.tex` as the root document;
 4. Compile;
-5. Follow the steps above (*4.1.4. Configure*) to customize you document.
+5. Follow the steps above (*4.1.4. Configure & Recompile*) to customize you document.
 
 **Warning:** You will need a paid Overleaf account. The template will not compile under Overleaf Free Plan, which has a 20‑second compilation limit.
 
