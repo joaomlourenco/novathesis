@@ -8,7 +8,7 @@
 \typeout{NT FILE FontStyles/newsgott.ldf}%
 
 \ifxeorlua{}{%
-  \ClassError{novathesis}{Font Style “calibri” is not compatible with pdfLaTeX. Please use LuaLaTeX}{Please use LuaLaTeX}%
+  \ClassError{novathesis}{Font Style “newsgott” is not compatible with pdfLaTeX. Please use LuaLaTeX}{Please use LuaLaTeX}%
 }
 
 \ntcheckfonts{NewsGotT}

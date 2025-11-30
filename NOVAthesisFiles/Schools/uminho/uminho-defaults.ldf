@@ -33,7 +33,7 @@
 %-----------------------------------------------------------------
 % novathesis customization
 %-----------------------------------------------------------------
-% \ntsetup{lang/cover=pt}
+\ntsetup{lang/cover=pt}
 \ntsetup{print/secondcover=true}
 \ntsetup{print/statement=true}
 \ntsetup{countsecondcover=true}
@@ -126,7 +126,7 @@
 }
 \NTAddToHook{abstract/mid}{%
   % \let\oldchapterheadstart=\chapterheadstart%
-  {{\noindent\newsgottbf\Large\thedoctitle(\@LSHORT,main)}\\[1ex]}%
+  {{\noindent\bfseries\Large\thedoctitle(\@LSHORT,main)}\\[1ex]}%
 }
 \NTAddToHook{abstract/post}{%
   \let\chapterheadstart=\oldchapterheadstart%
@@ -216,6 +216,8 @@
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\ntaddtocover{1-2}{}
+\ntaddtocover{N-1}{N-1}
 
 % University and School logos
 \ntaddtocover[vspace=-0.6mm,halign=l,height=2.6cm]{1-1}{%

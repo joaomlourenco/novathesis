@@ -4,7 +4,7 @@
 %%  NOVATHESIS — novathesis.cls
 %% ----------------------------------------------------------------------------
 %% 
-%% Version 7.6.2 (2025-11-30)
+%% Version 7.6.3 (2025-11-30)
 %% Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -473,14 +473,10 @@
   \if@endfor\else#4\fi
 }
 
-% --------------------------------------------------------
-% Print string between <...>
-\newcommand*{\embrace}[1]{#1}
-% \newcommand*{\embrace}[1]{$\langle$#1$\rangle$}
-
 
 % --------------------------------------------------------
-
+% Automatically download necessary fonts if using lualatex
+% --------------------------------------------------------
 \ifluatex
 \RequirePackage{luacode}
 \begin{luacode}
@@ -839,7 +835,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ASSOCARRAY
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\initmemory}[2][\embrace{\thenotdefined(\@LANG@COVER)}]{%
+\newcommand*{\initmemory}[2][\thenotdefined(\@LANG@COVER)]{%
   \optionlistdo{/novathesis/lang/all}{\csuse{#2}(##1):={#1}}}
 
 
@@ -948,11 +944,6 @@ end
 \newdata{margin}
 \newdata{frontpageimage}
 
-% \newcommand*{\@nt@newmemory}[1]{%
-%   \newdata{#1}%
-%   % \initmemory[\embrace{\MakeUppercase{#1}}]{#1}%
-% }
-% \forcsvlist{\@nt@newmemory}{university,school,department}
 \newdata{university}
 \newdata{school}
 \newdata{department}
@@ -1046,13 +1037,13 @@ end
 
 \@ifmtarg{\@DEGREEACR}{\gdef\@DEGREEACR{\option{/novathesis/degreeacr/\@DOCCLASS}}}{}
 
-\bkmstring(1-1)={\thebkmstring(cover,\@LANG@COVER)}
-\bkmstring(1-2)={\thebkmstring(incover,\@LANG@COVER)}
-\bkmstring(2-1)={\thebkmstring(frontpage,\@LANG@COVER)}
-\bkmstring(2-2)={\thebkmstring(infrontpage,\@LANG@COVER)}
-\bkmstring(N-1)={\thebkmstring(inbackcover,\@LANG@COVER)}
-\bkmstring(N-2)={\thebkmstring(backcover,\@LANG@COVER)}
-\bkmstring(spine)={\thebkmstring(spine,\@LANG@COVER)}
+\bkmstring(1-1)={\thebkmstring(cover,\@LANG@MAIN)}
+\bkmstring(1-2)={\thebkmstring(incover,\@LANG@MAIN)}
+\bkmstring(2-1)={\thebkmstring(frontpage,\@LANG@MAIN)}
+\bkmstring(2-2)={\thebkmstring(infrontpage,\@LANG@MAIN)}
+\bkmstring(N-1)={\thebkmstring(inbackcover,\@LANG@MAIN)}
+\bkmstring(N-2)={\thebkmstring(backcover,\@LANG@MAIN)}
+\bkmstring(spine)={\thebkmstring(spine,\@LANG@MAIN)}
 
 \@setabstractorder
 \ifdatadefined{abstractorder}(en){}{%
@@ -1536,7 +1527,7 @@ end
           \ntthesisfrontmatter% Before the main text (TOC, etc) — Roman page numbering
           \bookmarksetupnext{level=0}%
           \hypertarget{bmfrontmatter}{}%
-          \bookmark[level=0,dest=bmfrontmatter]{\thebkmstring(frontmatter,\@LANG@COVER)}%
+          \bookmark[level=0,dest=bmfrontmatter]{\thebkmstring(frontmatter,\@LANG@MAIN)}%
           \bookmarksetup{startatroot=false,level=1,keeplevel}%
           \iftoggle{/novathesis/print/frontmatter}{\ntprintlist{/@nt/print/#1}}{}%
     }%
@@ -1553,7 +1544,7 @@ end
           \bookmarksetup{level=0}%
           \bookmarksetupnext{level=0}%
           % \hypertarget{bmbackmatter}{}
-          % \bookmark[level=0,dest=bmbackmatter1]{\thebkmstring(backmatter,\@LANG@COVER)}
+          % \bookmark[level=0,dest=bmbackmatter1]{\thebkmstring(backmatter,\@LANG@MAIN)}
           \ntprintlist{/@nt/print/#1}%
     }%
     {backcover}{%
@@ -3135,7 +3126,7 @@ end
     \ifoptiondefined{/@nt/listof/\@matter}{
       \ifnum\value{\option{/@nt/listof/\@matter/@size}}>1\relax
         \hypertarget{bmlistof\@matter}{}%
-        \bookmark[level=0,dest=bmlistof\@matter]{\thebkmstring(listof,\@LANG@COVER)}%
+        \bookmark[level=0,dest=bmlistof\@matter]{\thebkmstring(listof,\@LANG@MAIN)}%
         \bookmarksetupnext{level=1}%
       \else
         \bookmarksetupnext{level=0}%

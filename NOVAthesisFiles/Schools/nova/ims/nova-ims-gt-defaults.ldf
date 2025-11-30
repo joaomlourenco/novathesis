@@ -28,16 +28,16 @@ for the Degree of \emph{\thedegreename(en)}}
 
 
 % University
-\university(pt):={\embrace{NONE}}
-\university(en):={\embrace{NONE}}
-\university(fr):={\embrace{NONE}}
-\university(it):={\embrace{NONE}}
+\university(pt):={NONE}
+\university(en):={NONE}
+\university(fr):={NONE}
+\university(it):={NONE}
 
 % Faculty / School
-\school(pt):={\embrace{NONE}}
-\school(en):={\embrace{NOVA Information Management School}}
-\school(fr):={\embrace{NONE}}
-\school(it):={\embrace{NONE}}
+\school(pt):={NONE}
+\school(en):={NOVA Information Management School}
+\school(fr):={NONE}
+\school(it):={NONE}
 
 % Comiittee printing order
 \committeeorder():={c,r,m}%
