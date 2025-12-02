@@ -375,7 +375,7 @@
   color/links/.new cmd          = {\@ifpackageloaded{hyperref}%
                                             {\hypersetup{allcolors=#1}}%
                                             {\PassOptionsToPackage{allcolors=#1}{hyperref}}},
-  color/gls/.new cmd             = {\AtEndPreamble{%\textcolor{#1}{##1}
+  glossaries/color/gls/.new cmd             = {\AtEndPreamble{%\textcolor{#1}{##1}
                                       \IfStrEq{#1}{None}{%
                                           \let\@glslink\glsplainhyperlink%
                                       }{%
@@ -412,7 +412,7 @@
   % MISC
   countsecondcover/.new toggle  = false,
   numberallpages/.new toggle    = false,
-  gnumberlist/.new toggle       = true,
+  glossaries/list/reverse/.new toggle       = true,
   tocintoc/.new toggle          = false,
   % DEBUG
   debug/.new list               = {},         % cover, index
@@ -1025,7 +1025,7 @@ end
 %     and HYPERLINK color
 \options{/novathesis/lang = \option{/novathesis/lang/main},
          /novathesis/color/links = DarkBlue,
-         /novathesis/color/gls = None,
+         /novathesis/glossaries/color/gls = None,
 }
 
 % \NTRunHook{memoir}
@@ -1237,8 +1237,8 @@ end
 }
 
 %--------------------------------
-% “Process gnumberlist” option - after glossaries
-\iftoggle{/novathesis/gnumberlist}{}{\setupglossaries{nonumberlist}}%
+% “Process glossaries/list/reverse” option - after glossaries
+\iftoggle{/novathesis/glossaries/list/reverse}{}{\setupglossaries{nonumberlist}}%
 \AtEndPreamble{\@loadglossaryfiles\makeglossaries}%
 
 %--------------------------------

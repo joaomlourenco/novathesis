@@ -115,14 +115,6 @@
 
 
 
-%-------------------------------------------------------------
-% \ntsetup{color/gls=SteelBlue} % The color for the glossary managed hyperlinks (glossary, symbols, etc)
-%                               %     Valid color names  —> look at "svgname" in the "xcolor"
-%                               %                           package documentation
-%                               % DEFAULT: black
-
-
-
 
 
 %%============================================================
@@ -138,8 +130,8 @@
 
 
 %-------------------------------------------------------------
-% \ntsetup{lang/extra={de,es}}   % List of additional languages are used in the document
-                                % besides the ones used in the abstracts (above)
+% \ntsetup{lang/extra={de,es}}  % List of additional languages are used in the document
+%                              % besides the ones used in the abstracts (above)
 %                               % following ISO 3166-1 (alfa-2)
 %                               %     [ en, pt, fr, it, de, es, gr —> valid languages
 %                               %     ]
@@ -148,9 +140,18 @@
 
 
 %-------------------------------------------------------------
-% \ntsetup{gnumberlist=false}   % Shall the glossary entries list the page numbers where
-%                               %     those entries are used?  (as a reverse index!)
-%                               % DEFAULT: gnumberlist=true
+% \ntsetup{glossaries/color/gls=SteelBlue} % The color for the glossary managed hyperlinks
+%                                          %      (glossary, symbols, etc)
+%                               %     Valid color names  —> look at "svgname" in the "xcolor"
+%                               %                           package documentation
+%                               % DEFAULT: black
+
+
+
+%-------------------------------------------------------------
+% \ntsetup{glossaries/list/reverse=false}   % Shall the glossary entries list the page numbers where
+%                                           %     those entries are used?  (as a reverse index!)
+%                               % DEFAULT: glossaries/list/reverse=true
 
 
 
