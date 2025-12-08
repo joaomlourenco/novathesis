@@ -108,9 +108,10 @@
 % -- Dynamic Box Variables --------------------------------------------------
 \clist_map_inline:nn { date, title, author, logo }
   {
-    \dim_new:c { l_nt_spine_box_#1_len_dim }        % width of the #1 box
-    \tl_new:c  { l_nt_spine_box_#1_angle_tl }       % rotation
+    \dim_new:c { l_nt_spine_box_#1_len_dim }        % width of th box
+    \dim_new:c { l_nt_spine_box_#1_fontstyle_tl }   % font customization
     \tl_new:c  { l_nt_spine_box_#1_bg_image_tl }    % per-box background image
+    \tl_new:c  { l_nt_spine_box_#1_bg_image_angle_tl } % image angle
     \tl_new:c  { l_nt_spine_box_#1_bg_color_tl }    % per-box background color
     \tl_new:c  { l_nt_spine_box_#1_bg_opacity_tl }  % per-box background opacity
     \tl_new:c  { l_nt_spine_box_#1_fg_color_tl }    % per-box text color
@@ -197,9 +198,12 @@
       {
         spine/box/#1/len           .dim_set:c = l_nt_spine_box_#1_len_dim,
         spine/box/#1/len           .initial:n = 3cm,
-
-        spine/box/#1/angle         .tl_set:c = l_nt_spine_box_#1_angle_tl,
-        spine/box/#1/angle         .initial:n = 0,
+        
+        spine/box/#1/extrasep      .dim_set:c = l_nt_spine_box_#1_extrasep_dim,
+        spine/box/#1/extrasep      .initial:n = 0mm,
+        
+        spine/box/#1/fontstyle     .tl_set:c  = l_nt_spine_box_#1_fontstyle_tl,
+        spine/box/#1/fontstyle     .initial:n = \sffamily,
         
         spine/box/#1/bg/color      .tl_set:c  = l_nt_spine_box_#1_bg_color_tl,
         spine/box/#1/bg/color      .initial:n = cyan,
@@ -207,8 +211,15 @@
         spine/box/#1/bg/opacity    .tl_set:c = l_nt_spine_box_#1_bg_opacity_tl,
         spine/box/#1/bg/opacity    .initial:n = 1,
 
-        spine/box/#1/image         .tl_set:c = l_nt_spine_box_#1_image_tl,
-        spine/box/#1/image         .initial:n = { },
+        spine/box/#1/bg/image      .tl_set:c = l_nt_spine_box_#1_bg_image_tl,
+        spine/box/#1/bg/image      .initial:n = { },
+
+        spine/box/#1/bg/image/angle       .tl_set:c = l_nt_spine_box_#1_bg_image_angle_tl,
+        spine/box/#1/bg/image/angle       .initial:n = 0,
+        spine/box/#1/bg/image/angle/phd   .tl_set:c = l_nt_spine_box_#1_bg_image_angle_phd_tl,
+        spine/box/#1/bg/image/angle/phd   .initial:n = { },
+        spine/box/#1/bg/image/angle/msc   .tl_set:c = l_nt_spine_box_#1_bg_image_angle_msc_tl,
+        spine/box/#1/bg/image/angle/msc   .initial:n = { },
         
         spine/box/#1/fg/color      .tl_set:c  = l_nt_spine_box_#1_fg_color_tl,
         spine/box/#1/fg/color      .initial:n = black,
@@ -227,26 +238,122 @@
       }
   }
 
+
+% -------------------------------------------------------------------------
+% 4. OptionSearch [prefix] {list,of,variables} [\result]
+% -------------------------------------------------------------------------
+
+% Temporary variables
+\tl_new:N \l_nt_search_result_tl
+\bool_new:N \l_nt_search_found_bool
+
+\msg_new:nnn { novathesis } { option-search-not-found }
+  {
+    No~non-empty~option~found~in~option~list~'#1'~
+    with~prefix~'#2'.
+  }
+
+
+\NewDocumentCommand{\OptionSearch}{ O{} m o }
+  {
+    % 1. Reset state
+    \tl_clear:N \l_nt_search_result_tl
+    \bool_set_false:N \l_nt_search_found_bool
+
+    % 2. Iterate through the comma-separated list (#2)
+    \clist_map_inline:nn { #2 }
+      {
+        % We check if the keys are actually variables or properties. 
+        % In expl3, keys usually set variables. 
+        % This implementation assumes the arguments map to VARIABLE NAMES (csnames).
+        
+        % Construct the full name: prefix (#1) + current item (##1)
+        % For your example: prefix="a/b/" item="d/e" -> check variable "\a/b/d/e"
+        
+        \cs_if_exist:cT { #1 ##1 }
+          {
+            \tl_set_eq:Nc \l_nt_search_result_tl { #1 ##1 }
+            % Check if that variable is NOT blank
+            \tl_if_blank:VF \l_nt_search_result_tl
+              {
+                \bool_set_true:N \l_nt_search_found_bool
+                \clist_map_break:
+              }
+          }
+      }
+    % 2b. If nothing found, issue an error
+    \bool_if:NF \l_nt_search_found_bool
+      {
+        \msg_error:nnxx
+          { novathesis } { option-search-not-found }
+          { #2 } { #1 }
+      }
+          
+    % 3. Output logic
+    \IfNoValueTF { #3 }
+      {
+        \tl_use:N \l_nt_search_result_tl
+      }
+      {
+        \tl_set_eq:NN #3 \l_nt_search_result_tl
+      }
+  }
+  
+
+
 % -------------------------------------------------------------------------
 % 4. Setup Command
 % -------------------------------------------------------------------------
-\NewDocumentCommand{\NTSetup}{ +m }
+\NewDocumentCommand{\NTSetup}{ o +m }
   {
-    \keys_set:nn { novathesis } { #1 }
+    \IfNoValueTF {#1}
+      {
+        \keys_set:nn { novathesis } { #2 }
+      }
+      {
+        \keys_set:nn { novathesis / #1 } { #2 }
+      }
   }
 
 % Default configuration for box lengths.
-\NTSetup{
-  spine/box/date/len    =  2.0cm,
-  spine/box/title/len   = 17.6cm,
-  spine/box/author/len  =  4.0cm,
-  spine/box/logo/len    =  4.1cm,
+\NTSetup[spine/box]{
+  date/len    =  1.5cm,
+  title/len   = 16.6cm,
+  author/len  =  5.0cm,
+  logo/len    =  4.1cm,
+  author/extrasep = 0.5cm,
 }
 
   
 % -------------------------------------------------------------------------
 % 5. Implementation: \PrintBookSpine
 % -------------------------------------------------------------------------
+
+% Sanitize strinf replacing ' ' with '~'
+\tl_new:N \l_nt_sanitize_title_tl
+
+% \NTSanitizeTitle {<macro>} [<sanitized>]
+\NewDocumentCommand \NTSanitizeTitle { m o }
+  {
+    % 1. Grab the *expansion* of the given macro into a scratch tl
+    %    e.g. \NTSanitizeTitle{\title}  → expand \title and store it
+    \tl_set:Nx \l_nt_sanitize_title_tl { #1 }
+
+    % 2. Replace all spaces with ~
+    \regex_replace_all:nnN { \s } { \c{nobreakspace} } \l_nt_sanitize_title_tl
+
+    % 3. Optional output argument
+    \IfNoValueTF{#2}
+      {
+        % No [<sanitized>] given → expand to sanitized value
+        \tl_use:N \l_nt_sanitize_title_tl
+      }
+      {
+        % [<sanitized>] given → set that macro to the sanitized value
+        \tl_set:NV #2 \l_nt_sanitize_title_tl
+      }
+  }
+
 
 % Temporary dimensions used during layout calculations
 \dim_new:N  \l_box_outer_width_dim
@@ -259,6 +366,7 @@
 
 \NewDocumentCommand{\PrintBookSpine}{}
   {
+    
     % 1. Adjust the stock (paper) size
     \newstocksize{layoutsize={\the\paperheight,\the\l_nt_spine_width_dim},keepmargins}
     
@@ -400,22 +508,27 @@
 
                   % 5. Per-box image processing:
                   \def\nt_spine_overlay_code{}%
-                  \edef\tmp_img{\use:c { l_nt_spine_box_##1_image_tl }}
+                  \edef\tmp_img{\use:c { l_nt_spine_box_##1_bg_image_tl }}
                   
                   \tl_if_blank:VF \tmp_img
                     {
                       \def\nt_spine_overlay_code{%
                         \node[
                           inner~sep=0pt,
-                          anchor=center
+                          anchor=center,
+                          opacity=1,
                         ] at (interior.center)
                           {
                               % A. Scale to height
+                              \OptionSearch [l_nt_spine_box_##1_bg_image_angle_] 
+                                            { \option{/novathesis/doctype}_tl,
+                                              tl,
+                                            }[\img_angle]
                               \setbox0=\hbox
                                {
                                  \includegraphics[height=\l_box_inner_height_dim,
-                                                  angle=\l_nt_spine_box_##1_angle_tl]
-                                                 {\use:c {l_nt_spine_box_##1_image_tl}}
+                                                  angle=\img_angle,
+                                 ]{\tmp_img}
                                }
 
                                 % Measure
@@ -429,8 +542,8 @@
                                       \setbox0=\hbox
                                        {
                                          \includegraphics[width=\l_box_inner_width_dim,
-                                                  angle=\l_nt_spine_box_##1_angle_tl]
-                                                         {\use:c {l_nt_spine_box_##1_image_tl}}
+                                                          angle=\img_angle,
+                                         ]{\tmp_img}
                                        }
                                        \dim_set:Nn \l_imgwidth_dim  { \wd0 }
                                        \dim_set:Nn \l_imgheight_dim { \ht0 + \dp0 }
@@ -454,6 +567,7 @@
                   \begin{tcolorbox}[
                       enhanced,              % enable overlays
                       fit,                   % allow content to adjust
+                      fit~basedim=20pt,
                       before~upper={
                         \hyphenpenalty=10000
                         \exhyphenpenalty=10000
@@ -466,8 +580,11 @@
                       arc=0pt,
                       boxrule=0pt,
                       frame~hidden,
+                      % tcbox~raise~base,
+                      box~align=base,
                       % colback=\use:c { l_nt_spine_box_##1_bg_color_tl },
                       interior~hidden,
+                      fontupper=\use:c { l_nt_spine_box_##1_fontstyle_tl },
                       coltext=\use:c { l_nt_spine_box_##1_fg_color_tl },
                       % Box dimensions
                       width=\use:c { l_nt_spine_box_##1_len_dim }
@@ -481,13 +598,18 @@
                       valign=\use:c { l_nt_spine_box_##1_valign_tl },
                       % Overlay
                       overlay={\nt_spine_overlay_code},
-                  ]
-                      \use:c { l_nt_spine_##1_tl }
+                  ]                      
+                      \setbox0=\hbox{Ap}
+                      \raisebox{0.5\dp0}{\vphantom{Ap}}
+                      % \NTSanitizeTitle
+                      { \use:c { l_nt_spine_##1_tl } }
                   \end{tcolorbox}
               };
                 
               % 7. Advance the horizontal cursor
-              \dim_add:Nn \l_tmpb_dim { \use:c { l_nt_spine_box_##1_len_dim } + \l_nt_spine_boxsep_dim }
+              \dim_add:Nn \l_tmpb_dim { \use:c { l_nt_spine_box_##1_len_dim } 
+                                        + \l_nt_spine_boxsep_dim + 
+                                        + \use:c { l_nt_spine_box_##1_extrasep_dim } }
            }
         \end{tikzpicture}
       };

@@ -134,18 +134,35 @@
 \newdata{dissertationplan}
 \dissertationplan(mscplan,en):={Dissertation Plan}
 \dissertationplan(phdplan,en):={Thesis Plan}
-\dissertationplan(phdprop,en):={Thesis Proposal}
+\dissertationplan(phdprop,en):={FaculdadeThesis Proposal}
 \dissertationplan(mscplan,pt):={Plano de Dissertação}
 \dissertationplan(phdplan,pt):={Plano de Tese}
 \dissertationplan(phdprop,pt):={Proposta de Tese}
 
-\AtBeginDocument{%
-  \NTSetup{
-      spine/bg/image  = nova-fct-spine-green,
-      spine/angle     = -90,
-      % spine/box/logo/bg/image = {\thespine(logo,\@DEGREEACR)}
-  }
+\SpineSetup[%
+  \def\spnimg{nova-fct-spine-red}%
+  \def\spnlogo{\thespine(logo,msc)}
+  \ifmscdoc{\def\spnimg{nova-fct-spine-blue}}{}%
+  \ifphddoc{%
+    \def\spnimg{nova-fct-spine-green}%
+    \def\spnlogo{\thespine(logo,phd)}%
+  }{}%
+]{%
+  width                       = 1cm,
+  angle                       = -90,
+  title                       = { \thedoctitle(\@LANG@COVER,spine) },
+  author                      = { \thedocauthor(name,short) },
+  bg/image                    = \spnimg,
+  box/logo/bg/image           = \spnlogo,
+  % box/logo/bg/image/angle     = { \@myangle },
+  box/logo/bg/image/angle/phd = {-90},
+  box/logo/bg/image/angle/msc = {0},
+  box/date/fg/color           = white,
+  box/title/fg/color          = white,
+  box/author/fg/color         = white,
+  % debug,
 }
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -180,7 +197,7 @@
 \ntaddtocover[tikz]{1-1,2-1}{%
   \node[anchor=north west, text width=10cm] 
     at ($(current page.north west) + (96.45mm,-11.4mm)$)
-    { \color{white}\fontsize{14}{14}\sffamily%
+    { \fontsize{14}{14}\sffamily%
       \let\oldnewline=\\%
       \def\\{\oldnewline[2pt]}%
       \THEdepartment(\@LANG@COVER)
@@ -262,24 +279,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% COVER 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% LOGOS
-% \ntaddtocover[vspace=1.0mm,hspace=-2.6cm,halign=l,height=2.0cm,valign=t]{2-1}{%
-%   % \makebox[0pt]{\color{black!50}\rule{15cm}{5cm}}
-%   \vspace*{-4mm}%
-%   \begin{minipage}[b]{8.7cm}%
-%   \includegraphics[width=2.15cm]{\expanded{\theuniversity(logo)}}%
-%   \hspace{3.5mm}\rule{0.15mm}{2cm}\hspace{5mm}%
-%   \raisebox{2.5mm}{\includegraphics[width=3.52cm]{\expanded{\theschool(logo)}}}%
-%   \end{minipage}%
-%   \raisebox{9mm}{%
-%   \begin{minipage}[b]{9cm}%
-%     \fontsize{14}{14}\selectfont%
-%     \THEdepartment(\@LANG@COVER)%
-%   \end{minipage}%
-%   }\\[4ex]%
-%   \hrule width 19cm%
-% }
 
 
 \ntaddtocover[tikz]{2-1}{%

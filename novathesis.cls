@@ -995,6 +995,14 @@ end
 % }
 
 
+\newcommand{\SpineSetup}[2][]{%
+  \NTAddToHook{print/spine/pre}{%
+    #1%
+    \NTSetup[spine] {#2}%
+  }%
+}
+
+
 % --------------------------------------------------------
 % Pass the remaining options to memoir
 % \letoptionlist{/options/remaining}\nt@remaining
@@ -1035,7 +1043,6 @@ end
 \def\@LANG@MAIN{\option{/novathesis/lang/main}}
 \def\@LANG@MAIN@LONG{\thelanglong(\@LANG@MAIN)}
 
-\@ifmtarg{\@DEGREEACR}{\gdef\@DEGREEACR{\option{/novathesis/degreeacr/\@DOCCLASS}}}{}
 
 \bkmstring(1-1)={\thebkmstring(cover,\@LANG@MAIN)}
 \bkmstring(1-2)={\thebkmstring(incover,\@LANG@MAIN)}
@@ -2077,6 +2084,7 @@ end
 \newcommand{\ntprintspine}{%
   \pagenumbering{roman}%
   \setcounter{page}{0}
+  \NTRunHook{print/spine/pre}%
   \iffileadded[spine]{cover}{%
     \optionlistdo{/@nt/file/cover/spine}{%
       \bgroup\thispagestyle{empty}%
@@ -2084,6 +2092,7 @@ end
       \egroup\clearforchapter%
     }%
   }{\PrintBookSpine\clearforchapter}%
+  \NTRunHook{print/spine/post}%
 }
 
 \newcommand{\ntprintbackcover}{%
