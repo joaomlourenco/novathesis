@@ -142,7 +142,9 @@
 \SpineSetup[%
   \def\spnimg{nova-fct-spine-red}%
   \def\spnlogo{\thespine(logo,msc)}
-  \ifmscdoc{\def\spnimg{nova-fct-spine-blue}}{}%
+  \ifmscdoc{%
+    \def\spnimg{nova-fct-spine-blue}%
+  }{}%
   \ifphddoc{%
     \def\spnimg{nova-fct-spine-green}%
     \def\spnlogo{\thespine(logo,phd)}%

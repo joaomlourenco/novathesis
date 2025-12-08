@@ -360,8 +360,9 @@
   abstractorder/.new cmd        = {\appto\@nt@saveabstractorder{{#1},}},%
   % SCHOOL
   schoolgiven/.new value        = {},
-  school/.new cmd               = {\optionsalso{/novathesis/schoolgiven=#1}%
-                                   \StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR%
+  school/.new cmd               = {\optionsalso{/novathesis/schoolgiven=#1}
+                                   \StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR
+                                   \IfStrEq{\@DEGREEACR}{}{\def\@DEGREEACR{\option{/novathesis/doctype}}}{}
                                   },
   school                        = nova/fct,
   % STYLES
