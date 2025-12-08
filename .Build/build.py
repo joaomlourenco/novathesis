@@ -206,7 +206,7 @@ def process_file(p: Path, patterns: Dict[re.Pattern, Callable[[str], str]]) -> i
         except Exception as e:
             print(f"{RED}❌ Failed to write {p}: {e}{RESET}")
     return changed
-def _update_progress_bar(current_line: int, total_lines: int, bar_length: int = 40) -> None:
+def _update_progress_bar(current_line: int, total_lines: int, bar_length: int = 37) -> None:
     """
     Update and display a progress bar based on the current line count.
     Args:
