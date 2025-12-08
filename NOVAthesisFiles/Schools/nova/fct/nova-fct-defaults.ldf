@@ -139,6 +139,14 @@
 \dissertationplan(phdplan,pt):={Plano de Tese}
 \dissertationplan(phdprop,pt):={Proposta de Tese}
 
+\AtBeginDocument{%
+  \NTSetup{
+      spine/bg/image  = nova-fct-spine-green,
+      spine/angle     = -90,
+      % spine/box/logo/bg/image = {\thespine(logo,\@DEGREEACR)}
+  }
+}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover pages

@@ -1992,11 +1992,11 @@ end
 }{}
 
 \ifoptionequal{/novathesis/spine/layout}{no}{}{%
-  \@nt@InputIfFileExists{spine.tex}{%
+  \@nt@InputIfFileExists{novathesis-spine.sty}{%
            {NOVAthesisFiles/Schools/\@UNIV/\@SCHL/}%
           ,{NOVAthesisFiles/Schools/\@UNIV/}%
           ,{NOVAthesisFiles/}%
-  }[][\ClassError{novathesis}{No “spine” file found.}{}]%
+  }[][\ClassError{novathesis}{No “novathesis-spine” file found.}{}]%
   \AtEndDocument{\csuse{ntprintspine}}%
 }
 
@@ -2083,7 +2083,7 @@ end
       \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
       \egroup\clearforchapter%
     }%
-  }{\@ntprintspine\clearforchapter}%
+  }{\PrintBookSpine\clearforchapter}%
 }
 
 \newcommand{\ntprintbackcover}{%
