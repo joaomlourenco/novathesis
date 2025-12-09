@@ -360,7 +360,7 @@
   abstractorder/.new cmd        = {\appto\@nt@saveabstractorder{{#1},}},%
   % SCHOOL
   schoolgiven/.new value        = {},
-  school/.new cmd               = {\optionsalso{/novathesis/schoolgiven=#1}
+  school/.new cmd               = {\optionsalso{/novathesis/schoolgiven=#1}%
                                    \StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR
                                    \IfStrEq{\@DEGREEACR}{}{\def\@DEGREEACR{\option{/novathesis/doctype}}}{}
                                   },
@@ -2960,14 +2960,17 @@ end
       \vfill%
       \raggedright\noindent%
       \textbf{\thesdgstring(\@LSHORT):}\\[1ex]
+      \edef\@sdgtype{\option{/novathesis/print/sgds/type}}
+      \IfFileExists{NOVAthesisFiles/Images/sdg-\@LSHORT/1-\@sdgtype.pdf}
+          {\def\@spnfolder{NOVAthesisFiles/Images/sdg-\@LSHORT}}
+          {\def\@spnfolder{NOVAthesisFiles/Images/sdg-en}}
       \noindent%\linespread{1.5}\selectfont
       \optionlistdo{/novathesis/print/sdgs/list}{%
         \stepcounter{sdgcnt}%
-        \edef\@sdgtype{\option{/novathesis/print/sgds/type}}
         \setbox0=\hbox{%
           % \typeout{FILE=NOVAthesisFiles/Images/sdg-\@LSHORT/##1-\XPTO}
             \includegraphics[width=\option{/novathesis/print/sdgs/size}]
-                            {NOVAthesisFiles/Images/sdg-\@LSHORT/##1-\@sdgtype}%
+                            {\@spnfolder/##1-\@sdgtype}%
         }%
         \ifdim \dimexpr\sdgdim + \wd0\relax > \textwidth\relax%
             \\[\@tempdimb]
