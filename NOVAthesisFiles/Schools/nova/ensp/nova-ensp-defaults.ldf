@@ -26,37 +26,6 @@
 % Comiittee printing order
 \committeeorder():={c,r,m}%
 
-% Cover background images
-% \thesiscover(phd,front,image):={}
-% \thesiscover(phdplan,front,image):={}
-% \thesiscover(phdprop,front,image):={}
-% \thesiscover(msc,front,image):={}
-% \thesiscover(mscplan,front,image):={}
-% \thesiscover(bsc,front,image):={}
-% \thesiscover(plain,front,image):={}
-% \thesiscover(phd,cdfront,image):={}
-% \thesiscover(phd,cdinlay,image):={}
-% \thesiscover(phdplan,cdfront,image):={}
-% \thesiscover(phdplan,cdinlay,image):={}
-% \thesiscover(phdprop,cdfront,image):={}
-% \thesiscover(phdprop,cdinlay,image):={}
-% \thesiscover(msc,cdfront,image):={}
-% \thesiscover(msc,cdinlay,image):={}
-% \thesiscover(mscplan,cdfront,image):={}
-% \thesiscover(mscplan,cdinlay,image):={}
-% \thesiscover(bsc,cdfront,image):={}
-% \thesiscover(bsc,cdinlay,image):={}
-% \thesiscover(plain,cdfront,image):={}
-% \thesiscover(plain,cdinlay,image):={}
-\thesiscover(logo,1):={width=4cm,nova-ensp-logo}
-
-
-% Spine info
-\spine(logo)={\theuniversity(logo)}
-% \spine(author)={\thedocauthor(name,short)}
-% \spine(title)={\THEdoctitle(\@LANG@COVER,main)}
-% \spine(year)={\thentdocdate(year)}
-
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
 \margin(screen,bottom):={2.5cm}
@@ -73,6 +42,15 @@
 \margin(cover,left):={1.0cm}
 \margin(cover,right):={1.0cm}
 
+
+% Spine info
+% \spine(logo)={\theuniversity(logo)}
+
+\SpineSetup[%
+]{%
+  box/logo/bg/image           = {\theuniversity(logo)},
+  % debug,
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
