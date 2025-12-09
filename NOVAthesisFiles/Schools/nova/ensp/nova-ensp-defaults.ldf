@@ -49,6 +49,7 @@
 \SpineSetup[%
 ]{%
   box/logo/bg/image           = {\theuniversity(logo)},
+  box/logo/bg/image/angle     = {-90},
   % debug,
 }
 

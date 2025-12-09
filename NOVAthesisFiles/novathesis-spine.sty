@@ -137,7 +137,7 @@
     spine/title    .initial:n   = { \thedoctitle(\@LANG@COVER,spine) },
 
     spine/date     .tl_set:N    = \l_nt_spine_date_tl,
-    spine/date     .initial:n   = { \the\year },
+    spine/date     .initial:n   = { \thentdocdate(submission,year) },
 
     spine/boxsep  .dim_set:N   = \l_nt_spine_boxsep_dim,
     spine/boxsep  .initial:n   = { 5mm },
