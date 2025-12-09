@@ -26,16 +26,6 @@
 % Comiittee printing order
 \committeeorder():={c,r,a,m}%
 
-% Cover background images
-\thesiscover(phd,bgcolor):={white}
-\thesiscover(msc,bgcolor):={white}
-
-% Spine info
-\spine(logo)={ulisboa-fc-logo}
-\spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\@LANG@COVER,main)}
-\spine(year)={\thentdocdate(submission,year)}
-
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
 \margin(screen,bottom):={2.5cm}
@@ -95,6 +85,16 @@
 \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
 \dissertationstring(phd,en)={Document written to earn the degree of %
 \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
+
+% Spine info
+\SpineSetup[%
+]{%
+  box/logo/bg/image           = {ulisboa-fc-logo},
+  box/logo/bg/image/angle     = {-90},
+  box/title/len   = 18.6cm,
+  box/logo/len    =  2.1cm,
+  % debug,
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
