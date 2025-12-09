@@ -31,11 +31,6 @@
 % \thesiscover(bsc,1-1,image):={}
 % \thesiscover(plain,1-1,image):={}
 
-% Spine info
-\spine(logo)={nova-fcsh-insignia-color}
-% \spine(author)={\thedocauthor(name,short)}
-% \spine(title)={\thedoctitle(\@LANG@COVER,main)}
-% \spine(year)={\thentdocdate(year)}
 
 % Set margins for "normal" pages
 \margin(screen,top):={2.5cm}
@@ -64,6 +59,12 @@
   \makeoddfoot{novathesis@frontmatter}{}{}{\thepage}
   \makeevenfoot{novathesis@frontmatter}{}{}{\thepage}
   \makeoddfoot{plain}{}{}{\thepage}
+}
+
+\SpineSetup[%
+]{%
+  box/logo/bg/image           = {nova-fcsh-insignia-color},
+  % debug,
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
