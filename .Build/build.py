@@ -739,7 +739,7 @@ def main() -> None:
     )
     ap.add_argument(
         "-t", "--doctype",
-        default="msc",
+        default="phd",
         choices=["phd", "msc", "bsc"],
         help="Document type: 'phd', 'msc', 'bsc' (default: msc)"
     )
