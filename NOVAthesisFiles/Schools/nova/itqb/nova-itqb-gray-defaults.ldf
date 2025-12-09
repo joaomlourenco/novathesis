@@ -13,6 +13,10 @@
 
 \typeout{NT FILE nova/itqb-gray-defaults.ldf}%
 
+\options{/novathesis,
+% NOVA/ITQB
+  nova/itqb/cover/color/.new choice = {gray, green},
+}
 
 % ITQB-NOVA specific customization
 \ntsetup{nova/itqb/cover/color=gray}
