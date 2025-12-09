@@ -361,8 +361,11 @@
   % SCHOOL
   schoolgiven/.new value        = {},
   school/.new cmd               = {\optionsalso{/novathesis/schoolgiven=#1}%
+                                   % \typeout{XXX=#1}\XXXX
                                    \StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR
+                                   % \typeout{XXX=\@UNIV/\@SCHL/\@DEGREEACR}\XXXX
                                    \IfStrEq{\@DEGREEACR}{}{\def\@DEGREEACR{\option{/novathesis/doctype}}}{}
+                                   % \typeout{XXX=\@UNIV/\@SCHL/\@DEGREEACR}\XXXX
                                   },
   school                        = nova/fct,
   % STYLES
@@ -969,7 +972,7 @@ end
   % \typeout{NTSETUP [/novathesis/\@UNIV/\@SCHL/#1/#2]}\NTSETUP%
   \ntfor\arg:={#2}\do{%
     \StrCut{\arg}{=}{\@ntopt}{\@ntval}%
-    % \typeout{NTSETUP2 [\@ntopt] = [\@ntval]}%
+    % \typeout{NTSETUP2 [\@ntopt] = [\@ntval]}\NTSETUP%
     \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/#1/\@ntopt}%
                     {\options{/novathesis/\@UNIV/\@SCHL/#1/#2}}{%
     \ifoptiondefined{/novathesis/#1/\@ntopt}%

@@ -13,8 +13,6 @@
 
 \typeout{NT FILE schools/nova/fct/nova-fct-defaults.ldf}%
 
-\def\@novafctcovercolor{red}
-
 %-----------------------------------------------------------------
 % New global properties
 %-----------------------------------------------------------------
@@ -68,11 +66,13 @@
 
 
 % Set cover color (background image)
-\IfStrEqCase{\option{/novathesis/doctype}}{%
-  {bsc}   {\def\@novafctcovercolor{red}}%
-  {msc}   {\def\@novafctcovercolor{blue}}%
-  {phd}   {\def\@novafctcovercolor{green}}%  
-}
+\ifcsname @novafctcovercolor\endcsname\else
+  \IfStrEqCase{\option{/novathesis/doctype}}{
+    {bsc}   {\def\@novafctcovercolor{red}}
+    {msc}   {\def\@novafctcovercolor{blue}}
+    {phd}   {\def\@novafctcovercolor{green}}
+  }[\def\@novafctcovercolor{red}]
+\fi
 \thesiscover(\@DOCTYPE,1-1,image):={nova-fct-cover-\@novafctcovercolor-front}
 \thesiscover(\@DOCTYPE,N-2,image):={nova-fct-cover-\@novafctcovercolor-back}
 \thesiscover(\@DOCTYPE,spine,image):={nova-fct-\@novafctcovercolor-red}
