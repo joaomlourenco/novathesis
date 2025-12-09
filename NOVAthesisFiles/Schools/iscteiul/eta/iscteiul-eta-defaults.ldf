@@ -22,19 +22,6 @@
 
 % Cover background images
 \thesiscover(phd,1-1,bgcolor):={white}
-% \thesiscover(phd,front,image):={}
-% \thesiscover(phdplan,front,image):={}
-% \thesiscover(phdprop,front,image):={}
-% \thesiscover(msc,front,image):={}
-% \thesiscover(mscplan,front,image):={}
-% \thesiscover(bsc,front,image):={}
-% \thesiscover(plain,front,image):={}
-
-% Spine info
-% \spine(logo)={cover-iscte-iul}
-% \spine(author)={\thedocauthor(name,short)}
-% \spine(title)={\thedoctitle(\@LANG@COVER,main)}
-% \spine(year)={\thentdocdate(year)}
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
@@ -66,6 +53,15 @@
 \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
 \copyrighttextstring(pt)={A \theschool(\@LANG@COVER)\ e a \theuniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
 \copyrighttextstring(en)={The \theschool(\@LANG@COVER)\ and the \theuniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+
+% Spine info
+\SpineSetup[%
+]{%
+  box/logo/bg/image           = {iscte-iul-logo},
+  box/logo/bg/image/angle     = {-90},
+  box/title/len               = {18.6cm},
+  box/logo/len                = {2.1cm},
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

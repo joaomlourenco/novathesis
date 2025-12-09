@@ -39,13 +39,6 @@
 \thesiscover(1-1,bgcolor):={white}
 \thesiscover(1-1,image):={other-esep-cover}
 
-% Spine info
-\spine(logo)={other-esep-logo_horiz}
-\spine(logo,angle)={90}
-\spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\@LANG@COVER,main)}
-\spine(year)={\thentdocdate(submission,year)}
-
 % Set margins for "normal" pages
 \margin(screen,top):={2.5cm}
 \margin(screen,bottom):={2.5cm}
@@ -61,6 +54,15 @@
 \margin(cover,bottom):={1.5cm}
 \margin(cover,left):={7cm}
 \margin(cover,right):={0.5cm}
+
+% Spine info
+\SpineSetup[%
+]{%
+  box/logo/bg/image           = {other-esep-logo_horiz},
+  % box/logo/bg/image/angle     = {-90},
+  % box/title/len               = {18.6cm},
+  % box/logo/len                = {2.1cm},
+}
 
 
 

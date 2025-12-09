@@ -20,8 +20,6 @@
 \frontpageimage():={cover}
 \thesiscover(1-1,bgcolor):={white}
 \thesiscover(1-1,image):={\thefrontpageimage()}
-% \thesiscover(1-1,image):={\thefrontpageimage()}
-% \thesiscover(1-1,image):={\thefrontpageimage()}
 
 % Set margins for cover pages
 \margin(cover,top):={2.9cm}
@@ -55,6 +53,7 @@
 \thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
 \dissertationstring(phd,en)={Thesis to obtain the Degree of %
 \thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+
 
 \AtEndPreamble{%
   \LoadHelveticaLikeFont%

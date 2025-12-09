@@ -15,4 +15,15 @@
 
 % School customization
 \school(logo):={ips-ests-logo-vert}
-\frontpageimage():={ests-photo } % don't add the .jpg extension
+\frontpageimage():={ests-photo} % don't add the .jpg extension
+
+
+% Spine info
+\SpineSetup[%
+]{%
+  box/logo/bg/image           = {ips-logo},
+  box/logo/bg/image/angle     = {-90},
+  box/title/len               = {18.6cm},
+  box/logo/len                = {2.1cm},
+}
+

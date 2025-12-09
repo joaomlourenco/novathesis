@@ -225,23 +225,18 @@
 
 
 % Spine info
-\spine(logo)={ulisboa-fmv-insignia-color}
-% \spine(author)={\thedocauthor(name,short)}
-% \spine(title)={\thedoctitle(\@LANG@MAIN,main)}
-% \spine(year)={\thentdocdate(year)}
-\spine(angle)={180}
+% \spine(angle)={180}
 
-\spine (box, spacing)={0.5cm}
-
-\spine(box,author,len)={4.0cm}
-
-\spine(box,title,len)={18.9cm}
-
-\spine(box,logo,len)={1.5cm}
-\spine(box,logo,angle)={90}
-\spine(box,logo,align)={c}
-
-\spine(box,date,len)={2.0cm}%29,7cm
+\SpineSetup[%
+]{%
+  box/logo/bg/image           = {ulisboa-fmv-insignia-color},
+  box/logo/bg/image/angle     = {-90},
+  box/date/len                = {2.0cm},
+  box/title/len               = {18.9cm},
+  box/author/len              = {4.0cm},
+  box/logo/len                = {1.5cm},
+  % debug,
+}
 
 
 % Set margins for "normal" pages
