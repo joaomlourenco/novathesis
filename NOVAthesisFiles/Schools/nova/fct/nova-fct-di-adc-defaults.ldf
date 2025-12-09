@@ -13,6 +13,8 @@
 
 \typeout{NT FILE schools/nova/fct/nova-fct-di-adc-defaults.ldf}%
 
+\def\@novafctcovercolor{red}
+
 \input{NOVAthesisFiles/Schools/nova/fct/nova-fct-red-defaults.ldf}
 
 \ntsetup{doctype=bsc}

@@ -13,6 +13,7 @@
 
 \typeout{NT FILE schools/nova/fct/nova-fct-defaults.ldf}%
 
+\def\@novafctcovercolor{red}
 
 %-----------------------------------------------------------------
 % New global properties
@@ -66,51 +67,22 @@
 % \thesiscover(2-1,textcolor):={black}
 
 
-% DEFAULT cover
-\thesiscover(1-1,image):=?{nova-fct-cover-red-front}
-\thesiscover(N-2,image):=?{nova-fct-cover-red-back}
-% \thesiscover(spine,image):=?{nova-fct-spine-red}
-
-% PhD cover
-\thesiscover(phd,1-1,image):=?{nova-fct-cover-green-front}
-\thesiscover(phd,N-2,image):=?{nova-fct-cover-green-back}
-\thesiscover(phd,spine,image):=?{nova-fct-spine-green}
-
-% MSc cover
-\thesiscover(msc,1-1,image):=?{nova-fct-cover-blue-front}
-\thesiscover(msc,N-2,image):=?{nova-fct-cover-blue-back}
-\thesiscover(msc,spine,image):=?{nova-fct-spine-blue}
-
-% BSc cover
-\thesiscover(bsc,1-1,image):=?{nova-fct-cover-red-front}
-\thesiscover(bsc,N-2,image):=?{nova-fct-cover-red-back}
-\thesiscover(bsc,spine,image):=?{nova-fct-spine-red}
+% Set cover color (background image)
+\IfStrEqCase{\option{/novathesis/doctype}}{%
+  {bsc}   {\def\@novafctcovercolor{red}}%
+  {msc}   {\def\@novafctcovercolor{blue}}%
+  {phd}   {\def\@novafctcovercolor{green}}%  
+}
+\thesiscover(\@DOCTYPE,1-1,image):={nova-fct-cover-\@novafctcovercolor-front}
+\thesiscover(\@DOCTYPE,N-2,image):={nova-fct-cover-\@novafctcovercolor-back}
+\thesiscover(\@DOCTYPE,spine,image):={nova-fct-\@novafctcovercolor-red}
 
 
 
 % Spine info
 % \spine(angle)={180}
-\spine(box,logo,margin,left)={2mm}
-\spine(box,logo,margin,right)={2mm}
-\spine(box,logo,margin,sep)={2mm}
-
 \spine(logo,phd):={\theuniversity(logo,neg)}
-\spine(box,logo,phd,angle)={0}
-\spine(box,logo,phd,scale)={1}
-\spine(box,logo,phd,raise)={0}
-
 \spine(logo,msc):={\theschool(logo,neg)}
-\spine(box,logo,msc,angle)={90}
-\spine(box,logo,msc,scale)={1}
-\spine(box,logo,msc,raise)={0.075}
-
-% \spine(text,angle)={90}
-\spine(box,text,color)={white}
-% \spine(box,color)={blue}
-% \spine(box,spacing)={0.5cm}
-% \spine(box,margin)={0.5mm}
-
-\spine(margin,right):=?{0.0cm}
 
 
 % Set margins for "normal" pages
@@ -150,18 +122,13 @@
     \def\spnlogo{\thespine(logo,phd)}%
   }{}%
 ]{%
-  width                       = 1cm,
-  angle                       = -90,
-  title                       = { \thedoctitle(\@LANG@COVER,spine) },
-  author                      = { \thedocauthor(name,short) },
-  bg/image                    = \spnimg,
-  box/logo/bg/image           = \spnlogo,
-  % box/logo/bg/image/angle     = { \@myangle },
+  bg/image                    = {\spnimg},
+  bg/image/angle              = {-90},
+  box/logo/bg/image           = {\spnlogo},
   box/logo/bg/image/angle/phd = {-90},
-  box/logo/bg/image/angle/msc = {0},
-  box/date/fg/color           = white,
-  box/title/fg/color          = white,
-  box/author/fg/color         = white,
+  box/date/fg/color           = {white},
+  box/title/fg/color          = {white},
+  box/author/fg/color         = {white},
   % debug,
 }
 

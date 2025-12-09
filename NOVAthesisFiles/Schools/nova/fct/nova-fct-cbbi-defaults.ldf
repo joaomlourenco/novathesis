@@ -148,6 +148,12 @@
 \dissertationplan(mscplan,en):={Dissertation Plan}
 \dissertationplan(mscplan,pt):={Plano de Dissertação}
 
+\SpineSetup[%
+]{%
+  box/logo/bg/image           = {\theschool(logo)},
+  % debug,
+}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover pages

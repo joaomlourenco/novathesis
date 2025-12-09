@@ -13,8 +13,6 @@
 
 \typeout{NT FILE schools/nova/fct/nova-fct-brown-defaults.ldf}%
 
-\thesiscover(\@DOCTYPE,1-1,image):={nova-fct-cover-brown-front}
-\thesiscover(\@DOCTYPE,N-2,image):={nova-fct-cover-brown-back}
-\thesiscover(\@DOCTYPE,spine,image):={nova-fct-spine-brown}
+\def\@novafctcovercolor{brown}
 
 \input{NOVAthesisFiles/Schools/nova/fct/nova-fct-defaults.ldf}
