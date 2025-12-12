@@ -11,10 +11,7 @@
   \ClassError{novathesis}{Font Style “newsgott” is not compatible with pdfLaTeX. Please use LuaLaTeX}{Please use LuaLaTeX}%
 }
 
-\ntcheckfonts{NewsGotT}
-            {Regular,Bold}
-            {https://github.com/joaomlourenco/novathesis-extras/}
-            {Fonts}
+\ntcheckfonts{NewsGotT}{Regular,Bold}
 
 
 \AtEndPreamble{%

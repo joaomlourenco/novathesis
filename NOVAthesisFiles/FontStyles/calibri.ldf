@@ -13,12 +13,14 @@
 
 \ntcheckfonts{Calibri}
             {Regular,Italic,Bold,BoldItalic}
-            {https://github.com/joaomlourenco/novathesis-extras/}
-            {Fonts}
 
-\setmainfont{Calibri-Regular.ttf}[
-    Path           = NOVAthesisFiles/FontStyles/Fonts/,
-    BoldFont       = Calibri-Bold.ttf,
-    ItalicFont     = Calibri-Italic.ttf,
-    BoldItalicFont = Calibri-BoldItalic.ttf,
-]%
+\setmainfont{Calibri}[
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+  Extension = .ttf,
+  Ligatures=TeX,
+  Mapping=tex-text,
+  UprightFont = *-Regular,
+  ItalicFont = *-Italic,
+  BoldFont = *-Bold,
+  BoldItalicFont = *-BoldItalic,
+]

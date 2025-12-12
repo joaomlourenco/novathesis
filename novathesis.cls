@@ -130,10 +130,12 @@
 \ifdefined\NewDocumentCommand\else\RequirePackage{xparse}\fi   % load xparse if necessary
 \RequirePackage{xfor}
 \RequirePackage{iftex}
+\RequirePackage{ifplatform}
 \RequirePackage{etoolbox}
 \RequirePackage{xstring}
 \RequirePackage{varwidth}
 \RequirePackage{textcase}
+\RequirePackage{catchfile}  % for automatic downloading of fonts
 \RequirePackage{NOVAthesisFiles/memory2}
 \RequirePackage{NOVAthesisFiles/nt-version}
 
@@ -481,155 +483,170 @@
 % --------------------------------------------------------
 % Automatically download necessary fonts if using lualatex
 % --------------------------------------------------------
-\ifluatex
-\RequirePackage{luacode}
-\begin{luacode}
--- timing helper (prefers wall time, otherwise CPU time)
-local function now()
-  local ok, socket = pcall(require, "socket")
-  if ok and socket.gettime then return socket.gettime() end
-  return os.clock()
-end
+\ExplSyntaxOn
 
--- mkdir -p using lfs when possible, else shell out
-local function mkdir_p(path)
-  path = (path or ""):gsub("\\","/")               -- normalize separators
-  if path == "" then return true end
-  local ok, lfs = pcall(require, "lfs")
-  if ok and lfs then
-    local accum = ""
-    -- keep leading "/" or drive letters intact
-    if path:match("^/") then accum = "/" end
-    if path:match("^[A-Za-z]:") then accum = path:sub(1,2) end
-    for part in path:gmatch("[^/]+") do
-      if accum == "" or accum:match("^[A-Za-z]:$") then
-        accum = accum .. part
-      elseif accum == "/" then
-        accum = "/" .. part
-      else
-        accum = accum .. "/" .. part
-      end
-      if not lfs.attributes(accum, "mode") then
-        local okmk = lfs.mkdir(accum)
-        if not okmk then return false end
-      end
-    end
-    return true
-  else
-    local is_win = package.config:sub(1,1) == "\\"
-    local cmd = is_win and ('mkdir "%s" >NUL 2>&1'):format(path)
-                     or ('mkdir -p "%s"'):format(path)
-    local rc = os.execute(cmd)
-    return rc == true or rc == 0
-  end
-end
-
--- get last path element of URL
-local function last_segment(url)
-  if not url or url == "" then return "" end
-  -- strip trailing slash
-  url = url:gsub("/+$","")
-  -- take everything after last "/"
-  local last = url:match("([^/]+)$") or url
-  -- if the last part looks like query-only, keep it verbatim
-  return last
-end
-
--- download URL -> filepath; returns ok, elapsed_seconds
-local function download_to(url, filepath)
-  -- try pure Lua (socket/http or ssl.https), else fallback to curl
-  local start_t = now()
-  local ok_socket, http = pcall(require, "socket.http")
-  local ltn12
-  if ok_socket then ltn12 = require("ltn12") end
-
-  local scheme = url:match("^(%w+):") or "http"
-  local ok = false
-
-  if scheme == "https" then
-    local ok_https, https = pcall(require, "ssl.https")
-    if ok_https and ltn12 then
-      local f, ferr = io.open(filepath, "wb")
-      if f then
-        local _, code = https.request{ url = url, sink = ltn12.sink.file(f) }
-        f:close()
-        ok = (code == 200)
-      end
-    end
-  elseif scheme == "http" and ok_socket and ltn12 then
-    local f, ferr = io.open(filepath, "wb")
-    if f then
-      local _, code = http.request{ url = url, sink = ltn12.sink.file(f) }
-      f:close()
-      ok = (code == 200)
-    end
-  end
-
-  if not ok then
-    -- fallback via curl (requires --shell-escape and curl in PATH)
-    local cmd = ('curl -L -s -o "%s" "%s"'):format(filepath, url)
-    local rc = os.execute(cmd)
-    ok = (rc == true or rc == 0)
-  end
-
-  local elapsed = now() - start_t
-  return ok, elapsed
-end
-
-function download_font(url, folder)
-  local last = last_segment(url)
-  local file = (folder:gsub("\\","/") .. "/" .. last):gsub("//+","/")
-
-  local made = mkdir_p(folder)
-  local ok, elapsed = false, 0.0
-  if made then ok, elapsed = download_to(url, file) end
-
-  -- Define LaTeX macros:
-  tex.print("\\def\\URL{" .. url .. "}")
-  tex.print("\\def\\FOLDER{" .. folder .. "}")
-  tex.print("\\def\\FilePath{" .. file .. "}")
-  tex.print("\\def\\ElapsedSeconds{" .. string.format("%.3f", elapsed) .. "}")
-  tex.print("\\def\\DownloadStatus{" .. (ok and "OK" or "FAILED") .. "}")
-end
-\end{luacode}
-
-% \DownloadFont{<URL>}{<FOLDER>}
-\newcommand{\DownloadFont}[2]{%
-  % Safely escape to Lua:
-  \directlua{download_font("\luaescapestring{#1}","\luaescapestring{#2}")}%
-  \typeout{         URL: \texttt{\URL}}
-  \typeout{      FOLDER: \texttt{\FOLDER}}
-  \typeout{        FILE: \texttt{\FilePath}}
-  \typeout{     SUCCESS: \texttt{\DownloadStatus}}
-  \typeout{TIME ELAPSED: \texttt{\ElapsedSeconds~s}}
+\NewDocumentCommand{\ntcheckfonts}{ 
+    O{ttf} 
+    m 
+    m 
+    O{https://raw.githubusercontent.com/joaomlourenco/novathesis-extras/main/Fonts} 
+    O{NOVAthesisFiles/FontStyles/Fonts} }
+{
+  % #1 = format (ttf)
+  % #2 = font name (Calibri)
+  % #3 = variants (Regular,Italic,Bold,BoldItalic)
+  % #4 = base URL
+  % #5 = target folder
+  
+  % Check if shell escape is enabled (compatible with all engines)
+  \sys_if_shell_unrestricted:TF
+  {
+    \nt_check_fonts:nnnnn { #1 } { #2 } { #3 } { #4 } { #5 }
+  }
+  {
+    \msg_error:nnnn { ntfonts } { shell-escape-required } { \c_sys_jobname_str } { \ntcheckfonts }
+  }
 }
-\fi
 
+\msg_new:nnn { ntfonts } { shell-escape-required }
+{
+  Font~download~requires~shell~escape.~\\
+  Please~compile~with:~
+  \token_to_str:N lualatex \c_space_tl \c_sys_jobname_str \c_space_tl -shell-escape
+}
 
-% Check if a font file exists
-\newcommand*{\ntcheckfonts}[5][ttf]{%
-% #1 = font format
-% #2 = Font name
-% #3 = Variants to load: Regular,Italic,Bold,Boldltalic
-% #4 = Repository URL
-% #5 = Fonts folder in Repo 
-%    XeTeX: manual download from "URL/ZIP/FONTNAME.zip"
-% luaLaTeX: automatic download from "URL/FONTNAME/FONTNAME-VARIANT.FORMAT"
-    \ntfor\myi:={#3}\do{
-      \typeout{------------------NOVAthesisFiles/FontStyles/Fonts/#2-\myi.#1}
-      \IfFileExists{NOVAthesisFiles/FontStyles/Fonts/#2-\myi.#1}{\typeout{FONT '#2-\myi.#1' is available.}}%
-          {%
-          \ifluatex          
-              \typeout{Missing font “#2-\myi.#1”!  Downloading from “#4/#5/#2/#2-\myi.#1”}
-              \DownloadFont{#4/raw/refs/heads/main/#5/#2/#2-\myi.#1}{NOVAthesisFiles/FontStyles/Fonts}
-          \else
-              \ClassError{novathesis}
-                         {Missing font “#2-\myi.#1”! Please download from: “#4/ZIP/#2.zip” and expand it to “NOVAthesisFiles/FontStyles/Fonts/#2-\myi.#1”}
-                         {Please download from: “#4/ZIP/#2.zip” and expand it to “NOVAthesisFiles/FontStyles/Fonts/#2-\myi.#1”}%
-          \fi
-      }%
+\seq_new:N \l__nt_variants_seq
+\tl_new:N \l__nt_filename_tl
+\tl_new:N \l__nt_remote_url_tl
+\tl_new:N \l__nt_local_path_tl
+
+\cs_new_protected:Npn \nt_check_fonts:nnnnn #1 #2 #3 #4 #5
+{
+  % Split variants by commas
+  \seq_set_split:Nnn \l__nt_variants_seq { , } { #3 }
+  
+  % Create target directory if it doesn't exist
+  \file_if_exist:nF { #5/DO_NOT_REMOVE_THIS_FILE.txt }
+  {
+    \sys_shell:n { mkdir~-p~#5 }
+  }
+  
+  % Process each variant
+  \seq_map_inline:Nn \l__nt_variants_seq
+  {
+    \tl_set:Nn \l__nt_filename_tl { #2-##1.#1 }
+    \tl_set:Nn \l__nt_remote_url_tl { #4/#2/#2-##1.#1 }
+    \tl_set:Nn \l__nt_local_path_tl { #5/#2-##1.#1 }
+    
+    % Check if file already exists
+    \file_if_exist:nTF { \l__nt_local_path_tl }
+    {
+      \iow_term:x { Font~' \l__nt_filename_tl '~already~exists. }
     }
+    {
+      \iow_term:x { Downloading~font~' \l__nt_filename_tl '~
+                    from~' \l__nt_remote_url_tl '~
+                    to~' \l__nt_local_path_tl '} 
+      
+      % Download the font
+      \nt_download_font:nn { \l__nt_remote_url_tl } { \l__nt_local_path_tl }
+    }
+  }
 }
+
+\bool_new:N \g_sys_shell_return_bool
+
+
+\cs_new_protected:Npn \nt_download_font:nn #1 #2
+{
+  \bool_set_false:N \l_tmpa_bool
+
+  % Check if shell escape us unrestricted  
+  \sys_if_shell_unrestricted:F
+    {
+      \msg_error:nn { ntfonts } { shell-escape-required }
+      \bool_set_true:N \l_tmpa_bool
+    }
+  
+  % Truy curl
+  \bool_if:NF \l_tmpa_bool
+    {
+      \iow_term:x { Tyying:~'curl'... }
+      \sys_get_shell:nnNT  { curl~--version~>~/dev/null~2>&1 }
+                           { }
+                           \g_sys_shell_return_bool
+        { % curl is available
+          \iow_term:x { Running:~curl~-L~-s~-o~#2~#1... }
+          \sys_shell_now:x { curl~-L~-s~-o~#2~#1 }
+          \bool_set_true:N \l_tmpa_bool
+        }
+    }
+  % try wget
+  \bool_if:NF \l_tmpa_bool
+    {
+      \iow_term:x { Trying:~'wget'... }
+      \sys_get_shell:nnNT  { wget~--version~>~/dev/null~2>&1 }
+                           { }
+                           \g_sys_shell_return_bool
+        { % wget is available
+          \iow_term:x { Running:~wget~-q~-O~#2~#1... }
+          \sys_shell_now:x { wget~-q~-O~#2~#1 }
+          \bool_set_true:N \l_tmpa_bool
+        }
+    }
+
+  % try python3
+  \bool_if:NF \l_tmpa_bool
+    {
+      \iow_term:x { Trying:~'python3'... }
+      \sys_get_shell:nnNT  { python3~--version~>~/dev/null~2>&1 }
+                           { }
+                           \g_sys_shell_return_bool
+        { % python3 is available
+          \iow_term:x { Running:~python3~-c~"import~urllib.request;~urllib.request.urlretrieve('#1',~'#2')"~2>/dev/null~||~python~-c~"import~urllib.request;~urllib.request.urlretrieve('#1',~'#2')"~2>/dev/null"... }
+          \sys_shell_now:x { python3~-c~"import~urllib.request;~urllib.request.urlretrieve('#1',~'#2')"~2>/dev/null~||~python~-c~"import~urllib.request;~urllib.request.urlretrieve('#1',~'#2')"~2>/dev/null~||~echo~"ªython3:~No~download~tool~available" }
+          \bool_set_true:N \l_tmpa_bool
+        }
+    }
+
+  % try python
+  \bool_if:NF \l_tmpa_bool
+    {
+      \iow_term:x { Trying:~'python'... }
+      \sys_get_shell:nnNT  { python~--version~>~/dev/null~2>&1 }
+                           { }
+                           \g_sys_shell_return_bool
+        { % python is available
+          \iow_term:x { Running:~python~-c~"import~urllib.request;~urllib.request.urlretrieve('#1',~'#2')"~2>/dev/null~||~python~-c~"import~urllib.request;~urllib.request.urlretrieve('#1',~'#2')"~2>/dev/null"... }
+          \sys_shell_now:x { python3~-c~"import~urllib.request;~urllib.request.urlretrieve('#1',~'#2')"~2>/dev/null~||~python~-c~"import~urllib.request;~urllib.request.urlretrieve('#1',~'#2')"~2>/dev/null~||~echo~"Python:~No~download~tool~available" }
+          \bool_set_true:N \l_tmpa_bool
+        }
+    }
+
+  % Try windows/Unix specific approaches
+ \bool_if:NF \l_tmpa_bool
+  {
+    \iow_term:x { Trying~a~platform~specific~strategy }
+    % Platform-specific fallbacks
+    \sys_if_platform_windows:T
+      {
+        % Windows - try PowerShell
+        \iow_term:x { Trying:~'powershell' }
+        \sys_get_shell:nnNT  { powershell~/?" }
+                             { }
+                             \g_sys_shell_return_bool
+          { % powershell is available
+            \iow_term:x { powershell -Command "Invoke-WebRequest -Uri '\l__nt_remote_url_tl' -OutFile '#1'" }
+            \sys_shell_now:x { powershell -Command "Invoke-WebRequest -Uri '\l__nt_remote_url_tl' -OutFile '#1'" }
+          \bool_set_true:N \l_tmpa_bool
+          }
+      }
+  }
+    
+}
+
+\ExplSyntaxOff
+
 
 
 % --------------------------------------------------------
