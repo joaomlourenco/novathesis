@@ -46,17 +46,7 @@
            ,{1-2,bgcolor}%
            ,{bgcolor}%
 )%
-
-\let\oldstockwidth=\stockwidth
-\begin{newpdflayout}[%
-  \settrims{0pt}{0pt}%
-  \setlrmarginsandblock{0pt}{*}{*}%
-  \setulmarginsandblock{0pt}{*}{*}%
-  \setlength{\parskip}{0pt}%
-  \setheadfoot{0pt}{0pt}%
-  \setheaderspaces{*}{0pt}{*} %
-  \setmarginnotes{0pt}{0pt}{0pt}%
-]{\stockheight}{2\stockwidth+\myspinewidth}%
+\begin{newstocksize}{layoutsize={\the\dimexpr2\stockwidth+\myspinewidth\relax,\the\stockheight},keepmargins}
   % \noindent% \Huge HELLO
 \begin{tikzpicture}[remember picture, overlay, transform shape]
   % BACKGROUND
@@ -149,5 +139,4 @@
     };
 \end{tikzpicture}
 
-\end{newpdflayout}
-
+\end{newstocksize}
