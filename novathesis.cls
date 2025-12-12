@@ -485,11 +485,11 @@
 % --------------------------------------------------------
 \ExplSyntaxOn
 
-\NewDocumentCommand{\ntcheckfonts}{ 
-    O{ttf} 
-    m 
-    m 
-    O{https://raw.githubusercontent.com/joaomlourenco/novathesis-extras/main/Fonts} 
+\NewDocumentCommand{\ntcheckfonts}{
+    O{ttf}
+    m
+    m
+    O{https://raw.githubusercontent.com/joaomlourenco/novathesis-extras/main/Fonts}
     O{NOVAthesisFiles/FontStyles/Fonts} }
 {
   % #1 = format (ttf)
@@ -497,7 +497,7 @@
   % #3 = variants (Regular,Italic,Bold,BoldItalic)
   % #4 = base URL
   % #5 = target folder
-  
+
   % Check if shell escape is enabled (compatible with all engines)
   \sys_if_shell_unrestricted:TF
   {
@@ -524,20 +524,20 @@
 {
   % Split variants by commas
   \seq_set_split:Nnn \l__nt_variants_seq { , } { #3 }
-  
+
   % Create target directory if it doesn't exist
   \file_if_exist:nF { #5/DO_NOT_REMOVE_THIS_FILE.txt }
   {
     \sys_shell:n { mkdir~-p~#5 }
   }
-  
+
   % Process each variant
   \seq_map_inline:Nn \l__nt_variants_seq
   {
     \tl_set:Nn \l__nt_filename_tl { #2-##1.#1 }
     \tl_set:Nn \l__nt_remote_url_tl { #4/#2/#2-##1.#1 }
     \tl_set:Nn \l__nt_local_path_tl { #5/#2-##1.#1 }
-    
+
     % Check if file already exists
     \file_if_exist:nTF { \l__nt_local_path_tl }
     {
@@ -546,51 +546,54 @@
     {
       \iow_term:x { Downloading~font~' \l__nt_filename_tl '~
                     from~' \l__nt_remote_url_tl '~
-                    to~' \l__nt_local_path_tl '} 
-      
+                    to~' \l__nt_local_path_tl '}
+
       % Download the font
       \nt_download_font:nn { \l__nt_remote_url_tl } { \l__nt_local_path_tl }
     }
   }
 }
 
-\bool_new:N \g_sys_shell_return_bool
 
+\tl_new:N \l_nt_cmd_output_tl
 
 \cs_new_protected:Npn \nt_download_font:nn #1 #2
 {
   \bool_set_false:N \l_tmpa_bool
 
-  % Check if shell escape us unrestricted  
+  % Check if shell escape us unrestricted
   \sys_if_shell_unrestricted:F
     {
       \msg_error:nn { ntfonts } { shell-escape-required }
       \bool_set_true:N \l_tmpa_bool
     }
-  
+
   % Truy curl
   \bool_if:NF \l_tmpa_bool
     {
       \iow_term:x { Tyying:~'curl'... }
-      \sys_get_shell:nnNT  { curl~--version~>~/dev/null~2>&1 }
-                           { }
-                           \g_sys_shell_return_bool
+      \sys_get_shell:nnN  { curl ~ --version ~ 2> ~ /dev/null }
+                          { \tl_trim_spaces:n }
+                          \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
         { % curl is available
-          \iow_term:x { Running:~curl~-L~-s~-o~#2~#1... }
-          \sys_shell_now:x { curl~-L~-s~-o~#2~#1 }
+          \iow_term:x { Running: ~ curl ~ -L ~ -s ~ -o ~ #2 ~ #1... }
+          \sys_shell_now:x { curl ~ -L ~ -s ~ -o ~ #2 ~ #1 }
           \bool_set_true:N \l_tmpa_bool
         }
     }
+
   % try wget
   \bool_if:NF \l_tmpa_bool
     {
-      \iow_term:x { Trying:~'wget'... }
-      \sys_get_shell:nnNT  { wget~--version~>~/dev/null~2>&1 }
-                           { }
-                           \g_sys_shell_return_bool
+      \iow_term:x { Trying: ~ 'wget'... }
+      \sys_get_shell:nnN  { wget ~ --version ~ 2> ~ /dev/null }
+                          { \tl_trim_spaces:n }
+                          \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
         { % wget is available
-          \iow_term:x { Running:~wget~-q~-O~#2~#1... }
-          \sys_shell_now:x { wget~-q~-O~#2~#1 }
+          \iow_term:x { Running: ~ wget ~ -q ~ -O ~ #2 ~ #1... }
+          \sys_shell_now:x { wget ~ -q ~ -O ~ #2 ~ #1 }
           \bool_set_true:N \l_tmpa_bool
         }
     }
@@ -598,13 +601,14 @@
   % try python3
   \bool_if:NF \l_tmpa_bool
     {
-      \iow_term:x { Trying:~'python3'... }
-      \sys_get_shell:nnNT  { python3~--version~>~/dev/null~2>&1 }
-                           { }
-                           \g_sys_shell_return_bool
+      \iow_term:x { Trying: ~ 'python3'... }
+      \sys_get_shell:nnNT  { python3 ~ --version ~ > ~ /dev/null ~ 2>&1 }
+                           { \tl_trim_spaces:n }
+                           \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
         { % python3 is available
-          \iow_term:x { Running:~python3~-c~"import~urllib.request;~urllib.request.urlretrieve('#1',~'#2')"~2>/dev/null~||~python~-c~"import~urllib.request;~urllib.request.urlretrieve('#1',~'#2')"~2>/dev/null"... }
-          \sys_shell_now:x { python3~-c~"import~urllib.request;~urllib.request.urlretrieve('#1',~'#2')"~2>/dev/null~||~python~-c~"import~urllib.request;~urllib.request.urlretrieve('#1',~'#2')"~2>/dev/null~||~echo~"ªython3:~No~download~tool~available" }
+          \iow_term:x { Running: ~ python3 ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null"... }
+          \sys_shell_now:x { python3 ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ echo ~ "ªython3: ~ No ~ download ~ tool ~ available" }
           \bool_set_true:N \l_tmpa_bool
         }
     }
@@ -612,13 +616,14 @@
   % try python
   \bool_if:NF \l_tmpa_bool
     {
-      \iow_term:x { Trying:~'python'... }
-      \sys_get_shell:nnNT  { python~--version~>~/dev/null~2>&1 }
-                           { }
-                           \g_sys_shell_return_bool
+      \iow_term:x { Trying: ~ 'python'... }
+      \sys_get_shell:nnNT  { python ~ --version ~ > ~ /dev/null ~ 2>&1 }
+                           { \tl_trim_spaces:n }
+                           \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
         { % python is available
-          \iow_term:x { Running:~python~-c~"import~urllib.request;~urllib.request.urlretrieve('#1',~'#2')"~2>/dev/null~||~python~-c~"import~urllib.request;~urllib.request.urlretrieve('#1',~'#2')"~2>/dev/null"... }
-          \sys_shell_now:x { python3~-c~"import~urllib.request;~urllib.request.urlretrieve('#1',~'#2')"~2>/dev/null~||~python~-c~"import~urllib.request;~urllib.request.urlretrieve('#1',~'#2')"~2>/dev/null~||~echo~"Python:~No~download~tool~available" }
+          \iow_term:x { Running: ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null"... }
+          \sys_shell_now:x { python3 ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ echo ~ "Python: ~ No ~ download ~ tool ~ available" }
           \bool_set_true:N \l_tmpa_bool
         }
     }
@@ -626,23 +631,24 @@
   % Try windows/Unix specific approaches
  \bool_if:NF \l_tmpa_bool
   {
-    \iow_term:x { Trying~a~platform~specific~strategy }
+    \iow_term:x { Trying ~ a ~ platform ~ specific ~ strategy }
     % Platform-specific fallbacks
     \sys_if_platform_windows:T
       {
         % Windows - try PowerShell
-        \iow_term:x { Trying:~'powershell' }
-        \sys_get_shell:nnNT  { powershell~/?" }
-                             { }
-                             \g_sys_shell_return_bool
+        \iow_term:x { Trying: ~ 'powershell' }
+        \sys_get_shell:nnNT  { powershell ~ /?" }
+                           { \tl_trim_spaces:n }
+                           \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
           { % powershell is available
-            \iow_term:x { powershell -Command "Invoke-WebRequest -Uri '\l__nt_remote_url_tl' -OutFile '#1'" }
-            \sys_shell_now:x { powershell -Command "Invoke-WebRequest -Uri '\l__nt_remote_url_tl' -OutFile '#1'" }
-          \bool_set_true:N \l_tmpa_bool
+            \iow_term:x ~ { ~ powershell ~ -Command ~ "Invoke-WebRequest ~ -Uri ~ '\l__nt_remote_url_tl' ~ -OutFile ~ '#1'" ~ }
+            \sys_shell_now:x ~ { ~ powershell ~ -Command ~ "Invoke-WebRequest ~ -Uri ~ '\l__nt_remote_url_tl' ~ -OutFile ~ '#1'" ~ }
+            \bool_set_true:N \l_tmpa_bool
           }
       }
   }
-    
+
 }
 
 \ExplSyntaxOff
