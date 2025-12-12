@@ -14,14 +14,16 @@
 
 This is a test with citing something~\cite{ecoop12-dias} in the appendix.
 
-\begin{newpdflayout}{210mm}{297mm}%{420mm}
+% \begin{newpdflayout}{210mm}{297mm}%{420mm}
+\newstocksize{layoutsize={297mm,210mm},keepmargins}
 
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
 \lipsum[1-9]
-
+\restorestocksize
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-\end{newpdflayout}
+\
+% \end{newpdflayout}
 
 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 

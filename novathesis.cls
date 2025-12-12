@@ -3,7 +3,7 @@
 %% ----------------------------------------------------------------------------
 %%  NOVATHESIS — novathesis.cls
 %% ----------------------------------------------------------------------------
-%% 
+%%
 %% Version 7.8.0 (2025-12-09)
 %% Copyright (C) 2004-25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
@@ -136,6 +136,7 @@
 \RequirePackage{varwidth}
 \RequirePackage{textcase}
 \RequirePackage{catchfile}  % for automatic downloading of fonts
+\RequirePackage{stocksize}  % changing the physical and logical page layout
 \RequirePackage{NOVAthesisFiles/memory2}
 \RequirePackage{NOVAthesisFiles/nt-version}
 
@@ -165,7 +166,6 @@
 
 \ExplSyntaxOn
 
-
 %=======================================================================
 % \IfBeginsWithAnyOf {text} {comma_sep_list_of_prefixes} {true} {false}
 %=======================================================================
@@ -177,7 +177,7 @@
   {
     % 1. Reset the boolean flag
     \bool_set_false:N \l__user_match_found_bool
-    
+
     % 2. Map through the comma-separated list.
     % \clist_map_inline:nn automatically trims spaces *around* items (foo, bar)
     % but keeps spaces *inside* items (Hello World).
@@ -194,7 +194,7 @@
             \clist_map_break:
           }
       }
-      
+
     % 3. Execute the appropriate branch
     \bool_if:NTF \l__user_match_found_bool { #3 } { #4 }
   }
@@ -247,14 +247,14 @@
 \NewDocumentCommand{\ValidateLtxProcessor}{ m m m }
   {
     % #1 = Univ, #2 = School, #3 = Degree
-    
+
     % Reset flags
     \bool_set_false:N \l_novathesis_rule_found_bool
-    
+
     % -----------------------------------------------------
     % A. Hierarchy Lookup (Univ/Sch/Deg -> Univ/Sch -> Univ)
     % -----------------------------------------------------
-    
+
     % 1. Check Univ/School/Degree
     \prop_get:NeNTF \g_novathesis_proc_rules_prop { #1/#2/#3 } \l_novathesis_found_rule_tl
       { \bool_set_true:N \l_novathesis_rule_found_bool }
@@ -266,7 +266,7 @@
             % 3. Check Univ
             \prop_get:NnNTF \g_novathesis_proc_rules_prop { #1 } \l_novathesis_found_rule_tl
               { \bool_set_true:N \l_novathesis_rule_found_bool }
-              { 
+              {
                 % No rule found: Do nothing (Implicitly Valid)
               }
           }
@@ -275,15 +275,15 @@
     % -----------------------------------------------------
     % B. Validation Logic
     % -----------------------------------------------------
-    
+
     \bool_if:NT \l_novathesis_rule_found_bool
       {
         % Check if the current engine is in the allowed list
         \clist_if_in:NVF \l_novathesis_found_rule_tl \g_novathesis_current_engine_str
           {
             % ERROR: Engine not found in allowed list
-            \msg_error:nnxx { novathesis } { invalid-processor } 
-              { #1/#2/#3 } 
+            \msg_error:nnxx { novathesis } { invalid-processor }
+              { #1/#2/#3 }
               { \clist_use:Nn \l_novathesis_found_rule_tl { ,~ } }
           }
       }
@@ -342,7 +342,7 @@
   % \typeout{#2(#3)}%
   % \ifdatadefinedor{\@match}{#2}(#3)%
   %   {\protect\gdef#1{\csuse{the#2}(\@match)}#4}%
-  %   {\protect\gdef#1{}#5}%  
+  %   {\protect\gdef#1{}#5}%
   \ifdatadefinedor{\@match}{#2}(#3)%
     {\protect\xdef#1{\expanded{\csuse{the#2}(\@match)}}#4}%
     {\protect\xdef#1{}#5}%
@@ -746,9 +746,9 @@
 %% MANAGE DOCUMENT CLASSES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \options{/@nt/document/.cd,
-   docclass/.new choice={phd=phd, phdprop=phd, phdplan=phd, 
-                         msc=msc, mscplan=msc, 
-                         bsc=bsc, 
+   docclass/.new choice={phd=phd, phdprop=phd, phdplan=phd,
+                         msc=msc, mscplan=msc,
+                         bsc=bsc,
                          plain=plain},
    docmain/.new list={phd, msc, bsc, plain},
 }
@@ -1939,7 +1939,7 @@
 %   Please open and edit the appropriate
 %       configuration file “0-Config/6_list_of.tex”
 %============================================================
-\AtEndPreamble{ 
+\AtEndPreamble{
 % is only loaded after school's configuration
 % can be changhed with "\ntsetup{print/other}"
   \makeatletter
@@ -2223,7 +2223,7 @@
    ,{image}%
   ){%
     \begin{tikzpicture}[remember picture, overlay]%
-      \node[anchor=center] at (current page.center) 
+      \node[anchor=center] at (current page.center)
               {\includegraphics[width=\paperwidth,height=\paperheight]{\match}};
     \end{tikzpicture}%
   }{}%
@@ -2267,7 +2267,7 @@
     \NTRunHook{cover/#1/grid/post}%
   }{}%
   \begin{tikzpicture}[remember picture, overlay]%
-    \node[anchor=north west,inner sep=0,xshift=\@MRGN@left, yshift=-\@MRGN@top] 
+    \node[anchor=north west,inner sep=0,xshift=\@MRGN@left, yshift=-\@MRGN@top]
           at (current page.north west) {%
       \begin{minipage}[t][\covertextheight]%
                       [t]{\covertextwidth}%
@@ -2803,147 +2803,14 @@
 \newcommand*{\ntsetlayout}{%
     % \synctex=1% Use synctex
     \brokenpenalty=10000%
-    \settypeoutlayoutunit{mm}%
-    \setulmarginsandblock%
-    {\themargin(\option{/novathesis/media},top)}%
-    {\themargin(\option{/novathesis/media},bottom)}%
-    {*}%
-    \setlrmarginsandblock%
-    {\themargin(\option{/novathesis/media},left)}%
-    {\themargin(\option{/novathesis/media},right)}%
-    {*}%
-    \checkandfixthelayout%
+    \newgeometry{
+        lmargin=\expanded{\themargin(\option{/novathesis/media},left)},
+        rmargin=\expanded{\themargin(\option{/novathesis/media},right)},
+        tmargin=\expanded{\themargin(\option{/novathesis/media},top)},
+        bmargin=\expanded{\themargin(\option{/novathesis/media},bottom)},
+    }%
     \ifoptionequal{/novathesis/media}{paper}{\openright}{}%
 }
-
-\newcommand*{\setpdftexpagesize}{%
-  \@ifundefined{pdfpageheight}{}{\pdfpageheight=\the\stockheight}
-  \@ifundefined{pdfpagewidth}{}{\pdfpagewidth=\the\stockwidth}
-  \@ifundefined{pageheight}{}{\pageheight=\the\stockheight}
-  \@ifundefined{pagewidth}{}{\pagewidth=\the\stockwidth}
-  \@ifundefined{pdfvorigin}{}{\ifdim\pdfvorigin=0pt\pdfvorigin=1in\fi}
-  \@ifundefined{pdfhorigin}{}{\ifdim\pdfhorigin=0pt\pdfhorigin=1in\fi}
-}
-
-\DeclareRobustCommand\nt@changelayout{%
-  \setlength{\@colht}{\textheight}
-  \setlength{\@colroom}{\textheight}%
-  \setlength{\vsize}{\textheight}
-  \setlength{\columnwidth}{\textwidth}%
-  \if@twocolumn%
-    \advance\columnwidth-\columnsep
-    \divide\columnwidth\tw@%
-    \@firstcolumntrue%
-  \fi%
-  \setlength{\hsize}{\columnwidth}%
-  \setlength{\linewidth}{\hsize}%
-}%
-
-\newcommand\nt@savelength[2]{%
-  \csappto{nt@restoregeometry@#1}{%
-    \expandafter\csname
-    #2\endcsname\expandafter=\expandafter\the\csname #2\endcsname\relax
-  }%
-}
-\newcommand\nt@saveboolean[2]{%
-  \csname if#2\endcsname
-  \csappto{nt@restoregeometry@#1}{%
-          \expandafter\noexpand\csname #1true\endcsname}%
-  \else
-  \csappto{nt@restoregeometry@#1\endcsname}{%
-          \expandafter\noexpand\csname #1false\endcsname}%
-  \fi
-}%
-
-\newcommand\nt@restoregeometry{%
-  \csuse{nt@restoregeometryB@\the\c@pdfnewlytlevel}%
-  \addtocounter{pdfnewlytlevel}{-1}%
-}
-
-\newcommand\nt@savegeometry{%
-  \addtocounter{pdfnewlytlevel}{1}%
-  \csgdef{nt@restoregeometryA@\the\c@pdfnewlytlevel}{}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{paperwidth}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{paperheight}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{textwidth}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{textheight}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{evensidemargin}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{oddsidemargin}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{topmargin}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{headheight}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{headsep}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{topskip}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{footskip}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{baselineskip}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{marginparwidth}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{marginparsep}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{columnsep}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{hoffset}%
-  \nt@savelength{\the\c@pdfnewlytlevel}{voffset}
-  \nt@saveboolean{\the\c@pdfnewlytlevel}{@twocolumn}%
-  \nt@saveboolean{\the\c@pdfnewlytlevel}{@twoside}%
-  \nt@saveboolean{\the\c@pdfnewlytlevel}{@mparswitch}%
-  \nt@saveboolean{\the\c@pdfnewlytlevel}{@reversemargin}%
-}
-
-\newcounter{pdfnewlytlevel}
-\RequirePackage{atbegshi}
-\newenvironment{newpdflayout}[3][]{%
-  % #1 = page height
-  % #2 = page width
-  % \typeout{textheight=\the\textheight}
-  % \typeout{textwidth=\the\textwidth}
-  % \AAAA
-  \nt@savegeometry%
-  \let\oldstockheight=\stockheight
-  \let\oldstockwidth=\stockwidth
-  \clearpage
-  \begingroup
-  \setstocksize{#2}{#3}
-  \settrimmedsize{#2}{#3}{*}
-  \paperwidth=\stockwidth
-  \paperheight=\stockheight
-  \setlrmarginsandblock%
-    {\themargin(\option{/novathesis/media},left)}%
-    {\themargin(\option{/novathesis/media},right)}%
-    {*}%
-  \setulmarginsandblock%
-    {\themargin(\option{/novathesis/media},top)}%
-    {\themargin(\option{/novathesis/media},bottom)}%
-    {*}%
-  #1%
-  \checkandfixthelayout[fixed]
-  \setpdftexpagesize
-  % From geometry
-  % \typeout{textheight=\the\textheight}
-  % \typeout{textwidth=\the\textwidth}
-  % \BBBB
-  \nt@changelayout%
-}{%
-  \clearpage%
-  \endgroup%
-  \nt@restoregeometry
-  % \setstocksize{\oldstockheight}{\oldstockwidth}
-  % \settrimmedsize{\oldstockheight}{\oldstockwidth}{*}
-  % \paperwidth=\stockwidth
-  % \paperheight=\stockheight
-  % \setlrmarginsandblock%
-  %   {\themargin(\option{/novathesis/media},left)}%
-  %   {\themargin(\option{/novathesis/media},right)}%
-  %   {*}%
-  % \setulmarginsandblock%
-  %   {\themargin(\option{/novathesis/media},top)}%
-  %   {\themargin(\option{/novathesis/media},bottom)}%
-  %   {*}%
-  \checkandfixthelayout[fixed]
-  \setpdftexpagesize
-  \nt@changelayout
-  \clearpage%
-  \addtocounter{page}{-1}%
-  ~\AtBeginShipoutDiscard
-  \clearpage
-}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Printing chapters and similars

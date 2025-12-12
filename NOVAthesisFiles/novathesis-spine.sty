@@ -23,7 +23,7 @@
 %     (e.g., a4paper) should be set in the main document.
 %   * The package temporarily adjusts the stock size so that the page
 %     height equals the spine thickness (spine/width).
-% -------------------------------------------------------------------------- 
+% --------------------------------------------------------------------------
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesExplPackage
@@ -36,29 +36,13 @@
 % 1. Dependencies
 % -------------------------------------------------------------------------
 
-% geometry:
-\@ifpackageloaded{geometry}{}
-    {\RequirePackage[margin=0mm]{geometry}}
-
-% graphbox:
-\@ifpackageloaded{graphbox}{}
-    {\RequirePackage{graphbox}}
-
-% stocksize:
+\RequirePackage{geometry}
+\RequirePackage{graphbox}
 \RequirePackage{stocksize}
-
-% TikZ:
-\@ifpackageloaded{tikz}{}
-    {\RequirePackage{tikz}}
-% \usetikzlibrary{calc, positioning, backgrounds}
-
-% tcolorbox:
+\RequirePackage{tikz}
 \@ifpackageloaded{tcolorbox}{}
     {\RequirePackage[most]{tcolorbox}}
 \tcbuselibrary{fitting}
-
-% functional:
-\RequirePackage{functional}
 
 
 \ExplSyntaxOn
@@ -76,9 +60,9 @@
 \dim_new:N   \l_nt_spine_boxsep_dim       % horizontal space between adjacent boxes
 
 \msg_new:nnn { novathesis } { invalid-spine-angle }
-  { 
+  {
     Invalid~spine~angle~'#1'.~
-    Allowed~values~are~0,~180,~90,~-90,~or~270. 
+    Allowed~values~are~0,~180,~90,~-90,~or~270.
   }
 
 % -- Spine Dimensions -------------------------------------------------------
@@ -163,7 +147,7 @@
     spine/fg/color       .initial:n = { black },
 
     % -- Debugging ---------------------------------------------------------
-    % "debug" is a boolean flag. 
+    % "debug" is a boolean flag.
     spine/debug          .bool_set:N = \l_nt_spine_debug_bool,
     spine/debug          .initial:n  = { false },
     spine/debug          .default:n  = { true },
@@ -194,13 +178,13 @@
       {
         spine/box/#1/len           .dim_set:c = l_nt_spine_box_#1_len_dim,
         spine/box/#1/len           .initial:n = { 3cm },
-        
+
         spine/box/#1/extrasep      .dim_set:c = l_nt_spine_box_#1_extrasep_dim,
         spine/box/#1/extrasep      .initial:n = { 0mm },
-        
+
         spine/box/#1/fontstyle     .tl_set:c  = l_nt_spine_box_#1_fontstyle_tl,
         spine/box/#1/fontstyle     .initial:n = { \sffamily },
-        
+
         spine/box/#1/bg/color      .tl_set:c  = l_nt_spine_box_#1_bg_color_tl,
         spine/box/#1/bg/color      .initial:n = { cyan },
 
@@ -216,19 +200,19 @@
         spine/box/#1/bg/image/angle/phd   .initial:n = { },
         spine/box/#1/bg/image/angle/msc   .tl_set:c = l_nt_spine_box_#1_bg_image_angle_msc_tl,
         spine/box/#1/bg/image/angle/msc   .initial:n = { },
-        
+
         spine/box/#1/fg/color      .tl_set:c  = l_nt_spine_box_#1_fg_color_tl,
         spine/box/#1/fg/color      .initial:n = { black },
-        
+
         spine/box/#1/frame/color   .tl_set:c  = l_nt_spine_box_#1_frame_color_tl,
         spine/box/#1/frame/color   .initial:n = { none },
-        
+
         spine/box/#1/frame/width   .tl_set:c  = l_nt_spine_box_#1_frame_width_tl,
         spine/box/#1/frame/width   .initial:n = { 0pt },
-        
+
         spine/box/#1/halign        .tl_set:c  = l_nt_spine_box_#1_halign_tl,
         spine/box/#1/halign        .initial:n = { center },
-        
+
         spine/box/#1/valign        .tl_set:c  = l_nt_spine_box_#1_valign_tl,
         spine/box/#1/valign        .initial:n = { center },
       }
@@ -259,13 +243,13 @@
     % 2. Iterate through the comma-separated list (#2)
     \clist_map_inline:nn { #2 }
       {
-        % We check if the keys are actually variables or properties. 
-        % In expl3, keys usually set variables. 
+        % We check if the keys are actually variables or properties.
+        % In expl3, keys usually set variables.
         % This implementation assumes the arguments map to VARIABLE NAMES (csnames).
-        
+
         % Construct the full name: prefix (#1) + current item (##1)
         % For your example: prefix="a/b/" item="d/e" -> check variable "\a/b/d/e"
-        
+
         \cs_if_exist:cT { #1 ##1 }
           {
             \tl_set_eq:Nc \l_nt_search_result_tl { #1 ##1 }
@@ -284,7 +268,7 @@
           { novathesis } { option-search-not-found }
           { #2 } { #1 }
       }
-          
+
     % 3. Output logic
     \IfNoValueTF { #3 }
       {
@@ -294,7 +278,7 @@
         \tl_set_eq:NN #3 \l_nt_search_result_tl
       }
   }
-  
+
 
 
 % -------------------------------------------------------------------------
@@ -320,7 +304,7 @@
   author/extrasep = 0.5cm,
 }
 
-  
+
 % -------------------------------------------------------------------------
 % 5. Implementation: \PrintBookSpine
 % -------------------------------------------------------------------------
@@ -362,13 +346,13 @@
 
 \NewDocumentCommand{\PrintBookSpine}{}
   {
-    
+
     % 1. Adjust the stock (paper) size
-    \newstocksize{layoutsize={\the\paperheight,\the\l_nt_spine_width_dim},keepmargins}
-    
+    \newstocksize{layoutsize={\the\paperheight,\the\l_nt_spine_width_dim},margin=0mm}
+
     % 2. Main drawing environment: a TikZ overlay on the full page.
     \begin{tikzpicture}[remember~picture, overlay]
-      
+
         % A. Draw the global spine background rectangle and its frame
         \node[
           inner~sep = 0pt,
@@ -380,33 +364,33 @@
           line~width=\l_nt_spine_frame_width_tl,
           anchor=center,
         ] at (current~page.center) {};
-        
+
         % B. Optionally overlay a global background image
         \tl_if_blank:VF \l_nt_spine_bg_image_tl
           {
               \str_case:VnF \l_nt_spine_bg_image_angle_tl
                 {
                   % Case 0 or 180 (Horizontal)
-                  {0}   { 
-                          \dim_set:Nn \l_imgwidth_dim  { \paperwidth } 
+                  {0}   {
+                          \dim_set:Nn \l_imgwidth_dim  { \paperwidth }
                           \dim_set:Nn \l_imgheight_dim { \paperheight }
                         }
-                  {180} { 
-                          \dim_set:Nn \l_imgwidth_dim  { \paperwidth } 
+                  {180} {
+                          \dim_set:Nn \l_imgwidth_dim  { \paperwidth }
                           \dim_set:Nn \l_imgheight_dim { \paperheight }
                         }
-    
+
                   % Case 90, -90, 270 (Vertical/Rotated)
-                  {90}  { 
-                          \dim_set:Nn \l_imgwidth_dim  { \paperheight } 
+                  {90}  {
+                          \dim_set:Nn \l_imgwidth_dim  { \paperheight }
                           \dim_set:Nn \l_imgheight_dim { \paperwidth }
                         }
-                  {-90} { 
-                          \dim_set:Nn \l_imgwidth_dim  { \paperheight } 
+                  {-90} {
+                          \dim_set:Nn \l_imgwidth_dim  { \paperheight }
                           \dim_set:Nn \l_imgheight_dim { \paperwidth }
                         }
-                  {270} { 
-                          \dim_set:Nn \l_imgwidth_dim  { \paperheight } 
+                  {270} {
+                          \dim_set:Nn \l_imgwidth_dim  { \paperheight }
                           \dim_set:Nn \l_imgheight_dim { \paperwidth }
                         }
                 }
@@ -423,10 +407,10 @@
           }
 
         % C. Begin drawing the individual content boxes.
-      \node[anchor=north~west, xshift=-4pt, yshift=4pt - \l_nt_spine_margin_top_dim] 
+      \node[anchor=north~west, xshift=-4pt, yshift=4pt - \l_nt_spine_margin_top_dim]
           at (current~page.north~west)
       {
-        
+
         % The Spine Container (nested TikZ picture)
        \begin{tikzpicture}
           [
@@ -439,7 +423,7 @@
                align = center,
              }
           ]
-          
+
           % Initialize the horizontal cursor to the left inner margin
           \dim_set_eq:Nc \l_tmpb_dim { l_nt_spine_margin_left_dim }
 
@@ -450,9 +434,9 @@
              draw = none,
              fill = none,
              anchor = north~west,
-           ] at (0, 0) 
+           ] at (0, 0)
            { };
-           
+
           % Loop over the configured logical order of boxes
           \clist_map_inline:Nn \l_nt_spine_order_clist
             {
@@ -462,17 +446,17 @@
 
               % Outer width
               \dim_set_eq:Nc \l_box_outer_width_dim    { l_nt_spine_box_##1_len_dim }
-              
+
               % Outer height
               \dim_set:Nn \l_box_outer_height_dim      { \l_nt_spine_width_dim
                                                          - \l_nt_spine_margin_top_dim
                                                          - \l_nt_spine_margin_bottom_dim }
-                                                         
+
               % Inner width/height
-              \dim_set:Nn \l_box_inner_width_dim    { \l_box_outer_width_dim 
-                                                         - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2 }  
-              \dim_set:Nn \l_box_inner_height_dim   { \l_box_outer_height_dim 
-                                                         - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2 }  
+              \dim_set:Nn \l_box_inner_width_dim    { \l_box_outer_width_dim
+                                                         - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2 }
+              \dim_set:Nn \l_box_inner_height_dim   { \l_box_outer_height_dim
+                                                         - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2 }
 
               % 4. Draw the outer container node for the current box
               \node[
@@ -484,8 +468,8 @@
                  text = \use:c { l_nt_spine_box_##1_fg_color_tl },
                  line~width = \use:c { l_nt_spine_box_##1_frame_width_tl },
                  anchor = north~west,
-              ] at (\l_tmpb_dim, 0) 
-              { 
+              ] at (\l_tmpb_dim, 0)
+              {
                   % --------------------------------------------------------
                   % DEBUG OVERLAY START
                   % --------------------------------------------------------
@@ -505,7 +489,7 @@
                   % 5. Per-box image processing:
                   \def\nt_spine_overlay_code{}%
                   \edef\tmp_img{\use:c { l_nt_spine_box_##1_bg_image_tl }}
-                  
+
                   \tl_if_blank:VF \tmp_img
                     {
                       \def\nt_spine_overlay_code{%
@@ -516,7 +500,7 @@
                         ] at (interior.center)
                           {
                               % A. Scale to height
-                              \OptionSearch [l_nt_spine_box_##1_bg_image_angle_] 
+                              \OptionSearch [l_nt_spine_box_##1_bg_image_angle_]
                                             { \option{/novathesis/doctype}_tl,
                                               tl,
                                             }[\img_angle]
@@ -544,7 +528,7 @@
                                        \dim_set:Nn \l_imgwidth_dim  { \wd0 }
                                        \dim_set:Nn \l_imgheight_dim { \ht0 + \dp0 }
                                   }
-                                    
+
                                   % C. Alignment logic
                                   \str_case:enF { \use:c { l_nt_spine_box_##1_halign_tl } }
                                     {
@@ -552,7 +536,7 @@
                                       {right}  { \hskip \dimexpr\l_box_inner_width_dim-\l_imgwidth_dim\relax \box0 }
                                       {center} { \box0 }
                                     }
-                                    { 
+                                    {
                                       \box0
                                     }
                           };
@@ -594,17 +578,17 @@
                       valign=\use:c { l_nt_spine_box_##1_valign_tl },
                       % Overlay
                       overlay={\nt_spine_overlay_code},
-                  ]                      
+                  ]
                       \setbox0=\hbox{2Ap}
                       \raisebox{0.75\dp0}{\vphantom{Ap}}
                       % \NTSanitizeTitle
                       { \use:c { l_nt_spine_##1_tl } }
                   \end{tcolorbox}
               };
-                
+
               % 7. Advance the horizontal cursor
-              \dim_add:Nn \l_tmpb_dim { \use:c { l_nt_spine_box_##1_len_dim } 
-                                        + \l_nt_spine_boxsep_dim + 
+              \dim_add:Nn \l_tmpb_dim { \use:c { l_nt_spine_box_##1_len_dim }
+                                        + \l_nt_spine_boxsep_dim +
                                         + \use:c { l_nt_spine_box_##1_extrasep_dim } }
            }
         \end{tikzpicture}
