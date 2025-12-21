@@ -136,7 +136,7 @@
 \RequirePackage{varwidth}
 \RequirePackage{textcase}
 \RequirePackage{catchfile}  % for automatic downloading of fonts
-\RequirePackage{stocksize}  % changing the physical and logical page layout
+\RequirePackage{NOVAthesisFiles/stocksize}  % changing the physical and logical page layout
 \RequirePackage{NOVAthesisFiles/memory2}
 \RequirePackage{NOVAthesisFiles/nt-version}
 

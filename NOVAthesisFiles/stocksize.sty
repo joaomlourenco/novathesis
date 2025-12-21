@@ -1,0 +1,179 @@
+  %% This is file `stocksize.sty',
+%%
+%% Copyright (C) 2024–25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%%
+%% This file may be distributed and/or modified under the conditions of
+%% the LaTeX Project Public License, either version 1.3c of this license
+%% or (at your option) any later version. The latest version of this
+%% license is in:
+%%
+%%    http://www.latex-project.org/lppl.txt
+%%
+%% and version 1.3c or later is part of all distributions of LaTeX
+%% version 2006/05/20 or later.
+%%
+\def\fileversion{1.0.5}
+\def\filedate   {2025/12/13}
+\edef\filename  {\@currname}
+
+\ProvidesPackage{stocksize}[%
+  \filedate\  v\fileversion (João M. Lourenço) User defined PDF paper (stock) size.]
+
+% Load geometry if it was was not loaded by the user
+\AddToHook{begindocument/before}{
+  \@ifpackageloaded{geometry}{}{
+    \RequirePackage[reset]{geometry}
+  }
+}
+
+% Change the physical paper (stock) size
+% Works with pdfLaTeX, XeLaTeX and LuaLaTeX
+% ------------------------------------------------------------
+% \@ss@setpdfpagesize{<height>}{<width>}
+% Low-level helper: syncs engine/LaTeX dimensions with the requested
+% physical stock size.
+% Sets (if defined): \pdfpageheight/\pdfpagewidth, \pageheight/\pagewidth,
+% and LaTeX's \paperheight/\paperwidth plus \stockheight/\stockwidth.
+% Args:
+%   #1  height dimension (e.g., 297mm)
+%   #2  width  dimension (e.g., 210mm)
+% Notes: called after computing full stock size from geometry.
+% ------------------------------------------------------------
+\newcommand*{\@ss@setpdfpagesize}[2]{%
+  \@ifundefined{pdfpageheight}{}{\pdfpageheight=#1}%
+  \@ifundefined{pdfpagewidth}{}{\pdfpagewidth=#2}%
+  \@ifundefined{pageheight}{}{\pageheight=#1}%
+  \@ifundefined{pagewidth}{}{\pagewidth=#2}%
+  \paperheight=#1%
+  \paperwidth=#2%
+  % memoir defines \stockheight/\stockwidth; other classes may not.
+  \@ifundefined{stockheight}{}{\stockheight=#1}%
+  \@ifundefined{stockwidth}{}{\stockwidth=#2}%
+}
+
+% ------------------------------------------------------------
+% Internal stack depth for nested stock-size changes (LIFO).
+% Each \newpdfgeometry increases it; \restorepdfgeometry decreases it.
+% ------------------------------------------------------------
+\newcounter{@ss@cnt}
+% ------------------------------------------------------------
+% Temporary storage for the *current* margin values when pushing
+% a new geometry. We avoid allocating registers inside commands.
+% ------------------------------------------------------------
+\newdimen\ss@tempdimd
+
+% ------------------------------------------------------------
+% Geometry key: keepmargins
+% Restore the previous margin values (l/r/t/b) before applying
+% \newgeometry{...}. This is used as the default behavior for
+% \newpdfgeometry unless the user overrides margins explicitly.
+% ------------------------------------------------------------
+\define@key{Gm}{keepmargins}[true]{%
+  \setkeys{Gm}{%
+    lmargin=\the\@tempdima,
+    rmargin=\the\@tempdimb,
+    tmargin=\the\@tempdimc,
+    bmargin=\the\ss@tempdimd
+  }%
+}
+
+% ------------------------------------------------------------
+% \newpdfgeometry{<geometry key=val list>}
+% Push a new stock/page size while preserving current state.
+% Steps:
+%   1) Save current full stock size (width/height) and margins.
+%   2) Increment internal stack counter and save a geometry profile.
+%   3) Optionally preserve previous margins via key `keepmargins` (default true).
+%   4) Apply \newgeometry{<...>} with the user-supplied keys.
+%   5) Recompute and set the new physical stock size.
+% Argument:
+%   <geometry key=val list> — passed to \newgeometry, e.g.:
+%     paper=letter, keepmargins
+%     paper=210mm:297mm, margin=2cm
+% Usage:
+%   \newpdfgeometry{paper=a4paper, keepmargins}
+%   ... content ...
+%   \restorepdfgeometry
+% ------------------------------------------------------------
+\newcommand*{\newpdfgeometry}[1]{%
+  % Geometry is intentionally loaded via a begin-document hook (to avoid
+  % option clashes if the user loads geometry with their own options).
+  % Therefore, using \newpdfgeometry in the preamble is an error.
+  \@ifpackageloaded{geometry}{}{%
+    \PackageError{stocksize}{The geometry package is not loaded yet}{%
+      stocksize loads geometry at \string\begin{document} (to avoid option clashes).%
+      \MessageBreak Use \string\newpdfgeometry\space after \string\begin{document},%
+      \MessageBreak or load geometry yourself before using stocksize.%
+    }%
+  }%
+  \@ifundefined{Gm@lmargin}{%
+    \PackageError{stocksize}{The geometry package is not initialized yet}{%
+      \MessageBreak Use \string\newpdfgeometry\space after \string\begin{document}.%
+    }%
+  }{}%
+
+  % Save current full stock size (computed from current margins+text block)
+  \expandafter\edef\csname @sspw@\arabic{@ss@cnt}\endcsname%
+                {\the\dimexpr\Gm@lmargin+\Gm@width+\Gm@rmargin\relax}%
+  \expandafter\edef\csname @ssph@\arabic{@ss@cnt}\endcsname%
+                {\the\dimexpr\Gm@tmargin+\Gm@height+\Gm@bmargin\relax}%
+
+  % Push current geometry onto a LIFO stack
+  \stepcounter{@ss@cnt}%
+  \savegeometry{@ss@cnt@\arabic{@ss@cnt}}%
+
+  % Snapshot current margins so we can keep them by default
+  \@tempdima=\Gm@lmargin\@tempdimb=\Gm@rmargin%
+  \@tempdimc=\Gm@tmargin\ss@tempdimd=\Gm@bmargin%
+
+  % Default behavior: keep current margins unless overridden by #1
+  \setkeys{Gm}{keepmargins}%
+
+  % Apply requested geometry changes
+  \newgeometry{#1}%
+
+  % Recompute and set new physical stock size
+  \edef\@sspw{\the\dimexpr\Gm@lmargin+\Gm@width+\Gm@rmargin\relax}%
+  \edef\@ssph{\the\dimexpr\Gm@tmargin+\Gm@height+\Gm@bmargin\relax}%
+  \@ss@setpdfpagesize{\@ssph}{\@sspw}%
+}
+
+% ------------------------------------------------------------
+% \restorepdfgeometry
+% Pop (restore) the previous geometry/stock size from the stack.
+% Loads the saved geometry profile for the current depth, decrements
+% the counter, and reapplies the previously saved stock size.
+% Arguments: none
+% ------------------------------------------------------------
+\newcommand*{\restorepdfgeometry}{%
+  \ifnum\value{@ss@cnt}>\z@
+    \loadgeometry{@ss@cnt@\arabic{@ss@cnt}}%
+    \addtocounter{@ss@cnt}{-1}%
+    \@ss@setpdfpagesize{\csname @ssph@\arabic{@ss@cnt}\endcsname}%
+                       {\csname @sspw@\arabic{@ss@cnt}\endcsname}%
+  \else
+    \PackageWarning{stocksize}{\string\restorepdfgeometry\space called with empty stack}%
+  \fi
+}
+
+% ------------------------------------------------------------
+% Environments (aliases)
+% These three environments are simple wrappers around:
+%   \newpdfgeometry{<...>} ... \restorepdfgeometry
+% They exist for user convenience / backwards compatibility:
+%   newstocksize   — change stock size for a region
+%   newpapersize   — synonym
+%   newpdflayout   — synonym
+% ------------------------------------------------------------
+
+\newenvironment{newstocksize}
+  {\newpdfgeometry}
+  {\restorepdfgeometry}
+
+\newenvironment{newpapersize}
+  {\newpdfgeometry}
+  {\restorepdfgeometry}
+
+\newenvironment{newpdflayout}
+  {\newpdfgeometry}
+  {\restorepdfgeometry}
