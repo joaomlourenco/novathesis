@@ -290,7 +290,7 @@ clean:
 	@ rm -f $(AUXFILES) "*(1)*" $(NEEDLUALATEX) $(KEEPDIR)
 	@ rm -rf $(AUXDIR) _minted*
 	@ find . -name .DS_Store | xargs rm -rf
-	@ find . -maxdepth 1 -type f -name 'novathesis*' ! -name '*.pdf' ! -name '*.tex' -delete
+	@ find . -maxdepth 1 -type f -name 'novathesis*' ! -name '*.pdf' ! -name '*.tex' ! -name '*.cls' -delete
 	@ rm -rf $(wildcard /tmp/ntbuild-*)&
 
 #————————————————————————————————————————————————————————————————————————————
