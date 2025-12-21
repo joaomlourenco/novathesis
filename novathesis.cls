@@ -1692,21 +1692,21 @@
 
 \ifoptionequal{/novathesis/print/webography}{}{%
   \printorder(backmatter):={
-    appendices;      % Print appendices; if any!
-    annexes;         % Print annexes; if any!
     bib;             % Print the bibliography.  Change to
      %    “bib[title=⟨title⟩]” to redefine the title!
     alllistof;       % Print all the listof defined in “6_list_of.tex”
     myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+    appendices;      % Print appendices; if any!
+    annexes;         % Print annexes; if any!
   }%
 }{%
   \printorder(backmatter):={
-    appendices; % Print appendices, if any!
-    annexes; % Print annexes, if any!
     \printbibliography[nottype=online]; % Print the bibliography.
     \printbibliography[title=\option{/novathesis/print/webography},type=online]; % Print the bibliography.
     alllistof;       % Print all the listof defined in “6_list_of.tex”
     myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+    appendices; % Print appendices, if any!
+    annexes; % Print annexes, if any!
   }%
 }
 % \ifoptionequal{/novathesis/print/webography}{}{%
