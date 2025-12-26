@@ -1,0 +1,474 @@
+% aidisclose.sty
+% 
+% Copyright (C) 2025 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%
+% This file may be distributed and/or modified under the conditions of
+% the LaTeX Project Public License, either version 1.3c of this license
+% or (at your option) any later version.
+\def\gaiversion{1.4.0}
+%
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\ProvidesExplPackage {aidisclose} {2025/12/26} {\gaiversion} 
+  {Utilities for Generative AI disclosure checklist and statements}
+
+% =========================================================
+% 0) DEPENDENCIES
+% =========================================================
+\RequirePackage{xparse}    % Interface for document commands
+\ifcsname  checkmark\endcsname\else
+\RequirePackage{amssymb}   % for \checkmark
+\fi
+\RequirePackage{multicol}  % for multi-column layout
+\RequirePackage{enumitem}  % for list customization
+\RequirePackage{relsize}   % for relative font sizing (\smaller, \larger)
+
+% =========================================================
+% 1) VARIABLE DEFINITIONS
+% =========================================================
+
+% --- Strings ---
+\str_new:N \g__gai_bibfile_str
+\str_new:N \g__gai_preamble_str
+\str_new:N \g__gai_footnote_str
+
+
+% --- Dimensions ---
+\dim_new:N \l__gai_fboxsep_dim
+\dim_new:N \l__gai_boxwd_dim
+\dim_new:N \l__gai_labelsep_dim
+\dim_set:Nn \l__gai_fboxsep_dim { 1.2pt }
+\dim_set:Nn \l__gai_labelsep_dim { 1.2em }
+
+% --- Sequences ---
+\seq_new:N \g__gai_active_keys_seq   % Stores keys activated by \GAIactivate
+\seq_new:N \l__gai_tools_seq         % Local sequence for processing tools list
+
+% --- Token Lists (Strings & Data) ---
+\tl_new:N  \l__gai_temp_tl           % Scratch variable
+\tl_new:N  \g__gai_comments_tl       % Accumulates user comments
+\tl_new:N  \g__gai_taxonomy_tl       % Stores the full taxonomy structure
+\tl_new:N  \g__gai_title_long_tl     % Full title of the disclosure section
+\tl_new:N  \g__gai_title_short_tl    % Short title (optional)
+\tl_new:N  \g__gai_section_cmd_tl    % The command used to create the section
+\tl_new:N  \g__gai_tools_sentence_tl % The formatted sentence listing tools
+\tl_new:N  \l__gai_authors_decl_tl   % The "Author(s) declare(s)..." string
+\tl_new:N  \g__gai_fontsize_tl       % Font size for the checklist
+\tl_new:N  \g__gai_checkmark_symbol_tl % The symbol used inside the checkbox
+
+% --- Integers ---
+\int_new:N   \g__gai_authors_int     % Number of authors provided
+\int_new:N   \g__gai_comment_int     % Counter for numbered comments
+
+% --- Clists ---
+\clist_new:N \g__gai_authors_clist   % Stores the raw list of authors
+
+
+% --- set string variables ---
+\str_set:Nn \g__gai_bibfile_str { aidisclose.bib }
+\str_set:Nn \g__gai_preamble_str { 
+    the~use~of~Generative~AI~in~the~research~work~and~writing~process~of~this~document.~
+    According~to~the~GAIDeT~taxonomy,~the~following~tasks~were~delegated~to~
+    Generative~AI~tools~under~full~human~supervision: }
+\str_set:Nn \g__gai_footnote_str { This~declaration~was~generated~using~the~\LaTeX }
+
+
+% =========================================================
+% 2) INTERNAL UTILITIES
+% =========================================================
+
+% --- Checkbox Drawing ---
+
+% Internal: Print a box with the configured checkmark symbol
+\cs_new_protected:Npn \__gai_print_checked_box:
+  {
+    \group_begin:
+    \dim_set:Nn \fboxsep { \l__gai_fboxsep_dim }
+    \fbox { \tl_use:N \g__gai_checkmark_symbol_tl }
+    \group_end:
+  }
+
+% Internal: Print an empty box (phantom symbol for exact size consistency)
+\cs_new_protected:Npn \__gai_print_empty_box:
+  {
+    \group_begin:
+    \dim_set:Nn \fboxsep { \l__gai_fboxsep_dim }
+    \fbox { \phantom { \tl_use:N \g__gai_checkmark_symbol_tl } }
+    \group_end:
+  }
+
+% Internal: Selects checked or empty box based on key existence
+\cs_new_protected:Npn \__gai_checkbox_for:n #1
+  {
+    \seq_if_in:NxTF \g__gai_active_keys_seq { \tl_to_str:n { #1 } }
+      { \__gai_print_checked_box: }
+      { \__gai_print_empty_box: }
+  }
+  
+% --- Text Formatting ---
+
+% Internal: Formats the text next to a checkbox
+% Uses \l__gai_boxwd_dim (calculated dynamically when symbol is set)
+\cs_new_protected:Npn \__gai_item_text:n #1
+  {
+    \parbox [t] 
+      { \dim_eval:n { \linewidth - \l__gai_boxwd_dim - \l__gai_labelsep_dim } }
+      { \raggedright #1 }
+  }
+
+% Internal: Prints the standard legal/explanation preamble
+\cs_new_protected:Npn \__gai_print_preamble:
+  {
+    \tl_use:N \l__gai_authors_decl_tl
+    \footnote{
+      \str_use:N \g__gai_footnote_str \space
+      {\hypersetup{allcolors=black}
+        \href{https://ctan.org/pkg/aidisclose}
+             {\texttt{aidisclose}~package}
+      }\space
+      \cite{Lourenco:2025:aidisclose}.
+    }
+    \space
+    \str_use:N \g__gai_preamble_str
+  }
+
+% --- Enumitem Configuration ---
+\setlist[itemize]{
+  leftmargin=*,
+  align=parleft,
+  itemsep=3pt,
+  topsep=0pt,
+  parsep=0pt,
+  labelsep=\l__gai_labelsep_dim
+}
+
+% =========================================================
+% 3) USER CONFIGURATION COMMANDS
+% =========================================================
+
+% \GAIsetCheckmarkSymbol{symbol}
+% Sets the symbol used for checked boxes.
+% Automatically recalculates box width to ensure perfect alignment.
+\NewDocumentCommand \GAIsetCheckmarkSymbol { m }
+  {
+    \tl_gset:Nn \g__gai_checkmark_symbol_tl { #1 }
+    
+    % Recalculate the width of the box based on the new symbol
+    % This ensures indentation remains correct if user picks a wide/narrow symbol
+    \hbox_set:Nn \l_tmpa_box { \fbox { #1 } }
+    \dim_set:Nn \l__gai_boxwd_dim { \box_wd:N \l_tmpa_box }
+  }
+
+% \GAIactivate{key}
+% marks a specific taxonomy item as "checked"
+\NewDocumentCommand \GAIactivate { m }
+  {
+    \tl_set:Nn \l__gai_temp_tl { #1 }
+    \tl_trim_spaces:N \l__gai_temp_tl
+    \seq_gput_right:Nx \g__gai_active_keys_seq { \tl_to_str:N \l__gai_temp_tl }
+  }
+
+% \GAItoolsUsed{tool1, tool2, ...}
+\NewDocumentCommand \GAItoolsUsed { m }
+  {
+    \tl_gclear:N \g__gai_tools_sentence_tl
+    \tl_if_blank:nTF { #1 }
+      { \tl_gset:Nn \g__gai_tools_sentence_tl { No~Generative~AI~tools~were~used. } }
+      {
+        \seq_set_split:Nnn \l__gai_tools_seq { , } { #1 }
+        \seq_set_map:NNn \l__gai_tools_seq \l__gai_tools_seq { \tl_trim_spaces:n {##1} }
+        \seq_remove_all:Nn \l__gai_tools_seq { }
+        \tl_gset:Nx \g__gai_tools_sentence_tl
+          {
+            \seq_use:Nnnn \l__gai_tools_seq { ~and~ } { ,~ } { ,~and~ } .
+          }
+      }
+  }
+
+% \GAIsetChecklistFontSize{ \small }
+\NewDocumentCommand \GAIsetChecklistFontSize { m }
+  {
+    \tl_gset:Nn \g__gai_fontsize_tl { #1 }
+  }
+
+% \GAIdiscloseTitle[short]{long}[section_level]
+\NewDocumentCommand \GAIdiscloseTitle { o m O{} }
+  {
+    \tl_gset:Nn \g__gai_title_long_tl { #2 }
+    \IfNoValueTF { #1 }
+      { \tl_gset:Nn \g__gai_title_short_tl { #2 } }
+      { \tl_gset:Nn \g__gai_title_short_tl { #1 } }
+    \tl_if_blank:nTF { #3 }
+      {
+        \cs_if_exist:cTF { chapter }
+          { \tl_gset:Nn \g__gai_section_cmd_tl { \chapter } }
+          { \tl_gset:Nn \g__gai_section_cmd_tl { \section } }
+      }
+      { \tl_gset:Nn \g__gai_section_cmd_tl { #3 } }
+  }
+
+\NewDocumentCommand \GAIdiscloseTitleLong {} { \tl_use:N \g__gai_title_long_tl }
+\NewDocumentCommand \GAIdiscloseTitleShort {} { \tl_use:N \g__gai_title_short_tl }
+
+% --- Default Configuration ---
+\GAIdiscloseTitle[Disclosure~of~Delegation~to~Generative~AI]
+                {Disclosure~of~Delegation~to~Generative~Artificial~Intelligence}
+\GAIsetChecklistFontSize { \smaller }
+\GAIsetCheckmarkSymbol { \checkmark } % Set default symbol (and calc default width)
+
+% =========================================================
+% 4) COMMENT ENVIRONMENTS
+% =========================================================
+\NewDocumentEnvironment{GAIcomment}{ +b }
+  {
+    \tl_gput_right:Nn \g__gai_comments_tl
+      {
+        \int_gincr:N \g__gai_comment_int
+        \par \bigskip \noindent
+        \textbf{Additional~comment~\#\int_use:N \g__gai_comment_int}~ #1 \par
+      }
+  } { }
+
+\NewDocumentEnvironment{GAIcomment*}{ +b }
+  {
+    \tl_gput_right:Nn \g__gai_comments_tl
+      {
+        \par \bigskip \noindent
+        \textbf{Additional~comment:}~ #1 \par
+      }
+  } { }
+
+% =========================================================
+% 5) TAXONOMY DATA
+% =========================================================
+\tl_gset:Nn \g__gai_taxonomy_tl {
+  \TGroup{Conceptualization}{
+    \TItem{c:idea}{Idea~generation}
+    \TItem{c:objective}{Defining~the~research~objective}
+    \TItem{c:rq}{Formulating~research~questions~and~hypotheses}
+    \TItem{c:feas}{Feasibility~assessment~and~risk~evaluation}
+    \TItem{c:pretest}{Preliminary~hypothesis~testing}
+  }
+  \TGroup{Literature~Review}{
+    \TItem{l:search}{Literature~search~and~systematization}
+    \TItem{l:write}{Writing~the~literature~review}
+    \TItem{l:patents}{Analysis~of~market~trends~and/or~patent~environment}
+    \TItem{l:gaps}{Evaluation~of~novelty~and~identification~of~gaps}
+  }
+  \TGroup{Methodology}{
+    \TItem{m:design}{Research~design}
+    \TItem{m:protocols}{Development~of~experimental~or~research~protocols}
+    \TItem{m:methods}{Selection~of~research~methods}
+  }
+  \TGroup{Software~Development~and~Automation}{
+    \TItem{s:codegen}{Code~generation}
+    \TItem{s:opt}{Code~optimization}
+    \TItem{s:auto}{Process~automation}
+    \TItem{s:algs}{Creation~of~algorithms~for~data~analysis}
+  }
+  \TGroup{Data~Management}{
+    \TItem{d:collect}{Data~collection}
+    \TItem{d:validate}{Validation}
+    \TItem{d:clean}{Data~cleaning}
+    \TItem{d:curate}{Data~curation~and~organization}
+    \TItem{d:analyze}{Data~analysis}
+    \TItem{d:viz}{Visualization}
+    \TItem{d:repro}{Reproducibility~testing}
+  }
+  \TGroup{Writing~and~Editing}{
+    \TItem{w:textgen}{Text~generation}
+    \TItem{w:proof}{Proofreading~and~editing}
+    \TItem{w:summarize}{Summarizing~text}
+    \TItem{w:concl}{Formulation~of~conclusions}
+    \TItem{w:tone}{Adapting~and~adjusting~emotional~tone}
+    \TItem{w:translate}{Translation}
+    \TItem{w:reformat}{Reformatting}
+    \TItem{w:press}{Press~releases~and~outreach~materials}
+  }
+  \TGroup{Ethics~Review}{
+    \TItem{e:bias}{Bias~analysis~and~discrimination~assessment}
+    \TItem{e:risk}{Ethical~risk~analysis}
+    \TItem{e:compliance}{Monitoring~compliance~with~ethical~standards}
+    \TItem{e:conf}{Data~confidentiality~monitoring}
+  }
+  \TGroup{Supervision}{
+    \TItem{sup:qa}{Quality~assessment}
+    \TItem{sup:trends}{Trend~identification}
+    \TItem{sup:limits}{Identification~of~limitations}
+    \TItem{sup:recs}{Recommendations}
+    \TItem{sup:pub}{Publication~support}
+  }
+}
+
+% =========================================================
+% 6) MAIN RENDERING ENGINE
+% =========================================================
+\NewDocumentCommand \GAIrenderDeclaration { s O{3} m }
+  {
+    % --- 1. Process Authors string ---
+    \clist_set:Nn \g__gai_authors_clist { #3 }
+    \int_set:Nn \g__gai_authors_int { \clist_count:N \g__gai_authors_clist }
+    
+    \int_compare:nNnTF { \g__gai_authors_int } = { 1 }
+      { \tl_set:Nn \l__gai_authors_decl_tl { #3~declares } }
+      { 
+        \tl_set:Nx \l__gai_authors_decl_tl 
+          { 
+            \clist_use:Nnnn \g__gai_authors_clist
+              { ~and~ } { ,~ } { ,~and~ } ~declare 
+          }
+      }
+
+    % --- 2. Print Section Title (conditionally) ---
+    \IfBooleanF { #1 }
+    { % Only render title in non-starred version
+      \use:c { \cs_to_str:N \g__gai_section_cmd_tl } 
+             { \g__gai_title_long_tl }
+    }
+               
+    % --- 3. Print Preamble ---
+    \__gai_print_preamble:
+    \par \bigskip
+
+    % --- 4. Render Taxonomy Checklist ---
+    \group_begin:
+      \g__gai_fontsize_tl
+      
+      % \TGroup{Title}{Items}
+      \cs_set:Npn \TGroup ##1 ##2
+        {
+          \par \bigskip
+          \int_compare:nNnTF { #2 } < { 2 }
+            {
+              \textbf{\larger ##1}\par\nopagebreak[4]
+              % 1 column: no multicols
+              \begin{itemize}
+                ##2
+              \end{itemize}
+            }
+            {
+              % 2+ columns: use multicols
+              \setlength { \multicolsep } { 5pt }
+              \begin { multicols } { #2 } [ \textbf { \larger ##1 } ]
+                \begin { itemize }
+                  ##2
+                \end { itemize }
+              \end { multicols }
+            }
+        }
+
+      % \TSubGroup{Title}{Items}
+      \cs_set:Npn \TSubGroup ##1 ##2
+        {
+          \item[] \textbf { ##1 } \par \smallskip
+          \begin { itemize }
+            ##2
+          \end { itemize }
+        }
+
+      % \TItem{Key}{Text}
+      \cs_set:Npn \TItem ##1 ##2
+        {
+          \item [ \__gai_checkbox_for:n { ##1 } ] 
+          \__gai_item_text:n { ##2 }
+        }
+      
+      \cs_set_eq:NN \TSubItem \TItem
+      \tl_use:N \g__gai_taxonomy_tl
+    \group_end:
+
+    \par \bigskip
+    
+    % --- 5. Print Tools Used ---
+    \noindent \textbf { Generative~AI~tools~used: } ~ \tl_use:N \g__gai_tools_sentence_tl
+
+    % --- 6. Print User Comments ---
+    \tl_if_empty:NF \g__gai_comments_tl
+      {
+        \par \bigskip
+        \tl_use:N \g__gai_comments_tl
+      }
+  }
+
+
+
+
+
+%=========================================================
+% Create aidisclose.bib file if it doesn't exist
+%=========================================================
+
+% Define the warning message
+\msg_new:nnn { aidisclose } { file-exists }
+  { File~'#1'~already~exists.~Skipping~creation. }
+
+% Create the macro
+\cs_new_protected:Nn \__aidisclose_write_bib_file:n
+  {
+    \file_if_exist:nTF { #1 }
+      { % File exists - show warning
+        \msg_warning:nnn { aidisclose } { file-exists } { #1 }
+      }
+      { % File doesn't exist - create it
+        \iow_new:N \l__aidisclose_bib_iow
+        \iow_open:Nn \l__aidisclose_bib_iow { #1 }
+        \iow_now:Nn \l__aidisclose_bib_iow 
+          {
+@article{Suchikova:2025:GAIDeT,^^J
+~~title~~~~~=~{{GAIDeT~(Generative~AI~Delegation~Taxonomy)}:~A~Taxonomy~for~Humans~to~Delegate~Tasks~to~Generative~Artificial~Intelligence~in~Scientific~Research~and~Publishing},^^J
+~~author~~~~=~{Yana~Suchikova~and~Natalia~Tsybuliak~and~Jaime~A.~Teixeira~da~Silva~and~Serhii~Nazarovets},^^J
+~~year~~~~~~=~2025,^^J
+~~journal~~~=~{Accountability~in~Research},^^J
+~~publisher~=~{Taylor~\&~Francis},^^J
+~~pages~~~~~=~{1--27},^^J
+~~doi~~~~~~~=~{10.1080/08989621.2025.2544331}^^J
+}^^J
+^^J
+@manual{Lourenco:2025:aidisclose,^^J
+~~author~~~~=~{Lourenço,~João~M.},^^J
+~~title~~~~~=~{The~\texttt{aidisclose}~package:~Generative~AI~disclosure~checklist~and~statements},^^J
+~~year~~~~~~=~{2025},^^J
+~~note~~~~~~=~{Version~\gaiversion},^^J
+~~url~~~~~~~=~{https://ctan.org/pkg/aidisclose}^^J
+}^^J
+          }
+        \iow_close:N \l__aidisclose_bib_iow
+      }
+  }
+  
+
+% User-facing command
+\NewDocumentCommand \GAIcreateBibFile { m }
+  {
+    \__aidisclose_write_bib_file:n { #1 }
+  }
+
+
+%=========================================================
+% Detect and handle biblatex vs BibTeX
+%=========================================================
+
+\AddToHook {begindocument/before} {
+
+\GAIcreateBibFile { \str_use:N \g__gai_bibfile_str }
+
+\@ifpackageloaded { biblatex }
+  { 
+    % ===== BIBLATEX/BIBER MODE =====
+    % Add our bib file using biblatex command
+    \addbibresource { \str_use:N \g__gai_bibfile_str }
+  }
+  { 
+    % ===== BIBTEX MODE =====
+    % Save original \bibliography command
+    \cs_set_eq:NN \__aidisclose_orig_bibliography:n \bibliography
+    
+    % Redefine \bibliography to prepend our bib file
+    \RenewDocumentCommand \bibliography { m }
+      {
+        \__aidisclose_orig_bibliography:n { aidisclose , #1 }
+      }
+  }
+
+}
+
+\endinput

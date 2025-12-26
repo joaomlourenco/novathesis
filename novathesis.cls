@@ -117,7 +117,6 @@
 \newcolumntype{C}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}X}
 \newcolumntype{R}{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}X}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% SOME ESSENTIAL PACKAGES
 %%    Others will be loaded later, in the file “packages.tex”
@@ -1665,6 +1664,7 @@
   acknowledgements;% (*) Print the acknowledgments
   quote;           % (*) Print the quote
   abstracts;       % Print abstracts in multiple languages.
+  aidisclose;      % AI disclosure statement
   alllistof;       % Print all the listof defined in “6_list_of.tex”
   myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
 }
@@ -1676,12 +1676,14 @@
   acknowledgements;% (*) Print the acknowledgments
   quote;           % (*) Print the quote
   abstracts;       % Print abstracts in multiple languages.
+  aidisclose;      % AI disclosure statement
   alllistof;       % Print all the listof defined in “6_list_of.tex”
   myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
 }
 
 \printorder(frontmatter,working):={%
   abstracts;       % Print abstracts in multiple languages.
+  aidisclose;      % AI disclosure statement
   alllistof;       % Print all the listof defined in “6_list_of.tex”
   myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
 }
@@ -1948,6 +1950,17 @@
   \NTRunHook{list_of/post}
 }
 
+
+%============================================================
+% Deal with AI disclose declaration
+%============================================================
+\AtEndPreamble{
+  \RequirePackage{NOVAthesisFiles/aidisclose} % AI disclose declaration
+  \input{\DIR@CONFIG/7-aidisclose}
+}
+
+
+%============================================================
 \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
 \optionlistdo{/@nt/file/bib/\@DOCTYPE}{%
   % \typeout{ADDBIB=#1}\ADDBIB
@@ -2835,6 +2848,9 @@
 
 \newcommand{\ntprintacknowledgements}{\@nt@printifmaindoc@i{acknowledgements}}
 
+\newcommand{\ntprintaidisclose}{%
+  \bookmarksetupnext{level=1}%
+  \GAIrenderDeclaration[3]{\thedocauthor(name)}}
 
 
 
