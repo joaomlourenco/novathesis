@@ -7,6 +7,8 @@
 
 \typeout{NT FILE Strings/pl.ldf}%
 
+\input{Strings/strings-declare.tex}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Polish - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,6 +47,16 @@
 \degreenameprefix(bsc,pl)       := {Licencjat z}
 \degreenameprefix(msc,pl)       := {Magister z}
 \degreenameprefix(phd,pl)       := {Doktorat z}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Polish (pl)
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\defaultnttitle(pl)             := {Bardzo Długi i Imponujący\\Tytuł Pracy z Wymuszonym Podziałem Wiersza}
+\defaultntsubtitle(pl)          := {Kilka Przemyśleń o Życiu, Wszechświecie\\i Całej Reszcie}
+\defaultntdepartment(pl)        := {Katedra\\Nazwa Katedry}
+\defaultntdegreename(pl)        := {Nazwa Kierunku Studiów}
+\defaultntspecialization(pl)    := {Nazwa Specjalności}
+\defaultntauthordegree(pl)      := {Magister/Licencjat z Nazwa Poprzedniego Stopnia}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Adviser strings
@@ -99,6 +111,10 @@
 \doctypestring(phdplan,pl)      := {Plan rozprawy doktorskiej}
 \doctypestring(phdprop,pl)      := {Propozycja rozprawy doktorskiej}
 \doctypestring(phd,pl)          := {Rozprawa doktorska}
+
+\dissertationplan(mscplan,pl)   := {Plan pracy magisterskiej}
+\dissertationplan(phdplan,pl)   := {Plan rozprawy doktorskiej}
+\dissertationplan(phdprop,pl)   := {Propozycja rozprawy}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% SDG

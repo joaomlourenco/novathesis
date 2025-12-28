@@ -7,6 +7,8 @@
 
 \typeout{NT FILE Strings/it.ldf}%
 
+\input{Strings/strings-declare.tex}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Italian - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -44,6 +46,16 @@
 \degreenameprefix(bsc,it)       := {Laurea triennale in}
 \degreenameprefix(msc,it)       := {Laurea magistrale in}
 \degreenameprefix(phd,it)       := {Dottorato di ricerca in}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Italian (it)
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\defaultnttitle(it)             := {Un Titolo di Tesi Molto Lungo e Impressionante\\con un'Interruzione di Riga Forzata}
+\defaultntsubtitle(it)          := {Alcune Riflessioni Sulla Vita, l'Universo\\e Tutto Quanto}
+\defaultntdepartment(it)        := {Dipartimento di\\Nome del Dipartimento}
+\defaultntdegreename(it)        := {Nome del Corso di Studi}
+\defaultntspecialization(it)    := {Nome Della Specializzazione}
+\defaultntauthordegree(it)      := {Master/Laurea in Nome del Titolo Precedente}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Adviser strings
@@ -98,6 +110,10 @@
 \doctypestring(phdplan,it)      := {Piano di tesi di dottorato}
 \doctypestring(phdprop,it)      := {Proposta di tesi di dottorato}
 \doctypestring(phd,it)          := {Tesi di dottorato}
+
+\dissertationplan(mscplan,it)   := {Piano della tesi di laurea}
+\dissertationplan(phdplan,it)   := {Piano della tesi di dottorato}
+\dissertationplan(phdprop,it)   := {Proposta di tesi}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% SDG

@@ -7,6 +7,8 @@
 
 \typeout{NT FILE Strings/es.ldf}%
 
+\input{Strings/strings-declare.tex}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Spanish - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,6 +47,26 @@
 \degreenameprefix(bsc,es)       := {Grado en}
 \degreenameprefix(msc,es)       := {Máster en}
 \degreenameprefix(phd,es)       := {Doctorado en}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Spanish (es)
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\defaultnttitle(es)             := {Un Título de Tesis muy Largo e Impresionante\\con un Salto de Línea Forzado}
+\defaultntsubtitle(es)          := {Algunos Pensamientos Sobre la Vida, el Universo\\y Todo lo Demás}
+\defaultntdepartment(es)        := {Departamento de\\Nombre del Departamento}
+\defaultntdegreename(es)        := {Nombre del Programa de Estudios}
+\defaultntspecialization(es)    := {Nombre de la Especialización}
+\defaultntauthordegree(es)      := {Máster/Grado en Nombre del Título Anterior}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% English (en)
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\defaultnttitle(en)             := {A Very Long and Impressive\\Thesis Title with a Forced Line Break}
+\defaultntsubtitle(en)          := {Some thoughts on the Life, the Universe,\\and Everything Else}
+\defaultntdepartment(en)        := {Department of\\Name of the Department}
+\defaultntdegreename(en)        := {Study Program Name}
+\defaultntspecialization(en)    := {Specialization Name}
+\defaultntauthordegree(en)      := {Master/BSc in Name of Previous Degree}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Adviser strings
@@ -99,6 +121,10 @@
 \doctypestring(phdplan,es)      := {Plan de tesis doctoral}
 \doctypestring(phdprop,es)      := {Propuesta de tesis doctoral}
 \doctypestring(phd,es)          := {Tesis doctoral}
+
+\dissertationplan(mscplan,es)   := {Plan de tesis de máster}
+\dissertationplan(phdplan,es)   := {Plan de tesis doctoral}
+\dissertationplan(phdprop,es)   := {Propuesta de tesis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% SDG

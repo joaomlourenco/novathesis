@@ -63,11 +63,14 @@
     \if\@data@tmp#3\relax#4\else#5\fi%
   }{#5}%
 }
-\def\datadefault#1(#2){%
-  \ifdatadefined{#1}(#2){%
-    \csname the#1\endcsname(#2)%
+\def\datadefault#1{%
+  \@ifnextchar[{\datadefault@i{#1}}{\datadefault@i{#1}[]}
+}
+\def\datadefault@i#1[#2](#3){%
+  \ifdatadefined{#1}(#3){%
+    \csname the#1\endcsname(#3)%
   }{%
-    \ifdatadefined{#1}(){\csname the#1\endcsname()}{}%
+    \ifdatadefined{#1}(#2){\csname the#1\endcsname(#2)}{}%
   }%
 }
 

@@ -121,6 +121,8 @@
 %% SOME ESSENTIAL PACKAGES
 %%    Others will be loaded later, in the file “packages.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\xappto\input@path{{NOVAthesisFiles/}{NOVAthesisFiles/Strings/}}
+
 \RequirePackage[table,svgnames]{xcolor}%
 % \RequirePackage{tabularray}
 % \UseTblrLibrary{booktabs}
@@ -135,9 +137,9 @@
 \RequirePackage{varwidth}
 \RequirePackage{textcase}
 \RequirePackage{catchfile}  % for automatic downloading of fonts
-\RequirePackage{NOVAthesisFiles/stocksize}  % changing the physical and logical page layout
-\RequirePackage{NOVAthesisFiles/memory2}
-\RequirePackage{NOVAthesisFiles/nt-version}
+\RequirePackage{stocksize}  % changing the physical and logical page layout
+\RequirePackage{memory2}
+\RequirePackage{nt-version}
 
 
 %%%%% Configure Graphics
@@ -156,7 +158,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Deal with NOVATHESIS options and configuration files
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{NOVAthesisFiles/options2}
+\RequirePackage{options2}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -385,7 +387,7 @@
                                    }},
   % LANGUAGES
   lang/extra/.new list          = {},
-  lang/all/.new list            = {ca,cz,de,dk,en,es,fr,gr,it,nl,pl,pt,sk,uk},
+  lang/all/.new list            = {cat,cz,de,dk,en,es,fr,gr,it,nl,pl,pt,sk,uk},
   lang/main/.copy choice        = {/novathesis/lang/all},
   lang/cover/.copy choice       = {/novathesis/lang/all},
   lang/copyright/.copy choice   = {/novathesis/lang/all},
@@ -866,10 +868,6 @@
 
 
 % For PDF bookmakrs
-\newdata{bkmstring}
-
-
-\newdata{notdefined}
 \newdata{keywordsenvpre}
 \newdata{keywordsenvpost}
 \newdata{keywordsblockpre}
@@ -877,7 +875,6 @@
 \newdata{keywordspre}
 \newdata{keywordssep}
 % \newdata{keywordsboxlen}
-\newdata{keywordsstring}
 \newdata{keywordsstringprefix}
 \newdata{keywordsstringsuffix}
 \newdata{keywordsstringfont}
@@ -888,31 +885,25 @@
 \keywordssep()={ {\textperiodcentered} }
 % \keywordsboxlen()={\textwidth-\widthof{\usebox{\keywordsstringbox}}}
 
-\newdata{specializationstring}
-\newdata{departmentofstring}
 \newdata{sponsor}
-\newdata{andstring}
+
 \newdata{commastring}
 \optionlistdo{/novathesis/lang/all}{%
   \commastring(#1):={,\ }%
 }
 
 
-\newdata{degreestring}
+
 \newdata{degreestringfont}
 
 \newdata{degreename}
 \newdata{degreenamefont}
 
-\newdata{degreenameprefix}
 \newdata{degreenameprefixfont}
 
-\newdata{doctypestring}
 \newdata{doctypestringfont}
 
-\newdata{sdgstring}
 
-\newdata{adviserstring}            % e.g., "Adviser", "Co-adviser"
 \newdata{adviserstringfont}
 \newdata{adviserstringpre}
 \newdata{adviserstringpost}
@@ -931,12 +922,10 @@
 \adviserorder():={a,c}  % By default print advisers and co-advisers
 \newdata{committeeorder}         %e.g., "{c,r,a,m,g}"
 
-\newdata{committeetitlestring}      %e.g., "Examinaiton Committee"
 \newdata{committeetitlestringpre}
 \newdata{committeetitlestringpost}
 \newdata{committeetitlestringfont}
 
-\newdata{committeestring}
 \newdata{committeestringpre}
 \newdata{committeestringpost}
 \newdata{committeestringfont}
@@ -955,11 +944,8 @@
 \newdata{persongrouppre}
 \newdata{persongrouppost}
 
-\newdata{dissertationstring}
 \newdata{dissertationstringfont}
 
-\newdata{copyrighttextstring}
-\newdata{acknowledgmentsstring}
 
 \newdata{majorfield}
 \newdata{minorfield}
@@ -980,8 +966,6 @@
 % For each main language, list which abstracts shall be printed and in which order
 % may have more than two (just be sure you include the languages above as well)
 \newdata{abstractorder}
-
-
 
 
 
@@ -1069,15 +1053,6 @@
 \def\@LANG@MAIN{\option{/novathesis/lang/main}}
 \def\@LANG@MAIN@LONG{\thelanglong(\@LANG@MAIN)}
 
-
-\bkmstring(1-1)={\thebkmstring(cover,\@LANG@MAIN)}
-\bkmstring(1-2)={\thebkmstring(incover,\@LANG@MAIN)}
-\bkmstring(2-1)={\thebkmstring(frontpage,\@LANG@MAIN)}
-\bkmstring(2-2)={\thebkmstring(infrontpage,\@LANG@MAIN)}
-\bkmstring(N-1)={\thebkmstring(inbackcover,\@LANG@MAIN)}
-\bkmstring(N-2)={\thebkmstring(backcover,\@LANG@MAIN)}
-\bkmstring(spine)={\thebkmstring(spine,\@LANG@MAIN)}
-
 \@setabstractorder
 \ifdatadefined{abstractorder}(en){}{%
   \abstractorder(en):={en,pt}
@@ -1122,7 +1097,7 @@
 }{}
 
 % Fixing autoref in yperref
-\RequirePackage{NOVAthesisFiles/fix-hyperref}
+\RequirePackage{fix-hyperref}
 
 %--------------------------------
 % “biblatex” stuff
@@ -1163,14 +1138,22 @@
                                                 {Add a file with the translations for this language.}}%
       \fi%
 }
+
 \@for\myi:=\expanded{\@LANG@COVER,\@LANG@COPYRIGHT,\@LANG@MAIN,%
                      \theabstractorder(\@LANG@MAIN)}\do{\@nt@loadlang{\myi}}
 \optionlistdo{/novathesis/lang/extra}{\@nt@loadlang{##1}}%
 
-% \letoptionlist{/@nt/lang/loaded}\LANGLOADED
-% \typeout{LANGLOADED=\@LANG@LOADED}\LLLLL
-\options{/@nt/lang/loaded/.expanded=\@LANG@LOADED}
-% \typeout{LANGLOADED=\@LANG@LOADED}\LANG@LOADED
+\bkmstring(1-1)={\thebkmstring(cover,\@LANG@MAIN)}
+\bkmstring(1-2)={\thebkmstring(incover,\@LANG@MAIN)}
+\bkmstring(2-1)={\thebkmstring(frontpage,\@LANG@MAIN)}
+\bkmstring(2-2)={\thebkmstring(infrontpage,\@LANG@MAIN)}
+\bkmstring(N-1)={\thebkmstring(inbackcover,\@LANG@MAIN)}
+\bkmstring(N-2)={\thebkmstring(backcover,\@LANG@MAIN)}
+\bkmstring(spine)={\thebkmstring(spine,\@LANG@MAIN)}
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHECK IF USING LUALATEX OR XELATEX
@@ -1180,6 +1163,8 @@
 \newcommand{\ifxetexorluatex}{\iftutex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\options{/@nt/lang/loaded/.expanded=\@LANG@LOADED}
+
 \def\@fontencs{}
 \def\@fontencs@sep{}
 \@for\myi:=\@LANG@LOADED\do{
@@ -1238,7 +1223,7 @@
   nostyles,
   automake,
 ]{glossaries-extra}% To create glossaries
-\RequirePackage{NOVAthesisFiles/glossary-xltabular}%
+\RequirePackage{glossary-xltabular}%
 \setglossarystyle{xltabular}%
 \setabbreviationstyle[acronym]{long-short}%
 \GlsXtrEnablePreLocationTag{\emph{(\small p.~}}{\emph{(\small pp.~}}
@@ -1351,12 +1336,13 @@
   % #2 = lang
   % #3 = value
   % \typeout{NT TITLE [#1] [#2] [#3]}%
-  \noexpandarg
+  \noexpandarg  
   \StrSubstitute{#3}{\\}{ }[\@nt@cleantitle]
   % \typeout{XXXX [\@nt@cleantitle]}\aaa
-  \doctitle(#2,#1):={\@nt@cleantitle}%
+  % \doctitle(#2,#1):={\@nt@cleantitle}%
+  \doctitle(#2,#1):={\def\\{ }#3}%
   \doctitle(#2,#1,cover):={#3}%
-  \IfStrEq{#1}{main}{\doctitle(#2,spine):=?{\@nt@cleantitle}}{}%
+  \IfStrEq{#1}{main}{\doctitle(#2,spine):=?{\thedoctitle(#2,#1)}}{}%
   % \doctitle(#2,#1):={\ntnolinebreak{#3}}%
   % \doctitle(#2,#1,cover):={#3}%
   % \IfStrEq{#1}{main}{\doctitle(#2,spine):={\ntnolinebreak{#3}}}{}%
@@ -1491,6 +1477,24 @@
   \docauthor(name,short):={#3}}
 
 \def\ntauthordegree(#1)#2{\docauthor(degree,#1):={#2}}
+
+
+
+
+%============================================================
+% Setting cover defaults
+%============================================================
+
+
+% strings to be defined for each language
+\nttitle(main,\@LANG@COVER){\thedefaultnttitle(\@LANG@COVER)}
+\nttitle(sub,\@LANG@COVER){\thedefaultntsubtitle(\@LANG@COVER)}
+\ntdepartment(\@LANG@COVER){\thedefaultntdepartment(\@LANG@COVER)}
+\ntdegreename(\@LANG@COVER){\thedefaultntdegreename(\@LANG@COVER)}
+\ntspecialization(\@LANG@COVER){\thedefaultntspecialization(\@LANG@COVER)}
+\ntauthordegree(\@LANG@COVER){\thedefaultntauthordegree(\@LANG@COVER)}
+
+
 
 %============================================================
 % Adding list_of
@@ -1955,7 +1959,7 @@
 % Deal with AI disclose declaration
 %============================================================
 \AtEndPreamble{
-  \RequirePackage{NOVAthesisFiles/aidisclose} % AI disclose declaration
+  \RequirePackage{aidisclose} % AI disclose declaration
   \input{\DIR@CONFIG/7-aidisclose}
 }
 
@@ -2053,7 +2057,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FIX BABEL
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input{NOVAthesisFiles/fix-babel.tex}
+\input{fix-babel.tex}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -7,6 +7,8 @@
 
 \typeout{NT FILE Strings/sk.ldf}%
 
+\input{Strings/strings-declare.tex}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Slovak - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,6 +47,16 @@
 \degreenameprefix(bsc,sk)       := {Bakalár v}
 \degreenameprefix(msc,sk)       := {Magister v}
 \degreenameprefix(phd,sk)       := {Doktorát v}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Slovak (sk)
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\defaultnttitle(sk)             := {Veľmi Dlhý a Pôsobivý\\Názov Práce s Vynúteným Zalomením Riadku}
+\defaultntsubtitle(sk)          := {Niekoľko Myšlienok o Živote, Vesmíre\\a Všetkom Ostatnom}
+\defaultntdepartment(sk)        := {Katedra\\Názov Katedry}
+\defaultntdegreename(sk)        := {Názov Študijného Programu}
+\defaultntspecialization(sk)    := {Názov Špecializácie}
+\defaultntauthordegree(sk)      := {Magister/Bakalár v Odbore Názov Predchádzajúceho Titulu}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Adviser strings
@@ -100,6 +112,9 @@
 \doctypestring(phdprop,sk)      := {Návrh dizertačnej práce}
 \doctypestring(phd,sk)          := {Dizertačná práca}
 
+\dissertationplan(mscplan,sk)   := {Plán diplomovej práce}
+\dissertationplan(phdplan,sk)   := {Plán dizertačnej práce}
+\dissertationplan(phdprop,sk)   := {Návrh dizertačnej práce}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% SDG
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

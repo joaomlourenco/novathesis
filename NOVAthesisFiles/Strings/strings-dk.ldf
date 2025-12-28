@@ -7,6 +7,8 @@
 
 \typeout{NT FILE Strings/dk.ldf}%
 
+\input{Strings/strings-declare.tex}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Danish - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,6 +47,16 @@
 \degreenameprefix(bsc,dk)       := {Bachelor i}
 \degreenameprefix(msc,dk)       := {Kandidat i}
 \degreenameprefix(phd,dk)       := {Ph.d. i}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Danish (dk)
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\defaultnttitle(dk)             := {En Meget Lang og Imponerende\\Afhandlingstitel med Tvunget Linjeskift}
+\defaultntsubtitle(dk)          := {Nogle Tanker om Livet, Universet\\og alt det Der}
+\defaultntdepartment(dk)        := {Institut for\\Navn på Instituttet}
+\defaultntdegreename(dk)        := {Navn på Uddannelsesprogram}
+\defaultntspecialization(dk)    := {Navn på Specialisering}
+\defaultntauthordegree(dk)      := {Kandidat/Bachelor i Navn på Tidligere Grad}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Adviser strings
@@ -99,6 +111,10 @@
 \doctypestring(phdplan,dk)      := {Plan for ph.d.-afhandling}
 \doctypestring(phdprop,dk)      := {Forslag til ph.d.-afhandling}
 \doctypestring(phd,dk)          := {Ph.d.-afhandling}
+
+\dissertationplan(mscplan,dk)   := {Specialeplan}
+\dissertationplan(phdplan,dk)   := {Ph.d.-plan}
+\dissertationplan(phdprop,dk)   := {Afhandlingsforslag}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% SDG

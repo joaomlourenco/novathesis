@@ -7,6 +7,8 @@
 
 \typeout{NT FILE Strings/cat.ldf}%
 
+\input{Strings/strings-declare.tex}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Catalan - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,6 +47,16 @@
 \degreenameprefix(bsc,ca)       := {Grau en}
 \degreenameprefix(msc,ca)       := {Màster en}
 \degreenameprefix(phd,ca)       := {Doctorat en}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Catalan (cat)
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\defaultnttitle(cat)            := {Un Títol de Tesi Molt Llarg i Impressionant\\amb un Salt de Línia Forçat}
+\defaultntsubtitle(cat)         := {Alguns Pensaments Sobre la Vida, l'Univers\\i Tota la Resta}
+\defaultntdepartment(cat)       := {Departament de\\nom del Departament}
+\defaultntdegreename(cat)       := {Nom del Programa d'Estudis}
+\defaultntspecialization(cat)   := {Nom de l'Especialització}
+\defaultntauthordegree(cat)     := {Màster/Grau en nom del Títol Anterior}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Adviser strings
@@ -99,6 +111,10 @@
 \doctypestring(phdplan,ca)      := {Pla de tesi doctoral}
 \doctypestring(phdprop,ca)      := {Proposta de tesi doctoral}
 \doctypestring(phd,ca)          := {Tesi doctoral}
+
+\dissertationplan(mscplan,cat)    := {Pla de la dissertació}
+\dissertationplan(phdplan,cat)    := {Pla de la tesi}
+\dissertationplan(phdprop,cat)    := {Proposta de tesi}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% SDG

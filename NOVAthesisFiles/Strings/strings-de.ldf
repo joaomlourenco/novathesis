@@ -7,6 +7,8 @@
 
 \typeout{NT FILE Strings/de.ldf}%
 
+\input{Strings/strings-declare.tex}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  German - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,6 +47,16 @@
 \degreenameprefix(bsc,de)       := {Bachelorstudium in}
 \degreenameprefix(msc,de)       := {Masterstudium in}
 \degreenameprefix(phd,de)       := {Doktoratsstudium in}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% German (de)
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\defaultnttitle(de)             := {Ein Sehr Langer und Beeindruckender\\Titel der Arbeit mit Erzwungenem Zeilenumbruch}
+\defaultntsubtitle(de)          := {Einige Gedanken Über das Leben, das Universum\\und den Ganzen Rest}
+\defaultntdepartment(de)        := {Fachbereich\\Name des Fachbereichs}
+\defaultntdegreename(de)        := {Name des Studiengangs}
+\defaultntspecialization(de)    := {Name der Vertiefung}
+\defaultntauthordegree(de)      := {Master/Bachelor in Name des Vorherigen Abschlusses}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Adviser strings
@@ -99,6 +111,10 @@
 \doctypestring(phdplan,de)      := {Plan der Doktorarbeit}
 \doctypestring(phdprop,de)      := {Dissertationsvorschlag}
 \doctypestring(phd,de)          := {Doktorarbeit}
+
+\dissertationplan(mscplan,de)   := {Plan der Masterarbeit}
+\dissertationplan(phdplan,de)   := {Plan der Dissertation}
+\dissertationplan(phdprop,de)   := {Dissertationsvorschlag}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% SDG

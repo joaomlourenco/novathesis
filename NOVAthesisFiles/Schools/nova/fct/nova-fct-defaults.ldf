@@ -49,11 +49,15 @@
 \school(fr):={NOVA School of Science and Technology}
 \school(it):={NOVA School of Science and Technology}
 \school(logo,pt):={nova-fct-logo-pt}
-\school(logo,neg,pt):={nova-fct-logo-negative-pt}
 \school(logo,en):={nova-fct-logo-en}
+\ifdatadefined{school}(logo,\@LANG@COVER)
+  {\school(logo):={\theschool(logo,\@LANG@COVER)}}
+  {\school(logo):={\theschool(logo,en)}}
+\school(logo,neg,pt):={nova-fct-logo-negative-pt}
 \school(logo,neg,en):={nova-fct-logo-negative-en}
-\school(logo):={\theschool(logo,\@LANG@COVER)}
-\school(logo,neg):={\theschool(logo,neg,\@LANG@COVER)}
+\ifdatadefined{school}(logo,neg,\@LANG@COVER)
+  {\school(logo,neg):={\theschool(logo,neg,\@LANG@COVER)}}
+  {\school(logo,neg):={\theschool(logo,neg,en)}}
 
 % Comiittee printing order
 % \committeeorder():={c,r,a,m}%
@@ -102,14 +106,6 @@
 \margin(cover,right):={2.0cm}
 \margin(cover,2-1,top):={6.6cm}
 
-
-\newdata{dissertationplan}
-\dissertationplan(mscplan,en):={Dissertation Plan}
-\dissertationplan(phdplan,en):={Thesis Plan}
-\dissertationplan(phdprop,en):={FaculdadeThesis Proposal}
-\dissertationplan(mscplan,pt):={Plano de Dissertação}
-\dissertationplan(phdplan,pt):={Plano de Tese}
-\dissertationplan(phdprop,pt):={Proposta de Tese}
 
 \SpineSetup[%
   \def\spnimg{nova-fct-spine-red}%

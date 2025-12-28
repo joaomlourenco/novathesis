@@ -7,6 +7,8 @@
 
 \typeout{NT FILE Strings/nl.ldf}%
 
+\input{Strings/strings-declare.tex}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Dutch - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -44,6 +46,16 @@
 \degreenameprefix(bsc,nl)       := {Bachelor in}
 \degreenameprefix(msc,nl)       := {Master in}
 \degreenameprefix(phd,nl)       := {Doctoraat in}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Dutch (nl)
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\defaultnttitle(nl)             := {Een Zeer Lange en Indrukwekkende\\Titel van het Proefschrift met een Geforceerde Regeleinde}
+\defaultntsubtitle(nl)          := {Enkele Gedachten over het Leven, het Universum\\en al de Rest}
+\defaultntdepartment(nl)        := {Departement\\Naam van het Departement}
+\defaultntdegreename(nl)        := {Naam van de Opleiding}
+\defaultntspecialization(nl)    := {Naam van de Specialisatie}
+\defaultntauthordegree(nl)      := {Master/Bachelor in Naam van Vorig Diploma}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Adviser strings
@@ -98,6 +110,10 @@
 \doctypestring(phdplan,nl)      := {Plan van het proefschrift}
 \doctypestring(phdprop,nl)      := {Voorstel voor een proefschrift}
 \doctypestring(phd,nl)          := {Proefschrift}
+
+\dissertationplan(mscplan,nl)   := {Afstudeerplan}
+\dissertationplan(phdplan,nl)   := {Proefschriftplan}
+\dissertationplan(phdprop,nl)   := {Proefschriftvoorstel}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% SDG

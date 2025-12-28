@@ -7,6 +7,8 @@
 
 \typeout{NT FILE Strings/en.ldf}%
 
+\input{Strings/strings-declare.tex}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  English - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,6 +47,16 @@
 \degreenameprefix(bsc,en)       := {Bachelor in}
 \degreenameprefix(msc,en)       := {Master in}
 \degreenameprefix(phd,en)       := {Doctorate in}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Danish (dk)
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\defaultnttitle(en)             :={A Very Long and Impressive\\Thesis Title With a Forced Line Break}
+\defaultntsubtitle(en)          :={Some Thoughts on the Life, the Universe,\\and Everything Else}
+\defaultntdepartment(en)        :={Department of\\Name of the Department}
+\defaultntdegreename(en)        :={Study Program Name}
+\defaultntspecialization(en)    :={Specialization Name}
+\defaultntauthordegree(en)      :={Master/BSc in Name of Previous Degree}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Adviser strings
@@ -99,6 +111,10 @@
 \doctypestring(phdplan,en)      := {Doctoral Thesis Plan}
 \doctypestring(phdprop,en)      := {Doctoral Thesis Proposal}
 \doctypestring(phd,en)          := {Doctoral Thesis}
+
+\dissertationplan(mscplan,en)   := {Dissertation Plan}
+\dissertationplan(phdplan,en)   := {Thesis Plan}
+\dissertationplan(phdprop,en)   := {Thesis Proposal}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% SDG

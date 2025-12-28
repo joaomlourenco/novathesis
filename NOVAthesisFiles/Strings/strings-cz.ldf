@@ -8,6 +8,8 @@
 
 \typeout{NT FILE Strings/cz.ldf}%
 
+\input{Strings/strings-declare.tex}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Czech - strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -46,6 +48,16 @@
 \degreenameprefix(bsc,cz)       := {Bakalářský obor}
 \degreenameprefix(msc,cz)       := {Magisterský obor}
 \degreenameprefix(phd,cz)       := {Doktorský obor}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Czech (cz)
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\defaultnttitle(cz)             := {Velmi Dlouhý a Působivý\\Název Práce s Vynuceným Zalomením Řádku}
+\defaultntsubtitle(cz)          := {Několik Myšlenek o Životě, Vesmíru\\a Všem Ostatním}
+\defaultntdepartment(cz)        := {Katedra\\Název Katedry}
+\defaultntdegreename(cz)        := {Název Studijního Programu}
+\defaultntspecialization(cz)    := {Název Specializace}
+\defaultntauthordegree(cz)      := {Magistr/Bakalář v Oboru Název Předchozího Titulu}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  Adviser strings
@@ -101,6 +113,10 @@
 \doctypestring(phdplan,cz)      := {Plán disertační práce}
 \doctypestring(phdprop,cz)      := {Teze disertační práce}
 \doctypestring(phd,cz)          := {Disertační práce}
+
+\dissertationplan(mscplan,cz)   := {Plán diplomové práce}
+\dissertationplan(phdplan,cz)   := {Plán disertační práce}
+\dissertationplan(phdprop,cz)   := {Návrh disertační práce}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% SDG
