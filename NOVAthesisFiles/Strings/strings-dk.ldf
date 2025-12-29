@@ -202,3 +202,12 @@ behørig kredit til forfatteren og udgiveren.}
 
 \acknowledgmentsstring(dk)      = {Dette dokument er udarbejdet med sætningssystemet (pdf/Xe/Lua)\LaTeX\ og skabelonen
 \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Babel definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ntlangsetup*{dk/annex=Bilag}
+\ntlangsetup*{dk/annexpl=Bilag}
+\ntlangsetup*{dk/appendixpl=Appendikser}

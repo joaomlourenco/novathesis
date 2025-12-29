@@ -197,3 +197,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \acknowledgmentsstring(uk)      = {Цей документ було створено за допомогою системи набору (pdf/Xe/Lua)\LaTeX\ та шаблону \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Babel definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ntlangsetup*{uk/annex=Додаток}
+\ntlangsetup*{uk/annexpl=Додатки}
+\ntlangsetup*{uk/appendixpl=Доповнення}

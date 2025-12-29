@@ -396,6 +396,7 @@
                                                 /novathesis/lang/copyright=#1}},
   lang                          = en,
   % PRINT ON/OFF
+  print/aidisclose/.new toggle  = true,
   print/committee/.new toggle   = false,
   print/adviser/.new toggle     = true,    % fake option - adviser should always be printed
   print/frontmatter/.new toggle = true,
@@ -1125,37 +1126,6 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Include strings for all the languages
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\@LANG@LOADED{}
-\def\@langs@loaded@sep{}
-\newcommand*{\@nt@loadlang}[1]{%
-      % \typeout{LL=#1}\LL
-      \if\instring{,#1,}{,\@LANG@LOADED,}\else%
-        \InputIfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
-                        {\eappto{\@LANG@LOADED}{\@langs@loaded@sep#1}\def\@langs@loaded@sep{,}}%
-                        {\ClassError{novathesis}{File not found: “NOVAthesisFiles/Strings/strings-#1.ldf” file!}%
-                                                {Add a file with the translations for this language.}}%
-      \fi%
-}
-
-\@for\myi:=\expanded{\@LANG@COVER,\@LANG@COPYRIGHT,\@LANG@MAIN,%
-                     \theabstractorder(\@LANG@MAIN)}\do{\@nt@loadlang{\myi}}
-\optionlistdo{/novathesis/lang/extra}{\@nt@loadlang{##1}}%
-
-\bkmstring(1-1)={\thebkmstring(cover,\@LANG@MAIN)}
-\bkmstring(1-2)={\thebkmstring(incover,\@LANG@MAIN)}
-\bkmstring(2-1)={\thebkmstring(frontpage,\@LANG@MAIN)}
-\bkmstring(2-2)={\thebkmstring(infrontpage,\@LANG@MAIN)}
-\bkmstring(N-1)={\thebkmstring(inbackcover,\@LANG@MAIN)}
-\bkmstring(N-2)={\thebkmstring(backcover,\@LANG@MAIN)}
-\bkmstring(spine)={\thebkmstring(spine,\@LANG@MAIN)}
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHECK IF USING LUALATEX OR XELATEX
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1163,16 +1133,6 @@
 \newcommand{\ifxetexorluatex}{\iftutex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\options{/@nt/lang/loaded/.expanded=\@LANG@LOADED}
-
-\def\@fontencs{}
-\def\@fontencs@sep{}
-\@for\myi:=\@LANG@LOADED\do{
-  \options{/@nt/fontenc=\myi}
-  \if\instring{,\option{/@nt/fontenc},}{,\@fontencs,}%
-  \else\eappto{\@fontencs}{\@fontencs@sep\option{/@nt/fontenc}}\def\@fontencs@sep{,}%
-  \fi%
-}
 % \typeout{FONTENCS=\@fontencs}\FONTENCS
 \ifxetexorluatex  % xelatex or lualatex
   \RequirePackage[no-math]{fontspec}%
@@ -1185,6 +1145,22 @@
 % --------------------------------------------------------
 % BABEL STUFF
 % \options{/@nt/lang/shorttolong=\@LANG@MAIN}%
+\def\@LANG@LOADED{}
+\def\@langs@loaded@sep{}
+\newcommand*{\@nt@setlangloaded}[1]{%
+      % \typeout{LL=#1}\LL
+      \if\instring{,#1,}{,\@LANG@LOADED,}\else%
+        \IfFileExists{NOVAthesisFiles/Strings/strings-#1.ldf}%
+                     {\eappto{\@LANG@LOADED}{\@langs@loaded@sep#1}\def\@langs@loaded@sep{,}}%
+                      {\ClassError{novathesis}{File not found: “NOVAthesisFiles/Strings/strings-#1.ldf” file!}%
+                                  {Add a file with the translations for this language.}}%
+      \fi%
+}
+
+\@for\myi:=\expanded{\@LANG@COVER,\@LANG@COPYRIGHT,\@LANG@MAIN,%
+                     \theabstractorder(\@LANG@MAIN)}\do{\@nt@setlangloaded{\myi}}
+\optionlistdo{/novathesis/lang/extra}{\@nt@setlangloaded{##1}}%
+
 \PassOptionsToPackage{main=\@LANG@MAIN@LONG}{babel}
 \@for\myi:=\expanded{\@LANG@LOADED}\do{%
   % \typeout{BABELLANG=\myi \thelanglong(\myi)}\BABELLANG%
@@ -1201,6 +1177,47 @@
   autoload.bcp47 = on
 }
 \ntselectlang{\@LANG@MAIN}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FIX BABEL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{fix-babel.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Include strings for all the languages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\@for\myi:=\expanded{\@LANG@LOADED}\do{%
+  \InputIfFileExists{NOVAthesisFiles/Strings/strings-\myi.ldf}%
+                    {}%
+                    {\ClassError{novathesis}
+                                {File not found: “NOVAthesisFiles/Strings/strings-#1.ldf” file!}%
+                                {Add a file with the translations for this language.}}%
+}%
+
+
+\bkmstring(1-1)={\thebkmstring(cover,\@LANG@MAIN)}
+\bkmstring(1-2)={\thebkmstring(incover,\@LANG@MAIN)}
+\bkmstring(2-1)={\thebkmstring(frontpage,\@LANG@MAIN)}
+\bkmstring(2-2)={\thebkmstring(infrontpage,\@LANG@MAIN)}
+\bkmstring(N-1)={\thebkmstring(inbackcover,\@LANG@MAIN)}
+\bkmstring(N-2)={\thebkmstring(backcover,\@LANG@MAIN)}
+\bkmstring(spine)={\thebkmstring(spine,\@LANG@MAIN)}
+
+
+\options{/@nt/lang/loaded/.expanded=\@LANG@LOADED}
+
+\def\@fontencs{}
+\def\@fontencs@sep{}
+\@for\myi:=\@LANG@LOADED\do{
+  \options{/@nt/fontenc=\myi}
+  \if\instring{,\option{/@nt/fontenc},}{,\@fontencs,}%
+  \else\eappto{\@fontencs}{\@fontencs@sep\option{/@nt/fontenc}}\def\@fontencs@sep{,}%
+  \fi%
+}
+
 
 %--------------------------------
 % “glossasries” stuff - after hyperref
@@ -1959,8 +1976,10 @@
 % Deal with AI disclose declaration
 %============================================================
 \AtEndPreamble{
-  \RequirePackage{aidisclose} % AI disclose declaration
-  \input{\DIR@CONFIG/7-aidisclose}
+  \iftoggle{/novathesis/print/aidisclose}{
+    \RequirePackage[autobib=true,nocite=false]{aidisclose} % AI disclose declaration
+    \input{\DIR@CONFIG/7-aidisclose}
+  }{}
 }
 
 
@@ -2051,13 +2070,6 @@
   \AtEndDocument{\csuse{ntprintspine}}%
 }
 
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% FIX BABEL
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input{fix-babel.tex}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2853,8 +2865,9 @@
 \newcommand{\ntprintacknowledgements}{\@nt@printifmaindoc@i{acknowledgements}}
 
 \newcommand{\ntprintaidisclose}{%
-  \bookmarksetupnext{level=1}%
-  \GAIrenderDeclaration[3]{\thedocauthor(name)}}
+  \iftoggle{/novathesis/print/aidisclose}{
+    \bookmarksetupnext{level=1}%
+    \GAIrenderDeclaration[3]{\thedocauthor(name)}}{}}
 
 
 

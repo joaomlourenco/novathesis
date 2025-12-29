@@ -8,10 +8,21 @@
 \typeout{NT FILE nova/univ-defaults.ldf}%
 
 % University
-\university(pt):={Universidade NOVA de Lisboa}
-\university(en):={NOVA University Lisbon}
-\university(fr):={NOVA University Lisbon}
-\university(it):={NOVA University Lisbon}
-\university(logo):={nova-insignia}
-\university(logo,neg):={nova-insignia-negative}
-\university(logo2):={nova-logo}
+\university(cat) := {NOVA University Lisbon}
+\university(cz)  := {NOVA University Lisbon}
+\university(de)  := {NOVA University Lisbon}
+\university(dk)  := {NOVA University Lisbon}
+\university(en)  := {NOVA University Lisbon}
+\university(es)  := {NOVA University Lisbon}
+\university(fr)  := {NOVA University Lisbon}
+\university(gr)  := {NOVA University Lisbon}
+\university(it)  := {NOVA University Lisbon}
+\university(nl)  := {NOVA University Lisbon}
+\university(pl)  := {NOVA University Lisbon}
+\university(pt)  := {Universidade NOVA de Lisboa}
+\university(sk)  := {NOVA University Lisbon}
+\university(uk)  := {NOVA University Lisbon}
+
+\university(logo)     :={nova-insignia}
+\university(logo,neg) :={nova-insignia-negative}
+\university(logo2)    :={nova-logo}

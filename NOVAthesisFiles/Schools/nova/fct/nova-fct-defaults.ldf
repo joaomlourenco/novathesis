@@ -44,10 +44,21 @@
 }
 
 % Faculty / School
-\school(pt):={Faculdade de Ciências e Tecnologia}
-\school(en):={NOVA School of Science and Technology}
-\school(fr):={NOVA School of Science and Technology}
-\school(it):={NOVA School of Science and Technology}
+\school(cat) := {NOVA School of School and Technology}
+\school(cz)  := {NOVA School of School and Technology}
+\school(de)  := {NOVA School of School and Technology}
+\school(dk)  := {NOVA School of School and Technology}
+\school(en)  := {NOVA School of School and Technology}
+\school(es)  := {NOVA School of School and Technology}
+\school(fr)  := {NOVA School of School and Technology}
+\school(gr)  := {NOVA School of School and Technology}
+\school(it)  := {NOVA School of School and Technology}
+\school(nl)  := {NOVA School of School and Technology}
+\school(pl)  := {NOVA School of School and Technology}
+\school(pt)  := {Faculdade de Ciências e Tecnologia}
+\school(sk)  := {NOVA School of School and Technology}
+\school(uk)  := {NOVA School of School and Technology}
+
 \school(logo,pt):={nova-fct-logo-pt}
 \school(logo,en):={nova-fct-logo-en}
 \ifdatadefined{school}(logo,\@LANG@COVER)

@@ -1,14 +1,14 @@
 % aidisclose.sty
 % 
-% Copyright (C) 2025 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+% Copyright (C) 2025-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %
 % This file may be distributed and/or modified under the conditions of
 % the LaTeX Project Public License, either version 1.3c of this license
 % or (at your option) any later version.
-\def\gaiversion{1.6.0}
+\def\gaiversion{1.6.1}
 %
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesExplPackage {aidisclose} {2025/12/26} {\gaiversion} 
+\ProvidesExplPackage {aidisclose} {2025/12/28} {\gaiversion} 
   {Utilities for Generative AI disclosure checklist and statements}
 
 % =========================================================
@@ -16,11 +16,15 @@
 % =========================================================
 \bool_new:N \g__gai_autobib_bool
 \bool_set_true:N \g__gai_autobib_bool
+\bool_new:N \g__gai_nocite_bool
+\bool_set_true:N \g__gai_nocite_bool
 
 \DeclareKeys[aidisclose]
   {
     autobib .bool_set:N = \g__gai_autobib_bool,
-    autobib .initial:n  = true
+    autobib .initial:n  = true,
+    nocite .bool_set:N = \g__gai_nocite_bool,
+    nocite .initial:n  = true,
   }
 \ProcessKeyOptions[aidisclose]
 
@@ -334,12 +338,23 @@
 \cs_new_protected:Npn \__gai_print_preamble:
   {
     \tl_use:N \l__gai_authors_decl_tl
-    \footnote{
-      \tl_use:N \g__gai_str_footnote_tl \nobreakspace
-      \cite{Lourenco:2025:aidisclose}.
-    }
+    \bool_if:NF \g__gai_nocite_bool
+      {
+        \footnote{
+          \tl_use:N \g__gai_str_footnote_tl \nobreakspace
+          \cite{Lourenco:2025:aidisclose}.
+        }
+      }
     \space
     \tl_use:N \g__gai_str_preamble_tl
+  }
+
+\cs_new_protected:Npn \CiteGAIDeT
+  {
+    \bool_if:NF \g__gai_nocite_bool
+      {
+        \nobreakspace  \cite{Suchikova:2025:GAIDeT}
+      }
   }
 
 \newlist{gailist}{itemize}{1}

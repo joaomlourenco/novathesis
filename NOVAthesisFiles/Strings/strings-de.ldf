@@ -197,3 +197,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \acknowledgmentsstring(de)      = {Dieses Dokument wurde mit dem (pdf/Xe/Lua)\LaTeX-System und der \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis}-Vorlage (v\novathesisversion)~\@ntcite{novathesis-manual} erstellt.}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Babel definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ntlangsetup*{de/annex=Anlage}
+\ntlangsetup*{de/annexpl=Anlagen}
+\ntlangsetup*{de/appendixpl=Anhänge}

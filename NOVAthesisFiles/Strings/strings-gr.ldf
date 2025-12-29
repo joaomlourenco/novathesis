@@ -197,3 +197,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \acknowledgmentsstring(gr)      = {Το παρόν έγγραφο δημιουργήθηκε με το σύστημα στοιχειοθεσίας (pdf/Xe/Lua)\LaTeX\ και το πρότυπο \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Babel definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ntlangsetup*{gr/annex=Προσάρτημα}
+\ntlangsetup*{gr/annexpl=Προσαρτήματα}
+\ntlangsetup*{gr/appendixpl=Παραρτήματα}

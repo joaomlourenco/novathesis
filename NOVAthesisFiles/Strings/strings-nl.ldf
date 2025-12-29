@@ -196,3 +196,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \acknowledgmentsstring(nl)      = {Dit document is opgesteld met het (pdf/Xe/Lua)\LaTeX-systeem en het \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis}-sjabloon (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Babel definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ntlangsetup*{nl/annex=Bijlage}
+\ntlangsetup*{nl/annexpl=Bijlagen}
+\ntlangsetup*{nl/appendixpl=Appendices}
