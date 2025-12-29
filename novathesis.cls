@@ -135,7 +135,7 @@
 \RequirePackage{etoolbox}
 \RequirePackage{xstring}
 \RequirePackage{varwidth}
-\RequirePackage{textcase}
+\RequirePackage{xurl}
 \RequirePackage{catchfile}  % for automatic downloading of fonts
 \RequirePackage{stocksize}  % changing the physical and logical page layout
 \RequirePackage{memory2}
@@ -225,6 +225,13 @@
 \sys_if_engine_pdftex:T { \str_gset:Nn \g_novathesis_current_engine_str {pdf} }
 \sys_if_engine_luatex:T { \str_gset:Nn \g_novathesis_current_engine_str {lua} }
 \sys_if_engine_xetex:T  { \str_gset:Nn \g_novathesis_current_engine_str {xe} }
+
+% 3. Define the user-facing command
+\NewDocumentCommand \NTengineName {}
+  {
+    % Use \str_use:N to retrieve the content of the variable
+    \str_use:N \g_novathesis_current_engine_str \LaTeX{}
+  }
 
 % ---------------------------------------------------------
 % 2. User Interface to Add Rules (Replament for \validprocessor)
@@ -2494,10 +2501,16 @@
   }%
 }
 
+\newcommand{\todayiso}{%
+  \the\year-%
+  \ifnum\month<10 0\fi\the\month-%
+  \ifnum\day<10 0\fi\the\day%
+}
 \newcommand{\@ntfixspacing}[2]{%
     \bgroup%
     \newdata{ntfixspacingstring}%
-    \ntfixspacingstring()={The \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template (v\novathesisversion)~\@ntcite{novathesis-manual}. (12cc90221730b8ba41bb3b1f8b517acd)}%md5
+    \noindent
+    \ntfixspacingstring()={The \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template (v\novathesisversion)~\@ntcite{novathesis-manual} @ \todayiso. (12cc90221730b8ba41bb3b1f8b517acd)}%md5
     \renewcommand*{\bibfont}{\hypersetup{allcolors=#1}\color{#1}%
      \sffamily\fontsize{#2}{#2}\selectfont}%
     \defbibheading{bibliography}[\bibname]{%
@@ -3112,23 +3125,37 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Copyright page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\printcompactbib}[1][]{%
+  \begingroup
+    \renewcommand*{\bibfont}{\tiny}% very small text
+    \renewbibmacro*{pageref}{}% suppress backrefs
+    % Remove vertical space before the list starts
+    \setlength{\topsep}{0pt}
+    \setlength{\partopsep}{0pt}
+    % Remove vertical space between items (from your previous request)
+    \setlength{\bibitemsep}{2pt}
+    % fine tune label width
+    \setlength{\labelnumberwidth}{10pt}%
+    % Print the bibliography with no title, passing any extra options
+    \defbibheading{ntlocalbib}{%
+      {\par\vspace*{-1.25ex}}
+      \textcolor{white}
+                {\fontsize{0.01}{1}\selectfont\noindent\hspace*{-\labelnumberwidth}
+                 \bibname~(12cc90221730b8ba41bb3b1f8b517acd)}%
+      \vspace*{-\baselineskip-\parskip}
+    }
+    \newrefcontext[sorting=ynt]%
+    \printbibliography[heading=ntlocalbib, #1]
+  \endgroup
+}
+
 \newcommand{\ntprintacknowledgementsblock}[1][\scriptsize]{%
     \NTRunHook{acknowledgementsblock/pre}%
-    \noindent\parbox{\textwidth}{%
       \refsection%
-      \renewcommand{\@ntcite}[1]{\nocite{##1}}
-      \vspace*{2.5ex}\footnoterule#1\theacknowledgmentsstring(\@LANG@MAIN)%
-      \renewcommand*{\bibfont}{#1}%
-      \setlength{\labelnumberwidth}{10pt}%
-      \renewbibmacro*{pageref}{}% suppress backrefs
-      \defbibenvironment{bibliography}
-        {\vspace*{-1ex}\tiny\list{}{\leftmargin0pt}}
-        {\endlist}
-        {\item}
-      \par{\fontsize{0.1}{0.1}\selectfont\bibname}\vspace*{-\baselineskip}
-      \printbibliography[heading=none]%
+      \renewcommand{\@ntcite}[1]{\cite{##1}}%
+      \bigskip\footnoterule#1\smallskip\noindent\theacknowledgmentsstring(\@LANG@MAIN)%
+      \printcompactbib%
       \endrefsection%
-    }
     \NTRunHook{acknowledgementsblock/post}%
 }
 

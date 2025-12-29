@@ -196,7 +196,7 @@
 %%% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\acknowledgmentsstring(cat)     = {Aquest document s’ha produït amb el sistema de composició (pdf/Xe/Lua)\LaTeX\ i la plantilla \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+\acknowledgmentsstring(cat)     = {Aquest document s’ha produït amb el sistema de composició \NTengineName~\cite{latex-project} i la plantilla \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
 
 
 

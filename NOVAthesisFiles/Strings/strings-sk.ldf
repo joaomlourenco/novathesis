@@ -195,7 +195,7 @@
 %%% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\acknowledgmentsstring(sk)      = {Tento dokument bol vytvorený pomocou sádzacieho systému (pdf/Xe/Lua)\LaTeX\ a šablóny \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+\acknowledgmentsstring(sk)      = {Tento dokument bol vytvorený pomocou sádzacieho systému \NTengineName~\cite{latex-project} a šablóny \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
