@@ -1,3 +1,51 @@
+## NOVAthesis Template Release Notes for v7.9.0
+This release focuses heavily on **AI Disclosure Statement** and various **code cleanup/refactoring** across the template files.
+
+This commit introduces a major refactoring and feature update, focusing on improving user configuration, modernizing core components, and enhancing functionality.
+
+---
+
+Release date: 2026-01-01  
+Compared to: 7.9.0
+
+---
+
+### Breaking Changes
+
+*   **`stocksize.sty` Overhaul:** The `stocksize` package has been completely rewritten using `expl3` to be stack-aware and more robust.
+    *   The environment `\begin{newstocksize}...\end{newstocksize}` is replaced by the commands `\newstocksize{...}` and `\restorestocksize`.
+*   **Configuration Options Renamed:**
+    *   The `print/secondcover` option has been renamed to `print/frontpage` for clarity.
+*   **Configuration Options Removed:**
+    *   The `print/frontmatter` option has been removed. Front matter is now always printed, with sections controlled by `\ntaddfile`.
+*   **Sponsor Command Syntax:** The `\ntsponsors` command syntax has been changed to a more structured format: `\ntsponsors(<order>,<type>,<lang>){...}`.
+*   **Style File Extensions:** Custom chapter and font style files must now use the standard `.sty` extension instead of `.ldf`.
+
+### Features
+
+*   **Documentation Overhaul:** All configuration files in `0-Config/` have been heavily re-commented with a new, structured format for significantly improved clarity and ease of use.
+*   **Enhanced AI Disclosure:**
+    *   The new option `print/aidisclosure` supports three modes: `false` (disabled), `aidisclose` (uses the `aidisclose` package + `0-Config/7-aidisclose.tex` file ), or a custom filename to include a personalized statement.
+    *   Added `1-FrontMatter/aidisclosure.tex` as an example of a custom disclosure file.
+
+### Refactoring & Fixes
+
+*   **Code Modernization:**
+    *   `novathesis.cls` now uses more `expl3` functions, replacing older LaTeX2e macros for more robust file searching and path handling.
+    *   The `stocksize.sty` package is now a modern `expl3`-based package.
+*   **Package Updates:**
+    *   `aidisclose.sty` has been updated to version `1.6.2`, now including a citation for the LaTeX project.
+*   **Font and Style Handling:**
+    *   The `futura` font style now uses the `Jost` font.
+    *   All custom style files in `NOVAthesisFiles/ChapStyles` and `NOVAthesisFiles/FontStyles` have been renamed from `.ldf` to `.sty`.
+    *   Removed unused `hansen` and `pedersen` chapter styles.
+*   **Cosmetic Cleanup:**
+    *   Added decorative ASCII art headers to school-specific configuration files.
+    *   Fixed an issue with bookmark generation for lists of figures and tables.
+
+
+
+
 ## NOVAthesis Template Release Notes for v7.6.1
 
 This release focuses heavily on **Sustainable Development Goals (SDG)** integration, **build process improvements**, **font style updates**, and various **code cleanup/refactoring** across the template files.

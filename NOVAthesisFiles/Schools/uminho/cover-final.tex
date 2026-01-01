@@ -46,7 +46,7 @@
            ,{1-2,bgcolor}%
            ,{bgcolor}%
 )%
-\begin{newstocksize}{layoutsize={\the\dimexpr2\stockwidth+\myspinewidth\relax,\the\stockheight},keepmargins}
+\newstocksize{layoutsize={\the\dimexpr2\stockwidth+\myspinewidth\relax,\the\stockheight},keepmargins}
   % \noindent% \Huge HELLO
 \begin{tikzpicture}[remember picture, overlay, transform shape]
   % BACKGROUND
@@ -139,4 +139,4 @@
     };
 \end{tikzpicture}
 
-\end{newstocksize}
+\restorestocksize

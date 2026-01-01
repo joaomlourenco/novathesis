@@ -7,7 +7,7 @@
 
 \typeout{NT FILE ul/iseg/defaults.ldf}%
 
-\ifdocfinal{\ntsetup{print/secondcover=true}}{}
+\ifdocfinal{\ntsetup{print/frontpage=true}}{}
 
 % Faculty / School
 \school(pt):={Instituto Superior de Economia e Gestão}

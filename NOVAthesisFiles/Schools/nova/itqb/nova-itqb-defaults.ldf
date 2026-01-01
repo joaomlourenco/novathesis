@@ -31,7 +31,7 @@
 }
 
 \openany
-\ntsetup{print/secondcover=true}
+\ntsetup{print/frontpage=true}
 
 % Loading of fonts must be delayed until class "novathesis" is loaded
 \AtEndPreamble{%

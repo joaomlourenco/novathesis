@@ -348,7 +348,8 @@
   {
 
     % 1. Adjust the stock (paper) size
-    \begin{newstocksize}{layoutsize={\the\paperheight,\the\l_nt_spine_width_dim},margin=0mm}
+    % \typeout{\NSS= [\the\paperheight] [\the\l_nt_spine_width_dim] [margin=0mm]}\NSS
+    \newstocksize{layoutsize={\the\paperheight,\the\l_nt_spine_width_dim},margin=0mm}
 
     % 2. Main drawing environment: a TikZ overlay on the full page.
     \begin{tikzpicture}[remember~picture, overlay]
@@ -594,7 +595,7 @@
         \end{tikzpicture}
       };
     \end{tikzpicture}
-    \end{newstocksize}
+    \restorestocksize
   }
 
 \ExplSyntaxOff

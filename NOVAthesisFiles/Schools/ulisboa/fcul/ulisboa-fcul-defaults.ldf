@@ -7,7 +7,7 @@
 
 \typeout{NT FILE ulisboa/fcul/defaults.ldf}%
 
-\ifdocfinal{\ntsetup{print/secondcover=true}}{}
+\ifdocfinal{\ntsetup{print/frontpage=true}}{}
 
 % Faculty / School
 \school(pt):={Faculdade de Ciências}

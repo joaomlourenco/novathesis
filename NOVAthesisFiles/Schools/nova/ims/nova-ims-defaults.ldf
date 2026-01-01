@@ -57,7 +57,7 @@
 \committeeorder():={c,r,m}%
 
 \openany
-\ntsetup{print/secondcover=true}
+\ntsetup{print/frontpage=true}
 \ntsetup{numberallpages=true}
 \AtEndPreamble{
   \ifdocworking{}{\ntsetup{print/statement=true}}

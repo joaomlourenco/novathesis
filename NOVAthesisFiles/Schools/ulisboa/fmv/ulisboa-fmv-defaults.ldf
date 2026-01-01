@@ -23,7 +23,7 @@
 \ntsetup{style/font=calibri}
 \ntsetup{style/chapter=fmv}
 \ntsetup{lang/cover=pt}
-\ntsetup{print/secondcover=true}
+\ntsetup{print/frontpage=true}
 \ntsetup{numberallpages=true}
 \ifdocworking{}{\ntsetup{color/links=black}}
 \ifdocfinal{\ntsetup{print/statement=true}}{}

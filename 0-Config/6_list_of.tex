@@ -20,15 +20,14 @@
 \ntaddlistof{listoffigures}      % The List of Figures. Comment to omit.
 \ntaddlistof{listoftables}       % The List of Tables. Comment to omit.
 \@ifpackageloaded{coloredtheorem}    % The List of Algorithms for package “algorithms”.
-    {\ntaddlistof{cthlistofalgorithms}}{
+    {\ntaddlistof{cthlistofalgorithms}}{}
 \@ifpackageloaded{algorithm2e}   % The List of Algorithms for package “algorithm2e”.
-    {\ntaddlistof{listofalgorithms}}{   % The List of Algorithms for Algorithm2e
+    {\ntaddlistof{listofalgorithms}}{}
 \@ifpackageloaded{algorithms}    % The List of Algorithms for package “algorithms”.
-    {\ntaddlistof{listofalgorithms}}{
-\@ifpackageloaded{algorithm}    % The List of Algorithms for package “algorithms”.
-    {\ntaddlistof{listofalgorithms}}{}}}}
+    {\ntaddlistof{listofalgorithms}}{}
+\@ifpackageloaded{algorithm}    % The List of Algorithms for package “algorithm”.
+    {\ntaddlistof{listofalgorithms}}{}
 \@ifpackageloaded{listings}      % The List of Listings for package “listings”.
     {\ntaddlistof{lstlistoflistings}}{}
 \@ifpackageloaded{minted}        % The List of Listings for the “minted” package.
     {\ntaddlistof{listoflistings}}{}
-% \ntaddlistof{listsofglossaries}  % The Glossary, and the lists of Acronyms and Symbols

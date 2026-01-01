@@ -1,0 +1,28 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/futura.sty
+%% NOVA thesis configuration file
+%%
+%% Customization of font to use a Linux Libertine font set
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE FontStyles/futura.sty}%
+
+
+\ifxeorlua{}{%
+  \ClassError{novathesis}{Font Style “Futura” is not compatible with pdfLaTeX. Please use LuaLaTeX}{Please use LuaLaTeX}%
+}
+
+\ntcheckfonts{Jost}
+             {Regular,Italic,Bold,BoldItalic}
+
+\setmainfont{Jost}[
+  Path = NOVAthesisFiles/FontStyles/Fonts/,
+  Extension = .ttf,
+  Ligatures=TeX,
+  Mapping=tex-text,
+  UprightFont = *-Regular,
+  ItalicFont = *-Italic,
+  BoldFont = *-Bold,
+  BoldItalicFont = *-BoldItalic,
+]
+

@@ -5,10 +5,10 @@
 % This file may be distributed and/or modified under the conditions of
 % the LaTeX Project Public License, either version 1.3c of this license
 % or (at your option) any later version.
-\def\gaiversion{1.6.1}
+\def\gaiversion{1.6.2}
 %
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesExplPackage {aidisclose} {2025/12/28} {\gaiversion} 
+\ProvidesExplPackage {aidisclose} {2025/12/30} {\gaiversion} 
   {Utilities for Generative AI disclosure checklist and statements}
 
 % =========================================================
@@ -297,6 +297,7 @@
             \sys_if_engine_pdftex:TF { pdf\LaTeX } { \LaTeX }
           }
       }
+      \CiteLaTeX
   }
 
 % Print Package Name with Link
@@ -341,12 +342,20 @@
     \bool_if:NF \g__gai_nocite_bool
       {
         \footnote{
-          \tl_use:N \g__gai_str_footnote_tl \nobreakspace
-          \cite{Lourenco:2025:aidisclose}.
+          \tl_use:N \g__gai_str_footnote_tl 
+          \nobreakspace \cite{Lourenco:2025:aidisclose}.
         }
       }
     \space
     \tl_use:N \g__gai_str_preamble_tl
+  }
+
+\cs_new_protected:Npn \CiteLaTeX
+  {
+    \bool_if:NF \g__gai_nocite_bool
+      {
+        \nobreakspace  \cite{latex-project}
+      }
   }
 
 \cs_new_protected:Npn \CiteGAIDeT
@@ -625,6 +634,13 @@
 ~~year~~~~~~=~{2025},^^J
 ~~note~~~~~~=~{Version~\gaiversion},^^J
 ~~url~~~~~~~=~{https://ctan.org/pkg/aidisclose}^^J
+}^^J
+^^J
+@misc{latex-project,^^J
+~~title~~~~~=~{\LaTeX{}~–~A~document~preparation~system},^^J
+~~author~~~~=~{{The~\LaTeX{}~Project~team}},^^J
+~~year~~~~~~=~{1985},^^J
+~~url~~~~~~~=~{https://www.latex-project.org},^^J
 }^^J
       }
     \iow_close:N \l__aidisclose_bib_iow
