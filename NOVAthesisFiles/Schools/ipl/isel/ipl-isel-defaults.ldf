@@ -79,7 +79,6 @@
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtEndPreamble{%
-  \LoadHelveticaLikeFont%
 }
 
 \NTAddToHook{cover/1-1/text/pre}{%
