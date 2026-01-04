@@ -8,7 +8,7 @@
 \def\gaiversion{1.6.2}
 %
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesExplPackage {aidisclose} {2025/12/30} {\gaiversion} 
+\ProvidesExplPackage {aidisclose} {2026/01/04} {\gaiversion} 
   {Utilities for Generative AI disclosure checklist and statements}
 
 % =========================================================
@@ -32,7 +32,6 @@
   \RequirePackage{amssymb}   % for \checkmark
 \fi
 \RequirePackage{multicol}    % for multi-column layout
-\RequirePackage{enumitem}    % for list customization
 \RequirePackage{relsize}     % for relative font sizing
 
 % =========================================================
@@ -366,17 +365,40 @@
       }
   }
 
-\newlist{gailist}{itemize}{1}
-\setlist[gailist]{
-  label=\textbullet,
-  leftmargin=*,
-  align=parleft,
-  itemsep=4pt,
-  topsep=2pt,
-  parsep=1pt,
-  labelsep=\l__gai_labelsep_dim
-}
 
+% CHECKLIST ENVIRONMENT (Replaces enumitem)
+% Define the label as a square (requires amssymb or latexsym usually, 
+% but \framebox{} is a safe fallback if symbols aren't loaded)
+\cs_new_protected:Nn \_gai_label:
+  {
+    \hbox_to_wd:nn { 1em } { \hss \framebox[0.8em]{\vphantom{t}} \hss }
+  }
+
+\NewDocumentEnvironment{gailist} { }
+  {
+    % Start a standard list
+    \list { \_gai_label: }
+      {
+        % Mimic enumitem's "nosep" (no vertical space)
+        \setlength { \topsep }      { 0pt }
+        \setlength { \partopsep }   { 0pt }
+        \setlength { \itemsep }     { 0pt }
+        \setlength { \parsep }      { 5pt }
+        
+        % Formatting (indentation)
+        \setlength { \leftmargin }  { 1.5em }
+        \setlength { \labelwidth }  { 1em }
+        \setlength { \labelsep }    { 0.5em }
+        
+        % Prevent indentation of the first paragraph inside an item
+        \setlength { \listparindent } { 0pt }
+      }
+  }
+  {
+    \endlist
+  }
+  
+  
 % --- Taxonomy Data Structure ---
 \tl_gset:Nn \g__gai_taxonomy_tl {
   \TGroup{\tl_use:N \g__gai_str_grp_conc_tl}{
@@ -570,6 +592,8 @@
     \par %\bigskip
 
     \group_begin:
+      \cs_set:Npn \baselinestretch { 1.1 }
+      \selectfont
       \tl_use:N \g__gai_fontsize_tl
       \cs_set:Npn \TGroup ##1 ##2
         {
@@ -577,9 +601,9 @@
           \int_compare:nNnTF { #2 } < { 2 }
             {
               \textbf{ \larger ##1 \  \hrulefill}\par\nopagebreak[4]
-              \begin{gailist}
+              \begin{ gailist }
                 ##2
-              \end{gailist}
+              \end{ gailist }
             }
             {
               \setlength { \multicolsep } { 4pt } 
