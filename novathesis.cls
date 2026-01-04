@@ -4,7 +4,7 @@
 %%  NOVATHESIS — novathesis.cls
 %% ----------------------------------------------------------------------------
 %%
-%% Version 7.9.0 (2026-01-01)
+%% Version 7.9.1 (2026-01-04)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -67,34 +67,30 @@
 %%    ██    ███████   ██    █████          █████     ██   ██       █████
 %%    ██    ██   ██   ██        ██         ██        ██   ██       ██
 %%    ██    ██   ██  ███   ██████          ██       ███   ███████  ███████
+%% 
+%% ----------------------------------------------------------------------------
+%%
+%% If you feel you need to change this file, you are doing something wrong!
+%%
+%% Please ask for help at GitHub Discussions page at
+%%          https://github.com/joaomlourenco/novathesis/discussions
+%%      or in the subreddit r/novathesis
+%%          https://www.reddit.com/r/novathesis/
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
-%%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
-%%%
-%%%   You SHOULD NOT change this file (you are playing with fire!)
-%%%
-%%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
-%%% WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\ProvidesClass{novathesis}[novathesis template Version 1.1.1] % (2025-05-25)
+\ProvidesClass{novathesis}[2026-01-01 v7.9.0 novathesis template class file]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
-
-%============================================================
+%% ----------------------------------------------------------------------------
 % Save these definitions asap, to be used later in the “\annex” command,
 % because "\@Roman" and "\Roman" were failing with pdflatex
 % when loading the "greek" language (and LGR font encofing)
-%============================================================
+%% ----------------------------------------------------------------------------
 \let\oldRoman=\Roman
 \let\old@Roman=\@Roman
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%============================================================
 \def\DIR@CONFIG{0-Config}
 \def\DIR@FRONTMATTER{1-FrontMatter}
 \def\DIR@MAINMATTER{2-MainMatter}
@@ -113,59 +109,193 @@
 \newcommand*{\ntmemoirsetup}[1]{\PassOptionsToClass{#1}{memoir}}
 \input{\DIR@CONFIG/0_memoir}
 \LoadClass{memoir}
-\OnehalfSpacing% One-and-half spacing
 
-\newcolumntype{L}{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}X}
-\newcolumntype{C}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}X}
-\newcolumntype{R}{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}X}
+\OnehalfSpacing% One-and-half spacing
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% SOME ESSENTIAL PACKAGES
 %%    Others will be loaded later, in the file “packages.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\xappto\input@path{{\DIR@NTFILES/}{\DIR@NTFILES/Strings/}}
 
-\RequirePackage[table,svgnames]{xcolor}%
-% \RequirePackage{tabularray}
-% \UseTblrLibrary{booktabs}
-
-
-\ifdefined\NewDocumentCommand\else\RequirePackage{xparse}\fi   % load xparse if necessary
-\RequirePackage{xfor}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 1. KERNEL, UTILITIES & FLAGS (Must load early)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[table,svgnames]{xcolor} % First to avoid option clashes
 \RequirePackage{iftex}
 \RequirePackage{ifplatform}
+\RequirePackage{xparse}
+\RequirePackage{xfor}
 \RequirePackage{etoolbox}
 \RequirePackage{xstring}
+\RequirePackage{catchfile}
 \RequirePackage{varwidth}
-\RequirePackage{xurl}
-\RequirePackage{catchfile}  % for automatic downloading of fonts
-\RequirePackage{NOVAthesisFiles/stocksize}  % changing the physical and logical page layout
-\RequirePackage{memory2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 2. TEMPLATE CORE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\xappto\input@path{{\DIR@NTFILES/}{\DIR@NTFILES/Strings/}}
+
+\RequirePackage{options2}
 \RequirePackage{nt-version}
+\RequirePackage{memory2}
+\RequirePackage{NOVAthesisFiles/stocksize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 3. FONTS & ENCODINGS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\iftutex
+  \RequirePackage[no-math]{fontspec}
+  \defaultfontfeatures{Ligatures=TeX}
+\else
+  \RequirePackage[T1]{fontenc}
+\fi
+
+% \PassOptionsToPackage{scaled=0.95}{inter}
+% \PassOptionsToPackage{scaled=0.95}{helvet}
+% \PassOptionsToPackage{scaled=0.95}{gillius2}
+\IfFileExists{inter.sty}
+  {\RequirePackage{inter}}
+{\IfFileExists{helvet.sty}
+  {\RequirePackage{helvet}}
+{\IfFileExists{gillius2.sty}
+  {\RequirePackage{gillius2}}
+  {\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}
+
+% TODO Good to load after fonts
+\RequirePackage{microtype} % Good to load after fonts
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 4. LANGUAGE & LOCALIZATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{babel}
+% \RequirePackage{translator}
+\RequirePackage{csquotes}  % MUST be loaded before biblatex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 5. GRAPHICS & TABLES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{tikz}
+\RequirePackage[nobeamer]{graphbox} % Loads graphicx
+\RequirePackage{colortbl}
+\RequirePackage{xurl} % Loads 'url' with better breaking
+\RequirePackage{url}  % (Technically redundant due to xurl, but kept as requested)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 6. BIBLIOGRAPHY & INDEXING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NewDocumentCommand { \ntbibsetup } {m}
+  {%
+    \@ifpackageloaded{biblatex}
+        {\ClassError{novathesis}{Please load biblatex options earlier.}{}}
+        {\PassOptionsToPackage{#1}{biblatex}}%
+  }
+
+\input{\DIR@CONFIG/2_biblatex}
+
+% TODO defernumbers=true??
+\RequirePackage{biblatex}
+% TODO to be loaded only if option print/index=true
+\RequirePackage{imakeidx} % Should generally be loaded before hyperref
+
+\AtEndPreamble{
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %% 7. HYPERREF & INTERACTIVE ELEMENTS
+  %% (Most packages go before here; specific ones go after)
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \PassOptionsToPackage{
+      bookmarksnumbered=true,
+      breaklinks=true,
+      colorlinks=true,
+      pdfdisplaydoctitle=true,
+      unicode=true,
+    }{hyperref}
+    \RequirePackage{hyperref}
+    \RequirePackage{fix-hyperref} % Patches hyperref immediately
+  
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %% 8. POST-HYPERREF DEPENDENCIES
+  %% (These MUST be loaded after hyperref)
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \RequirePackage{bookmark}           % Extends hyperref bookmarks
+  \PassOptionsToPackage{
+    translate=babel,
+    acronym,           % add acronyms listing
+    symbols,           % add symbols listing
+    % sanitizesort=false, % allow \gls inside descriptions
+    % xindy={language=\@LANG@MAIN@LONG},
+    nolong,
+    nosuper,
+    nolist,
+    notree,
+    nostyles,
+    automake,
+  }{glossaries-extra}
+  \RequirePackage{glossaries-extra}   % Must be after hyperref
+  \RequirePackage{glossary-xltabular} % Helper for glossaries
+
+  %--------------------------------
+  % “glossasries” stuff - after hyperref
+  \ifoptioncontains{/novathesis/lang/extra}{gr}
+    {\PassOptionsToPackage{xindy={language=\expanded{\@LANG@MAIN@LONG}}}
+                          {glossaries-extra}}
+    {}
+  
+  \setglossarystyle{xltabular}
+  \setabbreviationstyle[acronym]{long-short}
+  \GlsXtrEnablePreLocationTag{\emph{(\small p.~}}{\emph{(\small pp.~}}
+  \patchcmd{\@gls@automake@immediate}{-I xindy}{-q -I xindy}{}{}
+  % \renewcommand{\gls@automake@makegloss}{makeglossaries -q}%
+  \renewcommand{\GlsXtrFormatLocationList}[1]{\emph{\small#1)}}
+  \renewcommand{\glsnamefont}[1]{\textbf{#1}}
+  \newcommand*{\glsplainhyperlink}[2]{%
+      \begingroup%
+        \hypersetup{hidelinks}%
+        \hyperlink{#1}{#2}%
+      \endgroup%
+  }%
+  \let\printglossaryORIG\printglossary
+  \def\printglossary{%
+    \bookmarksetupnext{level=1}%
+    \printglossaryORIG%
+  }
+  
+  %--------------------------------
+  % “Process glossaries/list/reverse” option - after glossaries
+  \iftoggle{/novathesis/glossaries/list/reverse}{}{\setupglossaries{nonumberlist}}
+  \@loadglossaryfiles\makeglossaries
+}
 
 
-%%%%% Configure Graphics
-\RequirePackage[nobeamer]{graphbox}% improved version of "graphicx"
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 9. FINAL TOOLS & DEVELOPMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \ifoptioncontains{/novathesis/debug}{index}{%
+%   % \PassOptionsToPackage{inline}{showlabels}%
+%   \AtEndPreamble{\RequirePackage{showlabels}%
+%   \showlabels[\color{\debugindexcolor}]{index}}%
+% }{}
+\AtEndPreamble{
+  \RequirePackage[autobib=true,nocite=false]{aidisclose}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Configure Graphics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \expandafter\graphicspath\expandafter{\expandafter{\DIR@FIGURES/}}
 \DeclareGraphicsExtensions{.pdf,.png,.tif,.jpg}
 \providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
 \providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
 
-%%%%% Options to sans serif fonts (will be loaded later)
-\PassOptionsToPackage{scaled=0.95}{inter}
-\PassOptionsToPackage{scaled=0.95}{helvet}
-\PassOptionsToPackage{scaled=0.95}{gillius2}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Deal with NOVATHESIS options and configuration files
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{options2}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % UTILITIES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\ifxeorlua}[2]{\iftutex#1\else#2\fi}
+% --------------------------------------------------------
+% Change main font size on the fly
+\newcommand{\setmemoirfontsize}[1]{\input{mem#1.clo}}
 
 \ExplSyntaxOn
 
@@ -425,7 +555,7 @@
   countsecondcover/.new toggle  = false,
   numberallpages/.new toggle    = false,
   glossaries/list/reverse/.new toggle       = true,
-  tocintoc/.new toggle          = false,
+  tocintoc/.new toggle          = true,
   % DEBUG
   debug/.new list               = {},         % cover, index
 % SCHOOL specific customization
@@ -661,29 +791,9 @@
 
 }
 
-\ExplSyntaxOff
-
-
-
-% --------------------------------------------------------
-% Load and Helvetica-like font as the default SF font
-\newcommand*{\LoadHelveticaLikeFont}{%
-  \IfFileExists{inter.sty}%
-    {\RequirePackage{inter}}%
-  {\IfFileExists{helvet.sty}%
-    {\RequirePackage{helvet}}%
-  {\IfFileExists{gillius2.sty}%
-    {\RequirePackage{gillius2}}%
-    {\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}%
-}
-
-% --------------------------------------------------------
-% Change main font size on the fly
-\newcommand{\setmemoirfontsize}[1]{\input{mem#1.clo}}
 
 % --------------------------------------------------------
 % Trim spaces around argument
-\ExplSyntaxOn
 \cs_new_eq:NN \trimspaces \tl_trim_spaces:n
 
 % --------------------------------------------------------
@@ -738,6 +848,8 @@
       }
   }
 \ExplSyntaxOff
+
+
 
 
 \options{/@nt/.new family,
@@ -1026,9 +1138,6 @@
     \ClassError{novathesis}{Invalid class option: \@ntopt}{}{}}}}}}}%
 }
 
-\newcommand*{\ntbibsetup}[1]{%
-  \@ifpackageloaded{biblatex}{\ClassError{novathesis}{Please load biblatex options earlier.}{}}{\PassOptionsToPackage{#1}{biblatex}}%
-}
 
 \newcommand*{\NTAddToHook}[2]{\options{/@nt/hook/#1/.newpush={#2}}}
 
@@ -1096,42 +1205,23 @@
 }
 
 
-%============================================================
-% BIBLATEX CUSTOMIZATION
-%      Please open and edit the appropriate
-%       configuration file “0-Config/2_biblatex.tex”
-%============================================================
-\input{\DIR@CONFIG/2_biblatex}
-% \NTRunHook{biblatex}
 
 
 %============================================================
 % LOAD ADDITIONAL PACKAGES
 %============================================================
-
-% Load additional symbols
-% \RequirePackage[full]{textcomp}
-
 %%%%% Configure multilingual language support
-\RequirePackage{csquotes}
-\RequirePackage{url}
-\RequirePackage{xstring}
-
-\RequirePackage{colortbl}
 \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
 
-
-\iftoggle{/novathesis/print/index}{
-  \AtEndPreamble{
-    \ntaddtoprintorder{backmatter}{index}
-    \RequirePackage{imakeidx}
-    % \makeindex[intoc,columns=2,options=-s myindexstyle]%
-    \makeindex[intoc,columns=2,options=-s  \DIR@NTFILES/ntindexstyle]
-  }
-}{}
-
-% Fixing autoref in yperref
-\RequirePackage{fix-hyperref}
+%
+% \iftoggle{/novathesis/print/index}{
+%   \AtEndPreamble{
+%     \ntaddtoprintorder{backmatter}{index}
+%     \RequirePackage{imakeidx}
+%     % \makeindex[intoc,columns=2,options=-s myindexstyle]%
+%     \makeindex[intoc,columns=2,options=-s  \DIR@NTFILES/ntindexstyle]
+%   }
+% }{}
 
 %--------------------------------
 % “biblatex” stuff
@@ -1140,40 +1230,21 @@
 % \letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
 % \RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
 
-%--------------------------------
-% “hyperref” stuff
-\RequirePackage[%
-  , bookmarksnumbered=true%
-  , breaklinks=true%
-  , colorlinks=true%
-  , pdfdisplaydoctitle=true%
-  , unicode=true%
-]{hyperref}%
-\@nt@fixhyperref%
-% \pdfstringdefDisableCommands{%
-%   \def\\{}%
-%   \def\texttt#1{#1}%
-% }%
-\RequirePackage{bookmark}%
-% \RequirePackage{memhfixc}%   Must be used on memoir document class after hyperref
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHECK IF USING LUALATEX OR XELATEX
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\ifxeorlua}{\ifboolexpr{bool{luatex} or bool{xetex}}}
-\newcommand{\ifxetexorluatex}{\iftutex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \typeout{FONTENCS=\@fontencs}\FONTENCS
-\ifxetexorluatex  % xelatex or lualatex
-  \RequirePackage[no-math]{fontspec}%
-  \defaultfontfeatures{Ligatures=TeX}
-\else% pdflatex
-  \RequirePackage[\@fontencs]{fontenc}    % Use new T1 fonts
-  % \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
-\fi
+% \iftutex  % xelatex or lualatex
+%   \RequirePackage[no-math]{fontspec}%
+%   \defaultfontfeatures{Ligatures=TeX}
+% \else% pdflatex
+%   \RequirePackage[\@fontencs]{fontenc}    % Use new T1 fonts
+%   % \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
+% \fi
 
 % --------------------------------------------------------
 % BABEL STUFF
@@ -1194,21 +1265,21 @@
                      \theabstractorder(\@LANG@MAIN)}\do{\@nt@setlangloaded{\myi}}
 \optionlistdo{/novathesis/lang/extra}{\@nt@setlangloaded{##1}}%
 
-\PassOptionsToPackage{main=\@LANG@MAIN@LONG}{babel}
+
+\babeladjust{
+  autoload.bcp47 = on
+}
+% \PassOptionsToPackage{main=\@LANG@MAIN@LONG}{babel}
+\babelprovide[main,import]{\expanded{\@LANG@MAIN@LONG}}
 \@for\myi:=\expanded{\@LANG@LOADED}\do{%
   % \typeout{BABELLANG=\myi \thelanglong(\myi)}\BABELLANG%
-  % \options{/@nt/lang/shorttolong=\myi}%
-  \PassOptionsToPackage{\expanded{\thelanglong(\myi)}}{babel}%
-  \PassOptionsToPackage{\expanded{\thelanglong(\myi)}}{translator}%
+  \babelprovide[import]{\expanded{\thelanglong(\myi)}}%
 }%
 
 % --------------------------------------------------------
 % FIX BABEL TRANSLATION
-\RequirePackage{babel}      % Support for multilingual documents
-\RequirePackage{translator} % Support month name translations for pgfcalendar
-\babeladjust{
-  autoload.bcp47 = on
-}
+% \RequirePackage{babel}      % Support for multilingual documents
+% \RequirePackage{translator} % Support month name translations for pgfcalendar
 \ntselectlang{\@LANG@MAIN}
 
 
@@ -1252,72 +1323,26 @@
 }
 
 
-%--------------------------------
-% “glossasries” stuff - after hyperref
-\ifoptioncontains{/novathesis/lang/extra}{gr}{%
-  \PassOptionsToPackage{xindy={language=\@LANG@MAIN@LONG}}{glossaries-extra}
-}{}
-
-\RequirePackage[%
-  % , nonumberlist
-  translate=babel,
-  % languages={\@LANG@LOADED},
-  acronym,           % add acronyms listing
-  symbols,           % add symbols listing
-  % sanitizesort=false, % allow \gls inside descriptions
-  % xindy={language=\@LANG@MAIN@LONG},
-  nolong,
-  nosuper,
-  nolist,
-  notree,
-  nostyles,
-  automake,
-]{glossaries-extra}% To create glossaries
-\RequirePackage{glossary-xltabular}%
-\setglossarystyle{xltabular}%
-\setabbreviationstyle[acronym]{long-short}%
-\GlsXtrEnablePreLocationTag{\emph{(\small p.~}}{\emph{(\small pp.~}}
-\patchcmd{\@gls@automake@immediate}{-I xindy}{-q -I xindy}{}{}
-% \renewcommand{\gls@automake@makegloss}{makeglossaries -q}%
-\renewcommand{\GlsXtrFormatLocationList}[1]{\emph{\small#1)}}
-\renewcommand{\glsnamefont}[1]{\textbf{#1}}%
-\newcommand*{\glsplainhyperlink}[2]{%
-    \begingroup%
-      \hypersetup{hidelinks}%
-      \hyperlink{#1}{#2}%
-    \endgroup%
-}%
-\let\printglossaryORIG\printglossary
-\def\printglossary{%
-  \bookmarksetupnext{level=1}%
-  \printglossaryORIG%
-}
-
-%--------------------------------
-% “Process glossaries/list/reverse” option - after glossaries
-\iftoggle{/novathesis/glossaries/list/reverse}{}{\setupglossaries{nonumberlist}}%
-\AtEndPreamble{\@loadglossaryfiles\makeglossaries}%
 
 %--------------------------------
 % TIKZ
-\RequirePackage{tikz}
 \usetikzlibrary{calc}
 
 %%%%% Fine tuning of typesetting
 \ifxeorlua{%
-    \newcommand{\textls}[2][25]{{\addfontfeature{LetterSpace=\the\numexpr#1/9\relax}#2}}
+    % \newcommand{\textls}[2][25]{{\addfontfeature{LetterSpace=\the\numexpr#1/9\relax}#2}}
 }{% pdflatex
-  \RequirePackage[%
-    babel=true,
-    activate={true,nocompatibility},  % activate={true,nocompatibility} - activate protrusion and expansion
-    final,            % final - enable microtype; use "draft" to disable
-    tracking=true,    % tracking=true - activate this technique
-    kerning=true,     % kerning=true - activate this technique
-    spacing=true,     % spacing=true - activate this technique
-    factor=1100,      % factor=1100 - add 10% to the protrusion amount (default is 1000)
-    stretch=10,       % stretch=10 - reduce stretchability (default is 20)
-    shrink=10,        % shrink=10 - reduce shrinkability (default is 20)
-  ]{microtype}
+  % \RequirePackage[%
+  %   babel=true,
+  %   activate={true,nocompatibility},  % activate={true,nocompatibility} - activate protrusion and expansion
+  %   final,            % final - enable microtype; use "draft" to disable
+  %   tracking=true,    % tracking=true - activate this technique
+  %   kerning=true,     % kerning=true - activate this technique
+  %   spacing=true,     % spacing=true - activate this technique
+  %   factor=1100,      % factor=1100 - add 10% to the protrusion amount (default is 1000)
+  %   stretch=10,       % stretch=10 - reduce stretchability (default is 20)
+  %   shrink=10,        % shrink=10 - reduce shrinkability (default is 20)
+  % ]{microtype}
 }
 
 
@@ -1416,7 +1441,7 @@
 % \printisodate{2022-12}    -> e.g., December 20, 2022; Dezembro, 2022
 % \printisodate{2022}       -> e.g., 2022
 \ExplSyntaxOn
-\NewDocumentCommand{\printisodate}{ O{, } m }
+\NewDocumentCommand{\printisodate}{ O{,~} m }
 {
   \karl_print_isodate:nn { #1 } { #2 }
 }
@@ -1901,7 +1926,6 @@
      {\def\@ntsetuplevel{\@UNIV/}\InputIfFileExists{\DIR@CONFIG/9_\@UNIV.tex}{}{}}
 \def\@ntsetuplevel{}
 
-\RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
 
 % Prefer: DOI, else eprint, else URL
 \renewbibmacro*{doi+eprint+url}{%
@@ -1944,11 +1968,11 @@
 % If option “debug={index}” option is active,
 %     highlight index keywords in the main text
 \providecommand*{\debugindexcolor}{red!50}
-\ifoptioncontains{/novathesis/debug}{index}{%
-  % \PassOptionsToPackage{inline}{showlabels}%
-  \AtEndPreamble{\RequirePackage{showlabels}%
-  \showlabels[\color{\debugindexcolor}]{index}}%
-}{}
+% \ifoptioncontains{/novathesis/debug}{index}{
+%   % \PassOptionsToPackage{inline}{showlabels}%
+%   % \AtEndPreamble{\RequirePackage{showlabels}%
+%   \showlabels[\color{\debugindexcolor}]{index}}%
+% }{}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2006,7 +2030,7 @@
 %============================================================
 \AtEndPreamble{
   \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{
-    \RequirePackage[autobib=true,nocite=false]{aidisclose} % AI disclose declaration
+    % \RequirePackage[autobib=true,nocite=false]{aidisclose} % AI disclose declaration
     \input{\DIR@CONFIG/7-aidisclose}
   }{\gdef\gaiversion{0.0.0}}
 }
@@ -2981,8 +3005,8 @@
       \StrCut{#1}{-}\@ABS@LANG\@dummy%
       \ntselectlang{\@ABS@LANG}%
       % \typeout{NTL=\languagename [#1]}\bbbb
-      \hypertarget{bmabstract#1}{}%
-      \bookmark[dest=bmabstract#1]{\thebkmstring(abstract,#1)}%
+      % \hypertarget{bmabstract#1}{}%
+      % \bookmark[dest=bmabstract#1]{\thebkmstring(abstract,#1)}%
       \NTRunHook{abstract/pre}%
       \NTRunHook{abstract/#1/pre}%
       \printabstracttitle{#1}%
@@ -3097,7 +3121,7 @@
   \xdef\Hy@chapapp{annex}%
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
-  \gdef\@chapapp{\translate{annex}}%
+  % \gdef\@chapapp{\translate{annex}}%
   \gdef\thechapter{\annexcounter\c@chapter}%
 }%
 
@@ -3304,7 +3328,8 @@
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\printabstracttitle}[1]{%
-  \chapter*{\thebkmstring(abstract,#1)}%
+  \bookmarksetupnext{level=1}
+  \chapter{\thebkmstring(abstract,#1)}%
 }
 
 
@@ -3360,6 +3385,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setcounter{tocdepth}{2}
 
+% ---------------------------------------------------------------------
+% ToC Spacing Hack: Tighter spacing for Front Matter, normal for Main
+% ---------------------------------------------------------------------
+
+% 1. When Front Matter starts, write a command to the .toc file to REDUCE spacing
+\appto\frontmatter{%
+  \let\cftbeforechapterskipORIG\cftbeforechapterskip
+  \addtocontents{toc}{\protect\setlength{\cftbeforechapterskip}{3pt}}%
+}
+
+% 2. When Main Matter starts, write a command to the .toc file to RESTORE spacing
+% (Memoir default is usually 1.0em plus 1pt)
+\appto\mainmatter{%
+  \addtocontents{toc}{\protect\setlength{\cftbeforechapterskip}{1.0em plus 1pt}}%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Sectioning
