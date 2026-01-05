@@ -1,0 +1,115 @@
+%% CHECK IF USING LUALATEX OR XELATEX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \typeout{FONTENCS=\@fontencs}\FONTENCS
+% \iftutex  % xelatex or lualatex
+%   \RequirePackage[no-math]{fontspec}%
+%   \defaultfontfeatures{Ligatures=TeX}
+% \else% pdflatex
+%   \RequirePackage[\@fontencs]{fontenc}    % Use new T1 fonts
+%   % \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
+% \fi
+
+% --------------------------------------------------------
+% BABEL STUFF
+% \options{/@nt/lang/shorttolong=\@LANG@MAIN}%
+\def\@LANG@LOADED{}
+\def\@langs@loaded@sep{}
+\newcommand*{\@nt@setlangloaded}[1]{%
+      % \typeout{LL=#1}\LL
+      \if\instring{,#1,}{,\@LANG@LOADED,}\else%
+        \IfFileExists{\DIR@NTFILES/Strings/strings-#1.ldf}%
+                     {\eappto{\@LANG@LOADED}{\@langs@loaded@sep#1}\def\@langs@loaded@sep{,}}%
+                      {\ClassError{novathesis}{File not found: “\DIR@NTFILES/Strings/strings-#1.ldf” file!}%
+                                  {Add a file with the translations for this language.}}%
+      \fi%
+}
+
+\@for\myi:=\expanded{\@LANG@COVER,\@LANG@COPYRIGHT,\@LANG@MAIN,%
+                     \theabstractorder(\@LANG@MAIN)}\do{\@nt@setlangloaded{\myi}}
+\optionlistdo{/novathesis/lang/extra}{\@nt@setlangloaded{##1}}%
+
+
+\babeladjust{
+  autoload.bcp47 = on
+}
+% \PassOptionsToPackage{main=\@LANG@MAIN@LONG}{babel}
+\babelprovide[main,import]{\expanded{\@LANG@MAIN@LONG}}
+\@for\myi:=\expanded{\@LANG@LOADED}\do{%
+  % \typeout{BABELLANG=\myi \thelanglong(\myi)}\BABELLANG%
+  \babelprovide[import]{\expanded{\thelanglong(\myi)}}%
+}%
+
+% --------------------------------------------------------
+% FIX BABEL TRANSLATION
+% \RequirePackage{babel}      % Support for multilingual documents
+% \RequirePackage{translator} % Support month name translations for pgfcalendar
+\ntselectlang{\@LANG@MAIN}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FIX BABEL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{fix-babel.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Include strings for all the languages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\@for\myi:=\expanded{\@LANG@LOADED}\do{%
+  \InputIfFileExists{\DIR@NTFILES/Strings/strings-\myi.ldf}%
+                    {}%
+                    {\ClassError{novathesis}
+                                {File not found: “\DIR@NTFILES/Strings/strings-#1.ldf” file!}%
+                                {Add a file with the translations for this language.}}%
+}%
+
+
+\bkmstring(1-1)={\thebkmstring(cover,\@LANG@MAIN)}
+\bkmstring(1-2)={\thebkmstring(incover,\@LANG@MAIN)}
+\bkmstring(2-1)={\thebkmstring(frontpage,\@LANG@MAIN)}
+\bkmstring(2-2)={\thebkmstring(infrontpage,\@LANG@MAIN)}
+\bkmstring(N-1)={\thebkmstring(inbackcover,\@LANG@MAIN)}
+\bkmstring(N-2)={\thebkmstring(backcover,\@LANG@MAIN)}
+\bkmstring(spine)={\thebkmstring(spine,\@LANG@MAIN)}
+
+
+\options{/@nt/lang/loaded/.expanded=\@LANG@LOADED}
+
+\def\@fontencs{}
+\def\@fontencs@sep{}
+\@for\myi:=\@LANG@LOADED\do{
+  \options{/@nt/fontenc=\myi}
+  \if\instring{,\option{/@nt/fontenc},}{,\@fontencs,}%
+  \else\eappto{\@fontencs}{\@fontencs@sep\option{/@nt/fontenc}}\def\@fontencs@sep{,}%
+  \fi%
+}
+
+
+
+%--------------------------------
+% TIKZ
+\usetikzlibrary{calc}
+
+%%%%% Fine tuning of typesetting
+\ifxeorlua{%
+    % \newcommand{\textls}[2][25]{{\addfontfeature{LetterSpace=\the\numexpr#1/9\relax}#2}}
+}{% pdflatex
+  % \RequirePackage[%
+  %   babel=true,
+  %   activate={true,nocompatibility},  % activate={true,nocompatibility} - activate protrusion and expansion
+  %   final,            % final - enable microtype; use "draft" to disable
+  %   tracking=true,    % tracking=true - activate this technique
+  %   kerning=true,     % kerning=true - activate this technique
+  %   spacing=true,     % spacing=true - activate this technique
+  %   factor=1100,      % factor=1100 - add 10% to the protrusion amount (default is 1000)
+  %   stretch=10,       % stretch=10 - reduce stretchability (default is 20)
+  %   shrink=10,        % shrink=10 - reduce shrinkability (default is 20)
+  % ]{microtype}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

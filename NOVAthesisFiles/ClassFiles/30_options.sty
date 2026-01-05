@@ -1,0 +1,92 @@
+% PROCESSING CLASS OPTIONS
+\options@ProcessOptions{/novathesis}
+% --------------------------------------------------------
+% NTSETUP2
+\newcommand*{\ntsetup}[2][]{%
+  % \typeout{NTSETUP [/novathesis/\@UNIV/\@SCHL/#1/#2]}\NTSETUP%
+  \ntfor\arg:={#2}\do{%
+    \StrCut{\arg}{=}{\@ntopt}{\@ntval}%
+    % \typeout{NTSETUP2 [\@ntopt] = [\@ntval]}\NTSETUP%
+    \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/#1/\@ntopt}%
+                    {\options{/novathesis/\@UNIV/\@SCHL/#1/#2}}{%
+    \ifoptiondefined{/novathesis/#1/\@ntopt}%
+                    {\options{/novathesis/#1/#2}}{%
+    \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/\@ntopt}%
+                     {\options{/novathesis/\@UNIV/\@SCHL/#2}}{%
+    \ifoptiondefined{/novathesis/\@UNIV/\@ntopt}%
+                     {\options{/novathesis/\@UNIV/#2}}{%
+    \ifoptiondefined{/novathesis/\@ntopt}%
+                    {\options{/novathesis/#2}}{%
+    \ClassError{novathesis}{Invalid class option: \@ntopt}{}{}}}}}}}%
+}
+
+
+\newcommand*{\NTAddToHook}[2]{\options{/@nt/hook/#1/.newpush={#2}}}
+
+\newcommand*{\NTRunHook}[1]{\optionlistdo{/@nt/hook/#1}{##1}}
+
+% \newcommand*{\NTIfHook}[1]{%
+%   \ifoptiondefined{/@nt/hook/#1}%
+% }
+
+
+\newcommand{\SpineSetup}[2][]{%
+  \NTAddToHook{print/spine/pre}{%
+    #1%
+    \NTSetup[spine] {#2}%
+  }%
+}
+
+
+% --------------------------------------------------------
+% Pass the remaining options to memoir
+% \letoptionlist{/options/remaining}\nt@remaining
+% \PassOptionsToClass{\nt@remaining}{memoir}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LOADING CUSTOMIZATION STUFF - part 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------
+% Define DEFAULT corollaryUES for COVER and COPYRIGHT languages
+%     and HYPERLINK color
+\options{/novathesis/lang = \option{/novathesis/lang/main},
+         /novathesis/color/links = DarkBlue,
+         /novathesis/glossaries/color/gls = None,
+}
+
+% \NTRunHook{memoir}
+
+%============================================================
+%  TEMPLATE CUSTOMIZATION / OPTIONS
+%      Please open and edit the appropriate
+%       configuration file “0-Config/1_novathesis.tex”
+%============================================================
+\input{\DIR@CONFIG/1_novathesis}
+\def\@DOCTYPE{\option{/novathesis/doctype}}
+\def\@DOCSTATUS{\option{/novathesis/docstatus}}
+
+\options{/@nt/document/docclass=\@DOCTYPE}
+\def\@DOCCLASS{\option{/@nt/document/docclass}}
+
+\def\@LANG@COVER{\option{/novathesis/lang/cover}}
+\def\@LANG@COPYRIGHT{\option{/novathesis/lang/copyright}}
+\def\@LANG@MAIN{\option{/novathesis/lang/main}}
+\def\@LANG@MAIN@LONG{\thelanglong(\@LANG@MAIN)}
+
+\@setabstractorder
+\ifdatadefined{abstractorder}(en){}{%
+  \abstractorder(en):={en,pt}
+}
+\ifdatadefined{abstractorder}(\@LANG@MAIN){}{%
+  \abstractorder(\@LANG@MAIN):={\@LANG@MAIN,en}
+}
+
+
+
+
+%============================================================

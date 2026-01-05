@@ -1,0 +1,14 @@
+%============================================================
+%  WHICH LIST_OF TO PRINT
+%   Please open and edit the appropriate
+%       configuration file “0-Config/6_list_of.tex”
+%============================================================
+\AtEndPreamble{
+% is only loaded after school's configuration
+% can be changhed with "\ntsetup{print/other}"
+  \NTRunHook{list_of/pre}
+  \input{\DIR@CONFIG/6_list_of}
+  \NTRunHook{list_of/post}
+}
+
+

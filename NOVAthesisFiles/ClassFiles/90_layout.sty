@@ -1,0 +1,571 @@
+%% PAGE LAYOUT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\AtEndPreamble{\ntsetlayout}%
+
+\newcommand*{\ntsetlayout}{%
+    % \synctex=1% Use synctex
+    \brokenpenalty=10000%
+    \newgeometry{
+        lmargin=\expanded{\themargin(\option{/novathesis/media},left)},
+        rmargin=\expanded{\themargin(\option{/novathesis/media},right)},
+        tmargin=\expanded{\themargin(\option{/novathesis/media},top)},
+        bmargin=\expanded{\themargin(\option{/novathesis/media},bottom)},
+    }%
+    \ifoptionequal{/novathesis/media}{paper}{\openright}{}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Printing chapters and similars
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\@nt@printifmaindoc@i}[1]{%
+  % \typeout{NT Attempt to load #1}%
+  \ifmaindoc{% THEN it is a main document
+    \NTRunHook{#1/pre}%
+    \iffileadded{#1}{%
+      \hypertarget{bm#1}{}%
+      \bookmark[dest=bm#1]{\thebkmstring(#1,\@LANG@MAIN)}%
+      \@ntloadfiles@ii{#1}%
+    }{}%
+    \NTRunHook{#1/post}%
+    \clearforchapter%
+  }{}% It is a plan or proposal type document
+}
+
+\newcommand{\ntprintdedicatory}{\@nt@printifmaindoc@i{dedicatory}}
+
+\newcommand{\ntprintquote}{\@nt@printifmaindoc@i{quote}}
+
+\newcommand{\ntprintacknowledgements}{\@nt@printifmaindoc@i{acknowledgements}}
+
+\newcommand{\ntprintaidisclose}{%
+  \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{% use aidisclose
+    \bookmarksetupnext{level=1}%
+    \GAIrenderDeclaration[3]{\thedocauthor(name)}%
+  }{\ifoptionequal{/novathesis/print/aidisclosure}{false}
+      {} % do not print AI Disclosure
+      {\IfFileExists{\DIR@FRONTMATTER/\option{/novathesis/print/aidisclosure}}
+        {%
+          \bookmarksetupnext{level=1}%
+          \input{\DIR@FRONTMATTER/\option{/novathesis/print/aidisclosure}}%
+        }
+        {\ClassError{novathesis}
+                    {AI Disclusre file not found: '\option{/novathesis/print/aidisclosure}'.}
+                    {Please provide a valid AI Disclusre file name.}
+        }%
+      }%
+  }%
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Print Sustainable Development Goals (SDG)
+%% To be called from \ntprintabstracts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{sdgcnt}%
+\newdimen{\sdgdim}%
+\newcommand*{\ntprintsdgs}{
+  \@tempdima=\option{/novathesis/print/sdgs/hspace}%
+  \@tempdimb=\option{/novathesis/print/sdgs/vspace}%
+  \setcounter{sdgcnt}{0}%
+  \sdgdim=0pt%
+  \ifoptionnil{/novathesis/print/sdgs/list}{}{%
+      \vfill%
+      \raggedright\noindent%
+      \textbf{\thesdgstring(\@LSHORT):}\\[1ex]
+      \edef\@sdgtype{\option{/novathesis/print/sgds/type}}
+      \IfFileExists{\DIR@NTFILES/Images/sdg-\@LSHORT/1-\@sdgtype.pdf}
+          {\def\@spnfolder{\DIR@NTFILES/Images/sdg-\@LSHORT}}
+          {\def\@spnfolder{\DIR@NTFILES/Images/sdg-en}}
+      \noindent%\linespread{1.5}\selectfont
+      \optionlistdo{/novathesis/print/sdgs/list}{%
+        \stepcounter{sdgcnt}%
+        \setbox0=\hbox{%
+          % \typeout{FILE=\DIR@NTFILES/Images/sdg-\@LSHORT/##1-\XPTO}
+            \includegraphics[width=\option{/novathesis/print/sdgs/size}]
+                            {\@spnfolder/##1-\@sdgtype}%
+        }%
+        \ifdim \dimexpr\sdgdim + \wd0\relax > \textwidth\relax%
+            \\[\@tempdimb]
+            \sdgdim=\wd0%
+        \fi
+        \usebox0\hspace{\@tempdima}%
+      }%
+  }%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Print Abstracts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ntprintabstracts}{%
+  \NTRunHook{abstracts/pre}%
+  \@for\myi:=\expanded{\theabstractorder(\@LANG@MAIN)}\do{\@ntprintabstract{\myi}}%
+  \NTRunHook{abstracts/post}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Abstract, Acronyms and Glossary
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\@ntprintabstract}[1]{%
+  % \typeout{NT PRINT ABSTRACT=[#1]}\NTPRINTABSTRACT@I%
+  \iffileadded[#1]{abstract}{%
+    % \typeout{NT PRINT ABSTRACT 2=[#1]}\NTPRINTABSTRACT@II
+    \begingroup
+      % \typeout{NT PRINT ABSTRACT #1}\bbbb
+      \StrCut{#1}{-}\@ABS@LANG\@dummy%
+      \ntselectlang{\@ABS@LANG}%
+      % \typeout{NTL=\languagename [#1]}\bbbb
+      % \hypertarget{bmabstract#1}{}%
+      % \bookmark[dest=bmabstract#1]{\thebkmstring(abstract,#1)}%
+      \NTRunHook{abstract/pre}%
+      \NTRunHook{abstract/#1/pre}%
+      \printabstracttitle{#1}%
+      \NTRunHook{abstract/#1/mid}%
+      \NTRunHook{abstract/mid}%
+      \@ntloadfiles@ii[#1]{abstract}%
+      \ntprintsdgs%
+      \NTRunHook{abstract/#1/post}%
+      \NTRunHook{abstract/post}%
+    \endgroup%
+    \clearforchapter%
+  }{}%
+}
+
+\newcommand{\ntprintindex}{%
+  % \printglossary[type=index]%
+  \printindex%
+  \clearforchapter%
+}
+
+\newif\if@frontmatter
+\newcommand*{\ntthesisfrontmatter}{%
+  \NTRunHook{frontmatter/pre}%
+  \frontmatter%
+  \@frontmattertrue
+  \begingroup
+  \pagestyle{novathesis@frontmatter}%
+  \copypagestyle{chapter}{novathesis@frontmatter}
+  % \ntselectlang{\@LANG@MAIN}%
+  \pagenumbering{roman}%
+}
+
+\newif\if@mainmatter
+\newcommand*{\ntthesismainmatter}{%
+  \@frontmatterfalse
+  \endgroup
+  \NTRunHook{frontmatter/post}%
+  \bookmarksetup{startatroot}%
+  \NTRunHook{mainmatter/pre}%
+  \ifbool{@openright}{}{% openany=true
+    % Avoid cleardoublepage before "mainmatter"
+    \let\oldcleardoublepage\cleardoublepage%
+    \renewcommand{\cleardoublepage}{\clearforchapter}%
+  }%
+  \NTRunHook{mainmatter/pre}%
+  \mainmatter%
+  \@mainmattertrue
+  \ifbool{@openright}{}{% openany=true
+    \let\cleardoublepage\oldcleardoublepage%
+  }%
+  \pagestyle{novathesis@mainmatter}%
+  \ifxeorlua{}{\microtypesetup{protrusion=true}}%
+}
+
+\newif\if@backmatter
+\newcommand*{\ntthesisbackmatter}{%
+  \@mainmatterfalse
+  \NTRunHook{mainmatter/post}%
+  \@backmattertrue
+  \NTRunHook{backmatter/pre}%
+}
+\newcommand{\ntindex}[2][]{%
+  % \typeout{NTINDEX [#1] [#2]}
+  \bgroup%
+    \ifoptioncontains{/novathesis/debug}{index}{\showlabelsinline}{}%
+    \StrRight{#1}{1}[\@nt@index]%
+    \if\@nt@index!\relax
+      \def\@nt@index{#1#2}%
+    \else
+      \def\@nt@index{#1}%
+    \fi%
+    \index{\@nt@index}#2%
+  \egroup%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Chapters
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\ntprintchapters}{%
+    \@nt@foralllist{file}{chapter}{\@ntloadfiles@ii{chapter}}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Appendixes and Annexes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\addappheadtotoc}{%
+    \phantomsection\addtocontents{toc}%
+    {\protect\contentsline{chapter}{\appendixtocname}{}{}}%
+ }
+
+\newcommand*{\ntprintappendices}{%
+  \iffileadded{appendix}{%
+    \renewcommand{\appendixtocname}{\appendixplname}%
+    \appendix\addappheadtotoc%
+    \@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
+  }{}%
+}
+
+\newcommand*{\ntprintannexes}{%
+  \iffileadded{annex}{%
+    % \renewcommand{\appendixtocname}{\translate{Annexes}}%
+    \renewcommand{\appendixtocname}{\annexplname}%
+    \annex\addappheadtotoc%
+    \@nt@foralllist{file}{annex}{\@ntloadfiles@ii{annex}}%
+  }{}%
+}
+
+\ifdef{\annexcounter}{}{\def\annexcounter{\old@Roman}}
+\newcommand*{\annex}{%
+  \xdef\Hy@chapapp{annex}%
+  \setcounter{chapter}{0}%
+  \setcounter{section}{0}%
+  % \gdef\@chapapp{\translate{annex}}%
+  \gdef\thechapter{\annexcounter\c@chapter}%
+}%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Deal with optional lists in the frontmatter: listoftables, litoffigures, etc.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\ntprintalllistof}{%
+    \NTRunHook{listof/pre}%
+    \if@backmatter
+      \def\@matter{backmatter}
+    \else
+      \def\@matter{frontmatter}
+    \fi
+    \ifoptiondefined{/@nt/listof/\@matter}{
+      \ifnum\value{\option{/@nt/listof/\@matter/@size}}>1\relax
+        \hypertarget{bmlistof\@matter}{}%
+        \bookmark[level=0,dest=bmlistof\@matter]{\thebkmstring(listof,\@LANG@MAIN)}%
+        \bookmarksetupnext{level=1}%
+      \else
+        \bookmarksetupnext{level=0}%
+      \fi
+      % \typeout{PRINTALLLISTOF=\@matter}\PRINTALLLISTOF
+      \optionlistdo{/@nt/listof/\@matter}{\clearforchapter##1\bookmarksetupnext{level=1}}%
+    }{}
+    \NTRunHook{listof/post}%
+}
+
+
+% \def\option@listmatch@getval#1=#2{#2}
+\newcommand*{\option@listmatch}[2]{
+    % \typeout{NT LISTMATCH [#1] [#2]}%
+    \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%was xStrCut
+    % \typeout{K=\option@listmatch@key ~V=\option@listmatch@value}%
+    \IfStrEq{#1}{\option@listmatch@key}{\listbreak}{}%
+}%
+\options{/handlers/getval/.new operation={%
+    % \typeout{NT GETVAL [#1] [#2]}%
+    \optionlistdo{#1}{\option@listmatch{#2}{##1}}%
+    }%
+}
+
+\newcommand*{\@loadglossaryfiles}{%
+  \@for\listitem:={glossary,acronym,symbols}\do{%
+    \iffileadded[\listitem]{glossaries}{\@nt@loadallfiles{\listitem}{glossaries}}{}%
+  }%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand*{\ntprintbib}[1][]{%
+  \NTRunHook{printbib/pre}%
+  \printbibliography[#1]%
+  \ntfixspacing%
+  \NTRunHook{printbib/post}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Copyright page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\printcompactbib}[1][]{%
+  \begingroup
+    \renewcommand*{\bibfont}{\tiny}% very small text
+    \renewbibmacro*{pageref}{}% suppress backrefs
+    % Remove vertical space before the list starts
+    \setlength{\topsep}{0pt}
+    \setlength{\partopsep}{0pt}
+    % Remove vertical space between items (from your previous request)
+    \setlength{\bibitemsep}{2pt}
+    % fine tune label width
+    \setlength{\labelnumberwidth}{10pt}%
+    % Print the bibliography with no title, passing any extra options
+    \defbibheading{ntlocalbib}{%
+      {\par\vspace*{-1.25ex}}
+      \textcolor{white}
+                {\fontsize{0.01}{1}\selectfont\noindent\hspace*{-\labelnumberwidth}
+                 \bibname~(12cc90221730b8ba41bb3b1f8b517acd)}%
+      \vspace*{-\baselineskip-\parskip}
+    }
+    \newrefcontext[sorting=ynt]%
+    \printbibliography[heading=ntlocalbib, #1]
+  \endgroup
+}
+
+\newcommand{\ntprintacknowledgementsblock}[1][\scriptsize]{%
+    \NTRunHook{acknowledgementsblock/pre}%
+      \refsection%
+      \renewcommand{\@ntcite}[1]{\cite{##1}}%
+      \bigskip\footnoterule#1\smallskip\noindent\theacknowledgmentsstring(\@LANG@MAIN)%
+      \printcompactbib%
+      \endrefsection%
+    \NTRunHook{acknowledgementsblock/post}%
+}
+
+\newcommand*{\ntprintcopyright}{%
+  \iftoggle{/novathesis/print/copyright}{%
+    \ifmaindoc{%
+      \begingroup
+        \ntselectlang{\@LANG@COPYRIGHT}%
+        \hypertarget{bmcopyright}{}%
+        \bookmark[dest=bmcopyright]{\thebkmstring(copyright,\@LANG@MAIN)}%
+        \NTRunHook{copyright/pre}%
+        \ntprintcopyrightpage%
+        \NTRunHook{copyright/post}%
+        \ntprintacknowledgementsblock%
+        \clearforchapter%
+      \endgroup
+    }{}%
+   }{}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Quoting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\hugequote}{%
+  \bgroup%
+    \color{black!30}%
+    \fontsize{75}{80}\selectfont%
+    \fontfamily{ptm}\selectfont%
+    \textit{\glqq}%
+  \egroup%
+}
+
+\newcommand{\ntquoteauthor}[1]{{\\[1.25ex]\footnotesize\bfseries---~#1}}
+\newcommand{\ntquotewhere}[1]{{\footnotesize, #1}}
+\newcommand{\ntquoteprofession}[1]{{\footnotesize\\[-0.75ex](#1)}}
+\newcommand{\ntquotetext}[1]{{\itshape#1}}
+\newcommand{\ntquoteskip}{%
+  \vphantom{%
+    \begin{minipage}{\textwidth}%
+      \chapter*{ASDF}%
+      % \vspace*{\midchapskip}%
+    \end{minipage}%
+  }%
+}
+
+\NewDocumentEnvironment{ntquoting}{sO{10cm}O{}O{}O{}O{\@LANG@MAIN}+b}{%
+% 1 [*] => print big quote
+% 2 [o] => max width of citation box
+% 3 [o] => author name
+% 4 [o] => where/source
+% 5 [o] => profession
+% 6 [o] => lang
+% 7 [b] => quotation
+  % \typeout{
+  %          1=[#1]
+  %          2=[#2]
+  %          3=[#3]
+  %          4=[#4]
+  %          5=[#5]
+  %          6=[#6]
+  %          7=[#7]
+  % }\asdfg
+  \iftoggle{/novathesis/numberallpages}%
+    {\thispagestyle{novathesis@frontmatter}}%
+    {\thispagestyle{empty}}%
+  \defifundef{\ntqbox}{\newsavebox}%
+  \savebox{\ntqbox}{#7}
+  \ifdim\wd\ntqbox<\ifblank{#2}{\textwidth}{#2}\relax
+  \@tempdima=\wd\ntqbox
+  \else
+  \@tempdima=#2
+  \fi
+  \ntquoteskip
+  \begin{flushright}
+    \NTRunHook{ntquote/pre}%
+    \IfBooleanTF{#1}{\hugequote}{}
+    \begin{minipage}[t]{\@tempdima}
+      \raggedleft\normalsize
+      % \options{/@nt/lang/shorttolong=#6}%
+      \IfBooleanTF{#1}{%
+        \foreigntextquote{\thelanglong(#6)}{\ntquotetext{#7}}%
+      }{\ntquotetext#7}
+      \ifblank{#3}{}{\ntquoteauthor{#3}}%
+      \ifblank{#4}{}{\ntquotewhere{#4}}%
+      \ifblank{#5}{}{\ntquoteprofession{#5}}%
+    \end{minipage}%
+    \NTRunHook{ntquote/post}%
+  \end{flushright}
+}{}
+
+\ExplSyntaxOn
+\cs_new:cpn {ntquote} {\ntquoting*}
+\cs_new_eq:cN {endntquote} \endntquoting
+\cs_new:cpn {ntdedicatory} {\ntquoting}
+\cs_new_eq:cN {endntdedicatory} \endntquoting
+\ExplSyntaxOff
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Acknowledgements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{ntacknowledgements}{%
+  % \bookmarksetupnext{level=1}%
+  \chapter*{\thebkmstring(acknowledgements,\@LANG@MAIN)}%
+}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\printabstracttitle}[1]{%
+  \bookmarksetupnext{level=1}
+  \chapter{\thebkmstring(abstract,#1)}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Keywords
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\providecommand{\keywords}[1]{%
+    \NTRunHook{keywords/pre}%
+    % \NTRunHook{keywords/#1/pre}%
+    \def\and{\unskip\datadefault{keywordssep}(\@LSHORT)}%
+    % \def\and{{\textperiodcentered} }%
+    \par\addvspace\baselineskip\noindent%
+    \begingroup%
+    \datadefault{keywordsstringprefix}(\@LSHORT)%
+    \datadefault{keywordsstringfont}(\@LSHORT)%
+    \csuse{thekeywordsstring}(\@LSHORT)%
+    \datadefault{keywordsstringsuffix}(\@LSHORT)%
+    \endgroup%
+    % \enspace
+    \ignorespaces#1%
+    % \NTRunHook{keywords/#1/post}%
+    \NTRunHook{keywords/post}%
+}%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LABELS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\providecommand\thepresentationtext{%
+  \thedissertationstringfont()%
+  \ifdatadefined{dissertationstring}(\@DOCTYPE,\@LANG@COVER){%
+    \thedissertationstring(\@DOCTYPE,\@LANG@COVER)%
+  }{%
+    \thedissertationstring(\@DOCCLASS,\@LANG@COVER)%
+  }%
+}
+
+\providecommand\thecopyrightstr{%
+    % \iftoggle{/novathesis/numberallpages}%
+     {\thispagestyle{novathesis@frontmatter}}%
+     % {\thispagestyle{empty}}%
+    \noindent%
+    Copyright \textcopyright\ \thedocauthor(name), %
+    \theschool(\@LANG@COPYRIGHT), \theuniversity(\@LANG@COPYRIGHT).\\%
+    \thecopyrighttextstring(\@LANG@COPYRIGHT)%
+    % \ntselectlang{\@LANG@MAIN}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Table of contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{tocdepth}{2}
+
+% ---------------------------------------------------------------------
+% ToC Spacing Hack: Tighter spacing for Front Matter, normal for Main
+% ---------------------------------------------------------------------
+
+% 1. When Front Matter starts, write a command to the .toc file to REDUCE spacing
+\appto\frontmatter{%
+  \let\cftbeforechapterskipORIG\cftbeforechapterskip
+  \addtocontents{toc}{\protect\setlength{\cftbeforechapterskip}{3pt}}%
+}
+
+% 2. When Main Matter starts, write a command to the .toc file to RESTORE spacing
+% (Memoir default is usually 1.0em plus 1pt)
+\appto\mainmatter{%
+  \addtocontents{toc}{\protect\setlength{\cftbeforechapterskip}{1.0em plus 1pt}}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Sectioning
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\maxsecnumdepth{subsubsection}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fixes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Fix spacing for pages with roman numerals in ToC
+\renewcommand*{\@pnumwidth}{2.5em}% default is 1.55em
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Text style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% First try to load a local chapter-style definition
+\InputIfFileExists{\DIR@NTFILES/ChapStyles/\option{/novathesis/style/chapter}.sty}
+  {}{% otherwise, try a standard 'memoir' style
+      \ifcsdef{chs@\option{/novathesis/style/chapter}}
+          {\chapterstyle{\option{/novathesis/style/chapter}}}
+          {\ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/style/chapter}}{}}%
+}
+
+% First try to load a local font-style definition
+\InputIfFileExists{\DIR@NTFILES/FontStyles/\option{/novathesis/style/font}.sty}
+  {}{% otherwise, try a standard LaTeX package
+      \IfFileExists{\option{/novathesis/style/font}.sty}%
+        {\RequirePackage{\option{/novathesis/style/font}}}%
+        {\ClassError{novathesis}{Invalid Font Style: \option{/novathesis/style/font}}{}}%
+}
+
+% force page color to white in xelatex and lualatex
+\ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
+
+\AtBeginDocument{%
+  \makeatletter%
+  % \typeout{XXX [\thedocauthor(name)]}
+  % \typeout{XXX [\thedoctitle(\@LANG@MAIN,main)]}
+  % \typeout{XXX [\thedoctitle(\@LANG@MAIN,sub)]}
+  \hypersetup{%
+    pdfauthor={\thedocauthor(name)},
+    pdftitle={\thedoctitle(\@LANG@MAIN,main)},
+    pdfsubject={\thedoctitle(\@LANG@MAIN,sub)},
+  }
+
+  %--------------------------------
+  % If subcaption is loaded, let it handle subfigures
+  % otherwise use memoir subfigures
+  \@ifpackageloaded{subcaption}{}{\newsubfloat{figure}}
+  \newcommand{\@ntcite}[1]{\ifdef{\parencite}{\parencite{#1}}{\cite{#1}}}
+  \makeatother
+}

@@ -1,0 +1,75 @@
+% LOAD A DEFAULT COPYRIGHT PAGE DEFINITION
+\newcommand{\@nt@AddFileIfExists}[1]{%
+% #1 = class
+% #2 = sub class [OPTIONAL]
+% #3 = file name
+% #4 = dir list
+% #5 = action if not found [OPTIONAL]
+  \@ifnextchar[{\@nt@AddFileIfExists@i{#1}}{\@nt@AddFileIfExists@i{#1}[\@DOCTYPE]}%
+}
+
+\def\@nt@AddFileIfExists@i#1[#2]#3#4{%
+  \@ifnextchar[{\@nt@AddFileIfExists@ii{#1}[#2]{#3}#4}{\@nt@AddFileIfExists@ii{#1}[#2]{#3}#4[]}%
+}
+
+\long\def\@nt@AddFileIfExists@ii#1[#2]#3#4[#5]{%
+  \ntfor\arg:=#4\do{\IfFileExists{\arg#3}{\ntaddfile{#1}[#2]{\arg#3}\ntforbreak}{}}[#5]%
+}
+
+
+% \newcommand{\@nt@AddFileIfExists}[4][]{%
+% % #1 = OPTIONAL action if not found
+% % #2 = class
+% % #3 = file name
+% % #4 = dir list
+%   \ntfor\arg:=#4\do{\@nt@AddFileIfExists@i{#2}{#3}{\arg}}[#1]%
+% }
+%
+% \newcommand{\@nt@AddFileIfExists@i}[3]{%
+% % #1 = class
+% % #2 = file name
+% % #3 = dir list
+%   \IfFileExists{#3#2}{\ntaddfile{#1}{#3#2}\ntforbreak}{}%
+% }
+
+\ifmaindoc{% only print if a main document
+  \iftoggle{/novathesis/print/copyright}{% if copuyright toggle is on
+    \@nt@AddFileIfExists{copyright}{copyright.tex}{%
+           {\DIR@NTFILES/Schools/\@UNIV/\@SCHL/}%
+          ,{\DIR@NTFILES/Schools/\@UNIV/}%
+          ,{\DIR@NTFILES/}%
+    }%
+    \@ntloadfiles@ii{copyright}%
+  }{}%
+}{}
+
+\ifoptionequal{/novathesis/spine/layout}{off}{}{% print the spine
+  \InputIfFileExistsInDirsTF{novathesis-spine.sty}{
+          {\DIR@NTFILES/Schools/\@UNIV/\@SCHL/},
+          {\DIR@NTFILES/Schools/\@UNIV/},
+          {\DIR@NTFILES/},
+  }{\AtEndDocument{\csuse{ntprintspine}}}
+   {\ClassError{novathesis}{No “novathesis-spine” file found.}{}}%
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DEBUG - print grid over covers and spine
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\debuggrid}[1][orange]{%
+  \begin{tikzpicture}[remember picture, semitransparent, overlay, shift=(current page.north west)]%
+    \draw[step=1mm, line width=0.1mm, #1!30!white, yscale=-1] (\@MRGN@left, \@MRGN@top)
+              grid (\paperwidth-\@MRGN@right, \paperheight-\@MRGN@bottom);
+    \draw[step=5mm, line width=0.2mm, #1!40!white] (current page.north west)
+              grid (current page.south east);
+    \draw[step=1cm, line width=0.3mm, #1!90!white] (current page.north west)
+              grid (current page.south east);
+    \draw[step=5cm, line width=0.5mm, #1!50!white] (current page.north west)
+              grid (current page.south east);
+    \end{tikzpicture}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

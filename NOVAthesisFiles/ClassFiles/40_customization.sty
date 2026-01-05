@@ -1,0 +1,459 @@
+%% DEFINITIONS FOR THE REMINDER OF CUSTOMIZATION STUFF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% --------------------------------------------------------
+% Department
+\def\ntdepartment{\@ifstar{\@ntdepartmentifundef}{\@ntdepartment}}
+\def\@ntdepartmentifundef(#1)#2{\ifdatadefined{department}(#1){}{\@ntdepartment(#1){#2}}}
+\def\@ntdepartment(#1)#2{\department(#1):={#2}}
+
+% --------------------------------------------------------
+% Degree
+\def\ntmajorfield{\@ifstar{\@ntmajorfieldifundef}{\@ntmajorfield}}
+  % #1 = lang
+  % #2 = value
+\def\@ntmajorfieldifundef(#1)#2{\ifdatadefined{majorfield}(#1){}{\@ntmajorfield(#1){#2}}}
+\def\@ntmajorfield(#1)#2{\majorfield(#1):={#2}}
+
+\def\ntdegreename{\@ifstar{\@ntdegreenameifundef}{\@ntdegreename}}
+\def\@ntdegreenameifundef(#1)#2{\ifdatadefined{degreename}(#1){}{\@ntdegreename(#1){#2}}}
+\def\@ntdegreename(#1)#2{%
+  % #1 = lang
+  % #2 = value
+  \datamatch{\match}{degreenameprefix}(%
+            {\@DOCTYPE,\@DEGREEACR,\@LANG@COVER},%
+            {\@DOCCLASS,\@DEGREEACR,\@LANG@COVER},%
+            {\@DEGREEACR,\@LANG@COVER},%
+            {\@DOCTYPE,\@LANG@COVER},%
+            {\@DOCCLASS,\@LANG@COVER},%
+            {\@LANG@COVER}%
+  )%
+  \ifblank{\match}{\degreename(#1):={#2}}{\degreename(#1):={\match\ #2}}%
+  \majorfield(#1):={#2}%
+}
+% --------------------------------------------------------
+% Specialization
+\def\ntminorfield{\@ifstar{\@ntminorfieldifundef}{\@ntminorfield}}
+\def\@ntminorfieldifundef(#1)#2{\ifdatadefined{minorfield}(#1){}{\@ntminorfield(#1){#2}}}
+\def\@ntminorfield(#1)#2{\minorfield(#1):={#2}}
+
+\def\ntspecialization{\@ifstar{\@ntspecializationifundef}{\@ntspecialization}}
+\def\@ntspecializationifundef(#1)#2{\ifdatadefined{minorfield}(#1){}{\@ntspecialization(#1){#2}}}
+\def\@ntspecialization(#1)#2{%
+  \datamatch{\specmatch}{specializationstring}(%
+            {\@DOCTYPE,\@DEGREEACR,\@LANG@COVER},%
+            {\@DOCCLASS,\@DEGREEACR,\@LANG@COVER}%
+            {\@DEGREEACR,\@LANG@COVER},%
+            {\@DOCTYPE,\@LANG@COVER},%
+            {\@DOCCLASS,\@LANG@COVER},%
+            {\@LANG@COVER}%
+  )%
+  \ifblank{\match}{\specialization(#1)={#2}}{\specialization(#1)={\specmatch\ #2}}%
+  \minorfield(#1)={#2}%
+}
+
+% --------------------------------------------------------
+% Sponsors
+\def\ntsponsors(#1,#2,#3)#4{\sponsor(#3,#1,#2):={#2}}
+
+% --------------------------------------------------------
+% Title
+\def\nttitle(#1,#2)#3{%
+  % #1 = type (main, sub, spine) title
+  % #2 = lang
+  % #3 = value
+  % \typeout{NT TITLE [#1] [#2] [#3]}%
+  \noexpandarg  
+  \StrSubstitute{#3}{\\}{ }[\@nt@cleantitle]
+  % \typeout{XXXX [\@nt@cleantitle]}\aaa
+  % \doctitle(#2,#1):={\@nt@cleantitle}%
+  \doctitle(#2,#1):={\def\\{ }#3}%
+  \doctitle(#2,#1,cover):={#3}%
+  \IfStrEq{#1}{main}{\doctitle(#2,spine):=?{\thedoctitle(#2,#1)}}{}%
+  % \doctitle(#2,#1):={\ntnolinebreak{#3}}%
+  % \doctitle(#2,#1,cover):={#3}%
+  % \IfStrEq{#1}{main}{\doctitle(#2,spine):={\ntnolinebreak{#3}}}{}%
+  \fullexpandarg
+}
+
+% \newcommand{\ntnolinebreak}[1]{{\def\\{\ }#1}}
+% --------------------------------------------------------
+
+
+
+%============================================================
+% Date and month
+
+% \babelmonthname{<1..12>} → localized month name (current babel language)
+\newcommand{\babelmonthname}[1]{%
+  \csname month\romannumeral\numexpr#1\relax name\endcsname
+}
+
+% \printisodate{2022-12-25} -> localized date, e.g., December 20, 2022; 20 de dezembro de 2022
+% \printisodate{2022-12}    -> e.g., December 20, 2022; Dezembro, 2022
+% \printisodate{2022}       -> e.g., 2022
+\ExplSyntaxOn
+\NewDocumentCommand{\printisodate}{ O{,~} m }
+{
+  \karl_print_isodate:nn { #1 } { #2 }
+}
+
+\cs_new_protected:Npn \karl_print_isodate:nn #1 #2
+{
+  \seq_set_split:Nnn \l_tmpa_seq { - } { #2 }
+  \int_case:nnF { \seq_count:N \l_tmpa_seq }
+  {
+    { 1 } { \karl_print_isodate_year:n { #2 } }  % YYYY
+    { 2 } { \karl_print_isodate_year_month:nn { #1 } { #2 } }  % YYYY-MM
+    { 3 } { \karl_print_isodate_full:nnn { #2 } }  % YYYY-MM-DD
+  }
+  {
+    \msg_error:nnx { printisodatex } { invalid-format } { #2 }
+  }
+}
+
+\cs_new_protected:Npn \karl_print_isodate_year:n #1
+{
+  #1  % Just output the year
+}
+
+\cs_new_protected:Npn \karl_print_isodate_year_month:nn #1 #2
+{
+  \seq_set_split:Nnn \l_tmpa_seq { - } { #2 }
+  \MakeTitlecase { \babelmonthname { \seq_item:Nn \l_tmpa_seq { 2 } } }
+  #1  % separator
+  \seq_item:Nn \l_tmpa_seq { 1 }  % year
+}
+
+\cs_new_protected:Npn \karl_print_isodate_full:nnn #1
+{
+  \seq_set_split:Nnn \l_tmpa_seq { - } { #1 }
+  \localedate
+    { \seq_item:Nn \l_tmpa_seq { 1 } }  % year
+    { \seq_item:Nn \l_tmpa_seq { 2 } }  % month
+    { \seq_item:Nn \l_tmpa_seq { 3 } }  % day
+}
+
+\msg_new:nnn { printisodatex } { invalid-format }
+{
+  Invalid~date~format~'#1'.~Expected~YYYY,~YYYY-MM,~or~YYYY-MM-DD.
+}
+\ExplSyntaxOff
+% \newcommand{\printisodate}[2][, ]{\printisodate@i[#1]#2---\@nil}
+%
+% \def\printisodate@i[#1]#2-#3-#4-#5\@nil{%
+%   % 1=$<$#1$>$ $<$#2$>$ $<$#3$>$ $<$#4$>$\par
+%   \edef\@iso@one{#2}%
+%   \edef\@iso@two{#3}%
+%   \edef\@iso@three{#4}%
+%   \ifx\@iso@three\@empty
+%     \ifx\@iso@two\@empty
+%       \@iso@one%
+%     \else
+%       \MakeTitlecase{\babelmonthname{\@iso@two}}#1\@iso@one%
+%     \fi
+%   \else
+%     \localedate{\@iso@one}{\@iso@two}{\@iso@three}%
+%   \fi
+% }
+
+
+
+\newdata{ntdocdate}
+
+\def\ntdate{%
+  \@ifnextchar({\@ntdate@i}{\@ntdate@i(submission)}%
+}
+
+% \usepackage{pgfcalendar} % For converting month names
+
+\newcommand{\monthtotext}[1][\month]{\csuse{month\romannumeral#1 name}}
+
+\def\@ntdate@i(#1)#2{%
+  \StrCut{#2}{-}\@NTDY\@NTDM%
+  \StrCut{\@NTDM}{-}\@NTDM\@NTDD%
+  \ntdocdate(#1):={#2}%
+  \ntdocdate(#1,year):={\@NTDY}%
+  \ntdocdate(#1,month):={\@NTDM}%
+  \ntdocdate(#1,day,0):={\@NTDD}%
+  \IfBeginWith{\@NTDD}{0}{\StrGobbleLeft{\@NTDD}{1}[\@NTDDNZ]}{\edef\@NTDDNZ{\@NTDD}}%
+  \ntdocdate(#1,day):={\@NTDDNZ}%
+  % \typeout{NTD(#1) Y=[\@NTDY] M=[\@NTDM] D=[\@NTDD]}\NTDATE%
+  \@for\myi:={year,month,day}\do{%
+    \IfInteger{\thentdocdate(#1,\myi)}{}
+              {\ClassError{The \myi\ in \string\ntdocdate(#1){#2} is not a number!}{}{}}%
+  }%
+  \ntdocdate(#1,month,text):={\monthtotext[\@NTDM]}%
+}
+\ntdocdate(default):={2000-09-01}
+\ntdate(submission){\thentdocdate(default)}
+\ntdate(exam){\thentdocdate(default)}
+
+
+%============================================================
+% Author identification
+\newdata{docauthor}
+\docauthor(name):={Author Name}
+\docauthor(name,short):={Author Short Name}
+\docauthor(gender):={Author Gender}
+\docauthor(degree,\@LANG@COVER):={Author Previous Degree}
+
+\def\ntauthorname(#1)#2#3{% [m|f]{Long name}{Short name}
+  \docauthor(gender):={#1}%
+  \docauthor(name):={#2}%
+  \docauthor(name,short):={#3}}
+
+\def\ntauthordegree(#1)#2{\docauthor(degree,#1):={#2}}
+
+
+
+
+%============================================================
+% Setting cover defaults
+%============================================================
+
+
+% strings to be defined for each language
+\nttitle(main,\@LANG@COVER){\thedefaultnttitle(\@LANG@COVER)}
+\nttitle(sub,\@LANG@COVER){\thedefaultntsubtitle(\@LANG@COVER)}
+\ntdepartment(\@LANG@COVER){\thedefaultntdepartment(\@LANG@COVER)}
+\ntdegreename(\@LANG@COVER){\thedefaultntdegreename(\@LANG@COVER)}
+\ntspecialization(\@LANG@COVER){\thedefaultntspecialization(\@LANG@COVER)}
+\ntauthordegree(\@LANG@COVER){\thedefaultntauthordegree(\@LANG@COVER)}
+
+
+
+%============================================================
+% Adding list_of
+\newcommand*{\ntaddlistof}[2][]{%
+  % #1 = frontmatter, backmatter
+  % #2 = the list of SOMETHING without the initial "\"
+  \@ifmtarg{#1}{%
+    \edef\@listofat{\option{/novathesis/print/otherlists}}%
+  }{%
+    \edef\@listofat{#1}%
+  }
+  % \typeout{\ISTOF 1=[\@listofat] 2=[#2]}\NTADDLISTOF%
+  \IfStrEqCase{#2}{%
+    {tableofcontents}{\options{/@nt/listof/\@listofat/.newpush={%
+            \iftoggle{/novathesis/tocintoc}{\tableofcontents}%
+                  {\hypertarget{toctarget}{\tableofcontents*}%
+                   \bookmark[dest=toctarget]{\contentsname}}%
+    }}}%
+    {listoffigures*}{\options{/@nt/listof/\@listofat/.newpush={%
+            \hypertarget{loftarget}{\listoffigures*}%
+            \bookmark[dest=loftarget]{\listfigurename}%
+    }}}%
+    {listoffigures}{\options{/@nt/listof/\@listofat/.newpush={%
+            \hypertarget{loftarget}{\listoffigures}%
+            % \bookmark[dest=loftarget,level=1]{\listfigurename}%
+    }}}%
+    {listoftables*}{\options{/@nt/listof/\@listofat/.newpush={%
+            \hypertarget{lottarget}{\listoftables*}%
+            \bookmark[dest=lottarget]{\listtablename}%
+    }}}%
+    {listoftables}{\options{/@nt/listof/\@listofat/.newpush={%
+            \hypertarget{lottarget}{\listoftables}%
+            % \bookmark[dest=lottarget]{\listtablename}%
+    }}}%
+    {listoflistings}{\options{/@nt/listof/\@listofat/.newpush={%
+            \hypertarget{loltarget}{\listoflistings}%
+            \bookmark[dest=loltarget]{\listoflistingscaption}%
+    }}}%
+    {lstlistoflistings}{\options{/@nt/listof/\@listofat/.newpush={%
+            \hypertarget{loltarget}{\lstlistoflistings}%
+            % \bookmark[dest=loltarget]{\lstlistlistingname}%
+    }}}%
+    {listofalgorithms}{\options{/@nt/listof/\@listofat/.newpush = {%
+            \listofalgorithms
+            \ifdefined\listalgorithmname%
+              \addcontentsline{toc}{chapter}{\listalgorithmname}%
+            \else\ifdefined\listalgorithmcfname%
+              \addcontentsline{toc}{chapter}{\listalgorithmcfname}%
+            \else
+              \ClassError{novathesis}{Can't make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
+            \fi\fi}}}%
+  }[%
+      \options{/@nt/listof/\@listofat/.newpush={\ifdefmacro{#2}{#2}{\csuse{#2}}}}%
+   ]%
+}
+
+%============================================================
+% Print document “parts/sections/regions”
+\newcommand*{\ntprint}[1]{%
+  \IfStrEqCase{#1}{%
+    {frontcover}{%
+          \thispagestyle{empty}%
+          \pagestyle{empty}%
+          \ntprintcovers%
+    }%
+    {frontmatter}{%
+          \ntthesisfrontmatter% Before the main text (TOC, etc) — Roman page numbering
+          \bookmarksetupnext{level=0}%
+          \hypertarget{bmfrontmatter}{}%
+          \bookmark[level=0,dest=bmfrontmatter]{\thebkmstring(frontmatter,\@LANG@MAIN)}%
+          \bookmarksetup{startatroot=false,level=1,keeplevel}%
+          \ntprintlist{/@nt/print/#1}%
+    }%
+    {mainmatter}{%
+          \ntthesismainmatter% Mainn text — Arabic page numbering
+          \bookmarksetup{level=0}%
+          \bookmarksetupnext{level=0}%
+          \thispagestyle{novathesis@mainmatter}%
+          \pagestyle{novathesis@mainmatter}%
+          \ntprintlist{/@nt/print/#1}%
+    }%
+    {backmatter}{%
+          \ntthesisbackmatter     % The back text — Arabic page numbering
+          \bookmarksetup{level=0}%
+          \bookmarksetupnext{level=0}%
+          % \hypertarget{bmbackmatter}{}
+          % \bookmark[level=0,dest=bmbackmatter1]{\thebkmstring(backmatter,\@LANG@MAIN)}
+          \ntprintlist{/@nt/print/#1}%
+    }%
+    {backcover}{%
+          \bookmarksetup{level=0}%
+          \thispagestyle{empty}%
+          \pagestyle{empty}%
+          \ntprintbackcover%
+    }%
+  }[\ifdefmacro{#1}{#1}{\csuse{ntprint#1}}]%
+}
+
+\newcommand*{\ntprintlist}[1]{%
+  \optionlistdo{#1}{%
+    \ifdefmacro{##1}{##1}{%     ##1 is undefined
+      \ifcsmacro{ntprint##1}{%  \ntprint#1 is defined
+        \NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}%
+      }{%                       \ntprint#1 is undefined
+        \ifcsmacro{##1}{%       \##1 is defined
+          \NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}%
+        }{%                     nothing is defined
+          \ClassError{novathesis}{Invalid contents for frontmatter or mainmatter: [##1]}{}%
+        }%
+      }%
+    }%
+    % \clearforchapter%
+    \ignorespaces%
+  }%
+}
+
+\newcommand*{\ntsetprintorder}[2]{%
+  % #1 = frontmatter, mainmatter
+  % #2 = list
+  % \typeout{[#1] [#2]}
+  \option@setlist[;]{/@nt/print/#1}{#2}%
+}
+
+\newcommand*{\ntaddtoprintorder}[2]{%
+  % #1 = frontmatter, mainmatter
+  % #2 = list
+  % \typeout{[#1] [#2]}
+  \options{/@nt/print/#1/.push=#2}%
+}
+
+% \newcommand*{\ntremovefromprintorder}[2]{%
+% % #1 = frontmatter, mainmatter
+% % #2 =single item to remove
+%   \@for\@nt@item:=#2\do{\options{/@nt/print/#1/.remove = {\@nt@item}}}}
+
+\newcommand{\myprintglossaries}{%
+  % ignore if no glossaries were defined
+  \ifoptioncontains{/@nt/listtypes}{glossaries}{
+    \ifoptionequal{/novathesis/print/glossaries}{off}
+      {}{%
+        \if@backmatter
+          \def\@matter{backmatter}
+        \else
+          \def\@matter{frontmatter}
+        \fi
+        \IfStrEq{\option{/novathesis/print/glossaries}}{\@matter}{%
+          \clearforchapter%
+          \ntselectlang{\@LANG@MAIN}%
+          \hypertarget{bmglossaries}{}%
+          \bookmarksetupnext{level=0}%
+          \bookmark[level=0,dest=bmglossaries]
+                  {\thebkmstring(glossaries,\@LANG@MAIN)}%
+          \printglossaries
+        }{}%
+      }%
+  }{}%
+}
+
+% --------------------------------------------------------
+% DEFAULT VALUES FOR frontmatter AND mainmatter
+\newdata{printorder}
+
+\printorder(frontmatter,final):={%
+  statement;       % The statement page
+  copyright;       % (*) The copyright page
+  dedicatory;      % (*) Print the dedicatory
+  acknowledgements;% (*) Print the acknowledgments
+  quote;           % (*) Print the quote
+  abstracts;       % Print abstracts in multiple languages.
+  aidisclose;      % AI disclosure statement
+  alllistof;       % Print all the listof defined in “6_list_of.tex”
+  myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+}
+
+\printorder(frontmatter,provisional):={%
+  statement;       % The statement page
+  copyright;       % (*) The copyright page
+  dedicatory;      % (*) Print the dedicatory
+  acknowledgements;% (*) Print the acknowledgments
+  quote;           % (*) Print the quote
+  abstracts;       % Print abstracts in multiple languages.
+  aidisclose;      % AI disclosure statement
+  alllistof;       % Print all the listof defined in “6_list_of.tex”
+  myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+}
+
+\printorder(frontmatter,working):={%
+  abstracts;       % Print abstracts in multiple languages.
+  aidisclose;      % AI disclosure statement
+  alllistof;       % Print all the listof defined in “6_list_of.tex”
+  myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+}
+
+\printorder(mainmatter):={
+  chapters;        % Print document chapters
+}%
+
+\ifoptionequal{/novathesis/print/webography}{}{%
+  \printorder(backmatter):={
+    bib;             % Print the bibliography.  Change to
+     %    “bib[title=⟨title⟩]” to redefine the title!
+    alllistof;       % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+    appendices;      % Print appendices; if any!
+    annexes;         % Print annexes; if any!
+  }%
+}{%
+  \printorder(backmatter):={
+    \printbibliography[nottype=online]; % Print the bibliography.
+    \printbibliography[title=\option{/novathesis/print/webography},type=online]; % Print the bibliography.
+    alllistof;       % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+    appendices; % Print appendices, if any!
+    annexes; % Print annexes, if any!
+  }%
+}
+% \ifoptionequal{/novathesis/print/webography}{}{%
+%   \ntsetprintorder{mainmatter}{
+%     chapters;        % Print document chapters
+%     bib;             % Print the bibliography.  Change to
+%      %    “bib[title=⟨title⟩]” to redefine the title!
+%     appendices;      % Print appendices; if any!
+%     annexes;         % Print annexes; if any!
+%   }%
+% }{%
+%   \ntsetprintorder{mainmatter}{
+%     chapters; % Print document chapters
+%     \printbibliography[nottype=online]; % Print the bibliography.
+%     \printbibliography[title=\option{/novathesis/print/webography},type=online]; % Print the bibliography.
+%     appendices; % Print appendices, if any!
+%     annexes; % Print annexes, if any!
+%   }%
+% }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

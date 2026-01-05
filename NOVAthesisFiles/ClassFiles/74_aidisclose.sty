@@ -1,0 +1,11 @@
+%============================================================
+% Deal with AI disclose declaration
+%============================================================
+\AtEndPreamble{
+  \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{
+    % \RequirePackage[autobib=true,nocite=false]{aidisclose} % AI disclose declaration
+    \input{\DIR@CONFIG/7-aidisclose}
+  }{\gdef\gaiversion{0.0.0}}
+}
+
+

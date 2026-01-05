@@ -1,0 +1,10 @@
+% Prefer: DOI, else eprint, else URL
+\renewbibmacro*{doi+eprint+url}{%
+  \iffieldundef{doi}
+    {%
+      \iffieldundef{eprint}
+        {\usebibmacro{url+urldate}}% no doi/eprint → URL (with date if available)
+        {\usebibmacro{eprint}}% no doi, but eprint → eprint
+    }%
+    {\printfield{doi}}% doi present → DOI
+}

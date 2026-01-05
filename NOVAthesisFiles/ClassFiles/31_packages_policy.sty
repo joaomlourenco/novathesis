@@ -1,0 +1,36 @@
+% LOAD ADDITIONAL PACKAGES
+%============================================================
+%%%%% Configure multilingual language support
+\definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
+
+%
+% \iftoggle{/novathesis/print/index}{
+%   \AtEndPreamble{
+%     \ntaddtoprintorder{backmatter}{index}
+%     \RequirePackage{imakeidx}
+%     % \makeindex[intoc,columns=2,options=-s myindexstyle]%
+%     \makeindex[intoc,columns=2,options=-s  \DIR@NTFILES/ntindexstyle]
+%   }
+% }{}
+
+%--------------------------------
+% “biblatex” stuff
+% \ntaddfile{bib}{./\DIR@NTFILES/fix-bib.bib}%
+% \AtEndDocument{\nocite{novathesis-manual}}%
+% \letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
+% \RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%============================================================
+% ADDITIONAL PACKAGES and MACROS
+%      Please open and edit the appropriate
+%       configuration file “0-Config/8_packages.tex”
+%============================================================
+% \newcommand{\BeforeHyperref}[1]{\NTAddToHook{packages/pre}{#1}}
+% \newcommand{\AfterHyperref}[1]{\NTAddToHook{packages/post}{#1}}
+% \NTRunHook{packages/pre}
+\AtEndPreamble{\input{\DIR@CONFIG/5_packages}}
+% \NTRunHook{packages/post}
+

@@ -1,0 +1,35 @@
+%============================================================
+\setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
+\optionlistdo{/@nt/file/bib/\@DOCTYPE}{%
+  % \typeout{ADDBIB=#1}\ADDBIB
+  \addbibresource{#1}%
+}%
+
+\ifdocunset{\ntsetup{docstatus=working}}{}
+
+% \typeout{\theprintorder(frontmatter,\@DOCSTATUS)}
+\ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\@DOCSTATUS)}}%
+\ntsetprintorder{mainmatter}{\expanded{\theprintorder(mainmatter)}}%
+\ntsetprintorder{backmatter}{\expanded{\theprintorder(backmatter)}}%
+
+\ifoptionequal{/novathesis/spine/layout}{unset}
+    {\ifdocworking{\ntsetup{spine/layout=off}}
+                  {\ifmaindoc{\ntsetup{spine/layout=trim}}
+                             {\ntsetup{spine/layout=off}}}}
+    {}
+\ifdocfinal{\ntsetup{print/committee=true}}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\@nt@loadallfiles}[2]{\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}
+
+\newcommand{\@ntloadfile@i}[2][]{\IfFileExists{#2}{\input{#2}}{#1}}
+
+\newcommand{\@ntloadfiles@ii}[2][\@DOCTYPE]{%
+  % #1=KEY
+  % #2=file class
+  \iffileadded[#1]{#2}{\@nt@loadallfiles{#1}{#2}}{}%
+}
+
+\newcommand{\iffileadded}[2][\@DOCTYPE]{\ifoptiondefined{/@nt/file/#2/#1}}
+
+% --------------------------------------------------------

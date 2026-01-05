@@ -1,0 +1,269 @@
+%!TEX root=template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — novathesis.cls
+%% ----------------------------------------------------------------------------
+%%
+%% Version 7.9.1 (2026-01-04)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%% Departamento de Informática (www.di.fct.unl.pt)
+%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Universidade NOVA de Lisboa (www.unl.pt)
+%%
+%% BUGS and SUGGESTIONS: please submit an issue at the project web page
+%%      at: https://github.com/joaomlourenco/novathesis/
+%%
+%% HELP: please DO NOT SEND ME EMAILS about LaTeX or the NOVAthesis template
+%%       please ask for help at GitHub Discussions page at
+%%          https://github.com/joaomlourenco/novathesis/discussions
+%%      or in the subreddit r/novathesis
+%%          https://www.reddit.com/r/novathesis/
+%%
+%% AUTHOR @github:
+%%      - https://github.com/joaomlourenco (joaomlourenco)
+%%
+%% CONTRIBUTORS @github:
+%%      - https://github.com/joaomlourenco/novathesis/wiki#help-with-the-project-patches-and-new-features
+%%
+%% DONATIONS:
+%%      If you think this template really helped you while writing your thesis, then
+%%          1. Go to the project web page and giv it a star (on the top-right)
+%%          2. Make a small donation using the URL below
+%%                    https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8
+%%             We will keep a list thanking to all the identified donors that identify
+%%             themselves in the “Add special instructions to the seller:” box.
+%%
+%% CITATION:
+%%      If you use this template, please be kind and \cite{novathesis-manual}
+%%      somewhere in your document.
+%%
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
+%%
+%% ----------------------------------------------------------------------------
+%%
+%% ██████   ██       ███████   █████    █████   ███████
+%% ██   ██  ██       ██       ██   ██  ██       ██
+%% ██████   ██       █████    ███████   █████   █████
+%% ██       ██       ██       ██   ██       ██  ██
+%% ██       ███████  ███████  ██   ██  ██████   ███████
+%%
+%% █████     █████            ███    ██   █████   ███████
+%% ██   ██  ██   ██           ████   ██  ██   ██     ██
+%% ██   ██  ██   ██           ██ ██  ██  ██   ██     ██
+%% ██   ██  ██   ██           ██  ██ ██  ██   ██     ██
+%% █████     █████            ██   ████   █████      ██
+%%
+%%  █████   ██   ██   █████   ███    ██   █████   ███████
+%% ██       ██   ██  ██   ██  ████   ██  ██       ██
+%% ██       ███████  ███████  ██ ██  ██  ██  ███  █████
+%% ██       ██   ██  ██   ██  ██  ██ ██  ██   ██  ██
+%%  █████   ██   ██  ██   ██  ██   ████   █████   ███████
+%%
+%% ███████  ██   ██  ███    █████          ███████  ███   ██       ███████
+%%    ██    ██   ██   ██   ██              ██        ██   ██       ██
+%%    ██    ███████   ██    █████          █████     ██   ██       █████
+%%    ██    ██   ██   ██        ██         ██        ██   ██       ██
+%%    ██    ██   ██  ███   ██████          ██       ███   ███████  ███████
+%% 
+%% ----------------------------------------------------------------------------
+%%
+%% If you feel you need to change this file, you are doing something wrong!
+%%
+%% Please ask for help at GitHub Discussions page at
+%%          https://github.com/joaomlourenco/novathesis/discussions
+%%      or in the subreddit r/novathesis
+%%          https://www.reddit.com/r/novathesis/
+
+\ProvidesClass{novathesis}[2026-01-01 v7.9.0 novathesis template class file]
+\NeedsTeXFormat{LaTeX2e}[2020-02-02]
+
+%% ----------------------------------------------------------------------------
+% Save these definitions asap, to be used later in the “\annex” command,
+% because "\@Roman" and "\Roman" were failing with pdflatex
+% when loading the "greek" language (and LGR font encofing)
+%% ----------------------------------------------------------------------------
+\let\oldRoman=\Roman
+\let\old@Roman=\@Roman
+
+
+
+%============================================================
+\def\DIR@CONFIG{0-Config}
+\def\DIR@FRONTMATTER{1-FrontMatter}
+\def\DIR@MAINMATTER{2-MainMatter}
+\def\DIR@BACKMATTER{3-BackMatter}
+\def\DIR@BIBLIOGRAPHY{4-Bibliography}
+\def\DIR@FIGURES{5-Figures}
+\def\DIR@NTFILES{NOVAthesisFiles}
+\def\NT@FONTSTYLES{FontStyles}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  MEMOIR CUSTOMIZATION AND LOADING
+%%      Please open and edit the appropriate
+%%       configuration file “0-Config/0_memoir.tex”
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\ntmemoirsetup}[1]{\PassOptionsToClass{#1}{memoir}}
+\input{\DIR@CONFIG/0_memoir}
+\LoadClass{memoir}
+
+\OnehalfSpacing% One-and-half spacing
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SOME ESSENTIAL PACKAGES
+%%    Others will be loaded later, in the file “packages.tex”
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 1. KERNEL, UTILITIES & FLAGS (Must load early)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[table,svgnames]{xcolor} % First to avoid option clashes
+\RequirePackage{iftex}
+\RequirePackage{ifplatform}
+\RequirePackage{xparse}
+\RequirePackage{xfor}
+\RequirePackage{etoolbox}
+\RequirePackage{xstring}
+\RequirePackage{catchfile}
+\RequirePackage{varwidth}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 2. TEMPLATE CORE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\xappto\input@path{{\DIR@NTFILES/}{\DIR@NTFILES/Strings/}}
+
+\RequirePackage{options2}
+\RequirePackage{nt-version}
+\RequirePackage{memory2}
+\RequirePackage{NOVAthesisFiles/stocksize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 3. FONTS & ENCODINGS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\iftutex
+  \RequirePackage[no-math]{fontspec}
+  \defaultfontfeatures{Ligatures=TeX}
+\else
+  \RequirePackage[T1]{fontenc}
+\fi
+
+% \PassOptionsToPackage{scaled=0.95}{inter}
+% \PassOptionsToPackage{scaled=0.95}{helvet}
+% \PassOptionsToPackage{scaled=0.95}{gillius2}
+\IfFileExists{inter.sty}
+  {\RequirePackage{inter}}
+{\IfFileExists{helvet.sty}
+  {\RequirePackage{helvet}}
+{\IfFileExists{gillius2.sty}
+  {\RequirePackage{gillius2}}
+  {\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}
+
+% TODO Good to load after fonts
+\RequirePackage{microtype} % Good to load after fonts
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 4. LANGUAGE & LOCALIZATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{babel}
+% \RequirePackage{translator}
+\RequirePackage{csquotes}  % MUST be loaded before biblatex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 5. GRAPHICS & TABLES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{tikz}
+\RequirePackage[nobeamer]{graphbox} % Loads graphicx
+\RequirePackage{colortbl}
+\RequirePackage{xurl} % Loads 'url' with better breaking
+\RequirePackage{url}  % (Technically redundant due to xurl, but kept as requested)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 6. BIBLIOGRAPHY & INDEXING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NewDocumentCommand { \ntbibsetup } {m}
+  {%
+    \@ifpackageloaded{biblatex}
+        {\ClassError{novathesis}{Please load biblatex options earlier.}{}}
+        {\PassOptionsToPackage{#1}{biblatex}}%
+  }
+
+\input{\DIR@CONFIG/2_biblatex}
+
+% TODO defernumbers=true??
+\RequirePackage{biblatex}
+% TODO to be loaded only if option print/index=true
+\RequirePackage{imakeidx} % Should generally be loaded before hyperref
+
+\AtEndPreamble{
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %% 7. HYPERREF & INTERACTIVE ELEMENTS
+  %% (Most packages go before here; specific ones go after)
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \PassOptionsToPackage{
+      bookmarksnumbered=true,
+      breaklinks=true,
+      colorlinks=true,
+      pdfdisplaydoctitle=true,
+      unicode=true,
+    }{hyperref}
+    \RequirePackage{hyperref}
+    \RequirePackage{fix-hyperref} % Patches hyperref immediately
+  
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %% 8. POST-HYPERREF DEPENDENCIES
+  %% (These MUST be loaded after hyperref)
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \RequirePackage{bookmark}           % Extends hyperref bookmarks
+  \PassOptionsToPackage{
+    translate=babel,
+    acronym,           % add acronyms listing
+    symbols,           % add symbols listing
+    % sanitizesort=false, % allow \gls inside descriptions
+    % xindy={language=\@LANG@MAIN@LONG},
+    nolong,
+    nosuper,
+    nolist,
+    notree,
+    nostyles,
+    automake,
+  }{glossaries-extra}
+  \RequirePackage{glossaries-extra}   % Must be after hyperref
+  \RequirePackage{glossary-xltabular} % Helper for glossaries
+
+  %--------------------------------
+  % “glossasries” stuff - after hyperref
+  \ifoptioncontains{/novathesis/lang/extra}{gr}
+    {\PassOptionsToPackage{xindy={language=\expanded{\@LANG@MAIN@LONG}}}
+                          {glossaries-extra}}
+    {}
+  
+  \setglossarystyle{xltabular}
+  \setabbreviationstyle[acronym]{long-short}
+  \GlsXtrEnablePreLocationTag{\emph{(\small p.~}}{\emph{(\small pp.~}}
+  \patchcmd{\@gls@automake@immediate}{-I xindy}{-q -I xindy}{}{}
+  % \renewcommand{\gls@automake@makegloss}{makeglossaries -q}%
+  \renewcommand{\GlsXtrFormatLocationList}[1]{\emph{\small#1)}}
+  \renewcommand{\glsnamefont}[1]{\textbf{#1}}
+  \newcommand*{\glsplainhyperlink}[2]{%
+      \begingroup%
+        \hypersetup{hidelinks}%
+        \hyperlink{#1}{#2}%
+      \endgroup%
+  }%
+  \let\printglossaryORIG\printglossary
+  \def\printglossary{%
+    \bookmarksetupnext{level=1}%
+    \printglossaryORIG%
+  }
+  
+  %--------------------------------
+  % “Process glossaries/list/reverse” option - after glossaries
+  \iftoggle{/novathesis/glossaries/list/reverse}{}{\setupglossaries{nonumberlist}}
+  \@loadglossaryfiles\makeglossaries
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

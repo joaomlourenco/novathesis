@@ -1,0 +1,238 @@
+%% MANAGE FOLDERS PER CLASS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\options{/@nt/folders/.new choice={
+  copyright=.,
+  statement=.,
+  cover=\DIR@FRONTMATTER,
+  dedicatory=\DIR@FRONTMATTER,
+  acknowledgements=\DIR@FRONTMATTER,
+  quote=\DIR@FRONTMATTER,
+  abstract=\DIR@FRONTMATTER,
+  glossaries=\DIR@FRONTMATTER,
+  cover=\DIR@FRONTMATTER,
+  chapter=\DIR@MAINMATTER,
+  appendix=\DIR@BACKMATTER,
+  annex=\DIR@BACKMATTER,
+  bib=\DIR@BIBLIOGRAPHY,
+}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MANAGE DOCUMENT CLASSES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\options{/@nt/document/.cd,
+   docclass/.new choice={phd=phd, phdprop=phd, phdplan=phd,
+                         msc=msc, mscplan=msc,
+                         bsc=bsc,
+                         plain=plain},
+   docmain/.new list={phd, msc, bsc, plain},
+}
+
+% --------------------------------------------------------
+% Check if the document is of a specific class, i.e., bsc, msc, phd or main
+\newcommand{\ifdocclass}[1]{\ifoptionequal{/@nt/document/docclass}{#1}}
+\newcommand{\ifmaindoc}{\ifoptioncontains{/@nt/document/docmain}{\@DOCTYPE}}
+\newcommand{\ifphddoc}{\ifdocclass{phd}}
+\newcommand{\ifmscdoc}{\ifdocclass{msc}}
+\newcommand{\ifbscdoc}{\ifdocclass{bsc}}
+\newcommand{\ifplaindoc}{\ifdocclass{plain}}
+
+\newcommand{\ifdocstatus}[1]{\ifoptionequal{/novathesis/docstatus}{#1}}
+\newcommand{\ifdocfinal}{\ifdocstatus{final}}
+\newcommand{\ifdocprovisional}{\ifdocstatus{provisional}}
+\newcommand{\ifdocworking}{\ifdocstatus{working}}
+\newcommand{\ifdocunset}{\ifdocstatus{unset}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MANAGE PERSON LISTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\ntaddperson#1(#2,#3)#4{%
+  % syntax: \ntaddperson{class}(key,gender){person name, position, etc}
+  % #1=adviser | committee
+  % #2={a,c}            {c,r,a,m,g}
+  %     a=adviser        c=chair
+  %     c=coadviser      r=rapporteur/referee
+  %                      a=adviser
+  %                      ca=adviser
+  %                      m=other members
+  %                      g=guests
+  % #3={m,f}
+  % #4={person name, position, etc}
+  % \typeout{NTADDPERSON 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\NTADDPERSON%
+  \noexpandarg
+  \StrCut{#4}{,}\@nt@personname\@nt@dummy%was xStrCut
+  \options{/@nt/#1/#2/name/.expanded/.newpush={\@nt@personname},
+           /@nt/#1/#2/full/.expanded/.newpush={#4},
+           /@nt/#1/#2/gender/.newpush={#3}}%
+  % \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
+  \fullexpandarg
+}
+
+\def\ntresetperson#1(#2){%
+  % #1 = class
+  \option@setnil{/@nt/#1/#2/name}%
+  \option@setnil{/@nt/#1/#2/full}%
+  \option@setnil{/@nt/#1/#2/gender}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MANAGE FILE LISTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand*{\ntaddfile}[1]{%
+  % syntax: \ntaddfile{class}[key]{filename}
+  %         #1=file family (quote, abstract, chapter, etc)
+  %         #2=[key] (OPTIONAL)
+  %         #3=filename
+  \@nt@addtolist{file}{#1}%
+}
+
+\options{/@nt/listtypes/.new list={}}
+\NewDocumentCommand {\@nt@addtolist}
+                    {m m O{\option{/novathesis/doctype}} m} {%
+  % syntax: \ntaddto{type}{class}[key]{filename}
+  %         #1 ={file, person}
+  %         #2=family {quote, abstract, chapter, etc} or {author, adviser, committee}
+  %         #3=[file-lang | sub-family | key] (OPTIONAL)
+  %         #4=filename
+  \ifoptioncontains{/@nt/listtypes}{#2}{}
+      {\options{/@nt/listtypes/.newpush={#2}}}
+  \IfBeginsWithAnyOf{#4}{/,.}
+      {\xdef\@nt@filewithpath{#4}}
+      {\options{/@nt/folders=#2}%
+       \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}}
+  \@for\myi:=\expanded{#3}\do{%
+    % \typeout{NT ADDTOLIST [#1] [#2] [\myi] [\@nt@filewithpath]}\ADDTILIST%
+    \options{/@nt/#1/#2/\myi/.expanded/.newpush={\@nt@filewithpath}}%
+  }%
+}
+
+\newcommand*{\@nt@foralllist}[3]{%
+  % #1={file, person}
+  % #2=file family (quote, abstract, chapter, etc)
+  % #3=macro to be applied, which will receive the item from the list
+  \optionlistdo{/@nt/#1/#2}{#3{##1}}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Multilingual support
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\ntselectlang}[1]{%
+  \xdef\@LSHORT{#1}%
+  \xdef\@LLONG{\thelanglong(#1)}%
+  \selectlanguage{\@LLONG}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ASSOCARRAY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\initmemory}[2][\thenotdefined(\@LANG@COVER)]{%
+  \optionlistdo{/novathesis/lang/all}{\csuse{#2}(##1):={#1}}}
+
+
+% For PDF bookmakrs
+\newdata{keywordsenvpre}
+\newdata{keywordsenvpost}
+\newdata{keywordsblockpre}
+\newdata{keywordsblockpost}
+\newdata{keywordspre}
+\newdata{keywordssep}
+% \newdata{keywordsboxlen}
+\newdata{keywordsstringprefix}
+\newdata{keywordsstringsuffix}
+\newdata{keywordsstringfont}
+\keywordsblockpre()={\bigskip\noindent}
+\keywordsstringsuffix()={:\enspace}
+\keywordsstringfont()={\bfseries}
+% \keywordssep()={\ \textbf{\Large\textperiodcentered}\ }
+\keywordssep()={ {\textperiodcentered} }
+% \keywordsboxlen()={\textwidth-\widthof{\usebox{\keywordsstringbox}}}
+
+\newdata{sponsor}
+
+\newdata{commastring}
+\optionlistdo{/novathesis/lang/all}{%
+  \commastring(#1):={,\ }%
+}
+
+
+
+\newdata{degreestringfont}
+
+\newdata{degreename}
+\newdata{degreenamefont}
+
+\newdata{degreenameprefixfont}
+
+\newdata{doctypestringfont}
+
+
+\newdata{adviserstringfont}
+\newdata{adviserstringpre}
+\newdata{adviserstringpost}
+
+\newdata{advisernamepre}
+\newdata{advisernamepost}
+\newdata{advisernamefont}
+
+\newdata{adviserremainderpre}
+\newdata{adviserremainderpost}
+\newdata{adviserremainderfont}
+\adviserremainderfont()={\itshape\scriptsize}
+
+% Committee stuff
+\newdata{adviserorder}         %e.g., "{a,c}"
+\adviserorder():={a,c}  % By default print advisers and co-advisers
+\newdata{committeeorder}         %e.g., "{c,r,a,m,g}"
+
+\newdata{committeetitlestringpre}
+\newdata{committeetitlestringpost}
+\newdata{committeetitlestringfont}
+
+\newdata{committeestringpre}
+\newdata{committeestringpost}
+\newdata{committeestringfont}
+
+\newdata{committeenamepre}
+\newdata{committeenamepost}
+\newdata{committeenamefont}
+
+\newdata{committeeremainderpre}
+\newdata{committeeremainderpost}
+\newdata{committeeremainderfont}
+\committeeremainderfont()={\itshape\scriptsize}
+
+\newdata{personpre}
+\newdata{personpost}
+\newdata{persongrouppre}
+\newdata{persongrouppost}
+
+\newdata{dissertationstringfont}
+
+
+\newdata{majorfield}
+\newdata{minorfield}
+\newdata{specialization}
+
+\newdata{spine}
+\newdata{thesiscover}
+\newdata{margin}
+\newdata{frontpageimage}
+
+\newdata{university}
+\newdata{school}
+\newdata{department}
+
+\newdata{doctitle}
+
+
+% For each main language, list which abstracts shall be printed and in which order
+% may have more than two (just be sure you include the languages above as well)
+\newdata{abstractorder}
+
+
+
+% --------------------------------------------------------

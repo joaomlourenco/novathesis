@@ -1,0 +1,613 @@
+%% 9. FINAL TOOLS & DEVELOPMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \ifoptioncontains{/novathesis/debug}{index}{%
+%   % \PassOptionsToPackage{inline}{showlabels}%
+%   \AtEndPreamble{\RequirePackage{showlabels}%
+%   \showlabels[\color{\debugindexcolor}]{index}}%
+% }{}
+\AtEndPreamble{
+  \RequirePackage[autobib=true,nocite=false]{aidisclose}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Configure Graphics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\expandafter\graphicspath\expandafter{\expandafter{\DIR@FIGURES/}}
+\DeclareGraphicsExtensions{.pdf,.png,.tif,.jpg}
+\providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
+\providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% UTILITIES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\ifxeorlua}[2]{\iftutex#1\else#2\fi}
+% --------------------------------------------------------
+% Change main font size on the fly
+\newcommand{\setmemoirfontsize}[1]{\input{mem#1.clo}}
+
+\newcommand{\IfPackageLoaded}{\@ifpackageloaded}
+
+\ExplSyntaxOn
+
+%=======================================================================
+% \IfBeginsWithAnyOf {text} {comma_sep_list_of_prefixes} {true} {false}
+%=======================================================================
+
+% Define a boolean to track if a match was found
+\bool_new:N \l__user_match_found_bool
+
+\NewDocumentCommand{\IfBeginsWithAnyOf}{ m m +m +m }
+  {
+    % 1. Reset the boolean flag
+    \bool_set_false:N \l__user_match_found_bool
+
+    % 2. Map through the comma-separated list.
+    % \clist_map_inline:nn automatically trims spaces *around* items (foo, bar)
+    % but keeps spaces *inside* items (Hello World).
+    \clist_map_inline:nn { #2 }
+      {
+        % Check if the string (#1) starts with the current item (##1).
+        % We extract the first N characters of #1, where N is length of ##1.
+        \str_if_eq:eeT
+          { \str_range:nnn { #1 } { 1 } { \str_count:n { ##1 } } }
+          { ##1 }
+          {
+            % If match found: set flag to true and break the loop
+            \bool_set_true:N \l__user_match_found_bool
+            \clist_map_break:
+          }
+      }
+
+    % 3. Execute the appropriate branch
+    \bool_if:NTF \l__user_match_found_bool { #3 } { #4 }
+  }
+
+
+
+
+
+%=======================================================================
+% \AddValidProcessor {univ[/school]} {comma_sep_list_of_processors}
+% \ValidateLtxProcessor {univ} {school} {degree}
+%=======================================================================
+
+% ---------------------------------------------------------
+% 1. Variables and Data Storage
+% ---------------------------------------------------------
+
+% Store the rules (Univ/School -> Allowed Engines)
+\prop_new:N \g_novathesis_proc_rules_prop
+
+% Store the current engine name (pdf, lua, or xe)
+\str_new:N \g_novathesis_current_engine_str
+\tl_new:N  \l_novathesis_found_rule_tl
+\bool_new:N \l_novathesis_rule_found_bool
+
+% Detect the current engine immediately
+\sys_if_engine_pdftex:T { \str_gset:Nn \g_novathesis_current_engine_str {pdf} }
+\sys_if_engine_luatex:T { \str_gset:Nn \g_novathesis_current_engine_str {lua} }
+\sys_if_engine_xetex:T  { \str_gset:Nn \g_novathesis_current_engine_str {xe} }
+
+% 3. Define the user-facing command
+\NewDocumentCommand \NTengineName {}
+  {
+    % Use \str_use:N to retrieve the content of the variable
+    \str_use:N \g_novathesis_current_engine_str \LaTeX{}
+  }
+
+% ---------------------------------------------------------
+% 2. User Interface to Add Rules (Replament for \validprocessor)
+% ---------------------------------------------------------
+
+% Syntax: \AddValidProcessor{key}{list,of,engines}
+\NewDocumentCommand{\AddValidProcessor}{ m m }
+  {
+    \prop_gput:Nnn \g_novathesis_proc_rules_prop { #1 } { #2 }
+  }
+
+% ---------------------------------------------------------
+% 3. The Main Validator
+% ---------------------------------------------------------
+
+% Message definition for the error
+\msg_new:nnnn { novathesis } { invalid-processor }
+  { Invalid~processor~for~"#1". }
+  { You~are~using~\g_novathesis_current_engine_str (la)tex,~but~"#1"~only~allows:~#2. }
+
+\NewDocumentCommand{\ValidateLtxProcessor}{ m m m }
+  {
+    % #1 = Univ, #2 = School, #3 = Degree
+
+    % Reset flags
+    \bool_set_false:N \l_novathesis_rule_found_bool
+
+    % -----------------------------------------------------
+    % A. Hierarchy Lookup (Univ/Sch/Deg -> Univ/Sch -> Univ)
+    % -----------------------------------------------------
+
+    % 1. Check Univ/School/Degree
+    \prop_get:NeNTF \g_novathesis_proc_rules_prop { #1/#2/#3 } \l_novathesis_found_rule_tl
+      { \bool_set_true:N \l_novathesis_rule_found_bool }
+      {
+        % 2. Check Univ/School
+        \prop_get:NeNTF \g_novathesis_proc_rules_prop { #1/#2 } \l_novathesis_found_rule_tl
+          { \bool_set_true:N \l_novathesis_rule_found_bool }
+          {
+            % 3. Check Univ
+            \prop_get:NnNTF \g_novathesis_proc_rules_prop { #1 } \l_novathesis_found_rule_tl
+              { \bool_set_true:N \l_novathesis_rule_found_bool }
+              {
+                % No rule found: Do nothing (Implicitly Valid)
+              }
+          }
+      }
+
+    % -----------------------------------------------------
+    % B. Validation Logic
+    % -----------------------------------------------------
+
+    \bool_if:NT \l_novathesis_rule_found_bool
+      {
+        % Check if the current engine is in the allowed list
+        \clist_if_in:NVF \l_novathesis_found_rule_tl \g_novathesis_current_engine_str
+          {
+            % ERROR: Engine not found in allowed list
+            \msg_error:nnxx { novathesis } { invalid-processor }
+              { #1/#2/#3 }
+              { \clist_use:Nn \l_novathesis_found_rule_tl { ,~ } }
+          }
+      }
+  }
+
+% ---------------------------------------------------------
+% 4. Helper: Print current processor name (The \pdfprocessor equivalent)
+% ---------------------------------------------------------
+\NewDocumentCommand{\PrintProcessorName}{ }
+  {
+    \str_case:Vn \g_novathesis_current_engine_str
+      {
+        {pdf} { pdf(La)\TeX }
+        {lua} { lua(La)\TeX }
+        {xe}  { Xe(La)\TeX }
+      }
+  }
+
+\ExplSyntaxOff
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PACKAGE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------
+\def\@nt@saveabstractorder{}
+\newcommand{\@setabstractorder}{%
+  % \typeout{SAVEABSORDER=[\@nt@saveabstractorder]}\SAVEABSORDER%
+  \StrGobbleRight{\@nt@saveabstractorder}{1}[\@nt@saveabstractorder]%
+  \@for\myi:=\@nt@saveabstractorder\do{%
+    \StrCut{\myi}{=}\@nt@key\@nt@val%
+    \IfStrEq{\@nt@val}{}{\edef\@nt@val{\@nt@key}\def\@nt@key{\@LANG@MAIN}}{}%
+    % \typeout{SETABSORDER (\@nt@key):=[\@nt@val]}\SETABSORDER%
+    \abstractorder(\@nt@key):={\@nt@val}%
+  }%
+}
+
+
+% --------------------------------------------------------
+% Search if a data/memory is defined and returns value
+\def\datamatch#1#2(#3){%
+  % #1 = macro to set
+  % #2 = data@memory
+  % #3 = list of values
+  % Search and match first value from the list, error if no match is found
+  \datamatchtf{#1}{#2}(#3){}{\ClassError{novathesis}{Could not find “#2” defined with any of “(#3)”!}{}}%
+}
+
+\def\datamatchtf#1#2(#3)#4#5{%
+  % #1 = macro to set
+  % #2 = data@memory
+  % #3 = list of values
+  % #4 = true branch
+  % #5 = false branch
+  % Search and match first value from the list, true (found) and not true (not found) branches
+  % \typeout{#2(#3)}%
+  % \ifdatadefinedor{\@match}{#2}(#3)%
+  %   {\protect\gdef#1{\csuse{the#2}(\@match)}#4}%
+  %   {\protect\gdef#1{}#5}%
+  \ifdatadefinedor{\@match}{#2}(#3)%
+    {\protect\xdef#1{\expanded{\csuse{the#2}(\@match)}}#4}%
+    {\protect\xdef#1{}#5}%
+}
+
+
+
+\options{/novathesis/.new family,
+  % DOCUMENT
+  doctype/.new choice           = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
+  docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
+  media/.new choice             = {screen, paper},
+  spine/layout/.new choice      = {unset, trim, off},
+  spine/width/.new length       = {0pt},
+  % abstract/deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
+  % abstract/theorder/.new list   = {unset},
+  abstractorder/.new cmd        = {\appto\@nt@saveabstractorder{{#1},}},%
+  % SCHOOL
+  schoolgiven/.new value        = {},
+  school/.new cmd               = {\optionsalso{/novathesis/schoolgiven=#1}%
+                                   % \typeout{XXX=#1}\XXXX
+                                   \StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR
+                                   % \typeout{XXX=\@UNIV/\@SCHL/\@DEGREEACR}\XXXX
+                                   \IfStrEq{\@DEGREEACR}{}{\def\@DEGREEACR{\option{/novathesis/doctype}}}{}
+                                   % \typeout{XXX=\@UNIV/\@SCHL/\@DEGREEACR}\XXXX
+                                  },
+  school                        = nova/fct,
+  % STYLES
+  style/chapter/.new value      = bar,
+  style/font/.new value         = newpx,
+  style/url/.new cmd            = {\AfterPreamble{\urlstyle{#1}}},
+  color/links/.new cmd          = {\@ifpackageloaded{hyperref}%
+                                            {\hypersetup{allcolors=#1}}%
+                                            {\PassOptionsToPackage{allcolors=#1}{hyperref}}},
+  glossaries/color/gls/.new cmd             = {\AtEndPreamble{%\textcolor{#1}{##1}
+                                      \IfStrEq{#1}{None}{%
+                                          \let\@glslink\glsplainhyperlink%
+                                      }{%
+                                          \renewcommand*{\glstextformat}[1]{\textcolor{#1}{##1}}%
+                                      }%
+                                   }},
+  % LANGUAGES
+  lang/extra/.new list          = {},
+  lang/all/.new list            = {cat,cz,de,dk,en,es,fr,gr,it,nl,pl,pt,sk,uk},
+  lang/main/.copy choice        = {/novathesis/lang/all},
+  lang/cover/.copy choice       = {/novathesis/lang/all},
+  lang/copyright/.copy choice   = {/novathesis/lang/all},
+  lang/.new cmd                 = {\optionsalso{/novathesis/lang/main=#1,
+                                                /novathesis/lang/cover=#1,
+                                                /novathesis/lang/copyright=#1}},
+  lang                          = en,
+  % PRINT ON/OFF
+  print/aidisclosure/.new value  = aidisclose, % use '7-aidisclose.tex' + 'aidisclose' package
+  print/committee/.new toggle   = false,
+  print/adviser/.new toggle     = true,    % fake option - adviser should always be printed
+  print/otherlists/.new value   = frontmatter,  % print other lists (lof, lof, lol, …) in the front matter
+  print/glossaries/.new value   = frontmatter,  % print glossaries in the front matter
+  print/frontpage/.new toggle = false,
+  print/copyright/.new toggle   = true,
+  print/timestamp/.new toggle   = true,
+  print/index/.new toggle       = false,
+  print/webography/.new value   = {},      % empty means do not make a separate webography
+  print/statement/.new toggle   = false,
+  print/sdgs/list/.new list     = {},      % {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}
+  print/sgds/type/.new choice   = {inverted=i, normal=n, mono=m},   % any measure
+  print/sdgs/size/.new dim      = {2cm},   % any measure
+  print/sdgs/hspace/.new dim    = {5mm},   % any measure
+  print/sdgs/vspace/.new dim    = {4mm},   % any measure
+  % MISC
+  countsecondcover/.new toggle  = false,
+  numberallpages/.new toggle    = false,
+  glossaries/list/reverse/.new toggle       = true,
+  tocintoc/.new toggle          = true,
+  % DEBUG
+  debug/.new list               = {},         % cover, index
+% SCHOOL specific customization
+}
+
+
+\newcommand{\@splitdate}[4]{%
+  % \typeout{PROCESSDATE 1=#1}\PROCESSDATE%
+  \StrCut{#1}{-}#2\@daterest%
+  \StrCut{\@daterest}{-}#3#4%
+  % \typeout{PROCESSDATE 1=#1 Y=#2 M=#3 D=#4}\PROCESSDATEYMD%
+}
+
+\newcommand{\printmonth}[1]{%
+  \IfInteger{#1}{\pgfcalendarmonthname{#1}}{#1}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% GENERAL PURPOSE MACROS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\instring#1#2{TT\fi\begingroup
+  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
+
+% --------------------------------------------------------
+
+\newcommand{\printcm}[1]{%
+  \number\numexpr\dimexpr#1\relax*100/7227\relax.%
+  \ifnum\numexpr\dimexpr#1\relax*10000/7227-\numexpr\dimexpr#1\relax*100/7227\relax*100<10 0\fi
+  \number\numexpr\dimexpr#1\relax*10000/7227-\numexpr\dimexpr#1\relax*100/7227\relax*100\relax\,cm (#1)%
+}
+
+\newcommand{\NTDEBUG}[2][]{%
+  \if\relax\detokenize{#1}\relax
+    \typeout{#2}%
+  \else
+    \typeout{#2 = \printcm{#1}}%
+  \fi
+}
+
+% --------------------------------------------------------
+% The NOVAthesis logo
+\def\novathesisimg{\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{\DIR@NTFILES/Images/novathesis-text}}
+\def\novathesistxt{\textsl{novathesis}}
+\ifdef{\iftutex}
+    {\newcommand{\novathesis}{\novathesisimg}}
+    {\newcommand{\novathesis}{\novathesistxt}}
+
+% --------------------------------------------------------
+% Define something (except counters) if undefined
+\newcommand*{\defifundef}[2]{\ifundef{#1}{#2{#1}}{}}
+
+% --------------------------------------------------------
+% Variant of \@for with an optional final argument, that is
+% executed iif the loop is not interrupted
+\def\ntforbreak{\@endfortrue}
+\long\def\ntfor#1:=#2\do#3{\@ifnextchar[{\ntfor@i#1:=#2\do#3}{\ntfor@i#1:=#2\do#3[]}}
+\long\def\ntfor@i#1:=#2\do#3[#4]{%
+  \@for#1:={#2}\do{\xdef#1{#1}#3}%
+  \if@endfor\else#4\fi
+}
+
+
+% --------------------------------------------------------
+% Automatically download necessary fonts if using lualatex
+% --------------------------------------------------------
+\ExplSyntaxOn
+
+\NewDocumentCommand{\ntcheckfonts}{
+    O{ttf}
+    m
+    m
+    O{https://raw.githubusercontent.com/joaomlourenco/novathesis-extras/main/Fonts}
+    O{\DIR@NTFILES/FontStyles/Fonts} }
+{
+  % #1 = format (ttf)
+  % #2 = font name (Calibri)
+  % #3 = variants (Regular,Italic,Bold,BoldItalic)
+  % #4 = base URL
+  % #5 = target folder
+
+  % Check if shell escape is enabled (compatible with all engines)
+  \sys_if_shell_unrestricted:TF
+  {
+    \nt_check_fonts:nnnnn { #1 } { #2 } { #3 } { #4 } { #5 }
+  }
+  {
+    \msg_error:nnnn { ntfonts } { shell-escape-required } { \c_sys_jobname_str } { \ntcheckfonts }
+  }
+}
+
+\msg_new:nnn { ntfonts } { shell-escape-required }
+{
+  Font~download~requires~shell~escape.~\\
+  Please~compile~with:~
+  \token_to_str:N lualatex \c_space_tl \c_sys_jobname_str \c_space_tl -shell-escape
+}
+
+\seq_new:N \l__nt_variants_seq
+\tl_new:N \l__nt_filename_tl
+\tl_new:N \l__nt_remote_url_tl
+\tl_new:N \l__nt_local_path_tl
+
+\cs_new_protected:Npn \nt_check_fonts:nnnnn #1 #2 #3 #4 #5
+{
+  % Split variants by commas
+  \seq_set_split:Nnn \l__nt_variants_seq { , } { #3 }
+
+  % Create target directory if it doesn't exist
+  \file_if_exist:nF { #5/DO_NOT_REMOVE_THIS_FILE.txt }
+  {
+    \sys_shell:n { mkdir~-p~#5 }
+  }
+
+  % Process each variant
+  \seq_map_inline:Nn \l__nt_variants_seq
+  {
+    \tl_set:Nn \l__nt_filename_tl { #2-##1.#1 }
+    \tl_set:Nn \l__nt_remote_url_tl { #4/#2/#2-##1.#1 }
+    \tl_set:Nn \l__nt_local_path_tl { #5/#2-##1.#1 }
+
+    % Check if file already exists
+    \file_if_exist:nTF { \l__nt_local_path_tl }
+    {
+      \iow_term:x { Font~' \l__nt_filename_tl '~already~exists. }
+    }
+    {
+      \iow_term:x { Downloading~font~' \l__nt_filename_tl '~
+                    from~' \l__nt_remote_url_tl '~
+                    to~' \l__nt_local_path_tl '}
+
+      % Download the font
+      \nt_download_font:nn { \l__nt_remote_url_tl } { \l__nt_local_path_tl }
+    }
+  }
+}
+
+
+\tl_new:N \l_nt_cmd_output_tl
+
+\cs_new_protected:Npn \nt_download_font:nn #1 #2
+{
+  \bool_set_false:N \l_tmpa_bool
+
+  % Check if shell escape us unrestricted
+  \sys_if_shell_unrestricted:F
+    {
+      \msg_error:nn { ntfonts } { shell-escape-required }
+      \bool_set_true:N \l_tmpa_bool
+    }
+
+  % Truy curl
+  \bool_if:NF \l_tmpa_bool
+    {
+      \iow_term:x { Tyying:~'curl'... }
+      \sys_get_shell:nnN  { curl ~ --version ~ 2> ~ /dev/null }
+                          { \tl_trim_spaces:n }
+                          \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+        { % curl is available
+          \iow_term:x { Running: ~ curl ~ -L ~ -s ~ -o ~ #2 ~ #1... }
+          \sys_shell_now:x { curl ~ -L ~ -s ~ -o ~ #2 ~ #1 }
+          \bool_set_true:N \l_tmpa_bool
+        }
+    }
+
+  % try wget
+  \bool_if:NF \l_tmpa_bool
+    {
+      \iow_term:x { Trying: ~ 'wget'... }
+      \sys_get_shell:nnN  { wget ~ --version ~ 2> ~ /dev/null }
+                          { \tl_trim_spaces:n }
+                          \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+        { % wget is available
+          \iow_term:x { Running: ~ wget ~ -q ~ -O ~ #2 ~ #1... }
+          \sys_shell_now:x { wget ~ -q ~ -O ~ #2 ~ #1 }
+          \bool_set_true:N \l_tmpa_bool
+        }
+    }
+
+  % try python3
+  \bool_if:NF \l_tmpa_bool
+    {
+      \iow_term:x { Trying: ~ 'python3'... }
+      \sys_get_shell:nnNT  { python3 ~ --version ~ > ~ /dev/null ~ 2>&1 }
+                           { \tl_trim_spaces:n }
+                           \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+        { % python3 is available
+          \iow_term:x { Running: ~ python3 ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null"... }
+          \sys_shell_now:x { python3 ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ echo ~ "ªython3: ~ No ~ download ~ tool ~ available" }
+          \bool_set_true:N \l_tmpa_bool
+        }
+    }
+
+  % try python
+  \bool_if:NF \l_tmpa_bool
+    {
+      \iow_term:x { Trying: ~ 'python'... }
+      \sys_get_shell:nnNT  { python ~ --version ~ > ~ /dev/null ~ 2>&1 }
+                           { \tl_trim_spaces:n }
+                           \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+        { % python is available
+          \iow_term:x { Running: ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null"... }
+          \sys_shell_now:x { python3 ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ echo ~ "Python: ~ No ~ download ~ tool ~ available" }
+          \bool_set_true:N \l_tmpa_bool
+        }
+    }
+
+  % Try windows/Unix specific approaches
+ \bool_if:NF \l_tmpa_bool
+  {
+    \iow_term:x { Trying ~ a ~ platform ~ specific ~ strategy }
+    % Platform-specific fallbacks
+    \sys_if_platform_windows:T
+      {
+        % Windows - try PowerShell
+        \iow_term:x { Trying: ~ 'powershell' }
+        \sys_get_shell:nnNT  { powershell ~ /?" }
+                           { \tl_trim_spaces:n }
+                           \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+          { % powershell is available
+            \iow_term:x ~ { ~ powershell ~ -Command ~ "Invoke-WebRequest ~ -Uri ~ '\l__nt_remote_url_tl' ~ -OutFile ~ '#1'" ~ }
+            \sys_shell_now:x ~ { ~ powershell ~ -Command ~ "Invoke-WebRequest ~ -Uri ~ '\l__nt_remote_url_tl' ~ -OutFile ~ '#1'" ~ }
+            \bool_set_true:N \l_tmpa_bool
+          }
+      }
+  }
+
+}
+
+
+% --------------------------------------------------------
+% Trim spaces around argument
+\cs_new_eq:NN \trimspaces \tl_trim_spaces:n
+
+% --------------------------------------------------------
+% Input the file from the  first dir list (if any)
+% #1 = file name
+% #2 = list of directories
+% #3 = code if succeed [OPTIONAL]
+% #4 = code if fails [OPTIONAL]
+
+% 1. Create a boolean to track if the file was found during iteration
+\bool_new:N \l__ant_file_found_bool
+
+% 2. Define the command
+% #1 = File Name (Mandatory)
+% #2 = List of directories (Mandatory, comma separated)
+% #3 = Code if succeed (Optional, default empty)
+% #4 = Code if fails (Optional, default empty)
+\NewDocumentCommand{\InputIfFileExistsInDirsTF}{ m m +m +m }
+  {
+    % Reset the found flag to false at the start
+    \bool_set_false:N \l__ant_file_found_bool
+
+    % Iterate through the comma-separated list of directories (#2)
+    \clist_map_inline:nn { #2 }
+      {
+        % Construct path: current_dir/filename
+        % We check if the file exists at this specific path
+        \file_if_exist:nTF { ##1 / #1 }
+          {
+            % A. Input the file
+            \file_input:n { ##1 / #1 }
+
+            % B. Execute the Success Code (#3)
+            #3
+
+            % C. Mark as found
+            \bool_set_true:N \l__ant_file_found_bool
+
+            % D. Stop the loop immediately
+            \clist_map_break:
+          }
+          {
+            % File not found in this specific directory, continue loop
+          }
+      }
+
+    % After the loop, check if we ever found it
+    \bool_if:NF \l__ant_file_found_bool
+      {
+        % If not found, execute Failure Code (#4)
+        #4
+      }
+  }
+\ExplSyntaxOff
+
+
+
+
+\options{/@nt/.new family,
+  lang/loaded/.new list={},
+  % lang/shorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish, gr=greek},
+  fontenc/.new choice={cat=T1, cz=T1, de=T1, dk=T1, en=T1, es=T1, fr=T1, gr=LGR, %
+                       it=T1, nl=T1, pl=T1, pt=T1, sk=T1, uk=T2A},
+}
+
+
+\newdata{langlong}
+\langlong(cat):={catalan}
+\langlong(cz):={czech}
+\langlong(de):={german}
+\langlong(dk):={danish}
+\langlong(en):={english}
+\langlong(es):={spanish}
+\langlong(fr):={french}
+\langlong(gr):={greek}
+\langlong(it):={italian}
+\langlong(nl):={dutch}
+\langlong(pl):={polish}
+\langlong(pt):={portuguese}
+\langlong(sk):={slovak}
+\langlong(uk):={ukrainian}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

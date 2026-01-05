@@ -1,0 +1,34 @@
+% --------------------------------------------------------
+% Customize the pagestyle
+\newcommand{\rightorleftmark}{%
+  \setbox0=\hbox{\rightmark}
+  \ifdim\wd0>0.1pt\relax
+    \rightmark
+  \else
+    \leftmark
+  \fi
+}
+\makepagestyle{novathesis@mainmatter}
+\makeoddfoot{novathesis@mainmatter}{}{\thepage}{}
+\makeevenfoot{novathesis@mainmatter}{}{\thepage}{}
+\makeheadrule{novathesis@mainmatter}{\textwidth}{\normalrulethickness}
+\makeevenhead{novathesis@mainmatter}{\small\textsc{\leftmark}}{}{}
+\makeoddhead{novathesis@mainmatter}{}{}{\small\rightorleftmark}
+
+\makepagestyle{novathesis@frontmatter}
+\makeoddfoot{novathesis@frontmatter}{}{\thepage}{}
+\makeevenfoot{novathesis@frontmatter}{}{\thepage}{}
+
+\ifoptionequal{/novathesis/media}{paper}{\ntsetup{color/links=Black}}{}
+
+
+% --------------------------------------------------------
+% If option “debug={index}” option is active,
+%     highlight index keywords in the main text
+\providecommand*{\debugindexcolor}{red!50}
+% \ifoptioncontains{/novathesis/debug}{index}{
+%   % \PassOptionsToPackage{inline}{showlabels}%
+%   % \AtEndPreamble{\RequirePackage{showlabels}%
+%   \showlabels[\color{\debugindexcolor}]{index}}%
+% }{}
+
