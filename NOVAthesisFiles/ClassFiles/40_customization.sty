@@ -66,7 +66,8 @@
   \StrSubstitute{#3}{\\}{ }[\@nt@cleantitle]
   % \typeout{XXXX [\@nt@cleantitle]}\aaa
   % \doctitle(#2,#1):={\@nt@cleantitle}%
-  \doctitle(#2,#1):={\def\\{ }#3}%
+  \csedef{doctitle-#2-#1}{\def\\{ }#3}%
+  \doctitle(#2,#1):={\csuse{{doctitle-#2-#1}}}%
   \doctitle(#2,#1,cover):={#3}%
   \IfStrEq{#1}{main}{\doctitle(#2,spine):=?{\thedoctitle(#2,#1)}}{}%
   % \doctitle(#2,#1):={\ntnolinebreak{#3}}%
