@@ -235,11 +235,6 @@
   }
   % \typeout{\ISTOF 1=[\@listofat] 2=[#2]}\NTADDLISTOF%
   \IfStrEqCase{#2}{%
-    {tableofcontents}{\options{/@nt/listof/\@listofat/.newpush={%
-            \iftoggle{/novathesis/tocintoc}{\tableofcontents}%
-                  {\hypertarget{toctarget}{\tableofcontents*}%
-                   \bookmark[dest=toctarget]{\contentsname}}%
-    }}}%
     {listoffigures*}{\options{/@nt/listof/\@listofat/.newpush={%
             \hypertarget{loftarget}{\listoffigures*}%
             \bookmark[dest=loftarget]{\listfigurename}%

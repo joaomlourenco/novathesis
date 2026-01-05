@@ -150,6 +150,8 @@
   \copypagestyle{chapter}{novathesis@frontmatter}
   % \ntselectlang{\@LANG@MAIN}%
   \pagenumbering{roman}%
+  \setcounter{page}{2}%
+  \pagecolor{white}%
 }
 
 \newif\if@mainmatter
@@ -394,9 +396,7 @@
   %          6=[#6]
   %          7=[#7]
   % }\asdfg
-  \iftoggle{/novathesis/numberallpages}%
-    {\thispagestyle{novathesis@frontmatter}}%
-    {\thispagestyle{empty}}%
+  \thispagestyle{novathesis@frontmatter}%
   \defifundef{\ntqbox}{\newsavebox}%
   \savebox{\ntqbox}{#7}
   \ifdim\wd\ntqbox<\ifblank{#2}{\textwidth}{#2}\relax
@@ -482,9 +482,7 @@
 }
 
 \providecommand\thecopyrightstr{%
-    % \iftoggle{/novathesis/numberallpages}%
-     {\thispagestyle{novathesis@frontmatter}}%
-     % {\thispagestyle{empty}}%
+     \thispagestyle{novathesis@frontmatter}%
     \noindent%
     Copyright \textcopyright\ \thedocauthor(name), %
     \theschool(\@LANG@COPYRIGHT), \theuniversity(\@LANG@COPYRIGHT).\\%

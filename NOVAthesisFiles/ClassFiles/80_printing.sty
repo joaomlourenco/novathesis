@@ -74,9 +74,6 @@
     \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
     \NTRunHook{printcovers/post}%
   \endgroup%
-  \setcounter{page}{1}%
-  \iftoggle{/novathesis/countsecondcover}{\stepcounter{page}}{}%
-  \pagecolor{white}%
 }
 
 \newcommand{\ntprintcoverpair}[1]{%

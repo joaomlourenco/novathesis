@@ -58,7 +58,6 @@
 
 \openany
 \ntsetup{print/frontpage=true}
-\ntsetup{numberallpages=true}
 \AtEndPreamble{
   \ifdocworking{}{\ntsetup{print/statement=true}}
   \ntlangsetup*{pt/acronym=Lista de Siglas e Abreviaturas}

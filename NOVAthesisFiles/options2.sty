@@ -458,7 +458,12 @@
 \newrobustcmd\optionlistdo[2]{\csdef{opt@@do#1}##1{#2}\forlistcsloop{\csuse{opt@@do#1}}{optk@#1}}
 
 \newrobustcmd*\option@setlist[3][,]{\undef{\forcsvlist@setlis}\DeclareListParser*{\forcsvlist@setlis}{#1}\option@setnil{#2}\option@concat{#2}{#3}}
-\newrobustcmd*\option@concat[2]{%
+\newrobustcmd*\option@concat{%
+  \@ifstar{\option@concat@ifnew}{\option@concat@always}}
+\newrobustcmd*\option@concat@always[2]{%
+  \def\opt@do@concat##1{\option@push{#1}{##1}}%
+  \expandnext{\forcsvlist@setlis\opt@do@concat}{#2}}
+\newrobustcmd*\option@concat@ifnew[2]{%
   \def\opt@do@concat##1{\option@push{#1}{##1}}%
   \expandnext{\forcsvlist@setlis\opt@do@concat}{#2}}
 \newcommand*\letoptionlist[2]{%
@@ -712,7 +717,8 @@
           \expandnextsingle\ifoptiondefined{#1}{}{\expandnextsingle\options{#1/.new list}}%
           \option@push{#1}{#2}},
   /handlers/size/.new operation* = \option@listsize{#1},
-  /handlers/concat/.new operation = \option@concat{#1}{#2},
+  /handlers/concat/.new operation = {#1}{#2},
+  /handlers/concatifnew/.new operation = \option@concat@ifnew{#1}{#2},
   /handlers/copy list/.new operation = \option@copylist{#1}{#2}, % [EXTENSION]
   % Choices
   /handlers/new choice/.new handler={%
