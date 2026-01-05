@@ -3063,7 +3063,6 @@
 
 \newif\if@backmatter
 \newcommand*{\ntthesisbackmatter}{%
-  \@mainmatterfalse
   \NTRunHook{mainmatter/post}%
   \@backmattertrue
   \NTRunHook{backmatter/pre}%
