@@ -176,7 +176,6 @@
 
 \newif\if@backmatter
 \newcommand*{\ntthesisbackmatter}{%
-  \@mainmatterfalse
   \NTRunHook{mainmatter/post}%
   \@backmattertrue
   \NTRunHook{backmatter/pre}%
@@ -216,6 +215,8 @@
   \iffileadded{appendix}{%
     \renewcommand{\appendixtocname}{\appendixplname}%
     \appendix\addappheadtotoc%
+    \chapter{test of appendix}
+    \section{blah}
     \@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
   }{}%
 }
