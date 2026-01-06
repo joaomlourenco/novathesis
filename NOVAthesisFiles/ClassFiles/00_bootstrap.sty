@@ -77,49 +77,45 @@
 %%      or in the subreddit r/novathesis
 %%          https://www.reddit.com/r/novathesis/
 
-\ProvidesClass{novathesis}[2026-01-01 v7.9.0 novathesis template class file]
+\ProvidesClass{novathesis}[2026-01-04 novathesis template class file ( v7.9.1)]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
-%% ----------------------------------------------------------------------------
-% Save these definitions asap, to be used later in the “\annex” command,
-% because "\@Roman" and "\Roman" were failing with pdflatex
-% when loading the "greek" language (and LGR font encofing)
-%% ----------------------------------------------------------------------------
-\let\oldRoman=\Roman
-\let\old@Roman=\@Roman
 
 
+% =======================================================================
+%   Alias to the structure
+% =======================================================================
+\def\DIRCONFIG       {0-Config}
+\def\DIRFRONTMATTER  {1-FrontMatter}
+\def\DIRMAINMATTER   {2-MainMatter}
+\def\DIRBACKMATTER   {3-BackMatter}
+\def\DIRBIBLIOGRAPHY {4-Bibliography}
+\def\DIRFIGURES      {5-Figures}
+\def\DIRNTFILES      {NOVAthesisFiles}
+\def\DIRFONTSTYLES   {\DIRNTFILES/FontStyles}
 
-%============================================================
-\def\DIR@CONFIG{0-Config}
-\def\DIR@FRONTMATTER{1-FrontMatter}
-\def\DIR@MAINMATTER{2-MainMatter}
-\def\DIR@BACKMATTER{3-BackMatter}
-\def\DIR@BIBLIOGRAPHY{4-Bibliography}
-\def\DIR@FIGURES{5-Figures}
-\def\DIR@NTFILES{NOVAthesisFiles}
-\def\NT@FONTSTYLES{FontStyles}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  MEMOIR CUSTOMIZATION AND LOADING
-%%      Please open and edit the appropriate
-%%       configuration file “0-Config/0_memoir.tex”
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\ntmemoirsetup}[1]{\PassOptionsToClass{#1}{memoir}}
-\input{\DIR@CONFIG/0_memoir}
+% =======================================================================
+%   MEMOIR CUSTOMIZATION AND LOADING
+% =======================================================================
+\NewDocumentCommand { \ntmemoirsetup } { m }
+  {
+    \PassOptionsToClass{#1}{memoir}
+  }
+\input{\DIRCONFIG/0_memoir}
 \LoadClass{memoir}
 
-\OnehalfSpacing% One-and-half spacing
+% SLightly increase the line spacing
+\OnehalfSpacing
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% SOME ESSENTIAL PACKAGES
-%%    Others will be loaded later, in the file “packages.tex”
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 1. KERNEL, UTILITIES & FLAGS (Must load early)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% =======================================================================
+%   SOME ESSENTIAL PACKAGES
+% =======================================================================
+
+% -----------------------------------------------------------------------
+%   1. KERNEL, UTILITIES & FLAGS (Must load early)
+% -----------------------------------------------------------------------
 \RequirePackage[table,svgnames]{xcolor} % First to avoid option clashes
 \RequirePackage{iftex}
 \RequirePackage{ifplatform}
@@ -130,19 +126,19 @@
 \RequirePackage{catchfile}
 \RequirePackage{varwidth}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 2. TEMPLATE CORE
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\xappto\input@path{{\DIR@NTFILES/}{\DIR@NTFILES/Strings/}}
+% -----------------------------------------------------------------------
+%   2. TEMPLATE CORE
+% -----------------------------------------------------------------------
+\xappto\input@path{{\DIRNTFILES/}{\DIRNTFILES/Strings/}}
 
 \RequirePackage{options2}
 \RequirePackage{nt-version}
 \RequirePackage{memory2}
 \RequirePackage{NOVAthesisFiles/stocksize}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 3. FONTS & ENCODINGS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% -----------------------------------------------------------------------
+%   3. FONTS & ENCODINGS
+% -----------------------------------------------------------------------
 \iftutex
   \RequirePackage[no-math]{fontspec}
   \defaultfontfeatures{Ligatures=TeX}
@@ -150,9 +146,9 @@
   \RequirePackage[T1]{fontenc}
 \fi
 
-% \PassOptionsToPackage{scaled=0.95}{inter}
-% \PassOptionsToPackage{scaled=0.95}{helvet}
-% \PassOptionsToPackage{scaled=0.95}{gillius2}
+\PassOptionsToPackage{scaled=0.95}{inter}
+\PassOptionsToPackage{scaled=0.95}{helvet}
+\PassOptionsToPackage{scaled=0.95}{gillius2}
 \IfFileExists{inter.sty}
   {\RequirePackage{inter}}
 {\IfFileExists{helvet.sty}
@@ -190,7 +186,7 @@
         {\PassOptionsToPackage{#1}{biblatex}}%
   }
 
-\input{\DIR@CONFIG/2_biblatex}
+\input{\DIRCONFIG/2_biblatex}
 
 % TODO defernumbers=true??
 \RequirePackage{biblatex}

@@ -1,3 +1,84 @@
+%!TEX root=template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — novathesis.cls
+%% ----------------------------------------------------------------------------
+%%
+%% Version 7.9.1 (2026-01-04)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%% Departamento de Informática (www.di.fct.unl.pt)
+%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Universidade NOVA de Lisboa (www.unl.pt)
+%%
+%% BUGS and SUGGESTIONS: please submit an issue at the project web page
+%%      at: https://github.com/joaomlourenco/novathesis/
+%%
+%% HELP: please DO NOT SEND ME EMAILS about LaTeX or the NOVAthesis template
+%%       please ask for help at GitHub Discussions page at
+%%          https://github.com/joaomlourenco/novathesis/discussions
+%%      or in the subreddit r/novathesis
+%%          https://www.reddit.com/r/novathesis/
+%%
+%% AUTHOR @github:
+%%      - https://github.com/joaomlourenco (joaomlourenco)
+%%
+%% CONTRIBUTORS @github:
+%%      - https://github.com/joaomlourenco/novathesis/wiki#help-with-the-project-patches-and-new-features
+%%
+%% DONATIONS:
+%%      If you think this template really helped you while writing your thesis, then
+%%          1. Go to the project web page and giv it a star (on the top-right)
+%%          2. Make a small donation using the URL below
+%%                    https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8
+%%             We will keep a list thanking to all the identified donors that identify
+%%             themselves in the “Add special instructions to the seller:” box.
+%%
+%% CITATION:
+%%      If you use this template, please be kind and \cite{novathesis-manual}
+%%      somewhere in your document.
+%%
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
+%%
+%% ----------------------------------------------------------------------------
+%%
+%% ██████   ██       ███████   █████    █████   ███████
+%% ██   ██  ██       ██       ██   ██  ██       ██
+%% ██████   ██       █████    ███████   █████   █████
+%% ██       ██       ██       ██   ██       ██  ██
+%% ██       ███████  ███████  ██   ██  ██████   ███████
+%%
+%% █████     █████            ███    ██   █████   ███████
+%% ██   ██  ██   ██           ████   ██  ██   ██     ██
+%% ██   ██  ██   ██           ██ ██  ██  ██   ██     ██
+%% ██   ██  ██   ██           ██  ██ ██  ██   ██     ██
+%% █████     █████            ██   ████   █████      ██
+%%
+%%  █████   ██   ██   █████   ███    ██   █████   ███████
+%% ██       ██   ██  ██   ██  ████   ██  ██       ██
+%% ██       ███████  ███████  ██ ██  ██  ██  ███  █████
+%% ██       ██   ██  ██   ██  ██  ██ ██  ██   ██  ██
+%%  █████   ██   ██  ██   ██  ██   ████   █████   ███████
+%%
+%% ███████  ██   ██  ███    █████          ███████  ███   ██       ███████
+%%    ██    ██   ██   ██   ██              ██        ██   ██       ██
+%%    ██    ███████   ██    █████          █████     ██   ██       █████
+%%    ██    ██   ██   ██        ██         ██        ██   ██       ██
+%%    ██    ██   ██  ███   ██████          ██       ███   ███████  ███████
+%% 
+%% ----------------------------------------------------------------------------
+%%
+%% If you feel you need to change this file, you are doing something wrong!
+%%
+%% Please ask for help at GitHub Discussions page at
+%%          https://github.com/joaomlourenco/novathesis/discussions
+%%      or in the subreddit r/novathesis
+%%          https://www.reddit.com/r/novathesis/
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PAGE LAYOUT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -44,10 +125,10 @@
     \GAIrenderDeclaration[3]{\thedocauthor(name)}%
   }{\ifoptionequal{/novathesis/print/aidisclosure}{false}
       {} % do not print AI Disclosure
-      {\IfFileExists{\DIR@FRONTMATTER/\option{/novathesis/print/aidisclosure}}
+      {\IfFileExists{\DIRFRONTMATTER/\option{/novathesis/print/aidisclosure}}
         {%
           \bookmarksetupnext{level=1}%
-          \input{\DIR@FRONTMATTER/\option{/novathesis/print/aidisclosure}}%
+          \input{\DIRFRONTMATTER/\option{/novathesis/print/aidisclosure}}%
         }
         {\ClassError{novathesis}
                     {AI Disclusre file not found: '\option{/novathesis/print/aidisclosure}'.}
@@ -75,14 +156,14 @@
       \raggedright\noindent%
       \textbf{\thesdgstring(\@LSHORT):}\\[1ex]
       \edef\@sdgtype{\option{/novathesis/print/sgds/type}}
-      \IfFileExists{\DIR@NTFILES/Images/sdg-\@LSHORT/1-\@sdgtype.pdf}
-          {\def\@spnfolder{\DIR@NTFILES/Images/sdg-\@LSHORT}}
-          {\def\@spnfolder{\DIR@NTFILES/Images/sdg-en}}
+      \IfFileExists{\DIRNTFILES/Images/sdg-\@LSHORT/1-\@sdgtype.pdf}
+          {\def\@spnfolder{\DIRNTFILES/Images/sdg-\@LSHORT}}
+          {\def\@spnfolder{\DIRNTFILES/Images/sdg-en}}
       \noindent%\linespread{1.5}\selectfont
       \optionlistdo{/novathesis/print/sdgs/list}{%
         \stepcounter{sdgcnt}%
         \setbox0=\hbox{%
-          % \typeout{FILE=\DIR@NTFILES/Images/sdg-\@LSHORT/##1-\XPTO}
+          % \typeout{FILE=\DIRNTFILES/Images/sdg-\@LSHORT/##1-\XPTO}
             \includegraphics[width=\option{/novathesis/print/sdgs/size}]
                             {\@spnfolder/##1-\@sdgtype}%
         }%
@@ -531,7 +612,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % First try to load a local chapter-style definition
-\InputIfFileExists{\DIR@NTFILES/ChapStyles/\option{/novathesis/style/chapter}.sty}
+\InputIfFileExists{\DIRNTFILES/ChapStyles/\option{/novathesis/style/chapter}.sty}
   {}{% otherwise, try a standard 'memoir' style
       \ifcsdef{chs@\option{/novathesis/style/chapter}}
           {\chapterstyle{\option{/novathesis/style/chapter}}}
@@ -539,7 +620,7 @@
 }
 
 % First try to load a local font-style definition
-\InputIfFileExists{\DIR@NTFILES/FontStyles/\option{/novathesis/style/font}.sty}
+\InputIfFileExists{\DIRNTFILES/FontStyles/\option{/novathesis/style/font}.sty}
   {}{% otherwise, try a standard LaTeX package
       \IfFileExists{\option{/novathesis/style/font}.sty}%
         {\RequirePackage{\option{/novathesis/style/font}}}%

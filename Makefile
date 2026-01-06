@@ -82,7 +82,7 @@ TEXVERSIONS:=$(shell ls /usr/local/texlive/ | $(GREP) -v texmf-local)
 
 #————————————————————————————————————————————————————————————————————————————
 # Extract school being built
-SCHL := $(shell sed -n '/^[[:space:]]*%/d; s/.*ntsetup{school=\([^}]*\)}.*/\1/p' 0-Config/1_novathesis.tex | head -1)
+SCHL := $(shell sed -n '/^[[:space:]]*%/d; s/.*ntsetup{school=\([^}]*\)}.*/\1/p' \DIRCONFIG/1_novathesis.tex | head -1)
 SCHL := $(if $(SCHL),$(SCHL),nova/fct)
 
 
@@ -189,7 +189,7 @@ check-build:
 .PHONY: validate-config
 validate-config:
 	@if [ -z "$(SCHL)" ]; then \
-		printf "$(RED)Error: School configuration not found in 0-Config/1_novathesis.tex$(RESET)\n"; \
+		printf "$(RED)Error: School configuration not found in \DIRCONFIG/1_novathesis.tex$(RESET)\n"; \
 		exit 1; \
 	fi
 	@printf "$(CYAN)Building for school: $(YELLOW)$(SCHL)$(RESET)\n"
@@ -354,7 +354,7 @@ tp: tag push
 
 custom:
 	@ $(eval SCHL=$(shell printf "%s" "$(notdir $(CURDIR))" | sed -e 's,-,/,; s,-,/,'))
-	@ sed -i '' -E 's|[[:space:]]*%?[[:space:]]*(\\ntsetup\{school=)[^}]*}|\1'$(SCHL)'\}|' 0-Config/1_novathesis.tex
+	@ sed -i '' -E 's|[[:space:]]*%?[[:space:]]*(\\ntsetup\{school=)[^}]*}|\1'$(SCHL)'\}|' \DIRCONFIG/1_novathesis.tex
 	@ make bcp SCHL="$(SCHL)" BFLAGS="-f"
 
 #############################################################################

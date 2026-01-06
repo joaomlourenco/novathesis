@@ -60,7 +60,7 @@ Follow these steps to get started with a local \LaTeX\ installation:
 \end{flushleft}
     to the folder
 \begin{flushleft}
-\hspace*{0.5cm}“\verb!NOVAthesisFiles/FontStyles/Fonts!”.
+\hspace*{0.5cm}“\verb!\DIRFONTSTYLES/Fonts!”.
 \end{flushleft}
     \item[Escola Superior de Enfermagem do Porto (ESEP)] download the required \emph{Calibri} font files from
     \url{https://raw.githubusercontent.com/joaomlourenco/novathesis-extras/raw/main/Fonts/Calibri.zip}\\
@@ -70,7 +70,7 @@ Follow these steps to get started with a local \LaTeX\ installation:
 \end{flushleft}
       \noindent to the folder
 \begin{flushleft}
-\hspace*{0.5cm}\verb!NOVAthesisFiles/FontStyles/Fonts!.
+\hspace*{0.5cm}\verb!\DIRFONTSTYLES/Fonts!.
 \end{flushleft}
   \end{description}
 
@@ -141,7 +141,7 @@ A possible result of applying \pdfLaTeX\ to the “\texttt{template.tex}” file
 novathesis.cls     & \File    & \accessForbiden &
 The main class file.
 \\
-NOVAthesisFiles   & \Folder  & \accessForbiden &
+\DIRNTFILES   & \Folder  & \accessForbiden &
 Additional files for the \gls{novathesis} template.  This is where all the juice is so, unless you are a \TeX magician, don't mess up with the files and folders inside this folder.
 \\
         \bottomrule
@@ -638,7 +638,7 @@ The \gls{novathesis} template is organized into many files and folders. At the m
 \rowcolors{1}{GhostWhite}{}
 \begin{xltabular}{\linewidth}{>{\ttfamily}l>{\itshape}l>{\upshape}X}
 novathesis.cls     & file    &
-The main class file. It will include additional files from \texttt{NOVAthesisFiles} folder and its sub-folders.
+The main class file. It will include additional files from \texttt{\DIRNTFILES} folder and its sub-folders.
 \\
 template.tex      & file    &
 The main template file. You need to \emph{compile} this file with one of pdf\LaTeX, \XeLaTeX, or \LuaLaTeX\ to obtain the \texttt{template.pdf} file.
@@ -654,13 +654,13 @@ Examples          & folder  & Some more examples of the use of the template for 
 \\
 Scripts           & folder  & Some (possibly useful) scripts for Unix-based systems (Linux, Mac OSx). If you are a windows user, ignore this folder (you may safely delete it if you want).
 \\
-NOVAthesisFiles   & folder  &
+\DIRNTFILES   & folder  &
 Additional files for the \gls{novathesisclass}\ file.  Unless you know what you are doing, avoid messing up with the files and folders inside this folder (except for deleting the unused Schools, see below).
 \\
 \end{xltabular}
 \egroup
 
-The \texttt{NOVAthesisFiles} folder contains additional files and folders that complement the main \gls{novathesisclass}\ file.  These are:
+The \texttt{\DIRNTFILES} folder contains additional files and folders that complement the main \gls{novathesisclass}\ file.  These are:
 
 \noindent
 \bgroup

@@ -1,38 +1,117 @@
+%!TEX root=template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — novathesis.cls
+%% ----------------------------------------------------------------------------
+%%
+%% Version 7.9.1 (2026-01-04)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%% Departamento de Informática (www.di.fct.unl.pt)
+%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Universidade NOVA de Lisboa (www.unl.pt)
+%%
+%% BUGS and SUGGESTIONS: please submit an issue at the project web page
+%%      at: https://github.com/joaomlourenco/novathesis/
+%%
+%% HELP: please DO NOT SEND ME EMAILS about LaTeX or the NOVAthesis template
+%%       please ask for help at GitHub Discussions page at
+%%          https://github.com/joaomlourenco/novathesis/discussions
+%%      or in the subreddit r/novathesis
+%%          https://www.reddit.com/r/novathesis/
+%%
+%% AUTHOR @github:
+%%      - https://github.com/joaomlourenco (joaomlourenco)
+%%
+%% CONTRIBUTORS @github:
+%%      - https://github.com/joaomlourenco/novathesis/wiki#help-with-the-project-patches-and-new-features
+%%
+%% DONATIONS:
+%%      If you think this template really helped you while writing your thesis, then
+%%          1. Go to the project web page and giv it a star (on the top-right)
+%%          2. Make a small donation using the URL below
+%%                    https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8
+%%             We will keep a list thanking to all the identified donors that identify
+%%             themselves in the “Add special instructions to the seller:” box.
+%%
+%% CITATION:
+%%      If you use this template, please be kind and \cite{novathesis-manual}
+%%      somewhere in your document.
+%%
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
+%%
+%% ----------------------------------------------------------------------------
+%%
+%% ██████   ██       ███████   █████    █████   ███████
+%% ██   ██  ██       ██       ██   ██  ██       ██
+%% ██████   ██       █████    ███████   █████   █████
+%% ██       ██       ██       ██   ██       ██  ██
+%% ██       ███████  ███████  ██   ██  ██████   ███████
+%%
+%% █████     █████            ███    ██   █████   ███████
+%% ██   ██  ██   ██           ████   ██  ██   ██     ██
+%% ██   ██  ██   ██           ██ ██  ██  ██   ██     ██
+%% ██   ██  ██   ██           ██  ██ ██  ██   ██     ██
+%% █████     █████            ██   ████   █████      ██
+%%
+%%  █████   ██   ██   █████   ███    ██   █████   ███████
+%% ██       ██   ██  ██   ██  ████   ██  ██       ██
+%% ██       ███████  ███████  ██ ██  ██  ██  ███  █████
+%% ██       ██   ██  ██   ██  ██  ██ ██  ██   ██  ██
+%%  █████   ██   ██  ██   ██  ██   ████   █████   ███████
+%%
+%% ███████  ██   ██  ███    █████          ███████  ███   ██       ███████
+%%    ██    ██   ██   ██   ██              ██        ██   ██       ██
+%%    ██    ███████   ██    █████          █████     ██   ██       █████
+%%    ██    ██   ██   ██        ██         ██        ██   ██       ██
+%%    ██    ██   ██  ███   ██████          ██       ███   ███████  ███████
+%% 
+%% ----------------------------------------------------------------------------
+%%
+%% If you feel you need to change this file, you are doing something wrong!
+%%
+%% Please ask for help at GitHub Discussions page at
+%%          https://github.com/joaomlourenco/novathesis/discussions
+%%      or in the subreddit r/novathesis
+%%          https://www.reddit.com/r/novathesis/
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Update Schoold's images folder
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ntfor\match:={\@UNIV,\@UNIV/\@SCHL}\do{%
-    \IfFileExists{\DIR@NTFILES/Schools/\match/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
-            \prependtographicspath{{\DIR@NTFILES/Schools/\match/Images/},}}{}%
+    \IfFileExists{\DIRNTFILES/Schools/\match/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
+            \prependtographicspath{{\DIRNTFILES/Schools/\match/Images/},}}{}%
 }
 
 
 %============================================================
 %  UNIVERSITY/SCHOOL SPECIFIC MATERIALS
-%  configuration file “0-Config/9_<university>_<school>.tex”
+%  configuration file “\DIRCONFIG/9_<university>_<school>.tex”
 %============================================================
-\InputIfFileExists{\DIR@NTFILES/Schools/\@UNIV/\@UNIV-defaults.ldf}
+\InputIfFileExists{\DIRNTFILES/Schools/\@UNIV/\@UNIV-defaults.ldf}
     {}
     {\PackageError{novathesis}
-                  {Missing file “\DIR@NTFILES/Schools/\@UNIV/\@UNIV-defaults.ldf”}{}}
+                  {Missing file “\DIRNTFILES/Schools/\@UNIV/\@UNIV-defaults.ldf”}{}}
 
 \ntfor\match:={%
       \@UNIV-\@SCHL-\@DEGREEACR,%
       \@UNIV-\@SCHL%
   }\do{%
-      \IfFileExists{\DIR@NTFILES/Schools/\@UNIV/\@SCHL/\match-defaults.ldf}
-          {\input{\DIR@NTFILES/Schools/\@UNIV/\@SCHL/\match-defaults.ldf}\ntforbreak}
+      \IfFileExists{\DIRNTFILES/Schools/\@UNIV/\@SCHL/\match-defaults.ldf}
+          {\input{\DIRNTFILES/Schools/\@UNIV/\@SCHL/\match-defaults.ldf}\ntforbreak}
           {}%
   }
 [\PackageError{novathesis}
-              {Missing file “\DIR@NTFILES/Schools/\@UNIV/\@SCHL-defaults.ldf”}
+              {Missing file “\DIRNTFILES/Schools/\@UNIV/\@SCHL-defaults.ldf”}
               {}]
 
 \ValidateLtxProcessor{\@UNIV}{\@SCHL}{\@DEGREEACR}
 
-\IfFileExists{\DIR@CONFIG/9_\@UNIV_\@SCHL.tex}
-     {\def\@ntsetuplevel{\@UNIV/\@SCHL/}\input{\DIR@CONFIG/9_\@UNIV_\@SCHL.tex}}
-     {\def\@ntsetuplevel{\@UNIV/}\InputIfFileExists{\DIR@CONFIG/9_\@UNIV.tex}{}{}}
+\IfFileExists{\DIRCONFIG/9_\@UNIV_\@SCHL.tex}
+     {\def\@ntsetuplevel{\@UNIV/\@SCHL/}\input{\DIRCONFIG/9_\@UNIV_\@SCHL.tex}}
+     {\def\@ntsetuplevel{\@UNIV/}\InputIfFileExists{\DIRCONFIG/9_\@UNIV.tex}{}{}}
 \def\@ntsetuplevel{}
 
 
