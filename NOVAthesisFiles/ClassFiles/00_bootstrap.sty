@@ -93,6 +93,8 @@
 \def\DIRFIGURES      {5-Figures}
 \def\DIRNTFILES      {NOVAthesisFiles}
 \def\DIRFONTSTYLES   {\DIRNTFILES/FontStyles}
+\def\DIRSTYFILES     {\DIRNTFILES/StyFiles}
+\def\DIRSTRINGS      {\DIRNTFILES/Strings}
 
 
 % =======================================================================
@@ -129,12 +131,12 @@
 % -----------------------------------------------------------------------
 %   2. TEMPLATE CORE
 % -----------------------------------------------------------------------
-\xappto\input@path{{\DIRNTFILES/}{\DIRNTFILES/Strings/}}
+\xappto\input@path{{\DIRSTYFILES/}{\DIRSTRINGS/}}
 
 \RequirePackage{options2}
 \RequirePackage{nt-version}
 \RequirePackage{memory2}
-\RequirePackage{NOVAthesisFiles/stocksize}
+\RequirePackage{stocksize}
 
 % -----------------------------------------------------------------------
 %   3. FONTS & ENCODINGS
