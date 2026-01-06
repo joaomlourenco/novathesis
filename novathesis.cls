@@ -77,7 +77,7 @@
 %%      or in the subreddit r/novathesis
 %%          https://www.reddit.com/r/novathesis/
 
-\ProvidesClass{novathesis}[2026-01-01 v7.9.0 novathesis template class file]
+\ProvidesClass{novathesis}[2026-01-05 v7.9.1 novathesis template class file]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 %% ----------------------------------------------------------------------------
