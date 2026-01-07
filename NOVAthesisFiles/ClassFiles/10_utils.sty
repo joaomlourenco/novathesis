@@ -668,6 +668,28 @@
         #4
       }
   }
+
+
+\NewDocumentCommand{\UniquifyList}{m o}
+    {
+        % 1. Fully expand the input and set it to a local clist
+        \clist_set:Ne \l_tmpa_clist { #1 }    
+        
+        % 2. Remove duplicates
+        \clist_remove_duplicates:N \l_tmpa_clist
+        
+        % 3. Check if the optional argument #2 is present
+        \IfValueTF { #2 }
+            {
+                % If #2 is present: Store the result into the macro provided in #2
+                \tl_set:Ne #2 { \clist_use:Nn \l_tmpa_clist { , } }
+            }
+            {
+                % If #2 is NOT present: Print the list directly to the document
+                \clist_use:Nn \l_tmpa_clist { , }
+            }
+    }
+
 \ExplSyntaxOff
 
 
@@ -698,21 +720,21 @@
 \langlong(uk):={ukrainian}
 
 
-\NewMemStore{langlong}
-\Setlanglong(cat):={catalan}
-\Setlanglong(cz):={czech}
-\Setlanglong(de):={german}
-\Setlanglong(dk):={danish}
-\Setlanglong(en):={english}
-\Setlanglong(es):={spanish}
-\Setlanglong(fr):={french}
-\Setlanglong(gr):={greek}
-\Setlanglong(it):={italian}
-\Setlanglong(nl):={dutch}
-\Setlanglong(pl):={polish}
-\Setlanglong(pt):={portuguese}
-\Setlanglong(sk):={slovak}
-\Setlanglong(uk):={ukrainian}
+\NewMemStore{LangLong}
+\SetLangLong{cat}:={catalan}
+\SetLangLong{cz}:={czech}
+\SetLangLong{de}:={german}
+\SetLangLong{dk}:={danish}
+\SetLangLong{en}:={english}
+\SetLangLong{es}:={spanish}
+\SetLangLong{fr}:={french}
+\SetLangLong{gr}:={greek}
+\SetLangLong{it}:={italian}
+\SetLangLong{nl}:={dutch}
+\SetLangLong{pl}:={polish}
+\SetLangLong{pt}:={portuguese}
+\SetLangLong{sk}:={slovak}
+\SetLangLong{uk}:={ukrainian}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

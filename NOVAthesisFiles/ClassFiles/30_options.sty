@@ -153,10 +153,10 @@
 \options{/@nt/document/docclass=\@DOCTYPE}
 \def\@DOCCLASS{\option{/@nt/document/docclass}}
 
-\def\@LANG@COVER{\option{/novathesis/lang/cover}}
-\def\@LANG@COPYRIGHT{\option{/novathesis/lang/copyright}}
-\def\@LANG@MAIN{\option{/novathesis/lang/main}}
-\def\@LANG@MAIN@LONG{\thelanglong(\@LANG@MAIN)}
+\edef\@LANG@COVER{\option{/novathesis/lang/cover}}
+\edef\@LANG@COPYRIGHT{\option{/novathesis/lang/copyright}}
+\edef\@LANG@MAIN{\option{/novathesis/lang/main}}
+\edef\@LANG@MAIN@LONG{\GetLangLong*{\@LANG@MAIN}}
 
 \@setabstractorder
 \ifdatadefined{abstractorder}(en){}{%

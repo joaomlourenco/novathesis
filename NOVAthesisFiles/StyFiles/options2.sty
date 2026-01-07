@@ -476,6 +476,7 @@
 \let\ifoptionnil\ifoptionvoid
 \newrobustcmd*\ifoptioncontains[2]{\xifinlistcs{#2}{optk@#1}}
 \newrobustcmd*\option@pushifnew[2]{\ifoptioncontains{#1}{#2}{}{\option@push{#1}{#2}}}
+\newrobustcmd*\option@epushifnew[2]{\ifoptioncontains{#1}{#2}{}{\option@epush{#1}{#2}}}
 
 % [EXTENSION] Copy List Logic
 \newrobustcmd*\option@copylist[2]{%

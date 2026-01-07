@@ -122,7 +122,10 @@
 \RequirePackage[english]{babel}
 \AtBeginDocument{
 \ifx\bbl@ensure@bcp\@undefined
-  \newcommand{\bbl@ensure@bcp}[2]{#2}
+  \newcommand{\bbl@ensure@bcp}[2]{#2}%
+\fi
+\ifx\bbl@ensure@english\@undefined
+  \newcommand{\bbl@ensure@english}[1]{#1}%
 \fi
 }
 

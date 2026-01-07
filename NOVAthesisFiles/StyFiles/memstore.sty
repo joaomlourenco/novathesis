@@ -74,7 +74,7 @@
   }
 
 % \MemGet {name}{key}
-\NewDocumentCommand{\MemGet}{ s m m }
+\NewExpandableDocumentCommand{\MemGet}{ s m m }
   {
     \prop_if_exist:cTF { g__mem_#2_prop }
       {
@@ -265,11 +265,11 @@
       }
       
     % Define \Get<name>
-    \exp_args:Nc \NewDocumentCommand { Get#1 } { s m }
+    \exp_args:Nc \NewExpandableDocumentCommand { Get#1 } { s m }
       {
         \IfBooleanTF { ##1 }
-          { \MemGet* { #1 } { \tl_trim_spaces:n { ##2 } } }
-          { \MemGet  { #1 } { \tl_trim_spaces:n { ##2 } } }
+          { \MemGet* { #1 } { ##2 } }
+          { \MemGet  { #1 } { ##2 } }
       }
   }
 

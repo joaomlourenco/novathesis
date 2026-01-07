@@ -203,9 +203,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntselectlang}[1]{%
   \xdef\@LSHORT{#1}%
-  % \xdef\@LLONG{\thelanglong(#1)}%
-  \xdef\@LLONG{\Getlanglong*(#1)}%
-  \selectlanguage{\@LSHORT}%
+  \xdef\@LLONG{\GetLangLong*{#1}}%
+  \selectlanguage{\@LLONG}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

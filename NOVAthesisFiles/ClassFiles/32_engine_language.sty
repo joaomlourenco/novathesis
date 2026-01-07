@@ -78,53 +78,18 @@
 %%          https://www.reddit.com/r/novathesis/
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% CHECK IF USING LUALATEX OR XELATEX
+%% Set main language
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \typeout{FONTENCS=\@fontencs}\FONTENCS
-% \iftutex  % xelatex or lualatex
-%   \RequirePackage[no-math]{fontspec}%
-%   \defaultfontfeatures{Ligatures=TeX}
-% \else% pdflatex
-%   \RequirePackage[\@fontencs]{fontenc}    % Use new T1 fonts
-%   % \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
-% \fi
-
-% --------------------------------------------------------
-% BABEL STUFF
-% \options{/@nt/lang/shorttolong=\@LANG@MAIN}%
-\def\@LANG@LOADED{}
-\def\@langs@loaded@sep{}
-\newcommand*{\@nt@setlangloaded}[1]{%
-      % \typeout{LL=#1}\LL
-      \if\instring{,#1,}{,\@LANG@LOADED,}\else%
-        \IfFileExists{\DIRNTFILES/Strings/strings-#1.ldf}%
-                     {\eappto{\@LANG@LOADED}{\@langs@loaded@sep#1}\def\@langs@loaded@sep{,}}%
-                      {\ClassError{novathesis}{File not found: “\DIRNTFILES/Strings/strings-#1.ldf” file!}%
-                                  {Add a file with the translations for this language.}}%
-      \fi%
-}
-
-\@for\myi:=\expanded{\@LANG@COVER,\@LANG@COPYRIGHT,\@LANG@MAIN,%
-                     \theabstractorder(\@LANG@MAIN)}\do{\@nt@setlangloaded{\myi}}
-\optionlistdo{/novathesis/lang/extra}{\@nt@setlangloaded{##1}}%
-
-
-% \PassOptionsToPackage{main=\@LANG@MAIN@LONG}{babel}
-\babelprovide[main,import]{\expanded{\@LANG@MAIN@LONG}}
-% \@for\myi:=\expanded{\@LANG@LOADED}\do{%
-%   % \typeout{BABELLANG=\myi \thelanglong(\myi)}\BABELLANG%
-%   \babelprovide[import]{\expanded{\thelanglong(\myi)}}%
-% }%
-
-% --------------------------------------------------------
-% FIX BABEL TRANSLATION
-% \RequirePackage{babel}      % Support for multilingual documents
-% \RequirePackage{translator} % Support month name translations for pgfcalendar
+\babelprovide[main,import]{\@LANG@MAIN@LONG}
 \ntselectlang{\@LANG@MAIN}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Create list of loaded languages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\edef\@LANG@LOADED{\@LANG@COVER, \@LANG@COPYRIGHT, \@LANG@MAIN, \theabstractorder(\@LANG@MAIN)}
+\UniquifyList{\@LANG@LOADED}[\@LANG@LOADED]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FIX BABEL
@@ -136,14 +101,13 @@
 %% Include strings for all the languages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\@for\myi:=\expanded{\@LANG@LOADED}\do{%
-  \InputIfFileExists{\DIRNTFILES/Strings/strings-\myi.ldf}%
+\@for\myi:={\@LANG@LOADED}\do{%
+  \InputIfFileExists{\DIRSTRINGS/strings-\myi.ldf}%
                     {}%
                     {\ClassError{novathesis}
-                                {File not found: “\DIRNTFILES/Strings/strings-#1.ldf” file!}%
+                                {File not found: “\DIRNTFILES/Strings/strings-\myi.ldf” file!}%
                                 {Add a file with the translations for this language.}}%
 }%
-
 
 \bkmstring(1-1)={\thebkmstring(cover,\@LANG@MAIN)}
 \bkmstring(1-2)={\thebkmstring(incover,\@LANG@MAIN)}
