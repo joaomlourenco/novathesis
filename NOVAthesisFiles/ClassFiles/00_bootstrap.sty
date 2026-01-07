@@ -115,6 +115,20 @@
 %   SOME ESSENTIAL PACKAGES
 % =======================================================================
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 4. LANGUAGE & LOCALIZATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[english]{babel}
+\AtBeginDocument{
+\ifx\bbl@ensure@bcp\@undefined
+  \newcommand{\bbl@ensure@bcp}[2]{#2}
+\fi
+}
+
+% \RequirePackage{translator}
+\RequirePackage{csquotes}  % MUST be loaded before biblatex
+
 % -----------------------------------------------------------------------
 %   1. KERNEL, UTILITIES & FLAGS (Must load early)
 % -----------------------------------------------------------------------
@@ -136,6 +150,7 @@
 \RequirePackage{options2}
 \RequirePackage{nt-version}
 \RequirePackage{memory2}
+\RequirePackage{memstore}
 \RequirePackage{stocksize}
 
 % -----------------------------------------------------------------------
@@ -167,6 +182,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage[english]{babel}
 % \RequirePackage{translator}
+\babeladjust{
+  autoload.bcp47 = on
+}
+
+
 \RequirePackage{csquotes}  % MUST be loaded before biblatex
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

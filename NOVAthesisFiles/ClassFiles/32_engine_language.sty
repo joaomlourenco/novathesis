@@ -112,15 +112,12 @@
 \optionlistdo{/novathesis/lang/extra}{\@nt@setlangloaded{##1}}%
 
 
-\babeladjust{
-  autoload.bcp47 = on
-}
 % \PassOptionsToPackage{main=\@LANG@MAIN@LONG}{babel}
 \babelprovide[main,import]{\expanded{\@LANG@MAIN@LONG}}
-\@for\myi:=\expanded{\@LANG@LOADED}\do{%
-  % \typeout{BABELLANG=\myi \thelanglong(\myi)}\BABELLANG%
-  \babelprovide[import]{\expanded{\thelanglong(\myi)}}%
-}%
+% \@for\myi:=\expanded{\@LANG@LOADED}\do{%
+%   % \typeout{BABELLANG=\myi \thelanglong(\myi)}\BABELLANG%
+%   \babelprovide[import]{\expanded{\thelanglong(\myi)}}%
+% }%
 
 % --------------------------------------------------------
 % FIX BABEL TRANSLATION
