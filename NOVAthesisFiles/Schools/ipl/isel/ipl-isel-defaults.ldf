@@ -20,8 +20,8 @@
 % \majorfield(en):={Industrial Engineering and Management}
 
 % Department
-\department(pt):={Área Departamental de \themajorfield(pt)}
-\department(en):={Department of \themajorfield(en)}
+\ntdepartment(pt){Área Departamental de \themajorfield(pt)}
+\ntdepartment(en){Department of \themajorfield(en)}
 
 % Comiittee printing order
 \committeeorder():={c,m}%
@@ -99,7 +99,7 @@
   \fontsize{14}{14}\selectfont%
   \textbf{\THEschool(\@LANG@COVER)}\\%
   \fontsize{14}{14}\selectfont%
-  \textbf{\thedepartment(\@LANG@COVER)}%
+  \textbf{\GetDepartment(\@LANG@COVER)}%
 }
 
 \ntaddtocover[vspace=0.5cm,height=8cm,valign=c]{1-1,2-1}{%

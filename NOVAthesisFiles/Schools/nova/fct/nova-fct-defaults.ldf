@@ -175,8 +175,8 @@
     at ($(current page.north west) + (96.45mm,-11.4mm)$)
     { \fontsize{14}{14}\sffamily%
       \let\oldnewline=\\%
-      \def\\{\oldnewline[2pt]}%
-      \THEdepartment(\@LANG@COVER)
+      \def\\{\oldnewline[3pt]}%
+      \MakeUppercase{\GetDepartment(\@LANG@COVER)}
     };
 }
 

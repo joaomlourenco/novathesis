@@ -138,6 +138,14 @@
       }
   }
 
+\prg_new_conditional:Npnn \__mem_if_unset:nn #1 #2 { p, T, F, TF }
+  {
+    % Checks if the value stored in MemStore is empty or doesn't exist
+    \tl_if_empty:eTF { \MemGet{#1}{#2} }
+      { \prg_return_true:  }
+      { \prg_return_false: }
+  }
+
 % -------------------------------------------------------------------------
 % 5. User Conditional Commands
 % -------------------------------------------------------------------------
