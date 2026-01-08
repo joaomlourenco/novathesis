@@ -26,9 +26,9 @@ I further declare that I have fully acknowledge the Rules of Conduct and Code of
 
 \bigskip
 
-\IfStrEq{\thentdocdate(exam)}{\thentdocdate(default)}{\def\@DATE{submission}}{\def\@DATE{exam}}
+\IfStrEq{\GetDocDate(exam)}{\GetDocDate(default)}{\def\@DATE{submission}}{\def\@DATE{exam}}
 
-Lisbon, \printisodate{\thentdocdate(\@DATE,year)-\thentdocdate(\@DATE,month)-\thentdocdate(\@DATE,day)}
+Lisbon, \printisodate{\GetDocDate(\@DATE,year)-\GetDocDate(\@DATE,month)-\GetDocDate(\@DATE,day)}
 
 \endgroup
 \clearforchapter

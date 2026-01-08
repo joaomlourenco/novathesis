@@ -257,7 +257,7 @@
     % Define \Set<name>
     % We still trim the KEY explicitly here for interface consistency.
     % Value trimming is handled by \MemSet.
-    \exp_args:Nc \NewDocumentCommand { Set#1 } { s m u{=} m }
+    \exp_args:Nc \NewDocumentCommand { Set#1 } { s r() u{=} m }
       {
         \IfBooleanTF { ##1 }
           { \MemSet* { #1 } { \tl_trim_spaces:n { ##2 } } { ##4 } } 
@@ -265,7 +265,7 @@
       }
       
     % Define \Get<name>
-    \exp_args:Nc \NewExpandableDocumentCommand { Get#1 } { s m }
+    \exp_args:Nc \NewExpandableDocumentCommand { Get#1 } { s r() }
       {
         \IfBooleanTF { ##1 }
           { \MemGet* { #1 } { ##2 } }

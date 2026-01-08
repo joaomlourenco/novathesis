@@ -246,32 +246,14 @@
   \theuniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%
     \ifdocworking{\emph{\color{yellow}\textbf{Bozza:} \today}}%
-                 {\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
-  }{\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
+                 {\GetDocDate(submission,month,text), \GetDocDate(submission,year)}%
+  }{\GetDocDate(submission,month,text), \GetDocDate(submission,year)}%
 }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% COVER 2
+%% FRONT PAGE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% LOGOS
-% \ntaddtocover[vspace=1.0mm,hspace=-2.6cm,halign=l,height=2.0cm,valign=t]{2-1}{%
-%   % \makebox[0pt]{\color{black!50}\rule{15cm}{5cm}}
-%   \vspace*{-4mm}%
-%   \begin{minipage}[b]{8.7cm}%
-%   \includegraphics[width=2.15cm]{\expanded{\theuniversity(logo)}}%
-%   \hspace{3.5mm}\rule{0.15mm}{2cm}\hspace{5mm}%
-%   \raisebox{2.5mm}{\includegraphics[width=3.52cm]{\expanded{\theschool(logo)}}}%
-%   \end{minipage}%
-%   \raisebox{9mm}{%
-%   \begin{minipage}[b]{9cm}%
-%     \fontsize{14}{14}\selectfont%
-%     \THEdepartment(\@LANG@COVER)%
-%   \end{minipage}%
-%   }\\[4ex]%
-%   \hrule width 19cm%
-% }
 
 
 \ntaddtocover[tikz]{2-1}{%
@@ -344,8 +326,8 @@
   \theuniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%
     \ifdocworking{\emph{\color{blue}\textbf{Bozza:} \today}}%
-                 {\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
-  }{\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
+                 {\GetDocDate(submission,month,text), \GetDocDate(submission,year)}%
+  }{\GetDocDate(submission,month,text), \GetDocDate(submission,year)}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

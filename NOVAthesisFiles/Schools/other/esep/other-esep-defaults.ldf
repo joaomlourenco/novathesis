@@ -125,7 +125,7 @@
 % Date
 \ntaddtocover[vspace=2]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont
-    \textbf{\printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}}%
+    \textbf{\printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
 }
 
 %
@@ -167,7 +167,7 @@
 %   \ifdraftdoc
 %     \textbf{DRAFT: \today}
 %   \else
-%     \thentdocdate(month), \thentdocdate(year)
+%     \GetDocDate(month), \GetDocDate(year)
 %   \fi
 % }
 %

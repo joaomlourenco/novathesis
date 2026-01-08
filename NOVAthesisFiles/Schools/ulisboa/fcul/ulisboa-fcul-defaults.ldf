@@ -236,5 +236,5 @@
 \ntaddtocover[vspace=1.4cm]{1-1,2-1}{%
   % \fontseries{mc}
   \fontsize{14}{14}\selectfont%
-    \printisodate{\thentdocdate(submission,year)}%
+    \printisodate{\GetDocDate(submission,year)}%
 }

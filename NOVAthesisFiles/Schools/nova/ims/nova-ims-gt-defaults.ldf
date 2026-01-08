@@ -62,7 +62,7 @@ for the Degree of \emph{\thedegreename(en)}}
 
 % \spine(author)={\thedocauthor(name)}
 \spine(title)={\THEdoctitle(\@LANG@COVER,main)}
-% \spine(date)={\thentdocdate(submission,year)}
+% \spine(date)={\GetDocDate(submission,year)}
 \spine(title,font)={\bfseries\itshape}
 
 
@@ -204,10 +204,10 @@ for the Degree of \emph{\thedegreename(en)}}
 
 
 %==================================================================
-% COVER 2
+% FRONT PAGE
 %==================================================================
 
-% Title of Dissertation - COVER 2
+% Title of Dissertation - FRONT PAGE
 \ntaddtocover[vspace=2cm]{2-1}{%
     \centering%
     \fontsize{16}{16}\selectfont
@@ -247,7 +247,7 @@ for the Degree of \emph{\thedegreename(en)}}
 % Date
 \ntaddtocover[vspace=1]{2-1}{%
   \fontsize{11}{11}\selectfont
-    \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}
+    \printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}
 }
 
 

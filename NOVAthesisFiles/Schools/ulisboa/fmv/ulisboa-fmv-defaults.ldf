@@ -413,7 +413,7 @@
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   % \fontseries{mc}
   \fontsize{14}{14}\selectfont%
-    \printisodate{\thentdocdate(submission,year)}%
+    \printisodate{\GetDocDate(submission,year)}%
 }
 
 % Extra vspace for conver 1-1
@@ -425,13 +425,13 @@
 % \ifdocfinal{
 %   \ntaddtocover[halign=j]{2-2}{%
 %     \ntfor\match:={%
-%       \DIRNTFILES/Schools/\@UNIV/\@SCHL/statement-\@LANG@MAIN.tex,%
-%       \DIRNTFILES/Schools/\@UNIV/\@SCHL/statement.tex%
+%       \DIRSCHOOLS/\@UNIV/\@SCHL/statement-\@LANG@MAIN.tex,%
+%       \DIRSCHOOLS/\@UNIV/\@SCHL/statement.tex%
 %     }\do{\IfFileExists{\match}{\input{\match}\ntforbreak}{}}%
 %     [%
-%       \ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} in folders “\DIRNTFILES/Schools/\@UNIV/\@SCHL” nor “\DIRNTFILES/Schools/\@UNIV”}{}
+%       \ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} in folders “\DIRSCHOOLS/\@UNIV/\@SCHL” nor “\DIRSCHOOLS/\@UNIV”}{}
 %     ]%
-%     % \InputIfFileExists{\DIRNTFILES/Schools/\@UNIV/\@SCHL/statement.tex}{}%
+%     % \InputIfFileExists{\DIRSCHOOLS/\@UNIV/\@SCHL/statement.tex}{}%
 %         % {\PackageWarning{novathesis}{Missing statement file “statement.tex” for ”\@UNIV/\@SCHL”}}
 %   }%
 % }

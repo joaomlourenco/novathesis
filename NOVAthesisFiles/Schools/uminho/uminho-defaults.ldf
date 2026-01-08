@@ -186,7 +186,7 @@
 \spine(logo,school)={\theschool(logo,RGB)}
 \spine(author)={\thedocauthor(name,short)}
 \spine(title)={\thedoctitle(\@LANG@COVER,main)}
-\spine(year)={\thentdocdate(submission,year)}
+\spine(year)={\GetDocDate(submission,year)}
 % \spine(top)={116pt}
 \spine(top)={9cm}
 \spine(margin)={3mm}
@@ -284,7 +284,7 @@
     % \textbf{DRAFT: \today}
   % \else
   \printisodate[\theofstr(\@LANG@COVER)]
-               {\thentdocdate(submission,year)-\thentdocdate(submission,month)}
+               {\GetDocDate(submission,year)-\GetDocDate(submission,month)}
   % \fi
 }
 

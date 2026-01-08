@@ -115,8 +115,8 @@
 \ifmaindoc{% only print if a main document
   \iftoggle{/novathesis/print/copyright}{% if copuyright toggle is on
     \@nt@AddFileIfExists{copyright}{copyright.tex}{%
-           {\DIRNTFILES/Schools/\@UNIV/\@SCHL/}%
-          ,{\DIRNTFILES/Schools/\@UNIV/}%
+           {\DIRSCHOOLS/\@UNIV/\@SCHL/}%
+          ,{\DIRSCHOOLS/\@UNIV/}%
           ,{\DIRNTFILES/}%
     }%
     \@ntloadfiles@ii{copyright}%
@@ -125,9 +125,9 @@
 
 \ifoptionequal{/novathesis/spine/layout}{off}{}{% print the spine
   \InputIfFileExistsInDirsTF{novathesis-spine.sty}{
-          {\DIRNTFILES/Schools/\@UNIV/\@SCHL/},
-          {\DIRNTFILES/Schools/\@UNIV/},
-          {\DIRNTFILES/},
+          {\DIRSCHOOLS/\@UNIV/\@SCHL/},
+          {\DIRSCHOOLS/\@UNIV/},
+          {\DIRSTYFILES/},
   }{\AtEndDocument{\csuse{ntprintspine}}}
    {\ClassError{novathesis}{No “novathesis-spine” file found.}{}}%
 }

@@ -81,8 +81,8 @@
 %% Update Schoold's images folder
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ntfor\match:={\@UNIV,\@UNIV/\@SCHL}\do{%
-    \IfFileExists{\DIRNTFILES/Schools/\match/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
-            \prependtographicspath{{\DIRNTFILES/Schools/\match/Images/},}}{}%
+    \IfFileExists{\DIRSCHOOLS/\match/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
+            \prependtographicspath{{\DIRSCHOOLS/\match/Images/},}}{}%
 }
 
 
@@ -90,21 +90,21 @@
 %  UNIVERSITY/SCHOOL SPECIFIC MATERIALS
 %  configuration file “\DIRCONFIG/9_<university>_<school>.tex”
 %============================================================
-\InputIfFileExists{\DIRNTFILES/Schools/\@UNIV/\@UNIV-defaults.ldf}
+\InputIfFileExists{\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.ldf}
     {}
     {\PackageError{novathesis}
-                  {Missing file “\DIRNTFILES/Schools/\@UNIV/\@UNIV-defaults.ldf”}{}}
+                  {Missing file “\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.ldf”}{}}
 
 \ntfor\match:={%
       \@UNIV-\@SCHL-\@DEGREEACR,%
       \@UNIV-\@SCHL%
   }\do{%
-      \IfFileExists{\DIRNTFILES/Schools/\@UNIV/\@SCHL/\match-defaults.ldf}
-          {\input{\DIRNTFILES/Schools/\@UNIV/\@SCHL/\match-defaults.ldf}\ntforbreak}
+      \IfFileExists{\DIRSCHOOLS/\@UNIV/\@SCHL/\match-defaults.ldf}
+          {\input{\DIRSCHOOLS/\@UNIV/\@SCHL/\match-defaults.ldf}\ntforbreak}
           {}%
   }
 [\PackageError{novathesis}
-              {Missing file “\DIRNTFILES/Schools/\@UNIV/\@SCHL-defaults.ldf”}
+              {Missing file “\DIRSCHOOLS/\@UNIV/\@SCHL-defaults.ldf”}
               {}]
 
 \ValidateLtxProcessor{\@UNIV}{\@SCHL}{\@DEGREEACR}
