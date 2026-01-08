@@ -176,7 +176,7 @@
     { \fontsize{14}{14}\sffamily%
       \let\oldnewline=\\%
       \def\\{\oldnewline[3pt]}%
-      \MakeUppercase{\GetDepartment(\@LANG@COVER)}
+      \MakeUppercase{\GetDepartmentFull(\@LANG@COVER)}
     };
 }
 

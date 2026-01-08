@@ -41,7 +41,7 @@
 %-------------------------------------------------------------
 % Deapartment name
 %
-%     \ntdepartment(<lang>){name}
+%     \Department(<lang>){name}
 %.............................................................
 %
 % <lang>: -> cat (catalan), cz (czech), de (german), dk (danish), en (english), 
@@ -53,11 +53,9 @@
 % For other Schools, fill the entries below.
 %
 % Add more lines for other languages
-% You may use "\\" to force line breaks
 %-------------------------------------------------------------
-\ntdepartment*(en){Department of\\Name of the Department}
-\ntdepartment*(pt){Departamento de\\Nome do Departamento}
-
+\Department*(en){Name of the Department}   % e.g., Computer Science
+\Department*(pt){Nome do Departamento}     % e.g., Informática
 
 
 %-------------------------------------------------------------
@@ -77,8 +75,8 @@
 % Add more lines for other languages
 % You may use "\\" to force line breaks
 %-------------------------------------------------------------
-\ntdegreename*(en){Study Program Name}          % Example: Computer Science
-\ntdegreename*(pt){Nome do Programa de Estudos} % Examplo: Engenharia Informática
+\MajorField*(en){Study Program Name}          % Example: Computer Science
+\MajorField*(pt){Nome do Programa de Estudos} % Examplo: Engenharia Informática
 
 
 
@@ -186,10 +184,10 @@
 %
 % <date>: YYYY-MM-DD -> this is the prefered format
 %         YYYY-MM    -> the day can be omitted
-%         YYYY       -> both the day and the month can be omitted
 %-------------------------------------------------------------------
 % \ntdate(submission){year-month-day}
 % \ntdate(exam){year-month-day}
+\ntdate(exam){2025-12-25}
 
 
 

@@ -210,7 +210,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ASSOCARRAY
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\initmemory}[2][\thenotdefined(\@LANG@COVER)]{%
+\newcommand*{\initmemory}[2][\thenotdefinedString(\@LANG@COVER)]{%
   \optionlistdo{/novathesis/lang/all}{\csuse{#2}(##1):={#1}}}
 
 
@@ -234,16 +234,15 @@
 
 \newdata{sponsor}
 
-\newdata{commastring}
+\newdata{commaString}
 \optionlistdo{/novathesis/lang/all}{%
-  \commastring(#1):={,\ }%
+  \commaString(#1):={,\ }%
 }
 
 
 
 \newdata{degreestringfont}
 
-\newdata{degreename}
 \newdata{degreenamefont}
 
 \newdata{degreenameprefixfont}
@@ -294,7 +293,6 @@
 \newdata{dissertationstringfont}
 
 
-\newdata{majorfield}
 \newdata{minorfield}
 \newdata{specialization}
 

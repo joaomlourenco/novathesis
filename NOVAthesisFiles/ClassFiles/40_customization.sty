@@ -82,65 +82,136 @@
 %% DEFINITIONS FOR THE REMINDER OF CUSTOMIZATION STUFF
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%============================================================
-% Department
-%============================================================
 \ExplSyntaxOn
 
-\NewMemStore{Department}
+%============================================================
+% Utility for commands \ntSOMETHIG(key){value}
+%============================================================
 
-% 1. The Public Command
-% s = star (*)                 <= only define if undefined
-% r() = required ID in parens  <= the lang code
-% m = mandatory value          <= the name of the department
-\NewDocumentCommand{\ntdepartment}{ s r() m }
-  {
-    % We pass the star status (boolean) and expanded arguments to the internal logic
-    \nova_process_department:nee { #1 } { #2 } { #3 }
-  }
 
 % 2. Internal Logic
-\cs_new_protected:Npn \nova_process_department:nnn #1 #2 #3
+% star (*)        <= only define if undefined
+% MemStore        <- the name of the MemStore to use
+% ID              <= e.g., "pt"
+% Attribute       <= e.g., "The name of the department"
+\cs_new_protected:Npn \__nt_command:nnnn #1 #2 #3 #4
   {
-    % Handle the optional ID: if empty/NoValue, use 'default'
-    \tl_set:Nn \l_tmpa_tl { #2 }
-    % \quark_if_no_value:NT \l_tmpa_tl { \tl_set:Nn \l_tmpa_tl { default } }
-
     % Logic Branching
     \bool_if:nTF { #1 }
       {
         % Starred version: Only set if NOT already defined
         % We check if the 'department' data for this ID is empty/unset
-        \__mem_if_unset:nnT { Department } { \l_tmpa_tl }
-          { \MemSet { Department } { \l_tmpa_tl } { #3 } }
+        \__mem_if_unset:nnT { #2 } { #3 }
+          { 
+            \MemSet { #2 } { #3 } { #4 } 
+          }
       }
       {
         % Unstarred version: Set/Overwrite regardless
-        \MemSet { Department } { \l_tmpa_tl } { #3 }
+        \MemSet { #2 } { #3 } { #4 }
       }
   }
 
-% 3. Helper to check if data is undefined/empty
-% (Adjust this if your \MemSet uses a different internal storage check)
-% \prg_new_conditional:Npnn \nova_if_data_unset:nn #1 #2 { p, T, F, TF }
-%   {
-%     % We expand the result of \MemGet to check if it's empty
-%     \tl_if_empty:eTF { \MemGet{#1}{#2} }
-%       { \prg_return_true:  }
-%       { \prg_return_false: }
-%   }
+% 3. Generate expansion variants
+\cs_generate_variant:Nn \__nt_command:nnnn { neee }
 
-% 4. Generate expansion variants
-\cs_generate_variant:Nn \nova_process_department:nnn { nee }
+
+
+
+
+%============================================================
+% Department — e.g., Computer Science
+%============================================================
+
+% 1. The Public Command
+% s = star (*)                 <= only define if undefined
+% r() = required ID in parens  <= the lang code
+% O{} = Department of          <= prefix for the department name, e.g, “Department of”
+% m = mandatory value          <= the name of the department
+\NewMemStore{Department}
+\NewMemStore{DepartmentFull}
+\NewDocumentCommand{\Department}{ s r() o m }
+  {
+    % 1. Store the base department name (Mandatory argument #4)
+    \__nt_command:neee { #1 } { Department } { #2 } { #4 }
+
+    % 2. Handle the Prefix (Optional argument #3)
+    \IfNoValueTF { #3 }
+      {
+        % If no optional argument, use the default "Department of" from .ldf
+        % Note: \departmentofString is the key used in the .ldf files
+        \tl_set:Ne \l_tmpa_tl { \thedepartmentofString(#2) \\ }
+      }
+      {
+        % If optional argument provided, use it as the prefix
+        \tl_set:Ne \l_tmpa_tl { #3 \\ }
+      }
+
+    % 3. Store the Full Department string (Prefix + Name)
+    \__nt_command:neee { #1 } { DepartmentFull } { #2 } { \l_tmpa_tl #4 }
+    \typeout{GetDepartmentFull=\GetDepartmentFull(\@LANG@COVER)}
+  }
+
+%============================================================
+% Major field — Degree name
+%============================================================
+
+% 1. The Public Command
+% s = star (*)                 <= only define if undefined
+% r() = required ID in parens  <= the lang code
+% O{} = Department of          <= prefix for the department name, e.g, “Department of”
+% m = mandatory value          <= the major stufy field (e.g., Computer Science)
+\NewMemStore{MajorField}
+\NewDocumentCommand{\MajorField}{ s r() m }
+  {
+    % We pass the star status (boolean) and expanded arguments to the internal logic
+    \__nt_command:neee { #1 } { MajorField } { #2 } { #3 }
+  }
+\let\DegreeName\MajorField
+
+
+
+%============================================================
+% Degree and Major field — Degree name
+%============================================================
+
+\NewMemStore{DegreeMajorField}
+
+
+
+
+%============================================================
+% Minor field — Specialization
+%============================================================
+
+% 1. The Public Command
+% s = star (*)                 <= only define if undefined
+% r() = required ID in parens  <= the lang code
+% m = mandatory value          <= the minor stufy field (e.g., Distributed and Parallel Computfing)
+\NewMemStore{MinorField}
+\NewDocumentCommand{\MinorField}{ s r() m }
+  {
+    % We pass the star status (boolean) and expanded arguments to the internal logic
+    \__nt_command:neee { #1 } { MajorField } { #2 } { #3 }
+  }
+\let\Specialization\MinorField
+
+
+
 
 \ExplSyntaxOff
 
 
+
+
+
+\newdata{degreename}
+\newdata{majorfield}
 % --------------------------------------------------------
 % Degree
-\def\ntmajorfield{\@ifstar{\@ntmajorfieldifundef}{\@ntmajorfield}}
   % #1 = lang
   % #2 = value
+\def\ntmajorfield{\@ifstar{\@ntmajorfieldifundef}{\@ntmajorfield}}
 \def\@ntmajorfieldifundef(#1)#2{\ifdatadefined{majorfield}(#1){}{\@ntmajorfield(#1){#2}}}
 \def\@ntmajorfield(#1)#2{\majorfield(#1):={#2}}
 
@@ -169,7 +240,7 @@
 \def\ntspecialization{\@ifstar{\@ntspecializationifundef}{\@ntspecialization}}
 \def\@ntspecializationifundef(#1)#2{\ifdatadefined{minorfield}(#1){}{\@ntspecialization(#1){#2}}}
 \def\@ntspecialization(#1)#2{%
-  \datamatch{\specmatch}{specializationstring}(%
+  \datamatch{\specmatch}{specializationString}(%
             {\@DOCTYPE,\@DEGREEACR,\@LANG@COVER},%
             {\@DOCCLASS,\@DEGREEACR,\@LANG@COVER}%
             {\@DEGREEACR,\@LANG@COVER},%
@@ -400,7 +471,7 @@
 % strings to be defined for each language
 \nttitle(main,\@LANG@COVER){\thedefaultnttitle(\@LANG@COVER)}
 \nttitle(sub,\@LANG@COVER){\thedefaultntsubtitle(\@LANG@COVER)}
-\ntdepartment(\@LANG@COVER){\thedefaultntdepartment(\@LANG@COVER)}
+\Department(\@LANG@COVER){\thedefaultntdepartment(\@LANG@COVER)}
 \ntdegreename(\@LANG@COVER){\thedefaultntdegreename(\@LANG@COVER)}
 \ntspecialization(\@LANG@COVER){\thedefaultntspecialization(\@LANG@COVER)}
 \ntauthordegree(\@LANG@COVER){\thedefaultntauthordegree(\@LANG@COVER)}
@@ -470,7 +541,7 @@
           \ntthesisfrontmatter% Before the main text (TOC, etc) — Roman page numbering
           \bookmarksetupnext{level=0}%
           \hypertarget{bmfrontmatter}{}%
-          \bookmark[level=0,dest=bmfrontmatter]{\thebkmstring(frontmatter,\@LANG@MAIN)}%
+          \bookmark[level=0,dest=bmfrontmatter]{\thebkmString(frontmatter,\@LANG@MAIN)}%
           \bookmarksetup{startatroot=false,level=1,keeplevel}%
           \ntprintlist{/@nt/print/#1}%
     }%
@@ -487,7 +558,7 @@
           \bookmarksetup{level=0}%
           \bookmarksetupnext{level=0}%
           % \hypertarget{bmbackmatter}{}
-          % \bookmark[level=0,dest=bmbackmatter1]{\thebkmstring(backmatter,\@LANG@MAIN)}
+          % \bookmark[level=0,dest=bmbackmatter1]{\thebkmString(backmatter,\@LANG@MAIN)}
           \ntprintlist{/@nt/print/#1}%
     }%
     {backcover}{%
@@ -552,7 +623,7 @@
           \hypertarget{bmglossaries}{}%
           \bookmarksetupnext{level=0}%
           \bookmark[level=0,dest=bmglossaries]
-                  {\thebkmstring(glossaries,\@LANG@MAIN)}%
+                  {\thebkmString(glossaries,\@LANG@MAIN)}%
           \printglossaries
         }{}%
       }%

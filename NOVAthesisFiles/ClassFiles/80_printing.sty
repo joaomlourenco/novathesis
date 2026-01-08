@@ -191,8 +191,8 @@
   \begingroup%
     \NTRunHook{cover/pre}%
     \NTRunHook{cover/#1/pre}%
-    \hypertarget{\thebkmstring(#1)}{}%
-    \bookmark[dest=\thebkmstring(#1)]{\thebkmstring(#1)}%
+    \hypertarget{\thebkmString(#1)}{}%
+    \bookmark[dest=\thebkmString(#1)]{\thebkmString(#1)}%
     \bookmarksetupnext{level=1}%
     \thispagestyle{empty}%
     \setCoverBgColor{#1}%
@@ -485,9 +485,9 @@
 }
 \newcommand{\@ntfixspacing}[2]{%
     \bgroup%
-    \newdata{ntfixspacingstring}%
+    \newdata{ntfixspacingString}%
     \noindent
-    \ntfixspacingstring()={The \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template (v\novathesisversion)~\@ntcite{novathesis-manual} @ \todayiso. (12cc90221730b8ba41bb3b1f8b517acd)}%md5
+    \ntfixspacingString()={The \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template (v\novathesisversion)~\@ntcite{novathesis-manual} @ \todayiso. (12cc90221730b8ba41bb3b1f8b517acd)}%md5
     \renewcommand*{\bibfont}{\hypersetup{allcolors=#1}\color{#1}%
      \sffamily\fontsize{#2}{#2}\selectfont}%
     \defbibheading{bibliography}[\bibname]{%
@@ -495,7 +495,7 @@
     \refsection%
     \begin{minipage}{\linewidth}%
     \bibfont%
-    \thentfixspacingstring()\par%
+    \thentfixspacingString()\par%
     \printbibliography%
     \end{minipage}%
     \endrefsection%
@@ -533,7 +533,7 @@
           ]%
         }{}%
         \hypertarget{bmstatement}{}%
-        \bookmark[dest=bmstatement]{\thebkmstring(statement,\@LANG@MAIN)}%
+        \bookmark[dest=bmstatement]{\thebkmString(statement,\@LANG@MAIN)}%
         \@ntloadfiles@ii{statement}%
         \NTRunHook{statement/post}%
       }{}%
@@ -547,7 +547,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print persons list {advisers | committee}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\@check@instring}[4][,]{
+\newcommand{\@check@inString}[4][,]{
 % 1 = separator
 % 2 = value
 % 3 = list
@@ -581,7 +581,7 @@
   % #5 = adviser | committee
   % #6 = {a,c} | {c,r,a,m,g}
   % \typeout{NTPRINTPERSONS 1=[#1] 2=[#2] 3=[#3] 4=[#4] 5=[#5] 6=[#6]}\NTPRINTPERSONS
-  \@check@instring{#1}{full,name,list}{@ntprintpersons}%
+  % \@check@instring{#1}{full,name,list}{@ntprintpersons}%
   \iftoggle{/novathesis/print/#5}{%
     \begin{minipage}[t]{\linewidth}%
       \setlength{\parindent}{0pt}%
@@ -605,10 +605,10 @@
   % #2 = {a,c} | {c,r,a,m,g}
   % Build list of names
   % \typeout{NTPRINTPERSONSASLIST 1=[#1] 2=[#2]}\NTPRINTPERSONSASLIST%
-  \ifdatadefined{#1titlestring}(\@LANG@COVER){%
+  \ifdatadefined{#1titleString}(\@LANG@COVER){%
     \datadefault{#1titlestringpre}(\@LANG@COVER)%
     \datadefault{#1titlestringfont}(\@LANG@COVER)%
-    \csuse{the#1titlestring}(\@LANG@COVER)%
+    \csuse{the#1titleString}(\@LANG@COVER)%
     \datadefault{#1titlestringpost}(\@LANG@COVER)%
   }{}%
   \def\@nt@personlist{}%
@@ -635,8 +635,8 @@
     #2\trimspaces{#3}%
   \else % #4 is not empty
     #1\trimspaces{#3}%
-    \@replacelastcomma@i{\thecommastring(\@LSHORT)}%
-        {\theandstring(\@LSHORT)}#4\nil%
+    \@replacelastcomma@i{\thecommaString(\@LSHORT)}%
+        {\theandString(\@LSHORT)}#4\nil%
   \fi
 }
 
@@ -666,13 +666,13 @@
   \committeetitlestringpost():=?{\\[5pt]}%
   \@ntgetmaxlen{#3}{#2}%
   \begin{tabularx}{#2\linewidth}[t]{@{}L@{}}%
-    \ifdatadefined{#3titlestring}(\@LANG@COVER){%
+    \ifdatadefined{#3titleString}(\@LANG@COVER){%
       \datadefault{#3titlestringpre}()%
       \datadefault{#3titlestringfont}()%
-      \csuse{the#3titlestring}(\@LANG@COVER)%
+      \csuse{the#3titleString}(\@LANG@COVER)%
       \datadefault{#3titlestringpost}()%
     }{%
-      \ifdatadefined{committeetitlestring}(\@LANG@COVER){%
+      \ifdatadefined{committeetitleString}(\@LANG@COVER){%
         \datadefault{committeetitlestringpre}()%
         \datadefault{committeetitlestringfont}()%
         \strut%
@@ -699,10 +699,10 @@
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS
   \@ntgetmaxlen{#3}{#2}%
   \begin{tabular}[t]{@{}r@{~~}l@{}}%
-    \ifdatadefined{#2titlestring}(\@LANG@COVER){%
+    \ifdatadefined{#2titleString}(\@LANG@COVER){%
       \datadefault{#2titlestringpre}()%
       \datadefault{#2titlestringfont}()%
-      \csuse{the#2titlestring}(\@LANG@COVER)%
+      \csuse{the#2titleString}(\@LANG@COVER)%
       \datadefault{#2titlestringpost}()%
     }{}%
     \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{2}{#2}}}{\expanded{#3}}%
@@ -720,7 +720,7 @@
     \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
     \bgroup%
       \datadefault{#1stringfont}(#2)%
-      \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
+      \datadefault{#1String}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
     \egroup%
   \fi%
   }{}%
@@ -735,7 +735,7 @@
   \datadefault{#1stringpre}(#2)%
   \bgroup%
     \datadefault{#1stringfont}(#2)%
-    \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
+    \datadefault{#1String}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
   \egroup%
   \datadefault{#1stringpost}(#2)%
   \fi%

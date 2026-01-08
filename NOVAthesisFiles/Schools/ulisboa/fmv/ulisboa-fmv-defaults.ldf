@@ -28,9 +28,9 @@
 \ifdocfinal{\ntsetup{print/statement=true}}{}
 
 \IfStrEq{\@LANG@MAIN}{en}{%
-  % \spinebkmstring(pt):=\spinebkmstring(en)
+  % \spinebkmString(pt):=\spinebkmString(en)
   \abstractorder(en):={pt,pt-ext,en}
-  \bkmstring(abstract,pt-ext):={Resumo Alargado}
+  \bkmString(abstract,pt-ext):={Resumo Alargado}
 }
 
 \setcounter{lofdepth}{2}
@@ -174,8 +174,8 @@
 
 
 % --------------------------------------------------------
-\specializationstring(pt):={, na especialidade de}
-\specializationstring(en):={, with specialization in}
+\specializationString(pt):={, na especialidade de}
+\specializationString(en):={, with specialization in}
 
 % Faculty / School
 \school(pt):={Faculdade de Medicina Veterinária}
@@ -184,14 +184,14 @@
 \school(it):={Faculty of Veterinary Medicine}
 
 \@for\myi:={a,1,m,en},{a,1,f,en},{a,2,m,en},{a,2,f,en},{c,1,m,en},{c,1,f,en},{c,2,m,en},{c,2,f,en},{ca,1,m,en},{ca,1,f,en},{ca,2,m,en},{ca,2,f,en},{t,1,m,en},{t,1,f,en},{t,2,m,en},{t,2,f,en},{a,1,m,pt},{a,1,f,pt},{a,2,m,pt},{a,2,f,pt},{c,1,m,pt},{c,1,f,pt},{c,2,m,pt},{c,2,f,pt},{ca,1,m,pt},{ca,1,f,pt},{ca,2,m,pt},{ca,2,f,pt},{t,1,m,pt},{t,1,f,pt},{t,2,m,pt},{t,2,f,pt}\do{%
-  \adviserstring(\myi):={{\THEadviserstring(\myi)}}
+  \adviserString(\myi):={{\THEadviserString(\myi)}}
 }
 
 \@for\myi:={c,r,a,ca,m,g}\do{%
   \@for\myj:={1,2}\do{%
     \@for\myk:={m,f}\do{%
       \@for\myl:={en,pt}\do{%
-        \committeestring(\myi,\myj,\myk,\myl):={\THEcommitteestring(\myi,\myj,\myk,\myl)}%
+        \committeeString(\myi,\myj,\myk,\myl):={\THEcommitteeString(\myi,\myj,\myk,\myl)}%
       }%
     }%
   }%
@@ -277,13 +277,13 @@
 \adviserslabel(fr):={TBD}
 \adviserslabel(it):={TBD}
 
-\newdata{provisionalstring}
-\provisionalstring(pt):={Documento Provisório}
-\provisionalstring(en):={Provisional Document}
-\provisionalstring(de):={TBD}
-\provisionalstring(es):={TBD}
-\provisionalstring(fr):={TBD}
-\provisionalstring(it):={TBD}
+\newdata{provisionalString}
+\provisionalString(pt):={Documento Provisório}
+\provisionalString(en):={Provisional Document}
+\provisionalString(de):={TBD}
+\provisionalString(es):={TBD}
+\provisionalString(fr):={TBD}
+\provisionalString(it):={TBD}
 
 
 
@@ -368,7 +368,7 @@
 % Doc Status
 \ntaddtocover[vspace=0cm, height=1.5cm, valign=c]{1-1,2-1}{%
   \ifdocworking{Draft: \today}{}%
-  \ifdocprovisional{\emph{\theprovisionalstring(\@LANG@COVER)}}{}%
+  \ifdocprovisional{\emph{\theprovisionalString(\@LANG@COVER)}}{}%
   \ifdocfinal{~}{}%
 }
 

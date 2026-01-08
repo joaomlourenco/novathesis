@@ -16,8 +16,8 @@
 \school(it):={Faculty of Sciences}
 
 % Department field
-\ntdepartment(pt){Departamento de Nome do Departamento}
-\ntdepartment(en){Department of Name of the Department}
+\Department(pt){Departamento de Nome do Departamento}
+\Department(en){Department of Name of the Department}
 
 % Specialization field
 \specialization(pt):={Especialidade}
@@ -49,7 +49,7 @@
 
 % Use array helper defined in novathesis.csl
 \newdata{adviserslabel}
-\newdata{provisionalstring}
+\newdata{provisionalString}
 
 \adviserslabel(phd,pt):={Tese orientada por:}
 \adviserslabel(phd,en):={Thesis supervised by:}
@@ -65,26 +65,26 @@
 \adviserslabel(es):={TBD}
 \adviserslabel(fr):={TBD}
 \adviserslabel(it):={TBD}
-\provisionalstring(pt):={Documento Provisório}
-\provisionalstring(en):={Provisional Document}
-\provisionalstring(de):={TBD}
-\provisionalstring(es):={TBD}
-\provisionalstring(fr):={TBD}
-\provisionalstring(it):={TBD}
+\provisionalString(pt):={Documento Provisório}
+\provisionalString(en):={Provisional Document}
+\provisionalString(de):={TBD}
+\provisionalString(es):={TBD}
+\provisionalString(fr):={TBD}
+\provisionalString(it):={TBD}
 
-\dissertationstring(phdplan,pt)={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
-\dissertationstring(phdprop,pt)={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
-\dissertationstring(phd,pt)={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
+\dissertationString(phdplan,pt)={Documento especialmente elaborado para a obtenção do grau de  %
+\thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
+\dissertationString(phdprop,pt)={Documento especialmente elaborado para a obtenção do grau de  %
+\thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
+\dissertationString(phd,pt)={Documento especialmente elaborado para a obtenção do grau de  %
+\thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
 
-\dissertationstring(phdplan,en)={Document written to earn the degree of %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
-\dissertationstring(phdprop,en)={Document written to earn the degree of %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
-\dissertationstring(phd,en)={Document written to earn the degree of %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
+\dissertationString(phdplan,en)={Document written to earn the degree of %
+\thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
+\dissertationString(phdprop,en)={Document written to earn the degree of %
+\thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
+\dissertationString(phd,en)={Document written to earn the degree of %
+\thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
 
 % Spine info
 \SpineSetup[%
@@ -116,11 +116,11 @@
 
 \NTAddToHook{cover/1-1/text/pre}{%
   \sffamily%
-  \ifdocfinal{\provisionalstring(\@LANG@COVER):={~}}{}%
+  \ifdocfinal{\provisionalString(\@LANG@COVER):={~}}{}%
 }
 \NTAddToHook{cover/2-1/text/pre}{%
   \sffamily%
-  \ifdocfinal{\provisionalstring(\@LANG@COVER):={~}}{}%
+  \ifdocfinal{\provisionalString(\@LANG@COVER):={~}}{}%
 }
 
 % School
@@ -154,7 +154,7 @@
 
 % Doc Status
 \ntaddtocover[degree=phd/phdprop/phdplan, vspace=0cm, height=1.9cm]{1-1,2-1}{%
-  \emph{\theprovisionalstring(\@LANG@COVER)}%
+  \emph{\theprovisionalString(\@LANG@COVER)}%
 }
 
 % Degree
@@ -187,7 +187,7 @@
 
 % Doc Status
 \ntaddtocover[degree=msc/mscplan, vspace=0cm, height=1.0cm]{1-1,2-1}{%
-  \emph{\theprovisionalstring(\@LANG@COVER)}%
+  \emph{\theprovisionalString(\@LANG@COVER)}%
 }
 
 % Advisers

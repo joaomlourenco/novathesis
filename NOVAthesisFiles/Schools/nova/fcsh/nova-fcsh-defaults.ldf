@@ -48,8 +48,8 @@
 \margin(cover,left):={2.0cm}
 \margin(cover,right):={2.0cm}
 
-% \dissertationstring(phd,pt)={\thedoctypestr(phd,pt)\ em\\[1ex] \textbf{\themajorfield(pt)}}
-% \dissertationstring(phd,en)={\thedoctypestr(phd,en)\ in\\[1ex] \textbf{\themajorfield(en)}}
+% \dissertationString(phd,pt)={\thedoctypestr(phd,pt)\ em\\[1ex] \textbf{\themajorfield(pt)}}
+% \dissertationString(phd,en)={\thedoctypestr(phd,en)\ in\\[1ex] \textbf{\themajorfield(en)}}
 
 \setmemoirfontsize{12}   % A4paper with main text at 12pt
 \ntsetup{style/font=newtx}

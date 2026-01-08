@@ -108,8 +108,8 @@
 % \spine(box,spacing)={0.5cm}
 % \spine(box,margin)={0.5mm}
 
-\specializationstring(en):={SPECIALIZATION}
-\specializationstring(pt):={ESPECIALIZAÇÃO}
+\specializationString(en):={SPECIALIZATION}
+\specializationString(pt):={ESPECIALIZAÇÃO}
 
 \spine(margin,right):=?{0.0cm}
 \spine(tas)={\THEdoctitle(\@LANG@COVER,main)}
@@ -121,7 +121,7 @@
 \spine(tas,3)={\fontsize{8.5}{6}\selectfont%
                \THEdegreenameprefix(\@DOCTYPE,\@LANG@COVER) \bfseries\themajorfield(\@LANG@COVER)\\[-3pt]}
 \spine(tas,4)={\fontsize{5.4}{5}\selectfont%
-               \textbf{\THEspecializationstring(\@LANG@COVER)}
+               \textbf{\THEspecializationString(\@LANG@COVER)}
                \fontsize{7}{5}\selectfont\theminorfield(\@LANG@COVER)\\[-5pt]}
 
 
@@ -225,7 +225,7 @@
 % -------------------------------------------------------------------------------
 % Specialization
 \ntaddtocover[halign=l,hspace=-1mm,valign=t]{1-1}{%
-  \StrCut{\THEspecializationstring(\@LANG@COVER)}{ }\@SPCZL\@dummy%
+  \StrCut{\THEspecializationString(\@LANG@COVER)}{ }\@SPCZL\@dummy%
   \fontsize{11}{11}\selectfont%
   {\ifdatadefined{specialization}(\@LANG@COVER)
     {\textbf{\@SPCZL} \THEminorfield(\@LANG@COVER)}

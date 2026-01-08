@@ -90,18 +90,18 @@
 
 
 % Rename Doctor degree
-% \degreestring(msc,m,en):={Master's}
-% \degreestring(msc,f,en):={Master's}
-% \degreestring(mscplan,m,en):={Master's}
-% \degreestring(mscplan,f,en):={Master's}
+% \degreeString(msc,m,en):={Master's}
+% \degreeString(msc,f,en):={Master's}
+% \degreeString(mscplan,m,en):={Master's}
+% \degreeString(mscplan,f,en):={Master's}
 %
-% \degreestring(msc,m,pt):={Mestre}
-% \degreestring(msc,f,pt):={Mestre}
-% \degreestring(mscplan,m,pt):={Mestre}
-% \degreestring(mscplan,f,pt):={Mestre}
+% \degreeString(msc,m,pt):={Mestre}
+% \degreeString(msc,f,pt):={Mestre}
+% \degreeString(mscplan,m,pt):={Mestre}
+% \degreeString(mscplan,f,pt):={Mestre}
 %
-% \degreestring(bsc,m,pt):={Licenciado}
-% \degreestring(bsc,f,pt):={Licenciada}
+% \degreeString(bsc,m,pt):={Licenciado}
+% \degreeString(bsc,f,pt):={Licenciada}
 
 %% DARK GREY  112,121,128
 %% LIGHT GREY 200,203,206
@@ -161,11 +161,11 @@
 \margin(cover,2-1,right):={3cm}
 
 
-\dissertationstring(msc,en)={Dissertation presented as partial requirement for obtaining the degree of \thedegreename(csig,\@LANG@COVER)}
-\dissertationstring(mscplan,en)={Dissertation plan presented as partial requirement for obtaining the degree of \thedegreename(csig,\@LANG@COVER)}
+\dissertationString(msc,en)={Dissertation presented as partial requirement for obtaining the degree of \thedegreename(csig,\@LANG@COVER)}
+\dissertationString(mscplan,en)={Dissertation plan presented as partial requirement for obtaining the degree of \thedegreename(csig,\@LANG@COVER)}
 
-\dissertationstring(msc,pt)={Dissertatação apresentada como requisito parcial para obtenção do grau de \thedegreename(csig,\@LANG@COVER)}
-\dissertationstring(mscplan,pt)={Plano de dissertação apresentado como requisito parcial para obtenção do grau de \thedegreename(csig,\@LANG@COVER)}
+\dissertationString(msc,pt)={Dissertatação apresentada como requisito parcial para obtenção do grau de \thedegreename(csig,\@LANG@COVER)}
+\dissertationString(mscplan,pt)={Plano de dissertação apresentado como requisito parcial para obtenção do grau de \thedegreename(csig,\@LANG@COVER)}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -250,7 +250,7 @@
 \ntaddtocover[halign=l, vspace=-1cm+7pt]{1-1}{%
   \fontsize{12}{12}\selectfont%
   \textcolor{imsdarkgrey}{%
-    \thedissertationstring(\option{/novathesis/doctype},\@LANG@COVER)%
+    \thedissertationString(\option{/novathesis/doctype},\@LANG@COVER)%
   }%
 }
 
@@ -285,7 +285,7 @@
 \ntaddtocover[halign=c, vspace=4]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{imsdarkgrey}{%
-    \thedissertationstring(\option{/novathesis/doctype},\@LANG@COVER)%
+    \thedissertationString(\option{/novathesis/doctype},\@LANG@COVER)%
   }%
 }
 

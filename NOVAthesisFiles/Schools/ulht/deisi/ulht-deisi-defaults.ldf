@@ -28,31 +28,31 @@
 \margin(cover,right):={2.5cm}
 
 % Redefine strings
-\dissertationstring(bsc,pt)={Relatório para obtenção do Grau de %
-\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
-\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(msc,pt)={Dissertação para obtenção do Grau de %
-\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
-\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
-\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phd,pt)={Dissertação para obtenção do Grau de %
-\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationString(bsc,pt)={Relatório para obtenção do Grau de %
+\thedegreeString(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationString(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
+\thedegreeString(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationString(msc,pt)={Dissertação para obtenção do Grau de %
+\thedegreeString(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationString(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
+\thedegreeString(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationString(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
+\thedegreeString(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationString(phd,pt)={Dissertação para obtenção do Grau de %
+\thedegreeString(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(bsc,en)={Report to obtain the Degree of %
-\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(mscplan,en)={Intermediate dissertation to obtain the Degree of %
-\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(msc,en)={Dissertation to obtain the Degree of %
-\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phdplan,en)={Thesis plan to obtain the Degree of %
-\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phdprop,en)={Thesis proposal to obtain the Degree of %
-\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phd,en)={Thesis to obtain the Degree of %
-\thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationString(bsc,en)={Report to obtain the Degree of %
+\thedegreeString(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationString(mscplan,en)={Intermediate dissertation to obtain the Degree of %
+\thedegreeString(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationString(msc,en)={Dissertation to obtain the Degree of %
+\thedegreeString(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationString(phdplan,en)={Thesis plan to obtain the Degree of %
+\thedegreeString(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationString(phdprop,en)={Thesis proposal to obtain the Degree of %
+\thedegreeString(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
+\dissertationString(phd,en)={Thesis to obtain the Degree of %
+\thedegreeString(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
 
 
 \AtEndPreamble{%

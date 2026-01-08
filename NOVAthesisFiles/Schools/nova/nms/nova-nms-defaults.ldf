@@ -59,39 +59,39 @@
 \thesiscover(plain,1-1,image):={nova-nms-front-cover-generic}
 
 % Rename Doctor degree
-\degreestring(phd,m,en):={Doctor}
-\degreestring(phd,f,en):={Doctor}
-\degreestring(phdplan,m,en):={Doctor}
-\degreestring(phdplan,f,en):={Doctor}
-\degreestring(phdprop,m,en):={Doctor}
-\degreestring(phdprop,f,en):={Doctor}
+\degreeString(phd,m,en):={Doctor}
+\degreeString(phd,f,en):={Doctor}
+\degreeString(phdplan,m,en):={Doctor}
+\degreeString(phdplan,f,en):={Doctor}
+\degreeString(phdprop,m,en):={Doctor}
+\degreeString(phdprop,f,en):={Doctor}
 
-\degreestring(phd,m,en,x):={PhD}
-\degreestring(phd,f,en,x):={PhD}
-\degreestring(phdplan,m,en,x):={PhD}
-\degreestring(phdplan,f,en,x):={PhD}
-\degreestring(phdprop,m,en,x):={PhD}
-\degreestring(phdprop,f,en,x):={PhD}
+\degreeString(phd,m,en,x):={PhD}
+\degreeString(phd,f,en,x):={PhD}
+\degreeString(phdplan,m,en,x):={PhD}
+\degreeString(phdplan,f,en,x):={PhD}
+\degreeString(phdprop,m,en,x):={PhD}
+\degreeString(phdprop,f,en,x):={PhD}
 
-\degreestring(phd,m,pt):={Doutor}
-\degreestring(phd,f,pt):={Doutora}
-\degreestring(phdplan,m,pt):={Doutor}
-\degreestring(phdplan,f,pt):={Doutora}
-\degreestring(phdprop,m,pt):={Doutor}
-\degreestring(phdprop,f,pt):={Doutora}
+\degreeString(phd,m,pt):={Doutor}
+\degreeString(phd,f,pt):={Doutora}
+\degreeString(phdplan,m,pt):={Doutor}
+\degreeString(phdplan,f,pt):={Doutora}
+\degreeString(phdprop,m,pt):={Doutor}
+\degreeString(phdprop,f,pt):={Doutora}
 
-\degreestring(msc,m,en):={Master's}
-\degreestring(msc,f,en):={Master's}
-\degreestring(mscplan,m,en):={Master's}
-\degreestring(mscplan,f,en):={Master's}
+\degreeString(msc,m,en):={Master's}
+\degreeString(msc,f,en):={Master's}
+\degreeString(mscplan,m,en):={Master's}
+\degreeString(mscplan,f,en):={Master's}
 
-\degreestring(msc,m,pt):={Mestre}
-\degreestring(msc,f,pt):={Mestre}
-\degreestring(mscplan,m,pt):={Mestre}
-\degreestring(mscplan,f,pt):={Mestre}
+\degreeString(msc,m,pt):={Mestre}
+\degreeString(msc,f,pt):={Mestre}
+\degreeString(mscplan,m,pt):={Mestre}
+\degreeString(mscplan,f,pt):={Mestre}
 
-\degreestring(bsc,m,pt):={Licenciado}
-\degreestring(bsc,f,pt):={Licenciada}
+\degreeString(bsc,m,pt):={Licenciado}
+\degreeString(bsc,f,pt):={Licenciada}
 
 \newdata{degreeprefix}
 \degreeprefix(msc,en)={Master's Degree Program in}
@@ -170,74 +170,74 @@
 \margin(cover,right):={2.5cm}
 \margin(cover,N-2,bottom):={2.1cm}
 
-\adviserstring(a,1,m,en):={Supervised by}
-\adviserstring(a,1,f,en):={Supervised by}
-\adviserstring(a,2,m,en):={Supervised by}
-\adviserstring(a,2,f,en):={Supervised by}
-\adviserstring(c,1,m,en):={}
-\adviserstring(c,1,f,en):={}
-\adviserstring(c,2,m,en):={}
-\adviserstring(c,2,f,en):={}
-\adviserstring(ca,1,m,en):={}
-\adviserstring(ca,1,f,en):={}
-\adviserstring(ca,2,m,en):={}
-\adviserstring(ca,2,f,en):={}
+\adviserString(a,1,m,en):={Supervised by}
+\adviserString(a,1,f,en):={Supervised by}
+\adviserString(a,2,m,en):={Supervised by}
+\adviserString(a,2,f,en):={Supervised by}
+\adviserString(c,1,m,en):={}
+\adviserString(c,1,f,en):={}
+\adviserString(c,2,m,en):={}
+\adviserString(c,2,f,en):={}
+\adviserString(ca,1,m,en):={}
+\adviserString(ca,1,f,en):={}
+\adviserString(ca,2,m,en):={}
+\adviserString(ca,2,f,en):={}
 
-\adviserstring(a,1,m,pt):={Orientada por}
-\adviserstring(a,1,f,pt):={Orientada por}
-\adviserstring(a,2,m,pt):={Orientada por}
-\adviserstring(a,2,f,pt):={Orientada por}
-\adviserstring(c,1,m,pt):={}
-\adviserstring(c,1,f,pt):={}
-\adviserstring(c,2,m,pt):={}
-\adviserstring(c,2,f,pt):={}
-\adviserstring(ca,1,m,pt):={}
-\adviserstring(ca,1,f,pt):={}
-\adviserstring(ca,2,m,pt):={}
-\adviserstring(ca,2,f,pt):={}
+\adviserString(a,1,m,pt):={Orientada por}
+\adviserString(a,1,f,pt):={Orientada por}
+\adviserString(a,2,m,pt):={Orientada por}
+\adviserString(a,2,f,pt):={Orientada por}
+\adviserString(c,1,m,pt):={}
+\adviserString(c,1,f,pt):={}
+\adviserString(c,2,m,pt):={}
+\adviserString(c,2,f,pt):={}
+\adviserString(ca,1,m,pt):={}
+\adviserString(ca,1,f,pt):={}
+\adviserString(ca,2,m,pt):={}
+\adviserString(ca,2,f,pt):={}
 
 
-\dissertationstring(phd,en)={A thesis submitted in partial fulfilment of the requirements\\for the degree of
-    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
+\dissertationString(phd,en)={A thesis submitted in partial fulfilment of the requirements\\for the degree of
+    \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
     {\themajorfield(\@DEGREEACR,\@LANG@COVER)}}
- \dissertationstring(phdprop,en)={A thesis proposal submitted in partial fulfilment of the requirements\\for the degree of
-     \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
+ \dissertationString(phdprop,en)={A thesis proposal submitted in partial fulfilment of the requirements\\for the degree of
+     \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
      {\themajorfield(\@DEGREEACR,\@LANG@COVER)}}
- \dissertationstring(phdplan,en)={A thesis pan submitted in partial fulfilment of the requirements\\for the degree of
-     \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
+ \dissertationString(phdplan,en)={A thesis pan submitted in partial fulfilment of the requirements\\for the degree of
+     \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
      {\themajorfield(\@DEGREEACR,\@LANG@COVER)}}
 
-\dissertationstring(phd,pt)={Uma tese apresentada em cumprimento parcial dos requisitos\\para o grau de
-    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\
+\dissertationString(phd,pt)={Uma tese apresentada em cumprimento parcial dos requisitos\\para o grau de
+    \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\
     {\themajorfield(\@DEGREEACR,\@LANG@COVER)}}
- \dissertationstring(phdprop,pt)={Uma proposata de tese apresentada em cumprimento parcial dos requisitos\\para o grau de
-    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\
+ \dissertationString(phdprop,pt)={Uma proposata de tese apresentada em cumprimento parcial dos requisitos\\para o grau de
+    \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\
     {\themajorfield(\@DEGREEACR,\@LANG@COVER)}}
- \dissertationstring(phdplan,pt)={Um plano de tese apresentada em cumprimento parcial dos requisitos\\para o grau de
-    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\
+ \dissertationString(phdplan,pt)={Um plano de tese apresentada em cumprimento parcial dos requisitos\\para o grau de
+    \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\
     {\themajorfield(\@DEGREEACR,\@LANG@COVER)}}
 
-\dissertationstring(msc,en)={A dissertation submitted in partial fulfilment of the requirements\\for the degree of
-    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
+\dissertationString(msc,en)={A dissertation submitted in partial fulfilment of the requirements\\for the degree of
+    \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
     {\themajorfield(\@DEGREEACR,\@LANG@COVER)}}
- \dissertationstring(mscplan,en)={Dissertation plan presented as partial requirement for obtaining the degree of
-     \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
+ \dissertationString(mscplan,en)={Dissertation plan presented as partial requirement for obtaining the degree of
+     \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
      {\themajorfield(\@DEGREEACR,\@LANG@COVER)}}
  
 
-\dissertationstring(msc,pt)={Dissertação apresentada como requisito parcial para obtenção do grau de
-    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\
+\dissertationString(msc,pt)={Dissertação apresentada como requisito parcial para obtenção do grau de
+    \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\
     {\themajorfield(\@DEGREEACR,\@LANG@COVER)}}
- \dissertationstring(mscplan,pt)={Plano de dissertação apresentada como requisito parcial para obtenção do grau de
-    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\
-    {\themajorfield(\@DEGREEACR,\@LANG@COVER)}}
-
-\dissertationstring(bsc,en)={Report submitted in partial fulfilment of the requirements\\for the degree of
-    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
+ \dissertationString(mscplan,pt)={Plano de dissertação apresentada como requisito parcial para obtenção do grau de
+    \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\
     {\themajorfield(\@DEGREEACR,\@LANG@COVER)}}
 
-\dissertationstring(bsc,pt)={Replatório apresentado como requisito parcial para obtenção do grau de
-    \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\
+\dissertationString(bsc,en)={Report submitted in partial fulfilment of the requirements\\for the degree of
+    \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in
+    {\themajorfield(\@DEGREEACR,\@LANG@COVER)}}
+
+\dissertationString(bsc,pt)={Replatório apresentado como requisito parcial para obtenção do grau de
+    \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\
     {\themajorfield(\@DEGREEACR,\@LANG@COVER)}}
 
 
@@ -248,11 +248,11 @@
 \phdmsc(msc,pt):={Dissertação}
 
 \newdata{dissertationstringii}
-\dissertationstringii(en)={\thephdmsc(\@DOCTYPE,\@LANG@COVER) presented as partial requirement for obtaining the \thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER) degree in \themajorfield(\@DEGREEACR,\@LANG@COVER)}
+\dissertationstringii(en)={\thephdmsc(\@DOCTYPE,\@LANG@COVER) presented as partial requirement for obtaining the \thedegreeString(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER) degree in \themajorfield(\@DEGREEACR,\@LANG@COVER)}
 \dissertationstringii(specialization,en)={\StrLen{\theminorfield(\@LANG@COVER)}[\@xpto]\IfStrEq{\@xpto}{1}{}{, with a specialization in \theminorfield(\@LANG@COVER)}}
 
 \newdata{dissertationstringii}
-\dissertationstringii(pt)={\thephdmsc(\@DOCTYPE,\@LANG@COVER) apresentada como requisito parcial para obtenção do grau de \thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER) em\\
+\dissertationstringii(pt)={\thephdmsc(\@DOCTYPE,\@LANG@COVER) apresentada como requisito parcial para obtenção do grau de \thedegreeString(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER) em\\
 \themajorfield(\@DEGREEACR,\@LANG@COVER)}
 \dissertationstringii(specialization,pt)={\StrLen{\theminorfield(\@LANG@COVER)}[\@xpto]\IfStrEq{\@xpto}{1}{}{, com especialização em \theminorfield(\@LANG@COVER)}}
 

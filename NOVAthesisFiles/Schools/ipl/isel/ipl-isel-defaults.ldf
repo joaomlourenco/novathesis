@@ -20,8 +20,8 @@
 % \majorfield(en):={Industrial Engineering and Management}
 
 % Department
-\ntdepartment(pt){Área Departamental de \themajorfield(pt)}
-\ntdepartment(en){Department of \themajorfield(en)}
+\Department(pt){Área Departamental de \themajorfield(pt)}
+\Department(en){Department of \themajorfield(en)}
 
 % Comiittee printing order
 \committeeorder():={c,m}%
@@ -51,21 +51,21 @@
 \margin(cover,right):={2.5cm}
 
 
-% \dissertationstring(bsc,pt)={Relatório para obtenção do Grau de %
-% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
-% \dissertationstring(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
-% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
-% \dissertationstring(msc,pt)={Dissertação de natureza científica para obtenção do grau de  %
-% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
-% \dissertationstring(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
-% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
-% \dissertationstring(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
-% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
-% \dissertationstring(phd,pt)={Dissertação para obtenção do Grau de %
-% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
-\copyrighttextstring(pt)={O \theschool(\@LANG@COVER)\ e o \theuniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+% \dissertationString(bsc,pt)={Relatório para obtenção do Grau de %
+% \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+% \dissertationString(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
+% \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+% \dissertationString(msc,pt)={Dissertação de natureza científica para obtenção do grau de  %
+% \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+% \dissertationString(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
+% \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+% \dissertationString(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
+% \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+% \dissertationString(phd,pt)={Dissertação para obtenção do Grau de %
+% \thedegreeString(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
+\copyrighttextString(pt)={O \theschool(\@LANG@COVER)\ e o \theuniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
 
-\copyrighttextstring(en)={The \theschool(\@LANG@COVER)\ and the \theuniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+\copyrighttextString(en)={The \theschool(\@LANG@COVER)\ and the \theuniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

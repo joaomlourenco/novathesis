@@ -110,10 +110,10 @@
 % \region(photo,height):={13.2cm}
 \region(photo,width)={\paperwidth-\theregion(photo,left)-1.9cm}
 
-\dissertationstring(phd,en):={Dissertation presented to obtain the \textbf{Ph.D degree in}}
-\dissertationstring(phd,pt):={Dissertação apresentada para obter o \textbf{grau de Doutor em}}
-\dissertationstring(msc,en):={Dissertation presented to obtain the \textbf{M.Sc degree in}}
-\dissertationstring(msc,pt):={Dissertação apresentada para obter o \textbf{grau de Mestre em}}
+\dissertationString(phd,en):={Dissertation presented to obtain the \textbf{Ph.D degree in}}
+\dissertationString(phd,pt):={Dissertação apresentada para obter o \textbf{grau de Doutor em}}
+\dissertationString(msc,en):={Dissertation presented to obtain the \textbf{M.Sc degree in}}
+\dissertationString(msc,pt):={Dissertação apresentada para obter o \textbf{grau de Mestre em}}
 
 
 
@@ -223,7 +223,7 @@
     % Dissertation string
     \node [inner sep=0pt,anchor=west, yshift={\theregion(itqb,top)+28.75mm}]
                     {\fontsize{14}{14}\selectfont
-                     \thedissertationstring(\option{/@nt/document/docclass},%
+                     \thedissertationString(\option{/@nt/document/docclass},%
                                             \@LANG@COVER)};
     % Major field
     \node [inner sep=0pt,anchor=west, yshift={\theregion(itqb,top)+20.0mm}]

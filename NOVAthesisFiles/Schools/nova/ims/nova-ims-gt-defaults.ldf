@@ -17,13 +17,13 @@
 \degreenameprefix(msc,en):={Master of Science in}
 \ntdegreename(en){Geospatial Technologies}
 
-\adviserstring(a,a,en):={Dissertation supervised by:}
-\adviserstring(a,c,en):={Co-supervised by:}
+\adviserString(a,a,en):={Dissertation supervised by:}
+\adviserString(a,c,en):={Co-supervised by:}
 
 \adviserstringfont(a):={\bfseries}
 \adviserstringfont(c):={\bfseries}
 
-\dissertationstring(msc,en)={Dissertation submitted in partial fulfillment of the requirements\\
+\dissertationString(msc,en)={Dissertation submitted in partial fulfillment of the requirements\\
 for the Degree of \emph{\thedegreename(en)}}
 
 
@@ -182,7 +182,7 @@ for the Degree of \emph{\thedegreename(en)}}
 
 \ntaddtocover[vspace=0mm,height=70.5mm,halign=l,valign=t]{1-1}{%
   \fontsize{13}{13}\selectfont%
-  \thedissertationstring(msc,en)%
+  \thedissertationString(msc,en)%
 }
 
 \ntaddtocover[vspace=0mm,height=1mm,halign=l,valign=t]{1-1}{%

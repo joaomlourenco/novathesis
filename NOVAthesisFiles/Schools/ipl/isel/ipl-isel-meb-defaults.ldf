@@ -42,17 +42,17 @@
 
 % \thesiscover(1-1,image):={MEB_CapaVersaoDefinitiva_TFM_v02}
 
-\dissertationstring(bsc,pt)={Trabalho Final de Licenciatura para obtenção do grau de\\%
+\dissertationString(bsc,pt)={Trabalho Final de Licenciatura para obtenção do grau de\\%
 Mestre em Engenharia Biomédica}
-\dissertationstring(mscplan,pt)={Trabalho Final de Mestrado para obtenção do grau de\\%
+\dissertationString(mscplan,pt)={Trabalho Final de Mestrado para obtenção do grau de\\%
 Mestre em Engenharia Biomédica}
-\dissertationstring(msc,pt)={Trabalho Final de Mestrado para obtenção do grau de\\%
+\dissertationString(msc,pt)={Trabalho Final de Mestrado para obtenção do grau de\\%
 Mestre em Engenharia Biomédica}
-\dissertationstring(bsc,en)={Trabalho Final de Licenciatura para obtenção do grau de\\%
+\dissertationString(bsc,en)={Trabalho Final de Licenciatura para obtenção do grau de\\%
 Mestre em Engenharia Biomédica}
-\dissertationstring(mscplan,en)={Trabalho Final de Mestrado para obtenção do grau de\\%
+\dissertationString(mscplan,en)={Trabalho Final de Mestrado para obtenção do grau de\\%
 Mestre em Engenharia Biomédica}
-\dissertationstring(msc,en)={Trabalho Final de Mestrado para obtenção do grau de\\%
+\dissertationString(msc,en)={Trabalho Final de Mestrado para obtenção do grau de\\%
 Mestre em Engenharia Biomédica}
 
 
@@ -131,8 +131,8 @@ Mestre em Engenharia Biomédica}
 \ntaddtocover[vspace=8.75mm,valign=t]{1-1,2-1}{%
   % \adviserstringfont(a):={}%
   % \adviserstringfont(c):={\bfseries}%
-  \commastring(pt)={\\}
-  \andstring(pt)={\\}
+  \commaString(pt)={\\}
+  \andString(pt)={\\}
   \fontsize{11}{11}\selectfont%
   \underline{\@nt@printgrouptitle@text{adviser}{a}}\\[1ex]%
   \ntprintpersons[name]{0.9}[c]{0}{adviser}{a,c}%
@@ -143,10 +143,10 @@ Mestre em Engenharia Biomédica}
 \ntaddtocover[vspace=1,status=final]{1-1,2-1}{%
   \ifmaindoc{%
     \fontsize{11}{11}\selectfont%
-    \underline{\csuse{thecommitteetitlestring}(\@LANG@COVER)}\\[4pt]%
+    \underline{\csuse{thecommitteetitleString}(\@LANG@COVER)}\\[4pt]%
     \persongrouppost():={\\[5pt]}
     \personpost():={\\[-1pt]}
-    \committeetitlestring(pt):={}%
+    \committeetitleString(pt):={}%
     \ifdocfinal{\ntprintpersons[name]{1}[c]{2}{committee}{\thecommitteeorder()}\mbox{}}{\mbox{}}%
   }{\mbox{}}%
 }

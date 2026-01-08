@@ -105,7 +105,7 @@
     \NTRunHook{#1/pre}%
     \iffileadded{#1}{%
       \hypertarget{bm#1}{}%
-      \bookmark[dest=bm#1]{\thebkmstring(#1,\@LANG@MAIN)}%
+      \bookmark[dest=bm#1]{\thebkmString(#1,\@LANG@MAIN)}%
       \@ntloadfiles@ii{#1}%
     }{}%
     \NTRunHook{#1/post}%
@@ -154,7 +154,7 @@
   \ifoptionnil{/novathesis/print/sdgs/list}{}{%
       \vfill%
       \raggedright\noindent%
-      \textbf{\thesdgstring(\@LSHORT):}\\[1ex]
+      \textbf{\thesdgString(\@LSHORT):}\\[1ex]
       \edef\@sdgtype{\option{/novathesis/print/sgds/type}}
       \IfFileExists{\DIRNTFILES/Images/sdg-\@LSHORT/1-\@sdgtype.pdf}
           {\def\@spnfolder{\DIRNTFILES/Images/sdg-\@LSHORT}}
@@ -200,7 +200,7 @@
       \ntselectlang{\@ABS@LANG}%
       % \typeout{NTL=\languagename [#1]}\bbbb
       % \hypertarget{bmabstract#1}{}%
-      % \bookmark[dest=bmabstract#1]{\thebkmstring(abstract,#1)}%
+      % \bookmark[dest=bmabstract#1]{\thebkmString(abstract,#1)}%
       \NTRunHook{abstract/pre}%
       \NTRunHook{abstract/#1/pre}%
       \printabstracttitle{#1}%
@@ -336,7 +336,7 @@
     \ifoptiondefined{/@nt/listof/\@matter}{
       \ifnum\value{\option{/@nt/listof/\@matter/@size}}>1\relax
         \hypertarget{bmlistof\@matter}{}%
-        \bookmark[level=0,dest=bmlistof\@matter]{\thebkmstring(listof,\@LANG@MAIN)}%
+        \bookmark[level=0,dest=bmlistof\@matter]{\thebkmString(listof,\@LANG@MAIN)}%
         \bookmarksetupnext{level=1}%
       \else
         \bookmarksetupnext{level=0}%
@@ -411,7 +411,7 @@
     \NTRunHook{acknowledgementsblock/pre}%
       \refsection%
       \renewcommand{\@ntcite}[1]{\cite{##1}}%
-      \bigskip\footnoterule#1\smallskip\noindent\theacknowledgmentsstring(\@LANG@MAIN)%
+      \bigskip\footnoterule#1\smallskip\noindent\theacknowledgmentsString(\@LANG@MAIN)%
       \printcompactbib%
       \endrefsection%
     \NTRunHook{acknowledgementsblock/post}%
@@ -423,7 +423,7 @@
       \begingroup
         \ntselectlang{\@LANG@COPYRIGHT}%
         \hypertarget{bmcopyright}{}%
-        \bookmark[dest=bmcopyright]{\thebkmstring(copyright,\@LANG@MAIN)}%
+        \bookmark[dest=bmcopyright]{\thebkmString(copyright,\@LANG@MAIN)}%
         \NTRunHook{copyright/pre}%
         \ntprintcopyrightpage%
         \NTRunHook{copyright/post}%
@@ -515,7 +515,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{ntacknowledgements}{%
   % \bookmarksetupnext{level=1}%
-  \chapter*{\thebkmstring(acknowledgements,\@LANG@MAIN)}%
+  \chapter*{\thebkmString(acknowledgements,\@LANG@MAIN)}%
 }{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -523,7 +523,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\printabstracttitle}[1]{%
   \bookmarksetupnext{level=1}
-  \chapter{\thebkmstring(abstract,#1)}%
+  \chapter{\thebkmString(abstract,#1)}%
 }
 
 
@@ -539,7 +539,7 @@
     \begingroup%
     \datadefault{keywordsstringprefix}(\@LSHORT)%
     \datadefault{keywordsstringfont}(\@LSHORT)%
-    \csuse{thekeywordsstring}(\@LSHORT)%
+    \csuse{thekeywordsString}(\@LSHORT)%
     \datadefault{keywordsstringsuffix}(\@LSHORT)%
     \endgroup%
     % \enspace
@@ -555,10 +555,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \providecommand\thepresentationtext{%
   \thedissertationstringfont()%
-  \ifdatadefined{dissertationstring}(\@DOCTYPE,\@LANG@COVER){%
-    \thedissertationstring(\@DOCTYPE,\@LANG@COVER)%
+  \ifdatadefined{dissertationString}(\@DOCTYPE,\@LANG@COVER){%
+    \thedissertationString(\@DOCTYPE,\@LANG@COVER)%
   }{%
-    \thedissertationstring(\@DOCCLASS,\@LANG@COVER)%
+    \thedissertationString(\@DOCCLASS,\@LANG@COVER)%
   }%
 }
 
@@ -567,7 +567,7 @@
     \noindent%
     Copyright \textcopyright\ \thedocauthor(name), %
     \theschool(\@LANG@COPYRIGHT), \theuniversity(\@LANG@COPYRIGHT).\\%
-    \thecopyrighttextstring(\@LANG@COPYRIGHT)%
+    \thecopyrighttextString(\@LANG@COPYRIGHT)%
     % \ntselectlang{\@LANG@MAIN}%
 }
 
