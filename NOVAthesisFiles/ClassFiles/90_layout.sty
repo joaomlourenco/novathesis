@@ -298,8 +298,6 @@
   \iffileadded{appendix}{%
     \renewcommand{\appendixtocname}{\appendixplname}%
     \appendix\addappheadtotoc%
-    \chapter{test of appendix}
-    \section{blah}
     \@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
   }{}%
 }
@@ -372,9 +370,19 @@
 %% Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand*{\ntprintbib}[1][]{%
+\newcommand*{\ntprintbibsingle}[1][]{%
+  \bookmarksetup{startatroot}%
   \NTRunHook{printbib/pre}%
   \printbibliography[#1]%
+  \ntfixspacing%
+  \NTRunHook{printbib/post}%
+}
+
+\newcommand*{\ntprintbibseparate}[1][]{%
+  \bookmarksetup{startatroot}%
+  \NTRunHook{printbib/pre}%
+    \printbibliography[nottype=online,#1]; % Print the bibliography.
+    \printbibliography[title=\option{/novathesis/print/webography},type=online,#1]; % Print the bibliography.
   \ntfixspacing%
   \NTRunHook{printbib/post}%
 }
