@@ -2,3 +2,60 @@
 
 \makeatletter
 
+\vfill
+
+I declare that this thesis is the result of my own personal and independent research. Its content is original and all sources consulted have been duly acknowledged in the text, footnotes, and bibliography.
+
+
+\NewDocumentCommand { \signature } { m }
+
+\begin{center}  
+  The candidate,\par
+
+  \vspace{1.5cm}
+
+  \rule{\widthof{\textit{\thedocauthor(name)}}}{0.75pt}\par
+
+  \textit{\thedocauthor(name)}
+\end{center}
+
+\vfill
+
+I hereby declare that this thesis is in a suitable condition to be evaluated by the examination committee to be appointed.
+
+  \setbox0=\hbox{\@nt@printgrouptitle{adviser}{a}}
+  [\@nt@advgender] [\@nt@advnumber]
+  \@nt@printgrouptitle{adviser}{a} 
+  [\@nt@advgender] [\@nt@advnumber]
+
+
+  \adviserstringpre():={}%
+  \adviserstringpost():={: }%
+  \adviserstringfont():={\bfseries}%
+  \ntprintpersons[list]{1.0}{1}{adviser}{a,c}%
+
+\vfill
+\null
+
+  % #1* = { full | name | list }
+  % #2  = width in % of textwidth
+  % #3* = positioning
+  % #4  = number of columns
+  % #5  = adviser | committee
+  % #6  = {a,c} | {c,r,a,m,g}
+
+
+\endinput
+
+Declara-se que esta tese se encontra em condições de ser apreciada pelo júri a designar.
+As Orientadoras,
+
+Maria Fernandes Homem de Sousa Lobo Gonçalves
+
+Lisboa, 29 de dezembro de 2023
+
+Marisa Lobo Lousada
+
+Aveiro, 29 de dezembro de 2023
+
+\vfill

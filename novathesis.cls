@@ -91,16 +91,18 @@
 
 
 %============================================================
-\def\DIR@CONFIG{0-Config}
-\def\DIR@FRONTMATTER{1-FrontMatter}
-\def\DIR@MAINMATTER{2-MainMatter}
-\def\DIR@BACKMATTER{3-BackMatter}
-\def\DIR@BIBLIOGRAPHY{4-Bibliography}
-\def\DIR@FIGURES{5-Figures}
-\def\DIR@NTFILES{NOVAthesisFiles}
-\def\NT@FONTSTYLES{FontStyles}
-\def\DIR@SCHOOLS{\DIR@NTFILES/Schools}
-
+\def\DIRCONFIG{0-Config}
+\def\DIRFRONTMATTER{1-FrontMatter}
+\def\DIRMAINMATTER{2-MainMatter}
+\def\DIRBACKMATTER{3-BackMatter}
+\def\DIRBIBLIOGRAPHY{4-Bibliography}
+\def\DIRFIGURES{5-Figures}
+\def\DIRNTFILES{NOVAthesisFiles}
+\def\DIRFONTSTYLES{\DIRNTFILES/FontStyles}
+\def\DIRSCHOOLS{\DIRNTFILES/Schools}
+\def\DIRSTRINGS{\DIRNTFILES/Strings}
+\def\DIRCHAPSTYLES{\DIRNTFILES/ChapStyles}
+\def\DIRIMAGES{\DIRNTFILES/Images}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  MEMOIR CUSTOMIZATION AND LOADING
@@ -108,7 +110,7 @@
 %%       configuration file “0-Config/0_memoir.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntmemoirsetup}[1]{\PassOptionsToClass{#1}{memoir}}
-\input{\DIR@CONFIG/0_memoir}
+\input{\DIRCONFIG/0_memoir}
 \LoadClass{memoir}
 
 \OnehalfSpacing% One-and-half spacing
@@ -134,7 +136,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 2. TEMPLATE CORE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\xappto\input@path{{\DIR@NTFILES/}{\DIR@NTFILES/Strings/}}
+\xappto\input@path{{\DIRNTFILES/}{\DIRSTRINGS/}}
 
 \RequirePackage{options2}
 \RequirePackage{nt-version}
@@ -195,7 +197,7 @@
         {\PassOptionsToPackage{#1}{biblatex}}%
   }
 
-\input{\DIR@CONFIG/2_biblatex}
+\input{\DIRCONFIG/2_biblatex}
 
 % TODO defernumbers=true??
 \RequirePackage{biblatex}
@@ -287,7 +289,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Configure Graphics
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\expandafter\graphicspath\expandafter{\expandafter{\DIR@FIGURES/}}
+\expandafter\graphicspath\expandafter{\expandafter{\DIRFIGURES/}}
 \DeclareGraphicsExtensions{.pdf,.png,.tif,.jpg}
 \providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
 \providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
@@ -628,8 +630,9 @@
   {
     % Ensure we start on a new page (memoir command)
     \clearforchapter
+    % \typeout{ChapterNoTitle=[#1]}\CHAPTERNOTITLE
     \hypertarget{bm#1}{}%
-    \bookmark[dest=bm#1]{\thebkmstring(#1,\@LANG@MAIN)}%    
+    \bookmark[dest=bm#1]{#1}%    
     \noindent \ignorespaces
   }
 
@@ -791,7 +794,7 @@
 
 % --------------------------------------------------------
 % The NOVAthesis logo
-\def\novathesisimg{\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{\DIR@NTFILES/Images/novathesis-text}}
+\def\novathesisimg{\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{\DIRIMAGES/novathesis-text}}
 \def\novathesistxt{\textsl{novathesis}}
 \ifdef{\iftutex}
     {\newcommand{\novathesis}{\novathesisimg}}
@@ -822,7 +825,7 @@
     m
     m
     O{https://raw.githubusercontent.com/joaomlourenco/novathesis-extras/main/Fonts}
-    O{\DIR@NTFILES/FontStyles/Fonts} }
+    O{\DIRFONTSTYLES/Fonts} }
 {
   % #1 = format (ttf)
   % #2 = font name (Calibri)
@@ -1025,17 +1028,17 @@
 \options{/@nt/folders/.new choice={
   copyright=.,
   statement=.,
-  cover=\DIR@FRONTMATTER,
-  dedicatory=\DIR@FRONTMATTER,
-  acknowledgements=\DIR@FRONTMATTER,
-  quote=\DIR@FRONTMATTER,
-  abstract=\DIR@FRONTMATTER,
-  glossaries=\DIR@FRONTMATTER,
-  cover=\DIR@FRONTMATTER,
-  chapter=\DIR@MAINMATTER,
-  appendix=\DIR@BACKMATTER,
-  annex=\DIR@BACKMATTER,
-  bib=\DIR@BIBLIOGRAPHY,
+  cover=\DIRFRONTMATTER,
+  dedication=\DIRFRONTMATTER,
+  acknowledgements=\DIRFRONTMATTER,
+  quote=\DIRFRONTMATTER,
+  abstract=\DIRFRONTMATTER,
+  glossaries=\DIRFRONTMATTER,
+  cover=\DIRFRONTMATTER,
+  chapter=\DIRMAINMATTER,
+  appendix=\DIRBACKMATTER,
+  annex=\DIRBACKMATTER,
+  bib=\DIRBIBLIOGRAPHY,
 }}
 
 
@@ -1327,7 +1330,7 @@
 %      Please open and edit the appropriate
 %       configuration file “0-Config/1_novathesis.tex”
 %============================================================
-\input{\DIR@CONFIG/1_novathesis}
+\input{\DIRCONFIG/1_novathesis}
 \def\@DOCTYPE{\option{/novathesis/doctype}}
 \def\@DOCSTATUS{\option{/novathesis/docstatus}}
 
@@ -1362,13 +1365,13 @@
 %     \ntaddtoprintorder{backmatter}{index}
 %     \RequirePackage{imakeidx}
 %     % \makeindex[intoc,columns=2,options=-s myindexstyle]%
-%     \makeindex[intoc,columns=2,options=-s  \DIR@NTFILES/ntindexstyle]
+%     \makeindex[intoc,columns=2,options=-s  \DIRNTFILES/ntindexstyle]
 %   }
 % }{}
 
 %--------------------------------
 % “biblatex” stuff
-% \ntaddfile{bib}{./\DIR@NTFILES/fix-bib.bib}%
+% \ntaddfile{bib}{./\DIRNTFILES/fix-bib.bib}%
 % \AtEndDocument{\nocite{novathesis-manual}}%
 % \letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
 % \RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
@@ -1397,9 +1400,9 @@
 \newcommand*{\@nt@setlangloaded}[1]{%
       % \typeout{LL=#1}\LL
       \if\instring{,#1,}{,\@LANG@LOADED,}\else%
-        \IfFileExists{\DIR@NTFILES/Strings/strings-#1.ldf}%
+        \IfFileExists{\DIRSTRINGS/strings-#1.ldf}%
                      {\eappto{\@LANG@LOADED}{\@langs@loaded@sep#1}\def\@langs@loaded@sep{,}}%
-                      {\ClassError{novathesis}{File not found: “\DIR@NTFILES/Strings/strings-#1.ldf” file!}%
+                      {\ClassError{novathesis}{File not found: “\DIRSTRINGS/strings-#1.ldf” file!}%
                                   {Add a file with the translations for this language.}}%
       \fi%
 }
@@ -1437,10 +1440,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \@for\myi:=\expanded{\@LANG@LOADED}\do{%
-  \InputIfFileExists{\DIR@NTFILES/Strings/strings-\myi.ldf}%
+  \InputIfFileExists{\DIRSTRINGS/strings-\myi.ldf}%
                     {}%
                     {\ClassError{novathesis}
-                                {File not found: “\DIR@NTFILES/Strings/strings-#1.ldf” file!}%
+                                {File not found: “\DIRSTRINGS/strings-#1.ldf” file!}%
                                 {Add a file with the translations for this language.}}%
 }%
 
@@ -1784,7 +1787,7 @@
           \bookmarksetupnext{level=0}%
           \hypertarget{bmfrontmatter}{}%
           \bookmark[dest=bmfrontmatter]{\thebkmstring(frontmatter,\@LANG@MAIN)}%
-          \bookmarksetup{rellevel=1}%
+          \bookmarksetupnext{rellevel=1}%
           \ntprintlist{/@nt/print/#1}%
     }%
     {mainmatter}{%
@@ -1881,7 +1884,7 @@
 \printorder(frontmatter,final):={%
   statement;       % The statement page
   copyright;       % (*) The copyright page
-  dedicatory;      % (*) Print the dedicatory
+  dedication;      % (*) Print the dedication
   acknowledgements;% (*) Print the acknowledgments
   quote;           % (*) Print the quote
   abstracts;       % Print abstracts in multiple languages.
@@ -1893,7 +1896,7 @@
 \printorder(frontmatter,provisional):={%
   statement;       % The statement page
   copyright;       % (*) The copyright page
-  dedicatory;      % (*) Print the dedicatory
+  dedication;      % (*) Print the dedication
   acknowledgements;% (*) Print the acknowledgments
   quote;           % (*) Print the quote
   abstracts;       % Print abstracts in multiple languages.
@@ -2020,8 +2023,8 @@
 %% Update Schoold's images folder
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ntfor\match:={\@UNIV,\@UNIV/\@SCHL}\do{%
-    \IfFileExists{\DIR@NTFILES/Schools/\match/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
-            \prependtographicspath{{\DIR@NTFILES/Schools/\match/Images/},}}{}%
+    \IfFileExists{\DIRSCHOOLS/\match/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
+            \prependtographicspath{{\DIRSCHOOLS/\match/Images/},}}{}%
 }
 
 
@@ -2029,28 +2032,28 @@
 %  UNIVERSITY/SCHOOL SPECIFIC MATERIALS
 %  configuration file “0-Config/9_<university>_<school>.tex”
 %============================================================
-\InputIfFileExists{\DIR@NTFILES/Schools/\@UNIV/\@UNIV-defaults.ldf}
+\InputIfFileExists{\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.ldf}
     {}
     {\PackageError{novathesis}
-                  {Missing file “\DIR@NTFILES/Schools/\@UNIV/\@UNIV-defaults.ldf”}{}}
+                  {Missing file “\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.ldf”}{}}
 
 \ntfor\match:={%
       \@UNIV-\@SCHL-\@DEGREEACR,%
       \@UNIV-\@SCHL%
   }\do{%
-      \IfFileExists{\DIR@NTFILES/Schools/\@UNIV/\@SCHL/\match-defaults.ldf}
-          {\input{\DIR@NTFILES/Schools/\@UNIV/\@SCHL/\match-defaults.ldf}\ntforbreak}
+      \IfFileExists{\DIRSCHOOLS/\@UNIV/\@SCHL/\match-defaults.ldf}
+          {\input{\DIRSCHOOLS/\@UNIV/\@SCHL/\match-defaults.ldf}\ntforbreak}
           {}%
   }
 [\PackageError{novathesis}
-              {Missing file “\DIR@NTFILES/Schools/\@UNIV/\@SCHL-defaults.ldf”}
+              {Missing file “\DIRSCHOOLS/\@UNIV/\@SCHL-defaults.ldf”}
               {}]
 
 \ValidateLtxProcessor{\@UNIV}{\@SCHL}{\@DEGREEACR}
 
-\IfFileExists{\DIR@CONFIG/9_\@UNIV_\@SCHL.tex}
-     {\def\@ntsetuplevel{\@UNIV/\@SCHL/}\input{\DIR@CONFIG/9_\@UNIV_\@SCHL.tex}}
-     {\def\@ntsetuplevel{\@UNIV/}\InputIfFileExists{\DIR@CONFIG/9_\@UNIV.tex}{}{}}
+\IfFileExists{\DIRCONFIG/9_\@UNIV_\@SCHL.tex}
+     {\def\@ntsetuplevel{\@UNIV/\@SCHL/}\input{\DIRCONFIG/9_\@UNIV_\@SCHL.tex}}
+     {\def\@ntsetuplevel{\@UNIV/}\InputIfFileExists{\DIRCONFIG/9_\@UNIV.tex}{}{}}
 \def\@ntsetuplevel{}
 
 
@@ -2116,7 +2119,7 @@
 %   Please open and edit the appropriate
 %       configuration file “0-Config/3_cover.tex”
 %============================================================
-\input{\DIR@CONFIG/3_cover}
+\input{\DIRCONFIG/3_cover}
 % \NTRunHook{cover}
 
 % Patch month from number to string in the proper language
@@ -2127,8 +2130,8 @@
 %   Please open and edit the appropriate
 %       configuration file “0-Config/4_files.tex”
 %============================================================
-\input{\DIR@CONFIG/4_files}
-\ntaddfile{bib}{./\DIR@NTFILES/fix-bib.bib}
+\input{\DIRCONFIG/4_files}
+\ntaddfile{bib}{./\DIRNTFILES/fix-bib.bib}
 % \NTRunHook{files}
 
 %============================================================
@@ -2139,7 +2142,7 @@
 % \newcommand{\BeforeHyperref}[1]{\NTAddToHook{packages/pre}{#1}}
 % \newcommand{\AfterHyperref}[1]{\NTAddToHook{packages/post}{#1}}
 % \NTRunHook{packages/pre}
-\AtEndPreamble{\input{\DIR@CONFIG/5_packages}}
+\AtEndPreamble{\input{\DIRCONFIG/5_packages}}
 % \NTRunHook{packages/post}
 
 %============================================================
@@ -2152,7 +2155,7 @@
 % can be changhed with "\ntsetup{print/other}"
   \makeatletter
   \NTRunHook{list_of/pre}
-  \input{\DIR@CONFIG/6_list_of}
+  \input{\DIRCONFIG/6_list_of}
   \NTRunHook{list_of/post}
 }
 
@@ -2163,7 +2166,7 @@
 \AtEndPreamble{
   \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{
     % \RequirePackage[autobib=true,nocite=false]{aidisclose} % AI disclose declaration
-    \input{\DIR@CONFIG/7-aidisclose}
+    \input{\DIRCONFIG/7-aidisclose}
   }{\gdef\gaiversion{0.0.0}}
 }
 
@@ -2241,9 +2244,9 @@
   \iftoggle{/novathesis/print/copyright}{% if copuyright toggle is on
     \IfFileExistsInDirsTF {copyright} 
       {
-        {\DIR@NTFILES/Schools/\@UNIV/\@SCHL/},
-        {\DIR@NTFILES/Schools/\@UNIV/},
-        {\DIR@NTFILES/},
+        {\DIRSCHOOLS/\@UNIV/\@SCHL/},
+        {\DIRSCHOOLS/\@UNIV/},
+        {\DIRNTFILES/},
       }
       {
         \ntaddfile{copyright}{#1}
@@ -2257,9 +2260,9 @@
 
 \ifoptionequal{/novathesis/spine/layout}{off}{}{% print the spine
   \InputIfFileExistsInDirsTF{novathesis-spine.sty}{
-          {\DIR@NTFILES/Schools/\@UNIV/\@SCHL/},
-          {\DIR@NTFILES/Schools/\@UNIV/},
-          {\DIR@NTFILES/},
+          {\DIRSCHOOLS/\@UNIV/\@SCHL/},
+          {\DIRSCHOOLS/\@UNIV/},
+          {\DIRNTFILES/},
   }{\AtEndDocument{\csuse{ntprintspine}}}
    {\ClassError{novathesis}{No “novathesis-spine” file found.}{}}%
 }
@@ -2725,17 +2728,17 @@
         \iffileadded{statement}{}{%ELSE
         \IfFileExistsCase
           {
-            {\DIR@SCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-\@LANG@MAIN-statement}
+            {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-\@LANG@MAIN-statement}
                   {\ntaddfile{statement}{./##1.tex}},
-            {\DIR@SCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-statement}
+            {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-statement}
                   {\ntaddfile{statement}{./##1.tex}},
-            {\DIR@SCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@LANG@MAIN-statement}
+            {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@LANG@MAIN-statement}
                   {\ntaddfile{statement}{./##1.tex}},
-            {\DIR@SCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-statement}
+            {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-statement}
                   {\ntaddfile{statement}{./##1.tex}},
-            {\DIR@SCHOOLS/\@UNIV-\@LANG@MAIN-statement}
+            {\DIRSCHOOLS/\@UNIV-\@LANG@MAIN-statement}
                   {\ntaddfile{statement}{./##1.tex}},
-            {\DIR@SCHOOLS/\@UNIV-statement}
+            {\DIRSCHOOLS/\@UNIV-statement}
                   {\ntaddfile{statement}{./##1.tex}},
           }
           { % NOT FOUND
@@ -3055,16 +3058,16 @@
   \ifmaindoc{% THEN it is a main document
     \NTRunHook{#1/pre}%
     \iffileadded{#1}{%
-      \bookmarksetupnext{rellevel=0}%
-      \ChapterNoTitle{#1}
+      \expandafter\ChapterNoTitle\expandafter{\thebkmstring(#1,\@LANG@COPYRIGHT)}
       \PrintAddedFile{#1}%
+      \bookmarksetupnext{rellevel=0}%
     }{}%
     \NTRunHook{#1/post}%
     \clearforchapter%
   }{}% It is a plan or proposal type document
 }
 
-\newcommand{\ntprintdedicatory}{\@nt@printifmaindoc@i{dedicatory}}
+\newcommand{\ntprintdedication}{\@nt@printifmaindoc@i{dedication}}
 
 \newcommand{\ntprintquote}{\@nt@printifmaindoc@i{quote}}
 
@@ -3076,10 +3079,10 @@
     \GAIrenderDeclaration[3]{\thedocauthor(name)}%
   }{\ifoptionequal{/novathesis/print/aidisclosure}{false}
       {} % do not print AI Disclosure
-      {\IfFileExists{\DIR@FRONTMATTER/\option{/novathesis/print/aidisclosure}}
+      {\IfFileExists{\DIRFRONTMATTER/\option{/novathesis/print/aidisclosure}}
         {%
           \bookmarksetupnext{rellevel=0}%
-          \input{\DIR@FRONTMATTER/\option{/novathesis/print/aidisclosure}}%
+          \input{\DIRFRONTMATTER/\option{/novathesis/print/aidisclosure}}%
         }
         {\ClassError{novathesis}
                     {AI Disclusre file not found: '\option{/novathesis/print/aidisclosure}'.}
@@ -3107,14 +3110,14 @@
       \raggedright\noindent%
       \textbf{\thesdgstring(\@LSHORT):}\\[1ex]
       \edef\@sdgtype{\option{/novathesis/print/sgds/type}}
-      \IfFileExists{\DIR@NTFILES/Images/sdg-\@LSHORT/1-\@sdgtype.pdf}
-          {\def\@spnfolder{\DIR@NTFILES/Images/sdg-\@LSHORT}}
-          {\def\@spnfolder{\DIR@NTFILES/Images/sdg-en}}
+      \IfFileExists{\DIRIMAGES/sdg-\@LSHORT/1-\@sdgtype.pdf}
+          {\def\@spnfolder{\DIRIMAGES/sdg-\@LSHORT}}
+          {\def\@spnfolder{\DIRIMAGES/sdg-en}}
       \noindent%\linespread{1.5}\selectfont
       \optionlistdo{/novathesis/print/sdgs/list}{%
         \stepcounter{sdgcnt}%
         \setbox0=\hbox{%
-          % \typeout{FILE=\DIR@NTFILES/Images/sdg-\@LSHORT/##1-\XPTO}
+          % \typeout{FILE=\DIRIMAGES/sdg-\@LSHORT/##1-\XPTO}
             \includegraphics[width=\option{/novathesis/print/sdgs/size}]
                             {\@spnfolder/##1-\@sdgtype}%
         }%
@@ -3380,9 +3383,9 @@
   \ifmaindoc{%
     \iftoggle{/novathesis/print/copyright}{%
       \begingroup
-        \bookmarksetupnext{rellevel=0}
-        \ChapterNoTitle{Copyright}
+        \bookmarksetupnext{rellevel=1}
         \ntselectlang{\@LANG@COPYRIGHT}%
+        \expandafter\ChapterNoTitle\expandafter{\thebkmstring(copyright,\@LANG@COPYRIGHT)}
         \NTRunHook{copyright/pre}%
         \ntprintcopyrightpage%
         \NTRunHook{copyright/post}%
@@ -3473,8 +3476,8 @@
 \ExplSyntaxOn
 \cs_new:cpn {ntquote} {\ntquoting*}
 \cs_new_eq:cN {endntquote} \endntquoting
-\cs_new:cpn {ntdedicatory} {\ntquoting}
-\cs_new_eq:cN {endntdedicatory} \endntquoting
+\cs_new:cpn {ntdedication} {\ntquoting}
+\cs_new_eq:cN {endntdedication} \endntquoting
 \ExplSyntaxOff
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3581,7 +3584,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % First try to load a local chapter-style definition
-\InputIfFileExists{\DIR@NTFILES/ChapStyles/\option{/novathesis/style/chapter}.sty}
+\InputIfFileExists{\DIRCHAPSTYLES/\option{/novathesis/style/chapter}.sty}
   {}{% otherwise, try a standard 'memoir' style
       \ifcsdef{chs@\option{/novathesis/style/chapter}}
           {\chapterstyle{\option{/novathesis/style/chapter}}}
@@ -3590,7 +3593,7 @@
 
 \IfFileExistsCase
   {
-    {\DIR@NTFILES/FontStyles/\option{/novathesis/style/font}.sty}
+    {\DIRFONTSTYLES/\option{/novathesis/style/font}.sty}
           {\input{#1}},
     {\option{/novathesis/style/font}.sty}
           {\RequirePackage{#1}},        
@@ -3608,7 +3611,7 @@
   }
 
 % % First try to load a local font-style definition
-% \InputIfFileExists{\DIR@NTFILES/FontStyles/\option{/novathesis/style/font}.sty}
+% \InputIfFileExists{\DIRNTFILES/FontStyles/\option{/novathesis/style/font}.sty}
 %   {}{% otherwise, try a standard LaTeX package
 %       \IfFileExists{\option{/novathesis/style/font}.sty}%
 %         {\RequirePackage{\option{/novathesis/style/font}}}%
