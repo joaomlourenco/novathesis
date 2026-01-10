@@ -461,91 +461,85 @@
 % non-starred stops on first sucess
 % =========================================================
 
-% Boolean to track if any match was found during the loop
-\bool_new:N \l_file_dirs_found_bool
+
+\bool_new:N \l_file_found_bool
+\tl_new:N \l_file_action_tl
 
 \NewDocumentCommand{\IfFileExistsInDirsTF}{ s O{} m m m m }
  {
-  \bool_set_false:N \l_file_dirs_found_bool
+  \bool_set_false:N \l_file_found_bool
   
-  % We use \clist_map_inline:nn. 
-  % Inside here, ##1 refers to the current item in clist #4
   \clist_map_inline:nn { #4 }
    {
-    \file_if_exist:nTF { #2 ##1 #3 }
+    % Construct the path
+    \tl_set:Nn \l_tmpa_tl { #2 ##1 #3 }
+    
+    \file_if_exist:nTF { \l_tmpa_tl }
      {
-      \bool_set_true:N \l_file_dirs_found_bool
+      \bool_set_true:N \l_file_found_bool
       
-      % Execute user code (#5) passing the full path
-      \__file_dirs_execute_action:nn { #2 ##1 #3 } { #5 }
+      % 1. Store the user's code (#5) in a token list
+      \tl_set:Nn \l_file_action_tl { #5 }
       
-      % If NOT starred (#1 is empty), break.
-      % #1 contains \NoValue or is empty if no star, 
-      % but xparse 's' type returns a special token.
+      % 2. Replace all literal #1 tokens in the code with the found path
+      % This makes it behave as #1 for the user.
+      \tl_replace_all:Nnn \l_file_action_tl { #1 } { \l_tmpa_tl }
+      
+      % 3. Execute the resulting code
+      \l_file_action_tl
+      
+      % If non-starred, stop
       \IfBooleanF { #1 } { \clist_map_break: }
      }
-     { 
-       % Optional: \typeout{Not~found:~#2 ##1 #3} 
-     }
+     { }
    }
   
-  % If flag is false, run Else code (#6)
-  \bool_if:NF \l_file_dirs_found_bool { #6 }
- }
-
-% Helper to map #1 into the user's code block
-\cs_new:Npn \__file_dirs_execute_action:nn #1 #2
- {
-  \cs_set:Npn \__file_dirs_tmp:n ##1 { #2 }
-  \__file_dirs_tmp:n { #1 }
+  \bool_if:NF \l_file_found_bool { #6 }
  }
 
 
 
-% Variable to track if any file in the list was found
-\bool_new:N \l_filecase_found_bool
 
 \NewDocumentCommand{\IfFileExistsCase}{ s O{} m m }
   {
-    % Reset the found flag for every call
-    \bool_set_false:N \l_filecase_found_bool
+    % \group_begin:
+    \bool_set_false:N \l_file_found_bool
     
-    % Iterate through the comma-separated list of pairs
-    % Each item (##1) is expected to be {filepath}{action}
+    % Map through the clist of pairs
     \clist_map_inline:nn { #3 }
       {
-        \__filecase_process_item:nnn { #1 } { #2 } ##1
+        % ##1 is {filepath}{action}
+        \__filecase_split_pair:nnn { #1 } { #2 } ##1
       }
     
-    % If the flag is still false, execute the 'Else' branch
-    \bool_if:NF \l_filecase_found_bool { #4 }
+    % If nothing found, execute Else branch
+    \bool_if:NF \l_file_found_bool { #4 }
   }
 
-% Helper to process each {filepath}{action} pair
-% #1: Boolean (starred)
+% #1: Starred status
 % #2: Prefix
-% #3: Specific filepath
-% #4: Action to perform
-\cs_new:Npn \__filecase_process_item:nnn #1 #2 #3 #4
+% #3: Filename
+% #4: Action
+\cs_new:Npn \__filecase_split_pair:nnn #1 #2 #3 #4
   {
-    % Construct the full path
     \tl_set:Nn \l_tmpa_tl { #2 #3 }
     
     \file_if_exist:nT { \l_tmpa_tl }
       {
-        % Mark as found
-        \bool_set_true:N \l_filecase_found_bool
+        \bool_set_true:N \l_file_found_bool
         
-        % Define a temporary function to execute the action.
-        % This allows the user to use #1 in their code block 
-        % to represent the full file path.
-        \cs_set:Npn \__filecase_tmp_action:n ##1 { #4 }
-        \__filecase_tmp_action:n { \l_tmpa_tl }
+        % Define an internal macro to hold the user's action.
+        % We use a specific name to avoid parameter nesting issues.
+        \cs_set:Npn \__filecase_do_action:n ##1 { #4 }
         
-        % If NOT starred (stop on first), break the clist map
+        % Execute it with the found path
+        \__filecase_do_action:n { \l_tmpa_tl }
+        
+        % If NOT starred, break loop
         \bool_if:NF #1 { \clist_map_break: }
       }
   }
+
 
 
 
@@ -586,8 +580,6 @@
 % #3 = code if succeed [OPTIONAL]
 % #4 = code if fails [OPTIONAL]
 
-% 1. Create a boolean to track if the file was found during iteration
-\bool_new:N \l__ant_file_found_bool
 
 % 2. Define the command
 % #1 = File Name (Mandatory)
@@ -597,7 +589,7 @@
 \NewDocumentCommand{\InputIfFileExistsInDirsTF}{ m m +m +m }
   {
     % Reset the found flag to false at the start
-    \bool_set_false:N \l__ant_file_found_bool
+    \bool_set_false:N \l_file_found_bool
 
     % Iterate through the comma-separated list of directories (#2)
     \clist_map_inline:nn { #2 }
@@ -613,7 +605,7 @@
             #3
 
             % C. Mark as found
-            \bool_set_true:N \l__ant_file_found_bool
+            \bool_set_true:N \l_file_found_bool
 
             % D. Stop the loop immediately
             \clist_map_break:
@@ -624,7 +616,7 @@
       }
 
     % After the loop, check if we ever found it
-    \bool_if:NF \l__ant_file_found_bool
+    \bool_if:NF \l_file_found_bool
       {
         % If not found, execute Failure Code (#4)
         #4
@@ -2254,7 +2246,7 @@
         {\DIR@NTFILES/},
       }
       {
-        \ntaddfile{copyright}{##1}
+        \ntaddfile{copyright}{#1}
       }
       {
         \ClassError{novathesis}
@@ -3596,25 +3588,18 @@
           {\ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/style/chapter}}{}}%
 }
 
-\IfFileExistsCase*
+\IfFileExistsCase
   {
     {\DIR@NTFILES/FontStyles/\option{/novathesis/style/font}.sty}
-          {\input{\DIR@NTFILES/FontStyles/\option{/novathesis/style/font}.sty}},
+          {\input{#1}},
     {\option{/novathesis/style/font}.sty}
-          {\RequirePackage{\option{/novathesis/style/font}.sty}},        
+          {\RequirePackage{#1}},        
   }
   {
     \ifcsname IfFontExistsTF\endcsname
       \IfFontExistsTF{\option{/novathesis/style/font}}
         {\setmainfont{\option{/novathesis/style/font}}
-                     [  Extension = .ttf,
-  Ligatures=TeX,
-  Mapping=tex-text,
-  UprightFont = *,
-  ItalicFont = * Italic,
-  BoldFont = * Bold,
-  BoldItalicFont = * Bold Italic,
-]}
+                     [ \option{/novathesis/style/font/attributes} ]}
         {\ClassError{novathesis}{Could not find the font: \option{/novathesis/style/font}}{}}
     \else
       \ClassError{novathesis}
