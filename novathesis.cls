@@ -99,6 +99,7 @@
 \def\DIR@FIGURES{5-Figures}
 \def\DIR@NTFILES{NOVAthesisFiles}
 \def\NT@FONTSTYLES{FontStyles}
+\def\DIR@SCHOOLS{\DIR@NTFILES/Schools}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -150,16 +151,20 @@
   \RequirePackage[T1]{fontenc}
 \fi
 
-% \PassOptionsToPackage{scaled=0.95}{inter}
-% \PassOptionsToPackage{scaled=0.95}{helvet}
-% \PassOptionsToPackage{scaled=0.95}{gillius2}
 \IfFileExists{inter.sty}
-  {\RequirePackage{inter}}
+  {\RequirePackage[scaled=0.95]{inter}}
 {\IfFileExists{helvet.sty}
-  {\RequirePackage{helvet}}
+  {\RequirePackage[scaled=0.95]{helvet}}
 {\IfFileExists{gillius2.sty}
-  {\RequirePackage{gillius2}}
+  {\RequirePackage[scaled=0.95]{gillius2}}
   {\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}
+% \IfFileExistsCase*
+%   {
+%     {inter.sty}    {\RequirePackage{inter}},
+%     {helvet.sty}   {\RequirePackage{helvet}}
+%     {gillius2.sty} {\RequirePackage{gillius2}}
+%   }
+%   {\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}
 
 % TODO Good to load after fonts
 \RequirePackage{microtype} % Good to load after fonts
@@ -296,6 +301,11 @@
 % --------------------------------------------------------
 % Change main font size on the fly
 \newcommand{\setmemoirfontsize}[1]{\input{mem#1.clo}}
+
+
+
+
+
 
 \ExplSyntaxOn
 
@@ -442,6 +452,195 @@
       }
   }
 
+
+
+
+% =========================================================
+% Process multiple files
+% starred (*) processes all that exist
+% non-starred stops on first sucess
+% =========================================================
+
+% Boolean to track if any match was found during the loop
+\bool_new:N \l_file_dirs_found_bool
+
+\NewDocumentCommand{\IfFileExistsInDirsTF}{ s O{} m m m m }
+ {
+  \bool_set_false:N \l_file_dirs_found_bool
+  
+  % We use \clist_map_inline:nn. 
+  % Inside here, ##1 refers to the current item in clist #4
+  \clist_map_inline:nn { #4 }
+   {
+    \file_if_exist:nTF { #2 ##1 #3 }
+     {
+      \bool_set_true:N \l_file_dirs_found_bool
+      
+      % Execute user code (#5) passing the full path
+      \__file_dirs_execute_action:nn { #2 ##1 #3 } { #5 }
+      
+      % If NOT starred (#1 is empty), break.
+      % #1 contains \NoValue or is empty if no star, 
+      % but xparse 's' type returns a special token.
+      \IfBooleanF { #1 } { \clist_map_break: }
+     }
+     { 
+       % Optional: \typeout{Not~found:~#2 ##1 #3} 
+     }
+   }
+  
+  % If flag is false, run Else code (#6)
+  \bool_if:NF \l_file_dirs_found_bool { #6 }
+ }
+
+% Helper to map #1 into the user's code block
+\cs_new:Npn \__file_dirs_execute_action:nn #1 #2
+ {
+  \cs_set:Npn \__file_dirs_tmp:n ##1 { #2 }
+  \__file_dirs_tmp:n { #1 }
+ }
+
+
+
+% Variable to track if any file in the list was found
+\bool_new:N \l_filecase_found_bool
+
+\NewDocumentCommand{\IfFileExistsCase}{ s O{} m m }
+  {
+    % Reset the found flag for every call
+    \bool_set_false:N \l_filecase_found_bool
+    
+    % Iterate through the comma-separated list of pairs
+    % Each item (##1) is expected to be {filepath}{action}
+    \clist_map_inline:nn { #3 }
+      {
+        \__filecase_process_item:nnn { #1 } { #2 } ##1
+      }
+    
+    % If the flag is still false, execute the 'Else' branch
+    \bool_if:NF \l_filecase_found_bool { #4 }
+  }
+
+% Helper to process each {filepath}{action} pair
+% #1: Boolean (starred)
+% #2: Prefix
+% #3: Specific filepath
+% #4: Action to perform
+\cs_new:Npn \__filecase_process_item:nnn #1 #2 #3 #4
+  {
+    % Construct the full path
+    \tl_set:Nn \l_tmpa_tl { #2 #3 }
+    
+    \file_if_exist:nT { \l_tmpa_tl }
+      {
+        % Mark as found
+        \bool_set_true:N \l_filecase_found_bool
+        
+        % Define a temporary function to execute the action.
+        % This allows the user to use #1 in their code block 
+        % to represent the full file path.
+        \cs_set:Npn \__filecase_tmp_action:n ##1 { #4 }
+        \__filecase_tmp_action:n { \l_tmpa_tl }
+        
+        % If NOT starred (stop on first), break the clist map
+        \bool_if:NF #1 { \clist_map_break: }
+      }
+  }
+
+
+
+\NewDocumentCommand{\IfFontExistsCase}{ s m m }
+  {
+    \bool_set_false:N \l_tmpa_bool
+    \clist_map_inline:nn { #2 }
+      {
+        % Check if the command \IfFontExistsTF exists (provided by fontspec)
+        \cs_if_exist:cTF { IfFontExistsTF }
+          {
+            \IfFontExistsTF { ##1 }
+              {
+                \bool_set_true:N \l_tmpa_bool
+                % Execute the code #3, passing the found font name (##1)
+                #3 { ##1 }
+                % If starred, break the loop after the first match
+                \IfBooleanT { #1 } { \clist_map_break: }
+              }
+              { } % Do nothing if font doesn't exist
+          }
+          {
+            % Fallback if fontspec isn't loaded or engine is pdfLaTeX
+            \typeout{NOVAthesis:~fontspec~not~loaded.~Skipping~font~check~for~##1.}
+          }
+      }
+    
+    % Optional: warning if NO fonts from the list were found
+    \bool_if:NF \l_tmpa_bool 
+      { \typeout{NOVAthesis:~Warning:~No~fonts~from~the~list~{#2}~were~found.} }
+  }
+
+
+% --------------------------------------------------------
+% Input the file from the first dir list (if any)
+% #1 = file name
+% #2 = list of directories
+% #3 = code if succeed [OPTIONAL]
+% #4 = code if fails [OPTIONAL]
+
+% 1. Create a boolean to track if the file was found during iteration
+\bool_new:N \l__ant_file_found_bool
+
+% 2. Define the command
+% #1 = File Name (Mandatory)
+% #2 = List of directories (Mandatory, comma separated)
+% #3 = Code if succeed (Optional, default empty)
+% #4 = Code if fails (Optional, default empty)
+\NewDocumentCommand{\InputIfFileExistsInDirsTF}{ m m +m +m }
+  {
+    % Reset the found flag to false at the start
+    \bool_set_false:N \l__ant_file_found_bool
+
+    % Iterate through the comma-separated list of directories (#2)
+    \clist_map_inline:nn { #2 }
+      {
+        % Construct path: current_dir/filename
+        % We check if the file exists at this specific path
+        \file_if_exist:nTF { ##1 / #1 }
+          {
+            % A. Input the file
+            \file_input:n { ##1 / #1 }
+
+            % B. Execute the Success Code (#3)
+            #3
+
+            % C. Mark as found
+            \bool_set_true:N \l__ant_file_found_bool
+
+            % D. Stop the loop immediately
+            \clist_map_break:
+          }
+          {
+            % File not found in this specific directory, continue loop
+          }
+      }
+
+    % After the loop, check if we ever found it
+    \bool_if:NF \l__ant_file_found_bool
+      {
+        % If not found, execute Failure Code (#4)
+        #4
+      }
+  }
+
+
+\NewDocumentCommand{\ChapterNoTitle}{ m }
+  {
+    % Ensure we start on a new page (memoir command)
+    \clearforchapter
+    \hypertarget{bm#1}{}%
+    \bookmark[dest=bm#1]{\thebkmstring(#1,\@LANG@MAIN)}%    
+    \noindent \ignorespaces
+  }
+
 \ExplSyntaxOff
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -513,6 +712,7 @@
   % STYLES
   style/chapter/.new value      = bar,
   style/font/.new value         = newpx,
+  style/font/attributes/.new value = {},
   style/url/.new cmd            = {\AfterPreamble{\urlstyle{#1}}},
   color/links/.new cmd          = {\@ifpackageloaded{hyperref}%
                                             {\hypersetup{allcolors=#1}}%
@@ -796,57 +996,7 @@
 % Trim spaces around argument
 \cs_new_eq:NN \trimspaces \tl_trim_spaces:n
 
-% --------------------------------------------------------
-% Input the file from the  first dir list (if any)
-% #1 = file name
-% #2 = list of directories
-% #3 = code if succeed [OPTIONAL]
-% #4 = code if fails [OPTIONAL]
 
-% 1. Create a boolean to track if the file was found during iteration
-\bool_new:N \l__ant_file_found_bool
-
-% 2. Define the command
-% #1 = File Name (Mandatory)
-% #2 = List of directories (Mandatory, comma separated)
-% #3 = Code if succeed (Optional, default empty)
-% #4 = Code if fails (Optional, default empty)
-\NewDocumentCommand{\InputIfFileExistsInDirsTF}{ m m +m +m }
-  {
-    % Reset the found flag to false at the start
-    \bool_set_false:N \l__ant_file_found_bool
-
-    % Iterate through the comma-separated list of directories (#2)
-    \clist_map_inline:nn { #2 }
-      {
-        % Construct path: current_dir/filename
-        % We check if the file exists at this specific path
-        \file_if_exist:nTF { ##1 / #1 }
-          {
-            % A. Input the file
-            \file_input:n { ##1 / #1 }
-
-            % B. Execute the Success Code (#3)
-            #3
-
-            % C. Mark as found
-            \bool_set_true:N \l__ant_file_found_bool
-
-            % D. Stop the loop immediately
-            \clist_map_break:
-          }
-          {
-            % File not found in this specific directory, continue loop
-          }
-      }
-
-    % After the loop, check if we ever found it
-    \bool_if:NF \l__ant_file_found_bool
-      {
-        % If not found, execute Failure Code (#4)
-        #4
-      }
-  }
 \ExplSyntaxOff
 
 
@@ -977,6 +1127,7 @@
   %         #2=family {quote, abstract, chapter, etc} or {author, adviser, committee}
   %         #3=[file-lang | sub-family | key] (OPTIONAL)
   %         #4=filename
+  % \ifstrequal{#2}{statement}{\typeout{[#1] [#2] [#3] [#4]}\XXXXX}{}
   \ifoptioncontains{/@nt/listtypes}{#2}{}
       {\options{/@nt/listtypes/.newpush={#2}}}
   \IfBeginsWithAnyOf{#4}{/,.}
@@ -1636,30 +1787,33 @@
           \ntprintcovers%
     }%
     {frontmatter}{%
+          \bookmarksetup{startatroot}
           \ntthesisfrontmatter% Before the main text (TOC, etc) — Roman page numbering
           \bookmarksetupnext{level=0}%
           \hypertarget{bmfrontmatter}{}%
-          \bookmark[level=0,dest=bmfrontmatter]{\thebkmstring(frontmatter,\@LANG@MAIN)}%
-          \bookmarksetup{startatroot=false,level=1,keeplevel}%
+          \bookmark[dest=bmfrontmatter]{\thebkmstring(frontmatter,\@LANG@MAIN)}%
+          \bookmarksetup{rellevel=1}%
           \ntprintlist{/@nt/print/#1}%
     }%
     {mainmatter}{%
+          \bookmarksetup{startatroot}
           \ntthesismainmatter% Mainn text — Arabic page numbering
           \bookmarksetup{level=0}%
-          \bookmarksetupnext{level=0}%
           \thispagestyle{novathesis@mainmatter}%
           \pagestyle{novathesis@mainmatter}%
           \ntprintlist{/@nt/print/#1}%
     }%
     {backmatter}{%
+          \bookmarksetup{startatroot}
           \ntthesisbackmatter     % The back text — Arabic page numbering
-          \bookmarksetup{level=0}%
+          \bookmarksetupnext{level=-1}%
+          \hypertarget{bmbackmatter}{}%
+          \bookmark[dest=bmbackmatter]{\thebkmstring(backmatter,\@LANG@MAIN)}%
           \bookmarksetupnext{level=0}%
-          % \hypertarget{bmbackmatter}{}
-          % \bookmark[level=0,dest=bmbackmatter1]{\thebkmstring(backmatter,\@LANG@MAIN)}
           \ntprintlist{/@nt/print/#1}%
     }%
     {backcover}{%
+          \bookmarksetup{startatroot}
           \bookmarksetup{level=0}%
           \thispagestyle{empty}%
           \pagestyle{empty}%
@@ -1720,7 +1874,7 @@
           \ntselectlang{\@LANG@MAIN}%
           \hypertarget{bmglossaries}{}%
           \bookmarksetupnext{level=0}%
-          \bookmark[level=0,dest=bmglossaries]
+          \bookmark[dest=bmglossaries]
                   {\thebkmstring(glossaries,\@LANG@MAIN)}%
           \printglossaries
         }{}%
@@ -1769,40 +1923,21 @@
 
 \ifoptionequal{/novathesis/print/webography}{}{%
   \printorder(backmatter):={
-    bib;             % Print the bibliography.  Change to
-     %    “bib[title=⟨title⟩]” to redefine the title!
-    alllistof;       % Print all the listof defined in “6_list_of.tex”
-    myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
-    appendices;      % Print appendices; if any!
-    annexes;         % Print annexes; if any!
+    bibsingle;            % Print the bibliography
+    alllistof;            % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries;    % Print the Glossary, Acronyms, Symbols, etc…
+    appendices;           % Print appendices; if any!
+    annexes;              % Print annexes; if any!
   }%
 }{%
   \printorder(backmatter):={
-    \printbibliography[nottype=online]; % Print the bibliography.
-    \printbibliography[title=\option{/novathesis/print/webography},type=online]; % Print the bibliography.
-    alllistof;       % Print all the listof defined in “6_list_of.tex”
-    myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
-    appendices; % Print appendices, if any!
-    annexes; % Print annexes, if any!
+    bibseparate;          % Print the web references separate from the remainder of the bibliography
+    alllistof;            % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries;    % Print the Glossary, Acronyms, Symbols, etc…
+    appendices;           % Print appendices, if any!
+    annexes;              % Print annexes, if any!
   }%
 }
-% \ifoptionequal{/novathesis/print/webography}{}{%
-%   \ntsetprintorder{mainmatter}{
-%     chapters;        % Print document chapters
-%     bib;             % Print the bibliography.  Change to
-%      %    “bib[title=⟨title⟩]” to redefine the title!
-%     appendices;      % Print appendices; if any!
-%     annexes;         % Print annexes; if any!
-%   }%
-% }{%
-%   \ntsetprintorder{mainmatter}{
-%     chapters; % Print document chapters
-%     \printbibliography[nottype=online]; % Print the bibliography.
-%     \printbibliography[title=\option{/novathesis/print/webography},type=online]; % Print the bibliography.
-%     appendices; % Print appendices, if any!
-%     annexes; % Print annexes, if any!
-%   }%
-% }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1961,7 +2096,12 @@
 \makeoddfoot{novathesis@frontmatter}{}{\thepage}{}
 \makeevenfoot{novathesis@frontmatter}{}{\thepage}{}
 
-\ifoptionequal{/novathesis/media}{paper}{\ntsetup{color/links=Black}}{}
+\ifoptionequal{/novathesis/media}{paper}{
+  \ntsetup{color/links=Black}
+  \openright
+}{
+  \openany
+}
 
 
 % --------------------------------------------------------
@@ -2062,7 +2202,7 @@
 
 \newcommand{\@ntloadfile@i}[2][]{\IfFileExists{#2}{\input{#2}}{#1}}
 
-\newcommand{\@ntloadfiles@ii}[2][\@DOCTYPE]{%
+\newcommand{\PrintAddedFile}[2][\@DOCTYPE]{%
   % #1=KEY
   % #2=file class
   \iffileadded[#1]{#2}{\@nt@loadallfiles{#1}{#2}}{}%
@@ -2107,12 +2247,19 @@
 
 \ifmaindoc{% only print if a main document
   \iftoggle{/novathesis/print/copyright}{% if copuyright toggle is on
-    \@nt@AddFileIfExists{copyright}{copyright.tex}{%
-           {\DIR@NTFILES/Schools/\@UNIV/\@SCHL/}%
-          ,{\DIR@NTFILES/Schools/\@UNIV/}%
-          ,{\DIR@NTFILES/}%
-    }%
-    \@ntloadfiles@ii{copyright}%
+    \IfFileExistsInDirsTF {copyright} 
+      {
+        {\DIR@NTFILES/Schools/\@UNIV/\@SCHL/},
+        {\DIR@NTFILES/Schools/\@UNIV/},
+        {\DIR@NTFILES/},
+      }
+      {
+        \ntaddfile{copyright}{##1}
+      }
+      {
+        \ClassError{novathesis}
+                   {No “copyright.tex” file was found!}{}
+      }
   }{}%
 }{}
 
@@ -2217,7 +2364,7 @@
   \begingroup%
     \ntselectlang{\@LANG@COVER}%
     \NTRunHook{printcovers/pre}%
-    \NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
+    % \NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
     % \forcsvlist{\ntprintcoverpair}{#1}%
     \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
     \NTRunHook{printcovers/post}%
@@ -2264,7 +2411,7 @@
     \NTRunHook{cover/#1/pre}%
     \hypertarget{\thebkmstring(#1)}{}%
     \bookmark[dest=\thebkmstring(#1)]{\thebkmstring(#1)}%
-    \bookmarksetupnext{level=1}%
+    \bookmarksetupnext{rellevel=1}%
     \thispagestyle{empty}%
     \setCoverBgColor{#1}%
     \setCoverBgImage{#1}%
@@ -2584,28 +2731,29 @@
       \iftoggle{/novathesis/print/statement}{% if statement toggle is on
         \NTRunHook{statement/pre}%
         \iffileadded{statement}{}{%ELSE
-          \ntfor\match:={%
-            \@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-\@LANG@MAIN-statement,%
-            \@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-statement,%
-            \@SCHL/\@UNIV-\@SCHL-\@LANG@MAIN-statement,%
-            \@SCHL/\@UNIV-\@SCHL-statement,%
-            \@UNIV-\@LANG@MAIN-statement,%
-            \@UNIV-statement,%
-          }\do{%
-            \IfFileExists{\DIR@NTFILES/Schools/\@UNIV/\match.tex}{%
-              \ntaddfile{statement}{\DIR@NTFILES/Schools/\@UNIV/\match.tex}%
-              \ntforbreak%
-            }{}%
-          }[%
-            \ClassError{novathesis}{No “statement.tex” found! Not defined with %
-                                    \string\ntaddfile{statement}{filename} in folders %
-                                    “\DIR@NTFILES/Schools/\@UNIV/\@SCHL” nor %
-                                    “\DIR@NTFILES/Schools/\@UNIV”}{}
-          ]%
-        }{}%
-        \hypertarget{bmstatement}{}%
-        \bookmark[dest=bmstatement]{\thebkmstring(statement,\@LANG@MAIN)}%
-        \@ntloadfiles@ii{statement}%
+        \IfFileExistsCase
+          {
+            {\DIR@SCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-\@LANG@MAIN-statement}
+                  {\ntaddfile{statement}{./##1.tex}},
+            {\DIR@SCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-statement}
+                  {\ntaddfile{statement}{./##1.tex}},
+            {\DIR@SCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@LANG@MAIN-statement}
+                  {\ntaddfile{statement}{./##1.tex}},
+            {\DIR@SCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-statement}
+                  {\ntaddfile{statement}{./##1.tex}},
+            {\DIR@SCHOOLS/\@UNIV-\@LANG@MAIN-statement}
+                  {\ntaddfile{statement}{./##1.tex}},
+            {\DIR@SCHOOLS/\@UNIV-statement}
+                  {\ntaddfile{statement}{./##1.tex}},
+          }
+          { % NOT FOUND
+            \ClassError{novathesis}{No “statement.tex” file found!}{}
+          }
+        }%
+        % \hypertarget{bmstatement}{}%
+        % \bookmark[dest=bmstatement]{\thebkmstring(statement,\@LANG@MAIN)}%
+        \bookmarksetupnext{rellevel=1}%
+        \PrintAddedFile{statement}%
         \NTRunHook{statement/post}%
       }{}%
     }{}%
@@ -2618,6 +2766,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print persons list {advisers | committee}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcolumntype{L}{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}X}
+\newcolumntype{C}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}X}
+\newcolumntype{R}{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}X}
+
+
 \newcommand{\@check@instring}[4][,]{
 % 1 = separator
 % 2 = value
@@ -2899,7 +3052,7 @@
         tmargin=\expanded{\themargin(\option{/novathesis/media},top)},
         bmargin=\expanded{\themargin(\option{/novathesis/media},bottom)},
     }%
-    \ifoptionequal{/novathesis/media}{paper}{\openright}{}%
+    \ifoptionequal{/novathesis/media}{paper}{\openright}{\openany}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2910,9 +3063,9 @@
   \ifmaindoc{% THEN it is a main document
     \NTRunHook{#1/pre}%
     \iffileadded{#1}{%
-      \hypertarget{bm#1}{}%
-      \bookmark[dest=bm#1]{\thebkmstring(#1,\@LANG@MAIN)}%
-      \@ntloadfiles@ii{#1}%
+      \bookmarksetupnext{rellevel=0}%
+      \ChapterNoTitle{#1}
+      \PrintAddedFile{#1}%
     }{}%
     \NTRunHook{#1/post}%
     \clearforchapter%
@@ -2927,13 +3080,13 @@
 
 \newcommand{\ntprintaidisclose}{%
   \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{% use aidisclose
-    \bookmarksetupnext{level=1}%
+    \bookmarksetupnext{rellevel=0}%
     \GAIrenderDeclaration[3]{\thedocauthor(name)}%
   }{\ifoptionequal{/novathesis/print/aidisclosure}{false}
       {} % do not print AI Disclosure
       {\IfFileExists{\DIR@FRONTMATTER/\option{/novathesis/print/aidisclosure}}
         {%
-          \bookmarksetupnext{level=1}%
+          \bookmarksetupnext{rellevel=0}%
           \input{\DIR@FRONTMATTER/\option{/novathesis/print/aidisclosure}}%
         }
         {\ClassError{novathesis}
@@ -3012,7 +3165,7 @@
       \printabstracttitle{#1}%
       \NTRunHook{abstract/#1/mid}%
       \NTRunHook{abstract/mid}%
-      \@ntloadfiles@ii[#1]{abstract}%
+     \PrintAddedFile[#1]{abstract}%
       \ntprintsdgs%
       \NTRunHook{abstract/#1/post}%
       \NTRunHook{abstract/post}%
@@ -3063,7 +3216,6 @@
 
 \newif\if@backmatter
 \newcommand*{\ntthesisbackmatter}{%
-  \@mainmatterfalse
   \NTRunHook{mainmatter/post}%
   \@backmattertrue
   \NTRunHook{backmatter/pre}%
@@ -3087,7 +3239,7 @@
 %% Chapters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntprintchapters}{%
-    \@nt@foralllist{file}{chapter}{\@ntloadfiles@ii{chapter}}%
+    \@nt@foralllist{file}{chapter}{\PrintAddedFile{chapter}}%
 }
 
 
@@ -3100,19 +3252,21 @@
  }
 
 \newcommand*{\ntprintappendices}{%
+  \bookmarksetupnext{level=0}%
   \iffileadded{appendix}{%
     \renewcommand{\appendixtocname}{\appendixplname}%
     \appendix\addappheadtotoc%
-    \@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
+    \@nt@foralllist{file}{appendix}{\PrintAddedFile{appendix}}%
   }{}%
 }
 
 \newcommand*{\ntprintannexes}{%
+  \bookmarksetupnext{level=0}%
   \iffileadded{annex}{%
     % \renewcommand{\appendixtocname}{\translate{Annexes}}%
     \renewcommand{\appendixtocname}{\annexplname}%
     \annex\addappheadtotoc%
-    \@nt@foralllist{file}{annex}{\@ntloadfiles@ii{annex}}%
+    \@nt@foralllist{file}{annex}{\bookmarksetupnext{rellevel=0}\PrintAddedFile{annex}}%
   }{}%
 }
 
@@ -3138,15 +3292,14 @@
       \def\@matter{frontmatter}
     \fi
     \ifoptiondefined{/@nt/listof/\@matter}{
+      \bookmarksetup{level=0}
       \ifnum\value{\option{/@nt/listof/\@matter/@size}}>1\relax
         \hypertarget{bmlistof\@matter}{}%
-        \bookmark[level=0,dest=bmlistof\@matter]{\thebkmstring(listof,\@LANG@MAIN)}%
-        \bookmarksetupnext{level=1}%
-      \else
-        \bookmarksetupnext{level=0}%
+        \bookmark[dest=bmlistof\@matter]{\thebkmstring(listof,\@LANG@MAIN)}%
+        \bookmarksetupnext{rellevel=1}%
       \fi
       % \typeout{PRINTALLLISTOF=\@matter}\PRINTALLLISTOF
-      \optionlistdo{/@nt/listof/\@matter}{\clearforchapter##1\bookmarksetupnext{level=1}}%
+      \optionlistdo{/@nt/listof/\@matter}{\clearforchapter##1\bookmarksetupnext{rellevel=0}}%
     }{}
     \NTRunHook{listof/post}%
 }
@@ -3176,9 +3329,19 @@
 %% Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand*{\ntprintbib}[1][]{%
+\newcommand*{\ntprintbibsingle}[1][]{%
+  \bookmarksetupnext{rellevel=1}%
   \NTRunHook{printbib/pre}%
   \printbibliography[#1]%
+  \ntfixspacing%
+  \NTRunHook{printbib/post}%
+}
+
+\newcommand*{\ntprintbibseparate}[1][]{%
+  \bookmarksetupnext{rellevel=1}%
+  \NTRunHook{printbib/pre}%
+    \printbibliography[nottype=online]; % Print the bibliography.
+    \printbibliography[title=\option{/novathesis/print/webography},type=online]; % Print the bibliography.
   \ntfixspacing%
   \NTRunHook{printbib/post}%
 }
@@ -3222,21 +3385,27 @@
 }
 
 \newcommand*{\ntprintcopyright}{%
-  \iftoggle{/novathesis/print/copyright}{%
-    \ifmaindoc{%
+  \ifmaindoc{%
+    \iftoggle{/novathesis/print/copyright}{%
       \begingroup
+        \bookmarksetupnext{rellevel=0}
+        \ChapterNoTitle{Copyright}
         \ntselectlang{\@LANG@COPYRIGHT}%
-        \hypertarget{bmcopyright}{}%
-        \bookmark[dest=bmcopyright]{\thebkmstring(copyright,\@LANG@MAIN)}%
         \NTRunHook{copyright/pre}%
         \ntprintcopyrightpage%
         \NTRunHook{copyright/post}%
         \ntprintacknowledgementsblock%
-        \clearforchapter%
       \endgroup
     }{}%
    }{}%
 }
+
+
+\newcommand*{\ntprintcopyrightpage}{%
+  \PrintAddedFile{copyright}%
+}
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3328,7 +3497,7 @@
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\printabstracttitle}[1]{%
-  \bookmarksetupnext{level=1}
+  \bookmarksetupnext{rellevel=0}
   \chapter{\thebkmstring(abstract,#1)}%
 }
 
@@ -3427,13 +3596,39 @@
           {\ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/style/chapter}}{}}%
 }
 
-% First try to load a local font-style definition
-\InputIfFileExists{\DIR@NTFILES/FontStyles/\option{/novathesis/style/font}.sty}
-  {}{% otherwise, try a standard LaTeX package
-      \IfFileExists{\option{/novathesis/style/font}.sty}%
-        {\RequirePackage{\option{/novathesis/style/font}}}%
-        {\ClassError{novathesis}{Invalid Font Style: \option{/novathesis/style/font}}{}}%
-}
+\IfFileExistsCase*
+  {
+    {\DIR@NTFILES/FontStyles/\option{/novathesis/style/font}.sty}
+          {\input{\DIR@NTFILES/FontStyles/\option{/novathesis/style/font}.sty}},
+    {\option{/novathesis/style/font}.sty}
+          {\RequirePackage{\option{/novathesis/style/font}.sty}},        
+  }
+  {
+    \ifcsname IfFontExistsTF\endcsname
+      \IfFontExistsTF{\option{/novathesis/style/font}}
+        {\setmainfont{\option{/novathesis/style/font}}
+                     [  Extension = .ttf,
+  Ligatures=TeX,
+  Mapping=tex-text,
+  UprightFont = *,
+  ItalicFont = * Italic,
+  BoldFont = * Bold,
+  BoldItalicFont = * Bold Italic,
+]}
+        {\ClassError{novathesis}{Could not find the font: \option{/novathesis/style/font}}{}}
+    \else
+      \ClassError{novathesis}
+                 {Cann not load the font: \option{/novathesis/style/font}. Are you using XeLaTeX or LuaLaTeX?}{}
+    \fi
+  }
+
+% % First try to load a local font-style definition
+% \InputIfFileExists{\DIR@NTFILES/FontStyles/\option{/novathesis/style/font}.sty}
+%   {}{% otherwise, try a standard LaTeX package
+%       \IfFileExists{\option{/novathesis/style/font}.sty}%
+%         {\RequirePackage{\option{/novathesis/style/font}}}%
+%         {\ClassError{novathesis}{Invalid Font Style: \option{/novathesis/style/font}}{}}%
+% }
 
 % force page color to white in xelatex and lualatex
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}

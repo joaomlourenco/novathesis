@@ -41,7 +41,7 @@
 
 \copyrighttextstring(en)={The \theschool(\@LANG@COPYRIGHT)\ and the \theuniversity(\@LANG@COPYRIGHT)\ have the perpetual right to archive this report in printed copies reproduced on paper or digitally, or by any other means known or invented, undertaking to keep it under controlled and restricted access in order to meet their legal obligations.}
 
-\ntsetup{spine/layout=no}
+\ntsetup{spine/layout=off}
 
 \AtEndPreamble{
 \ntdepartment(pt){Departamento de\\Informática}

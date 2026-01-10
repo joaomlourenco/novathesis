@@ -33,7 +33,7 @@
 }
 
 \ntbibsetup{style=apa}
-\ntsetup{spine/layout=no}
+\ntsetup{spine/layout=off}
 \AtEndPreamble{\let\cite\parencite}
 
 
@@ -264,8 +264,7 @@
 
 
 \AtEndPreamble{%
-  \LoadHelveticaLikeFont%
-  % \RequirePackage{gillius2}%
+  %\LoadHelveticaLikeFont%  % \RequirePackage{gillius2}%
 }
 
 \NTAddToHook{cover/1-1/text/pre}{%

@@ -59,8 +59,7 @@ Mestre em Engenharia Biomédica}
 \ntresetcovers
 
 \AtEndPreamble{%
-  \LoadHelveticaLikeFont%
-}
+  %\LoadHelveticaLikeFont%}
 
 \NTAddToHook{cover/1-1/text/pre}{%
   \sffamily%

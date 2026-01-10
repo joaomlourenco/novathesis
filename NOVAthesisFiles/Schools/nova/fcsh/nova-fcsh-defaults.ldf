@@ -7,7 +7,7 @@
 
 \typeout{NT FILE nova/fsch/nova-fcsh-defaults.ldf}%
 
-\ntsetup{print/frontpage=true}
+\ntsetup{print/frontpage=false}
 
 % Faculty / School
 \school(pt):={Faculdade de Ciências Sociais e Humanas}
@@ -52,7 +52,7 @@
 % \dissertationstring(phd,en)={\thedoctypestr(phd,en)\ in\\[1ex] \textbf{\themajorfield(en)}}
 
 \setmemoirfontsize{12}   % A4paper with main text at 12pt
-\ntsetup{style/font=newtx}
+
 \AtEndPreamble{
   \makeoddfoot{novathesis@mainmatter}{}{}{\thepage}
   \makeevenfoot{novathesis@mainmatter}{}{}{\thepage}
@@ -75,7 +75,7 @@
 
 % Use romman numerals for Appendixes
 % \patchcmd{\HyOrg@appendix}{\@Alph}{\@Roman}{}{}
-\patchcmd{\appendix}{\@Alph}{\@Roman}{}{}
+% \patchcmd{\appendix}{\@Alph}{\@Roman}{}{}
 
 \frenchspacing
 
@@ -92,17 +92,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{%
-  \LoadHelveticaLikeFont%
-  % \RequirePackage{gillius2}%
-}
-
-\NTAddToHook{cover/1-1/text/pre}{%
-  \sffamily%
-}
-\NTAddToHook{cover/2-1/text/pre}{%
-  \sffamily%
-}
+% \AtEndPreamble{%
+%   \LoadHelveticaLikeFont%
+%   % \RequirePackage{gillius2}%
+% }
+%
+% \NTAddToHook{cover/1-1/text/pre}{%
+%   \sffamily%
+% }
+% \NTAddToHook{cover/2-1/text/pre}{%
+%   \sffamily%
+% }
 \definecolor{fcshblue}{RGB}{25,61,108}% Background title color
 
 
@@ -143,7 +143,7 @@
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{fcshblue}{%%
-      \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}%
+      \textbf{\printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}}%
   }%
 }
 
