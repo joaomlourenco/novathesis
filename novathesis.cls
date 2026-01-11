@@ -97,7 +97,7 @@
 \def\DIRBACKMATTER{3-BackMatter}
 \def\DIRBIBLIOGRAPHY{4-Bibliography}
 \def\DIRFIGURES{5-Figures}
-\def\DIRNTFILES{NOVAthesisFiles}
+\def\DIRNTFILES{./NOVAthesisFiles}
 \def\DIRFONTSTYLES{\DIRNTFILES/FontStyles}
 \def\DIRSCHOOLS{\DIRNTFILES/Schools}
 \def\DIRSTRINGS{\DIRNTFILES/Strings}
@@ -315,35 +315,49 @@
 % \IfBeginsWithAnyOf {text} {comma_sep_list_of_prefixes} {true} {false}
 %=======================================================================
 
-% Define a boolean to track if a match was found
-\bool_new:N \l__user_match_found_bool
+% 1. Create Variables
+\int_new:N \l_check_len_int
+\str_new:N \l_slice_str
+\tl_new:N \l_clean_input_tl
+\bool_new:N \l_match_found_bool
+
+% 2. Generate the missing variant
+%    This forces \str_range to accept an expanded ('e') first argument.
+\cs_generate_variant:Nn \str_range:nnn { enn }
 
 \NewDocumentCommand{\IfBeginsWithAnyOf}{ m m +m +m }
-  {
-    % 1. Reset the boolean flag
-    \bool_set_false:N \l__user_match_found_bool
-
-    % 2. Map through the comma-separated list.
-    % \clist_map_inline:nn automatically trims spaces *around* items (foo, bar)
-    % but keeps spaces *inside* items (Hello World).
-    \clist_map_inline:nn { #2 }
-      {
-        % Check if the string (#1) starts with the current item (##1).
-        % We extract the first N characters of #1, where N is length of ##1.
-        \str_if_eq:eeT
-          { \str_range:nnn { #1 } { 1 } { \str_count:n { ##1 } } }
-          { ##1 }
-          {
-            % If match found: set flag to true and break the loop
-            \bool_set_true:N \l__user_match_found_bool
-            \clist_map_break:
-          }
+ {
+  % Step A: Store and clean the input string
+  \tl_set:Nn \l_clean_input_tl { #1 }
+  \tl_trim_spaces:N \l_clean_input_tl
+  
+  \bool_set_false:N \l_match_found_bool
+  
+  % Step B: Iterate through prefixes
+  \clist_map_inline:nn { #2 }
+   {
+    % Get length of the current prefix (##1)
+    \int_set:Nn \l_check_len_int { \str_count:n { ##1 } }
+    
+    % Step C: Extract substring
+    % We use the generated ':enn' variant to expand \l_clean_input_tl
+    % into actual text (e.g., "Apple") BEFORE slicing.
+    \str_set:Nx \l_slice_str 
+      { 
+        \str_range:enn { \l_clean_input_tl } { 1 } { \l_check_len_int } 
       }
-
-    % 3. Execute the appropriate branch
-    \bool_if:NTF \l__user_match_found_bool { #3 } { #4 }
-  }
-
+    
+    % Step D: Compare
+    \exp_args:No \str_if_eq:nnTF \l_slice_str { ##1 }
+     {
+      \bool_set_true:N \l_match_found_bool
+      \clist_map_break: 
+     }
+     { }
+   }
+   
+  \bool_if:NTF \l_match_found_bool { #3 } { #4 }
+ }
 
 
 
@@ -467,38 +481,50 @@
 \bool_new:N \l_file_found_bool
 \tl_new:N \l_file_action_tl
 
+
 \NewDocumentCommand{\IfFileExistsInDirsTF}{ s O{} m m m m }
  {
-  \bool_set_false:N \l_file_found_bool
-  
-  \clist_map_inline:nn { #4 }
-   {
-    % Construct the path
-    \tl_set:Nn \l_tmpa_tl { #2 ##1 #3 }
+  \group_begin:
+    \tl_new:N \l_tmp_dir_tl
+    \tl_new:N \l_tmp_path_tl
+    \tl_new:N \l_tmp_last_char_tl
     
-    \file_if_exist:nTF { \l_tmpa_tl }
+    \bool_gset_false:N \g_file_found_bool
+    
+    % Define an internal "action" function that takes one argument (#1)
+    % This makes the user's code (#5) act like a function body.
+    \cs_set:Npn \__file_user_action:n ##1 { #5 }
+    
+    \clist_map_inline:nn { #4 }
      {
-      \bool_set_true:N \l_file_found_bool
+      \tl_set:Nn \l_tmp_dir_tl { ##1 }
+      \tl_trim_spaces:N \l_tmp_dir_tl
       
-      % 1. Store the user's code (#5) in a token list
-      \tl_set:Nn \l_file_action_tl { #5 }
+      % Smart Slash Logic
+      \tl_if_empty:NF \l_tmp_dir_tl
+       {
+        \tl_set:Nx \l_tmp_last_char_tl { \tl_item:Nn \l_tmp_dir_tl { -1 } }
+        \str_if_eq:VnF \l_tmp_last_char_tl { / }
+         { \tl_put_right:Nn \l_tmp_dir_tl { / } }
+       }
       
-      % 2. Replace all literal #1 tokens in the code with the found path
-      % This makes it behave as #1 for the user.
-      \tl_replace_all:Nnn \l_file_action_tl { #1 } { \l_tmpa_tl }
+      % CONSTRUCT FULL PATH: Prefix + Dir + Filename
+      \tl_set:Nx \l_tmp_path_tl { #2 \l_tmp_dir_tl #3 }
       
-      % 3. Execute the resulting code
-      \l_file_action_tl
-      
-      % If non-starred, stop
-      \IfBooleanF { #1 } { \clist_map_break: }
+      \file_if_exist:nT { \l_tmp_path_tl }
+       {
+        \bool_gset_true:N \g_file_found_bool
+        
+        % EXECUTE: Pass the full path directly into the user action
+        \__file_user_action:n { \l_tmp_path_tl }
+        
+        \IfBooleanF { #1 } { \clist_map_break: }
+       }
      }
-     { }
-   }
+  \group_end:
   
-  \bool_if:NF \l_file_found_bool { #6 }
+  \bool_if:NF \g_file_found_bool { #6 }
  }
-
 
 
 
@@ -583,46 +609,38 @@
 % #4 = code if fails [OPTIONAL]
 
 
-% 2. Define the command
-% #1 = File Name (Mandatory)
-% #2 = List of directories (Mandatory, comma separated)
-% #3 = Code if succeed (Optional, default empty)
-% #4 = Code if fails (Optional, default empty)
+% 1. Create variables
+\tl_new:N \l_found_path_tl
+
 \NewDocumentCommand{\InputIfFileExistsInDirsTF}{ m m +m +m }
   {
-    % Reset the found flag to false at the start
     \bool_set_false:N \l_file_found_bool
 
-    % Iterate through the comma-separated list of directories (#2)
+    % Iterate through directories (#2)
     \clist_map_inline:nn { #2 }
       {
-        % Construct path: current_dir/filename
-        % We check if the file exists at this specific path
+        % Check if 'directory/filename' exists
         \file_if_exist:nTF { ##1 / #1 }
           {
-            % A. Input the file
+            % A. Store the full path in the variable
+            \tl_set:Nn \l_found_path_tl { ##1 / #1 }
+
+            % B. Input the file
             \file_input:n { ##1 / #1 }
 
-            % B. Execute the Success Code (#3)
+            % C. Execute Success Code (#3)
             #3
 
-            % C. Mark as found
+            % D. Mark found and break loop
             \bool_set_true:N \l_file_found_bool
-
-            % D. Stop the loop immediately
             \clist_map_break:
           }
-          {
-            % File not found in this specific directory, continue loop
-          }
+          {}
       }
 
-    % After the loop, check if we ever found it
+    % Handle 'Not Found' case
     \bool_if:NF \l_file_found_bool
-      {
-        % If not found, execute Failure Code (#4)
-        #4
-      }
+      { #4 }
   }
 
 
@@ -1122,17 +1140,23 @@
   %         #2=family {quote, abstract, chapter, etc} or {author, adviser, committee}
   %         #3=[file-lang | sub-family | key] (OPTIONAL)
   %         #4=filename
-  % \ifstrequal{#2}{statement}{\typeout{[#1] [#2] [#3] [#4]}\XXXXX}{}
+  % \typeout{[#1] [#2] [#3] [#4]}\ADDTOLIST
+  \ifstrequal{#2}{copyright}
+    {\typeout{}\typeout{ntaddto{#1}{#2}[#3]{#4}}\NTADDTO}
+    {}
   \ifoptioncontains{/@nt/listtypes}{#2}{}
       {\options{/@nt/listtypes/.newpush={#2}}}
   \IfBeginsWithAnyOf{#4}{/,.}
-      {\xdef\@nt@filewithpath{#4}}
-      {\options{/@nt/folders=#2}%
+      {\ifstrequal{#2}{copyright}{\OPTi}{}\xdef\@nt@filewithpath{#4}}
+      {\ifstrequal{#2}{copyright}{\OPTii}{}\options{/@nt/folders=#2}%
        \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}}
   \@for\myi:=\expanded{#3}\do{%
     % \typeout{NT ADDTOLIST [#1] [#2] [\myi] [\@nt@filewithpath]}\ADDTILIST%
     \options{/@nt/#1/#2/\myi/.expanded/.newpush={\@nt@filewithpath}}%
   }%
+  \ifstrequal{#2}{copyright}
+    {\typeout{}\typeout{[\option{/@nt/#1/#2/phd}]}\NTSTORED}
+    {}
 }
 
 \newcommand*{\@nt@foralllist}[3]{%
@@ -2131,7 +2155,7 @@
 %       configuration file “0-Config/4_files.tex”
 %============================================================
 \input{\DIRCONFIG/4_files}
-\ntaddfile{bib}{./\DIRNTFILES/fix-bib.bib}
+\ntaddfile{bib}{\DIRNTFILES/fix-bib.bib}
 % \NTRunHook{files}
 
 %============================================================
@@ -2193,17 +2217,25 @@
 \ifdocfinal{\ntsetup{print/committee=true}}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\@nt@loadallfiles}[2]{\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}
+\newcommand{\@nt@loadallfiles}[2]{%
+  \optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}
 
-\newcommand{\@ntloadfile@i}[2][]{\IfFileExists{#2}{\input{#2}}{#1}}
+\newcommand{\@ntloadfile@i}[2][]{%
+  \IfFileExists{#2}{\input{#2}}{#1}}
 
 \newcommand{\PrintAddedFile}[2][\@DOCTYPE]{%
   % #1=KEY
   % #2=file class
-  \iffileadded[#1]{#2}{\@nt@loadallfiles{#1}{#2}}{}%
+  \iffileadded[#1]{#2}
+      {\@nt@loadallfiles{#1}{#2}}
+      {}%
 }
 
-\newcommand{\iffileadded}[2][\@DOCTYPE]{\ifoptiondefined{/@nt/file/#2/#1}}
+\newcommand{\iffileadded}[2][\@DOCTYPE]{%
+  \ifstrequal{#2}{copyright}
+    {\typeout{}\typeout{iffileadded{#2}{#1}}\IFFILEADDED}
+    {}
+  \ifoptiondefined{/@nt/file/#2/#1}}
 
 % --------------------------------------------------------
 % LOAD A DEFAULT COPYRIGHT PAGE DEFINITION
@@ -2240,31 +2272,16 @@
 %   \IfFileExists{#3#2}{\ntaddfile{#1}{#3#2}\ntforbreak}{}%
 % }
 
-\ifmaindoc{% only print if a main document
-  \iftoggle{/novathesis/print/copyright}{% if copuyright toggle is on
-    \IfFileExistsInDirsTF {copyright} 
-      {
-        {\DIRSCHOOLS/\@UNIV/\@SCHL/},
-        {\DIRSCHOOLS/\@UNIV/},
-        {\DIRNTFILES/},
-      }
-      {
-        \ntaddfile{copyright}{#1}
-      }
-      {
-        \ClassError{novathesis}
-                   {No “copyright.tex” file was found!}{}
-      }
-  }{}%
-}{}
 
 \ifoptionequal{/novathesis/spine/layout}{off}{}{% print the spine
-  \InputIfFileExistsInDirsTF{novathesis-spine.sty}{
-          {\DIRSCHOOLS/\@UNIV/\@SCHL/},
-          {\DIRSCHOOLS/\@UNIV/},
-          {\DIRNTFILES/},
-  }{\AtEndDocument{\csuse{ntprintspine}}}
-   {\ClassError{novathesis}{No “novathesis-spine” file found.}{}}%
+  \InputIfFileExistsInDirsTF {novathesis-spine.sty}
+    {
+      {\DIRSCHOOLS/\@UNIV/\@SCHL/},
+      {\DIRSCHOOLS/\@UNIV/},
+      {\DIRNTFILES/},
+    }
+    {\AtEndDocument{\csuse{ntprintspine}}}
+    {\ClassError{novathesis}{No “novathesis-spine” file found.}{}}%
 }
 
 
@@ -2729,17 +2746,17 @@
         \IfFileExistsCase
           {
             {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-\@LANG@MAIN-statement}
-                  {\ntaddfile{statement}{./##1.tex}},
+                  {\ntaddfile{statement}{##1.tex}},
             {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-statement}
-                  {\ntaddfile{statement}{./##1.tex}},
+                  {\ntaddfile{statement}{##1.tex}},
             {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@LANG@MAIN-statement}
-                  {\ntaddfile{statement}{./##1.tex}},
+                  {\ntaddfile{statement}{##1.tex}},
             {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-statement}
-                  {\ntaddfile{statement}{./##1.tex}},
+                  {\ntaddfile{statement}{##1.tex}},
             {\DIRSCHOOLS/\@UNIV-\@LANG@MAIN-statement}
-                  {\ntaddfile{statement}{./##1.tex}},
+                  {\ntaddfile{statement}{##1.tex}},
             {\DIRSCHOOLS/\@UNIV-statement}
-                  {\ntaddfile{statement}{./##1.tex}},
+                  {\ntaddfile{statement}{##1.tex}},
           }
           { % NOT FOUND
             \ClassError{novathesis}{No “statement.tex” file found!}{}
@@ -3397,7 +3414,21 @@
 
 
 \newcommand*{\ntprintcopyrightpage}{%
-  \PrintAddedFile{copyright}%
+  \ifmaindoc{% only print if a main document
+    \iftoggle{/novathesis/print/copyright}{% if copuyright toggle is on
+      \InputIfFileExistsInDirsTF {copyright.tex} 
+        {
+          {\DIRSCHOOLS/\@UNIV/\@SCHL},
+          {\DIRSCHOOLS/\@UNIV},
+          {\DIRNTFILES},
+        }
+        {}
+        {
+          \ClassError{novathesis}
+                     {No “copyright.tex” file was found!}{}
+        }
+    }{}%
+  }{}
 }
 
 
