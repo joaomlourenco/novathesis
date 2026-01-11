@@ -765,7 +765,6 @@
   print/sdgs/hspace/.new dim    = {5mm},   % any measure
   print/sdgs/vspace/.new dim    = {4mm},   % any measure
   % MISC
-  countsecondcover/.new toggle  = false,
   numberallpages/.new toggle    = false,
   glossaries/list/reverse/.new toggle       = true,
   tocintoc/.new toggle          = true,
@@ -2381,8 +2380,7 @@
     \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
     \NTRunHook{printcovers/post}%
   \endgroup%
-  \setcounter{page}{1}%
-  \iftoggle{/novathesis/countsecondcover}{\stepcounter{page}}{}%
+  \setcounter{page}{2}%
   \pagecolor{white}%
 }
 
@@ -2399,10 +2397,10 @@
     }{}%
   }{% Pre-defined cover page
     \IfStrEqCase{#1}{%
-      {1}{\ntprintcoversingle{#1-1}\ntprintcoversingle{#1-2}}%
+      {1}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}}%
       {2}{\iftoggle{/novathesis/print/frontpage}
-                   {\ntprintcoversingle{#1-1}\ntprintcoversingle{#1-2}}{}}%
-      {N}{\ntprintcoversingle{#1-1}\ntprintcoversingle{#1-2}}%
+                   {\ntprintcoversingle{#1-1}\ntprintcoversingle{#1}{2}}{}}%
+      {N}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}}%
     }[\ClassWarning{Invalid cover number: #1}{}]%
   }%
 }
@@ -2410,30 +2408,33 @@
 \gdef\@COVERNUM{}%
 \newcommand{\ifcovernum}[2]{\IfStrEq{\@COVERNUM}{#1}{#2}}
 
-\newcommand{\ntprintcoversingle}[1]{%
-  % #1 = cover ID “major-minor”
-  \gdef\@COVERNUM{#1}%
-  \ifcoverdefined[#1]{\setcounter{page}{0}\@ntprintcover@i{#1}}{}%
+\newcommand{\ntprintcoversingle}[2]{%
+  % #1 = cover ID “major”
+  % #2 = cover ID “minor”
+  \gdef\@COVERNUM{#1-#2}%
+  \ifcoverdefined[#1-#2]{\setcounter{page}{0}\@ntprintcover@i{#1}{#2}}{}%
 }
 
-\newcommand{\@ntprintcover@i}[1]{%
-  % #1 = cover ID (major-minor)
+\newcommand{\@ntprintcover@i}[2]{%
+  % #1 = cover ID “major”
+  % #2 = cover ID “minor”
   \begingroup%
     \NTRunHook{cover/pre}%
-    \NTRunHook{cover/#1/pre}%
-    \hypertarget{\thebkmstring(#1)}{}%
-    \bookmark[dest=\thebkmstring(#1)]{\thebkmstring(#1)}%
+    \NTRunHook{cover/#1-#2/pre}%
+    \hypertarget{\thebkmstring(#1-#2)}{}%
+    \bookmark[dest=\thebkmstring(#1-#2)]{\thebkmstring(#1-#2)}%
     \bookmarksetupnext{rellevel=1}%
     \thispagestyle{empty}%
-    \setCoverBgColor{#1}%
-    \setCoverBgImage{#1}%
-    \prrintCoverText{#1}%
-    % \@ntmakeboxwithcover{#1}{\@fullcover@box}%
-    \printCoverTikz{#1}%
-    \NTRunHook{cover/#1/post}%
+    \setCoverBgColor{#1-#2}%
+    \setCoverBgImage{#1-#2}%
+    \prrintCoverText{#1-#2}%
+    % \@ntmakeboxwithcover{#1-#2}{\@fullcover@box}%
+    \printCoverTikz{#1-#2}%
+    \NTRunHook{cover/#1-#2/post}%
     \NTRunHook{cover/post}%
   \endgroup%
-  \ifoptionequal{/novathesis/media}{paper}{\newpage ~\thispagestyle{empty}\newpage}{\clearforchapter}
+  \unskip%
+  \ifoptionequal{/novathesis/media}{paper}{\newpage ~\thispagestyle{empty}\newpage}{}
 }
 
 \newcommand{\setCoverBgColor}[1]{
@@ -2742,30 +2743,29 @@
     \ifmaindoc{% Skip thesis plan and similar documents
       \iftoggle{/novathesis/print/statement}{% if statement toggle is on
         \NTRunHook{statement/pre}%
-        \iffileadded{statement}{}{%ELSE
-        \IfFileExistsCase
-          {
-            {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-\@LANG@MAIN-statement}
-                  {\ntaddfile{statement}{##1.tex}},
-            {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-statement}
-                  {\ntaddfile{statement}{##1.tex}},
-            {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@LANG@MAIN-statement}
-                  {\ntaddfile{statement}{##1.tex}},
-            {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-statement}
-                  {\ntaddfile{statement}{##1.tex}},
-            {\DIRSCHOOLS/\@UNIV-\@LANG@MAIN-statement}
-                  {\ntaddfile{statement}{##1.tex}},
-            {\DIRSCHOOLS/\@UNIV-statement}
-                  {\ntaddfile{statement}{##1.tex}},
-          }
-          { % NOT FOUND
-            \ClassError{novathesis}{No “statement.tex” file found!}{}
-          }
-        }%
-        % \hypertarget{bmstatement}{}%
-        % \bookmark[dest=bmstatement]{\thebkmstring(statement,\@LANG@MAIN)}%
-        \bookmarksetupnext{rellevel=1}%
-        \PrintAddedFile{statement}%
+        \iffileadded{statement}
+          {\PrintAddedFile{statement}}
+          {%ELSE
+            \bookmarksetupnext{rellevel=1}%
+            \IfFileExistsCase
+              {
+                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-\@LANG@MAIN-statement}
+                      {\typeout{FILE=##1}\input{##1}},
+                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-statement}
+                      {\typeout{FILE=##1}\input{##1}},
+                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@LANG@MAIN-statement}
+                      {\typeout{FILE=##1}\input{##1}},
+                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-statement}
+                      {\typeout{FILE=##1}\input{##1}},
+                {\DIRSCHOOLS/\@UNIV-\@LANG@MAIN-statement}
+                      {\typeout{FILE=##1}\input{##1}},
+                {\DIRSCHOOLS/\@UNIV-statement}
+                      {\typeout{FILE=##1}\input{##1}},
+              }
+              { % NOT FOUND
+                \ClassError{novathesis}{No “statement.tex” file found!}{}
+              }
+          }%
         \NTRunHook{statement/post}%
       }{}%
     }{}%

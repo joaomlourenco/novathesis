@@ -8,6 +8,12 @@
 \typeout{NT FILE nova/fsch/nova-fcsh-defaults.ldf}%
 
 \ntsetup{print/frontpage=false}
+\ifmaindoc
+  {\ifdocworking
+    {}
+    {\ntsetup{print/statement=true}}}
+  {}
+
 
 % Faculty / School
 \school(pt):={Faculdade de Ciências Sociais e Humanas}
