@@ -2380,7 +2380,7 @@
     \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
     \NTRunHook{printcovers/post}%
   \endgroup%
-  \setcounter{page}{2}%
+  \setcounter{page}{0}%
   \pagecolor{white}%
 }
 
@@ -2746,7 +2746,7 @@
         \iffileadded{statement}
           {\PrintAddedFile{statement}}
           {%ELSE
-            \bookmarksetupnext{rellevel=1}%
+            % \bookmarksetupnext{rellevel=1}%
             \IfFileExistsCase
               {
                 {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-\@LANG@MAIN-statement}
@@ -3400,7 +3400,7 @@
   \ifmaindoc{%
     \iftoggle{/novathesis/print/copyright}{%
       \begingroup
-        \bookmarksetupnext{rellevel=1}
+        % \bookmarksetupnext{rellevel=1}
         \ntselectlang{\@LANG@COPYRIGHT}%
         \expandafter\ChapterNoTitle\expandafter{\thebkmstring(copyright,\@LANG@COPYRIGHT)}
         \NTRunHook{copyright/pre}%
