@@ -790,9 +790,6 @@
 %% GENERAL PURPOSE MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\instring#1#2{TT\fi\begingroup
-  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
-
 % --------------------------------------------------------
 
 \newcommand{\printcm}[1]{%
@@ -1422,12 +1419,13 @@
 \def\@langs@loaded@sep{}
 \newcommand*{\@nt@setlangloaded}[1]{%
       % \typeout{LL=#1}\LL
-      \if\instring{,#1,}{,\@LANG@LOADED,}\else%
+      \IfSubStr{,\@LANG@LOADED,}{,#1,}{}
+      {
         \IfFileExists{\DIRSTRINGS/strings-#1.ldf}%
                      {\eappto{\@LANG@LOADED}{\@langs@loaded@sep#1}\def\@langs@loaded@sep{,}}%
                       {\ClassError{novathesis}{File not found: “\DIRSTRINGS/strings-#1.ldf” file!}%
                                   {Add a file with the translations for this language.}}%
-      \fi%
+      }%
 }
 
 \@for\myi:=\expanded{\@LANG@COVER,\@LANG@COPYRIGHT,\@LANG@MAIN,%
@@ -1486,9 +1484,9 @@
 \def\@fontencs@sep{}
 \@for\myi:=\@LANG@LOADED\do{
   \options{/@nt/fontenc=\myi}
-  \if\instring{,\option{/@nt/fontenc},}{,\@fontencs,}%
-  \else\eappto{\@fontencs}{\@fontencs@sep\option{/@nt/fontenc}}\def\@fontencs@sep{,}%
-  \fi%
+  \IfSubStr{,\@fontencs,}{,\option{/@nt/fontenc},}
+    {}
+    {\eappto{\@fontencs}{\@fontencs@sep\option{/@nt/fontenc}}\def\@fontencs@sep{,}}%
 }
 
 
@@ -2231,9 +2229,6 @@
 }
 
 \newcommand{\iffileadded}[2][\@DOCTYPE]{%
-  \ifstrequal{#2}{copyright}
-    {\typeout{}\typeout{iffileadded{#2}{#1}}\IFFILEADDED}
-    {}
   \ifoptiondefined{/@nt/file/#2/#1}}
 
 % --------------------------------------------------------
@@ -2395,12 +2390,12 @@
       }%
       \ntprintcoversingle{2-1}%
     }{}%
-  }{% Pre-defined cover page
+  }{% Pre-defined cover page  
     \IfStrEqCase{#1}{%
-      {1}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}}%
+      {1}{\ntprintcoversingle{1}{1}\ntprintcoversingle{1}{2}}%
       {2}{\iftoggle{/novathesis/print/frontpage}
-                   {\ntprintcoversingle{#1-1}\ntprintcoversingle{#1}{2}}{}}%
-      {N}{\ntprintcoversingle{#1}{1}\ntprintcoversingle{#1}{2}}%
+                   {\ntprintcoversingle{2}{1}\ntprintcoversingle{2}{2}}{}}%
+      {N}{\ntprintcoversingle{N}{1}\ntprintcoversingle{N}{2}}%
     }[\ClassWarning{Invalid cover number: #1}{}]%
   }%
 }
@@ -2434,7 +2429,7 @@
     \NTRunHook{cover/post}%
   \endgroup%
   \unskip%
-  \ifoptionequal{/novathesis/media}{paper}{\newpage ~\thispagestyle{empty}\newpage}{}
+  \ifoptionequal{/novathesis/media}{paper}{\newpage ~\thispagestyle{empty}\newpage}{\clearforchapter}
 }
 
 \newcommand{\setCoverBgColor}[1]{
@@ -2543,17 +2538,15 @@
     \matchdegreetrue%
     \if&\option{/@ntcoveropts/status}&\relax%
     \else%
-      \if\instring{,\@DOCSTATUS,}{,\option{/@ntcoveropts/status},}%
-      \else%
-        \matchstatusfalse%
-      \fi%
+      \IfSubStr{,\option{/@ntcoveropts/status},}{,\@DOCSTATUS,}
+        {}
+        {\matchstatusfalse}%
     \fi%
     \if&\option{/@ntcoveropts/degree}&\relax%
     \else%
-      \if\instring{/\@DOCTYPE/}{/\option{/@ntcoveropts/degree}/}%
-      \else%
-        \matchdegreefalse%
-      \fi%
+      \IfSubStr{/\option{/@ntcoveropts/degree}/}{/\@DOCTYPE/}
+        {}
+        {\matchdegreefalse}%
     \fi%
     \ifmatchstatus%
       \ifmatchdegree%

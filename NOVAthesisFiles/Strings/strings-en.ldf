@@ -1,67 +1,65 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Strings/en.ldf
-%% NOVA thesis configuration file
-%%
-%% Customization for language dependent strings
+%%  English (en) strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE Strings/en.ldf}%
 
-\input{Strings/strings-declare.tex}
+% --------------------------------------------------------------------
+%   Load MemStore declarations
+% --------------------------------------------------------------------
+\input{\DIRSTRINGS/strings-declare.tex}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%  English - strings
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\AtEndPreamble{
-\StartBabelCommands*{english}{date}
-  \SetStringLoop{month#1name}{%
-    January,February,March,April,May,June,%
-    July,August,September,October,November,%
-    December}
-\EndBabelCommands
-}
+% --------------------------------------------------------------------
+%   Utilities
+% --------------------------------------------------------------------
+\andstring(en)                  := { and }
+\instring(en)                   := { in }
+\ofstring(en)                   := { of }
+\keywordsstring(en)             := {Keywords}
+\departmentofstring(en)         := {Department of}
+\specializationstring(en)       := {Specialization in}
+\degreenameprefix(bsc,en)       := {Bachelor in}
+\degreenameprefix(msc,en)       := {Master in}
+\degreenameprefix(phd,en)       := {Doctorate in}
 
+
+% --------------------------------------------------------------------
+%   Bookmakr strings
+% --------------------------------------------------------------------
 \bkmstring(frontmatter,en)      := {Front Matter}
 \bkmstring(backmatter,en)       := {Back Matter}
 \bkmstring(cover,en)            := {Front Cover}
-\bkmstring(incover,en)          := {Inside \thebkmstring(cover,en)}
+\bkmstring(incover,en)          := {Inside Front Cover}
 \bkmstring(frontpage,en)        := {Front Page}
-\bkmstring(infrontpage,en)      := {Inside \thebkmstring(frontpage,en)}
+\bkmstring(infrontpage,en)      := {Inside Front Page}
 \bkmstring(backcover,en)        := {Back Cover}
-\bkmstring(inbackcover,en)      := {Inside \thebkmstring(backcover,en)}
+\bkmstring(inbackcover,en)      := {Inside back Cover}
 \bkmstring(spine,en)            := {Spine}
 \bkmstring(copyright,en)        := {Copyright}
 \bkmstring(statement,en)        := {Statement}
-\bkmstring(dedication,en)       := {Dedication}
+\bkmstring(dedicatory,en)       := {Dedication}
 \bkmstring(acknowledgements,en) := {Acknowledgements}
 \bkmstring(quote,en)            := {Quotation}
 \bkmstring(abstract,en)         := {Abstract}
 \bkmstring(listof,en)           := {List of…}
 \bkmstring(glossaries,en)       := {Glossaries}
-\keywordsstring(en)             := {Keywords}
-\notdefined(en)                 := {UNDEFINED}
-\specializationstring(en)       := {Specialization in}
-\departmentofstring(en)         := {Department of}
-\andstring(en)                  := { and }
-\degreenameprefix(bsc,en)       := {Bachelor in}
-\degreenameprefix(msc,en)       := {Master in}
-\degreenameprefix(phd,en)       := {Doctorate in}
 
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Danish (dk)
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\defaultnttitle(en)             :={A Very Long and Impressive\\Thesis Title With a Forced Line Break}
-\defaultntsubtitle(en)          :={Some Thoughts on the Life, the Universe,\\and Everything Else}
-\defaultntdepartment(en)        :={Department of\\Name of the Department}
-\defaultntdegreename(en)        :={Study Program Name}
-\defaultntspecialization(en)    :={Specialization Name}
-\defaultntauthordegree(en)      :={Master/BSc in Name of Previous Degree}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%  Adviser strings
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% --------------------------------------------------------------------
+%   Defaults
+% --------------------------------------------------------------------
+\defaultnttitle(en)             := {A Very Long and Impressive\\Thesis Title With a Forced Line Break}
+\defaultntsubtitle(en)          := {Some Thoughts on the Life, the Universe,\\and Everything Else}
+\defaultntdepartment(en)        := {Name of the Department}
+\defaultntdegreename(en)        := {Study Program Name}
+\defaultntspecialization(en)    := {Specialization Name}
+\defaultntauthordegree(en)      := {Master/Bachelor in Name of Previous Degree}
+\notdefinedstring(en)           := {UNDEFINED}
 
+
+% --------------------------------------------------------------------
+%   Adviser strings
+% --------------------------------------------------------------------
 \adviserstring(a,1,m,en)        := {Supervisor}
 \adviserstring(a,1,f,en)        := {Supervisor}
 \adviserstring(a,2,m,en)        := {Supervisors}
@@ -82,10 +80,30 @@
 \adviserstring(t,2,m,en)        := {Tutors}
 \adviserstring(t,2,f,en)        := {Tutors}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Degree names
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\adviserstring(a,pref,1,m,en)        := {The Supervisor}
+\adviserstring(a,pref,1,f,en)        := {The Supervisor}
+\adviserstring(a,pref,2,m,en)        := {The Supervisors}
+\adviserstring(a,pref,2,f,en)        := {The Supervisors}
 
+\adviserstring(c,pref,1,m,en)        := {The Co-supervisor}
+\adviserstring(c,pref,1,f,en)        := {The Co-supervisor}
+\adviserstring(c,pref,2,m,en)        := {The Co-supervisors}
+\adviserstring(c,pref,2,f,en)        := {The Co-supervisors}
+
+\adviserstring(ca,pref,1,m,en)       := {The Co-supervisor}
+\adviserstring(ca,pref,1,f,en)       := {The Co-supervisor}
+\adviserstring(ca,pref,2,m,en)       := {The Co-supervisors}
+\adviserstring(ca,pref,2,f,en)       := {The Co-supervisors}
+
+\adviserstring(t,pref,1,m,en)        := {The Tutor}
+\adviserstring(t,pref,1,f,en)        := {The Tutor}
+\adviserstring(t,pref,2,m,en)        := {The Tutors}
+\adviserstring(t,pref,2,f,en)        := {The Tutors}
+
+
+% --------------------------------------------------------------------
+% Degree names
+% --------------------------------------------------------------------
 \degreestring(bsc,m,en)         := {Bachelor}
 \degreestring(bsc,f,en)         := {Bachelor}
 
@@ -101,10 +119,10 @@
 \degreestring(phdprop,m,en)     := {Doctoral candidate}
 \degreestring(phdprop,f,en)     := {Doctoral candidate}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Document types
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% --------------------------------------------------------------------
+% Document types
+% --------------------------------------------------------------------
 \doctypestring(bsc,en)          := {Bachelor Project}
 \doctypestring(mscplan,en)      := {Master Dissertation Plan}
 \doctypestring(msc,en)          := {Master Dissertation}
@@ -116,16 +134,16 @@
 \dissertationplan(phdplan,en)   := {Thesis Plan}
 \dissertationplan(phdprop,en)   := {Thesis Proposal}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% SDG
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% --------------------------------------------------------------------
+%   Sustainable Development Goals (SDG)
+% --------------------------------------------------------------------
 \sdgstring(en)                  := {Sustainable Development Goals (SDG)}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Committee
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% --------------------------------------------------------------------
+%   Committee
+% --------------------------------------------------------------------
 \committeetitlestring(en)       := {Examination Committee}
 
 \committeestring(c,1,m,en)      := {Chair}
@@ -158,51 +176,83 @@
 \committeestring(g,2,m,en)      := {Guests}
 \committeestring(g,2,f,en)      := {Guests}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Dissertation strings
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\dissertationstring(bsc,en)     = {Report submitted in partial fulfillment of the requirements for the degree of %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+% --------------------------------------------------------------------
+%   Dissertation strings
+% --------------------------------------------------------------------
 
-\dissertationstring(mscplan,en) = {Intermediate report submitted in partial fulfillment of the requirements for the degree of %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+\dissertationstring(bsc,en)     = {%
+      Report submitted in partial fulfillment of the requirements for the degree of %
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)%
+      \ in\\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(msc,en)     = {Dissertation submitted in partial fulfillment of the requirements for the degree of %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+\dissertationstring(mscplan,en) = {%
+      Intermediate report submitted in partial fulfillment of the requirements for the degree of %
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)%
+      \ in\\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(phdplan,en) = {Thesis plan submitted in partial fulfillment of the requirements for the degree of %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+\dissertationstring(msc,en)     = {%
+      Dissertation submitted in partial fulfillment of the requirements for the degree of %
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)%
+      \ in\\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(phdprop,en) = {Thesis proposal submitted in partial fulfillment of the requirements for the degree of %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+\dissertationstring(phdplan,en) = {%
+      Thesis plan submitted in partial fulfillment of the requirements for the degree of %
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)
+      \ in\\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(phd,en)     = {Thesis submitted in partial fulfillment of the requirements for the degree of %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+\dissertationstring(phdprop,en) = {%
+      Thesis proposal submitted in partial fulfillment of the requirements for the degree of %
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)
+      \ in\\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Copyright
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\copyrighttextstring(en)        = {The \theschool(\@LANG@COPYRIGHT)\ and the \theuniversity(\@LANG@COPYRIGHT)\ have the right, perpetual and without geographical limitations, to archive and publish this dissertation in print or digital form, or by any other existing or future means, and to disseminate it through scientific repositories and to allow its copying and distribution for non-commercial educational or research purposes, provided that proper credit is given to the author and the publisher.}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Acknowledgements
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\acknowledgmentsstring(en)      = {This document was produced with the \NTengineName~\@ntcite{latex-project} typesetting system and the \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+\dissertationstring(phd,en)     = {%
+      Thesis submitted in partial fulfillment of the requirements for the degree of %
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)
+      \ in\\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
 
+% --------------------------------------------------------------------
+%   Copyright
+% --------------------------------------------------------------------
+\copyrighttextstring(en)        = {%
+        The \theschool(\@LANG@COPYRIGHT)\ and the \theuniversity(\@LANG@COPYRIGHT)%
+        \ have the right, perpetual and without geographical limitations, to archive %
+        and publish this dissertation in print or digital form, or by any other existing %
+        or future means, and to disseminate it through scientific repositories and to %
+        allow its copying and distribution for non-commercial educational or research %
+        purposes, provided that proper credit is given to the author and the publisher.}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Babel definitions
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------------
+%   Acknowledgements
+% --------------------------------------------------------------------
+\acknowledgmentsstring(en)      = {%
+        This document was produced with the \NTengineName~\@ntcite{latex-project} %
+        typesetting system and the %
+        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        template (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+
+
+
+% --------------------------------------------------------------------
+%   Babel definitions
+% --------------------------------------------------------------------
 \ntlangsetup*{en/annex=Annex}
 \ntlangsetup*{en/annexpl=Annexes}
 \ntlangsetup*{en/appendixpl=Appendices}
+
+\AtEndPreamble{
+  \StartBabelCommands*{english}{date}
+    \SetStringLoop{month#1name}{%
+      January,February,March,April,May,June,%
+      July,August,September,October,November,%
+      December}
+  \EndBabelCommands
+}
