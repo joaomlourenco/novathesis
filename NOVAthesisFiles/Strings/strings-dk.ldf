@@ -21,6 +21,8 @@
 \degreenameprefix(bsc,dk)       := {Bachelor i}
 \degreenameprefix(msc,dk)       := {Kandidat i}
 \degreenameprefix(phd,dk)       := {Ph.d. i}
+\candidatestring(m,dk)          := {Kandidaten}
+\candidatestring(f,dk)          := {Kandidaten}
 
 
 % --------------------------------------------------------------------
@@ -80,25 +82,25 @@
 \adviserstring(t,2,m,dk)        := {Tutorer}
 \adviserstring(t,2,f,dk)        := {Tutorer}
 
-\adviserstring(a,pref,1,m,dk)        := {Vejlederen}
-\adviserstring(a,pref,1,f,dk)        := {Vejlederen}
-\adviserstring(a,pref,2,m,dk)        := {Vejlederne}
-\adviserstring(a,pref,2,f,dk)        := {Vejlederne}
+\adviserstring(pref,a,1,m,dk)        := {Vejlederen}
+\adviserstring(pref,a,1,f,dk)        := {Vejlederen}
+\adviserstring(pref,a,2,m,dk)        := {Vejlederne}
+\adviserstring(pref,a,2,f,dk)        := {Vejlederne}
 
-\adviserstring(c,pref,1,m,dk)        := {Medvejlederen}
-\adviserstring(c,pref,1,f,dk)        := {Medvejlederen}
-\adviserstring(c,pref,2,m,dk)        := {Medvejlederne}
-\adviserstring(c,pref,2,f,dk)        := {Medvejlederne}
+\adviserstring(pref,c,1,m,dk)        := {Medvejlederen}
+\adviserstring(pref,c,1,f,dk)        := {Medvejlederen}
+\adviserstring(pref,c,2,m,dk)        := {Medvejlederne}
+\adviserstring(pref,c,2,f,dk)        := {Medvejlederne}
 
-\adviserstring(ca,pref,1,m,dk)       := {Medvejlederen}
-\adviserstring(ca,pref,1,f,dk)       := {Medvejlederen}
-\adviserstring(ca,pref,2,m,dk)       := {Medvejlederne}
-\adviserstring(ca,pref,2,f,dk)       := {Medvejlederne}
+\adviserstring(pref,ca,1,m,dk)       := {Medvejlederen}
+\adviserstring(pref,ca,1,f,dk)       := {Medvejlederen}
+\adviserstring(pref,ca,2,m,dk)       := {Medvejlederne}
+\adviserstring(pref,ca,2,f,dk)       := {Medvejlederne}
 
-\adviserstring(t,pref,1,m,dk)        := {Tutoren}
-\adviserstring(t,pref,1,f,dk)        := {Tutoren}
-\adviserstring(t,pref,2,m,dk)        := {Tutorerne}
-\adviserstring(t,pref,2,f,dk)        := {Tutorerne}
+\adviserstring(pref,t,1,m,dk)        := {Tutoren}
+\adviserstring(pref,t,1,f,dk)        := {Tutoren}
+\adviserstring(pref,t,2,m,dk)        := {Tutorerne}
+\adviserstring(pref,t,2,f,dk)        := {Tutorerne}
 
 
 % --------------------------------------------------------------------

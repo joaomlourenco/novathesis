@@ -21,6 +21,8 @@
 \degreenameprefix(bsc,pl)       := {Licencjat z}
 \degreenameprefix(msc,pl)       := {Magister z}
 \degreenameprefix(phd,pl)       := {Doktorat z}
+\candidatestring(m,pl)          := {Kandydat}
+\candidatestring(f,pl)          := {Kandydatka}
 
 
 % --------------------------------------------------------------------
@@ -80,25 +82,25 @@
 \adviserstring(t,2,m,pl)        := {Opiekunowie naukowi}
 \adviserstring(t,2,f,pl)        := {Opiekunki naukowe}
 
-\adviserstring(a,pref,1,m,pl)        := {Promotor}
-\adviserstring(a,pref,1,f,pl)        := {Promotorka}
-\adviserstring(a,pref,2,m,pl)        := {Promotorzy}
-\adviserstring(a,pref,2,f,pl)        := {Promotorki}
+\adviserstring(pref,a,1,m,pl)        := {Promotor}
+\adviserstring(pref,a,1,f,pl)        := {Promotorka}
+\adviserstring(pref,a,2,m,pl)        := {Promotorzy}
+\adviserstring(pref,a,2,f,pl)        := {Promotorki}
 
-\adviserstring(c,pref,1,m,pl)        := {Promotor pomocniczy}
-\adviserstring(c,pref,1,f,pl)        := {Promotorka pomocnicza}
-\adviserstring(c,pref,2,m,pl)        := {Promotorzy pomocniczy}
-\adviserstring(c,pref,2,f,pl)        := {Promotorki pomocnicze}
+\adviserstring(pref,c,1,m,pl)        := {Promotor pomocniczy}
+\adviserstring(pref,c,1,f,pl)        := {Promotorka pomocnicza}
+\adviserstring(pref,c,2,m,pl)        := {Promotorzy pomocniczy}
+\adviserstring(pref,c,2,f,pl)        := {Promotorki pomocnicze}
 
-\adviserstring(ca,pref,1,m,pl)       := {Promotor pomocniczy}
-\adviserstring(ca,pref,1,f,pl)       := {Promotorka pomocnicza}
-\adviserstring(ca,pref,2,m,pl)       := {Promotorzy pomocniczy}
-\adviserstring(ca,pref,2,f,pl)       := {Promotorki pomocnicze}
+\adviserstring(pref,ca,1,m,pl)       := {Promotor pomocniczy}
+\adviserstring(pref,ca,1,f,pl)       := {Promotorka pomocnicza}
+\adviserstring(pref,ca,2,m,pl)       := {Promotorzy pomocniczy}
+\adviserstring(pref,ca,2,f,pl)       := {Promotorki pomocnicze}
 
-\adviserstring(t,pref,1,m,pl)        := {Opiekun naukowy}
-\adviserstring(t,pref,1,f,pl)        := {Opiekunka naukowa}
-\adviserstring(t,pref,2,m,pl)        := {Opiekunowie naukowi}
-\adviserstring(t,pref,2,f,pl)        := {Opiekunki naukowe}
+\adviserstring(pref,t,1,m,pl)        := {Opiekun naukowy}
+\adviserstring(pref,t,1,f,pl)        := {Opiekunka naukowa}
+\adviserstring(pref,t,2,m,pl)        := {Opiekunowie naukowi}
+\adviserstring(pref,t,2,f,pl)        := {Opiekunki naukowe}
 
 
 % --------------------------------------------------------------------

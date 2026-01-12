@@ -21,6 +21,8 @@
 \degreenameprefix(bsc,gr)       := {Πτυχίο στη}
 \degreenameprefix(msc,gr)       := {Μεταπτυχιακό στη}
 \degreenameprefix(phd,gr)       := {Διδακτορικό στη}
+\candidatestring(m,gr)          := {Ο Υποψήφιος}
+\candidatestring(f,gr)          := {Η Υποψήφια}
 
 
 % --------------------------------------------------------------------
@@ -80,25 +82,25 @@
 \adviserstring(t,2,m,gr)        := {Καθηγητές-σύμβουλοι}
 \adviserstring(t,2,f,gr)        := {Καθηγήτριες-σύμβουλοι}
 
-\adviserstring(a,pref,1,m,gr)        := {Ο Επιβλέπων}
-\adviserstring(a,pref,1,f,gr)        := {Η Επιβλέπουσα}
-\adviserstring(a,pref,2,m,gr)        := {Οι Επιβλέποντες}
-\adviserstring(a,pref,2,f,gr)        := {Οι Επιβλέπουσες}
+\adviserstring(pref,a,1,m,gr)        := {Ο Επιβλέπων}
+\adviserstring(pref,a,1,f,gr)        := {Η Επιβλέπουσα}
+\adviserstring(pref,a,2,m,gr)        := {Οι Επιβλέποντες}
+\adviserstring(pref,a,2,f,gr)        := {Οι Επιβλέπουσες}
 
-\adviserstring(c,pref,1,m,gr)        := {Ο Ακαδημαϊκός σύμβουλος}
-\adviserstring(c,pref,1,f,gr)        := {Η Ακαδημαϊκή σύμβουλος}
-\adviserstring(c,pref,2,m,gr)        := {Οι Ακαδημαϊκοί σύμβουλοι}
-\adviserstring(c,pref,2,f,gr)        := {Οι Ακαδημαϊκές σύμβουλοι}
+\adviserstring(pref,c,1,m,gr)        := {Ο Ακαδημαϊκός σύμβουλος}
+\adviserstring(pref,c,1,f,gr)        := {Η Ακαδημαϊκή σύμβουλος}
+\adviserstring(pref,c,2,m,gr)        := {Οι Ακαδημαϊκοί σύμβουλοι}
+\adviserstring(pref,c,2,f,gr)        := {Οι Ακαδημαϊκές σύμβουλοι}
 
-\adviserstring(ca,pref,1,m,gr)       := {Ο Ακαδημαϊκός σύμβουλος}
-\adviserstring(ca,pref,1,f,gr)       := {Η Ακαδημαϊκή σύμβουλος}
-\adviserstring(ca,pref,2,m,gr)       := {Οι Ακαδημαϊκοί σύμβουλοι}
-\adviserstring(ca,pref,2,f,gr)       := {Οι Ακαδημαϊκές σύμβουλοι}
+\adviserstring(pref,ca,1,m,gr)       := {Ο Ακαδημαϊκός σύμβουλος}
+\adviserstring(pref,ca,1,f,gr)       := {Η Ακαδημαϊκή σύμβουλος}
+\adviserstring(pref,ca,2,m,gr)       := {Οι Ακαδημαϊκοί σύμβουλοι}
+\adviserstring(pref,ca,2,f,gr)       := {Οι Ακαδημαϊκές σύμβουλοι}
 
-\adviserstring(t,pref,1,m,gr)        := {Ο Καθηγητής-σύμβουλος}
-\adviserstring(t,pref,1,f,gr)        := {Η Καθηγήτρια-σύμβουλος}
-\adviserstring(t,pref,2,m,gr)        := {Οι Καθηγητές-σύμβουλοι}
-\adviserstring(t,pref,2,f,gr)        := {Οι Καθηγήτριες-σύμβουλοι}
+\adviserstring(pref,t,1,m,gr)        := {Ο Καθηγητής-σύμβουλος}
+\adviserstring(pref,t,1,f,gr)        := {Η Καθηγήτρια-σύμβουλος}
+\adviserstring(pref,t,2,m,gr)        := {Οι Καθηγητές-σύμβουλοι}
+\adviserstring(pref,t,2,f,gr)        := {Οι Καθηγήτριες-σύμβουλοι}
 
 
 % --------------------------------------------------------------------

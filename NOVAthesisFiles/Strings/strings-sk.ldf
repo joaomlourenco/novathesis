@@ -21,6 +21,8 @@
 \degreenameprefix(bsc,sk)       := {Bakalár v}
 \degreenameprefix(msc,sk)       := {Magister v}
 \degreenameprefix(phd,sk)       := {Doktorát v}
+\candidatestring(m,sk)          := {Kandidát}
+\candidatestring(f,sk)          := {Kandidátka}
 
 
 % --------------------------------------------------------------------
@@ -80,25 +82,25 @@
 \adviserstring(t,2,m,sk)        := {Tutori}
 \adviserstring(t,2,f,sk)        := {Tutorky}
 
-\adviserstring(a,pref,1,m,sk)        := {Školiteľ}
-\adviserstring(a,pref,1,f,sk)        := {Školiteľka}
-\adviserstring(a,pref,2,m,sk)        := {Školitelia}
-\adviserstring(a,pref,2,f,sk)        := {Školiteľky}
+\adviserstring(pref,a,1,m,sk)        := {Školiteľ}
+\adviserstring(pref,a,1,f,sk)        := {Školiteľka}
+\adviserstring(pref,a,2,m,sk)        := {Školitelia}
+\adviserstring(pref,a,2,f,sk)        := {Školiteľky}
 
-\adviserstring(c,pref,1,m,sk)        := {Spoluškoliteľ}
-\adviserstring(c,pref,1,f,sk)        := {Spoluškoliteľka}
-\adviserstring(c,pref,2,m,sk)        := {Spoluškolitelia}
-\adviserstring(c,pref,2,f,sk)        := {Spoluškoliteľky}
+\adviserstring(pref,c,1,m,sk)        := {Spoluškoliteľ}
+\adviserstring(pref,c,1,f,sk)        := {Spoluškoliteľka}
+\adviserstring(pref,c,2,m,sk)        := {Spoluškolitelia}
+\adviserstring(pref,c,2,f,sk)        := {Spoluškoliteľky}
 
-\adviserstring(ca,pref,1,m,sk)       := {Spoluškoliteľ}
-\adviserstring(ca,pref,1,f,sk)       := {Spoluškoliteľka}
-\adviserstring(ca,pref,2,m,sk)       := {Spoluškolitelia}
-\adviserstring(ca,pref,2,f,sk)       := {Spoluškoliteľky}
+\adviserstring(pref,ca,1,m,sk)       := {Spoluškoliteľ}
+\adviserstring(pref,ca,1,f,sk)       := {Spoluškoliteľka}
+\adviserstring(pref,ca,2,m,sk)       := {Spoluškolitelia}
+\adviserstring(pref,ca,2,f,sk)       := {Spoluškoliteľky}
 
-\adviserstring(t,pref,1,m,sk)        := {Tutor}
-\adviserstring(t,pref,1,f,sk)        := {Tutorka}
-\adviserstring(t,pref,2,m,sk)        := {Tutori}
-\adviserstring(t,pref,2,f,sk)        := {Tutorky}
+\adviserstring(pref,t,1,m,sk)        := {Tutor}
+\adviserstring(pref,t,1,f,sk)        := {Tutorka}
+\adviserstring(pref,t,2,m,sk)        := {Tutori}
+\adviserstring(pref,t,2,f,sk)        := {Tutorky}
 
 
 % --------------------------------------------------------------------

@@ -21,6 +21,8 @@
 \degreenameprefix(bsc,cz)       := {Bakalářský obor}
 \degreenameprefix(msc,cz)       := {Magisterský obor}
 \degreenameprefix(phd,cz)       := {Doktorský obor}
+\candidatestring(m,cz)          := {Kandidát}
+\candidatestring(f,cz)          := {Kandidátka}
 
 
 % --------------------------------------------------------------------
@@ -81,25 +83,25 @@
 \adviserstring(t,2,m,cz)        := {Tutoři}
 \adviserstring(t,2,f,cz)        := {Tutorky}
 
-\adviserstring(a,pref,1,m,cz)        := {Vedoucí}
-\adviserstring(a,pref,1,f,cz)        := {Vedoucí}
-\adviserstring(a,pref,2,m,cz)        := {Vedoucí}
-\adviserstring(a,pref,2,f,cz)        := {Vedoucí}
+\adviserstring(pref,a,1,m,cz)        := {Vedoucí}
+\adviserstring(pref,a,1,f,cz)        := {Vedoucí}
+\adviserstring(pref,a,2,m,cz)        := {Vedoucí}
+\adviserstring(pref,a,2,f,cz)        := {Vedoucí}
 
-\adviserstring(c,pref,1,m,cz)        := {Konzultant}
-\adviserstring(c,pref,1,f,cz)        := {Konzultantka}
-\adviserstring(c,pref,2,m,cz)        := {Konzultanti}
-\adviserstring(c,pref,2,f,cz)        := {Konzultantky}
+\adviserstring(pref,c,1,m,cz)        := {Konzultant}
+\adviserstring(pref,c,1,f,cz)        := {Konzultantka}
+\adviserstring(pref,c,2,m,cz)        := {Konzultanti}
+\adviserstring(pref,c,2,f,cz)        := {Konzultantky}
 
-\adviserstring(ca,pref,1,m,cz)       := {Konzultant}
-\adviserstring(ca,pref,1,f,cz)       := {Konzultantka}
-\adviserstring(ca,pref,2,m,cz)       := {Konzultanti}
-\adviserstring(ca,pref,2,f,cz)       := {Konzultantky}
+\adviserstring(pref,ca,1,m,cz)       := {Konzultant}
+\adviserstring(pref,ca,1,f,cz)       := {Konzultantka}
+\adviserstring(pref,ca,2,m,cz)       := {Konzultanti}
+\adviserstring(pref,ca,2,f,cz)       := {Konzultantky}
 
-\adviserstring(t,pref,1,m,cz)        := {Tutor}
-\adviserstring(t,pref,1,f,cz)        := {Tutorka}
-\adviserstring(t,pref,2,m,cz)        := {Tutoři}
-\adviserstring(t,pref,2,f,cz)        := {Tutorky}
+\adviserstring(pref,t,1,m,cz)        := {Tutor}
+\adviserstring(pref,t,1,f,cz)        := {Tutorka}
+\adviserstring(pref,t,2,m,cz)        := {Tutoři}
+\adviserstring(pref,t,2,f,cz)        := {Tutorky}
 
 
 % --------------------------------------------------------------------

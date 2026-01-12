@@ -21,6 +21,8 @@
 \degreenameprefix(bsc,en)       := {Bachelor in}
 \degreenameprefix(msc,en)       := {Master in}
 \degreenameprefix(phd,en)       := {Doctorate in}
+\candidatestring(m,en)          := {The Candidate}
+\candidatestring(f,en)          := {The Candidate}
 
 
 % --------------------------------------------------------------------
@@ -80,25 +82,25 @@
 \adviserstring(t,2,m,en)        := {Tutors}
 \adviserstring(t,2,f,en)        := {Tutors}
 
-\adviserstring(a,pref,1,m,en)        := {The Supervisor}
-\adviserstring(a,pref,1,f,en)        := {The Supervisor}
-\adviserstring(a,pref,2,m,en)        := {The Supervisors}
-\adviserstring(a,pref,2,f,en)        := {The Supervisors}
+\adviserstring(pref,a,1,m,en)        := {The Supervisor}
+\adviserstring(pref,a,1,f,en)        := {The Supervisor}
+\adviserstring(pref,a,2,m,en)        := {The Supervisors}
+\adviserstring(pref,a,2,f,en)        := {The Supervisors}
 
-\adviserstring(c,pref,1,m,en)        := {The Co-supervisor}
-\adviserstring(c,pref,1,f,en)        := {The Co-supervisor}
-\adviserstring(c,pref,2,m,en)        := {The Co-supervisors}
-\adviserstring(c,pref,2,f,en)        := {The Co-supervisors}
+\adviserstring(pref,c,1,m,en)        := {The Co-supervisor}
+\adviserstring(pref,c,1,f,en)        := {The Co-supervisor}
+\adviserstring(pref,c,2,m,en)        := {The Co-supervisors}
+\adviserstring(pref,c,2,f,en)        := {The Co-supervisors}
 
-\adviserstring(ca,pref,1,m,en)       := {The Co-supervisor}
-\adviserstring(ca,pref,1,f,en)       := {The Co-supervisor}
-\adviserstring(ca,pref,2,m,en)       := {The Co-supervisors}
-\adviserstring(ca,pref,2,f,en)       := {The Co-supervisors}
+\adviserstring(pref,ca,1,m,en)       := {The Co-supervisor}
+\adviserstring(pref,ca,1,f,en)       := {The Co-supervisor}
+\adviserstring(pref,ca,2,m,en)       := {The Co-supervisors}
+\adviserstring(pref,ca,2,f,en)       := {The Co-supervisors}
 
-\adviserstring(t,pref,1,m,en)        := {The Tutor}
-\adviserstring(t,pref,1,f,en)        := {The Tutor}
-\adviserstring(t,pref,2,m,en)        := {The Tutors}
-\adviserstring(t,pref,2,f,en)        := {The Tutors}
+\adviserstring(pref,t,1,m,en)        := {The Tutor}
+\adviserstring(pref,t,1,f,en)        := {The Tutor}
+\adviserstring(pref,t,2,m,en)        := {The Tutors}
+\adviserstring(pref,t,2,f,en)        := {The Tutors}
 
 
 % --------------------------------------------------------------------

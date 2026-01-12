@@ -1101,9 +1101,12 @@
   % \typeout{NTADDPERSON 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\NTADDPERSON%
   \noexpandarg
   \StrCut{#4}{,}\@nt@personname\@nt@dummy%was xStrCut
-  \options{/@nt/#1/#2/name/.expanded/.newpush={\@nt@personname},
-           /@nt/#1/#2/full/.expanded/.newpush={#4},
-           /@nt/#1/#2/gender/.newpush={#3}}%
+  \options{
+      /@nt/#1/#2/name/.expanded/.newpush={\@nt@personname},
+      /@nt/#1/#2/full/.expanded/.newpush={#4},
+      /@nt/#1/#2/gender/.newpush={#3},
+      /@nt/#1/#2/pair/.expanded/.newpush={#3;\@nt@personname},
+  }%
   % \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
   \fullexpandarg
 }
@@ -1916,9 +1919,9 @@
 
 \options{/@nt/print/frontmatter/provisional/.new list = 
   {
-    % statement,         % The statement page
-    % copyright,         % (*) The copyright page
-    % dedication,        % (*) Print the dedication
+    statement,         % The statement page
+    copyright,         % (*) The copyright page
+    dedication,        % (*) Print the dedication
     acknowledgements,  % (*) Print the acknowledgments
     quote,             % (*) Print the quote
     abstracts,         % Print abstracts in multiple languages.
@@ -3379,6 +3382,76 @@
   % \gdef\@chapapp{\translate{annex}}%
   \gdef\thechapter{\annexcounter\c@chapter}%
 }%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Print statement utils
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\options{/@nt/adviser/a/pair/.size = \stnadvisers}
+\ifoptiondefined{/@nt/adviser/c/pair}
+  {\options{/@nt/adviser/c/pair/.size = \stncoadvisers}}
+  {\def\stncoadvisers{0}}
+
+\newenvironment{tightcenter}
+  {\par\centering}
+  {\par}%
+  
+\NewDocumentCommand { \TheCandiadteSignature } { m m }
+  % #1 = place
+  % #2 = ISO DATE
+  {
+    \begin{center}%
+      \StatementOneSignature%
+        {\expandafter\thecandidatestring\expandafter(\thedocauthor(gender),\@LANG@MAIN)}
+        {\thedocauthor(name)}%
+        {#2}
+    \end{center}%
+    \vfill
+  }
+
+
+\newcounter{nadv}
+\NewDocumentCommand { \TheAdvisersSignatures } { m m m }
+  % #1 = c (candidate) | a (only advisers) | a,c (both advisers and co-advisers)
+  % #2 = place
+  % #3 = ISO DATE
+  {
+    \vfill
+    \begin{tightcenter}
+      \ifoptiondefined{/@nt/adviser/#1/pair}{%
+        \optionlistdo{/@nt/adviser/#1/pair}{%
+            % \ifnum\arabic{nadv}=2\relax
+            %   ~\\[1ex]
+            % \fi
+            \stepcounter{nadv}
+            \StrCut{##1}{;}\stgender\stname
+            \StatementOneSignature 
+              {\theadviserstring(pref,#1,1,\stgender,\@LANG@MAIN)} 
+              {\stname}
+              {#3}
+        }%
+      }{}%
+    \end{tightcenter}
+    \vfill
+    \null
+  }
+
+
+\NewDocumentCommand { \StatementOneSignature } { m m m }
+  % #1 = text above
+  % #2 = name
+  {
+    \begin{minipage}[t]{6cm}
+      \medskip%
+      \begin{center}  
+        #1,\par
+        \vspace*{1.0cm}
+        \rule{\linewidth}{0.75pt}\par
+        \textit{#2}\\
+        \printisodate{#3}
+      \end{center}
+    \end{minipage}
+  }
 
 
 

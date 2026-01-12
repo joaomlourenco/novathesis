@@ -21,6 +21,8 @@
 \degreenameprefix(bsc,pt)       := {Licenciatura em}
 \degreenameprefix(msc,pt)       := {Mestrado em}
 \degreenameprefix(phd,pt)       := {Doutoramento em}
+\candidatestring(m,pt)          := {O Candidato}
+\candidatestring(f,pt)          := {A Candidata}
 
 
 % --------------------------------------------------------------------
@@ -80,25 +82,25 @@
 \adviserstring(t,2,m,pt)        := {Tutores}
 \adviserstring(t,2,f,pt)        := {Tutoras}
 
-\adviserstring(a,pref,1,m,pt)        := {O Orientador}
-\adviserstring(a,pref,1,f,pt)        := {A Orientadora}
-\adviserstring(a,pref,2,m,pt)        := {Os Orientadores}
-\adviserstring(a,pref,2,f,pt)        := {As Orientadoras}
+\adviserstring(pref,a,1,m,pt)        := {O Orientador}
+\adviserstring(pref,a,1,f,pt)        := {A Orientadora}
+\adviserstring(pref,a,2,m,pt)        := {Os Orientadores}
+\adviserstring(pref,a,2,f,pt)        := {As Orientadoras}
 
-\adviserstring(c,pref,1,m,pt)        := {O Coorientador}
-\adviserstring(c,pref,1,f,pt)        := {A Coorientadora}
-\adviserstring(c,pref,2,m,pt)        := {Os Coorientadores}
-\adviserstring(c,pref,2,f,pt)        := {As Coorientadoras}
+\adviserstring(pref,c,1,m,pt)        := {O Coorientador}
+\adviserstring(pref,c,1,f,pt)        := {A Coorientadora}
+\adviserstring(pref,c,2,m,pt)        := {Os Coorientadores}
+\adviserstring(pref,c,2,f,pt)        := {As Coorientadoras}
 
-\adviserstring(ca,pref,1,m,pt)       := {O Coorientador}
-\adviserstring(ca,pref,1,f,pt)       := {A Coorientadora}
-\adviserstring(ca,pref,2,m,pt)       := {Os Coorientadores}
-\adviserstring(ca,pref,2,f,pt)       := {As Coorientadoras}
+\adviserstring(pref,ca,1,m,pt)       := {O Coorientador}
+\adviserstring(pref,ca,1,f,pt)       := {A Coorientadora}
+\adviserstring(pref,ca,2,m,pt)       := {Os Coorientadores}
+\adviserstring(pref,ca,2,f,pt)       := {As Coorientadoras}
 
-\adviserstring(t,pref,1,m,pt)        := {O Tutor}
-\adviserstring(t,pref,1,f,pt)        := {A Tutora}
-\adviserstring(t,pref,2,m,pt)        := {Os Tutores}
-\adviserstring(t,pref,2,f,pt)        := {As Tutoras}
+\adviserstring(pref,t,1,m,pt)        := {O Tutor}
+\adviserstring(pref,t,1,f,pt)        := {A Tutora}
+\adviserstring(pref,t,2,m,pt)        := {Os Tutores}
+\adviserstring(pref,t,2,f,pt)        := {As Tutoras}
 
 
 % --------------------------------------------------------------------

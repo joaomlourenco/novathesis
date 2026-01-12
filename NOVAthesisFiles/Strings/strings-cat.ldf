@@ -21,6 +21,8 @@
 \degreenameprefix(bsc,cat)      := {Grau en}
 \degreenameprefix(msc,cat)      := {Màster en}
 \degreenameprefix(phd,cat)      := {Doctorat en}
+\candidatestring(m,cat)         := {El Candidat}
+\candidatestring(f,cat)         := {La Candidata}
 
 
 % --------------------------------------------------------------------
@@ -80,25 +82,25 @@
 \adviserstring(t,2,m,cat)       := {Tutors acadèmics}
 \adviserstring(t,2,f,cat)       := {Tutores acadèmiques}
 
-\adviserstring(a,pref,1,m,cat)       := {El Director}
-\adviserstring(a,pref,1,f,cat)       := {La Directora}
-\adviserstring(a,pref,2,m,cat)       := {Els Directors}
-\adviserstring(a,pref,2,f,cat)       := {Les Directores}
+\adviserstring(pref,a,1,m,cat)       := {El Director}
+\adviserstring(pref,a,1,f,cat)       := {La Directora}
+\adviserstring(pref,a,2,m,cat)       := {Els Directors}
+\adviserstring(pref,a,2,f,cat)       := {Les Directores}
 
-\adviserstring(c,pref,1,m,cat)       := {El Codirector}
-\adviserstring(c,pref,1,f,cat)       := {La Codirectora}
-\adviserstring(c,pref,2,m,cat)       := {Els Codirectors}
-\adviserstring(c,pref,2,f,cat)       := {Les Codirectores}
+\adviserstring(pref,c,1,m,cat)       := {El Codirector}
+\adviserstring(pref,c,1,f,cat)       := {La Codirectora}
+\adviserstring(pref,c,2,m,cat)       := {Els Codirectors}
+\adviserstring(pref,c,2,f,cat)       := {Les Codirectores}
 
-\adviserstring(ca,pref,1,m,cat)      := {El Codirector}
-\adviserstring(ca,pref,1,f,cat)      := {La Codirectora}
-\adviserstring(ca,pref,2,m,cat)      := {Els Codirectors}
-\adviserstring(ca,pref,2,f,cat)      := {Les Codirectores}
+\adviserstring(pref,ca,1,m,cat)      := {El Codirector}
+\adviserstring(pref,ca,1,f,cat)      := {La Codirectora}
+\adviserstring(pref,ca,2,m,cat)      := {Els Codirectors}
+\adviserstring(pref,ca,2,f,cat)      := {Les Codirectores}
 
-\adviserstring(t,pref,1,m,cat)       := {El Tutor acadèmic}
-\adviserstring(t,pref,1,f,cat)       := {La Tutora acadèmica}
-\adviserstring(t,pref,2,m,cat)       := {Els Tutors acadèmics}
-\adviserstring(t,pref,2,f,cat)       := {Les Tutores acadèmiques}
+\adviserstring(pref,t,1,m,cat)       := {El Tutor acadèmic}
+\adviserstring(pref,t,1,f,cat)       := {La Tutora acadèmica}
+\adviserstring(pref,t,2,m,cat)       := {Els Tutors acadèmics}
+\adviserstring(pref,t,2,f,cat)       := {Les Tutores acadèmiques}
 
 
 % --------------------------------------------------------------------

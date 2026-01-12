@@ -21,6 +21,8 @@
 \degreenameprefix(bsc,fr)       := {Licence en}
 \degreenameprefix(msc,fr)       := {Master en}
 \degreenameprefix(phd,fr)       := {Doctorat en}
+\candidatestring(m,fr)          := {Le Candidat}
+\candidatestring(f,fr)          := {La Candidate}
 
 
 % --------------------------------------------------------------------
@@ -80,25 +82,25 @@
 \adviserstring(t,2,m,fr)        := {Tuteurs académiques}
 \adviserstring(t,2,f,fr)        := {Tutrices académiques}
 
-\adviserstring(a,pref,1,m,fr)        := {Le Directeur de thèse}
-\adviserstring(a,pref,1,f,fr)        := {La Directrice de thèse}
-\adviserstring(a,pref,2,m,fr)        := {Les Directeurs de thèse}
-\adviserstring(a,pref,2,f,fr)        := {Les Directrices de thèse}
+\adviserstring(pref,a,1,m,fr)        := {Le Directeur de thèse}
+\adviserstring(pref,a,1,f,fr)        := {La Directrice de thèse}
+\adviserstring(pref,a,2,m,fr)        := {Les Directeurs de thèse}
+\adviserstring(pref,a,2,f,fr)        := {Les Directrices de thèse}
 
-\adviserstring(c,pref,1,m,fr)        := {Le Codirecteur de thèse}
-\adviserstring(c,pref,1,f,fr)        := {La Codirectrice de thèse}
-\adviserstring(c,pref,2,m,fr)        := {Les Codirecteurs de thèse}
-\adviserstring(c,pref,2,f,fr)        := {Les Codirectrices de thèse}
+\adviserstring(pref,c,1,m,fr)        := {Le Codirecteur de thèse}
+\adviserstring(pref,c,1,f,fr)        := {La Codirectrice de thèse}
+\adviserstring(pref,c,2,m,fr)        := {Les Codirecteurs de thèse}
+\adviserstring(pref,c,2,f,fr)        := {Les Codirectrices de thèse}
 
-\adviserstring(ca,pref,1,m,fr)       := {Le Codirecteur de thèse}
-\adviserstring(ca,pref,1,f,fr)       := {La Codirectrice de thèse}
-\adviserstring(ca,pref,2,m,fr)       := {Les Codirecteurs de thèse}
-\adviserstring(ca,pref,2,f,fr)       := {Les Codirectrices de thèse}
+\adviserstring(pref,ca,1,m,fr)       := {Le Codirecteur de thèse}
+\adviserstring(pref,ca,1,f,fr)       := {La Codirectrice de thèse}
+\adviserstring(pref,ca,2,m,fr)       := {Les Codirecteurs de thèse}
+\adviserstring(pref,ca,2,f,fr)       := {Les Codirectrices de thèse}
 
-\adviserstring(t,pref,1,m,fr)        := {Le Tuteur académique}
-\adviserstring(t,pref,1,f,fr)        := {La Tutrice académique}
-\adviserstring(t,pref,2,m,fr)        := {Les Tuteurs académiques}
-\adviserstring(t,pref,2,f,fr)        := {Les Tutrices académiques}
+\adviserstring(pref,t,1,m,fr)        := {Le Tuteur académique}
+\adviserstring(pref,t,1,f,fr)        := {La Tutrice académique}
+\adviserstring(pref,t,2,m,fr)        := {Les Tuteurs académiques}
+\adviserstring(pref,t,2,f,fr)        := {Les Tutrices académiques}
 
 
 % --------------------------------------------------------------------

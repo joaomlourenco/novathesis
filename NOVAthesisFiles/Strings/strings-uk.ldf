@@ -21,6 +21,8 @@
 \degreenameprefix(bsc,uk)       := {Бакалавр з}
 \degreenameprefix(msc,uk)       := {Магістр з}
 \degreenameprefix(phd,uk)       := {Доктор філософії з}
+\candidatestring(m,uk)          := {Здобувач}
+\candidatestring(f,uk)          := {Здобувачка}
 
 
 % --------------------------------------------------------------------
@@ -80,25 +82,25 @@
 \adviserstring(t,2,m,uk)        := {Тьютори}
 \adviserstring(t,2,f,uk)        := {Тьюторки}
 
-\adviserstring(a,pref,1,m,uk)        := {Науковий керівник}
-\adviserstring(a,pref,1,f,uk)        := {Наукова керівниця}
-\adviserstring(a,pref,2,m,uk)        := {Наукові керівники}
-\adviserstring(a,pref,2,f,uk)        := {Наукові керівниці}
+\adviserstring(pref,a,1,m,uk)        := {Науковий керівник}
+\adviserstring(pref,a,1,f,uk)        := {Наукова керівниця}
+\adviserstring(pref,a,2,m,uk)        := {Наукові керівники}
+\adviserstring(pref,a,2,f,uk)        := {Наукові керівниці}
 
-\adviserstring(c,pref,1,m,uk)        := {Співкерівник}
-\adviserstring(c,pref,1,f,uk)        := {Співкерівниця}
-\adviserstring(c,pref,2,m,uk)        := {Співкерівники}
-\adviserstring(c,pref,2,f,uk)        := {Співкерівниці}
+\adviserstring(pref,c,1,m,uk)        := {Співкерівник}
+\adviserstring(pref,c,1,f,uk)        := {Співкерівниця}
+\adviserstring(pref,c,2,m,uk)        := {Співкерівники}
+\adviserstring(pref,c,2,f,uk)        := {Співкерівниці}
 
-\adviserstring(ca,pref,1,m,uk)       := {Співкерівник}
-\adviserstring(ca,pref,1,f,uk)       := {Співкерівниця}
-\adviserstring(ca,pref,2,m,uk)       := {Співкерівники}
-\adviserstring(ca,pref,2,f,uk)       := {Співкерівниці}
+\adviserstring(pref,ca,1,m,uk)       := {Співкерівник}
+\adviserstring(pref,ca,1,f,uk)       := {Співкерівниця}
+\adviserstring(pref,ca,2,m,uk)       := {Співкерівники}
+\adviserstring(pref,ca,2,f,uk)       := {Співкерівниці}
 
-\adviserstring(t,pref,1,m,uk)        := {Тьютор}
-\adviserstring(t,pref,1,f,uk)        := {Тьюторка}
-\adviserstring(t,pref,2,m,uk)        := {Тьютори}
-\adviserstring(t,pref,2,f,uk)        := {Тьюторки}
+\adviserstring(pref,t,1,m,uk)        := {Тьютор}
+\adviserstring(pref,t,1,f,uk)        := {Тьюторка}
+\adviserstring(pref,t,2,m,uk)        := {Тьютори}
+\adviserstring(pref,t,2,f,uk)        := {Тьюторки}
 
 
 % --------------------------------------------------------------------
