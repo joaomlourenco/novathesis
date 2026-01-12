@@ -138,7 +138,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \xappto\input@path{{\DIRNTFILES/}{\DIRSTRINGS/}}
 
-\RequirePackage{options2}
+\RequirePackage{options-ext}
 \RequirePackage{nt-version}
 \RequirePackage{memory2}
 \RequirePackage{NOVAthesisFiles/stocksize}
@@ -174,7 +174,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 4. LANGUAGE & LOCALIZATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{babel}
+\RequirePackage[english]{babel}
 % \RequirePackage{translator}
 \RequirePackage{csquotes}  % MUST be loaded before biblatex
 
@@ -1809,7 +1809,7 @@
           \hypertarget{bmfrontmatter}{}%
           \bookmark[dest=bmfrontmatter]{\thebkmstring(frontmatter,\@LANG@MAIN)}%
           \bookmarksetupnext{rellevel=1}%
-          \ntprintlist{/@nt/print/#1}%
+          \ntprintlist{/@nt/print/#1/\@DOCSTATUS}%
     }%
     {mainmatter}{%
           \bookmarksetup{startatroot}
@@ -1840,34 +1840,26 @@
 
 \newcommand*{\ntprintlist}[1]{%
   \optionlistdo{#1}{%
-    \ifdefmacro{##1}{##1}{%     ##1 is undefined
-      \ifcsmacro{ntprint##1}{%  \ntprint#1 is defined
-        \NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}%
-      }{%                       \ntprint#1 is undefined
-        \ifcsmacro{##1}{%       \##1 is defined
-          \NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}%
-        }{%                     nothing is defined
-          \ClassError{novathesis}{Invalid contents for frontmatter or mainmatter: [##1]}{}%
+    \begingroup
+      \clearpage
+      \ifdefmacro{##1}
+        {##1}% ##1 is defined
+        {%     ##1 is undefined
+        \ifcsmacro{ntprint##1}{%  \ntprint#1 is defined
+          \NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}%
+        }{%                       \ntprint#1 is undefined
+          \ifcsmacro{##1}{%       \##1 is defined
+            \NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}%
+          }{%                     nothing is defined
+            \ClassError{novathesis}{Invalid contents for frontmatter or mainmatter: [##1]}{}%
+          }%
         }%
       }%
-    }%
-    % \clearforchapter%
-    \ignorespaces%
+      \unskip%
+      \clearforchapter%
+      \ignorespaces%
+    \endgroup
   }%
-}
-
-\newcommand*{\ntsetprintorder}[2]{%
-  % #1 = frontmatter, mainmatter
-  % #2 = list
-  % \typeout{[#1] [#2]}
-  \option@setlist[;]{/@nt/print/#1}{#2}%
-}
-
-\newcommand*{\ntaddtoprintorder}[2]{%
-  % #1 = frontmatter, mainmatter
-  % #2 = list
-  % \typeout{[#1] [#2]}
-  \options{/@nt/print/#1/.push=#2}%
 }
 
 % \newcommand*{\ntremovefromprintorder}[2]{%
@@ -1900,60 +1892,134 @@
 
 % --------------------------------------------------------
 % DEFAULT VALUES FOR frontmatter AND mainmatter
-\newdata{printorder}
 
-\printorder(frontmatter,final):={%
-  statement;       % The statement page
-  copyright;       % (*) The copyright page
-  dedication;      % (*) Print the dedication
-  acknowledgements;% (*) Print the acknowledgments
-  quote;           % (*) Print the quote
-  abstracts;       % Print abstracts in multiple languages.
-  aidisclose;      % AI disclosure statement
-  alllistof;       % Print all the listof defined in “6_list_of.tex”
-  myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+% \newcommand*{\ntaddtoprintorder}[2]{%
+%   % #1 = frontmatter, mainmatter
+%   % #2 = list
+%   % \typeout{[#1] [#2]}
+%   \options{/@nt/print/#1/.push=#2}%
+% }
+
+\options{/@nt/print/frontmatter/final/.new list = 
+  {%
+    statement,        % The statement page
+    copyright,        % (*) The copyright page
+    dedication,       % (*) Print the dedication
+    acknowledgements, % (*) Print the acknowledgments
+    quote,            % (*) Print the quote
+    abstracts,        % Print abstracts in multiple languages.
+    aidisclose,       % AI disclosure statement
+    alllistof,        % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
 }
 
-\printorder(frontmatter,provisional):={%
-  statement;       % The statement page
-  copyright;       % (*) The copyright page
-  dedication;      % (*) Print the dedication
-  acknowledgements;% (*) Print the acknowledgments
-  quote;           % (*) Print the quote
-  abstracts;       % Print abstracts in multiple languages.
-  aidisclose;      % AI disclosure statement
-  alllistof;       % Print all the listof defined in “6_list_of.tex”
-  myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+\options{/@nt/print/frontmatter/provisional/.new list = 
+  {
+    % statement,         % The statement page
+    % copyright,         % (*) The copyright page
+    % dedication,        % (*) Print the dedication
+    acknowledgements,  % (*) Print the acknowledgments
+    quote,             % (*) Print the quote
+    abstracts,         % Print abstracts in multiple languages.
+    aidisclose,        % AI disclosure statement
+    alllistof,         % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
 }
 
-\printorder(frontmatter,working):={%
-  abstracts;       % Print abstracts in multiple languages.
-  aidisclose;      % AI disclosure statement
-  alllistof;       % Print all the listof defined in “6_list_of.tex”
-  myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+\options{/@nt/print/frontmatter/working/.new list = 
+  {
+    abstracts,       % Print abstracts in multiple languages.
+    aidisclose,      % AI disclosure statement
+    alllistof,       % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
 }
 
-\printorder(mainmatter):={
-  chapters;        % Print document chapters
+\options{/@nt/print/mainmatter/.new list = 
+  {
+    chapters,        % Print document chapters
+  }
 }%
 
 \ifoptionequal{/novathesis/print/webography}{}{%
-  \printorder(backmatter):={
-    bibsingle;            % Print the bibliography
-    alllistof;            % Print all the listof defined in “6_list_of.tex”
-    myprintglossaries;    % Print the Glossary, Acronyms, Symbols, etc…
-    appendices;           % Print appendices; if any!
-    annexes;              % Print annexes; if any!
+  \options{/@nt/print/backmatter/.new list = 
+    {
+      bibsingle,            % Print the bibliography
+      alllistof,            % Print all the listof defined in “6_list_of.tex”
+      myprintglossaries,    % Print the Glossary, Acronyms, Symbols, etc…
+      appendices,           % Print appendices, if any!
+      annexes,              % Print annexes, if any!
+    }
   }%
 }{%
-  \printorder(backmatter):={
-    bibseparate;          % Print the web references separate from the remainder of the bibliography
-    alllistof;            % Print all the listof defined in “6_list_of.tex”
-    myprintglossaries;    % Print the Glossary, Acronyms, Symbols, etc…
-    appendices;           % Print appendices, if any!
-    annexes;              % Print annexes, if any!
+  \options{/@nt/print/backmatter/.new list = 
+    {
+      bibseparate,          % Print the web references separate from the remainder of the bibliography
+      alllistof,            % Print all the listof defined in “6_list_of.tex”
+      myprintglossaries,    % Print the Glossary, Acronyms, Symbols, etc…
+      appendices,           % Print appendices, if any!
+      annexes,              % Print annexes, if any!
+    }
   }%
 }
+
+
+% \newdata{printorder}
+%
+% \printorder(frontmatter,final):={%
+%   statement,       % The statement page
+%   copyright,       % (*) The copyright page
+%   dedication,      % (*) Print the dedication
+%   acknowledgements,% (*) Print the acknowledgments
+%   quote,           % (*) Print the quote
+%   abstracts,       % Print abstracts in multiple languages.
+%   aidisclose,      % AI disclosure statement
+%   alllistof,       % Print all the listof defined in “6_list_of.tex”
+%   myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+% }
+%
+% \printorder(frontmatter,provisional):={%
+%   statement,       % The statement page
+%   copyright,       % (*) The copyright page
+%   dedication,      % (*) Print the dedication
+%   acknowledgements,% (*) Print the acknowledgments
+%   quote,           % (*) Print the quote
+%   abstracts,       % Print abstracts in multiple languages.
+%   aidisclose,      % AI disclosure statement
+%   alllistof,       % Print all the listof defined in “6_list_of.tex”
+%   myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+% }
+%
+% \printorder(frontmatter,working):={%
+%   abstracts,       % Print abstracts in multiple languages.
+%   aidisclose,      % AI disclosure statement
+%   alllistof,       % Print all the listof defined in “6_list_of.tex”
+%   myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+% }
+%
+% \printorder(mainmatter):={
+%   chapters,        % Print document chapters
+% }%
+%
+% \ifoptionequal{/novathesis/print/webography}{}{%
+%   \printorder(backmatter):={
+%     bibsingle,            % Print the bibliography
+%     alllistof,            % Print all the listof defined in “6_list_of.tex”
+%     myprintglossaries,    % Print the Glossary, Acronyms, Symbols, etc…
+%     appendices,           % Print appendices, if any!
+%     annexes,              % Print annexes, if any!
+%   }%
+% }{%
+%   \printorder(backmatter):={
+%     bibseparate,          % Print the web references separate from the remainder of the bibliography
+%     alllistof,            % Print all the listof defined in “6_list_of.tex”
+%     myprintglossaries,    % Print the Glossary, Acronyms, Symbols, etc…
+%     appendices,           % Print appendices, if any!
+%     annexes,              % Print annexes, if any!
+%   }%
+% }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2201,11 +2267,6 @@
 
 \ifdocunset{\ntsetup{docstatus=working}}{}
 
-% \typeout{\theprintorder(frontmatter,\@DOCSTATUS)}
-\ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\@DOCSTATUS)}}%
-\ntsetprintorder{mainmatter}{\expanded{\theprintorder(mainmatter)}}%
-\ntsetprintorder{backmatter}{\expanded{\theprintorder(backmatter)}}%
-
 \ifoptionequal{/novathesis/spine/layout}{unset}
     {\ifdocworking{\ntsetup{spine/layout=off}}
                   {\ifmaindoc{\ntsetup{spine/layout=trim}}
@@ -2406,8 +2467,17 @@
 \newcommand{\ntprintcoversingle}[2]{%
   % #1 = cover ID “major”
   % #2 = cover ID “minor”
-  \gdef\@COVERNUM{#1-#2}%
-  \ifcoverdefined[#1-#2]{\setcounter{page}{0}\@ntprintcover@i{#1}{#2}}{}%
+  \ifcoverdefined[#1-#2]{%
+    \gdef\@COVERNUM{#1-#2}%
+    \setcounter{page}{0}\@ntprintcover@i{#1}{#2}
+    \ifoptionequal{/novathesis/media}{paper}{
+      \ifcoverdefined[#1-2]
+        {\clearpage}
+        {\clearforchapter}%
+    }{%
+      \clearpage%
+    }
+  }{}%
 }
 
 \newcommand{\@ntprintcover@i}[2]{%
@@ -2428,8 +2498,6 @@
     \NTRunHook{cover/#1-#2/post}%
     \NTRunHook{cover/post}%
   \endgroup%
-  \unskip%
-  \ifoptionequal{/novathesis/media}{paper}{\newpage ~\thispagestyle{empty}\newpage}{\clearforchapter}
 }
 
 \newcommand{\setCoverBgColor}[1]{
@@ -2943,22 +3011,24 @@
   % #1 = {adviser | committee}
   % #2 = {a,c} | {c,r,a,m,g}
   \ifoptiondefined{/@nt/#1/#2/full}{%
-  \ifnum\value{\option{/@nt/#1/#2/full/@size}}>0\relax%
-  % \typeout{/@nt/#1/#2/full=\arabic{\option{/@nt/#1/#2/full/@size}}}\AAAAA
-    \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
-    \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
-    \bgroup%
-      \datadefault{#1stringfont}(#2)%
-      \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
-    \egroup%
-  \fi%
+    \options{/@nt/#1/#2/full/.size = \mysize}%
+    \ifnum\mysize>0\relax%
+    % \typeout{/@nt/#1/#2/full=\arabic{\option{/@nt/#1/#2/full/@size}}}\AAAAA
+      \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
+      \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
+      \bgroup%
+        \datadefault{#1stringfont}(#2)%
+        \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
+      \egroup%
+    \fi%
   }{}%
 }
 
 \newcommand{\@nt@printgrouptitle}[2]{%
   % #1 = {adviser | committee}
   % #2 = {a,c} | {c,r,a,m,g}
-  \ifnum\value{\option{/@nt/#1/#2/full/@size}}>0\relax%
+  \options{/@nt/#1/#2/full/.size = \mysize}%
+  \ifnum\mysize>0\relax%
   \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
   \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
   \datadefault{#1stringpre}(#2)%
@@ -2976,7 +3046,8 @@
   % #3 = {adviser | committee}
   % #4 = {a,c} | {c,r,a,m,g}
   \ifoptiondefined{/@nt/#3/#4/full}{%
-  \ifnum\value{\option{/@nt/#3/#4/full/@size}}>0\relax%
+  \options{/@nt/#3/#4/full/.size = \mysize}%
+  \ifnum\mysize>0\relax%
     % \typeout{NTPRINTPERSONGROUP 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\NTPRINTPERSONGROUP
     \@nt@printgrouptitle{#3}{#4}%
     \begin{varwidth}[t]{\linewidth-\maxlen}%
@@ -3034,12 +3105,32 @@
     \optionlistdo{#1}{\if##1m\relax\gdef#2{m}\fi}%
 }
 
-\newcommand*{\@nt@reducenumber}[2]{%
-    % #1=options list
-    % #2=result (1|2)
-    \ifnum\value{\option{#1/@size}}=1\gdef#2{1}\else\gdef#2{2}\fi
+% --------------------------------------------------------
+% Reduce Number Logic: Result = Max(Current, Min(Size, 2))
+% --------------------------------------------------------
+% #1: Current accumulated number (Optional, default 1)
+% #2: Option path (e.g., /my/list). The code looks for #2/@size
+% #3: The macro to store the result in (globally)
+\newcommand*{\@nt@reducenumber}[3][1]{%
+  % 1. Retrieve the size value from the option system
+  %    \edefoption expands the option value into \opt@temp@size
+  \options{#2/.size = \mysize}%
+  %
+  % 2. Calculate Min(\mysize, 2)
+  %    We interpret the retrieved text as a number.
+  \ifnum\mysize < 2
+    \let\opt@temp@val\mysize
+  \else
+    \def\opt@temp@val{2}%
+  \fi
+  %
+  % 3. Calculate Max(#1, \opt@temp@val) and \xdef to #3
+  \ifnum#1 > \opt@temp@val
+    \xdef#3{#1}%
+  \else
+    \xdef#3{\opt@temp@val}%
+  \fi
 }
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3188,7 +3279,12 @@
 \newif\if@frontmatter
 \newcommand*{\ntthesisfrontmatter}{%
   \NTRunHook{frontmatter/pre}%
-  \frontmatter%
+  \begingroup
+    \def\clearforchapter{}
+    \def\cleardoublepage{}
+    \def\clearepage{}
+    \frontmatter%
+  \endgroup
   \@frontmattertrue
   \begingroup
   \pagestyle{novathesis@frontmatter}%
@@ -3298,7 +3394,8 @@
     \fi
     \ifoptiondefined{/@nt/listof/\@matter}{
       \bookmarksetup{level=0}
-      \ifnum\value{\option{/@nt/listof/\@matter/@size}}>1\relax
+      \options{/@nt/listof/\@matter/.size = \mysize}%
+      \ifnum\mysize>1\relax
         \hypertarget{bmlistof\@matter}{}%
         \bookmark[dest=bmlistof\@matter]{\thebkmstring(listof,\@LANG@MAIN)}%
         \bookmarksetupnext{rellevel=1}%

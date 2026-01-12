@@ -137,7 +137,7 @@
   \counterwithout{table}{chapter}%
 }
 
-\NTAddToHook{dedicatory/pre}{%
+\NTAddToHook{dedication/pre}{%
   \thispagestyle{plain}%
 }
 
