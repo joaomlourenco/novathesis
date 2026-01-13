@@ -644,15 +644,35 @@
   }
 
 
+
+
+% 1. Define the internal logic (accepts the argument as-is)
+\cs_new_protected:Nn \__user_chapter_logic:n
+ {
+  % Note: Inside ExplSyntaxOn, spaces are ignored, so we don't need % at EOL
+  \clearforchapter
+  
+  % Create the anchor. 
+  % #1 is now the fully expanded string (e.g., "Project Alpha").
+  \hypertarget{bm#1}{}
+  
+  % Create the bookmark using the same ID
+  \bookmark[dest=bm#1]{#1}
+  
+  % Reset spacing/formatting
+  \noindent \ignorespaces
+ }
+
+% 2. Generate the variant that forces expansion ('e' = expand fully)
+\cs_generate_variant:Nn \__user_chapter_logic:n { e }
+
+% 3. User Interface
 \NewDocumentCommand{\ChapterNoTitle}{ m }
-  {
-    % Ensure we start on a new page (memoir command)
-    \clearforchapter
-    % \typeout{ChapterNoTitle=[#1]}\CHAPTERNOTITLE
-    \hypertarget{bm#1}{}%
-    \bookmark[dest=bm#1]{#1}%    
-    \noindent \ignorespaces
-  }
+ {
+  % Call the expanded variant.
+  % This turns \ChapterNoTitle{\myMacro} into \__user_chapter_logic:n {Expanded Value}
+  \__user_chapter_logic:e { #1 }
+ }
 
 \ExplSyntaxOff
 
@@ -1105,7 +1125,7 @@
       /@nt/#1/#2/name/.expanded/.newpush={\@nt@personname},
       /@nt/#1/#2/full/.expanded/.newpush={#4},
       /@nt/#1/#2/gender/.newpush={#3},
-      /@nt/#1/#2/pair/.expanded/.newpush={#3;\@nt@personname},
+      /@nt/#1/#2/pair/.expanded/.newpush={#3/\@nt@personname},
   }%
   % \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
   \fullexpandarg
@@ -2856,7 +2876,7 @@
 }
 
 \newcommand{\ntprintpersons}[2][full]{%
-  % #1* = { full | name | list }
+  % #1* = { full | name | list }
   % #2  = width in % of textwidth
   % #3* = positioning
   % #4  = number of columns
@@ -2874,7 +2894,7 @@
 }
 
 \def\@ntprintpersons#1#2[#3]#4#5#6{
-  % #1 = { full | name | list }
+  % #1 = { full | name | list }
   % #2 = width in % of textwidth
   % #3 = positioning
   % #4 = number of columns
@@ -2888,7 +2908,7 @@
       \@setalignment{#3}%
       \begin{varwidth}{#2\linewidth}%
         \IfStrEqCase{#4}{%
-          {0}{\@ntprintpersonsaslist{#5}{#6}}%
+          {0}{\GetPersonsAsList{#5}{#6}}%
           {1}{\@ntprintpersonsasonecolumn{#1}{#2}{#5}{#6}}%
           {2}{\@ntprintpersonsastwocolumns{#1}{#5}{#6}}%
         }[\ClassError{novathesis}{Ivalid argument [#4] to \string\ntprintpersons{#1}{#2}{#4}{#5}{#6}}{}]%
@@ -2900,45 +2920,94 @@
 %============================================================
 % Print persons list {advisers | committee} as list
 %============================================================
-\newcommand{\@ntprintpersonsaslist}[2]{%
-  % #1 = adviser | committee
-  % #2 = {a,c} | {c,r,a,m,g}
-  % Build list of names
-  % \typeout{NTPRINTPERSONSASLIST 1=[#1] 2=[#2]}\NTPRINTPERSONSASLIST%
-  \ifdatadefined{#1titlestring}(\@LANG@COVER){%
-    \datadefault{#1titlestringpre}(\@LANG@COVER)%
-    \datadefault{#1titlestringfont}(\@LANG@COVER)%
-    \csuse{the#1titlestring}(\@LANG@COVER)%
-    \datadefault{#1titlestringpost}(\@LANG@COVER)%
-  }{}%
-  \def\@nt@personlist{}%
-  \def\@nt@listsep{}%
-  \@for\myi:=\expanded{#2}\do{%
-    \ifoptionvoid{/@nt/#1/\myi/name}{}{%
-      \letoptionlist{/@nt/#1/\myi/name}\@nt@person@sublist%
-      \eappto\@nt@personlist{\@nt@listsep\@nt@person@sublist}\def\@nt@listsep{,}%
-    }%
-  }%
-  \raggedright%
-  % \StrGobbleRight{\@nt@personlist}{1}%
-  \datadefault{#1namefont}(#2)\@replacelastcomma{\@nt@personlist}%
-}
+\ExplSyntaxOn
 
-\def\@replacelastcomma#1{%
-  % \typeout{REP1 [#1]}%
-  % \@replacelastcomma@i{}{}#1,\nil}
-  \expandafter\@replacelastcomma@i\expandafter{\expandafter}\expandafter{\expandafter}#1,\nil}
+% Define variables to hold the lists
+\clist_new:N \l_nt_master_clist
 
-\def\@replacelastcomma@i#1#2#3,#4\nil{%
-  % \typeout{REP2 [#1] [#2] [#3] [#4]}%
-  \if\relax\detokenize{#4}\relax
-    #2\trimspaces{#3}%
-  \else % #4 is not empty
-    #1\trimspaces{#3}%
-    \@replacelastcomma@i{\thecommastring(\@LSHORT)}%
-        {\theandstring(\@LSHORT)}#4\nil%
-  \fi
-}
+% 1. Create variants to handle expansion correctly
+% This ensures we can pass "expanded" arguments to these functions
+\cs_generate_variant:Nn \clist_map_inline:nn { xn }
+\cs_generate_variant:Nn \clist_put_right:Nn { Nx }
+
+\NewDocumentCommand {\GetPersonsAsList} { m m o }
+ {
+  % --- 1. Legacy Title Processing ---
+  \ifdatadefined{#1titlestring}(\@LANG@COVER)
+   {
+    \datadefault{#1titlestringpre}(\@LANG@COVER)
+    \datadefault{#1titlestringfont}(\@LANG@COVER)
+    \csuse{the#1titlestring}(\@LANG@COVER)
+    \datadefault{#1titlestringpost}(\@LANG@COVER)
+   }{}
+
+  % --- 2. Build the Flat List ---
+  \clist_clear:N \l_nt_master_clist
+
+  % Map over the categories provided in #2 (e.g., a, c)
+  \clist_map_inline:xn { #2 }
+   {
+    % Legacy check: if the list exists for this category
+    \ifoptionvoid{/@nt/#1/##1/pair}
+      { } 
+      {
+        % Retrieve the sub-list into the legacy macro \@advlist@i
+        \letoptionlist{/@nt/#1/##1/pair}\@advlist@i
+        
+        % FIX: Use put_right:Nx instead of concat:NN
+        % This expands \@advlist@i (e.g., "A, B") and appends A and B 
+        % as separate items to the master list.
+        \clist_put_right:Nx \l_nt_master_clist { \@advlist@i }
+      }
+   }
+
+  % --- 3. Output or Storage ---
+  \IfNoValueTF { #3 }
+   {
+     \raggedright
+     \datadefault{#1namefont}(#2)
+     % Convert clist back to comma-separated string for legacy formatter
+     \cs_set:Npx \@advlist { \clist_use:Nn \l_nt_master_clist { , } }
+     \FormatNamesAsList{\@advlist}
+   }
+   {
+     % Store the result in the requested output macro
+     \xdef #3 { \clist_use:Nn \l_nt_master_clist { , } }
+   }
+ }
+
+
+
+
+\cs_generate_variant:Nn \seq_set_from_clist:Nn { Ne }
+\cs_generate_variant:Nn \seq_use:Nnnn { Neee }
+\NewDocumentCommand{\FormatNamesAsList}{ m
+                                         O{ }
+                                         O{ , ~ } 
+                                         O{ ~ \theandstring(\@LANG@MAIN) ~ } 
+                                         O{ , ~ \theandstring(\@LANG@MAIN) ~ } }
+% {comma separated list of names} {name-prefix} {middle-sep} {pair-sep} {last-sep}
+% example: {Maria, Rita, Filomena} {Professora} {,} {~e~} {~e~}
+ {
+  % 1. Convert the input string (comma list) into a sequence variable
+  \seq_set_from_clist:Ne \l_tmpa_seq { #1 }
+
+  % 2. Create a temporary sequence to hold the modified names
+  \seq_clear:N \l_tmpb_seq
+
+  % 3. Loop through the original names and prefix them with "de "
+  \seq_map_inline:Nn \l_tmpa_seq
+   {
+    \seq_put_right:Nn \l_tmpb_seq { #2 ~ ##1 }
+   }
+
+  % 4. Output the sequence with custom separators
+  % \seq_use:Nnnn <sequence> {middle-sep} {pair-sep} {last-sep}
+  \seq_use:Neee \l_tmpb_seq { #2 } { #3 } { #4 }
+ }
+
+\ExplSyntaxOff
+
 
 %============================================================
 % Print persons list {advisers | committee} as one and two columns
@@ -3056,7 +3125,7 @@
     \begin{varwidth}[t]{\linewidth-\maxlen}%
       \raggedright%
       \IfStrEq{#1}{list}{%
-        \@ntprintpersonsaslist{#3}{#4}%
+        \GetPersonsAsList{#3}{#4}%
       }{%
         \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{#4}{##1}}%
       }%
@@ -3162,7 +3231,7 @@
   \ifmaindoc{% THEN it is a main document
     \NTRunHook{#1/pre}%
     \iffileadded{#1}{%
-      \expandafter\ChapterNoTitle\expandafter{\thebkmstring(#1,\@LANG@COPYRIGHT)}
+      \ChapterNoTitle{\thebkmstring(#1,\@LANG@COPYRIGHT)}
       \PrintAddedFile{#1}%
       \bookmarksetupnext{rellevel=0}%
     }{}%
@@ -3385,12 +3454,28 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Print statement utils
+%% Print statements utils
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \options{/@nt/adviser/a/pair/.size = \stnadvisers}
 \ifoptiondefined{/@nt/adviser/c/pair}
   {\options{/@nt/adviser/c/pair/.size = \stncoadvisers}}
   {\def\stncoadvisers{0}}
+
+
+\NewDocumentCommand { \Statements } { }
+  {
+    % \chapter{Declarações}
+    \chapter{\thebkmstring(statement,\@LANG@MAIN)}
+    \bookmarksetupnext{rellevel=0}%
+  }
+
+\NewDocumentCommand { \FrontPage } { }
+  {
+    % \chapter{Declarações}
+    \ChapterNoTitle{\thebkmstring(frontpage,\@LANG@MAIN)}
+    \bookmarksetupnext{rellevel=0}%
+    \ntchapskip
+  }
 
 \newenvironment{tightcenter}
   {\par\centering}
@@ -3416,7 +3501,6 @@
   % #2 = place
   % #3 = ISO DATE
   {
-    \vfill
     \begin{tightcenter}
       \ifoptiondefined{/@nt/adviser/#1/pair}{%
         \optionlistdo{/@nt/adviser/#1/pair}{%
@@ -3424,7 +3508,7 @@
             %   ~\\[1ex]
             % \fi
             \stepcounter{nadv}
-            \StrCut{##1}{;}\stgender\stname
+            \StrCut{##1}{/}\stgender\stname
             \StatementOneSignature 
               {\theadviserstring(pref,#1,1,\stgender,\@LANG@MAIN)} 
               {\stname}
@@ -3515,8 +3599,8 @@
 \newcommand*{\ntprintbibseparate}[1][]{%
   \bookmarksetupnext{rellevel=1}%
   \NTRunHook{printbib/pre}%
-    \printbibliography[nottype=online]; % Print the bibliography.
-    \printbibliography[title=\option{/novathesis/print/webography},type=online]; % Print the bibliography.
+    \printbibliography[nottype=online] % Print the bibliography.
+    \printbibliography[title=\option{/novathesis/print/webography},type=online] % Print the bibliography.
   \ntfixspacing%
   \NTRunHook{printbib/post}%
 }
@@ -3565,7 +3649,7 @@
       \begingroup
         % \bookmarksetupnext{rellevel=1}
         \ntselectlang{\@LANG@COPYRIGHT}%
-        \expandafter\ChapterNoTitle\expandafter{\thebkmstring(copyright,\@LANG@COPYRIGHT)}
+        \ChapterNoTitle{\thebkmstring(copyright,\@LANG@COPYRIGHT)}%
         \NTRunHook{copyright/pre}%
         \ntprintcopyrightpage%
         \NTRunHook{copyright/post}%
@@ -3613,7 +3697,7 @@
 \newcommand{\ntquotewhere}[1]{{\footnotesize, #1}}
 \newcommand{\ntquoteprofession}[1]{{\footnotesize\\[-0.75ex](#1)}}
 \newcommand{\ntquotetext}[1]{{\itshape#1}}
-\newcommand{\ntquoteskip}{%
+\newcommand{\ntchapskip}{%
   \vphantom{%
     \begin{minipage}{\textwidth}%
       \chapter*{ASDF}%
@@ -3649,7 +3733,7 @@
   \else
   \@tempdima=#2
   \fi
-  \ntquoteskip
+  \ntchapskip
   \begin{flushright}
     \NTRunHook{ntquote/pre}%
     \IfBooleanTF{#1}{\hugequote}{}

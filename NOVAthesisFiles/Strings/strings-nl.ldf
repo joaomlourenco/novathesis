@@ -15,6 +15,10 @@
 \andstring(nl)                  := { en }
 \instring(nl)                   := { in }
 \ofstring(nl)                   := { van }
+\ofstring(1,m,nl)               := { van de }
+\ofstring(2,m,nl)               := { van de }
+\ofstring(1,f,nl)               := { van de }
+\ofstring(2,f,nl)               := { van de }
 \keywordsstring(nl)             := {Trefwoorden}
 \departmentofstring(nl)         := {Afdeling}
 \specializationstring(nl)       := {Specialisatie in}
@@ -39,6 +43,7 @@
 \bkmstring(spine,nl)            := {Rug}
 \bkmstring(copyright,nl)        := {Auteursrecht}
 \bkmstring(statement,nl)        := {Verklaring}
+\bkmstring(statements,nl)       := {Verklaringen}
 \bkmstring(dedication,nl)       := {Opdracht}
 \bkmstring(acknowledgements,nl) := {Dankwoord}
 \bkmstring(quote,nl)            := {Citaat}
@@ -62,6 +67,11 @@
 % --------------------------------------------------------------------
 %   Adviser strings
 % --------------------------------------------------------------------
+\professorstring(1,m,nl)        := {Professor}
+\professorstring(2,m,nl)        := {Professoren}
+\professorstring(1,f,nl)        := {Professor}
+\professorstring(2,f,nl)        := {Professoren}
+
 \adviserstring(a,1,m,nl)        := {Begeleider}
 \adviserstring(a,1,f,nl)        := {Begeleidster}
 \adviserstring(a,2,m,nl)        := {Begeleiders}

@@ -15,6 +15,10 @@
 \andstring(sk)                  := { a }
 \instring(sk)                   := { v }
 \ofstring(sk)                   := { z }
+\ofstring(1,m,sk)               := { z }
+\ofstring(2,m,sk)               := { z }
+\ofstring(1,f,sk)               := { z }
+\ofstring(2,f,sk)               := { z }
 \keywordsstring(sk)             := {Kľúčové slová}
 \departmentofstring(sk)         := {Katedra}
 \specializationstring(sk)       := {Špecializácia v}
@@ -39,6 +43,7 @@
 \bkmstring(spine,sk)            := {Chrbát knihy}
 \bkmstring(copyright,sk)        := {Autorské právo}
 \bkmstring(statement,sk)        := {Vyhlásenie}
+\bkmstring(statements,sk)       := {Vyhlásenia}
 \bkmstring(dedication,sk)       := {Venovanie}
 \bkmstring(acknowledgements,sk) := {Poďakovanie}
 \bkmstring(quote,sk)            := {Citát}
@@ -62,6 +67,11 @@
 % --------------------------------------------------------------------
 %   Adviser strings
 % --------------------------------------------------------------------
+\professorstring(1,m,sk)        := {Profesor}
+\professorstring(2,m,sk)        := {Profesori}
+\professorstring(1,f,sk)        := {Profesorka}
+\professorstring(2,f,sk)        := {Profesorky}
+
 \adviserstring(a,1,m,sk)        := {Školiteľ}
 \adviserstring(a,1,f,sk)        := {Školiteľka}
 \adviserstring(a,2,m,sk)        := {Školitelia}

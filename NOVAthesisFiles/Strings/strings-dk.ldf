@@ -15,6 +15,10 @@
 \andstring(dk)                  := { og }
 \instring(dk)                   := { i }
 \ofstring(dk)                   := { af }
+\ofstring(1,m,dk)               := { af }
+\ofstring(2,m,dk)               := { af }
+\ofstring(1,f,dk)               := { af }
+\ofstring(2,f,dk)               := { af }
 \keywordsstring(dk)             := {Nøgleord}
 \departmentofstring(dk)         := {Institut for}
 \specializationstring(dk)       := {Specialisering i}
@@ -39,6 +43,7 @@
 \bkmstring(spine,dk)            := {Ryg}
 \bkmstring(copyright,dk)        := {Ophavsret}
 \bkmstring(statement,dk)        := {Erklæring}
+\bkmstring(statements,dk)       := {Erklæringer}
 \bkmstring(dedication,dk)       := {Dedikation}
 \bkmstring(acknowledgements,dk) := {Tak}
 \bkmstring(quote,dk)            := {Citat}
@@ -62,6 +67,11 @@
 % --------------------------------------------------------------------
 %   Adviser strings
 % --------------------------------------------------------------------
+\professorstring(1,m,dk)        := {Professor}
+\professorstring(2,m,dk)        := {Professorer}
+\professorstring(1,f,dk)        := {Professor}
+\professorstring(2,f,dk)        := {Professorer}
+
 \adviserstring(a,1,m,dk)        := {Vejleder}
 \adviserstring(a,1,f,dk)        := {Vejleder}
 \adviserstring(a,2,m,dk)        := {Vejledere}

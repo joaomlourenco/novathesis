@@ -15,6 +15,10 @@
 \andstring(fr)                  := { et }
 \instring(fr)                   := { en }
 \ofstring(fr)                   := { de }
+\ofstring(1,m,fr)               := { du }
+\ofstring(2,m,fr)               := { des }
+\ofstring(1,f,fr)               := { de la }
+\ofstring(2,f,fr)               := { des }
 \keywordsstring(fr)             := {Mots-clés}
 \departmentofstring(fr)         := {Département de}
 \specializationstring(fr)       := {Spécialisation en}
@@ -39,6 +43,7 @@
 \bkmstring(spine,fr)            := {Dos du livre}
 \bkmstring(copyright,fr)        := {Droits d’auteur}
 \bkmstring(statement,fr)        := {Déclaration}
+\bkmstring(statements,fr)       := {Déclarations}
 \bkmstring(dedication,fr)       := {Dédicace}
 \bkmstring(acknowledgements,fr) := {Remerciements}
 \bkmstring(quote,fr)            := {Citation}
@@ -62,6 +67,11 @@
 % --------------------------------------------------------------------
 %   Adviser strings
 % --------------------------------------------------------------------
+\professorstring(1,m,fr)        := {Professeur}
+\professorstring(2,m,fr)        := {Professeurs}
+\professorstring(1,f,fr)        := {Professeure}
+\professorstring(2,f,fr)        := {Professeures}
+
 \adviserstring(a,1,m,fr)        := {Directeur de thèse}
 \adviserstring(a,1,f,fr)        := {Directrice de thèse}
 \adviserstring(a,2,m,fr)        := {Directeurs de thèse}

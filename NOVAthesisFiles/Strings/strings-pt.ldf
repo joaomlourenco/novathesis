@@ -15,6 +15,10 @@
 \andstring(pt)                  := { e }
 \instring(pt)                   := { em }
 \ofstring(pt)                   := { de }
+\ofstring(1,m,pt)               := { do }
+\ofstring(2,m,pt)               := { dos }
+\ofstring(1,f,pt)               := { da }
+\ofstring(2,f,pt)               := { das }
 \keywordsstring(pt)             := {Palavras-chave}
 \departmentofstring(pt)         := {Departamento de}
 \specializationstring(pt)       := {Especialização em}
@@ -37,6 +41,7 @@
 \bkmstring(backcover,pt)        := {Contracapa}
 \bkmstring(inbackcover,pt)      := {Terceira capa}
 \bkmstring(spine,pt)            := {Lombada}
+\bkmstring(statements,pt)       := {Declarações}
 \bkmstring(copyright,pt)        := {Copyright}
 \bkmstring(statement,pt)        := {Declaração}
 \bkmstring(dedication,pt)       := {Dedicatória}
@@ -62,6 +67,11 @@
 % --------------------------------------------------------------------
 %   Adviser strings
 % --------------------------------------------------------------------
+\professorstring(1,m,pt)        := {Professor}
+\professorstring(2,m,pt)        := {Professores}
+\professorstring(1,f,pt)        := {Professora}
+\professorstring(2,f,pt)        := {Professoras}
+
 \adviserstring(a,1,m,pt)        := {Orientador}
 \adviserstring(a,1,f,pt)        := {Orientadora}
 \adviserstring(a,2,m,pt)        := {Orientadores}

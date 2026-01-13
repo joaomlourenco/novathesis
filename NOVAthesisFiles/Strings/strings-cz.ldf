@@ -15,6 +15,10 @@
 \andstring(cz)                  := { a }
 \instring(cz)                   := { v }
 \ofstring(cz)                   := { z }
+\ofstring(1,m,cz)               := { z }
+\ofstring(2,m,cz)               := { z }
+\ofstring(1,f,cz)               := { z }
+\ofstring(2,f,cz)               := { z }
 \keywordsstring(cz)             := {Klíčová slova}
 \departmentofstring(cz)         := {Katedra}
 \specializationstring(cz)       := {Specializace}
@@ -39,6 +43,7 @@
 \bkmstring(spine,cz)            := {Hřbet}
 \bkmstring(copyright,cz)        := {Copyright}
 \bkmstring(statement,cz)        := {Prohlášení}
+\bkmstring(statements,cz)       := {Prohlášení}
 \bkmstring(dedication,cz)       := {Věnování}
 \bkmstring(acknowledgements,cz) := {Poděkování}
 \bkmstring(quote,cz)            := {Citát}
@@ -62,6 +67,11 @@
 % --------------------------------------------------------------------
 %   Adviser strings
 % --------------------------------------------------------------------
+\professorstring(1,m,cz)        := {Profesor}
+\professorstring(2,m,cz)        := {Profesoři}
+\professorstring(1,f,cz)        := {Profesorka}
+\professorstring(2,f,cz)        := {Profesorky}
+
 % Note: "Vedoucí" works for both genders, but we provide specific forms if needed.
 \adviserstring(a,1,m,cz)        := {Vedoucí}
 \adviserstring(a,1,f,cz)        := {Vedoucí}

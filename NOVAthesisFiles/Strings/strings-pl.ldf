@@ -15,6 +15,10 @@
 \andstring(pl)                  := { i }
 \instring(pl)                   := { w }
 \ofstring(pl)                   := { z }
+\ofstring(1,m,pl)               := { z }
+\ofstring(2,m,pl)               := { z }
+\ofstring(1,f,pl)               := { z }
+\ofstring(2,f,pl)               := { z }
 \keywordsstring(pl)             := {Słowa kluczowe}
 \departmentofstring(pl)         := {Katedra}
 \specializationstring(pl)       := {Specjalizacja w}
@@ -39,6 +43,7 @@
 \bkmstring(spine,pl)            := {Grzbiet}
 \bkmstring(copyright,pl)        := {Prawa autorskie}
 \bkmstring(statement,pl)        := {Oświadczenie}
+\bkmstring(statements,pl)       := {Oświadczenia}
 \bkmstring(dedication,pl)       := {Dedykacja}
 \bkmstring(acknowledgements,pl) := {Podziękowania}
 \bkmstring(quote,pl)            := {Cytat}
@@ -62,6 +67,11 @@
 % --------------------------------------------------------------------
 %   Adviser strings
 % --------------------------------------------------------------------
+\professorstring(1,m,pl)        := {Profesor}
+\professorstring(2,m,pl)        := {Profesorowie}
+\professorstring(1,f,pl)        := {Profesor}
+\professorstring(2,f,pl)        := {Profesorowie}
+
 \adviserstring(a,1,m,pl)        := {Promotor}
 \adviserstring(a,1,f,pl)        := {Promotorka}
 \adviserstring(a,2,m,pl)        := {Promotorzy}

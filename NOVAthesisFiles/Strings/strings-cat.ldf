@@ -15,6 +15,10 @@
 \andstring(cat)                 := { i }
 \instring(cat)                  := { en }
 \ofstring(cat)                  := { de }
+\ofstring(1,m,cat)              := { del }
+\ofstring(2,m,cat)              := { dels }
+\ofstring(1,f,cat)              := { de la }
+\ofstring(2,f,cat)              := { de les }
 \keywordsstring(cat)            := {Paraules clau}
 \departmentofstring(cat)        := {Departament de}
 \specializationstring(cat)      := {Especialització en}
@@ -39,6 +43,7 @@
 \bkmstring(spine,cat)           := {Llombada}
 \bkmstring(copyright,cat)       := {Drets d’autor}
 \bkmstring(statement,cat)       := {Declaració}
+\bkmstring(statements,cat)      := {Declaracions}
 \bkmstring(dedication,cat)      := {Dedicatòria}
 \bkmstring(acknowledgements,cat):= {Agraïments}
 \bkmstring(quote,cat)           := {Citació}
@@ -62,6 +67,11 @@
 % --------------------------------------------------------------------
 %   Adviser strings
 % --------------------------------------------------------------------
+\professorstring(1,m,cat)       := {Professor}
+\professorstring(2,m,cat)       := {Professors}
+\professorstring(1,f,cat)       := {Professora}
+\professorstring(2,f,cat)       := {Professores}
+
 \adviserstring(a,1,m,cat)       := {Director}
 \adviserstring(a,1,f,cat)       := {Directora}
 \adviserstring(a,2,m,cat)       := {Directors}

@@ -15,6 +15,10 @@
 \andstring(uk)                  := { та }
 \instring(uk)                   := { в }
 \ofstring(uk)                   := { з }
+\ofstring(1,m,uk)               := { з }
+\ofstring(2,m,uk)               := { з }
+\ofstring(1,f,uk)               := { з }
+\ofstring(2,f,uk)               := { з }
 \keywordsstring(uk)             := {Ключові слова}
 \departmentofstring(uk)         := {Кафедра}
 \specializationstring(uk)       := {Спеціалізація з}
@@ -39,6 +43,7 @@
 \bkmstring(spine,uk)            := {Корінець}
 \bkmstring(copyright,uk)        := {Авторське право}
 \bkmstring(statement,uk)        := {Заява}
+\bkmstring(statements,uk)       := {Заяви}
 \bkmstring(dedication,uk)       := {Присвята}
 \bkmstring(acknowledgements,uk) := {Подяки}
 \bkmstring(quote,uk)            := {Цитата}
@@ -62,6 +67,11 @@
 % --------------------------------------------------------------------
 %   Adviser strings
 % --------------------------------------------------------------------
+\professorstring(1,m,uk)        := {Професор}
+\professorstring(2,m,uk)        := {Професори}
+\professorstring(1,f,uk)        := {Професорка}
+\professorstring(2,f,uk)        := {Професорки}
+
 \adviserstring(a,1,m,uk)        := {Науковий керівник}
 \adviserstring(a,1,f,uk)        := {Наукова керівниця}
 \adviserstring(a,2,m,uk)        := {Наукові керівники}

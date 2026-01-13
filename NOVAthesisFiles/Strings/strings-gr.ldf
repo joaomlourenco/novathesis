@@ -15,6 +15,10 @@
 \andstring(gr)                  := { και }
 \instring(gr)                   := { σε }
 \ofstring(gr)                   := { του }
+\ofstring(1,m,gr)               := { του }
+\ofstring(2,m,gr)               := { των }
+\ofstring(1,f,gr)               := { της }
+\ofstring(2,f,gr)               := { των }
 \keywordsstring(gr)             := {Λέξεις-κλειδιά}
 \departmentofstring(gr)         := {Τμήμα}
 \specializationstring(gr)       := {Ειδίκευση σε}
@@ -39,6 +43,7 @@
 \bkmstring(spine,gr)            := {Ράχη βιβλίου}
 \bkmstring(copyright,gr)        := {Πνευματικά δικαιώματα}
 \bkmstring(statement,gr)        := {Δήλωση}
+\bkmstring(statements,gr)       := {Δηλώσεις}
 \bkmstring(dedication,gr)       := {Αφιέρωση}
 \bkmstring(acknowledgements,gr) := {Ευχαριστίες}
 \bkmstring(quote,gr)            := {Παράθεμα}
@@ -62,6 +67,11 @@
 % --------------------------------------------------------------------
 %   Adviser strings
 % --------------------------------------------------------------------
+\professorstring(1,m,gr)        := {Καθηγητής}
+\professorstring(2,m,gr)        := {Καθηγητές}
+\professorstring(1,f,gr)        := {Καθηγήτρια}
+\professorstring(2,f,gr)        := {Καθηγήτριες}
+
 \adviserstring(a,1,m,gr)        := {Επιβλέπων}
 \adviserstring(a,1,f,gr)        := {Επιβλέπουσα}
 \adviserstring(a,2,m,gr)        := {Επιβλέποντες}
