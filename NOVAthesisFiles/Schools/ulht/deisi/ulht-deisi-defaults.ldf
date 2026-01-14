@@ -79,7 +79,7 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=3.5cm]{1-1,2-1}{%
   \fontsize{18}{20}\selectfont%
-  \textbf{\thedoctitle(\@LANG@COVER,main,cover)}%
+  \textbf{\thedoctitle(\@LANG@COVER,main)}%
 }
 
 % Author name

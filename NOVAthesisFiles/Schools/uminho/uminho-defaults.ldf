@@ -121,12 +121,12 @@
 %-----------------------------------------------------------------
 \NTAddToHook{abstract/pre}{%
   \let\oldchapterheadstart=\chapterheadstart%
-  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\@LSHORT,main)}}%
+  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\@LSHORT,main,plain)}}%
   \preto{\chapterheadstart}{\vspace*{-2cm}}
 }
 \NTAddToHook{abstract/mid}{%
   % \let\oldchapterheadstart=\chapterheadstart%
-  {{\noindent\bfseries\Large\thedoctitle(\@LSHORT,main)}\\[1ex]}%
+  {{\noindent\bfseries\Large\thedoctitle(\@LSHORT,main,plain)}\\[1ex]}%
 }
 \NTAddToHook{abstract/post}{%
   \let\chapterheadstart=\oldchapterheadstart%
@@ -186,7 +186,7 @@
 \spine(logo,university)={\theuniversity(logo,RGB)}
 \spine(logo,school)={\theschool(logo,RGB)}
 \spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\@LANG@COVER,main)}
+\spine(title)={\thedoctitle(\@LANG@COVER,main,plain)}
 \spine(year)={\thentdocdate(submission,year)}
 % \spine(top)={116pt}
 \spine(top)={9cm}
@@ -255,7 +255,7 @@
 \ntaddtocover[vspace=0.8cm,halign=l,height=5.5cm,valign=t]{1-1,2-1}{%
   \fontsize{17pt}{20.4bp}\selectfont%
   \addfontfeature{LetterSpace=2.9}%
-  \textbf{\thedoctitle(\@LANG@MAIN,main,cover)}
+  \textbf{\thedoctitle(\@LANG@MAIN,main)}
 }
 
 % Degree info

@@ -1602,12 +1602,12 @@
   % #3 = value
   % \typeout{NT TITLE [#1] [#2] [#3]}%
   \noexpandarg  
-  \StrSubstitute{#3}{\\}{ }[\@nt@cleantitle]
+  % \StrSubstitute{#3}{\\}{ }[\@nt@cleantitle]
   % \typeout{XXXX [\@nt@cleantitle]}\aaa
   % \doctitle(#2,#1):={\@nt@cleantitle}%
-  \doctitle(#2,#1):={\def\\{ }#3}%
-  \doctitle(#2,#1,cover):={#3}%
-  \IfStrEq{#1}{main}{\doctitle(#2,spine):=?{\thedoctitle(#2,#1)}}{}%
+  \doctitle(#2,#1):={#3}%
+  \doctitle(#2,#1,plain):={\def\\{ }#3}%
+  \IfStrEq{#1}{main}{\doctitle(#2,spine):=?{\thedoctitle(#2,#1,plain)}}{}%
   % \doctitle(#2,#1):={\ntnolinebreak{#3}}%
   % \doctitle(#2,#1,cover):={#3}%
   % \IfStrEq{#1}{main}{\doctitle(#2,spine):={\ntnolinebreak{#3}}}{}%
@@ -3331,8 +3331,8 @@
       \NTRunHook{abstract/pre}%
       \NTRunHook{abstract/#1/pre}%
       \printabstracttitle{#1}%
-      \NTRunHook{abstract/#1/mid}%
       \NTRunHook{abstract/mid}%
+      \NTRunHook{abstract/#1/mid}%
      \PrintAddedFile[#1]{abstract}%
       \ntprintsdgs%
       \NTRunHook{abstract/#1/post}%
@@ -3491,7 +3491,6 @@
         {\thedocauthor(name)}%
         {#2}
     \end{center}%
-    \vfill
   }
 
 
@@ -3516,8 +3515,6 @@
         }%
       }{}%
     \end{tightcenter}
-    \vfill
-    \null
   }
 
 
@@ -3697,7 +3694,7 @@
 \newcommand{\ntquotewhere}[1]{{\footnotesize, #1}}
 \newcommand{\ntquoteprofession}[1]{{\footnotesize\\[-0.75ex](#1)}}
 \newcommand{\ntquotetext}[1]{{\itshape#1}}
-\newcommand{\ntchapskip}{%
+\providecommand{\ntchapskip}{%
   \vphantom{%
     \begin{minipage}{\textwidth}%
       \chapter*{ASDF}%
@@ -3902,11 +3899,11 @@
 \AtBeginDocument{%
   \makeatletter%
   % \typeout{XXX [\thedocauthor(name)]}
-  % \typeout{XXX [\thedoctitle(\@LANG@MAIN,main)]}
+  % \typeout{XXX [\thedoctitle(\@LANG@MAIN,main,plain)]}
   % \typeout{XXX [\thedoctitle(\@LANG@MAIN,sub)]}
   \hypersetup{%
     pdfauthor={\thedocauthor(name)},
-    pdftitle={\thedoctitle(\@LANG@MAIN,main)},
+    pdftitle={\thedoctitle(\@LANG@MAIN,main,plain)},
     pdfsubject={\thedoctitle(\@LANG@MAIN,sub)},
   }
 

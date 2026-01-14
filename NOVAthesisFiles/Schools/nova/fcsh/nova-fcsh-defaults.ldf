@@ -13,6 +13,7 @@
     {}
     {\ntsetup{print/statement=true}}}
   {}
+\ntsetup{style/chapter=article}
 
 
 % Faculty / School
@@ -73,6 +74,31 @@
   % debug,
 }
 
+\NTAddToHook{abstract/pre}{%
+  \clearforchapter
+  \let\clearforchapterOROG\clearforchapter
+  \let\clearforchapter\relax
+  \begin{minipage}{\textwidth}
+    \begin{center}
+    \noindent\large\bfseries
+    \ifdatadefined{doctitle}(\@LSHORTg,abstract)
+      {\thedoctitle(\@LSHORTg,abstract)}
+      {\thedoctitle(\@LSHORTg,main)}
+    \end{center}
+   \smallskip
+    \begin{center}
+    \textbf{\thedocauthor(name)}
+    \end{center}
+  \end{minipage}
+%  \smallskip
+}
+\NTAddToHook{abstract/post}{%
+  \let\clearforchapter\clearforchapterOROG
+}      
+
+\newcommand{\ntchapskip}{\vspace*{2cm}}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % FCSH guidelines:
 % The pages should be numbered consecutively at the bottom centre of the
@@ -130,7 +156,7 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\thedoctitle(\@LANG@COVER,main,cover)}}%
+  \textcolor{fcshblue}{\textbf{\thedoctitle(\@LANG@COVER,main)}}%
 }
 
 % Author name

@@ -38,6 +38,8 @@
 \ntsetup{print/statement=true}
 \ntsetup{print/copyright=false}
 \ntbibsetup{style=apa}
+
+
 \AtEndPreamble{\let\cite\parencite}
 \abstractorder(pt):={pt,en}
 \abstractorder(en):={pt,en}
@@ -113,7 +115,7 @@
 \spine(logo,msc,raise)={0}
 
 \spine(author)={\thedocauthor(name)}
-\spine(title)={\thedoctitle(\@LANG@COVER,main)}
+\spine(title)={\thedoctitle(\@LANG@COVER,main,plain)}
 \spine(date)={\thentdocdate(submission,year)}
 
 \spine(text,angle)={90}
@@ -191,10 +193,10 @@
   \preto{\chapterheadstart}{%
     \noindent\begin{minipage}[t][0pt][t]{\textwidth}
       \begin{center}%
-        \textbf{\Large\thedoctitle(\@LSHORT,main,cover)}%
+        \textbf{\Large\thedoctitle(\@LSHORT,main)}%
         \ifdatadefined{doctitle}(\@LANG@COVER-sub,cover){%
           \\[6mm]%
-          \textbf{\Large\thedoctitle(\@LSHORT-sub,cover)}%
+          \textbf{\Large\thedoctitle(\@LSHORT-sub)}%
         }{}%
       \end{center}%
     \end{minipage}%
@@ -222,13 +224,13 @@
 }
 \ntaddtocover[halign=l, vspace=-1cm+7pt, minheight=3cm, valign=c]{1-1}{%
   \fontsize{17}{17}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{\THEdoctitle(\@LANG@COVER,main,cover)}}%
+  \textcolor{imsdarkgrey}{\textbf{\THEdoctitle(\@LANG@COVER,main)}}%
   \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
     % ~\\[-2ex]%
     \\
     \textcolor{imsmidgrey}{
       \fontsize{15}{15}\selectfont%
-      \textbf{\thedoctitle(\@LANG@COVER-sub,cover)}%
+      \textbf{\thedoctitle(\@LANG@COVER-sub)}%
     }%
   }{}%
 }
@@ -267,7 +269,7 @@
 
 \ntaddtocover[halign=c, vspace=1]{2-1}{%
   \fontsize{16}{16}\selectfont%
-  \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
+  \textbf{\THEdoctitle(\@LANG@COVER,main)}%
 }
 
 \ntaddtocover[halign=c, vspace=1]{2-1}{%

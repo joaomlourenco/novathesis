@@ -106,7 +106,7 @@
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{18}{20}\selectfont%
   %\textbf{\thetitle}%
-  \textbf{\thedoctitle(\@LANG@COVER,main,cover)}%
+  \textbf{\thedoctitle(\@LANG@COVER,main)}%
 }
 
 % Author name

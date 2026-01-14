@@ -102,10 +102,10 @@ for the Degree of \emph{\thedegreename(en)}}
   \preto{\chapterheadstart}{%
     \noindent\begin{minipage}[t][0pt][t]{\textwidth}
       \begin{center}%
-        \textbf{\Large\thedoctitle(\@LSHORT,main,cover)}%
+        \textbf{\Large\thedoctitle(\@LSHORT,main)}%
         \ifdatadefined{doctitle}(\@LANG@COVER-sub,cover){%
           \\[6mm]%
-          \textbf{\Large\thedoctitle(\@LSHORT-sub,cover)}%
+          \textbf{\Large\thedoctitle(\@LSHORT-sub)}%
         }{}%
       \end{center}%
     \end{minipage}%
@@ -157,11 +157,11 @@ for the Degree of \emph{\thedegreename(en)}}
 % Title of Dissertation
 \ntaddtocover[vspace=0mm,height=7.4cm,halign=l,valign=b]{1-1}{%
     \fontsize{18}{18}\selectfont
-    \bfseries\itshape\THEdoctitle(\@LANG@COVER,main,cover)%
+    \bfseries\itshape\THEdoctitle(\@LANG@COVER,main)%
     \ifdatadefined{doctitle}(\@LANG@COVER-sub,cover){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
-      \textbf{\thedoctitle(\@LANG@COVER-sub,cover)}%
+      \textbf{\thedoctitle(\@LANG@COVER-sub)}%
     }{}%
 }
 
@@ -210,11 +210,11 @@ for the Degree of \emph{\thedegreename(en)}}
 \ntaddtocover[vspace=2cm]{2-1}{%
     \centering%
     \fontsize{16}{16}\selectfont
-    \bfseries{\THEdoctitle(\@LANG@COVER,main,cover)}%
+    \bfseries{\THEdoctitle(\@LANG@COVER,main)}%
     \ifdatadefined{doctitle}(\@LANG@COVER-sub,cover){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
-      \textbf{\thedoctitle(\@LANG@COVER-sub,cover)}%
+      \textbf{\thedoctitle(\@LANG@COVER-sub)}%
     }{}%
 }
 

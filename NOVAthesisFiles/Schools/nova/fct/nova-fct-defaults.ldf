@@ -174,8 +174,7 @@
   \node[anchor=north west, text width=10cm] 
     at ($(current page.north west) + (96.45mm,-11.4mm)$)
     { \fontsize{14}{14}\sffamily%
-      \let\oldnewline=\\%
-      \def\\{\oldnewline[2pt]}%
+      DEPARTMENT OF\\[2pt]
       \THEdepartment(\@LANG@COVER)
     };
 }
@@ -199,11 +198,11 @@
 \ntaddtocover[halign=l,height=3.0cm,valign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{22}{21}\selectfont%
-    \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
+    \textbf{\THEdoctitle(\@LANG@COVER,main)}%
     \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
-      \textbf{\THEdoctitle(\@LANG@COVER,sub,cover)}%
+      \textbf{\THEdoctitle(\@LANG@COVER,sub)}%
     }{}%
   }{%
     \fontsize{17}{17}\selectfont%
@@ -223,11 +222,11 @@
     \thedocauthor(degree,\@LANG@COVER)%
   }{%
     \fontsize{22}{21}\selectfont%
-    \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
+    \textbf{\THEdoctitle(\@LANG@COVER,main)}%
     \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
-      \textbf{\THEdoctitle(\@LANG@COVER,sub,cover)}%
+      \textbf{\THEdoctitle(\@LANG@COVER,sub)}%
     }{}%
   }%
 }
@@ -283,11 +282,11 @@
 % Title of Dissertation (PhD)
 \ntaddtocover[halign=l]{2-1}{%
   \fontsize{17}{17}\selectfont%
-  \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
+  \textbf{\THEdoctitle(\@LANG@COVER,main)}%
   \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
     \\[4mm]%
     \fontsize{12}{12}\selectfont%
-    \textbf{\THEdoctitle(\@LANG@COVER,sub,cover)}%
+    \textbf{\THEdoctitle(\@LANG@COVER,sub)}%
   }{}%
 }
 
