@@ -1,11 +1,11 @@
-## NOVAthesis Template Release Notes for v7.9.0
+## NOVAthesis Template Release Notes for v7.9.2
 This release focuses heavily on **AI Disclosure Statement** and various **code cleanup/refactoring** across the template files.
 
 This commit introduces a major refactoring and feature update, focusing on improving user configuration, modernizing core components, and enhancing functionality.
 
 ---
 
-Release date: 2026-01-01  
+Release date: 2026-01-14  
 Compared to: 7.9.0
 
 ---
