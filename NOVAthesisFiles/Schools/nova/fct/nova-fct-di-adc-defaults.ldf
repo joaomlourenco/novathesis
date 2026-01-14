@@ -21,19 +21,33 @@
 
 \committeeorder():={a,ca,m}%
 
-\printorder(frontmatter,final):={%
-  copyright;       % (*) The copyright page
-  abstracts;       % Print abstracts in multiple languages.
-  alllistof;       % Print all the listof defined in “6_list_of.tex”
-  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+\options{/@nt/print/frontmatter/final = 
+  {%
+    copyright,       % (*) The copyright page
+    aidisclose,      % AI disclosure statement
+    abstracts,       % Print abstracts in multiple languages.
+    alllistof,       % Print all the listof defined in “6_list_of.tex”
+    printglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
 }
 
-\printorder(frontmatter,provisional):={\theprintorder(frontmatter,final)}
+\options{/@nt/print/frontmatter/provisional = 
+  {%
+    copyright,       % (*) The copyright page
+    aidisclose,      % AI disclosure statement
+    abstracts,       % Print abstracts in multiple languages.
+    alllistof,       % Print all the listof defined in “6_list_of.tex”
+    printglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
+}
 
-\printorder(frontmatter,working):={%
-  abstracts;       % Print abstracts in multiple languages.
-  alllistof;       % Print all the listof defined in “6_list_of.tex”
-  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+\options{/@nt/print/frontmatter/working = 
+  {
+    abstracts,       % Print abstracts in multiple languages.
+    aidisclose,      % AI disclosure statement
+    alllistof,       % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
 }
 
 \copyrighttextstring(pt)={A \theschool(\@LANG@COPYRIGHT)\ e a \theuniversity(\@LANG@COPYRIGHT)\ têm o direito perpétuo de arquivar este relatório em exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, comprometendo-se a manter o mesmo com acesso controlado e restrito, de forma a responder às suas obrigações legais.}
