@@ -75,7 +75,7 @@
 \ntaddtocover[vspace=2.2cm]{1-1,2-1}{%
   \noindent%
   \fontsize{15}{15}\selectfont%
-  \textbf{{\THEschool(\@LANG@COVER)}}%
+  \textbf{{\ToUppercase{\theschool(\@LANG@COVER)}}}%
 }
 
 % Degree name
@@ -88,7 +88,7 @@
 \ntaddtocover[vspace=6.5cm, height=4cm, valign=t]{1-1}{%
     \centering%
     \fontsize{15}{15}\selectfont%
-    {\THEdoctitle(\@LANG@COVER,main)}\\[1ex]%
+    {\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}\\[1ex]%
     \fontsize{12}{12}\selectfont%
     Dissertação%
 }

@@ -125,10 +125,10 @@
 % School
 \ntaddtocover[height=2.5cm, valign=t]{1-1,2-1}{%
   \fontseries{mc}\fontsize{12}{12}\selectfont%
-  {\THEuniversity(\@LANG@COVER)}\\[2mm]%
-  {\THEschool(\@LANG@COVER)}\\[2mm]%
+  {\ToUppercase{\theuniversity(\@LANG@COVER)}}\\[2mm]%
+  {\ToUppercase{\theschool(\@LANG@COVER)}}\\[2mm]%
   \ifmscdoc
-     {{\THEdepartment(\@LANG@COVER)}}%
+     {{\ToUppercase{\thedepartment(\@LANG@COVER)}}}%
     {}%
 }
 

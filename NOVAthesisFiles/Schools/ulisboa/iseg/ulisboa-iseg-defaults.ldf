@@ -152,9 +152,9 @@
 \ntaddtocover[vspace=0mm]{1-1,2-1}{%
     \fontsize{13}{17}\selectfont%
   % \SetTracking[ spacing = {25*,166, } ]{ encoding = * }{ 25 }%
-  \textbf{\textls[25]{\THEuniversity(\@LANG@COVER)}}\\%
+  \textbf{\textls[25]{\ToUppercase{\theuniversity(\@LANG@COVER)}}}\\%
   \vspace{2mm}%
-  \textbf{\textls[25]{\THEschool(\@LANG@COVER)}}%
+  \textbf{\textls[25]{\ToUppercase{\theschool(\@LANG@COVER)}}}%
 }
 
 % LOGO

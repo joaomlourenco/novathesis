@@ -112,16 +112,16 @@
 \specializationstring(pt):={ESPECIALIZAÇÃO}
 
 \spine(margin,right):=?{0.0cm}
-\spine(tas)={\THEdoctitle(\@LANG@COVER,main)}
+\spine(tas)={\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}
 \spine(tas,1)={~\\[4pt]%
                \fontsize{8}{8}\selectfont%
-               \THEdoctitle(\@LANG@COVER,main)\\[5.5pt]}
+               \ToUppercase{\thedoctitle(\@LANG@COVER,main)}\\[5.5pt]}
 \spine(tas,2)={\fontsize{11}{6}\selectfont\bfseries%
                \thedocauthor(name,short)\\[-0.5pt]}
 \spine(tas,3)={\fontsize{8.5}{6}\selectfont%
-               \THEdegreenameprefix(\@DOCTYPE,\@LANG@COVER) \bfseries\themajorfield(\@LANG@COVER)\\[-3pt]}
+               \ToUppercase{\thedegreenameprefix(\@DOCTYPE,\@LANG@COVER)} \bfseries\themajorfield(\@LANG@COVER)\\[-3pt]}
 \spine(tas,4)={\fontsize{5.4}{5}\selectfont%
-               \textbf{\THEspecializationstring(\@LANG@COVER)}
+               \textbf{\ToUppercase{\thespecializationstring(\@LANG@COVER)}}
                \fontsize{7}{5}\selectfont\theminorfield(\@LANG@COVER)\\[-5pt]}
 
 
@@ -195,7 +195,7 @@
   \node[anchor=north west] at ($(current page.north west) + (14.6mm,-97.25mm)$)
     {\fontsize{16.25}{14.5}\selectfont\sffamily%
       \makecell[tl]{
-      \THEdegreenameprefix(\@DOCTYPE,\@LANG@COVER)\\
+      \ToUppercase{\thedegreenameprefix(\@DOCTYPE,\@LANG@COVER)}\\
       \let\oldnewline\\%
       \renewcommand{\\}{\oldnewline\bfseries}%
       \bfseries%
@@ -225,10 +225,10 @@
 % -------------------------------------------------------------------------------
 % Specialization
 \ntaddtocover[halign=l,hspace=-1mm,valign=t]{1-1}{%
-  \StrCut{\THEspecializationstring(\@LANG@COVER)}{ }\@SPCZL\@dummy%
+  \StrCut{\ToUppercase{\thespecializationstring(\@LANG@COVER)}}{ }\@SPCZL\@dummy%
   \fontsize{11}{11}\selectfont%
   {\ifdatadefined{specialization}(\@LANG@COVER)
-    {\textbf{\@SPCZL} \THEminorfield(\@LANG@COVER)}
+    {\textbf{\@SPCZL} \ToUppercase{\theminorfield(\@LANG@COVER)}}
     {~}}%
 }
 
@@ -236,7 +236,7 @@
 % Title of Dissertation (PhD) / The author name (MSc)
 \ntaddtocover[halign=l,height=3.0cm,vspace=4.1mm,valign=c]{1-1}{%
     \fontsize{20.5}{17}\selectfont%
-    \textbf{\THEdocauthor(name)}\\[2mm]%
+    \textbf{\ToUppercase{\thedocauthor(name)}}\\[2mm]%
     \fontsize{17}{17}\selectfont%
     \thedocauthor(degree,\@LANG@COVER)%
 }
@@ -245,11 +245,11 @@
 % The author name (PhD) / Title of Dissertation (MSc)
 \ntaddtocover[vspace=6mm,halign=l,valign=t]{1-1}{%
     \fontsize{26}{26}\selectfont\bfseries%
-    \textbf{\THEdoctitle(\@LANG@COVER,main)}%
+    \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}%
     % \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover)
     %   {\\[4mm]%
     %    \fontsize{14}{14}\selectfont%
-    %     \textbf{\THEdoctitle(\@LANG@COVER,sub)}}
+    %     \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,sub)}}}
     %   {}%
 }
 
@@ -281,7 +281,7 @@
 %   \raisebox{9mm}{%
 %   \begin{minipage}[b]{9cm}%
 %     \fontsize{14}{14}\selectfont%
-%     \THEdepartment(\@LANG@COVER)%
+%     \ToUppercase{\thedepartment(\@LANG@COVER)}%
 %   \end{minipage}%
 %   }\\[4ex]%
 %   \hrule width 19cm%
@@ -295,7 +295,7 @@
     {\includegraphics[width=35.3mm]{\expanded{\theschool(logo)}}};%
   \draw[thick] ($(current page.north west) + (1cm,-4.1cm)$) -- ++(\paperwidth-2cm,0cm);%
   \node[anchor=north west] at ($(current page.north west) + (96.45mm,-11.4mm)$)
-    {\fontsize{14}{14}\sffamily\makecell[tl]{\THEdepartment(\@LANG@COVER)}};%
+    {\fontsize{14}{14}\sffamily\makecell[tl]{\ToUppercase{\thedepartment(\@LANG@COVER)}}};%
 }
 
 % Company logo
@@ -315,18 +315,18 @@
 % Title of Dissertation (PhD)
 \ntaddtocover[halign=l]{2-1}{%
   \fontsize{17}{17}\selectfont%
-  \textbf{\THEdoctitle(\@LANG@COVER,main)}%
+  \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}%
   \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
     \\[4mm]%
     \fontsize{12}{12}\selectfont%
-    \textbf{\THEdoctitle(\@LANG@COVER,sub)}%
+    \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,sub)}}%
   }{}%
 }
 
 % The author name
 \ntaddtocover[vspace=1,halign=l]{2-1}{%
   \fontsize{14}{14}\selectfont%
-  \textbf{\THEdocauthor(name)}\\[2mm]%
+  \textbf{\ToUppercase{\thedocauthor(name)}}\\[2mm]%
   \fontsize{14}{14}\selectfont%
   \thedocauthor(degree,\@LANG@COVER)%
 }
@@ -351,10 +351,10 @@
   \fontsize{10}{10}\selectfont%
   \ifmaindoc{}{\thedissertationplan(\@DOCTYPE,\@LANG@COVER)\\[1pt]}%
   % \ifoptionequal{/novathesis/doctype}{mscplan}{Dissertation Plan\\[1pt]}{}%
-  \THEdegreename(\@LANG@COVER)%
+  \ToUppercase{\thedegreename(\@LANG@COVER)}%
   {\ifdatadefined{specialization}(\@LANG@COVER){%
   \fontsize{8}{9}\selectfont
-  \\\THEspecialization(\@LANG@COVER)}{}}%
+  \\\ToUppercase{\thespecialization(\@LANG@COVER)}}{}}%
   \\[1.25ex]%
   \theuniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%
