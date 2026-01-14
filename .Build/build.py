@@ -931,7 +931,7 @@ def main() -> None:
         except Exception as e:
             print(f"{RED}❌ Could not create output directory {outdir_path}: {e}{RESET}")
             sys.exit(1)
-    
+
     # Build regex patterns for demo and cover modes
     patterns = {}
     if demo or cover_only or args.force_school:

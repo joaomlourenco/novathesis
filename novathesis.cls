@@ -3456,7 +3456,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Print statements utils
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\options{/@nt/adviser/a/pair/.size = \stnadvisers}
+\ifoptiondefined{/@nt/adviser/c/pair}
+  {\options{/@nt/adviser/a/pair/.size = \stnadvisers}}
+  {\def\stnadvisers{0}}
 \ifoptiondefined{/@nt/adviser/c/pair}
   {\options{/@nt/adviser/c/pair/.size = \stncoadvisers}}
   {\def\stncoadvisers{0}}

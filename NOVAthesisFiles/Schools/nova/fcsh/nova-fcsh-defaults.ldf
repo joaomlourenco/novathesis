@@ -81,9 +81,9 @@
   \begin{minipage}{\textwidth}
     \begin{center}
     \noindent\large\bfseries
-    \ifdatadefined{doctitle}(\@LSHORTg,abstract)
-      {\thedoctitle(\@LSHORTg,abstract)}
-      {\thedoctitle(\@LSHORTg,main)}
+    \ifdatadefined{doctitle}(\@LSHORT,abstract)
+      {\thedoctitle(\@LSHORT,abstract)}
+      {\thedoctitle(\@LSHORT,main)}
     \end{center}
    \smallskip
     \begin{center}
