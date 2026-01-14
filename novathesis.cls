@@ -696,7 +696,95 @@
 
 % --------------------------------------------------------
 % Search if a data/memory is defined and returns value
-\def\datamatch#1#2(#3){%
+\ExplSyntaxOn
+
+% Define a boolean to track if a match was found inside the loop
+\bool_new:N \l__memory_match_found_bool
+
+% Command: \datamatchtf
+% Syntax:  \datamatchtf{\match}{MEMORYDATA}(list,of,keys){TRUE}{FALSE}
+%
+% #1: The macro to store the result (\match)
+% #2: The memory data container name (MEMORYDATA)
+% #3: The list of keys to search (in parentheses)
+% #4: True branch code
+% #5: False branch code
+
+\NewDocumentCommand{\datamatchtf}{ s m m r() +m +m }
+  {
+    % Reset the found boolean to false at the start
+    \bool_set_false:N \l__memory_match_found_bool
+
+    % Iterate through the comma-separated list of keys (#4 now, due to argument shift).
+    \exp_args:Ne \clist_map_inline:nn { #4 }
+      {
+        % Construct the control sequence name: \@<MEMORYDATA>@<key>@memory
+        % Note: Using #3 for the memory namespace ID
+        \cs_if_exist:cT { @#3@ ##1 @memory }
+          {
+            % If the data slot exists:
+            % 1. Set the user's variable (#2) to the content of that slot.
+            
+            \IfBooleanTF{#1}
+              { 
+                % STARRED: #2 is a NAME (e.g., "myVar"). 
+                % Use \tl_set:cn to construct the csname from the string.
+                \tl_set:ce { #2 } { \use:c { @#3@ ##1 @memory } } 
+              }
+              { 
+                % NON-STARRED: #2 is a MACRO (e.g., \myVar). 
+                % Use \tl_set:Nn to set it directly.
+                \tl_set:Ne #2 { \use:c { @#3@ ##1 @memory } } 
+              }
+
+            % 2. Mark that we found a match
+            \bool_set_true:N \l__memory_match_found_bool
+
+            % 3. Break the loop immediately
+            \clist_map_break:
+          }
+      }
+
+    % Execute the appropriate branch based on whether a match was found
+    % True branch is #5, False branch is #6
+    \bool_if:NTF \l__memory_match_found_bool
+      { #5 } % Match found
+      { #6 } % No match found
+  }
+
+\NewDocumentCommand{\datamatch}{ s m m r() }
+  {
+    % Argument mapping:
+    % #1 = Star (boolean)
+    % #2 = Macro to set / Name of macro (if starred)
+    % #3 = Data ID (memory context)
+    % #4 = List of keys (inside parens)
+
+    \IfBooleanTF{#1}
+      { 
+        % Starred version: call \datamatchtf*
+        \datamatchtf* { #2 } { #3 } ( #4 ) 
+      }
+      { 
+        % Non-starred version: call \datamatchtf
+        \datamatchtf  { #2 } { #3 } ( #4 ) 
+      }
+      % --- True Branch (Match Found) ---
+      { } 
+      % --- False Branch (No Match) ---
+      { 
+        % Note: In expl3, spaces are ignored, so we use ~ for spaces in text.
+        \ClassError{novathesis}
+          { Could~not~find~“#3”~defined~with~any~of~“(#4)”! }
+          { }
+      }
+  }
+
+\ExplSyntaxOff
+
+% --------------------------------------------------------
+% Search if a data/memory is defined and returns value
+\def\datamatchOLD#1#2(#3){%
   % #1 = macro to set
   % #2 = data@memory
   % #3 = list of values
@@ -704,7 +792,7 @@
   \datamatchtf{#1}{#2}(#3){}{\ClassError{novathesis}{Could not find “#2” defined with any of “(#3)”!}{}}%
 }
 
-\def\datamatchtf#1#2(#3)#4#5{%
+\def\datamatchtfOLD#1#2(#3)#4#5{%
   % #1 = macro to set
   % #2 = data@memory
   % #3 = list of values
@@ -1160,9 +1248,6 @@
   %         #3=[file-lang | sub-family | key] (OPTIONAL)
   %         #4=filename
   % \typeout{[#1] [#2] [#3] [#4]}\ADDTOLIST
-  \ifstrequal{#2}{copyright}
-    {\typeout{}\typeout{ntaddto{#1}{#2}[#3]{#4}}\NTADDTO}
-    {}
   \ifoptioncontains{/@nt/listtypes}{#2}{}
       {\options{/@nt/listtypes/.newpush={#2}}}
   \IfBeginsWithAnyOf{#4}{/,.}
@@ -1173,9 +1258,6 @@
     % \typeout{NT ADDTOLIST [#1] [#2] [\myi] [\@nt@filewithpath]}\ADDTILIST%
     \options{/@nt/#1/#2/\myi/.expanded/.newpush={\@nt@filewithpath}}%
   }%
-  \ifstrequal{#2}{copyright}
-    {\typeout{}\typeout{[\option{/@nt/#1/#2/phd}]}\NTSTORED}
-    {}
 }
 
 \newcommand*{\@nt@foralllist}[3]{%
@@ -1601,22 +1683,40 @@
   % #2 = lang
   % #3 = value
   % \typeout{NT TITLE [#1] [#2] [#3]}%
-  \noexpandarg  
-  % \StrSubstitute{#3}{\\}{ }[\@nt@cleantitle]
-  % \typeout{XXXX [\@nt@cleantitle]}\aaa
-  % \doctitle(#2,#1):={\@nt@cleantitle}%
   \doctitle(#2,#1):={#3}%
-  \doctitle(#2,#1,plain):={\def\\{ }#3}%
+  \NewlineToSpace{#3}[\tmp]
+  \doctitle(#2,#1,plain):={\tmp}% 
   \IfStrEq{#1}{main}{\doctitle(#2,spine):=?{\thedoctitle(#2,#1,plain)}}{}%
-  % \doctitle(#2,#1):={\ntnolinebreak{#3}}%
-  % \doctitle(#2,#1,cover):={#3}%
-  % \IfStrEq{#1}{main}{\doctitle(#2,spine):={\ntnolinebreak{#3}}}{}%
-  \fullexpandarg
 }
 
-% \newcommand{\ntnolinebreak}[1]{{\def\\{\ }#1}}
-% --------------------------------------------------------
+\ExplSyntaxOn
 
+% Define a temporary token list variable
+\tl_new:N \l__memory_clean_tl
+
+\NewDocumentCommand{\NewlineToSpace}{ m o }
+  {
+    % 1. Store the input (#1) into the variable
+    \tl_set:Nn \l__memory_clean_tl { #1 }
+
+    % 2. Perform the replacement.
+    %    In expl3, ~ represents a space token (catcode 10).
+    %    This replaces every occurrence of the token \\ with a space.
+    \tl_replace_all:Nnn \l__memory_clean_tl { \\ } { ~ }
+
+    % 3. Check if the optional argument (#2) is provided
+    \IfNoValueTF { #2 }
+      {
+        % If no optional arg: Output the result directly
+        \tl_use:N \l__memory_clean_tl
+      }
+      {
+        % If optional arg exists: Set the provided macro (#2) to the result
+        \tl_set_eq:NN #2 \l__memory_clean_tl
+      }
+  }
+
+\ExplSyntaxOff
 
 
 %============================================================
@@ -2573,7 +2673,7 @@
              ,{textcolor}%
   ){\color{\match}}{}%
   \@for\myi:={top,bottom,left,right}\do{%
-    \expandafter\datamatch\csname @MRGN@\myi\endcsname{margin}(%
+    \datamatch*{@MRGN@\myi}{margin}(%
       {cover,\@DOCTYPE,\@DEGREEACR,#1,\myi},%
       {cover,\@DOCCLASS,\@DEGREEACR,#1,\myi},%
       {cover,\@DEGREEACR,#1,\myi},%
@@ -2616,6 +2716,8 @@
   \NTRunHook{cover/#1/text/post}%
 }
 
+\newif\ifmatchstatus%
+\newif\ifmatchdegree%
 \def\@ntcoverelement@iii#1#2\@nil#3{%
   % #1 = cover ID (major-minor)
   % #2 = cover element options
@@ -2623,8 +2725,6 @@
   \ifblank{#3}{}{%
     \options{/@ntcoveropts, defaults, #2, alignmap=\option{/@ntcoveropts/halign}}%
     % \typeout{@ntcoverelement@iii 1=[#1] 2=[#2] tikz=\option{/@ntcoveropts/tikz}}\@NTCOVERELEMENT@III
-    \defifundef{\ifmatchstatus}{\newif}%
-    \defifundef{\ifmatchdegree}{\newif}%
     \matchstatustrue%
     \matchdegreetrue%
     \if&\option{/@ntcoveropts/status}&\relax%
@@ -3902,11 +4002,11 @@
   \makeatletter%
   % \typeout{XXX [\thedocauthor(name)]}
   % \typeout{XXX [\thedoctitle(\@LANG@MAIN,main,plain)]}
-  % \typeout{XXX [\thedoctitle(\@LANG@MAIN,sub)]}
+  % \typeout{XXX [\thedoctitle(\@LANG@MAIN,sub,plain)]}
   \hypersetup{%
     pdfauthor={\thedocauthor(name)},
     pdftitle={\thedoctitle(\@LANG@MAIN,main,plain)},
-    pdfsubject={\thedoctitle(\@LANG@MAIN,sub)},
+    pdfsubject={\thedoctitle(\@LANG@MAIN,sub,plain)},
   }
 
   %--------------------------------
