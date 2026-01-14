@@ -311,6 +311,11 @@
 
 \ExplSyntaxOn
 
+\NewExpandableDocumentCommand {\ToUppercase} { m }
+  {
+    \text_uppercase:n { #1 }
+  }
+
 %=======================================================================
 % \IfBeginsWithAnyOf {text} {comma_sep_list_of_prefixes} {true} {false}
 %=======================================================================
@@ -718,6 +723,19 @@
     % Iterate through the comma-separated list of keys (#4 now, due to argument shift).
     \exp_args:Ne \clist_map_inline:nn { #4 }
       {
+        % Initialize #2 to empty
+        \IfBooleanTF{#1}
+          { 
+            % STARRED: #2 is a NAME (e.g., "myVar"). 
+            % Use \tl_set:cn to construct the csname from the string.
+            \tl_set:ce { #2 } { } 
+          }
+          { 
+            % NON-STARRED: #2 is a MACRO (e.g., \myVar). 
+            % Use \tl_set:Nn to set it directly.
+            \tl_set:Ne #2 { } 
+          }
+        
         % Construct the control sequence name: \@<MEMORYDATA>@<key>@memory
         % Note: Using #3 for the memory namespace ID
         \cs_if_exist:cT { @#3@ ##1 @memory }
