@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------------
 NOVATHESIS Build Assistant
 
-Version 7.9.1 (2026-01-05)
+Version 7.9.2 (2026-01-14)
 Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 -----------------------------------------------------------------------------
 
@@ -931,7 +931,7 @@ def main() -> None:
         except Exception as e:
             print(f"{RED}❌ Could not create output directory {outdir_path}: {e}{RESET}")
             sys.exit(1)
-    
+
     # Build regex patterns for demo and cover modes
     patterns = {}
     if demo or cover_only or args.force_school:

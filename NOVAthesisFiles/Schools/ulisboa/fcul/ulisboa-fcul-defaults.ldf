@@ -110,8 +110,7 @@
 
 % Temporary macro to use in conditional expressions;
 \AtEndPreamble{%
-  \LoadHelveticaLikeFont%
-  % \RequirePackage{gillius2}%
+  %\LoadHelveticaLikeFont%  % \RequirePackage{gillius2}%
 }
 
 \NTAddToHook{cover/1-1/text/pre}{%
@@ -143,13 +142,13 @@
 % PhD Title of Dissertation
 \ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.2cm, height=2cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{17}{17}\selectfont%
-  \textbf{\thedoctitle(\@LANG@COVER,main,cover)}%
+  \textbf{\thedoctitle(\@LANG@COVER,main)}%
 }
 
 % MSc Title of Dissertation
 \ntaddtocover[degree=msc/mscplan, vspace=2.0cm, height=2cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{17}{17}\selectfont%
-  \textbf{\thedoctitle(\@LANG@COVER,main,cover)}%
+  \textbf{\thedoctitle(\@LANG@COVER,main)}%
 }
 
 % Doc Status

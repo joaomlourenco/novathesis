@@ -1,27 +1,37 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Strings/pt.ldf
-%% NOVA thesis configuration file
-%%
-%% Customization for language dependent strings
+%%  Ukrainian (uk) strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE Strings/pt.ldf}%
 
-\input{Strings/strings-declare.tex}
+% --------------------------------------------------------------------
+%   Load MemStore declarations
+% --------------------------------------------------------------------
+\input{\DIRSTRINGS/strings-declare.tex}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%  Portuguese - strings
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\AtEndPreamble{
-\StartBabelCommands*{ukrainian}{date}
-  \SetStringLoop{month#1name}{%
-      Січень,Лютий,Березень,Квітень,Травень,Червень,%
-      Липень,Серпень,Вересень,Жовтень,Листопад,%
-      Грудень}
-\EndBabelCommands
-}
+% --------------------------------------------------------------------
+%   Utilities
+% --------------------------------------------------------------------
+\andstring(uk)                  := { та }
+\instring(uk)                   := { в }
+\ofstring(uk)                   := { з }
+\ofstring(1,m,uk)               := { з }
+\ofstring(2,m,uk)               := { з }
+\ofstring(1,f,uk)               := { з }
+\ofstring(2,f,uk)               := { з }
+\keywordsstring(uk)             := {Ключові слова}
+\departmentofstring(uk)         := {Кафедра}
+\specializationstring(uk)       := {Спеціалізація з}
+\degreenameprefix(bsc,uk)       := {Бакалавр з}
+\degreenameprefix(msc,uk)       := {Магістр з}
+\degreenameprefix(phd,uk)       := {Доктор філософії з}
+\candidatestring(m,uk)          := {Здобувач}
+\candidatestring(f,uk)          := {Здобувачка}
 
+
+% --------------------------------------------------------------------
+%   Bookmakr strings
+% --------------------------------------------------------------------
 \bkmstring(frontmatter,uk)      := {Початкові матеріали}
 \bkmstring(backmatter,uk)       := {Завершальні матеріали}
 \bkmstring(cover,uk)            := {Перша сторінка обкладинки}
@@ -33,34 +43,34 @@
 \bkmstring(spine,uk)            := {Корінець}
 \bkmstring(copyright,uk)        := {Авторське право}
 \bkmstring(statement,uk)        := {Заява}
-\bkmstring(dedicatory,uk)       := {Присвята}
+\bkmstring(statements,uk)       := {Заяви}
+\bkmstring(dedication,uk)       := {Присвята}
 \bkmstring(acknowledgements,uk) := {Подяки}
 \bkmstring(quote,uk)            := {Цитата}
 \bkmstring(abstract,uk)         := {Анотація}
 \bkmstring(listof,uk)           := {Список…}
 \bkmstring(glossaries,uk)       := {Глосарії}
-\keywordsstring(uk)             := {Ключові слова}
-\notdefined(uk)                 := {НЕ ВИЗНАЧЕНО}
-\specializationstring(uk)       := {Спеціалізація з}
-\departmentofstring(uk)         := {Кафедра}
-\andstring(uk)                  := { та }
-\degreenameprefix(bsc,uk)       := {Бакалавр з}
-\degreenameprefix(msc,uk)       := {Магістр з}
-\degreenameprefix(phd,uk)       := {Доктор філософії з}
 
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Ukrainian (uk)
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------------
+%   Defaults
+% --------------------------------------------------------------------
 \defaultnttitle(uk)             := {Дуже Довга та Вражаюча\\Назва Дисертації з Примусовим Розривом Рядка}
 \defaultntsubtitle(uk)          := {Деякі Думки про Життя, Всесвіт\\та все Інше}
 \defaultntdepartment(uk)        := {Кафедра\\Назва Кафедри}
 \defaultntdegreename(uk)        := {Назва Освітньої Програми}
 \defaultntspecialization(uk)    := {Назва Спеціалізації}
 \defaultntauthordegree(uk)      := {Магістр/Бакалавр з Назва Попереднього Ступеня}
+\notdefinedstring(uk)           := {НЕ ВИЗНАЧЕНО}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%  Adviser strings
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------------
+%   Adviser strings
+% --------------------------------------------------------------------
+\professorstring(1,m,uk)        := {Професор}
+\professorstring(2,m,uk)        := {Професори}
+\professorstring(1,f,uk)        := {Професорка}
+\professorstring(2,f,uk)        := {Професорки}
 
 \adviserstring(a,1,m,uk)        := {Науковий керівник}
 \adviserstring(a,1,f,uk)        := {Наукова керівниця}
@@ -82,10 +92,30 @@
 \adviserstring(t,2,m,uk)        := {Тьютори}
 \adviserstring(t,2,f,uk)        := {Тьюторки}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Degree names
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\adviserstring(pref,a,1,m,uk)        := {Науковий керівник}
+\adviserstring(pref,a,1,f,uk)        := {Наукова керівниця}
+\adviserstring(pref,a,2,m,uk)        := {Наукові керівники}
+\adviserstring(pref,a,2,f,uk)        := {Наукові керівниці}
 
+\adviserstring(pref,c,1,m,uk)        := {Співкерівник}
+\adviserstring(pref,c,1,f,uk)        := {Співкерівниця}
+\adviserstring(pref,c,2,m,uk)        := {Співкерівники}
+\adviserstring(pref,c,2,f,uk)        := {Співкерівниці}
+
+\adviserstring(pref,ca,1,m,uk)       := {Співкерівник}
+\adviserstring(pref,ca,1,f,uk)       := {Співкерівниця}
+\adviserstring(pref,ca,2,m,uk)       := {Співкерівники}
+\adviserstring(pref,ca,2,f,uk)       := {Співкерівниці}
+
+\adviserstring(pref,t,1,m,uk)        := {Тьютор}
+\adviserstring(pref,t,1,f,uk)        := {Тьюторка}
+\adviserstring(pref,t,2,m,uk)        := {Тьютори}
+\adviserstring(pref,t,2,f,uk)        := {Тьюторки}
+
+
+% --------------------------------------------------------------------
+% Degree names
+% --------------------------------------------------------------------
 \degreestring(bsc,m,uk)         := {Бакалавр}
 \degreestring(bsc,f,uk)         := {Бакалаврка}
 
@@ -101,10 +131,10 @@
 \degreestring(phdprop,m,uk)     := {Аспірант}
 \degreestring(phdprop,f,uk)     := {Аспірантка}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Document types
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% --------------------------------------------------------------------
+% Document types
+% --------------------------------------------------------------------
 \doctypestring(bsc,uk)          := {Бакалаврська робота}
 \doctypestring(mscplan,uk)      := {План магістерської роботи}
 \doctypestring(msc,uk)          := {Магістерська робота}
@@ -116,16 +146,16 @@
 \dissertationplan(phdplan,uk)   := {План дисертації}
 \dissertationplan(phdprop,uk)   := {Пропозиція до дисертації}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% SDG
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% --------------------------------------------------------------------
+%   Sustainable Development Goals (SDG)
+% --------------------------------------------------------------------
 \sdgstring(uk)                  := {Цілі сталого розвитку (ЦСР)}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Committee
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% --------------------------------------------------------------------
+%   Committee
+% --------------------------------------------------------------------
 \committeetitlestring(uk)       := {Екзаменаційна комісія}
 
 \committeestring(c,1,m,uk)      := {Голова комісії}
@@ -158,50 +188,77 @@
 \committeestring(g,2,m,uk)      := {Запрошені члени комісії}
 \committeestring(g,2,f,uk)      := {Запрошені членкині комісії}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Dissertation strings
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\dissertationstring(bsc,uk)     = {Роботу подано для здобуття ступеня %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ з\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+% --------------------------------------------------------------------
+%   Dissertation strings
+% --------------------------------------------------------------------
 
-\dissertationstring(mscplan,uk) = {Проміжний звіт подано для здобуття ступеня %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ з\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+\dissertationstring(bsc,uk)     = {
+      Роботу подано для здобуття ступеня % 
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) з\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(msc,uk)     = {Магістерську роботу подано для здобуття ступеня %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ з\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+\dissertationstring(mscplan,uk) = {
+      Проміжний звіт подано для здобуття ступеня % 
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) з\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(phdplan,uk) = {План дисертації подано для здобуття ступеня %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ з\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+\dissertationstring(msc,uk)     = {
+      Магістерську роботу подано для здобуття ступеня % 
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) з\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(phdprop,uk) = {Пропозицію дисертації подано для здобуття ступеня %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ з\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+\dissertationstring(phdplan,uk) = {
+      План дисертації подано для здобуття ступеня % 
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) з\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(phd,uk)     = {Дисертацію подано для здобуття ступеня %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ з\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+\dissertationstring(phdprop,uk) = {
+      Пропозицію дисертації подано для здобуття ступеня % 
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) з\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Copyright
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\dissertationstring(phd,uk)     = {
+      Дисертацію подано для здобуття ступеня % 
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) з\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-\copyrighttextstring(uk)        = {Школа \theschool(\@LANG@COPYRIGHT)\ та університет \theuniversity(\@LANG@COPYRIGHT)\ мають право, безстрокове і без географічних обмежень, архівувати та публікувати цю дисертацію в друкованій або цифровій формі чи будь-яким іншим існуючим або майбутнім способом, розповсюджувати її через наукові репозиторії та дозволяти її копіювання і поширення в навчальних або науково-дослідних, некомерційних цілях за умови належного посилання на автора та видавця.}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% --------------------------------------------------------------------
+%   Copyright
+% --------------------------------------------------------------------
+\copyrighttextstring(uk)        = {
+        Школа \theschool(\@LANG@COPYRIGHT)\ та університет \theuniversity(\@LANG@COPYRIGHT)%
+        \ мають право, безстрокове і без географічних обмежень, архівувати та публікувати цю % 
+        дисертацію в друкованій або цифровій формі чи будь-яким іншим існуючим або майбутнім % 
+        способом, розповсюджувати її через наукові репозиторії та дозволяти її копіювання і % 
+        поширення в навчальних або науково-дослідних, некомерційних цілях за умови належного % 
+        посилання на автора та видавця.}
+
+
+% --------------------------------------------------------------------
 %%% Acknowledgements
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% --------------------------------------------------------------------
+\acknowledgmentsstring(uk)      = {
+        Цей документ було створено за допомогою системи набору \NTengineName~\@ntcite{latex-project} % 
+        та шаблону % 
+        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} % 
+        (v\novathesisversion)ංග@ntcite{novathesis-manual}.}
 
-\acknowledgmentsstring(uk)      = {Цей документ було створено за допомогою системи набору \NTengineName~\cite{latex-project} та шаблону \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Babel definitions
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% --------------------------------------------------------------------
+%   Babel definitions
+% --------------------------------------------------------------------
 \ntlangsetup*{uk/annex=Додаток}
 \ntlangsetup*{uk/annexpl=Додатки}
 \ntlangsetup*{uk/appendixpl=Доповнення}
+
+\AtEndPreamble{
+  \StartBabelCommands*{ukrainian}{date}
+    \SetStringLoop{month#1name}{
+      Січень,Лютий,Березень,Квітень,Травень,Червень,%
+      Липень,Серпень,Вересень,Жовтень,Листопад,%
+      Грудень}
+  \EndBabelCommands
+}

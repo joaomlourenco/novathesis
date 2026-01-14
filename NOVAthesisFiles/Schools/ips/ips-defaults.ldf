@@ -24,7 +24,7 @@
 % Spine info
 \spine(logo)={ips-logo}
 % \spine(author)={\thedocauthor(name,short)}
-% \spine(title)={\thedoctitle(\@LANG@COVER,main)}
+% \spine(title)={\thedoctitle(\@LANG@COVER,main,plain)}
 % \spine(year)={\thentdocdate(year)}
 
 % Set margins for "normal" pages
@@ -62,8 +62,7 @@
 \newcommand{\@rightcol}{0.55\linewidth}
 
 \AtEndPreamble{%
-  \LoadHelveticaLikeFont%
-  % \RequirePackage{gillius2}%
+  %\LoadHelveticaLikeFont%  % \RequirePackage{gillius2}%
 }
 
 \NTAddToHook{cover/1-1/text/pre}{%
@@ -93,7 +92,7 @@
   % Title of Dissertation
   \begin{minipage}[t]{\@rightcol}%
     \fontsize{16}{16}\selectfont\raggedright%
-    \textbf{\thedoctitle(\@LANG@COVER,main,cover)}%
+    \textbf{\thedoctitle(\@LANG@COVER,main)}%
   \end{minipage}%
 }
 

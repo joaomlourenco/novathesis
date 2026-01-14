@@ -88,7 +88,7 @@
 \ntaddtocover[vspace=6.5cm, height=4cm, valign=t]{1-1}{%
     \centering%
     \fontsize{15}{15}\selectfont%
-    {\THEdoctitle(\@LANG@COVER,main,cover)}\\[1ex]%
+    {\THEdoctitle(\@LANG@COVER,main)}\\[1ex]%
     \fontsize{12}{12}\selectfont%
     Dissertação%
 }
@@ -97,8 +97,8 @@
 \ntaddtocover[vspace=6.5cm, height=4cm, valign=t]{2-1}{%
     \centering%
     \fontsize{15}{15}\selectfont\scshape%
-    \thedoctitle(\@LANG@COVER,main,cover)\\[1ex]%
-    \thedoctitle(en,main,cover)%
+    \thedoctitle(\@LANG@COVER,main)\\[1ex]%
+    \thedoctitle(en,main)%
 }
 
 % Advisers 2
@@ -151,8 +151,8 @@
 %   % \fontseries{mc}
 %   \fontsize{15}{15}\selectfont
 %   \scshape
-%   \thedoctitle(\@LANG@COVER,main,cover)\\[1ex]
-%   \thedoctitle(\@LANG@COVER,main,cover)[en]
+%   \thedoctitle(\@LANG@COVER,main)\\[1ex]
+%   \thedoctitle(\@LANG@COVER,main)[en]
 % }
 %
 % % Author name

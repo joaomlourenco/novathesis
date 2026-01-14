@@ -7,7 +7,14 @@
 
 \typeout{NT FILE nova/fsch/nova-fcsh-defaults.ldf}%
 
-\ntsetup{print/frontpage=true}
+\ntsetup{print/frontpage=false}
+\ifmaindoc
+  {\ifdocworking
+    {}
+    {\ntsetup{print/statement=true}}}
+  {}
+\ntsetup{style/chapter=article}
+
 
 % Faculty / School
 \school(pt):={Faculdade de Ciências Sociais e Humanas}
@@ -52,7 +59,7 @@
 % \dissertationstring(phd,en)={\thedoctypestr(phd,en)\ in\\[1ex] \textbf{\themajorfield(en)}}
 
 \setmemoirfontsize{12}   % A4paper with main text at 12pt
-\ntsetup{style/font=newtx}
+
 \AtEndPreamble{
   \makeoddfoot{novathesis@mainmatter}{}{}{\thepage}
   \makeevenfoot{novathesis@mainmatter}{}{}{\thepage}
@@ -67,6 +74,31 @@
   % debug,
 }
 
+\NTAddToHook{abstract/pre}{%
+  \clearforchapter
+  \let\clearforchapterOROG\clearforchapter
+  \let\clearforchapter\relax
+  \begin{minipage}{\textwidth}
+    \begin{center}
+    \noindent\large\bfseries
+    \ifdatadefined{doctitle}(\@LSHORT,abstract)
+      {\thedoctitle(\@LSHORT,abstract)}
+      {\thedoctitle(\@LSHORT,main)}
+    \end{center}
+   \smallskip
+    \begin{center}
+    \textbf{\thedocauthor(name)}
+    \end{center}
+  \end{minipage}
+%  \smallskip
+}
+\NTAddToHook{abstract/post}{%
+  \let\clearforchapter\clearforchapterOROG
+}      
+
+\newcommand{\ntchapskip}{\vspace*{2cm}}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % FCSH guidelines:
 % The pages should be numbered consecutively at the bottom centre of the
@@ -75,7 +107,7 @@
 
 % Use romman numerals for Appendixes
 % \patchcmd{\HyOrg@appendix}{\@Alph}{\@Roman}{}{}
-\patchcmd{\appendix}{\@Alph}{\@Roman}{}{}
+% \patchcmd{\appendix}{\@Alph}{\@Roman}{}{}
 
 \frenchspacing
 
@@ -92,17 +124,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{%
-  \LoadHelveticaLikeFont%
-  % \RequirePackage{gillius2}%
-}
-
-\NTAddToHook{cover/1-1/text/pre}{%
-  \sffamily%
-}
-\NTAddToHook{cover/2-1/text/pre}{%
-  \sffamily%
-}
+% \AtEndPreamble{%
+%   \LoadHelveticaLikeFont%
+%   % \RequirePackage{gillius2}%
+% }
+%
+% \NTAddToHook{cover/1-1/text/pre}{%
+%   \sffamily%
+% }
+% \NTAddToHook{cover/2-1/text/pre}{%
+%   \sffamily%
+% }
 \definecolor{fcshblue}{RGB}{25,61,108}% Background title color
 
 
@@ -124,7 +156,7 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\thedoctitle(\@LANG@COVER,main,cover)}}%
+  \textcolor{fcshblue}{\textbf{\thedoctitle(\@LANG@COVER,main)}}%
 }
 
 % Author name
@@ -143,7 +175,7 @@
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{fcshblue}{%%
-      \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}%
+      \textbf{\printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}}%
   }%
 }
 

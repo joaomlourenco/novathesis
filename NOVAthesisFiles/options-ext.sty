@@ -1,0 +1,120 @@
+%---------------------------------------------------------------------------
+% Copyright 2015–26 Daan Leijen, Microsoft Corporation.
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.  
+%---------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+\ProvidesPackage{options-ext}[2026/01/12, João Lourenço, Extends the package (key-value) options]
+
+
+\RequirePackage{options}
+
+
+\options{
+  % Handler: copy list
+  % Usage: /target/.copy list = {/source/list}
+  % Logic: 
+  % 1. Gets the content of the source list as a CSV string (\opt@temp).
+  % 2. Defines a helper (\opt@apply) to wrap that content in a call to .new list.
+  % 3. Uses \expandnext to pass the expanded content to the helper.
+  /handlers/copy list/.new handler = {%
+    \option@ensuredefined{#2}%
+    \letoptionlist{#2}\opt@temp
+    \def\opt@apply##1{\optionsalso{#1/.new list={##1}}}%
+    \expandnext{\opt@apply}{\opt@temp}%
+  },
+  % Handler: copy choice
+  % Usage: /target/.copy choice = {/source}
+  % Logic: Handles source being a 'choice' or 'list'.
+  /handlers/copy choice/.new handler = {%
+    \option@ensuredefined{#2}%
+    \ifoptiontype{#2}{choice}{%
+      % Source is a choice: Get the internal list of "key={val}" pairs
+      \letoptionlist{#2/@choices}\opt@temp 
+    }{%
+      % Source is a list: Get the values to serve as choice keys
+      \letoptionlist{#2}\opt@temp
+    }%
+    \def\opt@apply##1{\optionsalso{#1/.new choice={##1}}}%
+    \expandnext{\opt@apply}{\opt@temp}%
+  },
+  % Handler: newpush
+  % Usage: /list/.newpush = {item}
+  % Logic: Checks if the option exists; if not, defines it as a new list.
+  %        Then pushes the value to it.
+  /handlers/newpush/.new handler = {%
+    \ifoptiondefined{#1}{%
+      % Option exists: Just push the value
+      \optionsalso{#1/.push={#2}}%
+    }{%
+      % Option missing: Create as list first, then push
+      \optionsalso{#1/.new list, #1/.push={#2}}%
+    }%
+  },
+  % Handler: push ifnew
+  % Usage: /list/.push ifnew = {value}
+  % Logic: 
+  % 1. Checks if the option exists. If not, raises an error.
+  % 2. Checks if the list already contains the value.
+  % 3. If NOT in the list, calls .push.
+  /handlers/push ifnew/.new handler = {%
+    \option@ensuredefined{#1}% Enforce existence, error if missing
+    \ifoptioncontains{#1}{#2}{}{% Check containment
+      \optionsalso{#1/.push={#2}}% Push only if new
+    }%
+  },
+  % Handler: newpush ifnew
+  % Usage: /list/.newpush ifnew = {value}
+  % Logic: 
+  % 1. Checks if option exists.
+  %    - NO: Create it (.new list) and push the value.
+  %    - YES: Check if value is already inside.
+  %           - If NOT inside: Push the value.
+  %           - If inside: Do nothing.
+  /handlers/newpush ifnew/.new handler = {%
+    \ifoptiondefined{#1}{%
+      % Option exists: Check for duplicates before pushing
+      \ifoptioncontains{#1}{#2}{}{%
+        \optionsalso{#1/.push={#2}}%
+      }%
+    }{%
+      % Option does not exist: Create it and push (no need to check, it's empty)
+      \optionsalso{#1/.new list, #1/.push={#2}}%
+    }%
+  },
+  % Handler: .size
+  % Usage: /my/list/.size = \mycountmacro
+  % Logic: 
+  % 1. Checks if option exists.
+  % 2. Resets internal counter \opt@idx.
+  % 3. Loops over the internal storage (handling 'choice' vs 'list' locations).
+  % 4. Saves the result in the provided macro.
+  /handlers/size/.new handler = {%
+    \option@ensuredefined{#1}%
+    \opt@idx=0\relax
+    \def\opt@do##1{\advance\opt@idx 1\relax}%
+    \ifoptiontype{#1}{choice}%
+      {\forlistcsloop{\opt@do}{optk@#1/@choices}}%   % Count choices
+      {\forlistcsloop{\opt@do}{optk@#1}}%            % Count list items
+    \edef#2{\the\opt@idx}%
+  },
+}
+
+
+\options{
+  % Use .new handler* (note the star) for actions/flags
+  /handlers/show items/.new handler* = {%
+    \def\opt@out{}%
+    % Iterate over the list at path #1
+    \optionlistdo{#1}{\appto\opt@out{, (##1)}}%
+    % Display the result
+    \option@showvalue{\opt@out}%
+  }
+}

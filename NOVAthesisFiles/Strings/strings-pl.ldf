@@ -1,27 +1,37 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Strings/pl.ldf
-%% NOVA thesis configuration file
-%%
-%% Customization for language dependent strings
+%%  Polish (pl) strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE Strings/pl.ldf}%
 
-\input{Strings/strings-declare.tex}
+% --------------------------------------------------------------------
+%   Load MemStore declarations
+% --------------------------------------------------------------------
+\input{\DIRSTRINGS/strings-declare.tex}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%  Polish - strings
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\AtEndPreamble{
-\StartBabelCommands*{polish}{date}
-  \SetStringLoop{month#1name}{%
-      Styczeń,Luty,Marzec,Kwiecień,Maj,Czerwiec,%
-      Lipiec,Sierpień,Wrzesień,Październik,Listopad,%
-      Grudzień}
-\EndBabelCommands
-}
+% --------------------------------------------------------------------
+%   Utilities
+% --------------------------------------------------------------------
+\andstring(pl)                  := { i }
+\instring(pl)                   := { w }
+\ofstring(pl)                   := { z }
+\ofstring(1,m,pl)               := { z }
+\ofstring(2,m,pl)               := { z }
+\ofstring(1,f,pl)               := { z }
+\ofstring(2,f,pl)               := { z }
+\keywordsstring(pl)             := {Słowa kluczowe}
+\departmentofstring(pl)         := {Katedra}
+\specializationstring(pl)       := {Specjalizacja w}
+\degreenameprefix(bsc,pl)       := {Licencjat z}
+\degreenameprefix(msc,pl)       := {Magister z}
+\degreenameprefix(phd,pl)       := {Doktorat z}
+\candidatestring(m,pl)          := {Kandydat}
+\candidatestring(f,pl)          := {Kandydatka}
 
+
+% --------------------------------------------------------------------
+%   Bookmakr strings
+% --------------------------------------------------------------------
 \bkmstring(frontmatter,pl)      := {Materiały wstępne}
 \bkmstring(backmatter,pl)       := {Materiały końcowe}
 \bkmstring(cover,pl)            := {Pierwsza strona okładki}
@@ -33,34 +43,34 @@
 \bkmstring(spine,pl)            := {Grzbiet}
 \bkmstring(copyright,pl)        := {Prawa autorskie}
 \bkmstring(statement,pl)        := {Oświadczenie}
-\bkmstring(dedicatory,pl)       := {Dedykacja}
+\bkmstring(statements,pl)       := {Oświadczenia}
+\bkmstring(dedication,pl)       := {Dedykacja}
 \bkmstring(acknowledgements,pl) := {Podziękowania}
 \bkmstring(quote,pl)            := {Cytat}
 \bkmstring(abstract,pl)         := {Streszczenie}
 \bkmstring(listof,pl)           := {Spis…}
 \bkmstring(glossaries,pl)       := {Glosariusze}
-\keywordsstring(pl)             := {Słowa kluczowe}
-\notdefined(pl)                 := {NIEZDEFINIOWANE}
-\specializationstring(pl)       := {Specjalizacja w}
-\departmentofstring(pl)         := {Katedra}
-\andstring(pl)                  := { i }
-\degreenameprefix(bsc,pl)       := {Licencjat z}
-\degreenameprefix(msc,pl)       := {Magister z}
-\degreenameprefix(phd,pl)       := {Doktorat z}
 
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Polish (pl)
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------------
+%   Defaults
+% --------------------------------------------------------------------
 \defaultnttitle(pl)             := {Bardzo Długi i Imponujący\\Tytuł Pracy z Wymuszonym Podziałem Wiersza}
 \defaultntsubtitle(pl)          := {Kilka Przemyśleń o Życiu, Wszechświecie\\i Całej Reszcie}
-\defaultntdepartment(pl)        := {Katedra\\Nazwa Katedry}
+\defaultntdepartment(pl)        := {Nazwa Katedry}
 \defaultntdegreename(pl)        := {Nazwa Kierunku Studiów}
 \defaultntspecialization(pl)    := {Nazwa Specjalności}
 \defaultntauthordegree(pl)      := {Magister/Licencjat z Nazwa Poprzedniego Stopnia}
+\notdefinedstring(pl)           := {NIEZDEFINIOWANE}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%  Adviser strings
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------------
+%   Adviser strings
+% --------------------------------------------------------------------
+\professorstring(1,m,pl)        := {Profesor}
+\professorstring(2,m,pl)        := {Profesorowie}
+\professorstring(1,f,pl)        := {Profesor}
+\professorstring(2,f,pl)        := {Profesorowie}
 
 \adviserstring(a,1,m,pl)        := {Promotor}
 \adviserstring(a,1,f,pl)        := {Promotorka}
@@ -82,10 +92,30 @@
 \adviserstring(t,2,m,pl)        := {Opiekunowie naukowi}
 \adviserstring(t,2,f,pl)        := {Opiekunki naukowe}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Degree names
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\adviserstring(pref,a,1,m,pl)        := {Promotor}
+\adviserstring(pref,a,1,f,pl)        := {Promotorka}
+\adviserstring(pref,a,2,m,pl)        := {Promotorzy}
+\adviserstring(pref,a,2,f,pl)        := {Promotorki}
 
+\adviserstring(pref,c,1,m,pl)        := {Promotor pomocniczy}
+\adviserstring(pref,c,1,f,pl)        := {Promotorka pomocnicza}
+\adviserstring(pref,c,2,m,pl)        := {Promotorzy pomocniczy}
+\adviserstring(pref,c,2,f,pl)        := {Promotorki pomocnicze}
+
+\adviserstring(pref,ca,1,m,pl)       := {Promotor pomocniczy}
+\adviserstring(pref,ca,1,f,pl)       := {Promotorka pomocnicza}
+\adviserstring(pref,ca,2,m,pl)       := {Promotorzy pomocniczy}
+\adviserstring(pref,ca,2,f,pl)       := {Promotorki pomocnicze}
+
+\adviserstring(pref,t,1,m,pl)        := {Opiekun naukowy}
+\adviserstring(pref,t,1,f,pl)        := {Opiekunka naukowa}
+\adviserstring(pref,t,2,m,pl)        := {Opiekunowie naukowi}
+\adviserstring(pref,t,2,f,pl)        := {Opiekunki naukowe}
+
+
+% --------------------------------------------------------------------
+% Degree names
+% --------------------------------------------------------------------
 \degreestring(bsc,m,pl)         := {Licencjat}
 \degreestring(bsc,f,pl)         := {Licencjatka}
 
@@ -101,10 +131,10 @@
 \degreestring(phdprop,m,pl)     := {Doktorant}
 \degreestring(phdprop,f,pl)     := {Doktorantka}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Document types
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% --------------------------------------------------------------------
+% Document types
+% --------------------------------------------------------------------
 \doctypestring(bsc,pl)          := {Praca licencjacka}
 \doctypestring(mscplan,pl)      := {Plan pracy magisterskiej}
 \doctypestring(msc,pl)          := {Praca magisterska}
@@ -116,16 +146,16 @@
 \dissertationplan(phdplan,pl)   := {Plan rozprawy doktorskiej}
 \dissertationplan(phdprop,pl)   := {Propozycja rozprawy}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% SDG
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% --------------------------------------------------------------------
+%   Sustainable Development Goals (SDG)
+% --------------------------------------------------------------------
 \sdgstring(pl)                  := {Cele zrównoważonego rozwoju (SDG)}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Committee
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% --------------------------------------------------------------------
+%   Committee
+% --------------------------------------------------------------------
 \committeetitlestring(pl)       := {Komisja egzaminacyjna}
 
 \committeestring(c,1,m,pl)      := {Przewodniczący komisji}
@@ -158,50 +188,77 @@
 \committeestring(g,2,m,pl)      := {Członkowie zaproszeni}
 \committeestring(g,2,f,pl)      := {Członkinie zaproszone}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Dissertation strings
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\dissertationstring(bsc,pl)     = {Praca złożona w celu uzyskania stopnia %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+% --------------------------------------------------------------------
+%   Dissertation strings
+% --------------------------------------------------------------------
 
-\dissertationstring(mscplan,pl) = {Praca wstępna złożona w celu uzyskania stopnia %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+\dissertationstring(bsc,pl)     = {%
+      Praca złożona w celu uzyskania stopnia % 
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(msc,pl)     = {Praca magisterska złożona w celu uzyskania stopnia %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+\dissertationstring(mscplan,pl) = {%
+      Praca wstępna złożona w celu uzyskania stopnia % 
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(phdplan,pl) = {Plan rozprawy złożony w celu uzyskania stopnia %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+\dissertationstring(msc,pl)     = {%
+      Praca magisterska złożona w celu uzyskania stopnia % 
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(phdprop,pl) = {Propozycja rozprawy złożona w celu uzyskania stopnia %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+\dissertationstring(phdplan,pl) = {%
+      Plan rozprawy złożony w celu uzyskania stopnia % 
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(phd,pl)     = {Rozprawa doktorska złożona w celu uzyskania stopnia %
-  \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
-  \textbf{\themajorfield(\@LANG@COVER)}}
+\dissertationstring(phdprop,pl) = {%
+      Propozycja rozprawy złożona w celu uzyskania stopnia % 
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Copyright
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\dissertationstring(phd,pl)     = {%
+      Rozprawa doktorska złożona w celu uzyskania stopnia % 
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\[1ex]%
+      \textbf{\themajorfield(\@LANG@COVER)}}
 
-\copyrighttextstring(pl)        = {Katedra \theschool(\@LANG@COPYRIGHT)\ oraz \theuniversity(\@LANG@COPYRIGHT)\ posiadają nieograniczone czasowo i terytorialnie prawo do archiwizowania i publikowania niniejszej pracy w formie drukowanej lub cyfrowej, a także w każdy inny istniejący lub przyszły sposób, do jej rozpowszechniania za pośrednictwem repozytoriów naukowych oraz do zezwalania na jej kopiowanie i dystrybucję w niekomercyjnych celach dydaktycznych lub badawczych, pod warunkiem właściwego wskazania autora i wydawcy.}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% --------------------------------------------------------------------
+%   Copyright
+% --------------------------------------------------------------------
+\copyrighttextstring(pl)        = {%
+        Katedra \theschool(\@LANG@COPYRIGHT)\ oraz \theuniversity(\@LANG@COPYRIGHT)%
+        \ posiadają nieograniczone czasowo i terytorialnie prawo do archiwizowania i publikowania % 
+        niniejszej pracy w formie drukowanej lub cyfrowej, a także w każdy inny istniejący lub % 
+        przyszły sposób, do jej rozpowszechniania za pośrednictwem repozytoriów naukowych oraz do % 
+        zezwalania na jej kopiowanie i dystrybucję w niekomercyjnych celach dydaktycznych lub % 
+        badawczych, pod warunkiem właściwego wskazania autora i wydawcy.}
+
+
+% --------------------------------------------------------------------
 %%% Acknowledgements
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% --------------------------------------------------------------------
+\acknowledgmentsstring(pl)      = {%
+        Niniejszy dokument został przygotowany przy użyciu systemu składu \NTengineName~\@ntcite{latex-project} % 
+        oraz szablonu % 
+        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} % 
+        (v\novathesisversion)~\@ntcite{novathesis-manual}.}
 
-\acknowledgmentsstring(pl)      = {Niniejszy dokument został przygotowany przy użyciu systemu składu \NTengineName~\cite{latex-project} oraz szablonu \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} (v\novathesisversion)~\@ntcite{novathesis-manual}.}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Babel definitions
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% --------------------------------------------------------------------
+%   Babel definitions
+% --------------------------------------------------------------------
 \ntlangsetup*{pl/annex=Załącznik}
 \ntlangsetup*{pl/annexpl=Załączniki}
 \ntlangsetup*{pl/appendixpl=Dodatki}
+
+\AtEndPreamble{
+  \StartBabelCommands*{polish}{date}
+    \SetStringLoop{month#1name}{
+      Styczeń,Luty,Marzec,Kwiecień,Maj,Czerwiec,%
+      Lipiec,Sierpień,Wrzesień,Październik,Listopad,%
+      Grudzień}
+  \EndBabelCommands
+}

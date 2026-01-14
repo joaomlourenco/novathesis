@@ -56,8 +56,7 @@
 
 
 \AtEndPreamble{%
-  \LoadHelveticaLikeFont%
-  % \RequirePackage{gillius2}%
+  %\LoadHelveticaLikeFont%  % \RequirePackage{gillius2}%
 }
 
 \NTAddToHook{cover/1-1/text/pre}{%
@@ -80,7 +79,7 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=3.5cm]{1-1,2-1}{%
   \fontsize{18}{20}\selectfont%
-  \textbf{\thedoctitle(\@LANG@COVER,main,cover)}%
+  \textbf{\thedoctitle(\@LANG@COVER,main)}%
 }
 
 % Author name

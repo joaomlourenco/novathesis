@@ -245,11 +245,11 @@
 % The author name (PhD) / Title of Dissertation (MSc)
 \ntaddtocover[vspace=6mm,halign=l,valign=t]{1-1}{%
     \fontsize{26}{26}\selectfont\bfseries%
-    \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
+    \textbf{\THEdoctitle(\@LANG@COVER,main)}%
     % \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover)
     %   {\\[4mm]%
     %    \fontsize{14}{14}\selectfont%
-    %     \textbf{\THEdoctitle(\@LANG@COVER,sub,cover)}}
+    %     \textbf{\THEdoctitle(\@LANG@COVER,sub)}}
     %   {}%
 }
 
@@ -315,11 +315,11 @@
 % Title of Dissertation (PhD)
 \ntaddtocover[halign=l]{2-1}{%
   \fontsize{17}{17}\selectfont%
-  \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
+  \textbf{\THEdoctitle(\@LANG@COVER,main)}%
   \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
     \\[4mm]%
     \fontsize{12}{12}\selectfont%
-    \textbf{\THEdoctitle(\@LANG@COVER,sub,cover)}%
+    \textbf{\THEdoctitle(\@LANG@COVER,sub)}%
   }{}%
 }
 

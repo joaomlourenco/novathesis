@@ -4,7 +4,7 @@
 %%  NOVATHESIS — novathesis.cls
 %% ----------------------------------------------------------------------------
 %%
-%% Version 7.9.1 (2026-01-05)
+%% Version 7.9.2 (2026-01-14)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -77,7 +77,7 @@
 %%      or in the subreddit r/novathesis
 %%          https://www.reddit.com/r/novathesis/
 
-\ProvidesClass{novathesis}[2026-01-01 v7.9.0 novathesis template class file]
+\ProvidesClass{novathesis}[2026-01-14 v7.9.2 novathesis template class file]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 %% ----------------------------------------------------------------------------
@@ -91,15 +91,18 @@
 
 
 %============================================================
-\def\DIR@CONFIG{0-Config}
-\def\DIR@FRONTMATTER{1-FrontMatter}
-\def\DIR@MAINMATTER{2-MainMatter}
-\def\DIR@BACKMATTER{3-BackMatter}
-\def\DIR@BIBLIOGRAPHY{4-Bibliography}
-\def\DIR@FIGURES{5-Figures}
-\def\DIR@NTFILES{NOVAthesisFiles}
-\def\NT@FONTSTYLES{FontStyles}
-
+\def\DIRCONFIG{0-Config}
+\def\DIRFRONTMATTER{1-FrontMatter}
+\def\DIRMAINMATTER{2-MainMatter}
+\def\DIRBACKMATTER{3-BackMatter}
+\def\DIRBIBLIOGRAPHY{4-Bibliography}
+\def\DIRFIGURES{5-Figures}
+\def\DIRNTFILES{./NOVAthesisFiles}
+\def\DIRFONTSTYLES{\DIRNTFILES/FontStyles}
+\def\DIRSCHOOLS{\DIRNTFILES/Schools}
+\def\DIRSTRINGS{\DIRNTFILES/Strings}
+\def\DIRCHAPSTYLES{\DIRNTFILES/ChapStyles}
+\def\DIRIMAGES{\DIRNTFILES/Images}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  MEMOIR CUSTOMIZATION AND LOADING
@@ -107,7 +110,7 @@
 %%       configuration file “0-Config/0_memoir.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntmemoirsetup}[1]{\PassOptionsToClass{#1}{memoir}}
-\input{\DIR@CONFIG/0_memoir}
+\input{\DIRCONFIG/0_memoir}
 \LoadClass{memoir}
 
 \OnehalfSpacing% One-and-half spacing
@@ -133,9 +136,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 2. TEMPLATE CORE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\xappto\input@path{{\DIR@NTFILES/}{\DIR@NTFILES/Strings/}}
+\xappto\input@path{{\DIRNTFILES/}{\DIRSTRINGS/}}
 
-\RequirePackage{options2}
+\RequirePackage{options-ext}
 \RequirePackage{nt-version}
 \RequirePackage{memory2}
 \RequirePackage{NOVAthesisFiles/stocksize}
@@ -150,16 +153,20 @@
   \RequirePackage[T1]{fontenc}
 \fi
 
-% \PassOptionsToPackage{scaled=0.95}{inter}
-% \PassOptionsToPackage{scaled=0.95}{helvet}
-% \PassOptionsToPackage{scaled=0.95}{gillius2}
 \IfFileExists{inter.sty}
-  {\RequirePackage{inter}}
+  {\RequirePackage[scaled=0.95]{inter}}
 {\IfFileExists{helvet.sty}
-  {\RequirePackage{helvet}}
+  {\RequirePackage[scaled=0.95]{helvet}}
 {\IfFileExists{gillius2.sty}
-  {\RequirePackage{gillius2}}
+  {\RequirePackage[scaled=0.95]{gillius2}}
   {\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}
+% \IfFileExistsCase*
+%   {
+%     {inter.sty}    {\RequirePackage{inter}},
+%     {helvet.sty}   {\RequirePackage{helvet}}
+%     {gillius2.sty} {\RequirePackage{gillius2}}
+%   }
+%   {\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}
 
 % TODO Good to load after fonts
 \RequirePackage{microtype} % Good to load after fonts
@@ -167,7 +174,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 4. LANGUAGE & LOCALIZATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{babel}
+\RequirePackage[english]{babel}
 % \RequirePackage{translator}
 \RequirePackage{csquotes}  % MUST be loaded before biblatex
 
@@ -190,7 +197,7 @@
         {\PassOptionsToPackage{#1}{biblatex}}%
   }
 
-\input{\DIR@CONFIG/2_biblatex}
+\input{\DIRCONFIG/2_biblatex}
 
 % TODO defernumbers=true??
 \RequirePackage{biblatex}
@@ -282,7 +289,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Configure Graphics
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\expandafter\graphicspath\expandafter{\expandafter{\DIR@FIGURES/}}
+\expandafter\graphicspath\expandafter{\expandafter{\DIRFIGURES/}}
 \DeclareGraphicsExtensions{.pdf,.png,.tif,.jpg}
 \providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
 \providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
@@ -297,41 +304,60 @@
 % Change main font size on the fly
 \newcommand{\setmemoirfontsize}[1]{\input{mem#1.clo}}
 
+
+
+
+
+
 \ExplSyntaxOn
 
 %=======================================================================
 % \IfBeginsWithAnyOf {text} {comma_sep_list_of_prefixes} {true} {false}
 %=======================================================================
 
-% Define a boolean to track if a match was found
-\bool_new:N \l__user_match_found_bool
+% 1. Create Variables
+\int_new:N \l_check_len_int
+\str_new:N \l_slice_str
+\tl_new:N \l_clean_input_tl
+\bool_new:N \l_match_found_bool
+
+% 2. Generate the missing variant
+%    This forces \str_range to accept an expanded ('e') first argument.
+\cs_generate_variant:Nn \str_range:nnn { enn }
 
 \NewDocumentCommand{\IfBeginsWithAnyOf}{ m m +m +m }
-  {
-    % 1. Reset the boolean flag
-    \bool_set_false:N \l__user_match_found_bool
-
-    % 2. Map through the comma-separated list.
-    % \clist_map_inline:nn automatically trims spaces *around* items (foo, bar)
-    % but keeps spaces *inside* items (Hello World).
-    \clist_map_inline:nn { #2 }
-      {
-        % Check if the string (#1) starts with the current item (##1).
-        % We extract the first N characters of #1, where N is length of ##1.
-        \str_if_eq:eeT
-          { \str_range:nnn { #1 } { 1 } { \str_count:n { ##1 } } }
-          { ##1 }
-          {
-            % If match found: set flag to true and break the loop
-            \bool_set_true:N \l__user_match_found_bool
-            \clist_map_break:
-          }
+ {
+  % Step A: Store and clean the input string
+  \tl_set:Nn \l_clean_input_tl { #1 }
+  \tl_trim_spaces:N \l_clean_input_tl
+  
+  \bool_set_false:N \l_match_found_bool
+  
+  % Step B: Iterate through prefixes
+  \clist_map_inline:nn { #2 }
+   {
+    % Get length of the current prefix (##1)
+    \int_set:Nn \l_check_len_int { \str_count:n { ##1 } }
+    
+    % Step C: Extract substring
+    % We use the generated ':enn' variant to expand \l_clean_input_tl
+    % into actual text (e.g., "Apple") BEFORE slicing.
+    \str_set:Nx \l_slice_str 
+      { 
+        \str_range:enn { \l_clean_input_tl } { 1 } { \l_check_len_int } 
       }
-
-    % 3. Execute the appropriate branch
-    \bool_if:NTF \l__user_match_found_bool { #3 } { #4 }
-  }
-
+    
+    % Step D: Compare
+    \exp_args:No \str_if_eq:nnTF \l_slice_str { ##1 }
+     {
+      \bool_set_true:N \l_match_found_bool
+      \clist_map_break: 
+     }
+     { }
+   }
+   
+  \bool_if:NTF \l_match_found_bool { #3 } { #4 }
+ }
 
 
 
@@ -442,6 +468,212 @@
       }
   }
 
+
+
+
+% =========================================================
+% Process multiple files
+% starred (*) processes all that exist
+% non-starred stops on first sucess
+% =========================================================
+
+
+\bool_new:N \l_file_found_bool
+\tl_new:N \l_file_action_tl
+
+
+\NewDocumentCommand{\IfFileExistsInDirsTF}{ s O{} m m m m }
+ {
+  \group_begin:
+    \tl_new:N \l_tmp_dir_tl
+    \tl_new:N \l_tmp_path_tl
+    \tl_new:N \l_tmp_last_char_tl
+    
+    \bool_gset_false:N \g_file_found_bool
+    
+    % Define an internal "action" function that takes one argument (#1)
+    % This makes the user's code (#5) act like a function body.
+    \cs_set:Npn \__file_user_action:n ##1 { #5 }
+    
+    \clist_map_inline:nn { #4 }
+     {
+      \tl_set:Nn \l_tmp_dir_tl { ##1 }
+      \tl_trim_spaces:N \l_tmp_dir_tl
+      
+      % Smart Slash Logic
+      \tl_if_empty:NF \l_tmp_dir_tl
+       {
+        \tl_set:Nx \l_tmp_last_char_tl { \tl_item:Nn \l_tmp_dir_tl { -1 } }
+        \str_if_eq:VnF \l_tmp_last_char_tl { / }
+         { \tl_put_right:Nn \l_tmp_dir_tl { / } }
+       }
+      
+      % CONSTRUCT FULL PATH: Prefix + Dir + Filename
+      \tl_set:Nx \l_tmp_path_tl { #2 \l_tmp_dir_tl #3 }
+      
+      \file_if_exist:nT { \l_tmp_path_tl }
+       {
+        \bool_gset_true:N \g_file_found_bool
+        
+        % EXECUTE: Pass the full path directly into the user action
+        \__file_user_action:n { \l_tmp_path_tl }
+        
+        \IfBooleanF { #1 } { \clist_map_break: }
+       }
+     }
+  \group_end:
+  
+  \bool_if:NF \g_file_found_bool { #6 }
+ }
+
+
+
+\NewDocumentCommand{\IfFileExistsCase}{ s O{} m m }
+  {
+    % \group_begin:
+    \bool_set_false:N \l_file_found_bool
+    
+    % Map through the clist of pairs
+    \clist_map_inline:nn { #3 }
+      {
+        % ##1 is {filepath}{action}
+        \__filecase_split_pair:nnn { #1 } { #2 } ##1
+      }
+    
+    % If nothing found, execute Else branch
+    \bool_if:NF \l_file_found_bool { #4 }
+  }
+
+% #1: Starred status
+% #2: Prefix
+% #3: Filename
+% #4: Action
+\cs_new:Npn \__filecase_split_pair:nnn #1 #2 #3 #4
+  {
+    \tl_set:Nn \l_tmpa_tl { #2 #3 }
+    
+    \file_if_exist:nT { \l_tmpa_tl }
+      {
+        \bool_set_true:N \l_file_found_bool
+        
+        % Define an internal macro to hold the user's action.
+        % We use a specific name to avoid parameter nesting issues.
+        \cs_set:Npn \__filecase_do_action:n ##1 { #4 }
+        
+        % Execute it with the found path
+        \__filecase_do_action:n { \l_tmpa_tl }
+        
+        % If NOT starred, break loop
+        \bool_if:NF #1 { \clist_map_break: }
+      }
+  }
+
+
+
+
+\NewDocumentCommand{\IfFontExistsCase}{ s m m }
+  {
+    \bool_set_false:N \l_tmpa_bool
+    \clist_map_inline:nn { #2 }
+      {
+        % Check if the command \IfFontExistsTF exists (provided by fontspec)
+        \cs_if_exist:cTF { IfFontExistsTF }
+          {
+            \IfFontExistsTF { ##1 }
+              {
+                \bool_set_true:N \l_tmpa_bool
+                % Execute the code #3, passing the found font name (##1)
+                #3 { ##1 }
+                % If starred, break the loop after the first match
+                \IfBooleanT { #1 } { \clist_map_break: }
+              }
+              { } % Do nothing if font doesn't exist
+          }
+          {
+            % Fallback if fontspec isn't loaded or engine is pdfLaTeX
+            \typeout{NOVAthesis:~fontspec~not~loaded.~Skipping~font~check~for~##1.}
+          }
+      }
+    
+    % Optional: warning if NO fonts from the list were found
+    \bool_if:NF \l_tmpa_bool 
+      { \typeout{NOVAthesis:~Warning:~No~fonts~from~the~list~{#2}~were~found.} }
+  }
+
+
+% --------------------------------------------------------
+% Input the file from the first dir list (if any)
+% #1 = file name
+% #2 = list of directories
+% #3 = code if succeed [OPTIONAL]
+% #4 = code if fails [OPTIONAL]
+
+
+% 1. Create variables
+\tl_new:N \l_found_path_tl
+
+\NewDocumentCommand{\InputIfFileExistsInDirsTF}{ m m +m +m }
+  {
+    \bool_set_false:N \l_file_found_bool
+
+    % Iterate through directories (#2)
+    \clist_map_inline:nn { #2 }
+      {
+        % Check if 'directory/filename' exists
+        \file_if_exist:nTF { ##1 / #1 }
+          {
+            % A. Store the full path in the variable
+            \tl_set:Nn \l_found_path_tl { ##1 / #1 }
+
+            % B. Input the file
+            \file_input:n { ##1 / #1 }
+
+            % C. Execute Success Code (#3)
+            #3
+
+            % D. Mark found and break loop
+            \bool_set_true:N \l_file_found_bool
+            \clist_map_break:
+          }
+          {}
+      }
+
+    % Handle 'Not Found' case
+    \bool_if:NF \l_file_found_bool
+      { #4 }
+  }
+
+
+
+
+% 1. Define the internal logic (accepts the argument as-is)
+\cs_new_protected:Nn \__user_chapter_logic:n
+ {
+  % Note: Inside ExplSyntaxOn, spaces are ignored, so we don't need % at EOL
+  \clearforchapter
+  
+  % Create the anchor. 
+  % #1 is now the fully expanded string (e.g., "Project Alpha").
+  \hypertarget{bm#1}{}
+  
+  % Create the bookmark using the same ID
+  \bookmark[dest=bm#1]{#1}
+  
+  % Reset spacing/formatting
+  \noindent \ignorespaces
+ }
+
+% 2. Generate the variant that forces expansion ('e' = expand fully)
+\cs_generate_variant:Nn \__user_chapter_logic:n { e }
+
+% 3. User Interface
+\NewDocumentCommand{\ChapterNoTitle}{ m }
+ {
+  % Call the expanded variant.
+  % This turns \ChapterNoTitle{\myMacro} into \__user_chapter_logic:n {Expanded Value}
+  \__user_chapter_logic:e { #1 }
+ }
+
 \ExplSyntaxOff
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -513,6 +745,7 @@
   % STYLES
   style/chapter/.new value      = bar,
   style/font/.new value         = newpx,
+  style/font/attributes/.new value = {},
   style/url/.new cmd            = {\AfterPreamble{\urlstyle{#1}}},
   color/links/.new cmd          = {\@ifpackageloaded{hyperref}%
                                             {\hypersetup{allcolors=#1}}%
@@ -552,7 +785,6 @@
   print/sdgs/hspace/.new dim    = {5mm},   % any measure
   print/sdgs/vspace/.new dim    = {4mm},   % any measure
   % MISC
-  countsecondcover/.new toggle  = false,
   numberallpages/.new toggle    = false,
   glossaries/list/reverse/.new toggle       = true,
   tocintoc/.new toggle          = true,
@@ -578,9 +810,6 @@
 %% GENERAL PURPOSE MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\instring#1#2{TT\fi\begingroup
-  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
-
 % --------------------------------------------------------
 
 \newcommand{\printcm}[1]{%
@@ -599,7 +828,7 @@
 
 % --------------------------------------------------------
 % The NOVAthesis logo
-\def\novathesisimg{\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{\DIR@NTFILES/Images/novathesis-text}}
+\def\novathesisimg{\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{\DIRIMAGES/novathesis-text}}
 \def\novathesistxt{\textsl{novathesis}}
 \ifdef{\iftutex}
     {\newcommand{\novathesis}{\novathesisimg}}
@@ -630,7 +859,7 @@
     m
     m
     O{https://raw.githubusercontent.com/joaomlourenco/novathesis-extras/main/Fonts}
-    O{\DIR@NTFILES/FontStyles/Fonts} }
+    O{\DIRFONTSTYLES/Fonts} }
 {
   % #1 = format (ttf)
   % #2 = font name (Calibri)
@@ -796,57 +1025,7 @@
 % Trim spaces around argument
 \cs_new_eq:NN \trimspaces \tl_trim_spaces:n
 
-% --------------------------------------------------------
-% Input the file from the  first dir list (if any)
-% #1 = file name
-% #2 = list of directories
-% #3 = code if succeed [OPTIONAL]
-% #4 = code if fails [OPTIONAL]
 
-% 1. Create a boolean to track if the file was found during iteration
-\bool_new:N \l__ant_file_found_bool
-
-% 2. Define the command
-% #1 = File Name (Mandatory)
-% #2 = List of directories (Mandatory, comma separated)
-% #3 = Code if succeed (Optional, default empty)
-% #4 = Code if fails (Optional, default empty)
-\NewDocumentCommand{\InputIfFileExistsInDirsTF}{ m m +m +m }
-  {
-    % Reset the found flag to false at the start
-    \bool_set_false:N \l__ant_file_found_bool
-
-    % Iterate through the comma-separated list of directories (#2)
-    \clist_map_inline:nn { #2 }
-      {
-        % Construct path: current_dir/filename
-        % We check if the file exists at this specific path
-        \file_if_exist:nTF { ##1 / #1 }
-          {
-            % A. Input the file
-            \file_input:n { ##1 / #1 }
-
-            % B. Execute the Success Code (#3)
-            #3
-
-            % C. Mark as found
-            \bool_set_true:N \l__ant_file_found_bool
-
-            % D. Stop the loop immediately
-            \clist_map_break:
-          }
-          {
-            % File not found in this specific directory, continue loop
-          }
-      }
-
-    % After the loop, check if we ever found it
-    \bool_if:NF \l__ant_file_found_bool
-      {
-        % If not found, execute Failure Code (#4)
-        #4
-      }
-  }
 \ExplSyntaxOff
 
 
@@ -883,17 +1062,17 @@
 \options{/@nt/folders/.new choice={
   copyright=.,
   statement=.,
-  cover=\DIR@FRONTMATTER,
-  dedicatory=\DIR@FRONTMATTER,
-  acknowledgements=\DIR@FRONTMATTER,
-  quote=\DIR@FRONTMATTER,
-  abstract=\DIR@FRONTMATTER,
-  glossaries=\DIR@FRONTMATTER,
-  cover=\DIR@FRONTMATTER,
-  chapter=\DIR@MAINMATTER,
-  appendix=\DIR@BACKMATTER,
-  annex=\DIR@BACKMATTER,
-  bib=\DIR@BIBLIOGRAPHY,
+  cover=\DIRFRONTMATTER,
+  dedication=\DIRFRONTMATTER,
+  acknowledgements=\DIRFRONTMATTER,
+  quote=\DIRFRONTMATTER,
+  abstract=\DIRFRONTMATTER,
+  glossaries=\DIRFRONTMATTER,
+  cover=\DIRFRONTMATTER,
+  chapter=\DIRMAINMATTER,
+  appendix=\DIRBACKMATTER,
+  annex=\DIRBACKMATTER,
+  bib=\DIRBIBLIOGRAPHY,
 }}
 
 
@@ -942,9 +1121,12 @@
   % \typeout{NTADDPERSON 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\NTADDPERSON%
   \noexpandarg
   \StrCut{#4}{,}\@nt@personname\@nt@dummy%was xStrCut
-  \options{/@nt/#1/#2/name/.expanded/.newpush={\@nt@personname},
-           /@nt/#1/#2/full/.expanded/.newpush={#4},
-           /@nt/#1/#2/gender/.newpush={#3}}%
+  \options{
+      /@nt/#1/#2/name/.expanded/.newpush={\@nt@personname},
+      /@nt/#1/#2/full/.expanded/.newpush={#4},
+      /@nt/#1/#2/gender/.newpush={#3},
+      /@nt/#1/#2/pair/.expanded/.newpush={#3/\@nt@personname},
+  }%
   % \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
   \fullexpandarg
 }
@@ -977,16 +1159,23 @@
   %         #2=family {quote, abstract, chapter, etc} or {author, adviser, committee}
   %         #3=[file-lang | sub-family | key] (OPTIONAL)
   %         #4=filename
+  % \typeout{[#1] [#2] [#3] [#4]}\ADDTOLIST
+  \ifstrequal{#2}{copyright}
+    {\typeout{}\typeout{ntaddto{#1}{#2}[#3]{#4}}\NTADDTO}
+    {}
   \ifoptioncontains{/@nt/listtypes}{#2}{}
       {\options{/@nt/listtypes/.newpush={#2}}}
   \IfBeginsWithAnyOf{#4}{/,.}
-      {\xdef\@nt@filewithpath{#4}}
-      {\options{/@nt/folders=#2}%
+      {\ifstrequal{#2}{copyright}{\OPTi}{}\xdef\@nt@filewithpath{#4}}
+      {\ifstrequal{#2}{copyright}{\OPTii}{}\options{/@nt/folders=#2}%
        \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}}
   \@for\myi:=\expanded{#3}\do{%
     % \typeout{NT ADDTOLIST [#1] [#2] [\myi] [\@nt@filewithpath]}\ADDTILIST%
     \options{/@nt/#1/#2/\myi/.expanded/.newpush={\@nt@filewithpath}}%
   }%
+  \ifstrequal{#2}{copyright}
+    {\typeout{}\typeout{[\option{/@nt/#1/#2/phd}]}\NTSTORED}
+    {}
 }
 
 \newcommand*{\@nt@foralllist}[3]{%
@@ -1184,7 +1373,7 @@
 %      Please open and edit the appropriate
 %       configuration file “0-Config/1_novathesis.tex”
 %============================================================
-\input{\DIR@CONFIG/1_novathesis}
+\input{\DIRCONFIG/1_novathesis}
 \def\@DOCTYPE{\option{/novathesis/doctype}}
 \def\@DOCSTATUS{\option{/novathesis/docstatus}}
 
@@ -1219,13 +1408,13 @@
 %     \ntaddtoprintorder{backmatter}{index}
 %     \RequirePackage{imakeidx}
 %     % \makeindex[intoc,columns=2,options=-s myindexstyle]%
-%     \makeindex[intoc,columns=2,options=-s  \DIR@NTFILES/ntindexstyle]
+%     \makeindex[intoc,columns=2,options=-s  \DIRNTFILES/ntindexstyle]
 %   }
 % }{}
 
 %--------------------------------
 % “biblatex” stuff
-% \ntaddfile{bib}{./\DIR@NTFILES/fix-bib.bib}%
+% \ntaddfile{bib}{./\DIRNTFILES/fix-bib.bib}%
 % \AtEndDocument{\nocite{novathesis-manual}}%
 % \letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
 % \RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
@@ -1253,12 +1442,13 @@
 \def\@langs@loaded@sep{}
 \newcommand*{\@nt@setlangloaded}[1]{%
       % \typeout{LL=#1}\LL
-      \if\instring{,#1,}{,\@LANG@LOADED,}\else%
-        \IfFileExists{\DIR@NTFILES/Strings/strings-#1.ldf}%
+      \IfSubStr{,\@LANG@LOADED,}{,#1,}{}
+      {
+        \IfFileExists{\DIRSTRINGS/strings-#1.ldf}%
                      {\eappto{\@LANG@LOADED}{\@langs@loaded@sep#1}\def\@langs@loaded@sep{,}}%
-                      {\ClassError{novathesis}{File not found: “\DIR@NTFILES/Strings/strings-#1.ldf” file!}%
+                      {\ClassError{novathesis}{File not found: “\DIRSTRINGS/strings-#1.ldf” file!}%
                                   {Add a file with the translations for this language.}}%
-      \fi%
+      }%
 }
 
 \@for\myi:=\expanded{\@LANG@COVER,\@LANG@COPYRIGHT,\@LANG@MAIN,%
@@ -1294,10 +1484,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \@for\myi:=\expanded{\@LANG@LOADED}\do{%
-  \InputIfFileExists{\DIR@NTFILES/Strings/strings-\myi.ldf}%
+  \InputIfFileExists{\DIRSTRINGS/strings-\myi.ldf}%
                     {}%
                     {\ClassError{novathesis}
-                                {File not found: “\DIR@NTFILES/Strings/strings-#1.ldf” file!}%
+                                {File not found: “\DIRSTRINGS/strings-#1.ldf” file!}%
                                 {Add a file with the translations for this language.}}%
 }%
 
@@ -1317,9 +1507,9 @@
 \def\@fontencs@sep{}
 \@for\myi:=\@LANG@LOADED\do{
   \options{/@nt/fontenc=\myi}
-  \if\instring{,\option{/@nt/fontenc},}{,\@fontencs,}%
-  \else\eappto{\@fontencs}{\@fontencs@sep\option{/@nt/fontenc}}\def\@fontencs@sep{,}%
-  \fi%
+  \IfSubStr{,\@fontencs,}{,\option{/@nt/fontenc},}
+    {}
+    {\eappto{\@fontencs}{\@fontencs@sep\option{/@nt/fontenc}}\def\@fontencs@sep{,}}%
 }
 
 
@@ -1412,12 +1602,12 @@
   % #3 = value
   % \typeout{NT TITLE [#1] [#2] [#3]}%
   \noexpandarg  
-  \StrSubstitute{#3}{\\}{ }[\@nt@cleantitle]
+  % \StrSubstitute{#3}{\\}{ }[\@nt@cleantitle]
   % \typeout{XXXX [\@nt@cleantitle]}\aaa
   % \doctitle(#2,#1):={\@nt@cleantitle}%
-  \doctitle(#2,#1):={\def\\{ }#3}%
-  \doctitle(#2,#1,cover):={#3}%
-  \IfStrEq{#1}{main}{\doctitle(#2,spine):=?{\thedoctitle(#2,#1)}}{}%
+  \doctitle(#2,#1):={#3}%
+  \doctitle(#2,#1,plain):={\def\\{ }#3}%
+  \IfStrEq{#1}{main}{\doctitle(#2,spine):=?{\thedoctitle(#2,#1,plain)}}{}%
   % \doctitle(#2,#1):={\ntnolinebreak{#3}}%
   % \doctitle(#2,#1,cover):={#3}%
   % \IfStrEq{#1}{main}{\doctitle(#2,spine):={\ntnolinebreak{#3}}}{}%
@@ -1636,30 +1826,33 @@
           \ntprintcovers%
     }%
     {frontmatter}{%
+          \bookmarksetup{startatroot}
           \ntthesisfrontmatter% Before the main text (TOC, etc) — Roman page numbering
           \bookmarksetupnext{level=0}%
           \hypertarget{bmfrontmatter}{}%
-          \bookmark[level=0,dest=bmfrontmatter]{\thebkmstring(frontmatter,\@LANG@MAIN)}%
-          \bookmarksetup{startatroot=false,level=1,keeplevel}%
-          \ntprintlist{/@nt/print/#1}%
+          \bookmark[dest=bmfrontmatter]{\thebkmstring(frontmatter,\@LANG@MAIN)}%
+          \bookmarksetupnext{rellevel=1}%
+          \ntprintlist{/@nt/print/#1/\@DOCSTATUS}%
     }%
     {mainmatter}{%
+          \bookmarksetup{startatroot}
           \ntthesismainmatter% Mainn text — Arabic page numbering
           \bookmarksetup{level=0}%
-          \bookmarksetupnext{level=0}%
           \thispagestyle{novathesis@mainmatter}%
           \pagestyle{novathesis@mainmatter}%
           \ntprintlist{/@nt/print/#1}%
     }%
     {backmatter}{%
+          \bookmarksetup{startatroot}
           \ntthesisbackmatter     % The back text — Arabic page numbering
-          \bookmarksetup{level=0}%
+          \bookmarksetupnext{level=-1}%
+          \hypertarget{bmbackmatter}{}%
+          \bookmark[dest=bmbackmatter]{\thebkmstring(backmatter,\@LANG@MAIN)}%
           \bookmarksetupnext{level=0}%
-          % \hypertarget{bmbackmatter}{}
-          % \bookmark[level=0,dest=bmbackmatter1]{\thebkmstring(backmatter,\@LANG@MAIN)}
           \ntprintlist{/@nt/print/#1}%
     }%
     {backcover}{%
+          \bookmarksetup{startatroot}
           \bookmarksetup{level=0}%
           \thispagestyle{empty}%
           \pagestyle{empty}%
@@ -1670,34 +1863,26 @@
 
 \newcommand*{\ntprintlist}[1]{%
   \optionlistdo{#1}{%
-    \ifdefmacro{##1}{##1}{%     ##1 is undefined
-      \ifcsmacro{ntprint##1}{%  \ntprint#1 is defined
-        \NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}%
-      }{%                       \ntprint#1 is undefined
-        \ifcsmacro{##1}{%       \##1 is defined
-          \NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}%
-        }{%                     nothing is defined
-          \ClassError{novathesis}{Invalid contents for frontmatter or mainmatter: [##1]}{}%
+    \begingroup
+      \clearpage
+      \ifdefmacro{##1}
+        {##1}% ##1 is defined
+        {%     ##1 is undefined
+        \ifcsmacro{ntprint##1}{%  \ntprint#1 is defined
+          \NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}%
+        }{%                       \ntprint#1 is undefined
+          \ifcsmacro{##1}{%       \##1 is defined
+            \NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}%
+          }{%                     nothing is defined
+            \ClassError{novathesis}{Invalid contents for frontmatter or mainmatter: [##1]}{}%
+          }%
         }%
       }%
-    }%
-    % \clearforchapter%
-    \ignorespaces%
+      \unskip%
+      \clearforchapter%
+      \ignorespaces%
+    \endgroup
   }%
-}
-
-\newcommand*{\ntsetprintorder}[2]{%
-  % #1 = frontmatter, mainmatter
-  % #2 = list
-  % \typeout{[#1] [#2]}
-  \option@setlist[;]{/@nt/print/#1}{#2}%
-}
-
-\newcommand*{\ntaddtoprintorder}[2]{%
-  % #1 = frontmatter, mainmatter
-  % #2 = list
-  % \typeout{[#1] [#2]}
-  \options{/@nt/print/#1/.push=#2}%
 }
 
 % \newcommand*{\ntremovefromprintorder}[2]{%
@@ -1720,7 +1905,7 @@
           \ntselectlang{\@LANG@MAIN}%
           \hypertarget{bmglossaries}{}%
           \bookmarksetupnext{level=0}%
-          \bookmark[level=0,dest=bmglossaries]
+          \bookmark[dest=bmglossaries]
                   {\thebkmstring(glossaries,\@LANG@MAIN)}%
           \printglossaries
         }{}%
@@ -1730,77 +1915,132 @@
 
 % --------------------------------------------------------
 % DEFAULT VALUES FOR frontmatter AND mainmatter
-\newdata{printorder}
 
-\printorder(frontmatter,final):={%
-  statement;       % The statement page
-  copyright;       % (*) The copyright page
-  dedicatory;      % (*) Print the dedicatory
-  acknowledgements;% (*) Print the acknowledgments
-  quote;           % (*) Print the quote
-  abstracts;       % Print abstracts in multiple languages.
-  aidisclose;      % AI disclosure statement
-  alllistof;       % Print all the listof defined in “6_list_of.tex”
-  myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+% \newcommand*{\ntaddtoprintorder}[2]{%
+%   % #1 = frontmatter, mainmatter
+%   % #2 = list
+%   % \typeout{[#1] [#2]}
+%   \options{/@nt/print/#1/.push=#2}%
+% }
+
+\options{/@nt/print/frontmatter/final/.new list = 
+  {%
+    statement,        % The statement page
+    copyright,        % (*) The copyright page
+    dedication,       % (*) Print the dedication
+    acknowledgements, % (*) Print the acknowledgments
+    quote,            % (*) Print the quote
+    abstracts,        % Print abstracts in multiple languages.
+    aidisclose,       % AI disclosure statement
+    alllistof,        % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
 }
 
-\printorder(frontmatter,provisional):={%
-  statement;       % The statement page
-  copyright;       % (*) The copyright page
-  dedicatory;      % (*) Print the dedicatory
-  acknowledgements;% (*) Print the acknowledgments
-  quote;           % (*) Print the quote
-  abstracts;       % Print abstracts in multiple languages.
-  aidisclose;      % AI disclosure statement
-  alllistof;       % Print all the listof defined in “6_list_of.tex”
-  myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+\options{/@nt/print/frontmatter/provisional/.new list = 
+  {
+    statement,         % The statement page
+    copyright,         % (*) The copyright page
+    dedication,        % (*) Print the dedication
+    acknowledgements,  % (*) Print the acknowledgments
+    quote,             % (*) Print the quote
+    abstracts,         % Print abstracts in multiple languages.
+    aidisclose,        % AI disclosure statement
+    alllistof,         % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
 }
 
-\printorder(frontmatter,working):={%
-  abstracts;       % Print abstracts in multiple languages.
-  aidisclose;      % AI disclosure statement
-  alllistof;       % Print all the listof defined in “6_list_of.tex”
-  myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+\options{/@nt/print/frontmatter/working/.new list = 
+  {
+    abstracts,       % Print abstracts in multiple languages.
+    aidisclose,      % AI disclosure statement
+    alllistof,       % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
 }
 
-\printorder(mainmatter):={
-  chapters;        % Print document chapters
+\options{/@nt/print/mainmatter/.new list = 
+  {
+    chapters,        % Print document chapters
+  }
 }%
 
 \ifoptionequal{/novathesis/print/webography}{}{%
-  \printorder(backmatter):={
-    bib;             % Print the bibliography.  Change to
-     %    “bib[title=⟨title⟩]” to redefine the title!
-    alllistof;       % Print all the listof defined in “6_list_of.tex”
-    myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
-    appendices;      % Print appendices; if any!
-    annexes;         % Print annexes; if any!
+  \options{/@nt/print/backmatter/.new list = 
+    {
+      bibsingle,            % Print the bibliography
+      alllistof,            % Print all the listof defined in “6_list_of.tex”
+      myprintglossaries,    % Print the Glossary, Acronyms, Symbols, etc…
+      appendices,           % Print appendices, if any!
+      annexes,              % Print annexes, if any!
+    }
   }%
 }{%
-  \printorder(backmatter):={
-    \printbibliography[nottype=online]; % Print the bibliography.
-    \printbibliography[title=\option{/novathesis/print/webography},type=online]; % Print the bibliography.
-    alllistof;       % Print all the listof defined in “6_list_of.tex”
-    myprintglossaries; % Print the Glossary, Acronyms, Symbols, etc…
-    appendices; % Print appendices, if any!
-    annexes; % Print annexes, if any!
+  \options{/@nt/print/backmatter/.new list = 
+    {
+      bibseparate,          % Print the web references separate from the remainder of the bibliography
+      alllistof,            % Print all the listof defined in “6_list_of.tex”
+      myprintglossaries,    % Print the Glossary, Acronyms, Symbols, etc…
+      appendices,           % Print appendices, if any!
+      annexes,              % Print annexes, if any!
+    }
   }%
 }
+
+
+% \newdata{printorder}
+%
+% \printorder(frontmatter,final):={%
+%   statement,       % The statement page
+%   copyright,       % (*) The copyright page
+%   dedication,      % (*) Print the dedication
+%   acknowledgements,% (*) Print the acknowledgments
+%   quote,           % (*) Print the quote
+%   abstracts,       % Print abstracts in multiple languages.
+%   aidisclose,      % AI disclosure statement
+%   alllistof,       % Print all the listof defined in “6_list_of.tex”
+%   myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+% }
+%
+% \printorder(frontmatter,provisional):={%
+%   statement,       % The statement page
+%   copyright,       % (*) The copyright page
+%   dedication,      % (*) Print the dedication
+%   acknowledgements,% (*) Print the acknowledgments
+%   quote,           % (*) Print the quote
+%   abstracts,       % Print abstracts in multiple languages.
+%   aidisclose,      % AI disclosure statement
+%   alllistof,       % Print all the listof defined in “6_list_of.tex”
+%   myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+% }
+%
+% \printorder(frontmatter,working):={%
+%   abstracts,       % Print abstracts in multiple languages.
+%   aidisclose,      % AI disclosure statement
+%   alllistof,       % Print all the listof defined in “6_list_of.tex”
+%   myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+% }
+%
+% \printorder(mainmatter):={
+%   chapters,        % Print document chapters
+% }%
+%
 % \ifoptionequal{/novathesis/print/webography}{}{%
-%   \ntsetprintorder{mainmatter}{
-%     chapters;        % Print document chapters
-%     bib;             % Print the bibliography.  Change to
-%      %    “bib[title=⟨title⟩]” to redefine the title!
-%     appendices;      % Print appendices; if any!
-%     annexes;         % Print annexes; if any!
+%   \printorder(backmatter):={
+%     bibsingle,            % Print the bibliography
+%     alllistof,            % Print all the listof defined in “6_list_of.tex”
+%     myprintglossaries,    % Print the Glossary, Acronyms, Symbols, etc…
+%     appendices,           % Print appendices, if any!
+%     annexes,              % Print annexes, if any!
 %   }%
 % }{%
-%   \ntsetprintorder{mainmatter}{
-%     chapters; % Print document chapters
-%     \printbibliography[nottype=online]; % Print the bibliography.
-%     \printbibliography[title=\option{/novathesis/print/webography},type=online]; % Print the bibliography.
-%     appendices; % Print appendices, if any!
-%     annexes; % Print annexes, if any!
+%   \printorder(backmatter):={
+%     bibseparate,          % Print the web references separate from the remainder of the bibliography
+%     alllistof,            % Print all the listof defined in “6_list_of.tex”
+%     myprintglossaries,    % Print the Glossary, Acronyms, Symbols, etc…
+%     appendices,           % Print appendices, if any!
+%     annexes,              % Print annexes, if any!
 %   }%
 % }
 
@@ -1893,8 +2133,8 @@
 %% Update Schoold's images folder
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ntfor\match:={\@UNIV,\@UNIV/\@SCHL}\do{%
-    \IfFileExists{\DIR@NTFILES/Schools/\match/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
-            \prependtographicspath{{\DIR@NTFILES/Schools/\match/Images/},}}{}%
+    \IfFileExists{\DIRSCHOOLS/\match/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
+            \prependtographicspath{{\DIRSCHOOLS/\match/Images/},}}{}%
 }
 
 
@@ -1902,28 +2142,28 @@
 %  UNIVERSITY/SCHOOL SPECIFIC MATERIALS
 %  configuration file “0-Config/9_<university>_<school>.tex”
 %============================================================
-\InputIfFileExists{\DIR@NTFILES/Schools/\@UNIV/\@UNIV-defaults.ldf}
+\InputIfFileExists{\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.ldf}
     {}
     {\PackageError{novathesis}
-                  {Missing file “\DIR@NTFILES/Schools/\@UNIV/\@UNIV-defaults.ldf”}{}}
+                  {Missing file “\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.ldf”}{}}
 
 \ntfor\match:={%
       \@UNIV-\@SCHL-\@DEGREEACR,%
       \@UNIV-\@SCHL%
   }\do{%
-      \IfFileExists{\DIR@NTFILES/Schools/\@UNIV/\@SCHL/\match-defaults.ldf}
-          {\input{\DIR@NTFILES/Schools/\@UNIV/\@SCHL/\match-defaults.ldf}\ntforbreak}
+      \IfFileExists{\DIRSCHOOLS/\@UNIV/\@SCHL/\match-defaults.ldf}
+          {\input{\DIRSCHOOLS/\@UNIV/\@SCHL/\match-defaults.ldf}\ntforbreak}
           {}%
   }
 [\PackageError{novathesis}
-              {Missing file “\DIR@NTFILES/Schools/\@UNIV/\@SCHL-defaults.ldf”}
+              {Missing file “\DIRSCHOOLS/\@UNIV/\@SCHL-defaults.ldf”}
               {}]
 
 \ValidateLtxProcessor{\@UNIV}{\@SCHL}{\@DEGREEACR}
 
-\IfFileExists{\DIR@CONFIG/9_\@UNIV_\@SCHL.tex}
-     {\def\@ntsetuplevel{\@UNIV/\@SCHL/}\input{\DIR@CONFIG/9_\@UNIV_\@SCHL.tex}}
-     {\def\@ntsetuplevel{\@UNIV/}\InputIfFileExists{\DIR@CONFIG/9_\@UNIV.tex}{}{}}
+\IfFileExists{\DIRCONFIG/9_\@UNIV_\@SCHL.tex}
+     {\def\@ntsetuplevel{\@UNIV/\@SCHL/}\input{\DIRCONFIG/9_\@UNIV_\@SCHL.tex}}
+     {\def\@ntsetuplevel{\@UNIV/}\InputIfFileExists{\DIRCONFIG/9_\@UNIV.tex}{}{}}
 \def\@ntsetuplevel{}
 
 
@@ -1961,7 +2201,12 @@
 \makeoddfoot{novathesis@frontmatter}{}{\thepage}{}
 \makeevenfoot{novathesis@frontmatter}{}{\thepage}{}
 
-\ifoptionequal{/novathesis/media}{paper}{\ntsetup{color/links=Black}}{}
+\ifoptionequal{/novathesis/media}{paper}{
+  \ntsetup{color/links=Black}
+  \openright
+}{
+  \openany
+}
 
 
 % --------------------------------------------------------
@@ -1984,7 +2229,7 @@
 %   Please open and edit the appropriate
 %       configuration file “0-Config/3_cover.tex”
 %============================================================
-\input{\DIR@CONFIG/3_cover}
+\input{\DIRCONFIG/3_cover}
 % \NTRunHook{cover}
 
 % Patch month from number to string in the proper language
@@ -1995,8 +2240,8 @@
 %   Please open and edit the appropriate
 %       configuration file “0-Config/4_files.tex”
 %============================================================
-\input{\DIR@CONFIG/4_files}
-\ntaddfile{bib}{./\DIR@NTFILES/fix-bib.bib}
+\input{\DIRCONFIG/4_files}
+\ntaddfile{bib}{\DIRNTFILES/fix-bib.bib}
 % \NTRunHook{files}
 
 %============================================================
@@ -2007,7 +2252,7 @@
 % \newcommand{\BeforeHyperref}[1]{\NTAddToHook{packages/pre}{#1}}
 % \newcommand{\AfterHyperref}[1]{\NTAddToHook{packages/post}{#1}}
 % \NTRunHook{packages/pre}
-\AtEndPreamble{\input{\DIR@CONFIG/5_packages}}
+\AtEndPreamble{\input{\DIRCONFIG/5_packages}}
 % \NTRunHook{packages/post}
 
 %============================================================
@@ -2020,7 +2265,7 @@
 % can be changhed with "\ntsetup{print/other}"
   \makeatletter
   \NTRunHook{list_of/pre}
-  \input{\DIR@CONFIG/6_list_of}
+  \input{\DIRCONFIG/6_list_of}
   \NTRunHook{list_of/post}
 }
 
@@ -2031,7 +2276,7 @@
 \AtEndPreamble{
   \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{
     % \RequirePackage[autobib=true,nocite=false]{aidisclose} % AI disclose declaration
-    \input{\DIR@CONFIG/7-aidisclose}
+    \input{\DIRCONFIG/7-aidisclose}
   }{\gdef\gaiversion{0.0.0}}
 }
 
@@ -2045,11 +2290,6 @@
 
 \ifdocunset{\ntsetup{docstatus=working}}{}
 
-% \typeout{\theprintorder(frontmatter,\@DOCSTATUS)}
-\ntsetprintorder{frontmatter}{\expanded{\theprintorder(frontmatter,\@DOCSTATUS)}}%
-\ntsetprintorder{mainmatter}{\expanded{\theprintorder(mainmatter)}}%
-\ntsetprintorder{backmatter}{\expanded{\theprintorder(backmatter)}}%
-
 \ifoptionequal{/novathesis/spine/layout}{unset}
     {\ifdocworking{\ntsetup{spine/layout=off}}
                   {\ifmaindoc{\ntsetup{spine/layout=trim}}
@@ -2058,17 +2298,22 @@
 \ifdocfinal{\ntsetup{print/committee=true}}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\@nt@loadallfiles}[2]{\optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}
+\newcommand{\@nt@loadallfiles}[2]{%
+  \optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}
 
-\newcommand{\@ntloadfile@i}[2][]{\IfFileExists{#2}{\input{#2}}{#1}}
+\newcommand{\@ntloadfile@i}[2][]{%
+  \IfFileExists{#2}{\input{#2}}{#1}}
 
-\newcommand{\@ntloadfiles@ii}[2][\@DOCTYPE]{%
+\newcommand{\PrintAddedFile}[2][\@DOCTYPE]{%
   % #1=KEY
   % #2=file class
-  \iffileadded[#1]{#2}{\@nt@loadallfiles{#1}{#2}}{}%
+  \iffileadded[#1]{#2}
+      {\@nt@loadallfiles{#1}{#2}}
+      {}%
 }
 
-\newcommand{\iffileadded}[2][\@DOCTYPE]{\ifoptiondefined{/@nt/file/#2/#1}}
+\newcommand{\iffileadded}[2][\@DOCTYPE]{%
+  \ifoptiondefined{/@nt/file/#2/#1}}
 
 % --------------------------------------------------------
 % LOAD A DEFAULT COPYRIGHT PAGE DEFINITION
@@ -2105,24 +2350,16 @@
 %   \IfFileExists{#3#2}{\ntaddfile{#1}{#3#2}\ntforbreak}{}%
 % }
 
-\ifmaindoc{% only print if a main document
-  \iftoggle{/novathesis/print/copyright}{% if copuyright toggle is on
-    \@nt@AddFileIfExists{copyright}{copyright.tex}{%
-           {\DIR@NTFILES/Schools/\@UNIV/\@SCHL/}%
-          ,{\DIR@NTFILES/Schools/\@UNIV/}%
-          ,{\DIR@NTFILES/}%
-    }%
-    \@ntloadfiles@ii{copyright}%
-  }{}%
-}{}
 
 \ifoptionequal{/novathesis/spine/layout}{off}{}{% print the spine
-  \InputIfFileExistsInDirsTF{novathesis-spine.sty}{
-          {\DIR@NTFILES/Schools/\@UNIV/\@SCHL/},
-          {\DIR@NTFILES/Schools/\@UNIV/},
-          {\DIR@NTFILES/},
-  }{\AtEndDocument{\csuse{ntprintspine}}}
-   {\ClassError{novathesis}{No “novathesis-spine” file found.}{}}%
+  \InputIfFileExistsInDirsTF {novathesis-spine.sty}
+    {
+      {\DIRSCHOOLS/\@UNIV/\@SCHL/},
+      {\DIRSCHOOLS/\@UNIV/},
+      {\DIRNTFILES/},
+    }
+    {\AtEndDocument{\csuse{ntprintspine}}}
+    {\ClassError{novathesis}{No “novathesis-spine” file found.}{}}%
 }
 
 
@@ -2217,13 +2454,12 @@
   \begingroup%
     \ntselectlang{\@LANG@COVER}%
     \NTRunHook{printcovers/pre}%
-    \NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
+    % \NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
     % \forcsvlist{\ntprintcoverpair}{#1}%
     \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
     \NTRunHook{printcovers/post}%
   \endgroup%
-  \setcounter{page}{1}%
-  \iftoggle{/novathesis/countsecondcover}{\stepcounter{page}}{}%
+  \setcounter{page}{0}%
   \pagecolor{white}%
 }
 
@@ -2238,12 +2474,12 @@
       }%
       \ntprintcoversingle{2-1}%
     }{}%
-  }{% Pre-defined cover page
+  }{% Pre-defined cover page  
     \IfStrEqCase{#1}{%
-      {1}{\ntprintcoversingle{#1-1}\ntprintcoversingle{#1-2}}%
+      {1}{\ntprintcoversingle{1}{1}\ntprintcoversingle{1}{2}}%
       {2}{\iftoggle{/novathesis/print/frontpage}
-                   {\ntprintcoversingle{#1-1}\ntprintcoversingle{#1-2}}{}}%
-      {N}{\ntprintcoversingle{#1-1}\ntprintcoversingle{#1-2}}%
+                   {\ntprintcoversingle{2}{1}\ntprintcoversingle{2}{2}}{}}%
+      {N}{\ntprintcoversingle{N}{1}\ntprintcoversingle{N}{2}}%
     }[\ClassWarning{Invalid cover number: #1}{}]%
   }%
 }
@@ -2251,30 +2487,40 @@
 \gdef\@COVERNUM{}%
 \newcommand{\ifcovernum}[2]{\IfStrEq{\@COVERNUM}{#1}{#2}}
 
-\newcommand{\ntprintcoversingle}[1]{%
-  % #1 = cover ID “major-minor”
-  \gdef\@COVERNUM{#1}%
-  \ifcoverdefined[#1]{\setcounter{page}{0}\@ntprintcover@i{#1}}{}%
+\newcommand{\ntprintcoversingle}[2]{%
+  % #1 = cover ID “major”
+  % #2 = cover ID “minor”
+  \ifcoverdefined[#1-#2]{%
+    \gdef\@COVERNUM{#1-#2}%
+    \setcounter{page}{0}\@ntprintcover@i{#1}{#2}
+    \ifoptionequal{/novathesis/media}{paper}{
+      \ifcoverdefined[#1-2]
+        {\clearpage}
+        {\clearforchapter}%
+    }{%
+      \clearpage%
+    }
+  }{}%
 }
 
-\newcommand{\@ntprintcover@i}[1]{%
-  % #1 = cover ID (major-minor)
+\newcommand{\@ntprintcover@i}[2]{%
+  % #1 = cover ID “major”
+  % #2 = cover ID “minor”
   \begingroup%
     \NTRunHook{cover/pre}%
-    \NTRunHook{cover/#1/pre}%
-    \hypertarget{\thebkmstring(#1)}{}%
-    \bookmark[dest=\thebkmstring(#1)]{\thebkmstring(#1)}%
-    \bookmarksetupnext{level=1}%
+    \NTRunHook{cover/#1-#2/pre}%
+    \hypertarget{\thebkmstring(#1-#2)}{}%
+    \bookmark[dest=\thebkmstring(#1-#2)]{\thebkmstring(#1-#2)}%
+    \bookmarksetupnext{rellevel=1}%
     \thispagestyle{empty}%
-    \setCoverBgColor{#1}%
-    \setCoverBgImage{#1}%
-    \prrintCoverText{#1}%
-    % \@ntmakeboxwithcover{#1}{\@fullcover@box}%
-    \printCoverTikz{#1}%
-    \NTRunHook{cover/#1/post}%
+    \setCoverBgColor{#1-#2}%
+    \setCoverBgImage{#1-#2}%
+    \prrintCoverText{#1-#2}%
+    % \@ntmakeboxwithcover{#1-#2}{\@fullcover@box}%
+    \printCoverTikz{#1-#2}%
+    \NTRunHook{cover/#1-#2/post}%
     \NTRunHook{cover/post}%
   \endgroup%
-  \ifoptionequal{/novathesis/media}{paper}{\newpage ~\thispagestyle{empty}\newpage}{\clearforchapter}
 }
 
 \newcommand{\setCoverBgColor}[1]{
@@ -2383,17 +2629,15 @@
     \matchdegreetrue%
     \if&\option{/@ntcoveropts/status}&\relax%
     \else%
-      \if\instring{,\@DOCSTATUS,}{,\option{/@ntcoveropts/status},}%
-      \else%
-        \matchstatusfalse%
-      \fi%
+      \IfSubStr{,\option{/@ntcoveropts/status},}{,\@DOCSTATUS,}
+        {}
+        {\matchstatusfalse}%
     \fi%
     \if&\option{/@ntcoveropts/degree}&\relax%
     \else%
-      \if\instring{/\@DOCTYPE/}{/\option{/@ntcoveropts/degree}/}%
-      \else%
-        \matchdegreefalse%
-      \fi%
+      \IfSubStr{/\option{/@ntcoveropts/degree}/}{/\@DOCTYPE/}
+        {}
+        {\matchdegreefalse}%
     \fi%
     \ifmatchstatus%
       \ifmatchdegree%
@@ -2583,29 +2827,29 @@
     \ifmaindoc{% Skip thesis plan and similar documents
       \iftoggle{/novathesis/print/statement}{% if statement toggle is on
         \NTRunHook{statement/pre}%
-        \iffileadded{statement}{}{%ELSE
-          \ntfor\match:={%
-            \@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-\@LANG@MAIN-statement,%
-            \@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-statement,%
-            \@SCHL/\@UNIV-\@SCHL-\@LANG@MAIN-statement,%
-            \@SCHL/\@UNIV-\@SCHL-statement,%
-            \@UNIV-\@LANG@MAIN-statement,%
-            \@UNIV-statement,%
-          }\do{%
-            \IfFileExists{\DIR@NTFILES/Schools/\@UNIV/\match.tex}{%
-              \ntaddfile{statement}{\DIR@NTFILES/Schools/\@UNIV/\match.tex}%
-              \ntforbreak%
-            }{}%
-          }[%
-            \ClassError{novathesis}{No “statement.tex” found! Not defined with %
-                                    \string\ntaddfile{statement}{filename} in folders %
-                                    “\DIR@NTFILES/Schools/\@UNIV/\@SCHL” nor %
-                                    “\DIR@NTFILES/Schools/\@UNIV”}{}
-          ]%
-        }{}%
-        \hypertarget{bmstatement}{}%
-        \bookmark[dest=bmstatement]{\thebkmstring(statement,\@LANG@MAIN)}%
-        \@ntloadfiles@ii{statement}%
+        \iffileadded{statement}
+          {\PrintAddedFile{statement}}
+          {%ELSE
+            % \bookmarksetupnext{rellevel=1}%
+            \IfFileExistsCase
+              {
+                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-\@LANG@MAIN-statement}
+                      {\typeout{FILE=##1}\input{##1}},
+                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-statement}
+                      {\typeout{FILE=##1}\input{##1}},
+                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@LANG@MAIN-statement}
+                      {\typeout{FILE=##1}\input{##1}},
+                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-statement}
+                      {\typeout{FILE=##1}\input{##1}},
+                {\DIRSCHOOLS/\@UNIV-\@LANG@MAIN-statement}
+                      {\typeout{FILE=##1}\input{##1}},
+                {\DIRSCHOOLS/\@UNIV-statement}
+                      {\typeout{FILE=##1}\input{##1}},
+              }
+              { % NOT FOUND
+                \ClassError{novathesis}{No “statement.tex” file found!}{}
+              }
+          }%
         \NTRunHook{statement/post}%
       }{}%
     }{}%
@@ -2618,6 +2862,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print persons list {advisers | committee}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcolumntype{L}{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}X}
+\newcolumntype{C}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}X}
+\newcolumntype{R}{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}X}
+
+
 \newcommand{\@check@instring}[4][,]{
 % 1 = separator
 % 2 = value
@@ -2627,7 +2876,7 @@
 }
 
 \newcommand{\ntprintpersons}[2][full]{%
-  % #1* = { full | name | list }
+  % #1* = { full | name | list }
   % #2  = width in % of textwidth
   % #3* = positioning
   % #4  = number of columns
@@ -2645,7 +2894,7 @@
 }
 
 \def\@ntprintpersons#1#2[#3]#4#5#6{
-  % #1 = { full | name | list }
+  % #1 = { full | name | list }
   % #2 = width in % of textwidth
   % #3 = positioning
   % #4 = number of columns
@@ -2659,7 +2908,7 @@
       \@setalignment{#3}%
       \begin{varwidth}{#2\linewidth}%
         \IfStrEqCase{#4}{%
-          {0}{\@ntprintpersonsaslist{#5}{#6}}%
+          {0}{\GetPersonsAsList{#5}{#6}}%
           {1}{\@ntprintpersonsasonecolumn{#1}{#2}{#5}{#6}}%
           {2}{\@ntprintpersonsastwocolumns{#1}{#5}{#6}}%
         }[\ClassError{novathesis}{Ivalid argument [#4] to \string\ntprintpersons{#1}{#2}{#4}{#5}{#6}}{}]%
@@ -2671,45 +2920,94 @@
 %============================================================
 % Print persons list {advisers | committee} as list
 %============================================================
-\newcommand{\@ntprintpersonsaslist}[2]{%
-  % #1 = adviser | committee
-  % #2 = {a,c} | {c,r,a,m,g}
-  % Build list of names
-  % \typeout{NTPRINTPERSONSASLIST 1=[#1] 2=[#2]}\NTPRINTPERSONSASLIST%
-  \ifdatadefined{#1titlestring}(\@LANG@COVER){%
-    \datadefault{#1titlestringpre}(\@LANG@COVER)%
-    \datadefault{#1titlestringfont}(\@LANG@COVER)%
-    \csuse{the#1titlestring}(\@LANG@COVER)%
-    \datadefault{#1titlestringpost}(\@LANG@COVER)%
-  }{}%
-  \def\@nt@personlist{}%
-  \def\@nt@listsep{}%
-  \@for\myi:=\expanded{#2}\do{%
-    \ifoptionvoid{/@nt/#1/\myi/name}{}{%
-      \letoptionlist{/@nt/#1/\myi/name}\@nt@person@sublist%
-      \eappto\@nt@personlist{\@nt@listsep\@nt@person@sublist}\def\@nt@listsep{,}%
-    }%
-  }%
-  \raggedright%
-  % \StrGobbleRight{\@nt@personlist}{1}%
-  \datadefault{#1namefont}(#2)\@replacelastcomma{\@nt@personlist}%
-}
+\ExplSyntaxOn
 
-\def\@replacelastcomma#1{%
-  % \typeout{REP1 [#1]}%
-  % \@replacelastcomma@i{}{}#1,\nil}
-  \expandafter\@replacelastcomma@i\expandafter{\expandafter}\expandafter{\expandafter}#1,\nil}
+% Define variables to hold the lists
+\clist_new:N \l_nt_master_clist
 
-\def\@replacelastcomma@i#1#2#3,#4\nil{%
-  % \typeout{REP2 [#1] [#2] [#3] [#4]}%
-  \if\relax\detokenize{#4}\relax
-    #2\trimspaces{#3}%
-  \else % #4 is not empty
-    #1\trimspaces{#3}%
-    \@replacelastcomma@i{\thecommastring(\@LSHORT)}%
-        {\theandstring(\@LSHORT)}#4\nil%
-  \fi
-}
+% 1. Create variants to handle expansion correctly
+% This ensures we can pass "expanded" arguments to these functions
+\cs_generate_variant:Nn \clist_map_inline:nn { xn }
+\cs_generate_variant:Nn \clist_put_right:Nn { Nx }
+
+\NewDocumentCommand {\GetPersonsAsList} { m m o }
+ {
+  % --- 1. Legacy Title Processing ---
+  \ifdatadefined{#1titlestring}(\@LANG@COVER)
+   {
+    \datadefault{#1titlestringpre}(\@LANG@COVER)
+    \datadefault{#1titlestringfont}(\@LANG@COVER)
+    \csuse{the#1titlestring}(\@LANG@COVER)
+    \datadefault{#1titlestringpost}(\@LANG@COVER)
+   }{}
+
+  % --- 2. Build the Flat List ---
+  \clist_clear:N \l_nt_master_clist
+
+  % Map over the categories provided in #2 (e.g., a, c)
+  \clist_map_inline:xn { #2 }
+   {
+    % Legacy check: if the list exists for this category
+    \ifoptionvoid{/@nt/#1/##1/pair}
+      { } 
+      {
+        % Retrieve the sub-list into the legacy macro \@advlist@i
+        \letoptionlist{/@nt/#1/##1/pair}\@advlist@i
+        
+        % FIX: Use put_right:Nx instead of concat:NN
+        % This expands \@advlist@i (e.g., "A, B") and appends A and B 
+        % as separate items to the master list.
+        \clist_put_right:Nx \l_nt_master_clist { \@advlist@i }
+      }
+   }
+
+  % --- 3. Output or Storage ---
+  \IfNoValueTF { #3 }
+   {
+     \raggedright
+     \datadefault{#1namefont}(#2)
+     % Convert clist back to comma-separated string for legacy formatter
+     \cs_set:Npx \@advlist { \clist_use:Nn \l_nt_master_clist { , } }
+     \FormatNamesAsList{\@advlist}
+   }
+   {
+     % Store the result in the requested output macro
+     \xdef #3 { \clist_use:Nn \l_nt_master_clist { , } }
+   }
+ }
+
+
+
+
+\cs_generate_variant:Nn \seq_set_from_clist:Nn { Ne }
+\cs_generate_variant:Nn \seq_use:Nnnn { Neee }
+\NewDocumentCommand{\FormatNamesAsList}{ m
+                                         O{ }
+                                         O{ , ~ } 
+                                         O{ ~ \theandstring(\@LANG@MAIN) ~ } 
+                                         O{ , ~ \theandstring(\@LANG@MAIN) ~ } }
+% {comma separated list of names} {name-prefix} {middle-sep} {pair-sep} {last-sep}
+% example: {Maria, Rita, Filomena} {Professora} {,} {~e~} {~e~}
+ {
+  % 1. Convert the input string (comma list) into a sequence variable
+  \seq_set_from_clist:Ne \l_tmpa_seq { #1 }
+
+  % 2. Create a temporary sequence to hold the modified names
+  \seq_clear:N \l_tmpb_seq
+
+  % 3. Loop through the original names and prefix them with "de "
+  \seq_map_inline:Nn \l_tmpa_seq
+   {
+    \seq_put_right:Nn \l_tmpb_seq { #2 ~ ##1 }
+   }
+
+  % 4. Output the sequence with custom separators
+  % \seq_use:Nnnn <sequence> {middle-sep} {pair-sep} {last-sep}
+  \seq_use:Neee \l_tmpb_seq { #2 } { #3 } { #4 }
+ }
+
+\ExplSyntaxOff
+
 
 %============================================================
 % Print persons list {advisers | committee} as one and two columns
@@ -2785,22 +3083,24 @@
   % #1 = {adviser | committee}
   % #2 = {a,c} | {c,r,a,m,g}
   \ifoptiondefined{/@nt/#1/#2/full}{%
-  \ifnum\value{\option{/@nt/#1/#2/full/@size}}>0\relax%
-  % \typeout{/@nt/#1/#2/full=\arabic{\option{/@nt/#1/#2/full/@size}}}\AAAAA
-    \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
-    \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
-    \bgroup%
-      \datadefault{#1stringfont}(#2)%
-      \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
-    \egroup%
-  \fi%
+    \options{/@nt/#1/#2/full/.size = \mysize}%
+    \ifnum\mysize>0\relax%
+    % \typeout{/@nt/#1/#2/full=\arabic{\option{/@nt/#1/#2/full/@size}}}\AAAAA
+      \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
+      \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
+      \bgroup%
+        \datadefault{#1stringfont}(#2)%
+        \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
+      \egroup%
+    \fi%
   }{}%
 }
 
 \newcommand{\@nt@printgrouptitle}[2]{%
   % #1 = {adviser | committee}
   % #2 = {a,c} | {c,r,a,m,g}
-  \ifnum\value{\option{/@nt/#1/#2/full/@size}}>0\relax%
+  \options{/@nt/#1/#2/full/.size = \mysize}%
+  \ifnum\mysize>0\relax%
   \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
   \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
   \datadefault{#1stringpre}(#2)%
@@ -2818,13 +3118,14 @@
   % #3 = {adviser | committee}
   % #4 = {a,c} | {c,r,a,m,g}
   \ifoptiondefined{/@nt/#3/#4/full}{%
-  \ifnum\value{\option{/@nt/#3/#4/full/@size}}>0\relax%
+  \options{/@nt/#3/#4/full/.size = \mysize}%
+  \ifnum\mysize>0\relax%
     % \typeout{NTPRINTPERSONGROUP 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\NTPRINTPERSONGROUP
     \@nt@printgrouptitle{#3}{#4}%
     \begin{varwidth}[t]{\linewidth-\maxlen}%
       \raggedright%
       \IfStrEq{#1}{list}{%
-        \@ntprintpersonsaslist{#3}{#4}%
+        \GetPersonsAsList{#3}{#4}%
       }{%
         \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{#4}{##1}}%
       }%
@@ -2876,12 +3177,32 @@
     \optionlistdo{#1}{\if##1m\relax\gdef#2{m}\fi}%
 }
 
-\newcommand*{\@nt@reducenumber}[2]{%
-    % #1=options list
-    % #2=result (1|2)
-    \ifnum\value{\option{#1/@size}}=1\gdef#2{1}\else\gdef#2{2}\fi
+% --------------------------------------------------------
+% Reduce Number Logic: Result = Max(Current, Min(Size, 2))
+% --------------------------------------------------------
+% #1: Current accumulated number (Optional, default 1)
+% #2: Option path (e.g., /my/list). The code looks for #2/@size
+% #3: The macro to store the result in (globally)
+\newcommand*{\@nt@reducenumber}[3][1]{%
+  % 1. Retrieve the size value from the option system
+  %    \edefoption expands the option value into \opt@temp@size
+  \options{#2/.size = \mysize}%
+  %
+  % 2. Calculate Min(\mysize, 2)
+  %    We interpret the retrieved text as a number.
+  \ifnum\mysize < 2
+    \let\opt@temp@val\mysize
+  \else
+    \def\opt@temp@val{2}%
+  \fi
+  %
+  % 3. Calculate Max(#1, \opt@temp@val) and \xdef to #3
+  \ifnum#1 > \opt@temp@val
+    \xdef#3{#1}%
+  \else
+    \xdef#3{\opt@temp@val}%
+  \fi
 }
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2899,7 +3220,7 @@
         tmargin=\expanded{\themargin(\option{/novathesis/media},top)},
         bmargin=\expanded{\themargin(\option{/novathesis/media},bottom)},
     }%
-    \ifoptionequal{/novathesis/media}{paper}{\openright}{}%
+    \ifoptionequal{/novathesis/media}{paper}{\openright}{\openany}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2910,16 +3231,16 @@
   \ifmaindoc{% THEN it is a main document
     \NTRunHook{#1/pre}%
     \iffileadded{#1}{%
-      \hypertarget{bm#1}{}%
-      \bookmark[dest=bm#1]{\thebkmstring(#1,\@LANG@MAIN)}%
-      \@ntloadfiles@ii{#1}%
+      \ChapterNoTitle{\thebkmstring(#1,\@LANG@COPYRIGHT)}
+      \PrintAddedFile{#1}%
+      \bookmarksetupnext{rellevel=0}%
     }{}%
     \NTRunHook{#1/post}%
     \clearforchapter%
   }{}% It is a plan or proposal type document
 }
 
-\newcommand{\ntprintdedicatory}{\@nt@printifmaindoc@i{dedicatory}}
+\newcommand{\ntprintdedication}{\@nt@printifmaindoc@i{dedication}}
 
 \newcommand{\ntprintquote}{\@nt@printifmaindoc@i{quote}}
 
@@ -2927,14 +3248,14 @@
 
 \newcommand{\ntprintaidisclose}{%
   \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{% use aidisclose
-    \bookmarksetupnext{level=1}%
+    \bookmarksetupnext{rellevel=0}%
     \GAIrenderDeclaration[3]{\thedocauthor(name)}%
   }{\ifoptionequal{/novathesis/print/aidisclosure}{false}
       {} % do not print AI Disclosure
-      {\IfFileExists{\DIR@FRONTMATTER/\option{/novathesis/print/aidisclosure}}
+      {\IfFileExists{\DIRFRONTMATTER/\option{/novathesis/print/aidisclosure}}
         {%
-          \bookmarksetupnext{level=1}%
-          \input{\DIR@FRONTMATTER/\option{/novathesis/print/aidisclosure}}%
+          \bookmarksetupnext{rellevel=0}%
+          \input{\DIRFRONTMATTER/\option{/novathesis/print/aidisclosure}}%
         }
         {\ClassError{novathesis}
                     {AI Disclusre file not found: '\option{/novathesis/print/aidisclosure}'.}
@@ -2962,14 +3283,14 @@
       \raggedright\noindent%
       \textbf{\thesdgstring(\@LSHORT):}\\[1ex]
       \edef\@sdgtype{\option{/novathesis/print/sgds/type}}
-      \IfFileExists{\DIR@NTFILES/Images/sdg-\@LSHORT/1-\@sdgtype.pdf}
-          {\def\@spnfolder{\DIR@NTFILES/Images/sdg-\@LSHORT}}
-          {\def\@spnfolder{\DIR@NTFILES/Images/sdg-en}}
+      \IfFileExists{\DIRIMAGES/sdg-\@LSHORT/1-\@sdgtype.pdf}
+          {\def\@spnfolder{\DIRIMAGES/sdg-\@LSHORT}}
+          {\def\@spnfolder{\DIRIMAGES/sdg-en}}
       \noindent%\linespread{1.5}\selectfont
       \optionlistdo{/novathesis/print/sdgs/list}{%
         \stepcounter{sdgcnt}%
         \setbox0=\hbox{%
-          % \typeout{FILE=\DIR@NTFILES/Images/sdg-\@LSHORT/##1-\XPTO}
+          % \typeout{FILE=\DIRIMAGES/sdg-\@LSHORT/##1-\XPTO}
             \includegraphics[width=\option{/novathesis/print/sdgs/size}]
                             {\@spnfolder/##1-\@sdgtype}%
         }%
@@ -3010,9 +3331,9 @@
       \NTRunHook{abstract/pre}%
       \NTRunHook{abstract/#1/pre}%
       \printabstracttitle{#1}%
-      \NTRunHook{abstract/#1/mid}%
       \NTRunHook{abstract/mid}%
-      \@ntloadfiles@ii[#1]{abstract}%
+      \NTRunHook{abstract/#1/mid}%
+     \PrintAddedFile[#1]{abstract}%
       \ntprintsdgs%
       \NTRunHook{abstract/#1/post}%
       \NTRunHook{abstract/post}%
@@ -3030,7 +3351,12 @@
 \newif\if@frontmatter
 \newcommand*{\ntthesisfrontmatter}{%
   \NTRunHook{frontmatter/pre}%
-  \frontmatter%
+  \begingroup
+    \def\clearforchapter{}
+    \def\cleardoublepage{}
+    \def\clearepage{}
+    \frontmatter%
+  \endgroup
   \@frontmattertrue
   \begingroup
   \pagestyle{novathesis@frontmatter}%
@@ -3086,7 +3412,7 @@
 %% Chapters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntprintchapters}{%
-    \@nt@foralllist{file}{chapter}{\@ntloadfiles@ii{chapter}}%
+    \@nt@foralllist{file}{chapter}{\PrintAddedFile{chapter}}%
 }
 
 
@@ -3099,19 +3425,21 @@
  }
 
 \newcommand*{\ntprintappendices}{%
+  \bookmarksetupnext{level=0}%
   \iffileadded{appendix}{%
     \renewcommand{\appendixtocname}{\appendixplname}%
     \appendix\addappheadtotoc%
-    \@nt@foralllist{file}{appendix}{\@ntloadfiles@ii{appendix}}%
+    \@nt@foralllist{file}{appendix}{\PrintAddedFile{appendix}}%
   }{}%
 }
 
 \newcommand*{\ntprintannexes}{%
+  \bookmarksetupnext{level=0}%
   \iffileadded{annex}{%
     % \renewcommand{\appendixtocname}{\translate{Annexes}}%
     \renewcommand{\appendixtocname}{\annexplname}%
     \annex\addappheadtotoc%
-    \@nt@foralllist{file}{annex}{\@ntloadfiles@ii{annex}}%
+    \@nt@foralllist{file}{annex}{\bookmarksetupnext{rellevel=0}\PrintAddedFile{annex}}%
   }{}%
 }
 
@@ -3123,6 +3451,90 @@
   % \gdef\@chapapp{\translate{annex}}%
   \gdef\thechapter{\annexcounter\c@chapter}%
 }%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Print statements utils
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifoptiondefined{/@nt/adviser/c/pair}
+  {\options{/@nt/adviser/a/pair/.size = \stnadvisers}}
+  {\def\stnadvisers{0}}
+\ifoptiondefined{/@nt/adviser/c/pair}
+  {\options{/@nt/adviser/c/pair/.size = \stncoadvisers}}
+  {\def\stncoadvisers{0}}
+
+
+\NewDocumentCommand { \Statements } { }
+  {
+    % \chapter{Declarações}
+    \chapter{\thebkmstring(statement,\@LANG@MAIN)}
+    \bookmarksetupnext{rellevel=0}%
+  }
+
+\NewDocumentCommand { \FrontPage } { }
+  {
+    % \chapter{Declarações}
+    \ChapterNoTitle{\thebkmstring(frontpage,\@LANG@MAIN)}
+    \bookmarksetupnext{rellevel=0}%
+    \ntchapskip
+  }
+
+\newenvironment{tightcenter}
+  {\par\centering}
+  {\par}%
+  
+\NewDocumentCommand { \TheCandiadteSignature } { m m }
+  % #1 = place
+  % #2 = ISO DATE
+  {
+    \begin{center}%
+      \StatementOneSignature%
+        {\expandafter\thecandidatestring\expandafter(\thedocauthor(gender),\@LANG@MAIN)}
+        {\thedocauthor(name)}%
+        {#2}
+    \end{center}%
+  }
+
+
+\newcounter{nadv}
+\NewDocumentCommand { \TheAdvisersSignatures } { m m m }
+  % #1 = c (candidate) | a (only advisers) | a,c (both advisers and co-advisers)
+  % #2 = place
+  % #3 = ISO DATE
+  {
+    \begin{tightcenter}
+      \ifoptiondefined{/@nt/adviser/#1/pair}{%
+        \optionlistdo{/@nt/adviser/#1/pair}{%
+            % \ifnum\arabic{nadv}=2\relax
+            %   ~\\[1ex]
+            % \fi
+            \stepcounter{nadv}
+            \StrCut{##1}{/}\stgender\stname
+            \StatementOneSignature 
+              {\theadviserstring(pref,#1,1,\stgender,\@LANG@MAIN)} 
+              {\stname}
+              {#3}
+        }%
+      }{}%
+    \end{tightcenter}
+  }
+
+
+\NewDocumentCommand { \StatementOneSignature } { m m m }
+  % #1 = text above
+  % #2 = name
+  {
+    \begin{minipage}[t]{6cm}
+      \medskip%
+      \begin{center}  
+        #1,\par
+        \vspace*{1.0cm}
+        \rule{\linewidth}{0.75pt}\par
+        \textit{#2}\\
+        \printisodate{#3}
+      \end{center}
+    \end{minipage}
+  }
 
 
 
@@ -3137,15 +3549,15 @@
       \def\@matter{frontmatter}
     \fi
     \ifoptiondefined{/@nt/listof/\@matter}{
-      \ifnum\value{\option{/@nt/listof/\@matter/@size}}>1\relax
+      \bookmarksetup{level=0}
+      \options{/@nt/listof/\@matter/.size = \mysize}%
+      \ifnum\mysize>1\relax
         \hypertarget{bmlistof\@matter}{}%
-        \bookmark[level=0,dest=bmlistof\@matter]{\thebkmstring(listof,\@LANG@MAIN)}%
-        \bookmarksetupnext{level=1}%
-      \else
-        \bookmarksetupnext{level=0}%
+        \bookmark[dest=bmlistof\@matter]{\thebkmstring(listof,\@LANG@MAIN)}%
+        \bookmarksetupnext{rellevel=1}%
       \fi
       % \typeout{PRINTALLLISTOF=\@matter}\PRINTALLLISTOF
-      \optionlistdo{/@nt/listof/\@matter}{\clearforchapter##1\bookmarksetupnext{level=1}}%
+      \optionlistdo{/@nt/listof/\@matter}{\clearforchapter##1\bookmarksetupnext{rellevel=0}}%
     }{}
     \NTRunHook{listof/post}%
 }
@@ -3175,9 +3587,19 @@
 %% Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand*{\ntprintbib}[1][]{%
+\newcommand*{\ntprintbibsingle}[1][]{%
+  \bookmarksetupnext{rellevel=1}%
   \NTRunHook{printbib/pre}%
   \printbibliography[#1]%
+  \ntfixspacing%
+  \NTRunHook{printbib/post}%
+}
+
+\newcommand*{\ntprintbibseparate}[1][]{%
+  \bookmarksetupnext{rellevel=1}%
+  \NTRunHook{printbib/pre}%
+    \printbibliography[nottype=online] % Print the bibliography.
+    \printbibliography[title=\option{/novathesis/print/webography},type=online] % Print the bibliography.
   \ntfixspacing%
   \NTRunHook{printbib/post}%
 }
@@ -3221,21 +3643,41 @@
 }
 
 \newcommand*{\ntprintcopyright}{%
-  \iftoggle{/novathesis/print/copyright}{%
-    \ifmaindoc{%
+  \ifmaindoc{%
+    \iftoggle{/novathesis/print/copyright}{%
       \begingroup
+        % \bookmarksetupnext{rellevel=1}
         \ntselectlang{\@LANG@COPYRIGHT}%
-        \hypertarget{bmcopyright}{}%
-        \bookmark[dest=bmcopyright]{\thebkmstring(copyright,\@LANG@MAIN)}%
+        \ChapterNoTitle{\thebkmstring(copyright,\@LANG@COPYRIGHT)}%
         \NTRunHook{copyright/pre}%
         \ntprintcopyrightpage%
         \NTRunHook{copyright/post}%
         \ntprintacknowledgementsblock%
-        \clearforchapter%
       \endgroup
     }{}%
    }{}%
 }
+
+
+\newcommand*{\ntprintcopyrightpage}{%
+  \ifmaindoc{% only print if a main document
+    \iftoggle{/novathesis/print/copyright}{% if copuyright toggle is on
+      \InputIfFileExistsInDirsTF {copyright.tex} 
+        {
+          {\DIRSCHOOLS/\@UNIV/\@SCHL},
+          {\DIRSCHOOLS/\@UNIV},
+          {\DIRNTFILES},
+        }
+        {}
+        {
+          \ClassError{novathesis}
+                     {No “copyright.tex” file was found!}{}
+        }
+    }{}%
+  }{}
+}
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3254,7 +3696,7 @@
 \newcommand{\ntquotewhere}[1]{{\footnotesize, #1}}
 \newcommand{\ntquoteprofession}[1]{{\footnotesize\\[-0.75ex](#1)}}
 \newcommand{\ntquotetext}[1]{{\itshape#1}}
-\newcommand{\ntquoteskip}{%
+\providecommand{\ntchapskip}{%
   \vphantom{%
     \begin{minipage}{\textwidth}%
       \chapter*{ASDF}%
@@ -3290,7 +3732,7 @@
   \else
   \@tempdima=#2
   \fi
-  \ntquoteskip
+  \ntchapskip
   \begin{flushright}
     \NTRunHook{ntquote/pre}%
     \IfBooleanTF{#1}{\hugequote}{}
@@ -3311,8 +3753,8 @@
 \ExplSyntaxOn
 \cs_new:cpn {ntquote} {\ntquoting*}
 \cs_new_eq:cN {endntquote} \endntquoting
-\cs_new:cpn {ntdedicatory} {\ntquoting}
-\cs_new_eq:cN {endntdedicatory} \endntquoting
+\cs_new:cpn {ntdedication} {\ntquoting}
+\cs_new_eq:cN {endntdedication} \endntquoting
 \ExplSyntaxOff
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3327,7 +3769,7 @@
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\printabstracttitle}[1]{%
-  \bookmarksetupnext{level=1}
+  \bookmarksetupnext{rellevel=0}
   \chapter{\thebkmstring(abstract,#1)}%
 }
 
@@ -3419,20 +3861,39 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % First try to load a local chapter-style definition
-\InputIfFileExists{\DIR@NTFILES/ChapStyles/\option{/novathesis/style/chapter}.sty}
+\InputIfFileExists{\DIRCHAPSTYLES/\option{/novathesis/style/chapter}.sty}
   {}{% otherwise, try a standard 'memoir' style
       \ifcsdef{chs@\option{/novathesis/style/chapter}}
           {\chapterstyle{\option{/novathesis/style/chapter}}}
           {\ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/style/chapter}}{}}%
 }
 
-% First try to load a local font-style definition
-\InputIfFileExists{\DIR@NTFILES/FontStyles/\option{/novathesis/style/font}.sty}
-  {}{% otherwise, try a standard LaTeX package
-      \IfFileExists{\option{/novathesis/style/font}.sty}%
-        {\RequirePackage{\option{/novathesis/style/font}}}%
-        {\ClassError{novathesis}{Invalid Font Style: \option{/novathesis/style/font}}{}}%
-}
+\IfFileExistsCase
+  {
+    {\DIRFONTSTYLES/\option{/novathesis/style/font}.sty}
+          {\input{#1}},
+    {\option{/novathesis/style/font}.sty}
+          {\RequirePackage{#1}},        
+  }
+  {
+    \ifcsname IfFontExistsTF\endcsname
+      \IfFontExistsTF{\option{/novathesis/style/font}}
+        {\setmainfont{\option{/novathesis/style/font}}
+                     [ \option{/novathesis/style/font/attributes} ]}
+        {\ClassError{novathesis}{Could not find the font: \option{/novathesis/style/font}}{}}
+    \else
+      \ClassError{novathesis}
+                 {Cann not load the font: \option{/novathesis/style/font}. Are you using XeLaTeX or LuaLaTeX?}{}
+    \fi
+  }
+
+% % First try to load a local font-style definition
+% \InputIfFileExists{\DIRNTFILES/FontStyles/\option{/novathesis/style/font}.sty}
+%   {}{% otherwise, try a standard LaTeX package
+%       \IfFileExists{\option{/novathesis/style/font}.sty}%
+%         {\RequirePackage{\option{/novathesis/style/font}}}%
+%         {\ClassError{novathesis}{Invalid Font Style: \option{/novathesis/style/font}}{}}%
+% }
 
 % force page color to white in xelatex and lualatex
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
@@ -3440,11 +3901,11 @@
 \AtBeginDocument{%
   \makeatletter%
   % \typeout{XXX [\thedocauthor(name)]}
-  % \typeout{XXX [\thedoctitle(\@LANG@MAIN,main)]}
+  % \typeout{XXX [\thedoctitle(\@LANG@MAIN,main,plain)]}
   % \typeout{XXX [\thedoctitle(\@LANG@MAIN,sub)]}
   \hypersetup{%
     pdfauthor={\thedocauthor(name)},
-    pdftitle={\thedoctitle(\@LANG@MAIN,main)},
+    pdftitle={\thedoctitle(\@LANG@MAIN,main,plain)},
     pdfsubject={\thedoctitle(\@LANG@MAIN,sub)},
   }
 

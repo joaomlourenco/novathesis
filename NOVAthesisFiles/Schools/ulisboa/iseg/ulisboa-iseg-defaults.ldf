@@ -137,8 +137,7 @@
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtEndPreamble{%
-  \LoadHelveticaLikeFont%
-  % \RequirePackage{gillius2}%
+  %\LoadHelveticaLikeFont%  % \RequirePackage{gillius2}%
 }
 
 % \NTAddToHook{cover/1-1/text/pre}{%
@@ -182,7 +181,7 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=1.2cm,height=1.35cm,valign=c]{1-1,2-1}{%
     \fontsize{13}{15}\selectfont%
-  \textbf{\thedoctitle(\@LANG@COVER,main,cover)}%
+  \textbf{\thedoctitle(\@LANG@COVER,main)}%
 }
 
 % Author name
