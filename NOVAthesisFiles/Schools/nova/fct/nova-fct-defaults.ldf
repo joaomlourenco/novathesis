@@ -174,7 +174,7 @@
   \node[anchor=north west, text width=10cm] 
     at ($(current page.north west) + (96.45mm,-11.4mm)$)
     { \fontsize{14}{14}\sffamily%
-      \thedepartmentofstring(\@LANG@COVER)\\[2pt]
+      \ToUppercase{\thedepartmentofstring(\@LANG@COVER)}\\[2pt]
       \ToUppercase{\thedepartment(\@LANG@COVER)}
     };
 }
