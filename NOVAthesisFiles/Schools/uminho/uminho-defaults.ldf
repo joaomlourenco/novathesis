@@ -34,28 +34,39 @@
 % novathesis customization
 %-----------------------------------------------------------------
 \ntsetup{lang/cover=pt}
-\ntsetup{print/secondcover=true}
+\ntsetup{print/frontpage=true}
 \ntsetup{print/statement=true}
-\ntsetup{countsecondcover=true}
 \ntsetup{style/font=newsgott}
 
 \ifdocprovisional{\ntsetup{docstatus=final}}{}
 \ifmaindoc{\ifdocfinal{\ntaddfile{cover}[1]{./NOVAthesisFiles/Schools/uminho/cover-final.tex}}{}}{}
-\ntsetup{spine/layout=no}
+\ntsetup{spine/layout=off}
 
 % --------------------------------------------------------
 % PRINT ORDER FOR frontmatter AND mainmatter
-\printorder(frontmatter,final):={
-  copyright;       % (*) The copyright page
-  acknowledgements;% (*) Print the acknowledgments
-  statement;       % The statement page
-  quote;           % (*) Print the quote
-  abstracts;       % Print abstracts in multiple languages.
-  alllistof;       % Print all the listof defined in “7_list_of.tex”
-  printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+\options{/@nt/print/frontmatter/final = 
+  {%
+    copyright,       % (*) The copyright page
+    acknowledgements,% (*) Print the acknowledgments
+    statement,       % The statement page
+    quote,           % (*) Print the quote
+    abstracts,       % Print abstracts in multiple languages.
+    alllistof,       % Print all the listof defined in “7_list_of.tex”
+    printglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
 }
 
-\printorder(frontmatter,provisional):={\theprintorder(frontmatter,final)}
+\options{/@nt/print/frontmatter/provisional = 
+  {%
+    copyright,       % (*) The copyright page
+    acknowledgements,% (*) Print the acknowledgments
+    statement,       % The statement page
+    quote,           % (*) Print the quote
+    abstracts,       % Print abstracts in multiple languages.
+    alllistof,       % Print all the listof defined in “7_list_of.tex”
+    printglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
+}
 
 %-----------------------------------------------------------------
 % Other stuff
@@ -210,6 +221,72 @@
 \margin(cover,left):={7.87cm}
 \margin(cover,right):={2.0cm}
 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Copyright stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%------------------------------------------------------------------
+% LICENSING
+%------------------------------------------------------------------
+
+%%%%%%%%% Important package for the licensing.
+\AtEndPreamble{
+  \usepackage[
+      type={CC},
+      lang=\@LANG@COPYRIGHT,
+      modifier=\option{/novathesis/uminho/copyrightmodifier},
+      version={4.0},
+  ]{doclicense} % By default english is used, however  is necessary to
+  % explicity define the language if the license is in portuguese. The
+  % modifier must be changed accordingly to user preferences.  If the
+  % licensing is different from any of the Creative Commons (all rights
+  % reserved for instance) just uncomment the line with \copyrightfile below
+  % and add your own custom file and the doclicense package will be ignored.
+  % Here the custom file has the name copyright
+}
+
+\newcommand{\licenseThis}{%
+  \normalsize%
+  \textbf{\emph{\theumcopyrightlabel(\@LANG@COVER)}}\\
+  \doclicenseImage\\[0.5mm]%
+  \textbf{\doclicenseLongName}\\[0.5mm]
+  \textbf{\doclicenseName}\\[2ex]
+  {\small\url{\doclicenseURL}}
+}
+
+\newdata{umcopyrightlabel}
+\umcopyrightlabel(pt):={Licença concedida aos utilizadores deste trabalho}
+\umcopyrightlabel(en):={License granted to the users of this work}
+
+
+%% ============================================================
+%% COPYRIGHT TEXT
+%% ============================================================
+\newdata{umcopyrighttext}
+
+\umcopyrighttext(pt)={%
+  \begin{center}%
+    \textbf{DIREITOS DE AUTOR E CONDIÇÕES DE UTILIZAÇÃO DO TRABALHO POR TERCEIROS}%
+  \end{center}%
+  \indent Este é um trabalho académico que pode ser utilizado por terceiros desde que respeitadas as regras e boas práticas internacionalmente aceites, no que concerne aos direitos de autor e direitos conexos.\\[1ex]
+  \indent Assim, o presente trabalho pode ser utilizado nos termos previstos na licença abaixo
+indicada.\\[1ex]
+  \indent Caso o utilizador necessite de permissão para poder fazer um uso do trabalho em condições não previstas no licenciamento indicado, deverá contactar o autor, através do RepositoriUM da \theuniversity(\@LANG@COVER).\\[1cm]
+  \licenseThis%
+}
+
+\umcopyrighttext(en)={%
+  \begin{center}
+    \textbf{COPYRIGHT AND TERMS OF USE OF THIS WORK BY A THIRD PARTY}%
+  \end{center}%
+  \indent This is academic work that can be used by third parties as long as internationally accepted rules and good practices regarding copyright and related rights are respected.\\[1ex]
+  \indent Accordingly, this work may be used under the license provided below.\\[1ex]
+  \indent If the user needs permission to make use of the work under conditions not provided for in the indicated licensing, they should contact the author through the RepositoriUM of \theuniversity(\@LANG@COVER).\\[1cm]
+  \licenseThis%
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

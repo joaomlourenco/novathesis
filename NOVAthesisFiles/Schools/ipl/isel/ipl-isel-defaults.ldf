@@ -97,7 +97,7 @@
 % School%
 \ntaddtocover[vspace=0cm]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
-  \textbf{\THEschool(\@LANG@COVER)}\\%
+  \textbf{\ToUppercase{\theschool(\@LANG@COVER)}}\\%
   \fontsize{14}{14}\selectfont%
   \textbf{\thedepartment(\@LANG@COVER)}%
 }

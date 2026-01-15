@@ -95,10 +95,10 @@
 \ntaddtocover[vspace=0.5cm]{1-1,2-1}{%
   \fontsize{16}{16}\selectfont%
   \vspace{1cm}%
-  %\textbf{\MakeUppercase{\theuniversity(\@LANG@COVER)}}\\%
+  %\textbf{\ToUppercase{\theuniversity(\@LANG@COVER)}}\\%
   \textbf{\theschool(\@LANG@COVER)}\\%
   \vspace{2mm}%
-  %\textbf{\MakeUppercase{\theschool(\@LANG@COVER)}}%
+  %\textbf{\ToUppercase{\theschool(\@LANG@COVER)}}%
   \textbf{\themajorfield(\@LANG@COVER)}%
 }
 

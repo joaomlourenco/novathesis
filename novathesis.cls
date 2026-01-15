@@ -4,7 +4,7 @@
 %%  NOVATHESIS — novathesis.cls
 %% ----------------------------------------------------------------------------
 %%
-%% Version 7.9.2 (2026-01-14)
+%% Version 7.9.2 (2026-01-15)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -88,6 +88,9 @@
 \let\oldRoman=\Roman
 \let\old@Roman=\@Roman
 
+
+\newcommand*{\NTAddToHook}[2]{\options{/@nt/hook/#1/.newpush={#2}}}
+\newcommand*{\NTRunHook}[1]{\optionlistdo{/@nt/hook/#1}{##1}}
 
 
 %============================================================
@@ -199,10 +202,12 @@
 
 \input{\DIRCONFIG/2_biblatex}
 
-% TODO defernumbers=true??
-\RequirePackage{biblatex}
-% TODO to be loaded only if option print/index=true
-\RequirePackage{imakeidx} % Should generally be loaded before hyperref
+\NTAddToHook{/afterloading/schoolconfig}{%
+  % TODO defernumbers=true??
+  \RequirePackage{biblatex}
+  % TODO to be loaded only if option print/index=true
+  \RequirePackage{imakeidx} % Should generally be loaded before hyperref
+}
 
 \AtEndPreamble{
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -310,6 +315,11 @@
 
 
 \ExplSyntaxOn
+
+\NewExpandableDocumentCommand {\ToUppercase} { m }
+  {
+    \text_uppercase:n { #1 }
+  }
 
 %=======================================================================
 % \IfBeginsWithAnyOf {text} {comma_sep_list_of_prefixes} {true} {false}
@@ -528,19 +538,21 @@
 
 
 
+
+% Ensure l3regex is available (standard in modern kernels)
+\sys_if_engine_luatex:F { \RequirePackage{l3regex} }
+
 \NewDocumentCommand{\IfFileExistsCase}{ s O{} m m }
   {
-    % \group_begin:
     \bool_set_false:N \l_file_found_bool
     
-    % Map through the clist of pairs
     \clist_map_inline:nn { #3 }
       {
         % ##1 is {filepath}{action}
         \__filecase_split_pair:nnn { #1 } { #2 } ##1
       }
     
-    % If nothing found, execute Else branch
+    % Else branch
     \bool_if:NF \l_file_found_bool { #4 }
   }
 
@@ -550,24 +562,32 @@
 % #4: Action
 \cs_new:Npn \__filecase_split_pair:nnn #1 #2 #3 #4
   {
+    % 1. Construct the full path
     \tl_set:Nn \l_tmpa_tl { #2 #3 }
     
     \file_if_exist:nT { \l_tmpa_tl }
       {
         \bool_set_true:N \l_file_found_bool
         
-        % Define an internal macro to hold the user's action.
-        % We use a specific name to avoid parameter nesting issues.
-        \cs_set:Npn \__filecase_do_action:n ##1 { #4 }
+        % 2. Create a copy and strip the extension
+        \tl_set_eq:NN \l_tmpb_tl \l_tmpa_tl
         
-        % Execute it with the found path
-        \__filecase_do_action:n { \l_tmpa_tl }
+        % Regex: Match a dot, followed by non-dots and non-slashes, until end of string.
+        % This ensures we don't accidentally match a dot in a directory name (e.g. "ver.1/img").
+        \regex_replace_once:nnN { \.[^./]* \Z } { } \l_tmpb_tl
         
-        % If NOT starred, break loop
+        % 3. Define the internal action to accept TWO arguments:
+        %    ##1 = Full Path (e.g., images/logo.png)
+        %    ##2 = No Extension (e.g., images/logo)
+        \cs_set:Npn \__filecase_do_action:nn ##1 ##2 { #4 }
+        
+        % 4. Execute with both variants
+        \__filecase_do_action:nn { \l_tmpa_tl } { \l_tmpb_tl }
+        
+        % Break if not starred
         \bool_if:NF #1 { \clist_map_break: }
       }
   }
-
 
 
 
@@ -718,6 +738,19 @@
     % Iterate through the comma-separated list of keys (#4 now, due to argument shift).
     \exp_args:Ne \clist_map_inline:nn { #4 }
       {
+        % Initialize #2 to empty
+        \IfBooleanTF{#1}
+          { 
+            % STARRED: #2 is a NAME (e.g., "myVar"). 
+            % Use \tl_set:cn to construct the csname from the string.
+            \tl_set:ce { #2 } { } 
+          }
+          { 
+            % NON-STARRED: #2 is a MACRO (e.g., \myVar). 
+            % Use \tl_set:Nn to set it directly.
+            \tl_set:Ne #2 { } 
+          }
+        
         % Construct the control sequence name: \@<MEMORYDATA>@<key>@memory
         % Note: Using #3 for the memory namespace ID
         \cs_if_exist:cT { @#3@ ##1 @memory }
@@ -1410,10 +1443,6 @@
 }
 
 
-\newcommand*{\NTAddToHook}[2]{\options{/@nt/hook/#1/.newpush={#2}}}
-
-\newcommand*{\NTRunHook}[1]{\optionlistdo{/@nt/hook/#1}{##1}}
-
 % \newcommand*{\NTIfHook}[1]{%
 %   \ifoptiondefined{/@nt/hook/#1}%
 % }
@@ -2089,61 +2118,6 @@
 }
 
 
-% \newdata{printorder}
-%
-% \printorder(frontmatter,final):={%
-%   statement,       % The statement page
-%   copyright,       % (*) The copyright page
-%   dedication,      % (*) Print the dedication
-%   acknowledgements,% (*) Print the acknowledgments
-%   quote,           % (*) Print the quote
-%   abstracts,       % Print abstracts in multiple languages.
-%   aidisclose,      % AI disclosure statement
-%   alllistof,       % Print all the listof defined in “6_list_of.tex”
-%   myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
-% }
-%
-% \printorder(frontmatter,provisional):={%
-%   statement,       % The statement page
-%   copyright,       % (*) The copyright page
-%   dedication,      % (*) Print the dedication
-%   acknowledgements,% (*) Print the acknowledgments
-%   quote,           % (*) Print the quote
-%   abstracts,       % Print abstracts in multiple languages.
-%   aidisclose,      % AI disclosure statement
-%   alllistof,       % Print all the listof defined in “6_list_of.tex”
-%   myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
-% }
-%
-% \printorder(frontmatter,working):={%
-%   abstracts,       % Print abstracts in multiple languages.
-%   aidisclose,      % AI disclosure statement
-%   alllistof,       % Print all the listof defined in “6_list_of.tex”
-%   myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
-% }
-%
-% \printorder(mainmatter):={
-%   chapters,        % Print document chapters
-% }%
-%
-% \ifoptionequal{/novathesis/print/webography}{}{%
-%   \printorder(backmatter):={
-%     bibsingle,            % Print the bibliography
-%     alllistof,            % Print all the listof defined in “6_list_of.tex”
-%     myprintglossaries,    % Print the Glossary, Acronyms, Symbols, etc…
-%     appendices,           % Print appendices, if any!
-%     annexes,              % Print annexes, if any!
-%   }%
-% }{%
-%   \printorder(backmatter):={
-%     bibseparate,          % Print the web references separate from the remainder of the bibliography
-%     alllistof,            % Print all the listof defined in “6_list_of.tex”
-%     myprintglossaries,    % Print the Glossary, Acronyms, Symbols, etc…
-%     appendices,           % Print appendices, if any!
-%     annexes,              % Print annexes, if any!
-%   }%
-% }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% COVER DEFINITION MACROS
@@ -2256,7 +2230,7 @@
           {}%
   }
 [\PackageError{novathesis}
-              {Missing file “\DIRSCHOOLS/\@UNIV/\@SCHL-defaults.ldf”}
+              {Missing file “\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-defaults.ldf”}
               {}]
 
 \ValidateLtxProcessor{\@UNIV}{\@SCHL}{\@DEGREEACR}
@@ -2265,6 +2239,9 @@
      {\def\@ntsetuplevel{\@UNIV/\@SCHL/}\input{\DIRCONFIG/9_\@UNIV_\@SCHL.tex}}
      {\def\@ntsetuplevel{\@UNIV/}\InputIfFileExists{\DIRCONFIG/9_\@UNIV.tex}{}{}}
 \def\@ntsetuplevel{}
+
+% Now we can load biblatx
+\NTRunHook{/afterloading/schoolconfig}
 
 
 % Prefer: DOI, else eprint, else URL
@@ -2554,8 +2531,6 @@
   \begingroup%
     \ntselectlang{\@LANG@COVER}%
     \NTRunHook{printcovers/pre}%
-    % \NTAddToHook{mainmatter/pre}{\bookmarksetup{startatroot}}%
-    % \forcsvlist{\ntprintcoverpair}{#1}%
     \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
     \NTRunHook{printcovers/post}%
   \endgroup%
@@ -2568,11 +2543,20 @@
   \iffileadded[1]{cover}{% Deal with user-defined cover page
     \iffileadded[#1]{cover}{%
       \optionlistdo{/@nt/file/cover/#1}{%
-        \bgroup\thispagestyle{empty}%
+        \begingroup
+        \thispagestyle{empty}%
+        \NTRunHook{cover/pre}%
+        \NTRunHook{cover/#1-1/pre}%
+        \hypertarget{\thebkmstring(#1-1)}{}%
+        \bookmark[dest=\thebkmstring(#1-1)]{\thebkmstring(#1-1)}%
+        \bookmarksetupnext{rellevel=1}%
         \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
-        \egroup\clearpage%
+        \NTRunHook{cover/#1-1/post}%
+        \NTRunHook{cover/post}%
+        \endgroup
+        \clearpage%
       }%
-      \ntprintcoversingle{2-1}%
+      % \ntprintcoversingle{2-1}%
     }{}%
   }{% Pre-defined cover page  
     \IfStrEqCase{#1}{%
@@ -2933,17 +2917,17 @@
             % \bookmarksetupnext{rellevel=1}%
             \IfFileExistsCase
               {
-                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-\@LANG@MAIN-statement}
+                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-\@LANG@MAIN-statement.tex}
                       {\typeout{FILE=##1}\input{##1}},
-                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-statement}
+                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-statement.tex}
                       {\typeout{FILE=##1}\input{##1}},
-                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@LANG@MAIN-statement}
+                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@LANG@MAIN-statement.tex}
                       {\typeout{FILE=##1}\input{##1}},
-                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-statement}
+                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-statement.tex}
                       {\typeout{FILE=##1}\input{##1}},
-                {\DIRSCHOOLS/\@UNIV-\@LANG@MAIN-statement}
+                {\DIRSCHOOLS/\@UNIV/\@UNIV-\@LANG@MAIN-statement.tex}
                       {\typeout{FILE=##1}\input{##1}},
-                {\DIRSCHOOLS/\@UNIV-statement}
+                {\DIRSCHOOLS/\@UNIV/\@UNIV-statement.tex}
                       {\typeout{FILE=##1}\input{##1}},
               }
               { % NOT FOUND
@@ -3973,7 +3957,7 @@
     {\DIRFONTSTYLES/\option{/novathesis/style/font}.sty}
           {\input{#1}},
     {\option{/novathesis/style/font}.sty}
-          {\RequirePackage{#1}},        
+          {\RequirePackage{#2}},        
   }
   {
     \ifcsname IfFontExistsTF\endcsname

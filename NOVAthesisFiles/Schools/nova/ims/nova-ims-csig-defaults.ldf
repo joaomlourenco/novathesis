@@ -224,7 +224,7 @@
 }
 \ntaddtocover[halign=l, vspace=-1cm+7pt, minheight=3cm, valign=c]{1-1}{%
   \fontsize{17}{17}\selectfont%
-  \textcolor{imsdarkgrey}{\textbf{\THEdoctitle(\@LANG@COVER,main)}}%
+  \textcolor{imsdarkgrey}{\textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}}%
   \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
     % ~\\[-2ex]%
     \\
@@ -269,7 +269,7 @@
 
 \ntaddtocover[halign=c, vspace=1]{2-1}{%
   \fontsize{16}{16}\selectfont%
-  \textbf{\THEdoctitle(\@LANG@COVER,main)}%
+  \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}%
 }
 
 \ntaddtocover[halign=c, vspace=1]{2-1}{%

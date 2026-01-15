@@ -61,7 +61,7 @@ for the Degree of \emph{\thedegreename(en)}}
 \spine(logo,msc)={nova-ims-gt-cover-ball}
 
 % \spine(author)={\thedocauthor(name)}
-\spine(title)={\THEdoctitle(\@LANG@COVER,main)}
+\spine(title)={\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}
 % \spine(date)={\thentdocdate(submission,year)}
 \spine(title,font)={\bfseries\itshape}
 
@@ -157,7 +157,7 @@ for the Degree of \emph{\thedegreename(en)}}
 % Title of Dissertation
 \ntaddtocover[vspace=0mm,height=7.4cm,halign=l,valign=b]{1-1}{%
     \fontsize{18}{18}\selectfont
-    \bfseries\itshape\THEdoctitle(\@LANG@COVER,main)%
+    \bfseries\itshape\ToUppercase{\thedoctitle(\@LANG@COVER,main)}%
     \ifdatadefined{doctitle}(\@LANG@COVER-sub,cover){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
@@ -210,7 +210,7 @@ for the Degree of \emph{\thedegreename(en)}}
 \ntaddtocover[vspace=2cm]{2-1}{%
     \centering%
     \fontsize{16}{16}\selectfont
-    \bfseries{\THEdoctitle(\@LANG@COVER,main)}%
+    \bfseries{\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}%
     \ifdatadefined{doctitle}(\@LANG@COVER-sub,cover){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%

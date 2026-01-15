@@ -2,7 +2,7 @@
 # NOVATHESIS — Makefile
 #----------------------------------------------------------------------------
 #
-# Version 7.9.2 (2026-01-14)
+# Version 7.9.2 (2026-01-15)
 # Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 
 
@@ -291,7 +291,7 @@ clean:
 	@ rm -rf $(AUXDIR) _minted*
 	@ find . -name .DS_Store | xargs rm -rf
 	@ find . -maxdepth 1 -type f -name 'novathesis*' ! -name '*.pdf' ! -name '*.tex' ! -name '*.cls' -delete
-	@ rm -rf $(wildcard /tmp/ntbuild-*)&
+	@ rm -rf $(wildcard /tmp/novathesis) $(wildcard /tmp/ntbuild-*)&
 
 #————————————————————————————————————————————————————————————————————————————
 .PHONY: bclean
