@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------------
 NOVATHESIS Build Assistant
 
-Version 7.9.2 (2026-01-15)
+Version 7.9.3 (2026-01-15)
 Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 -----------------------------------------------------------------------------
 
@@ -752,12 +752,12 @@ def main() -> None:
     ap.add_argument(
         "-l", "--lang",
         default="en",
-        help="Two-letter language code for document (default: en)"
+        help="Two/three-letter language code for document (default: en, pt, cat)"
     )
     ap.add_argument(
         "--sdgs",
         default="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17",
-        help="Two-letter language code for document (default: en)"
+        help="Two/three-letter language code for document (default: en, pt, cat)"
     )
     ap.add_argument(
         "-p", "--processor",
@@ -857,9 +857,9 @@ def main() -> None:
         sys.exit(2)
     
     # Validate language code format
-    if not re.fullmatch(r"[a-z]{2}", args.lang): 
-        print("❌ Error: --lang must be a two-letter code, e.g., en, pt, uk, gr")
-        sys.exit(2)
+    if not re.fullmatch(r"[a-z]{2,3}", args.lang): 
+            print("❌ Error: --lang must be a 2 or 3 letter code, e.g., en, pt, cat")
+            sys.exit(2)
     
     project_root = Path.cwd()
     

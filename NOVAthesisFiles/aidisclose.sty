@@ -242,26 +242,44 @@
     ukrainian  = uk
   }
 
+
 \cs_new_protected:Nn \__gai_load_lang_file:n
   {
-    % 1. Try specific language in 'langdef/' folder
-    \file_if_exist:nTF { langdef/aidisclose-#1.ldf }
-      { \file_input:n { langdef/aidisclose-#1.ldf } }
+    % 1. Try specific language in current/root directory
+    \file_if_exist:nTF { aidisclose-#1.ldf }
+      { \file_input:n { aidisclose-#1.ldf } }
       {
-        % 2. Try specific language in current/root directory
-        \file_if_exist:nTF { aidisclose-#1.ldf }
-          { \file_input:n { aidisclose-#1.ldf } }
+        % 2. Try specific language in 'langdef/' folder
+        \file_if_exist:nTF { langdef/aidisclose-#1.ldf }
+          { \file_input:n { langdef/aidisclose-#1.ldf } }
           {
-            % 3. Fallback: English in 'langdef/'
-            \file_if_exist:nTF { langdef/aidisclose-en.ldf }
-              { \file_input:n { langdef/aidisclose-en.ldf } }
+            % 3. Fallback: English in current/root directory
+            \file_if_exist:nTF { aidisclose-en.ldf }
+              { \file_input:n { aidisclose-en.ldf } }
               { 
-                % 4. Fallback: English in current/root directory
-                \file_input:n { aidisclose-en.ldf } 
+                % 4. Fallback: English in 'langdef/'
+                \file_if_exist:nTF { langdef/aidisclose-en.ldf }
+                  { \file_input:n { langdef/aidisclose-en.ldf } }
+                  { 
+                    % ERROR: No files found
+                    \msg_error:nnn { aidisclose } { lang-not-found } { #1 }
+                  }
               }
           }
       }
   }
+
+% 1. Define the error message
+\msg_new:nnnn { aidisclose } { lang-not-found }
+  { Language~definition~file~for~'#1'~could~not~be~found. }
+  {
+    The~package~tried~to~load~'aidisclose-#1.ldf'~and~the~fallback~
+    'aidisclose-en.ldf'~in~both~the~current~directory~and~the~
+    'langdef/'~subdirectory,~but~none~were~found.
+  }
+
+
+
 
 \cs_new_protected:Nn \__gai_detect_and_load_language:
   {
