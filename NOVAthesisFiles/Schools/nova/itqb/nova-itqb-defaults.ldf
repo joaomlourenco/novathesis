@@ -27,7 +27,7 @@
 
 % ITQB-NOVA specific customization
 \AtBeginDocument{% set paper as b5paper
-  \newpdflayout{250mm}{176mm}%
+  \newstocksize{height=250mm,width=176mm}%
 }
 
 \openany
