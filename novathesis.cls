@@ -536,11 +536,10 @@
   \bool_if:NF \g_file_found_bool { #6 }
  }
 
-
-
-
 % Ensure l3regex is available (standard in modern kernels)
-\sys_if_engine_luatex:F { \RequirePackage{l3regex} }
+\usepackage{expl3}
+\expandafter\def\csname ver@l3regex.sty\endcsname{}
+\RequirePackage{l3regex}
 
 \NewDocumentCommand{\IfFileExistsCase}{ s O{} m m }
   {
