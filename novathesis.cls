@@ -145,6 +145,7 @@
 \RequirePackage{options-ext}
 \RequirePackage{nt-version}
 \RequirePackage{memory2}
+\RequirePackage{memstore}
 \RequirePackage{stocksize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1160,21 +1161,21 @@
 }
 
 
-\newdata{langlong}
-\langlong(cat):={catalan}
-\langlong(cz):={czech}
-\langlong(de):={german}
-\langlong(dk):={danish}
-\langlong(en):={english}
-\langlong(es):={spanish}
-\langlong(fr):={french}
-\langlong(gr):={greek}
-\langlong(it):={italian}
-\langlong(nl):={dutch}
-\langlong(pl):={polish}
-\langlong(pt):={portuguese}
-\langlong(sk):={slovak}
-\langlong(uk):={ukrainian}
+\NewMemStore{LangLong}
+\SetLangLong(cat):={catalan}
+\SetLangLong(cz):={czech}
+\SetLangLong(de):={german}
+\SetLangLong(dk):={danish}
+\SetLangLong(en):={english}
+\SetLangLong(es):={spanish}
+\SetLangLong(fr):={french}
+\SetLangLong(gr):={greek}
+\SetLangLong(it):={italian}
+\SetLangLong(nl):={dutch}
+\SetLangLong(pl):={polish}
+\SetLangLong(pt):={portuguese}
+\SetLangLong(sk):={slovak}
+\SetLangLong(uk):={ukrainian}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1306,7 +1307,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntselectlang}[1]{%
   \xdef\@LSHORT{#1}%
-  \xdef\@LLONG{\thelanglong(#1)}%
+  \xdef\@LLONG{\GetLangLong(#1)}%
   \selectlanguage{\@LLONG}%
 }
 
@@ -1494,7 +1495,7 @@
 \def\@LANG@COVER{\option{/novathesis/lang/cover}}
 \def\@LANG@COPYRIGHT{\option{/novathesis/lang/copyright}}
 \def\@LANG@MAIN{\option{/novathesis/lang/main}}
-\def\@LANG@MAIN@LONG{\thelanglong(\@LANG@MAIN)}
+\def\@LANG@MAIN@LONG{\GetLangLong(\@LANG@MAIN)}
 
 \@setabstractorder
 \ifdatadefined{abstractorder}(en){}{%
@@ -1573,8 +1574,8 @@
 % \PassOptionsToPackage{main=\@LANG@MAIN@LONG}{babel}
 \babelprovide[main,import]{\expanded{\@LANG@MAIN@LONG}}
 \@for\myi:=\expanded{\@LANG@LOADED}\do{%
-  % \typeout{BABELLANG=\myi \thelanglong(\myi)}\BABELLANG%
-  \babelprovide[import]{\expanded{\thelanglong(\myi)}}%
+  % \typeout{BABELLANG=\myi \GetLangLong(\myi)}\BABELLANG%
+  \babelprovide[import]{\expanded{\GetLangLong(\myi)}}%
 }%
 
 % --------------------------------------------------------
@@ -2007,7 +2008,7 @@
           }%
         }%
       }%
-      \unskip%
+      % \unskip%
       \clearforchapter%
       \ignorespaces%
     \endgroup
@@ -3823,7 +3824,7 @@
       \raggedleft\normalsize
       % \options{/@nt/lang/shorttolong=#6}%
       \IfBooleanTF{#1}{%
-        \foreigntextquote{\thelanglong(#6)}{\ntquotetext{#7}}%
+        \foreigntextquote{\GetLangLong(#6)}{\ntquotetext{#7}}%
       }{\ntquotetext#7}
       \ifblank{#3}{}{\ntquoteauthor{#3}}%
       \ifblank{#4}{}{\ntquotewhere{#4}}%

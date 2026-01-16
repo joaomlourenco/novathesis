@@ -1,0 +1,297 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesExplPackage{memstore}{2024/01/05}{1.6.1}{Memory storage with robust value trimming}
+
+% -------------------------------------------------------------------------
+% 1. Variables and Variants
+% -------------------------------------------------------------------------
+\bool_new:N \l__mem_found_bool
+\tl_new:N   \l__mem_current_key_tl
+\tl_new:N   \l__mem_current_val_tl
+
+% Generate variants
+% ceV is required to store trimmed variables without expanding their content
+\cs_generate_variant:Nn \prop_gput:Nnn { cen, cee, ceV }
+\cs_generate_variant:Nn \prop_item:Nn { ce }
+\cs_generate_variant:Nn \prop_if_in:NnTF { cnTF, ceTF, ceT }
+\cs_generate_variant:Nn \prop_if_exist:NTF { cTF }
+\cs_generate_variant:Nn \prop_get:NnN { cnN, ceN }
+\cs_generate_variant:Nn \prop_gremove:Nn { cn, ce }
+\cs_generate_variant:Nn \prop_map_inline:Nn { cn }
+\cs_generate_variant:Nn \prop_log:N { c }
+
+% -------------------------------------------------------------------------
+% 2. Internal Helpers
+% -------------------------------------------------------------------------
+
+\cs_new_protected:Npn \__mem_exec_branch:nnn #1 #2 #3
+  {
+    \cs_set:Npn \__mem_tmp_code:nn ##1 ##2 { #1 }
+    \__mem_tmp_code:nn { #2 } { #3 }
+  }
+
+\cs_new_protected:Npn \__mem_exec_foreach:nnn #1 #2 #3
+  {
+    \cs_set:Npn \__mem_tmp_loop:nn ##1 ##2 { #1 }
+    \__mem_tmp_loop:nn { #2 } { #3 }
+  }
+
+\cs_new_protected:Npn \__mem_ensure_exists:n #1
+  {
+    \prop_if_exist:cF { g__mem_#1_prop }
+      {
+        \prop_new:c { g__mem_#1_prop }
+      }
+  }
+
+% -------------------------------------------------------------------------
+% 3. Basic Commands (Updated)
+% -------------------------------------------------------------------------
+
+% \MemSet {name}{key}{value}
+% UPDATED: Uses a temporary variable for trimming to ensure stability.
+\NewDocumentCommand{\MemSet}{ s m m m }
+  {
+    \__mem_ensure_exists:n {#2}
+    
+    % 1. Store value in temp variable and trim it
+    \tl_set:Nn \l__mem_current_val_tl {#4}
+    \tl_trim_spaces:N \l__mem_current_val_tl
+    
+    \IfBooleanTF {#1}
+      { 
+        % Starred: Expand key (e) and value (e).
+        % We pass the variable \l__mem_current_val_tl.
+        % The 'e' specifier will expand the variable to its content, 
+        % and then CONTINUE expanding that content (e.g., \currYear -> 2024).
+        \prop_gput:cee { g__mem_#2_prop } {#3} { \l__mem_current_val_tl } 
+      }
+      { 
+        % Unstarred: Expand key (e), Store value as-is (V).
+        % The 'V' specifier retrieves the content of the variable 
+        % and stores it WITHOUT further expansion.
+        \prop_gput:ceV { g__mem_#2_prop } {#3} \l__mem_current_val_tl 
+      }
+  }
+
+% \MemGet {name}{key}
+\NewExpandableDocumentCommand{\MemGet}{ s m m }
+  {
+    \prop_if_exist:cTF { g__mem_#2_prop }
+      {
+        \prop_if_in:ceTF { g__mem_#2_prop } {#3}
+          {
+            \IfBooleanTF {#1}
+              { \use:e { \prop_item:ce { g__mem_#2_prop } {#3} } }
+              { \prop_item:ce { g__mem_#2_prop } {#3} }
+          }
+          { \msg_warning:nnnn { memstore } { unknown-key } {#2} {#3} }
+      }
+      { \msg_warning:nnn { memstore } { unknown-memory } {#2} }
+  }
+
+% -------------------------------------------------------------------------
+% 4. Conditional Logic Helpers
+% -------------------------------------------------------------------------
+
+\cs_new_protected:Npn \__mem_check_defined:nn #1 #2
+  {
+    \bool_set_false:N \l__mem_found_bool
+    \tl_clear:N \l__mem_current_key_tl
+    \tl_clear:N \l__mem_current_val_tl
+    
+    \prop_if_exist:cT { g__mem_#1_prop }
+      {
+        \clist_map_inline:nn { #2 }
+          {
+            \prop_if_in:ceT { g__mem_#1_prop } { ##1 }
+              {
+                \bool_set_true:N \l__mem_found_bool
+                \tl_set:Nn \l__mem_current_key_tl { ##1 }
+                \prop_get:ceN { g__mem_#1_prop } { ##1 } \l__mem_current_val_tl
+                \clist_map_break:
+              }
+          }
+      }
+  }
+
+\cs_new_protected:Npn \__mem_check_blank:nn #1 #2
+  {
+    \bool_set_false:N \l__mem_found_bool
+    \tl_clear:N \l__mem_current_key_tl
+    \tl_clear:N \l__mem_current_val_tl
+
+    \prop_if_exist:cT { g__mem_#1_prop }
+      {
+        \clist_map_inline:nn { #2 }
+          {
+            \prop_if_in:ceT { g__mem_#1_prop } { ##1 }
+              {
+                \prop_get:ceN { g__mem_#1_prop } { ##1 } \l__mem_current_val_tl
+                \tl_if_blank:VT \l__mem_current_val_tl
+                  {
+                    \bool_set_true:N \l__mem_found_bool
+                    \tl_set:Nn \l__mem_current_key_tl { ##1 }
+                    \clist_map_break:
+                  }
+              }
+          }
+      }
+  }
+
+\prg_new_conditional:Npnn \__mem_if_unset:nn #1 #2 { p, T, F, TF }
+  {
+    % Checks if the value stored in MemStore is empty or doesn't exist
+    \tl_if_empty:eTF { \MemGet{#1}{#2} }
+      { \prg_return_true:  }
+      { \prg_return_false: }
+  }
+
+% -------------------------------------------------------------------------
+% 5. User Conditional Commands
+% -------------------------------------------------------------------------
+
+\NewDocumentCommand{\IfMemDefinedTF}{ s m m +m +m }
+  {
+    \__mem_check_defined:nn {#2} {#3}
+    \bool_if:NTF \l__mem_found_bool
+      {
+        \IfBooleanT {#1} { \tl_set:Nx \l__mem_current_val_tl { \l__mem_current_val_tl } }
+        \__mem_exec_branch:nnn {#4} { \l__mem_current_key_tl } { \l__mem_current_val_tl }
+      }
+      { \__mem_exec_branch:nnn {#5} {} {} }
+  }
+
+\NewDocumentCommand{\IfMemDefinedT}{ s m m +m }
+  {
+    \__mem_check_defined:nn {#2} {#3}
+    \bool_if:NT \l__mem_found_bool
+      {
+        \IfBooleanT {#1} { \tl_set:Nx \l__mem_current_val_tl { \l__mem_current_val_tl } }
+        \__mem_exec_branch:nnn {#4} { \l__mem_current_key_tl } { \l__mem_current_val_tl }
+      }
+  }
+
+\NewDocumentCommand{\IfMemDefinedF}{ s m m +m }
+  {
+    \__mem_check_defined:nn {#2} {#3}
+    \bool_if:NF \l__mem_found_bool
+      { \__mem_exec_branch:nnn {#4} {} {} }
+  }
+
+\NewDocumentCommand{\IfMemBlankTF}{ s m m +m +m }
+  {
+    \__mem_check_blank:nn {#2} {#3}
+    \bool_if:NTF \l__mem_found_bool
+      {
+        \IfBooleanT {#1} { \tl_set:Nx \l__mem_current_val_tl { \l__mem_current_val_tl } }
+        \__mem_exec_branch:nnn {#4} { \l__mem_current_key_tl } { \l__mem_current_val_tl }
+      }
+      { \__mem_exec_branch:nnn {#5} {} {} }
+  }
+
+\NewDocumentCommand{\IfMemBlankT}{ s m m +m }
+  {
+    \__mem_check_blank:nn {#2} {#3}
+    \bool_if:NT \l__mem_found_bool
+      {
+        \IfBooleanT {#1} { \tl_set:Nx \l__mem_current_val_tl { \l__mem_current_val_tl } }
+        \__mem_exec_branch:nnn {#4} { \l__mem_current_key_tl } { \l__mem_current_val_tl }
+      }
+  }
+
+\NewDocumentCommand{\IfMemBlankF}{ s m m +m }
+  {
+    \__mem_check_blank:nn {#2} {#3}
+    \bool_if:NF \l__mem_found_bool
+      { \__mem_exec_branch:nnn {#4} {} {} }
+  }
+
+% -------------------------------------------------------------------------
+% 6. Matching Command
+% -------------------------------------------------------------------------
+
+\NewDocumentCommand{\MemMatch}{ s m m m m }
+  {
+    \IfBooleanTF {#1}
+      {
+        \IfMemDefinedTF*{#2}{#3}
+          { \tl_set:Nx #4 {##1} \tl_set:Nn #5 {##2} }
+          { \msg_error:nnn { memstore } { no-match-error } { #2 } }
+      }
+      {
+        \IfMemDefinedTF{#2}{#3}
+          { \tl_set:Nx #4 {##1} \tl_set:Nn #5 {##2} }
+          { \msg_error:nnn { memstore } { no-match-error } { #2 } }
+      }
+  }
+
+% -------------------------------------------------------------------------
+% 7. Utilities
+% -------------------------------------------------------------------------
+
+\NewDocumentCommand{\MemUndef}{ m m }
+  {
+    \prop_if_exist:cT { g__mem_#1_prop }
+      {
+        \clist_map_inline:nn { #2 }
+          { \prop_gremove:ce { g__mem_#1_prop } { ##1 } }
+      }
+  }
+
+\NewDocumentCommand{\MemForEach}{ m +m }
+  {
+    \prop_if_exist:cT { g__mem_#1_prop }
+      {
+        \prop_map_inline:cn { g__mem_#1_prop }
+          { \__mem_exec_foreach:nnn { #2 } { ##1 } { ##2 } }
+      }
+  }
+
+\NewDocumentCommand{\MemDebug}{ m }
+  {
+    \prop_if_exist:cTF { g__mem_#1_prop }
+      { \prop_log:c { g__mem_#1_prop } }
+      { \msg_warning:nnn { memstore } { unknown-memory } {#1} }
+  }
+
+% -------------------------------------------------------------------------
+% 8. Dynamic Interface (\NewMemStore)
+% -------------------------------------------------------------------------
+
+\NewDocumentCommand{\NewMemStore}{ m }
+  {
+    \__mem_ensure_exists:n {#1}
+    
+    % Define \Set<name>
+    % We still trim the KEY explicitly here for interface consistency.
+    % Value trimming is handled by \MemSet.
+    \exp_args:Nc \NewDocumentCommand { Set#1 } { s r() u{=} m }
+      {
+        \IfBooleanTF { ##1 }
+          { \MemSet* { #1 } { \tl_trim_spaces:n { ##2 } } { ##4 } } 
+          { \MemSet  { #1 } { \tl_trim_spaces:n { ##2 } } { ##4 } } 
+      }
+      
+    % Define \Get<name>
+    \exp_args:Nc \NewExpandableDocumentCommand { Get#1 } { s r() }
+      {
+        \IfBooleanTF { ##1 }
+          { \MemGet* { #1 } { ##2 } }
+          { \MemGet  { #1 } { ##2 } }
+      }
+  }
+
+% -------------------------------------------------------------------------
+% 9. Messages
+% -------------------------------------------------------------------------
+\msg_new:nnn { memstore } { unknown-memory }
+  { Memory~container~'#1'~does~not~exist.~Returning~empty. }
+\msg_new:nnn { memstore } { unknown-key }
+  { Key~'#2'~not~found~in~memory~'#1'.~Returning~empty. }
+\msg_new:nnn { memstore } { no-match-error }
+  { 
+    No~valid~key~from~the~requested~list~found~in~memory~'#1'.\\
+    Compilation~cannot~proceed. 
+  }
+
+\endinput
