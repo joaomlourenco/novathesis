@@ -135,6 +135,7 @@
 \RequirePackage{xstring}
 \RequirePackage{catchfile}
 \RequirePackage{varwidth}
+\RequirePackage{calc}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 2. TEMPLATE CORE
