@@ -145,8 +145,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Utility function
 %% for prinitng department names with increased spacing in "\\"
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\makeatletter
 \newcommand{\printdwithvspace}[2][2pt]{%
   \protected@edef\@tempcontent{#2}%
   \expandafter\in@\expandafter\\\expandafter{\@tempcontent}%
@@ -160,7 +159,6 @@
     \\[#1] #2%
   \fi
 }
-\makeatother
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
