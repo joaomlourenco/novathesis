@@ -100,7 +100,7 @@
   \textbf{\ToUppercase{\theschool(\@LANG@COVER)}}\\%
   \fontsize{14}{14}\selectfont%
   \textbf{\ToUppercase{\thedepartmentofstring(\@LANG@COVER)}}
-  \textbf{\printdwithvspace{\ToUppercase{\thedepartment(\@LANG@COVER)}}}%
+  \textbf{\ToUppercase{\thedepartment(\@LANG@COVER)}}%
 }
 
 \ntaddtocover[vspace=0.5cm,height=8cm,valign=c]{1-1,2-1}{%

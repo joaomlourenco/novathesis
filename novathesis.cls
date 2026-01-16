@@ -1657,20 +1657,6 @@
 \def\@ntdepartmentifundef(#1)#2{\ifdatadefined{department}(#1){}{\@ntdepartment(#1){#2}}}
 \def\@ntdepartment(#1)#2{\department(#1):={#2}}
 
-% for prinitng department names with increased spacing in "\\"
-\newcommand{\printdwithvspace}[2][2pt]{%
-  \protected@edef\@tempcontent{#2}%
-  \expandafter\in@\expandafter\\\expandafter{\@tempcontent}%
-  \ifin@
-    \begingroup
-      \let\orig@backslash\\%
-      \def\\{\orig@backslash[#1]}%
-      #2%
-    \endgroup
-  \else
-    \\[#1] #2%
-  \fi
-}
 % --------------------------------------------------------
 % Degree
 \def\ntmajorfield{\@ifstar{\@ntmajorfieldifundef}{\@ntmajorfield}}
