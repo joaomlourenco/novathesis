@@ -849,7 +849,7 @@
   doctype/.new choice           = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
   docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
   media/.new choice             = {screen, paper},
-  spine/layout/.new choice      = {unset, trim, off},
+  spine/layout/.new choice      = {unset, trim, false},
   spine/width/.new length       = {0pt},
   % abstract/deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
   % abstract/theorder/.new list   = {unset},
@@ -1657,6 +1657,20 @@
 \def\@ntdepartmentifundef(#1)#2{\ifdatadefined{department}(#1){}{\@ntdepartment(#1){#2}}}
 \def\@ntdepartment(#1)#2{\department(#1):={#2}}
 
+% for prinitng department names with increased spacing in "\\"
+\newcommand{\printdwithvspace}[2][2pt]{%
+  \protected@edef\@tempcontent{#2}%
+  \expandafter\in@\expandafter\\\expandafter{\@tempcontent}%
+  \ifin@
+    \begingroup
+      \let\orig@backslash\\%
+      \def\\{\orig@backslash[#1]}%
+      #2%
+    \endgroup
+  \else
+    \\[#1] #2%
+  \fi
+}
 % --------------------------------------------------------
 % Degree
 \def\ntmajorfield{\@ifstar{\@ntmajorfieldifundef}{\@ntmajorfield}}
@@ -1716,7 +1730,7 @@
   \doctitle(#2,#1):={#3}%
   \NewlineToSpace{#3}[\tmp]
   \doctitle(#2,#1,plain):={\tmp}% 
-  \IfStrEq{#1}{main}{\doctitle(#2,spine):=?{\thedoctitle(#2,#1,plain)}}{}%
+  \IfStrEq{#1}{main}{\doctitle(#2,spine):={\tmp}}{}%
 }
 
 \ExplSyntaxOn
@@ -2023,7 +2037,7 @@
 \newcommand{\myprintglossaries}{%
   % ignore if no glossaries were defined
   \ifoptioncontains{/@nt/listtypes}{glossaries}{
-    \ifoptionequal{/novathesis/print/glossaries}{off}
+    \ifoptionequal{/novathesis/print/glossaries}{false}
       {}{%
         \if@backmatter
           \def\@matter{backmatter}
@@ -2369,9 +2383,9 @@
 \ifdocunset{\ntsetup{docstatus=working}}{}
 
 \ifoptionequal{/novathesis/spine/layout}{unset}
-    {\ifdocworking{\ntsetup{spine/layout=off}}
+    {\ifdocworking{\ntsetup{spine/layout=false}}
                   {\ifmaindoc{\ntsetup{spine/layout=trim}}
-                             {\ntsetup{spine/layout=off}}}}
+                             {\ntsetup{spine/layout=false}}}}
     {}
 \ifdocfinal{\ntsetup{print/committee=true}}{}
 

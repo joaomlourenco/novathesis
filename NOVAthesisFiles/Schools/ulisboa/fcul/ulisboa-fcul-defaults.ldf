@@ -128,7 +128,8 @@
   {\ToUppercase{\theuniversity(\@LANG@COVER)}}\\[2mm]%
   {\ToUppercase{\theschool(\@LANG@COVER)}}\\[2mm]%
   \ifmscdoc
-     {{\ToUppercase{\thedepartment(\@LANG@COVER)}}}%
+     {\ToUppercase{\thedepartmentofstring(\@LANG@COVER)}
+      \printdwithvspace{\ToUppercase{\thedepartment(\@LANG@COVER)}}}%
     {}%
 }
 
