@@ -184,6 +184,9 @@
   \ifx\bbl@ensure@bcp\@undefined
     \newcommand{\bbl@ensure@bcp}[2]{#2}%
   \fi
+  \ifx\bbl@ensure@english\@undefined
+    \newcommand{\bbl@ensure@english}[1]{#1}%
+  \fi
 }
 
 \RequirePackage{csquotes}  % MUST be loaded before biblatex
@@ -700,6 +703,25 @@
   % This turns \ChapterNoTitle{\myMacro} into \__user_chapter_logic:n {Expanded Value}
   \__user_chapter_logic:e { #1 }
  }
+
+
+\NewDocumentCommand{\UniquifyList}{m o}
+  {
+    % 1. Fully expand the input and set it to a local clist
+    \clist_set:Ne \l_tmpa_clist { #1 }
+    % 2. Remove duplicates
+    \clist_remove_duplicates:N \l_tmpa_clist
+    % 3. Check if the optional argument #2 is present
+    \IfValueTF { #2 }
+      {
+        % If #2 is present: Store the result into the macro provided in #2
+        \tl_set:Ne #2 { \clist_use:Nn \l_tmpa_clist { , } }
+      }
+      {
+        % If #2 is NOT present: Print the list directly to the document
+        \clist_use:Nn \l_tmpa_clist { , }
+      }
+  }
 
 \ExplSyntaxOff
 
@@ -1497,10 +1519,10 @@
 \options{/@nt/document/docclass=\@DOCTYPE}
 \def\@DOCCLASS{\option{/@nt/document/docclass}}
 
-\def\@LANG@COVER{\option{/novathesis/lang/cover}}
-\def\@LANG@COPYRIGHT{\option{/novathesis/lang/copyright}}
-\def\@LANG@MAIN{\option{/novathesis/lang/main}}
-\def\@LANG@MAIN@LONG{\GetLangLong(\@LANG@MAIN)}
+\edef\@LANG@COVER{\option{/novathesis/lang/cover}}
+\edef\@LANG@COPYRIGHT{\option{/novathesis/lang/copyright}}
+\edef\@LANG@MAIN{\option{/novathesis/lang/main}}
+\edef\@LANG@MAIN@LONG{\GetLangLong(\@LANG@MAIN)}
 
 \@setabstractorder
 \ifdatadefined{abstractorder}(en){}{%
@@ -1555,22 +1577,22 @@
 % --------------------------------------------------------
 % BABEL STUFF
 % \options{/@nt/lang/shorttolong=\@LANG@MAIN}%
-\def\@LANG@LOADED{}
-\def\@langs@loaded@sep{}
-\newcommand*{\@nt@setlangloaded}[1]{%
-      % \typeout{LL=#1}\LL
-      \IfSubStr{,\@LANG@LOADED,}{,#1,}{}
-      {
-        \IfFileExists{\DIRSTRINGS/strings-#1.ldf}%
-                     {\eappto{\@LANG@LOADED}{\@langs@loaded@sep#1}\def\@langs@loaded@sep{,}}%
-                      {\ClassError{novathesis}{File not found: “\DIRSTRINGS/strings-#1.ldf” file!}%
-                                  {Add a file with the translations for this language.}}%
-      }%
-}
-
-\@for\myi:=\expanded{\@LANG@COVER,\@LANG@COPYRIGHT,\@LANG@MAIN,%
-                     \theabstractorder(\@LANG@MAIN)}\do{\@nt@setlangloaded{\myi}}
-\optionlistdo{/novathesis/lang/extra}{\@nt@setlangloaded{##1}}%
+% \def\@LANG@LOADED{}
+% \def\@langs@loaded@sep{}
+% \newcommand*{\@nt@setlangloaded}[1]{%
+%       % \typeout{LL=#1}\LL
+%       \IfSubStr{,\@LANG@LOADED,}{,#1,}{}
+%       {
+%         \IfFileExists{\DIRSTRINGS/strings-#1.ldf}%
+%                      {\eappto{\@LANG@LOADED}{\@langs@loaded@sep#1}\def\@langs@loaded@sep{,}}%
+%                       {\ClassError{novathesis}{File not found: “\DIRSTRINGS/strings-#1.ldf” file!}%
+%                                   {Add a file with the translations for this language.}}%
+%       }%
+% }
+%
+% \@for\myi:=\expanded{\@LANG@COVER,\@LANG@COPYRIGHT,\@LANG@MAIN,%
+%                      \theabstractorder(\@LANG@MAIN)}\do{\@nt@setlangloaded{\myi}}
+% \optionlistdo{/novathesis/lang/extra}{\@nt@setlangloaded{##1}}%
 
 
 \babeladjust{
@@ -1578,10 +1600,10 @@
 }
 % \PassOptionsToPackage{main=\@LANG@MAIN@LONG}{babel}
 \babelprovide[main,import]{\expanded{\@LANG@MAIN@LONG}}
-\@for\myi:=\expanded{\@LANG@LOADED}\do{%
-  % \typeout{BABELLANG=\myi \GetLangLong(\myi)}\BABELLANG%
-  \babelprovide[import]{\GetLangLong(\myi)}%
-}%
+% \@for\myi:=\expanded{\@LANG@LOADED}\do{%
+%   % \typeout{BABELLANG=\myi \GetLangLong(\myi)}\BABELLANG%
+%   \babelprovide[import]{\GetLangLong(\myi)}%
+% }%
 
 % --------------------------------------------------------
 % FIX BABEL TRANSLATION
@@ -1589,6 +1611,12 @@
 % \RequirePackage{translator} % Support month name translations for pgfcalendar
 \ntselectlang{\@LANG@MAIN}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Create list of loaded languages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\edef\@LANG@LOADED{\@LANG@COVER, \@LANG@COPYRIGHT, \@LANG@MAIN, \theabstractorder(\@LANG@MAIN)}
+\UniquifyList{\@LANG@LOADED}[\@LANG@LOADED]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FIX BABEL
@@ -1600,12 +1628,12 @@
 %% Include strings for all the languages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\@for\myi:=\expanded{\@LANG@LOADED}\do{%
+\@for\myi:={\@LANG@LOADED}\do{%
   \InputIfFileExists{\DIRSTRINGS/strings-\myi.ldf}%
-                    {}%
-                    {\ClassError{novathesis}
-                                {File not found: “\DIRSTRINGS/strings-#1.ldf” file!}%
-                                {Add a file with the translations for this language.}}%
+      {}%
+      {\ClassError{novathesis}
+                  {File not found: “\DIRSTRINGS/strings-#1.ldf” file!}%
+                  {Add a file with the translations for this language.}}%
 }%
 
 

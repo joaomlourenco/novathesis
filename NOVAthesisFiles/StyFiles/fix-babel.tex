@@ -62,11 +62,12 @@
   }%
 % \fi
 
-\AtEndPreamble{%
-  \optionlistdo{/@nt/lang/loaded}{%
-    \optionlistdo{/novathesis/babel/#1/keys}{%
+\AtEndPreamble{
+  \options{/@nt/lang/loaded = {\@LANG@LOADED}}
+  \optionlistdo{/@nt/lang/loaded}{
+    \optionlistdo{/novathesis/babel/#1/keys}{
       % \typeout{KEY SET2 (#1/##1)=[\option{/novathesis/babel/#1/##1}]}%\KEYSETTWO%
-      \setlocalecaption{\GetLangLong(#1)}{##1}{\option{/novathesis/babel/#1/##1}}%
-    }%
-  }%
+      \setlocalecaption{\GetLangLong(#1)}{##1}{\option{/novathesis/babel/#1/##1}}
+    }
+  }
 }
