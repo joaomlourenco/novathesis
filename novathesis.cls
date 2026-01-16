@@ -100,7 +100,7 @@
 \def\DIRBIBLIOGRAPHY{4-Bibliography}
 \def\DIRFIGURES{5-Figures}
 \def\DIRNTFILES{./NOVAthesisFiles}
-\def\DIRSTYFILES{\DIRNTFILES}
+\def\DIRSTYFILES{\DIRNTFILES/StyFiles}
 \def\DIRFONTSTYLES{\DIRNTFILES/FontStyles}
 \def\DIRSCHOOLS{\DIRNTFILES/Schools}
 \def\DIRSTRINGS{\DIRNTFILES/Strings}
@@ -2433,7 +2433,7 @@
     {
       {\DIRSCHOOLS/\@UNIV/\@SCHL/},
       {\DIRSCHOOLS/\@UNIV/},
-      {\DIRNTFILES/},
+      {\DIRSTYFILES/},
     }
     {\AtEndDocument{\csuse{ntprintspine}}}
     {\ClassError{novathesis}{No “novathesis-spine” file found.}{}}%
