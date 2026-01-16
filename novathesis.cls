@@ -2318,7 +2318,7 @@
 %       configuration file “0-Config/4_files.tex”
 %============================================================
 \input{\DIRCONFIG/4_files}
-\ntaddfile{bib}{\DIRNTFILES/fix-bib.bib}
+\ntaddfile{bib}{\DIRSTYFILES/fix-bib.bib}
 % \NTRunHook{files}
 
 %============================================================
