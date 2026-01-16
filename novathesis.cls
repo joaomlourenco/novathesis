@@ -180,7 +180,12 @@
 %% 4. LANGUAGE & LOCALIZATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage[english]{babel}
-% \RequirePackage{translator}
+\AtBeginDocument{%
+  \ifx\bbl@ensure@bcp\@undefined
+    \newcommand{\bbl@ensure@bcp}[2]{#2}%
+  \fi
+}
+
 \RequirePackage{csquotes}  % MUST be loaded before biblatex
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1575,7 +1580,7 @@
 \babelprovide[main,import]{\expanded{\@LANG@MAIN@LONG}}
 \@for\myi:=\expanded{\@LANG@LOADED}\do{%
   % \typeout{BABELLANG=\myi \GetLangLong(\myi)}\BABELLANG%
-  \babelprovide[import]{\expanded{\GetLangLong(\myi)}}%
+  \babelprovide[import]{\GetLangLong(\myi)}%
 }%
 
 % --------------------------------------------------------
