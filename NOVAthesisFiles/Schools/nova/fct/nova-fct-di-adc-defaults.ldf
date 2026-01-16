@@ -58,8 +58,8 @@
 \ntsetup{spine/layout=off}
 
 \AtEndPreamble{
-\ntdepartment(pt){Departamento de\\Informática}
-\ntdepartment(en){Department of\\Computer Science}
+\ntdepartment(pt){Informática}
+\ntdepartment(en){Computer Science}
 \ntdegreename(pt){Informática}
 \ntdegreename(en){Computer Science}
 \specialization(pt):={APDC — Relatório de Estágio em Empresa\ifoptionvoid{/novathesis/nova/fct/company/name}{}{ — \option{/novathesis/nova/fct/company/name}}}%

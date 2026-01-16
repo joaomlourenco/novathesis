@@ -15,10 +15,6 @@
 \school(fr):={Faculty of Sciences}
 \school(it):={Faculty of Sciences}
 
-% Department field
-\ntdepartment(pt){Departamento de Nome do Departamento}
-\ntdepartment(en){Department of Name of the Department}
-
 % Specialization field
 \specialization(pt):={Especialidade}
 \specialization(en):={Specialization}
@@ -128,7 +124,8 @@
   {\ToUppercase{\theuniversity(\@LANG@COVER)}}\\[2mm]%
   {\ToUppercase{\theschool(\@LANG@COVER)}}\\[2mm]%
   \ifmscdoc
-     {{\ToUppercase{\thedepartment(\@LANG@COVER)}}}%
+     {\ToUppercase{\thedepartmentofstring(\@LANG@COVER)}
+      \ToUppercase{\thedepartment(\@LANG@COVER)}}%
     {}%
 }
 

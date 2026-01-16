@@ -4,7 +4,7 @@
 %%  NOVATHESIS — template.tex
 %% ----------------------------------------------------------------------------
 %% 
-%% Version 7.9.3 (2026-01-15)
+%% Version 7.9.3 (2026-01-16)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -76,150 +76,26 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%%============================================================
-%% BLACK VOID AHEAD!  DO NOT TRESPASS!
-%%============================================================
-
-
-
-
-
-
-
-
-
-
-%%============================================================
-%% YOU'VE BEEN WARNED.  GO BACK TO SAFE GROUND.  NOW!!!
-%%============================================================
-
-
-
-
-
-
-
-
-
-
-%%============================================================
-%%  DO NOT GO BEYOND THIS POINT!
-%%  IF YOU DO… YOU DESERVE WHATEVER HAPPENS AFTERWARDS!
-%%============================================================
-
-
-
-
-
 %%------------------------------------------------------------
 %% The novathesis class is based in “memoir”.  To set memoir
 %%  options, edit “Config/0_memoir.tex”.
 \documentclass{novathesis}
-
-
-%============================================================
-%  MEMOIR CUSTOMIZATION
-%      Please open and edit the appropriate
-%       configuration file “Config/0_memoir.tex”
-%============================================================
-
-%============================================================
-%  TEMPLATE CUSTOMIZATION / OPTIONS (document type, university, school, etc)
-%      Please open and edit the appropriate
-%       configuration file “Config/1_novathesis.tex”
-%============================================================
-
-%============================================================
-% BIBLATEX CUSTOMIZATION (citation and bibliography styles)
-%      Please open and edit the appropriate
-%       configuration file “Config/2_biblatex.tex”
-%============================================================
-
-%============================================================
-%  COVER CUSTOMIZATION (title, author, etc)
-%   Please open and edit the appropriate
-%       configuration file “Config/3_cover.tex”
-%============================================================
-
-%============================================================
-%  THESIS/DISSERTATION FILES
-%   Please open and edit the appropriate
-%       configuration file “Config/4_files.tex”
-%============================================================
-
-%============================================================
-%  PERSONAL (YOUR) CUSTOMIZATION
-%   Please open and edit the appropriate
-%       configuration file “Config/5_packages.tex”
-%============================================================
-
-%============================================================
-%  WHICH LIST_OF TO PRINT
-%   Please open and edit the appropriate
-%       configuration file “Config/6_list_of.tex”
-%============================================================
-
-%============================================================
-% SPECIAL UNIVERSITY/SCHOOL CUSTOMIZATION
-%      Please open and edit the appropriate
-%       configuration file “Config/9_UNIVERSITY.tex”
-%============================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%%============================================================
-%% HAVE I NOT TOLD YOU TO NOT EDIT/CHANGE THIS FILE???  YES I DID!!!
-%%============================================================
-
 %%------------------------------------------------------------
-\begin{document}          % Beginning of document
+\begin{document}
 %%------------------------------------------------------------
-%% Print covers
-\ntprint{frontcover}          % The cover page
+%% Print front cover and front page
+\ntprint{frontcover}
 %%------------------------------------------------------------
 %% Print front matter
-\ntprint{frontmatter}     % The default order is listed below, but can be changed
+\ntprint{frontmatter}
 %%------------------------------------------------------------
 %% Print main matter
-\ntprint{mainmatter}      % The default order is listed below, but can be changed
+\ntprint{mainmatter}
 %%------------------------------------------------------------
 %% Print back matter
-\ntprint{backmatter}      % The default order is listed below, but can be changed
+\ntprint{backmatter}
 %%------------------------------------------------------------
 %% Print back cover and spine
-\ntprint{backcover}       % Print the back cover, if any!
+\ntprint{backcover}
 %%------------------------------------------------------------
-\end{document}          % End of document
+\end{document}

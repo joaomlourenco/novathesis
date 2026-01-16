@@ -155,6 +155,26 @@
 }
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Utility function
+%% for prinitng department names with increased spacing in "\\"
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\printdwithvspace}[2][2pt]{%
+  \protected@edef\@tempcontent{#2}%
+  \expandafter\in@\expandafter\\\expandafter{\@tempcontent}%
+  \ifin@
+    \begingroup
+      \let\orig@backslash\\%
+      \def\\{\orig@backslash[#1]}%
+      #2%
+    \endgroup
+  \else
+    \\[#1] #2%
+  \fi
+}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover pages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -295,7 +315,8 @@
     {\includegraphics[width=35.3mm]{\expanded{\theschool(logo)}}};%
   \draw[thick] ($(current page.north west) + (1cm,-4.1cm)$) -- ++(\paperwidth-2cm,0cm);%
   \node[anchor=north west] at ($(current page.north west) + (96.45mm,-11.4mm)$)
-    {\fontsize{14}{14}\sffamily\makecell[tl]{\ToUppercase{\thedepartment(\@LANG@COVER)}}};%
+    {\fontsize{14}{14}\sffamily\makecell[tl]{\ToUppercase{\thedepartmentofstring(\@LANG@COVER)}
+      \printdwithvspace{\ToUppercase{\thedepartment(\@LANG@COVER)}}}};%
 }
 
 % Company logo

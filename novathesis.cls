@@ -4,7 +4,7 @@
 %%  NOVATHESIS — novathesis.cls
 %% ----------------------------------------------------------------------------
 %%
-%% Version 7.9.3 (2026-01-15)
+%% Version 7.9.3 (2026-01-16)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -77,7 +77,7 @@
 %%      or in the subreddit r/novathesis
 %%          https://www.reddit.com/r/novathesis/
 
-\ProvidesClass{novathesis}[2026-01-14 v7.9.3 novathesis template class file]
+\ProvidesClass{novathesis}[Version 7.9.3 (2026-01-16) novathesis template class file]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 %% ----------------------------------------------------------------------------
@@ -849,7 +849,7 @@
   doctype/.new choice           = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
   docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
   media/.new choice             = {screen, paper},
-  spine/layout/.new choice      = {unset, trim, off},
+  spine/layout/.new choice      = {unset, trim, false},
   spine/width/.new length       = {0pt},
   % abstract/deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
   % abstract/theorder/.new list   = {unset},
@@ -1716,7 +1716,7 @@
   \doctitle(#2,#1):={#3}%
   \NewlineToSpace{#3}[\tmp]
   \doctitle(#2,#1,plain):={\tmp}% 
-  \IfStrEq{#1}{main}{\doctitle(#2,spine):=?{\thedoctitle(#2,#1,plain)}}{}%
+  \IfStrEq{#1}{main}{\doctitle(#2,spine):={\tmp}}{}%
 }
 
 \ExplSyntaxOn
@@ -2023,7 +2023,7 @@
 \newcommand{\myprintglossaries}{%
   % ignore if no glossaries were defined
   \ifoptioncontains{/@nt/listtypes}{glossaries}{
-    \ifoptionequal{/novathesis/print/glossaries}{off}
+    \ifoptionequal{/novathesis/print/glossaries}{false}
       {}{%
         \if@backmatter
           \def\@matter{backmatter}
@@ -2369,9 +2369,9 @@
 \ifdocunset{\ntsetup{docstatus=working}}{}
 
 \ifoptionequal{/novathesis/spine/layout}{unset}
-    {\ifdocworking{\ntsetup{spine/layout=off}}
+    {\ifdocworking{\ntsetup{spine/layout=false}}
                   {\ifmaindoc{\ntsetup{spine/layout=trim}}
-                             {\ntsetup{spine/layout=off}}}}
+                             {\ntsetup{spine/layout=false}}}}
     {}
 \ifdocfinal{\ntsetup{print/committee=true}}{}
 
