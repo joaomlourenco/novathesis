@@ -39,7 +39,7 @@
 \ntsetup{style/font=newsgott}
 
 \ifdocprovisional{\ntsetup{docstatus=final}}{}
-\ifmaindoc{\ifdocfinal{\ntaddfile{cover}[1]{./NOVAthesisFiles/Schools/uminho/cover-final.tex}}{}}{}
+\ifmaindoc{\ifdocfinal{\ntaddfile{cover}[1]{\DIRSCHOOLS/uminho/cover-final.tex}}{}}{}
 \ntsetup{spine/layout=off}
 
 % --------------------------------------------------------

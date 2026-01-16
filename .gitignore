@@ -7,7 +7,7 @@
 template.*
 # …except template.tex
 !template.tex
-!template.pdf
+# !template.pdf
 
 # Ignore temp files
 .needlualatex

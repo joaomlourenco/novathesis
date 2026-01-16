@@ -92,7 +92,6 @@
 \newcommand*{\NTAddToHook}[2]{\options{/@nt/hook/#1/.newpush={#2}}}
 \newcommand*{\NTRunHook}[1]{\optionlistdo{/@nt/hook/#1}{##1}}
 
-
 %============================================================
 \def\DIRCONFIG{0-Config}
 \def\DIRFRONTMATTER{1-FrontMatter}
@@ -101,6 +100,7 @@
 \def\DIRBIBLIOGRAPHY{4-Bibliography}
 \def\DIRFIGURES{5-Figures}
 \def\DIRNTFILES{./NOVAthesisFiles}
+\def\DIRSTYFILES{\DIRNTFILES}
 \def\DIRFONTSTYLES{\DIRNTFILES/FontStyles}
 \def\DIRSCHOOLS{\DIRNTFILES/Schools}
 \def\DIRSTRINGS{\DIRNTFILES/Strings}
@@ -140,12 +140,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 2. TEMPLATE CORE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\xappto\input@path{{\DIRNTFILES/}{\DIRSTRINGS/}}
+\xappto\input@path{{\DIRSTYFILES/}{\DIRSTRINGS/}}
 
 \RequirePackage{options-ext}
 \RequirePackage{nt-version}
 \RequirePackage{memory2}
-\RequirePackage{NOVAthesisFiles/stocksize}
+\RequirePackage{stocksize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 3. FONTS & ENCODINGS
@@ -895,7 +895,7 @@
   print/adviser/.new toggle     = true,    % fake option - adviser should always be printed
   print/otherlists/.new value   = frontmatter,  % print other lists (lof, lof, lol, …) in the front matter
   print/glossaries/.new value   = frontmatter,  % print glossaries in the front matter
-  print/frontpage/.new toggle = false,
+  print/frontpage/.new toggle   = false,
   print/copyright/.new toggle   = true,
   print/timestamp/.new toggle   = true,
   print/index/.new toggle       = false,
@@ -907,7 +907,6 @@
   print/sdgs/hspace/.new dim    = {5mm},   % any measure
   print/sdgs/vspace/.new dim    = {4mm},   % any measure
   % MISC
-  numberallpages/.new toggle    = false,
   glossaries/list/reverse/.new toggle       = true,
   tocintoc/.new toggle          = true,
   % DEBUG
@@ -2535,7 +2534,6 @@
     \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
     \NTRunHook{printcovers/post}%
   \endgroup%
-  \setcounter{page}{0}%
   \pagecolor{white}%
 }
 
@@ -2557,7 +2555,6 @@
         \endgroup
         \clearpage%
       }%
-      % \ntprintcoversingle{2-1}%
     }{}%
   }{% Pre-defined cover page  
     \IfStrEqCase{#1}{%
@@ -3448,6 +3445,9 @@
   \copypagestyle{chapter}{novathesis@frontmatter}
   % \ntselectlang{\@LANG@MAIN}%
   \pagenumbering{roman}%
+  \iftoggle{/novathesis/print/frontpage}
+    {\setcounter{page}{2}}
+    {\setcounter{page}{1}}
 }
 
 \newif\if@mainmatter
@@ -3807,9 +3807,7 @@
   %          6=[#6]
   %          7=[#7]
   % }\asdfg
-  \iftoggle{/novathesis/numberallpages}%
-    {\thispagestyle{novathesis@frontmatter}}%
-    {\thispagestyle{empty}}%
+  \thispagestyle{novathesis@frontmatter}%
   \defifundef{\ntqbox}{\newsavebox}%
   \savebox{\ntqbox}{#7}
   \ifdim\wd\ntqbox<\ifblank{#2}{\textwidth}{#2}\relax
@@ -3895,7 +3893,6 @@
 }
 
 \providecommand\thecopyrightstr{%
-    % \iftoggle{/novathesis/numberallpages}%
      {\thispagestyle{novathesis@frontmatter}}%
      % {\thispagestyle{empty}}%
     \noindent%

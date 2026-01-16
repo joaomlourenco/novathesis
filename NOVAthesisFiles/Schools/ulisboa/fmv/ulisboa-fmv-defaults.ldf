@@ -24,7 +24,6 @@
 \ntsetup{style/chapter=fmv}
 \ntsetup{lang/cover=pt}
 \ntsetup{print/frontpage=true}
-\ntsetup{numberallpages=true}
 \ifdocworking{}{\ntsetup{color/links=black}}
 \ifdocfinal{\ntsetup{print/statement=true}}{}
 
@@ -437,13 +436,13 @@
 % \ifdocfinal{
 %   \ntaddtocover[halign=j]{2-2}{%
 %     \ntfor\match:={%
-%       NOVAthesisFiles/Schools/\@UNIV/\@SCHL/statement-\@LANG@MAIN.tex,%
-%       NOVAthesisFiles/Schools/\@UNIV/\@SCHL/statement.tex%
+%       \DIRSCHOOLS/\@UNIV/\@SCHL/statement-\@LANG@MAIN.tex,%
+%       \DIRSCHOOLS/\@UNIV/\@SCHL/statement.tex%
 %     }\do{\IfFileExists{\match}{\input{\match}\ntforbreak}{}}%
 %     [%
-%       \ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} in folders “NOVAthesisFiles/Schools/\@UNIV/\@SCHL” nor “NOVAthesisFiles/Schools/\@UNIV”}{}
+%       \ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} in folders “\DIRSCHOOLS/\@UNIV/\@SCHL” nor “\DIRSCHOOLS/\@UNIV”}{}
 %     ]%
-%     % \InputIfFileExists{NOVAthesisFiles/Schools/\@UNIV/\@SCHL/statement.tex}{}%
+%     % \InputIfFileExists{\DIRSCHOOLS/\@UNIV/\@SCHL/statement.tex}{}%
 %         % {\PackageWarning{novathesis}{Missing statement file “statement.tex” for ”\@UNIV/\@SCHL”}}
 %   }%
 % }
