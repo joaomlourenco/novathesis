@@ -47,8 +47,14 @@
 % 3. Basic Commands (Updated)
 % -------------------------------------------------------------------------
 
-% \MemSet {name}{key}{value}
-% UPDATED: Uses a temporary variable for trimming to ensure stability.
+% Syntax: \MemSet(*){<storage_name>}{<key>}{<value>}
+% Usage:  Stores a value in the specified memory container.
+%         Spaces around the value are automatically trimmed.
+% Arguments:
+%   * (Optional) : If present, fully expands both <key> and <value> before storing.
+%   <storage_name>: The name of the memory container (e.g., 'authors').
+%   <key>        : The unique key identifier.
+%   <value>      : The content to store.
 \NewDocumentCommand{\MemSet}{ s m m m }
   {
     \__mem_ensure_exists:n {#2}
@@ -73,7 +79,13 @@
       }
   }
 
-% \MemGet {name}{key}
+% Syntax: \MemGet(*){<storage_name>}{<key>}
+% Usage:  Retrieves a value from the memory container.
+%         Returns nothing if the key or memory does not exist (with a warning).
+% Arguments:
+%   * (Optional) : If present, fully expands the retrieved value.
+%   <storage_name>: The name of the memory container.
+%   <key>        : The key to retrieve.
 \NewExpandableDocumentCommand{\MemGet}{ s m m }
   {
     \prop_if_exist:cTF { g__mem_#2_prop }
@@ -84,9 +96,9 @@
               { \use:e { \prop_item:ce { g__mem_#2_prop } {#3} } }
               { \prop_item:ce { g__mem_#2_prop } {#3} }
           }
-          { \msg_warning:nnnn { memstore } { unknown-key } {#2} {#3} }
+          { \NoCaseChange{ \msg_error:nnnn { memstore } { unknown-key } {#2} {#3} } }
       }
-      { \msg_warning:nnn { memstore } { unknown-memory } {#2} }
+      { \NoCaseChange{ \msg_error:nnn { memstore } { unknown-memory } {#2} } }
   }
 
 % -------------------------------------------------------------------------
@@ -150,6 +162,13 @@
 % 5. User Conditional Commands
 % -------------------------------------------------------------------------
 
+% Syntax: \IfMemDefinedTF(*){<storage_name>}{<key_list>}{<true_code>}{<false_code>}
+% Usage:  Checks if ANY key in <key_list> exists in <storage_name>.
+%         If found, executes <true_code> with #1=key and #2=value available.
+% Arguments:
+%   * (Optional) : If present, expands the found value before passing it to #2.
+%   <storage_name>: Memory container name.
+%   <key_list>   : Comma-separated list of keys to check.
 \NewDocumentCommand{\IfMemDefinedTF}{ s m m +m +m }
   {
     \__mem_check_defined:nn {#2} {#3}
@@ -161,6 +180,8 @@
       { \__mem_exec_branch:nnn {#5} {} {} }
   }
 
+% Syntax: \IfMemDefinedT(*){<storage_name>}{<key_list>}{<true_code>}
+% Usage:  Same as \IfMemDefinedTF, but only executes code if a key is found.
 \NewDocumentCommand{\IfMemDefinedT}{ s m m +m }
   {
     \__mem_check_defined:nn {#2} {#3}
@@ -171,6 +192,8 @@
       }
   }
 
+% Syntax: \IfMemDefinedF(*){<storage_name>}{<key_list>}{<false_code>}
+% Usage:  Same as \IfMemDefinedTF, but only executes code if NO keys are found.
 \NewDocumentCommand{\IfMemDefinedF}{ s m m +m }
   {
     \__mem_check_defined:nn {#2} {#3}
@@ -178,6 +201,11 @@
       { \__mem_exec_branch:nnn {#4} {} {} }
   }
 
+% Syntax: \IfMemBlankTF(*){<storage_name>}{<key_list>}{<true_code>}{<false_code>}
+% Usage:  Checks if ANY key in <key_list> exists AND its value is blank (empty or spaces).
+%         If found, executes <true_code> with #1=key available.
+% Arguments:
+%   * (Optional) : If present, expands the value before checking.
 \NewDocumentCommand{\IfMemBlankTF}{ s m m +m +m }
   {
     \__mem_check_blank:nn {#2} {#3}
@@ -189,6 +217,8 @@
       { \__mem_exec_branch:nnn {#5} {} {} }
   }
 
+% Syntax: \IfMemBlankT(*){<storage_name>}{<key_list>}{<true_code>}
+% Usage:  Executes <true_code> only if a blank key is found.
 \NewDocumentCommand{\IfMemBlankT}{ s m m +m }
   {
     \__mem_check_blank:nn {#2} {#3}
@@ -199,6 +229,8 @@
       }
   }
 
+% Syntax: \IfMemBlankF(*){<storage_name>}{<key_list>}{<false_code>}
+% Usage:  Executes <false_code> only if NO blank keys are found (i.e., all keys have values or don't exist).
 \NewDocumentCommand{\IfMemBlankF}{ s m m +m }
   {
     \__mem_check_blank:nn {#2} {#3}
@@ -206,10 +238,55 @@
       { \__mem_exec_branch:nnn {#4} {} {} }
   }
 
+
+% Syntax: \IfMemVoidTF{<storage_name>}{<key>}{<true_code>}{<false_code>}
+% Usage:  Executes <true_code> if the value is effectively "void" (missing or blank).
+%         Executes <false_code> only if a non-blank value exists.
+\NewDocumentCommand{\IfMemVoidTF}{ m m +m +m }
+  {
+    \prop_if_exist:cTF { g__mem_#1_prop }
+      {
+        \prop_if_in:ceTF { g__mem_#1_prop } {#2}
+          {
+            % Case 3: Key exists. Check if value is blank.
+            \prop_get:ceN { g__mem_#1_prop } {#2} \l__mem_current_val_tl
+            \tl_if_blank:VTF \l__mem_current_val_tl 
+              { #3 } % Value is blank -> Void
+              { #4 } % Value has content -> Not Void
+          }
+          { #3 } % Case 2: Key does not exist -> Void
+      }
+      { #3 } % Case 1: Storage does not exist -> Void
+  }
+
+% Syntax: \IfMemVoidT{<storage_name>}{<key>}{<code_if_void>}
+% Usage:  Calls \IfMemVoidTF with an empty 'False' branch.
+\NewDocumentCommand{\IfMemVoidT}{ m m +m }
+  {
+    \IfMemVoidTF { #1 } { #2 }
+      { #3 } % True branch (Void)
+      { }    % False branch (Do nothing)
+  }
+
+% Syntax: \IfMemVoidF{<storage_name>}{<key>}{<code_if_NOT_void>}
+% Usage:  Calls \IfMemVoidTF with an empty 'True' branch.
+\NewDocumentCommand{\IfMemVoidF}{ m m +m }
+  {
+    \IfMemVoidTF { #1 } { #2 }
+      { }    % True branch (Do nothing)
+      { #3 } % False branch (Not Void)
+  }
+  
+  
 % -------------------------------------------------------------------------
 % 6. Matching Command
 % -------------------------------------------------------------------------
 
+% Syntax: \MemMatch(*){<storage_name>}{<key_list>}{<cmd_key>}{<cmd_val>}
+% Usage:  Searches <key_list> for the first existing key in <storage_name>.
+%         Stores the found KEY in the control sequence <cmd_key>.
+%         Stores the found VALUE in the control sequence <cmd_val>.
+%         Issues an error if no match is found.
 \NewDocumentCommand{\MemMatch}{ s m m m m }
   {
     \IfBooleanTF {#1}
@@ -229,6 +306,8 @@
 % 7. Utilities
 % -------------------------------------------------------------------------
 
+% Syntax: \MemUndef{<storage_name>}{<key_list>}
+% Usage:  Removes the specified keys (comma-separated) from the memory container.
 \NewDocumentCommand{\MemUndef}{ m m }
   {
     \prop_if_exist:cT { g__mem_#1_prop }
@@ -238,6 +317,9 @@
       }
   }
 
+% Syntax: \MemForEach{<storage_name>}{<code_block>}
+% Usage:  Iterates over every item in the memory container.
+%         In <code_block>, #1 refers to the KEY, and #2 refers to the VALUE.
 \NewDocumentCommand{\MemForEach}{ m +m }
   {
     \prop_if_exist:cT { g__mem_#1_prop }
@@ -247,6 +329,8 @@
       }
   }
 
+% Syntax: \MemDebug{<storage_name>}
+% Usage:  Prints the contents of the memory container to the log file for debugging.
 \NewDocumentCommand{\MemDebug}{ m }
   {
     \prop_if_exist:cTF { g__mem_#1_prop }
@@ -258,6 +342,16 @@
 % 8. Dynamic Interface (\NewMemStore)
 % -------------------------------------------------------------------------
 
+% Syntax: \NewMemStore{<Name>}
+% Usage:  Creates a new named memory store with convenience commands.
+%         Generates: \Set<Name> and \Get<Name>.
+%
+%         Generated \Set<Name>(<key>){<value>}
+%            - stores <value> under <key> in 'Name'.
+%            - <key> is optional in () parens; trims spaces from key.
+%
+%         Generated \Get<Name>(<key>)
+%            - retrieves value from <key> in 'Name'.
 \NewDocumentCommand{\NewMemStore}{ m }
   {
     \__mem_ensure_exists:n {#1}
