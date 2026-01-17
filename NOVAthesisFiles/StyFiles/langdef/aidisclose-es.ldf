@@ -26,13 +26,13 @@
   c_obj         = {Definición\ del\ objetivo\ de\ investigación},
   c_rq          = {Formulación\ de\ preguntas\ e\ hipótesis\ de\ investigación},
   c_feas        = {Evaluación\ de\ viabilidad\ y\ análisis\ de\ riesgos},
-  c_pre         = {Prueba\ preliminar\ de\ hipótesis},
+  c_pre         = {Comprobaciones\ preliminares\ (exploratorias)\ de\ hipótesis},
   c_sim         = {Debate\ simulado\ y\ prueba\ de\ argumentos},
 % 2 — Literature Review
   l_srch        = {Búsqueda\ y\ Descubrimiento},
-  l_sum         = {Resumen\ del\ material\ fuente},
+  l_sum         = {Resumen\ de\ fuentes\ externas},
   l_map         = {Mapeo\ de\ conceptos\ y\ sistematización},
-  l_pat         = {Análisis\ de\ tendencias\ de\ mercado\ y/o\ entorno\ de\ patentes},
+  l_pat         = {Análisis\ del\ panorama\ de\ mercado/patentes},
   l_gaps        = {Identificación\ de\ brechas\ y\ evaluación\ de\ novedad},
 % 3 — Methodology
   m_des         = {Diseño\ de\ investigación},
@@ -43,19 +43,22 @@
   s_opt         = {Refactorización\ y\ Optimización},
   s_debug       = {Depuración\ y\ Reparación},
   s_auto        = {Automatización\ de\ procesos},
-  s_algs        = {Creación\ de\ algoritmos},
+  s_algs        = {Diseño\ de\ algoritmos},
 % 5 — Data Management
   d_coll        = {Recolección\ de\ datos},
   d_val         = {Validación},
   d_cln         = {Limpieza\ de\ datos},
   d_cur         = {Curación\ y\ organización\ de\ datos},
   d_anl         = {Análisis\ de\ datos},
-  d_viz         = {Visualización\ (a\ partir\ de\ datos)},
-  d_rep         = {Pruebas\ de\ reproducibilidad},
+  d_viz         = {Generación\ de\ figuras\ a\ partir\ de\ datos},
+  d_rep         = {Comprobaciones\ de\ reproducibilidad\ y\ reejecución},
+  d_lbl         = {Asistencia\ en\ etiquetado\ y\ anotación\ de\ datos},
+  d_syn         = {Generación\ de\ datos\ sintéticos},
+  d_anon        = {Apoyo\ a\ la\ desidentificación\ y\ anonimización},
 % 6 — Visuals and Multimedia
-  v_gen         = {Generación\ de\ imágenes\ y\ diagramas},
+  v_gen         = {Generación\ de\ imagen/diagrama\ (sintética)},
   v_edit        = {Mejora\ y\ edición\ de\ imágenes},
-  v_chart       = {Diseño\ de\ gráficos\ y\ tablas},
+  v_chart       = {Diseño\ y\ maquetación\ de\ figuras},
 % 7 — Writing and Editing
   w_draft       = {Redacción\ de\ texto},
   w_poly        = {Pulido\ y\ Edición},
@@ -78,3 +81,5 @@
   sup_rec       = {Sugerencias\ Estratégicas},
   sup_pub       = {Apoyo\ a\ la\ publicación},
 }
+
+

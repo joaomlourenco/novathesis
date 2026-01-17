@@ -26,13 +26,13 @@
   c_obj         = {Definiëren\ van\ de\ onderzoeksdoelstelling},
   c_rq          = {Formuleren\ van\ onderzoeksvragen\ en\ hypothesen},
   c_feas        = {Haalbaarheidsanalyse\ en\ risico-evaluatie},
-  c_pre         = {Voorlopige\ hypothesetoetsing},
+  c_pre         = {Voorlopige\ (verkennende)\ hypothesecontroles},
   c_sim         = {Gesimuleerd\ debat\ en\ argumentatietests},
 % 2 — Literature Review
   l_srch        = {Zoeken\ en\ Ontdekken},
-  l_sum         = {Samenvatting\ van\ bronmateriaal},
+  l_sum         = {Samenvatting\ van\ externe\ bronnen},
   l_map         = {Conceptmapping\ en\ systematisering},
-  l_pat         = {Analyse\ van\ markttrends\ en/of\ patentomgeving},
+  l_pat         = {Markt-/octrooilandschapsanalyse},
   l_gaps        = {Identificatie\ van\ hiaten\ en\ evaluatie\ van\ nieuwheid},
 % 3 — Methodology
   m_des         = {Onderzoeksontwerp},
@@ -43,19 +43,22 @@
   s_opt         = {Refactoring\ en\ Optimalisatie},
   s_debug       = {Debuggen\ en\ Reparatie},
   s_auto        = {Procesautomatisering},
-  s_algs        = {Maken\ van\ algoritmen},
+  s_algs        = {Algoritmeontwerp},
 % 5 — Data Management
   d_coll        = {Dataverzameling},
   d_val         = {Validatie},
   d_cln         = {Opschonen\ van\ data},
   d_cur         = {Curatie\ en\ organisatie\ van\ data},
   d_anl         = {Data-analyse},
-  d_viz         = {Visualisatie\ (van\ data)},
-  d_rep         = {Reproduceerbaarheidstesten},
+  d_viz         = {Generatie\ van\ figuren\ uit\ data},
+  d_rep         = {Reproduceerbaarheids-\ en\ herhalingscontroles},
+  d_lbl         = {Ondersteuning\ bij\ datalabelling\ en\ annotatie},
+  d_syn         = {Generatie\ van\ synthetische\ data},
+  d_anon        = {Ondersteuning\ bij\ de-identificatie\ en\ anonimisering},
 % 6 — Visuals and Multimedia
-  v_gen         = {Generatie\ van\ afbeeldingen\ en\ diagrammen},
+  v_gen         = {Afbeeldings-/diagramgeneratie\ (synthetisch)},
   v_edit        = {Verbetering\ en\ bewerking\ van\ afbeeldingen},
-  v_chart       = {Ontwerp\ van\ grafieken\ en\ tabellen},
+  v_chart       = {Figuurontwerp\ en\ lay-out},
 % 7 — Writing and Editing
   w_draft       = {Opstellen\ van\ tekst},
   w_poly        = {Polijsten\ en\ Bewerken},
@@ -78,3 +81,5 @@
   sup_rec       = {Strategische\ Suggesties},
   sup_pub       = {Publicatieondersteuning},
 }
+
+

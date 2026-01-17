@@ -20,19 +20,19 @@
   grp_vis       = {Visuals\ and\ Multimedia},
   grp_write     = {Writing\ and\ Editing},
   grp_eth       = {Ethics\ Review},
-  grp_sup       = {Quality Assurance},
+  grp_sup       = {Quality\ Assurance},
 % 1 — Conceptualization  
   c_idea        = {Idea\ generation},
   c_obj         = {Defining\ the\ research\ objective},
   c_rq          = {Formulating\ research\ questions\ and\ hypotheses},
   c_feas        = {Feasibility\ assessment\ and\ risk\ evaluation},
-  c_pre         = {Preliminary\ hypothesis\ testing},
+  c_pre         = {Preliminary\ (exploratory)\ hypothesis\ checks},
   c_sim         = {Simulated\ debate\ and\ argument\ testing},
 % 2 — Literature Review
   l_srch        = {Search\ and\ Discovery},
-  l_sum         = {Summarization\ of\ Source\ Material},
+  l_sum         = {External\ source\ summarization},
   l_map         = {Concept\ Mapping\ and\ Systematization},
-  l_pat         = {Analysis\ of\ market\ trends\ and/or\ patent\ environment},
+  l_pat         = {Market/patent\ landscape\ analysis},
   l_gaps        = {Gap\ Identification\ and\ Novelty\ Evaluation},
 % 3 — Methodology
   m_des         = {Research\ design},
@@ -43,19 +43,22 @@
   s_opt         = {Refactoring\ and\ Optimization},
   s_debug       = {Debugging\ and\ Repair},
   s_auto        = {Process\ automation},
-  s_algs        = {Creation\ of\ algorithms},
+  s_algs        = {Algorithm\ design},
 % 5 — Data Management
   d_coll        = {Data\ collection},
   d_val         = {Validation},
   d_cln         = {Data\ cleaning},
   d_cur         = {Data\ curation\ and\ organization},
   d_anl         = {Data\ analysis},
-  d_viz         = {Visualization\ (from\ data)},
-  d_rep         = {Reproducibility\ testing},
+  d_viz         = {Data-to-figure\ generation},
+  d_rep         = {Reproducibility\ and\ rerun\ checks},
+  d_lbl         = {Data\ labeling\ and\ annotation\ assistance},
+  d_syn         = {Synthetic\ data\ generation},
+  d_anon        = {De-identification\ and\ anonymization\ support},
 % 6 — Visuals and Multimedia
-  v_gen         = {Image\ and\ Diagram\ Generation},
+  v_gen         = {Image/diagram\ generation\ (synthetic)},
   v_edit        = {Image\ Enhancement\ and\ Editing},
-  v_chart       = {Chart\ and\ Graph\ Design},
+  v_chart       = {Figure\ design\ and\ layout},
 % 7 — Writing and Editing
   w_draft       = {Drafting\ Text},
   w_poly        = {Polishing\ and\ Editing},
@@ -78,3 +81,5 @@
   sup_rec       = {Strategic\ Suggestions},
   sup_pub       = {Publication\ support},
 }
+
+

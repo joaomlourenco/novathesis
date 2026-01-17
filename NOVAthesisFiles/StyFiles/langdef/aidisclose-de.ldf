@@ -26,13 +26,13 @@
   c_obj         = {Definition\ des\ Forschungsziels},
   c_rq          = {Formulierung\ von\ Forschungsfragen\ und\ Hypothesen},
   c_feas        = {Machbarkeitsbewertung\ und\ Risikoevaluation},
-  c_pre         = {Vorläufige\ Hypothesentests},
+  c_pre         = {Vorläufige\ (explorative)\ Hypothesenprüfungen},
   c_sim         = {Simulierte\ Debatte\ und\ Argumentationstests},
 % 2 — Literature Review
   l_srch        = {Suche\ und\ Entdeckung},
-  l_sum         = {Zusammenfassung\ von\ Quellenmaterial},
+  l_sum         = {Zusammenfassung\ externer\ Quellen},
   l_map         = {Konzeptmapping\ und\ Systematisierung},
-  l_pat         = {Analyse\ von\ Markttrends\ und/oder\ Patentumfeld},
+  l_pat         = {Markt-/Patentlandschaftsanalyse},
   l_gaps        = {Lückenidentifikation\ und\ Neuheitsbewertung},
 % 3 — Methodology
   m_des         = {Forschungsdesign},
@@ -43,19 +43,22 @@
   s_opt         = {Refactoring\ und\ Optimierung},
   s_debug       = {Debugging\ und\ Reparatur},
   s_auto        = {Prozessautomatisierung},
-  s_algs        = {Erstellung\ von\ Algorithmen},
+  s_algs        = {Algorithmenentwurf},
 % 5 — Data Management
   d_coll        = {Datenerhebung},
   d_val         = {Validierung},
   d_cln         = {Datenbereinigung},
   d_cur         = {Datenkuration\ und\ -organisation},
   d_anl         = {Datenanalyse},
-  d_viz         = {Visualisierung\ (aus\ Daten)},
-  d_rep         = {Reproduzierbarkeitstests},
+  d_viz         = {Daten-zu-Abbildung-Generierung},
+  d_rep         = {Reproduzierbarkeits-\ und\ Wiederholungsprüfungen},
+  d_lbl         = {Unterstützung\ bei\ Datenkennzeichnung\ und\ -annotation},
+  d_syn         = {Generierung\ synthetischer\ Daten},
+  d_anon        = {Unterstützung\ bei\ De-Identifizierung\ und\ Anonymisierung},
 % 6 — Visuals and Multimedia
-  v_gen         = {Bild-\ und\ Diagrammgenerierung},
+  v_gen         = {Bild-/Diagrammgenerierung\ (synthetisch)},
   v_edit        = {Bildverbesserung\ und\ -bearbeitung},
-  v_chart       = {Diagramm-\ und\ Grafikdesign},
+  v_chart       = {Abbildungsdesign\ und\ -layout},
 % 7 — Writing and Editing
   w_draft       = {Entwurf\ von\ Text},
   w_poly        = {Polieren\ und\ Bearbeiten},
@@ -78,3 +81,5 @@
   sup_rec       = {Strategische\ Vorschläge},
   sup_pub       = {Publikationsunterstützung},
 }
+
+
