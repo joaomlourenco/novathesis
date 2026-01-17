@@ -5,7 +5,7 @@
 % This file may be distributed and/or modified under the conditions of
 % the LaTeX Project Public License, either version 1.3c of this license
 % or (at your option) any later version.
-\def\gaiversion{1.6.2}
+\def\gaiversion{1.7.0}
 %
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
 \ProvidesExplPackage {aidisclose} {2026/01/04} {\gaiversion} 
@@ -51,33 +51,57 @@
 \tl_new:N  \g__gai_str_title_long_tl
 \tl_new:N  \g__gai_str_title_short_tl
 
-% Taxonomy Group Titles
+% ---------------------------------------------------------
+% Group Titles
+% ---------------------------------------------------------
 \tl_new:N \g__gai_str_grp_conc_tl
 \tl_new:N \g__gai_str_grp_lit_tl
 \tl_new:N \g__gai_str_grp_meth_tl
 \tl_new:N \g__gai_str_grp_soft_tl
 \tl_new:N \g__gai_str_grp_data_tl
+\tl_new:N \g__gai_str_grp_vis_tl
 \tl_new:N \g__gai_str_grp_write_tl
 \tl_new:N \g__gai_str_grp_eth_tl
 \tl_new:N \g__gai_str_grp_sup_tl
 
-% Taxonomy Item Strings
+% ---------------------------------------------------------
+% 1. Conceptualization
+% ---------------------------------------------------------
 \tl_new:N \g__gai_str_c_idea_tl
 \tl_new:N \g__gai_str_c_obj_tl
 \tl_new:N \g__gai_str_c_rq_tl
 \tl_new:N \g__gai_str_c_feas_tl
 \tl_new:N \g__gai_str_c_pre_tl
+\tl_new:N \g__gai_str_c_sim_tl
+
+% ---------------------------------------------------------
+% 2. Literature Review
+% ---------------------------------------------------------
 \tl_new:N \g__gai_str_l_srch_tl
-\tl_new:N \g__gai_str_l_wrt_tl
+\tl_new:N \g__gai_str_l_sum_tl
+\tl_new:N \g__gai_str_l_map_tl
 \tl_new:N \g__gai_str_l_pat_tl
 \tl_new:N \g__gai_str_l_gaps_tl
+
+% ---------------------------------------------------------
+% 3. Methodology
+% ---------------------------------------------------------
 \tl_new:N \g__gai_str_m_des_tl
 \tl_new:N \g__gai_str_m_proto_tl
 \tl_new:N \g__gai_str_m_meth_tl
+
+% ---------------------------------------------------------
+% 4. Software Development and Automation
+% ---------------------------------------------------------
 \tl_new:N \g__gai_str_s_gen_tl
 \tl_new:N \g__gai_str_s_opt_tl
+\tl_new:N \g__gai_str_s_debug_tl
 \tl_new:N \g__gai_str_s_auto_tl
 \tl_new:N \g__gai_str_s_algs_tl
+
+% ---------------------------------------------------------
+% 5. Data Management
+% ---------------------------------------------------------
 \tl_new:N \g__gai_str_d_coll_tl
 \tl_new:N \g__gai_str_d_val_tl
 \tl_new:N \g__gai_str_d_cln_tl
@@ -85,25 +109,45 @@
 \tl_new:N \g__gai_str_d_anl_tl
 \tl_new:N \g__gai_str_d_viz_tl
 \tl_new:N \g__gai_str_d_rep_tl
-\tl_new:N \g__gai_str_w_gen_tl
-\tl_new:N \g__gai_str_w_prf_tl
+
+% ---------------------------------------------------------
+% 6. Visuals and Multimedia
+% ---------------------------------------------------------
+\tl_new:N \g__gai_str_v_gen_tl
+\tl_new:N \g__gai_str_v_edit_tl
+\tl_new:N \g__gai_str_v_chart_tl
+
+% ---------------------------------------------------------
+% 7. Writing and Editing
+% ---------------------------------------------------------
+\tl_new:N \g__gai_str_w_draft_tl
+\tl_new:N \g__gai_str_w_poly_tl
 \tl_new:N \g__gai_str_w_sum_tl
 \tl_new:N \g__gai_str_w_con_tl
 \tl_new:N \g__gai_str_w_tone_tl
 \tl_new:N \g__gai_str_w_tra_tl
 \tl_new:N \g__gai_str_w_ref_tl
 \tl_new:N \g__gai_str_w_prs_tl
+\tl_new:N \g__gai_str_w_title_tl
+
+% ---------------------------------------------------------
+% 8. Ethics Review
+% ---------------------------------------------------------
 \tl_new:N \g__gai_str_e_bias_tl
 \tl_new:N \g__gai_str_e_risk_tl
 \tl_new:N \g__gai_str_e_comp_tl
 \tl_new:N \g__gai_str_e_conf_tl
+
+% ---------------------------------------------------------
+% 9. Critique and Feedback
+% ---------------------------------------------------------
 \tl_new:N \g__gai_str_sup_qa_tl
 \tl_new:N \g__gai_str_sup_trd_tl
 \tl_new:N \g__gai_str_sup_lim_tl
 \tl_new:N \g__gai_str_sup_rec_tl
 \tl_new:N \g__gai_str_sup_pub_tl
 
-% --- Other Variables ---
+% --- Helper Variables ---
 \dim_new:N \l__gai_fboxsep_dim
 \dim_new:N \l__gai_boxwd_dim
 \dim_new:N \l__gai_labelsep_dim
@@ -139,6 +183,7 @@
 
 \keys_define:nn { aidisclose / strings }
   {
+    % --- General Strings ---
     tools_used    .tl_set:N = \g__gai_str_tools_used_tl,
     none_used     .tl_set:N = \g__gai_str_none_used_tl,
     declares      .tl_set:N = \g__gai_str_declares_tl,
@@ -151,31 +196,45 @@
     title_long    .tl_set:N = \g__gai_str_title_long_tl,
     title_short   .tl_set:N = \g__gai_str_title_short_tl,
     
+    % --- Group Titles ---
     grp_conc      .tl_set:N = \g__gai_str_grp_conc_tl,
     grp_lit       .tl_set:N = \g__gai_str_grp_lit_tl,
     grp_meth      .tl_set:N = \g__gai_str_grp_meth_tl,
     grp_soft      .tl_set:N = \g__gai_str_grp_soft_tl,
     grp_data      .tl_set:N = \g__gai_str_grp_data_tl,
+    grp_vis       .tl_set:N = \g__gai_str_grp_vis_tl,
     grp_write     .tl_set:N = \g__gai_str_grp_write_tl,
     grp_eth       .tl_set:N = \g__gai_str_grp_eth_tl,
     grp_sup       .tl_set:N = \g__gai_str_grp_sup_tl,
 
+    % --- 1. Conceptualization ---
     c_idea        .tl_set:N = \g__gai_str_c_idea_tl,
     c_obj         .tl_set:N = \g__gai_str_c_obj_tl,
     c_rq          .tl_set:N = \g__gai_str_c_rq_tl,
     c_feas        .tl_set:N = \g__gai_str_c_feas_tl,
     c_pre         .tl_set:N = \g__gai_str_c_pre_tl,
+    c_sim         .tl_set:N = \g__gai_str_c_sim_tl,
+
+    % --- 2. Literature Review ---
     l_srch        .tl_set:N = \g__gai_str_l_srch_tl,
-    l_wrt         .tl_set:N = \g__gai_str_l_wrt_tl,
+    l_sum         .tl_set:N = \g__gai_str_l_sum_tl,
+    l_map         .tl_set:N = \g__gai_str_l_map_tl,
     l_pat         .tl_set:N = \g__gai_str_l_pat_tl,
     l_gaps        .tl_set:N = \g__gai_str_l_gaps_tl,
+    
+    % --- 3. Methodology ---
     m_des         .tl_set:N = \g__gai_str_m_des_tl,
     m_proto       .tl_set:N = \g__gai_str_m_proto_tl,
     m_meth        .tl_set:N = \g__gai_str_m_meth_tl,
+    
+    % --- 4. Software Development ---
     s_gen         .tl_set:N = \g__gai_str_s_gen_tl,
     s_opt         .tl_set:N = \g__gai_str_s_opt_tl,
+    s_debug       .tl_set:N = \g__gai_str_s_debug_tl,
     s_auto        .tl_set:N = \g__gai_str_s_auto_tl,
     s_algs        .tl_set:N = \g__gai_str_s_algs_tl,
+    
+    % --- 5. Data Management ---
     d_coll        .tl_set:N = \g__gai_str_d_coll_tl,
     d_val         .tl_set:N = \g__gai_str_d_val_tl,
     d_cln         .tl_set:N = \g__gai_str_d_cln_tl,
@@ -183,18 +242,30 @@
     d_anl         .tl_set:N = \g__gai_str_d_anl_tl,
     d_viz         .tl_set:N = \g__gai_str_d_viz_tl,
     d_rep         .tl_set:N = \g__gai_str_d_rep_tl,
-    w_gen         .tl_set:N = \g__gai_str_w_gen_tl,
-    w_prf         .tl_set:N = \g__gai_str_w_prf_tl,
+    
+    % --- 6. Visuals and Multimedia ---
+    v_gen         .tl_set:N = \g__gai_str_v_gen_tl,
+    v_edit        .tl_set:N = \g__gai_str_v_edit_tl,
+    v_chart       .tl_set:N = \g__gai_str_v_chart_tl,
+
+    % --- 7. Writing and Editing ---
+    w_draft       .tl_set:N = \g__gai_str_w_draft_tl,
+    w_poly        .tl_set:N = \g__gai_str_w_poly_tl,
     w_sum         .tl_set:N = \g__gai_str_w_sum_tl,
     w_con         .tl_set:N = \g__gai_str_w_con_tl,
     w_tone        .tl_set:N = \g__gai_str_w_tone_tl,
     w_tra         .tl_set:N = \g__gai_str_w_tra_tl,
     w_ref         .tl_set:N = \g__gai_str_w_ref_tl,
     w_prs         .tl_set:N = \g__gai_str_w_prs_tl,
+    w_title       .tl_set:N = \g__gai_str_w_title_tl,
+
+    % --- 8. Ethics Review ---
     e_bias        .tl_set:N = \g__gai_str_e_bias_tl,
     e_risk        .tl_set:N = \g__gai_str_e_risk_tl,
     e_comp        .tl_set:N = \g__gai_str_e_comp_tl,
     e_conf        .tl_set:N = \g__gai_str_e_conf_tl,
+    
+    % --- 9. Critique and Feedback ---
     sup_qa        .tl_set:N = \g__gai_str_sup_qa_tl,
     sup_trd       .tl_set:N = \g__gai_str_sup_trd_tl,
     sup_lim       .tl_set:N = \g__gai_str_sup_lim_tl,
@@ -277,9 +348,6 @@
     'aidisclose-en.ldf'~in~both~the~current~directory~and~the~
     'langdef/'~subdirectory,~but~none~were~found.
   }
-
-
-
 
 \cs_new_protected:Nn \__gai_detect_and_load_language:
   {
@@ -419,61 +487,79 @@
   
 % --- Taxonomy Data Structure ---
 \tl_gset:Nn \g__gai_taxonomy_tl {
+  % --- 1. Conceptualization ---
   \TGroup{\tl_use:N \g__gai_str_grp_conc_tl}{
-    \TItem{c:idea}   {\tl_use:N \g__gai_str_c_idea_tl}
-    \TItem{c:objective}{\tl_use:N \g__gai_str_c_obj_tl}
-    \TItem{c:rq}     {\tl_use:N \g__gai_str_c_rq_tl}
-    \TItem{c:feas}   {\tl_use:N \g__gai_str_c_feas_tl}
-    \TItem{c:pretest}{\tl_use:N \g__gai_str_c_pre_tl}
+    \TItem{c_idea}   {\tl_use:N \g__gai_str_c_idea_tl}
+    \TItem{c_obj}    {\tl_use:N \g__gai_str_c_obj_tl}
+    \TItem{c_rq}     {\tl_use:N \g__gai_str_c_rq_tl}
+    \TItem{c_feas}   {\tl_use:N \g__gai_str_c_feas_tl}
+    \TItem{c_pre}    {\tl_use:N \g__gai_str_c_pre_tl}
+    \TItem{c_sim}    {\tl_use:N \g__gai_str_c_sim_tl}
   }
+  % --- 2. Literature Review ---
   \TGroup{\tl_use:N \g__gai_str_grp_lit_tl}{
-    \TItem{l:search} {\tl_use:N \g__gai_str_l_srch_tl}
-    \TItem{l:write}  {\tl_use:N \g__gai_str_l_wrt_tl}
-    \TItem{l:patents}{\tl_use:N \g__gai_str_l_pat_tl}
-    \TItem{l:gaps}   {\tl_use:N \g__gai_str_l_gaps_tl}
+    \TItem{l_srch}   {\tl_use:N \g__gai_str_l_srch_tl}
+    \TItem{l_sum}    {\tl_use:N \g__gai_str_l_sum_tl}
+    \TItem{l_map}    {\tl_use:N \g__gai_str_l_map_tl}
+    \TItem{l_pat}    {\tl_use:N \g__gai_str_l_pat_tl}
+    \TItem{l_gaps}   {\tl_use:N \g__gai_str_l_gaps_tl}
   }
+  % --- 3. Methodology ---
   \TGroup{\tl_use:N \g__gai_str_grp_meth_tl}{
-    \TItem{m:design}   {\tl_use:N \g__gai_str_m_des_tl}
-    \TItem{m:protocols}{\tl_use:N \g__gai_str_m_proto_tl}
-    \TItem{m:methods}  {\tl_use:N \g__gai_str_m_meth_tl}
+    \TItem{m_des}    {\tl_use:N \g__gai_str_m_des_tl}
+    \TItem{m_proto}  {\tl_use:N \g__gai_str_m_proto_tl}
+    \TItem{m_meth}   {\tl_use:N \g__gai_str_m_meth_tl}
   }
+  % --- 4. Software Development ---
   \TGroup{\tl_use:N \g__gai_str_grp_soft_tl}{
-    \TItem{s:codegen}{\tl_use:N \g__gai_str_s_gen_tl}
-    \TItem{s:opt}    {\tl_use:N \g__gai_str_s_opt_tl}
-    \TItem{s:auto}   {\tl_use:N \g__gai_str_s_auto_tl}
-    \TItem{s:algs}   {\tl_use:N \g__gai_str_s_algs_tl}
+    \TItem{s_gen}    {\tl_use:N \g__gai_str_s_gen_tl}
+    \TItem{s_opt}    {\tl_use:N \g__gai_str_s_opt_tl}
+    \TItem{s_debug}  {\tl_use:N \g__gai_str_s_debug_tl}
+    \TItem{s_auto}   {\tl_use:N \g__gai_str_s_auto_tl}
+    \TItem{s_algs}   {\tl_use:N \g__gai_str_s_algs_tl}
   }
+  % --- 5. Data Management ---
   \TGroup{\tl_use:N \g__gai_str_grp_data_tl}{
-    \TItem{d:collect} {\tl_use:N \g__gai_str_d_coll_tl}
-    \TItem{d:validate}{\tl_use:N \g__gai_str_d_val_tl}
-    \TItem{d:clean}   {\tl_use:N \g__gai_str_d_cln_tl}
-    \TItem{d:curate}  {\tl_use:N \g__gai_str_d_cur_tl}
-    \TItem{d:analyze} {\tl_use:N \g__gai_str_d_anl_tl}
-    \TItem{d:viz}     {\tl_use:N \g__gai_str_d_viz_tl}
-    \TItem{d:repro}   {\tl_use:N \g__gai_str_d_rep_tl}
+    \TItem{d_coll}    {\tl_use:N \g__gai_str_d_coll_tl}
+    \TItem{d_val}     {\tl_use:N \g__gai_str_d_val_tl}
+    \TItem{d_cln}     {\tl_use:N \g__gai_str_d_cln_tl}
+    \TItem{d_cur}     {\tl_use:N \g__gai_str_d_cur_tl}
+    \TItem{d_anl}     {\tl_use:N \g__gai_str_d_anl_tl}
+    \TItem{d_viz}     {\tl_use:N \g__gai_str_d_viz_tl}
+    \TItem{d_rep}     {\tl_use:N \g__gai_str_d_rep_tl}
   }
+  % --- 6. Visuals and Multimedia ---
+  \TGroup{\tl_use:N \g__gai_str_grp_vis_tl}{
+    \TItem{v_gen}     {\tl_use:N \g__gai_str_v_gen_tl}
+    \TItem{v_edit}    {\tl_use:N \g__gai_str_v_edit_tl}
+    \TItem{v_chart}   {\tl_use:N \g__gai_str_v_chart_tl}
+  }
+  % --- 7. Writing and Editing ---
   \TGroup{\tl_use:N \g__gai_str_grp_write_tl}{
-    \TItem{w:textgen}  {\tl_use:N \g__gai_str_w_gen_tl}
-    \TItem{w:proof}    {\tl_use:N \g__gai_str_w_prf_tl}
-    \TItem{w:summarize}{\tl_use:N \g__gai_str_w_sum_tl}
-    \TItem{w:concl}    {\tl_use:N \g__gai_str_w_con_tl}
-    \TItem{w:tone}     {\tl_use:N \g__gai_str_w_tone_tl}
-    \TItem{w:translate}{\tl_use:N \g__gai_str_w_tra_tl}
-    \TItem{w:reformat} {\tl_use:N \g__gai_str_w_ref_tl}
-    \TItem{w:press}    {\tl_use:N \g__gai_str_w_prs_tl}
+    \TItem{w_draft}   {\tl_use:N \g__gai_str_w_draft_tl}
+    \TItem{w_poly}    {\tl_use:N \g__gai_str_w_poly_tl}
+    \TItem{w_sum}     {\tl_use:N \g__gai_str_w_sum_tl}
+    \TItem{w_con}     {\tl_use:N \g__gai_str_w_con_tl}
+    \TItem{w_tone}    {\tl_use:N \g__gai_str_w_tone_tl}
+    \TItem{w_tra}     {\tl_use:N \g__gai_str_w_tra_tl}
+    \TItem{w_ref}     {\tl_use:N \g__gai_str_w_ref_tl}
+    \TItem{w_prs}     {\tl_use:N \g__gai_str_w_prs_tl}
+    \TItem{w_title}   {\tl_use:N \g__gai_str_w_title_tl}
   }
+  % --- 8. Ethics Review ---
   \TGroup{\tl_use:N \g__gai_str_grp_eth_tl}{
-    \TItem{e:bias}      {\tl_use:N \g__gai_str_e_bias_tl}
-    \TItem{e:risk}      {\tl_use:N \g__gai_str_e_risk_tl}
-    \TItem{e:compliance}{\tl_use:N \g__gai_str_e_comp_tl}
-    \TItem{e:conf}      {\tl_use:N \g__gai_str_e_conf_tl}
+    \TItem{e_bias}    {\tl_use:N \g__gai_str_e_bias_tl}
+    \TItem{e_risk}    {\tl_use:N \g__gai_str_e_risk_tl}
+    \TItem{e_comp}    {\tl_use:N \g__gai_str_e_comp_tl}
+    \TItem{e_conf}    {\tl_use:N \g__gai_str_e_conf_tl}
   }
+  % --- 9. Critique and Feedback ---
   \TGroup{\tl_use:N \g__gai_str_grp_sup_tl}{
-    \TItem{sup:qa}    {\tl_use:N \g__gai_str_sup_qa_tl}
-    \TItem{sup:trends}{\tl_use:N \g__gai_str_sup_trd_tl}
-    \TItem{sup:limits}{\tl_use:N \g__gai_str_sup_lim_tl}
-    \TItem{sup:recs}  {\tl_use:N \g__gai_str_sup_rec_tl}
-    \TItem{sup:pub}   {\tl_use:N \g__gai_str_sup_pub_tl}
+    \TItem{sup_qa}    {\tl_use:N \g__gai_str_sup_qa_tl}
+    \TItem{sup_trd}   {\tl_use:N \g__gai_str_sup_trd_tl}
+    \TItem{sup_lim}   {\tl_use:N \g__gai_str_sup_lim_tl}
+    \TItem{sup_rec}   {\tl_use:N \g__gai_str_sup_rec_tl}
+    \TItem{sup_pub}   {\tl_use:N \g__gai_str_sup_pub_tl}
   }
 }
 
