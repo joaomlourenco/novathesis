@@ -301,7 +301,7 @@
 %   \raisebox{9mm}{%
 %   \begin{minipage}[b]{9cm}%
 %     \fontsize{14}{14}\selectfont%
-%     \ToUppercase{\thedepartment(\@LANG@COVER)}%
+%     \ToUppercase{\GetDepartment(\@LANG@COVER)}%
 %   \end{minipage}%
 %   }\\[4ex]%
 %   \hrule width 19cm%
@@ -315,8 +315,8 @@
     {\includegraphics[width=35.3mm]{\expanded{\theschool(logo)}}};%
   \draw[thick] ($(current page.north west) + (1cm,-4.1cm)$) -- ++(\paperwidth-2cm,0cm);%
   \node[anchor=north west] at ($(current page.north west) + (96.45mm,-11.4mm)$)
-    {\fontsize{14}{14}\sffamily\makecell[tl]{\ToUppercase{\thedepartmentofstring(\@LANG@COVER)}
-      \printdwithvspace{\ToUppercase{\thedepartment(\@LANG@COVER)}}}};%
+    {\fontsize{14}{14}\sffamily\makecell[tl]{\ToUppercase{\GetDepartmentofstring(\@LANG@COVER)}
+      \printdwithvspace{\ToUppercase{\GetDepartment(\@LANG@COVER)}}}};%
 }
 
 % Company logo

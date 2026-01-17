@@ -195,7 +195,7 @@
     at ($(current page.north west) + (96.45mm,-11.4mm)$)
     { \fontsize{14}{14}\sffamily%
       \ToUppercase{\thedepartmentofstring(\@LANG@COVER)}
-      \printdwithvspace{\ToUppercase{\thedepartment(\@LANG@COVER)}}
+      \printdwithvspace{\ToUppercase{\GetDepartment(\@LANG@COVER)}}
     };
 }
 

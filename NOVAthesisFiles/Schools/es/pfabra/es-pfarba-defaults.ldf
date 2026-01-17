@@ -170,7 +170,7 @@
 % Department
 % \ntAddToCoverTikz[anchor=north west]($(current page.north west) + (96.45mm,11.4mm)$){1-1,2-1}{%
 %   \fontsize{14}{14}\sffamily%
-%   \makecell[tl]{\ToUppercase{\thedepartment(\@LANG@COVER)}}%
+%   \makecell[tl]{\ToUppercase{\GetDepartment(\@LANG@COVER)}}%
 % }
 
 % -------------------------------------------------------------------------------
@@ -267,7 +267,7 @@
 %   \raisebox{9mm}{%
 %   \begin{minipage}[b]{9cm}%
 %     \fontsize{14}{14}\selectfont%
-%     \ToUppercase{\thedepartment(\@LANG@COVER)}%
+%     \ToUppercase{\GetDepartment(\@LANG@COVER)}%
 %   \end{minipage}%
 %   }\\[4ex]%
 %   \hrule width 19cm%

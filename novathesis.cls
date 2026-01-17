@@ -1436,7 +1436,7 @@
 
 \newdata{university}
 \newdata{school}
-\newdata{department}
+% \newdata{department}
 
 \newdata{doctitle}
 
@@ -1637,14 +1637,13 @@
 }%
 
 
-\bkmstring(1-1)={\thebkmstring(cover,\@LANG@MAIN)}
-\bkmstring(1-2)={\thebkmstring(incover,\@LANG@MAIN)}
-\bkmstring(2-1)={\thebkmstring(frontpage,\@LANG@MAIN)}
-\bkmstring(2-2)={\thebkmstring(infrontpage,\@LANG@MAIN)}
-\bkmstring(N-1)={\thebkmstring(inbackcover,\@LANG@MAIN)}
-\bkmstring(N-2)={\thebkmstring(backcover,\@LANG@MAIN)}
-\bkmstring(spine)={\thebkmstring(spine,\@LANG@MAIN)}
-
+\bkmstring(1-1)   = {\thebkmstring(cover,\@LANG@MAIN)}
+\bkmstring(1-2)   = {\thebkmstring(incover,\@LANG@MAIN)}
+\bkmstring(2-1)   = {\thebkmstring(frontpage,\@LANG@MAIN)}
+\bkmstring(2-2)   = {\thebkmstring(infrontpage,\@LANG@MAIN)}
+\bkmstring(N-1)   = {\thebkmstring(inbackcover,\@LANG@MAIN)}
+\bkmstring(N-2)   = {\thebkmstring(backcover,\@LANG@MAIN)}
+\bkmstring(spine) = {\thebkmstring(spine,\@LANG@MAIN)}
 
 \options{/@nt/lang/loaded/.expanded=\@LANG@LOADED}
 
@@ -1684,11 +1683,68 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% DEFINITIONS FOR THE REMINDER OF CUSTOMIZATION STUFF
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % --------------------------------------------------------
 % Department
-\def\ntdepartment{\@ifstar{\@ntdepartmentifundef}{\@ntdepartment}}
-\def\@ntdepartmentifundef(#1)#2{\ifdatadefined{department}(#1){}{\@ntdepartment(#1){#2}}}
-\def\@ntdepartment(#1)#2{\department(#1):={#2}}
+%============================================================
+\ExplSyntaxOn
+
+\NewMemStore{Department}
+
+% 1. The Public Command
+% s = star (*)                 <= only define if undefined
+% r() = required ID in parens  <= the lang code
+% m = mandatory value          <= the name of the department
+\NewDocumentCommand {\ntdepartment} { s r() m }
+  {
+    % We pass the star status (boolean) and expanded arguments to the internal logic
+    \nova_process_department:nee { #1 } { #2 } { #3 }
+  }
+
+% 2. Internal Logic
+\cs_new_protected:Npn \nova_process_department:nnn #1 #2 #3
+  {
+    % Handle the optional ID: if empty/NoValue, use 'default'
+    \tl_set:Nn \l_tmpa_tl { #2 }
+    % \quark_if_no_value:NT \l_tmpa_tl { \tl_set:Nn \l_tmpa_tl { default } }
+
+    % Logic Branching
+    \bool_if:nTF { #1 }
+      {
+        % Starred version: Only set if NOT already defined
+        % We check if the 'department' data for this ID is empty/unset
+        \__mem_if_unset:nnT { Department } { \l_tmpa_tl }
+          { \MemSet { Department } { \l_tmpa_tl } { #3 } }
+      }
+      {
+        % Unstarred version: Set/Overwrite regardless
+        \MemSet { Department } { \l_tmpa_tl } { #3 }
+      }
+  }
+
+% 3. Helper to check if data is undefined/empty
+% (Adjust this if your \MemSet uses a different internal storage check)
+% \prg_new_conditional:Npnn \nova_if_data_unset:nn #1 #2 { p, T, F, TF }
+%   {
+%     % We expand the result of \MemGet to check if it's empty
+%     \tl_if_empty:eTF { \MemGet{#1}{#2} }
+%       { \prg_return_true:  }
+%       { \prg_return_false: }
+%   }
+
+% 4. Generate expansion variants
+\cs_generate_variant:Nn \nova_process_department:nnn { nee }
+
+\ExplSyntaxOff
+
+
+
+%
+%
+%
+% \def\ntdepartment{\@ifstar{\@ntdepartmentifundef}{\@ntdepartment}}
+% \def\@ntdepartmentifundef(#1)#2{\ifdatadefined{department}(#1){}{\@ntdepartment(#1){#2}}}
+% \def\@ntdepartment(#1)#2{\department(#1):={#2}}
 
 % --------------------------------------------------------
 % Degree
@@ -1784,6 +1840,7 @@
 
 %============================================================
 % Date and month
+%============================================================
 
 % \babelmonthname{<1..12>} → localized month name (current babel language)
 \newcommand{\babelmonthname}[1]{%
@@ -1918,11 +1975,27 @@
 % Define the 'ee' variant to force expansion of both arguments
 \cs_generate_variant:Nn \__nova_process_iso_date:nn { ee }
 
+% Month number to month name using babel
+\cs_new:Npn \nova_month_to_text:n #1
+  {
+    % \int_eval:n ensures leading zeros (like 09) are handled correctly
+    % \int_to_roman:n converts the number to lowercase roman (i, ii, iii...)
+    % \use:c builds the control sequence name and executes it
+    \use:c { month \int_to_roman:n { \int_eval:n { #1 } } name }
+  }
+
+\NewDocumentCommand{\monthtotext}{ O{\month} }
+  {
+    \nova_month_to_text:n { #1 }
+  }
+
 \ExplSyntaxOff
 
 
 
 \NewMemStore{DocDate}
+
+\let\ntdate\SetDateISO
 \SetDateISO(submission){2000-01-31}
 \SetDateISO(exam){2000-01-31}
 
@@ -1959,6 +2032,7 @@
 
 %============================================================
 % Author identification
+%============================================================
 \newdata{docauthor}
 \docauthor(name):={Author Name}
 \docauthor(name,short):={Author Short Name}
@@ -1987,7 +2061,6 @@
 \ntdegreename(\@LANG@COVER){\thedefaultntdegreename(\@LANG@COVER)}
 \ntspecialization(\@LANG@COVER){\thedefaultntspecialization(\@LANG@COVER)}
 \ntauthordegree(\@LANG@COVER){\thedefaultntauthordegree(\@LANG@COVER)}
-
 
 
 %============================================================

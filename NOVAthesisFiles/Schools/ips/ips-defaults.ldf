@@ -15,8 +15,7 @@
 \university(it):={Polytechnic Institute of Setúbal}
 
 % Department
-\department(pt):={Área Departamental de \themajorfield(pt)}
-\department(en):={Department of \themajorfield(en)}
+\departmentofstring(pt)         := {Área Departamental de}
 
 % Comiittee printing order
 \committeeorder():={c,r,a,m}%
