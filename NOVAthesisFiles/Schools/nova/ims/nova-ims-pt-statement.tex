@@ -25,9 +25,9 @@ Declaro ainda que tenho conhecimento das Regras de Conduta e do Código de Honra
 
 \bigskip
 
-\IfStrEq{\thentdocdate(exam)}{\thentdocdate(default)}{\def\@DATE{submission}}{\def\@DATE{exam}}
+\IfStrEq{\GetDocDate(exam)}{\GetDocDate(default)}{\def\@DATE{submission}}{\def\@DATE{exam}}
 
-Lisboa, \printisodate{\thentdocdate(\@DATE,year)-\thentdocdate(\@DATE,month)-\thentdocdate(\@DATE,day)}
+Lisboa, \printisodate{\GetDocDate(\@DATE,year)-\GetDocDate(\@DATE,month)-\GetDocDate(\@DATE,day)}
 
 \endgroup
 \clearforchapter

@@ -156,7 +156,7 @@ Mestre em Engenharia Biomédica}
   \fontsize{11}{11}\selectfont%
   \iftoggle{/novathesis/print/timestamp}{%
     \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}%
-                 {\printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}}%
-  }{\printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}}%
+                 {\printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
+  }{\printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
 }
 

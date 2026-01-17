@@ -62,7 +62,7 @@ for the Degree of \emph{\thedegreename(en)}}
 
 % \spine(author)={\thedocauthor(name)}
 \spine(title)={\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}
-% \spine(date)={\thentdocdate(submission,year)}
+% \spine(date)={\GetDocDate(submission,year)}
 \spine(title,font)={\bfseries\itshape}
 
 
@@ -246,7 +246,7 @@ for the Degree of \emph{\thedegreename(en)}}
 % Date
 \ntaddtocover[vspace=1]{2-1}{%
   \fontsize{11}{11}\selectfont
-    \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}
+    \printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}
 }
 
 

@@ -116,7 +116,7 @@
 % Date
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont
-    \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}%
+    \printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}%
 }
 
 % % Final space

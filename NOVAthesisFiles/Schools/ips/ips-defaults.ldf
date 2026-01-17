@@ -25,7 +25,7 @@
 \spine(logo)={ips-logo}
 % \spine(author)={\thedocauthor(name,short)}
 % \spine(title)={\thedoctitle(\@LANG@COVER,main,plain)}
-% \spine(year)={\thentdocdate(year)}
+% \spine(year)={\GetDocDate(year)}
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
@@ -129,7 +129,7 @@
   \hfill%
   \begin{minipage}[t]{\@rightcol}%
     \fontsize{10}{10}\selectfont%
-    \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}%
+    \printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}%
   \end{minipage}%
 }
 

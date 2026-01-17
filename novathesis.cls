@@ -1859,36 +1859,102 @@
 % }
 
 
+\ExplSyntaxOn
 
-\newdata{ntdocdate}
+% 1. Define the message
+\msg_new:nnnn { date } { invalid-format }
+  { Invalid~ISO~date~format:~'#1'. }
+  { The~date~must~be~YYYY-MM~or~YYYY-MM-DD. }
 
-\def\ntdate{%
-  \@ifnextchar({\@ntdate@i}{\@ntdate@i(submission)}%
-}
+% 2. The Public Entry Point
+% We expand #1 and #2 immediately using the :ee variant
+\NewDocumentCommand{\SetDateISO}{ d() m }
+  {
+    \__nova_process_iso_date:ee { #1 } { #2 }
+  }
 
-% \usepackage{pgfcalendar} % For converting month names
+% 3. The Internal Logic
+\tl_new:N \l_tmp_year_tl
+\tl_new:N \l_tmp_month_tl
 
-\newcommand{\monthtotext}[1][\month]{\csuse{month\romannumeral#1 name}}
+\cs_new_protected:Npn \__nova_process_iso_date:nn #1 #2
+  {
+    % Handle the case where #1 (the optional ID) is not provided
+    \tl_set:Nn \l_tmpa_tl { #1 }
+    \quark_if_no_value:NT \l_tmpa_tl { \tl_set:Nn \l_tmpa_tl { default } }
 
-\def\@ntdate@i(#1)#2{%
-  \StrCut{#2}{-}\@NTDY\@NTDM%
-  \StrCut{\@NTDM}{-}\@NTDM\@NTDD%
-  \ntdocdate(#1):={#2}%
-  \ntdocdate(#1,year):={\@NTDY}%
-  \ntdocdate(#1,month):={\@NTDM}%
-  \ntdocdate(#1,day,0):={\@NTDD}%
-  \IfBeginWith{\@NTDD}{0}{\StrGobbleLeft{\@NTDD}{1}[\@NTDDNZ]}{\edef\@NTDDNZ{\@NTDD}}%
-  \ntdocdate(#1,day):={\@NTDDNZ}%
-  % \typeout{NTD(#1) Y=[\@NTDY] M=[\@NTDM] D=[\@NTDD]}\NTDATE%
-  \@for\myi:={year,month,day}\do{%
-    \IfInteger{\thentdocdate(#1,\myi)}{}
-              {\ClassError{The \myi\ in \string\ntdocdate(#1){#2} is not a number!}{}{}}%
-  }%
-  \ntdocdate(#1,month,text):={\monthtotext[\@NTDM]}%
-}
-\ntdocdate(default):={2000-09-01}
-\ntdate(submission){\thentdocdate(default)}
-\ntdate(exam){\thentdocdate(default)}
+    % 1. Validate syntax on the expanded string #2
+    \regex_match:nnTF { ^\d{4}-\d{2}(-\d{2})?$ } { #2 }
+      {
+        % 2. Split ISO string into a sequence
+        \seq_set_split:Nnn \l_tmpa_seq { - } { #2 }
+
+        % 3. Access components
+        \tl_set:Nx \l_tmp_year_tl  { \seq_item:Nn \l_tmpa_seq { 1 } }
+        \tl_set:Nx \l_tmp_month_tl { \seq_item:Nn \l_tmpa_seq { 2 } }
+
+        % 4. Global/Main storage (using our resolved ID in \l_tmpa_tl)
+        \MemSet{DocDate}{\l_tmpa_tl}{#2}
+        \MemSet{DocDate}{\l_tmpa_tl,year}{\l_tmp_year_tl}
+        \MemSet{DocDate}{\l_tmpa_tl,month}{\l_tmp_month_tl}
+
+        % 5. Check if Day exists (Fixed: \int_compare:nNnTF)
+        \int_compare:nNnTF { \seq_count:N \l_tmpa_seq } = { 3 }
+          {
+            \MemSet{DocDate}{\l_tmpa_tl,day}{ \int_eval:n { \seq_item:Nn \l_tmpa_seq { 3 } } }
+          }
+          {
+            \MemSet{DocDate}{\l_tmpa_tl,day}{}
+          }
+
+        % 6. Call monthtotext
+        \MemSet{DocDate}{\l_tmpa_tl,month,text}{ \monthtotext[\l_tmp_month_tl] }
+      }
+      {
+        \msg_error:nnn { date } { invalid-format } { #2 }
+      }
+  }
+
+% Define the 'ee' variant to force expansion of both arguments
+\cs_generate_variant:Nn \__nova_process_iso_date:nn { ee }
+
+\ExplSyntaxOff
+
+
+
+\NewMemStore{DocDate}
+\SetDateISO(submission){2000-01-31}
+\SetDateISO(exam){2000-01-31}
+
+% \newdata{ntdocdate}
+%
+% \def\ntdate{%
+%   \@ifnextchar({\@ntdate@i}{\@ntdate@i(submission)}%
+% }
+%
+% % \usepackage{pgfcalendar} % For converting month names
+%
+% \newcommand{\monthtotext}[1][\month]{\csuse{month\romannumeral#1 name}}
+%
+% \def\@ntdate@i(#1)#2{%
+%   \StrCut{#2}{-}\@NTDY\@NTDM%
+%   \StrCut{\@NTDM}{-}\@NTDM\@NTDD%
+%   \SetDocDate(#1)={#2}%
+%   \SetDocDate(#1,year)={\@NTDY}%
+%   \SetDocDate(#1,month)={\@NTDM}%
+%   \SetDocDate(#1,day,0)={\@NTDD}%
+%   \IfBeginWith{\@NTDD}{0}{\StrGobbleLeft{\@NTDD}{1}[\@NTDDNZ]}{\edef\@NTDDNZ{\@NTDD}}%
+%   \ntdocdate(#1,day):={\@NTDDNZ}%
+%   % \typeout{NTD(#1) Y=[\@NTDY] M=[\@NTDM] D=[\@NTDD]}\NTDATE%
+%   \@for\myi:={year,month,day}\do{%
+%     \IfInteger{\GetDocDate(#1,\myi)}{}
+%               {\ClassError{The \myi\ in \string\SetDocDate(#1){#2} is not a number!}{}{}}%
+%   }%
+%   \SetDocDate(#1,month,text)={\monthtotext[\@NTDM]}%
+% }
+% \SetDocDate(default)={2000-09-01}
+% \ntdate(submission){\GetDocDate(default)}
+% \ntdate(exam){\GetDocDate(default)}
 
 
 %============================================================
@@ -3785,7 +3851,7 @@
         {
           {\DIRSCHOOLS/\@UNIV/\@SCHL},
           {\DIRSCHOOLS/\@UNIV},
-          {\DIRNTFILES},
+          {\DIRSTYFILES},
         }
         {}
         {

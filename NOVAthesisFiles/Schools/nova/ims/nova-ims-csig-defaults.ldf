@@ -116,7 +116,7 @@
 
 \spine(author)={\thedocauthor(name)}
 \spine(title)={\thedoctitle(\@LANG@COVER,main,plain)}
-\spine(date)={\thentdocdate(submission,year)}
+\spine(date)={\GetDocDate(submission,year)}
 
 \spine(text,angle)={90}
 \spine(box,textcolor)={black}
@@ -302,7 +302,7 @@
 
 % Date
 \ntaddtocover[halign=c, vspace=2]{2-1}{%
-  \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}%
+  \printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}%
 }%
 
 

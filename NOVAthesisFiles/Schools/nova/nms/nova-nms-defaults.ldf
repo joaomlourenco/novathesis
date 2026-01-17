@@ -106,7 +106,7 @@
 
 % \spine(author)={\thedocauthor(name)}
 % \spine(title)={\thedoctitle(\@LANG@COVER,main,plain)}
-% \spine(date)={\thentdocdate(submission,year)}
+% \spine(date)={\GetDocDate(submission,year)}
 \spine(logo)={logo-novanms}
 
 \IfStrEq{\@DEGREEACR}{}{%
@@ -459,7 +459,7 @@
 % DATE
 \ntaddtocover[halign=c, vspace=1]{2-1}{%
   \fontsize{11}{11}\selectfont%
-  \printisodate{\thentdocdate(submission,year)-\thentdocdate(submission,month)}%
+  \printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
