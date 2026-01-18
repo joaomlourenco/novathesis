@@ -315,7 +315,7 @@
     {\includegraphics[width=35.3mm]{\expanded{\theschool(logo)}}};%
   \draw[thick] ($(current page.north west) + (1cm,-4.1cm)$) -- ++(\paperwidth-2cm,0cm);%
   \node[anchor=north west] at ($(current page.north west) + (96.45mm,-11.4mm)$)
-    {\fontsize{14}{14}\sffamily\makecell[tl]{\ToUppercase{\GetDepartmentofstring(\@LANG@COVER)}
+    {\fontsize{14}{14}\sffamily\makecell[tl]{\ToUppercase{\thedepartmentofstring(\@LANG@COVER)}
       \printdwithvspace{\ToUppercase{\GetDepartment(\@LANG@COVER)}}}};%
 }
 

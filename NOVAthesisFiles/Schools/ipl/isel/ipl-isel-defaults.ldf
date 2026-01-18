@@ -98,7 +98,7 @@
   \fontsize{14}{14}\selectfont%
   \textbf{\ToUppercase{\theschool(\@LANG@COVER)}}\\%
   \fontsize{14}{14}\selectfont%
-  \textbf{\ToUppercase{\GetDepartmentofstring(\@LANG@COVER)}}
+  \textbf{\ToUppercase{\thedepartmentofstring(\@LANG@COVER)}}
   \textbf{\ToUppercase{\GetDepartment(\@LANG@COVER)}}%
 }
 
