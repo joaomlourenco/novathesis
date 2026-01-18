@@ -40,7 +40,7 @@
 
 \ifdocprovisional{\ntsetup{docstatus=final}}{}
 \ifmaindoc{\ifdocfinal{\ntaddfile{cover}[1]{\DIRSCHOOLS/uminho/cover-final.tex}}{}}{}
-\ntsetup{spine/layout=off}
+\ntsetup{spine/layout=false}
 
 % --------------------------------------------------------
 % PRINT ORDER FOR frontmatter AND mainmatter

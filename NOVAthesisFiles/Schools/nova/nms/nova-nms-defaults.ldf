@@ -32,7 +32,7 @@
 }
 
 \ntbibsetup{style=apa}
-\ntsetup{spine/layout=off}
+\ntsetup{spine/layout=false}
 \AtEndPreamble{\let\cite\parencite}
 
 
