@@ -26,8 +26,8 @@
 
 
 % ITQB-NOVA specific customization
-\AtBeginDocument{% set paper as b5paper
-  \newstocksize{height=250mm,width=176mm}%
+\AddToHook{begindocument/end}{%
+  \newstocksize{layout=b5paper}%
 }
 
 \openany
