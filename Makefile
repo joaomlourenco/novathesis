@@ -69,7 +69,7 @@ BUILD:=.Build/build.py
 
 #————————————————————————————————————————————————————————————————————————————
 # extract version and date of the template
-VERSION_FILE=NOVAthesisFiles/nt-version.sty
+VERSION_FILE=NOVAthesisFiles/StyFiles/nt-version.sty
 
 VERSION		= $(shell awk -F'[{}]' '/\\novathesisversion/ {print $$4; exit}' '$(VERSION_FILE)')
 DATE		= $(shell awk -F'[{}]' '/\\novathesisdate/    {print $$4; exit}' '$(VERSION_FILE)')
@@ -317,8 +317,6 @@ gclean:
 
 #————————————————————————————————————————————————————————————————————————————
 # File containing version info
-VERSION_FILE = NOVAthesisFiles/nt-version.sty
-
 .PHONY: bump0 bump1 bump2 bump3
 bump0 bump1 bump2 bump3:
 ifneq ($@,bump0)
@@ -360,15 +358,71 @@ custom:
 #############################################################################
 # BUILD
 #############################################################################
-.PHONY: build build-en build-phd-final-en build-pt build-phd-final-pt
-build: build-en
 
-build-en build-phd-final-en: validate-config check-env check-build
-	$(BUILD) $(SCHL) --mode 1 --lang en $(BFLAGS)
+# Default values for build target
+# 1. Use a dot (.) instead of slash (/) for the Make target defaults
+DEFAULT_SCHL := nova.fct
+DEFAULT_TYP := phd
+DEFAULT_LNG := en
 
-build-pt build-phd-final-pt: validate-config check-env check-build
-	$(BUILD) $(SCHL) --mode 1 --lang pt $(BFLAGS)
+# ... (comments) ...
 
+.PHONY: build
+build: build-$(DEFAULT_SCHL)-$(DEFAULT_TYP)-$(DEFAULT_LNG)
+
+build-%: 
+	@echo "=== Parsing build target: build-$* ==="
+	$(eval PATTERN := $(subst .o,,$*))
+	$(eval PARTS := $(subst -, ,$(PATTERN)))
+	$(eval WORD_COUNT := $(words $(PARTS)))
+	@# Logic to parse arguments
+	@if [ "$(WORD_COUNT)" = "3" ]; then \
+		SCHL=$(word 1,$(PARTS)); \
+		TYP=$(word 2,$(PARTS)); \
+		LNG=$(word 3,$(PARTS)); \
+	elif [ "$(WORD_COUNT)" = "2" ]; then \
+		SCHL=$(DEFAULT_SCHL); \
+		TYP=$(word 1,$(PARTS)); \
+		LNG=$(word 2,$(PARTS)); \
+	elif [ "$(WORD_COUNT)" = "1" ]; then \
+		SCHL=$(DEFAULT_SCHL); \
+		TYP=$(DEFAULT_TYP); \
+		LNG=$(word 1,$(PARTS)); \
+	else \
+		echo "Error: Invalid format '$*'"; \
+		exit 1; \
+	fi; \
+	\
+	FINAL_SCHL=$$(echo $$SCHL | tr '.' '/'); \
+	\
+	echo "=== Building ==="; \
+	echo "SCHL=$$FINAL_SCHL, TYP=$$TYP, LNG=$$LNG"; \
+	echo "Command: $(BUILD) $$FINAL_SCHL --mode 1 --docstatus final --doctype $$TYP --lang $$LNG -bdir - $(BFLAGS)";\
+	$(BUILD) $$FINAL_SCHL --mode 1 --docstatus final --doctype $$TYP --lang $$LNG -bdir - $(BFLAGS)
+
+
+
+# Pattern rule for silently building documents
+# Usage: make sbuild[[-<school>]-<doctype>]-<lang>
+# Examples: make sbuild
+# sbuild-%: validate-config check-env check-build
+# 	@echo "Building for school: $(SCHL)"
+# 	$(eval PARTS := $(subst -, ,$*))
+# 	$(eval WORD_COUNT := $(words $(PARTS)))
+# 	@if [ "$(WORD_COUNT)" = "1" ]; then \
+# 		DTYPE=phd; \
+# 		LNG=$(PARTS); \
+# 	elif [ "$(WORD_COUNT)" = "2" ]; then \
+# 		DTYPE=$(word 1,$(PARTS)); \
+# 		LNG=$(word 2,$(PARTS)); \
+# 	else \
+# 		echo "Error: Invalid format '$*'. Expected '$(firstword $(subst -, ,$@))-lang' or '$(firstword $(subst -, ,$@))-doctype-lang'"; \
+# 		exit 1; \
+# 	fi; \
+# 	echo "Building with DTYPE=$$DTYPE, LNG=$$LNG"; \
+# 	$(BUILD) $(SCHL) --rename-pdf --mode 1 --docstatus final --doctype $$DTYPE --lang $$LNG -bdir - $(BFLAGS)
+#
+# .PHONY: build-% build-debug-%
 
 
 #############################################################################
