@@ -2059,8 +2059,6 @@
 \nttitle(sub,\@LANG@COVER){\thedefaultntsubtitle(\@LANG@COVER)}
 \ntdepartment(\@LANG@COVER){\thedefaultntdepartment(\@LANG@COVER)}
 \ntdegreename(\@LANG@COVER){\thedefaultntdegreename(\@LANG@COVER)}
-\ntspecialization(\@LANG@COVER){\thedefaultntspecialization(\@LANG@COVER)}
-\ntauthordegree(\@LANG@COVER){\thedefaultntauthordegree(\@LANG@COVER)}
 
 
 %============================================================
