@@ -27,13 +27,14 @@
   c_rq          = {Formulering\ af\ forskningsspørgsmål\ og\ hypoteser},
   c_feas        = {Vurdering\ af\ gennemførlighed\ og\ risiko},
   c_pre         = {Indledende\ hypotesetest},
-  c_sim         = {Simulated\ debate\ and\ argument\ testing},
+  c_sim         = {Simuleret\ debat\ og\ argumenttest},
 % 2 — Literature Review
   l_srch        = {Litteratursøgning\ og\ systematisering},
-  l_sum         = {Summarization\ of\ Source\ Material},
-  l_map         = {Concept\ Mapping\ and\ Systematization},
+  l_sum         = {Resumé\ af\ kildemateriale},
+  l_map         = {Konceptkortlægning\ og\ systematisering},
   l_pat         = {Analyse\ af\ markedstendenser\ og/eller\ patentmiljø},
   l_gaps        = {Vurdering\ af\ nyhedsværdi\ og\ identifikation\ af\ huller},
+  l_trans       = {Tværsproglig\ litteraturforståelse},
 % 3 — Methodology
   m_des         = {Forskningsdesign},
   m_proto       = {Udvikling\ af\ eksperimentelle\ eller\ forskningsprotokoller},
@@ -41,9 +42,10 @@
 % 4 — Software Development and Automation
   s_gen         = {Kodegenerering},
   s_opt         = {Kodeoptimering},
-  s_debug       = {Debugging\ and\ Repair},
+  s_debug       = {Fejlfinding\ og\ reparation},
   s_auto        = {Procesautomatisering},
   s_algs        = {Oprettelse\ af\ algoritmer},
+  s_doc         = {Kodedokumentation\ og\ kommentarer},
 % 5 — Data Management
   d_coll        = {Dataindsamling},
   d_val         = {Validering},
@@ -52,23 +54,24 @@
   d_anl         = {Dataanalyse},
   d_viz         = {Visualisering},
   d_rep         = {Reproducerbarhedstest},
-  d_lbl         = {Data\ labeling\ and\ annotation\ assistance},
-  d_syn         = {Synthetic\ data\ generation},
-  d_anon        = {De-identification\ and\ anonymization\ support},
+  d_lbl         = {Hjælp\ til\ datamærkning\ og\ annotering},
+  d_syn         = {Generering\ af\ syntetiske\ data},
+  d_anon        = {Støtte\ til\ afidentificering\ og\ anonymisering},
+  d_trans       = {Lyd-til-tekst\ transkription\ og\ taleridentifikation},
 % 6 — Visuals and Multimedia
-  v_gen         = {Image\ and\ Diagram\ Generation},
-  v_edit        = {Image\ Enhancement\ and\ Editing},
-  v_chart       = {Chart\ and\ Graph\ Design},
+  v_gen         = {Generering\ af\ billeder\ og\ diagrammer},
+  v_edit        = {Billedforbedring\ og\ redigering},
+  v_chart       = {Design\ af\ diagrammer\ og\ grafer},
 % 7 — Writing and Editing
-  w_draft       = {Drafting\ Text},
-  w_poly        = {Polishing\ and\ Editing},
+  w_draft       = {Udarbejdelse\ af\ tekst},
+  w_poly        = {Pudsning\ og\ redigering},
   w_sum         = {Tekstresumé},
   w_con         = {Formulering\ af\ konklusioner},
   w_tone        = {Tilpasning\ og\ justering\ af\ følelsesmæssig\ tone},
   w_tra         = {Oversættelse},
   w_ref         = {Omformatering},
   w_prs         = {Pressemeddelelser\ og\ formidlingsmateriale},
-  w_title       = {Title\ Generation},
+  w_title       = {Titelgenerering},
 % 8 — Ethics Review
   e_bias        = {Biasanalyse\ og\ vurdering\ af\ diskrimination},
   e_risk        = {Etisk\ risikoanalyse},
@@ -81,5 +84,3 @@
   sup_rec       = {Anbefalinger},
   sup_pub       = {Publikationsstøtte},
 }
-
-

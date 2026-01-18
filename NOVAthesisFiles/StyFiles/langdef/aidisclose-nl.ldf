@@ -34,6 +34,7 @@
   l_map         = {Conceptmapping\ en\ systematisering},
   l_pat         = {Markt-/octrooilandschapsanalyse},
   l_gaps        = {Identificatie\ van\ hiaten\ en\ evaluatie\ van\ nieuwheid},
+  l_trans       = {Meertalig\ literatuurbegrip},
 % 3 — Methodology
   m_des         = {Onderzoeksontwerp},
   m_proto       = {Ontwikkeling\ van\ experimentele\ of\ onderzoeksprotocollen},
@@ -44,6 +45,7 @@
   s_debug       = {Debuggen\ en\ Reparatie},
   s_auto        = {Procesautomatisering},
   s_algs        = {Algoritmeontwerp},
+  s_doc         = {Codedocumentatie\ en\ het\ genereren\ van\ commentaar},
 % 5 — Data Management
   d_coll        = {Dataverzameling},
   d_val         = {Validatie},
@@ -55,6 +57,7 @@
   d_lbl         = {Ondersteuning\ bij\ datalabelling\ en\ annotatie},
   d_syn         = {Generatie\ van\ synthetische\ data},
   d_anon        = {Ondersteuning\ bij\ de-identificatie\ en\ anonimisering},
+  d_trans       = {Audio-naar-tekst\ transcriptie\ en\ sprekerherkenning},
 % 6 — Visuals and Multimedia
   v_gen         = {Afbeeldings-/diagramgeneratie\ (synthetisch)},
   v_edit        = {Verbetering\ en\ bewerking\ van\ afbeeldingen},
@@ -81,5 +84,3 @@
   sup_rec       = {Strategische\ Suggesties},
   sup_pub       = {Publicatieondersteuning},
 }
-
-

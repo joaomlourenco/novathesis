@@ -64,6 +64,7 @@
 \tl_new:N \g__gai_str_grp_eth_tl
 \tl_new:N \g__gai_str_grp_sup_tl
 
+
 % ---------------------------------------------------------
 % 1. Conceptualization
 % ---------------------------------------------------------
@@ -74,6 +75,7 @@
 \tl_new:N \g__gai_str_c_pre_tl
 \tl_new:N \g__gai_str_c_sim_tl
 
+
 % ---------------------------------------------------------
 % 2. Literature Review
 % ---------------------------------------------------------
@@ -82,6 +84,8 @@
 \tl_new:N \g__gai_str_l_map_tl
 \tl_new:N \g__gai_str_l_pat_tl
 \tl_new:N \g__gai_str_l_gaps_tl
+\tl_new:N \g__gai_str_l_trans_tl
+
 
 % ---------------------------------------------------------
 % 3. Methodology
@@ -98,6 +102,7 @@
 \tl_new:N \g__gai_str_s_debug_tl
 \tl_new:N \g__gai_str_s_auto_tl
 \tl_new:N \g__gai_str_s_algs_tl
+\tl_new:N \g__gai_str_s_doc_tl
 
 % ---------------------------------------------------------
 % 5. Data Management
@@ -109,6 +114,10 @@
 \tl_new:N \g__gai_str_d_anl_tl
 \tl_new:N \g__gai_str_d_viz_tl
 \tl_new:N \g__gai_str_d_rep_tl
+\tl_new:N \g__gai_str_d_lbl_tl
+\tl_new:N \g__gai_str_d_syn_tl
+\tl_new:N \g__gai_str_d_anon_tl
+\tl_new:N \g__gai_str_d_trans_tl
 
 % ---------------------------------------------------------
 % 6. Visuals and Multimedia
@@ -183,7 +192,9 @@
 
 \keys_define:nn { aidisclose / strings }
   {
-    % --- General Strings ---
+% ---------------------------------------------------------
+% General Strings
+% ---------------------------------------------------------
     tools_used    .tl_set:N = \g__gai_str_tools_used_tl,
     none_used     .tl_set:N = \g__gai_str_none_used_tl,
     declares      .tl_set:N = \g__gai_str_declares_tl,
@@ -196,81 +207,107 @@
     title_long    .tl_set:N = \g__gai_str_title_long_tl,
     title_short   .tl_set:N = \g__gai_str_title_short_tl,
     
-    % --- Group Titles ---
+% ---------------------------------------------------------
+% Group Titles
+% ---------------------------------------------------------
     grp_conc      .tl_set:N = \g__gai_str_grp_conc_tl,
-    grp_lit       .tl_set:N = \g__gai_str_grp_lit_tl,
+    grp_lit     .tl_set:N = \g__gai_str_grp_lit_tl,
     grp_meth      .tl_set:N = \g__gai_str_grp_meth_tl,
     grp_soft      .tl_set:N = \g__gai_str_grp_soft_tl,
     grp_data      .tl_set:N = \g__gai_str_grp_data_tl,
-    grp_vis       .tl_set:N = \g__gai_str_grp_vis_tl,
+    grp_vis     .tl_set:N = \g__gai_str_grp_vis_tl,
     grp_write     .tl_set:N = \g__gai_str_grp_write_tl,
-    grp_eth       .tl_set:N = \g__gai_str_grp_eth_tl,
-    grp_sup       .tl_set:N = \g__gai_str_grp_sup_tl,
+    grp_eth     .tl_set:N = \g__gai_str_grp_eth_tl,
+    grp_sup     .tl_set:N = \g__gai_str_grp_sup_tl,
 
-    % --- 1. Conceptualization ---
-    c_idea        .tl_set:N = \g__gai_str_c_idea_tl,
-    c_obj         .tl_set:N = \g__gai_str_c_obj_tl,
-    c_rq          .tl_set:N = \g__gai_str_c_rq_tl,
-    c_feas        .tl_set:N = \g__gai_str_c_feas_tl,
-    c_pre         .tl_set:N = \g__gai_str_c_pre_tl,
-    c_sim         .tl_set:N = \g__gai_str_c_sim_tl,
+% ---------------------------------------------------------
+% 1. Conceptualization
+% ---------------------------------------------------------
+    c_idea      .tl_set:N = \g__gai_str_c_idea_tl,
+    c_obj     .tl_set:N = \g__gai_str_c_obj_tl,
+    c_rq      .tl_set:N = \g__gai_str_c_rq_tl,
+    c_feas      .tl_set:N = \g__gai_str_c_feas_tl,
+    c_pre     .tl_set:N = \g__gai_str_c_pre_tl,
+    c_sim     .tl_set:N = \g__gai_str_c_sim_tl,
 
-    % --- 2. Literature Review ---
-    l_srch        .tl_set:N = \g__gai_str_l_srch_tl,
-    l_sum         .tl_set:N = \g__gai_str_l_sum_tl,
-    l_map         .tl_set:N = \g__gai_str_l_map_tl,
-    l_pat         .tl_set:N = \g__gai_str_l_pat_tl,
-    l_gaps        .tl_set:N = \g__gai_str_l_gaps_tl,
-    
-    % --- 3. Methodology ---
-    m_des         .tl_set:N = \g__gai_str_m_des_tl,
-    m_proto       .tl_set:N = \g__gai_str_m_proto_tl,
-    m_meth        .tl_set:N = \g__gai_str_m_meth_tl,
-    
-    % --- 4. Software Development ---
-    s_gen         .tl_set:N = \g__gai_str_s_gen_tl,
-    s_opt         .tl_set:N = \g__gai_str_s_opt_tl,
-    s_debug       .tl_set:N = \g__gai_str_s_debug_tl,
-    s_auto        .tl_set:N = \g__gai_str_s_auto_tl,
-    s_algs        .tl_set:N = \g__gai_str_s_algs_tl,
-    
-    % --- 5. Data Management ---
-    d_coll        .tl_set:N = \g__gai_str_d_coll_tl,
-    d_val         .tl_set:N = \g__gai_str_d_val_tl,
-    d_cln         .tl_set:N = \g__gai_str_d_cln_tl,
-    d_cur         .tl_set:N = \g__gai_str_d_cur_tl,
-    d_anl         .tl_set:N = \g__gai_str_d_anl_tl,
-    d_viz         .tl_set:N = \g__gai_str_d_viz_tl,
-    d_rep         .tl_set:N = \g__gai_str_d_rep_tl,
-    
-    % --- 6. Visuals and Multimedia ---
-    v_gen         .tl_set:N = \g__gai_str_v_gen_tl,
-    v_edit        .tl_set:N = \g__gai_str_v_edit_tl,
-    v_chart       .tl_set:N = \g__gai_str_v_chart_tl,
+% ---------------------------------------------------------
+% 2. Literature Review
+% ---------------------------------------------------------
+    l_srch      .tl_set:N = \g__gai_str_l_srch_tl,
+    l_sum     .tl_set:N = \g__gai_str_l_sum_tl,
+    l_map     .tl_set:N = \g__gai_str_l_map_tl,
+    l_pat     .tl_set:N = \g__gai_str_l_pat_tl,
+    l_gaps      .tl_set:N = \g__gai_str_l_gaps_tl,
+    l_trans     .tl_set:N = \g__gai_str_l_trans_tl,
 
-    % --- 7. Writing and Editing ---
-    w_draft       .tl_set:N = \g__gai_str_w_draft_tl,
-    w_poly        .tl_set:N = \g__gai_str_w_poly_tl,
-    w_sum         .tl_set:N = \g__gai_str_w_sum_tl,
-    w_con         .tl_set:N = \g__gai_str_w_con_tl,
-    w_tone        .tl_set:N = \g__gai_str_w_tone_tl,
-    w_tra         .tl_set:N = \g__gai_str_w_tra_tl,
-    w_ref         .tl_set:N = \g__gai_str_w_ref_tl,
-    w_prs         .tl_set:N = \g__gai_str_w_prs_tl,
-    w_title       .tl_set:N = \g__gai_str_w_title_tl,
+% ---------------------------------------------------------
+% 3. Methodology
+% ---------------------------------------------------------
+    m_des     .tl_set:N = \g__gai_str_m_des_tl,
+    m_proto     .tl_set:N = \g__gai_str_m_proto_tl,
+    m_meth      .tl_set:N = \g__gai_str_m_meth_tl,
 
-    % --- 8. Ethics Review ---
-    e_bias        .tl_set:N = \g__gai_str_e_bias_tl,
-    e_risk        .tl_set:N = \g__gai_str_e_risk_tl,
-    e_comp        .tl_set:N = \g__gai_str_e_comp_tl,
-    e_conf        .tl_set:N = \g__gai_str_e_conf_tl,
-    
-    % --- 9. Critique and Feedback ---
-    sup_qa        .tl_set:N = \g__gai_str_sup_qa_tl,
-    sup_trd       .tl_set:N = \g__gai_str_sup_trd_tl,
-    sup_lim       .tl_set:N = \g__gai_str_sup_lim_tl,
-    sup_rec       .tl_set:N = \g__gai_str_sup_rec_tl,
-    sup_pub       .tl_set:N = \g__gai_str_sup_pub_tl,
+% ---------------------------------------------------------
+% 4. Software Development and Automation
+% ---------------------------------------------------------
+    s_gen     .tl_set:N = \g__gai_str_s_gen_tl,
+    s_opt     .tl_set:N = \g__gai_str_s_opt_tl,
+    s_debug     .tl_set:N = \g__gai_str_s_debug_tl,
+    s_auto      .tl_set:N = \g__gai_str_s_auto_tl,
+    s_algs      .tl_set:N = \g__gai_str_s_algs_tl,
+    s_doc     .tl_set:N = \g__gai_str_s_doc_tl,
+
+% ---------------------------------------------------------
+% 5. Data Management
+% ---------------------------------------------------------
+    d_coll      .tl_set:N = \g__gai_str_d_coll_tl,
+    d_val     .tl_set:N = \g__gai_str_d_val_tl,
+    d_cln     .tl_set:N = \g__gai_str_d_cln_tl,
+    d_cur     .tl_set:N = \g__gai_str_d_cur_tl,
+    d_anl     .tl_set:N = \g__gai_str_d_anl_tl,
+    d_viz     .tl_set:N = \g__gai_str_d_viz_tl,
+    d_rep     .tl_set:N = \g__gai_str_d_rep_tl,
+    d_lbl     .tl_set:N = \g__gai_str_d_lbl_tl,
+    d_syn     .tl_set:N = \g__gai_str_d_syn_tl,
+    d_anon      .tl_set:N = \g__gai_str_d_anon_tl,
+    d_trans     .tl_set:N = \g__gai_str_d_trans_tl,
+
+% ---------------------------------------------------------
+% 6. Visuals and Multimedia
+% ---------------------------------------------------------
+    v_gen     .tl_set:N = \g__gai_str_v_gen_tl,
+    v_edit      .tl_set:N = \g__gai_str_v_edit_tl,
+    v_chart     .tl_set:N = \g__gai_str_v_chart_tl,
+
+% ---------------------------------------------------------
+% 7. Writing and Editing
+% ---------------------------------------------------------
+    w_draft     .tl_set:N = \g__gai_str_w_draft_tl,
+    w_poly      .tl_set:N = \g__gai_str_w_poly_tl,
+    w_sum     .tl_set:N = \g__gai_str_w_sum_tl,
+    w_con     .tl_set:N = \g__gai_str_w_con_tl,
+    w_tone      .tl_set:N = \g__gai_str_w_tone_tl,
+    w_tra     .tl_set:N = \g__gai_str_w_tra_tl,
+    w_ref     .tl_set:N = \g__gai_str_w_ref_tl,
+    w_prs     .tl_set:N = \g__gai_str_w_prs_tl,
+    w_title     .tl_set:N = \g__gai_str_w_title_tl,
+
+% ---------------------------------------------------------
+% 8. Ethics Review
+% ---------------------------------------------------------
+    e_bias      .tl_set:N = \g__gai_str_e_bias_tl,
+    e_risk      .tl_set:N = \g__gai_str_e_risk_tl,
+    e_comp      .tl_set:N = \g__gai_str_e_comp_tl,
+    e_conf      .tl_set:N = \g__gai_str_e_conf_tl,
+
+% ---------------------------------------------------------
+% 9. Critique and Feedback
+% ---------------------------------------------------------
+    sup_qa      .tl_set:N = \g__gai_str_sup_qa_tl,
+    sup_trd     .tl_set:N = \g__gai_str_sup_trd_tl,
+    sup_lim     .tl_set:N = \g__gai_str_sup_lim_tl,
+    sup_rec     .tl_set:N = \g__gai_str_sup_rec_tl,
+    sup_pub     .tl_set:N = \g__gai_str_sup_pub_tl,
   }
 
 % =========================================================
@@ -503,6 +540,7 @@
     \TItem{l_map}    {\tl_use:N \g__gai_str_l_map_tl}
     \TItem{l_pat}    {\tl_use:N \g__gai_str_l_pat_tl}
     \TItem{l_gaps}   {\tl_use:N \g__gai_str_l_gaps_tl}
+    \TItem{l_trans}  {\tl_use:N \g__gai_str_l_trans_tl}
   }
   % --- 3. Methodology ---
   \TGroup{\tl_use:N \g__gai_str_grp_meth_tl}{
@@ -517,6 +555,7 @@
     \TItem{s_debug}  {\tl_use:N \g__gai_str_s_debug_tl}
     \TItem{s_auto}   {\tl_use:N \g__gai_str_s_auto_tl}
     \TItem{s_algs}   {\tl_use:N \g__gai_str_s_algs_tl}
+    \TItem{s_doc}    {\tl_use:N \g__gai_str_s_doc_tl} 
   }
   % --- 5. Data Management ---
   \TGroup{\tl_use:N \g__gai_str_grp_data_tl}{
@@ -527,6 +566,10 @@
     \TItem{d_anl}     {\tl_use:N \g__gai_str_d_anl_tl}
     \TItem{d_viz}     {\tl_use:N \g__gai_str_d_viz_tl}
     \TItem{d_rep}     {\tl_use:N \g__gai_str_d_rep_tl}
+    \TItem{d_lbl}     {\tl_use:N \g__gai_str_d_lbl_tl} 
+    \TItem{d_syn}     {\tl_use:N \g__gai_str_d_syn_tl} 
+    \TItem{d_anon}    {\tl_use:N \g__gai_str_d_anon_tl} 
+    \TItem{d_trans}   {\tl_use:N \g__gai_str_d_trans_tl}
   }
   % --- 6. Visuals and Multimedia ---
   \TGroup{\tl_use:N \g__gai_str_grp_vis_tl}{
@@ -538,13 +581,13 @@
   \TGroup{\tl_use:N \g__gai_str_grp_write_tl}{
     \TItem{w_draft}   {\tl_use:N \g__gai_str_w_draft_tl}
     \TItem{w_poly}    {\tl_use:N \g__gai_str_w_poly_tl}
+    \TItem{w_title}   {\tl_use:N \g__gai_str_w_title_tl}
     \TItem{w_sum}     {\tl_use:N \g__gai_str_w_sum_tl}
     \TItem{w_con}     {\tl_use:N \g__gai_str_w_con_tl}
+    \TItem{w_ref}     {\tl_use:N \g__gai_str_w_ref_tl}
     \TItem{w_tone}    {\tl_use:N \g__gai_str_w_tone_tl}
     \TItem{w_tra}     {\tl_use:N \g__gai_str_w_tra_tl}
-    \TItem{w_ref}     {\tl_use:N \g__gai_str_w_ref_tl}
     \TItem{w_prs}     {\tl_use:N \g__gai_str_w_prs_tl}
-    \TItem{w_title}   {\tl_use:N \g__gai_str_w_title_tl}
   }
   % --- 8. Ethics Review ---
   \TGroup{\tl_use:N \g__gai_str_grp_eth_tl}{
@@ -791,118 +834,4 @@
     \GAItoolsUsed { }
 }
 
-\NewDocumentCommand {\Documentation}
- {
-    % -----------------------------------------------------------------------------
-    % The block below is documentation text (not consumed by \GAIsetStrings).
-    % It is wrapped in \iffalse ... \fi so it does not affect compilation unless
-    % you intentionally enable it.
-    % -----------------------------------------------------------------------------
-    \section*{Revised group descriptions (clear phase + scope)}
-    \begin{itemize}
-      \item \textbf{Conceptualization}: Delegated ideation and problem-framing tasks \emph{before} executing the study (ideas, objectives, hypotheses, feasibility).
-      \item \textbf{Literature Review}: Delegated work using \emph{external sources} to find, digest, organize, and assess prior work and the surrounding landscape.
-      \item \textbf{Methodology}: Delegated design decisions about \emph{how} the study is conducted (design, protocols, methods).
-      \item \textbf{Software Development and Automation}: Delegated programming and workflow automation tasks (code writing, refactoring, debugging, pipelines).
-      \item \textbf{Data Management}: Delegated handling of data across the lifecycle (collection, cleaning, validation, analysis, reproducibility checks).
-      \item \textbf{Visuals and Multimedia}: Delegated creation or editing of \emph{non-text} artifacts (figures, diagrams, images, graphical design).
-      \item \textbf{Writing and Editing}: Delegated drafting and revision of prose and document assets (text, tone, translation, formatting, outreach).
-      \item \textbf{Ethics Review}: Delegated checks related to fairness, privacy/confidentiality, and compliance with ethical requirements.
-      \item \textbf{Quality Assurance}: Delegated critical review tasks intended to detect errors, weaknesses, or improvements across the work.
-      \item \textbf{Model and Prompt Operations}: Delegated work on prompting strategy, tool orchestration, retrieval setup, and model configuration.
-      \item \textbf{Evaluation and Verification}: Delegated design of evaluation criteria and workflows to verify correctness, robustness, and evidence.
-      \item \textbf{IP, Licensing and Legal Checks}: Delegated screening for IP/copyright issues and license compatibility concerns.
-      \item \textbf{Project and Administrative Support}: Delegated planning and administrative drafting tasks (project plans, proposals, slide content).
-    \end{itemize}
-    
-    \section*{Revised leaf descriptions (tight, boundary-aware)}
-    \begin{description}
-      \item[Conceptualization] \ 
-        \begin{description}
-          \item[c\_idea] Proposing candidate topics, angles, or solution directions (no commitment to final choice).
-          \item[c\_obj] Drafting/clarifying the main goal and success criteria.
-          \item[c\_rq] Proposing testable questions/hypotheses and their implications.
-          \item[c\_feas] Estimating resources, timelines, dependencies, and non-ethical risks.
-          \item[c\_pre] Suggesting quick sanity checks or toy analyses to decide whether to proceed (not final statistical validation).
-          \item[c\_sim] Stress-testing claims via counterarguments, alternative interpretations, and objections.
-        \end{description}
-    
-      \item[Literature Review] \ 
-        \begin{description}
-          \item[l\_srch] Generating search queries/keywords and identifying candidate sources.
-          \item[l\_sum] Condensing specific external sources into structured notes.
-          \item[l\_map] Organizing external work into themes, taxonomies, and comparisons.
-          \item[l\_pat] Summarizing external competitive/industry/patent context.
-          \item[l\_gaps] Identifying gaps and assessing novelty relative to external work (human verification implied).
-        \end{description}
-    
-      \item[Methodology] \ 
-        \begin{description}
-          \item[m\_des] Proposing study structure (variables, controls, sampling, evaluation).
-          \item[m\_proto] Drafting step-by-step procedures and experimental protocols.
-          \item[m\_meth] Recommending methods/models/analyses with assumptions and trade-offs.
-        \end{description}
-    
-      \item[Software Development and Automation] \ 
-        \begin{description}
-          \item[s\_gen] Writing code from specifications or examples (scripts, functions, tests).
-          \item[s\_opt] Improving structure/performance/readability without changing intended behavior.
-          \item[s\_debug] Diagnosing errors and proposing fixes (incl. failing tests).
-          \item[s\_auto] Building pipelines/workflows (batch runs, ETL, CI steps, templating).
-          \item[s\_algs] Proposing algorithmic logic/pseudocode/approach (distinct from coding it).
-        \end{description}
-    
-      \item[Data Management] \ 
-        \begin{description}
-          \item[d\_coll] Planning or drafting instruments/scripts to obtain data.
-          \item[d\_val] Detecting anomalies, schema issues, and sanity-check failures.
-          \item[d\_cln] Deduplication, normalization, missing-value handling, and transformations.
-          \item[d\_cur] Structuring datasets, metadata, documentation, and versioning plans.
-          \item[d\_anl] Assisting with analyses (stats, modeling, interpretation prompts).
-          \item[d\_viz] Creating plots directly from data (code-driven charts).
-          \item[d\_rep] Checking reruns, dependency capture, and replication scripts.
-          \item[d\_lbl] Assisting with labeling schemes, annotation guidelines, or label generation suggestions.
-          \item[d\_syn] Proposing or generating synthetic data for testing/training (with disclosure of synthetic origin).
-          \item[d\_anon] Assisting with de-identification/redaction strategies and privacy-preserving transforms.
-        \end{description}
-    
-      \item[Visuals and Multimedia] \ 
-        \begin{description}
-          \item[v\_gen] Creating diagrams/illustrations not directly rendered from data.
-          \item[v\_edit] Improving figures (cleanup, resolution, background, annotations).
-          \item[v\_chart] Improving readability and visual layout of figures (labels, typography, arrangement).
-        \end{description}
-    
-      \item[Writing and Editing] \ 
-        \begin{description}
-          \item[w\_draft] Writing initial prose from an outline or bullet points.
-          \item[w\_poly] Improving clarity, grammar, structure, and concision without changing meaning.
-          \item[w\_sum] Condensing sections/chapters you authored (not external papers).
-          \item[w\_con] Drafting conclusion text that synthesizes results and implications (still human-owned/verified).
-          \item[w\_tone] Changing voice/reading level/register for a target audience.
-          \item[w\_tra] Translating text between languages.
-          \item[w\_ref] Citation formatting, bibliography help, and style/LaTeX/Word formatting guidance.
-          \item[w\_prs] Creating non-technical summaries, outreach text, or media materials.
-          \item[w\_title] Proposing candidate titles/headings.
-        \end{description}
-    
-      \item[Ethics Review] \ 
-        \begin{description}
-          \item[e\_bias] Identifying potential disparate impact, representational harms, and fairness concerns.
-          \item[e\_risk] Enumerating ethical failure modes and mitigation ideas.
-          \item[e\_comp] Checking alignment with ethical policies/IRB requirements (as provided).
-          \item[e\_conf] Flagging sensitive data exposure risks and redaction needs.
-        \end{description}
-    
-      \item[Quality Assurance] \ 
-        \begin{description}
-          \item[sup\_qa] Structured critique as if reviewing (clarity, validity, missing citations, logic gaps).
-          \item[sup\_trd] Detecting patterns across your results/experiments/notes (not external market landscape).
-          \item[sup\_lim] Listing methodological/data/interpretation weaknesses and scope boundaries.
-          \item[sup\_rec] Proposing next steps, experiments, ablations, and alternative framings.
-          \item[sup\_pub] Venue fit guidance, submission checklisting, and response-to-reviewer drafting support.
-        \end{description}
-    
-    \end{description}
-  }
 \endinput

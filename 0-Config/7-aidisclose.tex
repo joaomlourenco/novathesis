@@ -23,59 +23,78 @@
 % and copy&paste here
 %—————————————————————————————————————————————————————————————————
 
-% --- Conceptualization ---
-\GAIactivate{c:idea}        % Idea generation
-\GAIactivate{c:objective}   % Defining the research objective
-\GAIactivate{c:rq}          % Formulating research questions and hypotheses
-% \GAIactivate{c:feas}        % Feasibility assessment and risk evaluation
-% \GAIactivate{c:pretest}     % Preliminary hypothesis testing
+% 1 — Conceptualization  
+% \GAIactivate{c_idea}        % Idea generation
+\GAIactivate{c_obj}         % Defining the research objective
+% \GAIactivate{c_rq}          % Formulating research questions and hypotheses
+\GAIactivate{c_feas}        % Feasibility assessment and risk evaluation
+% \GAIactivate{c_pre}         % Hypothesis viability assessment
+% \GAIactivate{c_sim}         % Simulated debate and argument testing
 
-% --- Literature Review ---
-\GAIactivate{l:search}      % Literature search and systematization
-\GAIactivate{l:write}       % Writing the literature review
-% \GAIactivate{l:patents}     % Market trends / patent environment
-% \GAIactivate{l:gaps}        % Novelty evaluation and gap identification
+% 2 — Literature Review
+% \GAIactivate{l_srch}        % Search and Discovery
+% \GAIactivate{l_sum}         % Literature summarization and synthesis
+\GAIactivate{l_map}         % Concept Mapping and Systematization
+% \GAIactivate{l_pat}         % Market/patent landscape analysis
+% \GAIactivate{l_gaps}        % Gap Identification and Novelty Evaluation
+% \GAIactivate{l_trans}       % Cross-lingual literature comprehension
 
-% --- Methodology ---
-\GAIactivate{m:design}      % Research design
-\GAIactivate{m:protocols}   % Experimental / research protocols
-% \GAIactivate{m:methods}     % Selection of research methods
+% 3 — Methodology
+% \GAIactivate{m_des}         % Experimental Design Optimization
+% \GAIactivate{m_proto}       % Development of experimental or research protocols
+\GAIactivate{m_meth}        % Methodological Instrument Selection
 
-% --- Software Development and Automation ---
-\GAIactivate{s:codegen}     % Code generation
-\GAIactivate{s:opt}         % Code optimization
-% \GAIactivate{s:auto}        % Process automation
-% \GAIactivate{s:algs}        % Algorithms for data analysis
+% 4 — Software Development and Automation
+% \GAIactivate{s_gen}         % Code Generation
+% \GAIactivate{s_opt}         % Refactoring and Optimization
+\GAIactivate{s_debug}       % Debugging and Repair
+\GAIactivate{s_auto}        % Process automation
+% \GAIactivate{s_algs}        % Algorithm design
+% \GAIactivate{s_doc}         % Code documentation and comment generation
 
-% --- Data Management ---
-\GAIactivate{d:collect}     % Data collection
-\GAIactivate{d:validate}    % Validation
-\GAIactivate{d:clean}       % Data cleaning
-% \GAIactivate{d:curate}      % Data curation and organization
-% \GAIactivate{d:analyze}     % Data analysis
-% \GAIactivate{d:viz}         % Visualization
-% \GAIactivate{d:repro}       % Reproducibility testing
+% 5 — Data Management
+% \GAIactivate{d_coll}        % Data collection
+% \GAIactivate{d_val}         % Validation
+% \GAIactivate{d_cln}         % Data cleaning
+\GAIactivate{d_cur}         % Data curation and organization
+% \GAIactivate{d_anl}         % Data analysis
+\GAIactivate{d_viz}         % Quantitative Plotting and Charting
+% \GAIactivate{d_rep}         % Reproducibility and rerun checks
+% \GAIactivate{d_lbl}         % Data labeling and annotation assistance
+% \GAIactivate{d_syn}         % Synthetic data generation
+% \GAIactivate{d_anon}        % De-identification and anonymization support
+\GAIactivate{d_trans}       % Audio-to-text transcription and diarization
 
-% --- Writing and Editing ---
-\GAIactivate{w:textgen}     % Text generation
-\GAIactivate{w:proof}       % Proofreading and editing
-\GAIactivate{w:summarize}   % Summarizing text
-% \GAIactivate{w:concl}       % Formulation of conclusions
-% \GAIactivate{w:tone}        % Emotional tone adjustment
-% \GAIactivate{w:translate}   % Translation
-% \GAIactivate{w:reformat}    % Reformatting
-% \GAIactivate{w:press}       % Press releases and outreach materials
+% 6 — Visuals and Multimedia
+% \GAIactivate{v_gen}         % Synthetic Asset Generation
+\GAIactivate{v_edit}        % Image Enhancement and Editing
+% \GAIactivate{v_chart}       % Diagrammatic and Schematic Design
 
-% --- Ethics Review / Supervision ---
-\GAIactivate{e:bias}        % Bias analysis / discrimination assessment
-\GAIactivate{e:risk}        % Ethical risk analysis
-\GAIactivate{e:compliance}  % Compliance monitoring
-% \GAIactivate{e:conf}        % Data confidentiality monitoring
-% \GAIactivate{sup:qa}        % Quality assessment
-% \GAIactivate{sup:trends}    % Trend identification
-% \GAIactivate{sup:limits}    % Identification of limitations
-% \GAIactivate{sup:recs}      % Recommendations
-% \GAIactivate{sup:pub}       % Publication support
+% 7 — Writing and Editing
+% \GAIactivate{w_draft}       % Drafting Text
+% \GAIactivate{w_poly}        % Polishing and Editing
+% \GAIactivate{w_sum}         % Abstract and Executive Summary Generation
+% \GAIactivate{w_con}         % Formulation of conclusions
+% \GAIactivate{w_tone}        % Tone Adjustment
+% \GAIactivate{w_tra}         % Translation
+% \GAIactivate{w_ref}         % Citation formatting and bibliography management
+\GAIactivate{w_prs}         % Press releases and outreach materials
+% \GAIactivate{w_title}       % Title Generation
+
+% 8 — Ethics Review
+\GAIactivate{e_bias}        % Bias analysis and discrimination assessment
+% \GAIactivate{e_risk}        % Ethical risk analysis
+% \GAIactivate{e_comp}        % Monitoring compliance with ethical standards
+% \GAIactivate{e_conf}        % Data confidentiality monitoring
+
+% 9 — Quality Assurance
+\GAIactivate{sup_qa}        % Simulated Peer Review
+% \GAIactivate{sup_trd}       % Consistency checking against field trends
+% \GAIactivate{sup_lim}       % Identification of limitations
+\GAIactivate{sup_rec}       % Publication strategy and journal selection
+% \GAIactivate{sup_pub}       % Publication support
+
+
 
 % --- GAI tools used ---
 % \GAItoolsUsed{}

@@ -27,13 +27,14 @@
   c_rq          = {Formulace\ výzkumných\ otázek\ a\ hypotéz},
   c_feas        = {Posouzení\ proveditelnosti\ a\ hodnocení\ rizik},
   c_pre         = {Předběžné\ testování\ hypotéz},
-  c_sim         = {Simulated\ debate\ and\ argument\ testing},
+  c_sim         = {Simulovaná\ debata\ a\ testování\ argumentů},
 % 2 — Literature Review
   l_srch        = {Vyhledávání\ a\ systematizace\ literatury},
-  l_sum         = {Summarization\ of\ Source\ Material},
-  l_map         = {Concept\ Mapping\ and\ Systematization},
+  l_sum         = {Shrnutí\ zdrojových\ materiálů},
+  l_map         = {Mapování\ konceptů\ a\ systematizace},
   l_pat         = {Analýza\ tržních\ trendů\ a/nebo\ patentového\ prostředí},
   l_gaps        = {Hodnocení\ novosti\ a\ identifikace\ mezer},
+  l_trans       = {Porozumění\ vícejazyčné\ literatuře},
 % 3 — Methodology
   m_des         = {Design\ výzkumu},
   m_proto       = {Vývoj\ experimentálních\ nebo\ výzkumných\ protokolů},
@@ -41,9 +42,10 @@
 % 4 — Software Development and Automation
   s_gen         = {Generování\ kódu},
   s_opt         = {Optimalizace\ kódu},
-  s_debug       = {Debugging\ and\ Repair},
+  s_debug       = {Ladění\ a\ opravy},
   s_auto        = {Automatizace\ procesů},
   s_algs        = {Tvorba\ algoritmů},
+  s_doc         = {Dokumentace\ kódu\ a\ generování\ komentářů},
 % 5 — Data Management
   d_coll        = {Sběr\ dat},
   d_val         = {Validace},
@@ -52,23 +54,24 @@
   d_anl         = {Analýza\ dat},
   d_viz         = {Vizualizace},
   d_rep         = {Testování\ reprodukovatelnosti},
-  d_lbl         = {Data\ labeling\ and\ annotation\ assistance},
-  d_syn         = {Synthetic\ data\ generation},
-  d_anon        = {De-identification\ and\ anonymization\ support},
+  d_lbl         = {Asistence\ při\ označování\ a\ anotaci\ dat},
+  d_syn         = {Generování\ syntetických\ dat},
+  d_anon        = {Podpora\ deidentifikace\ a\ anonymizace},
+  d_trans       = {Přepis\ zvuku\ na\ text\ a\ diarizace},
 % 6 — Visuals and Multimedia
-  v_gen         = {Image\ and\ Diagram\ Generation},
-  v_edit        = {Image\ Enhancement\ and\ Editing},
-  v_chart       = {Chart\ and\ Graph\ Design},
+  v_gen         = {Generování\ obrázků\ a\ diagramů},
+  v_edit        = {Vylepšování\ a\ úpravy\ obrázků},
+  v_chart       = {Návrh\ grafů\ a\ schémat},
 % 7 — Writing and Editing
-  w_draft       = {Drafting\ Text},
-  w_poly        = {Polishing\ and\ Editing},
+  w_draft       = {Psaní\ textu},
+  w_poly        = {Vylepšování\ a\ úpravy},
   w_sum         = {Shrnutí\ textu},
   w_con         = {Formulace\ závěrů},
   w_tone        = {Přizpůsobení\ a\ úprava\ emočního\ tónu},
   w_tra         = {Překlad},
   w_ref         = {Přeformátování},
   w_prs         = {Tiskové\ zprávy\ a\ propagační\ materiály},
-  w_title       = {Title\ Generation},
+  w_title       = {Generování\ nadpisů},
 % 8 — Ethics Review
   e_bias        = {Analýza\ zkreslení\ a\ hodnocení\ diskriminace},
   e_risk        = {Analýza\ etických\ rizik},
@@ -81,5 +84,3 @@
   sup_rec       = {Doporučení},
   sup_pub       = {Podpora\ publikování},
 }
-
-

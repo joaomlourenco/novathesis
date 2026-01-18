@@ -6,11 +6,11 @@
   declare       = {déclarent},
   and           = {et},
   preamble      = {l\'utilisation\ de\ l\'IA\ générative\ dans\ le\ travail\ de\ recherche\ et\ le\ processus\ de\ rédaction\ de\ ce\ document.\ Les\ tâches\ suivantes\footnote{Cette\ déclaration\ étend\ la\ taxonomie\ GAIDeT~\cite{Suchikova:2025:GAIDeT}.}\ ont\ été\ partiellement\ déléguées\ à\ des\ outils\ d\'IA\ générative\ sous\ une\ supervision\ humaine\ totale\ :},
-  footnote      = {Cette\ déclaration\ a\ été\ générée\ à\ l'aide\ de\ \GAIengineName{}\ et\ du\ paquet\ \LaTeX\ \GAIpackageName{}},
+  footnote      = {Cette\ déclaration\ a\ été\ générée\ à\'aide\ de\ \GAIengineName{}\ et\ du\ paquet\ \LaTeX\ \GAIpackageName{}},
   comment_label = {Commentaire\ supplémentaire},
   comment_star  = {Commentaire\ supplémentaire},
-  title_long    = {Déclaration\ de\ délégation\ à\ l'intelligence\ artificielle\ générative},
-  title_short   = {Déclaration\ de\ délégation\ à\ l'IA\ générative},
+  title_long    = {Déclaration\ de\ délégation\ à\ l\'intelligence\ artificielle\ générative},
+  title_short   = {Déclaration\ de\ délégation\ à\ l\'IA\ générative},
 % 0 — Groups
   grp_conc      = {Conceptualisation},
   grp_lit       = {Revue\ de\ la\ littérature},
@@ -22,18 +22,19 @@
   grp_eth       = {Examen\ éthique},
   grp_sup       = {Assurance\ Qualité},
 % 1 — Conceptualization  
-  c_idea        = {Génération\ d'idées},
-  c_obj         = {Définition\ de\ l'objectif\ de\ recherche},
+  c_idea        = {Génération\ d\'idées},
+  c_obj         = {Définition\ de\ l\'objectif\ de\ recherche},
   c_rq          = {Formulation\ de\ questions\ et\ hypothèses\ de\ recherche},
   c_feas        = {Évaluation\ de\ la\ faisabilité\ et\ analyse\ des\ risques},
   c_pre         = {Vérifications\ préliminaires\ (exploratoires)\ des\ hypothèses},
-  c_sim         = {Débat\ simulé\ et\ test\ d'arguments},
+  c_sim         = {Débat\ simulé\ et\ test\ d\'arguments},
 % 2 — Literature Review
   l_srch        = {Recherche\ et\ Découverte},
   l_sum         = {Résumé\ de\ sources\ externes},
   l_map         = {Cartographie\ des\ concepts\ et\ systématisation},
   l_pat         = {Analyse\ du\ paysage\ des\ marchés/brevets},
   l_gaps        = {Identification\ des\ lacunes\ et\ évaluation\ de\ la\ nouveauté},
+  l_trans       = {Compréhension\ de\ la\ littérature\ multilingue},
 % 3 — Methodology
   m_des         = {Conception\ de\ la\ recherche},
   m_proto       = {Développement\ de\ protocoles\ expérimentaux\ ou\ de\ recherche},
@@ -43,7 +44,8 @@
   s_opt         = {Refactoring\ et\ Optimisation},
   s_debug       = {Débogage\ et\ Réparation},
   s_auto        = {Automatisation\ des\ processus},
-  s_algs        = {Conception\ d'algorithmes},
+  s_algs        = {Conception\ d\'algorithmes},
+  s_doc         = {Documentation\ du\ code\ et\ génération\ de\ commentaires},
 % 5 — Data Management
   d_coll        = {Collecte\ des\ données},
   d_val         = {Validation},
@@ -52,12 +54,13 @@
   d_anl         = {Analyse\ des\ données},
   d_viz         = {Génération\ de\ figures\ à\ partir\ de\ données},
   d_rep         = {Vérifications\ de\ reproductibilité\ et\ de\ réexécution},
-  d_lbl         = {Assistance\ à\ l'étiquetage\ et\ à\ l'annotation\ des\ données},
+  d_lbl         = {Assistance\ à\ l\'étiquetage\ et\ à\ l\'annotation\ des\ données},
   d_syn         = {Génération\ de\ données\ synthétiques},
-  d_anon        = {Soutien\ à\ la\ désidentification\ et\ à\ l'anonymisation},
+  d_anon        = {Soutien\ à\ la\ désidentification\ et\ à\ l\'anonymisation},
+  d_trans       = {Transcription\ audio-texte\ et\ diarisation},
 % 6 — Visuals and Multimedia
-  v_gen         = {Génération\ d'images/diagrammes\ (synthétique)},
-  v_edit        = {Amélioration\ et\ édition\ d'images},
+  v_gen         = {Génération\ d\'images/diagrammes\ (synthétique)},
+  v_edit        = {Amélioration\ et\ édition\ d\'images},
   v_chart       = {Conception\ et\ mise\ en\ page\ de\ figures},
 % 7 — Writing and Editing
   w_draft       = {Rédaction\ de\ texte},
@@ -81,5 +84,3 @@
   sup_rec       = {Suggestions\ Stratégiques},
   sup_pub       = {Aide\ à\ la\ publication},
 }
-
-

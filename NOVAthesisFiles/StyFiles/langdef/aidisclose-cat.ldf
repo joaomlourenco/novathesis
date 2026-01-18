@@ -27,13 +27,14 @@
   c_rq          = {Formulació\ de\ preguntes\ i\ hipòtesis\ de\ recerca},
   c_feas        = {Avaluació\ de\ viabilitat\ i\ anàlisi\ de\ riscos},
   c_pre         = {Prova\ preliminar\ d'hipòtesis},
-  c_sim         = {Simulated\ debate\ and\ argument\ testing},
+  c_sim         = {Debat\ simulat\ i\ prova\ d'arguments},
 % 2 — Literature Review
   l_srch        = {Cerca\ i\ sistematització\ de\ literatura},
-  l_sum         = {Summarization\ of\ Source\ Material},
-  l_map         = {Concept\ Mapping\ and\ Systematization},
+  l_sum         = {Resum\ de\ material\ font},
+  l_map         = {Mapeatge\ de\ conceptes\ i\ sistematització},
   l_pat         = {Anàlisi\ de\ tendències\ de\ mercat\ i/o\ entorn\ de\ patents},
   l_gaps        = {Avaluació\ de\ novetat\ i\ identificació\ de\ buits},
+  l_trans       = {Comprensió\ de\ literatura\ multilingüe},
 % 3 — Methodology
   m_des         = {Disseny\ de\ la\ recerca},
   m_proto       = {Desenvolupament\ de\ protocols\ experimentals\ o\ de\ recerca},
@@ -41,9 +42,10 @@
 % 4 — Software Development and Automation
   s_gen         = {Generació\ de\ codi},
   s_opt         = {Optimització\ de\ codi},
-  s_debug       = {Debugging\ and\ Repair},
+  s_debug       = {Depuració\ i\ reparació},
   s_auto        = {Automatització\ de\ processos},
   s_algs        = {Creació\ d\'algorismes},
+  s_doc         = {Documentació\ de\ codi\ i\ generació\ de\ comentaris},
 % 5 — Data Management
   d_coll        = {Recollida\ de\ dades},
   d_val         = {Validació},
@@ -52,23 +54,24 @@
   d_anl         = {Anàlisi\ de\ dades},
   d_viz         = {Visualització},
   d_rep         = {Proves\ de\ reproductibilitat},
-  d_lbl         = {Data\ labeling\ and\ annotation\ assistance},
-  d_syn         = {Synthetic\ data\ generation},
-  d_anon        = {De-identification\ and\ anonymization\ support},
+  d_lbl         = {Etiquetatge\ de\ dades\ i\ assistència\ en\ l'anotació},
+  d_syn         = {Generació\ de\ dades\ sintètiques},
+  d_anon        = {Suport\ a\ la\ desidentificació\ i\ anonimització},
+  d_trans       = {Transcripció\ d'àudio\ a\ text\ i\ diarització},
 % 6 — Visuals and Multimedia
-  v_gen         = {Image\ and\ Diagram\ Generation},
-  v_edit        = {Image\ Enhancement\ and\ Editing},
-  v_chart       = {Chart\ and\ Graph\ Design},
+  v_gen         = {Generació\ d'imatges\ i\ diagrames},
+  v_edit        = {Millora\ i\ edició\ d'imatges},
+  v_chart       = {Disseny\ de\ gràfics\ i\ esquemes},
 % 7 — Writing and Editing
-  w_draft       = {Drafting\ Text},
-  w_poly        = {Polishing\ and\ Editing},
+  w_draft       = {Redacció\ de\ text},
+  w_poly        = {Poliment\ i\ edició},
   w_sum         = {Resum\ de\ text},
   w_con         = {Formulació\ de\ conclusions},
   w_tone        = {Adaptació\ i\ ajust\ del\ to\ emocional},
   w_tra         = {Traducció},
   w_ref         = {Reformatació},
   w_prs         = {Notes\ de\ premsa\ i\ materials\ de\ divulgació},
-  w_title       = {Title\ Generation},
+  w_title       = {Generació\ de\ títols},
 % 8 — Ethics Review
   e_bias        = {Anàlisi\ de\ biaixos\ i\ avaluació\ de\ discriminació},
   e_risk        = {Anàlisi\ de\ risc\ ètic},
@@ -81,5 +84,3 @@
   sup_rec       = {Recomanacions},
   sup_pub       = {Suport\ a\ la\ publicació},
 }
-
-

@@ -9,8 +9,8 @@
   footnote      = {Questa\ dichiarazione\ è\ stata\ generata\ utilizzando\ \GAIengineName{}\ e\ il\ pacchetto\ \LaTeX\ \GAIpackageName{}},
   comment_label = {Commento\ aggiuntivo},
   comment_star  = {Commento\ aggiuntivo},
-  title_long    = {Dichiarazione\ di\ Delega\ all'Intelligenza\ Artificiale\ Generativa},
-  title_short   = {Dichiarazione\ di\ Delega\ all'IA\ Generativa},
+  title_long    = {Dichiarazione\ di\ Delega\ all\'Intelligenza\ Artificiale\ Generativa},
+  title_short   = {Dichiarazione\ di\ Delega\ all\'IA\ Generativa},
 % 0 — Groups
   grp_conc      = {Concettualizzazione},
   grp_lit       = {Revisione\ della\ Letteratura},
@@ -34,6 +34,7 @@
   l_map         = {Mappatura\ concettuale\ e\ sistematizzazione},
   l_pat         = {Analisi\ del\ panorama\ di\ mercato/brevetti},
   l_gaps        = {Identificazione\ delle\ lacune\ e\ valutazione\ della\ novità},
+  l_trans       = {Comprensione\ della\ letteratura\ multilingue},
 % 3 — Methodology
   m_des         = {Disegno\ della\ ricerca},
   m_proto       = {Sviluppo\ di\ protocolli\ sperimentali\ o\ di\ ricerca},
@@ -44,6 +45,7 @@
   s_debug       = {Debug\ e\ Riparazione},
   s_auto        = {Automazione\ dei\ processi},
   s_algs        = {Progettazione\ di\ algoritmi},
+  s_doc         = {Documentazione\ del\ codice\ e\ generazione\ di\ commenti},
 % 5 — Data Management
   d_coll        = {Raccolta\ dati},
   d_val         = {Validazione},
@@ -55,6 +57,7 @@
   d_lbl         = {Assistenza\ per\ l'etichettatura\ e\ l'annotazione\ dei\ dati},
   d_syn         = {Generazione\ di\ dati\ sintetici},
   d_anon        = {Supporto\ alla\ de-identificazione\ e\ all'anonimizzazione},
+  d_trans       = {Trascrizione\ audio-testo\ e\ diarizzazione},
 % 6 — Visuals and Multimedia
   v_gen         = {Generazione\ di\ immagini/diagrammi\ (sintetica)},
   v_edit        = {Miglioramento\ e\ modifica\ delle\ immagini},
@@ -81,5 +84,3 @@
   sup_rec       = {Suggerimenti\ Strategici},
   sup_pub       = {Supporto\ alla\ pubblicazione},
 }
-
-

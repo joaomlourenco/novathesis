@@ -34,6 +34,7 @@
   l_map         = {Konzeptmapping\ und\ Systematisierung},
   l_pat         = {Markt-/Patentlandschaftsanalyse},
   l_gaps        = {Lückenidentifikation\ und\ Neuheitsbewertung},
+  l_trans       = {Sprachübergreifendes\ Literaturverständnis},
 % 3 — Methodology
   m_des         = {Forschungsdesign},
   m_proto       = {Entwicklung\ von\ experimentellen\ oder\ Forschungsprotokollen},
@@ -44,6 +45,7 @@
   s_debug       = {Debugging\ und\ Reparatur},
   s_auto        = {Prozessautomatisierung},
   s_algs        = {Algorithmenentwurf},
+  s_doc         = {Codedokumentation\ und\ Kommentargenerierung},
 % 5 — Data Management
   d_coll        = {Datenerhebung},
   d_val         = {Validierung},
@@ -55,6 +57,7 @@
   d_lbl         = {Unterstützung\ bei\ Datenkennzeichnung\ und\ -annotation},
   d_syn         = {Generierung\ synthetischer\ Daten},
   d_anon        = {Unterstützung\ bei\ De-Identifizierung\ und\ Anonymisierung},
+  d_trans       = {Audio-zu-Text-Transkription\ und\ Diarisierung},
 % 6 — Visuals and Multimedia
   v_gen         = {Bild-/Diagrammgenerierung\ (synthetisch)},
   v_edit        = {Bildverbesserung\ und\ -bearbeitung},
@@ -81,5 +84,3 @@
   sup_rec       = {Strategische\ Vorschläge},
   sup_pub       = {Publikationsunterstützung},
 }
-
-

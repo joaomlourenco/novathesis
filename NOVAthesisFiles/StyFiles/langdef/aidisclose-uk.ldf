@@ -27,13 +27,14 @@
   c_rq          = {Формулювання\ дослідницьких\ питань\ та\ гіпотез},
   c_feas        = {Оцінка\ здійсненності\ та\ оцінка\ ризиків},
   c_pre         = {Попереднє\ тестування\ гіпотез},
-  c_sim         = {Simulated\ debate\ and\ argument\ testing},
+  c_sim         = {Симульовані\ дебати\ та\ тестування\ аргументів},
 % 2 — Literature Review
   l_srch        = {Пошук\ та\ систематизація\ літератури},
-  l_sum         = {Summarization\ of\ Source\ Material},
-  l_map         = {Concept\ Mapping\ and\ Systematization},
+  l_sum         = {Узагальнення\ вихідного\ матеріалу},
+  l_map         = {Картографування\ понять\ та\ систематизація},
   l_pat         = {Аналіз\ ринкових\ тенденцій\ та/або\ патентного\ середовища},
   l_gaps        = {Оцінка\ новизни\ та\ виявлення\ прогалин},
+  l_trans       = {Багатомовне\ розуміння\ літератури},
 % 3 — Methodology
   m_des         = {Дизайн\ дослідження},
   m_proto       = {Розробка\ експериментальних\ або\ дослідницьких\ протоколів},
@@ -41,9 +42,10 @@
 % 4 — Software Development and Automation
   s_gen         = {Генерація\ коду},
   s_opt         = {Оптимізація\ коду},
-  s_debug       = {Debugging\ and\ Repair},
+  s_debug       = {Налагодження\ та\ ремонт},
   s_auto        = {Автоматизація\ процесів},
   s_algs        = {Створення\ алгоритмів},
+  s_doc         = {Документування\ коду\ та\ генерація\ коментарів},
 % 5 — Data Management
   d_coll        = {Збір\ даних},
   d_val         = {Валідація},
@@ -52,23 +54,24 @@
   d_anl         = {Аналіз\ даних},
   d_viz         = {Візуалізація},
   d_rep         = {Тестування\ відтворюваності},
-  d_lbl         = {Data\ labeling\ and\ annotation\ assistance},
-  d_syn         = {Synthetic\ data\ generation},
-  d_anon        = {De-identification\ and\ anonymization\ support},
+  d_lbl         = {Допомога\ в\ розмітці\ та\ анотуванні\ даних},
+  d_syn         = {Генерація\ синтетичних\ даних},
+  d_anon        = {Підтримка\ деідентифікації\ та\ анонімізації},
+  d_trans       = {Транскрипція\ аудіо\ в\ текст\ та\ діарізація},
 % 6 — Visuals and Multimedia
-  v_gen         = {Image\ and\ Diagram\ Generation},
-  v_edit        = {Image\ Enhancement\ and\ Editing},
-  v_chart       = {Chart\ and\ Graph\ Design},
+  v_gen         = {Генерація\ зображень\ та\ діаграм},
+  v_edit        = {Покращення\ та\ редагування\ зображень},
+  v_chart       = {Дизайн\ діаграм\ та\ графіків},
 % 7 — Writing and Editing
-  w_draft       = {Drafting\ Text},
-  w_poly        = {Polishing\ and\ Editing},
+  w_draft       = {Написання\ тексту},
+  w_poly        = {Вдосконалення\ та\ редагування},
   w_sum         = {Реферування\ тексту},
   w_con         = {Формулювання\ висновків},
   w_tone        = {Адаптація\ та\ налаштування\ емоційного\ тону},
   w_tra         = {Переклад},
   w_ref         = {Переформатування},
   w_prs         = {Прес-релізи\ та\ матеріали\ для\ поширення},
-  w_title       = {Title\ Generation},
+  w_title       = {Генерація\ заголовків},
 % 8 — Ethics Review
   e_bias        = {Аналіз\ упередженості\ та\ оцінка\ дискримінації},
   e_risk        = {Аналіз\ етичних\ ризиків},
@@ -81,5 +84,3 @@
   sup_rec       = {Рекомендації},
   sup_pub       = {Підтримка\ публікацій},
 }
-
-
