@@ -42,9 +42,7 @@
 \margin(cover,left):={1.0cm}
 \margin(cover,right):={1.0cm}
 
-
-% Spine info
-% \spine(logo)={\theuniversity(logo)}
+\thesiscover(logo):={nova-ensp-logo}
 
 \SpineSetup[%
 ]{%
@@ -70,17 +68,7 @@
 
 % ENSP logo
 \ntaddtocover[vspace=1cm,halign=c,valign=t]{1-1,2-1}{%
-  \@for\myi:={1,2,3,4,5}\do{%
-    % \typeout{MYI=\myi}
-    \datamatchtf{\match}{thesiscover}({logo,\myi},){%
-      % \typeout{MYI=\myi,[\thethesiscover(logo,\myi)]}\AAA
-      \StrCut{\match}{,}\myflg\myfile%
-      \ifnum\myi>1\hspace{1cm}\fi
-      \expanded{\includegraphics[\myflg,align=t]{\myfile}}%
-    }{%
-      % \typeout{MYI=\myi,[\thethesiscover(logo,\myi)]}\BBB
-    }%
-  }%
+  \includegraphics[width=5.75cm,align=t]{\thethesiscover(logo)}%
 }
 
 % % Title of Dissertation
