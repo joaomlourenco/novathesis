@@ -2,7 +2,7 @@
 # NOVATHESIS — Makefile
 #----------------------------------------------------------------------------
 #
-# Version 7.9.3 (2026-01-19)
+# Version 7.9.4 (2026-01-19)
 # Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 
 
@@ -419,7 +419,7 @@ build-%:
 	echo "=== Building ==="; \
 	echo "SCHL=$$FINAL_SCHL, TYP=$$TYP, LNG=$$LNG"; \
 	echo "Command: $(BUILD) $$FINAL_SCHL --doctype $$TYP --lang $$LNG --rename-pdf --mode 1 --docstatus final -o $(PWD) $(BFLAGS)"; \
-	# $(BUILD) $$FINAL_SCHL --doctype $$TYP --lang $$LNG --rename-pdf --mode 1 --docstatus final -o $(PWD) $(BFLAGS)
+	$(BUILD) $$FINAL_SCHL --doctype $$TYP --lang $$LNG --rename-pdf --mode 1 --docstatus final -o $(PWD) $(BFLAGS)
 
 
 
