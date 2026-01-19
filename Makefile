@@ -359,70 +359,68 @@ custom:
 # BUILD
 #############################################################################
 
-# Default values for build target
-# 1. Use a dot (.) instead of slash (/) for the Make target defaults
-DEFAULT_SCHL := nova.fct
-DEFAULT_TYP := phd
-DEFAULT_LNG := en
 
-# ... (comments) ...
+# 1. Define Defaults
+DFL_SCHL := nova.fct
+DFL_TYP  := phd
+DFL_LNG  := en
 
+# 2. Define Extraction Function
+# Note: Regex changed to "^[[:space:]]*" to strictly match start of line + spaces
+# This ignores lines starting with %
+GET_TEX_VAR = sed -n 's/^[[:space:]]*\\ntsetup{$(1)=\([^}]*\).*/\1/p' 0-Config/1_novathesis.tex
+
+# 3. Logic: Try to get from file; if empty, use Default
+# We store the raw extraction in a temporary variable (_) to check if it exists
+
+# Handle SCHL (Needs special tr handling only if extracted)
+_FILE_SCHL := $(shell $(call GET_TEX_VAR,school))
+SCHL := $(if $(_FILE_SCHL),$(shell echo $(_FILE_SCHL) | tr '/-' '..'),$(DFL_SCHL))
+
+# Handle TYP
+_FILE_TYP := $(shell $(call GET_TEX_VAR,doctype))
+TYP := $(or $(_FILE_TYP),$(DFL_TYP))
+
+# Handle LNG
+_FILE_LNG := $(shell $(call GET_TEX_VAR,lang))
+LNG := $(or $(_FILE_LNG),$(DFL_LNG))
+
+# 4. Define Build Rules
 .PHONY: build
-build: build-$(DEFAULT_SCHL)-$(DEFAULT_TYP)-$(DEFAULT_LNG)
+# Default build uses the variables calculated above
+build: build-$(SCHL)-$(TYP)-$(LNG)
 
+# Pattern rule to parse arguments from the target name
 build-%: 
 	@echo "=== Parsing build target: build-$* ==="
 	$(eval PATTERN := $(subst .o,,$*))
 	$(eval PARTS := $(subst -, ,$(PATTERN)))
 	$(eval WORD_COUNT := $(words $(PARTS)))
-	@# Logic to parse arguments
-	@if [ "$(WORD_COUNT)" = "3" ]; then \
+	@SCHL="$(SCHL)"; \
+	TYP="$(TYP)"; \
+	LNG="$(LNG)"; \
+	\
+	if [ "$(WORD_COUNT)" = "3" ]; then \
 		SCHL=$(word 1,$(PARTS)); \
 		TYP=$(word 2,$(PARTS)); \
 		LNG=$(word 3,$(PARTS)); \
 	elif [ "$(WORD_COUNT)" = "2" ]; then \
-		SCHL=$(DEFAULT_SCHL); \
 		TYP=$(word 1,$(PARTS)); \
 		LNG=$(word 2,$(PARTS)); \
 	elif [ "$(WORD_COUNT)" = "1" ]; then \
-		SCHL=$(DEFAULT_SCHL); \
-		TYP=$(DEFAULT_TYP); \
 		LNG=$(word 1,$(PARTS)); \
 	else \
-		echo "Error: Invalid format '$*'"; \
+		echo "Error: Invalid format '$*'. Expected 1-3 arguments."; \
 		exit 1; \
 	fi; \
 	\
-	FINAL_SCHL=$$(echo $$SCHL | tr '.' '/'); \
+	FINAL_SCHL=$$(echo $$SCHL | sed 's/\./\//; s/\./\//; s/\./-/g'); \
 	\
 	echo "=== Building ==="; \
 	echo "SCHL=$$FINAL_SCHL, TYP=$$TYP, LNG=$$LNG"; \
-	echo "Command: $(BUILD) $$FINAL_SCHL --mode 1 --docstatus final --doctype $$TYP --lang $$LNG -bdir - $(BFLAGS)";\
-	$(BUILD) $$FINAL_SCHL --mode 1 --docstatus final --doctype $$TYP --lang $$LNG -bdir - $(BFLAGS)
+	echo "Command: $(BUILD) $$FINAL_SCHL --doctype $$TYP --lang $$LNG --rename-pdf --mode 1 --docstatus final -o $(PWD) $(BFLAGS)"; \
+	$(BUILD) $$FINAL_SCHL --doctype $$TYP --lang $$LNG --rename-pdf --mode 1 --docstatus final -o $(PWD) $(BFLAGS)
 
-
-
-# Pattern rule for silently building documents
-# Usage: make sbuild[[-<school>]-<doctype>]-<lang>
-# Examples: make sbuild
-# sbuild-%: validate-config check-env check-build
-# 	@echo "Building for school: $(SCHL)"
-# 	$(eval PARTS := $(subst -, ,$*))
-# 	$(eval WORD_COUNT := $(words $(PARTS)))
-# 	@if [ "$(WORD_COUNT)" = "1" ]; then \
-# 		DTYPE=phd; \
-# 		LNG=$(PARTS); \
-# 	elif [ "$(WORD_COUNT)" = "2" ]; then \
-# 		DTYPE=$(word 1,$(PARTS)); \
-# 		LNG=$(word 2,$(PARTS)); \
-# 	else \
-# 		echo "Error: Invalid format '$*'. Expected '$(firstword $(subst -, ,$@))-lang' or '$(firstword $(subst -, ,$@))-doctype-lang'"; \
-# 		exit 1; \
-# 	fi; \
-# 	echo "Building with DTYPE=$$DTYPE, LNG=$$LNG"; \
-# 	$(BUILD) $(SCHL) --rename-pdf --mode 1 --docstatus final --doctype $$DTYPE --lang $$LNG -bdir - $(BFLAGS)
-#
-# .PHONY: build-% build-debug-%
 
 
 #############################################################################
