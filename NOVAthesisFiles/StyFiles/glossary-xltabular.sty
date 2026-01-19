@@ -49,9 +49,11 @@
   \newlength\glspagelistwidth
   \setlength{\glspagelistwidth}{0.1\hsize}
 }{}
+% \typeout{LAYOUT=\LAYOUT}\LAYOUTX
 \newglossarystyle{xltabular}{%
-  \renewenvironment{theglossary}%
-     {\xltabular{\linewidth}{@{}lX@{}}}%
+  \renewenvironment{theglossary}
+     {\edef\LAYOUT{\expanded{@{}\option{/novathesis/glossaries/layout}@{}}}%
+      \expandafter\xltabular\expandafter{\expandafter\linewidth\expandafter}\expandafter{\LAYOUT}}
      {\endxltabular}%
   \renewcommand*{\glossaryheader}{}%
   \renewcommand*{\glsgroupheading}[1]{}%

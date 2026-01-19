@@ -900,7 +900,7 @@
   color/links/.new cmd          = {\@ifpackageloaded{hyperref}%
                                             {\hypersetup{allcolors=#1}}%
                                             {\PassOptionsToPackage{allcolors=#1}{hyperref}}},
-  glossaries/color/gls/.new cmd             = {\AtEndPreamble{%\textcolor{#1}{##1}
+  color/glossaries/gls/.new cmd             = {\AtEndPreamble{%\textcolor{#1}{##1}
                                       \IfStrEq{#1}{None}{%
                                           \let\@glslink\glsplainhyperlink%
                                       }{%
@@ -935,7 +935,8 @@
   print/sdgs/hspace/.new dim    = {5mm},   % any measure
   print/sdgs/vspace/.new dim    = {4mm},   % any measure
   % MISC
-  glossaries/list/reverse/.new toggle       = true,
+  glossaries/list/reverse/.new toggle    = true,
+  glossaries/layout/.new value  = {lX},
   tocintoc/.new toggle          = true,
   % DEBUG
   debug/.new list               = {},         % cover, index
@@ -1172,7 +1173,7 @@
 
 % --------------------------------------------------------
 % Trim spaces around argument
-\cs_new_eq:NN \trimspaces \tl_trim_spaces:n
+\cs_new_eq:NN \trimspaces \tl_trim_spaces:e
 
 
 \ExplSyntaxOff
@@ -1452,22 +1453,45 @@
 \options@ProcessOptions{/novathesis}
 % --------------------------------------------------------
 % NTSETUP2
-\newcommand*{\ntsetup}[2][]{%
-  % \typeout{NTSETUP [/novathesis/\@UNIV/\@SCHL/#1/#2]}\NTSETUP%
-  \ntfor\arg:={#2}\do{%
-    \StrCut{\arg}{=}{\@ntopt}{\@ntval}%
-    % \typeout{NTSETUP2 [\@ntopt] = [\@ntval]}\NTSETUP%
-    \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/#1/\@ntopt}%
-                    {\options{/novathesis/\@UNIV/\@SCHL/#1/#2}}{%
-    \ifoptiondefined{/novathesis/#1/\@ntopt}%
-                    {\options{/novathesis/#1/#2}}{%
-    \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/\@ntopt}%
-                     {\options{/novathesis/\@UNIV/\@SCHL/#2}}{%
-    \ifoptiondefined{/novathesis/\@UNIV/\@ntopt}%
-                     {\options{/novathesis/\@UNIV/#2}}{%
-    \ifoptiondefined{/novathesis/\@ntopt}%
-                    {\options{/novathesis/#2}}{%
-    \ClassError{novathesis}{Invalid class option: \@ntopt}{}{}}}}}}}%
+\newcommand*{\ntsetup}[2][]{
+  % \typeout{NTSETUP [/novathesis/\@UNIV/\@SCHL/#1/#2]}\NTSETUP
+  % \AtEndPreamble{
+    \ntfor\arg:={#2}\do{
+      \StrCut{\arg}{=}{\@ntopti}{\@ntval}
+      \edef\@ntopt{\trimspaces{\@ntopti}}
+      % \typeout{NTSETUP2 [\@ntopt] = [\@ntval]}\NTSETUP
+      \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/#1/\@ntopt}
+                      {\options{/novathesis/\@UNIV/\@SCHL/#1/#2}}{
+      \ifoptiondefined{/novathesis/#1/\@ntopt}
+                      {\options{/novathesis/#1/#2}}{
+      \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/\@ntopt}
+                       {\options{/novathesis/\@UNIV/\@SCHL/#2}}{
+      \ifoptiondefined{/novathesis/\@UNIV/\@ntopt}
+                       {\options{/novathesis/\@UNIV/#2}}{
+      \ifoptiondefined{/novathesis/\@ntopt}
+                      {\options{/novathesis/#2}}{
+      \ClassError{novathesis}{Invalid class option: \@ntopt}{}{}}}}}}}
+  % }
+}
+
+\newcommand*{\ntlatesetup}[2][]{
+  \typeout{NTLATESETUP [#2]}
+  \AtEndPreamble{
+    \ntfor\arg:={#2}\do{
+      \StrCut{\arg}{=}{\@ntopti}{\@ntval}
+      \edef\@ntopt{\trimspaces{\@ntopti}}
+      \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/#1/\@ntopt}
+                      {\options{/novathesis/\@UNIV/\@SCHL/#1/#2}}{
+      \ifoptiondefined{/novathesis/#1/\@ntopt}
+                      {\options{/novathesis/#1/#2}}{
+      \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/\@ntopt}
+                       {\options{/novathesis/\@UNIV/\@SCHL/#2}}{
+      \ifoptiondefined{/novathesis/\@UNIV/\@ntopt}
+                       {\options{/novathesis/\@UNIV/#2}}{
+      \ifoptiondefined{/novathesis/\@ntopt}
+                      {\options{/novathesis/#2}}{
+      \ClassError{novathesis}{Invalid class option: \@ntopt}{}{}}}}}}}
+  }
 }
 
 
@@ -1502,7 +1526,7 @@
 %     and HYPERLINK color
 \options{/novathesis/lang = \option{/novathesis/lang/main},
          /novathesis/color/links = DarkBlue,
-         /novathesis/glossaries/color/gls = None,
+         /novathesis/color/glossaries/gls = None,
 }
 
 % \NTRunHook{memoir}
