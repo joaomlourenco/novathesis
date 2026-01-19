@@ -7,11 +7,10 @@
 template.*
 # …except template.tex
 !template.tex
-# !template.pdf
 
 # The renamed PDF files
-*-en.pdf
-*-pt.pdf
+# *-en.pdf
+# *-pt.pdf
 
 # Ignore temp files
 .needlualatex

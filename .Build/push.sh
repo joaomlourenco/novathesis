@@ -76,6 +76,9 @@ if [ -n "$OTHER_BRANCH" ]; then
     fi
 fi
 
+echo "🔄 Pushing tags..."
+git push --tags --force
+
 # 4) Summary
 # -------------------------------------------------------------
 echo "📋 Push Summary:"
