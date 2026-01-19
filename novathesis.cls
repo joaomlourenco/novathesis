@@ -1347,11 +1347,8 @@
 
 
 % For PDF bookmakrs
-\newdata{keywordsenvpre}
-\newdata{keywordsenvpost}
 \newdata{keywordsblockpre}
 \newdata{keywordsblockpost}
-\newdata{keywordspre}
 \newdata{keywordssep}
 % \newdata{keywordsboxlen}
 \newdata{keywordsstringprefix}
@@ -1397,8 +1394,9 @@
 \adviserremainderfont()={\itshape\scriptsize}
 
 % Committee stuff
-\newdata{adviserorder}         %e.g., "{a,c}"
-\adviserorder():={a,c}  % By default print advisers and co-advisers
+\NewMemStore{AdviserOrder}
+\SetAdviserOrder()={a,c}  % By default print advisers and co-advisers
+
 \newdata{committeeorder}         %e.g., "{c,r,a,m,g}"
 
 \newdata{committeetitlestringpre}
@@ -3395,20 +3393,20 @@
   % #3 = {adviser | committee}
   % #4 = {a,c} | {c,r,a,m,g}
   \ifoptiondefined{/@nt/#3/#4/full}{%
-  \options{/@nt/#3/#4/full/.size = \mysize}%
-  \ifnum\mysize>0\relax%
-    % \typeout{NTPRINTPERSONGROUP 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\NTPRINTPERSONGROUP
-    \@nt@printgrouptitle{#3}{#4}%
-    \begin{varwidth}[t]{\linewidth-\maxlen}%
-      \raggedright%
-      \IfStrEq{#1}{list}{%
-        \GetPersonsAsList{#3}{#4}%
-      }{%
-        \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{#4}{##1}}%
-      }%
-    \end{varwidth}%
-    \thepersongrouppost()%
-  \fi%
+    \options{/@nt/#3/#4/full/.size = \mysize}%
+    \ifnum\mysize>0\relax%
+      % \typeout{NTPRINTPERSONGROUP 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\NTPRINTPERSONGROUP
+      \@nt@printgrouptitle{#3}{#4}%
+      \begin{varwidth}[t]{\linewidth-\maxlen}%
+        \raggedright%
+        \IfStrEq{#1}{list}{%
+          \GetPersonsAsList{#3}{#4}%
+        }{%
+          \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{#4}{##1}}%
+        }%
+      \end{varwidth}%
+      \thepersongrouppost()%
+    \fi%
   }{}%
 }
 
