@@ -326,13 +326,13 @@ endif
 	$(MAKE) bcrtp
 
 .PHONY: bcrtp bcrp bcp crp cp rp crtp rtp tp 
-bcrtp: build-phd-final-en crtp
+bcrtp: build-phd-en crtp
 
-bcrp: build-phd-final-en crp
+bcrp: build-phd-en crp
 
-bcp: build-phd-final-en commit push
+bcp: build-phd-en commit push
 
-bcp-f: build-phd-final-en commit push-force
+bcp-f: build-phd-en commit push-force
 
 crp: commit rebase push
 
