@@ -549,8 +549,16 @@
 
 
 
-% Ensure l3regex is available (standard in modern kernels)
-\sys_if_engine_luatex:F { \RequirePackage{l3regex} }
+% Ensure expl3 (older) or l3regex (newer) is available (standard in modern kernels)
+\sys_if_engine_luatex:F { 
+    \IfFileExists{expl3.sty}
+        { \RequirePackage{expl3} }
+        {
+            \IfFileExists{l3regex.sty}
+                { \RequirePackage{l3regex} }
+                { \PackageError{novathesis}{Neither expl3 nor l3regex found. Please install a modern LaTeX kernel} }
+        }
+}
 
 \NewDocumentCommand{\IfFileExistsCase}{ s O{} m m }
   {
@@ -1215,6 +1223,7 @@
   cover=\DIRFRONTMATTER,
   dedication=\DIRFRONTMATTER,
   acknowledgements=\DIRFRONTMATTER,
+  statementintegrity=\DIRFRONTMATTER,
   quote=\DIRFRONTMATTER,
   abstract=\DIRFRONTMATTER,
   glossaries=\DIRFRONTMATTER,
@@ -2251,6 +2260,7 @@
     copyright,        % (*) The copyright page
     dedication,       % (*) Print the dedication
     acknowledgements, % (*) Print the acknowledgments
+    statementintegrity, % (*) Print the statement of integrity
     quote,            % (*) Print the quote
     abstracts,        % Print abstracts in multiple languages.
     aidisclose,       % AI disclosure statement
@@ -2265,6 +2275,7 @@
     copyright,         % (*) The copyright page
     dedication,        % (*) Print the dedication
     acknowledgements,  % (*) Print the acknowledgments
+    statementintegrity, % (*) Print the statement of integrity
     quote,             % (*) Print the quote
     abstracts,         % Print abstracts in multiple languages.
     aidisclose,        % AI disclosure statement
@@ -3520,6 +3531,8 @@
 \newcommand{\ntprintquote}{\@nt@printifmaindoc@i{quote}}
 
 \newcommand{\ntprintacknowledgements}{\@nt@printifmaindoc@i{acknowledgements}}
+
+\newcommand{\ntprintstatementintegrity}{\@nt@printifmaindoc@i{statementintegrity}}
 
 \newcommand{\ntprintaidisclose}{%
   \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{% use aidisclose
