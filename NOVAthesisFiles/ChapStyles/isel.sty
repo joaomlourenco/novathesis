@@ -1,0 +1,62 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ChapterStyle/isel.sty
+%% NOVA thesis configuration file
+%%
+%% Customization for the “ISEL” chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\typeout{NT FILE ChapterStyle/isel.sty}%
+
+% ==========================================================
+% CORES
+% ==========================================================
+\definecolor{ISELRed}{HTML}{FF3C28}
+\definecolor{ISELPurple}{HTML}{5F1437}
+
+% ==========================================================
+% CHAPTER STYLE (memoir)
+% ==========================================================
+\makechapterstyle{isel}{%
+  \setlength\beforechapskip{30pt}
+  \setlength\afterchapskip{24pt}
+  
+  \renewcommand\chapnumfont{\bfseries\fontsize{14}{16}\selectfont\color{ISELRed}}
+  \renewcommand\chaptitlefont{\bfseries\fontsize{14}{16}\selectfont\color{ISELRed}}
+
+  % 1. Use a toggle to distinguish between \chapter and \chapter*
+  \newbool{iselischapnumbered}
+  \renewcommand\printchapternonum{\boolfalse{iselischapnumbered}}
+  \renewcommand\printchapternum{\booltrue{iselischapnumbered}}
+
+  \renewcommand\printchaptername{}
+  \renewcommand\afterchapternum{}
+
+  \renewcommand\printchaptertitle[1]{%
+    % Logic: Only show number and line if:
+    % It's a numbered chapter (\chapter) AND we aren't in the frontmatter (chapter > 0)
+    \ifboolexpr{ bool {iselischapnumbered} and test {\ifnumcomp{\value{chapter}}{>}{0}} }{%
+      \noindent
+      {\chaptitlefont \thechapter\hspace{0.8em}\MakeUppercase{##1}\par}%
+      \vspace{-4pt}
+      \noindent\hspace*{-\dimexpr1in+\hoffset\relax}
+      {\color{ISELRed}\rule{\textwidth}{0.5pt}}\par
+    }{%
+      \noindent{\chaptitlefont ##1\par}%
+    }%
+  }
+}
+
+\chapterstyle{isel}
+
+% ==========================================================
+% SECTIONS
+% ==========================================================
+\setsecheadstyle{\bfseries\fontsize{12}{14}\selectfont\color{ISELPurple}}
+\setbeforesecskip{18pt}
+\setaftersecskip{10pt}
+
+\setsubsecheadstyle{\bfseries\fontsize{11}{13}\selectfont\color{ISELPurple}}
+\setbeforesubsecskip{14pt}
+\setaftersubsecskip{8pt}
+
+\setsubsubsecheadstyle{\bfseries\fontsize{11}{13}\selectfont\color{ISELPurple}}
+\setsecnumdepth{subsubsection}
