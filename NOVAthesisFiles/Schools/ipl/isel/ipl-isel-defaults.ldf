@@ -25,6 +25,14 @@
 \thesiscover(1-1,image):=?{isel-ipl-coverpage}
 \thesiscover(2-1,image):={isel-ipl-coverpage2}
 
+% Work Title on Abstract Header
+\newcommand{\TitleOnHeader}{%
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=north west,text width=120mm] at ($(current page.north west)+(25mm,-25mm)$)
+{\bfseries\fontsize{14}{16}\selectfont \thedoctitle(\@LANG@COVER,main)};
+\end{tikzpicture}%
+}
+
 % Spine info
 \spine(logo)={ipl-isel-logo/90}
 
