@@ -117,18 +117,18 @@
 }
 
 % Advisers
-\ntaddtocover[vspace=1.5cm,hspace=45mm,height=3.0cm,valign=t]{1-1,2-1}{%
+\ntaddtocover[vspace=1.5cm,valign=c]{1-1,2-1}{%
     \adviserstringfont():={\bfseries}%
   \fontsize{9}{9}\selectfont%
-  \color{iselAubergine}\ntprintpersons[full]{0.9}{2}{adviser}{a,c}%
+  \color{iselAubergine}\ntprintpersons[full]{0.9}[c]{1}{adviser}{a,c}%
 }
 
 % Committee
-\ntaddtocover[vspace=1.5cm,hspace=45mm,height=3.0cm,valign=t]{2-1}{%
+\ntaddtocover[vspace=1.5cm,valign=c]{2-1}{%
   \committeetitlestringfont():={\bfseries}%
   \committeestringfont():={\bfseries}%
   \fontsize{9}{9}\selectfont%
-  \color{iselAubergine}\ntprintpersons{0.9}{2}{committee}{\thecommitteeorder()}%
+  \color{iselAubergine}\ntprintpersons{0.9}[c]{1}{committee}{\thecommitteeorder()}%
 }
 
 
