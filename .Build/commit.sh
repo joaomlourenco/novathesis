@@ -6,9 +6,24 @@ YELLOW="$(printf '\033[33m')"
 CYAN="$(printf '\033[36m')"
 RESET="$(printf '\033[0m')"
 
+
+VERSION_FILE="NOVAthesisFiles/StyFiles/nt-version.sty"
+
+# Extract Version and Date
+# Note: used "$VERSION_FILE" (double quotes) so the shell expands the variable.
+# used $4 in awk to grab the content inside the second set of curly braces.
+VERSION=$(awk -F'[{}]' '/\\novathesisversion/ {print $4; exit}' "$VERSION_FILE")
+DATE=$(awk -F'[{}]' '/\\novathesisdate/    {print $4; exit}' "$VERSION_FILE")
+
+# Check if either variable is empty
+if [[ -z "$VERSION" || -z "$DATE" ]]; then
+    echo "Error: Could not parse VERSION or DATE from $VERSION_FILE" >&2
+    exit 1
+fi
+
 printf "%s-------------------------------------------------------------%s\n" "$RED" "$RESET"
 echo "📝 Starting commit process..."
-printf "%sVERSION=%s%s%s - DATE=%s%s%s.\n" "$CYAN" "$YELLOW" "$VERSION" "$CYAN" "$YELLOW" "$DATE" "$RESET"
+printf "%sVERSION=%s%s%s - DATE=%s%s%s\n" "$CYAN" "$YELLOW" "$VERSION" "$CYAN" "$YELLOW" "$DATE" "$RESET"
 printf "%s-------------------------------------------------------------%s\n" "$RED" "$RESET"
 
 # 1) Pre-commit checks
@@ -46,7 +61,7 @@ fi
 
 # 2) Create the commit
 # -------------------------------------------------------------
-COMMIT_MESSAGE="${COMMIT_MESSAGE:-$(CM) ($VERSION - $DATE)}"
+COMMIT_MESSAGE="${COMMIT_MESSAGE:-v($VERSION - $DATE)}"
 if git commit -m "$COMMIT_MESSAGE"; then
   COMMIT_HASH="$(git rev-parse --short HEAD)"
   echo "📦 Commit Summary:"
