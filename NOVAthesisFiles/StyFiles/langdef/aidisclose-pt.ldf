@@ -1,12 +1,27 @@
 % aidisclose-pt.ldf - Pt
-\GAIsetStrings{
+\AIDstrings{
   tools_used    = {Ferramentas\ de\ IA\ Generativa\ utilizadas:},
   none_used     = {Não\ foram\ declaradas\ ferramentas\ de\ IA\ Generativa.},
+  author        = {O\ autor},
+  authors       = {Os\ autores},
   declares      = {declara},
   declare       = {declaram},
+  acknowledges  = {reconhece},
+  acknowledge   = {reconhecem},
+  accepts       = {assume},
+  accept        = {assumem},
   and           = {e},
-  preamble      = {a\ utilização\ de\ IA\ Generativa\ no\ trabalho\ de\ investigação\ e\ processo\ de\ escrita\ deste\ documento.\ As\ seguintes\ tarefas\footnote{Esta\ declaração\ estende\ a\ taxonomia\ GAIDeT~\cite{Suchikova:2025:GAIDeT}.}\ foram\ parcialmente\ delegadas\ a\ ferramentas\ de\ IA\ Generativa\ sob\ total\ supervisão\ humana:},
-  footnote      = {Esta\ declaração\ foi\ gerada\ usando\ \GAIengineName{}\ e\ o\ pacote\ \LaTeX\ \GAIpackageName{}},
+  preamble      = {<author>,\ <AUTHOR~LIST>,\ <acknowledges>\ a\ utilização\ das\ seguintes\ ferramentas\ de\ inteligência\ artificial\ generativa\ no\ desenvolvimento\ desta\ tese.\ Estas\ tecnologias\ foram\ utilizadas\ sob\ rigorosa\ supervisão,\ e\ todos\ os\ resultados\ gerados\ por\ IA\ foram\ criticamente\ revistos\ e\ verificados\ quanto\ à\ sua\ exatidão.\ <author>\ <accept>\ total\ responsabilidade\ pela\ validade\ e\ originalidade\ do\ conteúdo,\ confirmando\ que\ a\ utilização\ destas\ ferramentas\ está\ em\ conformidade\ com\ todas\ as\ políticas\ institucionais\ e\ normas\ de\ integridade\ académica.},
+  %
+  % Pre/Post Parts
+  pre_tools     = {},
+  post_tools    = {},
+  pre_taxonomy  = {\noindent\bfseries Atividades\ apoiadas\ por\ Ferramentas\ de\ Inteligência\ Artificial\ Generativa:\footnote{Esta\ lista\ estende\ a\ taxonomia\ GAIDeT\CiteGAIDeT.}},
+  post_taxonomy = {},
+  pre_comments  = {},
+  post_comments = {},
+  %
+  footnote      = {Esta\ declaração\ foi\ gerada\ usando\ \AIDlatexProcessor{}\ e\ o\ pacote\ \LaTeX\ \AIDpackageName{}},
   comment_label = {Comentário\ adicional},
   comment_star  = {Comentário\ adicional},
   title_long    = {Declaração\ de\ Delegação\ a\ Inteligência\ Artificial\ Generativa},

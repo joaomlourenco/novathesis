@@ -1,12 +1,27 @@
 % aidisclose-it.ldf - It
-\GAIsetStrings{
+\AIDstrings{
   tools_used    = {Strumenti\ di\ IA\ generativa\ utilizzati:},
   none_used     = {Non\ sono\ stati\ dichiarati\ strumenti\ di\ IA\ generativa.},
+  author        = {L'autore},
+  authors       = {Gli\ autori},
   declares      = {dichiara},
   declare       = {dichiarano},
+  acknowledges  = {riconosce},
+  acknowledge   = {riconoscono},
+  accepts       = {accetta},
+  accept        = {accettano},
   and           = {e},
-  preamble      = {l\'uso\ di\ IA\ Generativa\ nel\ lavoro\ di\ ricerca\ e\ nel\ processo\ di\ scrittura\ di\ questo\ documento.\ I\ seguenti\ compiti\footnote{Questa\ dichiarazione\ estende\ la\ tassonomia\ GAIDeT~\cite{Suchikova:2025:GAIDeT}.}\ sono\ stati\ parzialmente\ delegati\ a\ strumenti\ di\ IA\ Generativa\ sotto\ la\ piena\ supervisione\ umana:},
-  footnote      = {Questa\ dichiarazione\ è\ stata\ generata\ utilizzando\ \GAIengineName{}\ e\ il\ pacchetto\ \LaTeX\ \GAIpackageName{}},
+  preamble      = {<author>,\ <AUTHOR~LIST>,\ <acknowledges>\ l'uso\ dei\ seguenti\ strumenti\ di\ intelligenza\ artificiale\ generativa\ nello\ sviluppo\ di\ questa\ tesi.\ Queste\ tecnologie\ sono\ state\ utilizzate\ sotto\ stretta\ supervisione\ e\ tutti\ gli\ output\ generati\ dall'IA\ sono\ stati\ esaminati\ criticamente\ e\ verificati\ per\ l'accuratezza.\ <author>\ <accept>\ la\ piena\ responsabilità\ per\ la\ validità\ e\ l'originalità\ del\ contenuto,\ confermando\ che\ l'uso\ di\ questi\ strumenti\ è\ allineato\ con\ tutte\ le\ politiche\ istituzionali\ e\ gli\ standard\ di\ integrità\ accademica.},
+  %
+  % Pre/Post Parts
+  pre_tools     = {},
+  post_tools    = {},
+  pre_taxonomy  = {\noindent\bfseries Attività\ supportate\ da\ strumenti\ di\ Intelligenza\ Artificiale\ Generativa:\\footnote{Questo\ elenco\ estende\ la\ tassonomia\ GAIDeT\CiteGAIDeT.}},
+  post_taxonomy = {},
+  pre_comments  = {},
+  post_comments = {},
+  %
+    footnote      = {Questa\ dichiarazione\ è\ stata\ generata\ utilizzando\ \AIDlatexProcessor{}\ e\ il\ pacchetto\ \LaTeX\ \AIDpackageName{}},
   comment_label = {Commento\ aggiuntivo},
   comment_star  = {Commento\ aggiuntivo},
   title_long    = {Dichiarazione\ di\ Delega\ all\'Intelligenza\ Artificiale\ Generativa},

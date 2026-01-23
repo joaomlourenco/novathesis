@@ -1,12 +1,27 @@
 % aidisclose-cat.ldf - Cat
-\GAIsetStrings{
+\AIDstrings{
   tools_used    = {Eines\ d'IA\ generativa\ utilitzades:},
   none_used     = {No\ es\ van\ declarar\ eines\ d’IA\ generativa.},
+  author        = {L'autor},
+  authors       = {Els\ autors},
   declares      = {declara},
   declare       = {declaren},
+  acknowledges  = {reconeix},
+  acknowledge   = {reconeixen},
+  accepts       = {accepta},
+  accept        = {accepten},
   and           = {i},
-  preamble      = {l\'ús\ d\'IA\ Generativa\ en\ el\ treball\ de\ recerca\ i\ el\ procés\ d\'escriptura\ d\'aquest\ document.\ Les\ següents\ tasques\footnote{Aquesta\ declaració\ estén\ la\ taxonomia\ GAIDeT~\cite{Suchikova:2025:GAIDeT}.}\ van\ ser\ parcialment\ delegades\ a\ eines\ d\'IA\ Generativa\ sota\ supervisió\ humana\ total:},
-  footnote      = {Aquesta\ declaració\ ha\ estat\ generada\ utilitzant\ \GAIengineName{}\ i\ el\ paquet\ \LaTeX\ \GAIpackageName{}},
+  preamble      = {<author>,\ <AUTHOR~LIST>,\ <acknowledges>\ l'ús\ de\ les\ següents\ eines\ d'intel·ligència\ artificial\ generativa\ en\ el\ desenvolupament\ d'aquesta\ tesi.\ Aquestes\ tecnologies\ es\ van\ utilitzar\ sota\ una\ estricta\ supervisió,\ i\ tots\ els\ resultats\ generats\ per\ IA\ van\ ser\ revisats\ críticament\ i\ verificats\ quant\ a\ la\ seva\ exactitud.\ <author>\ <accept>\ la\ plena\ responsabilitat\ de\ la\ validesa\ i\ l'originalitat\ del\ contingut,\ confirmant\ que\ l'ús\ d'aquestes\ eines\ s'alinea\ amb\ totes\ les\ polítiques\ institucionals\ i\ estàndards\ d'integritat\ acadèmica.},
+  %
+  % Pre/Post Parts
+  pre_tools     = {},
+  post_tools    = {},
+  pre_taxonomy  = {\noindent\bfseries Activitats\ recolzades\ per\ Eines\ d'Intel·ligència\ Artificial\ Generativa:\\footnote{Aquesta\ llista\ amplia\ la\ taxonomia\ GAIDeT\CiteGAIDeT.}},
+  post_taxonomy = {},
+  pre_comments  = {},
+  post_comments = {},
+  %
+    footnote      = {Aquesta\ declaració\ ha\ estat\ generada\ utilitzant\ \AIDlatexProcessor{}\ i\ el\ paquet\ \LaTeX\ \AIDpackageName{}},
   comment_label = {Comentari\ addicional},
   comment_star  = {Comentari\ addicional},
   title_long    = {Declaració\ de\ Delegació\ a\ la\ Intel·ligència\ Artificial\ Generativa},

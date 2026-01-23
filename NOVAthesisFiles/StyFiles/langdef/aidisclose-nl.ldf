@@ -1,12 +1,27 @@
 % aidisclose-nl.ldf - Nl
-\GAIsetStrings{
+\AIDstrings{
   tools_used    = {Gebruikte\ generatieve\ AI-tools:},
   none_used     = {Er\ zijn\ geen\ generatieve\ AI-hulpmiddelen\ opgegeven.},
+  author        = {De\ auteur},
+  authors       = {De\ auteurs},
   declares      = {verklaart},
   declare       = {verklaren},
+  acknowledges  = {erkent},
+  acknowledge   = {erkennen},
+  accepts       = {aanvaardt},
+  accept        = {aanvaarden},
   and           = {en},
-  preamble      = {het\ gebruik\ van\ generatieve\ AI\ in\ het\ onderzoekswerk\ en\ het\ schrijfproces\ van\ dit\ document.\ De\ volgende\ taken\footnote{Deze\ verklaring\ breidt\ de\ GAIDeT-taxonomie~\cite{Suchikova:2025:GAIDeT}\ uit.}\ werden\ gedeeltelijk\ gedelegeerd\ aan\ generatieve\ AI-tools\ onder\ volledig\ menselijk\ toezicht:},
-  footnote      = {Deze\ verklaring\ is\ gegenereerd\ met\ behulp\ van\ \GAIengineName{}\ en\ het\ \LaTeX-pakket\ \GAIpackageName{}},
+  preamble      = {<author>,\ <AUTHOR~LIST>,\ <acknowledges>\ het\ gebruik\ van\ de\ volgende\ tools\ voor\ generatieve\ kunstmatige\ intelligentie\ bij\ de\ totstandkoming\ van\ dit\ proefschrift.\ Deze\ technologieën\ werden\ onder\ strikt\ toezicht\ gebruikt\ en\ alle\ door\ AI\ gegenereerde\ output\ is\ kritisch\ beoordeeld\ en\ gecontroleerd\ op\ nauwkeurigheid.\ <author>\ <accept>\ de\ volledige\ verantwoordelijkheid\ voor\ de\ geldigheid\ en\ originaliteit\ van\ de\ inhoud\ en\ bevestigt\ dat\ het\ gebruik\ van\ deze\ tools\ in\ overeenstemming\ is\ met\ alle\ institutionele\ beleidslijnen\ en\ normen\ van\ academische\ integriteit.},
+  %
+  % Pre/Post Parts
+  pre_tools     = {},
+  post_tools    = {},
+  pre_taxonomy  = {\noindent\bfseries Activiteiten\ ondersteund\ door\ generatieve\ kunstmatige\ intelligentie-tools:\footnote{Deze\ lijst\ breidt\ de\ GAIDeT-taxonomie\ uit\CiteGAIDeT.}},
+  post_taxonomy = {},
+  pre_comments  = {},
+  post_comments = {},
+  %
+    footnote      = {Deze\ verklaring\ is\ gegenereerd\ met\ behulp\ van\ \AIDlatexProcessor{}\ en\ het\ \LaTeX-pakket\ \AIDpackageName{}},
   comment_label = {Aanvullende\ opmerking},
   comment_star  = {Aanvullende\ opmerking},
   title_long    = {Verklaring\ van\ Delegering\ aan\ Generatieve\ Kunstmatige\ Intelligentie},

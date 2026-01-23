@@ -1,29 +1,30 @@
 % aidisclose.sty
 % 
 % Copyright (C) 2025-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+% Modified based on user requirements.
 %
 % This file may be distributed and/or modified under the conditions of
 % the LaTeX Project Public License, either version 1.3c of this license
 % or (at your option) any later version.
-\def\gaiversion{1.7.0}
+\def\aidversion{1.11.0}
 %
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesExplPackage {aidisclose} {2026/01/04} {\gaiversion} 
+\ProvidesExplPackage {aidisclose} {2026/01/22} {\aidversion} 
   {Utilities for Generative AI disclosure checklist and statements}
 
 % =========================================================
 % 0) OPTIONS & DEPENDENCIES
 % =========================================================
-\bool_new:N \g__gai_autobib_bool
-\bool_set_true:N \g__gai_autobib_bool
-\bool_new:N \g__gai_nocite_bool
-\bool_set_true:N \g__gai_nocite_bool
+\bool_new:N \g__aid_autobib_bool
+\bool_set_true:N \g__aid_autobib_bool
+\bool_new:N \g__aid_nocite_bool
+\bool_set_true:N \g__aid_nocite_bool
 
 \DeclareKeys[aidisclose]
   {
-    autobib .bool_set:N = \g__gai_autobib_bool,
+    autobib .bool_set:N = \g__aid_autobib_bool,
     autobib .initial:n  = true,
-    nocite .bool_set:N = \g__gai_nocite_bool,
+    nocite .bool_set:N = \g__aid_nocite_bool,
     nocite .initial:n  = true,
   }
 \ProcessKeyOptions[aidisclose]
@@ -33,289 +34,18 @@
 \fi
 \RequirePackage{multicol}    % for multi-column layout
 \RequirePackage{relsize}     % for relative font sizing
+\RequirePackage{xcolor}      % for color customization
 
 % =========================================================
-% 1) VARIABLE DEFINITIONS (Strings)
+% 1) MULTI-LANGUAGE ARCHITECTURE
 % =========================================================
 
-\str_new:N \g__gai_bibfile_str
-\tl_new:N  \g__gai_str_tools_used_tl
-\tl_new:N  \g__gai_str_none_used_tl
-\tl_new:N  \g__gai_str_declares_tl
-\tl_new:N  \g__gai_str_declare_tl
-\tl_new:N  \g__gai_str_and_tl
-\tl_new:N  \g__gai_str_preamble_tl
-\tl_new:N  \g__gai_str_footnote_tl
-\tl_new:N  \g__gai_str_comment_label_tl
-\tl_new:N  \g__gai_str_comment_star_label_tl
-\tl_new:N  \g__gai_str_title_long_tl
-\tl_new:N  \g__gai_str_title_short_tl
+\tl_new:N \g__aid_target_lang_tl
+\tl_gset:Nn \g__aid_target_lang_tl { en }
+\tl_new:N \l__aid_render_lang_tl
 
-% ---------------------------------------------------------
-% Group Titles
-% ---------------------------------------------------------
-\tl_new:N \g__gai_str_grp_conc_tl
-\tl_new:N \g__gai_str_grp_lit_tl
-\tl_new:N \g__gai_str_grp_meth_tl
-\tl_new:N \g__gai_str_grp_soft_tl
-\tl_new:N \g__gai_str_grp_data_tl
-\tl_new:N \g__gai_str_grp_vis_tl
-\tl_new:N \g__gai_str_grp_write_tl
-\tl_new:N \g__gai_str_grp_eth_tl
-\tl_new:N \g__gai_str_grp_sup_tl
-
-
-% ---------------------------------------------------------
-% 1. Conceptualization
-% ---------------------------------------------------------
-\tl_new:N \g__gai_str_c_idea_tl
-\tl_new:N \g__gai_str_c_obj_tl
-\tl_new:N \g__gai_str_c_rq_tl
-\tl_new:N \g__gai_str_c_feas_tl
-\tl_new:N \g__gai_str_c_pre_tl
-\tl_new:N \g__gai_str_c_sim_tl
-
-
-% ---------------------------------------------------------
-% 2. Literature Review
-% ---------------------------------------------------------
-\tl_new:N \g__gai_str_l_srch_tl
-\tl_new:N \g__gai_str_l_sum_tl
-\tl_new:N \g__gai_str_l_map_tl
-\tl_new:N \g__gai_str_l_pat_tl
-\tl_new:N \g__gai_str_l_gaps_tl
-\tl_new:N \g__gai_str_l_trans_tl
-
-
-% ---------------------------------------------------------
-% 3. Methodology
-% ---------------------------------------------------------
-\tl_new:N \g__gai_str_m_des_tl
-\tl_new:N \g__gai_str_m_proto_tl
-\tl_new:N \g__gai_str_m_meth_tl
-
-% ---------------------------------------------------------
-% 4. Software Development and Automation
-% ---------------------------------------------------------
-\tl_new:N \g__gai_str_s_gen_tl
-\tl_new:N \g__gai_str_s_opt_tl
-\tl_new:N \g__gai_str_s_debug_tl
-\tl_new:N \g__gai_str_s_auto_tl
-\tl_new:N \g__gai_str_s_algs_tl
-\tl_new:N \g__gai_str_s_doc_tl
-
-% ---------------------------------------------------------
-% 5. Data Management
-% ---------------------------------------------------------
-\tl_new:N \g__gai_str_d_coll_tl
-\tl_new:N \g__gai_str_d_val_tl
-\tl_new:N \g__gai_str_d_cln_tl
-\tl_new:N \g__gai_str_d_cur_tl
-\tl_new:N \g__gai_str_d_anl_tl
-\tl_new:N \g__gai_str_d_viz_tl
-\tl_new:N \g__gai_str_d_rep_tl
-\tl_new:N \g__gai_str_d_lbl_tl
-\tl_new:N \g__gai_str_d_syn_tl
-\tl_new:N \g__gai_str_d_anon_tl
-\tl_new:N \g__gai_str_d_trans_tl
-
-% ---------------------------------------------------------
-% 6. Visuals and Multimedia
-% ---------------------------------------------------------
-\tl_new:N \g__gai_str_v_gen_tl
-\tl_new:N \g__gai_str_v_edit_tl
-\tl_new:N \g__gai_str_v_chart_tl
-
-% ---------------------------------------------------------
-% 7. Writing and Editing
-% ---------------------------------------------------------
-\tl_new:N \g__gai_str_w_draft_tl
-\tl_new:N \g__gai_str_w_poly_tl
-\tl_new:N \g__gai_str_w_sum_tl
-\tl_new:N \g__gai_str_w_con_tl
-\tl_new:N \g__gai_str_w_tone_tl
-\tl_new:N \g__gai_str_w_tra_tl
-\tl_new:N \g__gai_str_w_ref_tl
-\tl_new:N \g__gai_str_w_prs_tl
-\tl_new:N \g__gai_str_w_title_tl
-
-% ---------------------------------------------------------
-% 8. Ethics Review
-% ---------------------------------------------------------
-\tl_new:N \g__gai_str_e_bias_tl
-\tl_new:N \g__gai_str_e_risk_tl
-\tl_new:N \g__gai_str_e_comp_tl
-\tl_new:N \g__gai_str_e_conf_tl
-
-% ---------------------------------------------------------
-% 9. Critique and Feedback
-% ---------------------------------------------------------
-\tl_new:N \g__gai_str_sup_qa_tl
-\tl_new:N \g__gai_str_sup_trd_tl
-\tl_new:N \g__gai_str_sup_lim_tl
-\tl_new:N \g__gai_str_sup_rec_tl
-\tl_new:N \g__gai_str_sup_pub_tl
-
-% --- Helper Variables ---
-\dim_new:N \l__gai_fboxsep_dim
-\dim_new:N \l__gai_boxwd_dim
-\dim_new:N \l__gai_labelsep_dim
-\dim_set:Nn \l__gai_fboxsep_dim { 1.2pt }
-\dim_set:Nn \l__gai_labelsep_dim { 0.9em }
-
-\seq_new:N \g__gai_active_keys_seq
-\seq_new:N \l__gai_tools_seq
-\tl_new:N  \l__gai_temp_tl
-\tl_new:N  \g__gai_comments_tl
-\tl_new:N  \g__gai_taxonomy_tl
-\tl_new:N  \g__gai_title_long_tl
-\tl_new:N  \g__gai_title_short_tl
-\tl_new:N  \g__gai_section_cmd_tl
-\tl_new:N  \g__gai_tools_sentence_tl
-\tl_new:N  \l__gai_authors_decl_tl
-\tl_new:N  \g__gai_fontsize_tl
-\tl_new:N  \g__gai_checkmark_symbol_tl
-\int_new:N   \g__gai_authors_int
-\int_new:N   \g__gai_comment_int
-\clist_new:N \g__gai_authors_clist
-
-\str_set:Nn \g__gai_bibfile_str { aidisclose.bib }
-
-% =========================================================
-% 2) KEYS DEFINITIONS
-% =========================================================
-
-\NewDocumentCommand \GAIsetStrings { m }
-  {
-    \keys_set:nn { aidisclose / strings } { #1 }
-  }
-
-\keys_define:nn { aidisclose / strings }
-  {
-% ---------------------------------------------------------
-% General Strings
-% ---------------------------------------------------------
-    tools_used    .tl_set:N = \g__gai_str_tools_used_tl,
-    none_used     .tl_set:N = \g__gai_str_none_used_tl,
-    declares      .tl_set:N = \g__gai_str_declares_tl,
-    declare       .tl_set:N = \g__gai_str_declare_tl,
-    and           .tl_set:N = \g__gai_str_and_tl,
-    preamble      .tl_set:N = \g__gai_str_preamble_tl,
-    footnote      .tl_set:N = \g__gai_str_footnote_tl,
-    comment_label .tl_set:N = \g__gai_str_comment_label_tl,
-    comment_star  .tl_set:N = \g__gai_str_comment_star_label_tl,
-    title_long    .tl_set:N = \g__gai_str_title_long_tl,
-    title_short   .tl_set:N = \g__gai_str_title_short_tl,
-    
-% ---------------------------------------------------------
-% Group Titles
-% ---------------------------------------------------------
-    grp_conc      .tl_set:N = \g__gai_str_grp_conc_tl,
-    grp_lit     .tl_set:N = \g__gai_str_grp_lit_tl,
-    grp_meth      .tl_set:N = \g__gai_str_grp_meth_tl,
-    grp_soft      .tl_set:N = \g__gai_str_grp_soft_tl,
-    grp_data      .tl_set:N = \g__gai_str_grp_data_tl,
-    grp_vis     .tl_set:N = \g__gai_str_grp_vis_tl,
-    grp_write     .tl_set:N = \g__gai_str_grp_write_tl,
-    grp_eth     .tl_set:N = \g__gai_str_grp_eth_tl,
-    grp_sup     .tl_set:N = \g__gai_str_grp_sup_tl,
-
-% ---------------------------------------------------------
-% 1. Conceptualization
-% ---------------------------------------------------------
-    c_idea      .tl_set:N = \g__gai_str_c_idea_tl,
-    c_obj     .tl_set:N = \g__gai_str_c_obj_tl,
-    c_rq      .tl_set:N = \g__gai_str_c_rq_tl,
-    c_feas      .tl_set:N = \g__gai_str_c_feas_tl,
-    c_pre     .tl_set:N = \g__gai_str_c_pre_tl,
-    c_sim     .tl_set:N = \g__gai_str_c_sim_tl,
-
-% ---------------------------------------------------------
-% 2. Literature Review
-% ---------------------------------------------------------
-    l_srch      .tl_set:N = \g__gai_str_l_srch_tl,
-    l_sum     .tl_set:N = \g__gai_str_l_sum_tl,
-    l_map     .tl_set:N = \g__gai_str_l_map_tl,
-    l_pat     .tl_set:N = \g__gai_str_l_pat_tl,
-    l_gaps      .tl_set:N = \g__gai_str_l_gaps_tl,
-    l_trans     .tl_set:N = \g__gai_str_l_trans_tl,
-
-% ---------------------------------------------------------
-% 3. Methodology
-% ---------------------------------------------------------
-    m_des     .tl_set:N = \g__gai_str_m_des_tl,
-    m_proto     .tl_set:N = \g__gai_str_m_proto_tl,
-    m_meth      .tl_set:N = \g__gai_str_m_meth_tl,
-
-% ---------------------------------------------------------
-% 4. Software Development and Automation
-% ---------------------------------------------------------
-    s_gen     .tl_set:N = \g__gai_str_s_gen_tl,
-    s_opt     .tl_set:N = \g__gai_str_s_opt_tl,
-    s_debug     .tl_set:N = \g__gai_str_s_debug_tl,
-    s_auto      .tl_set:N = \g__gai_str_s_auto_tl,
-    s_algs      .tl_set:N = \g__gai_str_s_algs_tl,
-    s_doc     .tl_set:N = \g__gai_str_s_doc_tl,
-
-% ---------------------------------------------------------
-% 5. Data Management
-% ---------------------------------------------------------
-    d_coll      .tl_set:N = \g__gai_str_d_coll_tl,
-    d_val     .tl_set:N = \g__gai_str_d_val_tl,
-    d_cln     .tl_set:N = \g__gai_str_d_cln_tl,
-    d_cur     .tl_set:N = \g__gai_str_d_cur_tl,
-    d_anl     .tl_set:N = \g__gai_str_d_anl_tl,
-    d_viz     .tl_set:N = \g__gai_str_d_viz_tl,
-    d_rep     .tl_set:N = \g__gai_str_d_rep_tl,
-    d_lbl     .tl_set:N = \g__gai_str_d_lbl_tl,
-    d_syn     .tl_set:N = \g__gai_str_d_syn_tl,
-    d_anon      .tl_set:N = \g__gai_str_d_anon_tl,
-    d_trans     .tl_set:N = \g__gai_str_d_trans_tl,
-
-% ---------------------------------------------------------
-% 6. Visuals and Multimedia
-% ---------------------------------------------------------
-    v_gen     .tl_set:N = \g__gai_str_v_gen_tl,
-    v_edit      .tl_set:N = \g__gai_str_v_edit_tl,
-    v_chart     .tl_set:N = \g__gai_str_v_chart_tl,
-
-% ---------------------------------------------------------
-% 7. Writing and Editing
-% ---------------------------------------------------------
-    w_draft     .tl_set:N = \g__gai_str_w_draft_tl,
-    w_poly      .tl_set:N = \g__gai_str_w_poly_tl,
-    w_sum     .tl_set:N = \g__gai_str_w_sum_tl,
-    w_con     .tl_set:N = \g__gai_str_w_con_tl,
-    w_tone      .tl_set:N = \g__gai_str_w_tone_tl,
-    w_tra     .tl_set:N = \g__gai_str_w_tra_tl,
-    w_ref     .tl_set:N = \g__gai_str_w_ref_tl,
-    w_prs     .tl_set:N = \g__gai_str_w_prs_tl,
-    w_title     .tl_set:N = \g__gai_str_w_title_tl,
-
-% ---------------------------------------------------------
-% 8. Ethics Review
-% ---------------------------------------------------------
-    e_bias      .tl_set:N = \g__gai_str_e_bias_tl,
-    e_risk      .tl_set:N = \g__gai_str_e_risk_tl,
-    e_comp      .tl_set:N = \g__gai_str_e_comp_tl,
-    e_conf      .tl_set:N = \g__gai_str_e_conf_tl,
-
-% ---------------------------------------------------------
-% 9. Critique and Feedback
-% ---------------------------------------------------------
-    sup_qa      .tl_set:N = \g__gai_str_sup_qa_tl,
-    sup_trd     .tl_set:N = \g__gai_str_sup_trd_tl,
-    sup_lim     .tl_set:N = \g__gai_str_sup_lim_tl,
-    sup_rec     .tl_set:N = \g__gai_str_sup_rec_tl,
-    sup_pub     .tl_set:N = \g__gai_str_sup_pub_tl,
-  }
-
-% =========================================================
-% 3) LANGUAGE HANDLING
-% =========================================================
-
-\prop_new:N \g__gai_lang_map_prop
-\prop_gset_from_keyval:Nn \g__gai_lang_map_prop
+\prop_new:N \g__aid_lang_map_prop
+\prop_gset_from_keyval:Nn \g__aid_lang_map_prop
   {
     english    = en,
     american   = en,
@@ -325,11 +55,9 @@
     newzealand = en,
     UKenglish  = en,
     USenglish  = en,
-    
     portuguese = pt,
     brazilian  = pt,
     portuges   = pt,
-    
     catalan    = cat,
     czech      = cz,
     german     = de,
@@ -350,67 +78,180 @@
     ukrainian  = uk
   }
 
-
-\cs_new_protected:Nn \__gai_load_lang_file:n
+% ---------------------------------------------------------
+% KEY DEFINITION HELPER
+% ---------------------------------------------------------
+\cs_new_protected:Nn \__aid_define_translatable_key:n
   {
-    % 1. Try specific language in current/root directory
-    \file_if_exist:nTF { aidisclose-#1.ldf }
-      { \file_input:n { aidisclose-#1.ldf } }
+    \keys_define:nn { aidisclose / strings }
       {
-        % 2. Try specific language in 'langdef/' folder
-        \file_if_exist:nTF { langdef/aidisclose-#1.ldf }
-          { \file_input:n { langdef/aidisclose-#1.ldf } }
-          {
-            % 3. Fallback: English in current/root directory
-            \file_if_exist:nTF { aidisclose-en.ldf }
-              { \file_input:n { aidisclose-en.ldf } }
-              { 
-                % 4. Fallback: English in 'langdef/'
-                \file_if_exist:nTF { langdef/aidisclose-en.ldf }
-                  { \file_input:n { langdef/aidisclose-en.ldf } }
-                  { 
-                    % ERROR: No files found
-                    \msg_error:nnn { aidisclose } { lang-not-found } { #1 }
-                  }
-              }
+        #1 .code:n = 
+          { 
+            \tl_if_exist:cF { g__aid_str_ \g__aid_target_lang_tl _ #1 _tl }
+              { \tl_new:c { g__aid_str_ \g__aid_target_lang_tl _ #1 _tl } }
+            \tl_gset:cn { g__aid_str_ \g__aid_target_lang_tl _ #1 _tl } { ##1 }
           }
       }
   }
 
-% 1. Define the error message
-\msg_new:nnnn { aidisclose } { lang-not-found }
-  { Language~definition~file~for~'#1'~could~not~be~found. }
+\cs_new_protected:Nn \__aid_set_string:nn
   {
-    The~package~tried~to~load~'aidisclose-#1.ldf'~and~the~fallback~
-    'aidisclose-en.ldf'~in~both~the~current~directory~and~the~
-    'langdef/'~subdirectory,~but~none~were~found.
+    \tl_if_exist:cF { g__aid_str_ \g__aid_target_lang_tl _ #1 _tl }
+      { \tl_new:c { g__aid_str_ \g__aid_target_lang_tl _ #1 _tl } }
+    \tl_gset:cn { g__aid_str_ \g__aid_target_lang_tl _ #1 _tl } { #2 }
   }
 
-\cs_new_protected:Nn \__gai_detect_and_load_language:
+
+% =========================================================
+% 2) DYNAMIC TAXONOMY ENGINE
+% =========================================================
+
+\seq_new:N \g__aid_groups_seq
+
+\cs_new_protected:Nn \__aid_define_group:nn
   {
-    \bool_set_false:N \l_tmpa_bool
-    
-    \ifcsname languagename\endcsname
-      \prop_get:NxNTF \g__gai_lang_map_prop { \languagename } \l__suffix_tl
-        { 
-          \__gai_load_lang_file:n { \l__suffix_tl }
-          \bool_set_true:N \l_tmpa_bool
-        }
-        {}
-    \fi
-    
-    \bool_if:NF \l_tmpa_bool
-      {
-        \__gai_load_lang_file:n { en }
+    \seq_gput_right:Nn \g__aid_groups_seq { #1 }
+    \seq_new:c { g__aid_group_items_#1_seq }
+    \__aid_define_translatable_key:n { grp_#1 }
+    \__aid_set_string:nn { grp_#1 } { #2 }
+  }
+
+\cs_new_protected:Nn \__aid_define_entry:nnn
+  {
+    \seq_gput_right:cn { g__aid_group_items_#1_seq } { #2 }
+    \__aid_define_translatable_key:n { #2 }
+    \__aid_set_string:nn { #2 } { #3 }
+  }
+
+\cs_new_protected:Nn \__aid_load_groups:n
+  {
+    \keyval_parse:NNn \use_none:n \__aid_define_group:nn { #1 }
+  }
+
+\cs_new_protected:Nn \__aid_load_entries:n
+  {
+    \keyval_parse:NNn \use_none:n \__aid_parse_and_define_entry:nn { #1 }
+  }
+
+\cs_new_protected:Nn \__aid_parse_and_define_entry:nn
+  {
+    \seq_set_split:Nnn \l_tmpa_seq { : } { #1 }
+    \tl_set:Nx \l_tmpa_tl { \seq_item:Nn \l_tmpa_seq { 1 } }
+    \tl_set:Nx \l_tmpb_tl { \seq_item:Nn \l_tmpa_seq { 2 } }
+    \use:x 
+      { 
+        \__aid_define_entry:nnn { \l_tmpa_tl } { \l_tmpb_tl } { \exp_not:n { #2 } } 
       }
   }
 
 % =========================================================
-% 4) INTERNAL UTILITIES & TAXONOMY
+% 3) DEFINING GENERAL STRINGS KEYS
+% =========================================================
+
+\clist_const:Nn \c__aid_std_strings_clist
+  {
+    tools_used, none_used, declares, declare, acknowledges, acknowledge,
+    accepts, accept, and, preamble, footnote, comment_label, 
+    comment_star, title_long, title_short,
+    pre_tools, post_tools, pre_taxonomy, post_taxonomy, 
+    pre_comments, post_comments,
+    author, authors
+  }
+
+\clist_map_inline:Nn \c__aid_std_strings_clist
+  {
+    \__aid_define_translatable_key:n { #1 }
+  }
+
+\NewDocumentCommand \AIDstrings { m }
+  {
+    \keys_set:nn { aidisclose / strings } { #1 }
+  }
+
+% =========================================================
+% 4) LANGUAGE LOADING LOGIC
+% =========================================================
+
+\cs_new_protected:Nn \__aid_find_file:n
+  {
+    \file_if_exist:nTF { aidisclose-#1.ldf }
+      { \file_input:n { aidisclose-#1.ldf } }
+      {
+        \file_if_exist:nTF { langdef/aidisclose-#1.ldf }
+          { \file_input:n { langdef/aidisclose-#1.ldf } }
+          { 
+             \msg_warning:nnn { aidisclose } { lang-not-found } { #1 }
+          }
+      }
+  }
+
+\msg_new:nnnn { aidisclose } { lang-not-found }
+  { Language~definition~file~for~'#1'~not~found. }
+  { Falling~back~to~English~defaults~or~previously~loaded~strings. }
+
+\NewDocumentCommand \AIDloadLanguage { m }
+  {
+    \prop_get:NxNTF \g__aid_lang_map_prop { #1 } \l_tmpa_tl
+      { \tl_set_eq:NN \l__aid_iso_code_tl \l_tmpa_tl }
+      { \tl_set:Nx \l__aid_iso_code_tl { #1 } }
+
+    \bool_if_exist:cTF { g__aid_loaded_ \l__aid_iso_code_tl _bool }
+      { }
+      {
+         \group_begin:
+           \tl_gset:Nx \g__aid_target_lang_tl { \l__aid_iso_code_tl }
+           \__aid_find_file:n { \l__aid_iso_code_tl }
+         \group_end:
+         \bool_new:c { g__aid_loaded_ \l__aid_iso_code_tl _bool }
+         \bool_gset_true:c { g__aid_loaded_ \l__aid_iso_code_tl _bool }
+      }
+  }
+
+% =========================================================
+% 5) TAXONOMY STRUCTURE DEFINITION
+% =========================================================
+
+\__aid_load_groups:n
+  {
+    conc={}, lit={}, meth={}, soft={}, data={},
+    vis={}, write={}, eth={}, sup={}
+  }
+
+\__aid_load_entries:n
+  {
+    conc:c_idea={}, conc:c_obj={}, conc:c_rq={}, conc:c_feas={}, conc:c_pre={}, conc:c_sim={},
+    lit:l_srch={}, lit:l_sum={}, lit:l_map={}, lit:l_pat={}, lit:l_gaps={}, lit:l_trans={},
+    meth:m_des={}, meth:m_proto={}, meth:m_meth={},
+    soft:s_gen={}, soft:s_opt={}, soft:s_debug={}, soft:s_auto={}, soft:s_algs={}, soft:s_doc={},
+    data:d_coll={}, data:d_val={}, data:d_cln={}, data:d_cur={}, data:d_anl={}, data:d_viz={},
+    data:d_rep={}, data:d_lbl={}, data:d_syn={}, data:d_anon={}, data:d_trans={},
+    vis:v_gen={}, vis:v_edit={}, vis:v_chart={},
+    write:w_draft={}, write:w_poly={}, write:w_sum={}, write:w_con={}, write:w_tone={},
+    write:w_tra={}, write:w_ref={}, write:w_prs={}, write:w_title={},
+    eth:e_bias={}, eth:e_risk={}, eth:e_comp={}, eth:e_conf={},
+    sup:sup_qa={}, sup:sup_trd={}, sup:sup_lim={}, sup:sup_rec={}, sup:sup_pub={}
+  }
+
+% =========================================================
+% 6) LOAD DEFAULT STRINGS (Early Load)
+% =========================================================
+
+% 1. Set defaults first (prevents overwriting the LDF later)
+\AIDstrings{
+    pre_tools={}, post_tools={}, 
+    pre_taxonomy={}, post_taxonomy={},
+    pre_comments={}, post_comments={}
+}
+
+% 2. Then load the language (populates the strings)
+\AIDloadLanguage{en}
+
+% =========================================================
+% 7) INTERNAL UTILITIES
 % =========================================================
 
 % Detect the Engine Name (LuaLaTeX, XeLaTeX, pdfLaTeX)
-\NewDocumentCommand \GAIengineName {}
+\NewDocumentCommand \AIDlatexProcessor {}
   {
     \sys_if_engine_luatex:TF { Lua\LaTeX }
       {
@@ -421,9 +262,8 @@
       }
       \CiteLaTeX
   }
-
-% Print Package Name with Link
-\NewDocumentCommand \GAIpackageName {}
+  
+\NewDocumentCommand \AIDpackageName {}
   {
     \group_begin:
       \cs_if_exist:NTF \hypersetup
@@ -435,46 +275,67 @@
     \group_end:
   }
 
-\cs_new_protected:Npn \__gai_print_checked_box:
+\cs_new_protected:Npn \__aid_print_checked_box:
   {
     \group_begin:
-    \dim_set:Nn \fboxsep { \l__gai_fboxsep_dim }
-    \fbox { \tl_use:N \g__gai_checkmark_symbol_tl }
+    \dim_set:Nn \fboxsep { \l__aid_fboxsep_dim }
+    \color{ \g__aid_color_box_used_tl }
+    \fbox { 
+      \color{ \g__aid_color_checkmark_tl }
+      \tl_use:N \g__aid_checkmark_symbol_tl 
+    }
     \group_end:
   }
 
-\cs_new_protected:Npn \__gai_print_empty_box:
+\cs_new_protected:Npn \__aid_print_empty_box:
   {
     \group_begin:
-    \dim_set:Nn \fboxsep { \l__gai_fboxsep_dim }
-    \fbox { \phantom { \tl_use:N \g__gai_checkmark_symbol_tl } }
+    \dim_set:Nn \fboxsep { \l__aid_fboxsep_dim }
+    \color{ \g__aid_color_box_unused_tl }
+    \fbox { \phantom { \tl_use:N \g__aid_checkmark_symbol_tl } }
     \group_end:
   }
 
-\cs_new_protected:Npn \__gai_checkbox_for:n #1
+\cs_new_protected:Npn \__aid_checkbox_for:n #1
   {
-    \seq_if_in:NxTF \g__gai_active_keys_seq { \tl_to_str:n { #1 } }
-      { \__gai_print_checked_box: }
-      { \__gai_print_empty_box: }
+    \seq_if_in:NxTF \g__aid_active_keys_seq { \tl_to_str:n { #1 } }
+      { \__aid_print_checked_box: }
+      { \__aid_print_empty_box: }
   }
 
-\cs_new_protected:Npn \__gai_print_preamble:
+% --- STRING FETCHING HELPER ---
+\cs_new_protected:Nn \__aid_fetch_string:nN
   {
-    \tl_use:N \l__gai_authors_decl_tl
-    \bool_if:NF \g__gai_nocite_bool
+    \tl_if_exist:cTF { g__aid_str_ \l__aid_render_lang_tl _ #1 _tl }
+      { \tl_set_eq:Nc #2 { g__aid_str_ \l__aid_render_lang_tl _ #1 _tl } }
+      { 
+        \tl_if_exist:cTF { g__aid_str_en_ #1 _tl }
+          { \tl_set_eq:Nc #2 { g__aid_str_en_ #1 _tl } }
+          { \tl_set:Nn #2 { ??? } }
+      }
+  }
+
+\NewDocumentCommand \AIDGetString { m }
+  {
+    \__aid_fetch_string:nN { #1 } \l_tmpa_tl
+    \tl_use:N \l_tmpa_tl
+  }
+
+\cs_new_protected:Npn \__aid_print_preamble:
+  {
+    \tl_use:N \l__aid_working_preamble_tl
+    \bool_if:NF \g__aid_nocite_bool
       {
         \footnote{
-          \tl_use:N \g__gai_str_footnote_tl 
+          \AIDGetString { footnote } 
           \nobreakspace \cite{Lourenco:2025:aidisclose}.
         }
       }
-    \space
-    \tl_use:N \g__gai_str_preamble_tl
   }
 
 \cs_new_protected:Npn \CiteLaTeX
   {
-    \bool_if:NF \g__gai_nocite_bool
+    \bool_if:NF \g__aid_nocite_bool
       {
         \nobreakspace  \cite{latex-project}
       }
@@ -482,38 +343,29 @@
 
 \cs_new_protected:Npn \CiteGAIDeT
   {
-    \bool_if:NF \g__gai_nocite_bool
+    \bool_if:NF \g__aid_nocite_bool
       {
         \nobreakspace  \cite{Suchikova:2025:GAIDeT}
       }
   }
 
-
-% CHECKLIST ENVIRONMENT (Replaces enumitem)
-% Define the label as a square (requires amssymb or latexsym usually, 
-% but \framebox{} is a safe fallback if symbols aren't loaded)
-\cs_new_protected:Nn \_gai_label:
+% CHECKLIST ENVIRONMENT
+\cs_new_protected:Nn \_aid_label:
   {
     \hbox_to_wd:nn { 1em } { \hss \framebox[0.8em]{\vphantom{t}} \hss }
   }
 
-\NewDocumentEnvironment{gailist} { }
+\NewDocumentEnvironment{aidlist} { }
   {
-    % Start a standard list
-    \list { \_gai_label: }
+    \list { \_aid_label: }
       {
-        % Mimic enumitem's "nosep" (no vertical space)
         \setlength { \topsep }      { 0pt }
         \setlength { \partopsep }   { 0pt }
         \setlength { \itemsep }     { 0pt }
         \setlength { \parsep }      { 5pt }
-        
-        % Formatting (indentation)
         \setlength { \leftmargin }  { 1.5em }
         \setlength { \labelwidth }  { 1em }
         \setlength { \labelsep }    { 0.5em }
-        
-        % Prevent indentation of the first paragraph inside an item
         \setlength { \listparindent } { 0pt }
       }
   }
@@ -521,266 +373,412 @@
     \endlist
   }
   
-  
-% --- Taxonomy Data Structure ---
-\tl_gset:Nn \g__gai_taxonomy_tl {
-  % --- 1. Conceptualization ---
-  \TGroup{\tl_use:N \g__gai_str_grp_conc_tl}{
-    \TItem{c_idea}   {\tl_use:N \g__gai_str_c_idea_tl}
-    \TItem{c_obj}    {\tl_use:N \g__gai_str_c_obj_tl}
-    \TItem{c_rq}     {\tl_use:N \g__gai_str_c_rq_tl}
-    \TItem{c_feas}   {\tl_use:N \g__gai_str_c_feas_tl}
-    \TItem{c_pre}    {\tl_use:N \g__gai_str_c_pre_tl}
-    \TItem{c_sim}    {\tl_use:N \g__gai_str_c_sim_tl}
-  }
-  % --- 2. Literature Review ---
-  \TGroup{\tl_use:N \g__gai_str_grp_lit_tl}{
-    \TItem{l_srch}   {\tl_use:N \g__gai_str_l_srch_tl}
-    \TItem{l_sum}    {\tl_use:N \g__gai_str_l_sum_tl}
-    \TItem{l_map}    {\tl_use:N \g__gai_str_l_map_tl}
-    \TItem{l_pat}    {\tl_use:N \g__gai_str_l_pat_tl}
-    \TItem{l_gaps}   {\tl_use:N \g__gai_str_l_gaps_tl}
-    \TItem{l_trans}  {\tl_use:N \g__gai_str_l_trans_tl}
-  }
-  % --- 3. Methodology ---
-  \TGroup{\tl_use:N \g__gai_str_grp_meth_tl}{
-    \TItem{m_des}    {\tl_use:N \g__gai_str_m_des_tl}
-    \TItem{m_proto}  {\tl_use:N \g__gai_str_m_proto_tl}
-    \TItem{m_meth}   {\tl_use:N \g__gai_str_m_meth_tl}
-  }
-  % --- 4. Software Development ---
-  \TGroup{\tl_use:N \g__gai_str_grp_soft_tl}{
-    \TItem{s_gen}    {\tl_use:N \g__gai_str_s_gen_tl}
-    \TItem{s_opt}    {\tl_use:N \g__gai_str_s_opt_tl}
-    \TItem{s_debug}  {\tl_use:N \g__gai_str_s_debug_tl}
-    \TItem{s_auto}   {\tl_use:N \g__gai_str_s_auto_tl}
-    \TItem{s_algs}   {\tl_use:N \g__gai_str_s_algs_tl}
-    \TItem{s_doc}    {\tl_use:N \g__gai_str_s_doc_tl} 
-  }
-  % --- 5. Data Management ---
-  \TGroup{\tl_use:N \g__gai_str_grp_data_tl}{
-    \TItem{d_coll}    {\tl_use:N \g__gai_str_d_coll_tl}
-    \TItem{d_val}     {\tl_use:N \g__gai_str_d_val_tl}
-    \TItem{d_cln}     {\tl_use:N \g__gai_str_d_cln_tl}
-    \TItem{d_cur}     {\tl_use:N \g__gai_str_d_cur_tl}
-    \TItem{d_anl}     {\tl_use:N \g__gai_str_d_anl_tl}
-    \TItem{d_viz}     {\tl_use:N \g__gai_str_d_viz_tl}
-    \TItem{d_rep}     {\tl_use:N \g__gai_str_d_rep_tl}
-    \TItem{d_lbl}     {\tl_use:N \g__gai_str_d_lbl_tl} 
-    \TItem{d_syn}     {\tl_use:N \g__gai_str_d_syn_tl} 
-    \TItem{d_anon}    {\tl_use:N \g__gai_str_d_anon_tl} 
-    \TItem{d_trans}   {\tl_use:N \g__gai_str_d_trans_tl}
-  }
-  % --- 6. Visuals and Multimedia ---
-  \TGroup{\tl_use:N \g__gai_str_grp_vis_tl}{
-    \TItem{v_gen}     {\tl_use:N \g__gai_str_v_gen_tl}
-    \TItem{v_edit}    {\tl_use:N \g__gai_str_v_edit_tl}
-    \TItem{v_chart}   {\tl_use:N \g__gai_str_v_chart_tl}
-  }
-  % --- 7. Writing and Editing ---
-  \TGroup{\tl_use:N \g__gai_str_grp_write_tl}{
-    \TItem{w_draft}   {\tl_use:N \g__gai_str_w_draft_tl}
-    \TItem{w_poly}    {\tl_use:N \g__gai_str_w_poly_tl}
-    \TItem{w_title}   {\tl_use:N \g__gai_str_w_title_tl}
-    \TItem{w_sum}     {\tl_use:N \g__gai_str_w_sum_tl}
-    \TItem{w_con}     {\tl_use:N \g__gai_str_w_con_tl}
-    \TItem{w_ref}     {\tl_use:N \g__gai_str_w_ref_tl}
-    \TItem{w_tone}    {\tl_use:N \g__gai_str_w_tone_tl}
-    \TItem{w_tra}     {\tl_use:N \g__gai_str_w_tra_tl}
-    \TItem{w_prs}     {\tl_use:N \g__gai_str_w_prs_tl}
-  }
-  % --- 8. Ethics Review ---
-  \TGroup{\tl_use:N \g__gai_str_grp_eth_tl}{
-    \TItem{e_bias}    {\tl_use:N \g__gai_str_e_bias_tl}
-    \TItem{e_risk}    {\tl_use:N \g__gai_str_e_risk_tl}
-    \TItem{e_comp}    {\tl_use:N \g__gai_str_e_comp_tl}
-    \TItem{e_conf}    {\tl_use:N \g__gai_str_e_conf_tl}
-  }
-  % --- 9. Critique and Feedback ---
-  \TGroup{\tl_use:N \g__gai_str_grp_sup_tl}{
-    \TItem{sup_qa}    {\tl_use:N \g__gai_str_sup_qa_tl}
-    \TItem{sup_trd}   {\tl_use:N \g__gai_str_sup_trd_tl}
-    \TItem{sup_lim}   {\tl_use:N \g__gai_str_sup_lim_tl}
-    \TItem{sup_rec}   {\tl_use:N \g__gai_str_sup_rec_tl}
-    \TItem{sup_pub}   {\tl_use:N \g__gai_str_sup_pub_tl}
-  }
-}
-
 % =========================================================
-% 5) USER CONFIGURATION COMMANDS
+% 8) USER CONFIGURATION COMMANDS
 % =========================================================
 
-\NewDocumentCommand \GAIsetCheckmarkSymbol { m }
+\dim_new:N \l__aid_fboxsep_dim
+\dim_new:N \l__aid_boxwd_dim
+\dim_new:N \l__aid_labelsep_dim
+\dim_set:Nn \l__aid_fboxsep_dim { 1.2pt }
+\dim_set:Nn \l__aid_labelsep_dim { 0.9em }
+
+\seq_new:N \g__aid_active_keys_seq
+\seq_new:N \l__aid_tools_seq
+\seq_new:N \g__aid_order_seq
+
+\tl_new:N  \l__aid_temp_tl
+\tl_new:N  \g__aid_comments_tl
+\tl_new:N  \g__aid_title_long_tl
+\tl_new:N  \g__aid_title_short_tl
+\tl_new:N  \g__aid_section_cmd_tl
+\tl_new:N  \g__aid_tools_sentence_tl
+\tl_new:N  \g__aid_fontsize_tl
+\tl_new:N  \g__aid_checkmark_symbol_tl
+\int_new:N   \g__aid_authors_int
+\int_new:N   \g__aid_comment_int
+\clist_new:N \g__aid_authors_clist
+
+\tl_new:N \l__aid_author_names_tl
+\tl_new:N \l__aid_declares_verb_tl
+\tl_new:N \l__aid_acknowledges_verb_tl
+\tl_new:N \l__aid_accepts_verb_tl
+\tl_new:N \l__aid_working_preamble_tl
+\tl_new:N \l__aid_connector_tl
+\tl_new:N \l__aid_author_noun_tl
+\tl_new:N \l__aid_author_list_tl
+
+\tl_new:N \g__aid_color_used_tl
+\tl_new:N \g__aid_color_unused_tl
+\tl_new:N \g__aid_color_checkmark_tl
+\tl_new:N \g__aid_color_box_used_tl
+\tl_new:N \g__aid_color_box_unused_tl
+
+\str_set:Nn \g__aid_bibfile_str { aidisclose.bib }
+
+\NewDocumentCommand \AIDcheckmarkSymbol { m }
   {
-    \tl_gset:Nn \g__gai_checkmark_symbol_tl { #1 }
+    \tl_gset:Nn \g__aid_checkmark_symbol_tl { #1 }
     \hbox_set:Nn \l_tmpa_box { \fbox { #1 } }
-    \dim_set:Nn \l__gai_boxwd_dim { \box_wd:N \l_tmpa_box }
+    \dim_set:Nn \l__aid_boxwd_dim { \box_wd:N \l_tmpa_box }
   }
 
-\NewDocumentCommand \GAIactivate { m }
+\cs_generate_variant:Nn \tl_replace_all:Nnn { Nxx }
+\NewDocumentCommand \AIDactivate { m }
   {
-    \tl_set:Nn \l__gai_temp_tl { #1 }
-    \tl_trim_spaces:N \l__gai_temp_tl
-    \seq_gput_right:Nx \g__gai_active_keys_seq { \tl_to_str:N \l__gai_temp_tl }
+    \tl_set:Nx \l__aid_temp_tl { \tl_to_str:n { #1 } }
+    \tl_trim_spaces:N \l__aid_temp_tl
+    \tl_replace_all:Nxx \l__aid_temp_tl { \tl_to_str:n { : } } { \tl_to_str:n { _ } }
+    \seq_gput_right:No \g__aid_active_keys_seq { \l__aid_temp_tl }
   }
 
-\NewDocumentCommand \GAItoolsUsed { m }
+\NewDocumentCommand \AIDtoolsUsed { m }
   {
     \tl_if_blank:nTF { #1 }
-      { \tl_gset_eq:NN \g__gai_tools_sentence_tl \g__gai_str_none_used_tl }
+      { 
+         \__aid_fetch_string:nN { none_used } \l_tmpa_tl
+         \tl_gset_eq:NN \g__aid_tools_sentence_tl \l_tmpa_tl
+      }
       {
-        \seq_set_split:Nnn \l__gai_tools_seq { , } { #1 }
-        \seq_set_map:NNn \l__gai_tools_seq \l__gai_tools_seq { \tl_trim_spaces:n {##1} }
-        \seq_remove_all:Nn \l__gai_tools_seq { }
-        \tl_gset:Nx \g__gai_tools_sentence_tl
+        \seq_set_split:Nnn \l__aid_tools_seq { , } { #1 }
+        \seq_set_map:NNn \l__aid_tools_seq \l__aid_tools_seq { \tl_trim_spaces:n {##1} }
+        \seq_remove_all:Nn \l__aid_tools_seq { }
+        
+        \__aid_fetch_string:nN { and } \l_tmpa_tl
+        
+        % FIX: Use \tl_gset:Nx and \exp_not:V to bake the value of "and"
+        % into the sentence immediately, preventing variable collision later.
+        \tl_gset:Nx \g__aid_tools_sentence_tl
           {
-            \seq_use:Nnnn \l__gai_tools_seq 
-              { \ \tl_use:N \g__gai_str_and_tl\  } 
+            \exp_not:N \seq_use:Nnnn \exp_not:N \l__aid_tools_seq 
+              { \ \exp_not:V \l_tmpa_tl \  } 
               { ,\  } 
-              { ,\ \tl_use:N \g__gai_str_and_tl\  } .
+              { ,\ \exp_not:V \l_tmpa_tl \  } .
           }
       }
   }
 
-\NewDocumentCommand \GAIsetChecklistFontSize { m }
-  {
-    \tl_gset:Nn \g__gai_fontsize_tl { #1 }
-  }
+\NewDocumentCommand \AIDchecklistFontSize { m }
+  { \tl_gset:Nn \g__aid_fontsize_tl { #1 } }
 
-\NewDocumentCommand \GAIdiscloseTitle { o m O{} }
+\NewDocumentCommand \AIDdiscloseTitle { o m O{} }
   {
-    \tl_gset:Nn \g__gai_title_long_tl { #2 }
+    \tl_gset:Nn \g__aid_title_long_tl { #2 }
     \IfNoValueTF { #1 }
-      { \tl_gset:Nn \g__gai_title_short_tl { #2 } }
-      { \tl_gset:Nn \g__gai_title_short_tl { #1 } }
+      { \tl_gset:Nn \g__aid_title_short_tl { #2 } }
+      { \tl_gset:Nn \g__aid_title_short_tl { #1 } }
     \tl_if_blank:nTF { #3 }
       {
         \cs_if_exist:cTF { chapter }
-          { \tl_gset:Nn \g__gai_section_cmd_tl { \chapter } }
-          { \tl_gset:Nn \g__gai_section_cmd_tl { \section } }
+          { \tl_gset:Nn \g__aid_section_cmd_tl { \chapter } }
+          { \tl_gset:Nn \g__aid_section_cmd_tl { \section } }
       }
-      { \tl_gset:Nn \g__gai_section_cmd_tl { #3 } }
+      { \tl_gset:Nn \g__aid_section_cmd_tl { #3 } }
   }
+  
+\NewDocumentCommand \AIDpreamble { m }
+  { \__aid_set_string:nn { preamble } { #1 } }
 
-\NewDocumentCommand \GAIdiscloseTitleLong {} 
-  { 
-    \tl_if_empty:NTF \g__gai_title_long_tl 
-      { \tl_use:N \g__gai_str_title_long_tl } 
-      { \tl_use:N \g__gai_title_long_tl }
-  }
+\NewDocumentCommand \AIDpreTools { m }
+  { \__aid_set_string:nn { pre_tools } { #1 } }
+\NewDocumentCommand \AIDpostTools { m }
+  { \__aid_set_string:nn { post_tools } { #1 } }
 
-\NewDocumentCommand \GAIdiscloseTitleShort {} 
-  { 
-     \tl_if_empty:NTF \g__gai_title_short_tl 
-      { \tl_use:N \g__gai_str_title_short_tl } 
-      { \tl_use:N \g__gai_title_short_tl }
-  }
+\NewDocumentCommand \AIDpreTaxonomy { m }
+  { \__aid_set_string:nn { pre_taxonomy } { #1 } }
+\NewDocumentCommand \AIDpostTaxonomy { m }
+  { \__aid_set_string:nn { post_taxonomy } { #1 } }
 
-% Default Configuration
+\NewDocumentCommand \AIDpreComments { m }
+  { \__aid_set_string:nn { pre_comments } { #1 } }
+\NewDocumentCommand \AIDpostComments { m }
+  { \__aid_set_string:nn { post_comments } { #1 } }
+
+\NewDocumentCommand \AIDorder { m }
+  { \seq_set_from_clist:Nn \g__aid_order_seq { #1 } }
+
+\NewDocumentCommand \AIDusedColor { m }
+  { \tl_gset:Nn \g__aid_color_used_tl { #1 } }
+\NewDocumentCommand \AIDunusedColor { m }
+  { \tl_gset:Nn \g__aid_color_unused_tl { #1 } }
+\NewDocumentCommand \AIDcheckmarkColor { m }
+  { \tl_gset:Nn \g__aid_color_checkmark_tl { #1 } }
+\NewDocumentCommand \AIDboxUsedColor { m }
+  { \tl_gset:Nn \g__aid_color_box_used_tl { #1 } }
+\NewDocumentCommand \AIDboxUnusedColor { m }
+  { \tl_gset:Nn \g__aid_color_box_unused_tl { #1 } }
+
 \cs_if_exist:cTF { chapter }
-  { \tl_gset:Nn \g__gai_section_cmd_tl { \chapter } }
-  { \tl_gset:Nn \g__gai_section_cmd_tl { \section } }
+  { \tl_gset:Nn \g__aid_section_cmd_tl { \chapter } }
+  { \tl_gset:Nn \g__aid_section_cmd_tl { \section } }
 
-\GAIsetChecklistFontSize { \smaller }
-\GAIsetCheckmarkSymbol { \checkmark } 
+\AIDchecklistFontSize { \smaller }
+\AIDcheckmarkSymbol { \checkmark } 
+\AIDorder { preamble, tools, taxonomy, comments }
+\AIDusedColor { black }
+\AIDunusedColor { black!50 }
+\AIDcheckmarkColor { black }
+\AIDboxUsedColor { black }
+\AIDboxUnusedColor { black!50 }
 
 % =========================================================
-% 6) COMMENT ENVIRONMENTS
+% 9) COMMENT ENVIRONMENTS
 % =========================================================
-\NewDocumentEnvironment{GAIcomment}{ +b }
+\NewDocumentEnvironment{AIDcomment}{ +b }
   {
-    \tl_gput_right:Nn \g__gai_comments_tl
+    \tl_gput_right:Nn \g__aid_comments_tl
       {
-        \int_gincr:N \g__gai_comment_int
+        \int_gincr:N \g__aid_comment_int
         \par \bigskip \noindent
-        \textbf{\tl_use:N \g__gai_str_comment_label_tl\ \#\int_use:N \g__gai_comment_int :}\  #1 \par
+        \__aid_fetch_string:nN { comment_label } \l_tmpa_tl
+        \textbf{\tl_use:N \l_tmpa_tl \ \#\int_use:N \g__aid_comment_int :}\  #1 \par
       }
   } { }
 
-\NewDocumentEnvironment{GAIcomment*}{ +b }
+\NewDocumentEnvironment{AIDcomment*}{ +b }
   {
-    \tl_gput_right:Nn \g__gai_comments_tl
+    \tl_gput_right:Nn \g__aid_comments_tl
       {
         \par \bigskip \noindent
-        \textbf{\tl_use:N \g__gai_str_comment_star_label_tl :}\  #1 \par
+        \__aid_fetch_string:nN { comment_star } \l_tmpa_tl
+        \textbf{\tl_use:N \l_tmpa_tl :}\  #1 \par
       }
   } { }
 
 % =========================================================
-% 7) MAIN RENDERING ENGINE
+% 10) MAIN RENDERING ENGINE
 % =========================================================
-\NewDocumentCommand \GAIrenderDeclaration { s O{3} m }
+
+\cs_new_protected:Nn \__aid_render_header:n
   {
-    \clist_set:Nn \g__gai_authors_clist { #3 }
-    \int_set:Nn \g__gai_authors_int { \clist_count:N \g__gai_authors_clist }
-    
-    \int_compare:nNnTF { \g__gai_authors_int } = { 1 }
-      { \tl_set:Nx \l__gai_authors_decl_tl { #3\ \tl_use:N \g__gai_str_declares_tl } }
+    \bool_if:nF { #1 }
       { 
-        \tl_set:Nx \l__gai_authors_decl_tl 
+         \tl_if_empty:NTF \g__aid_title_long_tl 
+           { 
+             \__aid_fetch_string:nN { title_long } \l_tmpa_tl
+           }
+           { 
+             \tl_set_eq:NN \l_tmpa_tl \g__aid_title_long_tl
+           }
+         \exp_args:NV \g__aid_section_cmd_tl \l_tmpa_tl
+      }
+  }
+
+\cs_new_protected:Nn \__aid_calc_author_context:n
+  {
+    \clist_set:Nn \g__aid_authors_clist { #1 }
+    \int_set:Nn \g__aid_authors_int { \clist_count:N \g__aid_authors_clist }
+
+    \int_compare:nNnTF { \g__aid_authors_int } = { 1 }
+      { 
+        \tl_set:Nx \l__aid_author_list_tl { #1 }
+        \__aid_fetch_string:nN { declares } \l__aid_declares_verb_tl
+        \__aid_fetch_string:nN { acknowledges } \l__aid_acknowledges_verb_tl
+        \__aid_fetch_string:nN { accepts } \l__aid_accepts_verb_tl
+        \__aid_fetch_string:nN { author } \l__aid_author_noun_tl
+      }
+      { 
+        \__aid_fetch_string:nN { and } \l__aid_connector_tl
+        \tl_set:Nx \l__aid_author_list_tl 
           { 
-            \clist_use:Nnnn \g__gai_authors_clist
-              { \ \tl_use:N \g__gai_str_and_tl \space } { ,\space} { ,\ \tl_use:N \g__gai_str_and_tl \space } 
-            \ \tl_use:N \g__gai_str_declare_tl 
+            \clist_use:Nnnn \g__aid_authors_clist
+              { \ \tl_use:N \l__aid_connector_tl \space } 
+              { ,\space} 
+              { ,\ \tl_use:N \l__aid_connector_tl \space } 
           }
+        \__aid_fetch_string:nN { declare } \l__aid_declares_verb_tl
+        \__aid_fetch_string:nN { acknowledge } \l__aid_acknowledges_verb_tl
+        \__aid_fetch_string:nN { accept } \l__aid_accepts_verb_tl
+        \__aid_fetch_string:nN { authors } \l__aid_author_noun_tl
       }
+  }
 
-    \IfBooleanF { #1 }
-      { 
-        \use:c { \cs_to_str:N \g__gai_section_cmd_tl } 
-               { 
-                 \tl_if_empty:NTF \g__gai_title_long_tl 
-                   { \tl_use:N \g__gai_str_title_long_tl }
-                   { \tl_use:N \g__gai_title_long_tl }
-               }
-      }
-               
-    \__gai_print_preamble:
-    \par %\bigskip
+\cs_new_protected:Nn \__aid_prepare_preamble_string:
+  {
+    \__aid_fetch_string:nN { preamble } \l__aid_working_preamble_tl
+    
+    % New Placeholders
+    \tl_replace_all:Nnn \l__aid_working_preamble_tl { <author> } { \l__aid_author_noun_tl }
+    \tl_replace_all:Nnn \l__aid_working_preamble_tl { <AUTHOR~LIST> } { \l__aid_author_list_tl }
+    \tl_replace_all:Nnn \l__aid_working_preamble_tl { <declares> } { \l__aid_declares_verb_tl }
+    \tl_replace_all:Nnn \l__aid_working_preamble_tl { <acknowledges> } { \l__aid_acknowledges_verb_tl }
+    \tl_replace_all:Nnn \l__aid_working_preamble_tl { <accept> } { \l__aid_accepts_verb_tl }
+  }
 
+\cs_new_protected:Nn \__aid_render_section_tools:
+  {
+    \par \bigskip
+    \__aid_fetch_string:nN { pre_tools } \l_tmpa_tl
+    \tl_if_empty:NF \l_tmpa_tl
+      { \noindent \tl_use:N \l_tmpa_tl \par \bigskip }
+    
+    \__aid_fetch_string:nN { tools_used } \l_tmpa_tl
+    \noindent \textbf { \tl_use:N \l_tmpa_tl } \  \tl_use:N \g__aid_tools_sentence_tl
+    
+    \__aid_fetch_string:nN { post_tools } \l_tmpa_tl
+    \tl_if_empty:NF \l_tmpa_tl
+      { \par \bigskip \noindent \tl_use:N \l_tmpa_tl }
+  }
+
+\cs_new_protected:Nn \__aid_render_section_taxonomy:n
+  {
+    \par \bigskip
+    \__aid_fetch_string:nN { pre_taxonomy } \l_tmpa_tl
+    \tl_if_empty:NF \l_tmpa_tl
+      { \tl_use:N \l_tmpa_tl }
+    
     \group_begin:
       \cs_set:Npn \baselinestretch { 1.1 }
       \selectfont
-      \tl_use:N \g__gai_fontsize_tl
+      \tl_use:N \g__aid_fontsize_tl
+      
       \cs_set:Npn \TGroup ##1 ##2
         {
           \par \bigskip
-          \int_compare:nNnTF { #2 } < { 2 }
+          \__aid_fetch_string:nN { grp_##2 } \l_tmpa_tl
+          \int_compare:nNnTF { #1 } < { 2 }
             {
-              \textbf{ \larger ##1 \  \hrulefill}\par\nopagebreak[4]
-              \begin{ gailist }
-                ##2
-              \end{ gailist }
+              \textbf{ \larger \tl_use:N \l_tmpa_tl \  \hrulefill}\par\nopagebreak[4]
+              \begin{ aidlist }
+                \TItems { ##2 }
+              \end{ aidlist }
             }
             {
               \setlength { \multicolsep } { 4pt } 
-              \begin { multicols } { #2 } [ \noindent \textbf { \larger ##1 \  \hrulefill } ]
-                \begin { gailist }
-                  ##2
-                \end { gailist }
+              \begin { multicols } { #1 } [ \noindent \textbf { \larger \tl_use:N \l_tmpa_tl \  \hrulefill } ]
+                \begin { aidlist }
+                  \TItems { ##2 }
+                \end { aidlist }
               \end { multicols }
             }
         }
-      \cs_set:Npn \TItem ##1 ##2
+        
+      \cs_set:Npn \TItems ##1
         {
-          \item [ \__gai_checkbox_for:n { ##1 } ]
-          \parbox[t]{\linewidth}{ \raggedright ##2 }
+            \seq_map_inline:cn { g__aid_group_items_##1_seq }
+            { \TItem { ####1 } }
         }
-      \cs_set_eq:NN \TSubItem \TItem
-      \tl_use:N \g__gai_taxonomy_tl
-    \group_end:
 
-    \par \bigskip
-    \noindent \textbf { \tl_use:N \g__gai_str_tools_used_tl } \  \tl_use:N \g__gai_tools_sentence_tl
-    \tl_if_empty:NF \g__gai_comments_tl
+      \cs_set:Npn \TItem ##1
+        {
+          \__aid_fetch_string:nN { ##1 } \l_tmpa_tl
+          \seq_if_in:NxTF \g__aid_active_keys_seq { \tl_to_str:n { ##1 } }
+            {
+               \item [ \__aid_print_checked_box: ]
+               \group_begin:
+               \color{ \g__aid_color_used_tl }
+               \parbox[t]{\linewidth}{ \raggedright \tl_use:N \l_tmpa_tl }
+               \group_end:
+            }
+            {
+               \item [ \__aid_print_empty_box: ]
+               \group_begin:
+               \color{ \g__aid_color_unused_tl }
+               \parbox[t]{\linewidth}{ \raggedright \tl_use:N \l_tmpa_tl }
+               \group_end:
+            }
+        }
+      
+      \seq_map_inline:Nn \g__aid_groups_seq
+        { \TGroup { #1 } { ##1 } }
+
+    \group_end:
+    
+    \__aid_fetch_string:nN { post_taxonomy } \l_tmpa_tl
+    \tl_if_empty:NF \l_tmpa_tl
+      { \par \bigskip \noindent \tl_use:N \l_tmpa_tl }
+  }
+
+\cs_new_protected:Nn \__aid_render_section_comments:
+  {
+    \tl_if_empty:NF \g__aid_comments_tl
       {
         \par \bigskip
-        \tl_use:N \g__gai_comments_tl
+        \__aid_fetch_string:nN { pre_comments } \l_tmpa_tl
+        \tl_if_empty:NF \l_tmpa_tl
+          { \noindent \tl_use:N \l_tmpa_tl \par \bigskip }
+          
+        \tl_use:N \g__aid_comments_tl
+        
+        \__aid_fetch_string:nN { post_comments } \l_tmpa_tl
+        \tl_if_empty:NF \l_tmpa_tl
+          { \par \bigskip \noindent \tl_use:N \l_tmpa_tl }
       }
   }
 
+% ---------------------------------------------------------
+% 11. MAIN RENDER COMMAND (New Key-Value Syntax)
+% ---------------------------------------------------------
+
+% Define keys for the render command
+\keys_define:nn { aidisclose / render }
+  {
+    ncols .int_set:N = \l__aid_render_ncols_int,
+    ncols .initial:n = 3,
+    lang  .tl_set:N  = \l__aid_render_lang_opt_tl,
+    label .tl_set:N  = \l__aid_render_label_tl,
+  }
+
+\NewDocumentCommand \AIDrenderDeclaration { s o m }
+  {
+    \group_begin:
+      % Reset defaults
+      \keys_set:nn { aidisclose / render } { ncols=3, lang={}, label={} }
+      
+      % Process options
+      \IfNoValueF { #2 }
+        { \keys_set:nn { aidisclose / render } { #2 } }
+
+      % 1. Determine Language
+      \tl_if_empty:NTF \l__aid_render_lang_opt_tl
+        {
+          \ifcsname languagename\endcsname
+             \prop_get:NxNTF \g__aid_lang_map_prop { \languagename } \l_tmpa_tl
+               { \tl_set:Nx \l__aid_render_lang_tl { \l_tmpa_tl } }
+               { \tl_set:Nn \l__aid_render_lang_tl { en } }
+          \else
+             \tl_set:Nn \l__aid_render_lang_tl { en }
+          \fi
+        }
+        {
+          \prop_get:NxNTF \g__aid_lang_map_prop { \l__aid_render_lang_opt_tl } \l_tmpa_tl
+            { \tl_set:Nx \l__aid_render_lang_tl { \l_tmpa_tl } }
+            { \tl_set:Nn \l__aid_render_lang_tl { \l__aid_render_lang_opt_tl } }
+        }
+
+      % 2. Lazy Load the Language
+      \AIDloadLanguage { \l__aid_render_lang_tl }
+
+      % 3. Setup Context
+      \__aid_calc_author_context:n { #3 }
+      
+      % 4. Print Header
+      \__aid_render_header:n { #1 }
+      
+      % 5. Add Label if provided
+      \tl_if_empty:NF \l__aid_render_label_tl
+        { \label { \l__aid_render_label_tl } }
+
+      % 6. Prepare Substituted Preamble
+      \__aid_prepare_preamble_string:
+
+      % 7. Rendering Loop
+      \seq_map_inline:Nn \g__aid_order_seq
+        {
+          \str_case:nn { ##1 }
+            {
+              { preamble } { \__aid_print_preamble: }
+              { tools }    { \__aid_render_section_tools: }
+              { taxonomy } { \__aid_render_section_taxonomy:n { \l__aid_render_ncols_int } }
+              { comments } { \__aid_render_section_comments: }
+            }
+        }
+    \group_end:
+  }
+  
+  
 % =========================================================
-% 8) BIBLIOGRAPHY HANDLING
+% 12) BIBLIOGRAPHY HANDLING
 % =========================================================
 
 \cs_new_protected:Nn \__aidisclose_write_bib_file:n
@@ -803,8 +801,8 @@
 ~~author~~~~=~{Lourenço,~João~M.},^^J
 ~~title~~~~~=~{The~\texttt{aidisclose}~package:~Generative~AI~disclosure~checklist~and~statements},^^J
 ~~year~~~~~~=~{2025},^^J
-~~note~~~~~~=~{Version~\gaiversion},^^J
-~~url~~~~~~~=~{https://ctan.org/pkg/aidisclose}^^J
+~~note~~~~~~=~{Version~\aidversion},^^J
+~~url~~~~~~~=~{https://ctan.org/pkg/aidisclose/aidisclose-doc.pdf}^^J
 }^^J
 ^^J
 @misc{latex-project,^^J
@@ -818,20 +816,18 @@
   }
 
 \AddToHook {begindocument/before} {
-  \__gai_detect_and_load_language:
-  
-  \bool_if:NT \g__gai_autobib_bool
+  \bool_if:NT \g__aid_autobib_bool
     {
-      \__aidisclose_write_bib_file:n { \str_use:N \g__gai_bibfile_str }
+      \__aidisclose_write_bib_file:n { \str_use:N \g__aid_bibfile_str }
       \@ifpackageloaded { biblatex }
-        { \addbibresource { \str_use:N \g__gai_bibfile_str } }
+        { \addbibresource { \str_use:N \g__aid_bibfile_str } }
         { 
           \cs_set_eq:NN \__aidisclose_orig_bibliography:n \bibliography
           \RenewDocumentCommand \bibliography { m }
             { \__aidisclose_orig_bibliography:n { aidisclose , #1 } }
         }
     }
-    \GAItoolsUsed { }
+    \AIDtoolsUsed { }
 }
 
 \endinput
