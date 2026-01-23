@@ -297,7 +297,7 @@
 %   \showlabels[\color{\debugindexcolor}]{index}}%
 % }{}
 \AtEndPreamble{
-  \RequirePackage[autobib=true,nocite=false]{aidisclose}
+  \RequirePackage[autobib=true,nocite=false]{aidisclose2}
 }
 
 
@@ -2547,7 +2547,7 @@
   \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{
     % \RequirePackage[autobib=true,nocite=false]{aidisclose} % AI disclose declaration
     \input{\DIRCONFIG/7-aidisclose}
-  }{\gdef\gaiversion{0.0.0}}
+  }{\gdef\aidversion{0.0.0}}
 }
 
 
