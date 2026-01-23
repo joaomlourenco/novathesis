@@ -1,12 +1,27 @@
 % aidisclose-sk.ldf - Sk
-\GAIsetStrings{
+\AIDstrings{
   tools_used    = {Použité\ nástroje\ generatívnej\ UI:},
   none_used     = {Neboli\ deklarované\ žiadne\ nástroje\ generatívnej\ AI.},
+  author        = {Autor},
+  authors       = {Autori},
   declares      = {vyhlasuje},
   declare       = {vyhlasujú},
+  acknowledges  = {potvrdzuje},
+  acknowledge   = {potvrdzujú},
+  accepts       = {preberá},
+  accept        = {preberajú},
   and           = {a},
-  preamble      = {použitie\ generatívnej\ AI\ vo\ výskumnej\ práci\ a\ procese\ písania\ tohto\ dokumentu.\ Nasledujúce\ úlohy\footnote{Toto\ vyhlásenie\ rozširuje\ taxonómiu\ GAIDeT~\cite{Suchikova:2025:GAIDeT}.}\ boli\ čiastočne\ delegované\ na\ nástroje\ generatívnej\ AI\ pod\ úplným\ ľudským\ dohľadom:},
-  footnote      = {Toto\ vyhlásenie\ bolo\ vygenerované\ pomocou\ \GAIengineName{}\ a\ balíka\ \LaTeX{}\ \GAIpackageName{}},
+  preamble      = {<author>,\ <AUTHOR~LIST>,\ <acknowledges>\ použitie\ nasledujúcich\ nástrojov\ generatívnej\ umelej\ inteligencie\ pri\ vypracovaní\ tejto\ práce.\ Tieto\ technológie\ boli\ využité\ pod\ prísnym\ dohľadom\ a\ všetky\ výstupy\ generované\ AI\ boli\ kriticky\ preskúmané\ a\ overené\ z\ hľadiska\ presnosti.\ <author>\ <accept>\ plnú\ zodpovednosť\ za\ platnosť\ a\ originalitu\ obsahu\ a\ potvrdzuje,\ že\ použitie\ týchto\ nástrojov\ je\ v\ súlade\ so\ všetkými\ inštitucionál:footnotenymi\ zásadami\ a\ štandardmi\ akademickej\ integrity.},
+  %
+  % Pre/Post Parts
+  pre_tools     = {},
+  post_tools    = {},
+  pre_taxonomy  = {\noindent\bfseries Činnosti\ podporované\ nástrojmi\ generatívnej\ umelej\ inteligencie:\footnote{Tento\ zoznam\ rozširuje\ taxonómiu\ GAIDeT\ \CiteGAIDeT.}},
+  post_taxonomy = {},
+  pre_comments  = {},
+  post_comments = {},
+  %
+    footnote      = {Toto\ vyhlásenie\ bolo\ vygenerované\ pomocou\ \AIDlatexProcessor{}\ a\ balíka\ \LaTeX{}\ \AIDpackageName{}},
   comment_label = {Ďalší\ komentár},
   comment_star  = {Ďalší\ komentár},
   title_long    = {Vyhlásenie\ o\ delegovaní\ na\ generatívnu\ umelú\ inteligenciu},
@@ -60,7 +75,7 @@
   d_trans       = {Prepis\ zvuku\ na\ text\ a\ diarizácia},
 % 6 — Visuals and Multimedia
   v_gen         = {Generovanie\ obrázkov\ a\ diagramov},
-  v_edit        = {Vylepšovanie\ a\ úpravy\ obrázkov},
+  v_edit        = {Vylepšovanie\ a\ úpravy\ obrázků},
   v_chart       = {Návrh\ grafov\ a\ schém},
 % 7 — Writing and Editing
   w_draft       = {Písanie\ textu},

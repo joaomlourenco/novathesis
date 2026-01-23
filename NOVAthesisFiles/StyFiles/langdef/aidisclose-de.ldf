@@ -1,12 +1,27 @@
 % aidisclose-de.ldf - De
-\GAIsetStrings{
+\AIDstrings{
   tools_used    = {Verwendete\ generative\ KI-Tools:},
   none_used     = {Es\ wurden\ keine\ generativen\ KI-Werkzeuge\ angegeben.},
+  author        = {Der\ Autor},
+  authors       = {Die\ Autoren},
   declares      = {erklärt},
   declare       = {erklären},
+  acknowledges  = {bestätigt},
+  acknowledge   = {bestätigen},
+  accepts       = {übernimmt},
+  accept        = {übernehmen},
   and           = {und},
-  preamble      = {die\ Verwendung\ von\ generativer\ KI\ bei\ der\ Forschungsarbeit\ und\ dem\ Schreibprozess\ dieses\ Dokuments.\ Die\ folgenden\ Aufgaben\footnote{Diese\ Erklärung\ erweitert\ die\ GAIDeT-Taxonomie~\cite{Suchikova:2025:GAIDeT}.}\ wurden\ teilweise\ unter\ voller\ menschlicher\ Aufsicht\ an\ generative\ KI-Tools\ delegiert:},
-  footnote      = {Diese\ Erklärung\ wurde\ unter\ Verwendung\ von\ \GAIengineName{}\ und\ dem\ \LaTeX-Paket\ \GAIpackageName{}\ erstellt},
+  preamble      = {<author>,\ <AUTHOR~LIST>,\ <acknowledges>\ die\ Verwendung\ der\ folgenden\ generativen\ künstlichen\ Intelligenz-Tools\ bei\ der\ Erstellung\ dieser\ Arbeit.\ Diese\ Technologien\ wurden\ unter\ strenger\ Aufsicht\ eingesetzt,\ und\ alle\ KI-generierten\ Ausgaben\ wurden\ kritisch\ geprüft\ und\ auf\ ihre\ Richtigkeit\ verifiziert.\ <author>\ <accept>\ die\ volle\ Verantwortung\ für\ die\ Gültigkeit\ und\ Originalität\ des\ Inhalts\ und\ bestätigt,\ dass\ die\ Verwendung\ dieser\ Tools\ mit\ allen\ institutionellen\ Richtlinien\ und\ Standards\ der\ akademischen\ Integrität\ übereinstimmt.},
+  %
+  % Pre/Post Parts
+  pre_tools     = {},
+  post_tools    = {},
+  pre_taxonomy  = {\noindent\bfseries Aktivitäten,\ die\ durch\ generative\ künstliche\ Intelligenz-Tools\ unterstützt\ werden: \footnote{Diese\ Liste\ erweitert\ die\ GAIDeT-Taxonomie\ \CiteGAIDeT.}},
+  post_taxonomy = {},
+  pre_comments  = {},
+  post_comments = {},
+  %
+    footnote      = {Diese\ Erklärung\ wurde\ unter\ Verwendung\ von\ \AIDlatexProcessor{}\ und\ dem\ \LaTeX-Paket\ \AIDpackageName{}\ erstellt},
   comment_label = {Zusätzlicher\ Kommentar},
   comment_star  = {Zusätzlicher\ Kommentar},
   title_long    = {Offenlegung\ der\ Delegation\ an\ generative\ künstliche\ Intelligenz},

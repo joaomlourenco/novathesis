@@ -1,12 +1,27 @@
 % aidisclose-pl.ldf - Pl
-\GAIsetStrings{
+\AIDstrings{
   tools_used    = {Użyte\ narzędzia\ generatywnej\ SI:},
   none_used     = {Nie\ zadeklarowano\ żadnych\ narzędzi\ generatywnej\ SI.},
+  author        = {Autor},
+  authors       = {Autorzy},
   declares      = {oświadcza},
   declare       = {oświadczają},
+  acknowledges  = {potwierdza},
+  acknowledge   = {potwierdzają},
+  accepts       = {ponosi},
+  accept        = {ponoszą},
   and           = {i},
-  preamble      = {wykorzystanie\ generatywnej\ SI\ w\ pracy\ badawczej\ i\ procesie\ pisania\ tego\ dokumentu.\ Następujące\ zadania\footnote{Niniejsze\ oświadczenie\ rozszerza\ taksonomię\ GAIDeT~\cite{Suchikova:2025:GAIDeT}.}\ zostały\ częściowo\ oddelegowane\ do\ narzędzi\ generatywnej\ SI\ pod\ pełnym\ nadzorem\ człowieka:},
-  footnote      = {Niniejsze\ oświadczenie\ zostało\ wygenerowane\ przy\ użyciu\ \GAIengineName{}\ i\ pakietu\ \LaTeX{}\ \GAIpackageName{}},
+  preamble      = {<author>,\ <AUTHOR~LIST>,\ <acknowledges>\ wykorzystanie\ następujących\ narzędzi\ generatywnej\ sztucznej\ inteligencji\ w\ opracowaniu\ niniejszej\ pracy.\ Technologie\ te\ były\ wykorzystywane\ pod\ ścisłym\ nadzorem,\ a\ wszystkie\ wyniki\ wygenerowane\ przez\ SI\ zostały\ krytycznie\ przeanalizowane\ i\ zweryfikowane\ pod\ kątem\ dokładności.\ <author>\ <accept>\ pełną\ odpowiedzialność\ za\ ważność\ i\ oryginalność\ treści,\ potwierdzając,\ że\ korzystanie\ z\ tych\ narzędzi\ jest\ zgodne\ ze\ wszystkimi\ zasadami\ instytucjonalnymi\ i\ standardami\ uczciwości\ akademickiej.},
+  %
+  % Pre/Post Parts
+  pre_tools     = {},
+  post_tools    = {},
+  pre_taxonomy  = {\noindent\bfseries Działania\ wspierane\ przez\ narzędzia\ generatywnej\ sztucznej\ inteligencji:\footnote{Ta\ lista\ rozszerza\ taksonomię\ GAIDeT\ \CiteGAIDeT.}},
+  post_taxonomy = {},
+  pre_comments  = {},
+  post_comments = {},
+  %
+    footnote      = {Niniejsze\ oświadczenie\ zostało\ wygenerowane\ przy\ użyciu\ \AIDlatexProcessor{}\ i\ pakietu\ \LaTeX{}\ \AIDpackageName{}},
   comment_label = {Dodatkowy\ komentarz},
   comment_star  = {Dodatkowy\ komentarz},
   title_long    = {Oświadczenie\ o\ Oddelegowaniu\ Zadań\ do\ Generatywnej\ Sztucznej\ Inteligencji},

@@ -1,12 +1,27 @@
 % aidisclose-dk.ldf - Dk
-\GAIsetStrings{
+\AIDstrings{
   tools_used    = {Anvendte\ generative\ AI-værktøjer:},
   none_used     = {Der\ blev\ ikke\ erklæret\ generative\ AI-værktøjer.},
+  author        = {Forfatteren},
+  authors       = {Forfatterne},
   declares      = {erklærer},
   declare       = {erklærer},
+  acknowledges  = {anerkender},
+  acknowledge   = {anerkender},
+  accepts       = {påtager\ sig},
+  accept        = {påtager\ sig},
   and           = {og},
-  preamble      = {brugen\ af\ generativ\ AI\ i\ forskningsarbejdet\ og\ skriveprocessen\ af\ dette\ dokument.\ Følgende\ opgaver\footnote{Denne\ erklæring\ udvider\ GAIDeT-taksonomien~\cite{Suchikova:2025:GAIDeT}.}\ blev\ delvist\ delegeret\ til\ generative\ AI-værktøjer\ under\ fuldt\ menneskeligt\ opsyn:},
-  footnote      = {Denne\ erklæring\ blev\ genereret\ ved\ hjælp\ af\ \GAIengineName{}\ og\ \LaTeX-pakken\ \GAIpackageName{}},
+  preamble      = {<author>,\ <AUTHOR~LIST>,\ <acknowledges>\ brugen\ af\ følgende\ generative\ kunstig\ intelligens-værktøjer\ i\ udarbejdelsen\ af\ denne\ afhandling.\ Disse\ teknologier\ blev\ anvendt\ under\ strengt\ tilsyn,\ og\ alt\ AI-genereret\ output\ blev\ kritisk\ gennemgået\ og\ verificeret\ for\ nøjagtighed.\ <author>\ <accept>\ det\ fulde\ ansvar\ for\ indholdets\ gyldighed\ og\ originalitet\ og\ bekræfter,\ at\ brugen\ af\ disse\ værktøjer\ er\ i\ overensstemmelse\ med\ alle\ institutionelle\ politikker\ og\ standarder\ for\ akademisk\ integritet.},
+  %
+  % Pre/Post Parts
+  pre_tools     = {},
+  post_tools    = {},
+  pre_taxonomy  = {\noindent\bfseries Aktiviteter\ understøttet\ af\ generative\ kunstig\ intelligens-værktøjer:\footnote{Denne\ liste\ udvider\ GAIDeT-taksonomien\ \CiteGAIDeT.}},
+  post_taxonomy = {},
+  pre_comments  = {},
+  post_comments = {},
+  %
+    footnote      = {Denne\ erklæring\ blev\ genereret\ ved\ hjælp\ af\ \AIDlatexProcessor{}\ og\ \LaTeX-pakken\ \AIDpackageName{}},
   comment_label = {Yderligere\ kommentar},
   comment_star  = {Yderligere\ kommentar},
   title_long    = {Offentliggørelse\ af\ delegering\ til\ generativ\ kunstig\ intelligens},

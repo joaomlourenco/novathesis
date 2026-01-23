@@ -1,12 +1,27 @@
 % aidisclose-cz.ldf - Cz
-\GAIsetStrings{
+\AIDstrings{
   tools_used    = {Použité\ nástroje\ generativní\ UI:},
   none_used     = {Nebyly\ deklarovány\ žádné\ nástroje\ generativní\ AI.},
+  author        = {Autor},
+  authors       = {Autoři},
   declares      = {prohlašuje},
   declare       = {prohlašují},
+  acknowledges  = {potvrzuje},
+  acknowledge   = {potvrzují},
+  accepts       = {přebírá},
+  accept        = {přebírají},
   and           = {a},
-  preamble      = {použití\ generativní\ AI\ ve\ výzkumné\ práci\ a\ procesu\ psaní\ tohoto\ dokumentu.\ Následující\ úkoly\footnote{Toto\ prohlášení\ rozšiřuje\ taxonomii\ GAIDeT~\cite{Suchikova:2025:GAIDeT}.}\ byly\ částečně\ delegovány\ na\ nástroje\ generativní\ AI\ pod\ plným\ lidským\ dohledem:},
-  footnote      = {Toto\ prohlášení\ bylo\ vygenerováno\ pomocí\ \GAIengineName{}\ a\ balíčku\ \LaTeX{}\ \GAIpackageName{}},
+  preamble      = {<author>,\ <AUTHOR~LIST>,\ <acknowledges>\ použití\ následujících\ nástrojů\ generativní\ umělé\ inteligence\ při\ vypracování\ této\ práce.\ Tyto\ technologie\ byly\ využity\ pod\ přísným\ dohledem\ a\ všechny\ výstupy\ generované\ AI\ byly\ kriticky\ přezkoumány\ a\ ověřeny\ z\ hlediska\ přesnosti.\ <author>\ <accept>\ plnou\ odpovědnost\ za\ platnost\ a\ originalitu\ obsahu\ a\ potvrzuje,\ že\ použití\ těchto\ nástrojů\ je\ v\ souladu\ se\ všemi\ institucionálními\ zásadami\ a\ standardy\ akademické\ integrity.},
+  %
+  % Pre/Post Parts
+  pre_tools     = {},
+  post_tools    = {},
+  pre_taxonomy  = {\noindent\bfseries Činnosti\ podporované\ nástroji\ generativní\ umělé\ inteligence:\footnote{Tento\ seznam\ rozšiřuje\ taxonomii\ GAIDeT\ \CiteGAIDeT.}},
+  post_taxonomy = {},
+  pre_comments  = {},
+  post_comments = {},
+  %
+    footnote      = {Toto\ prohlášení\ bylo\ vygenerováno\ pomocí\ \AIDlatexProcessor{}\ a\ balíčku\ \LaTeX{}\ \AIDpackageName{}},
   comment_label = {Další\ komentář},
   comment_star  = {Další\ komentář},
   title_long    = {Prohlášení\ o\ delegování\ na\ generativní\ umělou\ inteligenci},
@@ -64,7 +79,7 @@
   v_chart       = {Návrh\ grafů\ a\ schémat},
 % 7 — Writing and Editing
   w_draft       = {Psaní\ textu},
-  w_poly        = {Vylepšování\ a\ úpravy},
+  w_poly        = {Vylepšovanie\ a\ úpravy},
   w_sum         = {Shrnutí\ textu},
   w_con         = {Formulace\ závěrů},
   w_tone        = {Přizpůsobení\ a\ úprava\ emočního\ tónu},

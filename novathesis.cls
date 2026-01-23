@@ -3524,7 +3524,7 @@
 \newcommand{\ntprintaidisclose}{%
   \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{% use aidisclose
     \bookmarksetupnext{rellevel=0}%
-    \GAIrenderDeclaration[3]{\thedocauthor(name)}%
+    \AIDrenderDeclaration[ncols=3]{\thedocauthor(name)}%
   }{\ifoptionequal{/novathesis/print/aidisclosure}{false}
       {} % do not print AI Disclosure
       {\IfFileExists{\DIRFRONTMATTER/\option{/novathesis/print/aidisclosure}}

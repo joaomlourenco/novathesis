@@ -1,16 +1,31 @@
 % aidisclose-fr.ldf - Fr
-\GAIsetStrings{
+\AIDstrings{
   tools_used    = {Outils\ d'IA\ générative\ utilisés\ :},
   none_used     = {Aucun\ outil\ d’IA\ générative\ n’a\ été\ déclaré.},
+  author        = {L'auteur},
+  authors       = {Les\ auteurs},
   declares      = {déclare},
   declare       = {déclarent},
+  acknowledges  = {reconnaît},
+  acknowledge   = {reconnaissent},
+  accepts       = {accepte},
+  accept        = {acceptent},
   and           = {et},
-  preamble      = {l\'utilisation\ de\ l\'IA\ générative\ dans\ le\ travail\ de\ recherche\ et\ le\ processus\ de\ rédaction\ de\ ce\ document.\ Les\ tâches\ suivantes\footnote{Cette\ déclaration\ étend\ la\ taxonomie\ GAIDeT~\cite{Suchikova:2025:GAIDeT}.}\ ont\ été\ partiellement\ déléguées\ à\ des\ outils\ d\'IA\ générative\ sous\ une\ supervision\ humaine\ totale\ :},
-  footnote      = {Cette\ déclaration\ a\ été\ générée\ à\'aide\ de\ \GAIengineName{}\ et\ du\ paquet\ \LaTeX\ \GAIpackageName{}},
+  preamble      = {<author>,\ <AUTHOR~LIST>,\ <acknowledges>\ l'utilisation\ des\ outils\ d'intelligence\ artificielle\ générative\ suivants\ dans\ le\ développement\ de\ cette\ thèse.\ Ces\ technologies\ ont\ été\ utilisées\ sous\ une\ supervision\ stricte,\ et\ tous\ les\ résultats\ générés\ par\ l'IA\ ont\ été\ examinés\ de\ manière\ critique\ et\ vérifiés\ pour\ leur\ exactitude.\ <author>\ <accept>\ l'entière\ responsabilité\ de\ la\ validité\ et\ de\ l'originalité\ du\ contenu,\ confirmant\ que\ l'utilisation\ de\ ces\ outils\ est\ conforme\ à\ toutes\ les\ politiques\ institutionnelles\ et\ aux\ normes\ d'intégrité\ académique.},
+  %
+  % Pre/Post Parts
+  pre_tools     = {},
+  post_tools    = {},
+  pre_taxonomy  = {\noindent\bfseries Activités\ soutenues\ par\ des\ outils\ d'intelligence\ artificielle\ générative\ :\footnote{Cette\ liste\ étend\ la\ taxonomie\ GAIDeT\CiteGAIDeT.}},
+  post_taxonomy = {},
+  pre_comments  = {},
+  post_comments = {},
+  %
+    footnote      = {Cette\ déclaration\ a\ été\ générée\ à\'aide\ de\ \AIDlatexProcessor{}\ et\ du\ paquet\ \LaTeX\ \AIDpackageName{}},
   comment_label = {Commentaire\ supplémentaire},
   comment_star  = {Commentaire\ supplémentaire},
-  title_long    = {Déclaration\ de\ délégation\ à\ l\'intelligence\ artificielle\ générative},
-  title_short   = {Déclaration\ de\ délégation\ à\ l\'IA\ générative},
+  title_long    = {Déclaration\ de\ délégation\ à\ l'intelligence\ artificielle\ générative},
+  title_short   = {Déclaration\ de\ délégation\ à\ l'IA\ générative},
 % 0 — Groups
   grp_conc      = {Conceptualisation},
   grp_lit       = {Revue\ de\ la\ littérature},
