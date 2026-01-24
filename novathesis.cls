@@ -549,8 +549,9 @@
 
 
 
-% Ensure l3regex is available (standard in modern kernels)
-\sys_if_engine_luatex:F { \RequirePackage{l3regex} }
+% `l3regex` is part of the LaTeX3 kernel (expl3) in modern TeX distributions.
+% Some setups don't ship a separate `l3regex.sty` anymore, so only load it if present.
+\IfFileExists{l3regex.sty}{\RequirePackage{l3regex}}{}
 
 \NewDocumentCommand{\IfFileExistsCase}{ s O{} m m }
   {
