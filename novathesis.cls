@@ -1185,7 +1185,7 @@
   lang/loaded/.new list={},
   % lang/shorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish, gr=greek},
   fontenc/.new choice={cat=T1, cz=T1, de=T1, dk=T1, en=T1, es=T1, fr=T1, gr=LGR, %
-                       it=T1, nl=T1, pl=T1, pt=T1, sk=T1, uk=T2A},
+                       it=T1, nl=T1, pl=T1, pt=T1, sk=T1, uk=T2A, zhs=T1, zht=T1},
 }
 
 
@@ -1204,6 +1204,8 @@
 \SetLangLong(pt):={portuguese}
 \SetLangLong(sk):={slovak}
 \SetLangLong(uk):={ukrainian}
+\SetLangLong(zhs):={zh-Hans}
+\SetLangLong(zht):={zh-Hant}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
