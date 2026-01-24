@@ -9,6 +9,12 @@
 
 \typeout{NT FILE abstract-zhs.tex}%
 
+% Use a CJK-capable system font (macOS) so Chinese glyphs render.
+\IfFontExistsTF{PingFang SC}{\newfontfamily\ntzhfont{PingFang SC}}{%
+  \IfFontExistsTF{Heiti SC}{\newfontfamily\ntzhfont{Heiti SC}}{\newfontfamily\ntzhfont{Latin Modern Roman}}%
+}
+{\ntzhfont
+
 无论论文用何种语言撰写，通常至少需要两篇摘要：一篇使用正文语言，另一篇使用其他语言。
 
 摘要的展示顺序可能因学院/学校要求而不同。\gls{novathesis}(\LaTeX)模板会尽量遵循各学校的默认规则；如有需要，也可以通过配置项自定义摘要的打印顺序。
@@ -29,4 +35,6 @@
   关键词三 \and
   关键词四 \and
   关键词五
+}
+
 }

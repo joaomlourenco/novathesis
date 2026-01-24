@@ -27,7 +27,7 @@
   \ifoptiondefined{/novathesis/babel/\@ntslang/\@ntskey#1}{%
     \option@undef{/novathesis/babel/\@ntslang/\@ntskey#1}%
   }{}%
-  \options{/novathesis/babel/\@ntslang/keys/.expanded/.newpush = \@ntskey#1#1}%
+  \options{/novathesis/babel/\@ntslang/keys/.expanded/.newpush = \@ntskey#1}%
   \options{/novathesis/babel/\@ntslang/\@ntskey#1/.expanded/.new value = \@ntsval}%
 }
 \newcommand{\ntlangsetupifndef}[2][name]{%
@@ -63,11 +63,20 @@
 % \fi
 
 \AtEndPreamble{
-  \options{/@nt/lang/loaded = {\@LANG@LOADED}}
-  \optionlistdo{/@nt/lang/loaded}{
-    \optionlistdo{/novathesis/babel/#1/keys}{
-      % \typeout{KEY SET2 (#1/##1)=[\option{/novathesis/babel/#1/##1}]}%\KEYSETTWO%
-      \setlocalecaption{\GetLangLong(#1)}{##1}{\option{/novathesis/babel/#1/##1}}
-    }
-  }
+  \def\nt@babel@apply@key#1{%
+    \ifoptiondefined{/novathesis/babel/\nt@babel@lang/#1}{%
+      \setlocalecaption{\GetLangLong(\nt@babel@lang)}{#1}{\option{/novathesis/babel/\nt@babel@lang/#1}}%
+    }{}%
+  }%
+  \def\nt@babel@apply@lang#1{%
+    \def\nt@babel@lang{#1}%
+    \ifx\nt@babel@lang\@nil\else
+      \ifx\nt@babel@lang\@empty\else
+        \ifoptiondefined{/novathesis/babel/\nt@babel@lang/keys}{%
+          \optionlistdo{/novathesis/babel/\nt@babel@lang/keys}{\nt@babel@apply@key{##1}}%
+        }{}%
+      \fi
+    \fi
+  }%
+  \optionlistdo{/@nt/lang/loaded}{\nt@babel@apply@lang{#1}}%
 }
