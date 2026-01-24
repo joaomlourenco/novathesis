@@ -854,8 +854,10 @@ def validate_school_id(school_id: str) -> str:
     Raises:
         SystemExit: If school ID format is invalid
     """
-    # Normalize: replace hyphens with slashes
-    normalized = school_id.replace("-", "/")
+    # Normalize: accept '-', '.' or '/' as separators and normalize to '/'
+    normalized = school_id.strip().replace("-", "/").replace(".", "/")
+    # Collapse accidental repeated separators
+    normalized = re.sub(r"/+", "/", normalized)
     
     if "/" not in normalized:
         print_error("School ID must contain '/' or '-'. Example: nova/fct or nova-fct")

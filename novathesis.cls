@@ -123,6 +123,12 @@
 %%    Others will be loaded later, in the file “packages.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% `l3regex` is part of the LaTeX3 kernel (expl3) in modern TeX distributions.
+% Some setups don't ship a separate `l3regex.sty` anymore, so only load it if present.
+\IfFileExists{xparse.sty}{\RequirePackage{xparse}}{}
+\IfFileExists{expl3.sty}{\RequirePackage{expl3}}{}
+\IfFileExists{l3regex.sty}{\RequirePackage{l3regex}}{}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 1. KERNEL, UTILITIES & FLAGS (Must load early)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -546,19 +552,6 @@
   \bool_if:NF \g_file_found_bool { #6 }
  }
 
-
-
-
-% Ensure expl3 (older) or l3regex (newer) is available (standard in modern kernels)
-\sys_if_engine_luatex:F { 
-    \IfFileExists{expl3.sty}
-        { \RequirePackage{expl3} }
-        {
-            \IfFileExists{l3regex.sty}
-                { \RequirePackage{l3regex} }
-                { \PackageError{novathesis}{Neither expl3 nor l3regex found. Please install a modern LaTeX kernel} }
-        }
-}
 
 \NewDocumentCommand{\IfFileExistsCase}{ s O{} m m }
   {
