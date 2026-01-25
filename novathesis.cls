@@ -549,8 +549,9 @@
 
 
 
-% Ensure l3regex is available (standard in modern kernels)
-\sys_if_engine_luatex:F { \RequirePackage{l3regex} }
+% `l3regex` is part of the LaTeX3 kernel (expl3) in modern TeX distributions.
+% Some setups don't ship a separate `l3regex.sty` anymore, so only load it if present.
+\IfFileExists{l3regex.sty}{\RequirePackage{l3regex}}{}
 
 \NewDocumentCommand{\IfFileExistsCase}{ s O{} m m }
   {
@@ -707,20 +708,11 @@
 
 \NewDocumentCommand{\UniquifyList}{m o}
   {
-    % 1. Fully expand the input and set it to a local clist
-    \clist_set:Ne \l_tmpa_clist { #1 }
-    % 2. Remove duplicates
+    \clist_set:Ne \l_tmpa_clist {#1}
     \clist_remove_duplicates:N \l_tmpa_clist
-    % 3. Check if the optional argument #2 is present
-    \IfValueTF { #2 }
-      {
-        % If #2 is present: Store the result into the macro provided in #2
-        \tl_set:Ne #2 { \clist_use:Nn \l_tmpa_clist { , } }
-      }
-      {
-        % If #2 is NOT present: Print the list directly to the document
-        \clist_use:Nn \l_tmpa_clist { , }
-      }
+    \IfValueTF{#2}
+      {\tl_set:Ne #2 {\clist_use:Nn \l_tmpa_clist {,}}}
+      {\clist_use:Nn \l_tmpa_clist {,}}
   }
 
 \ExplSyntaxOff
@@ -734,8 +726,8 @@
 \newcommand{\@setabstractorder}{%
   % \typeout{SAVEABSORDER=[\@nt@saveabstractorder]}\SAVEABSORDER%
   \StrGobbleRight{\@nt@saveabstractorder}{1}[\@nt@saveabstractorder]%
-  \@for\myi:=\@nt@saveabstractorder\do{%
-    \StrCut{\myi}{=}\@nt@key\@nt@val%
+  \@for\nt@tmpi:=\@nt@saveabstractorder\do{%
+    \StrCut{\nt@tmpi}{=}\@nt@key\@nt@val%
     \IfStrEq{\@nt@val}{}{\edef\@nt@val{\@nt@key}\def\@nt@key{\@LANG@MAIN}}{}%
     % \typeout{SETABSORDER (\@nt@key):=[\@nt@val]}\SETABSORDER%
     \abstractorder(\@nt@key):={\@nt@val}%
@@ -1185,7 +1177,7 @@
   lang/loaded/.new list={},
   % lang/shorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish, gr=greek},
   fontenc/.new choice={cat=T1, cz=T1, de=T1, dk=T1, en=T1, es=T1, fr=T1, gr=LGR, %
-                       it=T1, nl=T1, pl=T1, pt=T1, sk=T1, uk=T2A},
+                       it=T1, nl=T1, pl=T1, pt=T1, sk=T1, uk=T2A, zhs=T1, zht=T1},
 }
 
 
@@ -1204,6 +1196,8 @@
 \SetLangLong(pt):={portuguese}
 \SetLangLong(sk):={slovak}
 \SetLangLong(uk):={ukrainian}
+\SetLangLong(zhs):={zh-Hans}
+\SetLangLong(zht):={zh-Hant}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1316,9 +1310,9 @@
       {\ifstrequal{#2}{copyright}{\OPTi}{}\xdef\@nt@filewithpath{#4}}
       {\ifstrequal{#2}{copyright}{\OPTii}{}\options{/@nt/folders=#2}%
        \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}}
-  \@for\myi:=\expanded{#3}\do{%
-    % \typeout{NT ADDTOLIST [#1] [#2] [\myi] [\@nt@filewithpath]}\ADDTILIST%
-    \options{/@nt/#1/#2/\myi/.expanded/.newpush={\@nt@filewithpath}}%
+  \@for\nt@tmpi:=\expanded{#3}\do{%
+    % \typeout{NT ADDTOLIST [#1] [#2] [\nt@tmpi] [\@nt@filewithpath]}\ADDTILIST%
+    \options{/@nt/#1/#2/\nt@tmpi/.expanded/.newpush={\@nt@filewithpath}}%
   }%
 }
 
@@ -1637,8 +1631,19 @@
 %% Create list of loaded languages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\edef\@LANG@LOADED{\@LANG@COVER, \@LANG@COPYRIGHT, \@LANG@MAIN, \theabstractorder(\@LANG@MAIN)}
-\UniquifyList{\@LANG@LOADED}[\@LANG@LOADED]
+\def\@LANG@LOADED{}
+\def\@langs@loaded@sep{}
+\def\@nt@setlangloaded#1{%
+  \ifblank{#1}{}{%
+    \IfSubStr{,\@LANG@LOADED,}{,#1,}{}{%
+      \eappto{\@LANG@LOADED}{\@langs@loaded@sep#1}%
+      \def\@langs@loaded@sep{,}%
+    }%
+  }%
+}
+\let\nt@save@myi\myi
+\@for\myi:=\expanded{\@LANG@COVER,\@LANG@COPYRIGHT,\@LANG@MAIN,\theabstractorder(\@LANG@MAIN)}\do{\@nt@setlangloaded{\myi}}%
+\let\myi\nt@save@myi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FIX BABEL
@@ -1650,13 +1655,15 @@
 %% Include strings for all the languages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\@for\myi:={\@LANG@LOADED}\do{%
+\let\nt@save@myi\myi
+\@for\myi:=\@LANG@LOADED\do{%
   \InputIfFileExists{\DIRSTRINGS/strings-\myi.ldf}%
       {}%
       {\ClassError{novathesis}
-                  {File not found: “\DIRSTRINGS/strings-#1.ldf” file!}%
+                  {File not found: “\DIRSTRINGS/strings-\myi.ldf” file!}%
                   {Add a file with the translations for this language.}}%
 }%
+\let\myi\nt@save@myi
 
 
 \bkmstring(1-1)   = {\thebkmstring(cover,\@LANG@MAIN)}
@@ -1667,16 +1674,18 @@
 \bkmstring(N-2)   = {\thebkmstring(backcover,\@LANG@MAIN)}
 \bkmstring(spine) = {\thebkmstring(spine,\@LANG@MAIN)}
 
-\options{/@nt/lang/loaded/.expanded=\@LANG@LOADED}
+\ifoptiondefined{/@nt/lang/loaded}{\csdef{optk@/@nt/lang/loaded}{}}{\options{/@nt/lang/loaded/.new list}}%
+\@for\nt@tmpi:=\@LANG@LOADED\do{\ifblank{\nt@tmpi}{}{\options{/@nt/lang/loaded/.expanded/.push={\nt@tmpi}}}}
 
 \def\@fontencs{}
 \def\@fontencs@sep{}
-\@for\myi:=\@LANG@LOADED\do{
-  \options{/@nt/fontenc=\myi}
+\@for\nt@tmpi:=\@LANG@LOADED\do{
+  \options{/@nt/fontenc=\nt@tmpi}
   \IfSubStr{,\@fontencs,}{,\option{/@nt/fontenc},}
     {}
     {\eappto{\@fontencs}{\@fontencs@sep\option{/@nt/fontenc}}\def\@fontencs@sep{,}}%
 }
+
 
 
 
@@ -2847,20 +2856,20 @@
              ,{#1,textcolor}%
              ,{textcolor}%
   ){\color{\match}}{}%
-  \@for\myi:={top,bottom,left,right}\do{%
-    \datamatch*{@MRGN@\myi}{margin}(%
-      {cover,\@DOCTYPE,\@DEGREEACR,#1,\myi},%
-      {cover,\@DOCCLASS,\@DEGREEACR,#1,\myi},%
-      {cover,\@DEGREEACR,#1,\myi},%
-      {cover,\@DOCTYPE,\@DEGREEACR,\myi},%
-      {cover,\@DOCCLASS,\@DEGREEACR,\myi},%
-      {cover,\@DEGREEACR,\myi},%
-      {cover,\@DOCTYPE,#1,\myi},%
-      {cover,\@DOCCLASS,#1,\myi},%
-      {cover,#1,\myi},%
-      {cover,\@DOCTYPE,\myi},%
-      {cover,\@DOCCLASS,\myi},%
-      {cover,\myi})%
+  \@for\nt@tmpi:={top,bottom,left,right}\do{%
+    \datamatch*{@MRGN@\nt@tmpi}{margin}(%
+      {cover,\@DOCTYPE,\@DEGREEACR,#1,\nt@tmpi},%
+      {cover,\@DOCCLASS,\@DEGREEACR,#1,\nt@tmpi},%
+      {cover,\@DEGREEACR,#1,\nt@tmpi},%
+      {cover,\@DOCTYPE,\@DEGREEACR,\nt@tmpi},%
+      {cover,\@DOCCLASS,\@DEGREEACR,\nt@tmpi},%
+      {cover,\@DEGREEACR,\nt@tmpi},%
+      {cover,\@DOCTYPE,#1,\nt@tmpi},%
+      {cover,\@DOCCLASS,#1,\nt@tmpi},%
+      {cover,#1,\nt@tmpi},%
+      {cover,\@DOCTYPE,\nt@tmpi},%
+      {cover,\@DOCCLASS,\nt@tmpi},%
+      {cover,\nt@tmpi})%
   }%
   \newdimen{\covertextheight}%
   \newdimen{\covertextwidth}%
@@ -3584,7 +3593,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
   \NTRunHook{abstracts/pre}%
-  \@for\myi:=\expanded{\theabstractorder(\@LANG@MAIN)}\do{\@ntprintabstract{\myi}}%
+  \@for\nt@tmpi:=\expanded{\theabstractorder(\@LANG@MAIN)}\do{\@ntprintabstract{\nt@tmpi}}%
   \NTRunHook{abstracts/post}%
 }
 
@@ -3594,6 +3603,14 @@
 
 \newcommand{\@ntprintabstract}[1]{%
   % \typeout{NT PRINT ABSTRACT=[#1]}\NTPRINTABSTRACT@I%
+  \def\nt@skipabstract{0}%
+  \ifPDFTeX
+    \IfStrEq{#1}{zhs}{\def\nt@skipabstract{1}}{}%
+    \IfStrEq{#1}{zht}{\def\nt@skipabstract{1}}{}%
+  \fi
+  \ifnum\nt@skipabstract=1\relax
+    \ClassWarning{novathesis}{Skipping abstract '#1' under pdfLaTeX (CJK Unicode). Use 'make xe' or 'make lua' to include Chinese abstracts.}%
+  \else
   \iffileadded[#1]{abstract}{%
     % \typeout{NT PRINT ABSTRACT 2=[#1]}\NTPRINTABSTRACT@II
     \begingroup
@@ -3615,6 +3632,7 @@
     \endgroup%
     \clearforchapter%
   }{}%
+  \fi
 }
 
 \newcommand{\ntprintindex}{%
@@ -4044,9 +4062,33 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\iftutex
+  \ifcsname nt@cjkfontSC\endcsname\else
+    \IfFontExistsTF{PingFang SC}{\newfontfamily\nt@cjkfontSC{PingFang SC}}{%
+      \IfFontExistsTF{Noto Sans CJK SC}{\newfontfamily\nt@cjkfontSC{Noto Sans CJK SC}}{%
+        \IfFontExistsTF{Heiti SC}{\newfontfamily\nt@cjkfontSC{Heiti SC}}{\newfontfamily\nt@cjkfontSC{Latin Modern Roman}}%
+      }%
+    }%
+  \fi
+  \ifcsname nt@cjkfontTC\endcsname\else
+    \IfFontExistsTF{PingFang TC}{\newfontfamily\nt@cjkfontTC{PingFang TC}}{%
+      \IfFontExistsTF{Noto Sans CJK TC}{\newfontfamily\nt@cjkfontTC{Noto Sans CJK TC}}{%
+        \IfFontExistsTF{Heiti TC}{\newfontfamily\nt@cjkfontTC{Heiti TC}}{\newfontfamily\nt@cjkfontTC{Latin Modern Roman}}%
+      }%
+    }%
+  \fi
+\fi
+
 \newcommand*{\printabstracttitle}[1]{%
   \bookmarksetupnext{rellevel=0}
-  \chapter{\thebkmstring(abstract,#1)}%
+  \begingroup
+    \def\nt@abstitlefont{}%
+    \iftutex
+      \IfStrEq{#1}{zhs}{\def\nt@abstitlefont{\nt@cjkfontSC}}{}%
+      \IfStrEq{#1}{zht}{\def\nt@abstitlefont{\nt@cjkfontTC}}{}%
+    \fi
+    \chapter{\texorpdfstring{{\nt@abstitlefont\thebkmstring(abstract,#1)}}{\thebkmstring(abstract,#1)}}%
+  \endgroup
 }
 
 
