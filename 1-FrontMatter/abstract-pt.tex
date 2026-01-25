@@ -6,6 +6,11 @@
 %% Abstract in Portuguese
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\ExplSyntaxOn
+\cs_if_exist:NT \TitleOnHeader
+  { \TitleOnHeader }
+\ExplSyntaxOff
+
 \typeout{NT FILE abstract-pt.tex}%
 
 Independentemente da língua em que a dissertação está escrita, geralmente esta contém pelo menos dois resumos: um resumo na mesma língua do texto principal e outro resumo numa outra língua.

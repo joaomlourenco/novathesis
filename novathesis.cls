@@ -123,6 +123,12 @@
 %%    Others will be loaded later, in the file “packages.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% `l3regex` is part of the LaTeX3 kernel (expl3) in modern TeX distributions.
+% Some setups don't ship a separate `l3regex.sty` anymore, so only load it if present.
+\IfFileExists{xparse.sty}{\RequirePackage{xparse}}{}
+\IfFileExists{expl3.sty}{\RequirePackage{expl3}}{}
+\IfFileExists{l3regex.sty}{\RequirePackage{l3regex}}{}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 1. KERNEL, UTILITIES & FLAGS (Must load early)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -546,12 +552,6 @@
   \bool_if:NF \g_file_found_bool { #6 }
  }
 
-
-
-
-% `l3regex` is part of the LaTeX3 kernel (expl3) in modern TeX distributions.
-% Some setups don't ship a separate `l3regex.sty` anymore, so only load it if present.
-\IfFileExists{l3regex.sty}{\RequirePackage{l3regex}}{}
 
 \NewDocumentCommand{\IfFileExistsCase}{ s O{} m m }
   {
@@ -1209,6 +1209,7 @@
   cover=\DIRFRONTMATTER,
   dedication=\DIRFRONTMATTER,
   acknowledgements=\DIRFRONTMATTER,
+  statementintegrity=\DIRFRONTMATTER,
   quote=\DIRFRONTMATTER,
   abstract=\DIRFRONTMATTER,
   glossaries=\DIRFRONTMATTER,
@@ -2216,6 +2217,7 @@
     copyright,        % (*) The copyright page
     dedication,       % (*) Print the dedication
     acknowledgements, % (*) Print the acknowledgments
+    statementintegrity, % (*) Print the statement of integrity
     quote,            % (*) Print the quote
     abstracts,        % Print abstracts in multiple languages.
     aidisclose,       % AI disclosure statement
@@ -2230,6 +2232,7 @@
     copyright,         % (*) The copyright page
     dedication,        % (*) Print the dedication
     acknowledgements,  % (*) Print the acknowledgments
+    statementintegrity, % (*) Print the statement of integrity
     quote,             % (*) Print the quote
     abstracts,         % Print abstracts in multiple languages.
     aidisclose,        % AI disclosure statement
@@ -3142,6 +3145,10 @@
   % #6 = {a,c} | {c,r,a,m,g}
   % \typeout{NTPRINTPERSONS 1=[#1] 2=[#2] 3=[#3] 4=[#4] 5=[#5] 6=[#6]}\NTPRINTPERSONS
   \@check@instring{#1}{full,name,list}{@ntprintpersons}%
+  \def\nt@tabularx@horz{}%
+    \IfStrEq{#3}{c}{\def\nt@tabularx@horz{\centering\arraybackslash}}{}%
+    \IfStrEq{#3}{r}{\def\nt@tabularx@horz{\raggedright\arraybackslash}}{}%
+    \IfStrEq{#3}{l}{\def\nt@tabularx@horz{\raggedleft\arraybackslash}}{}%
   \iftoggle{/novathesis/print/#5}{%
     \begin{minipage}[t]{\linewidth}%
       \setlength{\parindent}{0pt}%
@@ -3261,6 +3268,7 @@
     \ifdim\stringlen>\maxlen\relax\setlength{\maxlen}{\stringlen}\fi%
   }%
 }
+
 \newcommand{\@ntprintpersonsasonecolumn}[4]{%
   % #1 = { full | name }
   % #2 = width in % of textwidth
@@ -3274,7 +3282,7 @@
   \persongrouppost():=?{\\[7pt]}
   \committeetitlestringpost():=?{\\[5pt]}%
   \@ntgetmaxlen{#3}{#2}%
-  \begin{tabularx}{#2\linewidth}[t]{@{}L@{}}%
+  \begin{tabularx}{#2\linewidth}[t]{@{}>{\nt@tabularx@horz}L@{}}%
     \ifdatadefined{#3titlestring}(\@LANG@COVER){%
       \datadefault{#3titlestringpre}()%
       \datadefault{#3titlestringfont}()%
@@ -3485,6 +3493,8 @@
 \newcommand{\ntprintquote}{\@nt@printifmaindoc@i{quote}}
 
 \newcommand{\ntprintacknowledgements}{\@nt@printifmaindoc@i{acknowledgements}}
+
+\newcommand{\ntprintstatementintegrity}{\@nt@printifmaindoc@i{statementintegrity}}
 
 \newcommand{\ntprintaidisclose}{%
   \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{% use aidisclose
