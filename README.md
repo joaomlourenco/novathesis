@@ -365,10 +365,20 @@ The Word templates (unmaintained) can be found in
   />
 </picture>
 
+---
+
+# 12. Contributers (thank you!)
+
+<a href="https://github.com/joaomlourenco/novathesis/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=joaomlourenco/novathesis" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).
+
 
 ---
 
-# 12. Say thank you!
+# 13. Say thank you!
 
 1. **Star this repository** by clicking the (⭐️) at the top right of the [project's page](https://github.com/joaomlourenco/novathesis).
 2. **Make a [small donation](https://paypal.me/novathesis)** (*pay me a beer!*)  
@@ -377,5 +387,3 @@ The Word templates (unmaintained) can be found in
 <img src="https://github.com/user-attachments/assets/8434a462-3599-4d3c-a2fd-04995db03fe3" width="100" />
 
 [![GitHub license](https://img.shields.io/badge/SAY%20THANKS-€5-orange.svg)](https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8)
-
----
