@@ -1568,59 +1568,11 @@
 %   }
 % }{}
 
-%--------------------------------
-% “biblatex” stuff
-% \ntaddfile{bib}{./\DIRNTFILES/fix-bib.bib}%
-% \AtEndDocument{\nocite{novathesis-manual}}%
-% \letoptionlist{/@nt/biblatex}\@nt@biblatex@opts%
-% \RequirePackage[hyperref=auto,defernumbers=true]{biblatex}%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% CHECK IF USING LUALATEX OR XELATEX
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \typeout{FONTENCS=\@fontencs}\FONTENCS
-% \iftutex  % xelatex or lualatex
-%   \RequirePackage[no-math]{fontspec}%
-%   \defaultfontfeatures{Ligatures=TeX}
-% \else% pdflatex
-%   \RequirePackage[\@fontencs]{fontenc}    % Use new T1 fonts
-%   % \RequirePackage[utf8]{inputenc}    % Format for the input file(s), see the "enc" option
-% \fi
-
-% --------------------------------------------------------
-% BABEL STUFF
-% \options{/@nt/lang/shorttolong=\@LANG@MAIN}%
-% \def\@LANG@LOADED{}
-% \def\@langs@loaded@sep{}
-% \newcommand*{\@nt@setlangloaded}[1]{%
-%       % \typeout{LL=#1}\LL
-%       \IfSubStr{,\@LANG@LOADED,}{,#1,}{}
-%       {
-%         \IfFileExists{\DIRSTRINGS/strings-#1.ldf}%
-%                      {\eappto{\@LANG@LOADED}{\@langs@loaded@sep#1}\def\@langs@loaded@sep{,}}%
-%                       {\ClassError{novathesis}{File not found: “\DIRSTRINGS/strings-#1.ldf” file!}%
-%                                   {Add a file with the translations for this language.}}%
-%       }%
-% }
-%
-% \@for\myi:=\expanded{\@LANG@COVER,\@LANG@COPYRIGHT,\@LANG@MAIN,%
-%                      \theabstractorder(\@LANG@MAIN)}\do{\@nt@setlangloaded{\myi}}
-% \optionlistdo{/novathesis/lang/extra}{\@nt@setlangloaded{##1}}%
-
-
 \babeladjust{
   autoload.bcp47 = on
 }
 % \PassOptionsToPackage{main=\@LANG@MAIN@LONG}{babel}
 \babelprovide[main,import]{\expanded{\@LANG@MAIN@LONG}}
-% \@for\myi:=\expanded{\@LANG@LOADED}\do{%
-%   % \typeout{BABELLANG=\myi \GetLangLong(\myi)}\BABELLANG%
-%   \babelprovide[import]{\GetLangLong(\myi)}%
-% }%
 
 % --------------------------------------------------------
 % FIX BABEL TRANSLATION
@@ -1630,21 +1582,25 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Create list of loaded languages
+%% which will be loaded dynamically by Babel
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\@LANG@LOADED{}
-\def\@langs@loaded@sep{}
-\def\@nt@setlangloaded#1{%
-  \ifblank{#1}{}{%
-    \IfSubStr{,\@LANG@LOADED,}{,#1,}{}{%
-      \eappto{\@LANG@LOADED}{\@langs@loaded@sep#1}%
-      \def\@langs@loaded@sep{,}%
-    }%
-  }%
-}
-\let\nt@save@myi\myi
-\@for\myi:=\expanded{\@LANG@COVER,\@LANG@COPYRIGHT,\@LANG@MAIN,\theabstractorder(\@LANG@MAIN)}\do{\@nt@setlangloaded{\myi}}%
-\let\myi\nt@save@myi
+\edef\@LANG@LOADED{\@LANG@COVER, \@LANG@COPYRIGHT, \@LANG@MAIN, \theabstractorder(\@LANG@MAIN)}
+\UniquifyList{\@LANG@LOADED}[\@LANG@LOADED]
+
+% \def\@LANG@LOADED{}
+% \def\@langs@loaded@sep{}
+% \def\@nt@setlangloaded#1{%
+%   \ifblank{#1}{}{%
+%     \IfSubStr{,\@LANG@LOADED,}{,#1,}{}{%
+%       \eappto{\@LANG@LOADED}{\@langs@loaded@sep#1}%
+%       \def\@langs@loaded@sep{,}%
+%     }%
+%   }%
+% }
+% \let\nt@save@myi\myi
+% \@for\myi:=\expanded{\@LANG@COVER,\@LANG@COPYRIGHT,\@LANG@MAIN,\theabstractorder(\@LANG@MAIN)}\do{\@nt@setlangloaded{\myi}}%
+% \let\myi\nt@save@myi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FIX BABEL
