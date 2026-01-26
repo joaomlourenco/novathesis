@@ -122,7 +122,7 @@
 \spine(logo)={\theschool(logo,neg)}
 \spine(bg,color)={\theitqbcolor(\option{/novathesis/nova/itqb/cover/color},spine)}
 \spine(date)={\textcolor{itqbgray207}{\theoeiras()},
-              \printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}
+              \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}
 
 \SpineSetup[%
 ]{%
@@ -233,7 +233,7 @@
     \node [inner sep=0pt,anchor=west, yshift={\theregion(itqb,top)+8.4mm}]
                     {\fontsize{12}{12}\selectfont
                      \mbox{O}eiras,
-                     \printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}};
+                     \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}};
     % Rectangle
     \fill [xshift=-\@MRGN@left,
            \expanded{%
