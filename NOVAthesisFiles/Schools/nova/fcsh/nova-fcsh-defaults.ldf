@@ -7,13 +7,12 @@
 
 \typeout{NT FILE nova/fsch/nova-fcsh-defaults.ldf}%
 
+\ntsetup{print/statement=true}
 \ntsetup{print/frontpage=false}
-\ifmaindoc
-  {\ifdocworking
-    {}
-    {\ntsetup{print/statement=true}}}
-  {}
+\ntsetup{print/copyright=false}
 \ntsetup{style/chapter=article}
+\ntaddfile{statement}[en]{nova-fcsh/nova-fcsh-statement-en}
+\ntaddfile{statement}[pt]{nova-fcsh/nova-fcsh-statement-pt}
 
 
 % Faculty / School
@@ -21,10 +20,6 @@
 \school(en):={School of Social Sciences and Humanities}
 \school(fr):={School of Social Sciences and Humanities}
 \school(it):={School of Social Sciences and Humanities}
-
-% Scientific filed
-\majorfield(pt):={«Área Científica»}
-\majorfield(en):={“Scientific Field”}
 
 % Comiittee printing order
 \committeeorder():={c,r,a,m}%
@@ -175,7 +170,7 @@
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{fcshblue}{%%
-      \textbf{\printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
+      \textbf{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
   }%
 }
 

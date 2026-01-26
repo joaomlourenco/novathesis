@@ -265,8 +265,8 @@
   \theuniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%
     \ifdocworking{\emph{\color{yellow}\textbf{Draft:} \today}}%
-                 {\printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
-  }{\printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
+                 {\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
+  }{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
 }
 
 
@@ -346,8 +346,8 @@
   \theuniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%
     \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}%
-                 {\printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
-  }{\printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
+                 {\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
+  }{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
