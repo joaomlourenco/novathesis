@@ -1,12 +1,24 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova-fcsh-statement-en.tex
+%% NOVA thesis document file
+%%
+%% Statement of integrity file (NOVA-FCSH)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+
+\clearforchapter
+
 % =====================================================================
-\FrontPage
-
-\vfill
-
+% The istitutional statement
+% =====================================================================
 Tese/Dissertação apresentada para cumprimento dos requisitos necessários à obtenção do
-grau de <GRAU> em <NOME-GRAU>, na Área de Especialização em <ESPECIALIDADE>,
-realizado sob a orientação científica da Professora <NOME-ORIENTADORA> e do Professor
-<NOME-ORIENTADOR>.
+grau de 
+\thedegreename(\@LSHORT)
+\ifdatadefined{specialization}(\@LSHORT)
+  {, na Área de Especialização em \thespecialization(\@LSHORT)}
+  {}
+, realizado sob a orientação científica de \GetPersonsAsList{adviser}{a}.
 
 \vfill
 
@@ -26,8 +38,13 @@ Apoio financeiro da Fundação para a Ciência e Tecnologia no âmbito do progra
 \vfill
 
 
+
 % =====================================================================
-\Statements
+% The statement of integrity
+% =====================================================================
+
+\chapter{\thebkmstring(statement,\@LANG@MAIN)}
+% \bookmarksetupnext{rellevel=0}%
 
 \vfill
 
@@ -35,16 +52,17 @@ Declaro que esta tese é o resultado da minha investigação pessoal e independe
 O seu conteúdo é original e todas as fontes consultadas estão devidamente mencionadas no
 texto, nas notas e na bibliografia.
 
-\TheCandiadteSignature {Lisboa} {2025-01-12}
+\TheCandiadteSignature {Lisboa} {\GetDocDate(submission)}
 
 
 \vfill
 
 
-Declaro que esta tese se encontra em condições de ser apreciado pelo júri a designar.
+Declaro / Declaramos que esta tese se encontra em condições de ser apreciado pelo júri a designar.
 
-\TheAdvisersSignatures {a} {Lisboa} {2025-01-12}  % ADVISERS
-\TheAdvisersSignatures {c} {Lisboa} {2025-01-12}  % CO-ADVISERS - Comment this line to omit
+\TheAdvisersSignatures {a} {Lisboa} {\GetDocDate(submission)}
+\TheAdvisersSignatures {c} {Lisboa} {\GetDocDate(submission)}
 
 \vfill\null
 \endinput
+
