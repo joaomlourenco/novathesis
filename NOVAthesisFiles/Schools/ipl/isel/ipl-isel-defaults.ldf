@@ -13,24 +13,53 @@
 
 \typeout{NT FILE ipl/isel/defaults.ldf}%
 
+
+% No PhD degree for ISEL
+\ifphddoc
+  {\ClassError {novathesis}
+               {Please select a valid document type in '0-Config/1_novathesis.tex'.  Current wrong value: '\@DOCTYPE'.}
+               {}}
+  {}
+
+
+\ntaddfile{statement}[en]{ipl-isel/ipl-isel-statement-en}
+\ntaddfile{statement}[pt]{ipl-isel/ipl-isel-statement-pt}
+\ntsetup{print/statement=true}
 \ntsetup{print/frontpage=true}
+\ntsetup{style/font=verdana}
 
 % Comiittee printing order
 \committeeorder():={c,m}%
-\definecolor{iselOrange}{HTML}{FF3C28}    % Official for Chapte
-\definecolor{iselAubergine}{HTML}{5F1437} % Official for Section and Cover
+
+% Colors
+\definecolor{iselRed}{HTML}{FF3C28}  % Official for Chapter
+\definecolor{iselPlum}{HTML}{5F1437} % Official for Section and Cover
+\definecolor{iselPink}{HTML}{FFD2F5} % Official for Section and Cover
+
 
 % Cover background images
 %\frontpageimage():={isel-photo} % don't add the .jpg extension
-\thesiscover(1-1,image):=?{isel-ipl-coverpage}
-\thesiscover(2-1,image):={isel-ipl-coverpage2}
+\thesiscover(wireframe):=?{ipl-isel-wireframe}
+\thesiscover(logo):=?{ipl-isel-logo}
 
+% \thesiscover(1-1,image):=?{isel-pg1}
+% \thesiscover(2-1,image):={isel-pg2}
+
+\NTAddToHook{/abstract/title/before}{%\
+  \begingroup
+    \color{iselPlum}%
+    \bfseries\fontsize{14}{16}\selectfont%
+    \thedoctitle(\@LANG@COVER,main)\\[4ex]%
+  \endgroup
+}
 % Work Title on Abstract Header
-\newcommand{\TitleOnHeader}{%
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north west,text width=120mm] at ($(current page.north west)+(25mm,-25mm)$)
-{\bfseries\fontsize{14}{16}\selectfont \thedoctitle(\@LANG@COVER,main)};
-\end{tikzpicture}%
+\NTAddToHook{abstract/pre}{%
+  \let\oldprintchaptertitle\printchaptertitle%
+  \renewcommand{\printchaptertitle}{%
+    \NTRunHook{/abstract/title/before}%
+    \NTRunHook{/abstract/title/\@LSHORT}%
+    \oldprintchaptertitle%
+  }%
 }
 
 % Spine info
@@ -48,93 +77,228 @@
 
 % Set margins for cover pages
 \margin(cover,top):={2.5cm}
-\margin(cover,bottom):={2.5cm}
-\margin(cover,left):={2.5cm}
+\margin(cover,bottom):={1.7cm}
+\margin(cover,left):={3.5cm}
 \margin(cover,right):={2.5cm}
 
 % Isel Style (overwrite config)
 \ntsetup{style/chapter=isel}
 
-% \dissertationstring(bsc,pt)={Relatório para obtenção do Grau de %
-% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
-% \dissertationstring(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
-% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
-% \dissertationstring(msc,pt)={Dissertação de natureza científica para obtenção do grau de  %
-% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
-% \dissertationstring(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
-% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
-% \dissertationstring(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
-% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
-% \dissertationstring(phd,pt)={Dissertação para obtenção do Grau de %
-% \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{12}{12}\selectfont\themajorfield(\@LANG@COVER)}}
-%\copyrighttextstring(pt)={O \theschool(\@LANG@COVER)\ e o \theuniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+% To allow the user to change the doctype string later
+\NewMemStore{DocType}
+\SetDocType(bsc)={Trabalho de Projeto}
+\SetDocType(msc)={Dissertação}
+\specializationstring(pt):={na Área de Especialização de}
 
-%\copyrighttextstring(en)={The \theschool(\@LANG@COVER)\ and the \theuniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+% --------------------------------------------------------------------
+%   Dissertation strings
+% --------------------------------------------------------------------
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% IST guidelines:
-% The pages should be numbered consecutively at the bottom centre of the
-% page.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\dissertationstring(bsc,pt)     = {%
+      \GetDocType(\option{/novathesis/doctype}) para obtenção do grau de %
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)%
+      \ em\\%
+      \themajorfield(\@LANG@COVER)%
+      \ifdatadefined{minorfield}(\@LANG@COVER)
+        {\thespecialization(\@LANG@COVER)}
+        {}%
+      .%
+}
 
+\dissertationstring(mscplan,pt) = {%
+      Plano de \GetDocType(\option{/novathesis/doctype}) para obtenção do grau de %
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)%
+      \ em\\%
+      \themajorfield(\@LANG@COVER)%
+      \ifdatadefined{minorfield}(\@LANG@COVER)
+        {\thespecialization(\@LANG@COVER)}
+        {}%
+      .%
+}
+
+\dissertationstring(msc,pt)     = {%
+      \GetDocType(\option{/novathesis/doctype}) para obtenção do grau de %
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)%
+      \ em\\%
+      \themajorfield(\@LANG@COVER)%
+      \ifdatadefined{minorfield}(\@LANG@COVER)
+        {\thespecialization(\@LANG@COVER)}
+        {}%
+      .%
+}
+
+\dissertationstring(mscplan,pt) = {%
+      Plano de \GetDocType(\option{/novathesis/doctype}) para obtenção do grau de %
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)%
+      \ em\\%
+      \themajorfield(\@LANG@COVER)%
+      \ifdatadefined{minorfield}(\@LANG@COVER)
+        {\thespecialization(\@LANG@COVER)}
+        {}%
+      .%
+}
+
+
+\dissertationstring(bsc,en) = {%
+      \GetDocType(\option{/novathesis/doctype}) to obtain the degree of %
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)%
+      \ in\\%
+      \themajorfield(\@LANG@COVER)%
+      \ifdatadefined{minorfield}(\@LANG@COVER)
+        {\thespecialization(\@LANG@COVER)}
+        {}%
+      .%
+}
+
+\dissertationstring(mscplan,en) = {%
+      \GetDocType(\option{/novathesis/doctype}) Plan to obtain the degree of %
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)%
+      \ in\\%
+      \themajorfield(\@LANG@COVER)%
+      \ifdatadefined{minorfield}(\@LANG@COVER)
+        {\thespecialization(\@LANG@COVER)}
+        {}%
+      .%
+}
+
+\dissertationstring(msc,en) = {%
+      \GetDocType(\option{/novathesis/doctype}) to obtain the degree of %
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)%
+      \ in\\%
+      \themajorfield(\@LANG@COVER)%
+      \ifdatadefined{minorfield}(\@LANG@COVER)
+        {\thespecialization(\@LANG@COVER)}
+        {}%
+      .%
+}
+
+
+\@for\mylang:={\@LANG@LOADED}\do{%
+  \committeetitlestring(\mylang):={\ToUppercase{\thecommitteetitlestring(\mylang)}}%
+  \@for\myadv:={a,c,ca,t}\do{%
+    \@for\mysp:={1,2}\do{%
+      \@for\mymf:={m,f}\do{%
+        \adviserstring(\myadv,\mysp,\mymf,\mylang):=%
+              {\ToUppercase{\theadviserstring(\myadv,\mysp,\mymf,\mylang)}}%
+      }%
+    }%
+  }%
+}
+
+
+% --------------------------------------------------------------------
+%   Frontmatter order
+% --------------------------------------------------------------------
+
+\options{/@nt/print/frontmatter/final = 
+  {%
+    acknowledgements, % (*) Print the acknowledgments
+    statement,        % (*) Print the statement of integrity
+    abstracts,        % Print abstracts in multiple languages.
+    alllistof,        % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
+}
+
+\options{/@nt/print/frontmatter/provisional = 
+  {%
+    acknowledgements, % (*) Print the acknowledgments
+    statement,        % (*) Print the statement of integrity
+    abstracts,        % Print abstracts in multiple languages.
+    alllistof,        % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Draw the cover page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{%
+% Top and left wireframe
+\NTAddToHook{cover/1-1/text/pre}{%
+  \color{iselPlum}%
 }
 
-\NTAddToHook{cover/1-1/text/pre}{%
-  % \sffamily%
-}
 \NTAddToHook{cover/2-1/text/pre}{%
-  % \sffamily%
+  \color{iselPlum}%
+}
+
+\ntaddtocover[tikz]{1-1}{%
+  \node[anchor=north west, inner sep=0pt] at (current page.north west)
+    {\includegraphics[width=210mm,height=297mm]{\expanded{\thethesiscover(wireframe)}}};%
+}
+
+\ntaddtocover[tikz]{1-1}{%
+  \node[anchor=north] at ($(current page.north) + (7mm,-28.5mm)$)
+    {\includegraphics[height=23mm]{\expanded{\thethesiscover(logo)}}};%
+}
+
+\ntaddtocover[tikz]{2-1}{%
+  \node[anchor=north] at ($(current page.north) + (0mm,-32.5mm)$)
+    {\includegraphics[height=21mm]{\expanded{\thethesiscover(logo)}}};%
 }
 
 % % Title of Dissertation
-\ntaddtocover[vspace=6,]{1-1}{%
-  \fontsize{17}{17}\selectfont%
-  \textbf{\color{iselAubergine}\thedoctitle(\@LANG@COVER,main)}%
+\ntaddtocover[vspace=66mm,height=4cm,valign=c]{1-1}{%
+  \fontsize{17}{20}\selectfont%
+  \textbf{\thedoctitle(\@LANG@COVER,main)}%
 }
 
-\ntaddtocover[vspace=3,]{2-1}{%
-  \fontsize{17}{17}\selectfont%
-  \textbf{\color{iselAubergine}\thedoctitle(\@LANG@COVER,main)}%
+\ntaddtocover[vspace=63mm,height=4cm,valign=c]{2-1}{%
+  \fontsize{17}{20}\selectfont%
+  \textbf{\thedoctitle(\@LANG@COVER,main)}%
 }
 
 % Author name
-\ntaddtocover[vspace=1,]{1-1,2-1}{%
-  \fontsize{12}{12}\selectfont%
-  \textbf{\color{iselAubergine}\thedocauthor(name)}\\
-  \fontsize{12}{12}\selectfont%
-  \color{iselAubergine}(\thedocauthor(degree))%
+\ntaddtocover[vspace=17.5mm,height=1cm,valign=c]{1-1}{%
+  \fontsize{12}{14}\selectfont%
+  \thedocauthor(name)\\
+  \fontsize{12}{13}\selectfont%
+  (\thedocauthor(degree,\@LANG@COVER))%
+}
+
+% Author name
+\ntaddtocover[vspace=19.5mm,height=1cm,valign=c]{2-1}{%
+  \fontsize{12}{14}\selectfont%
+  \thedocauthor(name)\\
+  \fontsize{12}{13}\selectfont%
+  (\thedocauthor(degree,\@LANG@COVER))%
 }
 
 % Degree
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vspace=11.5mm,height=1cm,valign=c]{1-1,2-1}{%
   \fontsize{9}{9}\selectfont%
-  \color{iselAubergine}\thepresentationtext%
+  \dissertationstringfont()={}%
+  \thepresentationtext%
 }
 
 % Advisers
-\ntaddtocover[vspace=1.5cm,valign=c]{1-1,2-1}{%
-    \adviserstringfont():={\bfseries}%
+\ntaddtocover[vspace=12mm,valign=t]{1-1}{%
+  \adviserstringfont():={}%
   \fontsize{9}{9}\selectfont%
-  \color{iselAubergine}\ntprintpersons[full]{0.9}[c]{1}{adviser}{a,c}%
+  \ntprintpersons[name]{0.9}[c]{1}{adviser}{a,c}%
+}
+
+% Advisers
+\ntaddtocover[vspace=7mm,valign=t]{2-1}{%
+  % \adviserstringfont():={}%
+  \adviserstringpost():={\\[2pt]}%
+  \fontsize{9}{9}\selectfont%
+  \ntprintpersons[name]{0.9}[c]{1}{adviser}{a,c}%
 }
 
 % Committee
-\ntaddtocover[vspace=1.5cm,valign=c]{2-1}{%
-  \committeetitlestringfont():={\bfseries}%
+\ntaddtocover[vspace=0mm,valign=c]{2-1}{%
+  % \committeetitlestringfont():={\bfseries}%
+  \committeestringpost():={\\[2pt]}%
   \committeestringfont():={\bfseries}%
   \fontsize{9}{9}\selectfont%
-  \color{iselAubergine}\ntprintpersons{0.9}[c]{1}{committee}{\thecommitteeorder()}%
+  \ntprintpersons[name]{0.9}[c]{1}{committee}{\thecommitteeorder()}%
 }
 
 
 \ntaddtocover[vspace=2]{1-1,2-1}{%
   \fontsize{9}{9}\selectfont%
   \ifdocworking
-    {\emph{\color{iselAubergine}\textbf{Draft:} \today}}%
-    {\textbf{\color{iselAubergine}\printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}}%
+    {\emph{\textbf{Draft: \today}}}%
+    {\textbf{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}}%
 }
