@@ -3457,38 +3457,39 @@
 %%%%%% Abstract, Acronyms and Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\newif\ifskipabstract
 \newcommand{\@ntprintabstract}[1]{%
-  % \typeout{NT PRINT ABSTRACT=[#1]}\NTPRINTABSTRACT@I%
-  \def\nt@skipabstract{0}%
-  \ifPDFTeX
-    \IfStrEq{#1}{zhs}{\def\nt@skipabstract{1}}{}%
-    \IfStrEq{#1}{zht}{\def\nt@skipabstract{1}}{}%
-  \fi
-  \ifnum\nt@skipabstract=1\relax
-    \ClassWarning{novathesis}{Skipping abstract '#1' under pdfLaTeX (CJK Unicode). Use 'make xe' or 'make lua' to include Chinese abstracts.}%
-  \else
   \iffileadded[#1]{abstract}{%
-    % \typeout{NT PRINT ABSTRACT 2=[#1]}\NTPRINTABSTRACT@II
-    \begingroup
-      % \typeout{NT PRINT ABSTRACT #1}\bbbb
-      \StrCut{#1}{-}\@ABS@LANG\@dummy%
-      \ntselectlang{\@ABS@LANG}%
-      % \typeout{NTL=\languagename [#1]}\bbbb
-      % \hypertarget{bmabstract#1}{}%
-      % \bookmark[dest=bmabstract#1]{\thebkmstring(abstract,#1)}%
-      \NTRunHook{abstract/pre}%
-      \NTRunHook{abstract/#1/pre}%
-      \printabstracttitle{#1}%
-      \NTRunHook{abstract/mid}%
-      \NTRunHook{abstract/#1/mid}%
-      \PrintAddedFile[#1]{abstract}%
-      \ntprintsdgs%
-      \NTRunHook{abstract/#1/post}%
-      \NTRunHook{abstract/post}%
-    \endgroup%
-    \clearforchapter%
+    \skipabstractfalse
+    % \typeout{NT PRINT ABSTRACT=[#1]}\NTPRINTABSTRACT@I%
+    \ifPDFTeX
+      \IfStrEq{#1}{zhs}{\skipabstracttrue}{}%
+      \IfStrEq{#1}{zht}{\skipabstracttrue}{}%
+    \fi
+    \ifskipabstract
+      \ClassWarning{novathesis}{Skipping abstract '#1' under pdfLaTeX (CJK Unicode). Use 'make xe' or 'make lua' to include Chinese abstracts.}%
+    \else
+      % \typeout{NT PRINT ABSTRACT 2=[#1]}\NTPRINTABSTRACT@II
+      \begingroup
+        % \typeout{NT PRINT ABSTRACT #1}\bbbb
+        \StrCut{#1}{-}\@ABS@LANG\@dummy%
+        \ntselectlang{\@ABS@LANG}%
+        % \typeout{NTL=\languagename [#1]}\bbbb
+        % \hypertarget{bmabstract#1}{}%
+        % \bookmark[dest=bmabstract#1]{\thebkmstring(abstract,#1)}%
+        \NTRunHook{abstract/pre}%
+        \NTRunHook{abstract/#1/pre}%
+        \printabstracttitle{#1}%
+        \NTRunHook{abstract/mid}%
+        \NTRunHook{abstract/#1/mid}%
+        \PrintAddedFile[#1]{abstract}%
+        \ntprintsdgs%
+        \NTRunHook{abstract/#1/post}%
+        \NTRunHook{abstract/post}%
+      \endgroup%
+      \clearforchapter%
+    \fi
   }{}%
-  \fi
 }
 
 \newcommand{\ntprintindex}{%
@@ -3897,22 +3898,36 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\iftutex
-  \ifcsname nt@cjkfontSC\endcsname\else
-    \IfFontExistsTF{PingFang SC}{\newfontfamily\nt@cjkfontSC{PingFang SC}}{%
-      \IfFontExistsTF{Noto Sans CJK SC}{\newfontfamily\nt@cjkfontSC{Noto Sans CJK SC}}{%
-        \IfFontExistsTF{Heiti SC}{\newfontfamily\nt@cjkfontSC{Heiti SC}}{\newfontfamily\nt@cjkfontSC{Latin Modern Roman}}%
-      }%
-    }%
+\IfSubStr{,\@LANG@LOADED,}{,zhs,}{%
+  \iftutex
+    \ifcsname nt@cjkfontSC\endcsname\else
+      \IfFontExistsTF{PingFang SC}
+        {\newfontfamily\nt@cjkfontSC{PingFang SC}}
+        {\IfFontExistsTF{Noto Sans CJK SC}
+          {\newfontfamily\nt@cjkfontSC{Noto Sans CJK SC}}
+          {\IfFontExistsTF{Heiti SC}
+            {\newfontfamily\nt@cjkfontSC{Heiti SC}}
+            {\newfontfamily\nt@cjkfontSC{Latin Modern Roman}}%
+          }%
+        }%
+    \fi
   \fi
-  \ifcsname nt@cjkfontTC\endcsname\else
-    \IfFontExistsTF{PingFang TC}{\newfontfamily\nt@cjkfontTC{PingFang TC}}{%
-      \IfFontExistsTF{Noto Sans CJK TC}{\newfontfamily\nt@cjkfontTC{Noto Sans CJK TC}}{%
-        \IfFontExistsTF{Heiti TC}{\newfontfamily\nt@cjkfontTC{Heiti TC}}{\newfontfamily\nt@cjkfontTC{Latin Modern Roman}}%
-      }%
-    }%
+}{}
+\IfSubStr{,\@LANG@LOADED,}{,zht,}{%
+  \iftutex
+    \ifcsname nt@cjkfontTC\endcsname\else
+      \IfFontExistsTF{PingFang TC}
+        {\newfontfamily\nt@cjkfontTC{PingFang TC}}
+        {\IfFontExistsTF{Noto Sans CJK TC}
+          {\newfontfamily\nt@cjkfontTC{Noto Sans CJK TC}}
+          {\IfFontExistsTF{Heiti TC}
+            {\newfontfamily\nt@cjkfontTC{Heiti TC}}
+            {\newfontfamily\nt@cjkfontTC{Latin Modern Roman}}%
+          }%
+        }%
+    \fi
   \fi
-\fi
+}{}
 
 \newcommand*{\printabstracttitle}[1]{%
   \bookmarksetupnext{rellevel=0}
