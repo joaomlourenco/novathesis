@@ -272,18 +272,20 @@
 }
 
 % Advisers
-\ntaddtocover[vspace=12mm,valign=t]{1-1}{%
-  \adviserstringfont():={}%
+\ntaddtocover[vspace=7mm,valign=t]{2-1}{%
+  \adviserstringfont():={\bfseries}%
+  \adviserstringpost():={\\[2pt]}%
   \fontsize{9}{9}\selectfont%
   \ntprintpersons[name]{0.9}[c]{1}{adviser}{a,c}%
 }
 
-% Advisers
-\ntaddtocover[vspace=7mm,valign=t]{2-1}{%
-  % \adviserstringfont():={}%
-  \adviserstringpost():={\\[2pt]}%
+% Committee
+\ntaddtocover[vspace=5mm,valign=c]{2-1}{%
+  \committeetitlestringfont():={\bfseries}%
+  \committeestringpost():={\\[2pt]}%
+  \committeestringfont():={\bfseries}%
   \fontsize{9}{9}\selectfont%
-  \ntprintpersons[name]{0.9}[c]{1}{adviser}{a,c}%
+  \ntprintpersons[name]{0.9}[c]{1}{committee}{\thecommitteeorder()}%
 }
 
 % Committee
