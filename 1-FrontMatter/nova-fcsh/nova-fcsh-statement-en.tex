@@ -1,0 +1,65 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova-fcsh-statement-en.tex
+%% NOVA thesis document file
+%%
+%% Statement of integrity file (NOVA-FCSH)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+
+\clearforchapter
+
+% =====================================================================
+% The istitutional statement
+% =====================================================================
+Thesis/Dissertation submitted in fulfillment of the requirements for the degree of 
+\thedegreename(\@LSHORT)
+\ifdatadefined{specialization}(\@LSHORT)
+  {, Specialization in \thespecialization(\@LSHORT)}
+  {}
+, carried out under the scientific supervision of \GetPersonsAsList{adviser}{a}.
+
+\vfill
+
+Financial support provided by the Fundação para a Ciência e a Tecnologia 
+within the scope of the <PROGRAM-NAME> program and through the PhD Fellowship <REF>.
+
+\bigskip
+
+\begin{center}
+  \hfill
+\includegraphics[height=1.5cm]{\DIRIMAGES/FCT_logo_positive}
+  \hfill
+\includegraphics[height=1.5cm]{\DIRIMAGES/republica_portuguesa_CTES}  
+  \hfill
+\end{center}
+
+\vfill
+
+
+
+% =====================================================================
+% The statement of integrity
+% =====================================================================
+
+\chapter{\thebkmstring(statement,\@LANG@MAIN)}
+% \bookmarksetupnext{rellevel=0}%
+
+\vfill
+
+I hereby declare that this thesis is the result of my own personal and independent research. 
+Its content is original and all sources consulted have been duly acknowledged in the text, footnotes, and bibliography.
+
+\TheCandiadteSignature {Lisbon} {\GetDocDate(submission)}
+
+
+\vfill
+
+
+I / we hereby declare that this thesis is in a suitable condition to be evaluated by the examination committee to be appointed.
+
+\TheAdvisersSignatures {a} {Lisbon} {\GetDocDate(submission)}
+\TheAdvisersSignatures {c} {Lisbon} {\GetDocDate(submission)}
+
+\vfill\null
+\endinput

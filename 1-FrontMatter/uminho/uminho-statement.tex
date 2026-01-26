@@ -1,0 +1,58 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% uminho/statement.tex
+%% NOVA thesis document file
+%%
+%% Statement
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE uminho/statement.tex}%
+
+\makeatletter
+
+%-----------------------------------------------------------------
+% STATEMENT OF INTEGRITY
+%-----------------------------------------------------------------
+
+\newdata{statementofintegritytextstr}
+
+\statementofintegritytextstr(pt):={%
+  \begin{center}%
+    \textbf{DECLARAÇÃO DE INTEGRIDADE}%
+  \end{center}%
+  \indent Declaro ter atuado com integridade na elaboração do presente trabalho académico e confirmo que não recorri à prática de plágio nem a qualquer forma de utilização indevida ou falsificação de informações ou resultados em nenhuma das etapas conducente à sua elaboração.\\[1ex]
+  \indent Mais declaro que conheço e que respeitei o Código de Conduta Ética da \theuniversity(\@LANG@MAIN).
+  }
+
+
+\statementofintegritytextstr(en):={%
+  \begin{center}%
+    \textbf{STATEMENT OF INTEGRITY}%
+  \end{center}%
+  \indent I hereby declare having conducted this academic work with integrity. I confirm that I have not used plagiarism or any form of undue use of information or falsification of results along the process leading to its elaboration.\\[1ex]
+  \indent I further declare that I have fully acknowledged the Code of Ethical Conduct of the \theuniversity(\@LANG@MAIN).
+}
+
+\newdata{signatureline}
+
+\signatureline(pt):=?{%
+  \begin{tabular}{c@{~}c}%
+  \rule{10em}{0.5pt}, & \rule{16em}{0.5pt}\\[-1ex]%
+  (\theplacestr(\@LANG@MAIN)) & (\thedatestr(\@LANG@MAIN))%
+  \end{tabular}%
+  \vspace{2cm}%
+  \begin{center}%
+    \rule{25em}{0.5pt}\\[-1ex]%
+    (\thedocauthor(name))%
+  \end{center}%
+}
+
+\signatureline(en):=?{\thesignatureline(pt)}
+
+\thispagestyle{plain}%
+\null%
+\vfill%
+\thestatementofintegritytextstr(\@LANG@MAIN)\\[1.5cm]
+\ontoggle{/novathesis/uminho/signatureline}{%
+  \thesignatureline(\@LANG@MAIN)%
+}%
+\vfill%

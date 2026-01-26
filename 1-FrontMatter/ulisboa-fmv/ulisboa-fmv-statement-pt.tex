@@ -1,0 +1,90 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ulisboa/fmv/statement-pt.tex
+%% NOVA thesis document file
+%%
+%% Statement
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE ulisboa/fmv/statement-pt.tex}%
+
+\makeatletter
+
+\thispagestyle{empty}
+
+\long\def\checkbox#1#2{\ifoptionanyof{/novathesis/ulisboa/fmv/#1}{#2}{\memoryxbox}{\memoryemptybox}}
+
+% \null\vfill
+
+%-----------------------------------------------------------------
+% STATEMENT OF INTEGRITY
+%-----------------------------------------------------------------
+\bgroup
+\setlength{\parskip}{1ex plus 1pt minus 1pt}
+\setlength{\parindent}{0cm}
+\sffamily\footnotesize
+\begin{center}
+  DECLARAÇÃO RELATIVA ÀS CONDIÇÕES DE REPRODUÇÃO DA TESE OU DISSERTAÇÃO
+\end{center}
+
+Autor: \thedocauthor(name)\par
+Título: {\ToUppercase{\thedoctitle(\@LANG@MAIN,main)}}\par
+Ano de conclusão: \GetDocDate(exam)
+
+Designação do curso: \thedegreename(\@LANG@COVER)\par
+Area cientifica em que melhor se enquadra:\par
+\indent\begin{tabular}{l@{\qquad}l}
+  \checkbox{scientificarea}{C} Clinica &
+  \checkbox{scientificarea}{PASA} Produção Animal e Segurança Alimentar \\
+  \checkbox{scientificarea}{MF} Morfologia e Função &
+  \checkbox{scientificarea}{SA} Sanidade Animal \\
+\end{tabular}
+
+Declaro sobre compromisso de hora que a tese ou dissertação agora entregue corresponde à que foi aprovada pelo juri constituido pela Faculdade de Medicina Veterinária da ULISBOA.
+
+Declaro que concedo à Faculdade de Medicina Veterinária e as seus agents uma licença não-exclusiva para arquivar e tornar acessível, nomeadamente através do seu repositório institucional, nas condições abaixo indicadas, a minha tese ou dissertação, no todo ou em parte, em suporte digital.
+
+Declaro que autorizo a Faculdade de Medicina Veterinária a arquivar mais de uma cópia da tese ou dissertação e a, sem alterar o seu conteúdo, converter o documento entregue, para qualquer formato de ficheiro, meio ou suporte, para efeitos de preservação e acesso.
+
+Retenho todos os direitos de autor relativos à tese ou dissertação, e o direito de a usar em trabalhos futuros (como artigos ou livros).
+
+Concordo que a minha tese ou dissertação seja colocada no repositório da Faculdade de Medicina Veterinária com seguinte estatuto:
+\begin{enumerate}
+  \item \checkbox{embargo/period}{I} Disponibilização imediata do conjunto do trabalho para acesso mundial;
+  \item \checkbox{embargo/period}{6,12} Disponibilização do conjunto do trabalho para acesso exclusivo a Faculdade de Medicina Veterinária durante o periodo de \checkbox{embargo/period}{6} 6 meses,
+\checkbox{embargo/period}{12} 12 meses, sendo que após o tempo assinalado autorizo o acesso mundial%
+\ifoptionanyof{/novathesis/ulisboa/fmv/embargo/period}{6,12}{%
+  \,$^*$.\par
+  $^*$\,{\footnotesize Indique o motivo embargo.}\par
+  {\setlength{\fboxsep}{2pt}%
+   \framebox[\linewidth][l]{\option{/novathesis/ulisboa/fmv/embargo/justification}}}%
+}{%
+  .%
+}
+\end{enumerate}
+
+{\footnotesize Nos exemplares das dissertações de mestrado ou teses de doutoramento entregues para a prestação de provas na a
+Universidade e dos quais é obrigatoriamente enviado um exemplar para depósito a Biblioteca da Faculdade de Medicina
+Veterinária da Universidade de Lisboa deve constar uma das seguintes declarações:}
+\begin{enumerate}
+  \item [\checkbox{reproduction}{I}]
+        É AUTORIZADA A REPRODUÇÃO INTEGRAL DESTA TESE/DISSERTAÇÃO APENAS PARA EFEITOS DE INVESTIGAÇÃO,
+        MEDIANTE DECLARAÇÃO ESCRITA DO INTERESSADO, QUE A TAL SE COMPROMETE.
+  \item [\checkbox{reproduction}{P}]
+        É AUTORIZADA A REPRODUÇÃO PARCIAL DESTA TESE/DISSERTAÇÃO APENAS PARA EFEITOS DE INVESTIGAÇÃO,
+        MEDIANTE DECLARAÇÃO ESCRITA DO INTERESSADO, QUE A TAL SE COMPROMETE.
+  \item [\checkbox{reproduction}{N}]
+        DE ACORDO COM A LEGISLAÇÃO EM VIGOR, NÃO E PERMITIDA A REPRODUÇÃO DE QUALQUER PARTE DESTA
+        TESE/DISSERTAÇÃO.
+\end{enumerate}
+
+Faculdade de Medicina Veterinária da Universidade de Lisboa,
+\option{/novathesis/examdate/day} de
+\printmonth{\option{/novathesis/examdate/month}} de
+\option{/novathesis/examdate/year}.\par
+\vspace*{2ex}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+Assinatura: & \rule{\linewidth}{0.75pt}
+\end{tabularx}
+% \ntprintacknowledgementsblock
+\egroup
+% \vfill\null

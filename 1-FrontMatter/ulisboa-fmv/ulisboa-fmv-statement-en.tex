@@ -1,0 +1,82 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ulisboa/fmv/statement-en.tex
+%% NOVA thesis document file
+%%
+%% Statement (English Version)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE ulisboa/fmv/statement-en.tex}%
+
+\makeatletter
+
+\thispagestyle{empty}
+
+\long\def\checkbox#1#2{\ifoptionanyof{/novathesis/ulisboa/fmv/#1}{#2}{\memoryxbox}{\memoryemptybox}}
+
+%-----------------------------------------------------------------
+% STATEMENT OF INTEGRITY
+%-----------------------------------------------------------------
+\bgroup
+\setlength{\parskip}{1ex plus 1pt minus 1pt}
+\setlength{\parindent}{0cm}
+\sffamily\footnotesize
+\begin{center}
+      DECLARATION REGARDING THE CONDITIONS FOR REPRODUCTION OF THE THESIS OR DISSERTATION
+\end{center}
+
+Author: \thedocauthor(name)\par
+Title: {\ToUppercase{\thedoctitle(\@LANG@MAIN,main)}}\par
+Year of completion: \GetDocDate(exam)
+
+Course designation: \thedegreename(\@LANG@COVER)\par
+Scientific area most closely related to:\par
+\indent\begin{tabular}{l@{\qquad}l}
+  \checkbox{scientificarea}{C} Clinical &
+  \checkbox{scientificarea}{PASA} Animal Production and Food Safety \\
+  \checkbox{scientificarea}{MF} Morphology and Function &
+  \checkbox{scientificarea}{SA} Animal Health \\
+\end{tabular}
+
+I declare on my word of honor that the thesis or dissertation now submitted corresponds to the one approved by the jury appointed by the Faculty of Veterinary Medicine of ULISBOA.
+
+I declare that I grant to the Faculty of Veterinary Medicine and its agents a non-exclusive license to archive and make accessible, namely through its institutional repository, under the conditions indicated below, my thesis or dissertation, in whole or in part, in digital format.
+
+I declare that I authorize the Faculty of Veterinary Medicine to archive more than one copy of the thesis or dissertation and to, without changing its content, convert the submitted document to any file format, medium, or support for the purposes of preservation and access.
+
+I retain all copyright related to the thesis or dissertation, and the right to use it in future works (such as articles or books).
+
+I agree that my thesis or dissertation be placed in the repository of the Faculty of Veterinary Medicine with the following status:
+\begin{enumerate}
+  \item \checkbox{embargo/period}{I} Immediate availability of the entire work for worldwide access;
+  \item \checkbox{embargo/period}{6,12} Availability of the entire work for exclusive access by the Faculty of Veterinary Medicine during a period of \checkbox{embargo/period}{6} 6 months,
+\checkbox{embargo/period}{12} 12 months, after which I authorize worldwide access%
+\ifoptionanyof{/novathesis/ulisboa/fmv/embargo/period}{6,12}{%
+  \,$^*$.\par
+  $^*$\,{\footnotesize Indicate the reason for embargo.}\par
+  {\setlength{\fboxsep}{2pt}%
+   \framebox[\linewidth][l]{\option{/novathesis/ulisboa/fmv/embargo/justification}}}%
+}{%
+  .%
+}
+\end{enumerate}
+
+{\footnotesize In the copies of the Master's dissertations or Doctoral theses submitted for examination at the University, of which one copy must be sent for deposit at the Library of the Faculty of Veterinary Medicine of the University of Lisbon, one of the following statements must be included:}
+\begin{enumerate}
+  \item [\checkbox{reproduction}{I}]
+        FULL REPRODUCTION OF THIS THESIS/DISSERTATION IS AUTHORIZED SOLELY FOR RESEARCH PURPOSES, 
+        UPON WRITTEN DECLARATION BY THE INTERESTED PARTY, WHO UNDERTAKES TO DO SO.
+  \item [\checkbox{reproduction}{P}]
+        PARTIAL REPRODUCTION OF THIS THESIS/DISSERTATION IS AUTHORIZED SOLELY FOR RESEARCH PURPOSES, 
+        UPON WRITTEN DECLARATION BY THE INTERESTED PARTY, WHO UNDERTAKES TO DO SO.
+  \item [\checkbox{reproduction}{N}]
+        IN ACCORDANCE WITH CURRENT LEGISLATION, REPRODUCTION OF ANY PART OF THIS 
+        THESIS/DISSERTATION IS NOT PERMITTED.
+\end{enumerate}
+
+Faculty of Veterinary Medicine of the University of Lisbon,
+\PrintDateISO{\GetDocDate(exam)}.\par
+\bigskip
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+Signature: & \rule{\linewidth}{0.75pt}
+\end{tabularx}
+\egroup
