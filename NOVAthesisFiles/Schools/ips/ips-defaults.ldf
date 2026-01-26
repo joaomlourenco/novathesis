@@ -128,7 +128,7 @@
   \hfill%
   \begin{minipage}[t]{\@rightcol}%
     \fontsize{10}{10}\selectfont%
-    \printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}%
+    \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}%
   \end{minipage}%
 }
 
