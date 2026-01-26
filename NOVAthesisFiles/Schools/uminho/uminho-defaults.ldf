@@ -37,6 +37,7 @@
 \ntsetup{print/frontpage=true}
 \ntsetup{print/statement=true}
 \ntsetup{style/font=newsgott}
+\ntaddfile{statement}{uminho/uminho-statement}
 
 \ifdocprovisional{\ntsetup{docstatus=final}}{}
 \ifmaindoc{\ifdocfinal{\ntaddfile{cover}[1]{\DIRSCHOOLS/uminho/cover-final.tex}}{}}{}
@@ -361,7 +362,7 @@ indicada.\\[1ex]
   % \ifdraftdoc
     % \textbf{DRAFT: \today}
   % \else
-  \printisodate[\theofstr(\@LANG@COVER)]
+  \PrintDateISO[\theofstr(\@LANG@COVER)]
                {\GetDocDate(submission,year)-\GetDocDate(submission,month)}
   % \fi
 }

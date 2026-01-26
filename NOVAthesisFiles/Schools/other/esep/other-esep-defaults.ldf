@@ -125,7 +125,7 @@
 % Date
 \ntaddtocover[vspace=2]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont
-    \textbf{\printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
+    \textbf{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
 }
 
 %

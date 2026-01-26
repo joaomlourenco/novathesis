@@ -302,7 +302,7 @@
 
 % Date
 \ntaddtocover[halign=c, vspace=2]{2-1}{%
-  \printisodate{\GetDocDate(submission,year)-\GetDocDate(submission,month)}%
+  \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}%
 }%
 
 
