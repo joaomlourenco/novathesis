@@ -1205,11 +1205,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \options{/@nt/folders/.new choice={
   copyright=.,
-  statement=.,
+  statement=\DIRFRONTMATTER,
   cover=\DIRFRONTMATTER,
   dedication=\DIRFRONTMATTER,
   acknowledgements=\DIRFRONTMATTER,
-  statementintegrity=\DIRFRONTMATTER,
   quote=\DIRFRONTMATTER,
   abstract=\DIRFRONTMATTER,
   glossaries=\DIRFRONTMATTER,
@@ -1311,6 +1310,9 @@
       {\ifstrequal{#2}{copyright}{\OPTi}{}\xdef\@nt@filewithpath{#4}}
       {\ifstrequal{#2}{copyright}{\OPTii}{}\options{/@nt/folders=#2}%
        \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}}
+  \ifstrequal{#1}{statement}{
+    \typeout{STATEMENT [#1] [#2] [#3]}\AAAA
+  }{}
   \@for\nt@tmpi:=\expanded{#3}\do{%
     % \typeout{NT ADDTOLIST [#1] [#2] [\nt@tmpi] [\@nt@filewithpath]}\ADDTILIST%
     \options{/@nt/#1/#2/\nt@tmpi/.expanded/.newpush={\@nt@filewithpath}}%
@@ -1587,20 +1589,8 @@
 
 \edef\@LANG@LOADED{\@LANG@COVER, \@LANG@COPYRIGHT, \@LANG@MAIN, \theabstractorder(\@LANG@MAIN)}
 \UniquifyList{\@LANG@LOADED}[\@LANG@LOADED]
-
-% \def\@LANG@LOADED{}
-% \def\@langs@loaded@sep{}
-% \def\@nt@setlangloaded#1{%
-%   \ifblank{#1}{}{%
-%     \IfSubStr{,\@LANG@LOADED,}{,#1,}{}{%
-%       \eappto{\@LANG@LOADED}{\@langs@loaded@sep#1}%
-%       \def\@langs@loaded@sep{,}%
-%     }%
-%   }%
-% }
-% \let\nt@save@myi\myi
-% \@for\myi:=\expanded{\@LANG@COVER,\@LANG@COPYRIGHT,\@LANG@MAIN,\theabstractorder(\@LANG@MAIN)}\do{\@nt@setlangloaded{\myi}}%
-% \let\myi\nt@save@myi
+\@for\mylang:={\@LANG@LOADED}\do
+  {\babelprovide[import]{\expanded{\@LANG@MAIN@LONG}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FIX BABEL
@@ -1835,147 +1825,99 @@
   \csname month\romannumeral\numexpr#1\relax name\endcsname
 }
 
-% \printisodate{2022-12-25} -> localized date, e.g., December 20, 2022; 20 de dezembro de 2022
-% \printisodate{2022-12}    -> e.g., December 20, 2022; Dezembro, 2022
-% \printisodate{2022}       -> e.g., 2022
-\ExplSyntaxOn
-\NewDocumentCommand{\printisodate}{ O{,~} m }
-{
-  \karl_print_isodate:nn { #1 } { #2 }
-}
-
-\cs_new_protected:Npn \karl_print_isodate:nn #1 #2
-{
-  \seq_set_split:Nnn \l_tmpa_seq { - } { #2 }
-  \int_case:nnF { \seq_count:N \l_tmpa_seq }
-  {
-    { 1 } { \karl_print_isodate_year:n { #2 } }  % YYYY
-    { 2 } { \karl_print_isodate_year_month:nn { #1 } { #2 } }  % YYYY-MM
-    { 3 } { \karl_print_isodate_full:nnn { #2 } }  % YYYY-MM-DD
-  }
-  {
-    \msg_error:nnx { printisodatex } { invalid-format } { #2 }
-  }
-}
-
-\cs_new_protected:Npn \karl_print_isodate_year:n #1
-{
-  #1  % Just output the year
-}
-
-\cs_new_protected:Npn \karl_print_isodate_year_month:nn #1 #2
-{
-  \seq_set_split:Nnn \l_tmpa_seq { - } { #2 }
-  \MakeTitlecase { \babelmonthname { \seq_item:Nn \l_tmpa_seq { 2 } } }
-  #1  % separator
-  \seq_item:Nn \l_tmpa_seq { 1 }  % year
-}
-
-\cs_new_protected:Npn \karl_print_isodate_full:nnn #1
-{
-  \seq_set_split:Nnn \l_tmpa_seq { - } { #1 }
-  \localedate
-    { \seq_item:Nn \l_tmpa_seq { 1 } }  % year
-    { \seq_item:Nn \l_tmpa_seq { 2 } }  % month
-    { \seq_item:Nn \l_tmpa_seq { 3 } }  % day
-}
-
-\msg_new:nnn { printisodatex } { invalid-format }
-{
-  Invalid~date~format~'#1'.~Expected~YYYY,~YYYY-MM,~or~YYYY-MM-DD.
-}
-\ExplSyntaxOff
-% \newcommand{\printisodate}[2][, ]{\printisodate@i[#1]#2---\@nil}
-%
-% \def\printisodate@i[#1]#2-#3-#4-#5\@nil{%
-%   % 1=$<$#1$>$ $<$#2$>$ $<$#3$>$ $<$#4$>$\par
-%   \edef\@iso@one{#2}%
-%   \edef\@iso@two{#3}%
-%   \edef\@iso@three{#4}%
-%   \ifx\@iso@three\@empty
-%     \ifx\@iso@two\@empty
-%       \@iso@one%
-%     \else
-%       \MakeTitlecase{\babelmonthname{\@iso@two}}#1\@iso@one%
-%     \fi
-%   \else
-%     \localedate{\@iso@one}{\@iso@two}{\@iso@three}%
-%   \fi
-% }
-
-
 \ExplSyntaxOn
 
-% 1. Define the message
-\msg_new:nnnn { date } { invalid-format }
-  { Invalid~ISO~date~format:~'#1'. }
-  { The~date~must~be~YYYY-MM~or~YYYY-MM-DD. }
+% \PrintDateISO{2022-12-25} -> localized date, e.g., December 20, 2022; 20 de dezembro de 2022
+% \PrintDateISO{2022-12}    -> e.g., December 20, 2022; Dezembro, 2022
+% \PrintDateISO{2022}       -> e.g., 2022
+\NewDocumentCommand{\PrintDateISO}{m}
+ {
+  \nt_print_iso_date:n {#1}
+ }
 
-% 2. The Public Entry Point
-% We expand #1 and #2 immediately using the :ee variant
+% Sequential variables to store Y, M, D
+\seq_new:N \l_nt_date_seq
+% Generate the 'NnV' variant (N = seq, n = delimiter, V = value of variable)
+\cs_generate_variant:Nn \seq_set_split:Nnn { Nne }
+
+\cs_new_protected:Nn \nt_print_iso_date:n
+ {
+  % Split the input string by the hyphen (-)
+  \seq_set_split:Nne \l_nt_date_seq { - } {#1}
+  
+  \int_case:nn { \seq_count:N \l_nt_date_seq }
+   {
+    % Case 1: Only Year (YYYY)
+    { 1 } { \seq_item:Nn \l_nt_date_seq { 1 } }
+    
+    % Case 2: Year and Month (YYYY-MM)
+    { 2 } { 
+      \MakeTitlecase { \babelmonthname { \seq_item:Nn \l_nt_date_seq { 2 } } }
+      ,~  % separator
+      \seq_item:Nn \l_nt_date_seq { 1 }  % year
+    }
+    
+    % Case 3: Full Date (YYYY-MM-DD)
+    { 3 } { 
+        \localedate { \seq_item:Nn \l_nt_date_seq { 1 } } 
+                    { \seq_item:Nn \l_nt_date_seq { 2 } } 
+                    { \seq_item:Nn \l_nt_date_seq { 3 } } 
+    }
+   }
+ }
+
+
+
+
+
+% Define the command with an optional d() argument and a mandatory m argument
 \NewDocumentCommand{\SetDateISO}{ d() m }
-  {
-    \__nova_process_iso_date:ee { #1 } { #2 }
-  }
+ {
+  \nt_set_iso_date:nn { #1 } { #2 }
+ }
 
-% 3. The Internal Logic
-\tl_new:N \l_tmp_year_tl
-\tl_new:N \l_tmp_month_tl
+% Sequential variable to store the split parts
+\seq_new:N \l_nt_parts_seq
 
-\cs_new_protected:Npn \__nova_process_iso_date:nn #1 #2
-  {
-    % Handle the case where #1 (the optional ID) is not provided
-    \tl_set:Nn \l_tmpa_tl { #1 }
-    \quark_if_no_value:NT \l_tmpa_tl { \tl_set:Nn \l_tmpa_tl { default } }
+\cs_new_protected:Nn \nt_set_iso_date:nn
+ {
+  % 1. Store the raw ISO string
+  \MemSet { DocDate } { #1 } { #2 }
+  
+  % 2. Split the string by the hyphen
+  \seq_set_split:Nnn \l_nt_parts_seq { - } { #2 }
+  
+  % 3. Process based on how many parts were found
+  \int_case:nn { \seq_count:N \l_nt_parts_seq }
+   {
+    % Case: YYYY
+    { 1 } 
+     {
+      \MemSet { DocDate } { #1, year } { \seq_item:Nn \l_nt_parts_seq { 1 } }
+     }
+    
+    % Case: YYYY-MM
+    { 2 }
+     {
+      \MemSet { DocDate } { #1, year }  { \seq_item:Nn \l_nt_parts_seq { 1 } }
+      \MemSet { DocDate } { #1, month } { \seq_item:Nn \l_nt_parts_seq { 2 } }
+      % Use Babel's \monthname to get the localized text
+      \MemSet { DocDate } { #1, month, text } 
+        { \monthname [ \seq_item:Nn \l_nt_parts_seq { 2 } ] }
+     }
+    
+    % Case: YYYY-MM-DD
+    { 3 }
+     {
+      \MemSet { DocDate } { #1, year }  { \seq_item:Nn \l_nt_parts_seq { 1 } }
+      \MemSet { DocDate } { #1, month } { \seq_item:Nn \l_nt_parts_seq { 2 } }
+      \MemSet { DocDate } { #1, month, text } 
+        { \monthname [ \seq_item:Nn \l_nt_parts_seq { 2 } ] }
+      \MemSet { DocDate } { #1, day }   { \seq_item:Nn \l_nt_parts_seq { 3 } }
+     }
+   }
+ }
 
-    % 1. Validate syntax on the expanded string #2
-    \regex_match:nnTF { ^\d{4}-\d{2}(-\d{2})?$ } { #2 }
-      {
-        % 2. Split ISO string into a sequence
-        \seq_set_split:Nnn \l_tmpa_seq { - } { #2 }
-
-        % 3. Access components
-        \tl_set:Nx \l_tmp_year_tl  { \seq_item:Nn \l_tmpa_seq { 1 } }
-        \tl_set:Nx \l_tmp_month_tl { \seq_item:Nn \l_tmpa_seq { 2 } }
-
-        % 4. Global/Main storage (using our resolved ID in \l_tmpa_tl)
-        \MemSet{DocDate}{\l_tmpa_tl}{#2}
-        \MemSet{DocDate}{\l_tmpa_tl,year}{\l_tmp_year_tl}
-        \MemSet{DocDate}{\l_tmpa_tl,month}{\l_tmp_month_tl}
-
-        % 5. Check if Day exists (Fixed: \int_compare:nNnTF)
-        \int_compare:nNnTF { \seq_count:N \l_tmpa_seq } = { 3 }
-          {
-            \MemSet{DocDate}{\l_tmpa_tl,day}{ \int_eval:n { \seq_item:Nn \l_tmpa_seq { 3 } } }
-          }
-          {
-            \MemSet{DocDate}{\l_tmpa_tl,day}{}
-          }
-
-        % 6. Call monthtotext
-        \MemSet{DocDate}{\l_tmpa_tl,month,text}{ \monthtotext[\l_tmp_month_tl] }
-      }
-      {
-        \msg_error:nnn { date } { invalid-format } { #2 }
-      }
-  }
-
-% Define the 'ee' variant to force expansion of both arguments
-\cs_generate_variant:Nn \__nova_process_iso_date:nn { ee }
-
-% Month number to month name using babel
-\cs_new:Npn \nova_month_to_text:n #1
-  {
-    % \int_eval:n ensures leading zeros (like 09) are handled correctly
-    % \int_to_roman:n converts the number to lowercase roman (i, ii, iii...)
-    % \use:c builds the control sequence name and executes it
-    \use:c { month \int_to_roman:n { \int_eval:n { #1 } } name }
-  }
-
-\NewDocumentCommand{\monthtotext}{ O{\month} }
-  {
-    \nova_month_to_text:n { #1 }
-  }
 
 \ExplSyntaxOff
 
@@ -1987,35 +1929,6 @@
 \SetDateISO(submission){2000-01-31}
 \SetDateISO(exam){2000-01-31}
 
-% \newdata{ntdocdate}
-%
-% \def\ntdate{%
-%   \@ifnextchar({\@ntdate@i}{\@ntdate@i(submission)}%
-% }
-%
-% % \usepackage{pgfcalendar} % For converting month names
-%
-% \newcommand{\monthtotext}[1][\month]{\csuse{month\romannumeral#1 name}}
-%
-% \def\@ntdate@i(#1)#2{%
-%   \StrCut{#2}{-}\@NTDY\@NTDM%
-%   \StrCut{\@NTDM}{-}\@NTDM\@NTDD%
-%   \SetDocDate(#1)={#2}%
-%   \SetDocDate(#1,year)={\@NTDY}%
-%   \SetDocDate(#1,month)={\@NTDM}%
-%   \SetDocDate(#1,day,0)={\@NTDD}%
-%   \IfBeginWith{\@NTDD}{0}{\StrGobbleLeft{\@NTDD}{1}[\@NTDDNZ]}{\edef\@NTDDNZ{\@NTDD}}%
-%   \ntdocdate(#1,day):={\@NTDDNZ}%
-%   % \typeout{NTD(#1) Y=[\@NTDY] M=[\@NTDM] D=[\@NTDD]}\NTDATE%
-%   \@for\myi:={year,month,day}\do{%
-%     \IfInteger{\GetDocDate(#1,\myi)}{}
-%               {\ClassError{The \myi\ in \string\SetDocDate(#1){#2} is not a number!}{}{}}%
-%   }%
-%   \SetDocDate(#1,month,text)={\monthtotext[\@NTDM]}%
-% }
-% \SetDocDate(default)={2000-09-01}
-% \ntdate(submission){\GetDocDate(default)}
-% \ntdate(exam){\GetDocDate(default)}
 
 
 %============================================================
@@ -2217,7 +2130,6 @@
     copyright,        % (*) The copyright page
     dedication,       % (*) Print the dedication
     acknowledgements, % (*) Print the acknowledgments
-    statementintegrity, % (*) Print the statement of integrity
     quote,            % (*) Print the quote
     abstracts,        % Print abstracts in multiple languages.
     aidisclose,       % AI disclosure statement
@@ -2232,7 +2144,6 @@
     copyright,         % (*) The copyright page
     dedication,        % (*) Print the dedication
     acknowledgements,  % (*) Print the acknowledgments
-    statementintegrity, % (*) Print the statement of integrity
     quote,             % (*) Print the quote
     abstracts,         % Print abstracts in multiple languages.
     aidisclose,        % AI disclosure statement
@@ -2470,7 +2381,6 @@
 \input{\DIRCONFIG/3_cover}
 % \NTRunHook{cover}
 
-% Patch month from number to string in the proper language
 \ntselectlang{\@LANG@COVER}%
 
 %============================================================
@@ -3070,29 +2980,9 @@
     \ifmaindoc{% Skip thesis plan and similar documents
       \iftoggle{/novathesis/print/statement}{% if statement toggle is on
         \NTRunHook{statement/pre}%
-        \iffileadded{statement}
-          {\PrintAddedFile{statement}}
-          {%ELSE
-            % \bookmarksetupnext{rellevel=1}%
-            \IfFileExistsCase
-              {
-                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-\@LANG@MAIN-statement.tex}
-                      {\typeout{FILE=##1}\input{##1}},
-                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@DEGREEACR-statement.tex}
-                      {\typeout{FILE=##1}\input{##1}},
-                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-\@LANG@MAIN-statement.tex}
-                      {\typeout{FILE=##1}\input{##1}},
-                {\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-statement.tex}
-                      {\typeout{FILE=##1}\input{##1}},
-                {\DIRSCHOOLS/\@UNIV/\@UNIV-\@LANG@MAIN-statement.tex}
-                      {\typeout{FILE=##1}\input{##1}},
-                {\DIRSCHOOLS/\@UNIV/\@UNIV-statement.tex}
-                      {\typeout{FILE=##1}\input{##1}},
-              }
-              { % NOT FOUND
-                \ClassError{novathesis}{No “statement.tex” file found!}{}
-              }
-          }%
+        \iffileadded[\@LSHORT]{statement}
+          {\PrintAddedFile[\@LSHORT]{statement}}
+          {\PrintAddedFile{statement}}%
         \NTRunHook{statement/post}%
       }{}%
     }{}%
@@ -3130,9 +3020,9 @@
 
 \newcommand*{\@setalignment}[1]{
   \IfStrEqCase{#1}{%
-    {l}{\raggedright}%
-    {c}{\centering}%
     {r}{\raggedleft}%
+    {c}{\centering}%
+    {l}{\raggedright}%
   }[\ClassError{novathesis}{Invalid alignment “#1”}{}]%
 }
 
@@ -3147,8 +3037,8 @@
   \@check@instring{#1}{full,name,list}{@ntprintpersons}%
   \def\nt@tabularx@horz{}%
     \IfStrEq{#3}{c}{\def\nt@tabularx@horz{\centering\arraybackslash}}{}%
-    \IfStrEq{#3}{r}{\def\nt@tabularx@horz{\raggedright\arraybackslash}}{}%
-    \IfStrEq{#3}{l}{\def\nt@tabularx@horz{\raggedleft\arraybackslash}}{}%
+    \IfStrEq{#3}{r}{\def\nt@tabularx@horz{\raggedleft\arraybackslash}}{}%
+    \IfStrEq{#3}{l}{\def\nt@tabularx@horz{\raggedright\arraybackslash}}{}%
   \iftoggle{/novathesis/print/#5}{%
     \begin{minipage}[t]{\linewidth}%
       \setlength{\parindent}{0pt}%
@@ -3179,14 +3069,14 @@
 
 \NewDocumentCommand {\GetPersonsAsList} { m m o }
  {
-  % --- 1. Legacy Title Processing ---
-  \ifdatadefined{#1titlestring}(\@LANG@COVER)
-   {
-    \datadefault{#1titlestringpre}(\@LANG@COVER)
-    \datadefault{#1titlestringfont}(\@LANG@COVER)
-    \csuse{the#1titlestring}(\@LANG@COVER)
-    \datadefault{#1titlestringpost}(\@LANG@COVER)
-   }{}
+  % % --- 1. Legacy Title Processing ---
+  % \ifdatadefined{#1titlestring}(\@LANG@COVER)
+  %  {
+  %   \datadefault{#1titlestringpre}(\@LANG@COVER)
+  %   \datadefault{#1titlestringfont}(\@LANG@COVER)
+  %   \csuse{the#1titlestring}(\@LANG@COVER)
+  %   \datadefault{#1titlestringpost}(\@LANG@COVER)
+  %  }{}
 
   % --- 2. Build the Flat List ---
   \clist_clear:N \l_nt_master_clist
@@ -3297,7 +3187,6 @@
       }{}%
     }%
     \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}%
-    % \@for\arg:=\expanded{#4}\do{\@nt@ntprintpersongroup{#1}{1}{#3}{\arg}}
   \end{tabularx}%
 }
 
@@ -3323,7 +3212,6 @@
       \datadefault{#2titlestringpost}()%
     }{}%
     \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{2}{#2}}}{\expanded{#3}}%
-    % \@for\myx:={#3}\do{\@nt@ntprintpersongroup[#1]{2}{#2}{\myx}}%
   \end{tabular}%
 }
 
@@ -3349,14 +3237,14 @@
   % #2 = {a,c} | {c,r,a,m,g}
   \options{/@nt/#1/#2/full/.size = \mysize}%
   \ifnum\mysize>0\relax%
-  \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
-  \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
-  \datadefault{#1stringpre}(#2)%
-  \bgroup%
-    \datadefault{#1stringfont}(#2)%
-    \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
-  \egroup%
-  \datadefault{#1stringpost}(#2)%
+    \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
+    \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
+    \datadefault{#1stringpre}(#2)%
+    \bgroup%
+      \datadefault{#1stringfont}(#2)%
+      \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
+    \egroup%
+    \datadefault{#1stringpost}(#2)%
   \fi%
 }
 
@@ -3488,13 +3376,15 @@
   }{}% It is a plan or proposal type document
 }
 
-\newcommand{\ntprintdedication}{\@nt@printifmaindoc@i{dedication}}
+\newcommand{\ntprintdedication}
+  {\@nt@printifmaindoc@i{dedication}}
 
-\newcommand{\ntprintquote}{\@nt@printifmaindoc@i{quote}}
+\newcommand{\ntprintquote}
+  {\@nt@printifmaindoc@i{quote}}
 
-\newcommand{\ntprintacknowledgements}{\@nt@printifmaindoc@i{acknowledgements}}
+\newcommand{\ntprintacknowledgements}
+  {\@nt@printifmaindoc@i{acknowledgements}}
 
-\newcommand{\ntprintstatementintegrity}{\@nt@printifmaindoc@i{statementintegrity}}
 
 \newcommand{\ntprintaidisclose}{%
   \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{% use aidisclose
@@ -3591,7 +3481,7 @@
       \printabstracttitle{#1}%
       \NTRunHook{abstract/mid}%
       \NTRunHook{abstract/#1/mid}%
-     \PrintAddedFile[#1]{abstract}%
+      \PrintAddedFile[#1]{abstract}%
       \ntprintsdgs%
       \NTRunHook{abstract/#1/post}%
       \NTRunHook{abstract/post}%
@@ -3718,33 +3608,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Print statements utils
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ifoptiondefined{/@nt/adviser/c/pair}
-  {\options{/@nt/adviser/a/pair/.size = \stnadvisers}}
-  {\def\stnadvisers{0}}
-\ifoptiondefined{/@nt/adviser/c/pair}
-  {\options{/@nt/adviser/c/pair/.size = \stncoadvisers}}
-  {\def\stncoadvisers{0}}
-
-
-\NewDocumentCommand { \Statements } { }
-  {
-    % \chapter{Declarações}
-    \chapter{\thebkmstring(statement,\@LANG@MAIN)}
-    \bookmarksetupnext{rellevel=0}%
-  }
-
-\NewDocumentCommand { \FrontPage } { }
-  {
-    % \chapter{Declarações}
-    \ChapterNoTitle{\thebkmstring(frontpage,\@LANG@MAIN)}
-    \bookmarksetupnext{rellevel=0}%
-    \ntchapskip
-  }
-
 \newenvironment{tightcenter}
   {\par\centering}
   {\par}%
-  
+
 \NewDocumentCommand { \TheCandiadteSignature } { m m }
   % #1 = place
   % #2 = ISO DATE
@@ -3759,41 +3626,43 @@
 
 
 \newcounter{nadv}
-\NewDocumentCommand { \TheAdvisersSignatures } { m m m }
-  % #1 = c (candidate) | a (only advisers) | a,c (both advisers and co-advisers)
-  % #2 = place
-  % #3 = ISO DATE
+\NewDocumentCommand { \TheAdvisersSignatures } { O{20mm} m m m }
+  % #2 = a (only advisers) | a,c (both advisers and co-advisers)
+  % #3 = place
+  % #4 = ISO DATE
   {
     \begin{tightcenter}
-      \ifoptiondefined{/@nt/adviser/#1/pair}{%
-        \optionlistdo{/@nt/adviser/#1/pair}{%
+      \ifoptiondefined{/@nt/adviser/#2/pair}{%
+        \optionlistdo{/@nt/adviser/#2/pair}{%
             % \ifnum\arabic{nadv}=2\relax
             %   ~\\[1ex]
             % \fi
             \stepcounter{nadv}
             \StrCut{##1}{/}\stgender\stname
             \StatementOneSignature 
-              {\theadviserstring(pref,#1,1,\stgender,\@LANG@MAIN)} 
+              {\theadviserstring(pref,#2,1,\stgender,\@LANG@MAIN)} 
               {\stname}
-              {#3}
+              {#4}
         }%
       }{}%
     \end{tightcenter}
   }
 
 
-\NewDocumentCommand { \StatementOneSignature } { m m m }
-  % #1 = text above
-  % #2 = name
+\NewDocumentCommand { \StatementOneSignature } { O{20mm} m m m }
+  % #1 = space to rule
+  % #2 = text above
+  % #3 = name
+  % #4 = date
   {
     \begin{minipage}[t]{6cm}
       \medskip%
       \begin{center}  
-        #1,\par
-        \vspace*{1.0cm}
+        #2,\par
+        \vspace*{#1}
         \rule{\linewidth}{0.75pt}\par
-        \textit{#2}\\
-        \printisodate{#3}
+        \textit{#3}\\
+        \PrintDateISO{#4}
       \end{center}
     \end{minipage}
   }
