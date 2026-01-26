@@ -69,11 +69,8 @@
   % debug,
 }
 
-\NTAddToHook{abstract/pre}{%
-  \clearforchapter
-  \let\clearforchapterOROG\clearforchapter
-  \let\clearforchapter\relax
-  \begin{minipage}{\textwidth}
+\NTAddToHook{/abstract/title/before}{%\
+  \begingroup
     \begin{center}
     \noindent\large\bfseries
     \ifdatadefined{doctitle}(\@LSHORT,abstract)
@@ -84,12 +81,18 @@
     \begin{center}
     \textbf{\thedocauthor(name)}
     \end{center}
-  \end{minipage}
-%  \smallskip
+  \endgroup
 }
-\NTAddToHook{abstract/post}{%
-  \let\clearforchapter\clearforchapterOROG
-}      
+% Work Title on Abstract Header
+\NTAddToHook{abstract/pre}{%
+  \let\oldprintchaptertitle\printchaptertitle%
+  \renewcommand{\printchaptertitle}{%
+    \NTRunHook{/abstract/title/before}%
+    \NTRunHook{/abstract/title/\@LSHORT}%
+    \oldprintchaptertitle%
+  }%
+  \SingleSpacing*%
+}
 
 \newcommand{\ntchapskip}{\vspace*{2cm}}
 
