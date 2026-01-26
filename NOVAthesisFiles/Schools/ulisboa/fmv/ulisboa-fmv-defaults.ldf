@@ -25,7 +25,11 @@
 \ntsetup{lang/cover=pt}
 \ntsetup{print/frontpage=true}
 \ifdocworking{}{\ntsetup{color/links=black}}
-\ifdocfinal{\ntsetup{print/statement=true}}{}
+\ntsetup{print/statement=true}
+\ntaddfile{statement}[en]{ulisboa-fmv/ulisboa-fmv-statement-en}
+\ntaddfile{statement}[pt]{ulisboa-fmv/ulisboa-fmv-statement-pt}
+
+\ntbibsetup{style=cse}
 
 \IfStrEq{\@LANG@MAIN}{en}{%
   % \spinebkmstring(pt):=\spinebkmstring(en)
@@ -56,98 +60,10 @@
 }
 
 \AtEndPreamble{
-  % \let\cite\parencite
   \makeheadrule{novathesis@mainmatter}{0pt}{0pt}
   \makeevenhead{novathesis@mainmatter}{}{}{}
   \makeoddhead{novathesis@mainmatter}{}{}{}
-% }
-%
-%
-%
-% \NTAddToHook{NOVAthesisFiles/packages}{%
-  \RequirePackage{xpatch}
-% Remove commas between family and given names
-  \DeclareNameAlias{sortname}{family-given}
-  \renewrobustcmd*{\revsdnamepunct}{}
-  \renewrobustcmd*{\bibinitdelim}{}
-% Remove commas between family and given names
-  \renewrobustcmd*{\revsdnamepunct}{}
-  \renewrobustcmd*{\bibinitdelim}{}
-% Remove dot after initials
-  \renewrobustcmd*{\bibinitperiod}{}
-% Add dot after list of authors (and before year)
-  % \xpretobibmacro{date+extradate}{\setunit{\addperiod\space}}{}{}
-% Remove quotation marks from title
-  \DeclareFieldFormat*{title}{#1}
-% Remove emphasized from titles
-  \DeclareFieldFormat*{journaltitle}{#1\isdot}
-\DeclareFieldFormat{postnote}{#1}
-\DeclareFieldFormat{multipostnote}{#1}
-\renewcommand*{\bibpagespunct}{\addcolon}
-\renewcommand{\postnotedelim}{%
-  \iffieldpages{postnote}
-    {\addcolon\space}
-    {\addspace}}
-  % \DefineBibliographyStrings{english}{%
-  %   page             = {\ifbibliography{}{p\adddot}},
-  %   pages            = {\ifbibliography{}{pp\adddot}},
-  % }
-  \DefineBibliographyExtras{english}{%
-% Remove "and" before last author
-  \DeclareFieldFormat{pages}{#1}
-  \DeclareDelimFormat{finalnamedelim}{%
-    \ifnumgreater{\value{liststop}}{2}{%
-      \printdelim{multinamedelim}}{\addspace\bibstring{and}\space}}
-  }
-% Add dot after list of authors (and before year) and remove parentheses in date
-  \xpatchbibmacro{date+extradate}{%
-    \printtext[parens]%
-    }{%
-    \setunit*{\addperiod\space}%
-    \printtext%
-  }{}{}
-% Remove "in:" prefix in journal title
-  \renewbibmacro{in:}{}
-% Cite as "family initials"
-\DeclareNameFormat{labelname}{%
-  \ifcase\value{uniquename}%
-    \usebibmacro{name:family}
-      {\namepartfamily}
-      {\namepartgiven}
-      {\namepartprefix}
-      {\namepartsuffix}%
-  \or
-    \ifuseprefix
-      {\usebibmacro{name:family-given}
-        {\namepartfamily}
-        {\namepartgiveni}
-        {\namepartprefix}
-        {\namepartsuffixi}}
-      {\usebibmacro{name:family-given}
-        {\namepartfamily}
-        {\namepartgiveni}
-        {\namepartprefixi}
-        {\namepartsuffixi}}%
-  \or
-    \usebibmacro{name:family-given}
-      {\namepartfamily}
-      {\namepartgiven}
-      {\namepartprefix}
-      {\namepartsuffix}%
-  \fi
-  \usebibmacro{name:andothers}}
-% Increase spacing between bib entries
-  \setlength\bibitemsep{1.25\itemsep}
 }
-
-
-\NTAddToHook{printbib/pre}{
-% Always remove "and" before last author
-  \DeclareDelimFormat{finalnamedelim}{%
-      \printdelim{multinamedelim}%
-  }%
-}
-
 
 
 \NTAddToHook{printbib/pre}{\begin{SingleSpacing}}
@@ -211,28 +127,6 @@
 
 % Comiittee printing order
 \committeeorder():={c,m}%
-
-% Cover background images
-% \thesiscover(phd,1-1,bgcolor):={lightyellow}%LemonChiffon,lightyellow
-% \thesiscover(phd,N-2,bgcolor):={lightyellow}%LemonChiffon,lightyellow
-% \thesiscover(msc,1-1,bgcolor):={lightyellow}%LemonChiffon,lightyellow
-% \thesiscover(msc,N-2,bgcolor):={lightyellow}%LemonChiffon,lightyellow
-% \thesiscover(spine,bgcolor):={lightyellow}%LemonChiffon,lightyellow
-% \thesiscover(phd,1-1,image):={phd-provisional}
-% \thesiscover(phd,2-1,image):={phd2}
-% \thesiscover(phd,provisional,1-1,image):={phd-provisional}
-% \thesiscover(phd,provisional,2-1,image):={provisional_1}
-% \thesiscover(msc,1-1,image):={msc1}
-% \thesiscover(msc,2-1,image):={msc2}
-% \thesiscover(msc,provisional,1-1,image):={msc-provisional}
-% \thesiscover(msc,provisional,2-1,image):={provisional_1}
-% \thesiscover(phd,front,image):={}
-% \thesiscover(phdplan,front,image):={}
-% \thesiscover(phdprop,front,image):={}
-% \thesiscover(msc,front,image):={}
-% \thesiscover(mscplan,front,image):={}
-% \thesiscover(bsc,front,image):={}
-% \thesiscover(plain,front,image):={}
 
 
 
@@ -404,7 +298,7 @@
 
 
 % Committee and Advisers
-\ntaddtocover[vspace=15mm, height=45mm, valign=c, halign=l]{1-1,2-1}{%
+\ntaddtocover[vspace=15mm, height=45mm, valign=c]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
   \committeestringfont():={\bfseries}%
   % \advisertitlestringfont():={\bfseries}%
@@ -424,7 +318,7 @@
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   % \fontseries{mc}
   \fontsize{14}{14}\selectfont%
-    \printisodate{\GetDocDate(submission,year)}%
+    \PrintDateISO{\GetDocDate(submission,year)}%
 }
 
 % Extra vspace for conver 1-1
@@ -433,17 +327,3 @@
   \null
 }
 
-% \ifdocfinal{
-%   \ntaddtocover[halign=j]{2-2}{%
-%     \ntfor\match:={%
-%       \DIRSCHOOLS/\@UNIV/\@SCHL/statement-\@LANG@MAIN.tex,%
-%       \DIRSCHOOLS/\@UNIV/\@SCHL/statement.tex%
-%     }\do{\IfFileExists{\match}{\input{\match}\ntforbreak}{}}%
-%     [%
-%       \ClassError{novathesis}{No “statement.tex” found! Not defined with  \string\ntaddfile{statement}{filename} in folders “\DIRSCHOOLS/\@UNIV/\@SCHL” nor “\DIRSCHOOLS/\@UNIV”}{}
-%     ]%
-%     % \InputIfFileExists{\DIRSCHOOLS/\@UNIV/\@SCHL/statement.tex}{}%
-%         % {\PackageWarning{novathesis}{Missing statement file “statement.tex” for ”\@UNIV/\@SCHL”}}
-%   }%
-% }
-%
