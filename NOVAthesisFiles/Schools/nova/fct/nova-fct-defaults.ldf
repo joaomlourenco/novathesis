@@ -86,6 +86,10 @@
     {bsc}   {\def\@novafctcovercolor{red}}
     {msc}   {\def\@novafctcovercolor{blue}}
     {phd}   {\def\@novafctcovercolor{green}}
+    {mscplan} {\def\@novafctcovercolor{blue}}
+    {phdplan} {\def\@novafctcovercolor{green}}
+    {phdprop} {\def\@novafctcovercolor{green}}
+    {plain}   {\def\@novafctcovercolor{red}}
   }[\def\@novafctcovercolor{red}]
 \fi
 \thesiscover(\@DOCTYPE,1-1,image):={nova-fct-cover-\@novafctcovercolor-front}
@@ -219,7 +223,7 @@
   \ifphddoc{%
     \fontsize{22}{21}\selectfont%
     \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}%
-    \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
+     \ifdatadefined{doctitle}(\@LANG@COVER,sub){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
       \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,sub)}}%
@@ -243,7 +247,7 @@
   }{%
     \fontsize{22}{21}\selectfont%
     \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}%
-    \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
+    \ifdatadefined{doctitle}(\@LANG@COVER,sub){%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
       \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,sub)}}%
@@ -303,7 +307,7 @@
 \ntaddtocover[halign=l]{2-1}{%
   \fontsize{17}{17}\selectfont%
   \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}%
-  \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
+  \ifdatadefined{doctitle}(\@LANG@COVER,sub){%
     \\[4mm]%
     \fontsize{12}{12}\selectfont%
     \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,sub)}}%
