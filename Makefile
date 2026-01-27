@@ -9,6 +9,9 @@
 #----------------------------------------------------------------------------
 # CUSTOMIZATION AREA HERE
 
+# Use bash and not sh
+SHELL := /bin/bash
+
 # Define V command to the name of your PDF viewer
 PDFVIEWER ?= open -a skim
 
