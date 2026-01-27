@@ -82,11 +82,9 @@
 
 % Set cover color (background image)
 \ifcsname @novafctcovercolor\endcsname\else
-  \IfStrEqCase{\option{/novathesis/doctype}}{
-    {bsc}   {\def\@novafctcovercolor{red}}
-    {msc}   {\def\@novafctcovercolor{blue}}
-    {phd}   {\def\@novafctcovercolor{green}}
-  }[\def\@novafctcovercolor{red}]
+  \def\@novafctcovercolor{red}
+  \ifdocclass{msc}{\def\@novafctcovercolor{blue}}{}
+  \ifdocclass{phd}{\def\@novafctcovercolor{green}}{}
 \fi
 \thesiscover(\@DOCTYPE,1-1,image):={nova-fct-cover-\@novafctcovercolor-front}
 \thesiscover(\@DOCTYPE,N-2,image):={nova-fct-cover-\@novafctcovercolor-back}

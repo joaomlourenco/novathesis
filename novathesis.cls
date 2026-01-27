@@ -2501,12 +2501,14 @@
 
 \ifoptionequal{/novathesis/spine/layout}{off}{}{% print the spine
   \InputIfFileExistsInDirsTF {novathesis-spine.sty}
-    {
+    {%
       {\DIRSCHOOLS/\@UNIV/\@SCHL/},
       {\DIRSCHOOLS/\@UNIV/},
       {\DIRSTYFILES/},
     }
-    {\AtEndDocument{\csuse{ntprintspine}}}
+    {%
+      \ifmaindoc{\AtEndDocument{\csuse{ntprintspine}}}{}%
+    }
     {\ClassError{novathesis}{No “novathesis-spine” file found.}{}}%
 }
 

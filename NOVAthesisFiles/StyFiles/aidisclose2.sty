@@ -531,7 +531,7 @@
         \int_gincr:N \g__aid_comment_int
         \par \bigskip \noindent
         \__aid_fetch_string:nN { comment_label } \l_tmpa_tl
-        \textbf{\tl_use:N \l_tmpa_tl \ \#\int_use:N \g__aid_comment_int :}\  #1 \par
+        \textbf{\tl_use:N \l_tmpa_tl \ \#\int_use:N \g__aid_comment_int :}\  \normalfont#1 \par
       }
   } { }
 
@@ -541,7 +541,7 @@
       {
         \par \bigskip \noindent
         \__aid_fetch_string:nN { comment_star } \l_tmpa_tl
-        \textbf{\tl_use:N \l_tmpa_tl :}\  #1 \par
+        \textbf{\tl_use:N \l_tmpa_tl :}\  \normalfont#1 \par
       }
   } { }
 
