@@ -243,6 +243,39 @@ def _update_progress_bar(current_line: int, total_lines: int, bar_length: int = 
     # Use carriage return to overwrite the same line
     sys.stdout.write(f'\r{BRIGHT_CYAN}📄 Progress: {BRIGHT_WHITE}|{bar}| {percentage:5.1f}% ({current_line}/{total_lines} lines){RESET}')
     sys.stdout.flush()
+
+def get_highest_degree_from_conf(target_school: str, conf_filename: str = "schools.conf") -> Optional[str]:
+    """
+    Parses schools.conf to find the highest degree for a given school.
+    Priority: phd > msc > bsc
+    """
+    priority = ["phd", "msc", "bsc"]
+    conf_path = Path(".") / ".Build" / conf_filename
+    
+    if not conf_path.exists():
+        print_error(f"Configuration file {conf_filename} not found.")
+        return None
+
+    with conf_path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            # Skip comments and empty lines
+            if not line or line.startswith("#") or line.startswith("["):
+                continue
+            
+            # Match school name and the degree list within brackets
+            # Example: nova/fct [msc, phd] [en,pt]
+            match = re.match(r"^([\w/-]+)\s+\[(.*?)\]", line)
+            if match:
+                school, degrees_str = match.groups()
+                if school == target_school:
+                    # Convert "[msc, phd]" to a list of strings
+                    available_degrees = [d.strip() for d in degrees_str.split(",")]
+                    # Return the first one that matches our priority list
+                    for p in priority:
+                        if p in available_degrees:
+                            return p
+    return None
     
 # --- Symlink Helpers --------------------------------------------------------
 def _copy_scripts_directory(src: Path, dst: Path) -> None:
@@ -939,9 +972,9 @@ def parse_arguments() -> argparse.Namespace:
     )
     ap.add_argument(
         "-t", "--doctype",
-        default="phd",
+        default=None,
         choices=["phd", "msc", "bsc"],
-        help="Document type: 'phd', 'msc', 'bsc' (default: phd)"
+        help="Document type: 'phd', 'msc', 'bsc' (default: highest available in schools.conf)"
     )
     ap.add_argument(
         "-s", "--docstatus",
@@ -1104,6 +1137,20 @@ def main() -> None:
     school_id = validate_school_id(args.school_id)
     validate_language(args.lang)
     validate_sdgs(args.sdgs)
+
+    # 1. Check if user provided a doctype via command line
+    if args.doctype is not None:
+        print_info(f"Using user-specified doctype: {args.doctype}")
+    else:
+        # 2. No argument given, try to auto-detect from schools.conf
+        highest_degree = get_highest_degree_from_conf(school_id)
+        if highest_degree:
+            print_info(f"Auto-detected highest degree for {GREEN}{school_id}{RESET}: {GREEN}{highest_degree}{RESET}")
+            args.doctype = highest_degree
+        else:
+            # 3. Fallback to 'phd' if school not found in config
+            print_warning(f"School '{school_id}' not found in schools.conf. Falling back to default: phd")
+            args.doctype = "phd"
     
     project_root = Path.cwd()
     

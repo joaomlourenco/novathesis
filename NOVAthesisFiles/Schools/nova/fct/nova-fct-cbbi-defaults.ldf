@@ -227,18 +227,18 @@
 \ntaddtocover[tikz]{1-1}{%
   \def\Y{23.75mm}
   \node[anchor=west] at ($(current page.south west) + (13.75mm,\Y)$)
-    {\includegraphics[width=11.75mm]{OtherLogos/logo-nova-bw}};%
+    {\includegraphics[width=11.75mm]{nova-insignia-bw}};%
   \draw[thick] ($(current page.south west) + (28mm,\Y-11.75mm/2)$) -- ++(0mm,11.75mm);%
   \node[anchor=west] at ($(current page.south west) + (29.0mm,\Y)$)
-    {\includegraphics[width=39.0mm]{OtherLogos/logo-nova-itqb-bw}};%
+    {\includegraphics[width=39.0mm]{nova-ihmt-logo-bw}};%
   \node[anchor=west,yshift=-2mm] at ($(current page.south west) + (75.0mm,\Y)$)
-    {\includegraphics[width=25.0mm]{OtherLogos/logo-nova-fct-bw}};%
+    {\includegraphics[width=25.0mm]{nova-fct-logo-bw-en}};%
   \node[anchor=west,yshift=-2mm] at ($(current page.south west) + (105.0mm,\Y)$)
-    {\includegraphics[width=25.0mm]{OtherLogos/logo-nova-nms-bw}};%
+    {\includegraphics[width=25.0mm]{nova-nms-logo-bw}};%
   \node[anchor=west,yshift=-2mm] at ($(current page.south west) + (136.0mm,\Y)$)
-    {\includegraphics[width=15.0mm]{OtherLogos/logo-nova-ims-bw}};%
+    {\includegraphics[width=15.0mm]{nova-ims-logo-bw}};%
   \node[anchor=west,yshift=-1mm] at ($(current page.south west) + (153.0mm,\Y)$)
-    {\includegraphics[width=48.0mm]{OtherLogos/logo-nova-ihmt-bw}};%
+    {\includegraphics[width=48.0mm]{nova-ihmt-logo-bw}};%
 }
 
 
@@ -390,7 +390,7 @@
 
 \ntaddtocover[tikz]{N-2}{%
   \node[anchor=north west] at ($(current page.north west) + (19mm,-221mm)$)
-    {\includegraphics[width=88mm]{OtherLogos/logo-nova-2-bw}};%
+    {\includegraphics[width=88mm]{nova-logo-grey}};%
 }
 
 % Print sponsor logos
