@@ -13,8 +13,8 @@ template.*
 # *-pt.pdf
 
 # Ignore temp files
+.Build/.*
 .needlualatex
-.keep-dir
 aidisclose.bib
 
 ### LaTeX ###

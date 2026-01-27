@@ -32,9 +32,9 @@ from typing import Dict, Callable, List, Pattern, Optional
 DEFAULT_LINE_COUNT = 4400
 COVER_LINE_COUNT = 2400
 PROGRESS_BAR_WIDTH = 37
-CACHE_DIR = Path.home() / ".cache" / "novathesis"
-CACHE_FILE = CACHE_DIR / "keep-dir.txt"
-LINE_COUNT_CACHE = CACHE_DIR / ".n_lines.txt"
+CACHE_DIR = Path(".") / ".Build"
+CACHE_FILE = CACHE_DIR / ".keep-dir.txt"
+LINE_COUNT_CACHE = CACHE_DIR / ".keep-lines.txt"
 
 # --- ANSI Color Codes for Terminal Output ------------------------------------
 RESET = "\033[0m"
