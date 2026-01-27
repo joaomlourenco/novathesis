@@ -1,181 +1,265 @@
-## NOVAthesis Template Release Notes for v7.9.3
-This release focuses heavily on **AI Disclosure Statement** and various **code cleanup/refactoring** across the template files.
+# NOVAthesis Template Release Notes (v1.0.0 - v7.10.0)
 
-This commit introduces a major refactoring and feature update, focusing on improving user configuration, modernizing core components, and enhancing functionality.
-
----
-
-Release date: 2026-01-14  
-Compared to: 7.9.0
+This document summarizes the changes and improvements made to the NOVAthesis template from version **1.0.0** to the current version **7.10.0**.
 
 ---
 
-### Breaking Changes
-
-*   **`stocksize.sty` Overhaul:** The `stocksize` package has been completely rewritten using `expl3` to be stack-aware and more robust.
-    *   The environment `\begin{newstocksize}...\end{newstocksize}` is replaced by the commands `\newstocksize{...}` and `\restorestocksize`.
-*   **Configuration Options Renamed:**
-    *   The `print/secondcover` option has been renamed to `print/frontpage` for clarity.
-*   **Configuration Options Removed:**
-    *   The `print/frontmatter` option has been removed. Front matter is now always printed, with sections controlled by `\ntaddfile`.
-*   **Sponsor Command Syntax:** The `\ntsponsors` command syntax has been changed to a more structured format: `\ntsponsors(<order>,<type>,<lang>){...}`.
-*   **Style File Extensions:** Custom chapter and font style files must now use the standard `.sty` extension instead of `.ldf`.
+## v7.10.0 (2026-01-27)
 
 ### Features
-
-*   **Documentation Overhaul:** All configuration files in `0-Config/` have been heavily re-commented with a new, structured format for significantly improved clarity and ease of use.
-*   **Enhanced AI Disclosure:**
-    *   The new option `print/aidisclosure` supports three modes: `false` (disabled), `aidisclose` (uses the `aidisclose` package + `0-Config/7-aidisclose.tex` file ), or a custom filename to include a personalized statement.
-    *   Added `1-FrontMatter/aidisclosure.tex` as an example of a custom disclosure file.
+*   **Chinese Language Support:** Added full support for Chinese abstracts in both Simplified (`zhs`) and Traditional (`zht`) scripts.
+*   **ISEL Support:** Added comprehensive support for **IPL/ISEL** (Instituto Superior de Engenharia de Lisboa), including custom styles, cover layouts, and integrity statements.
+*   **NOVA FCSH Automation:** Automated the integrity statement generation and updated configuration for NOVA FCSH.
+*   **Institutional Assets:** Added institutional logos and wireframe assets for IPL/ISEL.
 
 ### Refactoring & Fixes
-
-*   **Code Modernization:**
-    *   `novathesis.cls` now uses more `expl3` functions, replacing older LaTeX2e macros for more robust file searching and path handling.
-    *   The `stocksize.sty` package is now a modern `expl3`-based package.
-*   **Package Updates:**
-    *   `aidisclose.sty` has been updated to version `1.6.2`, now including a citation for the LaTeX project.
-*   **Font and Style Handling:**
-    *   The `futura` font style now uses the `Jost` font.
-    *   All custom style files in `NOVAthesisFiles/ChapStyles` and `NOVAthesisFiles/FontStyles` have been renamed from `.ldf` to `.sty`.
-    *   Removed unused `hansen` and `pedersen` chapter styles.
-*   **Cosmetic Cleanup:**
-    *   Added decorative ASCII art headers to school-specific configuration files.
-    *   Fixed an issue with bookmark generation for lists of figures and tables.
-
-
-
-
-## NOVAthesis Template Release Notes for v7.6.1
-
-This release focuses heavily on **Sustainable Development Goals (SDG)** integration, **build process improvements**, **font style updates**, and various **code cleanup/refactoring** across the template files.
+*   **Date Handling:** Overhauled date handling logic, standardizing on `\PrintDateISO` across school templates.
+*   **Statement Processing:** Refactored statement generation (integrity, copyright) for better consistency.
+*   **Abstracts:** Optimized CJK font loading and refactored abstract skipping logic.
 
 ---
 
-Release date: 2025-11-26  
-Compared to: 7.5.0
+## v7.9.x (January 2026)
+
+### Features
+*   **Glossaries:** Enhanced glossary support with customizable layouts (`0-Config/6_list_of.tex`) and improved setup.
+*   **ULisboa/FMV:** Added support for the Faculty of Veterinary Medicine (FMV).
+*   **Dynamic Signatures:** Implemented dynamic signature generation for statement pages.
+*   **Contributors:** Added a contributors section to the README.
+
+### Refactoring
+*   **AI Disclosure:** Major overhaul of the AI disclosure functionality, renaming the package to `aidisclose2` and modernizing the taxonomy.
+*   **Data Storage (`memstore`):** Migrated internal data storage (departments, etc.) to a new `memstore` package for better reliability.
+*   **File Structure:** Relocated style files to a dedicated `StyFiles` directory and standardized directory macros.
+*   **Language Handling:** Simplified language list generation and improved `babel` compatibility.
 
 ---
 
-### New Features and Enhancements
+## v7.8.x (December 2025)
 
-* **Full SDG Icon Integration:** Added all **17 English and Portuguese SDG icons** as PDF files (`NOVAthesisFiles/Images/sdg-en/` and `sdg-pt/`) to fully support the SDG setup options.
-* **SDG Configuration Options:** Introduced new configuration options for SDG printing in `0-Config/1_novathesis.tex`:
-  * `\ntsetup{print/sdgs/list={...}}`
-  * `\ntsetup{print/sdgs/type=...}` (e.g., `inverted`, `normal`, `mono`)
-  * Options for `size`, `hspace`, and `vspace` for fine-grained control.
-* **New Font Styles:** Added explicit support for several new font options in `NOVAthesisFiles/FontStyles/`:
-  * `palatino-gyre-pagella.ldf`
-  * `palatino-linitype.ldf`
-  * `palatino.ldf`
-* **New Language Strings:** Added comprehensive string localization files for:
-  * Catalan (`strings-ca.ldf`)
-  * Czech (`strings-cz.ldf`)
-  * Danish (`strings-dk.ldf`)
-  * Dutch (`strings-nl.ldf`)
-  * Polish (`strings-pl.ldf`)
-  * Slovak (`strings-sk.ldf`)
-* **FCSH Defaults:** Added the default configuration file for NOVA FCSH (`NOVAthesisFiles/Schools/nova/fcsh/nova-fcsh-defaults.ldf`).
+### Features
+*   **AI Disclosure Integration:** Introduced the `aidisclose` package for formal AI usage declarations in theses.
+*   **Stocksize Overhaul:** Completely rewrote `stocksize.sty` using `expl3` for robust page geometry handling.
+*   **Geometry Package:** Transitioned page layout definitions to use the `geometry` package instead of `memoir` custom methods.
 
 ---
 
-### 🛠️ Improvements and Refactoring
+## v7.7.x (December 2025)
 
-* **Build Script Overhaul:** Significant updates and additions across various build scripts in the `.Build/` directory, including new/updated files for `build.py`, `commit.sh`, `need_lualatex.sh`, `nt-safe-update.sh`, `push-force.sh`, `push-header.sh`, `push.sh`, `rebase.sh`, `tag-delete.sh`, `tag-push.sh`, and `tag.sh`.
-* **General FCT/FCT-NOVA Naming Standardization:** Standardized the references from the older **FCT-NOVA** to the modern **NOVA FCT** across files like `0-Config/3_cover.tex` and various school-specific defaults (`nova-fct-defaults.ldf`, `nova-fct-cbbi-defaults.ldf`, etc.).
-* **Font Style File Updates:** Updated existing font style files (`calibri.ldf`, `kieranhealy.ldf`, `newpx.ldf`, `newsgott.ldf`) for improved stability and compatibility.
-* **Configuration Cleanup:** Refactoring and minor updates in several config files (`0-Config/1_novathesis.tex`, `0-Config/3_cover.tex`, `0-Config/6_list_of.tex`) and main matter files (`2-MainMatter/chapter1.tex`, `chapter2.tex`, etc.).
-* **String Localization Consolidation:** Updated and cleaned up numerous existing string localization files (e.g., `strings-de.ldf`, `strings-en.ldf`, `strings-pt.ldf`) to align with the new features and strings.
-
----
-
-### Breaking Changes and Removals
-
-* **Removal of NOVA/IMS SDG Icons:** The old SDG icon files previously located in `NOVAthesisFiles/Schools/nova/ims/Images/` have been **removed** in favor of the new, standardized, global set of SDG icons.
-* **Removal of NOVA/IMS Defaults File:** The specific school defaults file `0-Config/9_nova_ims.tex` has been **deleted**.
-* **Removed Redundant String File:** The localized string file `NOVAthesisFiles/Strings/strings-es2.ldf` has been **deleted**.
-* **NOVA/IMS Defaults Refactor:** The general `nova-ims-defaults.ldf` file has been removed, and related configurations have been consolidated/updated in specialized IMS files (`nova-ims-csig-defaults.ldf`, `nova-ims-gt-defaults.ldf`).
+### Features
+*   **New Spine Design:** Implemented a new spine design for most schools (excluding ISEL).
+*   **New School Support:**
+    *   ULisboa/FCUL (Faculty of Sciences)
+    *   ULisboa/IST (Instituto Superior Técnico)
+    *   ULisboa/ISEG (Lisbon School of Economics and Management)
+*   **NOVA FCT Covers:** Improved default cover values and background colors.
 
 ---
 
-## novathesis 7.5.0 — Release notes
+## v7.6.x (November 2025)
 
-Release date: 2025-11-09  
-Compared to: 7.4.1
+### Features
+*   **SDG Support:** Added full support for **Sustainable Development Goals (SDG)** icons (English and Portuguese), with options for inverted/mono styles.
+*   **New Languages:** Added support for Danish (`dk`), Catalan (`cat`), Czech (`cz`), Slovak (`sk`), Polish (`pl`), Dutch (`nl`), and others.
+*   **Font Styles:** Added support for `palatino`, `palatino-gyre-pagella`, and `palatino-linitype`.
 
-### Overview
+### Refactoring
+*   **School Defaults:** Standardized school configurations into `*-defaults.ldf` files.
+*   **Build System:** Significant improvements to build scripts (`build.py`, `Makefile`) for better automation.
 
-Version 7.5.0 is a minor release focused on quality-of-life improvements, additional customization options, documentation updates, and a number of bug fixes. No major breaking API changes are expected for most users migrating from 7.4.1, but please read the "Upgrade notes" section before upgrading if you rely on heavy customizations or overrides.
+---
 
-### Highlights
+## v7.5.x (November 2025)
 
-- New: compact layout option to reduce vertical spacing for shorter theses and reports.
-- New: extended font-loading helpers and better Unicode handling for XeLaTeX/LuaLaTeX.
-- Improved: improved table and figure caption spacing and caption formatting consistency.
-- Improved: smarter defaults for hyperref metadata and PDF accessibility (bookmarks &amp; language).
-- Fixed: a set of issues with appendix numbering, TOC depth handling, and conflicting package options.
-- Docs: updated user manual and migration guide from 7.4.x with examples.
+### Features
+*   **Compact Layout:** Introduced a `compact` class option to reduce vertical spacing for shorter documents.
+*   **Font Loading:** Added auto-download capabilities for fonts when using LuaLaTeX.
+*   **Metadata:** Improved PDF metadata handling (title, author, keywords).
 
-### What's new (details)
+### Fixes
+*   **Captions:** improved spacing and consistency for table and figure captions.
+*   **Accessibility:** Better screen-reader compatibility and language tagging in PDFs.
 
-#### New features
+---
 
-- compact class option: add `compact` to the document class options to enable tighter vertical spacing in common environments (lists, captions, paragraph spacing). Useful for short theses, project reports, or when seeking a denser layout.
-- Extended font helpers: convenience macros to more easily configure system fonts with XeLaTeX and LuaLaTeX and fallbacks for common missing glyphs.
-- Improved PDF metadata handling: the template now sets more complete PDF metadata (title/author/keywords) by default and exposes simple options for customization.
+## v7.4.x (October-November 2025)
 
-#### Improvements
+### Features
+*   **Build System:** "Much improved" build scripts and Makefile with new targets.
+*   **INESC TEC:** Updated logos to vectorial format.
 
-- Caption and float behavior: consistent spacing and styling for captions in tables and figures, including better behavior when floats appear inside two-column or minipage contexts.
-- TOC and bookmarks: table of contents handling now respects specified tocdepth across frontmatter and appendices, and PDF bookmarks generation is more reliable.
-- Build robustness: detection and advisories for Biber/BibTeX usage depending on user bibliography configuration; clearer error messages when bibliography backend mismatch is detected.
-- Accessibility: language and metadata improvements for better screen-reader compatibility.
+### Fixes
+*   **School Fixes:** Corrections for NOVA/IMS (statements, dates), IPS/ESTS (margins), and ULisboa/FCUL.
 
-#### Bug fixes
+---
 
-- Fixed appendix numbering regression that could appear for users who enabled both `appendix` helpers and certain custom labels.
-- Fixed an issue where footnotes inside captions could sometimes break layout.
-- Fixed corner cases with custom titlepage overrides that prevented proper page numbering in frontmatter.
-- Fixed glossary/order-of-entries and indexing ordering issues in certain LaTeX engines.
+## v7.3.x (January - June 2025)
 
-#### Documentation
+### Features
+*   **Ukrainian Support:** Added support for the Ukrainian language.
+*   **NOVA FCSH:** Added support for partnerships.
+*   **Bibliography:** Updated link preference order (DOI -> eprint -> URL).
 
-- Updated the user manual with step-by-step examples for migrating from 7.4.1 and switching between LaTeX engines.
-- Added example showing `compact` usage and recommended font setups for XeLaTeX/LuaLaTeX.
-- Added troubleshooting section for common upgrade issues (bib backend, engine selection, local overrides).
+---
 
-### Upgrade notes
+## v7.2.x (January 2025)
 
-- Most users can upgrade by replacing the class and templates and recompiling their document. Run a full clean build (remove auxiliary files) and regenerate bibliography and index files:
-  - latexmk -C (to clean)
-  - latexmk -pdf (or use your existing build flow)
-  - if you use biber: run biber; if bibtex: run bibtex — check your configuration.
-- If you have local custom .sty or template overrides, scan them for references to internal macros which you might have overridden in 7.4.1; a small number of internal helper macro names were clarified and may require minor renaming in overrides. If you hit a break, consult the migration guide section in the manual.
-- If you rely on exact spacing, please test with the `compact` option off by default; enable it intentionally when you want tighter layout.
+### Features
+*   **NOVA FCT:**
+    *   Added support for the **DI-ADC** (Doctoral Program in Computer Science) document type.
+    *   Added support for **Colored Covers** (Red/Brown) for specific courses.
+    *   Added support for Master in Computational Biology & Bioinformatics.
+*   **Fonts:** Added support for the `futura` font.
+*   **Auxiliary Directory:** Makefile now uses an `AUXDIR` for temporary files to keep the root clean.
 
-### Compatibility
+---
 
-- Backwards compatible for standard usages migrating from 7.4.1.
-- No required external package updates are mandated, though updating your TeX distribution (TeX Live / MiKTeX) to a reasonably recent version is recommended to avoid engine/package incompatibilities.
+## v7.2.1 (October 2024)
 
-### Credits &amp; contributors
+### Features
+*   **NOVA FCT:**
+    *   Added support for the **DI-ADC** (Doctoral Program in Computer Science) document type.
+    *   Added support for **Colored Covers** (Red/Brown) for specific courses.
+*   **Maintenance:**
+    *   Fixed `mtp` target in Makefile.
+    *   Removed backup `nova-ims-defaults`.
+    *   Minor fixes in NOVA-IMS templates.
+    *   Fixed bug in ULisboa/FMV for phdcover with specialization.
+    *   Work in progress for NOVA-ITQB with `b5paper`.
 
-Thanks to community contributors and testers who reported issues and provided patches. See the changelog for a full list of contributors.
+---
 
-### Changelog (summary)
+## v7.1.x (2023 - 2024)
 
-- Added: compact layout option
-- Added: font-loading helper macros for XeLaTeX/LuaLaTeX
-- Improved: caption and TOC handling, PDF metadata
-- Fixed: appendix numbering, footnotes-in-captions, glossary order
-- Docs: updated manual and migration guide
+### Features & Improvements
+*   **School Support:**
+    *   Added support for **ULisboa/ISEG**.
+    *   Added support for **ULisboa/FCUL**.
+    *   Added support for **NOVA/ITQB**.
+    *   Added support for **NOVA/FCSH** partnerships.
+    *   Added support for **ULHT-MGE** and **ULHT-DEISI**.
+    *   Added support for **IPL/ISEL** (initial support).
+    *   Added support for **UMinho** (University of Minho) schools.
+    *   Added support for **NOVA/IMS** (Master in Computational Biology & Bioinformatics, etc.).
+    *   Added support for **Erasmus Mundus MSc on Geospacial Technologies**.
+*   **Spine:**
+    *   Implemented a new spine design for most schools.
+    *   Added support for user-defined book spine with `\ntaddfile{cover}[spine]{filename}`.
+    *   Added support for multiple logos in the spine.
+*   **Covers:**
+    *   Re-engineered cover drawing mechanisms.
+    *   Added support for colored covers and specific document types.
+    *   Improved cover layout for various schools (NOVA FCT, IST, FMV, etc.).
+    *   Added support for second cover (front page) separate from the main cover.
+*   **Formatting & Layout:**
+    *   Implemented `compact` class option.
+    *   Added support for `b5paper` and `a3` pages (via `newpdflayout`).
+    *   Improved support for `widows-and-orphans`.
+    *   Standardized date handling to ISO format (`YYYY-MM-DD`).
+    *   Improved "list of persons" (advisers, committee) layout options (list, 1-column, 2-columns).
+*   **Build System:**
+    *   Significant improvements to `Makefile` and build scripts (`build.py`).
+    *   Added support for `latexmk` with various engines (`pdflatex`, `xelatex`, `lualatex`).
+    *   Added `clean` and `dist` targets.
+*   **Languages:**
+    *   Added support for Ukrainian (`uk`).
+    *   Added support for Greek (`gr`).
+    *   Improved support for Portuguese (`pt`), English (`en`), French (`fr`), Italian (`it`), Spanish (`es`), and German (`de`).
+*   **Bibliography:**
+    *   Transitioned to `biblatex` by default (deprecating `bibtex` in some contexts).
+    *   Added support for multiple bibliographies.
+    *   Updated citation styles (APA-like).
+*   **Glossaries:**
+    *   Enhanced glossary support with `glossaries-extra` and `xindy`.
+    *   Added `xltabular` based glossary styles.
+*   **Fonts:**
+    *   Added support for `newtx` and `newpx` font sets.
+    *   Added support for `erewhon`, `kieranhealy`, `scholax`, `kpfonts`, `libertine`, `palatino`, `cm-unicode`, etc.
+    *   Added font loading helpers for `xelatex` and `lualatex`.
 
-### Release summary (short for GitHub release)
+### Refactoring
+*   **Core Logic:**
+    *   Major refactoring of `novathesis.cls` to use `expl3` (LaTeX3) features.
+    *   Replaced `assocarray` with `memory2` package for internal data storage.
+    *   Standardized option handling and configuration loading.
+    *   Moved school-specific configurations to `*-defaults.ldf` files.
+*   **File Structure:**
+    *   Restructured directories (`0-Config`, `1-FrontMatter`, `NOVAthesisFiles`, etc.).
+    *   Moved style files to `StyFiles`.
+    *   Cleaned up and standardized file naming conventions.
 
-novathesis 7.5.0 — quality-of-life improvements, new compact layout option, better XeLaTeX/LuaLaTeX font helpers, caption/TOC fixes, and updated documentation. See the full release notes for upgrade instructions and breaking-change guidance.
+---
 
-Would you like me to:
+## v6.x (2020 - 2022)
 
-- produce a ready-to-copy GitHub Release body,
-- open a PR with the updated CHANGELOG and release notes file,
-- or tailor the notes to call out specific commits or PRs (if you provide the list or let me fetch them)?
+### Features
+*   **School Support:**
+    *   Added/Improved support for **NOVA/IMS**, **NOVA/FCSH**, **NOVA/ENSP**, **ULisboa/IST**, **ULisboa/FC**, **IPS/ESTS**, **IPL/ISEL**, **ESEP**.
+*   **Cover System:**
+    *   Major rewrite of the cover printing logic.
+    *   Added support for "track message" on covers.
+    *   Introduced `debugcover` option.
+*   **Options:**
+    *   Replaced the old option system with `xkeyval` and later with custom key-value handling.
+    *   Added `docstatus` option (working, provisional, final).
+    *   Added `printfrontmatter` option.
+*   **LaTeX Engines:**
+    *   Added full support for **XeLaTeX** and **LuaLaTeX**.
+
+---
+
+## v5.x (2020 - 2021)
+
+### Features
+*   **Engines:**
+    *   Added support for **XeLaTeX** and **LuaLaTeX**.
+*   **Refactoring:**
+    *   Replaced the options system with a command `\ntsetup{...}`.
+    *   Improved file loading and hook system.
+*   **Visuals:**
+    *   New logo for NOVAthesis.
+    *   Updated school logos to vector formats where possible.
+
+---
+
+## v4.x (2014 - 2020)
+
+### Features
+*   **Renaming:** Template renamed from `unlthesis` to `novathesis` (v4.0.0, 2017).
+*   **Bibliography:**
+    *   Support for APA-like citations.
+*   **Layout:**
+    *   Shift from `book` class to `memoir` class foundation (v3.0.0, 2014).
+*   **Workflow:**
+    *   Migrated from Google Code to GitHub (2014).
+    *   Added MS Word templates (later removed/moved).
+
+---
+
+## v3.x (2014 - 2016)
+
+### Features
+*   **Core:**
+    *   Major rewrite of the class file.
+    *   Adoption of `memoir` class.
+    *   Support for multiple schools (multi-institution support).
+*   **Languages:**
+    *   Better multilingual support (pt, en, fr, it).
+*   **Structure:**
+    *   Support for Acronyms and Glossaries.
+
+---
+
+## v2.x & v1.x (2010 - 2012)
+
+### Early History
+*   **Origins:** Initial import as `thesisdifctunl` on Google Code (2010).
+*   **Features:**
+    *   Support for FCT/UNL layout.
+    *   Biblatex support.
+    *   Partial bibliographies.
+    *   Support for multiple advisers.
+*   **Evolution:**
+    *   Renamed directories (User -> Chapters).
+    *   Added examples.
+    *   Switched to `utf8` encoding default.
