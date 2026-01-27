@@ -392,7 +392,6 @@ build: build-$(SCHL)-$(TYP)-$(LNG)
 
 # Pattern rule to parse arguments from the target name
 build-%: 
-	@echo "=== Parsing build target: build-$* ==="
 	$(eval PATTERN := $(subst .o,,$*))
 	$(eval PARTS := $(subst -, ,$(PATTERN)))
 	$(eval WORD_COUNT := $(words $(PARTS)))
@@ -416,9 +415,7 @@ build-%:
 	\
 	FINAL_SCHL=$$(echo $$SCHL | sed 's/\./\//; s/\./\//; s/\./-/g'); \
 	\
-	echo "=== Building ==="; \
-	echo "SCHL=$$FINAL_SCHL, TYP=$$TYP, LNG=$$LNG"; \
-	echo "Command: $(BUILD) $$FINAL_SCHL --doctype $$TYP --lang $$LNG --rename-pdf --mode 1 --docstatus final -o $(PWD) $(BFLAGS)"; \
+	echo "$(BUILD) $$FINAL_SCHL --doctype $$TYP --lang $$LNG --rename-pdf --mode 1 --docstatus final -o $(PWD) $(BFLAGS)"; \
 	$(BUILD) $$FINAL_SCHL --doctype $$TYP --lang $$LNG --rename-pdf --mode 1 --docstatus final -o $(PWD) $(BFLAGS)
 
 
