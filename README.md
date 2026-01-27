@@ -132,81 +132,102 @@ Otherwise, download the default/main repository.
 
 <table>
 <tr><th colspan="6">Universidade NOVA de Lisboa</th></tr>
-<tr><th>FCT</th><th>FCT CBBI</th><th>FCT DI-ADC</th><th>ENSP</th><th>ITQB</th></tr>
+<tr><th>FCT</th><th>FCT CBBI</th><th>FCT DI-ADC</th><th>ENSP</th><th>ITQB</th><th>FCSH</th></tr>
 <tr><td align="center">
 
-| <img height="50" alt="nova-fct-phd" src="https://github.com/user-attachments/assets/efcbc6b0-175f-43e4-866a-126ab7889ab8" /> &nbsp; <img height="50" alt="nova-fct-msc" src="https://github.com/user-attachments/assets/4b153d74-e4ec-4445-b16d-0a7fcea38d35" /> |
+| <img height="50" alt="nova-fct-phd" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-fct-phd-en.jpg" /> &nbsp; <img height="50" alt="nova-fct-msc" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-fct-msc-en.jpg" /> |
 |:---------:|
 | [📦](https://github.com/novathesis/nova-fct/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-fct.git) |
 
  </td><td align="center">
 
-| <img height="50" alt="nova-fct-cbbi" src="https://github.com/user-attachments/assets/d983e7d1-fd8c-4ced-86b6-9f0792228ecb" /> |
+| <img height="50" alt="nova-fct-cbbi" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-fct-cbbi-msc-en.jpg" /> |
 |:---------:|
 | [📦](https://github.com/novathesis/nova-fct-cbbi/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-fct-cbbi.git) |
 
  </td><td align="center">
 
-| <img height="50" alt="nova-fct-di-adc" src="https://github.com/user-attachments/assets/d5dd4150-3f7b-45d4-878b-4d5ffc246e76" /> |
+| <img height="50" alt="nova-fct-di-adc" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-fct-di-adc-bsc-en.jpg" /> |
 |:---------:|
 | [📦](https://github.com/novathesis/nova-fct-cbbi/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-fct-cbbi.git) |
 
  </td><td align="center">
   
-| <img height="50" alt="nova-ensp" src="https://github.com/user-attachments/assets/148cb148-b4e8-4fd4-a914-5f53a50d7134" />  |
+| <img height="50" alt="nova-ensp" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-ensp-msc-en.jpg" />  |
 |:---------:|
 | [📦](https://github.com/novathesis/nova-ensp/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-ensp.git) |
 
 </td><td align="center">
 
-| <img height="50" alt="nova-itqb" src="https://github.com/user-attachments/assets/dd2cebb4-afdc-45f2-afa2-4b4c3d62033a" />  |
+| <img height="50" alt="nova-itqb" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-itqb-msc-en.jpg" />  |
 |:---------:|
 | [📦](https://github.com/novathesis/nova-itqb/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-itqb.git) |
+
+</td><td align="center">
+
+| <img height="50" alt="nova-itqb" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-fcsh-msc-en.jpg" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/nova-fcsh/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-fcsh.git) |
 
 </td></tr>
 </table>
 
 
 <table>
-<tr><th colspan="3">Universidade de Lisboa</th><th colspan="1">Universidade do Porto</th><th colspan="1">Universidade do Minho</th></tr>
-<tr><th>FCUL</th><th>IST</th><th>ISEG</th><th>FCUL</th><th>(all / todas)</th></tr>
+<tr><th colspan="4">Universidade de Lisboa</th><th>&nbsp;&nbsp;&nbsp;&nbsp;</th><th colspan="1">Universidade do Porto</th></tr>
+<tr><th>FCUL</th><th>IST</th><th>ISEG</th><th>FMV</th><td></td><th>FCUP</th></tr>
 <tr><td align="center">
 
-| <img height="50" alt="ulisboa-fcul" src="https://github.com/user-attachments/assets/07930d8c-69fa-466f-8523-a0fd419b15a7" /> |
+| <img height="50" alt="ulisboa-fcul" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ulisboa-fcul-msc-en.jpg" /> |
 |:---------:|
 | [📦](https://github.com/novathesis/ulisboa-fcul/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulisboa-fcul.git) |
 
 </td><td align="center">
 
-| <img height="50" alt="ulisboa-ist" src="https://github.com/user-attachments/assets/fa9e1eb7-4b7c-4587-aa6e-ba23d8287ac1" />  |
+| <img height="50" alt="ulisboa-ist" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ulisboa-ist-msc-en.jpg" />  |
 |:---------:|
 | [📦](https://github.com/novathesis/ulisboa-ist/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulisboa-ist.git) |
 
 </td><td align="center">
 
-| <img height="50" alt="ulisboa-iseg" src="https://github.com/user-attachments/assets/594e1a5b-5e3c-4db0-94f1-d23e8e27bc20" />  |
+| <img height="50" alt="ulisboa-iseg" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ulisboa-iseg-msc-en.jpg" />  |
 |:---------:|
 | [📦](https://github.com/novathesis/ulisboa-iseg/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulisboa-iseg.git) |
 
 </td><td align="center">
 
-| <img height="50" alt="uporto-fcul" src="https://github.com/user-attachments/assets/11788b92-e608-4e25-8bf1-5aa98b11efc7" />  |
+| <img height="50" alt="ulisboa-fmv" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ulisboa-fmv-msc-en.jpg" />  |
 |:---------:|
-| [📦](https://github.com/novathesis/uporto-fcul/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/uporto-fcul.git) |
+| [📦](https://github.com/novathesis/ulisboa-fmv/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulisboa-fmv.git) |
 
+</td><td>
 </td><td align="center">
 
-| <img height="50" alt="uminho" alt="uminho-phd" src="https://github.com/user-attachments/assets/b08da764-ba7a-4cde-b4f9-df17e87ff035" />  &nbsp; <img height="50" alt="uminho" alt="uminho-phd" src="https://github.com/user-attachments/assets/12f8d058-a74a-4426-bcfb-d637826b653f" />  |
+| <img height="50" alt="uporto-fcup" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/uporto-fcup-msc-en.jpg" />  |
 |:---------:|
-| [📦](https://github.com/novathesis/uminho/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/uminho.git) |
+| [📦](https://github.com/novathesis/uporto-fcup/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/uporto-fcup.git) |
 
 </td></tr> 
 </table>
 
 <table>
-<tr><th>NOVAthesis</th></tr>
-<tr><th>main repo</th></tr>
+<tr><th>Universidade do Minho</th><th>&nbsp;&nbsp;&nbsp;&nbsp;</th><th>Inst. Politécnico Lisboa</th><th>&nbsp;&nbsp;&nbsp;&nbsp;</th><th>NOVAthesis</th></tr>
+<tr><th>(all / todas)</th><th></th><th>ISEL</th><th></th><th>main repo</th></tr>
 <tr><td align="center">
+
+| <img height="50" alt="uminho" alt="uminho-phd" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/uminho-eeng-phd-en.jpg" />  &nbsp; <img height="50" alt="uminho" alt="uminho-phd" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/uminho-eeng-msc-en.jpg" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/uminho/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/uminho.git) |
+
+</td><td>
+</td><td align="center">
+
+| <img height="50" alt="ipl-isel" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ipl-isel-msc-en.jpg" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/ipl-isel/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ipl-isel.git) |
+
+</td><td>
+</td><td align="center">
 
 | <img height="50" alt="novathesis" src="https://github.com/user-attachments/assets/9c19097a-a7b7-49ce-95ff-70694767b350" />  |
 |:---------:|
@@ -387,3 +408,4 @@ Made with [contrib.rocks](https://contrib.rocks).
 <img src="https://github.com/user-attachments/assets/8434a462-3599-4d3c-a2fd-04995db03fe3" width="100" />
 
 [![GitHub license](https://img.shields.io/badge/SAY%20THANKS-€5-orange.svg)](https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8)
+
