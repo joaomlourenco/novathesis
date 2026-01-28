@@ -264,12 +264,12 @@ def get_highest_degree_from_conf(target_school: str, conf_filename: str = "schoo
                 continue
             
             # Match school name and the degree list within brackets
-            # Example: nova/fct [msc, phd] [en,pt]
+            # Example: nova/fct [phd, msc] [en,pt]
             match = re.match(r"^([\w/-]+)\s+\[(.*?)\]", line)
             if match:
                 school, degrees_str = match.groups()
                 if school == target_school:
-                    # Convert "[msc, phd]" to a list of strings
+                    # Convert "[phd, msc]" to a list of strings
                     available_degrees = [d.strip() for d in degrees_str.split(",")]
                     # Return the first one that matches our priority list
                     for p in priority:
