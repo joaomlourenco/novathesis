@@ -9,9 +9,22 @@
 
 \typeout{NT FILE abstract-zht.tex}%
 
-% Use a CJK-capable system font (macOS) so Chinese glyphs render.
-\IfFontExistsTF{PingFang TC}{\newfontfamily\ntzhfont{PingFang TC}}{%
-  \IfFontExistsTF{Heiti TC}{\newfontfamily\ntzhfont{Heiti TC}}{\newfontfamily\ntzhfont{Latin Modern Roman}}%
+% Select a CJK font that is likely available in TeX Live (works on Linux/Windows too),
+% with optional fallbacks to common system fonts.
+\IfFontExistsTF{Noto Serif CJK SC}{\newfontfamily\ntzhfont{Noto Serif CJK SC}}{%
+  \IfFontExistsTF{Noto Sans CJK SC}{\newfontfamily\ntzhfont{Noto Sans CJK SC}}{%
+    \IfFontExistsTF{Source Han Serif SC}{\newfontfamily\ntzhfont{Source Han Serif SC}}{%
+      \IfFontExistsTF{Source Han Sans SC}{\newfontfamily\ntzhfont{Source Han Sans SC}}{%
+        \IfFontExistsTF{FandolSong-Regular}{\newfontfamily\ntzhfont{FandolSong-Regular}}{%
+          \IfFontExistsTF{FandolSong}{\newfontfamily\ntzhfont{FandolSong}}{%
+            \IfFontExistsTF{PingFang SC}{\newfontfamily\ntzhfont{PingFang SC}}{%
+              \IfFontExistsTF{Heiti SC}{\newfontfamily\ntzhfont{Heiti SC}}{\newfontfamily\ntzhfont{Latin Modern Roman}}%
+            }%
+          }%
+        }%
+      }%
+    }%
+  }%
 }
 {\ntzhfont
 
