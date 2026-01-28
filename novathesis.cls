@@ -276,10 +276,10 @@
   \renewcommand{\GlsXtrFormatLocationList}[1]{\emph{\small#1)}}
   \renewcommand{\glsnamefont}[1]{\textbf{#1}}
   \newcommand*{\glsplainhyperlink}[2]{%
-      \begingroup%
+      \begingroup
         \hypersetup{hidelinks}%
         \hyperlink{#1}{#2}%
-      \endgroup%
+      \endgroup
   }%
   \let\printglossaryORIG\printglossary
   \def\printglossary{%
@@ -289,7 +289,9 @@
   
   %--------------------------------
   % “Process glossaries/list/reverse” option - after glossaries
-  \iftoggle{/novathesis/glossaries/list/reverse}{}{\setupglossaries{nonumberlist}}
+  \iftoggle{/novathesis/glossaries/list/reverse}
+           {}
+           {\setupglossaries{nonumberlist}}
   \@loadglossaryfiles\makeglossaries
 }
 
@@ -321,14 +323,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\ifxeorlua}[2]{\iftutex#1\else#2\fi}
+
 % --------------------------------------------------------
 % Change main font size on the fly
+% --------------------------------------------------------
 \newcommand{\setmemoirfontsize}[1]{\input{mem#1.clo}}
 
 
+% --------------------------------------------------------
+% Date and month
+% --------------------------------------------------------
+% \babelmonthname{<1..12>} → localized month name (current babel language)
+\newcommand{\babelmonthname}[1]{%
+  \csname month\romannumeral\numexpr#1\relax name\endcsname
+}
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Expl3 UTILITIES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ExplSyntaxOn
 
@@ -836,33 +849,6 @@
 
 \ExplSyntaxOff
 
-% --------------------------------------------------------
-% Search if a data/memory is defined and returns value
-\def\datamatchOLD#1#2(#3){%
-  % #1 = macro to set
-  % #2 = data@memory
-  % #3 = list of values
-  % Search and match first value from the list, error if no match is found
-  \datamatchtf{#1}{#2}(#3){}{\ClassError{novathesis}{Could not find “#2” defined with any of “(#3)”!}{}}%
-}
-
-\def\datamatchtfOLD#1#2(#3)#4#5{%
-  % #1 = macro to set
-  % #2 = data@memory
-  % #3 = list of values
-  % #4 = true branch
-  % #5 = false branch
-  % Search and match first value from the list, true (found) and not true (not found) branches
-  % \typeout{#2(#3)}%
-  % \ifdatadefinedor{\@match}{#2}(#3)%
-  %   {\protect\gdef#1{\csuse{the#2}(\@match)}#4}%
-  %   {\protect\gdef#1{}#5}%
-  \ifdatadefinedor{\@match}{#2}(#3)%
-    {\protect\xdef#1{\expanded{\csuse{the#2}(\@match)}}#4}%
-    {\protect\xdef#1{}#5}%
-}
-
-
 
 \options{/novathesis/.new family,
   % DOCUMENT
@@ -932,19 +918,6 @@
   tocintoc/.new toggle          = true,
   % DEBUG
   debug/.new list               = {},         % cover, index
-% SCHOOL specific customization
-}
-
-
-\newcommand{\@splitdate}[4]{%
-  % \typeout{PROCESSDATE 1=#1}\PROCESSDATE%
-  \StrCut{#1}{-}#2\@daterest%
-  \StrCut{\@daterest}{-}#3#4%
-  % \typeout{PROCESSDATE 1=#1 Y=#2 M=#3 D=#4}\PROCESSDATEYMD%
-}
-
-\newcommand{\printmonth}[1]{%
-  \IfInteger{#1}{\pgfcalendarmonthname{#1}}{#1}%
 }
 
 
@@ -953,36 +926,37 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % --------------------------------------------------------
-
-\newcommand{\printcm}[1]{%
-  \number\numexpr\dimexpr#1\relax*100/7227\relax.%
-  \ifnum\numexpr\dimexpr#1\relax*10000/7227-\numexpr\dimexpr#1\relax*100/7227\relax*100<10 0\fi
-  \number\numexpr\dimexpr#1\relax*10000/7227-\numexpr\dimexpr#1\relax*100/7227\relax*100\relax\,cm (#1)%
-}
-
-\newcommand{\NTDEBUG}[2][]{%
-  \if\relax\detokenize{#1}\relax
-    \typeout{#2}%
-  \else
-    \typeout{#2 = \printcm{#1}}%
-  \fi
-}
-
-% --------------------------------------------------------
 % The NOVAthesis logo
-\def\novathesisimg{\includegraphics[height=1.1\fontcharht\font`A,vshift=-0.35pt]{\DIRIMAGES/novathesis-text}}
+% --------------------------------------------------------
+% 1. Define the box register
+\newsavebox{\novathesisbox}
+
+% 2. Sane the image into the box (do this once)
+% We calculate the height based on the current font at the time of definition
+\sbox{\novathesisbox}{%
+  \includegraphics[height=1.1\fontcharht\font`A, vshift=-0.35pt]{\DIRIMAGES/novathesis-text}%
+}
+
+% 3. Define the macros to use the box
+\def\novathesisimg{\usebox{\novathesisbox}}
 \def\novathesistxt{\textsl{novathesis}}
+
+% 4. Select the output method
+% Use \providebox or similar if needed, but \newcommand works here
 \ifdef{\iftutex}
     {\newcommand{\novathesis}{\novathesisimg}}
     {\newcommand{\novathesis}{\novathesistxt}}
 
+
 % --------------------------------------------------------
 % Define something (except counters) if undefined
+% --------------------------------------------------------
 \newcommand*{\defifundef}[2]{\ifundef{#1}{#2{#1}}{}}
 
 % --------------------------------------------------------
 % Variant of \@for with an optional final argument, that is
 % executed iif the loop is not interrupted
+% --------------------------------------------------------
 \def\ntforbreak{\@endfortrue}
 \long\def\ntfor#1:=#2\do#3{\@ifnextchar[{\ntfor@i#1:=#2\do#3}{\ntfor@i#1:=#2\do#3[]}}
 \long\def\ntfor@i#1:=#2\do#3[#4]{%
@@ -1448,51 +1422,23 @@
 \options@ProcessOptions{/novathesis}
 % --------------------------------------------------------
 % NTSETUP2
-\newcommand*{\ntsetup}[2][]{
-  % \typeout{NTSETUP [/novathesis/\@UNIV/\@SCHL/#1/#2]}\NTSETUP
-  % \AtEndPreamble{
-    \ntfor\arg:={#2}\do{
-      \StrCut{\arg}{=}{\@ntopti}{\@ntval}
-      \edef\@ntopt{\trimspaces{\@ntopti}}
-      % \typeout{NTSETUP2 [\@ntopt] = [\@ntval]}\NTSETUP
-      \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/#1/\@ntopt}
-                      {\options{/novathesis/\@UNIV/\@SCHL/#1/#2}}{
-      \ifoptiondefined{/novathesis/#1/\@ntopt}
-                      {\options{/novathesis/#1/#2}}{
-      \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/\@ntopt}
-                       {\options{/novathesis/\@UNIV/\@SCHL/#2}}{
-      \ifoptiondefined{/novathesis/\@UNIV/\@ntopt}
-                       {\options{/novathesis/\@UNIV/#2}}{
-      \ifoptiondefined{/novathesis/\@ntopt}
-                      {\options{/novathesis/#2}}{
-      \ClassError{novathesis}{Invalid class option: \@ntopt}{}{}}}}}}}
-  % }
+\newcommand*{\ntsetup}[2][]{%
+  % 1. Set the search list for the /novathesis/ family.
+  % This tells the package: "If you don't find the key in the current 
+  % family, check these families in order."
+  \options{
+    /novathesis/.search also = {
+      /novathesis/\@UNIV/\@SCHL/#1/,
+      /novathesis/#1/,
+      /novathesis/\@UNIV/\@SCHL/,
+      /novathesis/\@UNIV/,
+      /novathesis/
+    }
+  }%
+  % 2. Execute the options within the /novathesis/ context.
+  % We use the slash prefix to indicate we are moving to the root-level family.
+  \options{/novathesis,#2}%
 }
-
-\newcommand*{\ntlatesetup}[2][]{
-  \typeout{NTLATESETUP [#2]}
-  \AtEndPreamble{
-    \ntfor\arg:={#2}\do{
-      \StrCut{\arg}{=}{\@ntopti}{\@ntval}
-      \edef\@ntopt{\trimspaces{\@ntopti}}
-      \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/#1/\@ntopt}
-                      {\options{/novathesis/\@UNIV/\@SCHL/#1/#2}}{
-      \ifoptiondefined{/novathesis/#1/\@ntopt}
-                      {\options{/novathesis/#1/#2}}{
-      \ifoptiondefined{/novathesis/\@UNIV/\@SCHL/\@ntopt}
-                       {\options{/novathesis/\@UNIV/\@SCHL/#2}}{
-      \ifoptiondefined{/novathesis/\@UNIV/\@ntopt}
-                       {\options{/novathesis/\@UNIV/#2}}{
-      \ifoptiondefined{/novathesis/\@ntopt}
-                      {\options{/novathesis/#2}}{
-      \ClassError{novathesis}{Invalid class option: \@ntopt}{}{}}}}}}}
-  }
-}
-
-
-% \newcommand*{\NTIfHook}[1]{%
-%   \ifoptiondefined{/@nt/hook/#1}%
-% }
 
 
 \newcommand{\SpineSetup}[2][]{%
@@ -1573,7 +1519,7 @@
 \babeladjust{
   autoload.bcp47 = on
 }
-% \PassOptionsToPackage{main=\@LANG@MAIN@LONG}{babel}
+
 \babelprovide[main,import]{\expanded{\@LANG@MAIN@LONG}}
 
 % --------------------------------------------------------
@@ -1589,9 +1535,8 @@
 
 \edef\@LANG@LOADED{\@LANG@COVER, \@LANG@COPYRIGHT, \@LANG@MAIN, \theabstractorder(\@LANG@MAIN)}
 \UniquifyList{\@LANG@LOADED}[\@LANG@LOADED]
-\@for\mylang:={\@LANG@LOADED}\do
-  {\babelprovide[import]{\expanded{\@LANG@MAIN@LONG}}}
 
+% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FIX BABEL
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1602,15 +1547,17 @@
 %% Include strings for all the languages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\let\nt@save@myi\myi
-\@for\myi:=\@LANG@LOADED\do{%
-  \InputIfFileExists{\DIRSTRINGS/strings-\myi.ldf}%
-      {}%
+\ifoptiondefined{/@nt/lang/loaded}
+  {\options{/@nt/lang/loaded = {}}}
+  {\options{/@nt/lang/loaded/.new list}}%
+
+\@for\mylang:=\@LANG@LOADED\do{%
+  \InputIfFileExists{\DIRSTRINGS/strings-\mylang.ldf}%
+      {\options{/@nt/lang/loaded/.expanded/.push={\mylang}}}%
       {\ClassError{novathesis}
-                  {File not found: “\DIRSTRINGS/strings-\myi.ldf” file!}%
+                  {File not found: “\DIRSTRINGS/strings-\mylang.ldf” file!}%
                   {Add a file with the translations for this language.}}%
 }%
-\let\myi\nt@save@myi
 
 
 \bkmstring(1-1)   = {\thebkmstring(cover,\@LANG@MAIN)}
@@ -1621,41 +1568,11 @@
 \bkmstring(N-2)   = {\thebkmstring(backcover,\@LANG@MAIN)}
 \bkmstring(spine) = {\thebkmstring(spine,\@LANG@MAIN)}
 
-\ifoptiondefined{/@nt/lang/loaded}{\csdef{optk@/@nt/lang/loaded}{}}{\options{/@nt/lang/loaded/.new list}}%
-\@for\nt@tmpi:=\@LANG@LOADED\do{\ifblank{\nt@tmpi}{}{\options{/@nt/lang/loaded/.expanded/.push={\nt@tmpi}}}}
-
-\def\@fontencs{}
-\def\@fontencs@sep{}
-\@for\nt@tmpi:=\@LANG@LOADED\do{
-  \options{/@nt/fontenc=\nt@tmpi}
-  \IfSubStr{,\@fontencs,}{,\option{/@nt/fontenc},}
-    {}
-    {\eappto{\@fontencs}{\@fontencs@sep\option{/@nt/fontenc}}\def\@fontencs@sep{,}}%
-}
-
-
 
 
 %--------------------------------
 % TIKZ
 \usetikzlibrary{calc}
-
-%%%%% Fine tuning of typesetting
-\ifxeorlua{%
-    % \newcommand{\textls}[2][25]{{\addfontfeature{LetterSpace=\the\numexpr#1/9\relax}#2}}
-}{% pdflatex
-  % \RequirePackage[%
-  %   babel=true,
-  %   activate={true,nocompatibility},  % activate={true,nocompatibility} - activate protrusion and expansion
-  %   final,            % final - enable microtype; use "draft" to disable
-  %   tracking=true,    % tracking=true - activate this technique
-  %   kerning=true,     % kerning=true - activate this technique
-  %   spacing=true,     % spacing=true - activate this technique
-  %   factor=1100,      % factor=1100 - add 10% to the protrusion amount (default is 1000)
-  %   stretch=10,       % stretch=10 - reduce stretchability (default is 20)
-  %   shrink=10,        % shrink=10 - reduce shrinkability (default is 20)
-  % ]{microtype}
-}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1813,19 +1730,6 @@
       }
   }
 
-\ExplSyntaxOff
-
-
-%============================================================
-% Date and month
-%============================================================
-
-% \babelmonthname{<1..12>} → localized month name (current babel language)
-\newcommand{\babelmonthname}[1]{%
-  \csname month\romannumeral\numexpr#1\relax name\endcsname
-}
-
-\ExplSyntaxOn
 
 % \PrintDateISO{2022-12-25} -> localized date, e.g., December 20, 2022; 20 de dezembro de 2022
 % \PrintDateISO{2022-12}    -> e.g., December 20, 2022; Dezembro, 2022
@@ -2086,11 +1990,6 @@
   }%
 }
 
-% \newcommand*{\ntremovefromprintorder}[2]{%
-% % #1 = frontmatter, mainmatter
-% % #2 =single item to remove
-%   \@for\@nt@item:=#2\do{\options{/@nt/print/#1/.remove = {\@nt@item}}}}
-
 \newcommand{\myprintglossaries}{%
   % ignore if no glossaries were defined
   \ifoptioncontains{/@nt/listtypes}{glossaries}{
@@ -2123,7 +2022,6 @@
 %   % \typeout{[#1] [#2]}
 %   \options{/@nt/print/#1/.push=#2}%
 % }
-
 \options{/@nt/print/frontmatter/final/.new list = 
   {%
     statement,        % The statement page
@@ -2362,11 +2260,6 @@
 % If option “debug={index}” option is active,
 %     highlight index keywords in the main text
 \providecommand*{\debugindexcolor}{red!50}
-% \ifoptioncontains{/novathesis/debug}{index}{
-%   % \PassOptionsToPackage{inline}{showlabels}%
-%   % \AtEndPreamble{\RequirePackage{showlabels}%
-%   \showlabels[\color{\debugindexcolor}]{index}}%
-% }{}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2397,8 +2290,6 @@
 %      Please open and edit the appropriate
 %       configuration file “0-Config/8_packages.tex”
 %============================================================
-% \newcommand{\BeforeHyperref}[1]{\NTAddToHook{packages/pre}{#1}}
-% \newcommand{\AfterHyperref}[1]{\NTAddToHook{packages/post}{#1}}
 % \NTRunHook{packages/pre}
 \AtEndPreamble{\input{\DIRCONFIG/5_packages}}
 % \NTRunHook{packages/post}
@@ -2423,7 +2314,6 @@
 %============================================================
 \AtEndPreamble{
   \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{
-    % \RequirePackage[autobib=true,nocite=false]{aidisclose} % AI disclose declaration
     \input{\DIRCONFIG/7-aidisclose}
   }{\gdef\aidversion{0.0.0}}
 }
@@ -2481,22 +2371,6 @@
 \long\def\@nt@AddFileIfExists@ii#1[#2]#3#4[#5]{%
   \ntfor\arg:=#4\do{\IfFileExists{\arg#3}{\ntaddfile{#1}[#2]{\arg#3}\ntforbreak}{}}[#5]%
 }
-
-
-% \newcommand{\@nt@AddFileIfExists}[4][]{%
-% % #1 = OPTIONAL action if not found
-% % #2 = class
-% % #3 = file name
-% % #4 = dir list
-%   \ntfor\arg:=#4\do{\@nt@AddFileIfExists@i{#2}{#3}{\arg}}[#1]%
-% }
-%
-% \newcommand{\@nt@AddFileIfExists@i}[3]{%
-% % #1 = class
-% % #2 = file name
-% % #3 = dir list
-%   \IfFileExists{#3#2}{\ntaddfile{#1}{#3#2}\ntforbreak}{}%
-% }
 
 
 \ifoptionequal{/novathesis/spine/layout}{off}{}{% print the spine
@@ -3539,7 +3413,6 @@
     \let\cleardoublepage\oldcleardoublepage%
   }%
   \pagestyle{novathesis@mainmatter}%
-  \ifxeorlua{}{\microtypesetup{protrusion=true}}%
 }
 
 \newif\if@backmatter
@@ -4056,13 +3929,6 @@
     \fi
   }
 
-% % First try to load a local font-style definition
-% \InputIfFileExists{\DIRNTFILES/FontStyles/\option{/novathesis/style/font}.sty}
-%   {}{% otherwise, try a standard LaTeX package
-%       \IfFileExists{\option{/novathesis/style/font}.sty}%
-%         {\RequirePackage{\option{/novathesis/style/font}}}%
-%         {\ClassError{novathesis}{Invalid Font Style: \option{/novathesis/style/font}}{}}%
-% }
 
 % force page color to white in xelatex and lualatex
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
