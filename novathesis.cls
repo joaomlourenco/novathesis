@@ -78,7 +78,7 @@
 %%          https://www.reddit.com/r/novathesis/
 
 \ProvidesClass{novathesis}[Version 7.10.0 (2026-01-28) novathesis template class file]
-\NeedsTeXFormat{LaTeX2e}[2020-02-02]
+\NeedsTeXFormat{LaTeX2e}[2024-06-01]
 
 %% ----------------------------------------------------------------------------
 % Save these definitions asap, to be used later in the “\annex” command,
@@ -125,8 +125,8 @@
 
 % `l3regex` is part of the LaTeX3 kernel (expl3) in modern TeX distributions.
 % Some setups don't ship a separate `l3regex.sty` anymore, so only load it if present.
-\IfFileExists{xparse.sty}{\RequirePackage{xparse}}{}
-\IfFileExists{expl3.sty}{\RequirePackage{expl3}}{}
+\IfFileExists{xparse.sty}{\RequirePackage{xparse}[2024-05-08]}{}
+\IfFileExists{expl3.sty}{\RequirePackage{expl3}[2024-05-08]}{}
 \IfFileExists{l3regex.sty}{\RequirePackage{l3regex}}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
