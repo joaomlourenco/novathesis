@@ -117,9 +117,9 @@ This is the preferred option, especially for large projects.
 
 ### 4.1.2. Download NOVAthesis
 
-If listed, download the tailored version for your school.
+If your school is [listed below](#the-novathesis-repositories), download the tailored version for your school.
 
-Otherwise, download the default/main repository.
+Otherwise, download the default/main repository (last in the list).
 
 
 ### How to download
@@ -210,17 +210,37 @@ Otherwise, download the default/main repository.
 </td></tr> 
 </table>
 
+
 <table>
-<tr><th>Universidade do Minho</th><th>&nbsp;&nbsp;&nbsp;&nbsp;</th><th>Inst. Politécnico Lisboa</th><th>&nbsp;&nbsp;&nbsp;&nbsp;</th><th>NOVAthesis</th></tr>
-<tr><th>(all / todas)</th><th></th><th>ISEL</th><th></th><th>main repo</th></tr>
+<tr><th>Universidade do Minho</th><th>&nbsp;&nbsp;&nbsp;&nbsp;</th><th colspan="2">Universidade Lusófona</th></tr>
+<tr><th>(all / todas)</th><th></th><th>DEISI</th><th>MGE</th></tr>
 <tr><td align="center">
 
-| <img height="50" alt="uminho" alt="uminho-phd" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/uminho-eeng-phd-en.jpg" />  &nbsp; <img height="50" alt="uminho" alt="uminho-phd" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/uminho-eeng-msc-en.jpg" />  |
+| <img height="50" alt="uminho" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/uminho-eeng-phd-en.jpg" />  &nbsp; <img height="50" alt="uminho" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/uminho-eeng-msc-en.jpg" />  |
 |:---------:|
 | [📦](https://github.com/novathesis/uminho/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/uminho.git) |
 
 </td><td>
 </td><td align="center">
+
+| <img height="50" alt="ulht-deisi" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ulht-deisi-phd-en.jpg" />  &nbsp; <img height="50" alt="ulht-deisi" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ulht-deisi-msc-en.jpg" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/ulht-deisi/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulht-deisi.git) |
+
+</td><td align="center">
+
+| <img height="50" alt="ulht-mge" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ulht-mge-phd-en.jpg" />  &nbsp; <img height="50" alt="ulht-mge" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ulht-mge-msc-en.jpg" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/ulht-mge/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulht-mge.git) |
+
+</td></tr> 
+</table>
+
+
+<table>
+<tr><th>Inst. Politécnico Lisboa</th><th>&nbsp;&nbsp;&nbsp;&nbsp;</th><th>Inst. Politécnico Setúbal</th><th>&nbsp;&nbsp;&nbsp;&nbsp;</th><th>NOVAthesis</th></tr>
+<tr><th>SEL</th><th></th><th>ESTS</th><th></th><th>main repo</th></tr>
+<tr><td align="center">
 
 | <img height="50" alt="ipl-isel" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ipl-isel-msc-en.jpg" />  |
 |:---------:|
@@ -229,11 +249,20 @@ Otherwise, download the default/main repository.
 </td><td>
 </td><td align="center">
 
+| <img height="50" alt="ips-ests" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ips-ests-msc-en.jpg" />  |
+|:---------:|
+| [📦](https://github.com/novathesis/ips-ests/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ips-ests.git) |
+
+</td><td>
+</td><td align="center">
+
 | <img height="50" alt="novathesis" src="https://github.com/user-attachments/assets/9c19097a-a7b7-49ce-95ff-70694767b350" />  |
 |:---------:|
 | [📦](https://github.com/joaomlourenco/novathesis/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/joaomlourenco/novathesis.git) |
 
-</td></tr> </table>
+</td></tr> 
+</table>
+
 
 ### 4.1.3. Compile
 
@@ -346,7 +375,7 @@ A large and growing list including:
 
 # 9. Showcase
 
-Sample covers from the supported schools are available in the Wiki's **Showcase** page.
+Sample covers from the supported schools are available in the [Wiki's **Showcase** page](https://github.com/joaomlourenco/novathesis/wiki/showcase).
 
 ---
 
