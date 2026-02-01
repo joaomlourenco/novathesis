@@ -131,8 +131,8 @@ Otherwise, download the default/main repository (last in the list).
 ### The NOVAthesis repositories
 
 <table>
-<tr><th colspan="6">Universidade NOVA de Lisboa</th></tr>
-<tr><th>FCT</th><th>FCT CBBI</th><th>FCT DI-ADC</th><th>ENSP</th><th>ITQB</th><th>FCSH</th></tr>
+<tr><th colspan="7">Universidade NOVA de Lisboa</th></tr>
+<tr><th>FCT</th><th>FCT CBBI</th><th>FCT DI-ADC</th><th>ENSP</th><th>ITQB</th><th>FCSH</th><th>IMS(*)</th></tr>
 <tr><td align="center">
 
 | <img height="50" alt="nova-fct-phd" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-fct-phd-en.jpg" /> &nbsp; <img height="50" alt="nova-fct-msc" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-fct-msc-en.jpg" /> |
@@ -169,8 +169,16 @@ Otherwise, download the default/main repository (last in the list).
 |:---------:|
 | [📦](https://github.com/novathesis/nova-fcsh/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-fcsh.git) |
 
+</td><td align="center">
+
+| <img height="50" alt="nova-ims" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-ims-msc-en.jpg" />  |
+|:---------:|
+| [📦](https://github.com/pdecampossouza/nova-ims-thesis-template-2025/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/pdecampossouza/nova-ims-thesis-template-2025) |
+
 </td></tr>
 </table>
+
+(*) The [NOVA IMS template](https://github.com/pdecampossouza/nova-ims-thesis-template-2025) is an adaptation of the NOVAthesis template by Paulo de Campos Souza.  Please refer to the author's [project page in GitHub](https://github.com/pdecampossouza/nova-ims-thesis-template-2025) for support requests.
 
 
 <table>
@@ -262,7 +270,6 @@ Otherwise, download the default/main repository (last in the list).
 
 </td></tr> 
 </table>
-
 
 ### 4.1.3. Compile
 
