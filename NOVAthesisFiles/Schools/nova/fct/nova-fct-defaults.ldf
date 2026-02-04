@@ -163,9 +163,31 @@
 %% Draw the cover pages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NTAddToHook{cover/1-1/text/pre}{%
+  \@ifpackageloaded{fontspec}{
+      \setsansfont{Inter}[
+        Scale = 0.95,
+        Extension = .otf,
+        UprightFont = *-Regular,
+        ItalicFont = *-Italic,
+        BoldFont = *-Bold,
+        BoldItalicFont = *-BoldItalic,
+        Ligatures = {NoCommon, TeX} % This kills the 'oe' ligature while keeping '--'
+      ]
+  }{}
   \sffamily%
 }
 \NTAddToHook{cover/2-1/text/pre}{%
+  \@ifpackageloaded{fontspec}{
+      \setsansfont{Inter}[
+        Scale = 0.95,
+        Extension = .otf,
+        UprightFont = *-Regular,
+        ItalicFont = *-Italic,
+        BoldFont = *-Bold,
+        BoldItalicFont = *-BoldItalic,
+        Ligatures = {NoCommon, TeX} % This kills the 'oe' ligature while keeping '--'
+      ]
+  }{}
   \sffamily%
 }
 
@@ -215,7 +237,7 @@
 % Title of Dissertation (PhD) / The author name (MSc)
 \ntaddtocover[halign=l,height=3.0cm,valign=c]{1-1}{%
   \ifphddoc{%
-    \fontsize{22}{21}\selectfont%
+    \fontsize{20}{21}\selectfont%
     \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}%
     \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
       \\[4mm]%
@@ -239,7 +261,7 @@
     \fontsize{17}{17}\selectfont%
     \thedocauthor(degree,\@LANG@COVER)%
   }{%
-    \fontsize{22}{21}\selectfont%
+    \fontsize{20}{21}\selectfont%
     \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}%
     \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
       \\[4mm]%

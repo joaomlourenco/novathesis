@@ -1698,7 +1698,7 @@
   % #3 = value
   % \typeout{NT TITLE [#1] [#2] [#3]}%
   \doctitle(#2,#1):={#3}%
-  \NewlineToSpace{#3}[\tmp]
+  \NewlineToSpace{#3}[\tmp]%
   \doctitle(#2,#1,plain):={\tmp}% 
   \IfStrEq{#1}{main}{\doctitle(#2,spine):={\tmp}}{}%
 }
@@ -1716,7 +1716,10 @@
     % 2. Perform the replacement.
     %    In expl3, ~ represents a space token (catcode 10).
     %    This replaces every occurrence of the token \\ with a space.
-    \tl_replace_all:Nnn \l__memory_clean_tl { \\ } { ~ }
+    \tl_replace_all:Nnn \l__memory_clean_tl { ~\\~ } { ~ }
+    \tl_replace_all:Nnn \l__memory_clean_tl { ~\\ }  { ~ }
+    \tl_replace_all:Nnn \l__memory_clean_tl { \\~ }  { ~ }
+    \tl_replace_all:Nnn \l__memory_clean_tl { \\ }   { ~ }
 
     % 3. Check if the optional argument (#2) is provided
     \IfNoValueTF { #2 }
