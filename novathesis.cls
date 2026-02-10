@@ -2376,7 +2376,9 @@
 }
 
 
-\ifoptionequal{/novathesis/spine/layout}{off}{}{% print the spine
+\ifoptionequal{/novathesis/spine/layout}{false}
+  {}% skip the spine
+  {% print the spine
   \InputIfFileExistsInDirsTF {novathesis-spine.sty}
     {%
       {\DIRSCHOOLS/\@UNIV/\@SCHL/},
