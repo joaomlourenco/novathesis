@@ -247,7 +247,7 @@ Otherwise, download the default/main repository (last in the list).
 
 <table>
 <tr><th>Inst. Politécnico Lisboa</th><th>&nbsp;&nbsp;&nbsp;&nbsp;</th><th>Inst. Politécnico Setúbal</th><th>&nbsp;&nbsp;&nbsp;&nbsp;</th><th>NOVAthesis</th></tr>
-<tr><th>SEL</th><th></th><th>ESTS</th><th></th><th>main repo</th></tr>
+<tr><th>ISEL</th><th></th><th>ESTS</th><th></th><th>main repo</th></tr>
 <tr><td align="center">
 
 | <img height="50" alt="ipl-isel" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ipl-isel-msc-en.jpg" />  |
