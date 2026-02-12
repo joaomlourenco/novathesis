@@ -9,16 +9,16 @@
 \typeout{NT FILE FontStyles/palatino-gyre-pagella.sty}
 
 \ifxeorlua{
-  \IfFontExistsTF{PalatinoTeX Gyre Pagella}
-      {\setmainfont{PalatinoTeX Gyre Pagella}[
+  \IfFontExistsTF{TeX Gyre Pagella}
+      {\setmainfont{TeX Gyre Pagella}[
               Scale=1.0,
               Ligatures={Common,Discretionary,TeX}]
-        \IfFontExistsTF{PalatinoTeX Gyre Pagella}{
+        \IfFontExistsTF{TeX Gyre Pagella Math}{
           \setmathfont{TeX Gyre Pagella Math}
         }{}
       }{
-  \PackageError{newpx.sty}{'PalatinoTeX Gyre Pagella' font not found.  Please select another font style in '0-Config/1_novathesis.tex'}
+  \PackageError{novathesis}{'TeX Gyre Pagella' font not found.  Please select another font style in '0-Config/1_novathesis.tex'}
   }
 }{
-  \PackageError{newpx.sty}{This font style is only available with 'lualatex' or 'xelatex'.}
+  \PackageError{novathesis}{This font style is only available with 'lualatex' or 'xelatex'.}
 }

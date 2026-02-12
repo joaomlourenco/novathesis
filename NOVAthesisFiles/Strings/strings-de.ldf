@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  German (de) strings
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 % --------------------------------------------------------------------
@@ -195,32 +195,32 @@
 
 \dissertationstring(bsc,de)     = {%
       Bericht eingereicht zur Erlangung des akademischen Grades %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) im Fach\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) im Fach\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(mscplan,de) = {%
       Zwischenbericht eingereicht zur Erlangung des akademischen Grades %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) im Fach\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) im Fach\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(msc,de)     = {%
       Masterarbeit eingereicht zur Erlangung des akademischen Grades %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) im Fach\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) im Fach\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(phdplan,de) = {%
       Dissertationsplan eingereicht zur Erlangung des akademischen Grades %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) im Fach\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) im Fach\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(phdprop,de) = {%
       Dissertationsvorschlag eingereicht zur Erlangung des akademischen Grades %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) im Fach\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) im Fach\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(phd,de)     = {%
       Dissertation eingereicht zur Erlangung des akademischen Grades %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) im Fach\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) im Fach\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 
@@ -240,7 +240,8 @@
 %%% Acknowledgements
 % --------------------------------------------------------------------
 \acknowledgmentsstring(de)      = {%
-        Dieses Dokument wurde mit dem (pdf/Xe/Lua)\LaTeX-System und der %
+        Dieses Dokument wurde mit dem system \NTengineName~\@ntcite{latex-project} %
+        und der %
         \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis}-Vorlage %
         (v\novathesisversion)~\@ntcite{novathesis-manual} erstellt.}
 

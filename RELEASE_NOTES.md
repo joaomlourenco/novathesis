@@ -61,7 +61,7 @@ This document summarizes the changes and improvements made to the NOVAthesis tem
 ### Features
 *   **SDG Support:** Added full support for **Sustainable Development Goals (SDG)** icons (English and Portuguese), with options for inverted/mono styles.
 *   **New Languages:** Added support for Danish (`dk`), Catalan (`cat`), Czech (`cz`), Slovak (`sk`), Polish (`pl`), Dutch (`nl`), and others.
-*   **Font Styles:** Added support for `palatino`, `palatino-gyre-pagella`, and `palatino-linitype`.
+*   **Font Styles:** Added support for `palatino`, `palatino-gyre-pagella`, and `palatino-linotype`.
 
 ### Refactoring
 *   **School Defaults:** Standardized school configurations into `*-defaults.ldf` files.
