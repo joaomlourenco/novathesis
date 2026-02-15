@@ -2489,7 +2489,7 @@
 
 \newcommand{\ntprintcoverpair}[1]{%
   % #1 = major cover ID
-  \iffileadded[1]{cover}{% Deal with user-defined cover page
+  \iffileadded[#1]{cover}{% Deal with user-defined cover page
     \iffileadded[#1]{cover}{%
       \optionlistdo{/@nt/file/cover/#1}{%
         \begingroup
