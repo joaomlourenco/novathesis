@@ -79,32 +79,59 @@
   \HyLang@DeclareLang{hungarian}{magyar}{}
 }
 
+\ExplSyntaxOn
+% Aux function to handle label data
+% #1=ref, #2=page, #3=title, #4=anchor (e.g. section.1), #5=extra
+% #6=original label key
+\cs_new:Npn \nt_autoref_aux:nnnnn #1 #2 #3 #4 #5 #6
+ {
+   % Extract type from anchor (e.g. "section" from "section.1")
+   \seq_set_split:Nnn \l_tmpa_seq { . } { #4 }
+   \seq_get_left:NN \l_tmpa_seq \l_tmpa_tl 
+   
+   % Remove star if present (e.g. "chapter*" -> "chapter")
+   \regex_replace_all:nnN { \* } { } \l_tmpa_tl
+   
+   \cs_if_exist:cTF { \l_tmpa_tl autorefname }
+    {
+      % Get current autorefname
+      \tl_set_eq:Nc \l_tmpb_tl { \l_tmpa_tl autorefname }
+      % Titlecase it (first letter uppercase)
+      \tl_set:Nx \l_tmpb_tl { \text_titlecase_first:V \l_tmpb_tl }
+      % Redefine locally within the group established in \Autoref
+      \cs_set:cpn { \l_tmpa_tl autorefname } { \l_tmpb_tl }
+      \autoref{#6}
+    }
+    {
+      % Fallback if autorefname not found
+      \autoref{#6}
+    }
+ }
+
+\NewDocumentCommand{\ntAutoref}{m}
+ {
+  \group_begin:
+  \tl_set:Nn \l_tmpa_tl { #1 }
+  \tl_trim_spaces:N \l_tmpa_tl
+  
+  \cs_if_exist:cTF { r@ \l_tmpa_tl }
+   {
+     % Retrieve the label content
+     \tl_set_eq:Nc \l_tmpb_tl { r@ \l_tmpa_tl }
+     
+     % Use \exp_last_unbraced:NV to expand the label content (\l_tmpb_tl) 
+     % as arguments to the auxiliary function, followed by the label key (\l_tmpa_tl)
+     \exp_last_unbraced:NV \nt_autoref_aux:nnnnn \l_tmpb_tl { \l_tmpa_tl }
+   }
+   {
+     \ref{#1}
+   }
+  \group_end:
+ }
+\ExplSyntaxOff
+
 \AtBeginDocument{
   \@nt@fixhyperref
-  \RequirePackage{catoptions}
-  \def\Autoref#1{%
-    \begingroup
-    \edef\reserved@a{\cpttrimspaces{#1}}%
-    \ifcsndefTF{r@#1}{%
-      \xaftercsname{\expandafter\testreftype\@fourthoffive}
-        {r@\reserved@a}.\\{#1}%
-    }{%
-      \ref{#1}%
-    }%
-    \endgroup
-  }
-  \def\testreftype#1.#2\\#3{%
-    % Strip star from type name if present (e.g. chapter* -> chapter)
-    \StrSubstitute{#1}{*}{}[\@nt@reftype]%
-    \ifcsndefTF{\@nt@reftype autorefname}{%
-      \def\reserved@a##1##2\@nil{%
-        \uppercase{\def\ref@name{##1}}%
-        \csn@edef{\@nt@reftype autorefname}{\ref@name##2}%
-        \autoref{#3}%
-      }%
-      \expandafter\reserved@a\@nt@reftype\@nil
-    }{%
-      \autoref{#3}%
-    }%
-  }
+  % Replaced catoptions-based \Autoref with expl3 implementation
+  \let\Autoref\ntAutoref
 }
