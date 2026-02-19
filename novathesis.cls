@@ -334,7 +334,9 @@
 
 \NewExpandableDocumentCommand {\ToUppercase} { m }
   {
-    \text_uppercase:n { #1 }
+    \cs_if_exist:NTF \text_uppercase:n
+      { \text_uppercase:n { #1 } }
+      { \tl_upper_case:n { #1 } }
   }
 
 %=======================================================================

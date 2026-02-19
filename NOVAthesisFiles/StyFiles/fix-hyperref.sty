@@ -7,52 +7,11 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE fix-hyperref.sty}%
+\typeout{NT FILE fix-hyperref.sty}
 
 \def\HyLang@portuguese{\HyLang@portuges}
 
 \newcommand{\@nt@fixhyperref}{
-  % \def\HyLang@DeclareLang##1##2##3{%
-  %   \@ifpackagewith{babel}{##1}{%
-  %     \expandafter\HyLang@addto
-  %         \csname extras##1\expandafter\endcsname
-  %         \csname HyLang@##2\endcsname
-  %     \begingroup
-  %       \edef\x{\endgroup
-  %         ##3%
-  %       }%
-  %     \x
-  %     \@namedef{HyLang@##1@done}{}%
-  %   }{% added check for "main=##1" (presumably Heiko can do better)
-  %     \@ifpackagewith{babel}{main=##1}{%
-  %       \expandafter\HyLang@addto
-  %         \csname extras##1\expandafter\endcsname
-  %         \csname HyLang@##2\endcsname
-  %       \begingroup
-  %         \edef\x{\endgroup
-  %           ##3%
-  %         }%
-  %       \x
-  %       \@namedef{HyLang@##1@done}{}%
-  %      }{}%
-  %   }%
-  %   \begingroup
-  %     \edef\x####1####2{%
-  %       \noexpand\ifx####2\relax
-  %         \errmessage{No definitions for language ##2' found!}%
-  %       \noexpand\fi
-  %       \endgroup
-  %       \noexpand\define@key{Hyp}{##1}[]{%
-  %         \noexpand\@ifundefined{HyLang@##1@done}{%
-  %           \noexpand\HyLang@addto{\noexpand####1}{\noexpand####2}%
-  %           ##3%
-  %           \noexpand\@namedef{HyLang@##1@done}{}%
-  %         }{}%
-  %       }%
-  %     }%
-  %   \expandafter\x\csname extras##1\expandafter\endcsname
-  %                 \csname HyLang@##2\endcsname
-  % }
   % repeat the known language declarations
   \HyLang@DeclareLang{english}{english}{}
   \HyLang@DeclareLang{UKenglish}{english}{}
@@ -80,58 +39,63 @@
 }
 
 \ExplSyntaxOn
-% Aux function to handle label data
-% #1=ref, #2=page, #3=title, #4=anchor (e.g. section.1), #5=extra
-% #6=original label key
-\cs_new:Npn \nt_autoref_aux:nnnnn #1 #2 #3 #4 #5 #6
+% Declare unique variables
+\tl_new:N \l_nt_autoref_type_tl
+\tl_new:N \l_nt_autoref_name_tl
+\tl_new:N \l_nt_autoref_data_tl
+\tl_new:N \l_nt_autoref_head_tl
+\tl_new:N \l_nt_autoref_tail_tl
+\seq_new:N \l_nt_autoref_anchor_seq
+
+% Robust titlecase function
+\cs_new_protected:Nn \nt_titlecase_first:N
  {
-   % Extract type from anchor (e.g. "section" from "section.1")
-   \seq_set_split:Nnn \l_tmpa_seq { . } { #4 }
-   \seq_get_left:NN \l_tmpa_seq \l_tmpa_tl 
-   
-   % Remove star if present (e.g. "chapter*" -> "chapter")
-   \regex_replace_all:nnN { \* } { } \l_tmpa_tl
-   
-   \cs_if_exist:cTF { \l_tmpa_tl autorefname }
+   \tl_if_empty:NF #1
     {
-      % Get current autorefname
-      \tl_set_eq:Nc \l_tmpb_tl { \l_tmpa_tl autorefname }
-      % Titlecase it (first letter uppercase)
-      \tl_set:Nx \l_tmpb_tl { \text_titlecase_first:V \l_tmpb_tl }
-      % Redefine locally within the group established in \Autoref
-      \cs_set:cpn { \l_tmpa_tl autorefname } { \l_tmpb_tl }
-      \autoref{#6}
-    }
-    {
-      % Fallback if autorefname not found
-      \autoref{#6}
+      \tl_set:Nx \l_nt_autoref_head_tl { \tl_head:N #1 }
+      \tl_set:Nx \l_nt_autoref_tail_tl { \tl_tail:N #1 }
+      % Check if ToUppercase exists (from novathesis.cls)
+      \cs_if_exist:cTF { ToUppercase }
+       { \tl_set:Nx \l_nt_autoref_head_tl { \ToUppercase { \l_nt_autoref_head_tl } } }
+       {
+         \cs_if_exist:NTF \text_uppercase:n
+          { \tl_set:Nx \l_nt_autoref_head_tl { \text_uppercase:n { \l_nt_autoref_head_tl } } }
+          { \tl_set:Nx \l_nt_autoref_head_tl { \tl_upper_case:n { \l_nt_autoref_head_tl } } }
+       }
+      \tl_set:Nx #1 { \l_nt_autoref_head_tl \l_nt_autoref_tail_tl }
     }
  }
 
-\NewDocumentCommand{\ntAutoref}{m}
+% Aux function to handle label data
+\cs_new_protected:Npn \nt_autoref_aux:nnnnn #1 #2 #3 #4 #5
+ {
+   \seq_set_split:Nnn \l_nt_autoref_anchor_seq { . } { #4 }
+   \seq_get_left:NN \l_nt_autoref_anchor_seq \l_nt_autoref_type_tl 
+   \regex_replace_all:nnN { \* } { } \l_nt_autoref_type_tl
+   
+   \cs_if_exist:cT { \l_nt_autoref_type_tl autorefname }
+    {
+      \tl_set_eq:Nc \l_nt_autoref_name_tl { \l_nt_autoref_type_tl autorefname }
+      \nt_titlecase_first:N \l_nt_autoref_name_tl
+      \cs_set:cpe { \l_nt_autoref_type_tl autorefname } { \tl_use:N \l_nt_autoref_name_tl }
+    }
+ }
+
+\cs_new_protected:Nn \nt_autoref_logic:n
  {
   \group_begin:
-  \tl_set:Nn \l_tmpa_tl { #1 }
-  \tl_trim_spaces:N \l_tmpa_tl
-  
-  \cs_if_exist:cTF { r@ \l_tmpa_tl }
+  \cs_if_exist:cT { r@ \tl_to_str:n { #1 } }
    {
-     % Retrieve the label content
-     \tl_set_eq:Nc \l_tmpb_tl { r@ \l_tmpa_tl }
-     
-     % Use \exp_last_unbraced:NV to expand the label content (\l_tmpb_tl) 
-     % as arguments to the auxiliary function, followed by the label key (\l_tmpa_tl)
-     \exp_last_unbraced:NV \nt_autoref_aux:nnnnn \l_tmpb_tl { \l_tmpa_tl }
+     \tl_set_eq:Nc \l_nt_autoref_data_tl { r@ \tl_to_str:n { #1 } }
+     \exp_last_unbraced:NV \nt_autoref_aux:nnnnn \l_nt_autoref_data_tl
    }
-   {
-     \ref{#1}
-   }
+  \autoref{#1}
   \group_end:
  }
-\ExplSyntaxOff
 
-\AtBeginDocument{
+\AtBeginDocument
+ {
   \@nt@fixhyperref
-  % Replaced catoptions-based \Autoref with expl3 implementation
-  \let\Autoref\ntAutoref
-}
+  \DeclareRobustCommand{\Autoref}[1]{ \nt_autoref_logic:n {#1} }
+ }
+\ExplSyntaxOff
