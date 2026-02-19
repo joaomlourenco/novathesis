@@ -105,14 +105,14 @@ SCHL := $(if $(SCHL),$(SCHL),nova/fct)
 # Automatically use the right latex compiler and compile
 .PHONY: default
 default: validate-config check-env check-build
-	$(BUILD) $(SCHL) ${BFLAGS}
+	$(BUILD) "$(SCHL)" ${BFLAGS}
 
 #————————————————————————————————————————————————————————————————————————————
 # The main targets
 # e.g. '$(MAKE) lua'
 .PHONY: pdf xe lua
 pdf xe lua: validate-config check-env $(NEEDLUALATEX) $(LTXFILE) $(LTXCLS)
-	$(LTXMK) -pdf$(patsubst pdf%,%,$@) $(LTXFLAGS) $(BASENAME)
+	$(LTXMK) -pdf$(patsubst pdf%,%,$@) $(LTXFLAGS) "$(BASENAME)"
 
 #————————————————————————————————————————————————————————————————————————————
 # Btach mode
@@ -166,7 +166,7 @@ endif
 # Build and display the PDF
 .PHONY: v view
 v view: $(PDFFILE)
-	$(PDFVIEWER) $(PDFFILE)
+	$(PDFVIEWER) "$(PDFFILE)"
 
 #————————————————————————————————————————————————————————————————————————————
 # Display the log file
@@ -195,7 +195,7 @@ validate-config:
 		printf "$(RED)Error: School configuration not found in 0-Config/1_novathesis.tex$(RESET)\n"; \
 		exit 1; \
 	fi
-	@printf "$(CYAN)Building for school: $(YELLOW)$(SCHL)$(RESET)\n"
+	@printf "$(CYAN)Building for school: $(YELLOW)\"$(SCHL)\"$(RESET)\n"
 
 
 #############################################################################
@@ -226,15 +226,15 @@ help:
 .PHONY: dry-run debug-vars
 .ONESHELL:
 dry-run:
-	@printf "$(CYAN)Would build with: SCHOOL=$(SCHL), MODE=$(MODE)$(RESET)\n"
-	@printf "$(CYAN)Main file: $(BASENAME).tex$(RESET)\n"
+	@printf "$(CYAN)Would build with: SCHOOL=\"$(SCHL)\", MODE=$(MODE)$(RESET)\n"
+	@printf "$(CYAN)Main file: \"$(BASENAME).tex\"$(RESET)\n"
 	@printf "$(CYAN)Compiler: $(LTXMK) $(LTXFLAGS)$(RESET)\n"
 
 .ONESHELL:
 debug-vars:
-	@printf "$(CYAN)SCHOOL: $(SCHL)$(RESET)\n"
+	@printf "$(CYAN)SCHOOL: \"$(SCHL)\"$(RESET)\n"
 	@printf "$(CYAN)VERSION: $(ORIGVERSION)$(RESET)\n"
-	@printf "$(CYAN)MAIN FILE: $(BASENAME)$(RESET)\n"
+	@printf "$(CYAN)MAIN FILE: \"$(BASENAME)\"$(RESET)\n"
 	@printf "$(CYAN)TEX VERSIONS: $(TEXVERSIONS)$(RESET)\n"
 	@printf "$(CYAN)LUA SCHOOLS: $(shell cat $(NEEDLUALATEX) 2>/dev/null || $(MAGENTA)'not computed'$(RESET))$(RESET)\n"
 
@@ -265,10 +265,10 @@ ZIPTARGET=$(BASENAME)-$(VERSION)@$(DATE).zip
 .PHONY: zip
 .ONESHELL:
 zip: clean
-	@ printf "$(YELLOW)Creating archive: $(ZIPTARGET)$(RESET)\n"
+	@ printf "$(YELLOW)Creating archive: \"$(ZIPTARGET)\"$(RESET)\n"
 	@ rm -f "$(ZIPTARGET)"
-	@ zip $(ZIPTARGET) -r -q $(ZIPFILES)  -x 'Scripts/*'
-	@ printf "$(YELLOW)Archive created: $(ZIPTARGET) ($(shell stat -f%$(RESET)z "$(ZIPTARGET)" 2>/dev/null || stat -c%s "$(ZIPTARGET)" ) bytes)\n"
+	@ zip "$(ZIPTARGET)" -r -q $(ZIPFILES)  -x 'Scripts/*'
+	@ printf "$(YELLOW)Archive created: \"$(ZIPTARGET)\" ($(shell stat -f%$(RESET)z "$(ZIPTARGET)" 2>/dev/null || stat -c%s "$(ZIPTARGET)" ) bytes)\n"
 
 
 #############################################################################
@@ -289,8 +289,8 @@ AUXFILES := $(filter-out $(GOODFILES),$(wildcard $(BASENAME).*)) $(NEEDLUALATEX)
 .PHONY: clean
 .ONESHELL:
 clean:
-	@ $(LTXMK) -c $(BASENAME)
-	@ rm -f $(AUXFILES) "*(1)*" $(NEEDLUALATEX) $(KEEPDIR)
+	@ $(LTXMK) -c "$(BASENAME)"
+	@ rm -f $(foreach f,$(AUXFILES),"$(f)") "*(1)*" $(NEEDLUALATEX) $(KEEPDIR)
 	@ rm -rf $(AUXDIR) _minted*
 	@ find . -name .DS_Store | xargs rm -rf
 	@ find . -maxdepth 1 -type f -name 'novathesis*' ! -name '*.pdf' ! -name '*.tex' ! -name '*.cls' -delete
@@ -418,8 +418,8 @@ build-%:
 	\
 	FINAL_SCHL=$$(echo $$SCHL | sed 's/\./\//; s/\./\//; s/\./-/g'); \
 	\
-	echo "$(BUILD) $$FINAL_SCHL --doctype $$TYP --lang $$LNG --rename-pdf --mode 1 --docstatus final -o $(PWD) $(BFLAGS)"; \
-	$(BUILD) $$FINAL_SCHL --doctype $$TYP --lang $$LNG --rename-pdf --mode 1 --docstatus final -o $(PWD) $(BFLAGS)
+	echo "$(BUILD) \"$$FINAL_SCHL\" --doctype \"$$TYP\" --lang \"$$LNG\" --rename-pdf --mode 1 --docstatus final -o \"$(PWD)\" $(BFLAGS)"; \
+	$(BUILD) "$$FINAL_SCHL" --doctype "$$TYP" --lang "$$LNG" --rename-pdf --mode 1 --docstatus final -o "$(PWD)" $(BFLAGS)
 
 
 
