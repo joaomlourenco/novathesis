@@ -1,65 +1,73 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fitbox2}[2025/11/28 v1.1 Fit text into box ratio calculator]
+\ProvidesExplPackage{fitbox2}{2026/02/19}{1.2}{Fit text into box ratio calculator}
 
 % Dependency for \pbox used to measure natural width/wrapping
 \RequirePackage{pbox}
-% Dependency for \csedef and expansion control
-\RequirePackage{etoolbox}
-% Dependency for math parsing (min function)
-\RequirePackage{pgfmath}
+
+% Variables
+\dim_new:N \l__fb_target_wd_dim
+\dim_new:N \l__fb_target_ht_dim
+\dim_new:N \l__fb_content_ht_dim
+\tl_new:N  \l__fb_hratio_tl
+\tl_new:N  \l__fb_vratio_tl
 
 % Internal helper: Divide length #1 by #2 and return a dimensionless ratio
-\newcommand*{\fb@divide}[2]{%
-  \strip@pt\dimexpr\number\numexpr\number\dimexpr#1\relax*65536/\number\dimexpr#2\relax\relax sp\relax
-}
+\cs_new:Npn \fb_divide:nn #1 #2
+  {
+    \fp_eval:n { \dim_to_decimal:n { #1 } / \dim_to_decimal:n { #2 } }
+  }
 
-\newcommand{\fitboxratio}[4]{%
-  % #1 = output macro name for the ratio
-  % #2 = target width
-  % #3 = target height
-  % #4 = text content to fit
-  %
-  % 1. Measure the target dimensions
-  \@tempdima=\dimexpr#2\relax % Target Width
-  \@tempdimb=\dimexpr#3\relax % Target Height
-  %
-  % 2. Typeset content into a box to measure natural dimensions
-  %    Using \pbox allows for line breaking if needed, up to \paperwidth.
-  \box0=\pbox{\paperwidth}{#4}%
-  %
-  % 3. Calculate Horizontal Ratio (Target Width / Content Width)
-  \ifdim\wd0>0pt
-    \edef\fb@hratio{\fb@divide{\@tempdima}{\wd0}}%
-  \else
-    \PackageWarning{fitbox2}{Content width is 0pt for text: "#4". Defaulting h-ratio to 1.}%
-    \def\fb@hratio{1.0}%
-  \fi
-  %
-  % 4. Calculate Vertical Ratio (Target Height / Content Height)
-  %    Height = height + depth (total vertical extent)
-  \@tempdimc=\dimexpr\ht0+\dp0\relax
-  \ifdim\@tempdimc>0pt
-    \edef\fb@vratio{\fb@divide{\@tempdimb}{\@tempdimc}}%
-  \else
-    \def\fb@vratio{1.0}%
-  \fi
-  %
-  % 5. Determine the limiting ratio (min of h and v) using PGF
-  \pgfmathparse{min(\fb@hratio,\fb@vratio)}%
-  %
-  % 6. Save result to the provided macro name (#1)
-  \csedef{#1}{\pgfmathresult}%
-}
+\NewDocumentCommand{\fitboxratio}{ m m m m }
+  {
+    % #1 = output macro name for the ratio
+    % #2 = target width
+    % #3 = target height
+    % #4 = text content to fit
+    
+    % 1. Measure the target dimensions
+    \dim_set:Nn \l__fb_target_wd_dim { #2 } 
+    \dim_set:Nn \l__fb_target_ht_dim { #3 } 
+    
+    % 2. Typeset content into a box to measure natural dimensions
+    \hbox_set:Nn \l_tmpa_box { \pbox{\paperwidth}{#4} }
+    
+    % 3. Calculate Horizontal Ratio (Target Width / Content Width)
+    \dim_compare:nNnTF { \box_wd:N \l_tmpa_box } > { 0pt }
+      {
+        \tl_set:Nx \l__fb_hratio_tl { \fb_divide:nn { \l__fb_target_wd_dim } { \box_wd:N \l_tmpa_box } }
+      }
+      {
+        \msg_warning:nnn { fitbox2 } { zero-width } { #4 }
+        \tl_set:Nn \l__fb_hratio_tl { 1.0 }
+      }
+    
+    % 4. Calculate Vertical Ratio (Target Height / Content Height)
+    \dim_set:Nn \l__fb_content_ht_dim { \box_ht:N \l_tmpa_box + \box_dp:N \l_tmpa_box }
+    \dim_compare:nNnTF { \l__fb_content_ht_dim } > { 0pt }
+      {
+        \tl_set:Nx \l__fb_vratio_tl { \fb_divide:nn { \l__fb_target_ht_dim } { \l__fb_content_ht_dim } }
+      }
+      {
+        \tl_set:Nn \l__fb_vratio_tl { 1.0 }
+      }
+    
+    % 5. Determine the limiting ratio (min of h and v)
+    \tl_set:Nx \l_tmpa_tl { \fp_eval:n { min( \l__fb_hratio_tl , \l__fb_vratio_tl ) } }
+    
+    % 6. Save result to the provided macro name (#1)
+    \cs_gset:cpx { #1 } { \tl_use:N \l_tmpa_tl }
+  }
 
-\newcommand{\fitboxmin}[2]{%
-  % #1 = output macro name
-  % #2 = comma separated list of values (e.g., ratios)
-  %
-  % Finds the minimum value in a list.
-  % Uses \expanded (modern engine primitive) or falls back if needed.
-  % Assuming modern TeX Live (2019+), \expanded is safe.
-  \pgfmathparse{min(\expanded{#2})}%
-  \csedef{#1}{\pgfmathresult}%
-}
+\NewDocumentCommand{\fitboxmin}{ m m }
+  {
+    % #1 = output macro name
+    % #2 = comma separated list of values (e.g., ratios)
+    \tl_set:Nx \l_tmpa_tl { \fp_eval:n { min( #2 ) } }
+    \cs_gset:cpx { #1 } { \tl_use:N \l_tmpa_tl }
+  }
+
+\msg_new:nnnn { fitbox2 } { zero-width }
+  { Content~width~is~0pt~for~text:~"#1". }
+  { Defaulting~h-ratio~to~1. }
 
 \endinput
