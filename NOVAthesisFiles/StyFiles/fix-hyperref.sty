@@ -80,6 +80,7 @@
 }
 
 \AtBeginDocument{
+  \@nt@fixhyperref
   \RequirePackage{catoptions}
   \def\Autoref#1{%
     \begingroup
@@ -93,13 +94,15 @@
     \endgroup
   }
   \def\testreftype#1.#2\\#3{%
-    \ifcsndefTF{#1autorefname}{%
+    % Strip star from type name if present (e.g. chapter* -> chapter)
+    \StrSubstitute{#1}{*}{}[\@nt@reftype]%
+    \ifcsndefTF{\@nt@reftype autorefname}{%
       \def\reserved@a##1##2\@nil{%
         \uppercase{\def\ref@name{##1}}%
-        \csn@edef{#1autorefname}{\ref@name##2}%
+        \csn@edef{\@nt@reftype autorefname}{\ref@name##2}%
         \autoref{#3}%
       }%
-      \reserved@a#1\@nil
+      \expandafter\reserved@a\@nt@reftype\@nil
     }{%
       \autoref{#3}%
     }%
