@@ -331,6 +331,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ExplSyntaxOn
+% Robust titlecase function: modifies the TL variable in-place
+\cs_new_protected:Nn \nt_titlecase_first:N
+ {
+   \tl_if_empty:NF #1
+    {
+      \tl_set:Nx \l_tmpa_tl { \tl_head:N #1 }
+      \tl_set:Nx \l_tmpb_tl { \tl_tail:N #1 }
+      \tl_set:Nx \l_tmpa_tl { \ToUppercase { \l_tmpa_tl } }
+      \tl_set:Nx #1 { \l_tmpa_tl \l_tmpb_tl }
+    }
+ }
 
 \NewExpandableDocumentCommand {\ToUppercase} { m }
   {
@@ -338,6 +349,14 @@
       { \text_uppercase:n { #1 } }
       { \tl_upper_case:n { #1 } }
   }
+
+\NewDocumentCommand {\MakeTitlecase} { m }
+  {
+    \tl_set:Nn \l_tmpa_tl { #1 }
+    \nt_titlecase_first:N \l_tmpa_tl
+    \tl_use:N \l_tmpa_tl
+  }
+\ExplSyntaxOff
 
 %=======================================================================
 % \IfBeginsWithAnyOf {text} {comma_sep_list_of_prefixes} {true} {false}
@@ -1789,27 +1808,27 @@
     % Case: YYYY
     { 1 } 
      {
-      \MemSet { DocDate } { #1, year } { \seq_item:Nn \l_nt_parts_seq { 1 } }
+      \MemSet* { DocDate } { #1, year } { \seq_item:Nn \l_nt_parts_seq { 1 } }
      }
     
     % Case: YYYY-MM
     { 2 }
      {
-      \MemSet { DocDate } { #1, year }  { \seq_item:Nn \l_nt_parts_seq { 1 } }
-      \MemSet { DocDate } { #1, month } { \seq_item:Nn \l_nt_parts_seq { 2 } }
+      \MemSet* { DocDate } { #1, year }  { \seq_item:Nn \l_nt_parts_seq { 1 } }
+      \MemSet* { DocDate } { #1, month } { \seq_item:Nn \l_nt_parts_seq { 2 } }
       % Use Babel's \monthname to get the localized text
-      \MemSet { DocDate } { #1, month, text } 
-        { \monthname [ \seq_item:Nn \l_nt_parts_seq { 2 } ] }
+      \MemSet* { DocDate } { #1, month, text } 
+        { \babelmonthname { \seq_item:Nn \l_nt_parts_seq { 2 } } }
      }
     
     % Case: YYYY-MM-DD
     { 3 }
      {
-      \MemSet { DocDate } { #1, year }  { \seq_item:Nn \l_nt_parts_seq { 1 } }
-      \MemSet { DocDate } { #1, month } { \seq_item:Nn \l_nt_parts_seq { 2 } }
-      \MemSet { DocDate } { #1, month, text } 
-        { \monthname [ \seq_item:Nn \l_nt_parts_seq { 2 } ] }
-      \MemSet { DocDate } { #1, day }   { \seq_item:Nn \l_nt_parts_seq { 3 } }
+      \MemSet* { DocDate } { #1, year }  { \seq_item:Nn \l_nt_parts_seq { 1 } }
+      \MemSet* { DocDate } { #1, month } { \seq_item:Nn \l_nt_parts_seq { 2 } }
+      \MemSet* { DocDate } { #1, month, text } 
+        { \babelmonthname { \seq_item:Nn \l_nt_parts_seq { 2 } } }
+      \MemSet* { DocDate } { #1, day }   { \seq_item:Nn \l_nt_parts_seq { 3 } }
      }
    }
  }
@@ -1909,7 +1928,7 @@
               \ClassError{novathesis}{Can't make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
             \fi\fi}}}%
   }[%
-      \options{/@nt/listof/\@listofat/.newpush={\ifdefmacro{#2}{#2}{\csuse{#2}}}}%
+      \options{/@nt/listof/\@listofat/.newpush={\ifcsdef{#2}{#2}{\csuse{#2}}}}%
    ]%
 }
 
@@ -1955,14 +1974,14 @@
           \pagestyle{empty}%
           \ntprintbackcover%
     }%
-  }[\ifdefmacro{#1}{#1}{\csuse{ntprint#1}}]%
+  }[\ifcsmacro{ntprint#1}{\csuse{ntprint#1}}{\ifcsmacro{#1}{\csuse{#1}}{}}]%
 }
 
 \newcommand*{\ntprintlist}[1]{%
   \optionlistdo{#1}{%
     \begingroup
       \clearpage
-      \ifdefmacro{##1}
+      \ifcsmacro{##1}
         {##1}% ##1 is defined
         {%     ##1 is undefined
         \ifcsmacro{ntprint##1}{%  \ntprint#1 is defined
