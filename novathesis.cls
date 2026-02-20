@@ -350,13 +350,12 @@
       { \tl_upper_case:n { #1 } }
   }
 
-\NewDocumentCommand {\MakeTitlecase} { m }
+\DeclareDocumentCommand {\MakeTitlecase} { m }
   {
     \tl_set:Nn \l_tmpa_tl { #1 }
     \nt_titlecase_first:N \l_tmpa_tl
     \tl_use:N \l_tmpa_tl
   }
-\ExplSyntaxOff
 
 %=======================================================================
 % \IfBeginsWithAnyOf {text} {comma_sep_list_of_prefixes} {true} {false}
