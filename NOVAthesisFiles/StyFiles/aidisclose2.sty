@@ -195,11 +195,13 @@
       { \tl_set_eq:NN \l__aid_iso_code_tl \l_tmpa_tl }
       { \tl_set:Nx \l__aid_iso_code_tl { #1 } }
 
+    % ALWAYS update the target language so user overrides apply correctly
+    \tl_gset:Nx \g__aid_target_lang_tl { \l__aid_iso_code_tl }
+
     \bool_if_exist:cTF { g__aid_loaded_ \l__aid_iso_code_tl _bool }
       { }
       {
          \group_begin:
-           \tl_gset:Nx \g__aid_target_lang_tl { \l__aid_iso_code_tl }
            \__aid_find_file:n { \l__aid_iso_code_tl }
          \group_end:
          \bool_new:c { g__aid_loaded_ \l__aid_iso_code_tl _bool }
@@ -432,29 +434,17 @@
     \seq_gput_right:No \g__aid_active_keys_seq { \l__aid_temp_tl }
   }
 
+
+\seq_new:N \g__aid_tools_seq
+
 \NewDocumentCommand \AIDtoolsUsed { m }
   {
     \tl_if_blank:nTF { #1 }
-      { 
-         \__aid_fetch_string:nN { none_used } \l_tmpa_tl
-         \tl_gset_eq:NN \g__aid_tools_sentence_tl \l_tmpa_tl
-      }
+      { \seq_gclear:N \g__aid_tools_seq }
       {
-        \seq_set_split:Nnn \l__aid_tools_seq { , } { #1 }
-        \seq_set_map:NNn \l__aid_tools_seq \l__aid_tools_seq { \tl_trim_spaces:n {##1} }
-        \seq_remove_all:Nn \l__aid_tools_seq { }
-        
-        \__aid_fetch_string:nN { and } \l_tmpa_tl
-        
-        % FIX: Use \tl_gset:Nx and \exp_not:V to bake the value of "and"
-        % into the sentence immediately, preventing variable collision later.
-        \tl_gset:Nx \g__aid_tools_sentence_tl
-          {
-            \exp_not:N \seq_use:Nnnn \exp_not:N \l__aid_tools_seq 
-              { \ \exp_not:V \l_tmpa_tl \  } 
-              { ,\  } 
-              { ,\ \exp_not:V \l_tmpa_tl \  } .
-          }
+        \seq_gset_split:Nnn \g__aid_tools_seq { , } { #1 }
+        \seq_gset_map:NNn \g__aid_tools_seq \g__aid_tools_seq { \tl_trim_spaces:n {##1} }
+        \seq_gremove_all:Nn \g__aid_tools_seq { }
       }
   }
 
@@ -520,6 +510,7 @@
 \AIDcheckmarkColor { black }
 \AIDboxUsedColor { black }
 \AIDboxUnusedColor { black!50 }
+\AIDtoolsUsed{ }
 
 % =========================================================
 % 9) COMMENT ENVIRONMENTS
@@ -613,7 +604,21 @@
       { \noindent \tl_use:N \l_tmpa_tl \par \bigskip }
     
     \__aid_fetch_string:nN { tools_used } \l_tmpa_tl
-    \noindent \textbf { \tl_use:N \l_tmpa_tl } \  \tl_use:N \g__aid_tools_sentence_tl
+    \noindent \textbf { \tl_use:N \l_tmpa_tl } \ 
+    
+    % Render the tools sentence dynamically here!
+    \seq_if_empty:NTF \g__aid_tools_seq
+      {
+         \__aid_fetch_string:nN { none_used } \l_tmpb_tl
+         \tl_use:N \l_tmpb_tl
+      }
+      {
+         \__aid_fetch_string:nN { and } \l_tmpb_tl
+         \seq_use:Nnnn \g__aid_tools_seq 
+           { \ \tl_use:N \l_tmpb_tl \  } 
+           { ,\  } 
+           { ,\ \tl_use:N \l_tmpb_tl \  } .
+      }
     
     \__aid_fetch_string:nN { post_tools } \l_tmpa_tl
     \tl_if_empty:NF \l_tmpa_tl
@@ -827,7 +832,6 @@
             { \__aidisclose_orig_bibliography:n { aidisclose , #1 } }
         }
     }
-    \AIDtoolsUsed { }
 }
 
 \endinput
