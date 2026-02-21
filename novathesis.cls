@@ -1980,17 +1980,13 @@
   \optionlistdo{#1}{%
     \begingroup
       \clearpage
-      \ifcsmacro{##1}
-        {##1}% ##1 is defined
-        {%     ##1 is undefined
-        \ifcsmacro{ntprint##1}{%  \ntprint#1 is defined
-          \NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}%
-        }{%                       \ntprint#1 is undefined
-          \ifcsmacro{##1}{%       \##1 is defined
-            \NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}%
-          }{%                     nothing is defined
-            \ClassError{novathesis}{Invalid contents for frontmatter or mainmatter: [##1]}{}%
-          }%
+      \ifcsmacro{ntprint##1}{%  \ntprint#1 is defined
+        \NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}%
+      }{%                       \ntprint#1 is undefined
+        \ifcsmacro{##1}{%       \##1 is defined
+          \NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}%
+        }{%                     nothing is defined
+          \ClassError{novathesis}{Invalid contents for frontmatter or mainmatter: [##1]}{}%
         }%
       }%
       % \unskip%

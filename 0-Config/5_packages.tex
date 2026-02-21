@@ -51,9 +51,39 @@
 % \usepackage{algorithm2e}
 % \RestyleAlgo{ruled}
 
-% \usepackage{minted}    % Fontification of source code listings
+\usepackage{minted}    % Fontification of source code listings
 
-\usepackage{listings}    % Fontification of source code listingsConfig/5_packages.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 6. Customization for LaTeX pretty print with minted
+\definecolor{latexbg}{HTML}{F5F5EE}
+\newminted{latex}{
+  bgcolor=latexbg,
+  fontsize=\small,
+  breaklines,
+  tabsize=2,
+  autogobble,
+  % frame=single,
+  % framesep=3mm,
+  % rulecolor=black!20,
+}
+\newmintinline{latex}{}
+\newenvironment{ltx}
+  {\VerbatimEnvironment
+   \begin{minted}[
+    bgcolor=latexbg,
+    fontsize=\small,
+    breaklines,
+    tabsize=2,
+    autogobble,
+    % frame=single,
+    % framesep=3mm,
+    % rulecolor=black!20,
+   ]{latex}}
+  {\end{minted}}
+
+
+
+% \usepackage{listings}    % Fontification of source code listingsConfig/5_packages.tex
 %                          % In alternative, use the package “minted” (highly recomended)
 
 % \lstset{
