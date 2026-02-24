@@ -135,9 +135,9 @@ You may process the same source files with both \verb!latex! or \verb!pdflatex!.
 
 \subsection{Dealing with Citations} % (fold)
 
-Para fazer citações, deverá usar-se a chave da referência no ficheiro BibTeX. Se for uma única referência~\cite{Artho04}, usar um ``\verb!~!'' para ligar o \verb!\cite{...}! à palavra que o precede (\ldots\verb!referência~\cite{Artho04}!).  Caso queira fazer múltiplas citações~\cite{Shavit95,Silberschatz06,Moss85}, deverá agrupá-las dentro de um úinico \verb!\cite{...}!.
+To make citations, the reference key in the BibTeX file should be used. If it is a single reference~\cite{Artho04}, use a ``\latexinline!~!'' to link the \latexinline!\cite{...}! to the word that precedes it (\ldots\latexinline!reference~\cite{Artho04}!). If you want to make multiple citations~\cite{Shavit95,Silberschatz06,Moss85}, they should be grouped within a single \latexinline!\cite{...}! and separeted by commas.
 
-Note que o ficheiro de bibliografia pode ter tantas entradas quantas quiser. Apenas aquelas cuja chave seja referenciada no texto é que serão incluidas na listagem de bibliografia.
+Note that the bibliography file can have as many entries as you want. Only those whose keys are referenced in the text will be included in the bibliography list.
 
 
 \subsection{Footnotes} % (fold)
@@ -212,16 +212,16 @@ To combine several figures into a single one… You can then reference the set a
 
 \begin{figure}[htbp]
   \centering
-    \subbottom[Novelo de lã]{%
+    \subbottom[Wool ball]{%
     \label{fig:woolball}
     \includegraphics[height=1in]{knitting-vectorial}
     }
 \qquad\qquad
-    \subbottom[Tempestade com neve]{%
+    \subbottom[Snowstorm]{%
     \label{fig:cloud}
     \includegraphics[height=1in]{snowstorm-vectorial}
     }
-  \caption{Exemplo de utilização de \emph{subbottom}}
+  \caption{Example of \emph{subbottom} usage}
   \label{fig:complete-figure}
 \end{figure}
 
@@ -234,7 +234,7 @@ or numbered
 e = mc^2
 \label{eq:1}
 \end{equation}
-which can latter be referenced as equation~\ref{eq:1}
+which can later be referenced as equation~\ref{eq:1}
 
 \newif\ifntlistingsloaded
 \ntifpkgloaded{listings}{\ntlistingsloadedtrue}{\ntlistingsloadedfalse}
@@ -281,7 +281,7 @@ and uncomment
 \begin{verbatim}
 \ntaddlistof{listofalgorithms}
 \end{verbatim}
-in file “\verb!8_list_og.tex!”.
+in file “\verb!6_list_of.tex!”.
 
 % \begin{algorithm}
 % $i\gets 10$\;

@@ -8,47 +8,195 @@
 
 \typeout{NT FILE chapter4.tex}%
 
-\chapter{Adding Support to a New School (work in progress)}
-\label{cha:porting_novathesis}
+\chapter{Project Internals and Contributing}
+\label{cha:project_internals}
 
-My advice to customize the \novathesis\ template to another School/University/Department/Degree is to browse the existing supported degrees to find one that is \emph{close enough}, and depart from there!
+This chapter is intended for contributors and advanced users who want to understand how \novathesis\ works under the hood or who wish to add support for a new school, department, or degree.
 
-The multitude of layouts supported by the \novathesis\ template is based in a three-tier naming scheme, separated by slashes: University / School / Department-or-Degree.  This three-tier naming scheme is also reflected in a three-tier directory (folder) structure in: \verb!<project_root>a/NOVAthesiFiles/Schools/…!.  For example:
+\section{Project Architecture}
+\label{sec:project_architecture}
 
-\begin{verbatim}
-…
-| 
-+—— nova
-|   +—— Images
-|   +—— fct
-|   |   \—— Images
-|   +—— ims
-|   |   \—— Images
-|   …
-|   
-\—— uminho
-    +—— Images
-    +—— ea
-    |   \—— Images
-    +—— ec
-    |   \—— Images
-    …
-\end{verbatim}
+The \novathesis\ template is organized into several directories, each with a specific purpose. Understanding this structure is crucial for any contribution.
 
-The directory \verb!uminho! contains the customization for all Schools of Universidade do Minho.  This university is an example of the case where the regulations are defined at University level and all the schools apply the same thesis layout and organization.  So, the all the customization is done in the file \verb!uminho/uminho-defaults.ldf!, except the definition of the name and logo of each individual school.
-
-As another example, the directory \verb!nova! contains the customization for all Schools from NOVA University Lisbon. This university grants a lot of freedom in the definition of the thesis layouts.  In some cases, they are defined at the School level (e.g., NOVA FCT), while is some other cases they are defined separately for each degree (e.g., NOVA IMS).
-
+\begin{description}
+  \item[\texttt{novathesis.cls}] The core \LaTeX\ class file. It handles the loading of packages, defines the document structure, and provides the API for school customization.
+  \item[\texttt{0-Config/}] Contains the user-level configuration files.
+    \begin{itemize}
+      \item \texttt{0\_memoir.tex}: Settings for the \texttt{memoir} class.
+      \item \texttt{1\_novathesis.tex}: Main template options (school selection, language, etc.).
+      \item \texttt{2\_biblatex.tex}: Bibliography settings.
+      \item \texttt{3\_cover.tex}: Manual cover overrides.
+    \end{itemize}
+  \item[\texttt{NOVAthesisFiles/}] The "engine" room of the template.
+    \begin{itemize}
+      \item \texttt{Schools/}: School-specific configuration files (\texttt{.ldf}) and logos.
+      \item \texttt{Strings/}: Localization files for different languages.
+      \item \texttt{ChapStyles/}: Custom chapter styles.
+      \item \texttt{FontStyles/}: Custom font configurations.
+      \item \texttt{StyFiles/}: Internal helper packages (e.g., \texttt{options-ext}, \texttt{memory2}).
+      \item \texttt{Images/}: Common images and branding.
+    \end{itemize}
+\end{description}
 
 
+\section{Adding Support for a New School}
+\label{sec:adding_school}
+
+Adding support for a new school involves creating a set of configuration files that define the school's metadata (name, university), localized strings (degree names, dissertation types), and the cover page layout.
+
+The template uses a two-tier naming scheme for schools: \texttt{University / School}. This is reflected in the directory structure under \texttt{NOVAthesisFiles/Schools/}.
+
+\subsection{Step-by-Step Guide}
 
 \begin{enumerate}
-  \item Try all the already supported schools and check which one is closer to your needs;
-  \begin{enumerate}
-    \item Edit \verb!Config/1_novathesis.tex! and near line 28 uncomment the line with key \verb!\ntsetup{school=<SOMETHING>}!;
-    \item For each school supported (see the comment), replace \verb!<SOMETHING>! with the school name, e.g., make it \verb!\ntsetup{school=ulisboa/fmv}!
-    \item Recompile and check the document.  Particularly, check the cover layout, the front-page (second cover) layout, the front-matter contents, the bibliography style;
-    \item Repeat for the next school, until you find one close enough.
-  \end{enumerate}
-  \item 
+  \item \textbf{Identify the closest match}: Browse the existing directories in \texttt{NOVAthesisFiles/Schools/} to find a school with a similar layout or regulations.
+  \item \textbf{Create the directory structure}: Create a new directory for your university and school. For example, \texttt{NOVAthesisFiles/Schools/myuniv/myschool/}.
+  \item \textbf{Create the defaults files}: You may need up to two \texttt{.ldf} files:
+    \begin{itemize}
+      \item \texttt{NOVAthesisFiles/Schools/myuniv/myuniv-defaults.ldf}: If the formatting rules (margins, cover layout, dissertation strings) are common to all schools within the university, place the configuration here. 
+      \item \texttt{NOVAthesisFiles/Schools/myuniv/myschool/myuniv-myschool-defaults.ldf}: This file should contain school-specific customizations. 
+    \end{itemize}
+    \textbf{Best Practice}: If the university rules are consistent across all its schools, \texttt{myuniv-defaults.ldf} should contain the bulk of the logic, and the individual school files should be minimal (just defining the school name and loading logos). Conversely, if rules vary significantly between schools, \texttt{myuniv-defaults.ldf} should be minimal, and the primary configuration should reside in the school-specific files.
+  \item \textbf{Add logos}: Create \texttt{Images/} subdirectories at the university and/or school level, depending on scope, and place the logos (preferably in PDF vectorial format) there.
+  \item \textbf{Configure the metadata}: In your \texttt{.ldf} files, define the university and school names for various languages using the \texttt{\textbackslash university} and \texttt{\textbackslash school} commands.
+
+\subsection{Metadata and Strings}
+
+The template uses a powerful metadata system based on the \texttt{MemStore} package. Most strings can be defined with multiple indices (e.g., degree, gender, language).
+
+\subsubsection{Core Metadata Commands}
+
+The following commands are used to define the basic identity of the school and degree:
+\begin{itemize}
+  \item \texttt{\textbackslash school(lang) := \{...\}}: Defines the school name (e.g., \texttt{pt}, \texttt{en}).
+  \item \texttt{\textbackslash university(lang) := \{...\}}: Defines the university name.
+  \item \texttt{\textbackslash school(logo, lang) := \{filename\}}: Specifies the logo filename for the school.
+  \item \texttt{\textbackslash degreestring(type, gender, lang) := \{...\}}: Defines the name of the degree (e.g., \texttt{msc}, \texttt{phd}).
+  \item \texttt{\textbackslash majorfield(lang) := \{...\}}: The scientific field or major.
+  \item \texttt{\textbackslash specialization(lang) := \{...\}}: Optional specialization within the field.
+\end{itemize}
+
+\subsubsection{Document Descriptions}
+
+These strings describe the nature of the document and its submission purpose:
+\begin{itemize}
+  \item \texttt{\textbackslash dissertationstring(type, lang) := \{...\}}: The long text on the cover explaining the document's purpose (e.g., "Dissertation specifically prepared...").
+  \item \texttt{\textbackslash dissertationplan(type, lang) := \{...\}}: Text used for intermediate reports or plans.
+  \item \texttt{\textbackslash copyrighttextstring(lang) := \{...\}}: The legal text for the copyright page.
+\end{itemize}
+
+\subsubsection{Person Titles (Advisers and Committee)}
+
+Titles for supervisors and committee members are highly granular:
+\begin{itemize}
+  \item \texttt{\textbackslash adviserstring(type, num, gender, lang) := \{...\}}:
+    \begin{itemize}
+      \item \texttt{type}: \texttt{a} (adviser), \texttt{c} (co-adviser), \texttt{t} (tutor).
+      \item \texttt{num}: \texttt{1} or \texttt{2}.
+      \item \texttt{gender}: \texttt{m} (male), \texttt{f} (female).
+    \end{itemize}
+  \item \texttt{\textbackslash committeestring(type, num, gender, lang) := \{...\}}: Similar to advisers, but for jury members (e.g., \texttt{c} for chair, \texttt{m} for main examiner).
+\end{itemize}
+
+\subsubsection{Layout and Geometry}
+
+School-specific margins and cover properties:
+\begin{itemize}
+  \item \texttt{\textbackslash margin(media, side) := \{value\}}:
+    \begin{itemize}
+      \item \texttt{media}: \texttt{screen}, \texttt{paper}, or \texttt{cover}.
+      \item \texttt{side}: \texttt{top}, \texttt{bottom}, \texttt{left}, \texttt{right}.
+    \end{itemize}
+  \item \texttt{\textbackslash committeeorder() := \{c,m,r,a\}}: Defines the printing order of committee members.
+  \item \texttt{\textbackslash thesiscover(page, attribute) := \{value\}}:
+    \begin{itemize}
+      \item \texttt{page}: \texttt{1-1} (front cover), \texttt{2-1} (front page), etc.
+      \item \texttt{attribute}: \texttt{bgcolor}, \texttt{textcolor}, \texttt{image}.
+    \end{itemize}
+\end{itemize}
+
+For example, to define the "Supervisor" string for an MSc dissertation in English:
+\begin{lstlisting}[language=TeX]
+\adviserstring(a, 1, m, en) := {Supervisor}
+\adviserstring(a, 1, f, en) := {Supervisor}
+\end{lstlisting}
+
+\subsection{Customizing the Cover Layout}
+
+The cover is built using a grid-based system. You can add elements (text, images) to specific positions using the \texttt{\textbackslash ntaddtocover} command.
+
+\begin{lstlisting}[language=TeX]
+\ntaddtocover[valign=c, vspace=2cm]{1-1,2-1}{%
+  \includegraphics[height=2cm]{myschool-logo}%
+}
+\end{lstlisting}
+
+The first argument accepts an optional set of keys to control the placement:
+\begin{description}
+  \item[\texttt{valign}] Vertical alignment (\texttt{t}op, \texttt{c}enter, \texttt{b}ottom).
+  \item[\texttt{halign}] Horizontal alignment (\texttt{l}eft, \texttt{c}enter, \texttt{r}ight).
+  \item[\texttt{vspace}] Vertical space (offset) from the reference point.
+  \item[\texttt{hspace}] Horizontal space (offset).
+  \item[\texttt{height}] Height of the element's box.
+  \item[\texttt{width}] Width of the element's box.
+  \item[\texttt{status}] Filter by document status (\texttt{working}, \texttt{provisional}, \texttt{final}).
+\end{description}
+
+The second argument (\texttt{1-1,2-1}) specifies the pages (Cover and Front Page) where the element should appear.
+
+\subsection{Spine Configuration}
+
+The book spine is configured using the \texttt{\textbackslash SpineSetup} command, provided by the \texttt{novathesis-spine} package. It allows you to define the background color, logos, and the layout of the title and author name.
+
+\begin{lstlisting}[language=TeX]
+\SpineSetup{
+  box/logo/bg/image = {my-school-logo},
+  box/logo/bg/image/angle = {-90},
+  box/title/len = 18cm,
+  box/logo/len = 2cm,
+}
+\end{lstlisting}
+
+\section{Localization and Strings}
+\label{sec:localization}
+
+The \novathesis\ template is fully multilingual and uses a centralized localization system located in \texttt{NOVAthesisFiles/Strings/}. Each supported language is identified by its ISO 3166-1 alpha-2 (two-letter) code.
+
+\subsection{The Localization Mechanism}
+
+The system relies on three interconnected components:
+
+\begin{description}
+  \item[\texttt{strings-declare.tex}] This file acts as a registry. It uses the \texttt{MemStore} package's \texttt{\textbackslash newdata} command to define all the metadata keys that need translation (e.g., \texttt{\textbackslash andstring}, \texttt{\textbackslash bkmstring}, \texttt{\textbackslash adviserstring}).
+  \item[\texttt{strings-<lang>.ldf}] These files contain the actual translations for a specific language. They define the values for the registered keys using the \texttt{:=} operator. For example:
+    \begin{lstlisting}[language=TeX]
+\andstring(en) := { and }
+\keywordsstring(en) := {Keywords}
+    \end{lstlisting}
+  \item[\texttt{Babel} Integration] While metadata strings are handled by \texttt{MemStore}, standard \LaTeX\ labels (like \emph{Chapter}, \emph{Contents}, or \emph{Index}) are managed by the \texttt{Babel} package. \novathesis\ provides a special command, \texttt{\textbackslash ntlangsetup}, to override these labels in the \texttt{.ldf} files.
+\end{description}
+
+\subsection{Overriding Babel Labels}
+
+To ensure consistency between the template's metadata and standard \LaTeX\ labels, you should use \texttt{\textbackslash ntlangsetup} in your \texttt{.ldf} file. For example, in \texttt{strings-pt.ldf}:
+
+\begin{lstlisting}[language=TeX]
+\ntlangsetup*{pt/contents=Índice}
+\ntlangsetup*{pt/listfigure=Índice de Figuras}
+\end{lstlisting}
+
+This command ensures that \texttt{Babel} uses "Índice" instead of the default "Conteúdo" when the Portuguese language is selected.
+
+\subsection{Adding a New Language}
+
+To add support for a new language (e.g., \texttt{zz}):
+
+\begin{enumerate}
+  \item \textbf{Create the string file}: Create \texttt{NOVAthesisFiles/Strings/strings-zz.ldf}.
+  \item \textbf{Register the file}: In \texttt{strings-zz.ldf}, ensure you input the declarations:
+    \begin{lstlisting}[language=TeX]
+\input{\DIRSTRINGS/strings-declare.tex}
+    \end{lstlisting}
+  \item \textbf{Provide translations}: Copy the content from \texttt{strings-en.ldf} and translate all the values to your language, replacing \texttt{(en)} with \texttt{(zz)}.
+  \item \textbf{Register with the template}: Update the main \texttt{novathesis.cls} or configuration files to recognize the new language code.
 \end{enumerate}
