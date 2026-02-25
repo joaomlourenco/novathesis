@@ -67,7 +67,7 @@ endif
 #————————————————————————————————————————————————————————————————————————————
 # latexmk and its flags
 LTXMK:=latexmk
-LTXFLAGS=-time -f -file-line-error -shell-escape -synctex=1 -auxdir=$(AUXDIR) $(MODE) $(FLAGS)
+LTXFLAGS=-time -file-line-error -shell-escape -synctex=1 -auxdir=$(AUXDIR) $(MODE) $(FLAGS)
 BUILD:=.Build/build.py
 
 #————————————————————————————————————————————————————————————————————————————
