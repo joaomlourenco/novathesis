@@ -600,12 +600,15 @@
       {
         \bool_set_true:N \l_file_found_bool
         
-        % 2. Create a copy and strip the extension
+        % 2. Store in global variables for top-level usage
         \tl_set_eq:NN \l_tmpb_tl \l_tmpa_tl
         
         % Regex: Match a dot, followed by non-dots and non-slashes, until end of string.
         % This ensures we don't accidentally match a dot in a directory name (e.g. "ver.1/img").
         \regex_replace_once:nnN { \.[^./]* \Z } { } \l_tmpb_tl
+
+        \xdef\ntfoundpath{\l_tmpa_tl}
+        \xdef\ntfoundpathnoext{\l_tmpb_tl}
         
         % 3. Define the internal action to accept TWO arguments:
         %    ##1 = Full Path (e.g., images/logo.png)
@@ -661,7 +664,6 @@
 
 
 % 1. Create variables
-\tl_new:N \l_found_path_tl
 
 \NewDocumentCommand{\InputIfFileExistsInDirsTF}{ m m +m +m }
   {
@@ -3484,6 +3486,7 @@
   \xdef\Hy@chapapp{annex}%
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
+  \gdef\chaptername{\annexname}%
   % \gdef\@chapapp{\translate{annex}}%
   \gdef\thechapter{\annexcounter\c@chapter}%
 }%
@@ -3921,9 +3924,9 @@
 \IfFileExistsCase
   {
     {\DIRFONTSTYLES/\option{/novathesis/style/font}.sty}
-          {\input{#1}},
+          {\input{\ntfoundpath}},
     {\option{/novathesis/style/font}.sty}
-          {\RequirePackage{#2}},        
+          {\RequirePackage{\ntfoundpathnoext}},        
   }
   {
     \ifcsname IfFontExistsTF\endcsname
