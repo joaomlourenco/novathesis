@@ -403,7 +403,7 @@ def prepare_temp_workspace(project_root: Path, build_dir: Optional[str]) -> Path
     ignore = shutil.ignore_patterns(
         "*.aux", "*.log", "*.toc", "*.out", "*.fls", "*.fdb_latexmk",
         "*.synctex*", "*.bbl", "*.blg",
-        ".git", ".gitignore", ".DS_Store", "AUXDIR"
+        ".git", ".gitignore", ".DS_Store", "AUXDIR", "aidisclose.bib"
     )
     _copytree_symlinking(project_root, tmpdir, ignore=ignore)
     
