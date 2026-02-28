@@ -355,13 +355,15 @@
 
 \ExplSyntaxOn
 % Robust titlecase function: modifies the TL variable in-place
+\tl_new:N \l__nt_titlecase_head_tl
+\tl_new:N \l__nt_titlecase_tail_tl
 \cs_new_protected:Nn \nt_titlecase_first:N
  {
    \tl_if_empty:NF #1
     {
-      \tl_set:Ne \l_tmpa_tl { \tl_head:N #1 }
-      \tl_set:Ne \l_tmpb_tl { \tl_tail:N #1 }
-      \tl_set:Ne #1 { \exp_not:N \MakeUppercase { \l_tmpa_tl } \l_tmpb_tl }
+      \tl_set:Ne \l__nt_titlecase_head_tl { \tl_head:N #1 }
+      \tl_set:Ne \l__nt_titlecase_tail_tl { \tl_tail:N #1 }
+      \tl_set:Ne #1 { \exp_not:N \MakeUppercase { \l__nt_titlecase_head_tl } \l__nt_titlecase_tail_tl }
     }
  }
 
@@ -1779,7 +1781,9 @@
     
     % Case 2: Year and Month (YYYY-MM)
     { 2 } { 
-      \MakeTitlecase { \babelmonthname { \seq_item:Nn \l_nt_date_seq { 2 } } }
+      \tl_set:Ne \l_tmpa_tl { \babelmonthname { \seq_item:Nn \l_nt_date_seq { 2 } } }
+      \nt_titlecase_first:N \l_tmpa_tl
+      \tl_use:N \l_tmpa_tl
       ,~  % separator
       \seq_item:Nn \l_nt_date_seq { 1 }  % year
     }
