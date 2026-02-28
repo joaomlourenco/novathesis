@@ -38,11 +38,8 @@
 % \usepackage[orphans/prevent, widows/prevent]{widows-and-orphans} % add warnings about widows and orphans to “template.log”
 % \usepackage{refcheck}     % list used and unused labels
 
-\usepackage[shortlabels]{enumitem}     % To enable costumizable enumerates.  See the documentation.
-
-\newenvironment{asparaenum}[1][]  % emulate paralist's 'asparaenum'
-  {\begin{enumerate}[#1, wide, itemsep=0pt, parsep=\parskip, topsep=0pt, partopsep=0pt]}
-  {\end{enumerate}}
+\usepackage[shortlabels, inline]{enumitem} % To enable costumizable inline enumerates.  See the documentation.
+\input{paralist-compat}
 
 \usepackage[textsize=footnotesize]{todonotes}  % To register TODO notes in the text
 

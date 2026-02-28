@@ -12,23 +12,51 @@
 %   You may add more lists if you want to, but please notice that the
 %   initial "\" is always omited in the “list-name”
 %=============================================================================
+\makeatletter
 
 % To move some listof to the end of the document, use:
 %     \ntaddlistof[backmatter]{the_list_of}
 
-\ntaddlistof[frontmatter]{tableofcontents}    % The Table of Contents. Probably you want ot leave this as is! ;)
+% --- 0. BASIC SETUP ---
+\ntaddlistof{tableofcontents}    % The Table of Contents. Probably you want ot leave this as is! ;)
 \ntaddlistof{listoffigures}      % The List of Figures. Comment to omit.
 \ntaddlistof{listoftables}       % The List of Tables. Comment to omit.
-\@ifpackageloaded{coloredtheorem}    % The List of Algorithms for package “algorithms”.
-    {\ntaddlistof{cthlistofalgorithms}}{}
-\@ifpackageloaded{algorithm2e}   % The List of Algorithms for package “algorithm2e”.
-    {\ntaddlistof{listofalgorithms}}{}
-\@ifpackageloaded{algorithms}    % The List of Algorithms for package “algorithms”.
-    {\ntaddlistof{listofalgorithms}}{}
-\@ifpackageloaded{algorithm}    % The List of Algorithms for package “algorithm”.
-    {\ntaddlistof{listofalgorithms}}{}
-\@ifpackageloaded{minted}        % The List of Listings for the “minted” package.
-    {\ntaddlistof{listoflistings}}
-{\@ifpackageloaded{listings}      % The List of Listings for package “listings”.
-    {\ntaddlistof{lstlistoflistings}}{}}
 
+
+% --- 1. ALGORITHMS SETUP ---
+\newcount\has@algo@list
+\has@algo@list=0 % Default to false
+
+% Check for any algorithm package
+\@ifpackageloaded{coloredtheorem}{\has@algo@list=1}{}
+\@ifpackageloaded{algorithm2e}{\has@algo@list=1}{}
+\@ifpackageloaded{algorithms}{\has@algo@list=1}{}
+\@ifpackageloaded{algorithm}{\has@algo@list=1}{}
+
+% Execute only once if any of the above are active
+\ifnum\has@algo@list=1
+    % Since you noted cthlistofalgorithms is part of the set, 
+    % we use the standard list name for the set.
+    \ntaddlistof{listofalgorithms}
+\fi
+
+
+% --- 2. LISTINGS SETUP ---
+\newcount\has@listings@list
+\has@listings@list=0 % Default to false
+
+% Check for Minted variants
+\@ifpackageloaded{minted}{\has@listings@list=1}{}
+\@ifpackageloaded{minted2}{\has@listings@list=1}{}
+
+% Check for Standard Listings (different command, but part of the same logic)
+\@ifpackageloaded{listings}{\has@listings@list=2}{}
+
+% Execute based on priority/package loaded
+\ifnum\has@listings@list=1
+    \ntaddlistof{listoflistings}    % Minted style
+\else\ifnum\has@listings@list=2
+    \ntaddlistof{lstlistoflistings} % Standard listings style
+\fi\fi
+
+\makeatother

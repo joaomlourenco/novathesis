@@ -82,6 +82,10 @@
 \AtBeginDocument
  {
   \@nt@fixhyperref
-  \DeclareRobustCommand{\Autoref}[1]{ \nt_autoref_logic:n {#1} }
+  \DeclareRobustCommand{\Autoref}[1]{ 
+    \ExplSyntaxOn
+    \nt_autoref_logic:n {#1} 
+    \ExplSyntaxOff
+  }
  }
 \ExplSyntaxOff
