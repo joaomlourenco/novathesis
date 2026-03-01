@@ -245,10 +245,10 @@
 % -------------------------------------------------------------------------------
 % Specialization
 \ntaddtocover[halign=l,hspace=-1mm,valign=t]{1-1}{%
-  \StrCut{\ToUppercase{\thespecializationstring(\@LANG@COVER)}}{ }\@SPCZL\@dummy%
   \fontsize{11}{11}\selectfont%
   {\ifdatadefined{specialization}(\@LANG@COVER)
-    {\textbf{\@SPCZL} \ToUppercase{\theminorfield(\@LANG@COVER)}}
+    {\StrCut{\thespecializationstring(\@LANG@COVER)}{ }\@SPCZL\@dummy%
+     \ToUppercase{\textbf{\@SPCZL}} \ToUppercase{\theminorfield(\@LANG@COVER)}}
     {~}}%
 }
 

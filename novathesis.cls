@@ -367,11 +367,12 @@
     }
  }
 
-\NewExpandableDocumentCommand {\ToUppercase} { m }
+\DeclareExpandableDocumentCommand{\ToUppercase}{ m }
   {
-    \MakeUppercase { #1 }
+    \text_uppercase:n { #1 }
   }
 
+  
 \DeclareDocumentCommand {\MakeTitlecase} { m }
   {
     \tl_set:Ne \l_tmpa_tl { #1 }
