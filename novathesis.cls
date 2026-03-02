@@ -4,7 +4,7 @@
 %%  NOVATHESIS — novathesis.cls
 %% ----------------------------------------------------------------------------
 %%
-%% Version 7.10.2 (2026-03-01)
+%% Version 7.10.3 (2026-03-02)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -77,7 +77,7 @@
 %%      or in the subreddit r/novathesis
 %%          https://www.reddit.com/r/novathesis/
 
-\ProvidesClass{novathesis}[Version 7.10.2 (2026-03-01) novathesis template class file]
+\ProvidesClass{novathesis}[Version 7.10.3 (2026-03-02) novathesis template class file]
 \NeedsTeXFormat{LaTeX2e}[2023-06-01]
 
 %% ----------------------------------------------------------------------------
@@ -937,6 +937,9 @@
   glossaries/list/reverse/.new toggle    = true,
   glossaries/layout/.new value  = {lX},
   tocintoc/.new toggle          = true,
+  % NUMBERING
+  numbering/floats/.new choice  = {chapter, sequential},
+  numbering/floats              = chapter,
   % DEBUG
   debug/.new list               = {},         % cover, index
 }
@@ -1912,62 +1915,51 @@
                    \bookmark[dest=toctarget]{\contentsname}}%
     }}}%
     {listoffigures*}{\options{/@nt/listof/\@listofat/.newpush={%
-            \nt@iflistempty{lof}{}{%
               \clearforchapter%
               \hypertarget{loftarget}{\listoffigures*}%
               \bookmark[dest=loftarget]{\listfigurename}%
-            }%
     }}}%
     {listoffigures}{\options{/@nt/listof/\@listofat/.newpush={%
-            \nt@iflistempty{lof}{}{%
               \clearforchapter%
               \hypertarget{loftarget}{\listoffigures}%
               % \bookmark[dest=loftarget,level=1]{\listfigurename}%
-            }%
     }}}%
     {listoftables*}{\options{/@nt/listof/\@listofat/.newpush={%
-            \nt@iflistempty{lot}{}{%
               \clearforchapter%
               \hypertarget{lottarget}{\listoftables*}%
               \bookmark[dest=lottarget]{\listtablename}%
-            }%
     }}}%
     {listoftables}{\options{/@nt/listof/\@listofat/.newpush={%
-            \nt@iflistempty{lot}{}{%
               \clearforchapter%
               \hypertarget{lottarget}{\listoftables}%
               % \bookmark[dest=lottarget]{\listtablename}%
-            }%
     }}}%
     {listoflistings}{\options{/@nt/listof/\@listofat/.newpush={%
-            \ifdefined\listoflistings
-              \nt@iflistempty{lol}{}{%
+            \ifcsdef{listoflistings}{%
                 \clearforchapter%
                 \hypertarget{loltarget}{\listoflistings}%
-                \ifdefined\listoflistingscaption
+                \ifcsdef{listoflistingscaption}{%
                   \bookmark[dest=loltarget]{\listoflistingscaption}%
-                \fi
-              }%
-            \fi
+                }{}%
+            }{}%
     }}}%
     {lstlistoflistings}{\options{/@nt/listof/\@listofat/.newpush={%
-            \nt@iflistempty{lol}{}{%
               \clearforchapter%
               \hypertarget{loltarget}{\lstlistoflistings}%
               % \bookmark[dest=loltarget]{\lstlistlistingname}%
-            }%
     }}}%
     {listofalgorithms}{\options{/@nt/listof/\@listofat/.newpush = {%
-            \nt@iflistempty{loa}{}{%
               \clearforchapter%
               \listofalgorithms
-              \ifdefined\listalgorithmname%
+              \ifcsdef{listalgorithmname}{%
                 \addcontentsline{toc}{chapter}{\listalgorithmname}%
-              \else\ifdefined\listalgorithmcfname%
-                \addcontentsline{toc}{chapter}{\listalgorithmcfname}%
-              \else
-                \ClassError{novathesis}{Can't make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
-              \fi\fi}%
+              }{%
+                \ifcsdef{listalgorithmcfname}{%
+                  \addcontentsline{toc}{chapter}{\listalgorithmcfname}%
+                }{%
+                  \ClassError{novathesis}{Can't make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
+                }%
+              }%
     }}}%
   }[%
       \options{/@nt/listof/\@listofat/.newpush={\ifcsdef{#2}{\clearforchapter\csuse{#2}}{\csuse{#2}}}}%
@@ -3476,6 +3468,7 @@
   }%
   \NTRunHook{mainmatter/pre}%
   \mainmatter%
+  \NTRunHook{mainmatter/post}%
   \@mainmattertrue
   \ifbool{@openright}{}{% openany=true
     \let\cleardoublepage\oldcleardoublepage%
@@ -3485,7 +3478,6 @@
 
 \newif\if@backmatter
 \newcommand*{\ntthesisbackmatter}{%
-  \NTRunHook{mainmatter/post}%
   \@backmattertrue
   \NTRunHook{backmatter/pre}%
 }
@@ -4002,6 +3994,27 @@
 % force page color to white in xelatex and lualatex
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
 
+\NTAddToHook{mainmatter/post}{%
+  \ifoptionequal{/novathesis/numbering/floats}{sequential}{%
+    \counterwithout{figure}{chapter}%
+    \counterwithout{table}{chapter}%
+    \counterwithout{footnote}{chapter}%
+    \counterwithout{equation}{chapter}%
+    \@ifundefined{c@algorithm}{}{\counterwithout{algorithm}{chapter}}%
+    \@ifundefined{c@listing}{}{\counterwithout{listing}{chapter}}%
+    \@ifundefined{c@lstlisting}{}{%
+      \@ifundefined{c@listing}{%
+        \counterwithout{lstlisting}{chapter}%
+      }{%
+        \let\c@lstlisting\c@listing%
+        \let\thelstlisting\thelisting%
+        \let\lstlistoflistings\listoflistings%
+      }%
+    }%
+  }{}%
+}
+
+
 \AtBeginDocument{%
   \makeatletter%
   % \typeout{XXX [\thedocauthor(name)]}
@@ -4018,5 +4031,5 @@
   % otherwise use memoir subfigures
   \@ifpackageloaded{subcaption}{}{\newsubfloat{figure}}
   \newcommand{\@ntcite}[1]{\ifdef{\parencite}{\parencite{#1}}{\cite{#1}}}
-  \makeatother
+  \makeatother  
 }

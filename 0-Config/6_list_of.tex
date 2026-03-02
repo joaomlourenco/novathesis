@@ -45,18 +45,18 @@
 \newcount\has@listings@list
 \has@listings@list=0 % Default to false
 
-% Check for Minted variants
-\@ifpackageloaded{minted}{\has@listings@list=1}{}
-\@ifpackageloaded{minted2}{\has@listings@list=1}{}
-
 % Check for Standard Listings (different command, but part of the same logic)
-\@ifpackageloaded{listings}{\has@listings@list=2}{}
+\@ifpackageloaded{listings}{\has@listings@list=1}{}
+
+% Check for Minted variants
+\@ifpackageloaded{minted}{\has@listings@list=2}{}
+\@ifpackageloaded{minted2}{\has@listings@list=2}{}
 
 % Execute based on priority/package loaded
 \ifnum\has@listings@list=1
-    \ntaddlistof{listoflistings}    % Minted style
-\else\ifnum\has@listings@list=2
     \ntaddlistof{lstlistoflistings} % Standard listings style
+\else\ifnum\has@listings@list=2
+    \ntaddlistof{listoflistings}    % Minted style
 \fi\fi
 
 \makeatother

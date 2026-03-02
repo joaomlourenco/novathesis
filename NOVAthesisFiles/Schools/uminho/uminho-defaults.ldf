@@ -37,6 +37,8 @@
 \ntsetup{print/frontpage=true}
 \ntsetup{print/statement=true}
 \ntsetup{style/font=newsgott}
+\ntsetup{numbering/floats=sequential}
+
 \ntaddfile{statement}{uminho/uminho-statement}
 
 \ifdocprovisional{\ntsetup{docstatus=final}}{}
@@ -142,11 +144,6 @@
 }
 \NTAddToHook{abstract/post}{%
   \let\chapterheadstart=\oldchapterheadstart%
-}
-
-\NTAddToHook{mainmatter/post}{%
-  \counterwithout{figure}{chapter}%
-  \counterwithout{table}{chapter}%
 }
 
 \NTAddToHook{dedication/pre}{%

@@ -26,8 +26,11 @@
 \ntsetup{print/frontpage=true}
 \ifdocworking{}{\ntsetup{color/links=black}}
 \ntsetup{print/statement=true}
+\ntsetup{numbering/floats=sequential}
+
 \ntaddfile{statement}[en]{ulisboa-fmv/ulisboa-fmv-statement-en}
 \ntaddfile{statement}[pt]{ulisboa-fmv/ulisboa-fmv-statement-pt}
+
 
 \ntbibsetup{style=cse}
 
@@ -214,10 +217,6 @@
 
 \NTAddToHook{ntquote/pre}{\vspace*{3cm}}
 
-\NTAddToHook{mainmatter/post}{%
-  \counterwithout{figure}{chapter}%
-  \counterwithout{table}{chapter}%
-}
 
 \ifdocfinal{}{
   \AtEndPreamble{\RequirePackage[pagewise]{lineno}}
