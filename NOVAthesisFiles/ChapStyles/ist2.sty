@@ -7,8 +7,17 @@
 
 \typeout{NT FILE NOVAthesisFiles/ChapStyles/ist2.sty}%
 
-%%%%% Configure chapters, headers, footers, and page numbering
+
+%%=======================================================================
+%% PACKAGE REQUIREMENTS
+%%=======================================================================
+
 \RequirePackage{soul}
+
+
+%%=======================================================================
+%% SAVEBOXES & COLORS
+%%=======================================================================
 
 \definecolor{istchaptercolor}{rgb}{0.7,0.8,0.9}
 
@@ -17,6 +26,10 @@
 \undef{\@nt@ist@part}
 \newsavebox{\@nt@ist@part}
 
+
+%%=======================================================================
+%% HELPERS
+%%=======================================================================
 
 \providecommand{\@nt@ist@chm}[1][4cm]{%
   \resizebox{!}{#1}{%
@@ -30,24 +43,21 @@
 }
 
 
+%%=======================================================================
+%% CHAPTER STYLE
+%%=======================================================================
+
 \makechapterstyle{ist}{%
-  % \renewcommand{\chapnamefont}{\normalfont\Large\scshape\raggedleft\so}%
-  \renewcommand{\chaptitlefont}{\normalfont\huge\bfseries\scshape}%\sffamily}%
-  % \renewcommand{\chapternamenum}{}
+  \renewcommand{\chaptitlefont}{\normalfont\huge\bfseries\scshape}%
   \renewcommand{\printchaptername}{}%
   \renewcommand{\printchapternum}{\null\hfill\@nt@ist@chm[2cm]\hspace*{14pt}\par}%
-  \renewcommand{\afterchapternum}{}%{\vspace*{-11ex}}%
+  \renewcommand{\afterchapternum}{}%
   \renewcommand{\printchaptertitle}[1]{\color{darkgray}\chaptitlefont\raggedleft ##1\par}%
   %
-  % \renewcommand{\partnamefont}{\chapnamefont}
-  % \renewcommand{\parttitlefont}{\chaptitlefont}
-  % \renewcommand{\partnamenum}{}
-  \renewcommand{\printpartname}{}%
   \renewcommand{\thepart}{\Roman{part}}
   \renewcommand{\printpartnum}{\null\hfill\@nt@ist@ptm[4cm]\hspace*{14pt}\par}%
-  % \renewcommand{\afterpartnum}{\vspace*{-11ex}}%
   \renewcommand{\printparttitle}[1]{\color{darkgray}\parttitlefont\raggedleft ##1\par}%
   \renewcommand*{\partnumfont}{\normalfont\scshape\MakeLowercase}
 }
-\chapterstyle{ist}
 
+\chapterstyle{ist}

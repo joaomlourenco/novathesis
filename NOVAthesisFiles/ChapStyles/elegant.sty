@@ -7,13 +7,27 @@
 
 \typeout{NT FILE NOVAthesisFiles/ChapStyles/elegant.sty}%
 
-%%%%% Configure chapters, headers, footers, and page numbering
+
+%%=======================================================================
+%% PACKAGE REQUIREMENTS
+%%=======================================================================
+
 \RequirePackage{soul}
+
+
+%%=======================================================================
+%% SAVEBOXES
+%%=======================================================================
 
 \undef{\@nt@elegant@chapter}
 \newsavebox{\@nt@elegant@chapter}
 \undef{\@nt@elegant@part}
 \newsavebox{\@nt@elegant@part}
+
+
+%%=======================================================================
+%% HELPERS
+%%=======================================================================
 
 \providecommand{\@nt@elegant@chapter@marker}[1][4cm]{%
   \sbox\@nt@elegant@chapter{%
@@ -54,6 +68,10 @@
 }
 
 
+%%=======================================================================
+%% CHAPTER STYLE
+%%=======================================================================
+
 \makechapterstyle{elegant}{%
   \renewcommand{\chapnamefont}{\normalfont\Large\scshape\raggedleft\so}%
   \renewcommand{\chaptitlefont}{\normalfont\LARGE\bfseries\scshape}%
@@ -73,4 +91,5 @@
   \renewcommand{\printparttitle}[1]{\color{darkgray}\parttitlefont\raggedleft ##1\par}%
   \renewcommand*{\partnumfont}{\normalfont\scshape\MakeLowercase}
 }
+
 \chapterstyle{elegant}

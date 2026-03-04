@@ -7,13 +7,30 @@
 
 \typeout{NT FILE NOVAthesisFiles/ChapStyles/vz43.sty}%
 
-%%%%% Configure chapters, headers, footers, and page numbering
+
+%%=======================================================================
+%% FLAGS
+%%=======================================================================
+
 \newif\ifNoChapNumber
+
+
+%%=======================================================================
+%% HELPERS
+%%=======================================================================
+
 \providecommand\Vlines{%
   \def\VL{\rule[-2cm]{1pt}{5cm}\hspace{1mm}\relax}
   \VL\VL\VL\VL\VL\VL\VL
 }
+
+
+%%=======================================================================
+%% CHAPTER STYLE
+%%=======================================================================
+
 \setlength\midchapskip{0pt}
+
 \makechapterstyle{VZ43}{%
   \renewcommand\chapternamenum{}
   \renewcommand\printchaptername{}
@@ -33,4 +50,5 @@
   }
   \renewcommand\printchapternonum{\NoChapNumbertrue}
 }
+
 \chapterstyle{VZ43}

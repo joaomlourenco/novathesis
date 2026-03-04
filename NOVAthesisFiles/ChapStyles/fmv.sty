@@ -7,31 +7,33 @@
 
 \typeout{NT FILE NOVAthesisFiles/ChapStyles/fmv.sty}%
 
-%%%%% Configure chapters, headers, footers, and page numbering
+
+%%=======================================================================
+%% CHAPTER STYLE
+%%=======================================================================
+
 \chapterstyle{section}
-\setlength{\beforechapskip}{-3ex}%{3.5ex \@plus 1ex \@minus .2ex}
+
+\setlength{\beforechapskip}{-3ex}
 \setlength{\afterchapskip}{2ex \@plus .2ex}
 
 \renewcommand*{\chapnumfont}{\large\bfseries}
 \renewcommand*{\chaptitlefont}{\large\bfseries}
 
+\gappto{\printchapternum}{\unskip.\quad}
+
+
+%%=======================================================================
+%% SECTIONING STYLES
+%%=======================================================================
 
 \setsecheadstyle{\large\bfseries}
 \setsubsecheadstyle{\large\bfseries}
 \setsubsubsecheadstyle{\large\bfseries}
 \setparaheadstyle{\large\bfseries}
-% \setbeforeparaskip{1.25ex}
 \setafterparaskip{0.1ex}
 \setsubparaheadstyle{\large\bfseries}
-% \setaftersubparaskip{0pt}
 \setbeforesubparaskip{1.25ex}
-
-% \renewcommand{\thechapter}{\Roman{chapter}}
-% \renewcommand{\thesection}{\arabic{section}.}
-% \renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
-% \renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
-
-\gappto{\printchapternum}{\unskip.\quad}
 
 \setsecnumdepth{paragraph}
 \setcounter{tocdepth}{4}

@@ -7,9 +7,18 @@
 
 \typeout{NT FILE NOVAthesisFiles/ChapStyles/bluebox.sty}%
 
-%%%%% Configure chapters, headers, footers, and page numbering
+
+%%=======================================================================
+%% SAVEBOXES & COLORS
+%%=======================================================================
+
 \newsavebox{\ChpNumBox}
 \definecolor{ChapBlue}{rgb}{0.7,0.8,0.9}
+
+
+%%=======================================================================
+%% HELPERS
+%%=======================================================================
 
 \newcommand*{\thickhrulefill}{%
   \leavevmode\leaders\hrule height 1\p@ \hfill \kern \z@%
@@ -24,6 +33,11 @@
       \rule{1ex}{0pt}}%
   \end{tabular}%
 }
+
+
+%%=======================================================================
+%% CHAPTER STYLE
+%%=======================================================================
 
 \makechapterstyle{BlueBox}{%
   \renewcommand{\chapnamefont}{\large\scshape}%
@@ -50,4 +64,5 @@
       \thickhrulefill\par
       \chaptitlefont ##1\par}}%
 }
+
 \chapterstyle{BlueBox}

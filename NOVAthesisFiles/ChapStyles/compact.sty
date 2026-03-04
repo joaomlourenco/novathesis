@@ -7,13 +7,25 @@
 
 \typeout{NT FILE NOVAthesisFiles/ChapStyles/compact.sty}%
 
-%%%%% Configure chapters, headers, footers, and page numbering
+
+%%=======================================================================
+%% CHAPTER STYLE
+%%=======================================================================
+
 \chapterstyle{section}
+
 \setlength{\beforechapskip}{3.5ex \@plus 1ex \@minus .2ex}
 \renewcommand*{\chapterheadstart}{\vspace{\beforechapskip}}
 \setlength{\afterchapskip}{2.3ex \@plus .2ex}
+
 \renewcommand*{\chapnumfont}{\normalfont\HUGE\sffamily}
 \renewcommand*{\chaptitlefont}{\normalfont\huge\sffamily}
+
+
+%%=======================================================================
+%% SECTION STYLES
+%%=======================================================================
+
 \gappto{\secheadstyle}{\sffamily}
 \gappto{\subsecheadstyle}{\sffamily}
 \gappto{\subsubsecheadstyle}{\sffamily}

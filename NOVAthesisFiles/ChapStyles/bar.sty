@@ -7,35 +7,33 @@
 
 \typeout{NT FILE NOVAthesisFiles/ChapStyles/bar.sty}%
 
+
+%%=======================================================================
+%% CHAPTER STYLE
+%%=======================================================================
+
 \chapterstyle{ell}
+
 \renewcommand{\chs@ell@helper}[1]{%
   \par%
-    % \begin{adjustwidth}{}{-\chapindent}
     \IfStrEq{#1}{}{% Unnumbered chapter
-      \hfill\begin{tabular}{r@{}}%|emacs
+      \hfill\begin{tabular}{r@{}}%
         \leavevmode\chapnumfont\normalfont #1\vphantom{1}%
         \hspace*{3.6pt}%
         \rule[-13.5pt]{0pt}{14.8mm}%
         \\%
-        % \hline%
       \end{tabular}%
     }{% Numbered chapter
-      \hfill\begin{tabular}{|r@{}}%|emacs
+      \hfill\begin{tabular}{|r@{}}%
         \leavevmode\chapnumfont\normalfont ~#1\vphantom{1}%
         \hspace*{3.6pt}%
         \rule[-13.5pt]{0pt}{14.8mm}%
         \\%
-        % \hline%
       \end{tabular}%
     }
-    % \end{adjustwidth}%
   \par%
 }%
 
 \renewcommand*{\printchaptertitle}[1]{%
   {\raggedleft\chaptitlefont\normalfont\scshape #1\par}\nobreak
 }
-
-% \@for\myi:={sec,subsec,subsubsec}\do{%
-%   \expandafter\gappto\csname \myi headstyle\endcsname{\sffamily}%
-% }

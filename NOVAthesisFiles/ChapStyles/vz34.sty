@@ -7,9 +7,18 @@
 
 \typeout{NT FILE NOVAthesisFiles/ChapStyles/vz34.sty}%
 
-%%%%% Configure chapters, headers, footers, and page numbering
+
+%%=======================================================================
+%% FLAGS
+%%=======================================================================
 
 \newif\ifNoChapNumber
+
+
+%%=======================================================================
+%% CHAPTER STYLE
+%%=======================================================================
+
 \makechapterstyle{VZ34}{%
   \renewcommand\chapternamenum{}
   \renewcommand\printchaptername{}
@@ -31,4 +40,5 @@
   }%
   \renewcommand\printchapternonum{\NoChapNumbertrue}
 }
+
 \chapterstyle{VZ34}
