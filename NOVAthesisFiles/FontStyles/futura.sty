@@ -2,20 +2,33 @@
 %% FontStyles/futura.sty
 %% NOVA thesis configuration file
 %%
-%% Customization of font to use a Futura-like font set (Jost)
+%% Customization of fonts to use Futura fontset
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT FILE FontStyles/futura.sty}%
 
 
+%%=======================================================================
+%% ENGINE CHECK
+%%=======================================================================
+
 \ifxeorlua{}{%
-  \ClassError{novathesis}{Font Style “Futura” is not compatible with pdfLaTeX. Please use LuaLaTeX}{Please use LuaLaTeX}%
+  \ClassError{novathesis}{Font Style “futura” is not compatible with pdfLaTeX. Please use XeLaTeX or LuaLaTeX}{Please use XeLaTeX or LuaLaTeX}%
 }
 
-\ntcheckfonts{Jost}
-             {Regular,Italic,Bold,BoldItalic}
 
-\setmainfont{Jost}[
+%%=======================================================================
+%% FONT VERIFICATION
+%%=======================================================================
+
+\ntcheckfonts{Futura}{Regular,Italic,Bold,BoldItalic}
+
+
+%%=======================================================================
+%% FONT SELECTION
+%%=======================================================================
+
+\setmainfont{Futura}[
   Path = \DIRFONTSTYLES/Fonts/,
   Extension = .ttf,
   Ligatures=TeX,
@@ -25,4 +38,3 @@
   BoldFont = *-Bold,
   BoldItalicFont = *-BoldItalic,
 ]
-

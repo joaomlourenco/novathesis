@@ -7,19 +7,34 @@
 
 \typeout{NT FILE FontStyles/verdana.sty}%
 
-\ntcheckfonts{VerdanaPro}{Regular,Italic,Bold,BoldItalic}
+
+%%=======================================================================
+%% ENGINE CHECK
+%%=======================================================================
 
 \ifxeorlua{}{%
-  \ClassError{novathesis}{Font Style “Verdana” is not compatible with pdfLaTeX. Please use XeLaTeX or LuaLaTeX}{Please use XeLaTeX or LuaLaTeX}%
+  \ClassError{novathesis}{Font Style “verdana” is not compatible with pdfLaTeX. Please use XeLaTeX or LuaLaTeX}{Please use XeLaTeX or LuaLaTeX}%
 }
 
-\setmainfont{VerdanaPro}[
+
+%%=======================================================================
+%% FONT VERIFICATION
+%%=======================================================================
+
+\ntcheckfonts{Verdana}{Regular,Italic,Bold,BoldItalic}
+
+
+%%=======================================================================
+%% FONT SELECTION
+%%=======================================================================
+
+\setmainfont{Verdana}[
   Path = \DIRFONTSTYLES/Fonts/,
   Extension = .ttf,
   Ligatures=TeX,
   Mapping=tex-text,
-  UprightFont=*-Regular,
-  ItalicFont=*-Italic,
-  BoldFont=*-Bold,
-  BoldItalicFont=*-BoldItalic,
+  UprightFont = *-Regular,
+  ItalicFont = *-Italic,
+  BoldFont = *-Bold,
+  BoldItalicFont = *-BoldItalic,
 ]

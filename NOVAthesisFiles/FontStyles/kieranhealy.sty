@@ -7,30 +7,39 @@
 
 \typeout{NT FILE FontStyles/kieranhealy.sty}%
 
-\ifxeorlua{%
-  \setromanfont[Path=\DIRFONTSTYLES/Fonts/,
-                BoldItalicFont=MinionPro-Bold-Italic.otf,
-                BoldFont      =MinionPro-Bold.otf,
-                ItalicFont    =MinionPro-Italic.otf,
-                Mapping       ={tex-text},
-                Numbers       ={OldStyle},
-                Ligatures     ={Common},
-                Scale         =1.10,
-  ]{MinionPro}
-  \setsansfont[Path=\DIRFONTSTYLES/Fonts/,
-               BoldItalicFont=MyriadPro-Bold-Italic.otf,
-               BoldFont      =MyriadPro-Bold.otf,
-               ItalicFont    =MyriadPro-Italic.otf,
-               Mapping=tex-text,
-               Ligatures={Common},
-               % Colour=AA0000
-  % ]{Unit-Medium}
-  ]{MyriadPro}
-  \setmonofont[Path=\DIRFONTSTYLES/Fonts/,
-               Mapping=tex-text,
-               Scale=0.90,
-               % Scale=0.72,
-  ]{PragmataPro}
-}%
-{\ClassError{novathesis}{Invalid font style: kieranhealy}{This style/font is only available for xelatex and lualatex}}
 
+%%=======================================================================
+%% ENGINE CHECK
+%%=======================================================================
+
+\ifxeorlua{}{%
+  \ClassError{novathesis}{Font Style “kieranhealy” is not compatible with pdfLaTeX. Please use XeLaTeX or LuaLaTeX}{Please use XeLaTeX or LuaLaTeX}%
+}
+
+
+%%=======================================================================
+%% FONT SELECTION
+%%=======================================================================
+
+\setromanfont[Path=\DIRFONTSTYLES/Fonts/,
+              BoldItalicFont=MinionPro-Bold-Italic.otf,
+              BoldFont      =MinionPro-Bold.otf,
+              ItalicFont    =MinionPro-Italic.otf,
+              Mapping       ={tex-text},
+              Numbers       ={OldStyle},
+              Ligatures     ={Common},
+              Scale         =1.10,
+]{MinionPro}
+
+\setsansfont[Path=\DIRFONTSTYLES/Fonts/,
+             BoldItalicFont=MyriadPro-Bold-Italic.otf,
+             BoldFont      =MyriadPro-Bold.otf,
+             ItalicFont    =MyriadPro-Italic.otf,
+             Mapping=tex-text,
+             Ligatures={Common},
+]{MyriadPro}
+
+\setmonofont[Path=\DIRFONTSTYLES/Fonts/,
+             Mapping=tex-text,
+             Scale=0.90,
+]{PragmataPro}

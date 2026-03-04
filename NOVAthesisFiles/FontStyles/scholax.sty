@@ -7,6 +7,11 @@
 
 \typeout{NT FILE FontStyles/scholax.sty}%
 
+
+%%=======================================================================
+%% PACKAGE REQUIREMENTS
+%%=======================================================================
+
 \RequirePackage[p,osf]{scholax}
 % T1 and textcomp are loaded by package. Change that here, if you want
 % load sans and typewriter packages here, if needed
@@ -14,4 +19,10 @@
 % amssymb should not be loaded
 \RequirePackage[scaled=1.075,ncf,vvarbb]{newtxmath}% need to scale up math package
 % vvarbb selects the STIX version of blackboard bold. See below.
+
+
+%%=======================================================================
+%% FONT CONFIGURATION
+%%=======================================================================
+
 \linespread{1.10} %needed only if scholax loaded at full scale

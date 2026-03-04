@@ -5,20 +5,30 @@
 %% Customization of font to use a Palatino-like font style
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\typeout{NT FILE FontStyles/palatino-gyre-pagella.sty}%
 
-\typeout{NT FILE FontStyles/palatino-gyre-pagella.sty}
 
-\ifxeorlua{
-  \IfFontExistsTF{TeX Gyre Pagella}
-      {\setmainfont{TeX Gyre Pagella}[
-              Scale=1.0,
-              Ligatures={Common,Discretionary,TeX}]
-        \IfFontExistsTF{TeX Gyre Pagella Math}{
-          \setmathfont{TeX Gyre Pagella Math}
-        }{}
-      }{
-  \PackageError{novathesis}{'TeX Gyre Pagella' font not found.  Please select another font style in '0-Config/1_novathesis.tex'}
-  }
-}{
-  \PackageError{novathesis}{This font style is only available with 'lualatex' or 'xelatex'.}
+%%=======================================================================
+%% ENGINE CHECK
+%%=======================================================================
+
+\ifxeorlua{}{%
+  \PackageError{novathesis}{This font style is only available with 'lualatex' or 'xelatex'.}{}
+}
+
+
+%%=======================================================================
+%% FONT SELECTION
+%%=======================================================================
+
+\IfFontExistsTF{TeX Gyre Pagella}{%
+  \setmainfont{TeX Gyre Pagella}[
+    Scale=1.0,
+    Ligatures={Common,Discretionary,TeX}
+  ]
+  \IfFontExistsTF{TeX Gyre Pagella Math}{%
+    \setmathfont{TeX Gyre Pagella Math}
+  }{}%
+}{%
+  \PackageError{novathesis}{'TeX Gyre Pagella' font not found. Please select another font style in '0-Config/1_novathesis.tex'}{}
 }
