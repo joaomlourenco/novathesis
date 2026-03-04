@@ -1,18 +1,17 @@
-%!TEX root = ../template.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% paralist-compat.tex
+%% StyFiles/paralist-compat.tex
 %% NOVA thesis configuration file
 %%
-%% Minor fixes to babel translation to portuguese
-%%
-%% Order and language for printing the abstracts depending on the language
-%% These macros are just informative for now (it is hardcoded in the
-%%   novathesis.ldf file)… this must be fixed in the future!!
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Emulation of paralist environments using enumitem
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE paralist-compat.tex}%
+\typeout{NT FILE StyFiles/paralist-compat.tex}%
 
-% Custom List Environments (emulating paralist)
+
+%%=======================================================================
+%% CUSTOM LIST ENVIRONMENTS (emulating paralist)
+%%=======================================================================
+
 \newenvironment{asparaenum}[1][]
   {\begin{enumerate}[#1, wide, itemsep=0pt, parsep=\parskip, topsep=0pt, partopsep=0pt]}
   {\end{enumerate}}
@@ -28,3 +27,4 @@
 \newenvironment{compactenum}[1][]
   {\begin{enumerate}[#1, noitemsep, topsep=0pt, parsep=0pt, partopsep=0pt]}
   {\end{enumerate}}
+ Greenland
