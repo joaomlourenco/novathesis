@@ -1,0 +1,100 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% chapter-manual-ntaddtocover.tex
+%% NOVA thesis document file
+%%
+%% Manual for the \ntaddtocover command
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE chapter-manual-ntaddtocover.tex}%
+
+\chapter{Customizing Covers with \textbackslash ntaddtocover}
+\label{cha:ntaddtocover}
+
+The \gls{novathesis} template provides a powerful command, \latexinline{\ntaddtocover}, to customize the cover pages. This command allows you to add text, images, or even complex \latexinline{\TikZ} code to specific pages of the document's covers.
+
+\section{Command Syntax}
+\label{sec:syntax}
+
+The general syntax for the command is:
+\begin{center}
+  \latexinline{\ntaddtocover[<attributes>]{<covers>}{<code>}}
+\end{center}
+
+\begin{description}
+  \item[\latexinline{attributes}] (Optional) A comma-separated list of key-value pairs that control the layout, alignment, and conditional printing of the element.
+  \item[\latexinline{covers}] A comma-separated list of cover identifiers where the code should be applied. Valid identifiers include:
+    \begin{itemize}
+      \item \texttt{1-1}: Front cover (outer).
+      \item \texttt{1-2}: Front cover (inner).
+      \item \texttt{2-1}: Front page (inner front cover).
+      \item \texttt{2-2}: Back of front page.
+      \item \texttt{N-1}: Inside back cover.
+      \item \texttt{N-2}: Back cover (outer).
+    \end{itemize}
+  \item[\latexinline{code}] The actual \LaTeX\ code to be rendered on the specified cover(s).
+\end{description}
+
+\section{Available Attributes}
+\label{sec:attributes}
+
+The behavior of the element can be fine-tuned using the following attributes:
+
+\begin{description}
+  \item[\texttt{vspace}] Vertical spacing from the previous element. It can be a \LaTeX\ length (e.g., \texttt{1cm}, \texttt{20mm}) or an integer. If an integer is provided (e.g., \texttt{vspace=2}), it is treated as a \latexinline{\vfill} with that relative weight. The template also supports degree-specific or page-specific variants like \texttt{vspace/phd} or \texttt{vspace/1-1}.
+  \item[\texttt{hspace}] Horizontal spacing from the left margin or the previous box in the same line.
+  \item[\texttt{height}] Fixed height for the element's container box. Special variants like \texttt{height/phd} or \texttt{height/msc} can be used for degree-specific heights.
+  \item[\texttt{minheight}] Minimum height for the element's container box.
+  \item[\texttt{width}] Fixed width for the element's container box (default is the full text width).
+  \item[\texttt{halign}] Horizontal alignment of the content within its box. Possible values are \texttt{l} (left), \texttt{c} (center), \texttt{r} (right), or \texttt{j} (justified).
+  \item[\texttt{valign}] Vertical alignment of the content within its box. Possible values are \texttt{t} (top), \texttt{c} (center), or \texttt{b} (bottom).
+  \item[\texttt{status}] Conditional printing based on the document status. For example, \texttt{status=\{working, provisional\}} will only print the element in draft or provisional versions.
+  \item[\texttt{degree}] Conditional printing based on the degree type. For example, \texttt{degree=\{phd, phdplan\}} will restrict the element to PhD-related documents.
+  \item[\texttt{tikz}] A boolean attribute. If set to \texttt{true}, the code is treated as \latexinline{\TikZ} code and executed within a \latexinline{\TikZ} \texttt{overlay} environment anchored to the page.
+  \item[\texttt{color}] Sets the text color for the element.
+  \item[\texttt{bgcolor}] Sets the background color for the element's box.
+  \item[\texttt{newpar}] A boolean attribute (defaulting to \texttt{true}) that indicates if the element should start a new paragraph after rendering.
+\end{description}
+
+\section{Resetting Covers}
+\label{sec:resetting}
+
+If you need to clear all previously defined elements for the covers (for example, to start a fresh layout for a specific school), you can use the following commands:
+
+\begin{description}
+  \item[\latexinline{\ntresetcovers}] Clears all elements from all cover pages (\texttt{1-1}, \texttt{1-2}, \texttt{2-1}, \texttt{2-2}, \texttt{N-1}, \texttt{N-2}).
+  \item[\latexinline{\ntresetonecover{<id>}}] Clears all elements from a specific cover page identified by \texttt{<id>}.
+\end{description}
+
+\section{Examples}
+\label{sec:examples}
+
+\subsection{Adding a logo with TikZ}
+This example from the ISEL school uses \latexinline{\TikZ} to place a logo at a fixed position on the front cover:
+
+\begin{ltx}
+\ntaddtocover[tikz]{1-1}{%
+  \node[anchor=north] at ($(current page.north) + (7mm,-28.5mm)$)
+    {\includegraphics[height=23mm]{\expanded{\thethesiscover(logo)}}};%
+}
+\end{ltx}
+
+\subsection{Standard text with spacing and alignment}
+This example shows how to add the dissertation title with specific vertical spacing and font size:
+
+\begin{ltx}
+\ntaddtocover[vspace=66mm,height=4cm,valign=c]{1-1}{%
+  \fontsize{17}{20}\selectfont%
+  \textbf{\thedoctitle(\@LANG@COVER,main)}%
+}
+\end{ltx}
+
+\subsection{Conditional elements}
+To print a "Draft" timestamp only in working versions:
+
+\begin{ltx}
+\ntaddtocover[vspace=2,status=working]{1-1,2-1}{%
+  \fontsize{9}{9}\selectfont%
+  \emph{\textbf{Draft: \today}}%
+}
+\end{ltx}
