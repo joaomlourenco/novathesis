@@ -14,35 +14,41 @@
 \typeout{NT FILE schools/nova/fct/nova-fct-cbbi-defaults.ldf}%
 
 
-%-----------------------------------------------------------------
-% New global properties
-%-----------------------------------------------------------------
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
 \options{/novathesis,
 % NOVA/FCT
   nova/fct/company/logo/.new value = {},
   nova/fct/company/name/.new value = {},
 }
 
-
 % NOVA FCT specific customization
-\openany
 \ntsetup{doctype=msc}
 \ntsetup{print/frontpage=true}
 \ntsetup{spine/width=3cm}     % Force the “book spine” width
+\openany
 
 
-% Loading of fonts must be delayed until class "novathesis" is loaded
-\AtEndPreamble{%
-  % [tabular,lining]
-  \RequirePackage[]{montserrat}
-  \ifxeorlua{\setsansfont{montserrat}}{}
-}
+%%=======================================================================
+%% COLORS
+%%=======================================================================
+
+\definecolor{msccbbigray}{RGB}{110,110,110}
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
 
 % Faculty / School
 \school(pt):={Faculdade de Ciências e Tecnologia}
 \school(en):={NOVA School of Science and Technology}
 \school(fr):={NOVA School of Science and Technology}
 \school(it):={NOVA School of Science and Technology}
+
+% Logos
 \school(logo,pt):={nova-fct-logo-pt}
 \school(logo,neg,pt):={nova-fct-logo-negative-pt}
 \school(logo,en):={nova-fct-logo-en}
@@ -53,77 +59,36 @@
 \ntdegreename(pt){Biologia Computacional\\\& Bioinformática}
 \ntdegreename(en){Computational Biology\\\& Bioinformatics}
 
-% Comiittee printing order
-% \committeeorder():={c,r,a,m}%
-\committeeorder():={c,r,a,ca,m}%
-
-% Cover background images
-% \thesiscover(1-1,bgcolor):={black}
-% \thesiscover(1-1,textcolor):={black}
-% \thesiscover(2-1,textcolor):={black}
-
-% MSc cover
-\thesiscover(msc,1-1,image):=?{nova-fct-cover-cbbi-front}
-\thesiscover(msc,N-2,image):=?{nova-fct-cover-cbbi-back}
-\thesiscover(msc,spine,image):=?{nova-fct-spine-cbbi}
-
-
-
-
-% Spine info
-
-\spine(order):={date,tas,logo}
-
-\spine(tab,spec):={{@{}l@{}}}
-
-\spine(box,date,len):=?{1.2cm}
-\spine(date)={2025}
-\spine(date,font)={\fontsize{10}{10}\selectfont\bfseries}
-
-\spine(box,date,angle)={270}
-
-% Defaults for spine title boxes
-\spine(box,tas,len):={23.3cm}
-% \spine(box,tas,angle)={\thespine(angle)}
-\spine(box,tas,align):={l}
-\spine(box,tas,margin,left):={0pt}
-\spine(box,tas,margin,right):={2pt}
-\spine(box,tas,angle):={0}
-
-% \spine(box,logo,angle)={0}
-\spine(box,logo,len):={2.7cm}
-\spine(box,logo,scale):={1.4}
-\spine(box,logo,margin,left)={10mm}
-\spine(box,logo,margin,right)={10mm}
-\spine(box,logo,margin,top)={1mm}
-\spine(box,logo,margin,bottom)={1mm}
-\spine(box,logo,margin,sep)={4mm}
-
-
-\spine(logo,\@DOCTYPE):={\theuniversity(logo2)}
-
-% \spine(text,angle)={90}
-% \spine(box,text,color)={white}
-% \spine(box,color)={blue}
-% \spine(box,spacing)={0.5cm}
-% \spine(box,margin)={0.5mm}
-
 \specializationstring(en):={SPECIALIZATION}
 \specializationstring(pt):={ESPECIALIZAÇÃO}
 
-\spine(margin,right):=?{0.0cm}
-\spine(tas)={\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}
-\spine(tas,1)={~\\[4pt]%
-               \fontsize{8}{8}\selectfont%
-               \ToUppercase{\thedoctitle(\@LANG@COVER,main)}\\[5.5pt]}
-\spine(tas,2)={\fontsize{11}{6}\selectfont\bfseries%
-               \thedocauthor(name,short)\\[-0.5pt]}
-\spine(tas,3)={\fontsize{8.5}{6}\selectfont%
-               \ToUppercase{\thedegreenameprefix(\@DOCTYPE,\@LANG@COVER)} \bfseries\themajorfield(\@LANG@COVER)\\[-3pt]}
-\spine(tas,4)={\fontsize{5.4}{5}\selectfont%
-               \textbf{\ToUppercase{\thespecializationstring(\@LANG@COVER)}}
-               \fontsize{7}{5}\selectfont\theminorfield(\@LANG@COVER)\\[-5pt]}
+\newdata{dissertationplan}
+\dissertationplan(mscplan,en):={Dissertation Plan}
+\dissertationplan(mscplan,pt):={Plano de Dissertação}
 
+
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
+\committeeorder():={c,r,a,ca,m}%
+
+
+%%=======================================================================
+%% FONTS
+%%=======================================================================
+
+% Loading of fonts must be delayed until class "novathesis" is loaded
+\AtEndPreamble{%
+  % [tabular,lining]
+  \RequirePackage[]{montserrat}
+  \ifxeorlua{\setsansfont{montserrat}}{}
+}
+
+
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
@@ -144,9 +109,46 @@
 \margin(cover,right):={2.0cm}
 
 
-\newdata{dissertationplan}
-\dissertationplan(mscplan,en):={Dissertation Plan}
-\dissertationplan(mscplan,pt):={Plano de Dissertação}
+%%=======================================================================
+%% SPINE
+%%=======================================================================
+
+\spine(order):={date,tas,logo}
+\spine(tab,spec):={{@{}l@{}}}
+
+\spine(date)={2025}
+\spine(date,font)={\fontsize{10}{10}\selectfont\bfseries}
+\spine(box,date,len):=?{1.2cm}
+\spine(box,date,angle)={270}
+
+\spine(tas)={\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}
+\spine(tas,1)={~\\[4pt]%
+               \fontsize{8}{8}\selectfont%
+               \ToUppercase{\thedoctitle(\@LANG@COVER,main)}\\[5.5pt]}
+\spine(tas,2)={\fontsize{11}{6}\selectfont\bfseries%
+               \thedocauthor(name,short)\\[-0.5pt]}
+\spine(tas,3)={\fontsize{8.5}{6}\selectfont%
+               \ToUppercase{\thedegreenameprefix(\@DOCTYPE,\@LANG@COVER)} \bfseries\themajorfield(\@LANG@COVER)\\[-3pt]}
+\spine(tas,4)={\fontsize{5.4}{5}\selectfont%
+               \textbf{\ToUppercase{\thespecializationstring(\@LANG@COVER)}}
+               \fontsize{7}{5}\selectfont\theminorfield(\@LANG@COVER)\\[-5pt]}
+
+\spine(box,tas,len):={23.3cm}
+\spine(box,tas,align):={l}
+\spine(box,tas,margin,left):={0pt}
+\spine(box,tas,margin,right):={2pt}
+\spine(box,tas,angle):={0}
+
+\spine(logo,\@DOCTYPE):={\theuniversity(logo2)}
+\spine(box,logo,len):={2.7cm}
+\spine(box,logo,scale):={1.4}
+\spine(box,logo,margin,left)={10mm}
+\spine(box,logo,margin,right)={10mm}
+\spine(box,logo,margin,top)={1mm}
+\spine(box,logo,margin,bottom)={1mm}
+\spine(box,logo,margin,sep)={4mm}
+
+\spine(margin,right):=?{0.0cm}
 
 \SpineSetup[%
 ]{%
@@ -155,11 +157,20 @@
 }
 
 
+%%=======================================================================
+%% COVER PAGE SETUP (BACKGROUNDS)
+%%=======================================================================
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Utility function
-%% for prinitng department names with increased spacing in "\\"
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MSc cover
+\thesiscover(msc,1-1,image):=?{nova-fct-cover-cbbi-front}
+\thesiscover(msc,N-2,image):=?{nova-fct-cover-cbbi-back}
+\thesiscover(msc,spine,image):=?{nova-fct-spine-cbbi}
+
+
+%%=======================================================================
+%% UTILITIES & HOOKS
+%%=======================================================================
+
 \newcommand{\printdwithvspace}[2][2pt]{%
   \protected@edef\@tempcontent{#2}%
   \expandafter\in@\expandafter\\\expandafter{\@tempcontent}%
@@ -174,36 +185,27 @@
   \fi
 }
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover pages
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NTAddToHook{cover/1-1/text/pre}{%
   \sffamily%
 }
+
 \NTAddToHook{cover/2-1/text/pre}{%
   \sffamily%
 }
+
 \NTAddToHook{spine/pre}{%
   \sffamily%
 }
 
-\definecolor{msccbbigray}{RGB}{110,110,110}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% COVER 1
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%=======================================================================
+%% COVER 1 ELEMENTS
+%%=======================================================================
 
-% -------------------------------------------------------------------------------
 % University and school logo
 \ntaddtocover[tikz]{1-1}{%
   \node[anchor=north west] at ($(current page.north west) + (18.75mm,-23.75mm)$)
     {\includegraphics[width=43mm]{nova-logo}};%
-  % \node[anchor=center] at ($(current page.north west) + (20mm,-20mm)$)
-  %   {\includegraphics[width=21mm]{\expanded{\theuniversity(logo,neg)}}};%
-  % \draw[thick] ($(current page.north west) + (3.5cm,-1cm)$) -- ++(0cm,-2cm);%
-  % \node[anchor=west] at ($(current page.north west) + (40mm,-19mm)$)
-  %   {\includegraphics[width=35.3mm]{\expanded{\theschool(logo,neg)}}};%
 }
 
 \ntaddtocover[tikz]{1-1}{%
@@ -241,8 +243,6 @@
     {\includegraphics[width=48.0mm]{nova-ihmt-logo-bw}};%
 }
 
-
-% -------------------------------------------------------------------------------
 % Specialization
 \ntaddtocover[halign=l,hspace=-1mm,valign=t]{1-1}{%
   \fontsize{11}{11}\selectfont%
@@ -252,7 +252,6 @@
     {~}}%
 }
 
-% -------------------------------------------------------------------------------
 % Title of Dissertation (PhD) / The author name (MSc)
 \ntaddtocover[halign=l,height=3.0cm,vspace=4.1mm,valign=c]{1-1}{%
     \fontsize{20.5}{17}\selectfont%
@@ -261,19 +260,12 @@
     \thedocauthor(degree,\@LANG@COVER)%
 }
 
-% -------------------------------------------------------------------------------
 % The author name (PhD) / Title of Dissertation (MSc)
 \ntaddtocover[vspace=6mm,halign=l,valign=t]{1-1}{%
     \fontsize{26}{26}\selectfont\bfseries%
     \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}%
-    % \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover)
-    %   {\\[4mm]%
-    %    \fontsize{14}{14}\selectfont%
-    %     \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,sub)}}}
-    %   {}%
 }
 
-% -------------------------------------------------------------------------------
 % Degrere name, Specialization, Date
 \ntaddtocover[vspace=1,halign=l]{1-1}{%
   \fontsize{18}{17}\selectfont%
@@ -284,28 +276,9 @@
 }
 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% COVER 2
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% LOGOS
-% \ntaddtocover[vspace=1.0mm,hspace=-2.6cm,halign=l,height=2.0cm,valign=t]{2-1}{%
-%   % \makebox[0pt]{\color{black!50}\rule{15cm}{5cm}}
-%   \vspace*{-4mm}%
-%   \begin{minipage}[b]{8.7cm}%
-%   \includegraphics[width=2.15cm]{\expanded{\theuniversity(logo)}}%
-%   \hspace{3.5mm}\rule{0.15mm}{2cm}\hspace{5mm}%
-%   \raisebox{2.5mm}{\includegraphics[width=3.52cm]{\expanded{\theschool(logo)}}}%
-%   \end{minipage}%
-%   \raisebox{9mm}{%
-%   \begin{minipage}[b]{9cm}%
-%     \fontsize{14}{14}\selectfont%
-%     \ToUppercase{\GetDepartment(\@LANG@COVER)}%
-%   \end{minipage}%
-%   }\\[4ex]%
-%   \hrule width 19cm%
-% }
+%%=======================================================================
+%% COVER 2 ELEMENTS
+%%=======================================================================
 
 \ntaddtocover[tikz]{2-1}{%
   \node[anchor=center] at ($(current page.north west) + (20mm,-20mm)$)
@@ -331,7 +304,6 @@
     }{}%
   }%
 }
-
 
 % Title of Dissertation (PhD)
 \ntaddtocover[halign=l]{2-1}{%
@@ -371,7 +343,6 @@
 \ntaddtocover[vspace=1,halign=l]{2-1}{%
   \fontsize{10}{10}\selectfont%
   \ifmaindoc{}{\thedissertationplan(\@DOCTYPE,\@LANG@COVER)\\[1pt]}%
-  % \ifoptionequal{/novathesis/doctype}{mscplan}{Dissertation Plan\\[1pt]}{}%
   \ToUppercase{\thedegreename(\@LANG@COVER)}%
   {\ifdatadefined{specialization}(\@LANG@COVER){%
   \fontsize{8}{9}\selectfont
@@ -384,9 +355,10 @@
   }{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% BACK COVER
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%=======================================================================
+%% BACK COVER ELEMENTS
+%%=======================================================================
 
 \ntaddtocover[tikz]{N-2}{%
   \node[anchor=north west] at ($(current page.north west) + (19mm,-221mm)$)

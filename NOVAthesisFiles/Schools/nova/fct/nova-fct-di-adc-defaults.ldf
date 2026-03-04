@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% nova/fct//nova-fct-red-defaults.ldf
+%% nova/fct//nova-fct-di-adc-defaults.ldf
 %% NOVA thesis document template
 %%
 %% This work is licensed under the
@@ -13,13 +13,47 @@
 
 \typeout{NT FILE schools/nova/fct/nova-fct-di-adc-defaults.ldf}%
 
-\def\@novafctcovercolor{red}
 
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
+\def\@novafctcovercolor{red}
 \input{\DIRSCHOOLS/nova/fct/nova-fct-red-defaults.ldf}
 
 \ntsetup{doctype=bsc}
 
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+\AtEndPreamble{
+  \ntdepartment(pt){Informática}
+  \ntdepartment(en){Computer Science}
+  \ntdegreename(pt){Informática}
+  \ntdegreename(en){Computer Science}
+  \specialization(pt):={APDC — Relatório de Estágio em Empresa\ifoptionvoid{/novathesis/nova/fct/company/name}{}{ — \option{/novathesis/nova/fct/company/name}}}%
+  \specialization(en):={APDC — Company Internship Report\ifoptionvoid{/novathesis/nova/fct/company/name}{}{ — \option{/novathesis/nova/fct/company/name}}}
+  \ntauthordegree(pt){}
+  \ntauthordegree(en){}
+}
+
+\copyrighttextstring(pt)={A \theschool(\@LANG@COPYRIGHT)\ e a \theuniversity(\@LANG@COPYRIGHT)\ têm o direito perpétuo de arquivar este relatório em exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, comprometendo-se a manter o mesmo com acesso controlado e restrito, de forma a responder às suas obrigações legais.}
+
+\copyrighttextstring(en)={The \theschool(\@LANG@COPYRIGHT)\ and the \theuniversity(\@LANG@COPYRIGHT)\ have the perpetual right to archive this report in printed copies reproduced on paper or digitally, or by any other means known or invented, undertaking to keep it under controlled and restricted access in order to meet their legal obligations.}
+
+
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
 \committeeorder():={a,ca,m}%
+
+
+%%=======================================================================
+%% FRONT MATTER CONFIGURATION
+%%=======================================================================
 
 \options{/@nt/print/frontmatter/final = 
   {%
@@ -50,20 +84,9 @@
   }
 }
 
-\copyrighttextstring(pt)={A \theschool(\@LANG@COPYRIGHT)\ e a \theuniversity(\@LANG@COPYRIGHT)\ têm o direito perpétuo de arquivar este relatório em exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, comprometendo-se a manter o mesmo com acesso controlado e restrito, de forma a responder às suas obrigações legais.}
 
-
-\copyrighttextstring(en)={The \theschool(\@LANG@COPYRIGHT)\ and the \theuniversity(\@LANG@COPYRIGHT)\ have the perpetual right to archive this report in printed copies reproduced on paper or digitally, or by any other means known or invented, undertaking to keep it under controlled and restricted access in order to meet their legal obligations.}
+%%=======================================================================
+%% SPINE
+%%=======================================================================
 
 \ntsetup{spine/layout=false}
-
-\AtEndPreamble{
-\ntdepartment(pt){Informática}
-\ntdepartment(en){Computer Science}
-\ntdegreename(pt){Informática}
-\ntdegreename(en){Computer Science}
-\specialization(pt):={APDC — Relatório de Estágio em Empresa\ifoptionvoid{/novathesis/nova/fct/company/name}{}{ — \option{/novathesis/nova/fct/company/name}}}%
-\specialization(en):={APDC — Company Internship Report\ifoptionvoid{/novathesis/nova/fct/company/name}{}{ — \option{/novathesis/nova/fct/company/name}}}
-\ntauthordegree(pt){}
-\ntauthordegree(en){}
-}
