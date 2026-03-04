@@ -1,40 +1,18 @@
-% novathesis-spine.sty
-% --------------------------------------------------------------------------
-% NovaThesis Spine Generator
-% --------------------------------------------------------------------------
-% This package provides a small, configurable "spine designer" for thesis
-% layouts, particularly in the NOVA style.
-%
-% It defines two main user commands:
-%
-%   - \NTSetup{ <key=value list> }
-%       Configure all spine parameters (texts, colors, sizes, images, etc.)
-%       via a l3keys-based interface.
-%
-%   - \PrintBookSpine
-%       Typeset a single page containing a horizontal "spine strip".
-%       The strip has height = spine/width and extends across the full
-%       page width. It is subdivided into boxes (date, title, author, logo)
-%       whose order and visual properties are controlled by keys.
-%
-% Implementation notes:
-%   * The code uses expl3, TikZ and tcolorbox.
-%   * The spine is drawn as a full-page overlay; the document's paper size
-%     (e.g., a4paper) should be set in the main document.
-%   * The package temporarily adjusts the stock size so that the page
-%     height equals the spine thickness (spine/width).
-% --------------------------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% StyFiles/novathesis-spine.sty
+%% NOVA thesis configuration file
+%%
+%% Configurable spine designer for thesis layouts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesExplPackage
-  {novathesis-spine}
-  {2026/01/14}
-  {0.2}
-  {NovaThesis Spine Generator}
+\ProvidesExplPackage{novathesis-spine}{2026/01/14}{0.2}{NovaThesis Spine Generator}
+\typeout{NT FILE StyFiles/novathesis-spine.sty}%
 
-% -------------------------------------------------------------------------
-% 1. Dependencies
-% -------------------------------------------------------------------------
+
+%%=======================================================================
+%% PACKAGE REQUIREMENTS
+%%=======================================================================
 
 \RequirePackage{geometry}
 \RequirePackage{graphbox}
@@ -45,11 +23,11 @@
 \tcbuselibrary{fitting}
 
 
-\ExplSyntaxOn
+%%=======================================================================
+%% VARIABLE DECLARATIONS
+%%=======================================================================
 
-% -------------------------------------------------------------------------
-% 2. Variable Declarations
-% -------------------------------------------------------------------------
+\ExplSyntaxOn
 
 % -- Global Spine Configuration --------------------------------------------
 \clist_new:N \l_nt_spine_order_clist      % list of box names
@@ -104,9 +82,10 @@
     \tl_new:c  { l_nt_spine_box_#1_frame_color_tl } % per-box frame color
   }
 
-% -------------------------------------------------------------------------
-% 3. Key Definitions (User Interface)
-% -------------------------------------------------------------------------
+
+%%=======================================================================
+%% KEY DEFINITIONS (USER INTERFACE)
+%%=======================================================================
 
 \keys_define:nn { novathesis }
   {
@@ -147,16 +126,11 @@
     spine/fg/color       .initial:n = { black },
 
     % -- Debugging ---------------------------------------------------------
-    % "debug" is a boolean flag.
     spine/debug          .bool_set:N = \l_nt_spine_debug_bool,
     spine/debug          .initial:n  = { false },
     spine/debug          .default:n  = { true },
-
-    % "debug/color" sets the overlay color
     spine/debug/color    .tl_set:N   = \l_nt_spine_debug_color_tl,
     spine/debug/color    .initial:n  = { orange },
-
-    % "debug/width" sets the overlay line width
     spine/debug/width    .dim_set:N  = \l_nt_spine_debug_width_dim,
     spine/debug/width    .initial:n  = { 1pt },
 
@@ -219,11 +193,11 @@
   }
 
 
-% -------------------------------------------------------------------------
-% 4. OptionSearch [prefix] {list,of,variables} [\result]
-% -------------------------------------------------------------------------
+%%=======================================================================
+%% USER INTERFACE COMMANDS
+%%=======================================================================
 
-% Temporary variables
+% -- OptionSearch [prefix] {list,of,variables} [\result] -------------------
 \tl_new:N \l_nt_search_result_tl
 \bool_new:N \l_nt_search_found_bool
 
@@ -233,27 +207,15 @@
     with~prefix~'#2'.
   }
 
-
 \NewDocumentCommand{\OptionSearch}{ O{} m o }
   {
-    % 1. Reset state
     \tl_clear:N \l_nt_search_result_tl
     \bool_set_false:N \l_nt_search_found_bool
-
-    % 2. Iterate through the comma-separated list (#2)
     \clist_map_inline:nn { #2 }
       {
-        % We check if the keys are actually variables or properties.
-        % In expl3, keys usually set variables.
-        % This implementation assumes the arguments map to VARIABLE NAMES (csnames).
-
-        % Construct the full name: prefix (#1) + current item (##1)
-        % For your example: prefix="a/b/" item="d/e" -> check variable "\a/b/d/e"
-
         \cs_if_exist:cT { #1 ##1 }
           {
             \tl_set_eq:Nc \l_nt_search_result_tl { #1 ##1 }
-            % Check if that variable is NOT blank
             \tl_if_blank:VF \l_nt_search_result_tl
               {
                 \bool_set_true:N \l_nt_search_found_bool
@@ -261,38 +223,16 @@
               }
           }
       }
-    % 2b. If nothing found, issue an error
     \bool_if:NF \l_nt_search_found_bool
-      {
-        \msg_error:nnxx
-          { novathesis } { option-search-not-found }
-          { #2 } { #1 }
-      }
+      { \msg_error:nnxx { novathesis } { option-search-not-found } { #2 } { #1 } }
 
-    % 3. Output logic
-    \IfNoValueTF { #3 }
-      {
-        \tl_use:N \l_nt_search_result_tl
-      }
-      {
-        \tl_set_eq:NN #3 \l_nt_search_result_tl
-      }
+    \IfNoValueTF { #3 } { \tl_use:N \l_nt_search_result_tl } { \tl_set_eq:NN #3 \l_nt_search_result_tl }
   }
 
-
-
-% -------------------------------------------------------------------------
-% 4. Setup Command
-% -------------------------------------------------------------------------
+% -- Setup Command ---------------------------------------------------------
 \NewDocumentCommand{\NTSetup}{ o +m }
   {
-    \IfNoValueTF {#1}
-      {
-        \keys_set:nn { novathesis } { #2 }
-      }
-      {
-        \keys_set:nn { novathesis / #1 } { #2 }
-      }
+    \IfNoValueTF {#1} { \keys_set:nn { novathesis } { #2 } } { \keys_set:nn { novathesis / #1 } { #2 } }
   }
 
 % Default configuration for box lengths.
@@ -304,38 +244,21 @@
   author/extrasep = 0.5cm,
 }
 
-
-% -------------------------------------------------------------------------
-% 5. Implementation: \PrintBookSpine
-% -------------------------------------------------------------------------
-
-% Sanitize strinf replacing ' ' with '~'
+% -- Sanitize title string --------------------------------------------------
 \tl_new:N \l_nt_sanitize_title_tl
 
-% \NTSanitizeTitle {<macro>} [<sanitized>]
 \NewDocumentCommand \NTSanitizeTitle { m o }
   {
-    % 1. Grab the *expansion* of the given macro into a scratch tl
-    %    e.g. \NTSanitizeTitle{\title}  → expand \title and store it
     \tl_set:Nx \l_nt_sanitize_title_tl { #1 }
-
-    % 2. Replace all spaces with ~
     \regex_replace_all:nnN { \s } { \c{nobreakspace} } \l_nt_sanitize_title_tl
-
-    % 3. Optional output argument
-    \IfNoValueTF{#2}
-      {
-        % No [<sanitized>] given → expand to sanitized value
-        \tl_use:N \l_nt_sanitize_title_tl
-      }
-      {
-        % [<sanitized>] given → set that macro to the sanitized value
-        \tl_set:NV #2 \l_nt_sanitize_title_tl
-      }
+    \IfNoValueTF{#2} { \tl_use:N \l_nt_sanitize_title_tl } { \tl_set:NV #2 \l_nt_sanitize_title_tl }
   }
 
 
-% Temporary dimensions used during layout calculations
+%%=======================================================================
+%% CORE IMPLEMENTATION: \PrintBookSpine
+%%=======================================================================
+
 \dim_new:N  \l_box_outer_width_dim
 \dim_new:N  \l_box_outer_height_dim
 \dim_new:N  \l_box_inner_width_dim
@@ -343,18 +266,15 @@
 \dim_new:N  \l_imgwidth_dim
 \dim_new:N  \l_imgheight_dim
 
-
 \NewDocumentCommand{\PrintBookSpine}{}
   {
-
     % 1. Adjust the stock (paper) size
-    % \typeout{\NSS= [\the\paperheight] [\the\l_nt_spine_width_dim] [margin=0mm]}\NSS
     \newstocksize{layoutsize={\the\paperheight,\the\l_nt_spine_width_dim},margin=0mm}
 
-    % 2. Main drawing environment: a TikZ overlay on the full page.
+    % 2. Main drawing environment
     \begin{tikzpicture}[remember~picture, overlay]
 
-        % A. Draw the global spine background rectangle and its frame
+        % A. Global spine background rectangle and its frame
         \node[
           inner~sep = 0pt,
           outer~sep = 0pt,
@@ -371,35 +291,13 @@
           {
               \str_case:VnF \l_nt_spine_bg_image_angle_tl
                 {
-                  % Case 0 or 180 (Horizontal)
-                  {0}   {
-                          \dim_set:Nn \l_imgwidth_dim  { \paperwidth }
-                          \dim_set:Nn \l_imgheight_dim { \paperheight }
-                        }
-                  {180} {
-                          \dim_set:Nn \l_imgwidth_dim  { \paperwidth }
-                          \dim_set:Nn \l_imgheight_dim { \paperheight }
-                        }
-
-                  % Case 90, -90, 270 (Vertical/Rotated)
-                  {90}  {
-                          \dim_set:Nn \l_imgwidth_dim  { \paperheight }
-                          \dim_set:Nn \l_imgheight_dim { \paperwidth }
-                        }
-                  {-90} {
-                          \dim_set:Nn \l_imgwidth_dim  { \paperheight }
-                          \dim_set:Nn \l_imgheight_dim { \paperwidth }
-                        }
-                  {270} {
-                          \dim_set:Nn \l_imgwidth_dim  { \paperheight }
-                          \dim_set:Nn \l_imgheight_dim { \paperwidth }
-                        }
+                  {0}   { \dim_set:Nn \l_imgwidth_dim  { \paperwidth } \dim_set:Nn \l_imgheight_dim { \paperheight } }
+                  {180} { \dim_set:Nn \l_imgwidth_dim  { \paperwidth } \dim_set:Nn \l_imgheight_dim { \paperheight } }
+                  {90}  { \dim_set:Nn \l_imgwidth_dim  { \paperheight } \dim_set:Nn \l_imgheight_dim { \paperwidth } }
+                  {-90} { \dim_set:Nn \l_imgwidth_dim  { \paperheight } \dim_set:Nn \l_imgheight_dim { \paperwidth } }
+                  {270} { \dim_set:Nn \l_imgwidth_dim  { \paperheight } \dim_set:Nn \l_imgheight_dim { \paperwidth } }
                 }
-                {
-                  % Default: Error Message
-                  % uses :nnx to expand the variable into the error message
-                  \msg_error:nnx { novathesis } { invalid-spine-angle } { \l_nt_spine_bg_image_angle_tl }
-                }
+                { \msg_error:nnx { novathesis } { invalid-spine-angle } { \l_nt_spine_bg_image_angle_tl } }
               \node[opacity=\l_nt_spine_bg_opacity_tl] at (current~page.center)
                       {\includegraphics[width=\l_imgwidth_dim,
                                         height=\l_imgheight_dim,
@@ -407,15 +305,12 @@
                        ]{\l_nt_spine_bg_image_tl}};
           }
 
-        % C. Begin drawing the individual content boxes.
+        % C. Begin drawing the individual content boxes
       \node[anchor=north~west, xshift=-4pt, yshift=4pt - \l_nt_spine_margin_top_dim]
           at (current~page.north~west)
       {
-
-        % The Spine Container (nested TikZ picture)
        \begin{tikzpicture}
           [
-             % Common style applied to all spine "outer" nodes
              spinebox/.style = {
                rectangle,
                inner~sep = 0pt,
@@ -425,41 +320,25 @@
              }
           ]
 
-          % Initialize the horizontal cursor to the left inner margin
           \dim_set_eq:Nc \l_tmpb_dim { l_nt_spine_margin_left_dim }
 
-           % Insert an invisible node to occupy the left margin space
+           % Left margin space
            \node[
              spinebox,
              minimum~width = \l_tmpb_dim,
              draw = none,
              fill = none,
              anchor = north~west,
-           ] at (0, 0)
-           { };
+           ] at (0, 0) { };
 
-          % Loop over the configured logical order of boxes
+          % Loop over boxes
           \clist_map_inline:Nn \l_nt_spine_order_clist
             {
-              % ##1 is the current box name (e.g., "date", "title", ...)
-
-              % 3. Calculate the box dimensions for this element
-
-              % Outer width
               \dim_set_eq:Nc \l_box_outer_width_dim    { l_nt_spine_box_##1_len_dim }
+              \dim_set:Nn \l_box_outer_height_dim      { \l_nt_spine_width_dim - \l_nt_spine_margin_top_dim - \l_nt_spine_margin_bottom_dim }
+              \dim_set:Nn \l_box_inner_width_dim    { \l_box_outer_width_dim - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2 }
+              \dim_set:Nn \l_box_inner_height_dim   { \l_box_outer_height_dim - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2 }
 
-              % Outer height
-              \dim_set:Nn \l_box_outer_height_dim      { \l_nt_spine_width_dim
-                                                         - \l_nt_spine_margin_top_dim
-                                                         - \l_nt_spine_margin_bottom_dim }
-
-              % Inner width/height
-              \dim_set:Nn \l_box_inner_width_dim    { \l_box_outer_width_dim
-                                                         - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2 }
-              \dim_set:Nn \l_box_inner_height_dim   { \l_box_outer_height_dim
-                                                         - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2 }
-
-              % 4. Draw the outer container node for the current box
               \node[
                  spinebox,
                  minimum~width = \l_box_outer_width_dim,
@@ -471,126 +350,62 @@
                  anchor = north~west,
               ] at (\l_tmpb_dim, 0)
               {
-                  % --------------------------------------------------------
-                  % DEBUG OVERLAY START
-                  % --------------------------------------------------------
+                  % Debug Overlay
                   \bool_if:NT \l_nt_spine_debug_bool
                   {
                       \begin{tikzpicture}[remember~picture, overlay]
-                          \draw[
-                              draw=\l_nt_spine_debug_color_tl,
-                              line~width=\l_nt_spine_debug_width_dim
-                          ] (0,0) rectangle (\l_box_outer_width_dim, \l_box_outer_height_dim);
+                          \draw[draw=\l_nt_spine_debug_color_tl, line~width=\l_nt_spine_debug_width_dim]
+                                (0,0) rectangle (\l_box_outer_width_dim, \l_box_outer_height_dim);
                       \end{tikzpicture}
                   }
-                  % --------------------------------------------------------
-                  % DEBUG OVERLAY END
-                  % --------------------------------------------------------
 
-                  % 5. Per-box image processing:
+                  % Per-box image processing
                   \def\nt_spine_overlay_code{}%
                   \edef\tmp_img{\use:c { l_nt_spine_box_##1_bg_image_tl }}
-
                   \tl_if_blank:VF \tmp_img
                     {
                       \def\nt_spine_overlay_code{%
-                        \node[
-                          inner~sep=0pt,
-                          anchor=center,
-                          opacity=1,
-                        ] at (interior.center)
+                        \node[inner~sep=0pt, anchor=center, opacity=1] at (interior.center)
                           {
-                              % A. Scale to height
-                              \OptionSearch [l_nt_spine_box_##1_bg_image_angle_]
-                                            { \option{/novathesis/doctype}_tl,
-                                              tl,
-                                            }[\img_angle]
-                              \setbox0=\hbox
-                               {
-                                 \includegraphics[height=\l_box_inner_height_dim,
-                                                  angle=\img_angle,
-                                 ]{\tmp_img}
-                               }
-
-                                % Measure
-                                \dim_set:Nn \l_imgwidth_dim  { \wd0 }
-                                \dim_set:Nn \l_imgheight_dim { \ht0 + \dp0 }
-
-                                % B. Fit logic
-                                \dim_compare:nNnT { \l_imgwidth_dim } > { \l_box_inner_width_dim }
-                                  {
-                                      % Re-scale by width
-                                      \setbox0=\hbox
-                                       {
-                                         \includegraphics[width=\l_box_inner_width_dim,
-                                                          angle=\img_angle,
-                                         ]{\tmp_img}
-                                       }
-                                       \dim_set:Nn \l_imgwidth_dim  { \wd0 }
-                                       \dim_set:Nn \l_imgheight_dim { \ht0 + \dp0 }
-                                  }
-
-                                  % C. Alignment logic
-                                  \str_case:enF { \use:c { l_nt_spine_box_##1_halign_tl } }
-                                    {
-                                      {left}   { \box0 \hskip \dimexpr\l_box_inner_width_dim-\l_imgwidth_dim\relax }
-                                      {right}  { \hskip \dimexpr\l_box_inner_width_dim-\l_imgwidth_dim\relax \box0 }
-                                      {center} { \box0 }
-                                    }
-                                    {
-                                      \box0
-                                    }
+                              \OptionSearch [l_nt_spine_box_##1_bg_image_angle_] { \option{/novathesis/doctype}_tl, tl, }[\img_angle]
+                              \setbox0=\hbox { \includegraphics[height=\l_box_inner_height_dim, angle=\img_angle, ]{\tmp_img} }
+                              \dim_set:Nn \l_imgwidth_dim  { \wd0 } \dim_set:Nn \l_imgheight_dim { \ht0 + \dp0 }
+                              \dim_compare:nNnT { \l_imgwidth_dim } > { \l_box_inner_width_dim }
+                                {
+                                    \setbox0=\hbox { \includegraphics[width=\l_box_inner_width_dim, angle=\img_angle, ]{\tmp_img} }
+                                    \dim_set:Nn \l_imgwidth_dim  { \wd0 } \dim_set:Nn \l_imgheight_dim { \ht0 + \dp0 }
+                                }
+                              \str_case:enF { \use:c { l_nt_spine_box_##1_halign_tl } }
+                                {
+                                  {left}   { \box0 \hskip \dimexpr\l_box_inner_width_dim-\l_imgwidth_dim\relax }
+                                  {right}  { \hskip \dimexpr\l_box_inner_width_dim-\l_imgwidth_dim\relax \box0 }
+                                  {center} { \box0 }
+                                } { \box0 }
                           };
                       }%
                     }
 
-                  % 6. Render the text content using tcolorbox.
+                  % Render content using tcolorbox
                   \begin{tcolorbox}[
-                      enhanced,              % enable overlays
-                      fit,                   % allow content to adjust
-                      fit~basedim=15pt,
-                      before~upper={
-                        \hyphenpenalty=10000
-                        \exhyphenpenalty=10000
-                      },
-                      boxsep=0pt,
-                      left=0pt,
-                      right=0pt,
-                      top=0pt,
-                      bottom=0pt,
-                      arc=0pt,
-                      boxrule=0pt,
-                      frame~hidden,
-                      % tcbox~raise~base,
-                      box~align=base,
-                      % colback=\use:c { l_nt_spine_box_##1_bg_color_tl },
-                      interior~hidden,
+                      enhanced, fit, fit~basedim=15pt,
+                      before~upper={ \hyphenpenalty=10000 \exhyphenpenalty=10000 },
+                      boxsep=0pt, left=0pt, right=0pt, top=0pt, bottom=0pt, arc=0pt, boxrule=0pt, frame~hidden, box~align=base, interior~hidden,
                       fontupper=\use:c { l_nt_spine_box_##1_fontstyle_tl },
                       coltext=\use:c { l_nt_spine_box_##1_fg_color_tl },
-                      % Box dimensions
-                      width=\use:c { l_nt_spine_box_##1_len_dim }
-                            - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2,
-                      height=\l_nt_spine_width_dim
-                            - \l_nt_spine_margin_top_dim
-                            - \l_nt_spine_margin_bottom_dim
-                            - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2,
-                      % Text alignment
+                      width=\use:c { l_nt_spine_box_##1_len_dim } - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2,
+                      height=\l_nt_spine_width_dim - \l_nt_spine_margin_top_dim - \l_nt_spine_margin_bottom_dim - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2,
                       halign=\use:c { l_nt_spine_box_##1_halign_tl },
                       valign=\use:c { l_nt_spine_box_##1_valign_tl },
-                      % Overlay
                       overlay={\nt_spine_overlay_code},
                   ]
                       \setbox0=\hbox{2Ap}
                       \raisebox{0.75\dp0}{\vphantom{Ap}}
-                      % \NTSanitizeTitle
                       { \use:c { l_nt_spine_##1_tl } }
                   \end{tcolorbox}
               };
 
-              % 7. Advance the horizontal cursor
-              \dim_add:Nn \l_tmpb_dim { \use:c { l_nt_spine_box_##1_len_dim }
-                                        + \l_nt_spine_boxsep_dim +
-                                        + \use:c { l_nt_spine_box_##1_extrasep_dim } }
+              % Advance horizontal cursor
+              \dim_add:Nn \l_tmpb_dim { \use:c { l_nt_spine_box_##1_len_dim } + \l_nt_spine_boxsep_dim + \use:c { l_nt_spine_box_##1_extrasep_dim } }
            }
         \end{tikzpicture}
       };
