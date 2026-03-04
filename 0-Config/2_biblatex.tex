@@ -11,54 +11,97 @@
 %%============================================================
 
 %%------------------------------------------------------------
-% If it works, leave biber.  If it fails for you, try bibtex
-\ntbibsetup{backend=biber}
-% \ntbibsetup{backend=bibtex}
-
+%%  GENERAL BEHAVIORAL OPTIONS
 %%------------------------------------------------------------
-%% Print only initials of given name, and do not use 'et al' in the bibliography
-\ntbibsetup{giveninits=true, maxbibnames=1000}
-
-%%------------------------------------------------------------
-%% At the end of each entry in the bibliography lists in which
-%% page(s) this entry is cited. Comment if you do not want this.
-\ntbibsetup{backref=true,backrefstyle=three}
-
-%%------------------------------------------------------------
-%% Show the dates in ISO format (YYY-MM-DD)
-\ntbibsetup{urldate=iso,date=iso,seconds=true}
+\ntbibsetup{
+  backend      = biber,   % Use 'biber' (recommended) or 'bibtex'
+  giveninits   = true,    % Print only initials of given name
+  maxbibnames  = 1000,    % Do not use 'et al' in the bibliography (list all authors)
+  backref      = true,    % List page(s) where each entry is cited
+  backrefstyle = three,   % Compact style for back-references
+  urldate      = iso,     % Show access dates in ISO format (YYYY-MM-DD)
+  date         = iso,     % Show publication dates in ISO format (YYYY-MM-DD)
+  seconds      = true,    % Include seconds in ISO dates if available
+}
 
 
 %%============================================================
-%% BIBLIOGRAPHY STYLE
-%% For other styles, see Section 3.3 in the BibLaTeX manual
+%%  BIBLIOGRAPHY STYLE (Uncomment exactly ONE block below)
 %%============================================================
 
 %%------------------------------------------------------------
-%% NUMBERED ORDER BY LAST NAME OF FIRST AUTHOR - this is the default
-%%............................................................
-% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=nyt}
+%% 1. NUMBERED ORDER BY LAST NAME OF FIRST AUTHOR (Default)
+%%------------------------------------------------------------
+% \ntbibsetup{
+%   style     = numeric-comp,
+%   sortcites = true,
+%   sorting   = nyt,
+% }
 
 
 %%------------------------------------------------------------
-%% NUMBERED ORDER BY CITATION
+%% 2. NUMBERED ORDER BY CITATION (Sequential)
 %%------------------------------------------------------------
-% \ntbibsetup{style=numeric-comp, sortcites=true, sorting=none}
+% \ntbibsetup{
+%   style     = numeric-comp,
+%   sortcites = true,
+%   sorting   = none,
+% }
 
 
 %%------------------------------------------------------------
-%% APLHA CITATION ORDER BY LAST NAME OF FIRST AUTHOR
+%% 3. ALPHA CITATION ORDER BY LAST NAME OF FIRST AUTHOR
 %%------------------------------------------------------------
-% \ntbibsetup{style=alphabetic, sortcites=true, sorting=nyt}
+% \ntbibsetup{
+%   style     = alphabetic,
+%   sortcites = true,
+%   sorting   = nyt,
+% }
 
 
 %%------------------------------------------------------------
-%% AUTHOR YEAR SORTED BY NAME AND YEAR
+%% 4. AUTHOR-YEAR COMPACT SORTED BY NAME AND YEAR
 %%------------------------------------------------------------
-% \ntbibsetup{style=authoryear-comp, sortcites=true, sorting=nyt}
+% \ntbibsetup{
+%   style     = authoryear-comp,
+%   sortcites = true,
+%   sorting   = nyt,
+% }
 
 
 %%------------------------------------------------------------
-%% APA-LIKE CITATION
+%% 5. APA-LIKE CITATION (Requires biber)
+%% (Follows strict APA 7th edition rules; alternative to style 4)
 %%------------------------------------------------------------
-% \ntbibsetup{backend=biber,natbib=true,style=apa}
+% \ntbibsetup{
+%   style   = apa,
+%   natbib  = true,
+% }
+
+
+%%------------------------------------------------------------
+%% 6. IEEE STYLE (Engineering / CS)
+%% (Similar to style 1 but with IEEE-specific formatting)
+%%------------------------------------------------------------
+% \ntbibsetup{
+%   style = ieee,
+% }
+
+
+%%------------------------------------------------------------
+%% 7. VANCOUVER STYLE (Medicine / Health Sciences)
+%% (Similar to style 2 but with Medical standard formatting)
+%%------------------------------------------------------------
+% \ntbibsetup{
+%   style = vancouver,
+% }
+
+
+%%------------------------------------------------------------
+%% 8. CHICAGO AUTHOR-DATE STYLE (Social Sciences)
+%% (Follows Chicago Manual of Style; alternative to style 4)
+%%------------------------------------------------------------
+% \ntbibsetup{
+%   style = chicago-authordate,
+% }
+
