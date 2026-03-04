@@ -2,16 +2,13 @@
 %%  Dutch (nl) strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-% --------------------------------------------------------------------
-%   Load MemStore declarations
-% --------------------------------------------------------------------
 \input{\DIRSTRINGS/strings-declare.tex}
 
 
-% --------------------------------------------------------------------
-%   Utilities
-% --------------------------------------------------------------------
+%%=======================================================================
+%% UTILITIES
+%%=======================================================================
+
 \andstring(nl)                  := { en }
 \instring(nl)                   := { in }
 \ofstring(nl)                   := { van }
@@ -29,9 +26,10 @@
 \candidatestring(f,nl)          := {De Kandidate}
 
 
-% --------------------------------------------------------------------
-%   Bookmakr strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% BOOKMARK STRINGS
+%%=======================================================================
+
 \bkmstring(frontmatter,nl)      := {Voorwerk}
 \bkmstring(backmatter,nl)       := {Nawerk}
 \bkmstring(cover,nl)            := {Omslag}
@@ -52,9 +50,10 @@
 \bkmstring(glossaries,nl)       := {Glossaria}
 
 
-% --------------------------------------------------------------------
-%   Defaults
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DEFAULTS
+%%=======================================================================
+
 \defaultnttitle(nl)             := {Een Zeer Lange en Indrukwekkende\\Titel van het Proefschrift met een Geforceerde Regeleinde}
 \defaultntsubtitle(nl)          := {Enkele Gedachten over het Leven, het Universum\\en al de Rest}
 \defaultntdepartment(nl)        := {Van het Departement}
@@ -64,9 +63,10 @@
 \notdefinedstring(nl)           := {NIET GEDEFINIEERD}
 
 
-% --------------------------------------------------------------------
-%   Adviser strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% ADVISER STRINGS
+%%=======================================================================
+
 \professorstring(1,m,nl)        := {Professor}
 \professorstring(2,m,nl)        := {Professoren}
 \professorstring(1,f,nl)        := {Professor}
@@ -113,9 +113,10 @@
 \adviserstring(pref,t,2,f,nl)        := {De Tutoren}
 
 
-% --------------------------------------------------------------------
-% Degree names
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DEGREE NAMES
+%%=======================================================================
+
 \degreestring(bsc,m,nl)         := {Bachelor}
 \degreestring(bsc,f,nl)         := {Bachelor}
 
@@ -132,9 +133,10 @@
 \degreestring(phdprop,f,nl)     := {Promovenda}
 
 
-% --------------------------------------------------------------------
-% Document types
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DOCUMENT TYPES
+%%=======================================================================
+
 \doctypestring(bsc,nl)          := {Bachelorproject}
 \doctypestring(mscplan,nl)      := {Plan van de masterscriptie}
 \doctypestring(msc,nl)          := {Masterscriptie}
@@ -147,15 +149,17 @@
 \dissertationplan(phdprop,nl)   := {Proefschriftvoorstel}
 
 
-% --------------------------------------------------------------------
-%   Sustainable Development Goals (SDG)
-% --------------------------------------------------------------------
+%%=======================================================================
+%% SDG (SUSTAINABLE DEVELOPMENT GOALS)
+%%=======================================================================
+
 \sdgstring(nl)                  := {Duurzameontwikkelingsdoelstellingen (SDG)}
 
 
-% --------------------------------------------------------------------
-%   Committee
-% --------------------------------------------------------------------
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
 \committeetitlestring(nl)       := {Examencommissie}
 
 \committeestring(c,1,m,nl)      := {Voorzitter}
@@ -189,50 +193,51 @@
 \committeestring(g,2,f,nl)      := {Gastleden}
 
 
-% --------------------------------------------------------------------
-%   Dissertation strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DISSERTATION TEMPLATES
+%%=======================================================================
 
 \dissertationstring(bsc,nl)     = {%
       Verslag ingediend ter verkrijging van de graad van %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}
 }
 
 \dissertationstring(mscplan,nl) = {%
       Tussentijds verslag ingediend ter verkrijging van de graad van %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}
 }
 
 \dissertationstring(msc,nl)     = {%
       Masterscriptie ingediend ter verkrijging van de graad van %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}
 }
 
 \dissertationstring(phdplan,nl) = {%
       Proefschriftplan ingediend ter verkrijging van de graad van %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}
 }
 
 \dissertationstring(phdprop,nl) = {%
       Voorstel voor een proefschrift ingediend ter verkrijging van de graad van %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}
 }
 
 \dissertationstring(phd,nl)     = {%
       Proefschrift ingediend ter verkrijging van de graad van %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}
 }
 
 
-% --------------------------------------------------------------------
-%   Copyright
-% --------------------------------------------------------------------
+%%=======================================================================
+%% LEGAL & ACKNOWLEDGEMENTS
+%%=======================================================================
+
 \copyrighttextstring(nl)        = {%
         De \theschool(\@LANG@COPYRIGHT)\ en de \theuniversity(\@LANG@COPYRIGHT)%
         \ hebben het eeuwigdurende en onbeperkte recht om dit proefschrift in gedrukte of digitale vorm, %
@@ -241,20 +246,16 @@
         niet-commerciële onderwijs- en onderzoeksdoeleinden toe te staan, mits de auteur en de %
         uitgever correct worden vermeld.}
 
-
-% --------------------------------------------------------------------
-%%% Acknowledgements
-% --------------------------------------------------------------------
 \acknowledgmentsstring(nl)      = {%
-        Dit document is opgesteld met het (pdf/Xe/Lua)\LaTeX-systeem en het %
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis}-sjabloon %
-        (v\novathesisversion)\@ntcite{novathesis-manual}.}
+        Dit document is opgesteld met het \NTengineName~\@ntcite{latex-project} system %
+        en het \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        sjabloon (v\novathesisversion)~\@ntcite{novathesis-manual}.}
 
 
+%%=======================================================================
+%% BABEL INTEGRATION
+%%=======================================================================
 
-% --------------------------------------------------------------------
-%   Babel definitions
-% --------------------------------------------------------------------
 \ntlangsetup*{nl/annex=Bijlage}
 \ntlangsetup*{nl/annexpl=Bijlagen}
 \ntlangsetup*{nl/appendixpl=Appendices}
@@ -267,3 +268,4 @@
       December}
   \EndBabelCommands
 }
+ Greenland

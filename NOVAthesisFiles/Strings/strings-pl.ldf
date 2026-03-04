@@ -2,16 +2,13 @@
 %%  Polish (pl) strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-% --------------------------------------------------------------------
-%   Load MemStore declarations
-% --------------------------------------------------------------------
 \input{\DIRSTRINGS/strings-declare.tex}
 
 
-% --------------------------------------------------------------------
-%   Utilities
-% --------------------------------------------------------------------
+%%=======================================================================
+%% UTILITIES
+%%=======================================================================
+
 \andstring(pl)                  := { i }
 \instring(pl)                   := { w }
 \ofstring(pl)                   := { z }
@@ -29,9 +26,10 @@
 \candidatestring(f,pl)          := {Kandydatka}
 
 
-% --------------------------------------------------------------------
-%   Bookmakr strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% BOOKMARK STRINGS
+%%=======================================================================
+
 \bkmstring(frontmatter,pl)      := {Materiały wstępne}
 \bkmstring(backmatter,pl)       := {Materiały końcowe}
 \bkmstring(cover,pl)            := {Pierwsza strona okładki}
@@ -52,9 +50,10 @@
 \bkmstring(glossaries,pl)       := {Glosariusze}
 
 
-% --------------------------------------------------------------------
-%   Defaults
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DEFAULTS
+%%=======================================================================
+
 \defaultnttitle(pl)             := {Bardzo Długi i Imponujący\\Tytuł Pracy z Wymuszonym Podziałem Wiersza}
 \defaultntsubtitle(pl)          := {Kilka Przemyśleń o Życiu, Wszechświecie\\i Całej Reszcie}
 \defaultntdepartment(pl)        := {Nazwa Katedry}
@@ -64,9 +63,10 @@
 \notdefinedstring(pl)           := {NIEZDEFINIOWANE}
 
 
-% --------------------------------------------------------------------
-%   Adviser strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% ADVISER STRINGS
+%%=======================================================================
+
 \professorstring(1,m,pl)        := {Profesor}
 \professorstring(2,m,pl)        := {Profesorowie}
 \professorstring(1,f,pl)        := {Profesor}
@@ -113,9 +113,10 @@
 \adviserstring(pref,t,2,f,pl)        := {Opiekunki naukowe}
 
 
-% --------------------------------------------------------------------
-% Degree names
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DEGREE NAMES
+%%=======================================================================
+
 \degreestring(bsc,m,pl)         := {Licencjat}
 \degreestring(bsc,f,pl)         := {Licencjatka}
 
@@ -132,9 +133,10 @@
 \degreestring(phdprop,f,pl)     := {Doktorantka}
 
 
-% --------------------------------------------------------------------
-% Document types
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DOCUMENT TYPES
+%%=======================================================================
+
 \doctypestring(bsc,pl)          := {Praca licencjacka}
 \doctypestring(mscplan,pl)      := {Plan pracy magisterskiej}
 \doctypestring(msc,pl)          := {Praca magisterska}
@@ -147,15 +149,17 @@
 \dissertationplan(phdprop,pl)   := {Propozycja rozprawy}
 
 
-% --------------------------------------------------------------------
-%   Sustainable Development Goals (SDG)
-% --------------------------------------------------------------------
+%%=======================================================================
+%% SDG (SUSTAINABLE DEVELOPMENT GOALS)
+%%=======================================================================
+
 \sdgstring(pl)                  := {Cele zrównoważonego rozwoju (SDG)}
 
 
-% --------------------------------------------------------------------
-%   Committee
-% --------------------------------------------------------------------
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
 \committeetitlestring(pl)       := {Komisja egzaminacyjna}
 
 \committeestring(c,1,m,pl)      := {Przewodniczący komisji}
@@ -189,44 +193,45 @@
 \committeestring(g,2,f,pl)      := {Członkinie zaproszone}
 
 
-% --------------------------------------------------------------------
-%   Dissertation strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DISSERTATION TEMPLATES
+%%=======================================================================
 
 \dissertationstring(bsc,pl)     = {%
       Praca złożona w celu uzyskania stopnia % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(mscplan,pl) = {%
       Praca wstępna złożona w celu uzyskania stopnia % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(msc,pl)     = {%
       Praca magisterska złożona w celu uzyskania stopnia % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(phdplan,pl) = {%
       Plan rozprawy złożony w celu uzyskania stopnia % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(phdprop,pl) = {%
       Propozycja rozprawy złożona w celu uzyskania stopnia % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(phd,pl)     = {%
       Rozprawa doktorska złożona w celu uzyskania stopnia % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 
-% --------------------------------------------------------------------
-%   Copyright
-% --------------------------------------------------------------------
+%%=======================================================================
+%% LEGAL & ACKNOWLEDGEMENTS
+%%=======================================================================
+
 \copyrighttextstring(pl)        = {%
         Katedra \theschool(\@LANG@COPYRIGHT)\ oraz \theuniversity(\@LANG@COPYRIGHT)%
         \ posiadają nieograniczone czasowo i terytorialnie prawo do archiwizowania i publikowania % 
@@ -235,10 +240,6 @@
         zezwalania na jej kopiowanie i dystrybucję w niekomercyjnych celach dydaktycznych lub % 
         badawczych, pod warunkiem właściwego wskazania autora i wydawcy.}
 
-
-% --------------------------------------------------------------------
-%%% Acknowledgements
-% --------------------------------------------------------------------
 \acknowledgmentsstring(pl)      = {%
         Niniejszy dokument został przygotowany przy użyciu systemu składu \NTengineName~\@ntcite{latex-project} % 
         oraz szablonu % 
@@ -246,10 +247,10 @@
         (v\novathesisversion)~\@ntcite{novathesis-manual}.}
 
 
+%%=======================================================================
+%% BABEL INTEGRATION
+%%=======================================================================
 
-% --------------------------------------------------------------------
-%   Babel definitions
-% --------------------------------------------------------------------
 \ntlangsetup*{pl/annex=Załącznik}
 \ntlangsetup*{pl/annexpl=Załączniki}
 \ntlangsetup*{pl/appendixpl=Dodatki}
@@ -262,3 +263,4 @@
       Grudzień}
   \EndBabelCommands
 }
+ Greenland

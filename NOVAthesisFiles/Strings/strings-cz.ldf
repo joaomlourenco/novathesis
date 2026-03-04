@@ -1,17 +1,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  Czech (cz) strings
+%% Czech (cz) strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-% --------------------------------------------------------------------
-%   Load MemStore declarations
-% --------------------------------------------------------------------
 \input{\DIRSTRINGS/strings-declare.tex}
 
 
-% --------------------------------------------------------------------
-%   Utilities
-% --------------------------------------------------------------------
+%%=======================================================================
+%% UTILITIES
+%%=======================================================================
+
 \andstring(cz)                  := { a }
 \instring(cz)                   := { v }
 \ofstring(cz)                   := { z }
@@ -29,9 +26,10 @@
 \candidatestring(f,cz)          := {Kandidátka}
 
 
-% --------------------------------------------------------------------
-%   Bookmakr strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% BOOKMARK STRINGS
+%%=======================================================================
+
 \bkmstring(frontmatter,cz)      := {Úvodní část}
 \bkmstring(backmatter,cz)       := {Závěrečná část}
 \bkmstring(cover,cz)            := {Obálka}
@@ -52,9 +50,10 @@
 \bkmstring(glossaries,cz)       := {Glosáře}
 
 
-% --------------------------------------------------------------------
-%   Defaults
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DEFAULTS
+%%=======================================================================
+
 \defaultnttitle(cz)             := {Velmi Dlouhý a Působivý\\Název Práce s Vynuceným Zalomením Řádku}
 \defaultntsubtitle(cz)          := {Několik Myšlenek o Životě, Vesmíru\a Všem Ostatním}
 \defaultntdepartment(cz)        := {Název Katedry}
@@ -64,15 +63,15 @@
 \notdefinedstring(cz)           := {NEDEFINOVÁNO}
 
 
-% --------------------------------------------------------------------
-%   Adviser strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% ADVISER STRINGS
+%%=======================================================================
+
 \professorstring(1,m,cz)        := {Profesor}
 \professorstring(2,m,cz)        := {Profesoři}
 \professorstring(1,f,cz)        := {Profesorka}
 \professorstring(2,f,cz)        := {Profesorky}
 
-% Note: "Vedoucí" works for both genders, but we provide specific forms if needed.
 \adviserstring(a,1,m,cz)        := {Vedoucí}
 \adviserstring(a,1,f,cz)        := {Vedoucí}
 \adviserstring(a,2,m,cz)        := {Vedoucí}
@@ -114,9 +113,10 @@
 \adviserstring(pref,t,2,f,cz)        := {Tutorky}
 
 
-% --------------------------------------------------------------------
-% Degree names
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DEGREE NAMES
+%%=======================================================================
+
 \degreestring(bsc,m,cz)         := {Bakalář}
 \degreestring(bsc,f,cz)         := {Bakalářka}
 
@@ -133,9 +133,10 @@
 \degreestring(phdprop,f,cz)     := {Doktorka}
 
 
-% --------------------------------------------------------------------
-% Document types
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DOCUMENT TYPES
+%%=======================================================================
+
 \doctypestring(bsc,cz)          := {Bakalářská práce}
 \doctypestring(mscplan,cz)      := {Plán diplomové práce}
 \doctypestring(msc,cz)          := {Diplomová práce}
@@ -148,15 +149,17 @@
 \dissertationplan(phdprop,cz)   := {Návrh disertační práce}
 
 
-% --------------------------------------------------------------------
-%   Sustainable Development Goals (SDG)
-% --------------------------------------------------------------------
+%%=======================================================================
+%% SDG (SUSTAINABLE DEVELOPMENT GOALS)
+%%=======================================================================
+
 \sdgstring(cz)                  := {Cíle udržitelného rozvoje (SDGs)}
 
 
-% --------------------------------------------------------------------
-%   Committee
-% --------------------------------------------------------------------
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
 \committeetitlestring(cz)       := {Komise}
 
 \committeestring(c,1,m,cz)      := {Předseda}
@@ -190,44 +193,45 @@
 \committeestring(g,2,f,cz)      := {Hosté}
 
 
-% --------------------------------------------------------------------
-%   Dissertation strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DISSERTATION TEMPLATES
+%%=======================================================================
 
 \dissertationstring(bsc,cz)     = {%
       Bakalářská práce předložená k získání titulu %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(mscplan,cz) = {%
       Průběžná zpráva předložená k získání titulu %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(msc,cz)     = {%
       Diplomová práce předložená k získání titulu %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(phdplan,cz) = {%
       Plán disertační práce předložený k získání titulu %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(phdprop,cz) = {%
       Teze disertační práce předložená k získání titulu %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 \dissertationstring(phd,cz)     = {%
       Disertační práce předložená k získání titulu %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 
-% --------------------------------------------------------------------
-%   Copyright
-% --------------------------------------------------------------------
+%%=======================================================================
+%% LEGAL & ACKNOWLEDGEMENTS
+%%=======================================================================
+
 \copyrighttextstring(cz)        = {%
         Škola \theschool(\@LANG@COPYRIGHT)\ a Univerzita \theuniversity(\@LANG@COPYRIGHT)%
         \ mají trvalé, územně neomezené právo archivovat a publikovat tuto práci v tištěné %
@@ -235,21 +239,17 @@
         jakož i zveřejňovat ji prostřednictvím vědeckých repozitářů a povolit její kopírování %
         a šíření pro vzdělávací nebo výzkumné, nekomerční účely, za podmínky uvedení autora a vydavatele.}
 
-
-% --------------------------------------------------------------------
-%%% Acknowledgements
-% --------------------------------------------------------------------
 \acknowledgmentsstring(cz)      = {%
         Tento dokument byl vytvořen pomocí sázecího systému \NTengineName~\@ntcite{latex-project} %
         a šablony %
         \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
-        (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+        (v\novathesisversion)~\@ntcite{novathesis-manual} vytvořen.}
 
 
+%%=======================================================================
+%% BABEL INTEGRATION
+%%=======================================================================
 
-% --------------------------------------------------------------------
-%   Babel definitions
-% --------------------------------------------------------------------
 \ntlangsetup*{cz/annex=Příloha}
 \ntlangsetup*{cz/annexpl=Přílohy}
 \ntlangsetup*{cz/appendixpl=Dodatky}
@@ -262,3 +262,4 @@
       Prosinec}
   \EndBabelCommands
 }
+ Greenland

@@ -1,17 +1,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  German (de) strings
+%% German (de) strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-% --------------------------------------------------------------------
-%   Load MemStore declarations
-% --------------------------------------------------------------------
 \input{\DIRSTRINGS/strings-declare.tex}
 
 
-% --------------------------------------------------------------------
-%   Utilities
-% --------------------------------------------------------------------
+%%=======================================================================
+%% UTILITIES
+%%=======================================================================
+
 \andstring(de)                  := { und }
 \instring(de)                   := { im }
 \ofstring(de)                   := { von }
@@ -29,9 +26,10 @@
 \candidatestring(f,de)          := {Die Kandidatin}
 
 
-% --------------------------------------------------------------------
-%   Bookmakr strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% BOOKMARK STRINGS
+%%=======================================================================
+
 \bkmstring(frontmatter,de)      := {Vorspann}
 \bkmstring(backmatter,de)       := {Schlussteil}
 \bkmstring(cover,de)            := {Umschlag}
@@ -52,9 +50,10 @@
 \bkmstring(glossaries,de)       := {Glossare}
 
 
-% --------------------------------------------------------------------
-%   Defaults
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DEFAULTS
+%%=======================================================================
+
 \defaultnttitle(de)             := {Ein Sehr Langer und Beeindruckender\\Titel der Arbeit mit Erzwungenem Zeilenumbruch}
 \defaultntsubtitle(de)          := {Einige Gedanken Über das Leben, das Universum\\und den Ganzen Rest}
 \defaultntdepartment(de)        := {Name des Fachbereichs}
@@ -64,9 +63,10 @@
 \notdefinedstring(de)           := {NICHT DEFINIERT}
 
 
-% --------------------------------------------------------------------
-%   Adviser strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% ADVISER STRINGS
+%%=======================================================================
+
 \professorstring(1,m,de)        := {Professor}
 \professorstring(2,m,de)        := {Professoren}
 \professorstring(1,f,de)        := {Professorin}
@@ -113,9 +113,10 @@
 \adviserstring(pref,t,2,f,de)        := {Die Tutorinnen}
 
 
-% --------------------------------------------------------------------
-% Degree names
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DEGREE NAMES
+%%=======================================================================
+
 \degreestring(bsc,m,de)         := {Bachelor-Absolvent}
 \degreestring(bsc,f,de)         := {Bachelor-Absolventin}
 
@@ -132,9 +133,10 @@
 \degreestring(phdprop,f,de)     := {Doktorandin}
 
 
-% --------------------------------------------------------------------
-% Document types
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DOCUMENT TYPES
+%%=======================================================================
+
 \doctypestring(bsc,de)          := {Bachelorarbeit}
 \doctypestring(mscplan,de)      := {Plan der Masterarbeit}
 \doctypestring(msc,de)          := {Masterarbeit}
@@ -147,15 +149,17 @@
 \dissertationplan(phdprop,de)   := {Dissertationsvorschlag}
 
 
-% --------------------------------------------------------------------
-%   Sustainable Development Goals (SDG)
-% --------------------------------------------------------------------
+%%=======================================================================
+%% SDG (SUSTAINABLE DEVELOPMENT GOALS)
+%%=======================================================================
+
 \sdgstring(de)                  := {Ziele für nachhaltige Entwicklung (SDG)}
 
 
-% --------------------------------------------------------------------
-%   Committee
-% --------------------------------------------------------------------
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
 \committeetitlestring(de)       := {Prüfungsausschuss}
 
 \committeestring(c,1,m,de)      := {Vorsitzender}
@@ -189,9 +193,9 @@
 \committeestring(g,2,f,de)      := {Gäste}
 
 
-% --------------------------------------------------------------------
-%   Dissertation strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DISSERTATION TEMPLATES
+%%=======================================================================
 
 \dissertationstring(bsc,de)     = {%
       Bericht eingereicht zur Erlangung des akademischen Grades %
@@ -224,9 +228,10 @@
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 
-% --------------------------------------------------------------------
-%   Copyright
-% --------------------------------------------------------------------
+%%=======================================================================
+%% LEGAL & ACKNOWLEDGEMENTS
+%%=======================================================================
+
 \copyrighttextstring(de)        = {%
         Die \theschool(\@LANG@COPYRIGHT)\ und die \theuniversity(\@LANG@COPYRIGHT)%
         \ besitzen das zeitlich unbegrenzte und räumlich unbeschränkte Recht, diese Arbeit in gedruckter %
@@ -235,10 +240,6 @@
         und Verbreitung zu nicht-kommerziellen Lehr- und Forschungszwecken zu gestatten, sofern der %
         Autor und der Herausgeber ordnungsgemäß genannt werden.}
 
-
-% --------------------------------------------------------------------
-%%% Acknowledgements
-% --------------------------------------------------------------------
 \acknowledgmentsstring(de)      = {%
         Dieses Dokument wurde mit dem system \NTengineName~\@ntcite{latex-project} %
         und der %
@@ -246,10 +247,10 @@
         (v\novathesisversion)~\@ntcite{novathesis-manual} erstellt.}
 
 
+%%=======================================================================
+%% BABEL INTEGRATION
+%%=======================================================================
 
-% --------------------------------------------------------------------
-%   Babel definitions
-% --------------------------------------------------------------------
 \ntlangsetup*{de/annex=Anlage}
 \ntlangsetup*{de/annexpl=Anlagen}
 \ntlangsetup*{de/appendixpl=Anhänge}
@@ -258,7 +259,8 @@
   \StartBabelCommands*{german}{date}
     \SetStringLoop{month#1name}{
       Januar,Februar,März,April,Mai,Juni,%
-      Juli,August,September,Oktober,November,%
+      Juli,August,September,Octobre,November,%
       Dezember}
   \EndBabelCommands
 }
+ Greenland

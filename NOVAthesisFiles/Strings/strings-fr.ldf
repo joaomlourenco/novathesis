@@ -1,17 +1,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  French (fr) strings
+%% French (fr) strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-% --------------------------------------------------------------------
-%   Load MemStore declarations
-% --------------------------------------------------------------------
 \input{\DIRSTRINGS/strings-declare.tex}
 
 
-% --------------------------------------------------------------------
-%   Utilities
-% --------------------------------------------------------------------
+%%=======================================================================
+%% UTILITIES
+%%=======================================================================
+
 \andstring(fr)                  := { et }
 \instring(fr)                   := { en }
 \ofstring(fr)                   := { de }
@@ -29,9 +26,10 @@
 \candidatestring(f,fr)          := {La Candidate}
 
 
-% --------------------------------------------------------------------
-%   Bookmakr strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% BOOKMARK STRINGS
+%%=======================================================================
+
 \bkmstring(frontmatter,fr)      := {Parties préliminaires}
 \bkmstring(backmatter,fr)       := {Parties finales}
 \bkmstring(cover,fr)            := {Première de couverture}
@@ -52,9 +50,10 @@
 \bkmstring(glossaries,fr)       := {Glossaires}
 
 
-% --------------------------------------------------------------------
-%   Defaults
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DEFAULTS
+%%=======================================================================
+
 \defaultnttitle(fr)             := {Un Titre de Thèse Très Long et Impressionnant\\Avec un Saut de Ligne Forcé}
 \defaultntsubtitle(fr)          := {Quelques Réflexions sur la vie, l'Univers\\et Tout le Reste}
 \defaultntdepartment(fr)        := {Nom du Département}
@@ -64,9 +63,10 @@
 \notdefinedstring(fr)           := {NON DÉFINI}
 
 
-% --------------------------------------------------------------------
-%   Adviser strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% ADVISER STRINGS
+%%=======================================================================
+
 \professorstring(1,m,fr)        := {Professeur}
 \professorstring(2,m,fr)        := {Professeurs}
 \professorstring(1,f,fr)        := {Professeure}
@@ -113,9 +113,10 @@
 \adviserstring(pref,t,2,f,fr)        := {Les Tutrices académiques}
 
 
-% --------------------------------------------------------------------
-% Degree names
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DEGREE NAMES
+%%=======================================================================
+
 \degreestring(bsc,m,fr)         := {Licencié}
 \degreestring(bsc,f,fr)         := {Licenciée}
 
@@ -132,9 +133,10 @@
 \degreestring(phdprop,f,fr)     := {Doctorante}
 
 
-% --------------------------------------------------------------------
-% Document types
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DOCUMENT TYPES
+%%=======================================================================
+
 \doctypestring(bsc,fr)          := {Mémoire de licence}
 \doctypestring(mscplan,fr)      := {Plan de mémoire de master}
 \doctypestring(msc,fr)          := {Mémoire de master}
@@ -147,15 +149,17 @@
 \dissertationplan(phdprop,fr)   := {Proposition de thèse}
 
 
-% --------------------------------------------------------------------
-%   Sustainable Development Goals (SDG)
-% --------------------------------------------------------------------
+%%=======================================================================
+%% SDG (SUSTAINABLE DEVELOPMENT GOALS)
+%%=======================================================================
+
 \sdgstring(fr)                  := {Objectifs de développement durable (ODD)}
 
 
-% --------------------------------------------------------------------
-%   Committee
-% --------------------------------------------------------------------
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
 \committeetitlestring(fr)       := {Jury d’examen}
 
 \committeestring(c,1,m,fr)      := {Président du jury}
@@ -189,45 +193,46 @@
 \committeestring(g,2,f,fr)      := {Membres invitées}
 
 
-% --------------------------------------------------------------------
-%   Dissertation strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DISSERTATION TEMPLATES
+%%=======================================================================
 
-\dissertationstring(bsc,fr)     = {
+\dissertationstring(bsc,fr)     = {%
       Mémoire présenté pour l’obtention du grade de %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) en\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) en\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(mscplan,fr) = {
+\dissertationstring(mscplan,fr) = {%
       Rapport intermédiaire présenté pour l’obtention du grade de %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) en\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) en\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(msc,fr)     = {
+\dissertationstring(msc,fr)     = {%
       Mémoire de master présenté pour l’obtention du grade de %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) en\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) en\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(phdplan,fr) = {
+\dissertationstring(phdplan,fr) = {%
       Plan de thèse présenté pour l’obtention du grade de %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) en\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) en\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(phdprop,fr) = {
+\dissertationstring(phdprop,fr) = {%
       Projet de thèse présenté pour l’obtention du grade de %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) en\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) en\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(phd,fr)     = {
+\dissertationstring(phd,fr)     = {%
       Thèse présentée pour l’obtention du grade de %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) en\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) en\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 
-% --------------------------------------------------------------------
-%   Copyright
-% --------------------------------------------------------------------
-\copyrighttextstring(fr)        = {
+%%=======================================================================
+%% LEGAL & ACKNOWLEDGEMENTS
+%%=======================================================================
+
+\copyrighttextstring(fr)        = {%
         L’\theschool(\@LANG@COPYRIGHT)\ et l’\theuniversity(\@LANG@COPYRIGHT)%
         \ disposent du droit perpétuel et sans limitation géographique d’archiver et de publier cette %
         thèse sous forme imprimée ou numérique, ou par tout autre moyen existant ou futur, et de la %
@@ -235,21 +240,17 @@
         distribution à des fins pédagogiques ou de recherche, non commerciales, à condition que l’auteur %
         et l’éditeur soient dûment mentionnés.}
 
-
-% --------------------------------------------------------------------
-%%% Acknowledgements
-% --------------------------------------------------------------------
-\acknowledgmentsstring(fr)      = {
+\acknowledgmentsstring(fr)      = {%
         Ce document a été produit avec le système de composition \NTengineName~\@ntcite{latex-project} %
         et le modèle %
         \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
         (v\novathesisversion)~\@ntcite{novathesis-manual}.}
 
 
+%%=======================================================================
+%% BABEL INTEGRATION
+%%=======================================================================
 
-% --------------------------------------------------------------------
-%   Babel definitions
-% --------------------------------------------------------------------
 \ntlangsetup*{fr/annex=Annexe}
 \ntlangsetup*{fr/annexpl=Annexes}
 \ntlangsetup*{fr/appendixpl=Appendices}
@@ -262,3 +263,4 @@
       Décembre}
   \EndBabelCommands
 }
+ Greenland

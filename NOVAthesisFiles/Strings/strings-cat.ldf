@@ -1,17 +1,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  Catalan (cat) strings
+%% Catalan (cat) strings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-% --------------------------------------------------------------------
-%   Load MemStore declarations
-% --------------------------------------------------------------------
 \input{\DIRSTRINGS/strings-declare.tex}
 
 
-% --------------------------------------------------------------------
-%   Utilities
-% --------------------------------------------------------------------
+%%=======================================================================
+%% UTILITIES
+%%=======================================================================
+
 \andstring(cat)                 := { i }
 \instring(cat)                  := { en }
 \ofstring(cat)                  := { de }
@@ -29,9 +26,10 @@
 \candidatestring(f,cat)         := {La Candidata}
 
 
-% --------------------------------------------------------------------
-%   Bookmakr strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% BOOKMARK STRINGS
+%%=======================================================================
+
 \bkmstring(frontmatter,cat)     := {Materials preliminars}
 \bkmstring(backmatter,cat)      := {Materials finals}
 \bkmstring(cover,cat)           := {Coberta}
@@ -52,9 +50,10 @@
 \bkmstring(glossaries,cat)      := {Glossaris}
 
 
-% --------------------------------------------------------------------
-%   Defaults
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DEFAULTS
+%%=======================================================================
+
 \defaultnttitle(cat)            := {Un Títol de Tesi Molt Llarg i Impressionant\\amb un Salt de Línia Forçat}
 \defaultntsubtitle(cat)         := {Alguns Pensaments Sobre la Vida, l'Univers\\i Tota la Resta}
 \defaultntdepartment(cat)       := {Nom del Departament}
@@ -64,9 +63,10 @@
 \notdefinedstring(cat)          := {NO DEFINIT}
 
 
-% --------------------------------------------------------------------
-%   Adviser strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% ADVISER STRINGS
+%%=======================================================================
+
 \professorstring(1,m,cat)       := {Professor}
 \professorstring(2,m,cat)       := {Professors}
 \professorstring(1,f,cat)       := {Professora}
@@ -113,9 +113,10 @@
 \adviserstring(pref,t,2,f,cat)       := {Les Tutores acadèmiques}
 
 
-% --------------------------------------------------------------------
-% Degree names
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DEGREE NAMES
+%%=======================================================================
+
 \degreestring(bsc,m,cat)        := {Llicenciat}
 \degreestring(bsc,f,cat)        := {Llicenciada}
 
@@ -132,9 +133,10 @@
 \degreestring(phdprop,f,cat)    := {Doctoranda}
 
 
-% --------------------------------------------------------------------
-% Document types
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DOCUMENT TYPES
+%%=======================================================================
+
 \doctypestring(bsc,cat)         := {Treball de final de grau}
 \doctypestring(mscplan,cat)     := {Pla de treball de màster}
 \doctypestring(msc,cat)         := {Treball de final de màster}
@@ -147,15 +149,17 @@
 \dissertationplan(phdprop,cat)    := {Proposta de tesi}
 
 
-% --------------------------------------------------------------------
-%   Sustainable Development Goals (SDG)
-% --------------------------------------------------------------------
+%%=======================================================================
+%% SDG (SUSTAINABLE DEVELOPMENT GOALS)
+%%=======================================================================
+
 \sdgstring(cat)                 := {Objectius de Desenvolupament Sostenible (ODS)}
 
 
-% --------------------------------------------------------------------
-%   Committee
-% --------------------------------------------------------------------
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
 \committeetitlestring(cat)      := {Tribunal avaluador}
 
 \committeestring(c,1,m,cat)     := {President del tribunal}
@@ -189,45 +193,46 @@
 \committeestring(g,2,f,cat)     := {Membres convidades}
 
 
-% --------------------------------------------------------------------
-%   Dissertation strings
-% --------------------------------------------------------------------
+%%=======================================================================
+%% DISSERTATION TEMPLATES
+%%=======================================================================
 
-\dissertationstring(bsc,cat)    = {
+\dissertationstring(bsc,cat)    = {%
       Treball presentat per a l’obtenció del títol de % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(mscplan,cat)= {
+\dissertationstring(mscplan,cat)= {%
       Informe intermedi presentat per a l’obtenció del títol de % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(msc,cat)    = {
+\dissertationstring(msc,cat)    = {%
       Treball de final de màster presentat per a l’obtenció del títol de % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(phdplan,cat)= {
+\dissertationstring(phdplan,cat)= {%
       Pla de tesi doctoral presentat per a l’obtenció del títol de % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(phdprop,cat)= {
+\dissertationstring(phdprop,cat)= {%
       Proposta de tesi doctoral presentada per a l’obtenció del títol de % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
-\dissertationstring(phd,cat)    = {
+\dissertationstring(phd,cat)    = {%
       Tesi doctoral presentada per a l’obtenció del títol de % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\[1ex]%
+      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\\[1ex]%
       \textbf{\themajorfield(\@LANG@COVER)}}
 
 
-% --------------------------------------------------------------------
-%   Copyright
-% --------------------------------------------------------------------
-\copyrighttextstring(cat)       = {
+%%=======================================================================
+%% LEGAL & ACKNOWLEDGEMENTS
+%%=======================================================================
+
+\copyrighttextstring(cat)       = {%
         La \theschool(\@LANG@COPYRIGHT)\ i la \theuniversity(\@LANG@COPYRIGHT)%
         \ disposen del dret perpetu i sense límits geogràfics d’arxivar % 
         i publicar aquesta tesi en format imprès o digital, ou per qualsevol altre mitjà existent % 
@@ -235,21 +240,17 @@
         permetre’n la còpia i distribució amb finalitats docents o de recerca, no comercials, % 
         sempre que es citi degudament l’autor i l’editor.}
 
-
-% --------------------------------------------------------------------
-%%% Acknowledgements
-% --------------------------------------------------------------------
-\acknowledgmentsstring(cat)     = {
+\acknowledgmentsstring(cat)     = {%
         Aquest document s’ha produït amb el sistema de composició \NTengineName~\@ntcite{latex-project} % 
         i la plantilla % 
         \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} % 
         (v\novathesisversion)~\@ntcite{novathesis-manual}.}
 
 
+%%=======================================================================
+%% BABEL INTEGRATION
+%%=======================================================================
 
-% --------------------------------------------------------------------
-%   Babel definitions
-% --------------------------------------------------------------------
 \ntlangsetup*{cat/annex=Annex}
 \ntlangsetup*{cat/annexpl=Annexos}
 \ntlangsetup*{cat/appendixpl=Apèndixs}
@@ -262,3 +263,4 @@
       Desembre}
   \EndBabelCommands
 }
+ Greenland
