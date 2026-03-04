@@ -7,40 +7,27 @@
 
 \typeout{NT FILE ipl/isel/ipl-isel-meb-defaults.ldf}%
 
+
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
 \input{\DIRSCHOOLS/ipl/isel/ipl-isel-defaults.ldf}
 
 \ntsetup{print/frontpage=true}
 
 \def\@LANG@COVER{pt}%
 
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
 % Faculty / School 
 \school(estsl,pt):={Escola Superior de Tecnologia da Saúde de Lisboa}
 \school(estsl,en):={Escola Superior de Tecnologia da Saúde de Lisboa}
 \school(estsl,fr):={Escola Superior de Tecnologia da Saúde de Lisboa}
 \school(estsl,it):={Escola Superior de Tecnologia da Saúde de Lisboa}
-
-% Spine info
-\spine(logo)={ipl-logo/0,ipl-isel-logo/0/1.5,ipl-isel-meb-logo/0,2cm/meb-text/0/1.8}
-\spine(box,logo,margin,sep):={5mm}
-
-\spine(box,date,angle)={-90}
-\spine(author)={\thedocauthor(name,short)}
-
-\spine(order):=?{date,author,title,logo}
-\spine(box,logo,len):=?{4.1cm}
-\spine(box,date,len):=?{1.0cm}
-% \spine(box,author,len):=?{5.0cm}
-
-
-% Set margins for cover pages
-\margin(cover,top):={1.175cm}
-\margin(cover,bottom):={1.5cm}
-\margin(cover,left):={2.1cm}
-\margin(cover,right):={2.1cm}
-
-\frontpageimage():={isel-meb-photo}
-
-% \thesiscover(1-1,image):={MEB_CapaVersaoDefinitiva_TFM_v02}
 
 \dissertationstring(bsc,pt)={Trabalho Final de Licenciatura para obtenção do grau de\\%
 Mestre em Engenharia Biomédica}
@@ -56,7 +43,47 @@ Mestre em Engenharia Biomédica}
 Mestre em Engenharia Biomédica}
 
 
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
+
+% Set margins for cover pages
+\margin(cover,top):={1.175cm}
+\margin(cover,bottom):={1.5cm}
+\margin(cover,left):={2.1cm}
+\margin(cover,right):={2.1cm}
+
+
+%%=======================================================================
+%% SPINE
+%%=======================================================================
+
+\spine(logo)={ipl-logo/0,ipl-isel-logo/0/1.5,ipl-isel-meb-logo/0,2cm/meb-text/0/1.8}
+\spine(box,logo,margin,sep):={5mm}
+
+\spine(box,date,angle)={-90}
+\spine(author)={\thedocauthor(name,short)}
+
+\spine(order):=?{date,author,title,logo}
+\spine(box,logo,len):=?{4.1cm}
+\spine(box,date,len):=?{1.0cm}
+% \spine(box,author,len):=?{5.0cm}
+
+
+%%=======================================================================
+%% COVER PAGE SETUP (BACKGROUNDS)
+%%=======================================================================
+
+\frontpageimage():={isel-meb-photo}
+
+% \thesiscover(1-1,image):={MEB_CapaVersaoDefinitiva_TFM_v02}
+
 \ntresetcovers
+
+
+%%=======================================================================
+%% UTILITIES & HOOKS
+%%=======================================================================
 
 \AtEndPreamble{%
   %\LoadHelveticaLikeFont%}
@@ -69,7 +96,9 @@ Mestre em Engenharia Biomédica}
 }
 
 
-% % School%
+%%=======================================================================
+%% COVER 1 & 2 ELEMENTS
+%%=======================================================================
 
 %% IPL
 \ntaddtocover[vspace=0cm, halign=l, hspace=0.5mm, height=1.225cm, valign=c]{1-1,2-1}{%
@@ -137,7 +166,6 @@ Mestre em Engenharia Biomédica}
   \ntprintpersons[name]{0.9}[c]{0}{adviser}{a,c}%
 }
 
-%
 % Committee — only print the committee for the main classes
 \ntaddtocover[vspace=1,status=final]{1-1,2-1}{%
   \ifmaindoc{%
@@ -150,7 +178,6 @@ Mestre em Engenharia Biomédica}
   }{\mbox{}}%
 }
 
-
 % Date
 \ntaddtocover[vspace=2]{1-1,2-1}{%
   \fontsize{11}{11}\selectfont%
@@ -159,4 +186,3 @@ Mestre em Engenharia Biomédica}
                  {\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
   }{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
 }
-
