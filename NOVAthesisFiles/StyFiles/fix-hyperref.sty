@@ -1,13 +1,17 @@
-%!TEX root = ../template.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% fix-hyperref.sty
+%% StyFiles/fix-hyperref.sty
 %% NOVA thesis configuration file
 %%
-%% Minor fixes to hyperref so that \autoref works in the proper language
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Minor fixes to hyperref and localized autoref capitalization
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE fix-hyperref.sty}
+\ProvidesPackage{fix-hyperref}[2026/03/03 v1.1]
+\typeout{NT FILE StyFiles/fix-hyperref.sty}%
+
+
+%%=======================================================================
+%% LANGUAGE FIXES
+%%=======================================================================
 
 \def\HyLang@portuguese{\HyLang@portuges}
 
@@ -38,7 +42,13 @@
   \HyLang@DeclareLang{hungarian}{magyar}{}
 }
 
+
+%%=======================================================================
+%% AUTOREF CAPITALIZATION (\Autoref)
+%%=======================================================================
+
 \ExplSyntaxOn
+
 % Declare unique variables for autoref
 \tl_new:N \l_nt_autoref_type_tl
 \tl_new:N \l_nt_autoref_name_tl
@@ -79,6 +89,11 @@
   \group_end:
  }
 
+
+%%=======================================================================
+%% INITIALIZATION
+%%=======================================================================
+
 \AtBeginDocument
  {
   \@nt@fixhyperref
@@ -88,4 +103,5 @@
     \ExplSyntaxOff
   }
  }
+
 \ExplSyntaxOff

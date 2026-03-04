@@ -1,21 +1,48 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% StyFiles/fitbox2.sty
+%% NOVA thesis configuration file
+%%
+%% Fit text into box ratio calculator
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesExplPackage{fitbox2}{2026/02/19}{1.2}{Fit text into box ratio calculator}
+\typeout{NT FILE StyFiles/fitbox2.sty}%
+
+
+%%=======================================================================
+%% PACKAGE REQUIREMENTS
+%%=======================================================================
 
 % Dependency for \pbox used to measure natural width/wrapping
 \RequirePackage{pbox}
 
-% Variables
+
+%%=======================================================================
+%% VARIABLES
+%%=======================================================================
+
 \dim_new:N \l__fb_target_wd_dim
 \dim_new:N \l__fb_target_ht_dim
 \dim_new:N \l__fb_content_ht_dim
 \tl_new:N  \l__fb_hratio_tl
 \tl_new:N  \l__fb_vratio_tl
 
-% Internal helper: Divide length #1 by #2 and return a dimensionless ratio
+
+%%=======================================================================
+%% INTERNAL HELPERS
+%%=======================================================================
+
+% Divide length #1 by #2 and return a dimensionless ratio
 \cs_new:Npn \fb_divide:nn #1 #2
   {
     \fp_eval:n { \dim_to_decimal:n { #1 } / \dim_to_decimal:n { #2 } }
   }
+
+
+%%=======================================================================
+%% PUBLIC COMMANDS
+%%=======================================================================
 
 \NewDocumentCommand{\fitboxratio}{ m m m m }
   {
@@ -65,6 +92,11 @@
     \tl_set:Nx \l_tmpa_tl { \fp_eval:n { min( #2 ) } }
     \cs_gset:cpx { #1 } { \tl_use:N \l_tmpa_tl }
   }
+
+
+%%=======================================================================
+%% MESSAGES
+%%=======================================================================
 
 \msg_new:nnnn { fitbox2 } { zero-width }
   { Content~width~is~0pt~for~text:~"#1". }

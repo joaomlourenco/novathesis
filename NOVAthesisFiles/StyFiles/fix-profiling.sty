@@ -5,7 +5,7 @@
 %% Helpers for profiling the compilation process
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ProvidesPackage{fix-profiling}[2024/01/01 v1.0]
+\ProvidesPackage{fix-profiling}[2026/03/03 v1.2]
 \typeout{NT FILE StyFiles/fix-profiling.sty}%
 
 
@@ -13,13 +13,25 @@
 %% ENGINE COMPATIBILITY
 %%=======================================================================
 
-% Ensure \pdfelapsedtime exists for engines other than pdfTeX
+% Ensure \pdfelapsedtime and \pdfresettimer exist across different engines
+% (pdfTeX, LuaTeX, XeTeX)
+
 \ifdefined\pdfelapsedtime\else
-  \newcount{\pdfelapsedtime}
-  \pdfelapsedtime=0
+  \ifdefined\elapsedtime
+    \let\pdfelapsedtime\elapsedtime
+  \else
+    \newcount\pdfelapsedtime
+    \pdfelapsedtime=0
+  \fi
 \fi
 
-\providecommand{\pdfresettimer}{}
+\ifdefined\pdfresettimer\else
+  \ifdefined\resettimer
+    \let\pdfresettimer\resettimer
+  \else
+    \newcommand{\pdfresettimer}{}
+  \fi
+\fi
 
 
 %%=======================================================================
@@ -27,23 +39,23 @@
 %%=======================================================================
 
 \ifdefined\PROFILING
-  % Print argument only when PROFILING is defined
+  % Enable \texprof command
   \newcommand{\texprof}[1]{#1}
   
-  % Try to load l3benchmark for high-precision timing
+  % Leverage LaTeX3 benchmark if available
   \IfFileExists{l3benchmark.sty}{%
     \RequirePackage{l3benchmark}
     \ExplSyntaxOn
-    \cs_new_eq:NN \benchmarktic \benchmark_tic:
-    \cs_new_eq:NN \benchmarktoc \benchmark_toc:
+      \cs_set_eq:NN \benchmarktic \benchmark_tic:
+      \cs_set_eq:NN \benchmarktoc \benchmark_toc:
     \ExplSyntaxOff
   }{%
-    % Fallback if l3benchmark is missing
+    % Dummy definitions if l3benchmark is not found
     \newcommand{\benchmarktic}{}
     \newcommand{\benchmarktoc}{}
   }
 \else
-  % No-op when PROFILING is not defined
+  % No-op definitions when PROFILING is not active
   \newcommand{\texprof}[1]{}
   \newcommand{\benchmarktic}{}
   \newcommand{\benchmarktoc}{}
