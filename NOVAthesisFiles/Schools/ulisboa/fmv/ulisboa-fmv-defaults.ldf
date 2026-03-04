@@ -8,10 +8,10 @@
 \typeout{NT FILE ulisboa/fmv/ulisboa-fmv-defaults.ldf}%
 
 
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
 
-%-----------------------------------------------------------------
-% New global properties
-%-----------------------------------------------------------------
 \options{/novathesis,
 % ULISBOA/FMV
   ulisboa/fmv/scientificarea/.new choice       = {C, MF, PASA, SA},
@@ -31,11 +31,9 @@
 \ntaddfile{statement}[en]{ulisboa-fmv/ulisboa-fmv-statement-en}
 \ntaddfile{statement}[pt]{ulisboa-fmv/ulisboa-fmv-statement-pt}
 
-
 \ntbibsetup{style=cse}
 
 \IfStrEq{\@LANG@MAIN}{en}{%
-  % \spinebkmstring(pt):=\spinebkmstring(en)
   \abstractorder(en):={pt,pt-ext,en}
   \bkmstring(abstract,pt-ext):={Resumo Alargado}
 }
@@ -47,20 +45,135 @@
 \openany
 
 
-% --------------------------------------------------------
-% FMV-like required data/information
-\RequirePackage{indentfirst}
-\setlength{\parindent}{1.25cm}
+%%=======================================================================
+%% COLORS
+%%=======================================================================
+
 \definecolor{fmvyellow}{RGB}{253,241,81}
 \definecolor{lightyellow}{RGB}{254,254,230}
-\ntbibsetup{
-  maxcitenames=2,
-  minbibnames=10,
-  maxbibnames=10,
-  dashed=false,
-  uniquelist=false,
-  style=authoryear,
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% Faculty / School
+\school(pt):={Faculdade de Medicina Veterinária}
+\school(en):={Faculty of Veterinary Medicine}
+\school(fr):={Faculty of Veterinary Medicine}
+\school(it):={Faculty of Veterinary Medicine}
+
+\newdata{doctypestr}
+\doctypestr(pt,phd):={Tese especialmente elaborada para obtenção do grau de Doutor em}
+\doctypestr(en,phd):={Thesis specially designed to earn the degree of Doctor in}
+\doctypestr(pt,msc):={Dissertação de Mestrado em}
+\doctypestr(en,msc):={Master Thesis in}
+
+\specializationstring(pt):={, na especialidade de}
+\specializationstring(en):={, with specialization in}
+
+\@for\myi:={a,1,m,en},{a,1,f,en},{a,2,m,en},{a,2,f,en},{c,1,m,en},{c,1,f,en},{c,2,m,en},{c,2,f,en},{ca,1,m,en},{ca,1,f,en},{ca,2,m,en},{ca,2,f,en},{t,1,m,en},{t,1,f,en},{t,2,m,en},{t,2,f,en},{a,1,m,pt},{a,1,f,pt},{a,2,m,pt},{a,2,f,pt},{c,1,m,pt},{c,1,f,pt},{c,2,m,pt},{c,2,f,pt},{ca,1,m,pt},{ca,1,f,pt},{ca,2,m,pt},{ca,2,f,pt},{t,1,m,pt},{t,1,f,pt},{t,2,m,pt},{t,2,f,pt}\do{%
+  \adviserstring(\myi):={\ToUppercase{\theadviserstring(\myi)}}
 }
+
+\@for\myi:={c,r,a,ca,m,g}\do{%
+  \@for\myj:={1,2}\do{%
+    \@for\myk:={m,f}\do{%
+      \@for\myl:={en,pt}\do{%
+        \committeestring(\myi,\myj,\myk,\myl):={\ToUppercase{\thecommitteestring(\myi,\myj,\myk,\myl)}}%
+      }%
+    }%
+  }%
+}
+
+\newdata{adviserslabel}
+\adviserslabel(phd,pt):={Tese orientada por:}
+\adviserslabel(phd,en):={Thesis supervised by:}
+\adviserslabel(phdprop,pt):={Tese orientada por:}
+\adviserslabel(phdprop,en):={Thesis supervised by:}
+\adviserslabel(phdplan,pt):={Tese orientada por:}
+\adviserslabel(phdplan,en):={Thesis supervised by:}
+\adviserslabel(msc,pt):={Dissertação orientada por:}
+\adviserslabel(msc,en):={Dissertation supervised by:}
+\adviserslabel(mscplan,pt):={Dissertação orientada por:}
+\adviserslabel(mscplan,en):={Dissertation supervised by:}
+\adviserslabel(de):={TBD}
+\adviserslabel(es):={TBD}
+\adviserslabel(fr):={TBD}
+\adviserslabel(it):={TBD}
+
+\newdata{provisionalstring}
+\provisionalstring(pt):={Documento Provisório}
+\provisionalstring(en):={Provisional Document}
+\provisionalstring(de):={TBD}
+\provisionalstring(es):={TBD}
+\provisionalstring(fr):={TBD}
+\provisionalstring(it):={TBD}
+
+
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
+\committeeorder():={c,m}%
+
+
+%%=======================================================================
+%% FONTS
+%%=======================================================================
+
+\AtEndPreamble{%
+  \renewcommand\familydefault{\sfdefault}%
+  \sffamily%
+}
+
+
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
+
+% Set margins for "normal" pages
+\margin(screen,top):={2.5cm}
+\margin(screen,bottom):={2.5cm}
+\margin(screen,left):={2.5cm}
+\margin(screen,right):={2.5cm}
+\margin(paper,top):={2.5cm}
+\margin(paper,bottom):={2.5cm}
+\margin(paper,left):={2.5cm}
+\margin(paper,right):={2.5cm}
+
+%% Set margins for cover pages
+\margin(cover,top):={2.5cm}
+\margin(cover,bottom):={2.5cm}
+\margin(cover,left):={2.5cm}
+\margin(cover,right):={2.5cm}
+
+\RequirePackage{indentfirst}
+\setlength{\parindent}{1.25cm}
+
+
+%%=======================================================================
+%% SPINE
+%%=======================================================================
+
+\SpineSetup[%
+]{%
+  box/logo/bg/image           = {ulisboa-fmv-insignia-color},
+  box/logo/bg/image/angle     = {-90},
+  box/date/len                = {2.0cm},
+  box/title/len               = {18.9cm},
+  box/author/len              = {4.0cm},
+  box/logo/len                = {1.5cm},
+  % debug,
+}
+
+
+%%=======================================================================
+%% UTILITIES & HOOKS
+%%=======================================================================
+
+\NTAddToHook{printbib/pre}{\begin{SingleSpacing}}
+\NTAddToHook{printbib/post}{\end{SingleSpacing}}
 
 \AtEndPreamble{
   \makeheadrule{novathesis@mainmatter}{0pt}{0pt}
@@ -68,9 +181,41 @@
   \makeoddhead{novathesis@mainmatter}{}{}{}
 }
 
+\NTAddToHook{frontmatter/pre}{%
+  \renewcommand\familydefault{\sfdefault}%
+  \sffamily%
+}
 
-\NTAddToHook{printbib/pre}{\begin{SingleSpacing}}
-\NTAddToHook{printbib/post}{\end{SingleSpacing}}
+\NTAddToHook{cover/1-1/text/pre}{\sffamily}
+\NTAddToHook{cover/2-1/text/pre}{\sffamily}
+
+\NTAddToHook{ntquote/pre}{\vspace*{3cm}}
+
+\ifdocfinal{}{
+  \AtEndPreamble{\RequirePackage[pagewise]{lineno}}
+  \NTAddToHook{acknowledgements/pre}{\linenumbers}
+  \NTAddToHook{acknowledgements/post}{\nolinenumbers}
+  \NTAddToHook{abstract/pre}{\linenumbers}
+  \NTAddToHook{abstract/post}{\nolinenumbers}
+  \NTAddToHook{mainmatter/pre}{\linenumbers}
+  \NTAddToHook{cover/N-1/pre}{\nolinenumbers}
+  \NTAddToHook{cover/N-2/pre}{\nolinenumbers}
+}
+
+\NTAddToHook{abstract/pre}{%
+  \let\oldchapterheadstart=\chapterheadstart%
+  \preto{\chapterheadstart}%
+  {\begin{center}\noindent\Large\bfseries{\THEdoctitle(\@LSHORT,main)}\end{center}\bigskip}%
+}
+
+\NTAddToHook{abstract/post}{%
+  \let\chapterheadstart=\oldchapterheadstart%
+}
+
+
+%%=======================================================================
+%% FRONT MATTER CONFIGURATION
+%%=======================================================================
 
 \options{/@nt/print/frontmatter/final = 
   {%
@@ -97,151 +242,10 @@
 }
 
 
-\newdata{doctypestr}
-\doctypestr(pt,phd):={Tese especialmente elaborada para obtenção do grau de Doutor em}
-\doctypestr(en,phd):={Thesis specially designed to earn the degree of Doctor in}
-\doctypestr(pt,msc):={Dissertação de Mestrado em}
-\doctypestr(en,msc):={Master Thesis in}
+%%=======================================================================
+%% COVER 1 & 2 ELEMENTS
+%%=======================================================================
 
-
-% --------------------------------------------------------
-\specializationstring(pt):={, na especialidade de}
-\specializationstring(en):={, with specialization in}
-
-% Faculty / School
-\school(pt):={Faculdade de Medicina Veterinária}
-\school(en):={Faculty of Veterinary Medicine}
-\school(fr):={Faculty of Veterinary Medicine}
-\school(it):={Faculty of Veterinary Medicine}
-
-\@for\myi:={a,1,m,en},{a,1,f,en},{a,2,m,en},{a,2,f,en},{c,1,m,en},{c,1,f,en},{c,2,m,en},{c,2,f,en},{ca,1,m,en},{ca,1,f,en},{ca,2,m,en},{ca,2,f,en},{t,1,m,en},{t,1,f,en},{t,2,m,en},{t,2,f,en},{a,1,m,pt},{a,1,f,pt},{a,2,m,pt},{a,2,f,pt},{c,1,m,pt},{c,1,f,pt},{c,2,m,pt},{c,2,f,pt},{ca,1,m,pt},{ca,1,f,pt},{ca,2,m,pt},{ca,2,f,pt},{t,1,m,pt},{t,1,f,pt},{t,2,m,pt},{t,2,f,pt}\do{%
-  \adviserstring(\myi):={\ToUppercase{\theadviserstring(\myi)}}
-}
-
-\@for\myi:={c,r,a,ca,m,g}\do{%
-  \@for\myj:={1,2}\do{%
-    \@for\myk:={m,f}\do{%
-      \@for\myl:={en,pt}\do{%
-        \committeestring(\myi,\myj,\myk,\myl):={\ToUppercase{\thecommitteestring(\myi,\myj,\myk,\myl)}}%
-      }%
-    }%
-  }%
-}
-
-% Comiittee printing order
-\committeeorder():={c,m}%
-
-
-
-% Spine info
-% \spine(angle)={180}
-
-\SpineSetup[%
-]{%
-  box/logo/bg/image           = {ulisboa-fmv-insignia-color},
-  box/logo/bg/image/angle     = {-90},
-  box/date/len                = {2.0cm},
-  box/title/len               = {18.9cm},
-  box/author/len              = {4.0cm},
-  box/logo/len                = {1.5cm},
-  % debug,
-}
-
-
-% Set margins for "normal" pages
-\margin(screen,top):={2.5cm}
-\margin(screen,bottom):={2.5cm}
-\margin(screen,left):={2.5cm}
-\margin(screen,right):={2.5cm}
-\margin(paper,top):={2.5cm}
-\margin(paper,bottom):={2.5cm}
-\margin(paper,left):={2.5cm}
-\margin(paper,right):={2.5cm}
-
-%% Set margins for cover pages
-\margin(cover,top):={2.5cm}
-\margin(cover,bottom):={2.5cm}
-\margin(cover,left):={2.5cm}
-\margin(cover,right):={2.5cm}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% String re-definition; original definitions in string-X.ldf
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Use array helper defined in novathesis.csl
-\newdata{adviserslabel}
-\adviserslabel(phd,pt):={Tese orientada por:}
-\adviserslabel(phd,en):={Thesis supervised by:}
-\adviserslabel(phdprop,pt):={Tese orientada por:}
-\adviserslabel(phdprop,en):={Thesis supervised by:}
-\adviserslabel(phdplan,pt):={Tese orientada por:}
-\adviserslabel(phdplan,en):={Thesis supervised by:}
-\adviserslabel(msc,pt):={Dissertação orientada por:}
-\adviserslabel(msc,en):={Dissertation supervised by:}
-\adviserslabel(mscplan,pt):={Dissertação orientada por:}
-\adviserslabel(mscplan,en):={Dissertation supervised by:}
-\adviserslabel(de):={TBD}
-\adviserslabel(es):={TBD}
-\adviserslabel(fr):={TBD}
-\adviserslabel(it):={TBD}
-
-\newdata{provisionalstring}
-\provisionalstring(pt):={Documento Provisório}
-\provisionalstring(en):={Provisional Document}
-\provisionalstring(de):={TBD}
-\provisionalstring(es):={TBD}
-\provisionalstring(fr):={TBD}
-\provisionalstring(it):={TBD}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Temporary macro to use in conditional expressions;
-\AtEndPreamble{%
-  \renewcommand\familydefault{\sfdefault}%
-  \sffamily%
-}
-
-\NTAddToHook{frontmatter/pre}{%
-  \renewcommand\familydefault{\sfdefault}%
-  \sffamily%
-}
-
-\NTAddToHook{cover/1-1/text/pre}{\sffamily}
-
-\NTAddToHook{cover/2-1/text/pre}{\sffamily}
-
-\NTAddToHook{ntquote/pre}{\vspace*{3cm}}
-
-
-\ifdocfinal{}{
-  \AtEndPreamble{\RequirePackage[pagewise]{lineno}}
-  \NTAddToHook{acknowledgements/pre}{\linenumbers}
-  \NTAddToHook{acknowledgements/post}{\nolinenumbers}
-  \NTAddToHook{abstract/pre}{\linenumbers}
-  \NTAddToHook{abstract/post}{\nolinenumbers}
-  \NTAddToHook{mainmatter/pre}{\linenumbers}
-  \NTAddToHook{cover/N-1/pre}{\nolinenumbers}
-  \NTAddToHook{cover/N-2/pre}{\nolinenumbers}
-}
-
-\NTAddToHook{abstract/pre}{%
-  % \typeout{ABSTRACT/PRE/\@LSHORT}\aaa
-  \let\oldchapterheadstart=\chapterheadstart%
-  \preto{\chapterheadstart}%
-  {\begin{center}\noindent\Large\bfseries{\THEdoctitle(\@LSHORT,main)}\end{center}\bigskip}%
-}
-
-\NTAddToHook{abstract/post}{%
-  \let\chapterheadstart=\oldchapterheadstart%
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% COVER ELEMENTS
 % School
 \ntaddtocover[vspace=2mm, height=2.0cm, valign=c]{1-1}{%
   \fontsize{12}{12}\selectfont%
@@ -268,7 +272,6 @@
   \textbf{{\THEdoctitle(\@LANG@MAIN,main,cover)}}%
 }
 
-
 % Doc Status
 \ntaddtocover[vspace=0cm, height=1.5cm, valign=c]{1-1,2-1}{%
   \ifdocworking{Draft: \today}{}%
@@ -294,7 +297,6 @@
                       \THEspecialization(\@LANG@COVER)}{~}}%
           {~}%
 }%
-
 
 % Committee and Advisers
 \ntaddtocover[vspace=15mm, height=45mm, valign=c]{1-1,2-1}{%
@@ -325,4 +327,3 @@
   % \fontseries{mc}
   \null
 }
-
