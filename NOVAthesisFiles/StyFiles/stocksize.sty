@@ -1,26 +1,27 @@
-%% This is file `stocksize.sty'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% StyFiles/stocksize.sty
+%% NOVA thesis configuration file
 %%
-%% Copyright (C) 2024–25 by João M. Lourenço <joao.lourenco@fct.unl.pt>
-%%
-%% This file may be distributed and/or modified under the conditions of
-%% the LaTeX Project Public License, either version 1.3c of this license
-%% or (at your option) any later version.
-%%
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesExplPackage{stocksize}
-                    {2025/12/31}
-                    {2.0.0}
-                    {Synchronize physical with logical paper size (Stack Aware)}
+%% Synchronize physical with logical paper size (Stack Aware)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% ============================================================================
-% 1. DEPENDENCIES
-% ============================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesExplPackage{stocksize}{2025/12/31}{2.0.0}{Synchronize physical with logical paper size (Stack Aware)}
+\typeout{NT FILE StyFiles/stocksize.sty}%
+
+
+%%=======================================================================
+%% PACKAGE REQUIREMENTS
+%%=======================================================================
+
 \RequirePackage{geometry}
 \RequirePackage{l3keys2e}
 
-% ============================================================================
-% 2. VARIABLE DEFINITIONS
-% ============================================================================
+
+%%=======================================================================
+%% VARIABLES
+%%=======================================================================
+
 % Stack counter for nested geometry handling
 \newcount\Gm@stackcnt
 \Gm@stackcnt=\z@
@@ -30,15 +31,13 @@
 \clist_new:N \l__geostack_defaults_clist
 \bool_new:N  \l__geostack_patch_bool
 
-% ============================================================================
-% 3. INTERNAL HELPERS
-% ============================================================================
 
-% ----------------------------------------------------------------------------
-% Helper: Synchronize Physical Paper Size
-% ----------------------------------------------------------------------------
-% This function ensures that the physical PDF "canvas" (PDF MediaBox) matches
-% the logical "paper" dimensions defined by geometry.
+%%=======================================================================
+%% INTERNAL HELPERS
+%%=======================================================================
+
+% Synchronize Physical Paper Size
+% Ensures physical PDF canvas matches logical dimensions
 \cs_new_protected:Nn \__geostack_sync_physical_size:
   {
     % 1. Update LaTeX standard paper dimensions to match geometry's layout
@@ -71,136 +70,85 @@
       }
   }
 
-% ============================================================================
-% 4. CORE LOGIC: GEOMETRY REDEFINITIONS (STACK MECHANISM)
-% ============================================================================
 
-% ----------------------------------------------------------------------------
+%%=======================================================================
+%% CORE LOGIC: GEOMETRY REDEFINITIONS (STACK MECHANISM)
+%%=======================================================================
+
 % Redefine \newgeometry to support LIFO Stacking
-% ----------------------------------------------------------------------------
-% Standard \newgeometry destroys the previous state. We redefine it to:
-% 1. Save the CURRENT state to a dynamic stack macro.
-% 2. Apply the NEW state.
 \renewcommand{\newgeometry}[1]{%
   \clearpage
-  % --- A. Stack Push Logic ---
-  % Initialize \Gm@restore locally to ensure cleanliness
   \def\Gm@restore{}%
-  
-  % Call \Gm@save (geometry internal). 
-  % This populates \Gm@restore with the commands needed to restore the CURRENT layout.
   \Gm@save
-  
-  % Increment stack depth
   \global\advance\Gm@stackcnt\@ne
-  
-  % Save the restoration instructions into a dynamic macro named \Gm@stack@<n>
-  % We use \xdef to expand \Gm@restore immediately (converting registers to values).
   \global\expandafter\xdef\csname Gm@stack@\the\Gm@stackcnt\endcsname{\Gm@restore}%
-  
-  % --- B. Apply New Geometry (Standard geometry logic) ---
-  \Gm@restore@org                 % Reset to preamble defaults
+  \Gm@restore@org
   \Gm@initnewgm
   \Gm@newgmtrue
-  \setkeys{Gm}{#1}%               % Process user arguments
+  \setkeys{Gm}{#1}%
   \Gm@newgmfalse
   \Gm@process
   \ifnum\mag=\@m\else\Gm@magtooffset\fi
   \Gm@changelayout
   \Gm@showparams{newgeometry}}
 
-% ----------------------------------------------------------------------------
 % Redefine \restoregeometry to support LIFO Stacking
-% ----------------------------------------------------------------------------
-% Standard \restoregeometry only goes back to preamble defaults. We redefine it to:
-% 1. Check if we are in a nested state (stack > 0).
-% 2. If yes, pop the last state. If no, reset to preamble.
 \renewcommand{\restoregeometry}{%
   \clearpage
-  % --- Stack Pop Logic ---
   \ifnum\Gm@stackcnt>\z@
-    % Case 1: Stack is not empty. 
-    % Execute the saved macro for the current level (restoring layout).
     \csname Gm@stack@\the\Gm@stackcnt\endcsname
-    % Decrement the counter
     \global\advance\Gm@stackcnt\m@ne
   \else
-    % Case 2: Stack is empty. 
-    % Fallback to standard geometry behavior (restore preamble settings).
     \Gm@restore@pkg
   \fi
-  % Recalculate layout
   \Gm@changelayout}
 
-% ============================================================================
-% 5. USER INTERFACE
-% ============================================================================
 
-% ----------------------------------------------------------------------------
-% Command: \newstocksize{options}
-% ----------------------------------------------------------------------------
-% Wrapper around \newgeometry that also handles:
-% 1. The 'keepmargins' logic (preserving current margins in new size).
-% 2. Syncing the physical page size after the layout change.
+%%=======================================================================
+%% USER INTERFACE
+%%=======================================================================
+
+% \newstocksize{options}
 \NewDocumentCommand {\newstocksize } { m }
   {
-    % --- STEP 1: Parse Options & Handle 'keepmargins' ---
     \clist_set:Nn \l__geostack_options_clist { #1 }
     \clist_clear:N \l__geostack_defaults_clist
     
     \clist_if_in:NnTF \l__geostack_options_clist { keepmargins }
       {
-        % A. Capture CURRENT margins from internal geometry macros
         \clist_put_right:Nx \l__geostack_defaults_clist { lmargin = \use:c{Gm@lmargin} }
         \clist_put_right:Nx \l__geostack_defaults_clist { rmargin = \use:c{Gm@rmargin} }
         \clist_put_right:Nx \l__geostack_defaults_clist { tmargin = \use:c{Gm@tmargin} }
         \clist_put_right:Nx \l__geostack_defaults_clist { bmargin = \use:c{Gm@bmargin} }
-        
-        % B. Remove 'keepmargins' (it's not a valid geometry option)
         \clist_remove_all:Nn \l__geostack_options_clist { keepmargins }
       }
       { }
       
-    % Merge calculated defaults with user's explicit options
     \clist_put_right:NV \l__geostack_defaults_clist \l__geostack_options_clist
-    
-    % --- STEP 2: Change Geometry (Push to Stack) ---
-    % \newgeometry (our patched version) updates logic and saves old state
     \exp_args:NV \newgeometry \l__geostack_defaults_clist
-    
-    % --- STEP 3: Sync Physical Output Size ---
     \__geostack_sync_physical_size:
   }
 
-% ----------------------------------------------------------------------------
-% Command: \restorestocksize
-% ----------------------------------------------------------------------------
-% Restores previous layout and syncs physical size.
+% \restorestocksize
 \NewDocumentCommand {\restorestocksize } {}
   {
-    % --- STEP 1: Restore Geometry (Pop from Stack) ---
     \restoregeometry
-    
-    % --- STEP 2: Sync Physical Output Size ---
     \__geostack_sync_physical_size:
   }
 
-% ============================================================================
-% 6. PACKAGE CONFIGURATION & PATCHING
-% ============================================================================
 
-% Define keys
+%%=======================================================================
+%% PACKAGE CONFIGURATION & PATCHING
+%%=======================================================================
+
 \keys_define:nn { stocksize }
   {
     patch-geometry .bool_set:N = \l__geostack_patch_bool,
     patch-geometry .default:n = true,
   }
 
-% Process package options
 \ProcessKeysPackageOptions { stocksize }
 
-% Apply patches if 'patch-geometry' was requested
-% This appends the sync command to standard geometry commands.
 \bool_if:NT \l__geostack_patch_bool
   {
     \apptocmd{\newgeometry}
