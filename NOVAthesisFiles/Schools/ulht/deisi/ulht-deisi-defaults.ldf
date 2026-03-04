@@ -9,23 +9,17 @@
 
 \typeout{NT FILE ulht/deisi/schl-defaults.ldf}%
 
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
 % Faculty / School
 \school(pt):={Departamento de Engenharia Informática e Sistemas de Informação}
 \school(en):={Departamento de Engenharia Informática e Sistemas de Informação}
 \school(fr):={Departamento de Engenharia Informática e Sistemas de Informação}
 \school(it):={Departamento de Engenharia Informática e Sistemas de Informação}
 \school(logo):={ulht-deisi-logo}
-
-% Cover background images
-\frontpageimage():={cover}
-\thesiscover(1-1,bgcolor):={white}
-\thesiscover(1-1,image):={\thefrontpageimage()}
-
-% Set margins for cover pages
-\margin(cover,top):={2.9cm}
-\margin(cover,bottom):={1.3cm}
-\margin(cover,left):={2.5cm}
-\margin(cover,right):={2.5cm}
 
 % Redefine strings
 \dissertationstring(bsc,pt)={Relatório para obtenção do Grau de %
@@ -55,9 +49,40 @@
 \thedegreestring(\@DOCTYPE,\expanded{\thedocauthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\themajorfield(\@LANG@COVER)}}
 
 
+%%=======================================================================
+%% FONTS
+%%=======================================================================
+
 \AtEndPreamble{%
   %\LoadHelveticaLikeFont%  % \RequirePackage{gillius2}%
 }
+
+
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
+
+% Set margins for cover pages
+\margin(cover,top):={2.9cm}
+\margin(cover,bottom):={1.3cm}
+\margin(cover,left):={2.5cm}
+\margin(cover,right):={2.5cm}
+
+
+%%=======================================================================
+%% COVER PAGE SETUP (BACKGROUNDS)
+%%=======================================================================
+
+\frontpageimage():={cover}
+\thesiscover(1-1,bgcolor):={white}
+\thesiscover(1-1,image):={\thefrontpageimage()}
+
+\ntresetcovers
+
+
+%%=======================================================================
+%% UTILITIES & HOOKS
+%%=======================================================================
 
 \NTAddToHook{cover/1-1/text/pre}{%
   \sffamily%
@@ -66,10 +91,10 @@
   \sffamily%
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ntresetcovers
+
+%%=======================================================================
+%% COVER 1 & 2 ELEMENTS
+%%=======================================================================
 
 % LOGO
 \ntaddtocover[halign=r,vspace=0cm]{1-1,2-1}{%
@@ -120,4 +145,3 @@
   \fontsize{14}{14}\selectfont%
     \textbf{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
 }
-

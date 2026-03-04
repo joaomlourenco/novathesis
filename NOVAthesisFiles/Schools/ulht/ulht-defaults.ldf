@@ -10,9 +10,18 @@
 \typeout{NT FILE ulht/univ-defaults.ldf}%
 
 
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
 % Configure the font set to Times New Roman
 \ntsetup{style/font=newtx}
 \ntsetup{print/frontpage=true}
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
 
 % University
 \university(pt):={Universidade Lusófona de Humanidades e Tecnologias}
@@ -22,31 +31,6 @@
 % Faculty / School
 \school(pt):={Nome da Unidade Orgânica}
 \school(en):={School's Name}
-
-% Comiittee printing order
-\committeeorder():={c,r,a,m}%
-
-% Cover background images
-\frontpageimage():={cover}
-\thesiscover(1-1,bgcolor):={white}
-\thesiscover(2-1,bgcolor):={white}
-
-
-% Set margins for "normal" pages
-\margin(screen,top):={3.5cm}
-\margin(screen,bottom):={2.5cm}
-\margin(screen,left):={3.0cm}
-\margin(screen,right):={3.0cm}
-\margin(paper,top):={3.5cm}
-\margin(paper,bottom):={2.5cm}
-\margin(paper,left):={2.5cm}
-\margin(paper,right):={3.5cm}
-
-% Set margins for cover pages
-\margin(cover,top):={1.5cm}
-\margin(cover,bottom):={2.5cm}
-\margin(cover,left):={3cm}
-\margin(cover,right):={3cm}
 
 \newdata{ulht}
 \ulht(dt,phd,pt):={Tese}
@@ -85,7 +69,47 @@
 \copyrighttextstring(en)={The \theschool(\@LANG@COVER)\ and the \theuniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
 
 
-% Spine info
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
+\committeeorder():={c,r,a,m}%
+
+
+%%=======================================================================
+%% FONTS
+%%=======================================================================
+
+\AtEndPreamble{%
+  %\LoadHelveticaLikeFont%  % \RequirePackage{gillius2}%
+}
+
+
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
+
+% Set margins for "normal" pages
+\margin(screen,top):={3.5cm}
+\margin(screen,bottom):={2.5cm}
+\margin(screen,left):={3.0cm}
+\margin(screen,right):={3.0cm}
+\margin(paper,top):={3.5cm}
+\margin(paper,bottom):={2.5cm}
+\margin(paper,left):={2.5cm}
+\margin(paper,right):={3.5cm}
+
+% Set margins for cover pages
+\margin(cover,top):={1.5cm}
+\margin(cover,bottom):={2.5cm}
+\margin(cover,left):={3cm}
+\margin(cover,right):={3cm}
+
+
+%%=======================================================================
+%% SPINE
+%%=======================================================================
+
 \SpineSetup[%
 ]{%
   box/logo/bg/image           = {ulht-logo},
@@ -95,15 +119,29 @@
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%=======================================================================
+%% COVER PAGE SETUP (BACKGROUNDS)
+%%=======================================================================
+
+\frontpageimage():={cover}
+\thesiscover(1-1,bgcolor):={white}
+\thesiscover(2-1,bgcolor):={white}
+
+
+%%=======================================================================
+%% UTILITIES & HOOKS
+%%=======================================================================
 
 % BORDER
 \newcommand{\borderwidth}{4pt}
 \newcommand{\bordermargin}{3mm}
 \definecolor{ulhtblue}{RGB}{16,49,84}%
 \usetikzlibrary{calc}
+
+
+%%=======================================================================
+%% COVER 1 & 2 ELEMENTS
+%%=======================================================================
 
 \ntaddtocover[tikz]{1-1,2-1}{%
   \draw [line width = \borderwidth,
@@ -163,18 +201,6 @@
   \ntprintpersons[name]{1}{2}{adviser}{a,c}%
 }
 
-
-% Committee — only print the committee for the main classes
-% \ntaddtocover[vspace=1]{2-1}{%
-%   \ifmaindoc{%
-%     \committeetitlestringfont():={\fontsize{14}{14}\selectfont\bfseries}%
-%     \committeestringfont():={\bfseries}%
-%     \fontsize{12}{12}\selectfont%
-%     \ntprintpersons[name]{0.9}{2}{committee}{\thecommitteeorder()}%
-%   }{}%
-% }
-
-
 % School
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont\bfseries%
@@ -188,4 +214,3 @@
   \fontsize{12}{12}\selectfont\bfseries%
     Lisboa\\\PrintDateISO{\GetDocDate(submission,year)}%
 }
-
