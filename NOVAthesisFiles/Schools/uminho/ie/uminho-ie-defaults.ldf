@@ -12,13 +12,17 @@
 
 \typeout{NT FILE uminho/ie/schl-defaults.ldf}%
 
-%-----------------------------------------------------------------
-% Remainder customization
-%-----------------------------------------------------------------
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
 % Faculty / School
 \school(pt):={Instituto de Educação}
 \school(en):={Institute of Education}
 \school(fr):={Institute of Education}
 \school(it):={Institute of Education}
+
+% Logos
 \school(logo,RGB):={uminho-ie-insignia-color}
 \school(logo,GRAY):={uminho-ie-insignia-mono}

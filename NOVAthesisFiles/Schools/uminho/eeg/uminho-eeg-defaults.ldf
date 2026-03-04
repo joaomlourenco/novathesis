@@ -12,13 +12,17 @@
 
 \typeout{NT FILE uminho/eeg/schl-defaults.ldf}%
 
-%-----------------------------------------------------------------
-% Remainder customization
-%-----------------------------------------------------------------
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
 % Faculty / School
 \school(pt):={Escola de Economia e Gestão}
 \school(en):={School of Economics and Management}
 \school(fr):={School of Economics and Management}
 \school(it):={School of Economics and Management}
+
+% Logos
 \school(logo,RGB):={uminho-eeg-insignia-color}
 \school(logo,GRAY):={uminho-eeg-insignia-mono}

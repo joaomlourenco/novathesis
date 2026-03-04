@@ -12,13 +12,17 @@
 
 \typeout{NT FILE uminho/epsi/schl-defaults.ldf}%
 
-%-----------------------------------------------------------------
-% Remainder customization
-%-----------------------------------------------------------------
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
 % Faculty / School
 \school(pt):={Escola de Psicologia}
 \school(en):={School of Psychology}
 \school(fr):={\theschool(en)}
 \school(it):={\theschool(en)}
+
+% Logos
 \school(logo,RGB):={uminho-ep-insignia-color}
 \school(logo,GRAY):={uminho-ep-insignia-mono}

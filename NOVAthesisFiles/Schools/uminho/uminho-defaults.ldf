@@ -8,9 +8,10 @@
 \typeout{NT FILE uminho/uminho-defaults.ldf}%
 
 
-%-----------------------------------------------------------------
-% New global properties
-%-----------------------------------------------------------------
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
 \options{/novathesis,
 % UMINHO
   uminho/copyrightmodifier/.new choice = {by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd},
@@ -18,21 +19,10 @@
   uminho/signatureline/.new toggle     = true,
 }
 
-
-%-----------------------------------------------------------------
 % Do not accept pdfLaTex
-%-----------------------------------------------------------------
 \AddValidProcessor{uminho}{lua,xe}
 
-%-----------------------------------------------------------------
-% memoir customization
-%-----------------------------------------------------------------
-\setmemoirfontsize{12}   % A4paper with main text at 12pt
-\openany         % Two print single paged
-
-%-----------------------------------------------------------------
 % novathesis customization
-%-----------------------------------------------------------------
 \ntsetup{lang/cover=pt}
 \ntsetup{print/frontpage=true}
 \ntsetup{print/statement=true}
@@ -45,61 +35,32 @@
 \ifmaindoc{\ifdocfinal{\ntaddfile{cover}[1]{\DIRSCHOOLS/uminho/cover-final.tex}}{}}{}
 \ntsetup{spine/layout=false}
 
-% --------------------------------------------------------
-% PRINT ORDER FOR frontmatter AND mainmatter
-\options{/@nt/print/frontmatter/final = 
-  {%
-    copyright,       % (*) The copyright page
-    acknowledgements,% (*) Print the acknowledgments
-    statement,       % The statement page
-    quote,           % (*) Print the quote
-    abstracts,       % Print abstracts in multiple languages.
-    alllistof,       % Print all the listof defined in “7_list_of.tex”
-    printglossaries, % Print the Glossary, Acronyms, Symbols, etc…
-  }
-}
-
-\options{/@nt/print/frontmatter/provisional = 
-  {%
-    copyright,       % (*) The copyright page
-    acknowledgements,% (*) Print the acknowledgments
-    statement,       % The statement page
-    quote,           % (*) Print the quote
-    abstracts,       % Print abstracts in multiple languages.
-    alllistof,       % Print all the listof defined in “7_list_of.tex”
-    printglossaries, % Print the Glossary, Acronyms, Symbols, etc…
-  }
-}
-
-%-----------------------------------------------------------------
-% Other stuff
-%-----------------------------------------------------------------
-\abstractorder(pt):={pt,en}
-\abstractorder(en):={pt,en}
-\abstractorder(fr):={pt,fr}
-\abstractorder(it):={pt,it}
-\abstractorder(es):={pt,es}
-\abstractorder(de):={pt,de}
-
-\commastring(pt):={\\}
-\commastring(en):={\\}
-\commastring(fr):={\\}
-\commastring(it):={\\}
-\commastring(es):={\\}
-\commastring(de):={\\}
-
-\andstring(pt):={\\}
-\andstring(en):={\\}
-\andstring(fr):={\\}
-\andstring(it):={\\}
-\andstring(es):={\\}
-\andstring(de):={\\}
+% memoir customization
+\setmemoirfontsize{12}   % A4paper with main text at 12pt
+\openany         % Two print single paged
 
 
+%%=======================================================================
+%% COLORS
+%%=======================================================================
 
-%-----------------------------------------------------------------
-% local strings
-%-----------------------------------------------------------------
+% Colorscheme as viewed in PDF Reader
+\definecolor{uminhoGREY}{RGB}{151, 153, 155}
+\definecolor{uminhoRED}{RGB}{164, 52, 58}
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% University
+\university(pt):={Universidade do Minho}
+\university(en):={Universidade do Minho}
+\university(fr):={Universidade do Minho}
+\university(it):={Universidade do Minho}
+\university(logo,RGB):={uminho-insignia-color}
+\university(logo,GRAY):={uminho-insignia-mono}
+
 \newdata{ofstr}
 \ofstr(pt):={ de }
 \ofstr(en):={, }
@@ -129,78 +90,38 @@
 \datestr(pt):={Data}
 \datestr(en):={Date}
 
+\abstractorder(pt):={pt,en}
+\abstractorder(en):={pt,en}
+\abstractorder(fr):={pt,fr}
+\abstractorder(it):={pt,it}
+\abstractorder(es):={pt,es}
+\abstractorder(de):={pt,de}
 
-%-----------------------------------------------------------------
-% Abstracts
-%-----------------------------------------------------------------
-\NTAddToHook{abstract/pre}{%
-  \let\oldchapterheadstart=\chapterheadstart%
-  % \preto{\chapterheadstart}{{\noindent\newsgottbf\Large\thedoctitle(\@LSHORT,main,plain)}}%
-  \preto{\chapterheadstart}{\vspace*{-2cm}}
-}
-\NTAddToHook{abstract/mid}{%
-  % \let\oldchapterheadstart=\chapterheadstart%
-  {{\noindent\bfseries\Large\thedoctitle(\@LSHORT,main,plain)}\\[1ex]}%
-}
-\NTAddToHook{abstract/post}{%
-  \let\chapterheadstart=\oldchapterheadstart%
-}
+\commastring(pt):={\\}
+\commastring(en):={\\}
+\commastring(fr):={\\}
+\commastring(it):={\\}
+\commastring(es):={\\}
+\commastring(de):={\\}
 
-\NTAddToHook{dedication/pre}{%
-  \thispagestyle{plain}%
-}
-
-\NTAddToHook{quote/pre}{%
-  \thispagestyle{plain}%
-}
+\andstring(pt):={\\}
+\andstring(en):={\\}
+\andstring(fr):={\\}
+\andstring(it):={\\}
+\andstring(es):={\\}
+\andstring(de):={\\}
 
 
-%-----------------------------------------------------------------
-% Remainder customization
-%-----------------------------------------------------------------
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
 
-% Colorscheme as viewed in PDF Reader
-\definecolor{uminhoGREY}{RGB}{151, 153, 155}
-\definecolor{uminhoRED}{RGB}{164, 52, 58}
-
-
-% University
-\university(pt):={Universidade do Minho}
-\university(en):={Universidade do Minho}
-\university(fr):={Universidade do Minho}
-\university(it):={Universidade do Minho}
-\university(logo,RGB):={uminho-insignia-color}
-\university(logo,GRAY):={uminho-insignia-mono}
-
-% Comiittee printing order
 \committeeorder():={c,r,m}%
 
-% Cover background images
-\thesiscover(phd,1-1,textcolor):={white}
-\thesiscover(phd,1-1,bgcolor):={uminhoGREY}
-\thesiscover(phd,1-2,bgcolor):={uminhoRED}
-\thesiscover(phd,2-1,textcolor):={uminhoGREY}
-\thesiscover(phd,N-1,bgcolor):={uminhoRED}
-\thesiscover(phd,N-2,bgcolor):={uminhoGREY}
 
-\thesiscover(msc,1-1,textcolor):={uminhoGREY}
-\thesiscover(msc,1-1,bgcolor):={white}
-\thesiscover(msc,1-2,bgcolor):={uminhoGREY}
-\thesiscover(msc,2-1,textcolor):={uminhoGREY}
-\thesiscover(msc,N-1,bgcolor):={uminhoGREY}
-\thesiscover(msc,N-2,bgcolor):={white}
-
-
-% Spine info
-\spine(logo,university)={\theuniversity(logo,RGB)}
-\spine(logo,school)={\theschool(logo,RGB)}
-\spine(author)={\thedocauthor(name,short)}
-\spine(title)={\thedoctitle(\@LANG@COVER,main,plain)}
-\spine(year)={\GetDocDate(submission,year)}
-% \spine(top)={116pt}
-\spine(top)={9cm}
-\spine(margin)={3mm}
-\spine(font)={}
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
@@ -220,30 +141,51 @@
 \margin(cover,right):={2.0cm}
 
 
+%%=======================================================================
+%% SPINE
+%%=======================================================================
+
+\spine(logo,university)={\theuniversity(logo,RGB)}
+\spine(logo,school)={\theschool(logo,RGB)}
+\spine(author)={\thedocauthor(name,short)}
+\spine(title)={\thedoctitle(\@LANG@COVER,main,plain)}
+\spine(year)={\GetDocDate(submission,year)}
+% \spine(top)={116pt}
+\spine(top)={9cm}
+\spine(margin)={3mm}
+\spine(font)={}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Copyright stuff
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%=======================================================================
+%% COVER PAGE SETUP (BACKGROUNDS)
+%%=======================================================================
 
-%------------------------------------------------------------------
-% LICENSING
-%------------------------------------------------------------------
+\thesiscover(phd,1-1,textcolor):={white}
+\thesiscover(phd,1-1,bgcolor):={uminhoGREY}
+\thesiscover(phd,1-2,bgcolor):={uminhoRED}
+\thesiscover(phd,2-1,textcolor):={uminhoGREY}
+\thesiscover(phd,N-1,bgcolor):={uminhoRED}
+\thesiscover(phd,N-2,bgcolor):={uminhoGREY}
 
-%%%%%%%%% Important package for the licensing.
+\thesiscover(msc,1-1,textcolor):={uminhoGREY}
+\thesiscover(msc,1-1,bgcolor):={white}
+\thesiscover(msc,1-2,bgcolor):={uminhoGREY}
+\thesiscover(msc,2-1,textcolor):={uminhoGREY}
+\thesiscover(msc,N-1,bgcolor):={uminhoGREY}
+\thesiscover(msc,N-2,bgcolor):={white}
+
+
+%%=======================================================================
+%% COPYRIGHT & LICENSING
+%%=======================================================================
+
 \AtEndPreamble{
   \usepackage[
       type={CC},
       lang=\@LANG@COPYRIGHT,
       modifier=\option{/novathesis/uminho/copyrightmodifier},
       version={4.0},
-  ]{doclicense} % By default english is used, however  is necessary to
-  % explicity define the language if the license is in portuguese. The
-  % modifier must be changed accordingly to user preferences.  If the
-  % licensing is different from any of the Creative Commons (all rights
-  % reserved for instance) just uncomment the line with \copyrightfile below
-  % and add your own custom file and the doclicense package will be ignored.
-  % Here the custom file has the name copyright
+  ]{doclicense}
 }
 
 \newcommand{\licenseThis}{%
@@ -259,12 +201,7 @@
 \umcopyrightlabel(pt):={Licença concedida aos utilizadores deste trabalho}
 \umcopyrightlabel(en):={License granted to the users of this work}
 
-
-%% ============================================================
-%% COPYRIGHT TEXT
-%% ============================================================
 \newdata{umcopyrighttext}
-
 \umcopyrighttext(pt)={%
   \begin{center}%
     \textbf{DIREITOS DE AUTOR E CONDIÇÕES DE UTILIZAÇÃO DO TRABALHO POR TERCEIROS}%
@@ -287,9 +224,62 @@ indicada.\\[1ex]
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%=======================================================================
+%% UTILITIES & HOOKS
+%%=======================================================================
+
+\NTAddToHook{abstract/pre}{%
+  \let\oldchapterheadstart=\chapterheadstart%
+  \preto{\chapterheadstart}{\vspace*{-2cm}}
+}
+\NTAddToHook{abstract/mid}{%
+  {{\noindent\bfseries\Large\thedoctitle(\@LSHORT,main,plain)}\\[1ex]}%
+}
+\NTAddToHook{abstract/post}{%
+  \let\chapterheadstart=\oldchapterheadstart%
+}
+
+\NTAddToHook{dedication/pre}{%
+  \thispagestyle{plain}%
+}
+
+\NTAddToHook{quote/pre}{%
+  \thispagestyle{plain}%
+}
+
+
+%%=======================================================================
+%% FRONT MATTER CONFIGURATION
+%%=======================================================================
+
+\options{/@nt/print/frontmatter/final = 
+  {%
+    copyright,       % (*) The copyright page
+    acknowledgements,% (*) Print the acknowledgments
+    statement,       % The statement page
+    quote,           % (*) Print the quote
+    abstracts,       % Print abstracts in multiple languages.
+    alllistof,       % Print all the listof defined in “7_list_of.tex”
+    printglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
+}
+
+\options{/@nt/print/frontmatter/provisional = 
+  {%
+    copyright,       % (*) The copyright page
+    acknowledgements,% (*) Print the acknowledgments
+    statement,       % The statement page
+    quote,           % (*) Print the quote
+    abstracts,       % Print abstracts in multiple languages.
+    alllistof,       % Print all the listof defined in “7_list_of.tex”
+    printglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
+}
+
+
+%%=======================================================================
+%% COVER 1 & 2 ELEMENTS
+%%=======================================================================
 
 \ntaddtocover{1-2}{}
 \ntaddtocover{N-1}{N-1}
@@ -307,7 +297,6 @@ indicada.\\[1ex]
   \hspace{1pt}%
   \includegraphics[height=2.5cm]{\theschool(logo,GRAY)}%
 }
-
 
 % University and School names
 \ntaddtocover[vspace=1cm,halign=l,height=5.25cm,valign=t]{1-1,2-1}{%
@@ -333,7 +322,7 @@ indicada.\\[1ex]
   \textbf{\thedoctitle(\@LANG@MAIN,main)}
 }
 
-% Degree info
+% Degree info (Cover 2 only)
 \ntaddtocover[vspace=0mm,halign=l,height=3.9cm,valign=t]{2-1}{%
   \vfill
   \fontsize{14}{16.8bp}\selectfont%
@@ -346,7 +335,7 @@ indicada.\\[1ex]
   }{}%
 }
 
-% Advisers
+% Advisers (Cover 2 only)
 \ntaddtocover[vspace=0.75cm,halign=l]{2-1}{%
   \fontsize{14}{16.8bp}\selectfont%
   \theadvisersrt(\@LANG@COVER)\\[\dimexpr-\baselineskip+0.5ex]%
@@ -356,18 +345,14 @@ indicada.\\[1ex]
 % Date
 \ntaddtocover[vspace=1,halign=l]{1-1,2-1}{%
   \fontsize{11}{11}\selectfont%
-  % \ifdraftdoc
-    % \textbf{DRAFT: \today}
-  % \else
   \PrintDateISO[\theofstr(\@LANG@COVER)]
                {\GetDocDate(submission,year)-\GetDocDate(submission,month)}
-  % \fi
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% BACK COVER
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%=======================================================================
+%% BACK COVER ELEMENTS
+%%=======================================================================
 
 % Print sponsor logos
 \ntaddtocover[vspace=1, halign=l]{N-2}{%
@@ -377,3 +362,4 @@ indicada.\\[1ex]
     }{}%
   }%
 }
+ Greenland

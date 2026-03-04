@@ -12,13 +12,17 @@
 
 \typeout{NT FILE uminho/emed/schl-defaults.ldf}%
 
-%-----------------------------------------------------------------
-% Remainder customization
-%-----------------------------------------------------------------
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
 % Faculty / School
 \school(pt):={Escola de Medicina​}
 \school(en):={School of Medicine​}
 \school(fr):={\theschool(en)}
 \school(it):={\theschool(en)}
+
+% Logos
 \school(logo,RGB):={uminho-em-insignia-color}
 \school(logo,GRAY):={uminho-em-insignia-mono}

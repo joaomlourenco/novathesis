@@ -12,13 +12,17 @@
 
 \typeout{NT FILE uminho/ec/schl-defaults.ldf}%
 
-%-----------------------------------------------------------------
-% Remainder customization
-%-----------------------------------------------------------------
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
 % Faculty / School
 \school(pt):={Escola de Ciências}
 \school(en):={School of Sciences}
 \school(fr):={School of Sciences}
 \school(it):={School of Sciences}
+
+% Logos
 \school(logo,RGB):={uminho-ec-insignia-color}
 \school(logo,GRAY):={uminho-ec-insignia-mono}

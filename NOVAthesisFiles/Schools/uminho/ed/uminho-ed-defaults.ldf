@@ -12,13 +12,17 @@
 
 \typeout{NT FILE uminho/ed/schl-defaults.ldf}%
 
-%-----------------------------------------------------------------
-% Remainder customization
-%-----------------------------------------------------------------
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
 % Faculty / School
 \school(pt):={Escola de Direito}
 \school(en):={School of Law}
 \school(fr):={School of Law}
 \school(it):={School of Law}
+
+% Logos
 \school(logo,RGB):={uminho-ed-insignia-color}
 \school(logo,GRAY):={uminho-ed-insignia-mono}
