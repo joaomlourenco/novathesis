@@ -1,15 +1,24 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% StyFiles/memstore.sty
+%% NOVA thesis configuration file
+%%
+%% Memory storage with robust value trimming using LaTeX3 properties
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesExplPackage{memstore}{2024/01/05}{1.6.1}{Memory storage with robust value trimming}
+\typeout{NT FILE StyFiles/memstore.sty}%
 
-% -------------------------------------------------------------------------
-% 1. Variables and Variants
-% -------------------------------------------------------------------------
+
+%%=======================================================================
+%% VARIABLES & VARIANTS
+%%=======================================================================
+
 \bool_new:N \l__mem_found_bool
 \tl_new:N   \l__mem_current_key_tl
 \tl_new:N   \l__mem_current_val_tl
 
 % Generate variants
-% ceV is required to store trimmed variables without expanding their content
 \cs_generate_variant:Nn \prop_gput:Nnn { cen, cee, ceV }
 \cs_generate_variant:Nn \prop_item:Nn { ce }
 \cs_generate_variant:Nn \prop_if_in:NnTF { cnTF, ceTF, ceT }
@@ -19,9 +28,10 @@
 \cs_generate_variant:Nn \prop_map_inline:Nn { cn }
 \cs_generate_variant:Nn \prop_log:N { c }
 
-% -------------------------------------------------------------------------
-% 2. Internal Helpers
-% -------------------------------------------------------------------------
+
+%%=======================================================================
+%% INTERNAL HELPERS
+%%=======================================================================
 
 \cs_new_protected:Npn \__mem_exec_branch:nnn #1 #2 #3
   {
@@ -43,18 +53,12 @@
       }
   }
 
-% -------------------------------------------------------------------------
-% 3. Basic Commands (Updated)
-% -------------------------------------------------------------------------
+
+%%=======================================================================
+%% CORE COMMANDS: SET AND GET
+%%=======================================================================
 
 % Syntax: \MemSet(*){<storage_name>}{<key>}{<value>}
-% Usage:  Stores a value in the specified memory container.
-%         Spaces around the value are automatically trimmed.
-% Arguments:
-%   * (Optional) : If present, fully expands both <key> and <value> before storing.
-%   <storage_name>: The name of the memory container (e.g., 'authors').
-%   <key>        : The unique key identifier.
-%   <value>      : The content to store.
 \NewDocumentCommand{\MemSet}{ s m m m }
   {
     \__mem_ensure_exists:n {#2}
@@ -65,27 +69,16 @@
     
     \IfBooleanTF {#1}
       { 
-        % Starred: Expand key (e) and value (e).
-        % We pass the variable \l__mem_current_val_tl.
-        % The 'e' specifier will expand the variable to its content, 
-        % and then CONTINUE expanding that content (e.g., \currYear -> 2024).
+        % Starred: Expand key (e) and value (e)
         \prop_gput:cee { g__mem_#2_prop } {#3} { \l__mem_current_val_tl } 
       }
       { 
-        % Unstarred: Expand key (e), Store value as-is (V).
-        % The 'V' specifier retrieves the content of the variable 
-        % and stores it WITHOUT further expansion.
+        % Unstarred: Expand key (e), Store value as-is (V)
         \prop_gput:ceV { g__mem_#2_prop } {#3} \l__mem_current_val_tl 
       }
   }
 
 % Syntax: \MemGet(*){<storage_name>}{<key>}
-% Usage:  Retrieves a value from the memory container.
-%         Returns nothing if the key or memory does not exist (with a warning).
-% Arguments:
-%   * (Optional) : If present, fully expands the retrieved value.
-%   <storage_name>: The name of the memory container.
-%   <key>        : The key to retrieve.
 \NewExpandableDocumentCommand{\MemGet}{ s m m }
   {
     \prop_if_exist:cTF { g__mem_#2_prop }
@@ -101,9 +94,10 @@
       { \NoCaseChange{ \msg_error:nnn { memstore } { unknown-memory } {#2} } }
   }
 
-% -------------------------------------------------------------------------
-% 4. Conditional Logic Helpers
-% -------------------------------------------------------------------------
+
+%%=======================================================================
+%% CONDITIONAL LOGIC
+%%=======================================================================
 
 \cs_new_protected:Npn \__mem_check_defined:nn #1 #2
   {
@@ -139,7 +133,7 @@
             \prop_if_in:ceT { g__mem_#1_prop } { ##1 }
               {
                 \prop_get:ceN { g__mem_#1_prop } { ##1 } \l__mem_current_val_tl
-                \tl_if_blank:VT \l__mem_current_val_tl
+                \tl_if_blank:VT { \l__mem_current_val_tl }
                   {
                     \bool_set_true:N \l__mem_found_bool
                     \tl_set:Nn \l__mem_current_key_tl { ##1 }
@@ -158,17 +152,7 @@
       { \prg_return_false: }
   }
 
-% -------------------------------------------------------------------------
-% 5. User Conditional Commands
-% -------------------------------------------------------------------------
-
 % Syntax: \IfMemDefinedTF(*){<storage_name>}{<key_list>}{<true_code>}{<false_code>}
-% Usage:  Checks if ANY key in <key_list> exists in <storage_name>.
-%         If found, executes <true_code> with #1=key and #2=value available.
-% Arguments:
-%   * (Optional) : If present, expands the found value before passing it to #2.
-%   <storage_name>: Memory container name.
-%   <key_list>   : Comma-separated list of keys to check.
 \NewDocumentCommand{\IfMemDefinedTF}{ s m m +m +m }
   {
     \__mem_check_defined:nn {#2} {#3}
@@ -180,8 +164,6 @@
       { \__mem_exec_branch:nnn {#5} {} {} }
   }
 
-% Syntax: \IfMemDefinedT(*){<storage_name>}{<key_list>}{<true_code>}
-% Usage:  Same as \IfMemDefinedTF, but only executes code if a key is found.
 \NewDocumentCommand{\IfMemDefinedT}{ s m m +m }
   {
     \__mem_check_defined:nn {#2} {#3}
@@ -192,8 +174,6 @@
       }
   }
 
-% Syntax: \IfMemDefinedF(*){<storage_name>}{<key_list>}{<false_code>}
-% Usage:  Same as \IfMemDefinedTF, but only executes code if NO keys are found.
 \NewDocumentCommand{\IfMemDefinedF}{ s m m +m }
   {
     \__mem_check_defined:nn {#2} {#3}
@@ -202,10 +182,6 @@
   }
 
 % Syntax: \IfMemBlankTF(*){<storage_name>}{<key_list>}{<true_code>}{<false_code>}
-% Usage:  Checks if ANY key in <key_list> exists AND its value is blank (empty or spaces).
-%         If found, executes <true_code> with #1=key available.
-% Arguments:
-%   * (Optional) : If present, expands the value before checking.
 \NewDocumentCommand{\IfMemBlankTF}{ s m m +m +m }
   {
     \__mem_check_blank:nn {#2} {#3}
@@ -217,8 +193,6 @@
       { \__mem_exec_branch:nnn {#5} {} {} }
   }
 
-% Syntax: \IfMemBlankT(*){<storage_name>}{<key_list>}{<true_code>}
-% Usage:  Executes <true_code> only if a blank key is found.
 \NewDocumentCommand{\IfMemBlankT}{ s m m +m }
   {
     \__mem_check_blank:nn {#2} {#3}
@@ -229,8 +203,6 @@
       }
   }
 
-% Syntax: \IfMemBlankF(*){<storage_name>}{<key_list>}{<false_code>}
-% Usage:  Executes <false_code> only if NO blank keys are found (i.e., all keys have values or don't exist).
 \NewDocumentCommand{\IfMemBlankF}{ s m m +m }
   {
     \__mem_check_blank:nn {#2} {#3}
@@ -238,55 +210,35 @@
       { \__mem_exec_branch:nnn {#4} {} {} }
   }
 
-
 % Syntax: \IfMemVoidTF{<storage_name>}{<key>}{<true_code>}{<false_code>}
-% Usage:  Executes <true_code> if the value is effectively "void" (missing or blank).
-%         Executes <false_code> only if a non-blank value exists.
 \NewDocumentCommand{\IfMemVoidTF}{ m m +m +m }
   {
     \prop_if_exist:cTF { g__mem_#1_prop }
       {
         \prop_if_in:ceTF { g__mem_#1_prop } {#2}
           {
-            % Case 3: Key exists. Check if value is blank.
             \prop_get:ceN { g__mem_#1_prop } {#2} \l__mem_current_val_tl
             \tl_if_blank:VTF \l__mem_current_val_tl 
               { #3 } % Value is blank -> Void
               { #4 } % Value has content -> Not Void
           }
-          { #3 } % Case 2: Key does not exist -> Void
+          { #3 } % Key does not exist -> Void
       }
-      { #3 } % Case 1: Storage does not exist -> Void
+      { #3 } % Storage does not exist -> Void
   }
 
-% Syntax: \IfMemVoidT{<storage_name>}{<key>}{<code_if_void>}
-% Usage:  Calls \IfMemVoidTF with an empty 'False' branch.
 \NewDocumentCommand{\IfMemVoidT}{ m m +m }
-  {
-    \IfMemVoidTF { #1 } { #2 }
-      { #3 } % True branch (Void)
-      { }    % False branch (Do nothing)
-  }
+  { \IfMemVoidTF { #1 } { #2 } { #3 } { } }
 
-% Syntax: \IfMemVoidF{<storage_name>}{<key>}{<code_if_NOT_void>}
-% Usage:  Calls \IfMemVoidTF with an empty 'True' branch.
 \NewDocumentCommand{\IfMemVoidF}{ m m +m }
-  {
-    \IfMemVoidTF { #1 } { #2 }
-      { }    % True branch (Do nothing)
-      { #3 } % False branch (Not Void)
-  }
-  
-  
-% -------------------------------------------------------------------------
-% 6. Matching Command
-% -------------------------------------------------------------------------
+  { \IfMemVoidTF { #1 } { #2 } { } { #3 } }
+
+
+%%=======================================================================
+%% MATCHING COMMANDS
+%%=======================================================================
 
 % Syntax: \MemMatch(*){<storage_name>}{<key_list>}{<cmd_key>}{<cmd_val>}
-% Usage:  Searches <key_list> for the first existing key in <storage_name>.
-%         Stores the found KEY in the control sequence <cmd_key>.
-%         Stores the found VALUE in the control sequence <cmd_val>.
-%         Issues an error if no match is found.
 \NewDocumentCommand{\MemMatch}{ s m m m m }
   {
     \IfBooleanTF {#1}
@@ -302,12 +254,12 @@
       }
   }
 
-% -------------------------------------------------------------------------
-% 7. Utilities
-% -------------------------------------------------------------------------
+
+%%=======================================================================
+%% UTILITIES
+%%=======================================================================
 
 % Syntax: \MemUndef{<storage_name>}{<key_list>}
-% Usage:  Removes the specified keys (comma-separated) from the memory container.
 \NewDocumentCommand{\MemUndef}{ m m }
   {
     \prop_if_exist:cT { g__mem_#1_prop }
@@ -318,8 +270,6 @@
   }
 
 % Syntax: \MemForEach{<storage_name>}{<code_block>}
-% Usage:  Iterates over every item in the memory container.
-%         In <code_block>, #1 refers to the KEY, and #2 refers to the VALUE.
 \NewDocumentCommand{\MemForEach}{ m +m }
   {
     \prop_if_exist:cT { g__mem_#1_prop }
@@ -330,7 +280,6 @@
   }
 
 % Syntax: \MemDebug{<storage_name>}
-% Usage:  Prints the contents of the memory container to the log file for debugging.
 \NewDocumentCommand{\MemDebug}{ m }
   {
     \prop_if_exist:cTF { g__mem_#1_prop }
@@ -338,27 +287,17 @@
       { \msg_warning:nnn { memstore } { unknown-memory } {#1} }
   }
 
-% -------------------------------------------------------------------------
-% 8. Dynamic Interface (\NewMemStore)
-% -------------------------------------------------------------------------
+
+%%=======================================================================
+%% DYNAMIC INTERFACE (\NewMemStore)
+%%=======================================================================
 
 % Syntax: \NewMemStore{<Name>}
-% Usage:  Creates a new named memory store with convenience commands.
-%         Generates: \Set<Name> and \Get<Name>.
-%
-%         Generated \Set<Name>(<key>){<value>}
-%            - stores <value> under <key> in 'Name'.
-%            - <key> is optional in () parens; trims spaces from key.
-%
-%         Generated \Get<Name>(<key>)
-%            - retrieves value from <key> in 'Name'.
 \NewDocumentCommand{\NewMemStore}{ m }
   {
     \__mem_ensure_exists:n {#1}
     
-    % Define \Set<name>
-    % We still trim the KEY explicitly here for interface consistency.
-    % Value trimming is handled by \MemSet.
+    % Define \Set<name>(<key>){<value>}
     \exp_args:Nc \NewDocumentCommand { Set#1 } { s r() u{=} m }
       {
         \IfBooleanTF { ##1 }
@@ -366,7 +305,7 @@
           { \MemSet  { #1 } { \tl_trim_spaces:n { ##2 } } { ##4 } } 
       }
       
-    % Define \Get<name>
+    % Define \Get<name>(<key>)
     \exp_args:Nc \NewExpandableDocumentCommand { Get#1 } { s r() }
       {
         \IfBooleanTF { ##1 }
@@ -375,13 +314,17 @@
       }
   }
 
-% -------------------------------------------------------------------------
-% 9. Messages
-% -------------------------------------------------------------------------
+
+%%=======================================================================
+%% MESSAGES
+%%=======================================================================
+
 \msg_new:nnn { memstore } { unknown-memory }
   { Memory~container~'#1'~does~not~exist.~Returning~empty. }
+
 \msg_new:nnn { memstore } { unknown-key }
   { Key~'#2'~not~found~in~memory~'#1'.~Returning~empty. }
+
 \msg_new:nnn { memstore } { no-match-error }
   { 
     No~valid~key~from~the~requested~list~found~in~memory~'#1'.\\
