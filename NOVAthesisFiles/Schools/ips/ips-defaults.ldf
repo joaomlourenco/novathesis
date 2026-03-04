@@ -8,6 +8,10 @@
 \typeout{NT FILE ips/univ-defaults.ldf}%
 
 
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
 % University
 \university(pt):={Instituto Politécnico de Setúbal}
 \university(en):={Polytechnic Institute of Setúbal}
@@ -17,14 +21,30 @@
 % Department
 \departmentofstring(pt)         := {Área Departamental de}
 
-% Comiittee printing order
+\copyrighttextstring(pt)={A \theschool(\@LANG@COVER)\ e o \theuniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+
+\copyrighttextstring(en)={The \theschool(\@LANG@COVER)\ and the \theuniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+
+
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
 \committeeorder():={c,r,a,m}%
 
-% Spine info
-\spine(logo)={ips-logo}
-% \spine(author)={\thedocauthor(name,short)}
-% \spine(title)={\thedoctitle(\@LANG@COVER,main,plain)}
-% \spine(year)={\GetDocDate(year)}
+
+%%=======================================================================
+%% FONTS
+%%=======================================================================
+
+\AtEndPreamble{%
+  %\LoadHelveticaLikeFont%  % \RequirePackage{gillius2}%
+}
+
+
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
@@ -42,27 +62,20 @@
 \margin(cover,left):={3.0cm}
 \margin(cover,right):={2.0cm}
 
-\copyrighttextstring(pt)={A \theschool(\@LANG@COVER)\ e o \theuniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
 
-\copyrighttextstring(en)={The \theschool(\@LANG@COVER)\ and the \theuniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+%%=======================================================================
+%% SPINE
+%%=======================================================================
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% IPS guidelines:
-% The pages should be numbered consecutively at the bottom centre of the
-% page.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\spine(logo)={ips-logo}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%=======================================================================
+%% UTILITIES & HOOKS
+%%=======================================================================
+
 \newcommand{\@leftcol}{0.37\linewidth}
 \newcommand{\@rightcol}{0.55\linewidth}
-
-\AtEndPreamble{%
-  %\LoadHelveticaLikeFont%  % \RequirePackage{gillius2}%
-}
 
 \NTAddToHook{cover/1-1/text/pre}{%
   \sffamily%
@@ -71,17 +84,18 @@
   \sffamily%
 }
 
+
+%%=======================================================================
+%% COVER 1 ELEMENTS
+%%=======================================================================
+
 % LOGO
 \ntaddtocover[vspace=0cm]{1-1}{%
   \includegraphics[height=4.6cm]{\expanded{\theschool(logo)}}%
 }
 
-\ntaddtocover[vspace=0cm]{2-1}{%
-  \rule{0cm}{4.6cm}%
-}
-
 % Author name and Title
-\ntaddtocover[halign=l, vspace=5cm]{1-1,2-1}{%
+\ntaddtocover[halign=l, vspace=5cm]{1-1}{%
   % Author name
   \begin{minipage}[t]{\@leftcol}%
     \fontsize{16}{16}\selectfont\raggedleft%
@@ -124,7 +138,7 @@
 }
 
 % Date
-\ntaddtocover[vspace=2]{1-1,2-1}{%
+\ntaddtocover[vspace=2]{1-1}{%
   \hfill%
   \begin{minipage}[t]{\@rightcol}%
     \fontsize{10}{10}\selectfont%
@@ -133,6 +147,28 @@
 }
 
 
+%%=======================================================================
+%% COVER 2 ELEMENTS
+%%=======================================================================
+
+\ntaddtocover[vspace=0cm]{2-1}{%
+  \rule{0cm}{4.6cm}%
+}
+
+% Author name and Title
+\ntaddtocover[halign=l, vspace=5cm]{2-1}{%
+  % Author name
+  \begin{minipage}[t]{\@leftcol}%
+    \fontsize{16}{16}\selectfont\raggedleft%
+    \thedocauthor(name)%
+  \end{minipage}%
+  \hfill%
+  % Title of Dissertation
+  \begin{minipage}[t]{\@rightcol}%
+    \fontsize{16}{16}\selectfont\raggedright%
+    \textbf{\thedoctitle(\@LANG@COVER,main)}%
+  \end{minipage}%
+}
 
 \ntaddtocover[vspace=1]{2-1}{%
   \hfill%
@@ -145,3 +181,11 @@
   \end{minipage}%
 }
 
+% Date
+\ntaddtocover[vspace=2]{2-1}{%
+  \hfill%
+  \begin{minipage}[t]{\@rightcol}%
+    \fontsize{10}{10}\selectfont%
+    \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}%
+  \end{minipage}%
+}

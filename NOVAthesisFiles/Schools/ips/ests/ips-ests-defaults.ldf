@@ -7,6 +7,11 @@
 
 \typeout{NT FILE ips/ests/defaults.ldf}%
 
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
 % Faculty / School
 \school(pt):={Escola Superior de Tecnologia de Setúbal}
 \school(en):={Escola Superior de Tecnologia de Setúbal}
@@ -15,10 +20,12 @@
 
 % School customization
 \school(logo):={ips-ests-logo-vert}
-\frontpageimage():={ests-photo} % don't add the .jpg extension
 
 
-% Spine info
+%%=======================================================================
+%% SPINE
+%%=======================================================================
+
 \SpineSetup[%
 ]{%
   box/logo/bg/image           = {ips-logo},
@@ -27,3 +34,9 @@
   box/logo/len                = {2.1cm},
 }
 
+
+%%=======================================================================
+%% COVER PAGE SETUP (BACKGROUNDS)
+%%=======================================================================
+
+\frontpageimage():={ests-photo} % don't add the .jpg extension
