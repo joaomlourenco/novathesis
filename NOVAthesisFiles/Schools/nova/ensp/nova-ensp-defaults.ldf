@@ -2,12 +2,22 @@
 %% nova/ensp/defaults.ldf
 %% NOVA thesis configuration file
 %%
-%% Customization for NOVA FCT (strings and cover)
+%% Customization for NOVA ENSP (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT FILE nova/ensp/defaults.ldf}%
 
+
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
 \ntsetup{print/frontpage=true}
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
 
 % Faculty / School
 \school(pt):={Escola Nacional de Saúde Pública}
@@ -15,16 +25,30 @@
 \school(fr):={Escola Nacional de Saúde Pública}
 \school(it):={Escola Nacional de Saúde Pública}
 
-% Scientific filed
-% \majorfield(pt):={«Área Científica»}
-% \majorfield(en):={“Scientific Field”}
-
 % Degree name
 \degreename(pt):={Nome do Curso}
 \degreename(en):={Degree Name}
 
-% Comiittee printing order
+
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
 \committeeorder():={c,r,m}%
+
+
+%%=======================================================================
+%% FONTS
+%%=======================================================================
+
+\AtEndPreamble{%
+  %\LoadHelveticaLikeFont%  % \RequirePackage{gillius2}%
+}
+
+
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
@@ -42,7 +66,10 @@
 \margin(cover,left):={1.0cm}
 \margin(cover,right):={1.0cm}
 
-\thesiscover(logo):={nova-ensp-logo}
+
+%%=======================================================================
+%% SPINE
+%%=======================================================================
 
 \SpineSetup[%
 ]{%
@@ -52,12 +79,16 @@
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{%
-  %\LoadHelveticaLikeFont%  % \RequirePackage{gillius2}%
-}
+%%=======================================================================
+%% COVER PAGE SETUP (BACKGROUNDS)
+%%=======================================================================
+
+\thesiscover(logo):={nova-ensp-logo}
+
+
+%%=======================================================================
+%% UTILITIES & HOOKS
+%%=======================================================================
 
 \NTAddToHook{cover/1-1/text/pre}{%
   \sffamily%
@@ -66,18 +97,23 @@
   \sffamily%
 }
 
+
+%%=======================================================================
+%% COVER 1 & 2 ELEMENTS
+%%=======================================================================
+
 % ENSP logo
 \ntaddtocover[vspace=1cm,halign=c,valign=t]{1-1,2-1}{%
   \includegraphics[width=5.75cm,align=t]{\thethesiscover(logo)}%
 }
 
-% % Title of Dissertation
+% Title of Dissertation
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont
   \textbf{\thedoctitle(\@LANG@COVER,main)}
 }
 
-% % Title of Dissertation
+% Degree name
 \ntaddtocover[vspace=1cm]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont
   \thedegreename(\@LANG@COVER)
@@ -89,13 +125,13 @@
   \textbf{\thedocauthor(name)}
 }
 
-% Degree
+% Presentation text (Cover 2 only)
 \ntaddtocover[vspace=1]{2-1}{%
   \fontsize{11}{11}\selectfont
   \thepresentationtext
 }
 
-% Advisers
+% Advisers (Cover 2 only)
 \ntaddtocover[vspace=1]{2-1}{%
   \fontsize{12}{12}\selectfont
   \ntprintpersons{0.75}{2}{adviser}{a,c}%
@@ -107,7 +143,7 @@
     \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}%
 }
 
-% % Final space
+% Final space
 \ntaddtocover[vspace=1cm]{1-1,2-1}{%
   ~
 }

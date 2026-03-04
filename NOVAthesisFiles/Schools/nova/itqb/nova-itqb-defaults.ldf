@@ -14,16 +14,16 @@
 \typeout{NT FILE nova/itqb/schl-defaults.ldf}%
 
 
-%-----------------------------------------------------------------
-% New global properties
-%-----------------------------------------------------------------
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
 \ifoptiondefined{/novathesis/nova/itqb/cover/color}{}{
   \options{/novathesis,
   % NOVA/ITQB
     nova/itqb/cover/color/.new choice = {gray, green},
   }
 }
-
 
 % ITQB-NOVA specific customization
 \AddToHook{begindocument/end}{%
@@ -33,10 +33,10 @@
 \openany
 \ntsetup{print/frontpage=true}
 
-% Loading of fonts must be delayed until class "novathesis" is loaded
-\AtEndPreamble{%
-  \RequirePackage{gillius2}%
-}
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
 
 \newdata{oeiras}
 \oeiras():={\mbox{O}eiras}
@@ -49,19 +49,33 @@
 \school(address):={\textbf{ITQB NOVA, Avenida da República, 2780-157 \theoeiras(), Portugal} $|$ Tel +351 214 469 100 $|$ itqb.unl.pt}
 
 \school(logo,neg):={nova-itqb-logo-mono}
-% \school(logo,neg):={nova-itqb-logo-negative}
 
-% Comiittee printing order
+\dissertationstring(phd,en):={Dissertation presented to obtain the \textbf{Ph.D degree in}}
+\dissertationstring(phd,pt):={Dissertação apresentada para obter o \textbf{grau de Doutor em}}
+\dissertationstring(msc,en):={Dissertation presented to obtain the \textbf{M.Sc degree in}}
+\dissertationstring(msc,pt):={Dissertação apresentada para obter o \textbf{grau de Mestre em}}
+
+
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
 \committeeorder():={c,r,a,m}%
 
-\providecolor{itqbgray207}{RGB}{207,207,207}
-\providecolor{itqbgray189}{RGB}{189,189,189}
-\providecolor{itqbgray127}{RGB}{127,127,127}
-\providecolor{itqbgray89}{RGB}{89,89,89}
-\providecolor{itqbgray38}{RGB}{38,38,38}
-\providecolor{itqbgray25}{RGB}{25,25,25}
-\providecolor{itqbgreen}{RGB}{39,177,153}
 
+%%=======================================================================
+%% FONTS
+%%=======================================================================
+
+% Loading of fonts must be delayed until class "novathesis" is loaded
+\AtEndPreamble{%
+  \RequirePackage{gillius2}%
+}
+
+
+%%=======================================================================
+%% LAYOUT (MARGINS & REGIONS)
+%%=======================================================================
 
 % Set margins for "normal" pages
 \margin(screen,top):={3.5cm}
@@ -79,6 +93,29 @@
 \margin(cover,left):={1.7cm}
 \margin(cover,right):={1.7cm}
 
+\newdata{region}
+\region(itqb,top):={-\paperheight+19.25mm}
+\region(itqb,bottom):={\theregion(itqb,top)-10.5mm}
+\region(itqb,left):={10mm}
+\region(itqb,right):={\paperwidth}
+\region(itqb,round):={0.4cm}
+\region(photo,top):={-81mm}
+\region(photo,left):={1.5cm}
+\region(photo,height):={11.0cm}
+\region(photo,width)={\paperwidth-\theregion(photo,left)-1.9cm}
+
+
+%%=======================================================================
+%% COLORS
+%%=======================================================================
+
+\providecolor{itqbgray207}{RGB}{207,207,207}
+\providecolor{itqbgray189}{RGB}{189,189,189}
+\providecolor{itqbgray127}{RGB}{127,127,127}
+\providecolor{itqbgray89}{RGB}{89,89,89}
+\providecolor{itqbgray38}{RGB}{38,38,38}
+\providecolor{itqbgray25}{RGB}{25,25,25}
+\providecolor{itqbgreen}{RGB}{39,177,153}
 
 \newdata{itqbcolor}
 \itqbcolor(gray,front,bar):={itqbgray89}
@@ -98,27 +135,11 @@
 \itqbcolor(green,spine):={itqbgreen}
 \itqbcolor(green,back):={itqbgreen}
 
-\newdata{region}
-\region(itqb,top):={-\paperheight+19.25mm}
-\region(itqb,bottom):={\theregion(itqb,top)-10.5mm}
-\region(itqb,left):={10mm}
-\region(itqb,right):={\paperwidth}
-\region(itqb,round):={0.4cm}
-\region(photo,top):={-81mm}
-\region(photo,left):={1.5cm}
-\region(photo,height):={11.0cm}
-% \region(photo,height):={13.2cm}
-\region(photo,width)={\paperwidth-\theregion(photo,left)-1.9cm}
 
-\dissertationstring(phd,en):={Dissertation presented to obtain the \textbf{Ph.D degree in}}
-\dissertationstring(phd,pt):={Dissertação apresentada para obter o \textbf{grau de Doutor em}}
-\dissertationstring(msc,en):={Dissertation presented to obtain the \textbf{M.Sc degree in}}
-\dissertationstring(msc,pt):={Dissertação apresentada para obter o \textbf{grau de Mestre em}}
+%%=======================================================================
+%% SPINE
+%%=======================================================================
 
-
-
-
-% Spine info
 \spine(logo)={\theschool(logo,neg)}
 \spine(bg,color)={\theitqbcolor(\option{/novathesis/nova/itqb/cover/color},spine)}
 \spine(date)={\textcolor{itqbgray207}{\theoeiras()},
@@ -133,29 +154,16 @@
   box/title/fg/color          = {white},
   box/author/fg/color         = {white},
   box/date/len                = {4.5cm},
-  % box/date/extrasep           = {10pt},
   box/title/len               = {11.0cm},
   box/author/len              = {3.0cm},
   box/logo/len                = {3.5cm},
   % debug,
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover pages
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NTAddToHook{cover/1-1/text/pre}{%
-  \sffamily%
-}
-\NTAddToHook{cover/2-1/text/pre}{%
-  \sffamily%
-}
-\NTAddToHook{cover/N-2/text/pre}{%
-  \sffamily%
-}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% COVER 1
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%=======================================================================
+%% UTILITIES & HOOKS
+%%=======================================================================
 
 \newcommand{\@resizetowidth}[2]{%
   \setbox0=\hbox{#2}%
@@ -167,6 +175,20 @@
   \fi
 }
 
+\NTAddToHook{cover/1-1/text/pre}{%
+  \sffamily%
+}
+\NTAddToHook{cover/2-1/text/pre}{%
+  \sffamily%
+}
+\NTAddToHook{cover/N-2/text/pre}{%
+  \sffamily%
+}
+
+
+%%=======================================================================
+%% COVER 1 ELEMENTS
+%%=======================================================================
 
 \ntaddtocover[tikz]{1-1}{%
   \sffamily%
@@ -255,9 +277,14 @@
   \end{scope}
 }
 
+
+%%=======================================================================
+%% BACK COVER ELEMENTS
+%%=======================================================================
+
 \ntaddtocover[tikz]{N-2}{%
   \sffamily%
-  \setbox0=\hbox{\scalebox{2}{\bfseries\GetDocDate(submission,year)}}
+  \setbox0=	\hbox{\scalebox{2}{\bfseries\GetDocDate(submission,year)}}
   \begin{scope}[shift=(current page.north west)]
     % Filling back cover
     \fill [color={\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/cover/color},back)}}]
