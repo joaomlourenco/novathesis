@@ -8,17 +8,19 @@
 \typeout{NT FILE other/esep/defaults.ldf}%
 
 
-%-----------------------------------------------------------------
-% Do not accept pdfLaTex
-%-----------------------------------------------------------------
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
 \AddValidProcessor{other/esp}{lua,xe}
 
-
-%-----------------------------------------------------------------
-% novathesis customization
-%-----------------------------------------------------------------
 \ntsetup{print/frontpage=true}    % Shall a second cover page be forced?
 \ntsetup{style/font=calibri}
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
 
 % University
 \university(pt):={Escola Superior de Enfermagem do Porto}
@@ -32,12 +34,17 @@
 \school(fr):={Escola Superior de Enfermagem do Porto}%%TBD
 \school(it):={Escola Superior de Enfermagem do Porto}%%TBD
 
-% Comiittee printing order
+
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
 \committeeorder():={c,r,m}%
 
-% Cover background images
-\thesiscover(1-1,bgcolor):={white}
-\thesiscover(1-1,image):={other-esep-cover}
+
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
 
 % Set margins for "normal" pages
 \margin(screen,top):={2.5cm}
@@ -55,7 +62,11 @@
 \margin(cover,left):={7cm}
 \margin(cover,right):={0.5cm}
 
-% Spine info
+
+%%=======================================================================
+%% SPINE
+%%=======================================================================
+
 \SpineSetup[%
 ]{%
   box/logo/bg/image           = {other-esep-logo_horiz},
@@ -65,11 +76,17 @@
 }
 
 
+%%=======================================================================
+%% COVER PAGE SETUP (BACKGROUNDS)
+%%=======================================================================
+
+\thesiscover(1-1,bgcolor):={white}
+\thesiscover(1-1,image):={other-esep-cover}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Draw the cover page
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%=======================================================================
+%% COVER 1 & 2 ELEMENTS
+%%=======================================================================
 
 % ESEP logo
 \ntaddtocover[vspace=2.2cm]{1-1,2-1}{%
@@ -84,7 +101,7 @@
   \thedegreename(\@LANG@COVER)%
 }
 
-% Title of Dissertation 1
+% Title of Dissertation 1 (Cover 1 only)
 \ntaddtocover[vspace=6.5cm, height=4cm, valign=t]{1-1}{%
     \centering%
     \fontsize{15}{15}\selectfont%
@@ -93,7 +110,7 @@
     Dissertação%
 }
 
-% % Title of Dissertation 2
+% % Title of Dissertation 2 (Cover 2 only)
 \ntaddtocover[vspace=6.5cm, height=4cm, valign=t]{2-1}{%
     \centering%
     \fontsize{15}{15}\selectfont\scshape%
@@ -101,19 +118,18 @@
     \thedoctitle(en,main)%
 }
 
-% Advisers 2
+% Advisers (Cover 2 only)
 \ntaddtocover[vspace=2cm]{2-1}{%
-  % \fontseries{mc}
   \parbox[t][4cm]{\textwidth}{%
     \centering%
     \fontsize{11}{11}\selectfont%
     \ntprintpersons{0.8}{2}{adviser}{a,c}%
   }%
 }
+
+% Advisers spacer (Cover 1 only)
 \ntaddtocover[vspace=2cm]{1-1}{%
-  \parbox[t][4cm]{\textwidth}{%
-  ~%
-  }%
+  \parbox[t][4cm]{\textwidth}{~}%
 }
 
 % Author name
@@ -127,53 +143,3 @@
   \fontsize{12}{12}\selectfont
     \textbf{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
 }
-
-%
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% %% Draw the second cover page
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% % ESEP logo
-% \ntaddtocover[vspace=2.2cm]{2-1}{%
-%   \ntcoverbackground
-%   \fontsize{15}{15}\selectfont
-%   \expandafter\ToUppercase\expandafter{\textbf{\theschool(\@LANG@COVER)}}
-% }
-%
-% % % Degree name
-% \ntaddtocover[vspace=0.5cm]{2-1}{%
-%   \fontsize{15}{15}\selectfont
-%   \thedegreename(\@LANG@COVER)
-% }
-%
-% % % Title of Dissertation
-% \ntaddtocover[vspace=6.5cm]{2-1}{%
-%   % \fontseries{mc}
-%   \fontsize{15}{15}\selectfont
-%   \scshape
-%   \thedoctitle(\@LANG@COVER,main)\\[1ex]
-%   \thedoctitle(\@LANG@COVER,main)[en]
-% }
-%
-% % Author name
-% \ntaddtocover[vspace=1]{2-1}{%
-%   \fontsize{12}{12}\selectfont
-%   \textbf{\thedocauthor(name)}
-% }
-%
-% % Date
-% \ntaddtocover[vspace=1]{2-1}{%
-%   \fontsize{12}{12}\selectfont
-%   \ifdraftdoc
-%     \textbf{DRAFT: \today}
-%   \else
-%     \GetDocDate(month), \GetDocDate(year)
-%   \fi
-% }
-%
-% % % Final space
-% \ntaddtocover[vspace=1cm]{2-1}{%
-%   ~
-% }
-%
-%
