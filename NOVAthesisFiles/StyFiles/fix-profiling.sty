@@ -1,13 +1,50 @@
-\ifdefined\pdfelapsedtime\else\newcount{\pdfelapsedtime}\pdfelapsedtime=0\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% StyFiles/fix-profiling.sty
+%% NOVA thesis configuration file
+%%
+%% Helpers for profiling the compilation process
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ProvidesPackage{fix-profiling}[2024/01/01 v1.0]
+\typeout{NT FILE StyFiles/fix-profiling.sty}%
+
+
+%%=======================================================================
+%% ENGINE COMPATIBILITY
+%%=======================================================================
+
+% Ensure \pdfelapsedtime exists for engines other than pdfTeX
+\ifdefined\pdfelapsedtime\else
+  \newcount{\pdfelapsedtime}
+  \pdfelapsedtime=0
+\fi
+
 \providecommand{\pdfresettimer}{}
 
+
+%%=======================================================================
+%% PROFILING LOGIC
+%%=======================================================================
+
 \ifdefined\PROFILING
+  % Print argument only when PROFILING is defined
   \newcommand{\texprof}[1]{#1}
-  \IfFileExists{l3benchmark}{\RequirePackage{l3benchmark}}{}
-  \ExplSyntaxOn
-  \cs_new_eq:NN \benchmarktic \benchmark_tic:
-  \cs_new_eq:NN \benchmarktoc \benchmark_toc:
-  \ExplSyntaxOff
+  
+  % Try to load l3benchmark for high-precision timing
+  \IfFileExists{l3benchmark.sty}{%
+    \RequirePackage{l3benchmark}
+    \ExplSyntaxOn
+    \cs_new_eq:NN \benchmarktic \benchmark_tic:
+    \cs_new_eq:NN \benchmarktoc \benchmark_toc:
+    \ExplSyntaxOff
+  }{%
+    % Fallback if l3benchmark is missing
+    \newcommand{\benchmarktic}{}
+    \newcommand{\benchmarktoc}{}
+  }
 \else
+  % No-op when PROFILING is not defined
   \newcommand{\texprof}[1]{}
+  \newcommand{\benchmarktic}{}
+  \newcommand{\benchmarktoc}{}
 \fi
