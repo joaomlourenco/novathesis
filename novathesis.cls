@@ -80,6 +80,10 @@
 \ProvidesClass{novathesis}[Version 7.10.3 (2026-03-02) novathesis template class file]
 \NeedsTeXFormat{LaTeX2e}[2023-06-01]
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% KERNEL & CORE UTILITIES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %% ----------------------------------------------------------------------------
 % Save these definitions asap, to be used later in the “\annex” command,
 % because "\@Roman" and "\Roman" were failing with pdflatex
@@ -107,10 +111,9 @@
 \def\DIRCHAPSTYLES{\DIRNTFILES/ChapStyles}
 \def\DIRIMAGES{\DIRNTFILES/Images}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  MEMOIR CUSTOMIZATION AND LOADING
-%%      Please open and edit the appropriate
-%%       configuration file “0-Config/0_memoir.tex”
+%% MEMOIR CUSTOMIZATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntmemoirsetup}[1]{\PassOptionsToClass{#1}{memoir}}
 \input{\DIRCONFIG/0_memoir}
@@ -118,9 +121,10 @@
 
 \OnehalfSpacing% One-and-half spacing
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 1. KERNEL, UTILITIES & FLAGS (Must load early)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% CORE PACKAGES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage[table,svgnames]{xcolor} % First to avoid option clashes
 \RequirePackage{iftex}
 \RequirePackage{ifplatform}
@@ -131,9 +135,6 @@
 \RequirePackage{varwidth}
 \RequirePackage{calc}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 2. TEMPLATE CORE
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \xappto\input@path{{\DIRSTYFILES/}{\DIRSTRINGS/}}
 
 \RequirePackage{options-ext}
@@ -142,9 +143,10 @@
 \RequirePackage{memstore}
 \RequirePackage{stocksize}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 3. FONTS & ENCODINGS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FONTS & ENCODINGS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \iftutex
   \RequirePackage[no-math]{fontspec}
   \defaultfontfeatures{Ligatures=TeX}
@@ -170,9 +172,9 @@
 % TODO Good to load after fonts
 \RequirePackage{microtype} % Good to load after fonts
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 4. LANGUAGE & LOCALIZATION
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LANGUAGE & LOCALIZATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage[english]{babel}
 \AtBeginDocument{%
   \ifx\bbl@ensure@bcp\@undefined
@@ -185,17 +187,24 @@
 
 \RequirePackage{csquotes}  % MUST be loaded before biblatex
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 5. GRAPHICS & TABLES
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% GRAPHICS & TABLES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{tikz}
 \RequirePackage[nobeamer]{graphbox} % Loads graphicx
 \RequirePackage{colortbl}
 \RequirePackage{xurl} % Loads 'url' with better breaking
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 6. BIBLIOGRAPHY & INDEXING
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\expandafter\graphicspath\expandafter{\expandafter{\DIRFIGURES/}}
+\DeclareGraphicsExtensions{.pdf,.png,.tif,.jpg}
+\providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
+\providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BIBLIOGRAPHY & INDEXING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NewDocumentCommand { \ntbibsetup } {m}
   {%
     \@ifpackageloaded{biblatex}
@@ -212,25 +221,21 @@
   \RequirePackage{imakeidx} % Should generally be loaded before hyperref
 }
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% HYPERREF & INTERACTIVE ELEMENTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtEndPreamble{
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %% 7. HYPERREF & INTERACTIVE ELEMENTS
-  %% (Most packages go before here; specific ones go after)
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \PassOptionsToPackage{
-      bookmarksnumbered=true,
-      breaklinks=true,
-      colorlinks=true,
-      pdfdisplaydoctitle=true,
-      unicode=true,
-    }{hyperref}
-    \RequirePackage{hyperref}
-    \RequirePackage{fix-hyperref} % Patches hyperref immediately
-  
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %% 8. POST-HYPERREF DEPENDENCIES
-  %% (These MUST be loaded after hyperref)
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \PassOptionsToPackage{
+    bookmarksnumbered=true,
+    breaklinks=true,
+    colorlinks=true,
+    pdfdisplaydoctitle=true,
+    unicode=true,
+  }{hyperref}
+  \RequirePackage{hyperref}
+  \RequirePackage{fix-hyperref} % Patches hyperref immediately
+
   \RequirePackage{bookmark}           % Extends hyperref bookmarks
   \PassOptionsToPackage{
     translate=babel,
@@ -283,30 +288,16 @@
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 9. FINAL TOOLS & DEVELOPMENT
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \ifoptioncontains{/novathesis/debug}{index}{%
-%   % \PassOptionsToPackage{inline}{showlabels}%
-%   \AtEndPreamble{\RequirePackage{showlabels}%
-%   \showlabels[\color{\debugindexcolor}]{index}}%
-% }{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FINAL TOOLS & DEVELOPMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtEndPreamble{
   \RequirePackage[autobib=true,nocite=false]{aidisclose2}
 }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Configure Graphics
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\expandafter\graphicspath\expandafter{\expandafter{\DIRFIGURES/}}
-\DeclareGraphicsExtensions{.pdf,.png,.tif,.jpg}
-\providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
-\providecommand*\prependtographicspath[1]{\xpreto\Ginput@path{#1}}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% UTILITIES
+%% RESOURCES & ENGINES (Expl3 & UTILITIES)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\ifxeorlua}[2]{\iftutex#1\else#2\fi}
@@ -348,10 +339,6 @@
   }%
 }
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Expl3 UTILITIES
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ExplSyntaxOn
 % Robust titlecase function: modifies the TL variable in-place
@@ -752,10 +739,6 @@
 
 \ExplSyntaxOff
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% PACKAGE
-
-% --------------------------------------------------------
 \def\@nt@saveabstractorder{}
 \newcommand{\@setabstractorder}{%
   % \typeout{SAVEABSORDER=[\@nt@saveabstractorder]}\SAVEABSORDER%
@@ -768,10 +751,14 @@
   }%
 }
 
-\ExplSyntaxOn
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DATA MANAGEMENT (MEMORY)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % --------------------------------------------------------
 % Search if a data/memory is defined and returns value
+
+\ExplSyntaxOn
 
 % Define a boolean to track if a match was found inside the loop
 \bool_new:N \l__memory_match_found_bool
@@ -871,6 +858,9 @@
 \ExplSyntaxOff
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TEMPLATE OPTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \options{/novathesis/.new family,
   % DOCUMENT
   doctype/.new choice           = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
@@ -1198,6 +1188,10 @@
 \SetLangLong(zhs):={zh-Hans}
 \SetLangLong(zht):={zh-Hant}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PERSON & FILE MANAGEMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE FOLDERS PER CLASS
@@ -1565,7 +1559,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FIX BABEL
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input{fix-babel.tex}
+\input{fix-babel-expl3.tex}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1601,7 +1595,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% DEFINITIONS FOR THE REMINDER OF CUSTOMIZATION STUFF
+%% DOCUMENT METADATA
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ExplSyntaxOn
@@ -1966,6 +1960,10 @@
    ]%
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% STRUCTURAL PRINTING ENGINE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %============================================================
 % Print document “parts/sections/regions”
 \newcommand*{\ntprint}[1]{%
@@ -2148,7 +2146,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% COVER DEFINITION MACROS
+%% COVER PAGE ENGINE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntresetcovers}{%
   \@for\arg:={1-1,1-2,2-1,2-2,N-1,N-2}\do{%
@@ -2230,6 +2228,10 @@
 %==========================================
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SCHOOL & UNIVERSITY LOGIC
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Update Schoold's images folder
@@ -3278,7 +3280,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% PAGE LAYOUT
+%% PAGE LAYOUT & STYLES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \AtEndPreamble{\ntsetlayout}%
@@ -3296,7 +3298,7 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Printing chapters and similars
+%% FRONT MATTER COMPONENTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\@nt@printifmaindoc@i}[1]{%
   % \typeout{NT Attempt to load #1}%
@@ -3497,7 +3499,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Chapters
+%% MAIN & BACK MATTER COMPONENTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntprintchapters}{%
     \@nt@foralllist{file}{chapter}{\PrintAddedFile{chapter}}%
@@ -3652,7 +3654,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Bibliography
+%% BIBLIOGRAPHY & INDEXING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand*{\ntprintbibsingle}[1][]{%
@@ -3951,6 +3953,10 @@
 
 \maxsecnumdepth{subsubsection}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FINAL HOOKS & FIXES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Fixes
