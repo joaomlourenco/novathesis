@@ -1,0 +1,35 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% fix-bib.tex
+%% NOVA thesis documentation file
+%%
+%% Detailed explanation of fix-bib.bib functionality.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE fix-bib.tex}
+
+\chapter{Explanation of fix-bib.bib}
+\label{annex:fix-bib}
+
+The file \texttt{NOVAthesisFiles/StyFiles/fix-bib.bib} contains a small set of mandatory or highly recommended bibliography entries for use with the \emph{NOVAthesis} template. These entries are often referenced within the template's own manual and example chapters.
+
+\section{Template Documentation}
+The most important entry in this file is \texttt{novathesis-manual}.
+\begin{itemize}
+    \item \textbf{Purpose}: It provides the official reference for the \emph{NOVAthesis} template itself.
+    \item \textbf{Requirement}: The template's \texttt{template.tex} file explicitly requests that users \texttt{\textbackslash cite\{novathesis-manual\}} somewhere in their document as a way to acknowledge the work put into the template.
+\end{itemize}
+
+\section{\LaTeX{} and AI Disclosure References}
+Additional entries provide standard citations for foundational technologies and emerging academic requirements:
+\begin{itemize}
+    \item \textbf{latex-project}: A generic citation for the \LaTeX{} document preparation system.
+    \item \textbf{Suchikova:2025:GAIDeT}: A reference to the ``Generative AI Delegation Taxonomy'' (GAIDeT). This is useful when documenting the use of AI in scientific research, as required by modern academic ethics.
+    \item \textbf{Lourenco:2025:aidisclose}: A reference to the \texttt{aidisclose} package, which is used within \emph{NOVAthesis} to generate AI disclosure statements and checklists.
+\end{itemize}
+
+\section{Technical Note}
+This \texttt{.bib} file is typically included in the project by the \texttt{\textbackslash ntaddfile\{bib\}\{fix-bib.bib\}} command in the configuration files. This ensures that these specific keys are always available for citation regardless of which other bibliography databases the user may be using.
+
+\section{Summary}
+The \texttt{fix-bib.bib} file ensures that critical references for the template, \LaTeX, and AI ethics are always available and correctly formatted for any document produced with \emph{NOVAthesis}.

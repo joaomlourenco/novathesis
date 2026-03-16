@@ -1,0 +1,28 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% copyright.tex
+%% NOVA thesis documentation file
+%%
+%% Detailed explanation of copyright.tex functionality.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE copyright.tex}
+
+\chapter{Explanation of copyright.tex}
+\label{annex:copyright}
+
+The file \texttt{NOVAthesisFiles/StyFiles/copyright.tex} is a small utility used to generate the default copyright page of the thesis.
+
+\section{Functionality}
+The file contains the necessary commands to format and print the copyright information:
+\begin{itemize}
+    \item \textbf{Vertical Alignment}: It uses \texttt{\textbackslash null\textbackslash vfill} to push the copyright text to the bottom of the page.
+    \item \textbf{Document Title}: It prints the document title using the \texttt{\textbackslash thedoctitle} command, specifically pulling the version intended for the cover in a plain style.
+    \item \textbf{Copyright String}: It invokes \texttt{\textbackslash thecopyrightstr}, which contains the localized legal text regarding copyright, reproduction rights, and citations, as configured in the school-specific or language-specific string files.
+\end{itemize}
+
+\section{Usage}
+This file is typically loaded automatically by the template when the front matter is being processed, ensuring that every thesis has a legally compliant and properly formatted copyright statement.
+
+\section{Summary}
+In summary, \texttt{copyright.tex} provides a standardized way to render the copyright page, maintaining consistency across all documents produced with the \emph{NOVAthesis} template.

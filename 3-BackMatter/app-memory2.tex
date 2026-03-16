@@ -1,0 +1,36 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% memory2.tex
+%% NOVA thesis documentation file
+%%
+%% Detailed explanation of memory2.sty functionality.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE memory2.tex}
+
+\chapter{Explanation of memory2.sty}
+\label{annex:memory2}
+
+The file \texttt{NOVAthesisFiles/StyFiles/memory2.sty} is a legacy-style utility package (based on a 2013 original by Song Zhiwei) used for storing and retrieving structured data within \LaTeX{}.
+
+\section{Key Concepts}
+This package allows the creation of data structures that resemble objects or arrays in standard programming:
+\begin{itemize}
+    \item \textbf{\textbackslash newdata}: Defines a new data storage object.
+    \item \textbf{\textbackslash the<Name>(key)}: Retrieves a stored value.
+    \item \textbf{Array-like Storage}: It can store values under multiple keys (e.g., \texttt{\textbackslash mydata(key1)=\{value\}}).
+\end{itemize}
+
+\section{Utility Functions}
+The package includes several helper macros for working with stored data:
+\begin{itemize}
+    \item \textbf{\textbackslash ifdatadefined}: A conditional that checks if a specific key has a value assigned to it.
+    \item \textbf{\textbackslash datacrossiftrue}: A specialized command that prints a ``checked box'' (\rlap{$\square$}{\raisebox{2pt}{\hspace{1pt}\tiny$\times$}}) if data exists, or an empty box otherwise, which is often used in administrative forms.
+    \item \textbf{\textbackslash datadefault}: Allows retrieving a value with a fallback if the primary key is not defined.
+\end{itemize}
+
+\section{Role in the Template}
+While newer parts of \emph{NOVAthesis} favor the more modern \texttt{memstore.sty}, \texttt{memory2.sty} is still used for various legacy features, especially those related to administrative checklists and multi-faceted data storage where standard \LaTeX2e macro syntax is preferred.
+
+\section{Summary}
+In summary, \texttt{memory2.sty} provides a basic but effective way to handle structured data in \LaTeX{}, enabling the template to manage complex configurations like checklists and multi-value options.

@@ -1,0 +1,41 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% fix-hyperref.tex
+%% NOVA thesis documentation file
+%%
+%% Detailed explanation of fix-hyperref.sty functionality.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE fix-hyperref.tex}
+
+\chapter{Explanation of fix-hyperref.sty}
+\label{annex:fix-hyperref}
+
+The file \texttt{NOVAthesisFiles/StyFiles/fix-hyperref.sty} is a specialized extension for the \texttt{hyperref} package within the \emph{NOVAthesis} template. Its primary goals are to fix language mapping issues and provide a ``smart'' capitalized version of the \texttt{\textbackslash autoref} command.
+
+\section{Language Mapping Fixes}
+Standard \texttt{hyperref} sometimes struggles to map localized strings (like ``Figure'' or ``Table'') to the correct language, especially with Portuguese variations. This style file addresses this by:
+\begin{itemize}
+    \item \textbf{Portuguese Aliasing}: Mapping \texttt{portuguese} to \texttt{portuges} (the internal \texttt{hyperref} name) to ensure consistency.
+    \item \textbf{\textbackslash @nt@fixhyperref}: This command re-declares standard language mappings (English, German, Russian, Portuguese, etc.) to ensure that when you use \texttt{\textbackslash autoref}, it correctly pulls the name in the document's current language.
+\end{itemize}
+
+\section{The \textbackslash Autoref Command}
+Standard \LaTeX's \texttt{\textbackslash autoref} usually prints labels in lowercase (e.g., ``see section 1''). While some languages prefer this, many styles require capitalization at the start of a sentence (e.g., ``Section 1 shows...'').
+
+This file implements a robust \texttt{\textbackslash Autoref} command using \LaTeX3 (\texttt{Expl3}) logic:
+\begin{itemize}
+    \item \textbf{Automatic Type Detection}: When you call \texttt{\textbackslash Autoref\{label\}}, it looks up the internal metadata of that label to see what it points to (e.g., a \texttt{chapter}, \texttt{section}, or \texttt{figure}).
+    \item \textbf{Dynamic Capitalization}: 
+    \begin{enumerate}
+        \item It extracts the type (e.g., \texttt{section}).
+        \item It cleans the name (removing \texttt{*} for unnumbered sections).
+        \item It fetches the localized name (e.g., ``secção'' in Portuguese).
+        \item It \textbf{capitalizes the first letter} (e.g., ``Secção'') using an internal helper function.
+        \item It locally redefines the name and calls the standard \texttt{\textbackslash autoref}.
+    \end{enumerate}
+    \item \textbf{Scoped Changes}: The capitalization happens inside a \LaTeX{} group, so it only affects that specific call and doesn't permanently change all subsequent references to be capitalized.
+\end{itemize}
+
+\section{Summary}
+In summary, this file ensures that \texttt{\textbackslash autoref} works reliably across all languages supported by \emph{NOVAthesis} and provides the \texttt{\textbackslash Autoref} command for correctly capitalized, localized references.

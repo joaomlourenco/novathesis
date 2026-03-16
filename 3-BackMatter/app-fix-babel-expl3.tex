@@ -1,0 +1,41 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% fix-babel-expl3.tex
+%% NOVA thesis documentation file
+%%
+%% Detailed explanation of fix-babel-expl3.tex functionality.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE fix-babel-expl3.tex}
+
+\chapter{Explanation of fix-babel-expl3.tex}
+\label{annex:fix-babel-expl3}
+
+The file \texttt{NOVAthesisFiles/StyFiles/fix-babel-expl3.tex} is a modern refactoring of the original \texttt{fix-babel.tex} utility. It uses the \LaTeX3 (\texttt{expl3}) programming layer to provide a more robust and performant way to manage localized strings (captions) across multiple languages.
+
+\section{Core Functionality: Localized Key Configuration}
+The primary entry point is the \texttt{\textbackslash ntlangsetup} command. This command allows the template or the user to define translations for specific keys in a given language.
+
+\begin{itemize}
+    \item \textbf{Syntax}: \texttt{\textbackslash ntlangsetup*[suffix]\{lang/key=value\}}
+    \item \textbf{Property Lists}: Internally, it uses \texttt{expl3} property lists (\texttt{prop}) named \texttt{g\_nt\_babel\_<lang>\_prop} to store these translations.
+    \item \textbf{Suffixing}: By default, it appends ``name'' to the key (e.g., \texttt{chapter} becomes \texttt{chaptername}), maintaining compatibility with standard \LaTeX{} naming conventions.
+    \item \textbf{Starred Version}: The \texttt{\textbackslash ntlangsetup*} variant only sets a value if it hasn't been defined yet, preventing accidental overrides of user settings.
+\end{itemize}
+
+\section{Application Engine}
+The translations are not applied immediately. Instead, they are collected and then applied at the very end of the preamble (using the \texttt{begindocument/before} hook).
+
+\begin{itemize}
+    \item \textbf{\textbackslash nt\_babel\_apply\_all\_captions}: This internal function iterates over all languages loaded by the template and maps the stored property lists to Babel's caption system.
+    \item \textbf{Babel Integration}: It uses \texttt{\textbackslash setlocalecaption} (with a fallback for older \LaTeX{} kernels) to inject the localized strings into the correct language environments.
+\end{itemize}
+
+\section{Hyphenation and Shorthands}
+The file also includes engine-specific configurations that aren't easily handled by property lists:
+\begin{itemize}
+    \item \textbf{Portuguese Hyphenation}: It adds a shorthand \texttt{"-} to the Portuguese language environment to allow for repeating hyphens at line breaks, which is a common requirement in Portuguese typography.
+\end{itemize}
+
+\section{Summary}
+By moving to \texttt{expl3}, \emph{NOVAthesis} gains a cleaner separation between the \emph{definition} of localized strings and their \emph{application}, resulting in a more maintainable and error-resistant localization system.
