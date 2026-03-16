@@ -139,6 +139,7 @@
 
 \RequirePackage{options-ext}
 \RequirePackage{nt-version}
+\RequirePackage{nt-covers}
 \RequirePackage{memory2}
 \RequirePackage{memstore}
 \RequirePackage{stocksize}
@@ -2146,86 +2147,86 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% COVER PAGE ENGINE
+%% COVER PAGE ENGINE (MOVED TO nt-covers.sty)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\ntresetcovers}{%
-  \@for\arg:={1-1,1-2,2-1,2-2,N-1,N-2}\do{%
-    \ntresetonecover{\arg}%
-  }%
-}
-
-\newcommand*{\ntresetonecover}[1]{%
-    \option@setnil{/@nt/cover/\@UNIV/\@SCHL/#1}%
-}
-
-
-\newcommand*{\ntaddtocover}[3][]{%
-  % #1 = cover atrtibutes
-  % #2 = list of covers where the code block should be applied
-  % #3 = the block code
-  % \typeout{NT ntaddtocover [/@nt/cover/\@UNIV/\@SCHL/element=#1]}%
-  % \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
-  \ntfor\arg:={#2}\do{\@ntaddtocover@iii{#1}{#3}{\arg}}%
-}
-
-\newcommand*{\@ntaddtocover@iii}[3]{%
-  % \typeout{NT ntaddtocover #3}%
-  % #1 = cover atrtibutes
-  % #2 = the block code
-  % #3 = covers where the code block should be applied
-  \options{/@nt/cover/\@UNIV/\@SCHL/#3/.newpush={{#1}\@nil{#2}}}%
-}
-
-%==========================================
-\NewDocumentCommand{\ntAddToCoverTikz}{d<>O{}r()O{}mm}{%
-  % #1=Command
-  % #2=Options
-  % #3=Position
-  % #4=Rest of command
-  % #5=CIDLIST
-  % #6=Code
-  % \typeout{Command=[#1]  Options=[#2]  Position=[#3]  Rest of command=[#4]  CIDLIST=[#5]  Code=[]}\NTADDTOCOVERTIKZ
-  \ntfor\cvids:={#5}\do{\ntAddToOneCoverTikz{#1}{#2}{#3}{#4}{\cvids}{#6}}%
-}
-
-\NewDocumentCommand{\ntAddToOneCoverTikz}{mmmmmm}{%
-  % #1=Command
-  % #2=Options
-  % #3=Position
-  % #4=Rest of command
-  % #5=CID
-  % #6=Code
-  % \typeout{Command=[#1]  Options=[#2]  Position=[#3]  Rest of command=[#4]  CIDLIST=[#5]  Code=[]}\NTADDTOONECOVERTIKZ
-  \options{/@nt/coverTikz/\@UNIV/\@SCHL/#5/.newpush=
-                {{#1}\@nil{#2}\@nil{#3}\@nil{#4}\@nil{#6}}}%
-}
-
-\NewDocumentCommand{\printCoverTikz}{m}{%
-  % #1 = cover ID (major-minor)
-  % \typeout{@NTCOVERTEXT 1=[#1]}\@NTCOVERTEXT%
-  \ifoptiondefined{/@nt/coverTikz/\@UNIV/\@SCHL/#1}{%
-    \NTRunHook{coverTikz/#1/text/pre}%
-    \begin{tikzpicture}[remember picture, overlay, yscale=-1, every node/.style={inner sep=0pt}]%
-      \optionlistdo{/@nt/coverTikz/\@UNIV/\@SCHL/#1}{%
-        \printCoverElementTikz#1\@nil##1\@nil\@nil%
-      }%
-    \end{tikzpicture}%
-    \NTRunHook{coverTikz/#1/text/post}%
-  }{}%
-}
-
-\def\printCoverElementTikz#1\@nil#2\@nil#3\@nil#4\@nil#5\@nil#6\@nil{%
-  % #1=CID
-  % #2=Command
-  % #3=Options
-  % #4=Position
-  % #5=Rest of command
-  % #6=Code
-  % \node[inner sep=0,#2] at (#1) {Pos=[#1] Opt=[#2] CID=[#3] COD=[#4]};
-  % \typeout{ CID=[#1] CMD=\string#2[#3] at (#4) --#5--}\TIKZCOVER
-  \IfNoValueTF {#2} {\node[#3] at (#4) #5 {#6}} {#2[#3] (#4) #5};
-}
-%==========================================
+% \newcommand*{\ntresetcovers}{%
+%   \@for\arg:={1-1,1-2,2-1,2-2,N-1,N-2}\do{%
+%     \ntresetonecover{\arg}%
+%   }%
+% }
+% 
+% \newcommand*{\ntresetonecover}[1]{%
+%     \option@setnil{/@nt/cover/\@UNIV/\@SCHL/#1}%
+% }
+% 
+% 
+% \newcommand*{\ntaddtocover}[3][]{%
+%   % #1 = cover atrtibutes
+%   % #2 = list of covers where the code block should be applied
+%   % #3 = the block code
+%   % \typeout{NT ntaddtocover [/@nt/cover/\@UNIV/\@SCHL/element=#1]}%
+%   % \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
+%   \ntfor\arg:={#2}\do{\@ntaddtocover@iii{#1}{#3}{\arg}}%
+% }
+% 
+% \newcommand*{\@ntaddtocover@iii}[3]{%
+%   % \typeout{NT ntaddtocover #3}%
+%   % #1 = cover atrtibutes
+%   % #2 = the block code
+%   % #3 = covers where the code block should be applied
+%   \options{/@nt/cover/\@UNIV/\@SCHL/#3/.newpush={{#1}\@nil{#2}}}%
+% }
+% 
+% %==========================================
+% \NewDocumentCommand{\ntAddToCoverTikz}{d<>O{}r()O{}mm}{%
+%   % #1=Command
+%   % #2=Options
+%   % #3=Position
+%   % #4=Rest of command
+%   % #5=CIDLIST
+%   % #6=Code
+%   % \typeout{Command=[#1]  Options=[#2]  Position=[#3]  Rest of command=[#4]  CIDLIST=[#5]  Code=[]}\NTADDTOCOVERTIKZ
+%   \ntfor\cvids:={#5}\do{\ntAddToOneCoverTikz{#1}{#2}{#3}{#4}{\cvids}{#6}}%
+% }
+% 
+% \NewDocumentCommand{\ntAddToOneCoverTikz}{mmmmmm}{%
+%   % #1=Command
+%   % #2=Options
+%   % #3=Position
+%   % #4=Rest of command
+%   % #5=CID
+%   % #6=Code
+%   % \typeout{Command=[#1]  Options=[#2]  Position=[#3]  Rest of command=[#4]  CIDLIST=[#5]  Code=[]}\NTADDTOONECOVERTIKZ
+%   \options{/@nt/coverTikz/\@UNIV/\@SCHL/#5/.newpush=
+%                 {{#1}\@nil{#2}\@nil{#3}\@nil{#4}\@nil{#6}}}%
+% }
+% 
+% \NewDocumentCommand{\printCoverTikz}{m}{%
+%   % #1 = cover ID (major-minor)
+%   % \typeout{@NTCOVERTEXT 1=[#1]}\@NTCOVERTEXT%
+%   \ifoptiondefined{/@nt/coverTikz/\@UNIV/\@SCHL/#1}{%
+%     \NTRunHook{coverTikz/#1/text/pre}%
+%     \begin{tikzpicture}[remember picture, overlay, yscale=-1, every node/.style={inner sep=0pt}]%
+%       \optionlistdo{/@nt/coverTikz/\@UNIV/\@SCHL/#1}{%
+%         \printCoverElementTikz#1\@nil##1\@nil\@nil%
+%       }%
+%     \end{tikzpicture}%
+%     \NTRunHook{coverTikz/#1/text/post}%
+%   }{}%
+% }
+% 
+% \def\printCoverElementTikz#1\@nil#2\@nil#3\@nil#4\@nil#5\@nil#6\@nil{%
+%   % #1=CID
+%   % #2=Command
+%   % #3=Options
+%   % #4=Position
+%   % #5=Rest of command
+%   % #6=Code
+%   % \node[inner sep=0,#2] at (#1) {Pos=[#1] Opt=[#2] CID=[#3] COD=[#4]};
+%   % \typeout{ CID=[#1] CMD=\string#2[#3] at (#4) --#5--}\TIKZCOVER
+%   \IfNoValueTF {#2} {\node[#3] at (#4) #5 {#6}} {#2[#3] (#4) #5};
+% }
+% %==========================================
 
 
 
@@ -2454,435 +2455,429 @@
 %% DEBUG - print grid over covers and spine
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\debuggrid}[1][orange]{%
-  \begin{tikzpicture}[remember picture, semitransparent, overlay, shift=(current page.north west)]%
-    \draw[step=1mm, line width=0.1mm, #1!30!white, yscale=-1] (\@MRGN@left, \@MRGN@top)
-              grid (\paperwidth-\@MRGN@right, \paperheight-\@MRGN@bottom);
-    \draw[step=5mm, line width=0.2mm, #1!40!white] (current page.north west)
-              grid (current page.south east);
-    \draw[step=1cm, line width=0.3mm, #1!90!white] (current page.north west)
-              grid (current page.south east);
-    \draw[step=5cm, line width=0.5mm, #1!50!white] (current page.north west)
-              grid (current page.south east);
-    \end{tikzpicture}%
-}
+% \newcommand{\debuggrid}[1][orange]{%
+%   \begin{tikzpicture}[remember picture, semitransparent, overlay, shift=(current page.north west)]%
+%     \draw[step=1mm, line width=0.1mm, #1!30!white, yscale=-1] (\@MRGN@left, \@MRGN@top)
+%               grid (\paperwidth-\@MRGN@right, \paperheight-\@MRGN@bottom);
+%     \draw[step=5mm, line width=0.2mm, #1!40!white] (current page.north west)
+%               grid (current page.south east);
+%     \draw[step=1cm, line width=0.3mm, #1!90!white] (current page.north west)
+%               grid (current page.south east);
+%     \draw[step=5cm, line width=0.5mm, #1!50!white] (current page.north west)
+%               grid (current page.south east);
+%     \end{tikzpicture}%
+% }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PRINT DOCUMENT PARTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\ifcoverdefined}[3][1-1]{%
-  % #1 = cover number
-  % #2 = true branch
-  % #3 = false branch
-  % \edef\asd{/@nt/cover/\@UNIV/\@SCHL/#1}
-  % \show\asd
-  \ifoptiondefined{/@nt/cover/\@UNIV/\@SCHL/#1}{#2}{%
-    \datamatchtf{\match}{thesiscover}(%
-       {\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
-      ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
-      ,{\@DEGREEACR,#1,bgcolor}%
-      ,{\@DEGREEACR,bgcolor}%
-      ,{\@DOCTYPE,\@DEGREEACR,#1,image}%
-      ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
-      ,{\@DEGREEACR,#1,image}%
-      ,{\@DEGREEACR,image}%
-      ,{\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
-      ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
-      ,{\@DEGREEACR,#1,bgcolor}%
-      ,{\@DEGREEACR,bgcolor}%
-      ,{\@DOCTYPE,\@DEGREEACR,#1,image}%
-      ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
-      ,{\@DEGREEACR,#1,image}%
-      ,{\@DEGREEACR,image}%
-      ,{\@DOCTYPE,#1,bgcolor}%
-      ,{\@DOCCLASS,#1,bgcolor}%
-      ,{#1,bgcolor}%
-      ,{bgcolor}%
-      ,{\@DOCTYPE,#1,image}%
-      ,{\@DOCCLASS,#1,image}%
-      ,{#1,image}%
-      ,{image}%
-      ,{\@DOCTYPE,#1,bgcolor}%
-      ,{\@DOCCLASS,#1,bgcolor}%
-      ,{#1,bgcolor}%
-      ,{bgcolor}%
-      ,{\@DOCTYPE,#1,image}%
-      ,{\@DOCCLASS,#1,image}%
-      ,{#1,image}%
-      ,{image}%
-    ){#2}{#3}%
-  }%
-}
+% \newcommand*{\ifcoverdefined}[3][1-1]{%
+%   % #1 = cover number
+%   % #2 = true branch
+%   % #3 = false branch
+%   % \edef\asd{/@nt/cover/\@UNIV/\@SCHL/#1}
+%   % \show\asd
+%   \ifoptiondefined{/@nt/cover/\@UNIV/\@SCHL/#1}{#2}{%
+%     \datamatchtf{\match}{thesiscover}(%
+%        {\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
+%       ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
+%       ,{\@DEGREEACR,#1,bgcolor}%
+%       ,{\@DEGREEACR,bgcolor}%
+%       ,{\@DOCTYPE,\@DEGREEACR,#1,image}%
+%       ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
+%       ,{\@DEGREEACR,#1,image}%
+%       ,{\@DEGREEACR,image}%
+%       ,{\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
+%       ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
+%       ,{\@DEGREEACR,#1,bgcolor}%
+%       ,{\@DEGREEACR,bgcolor}%
+%       ,{\@DOCTYPE,\@DEGREEACR,#1,image}%
+%       ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
+%       ,{\@DEGREEACR,#1,image}%
+%       ,{\@DEGREEACR,image}%
+%       ,{\@DOCTYPE,#1,bgcolor}%
+%       ,{\@DOCCLASS,#1,bgcolor}%
+%       ,{#1,bgcolor}%
+%       ,{bgcolor}%
+%       ,{\@DOCTYPE,#1,image}%
+%       ,{\@DOCCLASS,#1,image}%
+%       ,{#1,image}%
+%       ,{image}%
+%       ,{\@DOCTYPE,#1,bgcolor}%
+%       ,{\@DOCCLASS,#1,bgcolor}%
+%       ,{#1,bgcolor}%
+%       ,{bgcolor}%
+%       ,{\@DOCTYPE,#1,image}%
+%       ,{\@DOCCLASS,#1,image}%
+%       ,{#1,image}%
+%       ,{image}%
+%     ){#2}{#3}%
+%   }%
+% }
 
-\newcommand{\ntprintspine}{%
-  \pagenumbering{roman}%
-  \setcounter{page}{0}
-  \NTRunHook{print/spine/pre}%
-  \iffileadded[spine]{cover}{%
-    \optionlistdo{/@nt/file/cover/spine}{%
-      \bgroup\thispagestyle{empty}%
-      \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
-      \egroup\clearforchapter%
-    }%
-  }{\PrintBookSpine\clearforchapter}%
-  \NTRunHook{print/spine/post}%
-}
-
-\newcommand{\ntprintbackcover}{%
-  \clearforchapter%
-  \pagenumbering{roman}%
-  \setcounter{page}{0}
-  \ntprintcoverpair{N}%
-}
-
-\newcommand{\ntprintcovers}[1][1,2]{%
-  \begingroup%
-    \ntselectlang{\@LANG@COVER}%
-    \NTRunHook{printcovers/pre}%
-    \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
-    \NTRunHook{printcovers/post}%
-  \endgroup%
-  \pagecolor{white}%
-}
-
-\newcommand{\ntprintcoverpair}[1]{%
-  % #1 = major cover ID
-  \iffileadded[#1]{cover}{% Deal with user-defined cover page
-    \iffileadded[#1]{cover}{%
-      \optionlistdo{/@nt/file/cover/#1}{%
-        \begingroup
-        \thispagestyle{empty}%
-        \NTRunHook{cover/pre}%
-        \NTRunHook{cover/#1-1/pre}%
-        \hypertarget{\thebkmstring(#1-1)}{}%
-        \bookmark[dest=\thebkmstring(#1-1)]{\thebkmstring(#1-1)}%
-        \bookmarksetupnext{rellevel=1}%
-        \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
-        \NTRunHook{cover/#1-1/post}%
-        \NTRunHook{cover/post}%
-        \endgroup
-        \clearpage%
-      }%
-    }{}%
-  }{% Pre-defined cover page  
-    \IfStrEqCase{#1}{%
-      {1}{\ntprintcoversingle{1}{1}\ntprintcoversingle{1}{2}}%
-      {2}{\iftoggle{/novathesis/print/frontpage}
-                   {\ntprintcoversingle{2}{1}\ntprintcoversingle{2}{2}}{}}%
-      {N}{\ntprintcoversingle{N}{1}\ntprintcoversingle{N}{2}}%
-    }[\ClassWarning{Invalid cover number: #1}{}]%
-  }%
-}
-
-\gdef\@COVERNUM{}%
-\newcommand{\ifcovernum}[2]{\IfStrEq{\@COVERNUM}{#1}{#2}}
-
-\newcommand{\ntprintcoversingle}[2]{%
-  % #1 = cover ID “major”
-  % #2 = cover ID “minor”
-  \ifcoverdefined[#1-#2]{%
-    \gdef\@COVERNUM{#1-#2}%
-    \setcounter{page}{0}\@ntprintcover@i{#1}{#2}
-    \ifoptionequal{/novathesis/media}{paper}{
-      \ifcoverdefined[#1-2]
-        {\clearpage}
-        {\clearforchapter}%
-    }{%
-      \clearpage%
-    }
-  }{}%
-}
-
-\newcommand{\@ntprintcover@i}[2]{%
-  % #1 = cover ID “major”
-  % #2 = cover ID “minor”
-  \begingroup%
-    \NTRunHook{cover/pre}%
-    \NTRunHook{cover/#1-#2/pre}%
-    \hypertarget{\thebkmstring(#1-#2)}{}%
-    \bookmark[dest=\thebkmstring(#1-#2)]{\thebkmstring(#1-#2)}%
-    \bookmarksetupnext{rellevel=1}%
-    \thispagestyle{empty}%
-    \setCoverBgColor{#1-#2}%
-    \setCoverBgImage{#1-#2}%
-    \printCoverText{#1-#2}%
-    % \@ntmakeboxwithcover{#1-#2}{\@fullcover@box}%
-    \printCoverTikz{#1-#2}%
-    \NTRunHook{cover/#1-#2/post}%
-    \NTRunHook{cover/post}%
-  \endgroup%
-}
-
-\newcommand{\setCoverBgColor}[1]{
-  \null%
-  \NTRunHook{cover/#1/bgcolor/pre}%
-  \datamatchtf{\match}{thesiscover}(%
-    {\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
-   ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
-   ,{\@DEGREEACR,#1,bgcolor}%
-   ,{\@DEGREEACR,bgcolor}%
-   ,{\@DOCTYPE,#1,bgcolor}%
-   ,{\@DOCCLASS,#1,bgcolor}%
-   ,{#1,bgcolor}%
-   ,{bgcolor}%
-  ){\pagecolor{\match}}{\pagecolor{white}}%
-  \NTRunHook{cover/#1/bgcolor/post}%
-}
-
-\newcommand{\setCoverBgImage}[1]{
-  \null%
-  \NTRunHook{cover/#1/image/pre}%
-  \datamatchtf{\match}{thesiscover}(%
-    {\@DOCTYPE,\@DEGREEACR,#1,image}%
-   ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
-   ,{\@DEGREEACR,#1,image}%
-   ,{\@DEGREEACR,image}%
-   ,{\@DOCTYPE,#1,image}%
-   ,{\@DOCCLASS,#1,image}%
-   ,{#1,image}%
-   ,{image}%
-  ){%
-    \begin{tikzpicture}[remember picture, overlay]%
-      \node[anchor=center] at (current page.center)
-              {\includegraphics[width=\paperwidth,height=\paperheight]{\match}};
-    \end{tikzpicture}%
-  }{}%
-  \NTRunHook{cover/#1/image/post}%
-}
-
-\newcommand{\printCoverText}[1]{
-  \null%
-  \datamatchtf{\match}{thesiscover}(%
-              {\@DOCTYPE,\@DEGREEACR,#1,textcolor}%
-             ,{\@DOCCLASS,\@DEGREEACR,#1,textcolor}%
-             ,{\@DEGREEACR,#1,textcolor}%
-             ,{\@DEGREEACR,textcolor}%
-             ,{\@DOCTYPE,#1,textcolor}%
-             ,{\@DOCCLASS,#1,textcolor}%
-             ,{#1,textcolor}%
-             ,{textcolor}%
-  ){\color{\match}}{}%
-  \@for\nt@tmpi:={top,bottom,left,right}\do{%
-    \datamatch*{@MRGN@\nt@tmpi}{margin}(%
-      {cover,\@DOCTYPE,\@DEGREEACR,#1,\nt@tmpi},%
-      {cover,\@DOCCLASS,\@DEGREEACR,#1,\nt@tmpi},%
-      {cover,\@DEGREEACR,#1,\nt@tmpi},%
-      {cover,\@DOCTYPE,\@DEGREEACR,\nt@tmpi},%
-      {cover,\@DOCCLASS,\@DEGREEACR,\nt@tmpi},%
-      {cover,\@DEGREEACR,\nt@tmpi},%
-      {cover,\@DOCTYPE,#1,\nt@tmpi},%
-      {cover,\@DOCCLASS,#1,\nt@tmpi},%
-      {cover,#1,\nt@tmpi},%
-      {cover,\@DOCTYPE,\nt@tmpi},%
-      {cover,\@DOCCLASS,\nt@tmpi},%
-      {cover,\nt@tmpi})%
-  }%
-  \newdimen{\covertextheight}%
-  \newdimen{\covertextwidth}%
-  \covertextheight=\dimexpr\paperheight-\@MRGN@top-\@MRGN@bottom\relax%
-  \covertextwidth=\dimexpr\paperwidth-\@MRGN@left-\@MRGN@right\relax%
-  \ifoptioncontains{/novathesis/debug}{cover}{%
-    \NTRunHook{cover/#1/grid/pre}%
-    \debuggrid%
-    \NTRunHook{cover/#1/grid/post}%
-  }{}%
-  \begin{tikzpicture}[remember picture, overlay]%
-    \node[anchor=north west,inner sep=0,xshift=\@MRGN@left, yshift=-\@MRGN@top]
-          at (current page.north west) {%
-      \begin{minipage}[t][\covertextheight]%
-                      [t]{\covertextwidth}%
-        \@ntcovertext{#1}%
-      \end{minipage}%
-    };
-    \expandafter\@ifmtarg\expandafter{\csname @covertikzlist#1\endcsname}{}{\csuse{@covertikzlist@#1}}%
-  \end{tikzpicture}%
-}
-
-\newcommand{\@ntcovertext}[1]{%
-  % #1 = cover ID (major-minor)
-  % \typeout{@NTCOVERTEXT 1=[#1]}\@NTCOVERTEXT%
-  \NTRunHook{cover/#1/text/pre}%
-    \optionlistdo{/@nt/cover/\@UNIV/\@SCHL/#1}{\@ntcoverelement@iii{#1}##1}%
-  \NTRunHook{cover/#1/text/post}%
-}
-
-\newif\ifmatchstatus%
-\newif\ifmatchdegree%
-\def\@ntcoverelement@iii#1#2\@nil#3{%
-  % #1 = cover ID (major-minor)
-  % #2 = cover element options
-  % #3 = cover element code
-  \ifblank{#3}{}{%
-    \options{/@ntcoveropts, defaults, #2, alignmap=\option{/@ntcoveropts/halign}}%
-    % \typeout{@ntcoverelement@iii 1=[#1] 2=[#2] tikz=\option{/@ntcoveropts/tikz}}\@NTCOVERELEMENT@III
-    \matchstatustrue%
-    \matchdegreetrue%
-    \if&\option{/@ntcoveropts/status}&\relax%
-    \else%
-      \IfSubStr{,\option{/@ntcoveropts/status},}{,\@DOCSTATUS,}
-        {}
-        {\matchstatusfalse}%
-    \fi%
-    \if&\option{/@ntcoveropts/degree}&\relax%
-    \else%
-      \IfSubStr{/\option{/@ntcoveropts/degree}/}{/\@DOCTYPE/}
-        {}
-        {\matchdegreefalse}%
-    \fi%
-    \ifmatchstatus%
-      \ifmatchdegree%
-        \iftoggle{/@ntcoveropts/tikz}{%
-          % \typeout{TIKZ ADD [@covertikzlist@#1]}\TIKZ%
-          \expandafter\gappto\expandafter{\csname @covertikzlist@#1\endcsname}{#3}%
-        }{%
-          \@ntcoverelement@ii{#1}{#3}%
-        }%
-      \fi%
-    \fi%
-  }%
-}
-
-\options{/@ntcoveropts/.new family,
-  % letter to macro for horizontal alignment
-  alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft,j=\null},
-  % filters / conditional printing
-  status/.new value,
-  degree/.new value,
-  % horizontal alighment and vertical alignments inside the box
-  halign/.new choice={c, l, r, j},
-  valign/.new choice={c, t, b},
-  % height of the box (default = the natural height for the contents)
-  height/.new value,
-  % height of the box (default = the natural height for the contents)
-  height/phd/.new value,
-  % height of the box (default = the natural height for the contents)
-  height/msc/.new value,
-  % minheight of the box (default = the natural height for the contents)
-  minheight/.new value,
-  % width of the box (default = full width)
-  width/.new value,
-  % vertical spacing from precious box (default = 0ptcan also be an integer and,,
-  % in this caseit means the weight of the vfill),
-  vspace/.new value,
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  vspace/phd/.new value,
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  vspace/msc/.new value,
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  vspace/1-1/.new value,
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  vspace/2-1/.new value,
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  vspace/phd/1-1/.new value,
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  vspace/phd/2-1/.new value,
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  vspace/msc/1-1/.new value,
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  vspace/msc/2-1/.new value,
-  % horizontal spacing from the left margin (or last box in the same line) (default = 0pt)
-  hspace/.new value,
-  % is the last box in the line (default = true)
-  newpar/.new toggle,
-  % text color for the box (default = black)
-  color/.new color,
-  % background color for the box (default = transparent)
-  bgcolor/.new color,
-  % tikz cover elements
-  tikz/.new toggle,
-  % default values
-  defaults/.new style*={,
-                  vspace=0pt,
-                  vspace/msc={}, vspace/phd={},
-                  vspace/1-1={}, vspace/2-1={},
-                  vspace/msc/1-1={}, vspace/msc/2-1={},
-                  vspace/phd/1-1={}, vspace/phd/2-1={},
-                  status={}, degree={}, halign=c, valign=c,
-                  height={}, height/phd={}, height/msc={},
-                  minheight=0pt, width={}, hspace=0pt,
-                  newpar=true, color={}, bgcolor={},
-                  tikz=false,
-  }
-}
-
-\newcommand{\@ntcovervspace}[1]{%
-  % \typeout{COVERSPACE [1=#1]}\COVERSPACE%
-  \ifoptionvoid{/@ntcoveropts/#1}{%
-    % \typeout{NT blank [#1=\option{/@ntcoveropts/#1}]}
-  }{%
-    \IfInteger{\option{/@ntcoveropts/#1}}% USE vspace
-      {\vskip 0pt plus \option{/@ntcoveropts/#1}fill}%
-      {\vspace*{\option{/@ntcoveropts/#1}}}%
-    \ntforbreak%
-  }%
-}
-
-\newcommand{\@ntcoverelement@ii}[2]{%
-  % #1 = cover ID (major-minor)
-  % #2 = code
-  % If vspace is integer then replace by n*\vfill
-  % otherwise it is absolute verstical space
-  % \typeout{NT testblank [#1] =========}%
-  \ntfor\match:={vspace/\@DOCTYPE/#1,vspace/\@DOCTYPE,vspace/\@DOCCLASS/#1,vspace/\@DOCCLASS,vspace/#1,vspace}%
-        \do{\@ntcovervspace{\match}}%
-  % Typeset contents in a box
-  \@nt@makeboxwithcoverelement@iii{#1}{#2}{\@nt@coverelement}%
-  \noindent%
-  \hspace*{\option{/@ntcoveropts/hspace}}%
-  \ifoptioncontains{/novathesis/debug}{cover}{% If in debug mode surround element in box
-    \setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.5pt}%
-    \vspace*{-\fboxrule}\hspace*{-\fboxrule}%
-    \fbox{\usebox{\@nt@coverelement}}%
-  }{\usebox{\@nt@coverelement}}%
-  \iftoggle{/@ntcoveropts/newpar}{\expandafter\par}{}%
-}
-
-\newcommand{\@nt@makeboxwithcoverelement@iii}[3]{%
-  % #1 = cover ID (major-minor)
-  % #2 = code
-  % #3 = boxname
-  \defifundef{\@mkcvelemwidth}{\newlength}%
-  \ifoptionblank{/@ntcoveropts/width}%
-    {\setlength{\@mkcvelemwidth}{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}\relax}}%
-    {\option{/@ntcoveropts/width}}%
-  \defifundef{\ifheightopt}{\newif}%
-  \heightoptfalse%
-  \ntfor\myh:={height/\@DOCTYPE,height/\@DOCCLASS,height}\do{%
-    \ifoptionvoid{/@ntcoveropts/\myh}{}{%
-      \edefoption{/@ntcoveropts/\myh}\@mkcvelemheight\heightopttrue\ntforbreak%
-    }%
-  }%
-  % Create destination boxes if undefined and save to it
-  \defifundef{#3}{\newsavebox}%
-  \begin{lrbox}{#3}%
-    \begin{minipage}[t][0pt][t]{0pt}%
-      \color{white}\rule{0.000000000000001pt}{\option{/@ntcoveropts/minheight}}%
-    \end{minipage}%
-    % Minipage definition is different if element height is given or not
-    \ifheightopt%
-      \minipage[t][\@mkcvelemheight][\option{/@ntcoveropts/valign}]{\@mkcvelemwidth}%
-    \else%
-      \minipage[t][][\option{/@ntcoveropts/valign}]{\@mkcvelemwidth}%
-    \fi%
-        \ifoptionblank{/@ntcoveropts/color}{}{\color{\option{/@ntcoveropts/color}}}%
-        \option{/@ntcoveropts/alignmap}%
-        #2%
-    \endminipage%
-  \end{lrbox}%
-  % Add a background color if needed
-  \ifoptionblank{/@ntcoveropts/bgcolor}{}{%
-    \savebox{#3}{\colorbox{\option{/@ntcoveropts/bgcolor}}{\usebox{#3}}}%
-  }%
-}
+% \newcommand{\ntprintspine}{%
+%   \pagenumbering{roman}%
+%   \setcounter{page}{0}
+%   \NTRunHook{print/spine/pre}%
+%   \iffileadded[spine]{cover}{%
+%     \optionlistdo{/@nt/file/cover/spine}{%
+%       \bgroup\thispagestyle{empty}%
+%       \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
+%       \egroup\clearforchapter%
+%     }%
+%   }{\PrintBookSpine\clearforchapter}%
+%   \NTRunHook{print/spine/post}%
+% }
+% 
+% \newcommand{\ntprintbackcover}{%
+%   \clearforchapter%
+%   \pagenumbering{roman}%
+%   \setcounter{page}{0}
+%   \ntprintcoverpair{N}%
+% }
+% 
+% \newcommand{\ntprintcovers}[1][1,2]{%
+%   \begingroup%
+%     \ntselectlang{\@LANG@COVER}%
+%     \NTRunHook{printcovers/pre}%
+%     \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
+%     \NTRunHook{printcovers/post}%
+%   \endgroup%
+%   \pagecolor{white}%
+% }
+% 
+% \newcommand{\ntprintcoverpair}[1]{%
+%   % #1 = major cover ID
+%   \iffileadded[#1]{cover}{% Deal with user-defined cover page
+%     \iffileadded[#1]{cover}{%
+%       \optionlistdo{/@nt/file/cover/#1}{%
+%         \begingroup
+%         \thispagestyle{empty}%
+%         \NTRunHook{cover/pre}%
+%         \NTRunHook{cover/#1-1/pre}%
+%         \hypertarget{\thebkmstring(#1-1)}{}%
+%         \bookmark[dest=\thebkmstring(#1-1)]{\thebkmstring(#1-1)}%
+%         \bookmarksetupnext{rellevel=1}%
+%         \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
+%         \NTRunHook{cover/#1-1/post}%
+%         \NTRunHook{cover/post}%
+%         \endgroup
+%         \clearpage%
+%       }%
+%     }{}%
+%   }{% Pre-defined cover page  
+%     \IfStrEqCase{#1}{%
+%       {1}{\ntprintcoversingle{1}{1}\ntprintcoversingle{1}{2}}%
+%       {2}{\iftoggle{/novathesis/print/frontpage}
+%                    {\ntprintcoversingle{2}{1}\ntprintcoversingle{2}{2}}{}}%
+%       {N}{\ntprintcoversingle{N}{1}\ntprintcoversingle{N}{2}}%
+%     }[\ClassWarning{Invalid cover number: #1}{}]%
+%   }%
+% }
+% 
+% \gdef\@COVERNUM{}%
+% \newcommand{\ifcovernum}[2]{\IfStrEq{\@COVERNUM}{#1}{#2}}
+% 
+% \newcommand{\ntprintcoversingle}[2]{%
+%   % #1 = cover ID “major”
+%   % #2 = cover ID “minor”
+%   \ifcoverdefined[#1-#2]{%
+%     \gdef\@COVERNUM{#1-#2}%
+%     \setcounter{page}{0}\@ntprintcover@i{#1}{#2}
+%     \ifoptionequal{/novathesis/media}{paper}{
+%       \ifcoverdefined[#1-2]
+%         {\clearpage}
+%         {\clearforchapter}%
+%     }{%
+%       \clearpage%
+%     }
+%   }{}%
+% }
+% 
+% \newcommand{\@ntprintcover@i}[2]{%
+%   % #1 = cover ID “major”
+%   % #2 = cover ID “minor”
+%   \begingroup%
+%     \NTRunHook{cover/pre}%
+%     \NTRunHook{cover/#1-#2/pre}%
+%     \hypertarget{\thebkmstring(#1-#2)}{}%
+%     \bookmark[dest=\thebkmstring(#1-#2)]{\thebkmstring(#1-#2)}%
+%     \bookmarksetupnext{rellevel=1}%
+%     \thispagestyle{empty}%
+%     \setCoverBgColor{#1-#2}%
+%     \setCoverBgImage{#1-#2}%
+%     \printCoverText{#1-#2}%
+%     % \@ntmakeboxwithcover{#1-#2}{\@fullcover@box}%
+%     \printCoverTikz{#1-#2}%
+%     \NTRunHook{cover/#1-#2/post}%
+%     \NTRunHook{cover/post}%
+%   \endgroup%
+% }
+% 
+% \newcommand{\setCoverBgColor}[1]{
+%   \null%
+%   \NTRunHook{cover/#1/bgcolor/pre}%
+%   \datamatchtf{\match}{thesiscover}(%
+%     {\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
+%    ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
+%    ,{\@DEGREEACR,#1,bgcolor}%
+%    ,{\@DEGREEACR,bgcolor}%
+%    ,{\@DOCTYPE,#1,bgcolor}%
+%    ,{\@DOCCLASS,#1,bgcolor}%
+%    ,{#1,bgcolor}%
+%    ,{bgcolor}%
+%   ){\pagecolor{\match}}{\pagecolor{white}}%
+%   \NTRunHook{cover/#1/bgcolor/post}%
+% }
+% 
+% \newcommand{\setCoverBgImage}[1]{
+%   \null%
+%   \NTRunHook{cover/#1/image/pre}%
+%   \datamatchtf{\match}{thesiscover}(%
+%     {\@DOCTYPE,\@DEGREEACR,#1,image}%
+%    ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
+%    ,{\@DEGREEACR,#1,image}%
+%    ,{\@DEGREEACR,image}%
+%    ,{\@DOCTYPE,#1,image}%
+%    ,{\@DOCCLASS,#1,image}%
+%    ,{#1,image}%
+%    ,{image}%
+%   ){%
+%     \begin{tikzpicture}[remember picture, overlay]%
+%       \node[anchor=center] at (current page.center)
+%               {\includegraphics[width=\paperwidth,height=\paperheight]{\match}};
+%     \end{tikzpicture}%
+%   }{}%
+%   \NTRunHook{cover/#1/image/post}%
+% }
+% 
+% \newcommand{\printCoverText}[1]{
+%   \null%
+%   \datamatchtf{\match}{thesiscover}(%
+%               {\@DOCTYPE,\@DEGREEACR,#1,textcolor}%
+%              ,{\@DOCCLASS,\@DEGREEACR,#1,textcolor}%
+%              ,{\@DEGREEACR,#1,textcolor}%
+%              ,{\@DEGREEACR,textcolor}%
+%              ,{\@DOCTYPE,#1,textcolor}%
+%              ,{\@DOCCLASS,#1,textcolor}%
+%              ,{#1,textcolor}%
+%              ,{textcolor}%
+%   ){\color{\match}}{}%
+%   \@for\nt@tmpi:={top,bottom,left,right}\do{%
+%     \datamatch*{@MRGN@\nt@tmpi}{margin}(%
+%       {cover,\@DOCTYPE,\@DEGREEACR,#1,\nt@tmpi},%
+%       {cover,\@DOCCLASS,\@DEGREEACR,#1,\nt@tmpi},%
+%       {cover,\@DEGREEACR,#1,\nt@tmpi},%
+%       {cover,\@DOCTYPE,\@DEGREEACR,\nt@tmpi},%
+%       {cover,\@DOCCLASS,\@DEGREEACR,\nt@tmpi},%
+%       {cover,\@DEGREEACR,\nt@tmpi},%
+%       {cover,\@DOCTYPE,#1,\nt@tmpi},%
+%       {cover,\@DOCCLASS,#1,\nt@tmpi},%
+%       {cover,#1,\nt@tmpi},%
+%       {cover,\@DOCTYPE,\nt@tmpi},%
+%       {cover,\@DOCCLASS,\nt@tmpi},%
+%       {cover,\nt@tmpi})%
+%   }%
+%   \newdimen{\covertextheight}%
+%   \newdimen{\covertextwidth}%
+%   \covertextheight=\dimexpr\paperheight-\@MRGN@top-\@MRGN@bottom\relax%
+%   \covertextwidth=\dimexpr\paperwidth-\@MRGN@left-\@MRGN@right\relax%
+%   \ifoptioncontains{/novathesis/debug}{cover}{%
+%     \NTRunHook{cover/#1/grid/pre}%
+%     \debuggrid%
+%     \NTRunHook{cover/#1/grid/post}%
+%   }{}%
+%   \begin{tikzpicture}[remember picture, overlay]%
+%     \node[anchor=north west,inner sep=0,xshift=\@MRGN@left, yshift=-\@MRGN@top]
+%           at (current page.north west) {%
+%       \begin{minipage}[t][\covertextheight]%
+%                       [t]{\covertextwidth}%
+%         \@ntcovertext{#1}%
+%       \end{minipage}%
+%     };
+%     \expandafter\@ifmtarg\expandafter{\csname @covertikzlist#1\endcsname}{}{\csuse{@covertikzlist@#1}}%
+%   \end{tikzpicture}%
+% }
+% 
+% \newcommand{\@ntcovertext}[1]{%
+%   % #1 = cover ID (major-minor)
+%   % \typeout{@NTCOVERTEXT 1=[#1]}\@NTCOVERTEXT%
+%   \NTRunHook{cover/#1/text/pre}%
+%     \optionlistdo{/@nt/cover/\@UNIV/\@SCHL/#1}{\@ntcoverelement@iii{#1}##1}%
+%   \NTRunHook{cover/#1/text/post}%
+% }
+% 
+% \newif\ifmatchstatus%
+% \newif\ifmatchdegree%
+% \def\@ntcoverelement@iii#1#2\@nil#3{%
+%   % #1 = cover ID (major-minor)
+%   % #2 = cover element options
+%   % #3 = cover element code
+%   \ifblank{#3}{}{%
+%     \options{/@ntcoveropts, defaults, #2, alignmap=\option{/@ntcoveropts/halign}}%
+%     % \typeout{@ntcoverelement@iii 1=[#1] 2=[#2] tikz=\option{/@ntcoveropts/tikz}}\@NTCOVERELEMENT@III
+%     \matchstatustrue%
+%     \matchdegreetrue%
+%     \if&\option{/@ntcoveropts/status}&\relax%
+%     \else%
+%       \IfSubStr{,\option{/@ntcoveropts/status},}{,\@DOCSTATUS,}
+%         {}
+%         {\matchstatusfalse}%
+%     \fi%
+%     \if&\option{/@ntcoveropts/degree}&\relax%
+%     \else%
+%       \IfSubStr{/\option{/@ntcoveropts/degree}/}{/\@DOCTYPE/}
+%         {}
+%         {\matchdegreefalse}%
+%     \fi%
+%     \ifmatchstatus%
+%       \ifmatchdegree%
+%         \iftoggle{/@ntcoveropts/tikz}{%
+%           % \typeout{TIKZ ADD [@covertikzlist@#1]}\TIKZ%
+%           \expandafter\gappto\expandafter{\csname @covertikzlist@#1\endcsname}{#3}%
+%         }{%
+%           \@ntcoverelement@ii{#1}{#3}%
+%         }%
+%       \fi%
+%     \fi%
+%   }%
+% }
+% 
+% \options{/@ntcoveropts/.new family,
+%   % letter to macro for horizontal alignment
+%   alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft,j=\null},
+%   % filters / conditional printing
+%   status/.new value,
+%   degree/.new value,
+%   % horizontal alighment and vertical alignments inside the box
+%   halign/.new choice={c, l, r, j},
+%   valign/.new choice={c, t, b},
+%   % height of the box (default = the natural height for the contents)
+%   height/.new value,
+%   % height of the box (default = the natural height for the contents)
+%   height/phd/.new value,
+%   % height of the box (default = the natural height for the contents)
+%   height/msc/.new value,
+%   % minheight of the box (default = the natural height for the contents)
+%   minheight/.new value,
+%   % width of the box (default = full width)
+%   width/.new value,
+%   % vertical spacing from precious box (default = 0ptcan also be an integer and,,
+%   % in this caseit means the weight of the vfill),
+%   vspace/.new value,
+%   % vertical spacing from precious box (default = 0pt, can also be an integer and,
+%   % in this case, it means the weight of the vfill)
+%   vspace/phd/.new value,
+%   % vertical spacing from precious box (default = 0pt, can also be an integer and,
+%   % in this case, it means the weight of the vfill)
+%   vspace/msc/.new value,
+%   % vertical spacing from precious box (default = 0pt, can also be an integer and,
+%   % in this case, it means the weight of the vfill)
+%   vspace/1-1/.new value,
+%   % vertical spacing from precious box (default = 0pt, can also be an integer and,
+%   % in this case, it means the weight of the vfill)
+%   vspace/2-1/.new value,
+%   % vertical spacing from precious box (default = 0pt, can also be an integer and,
+%   % in this case, it means the weight of the vfill)
+%   vspace/phd/1-1/.new value,
+%   % vertical spacing from precious box (default = 0pt, can also be an integer and,
+%   % in this case, it means the weight of the vfill)
+%   vspace/phd/2-1/.new value,
+%   % vertical spacing from precious box (default = 0pt, can also be an integer and,
+%   % in this case, it means the weight of the vfill)
+%   vspace/msc/1-1/.new value,
+%   % vertical spacing from precious box (default = 0pt, can also be an integer and,
+%   % in this case, it means the weight of the vfill)
+%   vspace/msc/2-1/.new value,
+%   % horizontal spacing from the left margin (or last box in the same line) (default = 0pt)
+%   hspace/.new value,
+%   % is the last box in the line (default = true)
+%   newpar/.new toggle,
+%   % text color for the box (default = black)
+%   color/.new color,
+%   % background color for the box (default = transparent)
+%   bgcolor/.new color,
+%   % tikz cover elements
+%   tikz/.new toggle,
+%   % default values
+%   defaults/.new style*={,
+%                   vspace=0pt,
+%                   width={}, hspace=0pt,
+%                   newpar=true, color={}, bgcolor={},
+%                   tikz=false,
+%   }
+% }
+% 
+% \newcommand{\@ntcovervspace}[1]{%
+%   % \typeout{COVERSPACE [1=#1]}\COVERSPACE%
+%   \ifoptionvoid{/@ntcoveropts/#1}{%
+%     % \typeout{NT blank [#1=\option{/@ntcoveropts/#1}]}
+%   }{%
+%     \IfInteger{\option{/@ntcoveropts/#1}}% USE vspace
+%       {\vskip 0pt plus \option{/@ntcoveropts/#1}fill}%
+%       {\vspace*{\option{/@ntcoveropts/#1}}}%
+%     \ntforbreak%
+%   }%
+% }
+% 
+% \newcommand{\@ntcoverelement@ii}[2]{%
+%   % #1 = cover ID (major-minor)
+%   % #2 = code
+%   % If vspace is integer then replace by n*\vfill
+%   % otherwise it is absolute verstical space
+%   % \typeout{NT testblank [#1] =========}%
+%   \ntfor\match:={vspace/\@DOCTYPE/#1,vspace/\@DOCTYPE,vspace/\@DOCCLASS/#1,vspace/\@DOCCLASS,vspace/#1,vspace}%
+%         \do{\@ntcovervspace{\match}}%
+%   % Typeset contents in a box
+%   \@nt@makeboxwithcoverelement@iii{#1}{#2}{\@nt@coverelement}%
+%   \noindent%
+%   \hspace*{\option{/@ntcoveropts/hspace}}%
+%   \ifoptioncontains{/novathesis/debug}{cover}{% If in debug mode surround element in box
+%     \setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.5pt}%
+%     \vspace*{-\fboxrule}\hspace*{-\fboxrule}%
+%     \fbox{\usebox{\@nt@coverelement}}%
+%   }{\usebox{\@nt@coverelement}}%
+%   \iftoggle{/@ntcoveropts/newpar}{\expandafter\par}{}%
+% }
+% 
+% \newcommand{\@nt@makeboxwithcoverelement@iii}[3]{%
+%   % #1 = cover ID (major-minor)
+%   % #2 = code
+%   % #3 = boxname
+%   \defifundef{\@mkcvelemwidth}{\newlength}%
+%   \ifoptionblank{/@ntcoveropts/width}%
+%     {\setlength{\@mkcvelemwidth}{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}\relax}}%
+%     {\option{/@ntcoveropts/width}}%
+%   \defifundef{\ifheightopt}{\newif}%
+%   \heightoptfalse%
+%   \ntfor\myh:={height/\@DOCTYPE,height/\@DOCCLASS,height}\do{%
+%     \ifoptionvoid{/@ntcoveropts/\myh}{}{%
+%       \edefoption{/@ntcoveropts/\myh}\@mkcvelemheight\heightopttrue\ntforbreak%
+%     }%
+%   }%
+%   % Create destination boxes if undefined and save to it
+%   \defifundef{#3}{\newsavebox}%
+%   \begin{lrbox}{#3}%
+%     \begin{minipage}[t][0pt][t]{0pt}%
+%       \color{white}\rule{0.000000000000001pt}{\option{/@ntcoveropts/minheight}}%
+%     \end{minipage}%
+%     % Minipage definition is different if element height is given or not
+%     \ifheightopt%
+%       \minipage[t][\@mkcvelemheight][\option{/@ntcoveropts/valign}]{\@mkcvelemwidth}%
+%     \else%
+%       \minipage[t][][\option{/@ntcoveropts/valign}]{\@mkcvelemwidth}%
+%     \fi%
+%         \ifoptionblank{/@ntcoveropts/color}{}{\color{\option{/@ntcoveropts/color}}}%
+%         \option{/@ntcoveropts/alignmap}%
+%         #2%
+%     \endminipage%
+%   \end{lrbox}%
+%   % Add a background color if needed
+%   \ifoptionblank{/@ntcoveropts/bgcolor}{}{%
+%     \savebox{#3}{\colorbox{\option{/@ntcoveropts/bgcolor}}{\usebox{#3}}}%
+%   }%
+% }
 
 \newcommand{\todayiso}{%
   \the\year-%

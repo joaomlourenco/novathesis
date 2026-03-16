@@ -32,7 +32,7 @@ The \novathesis\ template is organized into several directories, each with a spe
       \item \texttt{Strings/}: Localization files for different languages.
       \item \texttt{ChapStyles/}: Custom chapter styles.
       \item \texttt{FontStyles/}: Custom font configurations.
-      \item \texttt{StyFiles/}: Internal helper packages (e.g., \texttt{options-ext}, \texttt{memory2}).
+      \item[\texttt{StyFiles/}] Internal helper packages (e.g., \texttt{options-ext}, \texttt{nt-covers}, \texttt{memory2}).
       \item \texttt{Images/}: Common images and branding.
     \end{itemize}
 \end{description}
@@ -485,6 +485,24 @@ This package adds handlers for choice iteration, list copying (\texttt{.copy lis
 
 \subsection{Summary}
 In summary, \texttt{options-ext.sty} is the engine that enables \emph{NOVAthesis} to handle its highly modular and customizable architecture.
+
+
+\section{Explanation of nt-covers.sty}
+\label{annex:nt-covers}
+
+The file \texttt{NOVAthesisFiles/StyFiles/nt-covers.sty} contains the core engine for generating and customizing the thesis covers and front pages. It was isolated from the main class file to improve maintainability.
+
+\subsection{Core Functionality}
+This package manages:
+\begin{itemize}
+    \item \textbf{\textbackslash ntaddtocover}: The primary interface for adding elements to covers.
+    \item \textbf{Cover Printing}: Macros like \texttt{\textbackslash ntprintcovers} and \texttt{\textbackslash ntprintcoverpair} that orchestrate the rendering of the different cover layers.
+    \item \textbf{Dynamic Layout}: The logic for handling margins, backgrounds, and element positioning (including TikZ overlays).
+    \item \textbf{Conditional Rendering}: Filtering elements based on document status or degree type.
+\end{itemize}
+
+\subsection{Summary}
+By centralizing cover-related logic in \texttt{nt-covers.sty}, the template maintains a clean separation between document structure and the complex graphical requirements of institution-specific covers.
 
 
 \section{Explanation of paralist-compat.tex}
