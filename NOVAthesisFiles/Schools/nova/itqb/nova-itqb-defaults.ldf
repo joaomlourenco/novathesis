@@ -192,6 +192,21 @@
 
 \ntaddtocover[tikz]{1-1}{%
   \sffamily%
+    \@for\nt@tmpi:={top,bottom,left,right}\do{%
+      \datamatch*{@MRGN@\nt@tmpi}{margin}(%
+        {cover,\@DOCTYPE,\@DEGREEACR,#1,\nt@tmpi},%
+        {cover,\@DOCCLASS,\@DEGREEACR,#1,\nt@tmpi},%
+        {cover,\@DEGREEACR,#1,\nt@tmpi},%
+        {cover,\@DOCTYPE,\@DEGREEACR,\nt@tmpi},%
+        {cover,\@DOCCLASS,\@DEGREEACR,\nt@tmpi},%
+        {cover,\@DEGREEACR,\nt@tmpi},%
+        {cover,\@DOCTYPE,#1,\nt@tmpi},%
+        {cover,\@DOCCLASS,#1,\nt@tmpi},%
+        {cover,#1,\nt@tmpi},%
+        {cover,\@DOCTYPE,\nt@tmpi},%
+        {cover,\@DOCCLASS,\nt@tmpi},%
+        {cover,\nt@tmpi})%
+    }%
   \setbox0=\hbox{%
       \scalebox{2.15}{%
 	  	  \fontsize{19}{19}\selectfont\bfseries\GetDocDate(submission,year)}}
