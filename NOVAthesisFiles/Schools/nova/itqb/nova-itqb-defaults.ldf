@@ -175,7 +175,7 @@
   \fi
 }
 
-\NTAddToHook{cover/1-1/text/pre}{%
+\NTAddToHook{cover/1-1/pre}{%
   \sffamily%
 }
 \NTAddToHook{cover/2-1/text/pre}{%

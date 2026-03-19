@@ -139,7 +139,7 @@
 
 \RequirePackage{options-ext}
 \RequirePackage{nt-version}
-\RequirePackage{nt-covers}
+\RequirePackage{nt-covers-expl3}
 \RequirePackage{memory2}
 \RequirePackage{memstore}
 \RequirePackage{stocksize}
@@ -148,6 +148,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FONTS & ENCODINGS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{microtype} % Good to load after fonts
+
 \iftutex
   \RequirePackage[no-math]{fontspec}
   \defaultfontfeatures{Ligatures=TeX}
@@ -156,7 +158,15 @@
 \fi
 
 \IfFileExists{inter.sty}
-  {\RequirePackage[scaled=0.95]{inter}}
+  {\RequirePackage[scaled=MatchLowercase]{inter}
+  \iftutex
+    \setsansfont{Inter}[
+      Scale = MatchLowercase,
+      Ligatures = {TeX, NoCommon}
+    ]
+    % Force it to be the default sans
+    \renewcommand{\sffamily}{\fontspec{Inter}[Ligatures={TeX,NoCommon}]}
+  \fi}
 {\IfFileExists{helvet.sty}
   {\RequirePackage[scaled=0.95]{helvet}}
 {\IfFileExists{gillius2.sty}
@@ -171,7 +181,6 @@
 %   {\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}
 
 % TODO Good to load after fonts
-\RequirePackage{microtype} % Good to load after fonts
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LANGUAGE & LOCALIZATION

@@ -346,7 +346,7 @@ To add support for a new language code (\texttt{zz}):
 
 \begin{itemize}
   \item \textbf{Expansion}: Use \latexinline{\expanded{...}} when passing memory data (like \latexinline{\theschool(...)}) to commands like \latexinline{\includegraphics}.
-  \item \textbf{Hooks}: Inject code at specific points, e.g., \latexinline{\NTAddToHook{cover/1-1/text/pre}{\sffamily}}.
+  \item \textbf{Hooks}: Inject code at specific points, e.g., \latexinline{\NTAddToHook{cover/1-1/pre}{\sffamily}}.
   \item \textbf{Conditionals}: Use \latexinline{\ifphddoc}, \latexinline{\ifmscdoc}, or \latexinline{\ifdocfinal} to tailor the configuration.
   \item \textbf{Utility Commands}: Define small helpers like \latexinline{\printdwithvspace} to simplify layout logic.
   \item \textbf{Loading Fonts}: Use \latexinline{\AtEndPreamble} to load school-specific fonts to avoid clashes.

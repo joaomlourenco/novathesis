@@ -182,33 +182,34 @@
   \fi
 }
 
-\NTAddToHook{cover/1-1/text/pre}{%
-  \@ifpackageloaded{fontspec}{
-      \setsansfont{Inter}[
-        Scale = 0.95,
-        Extension = .otf,
-        UprightFont = *-Regular,
-        ItalicFont = *-Italic,
-        BoldFont = *-Bold,
-        BoldItalicFont = *-BoldItalic,
-        Ligatures = {NoCommon, TeX} % This kills the 'oe' ligature while keeping '--'
-      ]
-  }{}
+\NTAddToHook{cover/1-1/pre}{%
+  % \iftutex
+  %     \setsansfont{Inter}[
+  %       Scale = 0.95,
+  %       Extension = .otf,
+  %       UprightFont = *-Regular,
+  %       ItalicFont = *-Italic,
+  %       BoldFont = *-Bold,
+  %       BoldItalicFont = *-BoldItalic,
+  %       Ligatures = {NoCommon, TeX}, % This kills the 'oe' ligature while keeping '--'
+  %     ]
+  % \fi
   \sffamily%
+  \color{white}
 }
 
-\NTAddToHook{cover/2-1/text/pre}{%
-  \@ifpackageloaded{fontspec}{
-      \setsansfont{Inter}[
-        Scale = 0.95,
-        Extension = .otf,
-        UprightFont = *-Regular,
-        ItalicFont = *-Italic,
-        BoldFont = *-Bold,
-        BoldItalicFont = *-BoldItalic,
-        Ligatures = {NoCommon, TeX} % This kills the 'oe' ligature while keeping '--'
-      ]
-  }{}
+\NTAddToHook{cover/2-1/pre}{%
+  % \iftutex
+  %     \setsansfont{Inter}[
+  %       Scale = 0.95,
+  %       Extension = .otf,
+  %       UprightFont = *-Regular,
+  %       ItalicFont = *-Italic,
+  %       BoldFont = *-Bold,
+  %       BoldItalicFont = *-BoldItalic,
+  %       Ligatures = {NoCommon, TeX} % This kills the 'oe' ligature while keeping '--'
+  %     ]
+  % \fi
   \sffamily%
 }
 
