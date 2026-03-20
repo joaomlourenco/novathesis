@@ -13,7 +13,9 @@
 %% LOCALIZED KEY CONFIGURATION (\ntlangsetup)
 \NewDocumentCommand{\ntlangsetup}{ s O{name} m }
   {
+    \ExplSyntaxOn
     \nt_babel_parse_setup:nnnn { #1 } { #2 } #3 \q_stop
+    \ExplSyntaxOff
   }
 
 \cs_new_protected:Npn \nt_babel_parse_setup:nnnn #1 #2 #3 / #4 = #5 \q_stop
@@ -23,15 +25,22 @@
 
 \cs_new_protected:Nn \nt_babel_store_key:nnnnn
   {
+    % Ensure the language property list exists
     \prop_if_exist:cF { g_nt_babel_#3_prop }
       {
         \prop_new:c { g_nt_babel_#3_prop }
         \seq_gput_right:Nn \g_nt_babel_tracked_langs_seq { #3 }
       }
 
+    % Store the value: append suffix to the key
     \bool_if:nTF { #1 }
-      { \prop_gput_if_new:cnn { g_nt_babel_#3_prop } { #4 #2 } { #5 } }
-      { \prop_gput:cnn { g_nt_babel_#3_prop } { #4 #2 } { #5 } }
+      { % Starred version: only set if NOT already defined
+        \prop_if_in:cnF { g_nt_babel_#3_prop } { #4 #2 }
+          { \prop_gput:cnn { g_nt_babel_#3_prop } { #4 #2 } { #5 } }
+      }
+      { % Normal version: force override
+        \prop_gput:cnn { g_nt_babel_#3_prop } { #4 #2 } { #5 }
+      }
   }
 
 %% ENGINE: APPLYING LOCALIZED CAPTIONS
