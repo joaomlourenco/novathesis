@@ -1,77 +1,42 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% StyFiles/fix-babel-expl3.tex
 %% NOVA thesis configuration file
-%%
-%% Refactored version using expl3 for better performance and reliability.
-%% 100% compatible with the interface of fix-babel.tex.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT FILE StyFiles/fix-babel-expl3.tex}%
 
 \ExplSyntaxOn
 
-%%=======================================================================
 %% INITIALIZATION & STORAGE
-%%=======================================================================
-
-% Property lists to store translations: g_nt_babel_data_<lang>_prop
-% A list to track which languages have custom keys defined
 \seq_new:N \g_nt_babel_tracked_langs_seq
 
-
-%%=======================================================================
 %% LOCALIZED KEY CONFIGURATION (\ntlangsetup)
-%%=======================================================================
-
-% Syntax: \ntlangsetup*[suffix]{lang/key=value}
-% Default suffix is "name" (as in the original)
 \NewDocumentCommand{\ntlangsetup}{ s O{name} m }
   {
     \nt_babel_parse_setup:nnnn { #1 } { #2 } #3 \q_stop
   }
 
-% Internal parser for the "lang/key=value" string
 \cs_new_protected:Npn \nt_babel_parse_setup:nnnn #1 #2 #3 / #4 = #5 \q_stop
   {
     \nt_babel_store_key:nnnnn { #1 } { #2 } { #3 } { #4 } { #5 }
   }
 
-% Storage logic
-% #1: boolean (true if starred/ifndef)
-% #2: suffix (e.g., name)
-% #3: language (e.g., pt)
-% #4: key (e.g., chapter)
-% #5: value (e.g., Capítulo)
 \cs_new_protected:Nn \nt_babel_store_key:nnnnn
   {
-    % Ensure the language property list exists
     \prop_if_exist:cF { g_nt_babel_#3_prop }
       {
         \prop_new:c { g_nt_babel_#3_prop }
         \seq_gput_right:Nn \g_nt_babel_tracked_langs_seq { #3 }
       }
 
-    % Store the value: append suffix to the key
     \bool_if:nTF { #1 }
-      { % Starred version (\ntlangsetup*): only set if not already defined
-        \prop_gput_if_new:cnn { g_nt_babel_#3_prop } { #4 #2 } { #5 }
-        % \typeout{L=[#2] [#3] [#4] [#5]}\STARED
-      }
-      { % Normal version (\ntlangsetup): force override
-        \prop_gput:cnn { g_nt_babel_#3_prop } { #4 #2 } { #5 }
-        % \typeout{L=[#2] [#3] [#4] [#5]}\NOTSTARED
-      }
+      { \prop_gput_if_new:cnn { g_nt_babel_#3_prop } { #4 #2 } { #5 } }
+      { \prop_gput:cnn { g_nt_babel_#3_prop } { #4 #2 } { #5 } }
   }
 
-
-%%=======================================================================
 %% ENGINE: APPLYING LOCALIZED CAPTIONS
-%%=======================================================================
-
 \cs_new_protected:Nn \nt_babel_apply_all_captions:
   {
-    % Iterate over languages loaded by the template (/@nt/lang/loaded)
-    % to ensure we only apply captions for active languages.
     \cs_if_exist:NT \optionlistdo
       {
         \optionlistdo { /@nt/lang/loaded }
@@ -80,9 +45,6 @@
               {
                 \prop_map_inline:cn { g_nt_babel_ ##1 _prop }
                   {
-                    % Apply via Babel's \setlocalecaption
-                    % \GetLangLong(pt) -> portuguese
-                    % \typeout{L=[\GetLangLong(##1)] [####1] [####2]}\SETLOCALECAPTION
                     \setlocalecaption { \GetLangLong(##1) } { ####1 } { ####2 }
                   }
               }
@@ -90,18 +52,18 @@
       }
   }
 
-% Hook into the "very very end" of the preamble.
-% 'begindocument/before' runs after all \AtBeginDocument blocks.
-% We provide a fallback for older LaTeX kernels.
+% Hook into the "very end" of the preamble.
+% We check for \hook_gadd:nnn (the Hook Manager) 
+% and fallback to \AtBeginDocument if it's an old engine.
 \cs_if_exist:NTF \hook_gadd:nnn
-  { \hook_gadd:nnn { begindocument / before } { \ExplSyntaxOn \nt_babel_apply_all_captions: \ExplSyntaxOff } }
-  { \AtBeginDocument { \ExplSyntaxOn \nt_babel_apply_all_captions: \ExplSyntaxOff } }
+  { 
+    \hook_gadd:nnn { begindocument / before } { \ExplSyntaxOn \nt_babel_apply_all_captions: \ExplSyntaxOff } 
+  }
+  { 
+    \AtBeginDocument { \ExplSyntaxOn \nt_babel_apply_all_captions: \ExplSyntaxOff } 
+  }
 
-
-%%=======================================================================
-%% COMPATIBILITY HELPERS & HYPHENATION
-%%=======================================================================
-
+%% COMPATIBILITY HELPERS
 % For compatibility with Babel version < 3.51
 \cs_set_protected:Npn \setlocalecaption #1 #2 #3
   {
@@ -110,7 +72,6 @@
 
 \ExplSyntaxOff
 
-% Hyphenation remains in standard LaTeX syntax for babel compatibility
 \addto\extrasportuguese{%
   \defineshorthand{"-}{\babelhyphen{repeat}}%
 }
