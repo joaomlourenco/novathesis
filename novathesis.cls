@@ -3027,11 +3027,11 @@
   \clist_map_inline:xn { #2 }
    {
     % Legacy check: if the list exists for this category
-    \ifoptionvoid{/@nt/#1/##1/pair}
+    \ifoptionvoid{/@nt/#1/##1/name}
       { } 
       {
         % Retrieve the sub-list into the legacy macro \@advlist@i
-        \letoptionlist{/@nt/#1/##1/pair}\@advlist@i
+        \letoptionlist{/@nt/#1/##1/name}\@advlist@i
         
         % FIX: Use put_right:Nx instead of concat:NN
         % This expands \@advlist@i (e.g., "A, B") and appends A and B 

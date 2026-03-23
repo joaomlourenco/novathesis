@@ -358,6 +358,18 @@
         {bgcolor}
       ) { \pagecolor{\l_nt_covers_tmp_tl} } { \pagecolor{white} }
 
+      % Text Color
+      \datamatchtf{ \l_nt_covers_tmp_tl }{thesiscover}(
+        {\@DOCTYPE,\@DEGREEACR,#1-#2,textcolor},
+        {\@DOCCLASS,\@DEGREEACR,#1-#2,textcolor},
+        {\@DEGREEACR,#1-#2,textcolor},
+        {\@DEGREEACR,textcolor},
+        {\@DOCTYPE,#1-#2,textcolor},
+        {\@DOCCLASS,#1-#2,textcolor},
+        {#1-#2,textcolor},
+        {textcolor}
+      ) { \color{\l_nt_covers_tmp_tl} } { \color{black} }
+
       % Background Image
       \datamatchtf{ \l_nt_covers_tmp_tl }{thesiscover}(
         {\@DOCTYPE,\@DEGREEACR,#1-#2,image},
@@ -429,6 +441,14 @@
           {\@DOCCLASS,#1,bgcolor},
           {#1,bgcolor},
           {bgcolor},
+          {\@DOCTYPE,\@DEGREEACR,#1,textcolor},
+          {\@DOCCLASS,\@DEGREEACR,#1,textcolor},
+          {\@DEGREEACR,#1,textcolor},
+          {\@DEGREEACR,textcolor},
+          {\@DOCTYPE,#1,textcolor},
+          {\@DOCCLASS,#1,textcolor},
+          {#1,textcolor},
+          {textcolor},
           {\@DOCTYPE,\@DEGREEACR,#1,image},
           {\@DOCCLASS,\@DEGREEACR,#1,image},
           {\@DEGREEACR,#1,image},

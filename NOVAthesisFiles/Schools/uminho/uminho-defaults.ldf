@@ -338,15 +338,19 @@ indicada.\\[1ex]
 % Advisers (Cover 2 only)
 \ntaddtocover[vspace=0.75cm,halign=l]{2-1}{%
   \fontsize{14}{16.8bp}\selectfont%
-  \theadvisersrt(\@LANG@COVER)\\[\dimexpr-\baselineskip+0.5ex]%
+  \theadvisersrt(\@LANG@COVER)%\\[\dimexpr-\baselineskip+0.5ex]%
+  \bigskip
+  \commastring(pt):={, }%
+  \commastring(en):={, }%
+  \andstring(pt):={ e }%
+  \andstring(en):={ and }%
   \textbf{\ntprintpersons{0.9}{0}{adviser}{a,c}}%
 }
 
 % Date
 \ntaddtocover[vspace=1,halign=l]{1-1,2-1}{%
   \fontsize{11}{11}\selectfont%
-  \PrintDateISO[\theofstr(\@LANG@COVER)]
-               {\GetDocDate(submission,year)-\GetDocDate(submission,month)}
+  \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}
 }
 
 
