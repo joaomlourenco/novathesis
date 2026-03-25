@@ -340,10 +340,6 @@ indicada.\\[1ex]
   \fontsize{14}{16.8bp}\selectfont%
   \theadvisersrt(\@LANG@COVER)%\\[\dimexpr-\baselineskip+0.5ex]%
   \bigskip
-  \commastring(pt):={, }%
-  \commastring(en):={, }%
-  \andstring(pt):={ e }%
-  \andstring(en):={ and }%
   \textbf{\ntprintpersons{0.9}{0}{adviser}{a,c}}%
 }
 
