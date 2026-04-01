@@ -30,11 +30,11 @@
 % Add more lines for other languages
 % You may use "\\" to force line breaks
 %-------------------------------------------------------------
-\nttitle(main,en){A Very Long and Impressive\\Thesis Title with a Forced Line Break}%
-\nttitle(main,pt){Um Título de Tese Longo\\e com uma Mudança de Linha Forçada}%
+\nttitle(main,pt){Otimização de Custos e Operações\\em Ambientes Multi-Cloud sobre\\Frameworks GenAI}%
+\nttitle(main,en){Cost and Operations Optimization\\in Multi-Cloud Environments\\over GenAI Frameworks}%
 
-\nttitle(sub,en){Some thoughts on the Life, the Universe,\\and Everything Else}%
-\nttitle(sub,pt){Algumas considerações sobre a Vida,\\o Universo e Tudo o Mais}%
+\nttitle(sub,en){}%
+\nttitle(sub,pt){}%
 
 
 
@@ -55,8 +55,7 @@
 % Add more lines for other languages
 % You may use "\\" to force line breaks
 %-------------------------------------------------------------
-\ntdepartment*(en){Department of\\Name of the Department}
-\ntdepartment*(pt){Departamento de\\Nome do Departamento}
+% Department is set in 9_nova_fct.tex
 
 
 
@@ -77,8 +76,7 @@
 % Add more lines for other languages
 % You may use "\\" to force line breaks
 %-------------------------------------------------------------
-\ntdegreename*(en){Study Program Name}          % Example: Computer Science
-\ntdegreename*(pt){Nome do Programa de Estudos} % Examplo: Engenharia Informática
+% Degree name is set in 9_nova_fct.tex
 
 
 
@@ -97,8 +95,8 @@
 %
 % If the degree has no specialization, comment the lies below.
 %-------------------------------------------------------------
-\ntspecialization*(en){Specialization Name}         % Example: Distributed Systems
-\ntspecialization*(pt){Designação da Especialidade} % Exemplo: Sistemas Distribuídos
+% \ntspecialization*(en){}
+% \ntspecialization*(pt){}
 
 
 
@@ -141,7 +139,7 @@
 % <gender>: m -> male
 %           f -> female
 %-------------------------------------------------------------
-\ntauthorname(m){John Very Longname Doe}{John Doe}
+\ntauthorname(m){Duarte José Lourenço Belo}{Duarte Belo}
 
 
 
@@ -158,8 +156,8 @@
 % Add more lines for other languages
 % You may use "\\" to force line breaks
 %-------------------------------------------------------------
-\ntauthordegree(en){Master/BSc in Name of Previous Degree}
-\ntauthordegree(pt){Mestrado/Licenciatura em Nome do Grau Anterior}
+\ntauthordegree(en){Master in Computer Science and Engineering}
+\ntauthordegree(pt){Mestrado em Engenharia Informática}
 
 
 
@@ -209,11 +207,10 @@
 %
 % You may use "\\" to force line breaks
 %-------------------------------------------------------------
-% Advisers(s)
-\ntaddperson{adviser}(a,f){Mary Doe Adviser Name, Full Professor, NOVA University Lisbon}
-% Co-advisers(s)
-\ntaddperson{adviser}(c,m){John Doe Co-Adviser Name, Associate Professor, NOVA University Lisbon}
-\ntaddperson{adviser}(c,f){John Doe other Co-Adviser Name, Full Professor, NOVA University Lisbon}
+% Adviser(s) — fill in the real names, positions and institutions below
+\ntaddperson{adviser}(a,m){Adviser Name, Full Professor, NOVA School of Science and Technology}
+% Co-adviser(s) — uncomment and fill if applicable
+% \ntaddperson{adviser}(c,m){Co-Adviser Name, Associate Professor, NOVA School of Science and Technology}
 
 
 
@@ -235,11 +232,8 @@
 %
 % You may use "\\" to force line breaks
 %-------------------------------------------------------------
-\ntaddperson{committee}(c,m){Committee chairperson's Name, Full Professor, NOVA School of Science and technology}
-\ntaddperson{committee}(r,m){Rapporteur's Name, Associate Professor, University of Somewhere}
-% \ntaddperson{committee}(r,m){Another Rapporteur's Name, Assistant Professor, Another University}
-% \ntaddperson{committee}(a,m){Adviser's Name (if present in the jury), Associate Professor, NOVA School of Science and technology}
-% \ntaddperson{committee}(ca,m){Co-Adviser's Name (if present in the jury), Associate Professor, Some University}
-\ntaddperson{committee}(m,f){Another Committee Member, Full Professor, Another University}
-\ntaddperson{committee}(m,f){Yet Another Member of the Committee, Assistant Professor, Another University}
-% \ntaddperson{committee}(g,m){Guest Member of the Committee, Position, University}
+% Committee — fill in after thesis is submitted/approved
+% \ntaddperson{committee}(c,m){Chairperson Name, Full Professor, NOVA School of Science and Technology}
+% \ntaddperson{committee}(r,m){Rapporteur Name, Associate Professor, University Name}
+% \ntaddperson{committee}(a,m){Adviser Name, Full Professor, NOVA School of Science and Technology}
+% \ntaddperson{committee}(m,f){Committee Member, Assistant Professor, University Name}
