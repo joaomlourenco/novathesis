@@ -26,8 +26,8 @@
 \let\old@Roman=\@Roman
 
 
-\newcommand*{\NTAddToHook}[2]{\options{/@nt/hook/#1/.newpush={#2}}}
-\newcommand*{\NTRunHook}[1]{\optionlistdo{/@nt/hook/#1}{##1}}
+\newcommand*{\NTAddToHook}[2]{\AddToHook{novathesis/#1}{#2}}
+\newcommand*{\NTRunHook}[1]{\ProvideHook{novathesis/#1}\UseHook{novathesis/#1}}
 
 %============================================================
 \def\DIRCONFIG{0-Config}
@@ -157,7 +157,7 @@
 
 \input{\DIRCONFIG/2_biblatex}
 
-\NTAddToHook{/afterloading/schoolconfig}{%
+\NTAddToHook{afterloading/schoolconfig}{%
   % TODO defernumbers=true??
   \RequirePackage{biblatex}
   % TODO to be loaded only if option print/index=true

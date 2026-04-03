@@ -183,7 +183,7 @@
 %% UTILITIES & HOOKS
 %%=======================================================================
 
-\NTAddToHook{/abstract/title/before}{%\
+\NTAddToHook{abstract/title/before}{%\
   \begingroup
     \color{iselPlum}%
     \bfseries\fontsize{14}{16}\selectfont%
@@ -195,8 +195,8 @@
 \NTAddToHook{abstract/pre}{%
   \let\oldprintchaptertitle\printchaptertitle%
   \renewcommand{\printchaptertitle}{%
-    \NTRunHook{/abstract/title/before}%
-    \NTRunHook{/abstract/title/\@LSHORT}%
+    \NTRunHook{abstract/title/before}%
+    \NTRunHook{abstract/title/\@LSHORT}%
     \oldprintchaptertitle%
   }%
 }

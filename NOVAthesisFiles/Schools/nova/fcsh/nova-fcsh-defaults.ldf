@@ -102,7 +102,7 @@
 
 \newcommand{\ntchapskip}{\vspace*{2cm}}
 
-\NTAddToHook{/abstract/title/before}{%\
+\NTAddToHook{abstract/title/before}{%\
   \begingroup
     \begin{center}
     \noindent\large\bfseries
@@ -121,8 +121,8 @@
 \NTAddToHook{abstract/pre}{%
   \let\oldprintchaptertitle\printchaptertitle%
   \renewcommand{\printchaptertitle}{%
-    \NTRunHook{/abstract/title/before}%
-    \NTRunHook{/abstract/title/\@LSHORT}%
+    \NTRunHook{abstract/title/before}%
+    \NTRunHook{abstract/title/\@LSHORT}%
     \oldprintchaptertitle%
   }%
   \SingleSpacing*%
