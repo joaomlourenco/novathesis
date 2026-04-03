@@ -10,26 +10,29 @@
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
 %%
-%% Package loading: memoir, core packages, fonts, language, graphics, biblatex, hyperref
+%% All package loading: memoir base class, utility packages, fonts & encodings,
+%% language support, graphics, bibliography, hyperref & glossaries.
 %% ----------------------------------------------------------------------------
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% KERNEL & CORE UTILITIES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% ----------------------------------------------------------------------------
-% Save these definitions asap, to be used later in the “\annex” command,
-% because "\@Roman" and "\Roman" were failing with pdflatex
-% when loading the "greek" language (and LGR font encofing)
-%% ----------------------------------------------------------------------------
+% Save \Roman / \@Roman immediately — pdflatex + greek (LGR encoding)
+% clobbers them, and we need the originals for the \annex command.
 \let\oldRoman=\Roman
 \let\old@Roman=\@Roman
 
-
+% ── Hook API ──────────────────────────────────────────────────────────
+% Thin wrappers over the LaTeX kernel hook engine (LaTeX 2020-10-01+).
+% Hook names are namespaced under 'novathesis/' to avoid conflicts with
+% kernel or package hooks.  \ProvideHook ensures firing an empty hook
+% is a silent no-op (matching \UseHook's undeclared-hook behaviour).
 \newcommand*{\NTAddToHook}[2]{\AddToHook{novathesis/#1}{#2}}
 \newcommand*{\NTRunHook}[1]{\ProvideHook{novathesis/#1}\UseHook{novathesis/#1}}
 
-%============================================================
+% ── Directory macros ──────────────────────────────────────────────────
 \def\DIRCONFIG{0-Config}
 \def\DIRFRONTMATTER{1-FrontMatter}
 \def\DIRMAINMATTER{2-MainMatter}
@@ -46,19 +49,19 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% MEMOIR CUSTOMIZATION
+%% MEMOIR BASE CLASS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\ntmemoirsetup}[1]{\PassOptionsToClass{#1}{memoir}}
 \input{\DIRCONFIG/0_memoir}
 \LoadClass{memoir}
 
-\OnehalfSpacing% One-and-half spacing
+\OnehalfSpacing
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CORE PACKAGES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage[table,svgnames]{xcolor} % First to avoid option clashes
+\RequirePackage[table,svgnames]{xcolor} % Must be loaded first to avoid option clashes
 \RequirePackage{iftex}
 \RequirePackage{ifplatform}
 \RequirePackage{xfor}
@@ -68,20 +71,21 @@
 \RequirePackage{varwidth}
 \RequirePackage{calc}
 
+% Add StyFiles and Strings to \input search path so bare filenames work
 \xappto\input@path{{\DIRSTYFILES/}{\DIRSTRINGS/}}
 
-\RequirePackage{options-ext}
-\RequirePackage{nt-version}
-\RequirePackage{nt-covers-expl3}
-\RequirePackage{memory2}
-\RequirePackage{memstore}
-\RequirePackage{stocksize}
+\RequirePackage{options-ext}      % Key-value option system
+\RequirePackage{nt-version}       % \novathesisversion / \novathesisdate
+\RequirePackage{nt-covers-expl3}  % Cover page rendering engine
+\RequirePackage{memory2}          % Data storage API (\newdata, \SetDataName, …)
+\RequirePackage{memstore}         % Higher-level memory store helpers
+\RequirePackage{stocksize}        % Paper / stock size handling
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FONTS & ENCODINGS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{microtype} % Good to load after fonts
+\RequirePackage{microtype}
 
 \iftutex
   \RequirePackage[no-math]{fontspec}
@@ -90,35 +94,26 @@
   \RequirePackage[T1]{fontenc}
 \fi
 
+% Preferred sans-serif stack: Inter → Helvet → Gillius2 → LaTeX default
 \IfFileExists{inter.sty}
   {\RequirePackage[scaled=MatchLowercase]{inter}
-  \iftutex
-    \setsansfont{Inter}[
-      Scale = MatchLowercase,
-      Ligatures = {TeX, NoCommon}
-    ]
-    % Force it to be the default sans
-    \renewcommand{\sffamily}{\fontspec{Inter}[Ligatures={TeX,NoCommon}]}
-  \fi}
-{\IfFileExists{helvet.sty}
-  {\RequirePackage[scaled=0.95]{helvet}}
-{\IfFileExists{gillius2.sty}
-  {\RequirePackage[scaled=0.95]{gillius2}}
-  {\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}
-% \IfFileExistsCase*
-%   {
-%     {inter.sty}    {\RequirePackage{inter}},
-%     {helvet.sty}   {\RequirePackage{helvet}}
-%     {gillius2.sty} {\RequirePackage{gillius2}}
-%   }
-%   {\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}
+   \iftutex
+     \setsansfont{Inter}[Scale=MatchLowercase, Ligatures={TeX,NoCommon}]
+     \renewcommand{\sffamily}{\fontspec{Inter}[Ligatures={TeX,NoCommon}]}
+   \fi}
+  {\IfFileExists{helvet.sty}
+    {\RequirePackage[scaled=0.95]{helvet}}
+    {\IfFileExists{gillius2.sty}
+      {\RequirePackage[scaled=0.95]{gillius2}}
+      {\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}
 
-% TODO Good to load after fonts
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LANGUAGE & LOCALIZATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage[english]{babel}
+
+% Provide fallback stubs for older babel versions that lack these commands
 \AtBeginDocument{%
   \ifx\bbl@ensure@bcp\@undefined
     \newcommand{\bbl@ensure@bcp}[2]{#2}%
@@ -128,7 +123,7 @@
   \fi
 }
 
-\RequirePackage{csquotes}  % MUST be loaded before biblatex
+\RequirePackage{csquotes}  % Must be loaded before biblatex
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -137,7 +132,7 @@
 \RequirePackage{tikz}
 \RequirePackage[nobeamer]{graphbox} % Loads graphicx
 \RequirePackage{colortbl}
-\RequirePackage{xurl} % Loads 'url' with better breaking
+\RequirePackage{xurl}               % Loads 'url' with improved line-breaking
 
 \expandafter\graphicspath\expandafter{\expandafter{\DIRFIGURES/}}
 \DeclareGraphicsExtensions{.pdf,.png,.tif,.jpg}
@@ -148,27 +143,30 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% BIBLIOGRAPHY & INDEXING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NewDocumentCommand { \ntbibsetup } {m}
-  {%
-    \@ifpackageloaded{biblatex}
-        {\ClassError{novathesis}{Please load biblatex options earlier.}{}}
-        {\PassOptionsToPackage{#1}{biblatex}}%
-  }
+
+% \ntbibsetup{key=value,...} — pass options to biblatex before it is loaded.
+% Must be called before \begin{document}.
+\NewDocumentCommand{\ntbibsetup}{m}{%
+  \@ifpackageloaded{biblatex}
+      {\ClassError{novathesis}{Please load biblatex options earlier.}{}}
+      {\PassOptionsToPackage{#1}{biblatex}}%
+}
 
 \input{\DIRCONFIG/2_biblatex}
 
+% biblatex and imakeidx are deferred until after school configs are loaded
+% so that school-specific options set via \ntbibsetup take full effect.
+% imakeidx must be loaded before hyperref.
 \NTAddToHook{afterloading/schoolconfig}{%
-  % TODO defernumbers=true??
   \RequirePackage{biblatex}
-  % TODO to be loaded only if option print/index=true
-  \RequirePackage{imakeidx} % Should generally be loaded before hyperref
+  \RequirePackage{imakeidx}
 }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% HYPERREF & INTERACTIVE ELEMENTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{
+\AtEndPreamble{%
   \PassOptionsToPackage{
     bookmarksnumbered=true,
     breaklinks=true,
@@ -177,14 +175,15 @@
     unicode=true,
   }{hyperref}
   \RequirePackage{hyperref}
-  \RequirePackage{fix-hyperref} % Patches hyperref immediately
-
+  \RequirePackage{fix-hyperref}       % Patches hyperref immediately after loading
   \RequirePackage{bookmark}           % Extends hyperref bookmarks
+
+  % ── glossaries-extra (must be loaded after hyperref) ──────────────
   \PassOptionsToPackage{
     translate=babel,
     acronym,           % add acronyms listing
     symbols,           % add symbols listing
-    % sanitizesort=false, % allow \gls inside descriptions
+    % sanitizesort=false, % allow \gls inside sort keys
     % xindy={language=\@LANG@MAIN@LONG},
     nolong,
     nosuper,
@@ -193,37 +192,35 @@
     nostyles,
     automake,
   }{glossaries-extra}
-  \RequirePackage{glossaries-extra}   % Must be after hyperref
-  \RequirePackage{glossary-xltabular} % Helper for glossaries
+  \RequirePackage{glossaries-extra}
+  \RequirePackage{glossary-xltabular}
 
-  %--------------------------------
-  % “glossasries” stuff - after hyperref
+  % xindy language support for Greek
   \ifoptioncontains{/novathesis/lang/extra}{gr}
     {\PassOptionsToPackage{xindy={language=\expanded{\@LANG@MAIN@LONG}}}
                           {glossaries-extra}}
     {}
-  
+
   \setglossarystyle{xltabular}
   \setabbreviationstyle[acronym]{long-short}
   \GlsXtrEnablePreLocationTag{\emph{(\small p.~}}{\emph{(\small pp.~}}
   \patchcmd{\@gls@automake@immediate}{-I xindy}{-q -I xindy}{}{}
-  % \renewcommand{\gls@automake@makegloss}{makeglossaries -q}%
   \renewcommand{\GlsXtrFormatLocationList}[1]{\emph{\small#1)}}
   \renewcommand{\glsnamefont}[1]{\textbf{#1}}
   \newcommand*{\glsplainhyperlink}[2]{%
-      \begingroup
-        \hypersetup{hidelinks}%
-        \hyperlink{#1}{#2}%
-      \endgroup
+    \begingroup
+      \hypersetup{hidelinks}%
+      \hyperlink{#1}{#2}%
+    \endgroup
   }%
+
+  % Ensure \printglossary inserts a PDF bookmark at the correct level
   \let\printglossaryORIG\printglossary
   \def\printglossary{%
     \bookmarksetupnext{level=1}%
     \printglossaryORIG%
   }
-  
-  %--------------------------------
-  % “Process glossaries/list/reverse” option - after glossaries
+
   \iftoggle{/novathesis/glossaries/list/reverse}
            {}
            {\setupglossaries{nonumberlist}}
@@ -232,10 +229,8 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% FINAL TOOLS & DEVELOPMENT
+%% AI DISCLOSURE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtEndPreamble{
+\AtEndPreamble{%
   \RequirePackage[autobib=true,nocite=false]{aidisclose2}
 }
-
-
