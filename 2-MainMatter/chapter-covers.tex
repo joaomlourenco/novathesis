@@ -1,0 +1,911 @@
+%!TEX root = ../template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — 2-MainMatter/chapter-covers.tex
+%% ----------------------------------------------------------------------------
+%%
+%% Version 7.10.7 (2026-03-25)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%%
+%% Reference chapter: the NOVAthesis cover page system.
+%% Intended audience: developers adding new school support or refactoring
+%% existing cover definitions.
+%%
+%% ----------------------------------------------------------------------------
+
+\typeout{NT FILE 2-MainMatter/chapter-covers.tex}%
+
+\chapter{The NOVAthesis Cover Page System}
+\label{cha:covers}
+
+This chapter documents the cover page engine used by the \texttt{novathesis}
+class.  It is written for developers who need to add cover support for a new
+institution, or who want to understand or refactor an existing cover
+definition.  End users who only want to configure metadata (title, author,
+committee) should work exclusively with \verb!0-Config/3_cover.tex!.
+
+The cover engine is implemented in two files:
+\begin{itemize}
+  \item \verb!NOVAthesisFiles/StyFiles/nt-covers.sty! — the legacy
+        implementation, retained for compatibility.
+  \item \verb!NOVAthesisFiles/StyFiles/nt-covers-expl3.sty! — the modern
+        \LaTeX3/expl3 reimplementation (the one used by default).
+\end{itemize}
+Both expose an identical public API; the remainder of this chapter describes
+that API.
+
+
+%%=======================================================================
+\section{Architecture Overview}
+\label{sec:covers_arch}
+%%=======================================================================
+
+Every cover page is rendered through three independent layers applied in
+order:
+
+\begin{enumerate}
+  \item \textbf{Background colour.}  A solid \verb!\pagecolor{}! fills the
+        entire page.  Set with \verb!\thesiscover(id,bgcolor):={colorname}!.
+  \item \textbf{Background image.}  A full-bleed graphic is stretched to
+        \verb!\paperwidth! $\times$ \verb!\paperheight!.  Set with
+        \verb!\thesiscover(id,image):={filename}!.
+  \item \textbf{Content layer.}  A \verb!tikzpicture! overlay anchors a
+        large \verb!minipage! at the top-left of the text area (offset by the
+        cover margins).  Inside this minipage, elements registered with
+        \verb!\ntaddtocover! are typeset top-to-bottom.  TikZ elements
+        registered with \verb!tikz=true! or \verb!\ntAddToCoverTikz! are
+        collected and rendered in a \emph{second} overlay \verb!tikzpicture!
+        drawn after the minipage, so they escape the minipage's coordinate
+        space.
+\end{enumerate}
+
+The cover text area is defined by four cover-specific margins (see
+Section~\ref{sec:covers_margins}).  All \verb!\ntaddtocover! elements are
+stacked \emph{vertically} inside this area, in the order they were
+registered.
+
+
+%%=======================================================================
+\section{Cover Identifiers}
+\label{sec:cover_ids}
+%%=======================================================================
+
+Each cover page has a two-part identifier \texttt{major\,-\,minor}:
+
+\begin{center}
+\begin{tabular}{cll}
+  \hline
+  \textbf{ID} & \textbf{Description} & \textbf{When printed} \\
+  \hline
+  \texttt{1-1} & Front cover — recto (right/odd page)   & Always \\
+  \texttt{1-2} & Front cover — verso (back of cover)    & When content is registered \\
+  \texttt{2-1} & Front page — recto                     & When \texttt{print/frontpage=true} \\
+  \texttt{2-2} & Front page — verso                     & When content is registered \\
+  \texttt{N-1} & Back cover — recto (reverse of back)   & When content is registered \\
+  \texttt{N-2} & Back cover — verso (outside back cover) & Always \\
+  \hline
+\end{tabular}
+\end{center}
+
+The \emph{major} number (1, 2, N) identifies the cover pair; the \emph{minor}
+number (1, 2) selects the recto or verso page within the pair.  A
+comma-separated list of IDs (e.g.\ \verb!1-1,2-1!) can be passed to any
+command that accepts cover IDs.
+
+
+%%=======================================================================
+\section{Setting Up the Cover Canvas}
+\label{sec:covers_canvas}
+%%=======================================================================
+
+%%-----------------------------------------------------------------------
+\subsection{Cover-Specific Margins}
+\label{sec:covers_margins}
+%%-----------------------------------------------------------------------
+
+Margins for the text area (the minipage placed on the content layer) are
+separate from the normal page margins.  They are set with the
+\verb!\margin(cover,...):={...}! family:
+
+\begin{verbatim}
+\margin(cover,top):={8.6cm}    % default top margin for all cover pages
+\margin(cover,bottom):={1.5cm}
+\margin(cover,left):={3.55cm}
+\margin(cover,right):={2.0cm}
+\margin(cover,2-1,top):={6.6cm} % override top margin for cover 2-1 only
+\end{verbatim}
+
+The cover-ID-specific variant takes precedence when printing that particular
+page.  Only the text area is affected; background images always fill the
+entire paper.
+
+
+%%-----------------------------------------------------------------------
+\subsection{Background Colour and Image}
+\label{sec:covers_bg}
+%%-----------------------------------------------------------------------
+
+These properties are stored in the \texttt{thesiscover} data family and
+retrieved through a prioritised lookup that checks the current document type
+and degree class before falling back to the generic key:
+
+\begin{verbatim}
+% Set a solid background colour for cover 1-1
+\thesiscover(1-1,bgcolor):={fctdarkblue}
+
+% Per-doctype variant (overrides the generic key when doctype=phd)
+\thesiscover(phd,1-1,bgcolor):={fctdarkgreen}
+
+% Set a background image (file must be findable by LaTeX/graphicx)
+\thesiscover(phd,1-1,image):={nova-fct-cover-green-front}
+
+% Set the default text colour for the entire cover page
+\thesiscover(1-1,textcolor):={white}
+\end{verbatim}
+
+Supported keys:
+\begin{itemize}
+  \item \verb!bgcolor! — name of a colour defined with \verb!\definecolor!.
+  \item \verb!image! — file name (no extension; passed to
+        \verb!\includegraphics!).  The image is automatically scaled to
+        \verb!\paperwidth! $\times$ \verb!\paperheight!.
+  \item \verb!textcolor! — sets \verb!\color{...}! for the entire content
+        layer of that cover page.
+\end{itemize}
+
+The lookup cascade used internally is:
+\begin{verbatim}
+\@DOCTYPE, \@DEGREEACR, cover-id, key
+\@DOCCLASS, \@DEGREEACR, cover-id, key
+\@DEGREEACR, cover-id, key
+\@DEGREEACR, key
+\@DOCTYPE, cover-id, key
+\@DOCCLASS, cover-id, key
+cover-id, key
+key
+\end{verbatim}
+
+The first matching entry wins, so you can easily have a generic fallback with
+targeted per-doctype overrides.
+
+
+%%=======================================================================
+\section{The \texttt{\textbackslash ntaddtocover} Command}
+\label{sec:ntaddtocover}
+%%=======================================================================
+
+\verb!\ntaddtocover! is the primary interface for populating a cover page.
+It registers a \emph{content block} — either a vertical box or a TikZ code
+snippet — for one or more cover pages.
+
+\medskip
+\noindent\textbf{Syntax:}
+\begin{verbatim}
+\ntaddtocover[<attributes>]{<cover-id-list>}{<code>}
+\end{verbatim}
+
+\begin{description}
+  \item[\texttt{[attributes]}] Optional comma-separated key=value list.
+        See Section~\ref{sec:ntaddtocover_attrs}.
+  \item[\texttt{\{cover-id-list\}}] Comma-separated list of cover IDs (e.g.\
+        \verb!1-1,2-1!) to which this element is appended.
+  \item[\texttt{\{code\}}] The content to typeset.  Evaluated inside a
+        \verb!minipage! (unless \verb!tikz=true!; see
+        Section~\ref{sec:ntaddtocover_tikz}).
+\end{description}
+
+Elements are rendered in the order they are registered.  The first call
+produces the topmost block.
+
+\medskip
+\noindent\textbf{Minimal example — adding a title block:}
+\begin{verbatim}
+\ntaddtocover[halign=l, height=3cm, valign=c]{1-1}{%
+  \fontsize{20}{21}\selectfont
+  \textbf{\thedoctitle(\@LANG@COVER,main)}%
+}
+\end{verbatim}
+
+
+%%-----------------------------------------------------------------------
+\subsection{Attribute Reference}
+\label{sec:ntaddtocover_attrs}
+%%-----------------------------------------------------------------------
+
+All attributes are optional.  Defaults are shown in parentheses.
+
+\medskip
+\noindent\textbf{Filter attributes} (the element is silently skipped when
+the filter does not match the current document):
+
+\begin{description}
+  \item[\texttt{status=\{...\}}] Comma-separated list of document statuses
+        for which this element should appear.  Valid values: \texttt{working},
+        \texttt{provisional}, \texttt{final}.  Empty (default) means
+        \emph{always}.
+  \item[\texttt{degree=\{...\}}] Comma-separated list of document types
+        for which this element should appear.  Valid values: \texttt{phd},
+        \texttt{msc}, \texttt{bsc}, \texttt{plain}, \texttt{phdplan},
+        \texttt{phdprop}, \texttt{mscplan}.  Empty (default) means
+        \emph{always}.
+\end{description}
+
+\medskip
+\noindent\textbf{Box geometry attributes:}
+
+\begin{description}
+  \item[\texttt{width=\{<dim>\}}] Width of the box (default: full text area
+        width minus \texttt{hspace}).  Any valid \TeX\ dimension.
+  \item[\texttt{height=\{<dim>\}}] Fixed height of the box.  When omitted, the
+        box height matches its natural content height.  Using a fixed height
+        together with \texttt{valign} lets you vertically place content inside
+        a reserved area.
+  \item[\texttt{height/phd=\{<dim>\}}] Same as \texttt{height}, but only
+        applied when the document type is PhD.  Overrides \texttt{height} for
+        PhD documents.
+  \item[\texttt{height/msc=\{<dim>\}}] Same, but for MSc documents.
+  \item[\texttt{minheight=\{<dim>\}}] Minimum height of the box, even when the
+        content is shorter (default: \texttt{0pt}).
+  \item[\texttt{hspace=\{<dim>\}}] Horizontal offset from the left margin
+        (default: \texttt{0pt}).  Useful for indenting elements that must not
+        start at the margin.
+\end{description}
+
+\medskip
+\noindent\textbf{Alignment attributes:}
+
+\begin{description}
+  \item[\texttt{halign=c|l|r|j}] Horizontal alignment of content inside the
+        box (default: \texttt{c}).  Values: \texttt{c} = \verb!\centering!,
+        \texttt{l} = \verb!\raggedright!, \texttt{r} = \verb!\raggedleft!,
+        \texttt{j} = justified (no alignment command).
+  \item[\texttt{valign=c|t|b}] Vertical alignment of content inside a
+        fixed-height box (default: \texttt{c}).  Ignored when no \texttt{height}
+        is given.
+\end{description}
+
+\medskip
+\noindent\textbf{Colour attributes:}
+
+\begin{description}
+  \item[\texttt{color=\{<colorname>\}}] Foreground text colour inside the box.
+        Overrides \texttt{textcolor} from \verb!\thesiscover!.
+  \item[\texttt{bgcolor=\{<colorname>\}}] Background colour of the box
+        (applied via \verb!\colorbox!).  Default: transparent.
+\end{description}
+
+\medskip
+\noindent\textbf{Vertical spacing attributes:}
+
+The \texttt{vspace} attribute controls the vertical gap \emph{before} the
+element.  It accepts either a \TeX\ dimension or a plain integer:
+
+\begin{description}
+  \item[\texttt{vspace=\{<dim>\}}] Insert a fixed \verb!\vspace*{<dim>}! above
+        the element.
+  \item[\texttt{vspace=\{<n>\}}] When the value is a plain integer, insert an
+        elastic \verb!\vskip 0pt plus <n>fill! instead.  This creates a
+        stretchable gap — setting \texttt{vspace=1} on consecutive elements
+        distributes the available vertical space evenly between them.
+  \item[\texttt{vspace/phd}, \texttt{vspace/msc}] Per-doctype override of
+        \texttt{vspace}.  Takes precedence over the generic \texttt{vspace}
+        when the document type matches.
+  \item[\texttt{vspace/1-1}, \texttt{vspace/2-1}] Per-cover-ID override.
+        Takes precedence when the element is being rendered on that specific
+        cover.
+  \item[\texttt{vspace/phd/1-1}, \texttt{vspace/msc/1-1}, etc.] Combined
+        per-doctype per-cover override.  Highest precedence.
+\end{description}
+
+\medskip
+\noindent\textbf{Layout control attributes:}
+
+\begin{description}
+  \item[\texttt{newpar=true|false}] Emit a \verb!\par! after the element
+        (default: \texttt{true}).  Set \texttt{newpar=false} to place the
+        next element on the same line.
+  \item[\texttt{tikz=true|false}] Treat the content block as raw TikZ code to
+        be injected into the overlay TikZ picture rather than typeset inside
+        the minipage (default: \texttt{false}).  See
+        Section~\ref{sec:ntaddtocover_tikz}.
+\end{description}
+
+
+%%-----------------------------------------------------------------------
+\subsection{Stacking Elements Vertically}
+\label{sec:covers_vstack}
+%%-----------------------------------------------------------------------
+
+The most common cover layout is a vertical stack of boxes, similar to a
+\verb!minipage! column.  Each \verb!\ntaddtocover! call appends one box to the
+column.  The following design rules apply:
+
+\begin{enumerate}
+  \item The element appears immediately after the previous one (zero gap by
+        default).
+  \item Use \texttt{vspace=\{<dim>\}} for a fixed gap and
+        \texttt{vspace=\{<n>\}} (integer) for a stretchable gap.
+  \item A single \texttt{vspace=1} between two groups of elements pushes one
+        group to the top and the other to the bottom.  Use equal integer
+        weights (e.g.\ two elements with \texttt{vspace=1}) for equal
+        distribution.
+  \item Use \texttt{height} to reserve vertical space even when content may
+        vary in size (e.g.\ optional subtitle lines).  Combine with
+        \texttt{valign=c} to centre the content vertically inside the reserved
+        area.
+\end{enumerate}
+
+Example — logo, title, elastic gap, date:
+\begin{verbatim}
+% Logo at the top of the text area
+\ntaddtocover[halign=l]{1-1,2-1}{%
+  \includegraphics[height=1.5cm]{my-school-logo}%
+}
+
+% Title — reserved box of fixed height so subtitle does not shift the author
+\ntaddtocover[vspace=5mm, halign=l, height=4cm, valign=c]{1-1,2-1}{%
+  \fontsize{18}{20}\selectfont
+  \textbf{\thedoctitle(\@LANG@COVER,main)}%
+}
+
+% Author
+\ntaddtocover[halign=l]{1-1,2-1}{%
+  \fontsize{14}{14}\selectfont
+  \thedocauthor(name)%
+}
+
+% Elastic gap pushes the date to the bottom of the text area
+\ntaddtocover[vspace=1, halign=l]{1-1,2-1}{%
+  \fontsize{11}{11}\selectfont
+  \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}%
+}
+\end{verbatim}
+
+\medskip
+
+\noindent\textbf{Conditional content per document type:}
+
+Use the \texttt{degree} filter or the internal \verb!\ifphddoc!/\verb!\ifmscdoc!
+helpers when the cover layout differs between PhD and MSc documents:
+
+\begin{verbatim}
+\ntaddtocover[halign=l, height=3cm, valign=c]{1-1}{%
+  \ifphddoc{%
+    \fontsize{20}{21}\selectfont
+    \textbf{\thedoctitle(\@LANG@COVER,main)}%
+  }{%
+    \fontsize{17}{17}\selectfont
+    \textbf{\thedocauthor(name)}%
+  }%
+}
+\end{verbatim}
+
+Alternatively, register two separate elements with complementary
+\texttt{degree} filters and identical heights so they occupy the same space:
+
+\begin{verbatim}
+\ntaddtocover[degree=phd, height=3cm, valign=c]{1-1}{%
+  \fontsize{20}{21}\selectfont \textbf{\thedoctitle(\@LANG@COVER,main)}%
+}
+\ntaddtocover[degree=msc, height=3cm, valign=c]{1-1}{%
+  \fontsize{17}{17}\selectfont \textbf{\thedocauthor(name)}%
+}
+\end{verbatim}
+
+
+%%-----------------------------------------------------------------------
+\subsection{Embedding TikZ Code via \texttt{tikz=true}}
+\label{sec:ntaddtocover_tikz}
+%%-----------------------------------------------------------------------
+
+Setting \texttt{tikz=true} in the attribute list causes the content block to
+be collected as \emph{overlay TikZ code} rather than box content.  The block
+is executed inside a \verb!tikzpicture[remember picture, overlay]! that covers
+the whole page, drawn after the text-layer minipage has been placed.
+
+This means the coordinate origin is the \verb!current page! node, not the
+text area, so you can position elements anywhere on the page with absolute
+coordinates.  The \verb!calc! TikZ library (\verb!\usetikzlibrary{calc}!) is
+loaded by default and can be used freely.
+
+\begin{verbatim}
+% Place the university logo at the top-left corner (absolute coordinates)
+\ntaddtocover[tikz]{1-1}{%
+  \node[anchor=center]
+    at ($(current page.north west) + (20mm,-20mm)$)
+    {\includegraphics[width=21mm]{\theuniversity(logo,neg)}};%
+  % Vertical rule separator
+  \draw[thick]
+    ($(current page.north west) + (3.5cm,-1cm)$) -- ++(0,-2cm);%
+}
+\end{verbatim}
+
+All \texttt{tikz=true} blocks registered for the same cover are concatenated
+into a single \verb!tikzpicture!, in registration order.
+
+\medskip
+\noindent\textbf{When to use \texttt{tikz=true} vs.\ plain box elements:}
+\begin{itemize}
+  \item Use plain box elements for text content whose position depends on the
+        height of other elements (titles, author names, committee lists).
+        The vertical-stacking model handles reflow automatically.
+  \item Use \texttt{tikz=true} for graphics or decorations that need to be
+        anchored at a fixed absolute position (logos at a corner, background
+        watermarks, ruled lines).
+\end{itemize}
+
+
+%%=======================================================================
+\section{The \texttt{\textbackslash ntAddToCoverTikz} Command}
+\label{sec:ntaddtocovertikz}
+%%=======================================================================
+
+\verb!\ntAddToCoverTikz! is a convenience command for registering individual
+TikZ nodes or drawing commands.  It mirrors the syntax of TikZ's own node
+and draw commands, inserting them into the same overlay picture as
+\verb!\ntaddtocover[tikz]!.
+
+\medskip
+\noindent\textbf{Syntax:}
+\begin{verbatim}
+\ntAddToCoverTikz<cmd>[opts](position)[rest]{cover-id-list}{code}
+\end{verbatim}
+
+\begin{description}
+  \item[\texttt{<cmd>}] Optional: a TikZ command other than \verb!\node!
+        (use angle brackets, e.g.\ \verb!<\draw>!).  When omitted, the
+        command defaults to \verb!\node!.
+  \item[\texttt{[opts]}] Optional TikZ options for the node or command (square
+        brackets, default empty).
+  \item[\texttt{(position)}] Required: position of the node or command, in
+        the TikZ coordinate system relative to \verb!current page! (parentheses).
+  \item[\texttt{[rest]}] Optional: additional TikZ node syntax placed between
+        the position and the final \verb!{code}! argument (square brackets,
+        default empty).
+  \item[\texttt{\{cover-id-list\}}] Comma-separated list of cover IDs.
+  \item[\texttt{\{code\}}] Node content (when using the default \verb!\node!
+        command) or the draw-path code (when using a custom command).
+\end{description}
+
+\medskip
+\noindent\textbf{How the arguments map to TikZ output:}
+
+When no command is specified, the generated TikZ is:
+\begin{verbatim}
+\node[opts] at (position) rest {code};
+\end{verbatim}
+
+When a command \verb!<\draw>! is specified:
+\begin{verbatim}
+\draw[opts] (position) rest;
+\end{verbatim}
+(note: \texttt{code} is ignored in command mode)
+
+\medskip
+\noindent\textbf{Examples:}
+\begin{verbatim}
+% Default \node — place a logo
+\ntAddToCoverTikz
+  [anchor=north east]
+  (current page.north east)
+  {1-1,2-1}
+  {\includegraphics[width=4cm]{my-logo}}
+
+% Custom command: \draw
+\ntAddToCoverTikz<\draw>
+  [thick, white]
+  ($(current page.north west) + (1cm,-4cm)$)
+  [-- ++(\paperwidth-2cm, 0)]
+  {1-1,2-1}
+  {}
+\end{verbatim}
+
+\medskip
+\noindent\textbf{Note on \texttt{yscale=-1}.}  The overlay picture for
+\verb!\ntAddToCoverTikz! uses \verb!yscale=-1!, so the $y$-axis points
+\emph{downward}.  Coordinates like \verb!(current page.north west) + (x,-y)!
+move right and \emph{down} from the top-left corner.  The plain
+\verb!\ntaddtocover[tikz]! blocks use a \emph{standard} overlay without
+\texttt{yscale}, so their coordinate conventions differ.
+
+
+%%=======================================================================
+\section{Cover Hooks}
+\label{sec:covers_hooks}
+%%=======================================================================
+
+Hooks let you execute code at specific points in the cover rendering pipeline
+without modifying the \verb!\ntaddtocover! element list.  They are registered
+with \verb!\NTAddToHook!:
+
+\begin{verbatim}
+\NTAddToHook{cover/1-1/pre}{\sffamily\color{white}}
+\NTAddToHook{cover/2-1/pre}{\sffamily}
+\NTAddToHook{cover/post}{\pagecolor{white}} % reset after each cover
+\end{verbatim}
+
+Available hook points (in execution order for a single cover page):
+
+\begin{center}
+\begin{tabular}{ll}
+  \hline
+  \textbf{Hook name}              & \textbf{When executed} \\
+  \hline
+  \texttt{cover/pre}              & Before any cover page \\
+  \texttt{cover/<id>/pre}         & Before cover \texttt{<id>} \\
+  \texttt{cover/<id>/text/pre}    & Before text-layer elements \\
+  \texttt{cover/<id>/text/post}   & After text-layer elements \\
+  \texttt{cover/<id>/bgcolor/pre} & Before background colour is applied \\
+  \texttt{cover/<id>/bgcolor/post}& After background colour is applied \\
+  \texttt{cover/<id>/image/pre}   & Before background image is rendered \\
+  \texttt{cover/<id>/image/post}  & After background image is rendered \\
+  \texttt{cover/<id>/grid/pre}    & Before debug grid (only in debug mode) \\
+  \texttt{cover/<id>/grid/post}   & After debug grid \\
+  \texttt{cover/<id>/post}        & After cover \texttt{<id>} \\
+  \texttt{cover/post}             & After any cover page \\
+  \hline
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{Typical use cases:}
+\begin{itemize}
+  \item Switch to a sans-serif font or set a global colour for the whole cover
+        page inside the \texttt{cover/<id>/pre} hook.
+  \item Reset font or colour in \texttt{cover/post} to avoid bleeding into the
+        rest of the document.
+  \item Load cover-specific fonts (e.g.\ via \verb!\setmainfont! for
+        \hologo{LuaLaTeX}/\hologo{XeLaTeX}) in \texttt{cover/pre}.
+\end{itemize}
+
+
+%%=======================================================================
+\section{Debugging a Cover Layout}
+\label{sec:covers_debug}
+%%=======================================================================
+
+Enable debug mode in \verb!0-Config/1_novathesis.tex!:
+
+\begin{verbatim}
+\ntsetup{debug={cover,spine}}
+\end{verbatim}
+
+With \texttt{cover} in the debug set, the engine automatically calls
+\verb!\debuggrid! over every cover page and draws thin frames around each
+text box placed by \verb!\ntaddtocover!.
+
+You can also call \verb!\debuggrid! manually inside a cover element:
+\begin{verbatim}
+\ntaddtocover{1-1}{\debuggrid[cyan]}
+\end{verbatim}
+
+The grid draws:
+\begin{itemize}
+  \item 1\,mm ticks (lightest),
+  \item 5\,mm ticks,
+  \item 1\,cm ticks,
+  \item 5\,cm ticks (darkest).
+\end{itemize}
+
+All lines respect the cover margins, so the grid origin is the top-left
+corner of the text area.
+
+\medskip
+A fast iteration workflow:
+\begin{verbatim}
+# Build the cover only (mode=2 skips all document content)
+python .Build/build.py nova/fct --mode 2
+\end{verbatim}
+
+This rebuilds only the front cover page, giving fast feedback when tuning
+positions and margins.
+
+
+%%=======================================================================
+\section{Cover Rendering: Execution Order Summary}
+\label{sec:covers_order}
+%%=======================================================================
+
+The following sequence describes what happens when
+\verb!\ntprintcoversingle{1}{1}! (cover \texttt{1-1}) is called:
+
+\begin{enumerate}
+  \item A fresh group is opened; \texttt{cover/pre} and
+        \texttt{cover/1-1/pre} hooks are run.
+  \item A PDF bookmark is inserted.
+  \item \texttt{thispagestyle{empty}} suppresses headers and footers.
+  \item Background colour lookup: the engine searches the
+        \texttt{thesiscover} data store for a matching \texttt{bgcolor} key
+        and calls \verb!\pagecolor!.
+  \item Background image lookup: if an \texttt{image} key is found, a
+        full-page \verb!tikzpicture! overlay renders it.
+  \item \texttt{cover/1-1/text/pre} hook.
+  \item Cover margins are read; a \verb!tikzpicture! overlay anchors a
+        \verb!minipage! at \verb!current page.north west! offset by those
+        margins.
+  \item Inside the minipage, each element registered with
+        \verb!\ntaddtocover[!…\texttt{]}\verb!{1-1}! is processed in order.
+        For each element the engine: resolves \texttt{vspace}, typeset the
+        content into a box, applies \texttt{bgcolor} wrapping, and emits the
+        box.
+  \item \texttt{tikz=true} elements accumulated during step~8 are emitted in
+        a second overlay \verb!tikzpicture!.
+  \item \texttt{cover/1-1/text/post}, \texttt{cover/1-1/post}, and
+        \texttt{cover/post} hooks are run.
+  \item The group is closed.
+\end{enumerate}
+
+
+%%=======================================================================
+\section{Step-by-Step: Adding Cover Support for a New School}
+\label{sec:covers_new_school}
+%%=======================================================================
+
+This section walks through adding a complete cover definition.  Substitute
+\texttt{myuniv} and \texttt{myfac} with the institution identifiers.
+
+\medskip
+\noindent\textbf{1.  Create the directory tree:}
+\begin{verbatim}
+NOVAthesisFiles/Schools/myuniv/myfac/
+NOVAthesisFiles/Schools/myuniv/myfac/Images/
+\end{verbatim}
+
+\medskip
+\noindent\textbf{2.  Create the defaults file}
+\verb!myuniv-myfac-defaults.ldf!:
+
+\begin{verbatim}
+%!TEX root=../../../template.tex
+%% myuniv/myfac/myuniv-myfac-defaults.ldf
+
+\typeout{NT FILE schools/myuniv/myfac/myuniv-myfac-defaults.ldf}%
+
+
+%%=======================================================
+%% COLOURS
+%%=======================================================
+
+\definecolor{myfacblue}{RGB}{0, 64, 128}
+\definecolor{myfacgold}{RGB}{190, 155, 80}
+
+
+%%=======================================================
+%% INSTITUTION STRINGS  (one line per supported language)
+%%=======================================================
+
+\university(en) := {My University}
+\university(pt) := {Minha Universidade}
+\school(en)     := {My Faculty}
+\school(pt)     := {Minha Faculdade}
+
+\school(logo,en) := {myuniv-myfac-logo-en}
+\school(logo,pt) := {myuniv-myfac-logo-pt}
+\ifdatadefined{school}(logo,\@LANG@COVER)
+  {\school(logo):={\theschool(logo,\@LANG@COVER)}}
+  {\school(logo):={\theschool(logo,en)}}
+
+
+%%=======================================================
+%% COMMITTEE ORDER
+%%=======================================================
+
+\committeeorder():={c,r,a,ca,m}%
+
+
+%%=======================================================
+%% LAYOUT
+%%=======================================================
+
+\margin(cover,top):={4.0cm}
+\margin(cover,bottom):={2.0cm}
+\margin(cover,left):={2.5cm}
+\margin(cover,right):={2.5cm}
+
+
+%%=======================================================
+%% COVER BACKGROUNDS
+%%=======================================================
+
+\thesiscover(1-1,bgcolor):={myfacblue}
+\thesiscover(1-1,textcolor):={white}
+\thesiscover(2-1,bgcolor):={white}
+\thesiscover(N-2,bgcolor):={myfacblue}
+
+
+%%=======================================================
+%% COVER ELEMENTS — cover 1-1 (front cover)
+%%=======================================================
+
+% Logo — absolutely positioned in the top-right area
+\ntaddtocover[tikz]{1-1}{%
+  \node[anchor=north east]
+    at ($(current page.north east) + (-1cm,-1cm)$)
+    {\includegraphics[height=2cm]{\theschool(logo)}};%
+}
+
+% Title
+\ntaddtocover[halign=l, height=4cm, valign=c]{1-1}{%
+  \fontsize{20}{22}\selectfont\bfseries
+  \thedoctitle(\@LANG@COVER,main)%
+}
+
+% Author
+\ntaddtocover[halign=l]{1-1}{%
+  \fontsize{14}{14}\selectfont
+  \thedocauthor(name)%
+}
+
+% Degree name + date pushed to the bottom
+\ntaddtocover[vspace=1, halign=l]{1-1}{%
+  \fontsize{11}{11}\selectfont
+  \thedegreename(\@LANG@COVER)\\
+  \PrintDateISO{\GetDocDate(submission,year)-%
+                \GetDocDate(submission,month)}%
+}
+
+
+%%=======================================================
+%% COVER ELEMENTS — cover 2-1 (front page)
+%%=======================================================
+
+% Reproduce key elements on the front page
+\ntaddtocover[halign=l]{2-1}{%
+  \includegraphics[height=1.5cm]{\theschool(logo)}\\[4mm]%
+  \fontsize{16}{18}\selectfont\bfseries
+  \thedoctitle(\@LANG@COVER,main)%
+}
+
+% Advisers
+\ntaddtocover[vspace=2, halign=l]{2-1}{%
+  \adviserstringfont():={\bfseries}%
+  \fontsize{11}{11}\selectfont
+  \ntprintpersons{0.9}{2}{adviser}{\GetAdviserOrder()}%
+}
+
+% Committee (final status only)
+\ntaddtocover[vspace=1, halign=l, status={final}]{2-1}{%
+  \committeetitlestringfont():={\bfseries}%
+  \fontsize{10}{10}\selectfont
+  \ntprintpersons{0.9}{2}{committee}{\thecommitteeorder()}%
+}
+
+% Date at the bottom
+\ntaddtocover[vspace=1, halign=l]{2-1}{%
+  \fontsize{11}{11}\selectfont
+  \thedegreename(\@LANG@COVER)\\
+  \PrintDateISO{\GetDocDate(submission,year)-%
+                \GetDocDate(submission,month)}%
+}
+\end{verbatim}
+
+\medskip
+\noindent\textbf{3.  Add logos} to
+\verb!NOVAthesisFiles/Schools/myuniv/myfac/Images/!.
+Supported formats: \texttt{.pdf} (preferred for vector logos), \texttt{.png},
+\texttt{.jpg}.
+
+\medskip
+\noindent\textbf{4.  Test with cover-only mode:}
+\begin{verbatim}
+python .Build/build.py myuniv/myfac --mode 2
+\end{verbatim}
+
+\medskip
+\noindent\textbf{5.  Test all document types:}
+\begin{verbatim}
+python .Build/build.py myuniv/myfac --doctype phd --docstatus final
+python .Build/build.py myuniv/myfac --doctype msc --docstatus final
+\end{verbatim}
+
+\medskip
+\noindent\textbf{6.  Enable debug mode} during development to verify spacing:
+\begin{verbatim}
+\ntsetup{debug={cover}}
+\end{verbatim}
+
+
+%%=======================================================================
+\section{Real-World Examples}
+\label{sec:covers_examples}
+%%=======================================================================
+
+%%-----------------------------------------------------------------------
+\subsection{NOVA/FCT: Mixed LaTeX and TikZ}
+\label{sec:covers_nova_fct}
+%%-----------------------------------------------------------------------
+
+The NOVA~FCT cover (\verb!NOVAthesisFiles/Schools/nova/fct/nova-fct-defaults.ldf!)
+demonstrates a typical mixed strategy:
+
+\begin{itemize}
+  \item All logos and graphical decorations (university logo, school logo,
+        separator rule, department name) are placed with
+        \verb!\ntaddtocover[tikz]{...}!, giving pixel-precise positioning
+        independent of the text flow.
+  \item All text content (title, author, degree, date) uses plain
+        \verb!\ntaddtocover! elements stacked in the cover's text area, which
+        starts at \texttt{margin(cover,top)=8.6cm} — well below the
+        absolutely-positioned logo band.
+  \item The front page (cover \texttt{2-1}) reuses the same elements but with
+        a lighter margin (\texttt{6.6cm} top) and adds advisers and committee.
+  \item PhD and MSc documents swap the order of title and author name using
+        \verb!\ifphddoc! conditionals inside shared elements.
+\end{itemize}
+
+Key cover-margin setting:
+\begin{verbatim}
+\margin(cover,top):={8.6cm}   % leaves room for the TikZ logo band
+\margin(cover,2-1,top):={6.6cm} % front page has a smaller logo band
+\end{verbatim}
+
+Background setup (colour varies by document class):
+\begin{verbatim}
+\def\@novafctcovercolor{red}          % default (BSc/other)
+\ifdocclass{msc}{\def\@novafctcovercolor{blue}}{}
+\ifdocclass{phd}{\def\@novafctcovercolor{green}}{}
+\thesiscover(\@DOCTYPE,1-1,image):=
+    {nova-fct-cover-\@novafctcovercolor-front}
+\end{verbatim}
+
+
+%%-----------------------------------------------------------------------
+\subsection{ULISBOA/IST: Pure LaTeX Box Stacking}
+\label{sec:covers_ist}
+%%-----------------------------------------------------------------------
+
+The IST cover
+(\verb!NOVAthesisFiles/Schools/ulisboa/ist/ulisboa-ist-defaults.ldf!)
+uses no TikZ for content elements at all.  Every element — logo, school
+name, a decorative image, title, author, advisers, committee, date — is
+placed as a plain box element with explicit \texttt{height} and
+\texttt{vspace} values.  This approach is simpler to reason about and
+produces a layout that tolerates variable-length content gracefully.
+
+The layout sequence for cover \texttt{1-1}:
+\begin{verbatim}
+\ntaddtocover[halign=l, hspace=-2.25mm]{1-1,2-1}{logo image}
+\ntaddtocover[vspace=5mm, hspace=23mm]{1-1,2-1}{school name text}
+\ntaddtocover[vspace=1.62cm, height=5cm]{1-1,2-1}{decorative image}
+\ntaddtocover[vspace=1.2cm,  height=1.35cm, valign=c]{1-1,2-1}{title}
+\ntaddtocover[vspace=1.0cm,  height=1.05cm]{1-1,2-1}{author name}
+\ntaddtocover[vspace=1.7cm,  height=3.0cm, valign=t]{1-1}{advisers}
+\ntaddtocover[vspace=1,      height=1.6cm, valign=t]{1-1}{degree text}
+\ntaddtocover[vspace=1, height=1.25cm, valign=t,
+              status={working,provisional}]{1-1}{draft message}
+\ntaddtocover[vspace=1, height=1.25cm, valign=t,
+              status={final}]{1-1}{approved message}
+\ntaddtocover[vspace=1, height=8.5mm, valign=b]{1-1,2-1}{date}
+\end{verbatim}
+
+Each \texttt{height} reservation ensures that regardless of whether the
+optional subtitle, specialization line, or committee is present, the
+elements below remain at a predictable vertical position.
+
+
+%%=======================================================================
+\section{Quick Reference}
+\label{sec:covers_quickref}
+%%=======================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lp{8cm}}
+  \hline
+  \textbf{Command / Setting} & \textbf{Purpose} \\
+  \hline
+  \verb!\margin(cover,top):={...}!          & Cover text-area top margin \\
+  \verb!\margin(cover,<id>,top):={...}!     & Per-cover override \\
+  \verb!\thesiscover(<id>,bgcolor):={...}!  & Page background colour \\
+  \verb!\thesiscover(<id>,image):={...}!    & Full-page background image \\
+  \verb!\thesiscover(<id>,textcolor):={...}!& Default text colour \\
+  \verb!\ntaddtocover[attrs]{ids}{code}!    & Register a text box element \\
+  \verb!\ntaddtocover[tikz]{ids}{code}!     & Register TikZ overlay code \\
+  \verb!\ntAddToCoverTikz<cmd>[opts](!…\verb!){ids}{code}! & Register a TikZ node/command \\
+  \verb!\NTAddToHook{cover/<id>/pre}{...}!  & Inject code before a cover \\
+  \verb!\debuggrid[color]!                  & Render a measurement grid \\
+  \verb!\ntsetup{debug={cover}}!            & Enable cover debug mode \\
+  \verb!python .Build/build.py ... --mode 2! & Build cover pages only \\
+  \hline
+\end{tabular}
+\end{center}
