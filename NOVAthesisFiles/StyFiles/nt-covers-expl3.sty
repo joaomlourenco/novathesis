@@ -22,7 +22,10 @@
 \dim_new:N \l_nt_covers_height_dim
 \tl_new:N  \l_nt_covers_tmp_tl
 \tl_new:N  \l_nt_covers_content_tl
-\tl_new:N  \l_nt_covers_tikz_overlay_tl
+\tl_new:N  \g_nt_covers_tikz_overlay_tl
+\bool_new:N \l_nt_covers_status_match_bool
+\bool_new:N \l_nt_covers_degree_match_bool
+\bool_new:N \l_nt_covers_defined_bool
 
 % Attributes for individual elements
 \keys_define:nn { nt/covers/element }
@@ -55,11 +58,11 @@
   }
 
 % Map for alignment macros
-\prop_new:N \l_nt_covers_align_map_prop
-\prop_put:Nnn \l_nt_covers_align_map_prop { c } { \centering }
-\prop_put:Nnn \l_nt_covers_align_map_prop { l } { \raggedright }
-\prop_put:Nnn \l_nt_covers_align_map_prop { r } { \raggedleft }
-\prop_put:Nnn \l_nt_covers_align_map_prop { j } { \null }
+\prop_new:N \g_nt_covers_align_map_prop
+\prop_gput:Nnn \g_nt_covers_align_map_prop { c } { \centering }
+\prop_gput:Nnn \g_nt_covers_align_map_prop { l } { \raggedright }
+\prop_gput:Nnn \g_nt_covers_align_map_prop { r } { \raggedleft }
+\prop_gput:Nnn \g_nt_covers_align_map_prop { j } { \null }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% INTERNAL HELPERS
@@ -100,24 +103,24 @@
     \bool_set_true:N \l_nt_covers_elem_newpar_bool
 
     \keys_set:nn { nt/covers/element } { #1 }
-    \bool_set_true:N \l_tmpa_bool % status match
-    \bool_set_true:N \l_tmpb_bool % degree match
+    \bool_set_true:N \l_nt_covers_status_match_bool % status match
+    \bool_set_true:N \l_nt_covers_degree_match_bool % degree match
 
     % Check status if specified
     \clist_if_empty:NF \l_nt_covers_elem_status_clist
       {
         \clist_if_in:NVF \l_nt_covers_elem_status_clist \@DOCSTATUS
-          { \bool_set_false:N \l_tmpa_bool }
+          { \bool_set_false:N \l_nt_covers_status_match_bool }
       }
 
     % Check degree if specified
     \clist_if_empty:NF \l_nt_covers_elem_degree_clist
       {
         \clist_if_in:NVF \l_nt_covers_elem_degree_clist \@DOCTYPE
-          { \bool_set_false:N \l_tmpb_bool }
+          { \bool_set_false:N \l_nt_covers_degree_match_bool }
       }
 
-    \bool_if:nTF { \l_tmpa_bool && \l_tmpb_bool }
+    \bool_if:nTF { \l_nt_covers_status_match_bool && \l_nt_covers_degree_match_bool }
       { \prg_return_true: } { \prg_return_false: }
   }
 
@@ -170,7 +173,7 @@
                 \tl_if_empty:NF \l_nt_covers_elem_color_tl { \color{ \l_nt_covers_elem_color_tl } }
 
                 % Apply alignment
-                \prop_get:NVN \l_nt_covers_align_map_prop \l_nt_covers_elem_halign_tl \l_nt_covers_tmp_tl
+                \prop_get:NVN \g_nt_covers_align_map_prop \l_nt_covers_elem_halign_tl \l_nt_covers_tmp_tl
                 \l_nt_covers_tmp_tl
 
                 % Insert code
@@ -425,12 +428,12 @@
 
 \NewDocumentCommand{\ifcoverdefined} { O{1-1} m m }
   {
-    \bool_set_false:N \l_tmpa_bool
-    \prop_if_in:NnT \g_nt_covers_content_prop { #1 } { \bool_set_true:N \l_tmpa_bool }
-    \prop_if_in:NnT \g_nt_covers_tikz_prop { #1 } { \bool_set_true:N \l_tmpa_bool }
+    \bool_set_false:N \l_nt_covers_defined_bool
+    \prop_if_in:NnT \g_nt_covers_content_prop { #1 } { \bool_set_true:N \l_nt_covers_defined_bool }
+    \prop_if_in:NnT \g_nt_covers_tikz_prop { #1 } { \bool_set_true:N \l_nt_covers_defined_bool }
 
     % Also check legacy thesiscover memory with full hierarchy
-    \bool_if:NF \l_tmpa_bool
+    \bool_if:NF \l_nt_covers_defined_bool
       {
         \datamatchtf{ \l_nt_covers_tmp_tl }{thesiscover}(
           {\@DOCTYPE,\@DEGREEACR,#1,bgcolor},
@@ -457,10 +460,10 @@
           {\@DOCCLASS,#1,image},
           {#1,image},
           {image}
-        ) { \bool_set_true:N \l_tmpa_bool } { }
+        ) { \bool_set_true:N \l_nt_covers_defined_bool } { }
       }
 
-    \bool_if:NTF \l_tmpa_bool { #2 } { #3 }
+    \bool_if:NTF \l_nt_covers_defined_bool { #2 } { #3 }
   }
 
 \ExplSyntaxOff
