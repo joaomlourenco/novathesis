@@ -17,6 +17,7 @@
 %% RESOURCES & ENGINES (Expl3 & UTILITIES)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Convenience alias: executes #1 for XeTeX/LuaTeX, #2 for pdfTeX
 \newcommand{\ifxeorlua}[2]{\iftutex#1\else#2\fi}
 
 % --------------------------------------------------------
@@ -67,7 +68,7 @@
     {
       \tl_set:Ne \l__nt_titlecase_head_tl { \tl_head:N #1 }
       \tl_set:Ne \l__nt_titlecase_tail_tl { \tl_tail:N #1 }
-      \tl_set:Ne #1 { \exp_not:N \MakeUppercase { \l__nt_titlecase_head_tl } \l__nt_titlecase_tail_tl }
+      \tl_set:Ne #1 { \exp_not:N \ToUppercase { \l__nt_titlecase_head_tl } \l__nt_titlecase_tail_tl }
     }
  }
 
@@ -84,9 +85,7 @@
     \tl_use:N \l_tmpa_tl
   }
 
-%=======================================================================
-% \IfBeginsWithAnyOf {text} {comma_sep_list_of_prefixes} {true} {false}
-%=======================================================================
+% ── \IfBeginsWithAnyOf{text}{prefix_list}{true}{false} ────────────────
 
 % 1. Create Variables
 \int_new:N \l_check_len_int
@@ -135,10 +134,7 @@
 
 
 
-%=======================================================================
-% \AddValidProcessor {univ[/school]} {comma_sep_list_of_processors}
-% \ValidateLtxProcessor {univ} {school} {degree}
-%=======================================================================
+% ── \AddValidProcessor{key}{engines} / \ValidateLtxProcessor{u}{s}{d} ─
 
 % ---------------------------------------------------------
 % 1. Variables and Data Storage
@@ -165,7 +161,7 @@
   }
 
 % ---------------------------------------------------------
-% 2. User Interface to Add Rules (Replament for \validprocessor)
+% 2. User Interface to Add Rules (replacement for \validprocessor)
 % ---------------------------------------------------------
 
 % Syntax: \AddValidProcessor{key}{list,of,engines}
@@ -244,11 +240,10 @@
 
 
 
-% =========================================================
-% Process multiple files
-% starred (*) processes all that exist
-% non-starred stops on first sucess
-% =========================================================
+% ── File existence utilities ───────────────────────────────────────────
+% \IfFileExistsInDirsTF, \IfFileExistsCase, \IfFontExistsCase,
+% \InputIfFileExistsInDirsTF — starred (*) processes all matches;
+% non-starred stops on first success
 
 \bool_new:N \l_file_found_bool
 \tl_new:N \l_file_action_tl
@@ -456,14 +451,15 @@
 
 \ExplSyntaxOff
 
+% ── Abstract order accumulator ────────────────────────────────────────
+% \abstractorder{lang=order} settings are accumulated in
+% \@nt@saveabstractorder and then processed once by \@setabstractorder.
 \def\@nt@saveabstractorder{}
 \newcommand{\@setabstractorder}{%
-  % \typeout{SAVEABSORDER=[\@nt@saveabstractorder]}\SAVEABSORDER%
   \StrGobbleRight{\@nt@saveabstractorder}{1}[\@nt@saveabstractorder]%
   \@for\nt@tmpi:=\@nt@saveabstractorder\do{%
     \StrCut{\nt@tmpi}{=}\@nt@key\@nt@val%
     \IfStrEq{\@nt@val}{}{\edef\@nt@val{\@nt@key}\def\@nt@key{\@LANG@MAIN}}{}%
-    % \typeout{SETABSORDER (\@nt@key):=[\@nt@val]}\SETABSORDER%
     \abstractorder(\@nt@key):={\@nt@val}%
   }%
 }
@@ -585,17 +581,11 @@
   media/.new choice             = {screen, paper},
   spine/layout/.new choice      = {unset, trim, false},
   spine/width/.new length       = {0pt},
-  % abstract/deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
-  % abstract/theorder/.new list   = {unset},
   abstractorder/.new cmd        = {\appto\@nt@saveabstractorder{{#1},}},%
-  % SCHOOL
   schoolgiven/.new value        = {},
   school/.new cmd               = {\optionsalso{/novathesis/schoolgiven=#1}%
-                                   % \typeout{XXX=#1}\XXXX
                                    \StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR
-                                   % \typeout{XXX=\@UNIV/\@SCHL/\@DEGREEACR}\XXXX
                                    \IfStrEq{\@DEGREEACR}{}{\def\@DEGREEACR{\option{/novathesis/doctype}}}{}
-                                   % \typeout{XXX=\@UNIV/\@SCHL/\@DEGREEACR}\XXXX
                                   },
   school                        = nova/fct,
   % STYLES
@@ -662,7 +652,7 @@
 % 1. Define the box register
 \newsavebox{\novathesisbox}
 
-% 2. Sane the image into the box (do this once)
+% 2. Save the image into the box (do this once)
 % We calculate the height based on the current font at the time of definition
 \sbox{\novathesisbox}{%
   \includegraphics[height=1.1\fontcharht\font`A, vshift=-0.35pt]{\DIRIMAGES/novathesis-text}%
@@ -881,14 +871,17 @@
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% INTERNAL OPTIONS & LANGUAGE MAPS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \options{/@nt/.new family,
   lang/loaded/.new list={},
-  % lang/shorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish, gr=greek},
   fontenc/.new choice={cat=T1, cz=T1, de=T1, dk=T1, en=T1, es=T1, fr=T1, gr=LGR, %
                        it=T1, nl=T1, pl=T1, pt=T1, sk=T1, uk=T2A, zhs=T1, zht=T1},
 }
 
 
+% LangLong: maps 2/3-letter language codes to babel language names
 \NewMemStore{LangLong}
 \SetLangLong(cat):={catalan}
 \SetLangLong(cz):={czech}
@@ -907,10 +900,6 @@
 \SetLangLong(zhs):={zh-Hans}
 \SetLangLong(zht):={zh-Hant}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% PERSON & FILE MANAGEMENT
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE FOLDERS PER CLASS
@@ -974,7 +963,6 @@
   %                      g=guests
   % #3={m,f}
   % #4={person name, position, etc}
-  % \typeout{NTADDPERSON 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\NTADDPERSON%
   \noexpandarg
   \StrCut{#4}{,}\@nt@personname\@nt@dummy%was xStrCut
   \options{
@@ -983,7 +971,6 @@
       /@nt/#1/#2/gender/.newpush={#3},
       /@nt/#1/#2/pair/.expanded/.newpush={#3/\@nt@personname},
   }%
-  % \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
   \fullexpandarg
 }
 
@@ -1015,7 +1002,6 @@
   %         #2=family {quote, abstract, chapter, etc} or {author, adviser, committee}
   %         #3=[file-lang | sub-family | key] (OPTIONAL)
   %         #4=filename
-  % \typeout{[#1] [#2] [#3] [#4]}\ADDTOLIST
   \ifoptioncontains{/@nt/listtypes}{#2}{}
       {\options{/@nt/listtypes/.newpush={#2}}}
   \IfBeginsWithAnyOf{#4}{/,.}
@@ -1023,7 +1009,6 @@
       {\options{/@nt/folders=#2}%
        \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}}
   \@for\nt@tmpi:=\expanded{#3}\do{%
-    % \typeout{NT ADDTOLIST [#1] [#2] [\nt@tmpi] [\@nt@filewithpath]}\ADDTILIST%
     \options{/@nt/#1/#2/\nt@tmpi/.expanded/.newpush={\@nt@filewithpath}}%
   }%
 }
@@ -1046,26 +1031,23 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ASSOCARRAY
+%% DATA INITIALIZATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\initmemory}[2][\thenotdefined(\@LANG@COVER)]{%
   \optionlistdo{/novathesis/lang/all}{\csuse{#2}(##1):={#1}}}
 
 
-% For PDF bookmakrs
+% For PDF bookmarks
 \newdata{keywordsblockpre}
 \newdata{keywordsblockpost}
 \newdata{keywordssep}
-% \newdata{keywordsboxlen}
 \newdata{keywordsstringprefix}
 \newdata{keywordsstringsuffix}
 \newdata{keywordsstringfont}
 \keywordsblockpre()={\bigskip\noindent}
 \keywordsstringsuffix()={:\enspace}
 \keywordsstringfont()={\bfseries}
-% \keywordssep()={\ \textbf{\Large\textperiodcentered}\ }
 \keywordssep()={ {\textperiodcentered} }
-% \keywordsboxlen()={\textwidth-\widthof{\usebox{\keywordsstringbox}}}
 
 \newdata{sponsor}
 
@@ -1141,7 +1123,6 @@
 
 \newdata{university}
 \newdata{school}
-% \newdata{department}
 
 \newdata{doctitle}
 
@@ -1182,12 +1163,6 @@
     \NTSetup[spine] {#2}%
   }%
 }
-
-
-% --------------------------------------------------------
-% Pass the remaining options to memoir
-% \letoptionlist{/options/remaining}\nt@remaining
-% \PassOptionsToClass{\nt@remaining}{memoir}
 
 
 
