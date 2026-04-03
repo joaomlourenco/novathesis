@@ -62,14 +62,14 @@
 %% CORE PACKAGES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage[table,svgnames]{xcolor} % Must be loaded first to avoid option clashes
-\RequirePackage{iftex}
-\RequirePackage{ifplatform}
-\RequirePackage{xfor}
-\RequirePackage{etoolbox}
-\RequirePackage{xstring}
-\RequirePackage{catchfile}
-\RequirePackage{varwidth}
-\RequirePackage{calc}
+\RequirePackage{iftex}       % \ifpdftex, \ifxetex, \ifluatex, \iftutex …
+\RequirePackage{ifplatform}  % \ifwindows, \iflinux, \ifmacosx
+\RequirePackage{xfor}        % Extended \foreach loop (\xfor, \xforeach)
+\RequirePackage{etoolbox}    % Programmer's toolbox: hooks, patching, booleans
+\RequirePackage{xstring}     % String manipulation (\StrBehind, \StrCut, …)
+\RequirePackage{catchfile}   % Read a file's contents into a macro
+\RequirePackage{varwidth}    % Variable-width minipage environment
+\RequirePackage{calc}        % Arithmetic in length/counter expressions
 
 % Add StyFiles and Strings to \input search path so bare filenames work
 \xappto\input@path{{\DIRSTYFILES/}{\DIRSTRINGS/}}
@@ -85,13 +85,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FONTS & ENCODINGS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{microtype}
+\RequirePackage{microtype}  % Microtypography: character protrusion & font expansion
 
 \iftutex
-  \RequirePackage[no-math]{fontspec}
+  \RequirePackage[no-math]{fontspec}  % OpenType font selection (XeLaTeX / LuaLaTeX)
   \defaultfontfeatures{Ligatures=TeX}
 \else
-  \RequirePackage[T1]{fontenc}
+  \RequirePackage[T1]{fontenc}  % 256-glyph output encoding (pdfLaTeX)
 \fi
 
 % Preferred sans-serif stack: Inter → Helvet → Gillius2 → LaTeX default
@@ -111,7 +111,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LANGUAGE & LOCALIZATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage[english]{babel}
+\RequirePackage[english]{babel}  % Multilingual support; active language switched later
 
 % Provide fallback stubs for older babel versions that lack these commands
 \AtBeginDocument{%
@@ -129,9 +129,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% GRAPHICS & TABLES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{tikz}
-\RequirePackage[nobeamer]{graphbox} % Loads graphicx
-\RequirePackage{colortbl}
+\RequirePackage{tikz}     % PGF/TikZ drawing engine (used by cover renderer)
+\RequirePackage[nobeamer]{graphbox} % Loads graphicx + \includegraphics[align=…]
+\RequirePackage{colortbl} % Coloured table cells (\columncolor, \rowcolor, …)
 \RequirePackage{xurl}               % Loads 'url' with improved line-breaking
 
 \expandafter\graphicspath\expandafter{\expandafter{\DIRFIGURES/}}
@@ -158,8 +158,8 @@
 % so that school-specific options set via \ntbibsetup take full effect.
 % imakeidx must be loaded before hyperref.
 \NTAddToHook{afterloading/schoolconfig}{%
-  \RequirePackage{biblatex}
-  \RequirePackage{imakeidx}
+  \RequirePackage{biblatex}   % Modern bibliography engine (biber backend)
+  \RequirePackage{imakeidx}   % Multiple-index support; must load before hyperref
 }
 
 
@@ -174,7 +174,7 @@
     pdfdisplaydoctitle=true,
     unicode=true,
   }{hyperref}
-  \RequirePackage{hyperref}
+  \RequirePackage{hyperref}              % PDF hyperlinks, metadata & bookmarks
   \RequirePackage{fix-hyperref}       % Patches hyperref immediately after loading
   \RequirePackage{bookmark}           % Extends hyperref bookmarks
 
@@ -192,8 +192,8 @@
     nostyles,
     automake,
   }{glossaries-extra}
-  \RequirePackage{glossaries-extra}
-  \RequirePackage{glossary-xltabular}
+  \RequirePackage{glossaries-extra}   % Glossaries, acronyms & symbols (extends glossaries)
+  \RequirePackage{glossary-xltabular} % xltabular-based glossary layout style
 
   % xindy language support for Greek
   \ifoptioncontains{/novathesis/lang/extra}{gr}
@@ -232,5 +232,5 @@
 %% AI DISCLOSURE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtEndPreamble{%
-  \RequirePackage[autobib=true,nocite=false]{aidisclose2}
+  \RequirePackage[autobib=true,nocite=false]{aidisclose2}  % AI disclosure watermark / statement
 }
