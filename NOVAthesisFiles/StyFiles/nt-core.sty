@@ -1,0 +1,1195 @@
+%!TEX root=template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — nt-core.sty
+%% ----------------------------------------------------------------------------
+%%
+%% Version 7.10.7 (2026-03-25)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%% Departamento de Informática (www.di.fct.unl.pt)
+%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Universidade NOVA de Lisboa (www.unl.pt)
+%%
+%% Core engine: expl3 utilities, data management, template options, macros, person/file management
+%% ----------------------------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% RESOURCES & ENGINES (Expl3 & UTILITIES)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\ifxeorlua}[2]{\iftutex#1\else#2\fi}
+
+% --------------------------------------------------------
+% Change main font size on the fly
+% --------------------------------------------------------
+\newcommand{\setmemoirfontsize}[1]{\input{mem#1.clo}}
+
+
+% --------------------------------------------------------
+% Date and month
+% --------------------------------------------------------
+% \babelmonthname{<1..12>} → localized month name (current babel language)
+\newcommand{\babelmonthname}[1]{%
+  \csname month\romannumeral\numexpr#1\relax name\endcsname
+}
+
+
+% --------------------------------------------------------
+% Check if a list file is empty
+% --------------------------------------------------------
+\newread\nt@tempread
+\newcommand*{\nt@iflistempty}[3]{%
+  % #1 = extension (e.g., lof, lot, lol)
+  % #2 = empty-code
+  % #3 = non-empty-code
+  \IfFileExists{\jobname.#1}{%
+    \openin\nt@tempread=\jobname.#1\relax
+    \ifeof\nt@tempread
+      \closein\nt@tempread
+      #2%
+    \else
+      \closein\nt@tempread
+      #3%
+    \fi
+  }{%
+    #2%
+  }%
+}
+
+
+\ExplSyntaxOn
+% Robust titlecase function: modifies the TL variable in-place
+\tl_new:N \l__nt_titlecase_head_tl
+\tl_new:N \l__nt_titlecase_tail_tl
+\cs_new_protected:Nn \nt_titlecase_first:N
+ {
+   \tl_if_empty:NF #1
+    {
+      \tl_set:Ne \l__nt_titlecase_head_tl { \tl_head:N #1 }
+      \tl_set:Ne \l__nt_titlecase_tail_tl { \tl_tail:N #1 }
+      \tl_set:Ne #1 { \exp_not:N \MakeUppercase { \l__nt_titlecase_head_tl } \l__nt_titlecase_tail_tl }
+    }
+ }
+
+\DeclareExpandableDocumentCommand{\ToUppercase}{ m }
+  {
+    \text_uppercase:n { #1 }
+  }
+
+  
+\DeclareDocumentCommand {\MakeTitlecase} { m }
+  {
+    \tl_set:Ne \l_tmpa_tl { #1 }
+    \nt_titlecase_first:N \l_tmpa_tl
+    \tl_use:N \l_tmpa_tl
+  }
+
+%=======================================================================
+% \IfBeginsWithAnyOf {text} {comma_sep_list_of_prefixes} {true} {false}
+%=======================================================================
+
+% 1. Create Variables
+\int_new:N \l_check_len_int
+\str_new:N \l_slice_str
+\tl_new:N \l_clean_input_tl
+\bool_new:N \l_match_found_bool
+
+% 2. Generate the missing variant
+%    This forces \str_range to accept an expanded ('e') first argument.
+\cs_generate_variant:Nn \str_range:nnn { enn }
+
+\NewDocumentCommand{\IfBeginsWithAnyOf}{ m m +m +m }
+ {
+  % Step A: Store and clean the input string
+  \tl_set:Nn \l_clean_input_tl { #1 }
+  \tl_trim_spaces:N \l_clean_input_tl
+  
+  \bool_set_false:N \l_match_found_bool
+  
+  % Step B: Iterate through prefixes
+  \clist_map_inline:nn { #2 }
+   {
+    % Get length of the current prefix (##1)
+    \int_set:Nn \l_check_len_int { \str_count:n { ##1 } }
+    
+    % Step C: Extract substring
+    % We use the generated ':enn' variant to expand \l_clean_input_tl
+    % into actual text (e.g., "Apple") BEFORE slicing.
+    \str_set:Nx \l_slice_str 
+      { 
+        \str_range:enn { \l_clean_input_tl } { 1 } { \l_check_len_int } 
+      }
+    
+    % Step D: Compare
+    \exp_args:No \str_if_eq:nnTF \l_slice_str { ##1 }
+     {
+      \bool_set_true:N \l_match_found_bool
+      \clist_map_break: 
+     }
+     { }
+   }
+   
+  \bool_if:NTF \l_match_found_bool { #3 } { #4 }
+ }
+
+
+
+
+%=======================================================================
+% \AddValidProcessor {univ[/school]} {comma_sep_list_of_processors}
+% \ValidateLtxProcessor {univ} {school} {degree}
+%=======================================================================
+
+% ---------------------------------------------------------
+% 1. Variables and Data Storage
+% ---------------------------------------------------------
+
+% Store the rules (Univ/School -> Allowed Engines)
+\prop_new:N \g_novathesis_proc_rules_prop
+
+% Store the current engine name (pdf, lua, or xe)
+\str_new:N \g_novathesis_current_engine_str
+\tl_new:N  \l_novathesis_found_rule_tl
+\bool_new:N \l_novathesis_rule_found_bool
+
+% Detect the current engine immediately
+\sys_if_engine_pdftex:T { \str_gset:Nn \g_novathesis_current_engine_str {pdf} }
+\sys_if_engine_luatex:T { \str_gset:Nn \g_novathesis_current_engine_str {lua} }
+\sys_if_engine_xetex:T  { \str_gset:Nn \g_novathesis_current_engine_str {xe} }
+
+% 3. Define the user-facing command
+\NewDocumentCommand \NTengineName {}
+  {
+    % Use \str_use:N to retrieve the content of the variable
+    \str_use:N \g_novathesis_current_engine_str \LaTeX{}
+  }
+
+% ---------------------------------------------------------
+% 2. User Interface to Add Rules (Replament for \validprocessor)
+% ---------------------------------------------------------
+
+% Syntax: \AddValidProcessor{key}{list,of,engines}
+\NewDocumentCommand{\AddValidProcessor}{ m m }
+  {
+    \prop_gput:Nnn \g_novathesis_proc_rules_prop { #1 } { #2 }
+  }
+
+% ---------------------------------------------------------
+% 3. The Main Validator
+% ---------------------------------------------------------
+
+% Message definition for the error
+\msg_new:nnnn { novathesis } { invalid-processor }
+  { Invalid~processor~for~"#1". }
+  { You~are~using~\g_novathesis_current_engine_str (la)tex,~but~"#1"~only~allows:~#2. }
+
+\NewDocumentCommand{\ValidateLtxProcessor}{ m m m }
+  {
+    % #1 = Univ, #2 = School, #3 = Degree
+
+    % Reset flags
+    \bool_set_false:N \l_novathesis_rule_found_bool
+
+    % -----------------------------------------------------
+    % A. Hierarchy Lookup (Univ/Sch/Deg -> Univ/Sch -> Univ)
+    % -----------------------------------------------------
+
+    % 1. Check Univ/School/Degree
+    \prop_get:NeNTF \g_novathesis_proc_rules_prop { #1/#2/#3 } \l_novathesis_found_rule_tl
+      { \bool_set_true:N \l_novathesis_rule_found_bool }
+      {
+        % 2. Check Univ/School
+        \prop_get:NeNTF \g_novathesis_proc_rules_prop { #1/#2 } \l_novathesis_found_rule_tl
+          { \bool_set_true:N \l_novathesis_rule_found_bool }
+          {
+            % 3. Check Univ
+            \prop_get:NnNTF \g_novathesis_proc_rules_prop { #1 } \l_novathesis_found_rule_tl
+              { \bool_set_true:N \l_novathesis_rule_found_bool }
+              {
+                % No rule found: Do nothing (Implicitly Valid)
+              }
+          }
+      }
+
+    % -----------------------------------------------------
+    % B. Validation Logic
+    % -----------------------------------------------------
+
+    \bool_if:NT \l_novathesis_rule_found_bool
+      {
+        % Check if the current engine is in the allowed list
+        \clist_if_in:NVF \l_novathesis_found_rule_tl \g_novathesis_current_engine_str
+          {
+            % ERROR: Engine not found in allowed list
+            \msg_error:nnxx { novathesis } { invalid-processor }
+              { #1/#2/#3 }
+              { \clist_use:Nn \l_novathesis_found_rule_tl { ,~ } }
+          }
+      }
+  }
+
+% ---------------------------------------------------------
+% 4. Helper: Print current processor name (The \pdfprocessor equivalent)
+% ---------------------------------------------------------
+\NewDocumentCommand{\PrintProcessorName}{ }
+  {
+    \str_case:Vn \g_novathesis_current_engine_str
+      {
+        {pdf} { pdf(La)\TeX }
+        {lua} { lua(La)\TeX }
+        {xe}  { Xe(La)\TeX }
+      }
+  }
+
+
+
+
+% =========================================================
+% Process multiple files
+% starred (*) processes all that exist
+% non-starred stops on first sucess
+% =========================================================
+
+\bool_new:N \l_file_found_bool
+\tl_new:N \l_file_action_tl
+\NewDocumentCommand{\IfFileExistsInDirsTF}{ s O{} m m m m }
+ {
+  \group_begin:
+    \tl_new:N \l_tmp_dir_tl
+    \tl_new:N \l_tmp_path_tl
+    \tl_new:N \l_tmp_last_char_tl
+    
+    
+    % Define an internal "action" function that takes one argument (#1)
+    % This makes the user's code (#5) act like a function body.
+    \cs_set:Npn \__file_user_action:n ##1 { #5 }
+    
+    \clist_map_inline:nn { #4 }
+     {
+      \tl_set:Nn \l_tmp_dir_tl { ##1 }
+      \tl_trim_spaces:N \l_tmp_dir_tl
+      
+      % Smart Slash Logic
+      \tl_if_empty:NF \l_tmp_dir_tl
+       {
+        \tl_set:Nx \l_tmp_last_char_tl { \tl_item:Nn \l_tmp_dir_tl { -1 } }
+        \str_if_eq:VnF \l_tmp_last_char_tl { / }
+         { \tl_put_right:Nn \l_tmp_dir_tl { / } }
+       }
+      
+      % CONSTRUCT FULL PATH: Prefix + Dir + Filename
+      \tl_set:Nx \l_tmp_path_tl { #2 \l_tmp_dir_tl #3 }
+      
+      \file_if_exist:nT { \l_tmp_path_tl }
+       {
+        \bool_gset_true:N \g_file_found_bool
+        
+        % EXECUTE: Pass the full path directly into the user action
+        \__file_user_action:n { \l_tmp_path_tl }
+        
+        \IfBooleanF { #1 } { \clist_map_break: }
+       }
+     }
+  \group_end:
+  
+  \bool_if:NF \g_file_found_bool { #6 }
+ }
+
+
+\NewDocumentCommand{\IfFileExistsCase}{ s O{} m m }
+  {
+    \clist_map_inline:nn { #3 }
+      {
+        % ##1 is {filepath}{action}
+        \__filecase_split_pair:nnn { #1 } { #2 } ##1
+      }
+    % Else branch
+    \bool_if:NF \l_file_found_bool { #4 }
+  }
+
+% #1: Starred status
+% #2: Prefix
+% #3: Filename
+% #4: Action
+\cs_new:Npn \__filecase_split_pair:nnn #1 #2 #3 #4 
+  {
+    % 1. Construct the full path
+    \tl_set:Nn \l_tmpa_tl { #2 #3 }
+    
+    \file_if_exist:nT { \l_tmpa_tl }
+      {
+        \bool_set_true:N \l_file_found_bool
+        
+        \tl_set_eq:NN \l_tmpb_tl \l_tmpa_tl
+        
+        % Regex: Match a dot, followed by non-dots and non-slashes, until end of string.
+        % This ensures we don't accidentally match a dot in a directory name (e.g. "ver.1/img").
+        \regex_replace_once:nnN { \.[^./]*\Z } { } \l_tmpb_tl
+
+        \xdef\ntfoundpath{\l_tmpa_tl}
+        \xdef\ntfoundpathnoext{\l_tmpb_tl}
+        
+        % 3. Define the internal action to accept TWO arguments:
+        %    ##1 = Full Path (e.g., images/logo.png)
+        %    ##2 = No Extension (e.g., images/logo)
+        \cs_set:Npn \__filecase_do_action:nn ##1 ##2 { #4 }
+        
+        % 4. Execute with both variants
+        \__filecase_do_action:nn { \l_tmpa_tl } { \l_tmpb_tl }
+        
+        % Break if not starred
+        \bool_if:NF #1 { \clist_map_break: }
+      }
+  }
+
+
+\NewDocumentCommand{\IfFontExistsCase}{ s m m }
+  {
+    \bool_set_false:N \l_tmpa_bool
+    \clist_map_inline:nn { #2 }
+      {
+        % Check if the command \IfFontExistsTF exists (provided by fontspec)
+        \cs_if_exist:cTF { IfFontExistsTF }
+          {
+            \IfFontExistsTF { ##1 }
+              {
+                \bool_set_true:N \l_tmpa_bool
+                % Execute the code #3, passing the found font name (##1)
+                #3 { ##1 }
+                % If starred, break the loop after the first match
+                \IfBooleanT { #1 } { \clist_map_break: }
+              }
+              { } % Do nothing if font doesn't exist
+          }
+          {
+            % Fallback if fontspec isn't loaded or engine is pdfLaTeX
+            \typeout{NOVAthesis:~fontspec~not~loaded.~Skipping~font~check~for~##1.}
+          }
+      }
+    
+    % Optional: warning if NO fonts from the list were found
+    \bool_if:NF \l_tmpa_bool 
+      { \typeout{NOVAthesis:~Warning:~No~fonts~from~the~list~{#2}~were~found.} }
+  }
+
+
+% --------------------------------------------------------
+% Input the file from the first dir list (if any)
+% #1 = file name
+% #2 = list of directories
+% #3 = code if succeed [OPTIONAL]
+% #4 = code if fails [OPTIONAL]
+
+
+% 1. Create variables
+
+\NewDocumentCommand{\InputIfFileExistsInDirsTF}{ m m +m +m }
+  {
+    \bool_set_false:N \l_file_found_bool
+
+    % Iterate through directories (#2)
+    \clist_map_inline:nn { #2 }
+      {
+        % Check if 'directory/filename' exists
+        \file_if_exist:nTF { ##1 / #1 }
+          {
+            % A. Store the full path in the variable
+            \tl_set:Nn \l_found_path_tl { ##1 / #1 }
+
+            % B. Input the file
+            \file_input:n { ##1 / #1 }
+
+            % C. Execute Success Code (#3)
+            #3
+
+            % D. Mark found and break loop
+            \bool_set_true:N \l_file_found_bool
+            \clist_map_break:
+          }
+          {}
+      }
+
+    % Handle 'Not Found' case
+    \bool_if:NF \l_file_found_bool
+      { #4 }
+  }
+
+
+
+
+% 1. Define the internal logic (accepts the argument as-is)
+\cs_new_protected:Nn \__user_chapter_logic:n
+ {
+  % Note: Inside ExplSyntaxOn, spaces are ignored, so we don't need % at EOL
+  \clearforchapter
+  
+  % Create the anchor. 
+  % #1 is now the fully expanded string (e.g., "Project Alpha").
+  \hypertarget{bm#1}{}
+  
+  % Create the bookmark using the same ID
+  \bookmark[dest=bm#1]{#1}
+  
+  % Reset spacing/formatting
+  \noindent \ignorespaces
+ }
+
+% 2. Generate the variant that forces expansion ('e' = expand fully)
+\cs_generate_variant:Nn \__user_chapter_logic:n { e }
+
+% 3. User Interface
+\NewDocumentCommand{\ChapterNoTitle}{ m }
+ {
+  % Call the expanded variant.
+  % This turns \ChapterNoTitle{\myMacro} into \__user_chapter_logic:n {Expanded Value}
+  \__user_chapter_logic:e { #1 }
+ }
+
+\NewDocumentCommand{\UniquifyList}{m o}
+  {
+    \clist_set:Ne \l_tmpa_clist {#1}
+    \clist_remove_duplicates:N \l_tmpa_clist
+    \IfValueTF{#2}
+      {\tl_set:Ne #2 {\clist_use:Nn \l_tmpa_clist {,}}}
+      {\clist_use:Nn \l_tmpa_clist {,}}
+  }
+
+\ExplSyntaxOff
+
+\def\@nt@saveabstractorder{}
+\newcommand{\@setabstractorder}{%
+  % \typeout{SAVEABSORDER=[\@nt@saveabstractorder]}\SAVEABSORDER%
+  \StrGobbleRight{\@nt@saveabstractorder}{1}[\@nt@saveabstractorder]%
+  \@for\nt@tmpi:=\@nt@saveabstractorder\do{%
+    \StrCut{\nt@tmpi}{=}\@nt@key\@nt@val%
+    \IfStrEq{\@nt@val}{}{\edef\@nt@val{\@nt@key}\def\@nt@key{\@LANG@MAIN}}{}%
+    % \typeout{SETABSORDER (\@nt@key):=[\@nt@val]}\SETABSORDER%
+    \abstractorder(\@nt@key):={\@nt@val}%
+  }%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DATA MANAGEMENT (MEMORY)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------
+% Search if a data/memory is defined and returns value
+
+\ExplSyntaxOn
+
+% Define a boolean to track if a match was found inside the loop
+\bool_new:N \l__memory_match_found_bool
+
+% Command: \datamatchtf
+% Syntax:  \datamatchtf{\match}{MEMORYDATA}(list,of,keys){TRUE}{FALSE}
+%
+% #1: The macro to store the result (\match)
+% #2: The memory data container name (MEMORYDATA)
+% #3: The list of keys to search (in parentheses)
+% #4: True branch code
+% #5: False branch code
+
+\NewDocumentCommand{\datamatchtf}{ s m m r() +m +m }
+  {
+    % Reset the found boolean to false at the start
+    \bool_set_false:N \l__memory_match_found_bool
+
+    % Iterate through the comma-separated list of keys (#4 now, due to argument shift).
+    \exp_args:Ne \clist_map_inline:nn { #4 }
+      {
+        % Initialize #2 to empty
+        \IfBooleanTF{#1}
+          { 
+            % STARRED: #2 is a NAME (e.g., "myVar"). 
+            % Use \tl_set:cn to construct the csname from the string.
+            \tl_set:ce { #2 } { } 
+          }
+          { 
+            % NON-STARRED: #2 is a MACRO (e.g., \myVar). 
+            % Use \tl_set:Nn to set it directly.
+            \tl_set:Ne #2 { } 
+          }
+        
+        % Construct the control sequence name: \@<MEMORYDATA>@<key>@memory
+        % Note: Using #3 for the memory namespace ID
+        \cs_if_exist:cT { @#3@ ##1 @memory }
+          {
+            % If the data slot exists:
+            % 1. Set the user's variable (#2) to the content of that slot.
+            
+            \IfBooleanTF{#1}
+              { 
+                % STARRED: #2 is a NAME (e.g., "myVar"). 
+                % Use \tl_set:cn to construct the csname from the string.
+                \tl_set:ce { #2 } { \use:c { @#3@ ##1 @memory } } 
+              }
+              { 
+                % NON-STARRED: #2 is a MACRO (e.g., \myVar). 
+                % Use \tl_set:Nn to set it directly.
+                \tl_set:Ne #2 { \use:c { @#3@ ##1 @memory } } 
+              }
+
+            % 2. Mark that we found a match
+            \bool_set_true:N \l__memory_match_found_bool
+
+            % 3. Break the loop immediately
+            \clist_map_break:
+          }
+      }
+
+    % Execute the appropriate branch based on whether a match was found
+    % True branch is #5, False branch is #6
+    \bool_if:NTF \l__memory_match_found_bool
+      { #5 } % Match found
+      { #6 } % No match found
+  }
+
+\NewDocumentCommand{\datamatch}{ s m m r() }
+  {
+    % Argument mapping:
+    % #1 = Star (boolean)
+    % #2 = Macro to set / Name of macro (if starred)
+    % #3 = Data ID (memory context)
+    % #4 = List of keys (inside parens)
+
+    \IfBooleanTF{#1}
+      { 
+        % Starred version: call \datamatchtf*
+        \datamatchtf* { #2 } { #3 } ( #4 ) 
+      }
+      { 
+        % Non-starred version: call \datamatchtf
+        \datamatchtf  { #2 } { #3 } ( #4 ) 
+      }
+      % --- True Branch (Match Found) ---
+      { } 
+      % --- False Branch (No Match) ---
+      { 
+        % Note: In expl3, spaces are ignored, so we use ~ for spaces in text.
+        \ClassError{novathesis}
+          { Could~not~find~“#3”~defined~with~any~of~“(#4)”! }
+          { }
+      }
+  }
+
+\ExplSyntaxOff
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TEMPLATE OPTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\options{/novathesis/.new family,
+  % DOCUMENT
+  doctype/.new choice           = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
+  docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
+  media/.new choice             = {screen, paper},
+  spine/layout/.new choice      = {unset, trim, false},
+  spine/width/.new length       = {0pt},
+  % abstract/deforder/.new choice = {default={\@LANG@MAIN,en}, en={en,pt}},
+  % abstract/theorder/.new list   = {unset},
+  abstractorder/.new cmd        = {\appto\@nt@saveabstractorder{{#1},}},%
+  % SCHOOL
+  schoolgiven/.new value        = {},
+  school/.new cmd               = {\optionsalso{/novathesis/schoolgiven=#1}%
+                                   % \typeout{XXX=#1}\XXXX
+                                   \StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR
+                                   % \typeout{XXX=\@UNIV/\@SCHL/\@DEGREEACR}\XXXX
+                                   \IfStrEq{\@DEGREEACR}{}{\def\@DEGREEACR{\option{/novathesis/doctype}}}{}
+                                   % \typeout{XXX=\@UNIV/\@SCHL/\@DEGREEACR}\XXXX
+                                  },
+  school                        = nova/fct,
+  % STYLES
+  style/chapter/.new value      = bar,
+  style/font/.new value         = newpx,
+  style/font/attributes/.new value = {},
+  style/url/.new cmd            = {\AfterPreamble{\urlstyle{#1}}},
+  color/links/.new cmd          = {\@ifpackageloaded{hyperref}%
+                                            {\hypersetup{allcolors=#1}}%
+                                            {\PassOptionsToPackage{allcolors=#1}{hyperref}}},
+  color/glossaries/gls/.new cmd             = {\AtEndPreamble{%\textcolor{#1}{##1}
+                                      \IfStrEq{#1}{None}{%
+                                          \let\@glslink\glsplainhyperlink%
+                                      }{%
+                                          \renewcommand*{\glstextformat}[1]{\textcolor{#1}{##1}}%
+                                      }%
+                                   }},
+  % LANGUAGES
+  lang/extra/.new list          = {},
+  lang/all/.new list            = {cat,cz,de,dk,en,es,fr,gr,it,nl,pl,pt,sk,uk},
+  lang/main/.copy choice        = {/novathesis/lang/all},
+  lang/cover/.copy choice       = {/novathesis/lang/all},
+  lang/copyright/.copy choice   = {/novathesis/lang/all},
+  lang/.new cmd                 = {\optionsalso{/novathesis/lang/main=#1,
+                                                /novathesis/lang/cover=#1,
+                                                /novathesis/lang/copyright=#1}},
+  lang                          = en,
+  % PRINT ON/OFF
+  print/aidisclosure/.new value  = aidisclose, % use '7-aidisclose.tex' + 'aidisclose' package
+  print/committee/.new toggle   = false,
+  print/adviser/.new toggle     = true,    % fake option - adviser should always be printed
+  print/otherlists/.new value   = frontmatter,  % print other lists (lof, lof, lol, …) in the front matter
+  print/glossaries/.new value   = frontmatter,  % print glossaries in the front matter
+  print/frontpage/.new toggle   = false,
+  print/copyright/.new toggle   = true,
+  print/timestamp/.new toggle   = true,
+  print/index/.new toggle       = false,
+  print/webography/.new value   = {},      % empty means do not make a separate webography
+  print/statement/.new toggle   = false,
+  print/sdgs/list/.new list     = {},      % {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}
+  print/sdgs/type/.new choice   = {inverted=i, normal=n, mono=m},   % any measure
+  print/sdgs/size/.new dim      = {2cm},   % any measure
+  print/sdgs/hspace/.new dim    = {5mm},   % any measure
+  print/sdgs/vspace/.new dim    = {4mm},   % any measure
+  % MISC
+  glossaries/list/reverse/.new toggle    = true,
+  glossaries/layout/.new value  = {lX},
+  tocintoc/.new toggle          = true,
+  % NUMBERING
+  numbering/floats/.new choice  = {chapter, sequential},
+  numbering/floats              = chapter,
+  % DEBUG
+  debug/.new list               = {},         % cover, index
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% GENERAL PURPOSE MACROS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------
+% The NOVAthesis logo
+% --------------------------------------------------------
+% 1. Define the box register
+\newsavebox{\novathesisbox}
+
+% 2. Sane the image into the box (do this once)
+% We calculate the height based on the current font at the time of definition
+\sbox{\novathesisbox}{%
+  \includegraphics[height=1.1\fontcharht\font`A, vshift=-0.35pt]{\DIRIMAGES/novathesis-text}%
+}
+
+% 3. Define the macros to use the box
+\def\novathesisimg{\usebox{\novathesisbox}}
+\def\novathesistxt{\textsl{novathesis}}
+
+% 4. Select the output method
+% Use \providebox or similar if needed, but \newcommand works here
+\iftutex
+  \newcommand{\novathesis}{\novathesisimg}
+\else
+  \newcommand{\novathesis}{\novathesistxt}
+\fi
+
+
+% --------------------------------------------------------
+% Define something (except counters) if undefined
+% --------------------------------------------------------
+\newcommand*{\defifundef}[2]{\ifundef{#1}{#2{#1}}{}}
+
+% --------------------------------------------------------
+% Variant of \@for with an optional final argument, that is
+% executed iif the loop is not interrupted
+% --------------------------------------------------------
+\def\ntforbreak{\@endfortrue}
+\long\def\ntfor#1:=#2\do#3{\@ifnextchar[{\ntfor@i#1:=#2\do#3}{\ntfor@i#1:=#2\do#3[]}}
+\long\def\ntfor@i#1:=#2\do#3[#4]{%
+  \@for#1:={#2}\do{\xdef#1{#1}#3}%
+  \if@endfor\else#4\fi
+}
+
+
+
+\ExplSyntaxOn
+
+% --------------------------------------------------------
+% Automatically download necessary fonts if using lualatex
+% --------------------------------------------------------
+
+\NewDocumentCommand{\ntcheckfonts}{
+    O{ttf}
+    m
+    m
+    O{https://raw.githubusercontent.com/joaomlourenco/novathesis-extras/main/Fonts}
+    O{\DIRFONTSTYLES/Fonts} }
+{
+  % #1 = format (ttf)
+  % #2 = font name (Calibri)
+  % #3 = variants (Regular,Italic,Bold,BoldItalic)
+  % #4 = base URL
+  % #5 = target folder
+
+  % Check if shell escape is enabled (compatible with all engines)
+  \sys_if_shell_unrestricted:TF
+  {
+    \nt_check_fonts:nnnnn { #1 } { #2 } { #3 } { #4 } { #5 }
+  }
+  {
+    \msg_error:nnnn { ntfonts } { shell-escape-required } { \c_sys_jobname_str } { \ntcheckfonts }
+  }
+}
+
+\msg_new:nnn { ntfonts } { shell-escape-required }
+{
+  Font~download~requires~shell~escape.~\\
+  Please~compile~with:~
+  \token_to_str:N lualatex \c_space_tl \c_sys_jobname_str \c_space_tl -shell-escape
+}
+
+\seq_new:N \l__nt_variants_seq
+\tl_new:N \l__nt_filename_tl
+\tl_new:N \l__nt_remote_url_tl
+\tl_new:N \l__nt_local_path_tl
+
+\cs_new_protected:Npn \nt_check_fonts:nnnnn #1 #2 #3 #4 #5
+{
+  % Split variants by commas
+  \seq_set_split:Nnn \l__nt_variants_seq { , } { #3 }
+
+  % Create target directory if it doesn't exist
+  \file_if_exist:nF { #5/DO_NOT_REMOVE_THIS_FILE.txt }
+  {
+    \sys_shell:n { mkdir~-p~#5 }
+  }
+
+  % Process each variant
+  \seq_map_inline:Nn \l__nt_variants_seq
+  {
+    \tl_set:Nn \l__nt_filename_tl { #2-##1.#1 }
+    \tl_set:Nn \l__nt_remote_url_tl { #4/#2/#2-##1.#1 }
+    \tl_set:Nn \l__nt_local_path_tl { #5/#2-##1.#1 }
+
+    % Check if file already exists
+    \file_if_exist:nTF { \l__nt_local_path_tl }
+    {
+      \iow_term:x { Font~' \l__nt_filename_tl '~already~exists. }
+    }
+    {
+      \iow_term:x { Downloading~font~' \l__nt_filename_tl '~
+                    from~' \l__nt_remote_url_tl '~
+                    to~' \l__nt_local_path_tl '}
+
+      % Download the font
+      \nt_download_font:nn { \l__nt_remote_url_tl } { \l__nt_local_path_tl }
+    }
+  }
+}
+
+
+\tl_new:N \l_nt_cmd_output_tl
+
+\cs_new_protected:Npn \nt_download_font:nn #1 #2
+{
+  \bool_set_false:N \l_tmpa_bool
+
+  % Check if shell escape us unrestricted
+  \sys_if_shell_unrestricted:F
+    {
+      \msg_error:nn { ntfonts } { shell-escape-required }
+      \bool_set_true:N \l_tmpa_bool
+    }
+
+  % Try curl
+  \bool_if:NF \l_tmpa_bool
+    {
+      \iow_term:x { Trying:~'curl'... }
+      \sys_get_shell:nnN  { curl ~ --version ~ 2> ~ /dev/null }
+                          { \tl_trim_spaces:n }
+                          \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+        { % curl is available
+          \iow_term:x { Running: ~ curl ~ -L ~ -s ~ -o ~ #2 ~ #1... }
+          \sys_shell_now:x { curl ~ -L ~ -s ~ -o ~ #2 ~ #1 }
+          \bool_set_true:N \l_tmpa_bool
+        }
+    }
+
+  % try wget
+  \bool_if:NF \l_tmpa_bool
+    {
+      \iow_term:x { Trying: ~ 'wget'... }
+      \sys_get_shell:nnN  { wget ~ --version ~ 2> ~ /dev/null }
+                          { \tl_trim_spaces:n }
+                          \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+        { % wget is available
+          \iow_term:x { Running: ~ wget ~ -q ~ -O ~ #2 ~ #1... }
+          \sys_shell_now:x { wget ~ -q ~ -O ~ #2 ~ #1 }
+          \bool_set_true:N \l_tmpa_bool
+        }
+    }
+
+  % try python3
+  \bool_if:NF \l_tmpa_bool
+    {
+      \iow_term:x { Trying: ~ 'python3'... }
+      \sys_get_shell:nnNT  { python3 ~ --version ~ > ~ /dev/null ~ 2>&1 }
+                           { \tl_trim_spaces:n }
+                           \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+        { % python3 is available
+          \iow_term:x { Running: ~ python3 ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null"... }
+          \sys_shell_now:x { python3 ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ echo ~ "python3: ~ No ~ download ~ tool ~ available" }
+          \bool_set_true:N \l_tmpa_bool
+        }
+    }
+
+  % try python
+  \bool_if:NF \l_tmpa_bool
+    {
+      \iow_term:x { Trying: ~ 'python'... }
+      \sys_get_shell:nnNT  { python ~ --version ~ > ~ /dev/null ~ 2>&1 }
+                           { \tl_trim_spaces:n }
+                           \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+        { % python is available
+          \iow_term:x { Running: ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null"... }
+          \sys_shell_now:x { python3 ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ echo ~ "Python: ~ No ~ download ~ tool ~ available" }
+          \bool_set_true:N \l_tmpa_bool
+        }
+    }
+
+  % Try windows/Unix specific approaches
+ \bool_if:NF \l_tmpa_bool
+  {
+    \iow_term:x { Trying ~ a ~ platform ~ specific ~ strategy }
+    % Platform-specific fallbacks
+    \sys_if_platform_windows:T
+      {
+        % Windows - try PowerShell
+        \iow_term:x { Trying: ~ 'powershell' }
+        \sys_get_shell:nnNT  { powershell ~ /?" }
+                           { \tl_trim_spaces:n }
+                           \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+          { % powershell is available
+            \iow_term:x ~ { ~ powershell ~ -Command ~ "Invoke-WebRequest ~ -Uri ~ '\l__nt_remote_url_tl' ~ -OutFile ~ '#2'" ~ }
+            \sys_shell_now:x ~ { ~ powershell ~ -Command ~ "Invoke-WebRequest ~ -Uri ~ '\l__nt_remote_url_tl' ~ -OutFile ~ '#2'" ~ }
+            \bool_set_true:N \l_tmpa_bool
+          }
+      }
+  }
+
+}
+
+
+% --------------------------------------------------------
+% Trim spaces around argument
+\cs_new_eq:NN \trimspaces \tl_trim_spaces:e
+
+\ExplSyntaxOff
+
+
+
+
+\options{/@nt/.new family,
+  lang/loaded/.new list={},
+  % lang/shorttolong/.new choice={en=english, pt=portuguese, fr=french, it=italian, de=german, es=spanish, gr=greek},
+  fontenc/.new choice={cat=T1, cz=T1, de=T1, dk=T1, en=T1, es=T1, fr=T1, gr=LGR, %
+                       it=T1, nl=T1, pl=T1, pt=T1, sk=T1, uk=T2A, zhs=T1, zht=T1},
+}
+
+
+\NewMemStore{LangLong}
+\SetLangLong(cat):={catalan}
+\SetLangLong(cz):={czech}
+\SetLangLong(de):={german}
+\SetLangLong(dk):={danish}
+\SetLangLong(en):={english}
+\SetLangLong(es):={spanish}
+\SetLangLong(fr):={french}
+\SetLangLong(gr):={greek}
+\SetLangLong(it):={italian}
+\SetLangLong(nl):={dutch}
+\SetLangLong(pl):={polish}
+\SetLangLong(pt):={portuguese}
+\SetLangLong(sk):={slovak}
+\SetLangLong(uk):={ukrainian}
+\SetLangLong(zhs):={zh-Hans}
+\SetLangLong(zht):={zh-Hant}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PERSON & FILE MANAGEMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MANAGE FOLDERS PER CLASS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\options{/@nt/folders/.new choice={
+  copyright=.,
+  statement=\DIRFRONTMATTER,
+  cover=\DIRFRONTMATTER,
+  dedication=\DIRFRONTMATTER,
+  acknowledgements=\DIRFRONTMATTER,
+  quote=\DIRFRONTMATTER,
+  abstract=\DIRFRONTMATTER,
+  glossaries=\DIRFRONTMATTER,
+  cover=\DIRFRONTMATTER,
+  chapter=\DIRMAINMATTER,
+  appendix=\DIRBACKMATTER,
+  annex=\DIRBACKMATTER,
+  bib=\DIRBIBLIOGRAPHY,
+}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MANAGE DOCUMENT CLASSES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\options{/@nt/document/.cd,
+   docclass/.new choice={phd=phd, phdprop=phd, phdplan=phd,
+                         msc=msc, mscplan=msc,
+                         bsc=bsc,
+                         plain=plain},
+   docmain/.new list={phd, msc, bsc, plain},
+}
+
+% --------------------------------------------------------
+% Check if the document is of a specific class, i.e., bsc, msc, phd or main
+\newcommand{\ifdocclass}[1]{\ifoptionequal{/@nt/document/docclass}{#1}}
+\newcommand{\ifmaindoc}{\ifoptioncontains{/@nt/document/docmain}{\@DOCTYPE}}
+\newcommand{\ifphddoc}{\ifdocclass{phd}}
+\newcommand{\ifmscdoc}{\ifdocclass{msc}}
+\newcommand{\ifbscdoc}{\ifdocclass{bsc}}
+\newcommand{\ifplaindoc}{\ifdocclass{plain}}
+
+\newcommand{\ifdocstatus}[1]{\ifoptionequal{/novathesis/docstatus}{#1}}
+\newcommand{\ifdocfinal}{\ifdocstatus{final}}
+\newcommand{\ifdocprovisional}{\ifdocstatus{provisional}}
+\newcommand{\ifdocworking}{\ifdocstatus{working}}
+\newcommand{\ifdocunset}{\ifdocstatus{unset}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MANAGE PERSON LISTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\ntaddperson#1(#2,#3)#4{%
+  % syntax: \ntaddperson{class}(key,gender){person name, position, etc}
+  % #1=adviser | committee
+  % #2={a,c}            {c,r,a,m,g}
+  %     a=adviser        c=chair
+  %     c=coadviser      r=rapporteur/referee
+  %                      a=adviser
+  %                      ca=adviser
+  %                      m=other members
+  %                      g=guests
+  % #3={m,f}
+  % #4={person name, position, etc}
+  % \typeout{NTADDPERSON 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\NTADDPERSON%
+  \noexpandarg
+  \StrCut{#4}{,}\@nt@personname\@nt@dummy%was xStrCut
+  \options{
+      /@nt/#1/#2/name/.expanded/.newpush={\@nt@personname},
+      /@nt/#1/#2/full/.expanded/.newpush={#4},
+      /@nt/#1/#2/gender/.newpush={#3},
+      /@nt/#1/#2/pair/.expanded/.newpush={#3/\@nt@personname},
+  }%
+  % \typeout{NTADD [/@nt/#1/#2/name=\@nt@personname]}%
+  \fullexpandarg
+}
+
+\def\ntresetperson#1(#2){%
+  % #1 = class
+  \option@setnil{/@nt/#1/#2/name}%
+  \option@setnil{/@nt/#1/#2/full}%
+  \option@setnil{/@nt/#1/#2/gender}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MANAGE FILE LISTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand*{\ntaddfile}[1]{%
+  % syntax: \ntaddfile{class}[key]{filename}
+  %         #1=file family (quote, abstract, chapter, etc)
+  %         #2=[key] (OPTIONAL)
+  %         #3=filename
+  \@nt@addtolist{file}{#1}%
+}
+
+\options{/@nt/listtypes/.new list={}}
+\NewDocumentCommand {\@nt@addtolist}
+                    {m m O{\option{/novathesis/doctype}} m} {%
+  % syntax: \ntaddto{type}{class}[key]{filename}
+  %         #1 ={file, person}
+  %         #2=family {quote, abstract, chapter, etc} or {author, adviser, committee}
+  %         #3=[file-lang | sub-family | key] (OPTIONAL)
+  %         #4=filename
+  % \typeout{[#1] [#2] [#3] [#4]}\ADDTOLIST
+  \ifoptioncontains{/@nt/listtypes}{#2}{}
+      {\options{/@nt/listtypes/.newpush={#2}}}
+  \IfBeginsWithAnyOf{#4}{/,.}
+      {\xdef\@nt@filewithpath{#4}}
+      {\options{/@nt/folders=#2}%
+       \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}}
+  \@for\nt@tmpi:=\expanded{#3}\do{%
+    % \typeout{NT ADDTOLIST [#1] [#2] [\nt@tmpi] [\@nt@filewithpath]}\ADDTILIST%
+    \options{/@nt/#1/#2/\nt@tmpi/.expanded/.newpush={\@nt@filewithpath}}%
+  }%
+}
+
+\newcommand*{\@nt@foralllist}[3]{%
+  % #1={file, person}
+  % #2=file family (quote, abstract, chapter, etc)
+  % #3=macro to be applied, which will receive the item from the list
+  \optionlistdo{/@nt/#1/#2}{#3{##1}}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Multilingual support
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\ntselectlang}[1]{%
+  \xdef\@LSHORT{#1}%
+  \xdef\@LLONG{\GetLangLong(#1)}%
+  \selectlanguage{\@LLONG}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ASSOCARRAY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\initmemory}[2][\thenotdefined(\@LANG@COVER)]{%
+  \optionlistdo{/novathesis/lang/all}{\csuse{#2}(##1):={#1}}}
+
+
+% For PDF bookmakrs
+\newdata{keywordsblockpre}
+\newdata{keywordsblockpost}
+\newdata{keywordssep}
+% \newdata{keywordsboxlen}
+\newdata{keywordsstringprefix}
+\newdata{keywordsstringsuffix}
+\newdata{keywordsstringfont}
+\keywordsblockpre()={\bigskip\noindent}
+\keywordsstringsuffix()={:\enspace}
+\keywordsstringfont()={\bfseries}
+% \keywordssep()={\ \textbf{\Large\textperiodcentered}\ }
+\keywordssep()={ {\textperiodcentered} }
+% \keywordsboxlen()={\textwidth-\widthof{\usebox{\keywordsstringbox}}}
+
+\newdata{sponsor}
+
+\newdata{commastring}
+\optionlistdo{/novathesis/lang/all}{%
+  \commastring(#1):={,\ }%
+}
+
+
+
+\newdata{degreestringfont}
+
+\newdata{degreename}
+\newdata{degreenamefont}
+
+\newdata{degreenameprefixfont}
+
+\newdata{doctypestringfont}
+
+
+\newdata{adviserstringfont}
+\newdata{adviserstringpre}
+\newdata{adviserstringpost}
+
+\newdata{advisernamepre}
+\newdata{advisernamepost}
+\newdata{advisernamefont}
+
+\newdata{adviserremainderpre}
+\newdata{adviserremainderpost}
+\newdata{adviserremainderfont}
+\adviserremainderfont()={\itshape\scriptsize}
+
+% Committee stuff
+\NewMemStore{AdviserOrder}
+\SetAdviserOrder()={a,c}  % By default print advisers and co-advisers
+
+\newdata{committeeorder}         %e.g., "{c,r,a,m,g}"
+
+\newdata{committeetitlestringpre}
+\newdata{committeetitlestringpost}
+\newdata{committeetitlestringfont}
+
+\newdata{committeestringpre}
+\newdata{committeestringpost}
+\newdata{committeestringfont}
+
+\newdata{committeenamepre}
+\newdata{committeenamepost}
+\newdata{committeenamefont}
+
+\newdata{committeeremainderpre}
+\newdata{committeeremainderpost}
+\newdata{committeeremainderfont}
+\committeeremainderfont()={\itshape\scriptsize}
+
+\newdata{personpre}
+\newdata{personpost}
+\newdata{persongrouppre}
+\newdata{persongrouppost}
+
+\newdata{dissertationstringfont}
+
+
+\newdata{majorfield}
+\newdata{minorfield}
+\newdata{specialization}
+
+\newdata{spine}
+\newdata{thesiscover}
+\newdata{margin}
+\newdata{frontpageimage}
+
+\newdata{university}
+\newdata{school}
+% \newdata{department}
+
+\newdata{doctitle}
+
+
+% For each main language, list which abstracts shall be printed and in which order
+% may have more than two (just be sure you include the languages above as well)
+\newdata{abstractorder}
+
+
+
+% --------------------------------------------------------
+% PROCESSING CLASS OPTIONS
+\options@ProcessOptions{/novathesis}
+% --------------------------------------------------------
+% NTSETUP2
+\newcommand*{\ntsetup}[2][]{%
+  % 1. Set the search list for the /novathesis/ family.
+  % This tells the package: "If you don't find the key in the current 
+  % family, check these families in order."
+  \options{
+    /novathesis/.search also = {
+      /novathesis/\@UNIV/\@SCHL/#1/,
+      /novathesis/#1/,
+      /novathesis/\@UNIV/\@SCHL/,
+      /novathesis/\@UNIV/,
+      /novathesis/
+    }
+  }%
+  % 2. Execute the options within the /novathesis/ context.
+  % We use the slash prefix to indicate we are moving to the root-level family.
+  \options{/novathesis,#2}%
+}
+
+
+\newcommand{\SpineSetup}[2][]{%
+  \NTAddToHook{print/spine/pre}{%
+    #1%
+    \NTSetup[spine] {#2}%
+  }%
+}
+
+
+% --------------------------------------------------------
+% Pass the remaining options to memoir
+% \letoptionlist{/options/remaining}\nt@remaining
+% \PassOptionsToClass{\nt@remaining}{memoir}
+
+
+
+
+

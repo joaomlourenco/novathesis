@@ -1,0 +1,1005 @@
+%!TEX root=template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — nt-setup.sty
+%% ----------------------------------------------------------------------------
+%%
+%% Version 7.10.7 (2026-03-25)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%% Departamento de Informática (www.di.fct.unl.pt)
+%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Universidade NOVA de Lisboa (www.unl.pt)
+%%
+%% Setup/initialization: config loading, babel, metadata, printing engine, school logic
+%% ----------------------------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LOADING CUSTOMIZATION STUFF - part 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------
+% Define DEFAULT corollaryUES for COVER and COPYRIGHT languages
+%     and HYPERLINK color
+\options{/novathesis/lang = \option{/novathesis/lang/main},
+         /novathesis/color/links = DarkBlue,
+         /novathesis/color/glossaries/gls = None,
+}
+
+% \NTRunHook{memoir}
+
+%============================================================
+%  TEMPLATE CUSTOMIZATION / OPTIONS
+%      Please open and edit the appropriate
+%       configuration file “0-Config/1_novathesis.tex”
+%============================================================
+\input{\DIRCONFIG/1_novathesis}
+\def\@DOCTYPE{\option{/novathesis/doctype}}
+\def\@DOCSTATUS{\option{/novathesis/docstatus}}
+
+\options{/@nt/document/docclass=\@DOCTYPE}
+\def\@DOCCLASS{\option{/@nt/document/docclass}}
+
+\edef\@LANG@COVER{\option{/novathesis/lang/cover}}
+\edef\@LANG@COPYRIGHT{\option{/novathesis/lang/copyright}}
+\edef\@LANG@MAIN{\option{/novathesis/lang/main}}
+\edef\@LANG@MAIN@LONG{\GetLangLong(\@LANG@MAIN)}
+
+\@setabstractorder
+\ifdatadefined{abstractorder}(en){}{%
+  \abstractorder(en):={en,pt}
+}
+\ifdatadefined{abstractorder}(\@LANG@MAIN){}{%
+  \abstractorder(\@LANG@MAIN):={\@LANG@MAIN,en}
+}
+
+
+
+
+%============================================================
+% LOAD ADDITIONAL PACKAGES
+%============================================================
+%%%%% Configure multilingual language support
+\definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
+
+%
+% \iftoggle{/novathesis/print/index}{
+%   \AtEndPreamble{
+%     \ntaddtoprintorder{backmatter}{index}
+%     \RequirePackage{imakeidx}
+%     % \makeindex[intoc,columns=2,options=-s myindexstyle]%
+%     \makeindex[intoc,columns=2,options=-s  \DIRNTFILES/ntindexstyle]
+%   }
+% }{}
+
+\babeladjust{
+  autoload.bcp47 = on
+}
+
+\babelprovide[main,import]{\expanded{\@LANG@MAIN@LONG}}
+
+% --------------------------------------------------------
+% FIX BABEL TRANSLATION
+% \RequirePackage{babel}      % Support for multilingual documents
+% \RequirePackage{translator} % Support month name translations for pgfcalendar
+\ntselectlang{\@LANG@MAIN}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Create list of loaded languages
+%% which will be loaded dynamically by Babel
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\edef\@LANG@LOADED{\@LANG@COVER, \@LANG@COPYRIGHT, \@LANG@MAIN, \theabstractorder(\@LANG@MAIN)}
+\UniquifyList{\@LANG@LOADED}[\@LANG@LOADED]
+
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FIX BABEL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{fix-babel-expl3.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Include strings for all the languages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifoptiondefined{/@nt/lang/loaded}
+  {\options{/@nt/lang/loaded = {}}}
+  {\options{/@nt/lang/loaded/.new list}}%
+
+\@for\mylang:=\@LANG@LOADED\do{%
+  \InputIfFileExists{\DIRSTRINGS/strings-\mylang.ldf}%
+      {\options{/@nt/lang/loaded/.expanded/.push={\mylang}}}%
+      {\ClassError{novathesis}
+                  {File not found: “\DIRSTRINGS/strings-\mylang.ldf” file!}%
+                  {Add a file with the translations for this language.}}%
+}%
+
+
+\bkmstring(1-1)   = {\thebkmstring(cover,\@LANG@MAIN)}
+\bkmstring(1-2)   = {\thebkmstring(incover,\@LANG@MAIN)}
+\bkmstring(2-1)   = {\thebkmstring(frontpage,\@LANG@MAIN)}
+\bkmstring(2-2)   = {\thebkmstring(infrontpage,\@LANG@MAIN)}
+\bkmstring(N-1)   = {\thebkmstring(inbackcover,\@LANG@MAIN)}
+\bkmstring(N-2)   = {\thebkmstring(backcover,\@LANG@MAIN)}
+\bkmstring(spine) = {\thebkmstring(spine,\@LANG@MAIN)}
+
+
+
+%--------------------------------
+% TIKZ
+\usetikzlibrary{calc}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DOCUMENT METADATA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ExplSyntaxOn
+
+% --------------------------------------------------------
+% Department
+%============================================================
+
+\NewMemStore{Department}
+
+% 1. The Public Command
+% s = star (*)                 <= only define if undefined
+% r() = required ID in parens  <= the lang code
+% m = mandatory value          <= the name of the department
+\NewDocumentCommand {\ntdepartment} { s r() m }
+  {
+    % We pass the star status (boolean) and expanded arguments to the internal logic
+    \nova_process_department:nee { #1 } { #2 } { #3 }
+  }
+
+% 2. Internal Logic
+\cs_new_protected:Npn \nova_process_department:nnn #1 #2 #3
+  {
+    % Handle the optional ID: if empty/NoValue, use 'default'
+    \tl_set:Nn \l_tmpa_tl { #2 }
+    % \quark_if_no_value:NT \l_tmpa_tl { \tl_set:Nn \l_tmpa_tl { default } }
+
+    % Logic Branching
+    \bool_if:nTF { #1 }
+      {
+        % Starred version: Only set if NOT already defined
+        % We check if the 'department' data for this ID is empty/unset
+        \__mem_if_unset:nnT { Department } { \l_tmpa_tl }
+          { \MemSet { Department } { \l_tmpa_tl } { #3 } }
+      }
+      {
+        % Unstarred version: Set/Overwrite regardless
+        \MemSet { Department } { \l_tmpa_tl } { #3 }
+      }
+  }
+
+% 3. Helper to check if data is undefined/empty
+% (Adjust this if your \MemSet uses a different internal storage check)
+% \prg_new_conditional:Npnn \nova_if_data_unset:nn #1 #2 { p, T, F, TF }
+%   {
+%     % We expand the result of \MemGet to check if it's empty
+%     \tl_if_empty:eTF { \MemGet{#1}{#2} }
+%       { \prg_return_true:  }
+%       { \prg_return_false: }
+%   }
+
+% 4. Generate expansion variants
+\cs_generate_variant:Nn \nova_process_department:nnn { nee }
+
+\ExplSyntaxOff
+
+
+%
+%
+%
+% \def\ntdepartment{\@ifstar{\@ntdepartmentifundef}{\@ntdepartment}}
+% \def\@ntdepartmentifundef(#1)#2{\ifdatadefined{department}(#1){}{\@ntdepartment(#1){#2}}}
+% \def\@ntdepartment(#1)#2{\department(#1):={#2}}
+
+% --------------------------------------------------------
+% Degree
+\def\ntmajorfield{\@ifstar{\@ntmajorfieldifundef}{\@ntmajorfield}}
+  % #1 = lang
+  % #2 = value
+\def\@ntmajorfieldifundef(#1)#2{\ifdatadefined{majorfield}(#1){}{\@ntmajorfield(#1){#2}}}
+\def\@ntmajorfield(#1)#2{\majorfield(#1):={#2}}
+
+\def\ntdegreename{\@ifstar{\@ntdegreenameifundef}{\@ntdegreename}}
+\def\@ntdegreenameifundef(#1)#2{\ifdatadefined{degreename}(#1){}{\@ntdegreename(#1){#2}}}
+\def\@ntdegreename(#1)#2{%
+  % #1 = lang
+  % #2 = value
+  \datamatch{\match}{degreenameprefix}(%
+            {\@DOCTYPE,\@DEGREEACR,\@LANG@COVER},%
+            {\@DOCCLASS,\@DEGREEACR,\@LANG@COVER},%
+            {\@DEGREEACR,\@LANG@COVER},%
+            {\@DOCTYPE,\@LANG@COVER},%
+            {\@DOCCLASS,\@LANG@COVER},%
+            {\@LANG@COVER}%
+  )%
+  \ifblank{\match}{\degreename(#1):={#2}}{\degreename(#1):={\match\ #2}}%
+  \majorfield(#1):={#2}%
+}
+% --------------------------------------------------------
+% Specialization
+\def\ntminorfield{\@ifstar{\@ntminorfieldifundef}{\@ntminorfield}}
+\def\@ntminorfieldifundef(#1)#2{\ifdatadefined{minorfield}(#1){}{\@ntminorfield(#1){#2}}}
+\def\@ntminorfield(#1)#2{\minorfield(#1):={#2}}
+
+\def\ntspecialization{\@ifstar{\@ntspecializationifundef}{\@ntspecialization}}
+\def\@ntspecializationifundef(#1)#2{\ifdatadefined{minorfield}(#1){}{\@ntspecialization(#1){#2}}}
+\def\@ntspecialization(#1)#2{%
+  \datamatch{\specmatch}{specializationstring}(%
+            {\@DOCTYPE,\@DEGREEACR,\@LANG@COVER},%
+            {\@DOCCLASS,\@DEGREEACR,\@LANG@COVER},%
+            {\@DEGREEACR,\@LANG@COVER},%
+            {\@DOCTYPE,\@LANG@COVER},%
+            {\@DOCCLASS,\@LANG@COVER},%
+            {\@LANG@COVER}%
+  )%
+  \ifblank{\specmatch}{\specialization(#1)={#2}}{\specialization(#1)={\specmatch\ #2}}%
+  \minorfield(#1)={#2}%
+}
+
+% --------------------------------------------------------
+% Sponsors
+\def\ntsponsors(#1,#2,#3)#4{\sponsor(#3,#1,#2):={#2}}
+
+% --------------------------------------------------------
+% Title
+\def\nttitle(#1,#2)#3{%
+  % #1 = type (main, sub, spine) title
+  % #2 = lang
+  % #3 = value
+  % \typeout{NT TITLE [#1] [#2] [#3]}%
+  \doctitle(#2,#1):={#3}%
+  \NewlineToSpace{#3}[\tmp]%
+  \doctitle(#2,#1,plain):={\tmp}% 
+  \IfStrEq{#1}{main}{\doctitle(#2,spine):={\tmp}}{}%
+}
+
+
+\ExplSyntaxOn
+
+% Define a temporary token list variable
+\tl_new:N \l__memory_clean_tl
+
+\NewDocumentCommand{\NewlineToSpace}{ m o }
+  {
+    % 1. Store the input (#1) into the variable
+    \tl_set:Nn \l__memory_clean_tl { #1 }
+
+    % 2. Perform the replacement.
+    %    In expl3, ~ represents a space token (catcode 10).
+    %    This replaces every occurrence of the token \\ with a space.
+    \tl_replace_all:Nnn \l__memory_clean_tl { ~\\~ } { ~ }
+    \tl_replace_all:Nnn \l__memory_clean_tl { ~\\ }  { ~ }
+    \tl_replace_all:Nnn \l__memory_clean_tl { \\~ }  { ~ }
+    \tl_replace_all:Nnn \l__memory_clean_tl { \\ }   { ~ }
+
+    % 3. Check if the optional argument (#2) is provided
+    \IfNoValueTF { #2 }
+      {
+        % If no optional arg: Output the result directly
+        \tl_use:N \l__memory_clean_tl
+      }
+      {
+        % If optional arg exists: Set the provided macro (#2) to the result
+        \tl_set_eq:NN #2 \l__memory_clean_tl
+      }
+  }
+
+
+% \PrintDateISO{2022-12-25} -> localized date, e.g., December 20, 2022; 20 de dezembro de 2022
+% \PrintDateISO{2022-12}    -> e.g., December 20, 2022; Dezembro, 2022
+% \PrintDateISO{2022}       -> e.g., 2022
+\NewDocumentCommand{\PrintDateISO}{m}
+ {
+  \nt_print_iso_date:n {#1}
+ }
+
+% Sequential variables to store Y, M, D
+\seq_new:N \l_nt_date_seq
+% Generate the 'NnV' variant (N = seq, n = delimiter, V = value of variable)
+\cs_generate_variant:Nn \seq_set_split:Nnn { Nne }
+
+\cs_new_protected:Nn \nt_print_iso_date:n
+ {
+  % Split the input string by the hyphen (-)
+  \seq_set_split:Nne \l_nt_date_seq { - } {#1}
+  
+  \int_case:nn { \seq_count:N \l_nt_date_seq }
+   {
+    % Case 1: Only Year (YYYY)
+    { 1 } { \seq_item:Nn \l_nt_date_seq { 1 } }
+    
+    % Case 2: Year and Month (YYYY-MM)
+    { 2 } { 
+      \tl_set:Ne \l_tmpa_tl { \babelmonthname { \seq_item:Nn \l_nt_date_seq { 2 } } }
+      \nt_titlecase_first:N \l_tmpa_tl
+      \tl_use:N \l_tmpa_tl
+      ,~  % separator
+      \seq_item:Nn \l_nt_date_seq { 1 }  % year
+    }
+    
+    % Case 3: Full Date (YYYY-MM-DD)
+    { 3 } { 
+        \localedate { \seq_item:Nn \l_nt_date_seq { 1 } } 
+                    { \seq_item:Nn \l_nt_date_seq { 2 } } 
+                    { \seq_item:Nn \l_nt_date_seq { 3 } } 
+    }
+   }
+ }
+
+
+
+
+
+% Define the command with an optional d() argument and a mandatory m argument
+\NewDocumentCommand{\SetDateISO}{ d() m }
+ {
+  \nt_set_iso_date:nn { #1 } { #2 }
+ }
+
+% Sequential variable to store the split parts
+\seq_new:N \l_nt_parts_seq
+
+\cs_new_protected:Nn \nt_set_iso_date:nn
+ {
+  % 1. Store the raw ISO string
+  \MemSet { DocDate } { #1 } { #2 }
+  
+  % 2. Split the string by the hyphen
+  \seq_set_split:Nnn \l_nt_parts_seq { - } { #2 }
+  
+  % 3. Process based on how many parts were found
+  \int_case:nn { \seq_count:N \l_nt_parts_seq }
+   {
+    % Case: YYYY
+    { 1 } 
+     {
+      \MemSet* { DocDate } { #1, year } { \seq_item:Nn \l_nt_parts_seq { 1 } }
+     }
+    
+    % Case: YYYY-MM
+    { 2 }
+     {
+      \MemSet* { DocDate } { #1, year }  { \seq_item:Nn \l_nt_parts_seq { 1 } }
+      \MemSet* { DocDate } { #1, month } { \seq_item:Nn \l_nt_parts_seq { 2 } }
+      % Use Babel's \monthname to get the localized text
+      \MemSet* { DocDate } { #1, month, text } 
+        { \babelmonthname { \seq_item:Nn \l_nt_parts_seq { 2 } } }
+     }
+    
+    % Case: YYYY-MM-DD
+    { 3 }
+     {
+      \MemSet* { DocDate } { #1, year }  { \seq_item:Nn \l_nt_parts_seq { 1 } }
+      \MemSet* { DocDate } { #1, month } { \seq_item:Nn \l_nt_parts_seq { 2 } }
+      \MemSet* { DocDate } { #1, month, text } 
+        { \babelmonthname { \seq_item:Nn \l_nt_parts_seq { 2 } } }
+      \MemSet* { DocDate } { #1, day }   { \seq_item:Nn \l_nt_parts_seq { 3 } }
+     }
+   }
+ }
+
+
+\ExplSyntaxOff
+
+
+
+\NewMemStore{DocDate}
+
+\let\ntdate\SetDateISO
+\SetDateISO(submission){2000-01-31}
+\SetDateISO(exam){2000-01-31}
+
+
+
+%============================================================
+% Author identification
+%============================================================
+\newdata{docauthor}
+\docauthor(name):={Author Name}
+\docauthor(name,short):={Author Short Name}
+\docauthor(gender):={Author Gender}
+\docauthor(degree,\@LANG@COVER):={Author Previous Degree}
+
+\def\ntauthorname(#1)#2#3{% [m|f]{Long name}{Short name}
+  \docauthor(gender):={#1}%
+  \docauthor(name):={#2}%
+  \docauthor(name,short):={#3}}
+
+\def\ntauthordegree(#1)#2{\docauthor(degree,#1):={#2}}
+
+
+
+
+%============================================================
+% Setting cover defaults
+%============================================================
+
+
+% strings to be defined for each language
+\nttitle(main,\@LANG@COVER){\thedefaultnttitle(\@LANG@COVER)}
+\nttitle(sub,\@LANG@COVER){\thedefaultntsubtitle(\@LANG@COVER)}
+\ntdepartment(\@LANG@COVER){\thedefaultntdepartment(\@LANG@COVER)}
+\ntdegreename(\@LANG@COVER){\thedefaultntdegreename(\@LANG@COVER)}
+
+
+%============================================================
+% Adding list_of
+\newcommand*{\ntaddlistof}[2][]{%
+  % #2 = the list of SOMETHING without the initial "\"
+  \@ifmtarg{#1}{%
+    \edef\@listofat{\option{/novathesis/print/otherlists}}%
+  }{%
+    \edef\@listofat{#1}%
+  }
+  % \typeout{\ISTOF 1=[\@listofat] 2=[#2]}\NTADDLISTOF%
+  \IfStrEqCase{#2}{%
+    {tableofcontents}{\options{/@nt/listof/\@listofat/.newpush={%
+            \clearforchapter%
+            \iftoggle{/novathesis/tocintoc}{\tableofcontents}%
+                  {\hypertarget{toctarget}{\tableofcontents*}%
+                   \bookmark[dest=toctarget]{\contentsname}}%
+    }}}%
+    {listoffigures*}{\options{/@nt/listof/\@listofat/.newpush={%
+              \clearforchapter%
+              \hypertarget{loftarget}{\listoffigures*}%
+              \bookmark[dest=loftarget]{\listfigurename}%
+    }}}%
+    {listoffigures}{\options{/@nt/listof/\@listofat/.newpush={%
+              \clearforchapter%
+              \hypertarget{loftarget}{\listoffigures}%
+              % \bookmark[dest=loftarget,level=1]{\listfigurename}%
+    }}}%
+    {listoftables*}{\options{/@nt/listof/\@listofat/.newpush={%
+              \clearforchapter%
+              \hypertarget{lottarget}{\listoftables*}%
+              \bookmark[dest=lottarget]{\listtablename}%
+    }}}%
+    {listoftables}{\options{/@nt/listof/\@listofat/.newpush={%
+              \clearforchapter%
+              \hypertarget{lottarget}{\listoftables}%
+              % \bookmark[dest=lottarget]{\listtablename}%
+    }}}%
+    {listoflistings}{\options{/@nt/listof/\@listofat/.newpush={%
+            \ifcsdef{listoflistings}{%
+                \clearforchapter%
+                \hypertarget{loltarget}{\listoflistings}%
+                \ifcsdef{listoflistingscaption}{%
+                  \bookmark[dest=loltarget]{\listoflistingscaption}%
+                }{}%
+            }{}%
+    }}}%
+    {lstlistoflistings}{\options{/@nt/listof/\@listofat/.newpush={%
+              \clearforchapter%
+              \hypertarget{loltarget}{\lstlistoflistings}%
+              % \bookmark[dest=loltarget]{\lstlistlistingname}%
+    }}}%
+    {listofalgorithms}{\options{/@nt/listof/\@listofat/.newpush = {%
+              \clearforchapter%
+              \listofalgorithms
+              \ifcsdef{listalgorithmname}{%
+                \addcontentsline{toc}{chapter}{\listalgorithmname}%
+              }{%
+                \ifcsdef{listalgorithmcfname}{%
+                  \addcontentsline{toc}{chapter}{\listalgorithmcfname}%
+                }{%
+                  \ClassError{novathesis}{Can't make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
+                }%
+              }%
+    }}}%
+  }[%
+      \options{/@nt/listof/\@listofat/.newpush={\ifcsdef{#2}{\clearforchapter\csuse{#2}}{\csuse{#2}}}}%
+   ]%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% STRUCTURAL PRINTING ENGINE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%============================================================
+% Print document “parts/sections/regions”
+\newcommand*{\ntprint}[1]{%
+  \IfStrEqCase{#1}{%
+    {frontcover}{%
+          \thispagestyle{empty}%
+          \pagestyle{empty}%
+          \ntprintcovers%
+    }%
+    {frontmatter}{%
+          \bookmarksetup{startatroot}
+          \ntthesisfrontmatter% Before the main text (TOC, etc) — Roman page numbering
+          \bookmarksetupnext{level=0}%
+          \hypertarget{bmfrontmatter}{}%
+          \bookmark[dest=bmfrontmatter]{\thebkmstring(frontmatter,\@LANG@MAIN)}%
+          \bookmarksetupnext{rellevel=1}%
+          \ntprintlist{/@nt/print/#1/\@DOCSTATUS}%
+    }%
+    {mainmatter}{%
+          \bookmarksetup{startatroot}
+          \ntthesismainmatter% Mainn text — Arabic page numbering
+          \bookmarksetup{level=0}%
+          \thispagestyle{novathesis@mainmatter}%
+          \pagestyle{novathesis@mainmatter}%
+          \ntprintlist{/@nt/print/#1}%
+    }%
+    {backmatter}{%
+          \bookmarksetup{startatroot}
+          \ntthesisbackmatter     % The back text — Arabic page numbering
+          \bookmarksetupnext{level=-1}%
+          \hypertarget{bmbackmatter}{}%
+          \bookmark[dest=bmbackmatter]{\thebkmstring(backmatter,\@LANG@MAIN)}%
+          \bookmarksetupnext{level=0}%
+          \ntprintlist{/@nt/print/#1}%
+    }%
+    {backcover}{%
+          \bookmarksetup{startatroot}
+          \bookmarksetup{level=0}%
+          \thispagestyle{empty}%
+          \pagestyle{empty}%
+          \ntprintbackcover%
+    }%
+  }[\ifcsmacro{ntprint#1}{\csuse{ntprint#1}}{\ifcsmacro{#1}{\csuse{#1}}{}}]%
+}
+
+\newcommand*{\ntprintlist}[1]{%
+  \optionlistdo{#1}{%
+    \begingroup
+      \clearpage
+      \ifcsmacro{ntprint##1}{%  \ntprint#1 is defined
+        \NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}%
+      }{%                       \ntprint#1 is undefined
+        \ifcsmacro{##1}{%       \##1 is defined
+          \NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}%
+        }{%                     nothing is defined
+          \ClassError{novathesis}{Invalid contents for frontmatter or mainmatter: [##1]}{}%
+        }%
+      }%
+      % \unskip%
+      \clearforchapter%
+      \ignorespaces%
+    \endgroup
+  }%
+}
+
+\newcommand{\myprintglossaries}{%
+  % ignore if no glossaries were defined
+  \ifoptioncontains{/@nt/listtypes}{glossaries}{
+    \ifoptionequal{/novathesis/print/glossaries}{false}
+      {}{%
+        \if@backmatter
+          \def\@matter{backmatter}
+        \else
+          \def\@matter{frontmatter}
+        \fi
+        \IfStrEq{\option{/novathesis/print/glossaries}}{\@matter}{%
+          \providebool{nt@anyglossary}%
+          \boolfalse{nt@anyglossary}%
+          \ifdefined\forallglossaries
+            \forallglossaries{\nt@glstype}{%
+              \ifdefined\ifglossaryempty
+                \ifglossaryempty{\nt@glstype}{}{\booltrue{nt@anyglossary}}%
+              \else\ifdefined\glsifentries
+                \glsifentries{\nt@glstype}{\booltrue{nt@anyglossary}}{}%
+              \else
+                \booltrue{nt@anyglossary}%
+              \fi\fi
+            }%
+          \else
+            \booltrue{nt@anyglossary}%
+          \fi
+          \ifbool{nt@anyglossary}{%
+            \clearforchapter%
+            \ntselectlang{\@LANG@MAIN}%
+            \hypertarget{bmglossaries}{}%
+            \bookmarksetupnext{level=0}%
+            \bookmark[dest=bmglossaries]
+                    {\thebkmstring(glossaries,\@LANG@MAIN)}%
+            \printglossaries
+          }{}%
+        }{}%
+      }%
+  }{}%
+}
+
+% --------------------------------------------------------
+% DEFAULT VALUES FOR frontmatter AND mainmatter
+
+% \newcommand*{\ntaddtoprintorder}[2]{%
+%   % #1 = frontmatter, mainmatter
+%   % #2 = list
+%   % \typeout{[#1] [#2]}
+%   \options{/@nt/print/#1/.push=#2}%
+% }
+\options{/@nt/print/frontmatter/final/.new list = 
+  {%
+    statement,        % The statement page
+    copyright,        % (*) The copyright page
+    dedication,       % (*) Print the dedication
+    acknowledgements, % (*) Print the acknowledgments
+    quote,            % (*) Print the quote
+    abstracts,        % Print abstracts in multiple languages.
+    aidisclose,       % AI disclosure statement
+    alllistof,        % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
+}
+
+\options{/@nt/print/frontmatter/provisional/.new list = 
+  {
+    statement,         % The statement page
+    copyright,         % (*) The copyright page
+    dedication,        % (*) Print the dedication
+    acknowledgements,  % (*) Print the acknowledgments
+    quote,             % (*) Print the quote
+    abstracts,         % Print abstracts in multiple languages.
+    aidisclose,        % AI disclosure statement
+    alllistof,         % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
+}
+
+\options{/@nt/print/frontmatter/working/.new list = 
+  {
+    abstracts,       % Print abstracts in multiple languages.
+    aidisclose,      % AI disclosure statement
+    alllistof,       % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
+}
+
+\options{/@nt/print/mainmatter/.new list = 
+  {
+    chapters,        % Print document chapters
+  }
+}%
+
+\ifoptionequal{/novathesis/print/webography}{}{%
+  \options{/@nt/print/backmatter/.new list = 
+    {
+      bibsingle,            % Print the bibliography
+      alllistof,            % Print all the listof defined in “6_list_of.tex”
+      myprintglossaries,    % Print the Glossary, Acronyms, Symbols, etc…
+      appendices,           % Print appendices, if any!
+      annexes,              % Print annexes, if any!
+    }
+  }%
+}{%
+  \options{/@nt/print/backmatter/.new list = 
+    {
+      bibseparate,          % Print the web references separate from the remainder of the bibliography
+      alllistof,            % Print all the listof defined in “6_list_of.tex”
+      myprintglossaries,    % Print the Glossary, Acronyms, Symbols, etc…
+      appendices,           % Print appendices, if any!
+      annexes,              % Print annexes, if any!
+    }
+  }%
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% COVER PAGE ENGINE (MOVED TO nt-covers.sty)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newcommand*{\ntresetcovers}{%
+%   \@for\arg:={1-1,1-2,2-1,2-2,N-1,N-2}\do{%
+%     \ntresetonecover{\arg}%
+%   }%
+% }
+% 
+% \newcommand*{\ntresetonecover}[1]{%
+%     \option@setnil{/@nt/cover/\@UNIV/\@SCHL/#1}%
+% }
+% 
+% 
+% \newcommand*{\ntaddtocover}[3][]{%
+%   % #1 = cover atrtibutes
+%   % #2 = list of covers where the code block should be applied
+%   % #3 = the block code
+%   % \typeout{NT ntaddtocover [/@nt/cover/\@UNIV/\@SCHL/element=#1]}%
+%   % \forcsvlist{\@ntaddtocover@iii{#1}{#3}}{#2}%
+%   \ntfor\arg:={#2}\do{\@ntaddtocover@iii{#1}{#3}{\arg}}%
+% }
+% 
+% \newcommand*{\@ntaddtocover@iii}[3]{%
+%   % \typeout{NT ntaddtocover #3}%
+%   % #1 = cover atrtibutes
+%   % #2 = the block code
+%   % #3 = covers where the code block should be applied
+%   \options{/@nt/cover/\@UNIV/\@SCHL/#3/.newpush={{#1}\@nil{#2}}}%
+% }
+% 
+% %==========================================
+% \NewDocumentCommand{\ntAddToCoverTikz}{d<>O{}r()O{}mm}{%
+%   % #1=Command
+%   % #2=Options
+%   % #3=Position
+%   % #4=Rest of command
+%   % #5=CIDLIST
+%   % #6=Code
+%   % \typeout{Command=[#1]  Options=[#2]  Position=[#3]  Rest of command=[#4]  CIDLIST=[#5]  Code=[]}\NTADDTOCOVERTIKZ
+%   \ntfor\cvids:={#5}\do{\ntAddToOneCoverTikz{#1}{#2}{#3}{#4}{\cvids}{#6}}%
+% }
+% 
+% \NewDocumentCommand{\ntAddToOneCoverTikz}{mmmmmm}{%
+%   % #1=Command
+%   % #2=Options
+%   % #3=Position
+%   % #4=Rest of command
+%   % #5=CID
+%   % #6=Code
+%   % \typeout{Command=[#1]  Options=[#2]  Position=[#3]  Rest of command=[#4]  CIDLIST=[#5]  Code=[]}\NTADDTOONECOVERTIKZ
+%   \options{/@nt/coverTikz/\@UNIV/\@SCHL/#5/.newpush=
+%                 {{#1}\@nil{#2}\@nil{#3}\@nil{#4}\@nil{#6}}}%
+% }
+% 
+% \NewDocumentCommand{\printCoverTikz}{m}{%
+%   % #1 = cover ID (major-minor)
+%   % \typeout{@NTCOVERTEXT 1=[#1]}\@NTCOVERTEXT%
+%   \ifoptiondefined{/@nt/coverTikz/\@UNIV/\@SCHL/#1}{%
+%     \NTRunHook{coverTikz/#1/text/pre}%
+%     \begin{tikzpicture}[remember picture, overlay, yscale=-1, every node/.style={inner sep=0pt}]%
+%       \optionlistdo{/@nt/coverTikz/\@UNIV/\@SCHL/#1}{%
+%         \printCoverElementTikz#1\@nil##1\@nil\@nil%
+%       }%
+%     \end{tikzpicture}%
+%     \NTRunHook{coverTikz/#1/text/post}%
+%   }{}%
+% }
+% 
+% \def\printCoverElementTikz#1\@nil#2\@nil#3\@nil#4\@nil#5\@nil#6\@nil{%
+%   % #1=CID
+%   % #2=Command
+%   % #3=Options
+%   % #4=Position
+%   % #5=Rest of command
+%   % #6=Code
+%   % \node[inner sep=0,#2] at (#1) {Pos=[#1] Opt=[#2] CID=[#3] COD=[#4]};
+%   % \typeout{ CID=[#1] CMD=\string#2[#3] at (#4) --#5--}\TIKZCOVER
+%   \IfNoValueTF {#2} {\node[#3] at (#4) #5 {#6}} {#2[#3] (#4) #5};
+% }
+% %==========================================
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SCHOOL & UNIVERSITY LOGIC
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Update Schoold's images folder
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ntfor\match:={\@UNIV,\@UNIV/\@SCHL}\do{%
+    \IfFileExists{\DIRSCHOOLS/\match/Images/DO_NOT_REMOVE_THIS_FILE.txt}{%
+            \prependtographicspath{{\DIRSCHOOLS/\match/Images/},}}{}%
+}
+
+
+%============================================================
+%  UNIVERSITY/SCHOOL SPECIFIC MATERIALS
+%  configuration file “0-Config/9_<university>_<school>.tex”
+%============================================================
+\InputIfFileExists{\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.ldf}
+    {}
+    {\PackageError{novathesis}
+                  {Missing file “\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.ldf”}{}}
+
+\ntfor\match:={%
+      \@UNIV-\@SCHL-\@DEGREEACR,%
+      \@UNIV-\@SCHL%
+  }\do{%
+      \IfFileExists{\DIRSCHOOLS/\@UNIV/\@SCHL/\match-defaults.ldf}
+          {\input{\DIRSCHOOLS/\@UNIV/\@SCHL/\match-defaults.ldf}\ntforbreak}
+          {}%
+  }
+[\PackageError{novathesis}
+              {Missing file “\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-defaults.ldf”}
+              {}]
+
+\ValidateLtxProcessor{\@UNIV}{\@SCHL}{\@DEGREEACR}
+
+\IfFileExists{\DIRCONFIG/9_\@UNIV_\@SCHL.tex}
+     {\def\@ntsetuplevel{\@UNIV/\@SCHL/}\input{\DIRCONFIG/9_\@UNIV_\@SCHL.tex}}
+     {\def\@ntsetuplevel{\@UNIV/}\InputIfFileExists{\DIRCONFIG/9_\@UNIV.tex}{}{}}
+\def\@ntsetuplevel{}
+
+% Now we can load biblatx
+\NTRunHook{/afterloading/schoolconfig}
+
+
+% Prefer: DOI, else eprint, else URL
+\renewbibmacro*{doi+eprint+url}{%
+  \iffieldundef{doi}
+    {%
+      \iffieldundef{eprint}
+        {\usebibmacro{url+urldate}}% no doi/eprint → URL (with date if available)
+        {\usebibmacro{eprint}}% no doi, but eprint → eprint
+    }%
+    {\printfield{doi}}% doi present → DOI
+}
+
+
+
+% --------------------------------------------------------
+% Customize the pagestyle
+\newcommand{\rightorleftmark}{%
+  \setbox0=\hbox{\rightmark}
+  \ifdim\wd0>0.1pt\relax
+    \rightmark
+  \else
+    \leftmark
+  \fi
+}
+\makepagestyle{novathesis@mainmatter}
+\makeoddfoot{novathesis@mainmatter}{}{\thepage}{}
+\makeevenfoot{novathesis@mainmatter}{}{\thepage}{}
+\makeheadrule{novathesis@mainmatter}{\textwidth}{\normalrulethickness}
+\makeevenhead{novathesis@mainmatter}{\small\textsc{\leftmark}}{}{}
+\makeoddhead{novathesis@mainmatter}{}{}{\small\rightorleftmark}
+
+\makepagestyle{novathesis@frontmatter}
+\makeoddfoot{novathesis@frontmatter}{}{\thepage}{}
+\makeevenfoot{novathesis@frontmatter}{}{\thepage}{}
+
+\ifoptionequal{/novathesis/media}{paper}{
+  \ntsetup{color/links=Black}
+  \openright
+}{
+  \openany
+}
+
+
+% --------------------------------------------------------
+% If option “debug={index}” option is active,
+%     highlight index keywords in the main text
+\providecommand*{\debugindexcolor}{red!50}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LOADING CUSTOMIZATION STUFF - part 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%============================================================
+%  THESIS/DISSERTATION COVER DATA (title, author, etc)
+%   Please open and edit the appropriate
+%       configuration file “0-Config/3_cover.tex”
+%============================================================
+\input{\DIRCONFIG/3_cover}
+% \NTRunHook{cover}
+
+\ntselectlang{\@LANG@COVER}%
+
+%============================================================
+%  THESIS/DISSERTATION FILES
+%   Please open and edit the appropriate
+%       configuration file “0-Config/4_files.tex”
+%============================================================
+\input{\DIRCONFIG/4_files}
+\ntaddfile{bib}{\DIRSTYFILES/fix-bib.bib}
+% \NTRunHook{files}
+
+%============================================================
+% ADDITIONAL PACKAGES and MACROS
+%      Please open and edit the appropriate
+%       configuration file “0-Config/8_packages.tex”
+%============================================================
+% \NTRunHook{packages/pre}
+\AtEndPreamble{\input{\DIRCONFIG/5_packages}}
+% \NTRunHook{packages/post}
+
+%============================================================
+%  WHICH LIST_OF TO PRINT
+%   Please open and edit the appropriate
+%       configuration file “0-Config/6_list_of.tex”
+%============================================================
+\AtEndPreamble{
+% is only loaded after school's configuration
+% can be changhed with "\ntsetup{print/other}"
+  \makeatletter
+  \NTRunHook{list_of/pre}
+  \input{\DIRCONFIG/6_list_of}
+  \NTRunHook{list_of/post}
+}
+
+
+%============================================================
+% Deal with AI disclose declaration
+%============================================================
+\AtEndPreamble{
+  \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{
+    \input{\DIRCONFIG/7-aidisclose}
+  }{\gdef\aidversion{0.0.0}}
+}
+
+
+%============================================================
+\setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
+\optionlistdo{/@nt/file/bib/\@DOCTYPE}{%
+  % \typeout{ADDBIB=#1}\ADDBIB
+  \addbibresource{#1}%
+}%
+
+\ifdocunset{\ntsetup{docstatus=working}}{}
+
+\ifoptionequal{/novathesis/spine/layout}{unset}
+    {\ifdocworking{\ntsetup{spine/layout=false}}
+                  {\ifmaindoc{\ntsetup{spine/layout=trim}}
+                             {\ntsetup{spine/layout=false}}}}
+    {}
+\ifdocfinal{\ntsetup{print/committee=true}}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\@nt@loadallfiles}[2]{%
+  \optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}
+
+\newcommand{\@ntloadfile@i}[2][]{%
+  \IfFileExists{#2}{\input{#2}}{#1}}
+
+\newcommand{\PrintAddedFile}[2][\@DOCTYPE]{%
+  % #1=KEY
+  % #2=file class
+  \iffileadded[#1]{#2}
+      {\@nt@loadallfiles{#1}{#2}}
+      {}%
+}
+
+\newcommand{\iffileadded}[2][\@DOCTYPE]{%
+  \ifoptiondefined{/@nt/file/#2/#1}}
+
+% --------------------------------------------------------
+% LOAD A DEFAULT COPYRIGHT PAGE DEFINITION
+\newcommand{\@nt@AddFileIfExists}[1]{%
+% #1 = class
+% #2 = sub class [OPTIONAL]
+% #3 = file name
+% #4 = dir list
+% #5 = action if not found [OPTIONAL]
+  \@ifnextchar[{\@nt@AddFileIfExists@i{#1}}{\@nt@AddFileIfExists@i{#1}[\@DOCTYPE]}%
+}
+
+\def\@nt@AddFileIfExists@i#1[#2]#3#4{%
+  \@ifnextchar[{\@nt@AddFileIfExists@ii{#1}[#2]{#3}#4}{\@nt@AddFileIfExists@ii{#1}[#2]{#3}#4[]}%
+}
+
+\long\def\@nt@AddFileIfExists@ii#1[#2]#3#4[#5]{%
+  \ntfor\arg:=#4\do{\IfFileExists{\arg#3}{\ntaddfile{#1}[#2]{\arg#3}\ntforbreak}{}}[#5]%
+}
+
+
+\InputIfFileExistsInDirsTF {novathesis-spine.sty}
+  {%
+    {\DIRSCHOOLS/\@UNIV/\@SCHL},
+    {\DIRSCHOOLS/\@UNIV},
+    {\DIRSTYFILES},
+  }
+  {} % true
+  {\ClassError{novathesis}{No “novathesis-spine” file found.}{}}%
+
+\ifoptionequal{/novathesis/spine/layout}{false}
+  {}% skip the spine
+  {% print the spine 
+    \ifmaindoc{\AtEndDocument{\csuse{ntprintspine}}}{}%
+  }
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DEBUG - print grid over covers and spine
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \newcommand{\debuggrid}[1][orange]{%
+%   \begin{tikzpicture}[remember picture, semitransparent, overlay, shift=(current page.north west)]%
+%     \draw[step=1mm, line width=0.1mm, #1!30!white, yscale=-1] (\@MRGN@left, \@MRGN@top)
+%               grid (\paperwidth-\@MRGN@right, \paperheight-\@MRGN@bottom);
+%     \draw[step=5mm, line width=0.2mm, #1!40!white] (current page.north west)
+%               grid (current page.south east);
+%     \draw[step=1cm, line width=0.3mm, #1!90!white] (current page.north west)
+%               grid (current page.south east);
+%     \draw[step=5cm, line width=0.5mm, #1!50!white] (current page.north west)
+%               grid (current page.south east);
+%     \end{tikzpicture}%
+% }
+
