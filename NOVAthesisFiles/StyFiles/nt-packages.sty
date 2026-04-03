@@ -77,8 +77,8 @@
 \RequirePackage{options-ext}      % Key-value option system
 \RequirePackage{nt-version}       % \novathesisversion / \novathesisdate
 \RequirePackage{nt-covers-expl3}  % Cover page rendering engine
-\RequirePackage{memory2}          % Data storage API (\newdata, \SetDataName, …)
-\RequirePackage{memstore}         % Higher-level memory store helpers
+\RequirePackage{memory2}          % Data storage API (\newdata, …)
+\RequirePackage{memstore}         % Higher-level memory store helpers (aiming to replace memory2)
 \RequirePackage{stocksize}        % Paper / stock size handling
 
 
@@ -134,6 +134,7 @@
 \RequirePackage{colortbl} % Coloured table cells (\columncolor, \rowcolor, …)
 \RequirePackage{xurl}               % Loads 'url' with improved line-breaking
 
+% ── Customize Graphcics package ───────────────────────────────────────
 \expandafter\graphicspath\expandafter{\expandafter{\DIRFIGURES/}}
 \DeclareGraphicsExtensions{.pdf,.png,.tif,.jpg}
 \providecommand*\appendtographicspath[1]{\xappto\Ginput@path{#1}}
@@ -174,7 +175,7 @@
     pdfdisplaydoctitle=true,
     unicode=true,
   }{hyperref}
-  \RequirePackage{hyperref}              % PDF hyperlinks, metadata & bookmarks
+  \RequirePackage{hyperref}           % PDF hyperlinks, metadata & bookmarks
   \RequirePackage{fix-hyperref}       % Patches hyperref immediately after loading
   \RequirePackage{bookmark}           % Extends hyperref bookmarks
 
