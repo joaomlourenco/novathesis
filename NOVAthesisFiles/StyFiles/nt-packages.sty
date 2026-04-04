@@ -27,10 +27,10 @@
 % ── Hook API ──────────────────────────────────────────────────────────
 % Thin wrappers over the LaTeX kernel hook engine (LaTeX 2020-10-01+).
 % Hook names are namespaced under 'novathesis/' to avoid conflicts with
-% kernel or package hooks.  \ProvideHook ensures firing an empty hook
-% is a silent no-op (matching \UseHook's undeclared-hook behaviour).
+% kernel or package hooks.  \ActivateGenericHook (LaTeX 2024+) makes
+% \UseHook a silent no-op when no code has been added to the hook.
 \newcommand*{\NTAddToHook}[2]{\AddToHook{novathesis/#1}{#2}}
-\newcommand*{\NTRunHook}[1]{\ProvideHook{novathesis/#1}\UseHook{novathesis/#1}}
+\newcommand*{\NTRunHook}[1]{\ActivateGenericHook{novathesis/#1}\UseHook{novathesis/#1}}
 
 % ── Directory macros ──────────────────────────────────────────────────
 \def\DIRCONFIG{0-Config}

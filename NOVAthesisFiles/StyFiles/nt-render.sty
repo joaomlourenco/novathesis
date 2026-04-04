@@ -1174,7 +1174,8 @@
       \options{/@nt/listof/\@matter/.size = \mysize}%
       \ifnum\mysize>1\relax
         \hypertarget{bmlistof\@matter}{}%
-        \bookmark[dest=bmlistof\@matter]{\GetBkmString(listof,\@LANG@MAIN)}%
+        \edef\@nt@listof@bkmtitle{\GetBkmString(listof,\@LANG@MAIN)}%
+        \bookmark[dest=bmlistof\@matter]{\@nt@listof@bkmtitle}%
         \bookmarksetupnext{rellevel=1}%
       \fi
       % \typeout{PRINTALLLISTOF=\@matter}\PRINTALLLISTOF
