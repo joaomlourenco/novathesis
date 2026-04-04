@@ -1,8 +1,8 @@
-# nt-covers-expl3-v2 Documentation
+# nt-covers-v2 Documentation
 
 ## Overview
 
-`nt-covers-expl3-v2.sty` is a modern, expl3-based reimplementation of the `nt-covers.sty` package. This version provides:
+`nt-covers-v2.sty` is a modern, expl3-based reimplementation of the `nt-covers.sty` package. This version provides:
 
 - **Modern LaTeX3 architecture** using expl3 programming interface
 - **Improved performance** through optimized data structures
@@ -170,7 +170,7 @@ All content elements support the following attributes:
 
 ```latex
 \documentclass{novathesis}
-\usepackage{nt-covers-expl3-v2}
+\usepackage{nt-covers-v2}
 
 \begin{document}
 
@@ -244,7 +244,7 @@ All content elements support the following attributes:
    \usepackage{nt-covers}
 
    % New
-   \usepackage{nt-covers-expl3-v2}
+   \usepackage{nt-covers-v2}
    ```
 
 2. **Update element attributes**:
