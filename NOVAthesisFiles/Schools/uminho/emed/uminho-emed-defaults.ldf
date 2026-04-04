@@ -18,11 +18,11 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Escola de Medicina​}
-\school(en):={School of Medicine​}
-\school(fr):={\theschool(en)}
-\school(it):={\theschool(en)}
+\SetSchool*(pt)={Escola de Medicina​}
+\SetSchool*(en)={School of Medicine​}
+\SetSchool*(fr)={\GetSchool(en)}
+\SetSchool*(it)={\GetSchool(en)}
 
 % Logos
-\school(logo,RGB):={uminho-em-insignia-color}
-\school(logo,GRAY):={uminho-em-insignia-mono}
+\SetSchool*(logo,RGB)={uminho-em-insignia-color}
+\SetSchool*(logo,GRAY)={uminho-em-insignia-mono}

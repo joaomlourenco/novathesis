@@ -20,59 +20,59 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Faculdade de Ciências}
-\school(en):={Faculty of Sciences}
-\school(fr):={Faculty of Sciences}
-\school(it):={Faculty of Sciences}
+\SetSchool*(pt)={Faculdade de Ciências}
+\SetSchool*(en)={Faculty of Sciences}
+\SetSchool*(fr)={Faculty of Sciences}
+\SetSchool*(it)={Faculty of Sciences}
 
 % Specialization field
-\specialization(pt):={Especialidade}
-\specialization(en):={Specialization}
+\SetSpecialization*(pt)={Especialidade}
+\SetSpecialization*(en)={Specialization}
 
-\newdata{adviserslabel}
-\adviserslabel(phd,pt):={Tese orientada por:}
-\adviserslabel(phd,en):={Thesis supervised by:}
-\adviserslabel(phdprop,pt):={Tese orientada por:}
-\adviserslabel(phdprop,en):={Thesis supervised by:}
-\adviserslabel(phdplan,pt):={Tese orientada por:}
-\adviserslabel(phdplan,en):={Thesis supervised by:}
-\adviserslabel(msc,pt):={Dissertação orientada por:}
-\adviserslabel(msc,en):={Dissertation supervised by:}
-\adviserslabel(mscplan,pt):={Dissertação orientada por:}
-\adviserslabel(mscplan,en):={Dissertation supervised by:}
-\adviserslabel(de):={TBD}
-\adviserslabel(es):={TBD}
-\adviserslabel(fr):={TBD}
-\adviserslabel(it):={TBD}
+\NewMemStore{AdvisersLabel}
+\SetAdvisersLabel*(phd,pt)={Tese orientada por:}
+\SetAdvisersLabel*(phd,en)={Thesis supervised by:}
+\SetAdvisersLabel*(phdprop,pt)={Tese orientada por:}
+\SetAdvisersLabel*(phdprop,en)={Thesis supervised by:}
+\SetAdvisersLabel*(phdplan,pt)={Tese orientada por:}
+\SetAdvisersLabel*(phdplan,en)={Thesis supervised by:}
+\SetAdvisersLabel*(msc,pt)={Dissertação orientada por:}
+\SetAdvisersLabel*(msc,en)={Dissertation supervised by:}
+\SetAdvisersLabel*(mscplan,pt)={Dissertação orientada por:}
+\SetAdvisersLabel*(mscplan,en)={Dissertation supervised by:}
+\SetAdvisersLabel*(de)={TBD}
+\SetAdvisersLabel*(es)={TBD}
+\SetAdvisersLabel*(fr)={TBD}
+\SetAdvisersLabel*(it)={TBD}
 
-\newdata{provisionalstring}
-\provisionalstring(pt):={Documento Provisório}
-\provisionalstring(en):={Provisional Document}
-\provisionalstring(de):={TBD}
-\provisionalstring(es):={TBD}
-\provisionalstring(fr):={TBD}
-\provisionalstring(it):={TBD}
+\NewMemStore{ProvisionalString}
+\SetProvisionalString*(pt)={Documento Provisório}
+\SetProvisionalString*(en)={Provisional Document}
+\SetProvisionalString*(de)={TBD}
+\SetProvisionalString*(es)={TBD}
+\SetProvisionalString*(fr)={TBD}
+\SetProvisionalString*(it)={TBD}
 
-\dissertationstring(phdplan,pt)={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
-\dissertationstring(phdprop,pt)={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
-\dissertationstring(phd,pt)={Documento especialmente elaborado para a obtenção do grau de  %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
+\SetDissertationString(phdplan,pt)={Documento especialmente elaborado para a obtenção do grau de  %
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)}
+\SetDissertationString(phdprop,pt)={Documento especialmente elaborado para a obtenção do grau de  %
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)}
+\SetDissertationString(phd,pt)={Documento especialmente elaborado para a obtenção do grau de  %
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)}
 
-\dissertationstring(phdplan,en)={Document written to earn the degree of %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
-\dissertationstring(phdprop,en)={Document written to earn the degree of %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
-\dissertationstring(phd,en)={Document written to earn the degree of %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)}
+\SetDissertationString(phdplan,en)={Document written to earn the degree of %
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)}
+\SetDissertationString(phdprop,en)={Document written to earn the degree of %
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)}
+\SetDissertationString(phd,en)={Document written to earn the degree of %
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)}
 
 
 %%=======================================================================
 %% COMMITTEE
 %%=======================================================================
 
-\committeeorder():={c,r,a,m}%
+\SetCommitteeOrder*()={c,r,a,m}%
 
 
 %%=======================================================================
@@ -89,20 +89,20 @@
 %%=======================================================================
 
 % Set margins for "normal" pages
-\margin(screen,top):={3.5cm}
-\margin(screen,bottom):={2.5cm}
-\margin(screen,left):={3.0cm}
-\margin(screen,right):={3.0cm}
-\margin(paper,top):={3.5cm}
-\margin(paper,bottom):={2.5cm}
-\margin(paper,left):={2.5cm}
-\margin(paper,right):={3.5cm}
+\SetMargin*(screen,top)={3.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={3.0cm}
+\SetMargin*(screen,right)={3.0cm}
+\SetMargin*(paper,top)={3.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={2.5cm}
+\SetMargin*(paper,right)={3.5cm}
 
 %% Set margins for cover pages
-\margin(cover,top):={1.1cm}
-\margin(cover,bottom):={0.8cm}
-\margin(cover,left):={2.5cm}
-\margin(cover,right):={2.5cm}
+\SetMargin*(cover,top)={1.1cm}
+\SetMargin*(cover,bottom)={0.8cm}
+\SetMargin*(cover,left)={2.5cm}
+\SetMargin*(cover,right)={2.5cm}
 
 
 %%=======================================================================
@@ -125,11 +125,11 @@
 
 \NTAddToHook{cover/1-1/pre}{%
   \sffamily%
-  \ifdocfinal{\provisionalstring(\@LANG@COVER):={~}}{}%
+  \ifdocfinal{\SetProvisionalString*(\@LANG@COVER)={~}}{}%
 }
 \NTAddToHook{cover/2-1/text/pre}{%
   \sffamily%
-  \ifdocfinal{\provisionalstring(\@LANG@COVER):={~}}{}%
+  \ifdocfinal{\SetProvisionalString*(\@LANG@COVER)={~}}{}%
 }
 
 
@@ -140,10 +140,10 @@
 % School
 \ntaddtocover[height=2.5cm, valign=t]{1-1,2-1}{%
   \fontseries{mc}\fontsize{12}{12}\selectfont%
-  {\ToUppercase{\theuniversity(\@LANG@COVER)}}\\[2mm]%
-  {\ToUppercase{\theschool(\@LANG@COVER)}}\\[2mm]%
+  {\ToUppercase{\GetUniversity(\@LANG@COVER)}}\\[2mm]%
+  {\ToUppercase{\GetSchool(\@LANG@COVER)}}\\[2mm]%
   \ifmscdoc
-     {\ToUppercase{\thedepartmentofstring(\@LANG@COVER)}
+     {\ToUppercase{\GetDepartmentOfString(\@LANG@COVER)}
       \ToUppercase{\GetDepartment(\@LANG@COVER)}}%
     {}%
 }
@@ -158,60 +158,58 @@
 % PhD Title of Dissertation
 \ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.2cm, height=2cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{17}{17}\selectfont%
-  \textbf{\thedoctitle(\@LANG@COVER,main)}%
+  \textbf{\GetDocTitle(\@LANG@COVER,main)}%
 }
 
 % MSc Title of Dissertation
 \ntaddtocover[degree=msc/mscplan, vspace=2.0cm, height=2cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{17}{17}\selectfont%
-  \textbf{\thedoctitle(\@LANG@COVER,main)}%
+  \textbf{\GetDocTitle(\@LANG@COVER,main)}%
 }
 
 % Doc Status (PhD only position)
 \ntaddtocover[degree=phd/phdprop/phdplan, vspace=0cm, height=1.9cm]{1-1,2-1}{%
-  \emph{\theprovisionalstring(\@LANG@COVER)}%
+  \emph{\GetProvisionalString(\@LANG@COVER)}%
 }
 
 % Degree (PhD only position)
 \ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.4cm, height=2.5cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
-  \thedegreename(\@LANG@COVER)
-  \ifdatadefined{specialization}(\@LANG@COVER)%
-    {\\[2mm]\thespecialization(\@LANG@COVER)}%
-    {}%
+  \GetDegreeName(\@LANG@COVER)
+  \IfMemVoidF{Specialization}{\@LANG@COVER}%
+    {\\[2mm]\GetSpecialization(\@LANG@COVER)}%
 }%
 
 % Author name
 \ntaddtocover[vspace=3.0cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
-  \thedocauthor(name)%
+  \GetDocAuthor(name)%
 }
 
 % Degree (MSc only position)
 \ntaddtocover[degree=msc/mscplan, vspace=1.8cm, height=2.5cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
-  \thedegreename(\@LANG@COVER)
-  \ifdatadefined{specialization}(\@LANG@COVER)%
-    {\\[2mm]\thespecialization(\@LANG@COVER)}%
-    {}%
+  \GetDegreeName(\@LANG@COVER)
+  \IfMemVoidF{Specialization}{\@LANG@COVER}%
+    {\\[2mm]\GetSpecialization(\@LANG@COVER)}%
 }%
 
 % Doc Status (MSc only position)
 \ntaddtocover[degree=msc/mscplan, vspace=0cm, height=1.0cm]{1-1,2-1}{%
-  \emph{\theprovisionalstring(\@LANG@COVER)}%
+  \emph{\GetProvisionalString(\@LANG@COVER)}%
 }
 
 % Advisers (PhD only position)
 \ntaddtocover[degree=phd/phdprop/phdplan, vspace=2.0cm]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
-  \theadviserslabel(\option{/novathesis/doctype},\@LANG@COVER)\\[3mm]%
+  \GetAdvisersLabel(\option{/novathesis/doctype},\@LANG@COVER)\\[3mm]%
   \ntprintpersons{0.9}{0}{adviser}{a,c}%
 }
 
 % Advisers (MSc only position)
 \ntaddtocover[degree=msc/mscplan, vspace=1.0cm]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
-  \theadviserslabel(\option{/novathesis/doctype},\@LANG@COVER)\\[3mm]%
+  \GetAdvisersLabel(\option{/novathesis/doctype},\@LANG@COVER)\\[3mm]%
   \ntprintpersons{0.9}{0}{adviser}{a,c}%
 }
 
@@ -220,7 +218,7 @@
   % \fontseries{mc}
   \fontsize{10}{10}\selectfont%
   \foreach \myi in {1, ..., 9} {%
-    \thesponsor(\@LANG@COVER,\myi,text)\qquad
+    \GetSponsor(\@LANG@COVER,\myi,text)\qquad
   }%
 }
 

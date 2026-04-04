@@ -13,36 +13,36 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Escola de Tecnologia e Arquitectura}
-\school(en):={School of Technology and Architecture}
+\SetSchool*(pt)={Escola de Tecnologia e Arquitectura}
+\SetSchool*(en)={School of Technology and Architecture}
 
-\dissertationstring(bsc,pt)={Relatório para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(msc,pt)={Dissertação para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
-\dissertationstring(phd,pt)={Dissertação para obtenção do Grau de %
-\thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\themajorfield(\@LANG@COVER)}}
+\SetDissertationString(bsc,pt)={Relatório para obtenção do Grau de %
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
+\SetDissertationString(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
+\SetDissertationString(msc,pt)={Dissertação para obtenção do Grau de %
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
+\SetDissertationString(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
+\SetDissertationString(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
+\SetDissertationString(phd,pt)={Dissertação para obtenção do Grau de %
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
 
-\copyrighttextstring(pt)={A \theschool(\@LANG@COVER)\ e a \theuniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
-\copyrighttextstring(en)={The \theschool(\@LANG@COVER)\ and the \theuniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+\SetCopyrightTextString(pt)={A \GetSchool(\@LANG@COVER)\ e a \GetUniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+\SetCopyrightTextString(en)={The \GetSchool(\@LANG@COVER)\ and the \GetUniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
 
 
 %%=======================================================================
 %% COMMITTEE
 %%=======================================================================
 
-\committeeorder():={c,r,a,m}%
+\SetCommitteeOrder*()={c,r,a,m}%
 
 % Font customization
-\adviserstringfont():={\bfseries}%
-\committeetitlestringfont():={\fontsize{14}{14}\selectfont\bfseries}%
-\committeestringfont():={\bfseries}%
+\MemSet{adviserstringfont}{}{\bfseries}%
+\MemSet{committeetitlestringfont}{}{\fontsize{14}{14}\selectfont\bfseries}%
+\MemSet{committeestringfont}{}{\bfseries}%
 
 
 %%=======================================================================
@@ -59,20 +59,20 @@
 %%=======================================================================
 
 % Set margins for "normal" pages
-\margin(screen,top):={3.5cm}
-\margin(screen,bottom):={2.5cm}
-\margin(screen,left):={3.0cm}
-\margin(screen,right):={3.0cm}
-\margin(paper,top):={3.5cm}
-\margin(paper,bottom):={2.5cm}
-\margin(paper,left):={2.5cm}
-\margin(paper,right):={3.5cm}
+\SetMargin*(screen,top)={3.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={3.0cm}
+\SetMargin*(screen,right)={3.0cm}
+\SetMargin*(paper,top)={3.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={2.5cm}
+\SetMargin*(paper,right)={3.5cm}
 
 % Set margins for cover pages
-\margin(cover,top):={2.0cm}
-\margin(cover,bottom):={1.5cm}
-\margin(cover,left):={2.5cm}
-\margin(cover,right):={2.5cm}
+\SetMargin*(cover,top)={2.0cm}
+\SetMargin*(cover,bottom)={1.5cm}
+\SetMargin*(cover,left)={2.5cm}
+\SetMargin*(cover,right)={2.5cm}
 
 
 %%=======================================================================
@@ -92,7 +92,7 @@
 %% COVER PAGE SETUP (BACKGROUNDS)
 %%=======================================================================
 
-\thesiscover(phd,1-1,bgcolor):={white}
+\SetThesisCover*(phd,1-1,bgcolor)={white}
 
 
 %%=======================================================================
@@ -120,25 +120,25 @@
 \ntaddtocover[vspace=0.5cm]{1-1,2-1}{%
   \fontsize{16}{16}\selectfont%
   \vspace{1cm}%
-  %\textbf{\ToUppercase{\theuniversity(\@LANG@COVER)}}\\%
-  \textbf{\theschool(\@LANG@COVER)}\\%
+  %\textbf{\ToUppercase{\GetUniversity(\@LANG@COVER)}}\\%
+  \textbf{\GetSchool(\@LANG@COVER)}\\%
   \vspace{2mm}%
-  %\textbf{\ToUppercase{\theschool(\@LANG@COVER)}}%
-  \textbf{\themajorfield(\@LANG@COVER)}%
+  %\textbf{\ToUppercase{\GetSchool(\@LANG@COVER)}}%
+  \textbf{\GetMajorField(\@LANG@COVER)}%
 }
 
 % % Title of Dissertation
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{18}{20}\selectfont%
   %\textbf{\thetitle}%
-  \textbf{\thedoctitle(\@LANG@COVER,main)}%
+  \textbf{\GetDocTitle(\@LANG@COVER,main)}%
 }
 
 % Author name
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
-  %\textbf{\thedocauthor(name)}%
-  \textbf{\thedocauthor(name)}%
+  %\textbf{\GetDocAuthor(name)}%
+  \textbf{\GetDocAuthor(name)}%
 }
 
 % Degree
@@ -156,7 +156,7 @@
 % Committee — only print the committee for the main classes
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
-  \ntprintpersons{0.9}{2}{committee}{\thecommitteeorder()}
+  \ntprintpersons{0.9}{2}{committee}{\GetCommitteeOrder()}
 }
 
 % Date

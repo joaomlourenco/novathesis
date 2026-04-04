@@ -13,13 +13,13 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Escola Superior de Tecnologia de Setúbal}
-\school(en):={Escola Superior de Tecnologia de Setúbal}
-\school(fr):={Escola Superior de Tecnologia de Setúbal}
-\school(it):={Escola Superior de Tecnologia de Setúbal}
+\SetSchool*(pt)={Escola Superior de Tecnologia de Setúbal}
+\SetSchool*(en)={Escola Superior de Tecnologia de Setúbal}
+\SetSchool*(fr)={Escola Superior de Tecnologia de Setúbal}
+\SetSchool*(it)={Escola Superior de Tecnologia de Setúbal}
 
 % School customization
-\school(logo):={ips-ests-logo-vert}
+\SetSchool*(logo)={ips-ests-logo-vert}
 
 
 %%=======================================================================
@@ -39,4 +39,4 @@
 %% COVER PAGE SETUP (BACKGROUNDS)
 %%=======================================================================
 
-\frontpageimage():={ests-photo} % don't add the .jpg extension
+\SetFrontPageImage*()={ests-photo} % don't add the .jpg extension

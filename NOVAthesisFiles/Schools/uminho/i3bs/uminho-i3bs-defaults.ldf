@@ -18,11 +18,11 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Instituto de Investigação em Biomateriais, \\Biodegradáveis e Biomiméticos​}
-\school(en):={Research Institute 13Bs}
-\school(fr):={\theschool(en)}
-\school(it):={\theschool(en)}
+\SetSchool*(pt)={Instituto de Investigação em Biomateriais, \\Biodegradáveis e Biomiméticos​}
+\SetSchool*(en)={Research Institute 13Bs}
+\SetSchool*(fr)={\GetSchool(en)}
+\SetSchool*(it)={\GetSchool(en)}
 
 % Logos
-\school(logo,RGB):={uminho-iibbb-insignia-color}
-\school(logo,GRAY):={uminho-iibbb-insignia-mono}
+\SetSchool*(logo,RGB)={uminho-iibbb-insignia-color}
+\SetSchool*(logo,GRAY)={uminho-iibbb-insignia-mono}

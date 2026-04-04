@@ -13,22 +13,22 @@
 %%=======================================================================
 
 % University
-\university(cat) := {NOVA University Lisbon}
-\university(cz)  := {NOVA University Lisbon}
-\university(de)  := {NOVA University Lisbon}
-\university(dk)  := {NOVA University Lisbon}
-\university(en)  := {NOVA University Lisbon}
-\university(es)  := {NOVA University Lisbon}
-\university(fr)  := {NOVA University Lisbon}
-\university(gr)  := {NOVA University Lisbon}
-\university(it)  := {NOVA University Lisbon}
-\university(nl)  := {NOVA University Lisbon}
-\university(pl)  := {NOVA University Lisbon}
-\university(pt)  := {Universidade NOVA de Lisboa}
-\university(sk)  := {NOVA University Lisbon}
-\university(uk)  := {NOVA University Lisbon}
+\SetUniversity*(cat)={NOVA University Lisbon}
+\SetUniversity*(cz)={NOVA University Lisbon}
+\SetUniversity*(de)={NOVA University Lisbon}
+\SetUniversity*(dk)={NOVA University Lisbon}
+\SetUniversity*(en)={NOVA University Lisbon}
+\SetUniversity*(es)={NOVA University Lisbon}
+\SetUniversity*(fr)={NOVA University Lisbon}
+\SetUniversity*(gr)={NOVA University Lisbon}
+\SetUniversity*(it)={NOVA University Lisbon}
+\SetUniversity*(nl)={NOVA University Lisbon}
+\SetUniversity*(pl)={NOVA University Lisbon}
+\SetUniversity*(pt)={Universidade NOVA de Lisboa}
+\SetUniversity*(sk)={NOVA University Lisbon}
+\SetUniversity*(uk)={NOVA University Lisbon}
 
 % Logos
-\university(logo)     :={nova-insignia}
-\university(logo,neg) :={nova-insignia-negative}
-\university(logo2)    :={nova-logo}
+\SetUniversity*(logo)={nova-insignia}
+\SetUniversity*(logo,neg)={nova-insignia-negative}
+\SetUniversity*(logo2)={nova-logo}

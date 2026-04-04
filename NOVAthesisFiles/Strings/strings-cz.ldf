@@ -9,237 +9,237 @@
 %% UTILITIES
 %%=======================================================================
 
-\andstring(cz)                  := { a }
-\instring(cz)                   := { v }
-\ofstring(cz)                   := { z }
-\ofstring(1,m,cz)               := { z }
-\ofstring(2,m,cz)               := { z }
-\ofstring(1,f,cz)               := { z }
-\ofstring(2,f,cz)               := { z }
-\keywordsstring(cz)             := {Klíčová slova}
-\departmentofstring(cz)         := {Katedra}
-\specializationstring(cz)       := {Specializace}
-\degreenameprefix(bsc,cz)       := {Bakalářský obor}
-\degreenameprefix(msc,cz)       := {Magisterský obor}
-\degreenameprefix(phd,cz)       := {Doktorský obor}
-\candidatestring(m,cz)          := {Kandidát}
-\candidatestring(f,cz)          := {Kandidátka}
+\SetAndString*(cz)={ a }
+\SetInString*(cz)={ v }
+\SetOfString*(cz)={ z }
+\SetOfString*(1,m,cz)={ z }
+\SetOfString*(2,m,cz)={ z }
+\SetOfString*(1,f,cz)={ z }
+\SetOfString*(2,f,cz)={ z }
+\SetKeywordsString*(cz)={Klíčová slova}
+\SetDepartmentOfString*(cz)={Katedra}
+\SetSpecializationString*(cz)={Specializace}
+\SetDegreeNamePrefix*(bsc,cz)={Bakalářský obor}
+\SetDegreeNamePrefix*(msc,cz)={Magisterský obor}
+\SetDegreeNamePrefix*(phd,cz)={Doktorský obor}
+\SetCandidateString*(m,cz)={Kandidát}
+\SetCandidateString*(f,cz)={Kandidátka}
 
 
 %%=======================================================================
 %% BOOKMARK STRINGS
 %%=======================================================================
 
-\bkmstring(frontmatter,cz)      := {Úvodní část}
-\bkmstring(backmatter,cz)       := {Závěrečná část}
-\bkmstring(cover,cz)            := {Obálka}
-\bkmstring(incover,cz)          := {Vnitřní strana přední obálky}
-\bkmstring(frontpage,cz)        := {Titulní list}
-\bkmstring(infrontpage,cz)      := {Rub titulního listu}
-\bkmstring(backcover,cz)        := {Zadní obálka}
-\bkmstring(inbackcover,cz)      := {Vnitřní strana zadní obálky}
-\bkmstring(spine,cz)            := {Hřbet}
-\bkmstring(copyright,cz)        := {Copyright}
-\bkmstring(statement,cz)        := {Prohlášení}
-\bkmstring(statements,cz)       := {Prohlášení}
-\bkmstring(dedication,cz)       := {Věnování}
-\bkmstring(acknowledgements,cz) := {Poděkování}
-\bkmstring(quote,cz)            := {Citát}
-\bkmstring(abstract,cz)         := {Abstrakt}
-\bkmstring(listof,cz)           := {Seznam…}
-\bkmstring(glossaries,cz)       := {Glosáře}
+\SetBkmString*(frontmatter,cz)={Úvodní část}
+\SetBkmString*(backmatter,cz)={Závěrečná část}
+\SetBkmString*(cover,cz)={Obálka}
+\SetBkmString*(incover,cz)={Vnitřní strana přední obálky}
+\SetBkmString*(frontpage,cz)={Titulní list}
+\SetBkmString*(infrontpage,cz)={Rub titulního listu}
+\SetBkmString*(backcover,cz)={Zadní obálka}
+\SetBkmString*(inbackcover,cz)={Vnitřní strana zadní obálky}
+\SetBkmString*(spine,cz)={Hřbet}
+\SetBkmString*(copyright,cz)={Copyright}
+\SetBkmString*(statement,cz)={Prohlášení}
+\SetBkmString*(statements,cz)={Prohlášení}
+\SetBkmString*(dedication,cz)={Věnování}
+\SetBkmString*(acknowledgements,cz)={Poděkování}
+\SetBkmString*(quote,cz)={Citát}
+\SetBkmString*(abstract,cz)={Abstrakt}
+\SetBkmString*(listof,cz)={Seznam…}
+\SetBkmString*(glossaries,cz)={Glosáře}
 
 
 %%=======================================================================
 %% DEFAULTS
 %%=======================================================================
 
-\defaultnttitle(cz)             := {Velmi Dlouhý a Působivý\\Název Práce s Vynuceným Zalomením Řádku}
-\defaultntsubtitle(cz)          := {Několik Myšlenek o Životě, Vesmíru\a Všem Ostatním}
-\defaultntdepartment(cz)        := {Název Katedry}
-\defaultntdegreename(cz)        := {Název Studijního Programu}
-\defaultntspecialization(cz)    := {Název Specializace}
-\defaultntauthordegree(cz)      := {Magistr/Bakalář v Oboru Název Předchozího Titulu}
-\notdefinedstring(cz)           := {NEDEFINOVÁNO}
+\SetDefaultNtTitle*(cz)={Velmi Dlouhý a Působivý\\Název Práce s Vynuceným Zalomením Řádku}
+\SetDefaultNtSubtitle*(cz)={Několik Myšlenek o Životě, Vesmíru\a Všem Ostatním}
+\SetDefaultNtDepartment*(cz)={Název Katedry}
+\SetDefaultNtDegreeName*(cz)={Název Studijního Programu}
+\SetDefaultNtSpecialization*(cz)={Název Specializace}
+\SetDefaultNtAuthorDegree*(cz)={Magistr/Bakalář v Oboru Název Předchozího Titulu}
+\SetNotDefinedString*(cz)={NEDEFINOVÁNO}
 
 
 %%=======================================================================
 %% ADVISER STRINGS
 %%=======================================================================
 
-\professorstring(1,m,cz)        := {Profesor}
-\professorstring(2,m,cz)        := {Profesoři}
-\professorstring(1,f,cz)        := {Profesorka}
-\professorstring(2,f,cz)        := {Profesorky}
+\SetProfessorString*(1,m,cz)={Profesor}
+\SetProfessorString*(2,m,cz)={Profesoři}
+\SetProfessorString*(1,f,cz)={Profesorka}
+\SetProfessorString*(2,f,cz)={Profesorky}
 
-\adviserstring(a,1,m,cz)        := {Vedoucí}
-\adviserstring(a,1,f,cz)        := {Vedoucí}
-\adviserstring(a,2,m,cz)        := {Vedoucí}
-\adviserstring(a,2,f,cz)        := {Vedoucí}
+\SetAdviserString*(a,1,m,cz)={Vedoucí}
+\SetAdviserString*(a,1,f,cz)={Vedoucí}
+\SetAdviserString*(a,2,m,cz)={Vedoucí}
+\SetAdviserString*(a,2,f,cz)={Vedoucí}
 
-\adviserstring(c,1,m,cz)        := {Konzultant}
-\adviserstring(c,1,f,cz)        := {Konzultantka}
-\adviserstring(c,2,m,cz)        := {Konzultanti}
-\adviserstring(c,2,f,cz)        := {Konzultantky}
+\SetAdviserString*(c,1,m,cz)={Konzultant}
+\SetAdviserString*(c,1,f,cz)={Konzultantka}
+\SetAdviserString*(c,2,m,cz)={Konzultanti}
+\SetAdviserString*(c,2,f,cz)={Konzultantky}
 
-\adviserstring(ca,1,m,cz)       := {Konzultant}
-\adviserstring(ca,1,f,cz)       := {Konzultantka}
-\adviserstring(ca,2,m,cz)       := {Konzultanti}
-\adviserstring(ca,2,f,cz)       := {Konzultantky}
+\SetAdviserString*(ca,1,m,cz)={Konzultant}
+\SetAdviserString*(ca,1,f,cz)={Konzultantka}
+\SetAdviserString*(ca,2,m,cz)={Konzultanti}
+\SetAdviserString*(ca,2,f,cz)={Konzultantky}
 
-\adviserstring(t,1,m,cz)        := {Tutor}
-\adviserstring(t,1,f,cz)        := {Tutorka}
-\adviserstring(t,2,m,cz)        := {Tutoři}
-\adviserstring(t,2,f,cz)        := {Tutorky}
+\SetAdviserString*(t,1,m,cz)={Tutor}
+\SetAdviserString*(t,1,f,cz)={Tutorka}
+\SetAdviserString*(t,2,m,cz)={Tutoři}
+\SetAdviserString*(t,2,f,cz)={Tutorky}
 
-\adviserstring(pref,a,1,m,cz)        := {Vedoucí}
-\adviserstring(pref,a,1,f,cz)        := {Vedoucí}
-\adviserstring(pref,a,2,m,cz)        := {Vedoucí}
-\adviserstring(pref,a,2,f,cz)        := {Vedoucí}
+\SetAdviserString*(pref,a,1,m,cz)={Vedoucí}
+\SetAdviserString*(pref,a,1,f,cz)={Vedoucí}
+\SetAdviserString*(pref,a,2,m,cz)={Vedoucí}
+\SetAdviserString*(pref,a,2,f,cz)={Vedoucí}
 
-\adviserstring(pref,c,1,m,cz)        := {Konzultant}
-\adviserstring(pref,c,1,f,cz)        := {Konzultantka}
-\adviserstring(pref,c,2,m,cz)        := {Konzultanti}
-\adviserstring(pref,c,2,f,cz)        := {Konzultantky}
+\SetAdviserString*(pref,c,1,m,cz)={Konzultant}
+\SetAdviserString*(pref,c,1,f,cz)={Konzultantka}
+\SetAdviserString*(pref,c,2,m,cz)={Konzultanti}
+\SetAdviserString*(pref,c,2,f,cz)={Konzultantky}
 
-\adviserstring(pref,ca,1,m,cz)       := {Konzultant}
-\adviserstring(pref,ca,1,f,cz)       := {Konzultantka}
-\adviserstring(pref,ca,2,m,cz)       := {Konzultanti}
-\adviserstring(pref,ca,2,f,cz)       := {Konzultantky}
+\SetAdviserString*(pref,ca,1,m,cz)={Konzultant}
+\SetAdviserString*(pref,ca,1,f,cz)={Konzultantka}
+\SetAdviserString*(pref,ca,2,m,cz)={Konzultanti}
+\SetAdviserString*(pref,ca,2,f,cz)={Konzultantky}
 
-\adviserstring(pref,t,1,m,cz)        := {Tutor}
-\adviserstring(pref,t,1,f,cz)        := {Tutorka}
-\adviserstring(pref,t,2,m,cz)        := {Tutoři}
-\adviserstring(pref,t,2,f,cz)        := {Tutorky}
+\SetAdviserString*(pref,t,1,m,cz)={Tutor}
+\SetAdviserString*(pref,t,1,f,cz)={Tutorka}
+\SetAdviserString*(pref,t,2,m,cz)={Tutoři}
+\SetAdviserString*(pref,t,2,f,cz)={Tutorky}
 
 
 %%=======================================================================
 %% DEGREE NAMES
 %%=======================================================================
 
-\degreestring(bsc,m,cz)         := {Bakalář}
-\degreestring(bsc,f,cz)         := {Bakalářka}
+\SetDegreeString*(bsc,m,cz)={Bakalář}
+\SetDegreeString*(bsc,f,cz)={Bakalářka}
 
-\degreestring(msc,m,cz)         := {Magistr}
-\degreestring(msc,f,cz)         := {Magistra}
-\degreestring(mscplan,m,cz)     := {Magistr}
-\degreestring(mscplan,f,cz)     := {Magistra}
+\SetDegreeString*(msc,m,cz)={Magistr}
+\SetDegreeString*(msc,f,cz)={Magistra}
+\SetDegreeString*(mscplan,m,cz)={Magistr}
+\SetDegreeString*(mscplan,f,cz)={Magistra}
 
-\degreestring(phd,m,cz)         := {Doktor}
-\degreestring(phd,f,cz)         := {Doktorka}
-\degreestring(phdplan,m,cz)     := {Doktor}
-\degreestring(phdplan,f,cz)     := {Doktorka}
-\degreestring(phdprop,m,cz)     := {Doktor}
-\degreestring(phdprop,f,cz)     := {Doktorka}
+\SetDegreeString*(phd,m,cz)={Doktor}
+\SetDegreeString*(phd,f,cz)={Doktorka}
+\SetDegreeString*(phdplan,m,cz)={Doktor}
+\SetDegreeString*(phdplan,f,cz)={Doktorka}
+\SetDegreeString*(phdprop,m,cz)={Doktor}
+\SetDegreeString*(phdprop,f,cz)={Doktorka}
 
 
 %%=======================================================================
 %% DOCUMENT TYPES
 %%=======================================================================
 
-\doctypestring(bsc,cz)          := {Bakalářská práce}
-\doctypestring(mscplan,cz)      := {Plán diplomové práce}
-\doctypestring(msc,cz)          := {Diplomová práce}
-\doctypestring(phdplan,cz)      := {Plán disertační práce}
-\doctypestring(phdprop,cz)      := {Teze disertační práce}
-\doctypestring(phd,cz)          := {Disertační práce}
+\SetDoctypeString*(bsc,cz)={Bakalářská práce}
+\SetDoctypeString*(mscplan,cz)={Plán diplomové práce}
+\SetDoctypeString*(msc,cz)={Diplomová práce}
+\SetDoctypeString*(phdplan,cz)={Plán disertační práce}
+\SetDoctypeString*(phdprop,cz)={Teze disertační práce}
+\SetDoctypeString*(phd,cz)={Disertační práce}
 
-\dissertationplan(mscplan,cz)   := {Plán diplomové práce}
-\dissertationplan(phdplan,cz)   := {Plán disertační práce}
-\dissertationplan(phdprop,cz)   := {Návrh disertační práce}
+\SetDissertationPlan*(mscplan,cz)={Plán diplomové práce}
+\SetDissertationPlan*(phdplan,cz)={Plán disertační práce}
+\SetDissertationPlan*(phdprop,cz)={Návrh disertační práce}
 
 
 %%=======================================================================
 %% SDG (SUSTAINABLE DEVELOPMENT GOALS)
 %%=======================================================================
 
-\sdgstring(cz)                  := {Cíle udržitelného rozvoje (SDGs)}
+\SetSdgString*(cz)={Cíle udržitelného rozvoje (SDGs)}
 
 
 %%=======================================================================
 %% COMMITTEE
 %%=======================================================================
 
-\committeetitlestring(cz)       := {Komise}
+\SetCommitteeTitleString*(cz)={Komise}
 
-\committeestring(c,1,m,cz)      := {Předseda}
-\committeestring(c,1,f,cz)      := {Předsedkyně}
-\committeestring(c,2,m,cz)      := {Předsedové}
-\committeestring(c,2,f,cz)      := {Předsedkyně}
+\SetCommitteeString*(c,1,m,cz)={Předseda}
+\SetCommitteeString*(c,1,f,cz)={Předsedkyně}
+\SetCommitteeString*(c,2,m,cz)={Předsedové}
+\SetCommitteeString*(c,2,f,cz)={Předsedkyně}
 
-\committeestring(r,1,m,cz)      := {Oponent}
-\committeestring(r,1,f,cz)      := {Oponentka}
-\committeestring(r,2,m,cz)      := {Oponenti}
-\committeestring(r,2,f,cz)      := {Oponentky}
+\SetCommitteeString*(r,1,m,cz)={Oponent}
+\SetCommitteeString*(r,1,f,cz)={Oponentka}
+\SetCommitteeString*(r,2,m,cz)={Oponenti}
+\SetCommitteeString*(r,2,f,cz)={Oponentky}
 
-\committeestring(a,1,m,cz)      := {Vedoucí}
-\committeestring(a,1,f,cz)      := {Vedoucí}
-\committeestring(a,2,m,cz)      := {Vedoucí}
-\committeestring(a,2,f,cz)      := {Vedoucí}
+\SetCommitteeString*(a,1,m,cz)={Vedoucí}
+\SetCommitteeString*(a,1,f,cz)={Vedoucí}
+\SetCommitteeString*(a,2,m,cz)={Vedoucí}
+\SetCommitteeString*(a,2,f,cz)={Vedoucí}
 
-\committeestring(ca,1,m,cz)     := {Konzultant}
-\committeestring(ca,1,f,cz)     := {Konzultantka}
-\committeestring(ca,2,m,cz)     := {Konzultanti}
-\committeestring(ca,2,f,cz)     := {Konzultantky}
+\SetCommitteeString*(ca,1,m,cz)={Konzultant}
+\SetCommitteeString*(ca,1,f,cz)={Konzultantka}
+\SetCommitteeString*(ca,2,m,cz)={Konzultanti}
+\SetCommitteeString*(ca,2,f,cz)={Konzultantky}
 
-\committeestring(m,1,m,cz)      := {Člen komise}
-\committeestring(m,1,f,cz)      := {Členka komise}
-\committeestring(m,2,m,cz)      := {Členové komise}
-\committeestring(m,2,f,cz)      := {Členky komise}
+\SetCommitteeString*(m,1,m,cz)={Člen komise}
+\SetCommitteeString*(m,1,f,cz)={Členka komise}
+\SetCommitteeString*(m,2,m,cz)={Členové komise}
+\SetCommitteeString*(m,2,f,cz)={Členky komise}
 
-\committeestring(g,1,m,cz)      := {Host}
-\committeestring(g,1,f,cz)      := {Host}
-\committeestring(g,2,m,cz)      := {Hosté}
-\committeestring(g,2,f,cz)      := {Hosté}
+\SetCommitteeString*(g,1,m,cz)={Host}
+\SetCommitteeString*(g,1,f,cz)={Host}
+\SetCommitteeString*(g,2,m,cz)={Hosté}
+\SetCommitteeString*(g,2,f,cz)={Hosté}
 
 
 %%=======================================================================
 %% DISSERTATION TEMPLATES
 %%=======================================================================
 
-\dissertationstring(bsc,cz)     = {%
+\SetDissertationString(bsc,cz)={%
       Bakalářská práce předložená k získání titulu %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(mscplan,cz) = {%
+\SetDissertationString(mscplan,cz)={%
       Průběžná zpráva předložená k získání titulu %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(msc,cz)     = {%
+\SetDissertationString(msc,cz)={%
       Diplomová práce předložená k získání titulu %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(phdplan,cz) = {%
+\SetDissertationString(phdplan,cz)={%
       Plán disertační práce předložený k získání titulu %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(phdprop,cz) = {%
+\SetDissertationString(phdprop,cz)={%
       Teze disertační práce předložená k získání titulu %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(phd,cz)     = {%
+\SetDissertationString(phd,cz)={%
       Disertační práce předložená k získání titulu %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ v oboru\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
 
 %%=======================================================================
 %% LEGAL & ACKNOWLEDGEMENTS
 %%=======================================================================
 
-\copyrighttextstring(cz)        = {%
-        Škola \theschool(\@LANG@COPYRIGHT)\ a Univerzita \theuniversity(\@LANG@COPYRIGHT)%
+\SetCopyrightTextString(cz)={%
+        Škola \GetSchool(\@LANG@COPYRIGHT)\ a Univerzita \GetUniversity(\@LANG@COPYRIGHT)%
         \ mají trvalé, územně neomezené právo archivovat a publikovat tuto práci v tištěné %
         nebo digitální podobě, či jakýmkoli jiným známým nebo v budoucnu vzniklým způsobem, %
         jakož i zveřejňovat ji prostřednictvím vědeckých repozitářů a povolit její kopírování %
         a šíření pro vzdělávací nebo výzkumné, nekomerční účely, za podmínky uvedení autora a vydavatele.}
 
-\acknowledgmentsstring(cz)      = {%
+\SetAcknowledgmentsString(cz)={%
         Tento dokument byl vytvořen pomocí sázecího systému \NTengineName~\@ntcite{latex-project} %
         a šablony %
         \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %

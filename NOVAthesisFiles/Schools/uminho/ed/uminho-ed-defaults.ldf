@@ -18,11 +18,11 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Escola de Direito}
-\school(en):={School of Law}
-\school(fr):={School of Law}
-\school(it):={School of Law}
+\SetSchool*(pt)={Escola de Direito}
+\SetSchool*(en)={School of Law}
+\SetSchool*(fr)={School of Law}
+\SetSchool*(it)={School of Law}
 
 % Logos
-\school(logo,RGB):={uminho-ed-insignia-color}
-\school(logo,GRAY):={uminho-ed-insignia-mono}
+\SetSchool*(logo,RGB)={uminho-ed-insignia-color}
+\SetSchool*(logo,GRAY)={uminho-ed-insignia-mono}

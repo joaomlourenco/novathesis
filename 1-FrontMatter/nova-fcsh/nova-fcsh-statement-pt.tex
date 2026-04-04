@@ -14,10 +14,9 @@
 % =====================================================================
 Tese/Dissertação apresentada para cumprimento dos requisitos necessários à obtenção do
 grau de 
-\thedegreename(\@LSHORT)
-\ifdatadefined{specialization}(\@LSHORT)
-  {, na Área de Especialização em \thespecialization(\@LSHORT)}
-  {}
+\GetDegreeName(\@LSHORT)
+\IfMemVoidF{Specialization}{\@LSHORT}
+  {, na Área de Especialização em \GetSpecialization(\@LSHORT)}
 , realizado sob a orientação científica de \GetPersonsAsList{adviser}{a}.
 
 \vfill
@@ -43,7 +42,7 @@ Apoio financeiro da Fundação para a Ciência e Tecnologia no âmbito do progra
 % The statement of integrity
 % =====================================================================
 
-\chapter{\thebkmstring(statement,\@LANG@MAIN)}
+\chapter{\GetBkmString(statement,\@LANG@MAIN)}
 % \bookmarksetupnext{rellevel=0}%
 
 \vfill

@@ -9,9 +9,9 @@
 
 
 % University
-\university(pt):={Instituto Politécnico de Lisboa}
-\university(en):={Instituto Politécnico de Lisboa}
-\university(fr):={Instituto Politécnico de Lisboa}
-\university(it):={Instituto Politécnico de Lisboa}
+\SetUniversity*(pt)={Instituto Politécnico de Lisboa}
+\SetUniversity*(en)={Instituto Politécnico de Lisboa}
+\SetUniversity*(fr)={Instituto Politécnico de Lisboa}
+\SetUniversity*(it)={Instituto Politécnico de Lisboa}
 
-\spine(frame,color)={black!50}
+\SetSpine(frame,color)={black!50}

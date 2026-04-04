@@ -13,10 +13,9 @@
 % The istitutional statement
 % =====================================================================
 Thesis/Dissertation submitted in fulfillment of the requirements for the degree of 
-\thedegreename(\@LSHORT)
-\ifdatadefined{specialization}(\@LSHORT)
-  {, Specialization in \thespecialization(\@LSHORT)}
-  {}
+\GetDegreeName(\@LSHORT)
+\IfMemVoidF{Specialization}{\@LSHORT}
+  {, Specialization in \GetSpecialization(\@LSHORT)}
 , carried out under the scientific supervision of \GetPersonsAsList{adviser}{a}.
 
 \vfill
@@ -42,7 +41,7 @@ within the scope of the <PROGRAM-NAME> program and through the PhD Fellowship <R
 % The statement of integrity
 % =====================================================================
 
-\chapter{\thebkmstring(statement,\@LANG@MAIN)}
+\chapter{\GetBkmString(statement,\@LANG@MAIN)}
 % \bookmarksetupnext{rellevel=0}%
 
 \vfill

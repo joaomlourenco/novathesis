@@ -506,23 +506,22 @@
             \tl_set:Ne #2 { } 
           }
         
-        % Construct the control sequence name: \@<MEMORYDATA>@<key>@memory
-        % Note: Using #3 for the memory namespace ID
-        \cs_if_exist:cT { @#3@ ##1 @memory }
+        % Look up key ##1 in the memstore property list for store #3
+        \prop_if_in:ceT { g__mem_#3_prop } { ##1 }
           {
-            % If the data slot exists:
-            % 1. Set the user's variable (#2) to the content of that slot.
+            % If the key exists in the store:
+            % 1. Set the user's variable (#2) to the stored value.
             
             \IfBooleanTF{#1}
               { 
                 % STARRED: #2 is a NAME (e.g., "myVar"). 
                 % Use \tl_set:cn to construct the csname from the string.
-                \tl_set:ce { #2 } { \use:c { @#3@ ##1 @memory } } 
+                \tl_set:ce { #2 } { \prop_item:ce { g__mem_#3_prop } { ##1 } } 
               }
               { 
                 % NON-STARRED: #2 is a MACRO (e.g., \myVar). 
                 % Use \tl_set:Nn to set it directly.
-                \tl_set:Ne #2 { \use:c { @#3@ ##1 @memory } } 
+                \tl_set:Ne #2 { \prop_item:ce { g__mem_#3_prop } { ##1 } } 
               }
 
             % 2. Mark that we found a match
@@ -1033,53 +1032,53 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% DATA INITIALIZATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\initmemory}[2][\thenotdefined(\@LANG@COVER)]{%
-  \optionlistdo{/novathesis/lang/all}{\csuse{#2}(##1):={#1}}}
+\newcommand*{\initmemory}[2][\GetNotDefinedString(\@LANG@COVER)]{%
+  \optionlistdo{/novathesis/lang/all}{\MemSet*{#2}{##1}{#1}}}
 
 
 % For PDF bookmarks
-\newdata{keywordsblockpre}
-\newdata{keywordsblockpost}
-\newdata{keywordssep}
-\newdata{keywordsstringprefix}
-\newdata{keywordsstringsuffix}
-\newdata{keywordsstringfont}
-\keywordsblockpre()={\bigskip\noindent}
-\keywordsstringsuffix()={:\enspace}
-\keywordsstringfont()={\bfseries}
-\keywordssep()={ {\textperiodcentered} }
+\NewMemStore{KeywordsBlockPre}
+\NewMemStore{KeywordsBlockPost}
+\NewMemStore{KeywordsSep}
+\NewMemStore{KeywordsStringPrefix}
+\NewMemStore{KeywordsStringSuffix}
+\NewMemStore{KeywordsStringFont}
+\SetKeywordsBlockPre()={\bigskip\noindent}
+\SetKeywordsStringSuffix()={:\enspace}
+\SetKeywordsStringFont()={\bfseries}
+\SetKeywordsSep()={ {\textperiodcentered} }
 
-\newdata{sponsor}
+\NewMemStore{Sponsor}
 
-\newdata{commastring}
+\NewMemStore{CommaString}
 \optionlistdo{/novathesis/lang/all}{%
-  \commastring(#1):={,\ }%
+  \SetCommaString*(#1)={,\ }%
 }
 
 
 
-\newdata{degreestringfont}
+\NewMemStore{DegreeStringFont}
 
-\newdata{degreename}
-\newdata{degreenamefont}
+\NewMemStore{DegreeName}
+\NewMemStore{DegreeNameFont}
 
-\newdata{degreenameprefixfont}
+\NewMemStore{DegreeNamePrefixFont}
 
-\newdata{doctypestringfont}
+\NewMemStore{DoctypeStringFont}
 
 
-\newdata{adviserstringfont}
-\newdata{adviserstringpre}
-\newdata{adviserstringpost}
+% (memstore: adviserstringfont kept as-is)
+% (memstore: adviserstringpre kept as-is)
+% (memstore: adviserstringpost kept as-is)
 
-\newdata{advisernamepre}
-\newdata{advisernamepost}
-\newdata{advisernamefont}
+% (memstore: advisernamepre kept as-is)
+% (memstore: advisernamepost kept as-is)
+% (memstore: advisernamefont kept as-is)
 
-\newdata{adviserremainderpre}
-\newdata{adviserremainderpost}
-\newdata{adviserremainderfont}
-\adviserremainderfont()={\itshape\scriptsize}
+% (memstore: adviserremainderpre kept as-is)
+% (memstore: adviserremainderpost kept as-is)
+% (memstore: adviserremainderfont kept as-is)
+\MemSet{adviserremainderfont}{}{\itshape\scriptsize}
 
 % Committee stuff
 \NewMemStore{AdviserOrder}
@@ -1088,46 +1087,46 @@
 % AbstractOrder: for each main language, list which abstracts to print and in which order
 \NewMemStore{AbstractOrder}
 
-\newdata{committeeorder}         %e.g., "{c,r,a,m,g}"
+\NewMemStore{CommitteeOrder}         %e.g., "{c,r,a,m,g}"
 
-\newdata{committeetitlestringpre}
-\newdata{committeetitlestringpost}
-\newdata{committeetitlestringfont}
+% (memstore: committeetitlestringpre kept as-is)
+% (memstore: committeetitlestringpost kept as-is)
+% (memstore: committeetitlestringfont kept as-is)
 
-\newdata{committeestringpre}
-\newdata{committeestringpost}
-\newdata{committeestringfont}
+% (memstore: committeestringpre kept as-is)
+% (memstore: committeestringpost kept as-is)
+% (memstore: committeestringfont kept as-is)
 
-\newdata{committeenamepre}
-\newdata{committeenamepost}
-\newdata{committeenamefont}
+% (memstore: committeenamepre kept as-is)
+% (memstore: committeenamepost kept as-is)
+% (memstore: committeenamefont kept as-is)
 
-\newdata{committeeremainderpre}
-\newdata{committeeremainderpost}
-\newdata{committeeremainderfont}
-\committeeremainderfont()={\itshape\scriptsize}
+% (memstore: committeeremainderpre kept as-is)
+% (memstore: committeeremainderpost kept as-is)
+% (memstore: committeeremainderfont kept as-is)
+\MemSet{committeeremainderfont}{}{\itshape\scriptsize}
 
-\newdata{personpre}
-\newdata{personpost}
-\newdata{persongrouppre}
-\newdata{persongrouppost}
+% (memstore: personpre kept as-is)
+% (memstore: personpost kept as-is)
+% (memstore: persongrouppre kept as-is)
+% (memstore: persongrouppost kept as-is)
 
-\newdata{dissertationstringfont}
+\NewMemStore{DissertationStringFont}
 
 
-\newdata{majorfield}
-\newdata{minorfield}
-\newdata{specialization}
+\NewMemStore{MajorField}
+\NewMemStore{MinorField}
+\NewMemStore{Specialization}
 
-\newdata{spine}
-\newdata{thesiscover}
-\newdata{margin}
-\newdata{frontpageimage}
+\NewMemStore{Spine}
+\NewMemStore{ThesisCover}
+\NewMemStore{Margin}
+\NewMemStore{FrontPageImage}
 
-\newdata{university}
-\newdata{school}
+\NewMemStore{University}
+\NewMemStore{School}
 
-\newdata{doctitle}
+\NewMemStore{DocTitle}
 
 
 % For each main language, list which abstracts shall be printed and in which order

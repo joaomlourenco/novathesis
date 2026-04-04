@@ -43,35 +43,35 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Faculdade de Ciências e Tecnologia}
-\school(en):={NOVA School of Science and Technology}
-\school(fr):={NOVA School of Science and Technology}
-\school(it):={NOVA School of Science and Technology}
+\SetSchool*(pt)={Faculdade de Ciências e Tecnologia}
+\SetSchool*(en)={NOVA School of Science and Technology}
+\SetSchool*(fr)={NOVA School of Science and Technology}
+\SetSchool*(it)={NOVA School of Science and Technology}
 
 % Logos
-\school(logo,pt):={nova-fct-logo-pt}
-\school(logo,neg,pt):={nova-fct-logo-negative-pt}
-\school(logo,en):={nova-fct-logo-en}
-\school(logo,neg,en):={nova-fct-logo-negative-en}
-\school(logo):={\theschool(logo,\@LANG@COVER)}
-\school(logo,neg):={\theschool(logo,neg,\@LANG@COVER)}
+\SetSchool*(logo,pt)={nova-fct-logo-pt}
+\SetSchool*(logo,neg,pt)={nova-fct-logo-negative-pt}
+\SetSchool*(logo,en)={nova-fct-logo-en}
+\SetSchool*(logo,neg,en)={nova-fct-logo-negative-en}
+\SetSchool*(logo)={\GetSchool(logo,\@LANG@COVER)}
+\SetSchool*(logo,neg)={\GetSchool(logo,neg,\@LANG@COVER)}
 
 \ntdegreename(pt){Biologia Computacional\\\& Bioinformática}
 \ntdegreename(en){Computational Biology\\\& Bioinformatics}
 
-\specializationstring(en):={SPECIALIZATION}
-\specializationstring(pt):={ESPECIALIZAÇÃO}
+\SetSpecializationString*(en)={SPECIALIZATION}
+\SetSpecializationString*(pt)={ESPECIALIZAÇÃO}
 
-\newdata{dissertationplan}
-\dissertationplan(mscplan,en):={Dissertation Plan}
-\dissertationplan(mscplan,pt):={Plano de Dissertação}
+\NewMemStore{DissertationPlan}
+\SetDissertationPlan*(mscplan,en)={Dissertation Plan}
+\SetDissertationPlan*(mscplan,pt)={Plano de Dissertação}
 
 
 %%=======================================================================
 %% COMMITTEE
 %%=======================================================================
 
-\committeeorder():={c,r,a,ca,m}%
+\SetCommitteeOrder*()={c,r,a,ca,m}%
 
 
 %%=======================================================================
@@ -91,68 +91,68 @@
 %%=======================================================================
 
 % Set margins for "normal" pages
-\margin(screen,top):={3.5cm}
-\margin(screen,bottom):={2.5cm}
-\margin(screen,left):={3.0cm}
-\margin(screen,right):={3.0cm}
-\margin(paper,top):={3.5cm}
-\margin(paper,bottom):={2.5cm}
-\margin(paper,left):={3.0cm}
-\margin(paper,right):={3.0cm}
+\SetMargin*(screen,top)={3.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={3.0cm}
+\SetMargin*(screen,right)={3.0cm}
+\SetMargin*(paper,top)={3.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={3.0cm}
+\SetMargin*(paper,right)={3.0cm}
 
 % Set margins for cover pages
-\margin(cover,top):={12.0cm}
-\margin(cover,bottom):={6.3cm}
-\margin(cover,2-1,top):={6.6cm}
-\margin(cover,2-1,bottom):={1.5cm}
-\margin(cover,left):={1.7cm}
-\margin(cover,right):={2.0cm}
+\SetMargin*(cover,top)={12.0cm}
+\SetMargin*(cover,bottom)={6.3cm}
+\SetMargin*(cover,2-1,top)={6.6cm}
+\SetMargin*(cover,2-1,bottom)={1.5cm}
+\SetMargin*(cover,left)={1.7cm}
+\SetMargin*(cover,right)={2.0cm}
 
 
 %%=======================================================================
 %% SPINE
 %%=======================================================================
 
-\spine(order):={date,tas,logo}
-\spine(tab,spec):={{@{}l@{}}}
+\SetSpine*(order)={date,tas,logo}
+\SetSpine*(tab,spec)={{@{}l@{}}}
 
-\spine(date)={2025}
-\spine(date,font)={\fontsize{10}{10}\selectfont\bfseries}
-\spine(box,date,len):=?{1.2cm}
-\spine(box,date,angle)={270}
+\SetSpine(date)={2025}
+\SetSpine(date,font)={\fontsize{10}{10}\selectfont\bfseries}
+\SetSpine*(box,date,len)=?{1.2cm}
+\SetSpine(box,date,angle)={270}
 
-\spine(tas)={\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}
-\spine(tas,1)={~\\[4pt]%
+\SetSpine(tas)={\ToUppercase{\GetDocTitle(\@LANG@COVER,main)}}
+\SetSpine(tas,1)={~\\[4pt]%
                \fontsize{8}{8}\selectfont%
-               \ToUppercase{\thedoctitle(\@LANG@COVER,main)}\\[5.5pt]}
-\spine(tas,2)={\fontsize{11}{6}\selectfont\bfseries%
-               \thedocauthor(name,short)\\[-0.5pt]}
-\spine(tas,3)={\fontsize{8.5}{6}\selectfont%
-               \ToUppercase{\thedegreenameprefix(\@DOCTYPE,\@LANG@COVER)} \bfseries\themajorfield(\@LANG@COVER)\\[-3pt]}
-\spine(tas,4)={\fontsize{5.4}{5}\selectfont%
-               \textbf{\ToUppercase{\thespecializationstring(\@LANG@COVER)}}
-               \fontsize{7}{5}\selectfont\theminorfield(\@LANG@COVER)\\[-5pt]}
+               \ToUppercase{\GetDocTitle(\@LANG@COVER,main)}\\[5.5pt]}
+\SetSpine(tas,2)={\fontsize{11}{6}\selectfont\bfseries%
+               \GetDocAuthor(name,short)\\[-0.5pt]}
+\SetSpine(tas,3)={\fontsize{8.5}{6}\selectfont%
+               \ToUppercase{\GetDegreeNamePrefix(\@DOCTYPE,\@LANG@COVER)} \bfseries\GetMajorField(\@LANG@COVER)\\[-3pt]}
+\SetSpine(tas,4)={\fontsize{5.4}{5}\selectfont%
+               \textbf{\ToUppercase{\GetSpecializationString(\@LANG@COVER)}}
+               \fontsize{7}{5}\selectfont\GetMinorField(\@LANG@COVER)\\[-5pt]}
 
-\spine(box,tas,len):={23.3cm}
-\spine(box,tas,align):={l}
-\spine(box,tas,margin,left):={0pt}
-\spine(box,tas,margin,right):={2pt}
-\spine(box,tas,angle):={0}
+\SetSpine*(box,tas,len)={23.3cm}
+\SetSpine*(box,tas,align)={l}
+\SetSpine*(box,tas,margin,left)={0pt}
+\SetSpine*(box,tas,margin,right)={2pt}
+\SetSpine*(box,tas,angle)={0}
 
-\spine(logo,\@DOCTYPE):={\theuniversity(logo2)}
-\spine(box,logo,len):={2.7cm}
-\spine(box,logo,scale):={1.4}
-\spine(box,logo,margin,left)={10mm}
-\spine(box,logo,margin,right)={10mm}
-\spine(box,logo,margin,top)={1mm}
-\spine(box,logo,margin,bottom)={1mm}
-\spine(box,logo,margin,sep)={4mm}
+\SetSpine*(logo,\@DOCTYPE)={\GetUniversity(logo2)}
+\SetSpine*(box,logo,len)={2.7cm}
+\SetSpine*(box,logo,scale)={1.4}
+\SetSpine(box,logo,margin,left)={10mm}
+\SetSpine(box,logo,margin,right)={10mm}
+\SetSpine(box,logo,margin,top)={1mm}
+\SetSpine(box,logo,margin,bottom)={1mm}
+\SetSpine(box,logo,margin,sep)={4mm}
 
-\spine(margin,right):=?{0.0cm}
+\SetSpine*(margin,right)=?{0.0cm}
 
 \SpineSetup[%
 ]{%
-  box/logo/bg/image = {\theschool(logo)},
+  box/logo/bg/image = {\GetSchool(logo)},
   % debug,
 }
 
@@ -162,9 +162,9 @@
 %%=======================================================================
 
 % MSc cover
-\thesiscover(msc,1-1,image):=?{nova-fct-cover-cbbi-front}
-\thesiscover(msc,N-2,image):=?{nova-fct-cover-cbbi-back}
-\thesiscover(msc,spine,image):=?{nova-fct-spine-cbbi}
+\SetThesisCover*(msc,1-1,image)=?{nova-fct-cover-cbbi-front}
+\SetThesisCover*(msc,N-2,image)=?{nova-fct-cover-cbbi-back}
+\SetThesisCover*(msc,spine,image)=?{nova-fct-spine-cbbi}
 
 
 %%=======================================================================
@@ -217,11 +217,11 @@
   \node[anchor=north west] at ($(current page.north west) + (14.6mm,-97.25mm)$)
     {\fontsize{16.25}{14.5}\selectfont\sffamily%
       \makecell[tl]{
-      \ToUppercase{\thedegreenameprefix(\@DOCTYPE,\@LANG@COVER)}\\
+      \ToUppercase{\GetDegreeNamePrefix(\@DOCTYPE,\@LANG@COVER)}\\
       \let\oldnewline\\%
       \renewcommand{\\}{\oldnewline\bfseries}%
       \bfseries%
-      \ToUppercase{\themajorfield(\@LANG@COVER)}%
+      \ToUppercase{\GetMajorField(\@LANG@COVER)}%
       }%
     };%
 }
@@ -246,24 +246,24 @@
 % Specialization
 \ntaddtocover[halign=l,hspace=-1mm,valign=t]{1-1}{%
   \fontsize{11}{11}\selectfont%
-  {\ifdatadefined{specialization}(\@LANG@COVER)
-    {\StrCut{\thespecializationstring(\@LANG@COVER)}{ }\@SPCZL\@dummy%
-     \ToUppercase{\textbf{\@SPCZL}} \ToUppercase{\theminorfield(\@LANG@COVER)}}
-    {~}}%
+  {\IfMemVoidTF{Specialization}{\@LANG@COVER}
+    {~}
+    {\StrCut{\GetSpecializationString(\@LANG@COVER)}{ }\@SPCZL\@dummy%
+     \ToUppercase{\textbf{\@SPCZL}} \ToUppercase{\GetMinorField(\@LANG@COVER)}}}%
 }
 
 % Title of Dissertation (PhD) / The author name (MSc)
 \ntaddtocover[halign=l,height=3.0cm,vspace=4.1mm,valign=c]{1-1}{%
     \fontsize{20.5}{17}\selectfont%
-    \textbf{\ToUppercase{\thedocauthor(name)}}\\[2mm]%
+    \textbf{\ToUppercase{\GetDocAuthor(name)}}\\[2mm]%
     \fontsize{17}{17}\selectfont%
-    \thedocauthor(degree,\@LANG@COVER)%
+    \GetDocAuthor(degree,\@LANG@COVER)%
 }
 
 % The author name (PhD) / Title of Dissertation (MSc)
 \ntaddtocover[vspace=6mm,halign=l,valign=t]{1-1}{%
     \fontsize{26}{26}\selectfont\bfseries%
-    \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}%
+    \textbf{\ToUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
 }
 
 % Degrere name, Specialization, Date
@@ -282,13 +282,13 @@
 
 \ntaddtocover[tikz]{2-1}{%
   \node[anchor=center] at ($(current page.north west) + (20mm,-20mm)$)
-    {\includegraphics[width=21mm]{\expanded{\theuniversity(logo)}}};%
+    {\includegraphics[width=21mm]{\expanded{\GetUniversity(logo)}}};%
   \draw[thick] ($(current page.north west) + (3.5cm,-1cm)$) -- ++(0cm,-2cm);%
   \node[anchor=west] at ($(current page.north west) + (40mm,-19mm)$)
-    {\includegraphics[width=35.3mm]{\expanded{\theschool(logo)}}};%
+    {\includegraphics[width=35.3mm]{\expanded{\GetSchool(logo)}}};%
   \draw[thick] ($(current page.north west) + (1cm,-4.1cm)$) -- ++(\paperwidth-2cm,0cm);%
   \node[anchor=north west] at ($(current page.north west) + (96.45mm,-11.4mm)$)
-    {\fontsize{14}{14}\sffamily\makecell[tl]{\ToUppercase{\thedepartmentofstring(\@LANG@COVER)}
+    {\fontsize{14}{14}\sffamily\makecell[tl]{\ToUppercase{\GetDepartmentOfString(\@LANG@COVER)}
       \printdwithvspace{\ToUppercase{\GetDepartment(\@LANG@COVER)}}}};%
 }
 
@@ -308,47 +308,47 @@
 % Title of Dissertation (PhD)
 \ntaddtocover[halign=l]{2-1}{%
   \fontsize{17}{17}\selectfont%
-  \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}%
-  \ifdatadefined{doctitle}(\@LANG@COVER,sub,cover){%
+  \textbf{\ToUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
+  \IfMemVoidF{DocTitle}{\@LANG@COVER,sub,cover}{%
     \\[4mm]%
     \fontsize{12}{12}\selectfont%
-    \textbf{\ToUppercase{\thedoctitle(\@LANG@COVER,sub)}}%
+    \textbf{\ToUppercase{\GetDocTitle(\@LANG@COVER,sub)}}%
   }{}%
 }
 
 % The author name
 \ntaddtocover[vspace=1,halign=l]{2-1}{%
   \fontsize{14}{14}\selectfont%
-  \textbf{\ToUppercase{\thedocauthor(name)}}\\[2mm]%
+  \textbf{\ToUppercase{\GetDocAuthor(name)}}\\[2mm]%
   \fontsize{14}{14}\selectfont%
-  \thedocauthor(degree,\@LANG@COVER)%
+  \GetDocAuthor(degree,\@LANG@COVER)%
 }
 
 % The advisers
 \ntaddtocover[vspace=2,halign=l]{2-1}{%
-  \adviserstringfont():={\bfseries}%
+  \MemSet{adviserstringfont}{}{\bfseries}%
   \fontsize{11}{11}\selectfont%
   \ntprintpersons{0.9}{2}{adviser}{\GetAdviserOrder()}%
 }
 
 % The committee
 \ntaddtocover[vspace=1,hspace=3.5cm,halign=l]{2-1}{%
-  \committeetitlestringfont():={\bfseries}%
-  \committeestringfont():={\bfseries}%
+  \MemSet{committeetitlestringfont}{}{\bfseries}%
+  \MemSet{committeestringfont}{}{\bfseries}%
   \fontsize{10}{10}\selectfont%
-  \ntprintpersons{0.9}{2}{committee}{\thecommitteeorder()}%
+  \ntprintpersons{0.9}{2}{committee}{\GetCommitteeOrder()}%
 }
 
 % Date
 \ntaddtocover[vspace=1,halign=l]{2-1}{%
   \fontsize{10}{10}\selectfont%
-  \ifmaindoc{}{\thedissertationplan(\@DOCTYPE,\@LANG@COVER)\\[1pt]}%
-  \ToUppercase{\thedegreename(\@LANG@COVER)}%
-  {\ifdatadefined{specialization}(\@LANG@COVER){%
+  \ifmaindoc{}{\GetDissertationPlan(\@DOCTYPE,\@LANG@COVER)\\[1pt]}%
+  \ToUppercase{\GetDegreeName(\@LANG@COVER)}%
+  {\IfMemVoidF{Specialization}{\@LANG@COVER}{%
   \fontsize{8}{9}\selectfont
-  \\\ToUppercase{\thespecialization(\@LANG@COVER)}}{}}%
+  \\\ToUppercase{\GetSpecialization(\@LANG@COVER)}}{}}%
   \\[1.25ex]%
-  \theuniversity(\@LANG@COVER)\\[1pt]%
+  \GetUniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%
     \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}%
                  {\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
@@ -368,8 +368,8 @@
 % Print sponsor logos
 \ntaddtocover[vspace=1, halign=l]{N-2}{%
   \foreach \myi in {1, ..., 9} {%
-    \ifdatadefined{sponsor}(\@LANG@COVER,\myi,logo){%
-      \thesponsor(\@LANG@COVER,\myi,logo)\qquad%
+    \IfMemVoidF{Sponsor}{\@LANG@COVER,\myi,logo}{%
+      \GetSponsor(\@LANG@COVER,\myi,logo)\qquad%
     }{}%
   }%
 }

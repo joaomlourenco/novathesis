@@ -9,238 +9,238 @@
 %% UTILITIES
 %%=======================================================================
 
-\andstring(cat)                 := { i }
-\instring(cat)                  := { en }
-\ofstring(cat)                  := { de }
-\ofstring(1,m,cat)              := { del }
-\ofstring(2,m,cat)              := { dels }
-\ofstring(1,f,cat)              := { de la }
-\ofstring(2,f,cat)              := { de les }
-\keywordsstring(cat)            := {Paraules clau}
-\departmentofstring(cat)        := {Departament de}
-\specializationstring(cat)      := {Especialització en}
-\degreenameprefix(bsc,cat)      := {Grau en}
-\degreenameprefix(msc,cat)      := {Màster en}
-\degreenameprefix(phd,cat)      := {Doctorat en}
-\candidatestring(m,cat)         := {El Candidat}
-\candidatestring(f,cat)         := {La Candidata}
+\SetAndString*(cat)={ i }
+\SetInString*(cat)={ en }
+\SetOfString*(cat)={ de }
+\SetOfString*(1,m,cat)={ del }
+\SetOfString*(2,m,cat)={ dels }
+\SetOfString*(1,f,cat)={ de la }
+\SetOfString*(2,f,cat)={ de les }
+\SetKeywordsString*(cat)={Paraules clau}
+\SetDepartmentOfString*(cat)={Departament de}
+\SetSpecializationString*(cat)={Especialització en}
+\SetDegreeNamePrefix*(bsc,cat)={Grau en}
+\SetDegreeNamePrefix*(msc,cat)={Màster en}
+\SetDegreeNamePrefix*(phd,cat)={Doctorat en}
+\SetCandidateString*(m,cat)={El Candidat}
+\SetCandidateString*(f,cat)={La Candidata}
 
 
 %%=======================================================================
 %% BOOKMARK STRINGS
 %%=======================================================================
 
-\bkmstring(frontmatter,cat)     := {Materials preliminars}
-\bkmstring(backmatter,cat)      := {Materials finals}
-\bkmstring(cover,cat)           := {Coberta}
-\bkmstring(incover,cat)         := {Segona de coberta}
-\bkmstring(frontpage,cat)       := {Portada}
-\bkmstring(infrontpage,cat)     := {Vers de la portada}
-\bkmstring(backcover,cat)       := {Contracoberta}
-\bkmstring(inbackcover,cat)     := {Tercera de coberta}
-\bkmstring(spine,cat)           := {Llombada}
-\bkmstring(copyright,cat)       := {Drets d’autor}
-\bkmstring(statement,cat)       := {Declaració}
-\bkmstring(statements,cat)      := {Declaracions}
-\bkmstring(dedication,cat)      := {Dedicatòria}
-\bkmstring(acknowledgements,cat):= {Agraïments}
-\bkmstring(quote,cat)           := {Citació}
-\bkmstring(abstract,cat)        := {Resum}
-\bkmstring(listof,cat)          := {Llista de…}
-\bkmstring(glossaries,cat)      := {Glossaris}
+\SetBkmString*(frontmatter,cat)={Materials preliminars}
+\SetBkmString*(backmatter,cat)={Materials finals}
+\SetBkmString*(cover,cat)={Coberta}
+\SetBkmString*(incover,cat)={Segona de coberta}
+\SetBkmString*(frontpage,cat)={Portada}
+\SetBkmString*(infrontpage,cat)={Vers de la portada}
+\SetBkmString*(backcover,cat)={Contracoberta}
+\SetBkmString*(inbackcover,cat)={Tercera de coberta}
+\SetBkmString*(spine,cat)={Llombada}
+\SetBkmString*(copyright,cat)={Drets d’autor}
+\SetBkmString*(statement,cat)={Declaració}
+\SetBkmString*(statements,cat)={Declaracions}
+\SetBkmString*(dedication,cat)={Dedicatòria}
+\SetBkmString*(acknowledgements,cat)={Agraïments}
+\SetBkmString*(quote,cat)={Citació}
+\SetBkmString*(abstract,cat)={Resum}
+\SetBkmString*(listof,cat)={Llista de…}
+\SetBkmString*(glossaries,cat)={Glossaris}
 
 
 %%=======================================================================
 %% DEFAULTS
 %%=======================================================================
 
-\defaultnttitle(cat)            := {Un Títol de Tesi Molt Llarg i Impressionant\\amb un Salt de Línia Forçat}
-\defaultntsubtitle(cat)         := {Alguns Pensaments Sobre la Vida, l'Univers\\i Tota la Resta}
-\defaultntdepartment(cat)       := {Nom del Departament}
-\defaultntdegreename(cat)       := {Nom del Programa d'Estudis}
-\defaultntspecialization(cat)   := {Nom de l'Especialització}
-\defaultntauthordegree(cat)     := {Màster/Grau en nom del Títol Anterior}
-\notdefinedstring(cat)          := {NO DEFINIT}
+\SetDefaultNtTitle*(cat)={Un Títol de Tesi Molt Llarg i Impressionant\\amb un Salt de Línia Forçat}
+\SetDefaultNtSubtitle*(cat)={Alguns Pensaments Sobre la Vida, l'Univers\\i Tota la Resta}
+\SetDefaultNtDepartment*(cat)={Nom del Departament}
+\SetDefaultNtDegreeName*(cat)={Nom del Programa d'Estudis}
+\SetDefaultNtSpecialization*(cat)={Nom de l'Especialització}
+\SetDefaultNtAuthorDegree*(cat)={Màster/Grau en nom del Títol Anterior}
+\SetNotDefinedString*(cat)={NO DEFINIT}
 
 
 %%=======================================================================
 %% ADVISER STRINGS
 %%=======================================================================
 
-\professorstring(1,m,cat)       := {Professor}
-\professorstring(2,m,cat)       := {Professors}
-\professorstring(1,f,cat)       := {Professora}
-\professorstring(2,f,cat)       := {Professores}
+\SetProfessorString*(1,m,cat)={Professor}
+\SetProfessorString*(2,m,cat)={Professors}
+\SetProfessorString*(1,f,cat)={Professora}
+\SetProfessorString*(2,f,cat)={Professores}
 
-\adviserstring(a,1,m,cat)       := {Director}
-\adviserstring(a,1,f,cat)       := {Directora}
-\adviserstring(a,2,m,cat)       := {Directors}
-\adviserstring(a,2,f,cat)       := {Directores}
+\SetAdviserString*(a,1,m,cat)={Director}
+\SetAdviserString*(a,1,f,cat)={Directora}
+\SetAdviserString*(a,2,m,cat)={Directors}
+\SetAdviserString*(a,2,f,cat)={Directores}
 
-\adviserstring(c,1,m,cat)       := {Codirector}
-\adviserstring(c,1,f,cat)       := {Codirectora}
-\adviserstring(c,2,m,cat)       := {Codirectors}
-\adviserstring(c,2,f,cat)       := {Codirectores}
+\SetAdviserString*(c,1,m,cat)={Codirector}
+\SetAdviserString*(c,1,f,cat)={Codirectora}
+\SetAdviserString*(c,2,m,cat)={Codirectors}
+\SetAdviserString*(c,2,f,cat)={Codirectores}
 
-\adviserstring(ca,1,m,cat)      := {Codirector}
-\adviserstring(ca,1,f,cat)      := {Codirectora}
-\adviserstring(ca,2,m,cat)      := {Codirectors}
-\adviserstring(ca,2,f,cat)      := {Codirectores}
+\SetAdviserString*(ca,1,m,cat)={Codirector}
+\SetAdviserString*(ca,1,f,cat)={Codirectora}
+\SetAdviserString*(ca,2,m,cat)={Codirectors}
+\SetAdviserString*(ca,2,f,cat)={Codirectores}
 
-\adviserstring(t,1,m,cat)       := {Tutor acadèmic}
-\adviserstring(t,1,f,cat)       := {Tutora acadèmica}
-\adviserstring(t,2,m,cat)       := {Tutors acadèmics}
-\adviserstring(t,2,f,cat)       := {Tutores acadèmiques}
+\SetAdviserString*(t,1,m,cat)={Tutor acadèmic}
+\SetAdviserString*(t,1,f,cat)={Tutora acadèmica}
+\SetAdviserString*(t,2,m,cat)={Tutors acadèmics}
+\SetAdviserString*(t,2,f,cat)={Tutores acadèmiques}
 
-\adviserstring(pref,a,1,m,cat)       := {El Director}
-\adviserstring(pref,a,1,f,cat)       := {La Directora}
-\adviserstring(pref,a,2,m,cat)       := {Els Directors}
-\adviserstring(pref,a,2,f,cat)       := {Les Directores}
+\SetAdviserString*(pref,a,1,m,cat)={El Director}
+\SetAdviserString*(pref,a,1,f,cat)={La Directora}
+\SetAdviserString*(pref,a,2,m,cat)={Els Directors}
+\SetAdviserString*(pref,a,2,f,cat)={Les Directores}
 
-\adviserstring(pref,c,1,m,cat)       := {El Codirector}
-\adviserstring(pref,c,1,f,cat)       := {La Codirectora}
-\adviserstring(pref,c,2,m,cat)       := {Els Codirectors}
-\adviserstring(pref,c,2,f,cat)       := {Les Codirectores}
+\SetAdviserString*(pref,c,1,m,cat)={El Codirector}
+\SetAdviserString*(pref,c,1,f,cat)={La Codirectora}
+\SetAdviserString*(pref,c,2,m,cat)={Els Codirectors}
+\SetAdviserString*(pref,c,2,f,cat)={Les Codirectores}
 
-\adviserstring(pref,ca,1,m,cat)      := {El Codirector}
-\adviserstring(pref,ca,1,f,cat)      := {La Codirectora}
-\adviserstring(pref,ca,2,m,cat)      := {Els Codirectors}
-\adviserstring(pref,ca,2,f,cat)      := {Les Codirectores}
+\SetAdviserString*(pref,ca,1,m,cat)={El Codirector}
+\SetAdviserString*(pref,ca,1,f,cat)={La Codirectora}
+\SetAdviserString*(pref,ca,2,m,cat)={Els Codirectors}
+\SetAdviserString*(pref,ca,2,f,cat)={Les Codirectores}
 
-\adviserstring(pref,t,1,m,cat)       := {El Tutor acadèmic}
-\adviserstring(pref,t,1,f,cat)       := {La Tutora acadèmica}
-\adviserstring(pref,t,2,m,cat)       := {Els Tutors acadèmics}
-\adviserstring(pref,t,2,f,cat)       := {Les Tutores acadèmiques}
+\SetAdviserString*(pref,t,1,m,cat)={El Tutor acadèmic}
+\SetAdviserString*(pref,t,1,f,cat)={La Tutora acadèmica}
+\SetAdviserString*(pref,t,2,m,cat)={Els Tutors acadèmics}
+\SetAdviserString*(pref,t,2,f,cat)={Les Tutores acadèmiques}
 
 
 %%=======================================================================
 %% DEGREE NAMES
 %%=======================================================================
 
-\degreestring(bsc,m,cat)        := {Llicenciat}
-\degreestring(bsc,f,cat)        := {Llicenciada}
+\SetDegreeString*(bsc,m,cat)={Llicenciat}
+\SetDegreeString*(bsc,f,cat)={Llicenciada}
 
-\degreestring(msc,m,cat)        := {Titulat de màster}
-\degreestring(msc,f,cat)        := {Titulada de màster}
-\degreestring(mscplan,m,cat)    := {Titulat de màster}
-\degreestring(mscplan,f,cat)    := {Titulada de màster}
+\SetDegreeString*(msc,m,cat)={Titulat de màster}
+\SetDegreeString*(msc,f,cat)={Titulada de màster}
+\SetDegreeString*(mscplan,m,cat)={Titulat de màster}
+\SetDegreeString*(mscplan,f,cat)={Titulada de màster}
 
-\degreestring(phd,m,cat)        := {Doctor}
-\degreestring(phd,f,cat)        := {Doctora}
-\degreestring(phdplan,m,cat)    := {Doctorand}
-\degreestring(phdplan,f,cat)    := {Doctoranda}
-\degreestring(phdprop,m,cat)    := {Doctorand}
-\degreestring(phdprop,f,cat)    := {Doctoranda}
+\SetDegreeString*(phd,m,cat)={Doctor}
+\SetDegreeString*(phd,f,cat)={Doctora}
+\SetDegreeString*(phdplan,m,cat)={Doctorand}
+\SetDegreeString*(phdplan,f,cat)={Doctoranda}
+\SetDegreeString*(phdprop,m,cat)={Doctorand}
+\SetDegreeString*(phdprop,f,cat)={Doctoranda}
 
 
 %%=======================================================================
 %% DOCUMENT TYPES
 %%=======================================================================
 
-\doctypestring(bsc,cat)         := {Treball de final de grau}
-\doctypestring(mscplan,cat)     := {Pla de treball de màster}
-\doctypestring(msc,cat)         := {Treball de final de màster}
-\doctypestring(phdplan,cat)     := {Pla de tesi doctoral}
-\doctypestring(phdprop,cat)     := {Proposta de tesi doctoral}
-\doctypestring(phd,cat)         := {Tesi doctoral}
+\SetDoctypeString*(bsc,cat)={Treball de final de grau}
+\SetDoctypeString*(mscplan,cat)={Pla de treball de màster}
+\SetDoctypeString*(msc,cat)={Treball de final de màster}
+\SetDoctypeString*(phdplan,cat)={Pla de tesi doctoral}
+\SetDoctypeString*(phdprop,cat)={Proposta de tesi doctoral}
+\SetDoctypeString*(phd,cat)={Tesi doctoral}
 
-\dissertationplan(mscplan,cat)    := {Pla de la dissertació}
-\dissertationplan(phdplan,cat)    := {Pla de la tesi}
-\dissertationplan(phdprop,cat)    := {Proposta de tesi}
+\SetDissertationPlan*(mscplan,cat)={Pla de la dissertació}
+\SetDissertationPlan*(phdplan,cat)={Pla de la tesi}
+\SetDissertationPlan*(phdprop,cat)={Proposta de tesi}
 
 
 %%=======================================================================
 %% SDG (SUSTAINABLE DEVELOPMENT GOALS)
 %%=======================================================================
 
-\sdgstring(cat)                 := {Objectius de Desenvolupament Sostenible (ODS)}
+\SetSdgString*(cat)={Objectius de Desenvolupament Sostenible (ODS)}
 
 
 %%=======================================================================
 %% COMMITTEE
 %%=======================================================================
 
-\committeetitlestring(cat)      := {Tribunal avaluador}
+\SetCommitteeTitleString*(cat)={Tribunal avaluador}
 
-\committeestring(c,1,m,cat)     := {President del tribunal}
-\committeestring(c,1,f,cat)     := {Presidenta del tribunal}
-\committeestring(c,2,m,cat)     := {Presidents del tribunal}
-\committeestring(c,2,f,cat)     := {Presidentes del tribunal}
+\SetCommitteeString*(c,1,m,cat)={President del tribunal}
+\SetCommitteeString*(c,1,f,cat)={Presidenta del tribunal}
+\SetCommitteeString*(c,2,m,cat)={Presidents del tribunal}
+\SetCommitteeString*(c,2,f,cat)={Presidentes del tribunal}
 
-\committeestring(r,1,m,cat)     := {Vocal}
-\committeestring(r,1,f,cat)     := {Vocal}
-\committeestring(r,2,m,cat)     := {Vocals}
-\committeestring(r,2,f,cat)     := {Vocals}
+\SetCommitteeString*(r,1,m,cat)={Vocal}
+\SetCommitteeString*(r,1,f,cat)={Vocal}
+\SetCommitteeString*(r,2,m,cat)={Vocals}
+\SetCommitteeString*(r,2,f,cat)={Vocals}
 
-\committeestring(a,1,m,cat)     := {Director}
-\committeestring(a,1,f,cat)     := {Directora}
-\committeestring(a,2,m,cat)     := {Directors}
-\committeestring(a,2,f,cat)     := {Directores}
+\SetCommitteeString*(a,1,m,cat)={Director}
+\SetCommitteeString*(a,1,f,cat)={Directora}
+\SetCommitteeString*(a,2,m,cat)={Directors}
+\SetCommitteeString*(a,2,f,cat)={Directores}
 
-\committeestring(ca,1,m,cat)    := {Codirector}
-\committeestring(ca,1,f,cat)    := {Codirectora}
-\committeestring(ca,2,m,cat)    := {Codirectors}
-\committeestring(ca,2,f,cat)    := {Codirectores}
+\SetCommitteeString*(ca,1,m,cat)={Codirector}
+\SetCommitteeString*(ca,1,f,cat)={Codirectora}
+\SetCommitteeString*(ca,2,m,cat)={Codirectors}
+\SetCommitteeString*(ca,2,f,cat)={Codirectores}
 
-\committeestring(m,1,m,cat)     := {Membre del tribunal}
-\committeestring(m,1,f,cat)     := {Membre del tribunal}
-\committeestring(m,2,m,cat)     := {Membres del tribunal}
-\committeestring(m,2,f,cat)     := {Membres del tribunal}
+\SetCommitteeString*(m,1,m,cat)={Membre del tribunal}
+\SetCommitteeString*(m,1,f,cat)={Membre del tribunal}
+\SetCommitteeString*(m,2,m,cat)={Membres del tribunal}
+\SetCommitteeString*(m,2,f,cat)={Membres del tribunal}
 
-\committeestring(g,1,m,cat)     := {Membre convidat}
-\committeestring(g,1,f,cat)     := {Membre convidada}
-\committeestring(g,2,m,cat)     := {Membres convidats}
-\committeestring(g,2,f,cat)     := {Membres convidades}
+\SetCommitteeString*(g,1,m,cat)={Membre convidat}
+\SetCommitteeString*(g,1,f,cat)={Membre convidada}
+\SetCommitteeString*(g,2,m,cat)={Membres convidats}
+\SetCommitteeString*(g,2,f,cat)={Membres convidades}
 
 
 %%=======================================================================
 %% DISSERTATION TEMPLATES
 %%=======================================================================
 
-\dissertationstring(bsc,cat)    = {%
+\SetDissertationString(bsc,cat)={%
       Treball presentat per a l’obtenció del títol de % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ en\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(mscplan,cat)= {%
+\SetDissertationString(mscplan,cat)={%
       Informe intermedi presentat per a l’obtenció del títol de % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ en\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(msc,cat)    = {%
+\SetDissertationString(msc,cat)={%
       Treball de final de màster presentat per a l’obtenció del títol de % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ en\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(phdplan,cat)= {%
+\SetDissertationString(phdplan,cat)={%
       Pla de tesi doctoral presentat per a l’obtenció del títol de % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ en\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(phdprop,cat)= {%
+\SetDissertationString(phdprop,cat)={%
       Proposta de tesi doctoral presentada per a l’obtenció del títol de % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ en\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(phd,cat)    = {%
+\SetDissertationString(phd,cat)={%
       Tesi doctoral presentada per a l’obtenció del títol de % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ en\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ en\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
 
 %%=======================================================================
 %% LEGAL & ACKNOWLEDGEMENTS
 %%=======================================================================
 
-\copyrighttextstring(cat)       = {%
-        La \theschool(\@LANG@COPYRIGHT)\ i la \theuniversity(\@LANG@COPYRIGHT)%
+\SetCopyrightTextString(cat)={%
+        La \GetSchool(\@LANG@COPYRIGHT)\ i la \GetUniversity(\@LANG@COPYRIGHT)%
         \ disposen del dret perpetu i sense límits geogràfics d’arxivar % 
         i publicar aquesta tesi en format imprès o digital, ou per qualsevol altre mitjà existent % 
         o futur, així com de difondre-la mitjançant repositoris científics i de % 
         permetre’n la còpia i distribució amb finalitats docents o de recerca, no comercials, % 
         sempre que es citi degudament l’autor i l’editor.}
 
-\acknowledgmentsstring(cat)     = {%
+\SetAcknowledgmentsString(cat)={%
         Aquest document s’ha produït amb el sistema de composició \NTengineName~\@ntcite{latex-project} % 
         i la plantilla % 
         \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} % 

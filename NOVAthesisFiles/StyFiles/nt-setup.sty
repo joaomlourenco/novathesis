@@ -115,13 +115,13 @@
 }%
 
 
-\bkmstring(1-1)   = {\thebkmstring(cover,\@LANG@MAIN)}
-\bkmstring(1-2)   = {\thebkmstring(incover,\@LANG@MAIN)}
-\bkmstring(2-1)   = {\thebkmstring(frontpage,\@LANG@MAIN)}
-\bkmstring(2-2)   = {\thebkmstring(infrontpage,\@LANG@MAIN)}
-\bkmstring(N-1)   = {\thebkmstring(inbackcover,\@LANG@MAIN)}
-\bkmstring(N-2)   = {\thebkmstring(backcover,\@LANG@MAIN)}
-\bkmstring(spine) = {\thebkmstring(spine,\@LANG@MAIN)}
+\SetBkmString(1-1)={\GetBkmString(cover,\@LANG@MAIN)}
+\SetBkmString(1-2)={\GetBkmString(incover,\@LANG@MAIN)}
+\SetBkmString(2-1)={\GetBkmString(frontpage,\@LANG@MAIN)}
+\SetBkmString(2-2)={\GetBkmString(infrontpage,\@LANG@MAIN)}
+\SetBkmString(N-1)={\GetBkmString(inbackcover,\@LANG@MAIN)}
+\SetBkmString(N-2)={\GetBkmString(backcover,\@LANG@MAIN)}
+\SetBkmString(spine)={\GetBkmString(spine,\@LANG@MAIN)}
 
 
 
@@ -201,15 +201,15 @@
 \def\ntmajorfield{\@ifstar{\@ntmajorfieldifundef}{\@ntmajorfield}}
   % #1 = lang
   % #2 = value
-\def\@ntmajorfieldifundef(#1)#2{\ifdatadefined{majorfield}(#1){}{\@ntmajorfield(#1){#2}}}
-\def\@ntmajorfield(#1)#2{\majorfield(#1):={#2}}
+\def\@ntmajorfieldifundef(#1)#2{\IfMemVoidT{MajorField}{#1}{\@ntmajorfield(#1){#2}}}
+\def\@ntmajorfield(#1)#2{\SetMajorField*(#1)={#2}}
 
 \def\ntdegreename{\@ifstar{\@ntdegreenameifundef}{\@ntdegreename}}
-\def\@ntdegreenameifundef(#1)#2{\ifdatadefined{degreename}(#1){}{\@ntdegreename(#1){#2}}}
+\def\@ntdegreenameifundef(#1)#2{\IfMemVoidT{DegreeName}{#1}{\@ntdegreename(#1){#2}}}
 \def\@ntdegreename(#1)#2{%
   % #1 = lang
   % #2 = value
-  \datamatch{\match}{degreenameprefix}(%
+  \datamatch{\match}{DegreeNamePrefix}(%
             {\@DOCTYPE,\@DEGREEACR,\@LANG@COVER},%
             {\@DOCCLASS,\@DEGREEACR,\@LANG@COVER},%
             {\@DEGREEACR,\@LANG@COVER},%
@@ -217,19 +217,19 @@
             {\@DOCCLASS,\@LANG@COVER},%
             {\@LANG@COVER}%
   )%
-  \ifblank{\match}{\degreename(#1):={#2}}{\degreename(#1):={\match\ #2}}%
-  \majorfield(#1):={#2}%
+  \ifblank{\match}{\SetDegreeName*(#1)={#2}}{\SetDegreeName*(#1)={\match\ #2}}%
+  \SetMajorField*(#1)={#2}%
 }
 % --------------------------------------------------------
 % Specialization
 \def\ntminorfield{\@ifstar{\@ntminorfieldifundef}{\@ntminorfield}}
-\def\@ntminorfieldifundef(#1)#2{\ifdatadefined{minorfield}(#1){}{\@ntminorfield(#1){#2}}}
-\def\@ntminorfield(#1)#2{\minorfield(#1):={#2}}
+\def\@ntminorfieldifundef(#1)#2{\IfMemVoidT{MinorField}{#1}{\@ntminorfield(#1){#2}}}
+\def\@ntminorfield(#1)#2{\SetMinorField*(#1)={#2}}
 
 \def\ntspecialization{\@ifstar{\@ntspecializationifundef}{\@ntspecialization}}
-\def\@ntspecializationifundef(#1)#2{\ifdatadefined{minorfield}(#1){}{\@ntspecialization(#1){#2}}}
+\def\@ntspecializationifundef(#1)#2{\IfMemVoidT{MinorField}{#1}{\@ntspecialization(#1){#2}}}
 \def\@ntspecialization(#1)#2{%
-  \datamatch{\specmatch}{specializationstring}(%
+  \datamatch{\specmatch}{SpecializationString}(%
             {\@DOCTYPE,\@DEGREEACR,\@LANG@COVER},%
             {\@DOCCLASS,\@DEGREEACR,\@LANG@COVER},%
             {\@DEGREEACR,\@LANG@COVER},%
@@ -237,13 +237,13 @@
             {\@DOCCLASS,\@LANG@COVER},%
             {\@LANG@COVER}%
   )%
-  \ifblank{\specmatch}{\specialization(#1)={#2}}{\specialization(#1)={\specmatch\ #2}}%
-  \minorfield(#1)={#2}%
+  \ifblank{\specmatch}{\SetSpecialization*(#1)={#2}}{\SetSpecialization*(#1)={\specmatch\ #2}}%
+  \SetMinorField(#1)={#2}%
 }
 
 % --------------------------------------------------------
 % Sponsors
-\def\ntsponsors(#1,#2,#3)#4{\sponsor(#3,#1,#2):={#2}}
+\def\ntsponsors(#1,#2,#3)#4{\SetSponsor*(#3,#1,#2)={#2}}
 
 % --------------------------------------------------------
 % Title
@@ -252,10 +252,10 @@
   % #2 = lang
   % #3 = value
   % \typeout{NT TITLE [#1] [#2] [#3]}%
-  \doctitle(#2,#1):={#3}%
+  \SetDocTitle*(#2,#1)={#3}%
   \NewlineToSpace{#3}[\tmp]%
-  \doctitle(#2,#1,plain):={\tmp}% 
-  \IfStrEq{#1}{main}{\doctitle(#2,spine):={\tmp}}{}%
+  \SetDocTitle*(#2,#1,plain)={\tmp}% 
+  \IfStrEq{#1}{main}{\SetDocTitle*(#2,spine)={\tmp}}{}%
 }
 
 
@@ -399,18 +399,18 @@
 %============================================================
 % Author identification
 %============================================================
-\newdata{docauthor}
-\docauthor(name):={Author Name}
-\docauthor(name,short):={Author Short Name}
-\docauthor(gender):={Author Gender}
-\docauthor(degree,\@LANG@COVER):={Author Previous Degree}
+\NewMemStore{DocAuthor}
+\SetDocAuthor*(name)={Author Name}
+\SetDocAuthor*(name,short)={Author Short Name}
+\SetDocAuthor*(gender)={Author Gender}
+\SetDocAuthor*(degree,\@LANG@COVER)={Author Previous Degree}
 
 \def\ntauthorname(#1)#2#3{% [m|f]{Long name}{Short name}
-  \docauthor(gender):={#1}%
-  \docauthor(name):={#2}%
-  \docauthor(name,short):={#3}}
+  \SetDocAuthor*(gender)={#1}%
+  \SetDocAuthor*(name)={#2}%
+  \SetDocAuthor*(name,short)={#3}}
 
-\def\ntauthordegree(#1)#2{\docauthor(degree,#1):={#2}}
+\def\ntauthordegree(#1)#2{\SetDocAuthor*(degree,#1)={#2}}
 
 
 
@@ -421,10 +421,10 @@
 
 
 % strings to be defined for each language
-\nttitle(main,\@LANG@COVER){\thedefaultnttitle(\@LANG@COVER)}
-\nttitle(sub,\@LANG@COVER){\thedefaultntsubtitle(\@LANG@COVER)}
-\ntdepartment(\@LANG@COVER){\thedefaultntdepartment(\@LANG@COVER)}
-\ntdegreename(\@LANG@COVER){\thedefaultntdegreename(\@LANG@COVER)}
+\nttitle(main,\@LANG@COVER){\GetDefaultNtTitle(\@LANG@COVER)}
+\nttitle(sub,\@LANG@COVER){\GetDefaultNtSubtitle(\@LANG@COVER)}
+\ntdepartment(\@LANG@COVER){\GetDefaultNtDepartment(\@LANG@COVER)}
+\ntdegreename(\@LANG@COVER){\GetDefaultNtDegreeName(\@LANG@COVER)}
 
 
 %============================================================
@@ -514,7 +514,7 @@
           \ntthesisfrontmatter% Before the main text (TOC, etc) — Roman page numbering
           \bookmarksetupnext{level=0}%
           \hypertarget{bmfrontmatter}{}%
-          \bookmark[dest=bmfrontmatter]{\thebkmstring(frontmatter,\@LANG@MAIN)}%
+          \bookmark[dest=bmfrontmatter]{\GetBkmString(frontmatter,\@LANG@MAIN)}%
           \bookmarksetupnext{rellevel=1}%
           \ntprintlist{/@nt/print/#1/\@DOCSTATUS}%
     }%
@@ -531,7 +531,7 @@
           \ntthesisbackmatter     % The back text — Arabic page numbering
           \bookmarksetupnext{level=-1}%
           \hypertarget{bmbackmatter}{}%
-          \bookmark[dest=bmbackmatter]{\thebkmstring(backmatter,\@LANG@MAIN)}%
+          \bookmark[dest=bmbackmatter]{\GetBkmString(backmatter,\@LANG@MAIN)}%
           \bookmarksetupnext{level=0}%
           \ntprintlist{/@nt/print/#1}%
     }%
@@ -597,7 +597,7 @@
             \hypertarget{bmglossaries}{}%
             \bookmarksetupnext{level=0}%
             \bookmark[dest=bmglossaries]
-                    {\thebkmstring(glossaries,\@LANG@MAIN)}%
+                    {\GetBkmString(glossaries,\@LANG@MAIN)}%
             \printglossaries
           }{}%
         }{}%

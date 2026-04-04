@@ -26,8 +26,8 @@
     \pagecolor{white}%
   \ifphddoc{\color{white}}{\color{black}}%
   \hspace*{10mm}%
-  \thespine(font)%
-  \parbox{197mm}{UMinho~$|$~\thespine(year)\hfill\thespine(author)\hfill\textbf{\thespine(title)}}%
+  \GetSpine(font)%
+  \parbox{197mm}{UMinho~$|$~\GetSpine(year)\hfill\GetSpine(author)\hfill\textbf{\GetSpine(title)}}%
   \parbox{90mm}{~}%
 }
 
@@ -51,16 +51,16 @@
   % draw image
     % \node[inner sep=0] at (current page.center)
     %         {\includegraphics[width=\textwidth,height=\textheight]%
-    %                          {\thethesiscover(spine,image)}%
+    %                          {\GetThesisCover(spine,image)}%
     %         };
     \node (univ) [inner sep=0,anchor=north,yshift=0.5pt] at (current page.north)
             {
-                \rotatebox{-90}{\includegraphics[width=\novathesis@spinewidth,angle=90]{\thespine(logo,university)}\hspace{-0.5pt}%
-                \includegraphics[width=\novathesis@spinewidth,angle=90]{\thespine(logo,school)}}
+                \rotatebox{-90}{\includegraphics[width=\novathesis@spinewidth,angle=90]{\GetSpine(logo,university)}\hspace{-0.5pt}%
+                \includegraphics[width=\novathesis@spinewidth,angle=90]{\GetSpine(logo,school)}}
              };
     % \node (schl) [inner sep=0,below of=univ]%
     %         {\includegraphics[width=\novathesis@spinewidth]%
-    %                          {\thespine(logo,school)}};
+    %                          {\GetSpine(logo,school)}};
     \node[inner sep=0] at (current page.center) {\rotatebox{90}{\spinetext}};
     \ifmscdoc{%
         \node[inner sep=0,xshift=-0.1pt-0.5\novathesis@spinewidth] at (current page.center)

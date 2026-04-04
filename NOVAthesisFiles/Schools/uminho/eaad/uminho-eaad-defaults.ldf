@@ -18,11 +18,11 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Escola de Arquitetura, Arte e Design}
-\school(en):={School of Architecture, Art, and Design}
-\school(fr):={\theschool(en)}
-\school(it):={\theschool(en)}
+\SetSchool*(pt)={Escola de Arquitetura, Arte e Design}
+\SetSchool*(en)={School of Architecture, Art, and Design}
+\SetSchool*(fr)={\GetSchool(en)}
+\SetSchool*(it)={\GetSchool(en)}
 
 % Logos
-\school(logo,RGB):={uminho-ea-insignia-color}
-\school(logo,GRAY):={uminho-ea-insignia-mono}
+\SetSchool*(logo,RGB)={uminho-ea-insignia-color}
+\SetSchool*(logo,GRAY)={uminho-ea-insignia-mono}

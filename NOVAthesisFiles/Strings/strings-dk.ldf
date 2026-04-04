@@ -9,238 +9,238 @@
 %% UTILITIES
 %%=======================================================================
 
-\andstring(dk)                  := { og }
-\instring(dk)                   := { i }
-\ofstring(dk)                   := { af }
-\ofstring(1,m,dk)               := { af }
-\ofstring(2,m,dk)               := { af }
-\ofstring(1,f,dk)               := { af }
-\ofstring(2,f,dk)               := { af }
-\keywordsstring(dk)             := {Nøgleord}
-\departmentofstring(dk)         := {Institut for}
-\specializationstring(dk)       := {Specialisering i}
-\degreenameprefix(bsc,dk)       := {Bachelor i}
-\degreenameprefix(msc,dk)       := {Kandidat i}
-\degreenameprefix(phd,dk)       := {Ph.d. i}
-\candidatestring(m,dk)          := {Kandidaten}
-\candidatestring(f,dk)          := {Kandidaten}
+\SetAndString*(dk)={ og }
+\SetInString*(dk)={ i }
+\SetOfString*(dk)={ af }
+\SetOfString*(1,m,dk)={ af }
+\SetOfString*(2,m,dk)={ af }
+\SetOfString*(1,f,dk)={ af }
+\SetOfString*(2,f,dk)={ af }
+\SetKeywordsString*(dk)={Nøgleord}
+\SetDepartmentOfString*(dk)={Institut for}
+\SetSpecializationString*(dk)={Specialisering i}
+\SetDegreeNamePrefix*(bsc,dk)={Bachelor i}
+\SetDegreeNamePrefix*(msc,dk)={Kandidat i}
+\SetDegreeNamePrefix*(phd,dk)={Ph.d. i}
+\SetCandidateString*(m,dk)={Kandidaten}
+\SetCandidateString*(f,dk)={Kandidaten}
 
 
 %%=======================================================================
 %% BOOKMARK STRINGS
 %%=======================================================================
 
-\bkmstring(frontmatter,dk)      := {Indledende materiale}
-\bkmstring(backmatter,dk)       := {Afsluttende materiale}
-\bkmstring(cover,dk)            := {Omslag}
-\bkmstring(incover,dk)          := {Omslagets inderside}
-\bkmstring(frontpage,dk)        := {Titelside}
-\bkmstring(infrontpage,dk)      := {Kolofonside}
-\bkmstring(backcover,dk)        := {Bagside}
-\bkmstring(inbackcover,dk)      := {Bagsidens inderside}
-\bkmstring(spine,dk)            := {Ryg}
-\bkmstring(copyright,dk)        := {Ophavsret}
-\bkmstring(statement,dk)        := {Erklæring}
-\bkmstring(statements,dk)       := {Erklæringer}
-\bkmstring(dedication,dk)       := {Dedikation}
-\bkmstring(acknowledgements,dk) := {Tak}
-\bkmstring(quote,dk)            := {Citat}
-\bkmstring(abstract,dk)         := {Resumé}
-\bkmstring(listof,dk)           := {Liste over…}
-\bkmstring(glossaries,dk)       := {Ordlister}
+\SetBkmString*(frontmatter,dk)={Indledende materiale}
+\SetBkmString*(backmatter,dk)={Afsluttende materiale}
+\SetBkmString*(cover,dk)={Omslag}
+\SetBkmString*(incover,dk)={Omslagets inderside}
+\SetBkmString*(frontpage,dk)={Titelside}
+\SetBkmString*(infrontpage,dk)={Kolofonside}
+\SetBkmString*(backcover,dk)={Bagside}
+\SetBkmString*(inbackcover,dk)={Bagsidens inderside}
+\SetBkmString*(spine,dk)={Ryg}
+\SetBkmString*(copyright,dk)={Ophavsret}
+\SetBkmString*(statement,dk)={Erklæring}
+\SetBkmString*(statements,dk)={Erklæringer}
+\SetBkmString*(dedication,dk)={Dedikation}
+\SetBkmString*(acknowledgements,dk)={Tak}
+\SetBkmString*(quote,dk)={Citat}
+\SetBkmString*(abstract,dk)={Resumé}
+\SetBkmString*(listof,dk)={Liste over…}
+\SetBkmString*(glossaries,dk)={Ordlister}
 
 
 %%=======================================================================
 %% DEFAULTS
 %%=======================================================================
 
-\defaultnttitle(dk)             := {En Meget Lang og Imponerende\\Afhandlingstitel med Tvunget Linjeskift}
-\defaultntsubtitle(dk)          := {Nogle Tanker om Livet, Universet\\og alt det Der}
-\defaultntdepartment(dk)        := {Navn på Instituttet}
-\defaultntdegreename(dk)        := {Navn na Uddannelsesprogram}
-\defaultntspecialization(dk)    := {Navn på Specialisering}
-\defaultntauthordegree(dk)      := {Kandidat/Bachelor i Navn på Tidligere Grad}
-\notdefinedstring(dk)           := {IKKE DEFINERET}
+\SetDefaultNtTitle*(dk)={En Meget Lang og Imponerende\\Afhandlingstitel med Tvunget Linjeskift}
+\SetDefaultNtSubtitle*(dk)={Nogle Tanker om Livet, Universet\\og alt det Der}
+\SetDefaultNtDepartment*(dk)={Navn på Instituttet}
+\SetDefaultNtDegreeName*(dk)={Navn na Uddannelsesprogram}
+\SetDefaultNtSpecialization*(dk)={Navn på Specialisering}
+\SetDefaultNtAuthorDegree*(dk)={Kandidat/Bachelor i Navn på Tidligere Grad}
+\SetNotDefinedString*(dk)={IKKE DEFINERET}
 
 
 %%=======================================================================
 %% ADVISER STRINGS
 %%=======================================================================
 
-\professorstring(1,m,dk)        := {Professor}
-\professorstring(2,m,dk)        := {Professorer}
-\professorstring(1,f,dk)        := {Professor}
-\professorstring(2,f,dk)        := {Professorer}
+\SetProfessorString*(1,m,dk)={Professor}
+\SetProfessorString*(2,m,dk)={Professorer}
+\SetProfessorString*(1,f,dk)={Professor}
+\SetProfessorString*(2,f,dk)={Professorer}
 
-\adviserstring(a,1,m,dk)        := {Vejleder}
-\adviserstring(a,1,f,dk)        := {Vejleder}
-\adviserstring(a,2,m,dk)        := {Vejledere}
-\adviserstring(a,2,f,dk)        := {Vejledere}
+\SetAdviserString*(a,1,m,dk)={Vejleder}
+\SetAdviserString*(a,1,f,dk)={Vejleder}
+\SetAdviserString*(a,2,m,dk)={Vejledere}
+\SetAdviserString*(a,2,f,dk)={Vejledere}
 
-\adviserstring(c,1,m,dk)        := {Medvejleder}
-\adviserstring(c,1,f,dk)        := {Medvejleder}
-\adviserstring(c,2,m,dk)        := {Medvejledere}
-\adviserstring(c,2,f,dk)        := {Medvejledere}
+\SetAdviserString*(c,1,m,dk)={Medvejleder}
+\SetAdviserString*(c,1,f,dk)={Medvejleder}
+\SetAdviserString*(c,2,m,dk)={Medvejledere}
+\SetAdviserString*(c,2,f,dk)={Medvejledere}
 
-\adviserstring(ca,1,m,dk)       := {Medvejleder}
-\adviserstring(ca,1,f,dk)       := {Medvejleder}
-\adviserstring(ca,2,m,dk)       := {Medvejledere}
-\adviserstring(ca,2,f,dk)       := {Medvejledere}
+\SetAdviserString*(ca,1,m,dk)={Medvejleder}
+\SetAdviserString*(ca,1,f,dk)={Medvejleder}
+\SetAdviserString*(ca,2,m,dk)={Medvejledere}
+\SetAdviserString*(ca,2,f,dk)={Medvejledere}
 
-\adviserstring(t,1,m,dk)        := {Tutor}
-\adviserstring(t,1,f,dk)        := {Tutor}
-\adviserstring(t,2,m,dk)        := {Tutorer}
-\adviserstring(t,2,f,dk)        := {Tutorer}
+\SetAdviserString*(t,1,m,dk)={Tutor}
+\SetAdviserString*(t,1,f,dk)={Tutor}
+\SetAdviserString*(t,2,m,dk)={Tutorer}
+\SetAdviserString*(t,2,f,dk)={Tutorer}
 
-\adviserstring(pref,a,1,m,dk)        := {Vejlederen}
-\adviserstring(pref,a,1,f,dk)        := {Vejlederen}
-\adviserstring(pref,a,2,m,dk)        := {Vejlederne}
-\adviserstring(pref,a,2,f,dk)        := {Vejlederne}
+\SetAdviserString*(pref,a,1,m,dk)={Vejlederen}
+\SetAdviserString*(pref,a,1,f,dk)={Vejlederen}
+\SetAdviserString*(pref,a,2,m,dk)={Vejlederne}
+\SetAdviserString*(pref,a,2,f,dk)={Vejlederne}
 
-\adviserstring(pref,c,1,m,dk)        := {Medvejlederen}
-\adviserstring(pref,c,1,f,dk)        := {Medvejlederen}
-\adviserstring(pref,c,2,m,dk)        := {Medvejlederne}
-\adviserstring(pref,c,2,f,dk)        := {Medvejlederne}
+\SetAdviserString*(pref,c,1,m,dk)={Medvejlederen}
+\SetAdviserString*(pref,c,1,f,dk)={Medvejlederen}
+\SetAdviserString*(pref,c,2,m,dk)={Medvejlederne}
+\SetAdviserString*(pref,c,2,f,dk)={Medvejlederne}
 
-\adviserstring(pref,ca,1,m,dk)       := {Medvejlederen}
-\adviserstring(pref,ca,1,f,dk)       := {Medvejlederen}
-\adviserstring(pref,ca,2,m,dk)       := {Medvejlederne}
-\adviserstring(pref,ca,2,f,dk)       := {Medvejlederne}
+\SetAdviserString*(pref,ca,1,m,dk)={Medvejlederen}
+\SetAdviserString*(pref,ca,1,f,dk)={Medvejlederen}
+\SetAdviserString*(pref,ca,2,m,dk)={Medvejlederne}
+\SetAdviserString*(pref,ca,2,f,dk)={Medvejlederne}
 
-\adviserstring(pref,t,1,m,dk)        := {Tutoren}
-\adviserstring(pref,t,1,f,dk)        := {Tutoren}
-\adviserstring(pref,t,2,m,dk)        := {Tutorerne}
-\adviserstring(pref,t,2,f,dk)        := {Tutorerne}
+\SetAdviserString*(pref,t,1,m,dk)={Tutoren}
+\SetAdviserString*(pref,t,1,f,dk)={Tutoren}
+\SetAdviserString*(pref,t,2,m,dk)={Tutorerne}
+\SetAdviserString*(pref,t,2,f,dk)={Tutorerne}
 
 
 %%=======================================================================
 %% DEGREE NAMES
 %%=======================================================================
 
-\degreestring(bsc,m,dk)         := {Bachelor}
-\degreestring(bsc,f,dk)         := {Bachelor}
+\SetDegreeString*(bsc,m,dk)={Bachelor}
+\SetDegreeString*(bsc,f,dk)={Bachelor}
 
-\degreestring(msc,m,dk)         := {Kandidat}
-\degreestring(msc,f,dk)         := {Kandidat}
-\degreestring(mscplan,m,dk)     := {Kandidat}
-\degreestring(mscplan,f,dk)     := {Kandidat}
+\SetDegreeString*(msc,m,dk)={Kandidat}
+\SetDegreeString*(msc,f,dk)={Kandidat}
+\SetDegreeString*(mscplan,m,dk)={Kandidat}
+\SetDegreeString*(mscplan,f,dk)={Kandidat}
 
-\degreestring(phd,m,dk)         := {Ph.d.}
-\degreestring(phd,f,dk)         := {Ph.d.}
-\degreestring(phdplan,m,dk)     := {Ph.d.}
-\degreestring(phdplan,f,dk)     := {Ph.d.}
-\degreestring(phdprop,m,dk)     := {Ph.d.}
-\degreestring(phdprop,f,dk)     := {Ph.d.}
+\SetDegreeString*(phd,m,dk)={Ph.d.}
+\SetDegreeString*(phd,f,dk)={Ph.d.}
+\SetDegreeString*(phdplan,m,dk)={Ph.d.}
+\SetDegreeString*(phdplan,f,dk)={Ph.d.}
+\SetDegreeString*(phdprop,m,dk)={Ph.d.}
+\SetDegreeString*(phdprop,f,dk)={Ph.d.}
 
 
 %%=======================================================================
 %% DOCUMENT TYPES
 %%=======================================================================
 
-\doctypestring(bsc,dk)          := {Bachelorprojekt}
-\doctypestring(mscplan,dk)      := {Plan for kandidatspeciale}
-\doctypestring(msc,dk)          := {Kandidatspeciale}
-\doctypestring(phdplan,dk)      := {Plan for ph.d.-afhandling}
-\doctypestring(phdprop,dk)      := {Forslag til ph.d.-afhandling}
-\doctypestring(phd,dk)          := {Ph.d.-afhandling}
+\SetDoctypeString*(bsc,dk)={Bachelorprojekt}
+\SetDoctypeString*(mscplan,dk)={Plan for kandidatspeciale}
+\SetDoctypeString*(msc,dk)={Kandidatspeciale}
+\SetDoctypeString*(phdplan,dk)={Plan for ph.d.-afhandling}
+\SetDoctypeString*(phdprop,dk)={Forslag til ph.d.-afhandling}
+\SetDoctypeString*(phd,dk)={Ph.d.-afhandling}
 
-\dissertationplan(mscplan,dk)   := {Specialeplan}
-\dissertationplan(phdplan,dk)   := {Ph.d.-plan}
-\dissertationplan(phdprop,dk)   := {Afhandlingsforslag}
+\SetDissertationPlan*(mscplan,dk)={Specialeplan}
+\SetDissertationPlan*(phdplan,dk)={Ph.d.-plan}
+\SetDissertationPlan*(phdprop,dk)={Afhandlingsforslag}
 
 
 %%=======================================================================
 %% SDG (SUSTAINABLE DEVELOPMENT GOALS)
 %%=======================================================================
 
-\sdgstring(dk)                  := {Verdensmålene for bæredygtig udvikling (SDG)}
+\SetSdgString*(dk)={Verdensmålene for bæredygtig udvikling (SDG)}
 
 
 %%=======================================================================
 %% COMMITTEE
 %%=======================================================================
 
-\committeetitlestring(dk)       := {Bedømmelsesudvalg}
+\SetCommitteeTitleString*(dk)={Bedømmelsesudvalg}
 
-\committeestring(c,1,m,dk)      := {Formand}
-\committeestring(c,1,f,dk)      := {Formand}
-\committeestring(c,2,m,dk)      := {Formænd}
-\committeestring(c,2,f,dk)      := {Formænd}
+\SetCommitteeString*(c,1,m,dk)={Formand}
+\SetCommitteeString*(c,1,f,dk)={Formand}
+\SetCommitteeString*(c,2,m,dk)={Formænd}
+\SetCommitteeString*(c,2,f,dk)={Formænd}
 
-\committeestring(r,1,m,dk)      := {Opponent}
-\committeestring(r,1,f,dk)      := {Opponent}
-\committeestring(r,2,m,dk)      := {Opponenter}
-\committeestring(r,2,f,dk)      := {Opponenter}
+\SetCommitteeString*(r,1,m,dk)={Opponent}
+\SetCommitteeString*(r,1,f,dk)={Opponent}
+\SetCommitteeString*(r,2,m,dk)={Opponenter}
+\SetCommitteeString*(r,2,f,dk)={Opponenter}
 
-\committeestring(a,1,m,dk)      := {Vejleder}
-\committeestring(a,1,f,dk)      := {Vejleder}
-\committeestring(a,2,m,dk)      := {Vejledere}
-\committeestring(a,2,f,dk)      := {Vejledere}
+\SetCommitteeString*(a,1,m,dk)={Vejleder}
+\SetCommitteeString*(a,1,f,dk)={Vejleder}
+\SetCommitteeString*(a,2,m,dk)={Vejledere}
+\SetCommitteeString*(a,2,f,dk)={Vejledere}
 
-\committeestring(ca,1,m,dk)     := {Medvejleder}
-\committeestring(ca,1,f,dk)     := {Medvejleder}
-\committeestring(ca,2,m,dk)     := {Medvejledere}
-\committeestring(ca,2,f,dk)     := {Medvejledere}
+\SetCommitteeString*(ca,1,m,dk)={Medvejleder}
+\SetCommitteeString*(ca,1,f,dk)={Medvejleder}
+\SetCommitteeString*(ca,2,m,dk)={Medvejledere}
+\SetCommitteeString*(ca,2,f,dk)={Medvejledere}
 
-\committeestring(m,1,m,dk)      := {Medlem}
-\committeestring(m,1,f,dk)      := {Medlem}
-\committeestring(m,2,m,dk)      := {Medlemmer}
-\committeestring(m,2,f,dk)      := {Medlemmer}
+\SetCommitteeString*(m,1,m,dk)={Medlem}
+\SetCommitteeString*(m,1,f,dk)={Medlem}
+\SetCommitteeString*(m,2,m,dk)={Medlemmer}
+\SetCommitteeString*(m,2,f,dk)={Medlemmer}
 
-\committeestring(g,1,m,dk)      := {Gæst}
-\committeestring(g,1,f,dk)      := {Gæst}
-\committeestring(g,2,m,dk)      := {Gæster}
-\committeestring(g,2,f,dk)      := {Gæster}
+\SetCommitteeString*(g,1,m,dk)={Gæst}
+\SetCommitteeString*(g,1,f,dk)={Gæst}
+\SetCommitteeString*(g,2,m,dk)={Gæster}
+\SetCommitteeString*(g,2,f,dk)={Gæster}
 
 
 %%=======================================================================
 %% DISSERTATION TEMPLATES
 %%=======================================================================
 
-\dissertationstring(bsc,dk)     = {%
+\SetDissertationString(bsc,dk)={%
       Rapport indleveret til opnåelse af graden %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ i\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(mscplan,dk) = {%
+\SetDissertationString(mscplan,dk)={%
       Foreløbig rapport indleveret til opnåelse af graden %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ i\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(msc,dk)     = {%
+\SetDissertationString(msc,dk)={%
       Speciale indleveret til opnåelse af graden %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ i\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(phdplan,dk) = {%
+\SetDissertationString(phdplan,dk)={%
       Planrapport indleveret til opnåelse af graden %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ i\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(phdprop,dk) = {%
+\SetDissertationString(phdprop,dk)={%
       Forslag til afhandling indleveret til opnåelse af graden %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ i\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(phd,dk)     = {%
+\SetDissertationString(phd,dk)={%
       Afhandling indleveret til opnåelse af graden %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ i\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
 
 %%=======================================================================
 %% LEGAL & ACKNOWLEDGEMENTS
 %%=======================================================================
 
-\copyrighttextstring(dk)        = {%
-        \theschool(\@LANG@COPYRIGHT)\ og \theuniversity(\@LANG@COPYRIGHT)\ har en evig og %
+\SetCopyrightTextString(dk)={%
+        \GetSchool(\@LANG@COPYRIGHT)\ og \GetUniversity(\@LANG@COPYRIGHT)\ har en evig og %
         uden geografiske begrænsninger gældende ret til at arkivere og offentliggøre denne afhandling %
         i trykt eller digital form, eller ved enhver anden nuværende eller fremtidig metode, samt til %
         at gøre den tilgængelig gennem videnskabelige repositorier og til at tillade kopiering og %
         distribution til ikke-kommercielle undervisnings- og forskningsformål, forudsat at der gives %
         behørig kredit til forfatteren og udgiveren.}
 
-\acknowledgmentsstring(dk)      = {%
+\SetAcknowledgmentsString(dk)={%
         Dette dokument er udarbejdet med sætningssystemet \NTengineName~\@ntcite{latex-project} %
         og skabelonen %
         \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %

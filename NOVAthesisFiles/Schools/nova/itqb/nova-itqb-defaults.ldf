@@ -38,29 +38,29 @@
 %% STRINGS (UNIVERSITY & SCHOOL)
 %%=======================================================================
 
-\newdata{oeiras}
-\oeiras():={\mbox{O}eiras}
+\NewMemStore{Oeiras}
+\SetOeiras*()={\mbox{O}eiras}
 
 % Faculty / School
-\school(pt):={Instituto de Tecnologia Química e Biológica António Xavier}
-\school(en):={Instituto de Tecnologia Química e Biológica António Xavier}
-\school(fr):={Instituto de Tecnologia Química e Biológica António Xavier}
-\school(it):={Instituto de Tecnologia Química e Biológica António Xavier}
-\school(address):={\textbf{ITQB NOVA, Avenida da República, 2780-157 \theoeiras(), Portugal} $|$ Tel +351 214 469 100 $|$ itqb.unl.pt}
+\SetSchool*(pt)={Instituto de Tecnologia Química e Biológica António Xavier}
+\SetSchool*(en)={Instituto de Tecnologia Química e Biológica António Xavier}
+\SetSchool*(fr)={Instituto de Tecnologia Química e Biológica António Xavier}
+\SetSchool*(it)={Instituto de Tecnologia Química e Biológica António Xavier}
+\SetSchool*(address)={\textbf{ITQB NOVA, Avenida da República, 2780-157 \GetOeiras(), Portugal} $|$ Tel +351 214 469 100 $|$ itqb.unl.pt}
 
-\school(logo,neg):={nova-itqb-logo-mono}
+\SetSchool*(logo,neg)={nova-itqb-logo-mono}
 
-\dissertationstring(phd,en):={Dissertation presented to obtain the \textbf{Ph.D degree in}}
-\dissertationstring(phd,pt):={Dissertação apresentada para obter o \textbf{grau de Doutor em}}
-\dissertationstring(msc,en):={Dissertation presented to obtain the \textbf{M.Sc degree in}}
-\dissertationstring(msc,pt):={Dissertação apresentada para obter o \textbf{grau de Mestre em}}
+\SetDissertationString*(phd,en)={Dissertation presented to obtain the \textbf{Ph.D degree in}}
+\SetDissertationString*(phd,pt)={Dissertação apresentada para obter o \textbf{grau de Doutor em}}
+\SetDissertationString*(msc,en)={Dissertation presented to obtain the \textbf{M.Sc degree in}}
+\SetDissertationString*(msc,pt)={Dissertação apresentada para obter o \textbf{grau de Mestre em}}
 
 
 %%=======================================================================
 %% COMMITTEE
 %%=======================================================================
 
-\committeeorder():={c,r,a,m}%
+\SetCommitteeOrder*()={c,r,a,m}%
 
 
 %%=======================================================================
@@ -78,31 +78,31 @@
 %%=======================================================================
 
 % Set margins for "normal" pages
-\margin(screen,top):={3.5cm}
-\margin(screen,bottom):={2.5cm}
-\margin(screen,left):={3.0cm}
-\margin(screen,right):={3.0cm}
-\margin(paper,top):={3.5cm}
-\margin(paper,bottom):={2.5cm}
-\margin(paper,left):={3.0cm}
-\margin(paper,right):={3.0cm}
+\SetMargin*(screen,top)={3.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={3.0cm}
+\SetMargin*(screen,right)={3.0cm}
+\SetMargin*(paper,top)={3.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={3.0cm}
+\SetMargin*(paper,right)={3.0cm}
 
 % Set margins for cover pages
-\margin(cover,top):={1.5cm}
-\margin(cover,bottom):={0.8cm}
-\margin(cover,left):={1.7cm}
-\margin(cover,right):={1.7cm}
+\SetMargin*(cover,top)={1.5cm}
+\SetMargin*(cover,bottom)={0.8cm}
+\SetMargin*(cover,left)={1.7cm}
+\SetMargin*(cover,right)={1.7cm}
 
-\newdata{region}
-\region(itqb,top):={-\paperheight+19.25mm}
-\region(itqb,bottom):={\theregion(itqb,top)-10.5mm}
-\region(itqb,left):={10mm}
-\region(itqb,right):={\paperwidth}
-\region(itqb,round):={0.4cm}
-\region(photo,top):={-81mm}
-\region(photo,left):={1.5cm}
-\region(photo,height):={11.0cm}
-\region(photo,width)={\paperwidth-\theregion(photo,left)-1.9cm}
+\NewMemStore{Region}
+\SetRegion*(itqb,top)={-\paperheight+19.25mm}
+\SetRegion*(itqb,bottom)={\GetRegion(itqb,top)-10.5mm}
+\SetRegion*(itqb,left)={10mm}
+\SetRegion*(itqb,right)={\paperwidth}
+\SetRegion*(itqb,round)={0.4cm}
+\SetRegion*(photo,top)={-81mm}
+\SetRegion*(photo,left)={1.5cm}
+\SetRegion*(photo,height)={11.0cm}
+\SetRegion(photo,width)={\paperwidth-\GetRegion(photo,left)-1.9cm}
 
 
 %%=======================================================================
@@ -117,39 +117,39 @@
 \providecolor{itqbgray25}{RGB}{25,25,25}
 \providecolor{itqbgreen}{RGB}{39,177,153}
 
-\newdata{itqbcolor}
-\itqbcolor(gray,front,bar):={itqbgray89}
-\itqbcolor(gray,front,text):={white}
-\itqbcolor(gray,front,text2):={itqbgray207}
-\itqbcolor(gray,front,date):={itqbgray127}
-\itqbcolor(gray,front,rectangle):={itqbgray89}
-\itqbcolor(gray,back,text):={itqbgray38}
-\itqbcolor(gray,spine):={itqbgray38}
-\itqbcolor(gray,back):={itqbgray38}
-\itqbcolor(green,front,bar):={itqbgreen}
-\itqbcolor(green,front,text):={white}
-\itqbcolor(green,front,date):={itqbgray127}
-\itqbcolor(green,front,rectangle):={itqbgreen}
-\itqbcolor(green,back,text):={itqbgreen}
-\itqbcolor(green,front,text2):={itqbgray207}
-\itqbcolor(green,spine):={itqbgreen}
-\itqbcolor(green,back):={itqbgreen}
+\NewMemStore{ItqbColor}
+\SetItqbColor*(gray,front,bar)={itqbgray89}
+\SetItqbColor*(gray,front,text)={white}
+\SetItqbColor*(gray,front,text2)={itqbgray207}
+\SetItqbColor*(gray,front,date)={itqbgray127}
+\SetItqbColor*(gray,front,rectangle)={itqbgray89}
+\SetItqbColor*(gray,back,text)={itqbgray38}
+\SetItqbColor*(gray,spine)={itqbgray38}
+\SetItqbColor*(gray,back)={itqbgray38}
+\SetItqbColor*(green,front,bar)={itqbgreen}
+\SetItqbColor*(green,front,text)={white}
+\SetItqbColor*(green,front,date)={itqbgray127}
+\SetItqbColor*(green,front,rectangle)={itqbgreen}
+\SetItqbColor*(green,back,text)={itqbgreen}
+\SetItqbColor*(green,front,text2)={itqbgray207}
+\SetItqbColor*(green,spine)={itqbgreen}
+\SetItqbColor*(green,back)={itqbgreen}
 
 
 %%=======================================================================
 %% SPINE
 %%=======================================================================
 
-\spine(logo)={\theschool(logo,neg)}
-\spine(bg,color)={\theitqbcolor(\option{/novathesis/nova/itqb/cover/color},spine)}
-\spine(date)={\textcolor{itqbgray207}{\theoeiras()},
+\SetSpine(logo)={\GetSchool(logo,neg)}
+\SetSpine(bg,color)={\GetItqbColor(\option{/novathesis/nova/itqb/cover/color},spine)}
+\SetSpine(date)={\textcolor{itqbgray207}{\GetOeiras()},
               \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}
 
 \SpineSetup[%
 ]{%
-  date                        = {\thespine(date)},
-  bg/color                    = {\thespine(bg,color)},
-  box/logo/bg/image           = {\thespine(logo)},
+  date                        = {\GetSpine(date)},
+  bg/color                    = {\GetSpine(bg,color)},
+  box/logo/bg/image           = {\GetSpine(logo)},
   box/date/fg/color           = {white},
   box/title/fg/color          = {white},
   box/author/fg/color         = {white},
@@ -219,14 +219,14 @@
            xshift=\paperwidth-\@MRGN@left-10mm,
            yshift=-\@MRGN@top-2.5mm,
            color={\expanded{%
-		   		\theitqbcolor(\option{/novathesis/nova/itqb/cover/color},front,date)}},
+		   		\GetItqbColor(\option{/novathesis/nova/itqb/cover/color},front,date)}},
 		   rotate=90,
 		  ] (date)
 		  {\fontsize{19}{19}\selectfont%
 		   \textbf{\GetDocDate(submission,year)}};
 	\draw[line width=0.7mm, 
 		  \expanded{%
-		   		\theitqbcolor(\option{/novathesis/nova/itqb/cover/color},front,date)}
+		   		\GetItqbColor(\option{/novathesis/nova/itqb/cover/color},front,date)}
 		 ] ($(date.north west) - (2mm,0)$) -- ($(date.north east) - (2mm,0)$);
     % Title
     \node [inner sep=0pt, anchor=south west, yshift=-\@MRGN@top-38.75mm]
@@ -235,7 +235,7 @@
                             {\@resizetowidth{\linewidth}%
                                             {\textbf{%
 											   \begin{tabular}{@{}l@{}}%
-											   \thedoctitle(\@LANG@COVER,main)%
+											   \GetDocTitle(\@LANG@COVER,main)%
 											   \end{tabular}%
 											 }}}};
     % Subtitle
@@ -243,48 +243,48 @@
                     {\fontsize{16.0}{16.0}\selectfont%front.pdf
                      \parbox{\paperwidth-\@MRGN@left-\@MRGN@right}%
                             {\@resizetowidth{\linewidth}%
-                                            {\thedoctitle(\@LANG@COVER,sub)}}};
+                                            {\GetDocTitle(\@LANG@COVER,sub)}}};
     % Author
     \node [inner sep=0pt, anchor=west, yshift=-\@MRGN@top-54.7mm]
-                    {\fontsize{15}{15}\selectfont\textbf{\thedocauthor(name)}};
+                    {\fontsize{15}{15}\selectfont\textbf{\GetDocAuthor(name)}};
     % Photo
-    \edef\@itqbheight{\theregion(photo,height)}
-    \edef\@itqbwidth{\theregion(photo,width)}
+    \edef\@itqbheight{\GetRegion(photo,height)}
+    \edef\@itqbwidth{\GetRegion(photo,width)}
     \draw [path picture={\node at (path picture bounding box.center)
                     {\includegraphics[height=\@itqbheight]{nova-itqb-photo}};},
                     rounded corners=8mm, xshift=-\@MRGN@left]
-                    ({\theregion(photo,left)},\theregion(photo,top))
+                    ({\GetRegion(photo,left)},\GetRegion(photo,top))
                     rectangle
-                    (\expanded{\theregion(photo,left)+\theregion(photo,width)},
-                               \expanded{\theregion(photo,top)-\theregion(photo,height)});
+                    (\expanded{\GetRegion(photo,left)+\GetRegion(photo,width)},
+                               \expanded{\GetRegion(photo,top)-\GetRegion(photo,height)});
     % Dissertation string
-    \node [inner sep=0pt,anchor=west, yshift={\theregion(itqb,top)+28.75mm}]
+    \node [inner sep=0pt,anchor=west, yshift={\GetRegion(itqb,top)+28.75mm}]
                     {\fontsize{14}{14}\selectfont
-                     \thedissertationstring(\option{/@nt/document/docclass},%
+                     \GetDissertationString(\option{/@nt/document/docclass},%
                                             \@LANG@COVER)};
     % Major field
-    \node [inner sep=0pt,anchor=west, yshift={\theregion(itqb,top)+20.0mm}]
+    \node [inner sep=0pt,anchor=west, yshift={\GetRegion(itqb,top)+20.0mm}]
                     {\fontsize{15}{15}\selectfont
-                     \themajorfield(\@LANG@COVER)};
+                     \GetMajorField(\@LANG@COVER)};
     % Date
-    \node [inner sep=0pt,anchor=west, yshift={\theregion(itqb,top)+8.4mm}]
+    \node [inner sep=0pt,anchor=west, yshift={\GetRegion(itqb,top)+8.4mm}]
                     {\fontsize{12}{12}\selectfont
                      \mbox{O}eiras,
                      \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}};
     % Rectangle
     \fill [xshift=-\@MRGN@left,
            \expanded{%
-		   	\theitqbcolor(\option{/novathesis/nova/itqb/cover/color},front,rectangle)}
+		   	\GetItqbColor(\option{/novathesis/nova/itqb/cover/color},front,rectangle)}
 		   ]
-                   (\theregion(itqb,left),{\theregion(itqb,top)})
-                -- (\theregion(itqb,right),{\theregion(itqb,top)})
-                -- (\theregion(itqb,right),{\theregion(itqb,bottom)})
-                {[rounded corners={\theregion(itqb,round)}]
-                -- (\theregion(itqb,left),{\theregion(itqb,bottom)})}
+                   (\GetRegion(itqb,left),{\GetRegion(itqb,top)})
+                -- (\GetRegion(itqb,right),{\GetRegion(itqb,top)})
+                -- (\GetRegion(itqb,right),{\GetRegion(itqb,bottom)})
+                {[rounded corners={\GetRegion(itqb,round)}]
+                -- (\GetRegion(itqb,left),{\GetRegion(itqb,bottom)})}
                 -- cycle {};
     % Text in rectangle
     \node [inner sep=0pt, anchor=west, xshift={1mm},
-                          yshift={(\theregion(itqb,bottom)+\theregion(itqb,top))/2}]
+                          yshift={(\GetRegion(itqb,bottom)+\GetRegion(itqb,top))/2}]
                   {\fontsize{9}{9}\selectfont
                   {\color{white}INSTITUTO DE TECNOLOGIA QUÍMICA E BIOLÓGICA }
                   {\color{itqbgray207}ANTÓNIO XAVIER}
@@ -302,25 +302,25 @@
   \setbox0=	\hbox{\scalebox{2}{\bfseries\GetDocDate(submission,year)}}
   \begin{scope}[shift=(current page.north west)]
     % Filling back cover
-    \fill [color={\expanded{\theitqbcolor(\option{/novathesis/nova/itqb/cover/color},back)}}]
+    \fill [color={\expanded{\GetItqbColor(\option{/novathesis/nova/itqb/cover/color},back)}}]
                     (0,0) rectangle (\paperwidth,-\paperheight);
     % Logo above rectangle
-    \node [inner sep=0pt,anchor=north west,xshift=11mm,yshift={3.5cm+\theregion(itqb,top)}]
+    \node [inner sep=0pt,anchor=north west,xshift=11mm,yshift={3.5cm+\GetRegion(itqb,top)}]
                     {\includegraphics[width=11.7cm]{nova-itqb-logo-mono}};
     \begin{scope}[xscale=-1,xshift=-\paperwidth]
       % Rectangle
-      \fill [color=white] (\theregion(itqb,left),{\theregion(itqb,top)})
-                  -- (\theregion(itqb,right),{\theregion(itqb,top)})
-                  -- (\theregion(itqb,right),{\theregion(itqb,bottom)})
-                  {[rounded corners={\theregion(itqb,round)}]
-                  -- (\theregion(itqb,left),{\theregion(itqb,bottom)})}
+      \fill [color=white] (\GetRegion(itqb,left),{\GetRegion(itqb,top)})
+                  -- (\GetRegion(itqb,right),{\GetRegion(itqb,top)})
+                  -- (\GetRegion(itqb,right),{\GetRegion(itqb,bottom)})
+                  {[rounded corners={\GetRegion(itqb,round)}]
+                  -- (\GetRegion(itqb,left),{\GetRegion(itqb,bottom)})}
                   -- cycle {};
       % Text in rectangle
     \node [inner sep=0pt, anchor=west, xshift={-\paperwidth+11mm},
-                          yshift={(\theregion(itqb,bottom)+\theregion(itqb,top))/2},
-                          color={\theitqbcolor(\option{/novathesis/nova/itqb/cover/color},back,text)}]
+                          yshift={(\GetRegion(itqb,bottom)+\GetRegion(itqb,top))/2},
+                          color={\GetItqbColor(\option{/novathesis/nova/itqb/cover/color},back,text)}]
                     {\fontsize{10}{10}\selectfont
-                     \theschool(address)};
+                     \GetSchool(address)};
     \end{scope}
   \end{scope}
 }

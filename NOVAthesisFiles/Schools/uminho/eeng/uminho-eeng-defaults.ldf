@@ -18,11 +18,11 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Escola de Engenharia}
-\school(en):={School of Engineering}
-\school(fr):={\theschool(en)}
-\school(it):={\theschool(en)}
+\SetSchool*(pt)={Escola de Engenharia}
+\SetSchool*(en)={School of Engineering}
+\SetSchool*(fr)={\GetSchool(en)}
+\SetSchool*(it)={\GetSchool(en)}
 
 % Logos
-\school(logo,RGB):={uminho-ee-insignia-color}
-\school(logo,GRAY):={uminho-ee-insignia-mono}
+\SetSchool*(logo,RGB)={uminho-ee-insignia-color}
+\SetSchool*(logo,GRAY)={uminho-ee-insignia-mono}

@@ -13,24 +13,24 @@
 %%=======================================================================
 
 % University
-\university(pt):={Instituto Politécnico de Setúbal}
-\university(en):={Polytechnic Institute of Setúbal}
-\university(fr):={Polytechnic Institute of Setúbal}
-\university(it):={Polytechnic Institute of Setúbal}
+\SetUniversity*(pt)={Instituto Politécnico de Setúbal}
+\SetUniversity*(en)={Polytechnic Institute of Setúbal}
+\SetUniversity*(fr)={Polytechnic Institute of Setúbal}
+\SetUniversity*(it)={Polytechnic Institute of Setúbal}
 
 % Department
-\departmentofstring(pt)         := {Área Departamental de}
+\SetDepartmentOfString*(pt)={Área Departamental de}
 
-\copyrighttextstring(pt)={A \theschool(\@LANG@COVER)\ e o \theuniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+\SetCopyrightTextString(pt)={A \GetSchool(\@LANG@COVER)\ e o \GetUniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
 
-\copyrighttextstring(en)={The \theschool(\@LANG@COVER)\ and the \theuniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+\SetCopyrightTextString(en)={The \GetSchool(\@LANG@COVER)\ and the \GetUniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
 
 
 %%=======================================================================
 %% COMMITTEE
 %%=======================================================================
 
-\committeeorder():={c,r,a,m}%
+\SetCommitteeOrder*()={c,r,a,m}%
 
 
 %%=======================================================================
@@ -47,27 +47,27 @@
 %%=======================================================================
 
 % Set margins for "normal" pages
-\margin(screen,top):={3.5cm}
-\margin(screen,bottom):={2.5cm}
-\margin(screen,left):={3.0cm}
-\margin(screen,right):={3.0cm}
-\margin(paper,top):={3.5cm}
-\margin(paper,bottom):={2.5cm}
-\margin(paper,left):={3.0cm}
-\margin(paper,right):={3.0cm}
+\SetMargin*(screen,top)={3.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={3.0cm}
+\SetMargin*(screen,right)={3.0cm}
+\SetMargin*(paper,top)={3.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={3.0cm}
+\SetMargin*(paper,right)={3.0cm}
 
 % Set margins for cover pages
-\margin(cover,top):={2.0cm}
-\margin(cover,bottom):={1.5cm}
-\margin(cover,left):={3.0cm}
-\margin(cover,right):={2.0cm}
+\SetMargin*(cover,top)={2.0cm}
+\SetMargin*(cover,bottom)={1.5cm}
+\SetMargin*(cover,left)={3.0cm}
+\SetMargin*(cover,right)={2.0cm}
 
 
 %%=======================================================================
 %% SPINE
 %%=======================================================================
 
-\spine(logo)={ips-logo}
+\SetSpine(logo)={ips-logo}
 
 
 %%=======================================================================
@@ -91,7 +91,7 @@
 
 % LOGO
 \ntaddtocover[vspace=0cm]{1-1}{%
-  \includegraphics[height=4.6cm]{\expanded{\theschool(logo)}}%
+  \includegraphics[height=4.6cm]{\expanded{\GetSchool(logo)}}%
 }
 
 % Author name and Title
@@ -99,13 +99,13 @@
   % Author name
   \begin{minipage}[t]{\@leftcol}%
     \fontsize{16}{16}\selectfont\raggedleft%
-    \thedocauthor(name)%
+    \GetDocAuthor(name)%
   \end{minipage}%
   \hfill%
   % Title of Dissertation
   \begin{minipage}[t]{\@rightcol}%
     \fontsize{16}{16}\selectfont\raggedright%
-    \textbf{\thedoctitle(\@LANG@COVER,main)}%
+    \textbf{\GetDocTitle(\@LANG@COVER,main)}%
   \end{minipage}%
 }
 
@@ -113,7 +113,7 @@
 \ntaddtocover[halign=l, vspace=1]{1-1}{%
   \hfill%
   \begin{minipage}[t]{\@rightcol}%
-    \includegraphics[height=5.3cm]{\thefrontpageimage()}%
+    \includegraphics[height=5.3cm]{\GetFrontPageImage()}%
   \end{minipage}%
 }
 
@@ -130,8 +130,8 @@
 \ntaddtocover[vspace=1]{1-1}{%
   \hfill%
   \begin{minipage}[t]{\@rightcol}%
-    \adviserstringfont(a):={\bfseries}%
-    \adviserstringfont(c):={\bfseries}%
+    \MemSet{adviserstringfont}{a}{\bfseries}%
+    \MemSet{adviserstringfont}{c}{\bfseries}%
     \fontsize{11}{11}\selectfont%
     \ntprintpersons{1}{2}{adviser}{a,c}%
   \end{minipage}%
@@ -160,13 +160,13 @@
   % Author name
   \begin{minipage}[t]{\@leftcol}%
     \fontsize{16}{16}\selectfont\raggedleft%
-    \thedocauthor(name)%
+    \GetDocAuthor(name)%
   \end{minipage}%
   \hfill%
   % Title of Dissertation
   \begin{minipage}[t]{\@rightcol}%
     \fontsize{16}{16}\selectfont\raggedright%
-    \textbf{\thedoctitle(\@LANG@COVER,main)}%
+    \textbf{\GetDocTitle(\@LANG@COVER,main)}%
   \end{minipage}%
 }
 
@@ -174,9 +174,9 @@
   \hfill%
   \begin{minipage}[t]{0.75\textwidth}%
     \ifmaindoc{%
-      \committeetitlestringfont():={\fontsize{14}{14}\selectfont\bfseries}%
-      \committeestringfont():={\bfseries}%
-      \fontsize{12}{12}\selectfont\ntprintpersons{1}{2}{committee}{\thecommitteeorder()}%
+      \MemSet{committeetitlestringfont}{}{\fontsize{14}{14}\selectfont\bfseries}%
+      \MemSet{committeestringfont}{}{\bfseries}%
+      \fontsize{12}{12}\selectfont\ntprintpersons{1}{2}{committee}{\GetCommitteeOrder()}%
     }{}%
   \end{minipage}%
 }

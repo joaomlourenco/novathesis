@@ -20,21 +20,21 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Escola Nacional de Saúde Pública}
-\school(en):={National School of Public Heath}
-\school(fr):={Escola Nacional de Saúde Pública}
-\school(it):={Escola Nacional de Saúde Pública}
+\SetSchool*(pt)={Escola Nacional de Saúde Pública}
+\SetSchool*(en)={National School of Public Heath}
+\SetSchool*(fr)={Escola Nacional de Saúde Pública}
+\SetSchool*(it)={Escola Nacional de Saúde Pública}
 
 % Degree name
-\degreename(pt):={Nome do Curso}
-\degreename(en):={Degree Name}
+\SetDegreeName*(pt)={Nome do Curso}
+\SetDegreeName*(en)={Degree Name}
 
 
 %%=======================================================================
 %% COMMITTEE
 %%=======================================================================
 
-\committeeorder():={c,r,m}%
+\SetCommitteeOrder*()={c,r,m}%
 
 
 %%=======================================================================
@@ -51,20 +51,20 @@
 %%=======================================================================
 
 % Set margins for "normal" pages
-\margin(screen,top):={3.5cm}
-\margin(screen,bottom):={2.5cm}
-\margin(screen,left):={3.0cm}
-\margin(screen,right):={3.0cm}
-\margin(paper,top):={3.5cm}
-\margin(paper,bottom):={2.5cm}
-\margin(paper,left):={2.5cm}
-\margin(paper,right):={3.5cm}
+\SetMargin*(screen,top)={3.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={3.0cm}
+\SetMargin*(screen,right)={3.0cm}
+\SetMargin*(paper,top)={3.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={2.5cm}
+\SetMargin*(paper,right)={3.5cm}
 
 % Set margins for cover pages
-\margin(cover,top):={1.0cm}
-\margin(cover,bottom):={1.0cm}
-\margin(cover,left):={1.0cm}
-\margin(cover,right):={1.0cm}
+\SetMargin*(cover,top)={1.0cm}
+\SetMargin*(cover,bottom)={1.0cm}
+\SetMargin*(cover,left)={1.0cm}
+\SetMargin*(cover,right)={1.0cm}
 
 
 %%=======================================================================
@@ -73,7 +73,7 @@
 
 \SpineSetup[%
 ]{%
-  box/logo/bg/image           = {\theuniversity(logo)},
+  box/logo/bg/image           = {\GetUniversity(logo)},
   box/logo/bg/image/angle     = {-90},
   % debug,
 }
@@ -83,7 +83,7 @@
 %% COVER PAGE SETUP (BACKGROUNDS)
 %%=======================================================================
 
-\thesiscover(logo):={nova-ensp-logo}
+\SetThesisCover*(logo)={nova-ensp-logo}
 
 
 %%=======================================================================
@@ -104,25 +104,25 @@
 
 % ENSP logo
 \ntaddtocover[vspace=1cm,halign=c,valign=t]{1-1,2-1}{%
-  \includegraphics[width=5.75cm,align=t]{\thethesiscover(logo)}%
+  \includegraphics[width=5.75cm,align=t]{\GetThesisCover(logo)}%
 }
 
 % Title of Dissertation
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont
-  \textbf{\thedoctitle(\@LANG@COVER,main)}
+  \textbf{\GetDocTitle(\@LANG@COVER,main)}
 }
 
 % Degree name
 \ntaddtocover[vspace=1cm]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont
-  \thedegreename(\@LANG@COVER)
+  \GetDegreeName(\@LANG@COVER)
 }
 
 % Author name
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont
-  \textbf{\thedocauthor(name)}
+  \textbf{\GetDocAuthor(name)}
 }
 
 % Presentation text (Cover 2 only)

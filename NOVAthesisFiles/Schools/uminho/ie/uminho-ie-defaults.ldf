@@ -18,11 +18,11 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Instituto de Educação}
-\school(en):={Institute of Education}
-\school(fr):={Institute of Education}
-\school(it):={Institute of Education}
+\SetSchool*(pt)={Instituto de Educação}
+\SetSchool*(en)={Institute of Education}
+\SetSchool*(fr)={Institute of Education}
+\SetSchool*(it)={Institute of Education}
 
 % Logos
-\school(logo,RGB):={uminho-ie-insignia-color}
-\school(logo,GRAY):={uminho-ie-insignia-mono}
+\SetSchool*(logo,RGB)={uminho-ie-insignia-color}
+\SetSchool*(logo,GRAY)={uminho-ie-insignia-mono}

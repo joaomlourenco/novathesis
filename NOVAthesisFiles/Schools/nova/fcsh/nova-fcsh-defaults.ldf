@@ -29,17 +29,17 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Faculdade de Ciências Sociais e Humanas}
-\school(en):={School of Social Sciences and Humanities}
-\school(fr):={School of Social Sciences and Humanities}
-\school(it):={School of Social Sciences and Humanities}
+\SetSchool*(pt)={Faculdade de Ciências Sociais e Humanas}
+\SetSchool*(en)={School of Social Sciences and Humanities}
+\SetSchool*(fr)={School of Social Sciences and Humanities}
+\SetSchool*(it)={School of Social Sciences and Humanities}
 
 
 %%=======================================================================
 %% COMMITTEE
 %%=======================================================================
 
-\committeeorder():={c,r,a,m}%
+\SetCommitteeOrder*()={c,r,a,m}%
 
 
 %%=======================================================================
@@ -60,20 +60,20 @@
 %%=======================================================================
 
 % Set margins for "normal" pages
-\margin(screen,top):={2.5cm}
-\margin(screen,bottom):={2.5cm}
-\margin(screen,left):={3.0cm}
-\margin(screen,right):={3.0cm}
-\margin(paper,top):={2.5cm}
-\margin(paper,bottom):={2.5cm}
-\margin(paper,left):={3.0cm}
-\margin(paper,right):={3.5cm}
+\SetMargin*(screen,top)={2.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={3.0cm}
+\SetMargin*(screen,right)={3.0cm}
+\SetMargin*(paper,top)={2.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={3.0cm}
+\SetMargin*(paper,right)={3.5cm}
 
 % Set margins for cover pages
-\margin(cover,top):={0.0cm}
-\margin(cover,bottom):={0.0cm}
-\margin(cover,left):={2.0cm}
-\margin(cover,right):={2.0cm}
+\SetMargin*(cover,top)={0.0cm}
+\SetMargin*(cover,bottom)={0.0cm}
+\SetMargin*(cover,left)={2.0cm}
+\SetMargin*(cover,right)={2.0cm}
 
 \frenchspacing
 
@@ -106,13 +106,13 @@
   \begingroup
     \begin{center}
     \noindent\large\bfseries
-    \ifdatadefined{doctitle}(\@LSHORT,abstract)
-      {\thedoctitle(\@LSHORT,abstract)}
-      {\thedoctitle(\@LSHORT,main)}
+    \IfMemVoidTF{DocTitle}{\@LSHORT,abstract}
+      {\GetDocTitle(\@LSHORT,main)}
+      {\GetDocTitle(\@LSHORT,abstract)}
     \end{center}
    \smallskip
     \begin{center}
-    \textbf{\thedocauthor(name)}
+    \textbf{\GetDocAuthor(name)}
     \end{center}
   \endgroup
 }
@@ -147,13 +147,13 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=1]{1-1}{%
   \fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\thedoctitle(\@LANG@COVER,main)}}%
+  \textcolor{fcshblue}{\textbf{\GetDocTitle(\@LANG@COVER,main)}}%
 }
 
 % Author name
 \ntaddtocover[vspace=1]{1-1}{%
   \fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\thedocauthor(name)}}%
+  \textcolor{fcshblue}{\textbf{\GetDocAuthor(name)}}%
 }
 
 % Degree
@@ -192,13 +192,13 @@
 % % Title of Dissertation
 \ntaddtocover[vspace=1]{2-1}{%
   \fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\thedoctitle(\@LANG@COVER,main)}}%
+  \textcolor{fcshblue}{\textbf{\GetDocTitle(\@LANG@COVER,main)}}%
 }
 
 % Author name
 \ntaddtocover[vspace=1]{2-1}{%
   \fontsize{18}{18}\selectfont%
-  \textcolor{fcshblue}{\textbf{\thedocauthor(name)}}%
+  \textcolor{fcshblue}{\textbf{\GetDocAuthor(name)}}%
 }
 
 % Degree
@@ -215,7 +215,7 @@
   }%
 }
 
-\ntaddtocover[vspace=1cm,hspace=-\expanded{\themargin(cover,left)}]{2-1}{%
+\ntaddtocover[vspace=1cm,hspace=-\expanded{\GetMargin(cover,left)}]{2-1}{%
  \raisebox{-1cm}{%
    \textcolor{fcshblue}{\rule{\stockwidth}{0.75cm}}%
  }%

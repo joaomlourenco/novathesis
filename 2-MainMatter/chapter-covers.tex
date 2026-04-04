@@ -108,11 +108,11 @@ separate from the normal page margins.  They are set with the
 \verb!\margin(cover,...):={...}! family:
 
 \begin{verbatim}
-\margin(cover,top):={8.6cm}    % default top margin for all cover pages
-\margin(cover,bottom):={1.5cm}
-\margin(cover,left):={3.55cm}
-\margin(cover,right):={2.0cm}
-\margin(cover,2-1,top):={6.6cm} % override top margin for cover 2-1 only
+\SetMargin*(cover,top)={8.6cm}    % default top margin for all cover pages
+\SetMargin*(cover,bottom)={1.5cm}
+\SetMargin*(cover,left)={3.55cm}
+\SetMargin*(cover,right)={2.0cm}
+\SetMargin*(cover,2-1,top)={6.6cm} % override top margin for cover 2-1 only
 \end{verbatim}
 
 The cover-ID-specific variant takes precedence when printing that particular
@@ -131,16 +131,16 @@ and degree class before falling back to the generic key:
 
 \begin{verbatim}
 % Set a solid background colour for cover 1-1
-\thesiscover(1-1,bgcolor):={fctdarkblue}
+\SetThesisCover*(1-1,bgcolor)={fctdarkblue}
 
 % Per-doctype variant (overrides the generic key when doctype=phd)
-\thesiscover(phd,1-1,bgcolor):={fctdarkgreen}
+\SetThesisCover*(phd,1-1,bgcolor)={fctdarkgreen}
 
 % Set a background image (file must be findable by LaTeX/graphicx)
-\thesiscover(phd,1-1,image):={nova-fct-cover-green-front}
+\SetThesisCover*(phd,1-1,image)={nova-fct-cover-green-front}
 
 % Set the default text colour for the entire cover page
-\thesiscover(1-1,textcolor):={white}
+\SetThesisCover*(1-1,textcolor)={white}
 \end{verbatim}
 
 Supported keys:
@@ -202,7 +202,7 @@ produces the topmost block.
 \begin{verbatim}
 \ntaddtocover[halign=l, height=3cm, valign=c]{1-1}{%
   \fontsize{20}{21}\selectfont
-  \textbf{\thedoctitle(\@LANG@COVER,main)}%
+  \textbf{\GetDocTitle(\@LANG@COVER,main)}%
 }
 \end{verbatim}
 
@@ -345,13 +345,13 @@ Example — logo, title, elastic gap, date:
 % Title — reserved box of fixed height so subtitle does not shift the author
 \ntaddtocover[vspace=5mm, halign=l, height=4cm, valign=c]{1-1,2-1}{%
   \fontsize{18}{20}\selectfont
-  \textbf{\thedoctitle(\@LANG@COVER,main)}%
+  \textbf{\GetDocTitle(\@LANG@COVER,main)}%
 }
 
 % Author
 \ntaddtocover[halign=l]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont
-  \thedocauthor(name)%
+  \GetDocAuthor(name)%
 }
 
 % Elastic gap pushes the date to the bottom of the text area
@@ -372,10 +372,10 @@ helpers when the cover layout differs between PhD and MSc documents:
 \ntaddtocover[halign=l, height=3cm, valign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{20}{21}\selectfont
-    \textbf{\thedoctitle(\@LANG@COVER,main)}%
+    \textbf{\GetDocTitle(\@LANG@COVER,main)}%
   }{%
     \fontsize{17}{17}\selectfont
-    \textbf{\thedocauthor(name)}%
+    \textbf{\GetDocAuthor(name)}%
   }%
 }
 \end{verbatim}
@@ -385,10 +385,10 @@ Alternatively, register two separate elements with complementary
 
 \begin{verbatim}
 \ntaddtocover[degree=phd, height=3cm, valign=c]{1-1}{%
-  \fontsize{20}{21}\selectfont \textbf{\thedoctitle(\@LANG@COVER,main)}%
+  \fontsize{20}{21}\selectfont \textbf{\GetDocTitle(\@LANG@COVER,main)}%
 }
 \ntaddtocover[degree=msc, height=3cm, valign=c]{1-1}{%
-  \fontsize{17}{17}\selectfont \textbf{\thedocauthor(name)}%
+  \fontsize{17}{17}\selectfont \textbf{\GetDocAuthor(name)}%
 }
 \end{verbatim}
 
@@ -413,7 +413,7 @@ loaded by default and can be used freely.
 \ntaddtocover[tikz]{1-1}{%
   \node[anchor=center]
     at ($(current page.north west) + (20mm,-20mm)$)
-    {\includegraphics[width=21mm]{\theuniversity(logo,neg)}};%
+    {\includegraphics[width=21mm]{\GetUniversity(logo,neg)}};%
   % Vertical rule separator
   \draw[thick]
     ($(current page.north west) + (3.5cm,-1cm)$) -- ++(0,-2cm);%
@@ -674,43 +674,43 @@ NOVAthesisFiles/Schools/myuniv/myfac/Images/
 %% INSTITUTION STRINGS  (one line per supported language)
 %%=======================================================
 
-\university(en) := {My University}
-\university(pt) := {Minha Universidade}
-\school(en)     := {My Faculty}
-\school(pt)     := {Minha Faculdade}
+\SetUniversity*(en)={My University}
+\SetUniversity*(pt)={Minha Universidade}
+\SetSchool*(en)={My Faculty}
+\SetSchool*(pt)={Minha Faculdade}
 
-\school(logo,en) := {myuniv-myfac-logo-en}
-\school(logo,pt) := {myuniv-myfac-logo-pt}
-\ifdatadefined{school}(logo,\@LANG@COVER)
-  {\school(logo):={\theschool(logo,\@LANG@COVER)}}
-  {\school(logo):={\theschool(logo,en)}}
+\SetSchool*(logo,en)={myuniv-myfac-logo-en}
+\SetSchool*(logo,pt)={myuniv-myfac-logo-pt}
+\IfMemVoidTF{School}{logo,\@LANG@COVER}
+  {\SetSchool*(logo)={\GetSchool(logo,en)}}
+  {\SetSchool*(logo)={\GetSchool(logo,\@LANG@COVER)}}
 
 
 %%=======================================================
 %% COMMITTEE ORDER
 %%=======================================================
 
-\committeeorder():={c,r,a,ca,m}%
+\SetCommitteeOrder*()={c,r,a,ca,m}%
 
 
 %%=======================================================
 %% LAYOUT
 %%=======================================================
 
-\margin(cover,top):={4.0cm}
-\margin(cover,bottom):={2.0cm}
-\margin(cover,left):={2.5cm}
-\margin(cover,right):={2.5cm}
+\SetMargin*(cover,top)={4.0cm}
+\SetMargin*(cover,bottom)={2.0cm}
+\SetMargin*(cover,left)={2.5cm}
+\SetMargin*(cover,right)={2.5cm}
 
 
 %%=======================================================
 %% COVER BACKGROUNDS
 %%=======================================================
 
-\thesiscover(1-1,bgcolor):={myfacblue}
-\thesiscover(1-1,textcolor):={white}
-\thesiscover(2-1,bgcolor):={white}
-\thesiscover(N-2,bgcolor):={myfacblue}
+\SetThesisCover*(1-1,bgcolor)={myfacblue}
+\SetThesisCover*(1-1,textcolor)={white}
+\SetThesisCover*(2-1,bgcolor)={white}
+\SetThesisCover*(N-2,bgcolor)={myfacblue}
 
 
 %%=======================================================
@@ -721,25 +721,25 @@ NOVAthesisFiles/Schools/myuniv/myfac/Images/
 \ntaddtocover[tikz]{1-1}{%
   \node[anchor=north east]
     at ($(current page.north east) + (-1cm,-1cm)$)
-    {\includegraphics[height=2cm]{\theschool(logo)}};%
+    {\includegraphics[height=2cm]{\GetSchool(logo)}};%
 }
 
 % Title
 \ntaddtocover[halign=l, height=4cm, valign=c]{1-1}{%
   \fontsize{20}{22}\selectfont\bfseries
-  \thedoctitle(\@LANG@COVER,main)%
+  \GetDocTitle(\@LANG@COVER,main)%
 }
 
 % Author
 \ntaddtocover[halign=l]{1-1}{%
   \fontsize{14}{14}\selectfont
-  \thedocauthor(name)%
+  \GetDocAuthor(name)%
 }
 
 % Degree name + date pushed to the bottom
 \ntaddtocover[vspace=1, halign=l]{1-1}{%
   \fontsize{11}{11}\selectfont
-  \thedegreename(\@LANG@COVER)\\
+  \GetDegreeName(\@LANG@COVER)\\
   \PrintDateISO{\GetDocDate(submission,year)-%
                 \GetDocDate(submission,month)}%
 }
@@ -751,29 +751,29 @@ NOVAthesisFiles/Schools/myuniv/myfac/Images/
 
 % Reproduce key elements on the front page
 \ntaddtocover[halign=l]{2-1}{%
-  \includegraphics[height=1.5cm]{\theschool(logo)}\\[4mm]%
+  \includegraphics[height=1.5cm]{\GetSchool(logo)}\\[4mm]%
   \fontsize{16}{18}\selectfont\bfseries
-  \thedoctitle(\@LANG@COVER,main)%
+  \GetDocTitle(\@LANG@COVER,main)%
 }
 
 % Advisers
 \ntaddtocover[vspace=2, halign=l]{2-1}{%
-  \adviserstringfont():={\bfseries}%
+  \MemSet{adviserstringfont}{}{\bfseries}%
   \fontsize{11}{11}\selectfont
   \ntprintpersons{0.9}{2}{adviser}{\GetAdviserOrder()}%
 }
 
 % Committee (final status only)
 \ntaddtocover[vspace=1, halign=l, status={final}]{2-1}{%
-  \committeetitlestringfont():={\bfseries}%
+  \MemSet{committeetitlestringfont}{}{\bfseries}%
   \fontsize{10}{10}\selectfont
-  \ntprintpersons{0.9}{2}{committee}{\thecommitteeorder()}%
+  \ntprintpersons{0.9}{2}{committee}{\GetCommitteeOrder()}%
 }
 
 % Date at the bottom
 \ntaddtocover[vspace=1, halign=l]{2-1}{%
   \fontsize{11}{11}\selectfont
-  \thedegreename(\@LANG@COVER)\\
+  \GetDegreeName(\@LANG@COVER)\\
   \PrintDateISO{\GetDocDate(submission,year)-%
                 \GetDocDate(submission,month)}%
 }
@@ -835,8 +835,8 @@ demonstrates a typical mixed strategy:
 
 Key cover-margin setting:
 \begin{verbatim}
-\margin(cover,top):={8.6cm}   % leaves room for the TikZ logo band
-\margin(cover,2-1,top):={6.6cm} % front page has a smaller logo band
+\SetMargin*(cover,top)={8.6cm}   % leaves room for the TikZ logo band
+\SetMargin*(cover,2-1,top)={6.6cm} % front page has a smaller logo band
 \end{verbatim}
 
 Background setup (colour varies by document class):
@@ -844,7 +844,7 @@ Background setup (colour varies by document class):
 \def\@novafctcovercolor{red}          % default (BSc/other)
 \ifdocclass{msc}{\def\@novafctcovercolor{blue}}{}
 \ifdocclass{phd}{\def\@novafctcovercolor{green}}{}
-\thesiscover(\@DOCTYPE,1-1,image):=
+\SetThesisCover*(\@DOCTYPE,1-1,image)=
     {nova-fct-cover-\@novafctcovercolor-front}
 \end{verbatim}
 

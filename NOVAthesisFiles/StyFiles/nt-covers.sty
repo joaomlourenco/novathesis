@@ -103,7 +103,7 @@
   % #2 = true branch
   % #3 = false branch
   \ifoptiondefined{/@nt/cover/\@UNIV/\@SCHL/#1}{#2}{%
-    \datamatchtf{\match}{thesiscover}(%
+    \datamatchtf{\match}{ThesisCover}(%
        {\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
       ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
       ,{\@DEGREEACR,#1,bgcolor}%
@@ -180,8 +180,8 @@
         \thispagestyle{empty}%
         \NTRunHook{cover/pre}%
         \NTRunHook{cover/#1-1/pre}%
-        \hypertarget{\thebkmstring(#1-1)}{}%
-        \bookmark[dest=\thebkmstring(#1-1)]{\thebkmstring(#1-1)}%
+        \hypertarget{\GetBkmString(#1-1)}{}%
+        \bookmark[dest=\GetBkmString(#1-1)]{\GetBkmString(#1-1)}%
         \bookmarksetupnext{rellevel=1}%
         \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
         \NTRunHook{cover/#1-1/post}%
@@ -225,8 +225,8 @@
   \begingroup%
     \NTRunHook{cover/pre}%
     \NTRunHook{cover/#1-#2/pre}%
-    \hypertarget{\thebkmstring(#1-#2)}{}%
-    \bookmark[dest=\thebkmstring(#1-#2)]{\thebkmstring(#1-#2)}%
+    \hypertarget{\GetBkmString(#1-#2)}{}%
+    \bookmark[dest=\GetBkmString(#1-#2)]{\GetBkmString(#1-#2)}%
     \bookmarksetupnext{rellevel=1}%
     \thispagestyle{empty}%
     \setCoverBgColor{#1-#2}%
@@ -242,7 +242,7 @@
 \newcommand{\setCoverBgColor}[1]{
   \null%
   \NTRunHook{cover/#1/bgcolor/pre}%
-  \datamatchtf{\match}{thesiscover}(%
+  \datamatchtf{\match}{ThesisCover}(%
     {\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
    ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
    ,{\@DEGREEACR,#1,bgcolor}%
@@ -258,7 +258,7 @@
 \newcommand{\setCoverBgImage}[1]{
   \null%
   \NTRunHook{cover/#1/image/pre}%
-  \datamatchtf{\match}{thesiscover}(%
+  \datamatchtf{\match}{ThesisCover}(%
     {\@DOCTYPE,\@DEGREEACR,#1,image}%
    ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
    ,{\@DEGREEACR,#1,image}%
@@ -278,7 +278,7 @@
 
 \newcommand{\printCoverText}[1]{
   \null%
-  \datamatchtf{\match}{thesiscover}(%
+  \datamatchtf{\match}{ThesisCover}(%
               {\@DOCTYPE,\@DEGREEACR,#1,textcolor}%
              ,{\@DOCCLASS,\@DEGREEACR,#1,textcolor}%
              ,{\@DEGREEACR,#1,textcolor}%
@@ -289,7 +289,7 @@
              ,{textcolor}%
   ){\color{\match}}{}%
   \@for\nt@tmpi:={top,bottom,left,right}\do{%
-    \datamatch*{@MRGN@\nt@tmpi}{margin}(%
+    \datamatch*{@MRGN@\nt@tmpi}{Margin}(%
       {cover,\@DOCTYPE,\@DEGREEACR,#1,\nt@tmpi},%
       {cover,\@DOCCLASS,\@DEGREEACR,#1,\nt@tmpi},%
       {cover,\@DEGREEACR,#1,\nt@tmpi},%

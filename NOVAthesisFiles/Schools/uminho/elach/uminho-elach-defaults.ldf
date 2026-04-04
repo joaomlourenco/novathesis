@@ -18,11 +18,11 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Escola de Letras, Artes e Ciências Humanas​}
-\school(en):={School of Arts and Humanities}
-\school(fr):={School of Arts and Humanities}
-\school(it):={School of Arts and Humanities}
+\SetSchool*(pt)={Escola de Letras, Artes e Ciências Humanas​}
+\SetSchool*(en)={School of Arts and Humanities}
+\SetSchool*(fr)={School of Arts and Humanities}
+\SetSchool*(it)={School of Arts and Humanities}
 
 % Logos
-\school(logo,RGB):={uminho-elach-insignia-color}
-\school(logo,GRAY):={uminho-elach-insignia-mono}
+\SetSchool*(logo,RGB)={uminho-elach-insignia-color}
+\SetSchool*(logo,GRAY)={uminho-elach-insignia-mono}

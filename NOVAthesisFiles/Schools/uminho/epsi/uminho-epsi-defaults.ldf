@@ -18,11 +18,11 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Escola de Psicologia}
-\school(en):={School of Psychology}
-\school(fr):={\theschool(en)}
-\school(it):={\theschool(en)}
+\SetSchool*(pt)={Escola de Psicologia}
+\SetSchool*(en)={School of Psychology}
+\SetSchool*(fr)={\GetSchool(en)}
+\SetSchool*(it)={\GetSchool(en)}
 
 % Logos
-\school(logo,RGB):={uminho-ep-insignia-color}
-\school(logo,GRAY):={uminho-ep-insignia-mono}
+\SetSchool*(logo,RGB)={uminho-ep-insignia-color}
+\SetSchool*(logo,GRAY)={uminho-ep-insignia-mono}

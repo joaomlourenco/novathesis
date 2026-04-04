@@ -94,10 +94,10 @@
     spine/order .initial:n   = { date,title,author,logo },
 
     spine/author   .tl_set:N    = \l_nt_spine_author_tl,
-    spine/author   .initial:n   = { \thedocauthor(name,short) },
+    spine/author   .initial:n   = { \GetDocAuthor(name,short) },
 
     spine/title    .tl_set:N    = \l_nt_spine_title_tl,
-    spine/title    .initial:n   = { \thedoctitle(\@LANG@COVER,spine) },
+    spine/title    .initial:n   = { \GetDocTitle(\@LANG@COVER,spine) },
 
     spine/date     .tl_set:N    = \l_nt_spine_date_tl,
     spine/date     .initial:n   = { \GetDocDate(submission,year) },

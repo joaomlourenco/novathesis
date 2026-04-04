@@ -51,85 +51,79 @@
 \NewMemStore{DocType}
 \SetDocType(bsc)={Trabalho de Projeto}
 \SetDocType(msc)={Dissertação}
-\specializationstring(pt):={na Área de Especialização de}
+\SetSpecializationString*(pt)={na Área de Especialização de}
 
 % --------------------------------------------------------------------
 %   Dissertation strings
 % --------------------------------------------------------------------
 
-\dissertationstring(bsc,pt)     = {%
+\SetDissertationString(bsc,pt)={%
       \GetDocType(\option{/novathesis/doctype}) para obtenção do grau de %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)%
       \ em\\%
-      \themajorfield(\@LANG@COVER)%
-      \ifdatadefined{minorfield}(\@LANG@COVER)
-        {\thespecialization(\@LANG@COVER)}
-        {}%
+      \GetMajorField(\@LANG@COVER)%
+      \IfMemVoidF{MinorField}{\@LANG@COVER}
+        {\GetSpecialization(\@LANG@COVER)}
       .%
 }
 
-\dissertationstring(mscplan,pt) = {%
+\SetDissertationString(mscplan,pt)={%
       Plano de \GetDocType(\option{/novathesis/doctype}) para obtenção do grau de %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)%
       \ em\\%
-      \themajorfield(\@LANG@COVER)%
-      \ifdatadefined{minorfield}(\@LANG@COVER)
-        {\thespecialization(\@LANG@COVER)}
-        {}%
+      \GetMajorField(\@LANG@COVER)%
+      \IfMemVoidF{MinorField}{\@LANG@COVER}
+        {\GetSpecialization(\@LANG@COVER)}
       .%
 }
 
-\dissertationstring(msc,pt)     = {%
+\SetDissertationString(msc,pt)={%
       \GetDocType(\option{/novathesis/doctype}) para obtenção do grau de %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)%
       \ em\\%
-      \themajorfield(\@LANG@COVER)%
-      \ifdatadefined{minorfield}(\@LANG@COVER)
-        {\thespecialization(\@LANG@COVER)}
-        {}%
+      \GetMajorField(\@LANG@COVER)%
+      \IfMemVoidF{MinorField}{\@LANG@COVER}
+        {\GetSpecialization(\@LANG@COVER)}
       .%
 }
 
-\dissertationstring(bsc,en) = {%
+\SetDissertationString(bsc,en)={%
       \GetDocType(\option{/novathesis/doctype}) to obtain the degree of %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)%
       \ in\\%
-      \themajorfield(\@LANG@COVER)%
-      \ifdatadefined{minorfield}(\@LANG@COVER)
-        {\thespecialization(\@LANG@COVER)}
-        {}%
+      \GetMajorField(\@LANG@COVER)%
+      \IfMemVoidF{MinorField}{\@LANG@COVER}
+        {\GetSpecialization(\@LANG@COVER)}
       .%
 }
 
-\dissertationstring(mscplan,en) = {%
+\SetDissertationString(mscplan,en)={%
       \GetDocType(\option{/novathesis/doctype}) Plan to obtain the degree of %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)%
       \ in\\%
-      \themajorfield(\@LANG@COVER)%
-      \ifdatadefined{minorfield}(\@LANG@COVER)
-        {\thespecialization(\@LANG@COVER)}
-        {}%
+      \GetMajorField(\@LANG@COVER)%
+      \IfMemVoidF{MinorField}{\@LANG@COVER}
+        {\GetSpecialization(\@LANG@COVER)}
       .%
 }
 
-\dissertationstring(msc,en) = {%
+\SetDissertationString(msc,en)={%
       \GetDocType(\option{/novathesis/doctype}) to obtain the degree of %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)%
       \ in\\%
-      \themajorfield(\@LANG@COVER)%
-      \ifdatadefined{minorfield}(\@LANG@COVER)
-        {\thespecialization(\@LANG@COVER)}
-        {}%
+      \GetMajorField(\@LANG@COVER)%
+      \IfMemVoidF{MinorField}{\@LANG@COVER}
+        {\GetSpecialization(\@LANG@COVER)}
       .%
 }
 
 \@for\mylang:={\@LANG@LOADED}\do{%
-  \committeetitlestring(\mylang):={\ToUppercase{\thecommitteetitlestring(\mylang)}}%
+  \SetCommitteeTitleString*(\mylang)={\ToUppercase{\GetCommitteeTitleString(\mylang)}}%
   \@for\myadv:={a,c,ca,t}\do{%
     \@for\mysp:={1,2}\do{%
       \@for\mymf:={m,f}\do{%
-        \adviserstring(\myadv,\mysp,\mymf,\mylang):=%
-              {\ToUppercase{\theadviserstring(\myadv,\mysp,\mymf,\mylang)}}%
+        \SetAdviserString*(\myadv,\mysp,\mymf,\mylang)=%
+              {\ToUppercase{\GetAdviserString(\myadv,\mysp,\mymf,\mylang)}}%
       }%
     }%
   }%
@@ -140,7 +134,7 @@
 %% COMMITTEE
 %%=======================================================================
 
-\committeeorder():={c,m}%
+\SetCommitteeOrder*()={c,m}%
 
 
 %%=======================================================================
@@ -148,35 +142,35 @@
 %%=======================================================================
 
 % Set margins for "normal" pages
-\margin(screen,top):={2.5cm}
-\margin(screen,bottom):={2.5cm}
-\margin(screen,left):={2.5cm}
-\margin(screen,right):={2.5cm}
-\margin(paper,top):={2.5cm}
-\margin(paper,bottom):={2.5cm}
-\margin(paper,left):={2.5cm}
-\margin(paper,right):={2.5cm}
+\SetMargin*(screen,top)={2.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={2.5cm}
+\SetMargin*(screen,right)={2.5cm}
+\SetMargin*(paper,top)={2.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={2.5cm}
+\SetMargin*(paper,right)={2.5cm}
 
 % Set margins for cover pages
-\margin(cover,top):={2.5cm}
-\margin(cover,bottom):={1.7cm}
-\margin(cover,left):={3.5cm}
-\margin(cover,right):={2.5cm}
+\SetMargin*(cover,top)={2.5cm}
+\SetMargin*(cover,bottom)={1.7cm}
+\SetMargin*(cover,left)={3.5cm}
+\SetMargin*(cover,right)={2.5cm}
 
 
 %%=======================================================================
 %% SPINE
 %%=======================================================================
 
-\spine(logo)={ipl-isel-logo/90}
+\SetSpine(logo)={ipl-isel-logo/90}
 
 
 %%=======================================================================
 %% COVER PAGE SETUP (BACKGROUNDS)
 %%=======================================================================
 
-\thesiscover(wireframe):=?{ipl-isel-wireframe}
-\thesiscover(logo):=?{ipl-isel-logo}
+\SetThesisCover*(wireframe)=?{ipl-isel-wireframe}
+\SetThesisCover*(logo)=?{ipl-isel-logo}
 
 
 %%=======================================================================
@@ -187,7 +181,7 @@
   \begingroup
     \color{iselPlum}%
     \bfseries\fontsize{14}{16}\selectfont%
-    \thedoctitle(\@LANG@COVER,main)\\[4ex]%
+    \GetDocTitle(\@LANG@COVER,main)\\[4ex]%
   \endgroup
 }
 
@@ -241,32 +235,32 @@
 
 \ntaddtocover[tikz]{1-1}{%
   \node[anchor=north west, inner sep=0pt] at (current page.north west)
-    {\includegraphics[width=210mm,height=297mm]{\expanded{\thethesiscover(wireframe)}}};%
+    {\includegraphics[width=210mm,height=297mm]{\expanded{\GetThesisCover(wireframe)}}};%
 }
 
 \ntaddtocover[tikz]{1-1}{%
   \node[anchor=north] at ($(current page.north) + (7mm,-28.5mm)$)
-    {\includegraphics[height=23mm]{\expanded{\thethesiscover(logo)}}};%
+    {\includegraphics[height=23mm]{\expanded{\GetThesisCover(logo)}}};%
 }
 
 % % Title of Dissertation
 \ntaddtocover[vspace=66mm,height=4cm,valign=c]{1-1}{%
   \fontsize{17}{20}\selectfont%
-  \textbf{\thedoctitle(\@LANG@COVER,main)}%
+  \textbf{\GetDocTitle(\@LANG@COVER,main)}%
 }
 
 % Author name
 \ntaddtocover[vspace=17.5mm,height=1cm,valign=c]{1-1}{%
   \fontsize{12}{14}\selectfont%
-  \thedocauthor(name)\\
+  \GetDocAuthor(name)\\
   \fontsize{12}{13}\selectfont%
-  (\thedocauthor(degree,\@LANG@COVER))%
+  (\GetDocAuthor(degree,\@LANG@COVER))%
 }
 
 % Degree
 \ntaddtocover[vspace=11.5mm,height=1cm,valign=c]{1-1}{%
   \fontsize{9}{9}\selectfont%
-  \dissertationstringfont()={}%
+  \SetDissertationStringFont()={}%
   \thepresentationtext%
 }
 
@@ -285,54 +279,54 @@
 
 \ntaddtocover[tikz]{2-1}{%
   \node[anchor=north] at ($(current page.north) + (0mm,-32.5mm)$)
-    {\includegraphics[height=21mm]{\expanded{\thethesiscover(logo)}}};%
+    {\includegraphics[height=21mm]{\expanded{\GetThesisCover(logo)}}};%
 }
 
 % % Title of Dissertation
 \ntaddtocover[vspace=63mm,height=4cm,valign=c]{2-1}{%
   \fontsize{17}{20}\selectfont%
-  \textbf{\thedoctitle(\@LANG@COVER,main)}%
+  \textbf{\GetDocTitle(\@LANG@COVER,main)}%
 }
 
 % Author name
 \ntaddtocover[vspace=19.5mm,height=1cm,valign=c]{2-1}{%
   \fontsize{12}{14}\selectfont%
-  \thedocauthor(name)\\
+  \GetDocAuthor(name)\\
   \fontsize{12}{13}\selectfont%
-  (\thedocauthor(degree,\@LANG@COVER))%
+  (\GetDocAuthor(degree,\@LANG@COVER))%
 }
 
 % Degree
 \ntaddtocover[vspace=11.5mm,height=1cm,valign=c]{2-1}{%
   \fontsize{9}{9}\selectfont%
-  \dissertationstringfont()={}%
+  \SetDissertationStringFont()={}%
   \thepresentationtext%
 }
 
 % Advisers
 \ntaddtocover[vspace=7mm,valign=t]{2-1}{%
-  \adviserstringfont():={\bfseries}%
-  \adviserstringpost():={\\[2pt]}%
+  \MemSet{adviserstringfont}{}{\bfseries}%
+  \MemSet{adviserstringpost}{}{\\[2pt]}%
   \fontsize{9}{9}\selectfont%
   \ntprintpersons[name]{0.9}[c]{1}{adviser}{a,c}%
 }
 
 % Committee
 \ntaddtocover[vspace=5mm,valign=c]{2-1}{%
-  \committeetitlestringfont():={\bfseries}%
-  \committeestringpost():={\\[2pt]}%
-  \committeestringfont():={\bfseries}%
+  \MemSet{committeetitlestringfont}{}{\bfseries}%
+  \MemSet{committeestringpost}{}{\\[2pt]}%
+  \MemSet{committeestringfont}{}{\bfseries}%
   \fontsize{9}{9}\selectfont%
-  \ntprintpersons[name]{0.9}[c]{1}{committee}{\thecommitteeorder()}%
+  \ntprintpersons[name]{0.9}[c]{1}{committee}{\GetCommitteeOrder()}%
 }
 
 % Committee (redundant in original, keeping original logic)
 \ntaddtocover[vspace=0mm,valign=c]{2-1}{%
-  % \committeetitlestringfont():={\bfseries}%
-  \committeestringpost():={\\[2pt]}%
-  \committeestringfont():={\bfseries}%
+  % \MemSet{committeetitlestringfont}{}{\bfseries}%
+  \MemSet{committeestringpost}{}{\\[2pt]}%
+  \MemSet{committeestringfont}{}{\bfseries}%
   \fontsize{9}{9}\selectfont%
-  \ntprintpersons[name]{0.9}[c]{1}{committee}{\thecommitteeorder()}%
+  \ntprintpersons[name]{0.9}[c]{1}{committee}{\GetCommitteeOrder()}%
 }
 
 % Date

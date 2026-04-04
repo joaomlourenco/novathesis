@@ -18,11 +18,11 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Instituto de Ciencias Sociais}
-\school(en):={Institute of Social Sciences}
-\school(fr):={Institute of Social Sciences}
-\school(it):={Institute of Social Sciences}
+\SetSchool*(pt)={Instituto de Ciencias Sociais}
+\SetSchool*(en)={Institute of Social Sciences}
+\SetSchool*(fr)={Institute of Social Sciences}
+\SetSchool*(it)={Institute of Social Sciences}
 
 % Logos
-\school(logo,RGB):={uminho-ics-insignia-color}
-\school(logo,GRAY):={uminho-ics-insignia-mono}
+\SetSchool*(logo,RGB)={uminho-ics-insignia-color}
+\SetSchool*(logo,GRAY)={uminho-ics-insignia-mono}

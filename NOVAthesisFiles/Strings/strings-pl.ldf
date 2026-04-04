@@ -9,238 +9,238 @@
 %% UTILITIES
 %%=======================================================================
 
-\andstring(pl)                  := { i }
-\instring(pl)                   := { w }
-\ofstring(pl)                   := { z }
-\ofstring(1,m,pl)               := { z }
-\ofstring(2,m,pl)               := { z }
-\ofstring(1,f,pl)               := { z }
-\ofstring(2,f,pl)               := { z }
-\keywordsstring(pl)             := {Słowa kluczowe}
-\departmentofstring(pl)         := {Katedra}
-\specializationstring(pl)       := {Specjalizacja w}
-\degreenameprefix(bsc,pl)       := {Licencjat z}
-\degreenameprefix(msc,pl)       := {Magister z}
-\degreenameprefix(phd,pl)       := {Doktorat z}
-\candidatestring(m,pl)          := {Kandydat}
-\candidatestring(f,pl)          := {Kandydatka}
+\SetAndString*(pl)={ i }
+\SetInString*(pl)={ w }
+\SetOfString*(pl)={ z }
+\SetOfString*(1,m,pl)={ z }
+\SetOfString*(2,m,pl)={ z }
+\SetOfString*(1,f,pl)={ z }
+\SetOfString*(2,f,pl)={ z }
+\SetKeywordsString*(pl)={Słowa kluczowe}
+\SetDepartmentOfString*(pl)={Katedra}
+\SetSpecializationString*(pl)={Specjalizacja w}
+\SetDegreeNamePrefix*(bsc,pl)={Licencjat z}
+\SetDegreeNamePrefix*(msc,pl)={Magister z}
+\SetDegreeNamePrefix*(phd,pl)={Doktorat z}
+\SetCandidateString*(m,pl)={Kandydat}
+\SetCandidateString*(f,pl)={Kandydatka}
 
 
 %%=======================================================================
 %% BOOKMARK STRINGS
 %%=======================================================================
 
-\bkmstring(frontmatter,pl)      := {Materiały wstępne}
-\bkmstring(backmatter,pl)       := {Materiały końcowe}
-\bkmstring(cover,pl)            := {Pierwsza strona okładki}
-\bkmstring(incover,pl)          := {Druga strona okładki}
-\bkmstring(frontpage,pl)        := {Strona tytułowa}
-\bkmstring(infrontpage,pl)      := {Metryka książki}
-\bkmstring(backcover,pl)        := {Czwarta strona okładki}
-\bkmstring(inbackcover,pl)      := {Trzecia strona okładki}
-\bkmstring(spine,pl)            := {Grzbiet}
-\bkmstring(copyright,pl)        := {Prawa autorskie}
-\bkmstring(statement,pl)        := {Oświadczenie}
-\bkmstring(statements,pl)       := {Oświadczenia}
-\bkmstring(dedication,pl)       := {Dedykacja}
-\bkmstring(acknowledgements,pl) := {Podziękowania}
-\bkmstring(quote,pl)            := {Cytat}
-\bkmstring(abstract,pl)         := {Streszczenie}
-\bkmstring(listof,pl)           := {Spis…}
-\bkmstring(glossaries,pl)       := {Glosariusze}
+\SetBkmString*(frontmatter,pl)={Materiały wstępne}
+\SetBkmString*(backmatter,pl)={Materiały końcowe}
+\SetBkmString*(cover,pl)={Pierwsza strona okładki}
+\SetBkmString*(incover,pl)={Druga strona okładki}
+\SetBkmString*(frontpage,pl)={Strona tytułowa}
+\SetBkmString*(infrontpage,pl)={Metryka książki}
+\SetBkmString*(backcover,pl)={Czwarta strona okładki}
+\SetBkmString*(inbackcover,pl)={Trzecia strona okładki}
+\SetBkmString*(spine,pl)={Grzbiet}
+\SetBkmString*(copyright,pl)={Prawa autorskie}
+\SetBkmString*(statement,pl)={Oświadczenie}
+\SetBkmString*(statements,pl)={Oświadczenia}
+\SetBkmString*(dedication,pl)={Dedykacja}
+\SetBkmString*(acknowledgements,pl)={Podziękowania}
+\SetBkmString*(quote,pl)={Cytat}
+\SetBkmString*(abstract,pl)={Streszczenie}
+\SetBkmString*(listof,pl)={Spis…}
+\SetBkmString*(glossaries,pl)={Glosariusze}
 
 
 %%=======================================================================
 %% DEFAULTS
 %%=======================================================================
 
-\defaultnttitle(pl)             := {Bardzo Długi i Imponujący\\Tytuł Pracy z Wymuszonym Podziałem Wiersza}
-\defaultntsubtitle(pl)          := {Kilka Przemyśleń o Życiu, Wszechświecie\\i Całej Reszcie}
-\defaultntdepartment(pl)        := {Nazwa Katedry}
-\defaultntdegreename(pl)        := {Nazwa Kierunku Studiów}
-\defaultntspecialization(pl)    := {Nazwa Specjalności}
-\defaultntauthordegree(pl)      := {Magister/Licencjat z Nazwa Poprzedniego Stopnia}
-\notdefinedstring(pl)           := {NIEZDEFINIOWANE}
+\SetDefaultNtTitle*(pl)={Bardzo Długi i Imponujący\\Tytuł Pracy z Wymuszonym Podziałem Wiersza}
+\SetDefaultNtSubtitle*(pl)={Kilka Przemyśleń o Życiu, Wszechświecie\\i Całej Reszcie}
+\SetDefaultNtDepartment*(pl)={Nazwa Katedry}
+\SetDefaultNtDegreeName*(pl)={Nazwa Kierunku Studiów}
+\SetDefaultNtSpecialization*(pl)={Nazwa Specjalności}
+\SetDefaultNtAuthorDegree*(pl)={Magister/Licencjat z Nazwa Poprzedniego Stopnia}
+\SetNotDefinedString*(pl)={NIEZDEFINIOWANE}
 
 
 %%=======================================================================
 %% ADVISER STRINGS
 %%=======================================================================
 
-\professorstring(1,m,pl)        := {Profesor}
-\professorstring(2,m,pl)        := {Profesorowie}
-\professorstring(1,f,pl)        := {Profesor}
-\professorstring(2,f,pl)        := {Profesorowie}
+\SetProfessorString*(1,m,pl)={Profesor}
+\SetProfessorString*(2,m,pl)={Profesorowie}
+\SetProfessorString*(1,f,pl)={Profesor}
+\SetProfessorString*(2,f,pl)={Profesorowie}
 
-\adviserstring(a,1,m,pl)        := {Promotor}
-\adviserstring(a,1,f,pl)        := {Promotorka}
-\adviserstring(a,2,m,pl)        := {Promotorzy}
-\adviserstring(a,2,f,pl)        := {Promotorki}
+\SetAdviserString*(a,1,m,pl)={Promotor}
+\SetAdviserString*(a,1,f,pl)={Promotorka}
+\SetAdviserString*(a,2,m,pl)={Promotorzy}
+\SetAdviserString*(a,2,f,pl)={Promotorki}
 
-\adviserstring(c,1,m,pl)        := {Promotor pomocniczy}
-\adviserstring(c,1,f,pl)        := {Promotorka pomocnicza}
-\adviserstring(c,2,m,pl)        := {Promotorzy pomocniczy}
-\adviserstring(c,2,f,pl)        := {Promotorki pomocnicze}
+\SetAdviserString*(c,1,m,pl)={Promotor pomocniczy}
+\SetAdviserString*(c,1,f,pl)={Promotorka pomocnicza}
+\SetAdviserString*(c,2,m,pl)={Promotorzy pomocniczy}
+\SetAdviserString*(c,2,f,pl)={Promotorki pomocnicze}
 
-\adviserstring(ca,1,m,pl)       := {Promotor pomocniczy}
-\adviserstring(ca,1,f,pl)       := {Promotorka pomocnicza}
-\adviserstring(ca,2,m,pl)       := {Promotorzy pomocniczy}
-\adviserstring(ca,2,f,pl)       := {Promotorki pomocnicze}
+\SetAdviserString*(ca,1,m,pl)={Promotor pomocniczy}
+\SetAdviserString*(ca,1,f,pl)={Promotorka pomocnicza}
+\SetAdviserString*(ca,2,m,pl)={Promotorzy pomocniczy}
+\SetAdviserString*(ca,2,f,pl)={Promotorki pomocnicze}
 
-\adviserstring(t,1,m,pl)        := {Opiekun naukowy}
-\adviserstring(t,1,f,pl)        := {Opiekunka naukowa}
-\adviserstring(t,2,m,pl)        := {Opiekunowie naukowi}
-\adviserstring(t,2,f,pl)        := {Opiekunki naukowe}
+\SetAdviserString*(t,1,m,pl)={Opiekun naukowy}
+\SetAdviserString*(t,1,f,pl)={Opiekunka naukowa}
+\SetAdviserString*(t,2,m,pl)={Opiekunowie naukowi}
+\SetAdviserString*(t,2,f,pl)={Opiekunki naukowe}
 
-\adviserstring(pref,a,1,m,pl)        := {Promotor}
-\adviserstring(pref,a,1,f,pl)        := {Promotorka}
-\adviserstring(pref,a,2,m,pl)        := {Promotorzy}
-\adviserstring(pref,a,2,f,pl)        := {Promotorki}
+\SetAdviserString*(pref,a,1,m,pl)={Promotor}
+\SetAdviserString*(pref,a,1,f,pl)={Promotorka}
+\SetAdviserString*(pref,a,2,m,pl)={Promotorzy}
+\SetAdviserString*(pref,a,2,f,pl)={Promotorki}
 
-\adviserstring(pref,c,1,m,pl)        := {Promotor pomocniczy}
-\adviserstring(pref,c,1,f,pl)        := {Promotorka pomocnicza}
-\adviserstring(pref,c,2,m,pl)        := {Promotorzy pomocniczy}
-\adviserstring(pref,c,2,f,pl)        := {Promotorki pomocnicze}
+\SetAdviserString*(pref,c,1,m,pl)={Promotor pomocniczy}
+\SetAdviserString*(pref,c,1,f,pl)={Promotorka pomocnicza}
+\SetAdviserString*(pref,c,2,m,pl)={Promotorzy pomocniczy}
+\SetAdviserString*(pref,c,2,f,pl)={Promotorki pomocnicze}
 
-\adviserstring(pref,ca,1,m,pl)       := {Promotor pomocniczy}
-\adviserstring(pref,ca,1,f,pl)       := {Promotorka pomocnicza}
-\adviserstring(pref,ca,2,m,pl)       := {Promotorzy pomocniczy}
-\adviserstring(pref,ca,2,f,pl)       := {Promotorki pomocnicze}
+\SetAdviserString*(pref,ca,1,m,pl)={Promotor pomocniczy}
+\SetAdviserString*(pref,ca,1,f,pl)={Promotorka pomocnicza}
+\SetAdviserString*(pref,ca,2,m,pl)={Promotorzy pomocniczy}
+\SetAdviserString*(pref,ca,2,f,pl)={Promotorki pomocnicze}
 
-\adviserstring(pref,t,1,m,pl)        := {Opiekun naukowy}
-\adviserstring(pref,t,1,f,pl)        := {Opiekunka naukowa}
-\adviserstring(pref,t,2,m,pl)        := {Opiekunowie naukowi}
-\adviserstring(pref,t,2,f,pl)        := {Opiekunki naukowe}
+\SetAdviserString*(pref,t,1,m,pl)={Opiekun naukowy}
+\SetAdviserString*(pref,t,1,f,pl)={Opiekunka naukowa}
+\SetAdviserString*(pref,t,2,m,pl)={Opiekunowie naukowi}
+\SetAdviserString*(pref,t,2,f,pl)={Opiekunki naukowe}
 
 
 %%=======================================================================
 %% DEGREE NAMES
 %%=======================================================================
 
-\degreestring(bsc,m,pl)         := {Licencjat}
-\degreestring(bsc,f,pl)         := {Licencjatka}
+\SetDegreeString*(bsc,m,pl)={Licencjat}
+\SetDegreeString*(bsc,f,pl)={Licencjatka}
 
-\degreestring(msc,m,pl)         := {Magister}
-\degreestring(msc,f,pl)         := {Magistra}
-\degreestring(mscplan,m,pl)     := {Magister}
-\degreestring(mscplan,f,pl)     := {Magistra}
+\SetDegreeString*(msc,m,pl)={Magister}
+\SetDegreeString*(msc,f,pl)={Magistra}
+\SetDegreeString*(mscplan,m,pl)={Magister}
+\SetDegreeString*(mscplan,f,pl)={Magistra}
 
-\degreestring(phd,m,pl)         := {Doktor}
-\degreestring(phd,f,pl)         := {Doktorka}
-\degreestring(phdplan,m,pl)     := {Doktorant}
-\degreestring(phdplan,f,pl)     := {Doktorantka}
-\degreestring(phdprop,m,pl)     := {Doktorant}
-\degreestring(phdprop,f,pl)     := {Doktorantka}
+\SetDegreeString*(phd,m,pl)={Doktor}
+\SetDegreeString*(phd,f,pl)={Doktorka}
+\SetDegreeString*(phdplan,m,pl)={Doktorant}
+\SetDegreeString*(phdplan,f,pl)={Doktorantka}
+\SetDegreeString*(phdprop,m,pl)={Doktorant}
+\SetDegreeString*(phdprop,f,pl)={Doktorantka}
 
 
 %%=======================================================================
 %% DOCUMENT TYPES
 %%=======================================================================
 
-\doctypestring(bsc,pl)          := {Praca licencjacka}
-\doctypestring(mscplan,pl)      := {Plan pracy magisterskiej}
-\doctypestring(msc,pl)          := {Praca magisterska}
-\doctypestring(phdplan,pl)      := {Plan rozprawy doktorskiej}
-\doctypestring(phdprop,pl)      := {Propozycja rozprawy doktorskiej}
-\doctypestring(phd,pl)          := {Rozprawa doktorska}
+\SetDoctypeString*(bsc,pl)={Praca licencjacka}
+\SetDoctypeString*(mscplan,pl)={Plan pracy magisterskiej}
+\SetDoctypeString*(msc,pl)={Praca magisterska}
+\SetDoctypeString*(phdplan,pl)={Plan rozprawy doktorskiej}
+\SetDoctypeString*(phdprop,pl)={Propozycja rozprawy doktorskiej}
+\SetDoctypeString*(phd,pl)={Rozprawa doktorska}
 
-\dissertationplan(mscplan,pl)   := {Plan pracy magisterskiej}
-\dissertationplan(phdplan,pl)   := {Plan rozprawy doktorskiej}
-\dissertationplan(phdprop,pl)   := {Propozycja rozprawy}
+\SetDissertationPlan*(mscplan,pl)={Plan pracy magisterskiej}
+\SetDissertationPlan*(phdplan,pl)={Plan rozprawy doktorskiej}
+\SetDissertationPlan*(phdprop,pl)={Propozycja rozprawy}
 
 
 %%=======================================================================
 %% SDG (SUSTAINABLE DEVELOPMENT GOALS)
 %%=======================================================================
 
-\sdgstring(pl)                  := {Cele zrównoważonego rozwoju (SDG)}
+\SetSdgString*(pl)={Cele zrównoważonego rozwoju (SDG)}
 
 
 %%=======================================================================
 %% COMMITTEE
 %%=======================================================================
 
-\committeetitlestring(pl)       := {Komisja egzaminacyjna}
+\SetCommitteeTitleString*(pl)={Komisja egzaminacyjna}
 
-\committeestring(c,1,m,pl)      := {Przewodniczący komisji}
-\committeestring(c,1,f,pl)      := {Przewodnicząca komisji}
-\committeestring(c,2,m,pl)      := {Przewodniczący komisji}
-\committeestring(c,2,f,pl)      := {Przewodniczące komisji}
+\SetCommitteeString*(c,1,m,pl)={Przewodniczący komisji}
+\SetCommitteeString*(c,1,f,pl)={Przewodnicząca komisji}
+\SetCommitteeString*(c,2,m,pl)={Przewodniczący komisji}
+\SetCommitteeString*(c,2,f,pl)={Przewodniczące komisji}
 
-\committeestring(r,1,m,pl)      := {Recenzent}
-\committeestring(r,1,f,pl)      := {Recenzentka}
-\committeestring(r,2,m,pl)      := {Recenzenci}
-\committeestring(r,2,f,pl)      := {Recenzentki}
+\SetCommitteeString*(r,1,m,pl)={Recenzent}
+\SetCommitteeString*(r,1,f,pl)={Recenzentka}
+\SetCommitteeString*(r,2,m,pl)={Recenzenci}
+\SetCommitteeString*(r,2,f,pl)={Recenzentki}
 
-\committeestring(a,1,m,pl)      := {Promotor}
-\committeestring(a,1,f,pl)      := {Promotorka}
-\committeestring(a,2,m,pl)      := {Promotorzy}
-\committeestring(a,2,f,pl)      := {Promotorki}
+\SetCommitteeString*(a,1,m,pl)={Promotor}
+\SetCommitteeString*(a,1,f,pl)={Promotorka}
+\SetCommitteeString*(a,2,m,pl)={Promotorzy}
+\SetCommitteeString*(a,2,f,pl)={Promotorki}
 
-\committeestring(ca,1,m,pl)     := {Promotor pomocniczy}
-\committeestring(ca,1,f,pl)     := {Promotorka pomocnicza}
-\committeestring(ca,2,m,pl)     := {Promotorzy pomocniczy}
-\committeestring(ca,2,f,pl)     := {Promotorki pomocnicze}
+\SetCommitteeString*(ca,1,m,pl)={Promotor pomocniczy}
+\SetCommitteeString*(ca,1,f,pl)={Promotorka pomocnicza}
+\SetCommitteeString*(ca,2,m,pl)={Promotorzy pomocniczy}
+\SetCommitteeString*(ca,2,f,pl)={Promotorki pomocnicze}
 
-\committeestring(m,1,m,pl)      := {Członek komisji}
-\committeestring(m,1,f,pl)      := {Członkini komisji}
-\committeestring(m,2,m,pl)      := {Członkowie komisji}
-\committeestring(m,2,f,pl)      := {Członkinie komisji}
+\SetCommitteeString*(m,1,m,pl)={Członek komisji}
+\SetCommitteeString*(m,1,f,pl)={Członkini komisji}
+\SetCommitteeString*(m,2,m,pl)={Członkowie komisji}
+\SetCommitteeString*(m,2,f,pl)={Członkinie komisji}
 
-\committeestring(g,1,m,pl)      := {Członek zaproszony}
-\committeestring(g,1,f,pl)      := {Członkini zaproszona}
-\committeestring(g,2,m,pl)      := {Członkowie zaproszeni}
-\committeestring(g,2,f,pl)      := {Członkinie zaproszone}
+\SetCommitteeString*(g,1,m,pl)={Członek zaproszony}
+\SetCommitteeString*(g,1,f,pl)={Członkini zaproszona}
+\SetCommitteeString*(g,2,m,pl)={Członkowie zaproszeni}
+\SetCommitteeString*(g,2,f,pl)={Członkinie zaproszone}
 
 
 %%=======================================================================
 %% DISSERTATION TEMPLATES
 %%=======================================================================
 
-\dissertationstring(bsc,pl)     = {%
+\SetDissertationString(bsc,pl)={%
       Praca złożona w celu uzyskania stopnia % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(mscplan,pl) = {%
+\SetDissertationString(mscplan,pl)={%
       Praca wstępna złożona w celu uzyskania stopnia % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(msc,pl)     = {%
+\SetDissertationString(msc,pl)={%
       Praca magisterska złożona w celu uzyskania stopnia % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(phdplan,pl) = {%
+\SetDissertationString(phdplan,pl)={%
       Plan rozprawy złożony w celu uzyskania stopnia % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(phdprop,pl) = {%
+\SetDissertationString(phdprop,pl)={%
       Propozycja rozprawy złożona w celu uzyskania stopnia % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
-\dissertationstring(phd,pl)     = {%
+\SetDissertationString(phd,pl)={%
       Rozprawa doktorska złożona w celu uzyskania stopnia % 
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ w dziedzinie\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
 
 
 %%=======================================================================
 %% LEGAL & ACKNOWLEDGEMENTS
 %%=======================================================================
 
-\copyrighttextstring(pl)        = {%
-        Katedra \theschool(\@LANG@COPYRIGHT)\ oraz \theuniversity(\@LANG@COPYRIGHT)%
+\SetCopyrightTextString(pl)={%
+        Katedra \GetSchool(\@LANG@COPYRIGHT)\ oraz \GetUniversity(\@LANG@COPYRIGHT)%
         \ posiadają nieograniczone czasowo i terytorialnie prawo do archiwizowania i publikowania % 
         niniejszej pracy w formie drukowanej lub cyfrowej, a także w każdy inny istniejący lub % 
         przyszły sposób, do jej rozpowszechniania za pośrednictwem repozytoriów naukowych oraz do % 
         zezwalania na jej kopiowanie i dystrybucję w niekomercyjnych celach dydaktycznych lub % 
         badawczych, pod warunkiem właściwego wskazania autora i wydawcy.}
 
-\acknowledgmentsstring(pl)      = {%
+\SetAcknowledgmentsString(pl)={%
         Niniejszy dokument został przygotowany przy użyciu systemu składu \NTengineName~\@ntcite{latex-project} % 
         oraz szablonu % 
         \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} % 

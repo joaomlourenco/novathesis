@@ -204,7 +204,7 @@
     % Fetch Margins from Memory (mimicking original logic with full hierarchy)
     \clist_map_inline:nn { top, bottom, left, right }
       {
-        \datamatch{ \l_nt_covers_tmp_tl } { margin } (
+        \datamatch{ \l_nt_covers_tmp_tl } { Margin } (
           {cover,\@DOCTYPE,\@DEGREEACR,#1,##1},
           {cover,\@DOCCLASS,\@DEGREEACR,#1,##1},
           {cover,\@DEGREEACR,#1,##1},
@@ -344,13 +344,13 @@
     \group_begin:
       \NTRunHook{cover/pre}
       \NTRunHook{cover/#1-#2/pre}
-      \hypertarget{\thebkmstring(#1-#2)}{}
-      \bookmark[dest=\thebkmstring(#1-#2)]{\thebkmstring(#1-#2)}
+      \hypertarget{\GetBkmString(#1-#2)}{}
+      \bookmark[dest=\GetBkmString(#1-#2)]{\GetBkmString(#1-#2)}
       \bookmarksetupnext{rellevel=1}
       \thispagestyle{empty}
 
       % Background Color
-      \datamatchtf{ \l_nt_covers_tmp_tl }{thesiscover}(
+      \datamatchtf{ \l_nt_covers_tmp_tl }{ThesisCover}(
         {\@DOCTYPE,\@DEGREEACR,#1-#2,bgcolor},
         {\@DOCCLASS,\@DEGREEACR,#1-#2,bgcolor},
         {\@DEGREEACR,#1-#2,bgcolor},
@@ -362,7 +362,7 @@
       ) { \pagecolor{\l_nt_covers_tmp_tl} } { \pagecolor{white} }
 
       % Text Color
-      \datamatchtf{ \l_nt_covers_tmp_tl }{thesiscover}(
+      \datamatchtf{ \l_nt_covers_tmp_tl }{ThesisCover}(
         {\@DOCTYPE,\@DEGREEACR,#1-#2,textcolor},
         {\@DOCCLASS,\@DEGREEACR,#1-#2,textcolor},
         {\@DEGREEACR,#1-#2,textcolor},
@@ -374,7 +374,7 @@
       ) { \color{\l_nt_covers_tmp_tl} } { \color{black} }
 
       % Background Image
-      \datamatchtf{ \l_nt_covers_tmp_tl }{thesiscover}(
+      \datamatchtf{ \l_nt_covers_tmp_tl }{ThesisCover}(
         {\@DOCTYPE,\@DEGREEACR,#1-#2,image},
         {\@DOCCLASS,\@DEGREEACR,#1-#2,image},
         {\@DEGREEACR,#1-#2,image},
@@ -435,7 +435,7 @@
     % Also check legacy thesiscover memory with full hierarchy
     \bool_if:NF \l_nt_covers_defined_bool
       {
-        \datamatchtf{ \l_nt_covers_tmp_tl }{thesiscover}(
+        \datamatchtf{ \l_nt_covers_tmp_tl }{ThesisCover}(
           {\@DOCTYPE,\@DEGREEACR,#1,bgcolor},
           {\@DOCCLASS,\@DEGREEACR,#1,bgcolor},
           {\@DEGREEACR,#1,bgcolor},

@@ -100,8 +100,8 @@
 %         \thispagestyle{empty}%
 %         \NTRunHook{cover/pre}%
 %         \NTRunHook{cover/#1-1/pre}%
-%         \hypertarget{\thebkmstring(#1-1)}{}%
-%         \bookmark[dest=\thebkmstring(#1-1)]{\thebkmstring(#1-1)}%
+%         \hypertarget{\GetBkmString(#1-1)}{}%
+%         \bookmark[dest=\GetBkmString(#1-1)]{\GetBkmString(#1-1)}%
 %         \bookmarksetupnext{rellevel=1}%
 %         \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
 %         \NTRunHook{cover/#1-1/post}%
@@ -145,8 +145,8 @@
 %   \begingroup%
 %     \NTRunHook{cover/pre}%
 %     \NTRunHook{cover/#1-#2/pre}%
-%     \hypertarget{\thebkmstring(#1-#2)}{}%
-%     \bookmark[dest=\thebkmstring(#1-#2)]{\thebkmstring(#1-#2)}%
+%     \hypertarget{\GetBkmString(#1-#2)}{}%
+%     \bookmark[dest=\GetBkmString(#1-#2)]{\GetBkmString(#1-#2)}%
 %     \bookmarksetupnext{rellevel=1}%
 %     \thispagestyle{empty}%
 %     \setCoverBgColor{#1-#2}%
@@ -430,9 +430,9 @@
 }
 \newcommand{\@ntfixspacing}[2]{%
     \bgroup%
-    \newdata{ntfixspacingstring}%
+    \NewMemStore{NtFixSpacingString}%
     \noindent
-    \ntfixspacingstring()={The \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template (v\novathesisversion)~\@ntcite{novathesis-manual} @ \todayiso. (12cc90221730b8ba41bb3b1f8b517acd)}%md5
+    \SetNtFixSpacingString()={The \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template (v\novathesisversion)~\@ntcite{novathesis-manual} @ \todayiso. (12cc90221730b8ba41bb3b1f8b517acd)}%md5
     \renewcommand*{\bibfont}{\hypersetup{allcolors=#1}\color{#1}%
      \sffamily\fontsize{#2}{#2}\selectfont}%
     \defbibheading{bibliography}[\bibname]{%
@@ -440,7 +440,7 @@
     \refsection%
     \begin{minipage}{\linewidth}%
     \bibfont%
-    \thentfixspacingstring()\par%
+    \GetNtFixSpacingString()\par%
     \printbibliography%
     \end{minipage}%
     \endrefsection%
@@ -549,10 +549,10 @@
   % % --- 1. Legacy Title Processing ---
   % \ifdatadefined{#1titlestring}(\@LANG@COVER)
   %  {
-  %   \datadefault{#1titlestringpre}(\@LANG@COVER)
-  %   \datadefault{#1titlestringfont}(\@LANG@COVER)
+  %   \MemGetDefault{#1titlestringpre}{\@LANG@COVER}
+  %   \MemGetDefault{#1titlestringfont}{\@LANG@COVER}
   %   \csuse{the#1titlestring}(\@LANG@COVER)
-  %   \datadefault{#1titlestringpost}(\@LANG@COVER)
+  %   \MemGetDefault{#1titlestringpost}{\@LANG@COVER}
   %  }{}
 
   % --- 2. Build the Flat List ---
@@ -579,7 +579,7 @@
   \IfNoValueTF { #3 }
    {
      \raggedright
-     \datadefault{#1namefont}(#2)
+     \MemGetDefault{#1namefont}{#2}
      % Convert clist back to comma-separated string for legacy formatter
      \cs_set:Npx \@advlist { \clist_use:Nn \l_nt_master_clist { , } }
      \FormatNamesAsList{\@advlist}
@@ -597,9 +597,9 @@
 \cs_generate_variant:Nn \seq_use:Nnnn { Neee }
 \NewDocumentCommand{\FormatNamesAsList}{ m
                                          O{ }
-                                         O{ \thecommastring(\@LANG@MAIN) ~ } 
-                                         O{ ~ \theandstring(\@LANG@MAIN) ~ } 
-                                         O{ , ~ \theandstring(\@LANG@MAIN) ~ } }
+                                         O{ \GetCommaString(\@LANG@MAIN) ~ } 
+                                         O{ ~ \GetAndString(\@LANG@MAIN) ~ } 
+                                         O{ , ~ \GetAndString(\@LANG@MAIN) ~ } }
 % {comma separated list of names} {name-prefix} {middle-sep} {pair-sep} {last-sep}
 % example: {Maria, Rita, Filomena} {Professora} {,} {~e~} {~e~}
  {
@@ -642,26 +642,26 @@
   % #3 = adviser | committee
   % #4 = {a,c} | {c,r,a,m,g}
   % \@check@instring{#1}{full,name}{@ntprintpersonsasonecolumn}%
-  \csuse{#3stringpost}():=?{:\\[2pt]}%
-  \csuse{#3namepost}():=?{{\\}}%
-  \csuse{#3remainderpre}():=?{{\\[-2pt]}}%
-  \personpost():=?{\\[2pt]}%
-  \persongrouppost():=?{\\[7pt]}
-  \committeetitlestringpost():=?{\\[5pt]}%
+  \IfMemVoidT{#3stringpost}{}{\MemSet*{#3stringpost}{}{:\\[2pt]}}%
+  \IfMemVoidT{#3namepost}{}{\MemSet*{#3namepost}{}{{\\}}}%
+  \IfMemVoidT{#3remainderpre}{}{\MemSet*{#3remainderpre}{}{{\\[-2pt]}}}%
+  \IfMemVoidT{personpost}{}{\MemSet*{personpost}{}{\\[2pt]}}%
+  \IfMemVoidT{persongrouppost}{}{\MemSet*{persongrouppost}{}{\\[7pt]}}
+  \IfMemVoidT{committeetitlestringpost}{}{\MemSet*{committeetitlestringpost}{}{\\[5pt]}}%
   \@ntgetmaxlen{#3}{#2}%
   \begin{tabularx}{#2\linewidth}[t]{@{}>{\nt@tabularx@horz}L@{}}%
-    \ifdatadefined{#3titlestring}(\@LANG@COVER){%
-      \datadefault{#3titlestringpre}()%
-      \datadefault{#3titlestringfont}()%
-      \csuse{the#3titlestring}(\@LANG@COVER)%
-      \datadefault{#3titlestringpost}()%
-    }{%
-      \ifdatadefined{committeetitlestring}(\@LANG@COVER){%
-        \datadefault{committeetitlestringpre}()%
-        \datadefault{committeetitlestringfont}()%
+    \IfMemVoidTF{CommitteeTitleString}{\@LANG@COVER}{}{%
+      \str_if_eq:nnTF{#3}{committee}{%
+        \MemGetDefault{#3titlestringpre}{}%
+        \MemGetDefault{#3titlestringfont}{}%
+        \GetCommitteeTitleString(\@LANG@COVER)%
+        \MemGetDefault{#3titlestringpost}{}%
+      }{%
+        \MemGetDefault{committeetitlestringpre}{}%
+        \MemGetDefault{committeetitlestringfont}{}%
         \strut%
-        \datadefault{committeetitlestringpost}()%
-      }{}%
+        \MemGetDefault{committeetitlestringpost}{}%
+      }%
     }%
     \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}%
   \end{tabularx}%
@@ -673,23 +673,35 @@
   % #3 = {a,c} | {c,r,a,m,g}
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3]}\NTPRINTPERSONSASTWOCOLUMNS
   % \@check@instring{#1}{full,name}{@ntprintpersonsasonecolumn}%
-  \csuse{#2stringpost}():=?{:&}%
-  \csuse{#2remainderpre}():=?{{\\[-2pt]}}%
-  \personpost():=?{\\[2pt]}%
-  \persongrouppost():=?{\\[14pt]}
-  \committeetitlestringpre():=?{&}%
-  \committeetitlestringpost():=?{\\[5pt]}%
+  \IfMemVoidT{#2stringpost}{}{\MemSet*{#2stringpost}{}{:&}}%
+  \IfMemVoidT{#2remainderpre}{}{\MemSet*{#2remainderpre}{}{{\\[-2pt]}}}%
+  \IfMemVoidT{personpost}{}{\MemSet*{personpost}{}{\\[2pt]}}%
+  \IfMemVoidT{persongrouppost}{}{\MemSet*{persongrouppost}{}{\\[14pt]}}
+  \IfMemVoidT{committeetitlestringpre}{}{\MemSet*{committeetitlestringpre}{}{&}}%
+  \IfMemVoidT{committeetitlestringpost}{}{\MemSet*{committeetitlestringpost}{}{\\[5pt]}}%
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS
   \@ntgetmaxlen{#3}{#2}%
   \begin{tabular}[t]{@{}r@{~~}l@{}}%
-    \ifdatadefined{#2titlestring}(\@LANG@COVER){%
-      \datadefault{#2titlestringpre}()%
-      \datadefault{#2titlestringfont}()%
-      \csuse{the#2titlestring}(\@LANG@COVER)%
-      \datadefault{#2titlestringpost}()%
-    }{}%
+    \str_if_eq:nnT{#2}{committee}{%
+      \IfMemVoidF{CommitteeTitleString}{\@LANG@COVER}{%
+        \MemGetDefault{#2titlestringpre}{}%
+        \MemGetDefault{#2titlestringfont}{}%
+        \GetCommitteeTitleString(\@LANG@COVER)%
+        \MemGetDefault{#2titlestringpost}{}%
+      }%
+    }%
     \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{2}{#2}}}{\expanded{#3}}%
   \end{tabular}%
+}
+
+% Dispatcher for the Type-A adviser/committee string stores.
+% Needed because the store names are CamelCase but the group-type #1 is lowercase.
+% #1 = {adviser | committee}
+% #2 = role key (e.g. "a", "c")
+\newcommand{\@nt@getstrgroup}[2]{%
+  \str_if_eq:nnTF{#1}{adviser}%
+    {\MemGetDefault{AdviserString}{#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER}}%
+    {\MemGetDefault{CommitteeString}{#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER}}%
 }
 
 \newcommand{\@nt@printgrouptitle@text}[2]{%
@@ -702,8 +714,8 @@
       \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
       \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
       \bgroup%
-        \datadefault{#1stringfont}(#2)%
-        \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
+        \MemGetDefault{#1stringfont}{#2}%
+        \@nt@getstrgroup{#1}{#2}%
       \egroup%
     \fi%
   }{}%
@@ -716,12 +728,12 @@
   \ifnum\mysize>0\relax%
     \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
     \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
-    \datadefault{#1stringpre}(#2)%
+    \MemGetDefault{#1stringpre}{#2}%
     \bgroup%
-      \datadefault{#1stringfont}(#2)%
-      \datadefault{#1string}(#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER)%
+      \MemGetDefault{#1stringfont}{#2}%
+      \@nt@getstrgroup{#1}{#2}%
     \egroup%
-    \datadefault{#1stringpost}(#2)%
+    \MemGetDefault{#1stringpost}{#2}%
   \fi%
 }
 
@@ -743,7 +755,7 @@
           \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{#4}{##1}}%
         }%
       \end{varwidth}%
-      \thepersongrouppost()%
+      \MemGet{persongrouppost}{}%
     \fi%
   }{}%
 }
@@ -758,29 +770,29 @@
 % #3 = {a,c} | {c,r,a,m,g}
 % #4 = (co)adviser info
 % \typeout{NTPRINTONENAME 1=[#1] 2=[#2] 3=[#4]}\NTPRINTONENAME
-\datadefault{personpre}(#3)%
+\MemGetDefault{personpre}{#3}%
 \begingroup
   \noexpandarg
   \raggedright%
-  \datadefault{#2namepre}(#3)%
+  \MemGetDefault{#2namepre}{#3}%
   \StrCut{#4}{,}\@nt@name\@nt@remainder% split name from remainder
   % \ignorespaces\parbox[b]{\linewidth}%
-  %                        {\raggedright\datadefault{#2namefont}(#3)\@nt@name}%
-  \datadefault{#2namefont}(#3)\@nt@name%
+  %                        {\raggedright\MemGetDefault{#2namefont}{#3}\@nt@name}%
+  \MemGetDefault{#2namefont}{#3}\@nt@name%
   \IfStrEq{#1}{full}{%
     \IfStrEq{\@nt@remainder}{}{}{%
-      \datadefault{#2remainderpre}(#3)%
+      \MemGetDefault{#2remainderpre}{#3}%
       \bgroup%
-        \datadefault{#2remainderfont}(#3)%
+        \MemGetDefault{#2remainderfont}{#3}%
         % \ignorespaces{\parbox[t]{\linewidth}%
         %                            {\raggedright\@nt@remainder}}%
         \@nt@remainder%
       \egroup%
-      \datadefault{#2remainderpost}(#3)%
+      \MemGetDefault{#2remainderpost}{#3}%
     }%
   }{}%
 \endgroup
-\datadefault{personpost}(#3)%
+\MemGetDefault{personpost}{#3}%
 }
 
 \newcommand*{\@nt@reducegender}[2]{%
@@ -828,10 +840,10 @@
     % \synctex=1% Use synctex
     \brokenpenalty=10000%
     \newgeometry{
-        lmargin=\expanded{\themargin(\option{/novathesis/media},left)},
-        rmargin=\expanded{\themargin(\option{/novathesis/media},right)},
-        tmargin=\expanded{\themargin(\option{/novathesis/media},top)},
-        bmargin=\expanded{\themargin(\option{/novathesis/media},bottom)},
+        lmargin=\expanded{\GetMargin(\option{/novathesis/media},left)},
+        rmargin=\expanded{\GetMargin(\option{/novathesis/media},right)},
+        tmargin=\expanded{\GetMargin(\option{/novathesis/media},top)},
+        bmargin=\expanded{\GetMargin(\option{/novathesis/media},bottom)},
     }%
     \ifoptionequal{/novathesis/media}{paper}{\openright}{\openany}%
 }
@@ -844,7 +856,7 @@
   \ifmaindoc{% THEN it is a main document
     \NTRunHook{#1/pre}%
     \iffileadded{#1}{%
-      \ChapterNoTitle{\thebkmstring(#1,\@LANG@COPYRIGHT)}
+      \ChapterNoTitle{\GetBkmString(#1,\@LANG@COPYRIGHT)}
       \PrintAddedFile{#1}%
       \bookmarksetupnext{rellevel=0}%
     }{}%
@@ -866,7 +878,7 @@
 \newcommand{\ntprintaidisclose}{%
   \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{% use aidisclose
     \bookmarksetupnext{rellevel=0}%
-    \AIDrenderDeclaration[ncols=3]{\thedocauthor(name)}%
+    \AIDrenderDeclaration[ncols=3]{\GetDocAuthor(name)}%
   }{\ifoptionequal{/novathesis/print/aidisclosure}{false}
       {} % do not print AI Disclosure
       {\IfFileExists{\DIRFRONTMATTER/\option{/novathesis/print/aidisclosure}}
@@ -898,7 +910,7 @@
   \ifoptionnil{/novathesis/print/sdgs/list}{}{%
       \vfill%
       \raggedright\noindent%
-      \textbf{\thesdgstring(\@LSHORT):}\\[1ex]
+      \textbf{\GetSdgString(\@LSHORT):}\\[1ex]
       \edef\@sdgtype{\option{/novathesis/print/sdgs/type}}
       \IfFileExists{\DIRIMAGES/sdg-\@LSHORT/1-\@sdgtype.pdf}
           {\def\@spnfolder{\DIRIMAGES/sdg-\@LSHORT}}
@@ -953,7 +965,7 @@
         \ntselectlang{\@ABS@LANG}%
         % \typeout{NTL=\languagename [#1]}\bbbb
         % \hypertarget{bmabstract#1}{}%
-        % \bookmark[dest=bmabstract#1]{\thebkmstring(abstract,#1)}%
+        % \bookmark[dest=bmabstract#1]{\GetBkmString(abstract,#1)}%
         \NTRunHook{abstract/pre}%
         \NTRunHook{abstract/#1/pre}%
         \printabstracttitle{#1}%
@@ -1096,8 +1108,8 @@
   {
     \begin{center}%
       \StatementOneSignature%
-        {\expandafter\thecandidatestring\expandafter(\thedocauthor(gender),\@LANG@MAIN)}
-        {\thedocauthor(name)}%
+        {\expandafter\thecandidatestring\expandafter(\GetDocAuthor(gender),\@LANG@MAIN)}
+        {\GetDocAuthor(name)}%
         {#2}
     \end{center}%
   }
@@ -1118,7 +1130,7 @@
             \stepcounter{nadv}
             \StrCut{##1}{/}\stgender\stname
             \StatementOneSignature 
-              {\theadviserstring(pref,#2,1,\stgender,\@LANG@MAIN)} 
+              {\GetAdviserString(pref,#2,1,\stgender,\@LANG@MAIN)} 
               {\stname}
               {#4}
         }%
@@ -1162,7 +1174,7 @@
       \options{/@nt/listof/\@matter/.size = \mysize}%
       \ifnum\mysize>1\relax
         \hypertarget{bmlistof\@matter}{}%
-        \bookmark[dest=bmlistof\@matter]{\thebkmstring(listof,\@LANG@MAIN)}%
+        \bookmark[dest=bmlistof\@matter]{\GetBkmString(listof,\@LANG@MAIN)}%
         \bookmarksetupnext{rellevel=1}%
       \fi
       % \typeout{PRINTALLLISTOF=\@matter}\PRINTALLLISTOF
@@ -1245,7 +1257,7 @@
     \NTRunHook{acknowledgementsblock/pre}%
       \refsection%
       \renewcommand{\@ntcite}[1]{\cite{##1}}%
-      \bigskip\footnoterule#1\smallskip\noindent\theacknowledgmentsstring(\@LANG@MAIN)%
+      \bigskip\footnoterule#1\smallskip\noindent\GetAcknowledgmentsString(\@LANG@MAIN)%
       \printcompactbib%
       \endrefsection%
     \NTRunHook{acknowledgementsblock/post}%
@@ -1257,7 +1269,7 @@
       \begingroup
         % \bookmarksetupnext{rellevel=1}
         \ntselectlang{\@LANG@COPYRIGHT}%
-        \ChapterNoTitle{\thebkmstring(copyright,\@LANG@COPYRIGHT)}%
+        \ChapterNoTitle{\GetBkmString(copyright,\@LANG@COPYRIGHT)}%
         \NTRunHook{copyright/pre}%
         \ntprintcopyrightpage%
         \NTRunHook{copyright/post}%
@@ -1369,7 +1381,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{ntacknowledgements}{%
   % \bookmarksetupnext{level=1}%
-  \chapter*{\thebkmstring(acknowledgements,\@LANG@MAIN)}%
+  \chapter*{\GetBkmString(acknowledgements,\@LANG@MAIN)}%
 }{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1414,7 +1426,7 @@
       \IfStrEq{#1}{zhs}{\def\nt@abstitlefont{\nt@cjkfontSC}}{}%
       \IfStrEq{#1}{zht}{\def\nt@abstitlefont{\nt@cjkfontTC}}{}%
     \fi
-    \chapter{\texorpdfstring{{\nt@abstitlefont\thebkmstring(abstract,#1)}}{\thebkmstring(abstract,#1)}}%
+    \chapter{\texorpdfstring{{\nt@abstitlefont\GetBkmString(abstract,#1)}}{\GetBkmString(abstract,#1)}}%
   \endgroup
 }
 
@@ -1425,14 +1437,14 @@
 \providecommand{\keywords}[1]{%
     \NTRunHook{keywords/pre}%
     % \NTRunHook{keywords/#1/pre}%
-    \def\and{\unskip\datadefault{keywordssep}(\@LSHORT)}%
+    \def\and{\unskip\MemGetDefault{KeywordsSep}{\@LSHORT}}%
     % \def\and{{\textperiodcentered} }%
     \par\addvspace\baselineskip\noindent%
     \begingroup%
-    \datadefault{keywordsstringprefix}(\@LSHORT)%
-    \datadefault{keywordsstringfont}(\@LSHORT)%
-    \csuse{thekeywordsstring}(\@LSHORT)%
-    \datadefault{keywordsstringsuffix}(\@LSHORT)%
+    \MemGetDefault{KeywordsStringPrefix}{\@LSHORT}%
+    \MemGetDefault{KeywordsStringFont}{\@LSHORT}%
+    \GetKeywordsString(\@LSHORT)%
+    \MemGetDefault{KeywordsStringSuffix}{\@LSHORT}%
     \endgroup%
     % \enspace
     \ignorespaces#1%
@@ -1446,11 +1458,11 @@
 %% LABELS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \providecommand\thepresentationtext{%
-  \thedissertationstringfont()%
-  \ifdatadefined{dissertationstring}(\@DOCTYPE,\@LANG@COVER){%
-    \thedissertationstring(\@DOCTYPE,\@LANG@COVER)%
+  \GetDissertationStringFont()%
+  \IfMemVoidTF{DissertationString}{\@DOCTYPE,\@LANG@COVER}{%
+    \GetDissertationString(\@DOCCLASS,\@LANG@COVER)%
   }{%
-    \thedissertationstring(\@DOCCLASS,\@LANG@COVER)%
+    \GetDissertationString(\@DOCTYPE,\@LANG@COVER)%
   }%
 }
 
@@ -1458,9 +1470,9 @@
      {\thispagestyle{novathesis@frontmatter}}%
      % {\thispagestyle{empty}}%
     \noindent%
-    Copyright \textcopyright\ \thedocauthor(name), %
-    \theschool(\@LANG@COPYRIGHT), \theuniversity(\@LANG@COPYRIGHT).\\%
-    \thecopyrighttextstring(\@LANG@COPYRIGHT)%
+    Copyright \textcopyright\ \GetDocAuthor(name), %
+    \GetSchool(\@LANG@COPYRIGHT), \GetUniversity(\@LANG@COPYRIGHT).\\%
+    \GetCopyrightTextString(\@LANG@COPYRIGHT)%
     % \ntselectlang{\@LANG@MAIN}%
 }
 
@@ -1562,13 +1574,13 @@
 
 \AtBeginDocument{%
   \makeatletter%
-  % \typeout{XXX [\thedocauthor(name)]}
-  % \typeout{XXX [\thedoctitle(\@LANG@MAIN,main,plain)]}
-  % \typeout{XXX [\thedoctitle(\@LANG@MAIN,sub,plain)]}
+  % \typeout{XXX [\GetDocAuthor(name)]}
+  % \typeout{XXX [\GetDocTitle(\@LANG@MAIN,main,plain)]}
+  % \typeout{XXX [\GetDocTitle(\@LANG@MAIN,sub,plain)]}
   \hypersetup{%
-    pdfauthor={\thedocauthor(name)},
-    pdftitle={\thedoctitle(\@LANG@MAIN,main,plain)},
-    pdfsubject={\thedoctitle(\@LANG@MAIN,sub,plain)},
+    pdfauthor={\GetDocAuthor(name)},
+    pdftitle={\GetDocTitle(\@LANG@MAIN,main,plain)},
+    pdfsubject={\GetDocTitle(\@LANG@MAIN,sub,plain)},
   }
 
   %--------------------------------

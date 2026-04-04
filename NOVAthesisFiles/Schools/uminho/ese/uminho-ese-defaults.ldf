@@ -18,11 +18,11 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Escola Superior de Enfermagem}
-\school(en):={School of Nursing}
-\school(fr):={School of Nursing}
-\school(it):={School of Nursing}
+\SetSchool*(pt)={Escola Superior de Enfermagem}
+\SetSchool*(en)={School of Nursing}
+\SetSchool*(fr)={School of Nursing}
+\SetSchool*(it)={School of Nursing}
 
 % Logos
-\school(logo,RGB):={uminho-ese-insignia-color}
-\school(logo,GRAY):={uminho-ese-insignia-mono}
+\SetSchool*(logo,RGB)={uminho-ese-insignia-color}
+\SetSchool*(logo,GRAY)={uminho-ese-insignia-mono}

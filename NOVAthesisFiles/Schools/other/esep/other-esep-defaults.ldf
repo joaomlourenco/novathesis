@@ -23,23 +23,23 @@
 %%=======================================================================
 
 % University
-\university(pt):={Escola Superior de Enfermagem do Porto}
-\university(en):={Nursing School of Porto}%%TBD
-\university(fr):={Escola Superior de Enfermagem do Porto}%%TBD
-\university(it):={Escola Superior de Enfermagem do Porto}%%TBD
+\SetUniversity*(pt)={Escola Superior de Enfermagem do Porto}
+\SetUniversity*(en)={Nursing School of Porto}%%TBD
+\SetUniversity*(fr)={Escola Superior de Enfermagem do Porto}%%TBD
+\SetUniversity*(it)={Escola Superior de Enfermagem do Porto}%%TBD
 
 % Faculty / School
-\school(pt):={Escola Superior de Enfermagem do Porto}
-\school(en):={Nursing School of Porto}%%TBD
-\school(fr):={Escola Superior de Enfermagem do Porto}%%TBD
-\school(it):={Escola Superior de Enfermagem do Porto}%%TBD
+\SetSchool*(pt)={Escola Superior de Enfermagem do Porto}
+\SetSchool*(en)={Nursing School of Porto}%%TBD
+\SetSchool*(fr)={Escola Superior de Enfermagem do Porto}%%TBD
+\SetSchool*(it)={Escola Superior de Enfermagem do Porto}%%TBD
 
 
 %%=======================================================================
 %% COMMITTEE
 %%=======================================================================
 
-\committeeorder():={c,r,m}%
+\SetCommitteeOrder*()={c,r,m}%
 
 
 %%=======================================================================
@@ -47,20 +47,20 @@
 %%=======================================================================
 
 % Set margins for "normal" pages
-\margin(screen,top):={2.5cm}
-\margin(screen,bottom):={2.5cm}
-\margin(screen,left):={3.25cm}
-\margin(screen,right):={3.25cm}
-\margin(paper,top):={2.5cm}
-\margin(paper,bottom):={2.5cm}
-\margin(paper,left):={4cm}
-\margin(paper,right):={2.5cm}
+\SetMargin*(screen,top)={2.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={3.25cm}
+\SetMargin*(screen,right)={3.25cm}
+\SetMargin*(paper,top)={2.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={4cm}
+\SetMargin*(paper,right)={2.5cm}
 
 % Set margins for cover pages
-\margin(cover,top):={1.0cm}
-\margin(cover,bottom):={1.5cm}
-\margin(cover,left):={7cm}
-\margin(cover,right):={0.5cm}
+\SetMargin*(cover,top)={1.0cm}
+\SetMargin*(cover,bottom)={1.5cm}
+\SetMargin*(cover,left)={7cm}
+\SetMargin*(cover,right)={0.5cm}
 
 
 %%=======================================================================
@@ -80,8 +80,8 @@
 %% COVER PAGE SETUP (BACKGROUNDS)
 %%=======================================================================
 
-\thesiscover(1-1,bgcolor):={white}
-\thesiscover(1-1,image):={other-esep-cover}
+\SetThesisCover*(1-1,bgcolor)={white}
+\SetThesisCover*(1-1,image)={other-esep-cover}
 
 
 %%=======================================================================
@@ -92,20 +92,20 @@
 \ntaddtocover[vspace=2.2cm]{1-1,2-1}{%
   \noindent%
   \fontsize{15}{15}\selectfont%
-  \textbf{{\ToUppercase{\theschool(\@LANG@COVER)}}}%
+  \textbf{{\ToUppercase{\GetSchool(\@LANG@COVER)}}}%
 }
 
 % Degree name
 \ntaddtocover[vspace=0.5cm]{1-1,2-1}{%
   \fontsize{15}{15}\selectfont%
-  \thedegreename(\@LANG@COVER)%
+  \GetDegreeName(\@LANG@COVER)%
 }
 
 % Title of Dissertation 1 (Cover 1 only)
 \ntaddtocover[vspace=6.5cm, height=4cm, valign=t]{1-1}{%
     \centering%
     \fontsize{15}{15}\selectfont%
-    {\ToUppercase{\thedoctitle(\@LANG@COVER,main)}}\\[1ex]%
+    {\ToUppercase{\GetDocTitle(\@LANG@COVER,main)}}\\[1ex]%
     \fontsize{12}{12}\selectfont%
     Dissertação%
 }
@@ -114,8 +114,8 @@
 \ntaddtocover[vspace=6.5cm, height=4cm, valign=t]{2-1}{%
     \centering%
     \fontsize{15}{15}\selectfont\scshape%
-    \thedoctitle(\@LANG@COVER,main)\\[1ex]%
-    \thedoctitle(en,main)%
+    \GetDocTitle(\@LANG@COVER,main)\\[1ex]%
+    \GetDocTitle(en,main)%
 }
 
 % Advisers (Cover 2 only)
@@ -135,7 +135,7 @@
 % Author name
 \ntaddtocover[vspace=1]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont
-  \textbf{\thedocauthor(name)}
+  \textbf{\GetDocAuthor(name)}
 }
 
 % Date

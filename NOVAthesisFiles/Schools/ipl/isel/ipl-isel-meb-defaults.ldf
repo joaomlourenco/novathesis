@@ -24,22 +24,22 @@
 %%=======================================================================
 
 % Faculty / School 
-\school(estsl,pt):={Escola Superior de Tecnologia da Saúde de Lisboa}
-\school(estsl,en):={Escola Superior de Tecnologia da Saúde de Lisboa}
-\school(estsl,fr):={Escola Superior de Tecnologia da Saúde de Lisboa}
-\school(estsl,it):={Escola Superior de Tecnologia da Saúde de Lisboa}
+\SetSchool*(estsl,pt)={Escola Superior de Tecnologia da Saúde de Lisboa}
+\SetSchool*(estsl,en)={Escola Superior de Tecnologia da Saúde de Lisboa}
+\SetSchool*(estsl,fr)={Escola Superior de Tecnologia da Saúde de Lisboa}
+\SetSchool*(estsl,it)={Escola Superior de Tecnologia da Saúde de Lisboa}
 
-\dissertationstring(bsc,pt)={Trabalho Final de Licenciatura para obtenção do grau de\\%
+\SetDissertationString(bsc,pt)={Trabalho Final de Licenciatura para obtenção do grau de\\%
 Mestre em Engenharia Biomédica}
-\dissertationstring(mscplan,pt)={Trabalho Final de Mestrado para obtenção do grau de\\%
+\SetDissertationString(mscplan,pt)={Trabalho Final de Mestrado para obtenção do grau de\\%
 Mestre em Engenharia Biomédica}
-\dissertationstring(msc,pt)={Trabalho Final de Mestrado para obtenção do grau de\\%
+\SetDissertationString(msc,pt)={Trabalho Final de Mestrado para obtenção do grau de\\%
 Mestre em Engenharia Biomédica}
-\dissertationstring(bsc,en)={Trabalho Final de Licenciatura para obtenção do grau de\\%
+\SetDissertationString(bsc,en)={Trabalho Final de Licenciatura para obtenção do grau de\\%
 Mestre em Engenharia Biomédica}
-\dissertationstring(mscplan,en)={Trabalho Final de Mestrado para obtenção do grau de\\%
+\SetDissertationString(mscplan,en)={Trabalho Final de Mestrado para obtenção do grau de\\%
 Mestre em Engenharia Biomédica}
-\dissertationstring(msc,en)={Trabalho Final de Mestrado para obtenção do grau de\\%
+\SetDissertationString(msc,en)={Trabalho Final de Mestrado para obtenção do grau de\\%
 Mestre em Engenharia Biomédica}
 
 
@@ -48,25 +48,25 @@ Mestre em Engenharia Biomédica}
 %%=======================================================================
 
 % Set margins for cover pages
-\margin(cover,top):={1.175cm}
-\margin(cover,bottom):={1.5cm}
-\margin(cover,left):={2.1cm}
-\margin(cover,right):={2.1cm}
+\SetMargin*(cover,top)={1.175cm}
+\SetMargin*(cover,bottom)={1.5cm}
+\SetMargin*(cover,left)={2.1cm}
+\SetMargin*(cover,right)={2.1cm}
 
 
 %%=======================================================================
 %% SPINE
 %%=======================================================================
 
-\spine(logo)={ipl-logo/0,ipl-isel-logo/0/1.5,ipl-isel-meb-logo/0,2cm/meb-text/0/1.8}
-\spine(box,logo,margin,sep):={5mm}
+\SetSpine(logo)={ipl-logo/0,ipl-isel-logo/0/1.5,ipl-isel-meb-logo/0,2cm/meb-text/0/1.8}
+\SetSpine*(box,logo,margin,sep)={5mm}
 
-\spine(box,date,angle)={-90}
-\spine(author)={\thedocauthor(name,short)}
+\SetSpine(box,date,angle)={-90}
+\SetSpine(author)={\GetDocAuthor(name,short)}
 
-\spine(order):=?{date,author,title,logo}
-\spine(box,logo,len):=?{4.1cm}
-\spine(box,date,len):=?{1.0cm}
+\SetSpine*(order)=?{date,author,title,logo}
+\SetSpine*(box,logo,len)=?{4.1cm}
+\SetSpine*(box,date,len)=?{1.0cm}
 % \spine(box,author,len):=?{5.0cm}
 
 
@@ -74,7 +74,7 @@ Mestre em Engenharia Biomédica}
 %% COVER PAGE SETUP (BACKGROUNDS)
 %%=======================================================================
 
-\frontpageimage():={isel-meb-photo}
+\SetFrontPageImage*()={isel-meb-photo}
 
 % \thesiscover(1-1,image):={MEB_CapaVersaoDefinitiva_TFM_v02}
 
@@ -105,7 +105,7 @@ Mestre em Engenharia Biomédica}
   \includegraphics[height=1.225cm,align=c]{ipl-logo}%
   \hspace*{2.6cm}%
   \fontsize{12.9}{13}\selectfont%
-  \textbf{\ToUppercase{\theuniversity(pt)}}%
+  \textbf{\ToUppercase{\GetUniversity(pt)}}%
 }
 
 %% ISEL e ESTSL
@@ -116,31 +116,31 @@ Mestre em Engenharia Biomédica}
   \hspace*{3.5mm}%
   \fontsize{12}{12}\selectfont%
   \begin{tabular}{@{}ll}
-    \theschool(\@LANG@COVER)\\%
-    \theschool(estsl,\@LANG@COVER)%
+    \GetSchool(\@LANG@COVER)\\%
+    \GetSchool(estsl,\@LANG@COVER)%
   \end{tabular}%
 }
 
 \ntaddtocover[vspace=1.6cm,height=9cm,valign=c]{1-1,2-1}{%
-  % \typeout{NT thefrontpageimage=[\thefrontpageimage()]}%
-  \ifdatadefined{frontpageimage}()
-    {\includegraphics[height=9cm]{\thefrontpageimage()}}%
+  % \typeout{NT thefrontpageimage=[\GetFrontPageImage()]}%
+  \IfMemVoidTF{FrontPageImage}{}
     {~}%
+    {\includegraphics[height=9cm]{\GetFrontPageImage()}}%
 }
 
 % % Title of Dissertation
 \ntaddtocover[vspace=1.5cm,]{1-1,2-1}{%
   \fontsize{16.5}{16}\selectfont%
   \bfseries%
-  \textbf{\thedoctitle(\@LANG@COVER,main)}%
+  \textbf{\GetDocTitle(\@LANG@COVER,main)}%
 }
 
 % Author name
 \ntaddtocover[vspace=1.4cm]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
-  \thedocauthor(name)%\\[1ex]
+  \GetDocAuthor(name)%\\[1ex]
   % \fontsize{14}{14}\selectfont%
-  % (\thedocauthor(degree))%
+  % (\GetDocAuthor(degree))%
 }
 
 % Degree
@@ -157,10 +157,10 @@ Mestre em Engenharia Biomédica}
 
 % Advisers
 \ntaddtocover[vspace=8.75mm,valign=t]{1-1,2-1}{%
-  % \adviserstringfont(a):={}%
-  % \adviserstringfont(c):={\bfseries}%
-  \commastring(pt)={\\}
-  \andstring(pt)={\\}
+  % \MemSet{adviserstringfont}{a}{}%
+  % \MemSet{adviserstringfont}{c}{\bfseries}%
+  \SetCommaString(pt)={\\}
+  \SetAndString(pt)={\\}
   \fontsize{11}{11}\selectfont%
   \underline{\@nt@printgrouptitle@text{adviser}{a}}\\[1ex]%
   \ntprintpersons[name]{0.9}[c]{0}{adviser}{a,c}%
@@ -170,11 +170,11 @@ Mestre em Engenharia Biomédica}
 \ntaddtocover[vspace=1,status=final]{1-1,2-1}{%
   \ifmaindoc{%
     \fontsize{11}{11}\selectfont%
-    \underline{\csuse{thecommitteetitlestring}(\@LANG@COVER)}\\[4pt]%
-    \persongrouppost():={\\[5pt]}
-    \personpost():={\\[-1pt]}
-    \committeetitlestring(pt):={}%
-    \ifdocfinal{\ntprintpersons[name]{1}[c]{2}{committee}{\thecommitteeorder()}\mbox{}}{\mbox{}}%
+    \underline{\GetCommitteeTitleString(\@LANG@COVER)}\\[4pt]%
+    \MemSet{persongrouppost}{}{\\[5pt]}
+    \MemSet{personpost}{}{\\[-1pt]}
+    \SetCommitteeTitleString*(pt)={}%
+    \ifdocfinal{\ntprintpersons[name]{1}[c]{2}{committee}{\GetCommitteeOrder()}\mbox{}}{\mbox{}}%
   }{\mbox{}}%
 }
 

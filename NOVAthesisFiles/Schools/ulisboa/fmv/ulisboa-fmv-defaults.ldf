@@ -35,7 +35,7 @@
 
 \IfStrEq{\@LANG@MAIN}{en}{%
   \SetAbstractOrder*(en)={pt,pt-ext,en}
-  \bkmstring(abstract,pt-ext):={Resumo Alargado}
+  \SetBkmString*(abstract,pt-ext)={Resumo Alargado}
 }
 
 \setcounter{lofdepth}{2}
@@ -58,64 +58,64 @@
 %%=======================================================================
 
 % Faculty / School
-\school(pt):={Faculdade de Medicina Veterinária}
-\school(en):={Faculty of Veterinary Medicine}
-\school(fr):={Faculty of Veterinary Medicine}
-\school(it):={Faculty of Veterinary Medicine}
+\SetSchool*(pt)={Faculdade de Medicina Veterinária}
+\SetSchool*(en)={Faculty of Veterinary Medicine}
+\SetSchool*(fr)={Faculty of Veterinary Medicine}
+\SetSchool*(it)={Faculty of Veterinary Medicine}
 
-\newdata{doctypestr}
-\doctypestr(pt,phd):={Tese especialmente elaborada para obtenção do grau de Doutor em}
-\doctypestr(en,phd):={Thesis specially designed to earn the degree of Doctor in}
-\doctypestr(pt,msc):={Dissertação de Mestrado em}
-\doctypestr(en,msc):={Master Thesis in}
+\NewMemStore{DoctypeStr}
+\SetDoctypeStr*(pt,phd)={Tese especialmente elaborada para obtenção do grau de Doutor em}
+\SetDoctypeStr*(en,phd)={Thesis specially designed to earn the degree of Doctor in}
+\SetDoctypeStr*(pt,msc)={Dissertação de Mestrado em}
+\SetDoctypeStr*(en,msc)={Master Thesis in}
 
-\specializationstring(pt):={, na especialidade de}
-\specializationstring(en):={, with specialization in}
+\SetSpecializationString*(pt)={, na especialidade de}
+\SetSpecializationString*(en)={, with specialization in}
 
 \@for\myi:={a,1,m,en},{a,1,f,en},{a,2,m,en},{a,2,f,en},{c,1,m,en},{c,1,f,en},{c,2,m,en},{c,2,f,en},{ca,1,m,en},{ca,1,f,en},{ca,2,m,en},{ca,2,f,en},{t,1,m,en},{t,1,f,en},{t,2,m,en},{t,2,f,en},{a,1,m,pt},{a,1,f,pt},{a,2,m,pt},{a,2,f,pt},{c,1,m,pt},{c,1,f,pt},{c,2,m,pt},{c,2,f,pt},{ca,1,m,pt},{ca,1,f,pt},{ca,2,m,pt},{ca,2,f,pt},{t,1,m,pt},{t,1,f,pt},{t,2,m,pt},{t,2,f,pt}\do{%
-  \adviserstring(\myi):={\ToUppercase{\theadviserstring(\myi)}}
+  \SetAdviserString*(\myi)={\ToUppercase{\GetAdviserString(\myi)}}
 }
 
 \@for\myi:={c,r,a,ca,m,g}\do{%
   \@for\myj:={1,2}\do{%
     \@for\myk:={m,f}\do{%
       \@for\myl:={en,pt}\do{%
-        \committeestring(\myi,\myj,\myk,\myl):={\ToUppercase{\thecommitteestring(\myi,\myj,\myk,\myl)}}%
+        \SetCommitteeString*(\myi,\myj,\myk,\myl)={\ToUppercase{\GetCommitteeString(\myi,\myj,\myk,\myl)}}%
       }%
     }%
   }%
 }
 
-\newdata{adviserslabel}
-\adviserslabel(phd,pt):={Tese orientada por:}
-\adviserslabel(phd,en):={Thesis supervised by:}
-\adviserslabel(phdprop,pt):={Tese orientada por:}
-\adviserslabel(phdprop,en):={Thesis supervised by:}
-\adviserslabel(phdplan,pt):={Tese orientada por:}
-\adviserslabel(phdplan,en):={Thesis supervised by:}
-\adviserslabel(msc,pt):={Dissertação orientada por:}
-\adviserslabel(msc,en):={Dissertation supervised by:}
-\adviserslabel(mscplan,pt):={Dissertação orientada por:}
-\adviserslabel(mscplan,en):={Dissertation supervised by:}
-\adviserslabel(de):={TBD}
-\adviserslabel(es):={TBD}
-\adviserslabel(fr):={TBD}
-\adviserslabel(it):={TBD}
+\NewMemStore{AdvisersLabel}
+\SetAdvisersLabel*(phd,pt)={Tese orientada por:}
+\SetAdvisersLabel*(phd,en)={Thesis supervised by:}
+\SetAdvisersLabel*(phdprop,pt)={Tese orientada por:}
+\SetAdvisersLabel*(phdprop,en)={Thesis supervised by:}
+\SetAdvisersLabel*(phdplan,pt)={Tese orientada por:}
+\SetAdvisersLabel*(phdplan,en)={Thesis supervised by:}
+\SetAdvisersLabel*(msc,pt)={Dissertação orientada por:}
+\SetAdvisersLabel*(msc,en)={Dissertation supervised by:}
+\SetAdvisersLabel*(mscplan,pt)={Dissertação orientada por:}
+\SetAdvisersLabel*(mscplan,en)={Dissertation supervised by:}
+\SetAdvisersLabel*(de)={TBD}
+\SetAdvisersLabel*(es)={TBD}
+\SetAdvisersLabel*(fr)={TBD}
+\SetAdvisersLabel*(it)={TBD}
 
-\newdata{provisionalstring}
-\provisionalstring(pt):={Documento Provisório}
-\provisionalstring(en):={Provisional Document}
-\provisionalstring(de):={TBD}
-\provisionalstring(es):={TBD}
-\provisionalstring(fr):={TBD}
-\provisionalstring(it):={TBD}
+\NewMemStore{ProvisionalString}
+\SetProvisionalString*(pt)={Documento Provisório}
+\SetProvisionalString*(en)={Provisional Document}
+\SetProvisionalString*(de)={TBD}
+\SetProvisionalString*(es)={TBD}
+\SetProvisionalString*(fr)={TBD}
+\SetProvisionalString*(it)={TBD}
 
 
 %%=======================================================================
 %% COMMITTEE
 %%=======================================================================
 
-\committeeorder():={c,m}%
+\SetCommitteeOrder*()={c,m}%
 
 
 %%=======================================================================
@@ -133,20 +133,20 @@
 %%=======================================================================
 
 % Set margins for "normal" pages
-\margin(screen,top):={2.5cm}
-\margin(screen,bottom):={2.5cm}
-\margin(screen,left):={2.5cm}
-\margin(screen,right):={2.5cm}
-\margin(paper,top):={2.5cm}
-\margin(paper,bottom):={2.5cm}
-\margin(paper,left):={2.5cm}
-\margin(paper,right):={2.5cm}
+\SetMargin*(screen,top)={2.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={2.5cm}
+\SetMargin*(screen,right)={2.5cm}
+\SetMargin*(paper,top)={2.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={2.5cm}
+\SetMargin*(paper,right)={2.5cm}
 
 %% Set margins for cover pages
-\margin(cover,top):={2.5cm}
-\margin(cover,bottom):={2.5cm}
-\margin(cover,left):={2.5cm}
-\margin(cover,right):={2.5cm}
+\SetMargin*(cover,top)={2.5cm}
+\SetMargin*(cover,bottom)={2.5cm}
+\SetMargin*(cover,left)={2.5cm}
+\SetMargin*(cover,right)={2.5cm}
 
 \RequirePackage{indentfirst}
 \setlength{\parindent}{1.25cm}
@@ -205,7 +205,7 @@
 \NTAddToHook{abstract/pre}{%
   \let\oldchapterheadstart=\chapterheadstart%
   \preto{\chapterheadstart}%
-  {\begin{center}\noindent\Large\bfseries{\THEdoctitle(\@LSHORT,main)}\end{center}\bigskip}%
+  {\begin{center}\noindent\Large\bfseries{\MakeTextUppercase{\GetDocTitle(\@LSHORT,main)}}\end{center}\bigskip}%
 }
 
 \NTAddToHook{abstract/post}{%
@@ -249,13 +249,13 @@
 % School
 \ntaddtocover[vspace=2mm, height=2.0cm, valign=c]{1-1}{%
   \fontsize{12}{12}\selectfont%
-  {\THEuniversity(\@LANG@COVER)}\\[4mm]%
-  {\THEschool(\@LANG@COVER)}%
+  {\MakeTextUppercase{\GetUniversity(\@LANG@COVER)}}\\[4mm]%
+  {\MakeTextUppercase{\GetSchool(\@LANG@COVER)}}%
 }
 \ntaddtocover[vspace=0mm, height=2.0cm, valign=t]{2-1}{%
   \fontsize{12}{12}\selectfont%
-  {\THEuniversity(\@LANG@COVER)}\\[4mm]%
-  {\THEschool(\@LANG@COVER)}%
+  {\MakeTextUppercase{\GetUniversity(\@LANG@COVER)}}\\[4mm]%
+  {\MakeTextUppercase{\GetSchool(\@LANG@COVER)}}%
 }
 
 % Logo
@@ -269,44 +269,43 @@
 % Title of Dissertation
 \ntaddtocover[vspace/1-1=18mm, vspace/2-1=10mm, height=2.35cm, valign=c]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
-  \textbf{{\THEdoctitle(\@LANG@MAIN,main,cover)}}%
+  \textbf{{\MakeTextUppercase{\GetDocTitle(\@LANG@MAIN,main,cover)}}}%
 }
 
 % Doc Status
 \ntaddtocover[vspace=0cm, height=1.5cm, valign=c]{1-1,2-1}{%
   \ifdocworking{Draft: \today}{}%
-  \ifdocprovisional{\emph{\theprovisionalstring(\@LANG@COVER)}}{}%
+  \ifdocprovisional{\emph{\GetProvisionalString(\@LANG@COVER)}}{}%
   \ifdocfinal{~}{}%
 }
 
 % Author name
 \ntaddtocover[vspace/1-1=0mm, vspace/2-1=4mm, height=1.8cm, valign=c]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
-  {\THEdocauthor(name)}%
+  {\MakeTextUppercase{\GetDocAuthor(name)}}%
 }
 
 % Degree
 % In this position only if it is a phd doc;
 \ntaddtocover[vspace=21mm, height=0.5cm]{2-1}{%
          \fontsize{12}{12}\selectfont%
-         {\THEdoctypestr(\@LANG@COVER,\option{/novathesis/doctype})}
-         {\THEmajorfield(\@LANG@COVER)}%
+         {\MakeTextUppercase{\GetDoctypeStr(\@LANG@COVER,\option{/novathesis/doctype})}}
+         {\MakeTextUppercase{\GetMajorField(\@LANG@COVER)}}%
          \ifphddoc{%
-           \ifdatadefined{specialization}(\@LANG@COVER)%
-                     {% \thebarheight(\@LANG@COVER)
-                      \THEspecialization(\@LANG@COVER)}{~}}%
+           \IfMemVoidTF{Specialization}{\@LANG@COVER}{~}{% \thebarheight(\@LANG@COVER)
+                       \MakeTextUppercase{\GetSpecialization(\@LANG@COVER)}}}%
           {~}%
 }%
 
 % Committee and Advisers
 \ntaddtocover[vspace=15mm, height=45mm, valign=c]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
-  \committeestringfont():={\bfseries}%
+  \MemSet{committeestringfont}{}{\bfseries}%
   % \advisertitlestringfont():={\bfseries}%
-  \adviserstringfont():={\bfseries}%
+  \MemSet{adviserstringfont}{}{\bfseries}%
   \begin{minipage}[t]{0.48\textwidth}
     \ifcovernum{2-1}%
-      {\ifdocfinal{\ntprintpersons[name]{1}{1}{committee}{\thecommitteeorder()}\mbox{}}{\mbox{}}}%
+      {\ifdocfinal{\ntprintpersons[name]{1}{1}{committee}{\GetCommitteeOrder()}\mbox{}}{\mbox{}}}%
       {\mbox{}}
   \end{minipage}%
   \hfill%
