@@ -259,6 +259,20 @@
 %% UTILITIES
 %%=======================================================================
 
+% Syntax: \MemGetDefault{<storage_name>}[<fallback_key>]{<key>}
+% Outputs the value at <key> if defined and non-blank;
+% else the value at <fallback_key> (if given) if defined and non-blank;
+% else nothing.
+\NewDocumentCommand{\MemGetDefault}{ m o m }
+  {
+    \IfMemVoidTF {#1} {#3}
+      {
+        \IfValueT {#2}
+          { \IfMemVoidF {#1} {#2} { \MemGet {#1} {#2} } }
+      }
+      { \MemGet {#1} {#3} }
+  }
+
 % Syntax: \MemUndef{<storage_name>}{<key_list>}
 \NewDocumentCommand{\MemUndef}{ m m }
   {

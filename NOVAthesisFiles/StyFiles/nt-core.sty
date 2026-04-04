@@ -460,7 +460,7 @@
   \@for\nt@tmpi:=\@nt@saveabstractorder\do{%
     \StrCut{\nt@tmpi}{=}\@nt@key\@nt@val%
     \IfStrEq{\@nt@val}{}{\edef\@nt@val{\@nt@key}\def\@nt@key{\@LANG@MAIN}}{}%
-    \abstractorder(\@nt@key):={\@nt@val}%
+    \SetAbstractOrder*(\@nt@key)={\@nt@val}%
   }%
 }
 
@@ -1085,6 +1085,9 @@
 \NewMemStore{AdviserOrder}
 \SetAdviserOrder()={a,c}  % By default print advisers and co-advisers
 
+% AbstractOrder: for each main language, list which abstracts to print and in which order
+\NewMemStore{AbstractOrder}
+
 \newdata{committeeorder}         %e.g., "{c,r,a,m,g}"
 
 \newdata{committeetitlestringpre}
@@ -1129,7 +1132,7 @@
 
 % For each main language, list which abstracts shall be printed and in which order
 % may have more than two (just be sure you include the languages above as well)
-\newdata{abstractorder}
+% (migrated to memstore — \NewMemStore{AbstractOrder} is declared above)
 
 
 

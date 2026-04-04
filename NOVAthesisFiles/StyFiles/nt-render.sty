@@ -926,7 +926,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
   \NTRunHook{abstracts/pre}%
-  \@for\nt@tmpi:=\expanded{\theabstractorder(\@LANG@MAIN)}\do{\@ntprintabstract{\nt@tmpi}}%
+  \@for\nt@tmpi:=\expanded{\GetAbstractOrder(\@LANG@MAIN)}\do{\@ntprintabstract{\nt@tmpi}}%
   \NTRunHook{abstracts/post}%
 }
 

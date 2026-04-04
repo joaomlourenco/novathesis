@@ -45,11 +45,11 @@
 \edef\@LANG@MAIN@LONG{\GetLangLong(\@LANG@MAIN)}
 
 \@setabstractorder
-\ifdatadefined{abstractorder}(en){}{%
-  \abstractorder(en):={en,pt}
+\IfMemVoidT{AbstractOrder}{en}{%
+  \SetAbstractOrder*(en)={en,pt}
 }
-\ifdatadefined{abstractorder}(\@LANG@MAIN){}{%
-  \abstractorder(\@LANG@MAIN):={\@LANG@MAIN,en}
+\IfMemVoidT{AbstractOrder}{\@LANG@MAIN}{%
+  \SetAbstractOrder*(\@LANG@MAIN)={\@LANG@MAIN,en}
 }
 
 
@@ -88,7 +88,7 @@
 %% which will be loaded dynamically by Babel
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\edef\@LANG@LOADED{\@LANG@COVER, \@LANG@COPYRIGHT, \@LANG@MAIN, \theabstractorder(\@LANG@MAIN)}
+\edef\@LANG@LOADED{\@LANG@COVER, \@LANG@COPYRIGHT, \@LANG@MAIN, \GetAbstractOrder(\@LANG@MAIN)}
 \UniquifyList{\@LANG@LOADED}[\@LANG@LOADED]
 
 % 

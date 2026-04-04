@@ -90,12 +90,12 @@
 \datestr(pt):={Data}
 \datestr(en):={Date}
 
-\abstractorder(pt):={pt,en}
-\abstractorder(en):={pt,en}
-\abstractorder(fr):={pt,fr}
-\abstractorder(it):={pt,it}
-\abstractorder(es):={pt,es}
-\abstractorder(de):={pt,de}
+\SetAbstractOrder*(pt)={pt,en}
+\SetAbstractOrder*(en)={pt,en}
+\SetAbstractOrder*(fr)={pt,fr}
+\SetAbstractOrder*(it)={pt,it}
+\SetAbstractOrder*(es)={pt,es}
+\SetAbstractOrder*(de)={pt,de}
 
 \commastring(pt):={\\}
 \commastring(en):={\\}

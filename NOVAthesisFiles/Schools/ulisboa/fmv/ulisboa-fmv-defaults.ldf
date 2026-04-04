@@ -34,7 +34,7 @@
 \ntbibsetup{style=cse}
 
 \IfStrEq{\@LANG@MAIN}{en}{%
-  \abstractorder(en):={pt,pt-ext,en}
+  \SetAbstractOrder*(en)={pt,pt-ext,en}
   \bkmstring(abstract,pt-ext):={Resumo Alargado}
 }
 
