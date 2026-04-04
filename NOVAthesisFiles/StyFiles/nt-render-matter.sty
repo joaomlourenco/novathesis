@@ -605,14 +605,14 @@
 \providecommand{\keywords}[1]{%
     \NTRunHook{keywords/pre}%
     % \NTRunHook{keywords/#1/pre}%
-    \def\and{\unskip\MemGetDefault{KeywordsSep}{\@LSHORT}}%
+    \def\and{\unskip\MemGetDefault{KeywordsSep}[]{\@LSHORT}}%
     % \def\and{{\textperiodcentered} }%
     \par\addvspace\baselineskip\noindent%
     \begingroup%
-    \MemGetDefault{KeywordsStringPrefix}{\@LSHORT}%
-    \MemGetDefault{KeywordsStringFont}{\@LSHORT}%
+    \MemGetDefault{KeywordsStringPrefix}[]{\@LSHORT}%
+    \MemGetDefault{KeywordsStringFont}[]{\@LSHORT}%
     \GetKeywordsString(\@LSHORT)%
-    \MemGetDefault{KeywordsStringSuffix}{\@LSHORT}%
+    \MemGetDefault{KeywordsStringSuffix}[]{\@LSHORT}%
     \endgroup%
     % \enspace
     \ignorespaces#1%
