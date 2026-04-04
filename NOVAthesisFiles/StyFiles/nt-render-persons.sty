@@ -1,0 +1,378 @@
+%!TEX root=template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — nt-render-persons.sty
+%% ----------------------------------------------------------------------------
+%%
+%% Version 7.10.7 (2026-03-25)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%% Departamento de Informática (www.di.fct.unl.pt)
+%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Universidade NOVA de Lisboa (www.unl.pt)
+%%
+%% Person list rendering: advisers and committee table printing.
+%% Loaded by nt-render.sty.
+%% ----------------------------------------------------------------------------
+\typeout{NT FILE StyFiles/nt-render-persons.sty}%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Print persons list {advisers | committee}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcolumntype{L}{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}X}
+\newcolumntype{C}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}X}
+\newcolumntype{R}{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}X}
+
+
+\newcommand{\@check@instring}[4][,]{
+% 1 = separator
+% 2 = value
+% 3 = list
+% 4 = error
+  \IfSubStr{#1#3#1}{#1#2#1}{}{\ClassError{novathesis}{#4: String “#1#2#1” not in “#1#3#1”}{}}%
+}
+
+\newcommand{\ntprintpersons}[2][full]{%
+  % #1* = { full | name | list }
+  % #2  = width in % of textwidth
+  % #3* = positioning
+  % #4  = number of columns
+  % #5  = adviser | committee
+  % #6  = {a,c} | {c,r,a,m,g}
+  \@ifnextchar[{\@ntprintpersons{#1}{#2}}{\@ntprintpersons{#1}{#2}[l]}%
+}
+
+\newcommand*{\@setalignment}[1]{
+  \IfStrEqCase{#1}{%
+    {r}{\raggedleft}%
+    {c}{\centering}%
+    {l}{\raggedright}%
+  }[\ClassError{novathesis}{Invalid alignment “#1”}{}]%
+}
+
+\def\@ntprintpersons#1#2[#3]#4#5#6{
+  % #1 = { full | name | list }
+  % #2 = width in % of textwidth
+  % #3 = positioning
+  % #4 = number of columns
+  % #5 = adviser | committee
+  % #6 = {a,c} | {c,r,a,m,g}
+  % \typeout{NTPRINTPERSONS 1=[#1] 2=[#2] 3=[#3] 4=[#4] 5=[#5] 6=[#6]}\NTPRINTPERSONS
+  \@check@instring{#1}{full,name,list}{@ntprintpersons}%
+  \def\nt@tabularx@horz{}%
+    \IfStrEq{#3}{c}{\def\nt@tabularx@horz{\centering\arraybackslash}}{}%
+    \IfStrEq{#3}{r}{\def\nt@tabularx@horz{\raggedleft\arraybackslash}}{}%
+    \IfStrEq{#3}{l}{\def\nt@tabularx@horz{\raggedright\arraybackslash}}{}%
+  \iftoggle{/novathesis/print/#5}{%
+    \begin{minipage}[t]{\linewidth}%
+      \setlength{\parindent}{0pt}%
+      \@setalignment{#3}%
+      \begin{varwidth}{#2\linewidth}%
+        \IfStrEqCase{#4}{%
+          {0}{\GetPersonsAsList{#5}{#6}}%
+          {1}{\@ntprintpersonsasonecolumn{#1}{#2}{#5}{#6}}%
+          {2}{\@ntprintpersonsastwocolumns{#1}{#5}{#6}}%
+        }[\ClassError{novathesis}{Ivalid argument [#4] to \string\ntprintpersons{#1}{#2}{#4}{#5}{#6}}{}]%
+      \end{varwidth}%
+    \end{minipage}%
+  }{}%
+}
+
+%============================================================
+% Print persons list {advisers | committee} as list
+%============================================================
+\ExplSyntaxOn
+
+% Define variables to hold the lists
+\clist_new:N \l_nt_master_clist
+
+% 1. Create variants to handle expansion correctly
+% This ensures we can pass "expanded" arguments to these functions
+\cs_generate_variant:Nn \clist_map_inline:nn { xn }
+\cs_generate_variant:Nn \clist_put_right:Nn { Nx }
+
+\NewDocumentCommand {\GetPersonsAsList} { m m o }
+ {
+  % % --- 1. Legacy Title Processing ---
+  % \ifdatadefined{#1titlestring}(\@LANG@COVER)
+  %  {
+  %   \MemGetDefault{#1titlestringpre}{\@LANG@COVER}
+  %   \MemGetDefault{#1titlestringfont}{\@LANG@COVER}
+  %   \csuse{the#1titlestring}(\@LANG@COVER)
+  %   \MemGetDefault{#1titlestringpost}{\@LANG@COVER}
+  %  }{}
+
+  % --- 2. Build the Flat List ---
+  \clist_clear:N \l_nt_master_clist
+
+  % Map over the categories provided in #2 (e.g., a, c)
+  \clist_map_inline:xn { #2 }
+   {
+    % Legacy check: if the list exists for this category
+    \ifoptionvoid{/@nt/#1/##1/name}
+      { } 
+      {
+        % Retrieve the sub-list into the legacy macro \@advlist@i
+        \letoptionlist{/@nt/#1/##1/name}\@advlist@i
+        
+        % FIX: Use put_right:Nx instead of concat:NN
+        % This expands \@advlist@i (e.g., "A, B") and appends A and B 
+        % as separate items to the master list.
+        \clist_put_right:Nx \l_nt_master_clist { \@advlist@i }
+      }
+   }
+
+  % --- 3. Output or Storage ---
+  \IfNoValueTF { #3 }
+   {
+     \raggedright
+     \MemGetDefault{#1namefont}[]{#2}
+     % Convert clist back to comma-separated string for legacy formatter
+     \cs_set:Npx \@advlist { \clist_use:Nn \l_nt_master_clist { , } }
+     \FormatNamesAsList{\@advlist}
+   }
+   {
+     % Store the result in the requested output macro
+     \xdef #3 { \clist_use:Nn \l_nt_master_clist { , } }
+   }
+ }
+
+
+
+
+\cs_generate_variant:Nn \seq_set_from_clist:Nn { Ne }
+\cs_generate_variant:Nn \seq_use:Nnnn { Neee }
+\NewDocumentCommand{\FormatNamesAsList}{ m
+                                         O{ }
+                                         O{ \GetCommaString(\@LANG@MAIN) ~ } 
+                                         O{ ~ \GetAndString(\@LANG@MAIN) ~ } 
+                                         O{ , ~ \GetAndString(\@LANG@MAIN) ~ } }
+% {comma separated list of names} {name-prefix} {middle-sep} {pair-sep} {last-sep}
+% example: {Maria, Rita, Filomena} {Professora} {,} {~e~} {~e~}
+ {
+  % 1. Convert the input string (comma list) into a sequence variable
+  \seq_set_from_clist:Ne \l_tmpa_seq { #1 }
+
+  % 2. Create a temporary sequence to hold the modified names
+  \seq_clear:N \l_tmpb_seq
+
+  % 3. Loop through the original names and prefix them with "de "
+  \seq_map_inline:Nn \l_tmpa_seq
+   {
+    \seq_put_right:Nn \l_tmpb_seq { #2 ~ ##1 }
+   }
+
+  % 4. Output the sequence with custom separators
+  % \seq_use:Nnnn <sequence> {middle-sep} {pair-sep} {last-sep}
+  \seq_use:Neee \l_tmpb_seq { #2 } { #3 } { #4 }
+ }
+
+\ExplSyntaxOff
+
+
+%============================================================
+% Print persons list {advisers | committee} as one and two columns
+%============================================================
+\newcommand{\@ntgetmaxlen}[2]{%
+  \defifundef{\stringlen}{\newdimen}%
+  \defifundef{\maxlen}{\newdimen}%
+  \setlength{\maxlen}{0pt}%
+  \@for\myx:=\expanded{#1}\do{%
+    \setlength{\stringlen}{\widthof{\@nt@printgrouptitle@text{#2}{\myx}~~}}%
+    \ifdim\stringlen>\maxlen\relax\setlength{\maxlen}{\stringlen}\fi%
+  }%
+}
+
+\newcommand{\@ntprintpersonsasonecolumn}[4]{%
+  % #1 = { full | name }
+  % #2 = width in % of textwidth
+  % #3 = adviser | committee
+  % #4 = {a,c} | {c,r,a,m,g}
+  % \@check@instring{#1}{full,name}{@ntprintpersonsasonecolumn}%
+  \IfMemVoidT{#3stringpost}{}{\MemSet*{#3stringpost}{}{:\\[2pt]}}%
+  \IfMemVoidT{#3namepost}{}{\MemSet*{#3namepost}{}{{\\}}}%
+  \IfMemVoidT{#3remainderpre}{}{\MemSet*{#3remainderpre}{}{{\\[-2pt]}}}%
+  \IfMemVoidT{personpost}{}{\MemSet*{personpost}{}{\\[2pt]}}%
+  \IfMemVoidT{persongrouppost}{}{\MemSet*{persongrouppost}{}{\\[7pt]}}
+  \IfMemVoidT{committeetitlestringpost}{}{\MemSet*{committeetitlestringpost}{}{\\[5pt]}}%
+  \@ntgetmaxlen{#3}{#2}%
+  \begin{tabularx}{#2\linewidth}[t]{@{}>{\nt@tabularx@horz}L@{}}%
+    \IfMemVoidTF{CommitteeTitleString}{\@LANG@COVER}{}{%
+      \IfStrEq{#3}{committee}{%
+        \MemGetDefault{#3titlestringpre}{}%
+        \MemGetDefault{#3titlestringfont}{}%
+        \GetCommitteeTitleString(\@LANG@COVER)%
+        \MemGetDefault{#3titlestringpost}{}%
+      }{%
+        \MemGetDefault{committeetitlestringpre}{}%
+        \MemGetDefault{committeetitlestringfont}{}%
+        \strut%
+        \MemGetDefault{committeetitlestringpost}{}%
+      }%
+    }%
+    \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}%
+  \end{tabularx}%
+}
+
+\newcommand{\@ntprintpersonsastwocolumns}[3]{%
+  % #1 = { full | name }
+  % #2 = adviser | committee
+  % #3 = {a,c} | {c,r,a,m,g}
+  % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3]}\NTPRINTPERSONSASTWOCOLUMNS
+  % \@check@instring{#1}{full,name}{@ntprintpersonsasonecolumn}%
+  \IfMemVoidT{#2stringpost}{}{\MemSet*{#2stringpost}{}{:&}}%
+  \IfMemVoidT{#2remainderpre}{}{\MemSet*{#2remainderpre}{}{{\\[-2pt]}}}%
+  \IfMemVoidT{personpost}{}{\MemSet*{personpost}{}{\\[2pt]}}%
+  \IfMemVoidT{persongrouppost}{}{\MemSet*{persongrouppost}{}{\\[14pt]}}
+  \IfMemVoidT{committeetitlestringpre}{}{\MemSet*{committeetitlestringpre}{}{&}}%
+  \IfMemVoidT{committeetitlestringpost}{}{\MemSet*{committeetitlestringpost}{}{\\[5pt]}}%
+  % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS
+  \@ntgetmaxlen{#3}{#2}%
+  \begin{tabular}[t]{@{}r@{~~}l@{}}%
+    \IfStrEq{#2}{committee}{%
+      \IfMemVoidF{CommitteeTitleString}{\@LANG@COVER}{%
+        \MemGetDefault{#2titlestringpre}{}%
+        \MemGetDefault{#2titlestringfont}{}%
+        \GetCommitteeTitleString(\@LANG@COVER)%
+        \MemGetDefault{#2titlestringpost}{}%
+      }%
+    }%
+    \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{2}{#2}}}{\expanded{#3}}%
+  \end{tabular}%
+}
+
+% Dispatcher for the Type-A adviser/committee string stores.
+% Needed because the store names are CamelCase but the group-type #1 is lowercase.
+% #1 = {adviser | committee}
+% #2 = role key (e.g. "a", "c")
+\newcommand{\@nt@getstrgroup}[2]{%
+  \IfStrEq{#1}{adviser}%
+    {\MemGetDefault{AdviserString}{#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER}}%
+    {\MemGetDefault{CommitteeString}{#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER}}%
+}
+
+\newcommand{\@nt@printgrouptitle@text}[2]{%
+  % #1 = {adviser | committee}
+  % #2 = {a,c} | {c,r,a,m,g}
+  \ifoptiondefined{/@nt/#1/#2/full}{%
+    \options{/@nt/#1/#2/full/.size = \mysize}%
+    \ifnum\mysize>0\relax%
+    % \typeout{/@nt/#1/#2/full=\arabic{\option{/@nt/#1/#2/full/@size}}}\AAAAA
+      \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
+      \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
+      \bgroup%
+        \MemGetDefault{#1stringfont}[]{#2}%
+        \@nt@getstrgroup{#1}{#2}%
+      \egroup%
+    \fi%
+  }{}%
+}
+
+\newcommand{\@nt@printgrouptitle}[2]{%
+  % #1 = {adviser | committee}
+  % #2 = {a,c} | {c,r,a,m,g}
+  \options{/@nt/#1/#2/full/.size = \mysize}%
+  \ifnum\mysize>0\relax%
+    \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
+    \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
+    \MemGetDefault{#1stringpre}[]{#2}%
+    \bgroup%
+      \MemGetDefault{#1stringfont}[]{#2}%
+      \@nt@getstrgroup{#1}{#2}%
+    \egroup%
+    \MemGetDefault{#1stringpost}[]{#2}%
+  \fi%
+}
+
+\newcommand{\@nt@ntprintpersongroup}[4][full]{%
+  % #1 = { full | name | list }
+  % #2 = {1 | 2}
+  % #3 = {adviser | committee}
+  % #4 = {a,c} | {c,r,a,m,g}
+  \ifoptiondefined{/@nt/#3/#4/full}{%
+    \options{/@nt/#3/#4/full/.size = \mysize}%
+    \ifnum\mysize>0\relax%
+      % \typeout{NTPRINTPERSONGROUP 1=[#1] 2=[#2] 3=[#3] 4=[#4]}\NTPRINTPERSONGROUP
+      \@nt@printgrouptitle{#3}{#4}%
+      \begin{varwidth}[t]{\linewidth-\maxlen}%
+        \raggedright%
+        \IfStrEq{#1}{list}{%
+          \GetPersonsAsList{#3}{#4}%
+        }{%
+          \optionlistdo{/@nt/#3/#4/full}{\@nt@printonename{#1}{#3}{#4}{##1}}%
+        }%
+      \end{varwidth}%
+      \MemGet{persongrouppost}{}%
+    \fi%
+  }{}%
+}
+
+
+%============================================================
+% Print person aux funcitons
+%============================================================
+\newcommand{\@nt@printonename}[4]{%
+% #1 = { full | name }
+% #2 = adviser | coadviser | committee
+% #3 = {a,c} | {c,r,a,m,g}
+% #4 = (co)adviser info
+% \typeout{NTPRINTONENAME 1=[#1] 2=[#2] 3=[#4]}\NTPRINTONENAME
+\MemGetDefault{personpre}[]{#3}%
+\begingroup
+  \noexpandarg
+  \raggedright%
+  \MemGetDefault{#2namepre}[]{#3}%
+  \StrCut{#4}{,}\@nt@name\@nt@remainder% split name from remainder
+  % \ignorespaces\parbox[b]{\linewidth}%
+  %                        {\raggedright\MemGetDefault{#2namefont}[]{#3}\@nt@name}%
+  \MemGetDefault{#2namefont}[]{#3}\@nt@name%
+  \IfStrEq{#1}{full}{%
+    \IfStrEq{\@nt@remainder}{}{}{%
+      \MemGetDefault{#2remainderpre}[]{#3}%
+      \bgroup%
+        \MemGetDefault{#2remainderfont}[]{#3}%
+        % \ignorespaces{\parbox[t]{\linewidth}%
+        %                            {\raggedright\@nt@remainder}}%
+        \@nt@remainder%
+      \egroup%
+      \MemGetDefault{#2remainderpost}[]{#3}%
+    }%
+  }{}%
+\endgroup
+\MemGetDefault{personpost}[]{#3}%
+}
+
+\newcommand*{\@nt@reducegender}[2]{%
+    % #1=gender list
+    % #2=result
+    \gdef#2{f}%
+    \optionlistdo{#1}{\if##1m\relax\gdef#2{m}\fi}%
+}
+
+% --------------------------------------------------------
+% Reduce Number Logic: Result = Max(Current, Min(Size, 2))
+% --------------------------------------------------------
+% #1: Current accumulated number (Optional, default 1)
+% #2: Option path (e.g., /my/list). The code looks for #2/@size
+% #3: The macro to store the result in (globally)
+\newcommand*{\@nt@reducenumber}[3][1]{%
+  % 1. Retrieve the size value from the option system
+  %    \edefoption expands the option value into \opt@temp@size
+  \options{#2/.size = \mysize}%
+  %
+  % 2. Calculate Min(\mysize, 2)
+  %    We interpret the retrieved text as a number.
+  \ifnum\mysize < 2
+    \let\opt@temp@val\mysize
+  \else
+    \def\opt@temp@val{2}%
+  \fi
+  %
+  % 3. Calculate Max(#1, \opt@temp@val) and \xdef to #3
+  \ifnum#1 > \opt@temp@val
+    \xdef#3{#1}%
+  \else
+    \xdef#3{\opt@temp@val}%
+  \fi
+}
+
+

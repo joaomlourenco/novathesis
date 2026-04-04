@@ -27,7 +27,39 @@
 
 % \NTRunHook{memoir}
 
-%============================================================
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% HOOK DECLARATIONS
+%% Pre-declare all known NOVAthesis hooks so that \NTAddToHook can be
+%% used before the hook is first run.  Parametric hooks (e.g. cover/#-#)
+%% are activated dynamically inside \NTRunHook at call time.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NTDeclareHook{afterloading/schoolconfig}
+\NTDeclareHook{printcovers/pre}     \NTDeclareHook{printcovers/post}
+\NTDeclareHook{cover/pre}           \NTDeclareHook{cover/post}
+\NTDeclareHook{print/spine/pre}     \NTDeclareHook{print/spine/post}
+\NTDeclareHook{frontmatter/pre}     \NTDeclareHook{frontmatter/post}
+\NTDeclareHook{mainmatter/pre}      \NTDeclareHook{mainmatter/post}
+\NTDeclareHook{backmatter/pre}      \NTDeclareHook{backmatter/post}
+\NTDeclareHook{abstracts/pre}       \NTDeclareHook{abstracts/post}
+\NTDeclareHook{abstract/pre}        \NTDeclareHook{abstract/post}
+\NTDeclareHook{abstract/mid}        \NTDeclareHook{abstract/title/before}
+\NTDeclareHook{listof/pre}          \NTDeclareHook{listof/post}
+\NTDeclareHook{list_of/pre}         \NTDeclareHook{list_of/post}
+\NTDeclareHook{printbib/pre}        \NTDeclareHook{printbib/post}
+\NTDeclareHook{statement/pre}       \NTDeclareHook{statement/post}
+\NTDeclareHook{acknowledgementsblock/pre} \NTDeclareHook{acknowledgementsblock/post}
+\NTDeclareHook{copyright/pre}       \NTDeclareHook{copyright/post}
+\NTDeclareHook{ntquote/pre}         \NTDeclareHook{ntquote/post}
+\NTDeclareHook{keywords/pre}        \NTDeclareHook{keywords/post}
+% Section-level hooks (used generically via \@nt@printifmaindoc@i)
+\NTDeclareHook{dedication/pre}      \NTDeclareHook{dedication/post}
+\NTDeclareHook{acknowledgements/pre}\NTDeclareHook{acknowledgements/post}
+\NTDeclareHook{quote/pre}           \NTDeclareHook{quote/post}
+% Spine hooks (used by uminho school)
+\NTDeclareHook{spine/pre}           \NTDeclareHook{spine/mid}
+\NTDeclareHook{spine/post}
+
+
 %  TEMPLATE CUSTOMIZATION / OPTIONS
 %      Please open and edit the appropriate
 %       configuration file “0-Config/1_novathesis.tex”
@@ -682,7 +714,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% COVER PAGE ENGINE (MOVED TO nt-covers.sty)
+%% COVER PAGE ENGINE (MOVED TO nt-covers-expl3.sty)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \newcommand*{\ntresetcovers}{%
 %   \@for\arg:={1-1,1-2,2-1,2-2,N-1,N-2}\do{%

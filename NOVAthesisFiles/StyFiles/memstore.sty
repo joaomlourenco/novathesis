@@ -281,6 +281,19 @@
       { \MemGet {#1} {#3} }
   }
 
+% Syntax: \MemGetSafe{<storage_name>}{<key>}
+% Like \MemGet but returns empty (no error) when the store or key doesn't exist.
+\NewExpandableDocumentCommand{\MemGetSafe}{ m m }
+  {
+    \prop_if_exist:cTF { g__mem_#1_prop }
+      {
+        \prop_if_in:ceTF { g__mem_#1_prop } {#2}
+          { \prop_item:ce { g__mem_#1_prop } {#2} }
+          { }
+      }
+      { }
+  }
+
 % Syntax: \MemUndef{<storage_name>}{<key_list>}
 \NewDocumentCommand{\MemUndef}{ m m }
   {
@@ -328,13 +341,17 @@
           { \MemSet  { #1 } { ##2 } { ##4 } } 
       }
       
-    % Define \Get<name>(<key>)
+    % Define \Get<name>(<key>)  — r() argument, expandable, normal form
     \exp_args:Nc \NewExpandableDocumentCommand { Get#1 } { s r() }
       {
         \IfBooleanTF { ##1 }
           { \MemGet* { #1 } { ##2 } }
           { \MemGet  { #1 } { ##2 } }
       }
+
+    % Define \Get<name>B{key} — m argument (braces), PDF-safe form
+    \exp_args:Nc \NewExpandableDocumentCommand { Get#1B } { m }
+      { \MemGet { #1 } { ##1 } }
   }
 
 

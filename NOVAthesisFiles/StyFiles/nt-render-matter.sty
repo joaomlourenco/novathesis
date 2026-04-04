@@ -1,0 +1,760 @@
+%!TEX root=template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — nt-render-matter.sty
+%% ----------------------------------------------------------------------------
+%%
+%% Version 7.10.7 (2026-03-25)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%% Departamento de Informática (www.di.fct.unl.pt)
+%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Universidade NOVA de Lisboa (www.unl.pt)
+%%
+%% Matter rendering: front/main/back matter components, SDG, abstracts,
+%% bibliography, sectioning, acknowledgements, keywords, and final hooks.
+%% Loaded by nt-render.sty.
+%% ----------------------------------------------------------------------------
+\typeout{NT FILE StyFiles/nt-render-matter.sty}%
+
+%% FRONT MATTER COMPONENTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\@nt@printifmaindoc@i}[1]{%
+  % \typeout{NT Attempt to load #1}%
+  \ifmaindoc{% THEN it is a main document
+    \NTRunHook{#1/pre}%
+    \iffileadded{#1}{%
+      \ChapterNoTitle{\GetBkmString(#1,\@LANG@COPYRIGHT)}
+      \PrintAddedFile{#1}%
+      \bookmarksetupnext{rellevel=0}%
+    }{}%
+    \NTRunHook{#1/post}%
+    \clearforchapter%
+  }{}% It is a plan or proposal type document
+}
+
+\newcommand{\ntprintdedication}
+  {\@nt@printifmaindoc@i{dedication}}
+
+\newcommand{\ntprintquote}
+  {\@nt@printifmaindoc@i{quote}}
+
+\newcommand{\ntprintacknowledgements}
+  {\@nt@printifmaindoc@i{acknowledgements}}
+
+
+\newcommand{\ntprintaidisclose}{%
+  \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{% use aidisclose
+    \bookmarksetupnext{rellevel=0}%
+    \AIDrenderDeclaration[ncols=3]{\GetDocAuthor(name)}%
+  }{\ifoptionequal{/novathesis/print/aidisclosure}{false}
+      {} % do not print AI Disclosure
+      {\IfFileExists{\DIRFRONTMATTER/\option{/novathesis/print/aidisclosure}}
+        {%
+          \bookmarksetupnext{rellevel=0}%
+          \input{\DIRFRONTMATTER/\option{/novathesis/print/aidisclosure}}%
+        }
+        {\ClassError{novathesis}
+                    {AI Disclusre file not found: '\option{/novathesis/print/aidisclosure}'.}
+                    {Please provide a valid AI Disclusre file name.}
+        }%
+      }%
+  }%
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Print Sustainable Development Goals (SDG)
+%% To be called from \ntprintabstracts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{sdgcnt}%
+\newdimen{\sdgdim}%
+\newcommand*{\ntprintsdgs}{
+  \@tempdima=\option{/novathesis/print/sdgs/hspace}%
+  \@tempdimb=\option{/novathesis/print/sdgs/vspace}%
+  \setcounter{sdgcnt}{0}%
+  \sdgdim=0pt%
+  \ifoptionnil{/novathesis/print/sdgs/list}{}{%
+      \vfill%
+      \raggedright\noindent%
+      \textbf{\GetSdgString(\@LSHORT):}\\[1ex]
+      \edef\@sdgtype{\option{/novathesis/print/sdgs/type}}
+      \IfFileExists{\DIRIMAGES/sdg-\@LSHORT/1-\@sdgtype.pdf}
+          {\def\@spnfolder{\DIRIMAGES/sdg-\@LSHORT}}
+          {\def\@spnfolder{\DIRIMAGES/sdg-en}}
+      \noindent%\linespread{1.5}\selectfont
+      \optionlistdo{/novathesis/print/sdgs/list}{%
+        \stepcounter{sdgcnt}%
+        \setbox0=\hbox{%
+          % \typeout{FILE=\DIRIMAGES/sdg-\@LSHORT/##1-\XPTO}
+            \includegraphics[width=\option{/novathesis/print/sdgs/size}]
+                            {\@spnfolder/##1-\@sdgtype}%
+        }%
+        \ifdim \dimexpr\sdgdim + \wd0\relax > \textwidth\relax%
+            \\[\@tempdimb]
+            \sdgdim=\wd0%
+        \fi
+        \usebox0\hspace{\@tempdima}%
+      }%
+  }%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Print Abstracts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ntprintabstracts}{%
+  \NTRunHook{abstracts/pre}%
+  \@for\nt@tmpi:=\expanded{\GetAbstractOrder(\@LANG@MAIN)}\do{\@ntprintabstract{\nt@tmpi}}%
+  \NTRunHook{abstracts/post}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Abstract, Acronyms and Glossary
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newif\ifskipabstract
+\newcommand{\@ntprintabstract}[1]{%
+  \iffileadded[#1]{abstract}{%
+    \skipabstractfalse
+    % \typeout{NT PRINT ABSTRACT=[#1]}\NTPRINTABSTRACT@I%
+    \ifPDFTeX
+      \IfStrEq{#1}{zhs}{\skipabstracttrue}{}%
+      \IfStrEq{#1}{zht}{\skipabstracttrue}{}%
+    \fi
+    \ifskipabstract
+      \ClassWarning{novathesis}{Skipping abstract '#1' under pdfLaTeX (CJK Unicode). Use 'make xe' or 'make lua' to include Chinese abstracts.}%
+    \else
+      % \typeout{NT PRINT ABSTRACT 2=[#1]}\NTPRINTABSTRACT@II
+      \begingroup
+        % \typeout{NT PRINT ABSTRACT #1}\bbbb
+        \StrCut{#1}{-}\@ABS@LANG\@dummy%
+        \ntselectlang{\@ABS@LANG}%
+        % \typeout{NTL=\languagename [#1]}\bbbb
+        % \hypertarget{bmabstract#1}{}%
+        % \bookmark[dest=bmabstract#1]{\GetBkmString(abstract,#1)}%
+        \NTRunHook{abstract/pre}%
+        \NTRunHook{abstract/#1/pre}%
+        \printabstracttitle{#1}%
+        \NTRunHook{abstract/mid}%
+        \NTRunHook{abstract/#1/mid}%
+        \PrintAddedFile[#1]{abstract}%
+        \ntprintsdgs%
+        \NTRunHook{abstract/#1/post}%
+        \NTRunHook{abstract/post}%
+      \endgroup%
+      \clearforchapter%
+    \fi
+  }{}%
+}
+
+\newcommand{\ntprintindex}{%
+  % \printglossary[type=index]%
+  \printindex%
+  \clearforchapter%
+}
+
+\newif\if@frontmatter
+\newcommand*{\ntthesisfrontmatter}{%
+  \NTRunHook{frontmatter/pre}%
+  \begingroup
+    \def\clearforchapter{}
+    \def\cleardoublepage{}
+    \def\clearepage{}
+    \frontmatter%
+  \endgroup
+  \@frontmattertrue
+  \begingroup
+  \pagestyle{novathesis@frontmatter}%
+  \copypagestyle{chapter}{novathesis@frontmatter}
+  % \ntselectlang{\@LANG@MAIN}%
+  \pagenumbering{roman}%
+  \iftoggle{/novathesis/print/frontpage}
+    {\setcounter{page}{2}}
+    {\setcounter{page}{1}}
+}
+
+\newif\if@mainmatter
+\newcommand*{\ntthesismainmatter}{%
+  \@frontmatterfalse
+  \endgroup
+  \NTRunHook{frontmatter/post}%
+  \bookmarksetup{startatroot}%
+  \NTRunHook{mainmatter/pre}%
+  \ifbool{@openright}{}{% openany=true
+    % Avoid cleardoublepage before "mainmatter"
+    \let\oldcleardoublepage\cleardoublepage%
+    \renewcommand{\cleardoublepage}{\clearforchapter}%
+  }%
+  \NTRunHook{mainmatter/pre}%
+  \mainmatter%
+  \NTRunHook{mainmatter/post}%
+  \@mainmattertrue
+  \ifbool{@openright}{}{% openany=true
+    \let\cleardoublepage\oldcleardoublepage%
+  }%
+  \pagestyle{novathesis@mainmatter}%
+}
+
+\newif\if@backmatter
+\newcommand*{\ntthesisbackmatter}{%
+  \@backmattertrue
+  \NTRunHook{backmatter/pre}%
+}
+\newcommand{\ntindex}[2][]{%
+  % \typeout{NTINDEX [#1] [#2]}
+  \bgroup%
+    \ifoptioncontains{/novathesis/debug}{index}{\showlabelsinline}{}%
+    \StrRight{#1}{1}[\@nt@index]%
+    \if\@nt@index!\relax
+      \def\@nt@index{#1#2}%
+    \else
+      \def\@nt@index{#1}%
+    \fi%
+    \index{\@nt@index}#2%
+  \egroup%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MAIN & BACK MATTER COMPONENTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\ntprintchapters}{%
+    \@nt@foralllist{file}{chapter}{\PrintAddedFile{chapter}}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Appendixes and Annexes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\addappheadtotoc}{%
+    \phantomsection\addtocontents{toc}%
+    {\protect\contentsline{chapter}{\appendixtocname}{}{}}%
+ }
+
+\newcommand*{\ntprintappendices}{%
+  \bookmarksetupnext{level=0}%
+  \iffileadded{appendix}{%
+    \renewcommand{\appendixtocname}{\appendixplname}%
+    \appendix\addappheadtotoc%
+    \@nt@foralllist{file}{appendix}{\PrintAddedFile{appendix}}%
+  }{}%
+}
+
+\newcommand*{\ntprintannexes}{%
+  \bookmarksetupnext{level=0}%
+  \iffileadded{annex}{%
+    % \renewcommand{\appendixtocname}{\translate{Annexes}}%
+    \renewcommand{\appendixtocname}{\annexplname}%
+    \annex\addappheadtotoc%
+    \@nt@foralllist{file}{annex}{\bookmarksetupnext{rellevel=0}\PrintAddedFile{annex}}%
+  }{}%
+}
+
+\ifdef{\annexcounter}{}{\def\annexcounter{\old@Roman}}
+\newcommand*{\annex}{%
+  \xdef\Hy@chapapp{annex}%
+  \setcounter{chapter}{0}%
+  \setcounter{section}{0}%
+  \gdef\chaptername{\annexname}%
+  % \gdef\@chapapp{\translate{annex}}%
+  \gdef\thechapter{\annexcounter\c@chapter}%
+}%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Print statements utils
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{tightcenter}
+  {\par\centering}
+  {\par}%
+
+\NewDocumentCommand { \TheCandiadteSignature } { m m }
+  % #1 = place
+  % #2 = ISO DATE
+  {
+    \begin{center}%
+      \StatementOneSignature%
+        {\expandafter\thecandidatestring\expandafter(\GetDocAuthor(gender),\@LANG@MAIN)}
+        {\GetDocAuthor(name)}%
+        {#2}
+    \end{center}%
+  }
+
+
+\newcounter{nadv}
+\NewDocumentCommand { \TheAdvisersSignatures } { O{20mm} m m m }
+  % #2 = a (only advisers) | a,c (both advisers and co-advisers)
+  % #3 = place
+  % #4 = ISO DATE
+  {
+    \begin{tightcenter}
+      \ifoptiondefined{/@nt/adviser/#2/pair}{%
+        \optionlistdo{/@nt/adviser/#2/pair}{%
+            % \ifnum\arabic{nadv}=2\relax
+            %   ~\\[1ex]
+            % \fi
+            \stepcounter{nadv}
+            \StrCut{##1}{/}\stgender\stname
+            \StatementOneSignature 
+              {\GetAdviserString(pref,#2,1,\stgender,\@LANG@MAIN)} 
+              {\stname}
+              {#4}
+        }%
+      }{}%
+    \end{tightcenter}
+  }
+
+
+\NewDocumentCommand { \StatementOneSignature } { O{20mm} m m m }
+  % #1 = space to rule
+  % #2 = text above
+  % #3 = name
+  % #4 = date
+  {
+    \begin{minipage}[t]{6cm}
+      \medskip%
+      \begin{center}  
+        #2,\par
+        \vspace*{#1}
+        \rule{\linewidth}{0.75pt}\par
+        \textit{#3}\\
+        \PrintDateISO{#4}
+      \end{center}
+    \end{minipage}
+  }
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Deal with optional lists in the frontmatter: listoftables, litoffigures, etc.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\ntprintalllistof}{%
+    \NTRunHook{listof/pre}%
+    \if@backmatter
+      \def\@matter{backmatter}
+    \else
+      \def\@matter{frontmatter}
+    \fi
+    \ifoptiondefined{/@nt/listof/\@matter}{
+      \bookmarksetup{level=0}
+      \options{/@nt/listof/\@matter/.size = \mysize}%
+      \ifnum\mysize>1\relax
+        \hypertarget{bmlistof\@matter}{}%
+        \edef\@nt@listof@bkmtitle{\GetBkmString(listof,\@LANG@MAIN)}%
+        \bookmark[dest=bmlistof\@matter]{\@nt@listof@bkmtitle}%
+        \bookmarksetupnext{rellevel=1}%
+      \fi
+      % \typeout{PRINTALLLISTOF=\@matter}\PRINTALLLISTOF
+      \optionlistdo{/@nt/listof/\@matter}{##1\bookmarksetupnext{rellevel=0}}%
+    }{}
+    \NTRunHook{listof/post}%
+}
+
+
+% \def\option@listmatch@getval#1=#2{#2}
+\newcommand*{\option@listmatch}[2]{
+    % \typeout{NT LISTMATCH [#1] [#2]}%
+    \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%was xStrCut
+    % \typeout{K=\option@listmatch@key ~V=\option@listmatch@value}%
+    \IfStrEq{#1}{\option@listmatch@key}{\listbreak}{}%
+}%
+\options{/handlers/getval/.new operation={%
+    % \typeout{NT GETVAL [#1] [#2]}%
+    \optionlistdo{#1}{\option@listmatch{#2}{##1}}%
+    }%
+}
+
+\newcommand*{\@loadglossaryfiles}{%
+  \@for\listitem:={glossary,acronym,symbols}\do{%
+    \iffileadded[\listitem]{glossaries}{\@nt@loadallfiles{\listitem}{glossaries}}{}%
+  }%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BIBLIOGRAPHY & INDEXING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand*{\ntprintbibsingle}[1][]{%
+  \bookmarksetupnext{rellevel=1}%
+  \NTRunHook{printbib/pre}%
+  \printbibliography[#1]%
+  \ntfixspacing%
+  \NTRunHook{printbib/post}%
+}
+
+\newcommand*{\ntprintbibseparate}[1][]{%
+  \bookmarksetupnext{rellevel=1}%
+  \NTRunHook{printbib/pre}%
+    \printbibliography[nottype=online] % Print the bibliography.
+    \printbibliography[title=\option{/novathesis/print/webography},type=online] % Print the bibliography.
+  \ntfixspacing%
+  \NTRunHook{printbib/post}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Copyright page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\printcompactbib}[1][]{%
+  \begingroup
+    \renewcommand*{\bibfont}{\tiny}% very small text
+    \renewbibmacro*{pageref}{}% suppress backrefs
+    % Remove vertical space before the list starts
+    \setlength{\topsep}{0pt}
+    \setlength{\partopsep}{0pt}
+    % Remove vertical space between items (from your previous request)
+    \setlength{\bibitemsep}{2pt}
+    % fine tune label width
+    \setlength{\labelnumberwidth}{10pt}%
+    % Print the bibliography with no title, passing any extra options
+    \defbibheading{ntlocalbib}{%
+      {\par\vspace*{-1.25ex}}
+      \textcolor{white}
+                {\fontsize{0.01}{1}\selectfont\noindent\hspace*{-\labelnumberwidth}
+                 \bibname~(12cc90221730b8ba41bb3b1f8b517acd)}%
+      \vspace*{-\baselineskip-\parskip}
+    }
+    \newrefcontext[sorting=ynt]%
+    \printbibliography[heading=ntlocalbib, #1]
+  \endgroup
+}
+
+\newcommand{\ntprintacknowledgementsblock}[1][\scriptsize]{%
+    \NTRunHook{acknowledgementsblock/pre}%
+      \refsection%
+      \renewcommand{\@ntcite}[1]{\cite{##1}}%
+      \bigskip\footnoterule#1\smallskip\noindent\GetAcknowledgmentsString(\@LANG@MAIN)%
+      \printcompactbib%
+      \endrefsection%
+    \NTRunHook{acknowledgementsblock/post}%
+}
+
+\newcommand*{\ntprintcopyright}{%
+  \ifmaindoc{%
+    \iftoggle{/novathesis/print/copyright}{%
+      \begingroup
+        % \bookmarksetupnext{rellevel=1}
+        \ntselectlang{\@LANG@COPYRIGHT}%
+        \ChapterNoTitle{\GetBkmString(copyright,\@LANG@COPYRIGHT)}%
+        \NTRunHook{copyright/pre}%
+        \ntprintcopyrightpage%
+        \NTRunHook{copyright/post}%
+        \ntprintacknowledgementsblock%
+      \endgroup
+    }{}%
+   }{}%
+}
+
+
+\newcommand*{\ntprintcopyrightpage}{%
+  \ifmaindoc{% only print if a main document
+    \iftoggle{/novathesis/print/copyright}{% if copuyright toggle is on
+      \InputIfFileExistsInDirsTF {copyright.tex} 
+        {
+          {\DIRSCHOOLS/\@UNIV/\@SCHL},
+          {\DIRSCHOOLS/\@UNIV},
+          {\DIRSTYFILES},
+        }
+        {}
+        {
+          \ClassError{novathesis}
+                     {No “copyright.tex” file was found!}{}
+        }
+    }{}%
+  }{}
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Quoting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\hugequote}{%
+  \bgroup%
+    \color{black!30}%
+    \fontsize{75}{80}\selectfont%
+    \fontfamily{ptm}\selectfont%
+    \textit{\glqq}%
+  \egroup%
+}
+
+\newcommand{\ntquoteauthor}[1]{{\\[1.25ex]\footnotesize\bfseries---~#1}}
+\newcommand{\ntquotewhere}[1]{{\footnotesize, #1}}
+\newcommand{\ntquoteprofession}[1]{{\footnotesize\\[-0.75ex](#1)}}
+\newcommand{\ntquotetext}[1]{{\itshape#1}}
+\providecommand{\ntchapskip}{%
+  \vphantom{%
+    \begin{minipage}{\textwidth}%
+      \chapter*{ASDF}%
+      % \vspace*{\midchapskip}%
+    \end{minipage}%
+  }%
+}
+
+\NewDocumentEnvironment{ntquoting}{sO{10cm}O{}O{}O{}O{\@LANG@MAIN}+b}{%
+% 1 [*] => print big quote
+% 2 [o] => max width of citation box
+% 3 [o] => author name
+% 4 [o] => where/source
+% 5 [o] => profession
+% 6 [o] => lang
+% 7 [b] => quotation
+  % \typeout{
+  %          1=[#1]
+  %          2=[#2]
+  %          3=[#3]
+  %          4=[#4]
+  %          5=[#5]
+  %          6=[#6]
+  %          7=[#7]
+  % }\asdfg
+  \thispagestyle{novathesis@frontmatter}%
+  \defifundef{\ntqbox}{\newsavebox}%
+  \savebox{\ntqbox}{#7}
+  \ifdim\wd\ntqbox<\ifblank{#2}{\textwidth}{#2}\relax
+  \@tempdima=\wd\ntqbox
+  \else
+  \@tempdima=#2
+  \fi
+  \ntchapskip
+  \begin{flushright}
+    \NTRunHook{ntquote/pre}%
+    \IfBooleanTF{#1}{\hugequote}{}
+    \begin{minipage}[t]{\@tempdima}
+      \raggedleft\normalsize
+      % \options{/@nt/lang/shorttolong=#6}%
+      \IfBooleanTF{#1}{%
+        \foreigntextquote{\GetLangLong(#6)}{\ntquotetext{#7}}%
+      }{\ntquotetext#7}
+      \ifblank{#3}{}{\ntquoteauthor{#3}}%
+      \ifblank{#4}{}{\ntquotewhere{#4}}%
+      \ifblank{#5}{}{\ntquoteprofession{#5}}%
+    \end{minipage}%
+    \NTRunHook{ntquote/post}%
+  \end{flushright}
+}{}
+
+\ExplSyntaxOn
+\cs_new:cpn {ntquote} {\ntquoting*}
+\cs_new_eq:cN {endntquote} \endntquoting
+\cs_new:cpn {ntdedication} {\ntquoting}
+\cs_new_eq:cN {endntdedication} \endntquoting
+\ExplSyntaxOff
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Acknowledgements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{ntacknowledgements}{%
+  % \bookmarksetupnext{level=1}%
+  \chapter*{\GetBkmString(acknowledgements,\@LANG@MAIN)}%
+}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\IfSubStr{,\@LANG@LOADED,}{,zhs,}{%
+  \iftutex
+    \ifcsname nt@cjkfontSC\endcsname\else
+      \IfFontExistsTF{PingFang SC}
+        {\newfontfamily\nt@cjkfontSC{PingFang SC}}
+        {\IfFontExistsTF{Noto Sans CJK SC}
+          {\newfontfamily\nt@cjkfontSC{Noto Sans CJK SC}}
+          {\IfFontExistsTF{Heiti SC}
+            {\newfontfamily\nt@cjkfontSC{Heiti SC}}
+            {\newfontfamily\nt@cjkfontSC{Latin Modern Roman}}%
+          }%
+        }%
+    \fi
+  \fi
+}{}
+\IfSubStr{,\@LANG@LOADED,}{,zht,}{%
+  \iftutex
+    \ifcsname nt@cjkfontTC\endcsname\else
+      \IfFontExistsTF{PingFang TC}
+        {\newfontfamily\nt@cjkfontTC{PingFang TC}}
+        {\IfFontExistsTF{Noto Sans CJK TC}
+          {\newfontfamily\nt@cjkfontTC{Noto Sans CJK TC}}
+          {\IfFontExistsTF{Heiti TC}
+            {\newfontfamily\nt@cjkfontTC{Heiti TC}}
+            {\newfontfamily\nt@cjkfontTC{Latin Modern Roman}}%
+          }%
+        }%
+    \fi
+  \fi
+}{}
+
+\newcommand*{\printabstracttitle}[1]{%
+  \bookmarksetupnext{rellevel=0}
+  \begingroup
+    \def\nt@abstitlefont{}%
+    \iftutex
+      \IfStrEq{#1}{zhs}{\def\nt@abstitlefont{\nt@cjkfontSC}}{}%
+      \IfStrEq{#1}{zht}{\def\nt@abstitlefont{\nt@cjkfontTC}}{}%
+    \fi
+    \chapter{\texorpdfstring{{\nt@abstitlefont\GetBkmString(abstract,#1)}}{\GetBkmString(abstract,#1)}}%
+  \endgroup
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Keywords
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\providecommand{\keywords}[1]{%
+    \NTRunHook{keywords/pre}%
+    % \NTRunHook{keywords/#1/pre}%
+    \def\and{\unskip\MemGetDefault{KeywordsSep}{\@LSHORT}}%
+    % \def\and{{\textperiodcentered} }%
+    \par\addvspace\baselineskip\noindent%
+    \begingroup%
+    \MemGetDefault{KeywordsStringPrefix}{\@LSHORT}%
+    \MemGetDefault{KeywordsStringFont}{\@LSHORT}%
+    \GetKeywordsString(\@LSHORT)%
+    \MemGetDefault{KeywordsStringSuffix}{\@LSHORT}%
+    \endgroup%
+    % \enspace
+    \ignorespaces#1%
+    % \NTRunHook{keywords/#1/post}%
+    \NTRunHook{keywords/post}%
+}%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LABELS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\providecommand\thepresentationtext{%
+  \GetDissertationStringFont()%
+  \IfMemVoidTF{DissertationString}{\@DOCTYPE,\@LANG@COVER}{%
+    \GetDissertationString(\@DOCCLASS,\@LANG@COVER)%
+  }{%
+    \GetDissertationString(\@DOCTYPE,\@LANG@COVER)%
+  }%
+}
+
+\providecommand\thecopyrightstr{%
+     {\thispagestyle{novathesis@frontmatter}}%
+     % {\thispagestyle{empty}}%
+    \noindent%
+    Copyright \textcopyright\ \GetDocAuthor(name), %
+    \GetSchool(\@LANG@COPYRIGHT), \GetUniversity(\@LANG@COPYRIGHT).\\%
+    \GetCopyrightTextString(\@LANG@COPYRIGHT)%
+    % \ntselectlang{\@LANG@MAIN}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Table of contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{tocdepth}{2}
+
+% ---------------------------------------------------------------------
+% ToC Spacing Hack: Tighter spacing for Front Matter, normal for Main
+% ---------------------------------------------------------------------
+
+% 1. When Front Matter starts, write a command to the .toc file to REDUCE spacing
+\appto\frontmatter{%
+  \let\cftbeforechapterskipORIG\cftbeforechapterskip
+  \addtocontents{toc}{\protect\setlength{\cftbeforechapterskip}{3pt}}%
+}
+
+% 2. When Main Matter starts, write a command to the .toc file to RESTORE spacing
+% (Memoir default is usually 1.0em plus 1pt)
+\appto\mainmatter{%
+  \addtocontents{toc}{\protect\setlength{\cftbeforechapterskip}{1.0em plus 1pt}}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Sectioning
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\maxsecnumdepth{subsubsection}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FINAL HOOKS & FIXES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fixes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Fix spacing for pages with roman numerals in ToC
+\renewcommand*{\@pnumwidth}{2.5em}% default is 1.55em
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Text style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% First try to load a local chapter-style definition
+\InputIfFileExists{\DIRCHAPSTYLES/\option{/novathesis/style/chapter}.sty}
+  {}{% otherwise, try a standard 'memoir' style
+      \ifcsdef{chs@\option{/novathesis/style/chapter}}
+          {\chapterstyle{\option{/novathesis/style/chapter}}}
+          {\ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/style/chapter}}{}}%
+}
+
+\IfFileExistsCase
+  {
+    {\DIRFONTSTYLES/\option{/novathesis/style/font}.sty}
+          {\input{\ntfoundpath}},
+    {\option{/novathesis/style/font}.sty}
+          {\RequirePackage{\ntfoundpathnoext}},        
+  }
+  {
+    \ifcsname IfFontExistsTF\endcsname
+      \IfFontExistsTF{\option{/novathesis/style/font}}
+        {\setmainfont{\option{/novathesis/style/font}}
+                     [ \option{/novathesis/style/font/attributes} ]}
+        {\ClassError{novathesis}{Could not find the font: \option{/novathesis/style/font}}{}}
+    \else
+      \ClassError{novathesis}
+                 {Cann not load the font: \option{/novathesis/style/font}. Are you using XeLaTeX or LuaLaTeX?}{}
+    \fi
+  }
+
+
+% force page color to white in xelatex and lualatex
+\ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
+
+\NTAddToHook{mainmatter/post}{%
+  \ifoptionequal{/novathesis/numbering/floats}{sequential}{%
+    \counterwithout{figure}{chapter}%
+    \counterwithout{table}{chapter}%
+    \counterwithout{footnote}{chapter}%
+    \counterwithout{equation}{chapter}%
+    \@ifundefined{c@algorithm}{}{\counterwithout{algorithm}{chapter}}%
+    \@ifundefined{c@listing}{}{\counterwithout{listing}{chapter}}%
+    \@ifundefined{c@lstlisting}{}{%
+      \@ifundefined{c@listing}{%
+        \counterwithout{lstlisting}{chapter}%
+      }{%
+        \let\c@lstlisting\c@listing%
+        \let\thelstlisting\thelisting%
+        \let\lstlistoflistings\listoflistings%
+      }%
+    }%
+  }{}%
+}
+
+
+\AtBeginDocument{%
+  \makeatletter%
+  % \typeout{XXX [\GetDocAuthor(name)]}
+  % \typeout{XXX [\GetDocTitle(\@LANG@MAIN,main,plain)]}
+  % \typeout{XXX [\GetDocTitle(\@LANG@MAIN,sub,plain)]}
+  \hypersetup{%
+    pdfauthor={\GetDocAuthor(name)},
+    pdftitle={\GetDocTitle(\@LANG@MAIN,main,plain)},
+    pdfsubject={\GetDocTitle(\@LANG@MAIN,sub,plain)},
+  }
+
+  %--------------------------------
+  % If subcaption is loaded, let it handle subfigures
+  % otherwise use memoir subfigures
+  \@ifpackageloaded{subcaption}{}{\newsubfloat{figure}}
+  \newcommand{\@ntcite}[1]{\ifdef{\parencite}{\parencite{#1}}{\cite{#1}}}
+  \makeatother  
+}

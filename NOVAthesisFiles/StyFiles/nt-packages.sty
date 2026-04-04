@@ -30,6 +30,7 @@
 % kernel or package hooks.  \ActivateGenericHook (LaTeX 2024+) makes
 % \UseHook a silent no-op when no code has been added to the hook.
 \newcommand*{\NTAddToHook}[2]{\AddToHook{novathesis/#1}{#2}}
+\newcommand*{\NTDeclareHook}[1]{\ActivateGenericHook{novathesis/#1}}
 \newcommand*{\NTRunHook}[1]{\ActivateGenericHook{novathesis/#1}\UseHook{novathesis/#1}}
 
 % ── Directory macros ──────────────────────────────────────────────────
@@ -122,6 +123,7 @@
   \fi
 }
 
+\IfFileExists{fvextra.sty}{\RequirePackage{fvextra}}{}% Load before csquotes if available (suppresses ordering warning for minted users)
 \RequirePackage{csquotes}  % Must be loaded before biblatex
 
 
