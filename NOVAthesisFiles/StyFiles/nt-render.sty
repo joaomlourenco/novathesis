@@ -579,7 +579,7 @@
   \IfNoValueTF { #3 }
    {
      \raggedright
-     \MemGetDefault{#1namefont}{#2}
+     \MemGetDefault{#1namefont}[]{#2}
      % Convert clist back to comma-separated string for legacy formatter
      \cs_set:Npx \@advlist { \clist_use:Nn \l_nt_master_clist { , } }
      \FormatNamesAsList{\@advlist}
@@ -714,7 +714,7 @@
       \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
       \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
       \bgroup%
-        \MemGetDefault{#1stringfont}{#2}%
+        \MemGetDefault{#1stringfont}[]{#2}%
         \@nt@getstrgroup{#1}{#2}%
       \egroup%
     \fi%
@@ -728,12 +728,12 @@
   \ifnum\mysize>0\relax%
     \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
     \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
-    \MemGetDefault{#1stringpre}{#2}%
+    \MemGetDefault{#1stringpre}[]{#2}%
     \bgroup%
-      \MemGetDefault{#1stringfont}{#2}%
+      \MemGetDefault{#1stringfont}[]{#2}%
       \@nt@getstrgroup{#1}{#2}%
     \egroup%
-    \MemGetDefault{#1stringpost}{#2}%
+    \MemGetDefault{#1stringpost}[]{#2}%
   \fi%
 }
 
@@ -770,29 +770,29 @@
 % #3 = {a,c} | {c,r,a,m,g}
 % #4 = (co)adviser info
 % \typeout{NTPRINTONENAME 1=[#1] 2=[#2] 3=[#4]}\NTPRINTONENAME
-\MemGetDefault{personpre}{#3}%
+\MemGetDefault{personpre}[]{#3}%
 \begingroup
   \noexpandarg
   \raggedright%
-  \MemGetDefault{#2namepre}{#3}%
+  \MemGetDefault{#2namepre}[]{#3}%
   \StrCut{#4}{,}\@nt@name\@nt@remainder% split name from remainder
   % \ignorespaces\parbox[b]{\linewidth}%
-  %                        {\raggedright\MemGetDefault{#2namefont}{#3}\@nt@name}%
-  \MemGetDefault{#2namefont}{#3}\@nt@name%
+  %                        {\raggedright\MemGetDefault{#2namefont}[]{#3}\@nt@name}%
+  \MemGetDefault{#2namefont}[]{#3}\@nt@name%
   \IfStrEq{#1}{full}{%
     \IfStrEq{\@nt@remainder}{}{}{%
-      \MemGetDefault{#2remainderpre}{#3}%
+      \MemGetDefault{#2remainderpre}[]{#3}%
       \bgroup%
-        \MemGetDefault{#2remainderfont}{#3}%
+        \MemGetDefault{#2remainderfont}[]{#3}%
         % \ignorespaces{\parbox[t]{\linewidth}%
         %                            {\raggedright\@nt@remainder}}%
         \@nt@remainder%
       \egroup%
-      \MemGetDefault{#2remainderpost}{#3}%
+      \MemGetDefault{#2remainderpost}[]{#3}%
     }%
   }{}%
 \endgroup
-\MemGetDefault{personpost}{#3}%
+\MemGetDefault{personpost}[]{#3}%
 }
 
 \newcommand*{\@nt@reducegender}[2]{%
