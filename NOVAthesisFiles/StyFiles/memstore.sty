@@ -63,19 +63,27 @@
   {
     \__mem_ensure_exists:n {#2}
     
-    % 1. Store value in temp variable and trim it
-    \tl_set:Nn \l__mem_current_val_tl {#4}
-    \tl_trim_spaces:N \l__mem_current_val_tl
+    % Pre-expand and trim the key using \tl_set:Ne (edef-like exhaustive expansion).
+    % \prop_gput:cee's e-variant cannot fully expand keys containing \tl_trim_spaces:n
+    % because that function uses \unexpanded internally to protect its result, which
+    % stops further expansion of macros inside the \expanded context used by e-variants.
+    % \tl_set:Ne runs independently of any surrounding \expanded, so it correctly
+    % expands all macros (e.g. \@DOCTYPE -> phd) before the key is stored.
+    \tl_set:Ne \l__mem_current_key_tl { #3 }
+    \tl_trim_spaces:N \l__mem_current_key_tl
     
     \IfBooleanTF {#1}
       { 
-        % Starred: Expand key (e) and value (e)
-        \prop_gput:cee { g__mem_#2_prop } {#3} { \l__mem_current_val_tl } 
+        % Starred: exhaustively expand value before storing
+        \tl_set:Ne \l__mem_current_val_tl { #4 }
+        \tl_trim_spaces:N \l__mem_current_val_tl
       }
       { 
-        % Unstarred: Expand key (e), Store value as-is (V)
-        \prop_gput:ceV { g__mem_#2_prop } {#3} \l__mem_current_val_tl 
+        % Unstarred: store value as-is (macros remain unexpanded)
+        \tl_set:Nn \l__mem_current_val_tl { #4 }
+        \tl_trim_spaces:N \l__mem_current_val_tl
       }
+    \prop_gput:ceV { g__mem_#2_prop } { \l__mem_current_key_tl } \l__mem_current_val_tl
   }
 
 % Syntax: \MemGet(*){<storage_name>}{<key>}
@@ -312,11 +320,12 @@
     \__mem_ensure_exists:n {#1}
     
     % Define \Set<name>(<key>){<value>}
+    % Note: key trimming and expansion are handled inside \MemSet.
     \exp_args:Nc \NewDocumentCommand { Set#1 } { s r() u{=} m }
       {
         \IfBooleanTF { ##1 }
-          { \MemSet* { #1 } { \tl_trim_spaces:n { ##2 } } { ##4 } } 
-          { \MemSet  { #1 } { \tl_trim_spaces:n { ##2 } } { ##4 } } 
+          { \MemSet* { #1 } { ##2 } { ##4 } } 
+          { \MemSet  { #1 } { ##2 } { ##4 } } 
       }
       
     % Define \Get<name>(<key>)
