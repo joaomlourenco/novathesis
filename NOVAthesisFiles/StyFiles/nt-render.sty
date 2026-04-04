@@ -651,7 +651,7 @@
   \@ntgetmaxlen{#3}{#2}%
   \begin{tabularx}{#2\linewidth}[t]{@{}>{\nt@tabularx@horz}L@{}}%
     \IfMemVoidTF{CommitteeTitleString}{\@LANG@COVER}{}{%
-      \str_if_eq:nnTF{#3}{committee}{%
+      \IfStrEq{#3}{committee}{%
         \MemGetDefault{#3titlestringpre}{}%
         \MemGetDefault{#3titlestringfont}{}%
         \GetCommitteeTitleString(\@LANG@COVER)%
@@ -682,7 +682,7 @@
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS
   \@ntgetmaxlen{#3}{#2}%
   \begin{tabular}[t]{@{}r@{~~}l@{}}%
-    \str_if_eq:nnT{#2}{committee}{%
+    \IfStrEq{#2}{committee}{%
       \IfMemVoidF{CommitteeTitleString}{\@LANG@COVER}{%
         \MemGetDefault{#2titlestringpre}{}%
         \MemGetDefault{#2titlestringfont}{}%
@@ -699,7 +699,7 @@
 % #1 = {adviser | committee}
 % #2 = role key (e.g. "a", "c")
 \newcommand{\@nt@getstrgroup}[2]{%
-  \str_if_eq:nnTF{#1}{adviser}%
+  \IfStrEq{#1}{adviser}%
     {\MemGetDefault{AdviserString}{#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER}}%
     {\MemGetDefault{CommitteeString}{#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER}}%
 }
