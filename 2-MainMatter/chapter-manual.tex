@@ -64,8 +64,8 @@ major distributions are:
 After installation, update all packages via the \emph{\TeXLive Manager} or
 the \emph{\MikTeX Console} before compiling the template for the first time.
 
-\paragraph{Recommended engine.}  LuaLaTeX is the recommended engine for most
-schools because it handles Unicode fonts natively.  XeLaTeX is a close
+\paragraph{Recommended engine.}  \hologo{LuaLaTeX} is the recommended engine for most
+schools because it handles Unicode fonts natively.  \hologo{XeLaTeX} is a close
 alternative.  \hologo{pdfLaTeX} works but cannot load OpenType/TrueType fonts.
 
 \paragraph{School-specific fonts.}  Some Schools or font-styles require fonts not available in \hologo{LaTeX}.  In normal conditions, they will be downloaded automatically.  However, if they are not, you may download the necessary fronts from \url{https://github.com/joaomlourenco/novathesis-extras/tree/main/Fonts}, unzip (if necessary), and copy the \verb!*.ttf! files to \verb!NOVAthesisFiles/FontStyles/Fonts/!.
@@ -100,7 +100,7 @@ PhD in English).
 Once imported:
 
 \begin{enumerate}
-  \item Set the \emph{Compiler} to \textbf{LuaLaTeX} (Menu → Compiler).
+  \item Set the \emph{Compiler} to \textbf{\hologo{LuaLaTeX}} (Menu → Compiler).
   \item Set the \emph{Main document} to \verb!template.tex!.
   \item Set the \emph{Bibliography tool} to \textbf{Biber}
     (Menu → Bibliography).
@@ -253,7 +253,7 @@ commented-out lines show available values as documentation:
 
 \begin{description}
   \item[\texttt{style/font}] Body font family.  Default: \texttt{newpx}
-    (Palatino-like).  Options marked with~(*) require LuaLaTeX or XeLaTeX.
+    (Palatino-like).  Options marked with~(*) require \hologo{LuaLaTeX} or \hologo{XeLaTeX}.
 \begin{latexcode}
 \ntsetup{style/font=newpx}        % Palatino-like (default)
 \ntsetup{style/font=libertine}    % Linux Libertine
@@ -264,7 +264,7 @@ commented-out lines show available values as documentation:
 % Any standard LaTeX font package name is also accepted.
 \end{latexcode}
 
-    For system fonts (LuaLaTeX/XeLaTeX only), provide the font name and
+    For system fonts (\hologo{LuaLaTeX}/\hologo{XeLaTeX} only), provide the font name and
     attributes explicitly:
 \begin{latexcode}
 \ntsetup{style/font=Times New Roman}
@@ -316,10 +316,10 @@ commented-out lines show available values as documentation:
 %%-----------------------------------------------------------------------
 
 These options control which supplementary pages are included in the
-generated PDF.  Many have defaults that vary with \texttt{docstatus}:
+generated PDF.  Many have defaults that vary with \texttt{school} and \texttt{docstatus}:
 
 \begin{description}
-  \item[\texttt{print/frontpage}] Print a second cover page (front page).
+  \item[\texttt{print/frontpage}] Print a front page (second cover).
     Default: \texttt{false}.
 \begin{latexcode}
 \ntsetup{print/frontpage=true}
@@ -416,7 +416,7 @@ generated PDF.  Many have defaults that vary with \texttt{docstatus}:
 \label{sub:sdgs}
 %%-----------------------------------------------------------------------
 
-NOVAthesis can print the UN SDG icons on the cover.  All three options
+NOVAthesis can print the United Nation's SDG icons at the bottom of the abstract page(s).  All three options
 below should be set together:
 \begin{latexcode}
 \ntsetup{print/sdgs/list={3,7,13}}    % SDG numbers to print
@@ -867,7 +867,7 @@ python3 .Build/build.py nova/fct --doctype phd --lang en --docstatus final
 
 On \Overleaf{} the build is triggered by pressing \emph{Recompile}.
 Ensure the settings described in Section~\ref{sub:overleaf} are applied
-(LuaLaTeX compiler, Biber bibliography, \verb!template.tex! as main file).
+(\hologo{LuaLaTeX} compiler, Biber bibliography, \verb!template.tex! as main file).
 \Overleaf{} compiles on their servers so \texttt{make} and \texttt{build.py}
 are not available — all configuration is done by editing the
 \verb!0-Config/! files.

@@ -171,17 +171,27 @@
 %% UTILITIES & HOOKS
 %%=======================================================================
 
+% Same implementation as nova-fct-defaults.ldf — see comments there.
+\newif\if@nt@hasbreak
+
 \newcommand{\printdwithvspace}[2][2pt]{%
-  \protected@edef\@tempcontent{#2}%
-  \expandafter\in@\expandafter\\\expandafter{\@tempcontent}%
-  \ifin@
+  % ---- Phase 1: probe — execute #2 in a discard box; \\ just sets a flag ----
+  \@nt@hasbreakfalse
+  \setbox\z@\hbox{%
+    \def\\{\global\@nt@hasbreaktrue}%
+    #2%
+  }%
+  % ---- Phase 2: typeset for real ---
+  \if@nt@hasbreak
+    % \\ found: redefine to append [#1] to each line break, then typeset
     \begingroup
-      \let\orig@backslash\\%
-      \def\\{\orig@backslash[#1]}%
+      \let\@nt@origcr\\%
+      \def\\{\@nt@origcr[#1]}%
       #2%
     \endgroup
   \else
-    \\[#1] #2%
+    % No \\ found: prepend \\[#1] before the content
+    \\[#1]#2%
   \fi
 }
 
