@@ -209,7 +209,7 @@
         \MemGetDefault{committeetitlestringpost}{}%
       }%
     }%
-    \@for\@nt@pers@role:=\expanded{#4}\do{\@nt@ntprintpersongroup[#1]{1}{#3}{\@nt@pers@role}}%
+    \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}%
   \end{tabularx}%
 }
 
@@ -235,8 +235,8 @@
         \GetCommitteeTitleString(\@LANG@COVER)%
         \MemGetDefault{#2titlestringpost}{}%
       }%
-    }%
-    \@for\@nt@pers@role:=\expanded{#3}\do{\@nt@ntprintpersongroup[#1]{2}{#2}{\@nt@pers@role}}%
+    }{}%
+    \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{2}{#2}}}{\expanded{#3}}%
   \end{tabular}%
 }
 

@@ -154,10 +154,20 @@
 
 \prg_new_conditional:Npnn \__mem_if_unset:nn #1 #2 { p, T, F, TF }
   {
-    % Checks if the value stored in MemStore is empty or doesn't exist
-    \tl_if_empty:eTF { \MemGet{#1}{#2} }
-      { \prg_return_true:  }
-      { \prg_return_false: }
+    % Returns true when the store or key is absent, or the stored value is empty.
+    % Direct prop-list checks avoid e-expansion of non-expandable MemGet/MemGetSafe.
+    \prop_if_exist:cTF { g__mem_#1_prop }
+      {
+        \prop_if_in:ceTF { g__mem_#1_prop } {#2}
+          {
+            % Key present: true iff the stored value is blank.
+            \tl_if_empty:eTF { \prop_item:ce { g__mem_#1_prop } {#2} }
+              { \prg_return_true:  }
+              { \prg_return_false: }
+          }
+          { \prg_return_true: }  % Key absent → void
+      }
+      { \prg_return_true: }      % Store doesn't exist → void
   }
 
 % Syntax: \IfMemDefinedTF(*){<storage_name>}{<key_list>}{<true_code>}{<false_code>}
