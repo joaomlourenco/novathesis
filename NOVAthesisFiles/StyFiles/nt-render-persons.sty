@@ -209,7 +209,7 @@
         \MemGetDefault{committeetitlestringpost}{}%
       }%
     }%
-    \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}%
+    \@for\@nt@pers@role:=\expanded{#4}\do{\@nt@ntprintpersongroup[#1]{1}{#3}{\@nt@pers@role}}%
   \end{tabularx}%
 }
 
@@ -236,7 +236,7 @@
         \MemGetDefault{#2titlestringpost}{}%
       }%
     }%
-    \expandnext{\forcsvlist{\@nt@ntprintpersongroup[#1]{2}{#2}}}{\expanded{#3}}%
+    \@for\@nt@pers@role:=\expanded{#3}\do{\@nt@ntprintpersongroup[#1]{2}{#2}{\@nt@pers@role}}%
   \end{tabular}%
 }
 
