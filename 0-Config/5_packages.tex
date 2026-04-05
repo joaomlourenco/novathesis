@@ -21,8 +21,26 @@
 \usepackage{wrapfig}      % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 \restylefloat{figure}     % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 \usepackage{metalogo}     % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
-\usepackage{hologo}        % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+\usepackage{hologo}       % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+\usepackage{xurl}         % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 \usepackage{lipsum}       % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+\usepackage{nicematrix}   % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+
+% Define a professional, muted palette
+\definecolor{headgray}{gray}{0.9}
+\definecolor{rowgray}{gray}{0.95}
+\newenvironment{ShadedTabular}[1]{%
+  \NiceTabular{#1}[
+    % vlines, % Optional: only if you really need vertical lines
+    code-before = {
+      \rowcolor{headgray}{1}      % Header background
+      \rowcolors{2}{rowgray}{white} % Zebra stripes starting from row 2
+    }
+  ]
+}{%
+  \endNiceTabular
+}
+
 
 \IfFileExists{byo-twemojiss.sty}{
   \usepackage{byo-twemojis}     % to typeset emojis
@@ -34,7 +52,6 @@
 
 \newcommand{\MikTeX}{Mik\TeX}
 \newcommand{\TeXLive}{\TeX Live}
-\newcommand{\pdfLaTeX}{pdf\LaTeX}
 \definecolor{Schlgray}{gray}{0.95}
 
 
@@ -51,6 +68,7 @@
 \usepackage[textsize=footnotesize]{todonotes}  % To register TODO notes in the text
 
 \usepackage{makecell}      % Multiline table cells and control vertical and horizontal alignment
+\renewcommand{\theadfont}{\bfseries}
 
 \usepackage{tcolorbox}    % pretty print color boxes
 
@@ -88,6 +106,28 @@
     % rulecolor=black!20,
    ]{latex}}
   {\end{minted}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 7. Customization for Bash/shell pretty print with minted
+\newminted{bash}{
+  bgcolor=latexbg,
+  fontsize=\small,
+  breaklines,
+  tabsize=2,
+  autogobble,
+}
+\newmintinline{bash}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 8. Customization for Python pretty print with minted
+\newminted{python}{
+  bgcolor=latexbg,
+  fontsize=\small,
+  breaklines,
+  tabsize=2,
+  autogobble,
+}
+\newmintinline{python}{}
 
 
 

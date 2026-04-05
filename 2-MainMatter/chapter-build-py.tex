@@ -1,0 +1,461 @@
+%!TEX root = ../template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — 2-MainMatter/chapter-build-py.tex
+%% ----------------------------------------------------------------------------
+%%
+%% Version 7.10.7 (2026-03-25)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%%
+%% Tutorial chapter: the .Build/build.py build assistant.
+%% Intended audience: developers and CI users who need to build NOVAthesis
+%% documents programmatically for specific schools, document types, and
+%% languages without manually editing configuration files.
+%%
+%% ----------------------------------------------------------------------------
+
+\typeout{NT FILE 2-MainMatter/chapter-build-py.tex}%
+
+\chapter{The \texttt{build.py} Build Assistant}
+\label{cha:build_py}
+
+The file \verb!.Build/build.py! is a Python~3 script that automates building
+\novathesis{} documents from the command line without touching any
+configuration file by hand.  It is the primary tool used by the
+CI pipeline and by maintainers generating sample PDFs for multiple
+schools at once.
+
+
+%%=======================================================================
+\section{Overview}
+\label{sec:buildpy_overview}
+%%=======================================================================
+
+The script performs four steps in sequence:
+
+\begin{enumerate}
+  \item \textbf{Resolve the school.}  Validate the \texttt{school\_id}
+        argument and auto-detect the highest available degree if
+        \texttt{--doctype} was not supplied.
+  \item \textbf{Prepare a workspace.}  Depending on the options, either
+        use the current directory in-place or create a temporary directory
+        populated with symlinks to the project tree.
+  \item \textbf{Patch configuration files.}  If \emph{patching mode} is
+        active (see Section~\ref{sec:buildpy_modes}), the copies of
+        \verb!0-Config/1_novathesis.tex! and \verb!0-Config/4_files.tex!
+        in the workspace are modified to reflect the requested school,
+        document type, language, and status.
+  \item \textbf{Build and deliver.}  Run \texttt{make} inside the workspace,
+        then copy the resulting \verb!template.pdf! to the output directory.
+\end{enumerate}
+
+\medskip\noindent
+\textbf{When to use \texttt{build.py} vs.\ \texttt{make}.}  For everyday
+writing, just run \texttt{make} (or your editor's build command).
+Use \texttt{build.py} when you need to build for a \emph{different} school
+or document type than the one currently set in \verb!0-Config/!, or when
+building from a script or CI job.
+
+
+%%=======================================================================
+\section{Prerequisites}
+\label{sec:buildpy_prereqs}
+%%=======================================================================
+
+\begin{itemize}
+  \item Python~3.10 or later.
+  \item A complete \TeX~Live (or MiK\TeX) installation with \texttt{latexmk}.
+  \item The script must be run from the \textbf{project root} — the directory
+        that contains \verb!template.tex! and \verb!0-Config/!.
+\end{itemize}
+
+\begin{bashcode}
+# From the project root:
+python3 .Build/build.py nova/fct
+\end{bashcode}
+
+
+%%=======================================================================
+\section{Quick Start}
+\label{sec:buildpy_quickstart}
+%%=======================================================================
+
+The only required argument is the \emph{school identifier}: a
+\verb!university/faculty! path that mirrors the directory structure under
+\verb!NOVAthesisFiles/Schools/!.
+
+\begin{bashcode}
+# Simplest call — build for NOVA FCT in user mode
+python3 .Build/build.py nova/fct
+
+# Build a PhD thesis in English, patching configs automatically
+python3 .Build/build.py nova/fct --doctype phd --lang en --docstatus final
+
+# Build cover pages only (fast preview)
+python3 .Build/build.py nova/fct --cover
+
+# Dry run — show what would happen without building
+python3 .Build/build.py nova/fct --doctype msc --dry-run
+\end{bashcode}
+
+The separator between university and faculty may be \verb!/!, \verb!-!, or
+\verb!.!; all are normalised to \verb!/! internally.  So \verb!nova-fct!
+and \verb!nova/fct! are identical.
+
+
+%%=======================================================================
+\section{Build Modes}
+\label{sec:buildpy_modes}
+%%=======================================================================
+
+The script operates in one of three modes, selected automatically from the
+options you pass.
+
+%%-----------------------------------------------------------------------
+\subsection{User Mode}
+\label{sec:buildpy_user_mode}
+%%-----------------------------------------------------------------------
+
+\emph{User mode} is active when \verb!--docstatus! is \texttt{keep} (the
+default) and neither \verb!--cover! nor \verb!--force-school! is given.
+In this mode:
+
+\begin{itemize}
+  \item The configuration files in \verb!0-Config/! are \emph{not modified}.
+  \item The build runs in the \textbf{current directory} (no temporary
+        workspace is created).
+  \item The result is exactly what \texttt{make} would produce.
+\end{itemize}
+
+\begin{bashcode}
+python3 .Build/build.py nova/fct         # user mode (default)
+python3 .Build/build.py nova/fct --progress 2  # same, with real-time output
+\end{bashcode}
+
+%%-----------------------------------------------------------------------
+\subsection{Patching Mode}
+\label{sec:buildpy_patching_mode}
+%%-----------------------------------------------------------------------
+
+\emph{Patching mode} is activated whenever any of the following options are
+present: \verb!--docstatus! (with a value other than \texttt{keep}),
+\verb!--cover!, or \verb!--force-school!.
+
+In patching mode the script:
+
+\begin{enumerate}
+  \item Automatically creates a \textbf{temporary workspace} (unless you
+        specify a directory with \verb!--build-dir!).
+  \item Populates it with symlinks pointing back to the project tree, then
+        copies (not symlinks) the \verb!0-Config/! files so they can be
+        safely modified.
+  \item Patches the copies to set the requested school, doctype, language,
+        and status.
+  \item Builds inside the workspace; the original \verb!0-Config/! files are
+        never touched.
+\end{enumerate}
+
+\begin{bashcode}
+# Patch school, doctype, language and status — builds in a temp directory
+python3 .Build/build.py nova/fct \
+    --doctype phd \
+    --lang en \
+    --docstatus final \
+    --rename-pdf \
+    --output-dir build/
+\end{bashcode}
+
+%%-----------------------------------------------------------------------
+\subsection{Cover-Only Mode}
+\label{sec:buildpy_cover_mode}
+%%-----------------------------------------------------------------------
+
+The \verb!--cover! flag builds \emph{only the cover pages}, skipping all
+chapters and bibliography.  This is much faster than a full build and is
+useful for previewing cover layouts.
+
+\begin{itemize}
+  \item Implies \verb!--docstatus final! automatically.
+  \item Comments out all \verb!\ntaddfile! entries in
+        \verb!0-Config/4_files.tex! in the workspace.
+  \item Disables the copyright page (\verb!\ntsetup{print/copyright=false}!).
+  \item Expected line count is reduced to \(\approx 2400\) for a more
+        accurate progress bar.
+\end{itemize}
+
+\begin{bashcode}
+python3 .Build/build.py nova/fct --cover
+python3 .Build/build.py nova/fct --cover --lang pt --progress 2
+\end{bashcode}
+
+
+%%=======================================================================
+\section{Command-Line Reference}
+\label{sec:buildpy_reference}
+%%=======================================================================
+
+%%-----------------------------------------------------------------------
+\subsection{Positional Argument}
+\label{sec:buildpy_positional}
+%%-----------------------------------------------------------------------
+
+\begin{description}
+  \item[\texttt{school\_id}]
+        The school identifier in \texttt{university/faculty} format.  For
+        sub-department variants use a three-part path such as
+        \texttt{nova/fct/cbbi}.  Hyphens and dots are accepted as separators
+        and are normalised to slashes.
+
+        \textbf{Examples:}
+        \verb!nova/fct!, \verb!nova/fcsh!, \verb!ulisboa/ist!,
+        \verb!uminho/eeng!, \verb!nova-fct! (same as \verb!nova/fct!).
+\end{description}
+
+%%-----------------------------------------------------------------------
+\subsection{Document Options}
+\label{sec:buildpy_doc_opts}
+%%-----------------------------------------------------------------------
+
+\begin{description}
+  \item[\texttt{-t}, \texttt{--doctype} \{phd | msc | bsc\}]
+        Document type.  If omitted, the script consults
+        \verb!.Build/schools.conf! and selects the highest degree available
+        for the given school (usually \texttt{phd}).
+
+  \item[\texttt{-s}, \texttt{--docstatus} \{working | provisional | final | keep\}]
+        Document status written into \verb!\ntsetup{docstatus=...}!.
+        \texttt{keep} (the default) leaves whatever value is already in
+        \verb!0-Config/1_novathesis.tex! unchanged.  Any other value
+        activates patching mode.
+
+  \item[\texttt{-l}, \texttt{--lang} \textit{code}]
+        Two- or three-letter \textsc{bcp-47} language code (default:
+        \texttt{en}).  Sets \verb!\ntsetup{lang=...}!.  Examples:
+        \texttt{en}, \texttt{pt}, \texttt{de}, \texttt{fr}, \texttt{uk},
+        \texttt{gr}, \texttt{cat}.
+
+  \item[\texttt{-{}-sdgs} \textit{n,n,\ldots}]
+        Comma-separated list of \textsc{sdg} numbers to display on the cover
+        (default: all 17).  Sets \verb!\ntsetup{print/sdgs/list=...}!.
+
+  \item[\texttt{-c}, \texttt{--cover}]
+        Build cover pages only.  Activates cover-only mode (see
+        Section~\ref{sec:buildpy_cover_mode}).
+
+  \item[\texttt{-f}, \texttt{--force-school}]
+        Force the school value to be applied even in user mode.  Useful when
+        the school in \verb!0-Config/1_novathesis.tex! differs from the one
+        passed on the command line.
+\end{description}
+
+%%-----------------------------------------------------------------------
+\subsection{Build Directory Options}
+\label{sec:buildpy_bdir_opts}
+%%-----------------------------------------------------------------------
+
+\begin{description}
+  \item[\texttt{-bdir} / \texttt{--build-dir} \textit{[path | - ]}]
+        Controls where the build workspace lives:
+
+        \begin{center}
+        \renewcommand{\arraystretch}{1.25}
+        \begin{tabular}{lp{9cm}}
+          \hline
+          \textbf{Value} & \textbf{Effect} \\
+          \hline
+          Omitted           & Use current directory (user mode default) \\
+          Present, no value & Create a new \verb!tempfile! directory \\
+          \texttt{-}        & Reuse the directory cached in
+                              \verb!.Build/.keep-dir.txt! from a previous
+                              run; create a new temp dir if none is cached \\
+          \textit{path}     & Use (or create) the specified directory \\
+          \hline
+        \end{tabular}
+        \end{center}
+
+  \item[\texttt{-k}, \texttt{--keep-bdir}]
+        Do not delete the temporary workspace after a successful build.
+        Implied when using \texttt{-bdir -} (cached directory mode).
+
+  \item[\texttt{-o}, \texttt{--output-dir} \textit{path}]
+        Directory where the finished PDF is copied (default: current
+        directory).  Created automatically if it does not exist.
+
+  \item[\texttt{-r}, \texttt{--rename-pdf}]
+        Rename the output PDF from the generic \verb!template.pdf! to
+        \verb!<university>-<faculty>-<doctype>-<lang>.pdf!.  For example:
+        \verb!nova-fct-phd-en.pdf!.
+\end{description}
+
+%%-----------------------------------------------------------------------
+\subsection{Build Engine Options}
+\label{sec:buildpy_engine_opts}
+%%-----------------------------------------------------------------------
+
+\begin{description}
+  \item[\texttt{-p}, \texttt{--processor} \textit{name}]
+        The \texttt{make} target used to compile \hologo{LaTeX}
+        (default: \texttt{lua}).  Pass \texttt{pdf} for \hologo{pdfLaTeX} or
+        \texttt{xe} for \hologo{XeLaTeX}.
+
+  \item[\texttt{-{}-progress} \{0 | 1 | 2\}]
+        Output verbosity during compilation:
+        \begin{itemize}
+          \item \texttt{0} — silent (no output)
+          \item \texttt{1} — animated progress bar (default)
+          \item \texttt{2} — real-time \texttt{latexmk} output
+        \end{itemize}
+
+  \item[\texttt{-{}-lines} \textit{n}]
+        Expected number of output lines for the progress-bar calculation.
+        If omitted, the value from a previous run is read from
+        \verb!.Build/.keep-lines.txt!; falls back to 4400 for a full build
+        and 2400 for cover-only mode.
+\end{description}
+
+%%-----------------------------------------------------------------------
+\subsection{Utility Options}
+\label{sec:buildpy_util_opts}
+%%-----------------------------------------------------------------------
+
+\begin{description}
+  \item[\texttt{-{}-dry-run}]
+        Print what the script \emph{would} do — school, doctype, language,
+        build directory, files to modify — without running the build.
+
+  \item[\texttt{-v}, \texttt{--verbose}]
+        Enable extra debug output from the script itself.
+\end{description}
+
+
+%%=======================================================================
+\section{Doctype Auto-Detection}
+\label{sec:buildpy_autodetect}
+%%=======================================================================
+
+When \verb!--doctype! is omitted, \texttt{build.py} reads
+\verb!.Build/schools.conf! to determine the highest degree available for the
+requested school.  Each line in that file lists a school identifier followed
+by the degrees it supports, e.g.:
+
+\begin{verbatim}
+nova/fct    [phd, msc]  [en, pt]
+uminho/ec   [phd, msc]  [en, pt]
+ipl/isel    [msc]       [en, pt]
+\end{verbatim}
+
+The script picks the \emph{first} entry in the degree list (leftmost = highest).
+If the school is not listed in \verb!schools.conf!, the fallback is
+\texttt{phd}.  You can always override auto-detection with \verb!--doctype!.
+
+
+%%=======================================================================
+\section{Examples}
+\label{sec:buildpy_examples}
+%%=======================================================================
+
+%%-----------------------------------------------------------------------
+\subsection{CI Pipeline Build}
+\label{sec:buildpy_ci}
+%%-----------------------------------------------------------------------
+
+The GitHub Actions workflow uses:
+
+\begin{bashcode}
+python3 .Build/build.py nova/fct \
+    --build-dir=AUXDIR \
+    --progress=2
+\end{bashcode}
+
+\verb!--progress 2! streams all \texttt{latexmk} output directly to the
+CI log.  \verb!--build-dir AUXDIR! places all auxiliary files in a named
+directory so they can be archived as a workflow artifact.
+
+%%-----------------------------------------------------------------------
+\subsection{Generating Multiple School PDFs}
+\label{sec:buildpy_multi}
+%%-----------------------------------------------------------------------
+
+A shell loop can drive \texttt{build.py} to produce one PDF per school:
+
+\begin{bashcode}
+for school in nova/fct nova/fcsh ulisboa/ist uminho/eeng; do
+    python3 .Build/build.py "$school"     \
+        --doctype phd                     \
+        --lang en                         \
+        --docstatus final                 \
+        --rename-pdf                      \
+        --output-dir pdfs/
+done
+\end{bashcode}
+
+%%-----------------------------------------------------------------------
+\subsection{Iterative Cover Development}
+\label{sec:buildpy_iterative}
+%%-----------------------------------------------------------------------
+
+While working on a new school cover, iterate quickly with:
+
+\begin{bashcode}
+# First pass — creates a temp directory and caches its path
+python3 .Build/build.py nova/fct --cover --build-dir -
+
+# Subsequent passes — reuse the same temp directory
+python3 .Build/build.py nova/fct --cover --build-dir -
+\end{bashcode}
+
+Using \verb!--build-dir -! on the first call creates a temporary directory
+and saves its path to \verb!.Build/.keep-dir.txt!.  All later calls with
+\verb!--build-dir -! reuse that directory, skipping the symlink-creation
+step and making repeated builds noticeably faster.
+
+%%-----------------------------------------------------------------------
+\subsection{Dry Run Before Committing}
+\label{sec:buildpy_dryrun}
+%%-----------------------------------------------------------------------
+
+Before a large batch run, verify the parameters with \verb!--dry-run!:
+
+\begin{bashcode}
+python3 .Build/build.py nova/fct \
+    --doctype msc \
+    --lang pt \
+    --docstatus provisional \
+    --dry-run
+\end{bashcode}
+
+The script prints the resolved school, document type, language, build
+directory, and the configuration files it would modify, then exits without
+building.
+
+
+%%=======================================================================
+\section{Quick Reference}
+\label{sec:buildpy_quickref}
+%%=======================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lp{8.5cm}}
+  \hline
+  \textbf{Option} & \textbf{Effect} \\
+  \hline
+  \verb!school_id!               & Required. \texttt{university/faculty[/variant]} \\
+  \verb!-t! / \verb!--doctype!   & \texttt{phd} / \texttt{msc} / \texttt{bsc} \\
+  \verb!-s! / \verb!--docstatus! & \texttt{working} / \texttt{provisional} / \texttt{final} / \texttt{keep} \\
+  \verb!-l! / \verb!--lang!      & Language code, e.g.\ \texttt{en}, \texttt{pt} \\
+  \verb!--sdgs!                  & SDG numbers, e.g.\ \texttt{1,7,13} \\
+  \verb!-c! / \verb!--cover!     & Cover-only build (fast preview) \\
+  \verb!-f! / \verb!--force-school! & Apply school even in user mode \\
+  \verb!-bdir! / \verb!--build-dir! & Workspace: omit=current, (empty)=temp, \texttt{-}=cached, path \\
+  \verb!-k! / \verb!--keep-bdir! & Keep workspace after build \\
+  \verb!-o! / \verb!--output-dir! & Destination for final PDF \\
+  \verb!-r! / \verb!--rename-pdf! & Rename PDF to \texttt{univ-school-type-lang.pdf} \\
+  \verb!-p! / \verb!--processor! & LaTeX engine: \texttt{lua} (default), \texttt{pdf}, \texttt{xe} \\
+  \verb!--progress!              & \texttt{0}=silent, \texttt{1}=bar, \texttt{2}=realtime \\
+  \verb!--lines!                 & Expected line count for progress bar \\
+  \verb!--dry-run!               & Preview actions without building \\
+  \verb!-v! / \verb!--verbose!   & Extra debug output \\
+  \hline
+\end{tabular}
+\end{center}
