@@ -418,8 +418,8 @@ build-%:
 	\
 	FINAL_SCHL=$$(echo $$SCHL | sed 's/\./\//; s/\./\//; s/\./-/g'); \
 	\
-	echo "$(BUILD) \"$$FINAL_SCHL\" --doctype \"$$TYP\" --lang \"$$LNG\" --rename-pdf --mode 1 --docstatus final -o \"$(PWD)\" $(BFLAGS)"; \
-	$(BUILD) "$$FINAL_SCHL" --doctype "$$TYP" --lang "$$LNG" --rename-pdf --mode 1 --docstatus final -o "$(PWD)" $(BFLAGS)
+	echo "$(BUILD) \"$$FINAL_SCHL\" --doctype \"$$TYP\" --lang \"$$LNG\" --rename-pdf --docstatus final -o \"$(PWD)\" $(BFLAGS)"; \
+	$(BUILD) "$$FINAL_SCHL" --doctype "$$TYP" --lang "$$LNG" --rename-pdf --docstatus final -o "$(PWD)" $(BFLAGS)
 
 
 
