@@ -12,9 +12,55 @@
 %%
 %% Matter rendering: front/main/back matter components, SDG, abstracts,
 %% bibliography, sectioning, acknowledgements, keywords, and final hooks.
-%% Loaded by nt-render.sty.
+%% Loaded by novathesis.cls.
 %% ----------------------------------------------------------------------------
 \typeout{NT FILE StyFiles/nt-render-matter.sty}%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PAGE GEOMETRY & LAYOUT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\AtEndPreamble{\ntsetlayout}%
+
+\newcommand*{\ntsetlayout}{%
+    % \synctex=1% Use synctex
+    \brokenpenalty=10000%
+    \newgeometry{
+        lmargin=\expanded{\GetMargin(\option{/novathesis/media},left)},
+        rmargin=\expanded{\GetMargin(\option{/novathesis/media},right)},
+        tmargin=\expanded{\GetMargin(\option{/novathesis/media},top)},
+        bmargin=\expanded{\GetMargin(\option{/novathesis/media},bottom)},
+    }%
+    \ifoptionequal{/novathesis/media}{paper}{\openright}{\openany}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SPACING FIX (bibliography anchor)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\@ntfixspacing}[2]{%
+    \bgroup%
+    \NewMemStore{NtFixSpacingString}%
+    \noindent
+    \SetNtFixSpacingString()={The \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template (v\novathesisversion)~\@ntcite{novathesis-manual} @ \todayiso. (12cc90221730b8ba41bb3b1f8b517acd)}%md5
+    \renewcommand*{\bibfont}{\hypersetup{allcolors=#1}\color{#1}%
+     \sffamily\fontsize{#2}{#2}\selectfont}%
+    \defbibheading{bibliography}[\bibname]{%
+    \ \textbf{##1}\\[-20pt]}%
+    \refsection%
+    \begin{minipage}{\linewidth}%
+    \bibfont%
+    \GetNtFixSpacingString()\par%
+    \printbibliography%
+    \end{minipage}%
+    \endrefsection%
+    \egroup%
+}
+
+\newcommand{\ntfixspacing}{%
+  \@ntfixspacing{white}{0.01}%
+  % \@ntfixspacing{blue}{16}%
+}
 
 %% FRONT MATTER COMPONENTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -40,6 +86,20 @@
 
 \newcommand{\ntprintacknowledgements}
   {\@nt@printifmaindoc@i{acknowledgements}}
+
+\newcommand*{\ntprintstatement}{%
+  \ifdocworking{}{% Only print statement if provisional or final
+    \ifmaindoc{% Skip thesis plan and similar documents
+      \iftoggle{/novathesis/print/statement}{% if statement toggle is on
+        \NTRunHook{statement/pre}%
+        \iffileadded[\@LSHORT]{statement}
+          {\PrintAddedFile[\@LSHORT]{statement}}
+          {\PrintAddedFile{statement}}%
+        \NTRunHook{statement/post}%
+      }{}%
+    }{}%
+  }%
+}
 
 
 \newcommand{\ntprintaidisclose}{%

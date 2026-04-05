@@ -87,4 +87,5 @@
 \input{\DIRSTYFILES/nt-packages.sty}
 \input{\DIRSTYFILES/nt-core.sty}
 \input{\DIRSTYFILES/nt-setup.sty}
-\input{\DIRSTYFILES/nt-render.sty}
+\input{\DIRSTYFILES/nt-render-persons.sty}
+\input{\DIRSTYFILES/nt-render-matter.sty}

@@ -686,6 +686,15 @@
   \if@endfor\else#4\fi
 }
 
+% --------------------------------------------------------
+% ISO 8601 date string: YYYY-MM-DD of \today
+% --------------------------------------------------------
+\newcommand{\todayiso}{%
+  \the\year-%
+  \ifnum\month<10 0\fi\the\month-%
+  \ifnum\day<10 0\fi\the\day%
+}
+
 
 
 \ExplSyntaxOn
