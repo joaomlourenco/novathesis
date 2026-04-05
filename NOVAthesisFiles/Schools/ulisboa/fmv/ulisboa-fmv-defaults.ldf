@@ -73,14 +73,14 @@
 \SetSpecializationString*(en)={, with specialization in}
 
 \@for\myi:={a,1,m,en},{a,1,f,en},{a,2,m,en},{a,2,f,en},{c,1,m,en},{c,1,f,en},{c,2,m,en},{c,2,f,en},{ca,1,m,en},{ca,1,f,en},{ca,2,m,en},{ca,2,f,en},{t,1,m,en},{t,1,f,en},{t,2,m,en},{t,2,f,en},{a,1,m,pt},{a,1,f,pt},{a,2,m,pt},{a,2,f,pt},{c,1,m,pt},{c,1,f,pt},{c,2,m,pt},{c,2,f,pt},{ca,1,m,pt},{ca,1,f,pt},{ca,2,m,pt},{ca,2,f,pt},{t,1,m,pt},{t,1,f,pt},{t,2,m,pt},{t,2,f,pt}\do{%
-  \SetAdviserString*(\myi)={\ToUppercase{\GetAdviserString(\myi)}}
+  \SetAdviserString*(\myi)={\MakeUppercase{\GetAdviserString(\myi)}}
 }
 
 \@for\myi:={c,r,a,ca,m,g}\do{%
   \@for\myj:={1,2}\do{%
     \@for\myk:={m,f}\do{%
       \@for\myl:={en,pt}\do{%
-        \SetCommitteeString*(\myi,\myj,\myk,\myl)={\ToUppercase{\GetCommitteeString(\myi,\myj,\myk,\myl)}}%
+        \SetCommitteeString*(\myi,\myj,\myk,\myl)={\MakeUppercase{\GetCommitteeString(\myi,\myj,\myk,\myl)}}%
       }%
     }%
   }%

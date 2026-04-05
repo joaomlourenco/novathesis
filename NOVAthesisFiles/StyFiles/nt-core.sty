@@ -68,16 +68,10 @@
     {
       \tl_set:Ne \l__nt_titlecase_head_tl { \tl_head:N #1 }
       \tl_set:Ne \l__nt_titlecase_tail_tl { \tl_tail:N #1 }
-      \tl_set:Ne #1 { \exp_not:N \ToUppercase { \l__nt_titlecase_head_tl } \l__nt_titlecase_tail_tl }
+      \tl_set:Ne #1 { \exp_not:N \MakeUppercase { \l__nt_titlecase_head_tl } \l__nt_titlecase_tail_tl }
     }
  }
 
-\DeclareExpandableDocumentCommand{\ToUppercase}{ m }
-  {
-    \text_uppercase:n { #1 }
-  }
-
-  
 \DeclareDocumentCommand {\MakeTitlecase} { m }
   {
     \tl_set:Ne \l_tmpa_tl { #1 }

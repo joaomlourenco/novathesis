@@ -92,7 +92,7 @@
 \ntaddtocover[vspace=2.2cm]{1-1,2-1}{%
   \noindent%
   \fontsize{15}{15}\selectfont%
-  \textbf{{\ToUppercase{\GetSchool(\@LANG@COVER)}}}%
+  \textbf{{\MakeUppercase{\GetSchool(\@LANG@COVER)}}}%
 }
 
 % Degree name
@@ -105,7 +105,7 @@
 \ntaddtocover[vspace=6.5cm, height=4cm, valign=t]{1-1}{%
     \centering%
     \fontsize{15}{15}\selectfont%
-    {\ToUppercase{\GetDocTitle(\@LANG@COVER,main)}}\\[1ex]%
+    {\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}\\[1ex]%
     \fontsize{12}{12}\selectfont%
     Dissertação%
 }

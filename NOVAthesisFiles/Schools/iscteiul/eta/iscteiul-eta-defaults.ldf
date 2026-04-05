@@ -120,10 +120,10 @@
 \ntaddtocover[vspace=0.5cm]{1-1,2-1}{%
   \fontsize{16}{16}\selectfont%
   \vspace{1cm}%
-  %\textbf{\ToUppercase{\GetUniversity(\@LANG@COVER)}}\\%
+  %\textbf{\MakeUppercase{\GetUniversity(\@LANG@COVER)}}\\%
   \textbf{\GetSchool(\@LANG@COVER)}\\%
   \vspace{2mm}%
-  %\textbf{\ToUppercase{\GetSchool(\@LANG@COVER)}}%
+  %\textbf{\MakeUppercase{\GetSchool(\@LANG@COVER)}}%
   \textbf{\GetMajorField(\@LANG@COVER)}%
 }
 

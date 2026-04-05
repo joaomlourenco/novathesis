@@ -232,8 +232,8 @@
   \node[anchor=north west, text width=10cm] 
     at ($(current page.north west) + (96.45mm,-11.4mm)$)
     { \fontsize{14}{14}\sffamily%
-      \ToUppercase{\GetDepartmentOfString(\@LANG@COVER)}
-      \printdwithvspace{\ToUppercase{\GetDepartment(\@LANG@COVER)}}
+      \MakeUppercase{\GetDepartmentOfString(\@LANG@COVER)}
+      \printdwithvspace{\MakeUppercase{\GetDepartment(\@LANG@COVER)}}
     };
 }
 
@@ -254,15 +254,15 @@
 \ntaddtocover[halign=l,height=3.0cm,valign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{20}{21}\selectfont%
-    \textbf{\ToUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
+    \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
     \IfMemVoidF{DocTitle}{\@LANG@COVER,sub,cover}{%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
-      \textbf{\ToUppercase{\GetDocTitle(\@LANG@COVER,sub)}}%
+      \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,sub)}}%
     }{}%
   }{%
     \fontsize{17}{17}\selectfont%
-    \textbf{\ToUppercase{\GetDocAuthor(name)}}\\[2mm]%
+    \textbf{\MakeUppercase{\GetDocAuthor(name)}}\\[2mm]%
     \fontsize{17}{17}\selectfont%
     \GetDocAuthor(degree,\@LANG@COVER)%
   }%
@@ -272,16 +272,16 @@
 \ntaddtocover[vspace=3.0cm,halign=l,height=3cm,valign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{17}{17}\selectfont%
-    \textbf{\ToUppercase{\GetDocAuthor(name)}}\\[2mm]%
+    \textbf{\MakeUppercase{\GetDocAuthor(name)}}\\[2mm]%
     \fontsize{17}{17}\selectfont%
     \GetDocAuthor(degree,\@LANG@COVER)%
   }{%
     \fontsize{20}{21}\selectfont%
-    \textbf{\ToUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
+    \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
     \IfMemVoidF{DocTitle}{\@LANG@COVER,sub,cover}{%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
-      \textbf{\ToUppercase{\GetDocTitle(\@LANG@COVER,sub)}}%
+      \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,sub)}}%
     }{}%
   }%
 }
@@ -290,10 +290,10 @@
 \ntaddtocover[vspace=1,halign=l]{1-1}{%
   \fontsize{14}{13}\selectfont%
   \ifmaindoc{}{\GetDissertationPlan(\@DOCTYPE,\@LANG@COVER)\\[1pt]}%
-  \ToUppercase{\GetDegreeName(\@LANG@COVER)}%
+  \MakeUppercase{\GetDegreeName(\@LANG@COVER)}%
   {\IfMemVoidF{Specialization}{\@LANG@COVER}{%
   \fontsize{11}{11}\selectfont
-  \\\ToUppercase{\GetSpecialization(\@LANG@COVER)}}{}}%
+  \\\MakeUppercase{\GetSpecialization(\@LANG@COVER)}}{}}%
   \\[3mm]%
   \GetUniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%
@@ -319,18 +319,18 @@
 % Title of Dissertation (PhD)
 \ntaddtocover[halign=l]{2-1}{%
   \fontsize{17}{17}\selectfont%
-  \textbf{\ToUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
+  \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
   \IfMemVoidF{DocTitle}{\@LANG@COVER,sub,cover}{%
     \\[4mm]%
     \fontsize{12}{12}\selectfont%
-    \textbf{\ToUppercase{\GetDocTitle(\@LANG@COVER,sub)}}%
+    \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,sub)}}%
   }{}%
 }
 
 % The author name
 \ntaddtocover[vspace=1,halign=l]{2-1}{%
   \fontsize{14}{14}\selectfont%
-  \textbf{\ToUppercase{\GetDocAuthor(name)}}\\[2mm]%
+  \textbf{\MakeUppercase{\GetDocAuthor(name)}}\\[2mm]%
   \fontsize{14}{14}\selectfont%
   \GetDocAuthor(degree,\@LANG@COVER)%
 }
@@ -354,10 +354,10 @@
 \ntaddtocover[vspace=1,halign=l]{2-1}{%
   \fontsize{10}{10}\selectfont%
   \ifmaindoc{}{\GetDissertationPlan(\@DOCTYPE,\@LANG@COVER)\\[1pt]}%
-  \ToUppercase{\GetDegreeName(\@LANG@COVER)}%
+  \MakeUppercase{\GetDegreeName(\@LANG@COVER)}%
   {\IfMemVoidF{Specialization}{\@LANG@COVER}{%
   \fontsize{8}{9}\selectfont
-  \\\ToUppercase{\GetSpecialization(\@LANG@COVER)}}{}}%
+  \\\MakeUppercase{\GetSpecialization(\@LANG@COVER)}}{}}%
   \\[1.25ex]%
   \GetUniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%

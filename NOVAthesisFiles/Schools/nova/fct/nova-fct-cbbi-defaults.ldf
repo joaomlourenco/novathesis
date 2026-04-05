@@ -121,16 +121,16 @@
 \SetSpine*(box,date,len)=?{1.2cm}
 \SetSpine(box,date,angle)={270}
 
-\SetSpine(tas)={\ToUppercase{\GetDocTitle(\@LANG@COVER,main)}}
+\SetSpine(tas)={\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}
 \SetSpine(tas,1)={~\\[4pt]%
                \fontsize{8}{8}\selectfont%
-               \ToUppercase{\GetDocTitle(\@LANG@COVER,main)}\\[5.5pt]}
+               \MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}\\[5.5pt]}
 \SetSpine(tas,2)={\fontsize{11}{6}\selectfont\bfseries%
                \GetDocAuthor(name,short)\\[-0.5pt]}
 \SetSpine(tas,3)={\fontsize{8.5}{6}\selectfont%
-               \ToUppercase{\GetDegreeNamePrefix(\@DOCTYPE,\@LANG@COVER)} \bfseries\GetMajorField(\@LANG@COVER)\\[-3pt]}
+               \MakeUppercase{\GetDegreeNamePrefix(\@DOCTYPE,\@LANG@COVER)} \bfseries\GetMajorField(\@LANG@COVER)\\[-3pt]}
 \SetSpine(tas,4)={\fontsize{5.4}{5}\selectfont%
-               \textbf{\ToUppercase{\GetSpecializationString(\@LANG@COVER)}}
+               \textbf{\MakeUppercase{\GetSpecializationString(\@LANG@COVER)}}
                \fontsize{7}{5}\selectfont\GetMinorField(\@LANG@COVER)\\[-5pt]}
 
 \SetSpine*(box,tas,len)={23.3cm}
@@ -217,11 +217,11 @@
   \node[anchor=north west] at ($(current page.north west) + (14.6mm,-97.25mm)$)
     {\fontsize{16.25}{14.5}\selectfont\sffamily%
       \makecell[tl]{
-      \ToUppercase{\GetDegreeNamePrefix(\@DOCTYPE,\@LANG@COVER)}\\
+      \MakeUppercase{\GetDegreeNamePrefix(\@DOCTYPE,\@LANG@COVER)}\\
       \let\oldnewline\\%
       \renewcommand{\\}{\oldnewline\bfseries}%
       \bfseries%
-      \ToUppercase{\GetMajorField(\@LANG@COVER)}%
+      \MakeUppercase{\GetMajorField(\@LANG@COVER)}%
       }%
     };%
 }
@@ -249,13 +249,13 @@
   {\IfMemVoidTF{Specialization}{\@LANG@COVER}
     {~}
     {\StrCut{\GetSpecializationString(\@LANG@COVER)}{ }\@SPCZL\@dummy%
-     \ToUppercase{\textbf{\@SPCZL}} \ToUppercase{\GetMinorField(\@LANG@COVER)}}}%
+     \MakeUppercase{\textbf{\@SPCZL}} \MakeUppercase{\GetMinorField(\@LANG@COVER)}}}%
 }
 
 % Title of Dissertation (PhD) / The author name (MSc)
 \ntaddtocover[halign=l,height=3.0cm,vspace=4.1mm,valign=c]{1-1}{%
     \fontsize{20.5}{17}\selectfont%
-    \textbf{\ToUppercase{\GetDocAuthor(name)}}\\[2mm]%
+    \textbf{\MakeUppercase{\GetDocAuthor(name)}}\\[2mm]%
     \fontsize{17}{17}\selectfont%
     \GetDocAuthor(degree,\@LANG@COVER)%
 }
@@ -263,7 +263,7 @@
 % The author name (PhD) / Title of Dissertation (MSc)
 \ntaddtocover[vspace=6mm,halign=l,valign=t]{1-1}{%
     \fontsize{26}{26}\selectfont\bfseries%
-    \textbf{\ToUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
+    \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
 }
 
 % Degrere name, Specialization, Date
@@ -288,8 +288,8 @@
     {\includegraphics[width=35.3mm]{\expanded{\GetSchool(logo)}}};%
   \draw[thick] ($(current page.north west) + (1cm,-4.1cm)$) -- ++(\paperwidth-2cm,0cm);%
   \node[anchor=north west] at ($(current page.north west) + (96.45mm,-11.4mm)$)
-    {\fontsize{14}{14}\sffamily\makecell[tl]{\ToUppercase{\GetDepartmentOfString(\@LANG@COVER)}
-      \printdwithvspace{\ToUppercase{\GetDepartment(\@LANG@COVER)}}}};%
+    {\fontsize{14}{14}\sffamily\makecell[tl]{\MakeUppercase{\GetDepartmentOfString(\@LANG@COVER)}
+      \printdwithvspace{\MakeUppercase{\GetDepartment(\@LANG@COVER)}}}};%
 }
 
 % Company logo
@@ -308,18 +308,18 @@
 % Title of Dissertation (PhD)
 \ntaddtocover[halign=l]{2-1}{%
   \fontsize{17}{17}\selectfont%
-  \textbf{\ToUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
+  \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
   \IfMemVoidF{DocTitle}{\@LANG@COVER,sub,cover}{%
     \\[4mm]%
     \fontsize{12}{12}\selectfont%
-    \textbf{\ToUppercase{\GetDocTitle(\@LANG@COVER,sub)}}%
+    \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,sub)}}%
   }{}%
 }
 
 % The author name
 \ntaddtocover[vspace=1,halign=l]{2-1}{%
   \fontsize{14}{14}\selectfont%
-  \textbf{\ToUppercase{\GetDocAuthor(name)}}\\[2mm]%
+  \textbf{\MakeUppercase{\GetDocAuthor(name)}}\\[2mm]%
   \fontsize{14}{14}\selectfont%
   \GetDocAuthor(degree,\@LANG@COVER)%
 }
@@ -343,10 +343,10 @@
 \ntaddtocover[vspace=1,halign=l]{2-1}{%
   \fontsize{10}{10}\selectfont%
   \ifmaindoc{}{\GetDissertationPlan(\@DOCTYPE,\@LANG@COVER)\\[1pt]}%
-  \ToUppercase{\GetDegreeName(\@LANG@COVER)}%
+  \MakeUppercase{\GetDegreeName(\@LANG@COVER)}%
   {\IfMemVoidF{Specialization}{\@LANG@COVER}{%
   \fontsize{8}{9}\selectfont
-  \\\ToUppercase{\GetSpecialization(\@LANG@COVER)}}{}}%
+  \\\MakeUppercase{\GetSpecialization(\@LANG@COVER)}}{}}%
   \\[1.25ex]%
   \GetUniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%

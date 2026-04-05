@@ -105,7 +105,7 @@ Mestre em Engenharia Biomédica}
   \includegraphics[height=1.225cm,align=c]{ipl-logo}%
   \hspace*{2.6cm}%
   \fontsize{12.9}{13}\selectfont%
-  \textbf{\ToUppercase{\GetUniversity(pt)}}%
+  \textbf{\MakeUppercase{\GetUniversity(pt)}}%
 }
 
 %% ISEL e ESTSL

@@ -238,9 +238,9 @@
 \ntaddtocover[vspace=5mm,hspace=0mm]{1-1,2-1}{%
     \fontsize{14}{16}\selectfont%
   % \SetTracking[ spacing = {25*,166, } ]{ encoding = * }{ 25 }%
-  \textbf{\textls[25]{\ToUppercase{\GetUniversity(\@LANG@COVER)}}}\\%
+  \textbf{\textls[25]{\MakeUppercase{\GetUniversity(\@LANG@COVER)}}}\\%
   \vspace{2mm}%
-  \textbf{\textls[25]{\ToUppercase{\GetSchool(\@LANG@COVER)}}}%
+  \textbf{\textls[25]{\MakeUppercase{\GetSchool(\@LANG@COVER)}}}%
 }
 
 % % Title of Dissertation

@@ -1,84 +1,86 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% StyFiles/fix-babel.tex
 %% NOVA thesis configuration file
-%%
-%% Minor fixes and enhancements to babel translations and hyphenation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT FILE StyFiles/fix-babel.tex}%
 
+\ExplSyntaxOn
 
-%%=======================================================================
-%% INITIALIZATION
-%%=======================================================================
+%% INITIALIZATION & STORAGE
+\seq_new:N \g_nt_babel_tracked_langs_seq
 
-\optionlistdo{/novathesis/lang/all}{\options{/novathesis/babel/#1/keys/.new list}}
-
-
-%%=======================================================================
 %% LOCALIZED KEY CONFIGURATION (\ntlangsetup)
-%%=======================================================================
-
-\def\mysplit#1/#2=#3\@nil#4#5#6{\def#4{#1}\def#5{#2}\def#6{#3}}
-
-\newcommand{\ntlangsetup}{\@ifstar{\ntlangsetupifndef}{\ntlangsetupdef}}
-
-\newcommand{\ntlangsetupdef}[2][name]{%
-  \mysplit#2\@nil{\@ntslang}{\@ntskey}{\@ntsval}%
-  \ifoptiondefined{/novathesis/babel/\@ntslang/\@ntskey#1}{%
-    \option@undef{/novathesis/babel/\@ntslang/\@ntskey#1}%
-  }{}%
-  \options{/novathesis/babel/\@ntslang/keys/.expanded/.newpush = \@ntskey#1}%
-  \options{/novathesis/babel/\@ntslang/\@ntskey#1/.expanded/.new value = \@ntsval}%
-}
-
-\newcommand{\ntlangsetupifndef}[2][name]{%
-  \mysplit#2\@nil{\@ntslang}{\@ntskey}{\@ntsval}%
-  \ifoptioncontains{/novathesis/babel/\@ntslang/keys/.expanded}{\@ntskey#1}{}{%
-    \options{/novathesis/babel/\@ntslang/keys/.expanded/.newpush = \@ntskey#1}%
-    \options{/novathesis/babel/\@ntslang/\@ntskey#1/.expanded/.new value = \@ntsval}%
+\NewDocumentCommand{\ntlangsetup}{ s O{name} m }
+  {
+    \ExplSyntaxOn
+    \nt_babel_parse_setup:nnnn { #1 } { #2 } #3 \q_stop
+    \ExplSyntaxOff
   }
-}
 
+\cs_new_protected:Npn \nt_babel_parse_setup:nnnn #1 #2 #3 / #4 = #5 \q_stop
+  {
+    \nt_babel_store_key:nnnnn { #1 } { #2 } { #3 } { #4 } { #5 }
+  }
 
-%%=======================================================================
-%% LANGUAGE-SPECIFIC HYPHENATION: PORTUGUESE
-%%=======================================================================
+\cs_new_protected:Nn \nt_babel_store_key:nnnnn
+  {
+    % Ensure the language property list exists
+    \prop_if_exist:cF { g_nt_babel_#3_prop }
+      {
+        \prop_new:c { g_nt_babel_#3_prop }
+        \seq_gput_right:Nn \g_nt_babel_tracked_langs_seq { #3 }
+      }
+
+    % Store the value: append suffix to the key
+    \bool_if:nTF { #1 }
+      { % Starred version: only set if NOT already defined
+        \prop_if_in:cnF { g_nt_babel_#3_prop } { #4 #2 }
+          { \prop_gput:cnn { g_nt_babel_#3_prop } { #4 #2 } { #5 } }
+      }
+      { % Normal version: force override
+        \prop_gput:cnn { g_nt_babel_#3_prop } { #4 #2 } { #5 }
+      }
+  }
+
+%% ENGINE: APPLYING LOCALIZED CAPTIONS
+\cs_new_protected:Nn \nt_babel_apply_all_captions:
+  {
+    \cs_if_exist:NT \optionlistdo
+      {
+        \optionlistdo { /@nt/lang/loaded }
+          {
+            \prop_if_exist:cT { g_nt_babel_ ##1 _prop }
+              {
+                \prop_map_inline:cn { g_nt_babel_ ##1 _prop }
+                  {
+                    \setlocalecaption { \GetLangLong(##1) } { ####1 } { ####2 }
+                  }
+              }
+          }
+      }
+  }
+
+% Hook into the "very end" of the preamble.
+% We check for \hook_gadd:nnn (the Hook Manager) 
+% and fallback to \AtBeginDocument if it's an old engine.
+\cs_if_exist:NTF \hook_gadd:nnn
+  { 
+    \hook_gadd:nnn { begindocument / before } { \ExplSyntaxOn \nt_babel_apply_all_captions: \ExplSyntaxOff } 
+  }
+  { 
+    \AtBeginDocument { \ExplSyntaxOn \nt_babel_apply_all_captions: \ExplSyntaxOff } 
+  }
+
+%% COMPATIBILITY HELPERS
+% For compatibility with Babel version < 3.51
+\cs_set_protected:Npn \setlocalecaption #1 #2 #3
+  {
+    \expandafter\addto\csname captions#1\endcsname { \cs_set:cpn {#2} {#3} }
+  }
+
+\ExplSyntaxOff
 
 \addto\extrasportuguese{%
-  \defineshorthand{"-}{\babelhyphen{repeat}}% generates a hyphen that will repeat on a new line
-}
-
-
-%%=======================================================================
-%% COMPATIBILITY HELPERS
-%%=======================================================================
-
-% For compatibility with Babel version < 3.51
-\renewcommand*{\setlocalecaption}[3]{%
-  \expandafter\addto\csname captions#1\endcsname{\csdef{#2}{#3}}%
-}%
-
-
-%%=======================================================================
-%% ENGINE: APPLYING LOCALIZED CAPTIONS
-%%=======================================================================
-
-\AtEndPreamble{
-  \def\nt@babel@apply@key#1{%
-    \ifoptiondefined{/novathesis/babel/\nt@babel@lang/#1}{%
-      \setlocalecaption{\GetLangLong(\nt@babel@lang)}{#1}{\option{/novathesis/babel/\nt@babel@lang/#1}}%
-    }{}%
-  }%
-  \def\nt@babel@apply@lang#1{%
-    \def\nt@babel@lang{#1}%
-    \ifx\nt@babel@lang\@nil\else
-      \ifx\nt@babel@lang\@empty\else
-        \ifoptiondefined{/novathesis/babel/\nt@babel@lang/keys}{%
-          \optionlistdo{/novathesis/babel/\nt@babel@lang/keys}{\nt@babel@apply@key{##1}}%
-        }{}%
-      \fi
-    \fi
-  }%
-  \optionlistdo{/@nt/lang/loaded}{\nt@babel@apply@lang{#1}}%
+  \defineshorthand{"-}{\babelhyphen{repeat}}%
 }

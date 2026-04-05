@@ -118,12 +118,12 @@
 }
 
 \@for\mylang:={\@LANG@LOADED}\do{%
-  \SetCommitteeTitleString*(\mylang)={\ToUppercase{\GetCommitteeTitleString(\mylang)}}%
+  \SetCommitteeTitleString*(\mylang)={\MakeUppercase{\GetCommitteeTitleString(\mylang)}}%
   \@for\myadv:={a,c,ca,t}\do{%
     \@for\mysp:={1,2}\do{%
       \@for\mymf:={m,f}\do{%
         \SetAdviserString*(\myadv,\mysp,\mymf,\mylang)=%
-              {\ToUppercase{\GetAdviserString(\myadv,\mysp,\mymf,\mylang)}}%
+              {\MakeUppercase{\GetAdviserString(\myadv,\mysp,\mymf,\mylang)}}%
       }%
     }%
   }%
