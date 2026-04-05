@@ -1001,14 +1001,14 @@
 }
 
 
-\InputIfFileExistsInDirsTF {novathesis-spine.sty}
+\InputIfFileExistsInDirsTF {nt-spine.sty}
   {%
     {\DIRSCHOOLS/\@UNIV/\@SCHL},
     {\DIRSCHOOLS/\@UNIV},
     {\DIRSTYFILES},
   }
   {} % true
-  {\ClassError{novathesis}{No “novathesis-spine” file found.}{}}%
+  {\ClassError{novathesis}{No “nt-spine” file found.}{}}%
 
 \ifoptionequal{/novathesis/spine/layout}{false}
   {}% skip the spine

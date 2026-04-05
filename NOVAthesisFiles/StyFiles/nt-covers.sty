@@ -403,7 +403,7 @@
 \NewDocumentCommand{\ntprintbackcover} { } { \ntprintcoverpair{N} }
 \NewDocumentCommand{\ntprintspine} { }
   {
-    % Spine logic is simpler to keep calling novathesis-spine.sty
+    % Spine logic is simpler to keep calling nt-spine.sty
     \pagenumbering{roman} \setcounter{page}{0}
     \NTRunHook{print/spine/pre}
     \iffileadded[spine]{cover}
