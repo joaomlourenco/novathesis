@@ -9,9 +9,6 @@
 #----------------------------------------------------------------------------
 # CUSTOMIZATION AREA HERE
 
-# Use bash and not sh
-SHELL := /bin/bash
-
 # Define V command to the name of your PDF viewer
 PDFVIEWER ?= open -a skim
 
@@ -23,11 +20,11 @@ EDITOR ?= mate
 #############################################################################
 
 #————————————————————————————————————————————————————————————————————————————
-# Prevents the “each line is a new shell” pitfall and simplifies variable flow
-SHELL := /bin/sh
+# Use bash; each recipe line runs in a single shell with strict error handling
+SHELL := /bin/bash
 .SHELLFLAGS := -eu -c -o pipefail
 #————————————————————————————————————————————————————————————————————————————
-# Define commans
+# Define commands
 GREP := grep -F
 
 #————————————————————————————————————————————————————————————————————————————
@@ -50,6 +47,7 @@ MODEBTCH := -interaction=batchmode
 ifeq ($(MODE),)
 MODE := $(MODENSTP)
 endif
+PROGRESSVERB := 2
 
 
 #————————————————————————————————————————————————————————————————————————————
@@ -115,21 +113,21 @@ pdf xe lua: validate-config check-env $(NEEDLUALATEX) $(LTXFILE) $(LTXCLS)
 	$(LTXMK) -pdf$(patsubst pdf%,%,$@) $(LTXFLAGS) "$(BASENAME)"
 
 #————————————————————————————————————————————————————————————————————————————
-# Btach mode
-.PHONY: verbose verb vv
-verbose verb vv:
+# Verbose mode
+.PHONY: verbose
+verbose:
 	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) MODE=$(MODENSTP) PROGRESS=$(PROGRESSVERB)
 
 #————————————————————————————————————————————————————————————————————————————
-# Btach mode
-.PHONY: batch btch bt
-batch btch bt:
+# Batch mode
+.PHONY: batch
+batch:
 	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) MODE=$(MODEBTCH) PROGRESS=
 
 #————————————————————————————————————————————————————————————————————————————
 # Interactive mode
-.PHONY: interactive itrtv itrt it
-interactive itrtv itrt it:
+.PHONY: interactive
+interactive:
 	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) MODE="$(MODEITRT)" PROGRESS=
 
 #————————————————————————————————————————————————————————————————————————————
@@ -268,7 +266,8 @@ zip: clean
 	@ printf "$(YELLOW)Creating archive: \"$(ZIPTARGET)\"$(RESET)\n"
 	@ rm -f "$(ZIPTARGET)"
 	@ zip "$(ZIPTARGET)" -r -q $(ZIPFILES)  -x 'Scripts/*'
-	@ printf "$(YELLOW)Archive created: \"$(ZIPTARGET)\" ($(shell stat -f%$(RESET)z "$(ZIPTARGET)" 2>/dev/null || stat -c%s "$(ZIPTARGET)" ) bytes)\n"
+	@ SIZE=$$(stat -f%z "$(ZIPTARGET)" 2>/dev/null || stat -c%s "$(ZIPTARGET)"); \
+	  printf "$(YELLOW)Archive created: \"$(ZIPTARGET)\" ($$SIZE bytes)$(RESET)\n"
 
 
 #############################################################################
@@ -328,30 +327,12 @@ ifneq ($@,bump0)
 endif
 	$(MAKE) bcrtp
 
-.PHONY: bcrtp bcrp bcp crp cp rp crtp rtp tp 
-bcrtp: build-phd-en crtp
-
-bcrp: build-phd-en crp
-
-bcp: build-phd-en commit push
-
-bcp-f: build-phd-en commit push-force
-
-crp: commit rebase push
-
-rp: rebase push
-
-crp-f: commit rebase push-force
-
-cp: commit push
-
-cp-f: commit push-force
-
-crtp: commit rtp
-
-rtp: rebase tp
-
-tp: tag push
+.PHONY: bcrtp crtp bcrp crp bcp
+bcrtp: build-phd-en commit rebase tag push
+crtp:  commit rebase tag push
+bcrp:  build-phd-en commit rebase push
+crp:   commit rebase push
+bcp:   build-phd-en commit push
 
 custom:
 	@ $(eval SCHL=$(shell printf "%s" "$(notdir $(CURDIR))" | sed -e 's,-,/,; s,-,/,'))
@@ -364,7 +345,6 @@ custom:
 
 
 # 1. Define Defaults
-DFL_SCHL := nova.fct
 DFL_TYP  := phd
 DFL_LNG  := en
 
@@ -376,9 +356,8 @@ GET_TEX_VAR = sed -n 's/^[[:space:]]*\\ntsetup{$(1)=\([^}]*\).*/\1/p' 0-Config/1
 # 3. Logic: Try to get from file; if empty, use Default
 # We store the raw extraction in a temporary variable (_) to check if it exists
 
-# Handle SCHL (Needs special tr handling only if extracted)
-_FILE_SCHL := $(shell $(call GET_TEX_VAR,school))
-SCHL := $(if $(_FILE_SCHL),$(shell echo $(_FILE_SCHL) | tr '/-' '..'),$(DFL_SCHL))
+# Dot-notation version of SCHL for use in build-* target names
+_BUILD_SCHL := $(subst /,.,$(subst -,.,$(SCHL)))
 
 # Handle TYP
 _FILE_TYP := $(shell $(call GET_TEX_VAR,doctype))
@@ -391,7 +370,7 @@ LNG := $(or $(_FILE_LNG),$(DFL_LNG))
 # 4. Define Build Rules
 .PHONY: build
 # Default build uses the variables calculated above
-build: build-$(SCHL)-$(TYP)-$(LNG)
+build: build-$(_BUILD_SCHL)-$(TYP)-$(LNG)
 
 # Pattern rule to parse arguments from the target name
 build-%: 
