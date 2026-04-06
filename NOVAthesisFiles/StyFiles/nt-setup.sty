@@ -958,9 +958,9 @@
 \ifdocunset{\ntsetup{docstatus=working}}{}
 
 \ifoptionequal{/novathesis/spine/layout}{unset}
-    {\ifdocworking{\ntsetup{spine/layout=false}}
-                  {\ifmaindoc{\ntsetup{spine/layout=trim}}
-                             {\ntsetup{spine/layout=false}}}}
+    {\ifdocfinal{\ifmaindoc{\ntsetup{spine/layout=trim}}
+                            {\ntsetup{spine/layout=false}}}
+                {\ntsetup{spine/layout=false}}}
     {}
 \ifdocfinal{\ntsetup{print/committee=true}}{}
 

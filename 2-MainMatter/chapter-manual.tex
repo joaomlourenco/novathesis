@@ -345,11 +345,12 @@ generated PDF.  Many have defaults that vary with \texttt{school} and \texttt{do
 \ntsetup{print/copyright=false}
 \end{latexcode}
 
-  \item[\texttt{print/spine}] Print the book spine.
-    Default: \texttt{false} for \texttt{working};
-    \texttt{true} for \texttt{provisional} and \texttt{final}.
+  \item[\texttt{spine/layout}] Print the book spine.
+    Default: \texttt{false} for \texttt{working} and \texttt{provisional};
+    \texttt{trim} (printed) for \texttt{final}.
 \begin{latexcode}
-\ntsetup{print/spine=false}  % suppress even in final
+\ntsetup{spine/layout=false}  % suppress spine even in final
+\ntsetup{spine/layout=trim}   % force spine even in provisional
 \end{latexcode}
 
   \item[\texttt{print/index}] Print a word index at the end.
@@ -755,8 +756,7 @@ used throughout the demo chapters:
     light beige background.
   \item[\texttt{bashcode}] Shell/Bash listing with the same style.
   \item[\texttt{pythoncode}] Python listing with the same style.
-  \item[\latexinline|\latexinline{...}|, \bashinline|\bashinline{...}|,
-    \pythoninline|\pythoninline{...}|] Inline highlighted code fragments.
+  \item[\latexinline|\latexinline{...}| ] Inline highlighted code fragments.
 \end{description}
 
 Use these environments in your chapters for consistent formatting:
@@ -788,27 +788,27 @@ the differences.
   \caption{Effect of \texttt{docstatus} on the generated document.}
   \label{tab:docstatus}
   \centering\small
-  \begin{tabular}{lccc}
-    \hline
+  \begin{ShadedTabular}{lccc}
+    \toprule
     \textbf{Feature} & \texttt{working} & \texttt{provisional} & \texttt{final} \\
-    \hline
+    % \midrule
     Timestamp on cover      & yes & no  & no  \\
     Dedication / quote      & no  & yes & yes \\
     Acknowledgements        & no  & yes & yes \\
     Integrity statement     & no  & yes & yes \\
     Evaluation committee    & no  & no  & yes \\
-    Book spine              & no  & yes & yes \\
-    \hline
-  \end{tabular}
+    Book spine              & no  & no  & yes \\
+    \bottomrule
+  \end{ShadedTabular}
 \end{table}
 
 A typical workflow:
 \begin{enumerate}
   \item Write with \texttt{docstatus=working} (fast, no distractions).
   \item Switch to \texttt{provisional} when submitting to the examination
-    jury — a clean PDF with spine but no committee members.
+    jury — a clean PDF without the committee members.
   \item Switch to \texttt{final} after the examination — includes the
-    committee, removes the timestamp, and is archive-ready.
+    committee, the book spike, and is archive-ready.
 \end{enumerate}
 
 
