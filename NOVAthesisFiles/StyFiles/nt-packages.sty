@@ -14,7 +14,6 @@
 %% language support, graphics, bibliography, hyperref & glossaries.
 %% ----------------------------------------------------------------------------
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% KERNEL & CORE UTILITIES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -169,6 +168,30 @@
 %% HYPERREF & INTERACTIVE ELEMENTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtEndPreamble{%
+  % ── PDF/A-2b archival output (single-pass) ────────────────────────
+  % When docstatus=final and pdfa=true (the default), load pdfx[a-2b]
+  % BEFORE hyperref so pdfx controls the PDF version and XMP metadata.
+  %
+  % LuaLaTeX fix: pdfx.sty line 72 reads \pdfminorversion BEFORE loading
+  % luatex85 (line 323), which maps \pdfminorversion → \pdfvariable minorversion
+  % (= 7).  Pre-loading luatex85 here ensures \pdfminorversion = 7 when pdfx
+  % reads it, so \pdfx@minorversion = 7 = \pdfminorversion at the version check
+  % (line 341) → no "Cannot change the \pdfminorversion" error.
+  \ifdocfinal{%
+    \iftoggle{/novathesis/pdfa}{%
+      % Write XMP metadata file for pdfx (cover data available from 3_cover.tex)
+      \newwrite\@nt@xmp@out
+      \immediate\openout\@nt@xmp@out=\jobname.xmpdata
+      \immediate\write\@nt@xmp@out{\string\Title{\GetDocTitle(\@LANG@MAIN,main,plain)}}%
+      \immediate\write\@nt@xmp@out{\string\Author{\GetDocAuthor(name)}}%
+      \immediate\write\@nt@xmp@out{\string\Language{\@LANG@MAIN}}%
+      \immediate\closeout\@nt@xmp@out
+      % Pre-load luatex85 before pdfx so the pdfminorversion check is correct
+      \@ifpackageloaded{luatex85}{}{\RequirePackage{luatex85}}%
+      \RequirePackage[a-2b]{pdfx}%    % sets PDF/A-2b and embeds XMP metadata
+    }{}%
+  }{}%
+  % ── hyperref ──────────────────────────────────────────────────────
   \PassOptionsToPackage{
     bookmarksnumbered=true,
     breaklinks=true,

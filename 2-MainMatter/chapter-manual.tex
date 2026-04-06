@@ -871,3 +871,57 @@ Ensure the settings described in Section~\ref{sub:overleaf} are applied
 \Overleaf{} compiles on their servers so \texttt{make} and \texttt{build.py}
 are not available — all configuration is done by editing the
 \verb!0-Config/! files.
+%%-----------------------------------------------------------------------
+\subsection{PDF/A Archival Output}
+\label{sub:pdfa}
+%%-----------------------------------------------------------------------
+
+When \verb!\ntsetup{docstatus=final}! is set, \novathesis{} automatically
+produces a \textbf{PDF/A-2b} conformant document — the archival-quality
+format required by most institutional repositories and digital libraries.
+No configuration beyond setting \texttt{docstatus=final} is needed.
+
+\medskip
+\noindent\textbf{How it works (single-pass).}
+\novathesis{} loads the \texttt{pdfx} package during the normal \LaTeX{}
+preamble, just before \texttt{hyperref}.  This single-pass approach requires
+no extra compilation run beyond the usual cross-reference and bibliography
+passes performed by every \LaTeX{} document.
+
+The XMP metadata packet (title, author, language) is written from the
+cover-page data defined in \verb!0-Config/3_cover.tex! and embedded into
+the PDF automatically.
+
+\medskip
+\noindent\textbf{PDF/A standard choice.}
+\novathesis{} targets \textbf{PDF/A-2b} (not~1b).  PDF/A-1b prohibits
+transparency, which is incompatible with the TikZ cover-page graphics used
+by virtually all supported schools.  PDF/A-2b lifts this restriction while
+remaining accepted by all major institutional repositories.
+
+\medskip
+\noindent\textbf{XMP metadata.}
+The thesis title, author name, and language are taken directly from the
+cover-page data in \verb!0-Config/3_cover.tex! and passed to \texttt{pdfx},
+which embeds them in the required XMP packet.  No additional configuration
+is needed.
+
+\medskip
+\noindent\textbf{Opting out.}
+To disable PDF/A output even in \texttt{final} mode, uncomment the escape
+hatch in \verb!0-Config/1_novathesis.tex!:
+
+\begin{latexcode}
+\ntsetup{pdfa=false}
+\end{latexcode}
+
+\noindent\textbf{Verifying compliance.}
+After the final build, validate with:
+\begin{itemize}
+  \item \textbf{VeraPDF} (open source, \url{https://verapdf.org}) —
+        the reference PDF/A validator.
+  \item \textbf{Adobe Acrobat Pro} — \emph{Tools → Print Production →
+        Preflight → PDF/A compliance}.
+  \item \textbf{PDF/A Live!} (online service) — quick check without local
+        installation.
+\end{itemize}
