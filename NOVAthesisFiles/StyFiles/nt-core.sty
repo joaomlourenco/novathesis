@@ -406,6 +406,10 @@
 
 
 
+% Default bookmark level for \ChapterNoTitle items.
+% Set to 1 inside \ntprint{frontmatter} so they nest under the Front Matter node.
+\def\@nt@bkm@level{0}
+
 % 1. Define the internal logic (accepts the argument as-is)
 \cs_new_protected:Nn \__user_chapter_logic:n
  {
@@ -414,10 +418,9 @@
   
   % Create the anchor. 
   % #1 is now the fully expanded string (e.g., "Project Alpha").
-  \hypertarget{bm#1}{}
-  
-  % Create the bookmark using the same ID
-  \bookmark[dest=bm#1]{#1}
+  \phantomsection%
+  % \bookmark[dest=\HyperLocalCurrentHref]{#1}%
+  \pdfbookmark[\@nt@bkm@level]{#1}{\HyperLocalCurrentHref}
   
   % Reset spacing/formatting
   \noindent \ignorespaces

@@ -71,7 +71,6 @@
     \iffileadded{#1}{%
       \ChapterNoTitle{\GetBkmString(#1,\@LANG@COPYRIGHT)}
       \PrintAddedFile{#1}%
-      \bookmarksetupnext{rellevel=0}%
     }{}%
     \NTRunHook{#1/post}%
     \clearforchapter%
@@ -104,13 +103,11 @@
 
 \newcommand{\ntprintaidisclose}{%
   \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{% use aidisclose
-    \bookmarksetupnext{rellevel=0}%
     \AIDrenderDeclaration[ncols=3]{\GetDocAuthor(name)}%
   }{\ifoptionequal{/novathesis/print/aidisclosure}{false}
       {} % do not print AI Disclosure
       {\IfFileExists{\DIRFRONTMATTER/\option{/novathesis/print/aidisclosure}}
         {%
-          \bookmarksetupnext{rellevel=0}%
           \input{\DIRFRONTMATTER/\option{/novathesis/print/aidisclosure}}%
         }
         {\ClassError{novathesis}
@@ -190,9 +187,6 @@
         % \typeout{NT PRINT ABSTRACT #1}\bbbb
         \StrCut{#1}{-}\@ABS@LANG\@dummy%
         \ntselectlang{\@ABS@LANG}%
-        % \typeout{NTL=\languagename [#1]}\bbbb
-        % \hypertarget{bmabstract#1}{}%
-        % \bookmark[dest=bmabstract#1]{\GetBkmString(abstract,#1)}%
         \NTRunHook{abstract/pre}%
         \NTRunHook{abstract/#1/pre}%
         \printabstracttitle{#1}%
@@ -239,7 +233,6 @@
   \@frontmatterfalse
   \endgroup
   \NTRunHook{frontmatter/post}%
-  \bookmarksetup{startatroot}%
   \NTRunHook{mainmatter/pre}%
   \ifbool{@openright}{}{% openany=true
     % Avoid cleardoublepage before "mainmatter"
@@ -287,28 +280,41 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Appendixes and Annexes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand*{\addappheadtotoc}{%
-    \phantomsection\addtocontents{toc}%
-    {\protect\contentsline{chapter}{\appendixtocname}{}{}}%
- }
-
+\newcommand{\shiftbookmarks}[2][1]{%
+  \begingroup
+    \@for\@secname:={part,chapter,section,subsection,subsubsection,paragraph,subparagraph}\do{%
+      \expandafter\ifx\csname toclevel@\@secname\endcsname\relax
+      \else
+        \edef\@currentlevel{\number\csname toclevel@\@secname\endcsname}%
+        \expandafter\edef\csname toclevel@\@secname\endcsname{%
+          \the\numexpr\@currentlevel+#1\relax
+        }%
+      \fi
+    }%
+    #2%
+  \endgroup
+}
+  
 \newcommand*{\ntprintappendices}{%
-  \bookmarksetupnext{level=0}%
   \iffileadded{appendix}{%
-    \renewcommand{\appendixtocname}{\appendixplname}%
-    \appendix\addappheadtotoc%
+    \appendix%
+    \clearforchapter\phantomsection
+    % After \appendix, hyperref resolves appendix chapter bookmark depth via
+    % toclevel@appendix (undefined by default → 0).  Set it to 1 so appendix
+    % chapters appear as level-1 children of the "Back Matter" node.
+    \expandafter\def\csname toclevel@appendix\endcsname{1}%
     \@nt@foralllist{file}{appendix}{\PrintAddedFile{appendix}}%
   }{}%
 }
 
 \newcommand*{\ntprintannexes}{%
-  \bookmarksetupnext{level=0}%
-  \iffileadded{annex}{%
-    % \renewcommand{\appendixtocname}{\translate{Annexes}}%
-    \renewcommand{\appendixtocname}{\annexplname}%
-    \annex\addappheadtotoc%
-    \@nt@foralllist{file}{annex}{\bookmarksetupnext{rellevel=0}\PrintAddedFile{annex}}%
-  }{}%
+  % \iffileadded{annex}{%
+  %   \annex%
+  %   \phantomsection%
+  %   \bookmark[level=1,dest=\HyperLocalCurrentHref,keeplevel]{\annexplname}%
+  %   \bookmarksetup{addtohook={\bookmarksetup{rellevel=1,keeplevel}}}%
+  %   \@nt@foralllist{file}{annex}{\PrintAddedFile{annex}}%
+  % }{}%
 }
 
 \ifdef{\annexcounter}{}{\def\annexcounter{\old@Roman}}
@@ -317,8 +323,8 @@
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
   \gdef\chaptername{\annexname}%
-  % \gdef\@chapapp{\translate{annex}}%
   \gdef\thechapter{\annexcounter\c@chapter}%
+  \appendix%
 }%
 
 
@@ -386,6 +392,10 @@
 
 
 
+%% Default list-of bookmark level (1 = direct child of Front/Back Matter group).
+%% \ntprintalllistof overrides this to 2 when a "List of..." group header is present.
+\def\@nt@lol@bkm@level{1}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Deal with optional lists in the frontmatter: listoftables, litoffigures, etc.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -395,19 +405,24 @@
       \def\@matter{backmatter}
     \else
       \def\@matter{frontmatter}
+      \iftoggle{/novathesis/tocintoc}
+            {\begingroup
+               % \tableofcontents (non-starred) creates a \chapter* bookmark that
+               % would be shifted by any active \shiftbookmarks.  Temporarily reset
+               % toclevel@chapter to 0 so Contents always appears at the root level.
+               \expandafter\def\csname toclevel@chapter\endcsname{0}%
+               \tableofcontents
+             \endgroup}%
+            {\pdfbookmark[0]{\contentsname}{\HyperLocalCurrentHref}
+             \tableofcontents*}%
     \fi
     \ifoptiondefined{/@nt/listof/\@matter}{
-      \bookmarksetup{level=0}
-      \options{/@nt/listof/\@matter/.size = \mysize}%
-      \ifnum\mysize>1\relax
-        \hypertarget{bmlistof\@matter}{}%
-        \edef\@nt@listof@bkmtitle{\GetBkmString(listof,\@LANG@MAIN)}%
-        \bookmark[dest=bmlistof\@matter]{\@nt@listof@bkmtitle}%
-        \bookmarksetupnext{rellevel=1}%
-      \fi
-      % \typeout{PRINTALLLISTOF=\@matter}\PRINTALLLISTOF
-      \optionlistdo{/@nt/listof/\@matter}{##1\bookmarksetupnext{rellevel=0}}%
-    }{}
+      \edef\@nt@listof@bkmtitle{\GetBkmString(listof,\@LANG@MAIN)}%
+      \clearforchapter%
+      \phantomsection%
+      \pdfbookmark[0]{\@nt@listof@bkmtitle}{\HyperLocalCurrentHref}%
+      \optionlistdo{/@nt/listof/\@matter}{##1}%
+    }{}%
     \NTRunHook{listof/post}%
 }
 
@@ -437,7 +452,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand*{\ntprintbibsingle}[1][]{%
-  \bookmarksetupnext{rellevel=1}%
   \NTRunHook{printbib/pre}%
   \printbibliography[#1]%
   \ntfixspacing%
@@ -445,7 +459,6 @@
 }
 
 \newcommand*{\ntprintbibseparate}[1][]{%
-  \bookmarksetupnext{rellevel=1}%
   \NTRunHook{printbib/pre}%
     \printbibliography[nottype=online] % Print the bibliography.
     \printbibliography[title=\option{/novathesis/print/webography},type=online] % Print the bibliography.
@@ -495,7 +508,6 @@
   \ifmaindoc{%
     \iftoggle{/novathesis/print/copyright}{%
       \begingroup
-        % \bookmarksetupnext{rellevel=1}
         \ntselectlang{\@LANG@COPYRIGHT}%
         \ChapterNoTitle{\GetBkmString(copyright,\@LANG@COPYRIGHT)}%
         \NTRunHook{copyright/pre}%
@@ -608,7 +620,6 @@
 %% Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{ntacknowledgements}{%
-  % \bookmarksetupnext{level=1}%
   \chapter*{\GetBkmString(acknowledgements,\@LANG@MAIN)}%
 }{}
 
@@ -647,7 +658,6 @@
 }{}
 
 \newcommand*{\printabstracttitle}[1]{%
-  \bookmarksetupnext{rellevel=0}
   \begingroup
     \def\nt@abstitlefont{}%
     \iftutex
@@ -779,6 +789,71 @@
 % force page color to white in xelatex and lualatex
 \ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LISTINGS + MINTED UNIFICATION
+%% Goal: one counter, one list, regardless of which package(s) are loaded.
+%%
+%% IMPORTANT: listings.sty defers \newcounter{lstlisting} to \AtBeginDocument,
+%% so counter aliasing must run AFTER that hook completes.
+%% \AddToHook{begindocument/end} fires after ALL \AtBeginDocument hooks.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AddToHook{begindocument/end}{%
+  \makeatletter
+    % 1. Helper for TOC/Bookmark injection
+    \newcommand{\update@lol}[1]{%
+      % \cleardoublepage
+      % \phantomsection
+      % \addcontentsline{toc}{chapter}{\listoflistingscaption}%
+      #1%
+    }
+
+    % 2. Helper to set numbering to Chapter.Sequence
+    % This defines \thelisting as \thechapter.\arabic{listing} 
+    % and ensures the counter resets when \chapter is called.
+    \newcommand{\setup@listing@numbering}[1]{%
+      \@addtoreset{#1}{chapter}%
+      \expandafter\renewcommand\csname the#1\endcsname{\thechapter.\arabic{#1}}%
+    }
+
+    \@ifpackageloaded{listings}{%
+      \@ifpackageloaded{minted}{%
+        % --- CASE: BOTH LOADED ---
+        \let\old@listoflistings\listoflistings
+        \renewcommand{\listoflistings}{\update@lol{\old@listoflistings}}
+        \let\lstlistoflistings\listoflistings
+      
+        % Setup numbering for 'listing' (minted's counter)
+        \setup@listing@numbering{listing}
+        % Unify 'listings' to follow 'minted'
+        \let\c@lstlisting\c@listing
+        \let\thelstlisting\thelisting
+      }{%
+        % --- CASE: ONLY LISTINGS LOADED ---
+        \ifx\listoflistingscaption\@undefined
+          \let\listoflistingscaption\lstlistlistingname
+        \fi
+        \let\old@lstlistoflistings\lstlistoflistings
+        \renewcommand{\lstlistoflistings}{\update@lol{\old@lstlistoflistings}}
+        \let\listoflistings\lstlistoflistings
+      
+        % Setup numbering for 'lstlisting'
+        \setup@listing@numbering{lstlisting}
+      }%
+    }{%
+      \@ifpackageloaded{minted}{%
+        % --- CASE: ONLY MINTED LOADED ---
+        \let\old@listoflistings\listoflistings
+        \renewcommand{\listoflistings}{\update@lol{\old@listoflistings}}
+      
+        % Setup numbering for 'listing'
+        \setup@listing@numbering{listing}
+      }{%
+        % NEITHER LOADED
+      }%
+    }%
+  \makeatother
+}
+
 \NTAddToHook{mainmatter/post}{%
   \ifoptionequal{/novathesis/numbering/floats}{sequential}{%
     \counterwithout{figure}{chapter}%
@@ -786,15 +861,14 @@
     \counterwithout{footnote}{chapter}%
     \counterwithout{equation}{chapter}%
     \@ifundefined{c@algorithm}{}{\counterwithout{algorithm}{chapter}}%
-    \@ifundefined{c@listing}{}{\counterwithout{listing}{chapter}}%
-    \@ifundefined{c@lstlisting}{}{%
-      \@ifundefined{c@listing}{%
-        \counterwithout{lstlisting}{chapter}%
-      }{%
-        \let\c@lstlisting\c@listing%
-        \let\thelstlisting\thelisting%
-        \let\lstlistoflistings\listoflistings%
-      }%
+    %% Counter unification (listings+minted) is handled at \AtBeginDocument above.
+    %% Here we only need the \counterwithout calls.
+    \@ifpackageloaded{minted}{%
+      \@ifundefined{c@listing}{}{\counterwithout{listing}{chapter}}%
+    }{%
+      \@ifpackageloaded{listings}{%
+        \@ifundefined{c@lstlisting}{}{\counterwithout{lstlisting}{chapter}}%
+      }{}%
     }%
   }{}%
 }

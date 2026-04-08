@@ -470,62 +470,49 @@
   }
   % \typeout{\ISTOF 1=[\@listofat] 2=[#2]}\NTADDLISTOF%
   \IfStrEqCase{#2}{%
-    {tableofcontents}{\options{/@nt/listof/\@listofat/.newpush={%
-            \clearforchapter%
-            \iftoggle{/novathesis/tocintoc}{\tableofcontents}%
-                  {\hypertarget{toctarget}{\tableofcontents*}%
-                   \bookmark[dest=toctarget]{\contentsname}}%
-    }}}%
-    {listoffigures*}{\options{/@nt/listof/\@listofat/.newpush={%
-              \clearforchapter%
-              \hypertarget{loftarget}{\listoffigures*}%
-              \bookmark[dest=loftarget]{\listfigurename}%
-    }}}%
     {listoffigures}{\options{/@nt/listof/\@listofat/.newpush={%
               \clearforchapter%
-              \hypertarget{loftarget}{\listoffigures}%
-              % \bookmark[dest=loftarget,level=1]{\listfigurename}%
-    }}}%
-    {listoftables*}{\options{/@nt/listof/\@listofat/.newpush={%
-              \clearforchapter%
-              \hypertarget{lottarget}{\listoftables*}%
-              \bookmark[dest=lottarget]{\listtablename}%
+              \listoffigures
     }}}%
     {listoftables}{\options{/@nt/listof/\@listofat/.newpush={%
               \clearforchapter%
-              \hypertarget{lottarget}{\listoftables}%
-              % \bookmark[dest=lottarget]{\listtablename}%
+              \listoftables
     }}}%
     {listoflistings}{\options{/@nt/listof/\@listofat/.newpush={%
             \ifcsdef{listoflistings}{%
                 \clearforchapter%
-                \hypertarget{loltarget}{\listoflistings}%
-                \ifcsdef{listoflistingscaption}{%
-                  \bookmark[dest=loltarget]{\listoflistingscaption}%
-                  \addcontentsline{toc}{chapter}{\listoflistingscaption}
-                }{}%
-            }{}%
-    }}}%
-    {lstlistoflistings}{\options{/@nt/listof/\@listofat/.newpush={%
-              \clearforchapter%
-              \hypertarget{loltarget}{\lstlistoflistings}%
-              % \bookmark[dest=loltarget]{\lstlistlistingname}%
+                \phantomsection
+                \pdfbookmark[\@nt@lol@bkm@level]{\listoflistingscaption}{\HyperLocalCurrentHref}
+                \listoflistings
+            }{%
+                  \ClassError{novathesis}{Can't make list of listings. Please report this problem in the “novathesis” github. Thanks!}{}%
+            }%
     }}}%
     {listofalgorithms}{\options{/@nt/listof/\@listofat/.newpush = {%
               \clearforchapter%
-              \listofalgorithms
+              \phantomsection
               \ifcsdef{listalgorithmname}{%
-                \addcontentsline{toc}{chapter}{\listalgorithmname}%
+                \pdfbookmark[\@nt@lol@bkm@level]{\listalgorithmname}{\HyperLocalCurrentHref}
               }{%
                 \ifcsdef{listalgorithmcfname}{%
-                  \addcontentsline{toc}{chapter}{\listalgorithmcfname}%
+                  \pdfbookmark[\@nt@lol@bkm@level]{\listalgorithmcfname}{\HyperLocalCurrentHref}
                 }{%
-                  \ClassError{novathesis}{Can't make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
+                  \ClassError{novathesis}
+                             {Cannot make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
                 }%
               }%
+              \listofalgorithms
     }}}%
   }[%
-      \options{/@nt/listof/\@listofat/.newpush={\ifcsdef{#2}{\clearforchapter\csuse{#2}}{\csuse{#2}}}}%
+      \clearforchapter
+      \options{/@nt/listof/\@listofat/.newpush={%
+          \ifcsdef{#2}{%
+            \csuse{#2}%
+          }{%
+            \ClassError{novathesis}
+                       {CCannot make #2. Please report this problem in the “novathesis” github. Thanks!}{}%
+          }%
+      }}%
    ]%
 }
 
@@ -543,34 +530,32 @@
           \ntprintcovers%
     }%
     {frontmatter}{%
-          \bookmarksetup{startatroot}
           \ntthesisfrontmatter% Before the main text (TOC, etc) — Roman page numbering
-          \bookmarksetupnext{level=0}%
-          \hypertarget{bmfrontmatter}{}%
-          \bookmark[dest=bmfrontmatter]{\GetBkmString(frontmatter,\@LANG@MAIN)}%
-          \bookmarksetupnext{rellevel=1}%
-          \ntprintlist{/@nt/print/#1/\@DOCSTATUS}%
+          \phantomsection
+          \pdfbookmark[0]{\GetBkmString(frontmatter,\@LANG@MAIN)}{\HyperLocalCurrentHref}
+          % Nest all front-matter items under the "Front Matter" bookmark node.
+          % \@nt@bkm@level=1 shifts \ChapterNoTitle pages (copyright, dedication, …)
+          % to level 1; \shiftbookmarks shifts chapter-level items (list-ofs) likewise.
+          % \pdfbookmark[0]{Contents} and \pdfbookmark[0]{List of…} use explicit
+          % levels so they stay at level 0 and are unaffected by \shiftbookmarks.
+          \begingroup
+            \def\@nt@bkm@level{1}%
+            \shiftbookmarks{\ntprintlist{/@nt/print/#1/\@DOCSTATUS}}%
+          \endgroup
     }%
     {mainmatter}{%
-          \bookmarksetup{startatroot}
-          \ntthesismainmatter% Mainn text — Arabic page numbering
-          \bookmarksetup{level=0}%
+          \ntthesismainmatter% Main text — Arabic page numbering
           \thispagestyle{novathesis@mainmatter}%
           \pagestyle{novathesis@mainmatter}%
           \ntprintlist{/@nt/print/#1}%
     }%
     {backmatter}{%
-          \bookmarksetup{startatroot}
           \ntthesisbackmatter     % The back text — Arabic page numbering
-          \bookmarksetupnext{level=-1}%
-          \hypertarget{bmbackmatter}{}%
-          \bookmark[dest=bmbackmatter]{\GetBkmString(backmatter,\@LANG@MAIN)}%
-          \bookmarksetupnext{level=0}%
-          \ntprintlist{/@nt/print/#1}%
+          \phantomsection
+          \pdfbookmark[0]{\GetBkmString(backmatter,\@LANG@MAIN)}{\HyperLocalCurrentHref}
+          \shiftbookmarks{\ntprintlist{/@nt/print/#1}}%
     }%
     {backcover}{%
-          \bookmarksetup{startatroot}
-          \bookmarksetup{level=0}%
           \thispagestyle{empty}%
           \pagestyle{empty}%
           \ntprintbackcover%
@@ -583,9 +568,11 @@
     \begingroup
       \clearpage
       \ifcsmacro{ntprint##1}{%  \ntprint#1 is defined
+        % \bookmarksetupnext{rellevel=1}%
         \NTRunHook{ntprint##1/pre}\csuse{ntprint##1}\NTRunHook{ntprint##1/post}%
       }{%                       \ntprint#1 is undefined
         \ifcsmacro{##1}{%       \##1 is defined
+          % \bookmarksetupnext{rellevel=1}%
           \NTRunHook{##1/pre}\csuse{##1}\NTRunHook{##1/post}%
         }{%                     nothing is defined
           \ClassError{novathesis}{Invalid contents for frontmatter or mainmatter: [##1]}{}%
@@ -609,34 +596,27 @@
           \def\@matter{frontmatter}
         \fi
         \IfStrEq{\option{/novathesis/print/glossaries}}{\@matter}{%
-          \providebool{nt@anyglossary}%
-          \boolfalse{nt@anyglossary}%
-          \ifdefined\forallglossaries
-            \forallglossaries{\nt@glstype}{%
-              \ifdefined\ifglossaryempty
-                \ifglossaryempty{\nt@glstype}{}{\booltrue{nt@anyglossary}}%
-              \else\ifdefined\glsifentries
-                \glsifentries{\nt@glstype}{\booltrue{nt@anyglossary}}{}%
-              \else
-                \booltrue{nt@anyglossary}%
-              \fi\fi
+          % In the preamble:
+          \newif\ifGlossaryNotEmpty
+  
+          % Where you print glossaries:
+          % \shiftbookmarks{%
+            \forallglossaries{\thisglossary}{%
+                \GlossaryNotEmptyfalse
+                \forglsentries[\thisglossary]{\thisentry}{%
+                    \ifglsused{\thisentry}{\GlossaryNotEmptytrue}{}%
+                }%
+                \ifGlossaryNotEmpty
+                    % \bookmarksetupnext{level=1,keeplevel}%
+                    \printglossary[type=\thisglossary]%
+                \fi
             }%
-          \else
-            \booltrue{nt@anyglossary}%
-          \fi
-          \ifbool{nt@anyglossary}{%
-            \clearforchapter%
-            \ntselectlang{\@LANG@MAIN}%
-            \hypertarget{bmglossaries}{}%
-            \bookmarksetupnext{level=0}%
-            \bookmark[dest=bmglossaries]
-                    {\GetBkmString(glossaries,\@LANG@MAIN)}%
-            \printglossaries
-          }{}%
+          % }
         }{}%
       }%
   }{}%
 }
+
 
 % --------------------------------------------------------
 % DEFAULT VALUES FOR frontmatter AND mainmatter
@@ -970,15 +950,17 @@
   \optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}
 
 \newcommand{\@ntloadfile@i}[2][]{%
-  \IfFileExists{#2}{\input{#2}}{#1}}
+  \InputIfFileExists{#2}{}{#1}}
 
-\newcommand{\PrintAddedFile}[2][\@DOCTYPE]{%
+\NewDocumentCommand{\PrintAddedFile}{O{\@DOCTYPE} m}{%
   % #1=KEY
   % #2=file class
+  % #3=optional bookmark level
   \iffileadded[#1]{#2}
-      {\@nt@loadallfiles{#1}{#2}}
-      {}%
+    {\@nt@loadallfiles{#1}{#2}}
+    {}%
 }
+
 
 \newcommand{\iffileadded}[2][\@DOCTYPE]{%
   \ifoptiondefined{/@nt/file/#2/#1}}
