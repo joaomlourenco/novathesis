@@ -310,12 +310,27 @@
 \newcommand*{\ntprintannexes}{%
   \iffileadded{annex}{%
     \annex%
-    \clearforchapter\phantomsection
-    \pdfbookmark[1]{\annexplname}{\HyperLocalCurrentHref}
-    % After \annex (which calls \appendix), bookmark depth for chapters uses
-    % toclevel@appendix.  Set it to 2 so annex chapters appear as level-2
-    % children of the "Annexes" level-1 node.
+    % Place the "Annexes" group bookmark (level 1) on the correct page.
+    % Every \chapter begins with \clearforchapter (a page break).  If we
+    % call \clearforchapter + \phantomsection here, the bookmark lands on a
+    % blank intermediate page and the chapter's own \clearforchapter moves
+    % to the actual annex page — wrong.  Instead, we hijack \clearforchapter
+    % once: the very first call (from the first annex \chapter{}) performs
+    % the real page break, then immediately plants the bookmark on that same
+    % page, then restores \clearforchapter for all subsequent chapters.
+    \global\let\nt@orig@clearforchapter\clearforchapter
+    \gdef\clearforchapter{%
+      \nt@orig@clearforchapter
+      \phantomsection
+      \pdfbookmark[1]{\annexplname}{\HyperLocalCurrentHref}%
+      \global\let\clearforchapter\nt@orig@clearforchapter
+    }%
+    % Annex chapters use toclevel@appendix (because \anappendixtrue is set).
+    % Set it to 2 so they appear as level-2 children of the "Annexes" node.
+    % Set toclevel@section to 3 so annex sections nest under their chapter
+    % (level 2) rather than appearing as siblings (level 2 from \shiftbookmarks).
     \expandafter\def\csname toclevel@appendix\endcsname{2}%
+    \expandafter\def\csname toclevel@section\endcsname{3}%
     \@nt@foralllist{file}{annex}{\PrintAddedFile{annex}}%
   }{}%
 }
@@ -324,11 +339,15 @@
 \newcommand*{\annex}{%
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
-  \appendix%
-  % Re-apply annex-specific overrides AFTER \appendix: it resets \Hy@chapapp
-  % to "appendix" and \thechapter to \Alph, which would collide with appendix
-  % chapter anchors (both would get "appendix.A" etc.).
-  \xdef\Hy@chapapp{annex}%
+  % Do NOT call \appendix here.  Hyperref's patched \appendix sets
+  % \Hy@chapapp to "appendix", which would collide with appendix chapter
+  % anchors (both appendix and annex would get "appendix.A" etc.).
+  % Instead, manually replicate exactly what memoir's \appendix and
+  % hyperref's patch do, substituting "annex" branding throughout.
+  \gdef\@chapapp{\annexname}%           % memoir: display name in headings/TOC
+  \anappendixtrue%                      % memoir: use appendix-style TOC entries
+  \gdef\theHchapter{\Hy@AlphNoErr{chapter}}% hyperref: A,B,C… for PDF anchors
+  \xdef\Hy@chapapp{annex}%             % hyperref: anchor prefix → annex.A etc.
   \gdef\chaptername{\annexname}%
   \gdef\thechapter{\annexcounter\c@chapter}%
 }%
