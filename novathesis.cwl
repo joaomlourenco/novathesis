@@ -110,10 +110,11 @@
 
 # ============================================================
 # CUSTOM LIST OF …
-#   \ntaddlistof[lang]{title}
+#   \ntaddlistof[matter]{listof}
+#   matter: frontmatter (default) or backmatter
 # ============================================================
-\ntaddlistof{%<title%>}
-\ntaddlistof[%<lang%>]{%<title%>}
+\ntaddlistof{%<listof%>}
+\ntaddlistof[%<matter%>]{%<listof%>}
 
 # ============================================================
 # TEMPLATE.TEX HIGH-LEVEL PRINT CALLS

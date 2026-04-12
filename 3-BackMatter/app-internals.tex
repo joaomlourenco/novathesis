@@ -376,16 +376,23 @@ Common \texttt{key} values include:
 
 %%--------------------------------------------------------------------
 \begin{macrodoc}{\textbackslash ntaddlistof}
-\sig{\textbackslash ntaddlistof\{\mv{title}\}}
-\sig{\textbackslash ntaddlistof[\mv{lang}]\{\mv{title}\}}
+\sig{\textbackslash ntaddlistof\{\mv{listof}\}}
+\sig{\textbackslash ntaddlistof[\mv{matter}]\{\mv{listof}\}}
 
-Adds a custom "List of~…" entry to the front matter.
-\texttt{\textbackslash ntprintalllistof} (called internally by
-\texttt{\textbackslash ntprint\{frontmatter\}}) will then typeset it.
+Registers a "List of~…" to be printed by
+\texttt{\textbackslash ntprint\{frontmatter\}} or
+\texttt{\textbackslash ntprint\{backmatter\}}.
+The optional \mv{matter} argument is either
+\texttt{frontmatter} (default) or \texttt{backmatter},
+and controls where the list is typeset.
+\mv{listof} is the internal identifier of the list
+(e.g.\ \texttt{figures}, \texttt{tables}, \texttt{listings}).
 
 \begin{latexcode}
-\ntaddlistof[en]{List of Algorithms}
-\ntaddlistof[pt]{Lista de Algoritmos}
+% Print list of figures in front matter (default)
+\ntaddlistof{figures}
+% Print list of listings in back matter
+\ntaddlistof[backmatter]{listings}
 \end{latexcode}
 \end{macrodoc}
 
@@ -577,93 +584,113 @@ This document was prepared using the \novathesis{} template.
 The table below lists all documented macros with a short description
 and the configuration file where they are typically used.
 
-\bigskip
-
-\begin{ShadedTabular}{lp{5.8cm}l}
-  \textbf{Macro} & \textbf{Purpose} & \textbf{Typical location} \\
-  %
-  \texttt{\textbackslash documentclass\{novathesis\}}
+%% Column colours for the xltabular summary table
+\rowcolors{2}{rowgray}{white}%
+\begin{xltabular}{\linewidth}{@{}
+    >{\ttfamily}l
+    >{\raggedright\arraybackslash}X
+    >{\ttfamily\small}l
+  @{}}
+  %% --- first-page header ---
+  \rowcolor{headgray}
+  \normalfont\bfseries Macro &
+  \normalfont\bfseries Purpose &
+  \normalfont\bfseries Typical location \\[\jot]
+  \endfirsthead
+  %% --- continuation header ---
+  \rowcolor{headgray}
+  \normalfont\bfseries Macro &
+  \normalfont\bfseries Purpose &
+  \normalfont\bfseries Typical location \\[\jot]
+  \endhead
+  %% --- continuation footer ---
+  \rowcolor{white}\multicolumn{3}{r}{\footnotesize\itshape (continued on next page)} \\
+  \endfoot
+  %% --- last-page footer ---
+  \endlastfoot
+  %% --- data rows ---
+  \makecell[l]{\textbackslash documentclass\\\hspace*{1cm}\{novathesis\}}
     & Load the template class
-    & \texttt{template.tex} \\
-  \texttt{\textbackslash ntsetup}
+    & template.tex \\
+  \textbackslash ntsetup
     & Master document configuration
-    & \texttt{0-Config/1\_novathesis.tex} \\
-  \texttt{\textbackslash nttitle}
+    & 0-Config/1\_novathesis.tex \\
+  \textbackslash nttitle
     & Set title (type + language)
-    & \texttt{0-Config/3\_cover.tex} \\
-  \texttt{\textbackslash ntauthorname}
+    & 0-Config/3\_cover.tex \\
+  \textbackslash ntauthorname
     & Author full and short name
-    & \texttt{0-Config/3\_cover.tex} \\
-  \texttt{\textbackslash ntauthordegree}
+    & 0-Config/3\_cover.tex \\
+  \textbackslash ntauthordegree
     & Author's pre-existing degree
-    & \texttt{0-Config/3\_cover.tex} \\
-  \texttt{\textbackslash ntdate}
+    & 0-Config/3\_cover.tex \\
+  \textbackslash ntdate
     & Submission / exam date
-    & \texttt{0-Config/3\_cover.tex} \\
-  \texttt{\textbackslash ntdepartment}
+    & 0-Config/3\_cover.tex \\
+  \textbackslash ntdepartment
     & Override department name
-    & \texttt{0-Config/3\_cover.tex} \\
-  \texttt{\textbackslash ntdegreename}
+    & 0-Config/3\_cover.tex \\
+  \textbackslash ntdegreename
     & Override degree name
-    & \texttt{0-Config/3\_cover.tex} \\
-  \texttt{\textbackslash ntspecialization}
+    & 0-Config/3\_cover.tex \\
+  \textbackslash ntspecialization
     & Override specialisation name
-    & \texttt{0-Config/3\_cover.tex} \\
-  \texttt{\textbackslash ntsponsors}
+    & 0-Config/3\_cover.tex \\
+  \textbackslash ntsponsors
     & Funding sponsor (text or logo)
-    & \texttt{0-Config/3\_cover.tex} \\
-  \texttt{\textbackslash ntaddperson}
+    & 0-Config/3\_cover.tex \\
+  \textbackslash ntaddperson
     & Register adviser or jury member
-    & \texttt{0-Config/3\_cover.tex} \\
-  \texttt{\textbackslash ntprintpersons}
+    & 0-Config/3\_cover.tex \\
+  \textbackslash ntprintpersons
     & Typeset adviser/jury table
-    & Cover \texttt{.tex} files \\
-  \texttt{\textbackslash ntaddfile}
+    & Cover .tex files \\
+  \textbackslash ntaddfile
     & Register any user file with the template
-    & \texttt{0-Config/4\_files.tex} \\
-  \texttt{\textbackslash ntprint}
+    & 0-Config/4\_files.tex \\
+  \textbackslash ntprint
     & Print one named document section
-    & \texttt{template.tex} \\
-  \texttt{\textbackslash ntprintlist}
+    & \normalfont\emph{ Internal} \\
+  \textbackslash ntprintlist
     & Print all files in a registered list
-    & \texttt{template.tex} \\
-  \texttt{\textbackslash ntaddlistof}
-    & Add a custom "List of~…" entry
-    & \texttt{0-Config/4\_files.tex} \\
-  \texttt{\textbackslash ntaddtocover}
+    & Internal \\
+  \textbackslash ntaddlistof
+    & Register a ``List of\,\ldots''; optional arg \texttt{frontmatter} (default) or \texttt{backmatter} sets where it prints
+    & 0-Config/4\_files.tex \\
+  \textbackslash ntaddtocover
     & Append content to cover slot(s)
-    & School \texttt{.ldf} / \texttt{0-Config/} \\
-  \texttt{\textbackslash ntAddToCoverTikz}
+    & School .clo files \\
+  \textbackslash ntAddToCoverTikz
     & Inject Ti\textit{k}Z code onto cover canvas
-    & School \texttt{.ldf} files \\
-  \texttt{\textbackslash ifphddoc} / \texttt{\textbackslash ifmscdoc}
+    & School .clo files \\
+  \textbackslash ifphddoc\,/\,\textbackslash ifmscdoc
     & Conditional on document type
-    & \texttt{0-Config/4\_files.tex}, chapters \\
-  \texttt{\textbackslash ifdocfinal}
+    & \makecell[l]{0-Config/4\_files.tex,\\chapters} \\
+  \textbackslash ifdocfinal
     & Conditional on document status
-    & \texttt{0-Config/4\_files.tex}, chapters \\
-  \texttt{\textbackslash ifxeorlua}
+    & \makecell[l]{0-Config/4\_files.tex,\\chapters} \\
+  \textbackslash ifxeorlua
     & Conditional on \LaTeX{} engine
-    & \texttt{0-Config/5\_packages.tex} \\
-  \texttt{\textbackslash NTDeclareHook}
+    & 0-Config/5\_packages.tex \\
+  \textbackslash NTDeclareHook
     & Declare an extension hook
-    & School \texttt{.ldf} files \\
-  \texttt{\textbackslash NTAddToHook}
+    & School .clo files \\
+  \textbackslash NTAddToHook
     & Add code to an extension hook
-    & School \texttt{.ldf} files \\
-  \texttt{\textbackslash NTRunHook}
+    & School .clo files \\
+  \textbackslash NTRunHook
     & Execute an extension hook
     & Class internals \\
-  \texttt{\textbackslash shiftbookmarks}
+  \textbackslash shiftbookmarks
     & Shift PDF bookmark levels
-    & \texttt{nt-render-matter.sty} \\
-  \texttt{\textbackslash ntselectlang}
+    & nt-render-matter.sty \\
+  \textbackslash ntselectlang
     & Switch active language mid-document
     & Abstract files, chapters \\
-  \texttt{\textbackslash debuggrid}
+  \textbackslash debuggrid
     & Overlay layout debug grid
     & During development \\
-  \texttt{\textbackslash novathesis}
+  \textbackslash novathesis
     & Template name in canonical style
     & Anywhere in text \\
-\end{ShadedTabular}
+\end{xltabular}
