@@ -22,13 +22,13 @@ This chapter documents the cover page engine used by the \texttt{novathesis}
 class.  It is written for developers who need to add cover support for a new
 institution, or who want to understand or refactor an existing cover
 definition.  End users who only want to configure metadata (title, author,
-committee) should work exclusively with \verb!0-Config/3_cover.tex!.
+committee) should work exclusively with \latexinline{0-Config/3_cover.tex}.
 
 The cover engine is implemented in two files:
 \begin{itemize}
-  \item \verb!NOVAthesisFiles/StyFiles/nt-covers.sty! — the legacy
+  \item \latexinline{NOVAthesisFiles/StyFiles/nt-covers.sty} — the legacy
         implementation, retained for compatibility.
-  \item \verb!NOVAthesisFiles/StyFiles/nt-covers.sty! — the modern
+  \item \latexinline{NOVAthesisFiles/StyFiles/nt-covers.sty} — the modern
         \LaTeX3/expl3 reimplementation (the one used by default).
 \end{itemize}
 Both expose an identical public API; the remainder of this chapter describes
@@ -44,23 +44,23 @@ Every cover page is rendered through three independent layers applied in
 order:
 
 \begin{enumerate}
-  \item \textbf{Background colour.}  A solid \verb!\pagecolor{}! fills the
-        entire page.  Set with \verb!\thesiscover(id,bgcolor):={colorname}!.
+  \item \textbf{Background colour.}  A solid \latexinline{\pagecolor{}} fills the
+        entire page.  Set with \latexinline{\thesiscover(id,bgcolor):={colorname}}.
   \item \textbf{Background image.}  A full-bleed graphic is stretched to
-        \verb!\paperwidth! $\times$ \verb!\paperheight!.  Set with
-        \verb!\thesiscover(id,image):={filename}!.
-  \item \textbf{Content layer.}  A \verb!tikzpicture! overlay anchors a
-        large \verb!minipage! at the top-left of the text area (offset by the
+        \latexinline{\paperwidth} $\times$ \latexinline{\paperheight}.  Set with
+        \latexinline{\thesiscover(id,image):={filename}}.
+  \item \textbf{Content layer.}  A \latexinline{tikzpicture} overlay anchors a
+        large \latexinline{minipage} at the top-left of the text area (offset by the
         cover margins).  Inside this minipage, elements registered with
-        \verb!\ntaddtocover! are typeset top-to-bottom.  TikZ elements
-        registered with \verb!tikz=true! or \verb!\ntAddToCoverTikz! are
-        collected and rendered in a \emph{second} overlay \verb!tikzpicture!
+        \latexinline{\ntaddtocover} are typeset top-to-bottom.  TikZ elements
+        registered with \latexinline{tikz=true} or \latexinline{\ntAddToCoverTikz} are
+        collected and rendered in a \emph{second} overlay \latexinline{tikzpicture}
         drawn after the minipage, so they escape the minipage's coordinate
         space.
 \end{enumerate}
 
 The cover text area is defined by four cover-specific margins (see
-Section~\ref{sec:covers_margins}).  All \verb!\ntaddtocover! elements are
+Section~\ref{sec:covers_margins}).  All \latexinline{\ntaddtocover} elements are
 stacked \emph{vertically} inside this area, in the order they were
 registered.
 
@@ -89,7 +89,7 @@ Each cover page has a two-part identifier \texttt{major\,-\,minor}:
 
 The \emph{major} number (1, 2, N) identifies the cover pair; the \emph{minor}
 number (1, 2) selects the recto or verso page within the pair.  A
-comma-separated list of IDs (e.g.\ \verb!1-1,2-1!) can be passed to any
+comma-separated list of IDs (e.g.\ \latexinline{1-1,2-1}) can be passed to any
 command that accepts cover IDs.
 
 
@@ -105,15 +105,15 @@ command that accepts cover IDs.
 
 Margins for the text area (the minipage placed on the content layer) are
 separate from the normal page margins.  They are set with the
-\verb!\margin(cover,...):={...}! family:
+\latexinline{\margin(cover,...):={...}} family:
 
-\begin{verbatim}
+\begin{latexcode}
 \SetMargin*(cover,top)={8.6cm}    % default top margin for all cover pages
 \SetMargin*(cover,bottom)={1.5cm}
 \SetMargin*(cover,left)={3.55cm}
 \SetMargin*(cover,right)={2.0cm}
 \SetMargin*(cover,2-1,top)={6.6cm} % override top margin for cover 2-1 only
-\end{verbatim}
+\end{latexcode}
 
 The cover-ID-specific variant takes precedence when printing that particular
 page.  Only the text area is affected; background images always fill the
@@ -129,7 +129,7 @@ These properties are stored in the \texttt{thesiscover} data family and
 retrieved through a prioritised lookup that checks the current document type
 and degree class before falling back to the generic key:
 
-\begin{verbatim}
+\begin{latexcode}
 % Set a solid background colour for cover 1-1
 \SetThesisCover*(1-1,bgcolor)={fctdarkblue}
 
@@ -141,20 +141,20 @@ and degree class before falling back to the generic key:
 
 % Set the default text colour for the entire cover page
 \SetThesisCover*(1-1,textcolor)={white}
-\end{verbatim}
+\end{latexcode}
 
 Supported keys:
 \begin{itemize}
-  \item \verb!bgcolor! — name of a colour defined with \verb!\definecolor!.
-  \item \verb!image! — file name (no extension; passed to
-        \verb!\includegraphics!).  The image is automatically scaled to
-        \verb!\paperwidth! $\times$ \verb!\paperheight!.
-  \item \verb!textcolor! — sets \verb!\color{...}! for the entire content
+  \item \latexinline{bgcolor} — name of a colour defined with \latexinline{\definecolor}.
+  \item \latexinline{image} — file name (no extension; passed to
+        \latexinline{\includegraphics}).  The image is automatically scaled to
+        \latexinline{\paperwidth} $\times$ \latexinline{\paperheight}.
+  \item \latexinline{textcolor} — sets \latexinline{\color{...}} for the entire content
         layer of that cover page.
 \end{itemize}
 
 The lookup cascade used internally is:
-\begin{verbatim}
+\begin{latexcode}
 \@DOCTYPE, \@DEGREEACR, cover-id, key
 \@DOCCLASS, \@DEGREEACR, cover-id, key
 \@DEGREEACR, cover-id, key
@@ -163,7 +163,7 @@ The lookup cascade used internally is:
 \@DOCCLASS, cover-id, key
 cover-id, key
 key
-\end{verbatim}
+\end{latexcode}
 
 The first matching entry wins, so you can easily have a generic fallback with
 targeted per-doctype overrides.
@@ -174,23 +174,23 @@ targeted per-doctype overrides.
 \label{sec:ntaddtocover}
 %%=======================================================================
 
-\verb!\ntaddtocover! is the primary interface for populating a cover page.
+\latexinline{\ntaddtocover} is the primary interface for populating a cover page.
 It registers a \emph{content block} — either a vertical box or a TikZ code
 snippet — for one or more cover pages.
 
 \medskip
 \noindent\textbf{Syntax:}
-\begin{verbatim}
+\begin{latexcode}
 \ntaddtocover[<attributes>]{<cover-id-list>}{<code>}
-\end{verbatim}
+\end{latexcode}
 
 \begin{description}
   \item[\texttt{[attributes]}] Optional comma-separated key=value list.
         See Section~\ref{sec:ntaddtocover_attrs}.
   \item[\texttt{\{cover-id-list\}}] Comma-separated list of cover IDs (e.g.\
-        \verb!1-1,2-1!) to which this element is appended.
+        \latexinline{1-1,2-1}) to which this element is appended.
   \item[\texttt{\{code\}}] The content to typeset.  Evaluated inside a
-        \verb!minipage! (unless \verb!tikz=true!; see
+        \latexinline{minipage} (unless \latexinline{tikz=true}; see
         Section~\ref{sec:ntaddtocover_tikz}).
 \end{description}
 
@@ -199,12 +199,12 @@ produces the topmost block.
 
 \medskip
 \noindent\textbf{Minimal example — adding a title block:}
-\begin{verbatim}
+\begin{latexcode}
 \ntaddtocover[halign=l, height=3cm, valign=c]{1-1}{%
   \fontsize{20}{21}\selectfont
   \textbf{\GetDocTitle(\@LANG@COVER,main)}%
 }
-\end{verbatim}
+\end{latexcode}
 
 
 %%-----------------------------------------------------------------------
@@ -256,8 +256,8 @@ the filter does not match the current document):
 
 \begin{description}
   \item[\texttt{halign=c|l|r|j}] Horizontal alignment of content inside the
-        box (default: \texttt{c}).  Values: \texttt{c} = \verb!\centering!,
-        \texttt{l} = \verb!\raggedright!, \texttt{r} = \verb!\raggedleft!,
+        box (default: \texttt{c}).  Values: \texttt{c} = \latexinline{\centering},
+        \texttt{l} = \latexinline{\raggedright}, \texttt{r} = \latexinline{\raggedleft},
         \texttt{j} = justified (no alignment command).
   \item[\texttt{valign=c|t|b}] Vertical alignment of content inside a
         fixed-height box (default: \texttt{c}).  Ignored when no \texttt{height}
@@ -269,9 +269,9 @@ the filter does not match the current document):
 
 \begin{description}
   \item[\texttt{color=\{<colorname>\}}] Foreground text colour inside the box.
-        Overrides \texttt{textcolor} from \verb!\thesiscover!.
+        Overrides \texttt{textcolor} from \latexinline{\thesiscover}.
   \item[\texttt{bgcolor=\{<colorname>\}}] Background colour of the box
-        (applied via \verb!\colorbox!).  Default: transparent.
+        (applied via \latexinline{\colorbox}).  Default: transparent.
 \end{description}
 
 \medskip
@@ -281,10 +281,10 @@ The \texttt{vspace} attribute controls the vertical gap \emph{before} the
 element.  It accepts either a \TeX\ dimension or a plain integer:
 
 \begin{description}
-  \item[\texttt{vspace=\{<dim>\}}] Insert a fixed \verb!\vspace*{<dim>}! above
+  \item[\texttt{vspace=\{<dim>\}}] Insert a fixed \latexinline{\vspace*{<dim>}} above
         the element.
   \item[\texttt{vspace=\{<n>\}}] When the value is a plain integer, insert an
-        elastic \verb!\vskip 0pt plus <n>fill! instead.  This creates a
+        elastic \latexinline{\vskip 0pt plus <n>fill} instead.  This creates a
         stretchable gap — setting \texttt{vspace=1} on consecutive elements
         distributes the available vertical space evenly between them.
   \item[\texttt{vspace/phd}, \texttt{vspace/msc}] Per-doctype override of
@@ -301,7 +301,7 @@ element.  It accepts either a \TeX\ dimension or a plain integer:
 \noindent\textbf{Layout control attributes:}
 
 \begin{description}
-  \item[\texttt{newpar=true|false}] Emit a \verb!\par! after the element
+  \item[\texttt{newpar=true|false}] Emit a \latexinline{\par} after the element
         (default: \texttt{true}).  Set \texttt{newpar=false} to place the
         next element on the same line.
   \item[\texttt{tikz=true|false}] Treat the content block as raw TikZ code to
@@ -317,7 +317,7 @@ element.  It accepts either a \TeX\ dimension or a plain integer:
 %%-----------------------------------------------------------------------
 
 The most common cover layout is a vertical stack of boxes, similar to a
-\verb!minipage! column.  Each \verb!\ntaddtocover! call appends one box to the
+\latexinline{minipage} column.  Each \latexinline{\ntaddtocover} call appends one box to the
 column.  The following design rules apply:
 
 \begin{enumerate}
@@ -336,7 +336,7 @@ column.  The following design rules apply:
 \end{enumerate}
 
 Example — logo, title, elastic gap, date:
-\begin{verbatim}
+\begin{latexcode}
 % Logo at the top of the text area
 \ntaddtocover[halign=l]{1-1,2-1}{%
   \includegraphics[height=1.5cm]{my-school-logo}%
@@ -359,16 +359,16 @@ Example — logo, title, elastic gap, date:
   \fontsize{11}{11}\selectfont
   \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}%
 }
-\end{verbatim}
+\end{latexcode}
 
 \medskip
 
 \noindent\textbf{Conditional content per document type:}
 
-Use the \texttt{degree} filter or the internal \verb!\ifphddoc!/\verb!\ifmscdoc!
+Use the \texttt{degree} filter or the internal \latexinline{\ifphddoc}/\latexinline{\ifmscdoc}
 helpers when the cover layout differs between PhD and MSc documents:
 
-\begin{verbatim}
+\begin{latexcode}
 \ntaddtocover[halign=l, height=3cm, valign=c]{1-1}{%
   \ifphddoc{%
     \fontsize{20}{21}\selectfont
@@ -378,19 +378,19 @@ helpers when the cover layout differs between PhD and MSc documents:
     \textbf{\GetDocAuthor(name)}%
   }%
 }
-\end{verbatim}
+\end{latexcode}
 
 Alternatively, register two separate elements with complementary
 \texttt{degree} filters and identical heights so they occupy the same space:
 
-\begin{verbatim}
+\begin{latexcode}
 \ntaddtocover[degree=phd, height=3cm, valign=c]{1-1}{%
   \fontsize{20}{21}\selectfont \textbf{\GetDocTitle(\@LANG@COVER,main)}%
 }
 \ntaddtocover[degree=msc, height=3cm, valign=c]{1-1}{%
   \fontsize{17}{17}\selectfont \textbf{\GetDocAuthor(name)}%
 }
-\end{verbatim}
+\end{latexcode}
 
 
 %%-----------------------------------------------------------------------
@@ -400,15 +400,15 @@ Alternatively, register two separate elements with complementary
 
 Setting \texttt{tikz=true} in the attribute list causes the content block to
 be collected as \emph{overlay TikZ code} rather than box content.  The block
-is executed inside a \verb!tikzpicture[remember picture, overlay]! that covers
+is executed inside a \latexinline{tikzpicture[remember picture, overlay]} that covers
 the whole page, drawn after the text-layer minipage has been placed.
 
-This means the coordinate origin is the \verb!current page! node, not the
+This means the coordinate origin is the \latexinline{current page} node, not the
 text area, so you can position elements anywhere on the page with absolute
-coordinates.  The \verb!calc! TikZ library (\verb!\usetikzlibrary{calc}!) is
+coordinates.  The \latexinline{calc} TikZ library (\latexinline{\usetikzlibrary{calc}}) is
 loaded by default and can be used freely.
 
-\begin{verbatim}
+\begin{latexcode}
 % Place the university logo at the top-left corner (absolute coordinates)
 \ntaddtocover[tikz]{1-1}{%
   \node[anchor=center]
@@ -418,10 +418,10 @@ loaded by default and can be used freely.
   \draw[thick]
     ($(current page.north west) + (3.5cm,-1cm)$) -- ++(0,-2cm);%
 }
-\end{verbatim}
+\end{latexcode}
 
 All \texttt{tikz=true} blocks registered for the same cover are concatenated
-into a single \verb!tikzpicture!, in registration order.
+into a single \latexinline{tikzpicture}, in registration order.
 
 \medskip
 \noindent\textbf{When to use \texttt{tikz=true} vs.\ plain box elements:}
@@ -440,30 +440,30 @@ into a single \verb!tikzpicture!, in registration order.
 \label{sec:ntaddtocovertikz}
 %%=======================================================================
 
-\verb!\ntAddToCoverTikz! is a convenience command for registering individual
+\latexinline{\ntAddToCoverTikz} is a convenience command for registering individual
 TikZ nodes or drawing commands.  It mirrors the syntax of TikZ's own node
 and draw commands, inserting them into the same overlay picture as
-\verb!\ntaddtocover[tikz]!.
+\latexinline{\ntaddtocover[tikz]}.
 
 \medskip
 \noindent\textbf{Syntax:}
-\begin{verbatim}
+\begin{latexcode}
 \ntAddToCoverTikz<cmd>[opts](position)[rest]{cover-id-list}{code}
-\end{verbatim}
+\end{latexcode}
 
 \begin{description}
-  \item[\texttt{<cmd>}] Optional: a TikZ command other than \verb!\node!
-        (use angle brackets, e.g.\ \verb!<\draw>!).  When omitted, the
-        command defaults to \verb!\node!.
+  \item[\texttt{<cmd>}] Optional: a TikZ command other than \latexinline{\node}
+        (use angle brackets, e.g.\ \latexinline{<\draw>}).  When omitted, the
+        command defaults to \latexinline{\node}.
   \item[\texttt{[opts]}] Optional TikZ options for the node or command (square
         brackets, default empty).
   \item[\texttt{(position)}] Required: position of the node or command, in
-        the TikZ coordinate system relative to \verb!current page! (parentheses).
+        the TikZ coordinate system relative to \latexinline{current page} (parentheses).
   \item[\texttt{[rest]}] Optional: additional TikZ node syntax placed between
-        the position and the final \verb!{code}! argument (square brackets,
+        the position and the final \latexinline{{code}} argument (square brackets,
         default empty).
   \item[\texttt{\{cover-id-list\}}] Comma-separated list of cover IDs.
-  \item[\texttt{\{code\}}] Node content (when using the default \verb!\node!
+  \item[\texttt{\{code\}}] Node content (when using the default \latexinline{\node}
         command) or the draw-path code (when using a custom command).
 \end{description}
 
@@ -471,19 +471,19 @@ and draw commands, inserting them into the same overlay picture as
 \noindent\textbf{How the arguments map to TikZ output:}
 
 When no command is specified, the generated TikZ is:
-\begin{verbatim}
+\begin{latexcode}
 \node[opts] at (position) rest {code};
-\end{verbatim}
+\end{latexcode}
 
-When a command \verb!<\draw>! is specified:
-\begin{verbatim}
+When a command \latexinline{<\draw>} is specified:
+\begin{latexcode}
 \draw[opts] (position) rest;
-\end{verbatim}
+\end{latexcode}
 (note: \texttt{code} is ignored in command mode)
 
 \medskip
 \noindent\textbf{Examples:}
-\begin{verbatim}
+\begin{latexcode}
 % Default \node — place a logo
 \ntAddToCoverTikz
   [anchor=north east]
@@ -498,14 +498,14 @@ When a command \verb!<\draw>! is specified:
   [-- ++(\paperwidth-2cm, 0)]
   {1-1,2-1}
   {}
-\end{verbatim}
+\end{latexcode}
 
 \medskip
 \noindent\textbf{Note on \texttt{yscale=-1}.}  The overlay picture for
-\verb!\ntAddToCoverTikz! uses \verb!yscale=-1!, so the $y$-axis points
-\emph{downward}.  Coordinates like \verb!(current page.north west) + (x,-y)!
+\latexinline{\ntAddToCoverTikz} uses \latexinline{yscale=-1}, so the $y$-axis points
+\emph{downward}.  Coordinates like \latexinline{(current page.north west) + (x,-y)}
 move right and \emph{down} from the top-left corner.  The plain
-\verb!\ntaddtocover[tikz]! blocks use a \emph{standard} overlay without
+\latexinline{\ntaddtocover[tikz]} blocks use a \emph{standard} overlay without
 \texttt{yscale}, so their coordinate conventions differ.
 
 
@@ -515,14 +515,14 @@ move right and \emph{down} from the top-left corner.  The plain
 %%=======================================================================
 
 Hooks let you execute code at specific points in the cover rendering pipeline
-without modifying the \verb!\ntaddtocover! element list.  They are registered
-with \verb!\NTAddToHook!:
+without modifying the \latexinline{\ntaddtocover} element list.  They are registered
+with \latexinline{\NTAddToHook}:
 
-\begin{verbatim}
+\begin{latexcode}
 \NTAddToHook{cover/1-1/pre}{\sffamily\color{white}}
 \NTAddToHook{cover/2-1/pre}{\sffamily}
 \NTAddToHook{cover/post}{\pagecolor{white}} % reset after each cover
-\end{verbatim}
+\end{latexcode}
 
 Available hook points (in execution order for a single cover page):
 
@@ -554,7 +554,7 @@ Available hook points (in execution order for a single cover page):
         page inside the \texttt{cover/<id>/pre} hook.
   \item Reset font or colour in \texttt{cover/post} to avoid bleeding into the
         rest of the document.
-  \item Load cover-specific fonts (e.g.\ via \verb!\setmainfont! for
+  \item Load cover-specific fonts (e.g.\ via \latexinline{\setmainfont} for
         \hologo{LuaLaTeX}/\hologo{XeLaTeX}) in \texttt{cover/pre}.
 \end{itemize}
 
@@ -564,20 +564,20 @@ Available hook points (in execution order for a single cover page):
 \label{sec:covers_debug}
 %%=======================================================================
 
-Enable debug mode in \verb!0-Config/1_novathesis.tex!:
+Enable debug mode in \latexinline{0-Config/1_novathesis.tex}:
 
-\begin{verbatim}
+\begin{latexcode}
 \ntsetup{debug={cover,spine}}
-\end{verbatim}
+\end{latexcode}
 
 With \texttt{cover} in the debug set, the engine automatically calls
-\verb!\debuggrid! over every cover page and draws thin frames around each
-text box placed by \verb!\ntaddtocover!.
+\latexinline{\debuggrid} over every cover page and draws thin frames around each
+text box placed by \latexinline{\ntaddtocover}.
 
-You can also call \verb!\debuggrid! manually inside a cover element:
-\begin{verbatim}
+You can also call \latexinline{\debuggrid} manually inside a cover element:
+\begin{latexcode}
 \ntaddtocover{1-1}{\debuggrid[cyan]}
-\end{verbatim}
+\end{latexcode}
 
 The grid draws:
 \begin{itemize}
@@ -592,10 +592,10 @@ corner of the text area.
 
 \medskip
 A fast iteration workflow:
-\begin{verbatim}
+\begin{bashcode}
 # Build the cover only (mode=2 skips all document content)
 python .Build/build.py nova/fct --mode 2
-\end{verbatim}
+\end{bashcode}
 
 This rebuilds only the front cover page, giving fast feedback when tuning
 positions and margins.
@@ -607,7 +607,7 @@ positions and margins.
 %%=======================================================================
 
 The following sequence describes what happens when
-\verb!\ntprintcoversingle{1}{1}! (cover \texttt{1-1}) is called:
+\latexinline{\ntprintcoversingle{1}{1}} (cover \texttt{1-1}) is called:
 
 \begin{enumerate}
   \item A fresh group is opened; \texttt{cover/pre} and
@@ -616,20 +616,20 @@ The following sequence describes what happens when
   \item \texttt{thispagestyle{empty}} suppresses headers and footers.
   \item Background colour lookup: the engine searches the
         \texttt{thesiscover} data store for a matching \texttt{bgcolor} key
-        and calls \verb!\pagecolor!.
+        and calls \latexinline{\pagecolor}.
   \item Background image lookup: if an \texttt{image} key is found, a
-        full-page \verb!tikzpicture! overlay renders it.
+        full-page \latexinline{tikzpicture} overlay renders it.
   \item \texttt{cover/1-1/text/pre} hook.
-  \item Cover margins are read; a \verb!tikzpicture! overlay anchors a
-        \verb!minipage! at \verb!current page.north west! offset by those
+  \item Cover margins are read; a \latexinline{tikzpicture} overlay anchors a
+        \latexinline{minipage} at \latexinline{current page.north west} offset by those
         margins.
   \item Inside the minipage, each element registered with
-        \verb!\ntaddtocover[!…\texttt{]}\verb!{1-1}! is processed in order.
+        \latexinline{\ntaddtocover[…]{1-1}} is processed in order.
         For each element the engine: resolves \texttt{vspace}, typeset the
         content into a box, applies \texttt{bgcolor} wrapping, and emits the
         box.
   \item \texttt{tikz=true} elements accumulated during step~8 are emitted in
-        a second overlay \verb!tikzpicture!.
+        a second overlay \latexinline{tikzpicture}.
   \item \texttt{cover/1-1/text/post}, \texttt{cover/1-1/post}, and
         \texttt{cover/post} hooks are run.
   \item The group is closed.
@@ -646,16 +646,16 @@ This section walks through adding a complete cover definition.  Substitute
 
 \medskip
 \noindent\textbf{1.  Create the directory tree:}
-\begin{verbatim}
+\begin{bashcode}
 NOVAthesisFiles/Schools/myuniv/myfac/
 NOVAthesisFiles/Schools/myuniv/myfac/Images/
-\end{verbatim}
+\end{bashcode}
 
 \medskip
 \noindent\textbf{2.  Create the defaults file}
-\verb!myuniv-myfac-defaults.clo!:
+\latexinline{myuniv-myfac-defaults.clo}:
 
-\begin{verbatim}
+\begin{latexcode}
 %!TEX root=../../../template.tex
 %% myuniv/myfac/myuniv-myfac-defaults.clo
 
@@ -777,32 +777,32 @@ NOVAthesisFiles/Schools/myuniv/myfac/Images/
   \PrintDateISO{\GetDocDate(submission,year)-%
                 \GetDocDate(submission,month)}%
 }
-\end{verbatim}
+\end{latexcode}
 
 \medskip
 \noindent\textbf{3.  Add logos} to
-\verb!NOVAthesisFiles/Schools/myuniv/myfac/Images/!.
+\latexinline{NOVAthesisFiles/Schools/myuniv/myfac/Images/}.
 Supported formats: \texttt{.pdf} (preferred for vector logos), \texttt{.png},
 \texttt{.jpg}.
 
 \medskip
 \noindent\textbf{4.  Test with cover-only mode:}
-\begin{verbatim}
+\begin{bashcode}
 python .Build/build.py myuniv/myfac --mode 2
-\end{verbatim}
+\end{bashcode}
 
 \medskip
 \noindent\textbf{5.  Test all document types:}
-\begin{verbatim}
+\begin{bashcode}
 python .Build/build.py myuniv/myfac --doctype phd --docstatus final
 python .Build/build.py myuniv/myfac --doctype msc --docstatus final
-\end{verbatim}
+\end{bashcode}
 
 \medskip
 \noindent\textbf{6.  Enable debug mode} during development to verify spacing:
-\begin{verbatim}
+\begin{latexcode}
 \ntsetup{debug={cover}}
-\end{verbatim}
+\end{latexcode}
 
 
 %%=======================================================================
@@ -815,38 +815,38 @@ python .Build/build.py myuniv/myfac --doctype msc --docstatus final
 \label{sec:covers_nova_fct}
 %%-----------------------------------------------------------------------
 
-The NOVA~FCT cover (\verb!NOVAthesisFiles/Schools/nova/fct/nova-fct-defaults.clo!)
+The NOVA~FCT cover (\latexinline{NOVAthesisFiles/Schools/nova/fct/nova-fct-defaults.clo})
 demonstrates a typical mixed strategy:
 
 \begin{itemize}
   \item All logos and graphical decorations (university logo, school logo,
         separator rule, department name) are placed with
-        \verb!\ntaddtocover[tikz]{...}!, giving pixel-precise positioning
+        \latexinline{\ntaddtocover[tikz]{...}}, giving pixel-precise positioning
         independent of the text flow.
   \item All text content (title, author, degree, date) uses plain
-        \verb!\ntaddtocover! elements stacked in the cover's text area, which
+        \latexinline{\ntaddtocover} elements stacked in the cover's text area, which
         starts at \texttt{margin(cover,top)=8.6cm} — well below the
         absolutely-positioned logo band.
   \item The front page (cover \texttt{2-1}) reuses the same elements but with
         a lighter margin (\texttt{6.6cm} top) and adds advisers and committee.
   \item PhD and MSc documents swap the order of title and author name using
-        \verb!\ifphddoc! conditionals inside shared elements.
+        \latexinline{\ifphddoc} conditionals inside shared elements.
 \end{itemize}
 
 Key cover-margin setting:
-\begin{verbatim}
+\begin{latexcode}
 \SetMargin*(cover,top)={8.6cm}   % leaves room for the TikZ logo band
 \SetMargin*(cover,2-1,top)={6.6cm} % front page has a smaller logo band
-\end{verbatim}
+\end{latexcode}
 
 Background setup (colour varies by document class):
-\begin{verbatim}
+\begin{latexcode}
 \def\@novafctcovercolor{red}          % default (BSc/other)
 \ifdocclass{msc}{\def\@novafctcovercolor{blue}}{}
 \ifdocclass{phd}{\def\@novafctcovercolor{green}}{}
 \SetThesisCover*(\@DOCTYPE,1-1,image)=
     {nova-fct-cover-\@novafctcovercolor-front}
-\end{verbatim}
+\end{latexcode}
 
 
 %%-----------------------------------------------------------------------
@@ -855,7 +855,7 @@ Background setup (colour varies by document class):
 %%-----------------------------------------------------------------------
 
 The IST cover
-(\verb!NOVAthesisFiles/Schools/ulisboa/ist/ulisboa-ist-defaults.clo!)
+(\latexinline{NOVAthesisFiles/Schools/ulisboa/ist/ulisboa-ist-defaults.clo})
 uses no TikZ for content elements at all.  Every element — logo, school
 name, a decorative image, title, author, advisers, committee, date — is
 placed as a plain box element with explicit \texttt{height} and
@@ -863,7 +863,7 @@ placed as a plain box element with explicit \texttt{height} and
 produces a layout that tolerates variable-length content gracefully.
 
 The layout sequence for cover \texttt{1-1}:
-\begin{verbatim}
+\begin{latexcode}
 \ntaddtocover[halign=l, hspace=-2.25mm]{1-1,2-1}{logo image}
 \ntaddtocover[vspace=5mm, hspace=23mm]{1-1,2-1}{school name text}
 \ntaddtocover[vspace=1.62cm, height=5cm]{1-1,2-1}{decorative image}
@@ -876,7 +876,7 @@ The layout sequence for cover \texttt{1-1}:
 \ntaddtocover[vspace=1, height=1.25cm, valign=t,
               status={final}]{1-1}{approved message}
 \ntaddtocover[vspace=1, height=8.5mm, valign=b]{1-1,2-1}{date}
-\end{verbatim}
+\end{latexcode}
 
 Each \texttt{height} reservation ensures that regardless of whether the
 optional subtitle, specialization line, or committee is present, the
@@ -894,18 +894,18 @@ elements below remain at a predictable vertical position.
   \toprule
   \textbf{Command / Setting} & \textbf{Purpose} \\
   % \midrule
-  \verb!\margin(cover,top):={...}!          & Cover text-area top margin \\
-  \verb!\margin(cover,<id>,top):={...}!     & Per-cover override \\
-  \verb!\thesiscover(<id>,bgcolor):={...}!  & Page background colour \\
-  \verb!\thesiscover(<id>,image):={...}!    & Full-page background image \\
-  \verb!\thesiscover(<id>,textcolor):={...}!& Default text colour \\
-  \verb!\ntaddtocover[attrs]{ids}{code}!    & Register a text box element \\
-  \verb!\ntaddtocover[tikz]{ids}{code}!     & Register TikZ overlay code \\
-  \verb!\ntAddToCoverTikz<cmd>[opts](!…\verb!){ids}{code}! & Register a TikZ node/command \\
-  \verb!\NTAddToHook{cover/<id>/pre}{...}!  & Inject code before a cover \\
-  \verb!\debuggrid[color]!                  & Render a measurement grid \\
-  \verb!\ntsetup{debug={cover}}!            & Enable cover debug mode \\
-  \verb!python .Build/build.py ... --mode 2! & Build cover pages only \\
+  \latexinline{\margin(cover,top):={...}}          & Cover text-area top margin \\
+  \latexinline{\margin(cover,<id>,top):={...}}     & Per-cover override \\
+  \latexinline{\thesiscover(<id>,bgcolor):={...}}  & Page background colour \\
+  \latexinline{\thesiscover(<id>,image):={...}}    & Full-page background image \\
+  \latexinline{\thesiscover(<id>,textcolor):={...}}& Default text colour \\
+  \latexinline{\ntaddtocover[attrs]{ids}{code}}    & Register a text box element \\
+  \latexinline{\ntaddtocover[tikz]{ids}{code}}     & Register TikZ overlay code \\
+  \latexinline{\ntAddToCoverTikz<cmd>[opts](…){ids}{code}} & Register a TikZ node/command \\
+  \latexinline{\NTAddToHook{cover/<id>/pre}{...}}  & Inject code before a cover \\
+  \latexinline{\debuggrid[color]}                  & Render a measurement grid \\
+  \latexinline{\ntsetup{debug={cover}}}            & Enable cover debug mode \\
+  \latexinline{python .Build/build.py ... --mode 2} & Build cover pages only \\
   \bottomrule
 \end{ShadedTabular}
 \end{center}
