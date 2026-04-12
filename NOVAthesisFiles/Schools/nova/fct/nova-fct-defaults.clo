@@ -264,7 +264,7 @@
   \ifphddoc{%
     \fontsize{20}{21}\selectfont%
     \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
-    \IfMemVoidF{DocTitle}{\@LANG@COVER,sub,cover}{%
+    \IfMemVoidF{DocTitle}{\@LANG@COVER,sub}{%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
       \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,sub)}}%
@@ -287,7 +287,7 @@
   }{%
     \fontsize{20}{21}\selectfont%
     \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
-    \IfMemVoidF{DocTitle}{\@LANG@COVER,sub,cover}{%
+    \IfMemVoidF{DocTitle}{\@LANG@COVER,sub}{%
       \\[4mm]%
       \fontsize{14}{14}\selectfont%
       \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,sub)}}%
@@ -329,7 +329,7 @@
 \ntaddtocover[halign=l]{2-1}{%
   \fontsize{17}{17}\selectfont%
   \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
-  \IfMemVoidF{DocTitle}{\@LANG@COVER,sub,cover}{%
+  \IfMemVoidF{DocTitle}{\@LANG@COVER,sub}{%
     \\[4mm]%
     \fontsize{12}{12}\selectfont%
     \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,sub)}}%

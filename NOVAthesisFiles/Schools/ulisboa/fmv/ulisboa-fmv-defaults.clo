@@ -269,7 +269,7 @@
 % Title of Dissertation
 \ntaddtocover[vspace/1-1=18mm, vspace/2-1=10mm, height=2.35cm, valign=c]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
-  \textbf{{\MakeTextUppercase{\GetDocTitle(\@LANG@MAIN,main,cover)}}}%
+  \textbf{{\MakeTextUppercase{\GetDocTitle(\@LANG@MAIN,main)}}}%
 }
 
 % Doc Status
