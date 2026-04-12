@@ -320,7 +320,8 @@
                            {\protect\appendixname\protect\space}%
       \protect\renewcommand{\protect\cftchapteraftersnum}{:}%
       \protect\renewcommand{\protect\cftchapteraftersnumb}{\protect\space}%
-      \protect\setlength{\protect\cftchapternumwidth}{6em}%
+      \protect\settowidth{\protect\cftchapternumwidth}%
+        {\protect\cftchapterfont\protect\appendixname\protect\space A:\ }%
     }%
     % \thechapter typeset branch: bare letter "A" — safe in chapter headings,
     % running heads, and \IfStrEq comparisons (no babel-wrapped macro).
@@ -360,7 +361,8 @@
                            {\protect\annexname\protect\space}%
       \protect\renewcommand{\protect\cftchapteraftersnum}{:}%
       \protect\renewcommand{\protect\cftchapteraftersnumb}{\protect\space}%
-      \protect\setlength{\protect\cftchapternumwidth}{6em}%
+      \protect\settowidth{\protect\cftchapternumwidth}%
+        {\protect\cftchapterfont\protect\annexname\protect\space VIII:\ }%
     }%
     % \thechapter typeset branch: bare Roman numeral "I" — safe (no babel macro).
     % PDF-string branch: "\annexname I" — appears in PDF bookmarks.
