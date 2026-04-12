@@ -304,17 +304,45 @@
     % depth via toclevel@appendix).  Set it to 1 so appendix chapters appear as
     % level-1 children of "Back Matter" (level 0).
     \expandafter\def\csname toclevel@appendix\endcsname{1}%
-    % Prefix the PDF bookmark *chapter* title with "\appendixname " so the
-    % bookmark panel reads "Appendix A Title".  \texorpdfstring leaves the
-    % typeset output unchanged (just \Alph{chapter} = "A").
+    % Write a marker into the .toc file so that when \tableofcontents renders
+    % the appendix entries (next pass), \cftchapterpresnum is set to
+    % "\appendixname: " — producing "Appendix: A Title" in the TOC.
+    % Memoir's \l@appendix routes through \l@chapapp which uses
+    % \cftchapterpresnum (not \cftappendixpresnum, which memoir never defines).
+    % Using \addtocontents embeds the command sequentially in the .toc file,
+    % so the prefix switches correctly between appendix and annex sections.
+    % Crucially, \@chapapp / \appendixname is NOT placed in \thechapter's
+    % typeset branch: doing so would embed \bbl@ensure@english (or
+    % \foreignlanguage) in the running-head mark, which calls \@ifnextchar*
+    % and corrupts \reserved@a, breaking the next \chapter call.
+    \addtocontents{toc}{%
+      \protect\renewcommand{\protect\cftchapterpresnum}%
+                           {\protect\appendixname\protect\space}%
+      \protect\renewcommand{\protect\cftchapteraftersnum}{:}%
+      \protect\renewcommand{\protect\cftchapteraftersnumb}{\protect\space}%
+      \protect\setlength{\protect\cftchapternumwidth}{6em}%
+    }%
+    % \thechapter typeset branch: bare letter "A" — safe in chapter headings,
+    % running heads, and \IfStrEq comparisons (no babel-wrapped macro).
+    % PDF-string branch: "\appendixname A" — appears in PDF bookmarks.
     \renewcommand{\thechapter}{%
-      \texorpdfstring{\Alph{chapter}}{\@chapapp\space\Alph{chapter}}}%
+      \texorpdfstring{\Alph{chapter}}{\@chapapp\space\Alph{chapter}:}}%
     % Redefine \thesection to use \Alph{chapter} directly (bypassing the
     % \texorpdfstring in \thechapter), so section bookmarks read "A.1 Title"
     % rather than "Appendix A.1 Title".  Subsection levels inherit this fix
     % automatically because \thesubsection = \thesection.\arabic{subsection}.
     \renewcommand{\thesection}{\Alph{chapter}.\arabic{section}}%
     \@nt@foralllist{file}{appendix}{\PrintAddedFile{appendix}}%
+    % If there are no annexes, reset now; if annexes follow, they will
+    % overwrite \cftchapterpresnum with \annexname:\space anyway.
+    \iffileadded{annex}{}{%
+      \addtocontents{toc}{%
+        \protect\renewcommand{\protect\cftchapterpresnum}{}%
+        \protect\renewcommand{\protect\cftchapteraftersnum}{}%
+        \protect\renewcommand{\protect\cftchapteraftersnumb}{}%
+        \protect\setlength{\protect\cftchapternumwidth}{1.5em}%
+      }%
+    }%
   }{}%
 }
 
@@ -323,14 +351,33 @@
     \annex%
     % Same toclevel@appendix key as for appendices (see comment above).
     \expandafter\def\csname toclevel@appendix\endcsname{1}%
-    % Prefix the PDF bookmark *chapter* title with "\annexname " so the
-    % bookmark panel reads "Annex I Title".
+    % Same .toc-marker approach as \ntprintappendices, but switching the
+    % presnum to \annexname so annex entries read "Annex: I Title".
+    % The reset marker after the list restores defaults for any entries that
+    % might follow (e.g. if the document adds more chapter-level TOC entries).
+    \addtocontents{toc}{%
+      \protect\renewcommand{\protect\cftchapterpresnum}%
+                           {\protect\annexname\protect\space}%
+      \protect\renewcommand{\protect\cftchapteraftersnum}{:}%
+      \protect\renewcommand{\protect\cftchapteraftersnumb}{\protect\space}%
+      \protect\setlength{\protect\cftchapternumwidth}{6em}%
+    }%
+    % \thechapter typeset branch: bare Roman numeral "I" — safe (no babel macro).
+    % PDF-string branch: "\annexname I" — appears in PDF bookmarks.
     \renewcommand{\thechapter}{%
-      \texorpdfstring{\annexcounter\c@chapter}{\@chapapp\space\Roman{chapter}}}%
+      \texorpdfstring{\annexcounter\c@chapter}{\@chapapp\space\Roman{chapter}:}}%
     % Redefine \thesection to use \Roman{chapter} directly, so section
     % bookmarks read "I.1 Title" rather than "Annex I.1 Title".
     \renewcommand{\thesection}{\Roman{chapter}.\arabic{section}}%
     \@nt@foralllist{file}{annex}{\PrintAddedFile{annex}}%
+    % Reset \cftchapterpresnum and \cftchapternumwidth to their memoir defaults
+    % so any chapter-level TOC entries after annexes are not affected.
+    \addtocontents{toc}{%
+      \protect\renewcommand{\protect\cftchapterpresnum}{}%
+      \protect\renewcommand{\protect\cftchapteraftersnum}{}%
+      \protect\renewcommand{\protect\cftchapteraftersnumb}{}%
+      \protect\setlength{\protect\cftchapternumwidth}{1.5em}%
+    }%
   }{}%
 }
 
