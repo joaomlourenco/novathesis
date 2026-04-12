@@ -177,6 +177,18 @@
   % (= 7).  Pre-loading luatex85 here ensures \pdfminorversion = 7 when pdfx
   % reads it, so \pdfx@minorversion = 7 = \pdfminorversion at the version check
   % (line 341) → no "Cannot change the \pdfminorversion" error.
+  % ── hyperref options (must be registered before anyone loads hyperref) ──
+  % This block runs before the \ifdocfinal/pdfx block so that when pdfx
+  % loads hyperref itself (in PDF/A-2b mode) these options are already
+  % registered via \PassOptionsToPackage and are merged in at load time.
+  \PassOptionsToPackage{
+    bookmarksnumbered=true,
+    bookmarksdepth=3,
+    breaklinks=true,
+    colorlinks=true,
+    pdfdisplaydoctitle=true,
+    unicode=true,
+  }{hyperref}
   \ifdocfinal{%
     \iftoggle{/novathesis/pdfa}{%
       % Write XMP metadata file for pdfx (cover data available from 3_cover.tex)
@@ -192,14 +204,6 @@
     }{}%
   }{}%
   % ── hyperref ──────────────────────────────────────────────────────
-  \PassOptionsToPackage{
-    bookmarksnumbered=true,
-    bookmarksdepth=3,
-    breaklinks=true,
-    colorlinks=true,
-    pdfdisplaydoctitle=true,
-    unicode=true,
-  }{hyperref}
   \RequirePackage{hyperref}           % PDF hyperlinks, metadata & bookmarks
   \RequirePackage{fix-hyperref}       % Patches hyperref immediately after loading
   \RequirePackage{bookmark}           % Extends hyperref bookmarks
