@@ -29,7 +29,7 @@ It covers the most common tasks: structuring your document, formatting text, ins
 Use these examples as a starting point.
 The \href{https://www.overleaf.com/learn}{Overleaf documentation} and \href{https://tex.stackexchange.com}{TeX~Stack~Exchange} are excellent resources for additional help.
 
-\begin{warningbox}[title={Do not edit \texttt{template.tex} or \texttt{novathesis.cls}}]
+\begin{warningbox}[title={Do not edit “\texttt{template.tex}” or “\texttt{novathesis.cls}”}]
   All your customizations go into the files inside \texttt{0-Config/}.
   Your chapter content lives in \texttt{2-MainMatter/} and is listed in \texttt{0-Config/4\_files.tex}.
   The root file \texttt{template.tex} and the class file \texttt{novathesis.cls} are \textbf{never} edited directly.
@@ -50,7 +50,7 @@ The \novathesis{} template follows a strict separation of concerns.
   \centering
   \begin{ShadedTabular}{lp{0.6\linewidth}}
     \toprule
-    File / Folder & Purpose \\
+    \thead[l]{File / Folder} & \thead[l]{Purpose} \\
     \midrule
     \texttt{0-Config/1\_novathesis.tex} & Main setup: school, document type, language, fonts, \ldots \\
     \texttt{0-Config/3\_cover.tex}      & Cover metadata: title, author, advisors, committee \\
@@ -71,10 +71,10 @@ The \novathesis{} template follows a strict separation of concerns.
 \label{sub:adding_chapter}
 %%-----------------------------------------------------------------------
 
-Create a new \texttt{.tex} file in \texttt{2-MainMatter/}, then register it in \texttt{0-Config/4\_files.tex}:
+Create a new \texttt{chapter-mywork.tex} file in \texttt{2-MainMatter/}, then register it in \texttt{0-Config/4\_files.tex}:
 
 \begin{latexcode}
-\ntaddfile{chapter}{2-MainMatter/chapter-mywork.tex}
+\ntaddfile{chapter}{chapter-mywork}
 \end{latexcode}
 
 Inside the file, start with a \latexinline{\chapter} command and give it a label:
@@ -88,7 +88,7 @@ Inside the file, start with a \latexinline{\chapter} command and give it a label
 \end{latexcode}
 
 The sectioning hierarchy is:
-\latexinline{\chapter} \(\to\) \latexinline{\section} \(\to\) \latexinline{\subsection} \(\to\) \latexinline{\subsubsection}.
+\latexinline{\chapter} \(\to\) \latexinline{\section} \(\to\) \latexinline{\subsection} \(\to\) \latexinline{\subsubsection} \(\to\) \latexinline{\paragraph} \(\to\) \latexinline{\subparagraph}.
 Avoid going deeper than \latexinline{\subsection} unless absolutely necessary.
 
 
@@ -110,6 +110,114 @@ Use \latexinline{\ref} if you only want the number.
 \begin{highlightbox}[title={Tip: non-breaking space before \textbackslash ref}]
   Always write \latexinline{Figure~\ref{fig:x}} with a non-breaking space (\latexinline{~}) so the word and number never split across lines.
 \end{highlightbox}
+
+%%-----------------------------------------------------------------------
+\subsubsection{Teaching \texttt{\textbackslash autoref} about a new object type}
+\label{ssub:autoref_new_type}
+%%-----------------------------------------------------------------------
+
+\latexinline{\autoref} looks up the label prefix to determine the word to prepend.
+When you define a new numbered environment — say, a \texttt{listing} or \texttt{algorithm} — you register its name by defining the macro \latexinline{\<counter>autorefname}:
+
+\begin{latexcode}
+% In 0-Config/5_packages.tex, after \usepackage{algorithm2e}:
+\newcommand{\algorithmautorefname}{Algorithm}
+
+% For a custom theorem environment with counter "theorem":
+\newcommand{\theoremautorefname}{Theorem}
+\end{latexcode}
+
+If your document is multilingual you can conditionally define the name based on the active language:
+
+\begin{latexcode}
+\addto\extrasenglish{\renewcommand{\algorithmautorefname}{Algorithm}}
+\addto\extrasportuges{\renewcommand{\algorithmautorefname}{Algoritmo}}
+\end{latexcode}
+
+
+%%=======================================================================
+\section{The \texttt{cleveref} Package}
+\label{sec:cleveref}
+%%=======================================================================
+
+The \texttt{cleveref} package is a more powerful alternative to \latexinline{\autoref}.
+Load it \emph{last} in your preamble (in \texttt{0-Config/5\_packages.tex}):
+
+\begin{latexcode}
+\usepackage{cleveref}
+\end{latexcode}
+
+\begin{warningbox}[title={\texttt{cleveref} must be loaded last}]
+  \texttt{cleveref} must be loaded \emph{after} \texttt{hyperref} and after any package that defines new float or theorem environments.
+  In the \novathesis{} template, add it at the end of \texttt{0-Config/5\_packages.tex}.
+\end{warningbox}
+
+
+%%-----------------------------------------------------------------------
+\subsection{Basic Usage}
+\label{sub:cref_basic}
+%%-----------------------------------------------------------------------
+
+\begin{table}[htbp]
+  \caption{Core \texttt{cleveref} commands.}
+  \label{tab:cref_commands}
+  \centering
+  \begin{ShadedTabular}{lp{0.6\linewidth}}
+    \toprule
+    Command & Result \\
+    \midrule
+    \latexinline{\cref{key}}         & Lowercase: \emph{figure~1}, \emph{chapter~2}, \ldots \\
+    \latexinline{\Cref{key}}         & Capitalised: \emph{Figure~1}, \emph{Chapter~2}, \ldots \\
+    \latexinline{\cref{k1,k2,k3}}    & Multiple refs in one call: \emph{figures~1, 2 and~3} \\
+    \latexinline{\crefrange{a}{b}}   & Range: \emph{figures~1 to~3} \\
+    \latexinline{\labelcref{key}}    & Number only (no type word) \\
+    \bottomrule
+  \end{ShadedTabular}
+\end{table}
+
+Use \latexinline{\Cref} at the start of a sentence and \latexinline{\cref} elsewhere:
+\begin{latexcode}
+\Cref{cha:my_work} presents the proposed approach.
+The results are summarised in \cref{tab:results,fig:results}.
+\end{latexcode}
+
+A key advantage over \latexinline{\autoref} is that \latexinline{\cref} can handle a
+comma-separated list of labels and automatically formats them — even across different
+object types — as a single, grammatically correct phrase.
+
+
+%%-----------------------------------------------------------------------
+\subsection{Teaching \texttt{cleveref} about a New Object Type}
+\label{sub:cref_new_type}
+%%-----------------------------------------------------------------------
+
+For every new numbered environment you create, register its singular and plural names
+with \latexinline{\crefname} (lowercase) and \latexinline{\Crefname} (capitalised):
+
+\begin{latexcode}
+% In 0-Config/5_packages.tex, after defining the environment:
+\crefname{algorithm}{algorithm}{algorithms}   % \cref{}
+\Crefname{algorithm}{Algorithm}{Algorithms}  % \Cref{}
+
+% Custom theorem environment:
+\crefname{theorem}{theorem}{theorems}
+\Crefname{theorem}{Theorem}{Theorems}
+\end{latexcode}
+
+The third argument is the \emph{plural} form used when multiple labels are listed in
+a single \latexinline{\cref{k1,k2}} call.
+
+For multilingual documents, wrap the definitions in language hooks:
+\begin{latexcode}
+\addto\extrasenglish{%
+  \crefname{algorithm}{algorithm}{algorithms}
+  \Crefname{algorithm}{Algorithm}{Algorithms}
+}
+\addto\extrasportuges{%
+  \crefname{algorithm}{algoritmo}{algoritmos}
+  \Crefname{algorithm}{Algoritmo}{Algoritmos}
+}
+\end{latexcode}
 
 
 %%=======================================================================
@@ -391,7 +499,7 @@ Reference the whole figure as \autoref{fig:subfig_example} or the sub-figures se
 \label{sec:bibliography}
 %%=======================================================================
 
-The template uses \hologo{BibLaTeX} with the \texttt{biber} backend.
+The template uses \texttt{biblatex} with the \hologo{biber} backend.
 Add your references to the \texttt{.bib} file(s) configured in \texttt{0-Config/2\_biblatex.tex}.
 
 
@@ -401,7 +509,7 @@ Add your references to the \texttt{.bib} file(s) configured in \texttt{0-Config/
 %%-----------------------------------------------------------------------
 
 \begin{table}[htbp]
-  \caption{Common \hologo{BibLaTeX} citation commands.}
+  \caption{Common \texttt{biblatex} citation commands.}
   \label{tab:cite_commands}
   \centering
   \begin{ShadedTabular}{lp{0.55\linewidth}}
