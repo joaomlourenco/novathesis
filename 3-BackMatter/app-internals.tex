@@ -1,0 +1,669 @@
+%!TEX root = ../template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — 3-BackMatter/app-internals.tex
+%% ----------------------------------------------------------------------------
+%%
+%% Version 7.10.7 (2026-03-25)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%%
+%% Reference appendix: the most important NOVAthesis macros, their
+%% signatures, semantics, and usage examples.  Derived from the CWL
+%% IntelliSense completion file (novathesis.cwl).
+%%
+%% ----------------------------------------------------------------------------
+
+\typeout{NT FILE 3-BackMatter/app-internals.tex}%
+
+%%--------------------------------------------------------------------
+%% Local visual style for macro documentation headers
+%%--------------------------------------------------------------------
+\newtcolorbox{macrodoc}[2][]{%
+  breakable,%
+  colback=blue!4!white,%
+  colframe=blue!20!white,%
+  colbacktitle=blue!20!white,%
+  coltitle=black,%
+  fonttitle=\ttfamily\bfseries\large,%
+  title={#2},%
+  left=8pt, right=8pt, top=5pt, bottom=7pt,%
+  boxrule=0.7pt,%
+  arc=3pt,%
+  #1%
+}
+
+%% Helper: typeset a meta-variable placeholder ⟨name⟩
+\newcommand{\mv}[1]{%
+  \textnormal{\textit{$\langle$#1$\rangle$}}}
+
+%% Helper: one signature line inside a macrodoc body
+\newcommand{\sig}[1]{%
+  \par\smallskip
+  \texttt{#1}\par}
+
+%%====================================================================
+\chapter{NOVAthesis Macro Reference}
+\label{app:internals}
+%%====================================================================
+
+This appendix documents the most important macros provided by the
+\novathesis{} template, grouped by purpose.  All signatures follow the
+notation used in the IntelliSense completion file \texttt{novathesis.cwl}:
+
+\begin{itemize}
+  \item \texttt{\{\mv{arg}\}} — mandatory argument
+  \item \texttt{[\mv{arg}]} — optional argument
+  \item \texttt{(\mv{arg})} — NOVAthesis parenthesised argument
+       (part of the command name, not a standard \LaTeX{} delimiter)
+  \item \texttt{*} — starred variant with modified behaviour
+\end{itemize}
+
+%%====================================================================
+\section{Template Bootstrap}
+\label{sec:int_bootstrap}
+%%====================================================================
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash documentclass\{novathesis\}}
+\sig{\textbackslash documentclass[\mv{options}]\{novathesis\}}
+
+The only document class provided by \novathesis.
+Pass engine-level or user options as a comma-separated list in
+the optional argument; all template-specific options are better
+placed in \texttt{\textbackslash ntsetup} (see below).
+\end{macrodoc}
+
+\bigskip
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash ntsetup}
+\sig{\textbackslash ntsetup\{\mv{key=value,...}\}}
+\sig{\textbackslash ntsetup[\mv{scope}]\{\mv{key=value,...}\}}
+
+The \emph{master configuration command}.  Every template option is
+set here; it may be called multiple times and the last assignment
+wins.  Place all calls in \texttt{0-Config/1\_novathesis.tex}.
+
+The most commonly used keys are listed below.
+
+\medskip
+\begin{ShadedTabular}{lll}
+  \textbf{Key} & \textbf{Typical values} & \textbf{Effect} \\
+  \texttt{school} & \texttt{nova/fct}, \texttt{ulisboa/ist}, \ldots
+                  & Selects the institutional cover \& strings \\
+  \texttt{doctype} & \texttt{phd}, \texttt{msc}, \texttt{bsc}, \texttt{plain}
+                   & Document type \\
+  \texttt{lang} & \texttt{en}, \texttt{pt}, \texttt{de}, \ldots
+                & Main document language \\
+  \texttt{media} & \texttt{screen}, \texttt{paper}
+                 & Optimises layout for on-screen or print \\
+  \texttt{docstatus} & \texttt{working}, \texttt{provisional}, \texttt{final}
+                     & Controls watermarks and certain front-matter sections \\
+\end{ShadedTabular}
+
+\smallskip
+\begin{latexcode}
+\ntsetup{school=nova/fct, doctype=phd, lang=en, media=screen}
+\ntsetup{docstatus=working}
+\end{latexcode}
+\end{macrodoc}
+
+%%====================================================================
+\section{Document Identity}
+\label{sec:int_identity}
+%%====================================================================
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash nttitle}
+\sig{\textbackslash nttitle(\mv{type},\mv{lang})\{\mv{title}\}}
+
+Sets one of the document's titles.  Different \emph{type} variants
+are used in different locations (cover page, spine, abstract header,
+etc.) and can be provided in multiple languages.
+
+\medskip
+\begin{ShadedTabular}{ll}
+  \textbf{type} & \textbf{Where used} \\
+  \texttt{main}     & Cover page, headers, PDF metadata \\
+  \texttt{sub}      & Subtitle \\
+  \texttt{cover}    & Overrides the cover title only \\
+  \texttt{abstract} & Abstract page header \\
+  \texttt{spine}    & Spine label (usually a short form) \\
+\end{ShadedTabular}
+
+\medskip
+\textbf{lang} is any supported language code:
+\texttt{en}, \texttt{pt}, \texttt{de}, \texttt{es}, \texttt{fr},
+\texttt{it}, \texttt{nl}, \texttt{pl}, \texttt{cz}, \texttt{dk},
+\texttt{sk}, \texttt{cat}, \texttt{gr}, \texttt{uk},
+\texttt{zhs}, \texttt{zht}.
+
+\begin{latexcode}
+\nttitle(main,en){Thesis Title in English}
+\nttitle(main,pt){Título da Tese em Português}
+\nttitle(spine,en){Short Title}
+\end{latexcode}
+\end{macrodoc}
+
+\bigskip
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash ntauthorname\quad\textbackslash ntauthordegree}
+\sig{\textbackslash ntauthorname(\mv{gender})\{\mv{full name}\}\{\mv{short name}\}}
+\sig{\textbackslash ntauthordegree(\mv{lang})\{\mv{degree}\}}
+
+\textbf{\texttt{\textbackslash ntauthorname}} registers the author's
+full and short names.  The \emph{gender} argument (\texttt{m} or \texttt{f})
+controls grammatical agreement in Portuguese strings.
+
+\textbf{\texttt{\textbackslash ntauthordegree}} sets the author's
+pre-existing academic degree for display on the cover.
+\begin{latexcode}
+\ntauthorname(m){João Maria Lourenço}{João Lourenço}
+\ntauthordegree(en){Bachelor in Computer Science}
+\ntauthordegree(pt){Licenciado em Engenharia Informática}
+\end{latexcode}
+\end{macrodoc}
+
+\bigskip
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash ntdate}
+\sig{\textbackslash ntdate(\mv{type})\{\mv{YYYY-MM-DD}\}}
+\sig{\textbackslash SetDateISO(\mv{type})\{\mv{YYYY-MM-DD}\}}
+\sig{\textbackslash PrintDateISO\{\mv{YYYY-MM-DD}\}}
+\sig{\textbackslash todayiso}
+
+\textbf{\texttt{\textbackslash ntdate}} registers a document date.
+\emph{type} is either \texttt{submission} (date sent to the jury) or
+\texttt{exam} (public defence date).
+
+\textbf{\texttt{\textbackslash SetDateISO}} / \textbf{\texttt{\textbackslash PrintDateISO}}
+are lower-level helpers for ISO 8601 date handling elsewhere in the document.
+\textbf{\texttt{\textbackslash todayiso}} expands to today's date in ISO format.
+
+The date string may be \texttt{YYYY-MM-DD}, \texttt{YYYY-MM}, or just \texttt{YYYY}.
+\begin{latexcode}
+\ntdate(submission){2025-09-30}
+\ntdate(exam){2025-11-14}
+\end{latexcode}
+\end{macrodoc}
+
+%%====================================================================
+\section{Institutional Metadata}
+\label{sec:int_institution}
+%%====================================================================
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash ntdepartment\quad\textbackslash ntdegreename\quad\textbackslash ntspecialization}
+\sig{\textbackslash ntdepartment(\mv{lang})\{\mv{name}\}}
+\sig{\textbackslash ntdepartment*(\mv{lang})\{\mv{name}\}}
+\sig{\textbackslash ntdegreename(\mv{lang})\{\mv{name}\}}
+\sig{\textbackslash ntdegreename*(\mv{lang})\{\mv{name}\}}
+\sig{\textbackslash ntspecialization(\mv{lang})\{\mv{name}\}}
+\sig{\textbackslash ntspecialization*(\mv{lang})\{\mv{name}\}}
+
+Override the school-default department name, degree name, or
+specialisation string.  Provide values for every language used in
+the document (at minimum the document language and Portuguese for
+national universities).  The starred form sets an abbreviated variant
+used on the spine and narrow covers.
+
+\begin{latexcode}
+\ntdepartment(en){Department of Computer Science}
+\ntdepartment(pt){Departamento de Informática}
+\ntdegreename(en){Doctor of Philosophy in Computer Science}
+\ntdegreename(pt){Doutor em Engenharia Informática}
+\end{latexcode}
+\end{macrodoc}
+
+\bigskip
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash ntsponsors}
+\sig{\textbackslash ntsponsors(\mv{order},\mv{type},\mv{lang})\{\mv{content}\}}
+
+Registers a funding sponsor for display on the cover.
+\emph{order} is a positive integer that controls display order.
+\emph{type} is either \texttt{text} (a string) or \texttt{logo}
+(an \texttt{\textbackslash includegraphics} call or similar).
+
+\begin{latexcode}
+\ntsponsors(1,logo,en){\includegraphics[height=1cm]{fct-logo}}
+\ntsponsors(2,text,en){Supported by FCT grant XXXXXX/XX/XXXXX}
+\end{latexcode}
+\end{macrodoc}
+
+%%====================================================================
+\section{People — Advisers and Committee}
+\label{sec:int_people}
+%%====================================================================
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash ntaddperson}
+\sig{\textbackslash ntaddperson\{\mv{class}\}(\mv{role},\mv{gender})\{\mv{name, position, institution}\}}
+
+Registers a person (adviser or jury member).  All fields are
+typeset verbatim on the cover and in the jury table.
+
+\medskip
+\begin{ShadedTabular}{lll}
+  \textbf{class} & \textbf{role} & \textbf{Meaning} \\
+  \texttt{adviser}   & \texttt{a}  & Principal adviser \\
+                     & \texttt{c} / \texttt{co} & Co-adviser \\
+                     & \texttt{t}  & Tutor \\
+  \texttt{committee} & \texttt{c}  & Chair \\
+                     & \texttt{r}  & Rapporteur \\
+                     & \texttt{a}  & Adviser \\
+                     & \texttt{co} & Co-adviser \\
+                     & \texttt{m}  & Member \\
+                     & \texttt{g}  & Guest \\
+\end{ShadedTabular}
+
+\medskip
+The \emph{gender} argument (\texttt{m} / \texttt{f}) governs
+grammatical agreement in Portuguese texts.
+
+\begin{latexcode}
+\ntaddperson{adviser}(a,m){%
+  João Maria Lourenço, Full Professor,
+  NOVA School of Science and Technology, UNL}
+\ntaddperson{committee}(c,m){%
+  Maria Fernanda Távora, Full Professor,
+  Instituto Superior Técnico, ULisboa}
+\end{latexcode}
+\end{macrodoc}
+
+\bigskip
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash ntprintpersons}
+\sig{\textbackslash ntprintpersons\{\mv{class}\}\{\mv{roles}\}}
+\sig{\textbackslash GetPersonsAsList\{\mv{class}\}\{\mv{roles}\}[\mv{separator}]}
+
+\textbf{\texttt{\textbackslash ntprintpersons}} typesets a formatted
+table of persons filtered by class and role(s).  Use it inside cover
+or front-matter files to display the jury or adviser list.
+
+\textbf{\texttt{\textbackslash GetPersonsAsList}} returns the same
+persons as a flat list with an optional custom separator.
+
+\begin{latexcode}
+\ntprintpersons{adviser}{a,co}
+\ntprintpersons{committee}{c,r,m}
+\end{latexcode}
+\end{macrodoc}
+
+%%====================================================================
+\section{File Registration — \texttt{\textbackslash ntaddfile}}
+\label{sec:int_addfile}
+%%====================================================================
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash ntaddfile}
+\sig{\textbackslash ntaddfile\{\mv{class}\}\{\mv{filename}\}}
+\sig{\textbackslash ntaddfile\{\mv{class}\}[\mv{key}]\{\mv{filename}\}}
+
+The single command used to register \emph{every} user-provided file
+with the template.  Files are rendered later by the corresponding
+\texttt{\textbackslash ntprint*} call in \texttt{template.tex}.
+The \emph{filename} must be given without extension; the
+\texttt{.tex} suffix is appended automatically.
+
+Multiple calls accumulate; files are printed in registration order.
+
+\medskip
+\begin{ShadedTabular}{llp{7cm}}
+  \textbf{class} & \textbf{key} & \textbf{Notes} \\
+  \texttt{bib}     & —
+    & BibTeX/Biber \texttt{.bib} database \\
+  \texttt{abstract} & language code (\texttt{en}, \texttt{pt}, \ldots)
+    & One per language; key selects the language \\
+  \texttt{glossaries} & \texttt{glossary} \textbar{} \texttt{acronym} \textbar{} \texttt{symbols}
+    & Glossary-type files loaded by \texttt{glossaries-extra} \\
+  \texttt{chapter} & optional doctype list
+    & Main-matter chapters; key restricts to listed doctypes \\
+  \texttt{appendix} & optional doctype list
+    & Back-matter appendices \\
+  \texttt{annex}   & optional doctype list
+    & Back-matter annexes \\
+  \texttt{cover}   & \texttt{1} \textbar{} \texttt{2} \textbar{} $N$ \textbar{} \texttt{spine}
+    & Overrides the built-in cover layout for slot $N$ \\
+  \texttt{dedication}       & — & \\
+  \texttt{acknowledgements} & — & \\
+  \texttt{quote}            & — & \\
+  \texttt{statement}        & language code
+    & Signed statement; key selects the language \\
+\end{ShadedTabular}
+
+\begin{latexcode}
+\ntaddfile{bib}{bibliography}
+\ntaddfile{abstract}[en]{abstract-en}
+\ntaddfile{abstract}[pt]{abstract-pt}
+\ntaddfile{glossaries}[acronym]{acronyms}
+\ntaddfile{chapter}{chapter-introduction}
+\ntaddfile{chapter}[phd,msc]{chapter-advanced}% only in PhD and MSc
+\ntaddfile{appendix}{app-build-py}
+\ntaddfile{annex}{annex-data}
+\end{latexcode}
+\end{macrodoc}
+
+%%====================================================================
+\section{Content Rendering}
+\label{sec:int_rendering}
+%%====================================================================
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash ntprint\quad\textbackslash ntprintlist}
+\sig{\textbackslash ntprint\{\mv{key}\}}
+\sig{\textbackslash ntprintlist\{\mv{key}\}}
+
+High-level rendering commands used exclusively in \texttt{template.tex}.
+\textbf{\texttt{\textbackslash ntprint}} outputs a single named
+section; \textbf{\texttt{\textbackslash ntprintlist}} outputs all
+items registered under the given key (e.g., all chapters).
+
+These abstract away the complex logic of conditionally printing
+front-matter elements, list-of-figures, etc.\ depending on the
+current \texttt{docstatus} and \texttt{doctype}.
+
+Common \texttt{key} values include:
+\texttt{frontcover}, \texttt{frontmatter}, \texttt{mainmatter},
+\texttt{backmatter}, \texttt{backcover}.
+\end{macrodoc}
+
+\bigskip
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash ntaddlistof}
+\sig{\textbackslash ntaddlistof\{\mv{title}\}}
+\sig{\textbackslash ntaddlistof[\mv{lang}]\{\mv{title}\}}
+
+Adds a custom "List of~…" entry to the front matter.
+\texttt{\textbackslash ntprintalllistof} (called internally by
+\texttt{\textbackslash ntprint\{frontmatter\}}) will then typeset it.
+
+\begin{latexcode}
+\ntaddlistof[en]{List of Algorithms}
+\ntaddlistof[pt]{Lista de Algoritmos}
+\end{latexcode}
+\end{macrodoc}
+
+%%====================================================================
+\section{Cover Customisation}
+\label{sec:int_covers}
+%%====================================================================
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash ntaddtocover}
+\sig{\textbackslash ntaddtocover\{\mv{cover-ids}\}\{\mv{content}\}}
+\sig{\textbackslash ntaddtocover[\mv{scope}]\{\mv{cover-ids}\}\{\mv{content}\}}
+
+Appends \emph{content} to one or more cover slots identified by
+\emph{cover-ids} (a comma-separated list of slot identifiers such as
+\texttt{1}, \texttt{2}, \texttt{spine}, \texttt{N}).
+Use the optional \emph{scope} to restrict the addition to a
+particular school or document type context.
+
+\begin{latexcode}
+\ntaddtocover{1,2}{\textbf{CONFIDENTIAL} — not for distribution}
+\end{latexcode}
+\end{macrodoc}
+
+\bigskip
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash ntAddToCoverTikz}
+\sig{\textbackslash ntAddToCoverTikz(\mv{layer})\{\mv{cover-ids}\}\{\mv{tikz-code}\}}
+\sig{\textbackslash ntAddToCoverTikz<\mv{label}>[\mv{tikz-options}](\mv{layer})[\mv{more-opts}]\{\mv{cover-ids}\}\{\mv{tikz-code}\}}
+
+Injects raw Ti\textit{k}Z drawing code onto the cover canvas at the
+specified \emph{layer} (e.g.\ \texttt{bg}, \texttt{fg},
+\texttt{text}).  Coordinates use the full cover dimensions.
+Use this for advanced cover layouts in school \texttt{.ldf} files.
+
+\begin{latexcode}
+\ntAddToCoverTikz(bg){1}{%
+  \fill[blue!20] (0,0) rectangle (\paperwidth,3cm);
+}
+\end{latexcode}
+\end{macrodoc}
+
+%%====================================================================
+\section{Document Conditionals}
+\label{sec:int_conditionals}
+%%====================================================================
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash ifphddoc, \textbackslash ifmscdoc, \ldots}
+\sig{\textbackslash ifdocclass\{\mv{class}\}\{\mv{true}\}\{\mv{false}\}}
+\sig{\textbackslash ifphddoc\{\mv{true}\}\{\mv{false}\}}
+\sig{\textbackslash ifmscdoc\{\mv{true}\}\{\mv{false}\}}
+\sig{\textbackslash ifbscdoc\{\mv{true}\}\{\mv{false}\}}
+\sig{\textbackslash ifplaindoc\{\mv{true}\}\{\mv{false}\}}
+\sig{\textbackslash ifdocstatus\{\mv{status}\}\{\mv{true}\}\{\mv{false}\}}
+\sig{\textbackslash ifdocfinal\{\mv{true}\}\{\mv{false}\}}
+\sig{\textbackslash ifdocprovisional\{\mv{true}\}\{\mv{false}\}}
+\sig{\textbackslash ifdocworking\{\mv{true}\}\{\mv{false}\}}
+\sig{\textbackslash ifcoverdefined\{\mv{cover-id}\}\{\mv{true}\}\{\mv{false}\}}
+\sig{\textbackslash ifxeorlua\{\mv{xe/lua code}\}\{\mv{pdflatex code}\}}
+
+A family of Boolean predicates for conditional content.  All follow
+the same two-argument form: \emph{true code} and \emph{false code}.
+The \emph{false} argument may be omitted (empty by default).
+
+\begin{latexcode}
+% Acknowledgements only in the final version
+\ifdocfinal{%
+  \ntaddfile{acknowledgements}{acknowledgements}%
+}
+
+% PhD-specific chapter
+\ifphddoc{%
+  \ntaddfile{chapter}[phd]{chapter-related-work}%
+}
+
+% Engine-dependent font choice
+\ifxeorlua{%
+  \setmainfont{TeX Gyre Pagella}%
+}{%
+  \usepackage{newpxtext}%
+}
+\end{latexcode}
+\end{macrodoc}
+
+%%====================================================================
+\section{Hook System}
+\label{sec:int_hooks}
+%%====================================================================
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash NTAddToHook\quad\textbackslash NTDeclareHook\quad\textbackslash NTRunHook}
+\sig{\textbackslash NTDeclareHook\{\mv{hook-name}\}}
+\sig{\textbackslash NTAddToHook\{\mv{hook-name}\}\{\mv{code}\}}
+\sig{\textbackslash NTRunHook\{\mv{hook-name}\}}
+
+\novathesis{} exposes a lightweight hook system used primarily in
+school \texttt{.ldf} files to inject code at well-defined points
+(cover rendering, font loading, language setup, etc.) without
+modifying the class source.
+
+Hooks are declared once with \textbf{\texttt{\textbackslash NTDeclareHook}},
+populated with \textbf{\texttt{\textbackslash NTAddToHook}} (can be
+called multiple times — code accumulates), and executed at the right
+moment with \textbf{\texttt{\textbackslash NTRunHook}}.
+
+\begin{latexcode}
+% In a school .ldf file:
+\NTAddToHook{cover/before}{\MySchoolSetupCode}
+\NTAddToHook{fonts/load}{\setmainfont{TeX Gyre Pagella}}
+\end{latexcode}
+\end{macrodoc}
+
+%%====================================================================
+\section{Miscellaneous Utilities}
+\label{sec:int_misc}
+%%====================================================================
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash shiftbookmarks}
+\sig{\textbackslash shiftbookmarks\{\mv{content}\}}
+\sig{\textbackslash shiftbookmarks[\mv{levels}]\{\mv{content}\}}
+
+Shifts all PDF bookmark levels inside \emph{content} by the given
+number of \emph{levels} (default: 1).  Used at the start of back
+matter to nest appendix and annex bookmarks one level below the
+``Back Matter'' root bookmark.
+
+\begin{latexcode}
+\shiftbookmarks[1]{\ntprintbibsingle \ntprintappendices \ntprintannexes}
+\end{latexcode}
+\end{macrodoc}
+
+\bigskip
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash ntselectlang}
+\sig{\textbackslash ntselectlang\{\mv{lang-code}\}}
+
+Switches the active Babel / Polyglossia language mid-document and
+updates all \novathesis{} localised strings accordingly.  Used
+internally when rendering multi-language abstracts; available for
+advanced users who need language changes inside chapters.
+
+\begin{latexcode}
+\ntselectlang{pt}
+\noindent\textbf{Resumo} — \lipsum[1]
+\ntselectlang{en}
+\end{latexcode}
+\end{macrodoc}
+
+\bigskip
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash debuggrid}
+\sig{\textbackslash debuggrid}
+\sig{\textbackslash debuggrid[\mv{color}]}
+
+Overlays a grid on the current page to aid layout debugging.
+Default colour is \texttt{red!30}.  Wrap in a local group or
+remove before final submission.
+
+\begin{latexcode}
+\debuggrid[blue!20]   % draw a blue grid on the current page
+\end{latexcode}
+\end{macrodoc}
+
+\bigskip
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash novathesis}
+\sig{\textbackslash novathesis}
+
+Typesets the template name \novathesis{} in the canonical stylised
+form.  Use it whenever referring to the template inside your
+document.
+
+\begin{latexcode}
+This document was prepared using the \novathesis{} template.
+\end{latexcode}
+\end{macrodoc}
+
+%%====================================================================
+\section{Summary Table}
+\label{sec:int_summary}
+%%====================================================================
+
+The table below lists all documented macros with a short description
+and the configuration file where they are typically used.
+
+\bigskip
+
+\begin{ShadedTabular}{lp{5.8cm}l}
+  \textbf{Macro} & \textbf{Purpose} & \textbf{Typical location} \\
+  %
+  \texttt{\textbackslash documentclass\{novathesis\}}
+    & Load the template class
+    & \texttt{template.tex} \\
+  \texttt{\textbackslash ntsetup}
+    & Master document configuration
+    & \texttt{0-Config/1\_novathesis.tex} \\
+  \texttt{\textbackslash nttitle}
+    & Set title (type + language)
+    & \texttt{0-Config/3\_cover.tex} \\
+  \texttt{\textbackslash ntauthorname}
+    & Author full and short name
+    & \texttt{0-Config/3\_cover.tex} \\
+  \texttt{\textbackslash ntauthordegree}
+    & Author's pre-existing degree
+    & \texttt{0-Config/3\_cover.tex} \\
+  \texttt{\textbackslash ntdate}
+    & Submission / exam date
+    & \texttt{0-Config/3\_cover.tex} \\
+  \texttt{\textbackslash ntdepartment}
+    & Override department name
+    & \texttt{0-Config/3\_cover.tex} \\
+  \texttt{\textbackslash ntdegreename}
+    & Override degree name
+    & \texttt{0-Config/3\_cover.tex} \\
+  \texttt{\textbackslash ntspecialization}
+    & Override specialisation name
+    & \texttt{0-Config/3\_cover.tex} \\
+  \texttt{\textbackslash ntsponsors}
+    & Funding sponsor (text or logo)
+    & \texttt{0-Config/3\_cover.tex} \\
+  \texttt{\textbackslash ntaddperson}
+    & Register adviser or jury member
+    & \texttt{0-Config/3\_cover.tex} \\
+  \texttt{\textbackslash ntprintpersons}
+    & Typeset adviser/jury table
+    & Cover \texttt{.tex} files \\
+  \texttt{\textbackslash ntaddfile}
+    & Register any user file with the template
+    & \texttt{0-Config/4\_files.tex} \\
+  \texttt{\textbackslash ntprint}
+    & Print one named document section
+    & \texttt{template.tex} \\
+  \texttt{\textbackslash ntprintlist}
+    & Print all files in a registered list
+    & \texttt{template.tex} \\
+  \texttt{\textbackslash ntaddlistof}
+    & Add a custom "List of~…" entry
+    & \texttt{0-Config/4\_files.tex} \\
+  \texttt{\textbackslash ntaddtocover}
+    & Append content to cover slot(s)
+    & School \texttt{.ldf} / \texttt{0-Config/} \\
+  \texttt{\textbackslash ntAddToCoverTikz}
+    & Inject Ti\textit{k}Z code onto cover canvas
+    & School \texttt{.ldf} files \\
+  \texttt{\textbackslash ifphddoc} / \texttt{\textbackslash ifmscdoc}
+    & Conditional on document type
+    & \texttt{0-Config/4\_files.tex}, chapters \\
+  \texttt{\textbackslash ifdocfinal}
+    & Conditional on document status
+    & \texttt{0-Config/4\_files.tex}, chapters \\
+  \texttt{\textbackslash ifxeorlua}
+    & Conditional on \LaTeX{} engine
+    & \texttt{0-Config/5\_packages.tex} \\
+  \texttt{\textbackslash NTDeclareHook}
+    & Declare an extension hook
+    & School \texttt{.ldf} files \\
+  \texttt{\textbackslash NTAddToHook}
+    & Add code to an extension hook
+    & School \texttt{.ldf} files \\
+  \texttt{\textbackslash NTRunHook}
+    & Execute an extension hook
+    & Class internals \\
+  \texttt{\textbackslash shiftbookmarks}
+    & Shift PDF bookmark levels
+    & \texttt{nt-render-matter.sty} \\
+  \texttt{\textbackslash ntselectlang}
+    & Switch active language mid-document
+    & Abstract files, chapters \\
+  \texttt{\textbackslash debuggrid}
+    & Overlay layout debug grid
+    & During development \\
+  \texttt{\textbackslash novathesis}
+    & Template name in canonical style
+    & Anywhere in text \\
+\end{ShadedTabular}

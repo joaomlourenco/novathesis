@@ -392,7 +392,7 @@
   % hyperref's patch do, substituting "annex" branding throughout.
   \gdef\@chapapp{\annexname}%           % memoir: display name in headings/TOC
   \anappendixtrue%                      % memoir: use appendix-style TOC entries
-  \gdef\theHchapter{\Hy@AlphNoErr{chapter}}% hyperref: A,B,C… for PDF anchors
+  \gdef\theHchapter{annex.\Hy@AlphNoErr{chapter}}% hyperref: annex.A, annex.B… — unique vs appendix A,B…
   \xdef\Hy@chapapp{annex}%             % hyperref: anchor prefix → annex.A etc.
   \gdef\chaptername{\annexname}%
   \gdef\thechapter{\annexcounter\c@chapter}%
