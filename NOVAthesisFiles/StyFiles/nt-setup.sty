@@ -482,7 +482,7 @@
             \ifcsdef{listoflistings}{%
                 \clearforchapter%
                 \phantomsection
-                \pdfbookmark[\@nt@lol@bkm@level]{\listoflistingscaption}{\HyperLocalCurrentHref}
+                \bookmark[level=\@nt@lol@bkm@level, dest=\HyperLocalCurrentHref]{\listoflistingscaption}
                 \listoflistings
             }{%
                   \ClassError{novathesis}{Can't make list of listings. Please report this problem in the “novathesis” github. Thanks!}{}%
@@ -492,10 +492,10 @@
               \clearforchapter%
               \phantomsection
               \ifcsdef{listalgorithmname}{%
-                \pdfbookmark[\@nt@lol@bkm@level]{\listalgorithmname}{\HyperLocalCurrentHref}
+                \bookmark[level=\@nt@lol@bkm@level, dest=\HyperLocalCurrentHref]{\listalgorithmname}
               }{%
                 \ifcsdef{listalgorithmcfname}{%
-                  \pdfbookmark[\@nt@lol@bkm@level]{\listalgorithmcfname}{\HyperLocalCurrentHref}
+                  \bookmark[level=\@nt@lol@bkm@level, dest=\HyperLocalCurrentHref]{\listalgorithmcfname}
                 }{%
                   \ClassError{novathesis}
                              {Cannot make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
@@ -532,11 +532,11 @@
     {frontmatter}{%
           \ntthesisfrontmatter% Before the main text (TOC, etc) — Roman page numbering
           \phantomsection
-          \pdfbookmark[0]{\GetBkmString(frontmatter,\@LANG@MAIN)}{\HyperLocalCurrentHref}
+          \bookmark[level=0, dest=\HyperLocalCurrentHref]{\GetBkmString(frontmatter,\@LANG@MAIN)}
           % Nest all front-matter items under the "Front Matter" bookmark node.
           % \@nt@bkm@level=1 shifts \ChapterNoTitle pages (copyright, dedication, …)
           % to level 1; \shiftbookmarks shifts chapter-level items (list-ofs) likewise.
-          % \pdfbookmark[0]{Contents} and \pdfbookmark[0]{List of…} use explicit
+          % \bookmark[level=0]{Contents} and \bookmark[level=0]{List of…} use explicit
           % levels so they stay at level 0 and are unaffected by \shiftbookmarks.
           \begingroup
             \def\@nt@bkm@level{1}%
@@ -552,7 +552,7 @@
     {backmatter}{%
           \ntthesisbackmatter     % The back text — Arabic page numbering
           \phantomsection
-          \pdfbookmark[0]{\GetBkmString(backmatter,\@LANG@MAIN)}{\HyperLocalCurrentHref}
+          \bookmark[level=0, dest=\HyperLocalCurrentHref]{\GetBkmString(backmatter,\@LANG@MAIN)}
           \shiftbookmarks{\ntprintlist{/@nt/print/#1}}%
     }%
     {backcover}{%

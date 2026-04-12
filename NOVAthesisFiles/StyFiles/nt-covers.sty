@@ -345,7 +345,7 @@
     \ifcoverdefined[#1-#2]
       {
         \gdef\@COVERNUM{#1-#2}
-        \setcounter{page}{0}
+        \IfStrEq{#1}{1}{\pagenumbering{roman}\setcounter{page}{0}}{}
         \nt_covers_render_page:nn { #1 } { #2 }
         \ifoptionequal{/novathesis/media}{paper}
           { \ifcoverdefined[#1-2] { \clearpage } { \clearforchapter } }
@@ -359,9 +359,17 @@
     \group_begin:
       \NTRunHook{cover/pre}
       \NTRunHook{cover/#1-#2/pre}
-      \hypertarget{\GetBkmString(#1-#2)}{}
-      \bookmark[dest=\GetBkmString(#1-#2)]{\GetBkmString(#1-#2)}
-      \bookmarksetupnext{rellevel=1}
+      \clearpage
+      \phantomsection
+      \def\bmshift{0}
+      \IfStrEqCase{#1}{% Front cover and back cover start at normal level
+        {1}{\def\bmshift{0}}
+        {N}{\def\bmshift{0}}
+      }[% Front page starts at level 1
+        {\def\bmshift{1}}
+      ]%
+      \IfStrEq{#2}{2}{\def\bmshift{1}}% Also, verso of covers always at level 1
+      \bookmark[level=\bmshift, dest=\HyperLocalCurrentHref]{\GetBkmString(#1-#2)}
       \thispagestyle{empty}
 
       % Background Color
@@ -419,7 +427,7 @@
 \NewDocumentCommand{\ntprintspine} { }
   {
     % Spine logic is simpler to keep calling nt-spine.sty
-    \pagenumbering{roman} \setcounter{page}{0}
+    \pagenumbering{roman} %\setcounter{page}{0}
     \NTRunHook{print/spine/pre}
     \iffileadded[spine]{cover}
       { \PrintAddedFile[spine]{cover} }

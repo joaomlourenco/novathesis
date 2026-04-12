@@ -369,7 +369,6 @@
 % #3 = code if succeed [OPTIONAL]
 % #4 = code if fails [OPTIONAL]
 
-
 % 1. Create variables
 
 \NewDocumentCommand{\InputIfFileExistsInDirsTF}{ m m +m +m }
@@ -419,12 +418,12 @@
   % Create the anchor. 
   % #1 is now the fully expanded string (e.g., "Project Alpha").
   \phantomsection%
-  % \bookmark[dest=\HyperLocalCurrentHref]{#1}%
-  \pdfbookmark[\@nt@bkm@level]{#1}{\HyperLocalCurrentHref}
+  \bookmark[level=\@nt@bkm@level, dest=\HyperLocalCurrentHref]{#1}
   
   % Reset spacing/formatting
   \noindent \ignorespaces
  }
+
 
 % 2. Generate the variant that forces expansion ('e' = expand fully)
 \cs_generate_variant:Nn \__user_chapter_logic:n { e }

@@ -65,10 +65,21 @@
 %       final —> final version (with committee)
 %-------------------------------------------------------------
 % \ntsetup{docstatus=final}
-%               NOTE: final mode automatically produces PDF/A-2b archival
-%               output (via the pdfx package).
-%               To disable: uncomment the pdfa=false line below.
-% \ntsetup{pdfa=false}    % uncomment to suppress PDF/A-2b even in final mode
+
+
+
+%-------------------------------------------------------------
+% Make a PDF/A-2b compliant file (for long term archival)
+%
+%     DEFAULT: pdfa <- false for 'working' and 'provisional' status
+%                   <- true for 'final' status
+%.............................................................
+%
+%     NOTE: final mode automatically produces PDF/A-2b archival
+%           output (via the pdfx package).
+%           To disable: uncomment line below to suppress PDF/A-2b even in final mode
+%-------------------------------------------------------------
+% \ntsetup{pdfa=false}
 
 
 

@@ -73,18 +73,18 @@ registered.
 Each cover page has a two-part identifier \texttt{major\,-\,minor}:
 
 \begin{center}
-\begin{tabular}{cll}
-  \hline
+\begin{ShadedTabular}{cll}
+  \toprule
   \textbf{ID} & \textbf{Description} & \textbf{When printed} \\
-  \hline
+  % \midrule
   \texttt{1-1} & Front cover — recto (right/odd page)   & Always \\
   \texttt{1-2} & Front cover — verso (back of cover)    & When content is registered \\
   \texttt{2-1} & Front page — recto                     & When \texttt{print/frontpage=true} \\
   \texttt{2-2} & Front page — verso                     & When content is registered \\
   \texttt{N-1} & Back cover — recto (reverse of back)   & When content is registered \\
   \texttt{N-2} & Back cover — verso (outside back cover) & Always \\
-  \hline
-\end{tabular}
+  \bottomrule
+\end{ShadedTabular}
 \end{center}
 
 The \emph{major} number (1, 2, N) identifies the cover pair; the \emph{minor}
@@ -527,10 +527,10 @@ with \verb!\NTAddToHook!:
 Available hook points (in execution order for a single cover page):
 
 \begin{center}
-\begin{tabular}{ll}
-  \hline
+\begin{ShadedTabular}{ll}
+  \toprule
   \textbf{Hook name}              & \textbf{When executed} \\
-  \hline
+  % \midrule
   \texttt{cover/pre}              & Before any cover page \\
   \texttt{cover/<id>/pre}         & Before cover \texttt{<id>} \\
   \texttt{cover/<id>/text/pre}    & Before text-layer elements \\
@@ -543,8 +543,8 @@ Available hook points (in execution order for a single cover page):
   \texttt{cover/<id>/grid/post}   & After debug grid \\
   \texttt{cover/<id>/post}        & After cover \texttt{<id>} \\
   \texttt{cover/post}             & After any cover page \\
-  \hline
-\end{tabular}
+  \bottomrule
+\end{ShadedTabular}
 \end{center}
 
 \medskip
@@ -890,10 +890,10 @@ elements below remain at a predictable vertical position.
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{lp{8cm}}
-  \hline
+\begin{ShadedTabular}{lp{8cm}}
+  \toprule
   \textbf{Command / Setting} & \textbf{Purpose} \\
-  \hline
+  % \midrule
   \verb!\margin(cover,top):={...}!          & Cover text-area top margin \\
   \verb!\margin(cover,<id>,top):={...}!     & Per-cover override \\
   \verb!\thesiscover(<id>,bgcolor):={...}!  & Page background colour \\
@@ -906,6 +906,7 @@ elements below remain at a predictable vertical position.
   \verb!\debuggrid[color]!                  & Render a measurement grid \\
   \verb!\ntsetup{debug={cover}}!            & Enable cover debug mode \\
   \verb!python .Build/build.py ... --mode 2! & Build cover pages only \\
-  \hline
-\end{tabular}
+  \bottomrule
+\end{ShadedTabular}
 \end{center}
+

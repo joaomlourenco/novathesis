@@ -17,7 +17,7 @@
 \typeout{NT FILE 2-MainMatter/chapter-build-py.tex}%
 
 \chapter{The \texttt{build.py} Build Assistant}
-\label{cha:build_py}
+\label{app:build_py}
 
 The file \verb!.Build/build.py! is a Python~3 script that automates building
 \novathesis{} documents from the command line without touching any
@@ -259,18 +259,18 @@ python3 .Build/build.py nova/fct --cover --lang pt --progress 2
 
         \begin{center}
         \renewcommand{\arraystretch}{1.25}
-        \begin{tabular}{lp{9cm}}
-          \hline
+        \begin{ShadedTabular}{lp{9cm}}
+          \toprule
           \textbf{Value} & \textbf{Effect} \\
-          \hline
+          % \midrule
           Omitted           & Use current directory (user mode default) \\
           Present, no value & Create a new \verb!tempfile! directory \\
           \texttt{-}        & Reuse the directory cached in
                               \verb!.Build/.keep-dir.txt! from a previous
                               run; create a new temp dir if none is cached \\
           \textit{path}     & Use (or create) the specified directory \\
-          \hline
-        \end{tabular}
+          \bottomrule
+        \end{ShadedTabular}
         \end{center}
 
   \item[\texttt{-k}, \texttt{--keep-bdir}]
@@ -436,10 +436,10 @@ building.
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{lp{8.5cm}}
-  \hline
+\begin{ShadedTabular}{lp{8.5cm}}
+  \toprule
   \textbf{Option} & \textbf{Effect} \\
-  \hline
+  % \midrule
   \verb!school_id!               & Required. \texttt{university/faculty[/variant]} \\
   \verb!-t! / \verb!--doctype!   & \texttt{phd} / \texttt{msc} / \texttt{bsc} \\
   \verb!-s! / \verb!--docstatus! & \texttt{working} / \texttt{provisional} / \texttt{final} / \texttt{keep} \\
@@ -456,6 +456,6 @@ building.
   \verb!--lines!                 & Expected line count for progress bar \\
   \verb!--dry-run!               & Preview actions without building \\
   \verb!-v! / \verb!--verbose!   & Extra debug output \\
-  \hline
-\end{tabular}
+  \bottomrule
+\end{ShadedTabular}
 \end{center}

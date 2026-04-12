@@ -32,7 +32,7 @@ through the files inside the \verb!0-Config/! folder — the rest of the
 project tree is never edited directly.
 
 For a reference to the automated build assistant \verb!.Build/build.py!,
-see Chapter~\ref{cha:build_py}.  For a guide to the cover page system,
+see Chapter~\ref{app:build_py}.  For a guide to the cover page system,
 see Chapter~\ref{cha:covers}.
 
 
@@ -227,7 +227,7 @@ commented-out lines show available values as documentation:
 \begin{latexcode}
 \ntsetup{docstatus=working}      % drafting (default)
 \ntsetup{docstatus=provisional}  % submitted; no committee yet
-\ntsetup{docstatus=final}        % post-examination; includes committee
+\ntsetup{docstatus=final}        % post-examination; committee, book spine, PDF/A-2b
 \end{latexcode}
 
   \item[\texttt{lang}] Main language of the document body (ISO 3166-1 alpha-2
@@ -798,9 +798,11 @@ the differences.
     Integrity statement     & no  & yes & yes \\
     Evaluation committee    & no  & no  & yes \\
     Book spine              & no  & no  & yes \\
+    PDF/A-2b output         & no  & no  & yes \\
     \bottomrule
   \end{ShadedTabular}
 \end{table}
+\noindent See Section~\ref{sub:pdfa} for details on the PDF/A archival output.
 
 A typical workflow:
 \begin{enumerate}
@@ -808,7 +810,8 @@ A typical workflow:
   \item Switch to \texttt{provisional} when submitting to the examination
     jury — a clean PDF without the committee members.
   \item Switch to \texttt{final} after the examination — includes the
-    committee, the book spike, and is archive-ready.
+    committee, the book spine, and produces a PDF/A-2b archival document
+    (see Section~\ref{sub:pdfa}).
 \end{enumerate}
 
 
@@ -853,7 +856,7 @@ processor — either in your editor preferences or via
 The \verb!.Build/build.py! script builds for a specific school without
 modifying the \verb!0-Config/! files manually.  It is primarily intended
 for CI use and for maintainers generating sample PDFs.  For full
-documentation see Chapter~\ref{cha:build_py}.
+documentation see Chapter~\ref{app:build_py}.
 
 Quick example:
 \begin{bashcode}
@@ -905,6 +908,48 @@ The thesis title, author name, and language are taken directly from the
 cover-page data in \verb!0-Config/3_cover.tex! and passed to \texttt{pdfx},
 which embeds them in the required XMP packet.  No additional configuration
 is needed.
+
+\medskip
+\noindent\textbf{Images and colour spaces.}
+The most common cause of PDF/A validation failures is an embedded image
+with a device-dependent colour space (plain RGB or CMYK) and no ICC
+profile.  PDF/A-2b requires every included image to carry an embedded
+ICC profile or use a calibrated colour space.  Practical guidance by
+format:
+
+\begin{description}
+  \item[JPEG / JPG] Most cameras and photo-editors embed an sRGB ICC
+    profile automatically.  Screenshots and diagrams exported from
+    presentation or diagramming software often do not.  Check the
+    source file and add a profile before including it (\emph{e.g.}\ via
+    GIMP's \emph{Image → Mode → Assign Colour Profile}, or with
+    ImageMagick: \verb!magick -profile sRGB.icc input.jpg output.jpg!).
+
+  \item[PNG] Inkscape embeds an sRGB profile when exporting via
+    \emph{File → Export PNG Image}.  Images from other sources should be
+    checked; if the profile is missing, add it with the same tools as
+    for JPEG above.
+
+  \item[TIFF] \LaTeX{} engines cannot include TIFF directly.  Convert
+    to PDF or PNG with an embedded ICC profile using an image-editing
+    tool (GIMP, ImageMagick, or Photoshop) before including the result.
+
+  \item[PDF (figures)] An included PDF figure must itself use
+    device-independent colour spaces throughout.  Figures produced by
+    Matplotlib, Inkscape, and TikZ are almost always clean.  Scanned
+    or converted PDFs may not be — if VeraPDF reports colour-space
+    errors linked to a specific figure, pre-process it with Ghostscript
+    before re-including:
+\begin{bashcode}
+gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite \
+   -sColorConversionStrategy=sRGB \
+   -o figure-fixed.pdf figure-original.pdf
+\end{bashcode}
+\end{description}
+
+\noindent The safest choice is \textbf{vector PDF} (TikZ, Inkscape,
+Matplotlib): it contains no raster data and is intrinsically
+colour-space clean.
 
 \medskip
 \noindent\textbf{Opting out.}
