@@ -1,0 +1,28 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% uminho/epsi/schl-defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for EP-UMINHO (strings and cover)
+%%
+%%      This customization had the collaboration and support
+%%      from Bruno Pereira (b-pereira @ github), who built
+%%      the initial support in a fork of version 4.x
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE uminho/epsi/schl-defaults.clo}%
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% Faculty / School
+\SetSchool*(pt)={Escola de Psicologia}
+\SetSchool*(en)={School of Psychology}
+\SetSchool*(fr)={\GetSchool(en)}
+\SetSchool*(it)={\GetSchool(en)}
+
+% Logos
+\SetSchool*(logo,RGB)={uminho-ep-insignia-color}
+\SetSchool*(logo,GRAY)={uminho-ep-insignia-mono}

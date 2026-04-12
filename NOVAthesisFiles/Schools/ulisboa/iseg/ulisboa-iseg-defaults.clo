@@ -1,0 +1,243 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ul/iseg/defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for IST-UL (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE ul/iseg/defaults.clo}%
+
+
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
+\ifdocfinal{\ntsetup{print/frontpage=true}}{}
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% Faculty / School
+\SetSchool*(pt)={Instituto Superior de Economia e Gestão}
+\SetSchool*(en)={Lisbon School of Economics \& Management}
+\SetSchool*(fr)={\GetSchool(en)}
+\SetSchool*(it)={\GetSchool(en)}
+
+\SetAdviserString*(a,1,m,en)={Supervisor}
+\SetAdviserString*(a,1,f,en)={Supervisor}
+\SetAdviserString*(a,2,m,en)={Supervisor}
+\SetAdviserString*(a,2,f,en)={Supervisor}
+\SetAdviserString*(c,1,m,en)={Co-supervisor}
+\SetAdviserString*(c,1,f,en)={Co-supervisor}
+\SetAdviserString*(c,2,m,en)={Co-supervisor}
+\SetAdviserString*(c,2,f,en)={Co-supervisor}
+\SetAdviserString*(ca,1,m,en)={Co-supervisor}
+\SetAdviserString*(ca,1,f,en)={Co-supervisor}
+\SetAdviserString*(ca,2,m,en)={Co-supervisor}
+\SetAdviserString*(ca,2,f,en)={Co-supervisor}
+
+\SetDegreeString*(bsc,m,en)={BSc}
+\SetDegreeString*(bsc,f,en)={BSc}
+\SetDegreeString*(msc,m,en)={MSc}
+\SetDegreeString*(msc,f,en)={MSc}
+\SetDegreeString*(mscplan,m,en)={MSc}
+\SetDegreeString*(mscplan,f,en)={MSc}
+\SetDegreeString*(phd,m,en)={PhD Degree}
+\SetDegreeString*(phd,f,en)={PhD Degree}
+\SetDegreeString*(phdplan,m,en)={PhD Degree}
+\SetDegreeString*(phdplan,f,en)={PhD Degree}
+\SetDegreeString*(phdprop,m,en)={PhD Degree}
+
+\SetDissertationString(bsc,pt)={Relatório especialmente elaborado para obtenção do Grau de %
+  \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+  {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
+\SetDissertationString(mscplan,pt)={Relatório intermédio especialmente elaborado para obtenção do Grau de %
+  \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+  {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
+\SetDissertationString(msc,pt)={Dissertação especialmente elaborada para obtenção do Grau de %
+  \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+  {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
+\SetDissertationString(phdplan,pt)={Relatório intermédio especialmente elaborado para obtenção do Grau de %
+  \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+  {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
+\SetDissertationString(phdprop,pt)={Proposta de tese especialmente elaborada para obtenção do Grau de %
+  \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+  {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
+\SetDissertationString(phd,pt)={Tese especialmente elaborada para obtenção do Grau de %
+  \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+  {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
+
+\SetDissertationString(bsc,en)={Report specifically prepared to obtain the %
+  \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+  {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
+\SetDissertationString(mscplan,en)={Dissertation plan specifically prepared to obtain the %
+  \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+  {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
+\SetDissertationString(msc,en)={Dissertation specifically prepared to obtain the %
+  \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+  {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
+\SetDissertationString(phdplan,en)={Thesis plan specifically prepared to obtain the %
+  \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+  {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
+\SetDissertationString(phdprop,en)={Thesis proposal specifically prepared to obtain the %
+  \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+  {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
+\SetDissertationString(phd,en)={Thesis specifically prepared to obtain the %
+  \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+  {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
+
+\SetCopyrightTextString(pt)={O \GetSchool(\@LANG@COVER)\ e a \GetUniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e disegribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+
+\SetCopyrightTextString(en)={The \GetSchool(\@LANG@COVER)\ and the \GetUniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and disegribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+
+
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
+\SetCommitteeOrder*()={c,m}%
+
+
+%%=======================================================================
+%% FONTS
+%%=======================================================================
+
+\AtEndPreamble{%
+  %\LoadHelveticaLikeFont%  % \RequirePackage{gillius2}%
+  \let\cite\parencite
+}
+
+
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
+
+% Set margins for "normal" pages
+\SetMargin*(screen,top)={3.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={3.0cm}
+\SetMargin*(screen,right)={3.0cm}
+\SetMargin*(paper,top)={3.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={2.5cm}
+\SetMargin*(paper,right)={3.5cm}
+
+% Set margins for cover pages
+\SetMargin*(cover,top)={2cm}
+\SetMargin*(cover,bottom)={2cm}
+\SetMargin*(cover,left)={3.0cm}
+\SetMargin*(cover,right)={3.0cm}
+
+
+%%=======================================================================
+%% SPINE
+%%=======================================================================
+
+\SpineSetup[%
+]{%
+  box/logo/bg/image           = {ulisboa-iseg-logo},
+  box/logo/bg/image/angle     = {-90},
+  box/title/len               = {18.6cm},
+  box/logo/len                = {2.1cm},
+}
+
+
+%%=======================================================================
+%% COVER PAGE SETUP (BACKGROUNDS)
+%%=======================================================================
+
+\SetThesisCover*(phd,1-1,bgcolor)={white}
+
+\NewMemStore{UlisboaIseg}
+\SetUlisboaIseg*(image)={iseg-image.jpg}
+
+
+%%=======================================================================
+%% UTILITIES & HOOKS
+%%=======================================================================
+
+\ntbibsetup{style=apa}
+
+
+%%=======================================================================
+%% COVER 1 & 2 ELEMENTS
+%%=======================================================================
+
+% School
+\ntaddtocover[vspace=0mm]{1-1,2-1}{%
+    \fontsize{13}{17}\selectfont%
+  % \SetTracking[ spacing = {25*,166, } ]{ encoding = * }{ 25 }%
+  \textbf{\textls[25]{\MakeUppercase{\GetUniversity(\@LANG@COVER)}}}\\%
+  \vspace{2mm}%
+  \textbf{\textls[25]{\MakeUppercase{\GetSchool(\@LANG@COVER)}}}%
+}
+
+% LOGO
+\ntaddtocover[halign=c, vspace=1cm]{1-1,2-1}{%
+  \includegraphics[height=2cm,align=c]{ulisboa-iseg-logo-horiz}%
+  \hspace{2cm}%
+  \includegraphics[height=1.0cm,align=c]{ulisboa-logo-color}
+}
+
+% Images (Cover 1 only)
+\IfFileExists{\GetUlisboaIseg(image)}{
+    \ntaddtocover[vspace=1.62cm,height=5cm]{1-1}{%
+        \includegraphics[height=5cm]{iseg-image}%
+    }%
+}{
+\ntaddtocover[vspace=1.62cm,height=1cm]{1-1}{~}%
+}%
+
+% Images spacer (Cover 2 only)
+\ntaddtocover[vspace=1.62cm,height=1cm]{2-1}{~}
+
+% % Title of Dissertation
+\ntaddtocover[vspace=1.2cm,height=1.35cm,valign=c]{1-1,2-1}{%
+    \fontsize{13}{15}\selectfont%
+  \textbf{\GetDocTitle(\@LANG@COVER,main)}%
+}
+
+% Author name
+\ntaddtocover[vspace=1.0cm,height=1.05cm]{1-1,2-1}{%
+    \fontsize{11}{12}\selectfont%
+  \textbf{\GetDocAuthor(name)}%
+}
+
+% Advisers
+\ntaddtocover[vspace=1.7cm,height=3.0cm,valign=t]{1-1,2-1}{%
+    \MemSet{adviserstringfont}{}{\bfseries}%
+  \fontsize{11}{12}\selectfont%
+  \ntprintpersons[name]{0.9}{2}{adviser}{a,c}%
+}
+
+% Degree
+\ntaddtocover[vspace=1,height=1.6cm,valign=t]{1-1,2-1}{%
+    \fontsize{10.75}{12}\selectfont%
+  \thepresentationtext%
+}
+
+% Committee (Cover 2 only)
+\ntaddtocover[vspace=1,valign=t]{2-1}{%
+    \fontsize{11}{12}\selectfont%
+  \ntprintpersons[full]{0.9}{2}{committee}{\GetCommitteeOrder()}%
+}
+
+% Funding (Cover 2 only)
+\ntaddtocover[vspace=1,height=1.25cm,valign=t,halign=l,status={final}]{2-1}{%
+  \ifoptionvoid{/novathesis/ulisboa/iseg/funding}{}{%
+    \NewMemStore{Funding}
+    \SetFunding*(pt)={Instituições Financiadoras:}
+    \SetFunding*(en)={Funding Institutions:}
+    \fontsize{11}{11}\selectfont%
+    \GetFunding(\@LANG@COVER)\\[0.75ex]%
+    \@for\myi:=\expanded{\option{/novathesis/ulisboa/iseg/funding}}\do{\hspace*{0.5cm}\myi\\}
+  }%
+}
+
+% Date
+\ntaddtocover[vspace=1,height=8.5mm,valign=b]{1-1,2-1}{%
+    \fontsize{12}{12}\selectfont%
+    {\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
+}

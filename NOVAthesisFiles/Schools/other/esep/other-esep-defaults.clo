@@ -1,0 +1,145 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% other/esep/defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for ESEP/ESENF (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE other/esep/defaults.clo}%
+
+
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
+\AddValidProcessor{other/esp}{lua,xe}
+
+\ntsetup{print/frontpage=true}    % Shall a second cover page be forced?
+\ntsetup{style/font=calibri}
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% University
+\SetUniversity*(pt)={Escola Superior de Enfermagem do Porto}
+\SetUniversity*(en)={Nursing School of Porto}%%TBD
+\SetUniversity*(fr)={Escola Superior de Enfermagem do Porto}%%TBD
+\SetUniversity*(it)={Escola Superior de Enfermagem do Porto}%%TBD
+
+% Faculty / School
+\SetSchool*(pt)={Escola Superior de Enfermagem do Porto}
+\SetSchool*(en)={Nursing School of Porto}%%TBD
+\SetSchool*(fr)={Escola Superior de Enfermagem do Porto}%%TBD
+\SetSchool*(it)={Escola Superior de Enfermagem do Porto}%%TBD
+
+
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
+\SetCommitteeOrder*()={c,r,m}%
+
+
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
+
+% Set margins for "normal" pages
+\SetMargin*(screen,top)={2.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={3.25cm}
+\SetMargin*(screen,right)={3.25cm}
+\SetMargin*(paper,top)={2.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={4cm}
+\SetMargin*(paper,right)={2.5cm}
+
+% Set margins for cover pages
+\SetMargin*(cover,top)={1.0cm}
+\SetMargin*(cover,bottom)={1.5cm}
+\SetMargin*(cover,left)={7cm}
+\SetMargin*(cover,right)={0.5cm}
+
+
+%%=======================================================================
+%% SPINE
+%%=======================================================================
+
+\SpineSetup[%
+]{%
+  box/logo/bg/image           = {other-esep-logo_horiz},
+  % box/logo/bg/image/angle     = {-90},
+  % box/title/len               = {18.6cm},
+  % box/logo/len                = {2.1cm},
+}
+
+
+%%=======================================================================
+%% COVER PAGE SETUP (BACKGROUNDS)
+%%=======================================================================
+
+\SetThesisCover*(1-1,bgcolor)={white}
+\SetThesisCover*(1-1,image)={other-esep-cover}
+
+
+%%=======================================================================
+%% COVER 1 & 2 ELEMENTS
+%%=======================================================================
+
+% ESEP logo
+\ntaddtocover[vspace=2.2cm]{1-1,2-1}{%
+  \noindent%
+  \fontsize{15}{15}\selectfont%
+  \textbf{{\MakeUppercase{\GetSchool(\@LANG@COVER)}}}%
+}
+
+% Degree name
+\ntaddtocover[vspace=0.5cm]{1-1,2-1}{%
+  \fontsize{15}{15}\selectfont%
+  \GetDegreeName(\@LANG@COVER)%
+}
+
+% Title of Dissertation 1 (Cover 1 only)
+\ntaddtocover[vspace=6.5cm, height=4cm, valign=t]{1-1}{%
+    \centering%
+    \fontsize{15}{15}\selectfont%
+    {\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}\\[1ex]%
+    \fontsize{12}{12}\selectfont%
+    Dissertação%
+}
+
+% % Title of Dissertation 2 (Cover 2 only)
+\ntaddtocover[vspace=6.5cm, height=4cm, valign=t]{2-1}{%
+    \centering%
+    \fontsize{15}{15}\selectfont\scshape%
+    \GetDocTitle(\@LANG@COVER,main)\\[1ex]%
+    \GetDocTitle(en,main)%
+}
+
+% Advisers (Cover 2 only)
+\ntaddtocover[vspace=2cm]{2-1}{%
+  \parbox[t][4cm]{\textwidth}{%
+    \centering%
+    \fontsize{11}{11}\selectfont%
+    \ntprintpersons{0.8}{2}{adviser}{a,c}%
+  }%
+}
+
+% Advisers spacer (Cover 1 only)
+\ntaddtocover[vspace=2cm]{1-1}{%
+  \parbox[t][4cm]{\textwidth}{~}%
+}
+
+% Author name
+\ntaddtocover[vspace=1]{1-1,2-1}{%
+  \fontsize{12}{12}\selectfont
+  \textbf{\GetDocAuthor(name)}
+}
+
+% Date
+\ntaddtocover[vspace=2]{1-1,2-1}{%
+  \fontsize{12}{12}\selectfont
+    \textbf{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
+}

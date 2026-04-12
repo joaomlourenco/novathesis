@@ -1,0 +1,188 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ipl/isel/defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for ISEL-IPL (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE ipl/isel/ipl-isel-meb-defaults.clo}%
+
+
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
+\input{\DIRSCHOOLS/ipl/isel/ipl-isel-defaults.clo}
+
+\ntsetup{print/frontpage=true}
+
+\def\@LANG@COVER{pt}%
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% Faculty / School 
+\SetSchool*(estsl,pt)={Escola Superior de Tecnologia da Saúde de Lisboa}
+\SetSchool*(estsl,en)={Escola Superior de Tecnologia da Saúde de Lisboa}
+\SetSchool*(estsl,fr)={Escola Superior de Tecnologia da Saúde de Lisboa}
+\SetSchool*(estsl,it)={Escola Superior de Tecnologia da Saúde de Lisboa}
+
+\SetDissertationString(bsc,pt)={Trabalho Final de Licenciatura para obtenção do grau de\\%
+Mestre em Engenharia Biomédica}
+\SetDissertationString(mscplan,pt)={Trabalho Final de Mestrado para obtenção do grau de\\%
+Mestre em Engenharia Biomédica}
+\SetDissertationString(msc,pt)={Trabalho Final de Mestrado para obtenção do grau de\\%
+Mestre em Engenharia Biomédica}
+\SetDissertationString(bsc,en)={Trabalho Final de Licenciatura para obtenção do grau de\\%
+Mestre em Engenharia Biomédica}
+\SetDissertationString(mscplan,en)={Trabalho Final de Mestrado para obtenção do grau de\\%
+Mestre em Engenharia Biomédica}
+\SetDissertationString(msc,en)={Trabalho Final de Mestrado para obtenção do grau de\\%
+Mestre em Engenharia Biomédica}
+
+
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
+
+% Set margins for cover pages
+\SetMargin*(cover,top)={1.175cm}
+\SetMargin*(cover,bottom)={1.5cm}
+\SetMargin*(cover,left)={2.1cm}
+\SetMargin*(cover,right)={2.1cm}
+
+
+%%=======================================================================
+%% SPINE
+%%=======================================================================
+
+\SetSpine(logo)={ipl-logo/0,ipl-isel-logo/0/1.5,ipl-isel-meb-logo/0,2cm/meb-text/0/1.8}
+\SetSpine*(box,logo,margin,sep)={5mm}
+
+\SetSpine(box,date,angle)={-90}
+\SetSpine(author)={\GetDocAuthor(name,short)}
+
+\SetSpine*(order)=?{date,author,title,logo}
+\SetSpine*(box,logo,len)=?{4.1cm}
+\SetSpine*(box,date,len)=?{1.0cm}
+% \spine(box,author,len):=?{5.0cm}
+
+
+%%=======================================================================
+%% COVER PAGE SETUP (BACKGROUNDS)
+%%=======================================================================
+
+\SetFrontPageImage*()={isel-meb-photo}
+
+% \thesiscover(1-1,image):={MEB_CapaVersaoDefinitiva_TFM_v02}
+
+\ntresetcovers
+
+
+%%=======================================================================
+%% UTILITIES & HOOKS
+%%=======================================================================
+
+\AtEndPreamble{%
+  %\LoadHelveticaLikeFont%}
+
+\NTAddToHook{cover/1-1/pre}{%
+  \sffamily%
+}
+\NTAddToHook{cover/2-1/text/pre}{%
+  \sffamily%
+}
+
+
+%%=======================================================================
+%% COVER 1 & 2 ELEMENTS
+%%=======================================================================
+
+%% IPL
+\ntaddtocover[vspace=0cm, halign=l, hspace=0.5mm, height=1.225cm, valign=c]{1-1,2-1}{%
+  \includegraphics[height=1.225cm,align=c]{ipl-logo}%
+  \hspace*{2.6cm}%
+  \fontsize{12.9}{13}\selectfont%
+  \textbf{\MakeUppercase{\GetUniversity(pt)}}%
+}
+
+%% ISEL e ESTSL
+\ntaddtocover[vspace=3mm, halign=l, hspace=-0.5mm, height=10mm, valign=c]{1-1,2-1}{%
+  \includegraphics[height=10.5mm,align=c]{ipl-isel-logo}%
+  \hspace*{2mm}
+  \includegraphics[height=7.7mm,align=c]{ipl-isel-meb-logo2}%
+  \hspace*{3.5mm}%
+  \fontsize{12}{12}\selectfont%
+  \begin{tabular}{@{}ll}
+    \GetSchool(\@LANG@COVER)\\%
+    \GetSchool(estsl,\@LANG@COVER)%
+  \end{tabular}%
+}
+
+\ntaddtocover[vspace=1.6cm,height=9cm,valign=c]{1-1,2-1}{%
+  % \typeout{NT thefrontpageimage=[\GetFrontPageImage()]}%
+  \IfMemVoidTF{FrontPageImage}{}
+    {~}%
+    {\includegraphics[height=9cm]{\GetFrontPageImage()}}%
+}
+
+% % Title of Dissertation
+\ntaddtocover[vspace=1.5cm,]{1-1,2-1}{%
+  \fontsize{16.5}{16}\selectfont%
+  \bfseries%
+  \textbf{\GetDocTitle(\@LANG@COVER,main)}%
+}
+
+% Author name
+\ntaddtocover[vspace=1.4cm]{1-1,2-1}{%
+  \fontsize{14}{14}\selectfont%
+  \GetDocAuthor(name)%\\[1ex]
+  % \fontsize{14}{14}\selectfont%
+  % (\GetDocAuthor(degree))%
+}
+
+% Degree
+\ntaddtocover[vspace=9mm]{1-1,2-1}{%
+  \fontsize{11}{11}\selectfont%
+  \thepresentationtext%
+}
+
+% Provisional
+\ntaddtocover[vspace=10mm,status={working,provisional}]{1-1,2-1}{%
+  \fontsize{11}{11}\selectfont%
+  (Versão Provisória)%
+}
+
+% Advisers
+\ntaddtocover[vspace=8.75mm,valign=t]{1-1,2-1}{%
+  % \MemSet{adviserstringfont}{a}{}%
+  % \MemSet{adviserstringfont}{c}{\bfseries}%
+  \SetCommaString(pt)={\\}
+  \SetAndString(pt)={\\}
+  \fontsize{11}{11}\selectfont%
+  \underline{\@nt@printgrouptitle@text{adviser}{a}}\\[1ex]%
+  \ntprintpersons[name]{0.9}[c]{0}{adviser}{a,c}%
+}
+
+% Committee — only print the committee for the main classes
+\ntaddtocover[vspace=1,status=final]{1-1,2-1}{%
+  \ifmaindoc{%
+    \fontsize{11}{11}\selectfont%
+    \underline{\GetCommitteeTitleString(\@LANG@COVER)}\\[4pt]%
+    \MemSet{persongrouppost}{}{\\[5pt]}
+    \MemSet{personpost}{}{\\[-1pt]}
+    \SetCommitteeTitleString*(pt)={}%
+    \ifdocfinal{\ntprintpersons[name]{1}[c]{2}{committee}{\GetCommitteeOrder()}\mbox{}}{\mbox{}}%
+  }{\mbox{}}%
+}
+
+% Date
+\ntaddtocover[vspace=2]{1-1,2-1}{%
+  \fontsize{11}{11}\selectfont%
+  \iftoggle{/novathesis/print/timestamp}{%
+    \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}%
+                 {\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
+  }{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
+}

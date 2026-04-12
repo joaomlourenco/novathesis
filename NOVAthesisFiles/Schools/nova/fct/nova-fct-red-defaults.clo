@@ -1,0 +1,18 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova/fct//nova-fct-red-defaults.clo
+%% NOVA thesis document template
+%%
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
+%%
+%% Authors / Contributors:
+%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE schools/nova/fct/nova-fct-red-defaults.clo}%
+
+\def\@novafctcovercolor{red}
+
+\input{\DIRSCHOOLS/nova/fct/nova-fct-defaults.clo}

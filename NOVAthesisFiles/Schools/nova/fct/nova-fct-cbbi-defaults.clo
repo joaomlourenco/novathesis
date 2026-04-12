@@ -1,0 +1,385 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova/fct/nova-fct-cbbi-defaults.clo
+%% NOVA thesis document template
+%%
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
+%%
+%% Authors / Contributors:
+%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE schools/nova/fct/nova-fct-cbbi-defaults.clo}%
+
+
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
+\options{/novathesis,
+% NOVA/FCT
+  nova/fct/company/logo/.new value = {},
+  nova/fct/company/name/.new value = {},
+}
+
+% NOVA FCT specific customization
+\ntsetup{doctype=msc}
+\ntsetup{print/frontpage=true}
+\ntsetup{spine/width=3cm}     % Force the “book spine” width
+\openany
+
+
+%%=======================================================================
+%% COLORS
+%%=======================================================================
+
+\definecolor{msccbbigray}{RGB}{110,110,110}
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% Faculty / School
+\SetSchool*(pt)={Faculdade de Ciências e Tecnologia}
+\SetSchool*(en)={NOVA School of Science and Technology}
+\SetSchool*(fr)={NOVA School of Science and Technology}
+\SetSchool*(it)={NOVA School of Science and Technology}
+
+% Logos
+\SetSchool*(logo,pt)={nova-fct-logo-pt}
+\SetSchool*(logo,neg,pt)={nova-fct-logo-negative-pt}
+\SetSchool*(logo,en)={nova-fct-logo-en}
+\SetSchool*(logo,neg,en)={nova-fct-logo-negative-en}
+\SetSchool*(logo)={\GetSchool(logo,\@LANG@COVER)}
+\SetSchool*(logo,neg)={\GetSchool(logo,neg,\@LANG@COVER)}
+
+\ntdegreename(pt){Biologia Computacional\\\& Bioinformática}
+\ntdegreename(en){Computational Biology\\\& Bioinformatics}
+
+\SetSpecializationString*(en)={SPECIALIZATION}
+\SetSpecializationString*(pt)={ESPECIALIZAÇÃO}
+
+\NewMemStore{DissertationPlan}
+\SetDissertationPlan*(mscplan,en)={Dissertation Plan}
+\SetDissertationPlan*(mscplan,pt)={Plano de Dissertação}
+
+
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
+\SetCommitteeOrder*()={c,r,a,ca,m}%
+
+
+%%=======================================================================
+%% FONTS
+%%=======================================================================
+
+% Loading of fonts must be delayed until class "novathesis" is loaded
+\AtEndPreamble{%
+  % [tabular,lining]
+  \RequirePackage[]{montserrat}
+  \ifxeorlua{\setsansfont{montserrat}}{}
+}
+
+
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
+
+% Set margins for "normal" pages
+\SetMargin*(screen,top)={3.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={3.0cm}
+\SetMargin*(screen,right)={3.0cm}
+\SetMargin*(paper,top)={3.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={3.0cm}
+\SetMargin*(paper,right)={3.0cm}
+
+% Set margins for cover pages
+\SetMargin*(cover,top)={12.0cm}
+\SetMargin*(cover,bottom)={6.3cm}
+\SetMargin*(cover,2-1,top)={6.6cm}
+\SetMargin*(cover,2-1,bottom)={1.5cm}
+\SetMargin*(cover,left)={1.7cm}
+\SetMargin*(cover,right)={2.0cm}
+
+
+%%=======================================================================
+%% SPINE
+%%=======================================================================
+
+\SetSpine*(order)={date,tas,logo}
+\SetSpine*(tab,spec)={{@{}l@{}}}
+
+\SetSpine(date)={2025}
+\SetSpine(date,font)={\fontsize{10}{10}\selectfont\bfseries}
+\SetSpine*(box,date,len)=?{1.2cm}
+\SetSpine(box,date,angle)={270}
+
+\SetSpine(tas)={\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}
+\SetSpine(tas,1)={~\\[4pt]%
+               \fontsize{8}{8}\selectfont%
+               \MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}\\[5.5pt]}
+\SetSpine(tas,2)={\fontsize{11}{6}\selectfont\bfseries%
+               \GetDocAuthor(name,short)\\[-0.5pt]}
+\SetSpine(tas,3)={\fontsize{8.5}{6}\selectfont%
+               \MakeUppercase{\GetDegreeNamePrefix(\@DOCTYPE,\@LANG@COVER)} \bfseries\GetMajorField(\@LANG@COVER)\\[-3pt]}
+\SetSpine(tas,4)={\fontsize{5.4}{5}\selectfont%
+               \textbf{\MakeUppercase{\GetSpecializationString(\@LANG@COVER)}}
+               \fontsize{7}{5}\selectfont\GetMinorField(\@LANG@COVER)\\[-5pt]}
+
+\SetSpine*(box,tas,len)={23.3cm}
+\SetSpine*(box,tas,align)={l}
+\SetSpine*(box,tas,margin,left)={0pt}
+\SetSpine*(box,tas,margin,right)={2pt}
+\SetSpine*(box,tas,angle)={0}
+
+\SetSpine*(logo,\@DOCTYPE)={\GetUniversity(logo2)}
+\SetSpine*(box,logo,len)={2.7cm}
+\SetSpine*(box,logo,scale)={1.4}
+\SetSpine(box,logo,margin,left)={10mm}
+\SetSpine(box,logo,margin,right)={10mm}
+\SetSpine(box,logo,margin,top)={1mm}
+\SetSpine(box,logo,margin,bottom)={1mm}
+\SetSpine(box,logo,margin,sep)={4mm}
+
+\SetSpine*(margin,right)=?{0.0cm}
+
+\SpineSetup[%
+]{%
+  box/logo/bg/image = {\GetSchool(logo)},
+  % debug,
+}
+
+
+%%=======================================================================
+%% COVER PAGE SETUP (BACKGROUNDS)
+%%=======================================================================
+
+% MSc cover
+\SetThesisCover*(msc,1-1,image)=?{nova-fct-cover-cbbi-front}
+\SetThesisCover*(msc,N-2,image)=?{nova-fct-cover-cbbi-back}
+\SetThesisCover*(msc,spine,image)=?{nova-fct-spine-cbbi}
+
+
+%%=======================================================================
+%% UTILITIES & HOOKS
+%%=======================================================================
+
+% Same implementation as nova-fct-defaults.clo — see comments there.
+\newif\if@nt@hasbreak
+
+\newcommand{\printdwithvspace}[2][2pt]{%
+  % ---- Phase 1: probe — execute #2 in a discard box; \\ just sets a flag ----
+  \@nt@hasbreakfalse
+  \setbox\z@\hbox{%
+    \def\\{\global\@nt@hasbreaktrue}%
+    #2%
+  }%
+  % ---- Phase 2: typeset for real ---
+  \if@nt@hasbreak
+    % \\ found: redefine to append [#1] to each line break, then typeset
+    \begingroup
+      \let\@nt@origcr\\%
+      \def\\{\@nt@origcr[#1]}%
+      #2%
+    \endgroup
+  \else
+    % No \\ found: prepend \\[#1] before the content
+    \\[#1]#2%
+  \fi
+}
+
+\NTAddToHook{cover/1-1/pre}{%
+  \sffamily%
+}
+
+\NTAddToHook{cover/2-1/text/pre}{%
+  \sffamily%
+}
+
+\NTAddToHook{spine/pre}{%
+  \sffamily%
+}
+
+
+%%=======================================================================
+%% COVER 1 ELEMENTS
+%%=======================================================================
+
+% University and school logo
+\ntaddtocover[tikz]{1-1}{%
+  \node[anchor=north west] at ($(current page.north west) + (18.75mm,-23.75mm)$)
+    {\includegraphics[width=43mm]{nova-logo}};%
+}
+
+\ntaddtocover[tikz]{1-1}{%
+  \node[anchor=north west] at ($(current page.north west) + (13mm,-76mm)$)
+    {\fontsize{52}{52}\selectfont\textbf{\sffamily \textcolor{msccbbigray}{MSc}CBBi}};%
+}
+
+\ntaddtocover[tikz]{1-1}{%
+  \node[anchor=north west] at ($(current page.north west) + (14.6mm,-97.25mm)$)
+    {\fontsize{16.25}{14.5}\selectfont\sffamily%
+      \makecell[tl]{
+      \MakeUppercase{\GetDegreeNamePrefix(\@DOCTYPE,\@LANG@COVER)}\\
+      \let\oldnewline\\%
+      \renewcommand{\\}{\oldnewline\bfseries}%
+      \bfseries%
+      \MakeUppercase{\GetMajorField(\@LANG@COVER)}%
+      }%
+    };%
+}
+
+\ntaddtocover[tikz]{1-1}{%
+  \def\Y{23.75mm}
+  \node[anchor=west] at ($(current page.south west) + (13.75mm,\Y)$)
+    {\includegraphics[width=11.75mm]{nova-insignia-bw}};%
+  \draw[thick] ($(current page.south west) + (28mm,\Y-11.75mm/2)$) -- ++(0mm,11.75mm);%
+  \node[anchor=west] at ($(current page.south west) + (29.0mm,\Y)$)
+    {\includegraphics[width=39.0mm]{nova-ihmt-logo-bw}};%
+  \node[anchor=west,yshift=-2mm] at ($(current page.south west) + (75.0mm,\Y)$)
+    {\includegraphics[width=25.0mm]{nova-fct-logo-bw-en}};%
+  \node[anchor=west,yshift=-2mm] at ($(current page.south west) + (105.0mm,\Y)$)
+    {\includegraphics[width=25.0mm]{nova-nms-logo-bw}};%
+  \node[anchor=west,yshift=-2mm] at ($(current page.south west) + (136.0mm,\Y)$)
+    {\includegraphics[width=15.0mm]{nova-ims-logo-bw}};%
+  \node[anchor=west,yshift=-1mm] at ($(current page.south west) + (153.0mm,\Y)$)
+    {\includegraphics[width=48.0mm]{nova-ihmt-logo-bw}};%
+}
+
+% Specialization
+\ntaddtocover[halign=l,hspace=-1mm,valign=t]{1-1}{%
+  \fontsize{11}{11}\selectfont%
+  {\IfMemVoidTF{Specialization}{\@LANG@COVER}
+    {~}
+    {\StrCut{\GetSpecializationString(\@LANG@COVER)}{ }\@SPCZL\@dummy%
+     \MakeUppercase{\textbf{\@SPCZL}} \MakeUppercase{\GetMinorField(\@LANG@COVER)}}}%
+}
+
+% Title of Dissertation (PhD) / The author name (MSc)
+\ntaddtocover[halign=l,height=3.0cm,vspace=4.1mm,valign=c]{1-1}{%
+    \fontsize{20.5}{17}\selectfont%
+    \textbf{\MakeUppercase{\GetDocAuthor(name)}}\\[2mm]%
+    \fontsize{17}{17}\selectfont%
+    \GetDocAuthor(degree,\@LANG@COVER)%
+}
+
+% The author name (PhD) / Title of Dissertation (MSc)
+\ntaddtocover[vspace=6mm,halign=l,valign=t]{1-1}{%
+    \fontsize{26}{26}\selectfont\bfseries%
+    \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
+}
+
+% Degrere name, Specialization, Date
+\ntaddtocover[vspace=1,halign=l]{1-1}{%
+  \fontsize{18}{17}\selectfont%
+  \iftoggle{/novathesis/print/timestamp}
+    {\ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}%
+                  {\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}}%
+    {\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
+}
+
+
+%%=======================================================================
+%% COVER 2 ELEMENTS
+%%=======================================================================
+
+\ntaddtocover[tikz]{2-1}{%
+  \node[anchor=center] at ($(current page.north west) + (20mm,-20mm)$)
+    {\includegraphics[width=21mm]{\expanded{\GetUniversity(logo)}}};%
+  \draw[thick] ($(current page.north west) + (3.5cm,-1cm)$) -- ++(0cm,-2cm);%
+  \node[anchor=west] at ($(current page.north west) + (40mm,-19mm)$)
+    {\includegraphics[width=35.3mm]{\expanded{\GetSchool(logo)}}};%
+  \draw[thick] ($(current page.north west) + (1cm,-4.1cm)$) -- ++(\paperwidth-2cm,0cm);%
+  \node[anchor=north west] at ($(current page.north west) + (96.45mm,-11.4mm)$)
+    {\fontsize{14}{14}\sffamily\makecell[tl]{\MakeUppercase{\GetDepartmentOfString(\@LANG@COVER)}
+      \printdwithvspace{\MakeUppercase{\GetDepartment(\@LANG@COVER)}}}};%
+}
+
+% Company logo
+\ntaddtocover[tikz]{1-1,2-1}{%
+  \ifoptionvoid{/novathesis/nova/fct/company/logo}{}{%
+    \ifoptionequal{/novathesis/doctype}{bsc}{%
+      \ifoptionequal{/novathesis/schoolgiven}{nova/fct/di-adc}{%
+        \node[anchor=east] at ($(current page.north east) + (-1cm,-2cm)$)
+              {\includegraphics[width=40mm,height=21mm,keepaspectratio]
+                               {\option{/novathesis/nova/fct/company/logo}}};%
+      }{}%
+    }{}%
+  }%
+}
+
+% Title of Dissertation (PhD)
+\ntaddtocover[halign=l]{2-1}{%
+  \fontsize{17}{17}\selectfont%
+  \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
+  \IfMemVoidF{DocTitle}{\@LANG@COVER,sub,cover}{%
+    \\[4mm]%
+    \fontsize{12}{12}\selectfont%
+    \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,sub)}}%
+  }{}%
+}
+
+% The author name
+\ntaddtocover[vspace=1,halign=l]{2-1}{%
+  \fontsize{14}{14}\selectfont%
+  \textbf{\MakeUppercase{\GetDocAuthor(name)}}\\[2mm]%
+  \fontsize{14}{14}\selectfont%
+  \GetDocAuthor(degree,\@LANG@COVER)%
+}
+
+% The advisers
+\ntaddtocover[vspace=2,halign=l]{2-1}{%
+  \MemSet{adviserstringfont}{}{\bfseries}%
+  \fontsize{11}{11}\selectfont%
+  \ntprintpersons{0.9}{2}{adviser}{\GetAdviserOrder()}%
+}
+
+% The committee
+\ntaddtocover[vspace=1,hspace=3.5cm,halign=l]{2-1}{%
+  \MemSet{committeetitlestringfont}{}{\bfseries}%
+  \MemSet{committeestringfont}{}{\bfseries}%
+  \fontsize{10}{10}\selectfont%
+  \ntprintpersons{0.9}{2}{committee}{\GetCommitteeOrder()}%
+}
+
+% Date
+\ntaddtocover[vspace=1,halign=l]{2-1}{%
+  \fontsize{10}{10}\selectfont%
+  \ifmaindoc{}{\GetDissertationPlan(\@DOCTYPE,\@LANG@COVER)\\[1pt]}%
+  \MakeUppercase{\GetDegreeName(\@LANG@COVER)}%
+  {\IfMemVoidF{Specialization}{\@LANG@COVER}{%
+  \fontsize{8}{9}\selectfont
+  \\\MakeUppercase{\GetSpecialization(\@LANG@COVER)}}{}}%
+  \\[1.25ex]%
+  \GetUniversity(\@LANG@COVER)\\[1pt]%
+  \iftoggle{/novathesis/print/timestamp}{%
+    \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}%
+                 {\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
+  }{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
+}
+
+
+%%=======================================================================
+%% BACK COVER ELEMENTS
+%%=======================================================================
+
+\ntaddtocover[tikz]{N-2}{%
+  \node[anchor=north west] at ($(current page.north west) + (19mm,-221mm)$)
+    {\includegraphics[width=88mm]{nova-logo-grey}};%
+}
+
+% Print sponsor logos
+\ntaddtocover[vspace=1, halign=l]{N-2}{%
+  \foreach \myi in {1, ..., 9} {%
+    \IfMemVoidF{Sponsor}{\@LANG@COVER,\myi,logo}{%
+      \GetSponsor(\@LANG@COVER,\myi,logo)\qquad%
+    }{}%
+  }%
+}

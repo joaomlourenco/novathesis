@@ -1,0 +1,216 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ulht-defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for Universidade Lusófona (strings and cover)
+%%
+%% Based in ulhd-deisi-defaults.clo by JoãoPedro Carvalho
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE ulht/univ-defaults.clo}%
+
+
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
+% Configure the font set to Times New Roman
+\ntsetup{style/font=newtx}
+\ntsetup{print/frontpage=true}
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% University
+\SetUniversity*(pt)={Universidade Lusófona de Humanidades e Tecnologias}
+\SetUniversity*(en)={Universidade Lusófona de Humanidades e Tecnologias}
+\SetUniversity*(logo)={logo_ulht_horiz}
+
+% Faculty / School
+\SetSchool*(pt)={Nome da Unidade Orgânica}
+\SetSchool*(en)={School's Name}
+
+\NewMemStore{Ulht}
+\SetUlht*(dt,phd,pt)={Tese}
+\SetUlht*(dt,msc,pt)={Dissertação}
+\SetUlht*(dt,bsc,pt)={Relatório}
+\SetUlht*(dt,phd,en)={Thesis}
+\SetUlht*(dt,msc,en)={Dissertation}
+\SetUlht*(dt,bsc,en)={Report}
+
+\SetUlht*(dtgender,phd,pt)={a}
+\SetUlht*(dtgender,msc,pt)={a}
+\SetUlht*(dtgender,bsc,pt)={o}
+
+% Redefine strings
+\SetDissertationString(phd,en)={\GetUlht(dt,phd,en)\ submitted to obtain the Title of
+                                 \GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)
+                                 in the Degree of \GetDegreeName(en), given by the \GetUniversity(en).}%
+\SetDissertationString(phd,pt)={\GetUlht(dt,phd,pt)\ apresentad\GetUlht(dtgender,phd,pt)\ para a obtenção do Grau de
+                                 \GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)
+                                 no Curso de \GetDegreeName(pt), conferido pela \GetUniversity(pt).}%
+\SetDissertationString(msc,en)={\GetUlht(dt,msc,en)\ submitted to obtain the Title of
+                                 \GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)
+                                 in the Degree of \GetDegreeName(en), given by the \GetUniversity(en).}%
+\SetDissertationString(msc,pt)={\GetUlht(dt,msc,pt)\ apresentad\GetUlht(dtgender,msc,pt)\ para a obtenção do Grau de
+                                 \GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)
+                                 no Curso de \GetDegreeName(pt), conferido pela \GetUniversity(pt).}%
+\SetDissertationString(bsc,en)={\GetUlht(dt,bsc,en)\ submitted to obtain the Title of
+                                 \GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)
+                                 in the Degree of \GetDegreeName(en), given by the \GetUniversity(en).}%
+\SetDissertationString(bsc,pt)={\GetUlht(dt,bsc,pt)\ apresentad\GetUlht(dtgender,bsc,pt)\ para a obtenção do Grau de
+                                 \GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)
+                                 no Curso de \GetDegreeName(pt), conferido pela \GetUniversity(pt).}%
+
+\SetCopyrightTextString(pt)={O \GetSchool(\@LANG@COVER)\ e a \GetUniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
+
+\SetCopyrightTextString(en)={The \GetSchool(\@LANG@COVER)\ and the \GetUniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}
+
+
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
+\SetCommitteeOrder*()={c,r,a,m}%
+
+
+%%=======================================================================
+%% FONTS
+%%=======================================================================
+
+\AtEndPreamble{%
+  %\LoadHelveticaLikeFont%  % \RequirePackage{gillius2}%
+}
+
+
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
+
+% Set margins for "normal" pages
+\SetMargin*(screen,top)={3.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={3.0cm}
+\SetMargin*(screen,right)={3.0cm}
+\SetMargin*(paper,top)={3.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={2.5cm}
+\SetMargin*(paper,right)={3.5cm}
+
+% Set margins for cover pages
+\SetMargin*(cover,top)={1.5cm}
+\SetMargin*(cover,bottom)={2.5cm}
+\SetMargin*(cover,left)={3cm}
+\SetMargin*(cover,right)={3cm}
+
+
+%%=======================================================================
+%% SPINE
+%%=======================================================================
+
+\SpineSetup[%
+]{%
+  box/logo/bg/image           = {ulht-logo},
+  box/logo/bg/image/angle     = {-90},
+  box/title/len               = {18.6cm},
+  box/logo/len                = {2.1cm},
+}
+
+
+%%=======================================================================
+%% COVER PAGE SETUP (BACKGROUNDS)
+%%=======================================================================
+
+\SetFrontPageImage*()={cover}
+\SetThesisCover*(1-1,bgcolor)={white}
+\SetThesisCover*(2-1,bgcolor)={white}
+
+
+%%=======================================================================
+%% UTILITIES & HOOKS
+%%=======================================================================
+
+% BORDER
+\newcommand{\borderwidth}{4pt}
+\newcommand{\bordermargin}{3mm}
+\definecolor{ulhtblue}{RGB}{16,49,84}%
+\usetikzlibrary{calc}
+
+
+%%=======================================================================
+%% COVER 1 & 2 ELEMENTS
+%%=======================================================================
+
+\ntaddtocover[tikz]{1-1,2-1}{%
+  \draw [line width = \borderwidth,
+         color = ulhtblue]
+         ($(current page.north west)+(\bordermargin,-\bordermargin)$)
+         rectangle ($(current page.south east)+(-\bordermargin,\bordermargin)$);
+}
+
+% LOGO
+\ntaddtocover[halign=c,valign=t,vspace=-3mm,height=1.4cm]{1-1,2-1}{%
+  \ifcovernum{1-1}{\includegraphics[width=6.3cm,align=t]{\GetUniversity(logo)}}%
+                  {\includegraphics[width=0cm,align=t]{\GetUniversity(logo)}}%
+}
+
+% Author name
+\ntaddtocover[vspace=0mm,valign=t,height=2cm]{1-1,2-1}{%
+  \fontsize{16}{16}\selectfont%
+  \textbf{\MakeUppercase{\GetDocAuthor(name)}}%
+}
+
+% % Title of Dissertation 1-1
+\ntaddtocover[vspace=8.7cm,valign=c,height=2cm]{1-1}{%
+  \fontsize{18}{18}\selectfont%
+  \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
+}
+
+% % Title of Dissertation 2-1
+\ntaddtocover[vspace=7.3 cm,valign=c,height=2cm]{2-1}{%
+  \fontsize{18}{18}\selectfont%
+  \textbf{\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}%
+}
+
+% Presentation text
+\ntaddtocover[vspace=1,hspace=6.3cm,halign=l]{2-1}{%
+  \fontsize{12}{12}\selectfont%
+  \thepresentationtext%
+}
+
+% Advisers 1-1
+\ntaddtocover[vspace=2,halign=r]{1-1}{%
+  \MemSet{adviserstringfont}{a}{\bfseries}%
+  \MemSet{adviserstringfont}{c}{\bfseries}%
+  \MemSet{advisernamefont}{}{\bfseries}%
+  \IfMemVoidT{persongrouppost}{}{\MemSet*{persongrouppost}{}{\\[4pt]}}%
+  \IfMemVoidT{personpost}{}{\MemSet*{personpost}{}{\\[0pt]}}%
+  \fontsize{14}{14}\selectfont%
+  \ntprintpersons[list]{1}[c]{2}{adviser}{a,c}%
+}
+
+% Advisers 2-1
+\ntaddtocover[vspace=7mm,hspace=6.3cm,halign=r]{2-1}{%
+  % \MemSet{adviserstringfont}{}{\bfseries}%
+  % \MemSet{advisernamefont}{}{\bfseries}%
+  \IfMemVoidT{persongrouppost}{}{\MemSet*{persongrouppost}{}{\\[4pt]}}%
+  \IfMemVoidT{personpost}{}{\MemSet*{personpost}{}{\\[0pt]}}%
+  \fontsize{11}{11}\selectfont%
+  \ntprintpersons[name]{1}{2}{adviser}{a,c}%
+}
+
+% School
+\ntaddtocover[vspace=1]{1-1,2-1}{%
+  \fontsize{14}{14}\selectfont\bfseries%
+    \GetUniversity(\@LANG@COVER)\\
+  \fontsize{12}{12}\selectfont\bfseries%
+    \GetSchool(\@LANG@COVER)
+}
+
+% Date
+\ntaddtocover[vspace=3.3cm]{1-1,2-1}{%
+  \fontsize{12}{12}\selectfont\bfseries%
+    Lisboa\\\PrintDateISO{\GetDocDate(submission,year)}%
+}

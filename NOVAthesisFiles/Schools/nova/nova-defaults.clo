@@ -1,0 +1,34 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova/univ-defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for UNIVERSIADE NOVA DE LISBOA (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE nova/univ-defaults.clo}%
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% University
+\SetUniversity*(cat)={NOVA University Lisbon}
+\SetUniversity*(cz)={NOVA University Lisbon}
+\SetUniversity*(de)={NOVA University Lisbon}
+\SetUniversity*(dk)={NOVA University Lisbon}
+\SetUniversity*(en)={NOVA University Lisbon}
+\SetUniversity*(es)={NOVA University Lisbon}
+\SetUniversity*(fr)={NOVA University Lisbon}
+\SetUniversity*(gr)={NOVA University Lisbon}
+\SetUniversity*(it)={NOVA University Lisbon}
+\SetUniversity*(nl)={NOVA University Lisbon}
+\SetUniversity*(pl)={NOVA University Lisbon}
+\SetUniversity*(pt)={Universidade NOVA de Lisboa}
+\SetUniversity*(sk)={NOVA University Lisbon}
+\SetUniversity*(uk)={NOVA University Lisbon}
+
+% Logos
+\SetUniversity*(logo)={nova-insignia}
+\SetUniversity*(logo,neg)={nova-insignia-negative}
+\SetUniversity*(logo2)={nova-logo}

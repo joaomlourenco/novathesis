@@ -1,0 +1,28 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% uminho/elach/uminho-elach-defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for ELACH-UMINHO (strings and cover)
+%%
+%%      This customization had the collaboration and support
+%%      from Bruno Pereira (b-pereira @ github), who built
+%%      the initial support in a fork of version 4.x
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE uminho/elach/uminho-elach-defaults.clo}%
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% Faculty / School
+\SetSchool*(pt)={Escola de Letras, Artes e Ciências Humanas​}
+\SetSchool*(en)={School of Arts and Humanities}
+\SetSchool*(fr)={School of Arts and Humanities}
+\SetSchool*(it)={School of Arts and Humanities}
+
+% Logos
+\SetSchool*(logo,RGB)={uminho-elach-insignia-color}
+\SetSchool*(logo,GRAY)={uminho-elach-insignia-mono}

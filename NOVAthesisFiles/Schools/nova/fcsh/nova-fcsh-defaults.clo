@@ -1,0 +1,222 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova/fcsh/nova-fcsh-defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for FCSH-NOVA (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE nova/fsch/nova-fcsh-defaults.clo}%
+
+
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
+\ntsetup{print/statement=true}
+\ntsetup{print/frontpage=false}
+\ntsetup{style/chapter=article}
+\ntsetup{print/otherlists=backmatter}
+\ntsetup{print/glossaries=backmatter}
+
+\ntaddfile{statement}[en]{nova-fcsh/nova-fcsh-statement-en}
+\ntaddfile{statement}[pt]{nova-fcsh/nova-fcsh-statement-pt}
+
+\setmemoirfontsize{12}   % A4paper with main text at 12pt
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% Faculty / School
+\SetSchool*(pt)={Faculdade de Ciências Sociais e Humanas}
+\SetSchool*(en)={School of Social Sciences and Humanities}
+\SetSchool*(fr)={School of Social Sciences and Humanities}
+\SetSchool*(it)={School of Social Sciences and Humanities}
+
+
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
+\SetCommitteeOrder*()={c,r,a,m}%
+
+
+%%=======================================================================
+%% FONTS
+%%=======================================================================
+
+\AtEndPreamble{
+  \makeoddfoot{novathesis@mainmatter}{}{}{\thepage}
+  \makeevenfoot{novathesis@mainmatter}{}{}{\thepage}
+  \makeoddfoot{novathesis@frontmatter}{}{}{\thepage}
+  \makeevenfoot{novathesis@frontmatter}{}{}{\thepage}
+  \makeoddfoot{plain}{}{}{\thepage}
+}
+
+
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
+
+% Set margins for "normal" pages
+\SetMargin*(screen,top)={2.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={3.0cm}
+\SetMargin*(screen,right)={3.0cm}
+\SetMargin*(paper,top)={2.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={3.0cm}
+\SetMargin*(paper,right)={3.5cm}
+
+% Set margins for cover pages
+\SetMargin*(cover,top)={0.0cm}
+\SetMargin*(cover,bottom)={0.0cm}
+\SetMargin*(cover,left)={2.0cm}
+\SetMargin*(cover,right)={2.0cm}
+
+\frenchspacing
+
+% Fazer indentação parágrafos
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{6pt plus 3pt minus 1pt}
+
+\RequirePackage{indentfirst}  % To also indent the first paragraph in the chapter/section/subsection/…
+
+
+%%=======================================================================
+%% SPINE
+%%=======================================================================
+
+\SpineSetup[%
+]{%
+  box/logo/bg/image           = {nova-fcsh-insignia-color},
+  box/logo/bg/image/angle/phd = {-90},
+  % debug,
+}
+
+
+%%=======================================================================
+%% UTILITIES & HOOKS
+%%=======================================================================
+
+\newcommand{\ntchapskip}{\vspace*{2cm}}
+
+\NTAddToHook{abstract/title/before}{%\
+  \begingroup
+    \begin{center}
+    \noindent\large\bfseries
+    \IfMemVoidTF{DocTitle}{\@LSHORT,abstract}
+      {\GetDocTitle(\@LSHORT,main)}
+      {\GetDocTitle(\@LSHORT,abstract)}
+    \end{center}
+   \smallskip
+    \begin{center}
+    \textbf{\GetDocAuthor(name)}
+    \end{center}
+  \endgroup
+}
+
+% Work Title on Abstract Header
+\NTAddToHook{abstract/pre}{%
+  \let\oldprintchaptertitle\printchaptertitle%
+  \renewcommand{\printchaptertitle}{%
+    \NTRunHook{abstract/title/before}%
+    \NTRunHook{abstract/title/\@LSHORT}%
+    \oldprintchaptertitle%
+  }%
+  \SingleSpacing*%
+}
+
+
+%%=======================================================================
+%% COLORS
+%%=======================================================================
+
+\definecolor{fcshblue}{RGB}{25,61,108}% Background title color
+
+
+%%=======================================================================
+%% COVER 1 ELEMENTS
+%%=======================================================================
+
+\ntaddtocover[halign=l, vspace=1.0cm, hspace=-1.2cm]{1-1}{%
+    \includegraphics[width=8.5cm]{nova-fcsh-logo-color-horiz}
+}
+
+% % Title of Dissertation
+\ntaddtocover[vspace=1]{1-1}{%
+  \fontsize{18}{18}\selectfont%
+  \textcolor{fcshblue}{\textbf{\GetDocTitle(\@LANG@COVER,main)}}%
+}
+
+% Author name
+\ntaddtocover[vspace=1]{1-1}{%
+  \fontsize{18}{18}\selectfont%
+  \textcolor{fcshblue}{\textbf{\GetDocAuthor(name)}}%
+}
+
+% Degree
+\ntaddtocover[vspace=1]{1-1}{%
+  \fontsize{18}{18}\selectfont%
+  \textcolor{fcshblue}{\textbf{\thepresentationtext}}%
+}
+
+% Date
+\ntaddtocover[vspace=1]{1-1}{%
+  \fontsize{14}{14}\selectfont%
+  \textcolor{fcshblue}{%%
+      \textbf{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
+  }%
+}
+
+\ntaddtocover[vspace=2.0cm]{1-1}{%
+  \null
+}
+
+
+%%=======================================================================
+%% COVER 2 ELEMENTS
+%%=======================================================================
+
+\ntaddtocover[halign=l, vspace=1.0cm, hspace=-1.2cm]{2-1}{%
+  \null%
+  \begin{tabular*}{{0.5\stockwidth}}[c]{@{}l@{}}%
+    \includegraphics[width=8.5cm]{nova-fcsh-logo-color-horiz}%
+  \end{tabular*}%
+  \begin{tabular*}{{0.5\stockwidth}}[c]{@{}l@{}}%
+    \textcolor{fcshblue}{\rule{\linewidth}{4pt}}%
+  \end{tabular*}%
+}
+
+% % Title of Dissertation
+\ntaddtocover[vspace=1]{2-1}{%
+  \fontsize{18}{18}\selectfont%
+  \textcolor{fcshblue}{\textbf{\GetDocTitle(\@LANG@COVER,main)}}%
+}
+
+% Author name
+\ntaddtocover[vspace=1]{2-1}{%
+  \fontsize{18}{18}\selectfont%
+  \textcolor{fcshblue}{\textbf{\GetDocAuthor(name)}}%
+}
+
+% Degree
+\ntaddtocover[vspace=1]{2-1}{%
+  \fontsize{18}{18}\selectfont%
+  \textcolor{fcshblue}{\textbf{\thepresentationtext}}%
+}
+
+% Date
+\ntaddtocover[vspace=1]{2-1}{%
+  \fontsize{14}{14}\selectfont%
+  \textcolor{fcshblue}{%%
+      \textbf{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
+  }%
+}
+
+\ntaddtocover[vspace=1cm,hspace=-\expanded{\GetMargin(cover,left)}]{2-1}{%
+ \raisebox{-1cm}{%
+   \textcolor{fcshblue}{\rule{\stockwidth}{0.75cm}}%
+ }%
+}

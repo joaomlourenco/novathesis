@@ -1,0 +1,28 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% uminho/ics/schl-defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for ICS-UMINHO (strings and cover)
+%%
+%%      This customization had the collaboration and support
+%%      from Bruno Pereira (b-pereira @ github), who built
+%%      the initial support in a fork of version 4.x
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE uminho/ics/schl-defaults.clo}%
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% Faculty / School
+\SetSchool*(pt)={Instituto de Ciencias Sociais}
+\SetSchool*(en)={Institute of Social Sciences}
+\SetSchool*(fr)={Institute of Social Sciences}
+\SetSchool*(it)={Institute of Social Sciences}
+
+% Logos
+\SetSchool*(logo,RGB)={uminho-ics-insignia-color}
+\SetSchool*(logo,GRAY)={uminho-ics-insignia-mono}

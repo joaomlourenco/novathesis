@@ -1,0 +1,19 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% uporto/univ-defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for UNIVERSIDADE DO PORTO (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE uporto/univ-defaults.clo}%
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% University
+\SetUniversity*(pt)={Universidade do Porto}
+\SetUniversity*(en)={Universidade do Porto}
+\SetUniversity*(fr)={Universidade do Porto}
+\SetUniversity*(it)={Universidade do Porto}

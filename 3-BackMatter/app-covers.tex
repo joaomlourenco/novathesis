@@ -16,7 +16,7 @@
 \typeout{NT FILE 2-MainMatter/chapter-covers.tex}%
 
 \chapter{The NOVAthesis Cover Page System}
-\label{cha:covers}
+\label{app:covers}
 
 This chapter documents the cover page engine used by the \texttt{novathesis}
 class.  It is written for developers who need to add cover support for a new
@@ -653,13 +653,13 @@ NOVAthesisFiles/Schools/myuniv/myfac/Images/
 
 \medskip
 \noindent\textbf{2.  Create the defaults file}
-\verb!myuniv-myfac-defaults.ldf!:
+\verb!myuniv-myfac-defaults.clo!:
 
 \begin{verbatim}
 %!TEX root=../../../template.tex
-%% myuniv/myfac/myuniv-myfac-defaults.ldf
+%% myuniv/myfac/myuniv-myfac-defaults.clo
 
-\typeout{NT FILE schools/myuniv/myfac/myuniv-myfac-defaults.ldf}%
+\typeout{NT FILE schools/myuniv/myfac/myuniv-myfac-defaults.clo}%
 
 
 %%=======================================================
@@ -815,7 +815,7 @@ python .Build/build.py myuniv/myfac --doctype msc --docstatus final
 \label{sec:covers_nova_fct}
 %%-----------------------------------------------------------------------
 
-The NOVA~FCT cover (\verb!NOVAthesisFiles/Schools/nova/fct/nova-fct-defaults.ldf!)
+The NOVA~FCT cover (\verb!NOVAthesisFiles/Schools/nova/fct/nova-fct-defaults.clo!)
 demonstrates a typical mixed strategy:
 
 \begin{itemize}
@@ -855,7 +855,7 @@ Background setup (colour varies by document class):
 %%-----------------------------------------------------------------------
 
 The IST cover
-(\verb!NOVAthesisFiles/Schools/ulisboa/ist/ulisboa-ist-defaults.ldf!)
+(\verb!NOVAthesisFiles/Schools/ulisboa/ist/ulisboa-ist-defaults.clo!)
 uses no TikZ for content elements at all.  Every element — logo, school
 name, a decorative image, title, author, advisers, committee, date — is
 placed as a plain box element with explicit \texttt{height} and

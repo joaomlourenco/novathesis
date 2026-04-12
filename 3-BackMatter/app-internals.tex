@@ -427,7 +427,7 @@ particular school or document type context.
 Injects raw Ti\textit{k}Z drawing code onto the cover canvas at the
 specified \emph{layer} (e.g.\ \texttt{bg}, \texttt{fg},
 \texttt{text}).  Coordinates use the full cover dimensions.
-Use this for advanced cover layouts in school \texttt{.ldf} files.
+Use this for advanced cover layouts in school \texttt{.clo} files.
 
 \begin{latexcode}
 \ntAddToCoverTikz(bg){1}{%
@@ -491,7 +491,7 @@ The \emph{false} argument may be omitted (empty by default).
 \sig{\textbackslash NTRunHook\{\mv{hook-name}\}}
 
 \novathesis{} exposes a lightweight hook system used primarily in
-school \texttt{.ldf} files to inject code at well-defined points
+school \texttt{.clo} files to inject code at well-defined points
 (cover rendering, font loading, language setup, etc.) without
 modifying the class source.
 
@@ -501,7 +501,7 @@ called multiple times — code accumulates), and executed at the right
 moment with \textbf{\texttt{\textbackslash NTRunHook}}.
 
 \begin{latexcode}
-% In a school .ldf file:
+% In a school .clo file:
 \NTAddToHook{cover/before}{\MySchoolSetupCode}
 \NTAddToHook{fonts/load}{\setmainfont{TeX Gyre Pagella}}
 \end{latexcode}

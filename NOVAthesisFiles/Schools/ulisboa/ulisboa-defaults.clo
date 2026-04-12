@@ -1,0 +1,19 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ulisboa/univ-defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for UNIVERSIDADE DE LISBOA (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE ulisboa/univ-defaults.clo}%
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% University
+\SetUniversity*(pt)={Universidade de Lisboa}
+\SetUniversity*(en)={Universidade de Lisboa}
+\SetUniversity*(fr)={Universidade de Lisboa}
+\SetUniversity*(it)={Universidade de Lisboa}

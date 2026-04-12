@@ -795,21 +795,21 @@
 %  UNIVERSITY/SCHOOL SPECIFIC MATERIALS
 %  configuration file “0-Config/9_<university>_<school>.tex”
 %============================================================
-\InputIfFileExists{\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.ldf}
+\InputIfFileExists{\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.clo}
     {}
     {\PackageError{novathesis}
-                  {Missing file “\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.ldf”}{}}
+                  {Missing file “\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.clo”}{}}
 
 \ntfor\match:={%
       \@UNIV-\@SCHL-\@DEGREEACR,%
       \@UNIV-\@SCHL%
   }\do{%
-      \IfFileExists{\DIRSCHOOLS/\@UNIV/\@SCHL/\match-defaults.ldf}
-          {\input{\DIRSCHOOLS/\@UNIV/\@SCHL/\match-defaults.ldf}\ntforbreak}
+      \IfFileExists{\DIRSCHOOLS/\@UNIV/\@SCHL/\match-defaults.clo}
+          {\input{\DIRSCHOOLS/\@UNIV/\@SCHL/\match-defaults.clo}\ntforbreak}
           {}%
   }
 [\PackageError{novathesis}
-              {Missing file “\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-defaults.ldf”}
+              {Missing file “\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-defaults.clo”}
               {}]
 
 \ValidateLtxProcessor{\@UNIV}{\@SCHL}{\@DEGREEACR}
