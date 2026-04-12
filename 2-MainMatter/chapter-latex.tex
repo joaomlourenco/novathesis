@@ -1,163 +1,291 @@
 %!TEX root = ../template.tex
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% chapter3.tex
-%% NOVA thesis document file
-%%
-%% Chapter with a short latex tutorial and examples
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE chapter3.tex}%
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — 2-MainMatter/chapter-latex.tex
+%% ----------------------------------------------------------------------------
+%%
+%% Version 7.10.7 (2026-03-25)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%%
+%% Chapter: A Short LaTeX Tutorial with Examples
+%%
+%% ----------------------------------------------------------------------------
+
+\typeout{NT FILE 2-MainMatter/chapter-latex.tex}%
 
 \makeatletter
-\newcommand{\ntifpkgloaded}{%
-  \@ifpackageloaded%
-}
+\newcommand{\ntifpkgloaded}{\@ifpackageloaded}
 \makeatother
 
 
+%%=======================================================================
 \chapter{A Short \hologo{LaTeX} Tutorial with Examples}
 \label{cha:a_short_latex_tutorial_with_examples}
+%%=======================================================================
 
-This Chapter aims at exemplifying how to do common stuff with \LaTeX. We also show some stuff which is not that common! ;)
+This chapter is a practical guide to writing your thesis with \hologo{LaTeX} and the \novathesis{} template.
+It covers the most common tasks: structuring your document, formatting text, inserting figures and tables, typesetting equations, managing citations, and producing the final PDF.
 
-Please, use these examples as a starting point, but you should always consider using the \emph{Big Oracle} (aka, \href{http://www.google.com}{Google}, your best friend) to search for additional information or al-ternative ways for achieving similar results.
+Use these examples as a starting point.
+The \href{https://www.overleaf.com/learn}{Overleaf documentation} and \href{https://tex.stackexchange.com}{TeX~Stack~Exchange} are excellent resources for additional help.
 
-\section{Document Structure} % (fold)
+\begin{warningbox}[title={Do not edit \texttt{template.tex} or \texttt{novathesis.cls}}]
+  All your customizations go into the files inside \texttt{0-Config/}.
+  Your chapter content lives in \texttt{2-MainMatter/} and is listed in \texttt{0-Config/4\_files.tex}.
+  The root file \texttt{template.tex} and the class file \texttt{novathesis.cls} are \textbf{never} edited directly.
+\end{warningbox}
+
+
+%%=======================================================================
+\section{Document Structure}
 \label{sec:document_structure}
+%%=======================================================================
 
-% section document_structure (end)
+The \novathesis{} template follows a strict separation of concerns.
+\autoref{tab:template_structure} summarizes the key files and folders.
 
-
-\section{Dealing with Bibliography} % (fold)
-\label{sec:dealing_with_bibliography}
-
-Citing something online~\cite{wiki:shuntingyard,flex,bison}.
-
-% section dealing_with_bibliography (end)
-
-
-\section{Inserting Tables} % (fold)
-\label{sec:inserting_tables}
-
-% section inserting_tables (end)
-
-
-\section{Importing Images} % (fold)
-\label{sec:importing_images}
-
-% section importing_images (end)
-
-
-\section{Floats, Figures and Captions} % (fold)
-\label{sec:floats_figures_and_captions}
-
-% \subsection{Inserting Figures Wrapped with text} % (fold)
-% \label{ssec:inserting_images_wrapped_with_text}
-%
-% You should only use this feature is \emph{really} necessary. This means, you have a very small image, that will look lonely just with text above and below.
-%
-% In this case, you must use the \verb!wrapfigure! package.  To use \verb!wrapfig!, you must first add this to the preamble:
-%
-% \begin{wrapfigure}{l}{2.5cm}
-%   \centering
-%     \includegraphics[width=2cm]{snowman-vectorial}
-%   \caption{A snow-man}
-% \end{wrapfigure}
-%
-% \noindent\verb!\usepackage{wrapfig}!\\
-% This then gives you access to:\\
-% \verb!\begin{wrapfigure}[lineheight]{alignment}{width}!\\
-% Alignment can normally be either ``l'' for left, or ``r'' for right. Lowercase ``l'' or ``r'' forces the figure to start precisely where specified (and may cause it to run over page breaks), while capital ``L'' or ``R'' allows the figure to float. If you defined your document as twosided, the alignment can also be ``i'' for inside or ``o'' for outside, as well as ``I'' or ``O''. The width is obviously the width of the figure. The example above was introduced with:
-% \lstset{language=TeX, morekeywords={\begin,\includegraphics,\caption}, caption=Wrapfig Example, label=lst:latex_example}
-% \begin{lstlisting}
-%   \begin{wrapfigure}{l}{2.5cm}
-%     \centering
-%       \includegraphics[width=2cm]{snowman-vectorial}
-%     \caption{A snow-man}
-%   \end{wrapfigure}
-% \end{lstlisting}
-
-% subsection inserting_images_wrapped_with_text (end)
-
-% section floats_figures_and_captions (end)
-
-\lipsum[1-3]
-
-\begin{figure}[htbp]
+\begin{table}[htbp]
+  \caption{Key files and folders in the \novathesis{} template.}
+  \label{tab:template_structure}
   \centering
-  \subbottom[One sub-figure\label{fig:leftsubfig}]{%
-    \includegraphics[width=0.5\linewidth]{knitting-vectorial}}%
-  \subbottom[Another sub-figure\label{fig:rightsubfig}]{%
-    \includegraphics[width=0.5\linewidth]{knitting-vectorial}}%
-  \caption{A figure with two sub-figures!}
-  \label{fig:fig2subfig}
-\end{figure}
+  \begin{ShadedTabular}{lp{0.6\linewidth}}
+    \toprule
+    File / Folder & Purpose \\
+    \midrule
+    \texttt{0-Config/1\_novathesis.tex} & Main setup: school, document type, language, fonts, \ldots \\
+    \texttt{0-Config/3\_cover.tex}      & Cover metadata: title, author, advisors, committee \\
+    \texttt{0-Config/4\_files.tex}      & List of chapter files to include \\
+    \texttt{0-Config/5\_packages.tex}   & Your extra packages and custom macros \\
+    \texttt{1-FrontMatter/}            & Abstracts, acknowledgments, dedication, \ldots \\
+    \texttt{2-MainMatter/}             & Your thesis chapters \\
+    \texttt{3-BackMatter/}             & Appendices and annexes \\
+    \texttt{4-Bibliography/}           & \texttt{.bib} reference databases \\
+    \texttt{5-Figures/}                & Image files \\
+    \bottomrule
+  \end{ShadedTabular}
+\end{table}
 
-\textbf{And this is a small text that references the Figure~\ref{fig:fig2subfig} and its Subfigures~\ref{fig:leftsubfig} and~\ref{fig:rightsubfig}.}
 
-\lipsum[1-3]
+%%-----------------------------------------------------------------------
+\subsection{Adding a New Chapter}
+\label{sub:adding_chapter}
+%%-----------------------------------------------------------------------
+
+Create a new \texttt{.tex} file in \texttt{2-MainMatter/}, then register it in \texttt{0-Config/4\_files.tex}:
+
+\begin{latexcode}
+\ntaddfile{chapter}{2-MainMatter/chapter-mywork.tex}
+\end{latexcode}
+
+Inside the file, start with a \latexinline{\chapter} command and give it a label:
+
+\begin{latexcode}
+\chapter{My Work}
+\label{cha:my_work}
+
+\section{Overview}
+\label{sec:overview}
+\end{latexcode}
+
+The sectioning hierarchy is:
+\latexinline{\chapter} \(\to\) \latexinline{\section} \(\to\) \latexinline{\subsection} \(\to\) \latexinline{\subsubsection}.
+Avoid going deeper than \latexinline{\subsection} unless absolutely necessary.
 
 
-\section{Text Formatting} % (fold)
+%%-----------------------------------------------------------------------
+\subsection{Cross-references}
+\label{sub:cross_references}
+%%-----------------------------------------------------------------------
+
+Place a \latexinline{\label} immediately after the element you want to reference — a chapter, section, figure, table, or equation — and then use \latexinline{\autoref} to cite it:
+
+\begin{latexcode}
+See \autoref{cha:my_work} for details.
+The results are in \autoref{fig:results} and \autoref{tab:results}.
+\end{latexcode}
+
+\latexinline{\autoref} automatically prepends the correct word (\emph{Chapter}, \emph{Figure}, \emph{Table}, \ldots) in the current language.
+Use \latexinline{\ref} if you only want the number.
+
+\begin{highlightbox}[title={Tip: non-breaking space before \textbackslash ref}]
+  Always write \latexinline{Figure~\ref{fig:x}} with a non-breaking space (\latexinline{~}) so the word and number never split across lines.
+\end{highlightbox}
+
+
+%%=======================================================================
+\section{Text Formatting}
 \label{sec:text_formatting}
+%%=======================================================================
 
-% section text_formatting (end)
+%%-----------------------------------------------------------------------
+\subsection{Basic Emphasis}
+\label{sub:basic_emphasis}
+%%-----------------------------------------------------------------------
 
+\begin{table}[htbp]
+  \caption{Common text formatting commands.}
+  \label{tab:text_formatting}
+  \centering
+  \begin{ShadedTabular}{lll}
+    \toprule
+    Command & Output & Use for \\
+    \midrule
+    \latexinline{\emph{text}}      & \emph{text}      & semantic emphasis (adapts to context) \\
+    \latexinline{\textbf{text}}    & \textbf{text}    & bold \\
+    \latexinline{\textit{text}}    & \textit{text}    & italic \\
+    \latexinline{\texttt{text}}    & \texttt{text}    & monospace / code \\
+    \latexinline{\textsc{text}}    & \textsc{text}    & small capitals \\
+    \latexinline{\underline{text}} & \underline{text} & underline (use sparingly) \\
+    \bottomrule
+  \end{ShadedTabular}
+\end{table}
 
-\section{Generating PDFs from \LaTeX} % (fold)
-\label{sec:generating_pdfs_from_latex}
-
-\subsection{Generating PDFs with pdflatex} % (fold)
-\label{ssec:generating_pdfs_with_pdflatex}
-
-You may create PDF files either by using \verb!latex! to generate a DVI file, and then use one of the many DVI-2-PDF converters, such as \verb!dvipdfm!.
-
-Alternatively, you may use \verb!pdflatex!, which will immediately generate a PDF with no intermediate DVI or PS files. In some systems, such as Apple, PDF is already the default format for \LaTeX. I strongly recommend you to use this approach, unless you have a very good argument to go for \verb!latex! + \verb!dvipdfm!.
-
-A typical pass for a document with figures, cross-references and a bibliography would be:
-\begin{verbatim}
-$ pdflatex template
-$ bibtex template
-$ pdflatex template
-$ pdflatex template
-\end{verbatim}
-You will notice that there is a new PDF file in the working directory called \verb!template.pdf!. Simple :)
-
-Please note that, to be sure all table of contents, cross-references and bibliographic citations are up-to-date, you must run \verb!latex! once, then \verb!bibtex!, and then \verb!latex! twice.
-% section generating_pdfs_with_pdflatex (end)
-
-\subsection{Dealing with Images} % (fold)
-\label{sub:dealing_with_images}
-
-You may process the same source files with both \verb!latex! or \verb!pdflatex!. But, if your text include images, you must be careful. \verb!latex! and \verb!pdflatex! accept images in different (exclusive) formats.  For \verb!latex! you may use EPS ou PS figures. For \verb!pdflatex! you may use JPG, PNG or PDF figures.  I strongly recommend you to use PDF figures in vectorial format (do not use bitmap images unless you have no other choice).
-% subsection dealing_with_images (end)
+Prefer \latexinline{\emph} over \latexinline{\textit}: inside an italic context \latexinline{\emph} automatically switches to upright, while \latexinline{\textit} does not.
 
 
-\subsection{Dealing with Citations} % (fold)
+%%-----------------------------------------------------------------------
+\subsection{Lists}
+\label{sub:lists}
+%%-----------------------------------------------------------------------
 
-To make citations, the reference key in the BibTeX file should be used. If it is a single reference~\cite{Artho04}, use a ``\latexinline!~!'' to link the \latexinline!\cite{...}! to the word that precedes it (\ldots\latexinline!reference~\cite{Artho04}!). If you want to make multiple citations~\cite{Shavit95,Silberschatz06,Moss85}, they should be grouped within a single \latexinline!\cite{...}! and separeted by commas.
+\paragraph{Unordered list (\texttt{itemize}):}
+\begin{latexcode}
+\begin{itemize}
+  \item First item
+  \item Second item
+  \item[$\star$] Custom bullet
+\end{itemize}
+\end{latexcode}
+\begin{itemize}
+  \item First item
+  \item Second item
+  \item[$\star$] Custom bullet
+\end{itemize}
 
-Note that the bibliography file can have as many entries as you want. Only those whose keys are referenced in the text will be included in the bibliography list.
+\paragraph{Ordered list (\texttt{enumerate}):}
+\begin{latexcode}
+\begin{enumerate}[a)]
+  \item Alpha-labelled item
+  \item Another item
+\end{enumerate}
+\end{latexcode}
+\begin{enumerate}[a)]
+  \item Alpha-labelled item
+  \item Another item
+\end{enumerate}
+
+\paragraph{Description list (\texttt{description}):}
+\begin{latexcode}
+\begin{description}
+  \item[PDF] Portable Document Format
+  \item[URL] Uniform Resource Locator
+\end{description}
+\end{latexcode}
+\begin{description}
+  \item[PDF] Portable Document Format
+  \item[URL] Uniform Resource Locator
+\end{description}
 
 
-\subsection{Footnotes} % (fold)
+%%-----------------------------------------------------------------------
+\subsection{Footnotes}
+\label{sub:footnotes}
+%%-----------------------------------------------------------------------
 
-Footnotes\footnote{This is a simple footnote.} will be numbered and shown in the bottom of the page.
+Footnotes\footnote{This is a simple footnote.} are created with \latexinline{\footnote{text}} placed immediately after the word they annotate — no space before the command.
+They are numbered automatically and appear at the bottom of the page.
 
 
-\subsection{Tables} % (fold)
+%%=======================================================================
+\section{Equations}
+\label{sec:equations}
+%%=======================================================================
 
-The Table~\ref{tab:hla:results} illustrates some important concepts associated with table construction:
-\begin{asparaenum}[i)]
-\item Do not use vertical lines;
-\item The caption should be above the table;
-\item Use the macros \verb!\toprule!, \verb!\midrule! and \verb!\bottomrule! to make the top, inner and bottom horizontal lines, respectively.
-\end{asparaenum}
+\hologo{LaTeX} excels at mathematical typesetting.
+Inline formulas are delimited by \latexinline{$...$}, for example the discriminant is $\Delta = b^2 - 4ac$.
+
+Display-style (unnumbered) equations use \latexinline{\[...\]}:
+\[ x = \frac{-b \pm \sqrt{b^2-4ac}}{2a} \]
+
+Numbered equations use the \texttt{equation} environment and are referenced with \latexinline{\autoref}:
+\begin{latexcode}
+\begin{equation}
+  E = mc^2
+  \label{eq:einstein}
+\end{equation}
+As shown in \autoref{eq:einstein}, energy and mass are equivalent.
+\end{latexcode}
+\begin{equation}
+  E = mc^2
+  \label{eq:einstein}
+\end{equation}
+As shown in \autoref{eq:einstein}, energy and mass are equivalent.
+
+For multi-line aligned equations, use the \texttt{align} environment:
+\begin{latexcode}
+\begin{align}
+  f(x) &= x^2 + 2x + 1 \label{eq:fx}\\
+       &= (x+1)^2      \label{eq:fx_factored}
+\end{align}
+\end{latexcode}
+\begin{align}
+  f(x) &= x^2 + 2x + 1 \label{eq:fx}\\
+       &= (x+1)^2      \label{eq:fx_factored}
+\end{align}
+
+
+%%=======================================================================
+\section{Tables}
+\label{sec:tables}
+%%=======================================================================
+
+Professional tables follow these rules:
+\begin{enumerate}
+  \item Never use vertical lines.
+  \item Place the caption \emph{above} the table.
+  \item Use \latexinline{\toprule}, \latexinline{\midrule}, and \latexinline{\bottomrule} from \texttt{booktabs}.
+  \item Use \texttt{xltabular} for tables that may span multiple pages.
+\end{enumerate}
+
+\autoref{tab:simple_table} shows a minimal example.
+
+\begin{latexcode}
+\begin{table}[htbp]
+  \caption{A simple table.}
+  \label{tab:simple_table}
+  \centering
+  \begin{tabular}{lcc}
+    \toprule
+    Method   & Precision & Recall \\
+    \midrule
+    Baseline & 0.72      & 0.68   \\
+    Proposed & 0.89      & 0.91   \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\end{latexcode}
+
+\begin{table}[htbp]
+  \caption{A simple table.}
+  \label{tab:simple_table}
+  \centering
+  \begin{tabular}{lcc}
+    \toprule
+    Method   & Precision & Recall \\
+    \midrule
+    Baseline & 0.72      & 0.68   \\
+    Proposed & 0.89      & 0.91   \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The \texttt{ShadedTabular} environment (defined in \texttt{0-Config/5\_packages.tex}) provides automatic zebra striping and is built on \texttt{NiceTabular}.
+For long tables, use \texttt{xltabular} as illustrated in \autoref{tab:hla:results}.
 
 \bgroup
 \rowcolors{1}{}{GhostWhite}
 \begin{xltabular}{\textwidth}{Xccccc}
-  \caption{Test results summary.}
+  \caption{A multi-page table using \texttt{xltabular} with row colors.}
   \label{tab:hla:results}\\
   \toprule
   \rowcolor{Gainsboro}%
@@ -181,123 +309,264 @@ Knight Moves~\cite{Beckman08}   & 1        & 3          & 1          & \emph{2B}
   \rowcolor{Gainsboro}%
 Total                            & 12      & 33        & 10        & 5A, 6B, 10C, 2D       & 2 \\
   \bottomrule
-  \end{xltabular}
+\end{xltabular}
 \egroup
 
-\subsection{Figures} % (fold)
 
-The images inserted in the document must be of good quality, preferably in vector format (vector PDF) and not in \emph{bitmap} (PNG, JPG, etc.). \emph{bitmap} images (Figure~\ref{fig:Figures_Tree_silhouettes-bitmap}) do not scale well and have negative effects on the quality of your document. On the other hand, \emph{vector} images {Figure~\ref{fig:Figures_Tree_silhouettes-vectorial}} scale as much as necessary without degrading the quality of the image.
+%%=======================================================================
+\section{Figures}
+\label{sec:figures}
+%%=======================================================================
 
-You should only use \emph{screenshots} for your plots, charts, etc, if you absolutely have no other alternative. Instead of generating a \emph{screenshot}, try using a virtual PDF printer and printing to a PDF file. As a general rule, you will get a vector PDF. Even if your PDF contains images, they will always be of higher or equal quality than what you would get with a \emph{screenshot}.
+Store image files in \texttt{5-Figures/}.
+Always prefer \emph{vector} formats (PDF) over \emph{bitmap} formats (PNG, JPG):
+vector images scale without quality loss, while bitmap images become pixelated when enlarged — compare \autoref{fig:snowman-bitmap} and \autoref{fig:snowman-vector}.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[height=1in]{snowman-bitmap}
   \includegraphics[height=3in]{snowman-bitmap}
-  \includegraphics[height=6in]{snowman-bitmap}
-  \caption{Bitmap image (JPG/PNG)}
-  \label{fig:Figures_Tree_silhouettes-bitmap}
+  \caption{Bitmap image (PNG/JPG): quality degrades at larger sizes.}
+  \label{fig:snowman-bitmap}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[height=1in]{snowman-vectorial}
   \includegraphics[height=3in]{snowman-vectorial}
-  \includegraphics[height=6in]{snowman-vectorial}
-  \caption{Vectorial image (PDF)}
-  \label{fig:Figures_Tree_silhouettes-vectorial}
+  \caption{Vector image (PDF): scales perfectly at any size.}
+  \label{fig:snowman-vector}
 \end{figure}
 
-To combine several figures into a single one… You can then reference the set as Figure~\ref{fig:complete-figure} or the sub-figures separately as~\ref{fig:woolball} and~\ref{fig:cloud}.
+A minimal figure:
+\begin{latexcode}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\linewidth]{my-diagram}
+  \caption{A clear, descriptive caption.}
+  \label{fig:my_diagram}
+\end{figure}
+\end{latexcode}
+
+The placement specifier \latexinline{[htbp]} means: try \textbf{h}ere, then \textbf{t}op, then \textbf{b}ottom, then a float \textbf{p}age.
+Avoid \latexinline{[H]} (from the \texttt{float} package) — it defeats \hologo{LaTeX}'s float algorithm and causes large white gaps.
+
+
+%%-----------------------------------------------------------------------
+\subsection{Sub-figures}
+\label{sub:subfigures}
+%%-----------------------------------------------------------------------
+
+Use memoir's \latexinline{\subbottom} to combine multiple images in one float (\autoref{fig:subfig_example}).
+
+\begin{latexcode}
+\begin{figure}[htbp]
+  \centering
+  \subbottom[Wool ball\label{fig:sub_wool}]{%
+    \includegraphics[height=1in]{knitting-vectorial}}%
+  \qquad
+  \subbottom[Snowstorm\label{fig:sub_snow}]{%
+    \includegraphics[height=1in]{snowstorm-vectorial}}%
+  \caption{Two sub-figures in one float.}
+  \label{fig:subfig_example}
+\end{figure}
+\end{latexcode}
 
 \begin{figure}[htbp]
   \centering
-    \subbottom[Wool ball]{%
-    \label{fig:woolball}
-    \includegraphics[height=1in]{knitting-vectorial}
-    }
-\qquad\qquad
-    \subbottom[Snowstorm]{%
-    \label{fig:cloud}
-    \includegraphics[height=1in]{snowstorm-vectorial}
-    }
-  \caption{Example of \emph{subbottom} usage}
-  \label{fig:complete-figure}
+  \subbottom[Wool ball\label{fig:sub_wool}]{%
+    \includegraphics[height=1in]{knitting-vectorial}}%
+  \qquad
+  \subbottom[Snowstorm\label{fig:sub_snow}]{%
+    \includegraphics[height=1in]{snowstorm-vectorial}}%
+  \caption{Two sub-figures in one float.}
+  \label{fig:subfig_example}
 \end{figure}
 
-\section{Equations}
+Reference the whole figure as \autoref{fig:subfig_example} or the sub-figures separately: \autoref{fig:sub_wool} and \autoref{fig:sub_snow}.
 
-LaTeX is a powerful tool for writing in a mathematical style. It allows you to insert formulas into the text, such as this: $ax^2 + bx + c = 0$. It also allows formulas to be highlighted on a separate line and centered on the page.
-\[ x = \frac{-b \pm \sqrt{b^2-4ac}}{2a} \]
-or numbered
-\begin{equation}
-e = mc^2
-\label{eq:1}
-\end{equation}
-which can later be referenced as equation~\ref{eq:1}
 
-\newif\ifntlistingsloaded
-\ntifpkgloaded{listings}{\ntlistingsloadedtrue}{\ntlistingsloadedfalse}
-\newif\ifntmintedloaded
-\ntifpkgloaded{minted}{\ntmintedloadedtrue}{\ntmintedloadedfalse}
+%%=======================================================================
+\section{Bibliography and Citations}
+\label{sec:bibliography}
+%%=======================================================================
 
-\ifntlistingsloaded
-\section{Test for listings} % (fold)
-\label{sec:test_for_listings}
+The template uses \hologo{BibLaTeX} with the \texttt{biber} backend.
+Add your references to the \texttt{.bib} file(s) configured in \texttt{0-Config/2\_biblatex.tex}.
 
-Testing the package “listings“…
 
-\begin{lstlisting}[caption=cap,label=lst:lab1,float=htbp]
-if(a==b)
-  puts("YESS!")
-\end{lstlisting}
-\fi
+%%-----------------------------------------------------------------------
+\subsection{Citation Commands}
+\label{sub:citations}
+%%-----------------------------------------------------------------------
 
-\ifntmintedloaded
-\section{Test for minted} % (fold)
-\label{sec:test_for_minted}
+\begin{table}[htbp]
+  \caption{Common \hologo{BibLaTeX} citation commands.}
+  \label{tab:cite_commands}
+  \centering
+  \begin{ShadedTabular}{lp{0.55\linewidth}}
+    \toprule
+    Command & Result \\
+    \midrule
+    \latexinline{\cite{key}}          & Standard citation: [1] or (Author, Year) \\
+    \latexinline{\cite{k1,k2,k3}}     & Multiple citations in one bracket \\
+    \latexinline{\textcite{key}}      & Inline: Author (Year) \\
+    \latexinline{\parencite{key}}     & Parenthetical: (Author, Year) \\
+    \latexinline{\footcite{key}}      & Citation in a footnote \\
+    \latexinline{\citeauthor{key}}    & Author name only \\
+    \latexinline{\citeyear{key}}      & Year only \\
+    \bottomrule
+  \end{ShadedTabular}
+\end{table}
 
-Testing the package “minted“…
+Always attach the citation to the preceding word with a non-breaking space:
+\begin{latexcode}
+...the shunting-yard algorithm~\cite{wiki:shuntingyard} was first...
+...as shown by several authors~\cite{Artho03,Artho04,Beckman08}.
+\end{latexcode}
 
-\begin{listing}[H]
-  \begin{minted}{C}
-    if(a==b)
-      puts("YESS!")
-  \end{minted}
-  \caption{Example of a listing.}
-  \label{lst:lab2}
-\end{listing}
-\fi
+Only references actually cited in the text appear in the bibliography list.
 
-\section{Test for algorithms}
-\label{sec:test_for_algorithms}
 
-Uncomment the algorithms source below and add the following to file “\verb!5_packages.tex!”
-\begin{verbatim}
-  \usepackage{algorithm2e}
-  \RestyleAlgo{ruled}
-\end{verbatim}
-and uncomment
-\begin{verbatim}
+%%-----------------------------------------------------------------------
+\subsection{Compilation with Biber}
+\label{sub:biber}
+%%-----------------------------------------------------------------------
+
+After changing citations or the \texttt{.bib} file, a full build requires four passes:
+\begin{bashcode}
+lualatex template
+biber   template
+lualatex template
+lualatex template
+\end{bashcode}
+
+The provided \texttt{Makefile} handles all of this automatically:
+\begin{bashcode}
+make lua    # full build: LuaLaTeX + biber
+make clean  # remove auxiliary files
+\end{bashcode}
+
+
+%%=======================================================================
+\section{Source Code Listings}
+\label{sec:code_listings}
+%%=======================================================================
+
+The template loads the \texttt{minted} package.
+Three environments are pre-configured in \texttt{0-Config/5\_packages.tex}:
+
+\begin{table}[htbp]
+  \caption{Pre-configured \texttt{minted} environments.}
+  \label{tab:minted_envs}
+  \centering
+  \begin{ShadedTabular}{lll}
+    \toprule
+    Environment / Command & Language & Use \\
+    \midrule
+    \texttt{latexcode}            & \LaTeX{} & block listing \\
+    \latexinline{\latexinline{}}  & \LaTeX{} & inline snippet \\
+    \texttt{bashcode}             & Bash     & block listing \\
+    \latexinline{\bashinline{}}   & Bash     & inline snippet \\
+    \texttt{pythoncode}           & Python   & block listing \\
+    \latexinline{\pythoninline{}} & Python   & inline snippet \\
+    \bottomrule
+  \end{ShadedTabular}
+\end{table}
+
+\paragraph{Block listing:}
+\begin{latexcode}
+\begin{pythoncode}
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+\end{pythoncode}
+\end{latexcode}
+\begin{pythoncode}
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+\end{pythoncode}
+
+\paragraph{Inline code:}
+\begin{latexcode}
+The function \pythoninline{fibonacci(n)} returns the $n$-th term.
+\end{latexcode}
+The function \pythoninline{fibonacci(n)} returns the $n$-th term.
+
+\begin{warningbox}[title={Requirement: \texttt{-\/-shell-escape}}]
+  \texttt{minted} calls the Pygments library at compile time and requires the \texttt{-{}-shell-escape} flag.
+  This flag is already included in the provided \texttt{Makefile} and \texttt{.Build/build.py}.
+\end{warningbox}
+
+
+%%=======================================================================
+\section{To-do Notes}
+\label{sec:todonotes}
+%%=======================================================================
+
+During writing, annotate your draft with \latexinline{\todo} notes:
+\begin{latexcode}
+Some text that needs more work.\todo{Add reference here}
+\todo[inline]{This entire section needs revision.}
+\end{latexcode}
+
+Remove all \latexinline{\todo} calls before submitting the final version,
+or set \latexinline{\ntsetup{docstatus=final}} which suppresses them automatically.
+
+
+%%=======================================================================
+\section{Generating the Final PDF}
+\label{sec:generating_pdfs}
+%%=======================================================================
+
+%%-----------------------------------------------------------------------
+\subsection{Recommended Engine: \hologo{LuaLaTeX}}
+\label{sub:lualatex}
+%%-----------------------------------------------------------------------
+
+\novathesis{} supports \hologo{pdfLaTeX}, \hologo{XeLaTeX}, and \hologo{LuaLaTeX}.
+\hologo{LuaLaTeX} is recommended: it handles OpenType fonts natively and is required by some schools.
+
+\begin{bashcode}
+make lua   # recommended
+make xe    # XeLaTeX
+make pdf   # pdfLaTeX
+\end{bashcode}
+
+
+%%-----------------------------------------------------------------------
+\subsection{Image Formats}
+\label{sub:image_formats}
+%%-----------------------------------------------------------------------
+
+All three engines accept \textbf{PDF}, \textbf{PNG}, and \textbf{JPG} directly.
+Use PDF for diagrams and plots, PNG for screenshots with transparency, and JPG for photographs.
+Avoid EPS — convert to PDF first with \bashinline{epstopdf}.
+
+
+%%-----------------------------------------------------------------------
+\subsection{Algorithms}
+\label{sub:algorithms}
+%%-----------------------------------------------------------------------
+
+To typeset algorithms, add to \texttt{0-Config/5\_packages.tex}:
+\begin{latexcode}
+\usepackage{algorithm2e}
+\RestyleAlgo{ruled}
+\end{latexcode}
+
+And optionally list algorithms in the front matter via \texttt{0-Config/4\_files.tex}:
+\begin{latexcode}
 \ntaddlistof{listofalgorithms}
-\end{verbatim}
-in file “\verb!6_list_of.tex!”.
+\end{latexcode}
 
 % \begin{algorithm}
 % $i\gets 10$\;
-% \eIf{$i\geq 5$}
-% {
-%     $i\gets i-1$\;
-% }{
-%     \If{$i\leq 3$}
-%     {
-%         $i\gets i+2$\;
-%     }
-% }
-% \caption{This is an algorithm.}
+% \eIf{$i\geq 5$}{$i\gets i-1$\;}{\If{$i\leq 3$}{$i\gets i+2$\;}}
+% \caption{Example algorithm.}
 % \end{algorithm}
 
-% section test_for_listings (end)
-
 % \printbibliography[heading=subbibliography, segment=\therefsegment, title={\bibname\ for chapter~\thechapter}]
-
