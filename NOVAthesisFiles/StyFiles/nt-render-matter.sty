@@ -295,6 +295,13 @@
   \endgroup
 }
   
+% Natural-width chapter number box: renders the label at its natural width
+% instead of forcing it into the fixed \cftchapternumwidth box.  Used for
+% annexes, where the Roman-numeral counter produces labels of varying width.
+% The first argument (#1 = \cftchapternumwidth) is intentionally ignored so
+% that "Annex I:" takes exactly as much space as its content requires.
+\newcommand{\@nt@naturalnumberlinebox}[2]{\leavevmode\hbox{#2}}
+
 \newcommand*{\ntprintappendices}{%
   \iffileadded{appendix}{%
     \appendix%
@@ -363,6 +370,7 @@
       \protect\renewcommand{\protect\cftchapteraftersnumb}{\protect\space}%
       \protect\settowidth{\protect\cftchapternumwidth}%
         {\protect\cftchapterfont\protect\annexname\protect\space VIII:\ }%
+      \protect\let\protect\chapternumberlinebox\protect\@nt@naturalnumberlinebox%
     }%
     % \thechapter typeset branch: bare Roman numeral "I" — safe (no babel macro).
     % PDF-string branch: "\annexname I" — appears in PDF bookmarks.
@@ -379,6 +387,7 @@
       \protect\renewcommand{\protect\cftchapteraftersnum}{}%
       \protect\renewcommand{\protect\cftchapteraftersnumb}{}%
       \protect\setlength{\protect\cftchapternumwidth}{1.5em}%
+      \protect\let\protect\chapternumberlinebox\protect\mem@cft@hb@xt@%
     }%
   }{}%
 }
