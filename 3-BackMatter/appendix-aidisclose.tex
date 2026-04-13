@@ -1,0 +1,134 @@
+%!TEX root = ../template.tex
+
+\chapter{Detailed AI Taxonomy Descriptions}
+\label{app:taxonomy}
+
+This appendix provides a detailed breakdown of the \AIDpackageName\ taxonomy.
+For each category, we define the \textbf{Objective} (the high-level goal of using AI in this phase) and the \textbf{Scope} (what is generally included or excluded).
+
+\begingroup
+\setparaheadstyle{\normalfont\normalsize\bfseries\color{blue!80!black}}
+\setlist[description]{font=\normalfont\bfseries\color{green!50!black}}
+
+\subsection*{1. Conceptualization}
+\paragraph{Objective:} To use AI as a thought partner for brainstorming, refining the research direction, and establishing the theoretical foundation before empirical work begins.
+\paragraph{Scope:} Includes ideation, hypothesis formation, and feasibility checks. Excludes the actual execution of experiments or data collection.
+\paragraph{Keys:}
+\begin{description}
+    \item[Idea generation:] Using AI to brainstorm new research topics, interdisciplinary connections, or novel angles on existing problems.
+    \item[Objective refinement:] Refining vague goals into concrete, actionable research objectives.
+    \item[Research questions:] Drafting and iterating on specific research questions (RQs) to ensure they are clear and answerable.
+    \item[Feasibility check:] Assessing whether the proposed study is viable regarding resources, time, and data availability.
+    \item[Preliminary research:] Conducting quick background checks or “pre-studies” to see if the idea has already been solved.
+    \item[Simulation/Scenarios:] Using AI to conceptualize theoretical models, simulate persona responses, or design hypothetical scenarios.
+\end{description}
+
+\subsection*{2. Literature Review}
+\paragraph{Objective:} To accelerate the discovery, synthesis, and organization of existing knowledge.
+\paragraph{Scope:} Includes searching, summarizing, and translating papers.
+Excludes the final critical argumentation (which remains the author's responsibility).
+\paragraph{Keys:}
+\begin{description}
+    \item[Search \& Discovery:] Using AI tools (e.g., semantic search) to find relevant papers that keyword searches might miss.
+    \item[Summarization:] Generating summaries or abstracts of long papers to quickly assess relevance.
+    \item[Mapping:] Visualizing connections, citation networks, or thematic clusters in the literature.
+    \item[Pattern recognition:] Identifying trends or recurring themes across a large corpus of text.
+    \item[Gap identification:] Using AI to suggest areas where current research is lacking or contradictory.
+    \item[Translation:] Translating foreign-language literature to make it accessible for the review.
+\end{description}
+
+\subsection*{3. Methodology}
+\paragraph{Objective:} To assist in the structural design of the research study.
+\paragraph{Scope:} Includes experimental design and instrument creation.
+Excludes the physical conduct of experiments.
+\paragraph{Keys:}
+\begin{description}
+    \item[Experimental design:] Designing the logic, control groups, and variables of the study.
+    \item[Prototyping:] Creating early drafts of survey instruments, interview guides, or experimental apparatus designs.
+    \item[Method selection:] Suggesting appropriate statistical methods or qualitative frameworks for the data.
+\end{description}
+
+\subsection*{4. Software Development and Automation}
+\paragraph{Objective:} To facilitate the creation, optimization, and maintenance of code used in the research.
+\paragraph{Scope:} Includes coding, debugging, and documentation.
+\paragraph{Keys:}
+\begin{description}
+    \item[Code generation:] Generating boilerplate code, scripts, or functions from natural language descriptions.
+    \item[Optimization:] Refactoring code for better performance or readability.
+    \item[Debugging:] Identifying syntax errors or logical bugs in scripts.
+    \item[Automation:] Writing scripts to automate file management, backups, or batch processing.
+    \item[Algorithm design:] Assisting in the logic and mathematical formulation of algorithms.
+    \item[Documentation:] Generating docstrings, comments, and README files for research software.
+\end{description}
+
+\subsection*{5. Data Management}
+\paragraph{Objective:} To handle the data lifecycle from collection to reporting.
+\paragraph{Scope:} Includes cleaning, analysis, and synthetic generation.
+Excludes the fabrication of results (which is ethical misconduct, distinct from declared synthetic data).
+\paragraph{Keys:}
+\begin{description}
+    \item[Collection:] Writing scrapers or using AI agents to gather public data.
+    \item[Validation:] Checking data for consistency, outliers, or errors.
+    \item[Cleaning:] Automating the formatting, parsing, and repair of messy datasets.
+    \item[Curation:] Organizing and categorizing large datasets.
+    \item[Analysis:] Suggesting or performing statistical tests and interpreting raw outputs.
+    \item[Visualization:] Generating code for plots, graphs, and data dashboards.
+    \item[Reporting:] Summarizing data findings in textual or tabular format.
+    \item[Labeling:] Using LLMs to annotate or classify text/image datasets (zero-shot/few-shot labeling).
+    \item[Synthesis:] Generating synthetic datasets to preserve privacy or augment small samples.
+    \item[Anonymization:] Detecting and removing Personally Identifiable Information (PII).
+    \item[Translation:] Translating textual data (e.g., survey responses) into the analysis language.
+\end{description}
+
+\subsection*{6. Visuals and Multimedia}
+\paragraph{Objective:} To create or enhance non-data visual elements.
+\paragraph{Scope:} Includes illustrative diagrams and image editing.
+Excludes scientific data plots (covered in Data Management).
+\paragraph{Keys:}
+\begin{description}
+    \item[Generation:] Creating conceptual images, illustrations, or diagrams from scratch.
+    \item[Editing:] Enhancing, cropping, or modifying existing images (e.g., removing background).
+    \item[Charts/Infographics:] Creating flowcharts, process diagrams, or high-level infographics.
+\end{description}
+
+\subsection*{7. Writing and Editing}
+\paragraph{Objective:} To assist in the textual articulation of the research.
+\paragraph{Scope:} Includes drafting, polishing, and translation.
+Note: Authors remain accountable for accuracy.
+\paragraph{Keys:}
+\begin{description}
+    \item[Drafting:] Generating initial text for sections based on bullet points or notes.
+    \item[Polishing:] Correcting grammar, spelling, and punctuation.
+    \item[Summarizing:] Creating the abstract or plain-language summary.
+    \item[Conclusions:] Synthesizing the discussion into a final concluding statement.
+    \item[Tone adjustment:] Rewriting text to be more formal, concise, or accessible.
+    \item[Translation:] Translating the manuscript from the author's native language to the publication language.
+    \item[References:] Formatting citations and bibliography styles.
+    \item[Presentation:] Drafting slide decks or conference poster text.
+    \item[Title generation:] Brainstorming catchy and accurate titles for the work.
+\end{description}
+
+\subsection*{8. Ethics Review}
+\paragraph{Objective:} To act as a check on the ethical integrity of the work.
+\paragraph{Scope:} Includes bias detection and risk assessment.
+\paragraph{Keys:}
+\begin{description}
+    \item[Bias detection:] Scanning text or study designs for potential cultural or gender bias.
+    \item[Risk assessment:] Identifying potential dual-use concerns or societal risks.
+    \item[Compliance:] Checking against specific ethical guidelines or checklists.
+    \item[Confidentiality:] Ensuring no private data is inadvertently leaked in the text.
+\end{description}
+
+\subsection*{9. Quality Assurance (Supervisor Role)}
+\paragraph{Objective:} To use AI as a critical reviewer or “devil's advocate.”
+\paragraph{Scope:} Includes simulated peer review and limitation checking.
+\paragraph{Keys:}
+\begin{description}
+    \item[Simulated Peer Review:] Using AI as a reviewer to identify unclear sections or potential critiques.
+    \item[Field Trends \& Consistency:] Checking the manuscript against current research trends and ensuring internal consistency.
+    \item[Limitations:] Identifying weaknesses or limitations in the study that the authors missed.
+    \item[Publication strategy:] Suggesting suitable journals or conferences and helping with the submission strategy.
+    \item[Publication support:] Assisting in drafting cover letters, responses to reviewers, or other publication-related materials.
+\end{description}
+
+\endgroup

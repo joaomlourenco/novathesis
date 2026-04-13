@@ -41,29 +41,7 @@ The \href{https://www.overleaf.com/learn}{Overleaf documentation} and \href{http
 \label{sec:document_structure}
 %%=======================================================================
 
-The \novathesis{} template follows a strict separation of concerns.
-\autoref{tab:template_structure} summarizes the key files and folders.
-
-\begin{table}[htbp]
-  \caption{Key files and folders in the \novathesis{} template.}
-  \label{tab:template_structure}
-  \centering
-  \begin{ShadedTabular}{lp{0.6\linewidth}}
-    \toprule
-    \thead[l]{File / Folder} & \thead[l]{Purpose} \\
-    \midrule
-    \texttt{0-Config/1\_novathesis.tex} & Main setup: school, document type, language, fonts, \ldots \\
-    \texttt{0-Config/3\_cover.tex}      & Cover metadata: title, author, advisors, committee \\
-    \texttt{0-Config/4\_files.tex}      & List of chapter files to include \\
-    \texttt{0-Config/5\_packages.tex}   & Your extra packages and custom macros \\
-    \texttt{1-FrontMatter/}            & Abstracts, acknowledgments, dedication, \ldots \\
-    \texttt{2-MainMatter/}             & Your thesis chapters \\
-    \texttt{3-BackMatter/}             & Appendices and annexes \\
-    \texttt{4-Bibliography/}           & \texttt{.bib} reference databases \\
-    \texttt{5-Figures/}                & Image files \\
-    \bottomrule
-  \end{ShadedTabular}
-\end{table}
+The \novathesis{} template follows a strict separation of concerns, with configuration separated from content. A detailed overview of the folder hierarchy and the purpose of each file is provided in \autoref{sec:project_structure}.
 
 
 %%-----------------------------------------------------------------------
@@ -636,29 +614,7 @@ or set \latexinline{\ntsetup{docstatus=final}} which suppresses them automatical
 \label{sec:generating_pdfs}
 %%=======================================================================
 
-%%-----------------------------------------------------------------------
-\subsection{Recommended Engine: \hologo{LuaLaTeX}}
-\label{sub:lualatex}
-%%-----------------------------------------------------------------------
-
-\novathesis{} supports \hologo{pdfLaTeX}, \hologo{XeLaTeX}, and \hologo{LuaLaTeX}.
-\hologo{LuaLaTeX} is recommended: it handles OpenType fonts natively and is required by some schools.
-
-\begin{bashcode}
-make lua   # recommended
-make xe    # XeLaTeX
-make pdf   # pdfLaTeX
-\end{bashcode}
-
-
-%%-----------------------------------------------------------------------
-\subsection{Image Formats}
-\label{sub:image_formats}
-%%-----------------------------------------------------------------------
-
-All three engines accept \textbf{PDF}, \textbf{PNG}, and \textbf{JPG} directly.
-Use PDF for diagrams and plots, PNG for screenshots with transparency, and JPG for photographs.
-Avoid EPS — convert to PDF first with \bashinline{epstopdf}.
+The \novathesis{} template supports several \hologo{LaTeX} engines. For detailed instructions on how to build your document, use the \texttt{Makefile}, or generate archival-quality PDF/A output, please refer to \autoref{sec:building}.
 
 
 %%-----------------------------------------------------------------------
