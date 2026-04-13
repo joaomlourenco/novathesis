@@ -141,15 +141,17 @@ If your document is multilingual you can conditionally define the name based on 
 %%=======================================================================
 
 The \texttt{cleveref} package is a more powerful alternative to \latexinline{\autoref}.
-Load it \emph{last} in your preamble (in \texttt{0-Config/5\_packages.tex}):
+Load it \emph{last} in your preamble (in \texttt{0-Config/5\_packages.tex}) with:
 
 \begin{latexcode}
-\usepackage{cleveref}
+\AtEndPreamble{
+  \usepackage{cleveref}
+}
 \end{latexcode}
 
 \begin{warningbox}[title={\texttt{cleveref} must be loaded last}]
   \texttt{cleveref} must be loaded \emph{after} \texttt{hyperref} and after any package that defines new float or theorem environments.
-  In the \novathesis{} template, add it at the end of \texttt{0-Config/5\_packages.tex}.
+  In the \novathesis{} template, add it as above and at the end of \texttt{0-Config/5\_packages.tex}.
 \end{warningbox}
 
 
@@ -164,7 +166,7 @@ Load it \emph{last} in your preamble (in \texttt{0-Config/5\_packages.tex}):
   \centering
   \begin{ShadedTabular}{lp{0.6\linewidth}}
     \toprule
-    Command & Result \\
+    \thead[l]{Command} & \thead[l]{Result} \\
     \midrule
     \latexinline{\cref{key}}         & Lowercase: \emph{figure~1}, \emph{chapter~2}, \ldots \\
     \latexinline{\Cref{key}}         & Capitalised: \emph{Figure~1}, \emph{Chapter~2}, \ldots \\
@@ -236,7 +238,7 @@ For multilingual documents, wrap the definitions in language hooks:
   \centering
   \begin{ShadedTabular}{lll}
     \toprule
-    Command & Output & Use for \\
+    \thead[l]{Command} & \thead[l]{Output} & \thead[l]{Use for} \\
     \midrule
     \latexinline{\emph{text}}      & \emph{text}      & semantic emphasis (adapts to context) \\
     \latexinline{\textbf{text}}    & \textbf{text}    & bold \\
@@ -248,7 +250,7 @@ For multilingual documents, wrap the definitions in language hooks:
   \end{ShadedTabular}
 \end{table}
 
-Prefer \latexinline{\emph} over \latexinline{\textit}: inside an italic context \latexinline{\emph} automatically switches to upright, while \latexinline{\textit} does not.
+To emphasize some words, prefer \latexinline{\emph} over \latexinline{\textit}. Inside an italic context \latexinline{\emph} automatically switches to upright, while \latexinline{\textit} does not.
 
 
 %%-----------------------------------------------------------------------
@@ -310,7 +312,7 @@ They are numbered automatically and appear at the bottom of the page.
 %%=======================================================================
 
 \hologo{LaTeX} excels at mathematical typesetting.
-Inline formulas are delimited by \latexinline{$...$}, for example the discriminant is $\Delta = b^2 - 4ac$.
+Inline formulas are delimited by \latexinline{\(...\)}, for example the discriminant is \()\Delta = b^2 - 4ac\).
 
 Display-style (unnumbered) equations use \latexinline{\[...\]}:
 \[ x = \frac{-b \pm \sqrt{b^2-4ac}}{2a} \]
@@ -395,28 +397,32 @@ For long tables, use \texttt{xltabular} as illustrated in \autoref{tab:hla:resul
 \begin{xltabular}{\textwidth}{Xccccc}
   \caption{A multi-page table using \texttt{xltabular} with row colors.}
   \label{tab:hla:results}\\
-  \toprule
+  % \toprule
   \rowcolor{Gainsboro}%
-  Test   & Anomalies  & Warnings  & Correct   & Categories            & Missed \\
-  \midrule
-Connection~\cite{Beckman08}     & 2       & 2          & 1          & \emph{C}              & 1 \\
-Coordinates'03~\cite{Artho03}   & 1        & 4          & 1          & \emph{2B, 1C}          & 0 \\
-Local Variable~\cite{Artho03}    & 1        & 2          & 1          & \emph{A}              & 0 \\
-NASA~\cite{Artho03}              & 1        & 1          & 1          & ---                    & 0 \\
-Coordinates'04~\cite{Artho04}    & 1        & 4          & 1          & \emph{3C}              & 0 \\
-Buffer~\cite{Artho04}            & 0        & 7          & 0          & \emph{2A, 1B, 2C, 2D}  & 0 \\
-Double-Check~\cite{Artho04}      & 0        & 2          & 0          & \emph{1A, 1B}          & 0 \\
-StringBuffer~\cite{Flanagan04}  & 1        & 0          & 0          & ---                    & 1 \\
-Account~\cite{Praun03}          & 1        & 1          & 1          & ---                   & 0 \\
-Jigsaw~\cite{Praun03}            & 1        & 2          & 1          & \emph{C}              & 0 \\
-Over-reporting~\cite{Praun03}    & 0        & 2          & 0          & \emph{1A, 1C}          & 0 \\
-Under-reporting~\cite{Praun03}  & 1        & 1          & 1          & ---                    & 0 \\
-Allocate Vector~\cite{IBM-Rep}  & 1        & 2          & 1          & \emph{C}              & 0 \\
-Knight Moves~\cite{Beckman08}   & 1        & 3          & 1          & \emph{2B}              & 0 \\
-  \midrule
+  \thead[l]{Test}                 & \thead[l]{Anomalies}  
+                                          & \thead[l]{Warnings}  
+                                                  & \thead[l]{Correct}   
+                                                          & \thead[l]{Categories}            
+                                                                                  & \thead[l]{Missed} \\
+  % \midrule
+Connection~\cite{Beckman08}       & 2     & 2     & 1     & \emph{C}              & 1 \\
+Coordinates'03~\cite{Artho03}     & 1     & 4     & 1     & \emph{2B, 1C}         & 0 \\
+Local Variable~\cite{Artho03}     & 1     & 2     & 1     & \emph{A}              & 0 \\
+NASA~\cite{Artho03}               & 1     & 1     & 1     & ---                   & 0 \\
+Coordinates'04~\cite{Artho04}     & 1     & 4     & 1     & \emph{3C}             & 0 \\
+Buffer~\cite{Artho04}             & 0     & 7     & 0     & \emph{2A, 1B, 2C, 2D} & 0 \\
+Double-Check~\cite{Artho04}       & 0     & 2     & 0     & \emph{1A, 1B}         & 0 \\
+StringBuffer~\cite{Flanagan04}    & 1     & 0     & 0     & ---                   & 1 \\
+Account~\cite{Praun03}            & 1     & 1     & 1     & ---                   & 0 \\
+Jigsaw~\cite{Praun03}             & 1     & 2     & 1     & \emph{C}              & 0 \\
+Over-reporting~\cite{Praun03}     & 0     & 2     & 0     & \emph{1A, 1C}         & 0 \\
+Under-reporting~\cite{Praun03}    & 1     & 1     & 1     & ---                   & 0 \\
+Allocate Vector~\cite{IBM-Rep}    & 1     & 2     & 1     & \emph{C}              & 0 \\
+Knight Moves~\cite{Beckman08}     & 1     & 3     & 1     & \emph{2B}             & 0 \\
+  % \midrule
   \rowcolor{Gainsboro}%
 Total                            & 12      & 33        & 10        & 5A, 6B, 10C, 2D       & 2 \\
-  \bottomrule
+  % \bottomrule
 \end{xltabular}
 \egroup
 
@@ -428,7 +434,7 @@ Total                            & 12      & 33        & 10        & 5A, 6B, 10C
 
 Store image files in \texttt{5-Figures/}.
 Always prefer \emph{vector} formats (PDF) over \emph{bitmap} formats (PNG, JPG):
-vector images scale without quality loss, while bitmap images become pixelated when enlarged — compare \autoref{fig:snowman-bitmap} and \autoref{fig:snowman-vector}.
+vector images scale without quality loss, while bitmap images become pixelated when enlarged. Compare \autoref{fig:snowman-bitmap} and \autoref{fig:snowman-vector} by \emph{zooming in} on both.
 
 \begin{figure}[htbp]
   \centering
@@ -496,7 +502,7 @@ Reference the whole figure as \autoref{fig:subfig_example} or the sub-figures se
 
 %%=======================================================================
 \section{Bibliography and Citations}
-\label{sec:bibliography}
+\label{sec:bibliography_and_citations}
 %%=======================================================================
 
 The template uses \texttt{biblatex} with the \hologo{biber} backend.
