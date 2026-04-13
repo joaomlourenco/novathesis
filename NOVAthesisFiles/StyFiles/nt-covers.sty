@@ -429,6 +429,9 @@
     % Spine logic is simpler to keep calling nt-spine.sty
     \pagenumbering{roman} %\setcounter{page}{0}
     \NTRunHook{print/spine/pre}
+    \clearpage
+    \phantomsection
+    \bookmark[level=0, dest=\HyperLocalCurrentHref]{\GetBkmString(spine)}
     \iffileadded[spine]{cover}
       { \PrintAddedFile[spine]{cover} }
       { \PrintBookSpine \clearforchapter }
