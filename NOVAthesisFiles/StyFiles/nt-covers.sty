@@ -361,14 +361,9 @@
       \NTRunHook{cover/#1-#2/pre}
       \clearpage
       \phantomsection
-      \def\bmshift{0}
-      \IfStrEqCase{#1}{% Front cover and back cover start at normal level
-        {1}{\def\bmshift{0}}
-        {N}{\def\bmshift{0}}
-      }[% Front page starts at level 1
-        {\def\bmshift{1}}
-      ]%
-      \IfStrEq{#2}{2}{\def\bmshift{1}}% Also, verso of covers always at level 1
+      \def\bmshift{1}
+      \IfStrEq{#1-#2}{1-1}{\def\bmshift{0}}{}
+      \IfStrEq{#1-#2}{N-2}{\def\bmshift{0}}{}
       \bookmark[level=\bmshift, dest=\HyperLocalCurrentHref]{\GetBkmString(#1-#2)}
       \thispagestyle{empty}
 

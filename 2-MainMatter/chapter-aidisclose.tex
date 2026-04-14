@@ -1,9 +1,21 @@
 \chapter{Artificial Intelligence Disclosure Statement}
 \label{chap:aidisclose}
 
-The \novathesis tempalte supports the rendering of a \emph{Artificial Intelligence Disclosure Statement}.
+As Generative Artificial Intelligence (GenAI) becomes increasingly integrated into academic research, transparency regarding its use is essential. The \novathesis\ template provides built-in support for rendering a formal \emph{Artificial Intelligence Disclosure Statement}.
 
-The rendering is cotrolled by the \latexinline{\ntsetup{print/aidisclosure=OPTION}} option in file \verb!0-Config/1_novathesis.tex!.
+\section{Why Disclose AI Use?}
+
+Academic integrity requires that authors are transparent about the tools and methods used to produce their work. Disclosing AI use:
+\begin{itemize}
+  \item \textbf{Promotes Transparency:} It allows readers and examiners to understand which parts of the research process were assisted by AI.
+  \item \textbf{Ensures Accountability:} Regardless of AI assistance, the \textbf{author remains solely responsible} for the accuracy, originality, and ethical integrity of the thesis. AI-generated "hallucinations" or errors are the author's responsibility to correct.
+  \item \textbf{Complies with Regulations:} Many universities and publishers now require a formal declaration of AI use. \emph{Please check your school's specific regulations regarding GenAI.}
+\end{itemize}
+
+
+\section{Configuration}
+
+The rendering of the statement is controlled by the \latexinline{\ntsetup{print/aidisclosure=OPTION}} option in the file \verb!0-Config/1_novathesis.tex!.
 
 Possible values for \latexinline{OPTION} are:
 
@@ -11,44 +23,60 @@ Possible values for \latexinline{OPTION} are:
 \noindent
 \begin{tabularx}{\textwidth}{>{\bfseries\ttfamily}lX}
   \toprule
-    false & Will omit the AI Disclosure Statement.\\
-    filename.tex & Will render the given file as the AI Disclosure Statement.\\
-    aidisclose & Will render the \emph{standard} AI Disclosure Statement with the help of the \href{https://github.com/joaomlourenco/aidisclose}{\texttt{aidisclose} package}.\\
+    false & Omit the AI Disclosure Statement entirely.\\
+    aidisclose & (Default) Render the \emph{standard} checklist using the \href{https://github.com/joaomlourenco/aidisclose}{\texttt{aidisclose} package}.\\
+    filename.tex & Render a custom file (e.g., \texttt{aidisclosure.tex}) from the \texttt{1-FrontMatter/} folder.\\
   \bottomrule
 \end{tabularx}
 
 
-\section{Deactivating the AI Disclosure Statement}
+\section{The Standard aidisclose Checklist}
 
-In file \verb!0-Config/1_novathesis.tex! add the optoin
-\latexinline{\ntsetup{print/aidisclosure=false}}.
+The \novathesis\ template uses the \href{https://github.com/joaomlourenco/aidisclose}{\texttt{aidisclose} package}~\cite{Lourenco:2025:aidisclose}, which follows the \emph{GAIDeT (Generative AI Delegation Taxonomy)}~\cite{Suchikova:2025:GAIDeT}. This provides a structured checklist of tasks (e.g., brainstorming, proofreading, code generation) where AI might have been employed.
 
+\subsection{Using the Companion Website (Recommended)}
 
-\section{Using Your Own AI Disclosure Statement}
+The most efficient way to generate your disclosure is to use the companion web site at \url{aidisclose.org} (see \Autoref{fig:aidisclose-org}).
 
-In file \verb!0-Config/1_novathesis.tex! add the optoin
-\latexinline{\ntsetup{print/aidisclosure=filename.tex}}.
-
-
-\section{Using the \texorpdfstring{\novathesis}{NOVAthesis} Standard AI Disclosure Statement}
-
-The \novathesis\ template uses the \href{https://github.com/joaomlourenco/aidisclose}{\texttt{aidisclose} package}~\cite{Lourenco:2025:aidisclose}, which extends the \emph{GAIDeT (Generative AI Delegation Taxonomy)}~\cite{Suchikova:2025:GAIDeT} to automate Generative AI disclosure statements and checklists.
-
-The \texttt{aidisclose} configuration file can be found at \verb!0-Config/7_aidisclose.tex!.  Although you can edit/change this file, it is strongly recommended that you use the \href{aidisclose.org}{package's companion web} site at \url{aidisclose.org}, illustrated in \Autoref{fig:aidisclose-org}.
-
-Fill the Author name and AI tools used, optionally add comments, leave \emph{Configuration \& Rendering} as is, and then select the appropriate checkboxes in \emph{Taxonomy of Delegated Tasks}.  Finally, press the geen button at the bottom, and replace the \novathesis aidisclose configuration file (\verb!0-Config/7_aidisclose.tex!) with the contents given in the web site.
+\begin{enumerate}
+  \item Visit \href{https://aidisclose.org}{aidisclose.org}.
+  \item Fill in your name and the AI tools used (e.g., ChatGPT, Claude, Gemini).
+  \item Select the appropriate checkboxes in the \emph{Taxonomy of Delegated Tasks}.
+  \item Click the green button to generate the \LaTeX\ snippet.
+  \item Copy the snippet and replace the contents of \verb!0-Config/7-aidisclose.tex! in your project.
+\end{enumerate}
 
 \begin{figure}[htbp]
   \centering
-    \includegraphics[height=0.9\textheight]{aidisclose-org}
+    \includegraphics[height=0.6\textheight]{aidisclose-org}
   \caption{The \href{https://aidisclose.org}{\texttt{aidisclose.org} web site}}
   \label{fig:aidisclose-org}
 \end{figure}
 
-\subsection{About the AI Tags}
+\subsection{Manual Configuration}
+
+Alternatively, you can manually edit \verb!0-Config/7-aidisclose.tex! by activating specific tags:
+\begin{latexcode}
+\AIDactivate{w:poly}  % For Polishing and Editing
+\AIDactivate{s:gen}   % For Code Generation
+\end{latexcode}
+
+
+\section{What if No AI was Used?}
+
+If you did \textbf{not} use any GenAI tools, you have two choices:
+\begin{enumerate}
+  \item \textbf{Deactivate it:} Set \latexinline{\ntsetup{print/aidisclosure=false}} in \verb!0-Config/1_novathesis.tex!.
+  \item \textbf{Negative Declaration:} Some schools prefer an explicit statement that no AI was used. In this case, use \latexinline{\ntsetup{print/aidisclosure=aidisclosure.tex}} and ensure \verb!1-FrontMatter/aidisclosure.tex! contains your "No AI used" declaration.
+\end{enumerate}
+
+
+\section{Placement in the Document}
+
+By default, the AI Disclosure Statement is printed in the \textbf{Front Matter}, typically appearing after the Integrity Statement and before the Abstracts. It is automatically included in the PDF when \texttt{docstatus} is set to \texttt{provisional} or \texttt{final}.
 
 
 \section{Detailed Taxonomy Descriptions}
 \label{sec:taxonomy_ref}
 
-A detailed breakdown of the \AIDpackageName\ taxonomy, including objectives, scope, and specific keys for each of the nine categories, is provided in \autoref{app:taxonomy}.
+For a detailed breakdown of what is included in each category (Objective, Scope, and Keys), please refer to \autoref{app:taxonomy}.

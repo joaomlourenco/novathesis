@@ -541,6 +541,28 @@ make clean  # remove auxiliary files
 
 
 %%=======================================================================
+\section{Acronyms and Glossaries}
+\label{sec:acronyms_and_glossaries}
+%%=======================================================================
+
+The \novathesis{} template uses the \texttt{glossaries-extra} package to manage acronyms and technical terms. Definitions are kept in \texttt{1-FrontMatter/acronyms.tex} and \texttt{glossary.tex}.
+
+\paragraph{Defining an Acronym:}
+\begin{latexcode}
+\newacronym{gcd}{GCD}{Greatest Common Divisor}
+\end{latexcode}
+
+\paragraph{Using it in text:}
+\begin{latexcode}
+The \gls{gcd} is...  % First use: Greatest Common Divisor (GCD)
+The \gls{gcd} is...  % Subsequent use: GCD
+The \glspl{gcd} are... % Plural: GCDs
+\end{latexcode}
+
+Using \latexinline{\gls} ensures that acronyms are expanded on their first use and that a consistent "List of Acronyms" is generated automatically in the front matter.
+
+
+%%=======================================================================
 \section{Source Code Listings}
 \label{sec:code_listings}
 %%=======================================================================

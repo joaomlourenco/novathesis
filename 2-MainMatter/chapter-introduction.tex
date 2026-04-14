@@ -338,6 +338,20 @@ The \gls{novathesis} template was born in~1996, and what you see now accumulates
 The \novathesis\ template provides an \emph{easy to use} environment for writing your thesis. Detailed instructions on how to set up the template using \Overleaf\ or a local \hologo{LaTeX} installation are provided in the \emph{User's Manual} (see \autoref{sec:getting_started_amnual}).
 
 
+\section{Your Thesis Roadmap}
+\label{sec:roadmap}
+
+Writing a thesis is a journey. Here is the recommended workflow for using this template:
+
+\begin{enumerate}
+  \item \textbf{Configuration:} Start by editing the files in \texttt{0-Config/}. Select your school, set your document type (PhD, MSc, etc.), and fill in your metadata (title, author, supervisors) in \texttt{3\_cover.tex}.
+  \item \textbf{Front Matter:} Write your acknowledgments, dedication, and abstracts in the \texttt{1-FrontMatter/} folder.
+  \item \textbf{Main Content:} Create separate \texttt{.tex} files for each chapter in \texttt{2-MainMatter/}. Register them in \texttt{0-Config/4\_files.tex} to include them in the build.
+  \item \textbf{Bibliography:} Keep your references in \texttt{4-Bibliography/bibliography.bib}. The template uses \texttt{biblatex} to handle formatting automatically.
+  \item \textbf{Build \& Iterate:} Use \texttt{make} or your editor's build command frequently to check the results.
+\end{enumerate}
+
+
 \section{Getting Help}
 \label{sec:getting_help}
 
