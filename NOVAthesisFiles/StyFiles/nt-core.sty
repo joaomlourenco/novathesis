@@ -285,6 +285,11 @@
  }
 
 
+% \IfFileExistsCase*[search-path]{ {file1}{action1}, {file2}{action2} }{ default-action }
+% * (Optional): logic defined in the underlying expl3 code.
+% #2 (Optional): A specific directory or path to prepend to the filenames.
+% #3 (Mandatory): A comma-separated list of pairs formatted as {filename}{code to run if found}.
+% #4 (Mandatory): The "Else" branch. This code runs only if none of the files in your list are found.
 \NewDocumentCommand{\IfFileExistsCase}{ s O{} m m }
   {
     \clist_map_inline:nn { #3 }
@@ -370,7 +375,6 @@
 % #4 = code if fails [OPTIONAL]
 
 % 1. Create variables
-
 \NewDocumentCommand{\InputIfFileExistsInDirsTF}{ m m +m +m }
   {
     \bool_set_false:N \l_file_found_bool

@@ -792,30 +792,26 @@
 
 %============================================================
 %  UNIVERSITY/SCHOOL SPECIFIC MATERIALS
-%  configuration file “0-Config/9_<university>_<school>.tex”
 %============================================================
 \InputIfFileExists{\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.clo}
     {}
     {\PackageError{novathesis}
                   {Missing file “\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.clo”}{}}
 
-\ntfor\match:={%
-      \@UNIV-\@SCHL-\@DEGREEACR,%
-      \@UNIV-\@SCHL%
-  }\do{%
-      \IfFileExists{\DIRSCHOOLS/\@UNIV/\@SCHL/\match-defaults.clo}
-          {\input{\DIRSCHOOLS/\@UNIV/\@SCHL/\match-defaults.clo}\ntforbreak}
-          {}%
+\IfFileExistsCase
+  [\DIRSCHOOLS/\@UNIV/\@SCHL/]
+  { 
+    {\@UNIV-\@SCHL-\@DEGREEACR-defaults.clo}{\input{#1}}, 
+    {\@UNIV-\@SCHL-defaults.clo}{\input{#1}}, 
   }
-[\PackageError{novathesis}
-              {Missing file “\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-defaults.clo”}
-              {}]
+  { 
+    \PackageError{novathesis}
+                  {Missing file “\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-defaults.clo”}
+                  {}
+  }
 
 \ValidateLtxProcessor{\@UNIV}{\@SCHL}{\@DEGREEACR}
 
-\IfFileExists{\DIRCONFIG/9_\@UNIV_\@SCHL.tex}
-     {\def\@ntsetuplevel{\@UNIV/\@SCHL/}\input{\DIRCONFIG/9_\@UNIV_\@SCHL.tex}}
-     {\def\@ntsetuplevel{\@UNIV/}\InputIfFileExists{\DIRCONFIG/9_\@UNIV.tex}{}{}}
 \def\@ntsetuplevel{}
 
 % Now we can load biblatx
@@ -878,11 +874,15 @@
 %  THESIS/DISSERTATION COVER DATA (title, author, etc)
 %   Please open and edit the appropriate
 %       configuration file “0-Config/3_cover.tex”
+%       configuration file “0-Config/9_<university>_<school>.tex”
 %============================================================
+\ntselectlang{\@LANG@COVER}%
 \input{\DIRCONFIG/3_cover}
 % \NTRunHook{cover}
+\IfFileExists{\DIRCONFIG/9_\@UNIV_\@SCHL.tex}
+     {\def\@ntsetuplevel{\@UNIV/\@SCHL/}\input{\DIRCONFIG/9_\@UNIV_\@SCHL.tex}}
+     {\def\@ntsetuplevel{\@UNIV/}\InputIfFileExists{\DIRCONFIG/9_\@UNIV.tex}{}{}}
 
-\ntselectlang{\@LANG@COVER}%
 
 %============================================================
 %  THESIS/DISSERTATION FILES

@@ -70,6 +70,16 @@
 \RequirePackage{catchfile}   % Read a file's contents into a macro
 \RequirePackage{varwidth}    % Variable-width minipage environment
 \RequirePackage{calc}        % Arithmetic in length/counter expressions
+\RequirePackage{hologo}      % Typeset TeX-family logos
+% Wrap \hologo in \NoCaseChange so \MakeUppercase never uppercases logo names
+% (LaTeX 2020+ case-changing engine uppercases even protected-command arguments).
+\renewcommand*\hologo[1]{\NoCaseChange{\hologoRobust{#1}}}
+% In PDF strings (bookmarks) render \hologo{X} as plain text "X".
+\AtBeginDocument{%
+  \pdfstringdefDisableCommands{%
+    \def\hologo#1{#1}%
+  }%
+}
 
 % Add StyFiles and Strings to \input search path so bare filenames work
 \xappto\input@path{{\DIRSTYFILES/}{\DIRSTRINGS/}}
@@ -186,6 +196,7 @@
     bookmarksdepth=3,
     breaklinks=true,
     colorlinks=true,
+    hypertexnames=false,    % prevents duplicate PDF destinations from memoir's double caption rendering
     pdfdisplaydoctitle=true,
     unicode=true,
   }{hyperref}

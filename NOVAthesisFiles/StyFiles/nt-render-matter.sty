@@ -222,9 +222,16 @@
   \pagestyle{novathesis@frontmatter}%
   \copypagestyle{chapter}{novathesis@frontmatter}
   % \ntselectlang{\@LANG@MAIN}%
+  % Save the cover-page count before \pagenumbering{roman} resets the counter.
+  % Schools with a 2-page front cover (e.g. nova-fct: pages 1-1 + 2-1) leave
+  % \c@page = 2 here; front matter must start at page 3 (iii) to avoid a
+  % duplicate 'page.ii' hyperref destination.
+  \iftoggle{/novathesis/print/frontpage}
+    {\edef\nt@lastcoverpage{\number\value{page}}}
+    {}%
   \pagenumbering{roman}%
   \iftoggle{/novathesis/print/frontpage}
-    {\setcounter{page}{2}}
+    {\setcounter{page}{\numexpr\nt@lastcoverpage+1\relax}}
     {\setcounter{page}{1}}
 }
 

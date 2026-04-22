@@ -21,26 +21,22 @@
 \usepackage{wrapfig}      % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 \restylefloat{figure}     % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 \usepackage{metalogo}     % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
-\usepackage{hologo}       % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 \usepackage{xurl}         % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 \usepackage{lipsum}       % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
-\usepackage{nicematrix}   % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
-
 % Define a professional, muted palette
 \newcommand{\Overleaf}{\href{https://www.overleaf.com?r=f5160636&rm=d&rs=b}{Overleaf}}
 \definecolor{headgray}{gray}{0.9}
 \definecolor{rowgray}{gray}{0.95}
+% ShadedTabular: a tabular with a shaded header row and zebra-striped body.
+% Uses colortbl (already loaded by novathesis) — no extra packages needed.
+% The header row receives headgray; body rows alternate rowgray / white.
 \newenvironment{ShadedTabular}[1]{%
-  \renewcommand{\arraystretch}{1.3}
-  \NiceTabular{#1}[
-    % vlines, % Optional: only if you really need vertical lines
-    code-before = {
-      \rowcolor{headgray}{1}      % Header background
-      \rowcolors{2}{rowgray}{white} % Zebra stripes starting from row 2
-    }
-  ]
+  \renewcommand{\arraystretch}{1.3}%
+  \rowcolors{2}{rowgray}{white}%    % body rows: zebra stripes starting at row 2
+  \tabular{#1}%
+  \rowcolor{headgray}%              % first (header) row background
 }{%
-  \endNiceTabular
+  \endtabular
 }
 
 
