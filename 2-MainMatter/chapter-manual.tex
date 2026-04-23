@@ -38,7 +38,7 @@ see Chapter~\ref{app:covers}.
 
 %%=======================================================================
 \section{Getting Started}
-\label{sec:getting_started_amnual}
+\label{sec:getting_started_manual}
 %%=======================================================================
 
 %%-----------------------------------------------------------------------
@@ -68,7 +68,7 @@ the \emph{\MikTeX Console} before compiling the template for the first time.
 schools because it handles Unicode fonts natively.  \hologo{XeLaTeX} is a close
 alternative.  \hologo{pdfLaTeX} works but cannot load OpenType/TrueType fonts.
 
-\paragraph{School-specific fonts.}  Some Schools or font-styles require fonts not available in \hologo{LaTeX}.  In normal conditions, they will be downloaded automatically.  However, if they are not, you may download the necessary fronts from \url{https://github.com/joaomlourenco/novathesis-extras/tree/main/Fonts}, unzip (if necessary), and copy the \verb!*.ttf! files to \verb!NOVAthesisFiles/FontStyles/Fonts/!.
+\paragraph{School-specific fonts.}  Some Schools or font-styles require fonts not available in \hologo{LaTeX}.  In normal conditions, they will be downloaded automatically.  However, if they are not, you may download the necessary fonts from \url{https://github.com/joaomlourenco/novathesis-extras/tree/main/Fonts}, unzip (if necessary), and copy the \verb!*.ttf! files to \verb!NOVAthesisFiles/FontStyles/Fonts/!.
 
 
 %%-----------------------------------------------------------------------
@@ -88,7 +88,7 @@ Or download the latest ZIP directly:
 
 The top-level folder is your working directory.  Rename it to anything
 you like.  Open \verb!template.tex! in your editor and compile it — you
-should get a PDF immediately with the default settings (\gls{FCT}
+should get a \gls{PDF} immediately with the default settings (\gls{FCT}
 PhD in English).
 
 %%-----------------------------------------------------------------------
@@ -139,8 +139,7 @@ engine.
     \verb!3-BackMatter/!        & Appendices and annexes              & \textbf{edit} \\
     \verb!4-Bibliography/!      & \texttt{.bib} database files        & \textbf{edit} \\
     \verb!5-Figures/!           & Images                              & \textbf{edit} \\
-    \verb!NOVAthesisFiles/!     & Template internals (styles, schools, strings       
-                                                                      & do not edit \\
+    \verb!NOVAthesisFiles/!     & Template internals (styles, schools, strings) & do not edit \\
     \verb!Scripts/!             & Utility scripts                     & do not edit \\
     \verb!.Build/!              & Build assistant (\texttt{build.py}) & do not edit \\
     \bottomrule
@@ -695,7 +694,7 @@ The order in which abstracts appear is controlled by
 \end{latexcode}
 
 Each file uses standard \texttt{glossaries} package commands
-(\verb!\newglossaryentry!, \verb!\newacronym!, etc.).
+(\verb!\newglossaryentry!, \verb!\newacronym!, etc.). To include them in your text, use the \latexinline{\gls{label}} command.
 
 %%-----------------------------------------------------------------------
 \subsection{Main Chapters}
@@ -712,7 +711,7 @@ Each file uses standard \texttt{glossaries} package commands
 Chapters are included in the order they appear in \verb!4_files.tex!.
 To restrict a chapter to specific document types, pass an optional list:
 \begin{latexcode}
-\ntaddfile{chapter}[mscplan,msc]{chapter-proposal}  % only in MSc docs
+\ntaddfile{chapter}[mscplan,msc]{chapter-proposal}  % only in \gls{msc} docs
 \end{latexcode}
 
 %%-----------------------------------------------------------------------
@@ -807,8 +806,9 @@ the differences.
 A typical workflow:
 \begin{enumerate}
   \item Write with \texttt{docstatus=working} (fast, no distractions).
-  \item Switch to \texttt{provisional} when submitting to the examination
-    jury — a clean PDF without the committee members.
+  \item Switch to \gls{msc} when submitting to the examination
+    jury — a clean \gls{PDF} without the committee members.
+
   \item Switch to \texttt{final} after the examination — includes the
     committee, the book spine, and produces a PDF/A-2b archival document
     (see Section~\ref{sub:pdfa}).
@@ -880,7 +880,7 @@ are not available — all configuration is done by editing the
 %%-----------------------------------------------------------------------
 
 When \verb!\ntsetup{docstatus=final}! is set, \novathesis{} automatically
-produces a \textbf{PDF/A-2b} conformant document — the archival-quality
+produces a \textbf{\gls{PDF}/A-2b} conformant document — the archival-quality
 format required by most institutional repositories and digital libraries.
 No configuration beyond setting \texttt{docstatus=final} is needed.
 

@@ -1,15 +1,15 @@
 \chapter{Artificial Intelligence Disclosure Statement}
 \label{chap:aidisclose}
 
-As Generative Artificial Intelligence (GenAI) becomes increasingly integrated into academic research, transparency regarding its use is essential. The \novathesis\ template provides built-in support for rendering a formal \emph{Artificial Intelligence Disclosure Statement}.
+As Generative Artificial Intelligence (\gls{AI}) becomes increasingly integrated into academic research, transparency regarding its use is essential. The \novathesis{} template provides built-in support for rendering a formal \emph{Artificial Intelligence Disclosure Statement}.
 
-\section{Why Disclose AI Use?}
+\section{Why Disclose \gls{AI} Use?}
 
-Academic integrity requires that authors are transparent about the tools and methods used to produce their work. Disclosing AI use:
+Academic integrity requires that authors are transparent about the tools and methods used to produce their work. Disclosing \gls{AI} use:
 \begin{itemize}
-  \item \textbf{Promotes Transparency:} It allows readers and examiners to understand which parts of the research process were assisted by AI.
-  \item \textbf{Ensures Accountability:} Regardless of AI assistance, the \textbf{author remains solely responsible} for the accuracy, originality, and ethical integrity of the thesis. AI-generated "hallucinations" or errors are the author's responsibility to correct.
-  \item \textbf{Complies with Regulations:} Many universities and publishers now require a formal declaration of AI use. \emph{Please check your school's specific regulations regarding GenAI.}
+  \item \textbf{Promotes Transparency:} It allows readers and examiners to understand which parts of the research process were assisted by \gls{AI}.
+  \item \textbf{Ensures Accountability:} Regardless of \gls{AI} assistance, the \textbf{author remains solely responsible} for the accuracy, originality, and ethical integrity of the thesis. \gls{AI}-generated "hallucinations" or errors are the author's responsibility to correct.
+  \item \textbf{Complies with Regulations:} Many universities and publishers now require a formal declaration of \gls{AI} use. \emph{Please check your school's specific regulations regarding Generative \gls{AI}.}
 \end{itemize}
 
 
@@ -32,7 +32,7 @@ Possible values for \latexinline{OPTION} are:
 
 \section{The Standard aidisclose Checklist}
 
-The \novathesis\ template uses the \href{https://github.com/joaomlourenco/aidisclose}{\texttt{aidisclose} package}~\cite{Lourenco:2025:aidisclose}, which follows the \emph{GAIDeT (Generative AI Delegation Taxonomy)}~\cite{Suchikova:2025:GAIDeT}. This provides a structured checklist of tasks (e.g., brainstorming, proofreading, code generation) where AI might have been employed.
+The \novathesis{} template uses the \href{https://github.com/joaomlourenco/aidisclose}{\texttt{aidisclose} package}~\cite{Lourenco:2025:aidisclose}, which follows the \emph{GAIDeT (Generative \gls{AI} Delegation Taxonomy)}~\cite{Suchikova:2025:GAIDeT}. This provides a structured checklist of tasks (e.g., brainstorming, proofreading, code generation) where \gls{AI} might have been employed.
 
 \subsection{Using the Companion Website (Recommended)}
 
@@ -40,7 +40,7 @@ The most efficient way to generate your disclosure is to use the companion web s
 
 \begin{enumerate}
   \item Visit \href{https://aidisclose.org}{aidisclose.org}.
-  \item Fill in your name and the AI tools used (e.g., ChatGPT, Claude, Gemini).
+  \item Fill in your name and the \gls{AI} tools used (e.g., ChatGPT, Claude, Gemini).
   \item Select the appropriate checkboxes in the \emph{Taxonomy of Delegated Tasks}.
   \item Click the green button to generate the \LaTeX\ snippet.
   \item Copy the snippet and replace the contents of \verb!0-Config/7-aidisclose.tex! in your project.
@@ -62,18 +62,18 @@ Alternatively, you can manually edit \verb!0-Config/7-aidisclose.tex! by activat
 \end{latexcode}
 
 
-\section{What if No AI was Used?}
+\section{What if No \gls{AI} was Used?}
 
-If you did \textbf{not} use any GenAI tools, you have two choices:
+If you did \textbf{not} use any Generative \gls{AI} tools, you have two choices:
 \begin{enumerate}
   \item \textbf{Deactivate it:} Set \latexinline{\ntsetup{print/aidisclosure=false}} in \verb!0-Config/1_novathesis.tex!.
-  \item \textbf{Negative Declaration:} Some schools prefer an explicit statement that no AI was used. In this case, use \latexinline{\ntsetup{print/aidisclosure=aidisclosure.tex}} and ensure \verb!1-FrontMatter/aidisclosure.tex! contains your "No AI used" declaration.
+  \item \textbf{Negative Declaration:} Some schools prefer an explicit statement that no \gls{AI} was used. In this case, create a custom file in \verb!1-FrontMatter/aidisclosure.tex! with your declaration and set \latexinline{\ntsetup{print/aidisclosure=aidisclosure.tex}}.
 \end{enumerate}
 
 
 \section{Placement in the Document}
 
-By default, the AI Disclosure Statement is printed in the \textbf{Front Matter}, typically appearing after the Integrity Statement and before the Abstracts. It is automatically included in the PDF when \texttt{docstatus} is set to \texttt{provisional} or \texttt{final}.
+By default, the \gls{AI} Disclosure Statement is printed in the \textbf{Front Matter}, typically appearing after the Integrity Statement and before the Abstracts. It is automatically included in the PDF when \texttt{docstatus} is set to \texttt{provisional} or \texttt{final}.
 
 
 \section{Detailed Taxonomy Descriptions}

@@ -411,8 +411,9 @@ Total                            & 12      & 33        & 10        & 5A, 6B, 10C
 %%=======================================================================
 
 Store image files in \texttt{5-Figures/}.
-Always prefer \emph{vector} formats (PDF) over \emph{bitmap} formats (PNG, JPG):
-vector images scale without quality loss, while bitmap images become pixelated when enlarged. Compare \autoref{fig:snowman-bitmap} and \autoref{fig:snowman-vector} by \emph{zooming in} on both.
+Always prefer \emph{vector} formats (\gls{PDF}) over \emph{bitmap} formats (PNG, JPG):
+vector images scale without quality loss, while bitmap images become pixelated when enlarged. Compare \autoref{fig:snowman-bitmap} and \autoref{fig:snowman-vectorial} by \emph{zooming in} on both.
+
 
 \begin{figure}[htbp]
   \centering
@@ -559,7 +560,12 @@ The \gls{gcd} is...  % Subsequent use: GCD
 The \glspl{gcd} are... % Plural: GCDs
 \end{latexcode}
 
-Using \latexinline{\gls} ensures that acronyms are expanded on their first use and that a consistent "List of Acronyms" is generated automatically in the front matter.
+Using \latexinline{\gls} ensures that acronyms are expanded on their first use and that a consistent "List of Acronyms" is generated automatically in the front matter. For instance, we can talk about \gls{AI} and how it relates to \gls{STEM} fields. Documents are often shared as \gls{PDF} files, which may include a \gls{URL} or a \gls{DOI} for reference.
+
+The glossary is used for technical terms like \gls{latex} or the \gls{framework} used in your research. You should also properly manage your \gls{bibliography}.
+
+\paragraph{Using Symbols:}
+Symbols are called using the \latexinline{\gls} command. For example, the angular frequency is \gls{omega}, the significance level is \gls{alpha}, and the reduced Planck constant is \gls{hbar}. We often work with the set of real numbers \gls{reals} and calculate the \gls{sum} of a sequence.
 
 
 %%=======================================================================
@@ -632,11 +638,11 @@ or set \latexinline{\ntsetup{docstatus=final}} which suppresses them automatical
 
 
 %%=======================================================================
-\section{Generating the Final PDF}
+\section{Generating the Final \gls{PDF}}
 \label{sec:generating_pdfs}
 %%=======================================================================
 
-The \novathesis{} template supports several \hologo{LaTeX} engines. For detailed instructions on how to build your document, use the \texttt{Makefile}, or generate archival-quality PDF/A output, please refer to \autoref{sec:building}.
+The \novathesis{} template supports several \hologo{LaTeX} engines. For detailed instructions on how to build your document, use the \texttt{Makefile}, or generate archival-quality \gls{PDF}/A output, please refer to \autoref{sec:building}.
 
 
 %%-----------------------------------------------------------------------
@@ -655,10 +661,24 @@ And optionally list algorithms in the front matter via \texttt{0-Config/4\_files
 \ntaddlistof{listofalgorithms}
 \end{latexcode}
 
-% \begin{algorithm}
-% $i\gets 10$\;
-% \eIf{$i\geq 5$}{$i\gets i-1$\;}{\If{$i\leq 3$}{$i\gets i+2$\;}}
-% \caption{Example algorithm.}
-% \end{algorithm}
+\begin{algorithm}[htbp]
+  \KwData{this text}
+  \KwResult{how to write algorithm with \protect\LaTeX2e }
+  initialization\;
+  \While{not at end of this document}{
+    read current\;
+    \eIf{understand}{
+      go to next section\;
+      current section becomes this one\;
+    }{
+      go back to the beginning of current section\;
+    }
+  }
+  \caption{Example algorithm using \texttt{algorithm2e}.}
+  \label{alg:example}
+\end{algorithm}
+
+Reference it as \autoref{alg:example}.
 
 % \printbibliography[heading=subbibliography, segment=\therefsegment, title={\bibname\ for chapter~\thechapter}]
+hechapter}]
