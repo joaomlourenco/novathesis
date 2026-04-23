@@ -88,7 +88,7 @@ The only required argument is the \emph{school identifier}: a
 # Simplest call — build for NOVA FCT in user mode
 python3 .Build/build.py nova/fct
 
-# Build a PhD thesis in English, patching configs automatically
+# Build a \gls{phd} thesis in English, patching configs automatically
 python3 .Build/build.py nova/fct --doctype phd --lang en --docstatus final
 
 # Build cover pages only (fast preview)
@@ -217,7 +217,7 @@ python3 .Build/build.py nova/fct --cover --lang pt --progress 2
 %%-----------------------------------------------------------------------
 
 \begin{description}
-  \item[\texttt{-t}, \texttt{--doctype} \{phd | msc | bsc\}]
+  \item[\texttt{-t}, \texttt{--doctype} \{\gls{phd} | \gls{msc} | \gls{bsc}\}]
         Document type.  If omitted, the script consults
         \verb!.Build/schools.conf! and selects the highest degree available
         for the given school (usually \texttt{phd}).
@@ -235,7 +235,7 @@ python3 .Build/build.py nova/fct --cover --lang pt --progress 2
         \texttt{gr}, \texttt{cat}.
 
   \item[\texttt{-{}-sdgs} \textit{n,n,\ldots}]
-        Comma-separated list of \textsc{sdg} numbers to display on the cover
+        Comma-separated list of \gls{SDG} numbers to display on the cover
         (default: all 17).  Sets \verb!\ntsetup{print/sdgs/list=...}!.
 
   \item[\texttt{-c}, \texttt{--cover}]
@@ -346,7 +346,7 @@ ipl/isel    [msc]       [en, pt]
 
 The script picks the \emph{first} entry in the degree list (leftmost = highest).
 If the school is not listed in \verb!schools.conf!, the fallback is
-\texttt{phd}.  You can always override auto-detection with \verb!--doctype!.
+\gls{phd}.  You can always override auto-detection with \verb!--doctype!.
 
 
 %%=======================================================================
@@ -368,15 +368,15 @@ python3 .Build/build.py nova/fct \
 \end{bashcode}
 
 \verb!--progress 2! streams all \texttt{latexmk} output directly to the
-CI log.  \verb!--build-dir AUXDIR! places all auxiliary files in a named
+\gls{CI} log.  \verb!--build-dir AUXDIR! places all auxiliary files in a named
 directory so they can be archived as a workflow artifact.
 
 %%-----------------------------------------------------------------------
-\subsection{Generating Multiple School PDFs}
+\subsection{Generating Multiple School \glspl{PDF}}
 \label{sec:buildpy_multi}
 %%-----------------------------------------------------------------------
 
-A shell loop can drive \texttt{build.py} to produce one PDF per school:
+A shell loop can drive \texttt{build.py} to produce one \gls{PDF} per school:
 
 \begin{bashcode}
 for school in nova/fct nova/fcsh ulisboa/ist uminho/eeng; do
@@ -449,8 +449,9 @@ building.
   \verb!-f! / \verb!--force-school! & Apply school even in user mode \\
   \verb!-bdir! / \verb!--build-dir! & Workspace: omit=current, (empty)=temp, \texttt{-}=cached, path \\
   \verb!-k! / \verb!--keep-bdir! & Keep workspace after build \\
-  \verb!-o! / \verb!--output-dir! & Destination for final PDF \\
-  \verb!-r! / \verb!--rename-pdf! & Rename PDF to \texttt{univ-school-type-lang.pdf} \\
+  \verb!-o! / \verb!--output-dir! & Destination for final \gls{PDF} \\
+  \verb!-r! / \verb!--rename-pdf! & Rename \gls{PDF} to \texttt{univ-school-type-lang.pdf} \\
+
   \verb!-p! / \verb!--processor! & LaTeX engine: \texttt{lua} (default), \texttt{pdf}, \texttt{xe} \\
   \verb!--progress!              & \texttt{0}=silent, \texttt{1}=bar, \texttt{2}=realtime \\
   \verb!--lines!                 & Expected line count for progress bar \\
@@ -459,3 +460,4 @@ building.
   \bottomrule
 \end{ShadedTabular}
 \end{center}
+

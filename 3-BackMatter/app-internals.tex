@@ -124,7 +124,7 @@ etc.) and can be provided in multiple languages.
 \medskip
 \begin{ShadedTabular}{ll}
   \textbf{type} & \textbf{Where used} \\
-  \texttt{main}     & Cover page, headers, PDF metadata \\
+  \texttt{main}     & Cover page, headers, \gls{PDF} metadata \\
   \texttt{sub}      & Subtitle \\
   \texttt{cover}    & Overrides the cover title only \\
   \texttt{abstract} & Abstract page header \\
@@ -517,7 +517,7 @@ moment with \textbf{\texttt{\textbackslash NTRunHook}}.
 \sig{\textbackslash shiftbookmarks\{\mv{content}\}}
 \sig{\textbackslash shiftbookmarks[\mv{levels}]\{\mv{content}\}}
 
-Shifts all PDF bookmark levels inside \emph{content} by the given
+Shifts all \gls{PDF} bookmark levels inside \emph{content} by the given
 number of \emph{levels} (default: 1).  Used at the start of back
 matter to nest appendix and annex bookmarks one level below the
 ``Back Matter'' root bookmark.
@@ -609,88 +609,33 @@ and the configuration file where they are typically used.
   %% --- last-page footer ---
   \endlastfoot
   %% --- data rows ---
-  \makecell[l]{\textbackslash documentclass\\\hspace*{1cm}\{novathesis\}}
-    & Load the template class
-    & template.tex \\
-  \textbackslash ntsetup
-    & Master document configuration
-    & 0-Config/1\_novathesis.tex \\
-  \textbackslash nttitle
-    & Set title (type + language)
-    & 0-Config/3\_cover.tex \\
-  \textbackslash ntauthorname
-    & Author full and short name
-    & 0-Config/3\_cover.tex \\
-  \textbackslash ntauthordegree
-    & Author's pre-existing degree
-    & 0-Config/3\_cover.tex \\
-  \textbackslash ntdate
-    & Submission / exam date
-    & 0-Config/3\_cover.tex \\
-  \textbackslash ntdepartment
-    & Override department name
-    & 0-Config/3\_cover.tex \\
-  \textbackslash ntdegreename
-    & Override degree name
-    & 0-Config/3\_cover.tex \\
-  \textbackslash ntspecialization
-    & Override specialisation name
-    & 0-Config/3\_cover.tex \\
-  \textbackslash ntsponsors
-    & Funding sponsor (text or logo)
-    & 0-Config/3\_cover.tex \\
-  \textbackslash ntaddperson
-    & Register adviser or jury member
-    & 0-Config/3\_cover.tex \\
-  \textbackslash ntprintpersons
-    & Typeset adviser/jury table
-    & Cover .tex files \\
-  \textbackslash ntaddfile
-    & Register any user file with the template
-    & 0-Config/4\_files.tex \\
-  \textbackslash ntprint
-    & Print one named document section
-    & \normalfont\emph{ Internal} \\
-  \textbackslash ntprintlist
-    & Print all files in a registered list
-    & Internal \\
-  \textbackslash ntaddlistof
-    & Register a ``List of\,\ldots''; optional arg \texttt{frontmatter} (default) or \texttt{backmatter} sets where it prints
-    & 0-Config/4\_files.tex \\
-  \textbackslash ntaddtocover
-    & Append content to cover slot(s)
-    & School .clo files \\
-  \textbackslash ntAddToCoverTikz
-    & Inject Ti\textit{k}Z code onto cover canvas
-    & School .clo files \\
-  \textbackslash ifphddoc\,/\,\textbackslash ifmscdoc
-    & Conditional on document type
-    & \makecell[l]{0-Config/4\_files.tex,\\chapters} \\
-  \textbackslash ifdocfinal
-    & Conditional on document status
-    & \makecell[l]{0-Config/4\_files.tex,\\chapters} \\
-  \textbackslash ifxeorlua
-    & Conditional on \LaTeX{} engine
-    & 0-Config/5\_packages.tex \\
-  \textbackslash NTDeclareHook
-    & Declare an extension hook
-    & School .clo files \\
-  \textbackslash NTAddToHook
-    & Add code to an extension hook
-    & School .clo files \\
-  \textbackslash NTRunHook
-    & Execute an extension hook
-    & Class internals \\
-  \textbackslash shiftbookmarks
-    & Shift PDF bookmark levels
-    & nt-render-matter.sty \\
-  \textbackslash ntselectlang
-    & Switch active language mid-document
-    & Abstract files, chapters \\
-  \textbackslash debuggrid
-    & Overlay layout debug grid
-    & During development \\
-  \textbackslash novathesis
-    & Template name in canonical style
-    & Anywhere in text \\
+  \makecell[l]{\textbackslash documentclass\\\hspace*{1cm}\{novathesis\}} & Load the template class & template.tex \\
+  \textbackslash ntsetup & Master document configuration & 0-Config/1\_novathesis.tex \\
+  \textbackslash nttitle & Set title (type + language) & 0-Config/3\_cover.tex \\
+  \textbackslash ntauthorname & Author full and short name & 0-Config/3\_cover.tex \\
+  \textbackslash ntauthordegree & Author's pre-existing degree & 0-Config/3\_cover.tex \\
+  \textbackslash ntdate & Submission / exam date & 0-Config/3\_cover.tex \\
+  \textbackslash ntdepartment & Override department name & 0-Config/3\_cover.tex \\
+  \textbackslash ntdegreename & Override degree name & 0-Config/3\_cover.tex \\
+  \textbackslash ntspecialization & Override specialisation name & 0-Config/3\_cover.tex \\
+  \textbackslash ntsponsors & Funding sponsor (text or logo) & 0-Config/3\_cover.tex \\
+  \textbackslash ntaddperson & Register adviser or jury member & 0-Config/3\_cover.tex \\
+  \textbackslash ntprintpersons & Typeset adviser/jury table & Cover .tex files \\
+  \textbackslash ntaddfile & Register any user file with the template & 0-Config/4\_files.tex \\
+  \textbackslash ntprint & Print one named document section & \normalfont\emph{ Internal} \\
+  \textbackslash ntprintlist & Print all files in a registered list & Internal \\
+  \textbackslash ntaddlistof & Register a ``List of\,\ldots''; optional arg \texttt{frontmatter} (default) or \texttt{backmatter} sets where it prints & 0-Config/4\_files.tex \\
+  \textbackslash ntaddtocover & Append content to cover slot(s) & School .clo files \\
+  \textbackslash ntAddToCoverTikz & Inject Ti\textit{k}Z code onto cover canvas & School .clo files \\
+  \textbackslash ifphddoc\,/\,\textbackslash ifmscdoc & Conditional on document type & \makecell[l]{0-Config/4\_files.tex,\\chapters} \\
+  \textbackslash ifdocfinal & Conditional on document status & \makecell[l]{0-Config/4\_files.tex,\\chapters} \\
+  \textbackslash ifxeorlua & Conditional on \hologo{LaTeX} engine & 0-Config/5\_packages.tex \\
+  \textbackslash NTDeclareHook & Declare an extension hook & School .clo files \\
+  \textbackslash NTAddToHook & Add code to an extension hook & School .clo files \\
+  \textbackslash NTRunHook & Execute an extension hook & Class internals \\
+  \textbackslash shiftbookmarks & Shift \gls{PDF} bookmark levels & nt-render-matter.sty \\
+  \textbackslash ntselectlang & Switch active language mid-document & Abstract files, chapters \\
+  \textbackslash debuggrid & Overlay layout debug grid & During development \\
+  \textbackslash novathesis & Template name in canonical style & Anywhere in text \\
 \end{xltabular}
+

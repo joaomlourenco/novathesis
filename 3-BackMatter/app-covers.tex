@@ -24,15 +24,13 @@ institution, or who want to understand or refactor an existing cover
 definition.  End users who only want to configure metadata (title, author,
 committee) should work exclusively with \latexinline{0-Config/3_cover.tex}.
 
-The cover engine is implemented in two files:
+The cover engine is implemented in:
 \begin{itemize}
-  \item \latexinline{NOVAthesisFiles/StyFiles/nt-covers.sty} — the legacy
-        implementation, retained for compatibility.
-  \item \latexinline{NOVAthesisFiles/StyFiles/nt-covers.sty} — the modern
-        \LaTeX3/expl3 reimplementation (the one used by default).
+  \item \latexinline{NOVAthesisFiles/StyFiles/nt-covers.sty} — a modern
+        \hologo{LaTeX3}/expl3 implementation that provides a high-level
+        declarative \gls{API} for cover design.
 \end{itemize}
-Both expose an identical public API; the remainder of this chapter describes
-that API.
+The remainder of this chapter describes that \gls{API}.
 
 
 %%=======================================================================
@@ -136,7 +134,7 @@ and degree class before falling back to the generic key:
 % Per-doctype variant (overrides the generic key when doctype=phd)
 \SetThesisCover*(phd,1-1,bgcolor)={fctdarkgreen}
 
-% Set a background image (file must be findable by LaTeX/graphicx)
+% Set a background image (file must be findable by \hologo{LaTeX}/graphicx)
 \SetThesisCover*(phd,1-1,image)={nova-fct-cover-green-front}
 
 % Set the default text colour for the entire cover page
@@ -241,9 +239,9 @@ the filter does not match the current document):
         together with \texttt{valign} lets you vertically place content inside
         a reserved area.
   \item[\texttt{height/phd=\{<dim>\}}] Same as \texttt{height}, but only
-        applied when the document type is PhD.  Overrides \texttt{height} for
-        PhD documents.
-  \item[\texttt{height/msc=\{<dim>\}}] Same, but for MSc documents.
+        applied when the document type is \gls{phd}.  Overrides \texttt{height} for
+        \gls{phd} documents.
+  \item[\texttt{height/msc=\{<dim>\}}] Same, but for \gls{msc} documents.
   \item[\texttt{minheight=\{<dim>\}}] Minimum height of the box, even when the
         content is shorter (default: \texttt{0pt}).
   \item[\texttt{hspace=\{<dim>\}}] Horizontal offset from the left margin
@@ -366,7 +364,7 @@ Example — logo, title, elastic gap, date:
 \noindent\textbf{Conditional content per document type:}
 
 Use the \texttt{degree} filter or the internal \latexinline{\ifphddoc}/\latexinline{\ifmscdoc}
-helpers when the cover layout differs between PhD and MSc documents:
+helpers when the cover layout differs between \gls{phd} and \gls{msc} documents:
 
 \begin{latexcode}
 \ntaddtocover[halign=l, height=3cm, valign=c]{1-1}{%
@@ -612,7 +610,7 @@ The following sequence describes what happens when
 \begin{enumerate}
   \item A fresh group is opened; \texttt{cover/pre} and
         \texttt{cover/1-1/pre} hooks are run.
-  \item A PDF bookmark is inserted.
+  \item A \gls{PDF} bookmark is inserted.
   \item \texttt{thispagestyle{empty}} suppresses headers and footers.
   \item Background colour lookup: the engine searches the
         \texttt{thesiscover} data store for a matching \texttt{bgcolor} key
@@ -811,11 +809,11 @@ python .Build/build.py myuniv/myfac --doctype msc --docstatus final
 %%=======================================================================
 
 %%-----------------------------------------------------------------------
-\subsection{NOVA/FCT: Mixed LaTeX and TikZ}
+\subsection{NOVA/FCT: Mixed \hologo{LaTeX} and TikZ}
 \label{sec:covers_nova_fct}
 %%-----------------------------------------------------------------------
 
-The NOVA~FCT cover (\latexinline{NOVAthesisFiles/Schools/nova/fct/nova-fct-defaults.clo})
+The \gls{FCT} cover (\latexinline{NOVAthesisFiles/Schools/nova/fct/nova-fct-defaults.clo})
 demonstrates a typical mixed strategy:
 
 \begin{itemize}
@@ -829,7 +827,7 @@ demonstrates a typical mixed strategy:
         absolutely-positioned logo band.
   \item The front page (cover \texttt{2-1}) reuses the same elements but with
         a lighter margin (\texttt{6.6cm} top) and adds advisers and committee.
-  \item PhD and MSc documents swap the order of title and author name using
+  \item \gls{phd} and \gls{msc} documents swap the order of title and author name using
         \latexinline{\ifphddoc} conditionals inside shared elements.
 \end{itemize}
 
@@ -850,7 +848,7 @@ Background setup (colour varies by document class):
 
 
 %%-----------------------------------------------------------------------
-\subsection{ULISBOA/IST: Pure LaTeX Box Stacking}
+\subsection{ULISBOA/IST: Pure \hologo{LaTeX} Box Stacking}
 \label{sec:covers_ist}
 %%-----------------------------------------------------------------------
 
