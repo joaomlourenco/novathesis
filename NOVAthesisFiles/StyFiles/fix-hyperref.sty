@@ -110,6 +110,13 @@
     \nt_autoref_logic:n {#1} 
     \ExplSyntaxOff
   }
+  % Fix duplicate PDF destinations across main matter and appendices.
+  % Hyperref's \theHchapter defaults to \arabic{chapter}, which resets to 0
+  % when \appendix is called.  Appendix B therefore gets the same raw counter
+  % value (2) as main chapter 2, producing clashing anchor names like
+  % "table.2.1".  Redefining \theHchapter to use \thechapter (which gives
+  % letters in appendices: A, B, C …) makes every anchor globally unique.
+  \renewcommand{\theHchapter}{\thechapter}
  }
 
 \ExplSyntaxOff
