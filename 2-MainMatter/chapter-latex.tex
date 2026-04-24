@@ -101,7 +101,7 @@ When you define a new numbered environment — say, a \texttt{listing} or \textt
 % In 0-Config/5_packages.tex, after \usepackage{algorithm2e}:
 \newcommand{\algorithmautorefname}{Algorithm}
 
-% For a custom theorem environment with counter "theorem":
+% For a custom theorem environment with counter “theorem”:
 \newcommand{\theoremautorefname}{Theorem}
 \end{latexcode}
 
@@ -428,7 +428,7 @@ vector images scale without quality loss, while bitmap images become pixelated w
   \includegraphics[height=1in]{snowman-vectorial}
   \includegraphics[height=3in]{snowman-vectorial}
   \caption{Vector image (PDF): scales perfectly at any size.}
-  \label{fig:snowman-vector}
+  \label{fig:snowman-vectorial}
 \end{figure}
 
 A minimal figure:
@@ -560,7 +560,7 @@ The \gls{gcd} is...  % Subsequent use: GCD
 The \glspl{gcd} are... % Plural: GCDs
 \end{latexcode}
 
-Using \latexinline{\gls} ensures that acronyms are expanded on their first use and that a consistent "List of Acronyms" is generated automatically in the front matter. For instance, we can talk about \gls{AI} and how it relates to \gls{STEM} fields. Documents are often shared as \gls{PDF} files, which may include a \gls{URL} or a \gls{DOI} for reference.
+Using \latexinline{\gls} ensures that acronyms are expanded on their first use and that a consistent “List of Acronyms” is generated automatically in the front matter. For instance, we can talk about \gls{AI} and how it relates to \gls{STEM} fields. Documents are often shared as \gls{PDF} files, which may include a \gls{URL} or a \gls{DOI} for reference.
 
 The glossary is used for technical terms like \gls{latex} or the \gls{framework} used in your research. You should also properly manage your \gls{bibliography}.
 
@@ -638,7 +638,7 @@ or set \latexinline{\ntsetup{docstatus=final}} which suppresses them automatical
 
 
 %%=======================================================================
-\section{Generating the Final \gls{PDF}}
+\section{Generating the Final \glsfmtshort{PDF}}
 \label{sec:generating_pdfs}
 %%=======================================================================
 

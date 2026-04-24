@@ -15,6 +15,14 @@
 %% ----------------------------------------------------------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% WRITE-REGISTER GUARD (must come before any other \newwrite)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% pdflatex is limited to 16 \write registers; LuaTeX allows 65536.
+% morewrites virtualises the pool so all packages get the streams they need.
+\RequirePackage{iftex}
+\ifluatex\else\RequirePackage{morewrites}\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% KERNEL & CORE UTILITIES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -61,6 +69,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CORE PACKAGES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% pdflatex is limited to 16 \write registers; LuaTeX allows 65536.
+% morewrites virtualises the pool so all packages get the streams they need.
+% Must be loaded before any other package calls \newwrite.
+\RequirePackage{iftex}
+\ifluatex\else\RequirePackage{morewrites}\fi
+
 \RequirePackage[table,svgnames]{xcolor} % Must be loaded first to avoid option clashes
 \RequirePackage{iftex}       % \ifpdftex, \ifxetex, \ifluatex, \iftutex …
 \RequirePackage{ifplatform}  % \ifwindows, \iflinux, \ifmacosx
