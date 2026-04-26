@@ -430,6 +430,47 @@ The full list of SDG numbers and their titles is reproduced in
 \verb!0-Config/1_novathesis.tex! as comments for quick reference.
 
 %%-----------------------------------------------------------------------
+\subsection{Indexing}
+\label{sub:indexing_manual}
+%%-----------------------------------------------------------------------
+
+\novathesis{} provides built-in support for generating a word index at the
+end of the document.
+
+\paragraph{Enabling the index.} To generate and print the index, enable the
+\texttt{print/index} toggle in \verb!0-Config/1_novathesis.tex!:
+\begin{latexcode}
+\ntsetup{print/index=true}
+\end{latexcode}
+When active, the template automatically initializes the indexing engine and
+adds an "Index" (or "Índice Remissivo") section to the back matter.
+
+\paragraph{Indexing words with \texttt{\textbackslash ntindex}.} While the standard
+\hologo{LaTeX} \latexinline{\index{word}} command only adds an entry to the index file
+(printing nothing in the text), the \novathesis{} \latexinline{\ntindex} command is
+more convenient:
+\begin{latexcode}
+This is a \ntindex{recommendation} for users.
+\end{latexcode}
+The above code prints "recommendation" in the document \textbf{and} adds it
+to the index.
+
+\paragraph{Custom keys and sub-entries.} You can use an optional argument
+to specify a different index key or create sub-entries:
+\begin{latexcode}
+\ntindex[Template!]{Version} % Prints "Version", indexes under Template > Version
+\ntindex[Project web page]{GitHub} % Prints "GitHub", indexes under Project web page
+\end{latexcode}
+
+\paragraph{Debugging the index.} If you want to see exactly which words have
+been indexed while proofreading, enable the index debug mode:
+\begin{latexcode}
+\ntsetup{debug={index}}
+\end{latexcode}
+This will highlight every word indexed with \latexinline{\ntindex} with a small
+label in the margin.
+
+%%-----------------------------------------------------------------------
 \subsection{Glossary and Miscellaneous Options}
 \label{sub:misc_options}
 %%-----------------------------------------------------------------------

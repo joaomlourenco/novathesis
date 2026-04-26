@@ -354,14 +354,17 @@ Multiple calls accumulate; files are printed in registration order.
 %%====================================================================
 
 %%--------------------------------------------------------------------
-\begin{macrodoc}{\textbackslash ntprint\quad\textbackslash ntprintlist}
+\begin{macrodoc}{\textbackslash ntprint\quad\textbackslash ntprintlist\quad\textbackslash ntprintindex}
 \sig{\textbackslash ntprint\{\mv{key}\}}
 \sig{\textbackslash ntprintlist\{\mv{key}\}}
+\sig{\textbackslash ntprintindex}
 
 High-level rendering commands used exclusively in \texttt{template.tex}.
 \textbf{\texttt{\textbackslash ntprint}} outputs a single named
 section; \textbf{\texttt{\textbackslash ntprintlist}} outputs all
 items registered under the given key (e.g., all chapters).
+\textbf{\texttt{\textbackslash ntprintindex}} prints the word index
+if \texttt{\textbackslash ntsetup\{print/index=true\}} is set.
 
 These abstract away the complex logic of conditionally printing
 front-matter elements, list-of-figures, etc.\ depending on the
@@ -564,6 +567,24 @@ remove before final submission.
 \bigskip
 
 %%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash ntindex}
+\sig{\textbackslash ntindex\{\mv{word}\}}
+\sig{\textbackslash ntindex[\mv{key}]\{\mv{word}\}}
+
+Typesets \mv{word} in the document and adds it to the index.
+If \mv{key} is provided, it is used as the index entry while \mv{word}
+remains the visible text. If \mv{key} ends with \texttt{!}, it is
+treated as a parent entry and \mv{word} is added as a sub-entry.
+
+\begin{latexcode}
+This is a \ntindex{recommendation}.
+See the \ntindex[Template!]{Version} number.
+\end{latexcode}
+\end{macrodoc}
+
+\bigskip
+
+%%--------------------------------------------------------------------
 \begin{macrodoc}{\textbackslash novathesis}
 \sig{\textbackslash novathesis}
 
@@ -624,9 +645,11 @@ and the configuration file where they are typically used.
   \textbackslash ntaddfile & Register any user file with the template & 0-Config/4\_files.tex \\
   \textbackslash ntprint & Print one named document section & \normalfont\emph{ Internal} \\
   \textbackslash ntprintlist & Print all files in a registered list & Internal \\
+  \textbackslash ntprintindex & Print the word index & Internal \\
   \textbackslash ntaddlistof & Register a ``List of\,\ldots''; optional arg \texttt{frontmatter} (default) or \texttt{backmatter} sets where it prints & 0-Config/4\_files.tex \\
   \textbackslash ntaddtocover & Append content to cover slot(s) & School .clo files \\
   \textbackslash ntAddToCoverTikz & Inject Ti\textit{k}Z code onto cover canvas & School .clo files \\
+  \textbackslash ntindex & Typeset and index a word & Chapters \\
   \textbackslash ifphddoc\,/\,\textbackslash ifmscdoc & Conditional on document type & \makecell[l]{0-Config/4\_files.tex,\\chapters} \\
   \textbackslash ifdocfinal & Conditional on document status & \makecell[l]{0-Config/4\_files.tex,\\chapters} \\
   \textbackslash ifxeorlua & Conditional on \hologo{LaTeX} engine & 0-Config/5\_packages.tex \\

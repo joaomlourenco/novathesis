@@ -569,6 +569,28 @@ Symbols are called using the \latexinline{\gls} command. For example, the angula
 
 
 %%=======================================================================
+\section{Indexing}
+\label{sec:indexing}
+%%=======================================================================
+
+\novathesis{} provides the \latexinline{\ntindex} command to simultaneously typeset and index a word:
+
+\begin{latexcode}
+This is a \ntindex{recommendation} for all users.
+See the \ntindex[Template!]{Version} number.
+\end{latexcode}
+
+The first example prints "recommendation" and adds it to the index.
+The second example prints "Version" and adds it to the index under the parent entry "Template".
+
+To print the index at the end of the document, ensure the following is set in \texttt{0-Config/1\_novathesis.tex}:
+\begin{latexcode}
+\ntsetup{print/index=true}
+\end{latexcode}
+For more details on index customization and debugging, see \autoref{sub:indexing_manual}.
+
+
+%%=======================================================================
 \section{Source Code Listings}
 \label{sec:code_listings}
 %%=======================================================================
