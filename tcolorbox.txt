@@ -1,0 +1,49 @@
+the covers are composed by either:
+- "layered" boxes, one below the next (this is the default)
+— only tikz code (e.g., nova/itqb)
+— a mix of boxes with tikx code (e.g., nova/fct)
+
+Analyze the commands for the boxes (there is a chapter/appendix with info on this).
+
+I want to plan a soft/progressive transition from the current model, where the "layered boxes" are chnaged from minipages to "tcolorbox".  This will allow the arguments of \addtocover[]{} to become arguments to tcolorbox.
+
+What is the plan?
+
+
+
+
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Plan Ready for Review                                                                                   │
+│ ─────────────────────────────────────────────────────────────────────────────────────────────────────── │
+│ Cover Engine: minipage → tcolorbox migration                                                            │
+│                                                                                                         │
+│ Goal: Replace element-level minipage in nt-covers.sty with tcolorbox. Progressive — public API          │
+│ unchanged, all .clo files untouched.                                                                    │
+│                                                                                                         │
+│ Two phases:                                                                                             │
+│                                                                                                         │
+│  - Phase 1 (engine swap): In \nt_covers_render_element:nn, replace the \hbox_set / minipage / \colorbox │
+│  block with a dynamically-built tcolorbox using a transparent blanker base style. Maps existing attrs   │
+│ directly: height→height, valign t/c/b→top/center/bottom, color→colupper, bgcolor→colback, hspace→left   │
+│ skip, halign stays as injected \centering/\raggedright.                                                 │
+│  - Phase 2 (API enrichment): Add new tcbopts=... key to \ntaddtocover[...] — a raw pass-through for     │
+│ arbitrary tcolorbox options, enabling richer cover styling without changing existing .clo files.        │
+│                                                                                                         │
+│ Files changed:                                                                                          │
+│                                                                                                         │
+│  - nt-packages.sty — add \RequirePackage{tcolorbox} + \tcbuselibrary{skins}                             │
+│  - nt-covers.sty — base style, renderer rewrite, tcbopts key                                            │
+│  - app-covers.tex + nt-covers-expl3-v2-documentation.md — doc update                                    │
+│                                                                                                         │
+│ Not changed: all school .clo files, \ntAddToCoverTikz, outer container minipage.                        │
+│                                                                                                         │
+│ Key risks to verify: negative hspace (used by 5+ schools), height+valign combos, bgcolor interior       │
+│ override, \use:e expansion for dynamic option list.                                                     │
+│                                                                                                         │
+│ ❯ 1. Accept plan and build on default permissions (recommended)                                         │
+│   2. Exit plan mode and I will prompt myself                                                            │
+│   3. Accept plan and build on autopilot                                                                 │
+│   4. Suggest changes                                                                                    │
+│                                                                                                         │
+│ ↑↓ to navigate · Enter to select · ctrl+e to show full plan · Esc to cancel                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────╯

@@ -203,9 +203,10 @@
 }
 
 \newcommand{\ntprintindex}{%
-  % \printglossary[type=index]%
-  \printindex%
-  \clearforchapter%
+  \iftoggle{/novathesis/print/index}{%
+    \printindex%
+    \clearforchapter%
+  }{}%
 }
 
 \newif\if@frontmatter
@@ -264,13 +265,17 @@
 \newcommand{\ntindex}[2][]{%
   % \typeout{NTINDEX [#1] [#2]}
   \bgroup%
-    \ifoptioncontains{/novathesis/debug}{index}{\showlabelsinline}{}%
-    \StrRight{#1}{1}[\@nt@index]%
-    \if\@nt@index!\relax
-      \def\@nt@index{#1#2}%
-    \else
-      \def\@nt@index{#1}%
-    \fi%
+    \ifoptioncontains{/novathesis/debug}{index}{\showlabelsinline{#1}{#2}}{}%
+    \ifblank{#1}{%
+      \def\@nt@index{#2}%
+    }{%
+      \StrRight{#1}{1}[\@nt@lastchar]%
+      \if\@nt@lastchar!\relax
+        \def\@nt@index{#1#2}%
+      \else
+        \def\@nt@index{#1}%
+      \fi%
+    }%
     \index{\@nt@index}#2%
   \egroup%
 }

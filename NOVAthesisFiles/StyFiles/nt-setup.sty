@@ -677,6 +677,7 @@
       myprintglossaries,    % Print the Glossary, Acronyms, Symbols, etc…
       appendices,           % Print appendices, if any!
       annexes,              % Print annexes, if any!
+      index,                % Print the index
     }
   }%
 }{%
@@ -687,6 +688,7 @@
       myprintglossaries,    % Print the Glossary, Acronyms, Symbols, etc…
       appendices,           % Print appendices, if any!
       annexes,              % Print annexes, if any!
+      index,                % Print the index
     }
   }%
 }
@@ -864,11 +866,21 @@
 % If option “debug={index}” option is active,
 %     highlight index keywords in the main text
 \providecommand*{\debugindexcolor}{red!50}
+\newcommand{\showlabelsinline}[2]{%
+  \setbox0=\hbox{\fcolorbox{\debugindexcolor}{white}{\tiny#1#2}}%
+  \marginpar{\copy0}%
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOADING CUSTOMIZATION STUFF - part 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\AtEndPreamble{
+  \iftoggle{/novathesis/print/index}{%
+    \makeindex[intoc,columns=2,options=-s \DIRNTFILES/ntindexstyle]%
+  }{}%
+}
 
 %============================================================
 %  THESIS/DISSERTATION COVER DATA (title, author, etc)
