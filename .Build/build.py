@@ -555,7 +555,7 @@ def localize_and_process_files(tmp_root: Path, confdir: Path, patterns: dict[str
     
     return changed_any
     
-def safe_outname(school: str, doctype: str, lang: str) -> str:
+def safe_outname(school: str, doctype: str, lang: str, engine: str) -> str:
     """
     Generate a safe filename for the output PDF.
     Args:
@@ -568,7 +568,8 @@ def safe_outname(school: str, doctype: str, lang: str) -> str:
     school_safe = school.replace("/", "-").replace(" ", "_")
     doctype_safe = doctype.replace(" ", "_")
     lang_safe = lang.replace(" ", "_")
-    return f"{school_safe}-{doctype_safe}-{lang_safe}.pdf"
+    engine_safe = engine.replace(" ", "_")
+    return f"{school_safe}-{doctype_safe}-{lang_safe}-{engine_safe}.pdf"
 
 # --- Biber Wrapper Creation -------------------------------------------------
 def create_biber_wrapper(tmp_root: Path) -> Optional[Path]:
@@ -686,7 +687,7 @@ def run_make_in_temp(
         
         if returncode == 0:
             print(f"{CYAN}✅ 'make' succeeded in {RED}{elapsed:.2f}{CYAN} seconds{RESET}")
-            return _handle_success(tmp_root, outdir, school_id, doctype, lang, keep_bdir, rename)
+            return _handle_success(tmp_root, outdir, school_id, doctype, lang, ltxprocessor, keep_bdir, rename)
         else:
             print_error(f"'make' failed with exit code {returncode}")
             print_warning(f"Temp workspace kept for debugging: {tmp_root}")
@@ -845,12 +846,14 @@ def _handle_success(
     school_id: str,
     doctype: str,
     lang: str,
+    ltxprocessor: str,
     keep_bdir: bool,
     rename: bool
 ) -> int:
     """Handle successful build by copying PDF to output directory."""
     src_pdf = tmp_root / "template.pdf"
-    dest_pdf = outdir / (safe_outname(school_id, doctype, lang) if rename else "template.pdf")
+    dest_pdf = outdir / (safe_outname(school_id, doctype, lang,
+          ltxprocessor) if rename else "template.pdf")
     
     if not src_pdf.exists():
         print_error(f"'{src_pdf}' missing")
