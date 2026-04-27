@@ -221,9 +221,9 @@ commented-out lines show available values as documentation:
 \end{latexcode}
 
   \item[\texttt{docstatus}] The workflow stage.  Controls which front-matter
-    pages are included.  Default: \ntindex[document status!working]{\latexinline{working}}.  See
+    pages are included.  Default: \latexinline{working}.  See
     Section~\ref{sec:status_workflow} for the full implications of each value.
-\ntindex[document status!]{provisional}\ntindex[document status!]{final}%
+
 \begin{latexcode}
 \ntsetup{docstatus=working}      % drafting (default)
 \ntsetup{docstatus=provisional}  % submitted; no committee yet
@@ -388,7 +388,7 @@ generated PDF.  Many have defaults that vary with \texttt{school} and \texttt{do
 %%-----------------------------------------------------------------------
 
 \begin{description}
-  \item[\texttt{abstractorder}] Ordered list of languages for the abstract
+  \item[\texttt{abstractorder}]\ntindex[configuration!abstractorder]{} Ordered list of languages for the abstract
     sequence.  Default: \texttt{\{lang, en\}} when \texttt{lang}$\neq$\texttt{en};
     otherwise \texttt{\{en, pt\}}.
 \begin{latexcode}
@@ -396,16 +396,16 @@ generated PDF.  Many have defaults that vary with \texttt{school} and \texttt{do
 \ntsetup{abstractorder={en,pt,uk,gr}}   % add Ukrainian & Greek
 \end{latexcode}
 
-  \item[\texttt{lang/cover}] Language for the cover and front page.
+  \item[\texttt{lang/cover}]\ntindex[configuration!lang/cover]{} Language for the cover and front page.
     Default: same as \texttt{lang}.
 \begin{latexcode}
 \ntsetup{lang/cover=pt}   % Portuguese cover even if body is English
 \end{latexcode}
 
-  \item[\texttt{lang/copyright}] Language for the copyright message.
+  \item[\texttt{lang/copyright}]\ntindex[configuration!lang/copyright]{} Language for the copyright message.
     Default: same as \texttt{lang}.
 
-  \item[\texttt{lang/extra}] Additional languages loaded in the document
+  \item[\texttt{lang/extra}]\ntindex[configuration!lang/extra]{} Additional languages loaded in the document
     (besides the main language and abstract languages).
 \begin{latexcode}
 \ntsetup{lang/extra={de,es}}
@@ -417,7 +417,7 @@ generated PDF.  Many have defaults that vary with \texttt{school} and \texttt{do
 \label{sub:sdgs}
 %%-----------------------------------------------------------------------
 
-NOVAthesis can print the United Nation's SDG icons at the bottom of the abstract page(s).  All three options
+NOVAthesis can print the United Nation's \ntindex[configuration!print/sdgs]{SDG} icons at the bottom of the abstract page(s).  All three options
 below should be set together:
 \begin{latexcode}
 \ntsetup{print/sdgs/list={3,7,13}}    % SDG numbers to print
@@ -444,7 +444,7 @@ end of the document.
 \ntsetup{print/index=true}
 \end{latexcode}
 When active, the template automatically initializes the indexing engine and
-adds an "Index" (or "Índice Remissivo") section to the back matter.
+adds an “Index” (or “Índice Remissivo”) section to the back matter.
 
 \paragraph{Indexing words with \texttt{\textbackslash ntindex}.} While the standard
 \hologo{LaTeX} \latexinline{\index{word}} command only adds an entry to the index file
@@ -453,14 +453,14 @@ more convenient:
 \begin{latexcode}
 This is a \ntindex{recommendation} for users.
 \end{latexcode}
-The above code prints "recommendation" in the document \textbf{and} adds it
+The above code prints “recommendation” in the document \textbf{and} adds it
 to the index.
 
 \paragraph{Custom keys and sub-entries.} You can use an optional argument
 to specify a different index key or create sub-entries:
 \begin{latexcode}
-\ntindex[template!]{Version} % Prints "Version", indexes under Template > Version
-\ntindex[project web page]{GitHub} % Prints "GitHub", indexes under Project web page
+\ntindex[template!]{Version} % Prints “Version”, indexes under Template > Version
+\ntindex[project web page]{GitHub} % Prints “GitHub”, indexes under Project web page
 \end{latexcode}
 
 \paragraph{Debugging the index.} If you want to see exactly which words have
@@ -917,7 +917,7 @@ Ensure the settings described in Section~\ref{sub:overleaf} are applied
 are not available — all configuration is done by editing the
 \verb!0-Config/! files.
 %%-----------------------------------------------------------------------
-\subsection{PDF/A Archival Output}
+\subsection{\ntindex[configuration!pdf/a]{PDF/A} Archival Output}
 \label{sub:pdfa}
 %%-----------------------------------------------------------------------
 
