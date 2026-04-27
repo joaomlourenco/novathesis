@@ -26,12 +26,12 @@
 %%=======================================================================
 
 This chapter is a complete guide to the \novathesis{} template.  It covers
-everything from the first-time setup to the fine-tuning of covers, fonts,
+Everything from the first-time setup to the fine-tuning of covers, fonts,
 citation styles, and the document workflow.  All user customization flows
-through the files inside the \verb!0-Config/! folder — the rest of the
+through the files inside the \ntindex[configuration!0-config/]{\latexinline{0-Config/}} folder — the rest of the
 project tree is never edited directly.
 
-For a reference to the automated build assistant \verb!.Build/build.py!,
+For a reference to the automated \ntindex[building!build.py]{\latexinline{build.py}} assistant,
 see Chapter~\ref{app:build_py}.  For a guide to the cover page system,
 see Chapter~\ref{app:covers}.
 
@@ -64,8 +64,8 @@ major distributions are:
 After installation, update all packages via the \emph{\hologo{TeXLive} Manager} or
 the \emph{\hologo{MiKTeX} Console} before compiling the template for the first time.
 
-\paragraph{Recommended engine.}  \hologo{LuaLaTeX} is the recommended engine for most
-schools because it handles Unicode fonts natively.  \hologo{XeLaTeX} is a close
+\paragraph{Recommended engine.}  \ntindex[fonts!]{LuaLaTeX} is the recommended engine for most
+schools because it handles Unicode fonts natively.  \ntindex[fonts!]{XeLaTeX} is a close
 alternative.  \hologo{pdfLaTeX} works but cannot load OpenType/TrueType fonts.
 
 \paragraph{School-specific fonts.}  Some Schools or font-styles require fonts not available in \hologo{LaTeX}.  In normal conditions, they will be downloaded automatically.  However, if they are not, you may download the necessary fonts from \url{https://github.com/joaomlourenco/novathesis-extras/tree/main/Fonts}, unzip (if necessary), and copy the \verb!*.ttf! files to \verb!NOVAthesisFiles/FontStyles/Fonts/!.
@@ -102,13 +102,13 @@ Once imported:
 \begin{enumerate}
   \item Set the \emph{Compiler} to \textbf{\hologo{LuaLaTeX}} (Menu → Compiler).
   \item Set the \emph{Main document} to \verb!template.tex!.
-  \item Set the \emph{Bibliography tool} to \textbf{Biber}
+  \item Set the \emph{Bibliography tool} to \textbf{\ntindex[bibliography!]{Biber}}
     (Menu → Bibliography).
   \item Press \emph{Recompile}.
 \end{enumerate}
 
-On \Overleaf{} you cannot run \texttt{make} or \texttt{build.py};
-all customization must be done by editing the \verb!0-Config/! files
+On \Overleaf{} you cannot run \ntindex[building!make]{\latexinline{make}} or \ntindex[building!build.py]{\latexinline{build.py}};
+all customization must be done by editing the \ntindex[configuration!0-config/]{\latexinline{0-Config/}} files
 directly (see Section~\ref{sec:project_structure}).
 
 
@@ -221,8 +221,9 @@ commented-out lines show available values as documentation:
 \end{latexcode}
 
   \item[\texttt{docstatus}] The workflow stage.  Controls which front-matter
-    pages are included.  Default: \texttt{working}.  See
+    pages are included.  Default: \ntindex[document status!working]{\latexinline{working}}.  See
     Section~\ref{sec:status_workflow} for the full implications of each value.
+\ntindex[document status!]{provisional}\ntindex[document status!]{final}%
 \begin{latexcode}
 \ntsetup{docstatus=working}      % drafting (default)
 \ntsetup{docstatus=provisional}  % submitted; no committee yet
@@ -458,8 +459,8 @@ to the index.
 \paragraph{Custom keys and sub-entries.} You can use an optional argument
 to specify a different index key or create sub-entries:
 \begin{latexcode}
-\ntindex[Template!]{Version} % Prints "Version", indexes under Template > Version
-\ntindex[Project web page]{GitHub} % Prints "GitHub", indexes under Project web page
+\ntindex[template!]{Version} % Prints "Version", indexes under Template > Version
+\ntindex[project web page]{GitHub} % Prints "GitHub", indexes under Project web page
 \end{latexcode}
 
 \paragraph{Debugging the index.} If you want to see exactly which words have
@@ -610,7 +611,7 @@ committee), \texttt{m}~(member), \texttt{g}~(guest).
 \label{sec:bibliography}
 %%=======================================================================
 
-\novathesis{} uses \texttt{biblatex} with the \texttt{biber} backend.
+\novathesis{} uses \ntindex[bibliography!biblatex]{\latexinline{biblatex}} with the \ntindex[bibliography!biber]{\latexinline{Biber}} backend.
 
 %%-----------------------------------------------------------------------
 \subsection{General Behavioral Options}
@@ -920,6 +921,7 @@ are not available — all configuration is done by editing the
 \label{sub:pdfa}
 %%-----------------------------------------------------------------------
 
+\ntindex[pdf/a!]{Archival compliance}
 When \verb!\ntsetup{docstatus=final}! is set, \novathesis{} automatically
 produces a \textbf{\gls{PDF}/A-2b} conformant document — the archival-quality
 format required by most institutional repositories and digital libraries.

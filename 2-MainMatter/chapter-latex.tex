@@ -30,7 +30,7 @@ Use these examples as a starting point.
 The \href{https://www.overleaf.com/learn}{Overleaf documentation} and \href{https://tex.stackexchange.com}{TeX~Stack~Exchange} are excellent resources for additional help.
 
 \begin{warningbox}[title={Do not edit “\texttt{template.tex}” or “\texttt{novathesis.cls}”}]
-  All your customizations go into the files inside \texttt{0-Config/}.
+  All your customizations go into the files inside \ntindex[configuration!0-config/]{\latexinline{0-Config/}}.
   Your chapter content lives in \texttt{2-MainMatter/} and is listed in \texttt{0-Config/4\_files.tex}.
   The root file \texttt{template.tex} and the class file \texttt{novathesis.cls} are \textbf{never} edited directly.
 \end{warningbox}
@@ -484,7 +484,7 @@ Reference the whole figure as \autoref{fig:subfig_example} or the sub-figures se
 \label{sec:bibliography_and_citations}
 %%=======================================================================
 
-The template uses \texttt{biblatex} with the \hologo{biber} backend.
+The template uses \ntindex[bibliography!biblatex]{\latexinline{biblatex}} with the \ntindex[bibliography!biber]{\latexinline{Biber}} backend.
 Add your references to the \texttt{.bib} file(s) configured in \texttt{0-Config/2\_biblatex.tex}.
 
 
@@ -534,7 +534,7 @@ lualatex template
 lualatex template
 \end{bashcode}
 
-The provided \texttt{Makefile} handles all of this automatically:
+The provided \ntindex[building!make]{\latexinline{make}} targets handle all of this automatically:
 \begin{bashcode}
 make lua    # full build: LuaLaTeX + biber
 make clean  # remove auxiliary files
@@ -577,7 +577,7 @@ Symbols are called using the \latexinline{\gls} command. For example, the angula
 
 \begin{latexcode}
 This is a \ntindex{recommendation} for all users.
-See the \ntindex[Template!]{Version} number.
+See the \ntindex[template!]{Version} number.
 \end{latexcode}
 
 The first example prints "recommendation" and adds it to the index.

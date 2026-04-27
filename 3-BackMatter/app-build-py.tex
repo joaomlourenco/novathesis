@@ -16,7 +16,7 @@
 
 \typeout{NT FILE 2-MainMatter/chapter-build-py.tex}%
 
-\chapter{The \texttt{build.py} Build Assistant}
+\chapter{The \ntindex[building!]{build.py} Build Assistant}
 \label{app:build_py}
 
 The file \verb!.Build/build.py! is a Python~3 script that automates building
@@ -42,16 +42,17 @@ The script performs four steps in sequence:
         populated with symlinks to the project tree.
   \item \textbf{Patch configuration files.}  If \emph{patching mode} is
         active (see Section~\ref{sec:buildpy_modes}), the copies of
-        \verb!0-Config/1_novathesis.tex! and \verb!0-Config/4_files.tex!
+        \ntindex[configuration!0-config/1\_novathesis.tex]{\latexinline{0-Config/1_novathesis.tex}} and \ntindex[configuration!0-config/4\_files.tex]{\latexinline{0-Config/4_files.tex}}
         in the workspace are modified to reflect the requested school,
         document type, language, and status.
-  \item \textbf{Build and deliver.}  Run \texttt{make} inside the workspace,
+  \item \textbf{Build and deliver.}  Run \ntindex[building!make]{\latexinline{make}} inside the workspace,
         then copy the resulting \verb!template.pdf! to the output directory.
-\end{enumerate}
+  \end{enumerate}
 
-\medskip\noindent
-\textbf{When to use \texttt{build.py} vs.\ \texttt{make}.}  For everyday
-writing, just run \texttt{make} (or your editor's build command).
+  \medskip\noindent
+  \textbf{When to use \texttt{build.py} vs.\ \texttt{make}.}  For everyday
+  writing, just run \ntindex[building!make]{\latexinline{make}} (or your editor's build command).
+
 Use \texttt{build.py} when you need to build for a \emph{different} school
 or document type than the one currently set in \verb!0-Config/!, or when
 building from a script or CI job.

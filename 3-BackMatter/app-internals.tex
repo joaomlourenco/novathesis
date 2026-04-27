@@ -578,7 +578,7 @@ treated as a parent entry and \mv{word} is added as a sub-entry.
 
 \begin{latexcode}
 This is a \ntindex{recommendation}.
-See the \ntindex[Template!]{Version} number.
+See the \ntindex[template!]{Version} number.
 \end{latexcode}
 \end{macrodoc}
 
@@ -646,13 +646,14 @@ and the configuration file where they are typically used.
   \textbackslash ntprint & Print one named document section & \normalfont\emph{ Internal} \\
   \textbackslash ntprintlist & Print all files in a registered list & Internal \\
   \textbackslash ntprintindex & Print the word index & Internal \\
-  \textbackslash ntaddlistof & Register a ``List of\,\ldots''; optional arg \texttt{frontmatter} (default) or \texttt{backmatter} sets where it prints & 0-Config/4\_files.tex \\
+  \textbackslash ntaddlistof & Register a ``List of\,\ldots''; optional arg \texttt{frontmatter} (default) or \texttt{backmatter} sets where it prints & \ntindex[configuration!0-config/6\_list\_of.tex]{}\latexinline{0-Config/6_list_of.tex} \\
+
   \textbackslash ntaddtocover & Append content to cover slot(s) & School .clo files \\
   \textbackslash ntAddToCoverTikz & Inject Ti\textit{k}Z code onto cover canvas & School .clo files \\
   \textbackslash ntindex & Typeset and index a word & Chapters \\
-  \textbackslash ifphddoc\,/\,\textbackslash ifmscdoc & Conditional on document type & \makecell[l]{0-Config/4\_files.tex,\\chapters} \\
-  \textbackslash ifdocfinal & Conditional on document status & \makecell[l]{0-Config/4\_files.tex,\\chapters} \\
-  \textbackslash ifxeorlua & Conditional on \hologo{LaTeX} engine & 0-Config/5\_packages.tex \\
+  \textbackslash ifphddoc\,/\,\textbackslash ifmscdoc & Conditional on document type & \makecell[l]{\ntindex[configuration!0-config/4\_files.tex]{}\latexinline{0-Config/4_files.tex},\\chapters} \\
+  \textbackslash ifdocfinal & Conditional on document status & \makecell[l]{\ntindex[configuration!0-config/4\_files.tex]{}\latexinline{0-Config/4_files.tex},\\chapters} \\
+  \textbackslash ifxeorlua & Conditional on \hologo{LaTeX} engine & \ntindex[configuration!0-config/5\_packages.tex]{}\latexinline{0-Config/5_packages.tex} \\
   \textbackslash NTDeclareHook & Declare an extension hook & School .clo files \\
   \textbackslash NTAddToHook & Add code to an extension hook & School .clo files \\
   \textbackslash NTRunHook & Execute an extension hook & Class internals \\

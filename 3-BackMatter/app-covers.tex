@@ -22,7 +22,7 @@ This chapter documents the cover page engine used by the \texttt{novathesis}
 class.  It is written for developers who need to add cover support for a new
 institution, or who want to understand or refactor an existing cover
 definition.  End users who only want to configure metadata (title, author,
-committee) should work exclusively with \latexinline{0-Config/3_cover.tex}.
+committee) should work exclusively with \ntindex[configuration!0-config/3\_cover.tex]{}\latexinline{0-Config/3_cover.tex}.
 
 The cover engine is implemented in:
 \begin{itemize}
@@ -42,15 +42,15 @@ Every cover page is rendered through three independent layers applied in
 order:
 
 \begin{enumerate}
-  \item \textbf{Background colour.}  A solid \latexinline{\pagecolor{}} fills the
+  \item \textbf{\ntindex[covers!]{Background colour}.}  A solid \latexinline{\pagecolor{}} fills the
         entire page.  Set with \latexinline{\thesiscover(id,bgcolor):={colorname}}.
-  \item \textbf{Background image.}  A full-bleed graphic is stretched to
+  \item \textbf{\ntindex[covers!]{Background image}.}  A full-bleed graphic is stretched to
         \latexinline{\paperwidth} $\times$ \latexinline{\paperheight}.  Set with
         \latexinline{\thesiscover(id,image):={filename}}.
   \item \textbf{Content layer.}  A \latexinline{tikzpicture} overlay anchors a
         large \latexinline{minipage} at the top-left of the text area (offset by the
         cover margins).  Inside this minipage, elements registered with
-        \latexinline{\ntaddtocover} are typeset top-to-bottom.  TikZ elements
+        \ntindex[covers!ntaddtocover]{}\latexinline{\ntaddtocover} are typeset top-to-bottom.  TikZ elements
         registered with \latexinline{tikz=true} or \latexinline{\ntAddToCoverTikz} are
         collected and rendered in a \emph{second} overlay \latexinline{tikzpicture}
         drawn after the minipage, so they escape the minipage's coordinate
@@ -562,7 +562,7 @@ Available hook points (in execution order for a single cover page):
 \label{sec:covers_debug}
 %%=======================================================================
 
-Enable debug mode in \latexinline{0-Config/1_novathesis.tex}:
+Enable debug mode in \ntindex[configuration!ntsetup]{}\latexinline{\ntsetup} in \latexinline{0-Config/1_novathesis.tex}:
 
 \begin{latexcode}
 \ntsetup{debug={cover,spine}}
