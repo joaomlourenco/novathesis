@@ -64,10 +64,9 @@ Mestre em Engenharia Biomédica}
 \SetSpine(box,date,angle)={-90}
 \SetSpine(author)={\GetDocAuthor(name,short)}
 
-\SetSpine*(order)=?{date,author,title,logo}
-\SetSpine*(box,logo,len)=?{4.1cm}
-\SetSpine*(box,date,len)=?{1.0cm}
-% \spine(box,author,len):=?{5.0cm}
+\IfMemVoidT{SetSpine}{order}{\MemSet*{SetSpine}{order}{date,author,title,logo}}
+\IfMemVoidT{SetSpine}{box,logo,len}{\MemSet*{SetSpine}{box,{4.1cm}}
+\IfMemVoidT{SetSpine}{box,date,len}{\MemSet*{SetSpine*}{box,{1.0cm}}
 
 
 %%=======================================================================

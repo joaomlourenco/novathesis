@@ -62,7 +62,6 @@
 \SetSpecializationString*(en)={SPECIALIZATION}
 \SetSpecializationString*(pt)={ESPECIALIZAÇÃO}
 
-\NewMemStore{DissertationPlan}
 \SetDissertationPlan*(mscplan,en)={Dissertation Plan}
 \SetDissertationPlan*(mscplan,pt)={Plano de Dissertação}
 
@@ -118,7 +117,7 @@
 
 \SetSpine(date)={2025}
 \SetSpine(date,font)={\fontsize{10}{10}\selectfont\bfseries}
-\SetSpine*(box,date,len)=?{1.2cm}
+\IfMemVoidT{Spine}{box,date,len}{\SetSpine*(box,date,len)={1.2cm}}
 \SetSpine(box,date,angle)={270}
 
 \SetSpine(tas)={\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}
@@ -148,7 +147,7 @@
 \SetSpine(box,logo,margin,bottom)={1mm}
 \SetSpine(box,logo,margin,sep)={4mm}
 
-\SetSpine*(margin,right)=?{0.0cm}
+\IfMemVoidT{Spine}{margin,right}{\MemSet{Spine}{margin,right}{0.0cm}}
 
 \SpineSetup[%
 ]{%
@@ -162,9 +161,9 @@
 %%=======================================================================
 
 % MSc cover
-\SetThesisCover*(msc,1-1,image)=?{nova-fct-cover-cbbi-front}
-\SetThesisCover*(msc,N-2,image)=?{nova-fct-cover-cbbi-back}
-\SetThesisCover*(msc,spine,image)=?{nova-fct-spine-cbbi}
+\IfMemVoidT{ThesisCover}{msc,1-1,image}{\MemSet*{ThesisCover}{msc,1-1,image}{nova-fct-cover-cbbi-front}}
+\IfMemVoidT{ThesisCover}{msc,N-2,image}{\MemSet*{ThesisCover}{msc,N-2,image}{nova-fct-cover-cbbi-back}}
+\IfMemVoidT{ThesisCover}{msc,spine,image}{\MemSet*{ThesisCover}{msc,spine,image}{nova-fct-spine-cbbi}}
 
 
 %%=======================================================================
@@ -199,7 +198,7 @@
   \sffamily%
 }
 
-\NTAddToHook{cover/2-1/text/pre}{%
+\NTAddToHook{cover/2-1/pre}{%
   \sffamily%
 }
 

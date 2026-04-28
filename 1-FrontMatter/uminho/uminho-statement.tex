@@ -34,7 +34,7 @@
 
 \NewMemStore{SignatureLine}
 
-\signatureline(pt):=?{%
+\IfMemVoid{signatureline}{pt}{\MemSet{signatureline}{pt}{%
   \begin{tabular}{c@{~}c}%
   \rule{10em}{0.5pt}, & \rule{16em}{0.5pt}\\[-1ex]%
   (\GetPlaceStr(\@LANG@MAIN)) & (\GetDateStr(\@LANG@MAIN))%
@@ -44,9 +44,9 @@
     \rule{25em}{0.5pt}\\[-1ex]%
     (\GetDocAuthor(name))%
   \end{center}%
-}
+}}
 
-\signatureline(en):=?{\GetSignatureLine(pt)}
+\IfMemVoidT{signatureline}{en}{\MemSet{signatureline}{en}{\MemGet{SignatureLine}{pt}}}
 
 \thispagestyle{plain}%
 \null%
