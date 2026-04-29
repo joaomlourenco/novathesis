@@ -185,111 +185,111 @@
   \sffamily%
 }
 
-
 %%=======================================================================
 %% COVER 1 ELEMENTS
 %%=======================================================================
 
 \ntaddtocover[tikz]{1-1}{%
-  \sffamily%
-    \@for\nt@tmpi:={top,bottom,left,right}\do{%
-      \datamatch{@MRGN@\nt@tmpi}{margin}(%
-        {cover,\@DOCTYPE,\@DEGREEACR,#1,\nt@tmpi},%
-        {cover,\@DOCCLASS,\@DEGREEACR,#1,\nt@tmpi},%
-        {cover,\@DEGREEACR,#1,\nt@tmpi},%
-        {cover,\@DOCTYPE,\@DEGREEACR,\nt@tmpi},%
-        {cover,\@DOCCLASS,\@DEGREEACR,\nt@tmpi},%
-        {cover,\@DEGREEACR,\nt@tmpi},%
-        {cover,\@DOCTYPE,#1,\nt@tmpi},%
-        {cover,\@DOCCLASS,#1,\nt@tmpi},%
-        {cover,#1,\nt@tmpi},%
-        {cover,\@DOCTYPE,\nt@tmpi},%
-        {cover,\@DOCCLASS,\nt@tmpi},%
-        {cover,\nt@tmpi})%
-    }%
-  \setbox0=\hbox{%
-      \scalebox{2.15}{%
-	  	  \fontsize{19}{19}\selectfont\bfseries\GetDocDate(submission,year)}}
-  \begin{scope}[shift=(current page.north west), xshift=\@MRGN@left]
-    % Logo at top-left
-    \node [inner sep=0pt, anchor=north west, xshift=0, yshift=-\@MRGN@top]
-                    {\includegraphics[height=1.7cm]{nova-itqb-logo}};
-    % Date at top-right
-    \node [inner sep=0pt,anchor=east,
-           xshift=\paperwidth-\@MRGN@left-10mm,
-           yshift=-\@MRGN@top-2.5mm,
-           color={\expanded{%
-		   		\GetItqbColor(\option{/novathesis/nova/itqb/cover/color},front,date)}},
-		   rotate=90,
-		  ] (date)
-		  {\fontsize{19}{19}\selectfont%
-		   \textbf{\GetDocDate(submission,year)}};
-	\draw[line width=0.7mm, 
-		  \expanded{%
-		   		\GetItqbColor(\option{/novathesis/nova/itqb/cover/color},front,date)}
-		 ] ($(date.north west) - (2mm,0)$) -- ($(date.north east) - (2mm,0)$);
-    % Title
-    \node [inner sep=0pt, anchor=south west, yshift=-\@MRGN@top-38.75mm]
-                    {\fontsize{19}{19}\selectfont%
-                     \parbox{\dimexpr\paperwidth-\@MRGN@left-\@MRGN@right}%
-                            {\@resizetowidth{\linewidth}%
-                                            {\textbf{%
-											   \begin{tabular}{@{}l@{}}%
-											   \GetDocTitle(\@LANG@COVER,main)%
-											   \end{tabular}%
-											 }}}};
-    % Subtitle
-    \node [inner sep=0pt, anchor=west, yshift=-\@MRGN@top-44.3mm]
-                    {\fontsize{16.0}{16.0}\selectfont%front.pdf
-                     \parbox{\paperwidth-\@MRGN@left-\@MRGN@right}%
-                            {\@resizetowidth{\linewidth}%
-                                            {\GetDocTitle(\@LANG@COVER,sub)}}};
-    % Author
-    \node [inner sep=0pt, anchor=west, yshift=-\@MRGN@top-54.7mm]
-                    {\fontsize{15}{15}\selectfont\textbf{\GetDocAuthor(name)}};
-    % Photo
-    \edef\@itqbheight{\GetRegion(photo,height)}
-    \edef\@itqbwidth{\GetRegion(photo,width)}
-    \draw [path picture={\node at (path picture bounding box.center)
-                    {\includegraphics[height=\@itqbheight]{nova-itqb-photo}};},
-                    rounded corners=8mm, xshift=-\@MRGN@left]
-                    ({\GetRegion(photo,left)},\GetRegion(photo,top))
-                    rectangle
-                    (\expanded{\GetRegion(photo,left)+\GetRegion(photo,width)},
-                               \expanded{\GetRegion(photo,top)-\GetRegion(photo,height)});
-    % Dissertation string
-    \node [inner sep=0pt,anchor=west, yshift={\GetRegion(itqb,top)+28.75mm}]
-                    {\fontsize{14}{14}\selectfont
-                     \GetDissertationString(\option{/@nt/document/docclass},%
-                                            \@LANG@COVER)};
-    % Major field
-    \node [inner sep=0pt,anchor=west, yshift={\GetRegion(itqb,top)+20.0mm}]
-                    {\fontsize{15}{15}\selectfont
-                     \GetMajorField(\@LANG@COVER)};
-    % Date
-    \node [inner sep=0pt,anchor=west, yshift={\GetRegion(itqb,top)+8.4mm}]
-                    {\fontsize{12}{12}\selectfont
-                     \mbox{O}eiras,
-                     \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}};
-    % Rectangle
-    \fill [xshift=-\@MRGN@left,
-           \expanded{%
-		   	\GetItqbColor(\option{/novathesis/nova/itqb/cover/color},front,rectangle)}
-		   ]
-                   (\GetRegion(itqb,left),{\GetRegion(itqb,top)})
-                -- (\GetRegion(itqb,right),{\GetRegion(itqb,top)})
-                -- (\GetRegion(itqb,right),{\GetRegion(itqb,bottom)})
-                {[rounded corners={\GetRegion(itqb,round)}]
-                -- (\GetRegion(itqb,left),{\GetRegion(itqb,bottom)})}
-                -- cycle {};
-    % Text in rectangle
-    \node [inner sep=0pt, anchor=west, xshift={1mm},
-                          yshift={(\GetRegion(itqb,bottom)+\GetRegion(itqb,top))/2}]
-                  {\fontsize{9}{9}\selectfont
-                  {\color{white}INSTITUTO DE TECNOLOGIA QUÍMICA E BIOLÓGICA }
-                  {\color{itqbgray207}ANTÓNIO XAVIER}
-                  {\color{white}$|$ UNIVERSIDADE NOVA DE LISBOA}};
-  \end{scope}
+    \sffamily%
+      \@for\nt@tmpi:={top,bottom,left,right}\do{%
+          \datamatchcs{@VAL@\nt@tmpi}{Margin}(%
+            {cover,\@DOCTYPE,\@DEGREEACR,#1,\nt@tmpi},%
+            {cover,\@DOCCLASS,\@DEGREEACR,#1,\nt@tmpi},%
+            {cover,\@DEGREEACR,#1,\nt@tmpi},%
+            {cover,\@DOCTYPE,\@DEGREEACR,\nt@tmpi},%
+            {cover,\@DOCCLASS,\@DEGREEACR,\nt@tmpi},%
+            {cover,\@DEGREEACR,\nt@tmpi},%
+            {cover,\@DOCTYPE,#1,\nt@tmpi},%
+            {cover,\@DOCCLASS,#1,\nt@tmpi},%
+            {cover,#1,\nt@tmpi},%
+            {cover,\@DOCTYPE,\nt@tmpi},%
+            {cover,\@DOCCLASS,\nt@tmpi},%
+            {cover,\nt@tmpi},
+          )%
+      }%
+    \setbox0=\hbox{%
+        \scalebox{2.15}{%
+        \fontsize{19}{19}\selectfont\bfseries\GetDocDate(submission,year)}}
+    \begin{scope}[shift=(current page.north west), xshift=\@VAL@left]
+      % Logo at top-left
+      \node [inner sep=0pt, anchor=north west, xshift=0, yshift=-\@VAL@top]
+                      {\includegraphics[height=1.7cm]{nova-itqb-logo}};
+      % Date at top-right
+      \node [inner sep=0pt,anchor=east,
+             xshift=\paperwidth-\@VAL@left-10mm,
+             yshift=-\@VAL@top-2.5mm,
+             color={\expanded{%
+           \GetItqbColor(\option{/novathesis/nova/itqb/cover/color},front,date)}},
+       rotate=90,
+      ] (date)
+      {\fontsize{19}{19}\selectfont%
+       \textbf{\GetDocDate(submission,year)}};
+  \draw[line width=0.7mm,
+      \expanded{%
+           \GetItqbColor(\option{/novathesis/nova/itqb/cover/color},front,date)}
+     ] ($(date.north west) - (2mm,0)$) -- ($(date.north east) - (2mm,0)$);
+      % Title
+      \node [inner sep=0pt, anchor=south west, yshift=-\@VAL@top-38.75mm]
+                      {\fontsize{19}{19}\selectfont%
+                       \parbox{\dimexpr\paperwidth-\@VAL@left-\@VAL@right}%
+                              {\@resizetowidth{\linewidth}%
+                                              {\textbf{%
+                         \begin{tabular}{@{}l@{}}%
+                         \GetDocTitle(\@LANG@COVER,main)%
+                         \end{tabular}%
+                       }}}};
+      % Subtitle
+      \node [inner sep=0pt, anchor=west, yshift=-\@VAL@top-44.3mm]
+                      {\fontsize{16.0}{16.0}\selectfont%front.pdf
+                       \parbox{\paperwidth-\@VAL@left-\@VAL@right}%
+                              {\@resizetowidth{\linewidth}%
+                                              {\GetDocTitle(\@LANG@COVER,sub)}}};
+      % Author
+      \node [inner sep=0pt, anchor=west, yshift=-\@VAL@top-54.7mm]
+                      {\fontsize{15}{15}\selectfont\textbf{\GetDocAuthor(name)}};
+      % Photo
+      \edef\@itqbheight{\GetRegion*(photo,height)}
+      \edef\@itqbwidth{\GetRegion*(photo,width)}
+      \draw [path picture={\node at (path picture bounding box.center)
+                      {\includegraphics[height=\@itqbheight]{nova-itqb-photo}};},
+                      rounded corners=8mm, xshift=-\@VAL@left]
+                      ({\GetRegion*(photo,left)},\GetRegion*(photo,top))
+                      rectangle
+                      (\expanded{\GetRegion*(photo,left)+\GetRegion*(photo,width)},
+                                 \expanded{\GetRegion*(photo,top)-\GetRegion*(photo,height)});
+      % Dissertation string
+      \node [inner sep=0pt,anchor=west, yshift={\GetRegion*(itqb,top)+28.75mm}]
+                      {\fontsize{14}{14}\selectfont
+                       \GetDissertationString(\option{/@nt/document/docclass},%
+                                              \@LANG@COVER)};
+      % Major field
+      \node [inner sep=0pt,anchor=west, yshift={\GetRegion*(itqb,top)+20.0mm}]
+                      {\fontsize{15}{15}\selectfont
+                       \GetMajorField(\@LANG@COVER)};
+      % Date
+      \node [inner sep=0pt,anchor=west, yshift={\GetRegion*(itqb,top)+8.4mm}]
+                      {\fontsize{12}{12}\selectfont
+                       \mbox{O}eiras,
+                       \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}};
+      % Rectangle
+      \fill [xshift=-\@VAL@left,
+             \expanded{%
+         \GetItqbColor(\option{/novathesis/nova/itqb/cover/color},front,rectangle)}
+       ]
+                     (\GetRegion*(itqb,left),{\GetRegion*(itqb,top)})
+                  -- (\GetRegion*(itqb,right),{\GetRegion*(itqb,top)})
+                  -- (\GetRegion*(itqb,right),{\GetRegion*(itqb,bottom)})
+                  {[rounded corners={\GetRegion*(itqb,round)}]
+                  -- (\GetRegion*(itqb,left),{\GetRegion*(itqb,bottom)})}
+                  -- cycle {};
+      % Text in rectangle
+      \node [inner sep=0pt, anchor=west, xshift={1mm},
+                            yshift={(\GetRegion*(itqb,bottom)+\GetRegion*(itqb,top))/2}]
+                    {\fontsize{9}{9}\selectfont
+                    {\color{white}INSTITUTO DE TECNOLOGIA QUÍMICA E BIOLÓGICA }
+                    {\color{itqbgray207}ANTÓNIO XAVIER}
+                    {\color{white}$|$ UNIVERSIDADE NOVA DE LISBOA}};
+    \end{scope}
 }
 
 
@@ -299,28 +299,28 @@
 
 \ntaddtocover[tikz]{N-2}{%
   \sffamily%
-  \setbox0=	\hbox{\scalebox{2}{\bfseries\GetDocDate(submission,year)}}
+  \setbox0=  \hbox{\scalebox{2}{\bfseries\GetDocDate(submission,year)}}
   \begin{scope}[shift=(current page.north west)]
     % Filling back cover
     \fill [color={\expanded{\GetItqbColor(\option{/novathesis/nova/itqb/cover/color},back)}}]
                     (0,0) rectangle (\paperwidth,-\paperheight);
     % Logo above rectangle
-    \node [inner sep=0pt,anchor=north west,xshift=11mm,yshift={3.5cm+\GetRegion(itqb,top)}]
+    \node [inner sep=0pt,anchor=north west,xshift=11mm,yshift={3.5cm+\GetRegion*(itqb,top)}]
                     {\includegraphics[width=11.7cm]{nova-itqb-logo-mono}};
     \begin{scope}[xscale=-1,xshift=-\paperwidth]
       % Rectangle
-      \fill [color=white] (\GetRegion(itqb,left),{\GetRegion(itqb,top)})
-                  -- (\GetRegion(itqb,right),{\GetRegion(itqb,top)})
-                  -- (\GetRegion(itqb,right),{\GetRegion(itqb,bottom)})
-                  {[rounded corners={\GetRegion(itqb,round)}]
-                  -- (\GetRegion(itqb,left),{\GetRegion(itqb,bottom)})}
+      \fill [color=white] (\GetRegion*(itqb,left),{\GetRegion*(itqb,top)})
+                  -- (\GetRegion*(itqb,right),{\GetRegion*(itqb,top)})
+                  -- (\GetRegion*(itqb,right),{\GetRegion*(itqb,bottom)})
+                  {[rounded corners={\GetRegion*(itqb,round)}]
+                  -- (\GetRegion*(itqb,left),{\GetRegion*(itqb,bottom)})}
                   -- cycle {};
       % Text in rectangle
-    \node [inner sep=0pt, anchor=west, xshift={-\paperwidth+11mm},
-                          yshift={(\GetRegion(itqb,bottom)+\GetRegion(itqb,top))/2},
-                          color={\GetItqbColor(\option{/novathesis/nova/itqb/cover/color},back,text)}]
-                    {\fontsize{10}{10}\selectfont
-                     \GetSchool(address)};
+      \node [inner sep=0pt, anchor=west, xshift={-\paperwidth+11mm},
+                            yshift={(\GetRegion*(itqb,bottom)+\GetRegion*(itqb,top))/2},
+                            color={\GetItqbColor(\option{/novathesis/nova/itqb/cover/color},back,text)}]
+                      {\fontsize{10}{10}\selectfont
+                       \GetSchool(address)};
     \end{scope}
   \end{scope}
 }

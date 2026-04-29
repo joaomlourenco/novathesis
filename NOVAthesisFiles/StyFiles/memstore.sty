@@ -35,6 +35,8 @@
 \cs_generate_variant:Nn \prop_gremove:Nn { cn, ce }
 \cs_generate_variant:Nn \prop_map_inline:Nn { cn }
 \cs_generate_variant:Nn \prop_log:N { c }
+\cs_generate_variant:Nn \tl_set:Nn { cn }
+\cs_generate_variant:Nn \tl_set:Nx { cx }
 
 
 %%=======================================================================
@@ -276,6 +278,22 @@
       {
         \IfMemDefinedTF{#2}{#3}
           { \tl_set:Nx #4 {##1} \tl_set:Nn #5 {##2} }
+          { \msg_error:nnn { memstore } { no-match-error } { #2 } }
+      }
+  }
+
+% Syntax: \MemMatchCS(*){<storage_name>}{<key_list>}{<cmd_key_control_sequence_name>}{<cmd_val_control_sequence_name>}
+\NewDocumentCommand{\MemMatchCS}{ s m m m m }
+  {
+    \IfBooleanTF {#1}
+      {
+        \IfMemDefinedTF*{#2}{#3}
+          { \tl_set:cx {#4} {##1} \tl_set:cn {#5} {##2} }
+          { \msg_error:nnn { memstore } { no-match-error } { #2 } }
+      }
+      {
+        \IfMemDefinedTF{#2}{#3}
+          { \tl_set:cx {#4} {##1} \tl_set:cn {#5} {##2} }
           { \msg_error:nnn { memstore } { no-match-error } { #2 } }
       }
   }

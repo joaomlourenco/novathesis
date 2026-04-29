@@ -550,7 +550,7 @@
     \IfBooleanTF{#1}
       { 
         % Starred version: call \datamatchtf*
-        \datamatchtf* { #2 } { #3 } ( #4 ) 
+        \datamatchtf* { #2 } { #3 } ( #4 )
       }
       { 
         % Non-starred version: call \datamatchtf
@@ -565,6 +565,20 @@
           { Could~not~find~“#3”~defined~with~any~of~“(#4)”! }
           { }
       }
+  }
+
+\NewDocumentCommand{\datamatchcs}{ s m m r() }
+  {
+    \IfBooleanTF{#1}
+    {
+      % Using expl3 syntax to expand the first argument into a csname
+      \exp_args:Nc \datamatch* { #2 } { #3 } ( #4 )
+    }
+    {
+      % Using expl3 syntax to expand the first argument into a csname
+      \exp_args:Nc \datamatch { #2 } { #3 } ( #4 )
+    }
+  
   }
 
 \ExplSyntaxOff
@@ -1176,8 +1190,5 @@
     \NTSetup[spine] {#2}%
   }%
 }
-
-
-
 
 
