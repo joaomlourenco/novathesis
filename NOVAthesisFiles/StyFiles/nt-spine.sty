@@ -286,11 +286,11 @@
         \node[
           inner~sep = 0pt,
           outer~sep = 0pt,
-          minimum~width=\paperwidth,
-          minimum~height=\paperheight,
-          draw=\l_nt_spine_frame_color_tl,
-          fill=\l_nt_spine_bg_color_tl,
-          line~width=\l_nt_spine_frame_width_tl,
+          minimum~width={\paperwidth},
+          minimum~height={\paperheight},
+          draw={\l_nt_spine_frame_color_tl},
+          fill={\l_nt_spine_bg_color_tl},
+          line~width={\l_nt_spine_frame_width_tl},
           anchor=center,
         ] at (current~page.center) {};
 
@@ -306,10 +306,10 @@
                   {270} { \dim_set:Nn \l_imgwidth_dim  { \paperheight } \dim_set:Nn \l_imgheight_dim { \paperwidth } }
                 }
                 { \msg_error:nnx { novathesis } { invalid-spine-angle } { \l_nt_spine_bg_image_angle_tl } }
-              \node[opacity=\l_nt_spine_bg_opacity_tl] at (current~page.center)
-                      {\includegraphics[width=\l_imgwidth_dim,
-                                        height=\l_imgheight_dim,
-                                        angle=\l_nt_spine_bg_image_angle_tl,
+              \node[opacity={\l_nt_spine_bg_opacity_tl}] at (current~page.center)
+                      {\includegraphics[width={\l_imgwidth_dim},
+                                        height={\l_imgheight_dim},
+                                        angle={\l_nt_spine_bg_image_angle_tl},
                        ]{\l_nt_spine_bg_image_tl}};
           }
 
@@ -323,7 +323,7 @@
                rectangle,
                inner~sep = 0pt,
                outer~sep = 0pt,
-               minimum~height = \l_nt_spine_width_dim - \l_nt_spine_margin_top_dim - \l_nt_spine_margin_bottom_dim,
+               minimum~height = {\l_nt_spine_width_dim - \l_nt_spine_margin_top_dim - \l_nt_spine_margin_bottom_dim},
                align = center,
              }
           ]
@@ -333,7 +333,7 @@
            % Left margin space
            \node[
              spinebox,
-             minimum~width = \l_tmpb_dim,
+             minimum~width = {\l_tmpb_dim},
              draw = none,
              fill = none,
              anchor = north~west,
@@ -349,12 +349,12 @@
 
               \node[
                  spinebox,
-                 minimum~width = \l_box_outer_width_dim,
-                 draw = \use:c { l_nt_spine_box_##1_frame_color_tl },
-                 fill = \use:c { l_nt_spine_box_##1_bg_color_tl },
+                 minimum~width = {\l_box_outer_width_dim},
+                 draw = {\use:c { l_nt_spine_box_##1_frame_color_tl }},
+                 fill = {\use:c { l_nt_spine_box_##1_bg_color_tl }},
                  fill~opacity = 0,
-                 text = \use:c { l_nt_spine_box_##1_fg_color_tl },
-                 line~width = \use:c { l_nt_spine_box_##1_frame_width_tl },
+                 text = {\use:c { l_nt_spine_box_##1_fg_color_tl }},
+                 line~width = {\use:c { l_nt_spine_box_##1_frame_width_tl }},
                  anchor = north~west,
               ] at (\l_tmpb_dim, 0)
               {
@@ -362,7 +362,7 @@
                   \bool_if:NT \l_nt_spine_debug_bool
                   {
                       \begin{tikzpicture}[remember~picture, overlay]
-                          \draw[draw=\l_nt_spine_debug_color_tl, line~width=\l_nt_spine_debug_width_dim]
+                          \draw[draw={\l_nt_spine_debug_color_tl}, line~width={\l_nt_spine_debug_width_dim}]
                                 (0,0) rectangle (\l_box_outer_width_dim, \l_box_outer_height_dim);
                       \end{tikzpicture}
                   }
@@ -398,12 +398,12 @@
                       enhanced, fit, fit~basedim=15pt,
                       before~upper={ \hyphenpenalty=10000 \exhyphenpenalty=10000 },
                       boxsep=0pt, left=0pt, right=0pt, top=0pt, bottom=0pt, arc=0pt, boxrule=0pt, frame~hidden, box~align=base, interior~hidden,
-                      fontupper=\use:c { l_nt_spine_box_##1_fontstyle_tl },
-                      coltext=\use:c { l_nt_spine_box_##1_fg_color_tl },
-                      width=\use:c { l_nt_spine_box_##1_len_dim } - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2,
-                      height=\l_nt_spine_width_dim - \l_nt_spine_margin_top_dim - \l_nt_spine_margin_bottom_dim - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2,
-                      halign=\use:c { l_nt_spine_box_##1_halign_tl },
-                      valign=\use:c { l_nt_spine_box_##1_valign_tl },
+                      fontupper={\use:c { l_nt_spine_box_##1_fontstyle_tl }},
+                      coltext={\use:c { l_nt_spine_box_##1_fg_color_tl }},
+                      width={\use:c { l_nt_spine_box_##1_len_dim } - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2},
+                      height={\l_nt_spine_width_dim - \l_nt_spine_margin_top_dim - \l_nt_spine_margin_bottom_dim - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2},
+                      halign={\use:c { l_nt_spine_box_##1_halign_tl }},
+                      valign={\use:c { l_nt_spine_box_##1_valign_tl }},
                       overlay={\nt_spine_overlay_code},
                   ]
                       \setbox0=\hbox{2Ap}
