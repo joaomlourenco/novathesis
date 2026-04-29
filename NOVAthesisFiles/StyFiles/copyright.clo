@@ -1,7 +1,7 @@
 %!TEX root=template.tex
 
 %% ----------------------------------------------------------------------------
-%%  NOVATHESIS — copyright.tex
+%%  NOVATHESIS — copyright.clo
 %% ----------------------------------------------------------------------------
 %%
 %% Version 7.10.7 (2026-03-25)
@@ -13,8 +13,8 @@
 %% Standard copyright page layout.
 %% ----------------------------------------------------------------------------
 
-\typeout{NT FILE StyFiles/copyright.tex}%
-
+\typeout{NT FILE StyFiles/copyright.clo}%
+\makeatletter
 \null\vfill%
 \noindent%
 \textbf{\large\GetDocTitle(\@LANG@COVER,main,plain)}\par%

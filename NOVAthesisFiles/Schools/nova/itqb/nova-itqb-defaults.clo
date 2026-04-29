@@ -141,7 +141,7 @@
 %%=======================================================================
 
 \SetSpine(logo)={\GetSchool(logo,neg)}
-\SetSpine(bg,color)={\GetItqbColor(\option{/novathesis/nova/itqb/cover/color},spine)}
+\SetSpine*(bg,color)={\GetItqbColor(\option{/novathesis/nova/itqb/cover/color},spine)}
 \SetSpine(date)={\textcolor{itqbgray207}{\GetOeiras()},
               \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}
 

@@ -617,7 +617,7 @@
 \newcommand*{\ntprintcopyrightpage}{%
   \ifmaindoc{% only print if a main document
     \iftoggle{/novathesis/print/copyright}{% if copuyright toggle is on
-      \InputIfFileExistsInDirsTF {copyright.tex} 
+      \InputIfFileExistsInDirsTF {copyright.clo} 
         {
           {\DIRSCHOOLS/\@UNIV/\@SCHL},
           {\DIRSCHOOLS/\@UNIV},
@@ -626,7 +626,7 @@
         {}
         {
           \ClassError{novathesis}
-                     {No “copyright.tex” file was found!}{}
+                     {No “copyright.clo” file was found!}{}
         }
     }{}%
   }{}
