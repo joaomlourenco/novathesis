@@ -24,6 +24,10 @@
 %%=======================================================================
 
 % Faculty / School 
+\SetSchool*(isel,pt)={Instituto Superior de Engenharia de Lisboa}
+\SetSchool*(isel,en)={Instituto Superior de Engenharia de Lisboa}
+\SetSchool*(isel,fr)={Instituto Superior de Engenharia de Lisboa}
+\SetSchool*(isel,it)={Instituto Superior de Engenharia de Lisboa}
 \SetSchool*(estsl,pt)={Escola Superior de Tecnologia da Saúde de Lisboa}
 \SetSchool*(estsl,en)={Escola Superior de Tecnologia da Saúde de Lisboa}
 \SetSchool*(estsl,fr)={Escola Superior de Tecnologia da Saúde de Lisboa}
@@ -116,7 +120,7 @@ Mestre em Engenharia Biomédica}
   \hspace*{3.5mm}%
   \fontsize{12}{12}\selectfont%
   \begin{tabular}{@{}ll}
-    \GetSchool(\@LANG@COVER)\\%
+    \GetSchool(isel,\@LANG@COVER)\\%
     \GetSchool(estsl,\@LANG@COVER)%
   \end{tabular}%
 }
