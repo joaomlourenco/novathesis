@@ -280,7 +280,7 @@
   \iftoggle{/novathesis/glossaries/list/reverse}
            {}
            {\setupglossaries{nonumberlist}}
-  \@loadglossaryfiles\makeglossaries
+  \AtBeginDocument{\@loadglossaryfiles\makeglossaries}
 }
 
 

@@ -14,8 +14,6 @@
 
 \input{\DIRSCHOOLS/ipl/isel/ipl-isel-defaults.clo}
 
-\ntsetup{print/frontpage=true}
-
 \def\@LANG@COVER{pt}%
 
 
@@ -64,9 +62,9 @@ Mestre em Engenharia Biomédica}
 \SetSpine(box,date,angle)={-90}
 \SetSpine(author)={\GetDocAuthor(name,short)}
 
-\IfMemVoidT{SetSpine}{order}{\MemSet*{SetSpine}{order}{date,author,title,logo}}
-\IfMemVoidT{SetSpine}{box,logo,len}{\MemSet*{SetSpine}{box,{4.1cm}}
-\IfMemVoidT{SetSpine}{box,date,len}{\MemSet*{SetSpine*}{box,{1.0cm}}
+\IfMemVoidT{Spine}{order}{\MemSet*{Spine}{order}{date,author,title,logo}}
+\IfMemVoidT{Spine}{box,logo,len}{\MemSet*{Spine}{box,logo,len}{4.1cm}}
+\IfMemVoidT{Spine}{box,date,len}{\MemSet*{Spine}{box,date,len}{1.0cm}}
 
 
 %%=======================================================================
@@ -85,7 +83,8 @@ Mestre em Engenharia Biomédica}
 %%=======================================================================
 
 \AtEndPreamble{%
-  %\LoadHelveticaLikeFont%}
+  %\LoadHelveticaLikeFont%
+}
 
 \NTAddToHook{cover/1-1/pre}{%
   \sffamily%

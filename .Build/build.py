@@ -76,7 +76,8 @@ def print_warning(msg: str) -> None:
 
 # --- Pattern Builders -------------------------------------------------------
 def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str,
-                   cover: bool, new_doc_status: str, new_sdgs_list: str, force: bool
+                   cover: bool, new_doc_status: str, new_sdgs_list: str, force: bool, 
+                   print_index: bool = False
                   ) -> dict[str, dict[Pattern, Callable[[str], str]]]:
     """
     Build regex patterns and transformation functions for configuration file processing.
@@ -88,6 +89,7 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str,
         new_doc_status: Document status (e.g., 'working', 'provisional', 'final', 'keep')
         new_sdgs_list: SDG list
         force: Force school application
+        print_index: If True, uncomment and enable print/index=true
     Returns:
         Dictionary mapping filenames to pattern-transformer dictionaries
     """
@@ -155,13 +157,15 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str,
                 _uncomment_replace("spine/layout", "trim"),
             re.compile(r"^\s*%?\s*\\ntsetup\{\s*spine/width\s*=\s*[^}]+\}\s*.*$"):
                 _uncomment_replace("spine/width", "2cm"),
-            re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/index\s*=\s*[^}]+\}\s*.*$"):
-                _uncomment_replace("print/index", "true"),
             re.compile(r"^\s*%?\s*\\ntsetup\{\s*docstatus\s*=\s*\{?[^}]+\}\s*.*$"):
                 _uncomment_replace("docstatus", new_doc_status),
             re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/sdgs/list\s*=\s*\{?[^}]+\}\s*.*$"):
                 _uncomment_replace("print/sdgs/list", new_sdgs_list),
         }
+        # Only add print/index pattern if explicitly requested
+        if print_index:
+            file_1_patterns[re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/index\s*=\s*[^}]+\}\s*.*$")] = \
+                _uncomment_replace("print/index", "true")
         result |= {
             "1_novathesis.tex": file_1_patterns,
         }
@@ -1032,6 +1036,12 @@ def parse_arguments() -> argparse.Namespace:
         help="Build cover-only (comments out \\ntaddfile and list_of entries; implies --docstatus final)"
     )
     ap.add_argument(
+        "--index",
+        action="store_true",
+        default=False,
+        help="Uncomment and enable print/index=true in configuration"
+    )
+    ap.add_argument(
         "-bdir", "--build-dir",
         nargs="?",
         const="",
@@ -1124,7 +1134,7 @@ def main() -> None:
         lines = COVER_LINE_COUNT
     
     # When patching configs, auto-use a temp dir if none specified
-    patching = (args.docstatus != "keep") or args.cover or args.force_school
+    patching = (args.docstatus != "keep") or args.cover or args.force_school or args.index
     if patching and args.build_dir is None:
         args.build_dir = ""
         print(f"{BRIGHT_CYAN}🔧 Patching mode: forcing temporary build directory{RESET}")
@@ -1179,7 +1189,7 @@ def main() -> None:
     if patching:
         patterns = build_patterns(
             args.doctype, school_id, args.lang, args.cover,
-            args.docstatus, args.sdgs, args.force_school
+            args.docstatus, args.sdgs, args.force_school, args.index
         )
         print(f"{BRIGHT_CYAN}🎯 Config patching enabled{RESET}")
     else:

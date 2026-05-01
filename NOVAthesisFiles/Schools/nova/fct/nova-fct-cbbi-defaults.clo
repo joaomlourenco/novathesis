@@ -117,7 +117,7 @@
 
 \SetSpine(date)={2025}
 \SetSpine(date,font)={\fontsize{10}{10}\selectfont\bfseries}
-\IfMemVoidT{Spine}{box,date,len}{\SetSpine*(box,date,len)={1.2cm}}
+\IfMemVoidT{Spine}{box,date,len}{\MemSet*{Spine}{box,date,len}{1.2cm}}
 \SetSpine(box,date,angle)={270}
 
 \SetSpine(tas)={\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}

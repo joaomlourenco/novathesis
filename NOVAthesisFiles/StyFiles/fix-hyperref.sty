@@ -117,6 +117,9 @@
   % "table.2.1".  Redefining \theHchapter to use \thechapter (which gives
   % letters in appendices: A, B, C …) makes every anchor globally unique.
   \renewcommand{\theHchapter}{\thechapter}
+  % \HyperLocalCurrentHref is used as a 'dest' in \bookmark calls.
+  \newcommand{\HyperLocalCurrentHref}{\@currentHref}
  }
+
 
 \ExplSyntaxOff

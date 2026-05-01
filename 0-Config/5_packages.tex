@@ -22,6 +22,7 @@
 \usepackage{wrapfig}      % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 \usepackage{metalogo}     % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 \usepackage{xurl}         % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+\usepackage{amsfonts}      % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 \usepackage{lipsum}       % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 % Define a professional, muted palette
 \newcommand{\Overleaf}{\href{https://www.overleaf.com?r=f5160636&rm=d&rs=b}{Overleaf}}
@@ -147,7 +148,12 @@
 }
 \newmintinline{python}{}
 
-
+\iftutex
+  \usepackage{newunicodechar}
+  \newunicodechar{→}{\ensuremath{\rightarrow}}
+\else
+  \DeclareUnicodeCharacter{→}{\ensuremath{\righarrow}}
+\fi
 
 % \usepackage{listingsutf8}    % Fontification of source code listings
 %                              % In alternative, use the package “minted”

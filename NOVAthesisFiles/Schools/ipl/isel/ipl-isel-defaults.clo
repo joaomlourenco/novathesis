@@ -18,17 +18,17 @@
 %% METADATA & GLOBAL PROPERTIES
 %%=======================================================================
 
-% No PhD degree for ISEL
-\ifphddoc
-  {\ClassError {novathesis}
-               {Please select a valid document type in '0-Config/1_novathesis.tex'.  Current wrong value: '\@DOCTYPE'.}
-               {}}
-  {}
-
 \ntsetup{print/statement=true}
 \ntsetup{print/frontpage=true}
 \ntsetup{style/font=verdana}
 \ntsetup{style/chapter=isel}
+
+\ntsetup{print/frontpage=true}
+\ifoptionequal{/novathesis/doctype}{msc}{}{
+  \ifoptionequal{/novathesis/doctype}{mscplan}{}{
+    \ntsetup{doctype=msc}
+  }
+}
 
 \ntaddfile{statement}[en]{ipl-isel/ipl-isel-statement-en}
 \ntaddfile{statement}[pt]{ipl-isel/ipl-isel-statement-pt}
@@ -169,15 +169,15 @@
 %% COVER PAGE SETUP (BACKGROUNDS)
 %%=======================================================================
 
-\IfMemVoidT{SetThesisCover}{wireframe}{\MemSet*{SetThesisCover}{wireframe}{ipl-isel-wireframe}}
-\IfMemVoidT{SetThesisCover}{logo}{\MemSet*{SetThesisCover}{logo}{ipl-isel-logo}}
+\IfMemVoidT{ThesisCover}{wireframe}{\MemSet*{ThesisCover}{wireframe}{ipl-isel-wireframe}}
+\IfMemVoidT{ThesisCover}{logo}{\MemSet*{ThesisCover}{logo}{ipl-isel-logo}}
 
 
 %%=======================================================================
 %% UTILITIES & HOOKS
 %%=======================================================================
 
-\NTAddToHook{abstract/title/before}{%\
+\NTAddToHook{abstract/title/before}{%
   \begingroup
     \color{iselPlum}%
     \bfseries\fontsize{14}{16}\selectfont%
