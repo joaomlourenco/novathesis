@@ -19,11 +19,17 @@
 %%=======================================================================
 
 % No PhD degree for ISEL
-\ifphddoc
-  {\ClassError {novathesis}
-               {Please select a valid document type in '0-Config/1_novathesis.tex'.  Current wrong value: '\@DOCTYPE'.}
-               {}}
-  {}
+\ifmscdoc{}{\ntsetup{doctype=msc}}
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% Faculty / School 
+\SetSchool*(isel,pt)={Instituto Superior de Engenharia de Lisboa}
+\SetSchool*(isel,en)={Instituto Superior de Engenharia de Lisboa}
+\SetSchool*(isel,fr)={Instituto Superior de Engenharia de Lisboa}
+\SetSchool*(isel,it)={Instituto Superior de Engenharia de Lisboa}
 
 \ntsetup{print/statement=true}
 \ntsetup{print/frontpage=true}
