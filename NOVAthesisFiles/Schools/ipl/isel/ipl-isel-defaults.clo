@@ -175,8 +175,8 @@
 %% COVER PAGE SETUP (BACKGROUNDS)
 %%=======================================================================
 
-\IfMemVoidT{SetThesisCover}{wireframe}{\MemSet*{SetThesisCover}{wireframe}{ipl-isel-wireframe}}
-\IfMemVoidT{SetThesisCover}{logo}{\MemSet*{SetThesisCover}{logo}{ipl-isel-logo}}
+\IfMemVoidT{ThesisCover}{wireframe}{\MemSet*{ThesisCover}{wireframe}{ipl-isel-wireframe}}
+\IfMemVoidT{ThesisCover}{logo}{\MemSet*{ThesisCover}{logo}{ipl-isel-logo}}
 
 
 %%=======================================================================
