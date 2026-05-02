@@ -16,7 +16,7 @@
 
 \ntsetup{print/frontpage=true}
 
-\def\@LANG@COVER{pt}%
+% \def\@LANG@COVER{pt}%
 
 
 %%=======================================================================
@@ -35,12 +35,13 @@ Mestre em Engenharia Biomédica}
 Mestre em Engenharia Biomédica}
 \SetDissertationString(msc,pt)={Trabalho Final de Mestrado para obtenção do grau de\\%
 Mestre em Engenharia Biomédica}
-\SetDissertationString(bsc,en)={Trabalho Final de Licenciatura para obtenção do grau de\\%
-Mestre em Engenharia Biomédica}
-\SetDissertationString(mscplan,en)={Trabalho Final de Mestrado para obtenção do grau de\\%
-Mestre em Engenharia Biomédica}
-\SetDissertationString(msc,en)={Trabalho Final de Mestrado para obtenção do grau de\\%
-Mestre em Engenharia Biomédica}
+
+\SetDissertationString(bsc,en)={Final Undergraduate Project for the degree of\\%
+Master in Biomedical Engineering}
+\SetDissertationString(mscplan,en)={Final Master's Project for the degree of\\%
+Master in Biomedical Engineering}
+\SetDissertationString(msc,en)={Master's Thesis for the degree of\\%
+Master in Biomedical Engineering}
 
 
 %%=======================================================================
@@ -158,6 +159,8 @@ Mestre em Engenharia Biomédica}
   % \MemSet{adviserstringfont}{c}{\bfseries}%
   \SetCommaString(pt)={\\}
   \SetAndString(pt)={\\}
+  \SetCommaString(en)={\\}
+  \SetAndString(en)={\\}
   \fontsize{11}{11}\selectfont%
   \underline{\@nt@printgrouptitle@text{adviser}{a}}\\[1ex]%
   \ntprintpersons[name]{0.9}[c]{0}{adviser}{a,c}%
@@ -171,6 +174,7 @@ Mestre em Engenharia Biomédica}
     \MemSet{persongrouppost}{}{\\[5pt]}
     \MemSet{personpost}{}{\\[-1pt]}
     \SetCommitteeTitleString*(pt)={}%
+    \SetCommitteeTitleString*(en)={}%
     \ifdocfinal{\ntprintpersons[name]{1}[c]{2}{committee}{\GetCommitteeOrder()}\mbox{}}{\mbox{}}%
   }{\mbox{}}%
 }

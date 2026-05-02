@@ -314,7 +314,7 @@
 }
 
 % Committee
-\ntaddtocover[vspace=5mm,valign=c]{2-1}{%
+\ntaddtocover[vspace=7mm,valign=c]{2-1}{%
   \MemSet{committeetitlestringfont}{}{\bfseries}%
   \MemSet{committeestringpost}{}{\\[2pt]}%
   \MemSet{committeestringfont}{}{\bfseries}%
@@ -322,14 +322,6 @@
   \ntprintpersons[name]{0.9}[c]{1}{committee}{\GetCommitteeOrder()}%
 }
 
-% Committee (redundant in original, keeping original logic)
-\ntaddtocover[vspace=0mm,valign=c]{2-1}{%
-  % \MemSet{committeetitlestringfont}{}{\bfseries}%
-  \MemSet{committeestringpost}{}{\\[2pt]}%
-  \MemSet{committeestringfont}{}{\bfseries}%
-  \fontsize{9}{9}\selectfont%
-  \ntprintpersons[name]{0.9}[c]{1}{committee}{\GetCommitteeOrder()}%
-}
 
 % Date
 \ntaddtocover[vspace=2]{2-1}{%

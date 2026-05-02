@@ -152,13 +152,7 @@
 }
 
 % PhD Title of Dissertation
-\ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.2cm, height=2cm]{1-1,2-1}{%
-  \fontseries{mc}\fontsize{17}{17}\selectfont%
-  \textbf{\GetDocTitle(\@LANG@COVER,main)}%
-}
-
-% MSc Title of Dissertation
-\ntaddtocover[degree=msc/mscplan, vspace=2.0cm, height=2cm]{1-1,2-1}{%
+\ntaddtocover[vspace=0.2cm, height=2cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{17}{17}\selectfont%
   \textbf{\GetDocTitle(\@LANG@COVER,main)}%
 }
@@ -170,7 +164,7 @@
 
 % Degree (PhD only position)
 \ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.4cm, height=2.5cm]{1-1,2-1}{%
-  \fontseries{mc}\fontsize{14}{14}\selectfont%
+  \fontseries{mc}\fontsi ze{14}{14}\selectfont%
   \GetDegreeName(\@LANG@COVER)
   \IfMemVoidF{Specialization}{\@LANG@COVER}%
     {\\[2mm]\GetSpecialization(\@LANG@COVER)}%

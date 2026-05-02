@@ -41,6 +41,9 @@
 %% FONTS
 %%=======================================================================
 
+\NTAddToHook{cover/text/pre}{%
+  \sffamily%
+}
 
 
 %%=======================================================================
@@ -60,8 +63,8 @@
 % Set margins for cover pages
 \SetMargin*(cover,top)={1.0cm}
 \SetMargin*(cover,bottom)={1.0cm}
-\SetMargin*(cover,left)={1.0cm}
-\SetMargin*(cover,right)={1.0cm}
+\SetMargin*(cover,left)={2.0cm}
+\SetMargin*(cover,right)={2.0cm}
 
 
 %%=======================================================================
