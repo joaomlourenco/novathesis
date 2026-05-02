@@ -120,11 +120,7 @@
 
 % Preferred sans-serif stack: Inter → Helvet → Gillius2 → LaTeX default
 \IfFileExists{inter.sty}
-  {\RequirePackage[scaled=MatchLowercase]{inter}
-   \iftutex
-     \setsansfont{Inter}[Scale=MatchLowercase, Ligatures={TeX,NoCommon}]
-     \renewcommand{\sffamily}{\fontspec{Inter}[Ligatures={TeX,NoCommon}]}
-   \fi}
+  {\RequirePackage[scaled=MatchLowercase]{inter}}
   {\IfFileExists{helvet.sty}
     {\RequirePackage[scaled=0.95]{helvet}}
     {\IfFileExists{gillius2.sty}
