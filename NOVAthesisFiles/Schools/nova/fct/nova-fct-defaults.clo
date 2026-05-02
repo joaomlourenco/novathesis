@@ -89,10 +89,6 @@
 %% FONTS
 %%=======================================================================
 
-% Loading of fonts must be delayed until class "novathesis" is loaded
-\AtEndPreamble{%
-  \RequirePackage{gillius2}%
-}
 
 
 %%=======================================================================
@@ -203,11 +199,10 @@
   %       Ligatures = {NoCommon, TeX}, % This kills the 'oe' ligature while keeping '--'
   %     ]
   % \fi
-  \sffamily%
   \color{white}
 }
 
-\NTAddToHook{cover/2-1/pre}{%
+\NTAddToHook{cover/text/pre}{%
   % \iftutex
   %     \setsansfont{Inter}[
   %       Scale = 0.95,

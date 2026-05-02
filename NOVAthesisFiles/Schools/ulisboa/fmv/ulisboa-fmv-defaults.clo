@@ -186,8 +186,7 @@
   \sffamily%
 }
 
-\NTAddToHook{cover/1-1/pre}{\sffamily}
-\NTAddToHook{cover/2-1/text/pre}{\sffamily}
+\NTAddToHook{cover/text/pre}{\sffamily}
 
 \NTAddToHook{ntquote/pre}{\vspace*{3cm}}
 

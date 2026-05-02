@@ -123,11 +123,7 @@
 %% UTILITIES & HOOKS
 %%=======================================================================
 
-\NTAddToHook{cover/1-1/pre}{%
-  \sffamily%
-  \ifdocfinal{\SetProvisionalString*(\@LANG@COVER)={~}}{}%
-}
-\NTAddToHook{cover/2-1/text/pre}{%
+\NTAddToHook{cover/text/pre}{%
   \sffamily%
   \ifdocfinal{\SetProvisionalString*(\@LANG@COVER)={~}}{}%
 }

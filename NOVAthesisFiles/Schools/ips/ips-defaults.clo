@@ -37,10 +37,6 @@
 %% FONTS
 %%=======================================================================
 
-\AtEndPreamble{%
-  %\LoadHelveticaLikeFont%  % \RequirePackage{gillius2}%
-}
-
 
 %%=======================================================================
 %% LAYOUT (MARGINS)
@@ -77,10 +73,7 @@
 \newcommand{\@leftcol}{0.37\linewidth}
 \newcommand{\@rightcol}{0.55\linewidth}
 
-\NTAddToHook{cover/1-1/pre}{%
-  \sffamily%
-}
-\NTAddToHook{cover/2-1/text/pre}{%
+\NTAddToHook{cover/text/pre}{%
   \sffamily%
 }
 

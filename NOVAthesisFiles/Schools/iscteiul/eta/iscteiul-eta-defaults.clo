@@ -49,9 +49,6 @@
 %% FONTS
 %%=======================================================================
 
-\AtEndPreamble{%
-  %\LoadHelveticaLikeFont%  % \RequirePackage{gillius2}%
-}
 
 
 %%=======================================================================
@@ -99,10 +96,7 @@
 %% UTILITIES & HOOKS
 %%=======================================================================
 
-\NTAddToHook{cover/1-1/pre}{%
-  \sffamily%
-}
-\NTAddToHook{cover/2-1/text/pre}{%
+\NTAddToHook{cover/text/pre}{%
   \sffamily%
 }
 
