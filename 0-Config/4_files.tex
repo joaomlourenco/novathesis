@@ -132,79 +132,76 @@
 % If present, the chapter will only be included in the given doc types.
 % If omitted, the chapter will always be included.
 %-------------------------------------------------------------
-% \ntaddfile{chapter}{chapter-introduction}
-% \ntaddfile{chapter}{chapter-manual}
-% \ntaddfile{chapter}{chapter-aidisclose}
-% \ntaddfile{chapter}{chapter-latex}
-% % \ntaddfile{chapter}{chapter-dummy}
-% % The following chapter would only be included
-% % in MSc and MSc-plan documents
-% %     \ntaddfile{chapter}[mscplan,msc]{chapter-last}
+\ntaddfile{chapter}{chapter-introduction}
+\ntaddfile{chapter}{chapter-manual}
+\ntaddfile{chapter}{chapter-aidisclose}
+\ntaddfile{chapter}{chapter-latex}
+% \ntaddfile{chapter}{chapter-dummy}
+% The following chapter would only be included
+% in MSc and MSc-plan documents
+%     \ntaddfile{chapter}[mscplan,msc]{chapter-last}
+
+
+
+%-------------------------------------------------------------
+% Apppendices
 %
+%     \ntaddfile{appendix}[<optional-doctype-list>]{<filename>}
+%.............................................................
 %
+% <filename>: -> must be '2-MainMatter/filename.tex'
 %
-% %-------------------------------------------------------------
-% % Apppendices
-% %
-% %     \ntaddfile{appendix}[<optional-doctype-list>]{<filename>}
-% %.............................................................
-% %
-% % <filename>: -> must be '2-MainMatter/filename.tex'
-% %
-% % <optional-doctype-list>:  -> A comma-separateed list of doctypes.
-% %                              The valid doctypes are listed in file
-% %                              '1_novathesis.tex', option 'doctype'.
-% %
-% % If present, the appendix will only be included in the given doc types.
-% % If omitted, the appendix will always be included.
-% %-------------------------------------------------------------
-% \ntaddfile{appendix}{app-internals}
-% \ntaddfile{appendix}{app-covers}
-% \ntaddfile{appendix}{app-build-py}
-% \ntaddfile{appendix}{appendix-aidisclose}
-% \ntaddfile{appendix}{appendix1}
+% <optional-doctype-list>:  -> A comma-separateed list of doctypes.
+%                              The valid doctypes are listed in file
+%                              '1_novathesis.tex', option 'doctype'.
 %
+% If present, the appendix will only be included in the given doc types.
+% If omitted, the appendix will always be included.
+%-------------------------------------------------------------
+\ntaddfile{appendix}{app-internals}
+\ntaddfile{appendix}{appendix1}
+\ntaddfile{appendix}{appendix2}
+
+
+%-------------------------------------------------------------
+% Apppendices
 %
+%     \ntaddfile{annex}[<optional-doctype-list>]{<filename>}
+%.............................................................
 %
-% %-------------------------------------------------------------
-% % Apppendices
-% %
-% %     \ntaddfile{annex}[<optional-doctype-list>]{<filename>}
-% %.............................................................
-% %
-% % <filename>: -> must be '2-MainMatter/filename.tex'
-% %
-% % <optional-doctype-list>:  -> A comma-separateed list of doctypes.
-% %                              The valid doctypes are listed in file
-% %                              '1_novathesis.tex', option 'doctype'.
-% %
-% % If present, the annex will only be included in the given doc types.
-% % If omitted, the annex will always be included.
-% %-------------------------------------------------------------
-% \ntaddfile{annex}{annex1}
-% % \ntaddfile{annex}{annex2}
-% % \ntaddfile{annex}{annex2}
+% <filename>: -> must be '2-MainMatter/filename.tex'
 %
+% <optional-doctype-list>:  -> A comma-separateed list of doctypes.
+%                              The valid doctypes are listed in file
+%                              '1_novathesis.tex', option 'doctype'.
 %
+% If present, the annex will only be included in the given doc types.
+% If omitted, the annex will always be included.
+%-------------------------------------------------------------
+\ntaddfile{annex}{annex1}
+% \ntaddfile{annex}{annex2}
+% \ntaddfile{annex}{annex2}
+
+
+
+%-------------------------------------------------------------
+% Covers
 %
-% %-------------------------------------------------------------
-% % Covers
-% %
-% %     \ntaddfile{cover}[<cover-id>]{<filename>}
-% %.............................................................
-% %
-% % <filename>:   -> must be '1-Frontmatter/filename.tex'
-% %
-% % <cover-id>: 1 -> The main cover
-% %             2 -> The front page
-% %             N -> The back cover
-% %         spine -> The back cover
-% %
-% % The given file will be used to render the cover <cover-id>
-% % Note: if you want to skip prnting the frontpage, do not
-% %       redefine the frontpage! Instead use the command
-% %       \ntsetup{print/frontpage=false}
-% %-------------------------------------------------------------
-% % \ntaddfile{cover}[1]{cover-page}
+%     \ntaddfile{cover}[<cover-id>]{<filename>}
+%.............................................................
 %
+% <filename>:   -> must be '1-Frontmatter/filename.tex'
 %
+% <cover-id>: 1 -> The main cover
+%             2 -> The front page
+%             N -> The back cover
+%         spine -> The back cover
+%
+% The given file will be used to render the cover <cover-id>
+% Note: if you want to skip prnting the frontpage, do not
+%       redefine the frontpage! Instead use the command
+%       \ntsetup{print/frontpage=false}
+%-------------------------------------------------------------
+% \ntaddfile{cover}[1]{cover-page}
+
+

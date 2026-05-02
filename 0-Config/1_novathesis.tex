@@ -23,7 +23,7 @@
 %         bsc —> BSc report
 %       plain —> Other report
 %-------------------------------------------------------------
-\ntsetup{doctype=msc}
+% \ntsetup{doctype=msc}
 
 
 
@@ -37,7 +37,8 @@
 %     NOVA-ITQB:  nova/itqb/gray, nova/itqb/green,
 %     NOVA-FCSH:  nova/fcsh,
 %     NOVA-ENSP:  nova/ensp,
-%     NOVA-IMS:   See: https://github.com/pdecampossouza/nova-ims-thesis-template-2025
+%     NOVA-IMS:   nova/ims, nova/ims/csig, nova/ims/ddm, nova/ims/dsaa,
+%                 nova/ims/egi, nova/ims/gi, nova/ims/gt,
 %     ULIBOA:     ulisboa/ist, ulisboa/fc, ulisboa/fmv, ulisboa/iseg,
 %     ULHT:       ulht/deisi, ulht/mge,
 %     UMINHO:     uminho/ead, uminho/ese, uminho/eeng, uminho/elach,
@@ -49,7 +50,7 @@
 %     IPS:        ips/ests,
 %     OTHER:      other/esep
 %-------------------------------------------------------------
-\ntsetup{school=uminho/eeng}
+% \ntsetup{school=nova/fcsh}
 
 
 
@@ -63,22 +64,7 @@
 % provisional —> submission version (no committee)
 %       final —> final version (with committee)
 %-------------------------------------------------------------
-\ntsetup{docstatus=final}
-
-
-
-%-------------------------------------------------------------
-% Make a PDF/A-2b compliant file (for long term archival)
-%
-%     DEFAULT: pdfa <- false for 'working' and 'provisional' status
-%                   <- true for 'final' status
-%.............................................................
-%
-%     NOTE: final mode automatically produces PDF/A-2b archival
-%           output (via the pdfx package).
-%           To disable: uncomment line below to suppress PDF/A-2b even in final mode
-%-------------------------------------------------------------
-% \ntsetup{pdfa=false}
+% \ntsetup{docstatus=final}
 
 
 
@@ -325,13 +311,13 @@
 
 %-------------------------------------------------------------
 % Print the book spine
-%     DEFAULTS: if status=working:      spine/layout <- false
-%               if status=provisional:  spine/layout <- false
-%               if status=final:        spine/layout <- trim
+%     DEFAULTS: if status=working:      print/spine <- false
+%               if status=provisional:  print/spine <- true
+%               if status=final:        print/spine <- true
 %.............................................................
 %
 %-------------------------------------------------------------
-% \ntsetup{spine/layout=false}
+% \ntsetup{print/spine=false}
 
 
 
@@ -423,6 +409,7 @@
 % \ntsetup{style/font/attributes={
 %   Extension = .ttf,
 %   Ligatures=TeX,
+%   Mapping=tex-text,
 %   UprightFont = *,
 %   ItalicFont = * Italic,
 %   BoldFont = * Bold,
