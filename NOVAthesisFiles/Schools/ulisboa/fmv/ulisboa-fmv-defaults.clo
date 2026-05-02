@@ -31,7 +31,7 @@
 \ntaddfile{statement}[en]{ulisboa-fmv/ulisboa-fmv-statement-en}
 \ntaddfile{statement}[pt]{ulisboa-fmv/ulisboa-fmv-statement-pt}
 
-\ntbibsetup{style=cse}
+\ntbibsetup{style=biblatex-cse}
 
 \IfStrEq{\@LANG@MAIN}{en}{%
   \SetAbstractOrder*(en)={pt,pt-ext,en}
@@ -192,7 +192,8 @@
 \NTAddToHook{ntquote/pre}{\vspace*{3cm}}
 
 \ifdocfinal{}{
-  \AtEndPreamble{\RequirePackage[pagewise]{lineno}}
+  \PassOptionsToPackage{pagewise}{lineno}
+  \AtEndPreamble{\RequirePackage{lineno}}
   \NTAddToHook{acknowledgements/pre}{\linenumbers}
   \NTAddToHook{acknowledgements/post}{\nolinenumbers}
   \NTAddToHook{abstract/pre}{\linenumbers}
@@ -259,7 +260,7 @@
 }
 
 % Logo
-\ntaddtocover[vspace/msc=5mm, vspace/phd=0.25cm, height=2.95cm, valign=t]{1-1,2-1}{%
+\ntaddtocover[vspace=0.25cm, height=2.95cm, valign=t]{1-1,2-1}{%
   \includegraphics[height=1.6cm,align=c]{ulisboa-logo-color}%
   \hspace{16mm}%
   \includegraphics[height=2.5cm,align=c]{ulisboa-fmv-insignia-color}%
@@ -267,7 +268,7 @@
 }
 
 % Title of Dissertation
-\ntaddtocover[vspace/1-1=18mm, vspace/2-1=10mm, height=2.35cm, valign=c]{1-1,2-1}{%
+\ntaddtocover[vspace=18mm, height=2.35cm, valign=c]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
   \textbf{{\MakeTextUppercase{\GetDocTitle(\@LANG@MAIN,main)}}}%
 }
@@ -280,7 +281,7 @@
 }
 
 % Author name
-\ntaddtocover[vspace/1-1=0mm, vspace/2-1=4mm, height=1.8cm, valign=c]{1-1,2-1}{%
+\ntaddtocover[vspace=0mm, height=1.8cm, valign=c]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
   {\MakeTextUppercase{\GetDocAuthor(name)}}%
 }

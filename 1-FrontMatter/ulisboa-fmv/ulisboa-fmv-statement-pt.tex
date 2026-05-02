@@ -11,7 +11,34 @@
 
 \thispagestyle{empty}
 
-\long\def\checkbox#1#2{\ifoptionanyof{/novathesis/ulisboa/fmv/#1}{#2}{\memoryxbox}{\memoryemptybox}}
+\long\def\checkbox#1#2{%
+  \ifoptionanyof{/novathesis/ulisboa/fmv/#1}{#2}%
+    {\memoryxbox}{\memoryemptybox}%
+}
+
+\def\memoryemptybox{{%
+  \setlength{\fboxsep}{0pt}%
+  \LARGE%
+  \setbox0=\hbox{$\times$}%
+  \fbox{\rule{\wd0}{0pt}\rule{0pt}{\ht0}}%
+}}
+\def\memoryxbox{{%
+  \setlength{\fboxsep}{0pt}%
+  \LARGE%
+  \fbox{$\times$}%
+}}
+\newif\ifmemorycross
+\def\datacrossiftrue#1(#2){%
+  \memorycrossfalse
+  \@for\@memory@it:=#2\do{%
+    \ifdatadefined{#1}(#2)
+      {\memorycrosstrue}
+      {}%
+  }%
+  \bgroup
+    \ifmemorycross\memoryxbox\else\memoryemptybox\fi%
+  \egroup
+}
 
 % \null\vfill
 

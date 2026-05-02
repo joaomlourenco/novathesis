@@ -218,7 +218,8 @@
   % \fontseries{mc}
   \fontsize{10}{10}\selectfont%
   \foreach \myi in {1, ..., 9} {%
-    \GetSponsor(\@LANG@COVER,\myi,text)\qquad
+    \IfMemVoidF{Sponsor}{\@LANG@COVER,\myi,text}
+      {\GetSponsor(\@LANG@COVER,\myi,text)\qquad}
   }%
 }
 

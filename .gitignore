@@ -15,6 +15,10 @@ template.*
 # …except template.tex
 !template.tex
 
+# Ignore all fonts
+NOVAthesisFiles/FontStyles/Fonts/*
+!NOVAthesisFiles/FontStyles/Fonts/DO_NOT_REMOVE_THIS_FILE.txt
+
 # The renamed PDF files
 # *-en.pdf
 # *-pt.pdf
