@@ -248,11 +248,13 @@
             at (current~page.north~west)
         {
           \begin{minipage}[t][\dim_use:N \l_nt_covers_height_dim][t]{\dim_use:N \l_nt_covers_width_dim}
+            \NTRunHook{cover/#1/text/pre}
             \prop_get:NnNTF \g_nt_covers_content_prop { #1 } \l_nt_covers_content_tl
               {
                 \tl_map_inline:Nn \l_nt_covers_content_tl { \nt_covers_render_element:nn ##1 }
               }
               { }
+            \NTRunHook{cover/#1/text/post}
           \end{minipage}
         };
     \end{tikzpicture}
