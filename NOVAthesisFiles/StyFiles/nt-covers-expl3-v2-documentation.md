@@ -128,7 +128,9 @@ All content elements support the following attributes:
 
 **Available attributes:**
 - `status` - Comma-separated list of valid document statuses (e.g., msc, phd)
-- `degree` - Comma-separated list of valid degree types
+- `degree` - Comma-separated or forward-slash separated list of valid degree types
+  - Supports: `degree=phd,msc` (comma-separated) or `degree=phd/msc` (forward-slash separated)
+  - Both formats are equivalent and converted internally
 - `halign` - Horizontal alignment: l, c, r, j
 - `valign` - Vertical alignment: t, c, b
 - `vspace` - Vertical space before element
@@ -140,6 +142,17 @@ All content elements support the following attributes:
 - `bgcolor` - Background color
 - `tikz` - Boolean: true if element contains TikZ
 - `newpar` - Boolean: true to add paragraph break after element
+
+**Degree Format Examples:**
+
+Both of these are equivalent and work identically:
+```latex
+\ntaddtocover[degree=phd,msc,phd_prop]{1-1}{Content}       % comma-separated
+\ntaddtocover[degree=phd/msc/phd_prop]{1-1}{Content}       % forward-slash separated
+```
+
+The degree filter matches `@DOCTYPE` (the current document's degree type) against the specified list. 
+An element is only rendered if its degree list is empty (matches all degrees) or if `@DOCTYPE` is in the list.
 
 ## Implementation Details
 
