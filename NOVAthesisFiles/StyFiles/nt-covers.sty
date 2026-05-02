@@ -43,11 +43,18 @@
 \bool_new:N \l_nt_covers_defined_bool
 
 % Attributes for individual elements
+% NOTE: The 'degree' option accepts either comma-separated (legacy) or forward-slash
+%       separated (current) values, e.g.:
+%         degree={phd,phdprop,phdplan}  (legacy comma-separated)
+%         degree=phd/phdprop/phdplan    (current forward-slash separated)
+%       Both formats are automatically converted to comma-separated internally.
+%       The degree filter checks if @DOCTYPE (e.g., 'phd', 'msc') matches any value.
+%       Element is only rendered if degree filter matches or is empty.
 \keys_define:nn { nt/covers/element }
   {
     status    .clist_set:N = \l_nt_covers_elem_status_clist,
     degree    .code:n = {
-      % Convert forward slashes to commas for compatibility
+      % Convert forward slashes to commas for compatibility with legacy comma syntax
       \tl_set:Nn \l_tmpa_tl { #1 }
       \str_replace_all:Nnn \l_tmpa_tl { / } { , }
       \clist_set:Nn \l_nt_covers_elem_degree_clist { \l_tmpa_tl }
@@ -105,6 +112,13 @@
   }
 
 % Check if element matches current doc status and degree
+% Args: #1 = element attributes (status, degree, etc.), #2 = element content
+% Returns: true if element should be rendered, false otherwise
+%
+% Matching logic:
+%   - status: if specified, @DOCSTATUS must be in list (or empty list means match all)
+%   - degree: if specified, @DOCTYPE must be in list (or empty list means match all)
+% Both conditions must be true for element to be rendered.
 \prg_new_protected_conditional:Npnn \nt_covers_if_match:nn #1 #2 { T, F, TF }
   {
     % Reset all element variables to defaults before parsing new attributes
@@ -134,6 +148,8 @@
       }
 
     % Check degree if specified
+    % @DOCTYPE is set to the document degree type (e.g., 'phd', 'msc', 'phd_prop', etc.)
+    % Element is only rendered if @DOCTYPE appears in the degree list, or degree is empty.
     \clist_if_empty:NF \l_nt_covers_elem_degree_clist
       {
         \clist_if_in:NVF \l_nt_covers_elem_degree_clist \@DOCTYPE
@@ -300,6 +316,29 @@
 \NewDocumentCommand{\ntresetonecover} { m }
   { \nt_covers_reset_one:n { #1 } }
 
+% Command: \ntaddtocover[options]{cover-ids}{content}
+% Purpose:  Add content to specified cover pages with optional filtering
+%
+% Args:
+%   options  = Optional parameters for rendering/filtering:
+%              - status={final,provisional,...}: Filter by document status
+%              - degree=phd/msc/phd_prop/...   : Filter by degree type
+%                  (accepts forward-slash or comma-separated: 'phd/msc' or 'phd,msc')
+%              - vspace=2cm                    : Vertical spacing
+%              - height=5cm                    : Content height
+%              - halign=l|c|r|j                : Horizontal alignment
+%              - valign=t|c|b                  : Vertical alignment
+%              - and more (see keys definition)
+%   cover-ids = Comma-separated cover IDs (1-1, 1-2, 2-1, 2-2, N-1, N-2)
+%   content  = LaTeX content to add to covers
+%
+% Example:
+%   \ntaddtocover[degree=phd/phd_prop, vspace=1cm]{1-1,2-1}{%
+%     This text appears on front and back covers for PhD and PhD Proposal degrees
+%   }
+%
+% Note: Degree option automatically converts forward-slash format to comma-separated
+%       internally. Both formats work:  degree=phd/msc/phd_prop and degree={phd,msc,phd_prop}
 \NewDocumentCommand{\ntaddtocover} { O{} m m }
   {
     \clist_map_inline:nn { #2 }
