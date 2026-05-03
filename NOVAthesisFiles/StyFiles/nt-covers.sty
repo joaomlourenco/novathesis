@@ -59,7 +59,7 @@
       % Convert forward slashes to commas for compatibility with legacy comma syntax
       \tl_set:Nn \l_tmpa_tl { #1 }
       \str_replace_all:Nnn \l_tmpa_tl { / } { , }
-      \clist_set:NV \l_nt_covers_elem_degree_clist \l_tmpa_tl
+      \clist_set:Nx \l_nt_covers_elem_degree_clist { \l_tmpa_tl }
     },
     halign    .choices:nn = { l, c, r, j }
                 { \tl_set:Nn \l_nt_covers_elem_halign_tl { #1 } },
