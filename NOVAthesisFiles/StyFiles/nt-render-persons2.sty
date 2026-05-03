@@ -46,10 +46,6 @@
 \seq_new:N \l_nt_valid_formats_seq
 \seq_set_from_clist:Nn \l_nt_valid_formats_seq { full, name, list }
 
-% Alignment mapping
-\prop_new:N \l_nt_alignment_prop
-\prop_set_from_keyval:Nn \l_nt_alignment_prop { l = \raggedright, c = \centering, r = \raggedleft }
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Module: Validation Functions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -65,16 +61,18 @@
    }
  }
 
-% Validate alignment value (l, c, r)
-\cs_new:Nn \nt_alignment_from_char:n
- {
-  \prop_if_in:NnTF \l_nt_alignment_prop { #1 }
-   { \prop_get:Nn \l_nt_alignment_prop { #1 } }
-   {
-    \msg_error:nnn { novathesis } { invalid-alignment } { #1 }
-    \raggedright
-   }
- }
+% Get alignment command from character (uses IfStrEqCase for compatibility)
+% This uses legacy TeX since it's called from text mode
+\newcommand{\nt@get@alignment@cmd}[1]{%
+  \IfStrEqCase{#1}{%
+    {l}{\raggedright}%
+    {c}{\centering}%
+    {r}{\raggedleft}%
+  }[%
+    \ClassError{novathesis}{Invalid alignment "#1" (must be l, c, or r)}{}%
+    \raggedright%
+  ]%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Module: Person List Retrieval (expl3 version)
@@ -240,8 +238,8 @@
   % Validate format value
   \nt_validate_in_list:Nnn \l_nt_persons_list_seq { #1 } { full, name, list }
   
-  % Get alignment command from mapping
-  \tl_set:Nn \l_nt_alignment_cmd_tl { \nt_alignment_from_char:n { #3 } }
+  % Get alignment command
+  \tl_set:Nn \l_nt_alignment_cmd_tl { \nt@get@alignment@cmd { #3 } }
   
   % Set up tabularx horizontal alignment based on parameter
   \def\nt@tabularx@horz{}%
