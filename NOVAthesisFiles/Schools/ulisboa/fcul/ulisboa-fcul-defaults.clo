@@ -158,12 +158,12 @@
 }
 
 % Doc Status (PhD only position)
-\ntaddtocover[degree=phd/phdprop/phdplan, vspace=0cm, height=1.9cm]{1-1,2-1}{%
+\ntaddtocover[degree=phd,phdprop,phdplan, vspace=0cm, height=1.9cm]{1-1,2-1}{%
   \emph{\GetProvisionalString(\@LANG@COVER)}%
 }
 
 % Degree (PhD only position)
-\ntaddtocover[degree=phd/phdprop/phdplan, vspace=0.4cm, height=2.5cm]{1-1,2-1}{%
+\ntaddtocover[degree=phd,phdprop,phdplan, vspace=0.4cm, height=2.5cm]{1-1,2-1}{%
   \fontseries{mc}\fontsize{14}{14}\selectfont%
   \GetDegreeName(\@LANG@COVER)
   \IfMemVoidF{Specialization}{\@LANG@COVER}%
@@ -190,7 +190,7 @@
 }
 
 % Advisers (PhD only position)
-\ntaddtocover[degree=phd/phdprop/phdplan, vspace=2.0cm]{1-1,2-1}{%
+\ntaddtocover[degree=phd,phdprop,phdplan, vspace=2.0cm]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
   \GetAdvisersLabel(\option{/novathesis/doctype},\@LANG@COVER)\\[3mm]%
   \ntprintpersons{0.9}{0}{adviser}{a,c}%
@@ -217,7 +217,7 @@
 \ntaddtocover[height=1cm, vspace=2]{1-1}{~}
 
 % Document purpose (PhD only)
-\ntaddtocover[degree=phd/phdprop/phdplan, vspace=1]{1-1,2-1}{%
+\ntaddtocover[degree=phd,phdprop,phdplan, vspace=1]{1-1,2-1}{%
   % \fontseries{mc}
   \fontsize{10}{10}\selectfont%
   \thepresentationtext%
