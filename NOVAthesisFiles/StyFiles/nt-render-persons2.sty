@@ -1,0 +1,475 @@
+%!TEX root=template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — nt-render-persons2.sty
+%% ----------------------------------------------------------------------------
+%%
+%% Version 2.0.0 (2026-05-03)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%% Departamento de Informática (www.di.fct.unl.pt)
+%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Universidade NOVA de Lisboa (www.unl.pt)
+%%
+%% Person list rendering: advisers and committee table printing.
+%% Fully expl3-based rewrite of nt-render-persons.sty
+%% API-compatible public interface with simplified internal structure.
+%% Loaded by novathesis.cls (alternative to nt-render-persons.sty).
+%% ----------------------------------------------------------------------------
+\typeout{NT FILE StyFiles/nt-render-persons2.sty}%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Table column types (shared with legacy code)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcolumntype{L}{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}X}
+\newcolumntype{C}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}X}
+\newcolumntype{R}{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}X}
+
+\ExplSyntaxOn
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Module: Internal Constants and Variables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Internal property lists for storing configuration
+\prop_new:N \g_nt_persons_config_prop
+
+% Master person list (expl3 sequence)
+\seq_new:N \l_nt_persons_list_seq
+
+% Temporary variables for person data
+\tl_new:N \l_nt_person_name_tl
+\tl_new:N \l_nt_person_remainder_tl
+\tl_new:N \l_nt_alignment_cmd_tl
+\int_new:N \l_nt_max_width_dim
+
+% Format validation list
+\seq_new:N \l_nt_valid_formats_seq
+\seq_set_from_clist:Nn \l_nt_valid_formats_seq { full, name, list }
+
+% Alignment mapping
+\prop_new:N \l_nt_alignment_prop
+\prop_set_from_keyval:Nn \l_nt_alignment_prop { l = \raggedright, c = \centering, r = \raggedleft }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Module: Validation Functions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Validate that a value exists in a list
+\cs_new:Nn \nt_validate_in_list:Nnn
+ {
+  \seq_set_from_clist:Nn #1 { #3 }
+  \seq_if_in:NnF #1 { #2 }
+   {
+    \msg_error:nnx { novathesis } { invalid-value }
+     { Argument ~ \texttt{#2} ~ not ~ in ~ allowed ~ values ~ \{#3\} }
+   }
+ }
+
+% Validate alignment value (l, c, r)
+\cs_new:Nn \nt_alignment_from_char:n
+ {
+  \prop_if_in:NnTF \l_nt_alignment_prop { #1 }
+   { \prop_get:Nn \l_nt_alignment_prop { #1 } }
+   {
+    \msg_error:nnn { novathesis } { invalid-alignment } { #1 }
+    \raggedright
+   }
+ }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Module: Person List Retrieval (expl3 version)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Clear the master list
+\cs_new:Nn \nt_persons_clear:
+ {
+  \seq_clear:N \l_nt_persons_list_seq
+ }
+
+% Add person data from option system into master list
+% #1 = person type (adviser, committee)
+% #2 = categories (a, c, etc.)
+\cs_new:Nn \nt_persons_build_list:nn
+ {
+  \nt_persons_clear:
+  \clist_map_inline:nn { #2 }
+   {
+    % Check if the option path exists for this category
+    \ifoptionvoid { /@nt/#1/##1/name }
+     { } 
+     {
+      % Retrieve the sub-list
+      \letoptionlist { /@nt/#1/##1/name } \l_nt_persons_temp_list
+      % Add to master sequence
+      \seq_put_right:Ne \l_nt_persons_list_seq { \l_nt_persons_temp_list }
+     }
+   }
+ }
+
+% Output person list as formatted text
+% #1 = person type (adviser, committee)
+% #2 = categories (a, c, etc.)
+\NewDocumentCommand \nt_persons_format_as_list:nn { m m }
+ {
+  \nt_persons_build_list:nn { #1 } { #2 }
+  \raggedright
+  \MemGetDefault { #1 namefont } [ ] { #2 }
+  \seq_use:Nn \l_nt_persons_list_seq { ,~ }
+ }
+
+% Store person list in a macro (optional output)
+% #1 = person type (adviser, committee)
+% #2 = categories (a, c, etc.)
+% #3 = output macro (destination)
+\NewDocumentCommand \nt_persons_get_list:nnn { m m m }
+ {
+  \nt_persons_build_list:nn { #1 } { #2 }
+  \xdef #3 { \seq_use:Nn \l_nt_persons_list_seq { , } }
+ }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Module: Column Layout Functions (one-column, two-column)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Get max string width for person groups
+% #1 = person type (adviser, committee)
+% #2 = categories
+\cs_new:Nn \nt_get_max_persongroup_width:nn
+ {
+  \l_nt_max_width_dim = 0pt
+  % Loop through categories and find max width
+  \clist_map_inline:nn { #2 }
+   {
+    \ifoptiondefined { /@nt/#1/##1/full }
+     {
+      \options { /@nt/#1/##1/full/.size = \l_nt_temp_size }
+      \ifnum \l_nt_temp_size > 0
+       {
+        % Calculate width of this group title
+        \setlength { \l_nt_temp_width } { \widthof { \nt_get_group_title:nn { #1 } { ##1 } ~~ } }
+        \ifdim \l_nt_temp_width > \l_nt_max_width_dim
+         { \l_nt_max_width_dim = \l_nt_temp_width }
+       }
+      \fi
+     }
+   }
+ }
+
+% Get the title string for a person group
+% #1 = person type (adviser, committee)
+% #2 = role key (a, c, etc.)
+\cs_new:Nn \nt_get_group_title:nn
+ {
+  \IfMemVoidF { CommitteeTitleString }
+   {
+    \ifoptiondefined { /@nt/#1/#2/full }
+     {
+      \options { /@nt/#1/#2/full/.size = \l_nt_temp_size }
+      \ifnum \l_nt_temp_size > 0
+       {
+        \@nt@reducegender { /@nt/#1/#2/gender } { \l_nt_temp_gender }
+        \@nt@reducenumber { /@nt/#1/#2/full } { \l_nt_temp_number }
+        \bgroup
+        \MemGetDefault { #1 stringfont } [ ] { #2 }
+        \IfStrEq { #1 } { adviser }
+         { \MemGetDefault { AdviserString } { #2, \l_nt_temp_number, \l_nt_temp_gender, \@LANG@COVER } }
+         { \MemGetDefault { CommitteeString } { #2, \l_nt_temp_number, \l_nt_temp_gender, \@LANG@COVER } }
+        \egroup
+       }
+      \fi
+     }
+   }
+ }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Module: Person Rendering
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Print one person with optional "full" (name + remainder) or "name" only
+% #1 = format (full, name, list)
+% #2 = person type (adviser, committee)
+% #3 = role key (a, c, etc.)
+% #4 = person data (name,remainder format)
+\NewDocumentCommand \nt_print_one_person:nnnn { m m m m }
+ {
+  \MemGetDefault { personpre } [ ] { #3 }
+  \begingroup
+  \noexpandarg
+  \raggedright
+  \MemGetDefault { #2 namepre } [ ] { #3 }
+  % Split person data into name and remainder
+  \StrCut { #4 } { , } \l_nt_person_name_tl \l_nt_person_remainder_tl
+  \MemGetDefault { #2 namefont } [ ] { #3 }
+  \l_nt_person_name_tl
+  % If format is "full", also print remainder
+  \IfStrEq { #1 } { full }
+   {
+    \IfStrEq { \l_nt_person_remainder_tl } { } { }
+     {
+      \MemGetDefault { #2 remainderpre } [ ] { #3 }
+      \bgroup
+      \MemGetDefault { #2 remainderfont } [ ] { #3 }
+      \l_nt_person_remainder_tl
+      \egroup
+      \MemGetDefault { #2 remainderpost } [ ] { #3 }
+     }
+   }
+   { }
+  \endgroup
+  \MemGetDefault { personpost } [ ] { #3 }
+ }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Module: Main Public API - ntprintpersons
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% PUBLIC API: \ntprintpersons [format] {width} [align] {cols} {type} {categories}
+%
+% #1 = format (default: full) — one of: full, name, list
+% #2 = width (% of textwidth as decimal: 0.8, 0.9, 1.0)
+% #3 = alignment (default: l) — one of: l (left), c (center), r (right)
+% #4 = columns (0=list, 1=one-column, 2=two-column)
+% #5 = type (adviser, committee)
+% #6 = categories (a,c or c,r,a,m,g etc.)
+%
+% This is the expl3 implementation that maintains full API compatibility
+% with the original nt-render-persons.sty while providing cleaner internals.
+
+\NewDocumentCommand \ntprintpersons { O{full} m O{l} m m m }
+ {
+  % Validate format value
+  \nt_validate_in_list:Nnn \l_nt_persons_list_seq { #1 } { full, name, list }
+  
+  % Get alignment command from mapping
+  \tl_set:Nn \l_nt_alignment_cmd_tl { \nt_alignment_from_char:n { #3 } }
+  
+  % Set up tabularx horizontal alignment based on parameter
+  \def\nt@tabularx@horz{}%
+  \IfStrEq { #3 } { c } { \def\nt@tabularx@horz { \centering\arraybackslash } } { }
+  \IfStrEq { #3 } { r } { \def\nt@tabularx@horz { \raggedleft\arraybackslash } } { }
+  \IfStrEq { #3 } { l } { \def\nt@tabularx@horz { \raggedright\arraybackslash } } { }
+  
+  % Render person list if toggle is enabled
+  \iftoggle { /novathesis/print/#5 }
+   {
+    \begin{minipage}[t]{\linewidth}%
+      \setlength{\parindent}{0pt}%
+      \tl_use:N \l_nt_alignment_cmd_tl%
+      \begin{varwidth}{#2\linewidth}%
+        \IfStrEqCase { #4 }
+         {
+          {0} { \nt_persons_format_as_list:nn { #5 } { #6 } }
+          {1} { \nt_print_persons_onecolumn:nnnn { #1 } { #2 } { #5 } { #6 } }
+          {2} { \nt_print_persons_twocolumns:nnn { #1 } { #5 } { #6 } }
+         }
+         [
+          \msg_error:nnx { novathesis } { invalid-colcount }
+           { Invalid ~ column ~ count ~ \texttt{#4} ~ for ~ \string\ntprintpersons }
+         ]
+      \end{varwidth}%
+    \end{minipage}%
+   }
+   { }
+ }
+
+% Print persons in one-column layout
+\cs_new:Nn \nt_print_persons_onecolumn:nnnn
+ {
+  \IfMemVoidT { #3 stringpost } { } { \MemSet*{ #3 stringpost } { } { :\\[2pt] } }
+  \IfMemVoidT { #3 namepost } { } { \MemSet*{ #3 namepost } { } { {\\} } }
+  \IfMemVoidT { #3 remainderpre } { } { \MemSet*{ #3 remainderpre } { } { {\\[-2pt]} } }
+  \IfMemVoidT { personpost } { } { \MemSet*{ personpost } { } { \\[2pt] } }
+  \IfMemVoidT { persongrouppost } { } { \MemSet*{ persongrouppost } { } { \\[7pt] } }
+  \IfMemVoidT { committeetitlestringpost } { } { \MemSet*{ committeetitlestringpost } { } { \\[5pt] } }
+  
+  \nt_get_max_persongroup_width:nn { #3 } { #4 }
+  
+  \begin{tabularx}{#2\linewidth}[t]{@{}>{\nt@tabularx@horz}L@{}}%
+    \IfMemVoidTF { CommitteeTitleString } { \@LANG@COVER } { }
+     {
+      \IfStrEq { #3 } { committee }
+       {
+        \MemGetDefault { #3 titlestringpre } [ ] { }
+        \MemGetDefault { #3 titlestringfont } [ ] { }
+        \GetCommitteeTitleString(\@LANG@COVER)
+        \MemGetDefault { #3 titlestringpost } [ ] { }
+       }
+       {
+        \MemGetDefault { committeetitlestringpre } [ ] { }
+        \MemGetDefault { committeetitlestringfont } [ ] { }
+        \strut
+        \MemGetDefault { committeetitlestringpost } [ ] { }
+       }
+     }
+    \expandnext{\forcsvlist{\nt@ntprintpersongroup[#1]{1}{#3}}}{\expanded{#4}}
+  \end{tabularx}%
+ }
+
+% Print persons in two-column layout
+\cs_new:Nn \nt_print_persons_twocolumns:nnn
+ {
+  \IfMemVoidT { #2 stringpost } { } { \MemSet*{ #2 stringpost } { } { :& } }
+  \IfMemVoidT { #2 remainderpre } { } { \MemSet*{ #2 remainderpre } { } { {\\[-2pt]} } }
+  \IfMemVoidT { personpost } { } { \MemSet*{ personpost } { } { \\[2pt] } }
+  \IfMemVoidT { persongrouppost } { } { \MemSet*{ persongrouppost } { } { \\[14pt] } }
+  \IfMemVoidT { committeetitlestringpre } { } { \MemSet*{ committeetitlestringpre } { } { & } }
+  \IfMemVoidT { committeetitlestringpost } { } { \MemSet*{ committeetitlestringpost } { } { \\[5pt] } }
+  
+  \nt_get_max_persongroup_width:nn { #2 } { #3 }
+  
+  \begin{tabular}[t]{@{}r@{~~}l@{}}%
+    \IfStrEq { #2 } { committee }
+     {
+      \IfMemVoidF { CommitteeTitleString } { \@LANG@COVER }
+       {
+        \MemGetDefault { #2 titlestringpre } [ ] { }
+        \MemGetDefault { #2 titlestringfont } [ ] { }
+        \GetCommitteeTitleString(\@LANG@COVER)
+        \MemGetDefault { #2 titlestringpost } [ ] { }
+       }
+     }
+     { }
+    \expandnext{\forcsvlist{\nt@ntprintpersongroup[#1]{2}{#2}}}{\expanded{#3}}
+  \end{tabular}%
+ }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Module: Legacy Interface Compatibility
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Keep legacy \GetPersonsAsList as a wrapper to the new expl3 function
+\NewDocumentCommand { \GetPersonsAsList } { m m o }
+ {
+  \IfNoValueTF { #3 }
+   {
+    \nt_persons_format_as_list:nn { #1 } { #2 }
+   }
+   {
+    \nt_persons_get_list:nnn { #1 } { #2 } { #3 }
+   }
+ }
+
+% Preserve legacy \FormatNamesAsList for backward compatibility
+\cs_generate_variant:Nn \seq_set_from_clist:Nn { Ne }
+\cs_generate_variant:Nn \seq_use:Nnnn { Neee }
+
+\NewDocumentCommand { \FormatNamesAsList } { m                  % list of names
+                                              O{ }              % prefix
+                                              O{ \GetCommaString(\@LANG@MAIN) } % middle-sep
+                                              O{ ~ \GetAndString(\@LANG@MAIN) } % pair-sep
+                                              O{ \GetCommaString(\@LANG@MAIN)\GetAndString(\@LANG@MAIN) } } % last-sep
+ {
+  \seq_set_from_clist:Ne \l_tmpa_seq { #1 }
+  \seq_clear:N \l_tmpb_seq
+  \seq_map_inline:Nn \l_tmpa_seq
+   {
+    \seq_put_right:Nn \l_tmpb_seq { #2 ~ ##1 }
+   }
+  \seq_use:Neee \l_tmpb_seq { #2 } { #3 } { #4 }
+ }
+
+% Message definitions for error reporting
+\msg_new:nnn { novathesis } { invalid-value }
+ { Invalid ~ value: ~ #1 }
+
+\msg_new:nnn { novathesis } { invalid-alignment }
+ { Invalid ~ alignment ~ character ~ '#1' ~ (must ~ be ~ l, ~ c, ~ or ~ r) }
+
+\msg_new:nnn { novathesis } { invalid-colcount }
+ { Invalid ~ column ~ count: ~ #1 }
+
+\ExplSyntaxOff
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Compatibility: Helper macros from legacy code
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% These are preserved unchanged from the original nt-render-persons.sty
+% They handle complex person group rendering that requires mixing expl3 and TeX primitives
+
+\newcommand{\@ntgetmaxlen}[2]{%
+  \defifundef{\stringlen}{\newdimen}%
+  \defifundef{\maxlen}{\newdimen}%
+  \setlength{\maxlen}{0pt}%
+  \@for\myx:=\expanded{#1}\do{%
+    \setlength{\stringlen}{\widthof{\@nt@printgrouptitle@text{#2}{\myx}~~}}%
+    \ifdim\stringlen>\maxlen\relax\setlength{\maxlen}{\stringlen}\fi%
+  }%
+}
+
+\newcommand{\@nt@getstrgroup}[2]{%
+  \IfStrEq{#1}{adviser}%
+    {\MemGetDefault{AdviserString}{#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER}}%
+    {\MemGetDefault{CommitteeString}{#2,\@nt@advnumber,\@nt@advgender,\@LANG@COVER}}%
+}
+
+\newcommand{\@nt@printgrouptitle@text}[2]{%
+  \ifoptiondefined{/@nt/#1/#2/full}{%
+    \options{/@nt/#1/#2/full/.size = \mysize}%
+    \ifnum\mysize>0\relax%
+      \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
+      \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
+      \bgroup%
+        \MemGetDefault{#1stringfont}[]{#2}%
+        \@nt@getstrgroup{#1}{#2}%
+      \egroup%
+    \fi%
+  }{}%
+}
+
+\newcommand{\@nt@printgrouptitle}[2]{%
+  \options{/@nt/#1/#2/full/.size = \mysize}%
+  \ifnum\mysize>0\relax%
+    \@nt@reducegender{/@nt/#1/#2/gender}{\@nt@advgender}%
+    \@nt@reducenumber{/@nt/#1/#2/full}{\@nt@advnumber}%
+    \MemGetDefault{#1stringpre}[]{#2}%
+    \bgroup%
+      \MemGetDefault{#1stringfont}[]{#2}%
+      \@nt@getstrgroup{#1}{#2}%
+    \egroup%
+    \MemGetDefault{#1stringpost}[]{#2}%
+  \fi%
+}
+
+\newcommand{\@nt@ntprintpersongroup}[4][full]{%
+  \ifoptiondefined{/@nt/#3/#4/full}{%
+    \options{/@nt/#3/#4/full/.size = \mysize}%
+    \ifnum\mysize>0\relax%
+      \@nt@printgrouptitle{#3}{#4}%
+      \begin{varwidth}[t]{\linewidth-\maxlen}%
+        \raggedright%
+        \IfStrEq{#1}{list}{%
+          \GetPersonsAsList{#3}{#4}%
+        }{%
+          \optionlistdo{/@nt/#3/#4/full}{\nt@print@one@name{#1}{#3}{#4}{##1}}%
+        }%
+      \end{varwidth}%
+      \MemGet{persongrouppost}{}%
+    \fi%
+  }{}%
+}
+
+\newcommand{\nt@print@one@name}[4]{%
+  \nt_print_one_person:nnnn { #1 } { #2 } { #3 } { #4 }%
+}
+
+\newcommand*{\@nt@reducegender}[2]{%
+    \gdef#2{f}%
+    \optionlistdo{#1}{\if##1m\relax\gdef#2{m}\fi}%
+}
+
+\newcommand*{\@nt@reducenumber}[3][1]{%
+  \options{#2/.size = \mysize}%
+  \ifnum\mysize < 2
+    \let\opt@temp@val\mysize
+  \else
+    \def\opt@temp@val{2}%
+  \fi
+  \ifnum#1 > \opt@temp@val
+    \xdef#3{#1}%
+  \else
+    \xdef#3{\opt@temp@val}%
+  \fi
+}
+
+\endinput
