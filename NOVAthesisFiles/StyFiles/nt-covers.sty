@@ -38,6 +38,8 @@
 \tl_new:N  \l_nt_covers_tmp_tl
 \tl_new:N  \l_nt_covers_content_tl
 \tl_new:N  \g_nt_covers_tikz_overlay_tl
+\tl_new:N  \l_nt_covers_doctype_tl
+\tl_new:N  \l_nt_covers_docstatus_tl
 \bool_new:N \l_nt_covers_status_match_bool
 \bool_new:N \l_nt_covers_degree_match_bool
 \bool_new:N \l_nt_covers_defined_bool
@@ -57,7 +59,7 @@
       % Convert forward slashes to commas for compatibility with legacy comma syntax
       \tl_set:Nn \l_tmpa_tl { #1 }
       \str_replace_all:Nnn \l_tmpa_tl { / } { , }
-      \clist_set:Nn \l_nt_covers_elem_degree_clist { \l_tmpa_tl }
+      \clist_set:NV \l_nt_covers_elem_degree_clist \l_tmpa_tl
     },
     halign    .choices:nn = { l, c, r, j }
                 { \tl_set:Nn \l_nt_covers_elem_halign_tl { #1 } },
@@ -140,10 +142,14 @@
     \bool_set_true:N \l_nt_covers_status_match_bool % status match
     \bool_set_true:N \l_nt_covers_degree_match_bool % degree match
 
+    % Expand @DOCTYPE and @DOCSTATUS macros into expl3 variables for proper matching
+    \tl_set:Nx \l_nt_covers_doctype_tl { \@DOCTYPE }
+    \tl_set:Nx \l_nt_covers_docstatus_tl { \@DOCSTATUS }
+
     % Check status if specified
     \clist_if_empty:NF \l_nt_covers_elem_status_clist
       {
-        \clist_if_in:NVF \l_nt_covers_elem_status_clist \@DOCSTATUS
+        \clist_if_in:NVF \l_nt_covers_elem_status_clist \l_nt_covers_docstatus_tl
           { \bool_set_false:N \l_nt_covers_status_match_bool }
       }
 
@@ -152,7 +158,7 @@
     % Element is only rendered if @DOCTYPE appears in the degree list, or degree is empty.
     \clist_if_empty:NF \l_nt_covers_elem_degree_clist
       {
-        \clist_if_in:NVF \l_nt_covers_elem_degree_clist \@DOCTYPE
+        \clist_if_in:NVF \l_nt_covers_elem_degree_clist \l_nt_covers_doctype_tl
           { \bool_set_false:N \l_nt_covers_degree_match_bool }
       }
 
