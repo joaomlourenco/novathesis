@@ -141,13 +141,13 @@
 
 \cs_generate_variant:Nn \seq_set_from_clist:Nn { Ne }
 \cs_generate_variant:Nn \seq_use:Nnnn { Neee }
-\NewDocumentCommand{\FormatNamesAsList}{ m
-                                         O{ }
-                                         O{ \GetCommaString(\@LANG@MAIN) ~ } 
-                                         O{ ~ \GetAndString(\@LANG@MAIN) ~ } 
-                                         O{ , ~ \GetAndString(\@LANG@MAIN) ~ } }
-% {comma separated list of names} {name-prefix} {middle-sep} {pair-sep} {last-sep}
-% example: {Maria, Rita, Filomena} {Professora} {,} {~e~} {~e~}
+\NewDocumentCommand{\FormatNamesAsList}{ m  % list of names
+                                         O{ } % prefix for each name
+                                         O{ \GetCommaString(\@LANG@MAIN) } % middle-sep
+                                         O{ ~ \GetAndString(\@LANG@MAIN) } % pair-sep
+                                         O{ \GetCommaString(\@LANG@MAIN)\GetAndString(\@LANG@MAIN) } } % 
+% \FormatNamesAsList {comma separated list of names} {name-prefix} {middle-sep} {pair-sep} {last-sep}
+% example: \FormatNamesAsList {Maria, Rita, Filomena} {Professora} {,~} {~e~} {~e~}
  {
   % 1. Convert the input string (comma list) into a sequence variable
   \seq_set_from_clist:Ne \l_tmpa_seq { #1 }
