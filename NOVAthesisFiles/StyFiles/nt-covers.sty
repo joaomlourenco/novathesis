@@ -45,20 +45,20 @@
 \bool_new:N \l_nt_covers_defined_bool
 
 % Attributes for individual elements
-% NOTE: The 'degree' option accepts either comma-separated (legacy) or forward-slash
-%       separated (current) values, e.g.:
-%         degree={phd,phdprop,phdplan}  (legacy comma-separated)
-%         degree=phd/phdprop/phdplan    (current forward-slash separated)
-%       Both formats are automatically converted to comma-separated internally.
-%       The degree filter checks if @DOCTYPE (e.g., 'phd', 'msc') matches any value.
-%       Element is only rendered if degree filter matches or is empty.
+% NOTE: The 'degree' option accepts comma-separated values in braces, e.g.:
+%       degree={phd,phdprop,phdplan}  - element renders only if @DOCTYPE matches one of these
+% Syntax: degree={item1,item2,...}
+% - Braces MUST be used around comma-separated lists (required by LaTeX keys system)
+% - The degree filter checks if @DOCTYPE (e.g., 'phd', 'msc') matches any value
+% - Element is only rendered if degree filter matches or is empty
+% - When degree is empty, element renders for all doctypes
 \keys_define:nn { nt/covers/element }
   {
     status    .clist_set:N = \l_nt_covers_elem_status_clist,
     degree    .code:n = {
-      % Accept comma-separated values directly
-      % NOTE: When using comma-separated values, they must be enclosed in braces, e.g.:
-      %       degree={phd,msc,phdplan}     (comma-separated, must use braces)
+      % Degree filtering: element renders only if @DOCTYPE matches one of these values
+      % Input must be braced and comma-separated, e.g.: {phd,phdprop,phdplan}
+      % The braces protect commas from being interpreted as key separators by the keys system
       \clist_set:Nn \l_nt_covers_elem_degree_clist { #1 }
     },
     halign    .choices:nn = { l, c, r, j }
