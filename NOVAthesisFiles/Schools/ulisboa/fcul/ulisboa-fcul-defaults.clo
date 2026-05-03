@@ -193,6 +193,7 @@
 \ntaddtocover[degree={phd,phdprop,phdplan}, halign=c, vspace=2.0cm]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
   \GetAdvisersLabel(\option{/novathesis/doctype},\@LANG@COVER)\\[3mm]%
+  \MemSet{adviserstringpost}{}{\\[2pt]}%
   \ntprintpersons[full]{0.9}[c]{0}{adviser}{a,c}%
 }
 
@@ -200,6 +201,7 @@
 \ntaddtocover[degree={msc,mscplan}, halign=c, vspace=1.0cm]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
   \GetAdvisersLabel(\option{/novathesis/doctype},\@LANG@COVER)\\[3mm]%
+  \MemSet{adviserstringpost}{}{\\[2pt]}%
   \ntprintpersons[full]{0.9}[c]{0}{adviser}{a,c}%
 }
 
