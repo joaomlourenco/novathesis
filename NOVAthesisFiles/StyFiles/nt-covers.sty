@@ -56,10 +56,10 @@
   {
     status    .clist_set:N = \l_nt_covers_elem_status_clist,
     degree    .code:n = {
-      % Convert forward slashes to commas for compatibility with legacy comma syntax
-      \tl_set:Nn \l_tmpa_tl { #1 }
-      \str_replace_all:Nnn \l_tmpa_tl { / } { , }
-      \clist_set:Nx \l_nt_covers_elem_degree_clist { \l_tmpa_tl }
+      % Accept comma-separated values directly
+      % NOTE: When using comma-separated values, they must be enclosed in braces, e.g.:
+      %       degree={phd,msc,phdplan}     (comma-separated, must use braces)
+      \clist_set:Nn \l_nt_covers_elem_degree_clist { #1 }
     },
     halign    .choices:nn = { l, c, r, j }
                 { \tl_set:Nn \l_nt_covers_elem_halign_tl { #1 } },
@@ -147,11 +147,11 @@
     \tl_set:Nx \l_nt_covers_docstatus_tl { \@DOCSTATUS }
 
     % Check status if specified
-    \clist_if_empty:NF \l_nt_covers_elem_status_clist
-      {
-        \clist_if_in:NVF \l_nt_covers_elem_status_clist \l_nt_covers_docstatus_tl
-          { \bool_set_false:N \l_nt_covers_status_match_bool }
-      }
+     \clist_if_empty:NF \l_nt_covers_elem_status_clist
+       {
+         \clist_if_in:NVF \l_nt_covers_elem_status_clist \l_nt_covers_docstatus_tl
+           { \bool_set_false:N \l_nt_covers_status_match_bool }
+       }
 
     % Check degree if specified
     % @DOCTYPE is set to the document degree type (e.g., 'phd', 'msc', 'phd_prop', etc.)
