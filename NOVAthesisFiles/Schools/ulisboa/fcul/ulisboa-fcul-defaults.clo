@@ -190,17 +190,17 @@
 }
 
 % Advisers (PhD only position)
-\ntaddtocover[degree={phd,phdprop,phdplan}, vspace=2.0cm]{1-1,2-1}{%
+\ntaddtocover[degree={phd,phdprop,phdplan}, halign=c, vspace=2.0cm]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
   \GetAdvisersLabel(\option{/novathesis/doctype},\@LANG@COVER)\\[3mm]%
-  \ntprintpersons{0.9}{0}{adviser}{a,c}%
+  \ntprintpersons[full]{0.9}[c]{0}{adviser}{a,c}%
 }
 
 % Advisers (MSc only position)
-\ntaddtocover[degree={msc,mscplan}, vspace=1.0cm]{1-1,2-1}{%
+\ntaddtocover[degree={msc,mscplan}, halign=c, vspace=1.0cm]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
   \GetAdvisersLabel(\option{/novathesis/doctype},\@LANG@COVER)\\[3mm]%
-  \ntprintpersons{0.9}{0}{adviser}{a,c}%
+  \ntprintpersons[full]{0.9}[c]{0}{adviser}{a,c}%
 }
 
 % Sponsor (Cover 2 only)
