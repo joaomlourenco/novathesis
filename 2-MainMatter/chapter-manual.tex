@@ -230,6 +230,15 @@ commented-out lines show available values as documentation:
 \ntsetup{docstatus=final}        % post-examination; committee, book spine, PDF/A-2b
 \end{latexcode}
 
+  \item[\texttt{pdfa}] PDF/A archival output toggle.  Default: \texttt{true}.
+    In normal usage, PDF/A-2b output is produced automatically in
+    \texttt{docstatus=final}; set this option to \texttt{false} to opt out.
+    See Section~\ref{sub:pdfa} for details.
+\begin{latexcode}
+\ntsetup{pdfa=true}   % default behavior
+\ntsetup{pdfa=false}  % disable PDF/A output
+\end{latexcode}
+
   \item[\texttt{lang}] Main language of the document body (ISO 3166-1 alpha-2
     code).  Default: \texttt{en}.
 \begin{latexcode}
