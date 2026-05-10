@@ -452,16 +452,37 @@
 \ExplSyntaxOff
 
 % ── Abstract order accumulator ────────────────────────────────────────
-% \abstractorder{lang=order} settings are accumulated in
-% \@nt@saveabstractorder and then processed once by \@setabstractorder.
-\def\@nt@saveabstractorder{}
-\newcommand{\@setabstractorder}{%
-  \StrGobbleRight{\@nt@saveabstractorder}{1}[\@nt@saveabstractorder]%
-  \@for\nt@tmpi:=\@nt@saveabstractorder\do{%
-    \StrCut{\nt@tmpi}{=}\@nt@key\@nt@val%
-    \IfStrEq{\@nt@val}{}{\edef\@nt@val{\@nt@key}\def\@nt@key{\@LANG@MAIN}}{}%
-    \SetAbstractOrder*(\@nt@key)={\@nt@val}%
-  }%
+% abstractorder={lang=order-list} (or abstractorder={order-list}) entries
+% are collected in \g__nt_abstractorder_seq and applied once by
+% \@setabstractorder (called from nt-setup.sty after options are frozen).
+\ExplSyntaxOn
+\seq_new:N \g__nt_abstractorder_seq
+\tl_new:N  \l__nt_ao_lang_tl
+\tl_new:N  \l__nt_ao_val_tl
+\cs_new_protected:Npn \@setabstractorder
+  {
+    \seq_map_inline:Nn \g__nt_abstractorder_seq
+      {
+        % ##1 is "lang=order-list"  or just "order-list" (main lang implied)
+        \seq_set_split:Nnn \l_tmpa_seq { = } { ##1 }
+        \int_compare:nNnTF { \seq_count:N \l_tmpa_seq } > { 1 }
+          {
+            \tl_set:Ne \l__nt_ao_lang_tl { \seq_item:Nn \l_tmpa_seq { 1 } }
+            \tl_set:Ne \l__nt_ao_val_tl  { \seq_item:Nn \l_tmpa_seq { 2 } }
+          }
+          {
+            \tl_set:Ne \l__nt_ao_lang_tl { \@LANG@MAIN }
+            \tl_set:Nn \l__nt_ao_val_tl  { ##1 }
+          }
+        \MemSet*{AbstractOrder}{ \l__nt_ao_lang_tl }{ \l__nt_ao_val_tl }
+      }
+  }
+\ExplSyntaxOff
+% Helper used by the options handler (ExplSyntax not active there):
+\newcommand{\@nt@addabstractorder}[1]{%
+  \ExplSyntaxOn
+  \seq_gput_right:Nn \g__nt_abstractorder_seq {#1}%
+  \ExplSyntaxOff
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -594,7 +615,7 @@
   media/.new choice             = {screen, paper},
   spine/layout/.new choice      = {unset, trim, false},
   spine/width/.new length       = {0pt},
-  abstractorder/.new cmd        = {\appto\@nt@saveabstractorder{{#1},}},%
+  abstractorder/.new cmd        = {\@nt@addabstractorder{#1}},%
   schoolgiven/.new value        = {},
   school/.new cmd               = {\optionsalso{/novathesis/schoolgiven=#1}%
                                    \StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR
