@@ -771,6 +771,34 @@
     % \NTRunHook{keywords/#1/pre}%
     \def\and{\unskip\MemGetDefault{KeywordsSep}[]{\@LSHORT}}%
     % \def\and{{\textperiodcentered} }%
+    % Store comma-separated plain-text copy for PDF metadata.
+    % \MemSet* is global (prop_gput), so storage survives the \begingroup.
+    \begingroup
+      \def\and{, }%
+      \MemSet*{DocKeywords}{\@LSHORT}{#1}%
+    \endgroup
+    % Set the PDF info dict Keywords entry here (outside any group) so the
+    % expanded string \@nt@pdfkwds is available at macro expansion time.
+    %
+    % WHY NOT \hypersetup: hyperref writes /Keywords via \PDF@FinishDoc, which
+    % runs at the FIRST-PAGE shipout (hook shipout/firstpage). In novathesis the
+    % abstract/keywords pages come after the first page, so \hypersetup called
+    % here would be silently ignored (the option is disabled by then).
+    %
+    % \pdfextension info accumulates info-dict entries; the last value for each
+    % key wins when the PDF is finalised. Calling it here (body time, after the
+    % first shipout) correctly overwrites the empty /Keywords entry written by
+    % hyperref at first-page shipout.  Guard with \ifluatex in case XeLaTeX is
+    % ever supported (XeLaTeX would need a \special{pdf:info ...} equivalent).
+    \IfStrEq{\@LSHORT}{\@LANG@MAIN}{%
+      \ifluatex
+        \begingroup
+          \def\and{, }%
+          \protected@edef\@nt@pdfkwds{\MemGet{DocKeywords}{\@LANG@MAIN}}%
+          \pdfextension info{/Keywords(\@nt@pdfkwds)}%
+        \endgroup
+      \fi
+    }{}%
     \par\addvspace\baselineskip\noindent%
     \begingroup%
     \MemGetDefault{KeywordsStringPrefix}[]{\@LSHORT}%
@@ -986,3 +1014,7 @@
   \newcommand{\@ntcite}[1]{\ifdef{\parencite}{\parencite{#1}}{\cite{#1}}}
   \makeatother  
 }
+
+% PDF Keywords are set inside \keywords{} via \pdfextension info (body time),
+% which overwrites the empty /Keywords entry that hyperref's \PDF@FinishDoc
+% writes at first-page shipout.  See the comment block above \IfStrEq there.
