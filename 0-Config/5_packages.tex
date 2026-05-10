@@ -33,7 +33,10 @@
 % The header row receives headgray; body rows alternate rowgray / white.
 \newenvironment{ShadedTabular}[1]{%
   \renewcommand{\arraystretch}{1.3}%
-  \renewcommand{\theadgape}{}%           % suppress makecell's gape so \rowcolor covers full header height
+  % Redefine \thead to avoid \multicolumn wrapping, which confuses colortbl's
+  % row-colour box and leaves white vertical stripes between header cells.
+  % The column spec already provides alignment; we only need the bold font.
+  \renewcommand{\thead}[2][]{\textbf{##2}}%
   \rowcolors{2}{rowgray}{white}%    % body rows: zebra stripes starting at row 2
   \tabular{#1}%
   \rowcolor{headgray}%              % first (header) row background
@@ -153,7 +156,7 @@
   \usepackage{newunicodechar}
   \newunicodechar{→}{\ensuremath{\rightarrow}}
 \else
-  \DeclareUnicodeCharacter{2192}{\ensuremath{\righarrow}}
+  \DeclareUnicodeCharacter{2192}{\ensuremath{\rightarrow}}
 \fi
 
 % \usepackage{listingsutf8}    % Fontification of source code listings
