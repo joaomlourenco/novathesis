@@ -33,6 +33,7 @@
 % The header row receives headgray; body rows alternate rowgray / white.
 \newenvironment{ShadedTabular}[1]{%
   \renewcommand{\arraystretch}{1.3}%
+  \renewcommand{\theadgape}{}%           % suppress makecell's gape so \rowcolor covers full header height
   \rowcolors{2}{rowgray}{white}%    % body rows: zebra stripes starting at row 2
   \tabular{#1}%
   \rowcolor{headgray}%              % first (header) row background
