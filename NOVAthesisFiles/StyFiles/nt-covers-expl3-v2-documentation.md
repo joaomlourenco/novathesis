@@ -133,7 +133,8 @@ All content elements support the following attributes:
   - Both formats are equivalent and converted internally
 - `halign` - Horizontal alignment: l, c, r, j
 - `valign` - Vertical alignment: t, c, b
-- `vspace` - Vertical space before element
+- `vspace` - Fixed vertical space (TeX dimension, e.g. `vspace=2em`) before element
+- `vfill` - Elastic vertical space (integer fill units, e.g. `vfill=1`) before element
 - `hspace` - Horizontal space before element
 - `height` - Fixed height for element
 - `minheight` - Minimum height for element

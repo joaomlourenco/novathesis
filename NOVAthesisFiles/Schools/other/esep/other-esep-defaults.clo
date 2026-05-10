@@ -133,13 +133,13 @@
 }
 
 % Author name
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vfill=1]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont
   \textbf{\GetDocAuthor(name)}
 }
 
 % Date
-\ntaddtocover[vspace=2]{1-1,2-1}{%
+\ntaddtocover[vfill=2]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont
     \textbf{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
 }

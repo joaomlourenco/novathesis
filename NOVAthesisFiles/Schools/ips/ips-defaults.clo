@@ -103,7 +103,7 @@
 }
 
 % Photo
-\ntaddtocover[halign=l, vspace=1]{1-1}{%
+\ntaddtocover[halign=l, vfill=1]{1-1}{%
   \hfill%
   \begin{minipage}[t]{\@rightcol}%
     \includegraphics[height=5.3cm]{\GetFrontPageImage()}%
@@ -111,7 +111,7 @@
 }
 
 % Degree
-\ntaddtocover[halign=l, vspace=1]{1-1}{%
+\ntaddtocover[halign=l, vfill=1]{1-1}{%
   \hfill%
   \begin{minipage}[t]{\@rightcol}%
     \fontsize{11}{11}\selectfont\raggedright%
@@ -120,7 +120,7 @@
 }
 
 % Advisers
-\ntaddtocover[vspace=1]{1-1}{%
+\ntaddtocover[vfill=1]{1-1}{%
   \hfill%
   \begin{minipage}[t]{\@rightcol}%
     \MemSet{adviserstringfont}{a}{\bfseries}%
@@ -131,7 +131,7 @@
 }
 
 % Date
-\ntaddtocover[vspace=2]{1-1}{%
+\ntaddtocover[vfill=2]{1-1}{%
   \hfill%
   \begin{minipage}[t]{\@rightcol}%
     \fontsize{10}{10}\selectfont%
@@ -163,7 +163,7 @@
   \end{minipage}%
 }
 
-\ntaddtocover[vspace=1]{2-1}{%
+\ntaddtocover[vfill=1]{2-1}{%
   \hfill%
   \begin{minipage}[t]{0.75\textwidth}%
     \ifmaindoc{%
@@ -175,7 +175,7 @@
 }
 
 % Date
-\ntaddtocover[vspace=2]{2-1}{%
+\ntaddtocover[vfill=2]{2-1}{%
   \hfill%
   \begin{minipage}[t]{\@rightcol}%
     \fontsize{10}{10}\selectfont%

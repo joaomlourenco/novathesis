@@ -145,25 +145,25 @@
 }
 
 % % Title of Dissertation
-\ntaddtocover[vspace=1]{1-1}{%
+\ntaddtocover[vfill=1]{1-1}{%
   \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\GetDocTitle(\@LANG@COVER,main)}}%
 }
 
 % Author name
-\ntaddtocover[vspace=1]{1-1}{%
+\ntaddtocover[vfill=1]{1-1}{%
   \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\GetDocAuthor(name)}}%
 }
 
 % Degree
-\ntaddtocover[vspace=1]{1-1}{%
+\ntaddtocover[vfill=1]{1-1}{%
   \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\thepresentationtext}}%
 }
 
 % Date
-\ntaddtocover[vspace=1]{1-1}{%
+\ntaddtocover[vfill=1]{1-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{fcshblue}{%%
       \textbf{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
@@ -190,25 +190,25 @@
 }
 
 % % Title of Dissertation
-\ntaddtocover[vspace=1]{2-1}{%
+\ntaddtocover[vfill=1]{2-1}{%
   \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\GetDocTitle(\@LANG@COVER,main)}}%
 }
 
 % Author name
-\ntaddtocover[vspace=1]{2-1}{%
+\ntaddtocover[vfill=1]{2-1}{%
   \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\GetDocAuthor(name)}}%
 }
 
 % Degree
-\ntaddtocover[vspace=1]{2-1}{%
+\ntaddtocover[vfill=1]{2-1}{%
   \fontsize{18}{18}\selectfont%
   \textcolor{fcshblue}{\textbf{\thepresentationtext}}%
 }
 
 % Date
-\ntaddtocover[vspace=1]{2-1}{%
+\ntaddtocover[vfill=1]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \textcolor{fcshblue}{%%
       \textbf{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%

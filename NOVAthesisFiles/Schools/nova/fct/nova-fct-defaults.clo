@@ -291,7 +291,7 @@
 }
 
 % Degree name, Specialization, Date
-\ntaddtocover[vspace=1,halign=l]{1-1}{%
+\ntaddtocover[vfill=1,halign=l]{1-1}{%
   \fontsize{14}{13}\selectfont%
   \ifmaindoc{}{\GetDissertationPlan(\@DOCTYPE,\@LANG@COVER)\\[1pt]}%
   \MakeUppercase{\GetDegreeName(\@LANG@COVER)}%
@@ -332,7 +332,7 @@
 }
 
 % The author name
-\ntaddtocover[vspace=1,halign=l]{2-1}{%
+\ntaddtocover[vfill=1,halign=l]{2-1}{%
   \fontsize{14}{14}\selectfont%
   \textbf{\MakeUppercase{\GetDocAuthor(name)}}\\[2mm]%
   \fontsize{14}{14}\selectfont%
@@ -340,14 +340,14 @@
 }
 
 % The advisers
-\ntaddtocover[vspace=2,halign=l]{2-1}{%
+\ntaddtocover[vfill=2,halign=l]{2-1}{%
   \MemSet{adviserstringfont}{}{\bfseries}%
   \fontsize{11}{11}\selectfont%
   \ntprintpersons{0.9}{2}{adviser}{\GetAdviserOrder()}%
 }
 
 % The committee
-\ntaddtocover[vspace=1,hspace=3.5cm,halign=l]{2-1}{%
+\ntaddtocover[vfill=1,hspace=3.5cm,halign=l]{2-1}{%
   \MemSet{committeetitlestringfont}{}{\bfseries}%
   \MemSet{committeestringfont}{}{\bfseries}%
   \fontsize{10}{10}\selectfont%
@@ -355,7 +355,7 @@
 }
 
 % Date
-\ntaddtocover[vspace=1,halign=l]{2-1}{%
+\ntaddtocover[vfill=1,halign=l]{2-1}{%
   \fontsize{10}{10}\selectfont%
   \ifmaindoc{}{\GetDissertationPlan(\@DOCTYPE,\@LANG@COVER)\\[1pt]}%
   \MakeUppercase{\GetDegreeName(\@LANG@COVER)}%
@@ -376,7 +376,7 @@
 %%=======================================================================
 
 % Print sponsor logos
-\ntaddtocover[vspace=1, halign=l]{N-2}{%
+\ntaddtocover[vfill=1, halign=l]{N-2}{%
   \foreach \myi in {1, ..., 9} {%
     \IfMemVoidF{Sponsor}{\@LANG@COVER,\myi,logo}{%
       \GetSponsor(\@LANG@COVER,\myi,logo)\qquad%

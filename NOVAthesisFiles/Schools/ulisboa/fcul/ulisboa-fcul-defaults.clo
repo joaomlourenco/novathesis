@@ -206,7 +206,7 @@
 }
 
 % Sponsor (Cover 2 only)
-\ntaddtocover[height=1cm, vspace=2]{2-1}{%
+\ntaddtocover[height=1cm, vfill=2]{2-1}{%
   % \fontseries{mc}
   \fontsize{10}{10}\selectfont%
   \foreach \myi in {1, ..., 9} {%
@@ -216,10 +216,10 @@
 }
 
 % Sponsor spacer (Cover 1 only)
-\ntaddtocover[height=1cm, vspace=2]{1-1}{~}
+\ntaddtocover[height=1cm, vfill=2]{1-1}{~}
 
 % Document purpose (PhD only)
-\ntaddtocover[degree={phd,phdprop,phdplan}, vspace=1]{1-1,2-1}{%
+\ntaddtocover[degree={phd,phdprop,phdplan}, vfill=1]{1-1,2-1}{%
   % \fontseries{mc}
   \fontsize{10}{10}\selectfont%
   \thepresentationtext%

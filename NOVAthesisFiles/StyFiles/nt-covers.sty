@@ -66,6 +66,7 @@
     valign    .choices:nn = { t, c, b }
                 { \tl_set:Nn \l_nt_covers_elem_valign_tl { #1 } },
     vspace    .tl_set:N    = \l_nt_covers_elem_vspace_tl,
+    vfill     .tl_set:N    = \l_nt_covers_elem_vfill_tl,
     hspace    .dim_set:N   = \l_nt_covers_elem_hspace_dim,
     height    .dim_set:N   = \l_nt_covers_elem_height_dim,
     minheight .dim_set:N   = \l_nt_covers_elem_minheight_dim,
@@ -80,6 +81,7 @@
     halign    .initial:n = c,
     valign    .initial:n = c,
     vspace    .initial:n = 0pt,
+    vfill     .initial:n = {},
     hspace    .initial:n = 0pt,
     minheight .initial:n = 0pt,
     tikz      .initial:n = false,
@@ -129,6 +131,7 @@
     \tl_set:Nn \l_nt_covers_elem_halign_tl { c }
     \tl_set:Nn \l_nt_covers_elem_valign_tl { c }
     \tl_set:Nn \l_nt_covers_elem_vspace_tl { 0pt }
+    \tl_clear:N \l_nt_covers_elem_vfill_tl
     \dim_set:Nn \l_nt_covers_elem_hspace_dim { 0pt }
     \dim_set:Nn \l_nt_covers_elem_height_dim { 0pt }
     \dim_set:Nn \l_nt_covers_elem_minheight_dim { 0pt }
@@ -168,16 +171,14 @@
 
 \cs_new_protected:Nn \nt_covers_apply_vspace:n
   {
-    \tl_if_empty:nF { #1 }
-      {
-        \regex_match:nnTF { ^\d+$ } { #1 }
-          { \vskip 0pt plus #1 fill }
-          { \vspace*{ #1 } }
-      }
+    \tl_if_empty:NTF \l_nt_covers_elem_vfill_tl
+      { \vspace*{ #1 } }
+      { \vskip 0pt plus \l_nt_covers_elem_vfill_tl fill }
   }
 \cs_generate_variant:Nn \nt_covers_apply_vspace:n { V }
 
 % Box for element rendering
+\tl_new:N  \l_nt_covers_elem_vfill_tl
 \box_new:N \l_nt_covers_elem_box
 
 \cs_new_protected:Nn \nt_covers_render_element:nn
@@ -330,7 +331,8 @@
 %              - status={final,provisional,...}: Filter by document status
 %              - degree=phd/msc/phd_prop/...   : Filter by degree type
 %                  (accepts forward-slash or comma-separated: 'phd/msc' or 'phd,msc')
-%              - vspace=2cm                    : Vertical spacing
+%              - vspace=2cm                    : Fixed vertical spacing (TeX dimension)
+%              - vfill=1                       : Elastic vertical spacing (n × fill units)
 %              - height=5cm                    : Content height
 %              - halign=l|c|r|j                : Horizontal alignment
 %              - valign=t|c|b                  : Vertical alignment
@@ -342,6 +344,7 @@
 %   \ntaddtocover[degree=phd/phd_prop, vspace=1cm]{1-1,2-1}{%
 %     This text appears on front and back covers for PhD and PhD Proposal degrees
 %   }
+%   \ntaddtocover[vfill=1]{1-1}{} % pushes following elements to the bottom
 %
 % Note: Degree option automatically converts forward-slash format to comma-separated
 %       internally. Both formats work:  degree=phd/msc/phd_prop and degree={phd,msc,phd_prop}

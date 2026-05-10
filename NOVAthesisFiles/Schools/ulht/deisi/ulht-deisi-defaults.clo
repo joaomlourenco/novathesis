@@ -102,19 +102,19 @@
 }
 
 % Author name
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vfill=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
   \textbf{\GetDocAuthor(name)}%
 }
 
 % Degree
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vfill=1]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
   \thepresentationtext%
 }
 
 % Advisers
-\ntaddtocover[vspace=2,halign=r]{1-1,2-1}{%
+\ntaddtocover[vfill=2,halign=r]{1-1,2-1}{%
   \MemSet{adviserstringfont}{a}{\bfseries}%
   \MemSet{adviserstringfont}{c}{\bfseries}%
   \fontsize{12}{12}\selectfont%
@@ -123,7 +123,7 @@
 
 
 % Committee — only print the committee for the main classes
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vfill=1]{1-1,2-1}{%
   \ifmaindoc{%
     \MemSet{committeetitlestringfont}{}{\fontsize{14}{14}\selectfont\bfseries}%
     \MemSet{committeestringfont}{}{\bfseries}%
@@ -135,7 +135,7 @@
 
 
 % Date
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vfill=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
     \textbf{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
 }

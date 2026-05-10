@@ -122,39 +122,39 @@
 }
 
 % % Title of Dissertation
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vfill=1]{1-1,2-1}{%
   \fontsize{18}{20}\selectfont%
   %\textbf{\thetitle}%
   \textbf{\GetDocTitle(\@LANG@COVER,main)}%
 }
 
 % Author name
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vfill=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
   %\textbf{\GetDocAuthor(name)}%
   \textbf{\GetDocAuthor(name)}%
 }
 
 % Degree
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vfill=1]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
   \thepresentationtext%
 }
 
 % Advisers
-\ntaddtocover[vspace=2]{1-1,2-1}{%
+\ntaddtocover[vfill=2]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
   \ntprintpersons{0.9}{2}{adviser}{a,c}%
 }
 
 % Committee — only print the committee for the main classes
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vfill=1]{1-1,2-1}{%
   \fontsize{12}{12}\selectfont%
   \ntprintpersons{0.9}{2}{committee}{\GetCommitteeOrder()}
 }
 
 % Date
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vfill=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont%
   \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}%
 }

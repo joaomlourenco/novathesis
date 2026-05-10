@@ -175,13 +175,13 @@
 }
 
 % Presentation text
-\ntaddtocover[vspace=1,hspace=6.3cm,halign=l]{2-1}{%
+\ntaddtocover[vfill=1,hspace=6.3cm,halign=l]{2-1}{%
   \fontsize{12}{12}\selectfont%
   \thepresentationtext%
 }
 
 % Advisers 1-1
-\ntaddtocover[vspace=2,halign=r]{1-1}{%
+\ntaddtocover[vfill=2,halign=r]{1-1}{%
   \MemSet{adviserstringfont}{a}{\bfseries}%
   \MemSet{adviserstringfont}{c}{\bfseries}%
   \MemSet{advisernamefont}{}{\bfseries}%
@@ -202,7 +202,7 @@
 }
 
 % School
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vfill=1]{1-1,2-1}{%
   \fontsize{14}{14}\selectfont\bfseries%
     \GetUniversity(\@LANG@COVER)\\
   \fontsize{12}{12}\selectfont\bfseries%

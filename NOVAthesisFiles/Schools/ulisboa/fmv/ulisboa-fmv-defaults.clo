@@ -315,7 +315,7 @@
 }
 
 % Date
-\ntaddtocover[vspace=1]{1-1,2-1}{%
+\ntaddtocover[vfill=1]{1-1,2-1}{%
   % \fontseries{mc}
   \fontsize{14}{14}\selectfont%
     \PrintDateISO{\GetDocDate(submission,year)}%

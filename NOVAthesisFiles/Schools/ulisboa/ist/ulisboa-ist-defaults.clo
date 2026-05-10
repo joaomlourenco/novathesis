@@ -269,25 +269,25 @@
 }
 
 % Degree (Cover 1 only)
-\ntaddtocover[vspace=1,height=1.6cm,valign=t]{1-1}{%
+\ntaddtocover[vfill=1,height=1.6cm,valign=t]{1-1}{%
     \fontsize{10.75}{12}\selectfont%
   \thepresentationtext%
 }
 
 % Provisional/draf message (Cover 1 only)
-\ntaddtocover[vspace=1,height=1.25cm,valign=t,status={working,provisional}]{1-1}{%
+\ntaddtocover[vfill=1,height=1.25cm,valign=t,status={working,provisional}]{1-1}{%
   \fontsize{12}{12}\selectfont%
   \GetCoverMsg(\@DOCTYPE,\@LANG@COVER,prov)%
 }
 
 % Approved message (Cover 1 only)
-\ntaddtocover[vspace=1,height=1.25cm,valign=t,status={final}]{1-1}{%
+\ntaddtocover[vfill=1,height=1.25cm,valign=t,status={final}]{1-1}{%
   \fontsize{11}{11}\selectfont%
   \GetCoverMsg(\@DOCTYPE,\@LANG@COVER,final)%
 }
 
 % Funding (Cover 2 only)
-\ntaddtocover[vspace=1,height=1.25cm,valign=t,halign=l,status={final}]{2-1}{%
+\ntaddtocover[vfill=1,height=1.25cm,valign=t,halign=l,status={final}]{2-1}{%
   \ifoptionequal{/novathesis/ulisboa/ist/funding}{}{}{%
     \NewMemStore{Funding}
     \SetFunding*(pt)={Instituições Financiadoras:}
@@ -299,7 +299,7 @@
 }
 
 % Date
-\ntaddtocover[vspace=1,height=8.5mm,valign=b]{1-1,2-1}{%
+\ntaddtocover[vfill=1,height=8.5mm,valign=b]{1-1,2-1}{%
     \fontsize{12}{12}\selectfont%
     {\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
 }

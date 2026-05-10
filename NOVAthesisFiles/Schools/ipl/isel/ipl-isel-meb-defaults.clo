@@ -167,7 +167,7 @@ Master in Biomedical Engineering}
 }
 
 % Committee — only print the committee for the main classes
-\ntaddtocover[vspace=1,status=final]{1-1,2-1}{%
+\ntaddtocover[vfill=1,status=final]{1-1,2-1}{%
   \ifmaindoc{%
     \fontsize{11}{11}\selectfont%
     \underline{\GetCommitteeTitleString(\@LANG@COVER)}\\[4pt]%
@@ -180,7 +180,7 @@ Master in Biomedical Engineering}
 }
 
 % Date
-\ntaddtocover[vspace=2]{1-1,2-1}{%
+\ntaddtocover[vfill=2]{1-1,2-1}{%
   \fontsize{11}{11}\selectfont%
   \iftoggle{/novathesis/print/timestamp}{%
     \ifdocworking{\emph{\color{blue}\textbf{Draft:} \today}}%

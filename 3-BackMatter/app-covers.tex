@@ -213,6 +213,39 @@ produces the topmost block.
 All attributes are optional.  Defaults are shown in parentheses.
 
 \medskip
+\noindent\textbf{Element-level parameters (\latexinline{\ntaddtocover[options]{covers}{content}}):}
+
+\begin{center}
+\small
+\begin{tabular}{@{}llll@{}}
+\hline
+\textbf{Attribute} & \textbf{Values} & \textbf{Default} & \textbf{Description} \\
+\hline
+\texttt{status} & \texttt{working}, \texttt{provisional}, \texttt{final} & (all) & Filter by doc status \\
+\texttt{degree} & \texttt{phd}, \texttt{msc}, \texttt{bsc}, \ldots & (all) & Filter by degree type \\
+\hline
+\texttt{width}  & \textit{dim} & text width & Box width \\
+\texttt{height} & \textit{dim} & natural & Fixed box height \\
+\texttt{height/phd}, \texttt{height/msc} & \textit{dim} & — & Per-doctype height override \\
+\texttt{minheight} & \textit{dim} & \texttt{0pt} & Minimum box height \\
+\texttt{hspace} & \textit{dim} & \texttt{0pt} & Horizontal offset from left margin \\
+\hline
+\texttt{halign} & \texttt{l}, \texttt{c}, \texttt{r}, \texttt{j} & \texttt{c} & Horizontal content alignment \\
+\texttt{valign} & \texttt{t}, \texttt{c}, \texttt{b} & \texttt{c} & Vertical content alignment (needs \texttt{height}) \\
+\hline
+\texttt{color}  & \textit{colorname} & (page default) & Foreground text colour \\
+\texttt{bgcolor} & \textit{colorname} & transparent & Box background colour \\
+\hline
+\texttt{vspace} & \textit{dim} & \texttt{0pt} & Fixed vertical gap \emph{before} the element \\
+\texttt{vfill}  & \textit{integer} & — & Elastic gap before element (\textit{n}×\texttt{fill}) \\
+\hline
+\texttt{tikz}   & \texttt{true}, \texttt{false} & \texttt{false} & Treat content as raw TikZ overlay code \\
+\texttt{newpar} & \texttt{true}, \texttt{false} & \texttt{true} & Emit \latexinline{\par} after element \\
+\hline
+\end{tabular}
+\end{center}
+
+\medskip
 \noindent\textbf{Filter attributes} (the element is silently skipped when
 the filter does not match the current document):
 
@@ -275,16 +308,18 @@ the filter does not match the current document):
 \medskip
 \noindent\textbf{Vertical spacing attributes:}
 
-The \texttt{vspace} attribute controls the vertical gap \emph{before} the
-element.  It accepts either a \TeX\ dimension or a plain integer:
+Two attributes control the vertical gap \emph{before} the element.  Use
+\texttt{vspace} for an absolute dimension, or \texttt{vfill} for elastic
+(stretchable) spacing:
 
 \begin{description}
   \item[\texttt{vspace=\{<dim>\}}] Insert a fixed \latexinline{\vspace*{<dim>}} above
         the element.
-  \item[\texttt{vspace=\{<n>\}}] When the value is a plain integer, insert an
-        elastic \latexinline{\vskip 0pt plus <n>fill} instead.  This creates a
-        stretchable gap — setting \texttt{vspace=1} on consecutive elements
-        distributes the available vertical space evenly between them.
+  \item[\texttt{vfill=\{<n>\}}] Insert an elastic \latexinline{\vskip 0pt plus <n>fill}
+        before the element.  This creates a stretchable gap — a single
+        \texttt{vfill=1} between two groups of elements pushes one group to
+        the top and the other to the bottom.  Two elements each with
+        \texttt{vfill=1} distribute remaining space evenly.
   \item[\texttt{vspace/phd}, \texttt{vspace/msc}] Per-doctype override of
         \texttt{vspace}.  Takes precedence over the generic \texttt{vspace}
         when the document type matches.
@@ -322,10 +357,10 @@ column.  The following design rules apply:
   \item The element appears immediately after the previous one (zero gap by
         default).
   \item Use \texttt{vspace=\{<dim>\}} for a fixed gap and
-        \texttt{vspace=\{<n>\}} (integer) for a stretchable gap.
-  \item A single \texttt{vspace=1} between two groups of elements pushes one
+        \texttt{vfill=\{<n>\}} (integer) for a stretchable gap.
+  \item A single \texttt{vfill=1} between two groups of elements pushes one
         group to the top and the other to the bottom.  Use equal integer
-        weights (e.g.\ two elements with \texttt{vspace=1}) for equal
+        weights (e.g.\ two elements with \texttt{vfill=1}) for equal
         distribution.
   \item Use \texttt{height} to reserve vertical space even when content may
         vary in size (e.g.\ optional subtitle lines).  Combine with
@@ -353,7 +388,7 @@ Example — logo, title, elastic gap, date:
 }
 
 % Elastic gap pushes the date to the bottom of the text area
-\ntaddtocover[vspace=1, halign=l]{1-1,2-1}{%
+\ntaddtocover[vfill=1, halign=l]{1-1,2-1}{%
   \fontsize{11}{11}\selectfont
   \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}%
 }
@@ -735,7 +770,7 @@ NOVAthesisFiles/Schools/myuniv/myfac/Images/
 }
 
 % Degree name + date pushed to the bottom
-\ntaddtocover[vspace=1, halign=l]{1-1}{%
+\ntaddtocover[vfill=1, halign=l]{1-1}{%
   \fontsize{11}{11}\selectfont
   \GetDegreeName(\@LANG@COVER)\\
   \PrintDateISO{\GetDocDate(submission,year)-%
@@ -755,21 +790,21 @@ NOVAthesisFiles/Schools/myuniv/myfac/Images/
 }
 
 % Advisers
-\ntaddtocover[vspace=2, halign=l]{2-1}{%
+\ntaddtocover[vfill=2, halign=l]{2-1}{%
   \MemSet{adviserstringfont}{}{\bfseries}%
   \fontsize{11}{11}\selectfont
   \ntprintpersons{0.9}{2}{adviser}{\GetAdviserOrder()}%
 }
 
 % Committee (final status only)
-\ntaddtocover[vspace=1, halign=l, status={final}]{2-1}{%
+\ntaddtocover[vfill=1, halign=l, status={final}]{2-1}{%
   \MemSet{committeetitlestringfont}{}{\bfseries}%
   \fontsize{10}{10}\selectfont
   \ntprintpersons{0.9}{2}{committee}{\GetCommitteeOrder()}%
 }
 
 % Date at the bottom
-\ntaddtocover[vspace=1, halign=l]{2-1}{%
+\ntaddtocover[vfill=1, halign=l]{2-1}{%
   \fontsize{11}{11}\selectfont
   \GetDegreeName(\@LANG@COVER)\\
   \PrintDateISO{\GetDocDate(submission,year)-%
@@ -868,12 +903,12 @@ The layout sequence for cover \texttt{1-1}:
 \ntaddtocover[vspace=1.2cm,  height=1.35cm, valign=c]{1-1,2-1}{title}
 \ntaddtocover[vspace=1.0cm,  height=1.05cm]{1-1,2-1}{author name}
 \ntaddtocover[vspace=1.7cm,  height=3.0cm, valign=t]{1-1}{advisers}
-\ntaddtocover[vspace=1,      height=1.6cm, valign=t]{1-1}{degree text}
-\ntaddtocover[vspace=1, height=1.25cm, valign=t,
+\ntaddtocover[vfill=1,      height=1.6cm, valign=t]{1-1}{degree text}
+\ntaddtocover[vfill=1, height=1.25cm, valign=t,
               status={working,provisional}]{1-1}{draft message}
-\ntaddtocover[vspace=1, height=1.25cm, valign=t,
+\ntaddtocover[vfill=1, height=1.25cm, valign=t,
               status={final}]{1-1}{approved message}
-\ntaddtocover[vspace=1, height=8.5mm, valign=b]{1-1,2-1}{date}
+\ntaddtocover[vfill=1, height=8.5mm, valign=b]{1-1,2-1}{date}
 \end{latexcode}
 
 Each \texttt{height} reservation ensures that regardless of whether the

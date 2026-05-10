@@ -344,7 +344,7 @@ indicada.\\[1ex]
 }
 
 % Date
-\ntaddtocover[vspace=1,halign=l]{1-1,2-1}{%
+\ntaddtocover[vfill=1,halign=l]{1-1,2-1}{%
   \fontsize{11}{11}\selectfont%
   \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}
 }
@@ -355,7 +355,7 @@ indicada.\\[1ex]
 %%=======================================================================
 
 % Print sponsor logos
-\ntaddtocover[vspace=1, halign=l]{N-2}{%
+\ntaddtocover[vfill=1, halign=l]{N-2}{%
   \foreach \myi in {1, ..., 9} {%
     \IfMemVoidF{Sponsor}{\@LANG@COVER,\myi,logo}{%
       \GetSponsor(\@LANG@COVER,\myi,logo)\qquad%
