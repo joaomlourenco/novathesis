@@ -221,15 +221,12 @@
 % 4. Generate expansion variants
 \cs_generate_variant:Nn \nova_process_department:nnn { nee }
 
-\ExplSyntaxOff
 
 
 % Old \ntdepartment code (superseded above):
 %   \def\ntdepartment{\@ifstar{\@ntdepartmentifundef}{\@ntdepartment}}
 %   \def\@ntdepartmentifundef(#1)#2{\ifdatadefined{department}(#1){}{\@ntdepartment(#1){#2}}}
 %   \def\@ntdepartment(#1)#2{\department(#1):={#2}}
-
-\ExplSyntaxOn
 
 % Scratch variables used across the field-command implementations below.
 % (\l_tmpa_tl, \l_tmpb_tl, \l_tmpa_seq, \l_tmpb_seq are expl3 kernel pre-declarations.)
@@ -377,10 +374,6 @@
       { }
   }
 
-\ExplSyntaxOff
-
-
-\ExplSyntaxOn
 
 % Define a temporary token list variable
 \tl_new:N \l__memory_clean_tl
@@ -533,7 +526,6 @@
 % Old code:
 %   \def\ntauthorname(#1)#2#3{\SetDocAuthor*(gender)={#1}\SetDocAuthor*(name)={#2}...}
 %   \def\ntauthordegree(#1)#2{\SetDocAuthor*(degree,#1)={#2}}
-\ExplSyntaxOn
 \NewDocumentCommand{\ntauthorname}{ r() m m }
   {
     % #1 = gender (m/f), #2 = full name, #3 = short name
@@ -546,7 +538,6 @@
     % #1 = lang, #2 = previous degree name
     \MemSet*{DocAuthor}{degree,#1}{#2}
   }
-\ExplSyntaxOff
 
 
 
