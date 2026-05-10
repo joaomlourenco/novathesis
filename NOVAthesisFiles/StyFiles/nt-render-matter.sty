@@ -785,19 +785,21 @@
     % abstract/keywords pages come after the first page, so \hypersetup called
     % here would be silently ignored (the option is disabled by then).
     %
-    % \pdfextension info accumulates info-dict entries; the last value for each
-    % key wins when the PDF is finalised. Calling it here (body time, after the
-    % first shipout) correctly overwrites the empty /Keywords entry written by
-    % hyperref at first-page shipout.  Guard with \ifluatex in case XeLaTeX is
-    % ever supported (XeLaTeX would need a \special{pdf:info ...} equivalent).
+    % Both \pdfextension info (LuaLaTeX) and \pdfinfo (pdfLaTeX) accumulate
+    % info-dict entries; the last value for each key wins when the PDF is
+    % finalised. Calling here (body time, after the first shipout) correctly
+    % overwrites the empty /Keywords entry written by hyperref at first-page
+    % shipout. XeLaTeX would need a \special{pdf:info ...} equivalent.
     \IfStrEq{\@LSHORT}{\@LANG@MAIN}{%
-      \ifluatex
-        \begingroup
-          \def\and{, }%
-          \protected@edef\@nt@pdfkwds{\MemGet{DocKeywords}{\@LANG@MAIN}}%
+      \begingroup
+        \def\and{, }%
+        \protected@edef\@nt@pdfkwds{\MemGet{DocKeywords}{\@LANG@MAIN}}%
+        \ifluatex
           \pdfextension info{/Keywords(\@nt@pdfkwds)}%
-        \endgroup
-      \fi
+        \else\ifpdftex
+          \pdfinfo{/Keywords(\@nt@pdfkwds)}%
+        \fi\fi
+      \endgroup
     }{}%
     \par\addvspace\baselineskip\noindent%
     \begingroup%
@@ -1015,6 +1017,6 @@
   \makeatother  
 }
 
-% PDF Keywords are set inside \keywords{} via \pdfextension info (body time),
-% which overwrites the empty /Keywords entry that hyperref's \PDF@FinishDoc
-% writes at first-page shipout.  See the comment block above \IfStrEq there.
+% PDF Keywords are set inside \keywords{} via \pdfextension info (LuaLaTeX)
+% or \pdfinfo (pdfLaTeX) during body processing, which overwrites the empty
+% /Keywords entry that hyperref's \PDF@FinishDoc writes at first-page shipout.
