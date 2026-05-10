@@ -21,10 +21,8 @@
 
 \definecolor{istchaptercolor}{rgb}{0.7,0.8,0.9}
 
-\undef{\@nt@ist@chapter}
-\newsavebox{\@nt@ist@chapter}
-\undef{\@nt@ist@part}
-\newsavebox{\@nt@ist@part}
+\@ifundefined{@nt@ist@chapter}{\newsavebox{\@nt@ist@chapter}}{}
+\@ifundefined{@nt@ist@part}{\newsavebox{\@nt@ist@part}}{}
 
 
 %%=======================================================================
