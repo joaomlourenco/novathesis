@@ -477,10 +477,6 @@
         \MemSet*{AbstractOrder}{ \l__nt_ao_lang_tl }{ \l__nt_ao_val_tl }
       }
   }
-% Defined inside ExplSyntaxOn so the body tokens keep expl3 catcodes;
-% no \ExplSyntaxOn/Off toggle needed in the body even when called outside.
-\NewDocumentCommand \@nt@addabstractorder { m }
-  { \seq_gput_right:Nn \g__nt_abstractorder_seq {#1} }
 \ExplSyntaxOff
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -613,7 +609,7 @@
   media/.new choice             = {screen, paper},
   spine/layout/.new choice      = {unset, trim, false},
   spine/width/.new length       = {0pt},
-  abstractorder/.new cmd        = {\@nt@addabstractorder{#1}},%
+  abstractorder/.new cmd        = {\ExplSyntaxOn\seq_gput_right:Nn \g__nt_abstractorder_seq {#1}\ExplSyntaxOff},%
   schoolgiven/.new value        = {},
   school/.new cmd               = {\optionsalso{/novathesis/schoolgiven=#1}%
                                    \StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR
