@@ -333,6 +333,9 @@
     \tl_if_empty:NF \g_nt_covers_tikz_overlay_tl
       {
         \begin{tikzpicture}[remember~picture, overlay]
+          % Re-apply the cover textcolor so overlay nodes inherit it (the minipage
+          % group already closed, reverting \color back to the document default)
+          \color{ \l_nt_covers_textcolor_tl }
           \g_nt_covers_tikz_overlay_tl
         \end{tikzpicture}
       }
