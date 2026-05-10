@@ -40,6 +40,7 @@
 \tl_new:N  \g_nt_covers_tikz_overlay_tl
 \tl_new:N  \l_nt_covers_doctype_tl
 \tl_new:N  \l_nt_covers_docstatus_tl
+\tl_new:N  \l_nt_covers_textcolor_tl
 \bool_new:N \l_nt_covers_status_match_bool
 \bool_new:N \l_nt_covers_degree_match_bool
 \bool_new:N \l_nt_covers_defined_bool
@@ -178,7 +179,6 @@
 \cs_generate_variant:Nn \nt_covers_apply_vspace:n { V }
 
 % Box for element rendering
-\tl_new:N  \l_nt_covers_elem_vfill_tl
 \box_new:N \l_nt_covers_elem_box
 
 \cs_new_protected:Nn \nt_covers_render_element:nn
@@ -191,7 +191,7 @@
             % 1. Apply Vertical Space
             \nt_covers_apply_vspace:V \l_nt_covers_elem_vspace_tl
 
-            % 2. Prepare the box
+            % 2. Compute element width
             \group_begin:
               \noindent \hspace*{ \l_nt_covers_elem_hspace_dim }
 
@@ -199,41 +199,42 @@
                 { \dim_set_eq:NN \l_tmpa_dim \l_nt_covers_elem_width_dim }
                 { \dim_set:Nn \l_tmpa_dim { \l_nt_covers_width_dim - \l_nt_covers_elem_hspace_dim } }
 
-              \hbox_set:Nw \l_nt_covers_elem_box
-                % Handle optional height
-                \dim_compare:nNnTF { \l_nt_covers_elem_height_dim } > { 0pt }
-                  {
-                    \begin{minipage} [ \l_nt_covers_elem_valign_tl ]
-                                   [ \dim_use:N \l_nt_covers_elem_height_dim ]
-                                   { \l_tmpa_dim }
-                  }
-                  {
-                    \begin{minipage} [ \l_nt_covers_elem_valign_tl ]
-                                   { \l_tmpa_dim }
-                  }
-
-                % Apply color if set
-                \tl_if_empty:NF \l_nt_covers_elem_color_tl { \color{ \l_nt_covers_elem_color_tl } }
-
-                % Apply alignment
-                \prop_get:NVN \g_nt_covers_align_map_prop \l_nt_covers_elem_halign_tl \l_nt_covers_tmp_tl
-                \l_nt_covers_tmp_tl
-
-                % Insert code
-                #2
-
-                \end{minipage}
-              \hbox_set_end:
-
-              % Apply background color if set
-              \tl_if_empty:NF \l_nt_covers_elem_bgcolor_tl
+              % 3a. No bgcolor: output minipage directly (no boxing overhead)
+              % 3b. With bgcolor: box the minipage first, then colorbox-wrap it
+              \tl_if_empty:NTF \l_nt_covers_elem_bgcolor_tl
                 {
+                  % --- Direct path ---
+                  \dim_compare:nNnTF { \l_nt_covers_elem_height_dim } > { 0pt }
+                    { \begin{minipage} [ \l_nt_covers_elem_valign_tl ]
+                                       [ \dim_use:N \l_nt_covers_elem_height_dim ]
+                                       { \l_tmpa_dim } }
+                    { \begin{minipage} [ \l_nt_covers_elem_valign_tl ]
+                                       { \l_tmpa_dim } }
+                  \tl_if_empty:NF \l_nt_covers_elem_color_tl { \color{ \l_nt_covers_elem_color_tl } }
+                  \prop_get:NVN \g_nt_covers_align_map_prop \l_nt_covers_elem_halign_tl \l_nt_covers_tmp_tl
+                  \l_nt_covers_tmp_tl
+                  #2
+                  \end{minipage}
+                }
+                {
+                  % --- Boxed path (bgcolor needs colorbox wrapping) ---
+                  \hbox_set:Nw \l_nt_covers_elem_box
+                    \dim_compare:nNnTF { \l_nt_covers_elem_height_dim } > { 0pt }
+                      { \begin{minipage} [ \l_nt_covers_elem_valign_tl ]
+                                         [ \dim_use:N \l_nt_covers_elem_height_dim ]
+                                         { \l_tmpa_dim } }
+                      { \begin{minipage} [ \l_nt_covers_elem_valign_tl ]
+                                         { \l_tmpa_dim } }
+                    \tl_if_empty:NF \l_nt_covers_elem_color_tl { \color{ \l_nt_covers_elem_color_tl } }
+                    \prop_get:NVN \g_nt_covers_align_map_prop \l_nt_covers_elem_halign_tl \l_nt_covers_tmp_tl
+                    \l_nt_covers_tmp_tl
+                    #2
+                    \end{minipage}
+                  \hbox_set_end:
                   \hbox_set:Nn \l_nt_covers_elem_box
                     { \colorbox{ \l_nt_covers_elem_bgcolor_tl } { \box_use:N \l_nt_covers_elem_box } }
+                  \box_use:N \l_nt_covers_elem_box
                 }
-
-              % Typeset the final box
-              \box_use:N \l_nt_covers_elem_box
 
               \bool_if:NT \l_nt_covers_elem_newpar_bool { \par }
             \group_end:
@@ -267,6 +268,22 @@
     \dim_set:Nn \l_nt_covers_width_dim  { \paperwidth  - \l_nt_covers_left_dim - \l_nt_covers_right_dim }
     \dim_set:Nn \l_nt_covers_height_dim { \paperheight - \l_nt_covers_top_dim  - \l_nt_covers_bottom_dim }
 
+    % Lookup text color for this cover (default: black)
+    % Applied as the first command inside the minipage so all elements inherit it.
+    \tl_set:Nn \l_nt_covers_textcolor_tl { black }
+    \datamatchtf{ \l_nt_covers_textcolor_tl }{ThesisCover}(
+      {\@DOCTYPE,\@DEGREEACR,#1,textcolor},
+      {\@DOCCLASS,\@DEGREEACR,#1,textcolor},
+      {\@DEGREEACR,#1,textcolor},
+      {\@DEGREEACR,textcolor},
+      {\@DOCTYPE,#1,textcolor},
+      {\@DOCCLASS,#1,textcolor},
+      {#1,textcolor},
+      {textcolor}
+    ) { } { }
+    % Guard against an empty match (e.g. school sets textcolor to nothing)
+    \tl_if_empty:NT \l_nt_covers_textcolor_tl { \tl_set:Nn \l_nt_covers_textcolor_tl { black } }
+
     \tl_gclear:N \g_nt_covers_tikz_overlay_tl
 
     \begin{tikzpicture}[remember~picture, overlay]
@@ -276,13 +293,17 @@
             at (current~page.north~west)
         {
           \begin{minipage}[t][\dim_use:N \l_nt_covers_height_dim][t]{\dim_use:N \l_nt_covers_width_dim}
-             \NTRunHook{cover/text/pre}
+            % Step 3: set default text colour (inherited by all elements in this minipage)
+            \color{ \l_nt_covers_textcolor_tl }
+            \NTRunHook{cover/text/pre}
+            \NTRunHook{cover/#1/text/pre}
             \prop_get:NnNTF \g_nt_covers_content_prop { #1 } \l_nt_covers_content_tl
               {
                 \tl_map_inline:Nn \l_nt_covers_content_tl { \nt_covers_render_element:nn ##1 }
               }
               { }
-             \NTRunHook{cover/text/post}
+            \NTRunHook{cover/#1/text/post}
+            \NTRunHook{cover/text/post}
           \end{minipage}
         };
     \end{tikzpicture}
@@ -422,9 +443,9 @@
       \bookmark[level=\bmshift, dest=\HyperLocalCurrentHref]{\GetBkmString(#1-#2)}
       \thispagestyle{empty}
 
-      % Background Color
-      \NTRunHook{cover/bgcolor/pre}
-      \NTRunHook{cover/#1-#2/bgcolor/pre}
+      % Step 1: Background Colour
+      % \NTRunHook{cover/bgcolor/pre}       % reserved for future use
+      % \NTRunHook{cover/#1-#2/bgcolor/pre} % reserved for future use
       \datamatchtf{ \l_nt_covers_tmp_tl }{ThesisCover}(
         {\@DOCTYPE,\@DEGREEACR,#1-#2,bgcolor},
         {\@DOCCLASS,\@DEGREEACR,#1-#2,bgcolor},
@@ -435,28 +456,12 @@
         {#1-#2,bgcolor},
         {bgcolor}
       ) { \pagecolor{\l_nt_covers_tmp_tl} } { \pagecolor{white} }
-      \NTRunHook{cover/#1-#2/bgcolor/post}
-      \NTRunHook{cover/bgcolor/post}
+      % \NTRunHook{cover/#1-#2/bgcolor/post} % reserved for future use
+      % \NTRunHook{cover/bgcolor/post}        % reserved for future use
 
-      % Text Color
-      \NTRunHook{cover/textcolor/pre}
-      \NTRunHook{cover/#1-#2/textcolor/pre}
-      \datamatchtf{ \l_nt_covers_tmp_tl }{ThesisCover}(
-        {\@DOCTYPE,\@DEGREEACR,#1-#2,textcolor},
-        {\@DOCCLASS,\@DEGREEACR,#1-#2,textcolor},
-        {\@DEGREEACR,#1-#2,textcolor},
-        {\@DEGREEACR,textcolor},
-        {\@DOCTYPE,#1-#2,textcolor},
-        {\@DOCCLASS,#1-#2,textcolor},
-        {#1-#2,textcolor},
-        {textcolor}
-      ) { \color{\l_nt_covers_tmp_tl} } { \color{black} }
-      \NTRunHook{cover/#1-#2/textcolor/post}
-      \NTRunHook{cover/textcolor/post}
-
-      % Background Image
-      \NTRunHook{cover/bgimage/pre}
-      \NTRunHook{cover/#1-#2/bgimage/pre}
+      % Step 2: Background Image (full-page TikZ overlay)
+      % \NTRunHook{cover/bgimage/pre}       % reserved for future use
+      % \NTRunHook{cover/#1-#2/bgimage/pre} % reserved for future use
       \datamatchtf{ \l_nt_covers_tmp_tl }{ThesisCover}(
         {\@DOCTYPE,\@DEGREEACR,#1-#2,image},
         {\@DOCCLASS,\@DEGREEACR,#1-#2,image},
@@ -473,15 +478,19 @@
               {\includegraphics[width=\paperwidth,height=\paperheight]{\l_nt_covers_tmp_tl}};
           \end{tikzpicture}
         } { }
-      \NTRunHook{cover/#1-#2/bgimage/post}
-      \NTRunHook{cover/bgimage/post}
+      % \NTRunHook{cover/#1-#2/bgimage/post} % reserved for future use
+      % \NTRunHook{cover/bgimage/post}        % reserved for future use
 
-      \NTRunHook{cover/text/pre}
-      \NTRunHook{cover/#1-#2/text/pre}
+      % Steps 3+4: Text colour (set inside minipage) + Element rendering
+      % cover/text/pre, cover/#1-#2/text/pre, cover/#1-#2/text/post, cover/text/post
+      % are all fired inside \nt_covers_print_text:n, within the minipage group,
+      % so font/colour changes in those hooks take effect correctly.
+      % \NTRunHook{cover/text/pre}        % moved inside minipage (nt_covers_print_text:n)
+      % \NTRunHook{cover/#1-#2/text/pre}  % moved inside minipage (nt_covers_print_text:n)
       \nt_covers_print_text:n { #1-#2 }
       \nt_covers_print_tikz:n { #1-#2 }
-      \NTRunHook{cover/#1-#2/text/post}
-      \NTRunHook{cover/text/post}
+      % \NTRunHook{cover/#1-#2/text/post} % moved inside minipage (nt_covers_print_text:n)
+      % \NTRunHook{cover/text/post}       % moved inside minipage (nt_covers_print_text:n)
 
       \NTRunHook{cover/#1-#2/post}
       \NTRunHook{cover/post}
