@@ -96,15 +96,10 @@
 %% UTILITIES & HOOKS
 %%=======================================================================
 
-\NTAddToHook{cover/text/pre}{%
-  \sffamily%
-}
-
-
-%%=======================================================================
-%% COVER 1 & 2 ELEMENTS
-%%=======================================================================
-
+\SetThesisCover(textfont)={\sffamily}
+% \NTAddToHook{cover/text/pre}{%
+%   \sffamily%
+% }
 % LOGO
 \ntaddtocover[vspace=0cm]{1-1,2-1}{%
   \includegraphics[width=12cm]{iscte-iul-\@LANG@COVER} % Adjusts the front page logo based on the lang/cover property

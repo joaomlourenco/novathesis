@@ -123,8 +123,8 @@
 %% UTILITIES & HOOKS
 %%=======================================================================
 
+\SetThesisCover(textfont)={\sffamily}
 \NTAddToHook{cover/text/pre}{%
-  \sffamily%
   \ifdocfinal{\SetProvisionalString*(\@LANG@COVER)={~}}{}%
 }
 

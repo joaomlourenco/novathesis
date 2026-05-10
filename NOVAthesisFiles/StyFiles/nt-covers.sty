@@ -41,6 +41,7 @@
 \tl_new:N  \l_nt_covers_doctype_tl
 \tl_new:N  \l_nt_covers_docstatus_tl
 \tl_new:N  \l_nt_covers_textcolor_tl
+\tl_new:N  \l_nt_covers_textfont_tl
 \bool_new:N \l_nt_covers_status_match_bool
 \bool_new:N \l_nt_covers_degree_match_bool
 \bool_new:N \l_nt_covers_defined_bool
@@ -272,17 +273,37 @@
     % Applied as the first command inside the minipage so all elements inherit it.
     \tl_set:Nn \l_nt_covers_textcolor_tl { black }
     \datamatchtf{ \l_nt_covers_textcolor_tl }{ThesisCover}(
-      {\@DOCTYPE,\@DEGREEACR,#1,textcolor},
-      {\@DOCCLASS,\@DEGREEACR,#1,textcolor},
-      {\@DEGREEACR,#1,textcolor},
-      {\@DEGREEACR,textcolor},
-      {\@DOCTYPE,#1,textcolor},
-      {\@DOCCLASS,#1,textcolor},
-      {#1,textcolor},
-      {textcolor}
+        {\@DOCTYPE,\@DEGREEACR,#1,textcolor},
+        {\@DOCCLASS,\@DEGREEACR,#1,textcolor},
+        {\@DEGREEACR,#1,textcolor},
+        {\@DEGREEACR,textcolor},
+        {\@DOCTYPE,#1,textcolor},
+        {\@DOCCLASS,#1,textcolor},
+        {#1,textcolor},
+        {textcolor}
     ) { } { }
     % Guard against an empty match (e.g. school sets textcolor to nothing)
     \tl_if_empty:NT \l_nt_covers_textcolor_tl { \tl_set:Nn \l_nt_covers_textcolor_tl { black } }
+
+    % Lookup text font for this cover (default: empty = no font switch)
+    % NOTE: must NOT use \datamatchtf — it e-expands stored values, which corrupts
+    % command tokens like \sffamily.  Use \prop_get:cnN directly (no expansion).
+    \tl_clear:N \l_nt_covers_textfont_tl
+    \exp_args:Ne \clist_map_inline:nn
+      {
+        {\@DOCTYPE,\@DEGREEACR,#1,textfont},
+        {\@DOCCLASS,\@DEGREEACR,#1,textfont},
+        {\@DEGREEACR,#1,textfont},
+        {\@DEGREEACR,textfont},
+        {\@DOCTYPE,#1,textfont},
+        {\@DOCCLASS,#1,textfont},
+        {#1,textfont},
+        {textfont}
+      }
+      {
+        \prop_get:cnNTF { g__mem_ThesisCover_prop } { ##1 } \l_nt_covers_textfont_tl
+          { \clist_map_break: } { }
+      }
 
     \tl_gclear:N \g_nt_covers_tikz_overlay_tl
 
@@ -293,8 +314,9 @@
             at (current~page.north~west)
         {
           \begin{minipage}[t][\dim_use:N \l_nt_covers_height_dim][t]{\dim_use:N \l_nt_covers_width_dim}
-            % Step 3: set default text colour (inherited by all elements in this minipage)
+            % Step 3: set default text colour and font (inherited by all elements in this minipage)
             \color{ \l_nt_covers_textcolor_tl }
+            \tl_if_empty:NF \l_nt_covers_textfont_tl { \tl_use:N \l_nt_covers_textfont_tl }
             \NTRunHook{cover/text/pre}
             \NTRunHook{cover/#1/text/pre}
             \prop_get:NnNTF \g_nt_covers_content_prop { #1 } \l_nt_covers_content_tl
@@ -450,10 +472,14 @@
         {\@DOCTYPE,\@DEGREEACR,#1-#2,bgcolor},
         {\@DOCCLASS,\@DEGREEACR,#1-#2,bgcolor},
         {\@DEGREEACR,#1-#2,bgcolor},
-        {\@DEGREEACR,bgcolor},
         {\@DOCTYPE,#1-#2,bgcolor},
         {\@DOCCLASS,#1-#2,bgcolor},
         {#1-#2,bgcolor},
+        {\@DOCTYPE,\@DEGREEACR,bgcolor},
+        {\@DOCCLASS,\@DEGREEACR,bgcolor},
+        {\@DEGREEACR,bgcolor},
+        {\@DOCTYPE,bgcolor},
+        {\@DOCCLASS,bgcolor},
         {bgcolor}
       ) { \pagecolor{\l_nt_covers_tmp_tl} } { \pagecolor{white} }
       % \NTRunHook{cover/#1-#2/bgcolor/post} % reserved for future use
@@ -466,10 +492,14 @@
         {\@DOCTYPE,\@DEGREEACR,#1-#2,image},
         {\@DOCCLASS,\@DEGREEACR,#1-#2,image},
         {\@DEGREEACR,#1-#2,image},
-        {\@DEGREEACR,image},
         {\@DOCTYPE,#1-#2,image},
         {\@DOCCLASS,#1-#2,image},
         {#1-#2,image},
+        {\@DOCTYPE,\@DEGREEACR,image},
+        {\@DOCCLASS,\@DEGREEACR,image},
+        {\@DEGREEACR,image},
+        {\@DOCTYPE,image},
+        {\@DOCCLASS,image},
         {image}
       )
         {
@@ -537,30 +567,42 @@
     \bool_if:NF \l_nt_covers_defined_bool
       {
         \datamatchtf{ \l_nt_covers_tmp_tl }{ThesisCover}(
-          {\@DOCTYPE,\@DEGREEACR,#1,bgcolor},
-          {\@DOCCLASS,\@DEGREEACR,#1,bgcolor},
-          {\@DEGREEACR,#1,bgcolor},
-          {\@DEGREEACR,bgcolor},
-          {\@DOCTYPE,#1,bgcolor},
-          {\@DOCCLASS,#1,bgcolor},
-          {#1,bgcolor},
-          {bgcolor},
-          {\@DOCTYPE,\@DEGREEACR,#1,textcolor},
-          {\@DOCCLASS,\@DEGREEACR,#1,textcolor},
-          {\@DEGREEACR,#1,textcolor},
-          {\@DEGREEACR,textcolor},
-          {\@DOCTYPE,#1,textcolor},
-          {\@DOCCLASS,#1,textcolor},
-          {#1,textcolor},
-          {textcolor},
-          {\@DOCTYPE,\@DEGREEACR,#1,image},
-          {\@DOCCLASS,\@DEGREEACR,#1,image},
-          {\@DEGREEACR,#1,image},
-          {\@DEGREEACR,image},
-          {\@DOCTYPE,#1,image},
-          {\@DOCCLASS,#1,image},
-          {#1,image},
-          {image}
+        {\@DOCTYPE,\@DEGREEACR,#1,textcolor},
+        {\@DOCCLASS,\@DEGREEACR,#1,textcolor},
+        {\@DEGREEACR,#1,textcolor},
+        {\@DOCTYPE,#1,textcolor},
+        {\@DOCCLASS,#1,textcolor},
+        {#1,textcolor},
+        {\@DOCTYPE,\@DEGREEACR,textcolor},
+        {\@DOCCLASS,\@DEGREEACR,textcolor},
+        {\@DEGREEACR,textcolor},
+        {\@DOCTYPE,textcolor},
+        {\@DOCCLASS,textcolor},
+        {textcolor},
+        {\@DOCTYPE,\@DEGREEACR,#1,bgcolor},
+        {\@DOCCLASS,\@DEGREEACR,#1,bgcolor},
+        {\@DEGREEACR,#1,bgcolor},
+        {\@DOCTYPE,#1,bgcolor},
+        {\@DOCCLASS,#1,bgcolor},
+        {#1,bgcolor},
+        {\@DOCTYPE,\@DEGREEACR,bgcolor},
+        {\@DOCCLASS,\@DEGREEACR,bgcolor},
+        {\@DEGREEACR,bgcolor},
+        {\@DOCTYPE,bgcolor},
+        {\@DOCCLASS,bgcolor},
+        {bgcolor},
+        {\@DOCTYPE,\@DEGREEACR,#1,image},
+        {\@DOCCLASS,\@DEGREEACR,#1,image},
+        {\@DEGREEACR,#1,image},
+        {\@DOCTYPE,#1,image},
+        {\@DOCCLASS,#1,image},
+        {#1,image},
+        {\@DOCTYPE,\@DEGREEACR,image},
+        {\@DOCCLASS,\@DEGREEACR,image},
+        {\@DEGREEACR,image},
+        {\@DOCTYPE,image},
+        {\@DOCCLASS,image},
+        {image}
         ) { \bool_set_true:N \l_nt_covers_defined_bool } { }
       }
 

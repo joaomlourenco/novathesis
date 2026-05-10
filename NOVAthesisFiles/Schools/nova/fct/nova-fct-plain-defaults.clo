@@ -172,6 +172,7 @@
 %%=======================================================================
 
 \SetThesisCover*(1-1,textcolor)={white}
+\SetThesisCover(textfont)={\sffamily}
 
 % Set cover color (background image)
 \ifcsname @novafctcovercolor\endcsname\else
@@ -227,20 +228,20 @@
   \color{white}
 }
 
-\NTAddToHook{cover/text/pre}{%
-  % \iftutex
-  %     \setsansfont{Inter}[
-  %       Scale = 0.95,
-  %       Extension = .otf,
-  %       UprightFont = *-Regular,
-  %       ItalicFont = *-Italic,
-  %       BoldFont = *-Bold,
-  %       BoldItalicFont = *-BoldItalic,
-  %       Ligatures = {NoCommon, TeX} % This kills the 'oe' ligature while keeping '--'
-  %     ]
-  % \fi
-  \sffamily%
-}
+% \NTAddToHook{cover/text/pre}{%  % superseded by \SetThesisCover(textfont)={\sffamily} above
+%   % \iftutex
+%   %     \setsansfont{Inter}[
+%   %       Scale = 0.95,
+%   %       Extension = .otf,
+%   %       UprightFont = *-Regular,
+%   %       ItalicFont = *-Italic,
+%   %       BoldFont = *-Bold,
+%   %       BoldItalicFont = *-BoldItalic,
+%   %       Ligatures = {NoCommon, TeX} % This kills the 'oe' ligature while keeping '--'
+%   %     ]
+%   % \fi
+%   \sffamily%
+% }
 
 
 %%=======================================================================

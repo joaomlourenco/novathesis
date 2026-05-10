@@ -41,14 +41,10 @@
 %% FONTS
 %%=======================================================================
 
-\NTAddToHook{cover/text/pre}{%
-  \sffamily%
-}
-
-
-%%=======================================================================
-%% LAYOUT (MARGINS)
-%%=======================================================================
+\SetThesisCover(textfont)={\sffamily}
+% \NTAddToHook{cover/text/pre}{%
+%   \sffamily%
+% }
 
 % Set margins for "normal" pages
 \SetMargin*(screen,top)={3.5cm}
@@ -90,14 +86,9 @@
 %% UTILITIES & HOOKS
 %%=======================================================================
 
-\NTAddToHook{cover/text/pre}{%
-  \sffamily%
-}
-
-
-%%=======================================================================
-%% COVER 1 & 2 ELEMENTS
-%%=======================================================================
+% \NTAddToHook{cover/text/pre}{%  % superseded by \SetThesisCover(textfont)={\sffamily} above
+%   \sffamily%
+% }
 
 % ENSP logo
 \ntaddtocover[vspace=1cm,halign=c,valign=t]{1-1,2-1}{%

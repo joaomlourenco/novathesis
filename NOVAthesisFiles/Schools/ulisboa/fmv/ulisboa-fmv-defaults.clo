@@ -186,7 +186,8 @@
   \sffamily%
 }
 
-\NTAddToHook{cover/text/pre}{\sffamily}
+\SetThesisCover(textfont)={\sffamily}
+% \NTAddToHook{cover/text/pre}{\sffamily}
 
 \NTAddToHook{ntquote/pre}{\vspace*{3cm}}
 

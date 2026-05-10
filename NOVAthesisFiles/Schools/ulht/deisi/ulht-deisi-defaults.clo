@@ -81,15 +81,10 @@
 %% UTILITIES & HOOKS
 %%=======================================================================
 
-\NTAddToHook{cover/text/pre}{%
-  \sffamily%
-}
-
-
-%%=======================================================================
-%% COVER 1 & 2 ELEMENTS
-%%=======================================================================
-
+\SetThesisCover(textfont)={\sffamily}
+% \NTAddToHook{cover/text/pre}{%
+%   \sffamily%
+% }
 % LOGO
 \ntaddtocover[halign=r,vspace=0cm]{1-1,2-1}{%
   \includegraphics[width=2.9cm, height=3cm]{\GetSchool(logo)}%

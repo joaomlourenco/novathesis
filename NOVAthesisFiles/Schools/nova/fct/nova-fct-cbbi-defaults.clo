@@ -194,11 +194,10 @@
   \fi
 }
 
-\NTAddToHook{cover/text/pre}{%
-  \sffamily%
-}
-
-\NTAddToHook{spine/pre}{%
+\SetThesisCover(textfont)={\sffamily}
+% \NTAddToHook{cover/text/pre}{%
+%   \sffamily%
+% }
   \sffamily%
 }
 

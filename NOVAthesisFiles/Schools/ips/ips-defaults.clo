@@ -73,15 +73,10 @@
 \newcommand{\@leftcol}{0.37\linewidth}
 \newcommand{\@rightcol}{0.55\linewidth}
 
-\NTAddToHook{cover/text/pre}{%
-  \sffamily%
-}
-
-
-%%=======================================================================
-%% COVER 1 ELEMENTS
-%%=======================================================================
-
+\SetThesisCover(textfont)={\sffamily}
+% \NTAddToHook{cover/text/pre}{%
+%   \sffamily%
+% }
 % LOGO
 \ntaddtocover[vspace=0cm]{1-1}{%
   \includegraphics[height=4.6cm]{\expanded{\GetSchool(logo)}}%

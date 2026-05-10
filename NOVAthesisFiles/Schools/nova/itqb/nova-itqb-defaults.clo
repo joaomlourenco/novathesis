@@ -175,13 +175,10 @@
   \fi
 }
 
-\NTAddToHook{cover/text/pre}{%
-  \sffamily%
-}
-
-%%=======================================================================
-%% COVER 1 ELEMENTS
-%%=======================================================================
+\SetThesisCover(textfont)={\sffamily}
+% \NTAddToHook{cover/text/pre}{%
+%   \sffamily%
+% }
 
 \ntaddtocover[tikz]{1-1}{%
     \sffamily%
