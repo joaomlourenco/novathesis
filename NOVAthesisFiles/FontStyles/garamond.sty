@@ -1,0 +1,53 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/garamond.sty
+%% NOVA thesis configuration file
+%%
+%% Customization of fonts to use EB Garamond font set
+%% Requires XeLaTeX or LuaLaTeX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE FontStyles/garamond.sty}%
+
+
+%%=======================================================================
+%% ENGINE CHECK
+%%=======================================================================
+
+\ifxeorlua{}{%
+  \ClassError{novathesis}
+             {Font~style~"garamond"~is~not~compatible~with~pdfLaTeX.~Please~use~XeLaTeX~or~LuaLaTeX}
+             {Please~use~XeLaTeX~or~LuaLaTeX}%
+}
+
+
+%%=======================================================================
+%% FONT VERIFICATION
+%%=======================================================================
+
+\RequirePackage{fontspec}
+
+
+%%=======================================================================
+%% FONT SELECTION
+%%=======================================================================
+
+% EB Garamond - Elegant serif font
+\setmainfont{EB Garamond}[
+  Ligatures = {TeX, Common, Discretionary},
+  Scale     = 1.0,
+]
+
+% TeX Gyre Heros for sans (pairs well with Garamond)
+\setsansfont{TeX Gyre Heros}[
+  Ligatures = TeX,
+  Scale     = 0.95,
+]
+
+% TeX Gyre Cursor for monospace
+\setmonofont{TeX Gyre Cursor}[
+  Ligatures = TeX,
+  Scale     = 0.95,
+]
+
+% Math font with Garamond scaling
+\RequirePackage[utopia]{newtxmath}

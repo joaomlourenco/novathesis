@@ -1,0 +1,42 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/times.sty
+%% NOVA thesis configuration file
+%%
+%% Customization of fonts to use Times New Roman font set
+%% Compatible with both pdfLaTeX and XeLaTeX/LuaLaTeX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE FontStyles/times.sty}%
+
+
+%%=======================================================================
+%% FONT SELECTION
+%%=======================================================================
+
+\ifxeorlua
+{
+  % XeLaTeX/LuaLaTeX version using system fonts
+  \setmainfont{Times New Roman}[
+    Ligatures = {TeX, Common},
+    Scale     = 1.0,
+  ]
+  
+  \setsansfont{Helvetica}[
+    Ligatures = TeX,
+    Scale     = 0.95,
+  ]
+  
+  \setmonofont{Courier New}[
+    Ligatures = TeX,
+    Scale     = 0.90,
+  ]
+  
+  % Math font
+  \RequirePackage[utopia]{newtxmath}
+}
+{
+  % pdfLaTeX version using packages
+  \RequirePackage{mathptmx}        % Times Roman text font
+  \RequirePackage[scaled=0.95]{helvet}  % Helvetica for sans-serif
+  \RequirePackage{courier}         % Courier for monospace
+}

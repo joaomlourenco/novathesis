@@ -731,13 +731,20 @@
   % #4 = base URL
   % #5 = target folder
 
-  % Check if shell escape is enabled (compatible with all engines)
-  \sys_if_shell_unrestricted:TF
+  % Check if using XeLaTeX or LuaLaTeX
+  \ifxeorlua
   {
-    \nt_check_fonts:nnnnn { #1 } { #2 } { #3 } { #4 } { #5 }
+    % Check if shell escape is enabled (compatible with all engines)
+    \sys_if_shell_unrestricted:TF
+    {
+      \nt_check_fonts:nnnnn { #1 } { #2 } { #3 } { #4 } { #5 }
+    }
+    {
+      \msg_error:nnnn { ntfonts } { shell-escape-required } { \c_sys_jobname_str } { \ntcheckfonts }
+    }
   }
   {
-    \msg_error:nnnn { ntfonts } { shell-escape-required } { \c_sys_jobname_str } { \ntcheckfonts }
+    \ClassError{novathesis}{Font~style~"#2"~is~not~compatible~with~pdfLaTeX.~Please~use~XeLaTeX~or~LuaLaTeX}{Please~use~XeLaTeX~or~LuaLaTeX}%
   }
 }
 

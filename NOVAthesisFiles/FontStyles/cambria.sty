@@ -1,0 +1,58 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/cambria.sty
+%% NOVA thesis configuration file
+%%
+%% Customization of fonts to use Cambria font set (Microsoft Office)
+%% Requires XeLaTeX or LuaLaTeX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE FontStyles/cambria.sty}%
+
+
+%%=======================================================================
+%% ENGINE CHECK
+%%=======================================================================
+
+\ifxeorlua{}{%
+  \ClassError{novathesis}
+             {Font~style~"cambria"~is~not~compatible~with~pdfLaTeX.~Please~use~XeLaTeX~or~LuaLaTeX}
+             {Please~use~XeLaTeX~or~LuaLaTeX}%
+}
+
+
+%%=======================================================================
+%% FONT VERIFICATION
+%%=======================================================================
+
+\RequirePackage{fontspec}
+
+
+%%=======================================================================
+%% FONT SELECTION
+%%=======================================================================
+
+% Cambria - Modern serif font from Microsoft Office
+\setmainfont{Cambria}[
+  Ligatures = {TeX, Common},
+  Scale     = 1.0,
+]
+
+% Segoe UI for sans-serif (modern corporate look)
+\setsansfont{Segoe UI}[
+  Ligatures = TeX,
+  Scale     = 0.95,
+]
+
+% Courier New for monospace
+\setmonofont{Courier New}[
+  Ligatures = TeX,
+  Scale     = 0.90,
+]
+
+% Cambria Math for mathematical typesetting
+\IfFontExistsTF{Cambria Math}{%
+  \setmathfont{Cambria Math}
+}{%
+  % Fallback to newtxmath if Cambria Math is not available
+  \RequirePackage[utopia]{newtxmath}
+}
