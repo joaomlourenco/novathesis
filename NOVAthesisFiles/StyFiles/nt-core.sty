@@ -477,13 +477,11 @@
         \MemSet*{AbstractOrder}{ \l__nt_ao_lang_tl }{ \l__nt_ao_val_tl }
       }
   }
+% Defined inside ExplSyntaxOn so the body tokens keep expl3 catcodes;
+% no \ExplSyntaxOn/Off toggle needed in the body even when called outside.
+\NewDocumentCommand \@nt@addabstractorder { m }
+  { \seq_gput_right:Nn \g__nt_abstractorder_seq {#1} }
 \ExplSyntaxOff
-% Helper used by the options handler (ExplSyntax not active there):
-\newcommand{\@nt@addabstractorder}[1]{%
-  \ExplSyntaxOn
-  \seq_gput_right:Nn \g__nt_abstractorder_seq {#1}%
-  \ExplSyntaxOff
-}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% DATA MANAGEMENT (MEMORY)
