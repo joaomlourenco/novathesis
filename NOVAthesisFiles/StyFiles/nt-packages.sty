@@ -120,13 +120,13 @@
 
 % Preferred sans-serif stack: Inter → Helvet → Gillius2 → LaTeX default
 \IfFileExists{inter.sty}
-  {\RequirePackage[scaled=MatchLowercase]{inter}}
+  {\RequirePackage[scaled=0.95]{inter}}
+  % {\RequirePackage[scaled=MatchLowercase]{inter}}
   {\IfFileExists{helvet.sty}
     {\RequirePackage[scaled=0.95]{helvet}}
     {\IfFileExists{gillius2.sty}
       {\RequirePackage[scaled=0.95]{gillius2}}
       {\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LANGUAGE & LOCALIZATION
