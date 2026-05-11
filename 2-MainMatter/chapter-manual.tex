@@ -818,30 +818,34 @@ To override an automatically-generated cover with a custom file:
 
 
 %%-----------------------------------------------------------------------
-\subsection{Available School Logo Images (IPL/ISEL)}
-\label{sub:ipl_images}
+\subsection{Bundled Institutional Images}
+\label{sub:bundled_images}
 %%-----------------------------------------------------------------------
 
-The \texttt{ipl} and \texttt{ipl/isel} school configurations bundle several
-logo images that can be referenced directly by file name (without path or
-extension) in \latexinline{\includegraphics} and in cover-configuration
-commands such as \latexinline{\SetThesisCover*(id,logo)={filename}}.
-Table~\ref{tab:ipl_images} lists the available logos; images marked as
-\emph{novathesis-internal} are used by the template engine and should not
-be referenced directly.
+NOVAthesis bundles a set of institutional logo images in
+\verb!NOVAthesisFiles/Images/!.  These files are \emph{not} in the default
+graphics search path, so reference them with the \latexinline{\DIRIMAGES}
+macro (or copy them to \verb!5-Figures/! to use just the file name):
+
+\begin{latexcode}
+\includegraphics[height=1.5cm]{\DIRIMAGES/FCT_logo_positive}
+\end{latexcode}
+
+Table~\ref{tab:bundled_images} shows the available images.
 
 \begin{table}[htb]
-  \caption{Logo images bundled with \texttt{school=ipl} and \texttt{school=ipl/isel}.}
-  \label{tab:ipl_images}
+  \caption{Institutional logo images bundled in \texttt{NOVAthesisFiles/Images/}.}
+  \label{tab:bundled_images}
   \centering\small
   \begin{ShadedTabular}{cll}
     \toprule
     \thead{Preview} & \thead{File name} & \thead{Description} \\
-    \includegraphics[height=1.2cm]{\DIRSCHOOLS/ipl/Images/ipl-logo}           & \verb!ipl-logo!            & IPL institutional logo \\
-    \includegraphics[height=1.2cm]{\DIRSCHOOLS/ipl/isel/Images/ipl-isel-logo} & \verb!ipl-isel-logo!       & ISEL logo (vertical) \\
-    \includegraphics[height=1.2cm]{\DIRSCHOOLS/ipl/isel/Images/ipl-isel-logo-horiz} & \verb!ipl-isel-logo-horiz! & ISEL logo (horizontal) \\
-    \includegraphics[height=1.2cm]{\DIRSCHOOLS/ipl/isel/Images/ipl-isel-meb-logo}   & \verb!ipl-isel-meb-logo!   & MEb programme logo \\
-    \includegraphics[height=1.2cm]{\DIRSCHOOLS/ipl/isel/Images/ipl-isel-meb-logo2}  & \verb!ipl-isel-meb-logo2!  & MEb programme logo (variant) \\
+    \includegraphics[height=1.2cm]{\DIRIMAGES/FCT_logo_positive}          & \verb!FCT_logo_positive!          & FCT logo (colour) \\
+    \includegraphics[height=1.2cm]{\DIRIMAGES/FCT_logo_negative}          & \verb!FCT_logo_negative!          & FCT logo (negative / white) \\
+    \includegraphics[height=1.2cm]{\DIRIMAGES/republica_portuguesa}        & \verb!republica_portuguesa!        & República Portuguesa emblem \\
+    \includegraphics[height=1.2cm]{\DIRIMAGES/republica_portuguesa_CTES}   & \verb!republica_portuguesa_CTES!   & República Portuguesa — CTES variant \\
+    \includegraphics[height=1.2cm]{\DIRIMAGES/Logo_Governo_Portugal}       & \verb!Logo_Governo_Portugal!       & Governo de Portugal logo \\
+    \includegraphics[height=1.2cm]{\DIRIMAGES/Logo_UE_FSE}                 & \verb!Logo_UE_FSE!                 & EU / Fundo Social Europeu logo \\
     \bottomrule
   \end{ShadedTabular}
 \end{table}
