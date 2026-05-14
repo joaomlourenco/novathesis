@@ -704,10 +704,11 @@
 }{}
 
 \ExplSyntaxOn
-\cs_new:cpn {ntquote} {\ntquoting*}
-\cs_new_eq:cN {endntquote} \endntquoting
-\cs_new:cpn {ntdedication} {\ntquoting}
-\cs_new_eq:cN {endntdedication} \endntquoting
+\cs_if_exist:NF \endntquoting { \cs_new_protected:Nn \endntquoting { } }
+\cs_new:cpn { ntquote } { \ntquoting* }
+\cs_new_eq:cN { endntquote } \endntquoting
+\cs_new:cpn { ntdedication } { \ntquoting }
+\cs_new_eq:cN { endntdedication } \endntquoting
 \ExplSyntaxOff
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
