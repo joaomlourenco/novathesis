@@ -57,6 +57,20 @@
 
 \ExplSyntaxOn
 
+% Provide a local fallback if nt-core.sty is not loaded first.
+% (In a normal NOVAthesis build, nt-core.sty defines this function.)
+\cs_if_exist:NF \nt_titlecase_first:N
+ {
+   \cs_new_protected:Nn \nt_titlecase_first:N
+    {
+      \tl_if_empty:NF #1
+       {
+         \tl_set:Ne #1
+           { \exp_not:N \MakeUppercase { \tl_head:N #1 } \tl_tail:N #1 }
+       }
+    }
+ }
+
 % Declare unique variables for autoref
 \tl_new:N \l_nt_autoref_type_tl
 \tl_new:N \l_nt_autoref_name_tl
@@ -78,10 +92,11 @@
     {
       % Get current autorefname
       \tl_set_eq:Nc \l_nt_autoref_name_tl { \l_nt_autoref_type_tl autorefname }
-      % Titlecase it (first letter uppercase) - uses helper from novathesis.cls
+      % Titlecase it (first letter uppercase) - uses helper from nt-core.sty
       \nt_titlecase_first:N \l_nt_autoref_name_tl
       % Redefine locally within the group established in \Autoref
-      \cs_set:cpe { \l_nt_autoref_type_tl autorefname } { \tl_use:N \l_nt_autoref_name_tl }
+      \cs_set:cpe { \l_nt_autoref_type_tl autorefname }
+        { \tl_use:N \l_nt_autoref_name_tl }
     }
  }
 
@@ -105,7 +120,7 @@
 \AtBeginDocument
  {
   \@nt@fixhyperref
-  \DeclareRobustCommand{\Autoref}[1]{ 
+  \DeclareRobustCommand{\Autoref} [ 1 ] {
     \ExplSyntaxOn
     \nt_autoref_logic:n {#1} 
     \ExplSyntaxOff
@@ -116,9 +131,9 @@
   % value (2) as main chapter 2, producing clashing anchor names like
   % "table.2.1".  Redefining \theHchapter to use \thechapter (which gives
   % letters in appendices: A, B, C …) makes every anchor globally unique.
-  \renewcommand{\theHchapter}{\thechapter}
+  \renewcommand { \theHchapter } { \thechapter }
   % \HyperLocalCurrentHref is used as a 'dest' in \bookmark calls.
-  \newcommand{\HyperLocalCurrentHref}{\@currentHref}
+  \newcommand { \HyperLocalCurrentHref } { \@currentHref }
  }
 
 
