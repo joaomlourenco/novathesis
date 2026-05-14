@@ -652,7 +652,7 @@
       \selectfont
       \tl_use:N \g__aid_fontsize_tl
       
-      \cs_set:Npn \TGroup ##1 ##2
+      \cs_set_protected:Npn \TGroup ##1 ##2
         {
           \par \bigskip
           \__aid_fetch_string:nN { grp_##2 } \l_tmpa_tl
@@ -676,13 +676,13 @@
             }
         }
         
-      \cs_set:Npn \TItems ##1
+      \cs_set_protected:Npn \TItems ##1
         {
             \seq_map_inline:cn { g__aid_group_items_##1_seq }
             { \TItem { ####1 } }
         }
 
-      \cs_set:Npn \TItem ##1
+      \cs_set_protected:Npn \TItem ##1
         {
           \__aid_fetch_string:nN { ##1 } \l_tmpa_tl
           \seq_if_in:NxTF \g__aid_active_keys_seq { \tl_to_str:n { ##1 } }
