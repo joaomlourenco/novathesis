@@ -21,10 +21,12 @@
 \seq_new:N \g_nt_babel_tracked_langs_seq
 
 %% LOCALIZED KEY CONFIGURATION (\ntlangsetup)
-\NewDocumentCommand{\ntlangsetup}{ s O{name} m }
+\NewDocumentCommand { \ntlangsetup } { s O { name } m }
   {
     \ExplSyntaxOn
-    \nt_babel_parse_setup:nnnn { #1 } { #2 } #3 \q_stop
+    \tl_set:Nn \l_tmpa_tl { #2 }
+    \tl_trim_spaces:N \l_tmpa_tl
+    \exp_args:NnV \nt_babel_parse_setup:nnnn { #1 } \l_tmpa_tl #3 \q_stop
     \ExplSyntaxOff
   }
 
@@ -76,10 +78,12 @@
 % and fallback to \AtBeginDocument if it's an old engine.
 \cs_if_exist:NTF \hook_gadd:nnn
   { 
-    \hook_gadd:nnn { begindocument / before } { \ExplSyntaxOn \nt_babel_apply_all_captions: \ExplSyntaxOff } 
+    \hook_gadd:nnn { begindocument / before }
+      { \ExplSyntaxOn \nt_babel_apply_all_captions: \ExplSyntaxOff }
   }
   { 
-    \AtBeginDocument { \ExplSyntaxOn \nt_babel_apply_all_captions: \ExplSyntaxOff } 
+    \AtBeginDocument
+      { \ExplSyntaxOn \nt_babel_apply_all_captions: \ExplSyntaxOff } 
   }
 
 %% COMPATIBILITY HELPERS
