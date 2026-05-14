@@ -93,11 +93,11 @@
   \clist_map_inline:xn { #2 }
    {
     % Legacy check: if the list exists for this category
-    \ifoptionvoid{/@nt/#1/##1/name}
+    \ifoptionvoid { /@nt/#1/##1/name }
       { } 
       {
         % Retrieve the sub-list into the legacy macro \@advlist@i
-        \letoptionlist{/@nt/#1/##1/name}\@advlist@i
+        \letoptionlist { /@nt/#1/##1/name } \@advlist@i
         
         % FIX: Use put_right:Nx instead of concat:NN
         % This expands \@advlist@i (e.g., "A, B") and appends A and B 
@@ -110,7 +110,7 @@
   \IfNoValueTF { #3 }
    {
      \raggedright
-     \MemGetDefault{#1namefont}[]{#2}
+     \MemGetDefault { #1namefont } [] { #2 }
      % Convert clist back to comma-separated string for legacy formatter
      \cs_set:Npx \@advlist { \clist_use:Nn \l_nt_master_clist { , } }
      \FormatNamesAsList{\@advlist}
@@ -126,11 +126,12 @@
 
 \cs_generate_variant:Nn \seq_set_from_clist:Nn { Ne }
 \cs_generate_variant:Nn \seq_use:Nnnn { Neee }
-\NewDocumentCommand{\FormatNamesAsList}{ m  % list of names
-                                         O{ } % prefix for each name
-                                         O{ \GetCommaString(\@LANG@MAIN) } % middle-sep
-                                         O{ ~ \GetAndString(\@LANG@MAIN) } % pair-sep
-                                         O{ \GetCommaString(\@LANG@MAIN)\GetAndString(\@LANG@MAIN) } } % 
+\NewDocumentCommand { \FormatNamesAsList } { m  % list of names
+                                           O { } % prefix for each name
+                                           O { \GetCommaString(\@LANG@MAIN) } % middle-sep
+                                           O { ~ \GetAndString(\@LANG@MAIN) } % pair-sep
+                                           O { \GetCommaString(\@LANG@MAIN)
+                                               \GetAndString(\@LANG@MAIN) } } %
 % \FormatNamesAsList {comma separated list of names} {name-prefix} {middle-sep} {pair-sep} {last-sep}
 % example: \FormatNamesAsList {Maria, Rita, Filomena} {Professora} {,~} {~e~} {~e~}
  {
