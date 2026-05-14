@@ -311,7 +311,7 @@
 % #2: Prefix
 % #3: Filename
 % #4: Action
-\cs_new:Npn \__filecase_split_pair:nnn #1 #2 #3 #4 
+\cs_new_protected:Npn \__filecase_split_pair:nnn #1 #2 #3 #4 
   {
     % 1. Construct the full path
     \tl_set:Nn \l_tmpa_tl { #2 #3 }
