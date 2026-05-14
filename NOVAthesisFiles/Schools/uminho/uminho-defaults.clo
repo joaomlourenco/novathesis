@@ -232,7 +232,10 @@ indicada.\\[1ex]
   \let\oldchapterheadstart=\chapterheadstart%
   \preto{\chapterheadstart}{\vspace*{-2cm}}
 }
-\NTAddToHook{abstract/mid}{%
+
+\ntsetup{abstract/title=after}
+
+\NTAddToHook{abstract/title/after}{%
   {{\noindent\bfseries\Large\GetDocTitle(\@LSHORT,main,plain)}\\[1ex]}%
 }
 \NTAddToHook{abstract/post}{%

@@ -183,22 +183,14 @@
 %% UTILITIES & HOOKS
 %%=======================================================================
 
+\ntsetup{abstract/title=before}
+
 \NTAddToHook{abstract/title/before}{%\
   \begingroup
     \color{iselPlum}%
     \bfseries\fontsize{14}{16}\selectfont%
     \GetDocTitle(\@LANG@COVER,main)\\[4ex]%
   \endgroup
-}
-
-% Work Title on Abstract Header
-\NTAddToHook{abstract/pre}{%
-  \let\oldprintchaptertitle\printchaptertitle%
-  \renewcommand{\printchaptertitle}{%
-    \NTRunHook{abstract/title/before}%
-    \NTRunHook{abstract/title/\@LSHORT}%
-    \oldprintchaptertitle%
-  }%
 }
 
 \NTAddToHook{cover/pre}{%

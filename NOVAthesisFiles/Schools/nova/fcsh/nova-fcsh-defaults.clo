@@ -102,6 +102,8 @@
 
 \newcommand{\ntchapskip}{\vspace*{2cm}}
 
+\ntsetup{abstract/title=before}
+
 \NTAddToHook{abstract/title/before}{%\
   \begingroup
     \begin{center}
@@ -117,16 +119,7 @@
   \endgroup
 }
 
-% Work Title on Abstract Header
-\NTAddToHook{abstract/pre}{%
-  \let\oldprintchaptertitle\printchaptertitle%
-  \renewcommand{\printchaptertitle}{%
-    \NTRunHook{abstract/title/before}%
-    \NTRunHook{abstract/title/\@LSHORT}%
-    \oldprintchaptertitle%
-  }%
-  \SingleSpacing*%
-}
+\NTAddToHook{abstract/pre}{\SingleSpacing*}
 
 
 %%=======================================================================

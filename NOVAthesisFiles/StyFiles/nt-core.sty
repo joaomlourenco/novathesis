@@ -617,6 +617,8 @@
   spine/layout/.new choice      = {unset, trim, false},
   spine/width/.new length       = {0pt},
   abstractorder/.new cmd        = {\@addtoabstractorder{#1}},%
+  abstract/title/.new choice    = {none, before, after}, % where to print the work title in abstracts
+  abstract/title                = none,
   schoolgiven/.new value        = {},
   school/.new cmd               = {\optionsalso{/novathesis/schoolgiven=#1}%
                                    \StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR

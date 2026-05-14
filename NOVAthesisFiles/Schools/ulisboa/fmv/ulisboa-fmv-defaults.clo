@@ -203,14 +203,14 @@
   \NTAddToHook{cover/N-2/pre}{\nolinenumbers}
 }
 
-\NTAddToHook{abstract/pre}{%
-  \let\oldchapterheadstart=\chapterheadstart%
-  \preto{\chapterheadstart}%
-  {\begin{center}\noindent\Large\bfseries{\MakeTextUppercase{\GetDocTitle(\@LSHORT,main)}}\end{center}\bigskip}%
-}
+\ntsetup{abstract/title=before}
 
-\NTAddToHook{abstract/post}{%
-  \let\chapterheadstart=\oldchapterheadstart%
+\NTAddToHook{abstract/title/before}{%
+  \begin{center}
+    \noindent\Large\bfseries
+    \MakeTextUppercase{\GetDocTitle(\@LSHORT,main)}%
+  \end{center}
+  \bigskip
 }
 
 

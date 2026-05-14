@@ -189,7 +189,11 @@
         \ntselectlang{\@ABS@LANG}%
         \NTRunHook{abstract/pre}%
         \NTRunHook{abstract/#1/pre}%
+        \ifoptionequal{/novathesis/abstract/title}{before}%
+          {\NTRunHook{abstract/title/before}}{}%
         \printabstracttitle{#1}%
+        \ifoptionequal{/novathesis/abstract/title}{after}%
+          {\NTRunHook{abstract/title/after}}{}%
         \NTRunHook{abstract/mid}%
         \NTRunHook{abstract/#1/mid}%
         \PrintAddedFile[#1]{abstract}%
@@ -761,6 +765,18 @@
     \fi
     \chapter{\texorpdfstring{{\nt@abstitlefont\GetBkmString(abstract,#1)}}{\GetBkmString(abstract,#1)}}%
   \endgroup
+}
+
+% Default work-title block inserted by \ntsetup{abstract/title=before|after}.
+% Schools needing custom styling should populate the hook directly instead.
+\newcommand{\ntprintabstracttitledefault}{%
+  \begin{center}
+    \large\bfseries
+    \IfMemVoidTF{DocTitle}{\@LSHORT,abstract}
+      {\GetDocTitle(\@LSHORT,main)}%
+      {\GetDocTitle(\@LSHORT,abstract)}%
+  \end{center}
+  \smallskip
 }
 
 
