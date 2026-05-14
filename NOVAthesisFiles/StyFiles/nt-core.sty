@@ -68,7 +68,9 @@
     {
       \tl_set:Ne \l__nt_titlecase_head_tl { \tl_head:N #1 }
       \tl_set:Ne \l__nt_titlecase_tail_tl { \tl_tail:N #1 }
-      \tl_set:Ne #1 { \exp_not:N \MakeUppercase { \l__nt_titlecase_head_tl } \l__nt_titlecase_tail_tl }
+      \tl_set:Ne #1
+        { \exp_not:N \MakeUppercase { \l__nt_titlecase_head_tl }
+          \l__nt_titlecase_tail_tl }
     }
  }
 
@@ -83,7 +85,7 @@
 
 % 1. Create Variables
 \int_new:N \l_check_len_int
-\str_new:N \l_slice_str
+\str_new:N \l__nt_slice_str
 \tl_new:N \l_clean_input_tl
 \bool_new:N \l_match_found_bool
 
@@ -91,7 +93,7 @@
 %    This forces \str_range to accept an expanded ('e') first argument.
 \cs_generate_variant:Nn \str_range:nnn { enn }
 
-\NewDocumentCommand{\IfBeginsWithAnyOf}{ m m +m +m }
+\NewDocumentCommand { \IfBeginsWithAnyOf } { m m +m +m }
  {
   % Step A: Store and clean the input string
   \tl_set:Nn \l_clean_input_tl { #1 }
@@ -108,13 +110,13 @@
     % Step C: Extract substring
     % We use the generated ':enn' variant to expand \l_clean_input_tl
     % into actual text (e.g., "Apple") BEFORE slicing.
-    \str_set:Nx \l_slice_str 
+    \str_set:Nx \l__nt_slice_str 
       { 
         \str_range:enn { \l_clean_input_tl } { 1 } { \l_check_len_int } 
       }
     
     % Step D: Compare
-    \exp_args:No \str_if_eq:nnTF \l_slice_str { ##1 }
+    \exp_args:No \str_if_eq:nnTF \l__nt_slice_str { ##1 }
      {
       \bool_set_true:N \l_match_found_bool
       \clist_map_break: 
@@ -143,15 +145,18 @@
 \bool_new:N \l_novathesis_rule_found_bool
 
 % Detect the current engine immediately
-\sys_if_engine_pdftex:T { \str_gset:Nn \g_novathesis_current_engine_str {pdf} }
-\sys_if_engine_luatex:T { \str_gset:Nn \g_novathesis_current_engine_str {lua} }
-\sys_if_engine_xetex:T  { \str_gset:Nn \g_novathesis_current_engine_str {xe} }
+\sys_if_engine_pdftex:T
+  { \str_gset:Nn \g_novathesis_current_engine_str { pdf } }
+\sys_if_engine_luatex:T
+  { \str_gset:Nn \g_novathesis_current_engine_str { lua } }
+\sys_if_engine_xetex:T
+  { \str_gset:Nn \g_novathesis_current_engine_str { xe } }
 
 % 3. Define the user-facing command
 \NewDocumentCommand \NTengineName {}
   {
     % Use \str_use:N to retrieve the content of the variable
-    \str_use:N \g_novathesis_current_engine_str \hologo{LaTeX}
+    \str_use:N \g_novathesis_current_engine_str \hologo { LaTeX }
   }
 
 % ---------------------------------------------------------
@@ -159,7 +164,7 @@
 % ---------------------------------------------------------
 
 % Syntax: \AddValidProcessor{key}{list,of,engines}
-\NewDocumentCommand{\AddValidProcessor}{ m m }
+\NewDocumentCommand { \AddValidProcessor } { m m }
   {
     \prop_gput:Nnn \g_novathesis_proc_rules_prop { #1 } { #2 }
   }
@@ -171,9 +176,12 @@
 % Message definition for the error
 \msg_new:nnnn { novathesis } { invalid-processor }
   { Invalid~processor~for~"#1". }
-  { You~are~using~\g_novathesis_current_engine_str (la)tex,~but~"#1"~only~allows:~#2. }
+  {
+    You~are~using~\g_novathesis_current_engine_str~(la)tex,~
+    but~"#1"~only~allows:~#2.
+  }
 
-\NewDocumentCommand{\ValidateLtxProcessor}{ m m m }
+\NewDocumentCommand { \ValidateLtxProcessor } { m m m }
   {
     % #1 = Univ, #2 = School, #3 = Degree
 
@@ -185,15 +193,18 @@
     % -----------------------------------------------------
 
     % 1. Check Univ/School/Degree
-    \prop_get:NeNTF \g_novathesis_proc_rules_prop { #1/#2/#3 } \l_novathesis_found_rule_tl
+    \prop_get:NeNTF \g_novathesis_proc_rules_prop { #1/#2/#3 }
+      \l_novathesis_found_rule_tl
       { \bool_set_true:N \l_novathesis_rule_found_bool }
       {
         % 2. Check Univ/School
-        \prop_get:NeNTF \g_novathesis_proc_rules_prop { #1/#2 } \l_novathesis_found_rule_tl
+        \prop_get:NeNTF \g_novathesis_proc_rules_prop { #1/#2 }
+          \l_novathesis_found_rule_tl
           { \bool_set_true:N \l_novathesis_rule_found_bool }
           {
             % 3. Check Univ
-            \prop_get:NnNTF \g_novathesis_proc_rules_prop { #1 } \l_novathesis_found_rule_tl
+            \prop_get:NnNTF \g_novathesis_proc_rules_prop { #1 }
+              \l_novathesis_found_rule_tl
               { \bool_set_true:N \l_novathesis_rule_found_bool }
               {
                 % No rule found: Do nothing (Implicitly Valid)
@@ -208,7 +219,8 @@
     \bool_if:NT \l_novathesis_rule_found_bool
       {
         % Check if the current engine is in the allowed list
-        \clist_if_in:NVF \l_novathesis_found_rule_tl \g_novathesis_current_engine_str
+        \clist_if_in:NVF \l_novathesis_found_rule_tl
+          \g_novathesis_current_engine_str
           {
             % ERROR: Engine not found in allowed list
             \msg_error:nnxx { novathesis } { invalid-processor }
@@ -221,13 +233,13 @@
 % ---------------------------------------------------------
 % 4. Helper: Print current processor name (The \pdfprocessor equivalent)
 % ---------------------------------------------------------
-\NewDocumentCommand{\PrintProcessorName}{ }
+\NewDocumentCommand { \PrintProcessorName } { }
   {
     \str_case:Vn \g_novathesis_current_engine_str
       {
-        {pdf} { pdf(La)\TeX }
-        {lua} { lua(La)\TeX }
-        {xe}  { Xe(La)\TeX }
+        { pdf } { pdf(La)\TeX }
+        { lua } { lua(La)\TeX }
+        { xe }  { Xe(La)\TeX }
       }
   }
 
@@ -240,18 +252,13 @@
 % non-starred stops on first success
 
 \bool_new:N \l_file_found_bool
-\tl_new:N \l_file_action_tl
-\NewDocumentCommand{\IfFileExistsInDirsTF}{ s O{} m m m m }
+\NewDocumentCommand { \IfFileExistsInDirsTF } { s O { } m m m m }
  {
+  \bool_gset_false:N \l_file_found_bool
   \group_begin:
     \tl_new:N \l_tmp_dir_tl
     \tl_new:N \l_tmp_path_tl
     \tl_new:N \l_tmp_last_char_tl
-    
-    
-    % Define an internal "action" function that takes one argument (#1)
-    % This makes the user's code (#5) act like a function body.
-    \cs_set:Npn \__file_user_action:n ##1 { #5 }
     
     \clist_map_inline:nn { #4 }
      {
@@ -271,17 +278,15 @@
       
       \file_if_exist:nT { \l_tmp_path_tl }
        {
-        \bool_gset_true:N \g_file_found_bool
-        
-        % EXECUTE: Pass the full path directly into the user action
-        \__file_user_action:n { \l_tmp_path_tl }
-        
+        \bool_gset_true:N \l_file_found_bool
+        \xdef\ntfoundpath{ \l_tmp_path_tl }
+        #5
         \IfBooleanF { #1 } { \clist_map_break: }
        }
      }
   \group_end:
   
-  \bool_if:NF \g_file_found_bool { #6 }
+  \bool_if:NF \l_file_found_bool { #6 }
  }
 
 
@@ -290,8 +295,9 @@
 % #2 (Optional): A specific directory or path to prepend to the filenames.
 % #3 (Mandatory): A comma-separated list of pairs formatted as {filename}{code to run if found}.
 % #4 (Mandatory): The "Else" branch. This code runs only if none of the files in your list are found.
-\NewDocumentCommand{\IfFileExistsCase}{ s O{} m m }
+\NewDocumentCommand { \IfFileExistsCase } { s O { } m m }
   {
+    \bool_set_false:N \l_file_found_bool
     \clist_map_inline:nn { #3 }
       {
         % ##1 is {filepath}{action}
@@ -320,16 +326,9 @@
         % This ensures we don't accidentally match a dot in a directory name (e.g. "ver.1/img").
         \regex_replace_once:nnN { \.[^./]*\Z } { } \l_tmpb_tl
 
-        \xdef\ntfoundpath{\l_tmpa_tl}
-        \xdef\ntfoundpathnoext{\l_tmpb_tl}
-        
-        % 3. Define the internal action to accept TWO arguments:
-        %    ##1 = Full Path (e.g., images/logo.png)
-        %    ##2 = No Extension (e.g., images/logo)
-        \cs_set:Npn \__filecase_do_action:nn ##1 ##2 { #4 }
-        
-        % 4. Execute with both variants
-        \__filecase_do_action:nn { \l_tmpa_tl } { \l_tmpb_tl }
+        \xdef\ntfoundpath{ \l_tmpa_tl }
+        \xdef\ntfoundpathnoext{ \l_tmpb_tl }
+        #4
         
         % Break if not starred
         \bool_if:NF #1 { \clist_map_break: }
@@ -337,7 +336,7 @@
   }
 
 
-\NewDocumentCommand{\IfFontExistsCase}{ s m m }
+\NewDocumentCommand { \IfFontExistsCase } { s m m }
   {
     \bool_set_false:N \l_tmpa_bool
     \clist_map_inline:nn { #2 }
@@ -357,13 +356,17 @@
           }
           {
             % Fallback if fontspec isn't loaded or engine is pdfLaTeX
-            \typeout{NOVAthesis:~fontspec~not~loaded.~Skipping~font~check~for~##1.}
+            \typeout { NOVAthesis:~fontspec~not~loaded.%
+              ~Skipping~font~check~for~##1. }
           }
       }
     
     % Optional: warning if NO fonts from the list were found
     \bool_if:NF \l_tmpa_bool 
-      { \typeout{NOVAthesis:~Warning:~No~fonts~from~the~list~{#2}~were~found.} }
+      {
+        \typeout
+          { NOVAthesis:~Warning:~No~fonts~from~the~list~{ #2 }~were~found. }
+      }
   }
 
 
@@ -375,7 +378,7 @@
 % #4 = code if fails [OPTIONAL]
 
 % 1. Create variables
-\NewDocumentCommand{\InputIfFileExistsInDirsTF}{ m m +m +m }
+\NewDocumentCommand { \InputIfFileExistsInDirsTF } { m m +m +m }
   {
     \bool_set_false:N \l_file_found_bool
 
@@ -411,7 +414,7 @@
 
 % Default bookmark level for \ChapterNoTitle items.
 % Set to 1 inside \ntprint{frontmatter} so they nest under the Front Matter node.
-\def\@nt@bkm@level{0}
+\def\@nt@bkm@level { 0 }
 
 % 1. Define the internal logic (accepts the argument as-is)
 \cs_new_protected:Nn \__user_chapter_logic:n
@@ -422,7 +425,7 @@
   % Create the anchor. 
   % #1 is now the fully expanded string (e.g., "Project Alpha").
   \phantomsection%
-  \bookmark[level=\@nt@bkm@level, dest=\HyperLocalCurrentHref]{#1}
+  \bookmark[level=\@nt@bkm@level, dest=\HyperLocalCurrentHref] { #1 }
   
   % Reset spacing/formatting
   \noindent \ignorespaces
@@ -433,20 +436,20 @@
 \cs_generate_variant:Nn \__user_chapter_logic:n { e }
 
 % 3. User Interface
-\NewDocumentCommand{\ChapterNoTitle}{ m }
+\NewDocumentCommand { \ChapterNoTitle } { m }
  {
   % Call the expanded variant.
   % This turns \ChapterNoTitle{\myMacro} into \__user_chapter_logic:n {Expanded Value}
   \__user_chapter_logic:e { #1 }
  }
 
-\NewDocumentCommand{\UniquifyList}{m o}
+\NewDocumentCommand { \UniquifyList } { m o }
   {
-    \clist_set:Ne \l_tmpa_clist {#1}
+    \clist_set:Ne \l_tmpa_clist { #1 }
     \clist_remove_duplicates:N \l_tmpa_clist
-    \IfValueTF{#2}
-      {\tl_set:Ne #2 {\clist_use:Nn \l_tmpa_clist {,}}}
-      {\clist_use:Nn \l_tmpa_clist {,}}
+    \IfValueTF { #2 }
+      { \tl_set:Ne #2 { \clist_use:Nn \l_tmpa_clist { , } } }
+      { \clist_use:Nn \l_tmpa_clist { , } }
   }
 
 \ExplSyntaxOff
@@ -474,8 +477,12 @@
             \tl_set:Ne \l__nt_ao_lang_tl { \@LANG@MAIN }
             \tl_set:Nn \l__nt_ao_val_tl  { ##1 }
           }
-        \MemSet*{AbstractOrder}{ \l__nt_ao_lang_tl }{ \l__nt_ao_val_tl }
+        \MemSet * { AbstractOrder } { \l__nt_ao_lang_tl } { \l__nt_ao_val_tl }
       }
+  }
+\cs_new_protected:Npn \@addtoabstractorder #1
+  {
+    \seq_gput_right:Nn \g__nt_abstractorder_seq { #1 }
   }
 \ExplSyntaxOff
 
@@ -500,7 +507,7 @@
 % #4: True branch code
 % #5: False branch code
 
-\NewDocumentCommand{\datamatchtf}{ s m m r() +m +m }
+\NewDocumentCommand { \datamatchtf } { s m m r() +m +m }
   {
     % Reset the found boolean to false at the start
     \bool_set_false:N \l__memory_match_found_bool
@@ -554,7 +561,7 @@
       { #6 } % No match found
   }
 
-\NewDocumentCommand{\datamatch}{ s m m r() }
+\NewDocumentCommand { \datamatch } { s m m r() }
   {
     % Argument mapping:
     % #1 = Star (boolean)
@@ -576,18 +583,18 @@
       % --- False Branch (No Match) ---
       { 
         % Note: In expl3, spaces are ignored, so we use ~ for spaces in text.
-        \ClassError{novathesis}
-          { Could~not~find~“#3”~defined~with~any~of~“(#4)”! }
+        \ClassError { novathesis }
+          { Could~not~find~“ #3 ”~defined~with~any~of~“ ( #4 ) ”! }
           { }
       }
   }
 
-\NewDocumentCommand{\datamatchcs}{ s m m r() }
+\NewDocumentCommand { \datamatchcs } { s m m r() }
   {
     \IfBooleanTF{#1}
     {
       % Using expl3 syntax to expand the first argument into a csname
-      \exp_args:Nc \datamatch* { #2 } { #3 } ( #4 )
+      \exp_args:NNc \datamatch * { #2 } { #3 } ( #4 )
     }
     {
       % Using expl3 syntax to expand the first argument into a csname
@@ -609,7 +616,7 @@
   media/.new choice             = {screen, paper},
   spine/layout/.new choice      = {unset, trim, false},
   spine/width/.new length       = {0pt},
-  abstractorder/.new cmd        = {\ExplSyntaxOn\seq_gput_right:Nn \g__nt_abstractorder_seq {#1}\ExplSyntaxOff},%
+  abstractorder/.new cmd        = {\@addtoabstractorder{#1}},%
   schoolgiven/.new value        = {},
   school/.new cmd               = {\optionsalso{/novathesis/schoolgiven=#1}%
                                    \StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR
@@ -733,12 +740,13 @@
 % Automatically download necessary fonts if using lualatex
 % --------------------------------------------------------
 
-\NewDocumentCommand{\ntcheckfonts}{
-    O{ttf}
+\NewDocumentCommand { \ntcheckfonts } {
+    O { ttf }
     m
     m
-    O{https://raw.githubusercontent.com/joaomlourenco/novathesis-extras/main/Fonts}
-    O{\DIRFONTSTYLES/Fonts} }
+    O { https://raw.githubusercontent.com/%
+      joaomlourenco/novathesis-extras/main/Fonts }
+    O { \DIRFONTSTYLES/Fonts } }
 {
   % #1 = format (ttf)
   % #2 = font name (Calibri)
@@ -755,11 +763,14 @@
       \nt_check_fonts:nnnnn { #1 } { #2 } { #3 } { #4 } { #5 }
     }
     {
-      \msg_error:nnnn { ntfonts } { shell-escape-required } { \c_sys_jobname_str } { \ntcheckfonts }
+      \msg_error:nn { ntfonts } { shell-escape-required }
     }
   }
   {
-    \ClassError{novathesis}{Font~style~"#2"~is~not~compatible~with~pdfLaTeX.~Please~use~XeLaTeX~or~LuaLaTeX}{Please~use~XeLaTeX~or~LuaLaTeX}%
+    \ClassError { novathesis }
+      { Font~style~" #2 "~is~not~compatible~with~pdfLaTeX.~
+        Please~use~XeLaTeX~or~LuaLaTeX }
+      { Please~use~XeLaTeX~or~LuaLaTeX } %
   }
 }
 
@@ -767,7 +778,8 @@
 {
   Font~download~requires~shell~escape.~\\
   Please~compile~with:~
-  \token_to_str:N lualatex \c_space_tl \c_sys_jobname_str \c_space_tl -shell-escape
+  \token_to_str:N lualatex \c_space_tl \c_sys_jobname_str
+  \c_space_tl -shell-escape
 }
 
 \seq_new:N \l__nt_variants_seq
@@ -801,7 +813,7 @@
     {
       \iow_term:x { Downloading~font~' \l__nt_filename_tl '~
                     from~' \l__nt_remote_url_tl '~
-                    to~' \l__nt_local_path_tl '}
+                    to~' \l__nt_local_path_tl '~ }
 
       % Download the font
       \nt_download_font:nn { \l__nt_remote_url_tl } { \l__nt_local_path_tl }
@@ -860,11 +872,28 @@
       \sys_get_shell:nnNT  { python3 ~ --version ~ > ~ /dev/null ~ 2>&1 }
                            { \tl_trim_spaces:n }
                            \l_nt_cmd_output_tl
-      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
-        { % python3 is available
-          \iow_term:x { Running: ~ python3 ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null"... }
-          \sys_shell_now:x { python3 ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ echo ~ "python3: ~ No ~ download ~ tool ~ available" }
-          \bool_set_true:N \l_tmpa_bool
+        {
+          \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+            { % python3 is available
+              \iow_term:x
+                {
+                  Running: ~ python3 ~ -c ~ "import ~ urllib.request; ~
+                  urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null
+                  ~ || ~ python ~ -c ~ "import ~ urllib.request; ~
+                  urllib.request.urlretrieve('#1', ~ '#2')" ~
+                  2>/dev/null"...
+                }
+              \sys_shell_now:x
+                {
+                  python3 ~ -c ~ "import ~ urllib.request; ~
+                  urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null
+                  ~ || ~ python ~ -c ~ "import ~ urllib.request; ~
+                  urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null
+                  ~ || ~ echo ~ "python3: ~ No ~ download ~ tool ~
+                  available"
+                }
+              \bool_set_true:N \l_tmpa_bool
+            }
         }
     }
 
@@ -875,11 +904,28 @@
       \sys_get_shell:nnNT  { python ~ --version ~ > ~ /dev/null ~ 2>&1 }
                            { \tl_trim_spaces:n }
                            \l_nt_cmd_output_tl
-      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
-        { % python is available
-          \iow_term:x { Running: ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null"... }
-          \sys_shell_now:x { python3 ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ python ~ -c ~ "import ~ urllib.request; ~ urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null ~ || ~ echo ~ "Python: ~ No ~ download ~ tool ~ available" }
-          \bool_set_true:N \l_tmpa_bool
+        {
+          \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+            { % python is available
+              \iow_term:x
+                {
+                  Running: ~ python ~ -c ~ "import ~ urllib.request; ~
+                  urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null
+                  ~ || ~ python ~ -c ~ "import ~ urllib.request; ~
+                  urllib.request.urlretrieve('#1', ~ '#2')" ~
+                  2>/dev/null"...
+                }
+              \sys_shell_now:x
+                {
+                  python3 ~ -c ~ "import ~ urllib.request; ~
+                  urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null
+                  ~ || ~ python ~ -c ~ "import ~ urllib.request; ~
+                  urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null
+                  ~ || ~ echo ~ "Python: ~ No ~ download ~ tool ~
+                  available"
+                }
+              \bool_set_true:N \l_tmpa_bool
+            }
         }
     }
 
@@ -895,11 +941,23 @@
         \sys_get_shell:nnNT  { powershell ~ /?" }
                            { \tl_trim_spaces:n }
                            \l_nt_cmd_output_tl
-      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
-          { % powershell is available
-            \iow_term:x ~ { ~ powershell ~ -Command ~ "Invoke-WebRequest ~ -Uri ~ '\l__nt_remote_url_tl' ~ -OutFile ~ '#2'" ~ }
-            \sys_shell_now:x ~ { ~ powershell ~ -Command ~ "Invoke-WebRequest ~ -Uri ~ '\l__nt_remote_url_tl' ~ -OutFile ~ '#2'" ~ }
-            \bool_set_true:N \l_tmpa_bool
+          {
+            \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+              { % powershell is available
+                \iow_term:x
+                  {
+                    powershell ~ -Command ~
+                    "Invoke-WebRequest ~ -Uri ~ ' \l__nt_remote_url_tl ' ~
+                    -OutFile ~ ' #2 '"
+                  }
+                \sys_shell_now:x
+                  {
+                    powershell ~ -Command ~
+                    "Invoke-WebRequest ~ -Uri ~ ' \l__nt_remote_url_tl ' ~
+                    -OutFile ~ ' #2 '"
+                  }
+                \bool_set_true:N \l_tmpa_bool
+              }
           }
       }
   }

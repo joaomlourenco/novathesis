@@ -898,8 +898,8 @@
 \IfFileExistsCase
   [\DIRSCHOOLS/\@UNIV/\@SCHL/]
   { 
-    {\@UNIV-\@SCHL-\@DEGREEACR-defaults.clo}{\input{#1}}, 
-    {\@UNIV-\@SCHL-defaults.clo}{\input{#1}}, 
+    {\@UNIV-\@SCHL-\@DEGREEACR-defaults.clo}{\input{\ntfoundpath}}, 
+    {\@UNIV-\@SCHL-defaults.clo}{\input{\ntfoundpath}}, 
   }
   { 
     \PackageError{novathesis}
