@@ -16,7 +16,7 @@
 \def\aidversion{1.11.0}
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
 \ProvidesExplPackage{aidisclose}{2026/01/22}{\aidversion}{Utilities for Generative AI disclosure checklist and statements}
-\typeout{NT FILE StyFiles/aidisclose2.sty}%
+\typeout{ NT FILE StyFiles/aidisclose2.sty } %
 
 
 %%=======================================================================
@@ -38,11 +38,11 @@
 \ProcessKeyOptions[aidisclose]
 
 \ifcsname checkmark\endcsname\else
-  \RequirePackage{amssymb}   % for \checkmark
+  \RequirePackage{ amssymb }   % for \checkmark
 \fi
-\RequirePackage{multicol}    % for multi-column layout
-\RequirePackage{relsize}     % for relative font sizing
-\RequirePackage{xcolor}      % for color customization
+\RequirePackage{ multicol }    % for multi-column layout
+\RequirePackage{ relsize }     % for relative font sizing
+\RequirePackage{ xcolor }      % for color customization
 
 
 %%=======================================================================
@@ -147,7 +147,8 @@
     \tl_set:Nx \l_tmpb_tl { \seq_item:Nn \l_tmpa_seq { 2 } }
     \use:x 
       { 
-        \__aid_define_entry:nnn { \l_tmpa_tl } { \l_tmpb_tl } { \exp_not:n { #2 } } 
+        \__aid_define_entry:nnn { \l_tmpa_tl } { \l_tmpb_tl }
+          { \exp_not:n { #2 } } 
       }
   }
 
@@ -225,23 +226,32 @@
 
 \__aid_load_groups:n
   {
-    conc={}, lit={}, meth={}, soft={}, data={},
-    vis={}, write={}, eth={}, sup={}
+    conc = { }, lit = { }, meth = { }, soft = { }, data = { },
+    vis = { }, write = { }, eth = { }, sup = { }
   }
 
 \__aid_load_entries:n
   {
-    conc:c_idea={}, conc:c_obj={}, conc:c_rq={}, conc:c_feas={}, conc:c_pre={}, conc:c_sim={},
-    lit:l_srch={}, lit:l_sum={}, lit:l_map={}, lit:l_pat={}, lit:l_gaps={}, lit:l_trans={},
-    meth:m_des={}, meth:m_proto={}, meth:m_meth={},
-    soft:s_gen={}, soft:s_opt={}, soft:s_debug={}, soft:s_auto={}, soft:s_algs={}, soft:s_doc={},
-    data:d_coll={}, data:d_val={}, data:d_cln={}, data:d_cur={}, data:d_anl={}, data:d_viz={},
-    data:d_rep={}, data:d_lbl={}, data:d_syn={}, data:d_anon={}, data:d_trans={},
-    vis:v_gen={}, vis:v_edit={}, vis:v_chart={},
-    write:w_draft={}, write:w_poly={}, write:w_sum={}, write:w_con={}, write:w_tone={},
-    write:w_tra={}, write:w_ref={}, write:w_prs={}, write:w_title={},
-    eth:e_bias={}, eth:e_risk={}, eth:e_comp={}, eth:e_conf={},
-    sup:sup_qa={}, sup:sup_trd={}, sup:sup_lim={}, sup:sup_rec={}, sup:sup_pub={}
+    conc:c_idea = { }, conc:c_obj = { }, conc:c_rq = { },
+    conc:c_feas = { }, conc:c_pre = { }, conc:c_sim = { },
+    lit:l_srch = { }, lit:l_sum = { }, lit:l_map = { },
+    lit:l_pat = { }, lit:l_gaps = { }, lit:l_trans = { },
+    meth:m_des = { }, meth:m_proto = { }, meth:m_meth = { },
+    soft:s_gen = { }, soft:s_opt = { }, soft:s_debug = { },
+    soft:s_auto = { }, soft:s_algs = { }, soft:s_doc = { },
+    data:d_coll = { }, data:d_val = { }, data:d_cln = { },
+    data:d_cur = { }, data:d_anl = { }, data:d_viz = { },
+    data:d_rep = { }, data:d_lbl = { }, data:d_syn = { },
+    data:d_anon = { }, data:d_trans = { },
+    vis:v_gen = { }, vis:v_edit = { }, vis:v_chart = { },
+    write:w_draft = { }, write:w_poly = { }, write:w_sum = { },
+    write:w_con = { }, write:w_tone = { },
+    write:w_tra = { }, write:w_ref = { },
+    write:w_prs = { }, write:w_title = { },
+    eth:e_bias = { }, eth:e_risk = { },
+    eth:e_comp = { }, eth:e_conf = { },
+    sup:sup_qa = { }, sup:sup_trd = { }, sup:sup_lim = { },
+    sup:sup_rec = { }, sup:sup_pub = { }
   }
 
 
@@ -251,13 +261,14 @@
 
 % 1. Set defaults first (prevents overwriting the LDF later)
 \AIDstrings{
-    pre_tools={}, post_tools={}, 
-    pre_taxonomy={}, post_taxonomy={},
-    pre_comments={}, post_comments={}
+    pre_tools = { }, post_tools = { }, 
+    pre_taxonomy = { }, post_taxonomy = { },
+    pre_comments = { }, post_comments = { }
 }
 
 % 2. Then load the language (populates the strings)
-\AIDloadLanguage{en}
+\tl_new:N \l__aid_iso_code_tl
+\AIDloadLanguage{ en }
 
 
 %%=======================================================================
@@ -281,11 +292,11 @@
   {
     \group_begin:
       \cs_if_exist:NTF \hypersetup
-        { \hypersetup{allcolors=black} }
-        {}
+        { \hypersetup{ allcolors=black } }
+        { }
       \cs_if_exist:NTF \href
-        { \href{https://ctan.org/pkg/aidisclose}{\texttt{aidisclose}} }
-        { \texttt{aidisclose} }
+        { \href{ https://ctan.org/pkg/aidisclose } { \texttt{ aidisclose } } }
+        { \texttt{ aidisclose } }
     \group_end:
   }
 
@@ -308,13 +319,6 @@
     \color{ \g__aid_color_box_unused_tl }
     \fbox { \phantom { \tl_use:N \g__aid_checkmark_symbol_tl } }
     \group_end:
-  }
-
-\cs_new_protected:Npn \__aid_checkbox_for:n #1
-  {
-    \seq_if_in:NxTF \g__aid_active_keys_seq { \tl_to_str:n { #1 } }
-      { \__aid_print_checked_box: }
-      { \__aid_print_empty_box: }
   }
 
 % --- STRING FETCHING HELPER ---
@@ -342,7 +346,7 @@
       {
         \footnote{
           \AIDGetString { footnote } 
-          \nobreakspace \cite{Lourenco:2025:aidisclose}.
+          \nobreakspace \cite{ Lourenco:2025:aidisclose } .
         }
       }
   }
@@ -351,7 +355,7 @@
   {
     \bool_if:NF \g__aid_nocite_bool
       {
-        \nobreakspace  \cite{latex-project}
+        \nobreakspace  \cite{ latex-project }
       }
   }
 
@@ -359,19 +363,19 @@
   {
     \bool_if:NF \g__aid_nocite_bool
       {
-        \nobreakspace  \cite{Suchikova:2025:GAIDeT}
+        \nobreakspace  \cite{ Suchikova:2025:GAIDeT }
       }
   }
 
 % CHECKLIST ENVIRONMENT
-\cs_new_protected:Nn \_aid_label:
+\cs_new_protected:Nn \__aid_label:
   {
-    \hbox_to_wd:nn { 1em } { \hss \framebox[0.8em]{\vphantom{t}} \hss }
+    \hbox_to_wd:nn { 1em } { \hss \framebox[0.8em] { \vphantom{ t } } \hss }
   }
 
-\NewDocumentEnvironment{aidlist} { }
+\NewDocumentEnvironment{ aidlist } { }
   {
-    \list { \_aid_label: }
+    \list { \__aid_label: }
       {
         \setlength { \topsep }      { 0pt }
         \setlength { \partopsep }   { 0pt }
@@ -393,28 +397,21 @@
 %%=======================================================================
 
 \dim_new:N \l__aid_fboxsep_dim
-\dim_new:N \l__aid_boxwd_dim
-\dim_new:N \l__aid_labelsep_dim
 \dim_set:Nn \l__aid_fboxsep_dim { 1.2pt }
-\dim_set:Nn \l__aid_labelsep_dim { 0.9em }
 
 \seq_new:N \g__aid_active_keys_seq
-\seq_new:N \l__aid_tools_seq
 \seq_new:N \g__aid_order_seq
 
 \tl_new:N  \l__aid_temp_tl
 \tl_new:N  \g__aid_comments_tl
 \tl_new:N  \g__aid_title_long_tl
-\tl_new:N  \g__aid_title_short_tl
 \tl_new:N  \g__aid_section_cmd_tl
-\tl_new:N  \g__aid_tools_sentence_tl
 \tl_new:N  \g__aid_fontsize_tl
 \tl_new:N  \g__aid_checkmark_symbol_tl
 \int_new:N   \g__aid_authors_int
 \int_new:N   \g__aid_comment_int
 \clist_new:N \g__aid_authors_clist
 
-\tl_new:N \l__aid_author_names_tl
 \tl_new:N \l__aid_declares_verb_tl
 \tl_new:N \l__aid_acknowledges_verb_tl
 \tl_new:N \l__aid_accepts_verb_tl
@@ -429,13 +426,9 @@
 \tl_new:N \g__aid_color_box_used_tl
 \tl_new:N \g__aid_color_box_unused_tl
 
-\str_set:Nn \g__aid_bibfile_str { aidisclose.bib }
-
 \NewDocumentCommand \AIDcheckmarkSymbol { m }
   {
     \tl_gset:Nn \g__aid_checkmark_symbol_tl { #1 }
-    \hbox_set:Nn \l_tmpa_box { \fbox { #1 } }
-    \dim_set:Nn \l__aid_boxwd_dim { \box_wd:N \l_tmpa_box }
   }
 
 \cs_generate_variant:Nn \tl_replace_all:Nnn { Nxx }
@@ -443,7 +436,8 @@
   {
     \tl_set:Nx \l__aid_temp_tl { \tl_to_str:n { #1 } }
     \tl_trim_spaces:N \l__aid_temp_tl
-    \tl_replace_all:Nxx \l__aid_temp_tl { \tl_to_str:n { : } } { \tl_to_str:n { _ } }
+    \tl_replace_all:Nxx \l__aid_temp_tl
+      { \tl_to_str:n { : } } { \tl_to_str:n { _ } }
     \seq_gput_right:No \g__aid_active_keys_seq { \l__aid_temp_tl }
   }
 
@@ -456,7 +450,8 @@
       { \seq_gclear:N \g__aid_tools_seq }
       {
         \seq_gset_split:Nnn \g__aid_tools_seq { , } { #1 }
-        \seq_gset_map:NNn \g__aid_tools_seq \g__aid_tools_seq { \tl_trim_spaces:n {##1} }
+        \seq_gset_map:NNn \g__aid_tools_seq \g__aid_tools_seq
+          { \tl_trim_spaces:n { ##1 } }
         \seq_gremove_all:Nn \g__aid_tools_seq { }
       }
   }
@@ -464,19 +459,16 @@
 \NewDocumentCommand \AIDchecklistFontSize { m }
   { \tl_gset:Nn \g__aid_fontsize_tl { #1 } }
 
-\NewDocumentCommand \AIDdiscloseTitle { o m O{} }
+\NewDocumentCommand \AIDdiscloseTitle { m O { } }
   {
-    \tl_gset:Nn \g__aid_title_long_tl { #2 }
-    \IfNoValueTF { #1 }
-      { \tl_gset:Nn \g__aid_title_short_tl { #2 } }
-      { \tl_gset:Nn \g__aid_title_short_tl { #1 } }
-    \tl_if_blank:nTF { #3 }
+    \tl_gset:Nn \g__aid_title_long_tl { #1 }
+    \tl_if_blank:nTF { #2 }
       {
         \cs_if_exist:cTF { chapter }
           { \tl_gset:Nn \g__aid_section_cmd_tl { \chapter } }
           { \tl_gset:Nn \g__aid_section_cmd_tl { \section } }
       }
-      { \tl_gset:Nn \g__aid_section_cmd_tl { #3 } }
+      { \tl_gset:Nn \g__aid_section_cmd_tl { #2 } }
   }
   
 \NewDocumentCommand \AIDpreamble { m }
@@ -530,24 +522,26 @@
 %% COMMENT ENVIRONMENTS
 %%=======================================================================
 
-\NewDocumentEnvironment{AIDcomment}{ +b }
+\NewDocumentEnvironment{ AIDcomment } { +b }
   {
     \tl_gput_right:Nn \g__aid_comments_tl
       {
         \int_gincr:N \g__aid_comment_int
         \par \bigskip \noindent
         \__aid_fetch_string:nN { comment_label } \l_tmpa_tl
-        \textbf{\tl_use:N \l_tmpa_tl \ \#\int_use:N \g__aid_comment_int :}\  \normalfont#1 \par
+        \textbf{ \tl_use:N \l_tmpa_tl \space
+          \# \int_use:N \g__aid_comment_int : } %
+          \  \normalfont#1 \par
       }
   } { }
 
-\NewDocumentEnvironment{AIDcomment*}{ +b }
+\NewDocumentEnvironment{ AIDcomment* } { +b }
   {
     \tl_gput_right:Nn \g__aid_comments_tl
       {
         \par \bigskip \noindent
         \__aid_fetch_string:nN { comment_star } \l_tmpa_tl
-        \textbf{\tl_use:N \l_tmpa_tl :}\  \normalfont#1 \par
+        \textbf{ \tl_use:N \l_tmpa_tl : }\  \normalfont#1 \par
       }
   } { }
 
@@ -573,8 +567,8 @@
 
 \cs_new_protected:Nn \__aid_calc_author_context:n
   {
-    \clist_set:Nn \g__aid_authors_clist { #1 }
-    \int_set:Nn \g__aid_authors_int { \clist_count:N \g__aid_authors_clist }
+    \clist_gset:Nn \g__aid_authors_clist { #1 }
+    \int_gset:Nn \g__aid_authors_int { \clist_count:N \g__aid_authors_clist }
 
     \int_compare:nNnTF { \g__aid_authors_int } = { 1 }
       { 
@@ -589,9 +583,9 @@
         \tl_set:Nx \l__aid_author_list_tl 
           { 
             \clist_use:Nnnn \g__aid_authors_clist
-              { \ \tl_use:N \l__aid_connector_tl \space } 
-              { ,\space} 
-              { ,\ \tl_use:N \l__aid_connector_tl \space } 
+              { \space \tl_use:N \l__aid_connector_tl \space }
+              { , \space }
+              { , \space \tl_use:N \l__aid_connector_tl \space }
           }
         \__aid_fetch_string:nN { declare } \l__aid_declares_verb_tl
         \__aid_fetch_string:nN { acknowledge } \l__aid_acknowledges_verb_tl
@@ -605,11 +599,16 @@
     \__aid_fetch_string:nN { preamble } \l__aid_working_preamble_tl
     
     % New Placeholders
-    \tl_replace_all:Nnn \l__aid_working_preamble_tl { <author> } { \l__aid_author_noun_tl }
-    \tl_replace_all:Nnn \l__aid_working_preamble_tl { <AUTHOR-LIST> } { \l__aid_author_list_tl }
-    \tl_replace_all:Nnn \l__aid_working_preamble_tl { <declares> } { \l__aid_declares_verb_tl }
-    \tl_replace_all:Nnn \l__aid_working_preamble_tl { <acknowledges> } { \l__aid_acknowledges_verb_tl }
-    \tl_replace_all:Nnn \l__aid_working_preamble_tl { <accept> } { \l__aid_accepts_verb_tl }
+    \tl_replace_all:Nnn \l__aid_working_preamble_tl
+      { <author> } { \l__aid_author_noun_tl }
+    \tl_replace_all:Nnn \l__aid_working_preamble_tl
+      { <AUTHOR-LIST> } { \l__aid_author_list_tl }
+    \tl_replace_all:Nnn \l__aid_working_preamble_tl
+      { <declares> } { \l__aid_declares_verb_tl }
+    \tl_replace_all:Nnn \l__aid_working_preamble_tl
+      { <acknowledges> } { \l__aid_acknowledges_verb_tl }
+    \tl_replace_all:Nnn \l__aid_working_preamble_tl
+      { <accept> } { \l__aid_accepts_verb_tl }
   }
 
 \cs_new_protected:Nn \__aid_render_section_tools:
@@ -631,9 +630,9 @@
       {
          \__aid_fetch_string:nN { and } \l_tmpb_tl
          \seq_use:Nnnn \g__aid_tools_seq 
-           { \ \tl_use:N \l_tmpb_tl \  } 
-           { ,\  } 
-           { ,\ \tl_use:N \l_tmpb_tl \  } .
+           { \space \tl_use:N \l_tmpb_tl \space }
+           { , \space }
+           { , \space \tl_use:N \l_tmpb_tl \space } .
       }
     
     \__aid_fetch_string:nN { post_tools } \l_tmpa_tl
@@ -659,14 +658,17 @@
           \__aid_fetch_string:nN { grp_##2 } \l_tmpa_tl
           \int_compare:nNnTF { #1 } < { 2 }
             {
-              \textbf{ \larger \tl_use:N \l_tmpa_tl \  \hrulefill}\par\nopagebreak[4]
+              \textbf{ \larger \tl_use:N \l_tmpa_tl \space \hrulefill } %
+              \par\nopagebreak[4]
               \begin{ aidlist }
                 \TItems { ##2 }
               \end{ aidlist }
             }
             {
               \setlength { \multicolsep } { 4pt } 
-              \begin { multicols } { #1 } [ \noindent \textbf { \larger \tl_use:N \l_tmpa_tl \  \hrulefill } ]
+              \begin { multicols } { #1 }
+                [ \noindent \textbf { \larger
+                  \tl_use:N \l_tmpa_tl \space \hrulefill } ]
                 \begin { aidlist }
                   \TItems { ##2 }
                 \end { aidlist }
@@ -688,14 +690,14 @@
                \item [ \__aid_print_checked_box: ]
                \group_begin:
                \color{ \g__aid_color_used_tl }
-               \parbox[t]{\linewidth}{ \raggedright \tl_use:N \l_tmpa_tl }
+               \parbox[t] { \linewidth } { \raggedright \tl_use:N \l_tmpa_tl }
                \group_end:
             }
             {
                \item [ \__aid_print_empty_box: ]
                \group_begin:
                \color{ \g__aid_color_unused_tl }
-               \parbox[t]{\linewidth}{ \raggedright \tl_use:N \l_tmpa_tl }
+               \parbox[t] { \linewidth } { \raggedright \tl_use:N \l_tmpa_tl }
                \group_end:
             }
         }
@@ -740,7 +742,8 @@
   {
     \group_begin:
       % Reset defaults
-      \keys_set:nn { aidisclose / render } { ncols=3, lang={}, label={} }
+      \keys_set:nn { aidisclose / render }
+        { ncols = 3, lang = { }, label = { } }
       
       % Process options
       \IfNoValueF { #2 }
@@ -758,7 +761,8 @@
           \fi
         }
         {
-          \prop_get:NxNTF \g__aid_lang_map_prop { \l__aid_render_lang_opt_tl } \l_tmpa_tl
+          \prop_get:NxNTF \g__aid_lang_map_prop
+            { \l__aid_render_lang_opt_tl } \l_tmpa_tl
             { \tl_set:Nx \l__aid_render_lang_tl { \l_tmpa_tl } }
             { \tl_set:Nn \l__aid_render_lang_tl { \l__aid_render_lang_opt_tl } }
         }
@@ -786,7 +790,11 @@
             {
               { preamble } { \__aid_print_preamble: }
               { tools }    { \__aid_render_section_tools: }
-              { taxonomy } { \__aid_render_section_taxonomy:n { \l__aid_render_ncols_int } }
+              { taxonomy }
+                {
+                  \__aid_render_section_taxonomy:n
+                    { \l__aid_render_ncols_int }
+                }
               { comments } { \__aid_render_section_comments: }
             }
         }
