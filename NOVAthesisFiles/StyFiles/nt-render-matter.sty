@@ -189,8 +189,6 @@
         \ntselectlang{\@ABS@LANG}%
         \NTRunHook{abstract/pre}%
         \NTRunHook{abstract/#1/pre}%
-        \ifoptionequal{/novathesis/abstract/title}{before}%
-          {\NTRunHook{abstract/title/before}}{}%
         \printabstracttitle{#1}%
         \ifoptionequal{/novathesis/abstract/title}{after}%
           {\NTRunHook{abstract/title/after}}{}%
@@ -763,6 +761,9 @@
       \IfStrEq{#1}{zhs}{\def\nt@abstitlefont{\nt@cjkfontSC}}{}%
       \IfStrEq{#1}{zht}{\def\nt@abstitlefont{\nt@cjkfontTC}}{}%
     \fi
+    \ifoptionequal{/novathesis/abstract/title}{before}{%
+      \preto\chapterheadstart{\NTRunHook{abstract/title/before}}%
+    }{}%
     \chapter{\texorpdfstring{{\nt@abstitlefont\GetBkmString(abstract,#1)}}{\GetBkmString(abstract,#1)}}%
   \endgroup
 }
@@ -770,12 +771,16 @@
 % Default work-title block inserted by \ntsetup{abstract/title=before|after}.
 % Schools needing custom styling should populate the hook directly instead.
 \newcommand{\ntprintabstracttitledefault}{%
-  \begin{center}
+  \begingroup
+    \ifoptionequal{/novathesis/abstract/title/align}{left}{\raggedright}{}%
+    \ifoptionequal{/novathesis/abstract/title/align}{right}{\raggedleft}{}%
+    \ifoptionequal{/novathesis/abstract/title/align}{center}{\centering}{}%
     \large\bfseries
     \IfMemVoidTF{DocTitle}{\@LSHORT,abstract}
       {\GetDocTitle(\@LSHORT,main)}%
       {\GetDocTitle(\@LSHORT,abstract)}%
-  \end{center}
+    \par
+  \endgroup
   \smallskip
 }
 
