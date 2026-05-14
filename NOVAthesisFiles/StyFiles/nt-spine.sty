@@ -14,36 +14,34 @@
 %% ----------------------------------------------------------------------------
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesExplPackage{nt-spine}{2026/01/14}{0.2}{NovaThesis Spine Generator}
-\typeout{NT FILE StyFiles/nt-spine.sty}%
+\ProvidesExplPackage { nt-spine } { 2026/01/14 } { 0.2 }
+  { NovaThesis Spine Generator }
+\typeout { NT FILE StyFiles/nt-spine.sty } %
 
 
 %%=======================================================================
 %% PACKAGE REQUIREMENTS
 %%=======================================================================
 
-\RequirePackage{geometry}
-\RequirePackage{graphbox}
-\RequirePackage{stocksize}
-\RequirePackage{tikz}
-\@ifpackageloaded{tcolorbox}{}
-    {\RequirePackage[most]{tcolorbox}}
-\tcbuselibrary{fitting}
+\RequirePackage { geometry }
+\RequirePackage { graphbox }
+\RequirePackage { stocksize }
+\RequirePackage { tikz }
+\@ifpackageloaded { tcolorbox } { }
+  { \RequirePackage [ most ] { tcolorbox } }
+\tcbuselibrary { fitting }
 
 
 %%=======================================================================
 %% VARIABLE DECLARATIONS
 %%=======================================================================
 
-\ExplSyntaxOn
-
 % -- Global Spine Configuration --------------------------------------------
-\clist_new:N \l_nt_spine_order_clist      % list of box names
-\tl_new:N    \l_nt_spine_author_tl        % text: author name
-\tl_new:N    \l_nt_spine_title_tl         % text: thesis title
-\tl_new:N    \l_nt_spine_date_tl          % text: date/year
-\tl_new:N    \l_nt_spine_angle_tl         % global spine angle
-\dim_new:N   \l_nt_spine_boxsep_dim       % horizontal space between adjacent boxes
+\clist_new:N \l_nt_spine_order_clist % list of box names
+\tl_new:N    \l_nt_spine_author_tl   % text: author name
+\tl_new:N    \l_nt_spine_title_tl    % text: thesis title
+\tl_new:N    \l_nt_spine_date_tl     % text: date/year
+\dim_new:N   \l_nt_spine_boxsep_dim  % gap between adjacent boxes
 
 \msg_new:nnn { novathesis } { invalid-spine-angle }
   {
@@ -52,41 +50,41 @@
   }
 
 % -- Spine Dimensions -------------------------------------------------------
-\dim_new:N   \l_nt_spine_width_dim        % spine thickness
+\dim_new:N \l_nt_spine_width_dim % spine thickness
 
 % -- Global Visual Appearance ----------------------------------------------
-\tl_new:N    \l_nt_spine_bg_image_tl      % filename of global background image
-\tl_new:N    \l_nt_spine_bg_image_angle_tl      % filename of global background image
-\tl_new:N    \l_nt_spine_bg_color_tl      % color for the global spine background
-\tl_new:N    \l_nt_spine_bg_opacity_tl    % opacity for the global background image
-\tl_new:N    \l_nt_spine_fg_color_tl      % default text color
-\tl_new:N    \l_nt_spine_valign_tl        % default vertical alignment
-\tl_new:N    \l_nt_spine_frame_color_tl   % color of outer spine frame
-\tl_new:N    \l_nt_spine_frame_width_tl   % line width of outer spine frame
+\tl_new:N \l_nt_spine_bg_image_tl       % global background image file
+\tl_new:N \l_nt_spine_bg_image_angle_tl % global background image angle
+\tl_new:N \l_nt_spine_bg_color_tl       % global background color
+\tl_new:N \l_nt_spine_bg_opacity_tl     % global background image opacity
+\tl_new:N \l_nt_spine_fg_color_tl       % default text color
+\tl_new:N \l_nt_spine_frame_color_tl    % outer spine frame color
+\tl_new:N \l_nt_spine_frame_width_tl    % outer spine frame width
 
 % -- Debug Visuals ---------------------------------------------------------
-\bool_new:N  \l_nt_spine_debug_bool       % toggle debug mode
-\tl_new:N    \l_nt_spine_debug_color_tl   % color for debug overlay
-\dim_new:N   \l_nt_spine_debug_width_dim  % line width for debug overlay
+\bool_new:N \l_nt_spine_debug_bool      % toggle debug mode
+\tl_new:N   \l_nt_spine_debug_color_tl  % debug overlay color
+\dim_new:N  \l_nt_spine_debug_width_dim % debug overlay line width
 
 % -- Margins ---------------------------------------------------------------
-\dim_new:N   \l_nt_spine_margin_top_dim
-\dim_new:N   \l_nt_spine_margin_bottom_dim
-\dim_new:N   \l_nt_spine_margin_left_dim
-\dim_new:N   \l_nt_spine_margin_right_dim
+\dim_new:N \l_nt_spine_margin_top_dim
+\dim_new:N \l_nt_spine_margin_bottom_dim
+\dim_new:N \l_nt_spine_margin_left_dim
+\dim_new:N \l_nt_spine_margin_right_dim
 
 % -- Dynamic Box Variables --------------------------------------------------
 \clist_map_inline:nn { date, title, author, logo }
   {
-    \dim_new:c { l_nt_spine_box_#1_len_dim }        % width of th box
-    \dim_new:c { l_nt_spine_box_#1_fontstyle_tl }   % font customization
-    \tl_new:c  { l_nt_spine_box_#1_bg_image_tl }    % per-box background image
-    \tl_new:c  { l_nt_spine_box_#1_bg_image_angle_tl } % image angle
-    \tl_new:c  { l_nt_spine_box_#1_bg_color_tl }    % per-box background color
-    \tl_new:c  { l_nt_spine_box_#1_bg_opacity_tl }  % per-box background opacity
-    \tl_new:c  { l_nt_spine_box_#1_fg_color_tl }    % per-box text color
-    \tl_new:c  { l_nt_spine_box_#1_valign_tl }      % vertical alignment
-    \tl_new:c  { l_nt_spine_box_#1_halign_tl }      % horizontal alignment
+    \dim_new:c { l_nt_spine_box_#1_len_dim }      % width of the box
+    \dim_new:c { l_nt_spine_box_#1_fontstyle_tl } % font customization
+    \tl_new:c  { l_nt_spine_box_#1_bg_image_tl }  % per-box background image
+    \tl_new:c  { l_nt_spine_box_#1_bg_image_angle_tl }
+      % per-box background image angle
+    \tl_new:c  { l_nt_spine_box_#1_bg_color_tl }   % per-box background color
+    \tl_new:c  { l_nt_spine_box_#1_bg_opacity_tl } % per-box background opacity
+    \tl_new:c  { l_nt_spine_box_#1_fg_color_tl }   % per-box text color
+    \tl_new:c  { l_nt_spine_box_#1_valign_tl }     % vertical alignment
+    \tl_new:c  { l_nt_spine_box_#1_halign_tl }     % horizontal alignment
     \tl_new:c  { l_nt_spine_box_#1_frame_color_tl } % per-box frame color
   }
 
@@ -158,45 +156,50 @@
   {
     \keys_define:nn { novathesis }
       {
-        spine/box/#1/len           .dim_set:c = l_nt_spine_box_#1_len_dim,
-        spine/box/#1/len           .initial:n = { 3cm },
+        spine/box/#1/len .dim_set:c = l_nt_spine_box_#1_len_dim,
+        spine/box/#1/len .initial:n = { 3cm },
 
-        spine/box/#1/extrasep      .dim_set:c = l_nt_spine_box_#1_extrasep_dim,
-        spine/box/#1/extrasep      .initial:n = { 0mm },
+        spine/box/#1/extrasep .dim_set:c = l_nt_spine_box_#1_extrasep_dim,
+        spine/box/#1/extrasep .initial:n = { 0mm },
 
-        spine/box/#1/fontstyle     .tl_set:c  = l_nt_spine_box_#1_fontstyle_tl,
-        spine/box/#1/fontstyle     .initial:n = { \sffamily },
+        spine/box/#1/fontstyle .tl_set:c = l_nt_spine_box_#1_fontstyle_tl,
+        spine/box/#1/fontstyle .initial:n = { \sffamily },
 
-        spine/box/#1/bg/color      .tl_set:c  = l_nt_spine_box_#1_bg_color_tl,
-        spine/box/#1/bg/color      .initial:n = { cyan },
+        spine/box/#1/bg/color .tl_set:c = l_nt_spine_box_#1_bg_color_tl,
+        spine/box/#1/bg/color .initial:n = { cyan },
 
-        spine/box/#1/bg/opacity    .tl_set:c = l_nt_spine_box_#1_bg_opacity_tl,
-        spine/box/#1/bg/opacity    .initial:n = { 1 },
+        spine/box/#1/bg/opacity .tl_set:c = l_nt_spine_box_#1_bg_opacity_tl,
+        spine/box/#1/bg/opacity .initial:n = { 1 },
 
-        spine/box/#1/bg/image      .tl_set:c = l_nt_spine_box_#1_bg_image_tl,
-        spine/box/#1/bg/image      .initial:n = { },
+        spine/box/#1/bg/image .tl_set:c = l_nt_spine_box_#1_bg_image_tl,
+        spine/box/#1/bg/image .initial:n = { },
 
-        spine/box/#1/bg/image/angle       .tl_set:c = l_nt_spine_box_#1_bg_image_angle_tl,
-        spine/box/#1/bg/image/angle       .initial:n = { 0 },
-        spine/box/#1/bg/image/angle/phd   .tl_set:c = l_nt_spine_box_#1_bg_image_angle_phd_tl,
-        spine/box/#1/bg/image/angle/phd   .initial:n = { },
-        spine/box/#1/bg/image/angle/msc   .tl_set:c = l_nt_spine_box_#1_bg_image_angle_msc_tl,
-        spine/box/#1/bg/image/angle/msc   .initial:n = { },
+        spine/box/#1/bg/image/angle .tl_set:c =
+          l_nt_spine_box_#1_bg_image_angle_tl,
+        spine/box/#1/bg/image/angle .initial:n = { 0 },
+        spine/box/#1/bg/image/angle/phd .tl_set:c =
+          l_nt_spine_box_#1_bg_image_angle_phd_tl,
+        spine/box/#1/bg/image/angle/phd .initial:n = { },
+        spine/box/#1/bg/image/angle/msc .tl_set:c =
+          l_nt_spine_box_#1_bg_image_angle_msc_tl,
+        spine/box/#1/bg/image/angle/msc .initial:n = { },
 
-        spine/box/#1/fg/color      .tl_set:c  = l_nt_spine_box_#1_fg_color_tl,
-        spine/box/#1/fg/color      .initial:n = { black },
+        spine/box/#1/fg/color .tl_set:c = l_nt_spine_box_#1_fg_color_tl,
+        spine/box/#1/fg/color .initial:n = { black },
 
-        spine/box/#1/frame/color   .tl_set:c  = l_nt_spine_box_#1_frame_color_tl,
-        spine/box/#1/frame/color   .initial:n = { none },
+        spine/box/#1/frame/color .tl_set:c =
+          l_nt_spine_box_#1_frame_color_tl,
+        spine/box/#1/frame/color .initial:n = { none },
 
-        spine/box/#1/frame/width   .tl_set:c  = l_nt_spine_box_#1_frame_width_tl,
-        spine/box/#1/frame/width   .initial:n = { 0pt },
+        spine/box/#1/frame/width .tl_set:c =
+          l_nt_spine_box_#1_frame_width_tl,
+        spine/box/#1/frame/width .initial:n = { 0pt },
 
-        spine/box/#1/halign        .tl_set:c  = l_nt_spine_box_#1_halign_tl,
-        spine/box/#1/halign        .initial:n = { center },
+        spine/box/#1/halign .tl_set:c = l_nt_spine_box_#1_halign_tl,
+        spine/box/#1/halign .initial:n = { center },
 
-        spine/box/#1/valign        .tl_set:c  = l_nt_spine_box_#1_valign_tl,
-        spine/box/#1/valign        .initial:n = { center },
+        spine/box/#1/valign .tl_set:c = l_nt_spine_box_#1_valign_tl,
+        spine/box/#1/valign .initial:n = { center },
       }
   }
 
@@ -215,7 +218,7 @@
     with~prefix~'#2'.
   }
 
-\NewDocumentCommand{\OptionSearch}{ O{} m o }
+\NewDocumentCommand \OptionSearch { O { } m o }
   {
     \tl_clear:N \l_nt_search_result_tl
     \bool_set_false:N \l_nt_search_found_bool
@@ -232,25 +235,33 @@
           }
       }
     \bool_if:NF \l_nt_search_found_bool
-      { \msg_error:nnxx { novathesis } { option-search-not-found } { #2 } { #1 } }
+      {
+        \msg_error:nnxx { novathesis } { option-search-not-found }
+          { #2 } { #1 }
+      }
 
-    \IfNoValueTF { #3 } { \tl_use:N \l_nt_search_result_tl } { \tl_set_eq:NN #3 \l_nt_search_result_tl }
+    \IfNoValueTF { #3 }
+      { \tl_use:N \l_nt_search_result_tl }
+      { \tl_set_eq:NN #3 \l_nt_search_result_tl }
   }
 
 % -- Setup Command ---------------------------------------------------------
-\NewDocumentCommand{\NTSetup}{ o +m }
+\NewDocumentCommand \NTSetup { o +m }
   {
-    \IfNoValueTF {#1} { \keys_set:nn { novathesis } { #2 } } { \keys_set:nn { novathesis / #1 } { #2 } }
+    \IfNoValueTF { #1 }
+      { \keys_set:nn { novathesis } { #2 } }
+      { \keys_set:nn { novathesis / #1 } { #2 } }
   }
 
 % Default configuration for box lengths.
-\NTSetup[spine/box]{
-  date/len    =  1.5cm,
-  title/len   = 16.6cm,
-  author/len  =  5.0cm,
-  logo/len    =  4.1cm,
-  author/extrasep = 0.5cm,
-}
+\NTSetup [spine/box]
+  {
+    date/len       = 1.5cm,
+    title/len      = 16.6cm,
+    author/len     = 5.0cm,
+    logo/len       = 4.1cm,
+    author/extrasep = 0.5cm,
+  }
 
 % -- Sanitize title string --------------------------------------------------
 \tl_new:N \l_nt_sanitize_title_tl
@@ -258,8 +269,11 @@
 \NewDocumentCommand \NTSanitizeTitle { m o }
   {
     \tl_set:Nx \l_nt_sanitize_title_tl { #1 }
-    \regex_replace_all:nnN { \s } { \c{nobreakspace} } \l_nt_sanitize_title_tl
-    \IfNoValueTF{#2} { \tl_use:N \l_nt_sanitize_title_tl } { \tl_set:NV #2 \l_nt_sanitize_title_tl }
+    \regex_replace_all:nnN { \s } { \c { nobreakspace } }
+      \l_nt_sanitize_title_tl
+    \IfNoValueTF { #2 }
+      { \tl_use:N \l_nt_sanitize_title_tl }
+      { \tl_set:NV #2 \l_nt_sanitize_title_tl }
   }
 
 
@@ -267,159 +281,312 @@
 %% CORE IMPLEMENTATION: \PrintBookSpine
 %%=======================================================================
 
-\dim_new:N  \l_box_outer_width_dim
-\dim_new:N  \l_box_outer_height_dim
-\dim_new:N  \l_box_inner_width_dim
-\dim_new:N  \l_box_inner_height_dim
-\dim_new:N  \l_imgwidth_dim
-\dim_new:N  \l_imgheight_dim
+\dim_new:N \l_box_outer_width_dim
+\dim_new:N \l_box_outer_height_dim
+\dim_new:N \l_box_inner_width_dim
+\dim_new:N \l_box_inner_height_dim
+\dim_new:N \l__nt_spine_imgwidth_dim
+\dim_new:N \l__nt_spine_imgheight_dim
 
-\NewDocumentCommand{\PrintBookSpine}{}
+\NewDocumentCommand \PrintBookSpine { }
   {
     % 1. Adjust the stock (paper) size
-    \newstocksize{layoutsize={\the\paperheight,\the\l_nt_spine_width_dim},margin=0mm}
+    \newstocksize
+      {
+        layoutsize =
+          { \the \paperheight, \the \l_nt_spine_width_dim },
+        margin = 0mm
+      }
 
     % 2. Main drawing environment
-    \begin{tikzpicture}[remember~picture, overlay]
+    \begin { tikzpicture } [ remember~picture, overlay ]
 
-        % A. Global spine background rectangle and its frame
-        \node[
+      % A. Global spine background rectangle and its frame
+      \node
+        [
           inner~sep = 0pt,
           outer~sep = 0pt,
-          minimum~width={\paperwidth},
-          minimum~height={\paperheight},
-          draw={\l_nt_spine_frame_color_tl},
-          fill={\l_nt_spine_bg_color_tl},
-          line~width={\l_nt_spine_frame_width_tl},
-          anchor=center,
-        ] at (current~page.center) {};
+          minimum~width = { \paperwidth },
+          minimum~height = { \paperheight },
+          draw = { \l_nt_spine_frame_color_tl },
+          fill = { \l_nt_spine_bg_color_tl },
+          line~width = { \l_nt_spine_frame_width_tl },
+          anchor = center,
+        ]
+        at ( current~page.center ) { } ;
 
-        % B. Optionally overlay a global background image
-        \tl_if_blank:VF \l_nt_spine_bg_image_tl
-          {
-              \str_case:VnF \l_nt_spine_bg_image_angle_tl
-                {
-                  {0}   { \dim_set:Nn \l_imgwidth_dim  { \paperwidth } \dim_set:Nn \l_imgheight_dim { \paperheight } }
-                  {180} { \dim_set:Nn \l_imgwidth_dim  { \paperwidth } \dim_set:Nn \l_imgheight_dim { \paperheight } }
-                  {90}  { \dim_set:Nn \l_imgwidth_dim  { \paperheight } \dim_set:Nn \l_imgheight_dim { \paperwidth } }
-                  {-90} { \dim_set:Nn \l_imgwidth_dim  { \paperheight } \dim_set:Nn \l_imgheight_dim { \paperwidth } }
-                  {270} { \dim_set:Nn \l_imgwidth_dim  { \paperheight } \dim_set:Nn \l_imgheight_dim { \paperwidth } }
-                }
-                { \msg_error:nnx { novathesis } { invalid-spine-angle } { \l_nt_spine_bg_image_angle_tl } }
-              \node[opacity={\l_nt_spine_bg_opacity_tl}] at (current~page.center)
-                      {\includegraphics[width={\l_imgwidth_dim},
-                                        height={\l_imgheight_dim},
-                                        angle={\l_nt_spine_bg_image_angle_tl},
-                       ]{\l_nt_spine_bg_image_tl}};
-          }
-
-        % C. Begin drawing the individual content boxes
-      \node[anchor=north~west, xshift=-4pt, yshift=4pt - \l_nt_spine_margin_top_dim]
-          at (current~page.north~west)
-      {
-       \begin{tikzpicture}
-          [
-             spinebox/.style = {
-               rectangle,
-               inner~sep = 0pt,
-               outer~sep = 0pt,
-               minimum~height = {\l_nt_spine_width_dim - \l_nt_spine_margin_top_dim - \l_nt_spine_margin_bottom_dim},
-               align = center,
-             }
-          ]
-
-          \dim_set_eq:Nc \l_tmpb_dim { l_nt_spine_margin_left_dim }
-
-           % Left margin space
-           \node[
-             spinebox,
-             minimum~width = {\l_tmpb_dim},
-             draw = none,
-             fill = none,
-             anchor = north~west,
-           ] at (0, 0) { };
-
-          % Loop over boxes
-          \clist_map_inline:Nn \l_nt_spine_order_clist
+      % B. Optionally overlay a global background image
+      \tl_if_blank:VF \l_nt_spine_bg_image_tl
+        {
+          \str_case:VnF \l_nt_spine_bg_image_angle_tl
             {
-              \dim_set_eq:Nc \l_box_outer_width_dim    { l_nt_spine_box_##1_len_dim }
-              \dim_set:Nn \l_box_outer_height_dim      { \l_nt_spine_width_dim - \l_nt_spine_margin_top_dim - \l_nt_spine_margin_bottom_dim }
-              \dim_set:Nn \l_box_inner_width_dim    { \l_box_outer_width_dim - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2 }
-              \dim_set:Nn \l_box_inner_height_dim   { \l_box_outer_height_dim - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2 }
+              { 0 }
+                {
+                  \dim_set:Nn \l__nt_spine_imgwidth_dim { \paperwidth }
+                  \dim_set:Nn \l__nt_spine_imgheight_dim { \paperheight }
+                }
+              { 180 }
+                {
+                  \dim_set:Nn \l__nt_spine_imgwidth_dim { \paperwidth }
+                  \dim_set:Nn \l__nt_spine_imgheight_dim { \paperheight }
+                }
+              { 90 }
+                {
+                  \dim_set:Nn \l__nt_spine_imgwidth_dim { \paperheight }
+                  \dim_set:Nn \l__nt_spine_imgheight_dim { \paperwidth }
+                }
+              { -90 }
+                {
+                  \dim_set:Nn \l__nt_spine_imgwidth_dim { \paperheight }
+                  \dim_set:Nn \l__nt_spine_imgheight_dim { \paperwidth }
+                }
+              { 270 }
+                {
+                  \dim_set:Nn \l__nt_spine_imgwidth_dim { \paperheight }
+                  \dim_set:Nn \l__nt_spine_imgheight_dim { \paperwidth }
+                }
+            }
+            {
+              \msg_error:nnx { novathesis } { invalid-spine-angle }
+                { \l_nt_spine_bg_image_angle_tl }
+            }
+          \node [ opacity = { \l_nt_spine_bg_opacity_tl } ]
+            at ( current~page.center )
+            {
+              \includegraphics
+                [
+                  width = { \l__nt_spine_imgwidth_dim },
+                  height = { \l__nt_spine_imgheight_dim },
+                  angle = { \l_nt_spine_bg_image_angle_tl },
+                ]
+                { \l_nt_spine_bg_image_tl }
+            } ;
+        }
 
-              \node[
-                 spinebox,
-                 minimum~width = {\l_box_outer_width_dim},
-                 draw = {\use:c { l_nt_spine_box_##1_frame_color_tl }},
-                 fill = {\use:c { l_nt_spine_box_##1_bg_color_tl }},
-                 fill~opacity = 0,
-                 text = {\use:c { l_nt_spine_box_##1_fg_color_tl }},
-                 line~width = {\use:c { l_nt_spine_box_##1_frame_width_tl }},
-                 anchor = north~west,
-              ] at (\l_tmpb_dim, 0)
+      % C. Begin drawing the individual content boxes
+      \node
+        [
+          anchor = north~west,
+          xshift = -4pt,
+          yshift = 4pt - \l_nt_spine_margin_top_dim,
+        ]
+        at ( current~page.north~west )
+        {
+          \begin { tikzpicture }
+            [
+              spinebox/.style =
+                {
+                  rectangle,
+                  inner~sep = 0pt,
+                  outer~sep = 0pt,
+                  minimum~height =
+                    {
+                      \l_nt_spine_width_dim
+                      - \l_nt_spine_margin_top_dim
+                      - \l_nt_spine_margin_bottom_dim
+                    },
+                  align = center,
+                }
+            ]
+
+            \dim_set_eq:Nc \l_tmpb_dim { l_nt_spine_margin_left_dim }
+
+            % Left margin space
+            \node
+              [
+                spinebox,
+                minimum~width = { \l_tmpb_dim },
+                draw = none,
+                fill = none,
+                anchor = north~west,
+              ]
+              at ( 0, 0 ) { } ;
+
+            % Loop over boxes
+            \clist_map_inline:Nn \l_nt_spine_order_clist
               {
-                  % Debug Overlay
-                  \bool_if:NT \l_nt_spine_debug_bool
+                \dim_set_eq:Nc \l_box_outer_width_dim
+                  { l_nt_spine_box_##1_len_dim }
+                \dim_set:Nn \l_box_outer_height_dim
                   {
-                      \begin{tikzpicture}[remember~picture, overlay]
-                          \draw[draw={\l_nt_spine_debug_color_tl}, line~width={\l_nt_spine_debug_width_dim}]
-                                (0,0) rectangle (\l_box_outer_width_dim, \l_box_outer_height_dim);
-                      \end{tikzpicture}
+                    \l_nt_spine_width_dim
+                    - \l_nt_spine_margin_top_dim
+                    - \l_nt_spine_margin_bottom_dim
+                  }
+                \dim_set:Nn \l_box_inner_width_dim
+                  {
+                    \l_box_outer_width_dim
+                    - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2
+                  }
+                \dim_set:Nn \l_box_inner_height_dim
+                  {
+                    \l_box_outer_height_dim
+                    - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2
                   }
 
-                  % Per-box image processing
-                  \def\nt_spine_overlay_code{}%
-                  \edef\tmp_img{\use:c { l_nt_spine_box_##1_bg_image_tl }}
-                  \tl_if_blank:VF \tmp_img
-                    {
-                      \def\nt_spine_overlay_code{%
-                        \node[inner~sep=0pt, anchor=center, opacity=1] at (interior.center)
-                          {
-                              \OptionSearch [l_nt_spine_box_##1_bg_image_angle_] { \option{/novathesis/doctype}_tl, tl, }[\img_angle]
-                              \setbox0=\hbox { \includegraphics[height=\l_box_inner_height_dim, angle=\img_angle, ]{\tmp_img} }
-                              \dim_set:Nn \l_imgwidth_dim  { \wd0 } \dim_set:Nn \l_imgheight_dim { \ht0 + \dp0 }
-                              \dim_compare:nNnT { \l_imgwidth_dim } > { \l_box_inner_width_dim }
-                                {
-                                    \setbox0=\hbox { \includegraphics[width=\l_box_inner_width_dim, angle=\img_angle, ]{\tmp_img} }
-                                    \dim_set:Nn \l_imgwidth_dim  { \wd0 } \dim_set:Nn \l_imgheight_dim { \ht0 + \dp0 }
-                                }
-                              \str_case:enF { \use:c { l_nt_spine_box_##1_halign_tl } }
-                                {
-                                  {left}   { \box0 \hskip \dimexpr\l_box_inner_width_dim-\l_imgwidth_dim\relax }
-                                  {right}  { \hskip \dimexpr\l_box_inner_width_dim-\l_imgwidth_dim\relax \box0 }
-                                  {center} { \box0 }
-                                } { \box0 }
-                          };
-                      }%
-                    }
-
-                  % Render content using tcolorbox
-                  \begin{tcolorbox}[
-                      enhanced, fit, fit~basedim=15pt,
-                      before~upper={ \hyphenpenalty=10000 \exhyphenpenalty=10000 },
-                      boxsep=0pt, left=0pt, right=0pt, top=0pt, bottom=0pt, arc=0pt, boxrule=0pt, frame~hidden, box~align=base, interior~hidden,
-                      fontupper={\use:c { l_nt_spine_box_##1_fontstyle_tl }},
-                      coltext={\use:c { l_nt_spine_box_##1_fg_color_tl }},
-                      width={\use:c { l_nt_spine_box_##1_len_dim } - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2},
-                      height={\l_nt_spine_width_dim - \l_nt_spine_margin_top_dim - \l_nt_spine_margin_bottom_dim - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2},
-                      halign={\use:c { l_nt_spine_box_##1_halign_tl }},
-                      valign={\use:c { l_nt_spine_box_##1_valign_tl }},
-                      overlay={\nt_spine_overlay_code},
+                \node
+                  [
+                    spinebox,
+                    minimum~width = { \l_box_outer_width_dim },
+                    draw = { \use:c { l_nt_spine_box_##1_frame_color_tl } },
+                    fill = { \use:c { l_nt_spine_box_##1_bg_color_tl } },
+                    fill~opacity = 0,
+                    text = { \use:c { l_nt_spine_box_##1_fg_color_tl } },
+                    line~width =
+                      { \use:c { l_nt_spine_box_##1_frame_width_tl } },
+                    anchor = north~west,
                   ]
-                      \setbox0=\hbox{2Ap}
-                      \raisebox{0.75\dp0}{\vphantom{Ap}}
-                      { \use:c { l_nt_spine_##1_tl } }
-                  \end{tcolorbox}
-              };
+                  at ( \l_tmpb_dim, 0 )
+                  {
+                    % Debug Overlay
+                    \bool_if:NT \l_nt_spine_debug_bool
+                      {
+                        \begin { tikzpicture }
+                          [ remember~picture, overlay ]
+                          \draw
+                            [
+                              draw = { \l_nt_spine_debug_color_tl },
+                              line~width = { \l_nt_spine_debug_width_dim },
+                            ]
+                            ( 0, 0 )
+                            rectangle
+                            ( \l_box_outer_width_dim, \l_box_outer_height_dim );
+                        \end { tikzpicture }
+                      }
 
-              % Advance horizontal cursor
-              \dim_add:Nn \l_tmpb_dim { \use:c { l_nt_spine_box_##1_len_dim } + \l_nt_spine_boxsep_dim + \use:c { l_nt_spine_box_##1_extrasep_dim } }
-           }
-        \end{tikzpicture}
-      };
-    \end{tikzpicture}
+                    % Per-box image processing
+                    \def \nt_spine_overlay_code { } %
+                    \edef \tmp_img
+                      { \use:c { l_nt_spine_box_##1_bg_image_tl } }
+                    \tl_if_blank:VF \tmp_img
+                      {
+                        \def \nt_spine_overlay_code
+                          {
+                            \node
+                              [ inner~sep = 0pt,
+                                anchor = center,
+                                opacity = 1 ]
+                              at ( interior.center )
+                              {
+                                \OptionSearch
+                                  [ l_nt_spine_box_##1_bg_image_angle_ ]
+                                  { \option { /novathesis/doctype } _tl, tl, }
+                                  [ \img_angle ]
+                                \setbox0 = \hbox
+                                  {
+                                    \includegraphics
+                                      [
+                                        height = \l_box_inner_height_dim,
+                                        angle = \img_angle,
+                                      ]
+                                      { \tmp_img }
+                                  }
+                                \dim_set:Nn \l__nt_spine_imgwidth_dim { \wd0 }
+                                \dim_set:Nn \l__nt_spine_imgheight_dim
+                                  { \ht0 + \dp0 }
+                                \dim_compare:nNnT
+                                  { \l__nt_spine_imgwidth_dim }
+                                  >
+                                  { \l_box_inner_width_dim }
+                                  {
+                                    \setbox0 = \hbox
+                                      {
+                                        \includegraphics
+                                          [
+                                            width = \l_box_inner_width_dim,
+                                            angle = \img_angle,
+                                          ]
+                                          { \tmp_img }
+                                      }
+                                    \dim_set:Nn
+                                      \l__nt_spine_imgwidth_dim
+                                      { \wd0 }
+                                    \dim_set:Nn \l__nt_spine_imgheight_dim
+                                      { \ht0 + \dp0 }
+                                  }
+                                \str_case:enF
+                                  { \use:c { l_nt_spine_box_##1_halign_tl } }
+                                  {
+                                    { left }
+                                      {
+                                        \box0
+                                        \hskip
+                                          \dimexpr
+                                            \l_box_inner_width_dim
+                                            - \l__nt_spine_imgwidth_dim
+                                          \relax
+                                      }
+                                    { right }
+                                      {
+                                        \hskip
+                                          \dimexpr
+                                            \l_box_inner_width_dim
+                                            - \l__nt_spine_imgwidth_dim
+                                          \relax
+                                        \box0
+                                      }
+                                    { center } { \box0 }
+                                  }
+                                  { \box0 }
+                              } ;
+                          } %
+                      }
+
+                    % Render content using tcolorbox
+                    \begin { tcolorbox }
+                      [
+                        enhanced,
+                        fit,
+                        fit~basedim = 15pt,
+                        before~upper =
+                          { \hyphenpenalty = 10000 \exhyphenpenalty = 10000 },
+                        boxsep = 0pt,
+                        left = 0pt,
+                        right = 0pt,
+                        top = 0pt,
+                        bottom = 0pt,
+                        arc = 0pt,
+                        boxrule = 0pt,
+                        frame~hidden,
+                        box~align = base,
+                        interior~hidden,
+                        fontupper =
+                          { \use:c { l_nt_spine_box_##1_fontstyle_tl } },
+                        coltext =
+                          { \use:c { l_nt_spine_box_##1_fg_color_tl } },
+                        width =
+                          {
+                            \use:c { l_nt_spine_box_##1_len_dim }
+                            - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2
+                          },
+                        height =
+                          {
+                            \l_nt_spine_width_dim
+                            - \l_nt_spine_margin_top_dim
+                            - \l_nt_spine_margin_bottom_dim
+                            - \use:c { l_nt_spine_box_##1_frame_width_tl } * 2
+                          },
+                        halign = { \use:c { l_nt_spine_box_##1_halign_tl } },
+                        valign = { \use:c { l_nt_spine_box_##1_valign_tl } },
+                        overlay = { \nt_spine_overlay_code },
+                      ]
+                      \setbox0 = \hbox { 2Ap }
+                      \raisebox { 0.75\dp0 } { \vphantom { Ap } }
+                      { \use:c { l_nt_spine_##1_tl } }
+                    \end { tcolorbox }
+                  } ;
+
+                % Advance horizontal cursor
+                \dim_add:Nn \l_tmpb_dim
+                  {
+                    \use:c { l_nt_spine_box_##1_len_dim }
+                    + \l_nt_spine_boxsep_dim
+                    + \use:c { l_nt_spine_box_##1_extrasep_dim }
+                  }
+              }
+          \end { tikzpicture }
+        } ;
+    \end { tikzpicture }
     \restorestocksize
   }
-
-\ExplSyntaxOff
 \endinput
