@@ -15,7 +15,7 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesExplPackage{memstore}{2024/01/05}{1.6.1}{Memory storage with robust value trimming}
-\typeout{NT FILE StyFiles/memstore.sty}%
+\typeout{ NT FILE StyFiles/memstore.sty } %
 
 
 %%=======================================================================
@@ -69,7 +69,7 @@
 %%=======================================================================
 
 % Syntax: \MemSet(*){<storage_name>}{<key>}{<value>}
-\NewDocumentCommand{\MemSet}{ s m m m }
+\NewDocumentCommand{\MemSet} { s m m m }
   {
     \__mem_ensure_exists:n {#2}
     
@@ -93,11 +93,12 @@
         \tl_set:Nn \l__mem_current_val_tl { #4 }
         \tl_trim_spaces:N \l__mem_current_val_tl
       }
-    \prop_gput:ceV { g__mem_#2_prop } { \l__mem_current_key_tl } \l__mem_current_val_tl
+    \prop_gput:ceV { g__mem_#2_prop }
+      { \l__mem_current_key_tl } \l__mem_current_val_tl
   }
 
 % Syntax: \MemGet(*){<storage_name>}{<key>}
-\NewExpandableDocumentCommand{\MemGet}{ s m m }
+\NewExpandableDocumentCommand{\MemGet} { s m m }
   {
     \prop_if_exist:cTF { g__mem_#2_prop }
       {
@@ -107,7 +108,10 @@
               { \use:e { \prop_item:ce { g__mem_#2_prop } {#3} } }
               { \prop_item:ce { g__mem_#2_prop } {#3} }
           }
-          { \NoCaseChange{ \msg_error:nnnn { memstore } { unknown-key } {#2} {#3} } }
+          {
+            \NoCaseChange
+              { \msg_error:nnnn { memstore } { unknown-key } { #2 } { #3 } }
+          }
       }
       { \NoCaseChange{ \msg_error:nnn { memstore } { unknown-memory } {#2} } }
   }
@@ -162,47 +166,34 @@
       }
   }
 
-\prg_new_conditional:Npnn \__mem_if_unset:nn #1 #2 { p, T, F, TF }
-  {
-    % Returns true when the store or key is absent, or the stored value is empty.
-    % Direct prop-list checks avoid e-expansion of non-expandable MemGet/MemGetSafe.
-    \prop_if_exist:cTF { g__mem_#1_prop }
-      {
-        \prop_if_in:ceTF { g__mem_#1_prop } {#2}
-          {
-            % Key present: true iff the stored value is blank.
-            \tl_if_empty:eTF { \prop_item:ce { g__mem_#1_prop } {#2} }
-              { \prg_return_true:  }
-              { \prg_return_false: }
-          }
-          { \prg_return_true: }  % Key absent → void
-      }
-      { \prg_return_true: }      % Store doesn't exist → void
-  }
 
 % Syntax: \IfMemDefinedTF(*){<storage_name>}{<key_list>}{<true_code>}{<false_code>}
-\NewDocumentCommand{\IfMemDefinedTF}{ s m m +m +m }
+\NewDocumentCommand{\IfMemDefinedTF} { s m m +m +m }
   {
     \__mem_check_defined:nn {#2} {#3}
     \bool_if:NTF \l__mem_found_bool
       {
-        \IfBooleanT {#1} { \tl_set:Nx \l__mem_current_val_tl { \l__mem_current_val_tl } }
-        \__mem_exec_branch:nnn {#4} { \l__mem_current_key_tl } { \l__mem_current_val_tl }
+        \IfBooleanT { #1 }
+          { \tl_set:Nx \l__mem_current_val_tl { \l__mem_current_val_tl } }
+        \__mem_exec_branch:nnn { #4 }
+          { \l__mem_current_key_tl } { \l__mem_current_val_tl }
       }
       { \__mem_exec_branch:nnn {#5} {} {} }
   }
 
-\NewDocumentCommand{\IfMemDefinedT}{ s m m +m }
+\NewDocumentCommand{\IfMemDefinedT} { s m m +m }
   {
     \__mem_check_defined:nn {#2} {#3}
     \bool_if:NT \l__mem_found_bool
       {
-        \IfBooleanT {#1} { \tl_set:Nx \l__mem_current_val_tl { \l__mem_current_val_tl } }
-        \__mem_exec_branch:nnn {#4} { \l__mem_current_key_tl } { \l__mem_current_val_tl }
+        \IfBooleanT { #1 }
+          { \tl_set:Nx \l__mem_current_val_tl { \l__mem_current_val_tl } }
+        \__mem_exec_branch:nnn { #4 }
+          { \l__mem_current_key_tl } { \l__mem_current_val_tl }
       }
   }
 
-\NewDocumentCommand{\IfMemDefinedF}{ s m m +m }
+\NewDocumentCommand{\IfMemDefinedF} { s m m +m }
   {
     \__mem_check_defined:nn {#2} {#3}
     \bool_if:NF \l__mem_found_bool
@@ -210,28 +201,32 @@
   }
 
 % Syntax: \IfMemBlankTF(*){<storage_name>}{<key_list>}{<true_code>}{<false_code>}
-\NewDocumentCommand{\IfMemBlankTF}{ s m m +m +m }
+\NewDocumentCommand{\IfMemBlankTF} { s m m +m +m }
   {
     \__mem_check_blank:nn {#2} {#3}
     \bool_if:NTF \l__mem_found_bool
       {
-        \IfBooleanT {#1} { \tl_set:Nx \l__mem_current_val_tl { \l__mem_current_val_tl } }
-        \__mem_exec_branch:nnn {#4} { \l__mem_current_key_tl } { \l__mem_current_val_tl }
+        \IfBooleanT { #1 }
+          { \tl_set:Nx \l__mem_current_val_tl { \l__mem_current_val_tl } }
+        \__mem_exec_branch:nnn { #4 }
+          { \l__mem_current_key_tl } { \l__mem_current_val_tl }
       }
       { \__mem_exec_branch:nnn {#5} {} {} }
   }
 
-\NewDocumentCommand{\IfMemBlankT}{ s m m +m }
+\NewDocumentCommand{\IfMemBlankT} { s m m +m }
   {
     \__mem_check_blank:nn {#2} {#3}
     \bool_if:NT \l__mem_found_bool
       {
-        \IfBooleanT {#1} { \tl_set:Nx \l__mem_current_val_tl { \l__mem_current_val_tl } }
-        \__mem_exec_branch:nnn {#4} { \l__mem_current_key_tl } { \l__mem_current_val_tl }
+        \IfBooleanT { #1 }
+          { \tl_set:Nx \l__mem_current_val_tl { \l__mem_current_val_tl } }
+        \__mem_exec_branch:nnn { #4 }
+          { \l__mem_current_key_tl } { \l__mem_current_val_tl }
       }
   }
 
-\NewDocumentCommand{\IfMemBlankF}{ s m m +m }
+\NewDocumentCommand{\IfMemBlankF} { s m m +m }
   {
     \__mem_check_blank:nn {#2} {#3}
     \bool_if:NF \l__mem_found_bool
@@ -239,7 +234,7 @@
   }
 
 % Syntax: \IfMemVoidTF{<storage_name>}{<key>}{<true_code>}{<false_code>}
-\NewDocumentCommand{\IfMemVoidTF}{ m m +m +m }
+\NewDocumentCommand{\IfMemVoidTF} { m m +m +m }
   {
     \prop_if_exist:cTF { g__mem_#1_prop }
       {
@@ -255,10 +250,10 @@
       { #3 } % Storage does not exist -> Void
   }
 
-\NewDocumentCommand{\IfMemVoidT}{ m m +m }
+\NewDocumentCommand{\IfMemVoidT} { m m +m }
   { \IfMemVoidTF { #1 } { #2 } { #3 } { } }
 
-\NewDocumentCommand{\IfMemVoidF}{ m m +m }
+\NewDocumentCommand{\IfMemVoidF} { m m +m }
   { \IfMemVoidTF { #1 } { #2 } { } { #3 } }
 
 
@@ -267,32 +262,32 @@
 %%=======================================================================
 
 % Syntax: \MemMatch(*){<storage_name>}{<key_list>}{<cmd_key>}{<cmd_val>}
-\NewDocumentCommand{\MemMatch}{ s m m m m }
+\NewDocumentCommand{\MemMatch} { s m m m m }
   {
     \IfBooleanTF {#1}
       {
-        \IfMemDefinedTF*{#2}{#3}
+        \IfMemDefinedTF* { #2 } { #3 }
           { \tl_set:Nx #4 {##1} \tl_set:Nn #5 {##2} }
           { \msg_error:nnn { memstore } { no-match-error } { #2 } }
       }
       {
-        \IfMemDefinedTF{#2}{#3}
+        \IfMemDefinedTF { #2 } { #3 }
           { \tl_set:Nx #4 {##1} \tl_set:Nn #5 {##2} }
           { \msg_error:nnn { memstore } { no-match-error } { #2 } }
       }
   }
 
 % Syntax: \MemMatchCS(*){<storage_name>}{<key_list>}{<cmd_key_control_sequence_name>}{<cmd_val_control_sequence_name>}
-\NewDocumentCommand{\MemMatchCS}{ s m m m m }
+\NewDocumentCommand{\MemMatchCS} { s m m m m }
   {
     \IfBooleanTF {#1}
       {
-        \IfMemDefinedTF*{#2}{#3}
+        \IfMemDefinedTF* { #2 } { #3 }
           { \tl_set:cx {#4} {##1} \tl_set:cn {#5} {##2} }
           { \msg_error:nnn { memstore } { no-match-error } { #2 } }
       }
       {
-        \IfMemDefinedTF{#2}{#3}
+        \IfMemDefinedTF { #2 } { #3 }
           { \tl_set:cx {#4} {##1} \tl_set:cn {#5} {##2} }
           { \msg_error:nnn { memstore } { no-match-error } { #2 } }
       }
@@ -307,7 +302,7 @@
 % Outputs the value at <key> if defined and non-blank;
 % else the value at <fallback_key> (if given) if defined and non-blank;
 % else nothing.
-\NewDocumentCommand{\MemGetDefault}{ m o m }
+\NewDocumentCommand{\MemGetDefault} { m o m }
   {
     \IfMemVoidTF {#1} {#3}
       {
@@ -319,7 +314,7 @@
 
 % Syntax: \MemGetSafe{<storage_name>}{<key>}
 % Like \MemGet but returns empty (no error) when the store or key doesn't exist.
-\NewExpandableDocumentCommand{\MemGetSafe}{ m m }
+\NewExpandableDocumentCommand{\MemGetSafe} { m m }
   {
     \prop_if_exist:cTF { g__mem_#1_prop }
       {
@@ -331,7 +326,7 @@
   }
 
 % Syntax: \MemUndef{<storage_name>}{<key_list>}
-\NewDocumentCommand{\MemUndef}{ m m }
+\NewDocumentCommand{\MemUndef} { m m }
   {
     \prop_if_exist:cT { g__mem_#1_prop }
       {
@@ -341,7 +336,7 @@
   }
 
 % Syntax: \MemForEach{<storage_name>}{<code_block>}
-\NewDocumentCommand{\MemForEach}{ m +m }
+\NewDocumentCommand{\MemForEach} { m +m }
   {
     \prop_if_exist:cT { g__mem_#1_prop }
       {
@@ -351,7 +346,7 @@
   }
 
 % Syntax: \MemDebug{<storage_name>}
-\NewDocumentCommand{\MemDebug}{ m }
+\NewDocumentCommand{\MemDebug} { m }
   {
     \prop_if_exist:cTF { g__mem_#1_prop }
       { \prop_log:c { g__mem_#1_prop } }
@@ -364,13 +359,13 @@
 %%=======================================================================
 
 % Syntax: \NewMemStore{<Name>}
-\NewDocumentCommand{\NewMemStore}{ m }
+\NewDocumentCommand{\NewMemStore} { m }
   {
     \__mem_ensure_exists:n {#1}
     
     % Define \Set<name>(<key>){<value>}
     % Note: key trimming and expansion are handled inside \MemSet.
-    \exp_args:Nc \NewDocumentCommand { Set#1 } { s r() u{=} m }
+    \exp_args:Nc \NewDocumentCommand { Set#1 } { s r() u { = } m }
       {
         \IfBooleanTF { ##1 }
           { \MemSet* { #1 } { ##2 } { ##4 } } 
