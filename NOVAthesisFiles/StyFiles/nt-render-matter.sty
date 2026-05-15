@@ -192,6 +192,7 @@
         \printabstracttitle{#1}%
         \ifoptionequal{/novathesis/abstract/title}{after}{%
           \begingroup
+            \noindent
             \ifoptionequal{/novathesis/abstract/title/align}{left}{\raggedright}{}%
             \ifoptionequal{/novathesis/abstract/title/align}{right}{\raggedleft}{}%
             \ifoptionequal{/novathesis/abstract/title/align}{center}{\centering}{}%
@@ -770,6 +771,7 @@
     \ifoptionequal{/novathesis/abstract/title}{before}{%
       \preto\chapterheadstart{%
         \begingroup
+          \noindent
           \ifoptionequal{/novathesis/abstract/title/align}{left}{\raggedright}{}%
           \ifoptionequal{/novathesis/abstract/title/align}{right}{\raggedleft}{}%
           \ifoptionequal{/novathesis/abstract/title/align}{center}{\centering}{}%
