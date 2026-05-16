@@ -77,7 +77,8 @@
   {
     \dim_new:c { l_nt_spine_box_#1_len_dim }      % width of the box
     \dim_new:c { l_nt_spine_box_#1_fontstyle_tl } % font customization
-    \tl_new:c  { l_nt_spine_box_#1_bg_image_tl }  % per-box background image
+    \tl_new:c  { l_nt_spine_box_#1_bg_image_tl }       % per-box background image
+    \tl_new:c  { l_nt_spine_box_#1_bg_image_scale_tl } % per-box image scale (0–1)
     \tl_new:c  { l_nt_spine_box_#1_bg_image_angle_tl }
       % per-box background image angle
     \tl_new:c  { l_nt_spine_box_#1_bg_color_tl }   % per-box background color
@@ -173,6 +174,9 @@
 
         spine/box/#1/bg/image .tl_set:c = l_nt_spine_box_#1_bg_image_tl,
         spine/box/#1/bg/image .initial:n = { },
+
+        spine/box/#1/bg/image/scale .tl_set:c = l_nt_spine_box_#1_bg_image_scale_tl,
+        spine/box/#1/bg/image/scale .initial:n = { 1 },
 
         spine/box/#1/bg/image/angle .tl_set:c =
           l_nt_spine_box_#1_bg_image_angle_tl,
@@ -287,6 +291,8 @@
 \dim_new:N \l_box_inner_height_dim
 \dim_new:N \l__nt_spine_imgwidth_dim
 \dim_new:N \l__nt_spine_imgheight_dim
+\dim_new:N \l__nt_spine_maxh_dim   % scaled max height for bg/image
+\dim_new:N \l__nt_spine_maxw_dim   % scaled max width  for bg/image
 
 \NewDocumentCommand \PrintBookSpine { }
   {
@@ -472,11 +478,20 @@
                                   [ l_nt_spine_box_##1_bg_image_angle_ ]
                                   { \option { /novathesis/doctype } _tl, tl, }
                                   [ \img_angle ]
+                                % Apply per-box scale to cap the image size
+                                \dim_set:Nn \l__nt_spine_maxh_dim
+                                  { \fp_to_dim:n
+                                    { \tl_use:c { l_nt_spine_box_##1_bg_image_scale_tl }
+                                      * \dim_to_fp:n { \l_box_inner_height_dim } } }
+                                \dim_set:Nn \l__nt_spine_maxw_dim
+                                  { \fp_to_dim:n
+                                    { \tl_use:c { l_nt_spine_box_##1_bg_image_scale_tl }
+                                      * \dim_to_fp:n { \l_box_inner_width_dim } } }
                                 \setbox0 = \hbox
                                   {
                                     \includegraphics
                                       [
-                                        height = \l_box_inner_height_dim,
+                                        height = \l__nt_spine_maxh_dim,
                                         angle = \img_angle,
                                       ]
                                       { \tmp_img }
@@ -487,13 +502,13 @@
                                 \dim_compare:nNnT
                                   { \l__nt_spine_imgwidth_dim }
                                   >
-                                  { \l_box_inner_width_dim }
+                                  { \l__nt_spine_maxw_dim }
                                   {
                                     \setbox0 = \hbox
                                       {
                                         \includegraphics
                                           [
-                                            width = \l_box_inner_width_dim,
+                                            width = \l__nt_spine_maxw_dim,
                                             angle = \img_angle,
                                           ]
                                           { \tmp_img }

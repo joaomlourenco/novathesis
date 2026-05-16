@@ -168,15 +168,21 @@
 %% SPINE
 %%=======================================================================
 
-\SetSpine(logo)={ipl-isel-logo/90}
-
+\SpineSetup[%
+]{
+  box/logo/bg/image       = {ipl-isel-logo-notext},
+  box/logo/bg/image/scale = 0.55,
+  % box/logo/bg/image/angle     = {90},
+}
 
 %%=======================================================================
 %% COVER PAGE SETUP (BACKGROUNDS)
 %%=======================================================================
 
-\IfMemVoidT{ThesisCover}{wireframe}{\MemSet*{ThesisCover}{wireframe}{ipl-isel-wireframe}}
-\IfMemVoidT{ThesisCover}{logo}{\MemSet*{ThesisCover}{logo}{ipl-isel-logo}}
+\SetThesisCover(textcolor)={iselPlum}
+
+\SetThesisCover(wireframe)={ipl-isel-wireframe}
+\SetThesisCover(logo)={ipl-isel-logo}
 
 
 %%=======================================================================
@@ -184,6 +190,7 @@
 %%=======================================================================
 
 \ntsetup{abstract/title=before}
+\ntsetup{abstract/title/align=left}
 
 \NTAddToHook{abstract/title/before}{%\
   \begingroup
@@ -191,10 +198,6 @@
     \bfseries\fontsize{14}{16}\selectfont%
     \GetDocTitle(\@LANG@COVER,main)\\[4ex]%
   \endgroup
-}
-
-\NTAddToHook{cover/pre}{%
-  \color{iselPlum}%
 }
 
 

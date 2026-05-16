@@ -644,6 +644,225 @@ committee), \texttt{m}~(member), \texttt{g}~(guest).
 
 
 %%=======================================================================
+\section{Book Spine}
+\label{sec:spine}
+%%=======================================================================
+
+The \emph{book spine} is the narrow strip printed on the bound edge of
+the thesis, showing the year, title, author name, and school logo from
+top to bottom.  It is generated automatically in \texttt{final} mode and
+typeset as a separate page (rotated 90°) appended after the back cover.
+
+%%-----------------------------------------------------------------------
+\subsection{Enabling and Sizing}
+\label{sub:spine_basic}
+%%-----------------------------------------------------------------------
+
+\begin{description}
+  \item[\texttt{spine/layout}] Controls when the spine is printed.
+    Default: \texttt{false} for \texttt{working} and \texttt{provisional};
+    \texttt{trim} for \texttt{final}.
+\begin{latexcode}
+\ntsetup{spine/layout=false}  % suppress spine even in final
+\ntsetup{spine/layout=trim}   % force spine even in provisional/working
+\end{latexcode}
+
+  \item[\texttt{spine/width}] Thickness of the spine strip (= book spine
+    width).  Default: \texttt{1cm}.  Set this to match the actual
+    thickness of the printed and bound book.
+\begin{latexcode}
+\ntsetup{spine/width=2cm}
+\end{latexcode}
+\end{description}
+
+%%-----------------------------------------------------------------------
+\subsection{Spine Title}
+\label{sub:spine_title}
+%%-----------------------------------------------------------------------
+
+When the full thesis title is too long for the spine, supply a shorter
+variant with \latexinline{\nttitle}:
+\begin{latexcode}
+\nttitle(spine,en){A Very Short Title}
+\nttitle(spine,pt){Um Título Muito Curto}
+\end{latexcode}
+If no \texttt{spine} variant is defined, the \texttt{cover} variant is
+used; if that is also absent, the \texttt{main} title is used.
+
+%%-----------------------------------------------------------------------
+\subsection{Customising the Spine with \texttt{\textbackslash SpineSetup}}
+\label{sub:spine_setup}
+%%-----------------------------------------------------------------------
+
+\latexinline{\SpineSetup} is the main command for customising the spine
+appearance.  It is typically called in the school \texttt{.clo} file, but
+users may call it in \verb!0-Config/3_cover.tex! or
+\verb!0-Config/5_packages.tex! to override or extend the school defaults.
+
+\begin{latexcode}
+\SpineSetup[<preamble code>]{<key=value list>}
+\end{latexcode}
+
+The optional \emph{preamble code} is executed first (useful for
+conditionals based on \latexinline{\ifmscdoc} / \latexinline{\ifphddoc}),
+followed by setting the key–value pairs listed in the mandatory argument.
+Multiple calls accumulate; later calls override earlier ones for the same
+key.
+
+%%- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsubsection*{Global Appearance Keys}
+
+\begin{description}
+  \item[\texttt{bg/image}] File name of a full-spine background image
+    (without extension).
+  \item[\texttt{bg/image/angle}] Rotation angle of the background image.
+    Allowed values: \texttt{0}, \texttt{90}, \texttt{-90}/\texttt{270},
+    \texttt{180}.  Default: \texttt{0}.
+  \item[\texttt{bg/color}] Background colour of the whole spine strip.
+    Use \texttt{none} for transparent.  Default: \texttt{none}.
+  \item[\texttt{bg/opacity}] Opacity of the background image (\texttt{0}–\texttt{1}).
+    Default: \texttt{1}.
+  \item[\texttt{fg/color}] Default text colour for all boxes.
+    Default: \texttt{black}.
+  \item[\texttt{frame/color}] Colour of the outer frame drawn around the
+    spine strip.  Use \texttt{none} to suppress.  Default: \texttt{none}.
+  \item[\texttt{frame/width}] Width of the outer frame.  Default: \texttt{0pt}.
+  \item[\texttt{boxsep}] Gap inserted between adjacent content boxes.
+    Default: \texttt{5mm}.
+  \item[\texttt{margin/top}, \texttt{margin/bottom}] Margins between the
+    spine edge and the top/bottom of the content area.
+    Defaults: \texttt{1mm}.
+  \item[\texttt{margin/left}, \texttt{margin/right}] Margins at the left
+    and right (= top and bottom when the spine is rotated) of the content
+    area.  Defaults: \texttt{5mm} / \texttt{0mm}.
+\end{description}
+
+%%- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsubsection*{Box Content and Order}
+
+The spine is divided into a sequence of named \emph{boxes}.  Four
+built-in boxes are available:
+
+\begin{center}\small
+\begin{ShadedTabular}{lll}
+  \toprule
+  \thead{Box name} & \thead{Content} & \thead{Default length} \\
+  \midrule
+  \texttt{date}   & Submission year                  & 1.5 cm \\
+  \texttt{title}  & Thesis title (spine variant)     & 16.6 cm \\
+  \texttt{author} & Author name (short form)         & 5.0 cm \\
+  \texttt{logo}   & School logo image                & 4.1 cm \\
+  \bottomrule
+\end{ShadedTabular}
+\end{center}
+
+\begin{description}
+  \item[\texttt{order}] Comma-separated list specifying which boxes to
+    print and in what order (left-to-right along the rotated spine, i.e.\
+    top-to-bottom when reading the bound book).
+    Default: \texttt{date,title,author,logo}.
+\begin{latexcode}
+\SpineSetup{order={date,title,author,logo}}
+\end{latexcode}
+
+  \item[\texttt{author}] Text placed in the \texttt{author} box.
+    Default: \latexinline{\GetDocAuthor(name,short)}.
+  \item[\texttt{title}] Text placed in the \texttt{title} box.
+    Default: \latexinline{\GetDocTitle(\@LANG@COVER,spine)}.
+  \item[\texttt{date}] Text placed in the \texttt{date} box.
+    Default: \latexinline{\GetDocDate(submission,year)}.
+\end{description}
+
+%%- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsubsection*{Per-Box Keys}
+
+Each built-in box (\texttt{date}, \texttt{title}, \texttt{author},
+\texttt{logo}) accepts the following keys, prefixed with
+\texttt{box/<name>/}:
+
+\begin{description}
+  \item[\texttt{box/<name>/len}] Length (height when the spine is laid
+    horizontally) of the box.
+\begin{latexcode}
+\SpineSetup{box/logo/len=4.5cm}
+\end{latexcode}
+
+  \item[\texttt{box/<name>/extrasep}] Additional gap added \emph{after}
+    this box.  Default: \texttt{0mm}.
+  \item[\texttt{box/<name>/fontstyle}] Font-switching command applied to
+    the box content.  Default: \latexinline{\sffamily}.
+  \item[\texttt{box/<name>/bg/color}] Background colour of the box.
+    Default: \texttt{cyan} (override per school as needed).
+  \item[\texttt{box/<name>/bg/opacity}] Opacity of the box background.
+    Default: \texttt{1}.
+  \item[\texttt{box/<name>/bg/image}] Background image file for the box.
+\begin{latexcode}
+\SpineSetup{box/logo/bg/image={my-school-logo}}
+\end{latexcode}
+
+  \item[\texttt{box/<name>/bg/image/scale}] Scale factor (\texttt{0}–\texttt{1})
+    applied to the maximum box dimensions before fitting the image.
+    The default \texttt{1} fills the whole box; smaller values add
+    proportional padding around the image.
+\begin{latexcode}
+\SpineSetup{box/logo/bg/image/scale=0.75}  % logo at 75% of box size
+\end{latexcode}
+
+  \item[\texttt{box/<name>/bg/image/angle}] Rotation angle for the
+    per-box background image.  Default: \texttt{0}.
+    Doctype-specific overrides are also available:
+    \texttt{box/<name>/bg/image/angle/msc} and
+    \texttt{box/<name>/bg/image/angle/phd}.
+  \item[\texttt{box/<name>/fg/color}] Foreground (text) colour of the
+    box.  Default: \texttt{black}.
+\begin{latexcode}
+\SpineSetup{box/title/fg/color=white}
+\end{latexcode}
+
+  \item[\texttt{box/<name>/frame/color}] Frame colour drawn around the
+    box.  Use \texttt{none} to suppress.  Default: \texttt{none}.
+  \item[\texttt{box/<name>/frame/width}] Width of the box frame.
+    Default: \texttt{0pt}.
+  \item[\texttt{box/<name>/halign}] Horizontal alignment of box content:
+    \texttt{left}, \texttt{center}, \texttt{right}.
+    Default: \texttt{center}.
+  \item[\texttt{box/<name>/valign}] Vertical alignment of box content:
+    \texttt{top}, \texttt{center}, \texttt{bottom}.
+    Default: \texttt{center}.
+\end{description}
+
+%%-----------------------------------------------------------------------
+\subsection{Example}
+\label{sub:spine_example}
+%%-----------------------------------------------------------------------
+
+The following example (similar to the \texttt{nova/fct} school) sets a
+full-spine background image, makes all text white, and places the school
+logo as a box background image — choosing different images for MSc and PhD:
+
+\begin{latexcode}
+\SpineSetup[%
+  \def\spnimg{my-spine-blue}%         % default image
+  \ifphddoc{\def\spnimg{my-spine-green}}{} % PhD override
+]{
+  bg/image                    = {\spnimg},
+  bg/image/angle              = {-90},
+  box/logo/bg/image           = {my-school-logo},
+  box/date/fg/color           = {white},
+  box/title/fg/color          = {white},
+  box/author/fg/color         = {white},
+}
+\end{latexcode}
+
+A minimal setup that only changes the logo box background:
+\begin{latexcode}
+\SpineSetup{
+  box/logo/bg/image = {my-school-logo},
+}
+\end{latexcode}
+
+
+%%=======================================================================
 \section{Bibliography (\texttt{2\_biblatex.tex})}
 \label{sec:bibliography}
 %%=======================================================================
