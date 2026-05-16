@@ -638,6 +638,52 @@ The function \pythoninline{fibonacci(n)} returns the $n$-th term.
 \end{latexcode}
 The function \pythoninline{fibonacci(n)} returns the $n$-th term.
 
+\paragraph{Captioned listings (appear in the List of Listings):}
+
+Wrap any \texttt{minted} environment inside a \texttt{listing} float and add
+\latexinline{\caption} and \latexinline{\label} to register it in the list of listings.
+\begin{latexcode}
+\begin{listing}[htbp]
+  \caption{Hello, World! in Python.}
+  \label{lst:hello-python}
+  \begin{pythoncode}
+    print("Hello, World!")
+  \end{pythoncode}
+\end{listing}
+\end{latexcode}
+
+\begin{listing}[htbp]
+  \caption{\emph{Hello, World!} in Python.}
+  \label{lst:hello-python}
+  \begin{pythoncode}
+    print("Hello, World!")
+  \end{pythoncode}
+\end{listing}
+
+\begin{listing}[htbp]
+  \caption{\emph{Hello, World!} in C.}
+  \label{lst:hello-c}
+  \begin{minted}[bgcolor=bgcolorlst, fontsize=\small, breaklines, tabsize=2, autogobble]{c}
+    #include <stdio.h>
+
+    int main(void) {
+        printf("Hello, World!\n");
+        return 0;
+    }
+  \end{minted}
+\end{listing}
+
+\begin{listing}[htbp]
+  \caption{\emph{Hello, World!} in \LaTeX{}.}
+  \label{lst:hello-latex}
+  \begin{latexcode}
+    \documentclass{article}
+    \begin{document}
+      Hello, World!
+    \end{document}
+  \end{latexcode}
+\end{listing}
+
 \begin{warningbox}[title={Requirement: \texttt{-\/-shell-escape}}]
   \texttt{minted} calls the Pygments library at compile time and requires the \texttt{-{}-shell-escape} flag.
   This flag is already included in the provided \texttt{Makefile} and \texttt{.Build/build.py}.
