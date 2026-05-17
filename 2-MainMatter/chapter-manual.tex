@@ -436,36 +436,38 @@ below should be set together:
 \ntsetup{print/sdgs/vspace=4mm}       % vertical gap below icons
 \end{latexcode}
 
-The \texttt{type} option selects the icon variant: \texttt{inverted} (colour on white background), \texttt{normal} (colour on coloured background), or \texttt{mono} (monochrome on white background).  Table~\ref{tab:sdgs} lists all 17 SDGs with their icon (\texttt{inverted} variant), title, and goal description.
+The \texttt{type} option selects the icon variant: \texttt{inverted} (colour on white background), \texttt{normal} (colour on coloured background), or \texttt{mono} (monochrome on white background).  Table~\ref{tab:sdgs}\footnote{Table~\ref{tab:sdgs} is intentionally in a page with differente dimensions (corresponding to a rotated page) to illustrate the funcitonality of the \texttt{stocksize} package.} lists all 17 SDGs with their icon (\texttt{inverted} variant), title, and goal description.
 
+\newstocksize{layoutsize={297mm,210mm},keepmargins}
 \begin{center}
 {\small\rowcolors{2}{rowgray}{white}%
 \renewcommand{\arraystretch}{1.4}%
 \begin{longtable}{@{}cp{\dimexpr0.32\linewidth}p{\dimexpr0.52\linewidth}@{}}
+  \caption{The 17 UN Sustainable Development Goals (SDGs) — \texttt{inverted} icon variant.}
+  \label{tab:sdgs}\\
   \rowcolor{headgray}
   \textbf{Icon} & \textbf{Title} & \textbf{Goal} \\\endhead
   %
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/1-i}  & \textbf{1 — No Poverty}                             & End poverty in all its forms everywhere. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/2-i}  & \textbf{2 — Zero Hunger}                            & End hunger, achieve food security, improve nutrition, and promote sustainable agriculture. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/3-i}  & \textbf{3 — Good Health and Well-being}              & Ensure healthy lives and promote well-being for all at all ages. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/4-i}  & \textbf{4 — Quality Education}                      & Ensure inclusive and equitable quality education and promote lifelong learning opportunities. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/5-i}  & \textbf{5 — Gender Equality}                        & Achieve gender equality and empower all women and girls. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/6-i}  & \textbf{6 — Clean Water and Sanitation}              & Ensure availability and sustainable management of water and sanitation for all. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/7-i}  & \textbf{7 — Affordable and Clean Energy}             & Ensure access to affordable, reliable, sustainable, and modern energy for all. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/8-i}  & \textbf{8 — Decent Work and Economic Growth}         & Promote sustained, inclusive, and sustainable economic growth, full employment, and decent work. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/9-i}  & \textbf{9 — Industry, Innovation and Infrastructure} & Build resilient infrastructure, promote inclusive and sustainable industrialization, and foster innovation. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/10-i} & \textbf{10 — Reduced Inequalities}                  & Reduce inequality within and among countries. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/11-i} & \textbf{11 — Sustainable Cities and Communities}     & Make cities and human settlements inclusive, safe, resilient, and sustainable. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/12-i} & \textbf{12 — Responsible Consumption and Production} & Ensure sustainable consumption and production patterns. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/13-i} & \textbf{13 — Climate Action}                        & Take urgent action to combat climate change and its impacts. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/14-i} & \textbf{14 — Life Below Water}                      & Conserve and sustainably use the oceans, seas, and marine resources. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/15-i} & \textbf{15 — Life on Land}                          & Protect, restore, and promote sustainable use of terrestrial ecosystems and halt biodiversity loss. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/16-i} & \textbf{16 — Peace, Justice and Strong Institutions} & Promote peaceful and inclusive societies, provide access to justice, and build accountable institutions. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/17-i} & \textbf{17 — Partnerships for the Goals}            & Strengthen the means of implementation and revitalize the global partnership for sustainable development. \\
-  \caption{The 17 UN Sustainable Development Goals (SDGs) — \texttt{inverted} icon variant.}
-  \label{tab:sdgs}
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/1-i}  & \textbf{1 — No Poverty}                             & End poverty in all its forms everywhere. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/2-i}  & \textbf{2 — Zero Hunger}                            & End hunger, achieve food security, improve nutrition, and promote sustainable agriculture. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/3-i}  & \textbf{3 — Good Health and Well-being}              & Ensure healthy lives and promote well-being for all at all ages. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/4-i}  & \textbf{4 — Quality Education}                      & Ensure inclusive and equitable quality education and promote lifelong learning opportunities. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/5-i}  & \textbf{5 — Gender Equality}                        & Achieve gender equality and empower all women and girls. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/6-i}  & \textbf{6 — Clean Water and Sanitation}              & Ensure availability and sustainable management of water and sanitation for all. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/7-i}  & \textbf{7 — Affordable and Clean Energy}             & Ensure access to affordable, reliable, sustainable, and modern energy for all. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/8-i}  & \textbf{8 — Decent Work and Economic Growth}         & Promote sustained, inclusive, and sustainable economic growth, full employment, and decent work. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/9-i}  & \textbf{9 — Industry, Innovation and Infrastructure} & Build resilient infrastructure, promote inclusive and sustainable industrialization, and foster innovation. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/10-i} & \textbf{10 — Reduced Inequalities}                  & Reduce inequality within and among countries. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/11-i} & \textbf{11 — Sustainable Cities and Communities}     & Make cities and human settlements inclusive, safe, resilient, and sustainable. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/12-i} & \textbf{12 — Responsible Consumption and Production} & Ensure sustainable consumption and production patterns. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/13-i} & \textbf{13 — Climate Action}                        & Take urgent action to combat climate change and its impacts. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/14-i} & \textbf{14 — Life Below Water}                      & Conserve and sustainably use the oceans, seas, and marine resources. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/15-i} & \textbf{15 — Life on Land}                          & Protect, restore, and promote sustainable use of terrestrial ecosystems and halt biodiversity loss. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/16-i} & \textbf{16 — Peace, Justice and Strong Institutions} & Promote peaceful and inclusive societies, provide access to justice, and build accountable institutions. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/17-i} & \textbf{17 — Partnerships for the Goals}            & Strengthen the means of implementation and revitalize the global partnership for sustainable development. \\
 \end{longtable}}
 \end{center}
+\restorestocksize
 
 %%-----------------------------------------------------------------------
 \subsection{Indexing}
