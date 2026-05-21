@@ -546,7 +546,7 @@
           { }
         \nt_covers_render_page:nn { #1 } { #2 }
         \ifoptionequal { /novathesis/media } { paper }
-          { \ifcoverdefined [#1-2] { \clearpage } { \clearforchapter } }
+          { \IfStrEq { #2 } { 1 } { \ifcoverdefined [#1-2] { } { \clearpage } } { } }
           { \clearpage }
       }
       { }
