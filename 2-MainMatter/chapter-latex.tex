@@ -4,7 +4,7 @@
 %%  NOVATHESIS — 2-MainMatter/chapter-latex.tex
 %% ----------------------------------------------------------------------------
 %%
-%% Version 7.10.7 (2026-03-25)
+%% Version 7.11.0 (2026-06-13)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %%
 %% Chapter: A Short LaTeX Tutorial with Examples
@@ -49,7 +49,7 @@ The \novathesis{} template follows a strict separation of concerns, with configu
 \label{sub:adding_chapter}
 %%-----------------------------------------------------------------------
 
-Create a new \texttt{chapter-mywork.tex} file in \texttt{2-MainMatter/}, then register it in \texttt{0-Config/4\_files.tex}:
+Create a new \texttt{chapter-mywork.tex} file in \texttt{2-MainMatter/}, then register the new file in configuration file \texttt{0-Config/4\_files.tex}:
 
 \begin{latexcode}
 \ntaddfile{chapter}{chapter-mywork}
@@ -701,8 +701,7 @@ Some text that needs more work.\todo{Add reference here}
 \todo[inline]{This entire section needs revision.}
 \end{latexcode}
 
-Remove all \latexinline{\todo} calls before submitting the final version,
-or set \latexinline{\ntsetup{docstatus=final}} which suppresses them automatically.
+Noice that \latexinline{\ntsetup{docstatus=final}} will suppresses them automatically all \latexinline{\todo} calls.
 
 
 %%=======================================================================

@@ -4,7 +4,7 @@
 %%  NOVATHESIS — 2-MainMatter/chapter-manual.tex
 %% ----------------------------------------------------------------------------
 %%
-%% Version 7.10.7 (2026-03-25)
+%% Version 7.11.0 (2026-06-13)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %%
 %% User's manual chapter: complete guide to configuring and using the
@@ -230,8 +230,8 @@ commented-out lines show available values as documentation:
 \ntsetup{docstatus=final}        % post-examination; committee, book spine, PDF/A-2b
 \end{latexcode}
 
-  \item[\texttt{pdfa}] PDF/A archival output toggle.  Default: \texttt{true}.
-    In normal usage, PDF/A-2b output is produced automatically in
+  \item[\texttt{pdfa}] \gls{PDFA} archival output toggle.  Default: \texttt{true}.
+    In normal usage, \gls{PDFA}-2b output is produced automatically in
     \texttt{docstatus=final}; set this option to \texttt{false} to opt out.
     See Section~\ref{sub:pdfa} for details.
 \begin{latexcode}
@@ -445,6 +445,8 @@ The \texttt{type} option selects the icon variant: \texttt{inverted} (colour on 
 \begin{longtable}{@{}cp{\dimexpr0.32\linewidth}p{\dimexpr0.52\linewidth}@{}}
   \caption{The 17 UN Sustainable Development Goals (SDGs) — \texttt{inverted} icon variant.}
   \label{tab:sdgs}\\
+  \rowcolor{headgray}
+  \textbf{Icon} & \textbf{Title} & \textbf{Goal} \\\endfirsthead
   \rowcolor{headgray}
   \textbf{Icon} & \textbf{Title} & \textbf{Goal} \\\endhead
   %
@@ -993,8 +995,9 @@ The order in which abstracts appear is controlled by
 \ntaddfile{glossaries}[symbols]{symbols}
 \end{latexcode}
 
-Each file uses standard \texttt{glossaries} package commands
-(\verb!\newglossaryentry!, \verb!\newacronym!, etc.). To include them in your text, use the \latexinline{\gls{label}} command.
+Each file uses standard \texttt{glossaries} package commands such as 
+\verb!\newglossaryentry!, \verb!\newacronym!, etc. 
+To include them in your text, use the \latexinline{\gls{label}} command.
 
 %%-----------------------------------------------------------------------
 \subsection{Main Chapters}
@@ -1058,17 +1061,17 @@ Table~\ref{tab:bundled_images} shows the available images.
   \caption{Institutional logo images bundled in \texttt{NOVAthesisFiles/Images/}.}
   \label{tab:bundled_images}
   \centering\small
-  \begin{ShadedTabular}{cll}
+  \begin{ShadedTabularX}{\textwidth}{llX}
     \toprule
     \thead{Preview} & \thead{File name} & \thead{Description} \\
-    \includegraphics[height=1.2cm]{\DIRIMAGES/FCT_logo_positive}          & \verb!FCT_logo_positive!          & FCT logo (colour) \\
-    \includegraphics[height=1.2cm]{\DIRIMAGES/FCT_logo_negative}          & \verb!FCT_logo_negative!          & FCT logo (negative / white) \\
-    \includegraphics[height=1.2cm]{\DIRIMAGES/republica_portuguesa}        & \verb!republica_portuguesa!        & República Portuguesa emblem \\
-    \includegraphics[height=1.2cm]{\DIRIMAGES/republica_portuguesa_CTES}   & \verb!republica_portuguesa_CTES!   & República Portuguesa — CTES variant \\
-    \includegraphics[height=1.2cm]{\DIRIMAGES/Logo_Governo_Portugal}       & \verb!Logo_Governo_Portugal!       & Governo de Portugal logo \\
-    \includegraphics[height=1.2cm]{\DIRIMAGES/Logo_UE_FSE}                 & \verb!Logo_UE_FSE!                 & EU / Fundo Social Europeu logo \\
+    \includegraphics[height=0.9cm,align=c]{\DIRIMAGES/FCT_logo_positive}          & \texttt{FCT\_logo\_positive}          & FCT logo (colour) \\
+    \includegraphics[height=0.9cm,align=c]{\DIRIMAGES/FCT_logo_negative}          & \texttt{FCT\_logo\_negative}          & FCT logo (negative / white) \\
+    \includegraphics[height=0.9cm,align=c]{\DIRIMAGES/republica_portuguesa}        & \texttt{republica\_portuguesa}        & República Portuguesa emblem \\
+    \includegraphics[height=0.9cm,align=c]{\DIRIMAGES/republica_portuguesa_CTES}   & \texttt{republica\_portuguesa\_CTES}   & República Portuguesa — CTES variant \\
+    \includegraphics[height=0.9cm,align=c]{\DIRIMAGES/Logo_Governo_Portugal}       & \texttt{Logo\_Governo\_Portugal}       & Governo de Portugal logo \\
+    \includegraphics[height=0.9cm,align=c]{\DIRIMAGES/Logo_UE_FSE}                 & \texttt{Logo\_UE\_FSE}                 & EU / Fundo Social Europeu logo \\
     \bottomrule
-  \end{ShadedTabular}
+  \end{ShadedTabularX}
 \end{table}
 
 
@@ -1131,11 +1134,11 @@ the differences.
     Integrity statement     & no  & yes & yes \\
     Evaluation committee    & no  & no  & yes \\
     Book spine              & no  & no  & yes \\
-    PDF/A-2b output         & no  & no  & yes \\
+    \gls{PDFA}-2b output    & no  & no  & yes \\
     \bottomrule
   \end{ShadedTabular}
 \end{table}
-\noindent See Section~\ref{sub:pdfa} for details on the PDF/A archival output.
+\noindent See Section~\ref{sub:pdfa} for details on the \gls{PDFA} archival output.
 
 A typical workflow:
 \begin{enumerate}
@@ -1144,7 +1147,7 @@ A typical workflow:
     jury — a clean \gls{PDF} without the committee members.
 
   \item Switch to \texttt{final} after the examination — includes the
-    committee, the book spine, and produces a PDF/A-2b archival document
+    committee, the book spine, and produces a \gls{PDFA}-2b archival document
     (see Section~\ref{sub:pdfa}).
 \end{enumerate}
 
@@ -1209,13 +1212,13 @@ Ensure the settings described in Section~\ref{sub:overleaf} are applied
 are not available — all configuration is done by editing the
 \verb!0-Config/! files.
 %%-----------------------------------------------------------------------
-\subsection{\ntindex[configuration!pdf/a]{PDF/A} Archival Output}
+\subsection{\texorpdfstring{\gls{PDFA}}{PDF/A} Archival Output}
 \label{sub:pdfa}
 %%-----------------------------------------------------------------------
 
 \ntindex[pdf/a!]{Archival compliance}
 When \verb!\ntsetup{docstatus=final}! is set, \novathesis{} automatically
-produces a \textbf{\gls{PDF}/A-2b} conformant document — the archival-quality
+produces a \textbf{\gls{PDFA}-2b} conformant document — the archival-quality
 format required by most institutional repositories and digital libraries.
 No configuration beyond setting \texttt{docstatus=final} is needed.
 
@@ -1231,10 +1234,10 @@ cover-page data defined in \verb!0-Config/3_cover.tex! and embedded into
 the PDF automatically.
 
 \medskip
-\noindent\textbf{PDF/A standard choice.}
-\novathesis{} targets \textbf{PDF/A-2b} (not~1b).  PDF/A-1b prohibits
+\noindent\textbf{\gls{PDFA} standard choice.}
+\novathesis{} targets \textbf{\gls{PDFA}-2b} (not~1b).  \gls{PDFA}-1b prohibits
 transparency, which is incompatible with the TikZ cover-page graphics used
-by virtually all supported schools.  PDF/A-2b lifts this restriction while
+by virtually all supported schools.  \gls{PDFA}-2b lifts this restriction while
 remaining accepted by all major institutional repositories.
 
 \medskip
@@ -1246,9 +1249,9 @@ is needed.
 
 \medskip
 \noindent\textbf{Images and colour spaces.}
-The most common cause of PDF/A validation failures is an embedded image
+The most common cause of \gls{PDFA} validation failures is an embedded image
 with a device-dependent colour space (plain RGB or CMYK) and no ICC
-profile.  PDF/A-2b requires every included image to carry an embedded
+profile.  \gls{PDFA}-2b requires every included image to carry an embedded
 ICC profile or use a calibrated colour space.  Practical guidance by
 format:
 
@@ -1288,7 +1291,7 @@ colour-space clean.
 
 \medskip
 \noindent\textbf{Opting out.}
-To disable PDF/A output even in \texttt{final} mode, uncomment the escape
+To disable \gls{PDFA} output even in \texttt{final} mode, uncomment the escape
 hatch in \verb!0-Config/1_novathesis.tex!:
 
 \begin{latexcode}
@@ -1299,9 +1302,9 @@ hatch in \verb!0-Config/1_novathesis.tex!:
 After the final build, validate with:
 \begin{itemize}
   \item \textbf{VeraPDF} (open source, \url{https://verapdf.org}) —
-        the reference PDF/A validator.
+        the reference \gls{PDFA} validator.
   \item \textbf{Adobe Acrobat Pro} — \emph{Tools → Print Production →
-        Preflight → PDF/A compliance}.
-  \item \textbf{PDF/A Live!} (online service) — quick check without local
+        Preflight → \gls{PDFA} compliance}.
+  \item \textbf{\gls{PDFA} Live!} (online service) — quick check without local
         installation.
 \end{itemize}
