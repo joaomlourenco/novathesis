@@ -18,10 +18,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print persons list {advisers | committee}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcolumntype{L}{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}X}
-\newcolumntype{C}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}X}
-\newcolumntype{R}{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}X}
-
 
 \NewDocumentCommand{\ntprintpersons}{O{full}mO{l}mmm}{%
   % #1 = format (default: full) {full, name, list}
@@ -181,7 +177,7 @@
   \IfMemVoidT{persongrouppost}{}{\MemSet*{persongrouppost}{}{\\[7pt]}}
   \IfMemVoidT{committeetitlestringpost}{}{\MemSet*{committeetitlestringpost}{}{\\[5pt]}}%
   \@ntgetmaxlen{#3}{#2}%
-  \begin{tabularx}{#2\linewidth}[t]{@{}>{\nt@tabularx@horz}L@{}}%
+  \begin{tabularx}{#2\linewidth}[t]{@{}>{\nt@tabularx@horz\raggedright\let\newline\\\arraybackslash\hspace{0pt}}X@{}}%
     \IfMemVoidTF{CommitteeTitleString}{\@LANG@COVER}{}{%
       \IfStrEq{#3}{committee}{%
         \MemGetDefault{#3titlestringpre}{}%
