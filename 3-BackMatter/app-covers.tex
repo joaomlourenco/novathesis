@@ -43,7 +43,10 @@ order:
 
 \begin{enumerate}
   \item \textbf{\ntindex[covers!]{Background colour}.}  A solid \latexinline{\pagecolor{}} fills the
-        entire page.  Set with \latexinline{\thesiscover(id,bgcolor):={colorname}}.
+        entire page.  Set with:
+        \begin{latexcode}
+\thesiscover(id,bgcolor):={colorname}
+        \end{latexcode}
   \item \textbf{\ntindex[covers!]{Background image}.}  A full-bleed graphic is stretched to
         \latexinline{\paperwidth} $\times$ \latexinline{\paperheight}.  Set with
         \latexinline{\thesiscover(id,image):={filename}}.
@@ -433,8 +436,8 @@ Alternatively, register two separate elements with complementary
 
 Setting \texttt{tikz=true} in the attribute list causes the content block to
 be collected as \emph{overlay TikZ code} rather than box content.  The block
-is executed inside a \latexinline{tikzpicture[remember picture, overlay]} that covers
-the whole page, drawn after the text-layer minipage has been placed.
+is executed as a \latexinline{tikzpicture[remember picture, overlay]}
+covering the whole page, drawn after the text-layer minipage has been placed.
 
 This means the coordinate origin is the \latexinline{current page} node, not the
 text area, so you can position elements anywhere on the page with absolute
@@ -654,8 +657,8 @@ The following sequence describes what happens when
         full-page \latexinline{tikzpicture} overlay renders it.
   \item \texttt{cover/1-1/text/pre} hook.
   \item Cover margins are read; a \latexinline{tikzpicture} overlay anchors a
-        \latexinline{minipage} at \latexinline{current page.north west} offset by those
-        margins.
+        \latexinline{minipage} at the \latexinline{current page.north west} anchor,
+        offset by those margins.
   \item Inside the minipage, each element registered with
         \latexinline{\ntaddtocover[…]{1-1}} is processed in order.
         For each element the engine: resolves \texttt{vspace}, typeset the
@@ -923,7 +926,7 @@ elements below remain at a predictable vertical position.
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{ShadedTabular}{lp{8cm}}
+\begin{ShadedTabularX}{\linewidth}{lX}
   \toprule
   \textbf{Command / Setting} & \textbf{Purpose} \\
   % \midrule
@@ -940,6 +943,6 @@ elements below remain at a predictable vertical position.
   \latexinline{\ntsetup{debug={cover}}}            & Enable cover debug mode \\
   \latexinline{python .Build/build.py ... --mode 2} & Build cover pages only \\
   \bottomrule
-\end{ShadedTabular}
+\end{ShadedTabularX}
 \end{center}
 
