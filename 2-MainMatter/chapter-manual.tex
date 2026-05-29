@@ -1176,14 +1176,47 @@ A typical workflow:
 \label{sub:make}
 %%-----------------------------------------------------------------------
 
-The \texttt{Makefile} at the project root wraps \texttt{latexmk}:
+The \texttt{Makefile} at the project root wraps \texttt{latexmk} and provides a set of commands to manage the entire document lifecycle. You can run \bashinline{make help} at any time to see the full list of available targets.
+
+\paragraph{Basic Compilation.} These targets handle the multi-pass build (including bibliography) using specific engines:
 \begin{bashcode}
-make        # auto-detect engine (usually LuaLaTeX)
-make lua    # force LuaLaTeX
-make xe     # force XeLaTeX
-make pdf    # force pdfLaTeX
-make view   # build and open the PDF viewer
-make clean  # remove auxiliary files
+make        # auto-detect engine (defaults to LuaLaTeX)
+make lua    # build using LuaLaTeX (recommended)
+make xe     # build using XeLaTeX
+make pdf    # build using pdfLaTeX
+\end{bashcode}
+
+\paragraph{Viewing and Debugging.}
+\begin{bashcode}
+make view   # build (if needed) and open the PDF in the default viewer
+make log    # open the LaTeX log file in the default text editor
+\end{bashcode}
+
+\paragraph{Cleaning Files.}
+\begin{bashcode}
+make clean   # remove standard auxiliary files (keep PDF)
+make bclean  # same as clean, but also clears the Biber cache
+make gclean  # use 'git clean' to remove all untracked files
+\end{bashcode}
+
+\paragraph{Advanced and Maintenance.}
+\begin{bashcode}
+make zip     # package the source files into a distribution ZIP archive
+make help    # display a help message with all available targets
+\end{bashcode}
+
+\paragraph{Environment Selectors.} If you have multiple \hologo{TeX} distributions or versions installed (specifically on macOS), you can force a specific environment:
+\begin{bashcode}
+make tl lua    # force TeX-Live
+make mik lua   # force MikTeX
+make 2024 lua  # use TeX-Live 2024 release
+\end{bashcode}
+
+\paragraph{Output Modes.} You can control the verbosity of the compilation output:
+\begin{bashcode}
+make verb lua  # verbose mode (standard LaTeX output)
+make batch lua # batch mode (minimal output)
+make itrt lua  # interactive mode (stops on errors)
 \end{bashcode}
 
 %%-----------------------------------------------------------------------
