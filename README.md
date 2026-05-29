@@ -287,7 +287,25 @@ latexmk -shell-escape -file-line-error -luapdf template
 
 **Important:** The template uses **`biber`** by default, not `bibtex`.  However, `bibtex` can be also be used.
 
-### 4.1.4. Configure & Recompile
+### 4.1.4. Makefile Targets
+
+The `Makefile` provides several targets to simplify your workflow:
+
+- **Compilation Engines:**
+  - `make pdf`: Build using `pdflatex`.
+  - `make xe`: Build using `xelatex`.
+  - `make lua`: Build using `lualatex` (default).
+- **Viewing & Logs:**
+  - `make v` or `make view`: Build the PDF and open it in your default viewer.
+  - `make log`: Open the LaTeX log file in your text editor.
+- **Cleaning:**
+  - `make clean`: Remove standard build artifacts.
+  - `make bclean`: Clean artifacts and also clear the Biber cache.
+- **Advanced:**
+  - `make help`: Display a help message with all available targets.
+  - `make zip`: Create a distribution ZIP archive of the source files.
+
+### 4.1.5. Configure & Recompile
 
 **Carefully edit** the files inside the `0-Config/` directory to set your document metadata, e.g.:
 
@@ -308,7 +326,7 @@ NOVAthesis is available as an official Overleaf template.  Despite the regular u
 2. [Upload the ZIP to Overleaf](www.overleaf.com);
 3. Set `template.tex` as the root document;
 4. Compile;
-5. Follow the steps above (*4.1.4. Configure & Recompile*) to customize you document.
+5. Follow the steps above (*4.1.5. Configure & Recompile*) to customize you document.
 
 **Warning:** You will need a paid Overleaf account. The template will not compile under Overleaf Free Plan, which has a 20‑second compilation limit.
 
