@@ -17,17 +17,17 @@
 \SetSchool*(en)={School of Technology and Architecture}
 
 \SetDissertationString(bsc,pt)={Relatório para obtenção do Grau de %
-\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
 \SetDissertationString(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
-\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
 \SetDissertationString(msc,pt)={Dissertação para obtenção do Grau de %
-\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
 \SetDissertationString(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
-\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
 \SetDissertationString(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
-\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
 \SetDissertationString(phd,pt)={Dissertação para obtenção do Grau de %
-\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\[1ex] \textbf{\fontsize{16}{16}\selectfont\GetMajorField(\@LANG@COVER)}}
 
 \SetCopyrightTextString(pt)={A \GetSchool(\@LANG@COVER)\ e a \GetUniversity(\@LANG@COVER)\ têm o direito, perpétuo e sem limites geográficos, de arquivar e publicar esta dissertação através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de a divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor e editor.}
 \SetCopyrightTextString(en)={The \GetSchool(\@LANG@COVER)\ and the \GetUniversity(\@LANG@COVER)\ have the right, perpetual and without geographical boundaries, to file and publish this dissertation through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author and editor.}

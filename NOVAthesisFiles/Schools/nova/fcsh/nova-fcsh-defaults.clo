@@ -18,6 +18,8 @@
 \ntsetup{print/otherlists=backmatter}
 \ntsetup{print/glossaries=backmatter}
 
+\ntaddfile{frontpage}[en]{nova-fcsh/nova-fcsh-frontpage-en}
+\ntaddfile{frontpage}[pt]{nova-fcsh/nova-fcsh-frontpage-pt}
 \ntaddfile{statement}[en]{nova-fcsh/nova-fcsh-statement-en}
 \ntaddfile{statement}[pt]{nova-fcsh/nova-fcsh-statement-pt}
 
@@ -82,6 +84,42 @@
 \setlength{\parskip}{6pt plus 3pt minus 1pt}
 
 \RequirePackage{indentfirst}  % To also indent the first paragraph in the chapter/section/subsection/…
+
+
+
+%%=======================================================================
+%% FRONT MATTER CONFIGURATION
+%%=======================================================================
+
+\options{/@nt/print/frontmatter/final = 
+  {%
+    frontpage,        % (*) The institutional statement and funding
+    copyright,        % (*) The copyright page
+    dedication,       % (*) Print the dedication
+    quote,            % (*) Print the quote
+    acknowledgements, % (*) Print the acknowledgments
+    statement,        % The statement page
+    aidisclose,       % AI disclosure statement
+    abstracts,        % Print abstracts in multiple languages.
+    alllistof,        % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
+}
+
+\options{/@nt/print/frontmatter/provisional = 
+  {%
+    frontpage,        % (*) The institutional statement and funding
+    copyright,        % (*) The copyright page
+    dedication,       % (*) Print the dedication
+    quote,            % (*) Print the quote
+    acknowledgements, % (*) Print the acknowledgments
+    statement,        % The statement page
+    aidisclose,       % AI disclosure statement
+    abstracts,        % Print abstracts in multiple languages.
+    alllistof,        % Print all the listof defined in “6_list_of.tex”
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+  }
+}
 
 
 %%=======================================================================
