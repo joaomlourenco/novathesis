@@ -1,65 +1,124 @@
-# --- Configuration ---
-# Default compiler if none is specified
-ENGINE ?= lualatex
-LATEXMK_FLAG = -time
+#-----------------------------------------------------------------------------
+# NOVAthesis — Makefile
+#
+# The build engine is latexmk; all LaTeX-specific behavior (engine defaults,
+# biber, glossaries, clean lists) lives in ./latexmkrc.
+#
+# Targets:
+#   make               build with LuaLaTeX (recommended)
+#   make lua|pdf|xe    build with a specific engine
+#   make view          build, then open the PDF
+#   make watch         rebuild automatically on every change
+#   make log           show the build log
+#   make clean         remove build artifacts (keeps the PDF)
+#   make distclean     clean + remove PDF and synctex files
+#   make help          show this help
+#
+# Variables:
+#   FILE=name          root .tex file (default: auto-detect \documentclass)
+#   NT="k=v,..."       \ntsetup overrides, e.g. NT="doctype=msc,lang=pt"
+#   V=1                verbose: raw LaTeX output
+#   BATCH=1            batch mode (never stops at errors) — good for CI
+#   TL=2024            use /usr/local/texlive/2024 for this run
+#   VIEWER=...         PDF viewer for 'make view'
+#   FLAGS=...          extra latexmk flags, passed through
+#-----------------------------------------------------------------------------
 
-# Detect if texfot is installed to filter verbose output
-TEXFOT := $(shell command -v texfot 2>/dev/null)
-
-# --- Flag Setup ---
-COMMON_FLAGS = -file-line-error -shell-escape -synctex=1 -recorder -output-directory=AUXDIR
-
-# --- Root File Detection ---
+# --- Root file detection -----------------------------------------------------
 ifeq ($(FILE),)
-    TARGET_FILES := $(shell grep -lF "\\documentclass" *.tex 2>/dev/null)
-    NUM_FILES    := $(words $(TARGET_FILES))
-    ifneq ($(NUM_FILES),1)
-        $(error Found $(NUM_FILES) .tex file(s) with \documentclass — set FILE=<name> explicitly)
-    endif
-    BASEFILE := $(basename $(TARGET_FILES))
+  ROOTS := $(shell grep -lF '\documentclass' *.tex 2>/dev/null)
+  ifneq ($(words $(ROOTS)),1)
+    $(error Found $(words $(ROOTS)) file(s) with \documentclass ($(ROOTS)); use FILE=<name>)
+  endif
+  BASE := $(basename $(ROOTS))
 else
-    BASEFILE := $(basename $(FILE))
+  BASE := $(basename $(FILE))
 endif
 
-# --- Public Targets & Short Aliases ---
+AUXDIR := AUXDIR
+export AUXDIR                       # also read by latexmkrc
 
-.PHONY: all mkl mkll mkp mkpp lualatex latexmk-lua pdflatex latexmk-pdf clean
+# --- TeX Live release selection (TL=2024) ------------------------------------
+ifneq ($(TL),)
+  TLBIN := $(firstword $(wildcard /usr/local/texlive/$(TL)/bin/*))
+  ifeq ($(TLBIN),)
+    $(error TeX Live $(TL) not found under /usr/local/texlive)
+  endif
+  export PATH := $(TLBIN):$(PATH)
+endif
 
-# Default target when you just type 'make'
-all: mkll
+# --- Commands and flags -------------------------------------------------------
+LATEXMK  := latexmk
+LMKFLAGS := -time -file-line-error -shell-escape -synctex=1 \
+            -output-directory=$(AUXDIR)
 
-# Short & Full aliases for LuaLaTeX
-mkl: lualatex
-lualatex: ENGINE = lualatex
-lualatex: build
+ifeq ($(BATCH),1)
+  LMKFLAGS += -interaction=batchmode
+else
+  LMKFLAGS += -interaction=nonstopmode
+endif
 
-# Short & Full aliases for Latexmk + LuaLaTeX
-mkll: latexmk-lua
-latexmk-lua: ENGINE = latexmk
-latexmk-lua: LATEXMK_FLAG += -pdflua
-latexmk-lua: build
+# Command-line overrides for \ntsetup (see nt-setup.sty, \ntoverride)
+ifneq ($(NT),)
+  LMKFLAGS += -usepretex -pretex='\def\ntoverride{$(NT)}'
+endif
 
-# Short & Full aliases for PDFLaTeX
-mkp: pdflatex
-pdflatex: ENGINE = pdflatex
-pdflatex: build
+LMKFLAGS += $(FLAGS)
 
-# Short & Full aliases for Latexmk + PDFLaTeX
-mkpp: latexmk-pdf
-latexmk-pdf: ENGINE = latexmk
-latexmk-pdf: LATEXMK_FLAG += -pdf
-latexmk-pdf: build
+# Filter LaTeX chatter with texfot when available (disabled by V=1)
+TEXFOT := $(shell command -v texfot 2>/dev/null)
+ifeq ($(V),1)
+  RUN :=
+else
+  RUN := $(TEXFOT)
+endif
 
-# --- Core Build Logic ---
+# --- Build targets ------------------------------------------------------------
+.PHONY: all lua pdf xe build
+all: lua
+lua: ENG := -pdflua
+pdf: ENG := -pdf
+xe:  ENG := -pdfxe
+lua pdf xe: build
+
 build:
-	@mkdir -p AUXDIR
-	@echo "Running: $(TEXFOT) $(ENGINE) $(LATEXMK_FLAG) $(COMMON_FLAGS) $(BASEFILE)"
-	@$(TEXFOT) $(ENGINE) $(LATEXMK_FLAG) $(COMMON_FLAGS) $(BASEFILE).tex
-	@cp -f AUXDIR/$(BASEFILE).pdf       $(BASEFILE).pdf       2>/dev/null || true
-	@cp -f AUXDIR/$(BASEFILE).synctex.gz $(BASEFILE).synctex.gz 2>/dev/null || true
+	@mkdir -p $(AUXDIR)
+	$(RUN) $(LATEXMK) $(ENG) $(LMKFLAGS) $(BASE).tex
+	@cp -f $(AUXDIR)/$(BASE).pdf . 2>/dev/null || true
+	@cp -f $(AUXDIR)/$(BASE).synctex.gz . 2>/dev/null || true
 
-# --- Clean Target ---
+# --- Convenience targets --------------------------------------------------------
+ifeq ($(shell uname),Darwin)
+  VIEWER ?= open
+else
+  VIEWER ?= xdg-open
+endif
+
+.PHONY: v view watch log
+v view: lua
+	$(VIEWER) "$(BASE).pdf"
+
+watch:
+	$(LATEXMK) -pdflua -pvc $(LMKFLAGS) $(BASE).tex
+
+PAGER ?= less
+log:
+	@$(PAGER) "$(AUXDIR)/$(BASE).log"
+
+# --- Cleaning -------------------------------------------------------------------
+.PHONY: clean distclean
 clean:
-	@echo "Cleaning up AUXDIR..."
-	@rm -rf AUXDIR
-	@rm -f $(BASEFILE).pdf $(BASEFILE).synctex.gz
+	-@$(LATEXMK) -C -output-directory=$(AUXDIR) $(BASE).tex >/dev/null 2>&1
+	rm -rf $(AUXDIR) _minted*
+	@find . -name .DS_Store -delete 2>/dev/null || true
+
+distclean: clean
+	rm -f "$(BASE).pdf" "$(BASE).synctex.gz"
+
+# --- Help -------------------------------------------------------------------------
+.PHONY: help
+help:
+	@awk '/^#---/{n++; next} n==1 && /^#/{sub(/^# ?/,""); print}' Makefile
+
+# --- Maintainer targets (not shipped in releases) -----------------------------------
+-include Makefile.dev

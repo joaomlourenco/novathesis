@@ -19,6 +19,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % pdflatex is limited to 16 \write registers; LuaTeX allows 65536.
 % morewrites virtualises the pool so all packages get the streams they need.
+% Must be loaded before any other package calls \newwrite.
 \RequirePackage{iftex}
 \ifluatex\else\RequirePackage{morewrites}\fi
 
@@ -69,13 +70,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CORE PACKAGES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% pdflatex is limited to 16 \write registers; LuaTeX allows 65536.
-% morewrites virtualises the pool so all packages get the streams they need.
-% Must be loaded before any other package calls \newwrite.
-\RequirePackage{iftex}
-\ifluatex\else\RequirePackage{morewrites}\fi
-
 \RequirePackage[table,svgnames]{xcolor} % Must be loaded first to avoid option clashes
 \RequirePackage{iftex}       % \ifpdftex, \ifxetex, \ifluatex, \iftutex …
 \RequirePackage{ifplatform}  % \ifwindows, \iflinux, \ifmacosx
@@ -284,5 +278,8 @@
 %% AI DISCLOSURE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtEndPreamble{%
-  \RequirePackage[autobib=true,nocite=false]{aidisclose2}  % AI disclosure watermark / statement
+  % Upstream aidisclose package (bundled in StyFiles). autobib=false because
+  % the thesis supplies the cite keys via StyFiles/fix-bib.bib; letting the
+  % package auto-write its own aidisclose.bib would duplicate those keys.
+  \RequirePackage[autobib=false,nocite=false]{aidisclose}  % AI disclosure watermark / statement
 }

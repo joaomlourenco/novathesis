@@ -69,6 +69,27 @@
 %       configuration file “0-Config/1_novathesis.tex”
 %============================================================
 \input{\DIRCONFIG/1_novathesis}
+
+%============================================================
+%  COMMAND-LINE OVERRIDES
+%      Any \ntsetup options may be given at the command line,
+%      without editing 0-Config/1_novathesis.tex, e.g.:
+%        latexmk -pdflua -usepretex \
+%          -pretex='\def\ntoverride{doctype=msc,school=uminho/ec,lang=pt}' template
+%      or, with a plain engine:
+%        lualatex -jobname=template '\def\ntoverride{doctype=msc}\input{template}'
+%      These values take precedence over 0-Config/1_novathesis.tex.
+%============================================================
+\ifdefined\ntoverride
+  \ClassInfo{novathesis}{Applying command-line overrides: \ntoverride}
+  \expandafter\ntsetup\expandafter{\ntoverride}
+  % Re-apply "school" so that school-derived macros (e.g. the degree
+  % acronym, which depends on "doctype") are recomputed and consistent,
+  % regardless of the order of the keys given in \ntoverride.
+  \edef\@nt@override@school{school=\option{/novathesis/schoolgiven}}
+  \expandafter\ntsetup\expandafter{\@nt@override@school}
+\fi
+
 \def\@DOCTYPE{\option{/novathesis/doctype}}
 \def\@DOCSTATUS{\option{/novathesis/docstatus}}
 

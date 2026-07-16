@@ -1,0 +1,80 @@
+#-----------------------------------------------------------------------------
+# NOVAthesis — Makefile.dev (maintainer targets)
+#
+# This file is NOT shipped in releases (excluded from 'make zip').
+# It is loaded automatically by the main Makefile via '-include Makefile.dev'.
+#
+# Targets:
+#   make school SCHOOL=nova/fct [TYPE=msc] [LANG=pt] [ENGINE=lua] [STATUS=final]
+#                      build one school variant (uses \ntoverride, nothing is
+#                      patched; defaults come from .Build/schools.conf)
+#   make matrix [JOBS=4] [ONLY=univ[/school][,...]]
+#                      build every school/doctype/lang/engine combination in
+#                      .Build/schools.conf. Each [order:...] section is a
+#                      group: its variants build sequentially in a shared aux
+#                      dir (reusing toc/bbl between similar variants), nested
+#                      as the "order:" tuple dictates; JOBS parallelizes
+#                      group×engine chains (biber lock auto-enabled if JOBS>1).
+#                      PDFs (named univ-school-doctype-lang-engine.pdf) go into
+#                      a folder YYYY-MM-DD@hh-mm-ss; failed builds leave a
+#                      .log file with the same base name there instead.
+#                      ONLY restricts by prefix: ONLY=nova (university),
+#                      ONLY=nova/fct (school + sub-programs), ONLY=uminho,ipl
+#   make needlua       regenerate the list of LuaLaTeX-only schools
+#   make zip           release archive novathesis-<version>@<date>.zip
+#   make bump1|bump2|bump3
+#                      bump major/mid/minor version (Scripts/bump.py)
+#   make gclean        git clean -fx (keeps Scripts and Fonts)
+#   make help-dev      show this help
+#-----------------------------------------------------------------------------
+
+VERSION_FILE := NOVAthesisFiles/StyFiles/nt-version.sty
+VERSION       = $(shell awk -F'[{}]' '/\\novathesisversion/ {print $$4; exit}' '$(VERSION_FILE)')
+DATE          = $(shell awk -F'[{}]' '/\\novathesisdate/    {print $$4; exit}' '$(VERSION_FILE)')
+
+VARIANT := .Build/nt-variant.sh
+JOBS    ?= 1
+
+# --- Variant builds ------------------------------------------------------------
+.PHONY: school matrix
+school:
+ifndef SCHOOL
+	$(error Usage: make school SCHOOL=univ/school [TYPE=phd|msc|bsc] [LANG=xx] [ENGINE=lua|pdf|xe] [STATUS=working|provisional|final])
+endif
+	@$(VARIANT) $(if $(TYPE),-t $(TYPE)) $(if $(LANG),-l $(LANG)) \
+	            $(if $(ENGINE),-e $(ENGINE)) $(if $(STATUS),-s $(STATUS)) \
+	            $(if $(V),-v) "$(SCHOOL)"
+
+matrix:
+	@$(VARIANT) -j $(JOBS) $(if $(V),-v) -a $(ONLY)
+
+# --- LuaLaTeX-only school detection ---------------------------------------------
+.PHONY: needlua
+needlua:
+	@.Build/need_lualatex.sh
+
+# --- Release archive --------------------------------------------------------------
+ZIPNAME  = novathesis-$(VERSION)@$(DATE).zip
+ZIPFILES = NOVAthesisFiles [0-5]-* LICENSE Makefile latexmkrc README.md \
+           novathesis.cls template.pdf template.tex .gitignore
+
+.PHONY: zip
+zip:
+	@rm -f "$(ZIPNAME)"
+	zip -rq "$(ZIPNAME)" $(ZIPFILES)
+	@echo "Created $(ZIPNAME)"
+
+# --- Version bump -------------------------------------------------------------------
+.PHONY: bump1 bump2 bump3
+bump1 bump2 bump3:
+	@Scripts/bump.py -b $(patsubst bump%,%,$@)
+
+# --- Deep clean -----------------------------------------------------------------------
+.PHONY: gclean
+gclean:
+	git clean -fx -e Scripts -e Fonts
+
+# --- Help --------------------------------------------------------------------------------
+.PHONY: help-dev
+help-dev:
+	@awk '/^#---/{n++; next} n==1 && /^#/{sub(/^# ?/,""); print}' Makefile.dev
