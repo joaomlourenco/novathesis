@@ -28,7 +28,7 @@ This document summarizes the changes and improvements made to the NOVAthesis tem
 *   **Contributors:** Added a contributors section to the README.
 
 ### Refactoring
-*   **AI Disclosure:** Major overhaul of the AI disclosure functionality, renaming the package to `aidisclose2` and modernizing the taxonomy.
+*   **AI Disclosure:** Major overhaul of the AI disclosure functionality, now using the upstream `aidisclose` package (loaded with `autobib=false`) and modernizing the taxonomy.
 *   **Data Storage (`memstore`):** Migrated internal data storage (departments, etc.) to a new `memstore` package for better reliability.
 *   **File Structure:** Relocated style files to a dedicated `StyFiles` directory and standardized directory macros.
 *   **Language Handling:** Simplified language list generation and improved `babel` compatibility.

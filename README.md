@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 NOVATHESIS — README.md
 
-Version 7.10.7 (2026-03-25)
+Version 7.11.0 (2026-06-13)
 Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 -----------------------------------------------------------------------------
 -->
@@ -51,6 +51,8 @@ Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 * [10\. Disclaimer](#10-disclaimer)
 * [11\. Deprecated Word Templates](#11-deprecated-word-templates)
 * [12\. Please give this repository a ⭐️](#12-please-give-this-repository-a-️%EF%B8%8F)
+* [13\. Contributors](#13-contributors-thank-you)
+* [14\. Say thank you!](#14-say-thank-you)
 
 ---
 
@@ -282,28 +284,40 @@ make
 otherwise run
 
 ```bash
-latexmk -shell-escape -file-line-error -luapdf template
+latexmk -pdflua -shell-escape -file-line-error template
 ```
+
+(the settings in the `latexmkrc` file at the project root are loaded automatically by `latexmk`).
 
 **Important:** The template uses **`biber`** by default, not `bibtex`.  However, `bibtex` can be also be used.
 
 ### 4.1.4. Makefile Targets
 
-The `Makefile` provides several targets to simplify your workflow:
+The `Makefile` is a thin wrapper around `latexmk` and provides several targets to simplify your workflow:
 
 - **Compilation Engines:**
+  - `make` or `make lua`: Build using `lualatex` (recommended default).
   - `make pdf`: Build using `pdflatex`.
   - `make xe`: Build using `xelatex`.
-  - `make lua`: Build using `lualatex` (default).
 - **Viewing & Logs:**
   - `make v` or `make view`: Build the PDF and open it in your default viewer.
-  - `make log`: Open the LaTeX log file in your text editor.
+  - `make watch`: Rebuild automatically every time a file is saved.
+  - `make log`: Show the LaTeX log file.
 - **Cleaning:**
-  - `make clean`: Remove standard build artifacts.
-  - `make bclean`: Clean artifacts and also clear the Biber cache.
-- **Advanced:**
-  - `make help`: Display a help message with all available targets.
-  - `make zip`: Create a distribution ZIP archive of the source files.
+  - `make clean`: Remove build artifacts (keeps the PDF).
+  - `make distclean`: Also remove the PDF and SyncTeX files.
+- **Help:**
+  - `make help`: Display a help message with all targets and variables.
+
+The behavior can be adjusted with variables, e.g.:
+
+```bash
+make V=1                                  # verbose (raw LaTeX output)
+make NT="doctype=msc,lang=pt"             # override any \ntsetup option
+make view VIEWER="open -a Skim"           # choose the PDF viewer
+```
+
+The `NT` variable accepts any comma-separated list of `\ntsetup` options and takes precedence over `0-Config/1_novathesis.tex`, without editing any file. This is handy for testing another school, language, or document type.
 
 ### 4.1.5. Configure & Recompile
 
@@ -326,7 +340,7 @@ NOVAthesis is available as an official Overleaf template.  Despite the regular u
 2. [Upload the ZIP to Overleaf](www.overleaf.com);
 3. Set `template.tex` as the root document;
 4. Compile;
-5. Follow the steps above (*4.1.5. Configure & Recompile*) to customize you document.
+5. Follow the steps above (*4.1.5. Configure & Recompile*) to customize your document.
 
 **Warning:** You will need a paid Overleaf account. The template will not compile under Overleaf Free Plan, which has a 20‑second compilation limit.
 
@@ -339,17 +353,18 @@ template.tex            # Document main file (do not change this fil
 0-Config/               # Document configuration and customization
   ├── 0_memoir.tex      #   low level customization (for advanced users only)
   ├── 1_novathesis.tex  #   main document customization file
-  ├── 2_biblatex.tex    #   biliography customization
+  ├── 2_biblatex.tex    #   bibliography customization
   ├── 3_cover.tex       #   cover contents/metadata
   ├── 4_files.tex       #   files to include in the document
-  ├── 5_packages.tex    #   user customization (pckages and commands)
+  ├── 5_packages.tex    #   user customization (packages and commands)
   ├── 6_list_of.tex     #   ordering for the lists (for advanced users only)
+  ├── 7-aidisclose.tex  #   AI usage disclosure statement
   └── 9_*.tex           #   School‑specific configs
 1-FrontMatter/          # Abstract, Dedicatory, …
 2-MainMatter/           # Document main content (main chapters)
 3-BackMatter/           # Appendices and Annexes
-4-Bibliography          # Bibliography databse (your .bib files)
-5-Figures/              # All the figures uaed in the document
+4-Bibliography/         # Bibliography database (your .bib files)
+5-Figures/              # All the figures used in the document
 ```
 
 Each configuration file has a single, well‑defined purpose to keep the project modular.
@@ -386,10 +401,12 @@ Contributions are welcome:
 
 A large and growing list including:
 
-- NOVA University Lisbon (FCT, IMS, FCSH, ITQB, ENSP)
-- University of Lisbon (ISEG, IST, FC, FMV)
-- University of Minho (EAD, EC, ED, EEG, EENG, ELACH, EMED, EPSI, ESE, I3BS, ICS, IE)
-- Universidade Lusófona
+- NOVA University Lisbon (FCT, FCSH, ITQB, ENSP)
+- University of Lisbon (FCUL, FMV, ISEG, IST)
+- University of Minho (EAAD, EC, ED, EEG, EENG, ELACH, EMED, EPSI, ESE, I3BS, ICS, IE)
+- University of Porto (FCUP)
+- ISCTE-IUL (ETA)
+- Universidade Lusófona (DEISI, MGE)
 - Instituto Politécnico de Lisboa (ISEL)
 - Instituto Politécnico de Setúbal (ESTS)
 - Escola Superior de Enfermagem do Porto
@@ -413,8 +430,8 @@ Compliance has been ensured to the best extent possible using public documentati
 
 # 11. Deprecated Word Templates
 
-The Word templates (unmaintained) can be found in  
-[https://github.com/joaomlourenco/novathesis_word]()
+The Word templates (unmaintained) can be found at  
+<https://github.com/joaomlourenco/novathesis_word>
 
 --------
 
@@ -442,7 +459,7 @@ The Word templates (unmaintained) can be found in
 
 ---
 
-# 12. Contributers (thank you!)
+# 13. Contributors (thank you!)
 
 <a href="https://github.com/joaomlourenco/novathesis/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=joaomlourenco/novathesis" />
@@ -453,7 +470,7 @@ Made with [contrib.rocks](https://contrib.rocks).
 
 ---
 
-# 13. Say thank you!
+# 14. Say thank you!
 
 1. **Star this repository** by clicking the (⭐️) at the top right of the [project's page](https://github.com/joaomlourenco/novathesis).
 2. **Make a [small donation](https://paypal.me/novathesis)** (*pay me a beer!*)  

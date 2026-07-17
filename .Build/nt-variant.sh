@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #-----------------------------------------------------------------------------
 # NOVAthesis — nt-variant.sh
+# Version 7.11.0 (2026-06-13)
 #
 # Build one (or all) school variants of the template WITHOUT touching the
 # working copy. Settings are injected at the command line through the
@@ -58,7 +59,7 @@ DRYRUN="${NT_DRYRUN:-0}"
 VERBOSE="${NT_VERBOSE:-0}"
 JOBS=1 ALL=0 UNITFILE=""
 
-usage() { sed -n '3,44p' "$0" | sed 's/^# \{0,1\}//'; exit "${1:-0}"; }
+usage() { sed -n '3,45p' "$0" | sed 's/^# \{0,1\}//'; exit "${1:-0}"; }
 
 while getopts "t:l:e:s:x:o:j:U:navh" opt; do
   case $opt in

@@ -220,7 +220,7 @@ All attributes are optional.  Defaults are shown in parentheses.
 
 \begin{center}
 \small
-\begin{tabular}{@{}llll@{}}
+\begin{ShadedTabular}[white]{@{}llll@{}}
 \hline
 \textbf{Attribute} & \textbf{Values} & \textbf{Default} & \textbf{Description} \\
 \hline
@@ -245,7 +245,7 @@ All attributes are optional.  Defaults are shown in parentheses.
 \texttt{tikz}   & \texttt{true}, \texttt{false} & \texttt{false} & Treat content as raw TikZ overlay code \\
 \texttt{newpar} & \texttt{true}, \texttt{false} & \texttt{true} & Emit \latexinline{\par} after element \\
 \hline
-\end{tabular}
+\end{ShadedTabular}
 \end{center}
 
 \medskip
@@ -629,12 +629,13 @@ corner of the text area.
 \medskip
 A fast iteration workflow:
 \begin{bashcode}
-# Build the cover only (mode=2 skips all document content)
-python .Build/build.py nova/fct --mode 2
+# Rebuild automatically on every save, for the school being tuned
+make watch NT="school=nova/fct"
 \end{bashcode}
 
-This rebuilds only the front cover page, giving fast feedback when tuning
-positions and margins.
+The \verb!NT! override selects the school without editing any configuration
+file, and \verb!make watch! rebuilds on every save, giving fast feedback
+when tuning positions and margins.
 
 
 %%=======================================================================
@@ -657,8 +658,7 @@ The following sequence describes what happens when
         full-page \latexinline{tikzpicture} overlay renders it.
   \item \texttt{cover/1-1/text/pre} hook.
   \item Cover margins are read; a \latexinline{tikzpicture} overlay anchors a
-        \latexinline{minipage} at the \latexinline{current page.north west} anchor,
-        offset by those margins.
+        \latexinline{minipage} at the page's top-left, offset by those margins.
   \item Inside the minipage, each element registered with
         \latexinline{\ntaddtocover[…]{1-1}} is processed in order.
         For each element the engine: resolves \texttt{vspace}, typeset the
@@ -822,16 +822,16 @@ Supported formats: \texttt{.pdf} (preferred for vector logos), \texttt{.png},
 \texttt{.jpg}.
 
 \medskip
-\noindent\textbf{4.  Test with cover-only mode:}
+\noindent\textbf{4.  Test the new school} (no configuration file is edited):
 \begin{bashcode}
-python .Build/build.py myuniv/myfac --mode 2
+make NT="school=myuniv/myfac"
 \end{bashcode}
 
 \medskip
 \noindent\textbf{5.  Test all document types:}
 \begin{bashcode}
-python .Build/build.py myuniv/myfac --doctype phd --docstatus final
-python .Build/build.py myuniv/myfac --doctype msc --docstatus final
+make NT="school=myuniv/myfac,doctype=phd,docstatus=final"
+make NT="school=myuniv/myfac,doctype=msc,docstatus=final"
 \end{bashcode}
 
 \medskip
@@ -941,7 +941,7 @@ elements below remain at a predictable vertical position.
   \latexinline{\NTAddToHook{cover/<id>/pre}{...}}  & Inject code before a cover \\
   \latexinline{\debuggrid[color]}                  & Render a measurement grid \\
   \latexinline{\ntsetup{debug={cover}}}            & Enable cover debug mode \\
-  \latexinline{python .Build/build.py ... --mode 2} & Build cover pages only \\
+  \latexinline{make NT="school=<univ/school>"}     & Build for a given school \\
   \bottomrule
 \end{ShadedTabular}
 \end{center}

@@ -31,9 +31,9 @@ citation styles, and the document workflow.  All user customization flows
 through the files inside the \ntindex[configuration!0-config/]{\latexinline{0-Config/}} folder — the rest of the
 project tree is never edited directly.
 
-For a reference to the automated \ntindex[building!build.py]{\latexinline{build.py}} assistant,
-see Chapter~\ref{app:build_py}.  For a guide to the cover page system,
-see Chapter~\ref{app:covers}.
+For a reference to the \ntindex[building!]{build system} (\latexinline{make}
+and the command-line overrides), see Chapter~\ref{app:build}.  For a guide to
+the cover page system, see Chapter~\ref{app:covers}.
 
 
 %%=======================================================================
@@ -107,7 +107,7 @@ Once imported:
   \item Press \emph{Recompile}.
 \end{enumerate}
 
-On \Overleaf{} you cannot run \ntindex[building!make]{\latexinline{make}} or \ntindex[building!build.py]{\latexinline{build.py}};
+On \Overleaf{} you cannot run \ntindex[building!make]{\latexinline{make}};
 all customization must be done by editing the \ntindex[configuration!0-config/]{\latexinline{0-Config/}} files
 directly (see Section~\ref{sec:project_structure}).
 
@@ -141,7 +141,7 @@ engine.
     \verb!5-Figures/!           & Images                              & \textbf{edit} \\
     \verb!NOVAthesisFiles/!     & Template internals (styles, schools, strings) & do not edit \\
     \verb!Scripts/!             & Utility scripts                     & do not edit \\
-    \verb!.Build/!              & Build assistant (\texttt{build.py}) & do not edit \\
+    \verb!.Build/!              & Maintainer build tools (\texttt{nt-variant.sh}) & do not edit \\
     \bottomrule
   \end{ShadedTabular}
 \end{table}
@@ -239,8 +239,8 @@ commented-out lines show available values as documentation:
 \ntsetup{pdfa=false}  % disable PDF/A output
 \end{latexcode}
 
-  \item[\texttt{lang}] Main language of the document body (ISO 3166-1 alpha-2
-    code).  Default: \texttt{en}.
+  \item[\texttt{lang}] Main language of the document body (two- or
+    three-letter language code).  Default: \texttt{en}.
 \begin{latexcode}
 \ntsetup{lang=en}   % English (default)
 \ntsetup{lang=pt}   % Portuguese
@@ -519,16 +519,16 @@ label in the margin.
 
 \begin{latexcode}
 % Hyperlink color for glossary entries (default: black)
-\ntsetup{glossaries/color/gls=SteelBlue}
+\ntsetup{color/glossaries/gls=SteelBlue}
 
 % Show back-references in glossary entries (default: true)
 \ntsetup{glossaries/list/reverse=false}
 
 % Glossary column widths
-\ntlatesetup{glossaries/layout={>{\raggedright}p{0.2\textwidth}X}}
+\ntsetup{glossaries/layout={>{\raggedright}p{0.2\textwidth}X}}
 
-% Include the Table of Contents as an entry in itself (default: false)
-\ntsetup{tocintoc=true}
+% Include the Table of Contents as an entry in itself (default: true)
+\ntsetup{tocintoc=false}
 
 % Book spine width (default: 1cm)
 \ntsetup{spine/width=2cm}
@@ -1180,8 +1180,8 @@ The \texttt{Makefile} at the project root wraps \texttt{latexmk} and provides a 
 
 \paragraph{Basic Compilation.} These targets handle the multi-pass build (including bibliography) using specific engines:
 \begin{bashcode}
-make        # auto-detect engine (defaults to LuaLaTeX)
-make lua    # build using LuaLaTeX (recommended)
+make        # build with LuaLaTeX (recommended default)
+make lua    # build using LuaLaTeX
 make xe     # build using XeLaTeX
 make pdf    # build using pdfLaTeX
 \end{bashcode}
@@ -1189,35 +1189,30 @@ make pdf    # build using pdfLaTeX
 \paragraph{Viewing and Debugging.}
 \begin{bashcode}
 make view   # build (if needed) and open the PDF in the default viewer
-make log    # open the LaTeX log file in the default text editor
+make watch  # rebuild automatically every time a file is saved
+make log    # show the LaTeX log file
 \end{bashcode}
 
 \paragraph{Cleaning Files.}
 \begin{bashcode}
-make clean   # remove standard auxiliary files (keep PDF)
-make bclean  # same as clean, but also clears the Biber cache
-make gclean  # use 'git clean' to remove all untracked files
+make clean      # remove auxiliary files (keep the PDF)
+make distclean  # same as clean, but also remove the PDF and SyncTeX files
 \end{bashcode}
 
-\paragraph{Advanced and Maintenance.}
+\paragraph{Variables.} The behavior is adjusted with variables appended to the command:
 \begin{bashcode}
-make zip     # package the source files into a distribution ZIP archive
-make help    # display a help message with all available targets
+make V=1                        # verbose (raw LaTeX output)
+make BATCH=1                    # batch mode, never stops at errors
+make TL=2024                    # use the TeX Live 2024 release
+make NT="doctype=msc,lang=pt"   # override \ntsetup options (see below)
+make FILE=mythesis              # explicit root file
 \end{bashcode}
 
-\paragraph{Environment Selectors.} If you have multiple \hologo{TeX} distributions or versions installed (specifically on macOS), you can force a specific environment:
-\begin{bashcode}
-make tl lua    # force TeX-Live
-make mik lua   # force MikTeX
-make 2024 lua  # use TeX-Live 2024 release
-\end{bashcode}
-
-\paragraph{Output Modes.} You can control the verbosity of the compilation output:
-\begin{bashcode}
-make verb lua  # verbose mode (standard LaTeX output)
-make batch lua # batch mode (minimal output)
-make itrt lua  # interactive mode (stops on errors)
-\end{bashcode}
+\paragraph{Overrides.} The \verb!NT! variable accepts any comma-separated
+list of \latexinline{\ntsetup} options; they take precedence over the values
+in \verb!0-Config/1_novathesis.tex!, without editing any file.  This is the
+easiest way to build for another school, language, or document type.  See
+Chapter~\ref{app:build} for the full reference.
 
 %%-----------------------------------------------------------------------
 \subsection{Using \texttt{latexmk} Directly}
@@ -1225,26 +1220,29 @@ make itrt lua  # interactive mode (stops on errors)
 %%-----------------------------------------------------------------------
 
 \begin{bashcode}
-latexmk -shell-escape -file-line-error -lualatex template
+latexmk -pdflua -shell-escape -file-line-error template
 \end{bashcode}
+
+The \verb!latexmkrc! file at the project root is loaded automatically and
+already configures the auxiliary directory, Biber, and the glossaries.
 
 Remember to select \textbf{biber} (not bibtex) as the bibliography
 processor — either in your editor preferences or via
 \verb!latexmk!'s default settings.
 
 %%-----------------------------------------------------------------------
-\subsection{Using \texttt{build.py}}
-\label{sub:build_py}
+\subsection{Building for Another School}
+\label{sub:build_variants}
 %%-----------------------------------------------------------------------
 
-The \verb!.Build/build.py! script builds for a specific school without
-modifying the \verb!0-Config/! files manually.  It is primarily intended
-for CI use and for maintainers generating sample PDFs.  For full
-documentation see Chapter~\ref{app:build_py}.
+The \verb!NT! overrides build for a specific school without modifying the
+\verb!0-Config/! files.  This is also what the CI pipeline and the
+maintainers use to generate sample PDFs.  For full documentation see
+Chapter~\ref{app:build}.
 
 Quick example:
 \begin{bashcode}
-python3 .Build/build.py nova/fct --doctype phd --lang en --docstatus final
+make NT="school=nova/fct,doctype=phd,lang=en,docstatus=final"
 \end{bashcode}
 
 %%-----------------------------------------------------------------------
@@ -1255,9 +1253,8 @@ python3 .Build/build.py nova/fct --doctype phd --lang en --docstatus final
 On \Overleaf{} the build is triggered by pressing \emph{Recompile}.
 Ensure the settings described in Section~\ref{sub:overleaf} are applied
 (\hologo{LuaLaTeX} compiler, Biber bibliography, \verb!template.tex! as main file).
-\Overleaf{} compiles on their servers so \texttt{make} and \texttt{build.py}
-are not available — all configuration is done by editing the
-\verb!0-Config/! files.
+\Overleaf{} compiles on their servers so \texttt{make} is not available —
+all configuration is done by editing the \verb!0-Config/! files.
 %%-----------------------------------------------------------------------
 \subsection{\texorpdfstring{\gls{PDFA}}{PDF/A} Archival Output}
 \label{sub:pdfa}

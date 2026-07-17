@@ -343,7 +343,7 @@ Multiple calls accumulate; files are printed in registration order.
 \ntaddfile{glossaries}[acronym]{acronyms}
 \ntaddfile{chapter}{chapter-introduction}
 \ntaddfile{chapter}[phd,msc]{chapter-advanced}% only in PhD and MSc
-\ntaddfile{appendix}{app-build-py}
+\ntaddfile{appendix}{app-build}
 \ntaddfile{annex}{annex-data}
 \end{latexcode}
 \end{macrodoc}
@@ -606,6 +606,9 @@ The table below lists all documented macros with a short description
 and the configuration file where they are typically used.
 
 %% Column colours for the xltabular summary table
+%% \bgroup…\egroup confines \rowcolors so the alternating-row state does not
+%% leak into following content (e.g. shading the next appendix's title letter).
+\bgroup
 \rowcolors{2}{rowgray}{white}%
 \begin{xltabular}{\linewidth}{@{}
     >{\ttfamily}l
@@ -662,4 +665,5 @@ and the configuration file where they are typically used.
   \textbackslash debuggrid & Overlay layout debug grid & During development \\
   \textbackslash novathesis & Template name in canonical style & Anywhere in text \\
 \end{xltabular}
+\egroup
 
