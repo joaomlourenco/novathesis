@@ -191,8 +191,21 @@
 %
 %     See \ntsetup{lang=pt} above for the list of valid languages
 %-------------------------------------------------------------
-% \ntsetup{abstractorder={en,pt,zhs,zht}} % with Simplified and Tradiciontal Chinese abstracts
+% \ntsetup{abstractorder={en,pt,zhs,zht}} % with Simplified and Traditional Chinese abstracts
 % \ntsetup{abstractorder={en,pt,uk,gr}}   % With Ukrainian (cyrilic) abstract
+
+
+
+%-------------------------------------------------------------
+% Print the work title with each abstract
+%
+%     DEFAULTS: abstract/title       <- none    (none, before, after)
+%               abstract/title/align <- center  (left, center, right)
+%.............................................................
+%
+%-------------------------------------------------------------
+% \ntsetup{abstract/title=before}
+% \ntsetup{abstract/title/align=left}
 
 
 
@@ -317,6 +330,30 @@
 %-------------------------------------------------------------
 % \ntsetup{spine/layout=false}   % suppress the spine even in 'final'
 % \ntsetup{spine/layout=trim}    % force the spine in any docstatus
+
+
+
+%-------------------------------------------------------------
+% Where to print the "other lists" (figures, tables, listings, …)
+%
+%     DEFAULT: print/otherlists <- frontmatter  (frontmatter, backmatter)
+%.............................................................
+%
+%-------------------------------------------------------------
+% \ntsetup{print/otherlists=backmatter}
+
+
+
+%-------------------------------------------------------------
+% Where to print the glossaries (glossary, acronyms, symbols, …)
+% Use 'false' to not print them at all
+%
+%     DEFAULT: print/glossaries <- frontmatter  (frontmatter, backmatter, false)
+%.............................................................
+%
+%-------------------------------------------------------------
+% \ntsetup{print/glossaries=backmatter}
+% \ntsetup{print/glossaries=false}
 
 
 

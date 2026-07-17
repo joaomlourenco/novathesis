@@ -389,6 +389,35 @@ generated PDF.  Many have defaults that vary with \texttt{school} and \texttt{do
 \ntsetup{print/aidisclosure=aidisclose}       % default package
 \ntsetup{print/aidisclosure=aidisclosure.tex} % custom file
 \end{latexcode}
+
+  \item[\texttt{print/otherlists}] Where the ``other lists'' (list of
+    figures, tables, listings, \ldots) are printed.
+    Default: \texttt{frontmatter}.
+\begin{latexcode}
+\ntsetup{print/otherlists=frontmatter}  % after the ToC (default)
+\ntsetup{print/otherlists=backmatter}   % before the appendices
+\end{latexcode}
+
+  \item[\texttt{print/glossaries}] Where the glossaries (glossary, acronyms,
+    symbols, chemical symbols) are printed, or \texttt{false} to suppress
+    them.  Default: \texttt{frontmatter}.
+\begin{latexcode}
+\ntsetup{print/glossaries=frontmatter}  % default
+\ntsetup{print/glossaries=backmatter}
+\ntsetup{print/glossaries=false}        % do not print
+\end{latexcode}
+
+  \item[\texttt{abstract/title}] Print the work title with each abstract,
+    before or after the abstract text.  Default: \texttt{none}.
+    The alignment of the title block is set with
+    \texttt{abstract/title/align} (\texttt{left}, \texttt{center}, or
+    \texttt{right}; default: \texttt{center}).
+\begin{latexcode}
+\ntsetup{abstract/title=none}    % default
+\ntsetup{abstract/title=before}  % title above the abstract
+\ntsetup{abstract/title=after}   % title below the abstract
+\ntsetup{abstract/title/align=left}
+\end{latexcode}
 \end{description}
 
 %%-----------------------------------------------------------------------
