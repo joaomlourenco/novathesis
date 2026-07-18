@@ -143,9 +143,12 @@
     \seq_put_right:Nn \l_tmpb_seq { #2 ~ ##1 }
    }
 
-  % 4. Output the sequence with custom separators
-  % \seq_use:Nnnn <sequence> {middle-sep} {pair-sep} {last-sep}
-  \seq_use:Neee \l_tmpb_seq { #2 } { #3 } { #4 }
+  % 4. Output the sequence with custom separators.
+  % \seq_use:Nnnn <seq> {sep-between-two} {sep-between-more} {sep-before-last}
+  %   two items -> pair-sep (#4)
+  %   >2 items  -> middle-sep (#3) between all but the last, last-sep (#5)
+  %                before the final name.
+  \seq_use:Neee \l_tmpb_seq { #4 } { #3 } { #5 }
  }
 
 \ExplSyntaxOff
