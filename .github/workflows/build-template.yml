@@ -6,24 +6,17 @@ on:
       - main
   pull_request:
 
-env:
-  EMAIL_GITHUB: joao.lourenco@fct.unl.pt
-  USERNAME_GITHUB: joaomlourenco
-
-permissions: write-all
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.actor != 'my_bot_account'
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          token: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Compile the LaTeX template
-        uses: xu-cheng/texlive-action/full@v1
+        uses: xu-cheng/texlive-action/full@13fd419112d7a5cfd158ed95cead7c6adda70c7f # v1
         with:
           run: |
             apk add --no-cache make bash grep
