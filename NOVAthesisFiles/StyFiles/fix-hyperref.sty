@@ -133,7 +133,14 @@
   \pdfstringdefDisableCommands{%
     \def\ntindex{\@nt@pdfstring@index}%
   }%
-  \long\def\@nt@pdfstring@index[#1]#2{#2}%
+  % \ntindex has an optional [key] and a mandatory {text}; in a bookmark we want
+  % only the visible {text}.  A plain [#1]#2 delimited match mis-scans the common
+  % \ntindex{text} (no brackets).  Instead grab everything up to the mandatory
+  % brace group (nothing, or "[key]") and discard it, then emit the mandatory
+  % argument.  This is fully expandable, so it works inside \pdfstringdef (where
+  % \@ifnextchar / the optional-argument machinery does not).
+  \long\def\@nt@pdfstring@index#1#{\@nt@pdfstring@index@mand}%
+  \long\def\@nt@pdfstring@index@mand#1{#1}%
   % Fix duplicate PDF destinations across main matter and appendices.
   % Hyperref's \theHchapter defaults to \arabic{chapter}, which resets to 0
   % when \appendix is called.  Appendix B therefore gets the same raw counter
