@@ -289,6 +289,8 @@ latexmk -pdflua -shell-escape -file-line-error template
 
 (the settings in the `latexmkrc` file at the project root are loaded automatically by `latexmk`).
 
+> ⚠️ **Security note — `-shell-escape`.** The template compiles with shell‑escape **enabled**, because some features run external programs during the build: `minted` (source‑code highlighting) calls Pygments, the glossary/acronym lists are built by `makeglossaries`, and selecting a bundled proprietary font (e.g. Calibri, Arial) downloads it over the network. Shell‑escape means that **compiling a document can run commands on your computer with your user account's privileges** — there is no sandbox. In practice this is safe when you build the official template and your own content, but you should **only compile `.tex` files, school configurations, and font styles that you trust.** Treat a thesis project you received from someone else the same way you would treat any script before running it.
+
 **Important:** The template uses **`biber`** by default, not `bibtex`.  However, `bibtex` can be also be used.
 
 ### 4.1.4. Makefile Targets
