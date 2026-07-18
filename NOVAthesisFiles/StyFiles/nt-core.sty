@@ -251,42 +251,52 @@
 % \InputIfFileExistsInDirsTF — starred (*) processes all matches;
 % non-starred stops on first success
 
-\bool_new:N \l_file_found_bool
+% Each file-search command below uses its OWN found-flag, so that nesting one
+% inside another's action code cannot clobber the outer result (they used to
+% share a single \l_file_found_bool).  \IfFileExistsInDirsTF sets its flag
+% globally to escape the \group_begin:/\group_end: that scopes its scratch
+% variables; the others set their flags locally.
+\bool_new:N \g__nt_fileindirs_found_bool
+\bool_new:N \l__nt_filecase_found_bool
+\bool_new:N \l__nt_inputindirs_found_bool
+% Scratch variables for \IfFileExistsInDirsTF, declared once (previously
+% \tl_new was called inside the command body, which errored on the 2nd call).
+\tl_new:N \l__nt_fileindirs_dir_tl
+\tl_new:N \l__nt_fileindirs_path_tl
+\tl_new:N \l__nt_fileindirs_lastchar_tl
+
 \NewDocumentCommand { \IfFileExistsInDirsTF } { s O { } m m m m }
  {
-  \bool_gset_false:N \l_file_found_bool
+  \bool_gset_false:N \g__nt_fileindirs_found_bool
   \group_begin:
-    \tl_new:N \l_tmp_dir_tl
-    \tl_new:N \l_tmp_path_tl
-    \tl_new:N \l_tmp_last_char_tl
-    
     \clist_map_inline:nn { #4 }
      {
-      \tl_set:Nn \l_tmp_dir_tl { ##1 }
-      \tl_trim_spaces:N \l_tmp_dir_tl
-      
+      \tl_set:Nn \l__nt_fileindirs_dir_tl { ##1 }
+      \tl_trim_spaces:N \l__nt_fileindirs_dir_tl
+
       % Smart Slash Logic
-      \tl_if_empty:NF \l_tmp_dir_tl
+      \tl_if_empty:NF \l__nt_fileindirs_dir_tl
        {
-        \tl_set:Nx \l_tmp_last_char_tl { \tl_item:Nn \l_tmp_dir_tl { -1 } }
-        \str_if_eq:VnF \l_tmp_last_char_tl { / }
-         { \tl_put_right:Nn \l_tmp_dir_tl { / } }
+        \tl_set:Nx \l__nt_fileindirs_lastchar_tl
+          { \tl_item:Nn \l__nt_fileindirs_dir_tl { -1 } }
+        \str_if_eq:VnF \l__nt_fileindirs_lastchar_tl { / }
+         { \tl_put_right:Nn \l__nt_fileindirs_dir_tl { / } }
        }
-      
+
       % CONSTRUCT FULL PATH: Prefix + Dir + Filename
-      \tl_set:Nx \l_tmp_path_tl { #2 \l_tmp_dir_tl #3 }
-      
-      \file_if_exist:nT { \l_tmp_path_tl }
+      \tl_set:Nx \l__nt_fileindirs_path_tl { #2 \l__nt_fileindirs_dir_tl #3 }
+
+      \file_if_exist:nT { \l__nt_fileindirs_path_tl }
        {
-        \bool_gset_true:N \l_file_found_bool
-        \xdef\ntfoundpath{ \l_tmp_path_tl }
+        \bool_gset_true:N \g__nt_fileindirs_found_bool
+        \xdef\ntfoundpath{ \l__nt_fileindirs_path_tl }
         #5
         \IfBooleanF { #1 } { \clist_map_break: }
        }
      }
   \group_end:
-  
-  \bool_if:NF \l_file_found_bool { #6 }
+
+  \bool_if:NF \g__nt_fileindirs_found_bool { #6 }
  }
 
 
@@ -297,14 +307,14 @@
 % #4 (Mandatory): The "Else" branch. This code runs only if none of the files in your list are found.
 \NewDocumentCommand { \IfFileExistsCase } { s O { } m m }
   {
-    \bool_set_false:N \l_file_found_bool
+    \bool_set_false:N \l__nt_filecase_found_bool
     \clist_map_inline:nn { #3 }
       {
         % ##1 is {filepath}{action}
         \__filecase_split_pair:nnn { #1 } { #2 } ##1
       }
     % Else branch
-    \bool_if:NF \l_file_found_bool { #4 }
+    \bool_if:NF \l__nt_filecase_found_bool { #4 }
   }
 
 % #1: Starred status
@@ -318,8 +328,8 @@
     
     \file_if_exist:nT { \l_tmpa_tl }
       {
-        \bool_set_true:N \l_file_found_bool
-        
+        \bool_set_true:N \l__nt_filecase_found_bool
+
         \tl_set_eq:NN \l_tmpb_tl \l_tmpa_tl
         
         % Regex: Match a dot, followed by non-dots and non-slashes, until end of string.
@@ -380,7 +390,7 @@
 % 1. Create variables
 \NewDocumentCommand { \InputIfFileExistsInDirsTF } { m m +m +m }
   {
-    \bool_set_false:N \l_file_found_bool
+    \bool_set_false:N \l__nt_inputindirs_found_bool
 
     % Iterate through directories (#2)
     \clist_map_inline:nn { #2 }
@@ -398,14 +408,14 @@
             #3
 
             % D. Mark found and break loop
-            \bool_set_true:N \l_file_found_bool
+            \bool_set_true:N \l__nt_inputindirs_found_bool
             \clist_map_break:
           }
           {}
       }
 
     % Handle 'Not Found' case
-    \bool_if:NF \l_file_found_bool
+    \bool_if:NF \l__nt_inputindirs_found_bool
       { #4 }
   }
 
