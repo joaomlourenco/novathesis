@@ -451,7 +451,7 @@
   {\par\centering}
   {\par}%
 
-\NewDocumentCommand { \TheCandiadteSignature } { m m }
+\NewDocumentCommand { \TheCandidateSignature } { m m }
   % #1 = place
   % #2 = ISO DATE
   {
@@ -459,13 +459,17 @@
       \StatementOneSignature%
         {\expandafter\GetCandidateString\expandafter(\GetDocAuthor(gender),\@LANG@MAIN)}
         {\GetDocAuthor(name)}%
-        {#2}
+        {#1}% place
+        {#2}% date
     \end{center}%
   }
+% Deprecated misspelled alias, kept for backwards compatibility.
+\NewCommandCopy\TheCandiadteSignature\TheCandidateSignature
 
 
 \newcounter{nadv}
 \NewDocumentCommand { \TheAdvisersSignatures } { O{20mm} m m m }
+  % #1 = space to signature rule
   % #2 = a (only advisers) | a,c (both advisers and co-advisers)
   % #3 = place
   % #4 = ISO DATE
@@ -478,30 +482,32 @@
             % \fi
             \stepcounter{nadv}
             \StrCut{##1}{/}\stgender\stname
-            \StatementOneSignature 
-              {\GetAdviserString(pref,#2,1,\stgender,\@LANG@MAIN)} 
+            \StatementOneSignature[#1]
+              {\GetAdviserString(pref,#2,1,\stgender,\@LANG@MAIN)}
               {\stname}
-              {#4}
+              {#3}% place
+              {#4}% date
         }%
       }{}%
     \end{tightcenter}
   }
 
 
-\NewDocumentCommand { \StatementOneSignature } { O{20mm} m m m }
+\NewDocumentCommand { \StatementOneSignature } { O{20mm} m m m m }
   % #1 = space to rule
   % #2 = text above
   % #3 = name
-  % #4 = date
+  % #4 = place
+  % #5 = date
   {
     \begin{minipage}[t]{6cm}
       \medskip%
-      \begin{center}  
+      \begin{center}
         #2,\par
         \vspace*{#1}
         \rule{\linewidth}{0.75pt}\par
         \textit{#3}\\
-        \PrintDateISO{#4}
+        \ifblank{#4}{}{#4,~}\PrintDateISO{#5}
       \end{center}
     \end{minipage}
   }
