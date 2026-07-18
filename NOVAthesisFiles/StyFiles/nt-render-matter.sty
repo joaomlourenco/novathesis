@@ -148,7 +148,12 @@
   \ifoptionnil{/novathesis/print/sdgs/list}{}{%
       \vfill%
       \raggedright\noindent%
-      \textbf{\GetSdgString(\@LSHORT):}\\[1ex]
+      % Fall back to the English SDG heading when the abstract language does
+      % not define one (e.g. zhs/zht, whose string files are minimal), so that
+      % SDGs + a Chinese abstract do not raise a memstore "unknown key" error.
+      \textbf{\IfMemVoidTF{SdgString}{\@LSHORT}
+                {\GetSdgString(en)}%
+                {\GetSdgString(\@LSHORT)}:}\\[1ex]
       \edef\@sdgtype{\option{/novathesis/print/sdgs/type}}
       \IfFileExists{\DIRIMAGES/sdg-\@LSHORT/1-\@sdgtype.pdf}
           {\def\@spnfolder{\DIRIMAGES/sdg-\@LSHORT}}
