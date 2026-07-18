@@ -103,7 +103,7 @@
 \newcommand*{\ntprintfrontpage}{%
   \ifdocworking{}{% Only print institutional statement if provisional or final
     \ifmaindoc{% Skip thesis plan and similar documents
-      \iftoggle{/novathesis/print/statement}{% if statement toggle is on
+      \iftoggle{/novathesis/print/frontpage}{% if frontpage toggle is on
         \NTRunHook{frontpage/pre}%
         \iffileadded[\@LSHORT]{frontpage}
           {\PrintAddedFile[\@LSHORT]{frontpage}}
