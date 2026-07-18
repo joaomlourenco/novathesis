@@ -790,16 +790,72 @@
 \tl_new:N \l__nt_filename_tl
 \tl_new:N \l__nt_remote_url_tl
 \tl_new:N \l__nt_local_path_tl
+\str_new:N \l__nt_font_check_str
+
+% --------------------------------------------------------
+% SECURITY: validate every font-download argument before it is
+% interpolated into a shell command.  \ntcheckfonts only runs with
+% shell escape enabled, so an argument carrying shell metacharacters
+% could execute arbitrary commands during the download.  Names,
+% formats and variants must be plain identifiers ([A-Za-z0-9._-]);
+% URLs and target paths may not contain shell metacharacters.  Every
+% component of the download URL and local path is checked here, and
+% the shell commands below additionally single-quote each field.
+\cs_generate_variant:Nn \regex_match:nnTF { nV }
+
+\msg_new:nnnn { ntfonts } { unsafe-token }
+  { Refusing~to~download~font:~unsafe~#1~'#2'. }
+  {
+    The~#1~may~contain~only~letters,~digits,~'.',~'_'~and~'-'.
+    A~value~with~other~characters~could~inject~shell~commands
+    while~downloading~the~font,~so~it~is~rejected.
+  }
+
+\msg_new:nnnn { ntfonts } { unsafe-path }
+  { Refusing~to~download~font:~unsafe~#1~'#2'. }
+  {
+    The~#1~contains~a~shell~metacharacter.~Such~a~value~could
+    inject~shell~commands~while~downloading~the~font,~so~it~is
+    rejected.
+  }
+
+% \__nt_font_assert_token:nn {label} {value} — value must be a plain
+% identifier; otherwise abort with an error naming the offending field.
+\cs_new_protected:Npn \__nt_font_assert_token:nn #1 #2
+  {
+    \str_set:Ne \l__nt_font_check_str { #2 }
+    \regex_match:nVF { \A[A-Za-z0-9._-]+\Z } \l__nt_font_check_str
+      { \msg_error:nnxx { ntfonts } { unsafe-token }
+          { #1 } { \l__nt_font_check_str } }
+  }
+
+% \__nt_font_assert_path:nn {label} {value} — value must be free of
+% shell metacharacters (quote/backtick/$/&/;/|/<>/()/backslash/newline).
+\cs_new_protected:Npn \__nt_font_assert_path:nn #1 #2
+  {
+    \str_set:Ne \l__nt_font_check_str { #2 }
+    \regex_match:nVT { [`'"$&;|<>()\\\n] } \l__nt_font_check_str
+      { \msg_error:nnxx { ntfonts } { unsafe-path }
+          { #1 } { \l__nt_font_check_str } }
+  }
 
 \cs_new_protected:Npn \nt_check_fonts:nnnnn #1 #2 #3 #4 #5
 {
-  % Split variants by commas
+  % Validate every argument before it can reach a shell command.
+  \__nt_font_assert_token:nn { format }       { #1 }
+  \__nt_font_assert_token:nn { font~name }    { #2 }
+  \__nt_font_assert_path:nn  { base~URL }     { #4 }
+  \__nt_font_assert_path:nn  { target~folder }{ #5 }
+
+  % Split variants by commas, then validate each one
   \seq_set_split:Nnn \l__nt_variants_seq { , } { #3 }
+  \seq_map_inline:Nn \l__nt_variants_seq
+    { \__nt_font_assert_token:nn { font~variant } { ##1 } }
 
   % Create target directory if it doesn't exist
   \file_if_exist:nF { #5/DO_NOT_REMOVE_THIS_FILE.txt }
   {
-    \sys_shell:n { mkdir~-p~#5 }
+    \sys_shell:n { mkdir~-p~'#5' }
   }
 
   % Process each variant
@@ -848,8 +904,8 @@
                           \l_nt_cmd_output_tl
       \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
         { % curl is available
-          \iow_term:x { Running: ~ curl ~ -L ~ -s ~ -o ~ #2 ~ #1... }
-          \sys_shell_now:x { curl ~ -L ~ -s ~ -o ~ #2 ~ #1 }
+          \iow_term:x { Running: ~ curl ~ -L ~ -s ~ -o ~ '#2' ~ '#1'... }
+          \sys_shell_now:x { curl ~ -L ~ -s ~ -o ~ '#2' ~ '#1' }
           \bool_set_true:N \l_tmpa_bool
         }
     }
@@ -863,8 +919,8 @@
                           \l_nt_cmd_output_tl
       \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
         { % wget is available
-          \iow_term:x { Running: ~ wget ~ -q ~ -O ~ #2 ~ #1... }
-          \sys_shell_now:x { wget ~ -q ~ -O ~ #2 ~ #1 }
+          \iow_term:x { Running: ~ wget ~ -q ~ -O ~ '#2' ~ '#1'... }
+          \sys_shell_now:x { wget ~ -q ~ -O ~ '#2' ~ '#1' }
           \bool_set_true:N \l_tmpa_bool
         }
     }
