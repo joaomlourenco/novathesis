@@ -796,6 +796,24 @@
   \c_space_tl -shell-escape
 }
 
+% Portable null device: /dev/null on Unix, nul on Windows (used to silence
+% "command not found" stderr from the tool-availability probes below).
+\sys_if_platform_windows:TF
+  { \tl_const:Nn \c__nt_devnull_tl { nul } }
+  { \tl_const:Nn \c__nt_devnull_tl { /dev/null } }
+
+% \sys_get_shell:nnN does NOT expand its command, so \c__nt_devnull_tl would
+% reach the shell verbatim and create a stray file named after the macro.
+% Use an e-expanding variant for the probes so the null device is resolved.
+\cs_generate_variant:Nn \sys_get_shell:nnN { enN }
+
+\msg_new:nnn { ntfonts } { download-failed }
+{
+  Could~not~download~the~font~from~'#1';~no~file~was~created~at~'#2'.~\\
+  Fetch~it~manually~from~
+  https://github.com/joaomlourenco/novathesis-extras/tree/main/Fonts
+}
+
 \seq_new:N \l__nt_variants_seq
 \tl_new:N \l__nt_filename_tl
 \tl_new:N \l__nt_remote_url_tl
@@ -862,10 +880,13 @@
   \seq_map_inline:Nn \l__nt_variants_seq
     { \__nt_font_assert_token:nn { font~variant } { ##1 } }
 
-  % Create target directory if it doesn't exist
+  % Create target directory if it doesn't exist.  (\sys_shell:n is not a real
+  % l3 function; use \sys_shell_now:x, which is defined and expands #5.)
   \file_if_exist:nF { #5/DO_NOT_REMOVE_THIS_FILE.txt }
   {
-    \sys_shell:n { mkdir~-p~'#5' }
+    \sys_if_platform_windows:TF
+      { \sys_shell_now:x { mkdir~"#5" } }      % cmd.exe: creates intermediate dirs
+      { \sys_shell_now:x { mkdir~-p~'#5' } }
   }
 
   % Process each variant
@@ -896,142 +917,121 @@
 
 \cs_new_protected:Npn \nt_download_font:nn #1 #2
 {
+  % #1 = remote URL, #2 = local target path
   \bool_set_false:N \l_tmpa_bool
 
-  % Check if shell escape us unrestricted
+  % A download tool can only run with (unrestricted) shell escape.
   \sys_if_shell_unrestricted:F
     {
       \msg_error:nn { ntfonts } { shell-escape-required }
       \bool_set_true:N \l_tmpa_bool
     }
 
-  % Try curl
+  % Probe curl (redirect only stderr so the version string is captured).
   \bool_if:NF \l_tmpa_bool
     {
       \iow_term:x { Trying:~'curl'... }
-      \sys_get_shell:nnN  { curl ~ --version ~ 2> ~ /dev/null }
+      \sys_get_shell:enN  {curl ~ --version ~ 2> ~ \c__nt_devnull_tl }
                           { \tl_trim_spaces:n }
                           \l_nt_cmd_output_tl
       \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
-        { % curl is available
-          \iow_term:x { Running: ~ curl ~ -L ~ -s ~ -o ~ '#2' ~ '#1'... }
-          \sys_shell_now:x { curl ~ -L ~ -s ~ -o ~ '#2' ~ '#1' }
+        {
+          % -f: fail (no file written) on HTTP >=400, so the file-existence
+          % check below is meaningful; -sS: quiet but still report real errors.
+          \iow_term:x { Running: ~ curl ~ -fsSL ~ -o ~ '#2' ~ '#1'... }
+          \sys_shell_now:x { curl ~ -fsSL ~ -o ~ '#2' ~ '#1' }
           \bool_set_true:N \l_tmpa_bool
         }
     }
 
-  % try wget
+  % Probe wget.
   \bool_if:NF \l_tmpa_bool
     {
       \iow_term:x { Trying: ~ 'wget'... }
-      \sys_get_shell:nnN  { wget ~ --version ~ 2> ~ /dev/null }
+      \sys_get_shell:enN  {wget ~ --version ~ 2> ~ \c__nt_devnull_tl }
                           { \tl_trim_spaces:n }
                           \l_nt_cmd_output_tl
       \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
-        { % wget is available
+        {
           \iow_term:x { Running: ~ wget ~ -q ~ -O ~ '#2' ~ '#1'... }
           \sys_shell_now:x { wget ~ -q ~ -O ~ '#2' ~ '#1' }
           \bool_set_true:N \l_tmpa_bool
         }
     }
 
-  % try python3
+  % Probe python3 (each interpreter runs only itself — no cross-calls).
   \bool_if:NF \l_tmpa_bool
     {
       \iow_term:x { Trying: ~ 'python3'... }
-      \sys_get_shell:nnNT  { python3 ~ --version ~ > ~ /dev/null ~ 2>&1 }
-                           { \tl_trim_spaces:n }
-                           \l_nt_cmd_output_tl
+      \sys_get_shell:enN  {python3 ~ --version ~ 2> ~ \c__nt_devnull_tl }
+                          { \tl_trim_spaces:n }
+                          \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
         {
-          \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
-            { % python3 is available
-              \iow_term:x
-                {
-                  Running: ~ python3 ~ -c ~ "import ~ urllib.request; ~
-                  urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null
-                  ~ || ~ python ~ -c ~ "import ~ urllib.request; ~
-                  urllib.request.urlretrieve('#1', ~ '#2')" ~
-                  2>/dev/null"...
-                }
-              \sys_shell_now:x
-                {
-                  python3 ~ -c ~ "import ~ urllib.request; ~
-                  urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null
-                  ~ || ~ python ~ -c ~ "import ~ urllib.request; ~
-                  urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null
-                  ~ || ~ echo ~ "python3: ~ No ~ download ~ tool ~
-                  available"
-                }
-              \bool_set_true:N \l_tmpa_bool
+          \iow_term:x { Running: ~ python3 ~ urlretrieve('#1',~'#2')... }
+          \sys_shell_now:x
+            {
+              python3 ~ -c ~ "import ~ urllib.request; ~
+              urllib.request.urlretrieve('#1', ~ '#2')"
             }
+          \bool_set_true:N \l_tmpa_bool
         }
     }
 
-  % try python
+  % Probe python (reached only when python3 was not found).
   \bool_if:NF \l_tmpa_bool
     {
       \iow_term:x { Trying: ~ 'python'... }
-      \sys_get_shell:nnNT  { python ~ --version ~ > ~ /dev/null ~ 2>&1 }
-                           { \tl_trim_spaces:n }
-                           \l_nt_cmd_output_tl
+      \sys_get_shell:enN  {python ~ --version ~ 2> ~ \c__nt_devnull_tl }
+                          { \tl_trim_spaces:n }
+                          \l_nt_cmd_output_tl
+      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
         {
+          \iow_term:x { Running: ~ python ~ urlretrieve('#1',~'#2')... }
+          \sys_shell_now:x
+            {
+              python ~ -c ~ "import ~ urllib.request; ~
+              urllib.request.urlretrieve('#1', ~ '#2')"
+            }
+          \bool_set_true:N \l_tmpa_bool
+        }
+    }
+
+  % Windows fallback: PowerShell (probe with 'where', not a malformed 'powershell /?"').
+  \bool_if:NF \l_tmpa_bool
+    {
+      \sys_if_platform_windows:T
+        {
+          \iow_term:x { Trying: ~ 'powershell'... }
+          \sys_get_shell:enN  {where ~ powershell ~ 2> ~ \c__nt_devnull_tl }
+                              { \tl_trim_spaces:n }
+                              \l_nt_cmd_output_tl
           \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
-            { % python is available
+            {
               \iow_term:x
                 {
-                  Running: ~ python ~ -c ~ "import ~ urllib.request; ~
-                  urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null
-                  ~ || ~ python ~ -c ~ "import ~ urllib.request; ~
-                  urllib.request.urlretrieve('#1', ~ '#2')" ~
-                  2>/dev/null"...
+                  powershell ~ -Command ~
+                  "Invoke-WebRequest ~ -Uri ~ '#1' ~ -OutFile ~ '#2'"
                 }
               \sys_shell_now:x
                 {
-                  python3 ~ -c ~ "import ~ urllib.request; ~
-                  urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null
-                  ~ || ~ python ~ -c ~ "import ~ urllib.request; ~
-                  urllib.request.urlretrieve('#1', ~ '#2')" ~ 2>/dev/null
-                  ~ || ~ echo ~ "Python: ~ No ~ download ~ tool ~
-                  available"
+                  powershell ~ -Command ~
+                  "Invoke-WebRequest ~ -Uri ~ '#1' ~ -OutFile ~ '#2'"
                 }
               \bool_set_true:N \l_tmpa_bool
             }
         }
     }
 
-  % Try windows/Unix specific approaches
- \bool_if:NF \l_tmpa_bool
-  {
-    \iow_term:x { Trying ~ a ~ platform ~ specific ~ strategy }
-    % Platform-specific fallbacks
-    \sys_if_platform_windows:T
-      {
-        % Windows - try PowerShell
-        \iow_term:x { Trying: ~ 'powershell' }
-        \sys_get_shell:nnNT  { powershell ~ /?" }
-                           { \tl_trim_spaces:n }
-                           \l_nt_cmd_output_tl
-          {
-            \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
-              { % powershell is available
-                \iow_term:x
-                  {
-                    powershell ~ -Command ~
-                    "Invoke-WebRequest ~ -Uri ~ ' \l__nt_remote_url_tl ' ~
-                    -OutFile ~ ' #2 '"
-                  }
-                \sys_shell_now:x
-                  {
-                    powershell ~ -Command ~
-                    "Invoke-WebRequest ~ -Uri ~ ' \l__nt_remote_url_tl ' ~
-                    -OutFile ~ ' #2 '"
-                  }
-                \bool_set_true:N \l_tmpa_bool
-              }
-          }
-      }
-  }
-
+  % Verify the download actually produced a file (only when shell escape was
+  % available; the disabled case already raised its own error above).  This
+  % turns a silent failure (404, network down, no tool found) into an
+  % actionable warning instead of a later "font not found" error.
+  \sys_if_shell_unrestricted:T
+    {
+      \file_if_exist:nF { #2 }
+        { \msg_warning:nnnn { ntfonts } { download-failed } { #1 } { #2 } }
+    }
 }
 
 
