@@ -149,6 +149,14 @@
 \RequirePackage{colortbl} % Coloured table cells (\columncolor, \rowcolor, …)
 \RequirePackage{xurl}               % Loads 'url' with improved line-breaking
 
+% Silence the harmless "multiple pdfs with page group included in a single
+% page" warning emitted when several PDF logos (with transparency groups) are
+% placed on one cover page.  This is a pdfTeX-only warning: LuaTeX does not
+% emit it (and setting its \pdfvariable form here disturbs backend init), and
+% XeTeX uses a different backend.  Guard on the primitive so it acts only
+% where it exists (pdfTeX).
+\ifdefined\pdfsuppresswarningpagegroup \pdfsuppresswarningpagegroup=1 \fi
+
 % ── Customize Graphcics package ───────────────────────────────────────
 \expandafter\graphicspath\expandafter{\expandafter{\DIRFIGURES/}}
 \DeclareGraphicsExtensions{.pdf,.png,.tif,.jpg}
