@@ -195,8 +195,21 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
     cp -f "$aux/template.pdf" "$OUTDIR/$id.pdf"
     echo "✓ $id.pdf  ($((t1 - t0))s)"
   else
-    cp -f "$aux/template.log" "$OUTDIR/$id.log" 2>/dev/null || true
-    echo "✗ $id  ($((t1 - t0))s)  — log copied to $OUTDIR/$id.log" >&2
+    # Save whatever diagnostics exist, and report ONLY what was actually saved
+    # (an early failure may leave no template.log; the captured build output
+    # $id.build.out exists for non-verbose runs and holds the error).
+    local saved=""
+    if [ -f "$aux/template.log" ] && cp -f "$aux/template.log" "$OUTDIR/$id.log"; then
+      saved="$OUTDIR/$id.log"
+    fi
+    if [ -f "$aux/$id.build.out" ] && cp -f "$aux/$id.build.out" "$OUTDIR/$id.build.out"; then
+      saved="${saved:+$saved and }$OUTDIR/$id.build.out"
+    fi
+    if [ -n "$saved" ]; then
+      echo "✗ $id  ($((t1 - t0))s)  — see $saved" >&2
+    else
+      echo "✗ $id  ($((t1 - t0))s)  — FAILED, and no log could be saved" >&2
+    fi
   fi
   return $rc
 }
