@@ -12,13 +12,13 @@
 #   make matrix [JOBS=4] [FILTER=univ[/school][,...]]
 #                      build every school/doctype/lang/engine combination in
 #                      .Build/schools.conf. Each [order:...] section is a
-#                      group: its variants build sequentially in a shared aux
-#                      dir (reusing toc/bbl between similar variants), nested
-#                      as the "order:" tuple dictates; JOBS parallelizes
-#                      group×engine chains (biber lock auto-enabled if JOBS>1).
-#                      PDFs (named univ-school-doctype-lang-engine.pdf) go into
-#                      a folder YYYY-MM-DD@hh-mm-ss; failed builds leave a
-#                      .log file with the same base name there instead.
+#                      group; its variants build sequentially (ordered by the
+#                      "order:" tuple), each in its OWN aux dir; JOBS
+#                      parallelizes group×engine chains (biber lock
+#                      auto-enabled if JOBS>1). PDFs (named
+#                      univ-school-doctype-lang-engine.pdf) go into
+#                      AUXDIR/matrix/YYYY-MM-DD@hh-mm-ss; a failed build leaves
+#                      its log/build output there instead.
 #                      FILTER restricts by prefix: FILTER=nova (university),
 #                      FILTER=nova/fct (school + sub-programs), FILTER=uminho,ipl
 #   make needlua       regenerate the list of LuaLaTeX-only schools
@@ -47,7 +47,8 @@ endif
 	            $(if $(V),-v) "$(SCHOOL)"
 
 matrix:
-	@$(VARIANT) -j $(JOBS) $(if $(V),-v) -a $(FILTER)
+	@mkdir -p $(AUXDIR)/matrix
+	@$(VARIANT) -j $(JOBS) $(if $(V),-v) -o $(AUXDIR)/matrix -a $(FILTER)
 
 # --- LuaLaTeX-only school detection ---------------------------------------------
 .PHONY: needlua

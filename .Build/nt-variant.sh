@@ -222,13 +222,16 @@ enable_biber_lock() {
 
 #--- main -------------------------------------------------------------------------
 if [ -n "$UNITFILE" ]; then
-  # Worker: build all variants of one group×engine unit SEQUENTIALLY in a
-  # shared aux dir, so each build reuses the previous variant's aux files.
+  # Worker: build the variants of one group×engine unit SEQUENTIALLY, each in
+  # its OWN aux dir.  A shared aux dir made latexmk skip the rebuild for
+  # variants that differ only in the \ntoverride pretex (the source files are
+  # identical, and the pretex is not a tracked dependency), so every variant
+  # silently reused the first one's PDF.
   unit=$(basename "$UNITFILE")
-  [ "$DRYRUN" = 1 ] && echo "# unit $unit (sequential, shared aux)"
+  [ "$DRYRUN" = 1 ] && echo "# unit $unit (sequential)"
   rc=0
   while read -r school dt lg eng; do
-    build_one "$school" "$dt" "$lg" "$eng" "$ROOT/AUXDIR/variants/$unit" || rc=1
+    build_one "$school" "$dt" "$lg" "$eng" || rc=1
   done < "$UNITFILE"
   exit $rc
 fi

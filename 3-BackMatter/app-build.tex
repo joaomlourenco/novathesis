@@ -197,8 +197,8 @@ listed in \verb!.Build/schools.conf!.  The \verb!FILTER! variable restricts
 the matrix by prefix: a university (\texttt{nova}), a school
 (\texttt{nova/fct}, which includes sub-programs such as
 \texttt{nova/fct/cbbi}), or a comma-separated list of prefixes.  All \glsfmtshortpl{PDF} of one invocation go
-into a folder named with the invocation timestamp,
-\texttt{YYYY-MM-DD@hh-mm-ss}, together with the \verb!.log! files of any
+into \verb!AUXDIR/matrix/YYYY-MM-DD@hh-mm-ss! (a folder named with the
+invocation timestamp), together with the log/build output of any
 failed variants.
 
 The file \verb!schools.conf! is organized in \emph{groups}, each starting
@@ -213,18 +213,15 @@ nova/fct    [phd, msc]  [en, pt]
 The semantics are:
 
 \begin{itemize}
-  \item \textbf{Groups build sequentially.}  The variants of a group are
-        very similar, so they share one auxiliary directory and are built
-        one after the other: each build reuses the previous variant's
-        auxiliary files (\texttt{toc}, \texttt{bbl}, \ldots) and needs fewer
-        \hologo{LaTeX} passes.
-  \item \textbf{The \texttt{order:} tuple sets the loop nesting} inside the
-        group (the last dimension varies fastest).  It is tuned empirically
-        to maximize the reuse of auxiliary files.
+  \item \textbf{Groups build sequentially}, in the order set by the
+        \texttt{order:} tuple inside the group (the last dimension varies
+        fastest).  Each variant is built in its \emph{own} auxiliary
+        directory: the variants differ only in the command-line
+        \latexinline{\ntoverride}, which \texttt{latexmk} does not track as a
+        dependency, so a \emph{shared} aux directory would make it skip the
+        rebuild and every variant would reuse the first one's \gls{PDF}.
   \item \textbf{Each \texttt{processor:} gets its own chain.}  A group with
-        \texttt{processor: pdf,lua} yields two independent sequential
-        chains, with separate auxiliary directories (mixing \hologo{pdfLaTeX}
-        and \hologo{LuaLaTeX} auxiliary files would spoil the reuse).
+        \texttt{processor: pdf,lua} yields two independent sequential chains.
   \item \textbf{\texttt{JOBS} parallelizes chains, never a chain's inside.}
         With \verb!JOBS>1!, group$\times$engine chains run concurrently.
         Concurrent \texttt{biber} processes fail sporadically, so a
