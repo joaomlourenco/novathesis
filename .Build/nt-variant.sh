@@ -184,10 +184,15 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
   printf '▶ %s …\n' "$id" >&2               # immediate "building" feedback
   mkdir -p "$aux"
   t0=$(date +%s)
+  # AUXDIR must be set per variant: latexmkrc does `$aux_dir = $ENV{AUXDIR}`,
+  # and -output-directory only sets latexmk's out_dir.  Without this every
+  # variant would write its .aux/.bcf/.log/minted cache into the ONE shared
+  # AUXDIR exported by the Makefile — harmless when sequential, but concurrent
+  # builds (JOBS>1) then trample each other and all fail.
   if [ "$VERBOSE" = 1 ]; then
-    (cd "$ROOT" && "${cmd[@]}") || rc=$?
+    (cd "$ROOT" && AUXDIR="$aux" "${cmd[@]}") || rc=$?
   else
-    (cd "$ROOT" && "${cmd[@]}" > "$aux/$id.build.out" 2>&1) || rc=$?
+    (cd "$ROOT" && AUXDIR="$aux" "${cmd[@]}" > "$aux/$id.build.out" 2>&1) || rc=$?
   fi
   t1=$(date +%s)
 
