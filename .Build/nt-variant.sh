@@ -211,6 +211,10 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
       echo "✗ $id  ($((t1 - t0))s)  — FAILED, and no log could be saved" >&2
     fi
   fi
+  # In matrix mode, drop this variant's aux dir now that its PDF (or logs) are
+  # in the output folder — keeps disk bounded across a large matrix.  A single
+  # 'make school' does not set NT_CLEAN_AUX, so it keeps the aux for iteration.
+  [ "${NT_CLEAN_AUX:-0}" = 1 ] && rm -rf "$aux"
   return $rc
 }
 
@@ -245,7 +249,7 @@ if [ "$ALL" = 1 ]; then
   OUTDIR="$OUTDIR/$(date +%F@%H-%M-%S)"
   [ "$DRYRUN" = 1 ] || mkdir -p "$OUTDIR"
   export NT_STATUS="$STATUS" NT_EXTRA="$EXTRA" NT_OUTDIR="$OUTDIR" \
-         NT_DRYRUN="$DRYRUN" NT_VERBOSE="$VERBOSE" PATH
+         NT_DRYRUN="$DRYRUN" NT_VERBOSE="$VERBOSE" NT_CLEAN_AUX=1 PATH
 
   # Split the ordered variant list into one file per group×engine unit;
   # units run in parallel (up to JOBS), their contents strictly in order.

@@ -12,7 +12,7 @@
 #   make watch         rebuild automatically on every change (LuaLaTeX)
 #   make watch-pdf|watch-xe   like watch, with pdfLaTeX / XeLaTeX
 #   make log           show the build log
-#   make clean         remove build artifacts (keeps the PDF)
+#   make clean         remove build artifacts (keeps the PDF and AUXDIR/matrix/)
 #   make distclean     clean + remove PDF and synctex files
 #   make help          show this help
 #   make help-dev      maintainer targets (school, matrix, zip; git checkout only)
@@ -118,7 +118,8 @@ log:
 .PHONY: clean distclean
 clean:
 	-@$(LATEXMK) -C -output-directory=$(AUXDIR) $(BASE).tex >/dev/null 2>&1
-	rm -rf $(AUXDIR) _minted*
+	rm -rf _minted*
+	@find "$(AUXDIR)" -mindepth 1 -maxdepth 1 ! -name matrix -exec rm -rf {} + 2>/dev/null || true
 	@find . -name .DS_Store -delete 2>/dev/null || true
 
 distclean: clean
