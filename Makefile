@@ -8,13 +8,14 @@
 # Targets:
 #   make               build with LuaLaTeX (recommended)
 #   make lua|pdf|xe    build with a specific engine
-#   make view          build, then open the PDF
+#   make view | v      build, then open the PDF
 #   make watch         rebuild automatically on every change (LuaLaTeX)
 #   make watch-pdf|watch-xe   like watch, with pdfLaTeX / XeLaTeX
 #   make log           show the build log
 #   make clean         remove build artifacts (keeps the PDF)
 #   make distclean     clean + remove PDF and synctex files
 #   make help          show this help
+#   make help-dev      maintainer targets (school, matrix, zip; git checkout only)
 #
 # Variables:
 #   FILE=name          root .tex file (default: auto-detect \documentclass)
@@ -23,6 +24,7 @@
 #   BATCH=1            batch mode (never stops at errors) — good for CI
 #   TL=2024            use /usr/local/texlive/2024 for this run
 #   VIEWER=...         PDF viewer for 'make view'
+#   PAGER=...          pager for 'make log' (default: less)
 #   FLAGS=...          extra latexmk flags, passed through
 #-----------------------------------------------------------------------------
 
