@@ -181,6 +181,7 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
     return 0
   fi
 
+  printf '▶ %s …\n' "$id" >&2               # immediate "building" feedback
   mkdir -p "$aux"
   t0=$(date +%s)
   if [ "$VERBOSE" = 1 ]; then
@@ -248,6 +249,10 @@ if [ "$ALL" = 1 ]; then
     echo "Error: no variant matches filter '$FILTER'." >&2
     rm -rf "$UNITS"; exit 1
   fi
+  total=$(cat "$UNITS"/* | wc -l | tr -d ' ')
+  printf '▶ Matrix: building %s variant(s)%s with %s job(s)\n' \
+         "$total" "${FILTER:+ matching '$FILTER'}" "$JOBS" >&2
+  printf '  output → %s\n' "$OUTDIR" >&2
   rc=0
   ls "$UNITS" | xargs -P "$JOBS" -I{} "$0" -U "$UNITS/{}" || rc=$?
   rm -rf "$UNITS"
