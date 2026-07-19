@@ -116,16 +116,6 @@
 %%%%% Configure multilingual language support
 \definecolor{darkblue}{rgb}{0.0,0.08,0.45}%
 
-%
-% \iftoggle{/novathesis/print/index}{
-%   \AtEndPreamble{
-%     \ntaddtoprintorder{backmatter}{index}
-%     \RequirePackage{imakeidx}
-%     % \makeindex[intoc,columns=2,options=-s myindexstyle]%
-%     \makeindex[intoc,columns=2,options=-s  \DIRNTFILES/ntindexstyle]
-%   }
-% }{}
-
 \babeladjust{
   autoload.bcp47 = on
 }
@@ -679,13 +669,7 @@
 % --------------------------------------------------------
 % DEFAULT VALUES FOR frontmatter AND mainmatter
 
-% \newcommand*{\ntaddtoprintorder}[2]{%
-%   % #1 = frontmatter, mainmatter
-%   % #2 = list
-%   % \typeout{[#1] [#2]}
-%   \options{/@nt/print/#1/.push=#2}%
-% }
-\options{/@nt/print/frontmatter/final/.new list = 
+\options{/@nt/print/frontmatter/final/.new list =
   {%
     statement,        % The statement page
     copyright,        % (*) The copyright page

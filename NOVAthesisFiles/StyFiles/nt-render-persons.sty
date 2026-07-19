@@ -73,16 +73,7 @@
 
 \NewDocumentCommand {\GetPersonsAsList} { m m o }
  {
-  % % --- 1. Legacy Title Processing ---
-  % \ifdatadefined{#1titlestring}(\@LANG@COVER)
-  %  {
-  %   \MemGetDefault{#1titlestringpre}{\@LANG@COVER}
-  %   \MemGetDefault{#1titlestringfont}{\@LANG@COVER}
-  %   \csuse{the#1titlestring}(\@LANG@COVER)
-  %   \MemGetDefault{#1titlestringpost}{\@LANG@COVER}
-  %  }{}
-
-  % --- 2. Build the Flat List ---
+  % --- 1. Build the Flat List ---
   \clist_clear:N \l_nt_master_clist
 
   % Map over the categories provided in #2 (e.g., a, c)
@@ -102,7 +93,7 @@
       }
    }
 
-  % --- 3. Output or Storage ---
+  % --- 2. Output or Storage ---
   \IfNoValueTF { #3 }
    {
      \raggedright
