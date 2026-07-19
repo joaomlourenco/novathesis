@@ -9,7 +9,7 @@
 #   make school SCHOOL=nova/fct [TYPE=msc] [LANG=pt] [ENGINE=lua] [STATUS=final]
 #                      build one school variant (uses \ntoverride, nothing is
 #                      patched; defaults come from .Build/schools.conf)
-#   make matrix [JOBS=4] [ONLY=univ[/school][,...]]
+#   make matrix [JOBS=4] [FILTER=univ[/school][,...]]
 #                      build every school/doctype/lang/engine combination in
 #                      .Build/schools.conf. Each [order:...] section is a
 #                      group: its variants build sequentially in a shared aux
@@ -19,8 +19,8 @@
 #                      PDFs (named univ-school-doctype-lang-engine.pdf) go into
 #                      a folder YYYY-MM-DD@hh-mm-ss; failed builds leave a
 #                      .log file with the same base name there instead.
-#                      ONLY restricts by prefix: ONLY=nova (university),
-#                      ONLY=nova/fct (school + sub-programs), ONLY=uminho,ipl
+#                      FILTER restricts by prefix: FILTER=nova (university),
+#                      FILTER=nova/fct (school + sub-programs), FILTER=uminho,ipl
 #   make needlua       regenerate the list of LuaLaTeX-only schools
 #   make zip           release archive novathesis-<version>@<date>.zip
 #   make bump1|bump2|bump3
@@ -47,7 +47,7 @@ endif
 	            $(if $(V),-v) "$(SCHOOL)"
 
 matrix:
-	@$(VARIANT) -j $(JOBS) $(if $(V),-v) -a $(ONLY)
+	@$(VARIANT) -j $(JOBS) $(if $(V),-v) -a $(FILTER)
 
 # --- LuaLaTeX-only school detection ---------------------------------------------
 .PHONY: needlua

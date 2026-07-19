@@ -187,13 +187,13 @@ file is copied next to where the \gls{PDF} would go, with the same base name.
 \begin{bashcode}
 make matrix                  # all variants, sequential
 make matrix JOBS=4           # 4 parallel chains
-make matrix ONLY=nova        # only NOVA schools
-make matrix ONLY=nova/fct    # one school (and its sub-programs)
-make matrix ONLY=uminho,ipl  # comma-separated prefixes
+make matrix FILTER=nova        # only NOVA schools
+make matrix FILTER=nova/fct    # one school (and its sub-programs)
+make matrix FILTER=uminho,ipl  # comma-separated prefixes
 \end{bashcode}
 
 \verb!make matrix! builds every school/doctype/language/engine combination
-listed in \verb!.Build/schools.conf!.  The \verb!ONLY! variable restricts
+listed in \verb!.Build/schools.conf!.  The \verb!FILTER! variable restricts
 the matrix by prefix: a university (\texttt{nova}), a school
 (\texttt{nova/fct}, which includes sub-programs such as
 \texttt{nova/fct/cbbi}), or a comma-separated list of prefixes.  All \glsfmtshortpl{PDF} of one invocation go
