@@ -155,7 +155,7 @@
   \InputIfFileExists{\DIRSTRINGS/strings-\mylang.ldf}%
       {\options{/@nt/lang/loaded/.expanded/.push={\mylang}}}%
       {\ClassError{novathesis}
-                  {File not found: “\DIRSTRINGS/strings-\mylang.ldf” file!}%
+                  {File not found: '\DIRSTRINGS/strings-\mylang.ldf' file!}%
                   {Add a file with the translations for this language.}}%
 }%
 
@@ -533,7 +533,7 @@
                 \bookmark[level=\@nt@lol@bkm@level, dest=\HyperLocalCurrentHref]{\listoflistingscaption}
                 \listoflistings
             }{%
-                  \ClassError{novathesis}{Can't make list of listings. Please report this problem in the “novathesis” github. Thanks!}{}%
+                  \ClassError{novathesis}{Can't make list of listings. Please report this problem in the 'novathesis' github. Thanks!}{}%
             }%
     }}}%
     {listofalgorithms}{\options{/@nt/listof/\@listofat/.newpush = {%
@@ -546,7 +546,7 @@
                   \bookmark[level=\@nt@lol@bkm@level, dest=\HyperLocalCurrentHref]{\listalgorithmcfname}
                 }{%
                   \ClassError{novathesis}
-                             {Cannot make list of algorithms. Please report this problem in the “novathesis” github. Thanks!}{}%
+                             {Cannot make list of algorithms. Please report this problem in the 'novathesis' github. Thanks!}{}%
                 }%
               }%
               \listofalgorithms
@@ -558,7 +558,7 @@
             \csuse{#2}%
           }{%
             \ClassError{novathesis}
-                       {CCannot make #2. Please report this problem in the “novathesis” github. Thanks!}{}%
+                       {Cannot make #2. Please report this problem in the 'novathesis' github. Thanks!}{}%
           }%
       }}%
    ]%
@@ -633,6 +633,7 @@
   }%
 }
 
+\newif\ifGlossaryNotEmpty
 \newcommand{\myprintglossaries}{%
   % ignore if no glossaries were defined
   \ifoptioncontains{/@nt/listtypes}{glossaries}{
@@ -645,7 +646,6 @@
         \fi
         \IfStrEq{\option{/novathesis/print/glossaries}}{\@matter}{%
           % In the preamble:
-          \newif\ifGlossaryNotEmpty
   
           % Where you print glossaries:
           % \shiftbookmarks{%
@@ -755,8 +755,8 @@
 %============================================================
 \InputIfFileExists{\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.clo}
     {}
-    {\PackageError{novathesis}
-                  {Missing file “\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.clo”}{}}
+    {\ClassError{novathesis}
+                {Missing file '\DIRSCHOOLS/\@UNIV/\@UNIV-defaults.clo'}{}}
 
 \IfFileExistsCase
   [\DIRSCHOOLS/\@UNIV/\@SCHL/]
@@ -765,9 +765,9 @@
     {\@UNIV-\@SCHL-defaults.clo}{\input{\ntfoundpath}}, 
   }
   { 
-    \PackageError{novathesis}
-                  {Missing file “\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-defaults.clo”}
-                  {}
+    \ClassError{novathesis}
+               {Missing file '\DIRSCHOOLS/\@UNIV/\@SCHL/\@UNIV-\@SCHL-defaults.clo'}
+               {}
   }
 
 \ValidateLtxProcessor{\@UNIV}{\@SCHL}{\@DEGREEACR}
@@ -960,7 +960,7 @@
     {\DIRSTYFILES},
   }
   {} % true
-  {\ClassError{novathesis}{No “nt-spine” file found.}{}}%
+  {\ClassError{novathesis}{No 'nt-spine' file found.}{}}%
 
 \ifoptionequal{/novathesis/spine/layout}{false}
   {}% skip the spine
