@@ -9,7 +9,8 @@
 #   make               build with LuaLaTeX (recommended)
 #   make lua|pdf|xe    build with a specific engine
 #   make view          build, then open the PDF
-#   make watch         rebuild automatically on every change
+#   make watch         rebuild automatically on every change (LuaLaTeX)
+#   make watch-pdf|watch-xe   like watch, with pdfLaTeX / XeLaTeX
 #   make log           show the build log
 #   make clean         remove build artifacts (keeps the PDF)
 #   make distclean     clean + remove PDF and synctex files
@@ -95,12 +96,17 @@ else
   VIEWER ?= xdg-open
 endif
 
-.PHONY: v view watch log
+.PHONY: v view watch watch-lua watch-pdf watch-xe log
 v view: lua
 	$(VIEWER) "$(BASE).pdf"
 
-watch:
-	$(LATEXMK) -pdflua -pvc $(LMKFLAGS) $(BASE).tex
+# Continuous preview (latexmk -pvc).  The engine follows the target, like
+# the build targets above; plain 'watch' defaults to LuaLaTeX.
+watch watch-lua: ENG := -pdflua
+watch-pdf:       ENG := -pdf
+watch-xe:        ENG := -pdfxe
+watch watch-lua watch-pdf watch-xe:
+	$(LATEXMK) $(ENG) -pvc $(LMKFLAGS) $(BASE).tex
 
 PAGER ?= less
 log:
