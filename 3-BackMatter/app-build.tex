@@ -133,7 +133,7 @@ consistent, whatever the order of the keys.
 %%=======================================================================
 
 \hologo{pdfTeX} and \hologo{XeTeX} can only write to 16 files at a time
-(\hologo{LuaTeX} allows 65536).  \novathesis{} alone claims 13 of those 16
+(\hologo{LuaTeX} allows 65536).  \novathesis{} alone claims 12 of those 16
 slots, so the class loads the \ntindex[packages!morewrites]{\texttt{morewrites}}
 package, which removes the limit --- at a steep price: it makes a
 \hologo{pdfLaTeX} pass roughly nine times slower.
@@ -144,12 +144,15 @@ If your document stays within the limit, you can skip it:
 make pdf FASTWRITES=1
 \end{bashcode}
 
-Beyond the 13 slots the class uses, each of the following costs one more:
-the symbols glossary, \latexinline{\listofalgorithms} and
-\latexinline{\listoflistings} (the last two only when the list is actually
-printed), plus whatever your own packages need (\texttt{minted}, for
-instance).  The \novathesis{} demo document uses one slot too many, so it
-needs \texttt{morewrites}; most real theses do not.
+Beyond the 12 slots the class uses, each of the following costs one more,
+and only when you actually use it: the symbols glossary (i.e.\ when you
+register a symbols file with
+\latexinline{\ntaddfile{glossaries}[symbols]{...}} in
+\verb!0-Config/4_files.tex!), \latexinline{\listofalgorithms} and
+\latexinline{\listoflistings} (when the list is printed), plus whatever your
+own packages need (\texttt{minted}, for instance).  The \novathesis{} demo
+document uses all of them, so it needs \texttt{morewrites}; most real theses
+do not.
 
 If you overshoot, the build stops with
 \texttt{No room for a new \textbackslash write} --- simply drop

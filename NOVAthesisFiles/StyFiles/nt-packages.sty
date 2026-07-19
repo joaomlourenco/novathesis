@@ -18,7 +18,7 @@
 %% WRITE-REGISTER GUARD (must come before any other \newwrite)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % pdflatex and xelatex are limited to 16 \write registers; LuaTeX allows 65536.
-% The class alone claims 13 of those 16, so morewrites virtualises the pool to
+% The class alone claims 12 of those 16, so morewrites virtualises the pool to
 % leave room for the document's own packages.  It must be loaded before any
 % other package calls \newwrite -- hence its position at the top of this file.
 %
@@ -32,9 +32,10 @@
 % or, with the build system, by passing FASTWRITES=1 (see the Makefile).
 % LuaLaTeX never loads morewrites, so the switch is a no-op there.
 %
-% Beyond the 13 the class claims, the usual extra consumers are one register
-% each for the symbols glossary, \listofalgorithms and \listoflistings (the
-% last two only when the list is actually printed), plus whatever the
+% Beyond the 12 the class claims, the usual extra consumers are one register
+% each for the symbols glossary, \listofalgorithms and \listoflistings (all
+% three only when actually used -- see the note by the glossaries options
+% below, and \@loadglossaryfiles), plus whatever the
 % document's own packages allocate (e.g. minted, via fancyvrb).  Overshooting
 % is reported as "No room for a new \write"; if that happens, drop the switch.
 \RequirePackage{iftex}
@@ -255,7 +256,14 @@
   \PassOptionsToPackage{
     translate=babel,
     acronym,           % add acronyms listing
-    symbols,           % add symbols listing
+    % NB: the 'symbols' option is deliberately NOT passed here.  It would
+    % create the symbols glossary at load time, claiming one of pdfTeX's 16
+    % \write registers even for documents without a single symbol.  The
+    % glossary is instead created on demand by \@loadglossaryfiles (see
+    % nt-render-matter.sty) when the user registers a symbols file with
+    %     \ntaddfile{glossaries}[symbols]{...}
+    % which is still early enough, as \makeglossaries runs below at
+    % \AtBeginDocument.  See also the write-register note at the top.
     % sanitizesort=false, % allow \gls inside sort keys
     % xindy={language=\@LANG@MAIN@LONG},
     nolong,

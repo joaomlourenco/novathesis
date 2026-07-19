@@ -567,6 +567,21 @@
 }
 
 \newcommand*{\@loadglossaryfiles}{%
+  % The symbols glossary is created on demand, and only if the document
+  % actually registered a symbols file: it costs one \write register, which
+  % pdfTeX/XeTeX have only 16 of (see the note atop nt-packages.sty).  This
+  % runs inside \AtBeginDocument, but still before both the entry files below
+  % and \makeglossaries, which is all that glossaries requires.
+  % \@gls@symbolsdef is what the package's 'symbols' option would have run;
+  % calling it keeps \printsymbols and the toc title identical.
+  \iffileadded[symbols]{glossaries}{%
+    \ifglossaryexists{symbols}
+      {}
+      {\ifcsdef{@gls@symbolsdef}
+         {\@gls@symbolsdef}
+         {\newglossary[slg]{symbols}{sls}{slo}{\glssymbolsgroupname}}%
+      }%
+  }{}%
   \@for\listitem:={glossary,acronym,symbols}\do{%
     \iffileadded[\listitem]{glossaries}{\@nt@loadallfiles{\listitem}{glossaries}}{}%
   }%
