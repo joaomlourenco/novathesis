@@ -17,11 +17,30 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% WRITE-REGISTER GUARD (must come before any other \newwrite)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% pdflatex is limited to 16 \write registers; LuaTeX allows 65536.
-% morewrites virtualises the pool so all packages get the streams they need.
-% Must be loaded before any other package calls \newwrite.
+% pdflatex and xelatex are limited to 16 \write registers; LuaTeX allows 65536.
+% The class alone claims 13 of those 16, so morewrites virtualises the pool to
+% leave room for the document's own packages.  It must be loaded before any
+% other package calls \newwrite -- hence its position at the top of this file.
+%
+% morewrites is expensive: it makes a pdflatex pass roughly 9x slower.  A
+% document that fits within the 16 registers does not need it and can skip it
+% by defining \ntnomorewrites BEFORE \documentclass:
+%
+%     \def\ntnomorewrites{}
+%     \documentclass{novathesis}
+%
+% or, with the build system, by passing FASTWRITES=1 (see the Makefile).
+% LuaLaTeX never loads morewrites, so the switch is a no-op there.
+%
+% Beyond the 13 the class claims, the usual extra consumers are one register
+% each for the symbols glossary, \listofalgorithms and \listoflistings (the
+% last two only when the list is actually printed), plus whatever the
+% document's own packages allocate (e.g. minted, via fancyvrb).  Overshooting
+% is reported as "No room for a new \write"; if that happens, drop the switch.
 \RequirePackage{iftex}
-\ifluatex\else\RequirePackage{morewrites}\fi
+\ifluatex\else
+  \ifdefined\ntnomorewrites\else\RequirePackage{morewrites}\fi
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% KERNEL & CORE UTILITIES

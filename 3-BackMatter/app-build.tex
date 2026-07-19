@@ -79,6 +79,9 @@ The behavior may be adjusted with variables appended to the command:
                         (see Section~\ref{sec:build_overrides}) \\
   \verb!V=1!          & Verbose: show the raw \hologo{LaTeX} output \\
   \verb!BATCH=1!      & Batch mode, never stops at errors (good for \gls{CI}) \\
+  \verb!FASTWRITES=1! & Skip \texttt{morewrites} — much faster
+                        \hologo{pdfLaTeX}/\hologo{XeLaTeX} builds
+                        (see Section~\ref{sec:build_fastwrites}) \\
   \verb!TL=2024!      & Use \verb!/usr/local/texlive/2024! for this run \\
   \verb!VIEWER=...!   & \gls{PDF} viewer used by \verb!make view! \\
   \verb!FLAGS=...!    & Extra \texttt{latexmk} flags, passed through \\
@@ -122,6 +125,43 @@ right after \verb!0-Config/1_novathesis.tex! is read, and the
 \texttt{school} option is then re-applied so that school-derived settings
 (e.g.\ the degree acronym, which depends on \texttt{doctype}) stay
 consistent, whatever the order of the keys.
+
+
+%%=======================================================================
+\section{Faster \hologo{pdfLaTeX} and \hologo{XeLaTeX} Builds}
+\label{sec:build_fastwrites}
+%%=======================================================================
+
+\hologo{pdfTeX} and \hologo{XeTeX} can only write to 16 files at a time
+(\hologo{LuaTeX} allows 65536).  \novathesis{} alone claims 13 of those 16
+slots, so the class loads the \ntindex[packages!morewrites]{\texttt{morewrites}}
+package, which removes the limit --- at a steep price: it makes a
+\hologo{pdfLaTeX} pass roughly nine times slower.
+
+If your document stays within the limit, you can skip it:
+
+\begin{bashcode}
+make pdf FASTWRITES=1
+\end{bashcode}
+
+Beyond the 13 slots the class uses, each of the following costs one more:
+the symbols glossary, \latexinline{\listofalgorithms} and
+\latexinline{\listoflistings} (the last two only when the list is actually
+printed), plus whatever your own packages need (\texttt{minted}, for
+instance).  The \novathesis{} demo document uses one slot too many, so it
+needs \texttt{morewrites}; most real theses do not.
+
+If you overshoot, the build stops with
+\texttt{No room for a new \textbackslash write} --- simply drop
+\verb!FASTWRITES=1! and rebuild.  The switch is a no-op under
+\hologo{LuaLaTeX}, which never loads \texttt{morewrites}.
+
+Without \texttt{make}, define the macro before \latexinline{\documentclass}:
+
+\begin{bashcode}
+pdflatex -shell-escape -jobname=template \
+    '\def\ntnomorewrites{}\input{template}'
+\end{bashcode}
 
 
 %%=======================================================================
