@@ -1,6 +1,52 @@
-# NOVAthesis Template Release Notes (v1.0.0 - v7.10.0)
+# NOVAthesis Template Release Notes (v1.0.0 - v8.0.0)
 
-This document summarizes the changes and improvements made to the NOVAthesis template from version **1.0.0** to the current version **7.10.0**.
+This document summarizes the changes and improvements made to the NOVAthesis template from version **1.0.0** to the current version **8.0.0**.
+
+---
+
+## v8.0.0 (unreleased)
+
+### ⚠️ Breaking change: glossaries moved to `bib2gls`
+
+Acronyms, glossary terms and symbols are now defined in **`.bib` files** processed by **`bib2gls`**, instead of `.tex` files processed by `makeglossaries`. Existing documents must be migrated.
+
+**What you must do**
+
+1.  Run **`make glsbib`** to convert `1-FrontMatter/*.tex` entry files to `.bib`.
+2.  **Re-add any `sort` keys.** `convertgls2bib` silently drops them. Nothing breaks visibly — the document still builds at the same page count — but symbols, and any entry whose name is a command, come out in the wrong order. `make glsbib` counts them and warns you per file.
+3.  Convert symbol entries from `@entry` to `@symbol`.
+4.  Delete `\glsaddall` if your document calls it; it has no `bib2gls` equivalent.
+5.  Delete the old `.tex` entry files once the output looks right.
+
+A registered `.tex` entry file now **stops the build** with an error naming the cause and the fix, so the migration cannot be missed silently. Full procedure: the *Migrating from 7.10.x* appendix of the manual.
+
+**New requirement:** `bib2gls` is a Java program. It ships with TeX Live but needs a **JRE**. Overleaf provides one; check locally with `bib2gls --version`.
+
+### Why
+
+Glossaries consumed 4 of pdfTeX's 16 write registers, forcing the template to load `morewrites`, which made every pdfLaTeX pass roughly **9× slower**. With `bib2gls` they consume none: the class floor dropped from 13 registers to 9, and a full pdfLaTeX build of the manual went from **109 s to 36 s**. Glossaries also no longer need `-shell-escape`.
+
+### Features
+*   **`FASTWRITES=1`:** skip `morewrites` on pdfLaTeX/XeLaTeX builds (`make pdf FASTWRITES=1`), now viable for most documents. No-op under LuaLaTeX.
+*   **`make glsbib`:** one-off glossary migration helper.
+*   **Symbols glossary on demand:** it only costs a write register if you actually register a symbols file.
+
+### Refactoring & Fixes
+*   **Matrix regression testing:** each variant's glossaries are now verified (no dropped entries, correct sort order) instead of trusting the exit code; the matrix defaults to `FASTWRITES=1` (`FASTWRITES=0` still covers the `morewrites` path).
+*   **Location lists** use `bib2gls`'s native `loc-prefix` for the `p.`/`pp.` distinction.
+*   **CI:** `actions/checkout` and `texlive-action` pinned to commit SHAs; PR builds no longer compile `main`; Dependabot added.
+
+---
+
+## v7.11.0 (2026-06-13)
+
+### Features
+*   **Command-line overrides:** any `\ntsetup` option can be set at build time via `make NT="doctype=msc,lang=pt"`, without editing configuration files.
+*   **Build system:** reworked `Makefile`/`latexmkrc`, per-variant auxiliary directories, timestamped matrix output, and a `.Build/nt-variant.sh` driver for school/matrix builds.
+
+### Refactoring & Fixes
+*   **Shell-escape hardening:** the font downloader validates its inputs and quotes its shell arguments.
+*   Numerous minor fixes: duplicate hook firing, `\ntprintfrontpage` gating, SDG heading fallback for languages without a translation, PDF bookmark handling for indexed entries, and dead-code removal across the style files.
 
 ---
 

@@ -13,6 +13,27 @@ Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 
 ---
 
+> ### ⚠️ Upgrading from 7.10.x or earlier? Read this first.
+>
+> **Version 8.0 changes where glossary entries live.** Acronyms, glossary terms and
+> symbols moved from `.tex` files (`\newacronym`, `\newglossaryentry`, processed by
+> `makeglossaries`) to `.bib` files processed by **`bib2gls`**.
+>
+> * Run **`make glsbib`** to convert your entry files, then **re-add any `sort` keys** —
+>   the converter drops them, which silently reorders symbols and any entry whose name
+>   is a command. The build still succeeds, so nothing warns you.
+> * Delete `\glsaddall` if your document calls it.
+> * **`bib2gls` needs a Java runtime.** Overleaf has one; check locally with
+>   `bib2gls --version`.
+>
+> A registered `.tex` entry file now stops the build with an explanatory error, so you
+> cannot miss the migration. Full procedure: the *Migrating from 7.10.x* appendix of
+> the manual (`template.pdf`).
+>
+> **Why:** glossaries no longer consume any of pdfTeX's 16 write registers, so most
+> documents no longer need the `morewrites` package — a full pdfLaTeX build of the
+> manual went from **109 s to 36 s**.
+
 <div>
 <img/ src="http://joaomlourenco.github.io/novathesis/novathesis-latex-logo-v5.jpg" width="400"/>
 </div>
@@ -92,6 +113,8 @@ The template is open‑source and actively maintained.
 
 - `latexmk` support
 - `biber` for bibliographies
+- `bib2gls` for glossaries, acronyms and symbols — ships with TeX Live, but **needs a Java runtime (JRE)**
+  on your machine. Overleaf provides one; check a local install with `bib2gls --version`.
 - Overleaf‑ready
 
 ---
@@ -289,7 +312,7 @@ latexmk -pdflua -shell-escape -file-line-error template
 
 (the settings in the `latexmkrc` file at the project root are loaded automatically by `latexmk`).
 
-> ⚠️ **Security note — `-shell-escape`.** The template compiles with shell‑escape **enabled**, because some features run external programs during the build: `minted` (source‑code highlighting) calls Pygments, the glossary/acronym lists are built by `makeglossaries`, and selecting a bundled proprietary font (e.g. Calibri, Arial) downloads it over the network. Shell‑escape means that **compiling a document can run commands on your computer with your user account's privileges** — there is no sandbox. In practice this is safe when you build the official template and your own content, but you should **only compile `.tex` files, school configurations, and font styles that you trust.** Treat a thesis project you received from someone else the same way you would treat any script before running it.
+> ⚠️ **Security note — `-shell-escape`.** The template compiles with shell‑escape **enabled**, because some features run external programs during the build: `minted` (source‑code highlighting) calls Pygments, and selecting a bundled proprietary font (e.g. Calibri, Arial) downloads it over the network. (Glossaries no longer require shell‑escape: since 8.0 they are built by `bib2gls`, which `latexmk` runs directly.) Shell‑escape means that **compiling a document can run commands on your computer with your user account's privileges** — there is no sandbox. In practice this is safe when you build the official template and your own content, but you should **only compile `.tex` files, school configurations, and font styles that you trust.** Treat a thesis project you received from someone else the same way you would treat any script before running it.
 
 **Important:** The template uses **`biber`** by default, not `bibtex`.  However, `bibtex` can be also be used.
 

@@ -59,6 +59,9 @@ The main targets are:
   \verb!make clean!     & Remove build artifacts (keeps the \gls{PDF}) \\
   \verb!make distclean! & \texttt{clean} + remove \gls{PDF} and SyncTeX files \\
   \verb!make help!      & Show the built-in help \\
+  \verb!make glsbib!    & Convert 7.10.x glossary \texttt{.tex} entry files to
+                          \texttt{.bib} (one-off; see
+                          Appendix~\ref{app:migration}) \\
   \bottomrule
 \end{ShadedTabular}
 \end{center}
@@ -133,7 +136,7 @@ consistent, whatever the order of the keys.
 %%=======================================================================
 
 \hologo{pdfTeX} and \hologo{XeTeX} can only write to 16 files at a time
-(\hologo{LuaTeX} allows 65536).  \novathesis{} alone claims 12 of those 16
+(\hologo{LuaTeX} allows 65536).  \novathesis{} alone claims 9 of those 16
 slots, so the class loads the \ntindex[packages!morewrites]{\texttt{morewrites}}
 package, which removes the limit --- at a steep price: it makes a
 \hologo{pdfLaTeX} pass roughly nine times slower.
@@ -144,15 +147,13 @@ If your document stays within the limit, you can skip it:
 make pdf FASTWRITES=1
 \end{bashcode}
 
-Beyond the 12 slots the class uses, each of the following costs one more,
-and only when you actually use it: the symbols glossary (i.e.\ when you
-register a symbols file with
-\latexinline{\ntaddfile{glossaries}[symbols]{...}} in
-\verb!0-Config/4_files.tex!), \latexinline{\listofalgorithms} and
+Beyond the 9 slots the class uses, each of the following costs one more, and
+only when you actually use it: \latexinline{\listofalgorithms} and
 \latexinline{\listoflistings} (when the list is printed), plus whatever your
-own packages need (\texttt{minted}, for instance).  The \novathesis{} demo
-document uses all of them, so it needs \texttt{morewrites}; most real theses
-do not.
+own packages need (\texttt{minted}, for instance).  Glossaries, acronyms and
+symbols cost nothing at all since 8.0 --- \texttt{bib2gls} passes everything
+through the \texttt{.aux} file.  Even this manual, which exercises every one
+of those features, now fits.
 
 If you overshoot, the build stops with
 \texttt{No room for a new \textbackslash write} --- simply drop
@@ -265,6 +266,15 @@ The semantics are:
         rebuild and every variant would reuse the first one's \gls{PDF}.
   \item \textbf{Each \texttt{processor:} gets its own chain.}  A group with
         \texttt{processor: pdf,lua} yields two independent sequential chains.
+  \item \textbf{The matrix builds with \texttt{FASTWRITES=1} by default}, so
+        \hologo{pdfLaTeX} variants skip \texttt{morewrites} and run in about
+        half the time.  That means the matrix no longer exercises the
+        \texttt{morewrites} path, so run \verb!make matrix FASTWRITES=0!
+        from time to time to keep it covered.
+  \item \textbf{Each variant's glossaries are verified}, not just its exit
+        status: \verb!.Build/check-glossaries.py! asserts that no entry was
+        dropped and that the lists are in sort-key order.  A build that
+        succeeds with a mangled glossary is reported as a failure.
   \item \textbf{\texttt{JOBS} parallelizes chains, never a chain's inside.}
         With \verb!JOBS>1!, group$\times$engine chains run concurrently.
         Concurrent \texttt{biber} processes fail sporadically, so a

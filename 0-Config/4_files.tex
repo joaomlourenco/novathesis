@@ -99,16 +99,23 @@
 
 
 %-------------------------------------------------------------
-% Glossaies (glossary, acronyms, symbols, etc)
+% Glossaries (glossary, acronyms, symbols, etc)
 %
 %     \ntaddfile{glossaries}[<type>]{<filename>}
 %.............................................................
 %
-% <filename>: -> must be '1-Frontmatter/filename.tex'
+% <filename>: -> must be '1-FrontMatter/<filename>.bib'
+%              (give the name WITHOUT the .bib extension)
 %
-% <type>:  glossary -> Glossay (longer dictionary like entries)
+% <type>:  glossary -> Glossary (longer dictionary like entries)
 %           acronym -> Acronyms and their meaning
 %           symbols -> Symbols and their meaning
+%
+% NOTE (changed in 8.0): entries live in .bib files, read by bib2gls, not in
+% .tex files read by makeglossaries.  Coming from 7.10.x or earlier?  Run
+%     make glsbib
+% to convert your entry files, then re-add any 'sort' keys -- the converter
+% drops them.  See the "Migrating from 7.10.x" appendix of the manual.
 %-------------------------------------------------------------
 \ntaddfile{glossaries}[glossary]{glossary}
 \ntaddfile{glossaries}[acronym]{acronyms}
@@ -161,6 +168,7 @@
 \ntaddfile{appendix}{app-internals}
 \ntaddfile{appendix}{app-covers}
 \ntaddfile{appendix}{app-build}
+\ntaddfile{appendix}{app-migration}
 \ntaddfile{appendix}{appendix-aidisclose}
 \ntaddfile{appendix}{appendix1}
 

@@ -546,11 +546,27 @@ make clean  # remove auxiliary files
 \label{sec:acronyms_and_glossaries}
 %%=======================================================================
 
-The \novathesis{} template uses the \texttt{glossaries-extra} package to manage acronyms and technical terms. Definitions are kept in \texttt{1-FrontMatter/acronyms.tex} and \texttt{glossary.tex}.
+The \novathesis{} template uses the \texttt{glossaries-extra} package with the
+\ntindex[packages!bib2gls]{\texttt{bib2gls}} backend to manage acronyms and
+technical terms.  Definitions are kept in \texttt{.bib} files:
+\texttt{1-FrontMatter/acronyms.bib}, \texttt{glossary.bib} and
+\texttt{symbols.bib}.
+
+\begin{warningbox}[title={Changed in 8.0: glossary entries are now
+                          \texttt{.bib} files}]
+  Entries used to be written as \hologo{LaTeX} commands
+  (\latexinline{\newacronym}, \latexinline{\newglossaryentry}) in
+  \texttt{.tex} files.  They are now \texttt{.bib} entries read by
+  \texttt{bib2gls}.  Upgrading a document from 7.10.x or earlier?  Run
+  \verb!make glsbib! and see Appendix~\ref{app:migration}.
+\end{warningbox}
 
 \paragraph{Defining an Acronym:}
 \begin{latexcode}
-\newacronym{gcd}{GCD}{Greatest Common Divisor}
+@acronym{gcd,
+  short = {GCD},
+  long  = {Greatest Common Divisor}
+}
 \end{latexcode}
 
 \paragraph{Using it in text:}
@@ -563,6 +579,28 @@ The \glspl{gcd} are... % Plural: GCDs
 Using \latexinline{\gls} ensures that acronyms are expanded on their first use and that a consistent “List of Acronyms” is generated automatically in the front matter. For instance, we can talk about \gls{AI} and how it relates to \gls{STEM} fields. Documents are often shared as \gls{PDF} files, which may include a \gls{URL} or a \gls{DOI} for reference.
 
 The glossary is used for technical terms like \gls{latex} or the \gls{framework} used in your research. You should also properly manage your \gls{bibliography}.
+
+\paragraph{Defining a glossary term or a symbol:}
+\begin{latexcode}
+@entry{framework,
+  name        = {framework},
+  description = {A basic structure underlying a system}
+}
+
+@symbol{omega,
+  name        = {\ensuremath{\omega}},
+  sort        = {omega},     % ALWAYS sort symbols explicitly
+  description = {the angular frequency},
+  type        = {symbols}
+}
+\end{latexcode}
+
+The \texttt{sort} key deserves a word.  \texttt{bib2gls} sorts on the
+\texttt{name} unless you say otherwise, which is fine for ordinary words but
+meaningless for a symbol, whose name is math markup: sorting on
+\latexinline{\ensuremath{\omega}} puts entries in an order no reader can
+predict.  Give every symbol --- and every entry whose name is a command ---
+an explicit \texttt{sort} key.
 
 \paragraph{Using Symbols:}
 Symbols are called using the \latexinline{\gls} command. For example, the angular frequency is \gls{omega}, the significance level is \gls{alpha}, and the reduced Planck constant is \gls{hbar}. We often work with the set of real numbers \gls{reals} and calculate the \gls{sum} of a sequence.
