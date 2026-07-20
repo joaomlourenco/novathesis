@@ -46,9 +46,15 @@ endif
 	            $(if $(ENGINE),-e $(ENGINE)) $(if $(STATUS),-s $(STATUS)) \
 	            $(if $(V),-v) "$(SCHOOL)"
 
+# FASTWRITES=1 (the default here) skips morewrites, which costs a pdfLaTeX
+# variant roughly 100s instead of 36s.  It only became safe once the class
+# stopped claiming more than 16 \write registers.  The trade-off: the matrix
+# then exercises only the fast path, so run 'make matrix FASTWRITES=0'
+# periodically to keep the morewrites path covered.
+matrix: FASTWRITES ?= 1
 matrix:
 	@mkdir -p $(AUXDIR)/matrix
-	@$(VARIANT) -j $(JOBS) $(if $(V),-v) -o $(AUXDIR)/matrix -a $(FILTER)
+	@FASTWRITES=$(FASTWRITES) $(VARIANT) -j $(JOBS) $(if $(V),-v) -o $(AUXDIR)/matrix -a $(FILTER)
 
 # --- LuaLaTeX-only school detection ---------------------------------------------
 .PHONY: needlua

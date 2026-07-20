@@ -171,6 +171,14 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
     *)   echo "✗ $id: unknown engine '$eng'" >&2; return 1 ;;
   esac
   pretex="\\def\\ntoverride{doctype=$dt,school=$school,lang=$lg,docstatus=$STATUS${EXTRA:+,$EXTRA}}"
+  # Skip morewrites when asked (see the matrix target in Makefile.dev).  No
+  # space may be introduced here: texfot re-splits the command line on
+  # whitespace, which would break the quoted -pretex argument.
+  # NB: an 'A && B' one-liner would abort the whole run under 'set -e' whenever
+  # the test is false, i.e. for every non-FASTWRITES variant.
+  if [ "${FASTWRITES:-0}" = 1 ]; then
+    pretex="$pretex\\def\\ntnomorewrites{}"
+  fi
 
   local cmd=(latexmk "$engflag" -interaction=batchmode -file-line-error
              -shell-escape -synctex=1 -output-directory="$aux"
@@ -196,10 +204,27 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
   fi
   t1=$(date +%s)
 
+  # A clean exit status is not enough: with bib2gls a wrong 'selection' drops
+  # glossary entries silently — the build succeeds and the page count does not
+  # even change.  Assert the glossaries really are intact before calling it a
+  # pass.  A missing checker or interpreter must not fail the variant.
+  if [ $rc -eq 0 ] && [ -x "$ROOT/.Build/check-glossaries.py" ]; then
+    if ! glscheck=$("$ROOT/.Build/check-glossaries.py" "$aux" template "$ROOT" 2>&1); then
+      rc=1
+      printf '%s\n' "$glscheck" > "$aux/$id.glossary.out"
+    fi
+  fi
+
   if [ $rc -eq 0 ]; then
     cp -f "$aux/template.pdf" "$OUTDIR/$id.pdf"
     echo "✓ $id.pdf  ($((t1 - t0))s)"
   else
+    if [ -f "$aux/$id.glossary.out" ]; then
+      cp -f "$aux/$id.glossary.out" "$OUTDIR/$id.glossary.out" 2>/dev/null || true
+      echo "✗ $id  ($((t1 - t0))s)  — glossary check failed:" >&2
+      sed 's/^/    /' "$aux/$id.glossary.out" >&2
+      return 1
+    fi
     # Save whatever diagnostics exist, and report ONLY what was actually saved
     # (an early failure may leave no template.log; the captured build output
     # $id.build.out exists for non-verbose runs and holds the error).
