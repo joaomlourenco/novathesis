@@ -256,6 +256,8 @@
   \PassOptionsToPackage{
     translate=babel,
     acronym,           % add acronyms listing
+    symbols,           % free in record mode (no \write)
+    record,            % bib2gls backend: entries come from .bib via the .aux
     % NB: the 'symbols' option is deliberately NOT passed here.  It would
     % create the symbols glossary at load time, claiming one of pdfTeX's 16
     % \write registers even for documents without a single symbol.  The
@@ -271,21 +273,13 @@
     nolist,
     notree,
     nostyles,
-    automake,
   }{glossaries-extra}
   \RequirePackage{glossaries-extra}   % Glossaries, acronyms & symbols (extends glossaries)
   \RequirePackage{glossary-xltabular} % xltabular-based glossary layout style
 
-  % xindy language support for Greek
-  \ifoptioncontains{/novathesis/lang/extra}{gr}
-    {\PassOptionsToPackage{xindy={language=\expanded{\@LANG@MAIN@LONG}}}
-                          {glossaries-extra}}
-    {}
-
   \setglossarystyle{xltabular}
   \setabbreviationstyle[acronym]{long-short}
   \GlsXtrEnablePreLocationTag{\emph{(\small p.~}}{\emph{(\small pp.~}}
-  \patchcmd{\@gls@automake@immediate}{-I xindy}{-q -I xindy}{}{}
   \renewcommand{\GlsXtrFormatLocationList}[1]{\emph{\small#1)}}
   \renewcommand{\glsnamefont}[1]{\textbf{#1}}
   \newcommand*{\glsplainhyperlink}[2]{%
@@ -305,7 +299,7 @@
   \iftoggle{/novathesis/glossaries/list/reverse}
            {}
            {\setupglossaries{nonumberlist}}
-  \AtBeginDocument{\@loadglossaryfiles\makeglossaries}
+  \AtBeginDocument{\@loadglossaryfiles}
 }
 
 

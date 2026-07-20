@@ -25,23 +25,17 @@ $pdf_mode = 4;
 # ── Bibliography: biblatex + biber ───────────────────────────────────────────
 $bibtex_use = 2;  # run biber; also delete .bbl on latexmk -C
 
-# ── Glossaries: glossaries-extra + makeglossaries ────────────────────────────
-add_cus_dep('glo', 'gls', 0, 'run_makeglossaries');
-add_cus_dep('acn', 'acr', 0, 'run_makeglossaries');
-add_cus_dep('slo', 'sls', 0, 'run_makeglossaries');
-add_cus_dep('cho', 'chs', 0, 'run_makeglossaries');
+# ── Glossaries: glossaries-extra + bib2gls (record mode) ────────────────
+# bib2gls reads the .aux and writes the .glstex; no makeindex/xindy, and no
+# \write registers consumed by the class.
+add_cus_dep('aux', 'glstex', 0, 'run_bib2gls');
 
-sub run_makeglossaries {
+sub run_bib2gls {
     my ($base, $dir) = fileparse($_[0]);
-    if ($^O =~ /MSWin/) {
-        return system 'makeglossaries', '-q', '-d', $dir, $base;
-    } else {
-        return system "makeglossaries -q -d '$dir' '$base'";
-    }
+    $dir =~ s{/\z}{};
+    $dir = '.' if $dir eq '';
+    return system('bib2gls', '-q', '--group', '-d', $dir, $base);
 }
 
-push @generated_exts, 'glo', 'gls', 'glg';
-push @generated_exts, 'acn', 'acr', 'alg';
-push @generated_exts, 'slo', 'sls', 'slg';
-push @generated_exts, 'cho', 'chs', 'chg';
+push @generated_exts, 'glstex', 'glg';
 $clean_ext .= ' %R.ist %R.xdy';
