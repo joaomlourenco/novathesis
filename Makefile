@@ -11,6 +11,8 @@
 #   make view | v      build, then open the PDF
 #   make watch         rebuild automatically on every change (LuaLaTeX)
 #   make watch-pdf|watch-xe   like watch, with pdfLaTeX / XeLaTeX
+#   make glsbib        convert 7.10.x glossary .tex entry files to .bib
+#                      (one-off migration step; see the manual)
 #   make log           show the build log
 #   make clean         remove build artifacts (keeps the PDF and AUXDIR/matrix/)
 #   make distclean     clean + remove PDF and synctex files
@@ -126,6 +128,29 @@ watch watch-lua watch-pdf watch-xe:
 PAGER ?= less
 log:
 	@$(PAGER) "$(AUXDIR)/$(BASE).log"
+
+# --- Glossary migration (7.10.x .tex entries -> .bib) ---------------------------
+GLSDIR ?= 1-FrontMatter
+
+.PHONY: glsbib
+glsbib:
+	@command -v convertgls2bib >/dev/null 2>&1 || { \
+	  echo "ERROR: convertgls2bib not found — it ships with bib2gls (TeX Live)."; exit 1; }
+	@found=0; \
+	for f in $(GLSDIR)/*.tex; do \
+	  [ -e "$$f" ] || continue; \
+	  grep -qE '\\newglossaryentry|\\newacronym' "$$f" || continue; \
+	  found=1; b="$${f%.tex}.bib"; \
+	  if [ -e "$$b" ]; then echo "  skip  $$f  ($$b already exists)"; continue; fi; \
+	  echo "  convert  $$f  ->  $$b"; \
+	  convertgls2bib --texenc UTF-8 --bibenc UTF-8 "$$f" "$$b" >/dev/null || exit 1; \
+	  n=`grep -cE 'sort *=' "$$f" || true`; \
+	  if [ "$$n" -gt 0 ]; then \
+	    echo "     WARNING: $$f had $$n sort key(s). convertgls2bib DROPS them;"; \
+	    echo "              re-add them in $$b or those entries will mis-sort."; \
+	  fi; \
+	done; \
+	if [ "$$found" = 0 ]; then echo "No glossary .tex files found in $(GLSDIR)/"; fi
 
 # --- Cleaning -------------------------------------------------------------------
 .PHONY: clean distclean

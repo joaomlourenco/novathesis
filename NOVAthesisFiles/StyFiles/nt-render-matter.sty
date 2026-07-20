@@ -566,21 +566,61 @@
     }%
 }
 
+% Glossary sources are bib2gls .bib files.  Each file registered with
+%     \ntaddfile{glossaries}[<type>]{<name>}
+% becomes part of a bib2gls resource; no \write registers are consumed and
+% there is no \makeglossaries.  See nt-packages.sty for the record-mode setup.
+
+\newcommand*{\@nt@glssrc}{}
+
+% Add one registered source to the accumulator, refusing 7.10-era .tex files
+% with a message that says exactly what to do about it.
+\newcommand*{\@nt@glsaddsrc}[1]{%
+  \IfFileExists{#1.bib}
+    {}
+    {\IfFileExists{#1.tex}
+       {\ClassError{novathesis}
+          {Glossary source '#1.tex' is in the old (7.10.x) format}
+          {NOVAthesis 8.0 keeps glossary entries in .bib files, read by
+           bib2gls, instead of .tex files read by makeglossaries.^^J
+           Run 'make glsbib' to convert your entry files, then CHECK THE SORT
+           KEYS: the converter silently drops them, which reorders any entry
+           whose name is a macro or math markup.^^J
+           See the migration appendix of the manual for the full procedure.}}
+       {\ClassError{novathesis}
+          {Glossary source '#1.bib' not found}
+          {\ntaddfile{glossaries} registered '#1', but neither '#1.bib' nor
+           '#1.tex' exists. Check the file name in 0-Config/4_files.tex.}}%
+    }%
+  \ifdefempty{\@nt@glssrc}
+    {\xdef\@nt@glssrc{#1}}
+    {\xdef\@nt@glssrc{\@nt@glssrc,#1}}%
+}
+
+% Emit one \GlsXtrLoadResources for the given glossary types, if any file was
+% registered for them.  #1=comma list of types, #2=bib2gls selection.
+\newcommand*{\@nt@glsresource}[2]{%
+  \gdef\@nt@glssrc{}%
+  \@for\nt@glstype:=#1\do{%
+    \iffileadded[\nt@glstype]{glossaries}
+      {\@nt@foralllist{file}{glossaries/\nt@glstype}{\@nt@glsaddsrc}}
+      {}%
+  }%
+  \ifdefempty{\@nt@glssrc}{}{%
+    \GlsXtrLoadResources[
+      src={\@nt@glssrc},
+      selection={#2},
+      loc-prefix={\ntglslocprefixone,\ntglslocprefixmany},
+    ]%
+  }%
+}
+
 \newcommand*{\@loadglossaryfiles}{%
-  % SPIKE: record/bib2gls mode. Each registered glossary file becomes a
-  % bib2gls resource; no \write registers, no \makeglossaries.
-  % main + symbols mirror \glsaddall[types={main,symbols}]: every entry is
-  % listed whether or not it is cited.  Abbreviations keep use-based selection.
-  \GlsXtrLoadResources[
-    src={1-FrontMatter/glossary,1-FrontMatter/symbols},
-    selection={all},
-    loc-prefix={\ntglslocprefixone,\ntglslocprefixmany},
-  ]%
-  \GlsXtrLoadResources[
-    src={1-FrontMatter/acronyms},
-    selection={recorded and deps},
-    loc-prefix={\ntglslocprefixone,\ntglslocprefixmany},
-  ]%
+  % main + symbols reproduce what \glsaddall[types={main,symbols}] used to do:
+  % every entry is listed whether or not it is cited.  Abbreviations stay
+  % use-based, so unused acronyms do not pad the list.
+  \@nt@glsresource{glossary,symbols}{all}%
+  \@nt@glsresource{acronym}{recorded and deps}%
 }
 
 
