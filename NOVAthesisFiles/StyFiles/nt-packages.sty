@@ -279,7 +279,17 @@
 
   \setglossarystyle{xltabular}
   \setabbreviationstyle[acronym]{long-short}
-  \GlsXtrEnablePreLocationTag{\emph{(\small p.~}}{\emph{(\small pp.~}}
+  % Location-list prefix: one location vs several.  Deliberately free of '@'
+  % so they survive being written to the .glstex and read back in document
+  % context, and so users can redefine them in 0-Config/5_packages.tex.
+  \newcommand*{\ntglslocprefixone}{\emph{(\small p.~}}%
+  \newcommand*{\ntglslocprefixmany}{\emph{(\small pp.~}}%
+  % NB: the "p."/"pp." prefix is NOT set with \GlsXtrEnablePreLocationTag --
+  % that hook does not fire against location lists built by bib2gls, which
+  % silently leaves every entry reading "(p. 1, 40)".  bib2gls has its own
+  % mechanism: the loc-prefix resource option in \@loadglossaryfiles (see
+  % nt-render-matter.sty), whose first value is used for a single location
+  % and the second for several.  The closing parenthesis stays here.
   \renewcommand{\GlsXtrFormatLocationList}[1]{\emph{\small#1)}}
   \renewcommand{\glsnamefont}[1]{\textbf{#1}}
   \newcommand*{\glsplainhyperlink}[2]{%
