@@ -23,8 +23,12 @@
 #                      FILTER=nova/fct (school + sub-programs), FILTER=uminho,ipl
 #   make needlua       regenerate the list of LuaLaTeX-only schools
 #   make zip           release archive novathesis-<version>@<date>.zip
-#   make bump1|bump2|bump3
-#                      bump major/mid/minor version (Scripts/bump.py)
+#   make bump-patch | bump-minor | bump-major
+#                      bump the version (Scripts/bump.py). Starting from
+#                      7.11.0: bump-patch -> 7.11.1, bump-minor -> 7.12.0,
+#                      bump-major -> 8.0.0.
+#                      Legacy names, kept for compatibility, are numbered from
+#                      the RIGHT: bump1 = patch, bump2 = minor, bump3 = major.
 #   make gclean        git clean -fx (keeps Scripts and Fonts)
 #   make help-dev      show this help
 #-----------------------------------------------------------------------------
@@ -46,11 +50,11 @@ endif
 	            $(if $(ENGINE),-e $(ENGINE)) $(if $(STATUS),-s $(STATUS)) \
 	            $(if $(V),-v) "$(SCHOOL)"
 
-# FASTWRITES=1 (the default here) skips morewrites, which costs a pdfLaTeX
-# variant roughly 100s instead of 36s.  It only became safe once the class
-# stopped claiming more than 16 \write registers.  The trade-off: the matrix
-# then exercises only the fast path, so run 'make matrix FASTWRITES=0'
-# periodically to keep the morewrites path covered.
+# morewrites is skipped by default (FASTWRITES=1), which costs a pdfLaTeX
+# variant roughly 36s instead of 100s.  This is safe since the class no longer
+# claims more than 16 \write registers.  The trade-off: the matrix then
+# exercises only the fast path, so run 'make matrix FASTWRITES=0' periodically
+# to keep the morewrites path covered.
 matrix: FASTWRITES ?= 1
 matrix:
 	@mkdir -p $(AUXDIR)/matrix
@@ -73,9 +77,15 @@ zip:
 	@echo "Created $(ZIPNAME)"
 
 # --- Version bump -------------------------------------------------------------------
-.PHONY: bump1 bump2 bump3
+# NOTE: Scripts/bump.py counts positions from the RIGHT, so -b 1 is the patch
+# level and -b 3 is the major level. Prefer the named aliases below.
+.PHONY: bump1 bump2 bump3 bump-patch bump-minor bump-major
 bump1 bump2 bump3:
 	@Scripts/bump.py -b $(patsubst bump%,%,$@)
+
+bump-patch: bump1
+bump-minor: bump2
+bump-major: bump3
 
 # --- Deep clean -----------------------------------------------------------------------
 .PHONY: gclean

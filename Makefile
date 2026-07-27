@@ -24,9 +24,9 @@
 #   NT="k=v,..."       \ntsetup overrides, e.g. NT="doctype=msc,lang=pt"
 #   V=1                verbose: raw LaTeX output
 #   BATCH=1            batch mode (never stops at errors) — good for CI
-#   FASTWRITES=1       skip morewrites: much faster pdf/xe builds, but fails
-#                      with "No room for a new \write" if the document needs
-#                      more than 16 write streams (no-op for LuaLaTeX)
+#   FASTWRITES=0       load morewrites (default is 1 = skip it). Only needed
+#                      for a pdf/xe document that overshoots the 16 write
+#                      streams ("No room for a new \write"); no-op for LuaLaTeX
 #   TL=2024            use /usr/local/texlive/2024 for this run
 #   VIEWER=...         PDF viewer for 'make view'
 #   PAGER=...          pager for 'make log' (default: less)
@@ -71,12 +71,14 @@ endif
 # \ntoverride) and the write-register switch (see nt-packages.sty).
 # NOTE: concatenated without spaces — texfot re-splits the command line on
 # whitespace, which would break a quoted -pretex argument containing spaces.
+# morewrites is skipped by default; FASTWRITES=0 re-enables it.
+FASTWRITES ?= 1
 PRETEX :=
 ifneq ($(NT),)
   PRETEX := $(PRETEX)\def\ntoverride{$(NT)}
 endif
-ifeq ($(FASTWRITES),1)
-  PRETEX := $(PRETEX)\def\ntnomorewrites{}
+ifneq ($(FASTWRITES),1)
+  PRETEX := $(PRETEX)\def\ntmorewrites{}
 endif
 ifneq ($(PRETEX),)
   LMKFLAGS += -usepretex -pretex='$(PRETEX)'

@@ -18,29 +18,33 @@
 %% WRITE-REGISTER GUARD (must come before any other \newwrite)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % pdflatex and xelatex are limited to 16 \write registers; LuaTeX allows 65536.
-% The class alone claims 12 of those 16, so morewrites virtualises the pool to
-% leave room for the document's own packages.  It must be loaded before any
-% other package calls \newwrite -- hence its position at the top of this file.
+% Since 8.0 glossaries are handled by bib2gls and no longer consume registers,
+% so the class floor dropped to 9 and a typical document fits comfortably
+% within 16.  morewrites (which virtualises the pool but makes a pdflatex pass
+% roughly 9x slower) is therefore NOT loaded by default.
 %
-% morewrites is expensive: it makes a pdflatex pass roughly 9x slower.  A
-% document that fits within the 16 registers does not need it and can skip it
-% by defining \ntnomorewrites BEFORE \documentclass:
+% A document that overshoots the 16 registers -- reported as "No room for a
+% new \write" -- can re-enable morewrites by defining \ntmorewrites BEFORE
+% \documentclass:
 %
-%     \def\ntnomorewrites{}
+%     \def\ntmorewrites{}
 %     \documentclass{novathesis}
 %
-% or, with the build system, by passing FASTWRITES=1 (see the Makefile).
-% LuaLaTeX never loads morewrites, so the switch is a no-op there.
+% or, with the build system, by passing FASTWRITES=0 (see the Makefile).
+% LuaLaTeX never needs morewrites, so the switch is a no-op there.
 %
-% Beyond the 12 the class claims, the usual extra consumers are one register
-% each for the symbols glossary, \listofalgorithms and \listoflistings (all
-% three only when actually used -- see the note by the glossaries options
-% below, and \@loadglossaryfiles), plus whatever the
-% document's own packages allocate (e.g. minted, via fancyvrb).  Overshooting
-% is reported as "No room for a new \write"; if that happens, drop the switch.
+% The extra consumers beyond the class floor are one register each for the
+% symbols glossary, \listofalgorithms and \listoflistings (only when actually
+% used), plus whatever the document's own packages allocate (e.g. minted, via
+% fancyvrb).  Only such register-heavy documents need \ntmorewrites.
+%
+% Legacy note: \ntnomorewrites (the pre-8.0 opt-out) is now redundant, since
+% skipping is the default; it is still honoured and overrides \ntmorewrites.
 \RequirePackage{iftex}
 \ifluatex\else
-  \ifdefined\ntnomorewrites\else\RequirePackage{morewrites}\fi
+  \ifdefined\ntmorewrites
+    \ifdefined\ntnomorewrites\else\RequirePackage{morewrites}\fi
+  \fi
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

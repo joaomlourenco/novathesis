@@ -171,13 +171,14 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
     *)   echo "✗ $id: unknown engine '$eng'" >&2; return 1 ;;
   esac
   pretex="\\def\\ntoverride{doctype=$dt,school=$school,lang=$lg,docstatus=$STATUS${EXTRA:+,$EXTRA}}"
-  # Skip morewrites when asked (see the matrix target in Makefile.dev).  No
-  # space may be introduced here: texfot re-splits the command line on
-  # whitespace, which would break the quoted -pretex argument.
+  # morewrites is skipped by default; re-enable it when FASTWRITES=0 (see the
+  # matrix target in Makefile.dev).  No space may be introduced here: texfot
+  # re-splits the command line on whitespace, which would break the quoted
+  # -pretex argument.
   # NB: an 'A && B' one-liner would abort the whole run under 'set -e' whenever
-  # the test is false, i.e. for every non-FASTWRITES variant.
-  if [ "${FASTWRITES:-0}" = 1 ]; then
-    pretex="$pretex\\def\\ntnomorewrites{}"
+  # the test is false, i.e. for every default (FASTWRITES=1) variant.
+  if [ "${FASTWRITES:-1}" != 1 ]; then
+    pretex="$pretex\\def\\ntmorewrites{}"
   fi
 
   local cmd=(latexmk "$engflag" -interaction=batchmode -file-line-error

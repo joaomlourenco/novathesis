@@ -82,9 +82,9 @@ The behavior may be adjusted with variables appended to the command:
                         (see Section~\ref{sec:build_overrides}) \\
   \verb!V=1!          & Verbose: show the raw \hologo{LaTeX} output \\
   \verb!BATCH=1!      & Batch mode, never stops at errors (good for \gls{CI}) \\
-  \verb!FASTWRITES=1! & Skip \texttt{morewrites} — much faster
-                        \hologo{pdfLaTeX}/\hologo{XeLaTeX} builds
-                        (see Section~\ref{sec:build_fastwrites}) \\
+  \verb!FASTWRITES=0! & Load \texttt{morewrites} (skipped by default) for a
+                        register-heavy \hologo{pdfLaTeX}/\hologo{XeLaTeX}
+                        document (see Section~\ref{sec:build_fastwrites}) \\
   \verb!TL=2024!      & Use \verb!/usr/local/texlive/2024! for this run \\
   \verb!VIEWER=...!   & \gls{PDF} viewer used by \verb!make view! \\
   \verb!FLAGS=...!    & Extra \texttt{latexmk} flags, passed through \\
@@ -137,15 +137,10 @@ consistent, whatever the order of the keys.
 
 \hologo{pdfTeX} and \hologo{XeTeX} can only write to 16 files at a time
 (\hologo{LuaTeX} allows 65536).  \novathesis{} alone claims 9 of those 16
-slots, so the class loads the \ntindex[packages!morewrites]{\texttt{morewrites}}
-package, which removes the limit --- at a steep price: it makes a
-\hologo{pdfLaTeX} pass roughly nine times slower.
-
-If your document stays within the limit, you can skip it:
-
-\begin{bashcode}
-make pdf FASTWRITES=1
-\end{bashcode}
+slots.  The \ntindex[packages!morewrites]{\texttt{morewrites}} package removes
+the limit, but at a steep price: it makes a \hologo{pdfLaTeX} pass roughly
+nine times slower.  Since 8.0 a typical document fits within the 16 slots, so
+\textbf{\texttt{morewrites} is not loaded by default}.
 
 Beyond the 9 slots the class uses, each of the following costs one more, and
 only when you actually use it: \latexinline{\listofalgorithms} and
@@ -155,16 +150,21 @@ symbols cost nothing at all since 8.0 --- \texttt{bib2gls} passes everything
 through the \texttt{.aux} file.  Even this manual, which exercises every one
 of those features, now fits.
 
-If you overshoot, the build stops with
-\texttt{No room for a new \textbackslash write} --- simply drop
-\verb!FASTWRITES=1! and rebuild.  The switch is a no-op under
-\hologo{LuaLaTeX}, which never loads \texttt{morewrites}.
+Only a register-heavy document overshoots, and the build then stops with
+\texttt{No room for a new \textbackslash write}.  In that case, re-enable
+\texttt{morewrites}:
 
-Without \texttt{make}, define the macro before \latexinline{\documentclass}:
+\begin{bashcode}
+make pdf FASTWRITES=0
+\end{bashcode}
+
+The switch is a no-op under \hologo{LuaLaTeX}, which never needs
+\texttt{morewrites}.  Without \texttt{make}, define the macro before
+\latexinline{\documentclass}:
 
 \begin{bashcode}
 pdflatex -shell-escape -jobname=template \
-    '\def\ntnomorewrites{}\input{template}'
+    '\def\ntmorewrites{}\input{template}'
 \end{bashcode}
 
 
@@ -295,7 +295,9 @@ The semantics are:
   \textbf{Target} & \textbf{Effect} \\
   \verb!make zip!     & Release archive \texttt{novathesis-<version>@<date>.zip}
                         (excludes \verb!Makefile.dev! and \verb!.Build/!) \\
-  \verb!make bump1/2/3! & Bump the major/mid/minor version number \\
+  \verb!make bump-patch! & Bump the patch number (e.g.\ 8.0.0 becomes 8.0.1) \\
+  \verb!make bump-minor! & Bump the minor number (e.g.\ 8.0.0 becomes 8.1.0) \\
+  \verb!make bump-major! & Bump the major number (e.g.\ 8.0.0 becomes 9.0.0) \\
   \verb!make needlua! & Regenerate the list of schools that require
                         \hologo{LuaLaTeX} \\
   \verb!make gclean!  & \texttt{git clean -fx} (keeps \verb!Scripts! and

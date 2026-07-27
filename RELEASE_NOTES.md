@@ -6,47 +6,39 @@ This document summarizes the changes and improvements made to the NOVAthesis tem
 
 ## v8.0.0 (unreleased)
 
-### ⚠️ Breaking change: glossaries moved to `bib2gls`
+A release focused on **build speed**, a **simpler build system**, and **documentation you can trust**.
 
-Acronyms, glossary terms and symbols are now defined in **`.bib` files** processed by **`bib2gls`**, instead of `.tex` files processed by `makeglossaries`. Existing documents must be migrated.
+### ⚠️ Breaking change: glossaries now use `bib2gls`
 
-**What you must do**
+Acronyms, glossary terms and symbols are now defined in **`.bib` files** processed by **`bib2gls`**, instead of `.tex` files processed by `makeglossaries`. Existing documents must be migrated:
 
 1.  Run **`make glsbib`** to convert `1-FrontMatter/*.tex` entry files to `.bib`.
-2.  **Re-add any `sort` keys.** `convertgls2bib` silently drops them. Nothing breaks visibly — the document still builds at the same page count — but symbols, and any entry whose name is a command, come out in the wrong order. `make glsbib` counts them and warns you per file.
+2.  **Re-add any `sort` keys** — `convertgls2bib` silently drops them, and without them symbols (and any entry whose name is a command) come out in the wrong order. `make glsbib` counts them and warns you per file.
 3.  Convert symbol entries from `@entry` to `@symbol`.
 4.  Delete `\glsaddall` if your document calls it; it has no `bib2gls` equivalent.
 5.  Delete the old `.tex` entry files once the output looks right.
 
-A registered `.tex` entry file now **stops the build** with an error naming the cause and the fix, so the migration cannot be missed silently. Full procedure: the *Migrating from 7.10.x* appendix of the manual.
+A leftover `.tex` entry file now **stops the build** with an error naming the cause and the fix, so the migration cannot be missed silently. Full procedure: the *Migrating from 7.10.x* appendix of the manual. **New requirement:** `bib2gls` needs a **JRE** (it ships with TeX Live; Overleaf provides one; check locally with `bib2gls --version`).
 
-**New requirement:** `bib2gls` is a Java program. It ships with TeX Live but needs a **JRE**. Overleaf provides one; check locally with `bib2gls --version`.
+### What's new
+*   **Command-line overrides:** set any `\ntsetup` option at build time with `make NT="doctype=msc,lang=pt"`, without editing a configuration file.
+*   **Rebuilt build system:** the `Makefile` is now a thin wrapper over `latexmk` (all LaTeX settings live in `latexmkrc`); maintainer tooling — per-school and full-matrix builds, timestamped output, parallel jobs — moved to `Makefile.dev` + `.Build/nt-variant.sh`.
+*   **`make glsbib`:** one-off helper to migrate 7.10.x glossary `.tex` entry files to `.bib`.
+*   **Build System appendix** added to the manual.
 
-### Why
+### What was improved
+*   **Much faster pdfLaTeX/XeLaTeX builds.** Glossaries no longer consume any of pdfTeX's 16 write registers, so the `morewrites` package (which made each pass ~9× slower) is **no longer loaded by default**. A full pdfLaTeX build of the manual dropped from **109 s to 36 s**, and glossaries no longer need `-shell-escape`. A register-heavy document that overshoots the limit can restore `morewrites` with `FASTWRITES=0` (or `\def\ntmorewrites{}` before `\documentclass`); no-op under LuaLaTeX.
+*   **Symbols glossary created on demand** — it only costs a write register when a symbols file is actually registered.
+*   **Bibliography location lists** use `bib2gls`'s native `loc-prefix` for the `p.`/`pp.` distinction.
+*   **Matrix regression testing** now verifies each variant's glossaries (no dropped entries, correct sort order) instead of trusting the exit code.
+*   **Documentation accuracy pass:** the manual and `0-Config` comments were corrected against the code — e.g. the real option names `color/glossaries/gls` and `spine/layout`, the correct `tocintoc` default (`true`), removal of the nonexistent `\ntlatesetup` and the retired `nova/ims` identifiers — and `print/otherlists`, `print/glossaries`, `abstract/title` and `abstract/title/align` are now documented.
+*   **Hardening:** the font downloader validates its inputs and quotes its shell arguments; CI pins `actions/checkout` and `texlive-action` to commit SHAs, no longer compiles `main` on PRs, and gained Dependabot.
 
-Glossaries consumed 4 of pdfTeX's 16 write registers, forcing the template to load `morewrites`, which made every pdfLaTeX pass roughly **9× slower**. With `bib2gls` they consume none: the class floor dropped from 13 registers to 9, and a full pdfLaTeX build of the manual went from **109 s to 36 s**. Glossaries also no longer need `-shell-escape`.
-
-### Features
-*   **`FASTWRITES=1`:** skip `morewrites` on pdfLaTeX/XeLaTeX builds (`make pdf FASTWRITES=1`), now viable for most documents. No-op under LuaLaTeX.
-*   **`make glsbib`:** one-off glossary migration helper.
-*   **Symbols glossary on demand:** it only costs a write register if you actually register a symbols file.
-
-### Refactoring & Fixes
-*   **Matrix regression testing:** each variant's glossaries are now verified (no dropped entries, correct sort order) instead of trusting the exit code; the matrix defaults to `FASTWRITES=1` (`FASTWRITES=0` still covers the `morewrites` path).
-*   **Location lists** use `bib2gls`'s native `loc-prefix` for the `p.`/`pp.` distinction.
-*   **CI:** `actions/checkout` and `texlive-action` pinned to commit SHAs; PR builds no longer compile `main`; Dependabot added.
-
----
-
-## v7.11.0 (2026-06-13)
-
-### Features
-*   **Command-line overrides:** any `\ntsetup` option can be set at build time via `make NT="doctype=msc,lang=pt"`, without editing configuration files.
-*   **Build system:** reworked `Makefile`/`latexmkrc`, per-variant auxiliary directories, timestamped matrix output, and a `.Build/nt-variant.sh` driver for school/matrix builds.
-
-### Refactoring & Fixes
-*   **Shell-escape hardening:** the font downloader validates its inputs and quotes its shell arguments.
-*   Numerous minor fixes: duplicate hook firing, `\ntprintfrontpage` gating, SDG heading fallback for languages without a translation, PDF bookmark handling for indexed entries, and dead-code removal across the style files.
+### What was fixed
+*   The `mainmatter/pre` hook fired twice.
+*   `\ntprintfrontpage` did not respect `print/frontpage`.
+*   The SDG heading now falls back to English for languages without a translation.
+*   PDF bookmarks now handle bracketless `\ntindex` entries correctly.
 
 ---
 
