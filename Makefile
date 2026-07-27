@@ -1,6 +1,6 @@
 #-----------------------------------------------------------------------------
 # NOVAthesis — Makefile
-# Version 7.11.0 (2026-06-13)
+# Version 8.0.0 (2026-07-27)
 #
 # The build engine is latexmk; all LaTeX-specific behavior (engine defaults,
 # biber, glossaries, clean lists) lives in ./latexmkrc.
