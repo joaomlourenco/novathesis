@@ -4,3 +4,9 @@ updates:
     directory: "/"
     schedule:
       interval: weekly
+    ignore:
+      # Stay on xu-cheng/texlive-action v1. v2 restructured the action
+      # (the /full sub-path was removed in favour of a `scheme:` input), so a
+      # major bump breaks this workflow. Patch/minor bumps within v1 are fine.
+      - dependency-name: "xu-cheng/texlive-action"
+        update-types: ["version-update:semver-major"]
