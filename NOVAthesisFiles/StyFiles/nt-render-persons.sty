@@ -4,7 +4,7 @@
 %%  NOVATHESIS — nt-render-persons.sty
 %% ----------------------------------------------------------------------------
 %%
-%% Version 7.10.7 (2026-03-25)
+%% Version 7.11.0 (2026-06-13)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -18,10 +18,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Print persons list {advisers | committee}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcolumntype{L}{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}X}
-\newcolumntype{C}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}X}
-\newcolumntype{R}{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}X}
-
 
 \NewDocumentCommand{\ntprintpersons}{O{full}mO{l}mmm}{%
   % #1 = format (default: full) {full, name, list}
@@ -77,16 +73,7 @@
 
 \NewDocumentCommand {\GetPersonsAsList} { m m o }
  {
-  % % --- 1. Legacy Title Processing ---
-  % \ifdatadefined{#1titlestring}(\@LANG@COVER)
-  %  {
-  %   \MemGetDefault{#1titlestringpre}{\@LANG@COVER}
-  %   \MemGetDefault{#1titlestringfont}{\@LANG@COVER}
-  %   \csuse{the#1titlestring}(\@LANG@COVER)
-  %   \MemGetDefault{#1titlestringpost}{\@LANG@COVER}
-  %  }{}
-
-  % --- 2. Build the Flat List ---
+  % --- 1. Build the Flat List ---
   \clist_clear:N \l_nt_master_clist
 
   % Map over the categories provided in #2 (e.g., a, c)
@@ -106,7 +93,7 @@
       }
    }
 
-  % --- 3. Output or Storage ---
+  % --- 2. Output or Storage ---
   \IfNoValueTF { #3 }
    {
      \raggedright
@@ -147,9 +134,12 @@
     \seq_put_right:Nn \l_tmpb_seq { #2 ~ ##1 }
    }
 
-  % 4. Output the sequence with custom separators
-  % \seq_use:Nnnn <sequence> {middle-sep} {pair-sep} {last-sep}
-  \seq_use:Neee \l_tmpb_seq { #2 } { #3 } { #4 }
+  % 4. Output the sequence with custom separators.
+  % \seq_use:Nnnn <seq> {sep-between-two} {sep-between-more} {sep-before-last}
+  %   two items -> pair-sep (#4)
+  %   >2 items  -> middle-sep (#3) between all but the last, last-sep (#5)
+  %                before the final name.
+  \seq_use:Neee \l_tmpb_seq { #4 } { #3 } { #5 }
  }
 
 \ExplSyntaxOff
@@ -181,7 +171,7 @@
   \IfMemVoidT{persongrouppost}{}{\MemSet*{persongrouppost}{}{\\[7pt]}}
   \IfMemVoidT{committeetitlestringpost}{}{\MemSet*{committeetitlestringpost}{}{\\[5pt]}}%
   \@ntgetmaxlen{#3}{#2}%
-  \begin{tabularx}{#2\linewidth}[t]{@{}>{\nt@tabularx@horz}L@{}}%
+  \begin{tabularx}{#2\linewidth}[t]{@{}>{\nt@tabularx@horz\raggedright\let\newline\\\arraybackslash\hspace{0pt}}X@{}}%
     \IfMemVoidTF{CommitteeTitleString}{\@LANG@COVER}{}{%
       \IfStrEq{#3}{committee}{%
         \MemGetDefault{#3titlestringpre}{}%

@@ -195,32 +195,32 @@
 
 \SetDissertationString(bsc,gr)={%
       Η παρούσα εργασία υποβάλλεται για την απονομή του τίτλου %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ στη\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) στη\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 \SetDissertationString(mscplan,gr)={%
       Το παρόν ενδιάμεσο κείμενο υποβάλλεται για την εκπλήρωση των απαιτήσεων απονομής του τίτλου %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ στη\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) στη\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 \SetDissertationString(msc,gr)={%
       Η παρούσα μεταπτυχιακή διατριβή υποβάλλεται για την απονομή του τίτλου %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ στη\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) στη\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 \SetDissertationString(phdplan,gr)={%
       Το παρόν σχέδιο διδακτορικής διατριβής υποβάλλεται για την εκπλήρωση των απαιτήσεων απονομής του τίτλου %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ στη\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) στη\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 \SetDissertationString(phdprop,gr)={%
       Η παρούσα πρόταση διδακτορικής διατριβής υποβάλλεται για την εκπλήρωση των απαιτήσεων απονομής του τίτλου %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ στη\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) στη\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 \SetDissertationString(phd,gr)={%
       Η παρούσα διδακτορική διατριβή υποβάλλεται για την απονομή του τίτλου %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ στη\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) στη\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 

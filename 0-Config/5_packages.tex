@@ -34,17 +34,30 @@
 % ShadedTabular: a tabular with a shaded header row and zebra-striped body.
 % Uses colortbl (already loaded by novathesis) — no extra packages needed.
 % The header row receives headgray; body rows alternate rowgray / white.
-\newenvironment{ShadedTabular}[1]{%
+\newenvironment{ShadedTabular}[2][rowgray]{%
+  \renewcommand{\arraystretch}{1.3}%
+  % Redefine \thead to avoid \multicolumn wrapping, which confuses colortbl's
+  % row-colour box and leaves white vertical stripes between header cells.
+  % The column spec already provides alignment; we only need the bold font.
+  \renewcommand{\thead}[2][]{\textbf{##2}}%
+  \rowcolors{2}{#1}{white}%    % body rows: zebra stripes starting at row 2
+  \tabular{#2}%
+  \rowcolor{headgray}%              % first (header) row background
+}{%
+  \endtabular
+}
+
+\newenvironment{ShadedTabularX}[2]{%
   \renewcommand{\arraystretch}{1.3}%
   % Redefine \thead to avoid \multicolumn wrapping, which confuses colortbl's
   % row-colour box and leaves white vertical stripes between header cells.
   % The column spec already provides alignment; we only need the bold font.
   \renewcommand{\thead}[2][]{\textbf{##2}}%
   \rowcolors{2}{rowgray}{white}%    % body rows: zebra stripes starting at row 2
-  \tabular{#1}%
+  \tabularx{#1}{#2}%
   \rowcolor{headgray}%              % first (header) row background
 }{%
-  \endtabular
+  \endtabularx
 }
 
 

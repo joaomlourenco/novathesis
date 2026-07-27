@@ -4,7 +4,7 @@
 %%  NOVATHESIS — fix-hyperref.sty
 %% ----------------------------------------------------------------------------
 %%
-%% Version 7.10.7 (2026-03-25)
+%% Version 7.11.0 (2026-06-13)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -125,6 +125,22 @@
     \nt_autoref_logic:n {#1} 
     \ExplSyntaxOff
   }
+  % \ntindex{text} is non-expandable, so hyperref warns when it appears in
+  % section headings used as PDF bookmark strings.  Register a safe fallback
+  % that emits only the visible text and skips the \index call.
+  % Must use \def (not \renewcommand) to avoid triggering \@protected@testopt,
+  % which is itself trapped in the PDF string context.
+  \pdfstringdefDisableCommands{%
+    \def\ntindex{\@nt@pdfstring@index}%
+  }%
+  % \ntindex has an optional [key] and a mandatory {text}; in a bookmark we want
+  % only the visible {text}.  A plain [#1]#2 delimited match mis-scans the common
+  % \ntindex{text} (no brackets).  Instead grab everything up to the mandatory
+  % brace group (nothing, or "[key]") and discard it, then emit the mandatory
+  % argument.  This is fully expandable, so it works inside \pdfstringdef (where
+  % \@ifnextchar / the optional-argument machinery does not).
+  \long\def\@nt@pdfstring@index#1#{\@nt@pdfstring@index@mand}%
+  \long\def\@nt@pdfstring@index@mand#1{#1}%
   % Fix duplicate PDF destinations across main matter and appendices.
   % Hyperref's \theHchapter defaults to \arabic{chapter}, which resets to 0
   % when \appendix is called.  Appendix B therefore gets the same raw counter

@@ -199,32 +199,32 @@
 
 \SetDissertationString(bsc,dk)={%
       Rapport indleveret til opnåelse af graden %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) i\\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 \SetDissertationString(mscplan,dk)={%
       Foreløbig rapport indleveret til opnåelse af graden %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) i\\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 \SetDissertationString(msc,dk)={%
       Speciale indleveret til opnåelse af graden %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) i\\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 \SetDissertationString(phdplan,dk)={%
       Planrapport indleveret til opnåelse af graden %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) i\\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 \SetDissertationString(phdprop,dk)={%
       Forslag til afhandling indleveret til opnåelse af graden %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) i\\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 \SetDissertationString(phd,dk)={%
       Afhandling indleveret til opnåelse af graden %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ i\\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) i\\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 

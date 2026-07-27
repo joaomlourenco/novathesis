@@ -65,8 +65,7 @@
 
 \SetDissertationString(bsc,pt)={%
       \GetDocType(\option{/novathesis/doctype}) para obtenção do grau de %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)%
-      \ em\\%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\%
       \GetMajorField(\@LANG@COVER)%
       \IfMemVoidF{MinorField}{\@LANG@COVER}
         {\GetSpecialization(\@LANG@COVER)}
@@ -75,8 +74,7 @@
 
 \SetDissertationString(mscplan,pt)={%
       Plano de \GetDocType(\option{/novathesis/doctype}) para obtenção do grau de %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)%
-      \ em\\%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\%
       \GetMajorField(\@LANG@COVER)%
       \IfMemVoidF{MinorField}{\@LANG@COVER}
         {\GetSpecialization(\@LANG@COVER)}
@@ -85,8 +83,7 @@
 
 \SetDissertationString(msc,pt)={%
       \GetDocType(\option{/novathesis/doctype}) para obtenção do grau de %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)%
-      \ em\\%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\%
       \GetMajorField(\@LANG@COVER)%
       \IfMemVoidF{MinorField}{\@LANG@COVER}
         {\GetSpecialization(\@LANG@COVER)}
@@ -95,8 +92,7 @@
 
 \SetDissertationString(bsc,en)={%
       \GetDocType(\option{/novathesis/doctype}) to obtain the degree of %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)%
-      \ in\\%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\%
       \GetMajorField(\@LANG@COVER)%
       \IfMemVoidF{MinorField}{\@LANG@COVER}
         {\GetSpecialization(\@LANG@COVER)}
@@ -105,8 +101,7 @@
 
 \SetDissertationString(mscplan,en)={%
       \GetDocType(\option{/novathesis/doctype}) Plan to obtain the degree of %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)%
-      \ in\\%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\%
       \GetMajorField(\@LANG@COVER)%
       \IfMemVoidF{MinorField}{\@LANG@COVER}
         {\GetSpecialization(\@LANG@COVER)}
@@ -115,8 +110,7 @@
 
 \SetDissertationString(msc,en)={%
       \GetDocType(\option{/novathesis/doctype}) to obtain the degree of %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)%
-      \ in\\%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\%
       \GetMajorField(\@LANG@COVER)%
       \IfMemVoidF{MinorField}{\@LANG@COVER}
         {\GetSpecialization(\@LANG@COVER)}

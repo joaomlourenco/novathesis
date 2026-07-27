@@ -4,7 +4,7 @@
 %%  NOVATHESIS — nt-packages.sty
 %% ----------------------------------------------------------------------------
 %%
-%% Version 7.10.7 (2026-03-25)
+%% Version 7.11.0 (2026-06-13)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -17,10 +17,35 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% WRITE-REGISTER GUARD (must come before any other \newwrite)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% pdflatex is limited to 16 \write registers; LuaTeX allows 65536.
-% morewrites virtualises the pool so all packages get the streams they need.
+% pdflatex and xelatex are limited to 16 \write registers; LuaTeX allows 65536.
+% Since 8.0 glossaries are handled by bib2gls and no longer consume registers,
+% so the class floor dropped to 9 and a typical document fits comfortably
+% within 16.  morewrites (which virtualises the pool but makes a pdflatex pass
+% roughly 9x slower) is therefore NOT loaded by default.
+%
+% A document that overshoots the 16 registers -- reported as "No room for a
+% new \write" -- can re-enable morewrites by defining \ntmorewrites BEFORE
+% \documentclass:
+%
+%     \def\ntmorewrites{}
+%     \documentclass{novathesis}
+%
+% or, with the build system, by passing FASTWRITES=0 (see the Makefile).
+% LuaLaTeX never needs morewrites, so the switch is a no-op there.
+%
+% The extra consumers beyond the class floor are one register each for the
+% symbols glossary, \listofalgorithms and \listoflistings (only when actually
+% used), plus whatever the document's own packages allocate (e.g. minted, via
+% fancyvrb).  Only such register-heavy documents need \ntmorewrites.
+%
+% Legacy note: \ntnomorewrites (the pre-8.0 opt-out) is now redundant, since
+% skipping is the default; it is still honoured and overrides \ntmorewrites.
 \RequirePackage{iftex}
-\ifluatex\else\RequirePackage{morewrites}\fi
+\ifluatex\else
+  \ifdefined\ntmorewrites
+    \ifdefined\ntnomorewrites\else\RequirePackage{morewrites}\fi
+  \fi
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% KERNEL & CORE UTILITIES
@@ -69,13 +94,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CORE PACKAGES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% pdflatex is limited to 16 \write registers; LuaTeX allows 65536.
-% morewrites virtualises the pool so all packages get the streams they need.
-% Must be loaded before any other package calls \newwrite.
-\RequirePackage{iftex}
-\ifluatex\else\RequirePackage{morewrites}\fi
-
 \RequirePackage[table,svgnames]{xcolor} % Must be loaded first to avoid option clashes
 \RequirePackage{iftex}       % \ifpdftex, \ifxetex, \ifluatex, \iftutex …
 \RequirePackage{ifplatform}  % \ifwindows, \iflinux, \ifmacosx
@@ -154,6 +172,14 @@
 \RequirePackage[nobeamer]{graphbox} % Loads graphicx + \includegraphics[align=…]
 \RequirePackage{colortbl} % Coloured table cells (\columncolor, \rowcolor, …)
 \RequirePackage{xurl}               % Loads 'url' with improved line-breaking
+
+% Silence the harmless "multiple pdfs with page group included in a single
+% page" warning emitted when several PDF logos (with transparency groups) are
+% placed on one cover page.  This is a pdfTeX-only warning: LuaTeX does not
+% emit it (and setting its \pdfvariable form here disturbs backend init), and
+% XeTeX uses a different backend.  Guard on the primitive so it acts only
+% where it exists (pdfTeX).
+\ifdefined\pdfsuppresswarningpagegroup \pdfsuppresswarningpagegroup=1 \fi
 
 % ── Customize Graphcics package ───────────────────────────────────────
 \expandafter\graphicspath\expandafter{\expandafter{\DIRFIGURES/}}
@@ -234,7 +260,16 @@
   \PassOptionsToPackage{
     translate=babel,
     acronym,           % add acronyms listing
-    symbols,           % add symbols listing
+    symbols,           % free in record mode (no \write)
+    record,            % bib2gls backend: entries come from .bib via the .aux
+    % NB: the 'symbols' option is deliberately NOT passed here.  It would
+    % create the symbols glossary at load time, claiming one of pdfTeX's 16
+    % \write registers even for documents without a single symbol.  The
+    % glossary is instead created on demand by \@loadglossaryfiles (see
+    % nt-render-matter.sty) when the user registers a symbols file with
+    %     \ntaddfile{glossaries}[symbols]{...}
+    % which is still early enough, as \makeglossaries runs below at
+    % \AtBeginDocument.  See also the write-register note at the top.
     % sanitizesort=false, % allow \gls inside sort keys
     % xindy={language=\@LANG@MAIN@LONG},
     nolong,
@@ -242,21 +277,23 @@
     nolist,
     notree,
     nostyles,
-    automake,
   }{glossaries-extra}
   \RequirePackage{glossaries-extra}   % Glossaries, acronyms & symbols (extends glossaries)
   \RequirePackage{glossary-xltabular} % xltabular-based glossary layout style
 
-  % xindy language support for Greek
-  \ifoptioncontains{/novathesis/lang/extra}{gr}
-    {\PassOptionsToPackage{xindy={language=\expanded{\@LANG@MAIN@LONG}}}
-                          {glossaries-extra}}
-    {}
-
   \setglossarystyle{xltabular}
   \setabbreviationstyle[acronym]{long-short}
-  \GlsXtrEnablePreLocationTag{\emph{(\small p.~}}{\emph{(\small pp.~}}
-  \patchcmd{\@gls@automake@immediate}{-I xindy}{-q -I xindy}{}{}
+  % Location-list prefix: one location vs several.  Deliberately free of '@'
+  % so they survive being written to the .glstex and read back in document
+  % context, and so users can redefine them in 0-Config/5_packages.tex.
+  \newcommand*{\ntglslocprefixone}{\emph{(\small p.~}}%
+  \newcommand*{\ntglslocprefixmany}{\emph{(\small pp.~}}%
+  % NB: the "p."/"pp." prefix is NOT set with \GlsXtrEnablePreLocationTag --
+  % that hook does not fire against location lists built by bib2gls, which
+  % silently leaves every entry reading "(p. 1, 40)".  bib2gls has its own
+  % mechanism: the loc-prefix resource option in \@loadglossaryfiles (see
+  % nt-render-matter.sty), whose first value is used for a single location
+  % and the second for several.  The closing parenthesis stays here.
   \renewcommand{\GlsXtrFormatLocationList}[1]{\emph{\small#1)}}
   \renewcommand{\glsnamefont}[1]{\textbf{#1}}
   \newcommand*{\glsplainhyperlink}[2]{%
@@ -276,7 +313,7 @@
   \iftoggle{/novathesis/glossaries/list/reverse}
            {}
            {\setupglossaries{nonumberlist}}
-  \AtBeginDocument{\@loadglossaryfiles\makeglossaries}
+  \AtBeginDocument{\@loadglossaryfiles}
 }
 
 
@@ -284,5 +321,8 @@
 %% AI DISCLOSURE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtEndPreamble{%
-  \RequirePackage[autobib=true,nocite=false]{aidisclose2}  % AI disclosure watermark / statement
+  % Upstream aidisclose package (bundled in StyFiles). autobib=false because
+  % the thesis supplies the cite keys via StyFiles/fix-bib.bib; letting the
+  % package auto-write its own aidisclose.bib would duplicate those keys.
+  \RequirePackage[autobib=false,nocite=false]{aidisclose}  % AI disclosure watermark / statement
 }

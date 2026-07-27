@@ -4,7 +4,7 @@
 %%  NOVATHESIS — nt-spine.sty
 %% ----------------------------------------------------------------------------
 %%
-%% Version 7.10.7 (2026-03-25)
+%% Version 7.11.0 (2026-06-13)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -14,8 +14,8 @@
 %% ----------------------------------------------------------------------------
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesExplPackage { nt-spine } { 2026/01/14 } { 0.2 }
-  { NovaThesis Spine Generator }
+\ProvidesExplPackage{nt-spine}{2026/01/14}{0.2}
+  {NovaThesis Spine Generator}
 \typeout { NT FILE StyFiles/nt-spine.sty } %
 
 
@@ -73,20 +73,27 @@
 \dim_new:N \l_nt_spine_margin_right_dim
 
 % -- Dynamic Box Variables --------------------------------------------------
+% Declare every per-box variable used by the key definitions below, with the
+% correct type.  (Previously _fontstyle_tl was declared as a dim register, and
+% _extrasep_dim, _frame_width_tl and the phd/msc angle overrides were never
+% declared at all — they only worked by l3keys auto-creating them.)
 \clist_map_inline:nn { date, title, author, logo }
   {
     \dim_new:c { l_nt_spine_box_#1_len_dim }      % width of the box
-    \dim_new:c { l_nt_spine_box_#1_fontstyle_tl } % font customization
+    \dim_new:c { l_nt_spine_box_#1_extrasep_dim } % extra gap after this box
+    \tl_new:c  { l_nt_spine_box_#1_fontstyle_tl } % font customization
     \tl_new:c  { l_nt_spine_box_#1_bg_image_tl }       % per-box background image
     \tl_new:c  { l_nt_spine_box_#1_bg_image_scale_tl } % per-box image scale (0–1)
-    \tl_new:c  { l_nt_spine_box_#1_bg_image_angle_tl }
-      % per-box background image angle
+    \tl_new:c  { l_nt_spine_box_#1_bg_image_angle_tl }     % per-box bg image angle
+    \tl_new:c  { l_nt_spine_box_#1_bg_image_angle_phd_tl } % ... doctype override (phd)
+    \tl_new:c  { l_nt_spine_box_#1_bg_image_angle_msc_tl } % ... doctype override (msc)
     \tl_new:c  { l_nt_spine_box_#1_bg_color_tl }   % per-box background color
     \tl_new:c  { l_nt_spine_box_#1_bg_opacity_tl } % per-box background opacity
     \tl_new:c  { l_nt_spine_box_#1_fg_color_tl }   % per-box text color
     \tl_new:c  { l_nt_spine_box_#1_valign_tl }     % vertical alignment
     \tl_new:c  { l_nt_spine_box_#1_halign_tl }     % horizontal alignment
     \tl_new:c  { l_nt_spine_box_#1_frame_color_tl } % per-box frame color
+    \tl_new:c  { l_nt_spine_box_#1_frame_width_tl } % per-box frame width
   }
 
 

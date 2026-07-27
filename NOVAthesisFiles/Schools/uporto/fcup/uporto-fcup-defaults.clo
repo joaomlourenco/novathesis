@@ -58,79 +58,79 @@
 
 \ifdocfinal{% final
   \SetDissertationString(bsc,pt)={Tese aprovada em provas públicas para obtenção do Grau de %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(mscplan,pt)={Plano de tese submetido para obtenção do Grau de %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(msc,pt)={Tese aprovada em provas públicas para obtenção do Grau de %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(phdplan,pt)={Plano de tese submetido para obtenção do Grau de %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(phdprop,pt)={Proposta de tese submetida para obtenção do Grau de %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(phd,pt)={Tese aprovada em provas públicas para obtenção do Grau de %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
 
   \SetDissertationString(bsc,en)={Thesis approved in public session to obtain the %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(mscplan,en)={Thesis plan submitted to obtain the %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(msc,en)={Thesis approved in public session to obtain the %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(phdplan,en)={Thesis plan submitted to obtain the %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(phdprop,en)={Thesis proposal submitted to obtain the %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(phd,en)={Thesis approved in public session to obtain the %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
 }{% working, provisional
   \SetDissertationString(bsc,pt)={Relatório especialmente elaborado para obtenção do Grau de %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(mscplan,pt)={Relatório intermédio especialmente elaborado para obtenção do Grau de %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(msc,pt)={Dissertação especialmente elaborada para obtenção do Grau de %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(phdplan,pt)={Relatório intermédio especialmente elaborado para obtenção do Grau de %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(phdprop,pt)={Proposta de tese especialmente elaborada para obtenção do Grau de %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(phd,pt)={Tese especialmente elaborada para obtenção do Grau de %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
 
   \SetDissertationString(bsc,en)={Report specifically prepared to obtain the %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(mscplan,en)={Dissertation plan specifically prepared to obtain the %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(msc,en)={Dissertation specifically prepared to obtain the %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(phdplan,en)={Thesis plan specifically prepared to obtain the %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(phdprop,en)={Thesis proposal specifically prepared to obtain the %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
   \SetDissertationString(phd,en)={Thesis specifically prepared to obtain the %
-    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\%
+    \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\%
     {\fontsize{10.75}{12}\selectfont\GetMajorField(\@LANG@COVER)}}
 }
 

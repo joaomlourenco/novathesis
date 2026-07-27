@@ -11,7 +11,7 @@
   accepts       = {preberá},
   accept        = {preberajú},
   and           = {a},
-  preamble      = {<author>,\ <AUTHOR-LIST>,\ <acknowledges>\ použitie\ nasledujúcich\ nástrojov\ generatívnej\ umelej\ inteligencie\ pri\ vypracovaní\ tejto\ práce.\ Tieto\ technológie\ boli\ využité\ pod\ prísnym\ dohľadom\ a\ všetky\ výstupy\ generované\ AI\ boli\ kriticky\ preskúmané\ a\ overené\ z\ hľadiska\ presnosti.\ <author>\ <accept>\ plnú\ zodpovednosť\ za\ platnosť\ a\ originalitu\ obsahu\ a\ potvrdzuje,\ že\ použitie\ týchto\ nástrojov\ je\ v\ súlade\ so\ všetkými\ inštitucionál:footnotenymi\ zásadami\ a\ štandardmi\ akademickej\ integrity.},
+  preamble      = {<author>,\ <AUTHOR-LIST>,\ <acknowledges>\ použitie\ nasledujúcich\ nástrojov\ generatívnej\ umelej\ inteligencie\ pri\ vypracovaní\ tejto\ práce.\ Tieto\ technológie\ boli\ využité\ pod\ prísnym\ dohľadom\ a\ všetky\ výstupy\ generované\ AI\ boli\ kriticky\ preskúmané\ a\ overené\ z\ hľadiska\ presnosti.\ <author>\ <accept>\ plnú\ zodpovednosť\ za\ platnosť\ a\ originalitu\ obsahu\ a\ potvrdzuje,\ že\ použitie\ týchto\ nástrojov\ je\ v\ súlade\ so\ všetkými\ inštitucionálnymi\ zásadami\ a\ štandardmi\ akademickej\ integrity.},
   %
   % Pre/Post Parts
   pre_tools     = {},
@@ -21,7 +21,7 @@
   pre_comments  = {},
   post_comments = {},
   %
-    footnote      = {Toto\ vyhlásenie\ bolo\ vygenerované\ pomocou\ \AIDlatexProcessor{}\ a\ balíka\ \hologo{LaTeX}\ \AIDpackageName{}},
+    footnote      = {Toto\ vyhlásenie\ bolo\ vygenerované\ pomocou\ \AIDlatexProcessor{},\ balíka\ \LaTeX{}\ \AIDpackageName{}\ a\ jeho\ sprievodnej\ webovej\ stránky\ \url{aidisclose.org}},
   comment_label = {Ďalší\ komentár},
   comment_star  = {Ďalší\ komentár},
   title_long    = {Vyhlásenie\ o\ delegovaní\ na\ generatívnu\ umelú\ inteligenciu},
@@ -36,7 +36,7 @@
   grp_write     = {Písanie\ a\ úpravy},
   grp_eth       = {Etické\ posúdenie},
   grp_sup       = {Zabezpečenie\ kvality},
-% 1 — Conceptualization  
+% 1 — Conceptualization
   c_idea        = {Generovanie\ nápadov},
   c_obj         = {Definovanie\ výskumného\ cieľa},
   c_rq          = {Formulácia\ výskumných\ otázok\ a\ hypotéz},

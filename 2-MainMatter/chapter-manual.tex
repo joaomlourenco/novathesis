@@ -4,7 +4,7 @@
 %%  NOVATHESIS — 2-MainMatter/chapter-manual.tex
 %% ----------------------------------------------------------------------------
 %%
-%% Version 7.10.7 (2026-03-25)
+%% Version 7.11.0 (2026-06-13)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %%
 %% User's manual chapter: complete guide to configuring and using the
@@ -31,9 +31,9 @@ citation styles, and the document workflow.  All user customization flows
 through the files inside the \ntindex[configuration!0-config/]{\latexinline{0-Config/}} folder — the rest of the
 project tree is never edited directly.
 
-For a reference to the automated \ntindex[building!build.py]{\latexinline{build.py}} assistant,
-see Chapter~\ref{app:build_py}.  For a guide to the cover page system,
-see Chapter~\ref{app:covers}.
+For a reference to the \ntindex[building!]{build system} (\latexinline{make}
+and the command-line overrides), see Chapter~\ref{app:build}.  For a guide to
+the cover page system, see Chapter~\ref{app:covers}.
 
 
 %%=======================================================================
@@ -69,6 +69,22 @@ schools because it handles Unicode fonts natively.  \ntindex[fonts!]{XeLaTeX} is
 alternative.  \hologo{pdfLaTeX} works but cannot load OpenType/TrueType fonts.
 
 \paragraph{School-specific fonts.}  Some Schools or font-styles require fonts not available in \hologo{LaTeX}.  In normal conditions, they will be downloaded automatically.  However, if they are not, you may download the necessary fonts from \url{https://github.com/joaomlourenco/novathesis-extras/tree/main/Fonts}, unzip (if necessary), and copy the \verb!*.ttf! files to \verb!NOVAthesisFiles/FontStyles/Fonts/!.
+
+\begin{warningbox}[title={Security: compiling runs external programs (\texttt{-\/-shell-escape})}]
+  \label{box:shell-escape-security}
+  \novathesis{} compiles with \texttt{-{}-shell-escape} \emph{enabled},
+  because several features run external programs during the build:
+  \texttt{minted} calls Pygments to highlight source code, and selecting a
+  bundled proprietary font (Calibri, Arial, \ldots) downloads it over the
+  network.  (Glossaries no longer need shell-escape: since 8.0 they are built
+  by \texttt{bib2gls}, which \texttt{latexmk} runs directly.)  With shell-escape, \textbf{compiling a document can run commands
+  on your computer with your own user privileges} — there is no sandbox.
+
+  Building the \emph{official} template with \emph{your own} content is safe.
+  But you should only compile \texttt{.tex} files, school configurations, and
+  font styles that you \emph{trust} — treat a thesis project received from
+  someone else the same way you would review any script before running it.
+\end{warningbox}
 
 
 %%-----------------------------------------------------------------------
@@ -107,7 +123,7 @@ Once imported:
   \item Press \emph{Recompile}.
 \end{enumerate}
 
-On \Overleaf{} you cannot run \ntindex[building!make]{\latexinline{make}} or \ntindex[building!build.py]{\latexinline{build.py}};
+On \Overleaf{} you cannot run \ntindex[building!make]{\latexinline{make}};
 all customization must be done by editing the \ntindex[configuration!0-config/]{\latexinline{0-Config/}} files
 directly (see Section~\ref{sec:project_structure}).
 
@@ -141,7 +157,7 @@ engine.
     \verb!5-Figures/!           & Images                              & \textbf{edit} \\
     \verb!NOVAthesisFiles/!     & Template internals (styles, schools, strings) & do not edit \\
     \verb!Scripts/!             & Utility scripts                     & do not edit \\
-    \verb!.Build/!              & Build assistant (\texttt{build.py}) & do not edit \\
+    \verb!.Build/!              & Maintainer build tools (\texttt{nt-variant.sh}) & do not edit \\
     \bottomrule
   \end{ShadedTabular}
 \end{table}
@@ -230,8 +246,8 @@ commented-out lines show available values as documentation:
 \ntsetup{docstatus=final}        % post-examination; committee, book spine, PDF/A-2b
 \end{latexcode}
 
-  \item[\texttt{pdfa}] PDF/A archival output toggle.  Default: \texttt{true}.
-    In normal usage, PDF/A-2b output is produced automatically in
+  \item[\texttt{pdfa}] \gls{PDFA} archival output toggle.  Default: \texttt{true}.
+    In normal usage, \gls{PDFA}-2b output is produced automatically in
     \texttt{docstatus=final}; set this option to \texttt{false} to opt out.
     See Section~\ref{sub:pdfa} for details.
 \begin{latexcode}
@@ -239,8 +255,8 @@ commented-out lines show available values as documentation:
 \ntsetup{pdfa=false}  % disable PDF/A output
 \end{latexcode}
 
-  \item[\texttt{lang}] Main language of the document body (ISO 3166-1 alpha-2
-    code).  Default: \texttt{en}.
+  \item[\texttt{lang}] Main language of the document body (two- or
+    three-letter language code).  Default: \texttt{en}.
 \begin{latexcode}
 \ntsetup{lang=en}   % English (default)
 \ntsetup{lang=pt}   % Portuguese
@@ -389,6 +405,35 @@ generated PDF.  Many have defaults that vary with \texttt{school} and \texttt{do
 \ntsetup{print/aidisclosure=aidisclose}       % default package
 \ntsetup{print/aidisclosure=aidisclosure.tex} % custom file
 \end{latexcode}
+
+  \item[\texttt{print/otherlists}] Where the ``other lists'' (list of
+    figures, tables, listings, \ldots) are printed.
+    Default: \texttt{frontmatter}.
+\begin{latexcode}
+\ntsetup{print/otherlists=frontmatter}  % after the ToC (default)
+\ntsetup{print/otherlists=backmatter}   % before the appendices
+\end{latexcode}
+
+  \item[\texttt{print/glossaries}] Where the glossaries (glossary, acronyms,
+    symbols, chemical symbols) are printed, or \texttt{false} to suppress
+    them.  Default: \texttt{frontmatter}.
+\begin{latexcode}
+\ntsetup{print/glossaries=frontmatter}  % default
+\ntsetup{print/glossaries=backmatter}
+\ntsetup{print/glossaries=false}        % do not print
+\end{latexcode}
+
+  \item[\texttt{abstract/title}] Print the work title with each abstract,
+    before or after the abstract text.  Default: \texttt{none}.
+    The alignment of the title block is set with
+    \texttt{abstract/title/align} (\texttt{left}, \texttt{center}, or
+    \texttt{right}; default: \texttt{center}).
+\begin{latexcode}
+\ntsetup{abstract/title=none}    % default
+\ntsetup{abstract/title=before}  % title above the abstract
+\ntsetup{abstract/title=after}   % title below the abstract
+\ntsetup{abstract/title/align=left}
+\end{latexcode}
 \end{description}
 
 %%-----------------------------------------------------------------------
@@ -436,36 +481,40 @@ below should be set together:
 \ntsetup{print/sdgs/vspace=4mm}       % vertical gap below icons
 \end{latexcode}
 
-The \texttt{type} option selects the icon variant: \texttt{inverted} (colour on white background), \texttt{normal} (colour on coloured background), or \texttt{mono} (monochrome on white background).  Table~\ref{tab:sdgs} lists all 17 SDGs with their icon (\texttt{inverted} variant), title, and goal description.
+The \texttt{type} option selects the icon variant: \texttt{inverted} (colour on white background), \texttt{normal} (colour on coloured background), or \texttt{mono} (monochrome on white background).  Table~\ref{tab:sdgs}\footnote{Table~\ref{tab:sdgs} is intentionally in a page with differente dimensions (corresponding to a rotated page) to illustrate the funcitonality of the \texttt{stocksize} package.} lists all 17 SDGs with their icon (\texttt{inverted} variant), title, and goal description.
 
+\newstocksize{layoutsize={297mm,210mm},keepmargins}
 \begin{center}
 {\small\rowcolors{2}{rowgray}{white}%
 \renewcommand{\arraystretch}{1.4}%
 \begin{longtable}{@{}cp{\dimexpr0.32\linewidth}p{\dimexpr0.52\linewidth}@{}}
+  \caption{The 17 UN Sustainable Development Goals (SDGs) — \texttt{inverted} icon variant.}
+  \label{tab:sdgs}\\
+  \rowcolor{headgray}
+  \textbf{Icon} & \textbf{Title} & \textbf{Goal} \\\endfirsthead
   \rowcolor{headgray}
   \textbf{Icon} & \textbf{Title} & \textbf{Goal} \\\endhead
   %
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/1-i}  & \textbf{1 — No Poverty}                             & End poverty in all its forms everywhere. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/2-i}  & \textbf{2 — Zero Hunger}                            & End hunger, achieve food security, improve nutrition, and promote sustainable agriculture. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/3-i}  & \textbf{3 — Good Health and Well-being}              & Ensure healthy lives and promote well-being for all at all ages. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/4-i}  & \textbf{4 — Quality Education}                      & Ensure inclusive and equitable quality education and promote lifelong learning opportunities. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/5-i}  & \textbf{5 — Gender Equality}                        & Achieve gender equality and empower all women and girls. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/6-i}  & \textbf{6 — Clean Water and Sanitation}              & Ensure availability and sustainable management of water and sanitation for all. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/7-i}  & \textbf{7 — Affordable and Clean Energy}             & Ensure access to affordable, reliable, sustainable, and modern energy for all. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/8-i}  & \textbf{8 — Decent Work and Economic Growth}         & Promote sustained, inclusive, and sustainable economic growth, full employment, and decent work. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/9-i}  & \textbf{9 — Industry, Innovation and Infrastructure} & Build resilient infrastructure, promote inclusive and sustainable industrialization, and foster innovation. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/10-i} & \textbf{10 — Reduced Inequalities}                  & Reduce inequality within and among countries. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/11-i} & \textbf{11 — Sustainable Cities and Communities}     & Make cities and human settlements inclusive, safe, resilient, and sustainable. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/12-i} & \textbf{12 — Responsible Consumption and Production} & Ensure sustainable consumption and production patterns. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/13-i} & \textbf{13 — Climate Action}                        & Take urgent action to combat climate change and its impacts. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/14-i} & \textbf{14 — Life Below Water}                      & Conserve and sustainably use the oceans, seas, and marine resources. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/15-i} & \textbf{15 — Life on Land}                          & Protect, restore, and promote sustainable use of terrestrial ecosystems and halt biodiversity loss. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/16-i} & \textbf{16 — Peace, Justice and Strong Institutions} & Promote peaceful and inclusive societies, provide access to justice, and build accountable institutions. \\
-  \includegraphics[width=1.15cm]{\DIRIMAGES/sdg-en/17-i} & \textbf{17 — Partnerships for the Goals}            & Strengthen the means of implementation and revitalize the global partnership for sustainable development. \\
-  \caption{The 17 UN Sustainable Development Goals (SDGs) — \texttt{inverted} icon variant.}
-  \label{tab:sdgs}
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/1-i}  & \textbf{1 — No Poverty}                             & End poverty in all its forms everywhere. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/2-i}  & \textbf{2 — Zero Hunger}                            & End hunger, achieve food security, improve nutrition, and promote sustainable agriculture. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/3-i}  & \textbf{3 — Good Health and Well-being}              & Ensure healthy lives and promote well-being for all at all ages. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/4-i}  & \textbf{4 — Quality Education}                      & Ensure inclusive and equitable quality education and promote lifelong learning opportunities. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/5-i}  & \textbf{5 — Gender Equality}                        & Achieve gender equality and empower all women and girls. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/6-i}  & \textbf{6 — Clean Water and Sanitation}              & Ensure availability and sustainable management of water and sanitation for all. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/7-i}  & \textbf{7 — Affordable and Clean Energy}             & Ensure access to affordable, reliable, sustainable, and modern energy for all. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/8-i}  & \textbf{8 — Decent Work and Economic Growth}         & Promote sustained, inclusive, and sustainable economic growth, full employment, and decent work. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/9-i}  & \textbf{9 — Industry, Innovation and Infrastructure} & Build resilient infrastructure, promote inclusive and sustainable industrialization, and foster innovation. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/10-i} & \textbf{10 — Reduced Inequalities}                  & Reduce inequality within and among countries. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/11-i} & \textbf{11 — Sustainable Cities and Communities}     & Make cities and human settlements inclusive, safe, resilient, and sustainable. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/12-i} & \textbf{12 — Responsible Consumption and Production} & Ensure sustainable consumption and production patterns. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/13-i} & \textbf{13 — Climate Action}                        & Take urgent action to combat climate change and its impacts. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/14-i} & \textbf{14 — Life Below Water}                      & Conserve and sustainably use the oceans, seas, and marine resources. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/15-i} & \textbf{15 — Life on Land}                          & Protect, restore, and promote sustainable use of terrestrial ecosystems and halt biodiversity loss. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/16-i} & \textbf{16 — Peace, Justice and Strong Institutions} & Promote peaceful and inclusive societies, provide access to justice, and build accountable institutions. \\
+  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/17-i} & \textbf{17 — Partnerships for the Goals}            & Strengthen the means of implementation and revitalize the global partnership for sustainable development. \\
 \end{longtable}}
 \end{center}
+\restorestocksize
 
 %%-----------------------------------------------------------------------
 \subsection{Indexing}
@@ -515,16 +564,16 @@ label in the margin.
 
 \begin{latexcode}
 % Hyperlink color for glossary entries (default: black)
-\ntsetup{glossaries/color/gls=SteelBlue}
+\ntsetup{color/glossaries/gls=SteelBlue}
 
 % Show back-references in glossary entries (default: true)
 \ntsetup{glossaries/list/reverse=false}
 
 % Glossary column widths
-\ntlatesetup{glossaries/layout={>{\raggedright}p{0.2\textwidth}X}}
+\ntsetup{glossaries/layout={>{\raggedright}p{0.2\textwidth}X}}
 
-% Include the Table of Contents as an entry in itself (default: false)
-\ntsetup{tocintoc=true}
+% Include the Table of Contents as an entry in itself (default: true)
+\ntsetup{tocintoc=false}
 
 % Book spine width (default: 1cm)
 \ntsetup{spine/width=2cm}
@@ -991,8 +1040,9 @@ The order in which abstracts appear is controlled by
 \ntaddfile{glossaries}[symbols]{symbols}
 \end{latexcode}
 
-Each file uses standard \texttt{glossaries} package commands
-(\verb!\newglossaryentry!, \verb!\newacronym!, etc.). To include them in your text, use the \latexinline{\gls{label}} command.
+Each file uses standard \texttt{glossaries} package commands such as 
+\verb!\newglossaryentry!, \verb!\newacronym!, etc. 
+To include them in your text, use the \latexinline{\gls{label}} command.
 
 %%-----------------------------------------------------------------------
 \subsection{Main Chapters}
@@ -1056,17 +1106,31 @@ Table~\ref{tab:bundled_images} shows the available images.
   \caption{Institutional logo images bundled in \texttt{NOVAthesisFiles/Images/}.}
   \label{tab:bundled_images}
   \centering\small
-  \begin{ShadedTabular}{cll}
+  \begin{ShadedTabularX}{\textwidth}{llX}
     \toprule
-    \thead{Preview} & \thead{File name} & \thead{Description} \\
-    \includegraphics[height=1.2cm]{\DIRIMAGES/FCT_logo_positive}          & \verb!FCT_logo_positive!          & FCT logo (colour) \\
-    \includegraphics[height=1.2cm]{\DIRIMAGES/FCT_logo_negative}          & \verb!FCT_logo_negative!          & FCT logo (negative / white) \\
-    \includegraphics[height=1.2cm]{\DIRIMAGES/republica_portuguesa}        & \verb!republica_portuguesa!        & República Portuguesa emblem \\
-    \includegraphics[height=1.2cm]{\DIRIMAGES/republica_portuguesa_CTES}   & \verb!republica_portuguesa_CTES!   & República Portuguesa — CTES variant \\
-    \includegraphics[height=1.2cm]{\DIRIMAGES/Logo_Governo_Portugal}       & \verb!Logo_Governo_Portugal!       & Governo de Portugal logo \\
-    \includegraphics[height=1.2cm]{\DIRIMAGES/Logo_UE_FSE}                 & \verb!Logo_UE_FSE!                 & EU / Fundo Social Europeu logo \\
+    \thead{Preview} 
+            & \thead{File name} 
+                    & \thead{Description} \\
+    \includegraphics[height=0.9cm,align=c]{\DIRIMAGES/FCT_logo_positive}          
+            & \texttt{FCT\_logo\_positive}
+                    & FCT logo (colour) \\
+    \includegraphics[height=0.9cm,align=c]{\DIRIMAGES/FCT_logo_negative}          
+            & \texttt{FCT\_logo\_negative}          
+                    & FCT logo (negative / white) \\
+    \includegraphics[height=0.9cm,align=c]{\DIRIMAGES/republica_portuguesa}        
+            & \texttt{republica\_portuguesa}        
+                    & República Portuguesa emblem \\
+    \includegraphics[height=0.9cm,align=c]{\DIRIMAGES/republica_portuguesa_CTES}   
+            & \texttt{republica\_portuguesa\_CTES}   
+                    & República Portuguesa — CTES variant \\
+    \includegraphics[height=0.9cm,align=c]{\DIRIMAGES/Logo_Governo_Portugal}       
+            & \texttt{Logo\_Governo\_Portugal}       
+                    & Governo de Portugal logo \\
+    \includegraphics[height=0.9cm,align=c]{\DIRIMAGES/Logo_UE_FSE}                 
+            & \texttt{Logo\_UE\_FSE}                 
+                    & EU / Fundo Social Europeu logo \\
     \bottomrule
-  \end{ShadedTabular}
+  \end{ShadedTabularX}
 \end{table}
 
 
@@ -1129,11 +1193,11 @@ the differences.
     Integrity statement     & no  & yes & yes \\
     Evaluation committee    & no  & no  & yes \\
     Book spine              & no  & no  & yes \\
-    PDF/A-2b output         & no  & no  & yes \\
+    \gls{PDFA}-2b output    & no  & no  & yes \\
     \bottomrule
   \end{ShadedTabular}
 \end{table}
-\noindent See Section~\ref{sub:pdfa} for details on the PDF/A archival output.
+\noindent See Section~\ref{sub:pdfa} for details on the \gls{PDFA} archival output.
 
 A typical workflow:
 \begin{enumerate}
@@ -1142,7 +1206,7 @@ A typical workflow:
     jury — a clean \gls{PDF} without the committee members.
 
   \item Switch to \texttt{final} after the examination — includes the
-    committee, the book spine, and produces a PDF/A-2b archival document
+    committee, the book spine, and produces a \gls{PDFA}-2b archival document
     (see Section~\ref{sub:pdfa}).
 \end{enumerate}
 
@@ -1157,15 +1221,43 @@ A typical workflow:
 \label{sub:make}
 %%-----------------------------------------------------------------------
 
-The \texttt{Makefile} at the project root wraps \texttt{latexmk}:
+The \texttt{Makefile} at the project root wraps \texttt{latexmk} and provides a set of commands to manage the entire document lifecycle. You can run \bashinline{make help} at any time to see the full list of available targets.
+
+\paragraph{Basic Compilation.} These targets handle the multi-pass build (including bibliography) using specific engines:
 \begin{bashcode}
-make        # auto-detect engine (usually LuaLaTeX)
-make lua    # force LuaLaTeX
-make xe     # force XeLaTeX
-make pdf    # force pdfLaTeX
-make view   # build and open the PDF viewer
-make clean  # remove auxiliary files
+make        # build with LuaLaTeX (recommended default)
+make lua    # build using LuaLaTeX
+make xe     # build using XeLaTeX
+make pdf    # build using pdfLaTeX
 \end{bashcode}
+
+\paragraph{Viewing and Debugging.}
+\begin{bashcode}
+make view   # build (if needed) and open the PDF in the default viewer
+make watch  # rebuild automatically every time a file is saved
+make log    # show the LaTeX log file
+\end{bashcode}
+
+\paragraph{Cleaning Files.}
+\begin{bashcode}
+make clean      # remove auxiliary files (keep the PDF)
+make distclean  # same as clean, but also remove the PDF and SyncTeX files
+\end{bashcode}
+
+\paragraph{Variables.} The behavior is adjusted with variables appended to the command:
+\begin{bashcode}
+make V=1                        # verbose (raw LaTeX output)
+make BATCH=1                    # batch mode, never stops at errors
+make TL=2024                    # use the TeX Live 2024 release
+make NT="doctype=msc,lang=pt"   # override \ntsetup options (see below)
+make FILE=mythesis              # explicit root file
+\end{bashcode}
+
+\paragraph{Overrides.} The \verb!NT! variable accepts any comma-separated
+list of \latexinline{\ntsetup} options; they take precedence over the values
+in \verb!0-Config/1_novathesis.tex!, without editing any file.  This is the
+easiest way to build for another school, language, or document type.  See
+Chapter~\ref{app:build} for the full reference.
 
 %%-----------------------------------------------------------------------
 \subsection{Using \texttt{latexmk} Directly}
@@ -1173,26 +1265,29 @@ make clean  # remove auxiliary files
 %%-----------------------------------------------------------------------
 
 \begin{bashcode}
-latexmk -shell-escape -file-line-error -lualatex template
+latexmk -pdflua -shell-escape -file-line-error template
 \end{bashcode}
+
+The \verb!latexmkrc! file at the project root is loaded automatically and
+already configures the auxiliary directory, Biber, and the glossaries.
 
 Remember to select \textbf{biber} (not bibtex) as the bibliography
 processor — either in your editor preferences or via
 \verb!latexmk!'s default settings.
 
 %%-----------------------------------------------------------------------
-\subsection{Using \texttt{build.py}}
-\label{sub:build_py}
+\subsection{Building for Another School}
+\label{sub:build_variants}
 %%-----------------------------------------------------------------------
 
-The \verb!.Build/build.py! script builds for a specific school without
-modifying the \verb!0-Config/! files manually.  It is primarily intended
-for CI use and for maintainers generating sample PDFs.  For full
-documentation see Chapter~\ref{app:build_py}.
+The \verb!NT! overrides build for a specific school without modifying the
+\verb!0-Config/! files.  This is also what the CI pipeline and the
+maintainers use to generate sample PDFs.  For full documentation see
+Chapter~\ref{app:build}.
 
 Quick example:
 \begin{bashcode}
-python3 .Build/build.py nova/fct --doctype phd --lang en --docstatus final
+make NT="school=nova/fct,doctype=phd,lang=en,docstatus=final"
 \end{bashcode}
 
 %%-----------------------------------------------------------------------
@@ -1203,17 +1298,16 @@ python3 .Build/build.py nova/fct --doctype phd --lang en --docstatus final
 On \Overleaf{} the build is triggered by pressing \emph{Recompile}.
 Ensure the settings described in Section~\ref{sub:overleaf} are applied
 (\hologo{LuaLaTeX} compiler, Biber bibliography, \verb!template.tex! as main file).
-\Overleaf{} compiles on their servers so \texttt{make} and \texttt{build.py}
-are not available — all configuration is done by editing the
-\verb!0-Config/! files.
+\Overleaf{} compiles on their servers so \texttt{make} is not available —
+all configuration is done by editing the \verb!0-Config/! files.
 %%-----------------------------------------------------------------------
-\subsection{\ntindex[configuration!pdf/a]{PDF/A} Archival Output}
+\subsection{\texorpdfstring{\gls{PDFA}}{PDF/A} Archival Output}
 \label{sub:pdfa}
 %%-----------------------------------------------------------------------
 
 \ntindex[pdf/a!]{Archival compliance}
 When \verb!\ntsetup{docstatus=final}! is set, \novathesis{} automatically
-produces a \textbf{\gls{PDF}/A-2b} conformant document — the archival-quality
+produces a \textbf{\gls{PDFA}-2b} conformant document — the archival-quality
 format required by most institutional repositories and digital libraries.
 No configuration beyond setting \texttt{docstatus=final} is needed.
 
@@ -1229,10 +1323,10 @@ cover-page data defined in \verb!0-Config/3_cover.tex! and embedded into
 the PDF automatically.
 
 \medskip
-\noindent\textbf{PDF/A standard choice.}
-\novathesis{} targets \textbf{PDF/A-2b} (not~1b).  PDF/A-1b prohibits
+\noindent\textbf{\gls{PDFA} standard choice.}
+\novathesis{} targets \textbf{\gls{PDFA}-2b} (not~1b).  \gls{PDFA}-1b prohibits
 transparency, which is incompatible with the TikZ cover-page graphics used
-by virtually all supported schools.  PDF/A-2b lifts this restriction while
+by virtually all supported schools.  \gls{PDFA}-2b lifts this restriction while
 remaining accepted by all major institutional repositories.
 
 \medskip
@@ -1244,9 +1338,9 @@ is needed.
 
 \medskip
 \noindent\textbf{Images and colour spaces.}
-The most common cause of PDF/A validation failures is an embedded image
+The most common cause of \gls{PDFA} validation failures is an embedded image
 with a device-dependent colour space (plain RGB or CMYK) and no ICC
-profile.  PDF/A-2b requires every included image to carry an embedded
+profile.  \gls{PDFA}-2b requires every included image to carry an embedded
 ICC profile or use a calibrated colour space.  Practical guidance by
 format:
 
@@ -1286,7 +1380,7 @@ colour-space clean.
 
 \medskip
 \noindent\textbf{Opting out.}
-To disable PDF/A output even in \texttt{final} mode, uncomment the escape
+To disable \gls{PDFA} output even in \texttt{final} mode, uncomment the escape
 hatch in \verb!0-Config/1_novathesis.tex!:
 
 \begin{latexcode}
@@ -1297,9 +1391,9 @@ hatch in \verb!0-Config/1_novathesis.tex!:
 After the final build, validate with:
 \begin{itemize}
   \item \textbf{VeraPDF} (open source, \url{https://verapdf.org}) —
-        the reference PDF/A validator.
+        the reference \gls{PDFA} validator.
   \item \textbf{Adobe Acrobat Pro} — \emph{Tools → Print Production →
-        Preflight → PDF/A compliance}.
-  \item \textbf{PDF/A Live!} (online service) — quick check without local
+        Preflight → \gls{PDFA} compliance}.
+  \item \textbf{\gls{PDFA} Live!} (online service) — quick check without local
         installation.
 \end{itemize}

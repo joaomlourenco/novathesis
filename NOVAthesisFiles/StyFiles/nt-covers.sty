@@ -4,7 +4,7 @@
 %%  NOVATHESIS — nt-covers.sty
 %% ----------------------------------------------------------------------------
 %%
-%% Version 7.10.7 (2026-03-25)
+%% Version 7.11.0 (2026-06-13)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -546,7 +546,7 @@
           { }
         \nt_covers_render_page:nn { #1 } { #2 }
         \ifoptionequal { /novathesis/media } { paper }
-          { \ifcoverdefined [#1-2] { \clearpage } { \clearforchapter } }
+          { \IfStrEq { #2 } { 1 } { \ifcoverdefined [#1-2] { } { \clearpage } } { } }
           { \clearpage }
       }
       { }

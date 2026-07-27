@@ -4,7 +4,7 @@
 %%  NOVATHESIS — nt-render-matter.sty
 %% ----------------------------------------------------------------------------
 %%
-%% Version 7.10.7 (2026-03-25)
+%% Version 7.11.0 (2026-06-13)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -100,6 +100,20 @@
   }%
 }
 
+\newcommand*{\ntprintfrontpage}{%
+  \ifdocworking{}{% Only print institutional statement if provisional or final
+    \ifmaindoc{% Skip thesis plan and similar documents
+      \iftoggle{/novathesis/print/frontpage}{% if frontpage toggle is on
+        \NTRunHook{frontpage/pre}%
+        \iffileadded[\@LSHORT]{frontpage}
+          {\PrintAddedFile[\@LSHORT]{frontpage}}
+          {\PrintAddedFile{frontpage}}%
+        \NTRunHook{frontpage/post}%
+      }{}%
+    }{}%
+  }%
+}
+
 
 \newcommand{\ntprintaidisclose}{%
   \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{% use aidisclose
@@ -134,7 +148,12 @@
   \ifoptionnil{/novathesis/print/sdgs/list}{}{%
       \vfill%
       \raggedright\noindent%
-      \textbf{\GetSdgString(\@LSHORT):}\\[1ex]
+      % Fall back to the English SDG heading when the abstract language does
+      % not define one (e.g. zhs/zht, whose string files are minimal), so that
+      % SDGs + a Chinese abstract do not raise a memstore "unknown key" error.
+      \textbf{\IfMemVoidTF{SdgString}{\@LSHORT}
+                {\GetSdgString(en)}%
+                {\GetSdgString(\@LSHORT)}:}\\[1ex]
       \edef\@sdgtype{\option{/novathesis/print/sdgs/type}}
       \IfFileExists{\DIRIMAGES/sdg-\@LSHORT/1-\@sdgtype.pdf}
           {\def\@spnfolder{\DIRIMAGES/sdg-\@LSHORT}}
@@ -250,7 +269,6 @@
   \@frontmatterfalse
   \endgroup
   \NTRunHook{frontmatter/post}%
-  \NTRunHook{mainmatter/pre}%
   \ifbool{@openright}{}{% openany=true
     % Avoid cleardoublepage before "mainmatter"
     \let\oldcleardoublepage\cleardoublepage%
@@ -438,7 +456,7 @@
   {\par\centering}
   {\par}%
 
-\NewDocumentCommand { \TheCandiadteSignature } { m m }
+\NewDocumentCommand { \TheCandidateSignature } { m m }
   % #1 = place
   % #2 = ISO DATE
   {
@@ -446,13 +464,17 @@
       \StatementOneSignature%
         {\expandafter\GetCandidateString\expandafter(\GetDocAuthor(gender),\@LANG@MAIN)}
         {\GetDocAuthor(name)}%
-        {#2}
+        {#1}% place
+        {#2}% date
     \end{center}%
   }
+% Deprecated misspelled alias, kept for backwards compatibility.
+\NewCommandCopy\TheCandiadteSignature\TheCandidateSignature
 
 
 \newcounter{nadv}
 \NewDocumentCommand { \TheAdvisersSignatures } { O{20mm} m m m }
+  % #1 = space to signature rule
   % #2 = a (only advisers) | a,c (both advisers and co-advisers)
   % #3 = place
   % #4 = ISO DATE
@@ -465,30 +487,32 @@
             % \fi
             \stepcounter{nadv}
             \StrCut{##1}{/}\stgender\stname
-            \StatementOneSignature 
-              {\GetAdviserString(pref,#2,1,\stgender,\@LANG@MAIN)} 
+            \StatementOneSignature[#1]
+              {\GetAdviserString(pref,#2,1,\stgender,\@LANG@MAIN)}
               {\stname}
-              {#4}
+              {#3}% place
+              {#4}% date
         }%
       }{}%
     \end{tightcenter}
   }
 
 
-\NewDocumentCommand { \StatementOneSignature } { O{20mm} m m m }
+\NewDocumentCommand { \StatementOneSignature } { O{20mm} m m m m }
   % #1 = space to rule
   % #2 = text above
   % #3 = name
-  % #4 = date
+  % #4 = place
+  % #5 = date
   {
     \begin{minipage}[t]{6cm}
       \medskip%
-      \begin{center}  
+      \begin{center}
         #2,\par
         \vspace*{#1}
         \rule{\linewidth}{0.75pt}\par
         \textit{#3}\\
-        \PrintDateISO{#4}
+        \ifblank{#4}{}{#4,~}\PrintDateISO{#5}
       \end{center}
     \end{minipage}
   }
@@ -530,7 +554,6 @@
 }
 
 
-% \def\option@listmatch@getval#1=#2{#2}
 \newcommand*{\option@listmatch}[2]{
     % \typeout{NT LISTMATCH [#1] [#2]}%
     \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%was xStrCut
@@ -543,10 +566,61 @@
     }%
 }
 
-\newcommand*{\@loadglossaryfiles}{%
-  \@for\listitem:={glossary,acronym,symbols}\do{%
-    \iffileadded[\listitem]{glossaries}{\@nt@loadallfiles{\listitem}{glossaries}}{}%
+% Glossary sources are bib2gls .bib files.  Each file registered with
+%     \ntaddfile{glossaries}[<type>]{<name>}
+% becomes part of a bib2gls resource; no \write registers are consumed and
+% there is no \makeglossaries.  See nt-packages.sty for the record-mode setup.
+
+\newcommand*{\@nt@glssrc}{}
+
+% Add one registered source to the accumulator, refusing 7.10-era .tex files
+% with a message that says exactly what to do about it.
+\newcommand*{\@nt@glsaddsrc}[1]{%
+  \IfFileExists{#1.bib}
+    {}
+    {\IfFileExists{#1.tex}
+       {\ClassError{novathesis}
+          {Glossary source '#1.tex' is in the old (7.10.x) format}
+          {NOVAthesis 8.0 keeps glossary entries in .bib files, read by
+           bib2gls, instead of .tex files read by makeglossaries.^^J
+           Run 'make glsbib' to convert your entry files, then CHECK THE SORT
+           KEYS: the converter silently drops them, which reorders any entry
+           whose name is a macro or math markup.^^J
+           See the migration appendix of the manual for the full procedure.}}
+       {\ClassError{novathesis}
+          {Glossary source '#1.bib' not found}
+          {\ntaddfile{glossaries} registered '#1', but neither '#1.bib' nor
+           '#1.tex' exists. Check the file name in 0-Config/4_files.tex.}}%
+    }%
+  \ifdefempty{\@nt@glssrc}
+    {\xdef\@nt@glssrc{#1}}
+    {\xdef\@nt@glssrc{\@nt@glssrc,#1}}%
+}
+
+% Emit one \GlsXtrLoadResources for the given glossary types, if any file was
+% registered for them.  #1=comma list of types, #2=bib2gls selection.
+\newcommand*{\@nt@glsresource}[2]{%
+  \gdef\@nt@glssrc{}%
+  \@for\nt@glstype:=#1\do{%
+    \iffileadded[\nt@glstype]{glossaries}
+      {\@nt@foralllist{file}{glossaries/\nt@glstype}{\@nt@glsaddsrc}}
+      {}%
   }%
+  \ifdefempty{\@nt@glssrc}{}{%
+    \GlsXtrLoadResources[
+      src={\@nt@glssrc},
+      selection={#2},
+      loc-prefix={\ntglslocprefixone,\ntglslocprefixmany},
+    ]%
+  }%
+}
+
+\newcommand*{\@loadglossaryfiles}{%
+  % main + symbols reproduce what \glsaddall[types={main,symbols}] used to do:
+  % every entry is listed whether or not it is cited.  Abbreviations stay
+  % use-based, so unused acronyms do not pad the list.
+  \@nt@glsresource{glossary,symbols}{all}%
+  \@nt@glsresource{acronym}{recorded and deps}%
 }
 
 
@@ -635,7 +709,7 @@
         {}
         {
           \ClassError{novathesis}
-                     {No “copyright.clo” file was found!}{}
+                     {No 'copyright.clo' file was found!}{}
         }
     }{}%
   }{}
@@ -703,7 +777,7 @@
       % \options{/@nt/lang/shorttolong=#6}%
       \IfBooleanTF{#1}{%
         \foreigntextquote{\GetLangLong(#6)}{\ntquotetext{#7}}%
-      }{\ntquotetext#7}
+      }{\ntquotetext{#7}}
       \ifblank{#3}{}{\ntquoteauthor{#3}}%
       \ifblank{#4}{}{\ntquotewhere{#4}}%
       \ifblank{#5}{}{\ntquoteprofession{#5}}%

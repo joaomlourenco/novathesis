@@ -4,7 +4,7 @@
 %%  NOVATHESIS — 2-MainMatter/chapter-covers.tex
 %% ----------------------------------------------------------------------------
 %%
-%% Version 7.10.7 (2026-03-25)
+%% Version 7.11.0 (2026-06-13)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %%
 %% Reference chapter: the NOVAthesis cover page system.
@@ -43,7 +43,10 @@ order:
 
 \begin{enumerate}
   \item \textbf{\ntindex[covers!]{Background colour}.}  A solid \latexinline{\pagecolor{}} fills the
-        entire page.  Set with \latexinline{\thesiscover(id,bgcolor):={colorname}}.
+        entire page.  Set with:
+        \begin{latexcode}
+\thesiscover(id,bgcolor):={colorname}
+        \end{latexcode}
   \item \textbf{\ntindex[covers!]{Background image}.}  A full-bleed graphic is stretched to
         \latexinline{\paperwidth} $\times$ \latexinline{\paperheight}.  Set with
         \latexinline{\thesiscover(id,image):={filename}}.
@@ -217,16 +220,16 @@ All attributes are optional.  Defaults are shown in parentheses.
 
 \begin{center}
 \small
-\begin{tabular}{@{}llll@{}}
+\begin{ShadedTabular}[white]{@{}llll@{}}
 \hline
 \textbf{Attribute} & \textbf{Values} & \textbf{Default} & \textbf{Description} \\
 \hline
-\texttt{status} & \texttt{working}, \texttt{provisional}, \texttt{final} & (all) & Filter by doc status \\
+\texttt{status} & \makecell[lt]{\texttt{working},\\\quad\texttt{provisional},\\\quad\texttt{final}} & (all) & Filter by doc status \\
 \texttt{degree} & \texttt{phd}, \texttt{msc}, \texttt{bsc}, \ldots & (all) & Filter by degree type \\
 \hline
 \texttt{width}  & \textit{dim} & text width & Box width \\
 \texttt{height} & \textit{dim} & natural & Fixed box height \\
-\texttt{height/phd}, \texttt{height/msc} & \textit{dim} & — & Per-doctype height override \\
+\makecell[lt]{\texttt{height/phd},\\\quad\texttt{height/msc}} & \textit{dim} & — & Per-doctype height override \\
 \texttt{minheight} & \textit{dim} & \texttt{0pt} & Minimum box height \\
 \texttt{hspace} & \textit{dim} & \texttt{0pt} & Horizontal offset from left margin \\
 \hline
@@ -242,7 +245,7 @@ All attributes are optional.  Defaults are shown in parentheses.
 \texttt{tikz}   & \texttt{true}, \texttt{false} & \texttt{false} & Treat content as raw TikZ overlay code \\
 \texttt{newpar} & \texttt{true}, \texttt{false} & \texttt{true} & Emit \latexinline{\par} after element \\
 \hline
-\end{tabular}
+\end{ShadedTabular}
 \end{center}
 
 \medskip
@@ -433,8 +436,8 @@ Alternatively, register two separate elements with complementary
 
 Setting \texttt{tikz=true} in the attribute list causes the content block to
 be collected as \emph{overlay TikZ code} rather than box content.  The block
-is executed inside a \latexinline{tikzpicture[remember picture, overlay]} that covers
-the whole page, drawn after the text-layer minipage has been placed.
+is executed as a \latexinline{tikzpicture[remember picture, overlay]}
+covering the whole page, drawn after the text-layer minipage has been placed.
 
 This means the coordinate origin is the \latexinline{current page} node, not the
 text area, so you can position elements anywhere on the page with absolute
@@ -626,12 +629,13 @@ corner of the text area.
 \medskip
 A fast iteration workflow:
 \begin{bashcode}
-# Build the cover only (mode=2 skips all document content)
-python .Build/build.py nova/fct --mode 2
+# Rebuild automatically on every save, for the school being tuned
+make watch NT="school=nova/fct"
 \end{bashcode}
 
-This rebuilds only the front cover page, giving fast feedback when tuning
-positions and margins.
+The \verb!NT! override selects the school without editing any configuration
+file, and \verb!make watch! rebuilds on every save, giving fast feedback
+when tuning positions and margins.
 
 
 %%=======================================================================
@@ -654,8 +658,7 @@ The following sequence describes what happens when
         full-page \latexinline{tikzpicture} overlay renders it.
   \item \texttt{cover/1-1/text/pre} hook.
   \item Cover margins are read; a \latexinline{tikzpicture} overlay anchors a
-        \latexinline{minipage} at \latexinline{current page.north west} offset by those
-        margins.
+        \latexinline{minipage} at the page's top-left, offset by those margins.
   \item Inside the minipage, each element registered with
         \latexinline{\ntaddtocover[…]{1-1}} is processed in order.
         For each element the engine: resolves \texttt{vspace}, typeset the
@@ -819,16 +822,16 @@ Supported formats: \texttt{.pdf} (preferred for vector logos), \texttt{.png},
 \texttt{.jpg}.
 
 \medskip
-\noindent\textbf{4.  Test with cover-only mode:}
+\noindent\textbf{4.  Test the new school} (no configuration file is edited):
 \begin{bashcode}
-python .Build/build.py myuniv/myfac --mode 2
+make NT="school=myuniv/myfac"
 \end{bashcode}
 
 \medskip
 \noindent\textbf{5.  Test all document types:}
 \begin{bashcode}
-python .Build/build.py myuniv/myfac --doctype phd --docstatus final
-python .Build/build.py myuniv/myfac --doctype msc --docstatus final
+make NT="school=myuniv/myfac,doctype=phd,docstatus=final"
+make NT="school=myuniv/myfac,doctype=msc,docstatus=final"
 \end{bashcode}
 
 \medskip
@@ -923,7 +926,7 @@ elements below remain at a predictable vertical position.
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{ShadedTabular}{lp{8cm}}
+\begin{ShadedTabular}{ll}
   \toprule
   \textbf{Command / Setting} & \textbf{Purpose} \\
   % \midrule
@@ -938,7 +941,7 @@ elements below remain at a predictable vertical position.
   \latexinline{\NTAddToHook{cover/<id>/pre}{...}}  & Inject code before a cover \\
   \latexinline{\debuggrid[color]}                  & Render a measurement grid \\
   \latexinline{\ntsetup{debug={cover}}}            & Enable cover debug mode \\
-  \latexinline{python .Build/build.py ... --mode 2} & Build cover pages only \\
+  \latexinline{make NT="school=<univ/school>"}     & Build for a given school \\
   \bottomrule
 \end{ShadedTabular}
 \end{center}

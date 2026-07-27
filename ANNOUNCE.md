@@ -1,55 +1,69 @@
-# Announcing NOVAthesis v7.10.0
+# Announcing NOVAthesis v8.0.0
 
-We are thrilled to announce the release of **NOVAthesis v7.10.0**, continuing our mission to provide a robust, modern, and flexible LaTeX template for academic theses and dissertations across multiple Portuguese institutions.
+We are happy to announce the release of **NOVAthesis v8.0.0**, a release focused on speed, on a simpler build system, and on documentation you can trust.
 
-This release brings significant new language support, expands our institutional coverage, and refines the core automation that makes NOVAthesis easy to use.
+This is a **major** release: glossaries changed their underlying technology, and existing documents need a short, guided migration.
 
-## Highlights of v7.10.0
+## Highlights of v8.0.0
 
-### Chinese Language Support 🇨🇳
-We have introduced full support for Chinese abstracts, covering both **Simplified (`zhs`)** and **Traditional (`zht`)** scripts. This includes optimized CJK font loading and refactored logic to handle these scripts seamlessly alongside European languages.
+### Much faster builds ⚡
 
-### New School Support: IPL/ISEL
-Comprehensive support for **IPL/ISEL (Instituto Superior de Engenharia de Lisboa)** is now available. This includes:
-- Custom cover layouts and styles.
-- Institutional logos and wireframe assets.
-- Integrated integrity statements compliant with ISEL regulations.
+Glossaries used to consume 4 of the 16 write registers available in pdfTeX. That forced the template to load the `morewrites` package, which made every pdfLaTeX pass roughly **9 times slower**. Glossaries are now processed by **`bib2gls`**, which uses **no** write registers at all.
 
-### Automation & Refactoring
-- **NOVA FCSH:** The integrity statement generation is now fully automated, simplifying the workflow for students.
-- **Statement Processing:** A unified refactoring of how statements (integrity, copyright) are generated improves maintainability and consistency.
+The result: a full pdfLaTeX build of the manual went from **109 seconds to 36 seconds**. Glossaries also no longer require `-shell-escape`.
 
----
+As a result, `morewrites` is **no longer loaded by default**. The rare register-heavy document that overshoots the 16-file limit can bring it back with `FASTWRITES=0` (or `\def\ntmorewrites{}` before `\documentclass`); it is a no-op under LuaLaTeX.
 
-## Recent Major Features (v7.x Series)
+### ⚠️ Breaking change: glossaries now use `.bib` files
 
-In case you missed them, here are some of the game-changing features introduced in recent updates:
+Acronyms, glossary terms and symbols are now defined in **`.bib` files** processed by **`bib2gls`**, instead of `.tex` files processed by `makeglossaries`.
 
-### AI Disclosure Statements (v7.8+)
-In response to the growing use of AI tools in academia, we introduced the **`aidisclose`** package. This feature allows students to formally and transparently declare the use of AI tools in their work, adhering to evolving academic integrity standards.
+To migrate:
 
-### Sustainable Development Goals (SDG) (v7.6+)
-You can now easily tag your thesis with **Sustainable Development Goals (SDG)** icons. The template supports the full set of 17 icons in English and Portuguese, with flexible styling options (standard, inverted, mono) to match your document's aesthetic.
+1. Run **`make glsbib`** to convert your `1-FrontMatter/*.tex` entry files to `.bib`.
+2. **Re-add any `sort` keys.** The conversion tool silently drops them. `make glsbib` counts them and warns you per file.
+3. Convert symbol entries from `@entry` to `@symbol`.
+4. Delete `\glsaddall` if your document calls it. It has no `bib2gls` equivalent.
+5. Delete the old `.tex` entry files once the output looks right.
 
-### Enhanced Page Layouts (v7.8+)
-We completely rewrote the page geometry handling (migrating from `memoir` custom methods to the standard `geometry` package and a new `stocksize` package). This ensures more robust and predictable page layouts, including support for `compact` options and better handling of varied paper sizes (`b5paper`, `a3` inserts).
+You cannot miss this migration by accident: a registered `.tex` entry file now **stops the build** with an error that names the cause and the fix. The full procedure is in the *Migrating from 7.10.x* appendix of the manual.
 
-### Expanding Institutional Support
-The NOVAthesis family continues to grow! Recent versions have added or significantly improved support for:
-- **ULisboa:** FMV (Veterinary Medicine), FCUL (Sciences), IST (Técnico), ISEG (Economics & Management).
-- **NOVA:** ITQB, ENSP, FCSH partnerships.
-- **UMinho:** Comprehensive support for various schools.
+**New requirement:** `bib2gls` is a Java program. It ships with TeX Live but needs a **JRE**. Overleaf provides one. Check your local installation with `bib2gls --version`.
 
-### Better Build Tools
-Our build system (`Makefile` and scripts) has seen massive improvements, offering smoother compilation workflows with `latexmk`, better font loading (especially for LuaLaTeX), and smarter handling of metadata and bibliography backends (`biblatex`/`biber`).
+### Build any variant from the command line
+
+Any `\ntsetup` option can now be set at build time, without editing a single configuration file.
+
+```bash
+make NT="doctype=msc,school=uminho/ec,lang=pt"
+```
+
+This is the easiest way to try another school, language, or document type, and to keep several variants of the same document.
+
+### A simpler build system
+
+The build system was rebuilt from scratch around `latexmk`. The `Makefile` is now a thin wrapper, all LaTeX knowledge lives in `latexmkrc`, and the maintainer tooling moved to a separate `Makefile.dev` that is not shipped with the template.
+
+```bash
+make            # build with LuaLaTeX
+make watch      # rebuild on every save
+make view       # build and open the PDF
+make help       # all targets and variables
+```
+
+Useful variables: `V=1` (verbose), `BATCH=1` (for CI), `TL=2024` (pick a TeX Live release), `FILE=<root>`.
+
+### Documentation you can trust
+
+The whole manual and the comments in `0-Config/` were audited against the code. Several options were documented with wrong names or wrong defaults, and one documented command did not exist at all. Those are fixed, and four previously undocumented options are now described. See the release notes for the detailed list.
 
 ---
 
 ## How to Update
 
-If you are starting a new thesis, simply download the latest version from our [GitHub repository](https://github.com/joaomlourenco/novathesis) or clone the specific branch for your school.
+If you are starting a new thesis, download the latest version from our [GitHub repository](https://github.com/joaomlourenco/novathesis) or clone the branch for your school.
 
-If you are updating an existing document, please check the `RELEASE_NOTES.md` for specific migration guides, especially if you have customized your configuration files.
+If you are updating an existing document, read the **Breaking change** section above and the *Migrating from 7.10.x* appendix of the manual. `RELEASE_NOTES.md` has the complete list of changes.
 
 ---
 

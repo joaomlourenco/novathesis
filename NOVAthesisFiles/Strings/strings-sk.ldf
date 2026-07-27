@@ -199,32 +199,32 @@
 
 \SetDissertationString(bsc,sk)={%
       Práca predložená na získanie akademického titulu %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ v študijnom odbore\\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) v študijnom odbore\\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 \SetDissertationString(mscplan,sk)={%
       Medzivýkaz predložený na získanie akademického titulu %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ v študijnom odbore\\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) v študijnom odbore\\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 \SetDissertationString(msc,sk)={%
       Diplomová práca predložená na získanie akademického titulu %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ v študijnom odbore\\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) v študijnom odbore\\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 \SetDissertationString(phdplan,sk)={%
       Plán dizertačnej práce predložený na získanie akademického titulu %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ v študijnom odbore\\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) v študijnom odbore\\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 \SetDissertationString(phdprop,sk)={%
       Návrh dizertačnej práce predložený na získanie akademického titulu %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ v študijnom odbore\\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) v študijnom odbore\\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 \SetDissertationString(phd,sk)={%
       Dizertačná práca predložená na získanie akademického titulu %
-      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ v študijnom odbore\\[1ex]%
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) v študijnom odbore\\[1ex]%
       \textbf{\GetMajorField(\@LANG@COVER)}}
 
 

@@ -23,30 +23,30 @@
 
 % Redefine strings
 \SetDissertationString(bsc,pt)={Relatório para obtenção do Grau de %
-\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
 \SetDissertationString(mscplan,pt)={Relatório intermédio para obtenção do Grau de %
-\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
 \SetDissertationString(msc,pt)={Dissertação para obtenção do Grau de %
-\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
 \SetDissertationString(phdplan,pt)={Relatório intermédio para obtenção do Grau de %
-\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
 \SetDissertationString(phdprop,pt)={Proposta de dissertação para obtenção do Grau de %
-\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
 \SetDissertationString(phd,pt)={Dissertação para obtenção do Grau de %
-\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER) em\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
 
 \SetDissertationString(bsc,en)={Report to obtain the Degree of %
-\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
 \SetDissertationString(mscplan,en)={Intermediate dissertation to obtain the Degree of %
-\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
 \SetDissertationString(msc,en)={Dissertation to obtain the Degree of %
-\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
 \SetDissertationString(phdplan,en)={Thesis plan to obtain the Degree of %
-\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
 \SetDissertationString(phdprop,en)={Thesis proposal to obtain the Degree of %
-\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
 \SetDissertationString(phd,en)={Thesis to obtain the Degree of %
-\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER)\ in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
+\GetDegreeString(\@DOCTYPE,\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\[1ex] \textbf{\fontsize{14}{14}\selectfont\GetMajorField(\@LANG@COVER)}}
 
 
 %%=======================================================================

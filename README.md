@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 NOVATHESIS — README.md
 
-Version 7.10.7 (2026-03-25)
+Version 7.11.0 (2026-06-13)
 Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 -----------------------------------------------------------------------------
 -->
@@ -12,6 +12,27 @@ Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 # NOVAthesis LaTeX Template
 
 ---
+
+> ### ⚠️ Upgrading from 7.10.x or earlier? Read this first.
+>
+> **Version 8.0 changes where glossary entries live.** Acronyms, glossary terms and
+> symbols moved from `.tex` files (`\newacronym`, `\newglossaryentry`, processed by
+> `makeglossaries`) to `.bib` files processed by **`bib2gls`**.
+>
+> * Run **`make glsbib`** to convert your entry files, then **re-add any `sort` keys** —
+>   the converter drops them, which silently reorders symbols and any entry whose name
+>   is a command. The build still succeeds, so nothing warns you.
+> * Delete `\glsaddall` if your document calls it.
+> * **`bib2gls` needs a Java runtime.** Overleaf has one; check locally with
+>   `bib2gls --version`.
+>
+> A registered `.tex` entry file now stops the build with an explanatory error, so you
+> cannot miss the migration. Full procedure: the *Migrating from 7.10.x* appendix of
+> the manual (`template.pdf`).
+>
+> **Why:** glossaries no longer consume any of pdfTeX's 16 write registers, so most
+> documents no longer need the `morewrites` package — a full pdfLaTeX build of the
+> manual went from **109 s to 36 s**.
 
 <div>
 <img/ src="http://joaomlourenco.github.io/novathesis/novathesis-latex-logo-v5.jpg" width="400"/>
@@ -51,6 +72,8 @@ Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 * [10\. Disclaimer](#10-disclaimer)
 * [11\. Deprecated Word Templates](#11-deprecated-word-templates)
 * [12\. Please give this repository a ⭐️](#12-please-give-this-repository-a-️%EF%B8%8F)
+* [13\. Contributors](#13-contributors-thank-you)
+* [14\. Say thank you!](#14-say-thank-you)
 
 ---
 
@@ -90,6 +113,8 @@ The template is open‑source and actively maintained.
 
 - `latexmk` support
 - `biber` for bibliographies
+- `bib2gls` for glossaries, acronyms and symbols — ships with TeX Live, but **needs a Java runtime (JRE)**
+  on your machine. Overleaf provides one; check a local install with `bib2gls --version`.
 - Overleaf‑ready
 
 ---
@@ -282,12 +307,44 @@ make
 otherwise run
 
 ```bash
-latexmk -shell-escape -file-line-error -luapdf template
+latexmk -pdflua -shell-escape -file-line-error template
 ```
+
+(the settings in the `latexmkrc` file at the project root are loaded automatically by `latexmk`).
+
+> ⚠️ **Security note — `-shell-escape`.** The template compiles with shell‑escape **enabled**, because some features run external programs during the build: `minted` (source‑code highlighting) calls Pygments, and selecting a bundled proprietary font (e.g. Calibri, Arial) downloads it over the network. (Glossaries no longer require shell‑escape: since 8.0 they are built by `bib2gls`, which `latexmk` runs directly.) Shell‑escape means that **compiling a document can run commands on your computer with your user account's privileges** — there is no sandbox. In practice this is safe when you build the official template and your own content, but you should **only compile `.tex` files, school configurations, and font styles that you trust.** Treat a thesis project you received from someone else the same way you would treat any script before running it.
 
 **Important:** The template uses **`biber`** by default, not `bibtex`.  However, `bibtex` can be also be used.
 
-### 4.1.4. Configure & Recompile
+### 4.1.4. Makefile Targets
+
+The `Makefile` is a thin wrapper around `latexmk` and provides several targets to simplify your workflow:
+
+- **Compilation Engines:**
+  - `make` or `make lua`: Build using `lualatex` (recommended default).
+  - `make pdf`: Build using `pdflatex`.
+  - `make xe`: Build using `xelatex`.
+- **Viewing & Logs:**
+  - `make v` or `make view`: Build the PDF and open it in your default viewer.
+  - `make watch`: Rebuild automatically every time a file is saved.
+  - `make log`: Show the LaTeX log file.
+- **Cleaning:**
+  - `make clean`: Remove build artifacts (keeps the PDF).
+  - `make distclean`: Also remove the PDF and SyncTeX files.
+- **Help:**
+  - `make help`: Display a help message with all targets and variables.
+
+The behavior can be adjusted with variables, e.g.:
+
+```bash
+make V=1                                  # verbose (raw LaTeX output)
+make NT="doctype=msc,lang=pt"             # override any \ntsetup option
+make view VIEWER="open -a Skim"           # choose the PDF viewer
+```
+
+The `NT` variable accepts any comma-separated list of `\ntsetup` options and takes precedence over `0-Config/1_novathesis.tex`, without editing any file. This is handy for testing another school, language, or document type.
+
+### 4.1.5. Configure & Recompile
 
 **Carefully edit** the files inside the `0-Config/` directory to set your document metadata, e.g.:
 
@@ -308,7 +365,7 @@ NOVAthesis is available as an official Overleaf template.  Despite the regular u
 2. [Upload the ZIP to Overleaf](www.overleaf.com);
 3. Set `template.tex` as the root document;
 4. Compile;
-5. Follow the steps above (*4.1.4. Configure & Recompile*) to customize you document.
+5. Follow the steps above (*4.1.5. Configure & Recompile*) to customize your document.
 
 **Warning:** You will need a paid Overleaf account. The template will not compile under Overleaf Free Plan, which has a 20‑second compilation limit.
 
@@ -321,17 +378,18 @@ template.tex            # Document main file (do not change this fil
 0-Config/               # Document configuration and customization
   ├── 0_memoir.tex      #   low level customization (for advanced users only)
   ├── 1_novathesis.tex  #   main document customization file
-  ├── 2_biblatex.tex    #   biliography customization
+  ├── 2_biblatex.tex    #   bibliography customization
   ├── 3_cover.tex       #   cover contents/metadata
   ├── 4_files.tex       #   files to include in the document
-  ├── 5_packages.tex    #   user customization (pckages and commands)
+  ├── 5_packages.tex    #   user customization (packages and commands)
   ├── 6_list_of.tex     #   ordering for the lists (for advanced users only)
+  ├── 7-aidisclose.tex  #   AI usage disclosure statement
   └── 9_*.tex           #   School‑specific configs
 1-FrontMatter/          # Abstract, Dedicatory, …
 2-MainMatter/           # Document main content (main chapters)
 3-BackMatter/           # Appendices and Annexes
-4-Bibliography          # Bibliography databse (your .bib files)
-5-Figures/              # All the figures uaed in the document
+4-Bibliography/         # Bibliography database (your .bib files)
+5-Figures/              # All the figures used in the document
 ```
 
 Each configuration file has a single, well‑defined purpose to keep the project modular.
@@ -368,10 +426,12 @@ Contributions are welcome:
 
 A large and growing list including:
 
-- NOVA University Lisbon (FCT, IMS, FCSH, ITQB, ENSP)
-- University of Lisbon (ISEG, IST, FC, FMV)
-- University of Minho (EAD, EC, ED, EEG, EENG, ELACH, EMED, EPSI, ESE, I3BS, ICS, IE)
-- Universidade Lusófona
+- NOVA University Lisbon (FCT, FCSH, ITQB, ENSP)
+- University of Lisbon (FCUL, FMV, ISEG, IST)
+- University of Minho (EAAD, EC, ED, EEG, EENG, ELACH, EMED, EPSI, ESE, I3BS, ICS, IE)
+- University of Porto (FCUP)
+- ISCTE-IUL (ETA)
+- Universidade Lusófona (DEISI, MGE)
 - Instituto Politécnico de Lisboa (ISEL)
 - Instituto Politécnico de Setúbal (ESTS)
 - Escola Superior de Enfermagem do Porto
@@ -395,8 +455,8 @@ Compliance has been ensured to the best extent possible using public documentati
 
 # 11. Deprecated Word Templates
 
-The Word templates (unmaintained) can be found in  
-[https://github.com/joaomlourenco/novathesis_word]()
+The Word templates (unmaintained) can be found at  
+<https://github.com/joaomlourenco/novathesis_word>
 
 --------
 
@@ -424,7 +484,7 @@ The Word templates (unmaintained) can be found in
 
 ---
 
-# 12. Contributers (thank you!)
+# 13. Contributors (thank you!)
 
 <a href="https://github.com/joaomlourenco/novathesis/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=joaomlourenco/novathesis" />
@@ -435,7 +495,7 @@ Made with [contrib.rocks](https://contrib.rocks).
 
 ---
 
-# 13. Say thank you!
+# 14. Say thank you!
 
 1. **Star this repository** by clicking the (⭐️) at the top right of the [project's page](https://github.com/joaomlourenco/novathesis).
 2. **Make a [small donation](https://paypal.me/novathesis)** (*pay me a beer!*)  
