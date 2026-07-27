@@ -19,10 +19,8 @@
 %% SAVEBOXES
 %%=======================================================================
 
-\undef{\@nt@elegant@chapter}
-\newsavebox{\@nt@elegant@chapter}
-\undef{\@nt@elegant@part}
-\newsavebox{\@nt@elegant@part}
+\@ifundefined{@nt@elegant@chapter}{\newsavebox{\@nt@elegant@chapter}}{}
+\@ifundefined{@nt@elegant@part}{\newsavebox{\@nt@elegant@part}}{}
 
 
 %%=======================================================================

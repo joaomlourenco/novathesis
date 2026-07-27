@@ -1,0 +1,1128 @@
+%!TEX root=template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — nt-render-matter.sty
+%% ----------------------------------------------------------------------------
+%%
+%% Version 8.0.0 (2026-07-27)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%% Departamento de Informática (www.di.fct.unl.pt)
+%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Universidade NOVA de Lisboa (www.unl.pt)
+%%
+%% Matter rendering: front/main/back matter components, SDG, abstracts,
+%% bibliography, sectioning, acknowledgements, keywords, and final hooks.
+%% Loaded by novathesis.cls.
+%% ----------------------------------------------------------------------------
+\typeout{NT FILE StyFiles/nt-render-matter.sty}%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PAGE GEOMETRY & LAYOUT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\AtEndPreamble{\ntsetlayout}%
+
+\newcommand*{\ntsetlayout}{%
+    % \synctex=1% Use synctex
+    \brokenpenalty=10000%
+    \newgeometry{
+        lmargin=\expanded{\GetMargin(\option{/novathesis/media},left)},
+        rmargin=\expanded{\GetMargin(\option{/novathesis/media},right)},
+        tmargin=\expanded{\GetMargin(\option{/novathesis/media},top)},
+        bmargin=\expanded{\GetMargin(\option{/novathesis/media},bottom)},
+    }%
+    \ifoptionequal{/novathesis/media}{paper}{\openright}{\openany}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SPACING FIX (bibliography anchor)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\@ntfixspacing}[2]{%
+    \bgroup%
+    \NewMemStore{NtFixSpacingString}%
+    \noindent
+    \SetNtFixSpacingString()={The \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template (v\novathesisversion)~\@ntcite{novathesis-manual} @ \todayiso. (12cc90221730b8ba41bb3b1f8b517acd)}%md5
+    \renewcommand*{\bibfont}{\hypersetup{allcolors=#1}\color{#1}%
+     \sffamily\fontsize{#2}{#2}\selectfont}%
+    \defbibheading{bibliography}[\bibname]{%
+    \ \textbf{##1}\\[-20pt]}%
+    \refsection%
+    \begin{minipage}{\linewidth}%
+    \bibfont%
+    \GetNtFixSpacingString()\par%
+    \printbibliography%
+    \end{minipage}%
+    \endrefsection%
+    \egroup%
+}
+
+\newcommand{\ntfixspacing}{%
+  \@ntfixspacing{white}{0.01}%
+  % \@ntfixspacing{blue}{16}%
+}
+
+%% FRONT MATTER COMPONENTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\@nt@printifmaindoc@i}[1]{%
+  % \typeout{NT Attempt to load #1}%
+  \ifmaindoc{% THEN it is a main document
+    \NTRunHook{#1/pre}%
+    \iffileadded{#1}{%
+      \ChapterNoTitle{\GetBkmString(#1,\@LANG@COPYRIGHT)}
+      \PrintAddedFile{#1}%
+    }{}%
+    \NTRunHook{#1/post}%
+    \clearforchapter%
+  }{}% It is a plan or proposal type document
+}
+
+\newcommand{\ntprintdedication}
+  {\@nt@printifmaindoc@i{dedication}}
+
+\newcommand{\ntprintquote}
+  {\@nt@printifmaindoc@i{quote}}
+
+\newcommand{\ntprintacknowledgements}
+  {\@nt@printifmaindoc@i{acknowledgements}}
+
+\newcommand*{\ntprintstatement}{%
+  \ifdocworking{}{% Only print statement if provisional or final
+    \ifmaindoc{% Skip thesis plan and similar documents
+      \iftoggle{/novathesis/print/statement}{% if statement toggle is on
+        \NTRunHook{statement/pre}%
+        \iffileadded[\@LSHORT]{statement}
+          {\PrintAddedFile[\@LSHORT]{statement}}
+          {\PrintAddedFile{statement}}%
+        \NTRunHook{statement/post}%
+      }{}%
+    }{}%
+  }%
+}
+
+\newcommand*{\ntprintfrontpage}{%
+  \ifdocworking{}{% Only print institutional statement if provisional or final
+    \ifmaindoc{% Skip thesis plan and similar documents
+      \iftoggle{/novathesis/print/frontpage}{% if frontpage toggle is on
+        \NTRunHook{frontpage/pre}%
+        \iffileadded[\@LSHORT]{frontpage}
+          {\PrintAddedFile[\@LSHORT]{frontpage}}
+          {\PrintAddedFile{frontpage}}%
+        \NTRunHook{frontpage/post}%
+      }{}%
+    }{}%
+  }%
+}
+
+
+\newcommand{\ntprintaidisclose}{%
+  \ifoptionequal{/novathesis/print/aidisclosure}{aidisclose}{% use aidisclose
+    \AIDrenderDeclaration[ncols=3]{\GetDocAuthor(name)}%
+  }{\ifoptionequal{/novathesis/print/aidisclosure}{false}
+      {} % do not print AI Disclosure
+      {\IfFileExists{\DIRFRONTMATTER/\option{/novathesis/print/aidisclosure}}
+        {%
+          \input{\DIRFRONTMATTER/\option{/novathesis/print/aidisclosure}}%
+        }
+        {\ClassError{novathesis}
+                    {AI Disclusre file not found: '\option{/novathesis/print/aidisclosure}'.}
+                    {Please provide a valid AI Disclusre file name.}
+        }%
+      }%
+  }%
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Print Sustainable Development Goals (SDG)
+%% To be called from \ntprintabstracts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{sdgcnt}%
+\newdimen{\sdgdim}%
+\newcommand*{\ntprintsdgs}{
+  \@tempdima=\option{/novathesis/print/sdgs/hspace}%
+  \@tempdimb=\option{/novathesis/print/sdgs/vspace}%
+  \setcounter{sdgcnt}{0}%
+  \sdgdim=0pt%
+  \ifoptionnil{/novathesis/print/sdgs/list}{}{%
+      \vfill%
+      \raggedright\noindent%
+      % Fall back to the English SDG heading when the abstract language does
+      % not define one (e.g. zhs/zht, whose string files are minimal), so that
+      % SDGs + a Chinese abstract do not raise a memstore "unknown key" error.
+      \textbf{\IfMemVoidTF{SdgString}{\@LSHORT}
+                {\GetSdgString(en)}%
+                {\GetSdgString(\@LSHORT)}:}\\[1ex]
+      \edef\@sdgtype{\option{/novathesis/print/sdgs/type}}
+      \IfFileExists{\DIRIMAGES/sdg-\@LSHORT/1-\@sdgtype.pdf}
+          {\def\@spnfolder{\DIRIMAGES/sdg-\@LSHORT}}
+          {\def\@spnfolder{\DIRIMAGES/sdg-en}}
+      \noindent%\linespread{1.5}\selectfont
+      \optionlistdo{/novathesis/print/sdgs/list}{%
+        \stepcounter{sdgcnt}%
+        \setbox0=\hbox{%
+          % \typeout{FILE=\DIRIMAGES/sdg-\@LSHORT/##1-\XPTO}
+            \includegraphics[width=\option{/novathesis/print/sdgs/size}]
+                            {\@spnfolder/##1-\@sdgtype}%
+        }%
+        \ifdim \dimexpr\sdgdim + \wd0\relax > \textwidth\relax%
+            \\[\@tempdimb]
+            \sdgdim=\wd0%
+        \fi
+        \usebox0\hspace{\@tempdima}%
+      }%
+  }%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Print Abstracts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ntprintabstracts}{%
+  \NTRunHook{abstracts/pre}%
+  \@for\nt@tmpi:=\expanded{\GetAbstractOrder(\@LANG@MAIN)}\do{\@ntprintabstract{\nt@tmpi}}%
+  \NTRunHook{abstracts/post}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Abstract, Acronyms and Glossary
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newif\ifskipabstract
+\newcommand{\@ntprintabstract}[1]{%
+  \iffileadded[#1]{abstract}{%
+    \skipabstractfalse
+    % \typeout{NT PRINT ABSTRACT=[#1]}\NTPRINTABSTRACT@I%
+    \ifPDFTeX
+      \IfStrEq{#1}{zhs}{\skipabstracttrue}{}%
+      \IfStrEq{#1}{zht}{\skipabstracttrue}{}%
+    \fi
+    \ifskipabstract
+      \ClassWarning{novathesis}{Skipping abstract '#1' under pdfLaTeX (CJK Unicode). Use 'make xe' or 'make lua' to include Chinese abstracts.}%
+    \else
+      % \typeout{NT PRINT ABSTRACT 2=[#1]}\NTPRINTABSTRACT@II
+      \begingroup
+        % \typeout{NT PRINT ABSTRACT #1}\bbbb
+        \StrCut{#1}{-}\@ABS@LANG\@dummy%
+        \ntselectlang{\@ABS@LANG}%
+        \NTRunHook{abstract/pre}%
+        \NTRunHook{abstract/#1/pre}%
+        \printabstracttitle{#1}%
+        \ifoptionequal{/novathesis/abstract/title}{after}{%
+          \begingroup
+            \noindent
+            \ifoptionequal{/novathesis/abstract/title/align}{left}{\raggedright}{}%
+            \ifoptionequal{/novathesis/abstract/title/align}{right}{\raggedleft}{}%
+            \ifoptionequal{/novathesis/abstract/title/align}{center}{\centering}{}%
+            \NTRunHook{abstract/title/after}%
+          \endgroup
+        }{}%
+        \NTRunHook{abstract/mid}%
+        \NTRunHook{abstract/#1/mid}%
+        \PrintAddedFile[#1]{abstract}%
+        \ntprintsdgs%
+        \NTRunHook{abstract/#1/post}%
+        \NTRunHook{abstract/post}%
+      \endgroup%
+      \clearforchapter%
+    \fi
+  }{}%
+}
+
+\newcommand{\ntprintindex}{%
+  \iftoggle{/novathesis/print/index}{%
+    \printindex%
+    \clearforchapter%
+  }{}%
+}
+
+\newif\if@frontmatter
+\newcommand*{\ntthesisfrontmatter}{%
+  \NTRunHook{frontmatter/pre}%
+  \begingroup
+    \def\clearforchapter{}
+    \def\cleardoublepage{}
+    \def\clearepage{}
+    \frontmatter%
+  \endgroup
+  \@frontmattertrue
+  \begingroup
+  \pagestyle{novathesis@frontmatter}%
+  \copypagestyle{chapter}{novathesis@frontmatter}
+  % \ntselectlang{\@LANG@MAIN}%
+  % Save the cover-page count before \pagenumbering{roman} resets the counter.
+  % Schools with a 2-page front cover (e.g. nova-fct: pages 1-1 + 2-1) leave
+  % \c@page = 2 here; front matter must start at page 3 (iii) to avoid a
+  % duplicate 'page.ii' hyperref destination.
+  \iftoggle{/novathesis/print/frontpage}
+    {\edef\nt@lastcoverpage{\number\value{page}}}
+    {}%
+  \pagenumbering{roman}%
+  \iftoggle{/novathesis/print/frontpage}
+    {\setcounter{page}{\numexpr\nt@lastcoverpage+1\relax}}
+    {\setcounter{page}{1}}
+}
+
+\newif\if@mainmatter
+\newcommand*{\ntthesismainmatter}{%
+  \@frontmatterfalse
+  \endgroup
+  \NTRunHook{frontmatter/post}%
+  \ifbool{@openright}{}{% openany=true
+    % Avoid cleardoublepage before "mainmatter"
+    \let\oldcleardoublepage\cleardoublepage%
+    \renewcommand{\cleardoublepage}{\clearforchapter}%
+  }%
+  \NTRunHook{mainmatter/pre}%
+  \mainmatter%
+  \NTRunHook{mainmatter/post}%
+  \@mainmattertrue
+  \ifbool{@openright}{}{% openany=true
+    \let\cleardoublepage\oldcleardoublepage%
+  }%
+  \pagestyle{novathesis@mainmatter}%
+}
+
+\newif\if@backmatter
+\newcommand*{\ntthesisbackmatter}{%
+  \@backmattertrue
+  \NTRunHook{backmatter/pre}%
+}
+\newcommand{\ntindex}[2][]{%
+  % \typeout{NTINDEX [#1] [#2]}
+  \bgroup%
+    \ifoptioncontains{/novathesis/debug}{index}{\showlabelsinline{#1}{#2}}{}%
+    \ifblank{#1}{%
+      \def\@nt@index{#2}%
+    }{%
+      \StrRight{#1}{1}[\@nt@lastchar]%
+      \if\@nt@lastchar!\relax
+        \def\@nt@index{#1#2}%
+      \else
+        \def\@nt@index{#1}%
+      \fi%
+    }%
+    \index{\@nt@index}#2%
+  \egroup%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MAIN & BACK MATTER COMPONENTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\ntprintchapters}{%
+    \@nt@foralllist{file}{chapter}{\PrintAddedFile{chapter}}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Appendixes and Annexes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\shiftbookmarks}[2][1]{%
+  \begingroup
+    \@for\@secname:={part,chapter,section,subsection,subsubsection,paragraph,subparagraph}\do{%
+      \expandafter\ifx\csname toclevel@\@secname\endcsname\relax
+      \else
+        \edef\@currentlevel{\number\csname toclevel@\@secname\endcsname}%
+        \expandafter\edef\csname toclevel@\@secname\endcsname{%
+          \the\numexpr\@currentlevel+#1\relax
+        }%
+      \fi
+    }%
+    #2%
+  \endgroup
+}
+  
+% Natural-width chapter number box: renders the label at its natural width
+% instead of forcing it into the fixed \cftchapternumwidth box.  Used for
+% annexes, where the Roman-numeral counter produces labels of varying width.
+% The first argument (#1 = \cftchapternumwidth) is intentionally ignored so
+% that "Annex I:" takes exactly as much space as its content requires.
+\newcommand{\@nt@naturalnumberlinebox}[2]{\leavevmode\hbox{#2}}
+
+\newcommand*{\ntprintappendices}{%
+  \iffileadded{appendix}{%
+    \appendix%
+    % Both appendix and annex chapters use toclevel@appendix for their bookmark
+    % level (memoir sets \anappendixtrue, which makes \@chapter call
+    % \addcontentsline{toc}{appendix}{...}; hyperref then resolves the bookmark
+    % depth via toclevel@appendix).  Set it to 1 so appendix chapters appear as
+    % level-1 children of "Back Matter" (level 0).
+    \expandafter\def\csname toclevel@appendix\endcsname{1}%
+    % Write a marker into the .toc file so that when \tableofcontents renders
+    % the appendix entries (next pass), \cftchapterpresnum is set to
+    % "\appendixname: " — producing "Appendix: A Title" in the TOC.
+    % Memoir's \l@appendix routes through \l@chapapp which uses
+    % \cftchapterpresnum (not \cftappendixpresnum, which memoir never defines).
+    % Using \addtocontents embeds the command sequentially in the .toc file,
+    % so the prefix switches correctly between appendix and annex sections.
+    % Crucially, \@chapapp / \appendixname is NOT placed in \thechapter's
+    % typeset branch: doing so would embed \bbl@ensure@english (or
+    % \foreignlanguage) in the running-head mark, which calls \@ifnextchar*
+    % and corrupts \reserved@a, breaking the next \chapter call.
+    \addtocontents{toc}{%
+      \protect\renewcommand{\protect\cftchapterpresnum}%
+                           {\protect\appendixname\protect\space}%
+      \protect\renewcommand{\protect\cftchapteraftersnum}{:}%
+      \protect\renewcommand{\protect\cftchapteraftersnumb}{\protect\space}%
+      \protect\settowidth{\protect\cftchapternumwidth}%
+        {\protect\cftchapterfont\protect\appendixname\protect\space A:\ }%
+    }%
+    % \thechapter typeset branch: bare letter "A" — safe in chapter headings,
+    % running heads, and \IfStrEq comparisons (no babel-wrapped macro).
+    % PDF-string branch: "\appendixname A" — appears in PDF bookmarks.
+    \renewcommand{\thechapter}{%
+      \texorpdfstring{\Alph{chapter}}{\@chapapp\space\Alph{chapter}:}}%
+    % Redefine \thesection to use \Alph{chapter} directly (bypassing the
+    % \texorpdfstring in \thechapter), so section bookmarks read "A.1 Title"
+    % rather than "Appendix A.1 Title".  Subsection levels inherit this fix
+    % automatically because \thesubsection = \thesection.\arabic{subsection}.
+    \renewcommand{\thesection}{\Alph{chapter}.\arabic{section}}%
+    \@nt@foralllist{file}{appendix}{\PrintAddedFile{appendix}}%
+    % If there are no annexes, reset now; if annexes follow, they will
+    % overwrite \cftchapterpresnum with \annexname:\space anyway.
+    \iffileadded{annex}{}{%
+      \addtocontents{toc}{%
+        \protect\renewcommand{\protect\cftchapterpresnum}{}%
+        \protect\renewcommand{\protect\cftchapteraftersnum}{}%
+        \protect\renewcommand{\protect\cftchapteraftersnumb}{}%
+        \protect\setlength{\protect\cftchapternumwidth}{1.5em}%
+      }%
+    }%
+  }{}%
+}
+
+\newcommand*{\ntprintannexes}{%
+  \iffileadded{annex}{%
+    \annex%
+    % Same toclevel@appendix key as for appendices (see comment above).
+    \expandafter\def\csname toclevel@appendix\endcsname{1}%
+    % Same .toc-marker approach as \ntprintappendices, but switching the
+    % presnum to \annexname so annex entries read "Annex: I Title".
+    % The reset marker after the list restores defaults for any entries that
+    % might follow (e.g. if the document adds more chapter-level TOC entries).
+    \addtocontents{toc}{%
+      \protect\renewcommand{\protect\cftchapterpresnum}%
+                           {\protect\annexname\protect\space}%
+      \protect\renewcommand{\protect\cftchapteraftersnum}{:}%
+      \protect\renewcommand{\protect\cftchapteraftersnumb}{\protect\space}%
+      \protect\settowidth{\protect\cftchapternumwidth}%
+        {\protect\cftchapterfont\protect\annexname\protect\space VIII:\ }%
+      \protect\let\protect\chapternumberlinebox\protect\@nt@naturalnumberlinebox%
+    }%
+    % \thechapter typeset branch: bare Roman numeral "I" — safe (no babel macro).
+    % PDF-string branch: "\annexname I" — appears in PDF bookmarks.
+    \renewcommand{\thechapter}{%
+      \texorpdfstring{\annexcounter\c@chapter}{\@chapapp\space\Roman{chapter}:}}%
+    % Redefine \thesection to use \Roman{chapter} directly, so section
+    % bookmarks read "I.1 Title" rather than "Annex I.1 Title".
+    \renewcommand{\thesection}{\Roman{chapter}.\arabic{section}}%
+    \@nt@foralllist{file}{annex}{\PrintAddedFile{annex}}%
+    % Reset \cftchapterpresnum and \cftchapternumwidth to their memoir defaults
+    % so any chapter-level TOC entries after annexes are not affected.
+    \addtocontents{toc}{%
+      \protect\renewcommand{\protect\cftchapterpresnum}{}%
+      \protect\renewcommand{\protect\cftchapteraftersnum}{}%
+      \protect\renewcommand{\protect\cftchapteraftersnumb}{}%
+      \protect\setlength{\protect\cftchapternumwidth}{1.5em}%
+      \protect\let\protect\chapternumberlinebox\protect\mem@cft@hb@xt@%
+    }%
+  }{}%
+}
+
+\ifdef{\annexcounter}{}{\def\annexcounter{\old@Roman}}
+\newcommand*{\annex}{%
+  \setcounter{chapter}{0}%
+  \setcounter{section}{0}%
+  % Do NOT call \appendix here.  Hyperref's patched \appendix sets
+  % \Hy@chapapp to "appendix", which would collide with appendix chapter
+  % anchors (both appendix and annex would get "appendix.A" etc.).
+  % Instead, manually replicate exactly what memoir's \appendix and
+  % hyperref's patch do, substituting "annex" branding throughout.
+  \gdef\@chapapp{\annexname}%           % memoir: display name in headings/TOC
+  \anappendixtrue%                      % memoir: use appendix-style TOC entries
+  \gdef\theHchapter{annex.\Hy@AlphNoErr{chapter}}% hyperref: annex.A, annex.B… — unique vs appendix A,B…
+  \xdef\Hy@chapapp{annex}%             % hyperref: anchor prefix → annex.A etc.
+  \gdef\chaptername{\annexname}%
+  \gdef\thechapter{\annexcounter\c@chapter}%
+}%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Print statements utils
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{tightcenter}
+  {\par\centering}
+  {\par}%
+
+\NewDocumentCommand { \TheCandidateSignature } { m m }
+  % #1 = place
+  % #2 = ISO DATE
+  {
+    \begin{center}%
+      \StatementOneSignature%
+        {\expandafter\GetCandidateString\expandafter(\GetDocAuthor(gender),\@LANG@MAIN)}
+        {\GetDocAuthor(name)}%
+        {#1}% place
+        {#2}% date
+    \end{center}%
+  }
+% Deprecated misspelled alias, kept for backwards compatibility.
+\NewCommandCopy\TheCandiadteSignature\TheCandidateSignature
+
+
+\newcounter{nadv}
+\NewDocumentCommand { \TheAdvisersSignatures } { O{20mm} m m m }
+  % #1 = space to signature rule
+  % #2 = a (only advisers) | a,c (both advisers and co-advisers)
+  % #3 = place
+  % #4 = ISO DATE
+  {
+    \begin{tightcenter}
+      \ifoptiondefined{/@nt/adviser/#2/pair}{%
+        \optionlistdo{/@nt/adviser/#2/pair}{%
+            % \ifnum\arabic{nadv}=2\relax
+            %   ~\\[1ex]
+            % \fi
+            \stepcounter{nadv}
+            \StrCut{##1}{/}\stgender\stname
+            \StatementOneSignature[#1]
+              {\GetAdviserString(pref,#2,1,\stgender,\@LANG@MAIN)}
+              {\stname}
+              {#3}% place
+              {#4}% date
+        }%
+      }{}%
+    \end{tightcenter}
+  }
+
+
+\NewDocumentCommand { \StatementOneSignature } { O{20mm} m m m m }
+  % #1 = space to rule
+  % #2 = text above
+  % #3 = name
+  % #4 = place
+  % #5 = date
+  {
+    \begin{minipage}[t]{6cm}
+      \medskip%
+      \begin{center}
+        #2,\par
+        \vspace*{#1}
+        \rule{\linewidth}{0.75pt}\par
+        \textit{#3}\\
+        \ifblank{#4}{}{#4,~}\PrintDateISO{#5}
+      \end{center}
+    \end{minipage}
+  }
+
+
+
+%% Default list-of bookmark level (1 = direct child of Front/Back Matter group).
+%% \ntprintalllistof overrides this to 2 when a "List of..." group header is present.
+\def\@nt@lol@bkm@level{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Deal with optional lists in the frontmatter: listoftables, litoffigures, etc.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\ntprintalllistof}{%
+    \NTRunHook{listof/pre}%
+    \if@backmatter
+      \def\@matter{backmatter}
+    \else
+      \def\@matter{frontmatter}
+      \iftoggle{/novathesis/tocintoc}
+            {\begingroup
+               % \tableofcontents (non-starred) creates a \chapter* bookmark that
+               % would be shifted by any active \shiftbookmarks.  Temporarily reset
+               % toclevel@chapter to 0 so Contents always appears at the root level.
+               \expandafter\def\csname toclevel@chapter\endcsname{0}%
+               \tableofcontents
+             \endgroup}%
+            {\bookmark[level=0, dest=\HyperLocalCurrentHref]{\contentsname}
+             \tableofcontents*}%
+    \fi
+    \ifoptiondefined{/@nt/listof/\@matter}{
+      \edef\@nt@listof@bkmtitle{\GetBkmString(listof,\@LANG@MAIN)}%
+      \clearforchapter%
+      \phantomsection%
+      \bookmark[level=0, dest=\HyperLocalCurrentHref]{\@nt@listof@bkmtitle}%
+      \optionlistdo{/@nt/listof/\@matter}{##1}%
+    }{}%
+    \NTRunHook{listof/post}%
+}
+
+
+\newcommand*{\option@listmatch}[2]{
+    % \typeout{NT LISTMATCH [#1] [#2]}%
+    \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%was xStrCut
+    % \typeout{K=\option@listmatch@key ~V=\option@listmatch@value}%
+    \IfStrEq{#1}{\option@listmatch@key}{\listbreak}{}%
+}%
+\options{/handlers/getval/.new operation={%
+    % \typeout{NT GETVAL [#1] [#2]}%
+    \optionlistdo{#1}{\option@listmatch{#2}{##1}}%
+    }%
+}
+
+% Glossary sources are bib2gls .bib files.  Each file registered with
+%     \ntaddfile{glossaries}[<type>]{<name>}
+% becomes part of a bib2gls resource; no \write registers are consumed and
+% there is no \makeglossaries.  See nt-packages.sty for the record-mode setup.
+
+\newcommand*{\@nt@glssrc}{}
+
+% Add one registered source to the accumulator, refusing 7.10-era .tex files
+% with a message that says exactly what to do about it.
+\newcommand*{\@nt@glsaddsrc}[1]{%
+  \IfFileExists{#1.bib}
+    {}
+    {\IfFileExists{#1.tex}
+       {\ClassError{novathesis}
+          {Glossary source '#1.tex' is in the old (7.10.x) format}
+          {NOVAthesis 8.0 keeps glossary entries in .bib files, read by
+           bib2gls, instead of .tex files read by makeglossaries.^^J
+           Run 'make glsbib' to convert your entry files, then CHECK THE SORT
+           KEYS: the converter silently drops them, which reorders any entry
+           whose name is a macro or math markup.^^J
+           See the migration appendix of the manual for the full procedure.}}
+       {\ClassError{novathesis}
+          {Glossary source '#1.bib' not found}
+          {\ntaddfile{glossaries} registered '#1', but neither '#1.bib' nor
+           '#1.tex' exists. Check the file name in 0-Config/4_files.tex.}}%
+    }%
+  \ifdefempty{\@nt@glssrc}
+    {\xdef\@nt@glssrc{#1}}
+    {\xdef\@nt@glssrc{\@nt@glssrc,#1}}%
+}
+
+% Emit one \GlsXtrLoadResources for the given glossary types, if any file was
+% registered for them.  #1=comma list of types, #2=bib2gls selection.
+\newcommand*{\@nt@glsresource}[2]{%
+  \gdef\@nt@glssrc{}%
+  \@for\nt@glstype:=#1\do{%
+    \iffileadded[\nt@glstype]{glossaries}
+      {\@nt@foralllist{file}{glossaries/\nt@glstype}{\@nt@glsaddsrc}}
+      {}%
+  }%
+  \ifdefempty{\@nt@glssrc}{}{%
+    \GlsXtrLoadResources[
+      src={\@nt@glssrc},
+      selection={#2},
+      loc-prefix={\ntglslocprefixone,\ntglslocprefixmany},
+    ]%
+  }%
+}
+
+\newcommand*{\@loadglossaryfiles}{%
+  % main + symbols reproduce what \glsaddall[types={main,symbols}] used to do:
+  % every entry is listed whether or not it is cited.  Abbreviations stay
+  % use-based, so unused acronyms do not pad the list.
+  \@nt@glsresource{glossary,symbols}{all}%
+  \@nt@glsresource{acronym}{recorded and deps}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BIBLIOGRAPHY & INDEXING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand*{\ntprintbibsingle}[1][]{%
+  \NTRunHook{printbib/pre}%
+  \printbibliography[#1]%
+  \ntfixspacing%
+  \NTRunHook{printbib/post}%
+}
+
+\newcommand*{\ntprintbibseparate}[1][]{%
+  \NTRunHook{printbib/pre}%
+    \printbibliography[nottype=online] % Print the bibliography.
+    \printbibliography[title=\option{/novathesis/print/webography},type=online] % Print the bibliography.
+  \ntfixspacing%
+  \NTRunHook{printbib/post}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Copyright page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\printcompactbib}[1][]{%
+  \begingroup
+    \renewcommand*{\bibfont}{\tiny}% very small text
+    \renewbibmacro*{pageref}{}% suppress backrefs
+    % Remove vertical space before the list starts
+    \setlength{\topsep}{0pt}
+    \setlength{\partopsep}{0pt}
+    % Remove vertical space between items (from your previous request)
+    \setlength{\bibitemsep}{2pt}
+    % fine tune label width
+    \setlength{\labelnumberwidth}{10pt}%
+    % Print the bibliography with no title, passing any extra options
+    \defbibheading{ntlocalbib}{%
+      {\par\vspace*{-1.25ex}}
+      \textcolor{white}
+                {\fontsize{0.01}{1}\selectfont\noindent\hspace*{-\labelnumberwidth}
+                 \bibname~(12cc90221730b8ba41bb3b1f8b517acd)}%
+      \vspace*{-\baselineskip-\parskip}
+    }
+    \newrefcontext[sorting=ynt]%
+    \printbibliography[heading=ntlocalbib, #1]
+  \endgroup
+}
+
+\newcommand{\ntprintacknowledgementsblock}[1][\scriptsize]{%
+    \NTRunHook{acknowledgementsblock/pre}%
+      \refsection%
+      \renewcommand{\@ntcite}[1]{\cite{##1}}%
+      \bigskip\footnoterule#1\smallskip\noindent\GetAcknowledgmentsString(\@LANG@MAIN)%
+      \printcompactbib%
+      \endrefsection%
+    \NTRunHook{acknowledgementsblock/post}%
+}
+
+\newcommand*{\ntprintcopyright}{%
+  \ifmaindoc{%
+    \iftoggle{/novathesis/print/copyright}{%
+      \begingroup
+        \ntselectlang{\@LANG@COPYRIGHT}%
+        \ChapterNoTitle{\GetBkmString(copyright,\@LANG@COPYRIGHT)}%
+        \NTRunHook{copyright/pre}%
+        \ntprintcopyrightpage%
+        \NTRunHook{copyright/post}%
+        \ntprintacknowledgementsblock%
+      \endgroup
+    }{}%
+   }{}%
+}
+
+
+\newcommand*{\ntprintcopyrightpage}{%
+  \ifmaindoc{% only print if a main document
+    \iftoggle{/novathesis/print/copyright}{% if copuyright toggle is on
+      \InputIfFileExistsInDirsTF {copyright.clo} 
+        {
+          {\DIRSCHOOLS/\@UNIV/\@SCHL},
+          {\DIRSCHOOLS/\@UNIV},
+          {\DIRSTYFILES},
+        }
+        {}
+        {
+          \ClassError{novathesis}
+                     {No 'copyright.clo' file was found!}{}
+        }
+    }{}%
+  }{}
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Quoting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\hugequote}{%
+  \bgroup%
+    \color{black!30}%
+    \fontsize{75}{80}\selectfont%
+    \fontfamily{ptm}\selectfont%
+    \textit{\glqq}%
+  \egroup%
+}
+
+\newcommand{\ntquoteauthor}[1]{{\\[1.25ex]\footnotesize\bfseries---~#1}}
+\newcommand{\ntquotewhere}[1]{{\footnotesize, #1}}
+\newcommand{\ntquoteprofession}[1]{{\footnotesize\\[-0.75ex](#1)}}
+\newcommand{\ntquotetext}[1]{{\itshape#1}}
+\providecommand{\ntchapskip}{%
+  \vphantom{%
+    \begin{minipage}{\textwidth}%
+      \chapter*{ASDF}%
+      % \vspace*{\midchapskip}%
+    \end{minipage}%
+  }%
+}
+
+\NewDocumentEnvironment{ntquoting}{sO{10cm}O{}O{}O{}O{\@LANG@MAIN}+b}{%
+% 1 [*] => print big quote
+% 2 [o] => max width of citation box
+% 3 [o] => author name
+% 4 [o] => where/source
+% 5 [o] => profession
+% 6 [o] => lang
+% 7 [b] => quotation
+  % \typeout{
+  %          1=[#1]
+  %          2=[#2]
+  %          3=[#3]
+  %          4=[#4]
+  %          5=[#5]
+  %          6=[#6]
+  %          7=[#7]
+  % }\asdfg
+  \thispagestyle{novathesis@frontmatter}%
+  \defifundef{\ntqbox}{\newsavebox}%
+  \savebox{\ntqbox}{#7}
+  \ifdim\wd\ntqbox<\ifblank{#2}{\textwidth}{#2}\relax
+  \@tempdima=\wd\ntqbox
+  \else
+  \@tempdima=#2
+  \fi
+  \ntchapskip
+  \begin{flushright}
+    \NTRunHook{ntquote/pre}%
+    \IfBooleanTF{#1}{\hugequote}{}
+    \begin{minipage}[t]{\@tempdima}
+      \raggedleft\normalsize
+      % \options{/@nt/lang/shorttolong=#6}%
+      \IfBooleanTF{#1}{%
+        \foreigntextquote{\GetLangLong(#6)}{\ntquotetext{#7}}%
+      }{\ntquotetext{#7}}
+      \ifblank{#3}{}{\ntquoteauthor{#3}}%
+      \ifblank{#4}{}{\ntquotewhere{#4}}%
+      \ifblank{#5}{}{\ntquoteprofession{#5}}%
+    \end{minipage}%
+    \NTRunHook{ntquote/post}%
+  \end{flushright}
+}{}
+
+\ExplSyntaxOn
+\cs_if_exist:NF \endntquoting { \cs_new_protected:Nn \endntquoting { } }
+\cs_new:cpn { ntquote } { \ntquoting* }
+\cs_new_eq:cN { endntquote } \endntquoting
+\cs_new:cpn { ntdedication } { \ntquoting }
+\cs_new_eq:cN { endntdedication } \endntquoting
+\ExplSyntaxOff
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Acknowledgements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{ntacknowledgements}{%
+  \chapter*{\GetBkmString(acknowledgements,\@LANG@MAIN)}%
+}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\IfSubStr{,\@LANG@LOADED,}{,zhs,}{%
+  \iftutex
+    \ifcsname nt@cjkfontSC\endcsname\else
+      \IfFontExistsTF{PingFang SC}
+        {\newfontfamily\nt@cjkfontSC{PingFang SC}}
+        {\IfFontExistsTF{Noto Sans CJK SC}
+          {\newfontfamily\nt@cjkfontSC{Noto Sans CJK SC}}
+          {\IfFontExistsTF{Heiti SC}
+            {\newfontfamily\nt@cjkfontSC{Heiti SC}}
+            {\newfontfamily\nt@cjkfontSC{Latin Modern Roman}}%
+          }%
+        }%
+    \fi
+  \fi
+}{}
+\IfSubStr{,\@LANG@LOADED,}{,zht,}{%
+  \iftutex
+    \ifcsname nt@cjkfontTC\endcsname\else
+      \IfFontExistsTF{PingFang TC}
+        {\newfontfamily\nt@cjkfontTC{PingFang TC}}
+        {\IfFontExistsTF{Noto Sans CJK TC}
+          {\newfontfamily\nt@cjkfontTC{Noto Sans CJK TC}}
+          {\IfFontExistsTF{Heiti TC}
+            {\newfontfamily\nt@cjkfontTC{Heiti TC}}
+            {\newfontfamily\nt@cjkfontTC{Latin Modern Roman}}%
+          }%
+        }%
+    \fi
+  \fi
+}{}
+
+\newcommand*{\printabstracttitle}[1]{%
+  \begingroup
+    \def\nt@abstitlefont{}%
+    \iftutex
+      \IfStrEq{#1}{zhs}{\def\nt@abstitlefont{\nt@cjkfontSC}}{}%
+      \IfStrEq{#1}{zht}{\def\nt@abstitlefont{\nt@cjkfontTC}}{}%
+    \fi
+    \ifoptionequal{/novathesis/abstract/title}{before}{%
+      \preto\chapterheadstart{%
+        \begingroup
+          \noindent
+          \ifoptionequal{/novathesis/abstract/title/align}{left}{\raggedright}{}%
+          \ifoptionequal{/novathesis/abstract/title/align}{right}{\raggedleft}{}%
+          \ifoptionequal{/novathesis/abstract/title/align}{center}{\centering}{}%
+          \NTRunHook{abstract/title/before}%
+        \endgroup
+      }%
+    }{}%
+    \chapter{\texorpdfstring{{\nt@abstitlefont\GetBkmString(abstract,#1)}}{\GetBkmString(abstract,#1)}}%
+  \endgroup
+}
+
+% Default work-title block used by \ntsetup{abstract/title=before|after}.
+% Schools needing custom styling should populate the hook directly instead.
+\newcommand{\ntprintabstracttitledefault}{%
+  \large\bfseries
+  \IfMemVoidTF{DocTitle}{\@LSHORT,abstract}
+    {\GetDocTitle(\@LSHORT,main)}%
+    {\GetDocTitle(\@LSHORT,abstract)}%
+  \par
+  \smallskip
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Keywords
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\providecommand{\keywords}[1]{%
+    \NTRunHook{keywords/pre}%
+    % \NTRunHook{keywords/#1/pre}%
+    \def\and{\unskip\MemGetDefault{KeywordsSep}[]{\@LSHORT}}%
+    % \def\and{{\textperiodcentered} }%
+    % Store comma-separated plain-text copy for PDF metadata.
+    % \MemSet* is global (prop_gput), so storage survives the \begingroup.
+    \begingroup
+      \def\and{, }%
+      \MemSet*{DocKeywords}{\@LSHORT}{#1}%
+    \endgroup
+    % Set the PDF info dict Keywords entry here (outside any group) so the
+    % expanded string \@nt@pdfkwds is available at macro expansion time.
+    %
+    % WHY NOT \hypersetup: hyperref writes /Keywords via \PDF@FinishDoc, which
+    % runs at the FIRST-PAGE shipout (hook shipout/firstpage). In novathesis the
+    % abstract/keywords pages come after the first page, so \hypersetup called
+    % here would be silently ignored (the option is disabled by then).
+    %
+    % Both \pdfextension info (LuaLaTeX) and \pdfinfo (pdfLaTeX) accumulate
+    % info-dict entries; the last value for each key wins when the PDF is
+    % finalised. Calling here (body time, after the first shipout) correctly
+    % overwrites the empty /Keywords entry written by hyperref at first-page
+    % shipout. XeLaTeX would need a \special{pdf:info ...} equivalent.
+    \IfStrEq{\@LSHORT}{\@LANG@MAIN}{%
+      \begingroup
+        \def\and{, }%
+        \protected@edef\@nt@pdfkwds{\MemGet{DocKeywords}{\@LANG@MAIN}}%
+        \ifluatex
+          \pdfextension info{/Keywords(\@nt@pdfkwds)}%
+        \else\ifpdftex
+          \pdfinfo{/Keywords(\@nt@pdfkwds)}%
+        \fi\fi
+      \endgroup
+    }{}%
+    \par\addvspace\baselineskip\noindent%
+    \begingroup%
+    \MemGetDefault{KeywordsStringPrefix}[]{\@LSHORT}%
+    \MemGetDefault{KeywordsStringFont}[]{\@LSHORT}%
+    \GetKeywordsString(\@LSHORT)%
+    \MemGetDefault{KeywordsStringSuffix}[]{\@LSHORT}%
+    \endgroup%
+    % \enspace
+    \ignorespaces#1%
+    % \NTRunHook{keywords/#1/post}%
+    \NTRunHook{keywords/post}%
+}%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LABELS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\providecommand\thepresentationtext{%
+  \GetDissertationStringFont()%
+  \IfMemVoidTF{DissertationString}{\@DOCTYPE,\@LANG@COVER}{%
+    \GetDissertationString(\@DOCCLASS,\@LANG@COVER)%
+  }{%
+    \GetDissertationString(\@DOCTYPE,\@LANG@COVER)%
+  }%
+}
+
+\providecommand\thecopyrightstr{%
+     {\thispagestyle{novathesis@frontmatter}}%
+     % {\thispagestyle{empty}}%
+    \noindent%
+    Copyright \textcopyright\ \GetDocAuthor(name), %
+    \GetSchool(\@LANG@COPYRIGHT), \GetUniversity(\@LANG@COPYRIGHT).\\%
+    \GetCopyrightTextString(\@LANG@COPYRIGHT)%
+    % \ntselectlang{\@LANG@MAIN}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Table of contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{tocdepth}{2}
+
+% ---------------------------------------------------------------------
+% ToC Spacing Hack: Tighter spacing for Front Matter, normal for Main
+% ---------------------------------------------------------------------
+
+% 1. When Front Matter starts, write a command to the .toc file to REDUCE spacing
+\appto\frontmatter{%
+  \let\cftbeforechapterskipORIG\cftbeforechapterskip
+  \addtocontents{toc}{\protect\setlength{\cftbeforechapterskip}{3pt}}%
+}
+
+% 2. When Main Matter starts, write a command to the .toc file to RESTORE spacing
+% (Memoir default is usually 1.0em plus 1pt)
+\appto\mainmatter{%
+  \addtocontents{toc}{\protect\setlength{\cftbeforechapterskip}{1.0em plus 1pt}}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Sectioning
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\maxsecnumdepth{subsubsection}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FINAL HOOKS & FIXES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fixes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Fix spacing for pages with roman numerals in ToC
+\renewcommand*{\@pnumwidth}{2.5em}% default is 1.55em
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Text style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% First try to load a local chapter-style definition
+\InputIfFileExists{\DIRCHAPSTYLES/\option{/novathesis/style/chapter}.sty}
+  {}{% otherwise, try a standard 'memoir' style
+      \ifcsdef{chs@\option{/novathesis/style/chapter}}
+          {\chapterstyle{\option{/novathesis/style/chapter}}}
+          {\ClassError{novathesis}{Invalid Chapter Style: \option{/novathesis/style/chapter}}{}}%
+}
+
+\IfFileExistsCase
+  {
+    {\DIRFONTSTYLES/\option{/novathesis/style/font}.sty}
+          {\input{\ntfoundpath}},
+    {\option{/novathesis/style/font}.sty}
+          {\RequirePackage{\ntfoundpathnoext}},        
+  }
+  {
+    \ifcsname IfFontExistsTF\endcsname
+      \IfFontExistsTF{\option{/novathesis/style/font}}
+        {\setmainfont{\option{/novathesis/style/font}}
+                     [ \option{/novathesis/style/font/attributes} ]}
+        {\ClassError{novathesis}{Could not find the font: \option{/novathesis/style/font}}{}}
+    \else
+      \ClassError{novathesis}
+                 {Cann not load the font: \option{/novathesis/style/font}. Are you using XeLaTeX or LuaLaTeX?}{}
+    \fi
+  }
+
+
+% force page color to white in xelatex and lualatex
+\ifxeorlua{\definecolor{nearlywhite}{gray}{0.999999}\colorlet{white}{nearlywhite}}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LISTINGS + MINTED UNIFICATION
+%% Goal: one counter, one list, regardless of which package(s) are loaded.
+%%
+%% IMPORTANT: listings.sty defers \newcounter{lstlisting} to \AtBeginDocument,
+%% so counter aliasing must run AFTER that hook completes.
+%% \AddToHook{begindocument/end} fires after ALL \AtBeginDocument hooks.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AddToHook{begindocument/end}{%
+  \makeatletter
+    % 1. Helper for TOC/Bookmark injection
+    \newcommand{\update@lol}[1]{%
+      % \cleardoublepage
+      % \phantomsection
+      % \addcontentsline{toc}{chapter}{\listoflistingscaption}%
+      #1%
+    }
+
+    % 2. Helper to set numbering to Chapter.Sequence
+    % This defines \thelisting as \thechapter.\arabic{listing} 
+    % and ensures the counter resets when \chapter is called.
+    \newcommand{\setup@listing@numbering}[1]{%
+      \@addtoreset{#1}{chapter}%
+      \expandafter\renewcommand\csname the#1\endcsname{\thechapter.\arabic{#1}}%
+    }
+
+    \@ifpackageloaded{listings}{%
+      \@ifpackageloaded{minted}{%
+        % --- CASE: BOTH LOADED ---
+        \let\old@listoflistings\listoflistings
+        \renewcommand{\listoflistings}{\update@lol{\old@listoflistings}}
+        \let\lstlistoflistings\listoflistings
+      
+        % Setup numbering for 'listing' (minted's counter)
+        \setup@listing@numbering{listing}
+        % Unify 'listings' to follow 'minted'
+        \let\c@lstlisting\c@listing
+        \let\thelstlisting\thelisting
+      }{%
+        % --- CASE: ONLY LISTINGS LOADED ---
+        \ifx\listoflistingscaption\@undefined
+          \let\listoflistingscaption\lstlistlistingname
+        \fi
+        \let\old@lstlistoflistings\lstlistoflistings
+        \renewcommand{\lstlistoflistings}{\update@lol{\old@lstlistoflistings}}
+        \let\listoflistings\lstlistoflistings
+      
+        % Setup numbering for 'lstlisting'
+        \setup@listing@numbering{lstlisting}
+      }%
+    }{%
+      \@ifpackageloaded{minted}{%
+        % --- CASE: ONLY MINTED LOADED ---
+        \let\old@listoflistings\listoflistings
+        \renewcommand{\listoflistings}{\update@lol{\old@listoflistings}}
+      
+        % Setup numbering for 'listing'
+        \setup@listing@numbering{listing}
+      }{%
+        % NEITHER LOADED
+      }%
+    }%
+  \makeatother
+}
+
+\NTAddToHook{mainmatter/post}{%
+  \ifoptionequal{/novathesis/numbering/floats}{sequential}{%
+    \counterwithout{figure}{chapter}%
+    \counterwithout{table}{chapter}%
+    \counterwithout{footnote}{chapter}%
+    \counterwithout{equation}{chapter}%
+    \@ifundefined{c@algorithm}{}{\counterwithout{algorithm}{chapter}}%
+    %% Counter unification (listings+minted) is handled at \AtBeginDocument above.
+    %% Here we only need the \counterwithout calls.
+    \@ifpackageloaded{minted}{%
+      \@ifundefined{c@listing}{}{\counterwithout{listing}{chapter}}%
+    }{%
+      \@ifpackageloaded{listings}{%
+        \@ifundefined{c@lstlisting}{}{\counterwithout{lstlisting}{chapter}}%
+      }{}%
+    }%
+  }{}%
+}
+
+
+\AtBeginDocument{%
+  \makeatletter%
+  % \typeout{XXX [\GetDocAuthor(name)]}
+  % \typeout{XXX [\GetDocTitle(\@LANG@MAIN,main,plain)]}
+  % \typeout{XXX [\GetDocTitle(\@LANG@MAIN,sub,plain)]}
+  \hypersetup{%
+    pdfauthor={\GetDocAuthor(name)},
+    pdftitle={\GetDocTitle(\@LANG@MAIN,main,plain)},
+    pdfsubject={\GetDocTitle(\@LANG@MAIN,sub,plain)},
+  }
+
+  %--------------------------------
+  % If subcaption is loaded, let it handle subfigures
+  % otherwise use memoir subfigures
+  \@ifpackageloaded{subcaption}{}{\newsubfloat{figure}}
+  \newcommand{\@ntcite}[1]{\ifdef{\parencite}{\parencite{#1}}{\cite{#1}}}
+  \makeatother  
+}
+
+% PDF Keywords are set inside \keywords{} via \pdfextension info (LuaLaTeX)
+% or \pdfinfo (pdfLaTeX) during body processing, which overwrites the empty
+% /Keywords entry that hyperref's \PDF@FinishDoc writes at first-page shipout.

@@ -75,8 +75,9 @@ def print_warning(msg: str) -> None:
     print(f"{YELLOW}⚠ {msg}{RESET}")
 
 # --- Pattern Builders -------------------------------------------------------
-def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str, 
-                   mode: int, new_doc_status: str, new_sdgs_list: str, force: bool
+def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str,
+                   cover: bool, new_doc_status: str, new_sdgs_list: str, force: bool, 
+                   print_index: bool = False
                   ) -> dict[str, dict[Pattern, Callable[[str], str]]]:
     """
     Build regex patterns and transformation functions for configuration file processing.
@@ -84,10 +85,11 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str,
         new_doc_type: Document type (e.g., 'phd', 'msc', 'bsc')
         new_school_id: School identifier (e.g., 'nova/fct')
         new_lang_code: Language code (e.g., 'en', 'pt', 'uk', 'gr')
+        cover: If True, build cover-only (comments out ntaddfile and list_of entries)
         new_doc_status: Document status (e.g., 'working', 'provisional', 'final', 'keep')
-        mode: Build mode (0: user, 1: demo, 2: cover)
         new_sdgs_list: SDG list
         force: Force school application
+        print_index: If True, uncomment and enable print/index=true
     Returns:
         Dictionary mapping filenames to pattern-transformer dictionaries
     """
@@ -155,18 +157,20 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str,
                 _uncomment_replace("spine/layout", "trim"),
             re.compile(r"^\s*%?\s*\\ntsetup\{\s*spine/width\s*=\s*[^}]+\}\s*.*$"):
                 _uncomment_replace("spine/width", "2cm"),
-            re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/index\s*=\s*[^}]+\}\s*.*$"):
-                _uncomment_replace("print/index", "true"),
             re.compile(r"^\s*%?\s*\\ntsetup\{\s*docstatus\s*=\s*\{?[^}]+\}\s*.*$"):
                 _uncomment_replace("docstatus", new_doc_status),
             re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/sdgs/list\s*=\s*\{?[^}]+\}\s*.*$"):
                 _uncomment_replace("print/sdgs/list", new_sdgs_list),
         }
+        # Only add print/index pattern if explicitly requested
+        if print_index:
+            file_1_patterns[re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/index\s*=\s*[^}]+\}\s*.*$")] = \
+                _uncomment_replace("print/index", "true")
         result |= {
             "1_novathesis.tex": file_1_patterns,
         }
 
-    if mode == 2: 
+    if cover:
         # Cover only, remove contents
         file_1_patterns |= {
             re.compile(r"^\s*%?\s*\\ntsetup\{\s*print/copyright\s*=\s*[^}]+\}\s*.*$"):
@@ -184,7 +188,7 @@ def build_patterns(new_doc_type: str, new_school_id: str, new_lang_code: str,
             "4_files.tex": file_4_patterns,
             "6_list_of.tex": file_6_patterns,
         }
-    
+
     return result
 
 # --- Core Processing Functions ----------------------------------------------
@@ -555,7 +559,7 @@ def localize_and_process_files(tmp_root: Path, confdir: Path, patterns: dict[str
     
     return changed_any
     
-def safe_outname(school: str, doctype: str, lang: str) -> str:
+def safe_outname(school: str, doctype: str, lang: str, engine: str) -> str:
     """
     Generate a safe filename for the output PDF.
     Args:
@@ -568,7 +572,8 @@ def safe_outname(school: str, doctype: str, lang: str) -> str:
     school_safe = school.replace("/", "-").replace(" ", "_")
     doctype_safe = doctype.replace(" ", "_")
     lang_safe = lang.replace(" ", "_")
-    return f"{school_safe}-{doctype_safe}-{lang_safe}.pdf"
+    engine_safe = engine.replace(" ", "_")
+    return f"{school_safe}-{doctype_safe}-{lang_safe}-{engine_safe}.pdf"
 
 # --- Biber Wrapper Creation -------------------------------------------------
 def create_biber_wrapper(tmp_root: Path) -> Optional[Path]:
@@ -686,7 +691,7 @@ def run_make_in_temp(
         
         if returncode == 0:
             print(f"{CYAN}✅ 'make' succeeded in {RED}{elapsed:.2f}{CYAN} seconds{RESET}")
-            return _handle_success(tmp_root, outdir, school_id, doctype, lang, keep_bdir, rename)
+            return _handle_success(tmp_root, outdir, school_id, doctype, lang, ltxprocessor, keep_bdir, rename)
         else:
             print_error(f"'make' failed with exit code {returncode}")
             print_warning(f"Temp workspace kept for debugging: {tmp_root}")
@@ -845,12 +850,14 @@ def _handle_success(
     school_id: str,
     doctype: str,
     lang: str,
+    ltxprocessor: str,
     keep_bdir: bool,
     rename: bool
 ) -> int:
     """Handle successful build by copying PDF to output directory."""
     src_pdf = tmp_root / "template.pdf"
-    dest_pdf = outdir / (safe_outname(school_id, doctype, lang) if rename else "template.pdf")
+    dest_pdf = outdir / (safe_outname(school_id, doctype, lang,
+          ltxprocessor) if rename else "template.pdf")
     
     if not src_pdf.exists():
         print_error(f"'{src_pdf}' missing")
@@ -1023,11 +1030,16 @@ def parse_arguments() -> argparse.Namespace:
         help="Rename the PDF from 'template.pdf' to 'univ-school-type-lang.pdf' (default: False)"
     )
     ap.add_argument(
-        "-m", "--mode",
-        type=int,
-        choices=[0, 1, 2],
-        default=0,
-        help="Build mode: 0 (user), 1 (demo), 2 (cover) (default: 0)"
+        "-c", "--cover",
+        action="store_true",
+        default=False,
+        help="Build cover-only (comments out \\ntaddfile and list_of entries; implies --docstatus final)"
+    )
+    ap.add_argument(
+        "--index",
+        action="store_true",
+        default=False,
+        help="Uncomment and enable print/index=true in configuration"
     )
     ap.add_argument(
         "-bdir", "--build-dir",
@@ -1106,32 +1118,26 @@ def main() -> None:
     """Main entry point for the NOVATHESIS build assistant."""
     args = parse_arguments()
     
-    # Map mode to descriptive names
-    mode_names = {0: "user", 1: "demo", 2: "cover"}
-    mode_name = mode_names[args.mode]
-    demo = (args.mode == 1)
-    cover_only = (args.mode == 2)
-    
-    # Demo mode forces final status
-    if demo:
+    # --cover implies docstatus=final
+    if args.cover:
         args.docstatus = "final"
-        print(f"{BRIGHT_CYAN}🎯 Demo mode: setting docstatus to 'final'{RESET}")
-    
+        print(f"{BRIGHT_CYAN}📕 Cover mode: building cover-only version{RESET}")
+
     # Determine expected line count
     if args.lines == -1:
         lines = get_cached_line_count()
     else:
         lines = args.lines
-    
+
     # Adjust for cover-only mode
-    if cover_only:
+    if args.cover:
         lines = COVER_LINE_COUNT
-        print(f"{BRIGHT_CYAN}📕 Cover mode: building cover-only version{RESET}")
     
-    # Force -bdir for demo and cover modes if omitted
-    if (demo or cover_only) and args.build_dir is None:
+    # When patching configs, auto-use a temp dir if none specified
+    patching = (args.docstatus != "keep") or args.cover or args.force_school or args.index
+    if patching and args.build_dir is None:
         args.build_dir = ""
-        print(f"{BRIGHT_CYAN}🔧 Forcing temporary build directory for {mode_name} mode{RESET}")
+        print(f"{BRIGHT_CYAN}🔧 Patching mode: forcing temporary build directory{RESET}")
     
     # Validate inputs
     school_id = validate_school_id(args.school_id)
@@ -1163,9 +1169,9 @@ def main() -> None:
     # Setup build directory
     tmp_root, reusing_temp_dir = setup_build_directory(args, project_root)
     
-    # Restore config symlinks if reusing temp dir in demo/cover mode
-    if reusing_temp_dir and (demo or cover_only) and tmp_root != project_root:
-        print(f"{BRIGHT_CYAN}🔧 Restoring config file symlinks for reuse in {mode_name} mode{RESET}")
+    # Restore config symlinks if reusing temp dir in patching mode
+    if reusing_temp_dir and patching and tmp_root != project_root:
+        print(f"{BRIGHT_CYAN}🔧 Restoring config file symlinks for reuse{RESET}")
         restore_config_symlinks(tmp_root, project_root, confdir_path)
     
     # Validate or create output directory
@@ -1180,12 +1186,12 @@ def main() -> None:
     
     # Build patterns for configuration changes
     patterns = {}
-    if demo or cover_only or args.force_school:
+    if patching:
         patterns = build_patterns(
-            args.doctype, school_id, args.lang, args.mode,
-            args.docstatus, args.sdgs, args.force_school
+            args.doctype, school_id, args.lang, args.cover,
+            args.docstatus, args.sdgs, args.force_school, args.index
         )
-        print(f"{BRIGHT_CYAN}🎯 {mode_name.capitalize()} mode: configuration files will be modified{RESET}")
+        print(f"{BRIGHT_CYAN}🎯 Config patching enabled{RESET}")
     else:
         print(f"{BRIGHT_CYAN}👤 User mode: configuration files will not be modified{RESET}")
     
@@ -1196,7 +1202,7 @@ def main() -> None:
         print(f"  Document type: {args.doctype}")
         print(f"  Language: {args.lang}")
         print(f"  Status: {args.docstatus}")
-        print(f"  Mode: {mode_name}")
+        print(f"  Cover only: {args.cover}")
         print(f"  Build directory: {tmp_root}")
         print(f"  Output directory: {outdir_path}")
         if patterns:

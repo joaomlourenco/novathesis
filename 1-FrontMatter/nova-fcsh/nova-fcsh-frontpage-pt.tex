@@ -1,0 +1,39 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nova-fcsh-frontpage-pt.tex
+%% NOVA thesis document file
+%%
+%% Frontpage file (NOVA-FCSH)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+
+\clearforchapter
+
+% =====================================================================
+% The istitutional statement
+% =====================================================================
+Tese/Dissertação apresentada para cumprimento dos requisitos necessários à obtenção do
+grau de 
+\GetDegreeName(\@LSHORT)
+\IfMemVoidF{Specialization}{\@LSHORT}
+  {, na Área de Especialização em \GetSpecialization(\@LSHORT)}
+, realizado sob a orientação científica de \GetPersonsAsList{adviser}{a}.
+
+\vfill
+
+Apoio financeiro da Fundação para a Ciência e Tecnologia no âmbito do programa
+<NOME-DO-PROGRAMA> e através da Bolsa de Doutoramento <REF>.
+
+\bigskip
+
+\begin{center}
+  \hfill
+\includegraphics[height=1.5cm]{\DIRIMAGES/FCT_logo_positive}
+  \hfill
+\includegraphics[height=1.5cm]{\DIRIMAGES/republica_portuguesa_CTES}  
+  \hfill
+\end{center}
+
+\vfill
+
+\makeatother

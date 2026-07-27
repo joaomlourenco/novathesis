@@ -8,33 +8,44 @@
 \typeout{NT FILE FontStyles/verdana.sty}%
 
 
-%%=======================================================================
-%% ENGINE CHECK
-%%=======================================================================
-
-\ifxeorlua{}{%
-  \ClassError{novathesis}{Font Style “verdana” is not compatible with pdfLaTeX. Please use XeLaTeX or LuaLaTeX}{Please use XeLaTeX or LuaLaTeX}%
-}
-
 
 %%=======================================================================
 %% FONT VERIFICATION
 %%=======================================================================
 
-\ntcheckfonts{Verdana}{Regular,Italic,Bold,BoldItalic}
+\ntcheckfonts{VerdanaPro}{Regular,Italic,Bold,BoldItalic}
 
 
 %%=======================================================================
 %% FONT SELECTION
 %%=======================================================================
 
-\setmainfont{Verdana}[
-  Path = \DIRFONTSTYLES/Fonts/,
-  Extension = .ttf,
-  Ligatures=TeX,
-  Mapping=tex-text,
-  UprightFont = *-Regular,
-  ItalicFont = *-Italic,
-  BoldFont = *-Bold,
+\setmainfont{VerdanaPro}[
+  Path           = \DIRFONTSTYLES/Fonts/,
+  Extension      = .ttf,
+  Ligatures      = TeX,
+  UprightFont    = *-Regular,
+  ItalicFont     = *-Italic,
+  BoldFont       = *-Bold,
   BoldItalicFont = *-BoldItalic,
 ]
+
+% Verdana is a sans-serif; use as both roman and sans
+\setsansfont{VerdanaPro}[
+  Path           = \DIRFONTSTYLES/Fonts/,
+  Extension      = .ttf,
+  Ligatures      = TeX,
+  UprightFont    = *-Regular,
+  ItalicFont     = *-Italic,
+  BoldFont       = *-Bold,
+  BoldItalicFont = *-BoldItalic,
+]
+
+% Use Courier New as fallback for monospace
+\setmonofont[
+  Scale          = 0.95,
+  Ligatures      = TeX,
+]{Courier New}
+
+% Math font using newtxmath for consistency
+\RequirePackage[libertine]{newtxmath}

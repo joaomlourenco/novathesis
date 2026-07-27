@@ -12,7 +12,7 @@
 %% SAVEBOXES & COLORS
 %%=======================================================================
 
-\newsavebox{\ChpNumBox}
+\newsavebox{\@nt@bluebox@ChpNumBox}
 \definecolor{ChapBlue}{rgb}{0.7,0.8,0.9}
 
 
@@ -49,17 +49,17 @@
   \renewcommand{\printchaptername}{}%
   \renewcommand{\chapternamenum}{}%
   \renewcommand{\printchapternum}{%
-    \sbox{\ChpNumBox}{%
+    \sbox{\@nt@bluebox@ChpNumBox}{%
       \BuildChpNum{\chapnamefont\@chapapp}%
       {\chapnumfont\thechapter}}}%
   \renewcommand{\printchapternonum}{%
-    \sbox{\ChpNumBox}{%
+    \sbox{\@nt@bluebox@ChpNumBox}{%
       \BuildChpNum{\chapnamefont\vphantom{\@chapapp}}%
       {\chapnumfont\hphantom{\thechapter}}}}%
   \renewcommand{\afterchapternum}{}%
   \renewcommand{\printchaptertitle}[1]{%
-    \usebox{\ChpNumBox}\hfill%
-    \parbox[t]{\hsize-\wd\ChpNumBox-1em}{%
+    \usebox{\@nt@bluebox@ChpNumBox}\hfill%
+    \parbox[t]{\hsize-\wd\@nt@bluebox@ChpNumBox-1em}{%
       \vspace{\midchapskip}%
       \thickhrulefill\par
       \chaptitlefont ##1\par}}%

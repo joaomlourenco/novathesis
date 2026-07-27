@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+"""NOVAthesis biber shim: serialize concurrent biber runs with a file lock.
+
+Concurrent biber processes fail sporadically (likely racing on the shared
+PAR-packed binary cache, see 'biber --cache'). This shim is put on PATH by
+.Build/nt-variant.sh when builds run in parallel (or when BIBER_LOCK=1) and
+forwards all arguments to the real biber, one process at a time.
+"""
+import fcntl
+import os
+import subprocess
+import sys
+
+LOCKFILE = "/tmp/novathesis-biber.lock"
+MYDIR = os.path.dirname(os.path.abspath(__file__))
+
+
+def find_real_biber():
+    for d in os.environ.get("PATH", "").split(os.pathsep):
+        if not d or os.path.abspath(d) == MYDIR:
+            continue
+        cand = os.path.join(d, "biber")
+        if os.path.isfile(cand) and os.access(cand, os.X_OK):
+            return cand
+    return None
+
+
+def main():
+    real = find_real_biber()
+    if real is None:
+        sys.stderr.write("biber shim: real biber not found on PATH\n")
+        sys.exit(127)
+    with open(LOCKFILE, "w") as lf:
+        fcntl.flock(lf, fcntl.LOCK_EX)
+        try:
+            rc = subprocess.call([real] + sys.argv[1:])
+        finally:
+            fcntl.flock(lf, fcntl.LOCK_UN)
+    sys.exit(rc)
+
+
+if __name__ == "__main__":
+    main()

@@ -37,12 +37,10 @@
 %     NOVA-ITQB:  nova/itqb/gray, nova/itqb/green,
 %     NOVA-FCSH:  nova/fcsh,
 %     NOVA-ENSP:  nova/ensp,
-%     NOVA-IMS:   nova/ims, nova/ims/csig, nova/ims/ddm, nova/ims/dsaa,
-%                 nova/ims/egi, nova/ims/gi, nova/ims/gt,
-%     ULIBOA:     ulisboa/ist, ulisboa/fc, ulisboa/fmv, ulisboa/iseg,
+%     ULISBOA:    ulisboa/ist, ulisboa/fcul, ulisboa/fmv, ulisboa/iseg,
 %     ULHT:       ulht/deisi, ulht/mge,
-%     UMINHO:     uminho/ead, uminho/ese, uminho/eeng, uminho/elach,
-%                 uminho/ed, uminho/ec, uminho/i3bs,uminho/emed,
+%     UMINHO:     uminho/eaad, uminho/ese, uminho/eeng, uminho/elach,
+%                 uminho/ed, uminho/ec, uminho/i3bs, uminho/emed,
 %                 uminho/ie, uminho/ics, uminho/epsi, uminho/eeg,
 %     UPORTO:     uporto/fcup,
 %     ISCTE-IUL:  iscteiul/eta
@@ -50,7 +48,7 @@
 %     IPS:        ips/ests,
 %     OTHER:      other/esep
 %-------------------------------------------------------------
-% \ntsetup{school=nova/fcsh}
+% \ntsetup{school=ulisboa/fcul}
 
 
 
@@ -193,8 +191,21 @@
 %
 %     See \ntsetup{lang=pt} above for the list of valid languages
 %-------------------------------------------------------------
-% \ntsetup{abstractorder={en,pt,zhs,zht}} % with Simplified and Tradiciontal Chinese abstracts
+% \ntsetup{abstractorder={en,pt,zhs,zht}} % with Simplified and Traditional Chinese abstracts
 % \ntsetup{abstractorder={en,pt,uk,gr}}   % With Ukrainian (cyrilic) abstract
+
+
+
+%-------------------------------------------------------------
+% Print the work title with each abstract
+%
+%     DEFAULTS: abstract/title       <- none    (none, before, after)
+%               abstract/title/align <- center  (left, center, right)
+%.............................................................
+%
+%-------------------------------------------------------------
+% \ntsetup{abstract/title=before}
+% \ntsetup{abstract/title/align=left}
 
 
 
@@ -228,13 +239,13 @@
 %-------------------------------------------------------------
 % The color for the glossary managed hyperlinks (glossary, symbols, etc)
 %
-%     DEFAULT: glossaries/color/gls <- black
+%     DEFAULT: color/glossaries/gls <- black
 %.............................................................
 %
 %     For the list of valid color names, take a look at the "xcolor"
 %     package documentation, namely the "svgname" colors
 %-------------------------------------------------------------
-% \ntsetup{glossaries/color/gls=SteelBlue}
+% \ntsetup{color/glossaries/gls=SteelBlue}
 
 
 
@@ -258,17 +269,17 @@
 %
 %     Specification for the two columns of the layout
 %-------------------------------------------------------------
-% \ntlatesetup{glossaries/layout = {>{\raggedright}p{0.2\textwidth}X}}
+% \ntsetup{glossaries/layout = {>{\raggedright}p{0.2\textwidth}X}}
 
 
 
 %-------------------------------------------------------------
 % Include the table of contents in the table of contents
-%     DEFAULT: tocintoc <- false
+%     DEFAULT: tocintoc <- true
 %.............................................................
 %
 %-------------------------------------------------------------
-% \ntsetup{tocintoc=true}
+% \ntsetup{tocintoc=false}
 
 
 
@@ -311,13 +322,38 @@
 
 %-------------------------------------------------------------
 % Print the book spine
-%     DEFAULTS: if status=working:      print/spine <- false
-%               if status=provisional:  print/spine <- true
-%               if status=final:        print/spine <- true
+%     DEFAULTS: if status=working:      spine/layout <- false
+%               if status=provisional:  spine/layout <- false
+%               if status=final:        spine/layout <- trim
 %.............................................................
 %
 %-------------------------------------------------------------
-% \ntsetup{print/spine=false}
+% \ntsetup{spine/layout=false}   % suppress the spine even in 'final'
+% \ntsetup{spine/layout=trim}    % force the spine in any docstatus
+
+
+
+%-------------------------------------------------------------
+% Where to print the "other lists" (figures, tables, listings, …)
+%
+%     DEFAULT: print/otherlists <- frontmatter  (frontmatter, backmatter)
+%.............................................................
+%
+%-------------------------------------------------------------
+% \ntsetup{print/otherlists=backmatter}
+
+
+
+%-------------------------------------------------------------
+% Where to print the glossaries (glossary, acronyms, symbols, …)
+% Use 'false' to not print them at all
+%
+%     DEFAULT: print/glossaries <- frontmatter  (frontmatter, backmatter, false)
+%.............................................................
+%
+%-------------------------------------------------------------
+% \ntsetup{print/glossaries=backmatter}
+% \ntsetup{print/glossaries=false}
 
 
 

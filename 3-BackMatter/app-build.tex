@@ -1,0 +1,308 @@
+%!TEX root = ../template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — 3-BackMatter/app-build.tex
+%% ----------------------------------------------------------------------------
+%%
+%% Version 8.0.0 (2026-07-27)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%%
+%% Tutorial appendix: the NOVAthesis build system (Makefile + latexmk +
+%% command-line overrides). Intended audience: everyday users building their
+%% own document, plus developers and CI users who need to build for specific
+%% schools, document types, and languages without editing configuration files.
+%%
+%% ----------------------------------------------------------------------------
+
+\typeout{NT FILE 3-BackMatter/app-build.tex}%
+
+\chapter{The \ntindex[building!]{Build System}}
+\label{app:build}
+
+\novathesis{} documents are built with \ntindex[building!latexmk]{\latexinline{latexmk}}.
+All the \hologo{LaTeX}-specific knowledge (default engine, \texttt{biber},
+glossaries, auxiliary directory, clean-up lists) lives in the
+\verb!latexmkrc! file at the project root, which \texttt{latexmk} loads
+automatically.  The \ntindex[building!Makefile]{\latexinline{Makefile}} is a
+thin, convenient wrapper around it.
+
+For everyday writing you only need \texttt{make}.  If you cannot (or do not
+want to) use \texttt{make}, calling \texttt{latexmk} directly gives the same
+result (see Section~\ref{sec:build_nomake}).
+
+
+%%=======================================================================
+\section{Everyday Building}
+\label{sec:build_everyday}
+%%=======================================================================
+
+\begin{bashcode}
+make            # build with LuaLaTeX (recommended default)
+make view       # build, then open the PDF
+make watch      # rebuild automatically every time a file is saved
+make clean      # remove build artifacts (keeps the PDF)
+\end{bashcode}
+
+The main targets are:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{ShadedTabular}{lp{8.5cm}}
+  \toprule
+  \textbf{Target} & \textbf{Effect} \\
+  \verb!make! (or \verb!make lua!) & Build with \hologo{LuaLaTeX} \\
+  \verb!make pdf!       & Build with \hologo{pdfLaTeX} \\
+  \verb!make xe!        & Build with \hologo{XeLaTeX} \\
+  \verb!make view!      & Build, then open the \gls{PDF} \\
+  \verb!make watch!     & Rebuild on every change (\texttt{latexmk -pvc}) \\
+  \verb!make log!       & Show the build log \\
+  \verb!make clean!     & Remove build artifacts (keeps the \gls{PDF}) \\
+  \verb!make distclean! & \texttt{clean} + remove \gls{PDF} and SyncTeX files \\
+  \verb!make help!      & Show the built-in help \\
+  \verb!make glsbib!    & Convert 7.10.x glossary \texttt{.tex} entry files to
+                          \texttt{.bib} (one-off; see
+                          Appendix~\ref{app:migration}) \\
+  \bottomrule
+\end{ShadedTabular}
+\end{center}
+
+All auxiliary files go into the \verb!AUXDIR/! directory; on success, the
+\gls{PDF} (and its SyncTeX file) are copied to the project root.
+
+The behavior may be adjusted with variables appended to the command:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{ShadedTabular}{lp{8.0cm}}
+  \toprule
+  \textbf{Variable} & \textbf{Effect} \\
+  \verb!FILE=name!    & Root \texttt{.tex} file (default: auto-detect the
+                        single file containing \latexinline{\documentclass}) \\
+  \verb!NT="k=v,..."! & \latexinline{\ntsetup} overrides
+                        (see Section~\ref{sec:build_overrides}) \\
+  \verb!V=1!          & Verbose: show the raw \hologo{LaTeX} output \\
+  \verb!BATCH=1!      & Batch mode, never stops at errors (good for \gls{CI}) \\
+  \verb!FASTWRITES=0! & Load \texttt{morewrites} (skipped by default) for a
+                        register-heavy \hologo{pdfLaTeX}/\hologo{XeLaTeX}
+                        document (see Section~\ref{sec:build_fastwrites}) \\
+  \verb!TL=2024!      & Use \verb!/usr/local/texlive/2024! for this run \\
+  \verb!VIEWER=...!   & \gls{PDF} viewer used by \verb!make view! \\
+  \verb!FLAGS=...!    & Extra \texttt{latexmk} flags, passed through \\
+  \bottomrule
+\end{ShadedTabular}
+\end{center}
+
+\begin{bashcode}
+make V=1                  # see everything LaTeX prints
+make pdf BATCH=1          # pdfLaTeX, never stop at errors
+make view VIEWER="open -a Skim"
+\end{bashcode}
+
+
+%%=======================================================================
+\section{Command-Line Overrides}
+\label{sec:build_overrides}
+%%=======================================================================
+
+Any \ntindex[configuration!ntsetup]{\latexinline{\ntsetup}} option can be
+given at the command line, \emph{without editing}
+\ntindex[configuration!0-config/1\_novathesis.tex]{\latexinline{0-Config/1_novathesis.tex}}.
+Command-line values take precedence over the values in the configuration
+files.
+
+\begin{bashcode}
+# Build for a different school/doctype/language, nothing is edited
+make NT="doctype=msc,school=uminho/ec,lang=pt"
+
+# Any \ntsetup key works
+make NT="docstatus=final,print/index=true"
+\end{bashcode}
+
+This is the recommended way to test other schools, to build final versions
+in \gls{CI}, or to keep several variants of the same document without
+touching the configuration.
+
+Internally, the \verb!NT! variable defines the macro
+\latexinline{\ntoverride} before the class loads.  The overrides are applied
+right after \verb!0-Config/1_novathesis.tex! is read, and the
+\texttt{school} option is then re-applied so that school-derived settings
+(e.g.\ the degree acronym, which depends on \texttt{doctype}) stay
+consistent, whatever the order of the keys.
+
+
+%%=======================================================================
+\section{Faster \hologo{pdfLaTeX} and \hologo{XeLaTeX} Builds}
+\label{sec:build_fastwrites}
+%%=======================================================================
+
+\hologo{pdfTeX} and \hologo{XeTeX} can only write to 16 files at a time
+(\hologo{LuaTeX} allows 65536).  \novathesis{} alone claims 9 of those 16
+slots.  The \ntindex[packages!morewrites]{\texttt{morewrites}} package removes
+the limit, but at a steep price: it makes a \hologo{pdfLaTeX} pass roughly
+nine times slower.  Since 8.0 a typical document fits within the 16 slots, so
+\textbf{\texttt{morewrites} is not loaded by default}.
+
+Beyond the 9 slots the class uses, each of the following costs one more, and
+only when you actually use it: \latexinline{\listofalgorithms} and
+\latexinline{\listoflistings} (when the list is printed), plus whatever your
+own packages need (\texttt{minted}, for instance).  Glossaries, acronyms and
+symbols cost nothing at all since 8.0 --- \texttt{bib2gls} passes everything
+through the \texttt{.aux} file.  Even this manual, which exercises every one
+of those features, now fits.
+
+Only a register-heavy document overshoots, and the build then stops with
+\texttt{No room for a new \textbackslash write}.  In that case, re-enable
+\texttt{morewrites}:
+
+\begin{bashcode}
+make pdf FASTWRITES=0
+\end{bashcode}
+
+The switch is a no-op under \hologo{LuaLaTeX}, which never needs
+\texttt{morewrites}.  Without \texttt{make}, define the macro before
+\latexinline{\documentclass}:
+
+\begin{bashcode}
+pdflatex -shell-escape -jobname=template \
+    '\def\ntmorewrites{}\input{template}'
+\end{bashcode}
+
+
+%%=======================================================================
+\section{Building Without \texttt{make}}
+\label{sec:build_nomake}
+%%=======================================================================
+
+Since \verb!latexmkrc! carries the configuration, a plain \texttt{latexmk}
+call is enough:
+
+\begin{bashcode}
+latexmk -pdflua -shell-escape -file-line-error template
+\end{bashcode}
+
+The overrides of Section~\ref{sec:build_overrides} are also available:
+
+\begin{bashcode}
+# With latexmk
+latexmk -pdflua -shell-escape -usepretex \
+    -pretex='\def\ntoverride{doctype=msc,lang=pt}' template
+
+# With a plain engine
+lualatex -shell-escape -jobname=template \
+    '\def\ntoverride{doctype=msc,lang=pt}\input{template}'
+\end{bashcode}
+
+
+%%=======================================================================
+\section{Maintainer Tools}
+\label{sec:build_maintainer}
+%%=======================================================================
+
+The remaining machinery is only relevant for \novathesis{} development and
+regression testing.  It lives in \verb!Makefile.dev! (loaded automatically
+by the \verb!Makefile! when present; not shipped in releases) and in the
+helper script \verb!.Build/nt-variant.sh!.
+
+%%-----------------------------------------------------------------------
+\subsection{Building One School Variant}
+\label{sec:build_school}
+%%-----------------------------------------------------------------------
+
+\begin{bashcode}
+make school SCHOOL=nova/fct                     # defaults from schools.conf
+make school SCHOOL=uminho/ec TYPE=msc LANG=pt ENGINE=lua
+\end{bashcode}
+
+The variant is built with the override mechanism of
+Section~\ref{sec:build_overrides}, so the working copy is never modified.
+Each variant uses its own auxiliary directory under \verb!AUXDIR/variants/!.
+The resulting \gls{PDF} is named
+\texttt{univ-school-doctype-lang-engine.pdf} (e.g.\
+\verb!nova-fct-phd-en-lua.pdf!).  Defaults come from
+\verb!.Build/schools.conf!: the highest degree available for the school, and
+\texttt{lua} whenever the school supports it.  If the build fails, the log
+file is copied next to where the \gls{PDF} would go, with the same base name.
+
+%%-----------------------------------------------------------------------
+\subsection{Building the Full Matrix}
+\label{sec:build_matrix}
+%%-----------------------------------------------------------------------
+
+\begin{bashcode}
+make matrix                  # all variants, sequential
+make matrix JOBS=4           # 4 parallel chains
+make matrix FILTER=nova        # only NOVA schools
+make matrix FILTER=nova/fct    # one school (and its sub-programs)
+make matrix FILTER=uminho,ipl  # comma-separated prefixes
+\end{bashcode}
+
+\verb!make matrix! builds every school/doctype/language/engine combination
+listed in \verb!.Build/schools.conf!.  The \verb!FILTER! variable restricts
+the matrix by prefix: a university (\texttt{nova}), a school
+(\texttt{nova/fct}, which includes sub-programs such as
+\texttt{nova/fct/cbbi}), or a comma-separated list of prefixes.  All \glsfmtshortpl{PDF} of one invocation go
+into \verb!AUXDIR/matrix/YYYY-MM-DD@hh-mm-ss! (a folder named with the
+invocation timestamp), together with the log/build output of any
+failed variants.
+
+The file \verb!schools.conf! is organized in \emph{groups}, each starting
+with a header such as:
+
+\begin{verbatim}
+[order: school, doctype, lang; processor: pdf,lua]
+nova/fct    [phd, msc]  [en, pt]
+...
+\end{verbatim}
+
+The semantics are:
+
+\begin{itemize}
+  \item \textbf{Groups build sequentially}, in the order set by the
+        \texttt{order:} tuple inside the group (the last dimension varies
+        fastest).  Each variant is built in its \emph{own} auxiliary
+        directory: the variants differ only in the command-line
+        \latexinline{\ntoverride}, which \texttt{latexmk} does not track as a
+        dependency, so a \emph{shared} aux directory would make it skip the
+        rebuild and every variant would reuse the first one's \gls{PDF}.
+  \item \textbf{Each \texttt{processor:} gets its own chain.}  A group with
+        \texttt{processor: pdf,lua} yields two independent sequential chains.
+  \item \textbf{The matrix builds with \texttt{FASTWRITES=1} by default}, so
+        \hologo{pdfLaTeX} variants skip \texttt{morewrites} and run in about
+        half the time.  That means the matrix no longer exercises the
+        \texttt{morewrites} path, so run \verb!make matrix FASTWRITES=0!
+        from time to time to keep it covered.
+  \item \textbf{Each variant's glossaries are verified}, not just its exit
+        status: \verb!.Build/check-glossaries.py! asserts that no entry was
+        dropped and that the lists are in sort-key order.  A build that
+        succeeds with a mangled glossary is reported as a failure.
+  \item \textbf{\texttt{JOBS} parallelizes chains, never a chain's inside.}
+        With \verb!JOBS>1!, group$\times$engine chains run concurrently.
+        Concurrent \texttt{biber} processes fail sporadically, so a
+        \texttt{flock}-based wrapper (\verb!.Build/shims/biber!) is enabled
+        automatically in that case (it can also be forced with
+        \verb!BIBER_LOCK=1! for external scripts).
+\end{itemize}
+
+%%-----------------------------------------------------------------------
+\subsection{Other Maintainer Targets}
+\label{sec:build_dev_misc}
+%%-----------------------------------------------------------------------
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{ShadedTabular}{lp{8.0cm}}
+  \toprule
+  \textbf{Target} & \textbf{Effect} \\
+  \verb!make zip!     & Release archive \texttt{novathesis-<version>@<date>.zip}
+                        (excludes \verb!Makefile.dev! and \verb!.Build/!) \\
+  \verb!make bump-patch! & Bump the patch number (e.g.\ 8.0.0 becomes 8.0.1) \\
+  \verb!make bump-minor! & Bump the minor number (e.g.\ 8.0.0 becomes 8.1.0) \\
+  \verb!make bump-major! & Bump the major number (e.g.\ 8.0.0 becomes 9.0.0) \\
+  \verb!make needlua! & Regenerate the list of schools that require
+                        \hologo{LuaLaTeX} \\
+  \verb!make gclean!  & \texttt{git clean -fx} (keeps \verb!Scripts! and
+                        \verb!Fonts!) \\
+  \verb!make help-dev! & Show the maintainer help \\
+  \bottomrule
+\end{ShadedTabular}
+\end{center}

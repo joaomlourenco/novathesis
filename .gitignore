@@ -1,12 +1,24 @@
 # Created by https://www.toptal.com/developers/gitignore/api/latex,windows,linux,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=latex,windows,linux,macos
 
+### LLM files ###
+.github/copilot-instructions.md
+AGENTS.md
+GEMINI.md
+INFO.md
+LLM.md
+__pycache__
+
 ### NOVAthesis template ###
 
 # Ignore all template files…
 template.*
 # …except template.tex
 !template.tex
+
+# Ignore all fonts
+NOVAthesisFiles/FontStyles/Fonts
+!NOVAthesisFiles/FontStyles/Fonts/DO_NOT_REMOVE_THIS_FILE.txt
 
 # The renamed PDF files
 # *-en.pdf

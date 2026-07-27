@@ -1,502 +1,717 @@
-\ProvidesPackage{nt-covers}[2026/03/16 NOVAthesis cover engine]
+%!TEX root=template.tex
 
-% This file was isolated from novathesis.cls
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — nt-covers.sty
+%% ----------------------------------------------------------------------------
+%%
+%% Version 8.0.0 (2026-07-27)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%% Departamento de Informática (www.di.fct.unl.pt)
+%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Universidade NOVA de Lisboa (www.unl.pt)
+%%
+%% Cover page rendering engine (expl3 v2). Loaded by novathesis.cls.
+%% ----------------------------------------------------------------------------
+
+\RequirePackage{expl3, xparse, l3keys2e}
+\ProvidesExplPackage{nt-covers}{2026/03/17}{0.2}{NOVAthesis cover engine (expl3 v2)}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% COVER PAGE ENGINE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\ntresetcovers}{%
-  \@for\arg:={1-1,1-2,2-1,2-2,N-1,N-2}\do{%
-    \ntresetonecover{\arg}%
-  }%
-}
 
-\newcommand*{\ntresetonecover}[1]{%
-    \option@setnil{/@nt/cover/\@UNIV/\@SCHL/#1}%
-}
+% Variables for cover management
+\seq_new:N \g_nt_covers_ids_seq
+\seq_set_from_clist:Nn \g_nt_covers_ids_seq { 1-1, 1-2, 2-1, 2-2, N-1, N-2 }
 
+% Props to store content (cover_id => seq of { {attrs}{code} })
+\prop_new:N \g_nt_covers_content_prop
+\prop_new:N \g_nt_covers_tikz_prop
 
-\newcommand*{\ntaddtocover}[3][]{%
-  % #1 = cover atrtibutes
-  % #2 = list of covers where the code block should be applied
-  % #3 = the block code
-  \ntfor\arg:={#2}\do{\@ntaddtocover@iii{#1}{#3}{\arg}}%
-}
+% Variables for current rendering context
+\dim_new:N \l_nt_covers_top_dim
+\dim_new:N \l_nt_covers_bottom_dim
+\dim_new:N \l_nt_covers_left_dim
+\dim_new:N \l_nt_covers_right_dim
+\dim_new:N \l_nt_covers_width_dim
+\dim_new:N \l_nt_covers_height_dim
+\tl_new:N  \l_nt_covers_tmp_tl
+\tl_new:N  \l_nt_covers_content_tl
+\tl_new:N  \g_nt_covers_tikz_overlay_tl
+\tl_new:N  \l_nt_covers_doctype_tl
+\tl_new:N  \l_nt_covers_docstatus_tl
+\tl_new:N  \l_nt_covers_textcolor_tl
+\tl_new:N  \l_nt_covers_textfont_tl
+\clist_new:N \l_nt_covers_elem_status_clist
+\clist_new:N \l_nt_covers_elem_degree_clist
+\tl_new:N  \l_nt_covers_elem_halign_tl
+\tl_new:N  \l_nt_covers_elem_valign_tl
+\tl_new:N  \l_nt_covers_elem_vspace_tl
+\tl_new:N  \l_nt_covers_elem_vfill_tl
+\dim_new:N \l_nt_covers_elem_hspace_dim
+\dim_new:N \l_nt_covers_elem_height_dim
+\dim_new:N \l_nt_covers_elem_minheight_dim
+\dim_new:N \l_nt_covers_elem_width_dim
+\tl_new:N  \l_nt_covers_elem_color_tl
+\tl_new:N  \l_nt_covers_elem_bgcolor_tl
+\bool_new:N \l_nt_covers_elem_tikz_bool
+\bool_new:N \l_nt_covers_elem_newpar_bool
+\bool_new:N \l_nt_covers_status_match_bool
+\bool_new:N \l_nt_covers_degree_match_bool
+\bool_new:N \l_nt_covers_defined_bool
 
-\newcommand*{\@ntaddtocover@iii}[3]{%
-  % #1 = cover atrtibutes
-  % #2 = the block code
-  % #3 = covers where the code block should be applied
-  \options{/@nt/cover/\@UNIV/\@SCHL/#3/.newpush={{#1}\@nil{#2}}}%
-}
-
-%==========================================
-\NewDocumentCommand{\ntAddToCoverTikz}{d<>O{}r()O{}mm}{%
-  % #1=Command
-  % #2=Options
-  % #3=Position
-  % #4=Rest of command
-  % #5=CIDLIST
-  % #6=Code
-  \ntfor\cvids:={#5}\do{\ntAddToOneCoverTikz{#1}{#2}{#3}{#4}{\cvids}{#6}}%
-}
-
-\NewDocumentCommand{\ntAddToOneCoverTikz}{mmmmmm}{%
-  % #1=Command
-  % #2=Options
-  % #3=Position
-  % #4=Rest of command
-  % #5=CIDLIST
-  % #6=Code
-  \options{/@nt/coverTikz/\@UNIV/\@SCHL/#5/.newpush=
-                {{#1}\@nil{#2}\@nil{#3}\@nil{#4}\@nil{#6}}}%
-}
-
-\NewDocumentCommand{\printCoverTikz}{m}{%
-  % #1 = cover ID (major-minor)
-  \ifoptiondefined{/@nt/coverTikz/\@UNIV/\@SCHL/#1}{%
-    \NTRunHook{coverTikz/#1/text/pre}%
-    \begin{tikzpicture}[remember picture, overlay, yscale=-1, every node/.style={inner sep=0pt}]%
-      \optionlistdo{/@nt/coverTikz/\@UNIV/\@SCHL/#1}{%
-        \printCoverElementTikz#1\@nil##1\@nil\@nil%
-      }%
-    \end{tikzpicture}%
-    \NTRunHook{coverTikz/#1/text/post}%
-  }{}%
-}
-
-\def\printCoverElementTikz#1\@nil#2\@nil#3\@nil#4\@nil#5\@nil#6\@nil{%
-  % #1=CID
-  % #2=Command
-  % #3=Options
-  % #4=Position
-  % #5=Rest of command
-  % #6=Code
-  \IfNoValueTF {#2} {\node[#3] at (#4) #5 {#6}} {#2[#3] (#4) #5};
-}
-%==========================================
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% DEBUG - print grid over covers and spine
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\debuggrid}[1][orange]{%
-  \begin{tikzpicture}[remember picture, semitransparent, overlay, shift=(current page.north west)]%
-    \draw[step=1mm, line width=0.1mm, #1!30!white, yscale=-1] (\@MRGN@left, \@MRGN@top)
-              grid (\paperwidth-\@MRGN@right, \paperheight-\@MRGN@bottom);
-    \draw[step=5mm, line width=0.2mm, #1!40!white] (current page.north west)
-              grid (current page.south east);
-    \draw[step=1cm, line width=0.3mm, #1!90!white] (current page.north west)
-              grid (current page.south east);
-    \draw[step=5cm, line width=0.5mm, #1!50!white] (current page.north west)
-              grid (current page.south east);
-    \end{tikzpicture}%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% PRINT DOCUMENT PARTS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\ifcoverdefined}[3][1-1]{%
-  % #1 = cover number
-  % #2 = true branch
-  % #3 = false branch
-  \ifoptiondefined{/@nt/cover/\@UNIV/\@SCHL/#1}{#2}{%
-    \datamatchtf{\match}{thesiscover}(%
-       {\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
-      ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
-      ,{\@DEGREEACR,#1,bgcolor}%
-      ,{\@DEGREEACR,bgcolor}%
-      ,{\@DOCTYPE,\@DEGREEACR,#1,image}%
-      ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
-      ,{\@DEGREEACR,#1,image}%
-      ,{\@DEGREEACR,image}%
-      ,{\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
-      ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
-      ,{\@DEGREEACR,#1,bgcolor}%
-      ,{\@DEGREEACR,bgcolor}%
-      ,{\@DOCTYPE,\@DEGREEACR,#1,image}%
-      ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
-      ,{\@DEGREEACR,#1,image}%
-      ,{\@DEGREEACR,image}%
-      ,{\@DOCTYPE,#1,bgcolor}%
-      ,{\@DOCCLASS,#1,bgcolor}%
-      ,{#1,bgcolor}%
-      ,{bgcolor}%
-      ,{\@DOCTYPE,#1,image}%
-      ,{\@DOCCLASS,#1,image}%
-      ,{#1,image}%
-      ,{image}%
-      ,{\@DOCTYPE,#1,bgcolor}%
-      ,{\@DOCCLASS,#1,bgcolor}%
-      ,{#1,bgcolor}%
-      ,{bgcolor}%
-      ,{\@DOCTYPE,#1,image}%
-      ,{\@DOCCLASS,#1,image}%
-      ,{#1,image}%
-      ,{image}%
-    ){#2}{#3}%
-  }%
-}
-
-\newcommand{\ntprintspine}{%
-  \pagenumbering{roman}%
-  \setcounter{page}{0}
-  \NTRunHook{print/spine/pre}%
-  \iffileadded[spine]{cover}{%
-    \optionlistdo{/@nt/file/cover/spine}{%
-      \bgroup\thispagestyle{empty}%
-      \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
-      \egroup\clearforchapter%
-    }%
-  }{\PrintBookSpine\clearforchapter}%
-  \NTRunHook{print/spine/post}%
-}
-
-\newcommand{\ntprintbackcover}{%
-  \clearforchapter%
-  \pagenumbering{roman}%
-  \setcounter{page}{0}
-  \ntprintcoverpair{N}%
-}
-
-\newcommand{\ntprintcovers}[1][1,2]{%
-  \begingroup%
-    \ntselectlang{\@LANG@COVER}%
-    \NTRunHook{printcovers/pre}%
-    \ntfor\arg:={#1}\do{\ntprintcoverpair{\arg}}%
-    \NTRunHook{printcovers/post}%
-  \endgroup%
-  \pagecolor{white}%
-}
-
-\newcommand{\ntprintcoverpair}[1]{%
-  % #1 = major cover ID
-  \iffileadded[#1]{cover}{% Deal with user-defined cover page
-    \iffileadded[#1]{cover}{%
-      \optionlistdo{/@nt/file/cover/#1}{%
-        \begingroup
-        \thispagestyle{empty}%
-        \NTRunHook{cover/pre}%
-        \NTRunHook{cover/#1-1/pre}%
-        \hypertarget{\thebkmstring(#1-1)}{}%
-        \bookmark[dest=\thebkmstring(#1-1)]{\thebkmstring(#1-1)}%
-        \bookmarksetupnext{rellevel=1}%
-        \@ntloadfile@i[\ClassError{novathesis}{Invalid cover file: “##1”}{}]{##1}%
-        \NTRunHook{cover/#1-1/post}%
-        \NTRunHook{cover/post}%
-        \endgroup
-        \clearpage%
-      }%
-    }{}%
-  }{% Pre-defined cover page  
-    \IfStrEqCase{#1}{%
-      {1}{\ntprintcoversingle{1}{1}\ntprintcoversingle{1}{2}}%
-      {2}{\iftoggle{/novathesis/print/frontpage}
-                   {\ntprintcoversingle{2}{1}\ntprintcoversingle{2}{2}}{}}%
-      {N}{\ntprintcoversingle{N}{1}\ntprintcoversingle{N}{2}}%
-    }[\ClassWarning{Invalid cover number: #1}{}]%
-  }%
-}
-
-\gdef\@COVERNUM{}%
-\newcommand{\ifcovernum}[2]{\IfStrEq{\@COVERNUM}{#1}{#2}}
-
-\newcommand{\ntprintcoversingle}[2]{%
-  % #1 = cover ID “major”
-  % #2 = cover ID “minor”
-  \ifcoverdefined[#1-#2]{%
-    \gdef\@COVERNUM{#1-#2}%
-    \setcounter{page}{0}\@ntprintcover@i{#1}{#2}
-    \ifoptionequal{/novathesis/media}{paper}{
-      \ifcoverdefined[#1-2]
-        {\clearpage}
-        {\clearforchapter}%
-    }{%
-      \clearpage%
-    }
-  }{}%
-}
-
-\newcommand{\@ntprintcover@i}[2]{%
-  % #1 = cover ID “major”
-  % #2 = cover ID “minor”
-  \begingroup%
-    \NTRunHook{cover/pre}%
-    \NTRunHook{cover/#1-#2/pre}%
-    \hypertarget{\thebkmstring(#1-#2)}{}%
-    \bookmark[dest=\thebkmstring(#1-#2)]{\thebkmstring(#1-#2)}%
-    \bookmarksetupnext{rellevel=1}%
-    \thispagestyle{empty}%
-    \setCoverBgColor{#1-#2}%
-    \setCoverBgImage{#1-#2}%
-    \printCoverText{#1-#2}%
-    % \@ntmakeboxwithcover{#1-#2}{\@fullcover@box}%
-    \printCoverTikz{#1-#2}%
-    \NTRunHook{cover/#1-#2/post}%
-    \NTRunHook{cover/post}%
-  \endgroup%
-}
-
-\newcommand{\setCoverBgColor}[1]{
-  \null%
-  \NTRunHook{cover/#1/bgcolor/pre}%
-  \datamatchtf{\match}{thesiscover}(%
-    {\@DOCTYPE,\@DEGREEACR,#1,bgcolor}%
-   ,{\@DOCCLASS,\@DEGREEACR,#1,bgcolor}%
-   ,{\@DEGREEACR,#1,bgcolor}%
-   ,{\@DEGREEACR,bgcolor}%
-   ,{\@DOCTYPE,#1,bgcolor}%
-   ,{\@DOCCLASS,#1,bgcolor}%
-   ,{#1,bgcolor}%
-   ,{bgcolor}%
-  ){\pagecolor{\match}}{\pagecolor{white}}%
-  \NTRunHook{cover/#1/bgcolor/post}%
-}
-
-\newcommand{\setCoverBgImage}[1]{
-  \null%
-  \NTRunHook{cover/#1/image/pre}%
-  \datamatchtf{\match}{thesiscover}(%
-    {\@DOCTYPE,\@DEGREEACR,#1,image}%
-   ,{\@DOCCLASS,\@DEGREEACR,#1,image}%
-   ,{\@DEGREEACR,#1,image}%
-   ,{\@DEGREEACR,image}%
-   ,{\@DOCTYPE,#1,image}%
-   ,{\@DOCCLASS,#1,image}%
-   ,{#1,image}%
-   ,{image}%
-  ){%
-    \begin{tikzpicture}[remember picture, overlay]%
-      \node[anchor=center] at (current page.center)
-              {\includegraphics[width=\paperwidth,height=\paperheight]{\match}};
-    \end{tikzpicture}%
-  }{}%
-  \NTRunHook{cover/#1/image/post}%
-}
-
-\newcommand{\printCoverText}[1]{
-  \null%
-  \datamatchtf{\match}{thesiscover}(%
-              {\@DOCTYPE,\@DEGREEACR,#1,textcolor}%
-             ,{\@DOCCLASS,\@DEGREEACR,#1,textcolor}%
-             ,{\@DEGREEACR,#1,textcolor}%
-             ,{\@DEGREEACR,textcolor}%
-             ,{\@DOCTYPE,#1,textcolor}%
-             ,{\@DOCCLASS,#1,textcolor}%
-             ,{#1,textcolor}%
-             ,{textcolor}%
-  ){\color{\match}}{}%
-  \@for\nt@tmpi:={top,bottom,left,right}\do{%
-    \datamatch*{@MRGN@\nt@tmpi}{margin}(%
-      {cover,\@DOCTYPE,\@DEGREEACR,#1,\nt@tmpi},%
-      {cover,\@DOCCLASS,\@DEGREEACR,#1,\nt@tmpi},%
-      {cover,\@DEGREEACR,#1,\nt@tmpi},%
-      {cover,\@DOCTYPE,\@DEGREEACR,\nt@tmpi},%
-      {cover,\@DOCCLASS,\@DEGREEACR,\nt@tmpi},%
-      {cover,\@DEGREEACR,\nt@tmpi},%
-      {cover,\@DOCTYPE,#1,\nt@tmpi},%
-      {cover,\@DOCCLASS,#1,\nt@tmpi},%
-      {cover,#1,\nt@tmpi},%
-      {cover,\@DOCTYPE,\nt@tmpi},%
-      {cover,\@DOCCLASS,\nt@tmpi},%
-      {cover,\nt@tmpi})%
-  }%
-  \newdimen{\covertextheight}%
-  \newdimen{\covertextwidth}%
-  \covertextheight=\dimexpr\paperheight-\@MRGN@top-\@MRGN@bottom\relax%
-  \covertextwidth=\dimexpr\paperwidth-\@MRGN@left-\@MRGN@right\relax%
-  \ifoptioncontains{/novathesis/debug}{cover}{%
-    \NTRunHook{cover/#1/grid/pre}%
-    \debuggrid%
-    \NTRunHook{cover/#1/grid/post}%
-  }{}%
-  \begin{tikzpicture}[remember picture, overlay]%
-    \node[anchor=north west,inner sep=0,xshift=\@MRGN@left, yshift=-\@MRGN@top]
-          at (current page.north west) {%
-      \begin{minipage}[t][\covertextheight]%
-                      [t]{\covertextwidth}%
-        \@ntcovertext{#1}%
-      \end{minipage}%
-    };
-    \expandafter\@ifmtarg\expandafter{\csname @covertikzlist#1\endcsname}{}{\csuse{@covertikzlist@#1}}%
-  \end{tikzpicture}%
-}
-
-\newcommand{\@ntcovertext}[1]{%
-  % #1 = cover ID (major-minor)
-  \NTRunHook{cover/#1/text/pre}%
-    \optionlistdo{/@nt/cover/\@UNIV/\@SCHL/#1}{\@ntcoverelement@iii{#1}##1}%
-  \NTRunHook{cover/#1/text/post}%
-}
-
-\newif\ifmatchstatus%
-\newif\ifmatchdegree%
-\def\@ntcoverelement@iii#1#2\@nil#3{%
-  % #1 = cover ID (major-minor)
-  % #2 = cover element options
-  % #3 = cover element code
-  \ifblank{#3}{}{%
-    \options{/@ntcoveropts, defaults, #2, alignmap=\option{/@ntcoveropts/halign}}%
-    \matchstatustrue%
-    \matchdegreetrue%
-    \if&\option{/@ntcoveropts/status}&\relax%
-    \else%
-      \IfSubStr{,\option{/@ntcoveropts/status},}{,\@DOCSTATUS,}
-        {}
-        {\matchstatusfalse}%
-    \fi%
-    \if&\option{/@ntcoveropts/degree}&\relax%
-    \else%
-      \IfSubStr{/\option{/@ntcoveropts/degree}/}{/\@DOCTYPE/}
-        {}
-        {\matchdegreefalse}%
-    \fi%
-    \ifmatchstatus%
-      \ifmatchdegree%
-        \iftoggle{/@ntcoveropts/tikz}{%
-          \expandafter\gappto\expandafter{\csname @covertikzlist@#1\endcsname}{#3}%
-        }{%
-          \@ntcoverelement@ii{#1}{#3}%
-        }%
-      \fi%
-    \fi%
-  }%
-}
-
-\options{/@ntcoveropts/.new family,
-  % letter to macro for horizontal alignment
-  alignmap/.new choice={c=\centering,l=\raggedright,r=\raggedleft,j=\null},
-  % filters / conditional printing
-  status/.new value,
-  degree/.new value,
-  % horizontal alighment and vertical alignments inside the box
-  halign/.new choice={c, l, r, j},
-  valign/.new choice={c, t, b},
-  % height of the box (default = the natural height for the contents)
-  height/.new value,
-  % height of the box (default = the natural height for the contents)
-  height/phd/.new value,
-  % height of the box (default = the natural height for the contents)
-  height/msc/.new value,
-  % minheight of the box (default = the natural height for the contents)
-  minheight/.new value,
-  % width of the box (default = full width)
-  width/.new value,
-  % vertical spacing from precious box (default = 0ptcan also be an integer and,,
-  % in this caseit means the weight of the vfill),
-  vspace/.new value,
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  vspace/phd/.new value,
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  vspace/msc/.new value,
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  vspace/1-1/.new value,
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  vspace/2-1/.new value,
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  vspace/phd/1-1/.new value,
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  vspace/phd/2-1/.new value,
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  vspace/msc/1-1/.new value,
-  % vertical spacing from precious box (default = 0pt, can also be an integer and,
-  % in this case, it means the weight of the vfill)
-  vspace/msc/2-1/.new value,
-  % horizontal spacing from the left margin (or last box in the same line) (default = 0pt)
-  hspace/.new value,
-  % is the last box in the line (default = true)
-  newpar/.new toggle,
-  % text color for the box (default = black)
-  color/.new color,
-  % background color for the box (default = transparent)
-  bgcolor/.new color,
-  % tikz cover elements
-  tikz/.new toggle,
-  % default values
-  defaults/.new style*={,
-                  vspace=0pt,
-                  vspace/msc={}, vspace/phd={},
-                  vspace/1-1={}, vspace/2-1={},
-                  vspace/msc/1-1={}, vspace/msc/2-1={},
-                  vspace/phd/1-1={}, vspace/phd/2-1={},
-                  status={}, degree={}, halign=c, valign=c,
-                  height={}, height/phd={}, height/msc={},
-                  minheight=0pt, width={}, hspace=0pt,
-                  newpar=true, color={}, bgcolor={},
-                  tikz=false,
+% Attributes for individual elements
+% NOTE: The 'degree' option accepts comma-separated values in braces, e.g.:
+%       degree={phd,phdprop,phdplan}  - element renders only if @DOCTYPE matches one of these
+% Syntax: degree={item1,item2,...}
+% - Braces MUST be used around comma-separated lists (required by LaTeX keys system)
+% - The degree filter checks if @DOCTYPE (e.g., 'phd', 'msc') matches any value
+% - Element is only rendered if degree filter matches or is empty
+% - When degree is empty, element renders for all doctypes
+\keys_define:nn { nt/covers/element }
+  {
+    status    .clist_set:N = \l_nt_covers_elem_status_clist,
+    degree    .code:n = {
+      % Degree filtering: element renders only if @DOCTYPE matches one of these values
+      % Input must be braced and comma-separated, e.g.: {phd,phdprop,phdplan}
+      % The braces protect commas from being interpreted as key separators by the keys system
+      \clist_set:Nn \l_nt_covers_elem_degree_clist { #1 }
+    },
+    halign    .choices:nn = { l, c, r, j }
+                { \tl_set:Nn \l_nt_covers_elem_halign_tl { #1 } },
+    valign    .choices:nn = { t, c, b }
+                { \tl_set:Nn \l_nt_covers_elem_valign_tl { #1 } },
+    vspace    .tl_set:N    = \l_nt_covers_elem_vspace_tl,
+    vfill     .tl_set:N    = \l_nt_covers_elem_vfill_tl,
+    hspace    .dim_set:N   = \l_nt_covers_elem_hspace_dim,
+    height    .dim_set:N   = \l_nt_covers_elem_height_dim,
+    minheight .dim_set:N   = \l_nt_covers_elem_minheight_dim,
+    width     .dim_set:N   = \l_nt_covers_elem_width_dim,
+    color     .tl_set:N    = \l_nt_covers_elem_color_tl,
+    bgcolor   .tl_set:N    = \l_nt_covers_elem_bgcolor_tl,
+    tikz      .bool_set:N  = \l_nt_covers_elem_tikz_bool,
+    newpar    .bool_set:N  = \l_nt_covers_elem_newpar_bool,
+    % Default values
+    status    .initial:n = {},
+    degree    .initial:n = {},
+    halign    .initial:n = c,
+    valign    .initial:n = c,
+    vspace    .initial:n = 0pt,
+    vfill     .initial:n = {},
+    hspace    .initial:n = 0pt,
+    minheight .initial:n = 0pt,
+    tikz      .initial:n = false,
+    newpar    .initial:n = true,
   }
-}
 
-\newcommand{\@ntcovervspace}[1]{%
-  \ifoptionvoid{/@ntcoveropts/#1}{%
-  }{%
-    \IfInteger{\option{/@ntcoveropts/#1}}% USE vspace
-      {\vskip 0pt plus \option{/@ntcoveropts/#1}fill}%
-      {\vspace*{\option{/@ntcoveropts/#1}}}%
-    \ntforbreak%
-  }%
-}
+% Map for alignment macros
+\prop_new:N \g_nt_covers_align_map_prop
+\prop_gput:Nnn \g_nt_covers_align_map_prop { c } { \centering }
+\prop_gput:Nnn \g_nt_covers_align_map_prop { l } { \raggedright }
+\prop_gput:Nnn \g_nt_covers_align_map_prop { r } { \raggedleft }
+\prop_gput:Nnn \g_nt_covers_align_map_prop { j } { \null }
 
-\newcommand{\@ntcoverelement@ii}[2]{%
-  % #1 = cover ID (major-minor)
-  % #2 = code
-  \ntfor\match:={vspace/\@DOCTYPE/#1,vspace/\@DOCTYPE,vspace/\@DOCCLASS/#1,vspace/\@DOCCLASS,vspace/#1,vspace}%
-        \do{\@ntcovervspace{\match}}%
-  % Typeset contents in a box
-  \@nt@makeboxwithcoverelement@iii{#1}{#2}{\@nt@coverelement}%
-  \noindent%
-  \hspace*{\option{/@ntcoveropts/hspace}}%
-  \ifoptioncontains{/novathesis/debug}{cover}{% If in debug mode surround element in box
-    \setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.5pt}%
-    \vspace*{-\fboxrule}\hspace*{-\fboxrule}%
-    \fbox{\usebox{\@nt@coverelement}}%
-  }{\usebox{\@nt@coverelement}}%
-  \iftoggle{/@ntcoveropts/newpar}{\expandafter\par}{}%
-}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% INTERNAL HELPERS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\@nt@makeboxwithcoverelement@iii}[3]{%
-  % #1 = cover ID (major-minor)
-  % #2 = code
-  % #3 = boxname
-  \defifundef{\@mkcvelemwidth}{\newlength}%
-  \ifoptionblank{/@ntcoveropts/width}%
-    {\setlength{\@mkcvelemwidth}{\dimexpr\linewidth-\option{/@ntcoveropts/hspace}\relax}}%
-    {\option{/@ntcoveropts/width}}%
-  \defifundef{\ifheightopt}{\newif}%
-  \heightoptfalse%
-  \ntfor\myh:={height/\@DOCTYPE,height/\@DOCCLASS,height}\do{%
-    \ifoptionvoid{/@ntcoveropts/\myh}{}{%
-      \edefoption{/@ntcoveropts/\myh}\@mkcvelemheight\heightopttrue\ntforbreak%
-    }%
-  }%
-  % Create destination boxes if undefined and save to it
-  \defifundef{#3}{\newsavebox}%
-  \begin{lrbox}{#3}%
-    \begin{minipage}[t][0pt][t]{0pt}%
-      \color{white}\rule{0.000000000000001pt}{\option{/@ntcoveropts/minheight}}%
-    \end{minipage}%
-    % Minipage definition is different if element height is given or not
-    \ifheightopt%
-      \minipage[t][\@mkcvelemheight][\option{/@ntcoveropts/valign}]{\@mkcvelemwidth}%
-    \else%
-      \minipage[t][][\option{/@ntcoveropts/valign}]{\@mkcvelemwidth}%
-    \fi%
-        \ifoptionblank{/@ntcoveropts/color}{}{\color{\option{/@ntcoveropts/color}}}%
-        \option{/@ntcoveropts/alignmap}%
-        #2%
-    \endminipage%
-  \end{lrbox}%
-  % Add a background color if needed
-  \ifoptionblank{/@ntcoveropts/bgcolor}{}{%
-    \savebox{#3}{\colorbox{\option{/@ntcoveropts/bgcolor}}{\usebox{#3}}}%
-  }%
-}
+\cs_new_protected:Nn \nt_covers_reset_one:n
+  {
+    \prop_gremove:Nn \g_nt_covers_content_prop { #1 }
+    \prop_gremove:Nn \g_nt_covers_tikz_prop { #1 }
+  }
+
+\cs_new_protected:Nn \nt_covers_add_to_prop:nnn
+  {
+    \prop_get:NnNTF #1 { #2 } \l_nt_covers_content_tl
+      {
+        \tl_put_right:Nn \l_nt_covers_content_tl { #3 }
+        \prop_gput:NnV #1 { #2 } \l_nt_covers_content_tl
+      }
+      { \prop_gput:Nnn #1 { #2 } { #3 } }
+  }
+
+% Check if element matches current doc status and degree
+% Args: #1 = element attributes (status, degree, etc.), #2 = element content
+% Returns: true if element should be rendered, false otherwise
+%
+% Matching logic:
+%   - status: if specified, @DOCSTATUS must be in list (or empty list means match all)
+%   - degree: if specified, @DOCTYPE must be in list (or empty list means match all)
+% Both conditions must be true for element to be rendered.
+\prg_new_protected_conditional:Npnn \nt_covers_if_match:nn #1 #2 { T, F, TF }
+  {
+    % Reset all element variables to defaults before parsing new attributes
+    \clist_clear:N \l_nt_covers_elem_status_clist
+    \clist_clear:N \l_nt_covers_elem_degree_clist
+    \tl_set:Nn \l_nt_covers_elem_halign_tl { c }
+    \tl_set:Nn \l_nt_covers_elem_valign_tl { c }
+    \tl_set:Nn \l_nt_covers_elem_vspace_tl { 0pt }
+    \tl_clear:N \l_nt_covers_elem_vfill_tl
+    \dim_set:Nn \l_nt_covers_elem_hspace_dim { 0pt }
+    \dim_set:Nn \l_nt_covers_elem_height_dim { 0pt }
+    \dim_set:Nn \l_nt_covers_elem_minheight_dim { 0pt }
+    \dim_set:Nn \l_nt_covers_elem_width_dim { 0pt }
+    \tl_clear:N \l_nt_covers_elem_color_tl
+    \tl_clear:N \l_nt_covers_elem_bgcolor_tl
+    \bool_set_false:N \l_nt_covers_elem_tikz_bool
+    \bool_set_true:N \l_nt_covers_elem_newpar_bool
+
+    \keys_set:nn { nt/covers/element } { #1 }
+    \bool_set_true:N \l_nt_covers_status_match_bool % status match
+    \bool_set_true:N \l_nt_covers_degree_match_bool % degree match
+
+    % Expand @DOCTYPE and @DOCSTATUS macros into expl3 variables for proper matching
+    \tl_set:Nx \l_nt_covers_doctype_tl { \@DOCTYPE }
+    \tl_set:Nx \l_nt_covers_docstatus_tl { \@DOCSTATUS }
+
+    % Check status if specified
+     \clist_if_empty:NF \l_nt_covers_elem_status_clist
+       {
+         \clist_if_in:NVF
+           \l_nt_covers_elem_status_clist
+           \l_nt_covers_docstatus_tl
+           { \bool_set_false:N \l_nt_covers_status_match_bool }
+       }
+
+    % Check degree if specified
+    % @DOCTYPE is set to the document degree type (e.g., 'phd', 'msc', 'phd_prop', etc.)
+    % Element is only rendered if @DOCTYPE appears in the degree list, or degree is empty.
+    \clist_if_empty:NF \l_nt_covers_elem_degree_clist
+      {
+        \clist_if_in:NVF
+          \l_nt_covers_elem_degree_clist
+          \l_nt_covers_doctype_tl
+          { \bool_set_false:N \l_nt_covers_degree_match_bool }
+      }
+
+    \bool_if:nTF
+      {
+        \l_nt_covers_status_match_bool
+        && \l_nt_covers_degree_match_bool
+      }
+      { \prg_return_true: }
+      { \prg_return_false: }
+  }
+
+\cs_new_protected:Nn \nt_covers_apply_vspace:n
+  {
+    \tl_if_empty:NTF \l_nt_covers_elem_vfill_tl
+      { \vspace* { #1 } }
+      { \vskip 0pt plus \l_nt_covers_elem_vfill_tl fill }
+  }
+\cs_generate_variant:Nn \nt_covers_apply_vspace:n { V }
+
+% Box for element rendering
+\box_new:N \l_nt_covers_elem_box
+
+\cs_new_protected:Nn \nt_covers_render_element:nn
+  {
+    \nt_covers_if_match:nnTF { #1 } { #2 }
+      {
+        \bool_if:NTF \l_nt_covers_elem_tikz_bool
+          { \tl_gput_right:Nn \g_nt_covers_tikz_overlay_tl { #2 } }
+          {
+            % 1. Apply Vertical Space
+            \nt_covers_apply_vspace:V \l_nt_covers_elem_vspace_tl
+
+            % 2. Compute element width
+            \group_begin:
+              \noindent \hspace* { \l_nt_covers_elem_hspace_dim }
+
+              \dim_compare:nNnTF { \l_nt_covers_elem_width_dim } > { 0pt }
+                { \dim_set_eq:NN \l_tmpa_dim \l_nt_covers_elem_width_dim }
+                {
+                  \dim_set:Nn \l_tmpa_dim
+                    {
+                      \l_nt_covers_width_dim
+                      - \l_nt_covers_elem_hspace_dim
+                    }
+                }
+
+              % 3a. No bgcolor: output minipage directly (no boxing overhead)
+              % 3b. With bgcolor: box the minipage first, then colorbox-wrap it
+              \tl_if_empty:NTF \l_nt_covers_elem_bgcolor_tl
+                {
+                  % --- Direct path ---
+                  \dim_compare:nNnTF { \l_nt_covers_elem_height_dim } > { 0pt }
+                    {
+                      \begin { minipage }
+                        [ \l_nt_covers_elem_valign_tl ]
+                        [ \dim_use:N \l_nt_covers_elem_height_dim ]
+                        { \l_tmpa_dim }
+                    }
+                    {
+                      \begin { minipage }
+                        [ \l_nt_covers_elem_valign_tl ]
+                        { \l_tmpa_dim }
+                    }
+                  \tl_if_empty:NF \l_nt_covers_elem_color_tl
+                    { \color { \l_nt_covers_elem_color_tl } }
+                  \prop_get:NVN
+                    \g_nt_covers_align_map_prop
+                    \l_nt_covers_elem_halign_tl
+                    \l_nt_covers_tmp_tl
+                  \l_nt_covers_tmp_tl
+                  #2
+                  \end { minipage }
+                }
+                {
+                  % --- Boxed path (bgcolor needs colorbox wrapping) ---
+                  \hbox_set:Nw \l_nt_covers_elem_box
+                    \dim_compare:nNnTF
+                      { \l_nt_covers_elem_height_dim } > { 0pt }
+                      {
+                        \begin { minipage }
+                          [ \l_nt_covers_elem_valign_tl ]
+                          [ \dim_use:N \l_nt_covers_elem_height_dim ]
+                          { \l_tmpa_dim }
+                      }
+                      {
+                        \begin { minipage }
+                          [ \l_nt_covers_elem_valign_tl ]
+                          { \l_tmpa_dim }
+                      }
+                    \tl_if_empty:NF \l_nt_covers_elem_color_tl
+                      { \color { \l_nt_covers_elem_color_tl } }
+                    \prop_get:NVN
+                      \g_nt_covers_align_map_prop
+                      \l_nt_covers_elem_halign_tl
+                      \l_nt_covers_tmp_tl
+                    \l_nt_covers_tmp_tl
+                    #2
+                    \end { minipage }
+                  \hbox_set_end:
+                  \hbox_set:Nn \l_nt_covers_elem_box
+                    {
+                      \colorbox
+                        { \l_nt_covers_elem_bgcolor_tl }
+                        { \box_use:N \l_nt_covers_elem_box }
+                    }
+                  \box_use:N \l_nt_covers_elem_box
+                }
+
+              \bool_if:NT \l_nt_covers_elem_newpar_bool { \par }
+            \group_end:
+          }
+      }
+      { }
+  }
+
+\cs_new_protected:Nn \nt_covers_print_text:n
+  {
+    % Fetch Margins from Memory (mimicking original logic with full hierarchy)
+    \clist_map_inline:nn { top, bottom, left, right }
+      {
+        \datamatch { \l_nt_covers_tmp_tl } { Margin } (
+          { cover,\@DOCTYPE,\@DEGREEACR,#1,##1 },
+          { cover,\@DOCCLASS,\@DEGREEACR,#1,##1 },
+          { cover,\@DEGREEACR,#1,##1 },
+          { cover,\@DOCTYPE,\@DEGREEACR,##1 },
+          { cover,\@DOCCLASS,\@DEGREEACR,##1 },
+          { cover,\@DEGREEACR,##1 },
+          { cover,\@DOCTYPE,#1,##1 },
+          { cover,\@DOCCLASS,#1,##1 },
+          { cover,#1,##1 },
+          { cover,\@DOCTYPE,##1 },
+          { cover,\@DOCCLASS,##1 },
+          { cover,##1 }
+        )
+        \dim_set:cn { l_nt_covers_ ##1 _dim } { \l_nt_covers_tmp_tl }
+      }
+
+    \dim_set:Nn \l_nt_covers_width_dim
+      {
+        \paperwidth - \l_nt_covers_left_dim - \l_nt_covers_right_dim
+      }
+    \dim_set:Nn \l_nt_covers_height_dim
+      {
+        \paperheight - \l_nt_covers_top_dim - \l_nt_covers_bottom_dim
+      }
+
+    % Lookup text color for this cover (default: black)
+    % Applied as the first command inside the minipage so all elements inherit it.
+    \tl_set:Nn \l_nt_covers_textcolor_tl { black }
+    \datamatchtf { \l_nt_covers_textcolor_tl } { ThesisCover } (
+      { \@DOCTYPE,\@DEGREEACR,#1,textcolor },
+      { \@DOCCLASS,\@DEGREEACR,#1,textcolor },
+      { \@DEGREEACR,#1,textcolor },
+      { \@DEGREEACR,textcolor },
+      { \@DOCTYPE,#1,textcolor },
+      { \@DOCCLASS,#1,textcolor },
+      { #1,textcolor },
+      { textcolor }
+    ) { } { }
+    % Guard against an empty match (e.g. school sets textcolor to nothing)
+    \tl_if_empty:NT \l_nt_covers_textcolor_tl
+      { \tl_set:Nn \l_nt_covers_textcolor_tl { black } }
+
+    % Lookup text font for this cover (default: empty = no font switch)
+    % NOTE: must NOT use \datamatchtf — it e-expands stored values, which corrupts
+    % command tokens like \sffamily.  Use \prop_get:cnN directly (no expansion).
+    \tl_clear:N \l_nt_covers_textfont_tl
+    \exp_args:Ne \clist_map_inline:nn
+      {
+        { \@DOCTYPE,\@DEGREEACR,#1,textfont },
+        { \@DOCCLASS,\@DEGREEACR,#1,textfont },
+        { \@DEGREEACR,#1,textfont },
+        { \@DEGREEACR,textfont },
+        { \@DOCTYPE,#1,textfont },
+        { \@DOCCLASS,#1,textfont },
+        { #1,textfont },
+        { textfont }
+      }
+      {
+        \prop_get:cnNTF
+          { g__mem_ThesisCover_prop }
+          { ##1 }
+          \l_nt_covers_textfont_tl
+          { \clist_map_break: }
+          { }
+      }
+
+    \tl_gclear:N \g_nt_covers_tikz_overlay_tl
+
+    \begin { tikzpicture } [ remember~picture, overlay ]
+      \node
+        [ anchor = north~west, inner~sep = 0,
+          xshift = \dim_use:N \l_nt_covers_left_dim,
+          yshift = - \dim_use:N \l_nt_covers_top_dim ]
+        at ( current~page.north~west )
+        {
+          \begin { minipage }
+            [ t ]
+            [ \dim_use:N \l_nt_covers_height_dim ]
+            [ t ]
+            { \dim_use:N \l_nt_covers_width_dim }
+            % Step 3: set default text colour and font (inherited by all elements in this minipage)
+            \color { \l_nt_covers_textcolor_tl }
+            \tl_if_empty:NF \l_nt_covers_textfont_tl
+              { \tl_use:N \l_nt_covers_textfont_tl }
+            \NTRunHook { cover/text/pre }
+            \NTRunHook { cover/#1/text/pre }
+            \prop_get:NnNTF
+              \g_nt_covers_content_prop
+              { #1 }
+              \l_nt_covers_content_tl
+              {
+                \tl_map_inline:Nn
+                  \l_nt_covers_content_tl
+                  { \nt_covers_render_element:nn ##1 }
+              }
+              { }
+            \NTRunHook { cover/#1/text/post }
+            \NTRunHook { cover/text/post }
+          \end { minipage }
+        } ;
+    \end { tikzpicture }
+    % Execute TikZ overlay OUTSIDE the primary picture to avoid nullfont issues with leading spaces
+    \tl_if_empty:NF \g_nt_covers_tikz_overlay_tl
+      {
+        \begin { tikzpicture } [ remember~picture, overlay ]
+          % Re-apply the cover textcolor so overlay nodes inherit it (the minipage
+          % group already closed, reverting \color back to the document default)
+          \color { \l_nt_covers_textcolor_tl }
+          \g_nt_covers_tikz_overlay_tl
+        \end { tikzpicture }
+      }
+  }
+
+\cs_new_protected:Nn \nt_covers_print_tikz:n
+  {
+    \prop_get:NnNTF \g_nt_covers_tikz_prop { #1 } \l_nt_covers_tmp_tl
+      {
+        \begin { tikzpicture }
+          [ remember~picture, overlay, yscale = -1,
+            every~node/.style = { inner~sep = 0pt } ]
+          \tl_map_inline:Nn \l_nt_covers_tmp_tl
+            { \nt_covers_render_tikz:nnnnn ##1 }
+        \end { tikzpicture }
+      }
+      { }
+  }
+
+\cs_new_protected:Nn \nt_covers_render_tikz:nnnnn
+  {
+    \tl_if_eq:nnTF { #1 } { -NoValue- }
+      { \node[#2] at (#3) #4 { #5 } }
+      { #1[#2] (#3) #4 }
+  }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PUBLIC API - REGISTRATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NewDocumentCommand{\ntresetcovers} { }
+  { \seq_map_inline:Nn \g_nt_covers_ids_seq { \nt_covers_reset_one:n { ##1 } } }
+
+\NewDocumentCommand{\ntresetonecover} { m }
+  { \nt_covers_reset_one:n { #1 } }
+
+% Command: \ntaddtocover[options]{cover-ids}{content}
+% Purpose:  Add content to specified cover pages with optional filtering
+%
+% Args:
+%   options  = Optional parameters for rendering/filtering:
+%              - status={final,provisional,...}: Filter by document status
+%              - degree=phd/msc/phd_prop/...   : Filter by degree type
+%                  (accepts forward-slash or comma-separated: 'phd/msc' or 'phd,msc')
+%              - vspace=2cm                    : Fixed vertical spacing (TeX dimension)
+%              - vfill=1                       : Elastic vertical spacing (n × fill units)
+%              - height=5cm                    : Content height
+%              - halign=l|c|r|j                : Horizontal alignment
+%              - valign=t|c|b                  : Vertical alignment
+%              - and more (see keys definition)
+%   cover-ids = Comma-separated cover IDs (1-1, 1-2, 2-1, 2-2, N-1, N-2)
+%   content  = LaTeX content to add to covers
+%
+% Example:
+%   \ntaddtocover[degree=phd/phd_prop, vspace=1cm]{1-1,2-1}{%
+%     This text appears on front and back covers for PhD and PhD Proposal degrees
+%   }
+%   \ntaddtocover[vfill=1]{1-1}{} % pushes following elements to the bottom
+%
+% Note: Degree option automatically converts forward-slash format to comma-separated
+%       internally. Both formats work:  degree=phd/msc/phd_prop and degree={phd,msc,phd_prop}
+\NewDocumentCommand { \ntaddtocover } { O { } m m }
+  {
+    \clist_map_inline:nn { #2 }
+      {
+        \nt_covers_add_to_prop:nnn \g_nt_covers_content_prop { ##1 }
+          { { { #1 } { #3 } } }
+      }
+  }
+
+\NewDocumentCommand { \ntAddToCoverTikz } { d<> O { } r() O { } m m }
+  {
+    \clist_map_inline:nn { #5 }
+      {
+        \nt_covers_add_to_prop:nnn \g_nt_covers_tikz_prop { ##1 }
+          { { { #1 } { #2 } { #3 } { #4 } { #6 } } }
+      }
+  }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PUBLIC PRINTING INTERFACE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NewDocumentCommand { \ntprintcovers } { O { 1,2 } }
+  {
+    \group_begin:
+      \ntselectlang { \@LANG@COVER }
+      \NTRunHook { printcovers/pre }
+      \clist_map_inline:nn { #1 } { \ntprintcoverpair { ##1 } }
+      \NTRunHook { printcovers/post }
+    \group_end:
+    \pagecolor { white }
+  }
+
+\NewDocumentCommand { \ntprintcoverpair } { m }
+  {
+    \iffileadded [#1] { cover }
+      { \PrintAddedFile [#1] { cover } }
+      {
+        \str_case:nn { #1 }
+          {
+            { 1 }
+              {
+                \ntprintcoversingle { 1 } { 1 }
+                \ntprintcoversingle { 1 } { 2 }
+              }
+            { 2 }
+              {
+                \iftoggle { /novathesis/print/frontpage }
+                  {
+                    \ntprintcoversingle { 2 } { 1 }
+                    \ntprintcoversingle { 2 } { 2 }
+                  }
+                  { }
+              }
+            { N }
+              {
+                \ntprintcoversingle { N } { 1 }
+                \ntprintcoversingle { N } { 2 }
+              }
+          }
+      }
+  }
+
+\NewDocumentCommand { \ntprintcoversingle } { m m }
+  {
+    \ifcoverdefined [#1-#2]
+      {
+        \tl_gset:cn { @COVERNUM } { #1-#2 }
+        \IfStrEq { #1 } { 1 }
+          { \pagenumbering { roman } \setcounter { page } { 0 } }
+          { }
+        \nt_covers_render_page:nn { #1 } { #2 }
+        \ifoptionequal { /novathesis/media } { paper }
+          { \IfStrEq { #2 } { 1 } { \ifcoverdefined [#1-2] { } { \clearpage } } { } }
+          { \clearpage }
+      }
+      { }
+  }
+
+\cs_new_protected:Nn \nt_covers_render_page:nn
+  {
+    \group_begin:
+      \NTRunHook { cover/pre }
+      \NTRunHook { cover/#1-#2/pre }
+      \clearpage
+      \phantomsection
+      \def \bmshift { 1 }
+      \IfStrEq { #1-#2 } { 1-1 } { \def \bmshift { 0 } } { }
+      \IfStrEq { #1-#2 } { N-2 } { \def \bmshift { 0 } } { }
+      \bookmark
+        [ level = \bmshift, dest = \HyperLocalCurrentHref ]
+        { \GetBkmString ( #1-#2 ) }
+      \thispagestyle { empty }
+
+      % Step 1: Background Colour
+      % \NTRunHook{cover/bgcolor/pre}       % reserved for future use
+      % \NTRunHook{cover/#1-#2/bgcolor/pre} % reserved for future use
+      \datamatchtf { \l_nt_covers_tmp_tl } { ThesisCover } (
+        { \@DOCTYPE,\@DEGREEACR,#1-#2,bgcolor },
+        { \@DOCCLASS,\@DEGREEACR,#1-#2,bgcolor },
+        { \@DEGREEACR,#1-#2,bgcolor },
+        { \@DOCTYPE,#1-#2,bgcolor },
+        { \@DOCCLASS,#1-#2,bgcolor },
+        { #1-#2,bgcolor },
+        { \@DOCTYPE,\@DEGREEACR,bgcolor },
+        { \@DOCCLASS,\@DEGREEACR,bgcolor },
+        { \@DEGREEACR,bgcolor },
+        { \@DOCTYPE,bgcolor },
+        { \@DOCCLASS,bgcolor },
+        { bgcolor }
+      )
+        { \pagecolor { \l_nt_covers_tmp_tl } }
+        { \pagecolor { white } }
+      % \NTRunHook{cover/#1-#2/bgcolor/post} % reserved for future use
+      % \NTRunHook{cover/bgcolor/post}        % reserved for future use
+
+      % Step 2: Background Image (full-page TikZ overlay)
+      % \NTRunHook{cover/bgimage/pre}       % reserved for future use
+      % \NTRunHook{cover/#1-#2/bgimage/pre} % reserved for future use
+      \datamatchtf { \l_nt_covers_tmp_tl } { ThesisCover } (
+        { \@DOCTYPE,\@DEGREEACR,#1-#2,image },
+        { \@DOCCLASS,\@DEGREEACR,#1-#2,image },
+        { \@DEGREEACR,#1-#2,image },
+        { \@DOCTYPE,#1-#2,image },
+        { \@DOCCLASS,#1-#2,image },
+        { #1-#2,image },
+        { \@DOCTYPE,\@DEGREEACR,image },
+        { \@DOCCLASS,\@DEGREEACR,image },
+        { \@DEGREEACR,image },
+        { \@DOCTYPE,image },
+        { \@DOCCLASS,image },
+        { image }
+      )
+        {
+          \begin { tikzpicture } [ remember~picture, overlay ]
+            \node [ anchor = center ] at ( current~page.center )
+              {
+                \includegraphics
+                  [ width = \paperwidth, height = \paperheight ]
+                  { \l_nt_covers_tmp_tl }
+              } ;
+          \end { tikzpicture }
+        }
+        { }
+      % \NTRunHook{cover/#1-#2/bgimage/post} % reserved for future use
+      % \NTRunHook{cover/bgimage/post}        % reserved for future use
+
+      % Steps 3+4: Text colour (set inside minipage) + Element rendering
+      % cover/text/pre, cover/#1-#2/text/pre, cover/#1-#2/text/post, cover/text/post
+      % are all fired inside \nt_covers_print_text:n, within the minipage group,
+      % so font/colour changes in those hooks take effect correctly.
+      % \NTRunHook{cover/text/pre}        % moved inside minipage (nt_covers_print_text:n)
+      % \NTRunHook{cover/#1-#2/text/pre}  % moved inside minipage (nt_covers_print_text:n)
+      \nt_covers_print_text:n { #1-#2 }
+      \nt_covers_print_tikz:n { #1-#2 }
+      % \NTRunHook{cover/#1-#2/text/post} % moved inside minipage (nt_covers_print_text:n)
+      % \NTRunHook{cover/text/post}       % moved inside minipage (nt_covers_print_text:n)
+
+      \NTRunHook { cover/#1-#2/post }
+      \NTRunHook { cover/post }
+    \group_end:
+  }
+
+% Standard aliases
+\NewDocumentCommand { \ntprintbackcover } { }
+  { \ntprintcoverpair { N } }
+\NewDocumentCommand { \ntprintspine } { }
+  {
+    % Spine logic is simpler to keep calling nt-spine.sty
+    \pagenumbering { roman } %\setcounter{page}{0}
+    \NTRunHook { print/spine/pre }
+    \clearpage
+    \phantomsection
+    \bookmark [ level = 0, dest = \HyperLocalCurrentHref ]
+      { \GetBkmString ( spine ) }
+    \iffileadded [spine] { cover }
+      { \PrintAddedFile [spine] { cover } }
+      { \PrintBookSpine \clearforchapter }
+    \NTRunHook { print/spine/post }
+  }
+
+\NewDocumentCommand { \ifcovernum } { m m }
+  { \str_if_eq:VnT \@COVERNUM { #1 } { #2 } }
+
+\NewDocumentCommand { \debuggrid } { O { orange } }
+  {
+    \begin { tikzpicture }
+      [ remember~picture, semitransparent, overlay,
+        shift = ( current~page.north~west ) ]
+      \draw [ step = 1mm, line~width = 0.1mm, #1!30!white, yscale = -1 ]
+        ( \l_nt_covers_left_dim, \l_nt_covers_top_dim )
+        grid
+        ( \paperwidth - \l_nt_covers_right_dim,
+          \paperheight - \l_nt_covers_bottom_dim ) ;
+      \draw [ step = 5mm, line~width = 0.2mm, #1!40!white ]
+        ( current~page.north~west ) grid ( current~page.south~east ) ;
+      \draw [ step = 1cm, line~width = 0.3mm, #1!90!white ]
+        ( current~page.north~west ) grid ( current~page.south~east ) ;
+      \draw [ step = 5cm, line~width = 0.5mm, #1!50!white ]
+        ( current~page.north~west ) grid ( current~page.south~east ) ;
+    \end { tikzpicture }
+  }
+
+\NewDocumentCommand { \ifcoverdefined } { O { 1-1 } m m }
+  {
+    \bool_set_false:N \l_nt_covers_defined_bool
+    \prop_if_in:NnT \g_nt_covers_content_prop { #1 }
+      { \bool_set_true:N \l_nt_covers_defined_bool }
+    \prop_if_in:NnT \g_nt_covers_tikz_prop { #1 }
+      { \bool_set_true:N \l_nt_covers_defined_bool }
+
+    % Also check legacy thesiscover memory with full hierarchy
+    \bool_if:NF \l_nt_covers_defined_bool
+      {
+        \datamatchtf { \l_nt_covers_tmp_tl } { ThesisCover } (
+          { \@DOCTYPE,\@DEGREEACR,#1,textcolor },
+          { \@DOCCLASS,\@DEGREEACR,#1,textcolor },
+          { \@DEGREEACR,#1,textcolor },
+          { \@DOCTYPE,#1,textcolor },
+          { \@DOCCLASS,#1,textcolor },
+          { #1,textcolor },
+          { \@DOCTYPE,\@DEGREEACR,#1,bgcolor },
+          { \@DOCCLASS,\@DEGREEACR,#1,bgcolor },
+          { \@DEGREEACR,#1,bgcolor },
+          { \@DOCTYPE,#1,bgcolor },
+          { \@DOCCLASS,#1,bgcolor },
+          { #1,bgcolor },
+          { \@DOCTYPE,\@DEGREEACR,#1,image },
+          { \@DOCCLASS,\@DEGREEACR,#1,image },
+          { \@DEGREEACR,#1,image },
+          { \@DOCTYPE,#1,image },
+          { \@DOCCLASS,#1,image },
+          { #1,image }
+        )
+          { \bool_set_true:N \l_nt_covers_defined_bool }
+          { }
+      }
+
+    \bool_if:NTF \l_nt_covers_defined_bool { #2 } { #3 }
+  }
+
+\ExplSyntaxOff

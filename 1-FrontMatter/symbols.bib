@@ -1,0 +1,66 @@
+% Encoding: UTF-8
+%
+% Symbols, for the "Symbols" list in the front matter.
+%
+% Use @symbol (not @entry): bib2gls then knows these are symbols rather than
+% words.  Always give an explicit 'sort' key -- without one, bib2gls would
+% sort on 'name', which here is math markup (\ensuremath{\mu}), producing an
+% order that means nothing to a reader.  Sorting on the symbol's spoken name
+% ("mu", "omega", ...) is what makes the list alphabetical in the way people
+% expect.
+%
+@symbol{mu,
+  name = {\ensuremath{\mu}},
+  sort = {mu},
+  description = {Mu},
+  type = {symbols}
+}
+
+@symbol{pi,
+  name = {\ensuremath{\pi}},
+  sort = {pi},
+  description = {the numerical value of pi},
+  type = {symbols}
+}
+
+@symbol{r,
+  name = {\ensuremath{r}},
+  sort = {r},
+  description = {the radius of a circle},
+  type = {symbols}
+}
+
+@symbol{omega,
+  name = {\ensuremath{\omega}},
+  sort = {omega},
+  description = {the angular frequency},
+  type = {symbols}
+}
+
+@symbol{alpha,
+  name = {\ensuremath{\alpha}},
+  sort = {alpha},
+  description = {the significance level},
+  type = {symbols}
+}
+
+@symbol{sum,
+  name = {\ensuremath{\sum}},
+  sort = {sum},
+  description = {the sum of a sequence},
+  type = {symbols}
+}
+
+@symbol{hbar,
+  name = {\ensuremath{\hbar}},
+  sort = {hbar},
+  description = {the reduced Planck constant},
+  type = {symbols}
+}
+
+@symbol{reals,
+  name = {\ensuremath{\mathbb{R}}},
+  sort = {reals},
+  description = {the set of real numbers},
+  type = {symbols}
+}

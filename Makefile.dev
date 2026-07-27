@@ -1,0 +1,98 @@
+#-----------------------------------------------------------------------------
+# NOVAthesis — Makefile.dev (maintainer targets)
+# Version 8.0.0 (2026-07-27)
+#
+# This file is NOT shipped in releases (excluded from 'make zip').
+# It is loaded automatically by the main Makefile via '-include Makefile.dev'.
+#
+# Targets:
+#   make school SCHOOL=nova/fct [TYPE=msc] [LANG=pt] [ENGINE=lua] [STATUS=final]
+#                      build one school variant (uses \ntoverride, nothing is
+#                      patched; defaults come from .Build/schools.conf)
+#   make matrix [JOBS=4] [FILTER=univ[/school][,...]]
+#                      build every school/doctype/lang/engine combination in
+#                      .Build/schools.conf. Each [order:...] section is a
+#                      group; its variants build sequentially (ordered by the
+#                      "order:" tuple), each in its OWN aux dir; JOBS
+#                      parallelizes group×engine chains (biber lock
+#                      auto-enabled if JOBS>1). PDFs (named
+#                      univ-school-doctype-lang-engine.pdf) go into
+#                      AUXDIR/matrix/YYYY-MM-DD@hh-mm-ss; a failed build leaves
+#                      its log/build output there instead.
+#                      FILTER restricts by prefix: FILTER=nova (university),
+#                      FILTER=nova/fct (school + sub-programs), FILTER=uminho,ipl
+#   make needlua       regenerate the list of LuaLaTeX-only schools
+#   make zip           release archive novathesis-<version>@<date>.zip
+#   make bump-patch | bump-minor | bump-major
+#                      bump the version (Scripts/bump.py). Starting from
+#                      7.11.0: bump-patch -> 7.11.1, bump-minor -> 7.12.0,
+#                      bump-major -> 8.0.0.
+#                      Legacy names, kept for compatibility, are numbered from
+#                      the RIGHT: bump1 = patch, bump2 = minor, bump3 = major.
+#   make gclean        git clean -fx (keeps Scripts and Fonts)
+#   make help-dev      show this help
+#-----------------------------------------------------------------------------
+
+VERSION_FILE := NOVAthesisFiles/StyFiles/nt-version.sty
+VERSION       = $(shell awk -F'[{}]' '/\\novathesisversion/ {print $$4; exit}' '$(VERSION_FILE)')
+DATE          = $(shell awk -F'[{}]' '/\\novathesisdate/    {print $$4; exit}' '$(VERSION_FILE)')
+
+VARIANT := .Build/nt-variant.sh
+JOBS    ?= 1
+
+# --- Variant builds ------------------------------------------------------------
+.PHONY: school matrix
+school:
+ifndef SCHOOL
+	$(error Usage: make school SCHOOL=univ/school [TYPE=phd|msc|bsc] [LANG=xx] [ENGINE=lua|pdf|xe] [STATUS=working|provisional|final])
+endif
+	@$(VARIANT) $(if $(TYPE),-t $(TYPE)) $(if $(LANG),-l $(LANG)) \
+	            $(if $(ENGINE),-e $(ENGINE)) $(if $(STATUS),-s $(STATUS)) \
+	            $(if $(V),-v) "$(SCHOOL)"
+
+# morewrites is skipped by default (FASTWRITES=1), which costs a pdfLaTeX
+# variant roughly 36s instead of 100s.  This is safe since the class no longer
+# claims more than 16 \write registers.  The trade-off: the matrix then
+# exercises only the fast path, so run 'make matrix FASTWRITES=0' periodically
+# to keep the morewrites path covered.
+matrix: FASTWRITES ?= 1
+matrix:
+	@mkdir -p $(AUXDIR)/matrix
+	@FASTWRITES=$(FASTWRITES) $(VARIANT) -j $(JOBS) $(if $(V),-v) -o $(AUXDIR)/matrix -a $(FILTER)
+
+# --- LuaLaTeX-only school detection ---------------------------------------------
+.PHONY: needlua
+needlua:
+	@.Build/need_lualatex.sh
+
+# --- Release archive --------------------------------------------------------------
+ZIPNAME  = novathesis-$(VERSION)@$(DATE).zip
+ZIPFILES = NOVAthesisFiles [0-5]-* LICENSE Makefile latexmkrc README.md \
+           novathesis.cls template.pdf template.tex .gitignore
+
+.PHONY: zip
+zip:
+	@rm -f "$(ZIPNAME)"
+	zip -rq "$(ZIPNAME)" $(ZIPFILES)
+	@echo "Created $(ZIPNAME)"
+
+# --- Version bump -------------------------------------------------------------------
+# NOTE: Scripts/bump.py counts positions from the RIGHT, so -b 1 is the patch
+# level and -b 3 is the major level. Prefer the named aliases below.
+.PHONY: bump1 bump2 bump3 bump-patch bump-minor bump-major
+bump1 bump2 bump3:
+	@Scripts/bump.py -b $(patsubst bump%,%,$@)
+
+bump-patch: bump1
+bump-minor: bump2
+bump-major: bump3
+
+# --- Deep clean -----------------------------------------------------------------------
+.PHONY: gclean
+gclean:
+	git clean -fx -e Scripts -e Fonts
+
+# --- Help --------------------------------------------------------------------------------
+.PHONY: help-dev
+help-dev:
+	@awk '/^#---/{n++; next} n==1 && /^#/{sub(/^# ?/,""); print}' Makefile.dev

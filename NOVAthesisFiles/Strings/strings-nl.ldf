@@ -9,228 +9,228 @@
 %% UTILITIES
 %%=======================================================================
 
-\andstring(nl)                  := { en }
-\instring(nl)                   := { in }
-\ofstring(nl)                   := { van }
-\ofstring(1,m,nl)               := { van de }
-\ofstring(2,m,nl)               := { van de }
-\ofstring(1,f,nl)               := { van de }
-\ofstring(2,f,nl)               := { van de }
-\keywordsstring(nl)             := {Trefwoorden}
-\departmentofstring(nl)         := {Afdeling}
-\specializationstring(nl)       := {Specialisatie in}
-\degreenameprefix(bsc,nl)       := {Bachelor in}
-\degreenameprefix(msc,nl)       := {Master in}
-\degreenameprefix(phd,nl)       := {Doctoraat in}
-\candidatestring(m,nl)          := {De Kandidaat}
-\candidatestring(f,nl)          := {De Kandidate}
+\SetAndString*(nl)={ en }
+\SetInString*(nl)={ in }
+\SetOfString*(nl)={ van }
+\SetOfString*(1,m,nl)={ van de }
+\SetOfString*(2,m,nl)={ van de }
+\SetOfString*(1,f,nl)={ van de }
+\SetOfString*(2,f,nl)={ van de }
+\SetKeywordsString*(nl)={Trefwoorden}
+\SetDepartmentOfString*(nl)={Afdeling}
+\SetSpecializationString*(nl)={Specialisatie in}
+\SetDegreeNamePrefix*(bsc,nl)={Bachelor in}
+\SetDegreeNamePrefix*(msc,nl)={Master in}
+\SetDegreeNamePrefix*(phd,nl)={Doctoraat in}
+\SetCandidateString*(m,nl)={De Kandidaat}
+\SetCandidateString*(f,nl)={De Kandidate}
 
 
 %%=======================================================================
 %% BOOKMARK STRINGS
 %%=======================================================================
 
-\bkmstring(frontmatter,nl)      := {Voorwerk}
-\bkmstring(backmatter,nl)       := {Nawerk}
-\bkmstring(cover,nl)            := {Omslag}
-\bkmstring(incover,nl)          := {Binnenzijde omslag}
-\bkmstring(frontpage,nl)        := {Titelpagina}
-\bkmstring(infrontpage,nl)      := {Colofon}
-\bkmstring(backcover,nl)        := {Achterplat}
-\bkmstring(inbackcover,nl)      := {Binnenzijde achterplat}
-\bkmstring(spine,nl)            := {Rug}
-\bkmstring(copyright,nl)        := {Auteursrecht}
-\bkmstring(statement,nl)        := {Verklaring}
-\bkmstring(statements,nl)       := {Verklaringen}
-\bkmstring(dedication,nl)       := {Opdracht}
-\bkmstring(acknowledgements,nl) := {Dankwoord}
-\bkmstring(quote,nl)            := {Citaat}
-\bkmstring(abstract,nl)         := {Samenvatting}
-\bkmstring(listof,nl)           := {Lijst van…}
-\bkmstring(glossaries,nl)       := {Glossaria}
+\SetBkmString*(frontmatter,nl)={Voorwerk}
+\SetBkmString*(backmatter,nl)={Nawerk}
+\SetBkmString*(cover,nl)={Omslag}
+\SetBkmString*(incover,nl)={Binnenzijde omslag}
+\SetBkmString*(frontpage,nl)={Titelpagina}
+\SetBkmString*(infrontpage,nl)={Colofon}
+\SetBkmString*(backcover,nl)={Achterplat}
+\SetBkmString*(inbackcover,nl)={Binnenzijde achterplat}
+\SetBkmString*(spine,nl)={Rug}
+\SetBkmString*(copyright,nl)={Auteursrecht}
+\SetBkmString*(statement,nl)={Verklaring}
+\SetBkmString*(statements,nl)={Verklaringen}
+\SetBkmString*(dedication,nl)={Opdracht}
+\SetBkmString*(acknowledgements,nl)={Dankwoord}
+\SetBkmString*(quote,nl)={Citaat}
+\SetBkmString*(abstract,nl)={Samenvatting}
+\SetBkmString*(listof,nl)={Lijst van…}
+\SetBkmString*(glossaries,nl)={Glossaria}
 
 
 %%=======================================================================
 %% DEFAULTS
 %%=======================================================================
 
-\defaultnttitle(nl)             := {Een Zeer Lange en Indrukwekkende\\Titel van het Proefschrift met een Geforceerde Regeleinde}
-\defaultntsubtitle(nl)          := {Enkele Gedachten over het Leven, het Universum\\en al de Rest}
-\defaultntdepartment(nl)        := {Van het Departement}
-\defaultntdegreename(nl)        := {Naam van de Opleiding}
-\defaultntspecialization(nl)    := {Naam van de Specialisatie}
-\defaultntauthordegree(nl)      := {Master/Bachelor in Naam van Vorig Diploma}
-\notdefinedstring(nl)           := {NIET GEDEFINIEERD}
+\SetDefaultNtTitle*(nl)={Een Zeer Lange en Indrukwekkende\\Titel van het Proefschrift met een Geforceerde Regeleinde}
+\SetDefaultNtSubtitle*(nl)={Enkele Gedachten over het Leven, het Universum\\en al de Rest}
+\SetDefaultNtDepartment*(nl)={Van het Departement}
+\SetDefaultNtDegreeName*(nl)={Naam van de Opleiding}
+\SetDefaultNtSpecialization*(nl)={Naam van de Specialisatie}
+\SetDefaultNtAuthorDegree*(nl)={Master/Bachelor in Naam van Vorig Diploma}
+\SetNotDefinedString*(nl)={NIET GEDEFINIEERD}
 
 
 %%=======================================================================
 %% ADVISER STRINGS
 %%=======================================================================
 
-\professorstring(1,m,nl)        := {Professor}
-\professorstring(2,m,nl)        := {Professoren}
-\professorstring(1,f,nl)        := {Professor}
-\professorstring(2,f,nl)        := {Professoren}
+\SetProfessorString*(1,m,nl)={Professor}
+\SetProfessorString*(2,m,nl)={Professoren}
+\SetProfessorString*(1,f,nl)={Professor}
+\SetProfessorString*(2,f,nl)={Professoren}
 
-\adviserstring(a,1,m,nl)        := {Begeleider}
-\adviserstring(a,1,f,nl)        := {Begeleidster}
-\adviserstring(a,2,m,nl)        := {Begeleiders}
-\adviserstring(a,2,f,nl)        := {Begeleidsters}
+\SetAdviserString*(a,1,m,nl)={Begeleider}
+\SetAdviserString*(a,1,f,nl)={Begeleidster}
+\SetAdviserString*(a,2,m,nl)={Begeleiders}
+\SetAdviserString*(a,2,f,nl)={Begeleidsters}
 
-\adviserstring(c,1,m,nl)        := {Co-begeleider}
-\adviserstring(c,1,f,nl)        := {Co-begeleidster}
-\adviserstring(c,2,m,nl)        := {Co-begeleiders}
-\adviserstring(c,2,f,nl)        := {Co-begeleidsters}
+\SetAdviserString*(c,1,m,nl)={Co-begeleider}
+\SetAdviserString*(c,1,f,nl)={Co-begeleidster}
+\SetAdviserString*(c,2,m,nl)={Co-begeleiders}
+\SetAdviserString*(c,2,f,nl)={Co-begeleidsters}
 
-\adviserstring(ca,1,m,nl)       := {Co-begeleider}
-\adviserstring(ca,1,f,nl)       := {Co-begeleidster}
-\adviserstring(ca,2,m,nl)       := {Co-begeleiders}
-\adviserstring(ca,2,f,nl)       := {Co-begeleidsters}
+\SetAdviserString*(ca,1,m,nl)={Co-begeleider}
+\SetAdviserString*(ca,1,f,nl)={Co-begeleidster}
+\SetAdviserString*(ca,2,m,nl)={Co-begeleiders}
+\SetAdviserString*(ca,2,f,nl)={Co-begeleidsters}
 
-\adviserstring(t,1,m,nl)        := {Tutor}
-\adviserstring(t,1,f,nl)        := {Tutor}
-\adviserstring(t,2,m,nl)        := {Tutoren}
-\adviserstring(t,2,f,nl)        := {Tutoren}
+\SetAdviserString*(t,1,m,nl)={Tutor}
+\SetAdviserString*(t,1,f,nl)={Tutor}
+\SetAdviserString*(t,2,m,nl)={Tutoren}
+\SetAdviserString*(t,2,f,nl)={Tutoren}
 
-\adviserstring(pref,a,1,m,nl)        := {De Begeleider}
-\adviserstring(pref,a,1,f,nl)        := {De Begeleidster}
-\adviserstring(pref,a,2,m,nl)        := {De Begeleiders}
-\adviserstring(pref,a,2,f,nl)        := {De Begeleidsters}
+\SetAdviserString*(pref,a,1,m,nl)={De Begeleider}
+\SetAdviserString*(pref,a,1,f,nl)={De Begeleidster}
+\SetAdviserString*(pref,a,2,m,nl)={De Begeleiders}
+\SetAdviserString*(pref,a,2,f,nl)={De Begeleidsters}
 
-\adviserstring(pref,c,1,m,nl)        := {De Co-begeleider}
-\adviserstring(pref,c,1,f,nl)        := {De Co-begeleidster}
-\adviserstring(pref,c,2,m,nl)        := {De Co-begeleiders}
-\adviserstring(pref,c,2,f,nl)        := {De Co-begeleidsters}
+\SetAdviserString*(pref,c,1,m,nl)={De Co-begeleider}
+\SetAdviserString*(pref,c,1,f,nl)={De Co-begeleidster}
+\SetAdviserString*(pref,c,2,m,nl)={De Co-begeleiders}
+\SetAdviserString*(pref,c,2,f,nl)={De Co-begeleidsters}
 
-\adviserstring(pref,ca,1,m,nl)       := {De Co-begeleider}
-\adviserstring(pref,ca,1,f,nl)       := {De Co-begeleidster}
-\adviserstring(pref,ca,2,m,nl)       := {De Co-begeleiders}
-\adviserstring(pref,ca,2,f,nl)       := {De Co-begeleidsters}
+\SetAdviserString*(pref,ca,1,m,nl)={De Co-begeleider}
+\SetAdviserString*(pref,ca,1,f,nl)={De Co-begeleidster}
+\SetAdviserString*(pref,ca,2,m,nl)={De Co-begeleiders}
+\SetAdviserString*(pref,ca,2,f,nl)={De Co-begeleidsters}
 
-\adviserstring(pref,t,1,m,nl)        := {De Tutor}
-\adviserstring(pref,t,1,f,nl)        := {De Tutor}
-\adviserstring(pref,t,2,m,nl)        := {De Tutoren}
-\adviserstring(pref,t,2,f,nl)        := {De Tutoren}
+\SetAdviserString*(pref,t,1,m,nl)={De Tutor}
+\SetAdviserString*(pref,t,1,f,nl)={De Tutor}
+\SetAdviserString*(pref,t,2,m,nl)={De Tutoren}
+\SetAdviserString*(pref,t,2,f,nl)={De Tutoren}
 
 
 %%=======================================================================
 %% DEGREE NAMES
 %%=======================================================================
 
-\degreestring(bsc,m,nl)         := {Bachelor}
-\degreestring(bsc,f,nl)         := {Bachelor}
+\SetDegreeString*(bsc,m,nl)={Bachelor}
+\SetDegreeString*(bsc,f,nl)={Bachelor}
 
-\degreestring(msc,m,nl)         := {Master of Science}
-\degreestring(msc,f,nl)         := {Master of Science}
-\degreestring(mscplan,m,nl)     := {Master of Science}
-\degreestring(mscplan,f,nl)     := {Master of Science}
+\SetDegreeString*(msc,m,nl)={Master of Science}
+\SetDegreeString*(msc,f,nl)={Master of Science}
+\SetDegreeString*(mscplan,m,nl)={Master of Science}
+\SetDegreeString*(mscplan,f,nl)={Master of Science}
 
-\degreestring(phd,m,nl)         := {Doctor}
-\degreestring(phd,f,nl)         := {Doctor}
-\degreestring(phdplan,m,nl)     := {Promovendus}
-\degreestring(phdplan,f,nl)     := {Promovenda}
-\degreestring(phdprop,m,nl)     := {Promovendus}
-\degreestring(phdprop,f,nl)     := {Promovenda}
+\SetDegreeString*(phd,m,nl)={Doctor}
+\SetDegreeString*(phd,f,nl)={Doctor}
+\SetDegreeString*(phdplan,m,nl)={Promovendus}
+\SetDegreeString*(phdplan,f,nl)={Promovenda}
+\SetDegreeString*(phdprop,m,nl)={Promovendus}
+\SetDegreeString*(phdprop,f,nl)={Promovenda}
 
 
 %%=======================================================================
 %% DOCUMENT TYPES
 %%=======================================================================
 
-\doctypestring(bsc,nl)          := {Bachelorproject}
-\doctypestring(mscplan,nl)      := {Plan van de masterscriptie}
-\doctypestring(msc,nl)          := {Masterscriptie}
-\doctypestring(phdplan,nl)      := {Plan van het proefschrift}
-\doctypestring(phdprop,nl)      := {Voorstel voor een proefschrift}
-\doctypestring(phd,nl)          := {Proefschrift}
+\SetDoctypeString*(bsc,nl)={Bachelorproject}
+\SetDoctypeString*(mscplan,nl)={Plan van de masterscriptie}
+\SetDoctypeString*(msc,nl)={Masterscriptie}
+\SetDoctypeString*(phdplan,nl)={Plan van het proefschrift}
+\SetDoctypeString*(phdprop,nl)={Voorstel voor een proefschrift}
+\SetDoctypeString*(phd,nl)={Proefschrift}
 
-\dissertationplan(mscplan,nl)   := {Afstudeerplan}
-\dissertationplan(phdplan,nl)   := {Proefschriftplan}
-\dissertationplan(phdprop,nl)   := {Proefschriftvoorstel}
+\SetDissertationPlan*(mscplan,nl)={Afstudeerplan}
+\SetDissertationPlan*(phdplan,nl)={Proefschriftplan}
+\SetDissertationPlan*(phdprop,nl)={Proefschriftvoorstel}
 
 
 %%=======================================================================
 %% SDG (SUSTAINABLE DEVELOPMENT GOALS)
 %%=======================================================================
 
-\sdgstring(nl)                  := {Duurzameontwikkelingsdoelstellingen (SDG)}
+\SetSdgString*(nl)={Duurzameontwikkelingsdoelstellingen (SDG)}
 
 
 %%=======================================================================
 %% COMMITTEE
 %%=======================================================================
 
-\committeetitlestring(nl)       := {Examencommissie}
+\SetCommitteeTitleString*(nl)={Examencommissie}
 
-\committeestring(c,1,m,nl)      := {Voorzitter}
-\committeestring(c,1,f,nl)      := {Voorzitster}
-\committeestring(c,2,m,nl)      := {Voorzitters}
-\committeestring(c,2,f,nl)      := {Voorzitters}
+\SetCommitteeString*(c,1,m,nl)={Voorzitter}
+\SetCommitteeString*(c,1,f,nl)={Voorzitster}
+\SetCommitteeString*(c,2,m,nl)={Voorzitters}
+\SetCommitteeString*(c,2,f,nl)={Voorzitters}
 
-\committeestring(r,1,m,nl)      := {Examinator}
-\committeestring(r,1,f,nl)      := {Examinatrice}
-\committeestring(r,2,m,nl)      := {Examinatoren}
-\committeestring(r,2,f,nl)      := {Examinatrices}
+\SetCommitteeString*(r,1,m,nl)={Examinator}
+\SetCommitteeString*(r,1,f,nl)={Examinatrice}
+\SetCommitteeString*(r,2,m,nl)={Examinatoren}
+\SetCommitteeString*(r,2,f,nl)={Examinatrices}
 
-\committeestring(a,1,m,nl)      := {Begeleider}
-\committeestring(a,1,f,nl)      := {Begeleidster}
-\committeestring(a,2,m,nl)      := {Begeleiders}
-\committeestring(a,2,f,nl)      := {Begeleidsters}
+\SetCommitteeString*(a,1,m,nl)={Begeleider}
+\SetCommitteeString*(a,1,f,nl)={Begeleidster}
+\SetCommitteeString*(a,2,m,nl)={Begeleiders}
+\SetCommitteeString*(a,2,f,nl)={Begeleidsters}
 
-\committeestring(ca,1,m,nl)     := {Co-begeleider}
-\committeestring(ca,1,f,nl)     := {Co-begeleidster}
-\committeestring(ca,2,m,nl)     := {Co-begeleiders}
-\committeestring(ca,2,f,nl)     := {Co-begeleidsters}
+\SetCommitteeString*(ca,1,m,nl)={Co-begeleider}
+\SetCommitteeString*(ca,1,f,nl)={Co-begeleidster}
+\SetCommitteeString*(ca,2,m,nl)={Co-begeleiders}
+\SetCommitteeString*(ca,2,f,nl)={Co-begeleidsters}
 
-\committeestring(m,1,m,nl)      := {Lid}
-\committeestring(m,1,f,nl)      := {Lid}
-\committeestring(m,2,m,nl)      := {Leden}
-\committeestring(m,2,f,nl)      := {Leden}
+\SetCommitteeString*(m,1,m,nl)={Lid}
+\SetCommitteeString*(m,1,f,nl)={Lid}
+\SetCommitteeString*(m,2,m,nl)={Leden}
+\SetCommitteeString*(m,2,f,nl)={Leden}
 
-\committeestring(g,1,m,nl)      := {Gastlid}
-\committeestring(g,1,f,nl)      := {Gastlid}
-\committeestring(g,2,m,nl)      := {Gastleden}
-\committeestring(g,2,f,nl)      := {Gastleden}
+\SetCommitteeString*(g,1,m,nl)={Gastlid}
+\SetCommitteeString*(g,1,f,nl)={Gastlid}
+\SetCommitteeString*(g,2,m,nl)={Gastleden}
+\SetCommitteeString*(g,2,f,nl)={Gastleden}
 
 
 %%=======================================================================
 %% DISSERTATION TEMPLATES
 %%=======================================================================
 
-\dissertationstring(bsc,nl)     = {%
+\SetDissertationString(bsc,nl)={%
       Verslag ingediend ter verkrijging van de graad van %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}
 }
 
-\dissertationstring(mscplan,nl) = {%
+\SetDissertationString(mscplan,nl)={%
       Tussentijds verslag ingediend ter verkrijging van de graad van %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}
 }
 
-\dissertationstring(msc,nl)     = {%
+\SetDissertationString(msc,nl)={%
       Masterscriptie ingediend ter verkrijging van de graad van %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}
 }
 
-\dissertationstring(phdplan,nl) = {%
+\SetDissertationString(phdplan,nl)={%
       Proefschriftplan ingediend ter verkrijging van de graad van %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}
 }
 
-\dissertationstring(phdprop,nl) = {%
+\SetDissertationString(phdprop,nl)={%
       Voorstel voor een proefschrift ingediend ter verkrijging van de graad van %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}
 }
 
-\dissertationstring(phd,nl)     = {%
+\SetDissertationString(phd,nl)={%
       Proefschrift ingediend ter verkrijging van de graad van %
-      \thedegreestring(\option{/novathesis/doctype},\expanded{\thedocauthor(gender)},\@LANG@COVER) in\\[1ex]%
-      \textbf{\themajorfield(\@LANG@COVER)}
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) in\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}
 }
 
 
@@ -238,15 +238,15 @@
 %% LEGAL & ACKNOWLEDGEMENTS
 %%=======================================================================
 
-\copyrighttextstring(nl)        = {%
-        De \theschool(\@LANG@COPYRIGHT)\ en de \theuniversity(\@LANG@COPYRIGHT)%
+\SetCopyrightTextString(nl)={%
+        De \GetSchool(\@LANG@COPYRIGHT)\ en de \GetUniversity(\@LANG@COPYRIGHT)%
         \ hebben het eeuwigdurende en onbeperkte recht om dit proefschrift in gedrukte of digitale vorm, %
         of met elk ander bestaand of toekomstig middel, te archiveren en te publiceren, het via %
         wetenschappelijke repositories te verspreiden en de reproductie en distributie ervan voor %
         niet-commerciële onderwijs- en onderzoeksdoeleinden toe te staan, mits de auteur en de %
         uitgever correct worden vermeld.}
 
-\acknowledgmentsstring(nl)      = {%
+\SetAcknowledgmentsString(nl)={%
         Dit document is opgesteld met het \NTengineName~\@ntcite{latex-project} system %
         en het \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
         sjabloon (v\novathesisversion)~\@ntcite{novathesis-manual}.}

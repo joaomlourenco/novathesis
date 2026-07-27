@@ -1,0 +1,44 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/computer-modern.sty
+%% NOVA thesis configuration file
+%%
+%% Customization to use Computer Modern fonts (LaTeX default)
+%% This is the classic TeX Gyre Termes with Computer Modern math
+%% Compatible with pdfLaTeX and XeLaTeX/LuaLaTeX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE FontStyles/computer-modern.sty}%
+
+
+%%=======================================================================
+%% FONT SELECTION
+%%=======================================================================
+
+\ifxeorlua
+{
+  % XeLaTeX/LuaLaTeX version using Latin Modern
+  \setmainfont{Latin Modern Roman}[
+    Ligatures = {TeX, Common},
+    Scale     = 1.0,
+  ]
+  
+  \setsansfont{Latin Modern Sans}[
+    Ligatures = TeX,
+    Scale     = 1.0,
+  ]
+  
+  \setmonofont{Latin Modern Mono}[
+    Ligatures = TeX,
+    Scale     = 1.0,
+  ]
+  
+  % Computer Modern math font (via unicode-math)
+  \RequirePackage{unicode-math}
+  \setmathfont{Latin Modern Math}
+}
+{
+  % pdfLaTeX version (uses default Computer Modern via LaTeX kernel)
+  % No explicit setup needed; Computer Modern is the default
+  \RequirePackage{amssymb}
+  \RequirePackage{amsmath}
+}

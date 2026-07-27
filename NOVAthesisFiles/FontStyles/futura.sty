@@ -8,14 +8,6 @@
 \typeout{NT FILE FontStyles/futura.sty}%
 
 
-%%=======================================================================
-%% ENGINE CHECK
-%%=======================================================================
-
-\ifxeorlua{}{%
-  \ClassError{novathesis}{Font Style “futura” is not compatible with pdfLaTeX. Please use XeLaTeX or LuaLaTeX}{Please use XeLaTeX or LuaLaTeX}%
-}
-
 
 %%=======================================================================
 %% FONT VERIFICATION
@@ -29,12 +21,31 @@
 %%=======================================================================
 
 \setmainfont{Futura}[
-  Path = \DIRFONTSTYLES/Fonts/,
-  Extension = .ttf,
-  Ligatures=TeX,
-  Mapping=tex-text,
-  UprightFont = *-Regular,
-  ItalicFont = *-Italic,
-  BoldFont = *-Bold,
+  Path           = \DIRFONTSTYLES/Fonts/,
+  Extension      = .ttf,
+  Ligatures      = TeX,
+  UprightFont    = *-Regular,
+  ItalicFont     = *-Italic,
+  BoldFont       = *-Bold,
   BoldItalicFont = *-BoldItalic,
 ]
+
+% Futura is a sans-serif; use as both roman and sans
+\setsansfont{Futura}[
+  Path           = \DIRFONTSTYLES/Fonts/,
+  Extension      = .ttf,
+  Ligatures      = TeX,
+  UprightFont    = *-Regular,
+  ItalicFont     = *-Italic,
+  BoldFont       = *-Bold,
+  BoldItalicFont = *-BoldItalic,
+]
+
+% Use Courier New as fallback for monospace
+\setmonofont[
+  Scale          = 0.95,
+  Ligatures      = TeX,
+]{Courier New}
+
+% Math font using newtxmath for consistency
+\RequirePackage[libertine]{newtxmath}

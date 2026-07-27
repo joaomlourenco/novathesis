@@ -14,14 +14,71 @@
 %
 % For a list of possible custuzzation strings see: https://github.com/joaomlourenco/novathesis/wiki/FAQ/_edit#2-how-to-rename-the-list-ofsomething-to-list-of-whatever
 
+% longtable — used in the user's manual for the SDG reference table
+\usepackage{longtable}
+
 %%============================================================
 %%  FOR DEMO PURPOSES ONLY --- YOU SHOULD REMOVE THESE PACKAGES
 %%============================================================
 \usepackage{float}        % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
-\usepackage{wrapfig}      % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 \restylefloat{figure}     % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+\usepackage{wrapfig}      % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 \usepackage{metalogo}     % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+\usepackage{xurl}         % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+\usepackage{amsfonts}      % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 \usepackage{lipsum}       % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+% Define a professional, muted palette
+\newcommand{\Overleaf}{\href{https://www.overleaf.com?r=f5160636&rm=d&rs=b}{Overleaf}}
+\definecolor{headgray}{gray}{0.9}
+\definecolor{rowgray}{gray}{0.95}
+% ShadedTabular: a tabular with a shaded header row and zebra-striped body.
+% Uses colortbl (already loaded by novathesis) — no extra packages needed.
+% The header row receives headgray; body rows alternate rowgray / white.
+\newenvironment{ShadedTabular}[2][rowgray]{%
+  \renewcommand{\arraystretch}{1.3}%
+  % Redefine \thead to avoid \multicolumn wrapping, which confuses colortbl's
+  % row-colour box and leaves white vertical stripes between header cells.
+  % The column spec already provides alignment; we only need the bold font.
+  \renewcommand{\thead}[2][]{\textbf{##2}}%
+  \rowcolors{2}{#1}{white}%    % body rows: zebra stripes starting at row 2
+  \tabular{#2}%
+  \rowcolor{headgray}%              % first (header) row background
+}{%
+  \endtabular
+}
+
+\newenvironment{ShadedTabularX}[2]{%
+  \renewcommand{\arraystretch}{1.3}%
+  % Redefine \thead to avoid \multicolumn wrapping, which confuses colortbl's
+  % row-colour box and leaves white vertical stripes between header cells.
+  % The column spec already provides alignment; we only need the bold font.
+  \renewcommand{\thead}[2][]{\textbf{##2}}%
+  \rowcolors{2}{rowgray}{white}%    % body rows: zebra stripes starting at row 2
+  \tabularx{#1}{#2}%
+  \rowcolor{headgray}%              % first (header) row background
+}{%
+  \endtabularx
+}
+
+
+\newenvironment{highlightbox}[1][]
+{%
+  \begin{tcolorbox}[colback=green!8,#1]
+}
+{%
+  \end{tcolorbox}
+}
+
+
+\newenvironment{warningbox}[1][]
+{%
+  \begin{tcolorbox}[colback=red!8,#1]
+}
+{%
+  \end{tcolorbox}
+}
+
+
 \IfFileExists{byo-twemojiss.sty}{
   \usepackage{byo-twemojis}     % to typeset emojis
   \newcommand{\emojiSmile}{\raisebox{-3pt}{\scalebox{1.3}{\byoTwemoji{head; eyes normal opened; mouth laughing}}}}
@@ -30,9 +87,6 @@
   \newlength{\twemojiDefaultHeight}
 }
 
-\newcommand{\MikTeX}{Mik\TeX}
-\newcommand{\TeXLive}{\TeX Live}
-\newcommand{\pdfLaTeX}{pdf\LaTeX}
 \definecolor{Schlgray}{gray}{0.95}
 
 
@@ -49,21 +103,24 @@
 \usepackage[textsize=footnotesize]{todonotes}  % To register TODO notes in the text
 
 \usepackage{makecell}      % Multiline table cells and control vertical and horizontal alignment
+\renewcommand{\theadfont}{\bfseries}
 
 \usepackage{tcolorbox}    % pretty print color boxes
+\tcbuselibrary{breakable} % allow tcolorboxes to span page breaks
 
 % \usepackage{indentfirst}       % Indent first list after a (sub)section title
 
-% \usepackage{algorithm2e}
+\usepackage[ruled,vlined]{algorithm2e}
 % \RestyleAlgo{ruled}
 
 \usepackage{minted}    % Fontification of source code listings
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 6. Customization for LaTeX pretty print with minted
-\definecolor{latexbg}{HTML}{F5F5EE}
+\definecolor{bgcolorlst}{HTML}{F5F5EE}
+
 \newminted{latex}{
-  bgcolor=latexbg,
+  bgcolor=bgcolorlst,
   fontsize=\small,
   breaklines,
   tabsize=2,
@@ -72,25 +129,55 @@
   % framesep=3mm,
   % rulecolor=black!20,
 }
+
 \newmintinline{latex}{}
+
 \newenvironment{ltx}
   {\VerbatimEnvironment
    \begin{minted}[
-    bgcolor=latexbg,
-    fontsize=\small,
-    breaklines,
-    tabsize=2,
-    autogobble,
+    % bgcolor=bgcolorlst,
+    % fontsize=\small,
+    % breaklines,
+    % tabsize=2,
+    % autogobble,
     % frame=single,
     % framesep=3mm,
     % rulecolor=black!20,
    ]{latex}}
   {\end{minted}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 7. Customization for Bash/shell pretty print with minted
+\newminted{bash}{
+  bgcolor=bgcolorlst,
+  fontsize=\small,
+  breaklines,
+  tabsize=2,
+  autogobble,
+}
+\newmintinline{bash}{}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 8. Customization for Python pretty print with minted
+\newminted{python}{
+  bgcolor=bgcolorlst,
+  fontsize=\small,
+  breaklines,
+  tabsize=2,
+  autogobble,
+}
+\newmintinline{python}{}
 
-% \usepackage{listings}    % Fontification of source code listingsConfig/5_packages.tex
-%                          % In alternative, use the package “minted” (highly recomended)
+\iftutex
+  \usepackage{newunicodechar}
+  \newunicodechar{→}{\ensuremath{\rightarrow}}
+\else
+  \DeclareUnicodeCharacter{2192}{\ensuremath{\rightarrow}}
+\fi
+
+% \usepackage{listingsutf8}    % Fontification of source code listings
+%                              % In alternative, use the package “minted”
+%                              % (highly recomended)
 
 % \lstset{
 %     captionpos=t,
@@ -106,17 +193,5 @@
 %     postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
 %     inputencoding=utf8,
 %     extendedchars=true,
-%     literate=
-%       {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
-%       {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
-%       {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
-%       {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
-%       {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
-%       {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
-%       {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
-%       {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
-%       {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
-%       {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
-%       {€}{{\EUR}}1 {£}{{\pounds}}1
 % }
 

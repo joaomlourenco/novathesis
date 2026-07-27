@@ -1,0 +1,28 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% uminho/emed/schl-defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for EM-UMINHO (strings and cover)
+%%
+%%      This customization had the collaboration and support
+%%      from Bruno Pereira (b-pereira @ github), who built
+%%      the initial support in a fork of version 4.x
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE uminho/emed/schl-defaults.clo}%
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% Faculty / School
+\SetSchool*(pt)={Escola de Medicina​}
+\SetSchool*(en)={School of Medicine​}
+\SetSchool*(fr)={\GetSchool(en)}
+\SetSchool*(it)={\GetSchool(en)}
+
+% Logos
+\SetSchool*(logo,RGB)={uminho-em-insignia-color}
+\SetSchool*(logo,GRAY)={uminho-em-insignia-mono}

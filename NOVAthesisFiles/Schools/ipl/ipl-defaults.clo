@@ -1,0 +1,17 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ipl/ipl-defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for INSTITUTO POLITÉCNICO DE LISBOA (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE ipl/ipl-defaults.clo}%
+
+
+% University
+\SetUniversity*(pt)={Instituto Politécnico de Lisboa}
+\SetUniversity*(en)={Instituto Politécnico de Lisboa}
+\SetUniversity*(fr)={Instituto Politécnico de Lisboa}
+\SetUniversity*(it)={Instituto Politécnico de Lisboa}
+
+\SetSpine(frame,color)={black!50}

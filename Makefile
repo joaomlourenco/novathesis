@@ -1,512 +1,174 @@
- #----------------------------------------------------------------------------
-# NOVATHESIS — Makefile
-#----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+# NOVAthesis — Makefile
+# Version 8.0.0 (2026-07-27)
 #
-# Version 7.10.7 (2026-03-25)
-# Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+# The build engine is latexmk; all LaTeX-specific behavior (engine defaults,
+# biber, glossaries, clean lists) lives in ./latexmkrc.
+#
+# Targets:
+#   make               build with LuaLaTeX (recommended)
+#   make lua|pdf|xe    build with a specific engine
+#   make view | v      build, then open the PDF
+#   make watch         rebuild automatically on every change (LuaLaTeX)
+#   make watch-pdf|watch-xe   like watch, with pdfLaTeX / XeLaTeX
+#   make glsbib        convert 7.10.x glossary .tex entry files to .bib
+#                      (one-off migration step; see the manual)
+#   make log           show the build log
+#   make clean         remove build artifacts (keeps the PDF and AUXDIR/matrix/)
+#   make distclean     clean + remove PDF and synctex files
+#   make help          show this help
+#   make help-dev      maintainer targets (school, matrix, zip; git checkout only)
+#
+# Variables:
+#   FILE=name          root .tex file (default: auto-detect \documentclass)
+#   NT="k=v,..."       \ntsetup overrides, e.g. NT="doctype=msc,lang=pt"
+#   V=1                verbose: raw LaTeX output
+#   BATCH=1            batch mode (never stops at errors) — good for CI
+#   FASTWRITES=0       load morewrites (default is 1 = skip it). Only needed
+#                      for a pdf/xe document that overshoots the 16 write
+#                      streams ("No room for a new \write"); no-op for LuaLaTeX
+#   TL=2024            use /usr/local/texlive/2024 for this run
+#   VIEWER=...         PDF viewer for 'make view'
+#   PAGER=...          pager for 'make log' (default: less)
+#   FLAGS=...          extra latexmk flags, passed through
+#-----------------------------------------------------------------------------
 
-
-#----------------------------------------------------------------------------
-# CUSTOMIZATION AREA HERE
-
-# Use bash and not sh
-SHELL := /bin/bash
-
-# Define V command to the name of your PDF viewer
-PDFVIEWER ?= open -a skim
-
-# Define the text Editor
-EDITOR ?= mate
-
-#############################################################################
-# DO NOT TOUCH BELOW THIS POINT
-#############################################################################
-
-#————————————————————————————————————————————————————————————————————————————
-# Prevents the “each line is a new shell” pitfall and simplifies variable flow
-SHELL := /bin/sh
-.SHELLFLAGS := -eu -c -o pipefail
-#————————————————————————————————————————————————————————————————————————————
-# Define commans
-GREP := grep -F
-
-#————————————————————————————————————————————————————————————————————————————
-# Automatically discover the main file:
-# 	1) the first file containing "\documentclass"
-#	2) ; if none found, raises an error
-LTXFILE := $(firstword $(shell $(GREP) -F -l -m1 '\documentclass' -- *.tex 2>/dev/null))
-ifeq ($(LTXFILE),)
-$(error No .tex file found with "\documentclass")
-endif
-BASENAME := $(patsubst %.tex,%,$(LTXFILE))
-PDFFILE := $(BASENAME).pdf
-LTXCLS := novathesis.cls
-
-#————————————————————————————————————————————————————————————————————————————
-# Possible compilation modes
-MODEITRT :=
-MODENSTP := -interaction=nonstopmode
-MODEBTCH := -interaction=batchmode
-ifeq ($(MODE),)
-MODE := $(MODENSTP)
-endif
-
-
-#————————————————————————————————————————————————————————————————————————————
-# Cache files
-NEEDLUALATEX=.needlualatex
-KEEPDIR=.keep-dir
-
-#————————————————————————————————————————————————————————————————————————————
-# AUXDIR to avoid cluttering workspace
-ifndef AUXDIR
-AUXDIR:=./AUXDIR
-export AUX_DIR=$(AUXDIR)
-endif
-
-#————————————————————————————————————————————————————————————————————————————
-# latexmk and its flags
-LTXMK:=latexmk
-LTXFLAGS=-time -file-line-error -shell-escape -synctex=1 -auxdir=$(AUXDIR) $(MODE) $(FLAGS)
-BUILD:=.Build/build.py
-
-#————————————————————————————————————————————————————————————————————————————
-# extract version and date of the template
-VERSION_FILE=NOVAthesisFiles/StyFiles/nt-version.sty
-
-VERSION		= $(shell awk -F'[{}]' '/\\novathesisversion/ {print $$4; exit}' '$(VERSION_FILE)')
-DATE		= $(shell awk -F'[{}]' '/\\novathesisdate/    {print $$4; exit}' '$(VERSION_FILE)')
-ORIGVERSION := $(VERSION)
-ORIGDATE	:= $(DATE)
-
-#————————————————————————————————————————————————————————————————————————————
-# Find out which versions of TeX live are available (works for macos)
-TEXVERSIONS:=$(shell ls /usr/local/texlive/ | $(GREP) -v texmf-local)
-
-#————————————————————————————————————————————————————————————————————————————
-# Extract school being built
-SCHL := $(shell sed -n '/^[[:space:]]*%/d; s/.*ntsetup{school=\([^}]*\)}.*/\1/p' 0-Config/1_novathesis.tex | head -1)
-SCHL := $(if $(SCHL),$(SCHL),nova/fct)
-
-
-
-#############################################################################
-# Main targets:
-# pdf/xe/lua		build with Tex-Live
-# tl pdf/xe/lua		build with Tex-Live
-# mik pdf/xe/lua	build with MikTeX
-# year pdf/xe/lua	build with Tex-Live release for <year> (if available, otherwise defaults release)
-# v/view			build with pdfLaTeX
-# zip				build a ZIP archive with the source files
-# help              print help message
-#############################################################################
-
-#————————————————————————————————————————————————————————————————————————————
-# Automatically use the right latex compiler and compile
-.PHONY: default
-default: validate-config check-env check-build
-	$(BUILD) "$(SCHL)" ${BFLAGS}
-
-#————————————————————————————————————————————————————————————————————————————
-# The main targets
-# e.g. '$(MAKE) lua'
-.PHONY: pdf xe lua
-pdf xe lua: validate-config check-env $(NEEDLUALATEX) $(LTXFILE) $(LTXCLS)
-	$(LTXMK) -pdf$(patsubst pdf%,%,$@) $(LTXFLAGS) "$(BASENAME)"
-
-#————————————————————————————————————————————————————————————————————————————
-# Btach mode
-.PHONY: verbose verb vv
-verbose verb vv:
-	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) MODE=$(MODENSTP) PROGRESS=$(PROGRESSVERB)
-
-#————————————————————————————————————————————————————————————————————————————
-# Btach mode
-.PHONY: batch btch bt
-batch btch bt:
-	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) MODE=$(MODEBTCH) PROGRESS=
-
-#————————————————————————————————————————————————————————————————————————————
-# Interactive mode
-.PHONY: interactive itrtv itrt it
-interactive itrtv itrt it:
-	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) MODE="$(MODEITRT)" PROGRESS=
-
-#————————————————————————————————————————————————————————————————————————————
-# Use TeX-Live and excute next target
-# e.g. '$(MAKE) tl lua'
-.PHONY: tl
-tl:
-	@ hash -r
-	$(MAKE) $(filter-out $@,$(MAKECMDGOALS))
-
-#————————————————————————————————————————————————————————————————————————————
-# Use MikTeX and excute next target
-# e.g. '$(MAKE) mik lua'
-.PHONY: mik
-mik:
-	@ hash -r
-	PATH="$(HOME)/bin:$(PATH)" $(MAKE) $(filter-out $@,$(MAKECMDGOALS))
-
-#————————————————————————————————————————————————————————————————————————————
-# Use a specific TeX-Live release and excute next target
-# e.g. '$(MAKE) 2024 lua'
-.PHONY: $(TEXVERSIONS)
-$(TEXVERSIONS):
-	@ hash -r
-	$(eval TEXBIN := $(firstword $(wildcard /usr/local/texlive/$@/bin/*-darwin/)))
-ifeq ($(TEXBIN),)
-	@ printf "$(RED)TeX Live $@ not found; using default on PATH$(RESET)\n"
-	$(MAKE) $(filter-out $@,$(MAKECMDGOALS))
+# --- Root file detection -----------------------------------------------------
+ifeq ($(FILE),)
+  ROOTS := $(shell grep -lF '\documentclass' *.tex 2>/dev/null)
+  ifneq ($(words $(ROOTS)),1)
+    $(error Found $(words $(ROOTS)) file(s) with \documentclass ($(ROOTS)); use FILE=<name>)
+  endif
+  BASE := $(basename $(ROOTS))
 else
-	PATH="$(TEXBIN):$(PATH)" $(MAKE) $(filter-out $@,$(MAKECMDGOALS))
+  BASE := $(basename $(FILE))
 endif
 
-#————————————————————————————————————————————————————————————————————————————
-# Build and display the PDF
-.PHONY: v view
-v view: $(PDFFILE)
-	$(PDFVIEWER) "$(PDFFILE)"
+AUXDIR := AUXDIR
+export AUXDIR                       # also read by latexmkrc
 
-#————————————————————————————————————————————————————————————————————————————
-# Display the log file
-.PHONY: log
+# --- TeX Live release selection (TL=2024) ------------------------------------
+ifneq ($(TL),)
+  TLBIN := $(firstword $(wildcard /usr/local/texlive/$(TL)/bin/*))
+  ifeq ($(TLBIN),)
+    $(error TeX Live $(TL) not found under /usr/local/texlive)
+  endif
+  export PATH := $(TLBIN):$(PATH)
+endif
+
+# --- Commands and flags -------------------------------------------------------
+LATEXMK  := latexmk
+LMKFLAGS := -time -file-line-error -shell-escape -synctex=1 \
+            -output-directory=$(AUXDIR)
+
+ifeq ($(BATCH),1)
+  LMKFLAGS += -interaction=batchmode
+else
+  LMKFLAGS += -interaction=nonstopmode
+endif
+
+# Code injected before \documentclass: \ntsetup overrides (see nt-setup.sty,
+# \ntoverride) and the write-register switch (see nt-packages.sty).
+# NOTE: concatenated without spaces — texfot re-splits the command line on
+# whitespace, which would break a quoted -pretex argument containing spaces.
+# morewrites is skipped by default; FASTWRITES=0 re-enables it.
+FASTWRITES ?= 1
+PRETEX :=
+ifneq ($(NT),)
+  PRETEX := $(PRETEX)\def\ntoverride{$(NT)}
+endif
+ifneq ($(FASTWRITES),1)
+  PRETEX := $(PRETEX)\def\ntmorewrites{}
+endif
+ifneq ($(PRETEX),)
+  LMKFLAGS += -usepretex -pretex='$(PRETEX)'
+endif
+
+LMKFLAGS += $(FLAGS)
+
+# Filter LaTeX chatter with texfot when available (disabled by V=1)
+TEXFOT := $(shell command -v texfot 2>/dev/null)
+ifeq ($(V),1)
+  RUN :=
+else
+  RUN := $(TEXFOT)
+endif
+
+# --- Build targets ------------------------------------------------------------
+.PHONY: all lua pdf xe build
+all: lua
+lua: ENG := -pdflua
+pdf: ENG := -pdf
+xe:  ENG := -pdfxe
+lua pdf xe: build
+
+build:
+	@mkdir -p $(AUXDIR)
+	$(RUN) $(LATEXMK) $(ENG) $(LMKFLAGS) $(BASE).tex
+	@cp -f $(AUXDIR)/$(BASE).pdf . 2>/dev/null || true
+	@cp -f $(AUXDIR)/$(BASE).synctex.gz . 2>/dev/null || true
+
+# --- Convenience targets --------------------------------------------------------
+ifeq ($(shell uname),Darwin)
+  VIEWER ?= open
+else
+  VIEWER ?= xdg-open
+endif
+
+.PHONY: v view watch watch-lua watch-pdf watch-xe log
+v view: lua
+	$(VIEWER) "$(BASE).pdf"
+
+# Continuous preview (latexmk -pvc).  The engine follows the target, like
+# the build targets above; plain 'watch' defaults to LuaLaTeX.
+watch watch-lua: ENG := -pdflua
+watch-pdf:       ENG := -pdf
+watch-xe:        ENG := -pdfxe
+watch watch-lua watch-pdf watch-xe:
+	$(LATEXMK) $(ENG) -pvc $(LMKFLAGS) $(BASE).tex
+
+PAGER ?= less
 log:
-	$(EDITOR) $$(find . -name "$(BASENAME).log" -print0 | xargs -0)
+	@$(PAGER) "$(AUXDIR)/$(BASE).log"
 
-#————————————————————————————————————————————————————————————————————————————
-# Build the PDF
-$(PDFFILE): $(LTXFILE)
-	$(MAKE) default $(BF)
+# --- Glossary migration (7.10.x .tex entries -> .bib) ---------------------------
+GLSDIR ?= 1-FrontMatter
 
-#————————————————————————————————————————————————————————————————————————————
-# Add fail-safe for critical commands
-.PHONY: check-env check-build
-check-env:
-	@command -v $(LTXMK) >/dev/null 2>&1 || { printf "$(RED)Error: $(LTXMK) not found$(RESET)\n"; exit 1; }
+.PHONY: glsbib
+glsbib:
+	@command -v convertgls2bib >/dev/null 2>&1 || { \
+	  echo "ERROR: convertgls2bib not found — it ships with bib2gls (TeX Live)."; exit 1; }
+	@found=0; \
+	for f in $(GLSDIR)/*.tex; do \
+	  [ -e "$$f" ] || continue; \
+	  grep -qE '\\newglossaryentry|\\newacronym' "$$f" || continue; \
+	  found=1; b="$${f%.tex}.bib"; \
+	  if [ -e "$$b" ]; then echo "  skip  $$f  ($$b already exists)"; continue; fi; \
+	  echo "  convert  $$f  ->  $$b"; \
+	  convertgls2bib --texenc UTF-8 --bibenc UTF-8 "$$f" "$$b" >/dev/null || exit 1; \
+	  n=`grep -cE 'sort *=' "$$f" || true`; \
+	  if [ "$$n" -gt 0 ]; then \
+	    echo "     WARNING: $$f had $$n sort key(s). convertgls2bib DROPS them;"; \
+	    echo "              re-add them in $$b or those entries will mis-sort."; \
+	  fi; \
+	done; \
+	if [ "$$found" = 0 ]; then echo "No glossary .tex files found in $(GLSDIR)/"; fi
 
-check-build:
-	@command -v $(BUILD) -h >/dev/null 2>&1 || { printf "$(RED)Error: $(BUILD) not found$(RESET)\n"; exit 1; }
-
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: validate-config
-validate-config:
-	@if [ -z "$(SCHL)" ]; then \
-		printf "$(RED)Error: School configuration not found in 0-Config/1_novathesis.tex$(RESET)\n"; \
-		exit 1; \
-	fi
-	@printf "$(CYAN)Building for school: $(YELLOW)\"$(SCHL)\"$(RESET)\n"
-
-
-#############################################################################
-# HELP & DDEBUG
-#############################################################################
-
-#————————————————————————————————————————————————————————————————————————————
-# Help
-.PHONY: help
-.ONESHELL:
-help:
-	@printf "$(CYAN)NOVAthesis Makefile Help$(RESET)\n"
-	@printf "$(CYAN)========================$(RESET)\n"
-	@printf "$(CYAN)Main targets:$(RESET)\n"
-	@printf "$(CYAN)  pdf, xe, lua    - Build with different engines$(RESET)\n"
-	@printf "$(CYAN)  view/v          - Build and view PDF$(RESET)\n"
-	@printf "$(CYAN)  clean           - Remove build artifacts$(RESET)\n"
-	@printf "$(CYAN)  zip             - Create distribution package$(RESET)\n"
-	@printf "$(CYAN)  bump0/1/2/3     - Bump version numbers$(RESET)\n"
-	@printf "\n"
-	@printf "$(CYAN)Advanced:$(RESET)\n"
-	@printf "$(CYAN)  tl/mik TARGET   - Use specific TeX distribution$(RESET)\n"
-	@printf "$(CYAN)  YEAR TARGET     - Use specific TeX Live version$(RESET)\n"
-	@printf "$(CYAN)  verb/btch/itrt  - Verbose/Batch/Interactive mode$(RESET)\n"
-	
-#————————————————————————————————————————————————————————————————————————————
-# Debug
-.PHONY: dry-run debug-vars
-.ONESHELL:
-dry-run:
-	@printf "$(CYAN)Would build with: SCHOOL=\"$(SCHL)\", MODE=$(MODE)$(RESET)\n"
-	@printf "$(CYAN)Main file: \"$(BASENAME).tex\"$(RESET)\n"
-	@printf "$(CYAN)Compiler: $(LTXMK) $(LTXFLAGS)$(RESET)\n"
-
-.ONESHELL:
-debug-vars:
-	@printf "$(CYAN)SCHOOL: \"$(SCHL)\"$(RESET)\n"
-	@printf "$(CYAN)VERSION: $(ORIGVERSION)$(RESET)\n"
-	@printf "$(CYAN)MAIN FILE: \"$(BASENAME)\"$(RESET)\n"
-	@printf "$(CYAN)TEX VERSIONS: $(TEXVERSIONS)$(RESET)\n"
-	@printf "$(CYAN)LUA SCHOOLS: $(shell cat $(NEEDLUALATEX) 2>/dev/null || $(MAGENTA)'not computed'$(RESET))$(RESET)\n"
-
-#————————————————————————————————————————————————————————————————————————————
-# Color definitions
-RED := \033[0;31m
-GREEN := \033[0;32m
-YELLOW := \033[0;33m
-BLUE := \033[0;34m
-MAGENTA := \033[0;35m
-CYAN := \033[0;36m
-WHITE := \033[0;37m
-BOLD := \033[1m
-RESET := \033[0m
-
-
-
-#############################################################################
-# Create a ZIP file (no .git and similar folder)
-#############################################################################
-
-#————————————————————————————————————————————————————————————————————————————
-# target and files to be incldued in "$(MAKE) zip"
-ZIPFILES:=NOVAthesisFiles [0-5]-* LICENSE Makefile README.md Scripts novathesis.cls template.pdf template.tex .gitignore
-ZIPTARGET=$(BASENAME)-$(VERSION)@$(DATE).zip
-
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: zip
-.ONESHELL:
-zip: clean
-	@ printf "$(YELLOW)Creating archive: \"$(ZIPTARGET)\"$(RESET)\n"
-	@ rm -f "$(ZIPTARGET)"
-	@ zip "$(ZIPTARGET)" -r -q $(ZIPFILES)  -x 'Scripts/*'
-	@ printf "$(YELLOW)Archive created: \"$(ZIPTARGET)\" ($(shell stat -f%$(RESET)z "$(ZIPTARGET)" 2>/dev/null || stat -c%s "$(ZIPTARGET)" ) bytes)\n"
-
-
-#############################################################################
-# Cleaning targets
-#	clean -> standard clean
-#	bclean -> also cleans biber cache
-#	gclean -> uses git clean (removes all untracked files)
-#############################################################################
-
-#————————————————————————————————————————————————————————————————————————————
-# aux files
-# AUXFILES:=$(shell ls $(BASENAME)*.* | $(GREP) -v .tex | $(GREP) -v .pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
-
-GOODFILES := LICENSE Makefile %.cls %.md .gitignore %.tex %.pdf
-AUXFILES := $(filter-out $(GOODFILES),$(wildcard $(BASENAME).*)) $(NEEDLUALATEX)
-
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: clean
-.ONESHELL:
+# --- Cleaning -------------------------------------------------------------------
+.PHONY: clean distclean
 clean:
-	@ $(LTXMK) -c "$(BASENAME)"
-	@ rm -f $(foreach f,$(AUXFILES),"$(f)") "*(1)*" $(NEEDLUALATEX) $(KEEPDIR)
-	@ rm -rf $(AUXDIR) _minted*
-	@ find . -name .DS_Store | xargs rm -rf
-	@ find . -maxdepth 1 -type f -name 'novathesis*' ! -name '*.pdf' ! -name '*.tex' ! -name '*.cls' -delete
-	@ rm -rf $(wildcard /tmp/novathesis) $(wildcard /tmp/ntbuild-*)&
+	-@$(LATEXMK) -C -output-directory=$(AUXDIR) $(BASE).tex >/dev/null 2>&1
+	rm -rf _minted*
+	@find "$(AUXDIR)" -mindepth 1 -maxdepth 1 ! -name matrix -exec rm -rf {} + 2>/dev/null || true
+	@find . -name .DS_Store -delete 2>/dev/null || true
 
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: bclean
-bclean:
-	@ rm -rf `biber -cache`
-	@ biber -cache
-	@ $(MAKE) clean
+distclean: clean
+	rm -f "$(BASE).pdf" "$(BASE).synctex.gz"
 
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: gclean
-gclean:
-	@ git clean -fx -e Scripts -e Fonts
-	@ rm -rf $(wildcard /tmp/ntbuild-*)&
+# --- Help -------------------------------------------------------------------------
+.PHONY: help
+help:
+	@awk '/^#---/{n++; next} n==1 && /^#/{sub(/^# ?/,""); print}' Makefile
 
-
-#############################################################################
-# Bump up the template version
-#	bump0 -> do not increase version number
-#	bump1 -> increase major version number
-#	bump2 -> increase mid version number
-#	bump3 -> increase minor version number
-#############################################################################
-
-#————————————————————————————————————————————————————————————————————————————
-# File containing version info
-.PHONY: bump0 bump1 bump2 bump3
-bump0 bump1 bump2 bump3:
-ifneq ($@,bump0)
-	$(eval BI='$(patsubst bump%,%,$@)')
-	@ Scripts/bump.py -b $(BI)
-endif
-	$(MAKE) bcrtp
-
-.PHONY: bcrtp bcrp bcp crp cp rp crtp rtp tp 
-bcrtp: build-phd-en crtp
-
-bcrp: build-phd-en crp
-
-bcp: build-phd-en commit push
-
-bcp-f: build-phd-en commit push-force
-
-crp: commit rebase push
-
-rp: rebase push
-
-crp-f: commit rebase push-force
-
-cp: commit push
-
-cp-f: commit push-force
-
-crtp: commit rtp
-
-rtp: rebase tp
-
-tp: tag push
-
-custom:
-	@ $(eval SCHL=$(shell printf "%s" "$(notdir $(CURDIR))" | sed -e 's,-,/,; s,-,/,'))
-	@ sed -i '' -E 's|[[:space:]]*%?[[:space:]]*(\\ntsetup\{school=)[^}]*}|\1'$(SCHL)'\}|' 0-Config/1_novathesis.tex
-	@ make bcp SCHL="$(SCHL)" BFLAGS="-f"
-
-#############################################################################
-# BUILD
-#############################################################################
-
-
-# 1. Define Defaults
-DFL_SCHL := nova.fct
-DFL_TYP  := phd
-DFL_LNG  := en
-
-# 2. Define Extraction Function
-# Note: Regex changed to "^[[:space:]]*" to strictly match start of line + spaces
-# This ignores lines starting with %
-GET_TEX_VAR = sed -n 's/^[[:space:]]*\\ntsetup{$(1)=\([^}]*\).*/\1/p' 0-Config/1_novathesis.tex
-
-# 3. Logic: Try to get from file; if empty, use Default
-# We store the raw extraction in a temporary variable (_) to check if it exists
-
-# Handle SCHL (Needs special tr handling only if extracted)
-_FILE_SCHL := $(shell $(call GET_TEX_VAR,school))
-SCHL := $(if $(_FILE_SCHL),$(shell echo $(_FILE_SCHL) | tr '/-' '..'),$(DFL_SCHL))
-
-# Handle TYP
-_FILE_TYP := $(shell $(call GET_TEX_VAR,doctype))
-TYP := $(or $(_FILE_TYP),$(DFL_TYP))
-
-# Handle LNG
-_FILE_LNG := $(shell $(call GET_TEX_VAR,lang))
-LNG := $(or $(_FILE_LNG),$(DFL_LNG))
-
-# 4. Define Build Rules
-.PHONY: build
-# Default build uses the variables calculated above
-build: build-$(SCHL)-$(TYP)-$(LNG)
-
-# Pattern rule to parse arguments from the target name
-build-%: 
-	$(eval PATTERN := $(subst .o,,$*))
-	$(eval PARTS := $(subst -, ,$(PATTERN)))
-	$(eval WORD_COUNT := $(words $(PARTS)))
-	@SCHL="$(SCHL)"; \
-	TYP="$(TYP)"; \
-	LNG="$(LNG)"; \
-	\
-	if [ "$(WORD_COUNT)" = "3" ]; then \
-		SCHL=$(word 1,$(PARTS)); \
-		TYP=$(word 2,$(PARTS)); \
-		LNG=$(word 3,$(PARTS)); \
-	elif [ "$(WORD_COUNT)" = "2" ]; then \
-		TYP=$(word 1,$(PARTS)); \
-		LNG=$(word 2,$(PARTS)); \
-	elif [ "$(WORD_COUNT)" = "1" ]; then \
-		LNG=$(word 1,$(PARTS)); \
-	else \
-		echo "Error: Invalid format '$*'. Expected 1-3 arguments."; \
-		exit 1; \
-	fi; \
-	\
-	FINAL_SCHL=$$(echo $$SCHL | sed 's/\./\//; s/\./\//; s/\./-/g'); \
-	\
-	echo "$(BUILD) \"$$FINAL_SCHL\" --doctype \"$$TYP\" --lang \"$$LNG\" --rename-pdf --mode 1 --docstatus final -o \"$(PWD)\" $(BFLAGS)"; \
-	$(BUILD) "$$FINAL_SCHL" --doctype "$$TYP" --lang "$$LNG" --rename-pdf --mode 1 --docstatus final -o "$(PWD)" $(BFLAGS)
-
-
-
-#############################################################################
-# COMMIT / PUSH
-#############################################################################
-COMMIT_MESSAGE ?= Version $(VERSION) - $(DATE). $(CM)
-COMMIT_INCLUDE_UNTRACKED ?= no
-
-.PHONY: commit commit-untracked push push-force
-commit push push-force:
-	@ VERSION="$(VERSION)" \
-	DATE="$(DATE)" \
-	COMMIT_MESSAGE="$(COMMIT_MESSAGE)" \
-	COMMIT_INCLUDE_UNTRACKED="$(COMMIT_INCLUDE_UNTRACKED)" \
-	.Build/$@.sh
-
-commit-untracked:
-	make commit COMMIT_INCLUDE_UNTRACKED=yes
-
-#————————————————————————————————————————————————————————————————————————————
-# Helper to show remote status
-PUSH_REMOTE ?= origin
-.PHONY: push-status
-push-status:
-	@echo "📋 Remote status for all branches:"
-	@git remote show $(PUSH_REMOTE) | grep -E "(HEAD branch|Local branch|pushes to|local out of date)" || true
-
-
-#############################################################################
-# REBASE -> if rebase fails, tries MERGE
-#############################################################################
-MERGE_MESSAGE ?= Merged $(VERSION) - $(DATE).
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: rebase
-rebase:
-	@MERGE_MESSAGE="$(MERGE_MESSAGE)" \
-	VERSION="$(VERSION)" \
-	DATE="$(DATE)" \
-	.Build/rebase.sh
-
-
-
-#############################################################################
-# TAG
-#############################################################################
-TAG_VERSION ?= $(VERSION)
-TAG_DATE ?= $(DATE)
-TAG_MESSAGE ?= Version $(TAG_VERSION) - $(TAG_DATE).
-
-.PHONY: tag tag-push tag-delete tag-dry-run tag-show tag-list
-tag tag-push tag-delete tag-dry-run tag-show:
-	@VERSION="$(VERSION)" \
-	DATE="$(DATE)" \
-	TAG_VERSION="$(TAG_VERSION)" \
-	TAG_DATE="$(TAG_DATE)" \
-	TAG_MESSAGE="$(TAG_MESSAGE)" \
-	.Build/$@.sh
-
-tag-list:
-	@echo "📋 Recent tags:"
-	@git tag -l --sort=-version:refname "v*" | head -10
-
-
-	
-	
-
-
-
-
-#############################################################################
-# UPDATE
-#############################################################################
-CDIR    = $(shell basename $$(pwd))
-update:
-	@ .Build/nt-safe-update.sh $(CDIR)
-
-#############################################################################
-# Find out which templates cannot be compiled with 'pdflatex'
-# i.e., that must be compiled with 'lualatex' or 'xelatex'
-#############################################################################
-
-#————————————————————————————————————————————————————————————————————————————
-.PHONY: needlua needlualatex
-needlua needlualatex:
-	@ .Build/need_lualatex.sh
-
-# Add a real dependency for the cache file
-$(NEEDLUALATEX): $(shell find NOVAthesisFiles -name "*.sty" -o -name "*.ldf")
-	$(MAKE) --no-print-directory needlualatex
+# --- Maintainer targets (not shipped in releases) -----------------------------------
+-include Makefile.dev

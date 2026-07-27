@@ -1,0 +1,133 @@
+%!TEX root = ../template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — 3-BackMatter/app-migration.tex
+%% ----------------------------------------------------------------------------
+%%
+%% Version 8.0.0 (2026-07-27)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%%
+%% Migration guide: upgrading a document written for NOVAthesis 7.10.x or
+%% earlier to 8.0, whose glossaries are driven by bib2gls.
+%%
+%% ----------------------------------------------------------------------------
+
+\typeout{NT FILE 3-BackMatter/app-migration.tex}%
+
+\chapter{Migrating from \ntindex[migration]{7.10.x}}
+\label{app:migration}
+
+\novathesis~8.0 changed how glossaries, acronyms and symbols are stored.  If
+you are starting a new document, you can skip this appendix entirely --- the
+template already ships in the new format.  If you are upgrading a document
+you have been writing against 7.10.x or earlier, this is the only change that
+requires your attention.
+
+%%=======================================================================
+\section{What Changed, and Why}
+%%=======================================================================
+
+Glossary entries used to be written as \hologo{LaTeX} commands in
+\texttt{.tex} files, and processed by \texttt{makeglossaries}.  They are now
+\texttt{.bib} entries, processed by \ntindex[packages!bib2gls]{\texttt{bib2gls}}.
+
+The reason is a hard limit in \hologo{pdfTeX} and \hologo{XeTeX}: a document
+can only write to 16 files at once, and the old glossary machinery claimed
+four of those slots.  The template had to load the \texttt{morewrites}
+package to work around it, which made every \hologo{pdfLaTeX} pass roughly
+nine times slower.  With \texttt{bib2gls} the glossaries need \emph{no} write
+slots at all, so most documents no longer need \texttt{morewrites}:
+a full \hologo{pdfLaTeX} build of this manual went from 109 to 36 seconds.
+See Section~\ref{sec:build_fastwrites}.
+
+\begin{warningbox}[title={New requirement: Java}]
+  \texttt{bib2gls} is a Java program.  It ships with \TeX~Live, but it needs a
+  \gls{JRE} on your machine.  Overleaf provides one.  For a local
+  installation, install any current \gls{JRE} if \verb!bib2gls --version!
+  does not work.
+\end{warningbox}
+
+%%=======================================================================
+\section{The Migration, Step by Step}
+\label{sec:migration_steps}
+%%=======================================================================
+
+\paragraph{1. Convert your entry files.}
+\begin{bashcode}
+make glsbib
+\end{bashcode}
+
+This converts every glossary \texttt{.tex} file in \verb!1-FrontMatter/! into
+a \texttt{.bib} file of the same name, leaving the originals untouched.  It
+skips any file already converted, so it is safe to run twice.
+
+\paragraph{2. Re-add your \texttt{sort} keys.}  This is the step people miss,
+so \verb!make glsbib! counts them for you and prints a warning like:
+
+\begin{verbatim}
+  convert  1-FrontMatter/symbols.tex  ->  1-FrontMatter/symbols.bib
+     WARNING: 1-FrontMatter/symbols.tex had 8 sort key(s). convertgls2bib
+              DROPS them; re-add them in 1-FrontMatter/symbols.bib or those
+              entries will mis-sort.
+\end{verbatim}
+
+The converter silently discards every \texttt{sort} key.  Nothing breaks ---
+the document still builds, at the same page count --- but the affected
+entries come out in the wrong order.  It bites exactly the entries that
+needed a sort key in the first place: symbols, and any entry whose name is a
+command.  Open each converted file and restore them:
+
+\begin{latexcode}
+@symbol{mu,
+  name        = {\ensuremath{\mu}},
+  sort        = {mu},        % <- restore this
+  description = {Mu},
+  type        = {symbols}
+}
+\end{latexcode}
+
+\paragraph{3. Convert symbols to \texttt{@symbol}.}  The converter turns
+everything into \texttt{@entry}.  Entries that are symbols should use
+\texttt{@symbol} instead, so \texttt{bib2gls} treats them as symbols rather
+than words.
+
+\paragraph{4. Remove \latexinline{\glsaddall}.}  If your document calls
+\latexinline{\glsaddall}, delete the call.  It has no equivalent in
+\texttt{bib2gls}, which decides inclusion per glossary: the template already
+lists every entry of the glossary and symbols lists, and only the acronyms
+you actually use.
+
+\paragraph{5. Delete the old \texttt{.tex} entry files} once the output looks
+right.  They are no longer read.  If one is still registered in
+\verb!0-Config/4_files.tex!, the build stops with an error telling you so ---
+that error is the safety net for this whole procedure, not a bug.
+
+\paragraph{6. Rebuild and check the lists.}  Compare the glossary, acronym
+and symbol lists against your previous \gls{PDF}: same entries, same order.
+
+%%=======================================================================
+\section{If Something Looks Wrong}
+%%=======================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{ShadedTabular}{p{5.2cm}p{8.0cm}}
+  \toprule
+  \textbf{Symptom} & \textbf{Cause} \\
+  \emph{``Glossary source \dots{} is in the old (7.10.x) format''} &
+    A \texttt{.tex} entry file is still registered.  Run \verb!make glsbib!. \\
+  Entries in a strange order &
+    Missing \texttt{sort} keys (step~2). \\
+  An entry is missing from a list &
+    For acronyms this is normal --- only the ones you cite are listed.  For
+    the glossary and symbols lists it is not; check the entry really is in
+    the \texttt{.bib} file. \\
+  \emph{``Undefined control sequence \textbackslash bibglsnew\dots{}''} &
+    \texttt{bib2gls} did not run.  Check \verb!bib2gls --version!, i.e.\
+    check Java. \\
+  \bottomrule
+\end{ShadedTabular}
+\end{center}
+
+Nothing outside the glossaries changed: your chapters, bibliography, cover
+configuration and \latexinline{\ntsetup} options all work as before.

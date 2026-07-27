@@ -20,6 +20,10 @@
 %% CHAPTER STYLE
 %%=======================================================================
 
+% Declare outside \makechapterstyle so it is safe if \chapterstyle{isel}
+% is called more than once (e.g. after \frontmatter / \mainmatter).
+\newbool{iselischapnumbered}
+
 \makechapterstyle{isel}{%
   \setlength\beforechapskip{30pt}
   \setlength\afterchapskip{24pt}
@@ -28,7 +32,6 @@
   \renewcommand\chaptitlefont{\bfseries\fontsize{14}{16}\selectfont\color{ISELRed}}
 
   % 1. Use a toggle to distinguish between \chapter and \chapter*
-  \newbool{iselischapnumbered}
   \renewcommand\printchapternonum{\boolfalse{iselischapnumbered}}
   \renewcommand\printchapternum{\booltrue{iselischapnumbered}}
 

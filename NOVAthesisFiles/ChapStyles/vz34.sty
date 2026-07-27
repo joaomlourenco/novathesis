@@ -12,7 +12,8 @@
 %% FLAGS
 %%=======================================================================
 
-\newif\ifNoChapNumber
+% Guard against double-loading (both vz34 and vz43 use this flag).
+\@ifundefined{ifNoChapNumber}{\newif\ifNoChapNumber}{}
 
 
 %%=======================================================================

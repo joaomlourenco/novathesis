@@ -11,7 +11,34 @@
 
 \thispagestyle{empty}
 
-\long\def\checkbox#1#2{\ifoptionanyof{/novathesis/ulisboa/fmv/#1}{#2}{\memoryxbox}{\memoryemptybox}}
+\long\def\checkbox#1#2{%
+  \ifoptionanyof{/novathesis/ulisboa/fmv/#1}{#2}%
+    {\memoryxbox}{\memoryemptybox}%
+}
+
+\def\memoryemptybox{{%
+  \setlength{\fboxsep}{0pt}%
+  \LARGE%
+  \setbox0=\hbox{$\times$}%
+  \fbox{\rule{\wd0}{0pt}\rule{0pt}{\ht0}}%
+}}
+\def\memoryxbox{{%
+  \setlength{\fboxsep}{0pt}%
+  \LARGE%
+  \fbox{$\times$}%
+}}
+\newif\ifmemorycross
+\def\datacrossiftrue#1(#2){%
+  \memorycrossfalse
+  \@for\@memory@it:=#2\do{%
+    \ifdatadefined{#1}(#2)
+      {\memorycrosstrue}
+      {}%
+  }%
+  \bgroup
+    \ifmemorycross\memoryxbox\else\memoryemptybox\fi%
+  \egroup
+}
 
 %-----------------------------------------------------------------
 % STATEMENT OF INTEGRITY
@@ -24,11 +51,11 @@
       DECLARATION REGARDING THE CONDITIONS FOR REPRODUCTION OF THE THESIS OR DISSERTATION
 \end{center}
 
-Author: \thedocauthor(name)\par
-Title: {\ToUppercase{\thedoctitle(\@LANG@MAIN,main)}}\par
+Author: \GetDocAuthor(name)\par
+Title: {\MakeUppercase{\GetDocTitle(\@LANG@MAIN,main)}}\par
 Year of completion: \GetDocDate(exam)
 
-Course designation: \thedegreename(\@LANG@COVER)\par
+Course designation: \GetDegreeName(\@LANG@COVER)\par
 Scientific area most closely related to:\par
 \indent\begin{tabular}{l@{\qquad}l}
   \checkbox{scientificarea}{C} Clinical &
