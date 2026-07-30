@@ -112,13 +112,13 @@
 
 
 \cs_generate_variant:Nn \seq_set_from_clist:Nn { Ne }
-\cs_generate_variant:Nn \seq_use:Nnnn { Neee }
 \NewDocumentCommand { \FormatNamesAsList } { m  % list of names
                                            O { } % prefix for each name
                                            O { \GetCommaString(\@LANG@MAIN) } % middle-sep
                                            O { ~ \GetAndString(\@LANG@MAIN) } % pair-sep
-                                           O { \GetCommaString(\@LANG@MAIN)
-                                               \GetAndString(\@LANG@MAIN) } } %
+                                           O { ~ \GetAndString(\@LANG@MAIN) } } %
+                                           % O { \GetCommaString(\@LANG@MAIN)
+                                           %     \GetAndString(\@LANG@MAIN) } } %
 % \FormatNamesAsList {comma separated list of names} {name-prefix} {middle-sep} {pair-sep} {last-sep}
 % example: \FormatNamesAsList {Maria, Rita, Filomena} {Professora} {,~} {~e~} {~e~}
  {
@@ -139,7 +139,7 @@
   %   two items -> pair-sep (#4)
   %   >2 items  -> middle-sep (#3) between all but the last, last-sep (#5)
   %                before the final name.
-  \seq_use:Neee \l_tmpb_seq { #4 } { #3 } { #5 }
+  \seq_use:Nnnn \l_tmpb_seq { #4 } { #3 } { #5 }
  }
 
 \ExplSyntaxOff

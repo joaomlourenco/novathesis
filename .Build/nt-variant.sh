@@ -43,6 +43,8 @@
 #
 # Environment:
 #   BIBER_LOCK=1   force the biber flock shim (auto-enabled when jobs > 1)
+#   NT_WARM=0      one fresh (cold) aux dir per variant; default 1 shares a warm
+#                  aux dir within each sequential unit for faster rebuilds
 #-----------------------------------------------------------------------------
 set -euo pipefail
 
@@ -161,37 +163,57 @@ list_variants() {
 #--- single variant build ------------------------------------------------------
 build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
   local school=$1 dt=$2 lg=$3 eng=$4
-  local id engflag aux pretex rc=0 t0 t1
+  local id engflag aux ovr ovrrel owns_aux jobname rc=0 t0 t1
   id="$(printf '%s' "$school" | tr / -)-$dt-$lg-$eng"
-  aux="${5:-$ROOT/AUXDIR/variants/$id}"
+  if [ -n "${5:-}" ]; then
+    aux="$5"; owns_aux=0            # shared (warm) aux dir, owned by the caller
+  else
+    aux="$ROOT/AUXDIR/variants/$id"; owns_aux=1
+  fi
+  # jobname = the aux-dir basename: stable within a (warm) unit but DISTINCT
+  # across parallel units and cold variants.  This keeps every \jobname-keyed
+  # file that a tool drops in the shared cwd -- minted's _minted-<jobname>,
+  # ifplatform's <jobname>.w18, etc. -- from colliding between concurrent builds.
+  jobname="$(basename "$aux")"
   case $eng in
     lua) engflag=-pdflua ;;
     xe)  engflag=-pdfxe ;;
     pdf) engflag=-pdf ;;
     *)   echo "✗ $id: unknown engine '$eng'" >&2; return 1 ;;
   esac
-  pretex="\\def\\ntoverride{doctype=$dt,school=$school,lang=$lg,docstatus=$STATUS${EXTRA:+,$EXTRA}}"
-  # morewrites is skipped by default; re-enable it when FASTWRITES=0 (see the
-  # matrix target in Makefile.dev).  No space may be introduced here: texfot
-  # re-splits the command line on whitespace, which would break the quoted
-  # -pretex argument.
-  # NB: an 'A && B' one-liner would abort the whole run under 'set -e' whenever
-  # the test is false, i.e. for every default (FASTWRITES=1) variant.
-  if [ "${FASTWRITES:-1}" != 1 ]; then
-    pretex="$pretex\\def\\ntmorewrites{}"
-  fi
 
+  # Inject \ntoverride through a FILE that latexmk tracks as a dependency,
+  # instead of -pretex (which latexmk ignores for up-to-date checks).  This is
+  # what makes a shared (warm) aux dir safe: rewriting the file forces a rebuild
+  # for the next school, so latexmk can no longer silently reuse the previous
+  # variant's PDF, while it still skips the unchanged steps (biber, bib2gls) and
+  # converges in fewer passes.  The \input path is relative to the compile cwd
+  # ($ROOT); AUXDIR has no spaces, so it stays safe for texfot too.
+  ovr="$aux/nt-override.tex"
+  ovrrel="${aux#"$ROOT"/}/nt-override.tex"
+
+  # -jobname is REQUIRED: the pretex starts with \input{override}, and without a
+  # fixed jobname the engine would name every output after that first file
+  # (override.pdf) instead of <jobname>.pdf.  Using the per-unit jobname also
+  # de-collides tool caches in the shared cwd (see the jobname note above).
   local cmd=(latexmk "$engflag" -interaction=batchmode -file-line-error
-             -shell-escape -synctex=1 -output-directory="$aux"
-             -usepretex -pretex="$pretex" template)
+             -shell-escape -synctex=1 -output-directory="$aux" -jobname="$jobname"
+             -usepretex -pretex="\\input{$ovrrel}" template)
 
   if [ "$DRYRUN" = 1 ]; then
+    printf '# %s -> \\input{%s}\n' "$id" "$ovrrel"
     printf '%q ' "${cmd[@]}"; echo
     return 0
   fi
 
   printf '▶ %s …\n' "$id" >&2               # immediate "building" feedback
   mkdir -p "$aux"
+  # (Re)write the tracked override.  FASTWRITES=0 also re-enables morewrites.
+  {
+    printf '\\def\\ntoverride{doctype=%s,school=%s,lang=%s,docstatus=%s%s}\n' \
+           "$dt" "$school" "$lg" "$STATUS" "${EXTRA:+,$EXTRA}"
+    if [ "${FASTWRITES:-1}" != 1 ]; then printf '\\def\\ntmorewrites{}\n'; fi
+  } > "$ovr"
   t0=$(date +%s)
   # AUXDIR must be set per variant: latexmkrc does `$aux_dir = $ENV{AUXDIR}`,
   # and -output-directory only sets latexmk's out_dir.  Without this every
@@ -210,14 +232,14 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
   # even change.  Assert the glossaries really are intact before calling it a
   # pass.  A missing checker or interpreter must not fail the variant.
   if [ $rc -eq 0 ] && [ -x "$ROOT/.Build/check-glossaries.py" ]; then
-    if ! glscheck=$("$ROOT/.Build/check-glossaries.py" "$aux" template "$ROOT" 2>&1); then
+    if ! glscheck=$("$ROOT/.Build/check-glossaries.py" "$aux" "$jobname" "$ROOT" 2>&1); then
       rc=1
       printf '%s\n' "$glscheck" > "$aux/$id.glossary.out"
     fi
   fi
 
   if [ $rc -eq 0 ]; then
-    cp -f "$aux/template.pdf" "$OUTDIR/$id.pdf"
+    cp -f "$aux/$jobname.pdf" "$OUTDIR/$id.pdf"
     echo "✓ $id.pdf  ($((t1 - t0))s)"
   else
     if [ -f "$aux/$id.glossary.out" ]; then
@@ -227,10 +249,10 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
       return 1
     fi
     # Save whatever diagnostics exist, and report ONLY what was actually saved
-    # (an early failure may leave no template.log; the captured build output
+    # (an early failure may leave no <jobname>.log; the captured build output
     # $id.build.out exists for non-verbose runs and holds the error).
     local saved=""
-    if [ -f "$aux/template.log" ] && cp -f "$aux/template.log" "$OUTDIR/$id.log"; then
+    if [ -f "$aux/$jobname.log" ] && cp -f "$aux/$jobname.log" "$OUTDIR/$id.log"; then
       saved="$OUTDIR/$id.log"
     fi
     if [ -f "$aux/$id.build.out" ] && cp -f "$aux/$id.build.out" "$OUTDIR/$id.build.out"; then
@@ -245,7 +267,9 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
   # In matrix mode, drop this variant's aux dir now that its PDF (or logs) are
   # in the output folder — keeps disk bounded across a large matrix.  A single
   # 'make school' does not set NT_CLEAN_AUX, so it keeps the aux for iteration.
-  [ "${NT_CLEAN_AUX:-0}" = 1 ] && rm -rf "$aux"
+  # Only drop the aux dir if this call OWNS it (a per-variant cold dir).  A
+  # shared warm dir is cleaned once by the worker after the whole unit finishes.
+  if [ "$owns_aux" = 1 ] && [ "${NT_CLEAN_AUX:-0}" = 1 ]; then rm -rf "$aux"; fi
   return $rc
 }
 
@@ -257,17 +281,21 @@ enable_biber_lock() {
 
 #--- main -------------------------------------------------------------------------
 if [ -n "$UNITFILE" ]; then
-  # Worker: build the variants of one group×engine unit SEQUENTIALLY, each in
-  # its OWN aux dir.  A shared aux dir made latexmk skip the rebuild for
-  # variants that differ only in the \ntoverride pretex (the source files are
-  # identical, and the pretex is not a tracked dependency), so every variant
-  # silently reused the first one's PDF.
+  # Worker: build the variants of one group×engine unit SEQUENTIALLY.  With
+  # NT_WARM=1 (default) they share ONE aux dir, so each variant reuses the
+  # previous one's warm .aux/.bbl/.glstex and converges in fewer passes.  This
+  # is safe because \ntoverride is now a tracked file (see build_one): changing
+  # school rewrites it, forcing latexmk to rebuild — it can no longer reuse the
+  # previous variant's PDF.  NT_WARM=0 restores a fresh cold aux dir per variant.
   unit=$(basename "$UNITFILE")
-  [ "$DRYRUN" = 1 ] && echo "# unit $unit (sequential)"
+  unitaux=""
+  if [ "${NT_WARM:-1}" = 1 ]; then unitaux="$ROOT/AUXDIR/units/$unit"; fi
+  [ "$DRYRUN" = 1 ] && echo "# unit $unit (sequential${unitaux:+, warm aux})"
   rc=0
   while read -r school dt lg eng; do
-    build_one "$school" "$dt" "$lg" "$eng" || rc=1
+    build_one "$school" "$dt" "$lg" "$eng" ${unitaux:+"$unitaux"} || rc=1
   done < "$UNITFILE"
+  if [ -n "$unitaux" ] && [ "${NT_CLEAN_AUX:-0}" = 1 ]; then rm -rf "$unitaux"; fi
   exit $rc
 fi
 
@@ -280,7 +308,8 @@ if [ "$ALL" = 1 ]; then
   OUTDIR="$OUTDIR/$(date +%F@%H-%M-%S)"
   [ "$DRYRUN" = 1 ] || mkdir -p "$OUTDIR"
   export NT_STATUS="$STATUS" NT_EXTRA="$EXTRA" NT_OUTDIR="$OUTDIR" \
-         NT_DRYRUN="$DRYRUN" NT_VERBOSE="$VERBOSE" NT_CLEAN_AUX=1 PATH
+         NT_DRYRUN="$DRYRUN" NT_VERBOSE="$VERBOSE" NT_CLEAN_AUX=1 \
+         NT_WARM="${NT_WARM:-1}" PATH
 
   # Split the ordered variant list into one file per group×engine unit;
   # units run in parallel (up to JOBS), their contents strictly in order.

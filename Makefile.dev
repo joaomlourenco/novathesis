@@ -55,10 +55,15 @@ endif
 # claims more than 16 \write registers.  The trade-off: the matrix then
 # exercises only the fast path, so run 'make matrix FASTWRITES=0' periodically
 # to keep the morewrites path covered.
+#
+# WARM=1 (default) shares one warm aux dir within each sequential unit, so a
+# variant reuses the previous one's aux/bbl/glstex and rebuilds in fewer passes.
+# WARM=0 forces a fresh cold aux dir per variant (the older, slower behaviour).
 matrix: FASTWRITES ?= 1
+matrix: WARM ?= 1
 matrix:
 	@mkdir -p $(AUXDIR)/matrix
-	@FASTWRITES=$(FASTWRITES) $(VARIANT) -j $(JOBS) $(if $(V),-v) -o $(AUXDIR)/matrix -a $(FILTER)
+	@FASTWRITES=$(FASTWRITES) NT_WARM=$(WARM) $(VARIANT) -j $(JOBS) $(if $(V),-v) -o $(AUXDIR)/matrix -a $(FILTER)
 
 # --- LuaLaTeX-only school detection ---------------------------------------------
 .PHONY: needlua
