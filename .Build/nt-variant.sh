@@ -45,6 +45,10 @@
 #   BIBER_LOCK=1   force the biber flock shim (auto-enabled when jobs > 1)
 #   NT_WARM=0      one fresh (cold) aux dir per variant; default 1 shares a warm
 #                  aux dir within each sequential unit for faster rebuilds
+#   NT_COST_DEFAULT=N  assumed seconds for a variant with no recorded time
+#                  (default 60).  Matrix units are dispatched longest-first
+#                  (LPT) using measured times cached in .Build/.matrix-costs.tsv;
+#                  delete that file to reset to group-id order.
 #-----------------------------------------------------------------------------
 set -euo pipefail
 
@@ -241,6 +245,11 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
   if [ $rc -eq 0 ]; then
     cp -f "$aux/$jobname.pdf" "$OUTDIR/$id.pdf"
     echo "✓ $id.pdf  ($((t1 - t0))s)"
+    # Record this variant's build time for cost-based (LPT) unit scheduling.
+    # One file per variant id => no contention across parallel workers.
+    if [ -n "${NT_TIMINGS_DIR:-}" ]; then
+      printf '%s\t%s\n' "$id" "$((t1 - t0))" > "$NT_TIMINGS_DIR/$id"
+    fi
   else
     if [ -f "$aux/$id.glossary.out" ]; then
       cp -f "$aux/$id.glossary.out" "$OUTDIR/$id.glossary.out" 2>/dev/null || true
@@ -307,9 +316,14 @@ if [ "$ALL" = 1 ]; then
   # All matrix PDFs (and failure logs) go into a per-invocation folder
   OUTDIR="$OUTDIR/$(date +%F@%H-%M-%S)"
   [ "$DRYRUN" = 1 ] || mkdir -p "$OUTDIR"
+  # Cost-based (LPT) scheduling: a per-run dir collects each variant's build
+  # time (one file per id -> no locking), merged afterwards into a persistent
+  # cost DB used to order units longest-first.
+  NT_TIMINGS_DIR=$(mktemp -d)
+  COSTDB="$HERE/.matrix-costs.tsv"; touch "$COSTDB"
   export NT_STATUS="$STATUS" NT_EXTRA="$EXTRA" NT_OUTDIR="$OUTDIR" \
          NT_DRYRUN="$DRYRUN" NT_VERBOSE="$VERBOSE" NT_CLEAN_AUX=1 \
-         NT_WARM="${NT_WARM:-1}" PATH
+         NT_WARM="${NT_WARM:-1}" NT_TIMINGS_DIR="$NT_TIMINGS_DIR" PATH
 
   # Split the ordered variant list into one file per group×engine unit;
   # units run in parallel (up to JOBS), their contents strictly in order.
@@ -333,9 +347,29 @@ if [ "$ALL" = 1 ]; then
   printf '▶ Matrix: building %s variant(s)%s with %s job(s)\n' \
          "$total" "${FILTER:+ matching '$FILTER'}" "$JOBS" >&2
   printf '  output → %s\n' "$OUTDIR" >&2
+  # Dispatch longest-first (LPT): a unit's cost is the sum of its variants' last
+  # recorded build times (NT_COST_DEFAULT for unknowns).  An empty DB or ties
+  # fall back to group-id order.  This only changes WHEN units start, never the
+  # result.  FILENAME==db (not FNR==NR) is robust to an empty cost DB.
+  order_units() {
+    awk -v def="${NT_COST_DEFAULT:-60}" -v db="$COSTDB" '
+      FILENAME == db { cost[$1] = $2; next }
+      { id = $1; gsub(/\//, "-", id); id = id "-" $2 "-" $3 "-" $4
+        tot[FILENAME] += (id in cost) ? cost[id] : def }
+      END { for (p in tot) { n = split(p, x, "/"); printf "%d\t%s\n", tot[p], x[n] } }
+    ' "$COSTDB" "$UNITS"/* | sort -k1,1rn -k2,2 | cut -f2
+  }
   rc=0
-  ls "$UNITS" | xargs -P "$JOBS" -I{} "$0" -U "$UNITS/{}" || rc=$?
-  rm -rf "$UNITS"
+  order_units | xargs -P "$JOBS" -I{} "$0" -U "$UNITS/{}" || rc=$?
+  # Merge this run's times into the persistent cost DB (new values win).
+  if [ "$DRYRUN" != 1 ] && ls "$NT_TIMINGS_DIR"/* >/dev/null 2>&1; then
+    cat "$NT_TIMINGS_DIR"/* > "$NT_TIMINGS_DIR/.new"
+    awk -F'\t' 'FNR==NR { n[$1] = $2; next }
+                !($1 in n) { print }
+                END { for (k in n) print k "\t" n[k] }' \
+        "$NT_TIMINGS_DIR/.new" "$COSTDB" > "$COSTDB.tmp" && mv "$COSTDB.tmp" "$COSTDB"
+  fi
+  rm -rf "$UNITS" "$NT_TIMINGS_DIR"
   exit $rc
 fi
 
