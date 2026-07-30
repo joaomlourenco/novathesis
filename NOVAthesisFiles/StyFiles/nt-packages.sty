@@ -106,9 +106,31 @@
 \RequirePackage{varwidth}    % Variable-width minipage environment
 \RequirePackage{calc}        % Arithmetic in length/counter expressions
 \RequirePackage{hologo}      % Typeset TeX-family logos
+% Some logo names are newer than the hologo build a TeX distribution ships
+% with (e.g. "TeXLive" was only added to hologo in 2025/11/11, so Overleaf's
+% currently-deployed hologo -- and any older local TeX Live -- doesn't know
+% it and \hologo{TeXLive} raises "Unknown logo"). Provide hand-made stand-ins
+% for such names below, but ALWAYS prefer hologo's own definition when it
+% exists: \ifcsname HoLogo@<name>\endcsname is hologo's internal storage for
+% a known logo (stable across all hologo versions, old and new alike), so
+% the moment the installed hologo is updated to know a name, this wrapper
+% silently steps aside and defers to it -- no further changes needed here.
+\newcommand*\nt@hologo@fallback@TeXLive{\hologoRobust{TeX}\,Live}
 % Wrap \hologo in \NoCaseChange so \MakeUppercase never uppercases logo names
 % (LaTeX 2020+ case-changing engine uppercases even protected-command arguments).
-\renewcommand*\hologo[1]{\NoCaseChange{\hologoRobust{#1}}}
+\renewcommand*\hologo[1]{%
+  \NoCaseChange{%
+    \ifcsname HoLogo@#1\endcsname
+      \hologoRobust{#1}%
+    \else
+      \ifcsname nt@hologo@fallback@#1\endcsname
+        \csname nt@hologo@fallback@#1\endcsname
+      \else
+        \hologoRobust{#1}% unknown to both -- let hologo raise its own error
+      \fi
+    \fi
+  }%
+}
 % In PDF strings (bookmarks) render \hologo{X} as plain text "X".
 \AtBeginDocument{%
   \pdfstringdefDisableCommands{%
