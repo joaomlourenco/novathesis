@@ -168,37 +168,37 @@ Otherwise, download the default/main repository (last in the list).
 
 | <img height="50" alt="nova-fct-cbbi" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-fct-cbbi-msc-en.jpg" /> |
 |:---------:|
-| [📦](https://github.com/novathesis/nova-fct-cbbi/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-fct-cbbi.git) |
+| [📦](https://github.com/novathesis/nova-fct-cbbi/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-fct-cbbi.git) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
  </td><td align="center">
 
 | <img height="50" alt="nova-fct-di-adc" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-fct-di-adc-bsc-en.jpg" /> |
 |:---------:|
-| [📦](https://github.com/novathesis/nova-fct-cbbi/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-fct-cbbi.git) |
+| [📦](https://github.com/novathesis/nova-fct-cbbi/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-fct-cbbi.git) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
  </td><td align="center">
   
 | <img height="50" alt="nova-ensp" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-ensp-msc-en.jpg" />  |
 |:---------:|
-| [📦](https://github.com/novathesis/nova-ensp/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-ensp.git) |
+| [📦](https://github.com/novathesis/nova-ensp/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-ensp.git) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
 </td><td align="center">
 
 | <img height="50" alt="nova-itqb" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-itqb-msc-en.jpg" />  |
 |:---------:|
-| [📦](https://github.com/novathesis/nova-itqb/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-itqb.git) |
+| [📦](https://github.com/novathesis/nova-itqb/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-itqb.git) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
 </td><td align="center">
 
 | <img height="50" alt="nova-itqb" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-fcsh-msc-en.jpg" />  |
 |:---------:|
-| [📦](https://github.com/novathesis/nova-fcsh/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-fcsh.git) |
+| [📦](https://github.com/novathesis/nova-fcsh/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/nova-fcsh.git) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
 </td><td align="center">
 
 | <img height="50" alt="nova-ims" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-ims-msc-en.jpg" />  |
 |:---------:|
-| [📦](https://github.com/pdecampossouza/nova-ims-thesis-template-2025/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/pdecampossouza/nova-ims-thesis-template-2025) |
+| [📦](https://github.com/pdecampossouza/nova-ims-thesis-template-2025/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/pdecampossouza/nova-ims-thesis-template-2025) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
 </td></tr>
 </table>
@@ -213,32 +213,32 @@ Otherwise, download the default/main repository (last in the list).
 
 | <img height="50" alt="ulisboa-fcul" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ulisboa-fcul-msc-en.jpg" /> |
 |:---------:|
-| [📦](https://github.com/novathesis/ulisboa-fcul/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulisboa-fcul.git) |
+| [📦](https://github.com/novathesis/ulisboa-fcul/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulisboa-fcul.git) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
 </td><td align="center">
 
 | <img height="50" alt="ulisboa-ist" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ulisboa-ist-msc-en.jpg" />  |
 |:---------:|
-| [📦](https://github.com/novathesis/ulisboa-ist/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulisboa-ist.git) |
+| [📦](https://github.com/novathesis/ulisboa-ist/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulisboa-ist.git) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
 </td><td align="center">
 
 | <img height="50" alt="ulisboa-iseg" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ulisboa-iseg-msc-en.jpg" />  |
 |:---------:|
-| [📦](https://github.com/novathesis/ulisboa-iseg/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulisboa-iseg.git) |
+| [📦](https://github.com/novathesis/ulisboa-iseg/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulisboa-iseg.git) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
 </td><td align="center">
 
 | <img height="50" alt="ulisboa-fmv" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ulisboa-fmv-msc-en.jpg" />  |
 |:---------:|
-| [📦](https://github.com/novathesis/ulisboa-fmv/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulisboa-fmv.git) |
+| [📦](https://github.com/novathesis/ulisboa-fmv/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulisboa-fmv.git) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
 </td><td>
 </td><td align="center">
 
 | <img height="50" alt="uporto-fcup" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/uporto-fcup-msc-en.jpg" />  |
 |:---------:|
-| [📦](https://github.com/novathesis/uporto-fcup/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/uporto-fcup.git) |
+| [📦](https://github.com/novathesis/uporto-fcup/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/uporto-fcup.git) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
 </td></tr> 
 </table>
@@ -251,20 +251,20 @@ Otherwise, download the default/main repository (last in the list).
 
 | <img height="50" alt="uminho" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/uminho-eeng-phd-en.jpg" />  &nbsp; <img height="50" alt="uminho" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/uminho-eeng-msc-en.jpg" />  |
 |:---------:|
-| [📦](https://github.com/novathesis/uminho/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/uminho.git) |
+| [📦](https://github.com/novathesis/uminho/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/uminho.git) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
 </td><td>
 </td><td align="center">
 
 | <img height="50" alt="ulht-deisi" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ulht-deisi-phd-en.jpg" />  &nbsp; <img height="50" alt="ulht-deisi" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ulht-deisi-msc-en.jpg" />  |
 |:---------:|
-| [📦](https://github.com/novathesis/ulht-deisi/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulht-deisi.git) |
+| [📦](https://github.com/novathesis/ulht-deisi/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulht-deisi.git) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
 </td><td align="center">
 
 | <img height="50" alt="ulht-mge" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ulht-mge-phd-en.jpg" />  &nbsp; <img height="50" alt="ulht-mge" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ulht-mge-msc-en.jpg" />  |
 |:---------:|
-| [📦](https://github.com/novathesis/ulht-mge/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulht-mge.git) |
+| [📦](https://github.com/novathesis/ulht-mge/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ulht-mge.git) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
 </td></tr> 
 </table>
@@ -284,14 +284,14 @@ Otherwise, download the default/main repository (last in the list).
 
 | <img height="50" alt="ips-ests" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/ips-ests-msc-en.jpg" />  |
 |:---------:|
-| [📦](https://github.com/novathesis/ips-ests/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ips-ests.git) |
+| [📦](https://github.com/novathesis/ips-ests/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/novathesis/ips-ests.git) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
 </td><td>
 </td><td align="center">
 
 | <img height="50" alt="novathesis" src="https://github.com/user-attachments/assets/9c19097a-a7b7-49ce-95ff-70694767b350" />  |
 |:---------:|
-| [📦](https://github.com/joaomlourenco/novathesis/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/joaomlourenco/novathesis.git) |
+| [📦](https://github.com/joaomlourenco/novathesis/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/joaomlourenco/novathesis.git) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
 </td></tr> 
 </table>
