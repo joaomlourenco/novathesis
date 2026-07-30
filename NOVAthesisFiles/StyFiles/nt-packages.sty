@@ -96,7 +96,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage[table,svgnames]{xcolor} % Must be loaded first to avoid option clashes
 \RequirePackage{iftex}       % \ifpdftex, \ifxetex, \ifluatex, \iftutex …
-\RequirePackage{ifplatform}  % \ifwindows, \iflinux, \ifmacosx
+% ifplatform removed: its \ifwindows/\iflinux/\ifmacosx are unused here, and it
+% shell-escapes `uname` into \jobname.w18 on every build — a per-build cost and,
+% under parallel matrix builds sharing one cwd, a race (see build notes).
 \RequirePackage{xfor}        % Extended \foreach loop (\xfor, \xforeach)
 \RequirePackage{etoolbox}    % Programmer's toolbox: hooks, patching, booleans
 \RequirePackage{xstring}     % String manipulation (\StrBehind, \StrCut, …)

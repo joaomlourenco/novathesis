@@ -102,16 +102,17 @@ Master in Biomedical Engineering}
 }
 
 %% ISEL e ESTSL
-\ntaddtocover[vspace=3mm, halign=l, hspace=-0.5mm, height=10mm, valign=c]{1-1,2-1}{%
-  \includegraphics[height=10.5mm,align=c]{ipl-isel-logo}%
-  \hspace*{2mm}
+\ntaddtocover[vspace=3mm, halign=c, hspace=-0.5mm, height=10mm, valign=c]{1-1,2-1}{%
+  \includegraphics[height=7.7mm,align=c]{ipl-isel-logo}%
+  \hspace*{1.5cm}
+  % \hspace*{2mm}
   \includegraphics[height=7.7mm,align=c]{ipl-isel-meb-logo2}%
-  \hspace*{3.5mm}%
-  \fontsize{12}{12}\selectfont%
-  \begin{tabular}{@{}ll}
-    \GetSchool(isel,\@LANG@COVER)\\%
-    \GetSchool(estsl,\@LANG@COVER)%
-  \end{tabular}%
+  % \hspace*{3.5mm}%
+  % \fontsize{12}{12}\selectfont%
+  % \begin{tabular}{@{}ll}
+  %   \GetSchool(isel,\@LANG@COVER)\\%
+  %   \GetSchool(estsl,\@LANG@COVER)%
+  % \end{tabular}%
 }
 
 \ntaddtocover[vspace=1.6cm,height=9cm,valign=c]{1-1,2-1}{%

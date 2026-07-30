@@ -852,7 +852,7 @@
 \cs_new_protected:Npn \__nt_font_assert_token:nn #1 #2
   {
     \str_set:Ne \l__nt_font_check_str { #2 }
-    \regex_match:nVF { \A[A-Za-z0-9._-]+\Z } \l__nt_font_check_str
+    \regex_match:nVF { \A[A-Za-z0-9._\-]+\Z } \l__nt_font_check_str
       { \msg_error:nnxx { ntfonts } { unsafe-token }
           { #1 } { \l__nt_font_check_str } }
   }

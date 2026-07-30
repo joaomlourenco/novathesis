@@ -9,13 +9,18 @@
 #   make school SCHOOL=nova/fct [TYPE=msc] [LANG=pt] [ENGINE=lua] [STATUS=final]
 #                      build one school variant (uses \ntoverride, nothing is
 #                      patched; defaults come from .Build/schools.conf)
-#   make matrix [JOBS=4] [FILTER=univ[/school][,...]]
+#   make matrix [JOBS=4] [FILTER=univ[/school][,...]] [WARM=0] [FASTWRITES=0]
 #                      build every school/doctype/lang/engine combination in
-#                      .Build/schools.conf. Each [order:...] section is a
-#                      group; its variants build sequentially (ordered by the
-#                      "order:" tuple), each in its OWN aux dir; JOBS
-#                      parallelizes group×engine chains (biber lock
-#                      auto-enabled if JOBS>1). PDFs (named
+#                      .Build/schools.conf. Each [order:...] section x engine is
+#                      a "unit": a sequential chain (ordered by the "order:"
+#                      tuple). WARM=1 (default) shares one warm aux dir per unit
+#                      so variants reuse .aux/.bbl/.glstex and rebuild in fewer
+#                      passes (WARM=0 = fresh aux per variant). JOBS parallelizes
+#                      whole units, each under its own jobname so per-jobname
+#                      caches (minted, ...) don't collide; biber lock auto-on if
+#                      JOBS>1. Units are dispatched longest-first using measured
+#                      times cached in .Build/.matrix-costs.tsv (delete to reset;
+#                      NT_COST_DEFAULT weights unseen variants). PDFs (named
 #                      univ-school-doctype-lang-engine.pdf) go into
 #                      AUXDIR/matrix/YYYY-MM-DD@hh-mm-ss; a failed build leaves
 #                      its log/build output there instead.
@@ -24,9 +29,9 @@
 #   make needlua       regenerate the list of LuaLaTeX-only schools
 #   make zip           release archive novathesis-<version>@<date>.zip
 #   make bump-patch | bump-minor | bump-major
-#                      bump the version (Scripts/bump.py). Starting from
-#                      7.11.0: bump-patch -> 7.11.1, bump-minor -> 7.12.0,
-#                      bump-major -> 8.0.0.
+#                      bump the version (Scripts/bump.py). From 8.0.0:
+#                      bump-patch -> 8.0.1, bump-minor -> 8.1.0,
+#                      bump-major -> 9.0.0.
 #                      Legacy names, kept for compatibility, are numbered from
 #                      the RIGHT: bump1 = patch, bump2 = minor, bump3 = major.
 #   make gclean        git clean -fx (keeps Scripts and Fonts)
@@ -55,10 +60,15 @@ endif
 # claims more than 16 \write registers.  The trade-off: the matrix then
 # exercises only the fast path, so run 'make matrix FASTWRITES=0' periodically
 # to keep the morewrites path covered.
+#
+# WARM=1 (default) shares one warm aux dir within each sequential unit, so a
+# variant reuses the previous one's aux/bbl/glstex and rebuilds in fewer passes.
+# WARM=0 forces a fresh cold aux dir per variant (the older, slower behaviour).
 matrix: FASTWRITES ?= 1
+matrix: WARM ?= 1
 matrix:
 	@mkdir -p $(AUXDIR)/matrix
-	@FASTWRITES=$(FASTWRITES) $(VARIANT) -j $(JOBS) $(if $(V),-v) -o $(AUXDIR)/matrix -a $(FILTER)
+	@FASTWRITES=$(FASTWRITES) NT_WARM=$(WARM) $(VARIANT) -j $(JOBS) $(if $(V),-v) -o $(AUXDIR)/matrix -a $(FILTER)
 
 # --- LuaLaTeX-only school detection ---------------------------------------------
 .PHONY: needlua

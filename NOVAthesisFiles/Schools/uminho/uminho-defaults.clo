@@ -341,7 +341,7 @@ indicada.\\[1ex]
 % Advisers (Cover 2 only)
 \ntaddtocover[vspace=0.75cm,halign=l]{2-1}{%
   \fontsize{14}{16.8bp}\selectfont%
-  \GetAdviserSrt(\@LANG@COVER)%\\[\dimexpr-\baselineskip+0.5ex]%
+  \GetAdviserSrt(\@LANG@COVER)\\%[\dimexpr-\baselineskip+0.5ex]%
   \bigskip
   \textbf{\ntprintpersons{0.9}{0}{adviser}{a,c}}%
 }
