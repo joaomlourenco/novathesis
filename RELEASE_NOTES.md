@@ -30,7 +30,8 @@ A leftover `.tex` entry file now **stops the build** with an error naming the ca
 *   **Much faster pdfLaTeX/XeLaTeX builds.** Glossaries no longer consume any of pdfTeX's 16 write registers, so the `morewrites` package (which made each pass ~9× slower) is **no longer loaded by default**. A full pdfLaTeX build of the manual dropped from **109 s to 36 s**, and glossaries no longer need `-shell-escape`. A register-heavy document that overshoots the limit can restore `morewrites` with `FASTWRITES=0` (or `\def\ntmorewrites{}` before `\documentclass`); no-op under LuaLaTeX.
 *   **Symbols glossary created on demand** — it only costs a write register when a symbols file is actually registered.
 *   **Bibliography location lists** use `bib2gls`'s native `loc-prefix` for the `p.`/`pp.` distinction.
-*   **Matrix regression testing** now verifies each variant's glossaries (no dropped entries, correct sort order) instead of trusting the exit code.
+*   **Faster, smarter matrix builds** (maintainer regression tooling). Variants of a group now share a *warm* auxiliary directory within each sequential unit, reusing `.aux`/`.bbl`/`.glstex` and rebuilding in far fewer passes (`WARM=0` restores cold builds). Parallel units (`JOBS>1`) each run under their own jobname, so per-jobname caches (`minted`'s `_minted-<jobname>`, …) can't collide across concurrent builds. And units are dispatched **longest-first** from measured build times cached in `.Build/.matrix-costs.tsv`, front-loading the heavy schools to shrink the parallel long tail — no `schools.conf` hand-tuning. Each variant's glossaries are still verified (no dropped entries, correct sort order) rather than trusting the exit code.
+*   **Dropped the unused `ifplatform` package**: it shell-escaped `uname` into `\jobname.w18` on every build (a needless cost) and raced under parallel matrix jobs sharing one working directory. Nothing in the template used its result.
 *   **Documentation accuracy pass:** the manual and `0-Config` comments were corrected against the code — e.g. the real option names `color/glossaries/gls` and `spine/layout`, the correct `tocintoc` default (`true`), removal of the nonexistent `\ntlatesetup` and the retired `nova/ims` identifiers — and `print/otherlists`, `print/glossaries`, `abstract/title` and `abstract/title/align` are now documented.
 *   **Hardening:** the font downloader validates its inputs and quotes its shell arguments; CI pins `actions/checkout` and `texlive-action` to commit SHAs, no longer compiles `main` on PRs, and gained Dependabot.
 
@@ -39,6 +40,9 @@ A leftover `.tex` entry file now **stops the build** with an error naming the ca
 *   `\ntprintfrontpage` did not respect `print/frontpage`.
 *   The SDG heading now falls back to English for languages without a translation.
 *   PDF bookmarks now handle bracketless `\ntindex` entries correctly.
+*   Name lists built by `\FormatNamesAsList` (advisers, committee) no longer break or mis-expand their separators — fixes the stacked-name covers used by uminho and ISEL-MEB.
+*   uminho: the copyright page no longer errors when no Creative Commons modifier is set (it now defaults to `by-nc-sa`).
+*   Silenced an l3regex *"invalid end-point for range"* warning from the font-name check (an unescaped `-` in a character class).
 
 ---
 

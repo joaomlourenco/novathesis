@@ -229,21 +229,21 @@ file is copied next to where the \gls{PDF} would go, with the same base name.
 %%-----------------------------------------------------------------------
 
 \begin{bashcode}
-make matrix                  # all variants, sequential
-make matrix JOBS=4           # 4 parallel chains
-make matrix FILTER=nova        # only NOVA schools
-make matrix FILTER=nova/fct    # one school (and its sub-programs)
+make matrix                  # all variants
+make matrix JOBS=4           # up to 4 units in parallel
+make matrix FILTER=nova/fct  # restrict by prefix (university/school/sub-program)
 make matrix FILTER=uminho,ipl  # comma-separated prefixes
+make matrix WARM=0           # one fresh aux dir per variant (no warm reuse)
 \end{bashcode}
 
 \verb!make matrix! builds every school/doctype/language/engine combination
 listed in \verb!.Build/schools.conf!.  The \verb!FILTER! variable restricts
 the matrix by prefix: a university (\texttt{nova}), a school
 (\texttt{nova/fct}, which includes sub-programs such as
-\texttt{nova/fct/cbbi}), or a comma-separated list of prefixes.  All \glsfmtshortpl{PDF} of one invocation go
-into \verb!AUXDIR/matrix/YYYY-MM-DD@hh-mm-ss! (a folder named with the
-invocation timestamp), together with the log/build output of any
-failed variants.
+\texttt{nova/fct/cbbi}), or a comma-separated list of prefixes.  All
+\glsfmtshortpl{PDF} of one invocation go into
+\verb!AUXDIR/matrix/YYYY-MM-DD@hh-mm-ss! (a folder named with the invocation
+timestamp), together with the log/build output of any failed variants.
 
 The file \verb!schools.conf! is organized in \emph{groups}, each starting
 with a header such as:
@@ -254,33 +254,53 @@ nova/fct    [phd, msc]  [en, pt]
 ...
 \end{verbatim}
 
-The semantics are:
+Each group\,$\times$\,engine is a \emph{unit}: a sequential chain of that
+group's variants and the quantum the scheduler dispatches.  The semantics are:
 
 \begin{itemize}
-  \item \textbf{Groups build sequentially}, in the order set by the
-        \texttt{order:} tuple inside the group (the last dimension varies
-        fastest).  Each variant is built in its \emph{own} auxiliary
-        directory: the variants differ only in the command-line
-        \latexinline{\ntoverride}, which \texttt{latexmk} does not track as a
-        dependency, so a \emph{shared} aux directory would make it skip the
-        rebuild and every variant would reuse the first one's \gls{PDF}.
-  \item \textbf{Each \texttt{processor:} gets its own chain.}  A group with
-        \texttt{processor: pdf,lua} yields two independent sequential chains.
-  \item \textbf{The matrix builds with \texttt{FASTWRITES=1} by default}, so
-        \hologo{pdfLaTeX} variants skip \texttt{morewrites} and run in about
-        half the time.  That means the matrix no longer exercises the
-        \texttt{morewrites} path, so run \verb!make matrix FASTWRITES=0!
-        from time to time to keep it covered.
+  \item \textbf{Units build sequentially}, in the order set by the
+        \texttt{order:} tuple (the last dimension varies fastest), so
+        consecutive variants are as similar as possible.  A group with
+        \texttt{processor: pdf,lua} yields two units (one per engine).
+
+  \item \textbf{Warm reuse} (\texttt{WARM=1}, the default).  The variants of a
+        unit share \emph{one} auxiliary directory, so each reuses the previous
+        one's \texttt{.aux}/\texttt{.bbl}/\texttt{.glstex} and converges in
+        fewer passes (\texttt{biber} and \texttt{bib2gls} are skipped when
+        their inputs are unchanged).  This is safe because the per-variant
+        \latexinline{\ntoverride} is injected through a \emph{tracked} file
+        that \texttt{latexmk} watches (not the untracked \verb!-pretex!), so
+        changing school forces the correct rebuild and no variant can silently
+        reuse the previous one's \gls{PDF}.  \verb!make matrix WARM=0! restores
+        a fresh (cold) aux directory per variant.
+
+  \item \textbf{Cost-based scheduling.}  Units are dispatched
+        \emph{longest-first}, using each variant's measured build time cached
+        in \verb!.Build/.matrix-costs.tsv! (refreshed after every run).  This
+        front-loads the heavy targets so the cores stay busy right to the end,
+        with no need to hand-order \texttt{schools.conf}.  An empty cache or an
+        unseen variant falls back to group order (\verb!NT_COST_DEFAULT! sets
+        the assumed time for unknowns); delete the file to reset.
+
+  \item \textbf{\texttt{JOBS} parallelizes units, never a unit's inside.}
+        With \verb!JOBS>1! whole units run concurrently, each under its own
+        \emph{jobname} (its aux-directory name), so per-jobname caches that
+        tools write into the working directory --- \texttt{minted}'s
+        \verb!_minted-<jobname>! and the like --- cannot collide between
+        concurrent units.  Concurrent \texttt{biber} processes fail
+        sporadically, so a \texttt{flock} wrapper (\verb!.Build/shims/biber!)
+        is enabled automatically when \verb!JOBS>1! (or forced with
+        \verb!BIBER_LOCK=1!).
+
+  \item \textbf{\texttt{FASTWRITES=1} by default}, so \hologo{pdfLaTeX}
+        variants skip \texttt{morewrites} and run in about half the time.  The
+        matrix then does not exercise the \texttt{morewrites} path, so run
+        \verb!make matrix FASTWRITES=0! from time to time to keep it covered.
+
   \item \textbf{Each variant's glossaries are verified}, not just its exit
         status: \verb!.Build/check-glossaries.py! asserts that no entry was
         dropped and that the lists are in sort-key order.  A build that
         succeeds with a mangled glossary is reported as a failure.
-  \item \textbf{\texttt{JOBS} parallelizes chains, never a chain's inside.}
-        With \verb!JOBS>1!, group$\times$engine chains run concurrently.
-        Concurrent \texttt{biber} processes fail sporadically, so a
-        \texttt{flock}-based wrapper (\verb!.Build/shims/biber!) is enabled
-        automatically in that case (it can also be forced with
-        \verb!BIBER_LOCK=1! for external scripts).
 \end{itemize}
 
 %%-----------------------------------------------------------------------
