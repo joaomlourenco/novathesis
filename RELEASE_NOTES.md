@@ -4,7 +4,7 @@ This document summarizes the changes and improvements made to the NOVAthesis tem
 
 ---
 
-## v8.0.0 (unreleased)
+## v8.0.0 — Andorinha (2026-07-30)
 
 A release focused on **build speed**, a **simpler build system**, and **documentation you can trust**.
 
