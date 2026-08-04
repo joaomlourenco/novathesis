@@ -138,13 +138,23 @@
 %% Print Sustainable Development Goals (SDG)
 %% To be called from \ntprintabstracts
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcounter{sdgcnt}%
-\newdimen{\sdgdim}%
-\newcommand*{\ntprintsdgs}{
-  \@tempdima=\option{/novathesis/print/sdgs/hspace}%
-  \@tempdimb=\option{/novathesis/print/sdgs/vspace}%
-  \setcounter{sdgcnt}{0}%
-  \sdgdim=0pt%
+% Row breaking is left to TeX.  The icons are ordinary boxes separated by
+% \hspace glue, so the paragraph builder wraps them across as many rows as
+% needed, for any icon width, page width or margin setting.
+%
+% Row separation is controlled through \lineskip rather than an explicit
+% "\\[<vspace>]": because every icon box is far taller than the prevailing
+% \baselineskip, TeX always falls back to \lineskip between these rows, so
+% setting it *is* the vertical gap (this holds under \OnehalfSpacing too).
+%
+% A previous version tried to break rows by hand, accumulating a running width
+% in a \sdgdim register and emitting "\\[<vspace>]" when it overflowed
+% \textwidth.  That register was never actually accumulated, so the test read
+% "is ONE icon wider than the whole text block?" and could never be true: the
+% manual break never fired, and with it the print/sdgs/vspace option silently
+% did nothing.  Rows still came out correctly, but only because TeX had been
+% doing the wrapping all along.
+\newcommand*{\ntprintsdgs}{%
   \ifoptionnil{/novathesis/print/sdgs/list}{}{%
       \vfill%
       \raggedright\noindent%
@@ -158,20 +168,16 @@
       \IfFileExists{\DIRIMAGES/sdg-\@LSHORT/1-\@sdgtype.pdf}
           {\def\@spnfolder{\DIRIMAGES/sdg-\@LSHORT}}
           {\def\@spnfolder{\DIRIMAGES/sdg-en}}
-      \noindent%\linespread{1.5}\selectfont
-      \optionlistdo{/novathesis/print/sdgs/list}{%
-        \stepcounter{sdgcnt}%
-        \setbox0=\hbox{%
-          % \typeout{FILE=\DIRIMAGES/sdg-\@LSHORT/##1-\XPTO}
-            \includegraphics[width=\option{/novathesis/print/sdgs/size}]
-                            {\@spnfolder/##1-\@sdgtype}%
+      \begingroup
+        \lineskip=\option{/novathesis/print/sdgs/vspace}\relax
+        \noindent
+        \optionlistdo{/novathesis/print/sdgs/list}{%
+          \includegraphics[width=\option{/novathesis/print/sdgs/size}]
+                          {\@spnfolder/##1-\@sdgtype}%
+          \hspace{\option{/novathesis/print/sdgs/hspace}}%
         }%
-        \ifdim \dimexpr\sdgdim + \wd0\relax > \textwidth\relax%
-            \\[\@tempdimb]
-            \sdgdim=\wd0%
-        \fi
-        \usebox0\hspace{\@tempdima}%
-      }%
+        \par
+      \endgroup
   }%
 }
 
@@ -637,8 +643,9 @@
 
 \newcommand*{\ntprintbibseparate}[1][]{%
   \NTRunHook{printbib/pre}%
-    \printbibliography[nottype=online] % Print the bibliography.
-    \printbibliography[title=\option{/novathesis/print/webography},type=online] % Print the bibliography.
+    \printbibliography[nottype=online]% Print the main bibliography.
+    % Print the web references separately, under their own title.
+    \printbibliography[title=\option{/novathesis/print/webography},type=online]%
   \ntfixspacing%
   \NTRunHook{printbib/post}%
 }
