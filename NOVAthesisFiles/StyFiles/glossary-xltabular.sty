@@ -21,7 +21,8 @@
 %% PACKAGE REQUIREMENTS
 %%=======================================================================
 
-\RequirePackage{longtable}
+% xltabular already loads longtable (and tabularx), so it is the only
+% requirement needed here.
 \RequirePackage{xltabular}
 
 
@@ -195,14 +196,15 @@
 }
 
 \newglossarystyle{xltabular4colheaderborder}{%
-  \setglossarystyle{xltabular4col}%
-  \renewenvironment{theglossary}%
-    {\xltabular{\linewidth}{|l|l|l|l|}}%
-    {\endxltabular}%
+  % Build on the *bordered* 4-column style, matching xltabularheaderborder ->
+  % xltabularborder and xltabular3colheaderborder -> xltabular3colborder.
+  % (This used to inherit the unbordered xltabular4col and re-declare the
+  % bordered column spec by hand, which worked only by duplication.)
+  \setglossarystyle{xltabular4colborder}%
   \renewcommand*{\glossaryheader}{%
     \hline\bfseries\entryname&\bfseries\descriptionname&
     \bfseries \symbolname&
-    \bfseries\pagelistname\tabularnewline\hline\head
+    \bfseries\pagelistname\tabularnewline\hline\endhead
     \hline\endfoot}%
 }
 
