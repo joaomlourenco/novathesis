@@ -17,34 +17,16 @@
 
 % \color{\GetThesisCover(\option{/novathesis/doctype},1-1,textcolor)}
 \datamatchtf{\match}{ThesisCover}(%
-            {\@DOCTYPE,\@DEGREEACR,1-1,textcolor}%
-           ,{\@DOCCLASS,\@DEGREEACR,1-1,textcolor}%
-           ,{\@DEGREEACR,1-1,textcolor}%
-           ,{\@DEGREEACR,textcolor}%
-           ,{\@DOCTYPE,1-1,textcolor}%
-           ,{\@DOCCLASS,1-1,textcolor}%
-           ,{1-1,textcolor}%
-           ,{textcolor}%
+            \nthierkeys{}{1-1,textcolor}%
+           ,\nthierkeys{}{textcolor}%
 ){\color{\match}}{}%
 \datamatch{\@UM@BGCOLOR@i}{ThesisCover}(%
-            {\@DOCTYPE,\@DEGREEACR,1-1,bgcolor}%
-           ,{\@DOCCLASS,\@DEGREEACR,1-1,bgcolor}%
-           ,{\@DEGREEACR,1-1,bgcolor}%
-           ,{\@DEGREEACR,bgcolor}%
-           ,{\@DOCTYPE,1-1,bgcolor}%
-           ,{\@DOCCLASS,1-1,bgcolor}%
-           ,{1-1,bgcolor}%
-           ,{bgcolor}%
+            \nthierkeys{}{1-1,bgcolor}%
+           ,\nthierkeys{}{bgcolor}%
 )%
 \datamatch{\@UM@BGCOLOR@ii}{ThesisCover}(%
-            {\@DOCTYPE,\@DEGREEACR,1-2,bgcolor}%
-           ,{\@DOCCLASS,\@DEGREEACR,1-2,bgcolor}%
-           ,{\@DEGREEACR,1-2,bgcolor}%
-           ,{\@DEGREEACR,bgcolor}%
-           ,{\@DOCTYPE,1-2,bgcolor}%
-           ,{\@DOCCLASS,1-2,bgcolor}%
-           ,{1-2,bgcolor}%
-           ,{bgcolor}%
+            \nthierkeys{}{1-2,bgcolor}%
+           ,\nthierkeys{}{bgcolor}%
 )%
 \newstocksize{layoutsize={\the\dimexpr2\stockwidth+\myspinewidth\relax,\the\stockheight},keepmargins}
   % \noindent% \Huge HELLO

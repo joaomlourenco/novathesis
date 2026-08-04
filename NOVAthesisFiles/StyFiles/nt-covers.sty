@@ -303,19 +303,10 @@
     % Fetch Margins from Memory (mimicking original logic with full hierarchy)
     \clist_map_inline:nn { top, bottom, left, right }
       {
+        % Canonical hierarchy: cover-specific tier first, then global tier
         \datamatch { \l_nt_covers_tmp_tl } { Margin } (
-          { cover,\@DOCTYPE,\@DEGREEACR,#1,##1 },
-          { cover,\@DOCCLASS,\@DEGREEACR,#1,##1 },
-          { cover,\@DEGREEACR,#1,##1 },
-          { cover,\@DOCTYPE,\@DEGREEACR,##1 },
-          { cover,\@DOCCLASS,\@DEGREEACR,##1 },
-          { cover,\@DEGREEACR,##1 },
-          { cover,\@DOCTYPE,#1,##1 },
-          { cover,\@DOCCLASS,#1,##1 },
-          { cover,#1,##1 },
-          { cover,\@DOCTYPE,##1 },
-          { cover,\@DOCCLASS,##1 },
-          { cover,##1 }
+          \nthierkeys { cover, } { #1,##1 } ,
+          \nthierkeys { cover, } { ##1 }
         )
         \dim_set:cn { l_nt_covers_ ##1 _dim } { \l_nt_covers_tmp_tl }
       }
@@ -333,14 +324,8 @@
     % Applied as the first command inside the minipage so all elements inherit it.
     \tl_set:Nn \l_nt_covers_textcolor_tl { black }
     \datamatchtf { \l_nt_covers_textcolor_tl } { ThesisCover } (
-      { \@DOCTYPE,\@DEGREEACR,#1,textcolor },
-      { \@DOCCLASS,\@DEGREEACR,#1,textcolor },
-      { \@DEGREEACR,#1,textcolor },
-      { \@DEGREEACR,textcolor },
-      { \@DOCTYPE,#1,textcolor },
-      { \@DOCCLASS,#1,textcolor },
-      { #1,textcolor },
-      { textcolor }
+      \nthierkeys { } { #1,textcolor } ,
+      \nthierkeys { } { textcolor }
     ) { } { }
     % Guard against an empty match (e.g. school sets textcolor to nothing)
     \tl_if_empty:NT \l_nt_covers_textcolor_tl
@@ -352,14 +337,8 @@
     \tl_clear:N \l_nt_covers_textfont_tl
     \exp_args:Ne \clist_map_inline:nn
       {
-        { \@DOCTYPE,\@DEGREEACR,#1,textfont },
-        { \@DOCCLASS,\@DEGREEACR,#1,textfont },
-        { \@DEGREEACR,#1,textfont },
-        { \@DEGREEACR,textfont },
-        { \@DOCTYPE,#1,textfont },
-        { \@DOCCLASS,#1,textfont },
-        { #1,textfont },
-        { textfont }
+        \nthierkeys { } { #1,textfont } ,
+        \nthierkeys { } { textfont }
       }
       {
         \prop_get:cnNTF
@@ -571,18 +550,8 @@
       % \NTRunHook{cover/bgcolor/pre}       % reserved for future use
       % \NTRunHook{cover/#1-#2/bgcolor/pre} % reserved for future use
       \datamatchtf { \l_nt_covers_tmp_tl } { ThesisCover } (
-        { \@DOCTYPE,\@DEGREEACR,#1-#2,bgcolor },
-        { \@DOCCLASS,\@DEGREEACR,#1-#2,bgcolor },
-        { \@DEGREEACR,#1-#2,bgcolor },
-        { \@DOCTYPE,#1-#2,bgcolor },
-        { \@DOCCLASS,#1-#2,bgcolor },
-        { #1-#2,bgcolor },
-        { \@DOCTYPE,\@DEGREEACR,bgcolor },
-        { \@DOCCLASS,\@DEGREEACR,bgcolor },
-        { \@DEGREEACR,bgcolor },
-        { \@DOCTYPE,bgcolor },
-        { \@DOCCLASS,bgcolor },
-        { bgcolor }
+        \nthierkeys { } { #1-#2,bgcolor } ,
+        \nthierkeys { } { bgcolor }
       )
         { \pagecolor { \l_nt_covers_tmp_tl } }
         { \pagecolor { white } }
@@ -593,18 +562,8 @@
       % \NTRunHook{cover/bgimage/pre}       % reserved for future use
       % \NTRunHook{cover/#1-#2/bgimage/pre} % reserved for future use
       \datamatchtf { \l_nt_covers_tmp_tl } { ThesisCover } (
-        { \@DOCTYPE,\@DEGREEACR,#1-#2,image },
-        { \@DOCCLASS,\@DEGREEACR,#1-#2,image },
-        { \@DEGREEACR,#1-#2,image },
-        { \@DOCTYPE,#1-#2,image },
-        { \@DOCCLASS,#1-#2,image },
-        { #1-#2,image },
-        { \@DOCTYPE,\@DEGREEACR,image },
-        { \@DOCCLASS,\@DEGREEACR,image },
-        { \@DEGREEACR,image },
-        { \@DOCTYPE,image },
-        { \@DOCCLASS,image },
-        { image }
+        \nthierkeys { } { #1-#2,image } ,
+        \nthierkeys { } { image }
       )
         {
           \begin { tikzpicture } [ remember~picture, overlay ]
@@ -687,25 +646,13 @@
     % Also check legacy thesiscover memory with full hierarchy
     \bool_if:NF \l_nt_covers_defined_bool
       {
+        % Only cover-specific keys: a global (degree-wide) setting does not
+        % mean this particular cover was defined.
         \datamatchtf { \l_nt_covers_tmp_tl } { ThesisCover } (
-          { \@DOCTYPE,\@DEGREEACR,#1,textcolor },
-          { \@DOCCLASS,\@DEGREEACR,#1,textcolor },
-          { \@DEGREEACR,#1,textcolor },
-          { \@DOCTYPE,#1,textcolor },
-          { \@DOCCLASS,#1,textcolor },
-          { #1,textcolor },
-          { \@DOCTYPE,\@DEGREEACR,#1,bgcolor },
-          { \@DOCCLASS,\@DEGREEACR,#1,bgcolor },
-          { \@DEGREEACR,#1,bgcolor },
-          { \@DOCTYPE,#1,bgcolor },
-          { \@DOCCLASS,#1,bgcolor },
-          { #1,bgcolor },
-          { \@DOCTYPE,\@DEGREEACR,#1,image },
-          { \@DOCCLASS,\@DEGREEACR,#1,image },
-          { \@DEGREEACR,#1,image },
-          { \@DOCTYPE,#1,image },
-          { \@DOCCLASS,#1,image },
-          { #1,image }
+          \nthierkeys { } { #1,textcolor } ,
+          \nthierkeys { } { #1,textfont } ,
+          \nthierkeys { } { #1,bgcolor } ,
+          \nthierkeys { } { #1,image }
         )
           { \bool_set_true:N \l_nt_covers_defined_bool }
           { }

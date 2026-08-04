@@ -610,7 +610,43 @@
       % Using expl3 syntax to expand the first argument into a csname
       \exp_args:Nc \datamatch { #2 } { #3 } ( #4 )
     }
-  
+
+  }
+
+% --------------------------------------------------------
+% Canonical key-hierarchy generator for \datamatch(tf) chains
+%
+% \nthierkeys{<prefix>}{<suffix>}
+%
+% Fully expandable.  Expands to the canonical 6-key fallback tier
+% (most specific first):
+%
+%   { <prefix> \@DOCTYPE  , \@DEGREEACR , <suffix> } ,
+%   { <prefix> \@DOCCLASS , \@DEGREEACR , <suffix> } ,
+%   { <prefix> \@DEGREEACR , <suffix> } ,
+%   { <prefix> \@DOCTYPE  , <suffix> } ,
+%   { <prefix> \@DOCCLASS , <suffix> } ,
+%   { <prefix> <suffix> }
+%
+% <prefix> must be empty or end with a comma (e.g. "cover,").
+% <suffix> is the trailing key part (e.g. "1-1,textcolor" or "textcolor").
+%
+% Cover lookups use two tiers, cover-specific first, so that any
+% per-cover setting always beats any global (degree-wide) one:
+%
+%   \datamatchtf { \tl } { ThesisCover }
+%     ( \nthierkeys{}{1-1,bgcolor} , \nthierkeys{}{bgcolor} ) {...}{...}
+%
+% Designed for use inside the e-expanded key lists of \datamatch,
+% \datamatchtf, and \datamatchcs, but works in any e/x expansion context.
+\cs_new:Npn \nthierkeys #1 #2
+  {
+    { #1 \@DOCTYPE  , \@DEGREEACR , #2 } ,
+    { #1 \@DOCCLASS , \@DEGREEACR , #2 } ,
+    { #1 \@DEGREEACR , #2 } ,
+    { #1 \@DOCTYPE  , #2 } ,
+    { #1 \@DOCCLASS , #2 } ,
+    { #1 #2 }
   }
 
 \ExplSyntaxOff
