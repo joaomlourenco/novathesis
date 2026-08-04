@@ -17,6 +17,29 @@
 \ProvidesExplPackage{memstore}{2024/01/05}{1.6.1}{Memory storage with robust value trimming}
 \typeout{ NT FILE StyFiles/memstore.sty } %
 
+% ---------------------------------------------------------------------------
+% Argument spec for the \Set<Name> commands built by \NewMemStore.
+%
+% Accepts   \Set<Name>(key)={value}      \Set<Name>*(key)={value}
+%           \Set<Name>(key):={value}     \Set<Name>*(key):={value}
+% and tolerates the separator being absent entirely.
+%
+% This deliberately avoids the 'u' (until) argument type that earlier versions
+% used.  'u' is deprecated, is absent from the LaTeX kernel's ltcmd and survives
+% only in the xparse package, so relying on it made this package silently
+% dependent on something else having loaded xparse first; when 'u' is
+% unavailable every \Set<Name> dies at definition time with "Invalid argument
+% type 'u'".  'u' also scans ahead for its delimiter, so a call that omits the
+% '=' runs away to the end of the file.  The optional-token type 't' is
+% standard, needs no xparse, and simply reports absence.
+%
+% The spec is a *str* constant on purpose: \str_const:Nn gives every character
+% catcode 12, which is what makes "t:" match the ':' typed at a call site.
+% Written literally inside \ExplSyntaxOn the ':' would be catcode 11 (letter)
+% and would NOT match, silently capturing the ':' as the value instead --
+% "\SetLangLong(cat):={catalan}" would store ':' and leave {catalan} stranded.
+\str_const:Nn \c__mem_setter_spec_str { s r() t: t= m }
+
 
 %%=======================================================================
 %% VARIABLES & VARIANTS
@@ -27,12 +50,20 @@
 \tl_new:N   \l__mem_current_val_tl
 
 % Generate variants
-\cs_generate_variant:Nn \prop_gput:Nnn { cen, cee, ceV }
+\cs_generate_variant:Nn \prop_gput:Nnn { cee, ceV }
 \cs_generate_variant:Nn \prop_item:Nn { ce }
-\cs_generate_variant:Nn \prop_if_in:NnTF { cnTF, ceTF, ceT }
+\cs_generate_variant:Nn \prop_if_in:NnTF { ceTF }
+% NOTE: \prop_if_in:ceT must be derived from the "T" base, NOT from the "TF"
+% one.  A T-form variant cannot be built from a TF base: the request is
+% silently discarded (no error), leaving \prop_if_in:ceT undefined.  Because an
+% undefined conditional swallows its branches, \__mem_check_defined:nn and
+% \__mem_check_blank:nn below then always fell through to the false branch --
+% i.e. \IfMemDefinedTF, \IfMemBlankTF, \MemMatch and friends returned the WRONG
+% answer rather than failing loudly.
+\cs_generate_variant:Nn \prop_if_in:NnT { ceT }
 \cs_generate_variant:Nn \prop_if_exist:NTF { cTF }
 \cs_generate_variant:Nn \prop_get:NnN { cnN, ceN }
-\cs_generate_variant:Nn \prop_gremove:Nn { cn, ce }
+\cs_generate_variant:Nn \prop_gremove:Nn { ce }
 \cs_generate_variant:Nn \prop_map_inline:Nn { cn }
 \cs_generate_variant:Nn \prop_log:N { c }
 \cs_generate_variant:Nn \tl_set:Nn { cn }
@@ -98,6 +129,17 @@
   }
 
 % Syntax: \MemGet(*){<storage_name>}{<key>}
+%
+% Expandable, so it may be used inside \edef / \tl_set:Ne / \MemSet* -- but
+% ONLY on the success path.  \msg_error:nnnn is not expandable: if the store or
+% key is missing inside an expansion context, the error cannot fire and its
+% tokens are written verbatim into the result instead, e.g.
+%     \edef\x{\MemGet{Lang}{nope}}
+%       -> \x = {\msg_error:nnnn {memstore}{unknown-key}{Lang}{nope}}
+% together with a confusing low-level "Undefined control sequence".
+% Outside an expansion context the error is raised normally.
+% When a missing entry is a legitimate possibility inside \edef, use
+% \MemGetSafe (below), which expands to nothing and never errors.
 \NewExpandableDocumentCommand{\MemGet} { s m m }
   {
     \prop_if_exist:cTF { g__mem_#2_prop }
@@ -363,13 +405,21 @@
   {
     \__mem_ensure_exists:n {#1}
     
-    % Define \Set<name>(<key>){<value>}
+    % Define \Set<name>(<key>)={<value>}   (see \c__mem_setter_spec_str above)
     % Note: key trimming and expansion are handled inside \MemSet.
-    \exp_args:Nc \NewDocumentCommand { Set#1 } { s r() u { = } m }
+    % \use:e is needed so the spec constant is expanded into place; the command
+    % name still comes from \exp_not:c, and the body is passed unexpanded after.
+    \use:e
       {
+        \exp_not:N \NewDocumentCommand \exp_not:c { Set#1 }
+        { \c__mem_setter_spec_str }
+      }
+      {
+        % ##1 = star, ##2 = key, ##3 = optional ':', ##4 = optional '=',
+        % ##5 = value.  ##3/##4 are consumed only to keep them out of the value.
         \IfBooleanTF { ##1 }
-          { \MemSet* { #1 } { ##2 } { ##4 } } 
-          { \MemSet  { #1 } { ##2 } { ##4 } } 
+          { \MemSet* { #1 } { ##2 } { ##5 } }
+          { \MemSet  { #1 } { ##2 } { ##5 } }
       }
       
     % Define \Get<name>(<key>)  — r() argument, expandable, normal form

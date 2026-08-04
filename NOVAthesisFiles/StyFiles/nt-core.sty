@@ -536,12 +536,11 @@
 % #4: True branch code
 % #5: False branch code
 
-% \datamatchtf uses \prop_if_in:ceT below.  memstore.sty asks for that variant
-% via `\cs_generate_variant:Nn \prop_if_in:NnTF { ..., ceT }`, but a "T"-form
-% variant cannot be derived from the "TF" base: on l3kernel 2022-01-21 that
-% request is silently ignored and \prop_if_in:ceT is left undefined.  Derive it
-% from the matching \prop_if_in:NnT base instead, guarded so it stays a no-op
-% on kernels that already provide it.
+% \datamatchtf reads memstore's property lists (g__mem_<store>_prop) directly
+% and so relies on memstore.sty's variants, in particular \prop_if_in:ceT,
+% which memstore generates from the \prop_if_in:NnT base.  memstore is loaded
+% by nt-packages.sty, i.e. before this file, so the variant is available here.
+% Kept as a safety net in case that load order ever changes; a no-op otherwise.
 \cs_if_exist:NF \prop_if_in:ceT
   { \cs_generate_variant:Nn \prop_if_in:NnT { ceT } }
 
