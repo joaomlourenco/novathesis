@@ -221,7 +221,7 @@
 
 
 %%=======================================================================
-%% COVER 1 ELEMENTS
+%% COVERS 1 and 2 ELEMENTS
 %%=======================================================================
 
 \ntaddtocover[tikz]{1-1}{%
@@ -229,19 +229,19 @@
     {\includegraphics[width=210mm,height=297mm]{\expanded{\GetThesisCover(wireframe)}}};%
 }
 
-\ntaddtocover[tikz]{1-1}{%
+\ntaddtocover[tikz]{1-1,2-1}{%
   \node[anchor=north] at ($(current page.north) + (7mm,-28.5mm)$)
     {\includegraphics[height=23mm]{\expanded{\GetThesisCover(logo)}}};%
 }
 
 % % Title of Dissertation
-\ntaddtocover[vspace=66mm,height=4cm,valign=c]{1-1}{%
+\ntaddtocover[vspace=66mm,height=4cm,valign=c]{1-1,2-1}{%
   \fontsize{17}{20}\selectfont%
   \textbf{\GetDocTitle(\@LANG@COVER,main)}%
 }
 
 % Author name
-\ntaddtocover[vspace=17.5mm,height=1cm,valign=c]{1-1}{%
+\ntaddtocover[vspace=17.5mm,height=1cm,valign=c]{1-1,2-1}{%
   \fontsize{12}{14}\selectfont%
   \GetDocAuthor(name)\\
   \fontsize{12}{13}\selectfont%
@@ -249,46 +249,7 @@
 }
 
 % Degree
-\ntaddtocover[vspace=11.5mm,height=1cm,valign=c]{1-1}{%
-  \fontsize{9}{9}\selectfont%
-  \SetDissertationStringFont()={}%
-  \thepresentationtext%
-}
-
-% Date
-\ntaddtocover[vfill=2]{1-1}{%
-  \fontsize{9}{9}\selectfont%
-  \ifdocworking
-    {\emph{\textbf{Draft: \today}}}%
-    {\textbf{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}}%
-}
-
-
-%%=======================================================================
-%% COVER 2 ELEMENTS
-%%=======================================================================
-
-\ntaddtocover[tikz]{2-1}{%
-  \node[anchor=north] at ($(current page.north) + (0mm,-32.5mm)$)
-    {\includegraphics[height=21mm]{\expanded{\GetThesisCover(logo)}}};%
-}
-
-% % Title of Dissertation
-\ntaddtocover[vspace=63mm,height=4cm,valign=c]{2-1}{%
-  \fontsize{17}{20}\selectfont%
-  \textbf{\GetDocTitle(\@LANG@COVER,main)}%
-}
-
-% Author name
-\ntaddtocover[vspace=19.5mm,height=1cm,valign=c]{2-1}{%
-  \fontsize{12}{14}\selectfont%
-  \GetDocAuthor(name)\\
-  \fontsize{12}{13}\selectfont%
-  (\GetDocAuthor(degree,\@LANG@COVER))%
-}
-
-% Degree
-\ntaddtocover[vspace=11.5mm,height=1cm,valign=c]{2-1}{%
+\ntaddtocover[vspace=11.5mm,height=1cm,valign=c]{1-1,2-1}{%
   \fontsize{9}{9}\selectfont%
   \SetDissertationStringFont()={}%
   \thepresentationtext%
@@ -311,11 +272,12 @@
   \ntprintpersons[name]{0.9}[c]{1}{committee}{\GetCommitteeOrder()}%
 }
 
-
 % Date
-\ntaddtocover[vfill=2]{2-1}{%
+\ntaddtocover[vfill=2]{1-1,2-1}{%
   \fontsize{9}{9}\selectfont%
   \ifdocworking
     {\emph{\textbf{Draft: \today}}}%
     {\textbf{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}}%
 }
+
+
