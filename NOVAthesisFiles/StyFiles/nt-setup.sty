@@ -151,6 +151,11 @@
   {\options{/@nt/lang/loaded = {}}}
   {\options{/@nt/lang/loaded/.new list}}%
 
+% DO NOT wrap this loop in \ExplSyntaxOn.  \InputIfFileExists reads the .ldf
+% files at *execution* time, so an active ExplSyntax would apply expl3 catcodes
+% to their contents, where a space is ignored: every translated string silently
+% loses its spaces ("O Candidato" -> "OCandidato", and likewise the whole
+% copyright paragraph).  \@for keeps normal catcodes throughout.
 \@for\mylang:=\@LANG@LOADED\do{%
   \InputIfFileExists{\DIRSTRINGS/strings-\mylang.ldf}%
       {\options{/@nt/lang/loaded/.expanded/.push={\mylang}}}%
@@ -201,7 +206,6 @@
  { 
  % Handle the optional ID: if empty/NoValue, use 'default'
  \tl_set:Nn \l_tmpa_tl { #2 }
- % \quark_if_no_value:NT \l_tmpa_tl { \tl_set:Nn \l_tmpa_tl { default } }
 
  % Logic Branching
  \bool_if:nTF { #1 }
@@ -229,22 +233,24 @@
 % ─────────────────────────────────────────────────────────────────────────────
 % \ntmajorfield(*)(lang){ value } — major field of study
 % ─────────────────────────────────────────────────────────────────────────────
-\NewDocumentCommand { \ntmajorfield } { s r() m }
- { 
+% Shared logic for \ntmajorfield / \ntminorfield: set <store>(lang) to <value>,
+% unconditionally, or only if not already set (star variant).
+\cs_new_protected:Npn \__nt_set_field_if_star:nnnn #1 #2 #3 #4
+ {
+ % #1 = star bool, #2 = store name, #3 = lang key, #4 = value
  \bool_if:nTF { #1 }
- { \IfMemVoidT { MajorField } { #2 } { \MemSet* { MajorField } { #2 } { #3 } } }
- { \MemSet* { MajorField } { #2 } { #3 } }
+ { \IfMemVoidT { #2 } { #3 } { \MemSet* { #2 } { #3 } { #4 } } }
+ { \MemSet* { #2 } { #3 } { #4 } }
  }
+
+\NewDocumentCommand { \ntmajorfield } { s r() m }
+ { \__nt_set_field_if_star:nnnn { #1 } { MajorField } { #2 } { #3 } }
 
 % ─────────────────────────────────────────────────────────────────────────────
 % \ntminorfield(*)(lang){ value } — minor field of study
 % ─────────────────────────────────────────────────────────────────────────────
 \NewDocumentCommand { \ntminorfield } { s r() m }
- { 
- \bool_if:nTF { #1 }
- { \IfMemVoidT { MinorField } { #2 } { \MemSet* { MinorField } { #2 } { #3 } } }
- { \MemSet* { MinorField } { #2 } { #3 } }
- }
+ { \__nt_set_field_if_star:nnnn { #1 } { MinorField } { #2 } { #3 } }
 
 % ─────────────────────────────────────────────────────────────────────────────
 % \ntdegreename(*)(lang){ value } — degree / programme name
@@ -289,7 +295,7 @@
  \ifblank { \specmatch }
  { \MemSet* { Specialization } { #1 } { #2 } }
  { \MemSet* { Specialization } { #1 } { \specmatch\ #2 } } %
- \MemSet { MinorField } { #1 } { #2 } %
+ \MemSet* { MinorField } { #1 } { #2 } %
  }
 \NewDocumentCommand { \ntspecialization } { s r() m }
  { 
@@ -305,7 +311,8 @@
 % \ntsponsors(order,type,lang){ value } — funding sponsor entry
 % Parens hold three comma-separated fields: display order, content type
 % (logo/text), and language code.
-% Bug-fix: old code stored #2 (type) as the value instead of #4 (content).
+% Bug-fix: old code stored the "type" field as the value instead of the
+% mandatory {value} argument (now #2).
 % ─────────────────────────────────────────────────────────────────────────────
 \NewDocumentCommand { \ntsponsors } { r() m }
  { 
@@ -378,7 +385,7 @@
 
 % Sequential variables to store Y, M, D
 \seq_new:N \l_nt_date_seq
-% Generate the 'NnV' variant (N = seq, n = delimiter, V = value of variable)
+% Generate the 'Nne' variant (N = seq, n = delimiter, e = fully-expanded string)
 \cs_generate_variant:Nn \seq_set_split:Nnn { Nne }
 
 \cs_new_protected:Nn \nt_print_iso_date:n
@@ -509,6 +516,10 @@
 
 %============================================================
 % Adding list_of
+% NOTE: kept in LaTeX2e syntax (\IfStrEqCase, not expl3's \str_case:nnF).
+% The branches below embed literal prose in \ClassError messages, and under
+% \ExplSyntaxOn every space in that prose would be swallowed
+% ("Can'tmakelistoflistings.").  Not worth an ExplSyntax block here.
 \newcommand*{\ntaddlistof}[2][]{%
   % #2 = the list of SOMETHING without the initial "\"
   \@ifmtarg{#1}{%
@@ -570,6 +581,8 @@
 
 %============================================================
 % Print document “parts/sections/regions”
+% Kept in LaTeX2e syntax for the same reason as \ntaddlistof above: the
+% branches carry literal text, which \ExplSyntaxOn would strip spaces from.
 \newcommand*{\ntprint}[1]{%
   \IfStrEqCase{#1}{%
     {frontcover}{%

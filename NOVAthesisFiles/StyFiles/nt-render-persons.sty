@@ -112,26 +112,42 @@
 
 
 \cs_generate_variant:Nn \seq_set_from_clist:Nn { Ne }
+% Own scratch sequences rather than the kernel's shared \l_tmpa_seq/\l_tmpb_seq:
+% the second is built while mapping over the first, and the caller's code runs
+% in between, so a shared scratch could be clobbered mid-loop.
+\seq_new:N \l__nt_persons_names_seq
+\seq_new:N \l__nt_persons_out_seq
+% The separators carry their own surrounding spaces.  This matters because
+% \MemSet trims stored values: the string files define e.g. "{ and }" and
+% "{, }", but memstore hands back "and" and "," with the spaces gone.  The
+% defaults below therefore re-add them on BOTH sides, matching the documented
+% example ({,~} {~e~} {~e~}).  Previously only the leading side was re-added
+% and the trailing space came from the per-name "#2~##1" below, which also put
+% a stray space in front of the very first name.
 \NewDocumentCommand { \FormatNamesAsList } { m  % list of names
                                            O { } % prefix for each name
-                                           O { \GetCommaString(\@LANG@MAIN) } % middle-sep
-                                           O { ~ \GetAndString(\@LANG@MAIN) } % pair-sep
-                                           O { ~ \GetAndString(\@LANG@MAIN) } } %
-                                           % O { \GetCommaString(\@LANG@MAIN)
-                                           %     \GetAndString(\@LANG@MAIN) } } %
+                                           O { \GetCommaString(\@LANG@MAIN) ~ } % middle-sep
+                                           O { ~ \GetAndString(\@LANG@MAIN) ~ } % pair-sep
+                                           O { ~ \GetAndString(\@LANG@MAIN) ~ } } %
 % \FormatNamesAsList {comma separated list of names} {name-prefix} {middle-sep} {pair-sep} {last-sep}
 % example: \FormatNamesAsList {Maria, Rita, Filomena} {Professora} {,~} {~e~} {~e~}
  {
   % 1. Convert the input string (comma list) into a sequence variable
-  \seq_set_from_clist:Ne \l_tmpa_seq { #1 }
+  \seq_set_from_clist:Ne \l__nt_persons_names_seq { #1 }
 
   % 2. Create a temporary sequence to hold the modified names
-  \seq_clear:N \l_tmpb_seq
+  \seq_clear:N \l__nt_persons_out_seq
 
-  % 3. Loop through the original names and prefix them with "de "
-  \seq_map_inline:Nn \l_tmpa_seq
+  % 3. Loop through the original names, prefixing each with #2 (e.g. "Prof.").
+  %    The separating space belongs to the prefix: emitting "#2~##1"
+  %    unconditionally would put a stray space in front of every name whenever
+  %    #2 is empty (the default), so that "Maria, Rita" rendered as " Maria,
+  %    Rita".  Only insert it when there is actually a prefix to separate.
+  \seq_map_inline:Nn \l__nt_persons_names_seq
    {
-    \seq_put_right:Nn \l_tmpb_seq { #2 ~ ##1 }
+    \tl_if_empty:nTF { #2 }
+      { \seq_put_right:Nn \l__nt_persons_out_seq { ##1 } }
+      { \seq_put_right:Nn \l__nt_persons_out_seq { #2 ~ ##1 } }
    }
 
   % 4. Output the sequence with custom separators.
@@ -139,7 +155,7 @@
   %   two items -> pair-sep (#4)
   %   >2 items  -> middle-sep (#3) between all but the last, last-sep (#5)
   %                before the final name.
-  \seq_use:Nnnn \l_tmpb_seq { #4 } { #3 } { #5 }
+  \seq_use:Nnnn \l__nt_persons_out_seq { #4 } { #3 } { #5 }
  }
 
 \ExplSyntaxOff
@@ -148,10 +164,24 @@
 %============================================================
 % Print persons list {advisers | committee} as one and two columns
 %============================================================
-\newcommand{\@ntgetmaxlen}[2]{%
+% \maxlen is the width reserved for the group title in
+% \@nt@ntprintpersongroup, which sizes the name block as
+% "\linewidth-\maxlen".  It is a shared register, so it must be RESET before
+% every person list, even by layouts that do not reserve any title width;
+% otherwise a one-column list following a two-column one would inherit the
+% latter's value and come out too narrow.
+\newcommand{\@ntresetmaxlen}{%
   \defifundef{\stringlen}{\newdimen}%
   \defifundef{\maxlen}{\newdimen}%
   \setlength{\maxlen}{0pt}%
+}
+
+% \@ntgetmaxlen{<role-list>}{<adviser|committee>}
+%   #1 is iterated over; #2 is the person class handed to
+%   \@nt@printgrouptitle@text{<class>}{<role>}.  Note the order: roles first,
+%   class second.
+\newcommand{\@ntgetmaxlen}[2]{%
+  \@ntresetmaxlen%
   \@for\myx:=\expanded{#1}\do{%
     \setlength{\stringlen}{\widthof{\@nt@printgrouptitle@text{#2}{\myx}~~}}%
     \ifdim\stringlen>\maxlen\relax\setlength{\maxlen}{\stringlen}\fi%
@@ -168,9 +198,14 @@
   \IfMemVoidT{#3namepost}{}{\MemSet*{#3namepost}{}{{\\}}}%
   \IfMemVoidT{#3remainderpre}{}{\MemSet*{#3remainderpre}{}{{\\[-2pt]}}}%
   \IfMemVoidT{personpost}{}{\MemSet*{personpost}{}{\\[2pt]}}%
-  \IfMemVoidT{persongrouppost}{}{\MemSet*{persongrouppost}{}{\\[7pt]}}
+  \IfMemVoidT{persongrouppost}{}{\MemSet*{persongrouppost}{}{\\[7pt]}}%
   \IfMemVoidT{committeetitlestringpost}{}{\MemSet*{committeetitlestringpost}{}{\\[5pt]}}%
-  \@ntgetmaxlen{#3}{#2}%
+  % No title width is reserved in this layout: the group title ends with a
+  % line break (stringpost = ":\\"), so the names below start on a fresh line
+  % and use the full width.  Only reset the shared \maxlen (see
+  % \@ntresetmaxlen).  The two-column layout, whose title sits in a left
+  % column (":&"), is the one that measures it with \@ntgetmaxlen.
+  \@ntresetmaxlen%
   \begin{tabularx}{#2\linewidth}[t]{@{}>{\nt@tabularx@horz\raggedright\let\newline\\\arraybackslash\hspace{0pt}}X@{}}%
     \IfMemVoidTF{CommitteeTitleString}{\@LANG@COVER}{}{%
       \IfStrEq{#3}{committee}{%
@@ -198,7 +233,7 @@
   \IfMemVoidT{#2stringpost}{}{\MemSet*{#2stringpost}{}{:&}}%
   \IfMemVoidT{#2remainderpre}{}{\MemSet*{#2remainderpre}{}{{\\[-2pt]}}}%
   \IfMemVoidT{personpost}{}{\MemSet*{personpost}{}{\\[2pt]}}%
-  \IfMemVoidT{persongrouppost}{}{\MemSet*{persongrouppost}{}{\\[14pt]}}
+  \IfMemVoidT{persongrouppost}{}{\MemSet*{persongrouppost}{}{\\[14pt]}}%
   \IfMemVoidT{committeetitlestringpre}{}{\MemSet*{committeetitlestringpre}{}{&}}%
   \IfMemVoidT{committeetitlestringpost}{}{\MemSet*{committeetitlestringpost}{}{\\[5pt]}}%
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS

@@ -26,8 +26,16 @@
 }
 
 % ITQB-NOVA specific customization
+% 'keepmargins' is essential: \newstocksize is a wrapper around \newgeometry,
+% so without it the new layout resets the margins to geometry's own defaults for
+% b5paper -- asymmetric and alternating (inner ~3.17cm / outer ~2.11cm) -- and
+% the \SetMargin(screen|paper,...) values below are silently discarded.  This
+% hook runs at begindocument/end, i.e. AFTER \ntsetlayout has applied those
+% margins at \AtEndPreamble, so it is the last word on the page layout.
+% 'keepmargins' re-applies the current \Gm@?margin values on top of the new
+% stock size, giving b5paper WITH the requested 3.0cm/3.0cm margins.
 \AddToHook{begindocument/end}{%
-  \newstocksize{layout=b5paper}%
+  \newstocksize{layout=b5paper,keepmargins}%
 }
 
 \openany

@@ -52,6 +52,8 @@
 \dim_new:N \l_nt_covers_elem_height_dim
 \dim_new:N \l_nt_covers_elem_minheight_dim
 \dim_new:N \l_nt_covers_elem_width_dim
+\dim_new:N \l_nt_covers_body_dim   % computed width of the element body
+\dim_new:N \l_nt_covers_pad_dim    % padding added to satisfy 'minheight'
 \tl_new:N  \l_nt_covers_elem_color_tl
 \tl_new:N  \l_nt_covers_elem_bgcolor_tl
 \bool_new:N \l_nt_covers_elem_tikz_bool
@@ -91,17 +93,13 @@
     bgcolor   .tl_set:N    = \l_nt_covers_elem_bgcolor_tl,
     tikz      .bool_set:N  = \l_nt_covers_elem_tikz_bool,
     newpar    .bool_set:N  = \l_nt_covers_elem_newpar_bool,
-    % Default values
-    status    .initial:n = {},
-    degree    .initial:n = {},
-    halign    .initial:n = c,
-    valign    .initial:n = c,
-    vspace    .initial:n = 0pt,
-    vfill     .initial:n = {},
-    hspace    .initial:n = 0pt,
-    minheight .initial:n = 0pt,
-    tikz      .initial:n = false,
-    newpar    .initial:n = true,
+    % NOTE: no '.initial:n' defaults are declared here.  They would apply only
+    % once, at key-definition time, whereas every element must start from a
+    % clean state: \keys_set:nn is called once per element and unset keys keep
+    % whatever the previous element left behind.  The per-element defaults are
+    % therefore applied by \nt_covers_elem_reset_defaults: (below), which runs
+    % immediately before each \keys_set:nn.  That helper is the single source
+    % of truth for element defaults -- change values there, not here.
   }
 
 % Map for alignment macros
@@ -131,31 +129,40 @@
       { \prop_gput:Nnn #1 { #2 } { #3 } }
   }
 
+% Per-element defaults.  SINGLE SOURCE OF TRUTH: this runs immediately before
+% every \keys_set:nn for { nt/covers/element }, so a key the caller omits falls
+% back to the value set here rather than leaking in from the previous element.
+% (This is why the key definitions carry no '.initial:n' -- see the note there.)
+\cs_new_protected:Nn \nt_covers_elem_reset_defaults:
+  {
+    \clist_clear:N \l_nt_covers_elem_status_clist       % status    = {}
+    \clist_clear:N \l_nt_covers_elem_degree_clist       % degree    = {}
+    \tl_set:Nn \l_nt_covers_elem_halign_tl { c }        % halign    = c
+    \tl_set:Nn \l_nt_covers_elem_valign_tl { c }        % valign    = c
+    \tl_set:Nn \l_nt_covers_elem_vspace_tl { 0pt }      % vspace    = 0pt
+    \tl_clear:N \l_nt_covers_elem_vfill_tl              % vfill     = {}
+    \dim_set:Nn \l_nt_covers_elem_hspace_dim { 0pt }    % hspace    = 0pt
+    \dim_set:Nn \l_nt_covers_elem_height_dim { 0pt }    % height    = 0pt (natural)
+    \dim_set:Nn \l_nt_covers_elem_minheight_dim { 0pt } % minheight = 0pt (disabled)
+    \dim_set:Nn \l_nt_covers_elem_width_dim { 0pt }     % width     = 0pt (full width)
+    \tl_clear:N \l_nt_covers_elem_color_tl              % color     = {} (inherit)
+    \tl_clear:N \l_nt_covers_elem_bgcolor_tl            % bgcolor   = {} (none)
+    \bool_set_false:N \l_nt_covers_elem_tikz_bool       % tikz      = false
+    \bool_set_true:N \l_nt_covers_elem_newpar_bool      % newpar    = true
+  }
+
 % Check if element matches current doc status and degree
-% Args: #1 = element attributes (status, degree, etc.), #2 = element content
+% Args: #1 = element attributes (status, degree, etc.)
 % Returns: true if element should be rendered, false otherwise
 %
 % Matching logic:
 %   - status: if specified, @DOCSTATUS must be in list (or empty list means match all)
 %   - degree: if specified, @DOCTYPE must be in list (or empty list means match all)
 % Both conditions must be true for element to be rendered.
-\prg_new_protected_conditional:Npnn \nt_covers_if_match:nn #1 #2 { T, F, TF }
+\prg_new_protected_conditional:Npnn \nt_covers_if_match:n #1 { T, F, TF }
   {
     % Reset all element variables to defaults before parsing new attributes
-    \clist_clear:N \l_nt_covers_elem_status_clist
-    \clist_clear:N \l_nt_covers_elem_degree_clist
-    \tl_set:Nn \l_nt_covers_elem_halign_tl { c }
-    \tl_set:Nn \l_nt_covers_elem_valign_tl { c }
-    \tl_set:Nn \l_nt_covers_elem_vspace_tl { 0pt }
-    \tl_clear:N \l_nt_covers_elem_vfill_tl
-    \dim_set:Nn \l_nt_covers_elem_hspace_dim { 0pt }
-    \dim_set:Nn \l_nt_covers_elem_height_dim { 0pt }
-    \dim_set:Nn \l_nt_covers_elem_minheight_dim { 0pt }
-    \dim_set:Nn \l_nt_covers_elem_width_dim { 0pt }
-    \tl_clear:N \l_nt_covers_elem_color_tl
-    \tl_clear:N \l_nt_covers_elem_bgcolor_tl
-    \bool_set_false:N \l_nt_covers_elem_tikz_bool
-    \bool_set_true:N \l_nt_covers_elem_newpar_bool
+    \nt_covers_elem_reset_defaults:
 
     \keys_set:nn { nt/covers/element } { #1 }
     \bool_set_true:N \l_nt_covers_status_match_bool % status match
@@ -205,9 +212,43 @@
 % Box for element rendering
 \box_new:N \l_nt_covers_elem_box
 
+% Enforce the 'minheight' attribute on an already-typeset element box.
+% The body is typeset only ONCE: rather than re-running the content to fit a
+% taller minipage (which would repeat any side effects it has, e.g. counters
+% or \label), the shortfall is added to the box's own height/depth.  TeX then
+% reserves that space when the box is contributed to the enclosing vertical
+% list, so the element occupies at least 'minheight'.  Where the padding goes
+% follows valign: t = all below, b = all above, c (default) = split evenly.
+% A box already at least 'minheight' tall is left untouched.
+\cs_new_protected:Nn \nt_covers_apply_minheight:N
+  {
+    \dim_compare:nNnT { \l_nt_covers_elem_minheight_dim } > { 0pt }
+      {
+        \dim_set:Nn \l_nt_covers_pad_dim
+          {
+            \l_nt_covers_elem_minheight_dim
+            - \box_ht:N #1 - \box_dp:N #1
+          }
+        \dim_compare:nNnT { \l_nt_covers_pad_dim } > { 0pt }
+          {
+            \str_case:VnF \l_nt_covers_elem_valign_tl
+              {
+                { t }
+                  { \box_set_dp:Nn #1 { \box_dp:N #1 + \l_nt_covers_pad_dim } }
+                { b }
+                  { \box_set_ht:Nn #1 { \box_ht:N #1 + \l_nt_covers_pad_dim } }
+              }
+              {
+                \box_set_ht:Nn #1 { \box_ht:N #1 + 0.5 \l_nt_covers_pad_dim }
+                \box_set_dp:Nn #1 { \box_dp:N #1 + 0.5 \l_nt_covers_pad_dim }
+              }
+          }
+      }
+  }
+
 \cs_new_protected:Nn \nt_covers_render_element:nn
   {
-    \nt_covers_if_match:nnTF { #1 } { #2 }
+    \nt_covers_if_match:nTF { #1 }
       {
         \bool_if:NTF \l_nt_covers_elem_tikz_bool
           { \tl_gput_right:Nn \g_nt_covers_tikz_overlay_tl { #2 } }
@@ -220,76 +261,58 @@
               \noindent \hspace* { \l_nt_covers_elem_hspace_dim }
 
               \dim_compare:nNnTF { \l_nt_covers_elem_width_dim } > { 0pt }
-                { \dim_set_eq:NN \l_tmpa_dim \l_nt_covers_elem_width_dim }
+                { \dim_set_eq:NN \l_nt_covers_body_dim \l_nt_covers_elem_width_dim }
                 {
-                  \dim_set:Nn \l_tmpa_dim
+                  \dim_set:Nn \l_nt_covers_body_dim
                     {
                       \l_nt_covers_width_dim
                       - \l_nt_covers_elem_hspace_dim
                     }
                 }
 
-              % 3a. No bgcolor: output minipage directly (no boxing overhead)
-              % 3b. With bgcolor: box the minipage first, then colorbox-wrap it
-              \tl_if_empty:NTF \l_nt_covers_elem_bgcolor_tl
-                {
-                  % --- Direct path ---
-                  \dim_compare:nNnTF { \l_nt_covers_elem_height_dim } > { 0pt }
-                    {
-                      \begin { minipage }
-                        [ \l_nt_covers_elem_valign_tl ]
-                        [ \dim_use:N \l_nt_covers_elem_height_dim ]
-                        { \l_tmpa_dim }
-                    }
-                    {
-                      \begin { minipage }
-                        [ \l_nt_covers_elem_valign_tl ]
-                        { \l_tmpa_dim }
-                    }
-                  \tl_if_empty:NF \l_nt_covers_elem_color_tl
-                    { \color { \l_nt_covers_elem_color_tl } }
-                  \prop_get:NVN
-                    \g_nt_covers_align_map_prop
-                    \l_nt_covers_elem_halign_tl
-                    \l_nt_covers_tmp_tl
+              % 3. Typeset the element body once into a box, so that
+              %    'minheight' can be enforced (and a bgcolor wrapped around
+              %    the result) without ever re-running the content.
+              \hbox_set:Nw \l_nt_covers_elem_box
+                \dim_compare:nNnTF
+                  { \l_nt_covers_elem_height_dim } > { 0pt }
+                  {
+                    \begin { minipage }
+                      [ \l_nt_covers_elem_valign_tl ]
+                      [ \dim_use:N \l_nt_covers_elem_height_dim ]
+                      { \l_nt_covers_body_dim }
+                  }
+                  {
+                    \begin { minipage }
+                      [ \l_nt_covers_elem_valign_tl ]
+                      { \l_nt_covers_body_dim }
+                  }
+                \tl_if_empty:NF \l_nt_covers_elem_color_tl
+                  { \color { \l_nt_covers_elem_color_tl } }
+                \prop_get:NVN
+                  \g_nt_covers_align_map_prop
+                  \l_nt_covers_elem_halign_tl
                   \l_nt_covers_tmp_tl
-                  #2
-                  \end { minipage }
-                }
+                \l_nt_covers_tmp_tl
+                #2
+                \end { minipage }
+              \hbox_set_end:
+
+              % 4. Enforce 'minheight' before any bgcolor is applied, so the
+              %    background covers the padded area too.
+              \nt_covers_apply_minheight:N \l_nt_covers_elem_box
+
+              % 5. Emit, colorbox-wrapped when a bgcolor was requested.
+              \tl_if_empty:NF \l_nt_covers_elem_bgcolor_tl
                 {
-                  % --- Boxed path (bgcolor needs colorbox wrapping) ---
-                  \hbox_set:Nw \l_nt_covers_elem_box
-                    \dim_compare:nNnTF
-                      { \l_nt_covers_elem_height_dim } > { 0pt }
-                      {
-                        \begin { minipage }
-                          [ \l_nt_covers_elem_valign_tl ]
-                          [ \dim_use:N \l_nt_covers_elem_height_dim ]
-                          { \l_tmpa_dim }
-                      }
-                      {
-                        \begin { minipage }
-                          [ \l_nt_covers_elem_valign_tl ]
-                          { \l_tmpa_dim }
-                      }
-                    \tl_if_empty:NF \l_nt_covers_elem_color_tl
-                      { \color { \l_nt_covers_elem_color_tl } }
-                    \prop_get:NVN
-                      \g_nt_covers_align_map_prop
-                      \l_nt_covers_elem_halign_tl
-                      \l_nt_covers_tmp_tl
-                    \l_nt_covers_tmp_tl
-                    #2
-                    \end { minipage }
-                  \hbox_set_end:
                   \hbox_set:Nn \l_nt_covers_elem_box
                     {
                       \colorbox
                         { \l_nt_covers_elem_bgcolor_tl }
                         { \box_use:N \l_nt_covers_elem_box }
                     }
-                  \box_use:N \l_nt_covers_elem_box
                 }
+              \box_use:N \l_nt_covers_elem_box
 
               \bool_if:NT \l_nt_covers_elem_newpar_bool { \par }
             \group_end:
@@ -303,19 +326,10 @@
     % Fetch Margins from Memory (mimicking original logic with full hierarchy)
     \clist_map_inline:nn { top, bottom, left, right }
       {
+        % Canonical hierarchy: cover-specific tier first, then global tier
         \datamatch { \l_nt_covers_tmp_tl } { Margin } (
-          { cover,\@DOCTYPE,\@DEGREEACR,#1,##1 },
-          { cover,\@DOCCLASS,\@DEGREEACR,#1,##1 },
-          { cover,\@DEGREEACR,#1,##1 },
-          { cover,\@DOCTYPE,\@DEGREEACR,##1 },
-          { cover,\@DOCCLASS,\@DEGREEACR,##1 },
-          { cover,\@DEGREEACR,##1 },
-          { cover,\@DOCTYPE,#1,##1 },
-          { cover,\@DOCCLASS,#1,##1 },
-          { cover,#1,##1 },
-          { cover,\@DOCTYPE,##1 },
-          { cover,\@DOCCLASS,##1 },
-          { cover,##1 }
+          \nthierkeys { cover, } { #1,##1 } ,
+          \nthierkeys { cover, } { ##1 }
         )
         \dim_set:cn { l_nt_covers_ ##1 _dim } { \l_nt_covers_tmp_tl }
       }
@@ -333,14 +347,8 @@
     % Applied as the first command inside the minipage so all elements inherit it.
     \tl_set:Nn \l_nt_covers_textcolor_tl { black }
     \datamatchtf { \l_nt_covers_textcolor_tl } { ThesisCover } (
-      { \@DOCTYPE,\@DEGREEACR,#1,textcolor },
-      { \@DOCCLASS,\@DEGREEACR,#1,textcolor },
-      { \@DEGREEACR,#1,textcolor },
-      { \@DEGREEACR,textcolor },
-      { \@DOCTYPE,#1,textcolor },
-      { \@DOCCLASS,#1,textcolor },
-      { #1,textcolor },
-      { textcolor }
+      \nthierkeys { } { #1,textcolor } ,
+      \nthierkeys { } { textcolor }
     ) { } { }
     % Guard against an empty match (e.g. school sets textcolor to nothing)
     \tl_if_empty:NT \l_nt_covers_textcolor_tl
@@ -352,14 +360,8 @@
     \tl_clear:N \l_nt_covers_textfont_tl
     \exp_args:Ne \clist_map_inline:nn
       {
-        { \@DOCTYPE,\@DEGREEACR,#1,textfont },
-        { \@DOCCLASS,\@DEGREEACR,#1,textfont },
-        { \@DEGREEACR,#1,textfont },
-        { \@DEGREEACR,textfont },
-        { \@DOCTYPE,#1,textfont },
-        { \@DOCCLASS,#1,textfont },
-        { #1,textfont },
-        { textfont }
+        \nthierkeys { } { #1,textfont } ,
+        \nthierkeys { } { textfont }
       }
       {
         \prop_get:cnNTF
@@ -431,9 +433,13 @@
       { }
   }
 
+% #1 is the optional <cmd>, normalised to empty by \ntAddToCoverTikz when it
+% was omitted (see there).  Testing for empty rather than string-comparing
+% against xparse's internal "-NoValue-" marker keeps this independent of that
+% marker's representation, which is not a documented interface.
 \cs_new_protected:Nn \nt_covers_render_tikz:nnnnn
   {
-    \tl_if_eq:nnTF { #1 } { -NoValue- }
+    \tl_if_empty:nTF { #1 }
       { \node[#2] at (#3) #4 { #5 } }
       { #1[#2] (#3) #4 }
   }
@@ -454,11 +460,11 @@
 % Args:
 %   options  = Optional parameters for rendering/filtering:
 %              - status={final,provisional,...}: Filter by document status
-%              - degree=phd/msc/phd_prop/...   : Filter by degree type
-%                  (accepts forward-slash or comma-separated: 'phd/msc' or 'phd,msc')
+%              - degree={phd,phdprop,...}      : Filter by degree type
 %              - vspace=2cm                    : Fixed vertical spacing (TeX dimension)
 %              - vfill=1                       : Elastic vertical spacing (n × fill units)
-%              - height=5cm                    : Content height
+%              - height=5cm                    : Fixed content height
+%              - minheight=5cm                 : Minimum content height (padded if shorter)
 %              - halign=l|c|r|j                : Horizontal alignment
 %              - valign=t|c|b                  : Vertical alignment
 %              - and more (see keys definition)
@@ -466,13 +472,17 @@
 %   content  = LaTeX content to add to covers
 %
 % Example:
-%   \ntaddtocover[degree=phd/phd_prop, vspace=1cm]{1-1,2-1}{%
+%   \ntaddtocover[degree={phd,phdprop}, vspace=1cm]{1-1,2-1}{%
 %     This text appears on front and back covers for PhD and PhD Proposal degrees
 %   }
 %   \ntaddtocover[vfill=1]{1-1}{} % pushes following elements to the bottom
 %
-% Note: Degree option automatically converts forward-slash format to comma-separated
-%       internally. Both formats work:  degree=phd/msc/phd_prop and degree={phd,msc,phd_prop}
+% Note: 'degree' takes a BRACED, COMMA-separated list, matched against \@DOCTYPE.
+%       The braces are required: they keep the commas from being read as key
+%       separators.  There is no slash-separated form -- 'degree=phd/msc' is a
+%       single unmatchable value and the element would silently never render.
+%       Valid doctypes (see nt-core.sty) are: phd, phdprop, phdplan, msc,
+%       mscplan, bsc, plain.
 \NewDocumentCommand { \ntaddtocover } { O { } m m }
   {
     \clist_map_inline:nn { #2 }
@@ -482,13 +492,25 @@
       }
   }
 
-\NewDocumentCommand { \ntAddToCoverTikz } { d<> O { } r() O { } m m }
+% #1 = <cmd> (already normalised: empty means "use \node"), #2 = [opts],
+% #3 = (position), #4 = [rest], #5 = {cover-ids}, #6 = {code}
+\cs_new_protected:Nn \nt_covers_add_tikz:nnnnnn
   {
     \clist_map_inline:nn { #5 }
       {
         \nt_covers_add_to_prop:nnn \g_nt_covers_tikz_prop { ##1 }
           { { { #1 } { #2 } { #3 } { #4 } { #6 } } }
       }
+  }
+
+\NewDocumentCommand { \ntAddToCoverTikz } { d<> O { } r() O { } m m }
+  {
+    % Resolve the optional <cmd> here, where \IfNoValueTF is still meaningful,
+    % and store it as an empty field when absent.  The renderer runs later, off
+    % a property list, where the argument's "was it given?" status is gone.
+    \IfNoValueTF { #1 }
+      { \nt_covers_add_tikz:nnnnnn {    } { #2 } { #3 } { #4 } { #5 } { #6 } }
+      { \nt_covers_add_tikz:nnnnnn { #1 } { #2 } { #3 } { #4 } { #5 } { #6 } }
   }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -511,7 +533,7 @@
     \iffileadded [#1] { cover }
       { \PrintAddedFile [#1] { cover } }
       {
-        \str_case:nn { #1 }
+        \str_case:nnF { #1 }
           {
             { 1 }
               {
@@ -531,6 +553,15 @@
               {
                 \ntprintcoversingle { N } { 1 }
                 \ntprintcoversingle { N } { 2 }
+              }
+          }
+          {
+            % Unknown pair id: without this branch a typo such as
+            % \ntprintcovers[1,3] would print nothing at all, silently.
+            \ClassWarning { novathesis }
+              {
+                Unknown~cover~pair~'#1'~ignored.~
+                Valid~pair~ids~are~1,~2~and~N
               }
           }
       }
@@ -571,18 +602,8 @@
       % \NTRunHook{cover/bgcolor/pre}       % reserved for future use
       % \NTRunHook{cover/#1-#2/bgcolor/pre} % reserved for future use
       \datamatchtf { \l_nt_covers_tmp_tl } { ThesisCover } (
-        { \@DOCTYPE,\@DEGREEACR,#1-#2,bgcolor },
-        { \@DOCCLASS,\@DEGREEACR,#1-#2,bgcolor },
-        { \@DEGREEACR,#1-#2,bgcolor },
-        { \@DOCTYPE,#1-#2,bgcolor },
-        { \@DOCCLASS,#1-#2,bgcolor },
-        { #1-#2,bgcolor },
-        { \@DOCTYPE,\@DEGREEACR,bgcolor },
-        { \@DOCCLASS,\@DEGREEACR,bgcolor },
-        { \@DEGREEACR,bgcolor },
-        { \@DOCTYPE,bgcolor },
-        { \@DOCCLASS,bgcolor },
-        { bgcolor }
+        \nthierkeys { } { #1-#2,bgcolor } ,
+        \nthierkeys { } { bgcolor }
       )
         { \pagecolor { \l_nt_covers_tmp_tl } }
         { \pagecolor { white } }
@@ -593,18 +614,8 @@
       % \NTRunHook{cover/bgimage/pre}       % reserved for future use
       % \NTRunHook{cover/#1-#2/bgimage/pre} % reserved for future use
       \datamatchtf { \l_nt_covers_tmp_tl } { ThesisCover } (
-        { \@DOCTYPE,\@DEGREEACR,#1-#2,image },
-        { \@DOCCLASS,\@DEGREEACR,#1-#2,image },
-        { \@DEGREEACR,#1-#2,image },
-        { \@DOCTYPE,#1-#2,image },
-        { \@DOCCLASS,#1-#2,image },
-        { #1-#2,image },
-        { \@DOCTYPE,\@DEGREEACR,image },
-        { \@DOCCLASS,\@DEGREEACR,image },
-        { \@DEGREEACR,image },
-        { \@DOCTYPE,image },
-        { \@DOCCLASS,image },
-        { image }
+        \nthierkeys { } { #1-#2,image } ,
+        \nthierkeys { } { image }
       )
         {
           \begin { tikzpicture } [ remember~picture, overlay ]
@@ -687,25 +698,13 @@
     % Also check legacy thesiscover memory with full hierarchy
     \bool_if:NF \l_nt_covers_defined_bool
       {
+        % Only cover-specific keys: a global (degree-wide) setting does not
+        % mean this particular cover was defined.
         \datamatchtf { \l_nt_covers_tmp_tl } { ThesisCover } (
-          { \@DOCTYPE,\@DEGREEACR,#1,textcolor },
-          { \@DOCCLASS,\@DEGREEACR,#1,textcolor },
-          { \@DEGREEACR,#1,textcolor },
-          { \@DOCTYPE,#1,textcolor },
-          { \@DOCCLASS,#1,textcolor },
-          { #1,textcolor },
-          { \@DOCTYPE,\@DEGREEACR,#1,bgcolor },
-          { \@DOCCLASS,\@DEGREEACR,#1,bgcolor },
-          { \@DEGREEACR,#1,bgcolor },
-          { \@DOCTYPE,#1,bgcolor },
-          { \@DOCCLASS,#1,bgcolor },
-          { #1,bgcolor },
-          { \@DOCTYPE,\@DEGREEACR,#1,image },
-          { \@DOCCLASS,\@DEGREEACR,#1,image },
-          { \@DEGREEACR,#1,image },
-          { \@DOCTYPE,#1,image },
-          { \@DOCCLASS,#1,image },
-          { #1,image }
+          \nthierkeys { } { #1,textcolor } ,
+          \nthierkeys { } { #1,textfont } ,
+          \nthierkeys { } { #1,bgcolor } ,
+          \nthierkeys { } { #1,image }
         )
           { \bool_set_true:N \l_nt_covers_defined_bool }
           { }
