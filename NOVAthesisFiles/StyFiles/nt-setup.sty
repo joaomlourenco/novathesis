@@ -151,16 +151,18 @@
   {\options{/@nt/lang/loaded = {}}}
   {\options{/@nt/lang/loaded/.new list}}%
 
-\ExplSyntaxOn
-\exp_args:No \clist_map_inline:nn \@LANG@LOADED
-  {
-    \InputIfFileExists{\DIRSTRINGS/strings-#1.ldf}%
-        {\options{/@nt/lang/loaded/.expanded/.push={#1}}}%
-        {\ClassError{novathesis}
-                    {File not found: '\DIRSTRINGS/strings-#1.ldf' file!}%
-                    {Add a file with the translations for this language.}}%
-  }
-\ExplSyntaxOff
+% DO NOT wrap this loop in \ExplSyntaxOn.  \InputIfFileExists reads the .ldf
+% files at *execution* time, so an active ExplSyntax would apply expl3 catcodes
+% to their contents, where a space is ignored: every translated string silently
+% loses its spaces ("O Candidato" -> "OCandidato", and likewise the whole
+% copyright paragraph).  \@for keeps normal catcodes throughout.
+\@for\mylang:=\@LANG@LOADED\do{%
+  \InputIfFileExists{\DIRSTRINGS/strings-\mylang.ldf}%
+      {\options{/@nt/lang/loaded/.expanded/.push={\mylang}}}%
+      {\ClassError{novathesis}
+                  {File not found: '\DIRSTRINGS/strings-\mylang.ldf' file!}%
+                  {Add a file with the translations for this language.}}%
+}%
 
 
 \SetBkmString*(1-1)={\GetBkmString(cover,\@LANG@MAIN)}
@@ -514,7 +516,10 @@
 
 %============================================================
 % Adding list_of
-\ExplSyntaxOn
+% NOTE: kept in LaTeX2e syntax (\IfStrEqCase, not expl3's \str_case:nnF).
+% The branches below embed literal prose in \ClassError messages, and under
+% \ExplSyntaxOn every space in that prose would be swallowed
+% ("Can'tmakelistoflistings.").  Not worth an ExplSyntax block here.
 \newcommand*{\ntaddlistof}[2][]{%
   % #2 = the list of SOMETHING without the initial "\"
   \@ifmtarg{#1}{%
@@ -523,7 +528,7 @@
     \edef\@listofat{#1}%
   }
   % \typeout{\ISTOF 1=[\@listofat] 2=[#2]}\NTADDLISTOF%
-  \str_case:nnF { #2 } {%
+  \IfStrEqCase{#2}{%
     {listoffigures}{\options{/@nt/listof/\@listofat/.newpush={%
               \clearforchapter%
               \listoffigures
@@ -557,7 +562,7 @@
               }%
               \listofalgorithms
     }}}%
-  } {%
+  }[%
       \clearforchapter
       \options{/@nt/listof/\@listofat/.newpush={%
           \ifcsdef{#2}{%
@@ -567,9 +572,8 @@
                        {Cannot make #2. Please report this problem in the 'novathesis' github. Thanks!}{}%
           }%
       }}%
-  }%
+   ]%
 }
-\ExplSyntaxOff
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% STRUCTURAL PRINTING ENGINE
@@ -577,9 +581,10 @@
 
 %============================================================
 % Print document “parts/sections/regions”
-\ExplSyntaxOn
+% Kept in LaTeX2e syntax for the same reason as \ntaddlistof above: the
+% branches carry literal text, which \ExplSyntaxOn would strip spaces from.
 \newcommand*{\ntprint}[1]{%
-  \str_case:nnF { #1 } {%
+  \IfStrEqCase{#1}{%
     {frontcover}{%
           \thispagestyle{empty}%
           \pagestyle{empty}%
@@ -616,11 +621,8 @@
           \pagestyle{empty}%
           \ntprintbackcover%
     }%
-  } {%
-    \ifcsmacro{ntprint#1}{\csuse{ntprint#1}}{\ifcsmacro{#1}{\csuse{#1}}{}}%
-  }%
+  }[\ifcsmacro{ntprint#1}{\csuse{ntprint#1}}{\ifcsmacro{#1}{\csuse{#1}}{}}]%
 }
-\ExplSyntaxOff
 
 \newcommand*{\ntprintlist}[1]{%
   \optionlistdo{#1}{%

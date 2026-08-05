@@ -45,13 +45,28 @@ DATE          = $(shell awk -F'[{}]' '/\\novathesisdate/    {print $$4; exit}' '
 VARIANT := .Build/nt-variant.sh
 JOBS    ?= 1
 
+# "make school ... LANG=pt" documents LANG as the document language, but LANG is
+# also the POSIX locale variable, and make puts every command-line variable into
+# the environment of its recipes.  The child processes then try to load a locale
+# literally named "pt", which does not exist, and LuaTeX aborts before reading
+# any input:
+#     perl: warning: Setting locale failed. ... LANG = "pt"
+#     Unable to read locale data: ... Exiting now.
+# Stop exporting it, so it stays an ordinary make variable (still passed below
+# as "-l $(LANG)") without reaching the environment.  Guarded on $(origin ...)
+# so that a LANG inherited from the user's real shell locale is left untouched.
+# (nt-variant.sh already sidesteps the same clash internally by using LANG_.)
+ifeq ($(origin LANG),command line)
+  unexport LANG
+endif
+
 # --- Variant builds ------------------------------------------------------------
 .PHONY: school matrix
 school:
 ifndef SCHOOL
 	$(error Usage: make school SCHOOL=univ/school [TYPE=phd|msc|bsc] [LANG=xx] [ENGINE=lua|pdf|xe] [STATUS=working|provisional|final])
 endif
-	@$(VARIANT) $(if $(TYPE),-t $(TYPE)) $(if $(LANG),-l $(LANG)) \
+	@$(TIMER) $(VARIANT) $(if $(TYPE),-t $(TYPE)) $(if $(LANG),-l $(LANG)) \
 	            $(if $(ENGINE),-e $(ENGINE)) $(if $(STATUS),-s $(STATUS)) \
 	            $(if $(V),-v) "$(SCHOOL)"
 
@@ -68,7 +83,7 @@ matrix: FASTWRITES ?= 1
 matrix: WARM ?= 1
 matrix:
 	@mkdir -p $(AUXDIR)/matrix
-	@FASTWRITES=$(FASTWRITES) NT_WARM=$(WARM) $(VARIANT) -j $(JOBS) $(if $(V),-v) -o $(AUXDIR)/matrix -a $(FILTER)
+	@FASTWRITES=$(FASTWRITES) NT_WARM=$(WARM) $(TIMER) $(VARIANT) -j $(JOBS) $(if $(V),-v) -o $(AUXDIR)/matrix -a $(FILTER)
 
 # --- LuaLaTeX-only school detection ---------------------------------------------
 .PHONY: needlua
