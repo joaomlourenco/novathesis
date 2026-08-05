@@ -6,9 +6,14 @@
 # It is loaded automatically by the main Makefile via '-include Makefile.dev'.
 #
 # Targets:
-#   make school SCHOOL=nova/fct [TYPE=msc] [LANG=pt] [ENGINE=lua] [STATUS=final]
+#   make school SCHOOL=nova/fct [TYPE=msc] [LNG=pt] [ENGINE=lua] [STATUS=final]
 #                      build one school variant (uses \ntoverride, nothing is
 #                      patched; defaults come from .Build/schools.conf)
+#                      LNG (not LANG) sets the document language: LANG is the
+#                      shell's POSIX locale variable, so make would both inherit
+#                      it when unset (giving "-l en_US.UTF-8") and export
+#                      "LANG=pt" into the build, where it is not a valid locale
+#                      and LuaTeX aborts. LNG has no such clash.
 #   make matrix [JOBS=4] [FILTER=univ[/school][,...]] [WARM=0] [FASTWRITES=0]
 #                      build every school/doctype/lang/engine combination in
 #                      .Build/schools.conf. Each [order:...] section x engine is
@@ -45,28 +50,13 @@ DATE          = $(shell awk -F'[{}]' '/\\novathesisdate/    {print $$4; exit}' '
 VARIANT := .Build/nt-variant.sh
 JOBS    ?= 1
 
-# "make school ... LANG=pt" documents LANG as the document language, but LANG is
-# also the POSIX locale variable, and make puts every command-line variable into
-# the environment of its recipes.  The child processes then try to load a locale
-# literally named "pt", which does not exist, and LuaTeX aborts before reading
-# any input:
-#     perl: warning: Setting locale failed. ... LANG = "pt"
-#     Unable to read locale data: ... Exiting now.
-# Stop exporting it, so it stays an ordinary make variable (still passed below
-# as "-l $(LANG)") without reaching the environment.  Guarded on $(origin ...)
-# so that a LANG inherited from the user's real shell locale is left untouched.
-# (nt-variant.sh already sidesteps the same clash internally by using LANG_.)
-ifeq ($(origin LANG),command line)
-  unexport LANG
-endif
-
 # --- Variant builds ------------------------------------------------------------
 .PHONY: school matrix
 school:
 ifndef SCHOOL
-	$(error Usage: make school SCHOOL=univ/school [TYPE=phd|msc|bsc] [LANG=xx] [ENGINE=lua|pdf|xe] [STATUS=working|provisional|final])
+	$(error Usage: make school SCHOOL=univ/school [TYPE=phd|msc|bsc] [LNG=xx] [ENGINE=lua|pdf|xe] [STATUS=working|provisional|final])
 endif
-	@$(TIMER) $(VARIANT) $(if $(TYPE),-t $(TYPE)) $(if $(LANG),-l $(LANG)) \
+	@$(TIMER) $(VARIANT) $(if $(TYPE),-t $(TYPE)) $(if $(LNG),-l $(LNG)) \
 	            $(if $(ENGINE),-e $(ENGINE)) $(if $(STATUS),-s $(STATUS)) \
 	            $(if $(V),-v) "$(SCHOOL)"
 
