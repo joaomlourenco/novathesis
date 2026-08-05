@@ -1,10 +1,10 @@
-# NOVAthesis Template Release Notes (v1.0.0 - v8.0.0)
+# NOVAthesis Template Release Notes (v1.0.0 - v8.0.1)
 
-This document summarizes the changes and improvements made to the NOVAthesis template from version **1.0.0** to the current version **8.0.0**.
+This document summarizes the changes and improvements made to the NOVAthesis template from version **1.0.0** to the current version **8.0.1**.
 
 ---
 
-## v8.0.0 — Andorinha (2026-07-30)
+## v8.0.1 — Andorinha (2026-07-30)
 
 A release focused on **build speed**, a **simpler build system**, and **documentation you can trust**.
 
