@@ -24,7 +24,12 @@
   \RequirePackage[type1]{cabin}% used only by \mathsf
   \RequirePackage{amsthm}% load before newtxmath
   \RequirePackage[libertine,vvarbb]{newtxmath}% does not load minnewsgott because another Roman text package was specified
-
+  \setmonofont{JetBrains Mono}
+  [ LetterSpace=-3.0,
+    Scale = MatchLowercase, % Automatically scales to match surrounding text height
+  ]
+  % \setmonofont{Fira Mono}
+  % \setmonofont{Fira Mono}[LetterSpace=-2.0]
   \setmainfont[
     Path                = \DIRFONTSTYLES/Fonts/,
     Ligatures           = TeX,
