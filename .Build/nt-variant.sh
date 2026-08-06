@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #-----------------------------------------------------------------------------
 # NOVAthesis — nt-variant.sh
-# Version 8.0.1 (2026-08-05)
+# Version 8.0.2 (2026-08-07)
 #
 # Build one (or all) school variants of the template WITHOUT touching the
 # working copy. Settings are injected at the command line through the
