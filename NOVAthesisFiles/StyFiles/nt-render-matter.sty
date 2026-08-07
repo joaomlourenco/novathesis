@@ -31,6 +31,14 @@
         tmargin=\expanded{\GetMargin(\option{/novathesis/media},top)},
         bmargin=\expanded{\GetMargin(\option{/novathesis/media},bottom)},
     }%
+    % \newgeometry recomputes \headheight from scratch, and on some
+    % school/font combos the running head content is ~0.9pt taller than
+    % that default, triggering a "material used in headers is too large"
+    % warning and a repeating "Overfull \vbox" on every page. Grow the
+    % head area by 1pt to fit it cleanly; \textheight is left alone, so
+    % the text block shifts down 1pt and the 1pt comes out of the bottom
+    % margin rather than costing a line of text height.
+    \addtolength{\headheight}{1pt}%
     \ifoptionequal{/novathesis/media}{paper}{\openright}{\openany}%
 }
 
