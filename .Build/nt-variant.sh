@@ -52,6 +52,15 @@
 #-----------------------------------------------------------------------------
 set -euo pipefail
 
+# Colors for status lines (▶ start, ✓ success, ✗ failure). Disabled when
+# stdout isn't a terminal (e.g. piped to a file/CI log) or NO_COLOR is set.
+if [ -t 1 ] && [ -z "${NO_COLOR:-}" ]; then
+  C_GREEN=$'\033[32m'; C_RED=$'\033[31m'; C_YELLOW=$'\033[33m'
+  C_BLUE=$'\033[34m';  C_BOLD=$'\033[1m'; C_RESET=$'\033[0m'
+else
+  C_GREEN="" C_RED="" C_YELLOW="" C_BLUE="" C_BOLD="" C_RESET=""
+fi
+
 HERE=$(cd "$(dirname "$0")" && pwd)
 ROOT=$(cd "$HERE/.." && pwd)
 CONF="$HERE/schools.conf"
@@ -183,7 +192,7 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
     lua) engflag=-pdflua ;;
     xe)  engflag=-pdfxe ;;
     pdf) engflag=-pdf ;;
-    *)   echo "✗ $id: unknown engine '$eng'" >&2; return 1 ;;
+    *)   printf '%s✗ %s: unknown engine '\''%s'\''%s\n' "$C_RED" "$id" "$eng" "$C_RESET" >&2; return 1 ;;
   esac
 
   # Inject \ntoverride through a FILE that latexmk tracks as a dependency,
@@ -210,7 +219,7 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
     return 0
   fi
 
-  printf '▶ %s …\n' "$id" >&2               # immediate "building" feedback
+  printf '%s▶ %s …%s\n' "$C_BLUE" "$id" "$C_RESET" >&2   # immediate "building" feedback
   mkdir -p "$aux"
   # (Re)write the tracked override.  FASTWRITES=0 also re-enables morewrites.
   {
@@ -244,7 +253,7 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
 
   if [ $rc -eq 0 ]; then
     cp -f "$aux/$jobname.pdf" "$OUTDIR/$id.pdf"
-    echo "✓ $id.pdf  ($((t1 - t0))s)"
+    printf '%s✓ %s.pdf%s  %s(%ss)%s\n' "$C_GREEN" "$id" "$C_RESET" "$C_YELLOW" "$((t1 - t0))" "$C_RESET"
     # Record this variant's build time for cost-based (LPT) unit scheduling.
     # One file per variant id => no contention across parallel workers.
     if [ -n "${NT_TIMINGS_DIR:-}" ]; then
@@ -253,7 +262,7 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
   else
     if [ -f "$aux/$id.glossary.out" ]; then
       cp -f "$aux/$id.glossary.out" "$OUTDIR/$id.glossary.out" 2>/dev/null || true
-      echo "✗ $id  ($((t1 - t0))s)  — glossary check failed:" >&2
+      printf '%s✗ %s  (%ss)  — glossary check failed:%s\n' "$C_RED" "$id" "$((t1 - t0))" "$C_RESET" >&2
       sed 's/^/    /' "$aux/$id.glossary.out" >&2
       return 1
     fi
@@ -268,9 +277,9 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
       saved="${saved:+$saved and }$OUTDIR/$id.build.out"
     fi
     if [ -n "$saved" ]; then
-      echo "✗ $id  ($((t1 - t0))s)  — see $saved" >&2
+      printf '%s✗ %s  (%ss)  — see %s%s\n' "$C_RED" "$id" "$((t1 - t0))" "$saved" "$C_RESET" >&2
     else
-      echo "✗ $id  ($((t1 - t0))s)  — FAILED, and no log could be saved" >&2
+      printf '%s✗ %s  (%ss)  — FAILED, and no log could be saved%s\n' "$C_RED" "$id" "$((t1 - t0))" "$C_RESET" >&2
     fi
   fi
   # In matrix mode, drop this variant's aux dir now that its PDF (or logs) are
@@ -344,8 +353,8 @@ if [ "$ALL" = 1 ]; then
     rm -rf "$UNITS"; exit 1
   fi
   total=$(cat "$UNITS"/* | wc -l | tr -d ' ')
-  printf '▶ Matrix: building %s variant(s)%s with %s job(s)\n' \
-         "$total" "${FILTER:+ matching '$FILTER'}" "$JOBS" >&2
+  printf '%s%s▶ Matrix: building %s variant(s)%s with %s job(s)%s\n' \
+         "$C_BOLD" "$C_BLUE" "$total" "${FILTER:+ matching '$FILTER'}" "$JOBS" "$C_RESET" >&2
   printf '  output → %s\n' "$OUTDIR" >&2
   # Dispatch longest-first (LPT): a unit's cost is the sum of its variants' last
   # recorded build times (NT_COST_DEFAULT for unknowns).  An empty DB or ties
