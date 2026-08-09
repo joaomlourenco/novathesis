@@ -88,6 +88,8 @@ Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 
 The template is open‑source and actively maintained.
 
+- Check the [showcase](https://github.com/joaomlourenco/novathesis/wiki/showcase) with some examples
+
 ---
 
 # 2. Key Features
