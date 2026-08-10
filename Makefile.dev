@@ -7,13 +7,16 @@
 #
 # Targets:
 #   make school SCHOOL=nova/fct [TYPE=msc] [LNG=pt] [ENGINE=lua] [STATUS=final]
-#               [EXTRA='<keys>']
+#               [NT='<keys>']
 #                      build one school variant (uses \ntoverride, nothing is
 #                      patched; defaults come from .Build/schools.conf)
-#                      EXTRA passes extra \ntsetup keys through to the build
-#                      (-x), e.g. to print all the SDGs:
+#                      NT passes extra \ntsetup keys through to the build,
+#                      appended to the doctype/school/lang/docstatus that this
+#                      target already computes (unlike the main Makefile's NT,
+#                      which REPLACES \ntoverride outright — see there). E.g.
+#                      to print all the SDGs:
 #                        make school SCHOOL=nova/fct \
-#                             EXTRA='print/sdgs/list={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}'
+#                             NT='print/sdgs/list={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}'
 #                      Quote it: it contains commas and braces.
 #                      LNG (not LANG) sets the document language: LANG is the
 #                      shell's POSIX locale variable, so make would both inherit
@@ -21,7 +24,7 @@
 #                      "LANG=pt" into the build, where it is not a valid locale
 #                      and LuaTeX aborts. LNG has no such clash.
 #   make matrix [JOBS=4] [FILTER=univ[/school][,...]] [WARM=0] [FASTWRITES=0]
-#               [EXTRA='<keys>']
+#               [NT='<keys>']
 #                      build every school/doctype/lang/engine combination in
 #                      .Build/schools.conf. Each [order:...] section x engine is
 #                      a "unit": a sequential chain (ordered by the "order:"
@@ -38,10 +41,11 @@
 #                      its log/build output there instead.
 #                      FILTER restricts by prefix: FILTER=nova (university),
 #                      FILTER=nova/fct (school + sub-programs), FILTER=uminho,ipl
-#                      EXTRA passes extra \ntsetup keys to every variant (-x),
-#                      quoted, e.g. to print all the SDGs on every cover:
+#                      NT passes extra \ntsetup keys to every variant, appended
+#                      the same way as above; quoted, e.g. to print all the
+#                      SDGs on every cover:
 #                        make matrix \
-#                             EXTRA='print/sdgs/list={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}'
+#                             NT='print/sdgs/list={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}'
 #   make needlua       regenerate the list of LuaLaTeX-only schools
 #   make zip           release archive novathesis-<version>@<date>.zip
 #   make bump-patch | bump-minor | bump-major
@@ -69,7 +73,7 @@ ifndef SCHOOL
 endif
 	@$(TIMER) $(VARIANT) $(if $(TYPE),-t $(TYPE)) $(if $(LNG),-l $(LNG)) \
 	            $(if $(ENGINE),-e $(ENGINE)) $(if $(STATUS),-s $(STATUS)) \
-	            $(if $(EXTRA),-x '$(EXTRA)') \
+	            $(if $(NT),-x '$(NT)') \
 	            $(if $(V),-v) "$(SCHOOL)"
 
 # morewrites is skipped by default (FASTWRITES=1), which costs a pdfLaTeX
@@ -85,7 +89,7 @@ matrix: FASTWRITES ?= 1
 matrix: WARM ?= 1
 matrix:
 	@mkdir -p $(AUXDIR)/matrix
-	@FASTWRITES=$(FASTWRITES) NT_WARM=$(WARM) $(TIMER) $(VARIANT) -j $(JOBS) $(if $(V),-v) $(if $(EXTRA),-x '$(EXTRA)') -o $(AUXDIR)/matrix -a $(FILTER)
+	@FASTWRITES=$(FASTWRITES) NT_WARM=$(WARM) $(TIMER) $(VARIANT) -j $(JOBS) $(if $(V),-v) $(if $(NT),-x '$(NT)') -o $(AUXDIR)/matrix -a $(FILTER)
 
 # --- LuaLaTeX-only school detection ---------------------------------------------
 .PHONY: needlua

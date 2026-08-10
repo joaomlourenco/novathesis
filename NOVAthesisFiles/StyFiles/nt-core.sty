@@ -996,9 +996,41 @@
 % just means "this language has no icons upstream").
 \bool_new:N \l__nt_download_quiet_bool
 
+\str_new:N \l__nt_download_size_str
+
+% \__nt_download_discard:n {path} — remove a file left behind by a failed
+% transfer.  Needed because "wget -O" creates the output file *before* the
+% request is answered, so an HTTP error or a dead network leaves a 0-byte
+% file; without this it would be cached forever and later break
+% \includegraphics instead of being reported as a failed download.
+\cs_new_protected:Npn \__nt_download_discard:n #1
+  {
+    \iow_term:x { Discarding~empty~file~'#1'. }
+    \sys_if_platform_windows:TF
+      { \sys_shell_now:x { del~/q~"#1" } }
+      { \sys_shell_now:x { rm~-f~'#1' } }
+  }
+
+% \__nt_download_accept:n {path} — decide whether the tool that has just run
+% actually delivered the file.  Only a non-empty file counts as success; on
+% anything else the download is *not* marked done, so the next tool in the
+% chain is tried (a present but failing curl must not block wget/python).
+\cs_new_protected:Npn \__nt_download_accept:n #1
+  {
+    \file_get_size:nNT { #1 } \l__nt_download_size_str
+      {
+        \str_if_eq:VnTF \l__nt_download_size_str { 0 }
+          { \__nt_download_discard:n { #1 } }
+          { \bool_set_true:N \l__nt_download_done_bool }
+      }
+  }
+
 \cs_new_protected:Npn \nt_download_file:nn #1 #2
 {
   % #1 = remote URL, #2 = local target path
+  % \l__nt_download_done_bool means "stop trying": it is set only once a tool
+  % has produced a usable (non-empty) file, so the strategies below form a real
+  % fallback chain instead of "whichever tool is installed first wins".
   \bool_set_false:N \l__nt_download_done_bool
 
   % A download tool can only run with (unrestricted) shell escape.
@@ -1015,39 +1047,48 @@
       \sys_get_shell:enN  {curl ~ --version ~ 2> ~ \c__nt_devnull_tl }
                           { \tl_trim_spaces:n }
                           \l_nt_cmd_output_tl
-      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+      \tl_if_empty:NF \l_nt_cmd_output_tl
         {
           % -f: fail (no file written) on HTTP >=400, so the file-existence
           % check below is meaningful; -sS: quiet but still report real errors.
           \iow_term:x { Running: ~ curl ~ -fsSL ~ -o ~ '#2' ~ '#1'... }
           \sys_shell_now:x { curl ~ -fsSL ~ -o ~ '#2' ~ '#1' }
-          \bool_set_true:N \l__nt_download_done_bool
+          \__nt_download_accept:n { #2 }
         }
     }
 
-  % Probe wget.
+  % Probe wget.  Unlike curl, wget has no "-f": with -O it always creates the
+  % output file, and leaves it empty on an HTTP error or a dead network, so the
+  % 0-byte result is caught (and removed) by \__nt_download_accept:n below.
   \bool_if:NF \l__nt_download_done_bool
     {
       \iow_term:x { Trying: ~ 'wget'... }
       \sys_get_shell:enN  {wget ~ --version ~ 2> ~ \c__nt_devnull_tl }
                           { \tl_trim_spaces:n }
                           \l_nt_cmd_output_tl
-      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+      \tl_if_empty:NF \l_nt_cmd_output_tl
         {
-          \iow_term:x { Running: ~ wget ~ -q ~ -O ~ '#2' ~ '#1'... }
-          \sys_shell_now:x { wget ~ -q ~ -O ~ '#2' ~ '#1' }
-          \bool_set_true:N \l__nt_download_done_bool
+          \iow_term:x { Running: ~ wget ~ -q ~ --tries=1 ~ -O ~ '#2' ~ '#1'... }
+          \sys_shell_now:x { wget ~ -q ~ --tries=1 ~ -O ~ '#2' ~ '#1' }
+          \__nt_download_accept:n { #2 }
         }
     }
 
   % Probe python3 (each interpreter runs only itself — no cross-calls).
+  % The probe imports urllib.request instead of asking for --version: that is
+  % what the download actually needs, and it is Python 3 only (see 'python'
+  % below).  It must print something, as a blank result means "not usable".
   \bool_if:NF \l__nt_download_done_bool
     {
       \iow_term:x { Trying: ~ 'python3'... }
-      \sys_get_shell:enN  {python3 ~ --version ~ 2> ~ \c__nt_devnull_tl }
+      % NOTE: single quotes.  \sys_get_shell:nnN refuses a command containing a
+      % double quote and returns \q_no_value, which is NOT empty and would make
+      % the probe succeed for a tool that is not there.
+      \sys_get_shell:enN  {python3 ~ -c ~ 'import ~ urllib.request; ~
+                           print(1)' ~ 2> ~ \c__nt_devnull_tl }
                           { \tl_trim_spaces:n }
                           \l_nt_cmd_output_tl
-      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+      \tl_if_empty:NF \l_nt_cmd_output_tl
         {
           \iow_term:x { Running: ~ python3 ~ urlretrieve('#1',~'#2')... }
           \sys_shell_now:x
@@ -1055,18 +1096,22 @@
               python3 ~ -c ~ "import ~ urllib.request; ~
               urllib.request.urlretrieve('#1', ~ '#2')"
             }
-          \bool_set_true:N \l__nt_download_done_bool
+          \__nt_download_accept:n { #2 }
         }
     }
 
-  % Probe python (reached only when python3 was not found).
+  % Probe python (reached only when python3 was not found).  On a system where
+  % 'python' is still Python 2 the import below fails, the probe prints
+  % nothing, and this branch is skipped: urllib.request does not exist there
+  % (it is urllib.urlretrieve), so '--version' would have wrongly accepted it.
   \bool_if:NF \l__nt_download_done_bool
     {
       \iow_term:x { Trying: ~ 'python'... }
-      \sys_get_shell:enN  {python ~ --version ~ 2> ~ \c__nt_devnull_tl }
+      \sys_get_shell:enN  {python ~ -c ~ 'import ~ urllib.request; ~
+                           print(1)' ~ 2> ~ \c__nt_devnull_tl }
                           { \tl_trim_spaces:n }
                           \l_nt_cmd_output_tl
-      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+      \tl_if_empty:NF \l_nt_cmd_output_tl
         {
           \iow_term:x { Running: ~ python ~ urlretrieve('#1',~'#2')... }
           \sys_shell_now:x
@@ -1074,7 +1119,7 @@
               python ~ -c ~ "import ~ urllib.request; ~
               urllib.request.urlretrieve('#1', ~ '#2')"
             }
-          \bool_set_true:N \l__nt_download_done_bool
+          \__nt_download_accept:n { #2 }
         }
     }
 
@@ -1087,7 +1132,7 @@
           \sys_get_shell:enN  {where ~ powershell ~ 2> ~ \c__nt_devnull_tl }
                               { \tl_trim_spaces:n }
                               \l_nt_cmd_output_tl
-          \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+          \tl_if_empty:NF \l_nt_cmd_output_tl
             {
               \iow_term:x
                 {
@@ -1099,18 +1144,20 @@
                   powershell ~ -Command ~
                   "Invoke-WebRequest ~ -Uri ~ '#1' ~ -OutFile ~ '#2'"
                 }
-              \bool_set_true:N \l__nt_download_done_bool
+              \__nt_download_accept:n { #2 }
             }
         }
     }
 
-  % Verify the download actually produced a file (only when shell escape was
+  % Report when no tool managed to deliver the file (only when shell escape was
   % available; the disabled case already raised its own error above).  This
   % turns a silent failure (404, network down, no tool found) into an
-  % actionable warning instead of a later "file not found" error.
+  % actionable warning instead of a later "file not found" error.  The test is
+  % on the flag, not on the file, because an empty file left by a failed
+  % transfer has just been removed by \__nt_download_accept:n.
   \sys_if_shell_unrestricted:T
     {
-      \file_if_exist:nF { #2 }
+      \bool_if:NF \l__nt_download_done_bool
         {
           \bool_if:NF \l__nt_download_quiet_bool
             { \msg_warning:nnnn { ntdownload } { download-failed } { #1 } { #2 } }
@@ -1131,19 +1178,42 @@
 % a language is simply its NOVAthesis language code in UPPER CASE (en ->
 % EN, pt -> PT, ...), so adding a language upstream needs NO change here,
 % as long as the new folder is named after the matching language code.
-% A language with no icons upstream costs exactly one failed request per
-% run (the loop stops at the first miss) and then falls back to English,
-% matching \ntprintsdgs's own "fall back to sdg-en" behaviour below.
+% Inside "<LANG>/PDF/" the repo nests one folder per colour variant
+% (Normal, Inverted, BlackWhite — see \__nt_set_sdg_variant:n below); a
+% language that does not (yet) offer a given variant costs exactly one
+% failed request per run (the loop stops at the first miss) and then
+% falls back to English, matching \ntprintsdgs's own "fall back to
+% sdg-en" behaviour below.
 % --------------------------------------------------------
 
 \tl_new:N \l__nt_sdg_lang_tl
 \tl_new:N \l__nt_sdg_type_tl
 \tl_new:N \l__nt_sdg_remote_lang_tl
+\tl_new:N \l__nt_sdg_variant_tl
 \tl_new:N \l__nt_sdg_local_path_tl
 \bool_new:N \l__nt_sdg_lang_ok_bool
 
 \tl_const:Nn \c__nt_sdg_base_url_tl
   { https://raw.githubusercontent.com/joaomlourenco/SDGs/main/Icons }
+
+% The upstream repo keeps one sub-folder per colour variant (PDF/Normal,
+% PDF/Inverted, PDF/BlackWhite) inside each language folder; the file
+% itself still carries the -n/-i/-m suffix.  Map the internal type letter
+% (see print/sdgs/type above) to that folder name.  #2 is already
+% restricted to i/n/m by the option's own choice list, so an unmatched
+% case here can only mean the upstream layout changed again.
+\msg_new:nnn { ntdownload } { sdg-type-unknown }
+  { Unknown~SDG~icon~type~'#1'.~Expected~one~of~i,~n,~m. }
+\cs_new_protected:Npn \__nt_set_sdg_variant:n #1
+  {
+    \str_case:nnF { #1 }
+      {
+        { i } { \tl_set:Nn \l__nt_sdg_variant_tl { Inverted } }
+        { n } { \tl_set:Nn \l__nt_sdg_variant_tl { Normal } }
+        { m } { \tl_set:Nn \l__nt_sdg_variant_tl { BlackWhite } }
+      }
+      { \msg_error:nnx { ntdownload } { sdg-type-unknown } { #1 } }
+  }
 
 \msg_new:nnn { ntdownload } { sdg-lang-unavailable }
 {
@@ -1163,8 +1233,12 @@
 \cs_new_protected:Npn \__nt_check_sdgs_lang:nn #1 #2
   {
     \__nt_download_assert_token:nn { SDG~language } { #1 }
+    \__nt_download_assert_token:nn { SDG~type } { #2 }
     % Upstream folder = language code in upper case; no table to maintain.
     \tl_set:Nx \l__nt_sdg_remote_lang_tl { \str_uppercase:n { #1 } }
+    % Upstream now nests a colour-variant folder (Normal/Inverted/BlackWhite)
+    % under PDF/ for every language; compute it once per call.
+    \__nt_set_sdg_variant:n { #2 }
     \bool_set_true:N \l__nt_sdg_lang_ok_bool
     \file_if_exist:nF { \DIRIMAGES/sdg-#1/DO_NOT_REMOVE_THIS_FILE.txt }
       {
@@ -1178,8 +1252,9 @@
           {
             \__nt_download_assert_token:nn { SDG~number } { ##1 }
             \tl_set:Nn \l__nt_filename_tl { sdg-#1/##1-#2.pdf }
-            \tl_set:Nn \l__nt_remote_url_tl
-              { \c__nt_sdg_base_url_tl/\l__nt_sdg_remote_lang_tl/PDF/##1-#2.pdf }
+            \tl_set:Nx \l__nt_remote_url_tl
+              { \c__nt_sdg_base_url_tl/\l__nt_sdg_remote_lang_tl/PDF/%
+                \l__nt_sdg_variant_tl/##1-#2.pdf }
             \tl_set:Nn \l__nt_sdg_local_path_tl { \DIRIMAGES/sdg-#1/##1-#2.pdf }
 
             \file_if_exist:nTF { \l__nt_sdg_local_path_tl }

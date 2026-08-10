@@ -23,6 +23,10 @@
 #   -e engine    lua|pdf|xe    (default: lua if allowed by schools.conf)
 #   -s status    working|provisional|final   (default: final)
 #   -x keys      extra \ntsetup keys, e.g. 'print/index=true'
+#                (this is what Makefile.dev's 'make school'/'make matrix' NT=
+#                variable is forwarded through as; renamed at the Make level
+#                for consistency with the main Makefile's NT=, but left as -x
+#                here since it only appends to \ntoverride, not replace it)
 #   -o outdir    where to put the renamed PDF (default: repo root; with -a a
 #                subfolder YYYY-MM-DD@hh-mm-ss is created at invocation time)
 #   -j jobs      parallel jobs for -a (default: 1)
