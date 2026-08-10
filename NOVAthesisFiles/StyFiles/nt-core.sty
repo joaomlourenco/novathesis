@@ -991,6 +991,11 @@
 % the \sys_get_shell:enN / \sys_shell_now:x probe calls below.
 \bool_new:N \l__nt_download_done_bool
 
+% When true, \nt_download_file:nn does not warn if no file was produced: the
+% caller takes care of reporting (used by the SDG code, where a miss usually
+% just means "this language has no icons upstream").
+\bool_new:N \l__nt_download_quiet_bool
+
 \cs_new_protected:Npn \nt_download_file:nn #1 #2
 {
   % #1 = remote URL, #2 = local target path
@@ -1106,7 +1111,10 @@
   \sys_if_shell_unrestricted:T
     {
       \file_if_exist:nF { #2 }
-        { \msg_warning:nnnn { ntdownload } { download-failed } { #1 } { #2 } }
+        {
+          \bool_if:NF \l__nt_download_quiet_bool
+            { \msg_warning:nnnn { ntdownload } { download-failed } { #1 } { #2 } }
+        }
     }
 }
 
@@ -1119,9 +1127,12 @@
 % that abstract's own language and the active icon type (see
 % print/sdgs/list and print/sdgs/type below).
 %
-% Source: https://github.com/joaomlourenco/SDGs — icons are only
-% available upstream for a handful of languages (EN/PT/ES/FR/DE); for
-% any other abstract language, only the English fallback is fetched,
+% Source: https://github.com/joaomlourenco/SDGs.  The upstream folder for
+% a language is simply its NOVAthesis language code in UPPER CASE (en ->
+% EN, pt -> PT, ...), so adding a language upstream needs NO change here,
+% as long as the new folder is named after the matching language code.
+% A language with no icons upstream costs exactly one failed request per
+% run (the loop stops at the first miss) and then falls back to English,
 % matching \ntprintsdgs's own "fall back to sdg-en" behaviour below.
 % --------------------------------------------------------
 
@@ -1129,43 +1140,41 @@
 \tl_new:N \l__nt_sdg_type_tl
 \tl_new:N \l__nt_sdg_remote_lang_tl
 \tl_new:N \l__nt_sdg_local_path_tl
+\bool_new:N \l__nt_sdg_lang_ok_bool
 
 \tl_const:Nn \c__nt_sdg_base_url_tl
   { https://raw.githubusercontent.com/joaomlourenco/SDGs/main/Icons }
 
-% \__nt_sdg_remote_lang:nN {novathesis-lang} {tl-var} — sets #2 to the
-% upstream language folder (EN/PT/ES/FR/DE) for #1, or clears #2 when
-% #1 has no icons upstream (the caller then only fetches English).
-\cs_new_protected:Npn \__nt_sdg_remote_lang:nN #1 #2
-  {
-    \tl_clear:N #2
-    \str_case:nn { #1 }
-      {
-        { en } { \tl_set:Nn #2 { EN } }
-        { pt } { \tl_set:Nn #2 { PT } }
-        { es } { \tl_set:Nn #2 { ES } }
-        { fr } { \tl_set:Nn #2 { FR } }
-        { de } { \tl_set:Nn #2 { DE } }
-      }
-  }
+\msg_new:nnn { ntdownload } { sdg-lang-unavailable }
+{
+  Could~not~download~the~SDG~icons~for~language~'#1'~from~'#2'.~\\
+  This~normally~means~that~this~language~is~not~(yet)~available~in~
+  https://github.com/joaomlourenco/SDGs,~in~which~case~the~English~icons~
+  are~used~instead~and~you~can~ignore~this~warning.~If~the~language~IS~
+  available~there,~check~your~network~connection.
+}
 
 % \__nt_check_sdgs_lang:nn {novathesis-lang} {sdg-type} — ensures every
 % SDG icon in print/sdgs/list, of the given type (i/n/m), is available
 % locally in NOVAthesisFiles/Images/sdg-<lang>, downloading whatever is
-% missing.  Does nothing when #1 has no icons upstream.
+% missing.  Stops at the first download that produces no file, so a
+% language that is not available upstream costs one request, not one per
+% icon; the caller then falls back to English.
 \cs_new_protected:Npn \__nt_check_sdgs_lang:nn #1 #2
   {
     \__nt_download_assert_token:nn { SDG~language } { #1 }
-    \__nt_sdg_remote_lang:nN { #1 } \l__nt_sdg_remote_lang_tl
-    \tl_if_empty:NF \l__nt_sdg_remote_lang_tl
+    % Upstream folder = language code in upper case; no table to maintain.
+    \tl_set:Nx \l__nt_sdg_remote_lang_tl { \str_uppercase:n { #1 } }
+    \bool_set_true:N \l__nt_sdg_lang_ok_bool
+    \file_if_exist:nF { \DIRIMAGES/sdg-#1/DO_NOT_REMOVE_THIS_FILE.txt }
       {
-        \file_if_exist:nF { \DIRIMAGES/sdg-#1/DO_NOT_REMOVE_THIS_FILE.txt }
-          {
-            \sys_if_platform_windows:TF
-              { \sys_shell_now:x { mkdir~"\DIRIMAGES/sdg-#1" } }
-              { \sys_shell_now:x { mkdir~-p~'\DIRIMAGES/sdg-#1' } }
-          }
-        \optionlistdo{/novathesis/print/sdgs/list}
+        \sys_if_platform_windows:TF
+          { \sys_shell_now:x { mkdir~"\DIRIMAGES/sdg-#1" } }
+          { \sys_shell_now:x { mkdir~-p~'\DIRIMAGES/sdg-#1' } }
+      }
+    \optionlistdo{/novathesis/print/sdgs/list}
+      {
+        \bool_if:NT \l__nt_sdg_lang_ok_bool
           {
             \__nt_download_assert_token:nn { SDG~number } { ##1 }
             \tl_set:Nn \l__nt_filename_tl { sdg-#1/##1-#2.pdf }
@@ -1181,9 +1190,19 @@
                 \iow_term:x { Downloading~SDG~icon~' \l__nt_filename_tl '~
                               from~' \l__nt_remote_url_tl '~
                               to~' \l__nt_sdg_local_path_tl '~ }
+                % Quiet: a miss here usually just means "no icons upstream for
+                % this language", which is reported once below, not per icon.
+                \bool_set_true:N \l__nt_download_quiet_bool
                 \nt_download_file:nn
                   { \l__nt_remote_url_tl }
                   { \l__nt_sdg_local_path_tl }
+                \bool_set_false:N \l__nt_download_quiet_bool
+                \file_if_exist:nF { \l__nt_sdg_local_path_tl }
+                  {
+                    \bool_set_false:N \l__nt_sdg_lang_ok_bool
+                    \msg_warning:nnxx { ntdownload } { sdg-lang-unavailable }
+                      { #1 } { \l__nt_remote_url_tl }
+                  }
               }
           }
       }
