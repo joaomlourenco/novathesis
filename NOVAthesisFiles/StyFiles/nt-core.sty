@@ -1446,6 +1446,8 @@
 }
 
 \options{/@nt/listtypes/.new list={}}
+\ExplSyntaxOn
+\clist_new:N \l__nt_addtolist_clist
 \NewDocumentCommand {\@nt@addtolist}
                     {m m O{\option{/novathesis/doctype}} m} {%
   % syntax: \ntaddto{type}{class}[key]{filename}
@@ -1459,10 +1461,14 @@
       {\xdef\@nt@filewithpath{#4}}
       {\options{/@nt/folders=#2}%
        \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}}
-  \@for\nt@tmpi:=\expanded{#3}\do{%
-    \options{/@nt/#1/#2/\nt@tmpi/.expanded/.newpush={\@nt@filewithpath}}%
-  }%
+  % #3 is fully expanded before being split into items, matching the
+  % previous \@for\nt@tmpi:=\expanded{#3}\do{...} behaviour; the items
+  % are file-lang/sub-family/key identifiers, not document text.
+  \clist_set:Ne \l__nt_addtolist_clist {#3}
+  \clist_map_inline:Nn \l__nt_addtolist_clist
+      { \options{/@nt/#1/#2/##1/.expanded/.newpush={\@nt@filewithpath}} }
 }
+\ExplSyntaxOff
 
 \newcommand*{\@nt@foralllist}[3]{%
   % #1={file, person}
