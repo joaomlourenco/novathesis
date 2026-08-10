@@ -646,37 +646,44 @@
   }%
 }
 
-\newif\ifGlossaryNotEmpty
-\newcommand{\myprintglossaries}{%
-  % ignore if no glossaries were defined
-  \ifoptioncontains{/@nt/listtypes}{glossaries}{
-    \ifoptionequal{/novathesis/print/glossaries}{false}
-      {}{%
-        \if@backmatter
-          \def\@matter{backmatter}
-        \else
-          \def\@matter{frontmatter}
-        \fi
-        \IfStrEq{\option{/novathesis/print/glossaries}}{\@matter}{%
-          % In the preamble:
-  
-          % Where you print glossaries:
-          % \shiftbookmarks{%
-            \forallglossaries{\thisglossary}{%
-                \GlossaryNotEmptyfalse
-                \forglsentries[\thisglossary]{\thisentry}{%
-                    \GlossaryNotEmptytrue%
-                }%
-                \ifGlossaryNotEmpty
-                    % \bookmarksetupnext{level=1,keeplevel}%
-                    \printunsrtglossary[type=\thisglossary]%
-                \fi
-            }%
-          % }
-        }{}%
-      }%
-  }{}%
-}
+% \ifoptioncontains/\ifoptionequal/\if@backmatter/\forallglossaries/
+% \forglsentries/\printunsrtglossary are plain classical control sequences
+% (no "_"/":" in their names), so they can be called freely from inside
+% this expl3 body. Only the string comparison and the not-empty flag
+% (formerly xstring's \IfStrEq and a classical \newif) move to expl3;
+% none of this carries typeset prose -- "frontmatter"/"backmatter" are
+% internal keywords, not document text.
+\ExplSyntaxOn
+\bool_new:N \l__nt_glossary_nonempty_bool
+\cs_new_protected:Npn \myprintglossaries
+  { % ignore if no glossaries were defined
+    \ifoptioncontains {/@nt/listtypes} {glossaries}
+      {
+        \ifoptionequal {/novathesis/print/glossaries} {false}
+          { }
+          {
+            \if@backmatter
+              \def \@matter {backmatter}
+            \else
+              \def \@matter {frontmatter}
+            \fi
+            \str_if_eq:eeTF { \option{/novathesis/print/glossaries} } { \@matter }
+              {
+                \forallglossaries {\thisglossary}
+                  {
+                    \bool_set_false:N \l__nt_glossary_nonempty_bool
+                    \forglsentries [\thisglossary] {\thisentry}
+                      { \bool_set_true:N \l__nt_glossary_nonempty_bool }
+                    \bool_if:NT \l__nt_glossary_nonempty_bool
+                      { \printunsrtglossary [type=\thisglossary] }
+                  }
+              }
+              { }
+          }
+      }
+      { }
+  }
+\ExplSyntaxOff
 
 
 % --------------------------------------------------------
