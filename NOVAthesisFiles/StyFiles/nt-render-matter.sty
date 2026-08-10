@@ -173,6 +173,7 @@
                 {\GetSdgString(en)}%
                 {\GetSdgString(\@LSHORT)}:}\\[1ex]
       \edef\@sdgtype{\option{/novathesis/print/sdgs/type}}
+      \ntchecksdgs{\@LSHORT}{\@sdgtype}%
       \IfFileExists{\DIRIMAGES/sdg-\@LSHORT/1-\@sdgtype.pdf}
           {\def\@spnfolder{\DIRIMAGES/sdg-\@LSHORT}}
           {\def\@spnfolder{\DIRIMAGES/sdg-en}}

@@ -20,6 +20,10 @@ template.*
 NOVAthesisFiles/FontStyles/Fonts
 !NOVAthesisFiles/FontStyles/Fonts/DO_NOT_REMOVE_THIS_FILE.txt
 
+# Ignore downloaded SDG icons (fetched automatically by \ntchecksdgs from
+# https://github.com/joaomlourenco/SDGs, see NOVAthesisFiles/StyFiles/nt-core.sty)
+NOVAthesisFiles/Images/sdg-*
+
 # The renamed PDF files
 # *-en.pdf
 # *-pt.pdf
@@ -360,7 +364,7 @@ TSWLatexianTemp*
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
 
 # Thumbnails
 ._*
