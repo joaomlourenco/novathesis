@@ -180,13 +180,23 @@
 %   #1 is iterated over; #2 is the person class handed to
 %   \@nt@printgrouptitle@text{<class>}{<role>}.  Note the order: roles first,
 %   class second.
-\newcommand{\@ntgetmaxlen}[2]{%
-  \@ntresetmaxlen%
-  \@for\myx:=\expanded{#1}\do{%
-    \setlength{\stringlen}{\widthof{\@nt@printgrouptitle@text{#2}{\myx}~~}}%
-    \ifdim\stringlen>\maxlen\relax\setlength{\maxlen}{\stringlen}\fi%
-  }%
-}
+\ExplSyntaxOn
+\clist_new:N \l__nt_getmaxlen_clist
+\cs_new_protected:Npn \@ntgetmaxlen #1#2
+  {
+    \@ntresetmaxlen
+    % #1 is a literal role-code list (e.g. "a,c"), fully expanded before
+    % being split into items, matching the previous
+    % \@for\myx:=\expanded{#1}\do{...} behaviour. Items are role codes,
+    % not document text.
+    \clist_set:Ne \l__nt_getmaxlen_clist {#1}
+    \clist_map_inline:Nn \l__nt_getmaxlen_clist
+      {
+        \setlength{\stringlen}{\widthof{\@nt@printgrouptitle@text{#2}{##1}~~}}
+        \ifdim\stringlen>\maxlen\relax\setlength{\maxlen}{\stringlen}\fi
+      }
+  }
+\ExplSyntaxOff
 
 \newcommand{\@ntprintpersonsasonecolumn}[4]{%
   % #1 = { full | name }
@@ -365,25 +375,15 @@
 % #1: Current accumulated number (Optional, default 1)
 % #2: Option path (e.g., /my/list). The code looks for #2/@size
 % #3: The macro to store the result in (globally)
-\newcommand*{\@nt@reducenumber}[3][1]{%
-  % 1. Retrieve the size value from the option system
-  %    \edefoption expands the option value into \opt@temp@size
-  \options{#2/.size = \mysize}%
-  %
-  % 2. Calculate Min(\mysize, 2)
-  %    We interpret the retrieved text as a number.
-  \ifnum\mysize < 2
-    \let\opt@temp@val\mysize
-  \else
-    \def\opt@temp@val{2}%
-  \fi
-  %
-  % 3. Calculate Max(#1, \opt@temp@val) and \xdef to #3
-  \ifnum#1 > \opt@temp@val
-    \xdef#3{#1}%
-  \else
-    \xdef#3{\opt@temp@val}%
-  \fi
-}
+\ExplSyntaxOn
+\NewDocumentCommand \@nt@reducenumber { O{1} m m }
+  {
+    % #1: current accumulated number (default 1)
+    % #2: option path (e.g. /my/list); its /.size is looked up
+    % #3: macro to store the result in (globally)
+    \options{#2/.size = \mysize}
+    \xdef #3 { \int_max:nn {#1} { \int_min:nn {\mysize} {2} } }
+  }
+\ExplSyntaxOff
 
 
