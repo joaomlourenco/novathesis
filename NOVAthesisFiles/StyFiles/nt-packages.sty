@@ -119,22 +119,24 @@
 % a known logo (stable across all hologo versions, old and new alike), so
 % the moment the installed hologo is updated to know a name, this wrapper
 % silently steps aside and defers to it -- no further changes needed here.
-\newcommand*\nt@hologo@fallback@TeXLive{\hologoRobust{TeX}\,Live}
+\ExplSyntaxOn
+\cs_new:Npn \nt@hologo@fallback@TeXLive { \hologoRobust{TeX}\,Live }
 % Wrap \hologo in \NoCaseChange so \MakeUppercase never uppercases logo names
 % (LaTeX 2020+ case-changing engine uppercases even protected-command arguments).
-\renewcommand*\hologo[1]{%
-  \NoCaseChange{%
-    \ifcsname HoLogo@#1\endcsname
-      \hologoRobust{#1}%
-    \else
-      \ifcsname nt@hologo@fallback@#1\endcsname
-        \csname nt@hologo@fallback@#1\endcsname
-      \else
-        \hologoRobust{#1}% unknown to both -- let hologo raise its own error
-      \fi
-    \fi
-  }%
-}
+\cs_set:Npn \hologo #1
+  {
+    \NoCaseChange
+      {
+        \cs_if_exist:cTF { HoLogo@#1 }
+          { \hologoRobust{#1} }
+          {
+            \cs_if_exist:cTF { nt@hologo@fallback@#1 }
+              { \use:c { nt@hologo@fallback@#1 } }
+              { \hologoRobust{#1} } % unknown to both -- let hologo raise its own error
+          }
+      }
+  }
+\ExplSyntaxOff
 % In PDF strings (bookmarks) render \hologo{X} as plain text "X".
 \AtBeginDocument{%
   \pdfstringdefDisableCommands{%
@@ -165,14 +167,23 @@
 \fi
 
 % Preferred sans-serif stack: Inter → Helvet → Gillius2 → LaTeX default
-\IfFileExists{inter.sty}
-  {\RequirePackage[scaled=0.95]{inter}}
-  % {\RequirePackage[scaled=MatchLowercase]{inter}}
-  {\IfFileExists{helvet.sty}
-    {\RequirePackage[scaled=0.95]{helvet}}
-    {\IfFileExists{gillius2.sty}
-      {\RequirePackage[scaled=0.95]{gillius2}}
-      {\ClassWarning{novathesis}{Could not find a suitable Sans Serif font… using the default!}}}}
+\ExplSyntaxOn
+% The ClassWarning text uses "~" instead of literal spaces: under
+% ExplSyntaxOn, space (catcode 9) is ignored, but "~" is catcode 10
+% (an ordinary interword space), so it survives untouched.
+\IfFileExists { inter.sty }
+  { \RequirePackage[scaled=0.95]{inter} }
+  % { \RequirePackage[scaled=MatchLowercase]{inter} }
+  {
+    \IfFileExists { helvet.sty }
+      { \RequirePackage[scaled=0.95]{helvet} }
+      {
+        \IfFileExists { gillius2.sty }
+          { \RequirePackage[scaled=0.95]{gillius2} }
+          { \ClassWarning{novathesis}{Could~not~find~a~suitable~Sans~Serif~font…~using~the~default!} }
+      }
+  }
+\ExplSyntaxOff
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LANGUAGE & LOCALIZATION
