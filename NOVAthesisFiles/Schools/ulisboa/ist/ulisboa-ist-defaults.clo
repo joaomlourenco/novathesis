@@ -15,7 +15,6 @@
 \options{/novathesis,
 % ULISBOA/IST
   ulisboa/ist/classification/.new value = {},
-  ulisboa/ist/funding/.new value        = {},
 }
 
 \ifdocfinal{\ntsetup{print/frontpage=true}}{}
@@ -286,15 +285,21 @@
   \GetCoverMsg(\@DOCTYPE,\@LANG@COVER,final)%
 }
 
-% Funding (Cover 2 only)
+% Funding (Cover 2 only). Institutions/grants are registered per school via
+% \ntsponsors(<order>,text,<lang>){...} (see 0-Config/9_ulisboa_ist.tex);
+% this just prints the bilingual heading once, then every registered entry.
 \ntaddtocover[vfill=1,height=1.25cm,valign=t,halign=l,status={final}]{2-1}{%
-  \ifoptionequal{/novathesis/ulisboa/ist/funding}{}{}{%
+  \IfMemVoidF{Sponsor}{\@LANG@COVER,1,text}{%
     \NewMemStore{Funding}
     \SetFunding*(pt)={Instituições Financiadoras:}
     \SetFunding*(en)={Funding Institutions:}
     \fontsize{11}{11}\selectfont%
     \GetFunding(\@LANG@COVER)\\[0.75ex]%
-    \@for\myi:=\expanded{\option{/novathesis/ulisboa/ist/funding}}\do{\hspace*{0.5cm}\myi\\}
+    \foreach \myi in {1, ..., 9} {%
+      \IfMemVoidF{Sponsor}{\@LANG@COVER,\myi,text}{%
+        \hspace*{0.5cm}\GetSponsor(\@LANG@COVER,\myi,text)\\%
+      }%
+    }%
   }%
 }
 

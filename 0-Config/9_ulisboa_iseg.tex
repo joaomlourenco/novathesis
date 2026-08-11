@@ -14,8 +14,9 @@
 % ULISBOA - ISEG
 %------------------------------------------------------------
 
-% Funding Institutions
-% \ntsetup{ulisboa/iseg/funding={
-%   {Fundação para a Ciência e Tecnologia, projeto \#1234 1234 1234},%
-%   {União Europeia, projeto \#9876 ABCD}%
-% }}
+% Funding Institutions (one \ntsponsors(<order>,text,<lang>) call per
+% institution per language; order must start at 1 and be dense)
+% \ntsponsors(1,text,pt){Fundação para a Ciência e Tecnologia, projeto \#1234 1234 1234}
+% \ntsponsors(1,text,en){Fundação para a Ciência e Tecnologia, projeto \#1234 1234 1234}
+% \ntsponsors(2,text,pt){União Europeia, projeto \#9876 ABCD}
+% \ntsponsors(2,text,en){União Europeia, projeto \#9876 ABCD}
