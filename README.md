@@ -468,19 +468,19 @@ The Word templates (unmaintained) can be found at
   <source
     media="(prefers-color-scheme: dark)"
     srcset="
-      https://api.star-history.com/svg?repos=joaomlourenco/novathesis&type=Date&theme=dark
+      https://star-history.dera.page/svg?repos=joaomlourenco/novathesis&type=Date&theme=dark
     "
   />
   <source
     media="(prefers-color-scheme: light)"
     srcset="
-      https://api.star-history.com/svg?repos=joaomlourenco/novathesis&type=Date
+      https://star-history.dera.page/svg?repos=joaomlourenco/novathesis&type=Date
     "
   />
   <img
     width="500"
     alt="Star History Chart"
-    src="https://api.star-history.com/svg?repos=joaomlourenco/novathesis&type=Date"
+    src="https://star-history.dera.page/svg?repos=joaomlourenco/novathesis&type=Date"
   />
 </picture>
 
