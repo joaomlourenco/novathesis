@@ -558,12 +558,12 @@
             {\bookmark[level=0, dest=\HyperLocalCurrentHref]{\contentsname}
              \tableofcontents*}%
     \fi
-    \ifoptiondefined{/@nt/listof/\@matter}{
+    \@nt@listof@ifdefined{\@matter}{
       \edef\@nt@listof@bkmtitle{\GetBkmString(listof,\@LANG@MAIN)}%
       \clearforchapter%
       \phantomsection%
       \bookmark[level=0, dest=\HyperLocalCurrentHref]{\@nt@listof@bkmtitle}%
-      \optionlistdo{/@nt/listof/\@matter}{##1}%
+      \@nt@listof@run{\@matter}{##1}%
     }{}%
     \NTRunHook{listof/post}%
 }

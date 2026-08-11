@@ -513,6 +513,30 @@
 \ntdegreename(\@LANG@COVER){\GetDefaultNtDegreeName(\@LANG@COVER)}
 
 
+% "Other lists" (listoffigures/listoftables/.../custom) registered per
+% matter (frontmatter/backmatter, or any key \ntaddlistof/print/otherlists
+% names -- not a small fixed set like the print-order buckets above, so
+% the seq is created lazily on first push, mirroring options-ext.sty's
+% old ".newpush" semantics exactly). Plain-named (no "_"/":") so
+% \ntaddlistof's classical body (see the note on it below) can push
+% without ExplSyntaxOn active at the call site.
+\ExplSyntaxOn
+\cs_new_protected:Npn \@nt@listof@push #1#2
+  {
+    \seq_if_exist:cF { g__nt_listof_#1_seq } { \seq_new:c { g__nt_listof_#1_seq } }
+    \seq_gput_right:cn { g__nt_listof_#1_seq } {#2}
+  }
+% \@nt@listof@ifdefined{<bucket>}{<true>}{<false>} -- like \ifoptiondefined
+% used to be for this registry.
+\cs_new_protected:Npn \@nt@listof@ifdefined #1
+  { \seq_if_exist:cTF { g__nt_listof_#1_seq } }
+% \@nt@listof@run{<bucket>}{<code, using #1 for the current item>} --
+% same "no :c variant of seq_map_inline" situation as
+% \@nt@printorder@run above; same fix.
+\cs_new_protected:Npn \@nt@listof@run #1#2
+  { \expandafter\seq_map_inline:Nn\csname g__nt_listof_#1_seq\endcsname {#2} }
+\ExplSyntaxOff
+
 %============================================================
 % Adding list_of
 % NOTE: kept in LaTeX2e syntax (\IfStrEqCase, not expl3's \str_case:nnF).
@@ -528,15 +552,15 @@
   }
   % \typeout{\ISTOF 1=[\@listofat] 2=[#2]}\NTADDLISTOF%
   \IfStrEqCase{#2}{%
-    {listoffigures}{\options{/@nt/listof/\@listofat/.newpush={%
+    {listoffigures}{\@nt@listof@push{\@listofat}{%
               \clearforchapter%
               \listoffigures
-    }}}%
-    {listoftables}{\options{/@nt/listof/\@listofat/.newpush={%
+    }}%
+    {listoftables}{\@nt@listof@push{\@listofat}{%
               \clearforchapter%
               \listoftables
-    }}}%
-    {listoflistings}{\options{/@nt/listof/\@listofat/.newpush={%
+    }}%
+    {listoflistings}{\@nt@listof@push{\@listofat}{%
             \ifcsdef{listoflistings}{%
                 \clearforchapter%
                 \phantomsection
@@ -545,8 +569,8 @@
             }{%
                   \ClassError{novathesis}{Can't make list of listings. Please report this problem in the 'novathesis' github. Thanks!}{}%
             }%
-    }}}%
-    {listofalgorithms}{\options{/@nt/listof/\@listofat/.newpush = {%
+    }}%
+    {listofalgorithms}{\@nt@listof@push{\@listofat}{%
               \clearforchapter%
               \phantomsection
               \ifcsdef{listalgorithmname}{%
@@ -560,17 +584,17 @@
                 }%
               }%
               \listofalgorithms
-    }}}%
+    }}%
   }[%
       \clearforchapter
-      \options{/@nt/listof/\@listofat/.newpush={%
+      \@nt@listof@push{\@listofat}{%
           \ifcsdef{#2}{%
             \csuse{#2}%
           }{%
             \ClassError{novathesis}
                        {Cannot make #2. Please report this problem in the 'novathesis' github. Thanks!}{}%
           }%
-      }}%
+      }%
    ]%
 }
 
