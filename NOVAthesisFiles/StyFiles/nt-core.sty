@@ -35,28 +35,6 @@
 }
 
 
-% --------------------------------------------------------
-% Check if a list file is empty
-% --------------------------------------------------------
-\newread\nt@tempread
-\newcommand*{\nt@iflistempty}[3]{%
-  % #1 = extension (e.g., lof, lot, lol)
-  % #2 = empty-code
-  % #3 = non-empty-code
-  \IfFileExists{\jobname.#1}{%
-    \openin\nt@tempread=\jobname.#1\relax
-    \ifeof\nt@tempread
-      \closein\nt@tempread
-      #2%
-    \else
-      \closein\nt@tempread
-      #3%
-    \fi
-  }{%
-    #2%
-  }%
-}
-
 
 \ExplSyntaxOn
 % Robust titlecase function: modifies the TL variable in-place
