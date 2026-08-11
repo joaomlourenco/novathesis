@@ -148,9 +148,7 @@
 %% Include strings for all the languages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ifoptiondefined{/@nt/lang/loaded}
-  {\options{/@nt/lang/loaded = {}}}
-  {\options{/@nt/lang/loaded/.new list}}%
+\@nt@langloaded@reset
 
 % DO NOT wrap this loop in \ExplSyntaxOn.  \InputIfFileExists reads the .ldf
 % files at *execution* time, so an active ExplSyntax would apply expl3 catcodes
@@ -159,7 +157,7 @@
 % copyright paragraph).  \@for keeps normal catcodes throughout.
 \@for\mylang:=\@LANG@LOADED\do{%
   \InputIfFileExists{\DIRSTRINGS/strings-\mylang.ldf}%
-      {\options{/@nt/lang/loaded/.expanded/.push={\mylang}}}%
+      {\@nt@langloaded@push{\mylang}}%
       {\ClassError{novathesis}
                   {File not found: '\DIRSTRINGS/strings-\mylang.ldf' file!}%
                   {Add a file with the translations for this language.}}%
@@ -647,18 +645,18 @@
   }%
 }
 
-% \ifoptioncontains/\ifoptionequal/\if@backmatter/\forallglossaries/
-% \forglsentries/\printunsrtglossary are plain classical control sequences
-% (no "_"/":" in their names), so they can be called freely from inside
-% this expl3 body. Only the string comparison and the not-empty flag
-% (formerly xstring's \IfStrEq and a classical \newif) move to expl3;
-% none of this carries typeset prose -- "frontmatter"/"backmatter" are
+% \ifoptionequal/\if@backmatter/\forallglossaries/\forglsentries/
+% \printunsrtglossary are plain classical control sequences (no "_"/":"
+% in their names), so they can be called freely from inside this expl3
+% body. The listtypes registry check, the string comparison, and the
+% not-empty flag (formerly a classical \newif) all move to expl3; none
+% of this carries typeset prose -- "frontmatter"/"backmatter" are
 % internal keywords, not document text.
 \ExplSyntaxOn
 \bool_new:N \l__nt_glossary_nonempty_bool
 \cs_new_protected:Npn \myprintglossaries
   { % ignore if no glossaries were defined
-    \ifoptioncontains {/@nt/listtypes} {glossaries}
+    \seq_if_in:NnTF \g__nt_listtypes_seq {glossaries}
       {
         \ifoptionequal {/novathesis/print/glossaries} {false}
           { }

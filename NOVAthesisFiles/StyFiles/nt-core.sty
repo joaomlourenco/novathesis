@@ -1325,9 +1325,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% INTERNAL OPTIONS & LANGUAGE MAPS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\options{/@nt/.new family,
-  lang/loaded/.new list={},
-}
+% The list of languages actually found on disk (nt-setup.sty populates
+% this once babel/strings-*.ldf loading resolves which languages exist).
+% Was an options-package list; \@nt@langloaded@reset/@push are
+% plain-named so the classical, catcode-sensitive \InputIfFileExists
+% loop in nt-setup.sty can call them without needing ExplSyntaxOn active
+% at the call site (see the warning on that loop for why).
+\ExplSyntaxOn
+\seq_new:N \g__nt_lang_loaded_seq
+\cs_new_protected:Npn \@nt@langloaded@reset
+  { \seq_gclear:N \g__nt_lang_loaded_seq }
+\cs_new_protected:Npn \@nt@langloaded@push #1
+  { \seq_gput_right:Ne \g__nt_lang_loaded_seq {#1} }
+\ExplSyntaxOff
 
 
 % LangLong: maps 2/3-letter language codes to babel language names
@@ -1456,8 +1466,13 @@
   \@nt@addtolist{file}{#1}%
 }
 
-\options{/@nt/listtypes/.new list={}}
 \ExplSyntaxOn
+% Registry of which file/person classes have ever been registered at
+% all (a "registry of registries"): was an options-package list, now a
+% plain dedup-guarded seq -- \seq_if_in:Nn compares its item argument
+% unexpanded, which is safe here since every caller (\ntaddfile,
+% \ntaddperson) passes a literal identifier, never a macro.
+\seq_new:N \g__nt_listtypes_seq
 \clist_new:N \l__nt_addtolist_clist
 \NewDocumentCommand {\@nt@addtolist}
                     {m m O{\option{/novathesis/doctype}} m} {%
@@ -1466,8 +1481,8 @@
   %         #2=family {quote, abstract, chapter, etc} or {author, adviser, committee}
   %         #3=[file-lang | sub-family | key] (OPTIONAL)
   %         #4=filename
-  \ifoptioncontains{/@nt/listtypes}{#2}{}
-      {\options{/@nt/listtypes/.newpush={#2}}}
+  \seq_if_in:NnF \g__nt_listtypes_seq {#2}
+      { \seq_gput_right:Nn \g__nt_listtypes_seq {#2} }
   \IfBeginsWithAnyOf{#4}{/,.}
       {\xdef\@nt@filewithpath{#4}}
       {\xdef\@nt@filewithpath{\prop_item:Ne \c__nt_folders_prop {#2}/#4}}

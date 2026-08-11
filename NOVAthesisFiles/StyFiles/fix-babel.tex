@@ -58,9 +58,9 @@
 %% ENGINE: APPLYING LOCALIZED CAPTIONS
 \cs_new_protected:Nn \nt_babel_apply_all_captions:
   {
-    \cs_if_exist:NT \optionlistdo
+    \seq_if_exist:NT \g__nt_lang_loaded_seq
       {
-        \optionlistdo { /@nt/lang/loaded }
+        \seq_map_inline:Nn \g__nt_lang_loaded_seq
           {
             \prop_if_exist:cT { g_nt_babel_ ##1 _prop }
               {
