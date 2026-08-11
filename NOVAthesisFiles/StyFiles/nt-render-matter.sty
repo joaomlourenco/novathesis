@@ -4,7 +4,7 @@
 %%  NOVATHESIS — nt-render-matter.sty
 %% ----------------------------------------------------------------------------
 %%
-%% Version 8.0.2 (2026-08-07)
+%% Version 8.0.3 (2026-08-11)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -173,6 +173,7 @@
                 {\GetSdgString(en)}%
                 {\GetSdgString(\@LSHORT)}:}\\[1ex]
       \edef\@sdgtype{\option{/novathesis/print/sdgs/type}}
+      \ntchecksdgs{\@LSHORT}{\@sdgtype}%
       \IfFileExists{\DIRIMAGES/sdg-\@LSHORT/1-\@sdgtype.pdf}
           {\def\@spnfolder{\DIRIMAGES/sdg-\@LSHORT}}
           {\def\@spnfolder{\DIRIMAGES/sdg-en}}
@@ -819,16 +820,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Font names below use "~" instead of literal spaces: under ExplSyntaxOn,
+% space (catcode 9) is ignored, but "~" is catcode 10 (an ordinary
+% interword space), so multi-word font names survive untouched. This is
+% safe here because IfFontExistsTF/newfontfamily only query the OS font
+% backend with a string -- unlike \InputIfFileExists/\input/\RequirePackage
+% elsewhere in this file, nothing here reads and tokenizes an external
+% file's contents under these catcodes.
+\ExplSyntaxOn
 \IfSubStr{,\@LANG@LOADED,}{,zhs,}{%
   \iftutex
     \ifcsname nt@cjkfontSC\endcsname\else
-      \IfFontExistsTF{PingFang SC}
-        {\newfontfamily\nt@cjkfontSC{PingFang SC}}
-        {\IfFontExistsTF{Noto Sans CJK SC}
-          {\newfontfamily\nt@cjkfontSC{Noto Sans CJK SC}}
-          {\IfFontExistsTF{Heiti SC}
-            {\newfontfamily\nt@cjkfontSC{Heiti SC}}
-            {\newfontfamily\nt@cjkfontSC{Latin Modern Roman}}%
+      \IfFontExistsTF{PingFang~SC}
+        {\newfontfamily\nt@cjkfontSC{PingFang~SC}}
+        {\IfFontExistsTF{Noto~Sans~CJK~SC}
+          {\newfontfamily\nt@cjkfontSC{Noto~Sans~CJK~SC}}
+          {\IfFontExistsTF{Heiti~SC}
+            {\newfontfamily\nt@cjkfontSC{Heiti~SC}}
+            {\newfontfamily\nt@cjkfontSC{Latin~Modern~Roman}}%
           }%
         }%
     \fi
@@ -837,18 +846,19 @@
 \IfSubStr{,\@LANG@LOADED,}{,zht,}{%
   \iftutex
     \ifcsname nt@cjkfontTC\endcsname\else
-      \IfFontExistsTF{PingFang TC}
-        {\newfontfamily\nt@cjkfontTC{PingFang TC}}
-        {\IfFontExistsTF{Noto Sans CJK TC}
-          {\newfontfamily\nt@cjkfontTC{Noto Sans CJK TC}}
-          {\IfFontExistsTF{Heiti TC}
-            {\newfontfamily\nt@cjkfontTC{Heiti TC}}
-            {\newfontfamily\nt@cjkfontTC{Latin Modern Roman}}%
+      \IfFontExistsTF{PingFang~TC}
+        {\newfontfamily\nt@cjkfontTC{PingFang~TC}}
+        {\IfFontExistsTF{Noto~Sans~CJK~TC}
+          {\newfontfamily\nt@cjkfontTC{Noto~Sans~CJK~TC}}
+          {\IfFontExistsTF{Heiti~TC}
+            {\newfontfamily\nt@cjkfontTC{Heiti~TC}}
+            {\newfontfamily\nt@cjkfontTC{Latin~Modern~Roman}}%
           }%
         }%
     \fi
   \fi
 }{}
+\ExplSyntaxOff
 
 \newcommand*{\printabstracttitle}[1]{%
   \begingroup

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #-----------------------------------------------------------------------------
 # NOVAthesis — nt-variant.sh
-# Version 8.0.2 (2026-08-07)
+# Version 8.0.3 (2026-08-11)
 #
 # Build one (or all) school variants of the template WITHOUT touching the
 # working copy. Settings are injected at the command line through the
@@ -23,6 +23,10 @@
 #   -e engine    lua|pdf|xe    (default: lua if allowed by schools.conf)
 #   -s status    working|provisional|final   (default: final)
 #   -x keys      extra \ntsetup keys, e.g. 'print/index=true'
+#                (this is what Makefile.dev's 'make school'/'make matrix' NT=
+#                variable is forwarded through as; renamed at the Make level
+#                for consistency with the main Makefile's NT=, but left as -x
+#                here since it only appends to \ntoverride, not replace it)
 #   -o outdir    where to put the renamed PDF (default: repo root; with -a a
 #                subfolder YYYY-MM-DD@hh-mm-ss is created at invocation time)
 #   -j jobs      parallel jobs for -a (default: 1)

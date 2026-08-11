@@ -4,7 +4,7 @@
 %%  NOVATHESIS — 2-MainMatter/chapter-manual.tex
 %% ----------------------------------------------------------------------------
 %%
-%% Version 8.0.2 (2026-08-07)
+%% Version 8.0.3 (2026-08-11)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %%
 %% User's manual chapter: complete guide to configuring and using the
@@ -74,9 +74,10 @@ alternative.  \hologo{pdfLaTeX} works but cannot load OpenType/TrueType fonts.
   \label{box:shell-escape-security}
   \novathesis{} compiles with \texttt{-{}-shell-escape} \emph{enabled},
   because several features run external programs during the build:
-  \texttt{minted} calls Pygments to highlight source code, and selecting a
+  \texttt{minted} calls Pygments to highlight source code, selecting a
   bundled proprietary font (Calibri, Arial, \ldots) downloads it over the
-  network.  (Glossaries no longer need shell-escape: since 8.0 they are built
+  network, and printing the SDG icons (Section~\ref{sub:sdgs}) downloads them
+  the same way.  (Glossaries no longer need shell-escape: since 8.0 they are built
   by \texttt{bib2gls}, which \texttt{latexmk} runs directly.)  With shell-escape, \textbf{compiling a document can run commands
   on your computer with your own user privileges} — there is no sandbox.
 
@@ -481,38 +482,74 @@ below should be set together:
 \ntsetup{print/sdgs/vspace=4mm}       % vertical gap below icons
 \end{latexcode}
 
-The \texttt{type} option selects the icon variant: \texttt{inverted} (colour on white background), \texttt{normal} (colour on coloured background), or \texttt{mono} (monochrome on white background).  Table~\ref{tab:sdgs}\footnote{Table~\ref{tab:sdgs} is intentionally in a page with differente dimensions (corresponding to a rotated page) to illustrate the funcitonality of the \texttt{stocksize} package.} lists all 17 SDGs with their icon (\texttt{inverted} variant), title, and goal description.
+The \texttt{type} option selects the icon variant: \texttt{inverted} (colour on white background), \texttt{normal} (colour on coloured background), or \texttt{mono} (monochrome on white background).  Table~\ref{tab:sdgs}\footnote{Table~\ref{tab:sdgs} is intentionally in a page with differente dimensions (corresponding to a rotated page) to illustrate the funcitonality of the \texttt{stocksize} package.} lists all 17 SDGs with their icon in the three variants, title, and goal description.
+
+\paragraph{Automatic download of the SDG icons.}  The \ntindex[configuration!print/sdgs!automatic download]{SDG} icons are \emph{not} shipped with the template.  Just like the school-specific fonts (Section~\ref{sub:local_install}), they are downloaded automatically when needed from \url{https://github.com/joaomlourenco/SDGs} into \verb!NOVAthesisFiles/Images/sdg-<lang>/!, and reused from there in later compilations, so the download happens only once.  Only what is really necessary is fetched, namely the icons listed in \texttt{print/sdgs/list}, in the variant chosen with \texttt{print/sdgs/type}, and in the language of each abstract.
+
+At the time of writing the icons exist upstream in English, Portuguese, Spanish, French and German.  For an abstract written in any other language, the English icons are used instead, so the English set is always downloaded as a fallback.  No list of languages is hardwired in the template: the upstream folder is simply the language code in upper case (\texttt{pt}~$\rightarrow$~\texttt{PT}, \ldots), so icons for a new language added upstream are used automatically, with no change to \novathesis{}, as long as the new folder is named after the corresponding language code.
+
+As for the fonts, this needs \texttt{-{}-shell-escape} (see the warning box in page~\pageref{box:shell-escape-security}) and a network connection.  A language with no icons upstream simply produces one warning per compilation and falls back to English.  If the download fails, you may get the files by hand from the address above and copy them into that folder.
+
+% This table shows all 17 icons directly (not through \ntprintsdgs), so make
+% sure they are locally cached regardless of the user's own print/sdgs/list.
+% The option override is local to this group; the user's own setting (if any)
+% is restored automatically at \endgroup.
+\begingroup
+  \optionsalso{/novathesis/print/sdgs/list={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}}
+  \ntchecksdgs{en}{n}
+  \ntchecksdgs{en}{i}
+  \ntchecksdgs{en}{m}
+\endgroup
 
 \newstocksize{layoutsize={297mm,210mm},keepmargins}
+% Uniform row height: \sdgstrut is an empty, zero-width box of exactly
+% \sdgrowheight, so every row is that tall, slightly taller than the icon.
+% It must be \vcenter'ed (not a plain \rule): graphbox's "align=c" centres the
+% icon on the *math axis*, and m{} columns centre their text the same way, so
+% a baseline-symmetric strut would sit lower than the icon and push it against
+% the top of the row.  \vcenter puts the strut on the same axis as both.
+% (A row whose text needs more lines than fit in \sdgrowheight will still grow.)
+\newlength{\sdgiconheight}\setlength{\sdgiconheight}{1.15cm}
+\newlength{\sdgrowheight}\setlength{\sdgrowheight}{1.35cm}
+\newcommand{\sdgstrut}{$\vcenter to\sdgrowheight{}$}
 \begin{center}
-{\small\rowcolors{2}{rowgray}{white}%
+\small\rowcolors{2}{rowgray}{white}%
 \renewcommand{\arraystretch}{1.4}%
-\begin{longtable}{@{}cp{\dimexpr0.32\linewidth}p{\dimexpr0.52\linewidth}@{}}
-  \caption{The 17 UN Sustainable Development Goals (SDGs) — \texttt{inverted} icon variant.}
+\newcommand{\inclsdg}[2]{\sdgstrut\includegraphics[height=\sdgiconheight,align=c]{\DIRIMAGES/sdg-en/#1-#2}}
+% NOTE: this must be 'xltabular', not 'tabularx'.  The template loads
+% glossary-xltabular -> xltabular, and xltabular explicitly restores the plain
+% (single-page, no-\caption) tabularx, providing the longtable-backed version
+% under the name 'xltabular' instead.  Only xltabular supports \caption,
+% \label, \endfirsthead and \endhead, and breaks across pages, which this
+% 17-row table needs.  \tabularxcolumn=m centres the X column vertically.
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+\begin{xltabular}{\textwidth}{@{}ccc>{\raggedright\arraybackslash}m{0.26\textwidth}X@{}}
+  \rowcolor{white}
+  \caption{The 17 UN Sustainable Development Goals (SDGs), in the \texttt{normal}, \texttt{inverted} and \texttt{mono} icon variants.}
   \label{tab:sdgs}\\
   \rowcolor{headgray}
-  \textbf{Icon} & \textbf{Title} & \textbf{Goal} \\\endfirsthead
-  \rowcolor{headgray}
-  \textbf{Icon} & \textbf{Title} & \textbf{Goal} \\\endhead
+  \textbf{Normal} & \textbf{Inverted} & \textbf{Mono} & \textbf{Title} & \textbf{Goal} \\\endfirsthead
+  \rowcolor{headgray}%
+  \textbf{Normal} & \textbf{Inverted} & \textbf{Mono} & \textbf{Title} & \textbf{Goal} \\\endhead
   %
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/1-i}  & \textbf{1 — No Poverty}                             & End poverty in all its forms everywhere. \\
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/2-i}  & \textbf{2 — Zero Hunger}                            & End hunger, achieve food security, improve nutrition, and promote sustainable agriculture. \\
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/3-i}  & \textbf{3 — Good Health and Well-being}              & Ensure healthy lives and promote well-being for all at all ages. \\
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/4-i}  & \textbf{4 — Quality Education}                      & Ensure inclusive and equitable quality education and promote lifelong learning opportunities. \\
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/5-i}  & \textbf{5 — Gender Equality}                        & Achieve gender equality and empower all women and girls. \\
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/6-i}  & \textbf{6 — Clean Water and Sanitation}              & Ensure availability and sustainable management of water and sanitation for all. \\
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/7-i}  & \textbf{7 — Affordable and Clean Energy}             & Ensure access to affordable, reliable, sustainable, and modern energy for all. \\
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/8-i}  & \textbf{8 — Decent Work and Economic Growth}         & Promote sustained, inclusive, and sustainable economic growth, full employment, and decent work. \\
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/9-i}  & \textbf{9 — Industry, Innovation and Infrastructure} & Build resilient infrastructure, promote inclusive and sustainable industrialization, and foster innovation. \\
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/10-i} & \textbf{10 — Reduced Inequalities}                  & Reduce inequality within and among countries. \\
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/11-i} & \textbf{11 — Sustainable Cities and Communities}     & Make cities and human settlements inclusive, safe, resilient, and sustainable. \\
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/12-i} & \textbf{12 — Responsible Consumption and Production} & Ensure sustainable consumption and production patterns. \\
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/13-i} & \textbf{13 — Climate Action}                        & Take urgent action to combat climate change and its impacts. \\
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/14-i} & \textbf{14 — Life Below Water}                      & Conserve and sustainably use the oceans, seas, and marine resources. \\
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/15-i} & \textbf{15 — Life on Land}                          & Protect, restore, and promote sustainable use of terrestrial ecosystems and halt biodiversity loss. \\
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/16-i} & \textbf{16 — Peace, Justice and Strong Institutions} & Promote peaceful and inclusive societies, provide access to justice, and build accountable institutions. \\
-  \includegraphics[width=1.15cm,align=c]{\DIRIMAGES/sdg-en/17-i} & \textbf{17 — Partnerships for the Goals}            & Strengthen the means of implementation and revitalize the global partnership for sustainable development. \\
-\end{longtable}}
+  \inclsdg{1}{n}  & \inclsdg{1}{i}  & \inclsdg{1}{m}  & \textbf{1 — No Poverty}                             & End poverty in all its forms everywhere. \\
+  \inclsdg{2}{n}  & \inclsdg{2}{i}  & \inclsdg{2}{m}  & \textbf{2 — Zero Hunger}                            & End hunger, achieve food security, improve nutrition, and promote sustainable agriculture. \\
+  \inclsdg{3}{n}  & \inclsdg{3}{i}  & \inclsdg{3}{m}  & \textbf{3 — Good Health and Well-being}              & Ensure healthy lives and promote well-being for all at all ages. \\
+  \inclsdg{4}{n}  & \inclsdg{4}{i}  & \inclsdg{4}{m}  & \textbf{4 — Quality Education}                      & Ensure inclusive and equitable quality education and promote lifelong learning opportunities. \\
+  \inclsdg{5}{n}  & \inclsdg{5}{i}  & \inclsdg{5}{m}  & \textbf{5 — Gender Equality}                        & Achieve gender equality and empower all women and girls. \\
+  \inclsdg{6}{n}  & \inclsdg{6}{i}  & \inclsdg{6}{m}  & \textbf{6 — Clean Water and Sanitation}              & Ensure availability and sustainable management of water and sanitation for all. \\
+  \inclsdg{7}{n}  & \inclsdg{7}{i}  & \inclsdg{7}{m}  & \textbf{7 — Affordable and Clean Energy}             & Ensure access to affordable, reliable, sustainable, and modern energy for all. \\
+  \inclsdg{8}{n}  & \inclsdg{8}{i}  & \inclsdg{8}{m}  & \textbf{8 — Decent Work and Economic Growth}         & Promote sustained, inclusive, and sustainable economic growth, full employment, and decent work. \\\pagebreak
+  \inclsdg{9}{n}  & \inclsdg{9}{i}  & \inclsdg{9}{m}  & \textbf{9 — Industry, Innovation and Infrastructure} & Build resilient infrastructure, promote inclusive and sustainable industrialization, and foster innovation. \\
+  \inclsdg{10}{n} & \inclsdg{10}{i} & \inclsdg{10}{m} & \textbf{10 — Reduced Inequalities}                  & Reduce inequality within and among countries. \\
+  \inclsdg{11}{n} & \inclsdg{11}{i} & \inclsdg{11}{m} & \textbf{11 — Sustainable Cities and Communities}     & Make cities and human settlements inclusive, safe, resilient, and sustainable. \\
+  \inclsdg{12}{n} & \inclsdg{12}{i} & \inclsdg{12}{m} & \textbf{12 — Responsible Consumption and Production} & Ensure sustainable consumption and production patterns. \\
+  \inclsdg{13}{n} & \inclsdg{13}{i} & \inclsdg{13}{m} & \textbf{13 — Climate Action}                        & Take urgent action to combat climate change and its impacts. \\
+  \inclsdg{14}{n} & \inclsdg{14}{i} & \inclsdg{14}{m} & \textbf{14 — Life Below Water}                      & Conserve and sustainably use the oceans, seas, and marine resources. \\
+  \inclsdg{15}{n} & \inclsdg{15}{i} & \inclsdg{15}{m} & \textbf{15 — Life on Land}                          & Protect, restore, and promote sustainable use of terrestrial ecosystems and halt biodiversity loss. \\
+  \inclsdg{16}{n} & \inclsdg{16}{i} & \inclsdg{16}{m} & \textbf{16 — Peace, Justice and Strong Institutions} & Promote peaceful and inclusive societies, provide access to justice, and build accountable institutions. \\
+  \inclsdg{17}{n} & \inclsdg{17}{i} & \inclsdg{17}{m} & \textbf{17 — Partnerships for the Goals}            & Strengthen the means of implementation and revitalize the global partnership for sustainable development. \\
+\end{xltabular}
 \end{center}
 \restorestocksize
 

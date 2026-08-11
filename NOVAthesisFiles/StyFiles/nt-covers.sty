@@ -4,7 +4,7 @@
 %%  NOVATHESIS — nt-covers.sty
 %% ----------------------------------------------------------------------------
 %%
-%% Version 8.0.2 (2026-08-07)
+%% Version 8.0.3 (2026-08-11)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -572,12 +572,12 @@
     \ifcoverdefined [#1-#2]
       {
         \tl_gset:cn { @COVERNUM } { #1-#2 }
-        \IfStrEq { #1 } { 1 }
+        \str_if_eq:nnTF { #1 } { 1 }
           { \pagenumbering { roman } \setcounter { page } { 0 } }
           { }
         \nt_covers_render_page:nn { #1 } { #2 }
         \ifoptionequal { /novathesis/media } { paper }
-          { \IfStrEq { #2 } { 1 } { \ifcoverdefined [#1-2] { } { \clearpage } } { } }
+          { \str_if_eq:nnTF { #2 } { 1 } { \ifcoverdefined [#1-2] { } { \clearpage } } { } }
           { \clearpage }
       }
       { }
@@ -591,8 +591,8 @@
       \clearpage
       \phantomsection
       \def \bmshift { 1 }
-      \IfStrEq { #1-#2 } { 1-1 } { \def \bmshift { 0 } } { }
-      \IfStrEq { #1-#2 } { N-2 } { \def \bmshift { 0 } } { }
+      \str_if_eq:nnTF { #1-#2 } { 1-1 } { \def \bmshift { 0 } } { }
+      \str_if_eq:nnTF { #1-#2 } { N-2 } { \def \bmshift { 0 } } { }
       \bookmark
         [ level = \bmshift, dest = \HyperLocalCurrentHref ]
         { \GetBkmString ( #1-#2 ) }

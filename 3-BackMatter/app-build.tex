@@ -4,7 +4,7 @@
 %%  NOVATHESIS — 3-BackMatter/app-build.tex
 %% ----------------------------------------------------------------------------
 %%
-%% Version 8.0.2 (2026-08-07)
+%% Version 8.0.3 (2026-08-11)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %%
 %% Tutorial appendix: the NOVAthesis build system (Makefile + latexmk +
@@ -210,7 +210,7 @@ helper script \verb!.Build/nt-variant.sh!.
 
 \begin{bashcode}
 make school SCHOOL=nova/fct                     # defaults from schools.conf
-make school SCHOOL=uminho/ec TYPE=msc LANG=pt ENGINE=lua
+make school SCHOOL=uminho/ec TYPE=msc LNG=pt ENGINE=lua
 \end{bashcode}
 
 The variant is built with the override mechanism of
@@ -222,6 +222,22 @@ The resulting \gls{PDF} is named
 \verb!.Build/schools.conf!: the highest degree available for the school, and
 \texttt{lua} whenever the school supports it.  If the build fails, the log
 file is copied next to where the \gls{PDF} would go, with the same base name.
+\texttt{LNG} (not \texttt{LANG}) sets the language: \texttt{LANG} is the
+shell's own locale variable, so using it here would leak into the build
+and, for anything other than an installed locale, break \hologo{LuaLaTeX}.
+
+\verb!NT='<keys>'! appends extra \latexinline{\ntsetup} keys to the
+doctype/school/lang/docstatus this target already computes, e.g.\ to print
+every SDG on this variant's cover:
+\begin{bashcode}
+make school SCHOOL=nova/fct \
+    NT='print/sdgs/list={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}'
+\end{bashcode}
+Quote it: it typically contains commas and braces.  This is the same
+variable name as the main \verb!Makefile!'s \verb!NT=!
+(Section~\ref{sec:build_overrides}), but not the same behaviour: there,
+\verb!NT=! \emph{replaces} \latexinline{\ntoverride} outright; here it only
+\emph{appends} to the override this target builds for you.
 
 %%-----------------------------------------------------------------------
 \subsection{Building the Full Matrix}
@@ -234,7 +250,13 @@ make matrix JOBS=4           # up to 4 units in parallel
 make matrix FILTER=nova/fct  # restrict by prefix (university/school/sub-program)
 make matrix FILTER=uminho,ipl  # comma-separated prefixes
 make matrix WARM=0           # one fresh aux dir per variant (no warm reuse)
+make matrix NT='print/sdgs/list={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}'
+                              # extra \ntsetup keys, appended to every variant
 \end{bashcode}
+\verb!NT!, quoted, works exactly as in \verb!make school! above: it appends
+extra \latexinline{\ntsetup} keys to \emph{every} variant in the matrix,
+rather than replacing \latexinline{\ntoverride} like the main
+\verb!Makefile!'s \verb!NT=! does.
 
 \verb!make matrix! builds every school/doctype/language/engine combination
 listed in \verb!.Build/schools.conf!.  The \verb!FILTER! variable restricts

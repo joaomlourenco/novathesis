@@ -4,7 +4,7 @@
 %%  NOVATHESIS — nt-core.sty
 %% ----------------------------------------------------------------------------
 %%
-%% Version 8.0.2 (2026-08-07)
+%% Version 8.0.3 (2026-08-11)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -796,12 +796,25 @@
 % Variant of \@for with an optional final argument, that is
 % executed iif the loop is not interrupted
 % --------------------------------------------------------
-\def\ntforbreak{\@endfortrue}
+% The outer \ntfor/\ntfor@i shells stay classical: their parameter text
+% uses ":=" and "[...]" as literal delimiters that must keep catcode 12
+% to match call sites written in normal-catcode context, so they cannot
+% be defined while ExplSyntaxOn is active. Only the loop body itself
+% (no delimiters, no document text) moves to expl3, via a plain-named
+% (no "_"/":") auxiliary that classical code can call from anywhere.
+\ExplSyntaxOn
+\bool_new:N \l__nt_for_break_bool
+\cs_new_protected:Npn \@nt@ntforloop #1#2#3#4
+  { % #1=loop variable  #2=comma list  #3=per-iteration code  #4=else-branch
+    \bool_set_false:N \l__nt_for_break_bool
+    \clist_map_inline:nn {#2} { \xdef #1 {##1} #3 }
+    \bool_if:NF \l__nt_for_break_bool {#4}
+  }
+\cs_new:Npn \ntforbreak
+  { \bool_set_true:N \l__nt_for_break_bool \clist_map_break: }
+\ExplSyntaxOff
 \long\def\ntfor#1:=#2\do#3{\@ifnextchar[{\ntfor@i#1:=#2\do#3}{\ntfor@i#1:=#2\do#3[]}}
-\long\def\ntfor@i#1:=#2\do#3[#4]{%
-  \@for#1:={#2}\do{\xdef#1{#1}#3}%
-  \if@endfor\else#4\fi
-}
+\long\def\ntfor@i#1:=#2\do#3[#4]{\@nt@ntforloop{#1}{#2}{#3}{#4}}
 
 % --------------------------------------------------------
 % ISO 8601 date string: YYYY-MM-DD of \today
@@ -843,7 +856,7 @@
       \nt_check_fonts:nnnnn { #1 } { #2 } { #3 } { #4 } { #5 }
     }
     {
-      \msg_error:nn { ntfonts } { shell-escape-required }
+      \msg_error:nn { ntdownload } { shell-escape-required }
     }
   }
   {
@@ -854,12 +867,16 @@
   }
 }
 
-\msg_new:nnn { ntfonts } { shell-escape-required }
+% --------------------------------------------------------
+% Generic download engine (used both by \ntcheckfonts above and by
+% \ntchecksdgs further down).  Messages are intentionally generic: this
+% engine has no notion of "font" or "SDG", it just fetches a URL to a
+% local path.
+% --------------------------------------------------------
+\msg_new:nnn { ntdownload } { shell-escape-required }
 {
-  Font~download~requires~shell~escape.~\\
-  Please~compile~with:~
-  \token_to_str:N lualatex \c_space_tl \c_sys_jobname_str
-  \c_space_tl -shell-escape
+  File~download~requires~shell~escape.~\\
+  Please~add~-shell-escape~to~your~compilation~command.
 }
 
 % Portable null device: /dev/null on Unix, nul on Windows (used to silence
@@ -873,78 +890,79 @@
 % Use an e-expanding variant for the probes so the null device is resolved.
 \cs_generate_variant:Nn \sys_get_shell:nnN { enN }
 
-\msg_new:nnn { ntfonts } { download-failed }
+\msg_new:nnn { ntdownload } { download-failed }
 {
-  Could~not~download~the~font~from~'#1';~no~file~was~created~at~'#2'.~\\
-  Fetch~it~manually~from~
-  https://github.com/joaomlourenco/novathesis-extras/tree/main/Fonts
+  Could~not~download~'#2'~from~'#1'.~\\
+  No~file~was~created;~check~your~network~connection,~or~fetch~it~
+  manually~from~that~URL.
 }
 
 \seq_new:N \l__nt_variants_seq
 \tl_new:N \l__nt_filename_tl
 \tl_new:N \l__nt_remote_url_tl
 \tl_new:N \l__nt_local_path_tl
-\str_new:N \l__nt_font_check_str
+\str_new:N \l__nt_download_check_str
 
 % --------------------------------------------------------
-% SECURITY: validate every font-download argument before it is
-% interpolated into a shell command.  \ntcheckfonts only runs with
-% shell escape enabled, so an argument carrying shell metacharacters
-% could execute arbitrary commands during the download.  Names,
-% formats and variants must be plain identifiers ([A-Za-z0-9._-]);
-% URLs and target paths may not contain shell metacharacters.  Every
-% component of the download URL and local path is checked here, and
-% the shell commands below additionally single-quote each field.
+% SECURITY: validate every download argument (used both for fonts and
+% for SDGs) before it is interpolated into a shell command.  These
+% functions only ever run with shell escape enabled, so an argument
+% carrying shell metacharacters could execute arbitrary commands during
+% the download.  Names, formats, variants, languages and list entries
+% must be plain identifiers ([A-Za-z0-9._-]); URLs and target paths may
+% not contain shell metacharacters.  Every component of the download
+% URL and local path is checked here, and the shell commands below
+% additionally single-quote each field.
 \cs_generate_variant:Nn \regex_match:nnTF { nV }
 
-\msg_new:nnnn { ntfonts } { unsafe-token }
-  { Refusing~to~download~font:~unsafe~#1~'#2'. }
+\msg_new:nnnn { ntdownload } { unsafe-token }
+  { Refusing~to~download:~unsafe~#1~'#2'. }
   {
     The~#1~may~contain~only~letters,~digits,~'.',~'_'~and~'-'.
     A~value~with~other~characters~could~inject~shell~commands
-    while~downloading~the~font,~so~it~is~rejected.
+    while~downloading~the~file,~so~it~is~rejected.
   }
 
-\msg_new:nnnn { ntfonts } { unsafe-path }
-  { Refusing~to~download~font:~unsafe~#1~'#2'. }
+\msg_new:nnnn { ntdownload } { unsafe-path }
+  { Refusing~to~download:~unsafe~#1~'#2'. }
   {
     The~#1~contains~a~shell~metacharacter.~Such~a~value~could
-    inject~shell~commands~while~downloading~the~font,~so~it~is
+    inject~shell~commands~while~downloading~the~file,~so~it~is
     rejected.
   }
 
-% \__nt_font_assert_token:nn {label} {value} — value must be a plain
-% identifier; otherwise abort with an error naming the offending field.
-\cs_new_protected:Npn \__nt_font_assert_token:nn #1 #2
+% \__nt_download_assert_token:nn {label} {value} — value must be a
+% plain identifier; otherwise abort with an error naming the field.
+\cs_new_protected:Npn \__nt_download_assert_token:nn #1 #2
   {
-    \str_set:Ne \l__nt_font_check_str { #2 }
-    \regex_match:nVF { \A[A-Za-z0-9._\-]+\Z } \l__nt_font_check_str
-      { \msg_error:nnxx { ntfonts } { unsafe-token }
-          { #1 } { \l__nt_font_check_str } }
+    \str_set:Ne \l__nt_download_check_str { #2 }
+    \regex_match:nVF { \A[A-Za-z0-9._\-]+\Z } \l__nt_download_check_str
+      { \msg_error:nnxx { ntdownload } { unsafe-token }
+          { #1 } { \l__nt_download_check_str } }
   }
 
-% \__nt_font_assert_path:nn {label} {value} — value must be free of
+% \__nt_download_assert_path:nn {label} {value} — value must be free of
 % shell metacharacters (quote/backtick/$/&/;/|/<>/()/backslash/newline).
-\cs_new_protected:Npn \__nt_font_assert_path:nn #1 #2
+\cs_new_protected:Npn \__nt_download_assert_path:nn #1 #2
   {
-    \str_set:Ne \l__nt_font_check_str { #2 }
-    \regex_match:nVT { [`'"$&;|<>()\\\n] } \l__nt_font_check_str
-      { \msg_error:nnxx { ntfonts } { unsafe-path }
-          { #1 } { \l__nt_font_check_str } }
+    \str_set:Ne \l__nt_download_check_str { #2 }
+    \regex_match:nVT { [`'"$&;|<>()\\\n] } \l__nt_download_check_str
+      { \msg_error:nnxx { ntdownload } { unsafe-path }
+          { #1 } { \l__nt_download_check_str } }
   }
 
 \cs_new_protected:Npn \nt_check_fonts:nnnnn #1 #2 #3 #4 #5
 {
   % Validate every argument before it can reach a shell command.
-  \__nt_font_assert_token:nn { format }       { #1 }
-  \__nt_font_assert_token:nn { font~name }    { #2 }
-  \__nt_font_assert_path:nn  { base~URL }     { #4 }
-  \__nt_font_assert_path:nn  { target~folder }{ #5 }
+  \__nt_download_assert_token:nn { format }       { #1 }
+  \__nt_download_assert_token:nn { font~name }    { #2 }
+  \__nt_download_assert_path:nn  { base~URL }     { #4 }
+  \__nt_download_assert_path:nn  { target~folder }{ #5 }
 
   % Split variants by commas, then validate each one
   \seq_set_split:Nnn \l__nt_variants_seq { , } { #3 }
   \seq_map_inline:Nn \l__nt_variants_seq
-    { \__nt_font_assert_token:nn { font~variant } { ##1 } }
+    { \__nt_download_assert_token:nn { font~variant } { ##1 } }
 
   % Create target directory if it doesn't exist.  (\sys_shell:n is not a real
   % l3 function; use \sys_shell_now:x, which is defined and expands #5.)
@@ -973,7 +991,7 @@
                     to~' \l__nt_local_path_tl '~ }
 
       % Download the font
-      \nt_download_font:nn { \l__nt_remote_url_tl } { \l__nt_local_path_tl }
+      \nt_download_file:nn { \l__nt_remote_url_tl } { \l__nt_local_path_tl }
     }
   }
 }
@@ -986,15 +1004,52 @@
 % the \sys_get_shell:enN / \sys_shell_now:x probe calls below.
 \bool_new:N \l__nt_download_done_bool
 
-\cs_new_protected:Npn \nt_download_font:nn #1 #2
+% When true, \nt_download_file:nn does not warn if no file was produced: the
+% caller takes care of reporting (used by the SDG code, where a miss usually
+% just means "this language has no icons upstream").
+\bool_new:N \l__nt_download_quiet_bool
+
+\str_new:N \l__nt_download_size_str
+
+% \__nt_download_discard:n {path} — remove a file left behind by a failed
+% transfer.  Needed because "wget -O" creates the output file *before* the
+% request is answered, so an HTTP error or a dead network leaves a 0-byte
+% file; without this it would be cached forever and later break
+% \includegraphics instead of being reported as a failed download.
+\cs_new_protected:Npn \__nt_download_discard:n #1
+  {
+    \iow_term:x { Discarding~empty~file~'#1'. }
+    \sys_if_platform_windows:TF
+      { \sys_shell_now:x { del~/q~"#1" } }
+      { \sys_shell_now:x { rm~-f~'#1' } }
+  }
+
+% \__nt_download_accept:n {path} — decide whether the tool that has just run
+% actually delivered the file.  Only a non-empty file counts as success; on
+% anything else the download is *not* marked done, so the next tool in the
+% chain is tried (a present but failing curl must not block wget/python).
+\cs_new_protected:Npn \__nt_download_accept:n #1
+  {
+    \file_get_size:nNT { #1 } \l__nt_download_size_str
+      {
+        \str_if_eq:VnTF \l__nt_download_size_str { 0 }
+          { \__nt_download_discard:n { #1 } }
+          { \bool_set_true:N \l__nt_download_done_bool }
+      }
+  }
+
+\cs_new_protected:Npn \nt_download_file:nn #1 #2
 {
   % #1 = remote URL, #2 = local target path
+  % \l__nt_download_done_bool means "stop trying": it is set only once a tool
+  % has produced a usable (non-empty) file, so the strategies below form a real
+  % fallback chain instead of "whichever tool is installed first wins".
   \bool_set_false:N \l__nt_download_done_bool
 
   % A download tool can only run with (unrestricted) shell escape.
   \sys_if_shell_unrestricted:F
     {
-      \msg_error:nn { ntfonts } { shell-escape-required }
+      \msg_error:nn { ntdownload } { shell-escape-required }
       \bool_set_true:N \l__nt_download_done_bool
     }
 
@@ -1005,39 +1060,48 @@
       \sys_get_shell:enN  {curl ~ --version ~ 2> ~ \c__nt_devnull_tl }
                           { \tl_trim_spaces:n }
                           \l_nt_cmd_output_tl
-      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+      \tl_if_empty:NF \l_nt_cmd_output_tl
         {
           % -f: fail (no file written) on HTTP >=400, so the file-existence
           % check below is meaningful; -sS: quiet but still report real errors.
           \iow_term:x { Running: ~ curl ~ -fsSL ~ -o ~ '#2' ~ '#1'... }
           \sys_shell_now:x { curl ~ -fsSL ~ -o ~ '#2' ~ '#1' }
-          \bool_set_true:N \l__nt_download_done_bool
+          \__nt_download_accept:n { #2 }
         }
     }
 
-  % Probe wget.
+  % Probe wget.  Unlike curl, wget has no "-f": with -O it always creates the
+  % output file, and leaves it empty on an HTTP error or a dead network, so the
+  % 0-byte result is caught (and removed) by \__nt_download_accept:n below.
   \bool_if:NF \l__nt_download_done_bool
     {
       \iow_term:x { Trying: ~ 'wget'... }
       \sys_get_shell:enN  {wget ~ --version ~ 2> ~ \c__nt_devnull_tl }
                           { \tl_trim_spaces:n }
                           \l_nt_cmd_output_tl
-      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+      \tl_if_empty:NF \l_nt_cmd_output_tl
         {
-          \iow_term:x { Running: ~ wget ~ -q ~ -O ~ '#2' ~ '#1'... }
-          \sys_shell_now:x { wget ~ -q ~ -O ~ '#2' ~ '#1' }
-          \bool_set_true:N \l__nt_download_done_bool
+          \iow_term:x { Running: ~ wget ~ -q ~ --tries=1 ~ -O ~ '#2' ~ '#1'... }
+          \sys_shell_now:x { wget ~ -q ~ --tries=1 ~ -O ~ '#2' ~ '#1' }
+          \__nt_download_accept:n { #2 }
         }
     }
 
   % Probe python3 (each interpreter runs only itself — no cross-calls).
+  % The probe imports urllib.request instead of asking for --version: that is
+  % what the download actually needs, and it is Python 3 only (see 'python'
+  % below).  It must print something, as a blank result means "not usable".
   \bool_if:NF \l__nt_download_done_bool
     {
       \iow_term:x { Trying: ~ 'python3'... }
-      \sys_get_shell:enN  {python3 ~ --version ~ 2> ~ \c__nt_devnull_tl }
+      % NOTE: single quotes.  \sys_get_shell:nnN refuses a command containing a
+      % double quote and returns \q_no_value, which is NOT empty and would make
+      % the probe succeed for a tool that is not there.
+      \sys_get_shell:enN  {python3 ~ -c ~ 'import ~ urllib.request; ~
+                           print(1)' ~ 2> ~ \c__nt_devnull_tl }
                           { \tl_trim_spaces:n }
                           \l_nt_cmd_output_tl
-      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+      \tl_if_empty:NF \l_nt_cmd_output_tl
         {
           \iow_term:x { Running: ~ python3 ~ urlretrieve('#1',~'#2')... }
           \sys_shell_now:x
@@ -1045,18 +1109,22 @@
               python3 ~ -c ~ "import ~ urllib.request; ~
               urllib.request.urlretrieve('#1', ~ '#2')"
             }
-          \bool_set_true:N \l__nt_download_done_bool
+          \__nt_download_accept:n { #2 }
         }
     }
 
-  % Probe python (reached only when python3 was not found).
+  % Probe python (reached only when python3 was not found).  On a system where
+  % 'python' is still Python 2 the import below fails, the probe prints
+  % nothing, and this branch is skipped: urllib.request does not exist there
+  % (it is urllib.urlretrieve), so '--version' would have wrongly accepted it.
   \bool_if:NF \l__nt_download_done_bool
     {
       \iow_term:x { Trying: ~ 'python'... }
-      \sys_get_shell:enN  {python ~ --version ~ 2> ~ \c__nt_devnull_tl }
+      \sys_get_shell:enN  {python ~ -c ~ 'import ~ urllib.request; ~
+                           print(1)' ~ 2> ~ \c__nt_devnull_tl }
                           { \tl_trim_spaces:n }
                           \l_nt_cmd_output_tl
-      \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+      \tl_if_empty:NF \l_nt_cmd_output_tl
         {
           \iow_term:x { Running: ~ python ~ urlretrieve('#1',~'#2')... }
           \sys_shell_now:x
@@ -1064,7 +1132,7 @@
               python ~ -c ~ "import ~ urllib.request; ~
               urllib.request.urlretrieve('#1', ~ '#2')"
             }
-          \bool_set_true:N \l__nt_download_done_bool
+          \__nt_download_accept:n { #2 }
         }
     }
 
@@ -1077,7 +1145,7 @@
           \sys_get_shell:enN  {where ~ powershell ~ 2> ~ \c__nt_devnull_tl }
                               { \tl_trim_spaces:n }
                               \l_nt_cmd_output_tl
-          \tl_if_blank:nF { \tl_use:N \l_nt_cmd_output_tl }
+          \tl_if_empty:NF \l_nt_cmd_output_tl
             {
               \iow_term:x
                 {
@@ -1089,21 +1157,160 @@
                   powershell ~ -Command ~
                   "Invoke-WebRequest ~ -Uri ~ '#1' ~ -OutFile ~ '#2'"
                 }
-              \bool_set_true:N \l__nt_download_done_bool
+              \__nt_download_accept:n { #2 }
             }
         }
     }
 
-  % Verify the download actually produced a file (only when shell escape was
+  % Report when no tool managed to deliver the file (only when shell escape was
   % available; the disabled case already raised its own error above).  This
   % turns a silent failure (404, network down, no tool found) into an
-  % actionable warning instead of a later "font not found" error.
+  % actionable warning instead of a later "file not found" error.  The test is
+  % on the flag, not on the file, because an empty file left by a failed
+  % transfer has just been removed by \__nt_download_accept:n.
   \sys_if_shell_unrestricted:T
     {
-      \file_if_exist:nF { #2 }
-        { \msg_warning:nnnn { ntfonts } { download-failed } { #1 } { #2 } }
+      \bool_if:NF \l__nt_download_done_bool
+        {
+          \bool_if:NF \l__nt_download_quiet_bool
+            { \msg_warning:nnnn { ntdownload } { download-failed } { #1 } { #2 } }
+        }
     }
 }
+
+
+% --------------------------------------------------------
+% Automatically download necessary SDG icons.  Unlike fonts, SDG icons
+% are plain PDF images, so this works under any engine (pdfLaTeX,
+% XeLaTeX or LuaLaTeX), not just XeLaTeX/LuaLaTeX.  Called from
+% \ntprintsdgs (nt-render-matter.sty) once per printed abstract, with
+% that abstract's own language and the active icon type (see
+% print/sdgs/list and print/sdgs/type below).
+%
+% Source: https://github.com/joaomlourenco/SDGs.  The upstream folder for
+% a language is simply its NOVAthesis language code in UPPER CASE (en ->
+% EN, pt -> PT, ...), so adding a language upstream needs NO change here,
+% as long as the new folder is named after the matching language code.
+% Inside "<LANG>/PDF/" the repo nests one folder per colour variant
+% (Normal, Inverted, BlackWhite — see \__nt_set_sdg_variant:n below); a
+% language that does not (yet) offer a given variant costs exactly one
+% failed request per run (the loop stops at the first miss) and then
+% falls back to English, matching \ntprintsdgs's own "fall back to
+% sdg-en" behaviour below.
+% --------------------------------------------------------
+
+\tl_new:N \l__nt_sdg_lang_tl
+\tl_new:N \l__nt_sdg_type_tl
+\tl_new:N \l__nt_sdg_remote_lang_tl
+\tl_new:N \l__nt_sdg_variant_tl
+\tl_new:N \l__nt_sdg_local_path_tl
+\bool_new:N \l__nt_sdg_lang_ok_bool
+
+\tl_const:Nn \c__nt_sdg_base_url_tl
+  { https://raw.githubusercontent.com/joaomlourenco/SDGs/main/Icons }
+
+% The upstream repo keeps one sub-folder per colour variant (PDF/Normal,
+% PDF/Inverted, PDF/BlackWhite) inside each language folder; the file
+% itself still carries the -n/-i/-m suffix.  Map the internal type letter
+% (see print/sdgs/type above) to that folder name.  #2 is already
+% restricted to i/n/m by the option's own choice list, so an unmatched
+% case here can only mean the upstream layout changed again.
+\msg_new:nnn { ntdownload } { sdg-type-unknown }
+  { Unknown~SDG~icon~type~'#1'.~Expected~one~of~i,~n,~m. }
+\cs_new_protected:Npn \__nt_set_sdg_variant:n #1
+  {
+    \str_case:nnF { #1 }
+      {
+        { i } { \tl_set:Nn \l__nt_sdg_variant_tl { Inverted } }
+        { n } { \tl_set:Nn \l__nt_sdg_variant_tl { Normal } }
+        { m } { \tl_set:Nn \l__nt_sdg_variant_tl { BlackWhite } }
+      }
+      { \msg_error:nnx { ntdownload } { sdg-type-unknown } { #1 } }
+  }
+
+\msg_new:nnn { ntdownload } { sdg-lang-unavailable }
+{
+  Could~not~download~the~SDG~icons~for~language~'#1'~from~'#2'.~\\
+  This~normally~means~that~this~language~is~not~(yet)~available~in~
+  https://github.com/joaomlourenco/SDGs,~in~which~case~the~English~icons~
+  are~used~instead~and~you~can~ignore~this~warning.~If~the~language~IS~
+  available~there,~check~your~network~connection.
+}
+
+% \__nt_check_sdgs_lang:nn {novathesis-lang} {sdg-type} — ensures every
+% SDG icon in print/sdgs/list, of the given type (i/n/m), is available
+% locally in NOVAthesisFiles/Images/sdg-<lang>, downloading whatever is
+% missing.  Stops at the first download that produces no file, so a
+% language that is not available upstream costs one request, not one per
+% icon; the caller then falls back to English.
+\cs_new_protected:Npn \__nt_check_sdgs_lang:nn #1 #2
+  {
+    \__nt_download_assert_token:nn { SDG~language } { #1 }
+    \__nt_download_assert_token:nn { SDG~type } { #2 }
+    % Upstream folder = language code in upper case; no table to maintain.
+    \tl_set:Nx \l__nt_sdg_remote_lang_tl { \str_uppercase:n { #1 } }
+    % Upstream now nests a colour-variant folder (Normal/Inverted/BlackWhite)
+    % under PDF/ for every language; compute it once per call.
+    \__nt_set_sdg_variant:n { #2 }
+    \bool_set_true:N \l__nt_sdg_lang_ok_bool
+    \file_if_exist:nF { \DIRIMAGES/sdg-#1/DO_NOT_REMOVE_THIS_FILE.txt }
+      {
+        \sys_if_platform_windows:TF
+          { \sys_shell_now:x { mkdir~"\DIRIMAGES/sdg-#1" } }
+          { \sys_shell_now:x { mkdir~-p~'\DIRIMAGES/sdg-#1' } }
+      }
+    \optionlistdo{/novathesis/print/sdgs/list}
+      {
+        \bool_if:NT \l__nt_sdg_lang_ok_bool
+          {
+            \__nt_download_assert_token:nn { SDG~number } { ##1 }
+            \tl_set:Nn \l__nt_filename_tl { sdg-#1/##1-#2.pdf }
+            \tl_set:Nx \l__nt_remote_url_tl
+              { \c__nt_sdg_base_url_tl/\l__nt_sdg_remote_lang_tl/PDF/%
+                \l__nt_sdg_variant_tl/##1-#2.pdf }
+            \tl_set:Nn \l__nt_sdg_local_path_tl { \DIRIMAGES/sdg-#1/##1-#2.pdf }
+
+            \file_if_exist:nTF { \l__nt_sdg_local_path_tl }
+              {
+                \iow_term:x { SDG~icon~' \l__nt_filename_tl '~already~exists. }
+              }
+              {
+                \iow_term:x { Downloading~SDG~icon~' \l__nt_filename_tl '~
+                              from~' \l__nt_remote_url_tl '~
+                              to~' \l__nt_sdg_local_path_tl '~ }
+                % Quiet: a miss here usually just means "no icons upstream for
+                % this language", which is reported once below, not per icon.
+                \bool_set_true:N \l__nt_download_quiet_bool
+                \nt_download_file:nn
+                  { \l__nt_remote_url_tl }
+                  { \l__nt_sdg_local_path_tl }
+                \bool_set_false:N \l__nt_download_quiet_bool
+                \file_if_exist:nF { \l__nt_sdg_local_path_tl }
+                  {
+                    \bool_set_false:N \l__nt_sdg_lang_ok_bool
+                    \msg_warning:nnxx { ntdownload } { sdg-lang-unavailable }
+                      { #1 } { \l__nt_remote_url_tl }
+                  }
+              }
+          }
+      }
+  }
+
+% \nt_check_sdgs:nn {novathesis-lang} {sdg-type} — checks/downloads the
+% abstract's own language (if available upstream) and always also the
+% English set, as the safety net \ntprintsdgs itself falls back to.
+\cs_new_protected:Npn \nt_check_sdgs:nn #1 #2
+  {
+    \tl_set:Ne \l__nt_sdg_lang_tl { #1 }
+    \tl_set:Ne \l__nt_sdg_type_tl { #2 }
+    \exp_args:NVV \__nt_check_sdgs_lang:nn \l__nt_sdg_lang_tl \l__nt_sdg_type_tl
+    \tl_if_eq:nnF { \l__nt_sdg_lang_tl } { en }
+      { \exp_args:NnV \__nt_check_sdgs_lang:nn { en } \l__nt_sdg_type_tl }
+  }
+
+% Public entry point, mirroring \ntcheckfonts.
+\NewDocumentCommand { \ntchecksdgs } { m m }
+  { \nt_check_sdgs:nn { #1 } { #2 } }
 
 
 % --------------------------------------------------------
@@ -1239,6 +1446,8 @@
 }
 
 \options{/@nt/listtypes/.new list={}}
+\ExplSyntaxOn
+\clist_new:N \l__nt_addtolist_clist
 \NewDocumentCommand {\@nt@addtolist}
                     {m m O{\option{/novathesis/doctype}} m} {%
   % syntax: \ntaddto{type}{class}[key]{filename}
@@ -1252,10 +1461,14 @@
       {\xdef\@nt@filewithpath{#4}}
       {\options{/@nt/folders=#2}%
        \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}}
-  \@for\nt@tmpi:=\expanded{#3}\do{%
-    \options{/@nt/#1/#2/\nt@tmpi/.expanded/.newpush={\@nt@filewithpath}}%
-  }%
+  % #3 is fully expanded before being split into items, matching the
+  % previous \@for\nt@tmpi:=\expanded{#3}\do{...} behaviour; the items
+  % are file-lang/sub-family/key identifiers, not document text.
+  \clist_set:Ne \l__nt_addtolist_clist {#3}
+  \clist_map_inline:Nn \l__nt_addtolist_clist
+      { \options{/@nt/#1/#2/##1/.expanded/.newpush={\@nt@filewithpath}} }
 }
+\ExplSyntaxOff
 
 \newcommand*{\@nt@foralllist}[3]{%
   % #1={file, person}

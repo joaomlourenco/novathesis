@@ -4,7 +4,7 @@
 %%  NOVATHESIS — fix-hyperref.sty
 %% ----------------------------------------------------------------------------
 %%
-%% Version 8.0.2 (2026-08-07)
+%% Version 8.0.3 (2026-08-11)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -23,32 +23,40 @@
 
 \def\HyLang@portuguese{\HyLang@portuges}
 
-\newcommand{\@nt@fixhyperref}{
-  % repeat the known language declarations
-  \HyLang@DeclareLang{english}{english}{}
-  \HyLang@DeclareLang{UKenglish}{english}{}
-  \HyLang@DeclareLang{british}{english}{}
-  \HyLang@DeclareLang{USenglish}{english}{}
-  \HyLang@DeclareLang{american}{english}{}
-  \HyLang@DeclareLang{german}{german}{}
-  \HyLang@DeclareLang{austrian}{german}{}
-  \HyLang@DeclareLang{ngerman}{german}{}
-  \HyLang@DeclareLang{naustrian}{german}{}
-  \HyLang@DeclareLang{russian}{russian}{\noexpand\hypersetup{unicode}}
-  \HyLang@DeclareLang{brazil}{portuguese}{}
-  \HyLang@DeclareLang{brazilian}{portuguese}{}
-  \HyLang@DeclareLang{portuguese}{portuguese}{}
-  \HyLang@DeclareLang{spanish}{spanish}{}
-  \HyLang@DeclareLang{afrikaans}{afrikaans}{}
-  \HyLang@DeclareLang{french}{french}{}
-  \HyLang@DeclareLang{frenchb}{french}{}
-  \HyLang@DeclareLang{francais}{french}{}
-  \HyLang@DeclareLang{acadian}{french}{}
-  \HyLang@DeclareLang{canadien}{french}{}
-  \HyLang@DeclareLang{italian}{italian}{}
-  \HyLang@DeclareLang{magyar}{magyar}{}
-  \HyLang@DeclareLang{hungarian}{magyar}{}
-}
+\ExplSyntaxOn
+% Table of {alias}{canonical}{extra-code} triples, one \HyLang@DeclareLang
+% call per entry. No entry carries typeset prose (only language codes and,
+% for russian, an unexpanded \hypersetup{unicode} call), so looping over it
+% under expl3 is safe.
+\clist_const:Nn \c_nt_hylang_data_clist
+  {
+    {english}{english}{},
+    {UKenglish}{english}{},
+    {british}{english}{},
+    {USenglish}{english}{},
+    {american}{english}{},
+    {german}{german}{},
+    {austrian}{german}{},
+    {ngerman}{german}{},
+    {naustrian}{german}{},
+    {russian}{russian}{\noexpand\hypersetup{unicode}},
+    {brazil}{portuguese}{},
+    {brazilian}{portuguese}{},
+    {portuguese}{portuguese}{},
+    {spanish}{spanish}{},
+    {afrikaans}{afrikaans}{},
+    {french}{french}{},
+    {frenchb}{french}{},
+    {francais}{french}{},
+    {acadian}{french}{},
+    {canadien}{french}{},
+    {italian}{italian}{},
+    {magyar}{magyar}{},
+    {hungarian}{magyar}{}
+  }
+\cs_new_protected:Npn \@nt@fixhyperref
+  { \clist_map_inline:Nn \c_nt_hylang_data_clist { \HyLang@DeclareLang ##1 } }
+\ExplSyntaxOff
 
 
 %%=======================================================================
