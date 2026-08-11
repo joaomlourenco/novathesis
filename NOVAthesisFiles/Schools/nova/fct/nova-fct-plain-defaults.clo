@@ -27,29 +27,23 @@
 \ntsetup{print/frontpage=true}
 \openany
 
-\options{/@nt/print/frontmatter/working = 
-  {
+\@nt@printorder@set{frontmatter_working}{%
     abstracts,       % Print abstracts in multiple languages.
     aidisclose,      % AI disclosure statement
     alllistof,       % Print all the listof defined in “6_list_of.tex”
     myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
-  }
 }
-\options{/@nt/print/frontmatter/provisional = 
-  {
+\@nt@printorder@set{frontmatter_provisional}{%
     abstracts,       % Print abstracts in multiple languages.
     aidisclose,      % AI disclosure statement
     alllistof,       % Print all the listof defined in “6_list_of.tex”
     myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
-  }
 }
-\options{/@nt/print/frontmatter/final = 
-  {
+\@nt@printorder@set{frontmatter_final}{%
     abstracts,       % Print abstracts in multiple languages.
     aidisclose,      % AI disclosure statement
     alllistof,       % Print all the listof defined in “6_list_of.tex”
     myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
-  }
 }
 
 

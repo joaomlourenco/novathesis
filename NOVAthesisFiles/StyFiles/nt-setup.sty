@@ -600,20 +600,20 @@
           % levels so they stay at level 0 and are unaffected by \shiftbookmarks.
           \begingroup
             \def\@nt@bkm@level{1}%
-            \shiftbookmarks{\ntprintlist{/@nt/print/#1/\@DOCSTATUS}}%
+            \shiftbookmarks{\ntprintlist{#1_\@DOCSTATUS}}%
           \endgroup
     }%
     {mainmatter}{%
           \ntthesismainmatter% Main text — Arabic page numbering
           \thispagestyle{novathesis@mainmatter}%
           \pagestyle{novathesis@mainmatter}%
-          \ntprintlist{/@nt/print/#1}%
+          \ntprintlist{#1}%
     }%
     {backmatter}{%
           \ntthesisbackmatter     % The back text — Arabic page numbering
           \phantomsection
           \bookmark[level=0, dest=\HyperLocalCurrentHref]{\GetBkmString(backmatter,\@LANG@MAIN)}
-          \shiftbookmarks{\ntprintlist{/@nt/print/#1}}%
+          \shiftbookmarks{\ntprintlist{#1}}%
     }%
     {backcover}{%
           \thispagestyle{empty}%
@@ -623,8 +623,41 @@
   }[\ifcsmacro{ntprint#1}{\csuse{ntprint#1}}{\ifcsmacro{#1}{\csuse{#1}}{}}]%
 }
 
+% Print-order registries: which sections print, and in what order, for
+% each of frontmatter (per docstatus)/mainmatter/backmatter. Were 5
+% options-package lists (seeded with a default order, some fully
+% replaced by school .clo files wanting a custom one); now 5 plain
+% seqs. \@nt@printorder@set/@run are plain-named (no "_"/":") so
+% classical code -- including every school .clo file -- can call them
+% without needing ExplSyntaxOn active at the call site.
+\ExplSyntaxOn
+\seq_new:N \g__nt_print_frontmatter_final_seq
+\seq_new:N \g__nt_print_frontmatter_provisional_seq
+\seq_new:N \g__nt_print_frontmatter_working_seq
+\seq_new:N \g__nt_print_mainmatter_seq
+\seq_new:N \g__nt_print_backmatter_seq
+
+% \@nt@printorder@set{<bucket>}{<item1,item2,...>} -- (re)set the print
+% order for <bucket> (one of frontmatter_final, frontmatter_provisional,
+% frontmatter_working, mainmatter, backmatter) to the given comma-list.
+% Used both for the default declarations below and by school .clo files
+% that want a fully custom order; the "set" semantics (full replace,
+% not append) match \options{.../key = {...}}'s old behaviour exactly.
+\cs_new_protected:Npn \@nt@printorder@set #1#2
+  { \seq_set_from_clist:cn { g__nt_print_#1_seq } {#2} }
+
+% \@nt@printorder@run{<bucket>}{<code, using #1 for the current item>}
+% -- run <code> once per item registered under <bucket>, in order.
+% l3seq has no generated ":c" variant of seq_map_inline (confirmed by
+% testing directly -- unlike clist/seq_new, _gput_right, etc., which do),
+% so the csname is built with the plain \csname/\expandafter primitives
+% instead, which work identically regardless of ExplSyntaxOn state.
+\cs_new_protected:Npn \@nt@printorder@run #1#2
+  { \expandafter\seq_map_inline:Nn\csname g__nt_print_#1_seq\endcsname {#2} }
+\ExplSyntaxOff
+
 \newcommand*{\ntprintlist}[1]{%
-  \optionlistdo{#1}{%
+  \@nt@printorder@run{#1}{%
     \begingroup
       \clearpage
       \ifcsmacro{ntprint##1}{%  \ntprint#1 is defined
@@ -688,8 +721,7 @@
 % --------------------------------------------------------
 % DEFAULT VALUES FOR frontmatter AND mainmatter
 
-\options{/@nt/print/frontmatter/final/.new list =
-  {%
+\@nt@printorder@set{frontmatter_final}{%
     statement,        % The statement page
     copyright,        % (*) The copyright page
     dedication,       % (*) Print the dedication
@@ -699,11 +731,9 @@
     aidisclose,       % AI disclosure statement
     alllistof,        % Print all the listof defined in “6_list_of.tex”
     myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
-  }
 }
 
-\options{/@nt/print/frontmatter/provisional/.new list = 
-  {
+\@nt@printorder@set{frontmatter_provisional}{
     statement,         % The statement page
     copyright,         % (*) The copyright page
     dedication,        % (*) Print the dedication
@@ -713,45 +743,36 @@
     aidisclose,        % AI disclosure statement
     alllistof,         % Print all the listof defined in “6_list_of.tex”
     myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
-  }
 }
 
-\options{/@nt/print/frontmatter/working/.new list = 
-  {
+\@nt@printorder@set{frontmatter_working}{
     abstracts,       % Print abstracts in multiple languages.
     aidisclose,      % AI disclosure statement
     alllistof,       % Print all the listof defined in “6_list_of.tex”
     myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
-  }
 }
 
-\options{/@nt/print/mainmatter/.new list = 
-  {
+\@nt@printorder@set{mainmatter}{
     chapters,        % Print document chapters
-  }
 }%
 
 \ifoptionequal{/novathesis/print/webography}{}{%
-  \options{/@nt/print/backmatter/.new list = 
-    {
+  \@nt@printorder@set{backmatter}{
       bibsingle,            % Print the bibliography
       alllistof,            % Print all the listof defined in “6_list_of.tex”
       myprintglossaries,    % Print the Glossary, Acronyms, Symbols, etc…
       appendices,           % Print appendices, if any!
       annexes,              % Print annexes, if any!
       index,                % Print the index
-    }
   }%
 }{%
-  \options{/@nt/print/backmatter/.new list = 
-    {
+  \@nt@printorder@set{backmatter}{
       bibseparate,          % Print the web references separate from the remainder of the bibliography
       alllistof,            % Print all the listof defined in “6_list_of.tex”
       myprintglossaries,    % Print the Glossary, Acronyms, Symbols, etc…
       appendices,           % Print appendices, if any!
       annexes,              % Print annexes, if any!
       index,                % Print the index
-    }
   }%
 }
 
