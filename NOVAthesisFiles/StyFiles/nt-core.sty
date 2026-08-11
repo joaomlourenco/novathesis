@@ -458,13 +458,11 @@
       { \clist_use:Nn \l__nt_uniquify_clist { , } }
   }
 
-\ExplSyntaxOff
 
 % ── Abstract order accumulator ────────────────────────────────────────
 % abstractorder={lang=order-list} (or abstractorder={order-list}) entries
 % are collected in \g__nt_abstractorder_seq and applied once by
 % \@setabstractorder (called from nt-setup.sty after options are frozen).
-\ExplSyntaxOn
 \seq_new:N \g__nt_abstractorder_seq
 \tl_new:N  \l__nt_ao_lang_tl
 \tl_new:N  \l__nt_ao_val_tl
@@ -491,7 +489,6 @@
   {
     \seq_gput_right:Nn \g__nt_abstractorder_seq { #1 }
   }
-\ExplSyntaxOff
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% DATA MANAGEMENT (MEMORY)
@@ -500,7 +497,6 @@
 % --------------------------------------------------------
 % Search if a data/memory is defined and returns value
 
-\ExplSyntaxOn
 
 % Define a boolean to track if a match was found inside the loop
 \bool_new:N \l__memory_match_found_bool
@@ -791,6 +787,7 @@
 \cs_new:Npn \ntforbreak
   { \bool_set_true:N \l__nt_for_break_bool \clist_map_break: }
 \ExplSyntaxOff
+
 \long\def\ntfor#1:=#2\do#3{\@ifnextchar[{\ntfor@i#1:=#2\do#3}{\ntfor@i#1:=#2\do#3[]}}
 \long\def\ntfor@i#1:=#2\do#3[#4]{\@nt@ntforloop{#1}{#2}{#3}{#4}}
 
@@ -1295,7 +1292,6 @@
 % Trim spaces around argument
 \cs_new_eq:NN \trimspaces \tl_trim_spaces:e
 
-\ExplSyntaxOff
 
 
 
@@ -1309,7 +1305,6 @@
 % plain-named so the classical, catcode-sensitive \InputIfFileExists
 % loop in nt-setup.sty can call them without needing ExplSyntaxOn active
 % at the call site (see the warning on that loop for why).
-\ExplSyntaxOn
 \seq_new:N \g__nt_lang_loaded_seq
 \cs_new_protected:Npn \@nt@langloaded@reset
   { \seq_gclear:N \g__nt_lang_loaded_seq }
@@ -1358,13 +1353,13 @@
     annex = { \DIRBACKMATTER },
     bib = { \DIRBIBLIOGRAPHY },
   }
-\ExplSyntaxOff
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE DOCUMENT CLASSES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ExplSyntaxOn
+
 \prop_const_from_keyval:Nn \c__nt_docclass_prop
   {
     phd = phd, phdprop = phd, phdplan = phd,
@@ -1372,7 +1367,7 @@
     bsc = bsc,
     plain = plain,
   }
-\ExplSyntaxOff
+
 % --------------------------------------------------------
 % Check if the document is of a specific class, i.e., bsc, msc, phd or main
 % etoolbox's \ifstrequal does not reliably compare \@DOCTYPE/\@DOCCLASS
@@ -1380,12 +1375,14 @@
 % catcode-blind expl3 string comparison) is used for both instead.
 % "Main" doctypes are exactly the ones docclass maps to themselves
 % (phd->phd, but phdprop->phd and phdplan->phd).
-\ExplSyntaxOn
 \cs_new_protected:Npn \ifdocclass #1
   { \str_if_eq:eeTF {\@DOCCLASS} {#1} }
 \cs_new_protected:Npn \ifmaindoc #1#2
   { \str_if_eq:eeTF {\@DOCTYPE} {\@DOCCLASS} {#1} {#2} }
+
 \ExplSyntaxOff
+
+
 \newcommand{\ifphddoc}{\ifdocclass{phd}}
 \newcommand{\ifmscdoc}{\ifdocclass{msc}}
 \newcommand{\ifbscdoc}{\ifdocclass{bsc}}
