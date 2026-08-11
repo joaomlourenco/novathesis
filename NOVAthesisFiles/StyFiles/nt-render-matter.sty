@@ -569,18 +569,6 @@
 }
 
 
-\newcommand*{\option@listmatch}[2]{
-    % \typeout{NT LISTMATCH [#1] [#2]}%
-    \StrCut{#2}{=}\option@listmatch@key\option@listmatch@value%was xStrCut
-    % \typeout{K=\option@listmatch@key ~V=\option@listmatch@value}%
-    \IfStrEq{#1}{\option@listmatch@key}{\listbreak}{}%
-}%
-\options{/handlers/getval/.new operation={%
-    % \typeout{NT GETVAL [#1] [#2]}%
-    \optionlistdo{#1}{\option@listmatch{#2}{##1}}%
-    }%
-}
-
 % Glossary sources are bib2gls .bib files.  Each file registered with
 %     \ntaddfile{glossaries}[<type>]{<name>}
 % becomes part of a bib2gls resource; no \write registers are consumed and

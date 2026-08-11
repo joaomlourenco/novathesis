@@ -26,23 +26,6 @@
 
 
 %%=======================================================================
-%% New choice iterator
-%%=======================================================================
-
-\newrobustcmd\optionchoicedo[2]{% {<option>}{<code>}
-  % Define the internal handler that splits the key and value
-  \def\opt@@choice@do##1=##2\opt@stop{#2}% 
-  
-  % Define the wrapper that passes the parsed arguments to the handler
-  \def\opt@@choice@wrapper##1{%
-    \opt@@choice@do##1\opt@stop
-  }%
-  
-  % Use the internal list storage of the options package
-  \forlistcsloop{\opt@@choice@wrapper}{\optionname{#1/@choices}}%
-}
-
-%%=======================================================================
 %% CUSTOM HANDLERS: COPYING
 %%=======================================================================
 
