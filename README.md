@@ -162,7 +162,7 @@ Otherwise, download the default/main repository (last in the list).
 <tr><th>FCT</th><th>FCT CBBI</th><th>FCT DI-ADC</th><th>ENSP</th><th>ITQB</th><th>FCSH</th><th>IMS(*)</th></tr>
 <tr><td align="center">
 
-| <img height="50" alt="nova-fct-phd" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-fct-phd-en.jpg" /> &nbsp; <img height="50" alt="nova-fct-msc" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-fct-msc-en.jpg" /> |
+| <img height="50" alt="nova-fct-phd" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-fct-phd-en-lua-1.svg" /> &nbsp; <img height="50" alt="nova-fct-msc" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/SVG/nova-fct-msc-en-lua-1.svg" /> |
 |:---------:|
 | [📦](https://github.com/novathesis/nova-fct/archive/refs/heads/main.zip) &nbsp;&nbsp; [<img height="19" alt="github-logo-25x25" src="https://github.com/user-attachments/assets/bdf7b017-aafc-4919-a382-1094b84dc2ff" />](https://github.com/novathesis/nova-fct.git) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc)|
 
