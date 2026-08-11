@@ -613,7 +613,16 @@
     {backmatter}{%
           \ntthesisbackmatter     % The back text — Arabic page numbering
           \phantomsection
-          \bookmark[level=0, dest=\HyperLocalCurrentHref]{\GetBkmString(backmatter,\@LANG@MAIN)}
+          % level=-1 (not 0): "Front Matter" gets away with level=0 only because
+          % nothing is open yet at a shallower level when it's written. By the
+          % time "Back Matter" is written, a \part (level -1) may still be the
+          % open ancestor, and a level=0 sibling of chapters would nest inside
+          % it instead of popping back out to the top level. -1 matches \part's
+          % own level, so this always closes back out to the top -- whether or
+          % not the document uses \part at all (with no open ancestor at -1 or
+          % shallower, a level=-1 bookmark still becomes a plain root, exactly
+          % as level=0 did before in the no-\part case).
+          \bookmark[level=-1, dest=\HyperLocalCurrentHref]{\GetBkmString(backmatter,\@LANG@MAIN)}
           \shiftbookmarks{\ntprintlist{/@nt/print/#1}}%
     }%
     {backcover}{%
