@@ -464,6 +464,7 @@ The Word templates (unmaintained) can be found at
 
 # 12. Please give this repository a ⭐️
 
+<!--
 <picture>
   <source
     media="(prefers-color-scheme: dark)"
@@ -483,6 +484,14 @@ The Word templates (unmaintained) can be found at
     src="https://star-history.dera.page/svg?repos=joaomlourenco/novathesis&type=Date"
   />
 </picture>
+-->
+
+<picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=joaomlourenco/novathesis%2Cjoaomlourenco/novathesis_word&type=date&theme=dark&legend=top-left&sealed_token=KiAdxo7wrX5R__JpXkk-v3LKV14s5YrCRjGkdMCgJEWBV1KxiPXIY8TUMXMx1_AHz8ivYGooM2Wb7tR4M4-EwNfQvMZWccO6fnAv8gA2wk72JCe5i6ewyA" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=joaomlourenco/novathesis%2Cjoaomlourenco/novathesis_word&type=date&legend=top-left&sealed_token=KiAdxo7wrX5R__JpXkk-v3LKV14s5YrCRjGkdMCgJEWBV1KxiPXIY8TUMXMx1_AHz8ivYGooM2Wb7tR4M4-EwNfQvMZWccO6fnAv8gA2wk72JCe5i6ewyA" />
+   <img width="450" alt="Star History Chart" src="https://api.star-history.com/chart?repos=joaomlourenco/novathesis%2Cjoaomlourenco/novathesis_word&type=date&legend=top-left&sealed_token=KiAdxo7wrX5R__JpXkk-v3LKV14s5YrCRjGkdMCgJEWBV1KxiPXIY8TUMXMx1_AHz8ivYGooM2Wb7tR4M4-EwNfQvMZWccO6fnAv8gA2wk72JCe5i6ewyA" />
+</picture>
+
 
 ---
 
