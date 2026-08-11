@@ -1353,38 +1353,51 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE FOLDERS PER CLASS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\options{/@nt/folders/.new choice={
-  copyright=.,
-  frontpage=\DIRFRONTMATTER,
-  statement=\DIRFRONTMATTER,
-  cover=\DIRFRONTMATTER,
-  dedication=\DIRFRONTMATTER,
-  acknowledgements=\DIRFRONTMATTER,
-  quote=\DIRFRONTMATTER,
-  abstract=\DIRFRONTMATTER,
-  glossaries=\DIRFRONTMATTER,
-  chapter=\DIRMAINMATTER,
-  appendix=\DIRBACKMATTER,
-  annex=\DIRBACKMATTER,
-  bib=\DIRBIBLIOGRAPHY,
-}}
+\ExplSyntaxOn
+\prop_const_from_keyval:Nn \c__nt_folders_prop
+  {
+    copyright = { . },
+    frontpage = { \DIRFRONTMATTER },
+    statement = { \DIRFRONTMATTER },
+    cover = { \DIRFRONTMATTER },
+    dedication = { \DIRFRONTMATTER },
+    acknowledgements = { \DIRFRONTMATTER },
+    quote = { \DIRFRONTMATTER },
+    abstract = { \DIRFRONTMATTER },
+    glossaries = { \DIRFRONTMATTER },
+    chapter = { \DIRMAINMATTER },
+    appendix = { \DIRBACKMATTER },
+    annex = { \DIRBACKMATTER },
+    bib = { \DIRBIBLIOGRAPHY },
+  }
+\ExplSyntaxOff
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE DOCUMENT CLASSES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\options{/@nt/document/.cd,
-   docclass/.new choice={phd=phd, phdprop=phd, phdplan=phd,
-                         msc=msc, mscplan=msc,
-                         bsc=bsc,
-                         plain=plain},
-   docmain/.new list={phd, msc, bsc, plain},
-}
-
+\ExplSyntaxOn
+\prop_const_from_keyval:Nn \c__nt_docclass_prop
+  {
+    phd = phd, phdprop = phd, phdplan = phd,
+    msc = msc, mscplan = msc,
+    bsc = bsc,
+    plain = plain,
+  }
+\ExplSyntaxOff
 % --------------------------------------------------------
 % Check if the document is of a specific class, i.e., bsc, msc, phd or main
-\newcommand{\ifdocclass}[1]{\ifoptionequal{/@nt/document/docclass}{#1}}
-\newcommand{\ifmaindoc}{\ifoptioncontains{/@nt/document/docmain}{\@DOCTYPE}}
+% etoolbox's \ifstrequal does not reliably compare \@DOCTYPE/\@DOCCLASS
+% (looked up via l3prop) against a literal string -- str_if_eq:ee (fully
+% catcode-blind expl3 string comparison) is used for both instead.
+% "Main" doctypes are exactly the ones docclass maps to themselves
+% (phd->phd, but phdprop->phd and phdplan->phd).
+\ExplSyntaxOn
+\cs_new_protected:Npn \ifdocclass #1
+  { \str_if_eq:eeTF {\@DOCCLASS} {#1} }
+\cs_new_protected:Npn \ifmaindoc #1#2
+  { \str_if_eq:eeTF {\@DOCTYPE} {\@DOCCLASS} {#1} {#2} }
+\ExplSyntaxOff
 \newcommand{\ifphddoc}{\ifdocclass{phd}}
 \newcommand{\ifmscdoc}{\ifdocclass{msc}}
 \newcommand{\ifbscdoc}{\ifdocclass{bsc}}
@@ -1457,8 +1470,7 @@
       {\options{/@nt/listtypes/.newpush={#2}}}
   \IfBeginsWithAnyOf{#4}{/,.}
       {\xdef\@nt@filewithpath{#4}}
-      {\options{/@nt/folders=#2}%
-       \xdef\@nt@filewithpath{\option{/@nt/folders}/#4}}
+      {\xdef\@nt@filewithpath{\prop_item:Ne \c__nt_folders_prop {#2}/#4}}
   % #3 is fully expanded before being split into items, matching the
   % previous \@for\nt@tmpi:=\expanded{#3}\do{...} behaviour; the items
   % are file-lang/sub-family/key identifiers, not document text.

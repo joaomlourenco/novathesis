@@ -93,8 +93,9 @@
 \def\@DOCTYPE{\option{/novathesis/doctype}}
 \def\@DOCSTATUS{\option{/novathesis/docstatus}}
 
-\options{/@nt/document/docclass=\@DOCTYPE}
-\def\@DOCCLASS{\option{/@nt/document/docclass}}
+\ExplSyntaxOn
+\xdef\@DOCCLASS{\prop_item:Ne \c__nt_docclass_prop {\@DOCTYPE}}
+\ExplSyntaxOff
 
 \edef\@LANG@COVER{\option{/novathesis/lang/cover}}
 \edef\@LANG@COPYRIGHT{\option{/novathesis/lang/copyright}}
