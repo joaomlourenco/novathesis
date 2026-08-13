@@ -1458,17 +1458,30 @@
   % previous \@for\nt@tmpi:=\expanded{#3}\do{...} behaviour; the items
   % are file-lang/sub-family/key identifiers, not document text.
   \clist_set:Ne \l__nt_addtolist_clist {#3}
+  % Storage key mirrors the old options-package path "/@nt/#1/#2/##1"
+  % literally (slashes and all) as the \csname suffix, so every reader
+  % of that same path string -- \iffileadded, \@nt@loadallfiles,
+  % \@nt@foralllist -- keeps matching it exactly, without having to
+  % agree on a separate segmentation scheme.
   \clist_map_inline:Nn \l__nt_addtolist_clist
-      { \options{/@nt/#1/#2/##1/.expanded/.newpush={\@nt@filewithpath}} }
+      {
+        \seq_if_exist:cF { g__nt_filereg/@nt/#1/#2/##1 }
+            { \seq_new:c { g__nt_filereg/@nt/#1/#2/##1 } }
+        \seq_gput_right:ce { g__nt_filereg/@nt/#1/#2/##1 } {\@nt@filewithpath}
+      }
 }
 \ExplSyntaxOff
 
-\newcommand*{\@nt@foralllist}[3]{%
+\ExplSyntaxOn
+\NewDocumentCommand {\@nt@foralllist} { m m m } {%
   % #1={file, person}
-  % #2=file family (quote, abstract, chapter, etc)
+  % #2=file family (quote, abstract, chapter, etc) -- may itself embed
+  %    further "/"-separated sub-path segments (e.g. "glossaries/\nt@glstype")
   % #3=macro to be applied, which will receive the item from the list
-  \optionlistdo{/@nt/#1/#2}{#3{##1}}%
+  \seq_if_exist:cT { g__nt_filereg/@nt/#1/#2 }
+      { \expandafter\seq_map_inline:Nn\csname g__nt_filereg/@nt/#1/#2\endcsname {#3{##1}} }%
 }
+\ExplSyntaxOff
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

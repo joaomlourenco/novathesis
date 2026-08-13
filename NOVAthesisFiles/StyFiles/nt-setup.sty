@@ -962,10 +962,12 @@
 
 %============================================================
 \setcounter{biburlnumpenalty}{100}% Allow to break DOIs in bibliography
-\optionlistdo{/@nt/file/bib/\@DOCTYPE}{%
-  % \typeout{ADDBIB=#1}\ADDBIB
-  \addbibresource{#1}%
-}%
+\ExplSyntaxOn
+\seq_if_exist:cT { g__nt_filereg/@nt/file/bib/\@DOCTYPE }
+    { \expandafter\seq_map_inline:Nn\csname g__nt_filereg/@nt/file/bib/\@DOCTYPE\endcsname
+        { \addbibresource{#1} }
+    }
+\ExplSyntaxOff
 
 \ifdocunset{\ntsetup{docstatus=working}}{}
 
@@ -978,8 +980,12 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ExplSyntaxOn
 \newcommand{\@nt@loadallfiles}[2]{%
-  \optionlistdo{/@nt/file/#2/#1}{\@ntloadfile@i{##1}}}
+  \seq_if_exist:cT { g__nt_filereg/@nt/file/#2/#1 }
+      { \expandafter\seq_map_inline:Nn\csname g__nt_filereg/@nt/file/#2/#1\endcsname {\@ntloadfile@i{##1}} }%
+}
+\ExplSyntaxOff
 
 \newcommand{\@ntloadfile@i}[2][]{%
   \InputIfFileExists{#2}{}{#1}}
@@ -994,8 +1000,10 @@
 }
 
 
+\ExplSyntaxOn
 \newcommand{\iffileadded}[2][\@DOCTYPE]{%
-  \ifoptiondefined{/@nt/file/#2/#1}}
+  \seq_if_exist:cTF { g__nt_filereg/@nt/file/#2/#1 }}
+\ExplSyntaxOff
 
 % --------------------------------------------------------
 % LOAD A DEFAULT COPYRIGHT PAGE DEFINITION

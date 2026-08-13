@@ -326,8 +326,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MAIN & BACK MATTER COMPONENTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \PrintAddedFile{chapter} already loops internally (via \@nt@loadallfiles)
+% over every chapter file registered for the current doctype, so a single
+% call -- not a per-item \@nt@foralllist wrapper -- is the complete behavior.
 \newcommand*{\ntprintchapters}{%
-    \@nt@foralllist{file}{chapter}{\PrintAddedFile{chapter}}%
+    \PrintAddedFile{chapter}%
 }
 
 
@@ -394,7 +397,9 @@
     % rather than "Appendix A.1 Title".  Subsection levels inherit this fix
     % automatically because \thesubsection = \thesection.\arabic{subsection}.
     \renewcommand{\thesection}{\Alph{chapter}.\arabic{section}}%
-    \@nt@foralllist{file}{appendix}{\PrintAddedFile{appendix}}%
+    % See \ntprintchapters: \PrintAddedFile already loops over every
+    % registered appendix file internally, so a single call suffices.
+    \PrintAddedFile{appendix}%
     % If there are no annexes, reset now; if annexes follow, they will
     % overwrite \cftchapterpresnum with \annexname:\space anyway.
     \iffileadded{annex}{}{%
@@ -433,7 +438,9 @@
     % Redefine \thesection to use \Roman{chapter} directly, so section
     % bookmarks read "I.1 Title" rather than "Annex I.1 Title".
     \renewcommand{\thesection}{\Roman{chapter}.\arabic{section}}%
-    \@nt@foralllist{file}{annex}{\PrintAddedFile{annex}}%
+    % See \ntprintchapters: \PrintAddedFile already loops over every
+    % registered annex file internally, so a single call suffices.
+    \PrintAddedFile{annex}%
     % Reset \cftchapterpresnum and \cftchapternumwidth to their memoir defaults
     % so any chapter-level TOC entries after annexes are not affected.
     \addtocontents{toc}{%
