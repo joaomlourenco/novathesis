@@ -659,6 +659,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% TEMPLATE OPTIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Shared allowed-language list for lang/all (a list) and lang/main,
+% lang/cover, lang/copyright (choices that must accept the same values).
+% Previously lang/main|cover|copyright used options-ext.sty's ".copy
+% choice" to copy lang/all's values; now all four just expand this same
+% macro via core options.sty's own ".expanded" modifier, which needs no
+% custom handler.
+\def\@nt@alllangs{cat,cz,de,dk,en,es,fr,gr,it,nl,pl,pt,sk,uk}
 \options{/novathesis/.new family,
   % DOCUMENT
   doctype/.new choice           = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
@@ -694,10 +701,10 @@
                                    }},
   % LANGUAGES
   lang/extra/.new list          = {},
-  lang/all/.new list            = {cat,cz,de,dk,en,es,fr,gr,it,nl,pl,pt,sk,uk},
-  lang/main/.copy choice        = {/novathesis/lang/all},
-  lang/cover/.copy choice       = {/novathesis/lang/all},
-  lang/copyright/.copy choice   = {/novathesis/lang/all},
+  lang/all/.expanded/.new list           = {\@nt@alllangs},
+  lang/main/.expanded/.new choice        = {\@nt@alllangs},
+  lang/cover/.expanded/.new choice       = {\@nt@alllangs},
+  lang/copyright/.expanded/.new choice   = {\@nt@alllangs},
   lang/.new cmd                 = {\optionsalso{/novathesis/lang/main=#1,
                                                 /novathesis/lang/cover=#1,
                                                 /novathesis/lang/copyright=#1}},
