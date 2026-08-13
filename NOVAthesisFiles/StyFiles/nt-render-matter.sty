@@ -495,6 +495,19 @@
 
 
 \newcounter{nadv}
+% \ntforeachperson callback for \TheAdvisersSignatures, curried with
+% (space,role,place,date); title/position/institution are ignored, only
+% the name and gender feed the signature line.
+\newcommand{\@nt@advisersignature}[9]{%
+  % #1=space #2=role #3=place #4=date (curried)
+  % #5=title #6=name #7=position #8=institution #9=gender
+  \stepcounter{nadv}
+  \StatementOneSignature[#1]
+    {\GetAdviserString(pref,#2,1,#9,\@LANG@MAIN)}
+    {#6}
+    {#3}% place
+    {#4}% date
+}
 \NewDocumentCommand { \TheAdvisersSignatures } { O{20mm} m m m }
   % #1 = space to signature rule
   % #2 = a (only advisers) | a,c (both advisers and co-advisers)
@@ -502,20 +515,9 @@
   % #4 = ISO DATE
   {
     \begin{tightcenter}
-      \ifoptiondefined{/@nt/adviser/#2/pair}{%
-        \optionlistdo{/@nt/adviser/#2/pair}{%
-            % \ifnum\arabic{nadv}=2\relax
-            %   ~\\[1ex]
-            % \fi
-            \stepcounter{nadv}
-            \StrCut{##1}{/}\stgender\stname
-            \StatementOneSignature[#1]
-              {\GetAdviserString(pref,#2,1,\stgender,\@LANG@MAIN)}
-              {\stname}
-              {#3}% place
-              {#4}% date
-        }%
-      }{}%
+      \ifnum\ntpersoncount{adviser}{#2}>0\relax%
+        \ntforeachperson{adviser}{#2}{\@nt@advisersignature{#1}{#2}{#3}{#4}}%
+      \fi%
     \end{tightcenter}
   }
 

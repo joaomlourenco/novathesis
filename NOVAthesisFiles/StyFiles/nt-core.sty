@@ -1398,8 +1398,122 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MANAGE PERSON LISTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Storage: one seq per field (name/title/position/institution/gender),
+% per (class,role) -- e.g. g__nt_person_adviser_a_name_seq -- with index n
+% describing the same person across all five seqs. \ntaddperson pushes into
+% all five together; \ntforeachperson/\ntpersoncount/\ntpersongender read
+% them back. Kept in a single \ExplSyntaxOn block below so every "_" in a
+% \csname is tokenized as a letter at definition time and stays that way
+% however it's later called (see [[established pattern from Tier 1-4a]]).
+\ExplSyntaxOn
+\keys_define:nn { nt/person }
+  {
+    title       .tl_set:N  = \l__nt_person_title_tl,
+    title       .initial:n = {},
+    position    .tl_set:N  = \l__nt_person_position_tl,
+    position    .initial:n = {},
+    institution .tl_set:N  = \l__nt_person_institution_tl,
+    institution .initial:n = {},
+  }
+\cs_new:Npn \@nt@trim@aux #1 { \tl_trim_spaces:e {#1} }
+\cs_new_protected:Npn \@nt@person@setkeys #1
+  { \keys_set:nn { nt/person } { title={}, position={}, institution={}, #1 } }
+\cs_new_protected:Npn \@nt@person@store #1#2#3#4#5#6#7
+  {
+    % #1=class #2=role #3=name #4=title #5=position #6=institution #7=gender
+    \seq_if_exist:cF { g__nt_person_#1_#2_name_seq }
+      {
+        \seq_new:c { g__nt_person_#1_#2_name_seq }
+        \seq_new:c { g__nt_person_#1_#2_title_seq }
+        \seq_new:c { g__nt_person_#1_#2_position_seq }
+        \seq_new:c { g__nt_person_#1_#2_institution_seq }
+        \seq_new:c { g__nt_person_#1_#2_gender_seq }
+      }
+    \seq_gput_right:ce { g__nt_person_#1_#2_name_seq }        {#3}
+    \seq_gput_right:ce { g__nt_person_#1_#2_title_seq }       {#4}
+    \seq_gput_right:ce { g__nt_person_#1_#2_position_seq }    {#5}
+    \seq_gput_right:ce { g__nt_person_#1_#2_institution_seq } {#6}
+    \seq_gput_right:ce { g__nt_person_#1_#2_gender_seq }      {#7}
+  }
+
+% \ntpersoncount{class}{role} -> number of people registered (0 if none).
+% Fully expandable (no TF-conditional composition tricks -- those proved
+% unreliable inside \cs_new:Npn; \seq_if_exist:cTF alone is fine here).
+\cs_new:Npn \ntpersoncount #1#2
+  { \seq_if_exist:cTF { g__nt_person_#1_#2_name_seq }
+      { \seq_count:c { g__nt_person_#1_#2_name_seq } }
+      { 0 }
+  }
+
+% \ntpersongender{class}{role}{result-macro} -> assigns "m" into
+% <result-macro> if any registered person is male, else "f" (matches the
+% previous \@nt@reducegender rule). A procedure, not an expandable
+% function: \seq_if_in:...TF did not compose reliably as a return value,
+% so this walks the seq with \seq_map_inline:Nn + \str_if_eq:nnT instead,
+% both proven throughout this migration.
+\cs_new_protected:Npn \ntpersongender #1#2#3
+  {
+    \tl_set:Nn #3 {f}
+    \seq_if_exist:cT { g__nt_person_#1_#2_gender_seq }
+      { \expandafter\seq_map_inline:Nn\csname g__nt_person_#1_#2_gender_seq\endcsname
+          { \str_if_eq:nnT {##1} {m} { \tl_set:Nn #3 {m} } }
+      }
+  }
+
+% \ntforeachperson{class}{role}{<macro>} -> calls
+% <macro>{title}{name}{position}{institution}{gender} once per person
+% registered in that (class,role), in \ntaddperson call order. No-op if
+% nobody is registered.
+\NewDocumentCommand \ntforeachperson { m m m }
+  { \seq_if_exist:cT { g__nt_person_#1_#2_name_seq }
+      { \int_step_inline:nn { \seq_count:c { g__nt_person_#1_#2_name_seq } }
+          { #3
+              { \seq_item:cn { g__nt_person_#1_#2_title_seq }       {##1} }
+              { \seq_item:cn { g__nt_person_#1_#2_name_seq }        {##1} }
+              { \seq_item:cn { g__nt_person_#1_#2_position_seq }    {##1} }
+              { \seq_item:cn { g__nt_person_#1_#2_institution_seq } {##1} }
+              { \seq_item:cn { g__nt_person_#1_#2_gender_seq }      {##1} }
+          }
+      }
+  }
+
+% \@nt@addperson@i -- \ntaddperson's real implementation, split out so the
+% trailing [title=...,position=...,institution=...] can be an xparse O{}
+% slot (xparse needs to own the argument that follows to peek for "[").
+% #1=class #2=role #3=gender #4=name-or-legacy-string #5=[keys]
+\NewDocumentCommand \@nt@addperson@i { m m m m O{} } {%
+  \IfSubStr{#4}{,}{%
+    % Legacy "name, position, institution" comma string (still
+    % supported): cut only the first two commas -- any further commas
+    % belong to the institution (e.g. "..., NOVA School of Science and
+    % Technology, UNL").
+    \ClassWarning{novathesis}{%
+      \string\ntaddperson: the "name,\space position,\space institution"
+      comma string is deprecated.\MessageBreak
+      Use \string\ntaddperson\string{#1\string}(#2,#3)\string{name\string}%
+      [position=...,\space institution=...]\space instead%
+    }%
+    \noexpandarg
+    \StrCut{#4}{,}\@nt@p@name\@nt@p@rest
+    \fullexpandarg
+    \StrCut{\@nt@p@rest}{,}\@nt@p@position@raw\@nt@p@institution@raw
+    \edef\@nt@p@position{\@nt@trim@aux{\@nt@p@position@raw}}%
+    \edef\@nt@p@institution{\@nt@trim@aux{\@nt@p@institution@raw}}%
+    \def\@nt@p@title{}%
+  }{%
+    \def\@nt@p@name{#4}%
+    \@nt@person@setkeys{#5}%
+    \let\@nt@p@title\l__nt_person_title_tl
+    \let\@nt@p@position\l__nt_person_position_tl
+    \let\@nt@p@institution\l__nt_person_institution_tl
+  }%
+  \@nt@person@store{#1}{#2}{\@nt@p@name}{\@nt@p@title}{\@nt@p@position}{\@nt@p@institution}{#3}%
+}
+\ExplSyntaxOff
+
 \def\ntaddperson#1(#2,#3)#4{%
-  % syntax: \ntaddperson{class}(key,gender){person name, position, etc}
+  % syntax: \ntaddperson{class}(role,gender){name}[title=...,position=...,institution=...]
+  %         legacy:  \ntaddperson{class}(role,gender){name, position, institution}
   % #1=adviser | committee
   % #2={a,c}            {c,r,a,m,g}
   %     a=adviser        c=chair
@@ -1409,16 +1523,8 @@
   %                      m=other members
   %                      g=guests
   % #3={m,f}
-  % #4={person name, position, etc}
-  \noexpandarg
-  \StrCut{#4}{,}\@nt@personname\@nt@dummy%was xStrCut
-  \options{
-      /@nt/#1/#2/name/.expanded/.newpush={\@nt@personname},
-      /@nt/#1/#2/full/.expanded/.newpush={#4},
-      /@nt/#1/#2/gender/.newpush={#3},
-      /@nt/#1/#2/pair/.expanded/.newpush={#3/\@nt@personname},
-  }%
-  \fullexpandarg
+  % #4=name (or, legacy, "name, position, institution")
+  \@nt@addperson@i{#1}{#2}{#3}{#4}%
 }
 
 
