@@ -688,13 +688,19 @@ For the author's previous degree (printed on some covers):
 
 \begin{latexcode}
 % Principal adviser
-\ntaddperson{adviser}(a,f){Mary Adviser, Full Professor, NOVA University Lisbon}
+\ntaddperson{adviser}(a,f){Mary Adviser}
+  [position=Full Professor, institution=NOVA University Lisbon]
 % Co-advisers
-\ntaddperson{adviser}(c,m){John Co-Adviser, Associate Professor, IST}
+\ntaddperson{adviser}(c,m){John Co-Adviser}
+  [position=Associate Professor, institution=IST]
 \end{latexcode}
 
 Valid role codes: \texttt{a}~(adviser), \texttt{c}/\texttt{co}~(co-adviser),
 \texttt{t}~(tutor).  Gender codes: \texttt{m}~(male), \texttt{f}~(female).
+The \texttt{title}, \texttt{position}, and \texttt{institution} fields are
+all optional; a legacy \texttt{\{name, position, institution\}} comma
+string is still accepted too, but is deprecated (see
+Appendix~\ref{app:internals}).
 
 %%-----------------------------------------------------------------------
 \subsection{Evaluation Committee}
@@ -704,10 +710,14 @@ Valid role codes: \texttt{a}~(adviser), \texttt{c}/\texttt{co}~(co-adviser),
 Committee members are only printed when \texttt{docstatus=final}
 (or when forced with \verb!\ntsetup{print/committee=true}!):
 \begin{latexcode}
-\ntaddperson{committee}(c,m){Chair Name, Full Professor, NOVA University Lisbon}
-\ntaddperson{committee}(r,m){Rapporteur, Associate Professor, University of Porto}
-\ntaddperson{committee}(m,f){Member Name, Assistant Professor, University X}
-\ntaddperson{committee}(g,f){Guest Member, Position, Institution}
+\ntaddperson{committee}(c,m){Chair Name}
+  [position=Full Professor, institution=NOVA University Lisbon]
+\ntaddperson{committee}(r,m){Rapporteur}
+  [position=Associate Professor, institution=University of Porto]
+\ntaddperson{committee}(m,f){Member Name}
+  [position=Assistant Professor, institution=University X]
+\ntaddperson{committee}(g,f){Guest Member}
+  [position=Position, institution=Institution]
 \end{latexcode}
 
 Valid roles: \texttt{c}~(chair), \texttt{r}~(rapporteur/arguente),

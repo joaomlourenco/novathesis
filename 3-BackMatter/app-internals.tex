@@ -241,10 +241,13 @@ Registers a funding sponsor for display on the cover.
 
 %%--------------------------------------------------------------------
 \begin{macrodoc}{\textbackslash ntaddperson}
-\sig{\textbackslash ntaddperson\{\mv{class}\}(\mv{role},\mv{gender})\{\mv{name, position, institution}\}}
+\sig{\textbackslash ntaddperson\{\mv{class}\}(\mv{role},\mv{gender})\{\mv{name}\}[\mv{title=...,\ position=...,\ institution=...}]}
 
-Registers a person (adviser or jury member).  All fields are
-typeset verbatim on the cover and in the jury table.
+Registers a person (adviser or jury member).  Only \mv{name} is
+required; \texttt{title}, \texttt{position}, and \texttt{institution}
+are independent optional fields, given as \texttt{key=value} pairs in
+the trailing bracket.  All fields are typeset verbatim on the cover and
+in the jury table.
 
 \medskip
 \begin{ShadedTabular}{lll}
@@ -265,13 +268,26 @@ The \emph{gender} argument (\texttt{m} / \texttt{f}) governs
 grammatical agreement in Portuguese texts.
 
 \begin{latexcode}
-\ntaddperson{adviser}(a,m){%
-  João Maria Lourenço, Full Professor,
-  NOVA School of Science and Technology, UNL}
-\ntaddperson{committee}(c,m){%
-  Maria Fernanda Távora, Full Professor,
-  Instituto Superior Técnico, ULisboa}
+\ntaddperson{adviser}(a,m){João Maria Lourenço}%
+  [position=Full Professor,
+   institution=NOVA School of Science and Technology, UNL]
+\ntaddperson{committee}(c,m){Maria Fernanda Távora}%
+  [title=Prof.,
+   position=Full Professor,
+   institution=Instituto Superior Técnico, ULisboa]
 \end{latexcode}
+
+\begin{highlightbox}[title={Upgrading from an older document}]
+Earlier \novathesis{} versions took a single
+\texttt{\{name, position, institution\}} comma string instead of the
+bracket above -- that form still works (only the first two commas are
+significant; a comma-containing institution like
+``\emph{NOVA School of Science and Technology, UNL}'' is kept whole),
+but now emits a deprecation warning (once per \texttt{\textbackslash
+ntaddperson} call) suggesting the
+\texttt{title}/\texttt{position}/\texttt{institution} form instead.
+There is no rush to convert existing documents.
+\end{highlightbox}
 \end{macrodoc}
 
 \bigskip
@@ -291,6 +307,40 @@ persons as a flat list with an optional custom separator.
 \begin{latexcode}
 \ntprintpersons{adviser}{a,co}
 \ntprintpersons{committee}{c,r,m}
+\end{latexcode}
+\end{macrodoc}
+
+\bigskip
+
+%%--------------------------------------------------------------------
+\begin{macrodoc}{\textbackslash ntforeachperson}
+\sig{\textbackslash ntforeachperson\{\mv{class}\}\{\mv{role}\}\{\mv{macro}\}}
+\sig{\textbackslash ntpersoncount\{\mv{class}\}\{\mv{role}\}}
+\sig{\textbackslash ntpersongender\{\mv{class}\}\{\mv{role}\}\{\mv{result-macro}\}}
+
+Lower-level accessors for custom cover pages or school \texttt{.clo}
+files that need person data directly, without going through
+\texttt{\textbackslash ntprintpersons}.
+
+\textbf{\texttt{\textbackslash ntforeachperson}} calls
+\mv{macro}\texttt{\{title\}\{name\}\{position\}\{institution\}\{gender\}}
+once for every person registered under \mv{class}/\mv{role}, in the
+order they were added with \texttt{\textbackslash ntaddperson}.  Any
+field a given person did not set comes through as an empty group.
+
+\textbf{\texttt{\textbackslash ntpersoncount}} expands to the number of
+people registered (\texttt{0} if none) -- useful for choosing between a
+singular and plural label.
+
+\textbf{\texttt{\textbackslash ntpersongender}} sets \mv{result-macro}
+to \texttt{m} if at least one registered person is male, otherwise
+\texttt{f} -- the same "any male makes the group masculine" rule
+\novathesis{} uses for Portuguese grammatical agreement on group
+labels like ``Supervisor(s)''.
+
+\begin{latexcode}
+\newcommand{\printshortname}#1#2#3#4#5{#2\\}
+\ntforeachperson{committee}{m}{\printshortname}
 \end{latexcode}
 \end{macrodoc}
 
