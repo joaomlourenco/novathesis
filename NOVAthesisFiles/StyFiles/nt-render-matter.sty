@@ -643,8 +643,27 @@
 %% BIBLIOGRAPHY & INDEXING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Add the template's own reference to the document's bibliography.
+%
+% The entry must land in refsection 0 — the document's *main* reference list —
+% because that is the only place that counts: bibliographic indexers (Google
+% Scholar among them) count a citation by parsing the reference list of the
+% citing document, so a reference confined to a local \refsection, or merely
+% printed as a formatted string elsewhere, is invisible to them.
+%
+% It is issued here, immediately before \printbibliography, rather than from
+% \AfterPreamble: at \begin{document} biblatex has not yet read the .bbl, so an
+% earlier \nocite raises a spurious "Citation 'novathesis-manual' undefined"
+% warning on every single build.
+%
+% Opt out with \ntsetup{cite/template=false}.
+\newcommand*{\@ntcitetemplate}{%
+  \iftoggle{/novathesis/cite/template}{\nocite{novathesis-manual}}{}%
+}
+
 \newcommand*{\ntprintbibsingle}[1][]{%
   \NTRunHook{printbib/pre}%
+  \@ntcitetemplate%
   \printbibliography[#1]%
   \ntfixspacing%
   \NTRunHook{printbib/post}%
@@ -652,6 +671,7 @@
 
 \newcommand*{\ntprintbibseparate}[1][]{%
   \NTRunHook{printbib/pre}%
+    \@ntcitetemplate%
     \printbibliography[nottype=online]% Print the main bibliography.
     % Print the web references separately, under their own title.
     \printbibliography[title=\option{/novathesis/print/webography},type=online]%

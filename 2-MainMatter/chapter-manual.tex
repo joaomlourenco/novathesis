@@ -398,6 +398,16 @@ generated PDF.  Many have defaults that vary with \texttt{school} and \texttt{do
 \ntsetup{print/webography=Webography}
 \end{latexcode}
 
+  \item[\texttt{cite/template}] Add the reference to the \novathesis{} template
+    to your document's bibliography.  Default: \texttt{true}.
+
+    \novathesis{} is developed and maintained for free, and citations are the
+    only currency in which that work is repaid.  If you would rather not
+    include the reference, simply turn the option off --- no hard feelings.
+\begin{latexcode}
+\ntsetup{cite/template=false}
+\end{latexcode}
+
   \item[\texttt{print/aidisclosure}] Print an AI use disclosure statement.
     Default: \texttt{aidisclose} (uses \verb!1-FrontMatter/7-aidisclose.tex!
     with the \texttt{aidisclose} package).
