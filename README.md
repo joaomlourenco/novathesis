@@ -52,6 +52,7 @@ Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 [![GitHub commits](https://img.shields.io/github/commits-since/joaomlourenco/novathesis/2.0.0.svg)](https://github.com/joaomlourenco/novathesis/commit/)
 ![![Last commit](https://github.com/joaomlourenco/novathesis)](https://img.shields.io/github/last-commit/joaomlourenco/novathesis?color=blue)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21938603.svg)](https://doi.org/10.5281/zenodo.21938603)
 [![GitHub license](https://img.shields.io/badge/SAY%20THANKS-€5-orange.svg)](https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8)
 
 ---
@@ -73,7 +74,7 @@ Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 * [11\. Deprecated Word Templates](#11-deprecated-word-templates)
 * [12\. Please give this repository a ⭐️](#12-please-give-this-repository-a-️%EF%B8%8F)
 * [13\. Contributors](#13-contributors-thank-you)
-* [14\. Say thank you!](#14-say-thank-you)
+* [14\. Say thank you! (and how to cite)](#14-say-thank-you-and-how-to-cite)
 
 ---
 
@@ -506,11 +507,35 @@ Made with [contrib.rocks](https://contrib.rocks).
 
 ---
 
-# 14. Say thank you!
+# 14. Say thank you! (and how to cite)
 
 1. **Star this repository** by clicking the (⭐️) at the top right of the [project's page](https://github.com/joaomlourenco/novathesis).
-2. **Make a [small donation](https://paypal.me/novathesis)** (*pay me a beer!*)  
-3. **Cite the NOVAthesis manual** in your thesis/dissertation (e.g., in the acknowledgments) with `\cite{novathesis-manual}` (the correct bibliographic reference will be added automatically).
+2. **Make a [small donation](https://paypal.me/novathesis)** (*pay me a beer!*)
+3. **Cite novathesis** — see below.
+
+### How to cite
+
+novathesis is archived on Zenodo with a DOI: **[10.5281/zenodo.21938603](https://doi.org/10.5281/zenodo.21938603)**. This is the *concept* DOI, so it is version-independent and always resolves to the latest release.
+
+**If you write your thesis with the template, you need do nothing:** the reference is added to your bibliography automatically. Turn it off with `\ntsetup{cite/template=false}` if you prefer.
+
+To cite it explicitly in the text, use `\cite{novathesis-manual}` — the bibliographic entry is supplied by the template, so there is no BibTeX to copy.
+
+Anywhere else, use:
+
+```bibtex
+@Manual{novathesis-manual,
+  title        = {{novathesis}: A {LaTeX} Template for Academic Theses and Dissertations},
+  author       = {João M. Lourenço},
+  organization = {NOVA University Lisbon},
+  year         = {2026},
+  doi          = {10.5281/zenodo.21938603},
+}
+```
+
+> J. M. Lourenço. *novathesis: A LaTeX Template for Academic Theses and Dissertations.* NOVA University Lisbon, 2026. doi: 10.5281/zenodo.21938603
+
+GitHub's **“Cite this repository”** button (right-hand sidebar) generates the same reference in BibTeX or APA, from [`CITATION.cff`](CITATION.cff).
 
 <img src="https://github.com/user-attachments/assets/8434a462-3599-4d3c-a2fd-04995db03fe3" width="100" />
 
