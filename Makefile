@@ -92,12 +92,17 @@ endif
 
 LMKFLAGS += $(FLAGS)
 
-# Filter LaTeX chatter with texfot when available (disabled by V=1)
+# Filter LaTeX chatter with texfot when available (disabled by V=1).
+# --accept is checked before every ignore rule, so it is what lets the
+# template's own "[novathesis]" notices reach the terminal; everything the
+# class writes for the user's eyes carries that prefix, and nothing else does.
 TEXFOT := $(shell command -v texfot 2>/dev/null)
 ifeq ($(V),1)
   RUN :=
+else ifeq ($(TEXFOT),)
+  RUN :=
 else
-  RUN := $(TEXFOT)
+  RUN := $(TEXFOT) --accept '^\[novathesis\]'
 endif
 
 # --- Build targets ------------------------------------------------------------

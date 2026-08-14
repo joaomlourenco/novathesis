@@ -661,6 +661,33 @@
   \iftoggle{/novathesis/cite/template}{\nocite{novathesis-manual}}{}%
 }
 
+% Tell the author, once per build, that the reference was added and how to
+% remove it.  Silent when the option is off (the choice was already made, and
+% nagging about it would be rude) and when docstatus=final, so that the build
+% of the document actually being submitted carries no chatter.
+%
+% Every line is prefixed with "[novathesis]" because the Makefile filters the
+% engine output through texfot, which discards ordinary \typeout lines; that
+% prefix is the pattern texfot is told to --accept, and it is used for nothing
+% else.  Without it this message would exist only in the .log, where nobody
+% would read it.
+\AtEndDocument{%
+  \ifdocfinal{}{%
+    \iftoggle{/novathesis/cite/template}{%
+      \typeout{^^J%
+[novathesis] ---------------------------------------------------------^^J%
+[novathesis] The reference to the template (v\novathesisversion) was added to your^^J%
+[novathesis] bibliography.  novathesis is free, and citations are the only^^J%
+[novathesis] currency in which the work is repaid -- please consider^^J%
+[novathesis] keeping it.  DOI: 10.5281/zenodo.21938603^^J%
+[novathesis]^^J%
+[novathesis] Opt out with: \string\ntsetup{cite/template=false}^^J%
+[novathesis] ---------------------------------------------------------^^J%
+      }%
+    }{}%
+  }%
+}
+
 \newcommand*{\ntprintbibsingle}[1][]{%
   \NTRunHook{printbib/pre}%
   \@ntcitetemplate%
