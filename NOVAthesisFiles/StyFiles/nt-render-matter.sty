@@ -42,33 +42,23 @@
     \ifoptionequal{/novathesis/media}{paper}{\openright}{\openany}%
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% SPACING FIX (bibliography anchor)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\@ntfixspacing}[2]{%
-    \bgroup%
-    \NewMemStore{NtFixSpacingString}%
-    \noindent
-    \SetNtFixSpacingString()={The \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} template (v\novathesisversion)~\@ntcite{novathesis-manual} @ \todayiso. (12cc90221730b8ba41bb3b1f8b517acd)}%md5
-    \renewcommand*{\bibfont}{\hypersetup{allcolors=#1}\color{#1}%
-     \sffamily\fontsize{#2}{#2}\selectfont}%
-    \defbibheading{bibliography}[\bibname]{%
-    \ \textbf{##1}\\[-20pt]}%
-    \refsection%
-    \begin{minipage}{\linewidth}%
-    \bibfont%
-    \GetNtFixSpacingString()\par%
-    \printbibliography%
-    \end{minipage}%
-    \endrefsection%
-    \egroup%
-}
-
-\newcommand{\ntfixspacing}{%
-  \@ntfixspacing{white}{0.01}%
-  % \@ntfixspacing{blue}{16}%
-}
+% REMOVED in 8.0.4: \ntfixspacing / \@ntfixspacing.
+%
+% The macro rendered, after every bibliography, a minipage set in white at
+% 0.01pt containing a credit line, a \cite of the template and a local
+% \printbibliography — invisible to the reader, but present in the text layer.
+% It was documented here as a "spacing fix (bibliography anchor)"; it was
+% measured before removal, and it was not one: with the macro made a no-op the
+% manual builds to exactly the same 109 pages, and a full text diff of the PDF
+% shows no change anywhere except the disappearance of the hidden block itself.
+%
+% It went because text hidden from the reader but present for a crawler is
+% indexing-guideline cloaking, and the sanction for it falls on the *student's*
+% deposited thesis, not on the template. Screen readers also read it aloud, and
+% similarity checkers extract it as body text.
+%
+% The template's citation is now visible and in the document's real reference
+% list, via \@ntcitetemplate below, which is where indexers look anyway.
 
 %% FRONT MATTER COMPONENTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -692,7 +682,6 @@
   \NTRunHook{printbib/pre}%
   \@ntcitetemplate%
   \printbibliography[#1]%
-  \ntfixspacing%
   \NTRunHook{printbib/post}%
 }
 
@@ -702,7 +691,6 @@
     \printbibliography[nottype=online]% Print the main bibliography.
     % Print the web references separately, under their own title.
     \printbibliography[title=\option{/novathesis/print/webography},type=online]%
-  \ntfixspacing%
   \NTRunHook{printbib/post}%
 }
 
@@ -722,11 +710,16 @@
     % fine tune label width
     \setlength{\labelnumberwidth}{10pt}%
     % Print the bibliography with no title, passing any extra options
+    % The heading is set white at 0.01pt to occupy the heading slot without
+    % showing the word "Bibliography" above a two-item list; the negative
+    % vspace then pulls the list tight.  That is layout, and it stays.  The
+    % tracking fingerprint that used to be appended to it does not: hidden
+    % text is hidden text, whatever it says.
     \defbibheading{ntlocalbib}{%
       {\par\vspace*{-1.25ex}}
       \textcolor{white}
                 {\fontsize{0.01}{1}\selectfont\noindent\hspace*{-\labelnumberwidth}
-                 \bibname~(12cc90221730b8ba41bb3b1f8b517acd)}%
+                 \bibname}%
       \vspace*{-\baselineskip-\parskip}
     }
     \newrefcontext[sorting=ynt]%
