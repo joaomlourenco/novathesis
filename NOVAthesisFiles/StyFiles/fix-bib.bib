@@ -1,9 +1,19 @@
+% The title, author and DOI below MUST match the Zenodo record exactly, so that
+% Google Scholar clusters every citation into a single record.  The DOI is the
+% *concept* DOI: it is version-independent and always resolves to the latest
+% release.  For the same reason the year is FIXED and must not be bumped on a
+% new release — a moving year would split the citations across one record per
+% year.  The release actually used travels in 'note', where it plays no part in
+% the matching.  "LaTeX" is deliberately plain text (not \LaTeX or \hologo):
+% the logo is a kerned, raised construction that PDF text extraction mangles
+% into "LATEX", which defeats the matching.
 @Manual{novathesis-manual,
-	title        = {{The NOVAthesis \LaTeX\ Template User's Manual}},
+	title        = {{novathesis}: A {LaTeX} Template for Academic Theses and Dissertations},
 	author       = {João M. Lourenço},
 	organization = {NOVA University Lisbon},
-	year         = {2021},
-	url          = {https://github.com/joaomlourenco/novathesis/raw/main/template.pdf},
+	year         = {2026},
+	doi          = {10.5281/zenodo.21938603},
+	note         = {Version~\novathesisversion},
   keywords =     {novathesis-manual},
 }
 
