@@ -788,6 +788,42 @@
 % page); ask if you want it localized too.
 %
 % Opt out with \ntsetup{print/colophon=false}.
+%
+% Fixed constant, reused verbatim from the hidden white-text credit this
+% colophon replaces (see the "REMOVED in 8.0.4" note near the top of this
+% file) -- not a hash of anything computed at build time.
+\def\@nt@colophonbuildid{12cc9022}
+
+% Curated display name for each FontStyles/*.sty style, keyed by the raw
+% /novathesis/style/font value (what the user types in
+% \ntsetup{style/font=...}). Falls back to the raw value itself for any
+% style not in this table (e.g. a school-added custom font file), so an
+% unrecognised value never breaks the build -- it just prints plainly.
+\newcommand*{\@nt@fontprettyname}[1]{%
+  \IfStrEqCase{#1}{%
+    {arial}{Arial}%
+    {baskerville}{Baskerville}%
+    {bookman}{Bookman}%
+    {calibri}{Calibri}%
+    {cambria}{Cambria}%
+    {computer-modern}{Computer Modern}%
+    {erewhon}{Erewhon}%
+    {futura}{Futura}%
+    {garamond}{EB Garamond}%
+    {kieranhealy}{Minion Pro~/ Myriad Pro~/ Pragmata Pro}%
+    {libertine}{Linux Libertine}%
+    {newpx}{New PX (Palatino)}%
+    {newsgott}{News Gothic T}%
+    {opensans}{Open Sans}%
+    {palatino-gyre-pagella}{TeX Gyre Pagella (Palatino)}%
+    {palatino-linotype}{Palatino Linotype}%
+    {palatino}{Palatino}%
+    {scholax}{Scholax}%
+    {times}{Times New Roman}%
+    {verdana}{Verdana}%
+  }[#1]%
+}
+
 \newcommand*{\ntprintcolophon}{%
   \ifmaindoc{%
     \iftoggle{/novathesis/print/colophon}{%
@@ -798,7 +834,8 @@
       \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis}
       template (v\novathesisversion)%
       \iftoggle{/novathesis/cite/template}{~\@ntcite{novathesis-manual}}{}%
-      , on \today.%
+      , set in \@nt@fontprettyname{\option{/novathesis/style/font}}.
+      Build \@nt@colophonbuildid, \today.%
       \NTRunHook{colophon/post}%
     }{}%
   }{}%
