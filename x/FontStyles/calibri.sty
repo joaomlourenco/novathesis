@@ -1,0 +1,51 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/calibri.sty
+%% NOVA thesis configuration file
+%%
+%% Customization of fonts to use Calibri fontset
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE FontStyles/calibri.sty}%
+
+
+
+%%=======================================================================
+%% FONT VERIFICATION
+%%=======================================================================
+
+\ntcheckfonts{Calibri}{Regular,Italic,Bold,BoldItalic}
+
+
+%%=======================================================================
+%% FONT SELECTION
+%%=======================================================================
+
+\setmainfont{Calibri}[
+  Path           = \DIRFONTSTYLES/Fonts/,
+  Extension      = .ttf,
+  Ligatures      = TeX,
+  UprightFont    = *-Regular,
+  ItalicFont     = *-Italic,
+  BoldFont       = *-Bold,
+  BoldItalicFont = *-BoldItalic,
+]
+
+% Calibri is a sans-serif; use as both roman and sans
+\setsansfont{Calibri}[
+  Path           = \DIRFONTSTYLES/Fonts/,
+  Extension      = .ttf,
+  Ligatures      = TeX,
+  UprightFont    = *-Regular,
+  ItalicFont     = *-Italic,
+  BoldFont       = *-Bold,
+  BoldItalicFont = *-BoldItalic,
+]
+
+% Use Courier New as fallback for monospace
+\setmonofont[
+  Scale          = 0.95,
+  Ligatures      = TeX,
+]{Courier New}
+
+% Math font using newtxmath for consistency
+\RequirePackage[libertine]{newtxmath}

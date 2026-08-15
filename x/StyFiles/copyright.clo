@@ -1,0 +1,22 @@
+%!TEX root=template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — copyright.clo
+%% ----------------------------------------------------------------------------
+%%
+%% Version 7.11.0 (2026-06-13)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%% Departamento de Informática (www.di.fct.unl.pt)
+%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Universidade NOVA de Lisboa (www.unl.pt)
+%%
+%% Standard copyright page layout.
+%% ----------------------------------------------------------------------------
+
+\typeout{NT FILE StyFiles/copyright.clo}%
+\makeatletter
+\null\vfill%
+\noindent%
+\textbf{\large\GetDocTitle(\@LANG@COVER,main,plain)}\par%
+\bigskip%
+\thecopyrightstr

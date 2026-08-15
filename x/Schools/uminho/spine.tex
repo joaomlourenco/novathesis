@@ -1,0 +1,76 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% spine.tex
+%% NOVA thesis document template
+%%
+%% This work is licensed under the
+%% The LaTeX project public license (LPPL), version 1.3c
+%% To view a copy of this license, visit
+%% https://www.latex-project.org/lppl/lppl-1-3c/
+%%
+%% Authors / Contributors:
+%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE uminho/spine.tex}%
+
+
+
+% Draw the book spine
+% usable range: 145 to 425 pages, maximum characters for the title 140 and 22 for the author name
+% usable range: 75 to 145 pages, maximum characters for the title 70 and 22 for the author name
+
+\makeatletter
+
+
+\newcommand{\spinetext}{%
+    \pagecolor{white}%
+  \ifphddoc{\color{white}}{\color{black}}%
+  \hspace*{10mm}%
+  \GetSpine(font)%
+  \parbox{197mm}{UMinho~$|$~\GetSpine(year)\hfill\GetSpine(author)\hfill\textbf{\GetSpine(title)}}%
+  \parbox{90mm}{~}%
+}
+
+\newcommand{\@ntprintspine}{%
+  \newlength{\novathesis@spinewidth}%
+  \setlength{\novathesis@spinewidth}{1mm * (\thelastsheet+ 19) / 20}% replace \thelastsheet by 1581 to get 80mm width folder label or any other value as long as the width is bigger than 50mm
+  % \printlen%
+  \color{white}%
+  \thispagestyle{empty}
+  \NTRunHook{spine/pre}%
+  % \savegeometry{maintext}%
+  % \newgeometry{textwidth=\novathesis@spinewidth,textheight=\paperheight}%
+  \begin{tikzpicture}[remember picture, overlay]
+    % \node[inner sep=0] at (current page.center) {\fill[red] rectangle (4,4)};
+  \ifphddoc{%
+    \node[inner sep=0,shape=rectangle,fill=uminhoGREY,minimum height =\paperheight,minimum width =\novathesis@spinewidth] at (current page.center) {~};
+  }{%
+    % \node[inner sep=0,shape=rectangle,draw=black,fill=white,minimum height =\paperheight,minimum width =\novathesis@spinewidth] at (current page.center) {~};
+  }%
+
+  % draw image
+    % \node[inner sep=0] at (current page.center)
+    %         {\includegraphics[width=\textwidth,height=\textheight]%
+    %                          {\GetThesisCover(spine,image)}%
+    %         };
+    \node (univ) [inner sep=0,anchor=north,yshift=0.5pt] at (current page.north)
+            {
+                \rotatebox{-90}{\includegraphics[width=\novathesis@spinewidth,angle=90]{\GetSpine(logo,university)}\hspace{-0.5pt}%
+                \includegraphics[width=\novathesis@spinewidth,angle=90]{\GetSpine(logo,school)}}
+             };
+    % \node (schl) [inner sep=0,below of=univ]%
+    %         {\includegraphics[width=\novathesis@spinewidth]%
+    %                          {\GetSpine(logo,school)}};
+    \node[inner sep=0] at (current page.center) {\rotatebox{90}{\spinetext}};
+    \ifmscdoc{%
+        \node[inner sep=0,xshift=-0.1pt-0.5\novathesis@spinewidth] at (current page.center)
+                                 {\color{uminhoGREY}\rule{0.1pt}{\paperheight}};
+        \node[inner sep=0,xshift=0.1pt+0.5\novathesis@spinewidth] at (current page.center)
+                                 {\color{uminhoGREY}\rule{0.1pt}{\paperheight}};
+    }{}
+  \end{tikzpicture}%
+  \NTRunHook{spine/mid}%
+  \ifoptioncontains{/novathesis/debug}{cover}{\debuggrid}{}%
+  % \loadgeometry{maintext}%
+  \NTRunHook{spine/post}%
+}

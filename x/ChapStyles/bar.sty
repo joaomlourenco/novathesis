@@ -1,0 +1,39 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOVAthesisFiles/ChapStyles/bar.sty
+%% NOVA thesis configuration file
+%%
+%% Customization for the “NOVA School of Science and Technology” chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE NOVAthesisFiles/ChapStyles/bar.sty}%
+
+
+%%=======================================================================
+%% CHAPTER STYLE
+%%=======================================================================
+
+\chapterstyle{ell}
+
+\renewcommand{\chs@ell@helper}[1]{%
+  \par%
+    \IfStrEq{#1}{}{% Unnumbered chapter
+      \hfill\begin{tabular}{r@{}}%
+        \leavevmode\chapnumfont\normalfont #1\vphantom{1}%
+        \hspace*{3.6pt}%
+        \rule[-13.5pt]{0pt}{14.8mm}%
+        \\%
+      \end{tabular}%
+    }{% Numbered chapter
+      \hfill\begin{tabular}{|r@{}}%
+        \leavevmode\chapnumfont\normalfont ~#1\vphantom{1}%
+        \hspace*{3.6pt}%
+        \rule[-13.5pt]{0pt}{14.8mm}%
+        \\%
+      \end{tabular}%
+    }
+  \par%
+}%
+
+\renewcommand*{\printchaptertitle}[1]{%
+  {\raggedleft\chaptitlefont\normalfont\scshape #1\par}\nobreak
+}

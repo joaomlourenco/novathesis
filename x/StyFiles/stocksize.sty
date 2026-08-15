@@ -1,0 +1,189 @@
+%!TEX root=template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — stocksize.sty
+%% ----------------------------------------------------------------------------
+%%
+%% Version 8.0.3 (2026-08-11)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%% Departamento de Informática (www.di.fct.unl.pt)
+%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Universidade NOVA de Lisboa (www.unl.pt)
+%%
+%% Synchronize physical with logical paper size (Stack Aware).
+%% ----------------------------------------------------------------------------
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesExplPackage{stocksize}{2025/12/31}{2.0.0}
+  {Synchronize physical with logical paper size (Stack Aware)}
+\typeout { NT FILE StyFiles/stocksize.sty } %
+
+
+%%=======================================================================
+%% PACKAGE REQUIREMENTS
+%%=======================================================================
+
+\RequirePackage { geometry }
+\RequirePackage { l3keys2e }
+
+
+%%=======================================================================
+%% VARIABLES
+%%=======================================================================
+
+% Stack counter for nested geometry handling
+\newcount \Gm@stackcnt
+\Gm@stackcnt = \z@
+
+% Expl3 variables for option handling
+\clist_new:N \l__geostack_options_clist
+\clist_new:N \l__geostack_defaults_clist
+\bool_new:N  \l__geostack_patch_bool
+
+
+%%=======================================================================
+%% INTERNAL HELPERS
+%%=======================================================================
+
+% Synchronize Physical Paper Size
+% Ensures physical PDF canvas matches logical dimensions
+\cs_new_protected:Nn \__geostack_sync_physical_size:
+  {
+    % 1. Update LaTeX standard paper dimensions to match geometry's layout
+    \setlength { \paperwidth } { \the\Gm@layoutwidth }
+    \setlength { \paperheight } { \the\Gm@layoutheight }
+
+    % 2. Sync PDF driver specific dimensions (pdfTeX, LuaTeX, XeTeX)
+    \cs_if_exist:NT \pdfpagewidth
+      {
+        \setlength { \pdfpagewidth } { \paperwidth }
+        \setlength { \pdfpageheight } { \paperheight }
+      }
+    \cs_if_exist:NT \pagewidth
+      {
+        \setlength { \pagewidth } { \paperwidth }
+        \setlength { \pageheight } { \paperheight }
+      }
+
+    % 3. Sync memoir class or other packages using \stockwidth
+    \cs_if_exist:NT \stockwidth
+      {
+        \setlength { \stockwidth } { \paperwidth }
+        \setlength { \stockheight } { \paperheight }
+      }
+
+    % 4. Force geometry to recalculate its internal layout logic
+    \cs_if_exist:cT { Gm@changelayout }
+      {
+        \use:c { Gm@changelayout }
+      }
+  }
+
+
+%%=======================================================================
+%% CORE LOGIC: GEOMETRY REDEFINITIONS (STACK MECHANISM)
+%%=======================================================================
+
+% Redefine \newgeometry to support LIFO Stacking
+\renewcommand { \newgeometry } [1] { %
+  \clearpage
+  \def \Gm@restore { } %
+  \Gm@save
+  \global\advance \Gm@stackcnt \@ne
+  \global\expandafter\xdef
+    \csname Gm@stack@\the\Gm@stackcnt\endcsname
+    { \Gm@restore } %
+  \Gm@restore@org
+  \Gm@initnewgm
+  \Gm@newgmtrue
+  \setkeys { Gm } { #1 } %
+  \Gm@newgmfalse
+  \Gm@process
+  \ifnum \mag = \@m \else \Gm@magtooffset \fi
+  \Gm@changelayout
+  \Gm@showparams { newgeometry }
+}
+
+% Redefine \restoregeometry to support LIFO Stacking
+\renewcommand { \restoregeometry } { %
+  \clearpage
+  \ifnum \Gm@stackcnt > \z@
+    \csname Gm@stack@\the\Gm@stackcnt\endcsname
+    \global\advance \Gm@stackcnt \m@ne
+  \else
+    \Gm@restore@pkg
+  \fi
+  \Gm@changelayout
+}
+
+
+%%=======================================================================
+%% USER INTERFACE
+%%=======================================================================
+
+% \newstocksize{options}
+\NewDocumentCommand { \newstocksize } { m }
+  {
+    \clist_set:Nn \l__geostack_options_clist { #1 }
+    \clist_clear:N \l__geostack_defaults_clist
+
+    \clist_if_in:NnTF \l__geostack_options_clist { keepmargins }
+      {
+        \clist_put_right:Nx \l__geostack_defaults_clist
+          { lmargin = \use:c { Gm@lmargin } }
+        \clist_put_right:Nx \l__geostack_defaults_clist
+          { rmargin = \use:c { Gm@rmargin } }
+        \clist_put_right:Nx \l__geostack_defaults_clist
+          { tmargin = \use:c { Gm@tmargin } }
+        \clist_put_right:Nx \l__geostack_defaults_clist
+          { bmargin = \use:c { Gm@bmargin } }
+        \clist_remove_all:Nn \l__geostack_options_clist { keepmargins }
+      }
+      { }
+
+    \clist_put_right:NV
+      \l__geostack_defaults_clist
+      \l__geostack_options_clist
+    \exp_args:NV \newgeometry \l__geostack_defaults_clist
+    \__geostack_sync_physical_size:
+  }
+
+% \restorestocksize
+\NewDocumentCommand { \restorestocksize } { }
+  {
+    \restoregeometry
+    \__geostack_sync_physical_size:
+  }
+
+
+%%=======================================================================
+%% PACKAGE CONFIGURATION & PATCHING
+%%=======================================================================
+
+\keys_define:nn { stocksize }
+  {
+    patch-geometry .bool_set:N = \l__geostack_patch_bool,
+    patch-geometry .default:n = true,
+  }
+
+\ProcessKeysPackageOptions { stocksize }
+
+\bool_if:NT \l__geostack_patch_bool
+  {
+    \apptocmd { \newgeometry }
+      { \__geostack_sync_physical_size: }
+      { }
+      { \PackageWarning { stocksize } { Failed to patch newgeometry } }
+
+    \apptocmd { \restoregeometry }
+      { \__geostack_sync_physical_size: }
+      { }
+      { \PackageWarning { stocksize } { Failed to patch restoregeometry } }
+
+    \apptocmd { \loadgeometry }
+      { \__geostack_sync_physical_size: }
+      { }
+      { \PackageWarning { stocksize } { Failed to patch loadgeometry } }
+  }
+
+\endinput

@@ -1,0 +1,48 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/kieranhealy.sty
+%% NOVA thesis configuration file
+%%
+%% Customization of fonts to use Kieran Healy's fontset (MinionPro, MyriadPro, PragmataPro)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE FontStyles/kieranhealy.sty}%
+
+
+%%=======================================================================
+%% ENGINE CHECK
+%%=======================================================================
+
+\ifxeorlua{}{%
+  \ClassError{novathesis}
+             {Font~style~"kieranhealy"~is~not~compatible~with~pdfLaTeX.~Please~use~XeLaTeX~or~LuaLaTeX}
+             {Please~use~XeLaTeX~or~LuaLaTeX}%
+}
+
+
+%%=======================================================================
+%% FONT SELECTION
+%%=======================================================================
+
+\setromanfont[
+  Path=\DIRFONTSTYLES/Fonts/,
+  BoldItalicFont = *-Bold-Italic.otf,
+  BoldFont       = *-Bold.otf,
+  ItalicFont     = *-Italic.otf,
+  Ligatures      = {TeX, Common},
+  Numbers        = {OldStyle},
+  Scale          = 1.10,
+]{MinionPro}
+
+\setsansfont[
+  Path=\DIRFONTSTYLES/Fonts/,
+  BoldItalicFont = *-Bold-Italic.otf,
+  BoldFont       = *-Bold.otf,
+  ItalicFont     = *-Italic.otf,
+  Ligatures      = {TeX, Common},
+]{MyriadPro}
+
+\setmonofont[
+  Path=\DIRFONTSTYLES/Fonts/,
+  Ligatures = TeX,
+  Scale     = 0.90,
+]{PragmataPro}

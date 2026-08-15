@@ -1,0 +1,45 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOVAthesisFiles/ChapStyles/vz34.sty
+%% NOVA thesis configuration file
+%%
+%% Customization for the VZ34 chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE NOVAthesisFiles/ChapStyles/vz34.sty}%
+
+
+%%=======================================================================
+%% FLAGS
+%%=======================================================================
+
+% Guard against double-loading (both vz34 and vz43 use this flag).
+\@ifundefined{ifNoChapNumber}{\newif\ifNoChapNumber}{}
+
+
+%%=======================================================================
+%% CHAPTER STYLE
+%%=======================================================================
+
+\makechapterstyle{VZ34}{%
+  \renewcommand\chapternamenum{}
+  \renewcommand\printchaptername{}
+  \renewcommand\printchapternum{}
+  \renewcommand\chapnumfont{\Huge\bfseries}
+  \renewcommand\chaptitlefont{\Huge\bfseries\raggedright}
+  \renewcommand\printchaptertitle[1]{%
+    \ifNoChapNumber
+      \begin{tabular}{@{}p{\textwidth}}%
+        \chaptitlefont ##1%
+      \end{tabular}%
+    \else
+      \begin{tabular}{@{}p{1cm}|!{\quad}p{\textwidth-1cm-2em-4\tabcolsep }}%
+        \chapnumfont \thechapter%
+        & \chaptitlefont ##1%
+      \end{tabular}%
+    \fi
+    \NoChapNumberfalse%
+  }%
+  \renewcommand\printchapternonum{\NoChapNumbertrue}
+}
+
+\chapterstyle{VZ34}

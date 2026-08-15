@@ -1,0 +1,45 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/palatino.sty
+%% NOVA thesis configuration file
+%%
+%% Customization of font to use a Palatino-like font style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE FontStyles/palatino.sty}%
+
+
+%%=======================================================================
+%% ENGINE CHECK
+%%=======================================================================
+
+\ifxeorlua{}{%
+  \ClassError{novathesis}
+             {Font~style~"Palatino"~is~not~compatible~with~pdfLaTeX.~Please~use~XeLaTeX~or~LuaLaTeX}
+             {Please~use~XeLaTeX~or~LuaLaTeX}%
+}
+
+
+%%=======================================================================
+%% FONT SELECTION
+%%=======================================================================
+
+\IfFontExistsTF{Palatino}{%
+  \setmainfont{Palatino}[
+    Scale=1.0,
+    Ligatures={Common,Discretionary,TeX}
+  ]
+  % Use TeX Gyre Termes for sans (compatible with Palatino)
+  \setsansfont{TeX Gyre Heros}[
+    Scale=0.92,
+    Ligatures=TeX
+  ]
+  % Use TeX Gyre Cursor for mono
+  \setmonofont{Courier New}[
+    Scale=0.95,
+    Ligatures=TeX
+  ]
+  % Math font using newtxmath with palatino
+  \RequirePackage[p]{newtxmath}
+}{%
+  \PackageError{novathesis}{'Palatino' font not found. Please select another font style in '0-Config/1_novathesis.tex'}{}
+}

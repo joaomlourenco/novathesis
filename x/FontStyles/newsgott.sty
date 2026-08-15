@@ -1,0 +1,45 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/newsgott.sty
+%% NOVA thesis configuration file
+%%
+%% Customization of font to use a News Gothic T font set
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE FontStyles/newsgott.sty}%
+
+
+
+%%=======================================================================
+%% FONT VERIFICATION
+%%=======================================================================
+
+\ntcheckfonts{NewsGotT}{Regular,Bold}
+
+
+%%=======================================================================
+%% FONT SELECTION
+%%=======================================================================
+
+\AtEndPreamble{%
+  \RequirePackage[type1]{cabin}% used only by \mathsf
+  \RequirePackage{amsthm}% load before newtxmath
+  \RequirePackage[libertine,vvarbb]{newtxmath}% does not load minnewsgott because another Roman text package was specified
+  \setmonofont{JetBrains Mono}
+  [ LetterSpace=-3.0,
+    Scale = MatchLowercase, % Automatically scales to match surrounding text height
+  ]
+  % \setmonofont{Fira Mono}
+  % \setmonofont{Fira Mono}[LetterSpace=-2.0]
+  \setmainfont[
+    Path                = \DIRFONTSTYLES/Fonts/,
+    Ligatures           = TeX,
+    UprightFont         = *-Regular.ttf,
+    BoldFont            = *-Bold.ttf,
+    BoldSlantedFont     = *-Bold.ttf,
+    BoldItalicFont      = *-Bold.ttf,
+    AutoFakeSlant       = 0.15,
+    BoldSlantedFeatures = {FakeSlant = 0.15},
+    BoldItalicFeatures  = {FakeSlant = 0.15},
+    Scale               = 1.003764115,
+  ]{NewsGotT}
+}

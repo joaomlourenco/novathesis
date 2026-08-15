@@ -1,0 +1,53 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FontStyles/baskerville.sty
+%% NOVA thesis configuration file
+%%
+%% Customization of fonts to use Baskerville font set
+%% Requires XeLaTeX or LuaLaTeX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE FontStyles/baskerville.sty}%
+
+
+%%=======================================================================
+%% ENGINE CHECK
+%%=======================================================================
+
+\ifxeorlua{}{%
+  \ClassError{novathesis}
+             {Font~style~"baskerville"~is~not~compatible~with~pdfLaTeX.~Please~use~XeLaTeX~or~LuaLaTeX}
+             {Please~use~XeLaTeX~or~LuaLaTeX}%
+}
+
+
+%%=======================================================================
+%% FONT VERIFICATION
+%%=======================================================================
+
+\RequirePackage{fontspec}
+
+
+%%=======================================================================
+%% FONT SELECTION
+%%=======================================================================
+
+% Baskerville - Traditional serif font
+\setmainfont{Baskerville}[
+  Ligatures = {TeX, Common, Discretionary},
+  Scale     = 1.0,
+]
+
+% TeX Gyre Heros for sans (clean complement to Baskerville)
+\setsansfont{TeX Gyre Heros}[
+  Ligatures = TeX,
+  Scale     = 0.95,
+]
+
+% Courier New for monospace
+\setmonofont{Courier New}[
+  Ligatures = TeX,
+  Scale     = 0.90,
+]
+
+% Math font using newtxmath with Baskerville-like metrics
+\RequirePackage[baskerville]{newtxmath}

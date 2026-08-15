@@ -1,0 +1,61 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOVAthesisFiles/ChapStyles/ist2.sty
+%% NOVA thesis configuration file
+%%
+%% Customization for the IST chapter style (variant 2)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE NOVAthesisFiles/ChapStyles/ist2.sty}%
+
+
+%%=======================================================================
+%% PACKAGE REQUIREMENTS
+%%=======================================================================
+
+\RequirePackage{soul}
+
+
+%%=======================================================================
+%% SAVEBOXES & COLORS
+%%=======================================================================
+
+\definecolor{istchaptercolor}{rgb}{0.7,0.8,0.9}
+
+\@ifundefined{@nt@istii@chapter}{\newsavebox{\@nt@istii@chapter}}{}
+\@ifundefined{@nt@istii@part}{\newsavebox{\@nt@istii@part}}{}
+
+
+%%=======================================================================
+%% HELPERS
+%%=======================================================================
+
+\providecommand{\@nt@istii@chm}[1][4cm]{%
+  \resizebox{!}{#1}{%
+    \fboxsep=1pt%
+    \color{istchaptercolor}\thechapter%
+  }%
+}
+
+\providecommand{\@nt@istii@ptm}[1][4cm]{%
+  \@nt@istii@chm{#1}
+}
+
+
+%%=======================================================================
+%% CHAPTER STYLE
+%%=======================================================================
+
+\makechapterstyle{ist2}{%
+  \renewcommand{\chaptitlefont}{\normalfont\huge\bfseries\scshape}%
+  \renewcommand{\printchaptername}{}%
+  \renewcommand{\printchapternum}{\null\hfill\@nt@istii@chm[2cm]\hspace*{14pt}\par}%
+  \renewcommand{\afterchapternum}{}%
+  \renewcommand{\printchaptertitle}[1]{\color{darkgray}\chaptitlefont\raggedleft ##1\par}%
+  %
+  \renewcommand{\thepart}{\Roman{part}}
+  \renewcommand{\printpartnum}{\null\hfill\@nt@istii@ptm[4cm]\hspace*{14pt}\par}%
+  \renewcommand{\printparttitle}[1]{\color{darkgray}\parttitlefont\raggedleft ##1\par}%
+  \renewcommand*{\partnumfont}{\normalfont\scshape\MakeLowercase}
+}
+
+\chapterstyle{ist2}

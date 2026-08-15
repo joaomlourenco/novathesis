@@ -1,0 +1,39 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOVAthesisFiles/ChapStyles/fmv.sty
+%% NOVA thesis configuration file
+%%
+%% Customization for the FMV chapter style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE NOVAthesisFiles/ChapStyles/fmv.sty}%
+
+
+%%=======================================================================
+%% CHAPTER STYLE
+%%=======================================================================
+
+\chapterstyle{section}
+
+\setlength{\beforechapskip}{-3ex}
+\setlength{\afterchapskip}{2ex \@plus .2ex}
+
+\renewcommand*{\chapnumfont}{\large\bfseries}
+\renewcommand*{\chaptitlefont}{\large\bfseries}
+
+\gappto{\printchapternum}{\unskip.\quad}
+
+
+%%=======================================================================
+%% SECTIONING STYLES
+%%=======================================================================
+
+\setsecheadstyle{\large\bfseries}
+\setsubsecheadstyle{\large\bfseries}
+\setsubsubsecheadstyle{\large\bfseries}
+\setparaheadstyle{\large\bfseries}
+\setafterparaskip{0.1ex}
+\setsubparaheadstyle{\large\bfseries}
+\setbeforesubparaskip{1.25ex}
+
+\setsecnumdepth{paragraph}
+\setcounter{tocdepth}{4}
