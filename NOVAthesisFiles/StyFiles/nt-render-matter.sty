@@ -756,7 +756,7 @@
 \newcommand*{\ntprintcopyrightpage}{%
   \ifmaindoc{% only print if a main document
     \iftoggle{/novathesis/print/copyright}{% if copuyright toggle is on
-      \InputIfFileExistsInDirsTF {copyright.clo} 
+      \InputIfFileExistsInDirsTF {copyright.clo}
         {
           {\DIRSCHOOLS/\@UNIV/\@SCHL},
           {\DIRSCHOOLS/\@UNIV},
@@ -772,6 +772,37 @@
 }
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Colophon
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A labelled Colophon page in the back matter: the traditional
+% book-design place for production details (typesetting engine,
+% template, build date), distinct from the passing mention already made
+% in the acknowledgements block (see \SetAcknowledgmentsString).
+%
+% Kept in English regardless of \@LANG@MAIN -- only the page title comes
+% from \GetBkmString(colophon,...), which is translated in all 14
+% supported languages. The body sentence is a short technical/production
+% note, not document prose, and is left in English on purpose (translating
+% it accurately in all 14 languages is a separate effort from adding the
+% page); ask if you want it localized too.
+%
+% Opt out with \ntsetup{print/colophon=false}.
+\newcommand*{\ntprintcolophon}{%
+  \ifmaindoc{%
+    \iftoggle{/novathesis/print/colophon}{%
+      \chapter*{\GetBkmString(colophon,\@LANG@MAIN)}%
+      \NTRunHook{colophon/pre}%
+      \noindent
+      This document was typeset with \NTengineName{} and the
+      \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis}
+      template (v\novathesisversion)%
+      \iftoggle{/novathesis/cite/template}{~\@ntcite{novathesis-manual}}{}%
+      , on \today.%
+      \NTRunHook{colophon/post}%
+    }{}%
+  }{}%
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

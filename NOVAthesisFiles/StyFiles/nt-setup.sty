@@ -742,7 +742,7 @@
 }%
 
 \ifoptionequal{/novathesis/print/webography}{}{%
-  \options{/@nt/print/backmatter/.new list = 
+  \options{/@nt/print/backmatter/.new list =
     {
       bibsingle,            % Print the bibliography
       alllistof,            % Print all the listof defined in “6_list_of.tex”
@@ -750,10 +750,11 @@
       appendices,           % Print appendices, if any!
       annexes,              % Print annexes, if any!
       index,                % Print the index
+      colophon,             % Print the Colophon page
     }
   }%
 }{%
-  \options{/@nt/print/backmatter/.new list = 
+  \options{/@nt/print/backmatter/.new list =
     {
       bibseparate,          % Print the web references separate from the remainder of the bibliography
       alllistof,            % Print all the listof defined in “6_list_of.tex”
@@ -761,6 +762,7 @@
       appendices,           % Print appendices, if any!
       annexes,              % Print annexes, if any!
       index,                % Print the index
+      colophon,             % Print the Colophon page
     }
   }%
 }
