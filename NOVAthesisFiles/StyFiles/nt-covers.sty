@@ -592,7 +592,13 @@
       \phantomsection
       \def \bmshift { 1 }
       \str_if_eq:nnTF { #1-#2 } { 1-1 } { \def \bmshift { 0 } } { }
-      \str_if_eq:nnTF { #1-#2 } { N-2 } { \def \bmshift { 0 } } { }
+      % N-2 (Back Cover) renders after "Back Matter" (level -1, see
+      % \ntprintlist) is already open, unlike 1-1 (Front Cover), which
+      % renders before anything is open -- so level 0 would nest it as a
+      % child of Back Matter instead of popping back out to the top.
+      % -1 matches Back Matter's own level for the same reason Back
+      % Matter itself needs -1 rather than Front Matter's 0.
+      \str_if_eq:nnTF { #1-#2 } { N-2 } { \def \bmshift { -1 } } { }
       \bookmark
         [ level = \bmshift, dest = \HyperLocalCurrentHref ]
         { \GetBkmString ( #1-#2 ) }
