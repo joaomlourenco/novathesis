@@ -241,11 +241,21 @@
         zezwalania na jej kopiowanie i dystrybucję w niekomercyjnych celach dydaktycznych lub % 
         badawczych, pod warunkiem właściwego wskazania autora i wydawcy.}
 
-\SetAcknowledgmentsString(pl)={%
-        Niniejszy dokument został przygotowany przy użyciu systemu składu \NTengineName{}  % 
-        oraz szablonu % 
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} % 
-        (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+% Puste: podziękowanie "przygotowano przy użyciu NOVAthesis" znajduje się
+% teraz na stronie kolofonu.
+\SetAcknowledgmentsString(pl)={}
+
+\SetColophonString(pl)={%
+        Ten dokument został złożony za pomocą \NTengineName{} oraz szablonu %
+        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        (v\novathesisversion), krojem pisma %
+        \@nt@fontprettyname{\option{/novathesis/style/font}}.}
+
+\SetColophonPdfaString(pl)={To jest kopia archiwalna zgodna ze standardem PDF/A-2b.}
+
+\SetColophonNotPdfaString(pl)={To \emph{nie jest} kopia archiwalna zgodna ze standardem PDF/A.}
+
+\SetColophonBuildString(pl)={Kompilacja \@nt@colophonbuildid, \today.}
 
 
 %%=======================================================================

@@ -240,11 +240,20 @@
         jakož i zveřejňovat ji prostřednictvím vědeckých repozitářů a povolit její kopírování %
         a šíření pro vzdělávací nebo výzkumné, nekomerční účely, za podmínky uvedení autora a vydavatele.}
 
-\SetAcknowledgmentsString(cz)={%
-        Tento dokument byl vytvořen pomocí sázecího systému \NTengineName{}  %
-        a šablony %
+% Prázdné: poděkování "vytvořeno s NOVAthesis" je nyní na stránce Tiráž.
+\SetAcknowledgmentsString(cz)={}
+
+\SetColophonString(cz)={%
+        Tento dokument byl sazen pomocí \NTengineName{} a šablony %
         \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
-        (v\novathesisversion)~\@ntcite{novathesis-manual} vytvořen.}
+        (v\novathesisversion), písmem %
+        \@nt@fontprettyname{\option{/novathesis/style/font}}.}
+
+\SetColophonPdfaString(cz)={Toto je archivní kopie ve formátu PDF/A-2b.}
+
+\SetColophonNotPdfaString(cz)={Toto \emph{není} archivní kopie ve formátu PDF/A.}
+
+\SetColophonBuildString(cz)={Sestavení \@nt@colophonbuildid, \today.}
 
 
 %%=======================================================================

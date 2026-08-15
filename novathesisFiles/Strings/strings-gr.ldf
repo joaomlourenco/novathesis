@@ -240,11 +240,21 @@
 % --------------------------------------------------------------------
 %%% Acknowledgements
 % --------------------------------------------------------------------
-\SetAcknowledgmentsString(gr)={%
-        Το παρόν έγγραφο δημιουργήθηκε με το σύστημα στοιχειοθεσίας \NTengineName{} %
-        και το πρότυπο %
+% Κενό: η αναφορά "δημιουργήθηκε με το NOVAthesis" βρίσκεται πλέον στη
+% σελίδα Κολοφώνα.
+\SetAcknowledgmentsString(gr)={}
+
+\SetColophonString(gr)={%
+        Το παρόν έγγραφο στοιχειοθετήθηκε με το \NTengineName{} και το πρότυπο %
         \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
-        (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+        (v\novathesisversion), με τη γραμματοσειρά %
+        \@nt@fontprettyname{\option{/novathesis/style/font}}.}
+
+\SetColophonPdfaString(gr)={Αυτό είναι αρχειακό αντίγραφο συμβατό με το πρότυπο PDF/A-2b.}
+
+\SetColophonNotPdfaString(gr)={Αυτό \emph{δεν} είναι αρχειακό αντίγραφο συμβατό με το PDF/A.}
+
+\SetColophonBuildString(gr)={Έκδοση \@nt@colophonbuildid, \today.}
 
 
 

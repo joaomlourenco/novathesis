@@ -241,11 +241,21 @@
         na nekomerčné vzdelávacie alebo výskumné účely za predpokladu, že bude riadne uvedený %
         autor a vydavateľ.}
 
-\SetAcknowledgmentsString(sk)={%
-        Tento dokument bol vytvorený pomocou sádzacieho systému \NTengineName{}  %
-        a šablóny %
+% Prázdne: poďakovanie "vytvorené pomocou NOVAthesis" je teraz na stránke
+% Tiráž.
+\SetAcknowledgmentsString(sk)={}
+
+\SetColophonString(sk)={%
+        Tento dokument bol vysádzaný pomocou \NTengineName{} a šablóny %
         \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
-        (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+        (v\novathesisversion), písmom %
+        \@nt@fontprettyname{\option{/novathesis/style/font}}.}
+
+\SetColophonPdfaString(sk)={Toto je archívna kópia vo formáte PDF/A-2b.}
+
+\SetColophonNotPdfaString(sk)={Toto \emph{nie je} archívna kópia vo formáte PDF/A.}
+
+\SetColophonBuildString(sk)={Zostavenie \@nt@colophonbuildid, \today.}
 
 
 %%=======================================================================

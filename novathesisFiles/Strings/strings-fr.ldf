@@ -241,11 +241,21 @@
         distribution à des fins pédagogiques ou de recherche, non commerciales, à condition que l’auteur %
         et l’éditeur soient dûment mentionnés.}
 
-\SetAcknowledgmentsString(fr)={%
-        Ce document a été produit avec le système de composition \NTengineName{}  %
-        et le modèle %
+% Vide : le crédit « produit avec NOVAthesis » se trouve maintenant sur
+% la page de colophon.
+\SetAcknowledgmentsString(fr)={}
+
+\SetColophonString(fr)={%
+        Ce document a été composé avec \NTengineName{} et le modèle %
         \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
-        (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+        (v\novathesisversion), avec la police %
+        \@nt@fontprettyname{\option{/novathesis/style/font}}.}
+
+\SetColophonPdfaString(fr)={Ceci est une copie d'archivage conforme au format PDF/A-2b.}
+
+\SetColophonNotPdfaString(fr)={Ceci n'est \emph{pas} une copie d'archivage conforme au format PDF/A.}
+
+\SetColophonBuildString(fr)={Compilation \@nt@colophonbuildid, \today.}
 
 
 %%=======================================================================

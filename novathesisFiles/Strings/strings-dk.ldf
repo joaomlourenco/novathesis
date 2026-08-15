@@ -241,11 +241,20 @@
         distribution til ikke-kommercielle undervisnings- og forskningsformål, forudsat at der gives %
         behørig kredit til forfatteren og udgiveren.}
 
-\SetAcknowledgmentsString(dk)={%
-        Dette dokument er udarbejdet med sætningssystemet \NTengineName{}  %
-        og skabelonen %
+% Tom: krediteringen "udarbejdet med NOVAthesis" er nu på Kolofon-siden.
+\SetAcknowledgmentsString(dk)={}
+
+\SetColophonString(dk)={%
+        Dette dokument er sat med \NTengineName{} og skabelonen %
         \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
-        (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+        (v\novathesisversion), med skrifttypen %
+        \@nt@fontprettyname{\option{/novathesis/style/font}}.}
+
+\SetColophonPdfaString(dk)={Dette er en arkivegnet PDF/A-2b-kopi.}
+
+\SetColophonNotPdfaString(dk)={Dette er \emph{ikke} en arkivegnet PDF/A-kopi.}
+
+\SetColophonBuildString(dk)={Build \@nt@colophonbuildid, \today.}
 
 
 %%=======================================================================

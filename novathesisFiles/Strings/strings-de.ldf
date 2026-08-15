@@ -241,11 +241,21 @@
         und Verbreitung zu nicht-kommerziellen Lehr- und Forschungszwecken zu gestatten, sofern der %
         Autor und der Herausgeber ordnungsgemäß genannt werden.}
 
-\SetAcknowledgmentsString(de)={%
-        Dieses Dokument wurde mit dem system \NTengineName{}  %
-        und der %
+% Leer: der Hinweis "erstellt mit NOVAthesis" steht jetzt auf der
+% Kolophon-Seite.
+\SetAcknowledgmentsString(de)={}
+
+\SetColophonString(de)={%
+        Dieses Dokument wurde mit \NTengineName{} und der %
         \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis}-Vorlage %
-        (v\novathesisversion)~\@ntcite{novathesis-manual} erstellt.}
+        (v\novathesisversion) gesetzt, in der Schriftart %
+        \@nt@fontprettyname{\option{/novathesis/style/font}}.}
+
+\SetColophonPdfaString(de)={Dies ist eine archivfähige PDF/A-2b-Kopie.}
+
+\SetColophonNotPdfaString(de)={Dies ist \emph{keine} archivfähige PDF/A-Kopie.}
+
+\SetColophonBuildString(de)={Build \@nt@colophonbuildid, \today.}
 
 
 %%=======================================================================

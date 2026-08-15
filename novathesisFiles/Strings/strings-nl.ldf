@@ -247,10 +247,21 @@
         niet-commerciële onderwijs- en onderzoeksdoeleinden toe te staan, mits de auteur en de %
         uitgever correct worden vermeld.}
 
-\SetAcknowledgmentsString(nl)={%
-        Dit document is opgesteld met het \NTengineName{}  system %
-        en het \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
-        sjabloon (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+% Leeg: de vermelding "opgesteld met NOVAthesis" staat nu op de
+% Colofon-pagina.
+\SetAcknowledgmentsString(nl)={}
+
+\SetColophonString(nl)={%
+        Dit document is gezet met \NTengineName{} en de %
+        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        sjabloon (v\novathesisversion), in het lettertype %
+        \@nt@fontprettyname{\option{/novathesis/style/font}}.}
+
+\SetColophonPdfaString(nl)={Dit is een archiefwaardig PDF/A-2b-exemplaar.}
+
+\SetColophonNotPdfaString(nl)={Dit is \emph{geen} archiefwaardig PDF/A-exemplaar.}
+
+\SetColophonBuildString(nl)={Build \@nt@colophonbuildid, \today.}
 
 
 %%=======================================================================

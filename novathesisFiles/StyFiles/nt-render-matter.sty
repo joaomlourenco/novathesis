@@ -727,6 +727,16 @@
   \endgroup
 }
 
+% No longer called automatically from \ntprintcopyright: it used to carry
+% the "produced with NOVAthesis" mini-colophon (\SetAcknowledgmentsString),
+% which is now empty in every language file -- that credit lives on the
+% Colophon page instead, and duplicating it here served no one. The
+% mechanism itself (a small footnote-style block + a local citation list)
+% stays available for a school to invoke deliberately for its own
+% acknowledgements/funding credits, as ulisboa-fmv's statement file
+% already shows (commented out): set \SetAcknowledgmentsString to your
+% own text and call \ntprintacknowledgementsblock from wherever you want
+% it to appear.
 \newcommand{\ntprintacknowledgementsblock}[1][\scriptsize]{%
     \NTRunHook{acknowledgementsblock/pre}%
       \refsection%
@@ -746,7 +756,6 @@
         \NTRunHook{copyright/pre}%
         \ntprintcopyrightpage%
         \NTRunHook{copyright/post}%
-        \ntprintacknowledgementsblock%
       \endgroup
     }{}%
    }{}%
@@ -777,21 +786,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A labelled Colophon page in the back matter: the traditional
 % book-design place for production details (typesetting engine,
-% template, build date), distinct from the passing mention already made
-% in the acknowledgements block (see \SetAcknowledgmentsString).
+% template, PDF/A status, build date). Prints at every docstatus,
+% including working, since it is now the template's only credit line --
+% the old copyright-page mini-colophon (\SetAcknowledgmentsString) was
+% removed rather than left to duplicate this page (see its own comment
+% for schools that still want that block for their own purposes).
 %
-% Kept in English regardless of \@LANG@MAIN -- only the page title comes
-% from \GetBkmString(colophon,...), which is translated in all 14
-% supported languages. The body sentence is a short technical/production
-% note, not document prose, and is left in English on purpose (translating
-% it accurately in all 14 languages is a separate effort from adding the
-% page); ask if you want it localized too.
+% Fully multilingual: \GetBkmString(colophon,...) for the page title
+% and \GetColophonString / \GetColophonPdfaString /
+% \GetColophonNotPdfaString / \GetColophonBuildString (all defined per
+% language in NOVAthesisFiles/Strings/strings-*.ldf) for the body, same
+% as every other template-generated string, keyed by \@LANG@MAIN. No
+% zhs/zht fallback needed: lang/main is a choice restricted to the same
+% 14 languages these strings cover, so \@LANG@MAIN can never be zhs/zht
+% (those exist only for abstract translations, via a separate mechanism).
 %
-% Skipped entirely at docstatus=working (\ifdocworking), matching
-% \ntprintstatement/\ntprintfrontpage: a colophon documenting a build's
-% typeface, citation and PDF/A status is only meaningful once the
-% document is a real submission candidate, not every intermediate draft.
-% On top of that, opt out with \ntsetup{print/colophon=false}.
+% Opt out with \ntsetup{print/colophon=false}.
 %
 % Fixed constant, reused verbatim from the hidden white-text credit this
 % colophon replaces (see the "REMOVED in 8.0.4" note near the top of this
@@ -829,7 +839,6 @@
 }
 
 \newcommand*{\ntprintcolophon}{%
-  \ifdocworking{}{%
   \ifmaindoc{%
     \iftoggle{/novathesis/print/colophon}{%
       \chapter*{\GetBkmString(colophon,\@LANG@MAIN)}%
@@ -841,10 +850,7 @@
       \end{center}
       \bigskip
       \noindent
-      This document was typeset with \NTengineName{} and the
-      \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis}
-      template (v\novathesisversion), set in
-      \@nt@fontprettyname{\option{/novathesis/style/font}}.
+      \GetColophonString(\@LANG@MAIN)%
       \par\bigskip
       \iftoggle{/novathesis/cite/template}{%
         \fullcite{novathesis-manual}%
@@ -852,17 +858,16 @@
       }{}%
       \ifdocfinal{%
         \iftoggle{/novathesis/pdfa}%
-          {This is a PDF/A-2b archival copy.}%
-          {This is \emph{not} a PDF/A archival copy.}%
+          {\GetColophonPdfaString(\@LANG@MAIN)}%
+          {\GetColophonNotPdfaString(\@LANG@MAIN)}%
       }{%
-        This is \emph{not} a PDF/A archival copy.%
+        \GetColophonNotPdfaString(\@LANG@MAIN)%
       }%
       \par\bigskip
-      {\scriptsize Build \@nt@colophonbuildid, \today.}%
+      {\scriptsize \GetColophonBuildString(\@LANG@MAIN)}%
       \NTRunHook{colophon/post}%
     }{}%
   }{}%
-  }%
 }
 
 

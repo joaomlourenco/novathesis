@@ -241,11 +241,25 @@
         permitir a sua cópia e distribuição para fins educacionais ou de investigação, não-comerciais, %
         desde que seja dado o devido crédito ao autor e ao editor.}
 
-\SetAcknowledgmentsString(pt)={% 
-        Este documento foi produzido com o sistema de composição \NTengineName{}  %
-        e o modelo %
+% Vazio: o crédito "produzido com o NOVAthesis" está agora na página de
+% Colofão (\ntprintcolophon) em vez de aqui.
+\SetAcknowledgmentsString(pt)={}
+
+%%=======================================================================
+%% COLOFÃO
+%%=======================================================================
+
+\SetColophonString(pt)={%
+        Este documento foi composto com o \NTengineName{} e o modelo %
         \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
-        (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+        (v\novathesisversion), com o tipo de letra %
+        \@nt@fontprettyname{\option{/novathesis/style/font}}.}
+
+\SetColophonPdfaString(pt)={Esta é uma cópia arquivística em conformidade com o PDF/A-2b.}
+
+\SetColophonNotPdfaString(pt)={Esta \emph{não} é uma cópia arquivística em conformidade com o PDF/A.}
+
+\SetColophonBuildString(pt)={Compilação \@nt@colophonbuildid, \today.}
 
 
 %%=======================================================================

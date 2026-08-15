@@ -241,11 +241,21 @@
         поширення в навчальних або науково-дослідних, некомерційних цілях за умови належного % 
         посилання на автора та видавця.}
 
-\SetAcknowledgmentsString(uk)={%
-        Цей документ було створено за допомогою системи набору \NTengineName{}  % 
-        та шаблону % 
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} % 
-        (v\novathesisversion)~\@ntcite{novathesis-manual}.}
+% Порожньо: подяка "створено за допомогою NOVAthesis" тепер на сторінці
+% Колофон.
+\SetAcknowledgmentsString(uk)={}
+
+\SetColophonString(uk)={%
+        Цей документ набрано за допомогою \NTengineName{} та шаблону %
+        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        (v\novathesisversion), шрифтом %
+        \@nt@fontprettyname{\option{/novathesis/style/font}}.}
+
+\SetColophonPdfaString(uk)={Це архівна копія у форматі PDF/A-2b.}
+
+\SetColophonNotPdfaString(uk)={Це \emph{не} архівна копія у форматі PDF/A.}
+
+\SetColophonBuildString(uk)={Збірка \@nt@colophonbuildid, \today.}
 
 
 %%=======================================================================
