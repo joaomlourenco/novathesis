@@ -648,7 +648,7 @@
 %
 % Opt out with \ntsetup{cite/template=false}.
 \newcommand*{\@ntcitetemplate}{%
-  \iftoggle{/novathesis/cite/template}{\nocite{novathesis-manual}}{}%
+  \nocite{novathesis-manual}%
 }
 
 % Tell the author, once per build, that the reference was added and how to
@@ -671,7 +671,6 @@
 [novathesis] currency in which the work is repaid -- please consider^^J%
 [novathesis] keeping it.  DOI: 10.5281/zenodo.21938603^^J%
 [novathesis]^^J%
-[novathesis] Opt out with: \string\ntsetup{cite/template=false}^^J%
 [novathesis] ---------------------------------------------------------^^J%
       }%
     }{}%
@@ -852,10 +851,7 @@
       \noindent
       \GetColophonString(\@LANG@MAIN)%
       \par\bigskip
-      \iftoggle{/novathesis/cite/template}{%
         \fullcite{novathesis-manual}%
-        \par\bigskip
-      }{}%
       \ifdocfinal{%
         \iftoggle{/novathesis/pdfa}%
           {\GetColophonPdfaString(\@LANG@MAIN)}%
