@@ -787,7 +787,11 @@
 % it accurately in all 14 languages is a separate effort from adding the
 % page); ask if you want it localized too.
 %
-% Opt out with \ntsetup{print/colophon=false}.
+% Skipped entirely at docstatus=working (\ifdocworking), matching
+% \ntprintstatement/\ntprintfrontpage: a colophon documenting a build's
+% typeface, citation and PDF/A status is only meaningful once the
+% document is a real submission candidate, not every intermediate draft.
+% On top of that, opt out with \ntsetup{print/colophon=false}.
 %
 % Fixed constant, reused verbatim from the hidden white-text credit this
 % colophon replaces (see the "REMOVED in 8.0.4" note near the top of this
@@ -825,20 +829,40 @@
 }
 
 \newcommand*{\ntprintcolophon}{%
+  \ifdocworking{}{%
   \ifmaindoc{%
     \iftoggle{/novathesis/print/colophon}{%
       \chapter*{\GetBkmString(colophon,\@LANG@MAIN)}%
       \NTRunHook{colophon/pre}%
+      \begin{center}
+        \IfFileExists{\DIRIMAGES/novathesis-insignia-outline.pdf}
+          {\includegraphics[width=12mm]{\DIRIMAGES/novathesis-insignia-outline}}
+          {}%
+      \end{center}
+      \bigskip
       \noindent
       This document was typeset with \NTengineName{} and the
       \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis}
-      template (v\novathesisversion)%
-      \iftoggle{/novathesis/cite/template}{~\@ntcite{novathesis-manual}}{}%
-      , set in \@nt@fontprettyname{\option{/novathesis/style/font}}.
-      Build \@nt@colophonbuildid, \today.%
+      template (v\novathesisversion), set in
+      \@nt@fontprettyname{\option{/novathesis/style/font}}.
+      \par\bigskip
+      \iftoggle{/novathesis/cite/template}{%
+        \fullcite{novathesis-manual}%
+        \par\bigskip
+      }{}%
+      \ifdocfinal{%
+        \iftoggle{/novathesis/pdfa}%
+          {This is a PDF/A-2b archival copy.}%
+          {This is \emph{not} a PDF/A archival copy.}%
+      }{%
+        This is \emph{not} a PDF/A archival copy.%
+      }%
+      \par\bigskip
+      {\scriptsize Build \@nt@colophonbuildid, \today.}%
       \NTRunHook{colophon/post}%
     }{}%
   }{}%
+  }%
 }
 
 
