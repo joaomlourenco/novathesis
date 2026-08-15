@@ -12,7 +12,7 @@ $aux_dir = $ENV{AUXDIR} // './AUXDIR';
 # Without this, kpathsea falls back to the \input@path recursive search which
 # resolves files with a path prefix, causing "requested X but provides Y"
 # warnings because the prefix mismatches the \ProvidesPackage declaration.
-$ENV{TEXINPUTS} = './NOVAthesisFiles/StyFiles/:./NOVAthesisFiles/Strings/:'
+$ENV{TEXINPUTS} = './novathesisFiles/StyFiles/:./novathesisFiles/Strings/:'
                 . ($ENV{TEXINPUTS} // '');
 
 # ── Dependency tracking ───────────────────────────────────────────────────────

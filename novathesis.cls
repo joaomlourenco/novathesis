@@ -81,7 +81,7 @@
 \ProvidesClass{novathesis}[Version 8.0.3 (2026-08-11) novathesis template class file]
 \NeedsTeXFormat{LaTeX2e}[2023-06-01]
 
-\def\DIRNTFILES{./NOVAthesisFiles}
+\def\DIRNTFILES{./novathesisFiles}
 \def\DIRSTYFILES{\DIRNTFILES/StyFiles}
 
 \input{\DIRSTYFILES/nt-packages.sty}

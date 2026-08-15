@@ -58,7 +58,7 @@
 #   make help-dev      show this help
 #-----------------------------------------------------------------------------
 
-VERSION_FILE := NOVAthesisFiles/StyFiles/nt-version.sty
+VERSION_FILE := novathesisFiles/StyFiles/nt-version.sty
 VERSION       = $(shell awk -F'[{}]' '/\\novathesisversion/ {print $$4; exit}' '$(VERSION_FILE)')
 DATE          = $(shell awk -F'[{}]' '/\\novathesisdate/    {print $$4; exit}' '$(VERSION_FILE)')
 
@@ -98,7 +98,7 @@ needlua:
 
 # --- Release archive --------------------------------------------------------------
 ZIPNAME  = novathesis-$(VERSION)@$(DATE).zip
-ZIPFILES = NOVAthesisFiles [0-5]-* LICENSE Makefile latexmkrc README.md \
+ZIPFILES = novathesisFiles [0-5]-* LICENSE Makefile latexmkrc README.md \
            novathesis.cls template.pdf template.tex .gitignore
 
 .PHONY: zip

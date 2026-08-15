@@ -226,7 +226,7 @@ A leftover `.tex` entry file now **stops the build** with an error naming the ca
     *   Standardized option handling and configuration loading.
     *   Moved school-specific configurations to `*-defaults.ldf` files.
 *   **File Structure:**
-    *   Restructured directories (`0-Config`, `1-FrontMatter`, `NOVAthesisFiles`, etc.).
+    *   Restructured directories (`0-Config`, `1-FrontMatter`, `novathesisFiles`, etc.).
     *   Moved style files to `StyFiles`.
     *   Cleaned up and standardized file naming conventions.
 
