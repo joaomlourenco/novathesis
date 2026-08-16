@@ -4,7 +4,7 @@
 %%  NOVATHESIS — novathesis.cls
 %% ----------------------------------------------------------------------------
 %%
-%% Version 8.0.3 (2026-08-11)
+%% Version 8.1.0 (2026-08-16)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
@@ -78,7 +78,7 @@
 %%          https://www.reddit.com/r/novathesis/
 
 
-\ProvidesClass{novathesis}[Version 8.0.3 (2026-08-11) novathesis template class file]
+\ProvidesClass{novathesis}[Version 8.1.0 (2026-08-16) novathesis template class file]
 \NeedsTeXFormat{LaTeX2e}[2023-06-01]
 
 \def\DIRNTFILES{./novathesisFiles}
