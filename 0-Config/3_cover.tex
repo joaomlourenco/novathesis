@@ -31,11 +31,11 @@
 % Add more lines for other languages
 % You may use "\\" to force line breaks
 %-------------------------------------------------------------
-\nttitle(main,en){novathesis — The Manual}%
-\nttitle(main,pt){novathesis — O Manual}%
+\nttitle(main,en){A Very Long and Impressive\\Thesis Title with a Forced Line Break}%
+\nttitle(main,pt){Um Título de Tese Longo\\e com uma Mudança de Linha Forçada}%
 
-\nttitle(sub,en){A LaTeX template for theses and dissertations}%
-\nttitle(sub,pt){Um Template LaTeX para Teses e Dissertações}%
+\nttitle(sub,en){Some thoughts on the Life, the Universe,\\and Everything Else}%
+\nttitle(sub,pt){Algumas considerações sobre a Vida,\\o Universo e Tudo o Mais}%
 
 
 
@@ -142,7 +142,7 @@
 % <gender>: m -> male
 %           f -> female
 %-------------------------------------------------------------
-\ntauthorname(m){João M. Lourenço}{João M. Lourenço}
+\ntauthorname(m){John Very Longname Doe}{John Doe}
 
 
 
@@ -197,8 +197,7 @@
 %-------------------------------------------------------------
 % Advisers' names
 %
-%     \ntaddperson{adviser}(<role>,<gender>){Full Name}
-%       [title=..., position=..., institution=...]
+%     \ntaddperson{adviser}(<role>,<gender>){Full Name, Position, and School}
 %.............................................................
 %
 %   <role>: a  -> adviser
@@ -209,31 +208,20 @@
 % <gender>: m -> male
 %           f -> female
 %
-% title, position, and institution are all optional -- omit any (or all)
-% of them, or the whole bracket, if not needed.
-%
-% Legacy syntax (still accepted, but deprecated -- only the first two
-% commas are significant, so a comma-containing institution stays whole):
-%     \ntaddperson{adviser}(<role>,<gender>){Full Name, Position, and School}
-%
 % You may use "\\" to force line breaks
 %-------------------------------------------------------------
 % Advisers(s)
-\ntaddperson{adviser}(a,f){Mary Doe Adviser Name}
-  [position=Full Professor, institution=NOVA University Lisbon]
+\ntaddperson{adviser}(a,f){Mary Doe Adviser Name, Full Professor, NOVA University Lisbon}
 % Co-advisers(s)
-\ntaddperson{adviser}(c,m){John Doe Co-Adviser Name}
-  [position=Associate Professor, institution=NOVA University Lisbon]
-\ntaddperson{adviser}(c,f){John Doe other Co-Adviser Name}
-  [position=Full Professor, institution=NOVA University Lisbon]
+\ntaddperson{adviser}(c,m){John Doe Co-Adviser Name, Associate Professor, NOVA University Lisbon}
+\ntaddperson{adviser}(c,f){John Doe other Co-Adviser Name, Full Professor, NOVA University Lisbon}
 
 
 
 %-------------------------------------------------------------
 % Advisers' names
 %
-%     \ntaddperson{committee}(<role>,<gender>){Full Name}
-%       [title=..., position=..., institution=...]
+%     \ntaddperson{adviser}(<role>,<gender>){Full Name, Position, and School}
 %.............................................................
 %
 %   <role>: c  -> committee chair (presidente do júri)
@@ -246,24 +234,13 @@
 % <gender>: m -> male
 %           f -> female
 %
-% title, position, and institution are all optional -- omit any (or all)
-% of them, or the whole bracket, if not needed.
-%
-% Legacy syntax (still accepted, but deprecated -- only the first two
-% commas are significant, so a comma-containing institution stays whole):
-%     \ntaddperson{committee}(<role>,<gender>){Full Name, Position, and School}
-%
 % You may use "\\" to force line breaks
 %-------------------------------------------------------------
-\ntaddperson{committee}(c,m){Committee chairperson's Name}
-  [position=Full Professor, institution=NOVA School of Science and technology]
-\ntaddperson{committee}(r,m){Rapporteur's Name}
-  [position=Associate Professor, institution=University of Somewhere]
-% \ntaddperson{committee}(r,m){Another Rapporteur's Name}[position=Assistant Professor, institution=Another University]
-% \ntaddperson{committee}(a,m){Adviser's Name (if present in the jury)}[position=Associate Professor, institution=NOVA School of Science and technology]
-% \ntaddperson{committee}(ca,m){Co-Adviser's Name (if present in the jury)}[position=Associate Professor, institution=Some University]
-\ntaddperson{committee}(m,f){Another Committee Member}
-  [position=Full Professor, institution=Another University]
-\ntaddperson{committee}(m,f){Yet Another Member of the Committee}
-  [position=Assistant Professor, institution=Another University]
+\ntaddperson{committee}(c,m){Committee chairperson's Name, Full Professor, NOVA School of Science and technology}
+\ntaddperson{committee}(r,m){Rapporteur's Name, Associate Professor, University of Somewhere}
+% \ntaddperson{committee}(r,m){Another Rapporteur's Name, Assistant Professor, Another University}
+% \ntaddperson{committee}(a,m){Adviser's Name (if present in the jury), Associate Professor, NOVA School of Science and technology}
+% \ntaddperson{committee}(ca,m){Co-Adviser's Name (if present in the jury), Associate Professor, Some University}
+\ntaddperson{committee}(m,f){Another Committee Member, Full Professor, Another University}
+\ntaddperson{committee}(m,f){Yet Another Member of the Committee, Assistant Professor, Another University}
 % \ntaddperson{committee}(g,m){Guest Member of the Committee, Position, University}
