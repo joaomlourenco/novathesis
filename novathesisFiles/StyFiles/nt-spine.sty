@@ -49,6 +49,14 @@
     Allowed~values~are~0,~180,~90,~-90,~or~270.
   }
 
+\msg_new:nnn { novathesis } { spine-len-overflow }
+  {
+    The~explicit~spine~box~'len'~values~already~exceed~the~available~
+    spine~length~by~#1~(before~sharing~the~leftover~space~among~the~
+    'auto'~boxes~-~those~left~unset~or~set~to~'*').~Auto~boxes~will~get~
+    a~negative~length~and~likely~render~incorrectly.
+  }
+
 % -- Spine Dimensions -------------------------------------------------------
 \dim_new:N \l_nt_spine_width_dim % spine thickness
 
@@ -79,7 +87,21 @@
 % declared at all — they only worked by l3keys auto-creating them.)
 \clist_map_inline:nn { date, title, author, logo }
   {
-    \dim_new:c { l_nt_spine_box_#1_len_dim }      % width of the box
+    \dim_new:c { l_nt_spine_box_#1_len_dim }      % width of the box (resolved)
+    \tl_new:c  { l_nt_spine_box_#1_len_tl }       % raw 'len' setting: blank
+                                                   % or '*' means "auto": share
+                                                   % the spine's leftover length
+                                                   % with the other auto boxes
+    \dim_new:c { l_nt_spine_box_#1_default_len_dim } % this box's shipped
+                                                      % default 'len' -- the
+                                                      % weight auto boxes are
+                                                      % shared out in proportion
+                                                      % to (captured once, right
+                                                      % after the shipped
+                                                      % defaults are applied
+                                                      % below; never touched by
+                                                      % a school's own
+                                                      % \SpineSetup afterwards)
     \dim_new:c { l_nt_spine_box_#1_extrasep_dim } % extra gap after this box
     \tl_new:c  { l_nt_spine_box_#1_fontstyle_tl } % font customization
     \tl_new:c  { l_nt_spine_box_#1_bg_image_tl }       % per-box background image
@@ -136,7 +158,19 @@
     spine/frame/color    .initial:n = { none },
     spine/frame/width    .tl_set:N  = \l_nt_spine_frame_width_tl,
     spine/frame/width    .initial:n = { 0pt },
-    spine/fg/color       .tl_set:N  = \l_nt_spine_fg_color_tl,
+    % Also cascades into every box's own fg/color, since nothing ever paints
+    % text in the global spine color directly (unlike bg/color and
+    % frame/color, which do have a real consumer: the outer spine strip
+    % itself, at the "fill"/"draw" keys below). Without the cascade, this
+    % key would silently do nothing while each box kept its own independent
+    % "black" default. A box-level "fg/color" given later in the same
+    % \SpineSetup call still wins, since l3keys applies keys in order.
+    spine/fg/color       .code:n    =
+      {
+        \tl_set:Nn \l_nt_spine_fg_color_tl { #1 }
+        \clist_map_inline:nn { date, title, author, logo }
+          { \tl_set:cn { l_nt_spine_box_##1_fg_color_tl } { #1 } }
+      },
     spine/fg/color       .initial:n = { black },
 
     % -- Debugging ---------------------------------------------------------
@@ -164,8 +198,13 @@
   {
     \keys_define:nn { novathesis }
       {
-        spine/box/#1/len .dim_set:c = l_nt_spine_box_#1_len_dim,
-        spine/box/#1/len .initial:n = { 3cm },
+        % Stored raw (not resolved to a dimension yet): blank or '*' marks
+        % this box as "auto", to be resolved by \__nt_spine_resolve_lens: once
+        % \SpineSetup has finished running, sharing the spine's leftover
+        % length among the auto boxes in proportion to their shipped
+        % defaults (see \l_nt_spine_box_#1_default_len_dim above).
+        spine/box/#1/len .tl_set:c = l_nt_spine_box_#1_len_tl,
+        spine/box/#1/len .initial:n = { },
 
         spine/box/#1/extrasep .dim_set:c = l_nt_spine_box_#1_extrasep_dim,
         spine/box/#1/extrasep .initial:n = { 0mm },
@@ -264,15 +303,22 @@
       { \keys_set:nn { novathesis / #1 } { #2 } }
   }
 
-% Default configuration for box lengths.
-\NTSetup [spine/box]
-  {
-    date/len       = 1.5cm,
-    title/len      = 16.6cm,
-    author/len     = 5.0cm,
-    logo/len       = 4.1cm,
-    author/extrasep = 0.5cm,
-  }
+% Shipped default lengths -- used ONLY as the per-box "weight" that 'auto'
+% boxes (blank/'*' len) share leftover spine space in proportion to; NOT set
+% through the 'len' key itself (spine/box/#1/len stays at its blank
+% .initial:n). If this went through \NTSetup[spine/box]{date/len=1.5cm,...}
+% instead, every box's raw len_tl would become a concrete, non-blank value
+% right here at load time, and a school that never touches, say, box/date/len
+% at all would silently keep inheriting that concrete 1.5cm rather than being
+% "auto" -- exactly the bug this file had before: setting only
+% box/logo/len=1cm shrank the logo in place (same start point, ending
+% earlier, so its centered content shifted toward that same start -- i.e.
+% "left") instead of letting date/title/author grow to fill the freed space.
+\dim_set:cn { l_nt_spine_box_date_default_len_dim }   { 1.5cm }
+\dim_set:cn { l_nt_spine_box_title_default_len_dim }  { 16.6cm }
+\dim_set:cn { l_nt_spine_box_author_default_len_dim } { 5.0cm }
+\dim_set:cn { l_nt_spine_box_logo_default_len_dim }   { 4.1cm }
+\NTSetup [spine/box] { author/extrasep = 0.5cm }
 
 % -- Sanitize title string --------------------------------------------------
 \tl_new:N \l_nt_sanitize_title_tl
@@ -301,8 +347,90 @@
 \dim_new:N \l__nt_spine_maxh_dim   % scaled max height for bg/image
 \dim_new:N \l__nt_spine_maxw_dim   % scaled max width  for bg/image
 
+% -- Resolve 'auto' box lengths ---------------------------------------------
+% Boxes left with a blank (or '*') 'len' share out whatever length is left
+% over on the spine -- once every explicitly-sized box has been accounted
+% for -- in proportion to their shipped default lengths (date/title/author/
+% logo = 1.5/16.6/5.0/4.1cm, see the \NTSetup[spine/box] call above). Must
+% run after \NTRunHook{print/spine/pre} (i.e. after \SpineSetup) has set
+% every box's raw len_tl, and before the box-drawing loop below reads the
+% resolved len_dim.
+\dim_new:N \l__nt_spine_remaining_dim
+\dim_new:N \l__nt_spine_autoweight_dim
+\clist_new:N \l__nt_spine_auto_clist
+\tl_new:N \l__nt_spine_lentest_tl
+
+\cs_new_protected:Npn \__nt_spine_resolve_lens:
+  {
+    \clist_clear:N \l__nt_spine_auto_clist
+    \dim_zero:N \l__nt_spine_autoweight_dim
+    \dim_set:Nn \l__nt_spine_remaining_dim
+      {
+        \paperheight
+        - \l_nt_spine_margin_left_dim
+        - \l_nt_spine_margin_right_dim
+      }
+    \clist_map_inline:Nn \l_nt_spine_order_clist
+      {
+        % boxsep+extrasep are spent by every box, auto or not (matching how
+        % the box-drawing loop below always advances the cursor by them)
+        \dim_set:Nn \l__nt_spine_remaining_dim
+          {
+            \l__nt_spine_remaining_dim
+            - \l_nt_spine_boxsep_dim
+            - \use:c { l_nt_spine_box_##1_extrasep_dim }
+          }
+        \tl_set:Ne \l__nt_spine_lentest_tl { \use:c { l_nt_spine_box_##1_len_tl } }
+        \tl_if_blank:VTF \l__nt_spine_lentest_tl
+          {
+            \clist_put_right:Nn \l__nt_spine_auto_clist { ##1 }
+            \dim_add:Nn \l__nt_spine_autoweight_dim
+              { \use:c { l_nt_spine_box_##1_default_len_dim } }
+          }
+          {
+            \tl_if_eq:VnTF \l__nt_spine_lentest_tl { * }
+              {
+                \clist_put_right:Nn \l__nt_spine_auto_clist { ##1 }
+                \dim_add:Nn \l__nt_spine_autoweight_dim
+                  { \use:c { l_nt_spine_box_##1_default_len_dim } }
+              }
+              {
+                \dim_set:cn { l_nt_spine_box_##1_len_dim } { \l__nt_spine_lentest_tl }
+                \dim_set:Nn \l__nt_spine_remaining_dim
+                  {
+                    \l__nt_spine_remaining_dim
+                    - \use:c { l_nt_spine_box_##1_len_dim }
+                  }
+              }
+          }
+      }
+    \int_compare:nNnT { \clist_count:N \l__nt_spine_auto_clist } > { 0 }
+      {
+        \dim_compare:nNnT { \l__nt_spine_remaining_dim } < { 0pt }
+          {
+            \msg_warning:nnx { novathesis } { spine-len-overflow }
+              { \the \l__nt_spine_remaining_dim }
+          }
+        \clist_map_inline:Nn \l__nt_spine_auto_clist
+          {
+            \dim_set:cn { l_nt_spine_box_##1_len_dim }
+              {
+                \fp_to_dim:n
+                  {
+                    \dim_to_fp:n { \l__nt_spine_remaining_dim }
+                    * \dim_to_fp:n { \use:c { l_nt_spine_box_##1_default_len_dim } }
+                    / \dim_to_fp:n { \l__nt_spine_autoweight_dim }
+                  }
+              }
+          }
+      }
+  }
+
 \NewDocumentCommand \PrintBookSpine { }
   {
+    % 0. Resolve any 'auto' box lengths now that \SpineSetup has run
+    \__nt_spine_resolve_lens:
+
     % 1. Adjust the stock (paper) size
     \newstocksize
       {
