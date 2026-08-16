@@ -15,6 +15,7 @@
 \ntsetup{print/frontpage = true}    % Shall a second cover page be forced?
 \ntsetup{spine/layout = trim}    % force the spine in any docstatus
 \ntsetup{color/links = ntred}
+\ntsetup{style/font = jost}
 
 % ————————————————————————
 
@@ -43,10 +44,10 @@
 \SetMargin*(paper,right)={2.5cm}
 
 % Set margins for cover pages
-\SetMargin*(cover,top)={1.0cm}
-\SetMargin*(cover,bottom)={1.5cm}
-\SetMargin*(cover,left)={7cm}
-\SetMargin*(cover,right)={0.5cm}
+\SetMargin*(cover,top)={37.1mm}
+\SetMargin*(cover,bottom)={47.7mm}
+\SetMargin*(cover,left)={29.0mm}
+\SetMargin*(cover,right)={29.0mm}
 
 
 %%=======================================================================
