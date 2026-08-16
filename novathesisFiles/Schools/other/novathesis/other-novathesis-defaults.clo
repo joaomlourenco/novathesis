@@ -1,0 +1,95 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% other/novathesis/defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for ESEP/ESENF (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE other/novathesis/defaults.clo}%
+
+
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+\ntsetup{docstatus = final}
+\ntsetup{print/frontpage = true}    % Shall a second cover page be forced?
+\ntsetup{spine/layout = trim}    % force the spine in any docstatus
+\ntsetup{color/links = ntred}
+
+% ————————————————————————
+
+\nttitle(main,en){novathesis — The Manual}%
+\nttitle(main,pt){novathesis — O Manual}%
+
+\nttitle(sub,en){A LaTeX template for theses and dissertations}%
+\nttitle(sub,pt){Um Template LaTeX para Teses e Dissertações}%
+
+\ntauthorname(m){João M. Lourenço}{João M. Lourenço}
+
+\ntdate(submission){2026-08-16}
+
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
+
+% Set margins for "normal" pages
+\SetMargin*(screen,top)={2.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={3.25cm}
+\SetMargin*(screen,right)={3.25cm}
+\SetMargin*(paper,top)={2.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={4cm}
+\SetMargin*(paper,right)={2.5cm}
+
+% Set margins for cover pages
+\SetMargin*(cover,top)={1.0cm}
+\SetMargin*(cover,bottom)={1.5cm}
+\SetMargin*(cover,left)={7cm}
+\SetMargin*(cover,right)={0.5cm}
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% University
+\SetUniversity(pt)={\emph{Universidade}}
+\SetUniversity(en)={\emph{University}}
+\SetSchool(pt)={\emph{Faculdade}}
+\SetSchool(en)={\emph{School}}
+
+
+
+%%=======================================================================
+%% COVER PAGE SETUP (BACKGROUNDS)
+%%=======================================================================
+% \def\COLOR{gray}
+\def\COLOR{red}
+
+\SetThesisCover*(1-1,image)={\COLOR/cover-1}
+\SetThesisCover*(2-1,image)={\COLOR/cover-2}
+\SetThesisCover*(N-2,image)={\COLOR/cover-N}
+
+
+%%=======================================================================
+%% SPINE
+%%=======================================================================
+\definecolor{ntgray}{HTML}{201E1D}
+\definecolor{ntred}{HTML}{D94329}
+
+\NewMemStore{NtCover}
+\SetNtCover(insignia,gray)={insignia-red}
+\SetNtCover(insignia,red)={insignia-red2}
+\SetNtCover(background,gray)={ntgray}
+\SetNtCover(background,red)={ntred}
+
+\SpineSetup[%
+]{%
+  bg/color                    = {\GetNtCover(background,\COLOR)},
+  fg/color                    = {white},
+  box/logo/bg/image           = {\COLOR/\GetNtCover(insignia,\COLOR)},
+  box/logo/bg/image/angle     = {-90},
+  box/logo/len                = {1.3cm},
+}
+

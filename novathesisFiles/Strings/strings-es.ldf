@@ -1,0 +1,276 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Spanish (es) strings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{\DIRSTRINGS/strings-declare.tex}
+
+
+%%=======================================================================
+%% UTILITIES
+%%=======================================================================
+
+\SetAndString*(es)={ y }
+\SetInString*(es)={ en }
+\SetOfString*(es)={ de }
+\SetOfString*(1,m,es)={ del }
+\SetOfString*(2,m,es)={ de los }
+\SetOfString*(1,f,es)={ de la }
+\SetOfString*(2,f,es)={ de las }
+\SetKeywordsString*(es)={Palabras\ clave}
+\SetDepartmentOfString*(es)={Departamento\ de}
+\SetSpecializationString*(es)={Especialización\ en}
+\SetDegreeNamePrefix*(bsc,es)={Grado\ en}
+\SetDegreeNamePrefix*(msc,es)={Máster\ en}
+\SetDegreeNamePrefix*(phd,es)={Doctorado\ en}
+\SetCandidateString*(m,es)={El\ Candidato}
+\SetCandidateString*(f,es)={La\ Candidata}
+
+
+%%=======================================================================
+%% BOOKMARK STRINGS
+%%=======================================================================
+
+\SetBkmString*(frontmatter,es)={Material preliminar}
+\SetBkmString*(backmatter,es)={Material final}
+\SetBkmString*(cover,es)={Cubierta}
+\SetBkmString*(incover,es)={Segunda de cubierta}
+\SetBkmString*(frontpage,es)={Portada}
+\SetBkmString*(infrontpage,es)={Verso de portada}
+\SetBkmString*(backcover,es)={Cuarta de cubierta}
+\SetBkmString*(inbackcover,es)={Tercera de cubierta}
+\SetBkmString*(spine,es)={Lomo}
+\SetBkmString*(copyright,es)={Derechos de autor}
+\SetBkmString*(statement,es)={Declaración}
+\SetBkmString*(statements,es)={Declaraciones}
+\SetBkmString*(dedication,es)={Dedicatoria}
+\SetBkmString*(acknowledgements,es)={Agradecimientos}
+\SetBkmString*(quote,es)={Cita}
+\SetBkmString*(abstract,es)={Resumen}
+\SetBkmString*(listof,es)={Lista de…}
+\SetBkmString*(glossaries,es)={Glosarios}
+\SetBkmString*(colophon,es)={Colofón}
+
+
+%%=======================================================================
+%% DEFAULTS
+%%=======================================================================
+
+\SetDefaultNtTitle*(es)={Un Título de Tesis muy Largo e Impressionante\\con un Salto de Línea Forzado}
+\SetDefaultNtSubtitle*(es)={Algunos Pensamientos Sobre la Vida, el Universo\\y Todo lo Demás}
+\SetDefaultNtDepartment*(es)={Nombre del Departamento}
+\SetDefaultNtDegreeName*(es)={Nombre del Programa de Estudios}
+\SetDefaultNtSpecialization*(es)={Nombre de la Especialización}
+\SetDefaultNtAuthorDegree*(es)={Máster/Grado en Nombre del Título Anterior}
+\SetNotDefinedString*(es)={NO DEFINIDO}
+
+
+%%=======================================================================
+%% ADVISER STRINGS
+%%=======================================================================
+
+\SetProfessorString*(1,m,es)={Profesor}
+\SetProfessorString*(2,m,es)={Profesores}
+\SetProfessorString*(1,f,es)={Profesora}
+\SetProfessorString*(2,f,es)={Professoras}
+
+\SetAdviserString*(a,1,m,es)={Director}
+\SetAdviserString*(a,1,f,es)={Directora}
+\SetAdviserString*(a,2,m,es)={Directores}
+\SetAdviserString*(a,2,f,es)={Directoras}
+
+\SetAdviserString*(c,1,m,es)={Codirector}
+\SetAdviserString*(c,1,f,es)={Codirectora}
+\SetAdviserString*(c,2,m,es)={Codirectores}
+\SetAdviserString*(c,2,f,es)={Codirectoras}
+
+\SetAdviserString*(ca,1,m,es)={Codirector}
+\SetAdviserString*(ca,1,f,es)={Codirectora}
+\SetAdviserString*(ca,2,m,es)={Codirectores}
+\SetAdviserString*(ca,2,f,es)={Codirectoras}
+
+\SetAdviserString*(t,1,m,es)={Tutor académico}
+\SetAdviserString*(t,1,f,es)={Tutora académica}
+\SetAdviserString*(t,2,m,es)={Tutores académicos}
+\SetAdviserString*(t,2,f,es)={Tutoras académicas}
+
+\SetAdviserString*(pref,a,1,m,es)={El Director}
+\SetAdviserString*(pref,a,1,f,es)={La Directora}
+\SetAdviserString*(pref,a,2,m,es)={Los Directores}
+\SetAdviserString*(pref,a,2,f,es)={Las Directoras}
+
+\SetAdviserString*(pref,c,1,m,es)={El Codirector}
+\SetAdviserString*(pref,c,1,f,es)={La Codirectora}
+\SetAdviserString*(pref,c,2,m,es)={Los Codirectores}
+\SetAdviserString*(pref,c,2,f,es)={Las Codirectoras}
+
+\SetAdviserString*(pref,ca,1,m,es)={El Codirector}
+\SetAdviserString*(pref,ca,1,f,es)={La Codirectora}
+\SetAdviserString*(pref,ca,2,m,es)={Los Codirectores}
+\SetAdviserString*(pref,ca,2,f,es)={Las Codirectoras}
+
+\SetAdviserString*(pref,t,1,m,es)={El Tutor académico}
+\SetAdviserString*(pref,t,1,f,es)={La Tutora académica}
+\SetAdviserString*(pref,t,2,m,es)={Los Tutores académicos}
+\SetAdviserString*(pref,t,2,f,es)={Las Tutoras académicas}
+
+
+%%=======================================================================
+%% DEGREE NAMES
+%%=======================================================================
+
+\SetDegreeString*(bsc,m,es)={Graduado}
+\SetDegreeString*(bsc,f,es)={Graduada}
+
+\SetDegreeString*(msc,m,es)={Máster}
+\SetDegreeString*(msc,f,es)={Máster}
+\SetDegreeString*(mscplan,m,es)={Máster}
+\SetDegreeString*(mscplan,f,es)={Máster}
+
+\SetDegreeString*(phd,m,es)={Doctor}
+\SetDegreeString*(phd,f,es)={Doctora}
+\SetDegreeString*(phdplan,m,es)={Doctorando}
+\SetDegreeString*(phdplan,f,es)={Doctoranda}
+\SetDegreeString*(phdprop,m,es)={Doctorando}
+\SetDegreeString*(phdprop,f,es)={Doctoranda}
+
+
+%%=======================================================================
+%% DOCUMENT TYPES
+%%=======================================================================
+
+\SetDoctypeString*(bsc,es)={Trabajo Fin de Grado}
+\SetDoctypeString*(mscplan,es)={Plan de Trabajo Fin de Máster}
+\SetDoctypeString*(msc,es)={Trabajo Fin de Máster}
+\SetDoctypeString*(phdplan,es)={Plan de tesis doctoral}
+\SetDoctypeString*(phdprop,es)={Propuesta de tesis doctoral}
+\SetDoctypeString*(phd,es)={Tesis doctoral}
+
+\SetDissertationPlan*(mscplan,es)={Plan de tesis de máster}
+\SetDissertationPlan*(phdplan,es)={Plan de tesis doctoral}
+\SetDissertationPlan*(phdprop,es)={Propuesta de tesis}
+
+
+%%=======================================================================
+%% SDG (SUSTAINABLE DEVELOPMENT GOALS)
+%%=======================================================================
+
+\SetSdgString*(es)={Objetivos de Desarrollo Sostenible (ODS)}
+
+
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
+\SetCommitteeTitleString*(es)={Tribunal examinador}
+
+\SetCommitteeString*(c,1,m,es)={Presidente}
+\SetCommitteeString*(c,1,f,es)={Presidenta}
+\SetCommitteeString*(c,2,m,es)={Presidentes}
+\SetCommitteeString*(c,2,f,es)={Presidentas}
+
+\SetCommitteeString*(r,1,m,es)={Vocal}
+\SetCommitteeString*(r,1,f,es)={Vocal}
+\SetCommitteeString*(r,2,m,es)={Vocales}
+\SetCommitteeString*(r,2,f,es)={Vocales}
+
+\SetCommitteeString*(a,1,m,es)={Director}
+\SetCommitteeString*(a,1,f,es)={Directora}
+\SetCommitteeString*(a,2,m,es)={Directores}
+\SetCommitteeString*(a,2,f,es)={Directoras}
+
+\SetCommitteeString*(ca,1,m,es)={Codirector}
+\SetCommitteeString*(ca,1,f,es)={Codirectora}
+\SetCommitteeString*(ca,2,m,es)={Codirectores}
+\SetCommitteeString*(ca,2,f,es)={Codirectoras}
+
+\SetCommitteeString*(m,1,m,es)={Miembro}
+\SetCommitteeString*(m,1,f,es)={Miembro}
+\SetCommitteeString*(m,2,m,es)={Miembros}
+\SetCommitteeString*(m,2,f,es)={Miembros}
+
+\SetCommitteeString*(g,1,m,es)={Miembro invitado}
+\SetCommitteeString*(g,1,f,es)={Miembro invitada}
+\SetCommitteeString*(g,2,m,es)={Miembros invitados}
+\SetCommitteeString*(g,2,f,es)={Miembros invitadas}
+
+
+%%=======================================================================
+%% DISSERTATION TEMPLATES
+%%=======================================================================
+
+\SetDissertationString(bsc,es)={%
+      Memoria presentada para la obtención del título de % 
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) en\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
+
+\SetDissertationString(mscplan,es)={%
+      Memoria intermedia presentada para la obtención del título de % 
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) en\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
+
+\SetDissertationString(msc,es)={%
+      Trabajo de fin de máster presentado para la obtención del título de % 
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) en\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
+
+\SetDissertationString(phdplan,es)={%
+      Plan de tesis doctoral presentado para la obtención del título de % 
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) en\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
+
+\SetDissertationString(phdprop,es)={%
+      Propuesta de tesis doctoral presentada para la obtención del título de % 
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) en\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
+
+\SetDissertationString(phd,es)={%
+      Tesis doctoral presentada para la obtención del título de % 
+      \GetDegreeString(\option{/novathesis/doctype},\expanded{\GetDocAuthor(gender)},\@LANG@COVER) en\\[1ex]%
+      \textbf{\GetMajorField(\@LANG@COVER)}}
+
+
+%%=======================================================================
+%% LEGAL & ACKNOWLEDGEMENTS
+%%=======================================================================
+
+\SetCopyrightTextString(es)={%
+        La \GetSchool(\@LANG@COPYRIGHT)\ y la \GetUniversity(\@LANG@COPYRIGHT)%
+        \ poseen el derecho perpetuo y sin límites geográficos de archivar y publicar esta tesis % 
+        en formato impreso o digital, o por cualquier otro medio existente o que pueda desarrollarse, % 
+        así como de difundirla a través de repositórios científicos y permitir su copia y distribución % 
+        con fines docentes o de investigación no comerciales, siempre que se indique adecuadamente % 
+        la autoría y la editorial.}
+
+% Vacío: el crédito "elaborado con NOVAthesis" está ahora en la página
+% de Colofón.
+\SetAcknowledgmentsString(es)={}
+
+\SetColophonString(es)={%
+        Este documento se ha compuesto con \NTengineName{} y la plantilla %
+        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        (v\novathesisversion), con el tipo de letra %
+        \@nt@fontprettyname{\option{/novathesis/style/font}}.}
+
+\SetColophonPdfaString(es)={Esta es una copia de archivo conforme con PDF/A-2b.}
+
+\SetColophonNotPdfaString(es)={Esta \emph{no} es una copia de archivo conforme con PDF/A.}
+
+\SetColophonBuildString(es)={Compilación \@nt@colophonbuildid, \today.}
+
+
+%%=======================================================================
+%% BABEL INTEGRATION
+%%=======================================================================
+
+\ntlangsetup*{es/annex=Anexo}
+\ntlangsetup*{es/annexpl=Anexos}
+\ntlangsetup*{es/appendixpl=Apéndices}
+
+\AtEndPreamble{
+  \StartBabelCommands*{spanish}{date}
+    \SetStringLoop{month#1name}{%
+      Enero,Febrero,Marzo,Abril,Mayo,Junio,%
+      Julio,Agosto,Septiembre,Octubre,Noviembre,%
+      Diciembre}
+  \EndBabelCommands
+}

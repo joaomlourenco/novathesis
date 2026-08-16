@@ -4,7 +4,7 @@
 %%  NOVATHESIS — 2-MainMatter/chapter-manual.tex
 %% ----------------------------------------------------------------------------
 %%
-%% Version 8.0.3 (2026-08-11)
+%% Version 8.1.0 (2026-08-16)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %%
 %% User's manual chapter: complete guide to configuring and using the
@@ -68,7 +68,7 @@ the \emph{\hologo{MiKTeX} Console} before compiling the template for the first t
 schools because it handles Unicode fonts natively.  \ntindex[fonts!]{XeLaTeX} is a close
 alternative.  \hologo{pdfLaTeX} works but cannot load OpenType/TrueType fonts.
 
-\paragraph{School-specific fonts.}  Some Schools or font-styles require fonts not available in \hologo{LaTeX}.  In normal conditions, they will be downloaded automatically.  However, if they are not, you may download the necessary fonts from \url{https://github.com/joaomlourenco/novathesis-extras/tree/main/Fonts}, unzip (if necessary), and copy the \verb!*.ttf! files to \verb!NOVAthesisFiles/FontStyles/Fonts/!.
+\paragraph{School-specific fonts.}  Some Schools or font-styles require fonts not available in \hologo{LaTeX}.  In normal conditions, they will be downloaded automatically.  However, if they are not, you may download the necessary fonts from \url{https://github.com/joaomlourenco/novathesis-extras/tree/main/Fonts}, unzip (if necessary), and copy the \verb!*.ttf! files to \verb!novathesisFiles/FontStyles/Fonts/!.
 
 \begin{warningbox}[title={Security: compiling runs external programs (\texttt{-\/-shell-escape})}]
   \label{box:shell-escape-security}
@@ -156,7 +156,7 @@ engine.
     \verb!3-BackMatter/!        & Appendices and annexes              & \textbf{edit} \\
     \verb!4-Bibliography/!      & \texttt{.bib} database files        & \textbf{edit} \\
     \verb!5-Figures/!           & Images                              & \textbf{edit} \\
-    \verb!NOVAthesisFiles/!     & Template internals (styles, schools, strings) & do not edit \\
+    \verb!novathesisFiles/!     & Template internals (styles, schools, strings) & do not edit \\
     \verb!Scripts/!             & Utility scripts                     & do not edit \\
     \verb!.Build/!              & Maintainer build tools (\texttt{nt-variant.sh}) & do not edit \\
     \bottomrule
@@ -398,6 +398,16 @@ generated PDF.  Many have defaults that vary with \texttt{school} and \texttt{do
 \ntsetup{print/webography=Webography}
 \end{latexcode}
 
+  \item[\texttt{cite/template}] Add the reference to the \novathesis{} template
+    to your document's bibliography.  Default: \texttt{true}.
+
+    \novathesis{} is developed and maintained for free, and citations are the
+    only currency in which that work is repaid.  If you would rather not
+    include the reference, simply turn the option off --- no hard feelings.
+\begin{latexcode}
+\ntsetup{cite/template=false}
+\end{latexcode}
+
   \item[\texttt{print/aidisclosure}] Print an AI use disclosure statement.
     Default: \texttt{aidisclose} (uses \verb!1-FrontMatter/7-aidisclose.tex!
     with the \texttt{aidisclose} package).
@@ -484,7 +494,7 @@ below should be set together:
 
 The \texttt{type} option selects the icon variant: \texttt{inverted} (colour on white background), \texttt{normal} (colour on coloured background), or \texttt{mono} (monochrome on white background).  Table~\ref{tab:sdgs}\footnote{Table~\ref{tab:sdgs} is intentionally in a page with differente dimensions (corresponding to a rotated page) to illustrate the funcitonality of the \texttt{stocksize} package.} lists all 17 SDGs with their icon in the three variants, title, and goal description.
 
-\paragraph{Automatic download of the SDG icons.}  The \ntindex[configuration!print/sdgs!automatic download]{SDG} icons are \emph{not} shipped with the template.  Just like the school-specific fonts (Section~\ref{sub:local_install}), they are downloaded automatically when needed from \url{https://github.com/joaomlourenco/SDGs} into \verb!NOVAthesisFiles/Images/sdg-<lang>/!, and reused from there in later compilations, so the download happens only once.  Only what is really necessary is fetched, namely the icons listed in \texttt{print/sdgs/list}, in the variant chosen with \texttt{print/sdgs/type}, and in the language of each abstract.
+\paragraph{Automatic download of the SDG icons.}  The \ntindex[configuration!print/sdgs!automatic download]{SDG} icons are \emph{not} shipped with the template.  Just like the school-specific fonts (Section~\ref{sub:local_install}), they are downloaded automatically when needed from \url{https://github.com/joaomlourenco/SDGs} into \verb!novathesisFiles/Images/sdg-<lang>/!, and reused from there in later compilations, so the download happens only once.  Only what is really necessary is fetched, namely the icons listed in \texttt{print/sdgs/list}, in the variant chosen with \texttt{print/sdgs/type}, and in the language of each abstract.
 
 At the time of writing the icons exist upstream in English, Portuguese, Spanish, French and German.  For an abstract written in any other language, the English icons are used instead, so the English set is always downloaded as a fallback.  No list of languages is hardwired in the template: the upstream folder is simply the language code in upper case (\texttt{pt}~$\rightarrow$~\texttt{PT}, \ldots), so icons for a new language added upstream are used automatically, with no change to \novathesis{}, as long as the new folder is named after the corresponding language code.
 
@@ -1048,7 +1058,7 @@ Place \verb!.bib! files in \verb!4-Bibliography/!.
 \ntaddfile{quote}{quote}
 % Dedication, quote, and acknowledgements are skipped in 'working' mode.
 
-% Integrity statement (school-specific files available in NOVAthesisFiles)
+% Integrity statement (school-specific files available in novathesisFiles)
 \ntaddfile{statement}[en]{univ-school/statement-en}
 \end{latexcode}
 
@@ -1129,7 +1139,7 @@ To override an automatically-generated cover with a custom file:
 %%-----------------------------------------------------------------------
 
 NOVAthesis bundles a set of institutional logo images in
-\verb!NOVAthesisFiles/Images/!.  These files are \emph{not} in the default
+\verb!novathesisFiles/Images/!.  These files are \emph{not} in the default
 graphics search path, so reference them with the \latexinline{\DIRIMAGES}
 macro (or copy them to \verb!5-Figures/! to use just the file name):
 
@@ -1140,7 +1150,7 @@ macro (or copy them to \verb!5-Figures/! to use just the file name):
 Table~\ref{tab:bundled_images} shows the available images.
 
 \begin{table}[htb]
-  \caption{Institutional logo images bundled in \texttt{NOVAthesisFiles/Images/}.}
+  \caption{Institutional logo images bundled in \texttt{novathesisFiles/Images/}.}
   \label{tab:bundled_images}
   \centering\small
   \begin{ShadedTabularX}{\textwidth}{llX}

@@ -4,7 +4,7 @@
 %%  NOVATHESIS — 2-MainMatter/chapter-covers.tex
 %% ----------------------------------------------------------------------------
 %%
-%% Version 8.0.3 (2026-08-11)
+%% Version 8.1.0 (2026-08-16)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %%
 %% Reference chapter: the NOVAthesis cover page system.
@@ -26,7 +26,7 @@ committee) should work exclusively with \ntindex[configuration!0-config/3\_cover
 
 The cover engine is implemented in:
 \begin{itemize}
-  \item \latexinline{NOVAthesisFiles/StyFiles/nt-covers.sty} — a modern
+  \item \latexinline{novathesisFiles/StyFiles/nt-covers.sty} — a modern
         \hologo{LaTeX3}/expl3 implementation that provides a high-level
         declarative \gls{API} for cover design.
 \end{itemize}
@@ -683,8 +683,8 @@ This section walks through adding a complete cover definition.  Substitute
 \medskip
 \noindent\textbf{1.  Create the directory tree:}
 \begin{bashcode}
-NOVAthesisFiles/Schools/myuniv/myfac/
-NOVAthesisFiles/Schools/myuniv/myfac/Images/
+novathesisFiles/Schools/myuniv/myfac/
+novathesisFiles/Schools/myuniv/myfac/Images/
 \end{bashcode}
 
 \medskip
@@ -817,7 +817,7 @@ NOVAthesisFiles/Schools/myuniv/myfac/Images/
 
 \medskip
 \noindent\textbf{3.  Add logos} to
-\latexinline{NOVAthesisFiles/Schools/myuniv/myfac/Images/}.
+\latexinline{novathesisFiles/Schools/myuniv/myfac/Images/}.
 Supported formats: \texttt{.pdf} (preferred for vector logos), \texttt{.png},
 \texttt{.jpg}.
 
@@ -851,7 +851,7 @@ make NT="school=myuniv/myfac,doctype=msc,docstatus=final"
 \label{sec:covers_nova_fct}
 %%-----------------------------------------------------------------------
 
-The \gls{FCT} cover (\latexinline{NOVAthesisFiles/Schools/nova/fct/nova-fct-defaults.clo})
+The \gls{FCT} cover (\latexinline{novathesisFiles/Schools/nova/fct/nova-fct-defaults.clo})
 demonstrates a typical mixed strategy:
 
 \begin{itemize}
@@ -891,7 +891,7 @@ Background setup (colour varies by document class):
 %%-----------------------------------------------------------------------
 
 The IST cover
-(\latexinline{NOVAthesisFiles/Schools/ulisboa/ist/ulisboa-ist-defaults.clo})
+(\latexinline{novathesisFiles/Schools/ulisboa/ist/ulisboa-ist-defaults.clo})
 uses no TikZ for content elements at all.  Every element — logo, school
 name, a decorative image, title, author, advisers, committee, date — is
 placed as a plain box element with explicit \texttt{height} and

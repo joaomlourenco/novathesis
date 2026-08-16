@@ -1,0 +1,28 @@
+# Citation metadata for GitHub's "Cite this repository" button.
+# Keep title, authors and doi in sync with the Zenodo record and with the
+# `novathesis-manual` entry in novathesisFiles/StyFiles/fix-bib.bib — the three
+# must agree, or Google Scholar files the citations under separate records.
+# On a new release, bump `version` and `date-released` only; `doi` is the
+# version-independent concept DOI and never changes.
+cff-version: 1.2.0
+message: "If you use novathesis, please cite it as below."
+title: "novathesis: A LaTeX Template for Academic Theses and Dissertations"
+type: software
+authors:
+  - family-names: "Lourenço"
+    given-names: "João M."
+    orcid: "https://orcid.org/0000-0002-8495-6442"
+    affiliation: "NOVA University Lisbon"
+doi: "10.5281/zenodo.21938603"
+repository-code: "https://github.com/joaomlourenco/novathesis"
+url: "https://github.com/joaomlourenco/novathesis"
+license: LPPL-1.3c
+version: "8.0.3"
+date-released: "2026-08-14"
+keywords:
+  - LaTeX
+  - thesis
+  - dissertation
+  - template
+  - typesetting
+  - academic-writing
