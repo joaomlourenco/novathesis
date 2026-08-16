@@ -60,5 +60,12 @@ sub run_bib2gls {
     return $ret;
 }
 
-push @generated_exts, 'glstex', 'glg', '%R*.glstex';
-$clean_ext .= ' %R.ist %R.xdy';
+# Deliberately NOT listing 'glstex' here (only 'glg'): @generated_exts tells
+# latexmk "a diff in this file, since the last run, is expected noise from
+# regeneration, not a signal that something needs rebuilding" -- exactly
+# backwards from what we want for .glstex, whose content changing (because
+# bib2gls picked up an edited .bib entry) is precisely the signal that
+# lualatex needs to rerun to pick up the new text. Cleanup is unaffected:
+# `make clean` blanket-wipes AUXDIR's contents regardless of this list.
+push @generated_exts, 'glg';
+$clean_ext .= ' %R.ist %R.xdy %R.glstex %R-*.glstex';
