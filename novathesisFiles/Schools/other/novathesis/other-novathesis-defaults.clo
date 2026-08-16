@@ -11,8 +11,22 @@
 %%=======================================================================
 %% METADATA & GLOBAL PROPERTIES
 %%=======================================================================
-\ntsetup{print/frontpage=true}    % Shall a second cover page be forced?
-\ntsetup{spine/layout=trim}    % force the spine in any docstatus
+\ntsetup{docstatus = final}
+\ntsetup{print/frontpage = true}    % Shall a second cover page be forced?
+\ntsetup{spine/layout = trim}    % force the spine in any docstatus
+\ntsetup{color/links = ntred}
+
+% ————————————————————————
+
+\nttitle(main,en){novathesis — The Manual}%
+\nttitle(main,pt){novathesis — O Manual}%
+
+\nttitle(sub,en){A LaTeX template for theses and dissertations}%
+\nttitle(sub,pt){Um Template LaTeX para Teses e Dissertações}%
+
+\ntauthorname(m){João M. Lourenço}{João M. Lourenço}
+
+\ntdate(submission){2026-08-16}
 
 %%=======================================================================
 %% LAYOUT (MARGINS)
@@ -36,86 +50,46 @@
 
 
 %%=======================================================================
-%% SPINE
+%% STRINGS (UNIVERSITY & SCHOOL)
 %%=======================================================================
-\definecolor{ntdarkgray}{HTML}{201E1D}%
 
-\SpineSetup[%
-]{%
-  bg/color                    = {ntdarkgray},
-  fg/color                    = {white},
-  box/logo/bg/image           = {insignia-red},
-  box/logo/bg/image/angle     = {-90},
-  % box/title/len               = {18.6cm},
-  box/logo/len                = {1.3cm},
-}
+% University
+\SetUniversity(pt)={\emph{Universidade}}
+\SetUniversity(en)={\emph{University}}
+\SetSchool(pt)={\emph{Faculdade}}
+\SetSchool(en)={\emph{School}}
+
 
 
 %%=======================================================================
 %% COVER PAGE SETUP (BACKGROUNDS)
 %%=======================================================================
+% \def\COLOR{gray}
+\def\COLOR{red}
 
-\SetThesisCover*(1-1,image)={cover-1}
-\SetThesisCover*(2-1,image)={cover-2}
-\SetThesisCover*(N-2,image)={cover-N}
+\SetThesisCover*(1-1,image)={\COLOR/cover-1}
+\SetThesisCover*(2-1,image)={\COLOR/cover-2}
+\SetThesisCover*(N-2,image)={\COLOR/cover-N}
 
 
-% %%=======================================================================
-% %% COVER 1 & 2 ELEMENTS
-% %%=======================================================================
-%
-% % ESEP logo
-% \ntaddtocover[vspace=2.2cm]{1-1,2-1}{%
-%   \noindent%
-%   \fontsize{15}{15}\selectfont%
-%   \textbf{{\MakeUppercase{\GetSchool(\@LANG@COVER)}}}%
-% }
-%
-% % Degree name
-% \ntaddtocover[vspace=0.5cm]{1-1,2-1}{%
-%   \fontsize{15}{15}\selectfont%
-%   \GetDegreeName(\@LANG@COVER)%
-% }
-%
-% % Title of Dissertation 1 (Cover 1 only)
-% \ntaddtocover[vspace=6.5cm, height=4cm, valign=t]{1-1}{%
-%     \centering%
-%     \fontsize{15}{15}\selectfont%
-%     {\MakeUppercase{\GetDocTitle(\@LANG@COVER,main)}}\\[1ex]%
-%     \fontsize{12}{12}\selectfont%
-%     Dissertação%
-% }
-%
-% % % Title of Dissertation 2 (Cover 2 only)
-% \ntaddtocover[vspace=6.5cm, height=4cm, valign=t]{2-1}{%
-%     \centering%
-%     \fontsize{15}{15}\selectfont\scshape%
-%     \GetDocTitle(\@LANG@COVER,main)\\[1ex]%
-%     \GetDocTitle(en,main)%
-% }
-%
-% % Advisers (Cover 2 only)
-% \ntaddtocover[vspace=2cm]{2-1}{%
-%   \parbox[t][4cm]{\textwidth}{%
-%     \centering%
-%     \fontsize{11}{11}\selectfont%
-%     \ntprintpersons{0.8}{2}{adviser}{a,c}%
-%   }%
-% }
-%
-% % Advisers spacer (Cover 1 only)
-% \ntaddtocover[vspace=2cm]{1-1}{%
-%   \parbox[t][4cm]{\textwidth}{~}%
-% }
-%
-% % Author name
-% \ntaddtocover[vfill=1]{1-1,2-1}{%
-%   \fontsize{12}{12}\selectfont
-%   \textbf{\GetDocAuthor(name)}
-% }
-%
-% % Date
-% \ntaddtocover[vfill=2]{1-1,2-1}{%
-%   \fontsize{12}{12}\selectfont
-%     \textbf{\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}}%
-% }
+%%=======================================================================
+%% SPINE
+%%=======================================================================
+\definecolor{ntgray}{HTML}{201E1D}
+\definecolor{ntred}{HTML}{D94329}
+
+\NewMemStore{NtCover}
+\SetNtCover(insignia,gray)={insignia-red}
+\SetNtCover(insignia,red)={insignia-red2}
+\SetNtCover(background,gray)={ntgray}
+\SetNtCover(background,red)={ntred}
+
+\SpineSetup[%
+]{%
+  bg/color                    = {\GetNtCover(background,\COLOR)},
+  fg/color                    = {white},
+  box/logo/bg/image           = {\COLOR/\GetNtCover(insignia,\COLOR)},
+  box/logo/bg/image/angle     = {-90},
+  box/logo/len                = {1.3cm},
+}
+
