@@ -12,7 +12,7 @@ $aux_dir = $ENV{AUXDIR} // './AUXDIR';
 # Without this, kpathsea falls back to the \input@path recursive search which
 # resolves files with a path prefix, causing "requested X but provides Y"
 # warnings because the prefix mismatches the \ProvidesPackage declaration.
-$ENV{TEXINPUTS} = './NOVAthesisFiles/StyFiles/:./NOVAthesisFiles/Strings/:'
+$ENV{TEXINPUTS} = './novathesisFiles/StyFiles/:./novathesisFiles/Strings/:'
                 . ($ENV{TEXINPUTS} // '');
 
 # ── Dependency tracking ───────────────────────────────────────────────────────
@@ -34,8 +34,38 @@ sub run_bib2gls {
     my ($base, $dir) = fileparse($_[0]);
     $dir =~ s{/\z}{};
     $dir = '.' if $dir eq '';
-    return system('bib2gls', '-q', '--group', '-d', $dir, $base);
+    my $ret = system('bib2gls', '-q', '--group', '-d', $dir, $base);
+    return $ret if $ret;
+
+    # bib2gls runs as an external process, outside latexmk's -recorder
+    # tracking, so latexmk has no idea it read e.g. 1-FrontMatter/acronyms.bib
+    # -- without this, editing a .bib source doesn't retrigger a rebuild,
+    # since the 'aux -> glstex' dependency above only reruns bib2gls when the
+    # .aux itself changes. Parsing bib2gls's own .glg log for "Reading ..."
+    # lines and registering them via rdb_ensure_file is the fix documented in
+    # latexmk's bundled example_rcfiles/bib2gls_latexmkrc.
+    my $glg = "$_[0].glg";
+    if (open(my $glg_fh, '<', $glg)) {
+        rdb_add_generated($glg);
+        while (<$glg_fh>) {
+            s/\s*$//;
+            if (/^Reading\s+(.+)$/) { rdb_ensure_file($rule, $1); }
+            if (/^Writing\s+(.+)$/) { rdb_add_generated($1); }
+        }
+        close $glg_fh;
+    }
+    else {
+        warn "run_bib2gls: cannot read log file '$glg': $!\n";
+    }
+    return $ret;
 }
 
-push @generated_exts, 'glstex', 'glg';
-$clean_ext .= ' %R.ist %R.xdy';
+# Deliberately NOT listing 'glstex' here (only 'glg'): @generated_exts tells
+# latexmk "a diff in this file, since the last run, is expected noise from
+# regeneration, not a signal that something needs rebuilding" -- exactly
+# backwards from what we want for .glstex, whose content changing (because
+# bib2gls picked up an edited .bib entry) is precisely the signal that
+# lualatex needs to rerun to pick up the new text. Cleanup is unaffected:
+# `make clean` blanket-wipes AUXDIR's contents regardless of this list.
+push @generated_exts, 'glg';
+$clean_ext .= ' %R.ist %R.xdy %R.glstex %R-*.glstex';
