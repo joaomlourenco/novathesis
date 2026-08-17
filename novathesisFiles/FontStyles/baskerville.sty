@@ -36,18 +36,22 @@
   Ligatures = {TeX, Common, Discretionary},
   Scale     = 1.0,
 ]
+\renewcommand*{\FontPrettyName}{Baskerville}
 
 % TeX Gyre Heros for sans (clean complement to Baskerville)
 \setsansfont{TeX Gyre Heros}[
   Ligatures = TeX,
   Scale     = 0.95,
 ]
+\renewcommand*{\FontPrettyNameSans}{TeX Gyre Heros}
 
 % Courier New for monospace
 \setmonofont{Courier New}[
   Ligatures = TeX,
   Scale     = 0.90,
 ]
+\renewcommand*{\FontPrettyNameMono}{Courier New}
 
 % Math font using newtxmath with Baskerville-like metrics
 \RequirePackage[baskerville]{newtxmath}
+\renewcommand*{\FontPrettyNameMath}{Baskerville (newtxmath)}

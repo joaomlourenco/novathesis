@@ -35,10 +35,12 @@
   \RequirePackage[type1]{cabin}% used only by \mathsf
   \RequirePackage{amsthm}% load before newtxmath
   \RequirePackage[libertine,vvarbb]{newtxmath}% does not load minnewsgott because another Roman text package was specified
+  \renewcommand*{\FontPrettyNameMath}{Libertine (newtxmath)}
   \setmonofont{JetBrains Mono}
   [ LetterSpace=-3.0,
     Scale = MatchLowercase, % Automatically scales to match surrounding text height
   ]
+  \renewcommand*{\FontPrettyNameMono}{JetBrains Mono}
   % \setmonofont{Fira Mono}
   % \setmonofont{Fira Mono}[LetterSpace=-2.0]
   \setmainfont[
@@ -53,4 +55,5 @@
     BoldItalicFeatures  = {FakeSlant = 0.15},
     Scale               = 1.003764115,
   ]{NewsGotT}
+  \renewcommand*{\FontPrettyName}{News Gothic T}
 }

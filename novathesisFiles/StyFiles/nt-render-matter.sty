@@ -804,34 +804,63 @@
 % file) -- not a hash of anything computed at build time.
 \def\@nt@colophonbuildid{12cc9022}
 
-% Curated display name for each FontStyles/*.sty style, keyed by the raw
-% /novathesis/style/font value (what the user types in
-% \ntsetup{style/font=...}). Falls back to the raw value itself for any
-% style not in this table (e.g. a school-added custom font file), so an
-% unrecognised value never breaks the build -- it just prints plainly.
-\newcommand*{\@nt@fontprettyname}[1]{%
-  \IfStrEqCase{#1}{%
-    {arial}{Arial}%
-    {baskerville}{Baskerville}%
-    {bookman}{Bookman}%
-    {calibri}{Calibri}%
-    {cambria}{Cambria}%
-    {computer-modern}{Computer Modern}%
-    {erewhon}{Erewhon}%
-    {futura}{Futura}%
-    {garamond}{EB Garamond}%
-    {kieranhealy}{Minion Pro~/ Myriad Pro~/ Pragmata Pro}%
-    {libertine}{Linux Libertine}%
-    {newpx}{New PX (Palatino)}%
-    {newsgott}{News Gothic T}%
-    {opensans}{Open Sans}%
-    {palatino-gyre-pagella}{TeX Gyre Pagella (Palatino)}%
-    {palatino-linotype}{Palatino Linotype}%
-    {palatino}{Palatino}%
-    {scholax}{Scholax}%
-    {times}{Times New Roman}%
-    {verdana}{Verdana}%
-  }[#1]%
+% Curated display name(s) for the FontStyles/*.sty style currently loaded
+% by \ntsetup{style/font=...}. Each FontStyles file registers its own
+% name(s) locally, right where it calls \setmainfont/\setromanfont (main),
+% \setsansfont (sans), \setmonofont (mono/tt) and \setmathfont or a math
+% package (math) -- see any file under novathesisFiles/FontStyles/ for the
+% pattern; a font file that doesn't set a given role (e.g. no separate
+% math font) simply doesn't touch that macro, and it stays empty.
+%
+% \FontPrettyName (main) is the only mandatory one: the safety-net
+% \IfStrEq check below the font-loading code falls back to the raw
+% style/font value itself if it is still empty after loading, so an
+% unrecognised/custom school font never breaks the build -- it just
+% prints plainly. The sans/mono/math variants are optional and stay
+% empty when not set; consumers must check for blankness before use.
+\newcommand*{\FontPrettyName}{}
+\newcommand*{\FontPrettyNameSans}{}
+\newcommand*{\FontPrettyNameMono}{}
+\newcommand*{\FontPrettyNameMath}{}
+
+% Optional colophon detail, appended right after \FontPrettyName -- which
+% no longer carries its own trailing period (see \SetColophonString in
+% strings-*.ldf): this macro supplies the sentence's final "." either way,
+% so the colophon always ends in exactly one, never a dangling
+% "). (sans: ...)" fragment tacked on after it.
+%
+% Folds whichever of \FontPrettyNameSans/Mono/Math the loaded font file
+% set into ", with A for sans, B for mono and C for math." -- properly
+% comma/"and"-joined (2 items use just "and", 3+ use a comma-separated
+% list with "and" before the last) via \FormatNamesAsList
+% (nt-render-persons.sty), the same joiner already used for adviser/
+% committee name lists, so the "and" is pulled from \GetAndString and is
+% already correctly localized in all 14 languages. Prints just "." when
+% none of the three were set.
+%
+% The "with .. for sans/mono/math" glue words themselves are deliberately
+% left in English across all languages, same as the "sans"/"mono"/"math"
+% labels they attach to (see \FontPrettyNameSans and friends above): they
+% are typographic jargon, not document prose, and translating a sentence
+% frame (as opposed to the single "and" word \FormatNamesAsList already
+% localizes for us) was judged out of proportion to what was asked.
+\newcommand*{\@nt@colophonfontdetails}{%
+  \begingroup
+    \def\@nt@cfd@list{}%
+    \def\@nt@cfd@sep{}%
+    \IfStrEq{\FontPrettyNameSans}{}{}{%
+      \edef\@nt@cfd@list{\@nt@cfd@list\@nt@cfd@sep\FontPrettyNameSans{} for sans}%
+      \def\@nt@cfd@sep{,}%
+    }%
+    \IfStrEq{\FontPrettyNameMono}{}{}{%
+      \edef\@nt@cfd@list{\@nt@cfd@list\@nt@cfd@sep\FontPrettyNameMono{} for mono}%
+      \def\@nt@cfd@sep{,}%
+    }%
+    \IfStrEq{\FontPrettyNameMath}{}{}{%
+      \edef\@nt@cfd@list{\@nt@cfd@list\@nt@cfd@sep\FontPrettyNameMath{} for math}%
+    }%
+    \IfStrEq{\@nt@cfd@list}{}{.}{,~with~\FormatNamesAsList{\@nt@cfd@list}.}%
+  \endgroup
 }
 
 \newcommand*{\ntprintcolophon}{%
@@ -847,6 +876,7 @@
       \bigskip
       \noindent
       \GetColophonString(\@LANG@MAIN)%
+      \@nt@colophonfontdetails%
       \par\bigskip
         \fullcite{novathesis-manual}%
       \ifdocfinal{%
@@ -1169,6 +1199,14 @@
                  {Cann not load the font: \option{/novathesis/style/font}. Are you using XeLaTeX or LuaLaTeX?}{}
     \fi
   }
+
+% Safety net for the mandatory main-font name: a raw font name typed
+% directly in style/font (the \setmainfont branch above) or a school's
+% own FontStyles-less custom font never sets \FontPrettyName, so fall
+% back to the raw option value itself.
+\IfStrEq{\FontPrettyName}{}
+  {\renewcommand*{\FontPrettyName}{\option{/novathesis/style/font}}}
+  {}
 
 
 % force page color to white in xelatex and lualatex

@@ -21,24 +21,30 @@
     Ligatures = {TeX, Common},
     Scale     = 1.0,
   ]
-  
+  \renewcommand*{\FontPrettyName}{Latin Modern Roman}
+
   \setsansfont{Latin Modern Sans}[
     Ligatures = TeX,
     Scale     = 1.0,
   ]
-  
+  \renewcommand*{\FontPrettyNameSans}{Latin Modern Sans}
+
   \setmonofont{Latin Modern Mono}[
     Ligatures = TeX,
     Scale     = 1.0,
   ]
-  
+  \renewcommand*{\FontPrettyNameMono}{Latin Modern Mono}
+
   % Computer Modern math font (via unicode-math)
   \RequirePackage{unicode-math}
   \setmathfont{Latin Modern Math}
+  \renewcommand*{\FontPrettyNameMath}{Latin Modern Math}
 }
 {
   % pdfLaTeX version (uses default Computer Modern via LaTeX kernel)
   % No explicit setup needed; Computer Modern is the default
   \RequirePackage{amssymb}
   \RequirePackage{amsmath}
+  \renewcommand*{\FontPrettyName}{Computer Modern}
+  \renewcommand*{\FontPrettyNameMath}{Computer Modern}
 }

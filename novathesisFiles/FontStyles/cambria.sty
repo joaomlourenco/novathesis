@@ -36,23 +36,28 @@
   Ligatures = {TeX, Common},
   Scale     = 1.0,
 ]
+\renewcommand*{\FontPrettyName}{Cambria}
 
 % Segoe UI for sans-serif (modern corporate look)
 \setsansfont{Segoe UI}[
   Ligatures = TeX,
   Scale     = 0.95,
 ]
+\renewcommand*{\FontPrettyNameSans}{Segoe UI}
 
 % Courier New for monospace
 \setmonofont{Courier New}[
   Ligatures = TeX,
   Scale     = 0.90,
 ]
+\renewcommand*{\FontPrettyNameMono}{Courier New}
 
 % Cambria Math for mathematical typesetting
 \IfFontExistsTF{Cambria Math}{%
   \setmathfont{Cambria Math}
+  \renewcommand*{\FontPrettyNameMath}{Cambria Math}
 }{%
   % Fallback to newtxmath if Cambria Math is not available
   \RequirePackage[utopia]{newtxmath}
+  \renewcommand*{\FontPrettyNameMath}{Utopia (newtxmath)}
 }
