@@ -431,6 +431,14 @@
     % 0. Resolve any 'auto' box lengths now that \SpineSetup has run
     \__nt_spine_resolve_lens:
 
+    % \ntsetup{debug=...} and \SpineSetup{debug=...} were two disconnected
+    % systems: putting 'spine' in the general debug list did nothing, since
+    % only \l_nt_spine_debug_bool (set via spine/debug) was ever checked.
+    % OR them together so either one turns the box-outline overlay on.
+    \ifoptioncontains { /novathesis/debug } { spine }
+      { \bool_set_true:N \l_nt_spine_debug_bool }
+      { }
+
     % 1. Adjust the stock (paper) size
     \newstocksize
       {

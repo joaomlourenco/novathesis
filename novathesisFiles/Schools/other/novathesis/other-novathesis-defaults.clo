@@ -15,7 +15,7 @@
 \ntsetup{print/frontpage = true}    % Shall a second cover page be forced?
 \ntsetup{spine/layout = trim}    % force the spine in any docstatus
 \ntsetup{color/links = ntred}
-\ntsetup{style/font = jost}
+% \ntsetup{style/font = jost}
 
 % ————————————————————————
 
@@ -28,6 +28,32 @@
 \ntauthorname(m){João M. Lourenço}{João M. Lourenço}
 
 \ntdate(submission){2026-08-16}
+
+
+%%=======================================================================
+%% FONTS
+%%=======================================================================
+
+% Loading of fonts must be delayed until class "novathesis" is loaded
+\AtEndPreamble{%
+  \ntcheckfonts{Jost}{Regular,Italic,Bold,BoldItalic}
+}
+
+\NTAddToHook{printcovers/pre}{
+% TeX Gyre Heros for sans (pairs well with Jost)
+\setsansfont{Jost}[
+  Path           = \DIRFONTSTYLES/Fonts/,
+  Ligatures = {TeX, Common, Discretionary},
+  Extension      = .ttf,
+  % Scale     = MatchLowercase, % Automatically scales to match surrounding text height
+  Scale          = 1.003764115,
+  UprightFont    = *-Regular,
+  ItalicFont     = *-Italic,
+  BoldFont       = *-Bold,
+  BoldItalicFont = *-BoldItalic,
+]
+}
+
 
 %%=======================================================================
 %% LAYOUT (MARGINS)
@@ -44,10 +70,10 @@
 \SetMargin*(paper,right)={2.5cm}
 
 % Set margins for cover pages
-\SetMargin*(cover,top)={37.1mm}
-\SetMargin*(cover,bottom)={47.7mm}
-\SetMargin*(cover,left)={29.0mm}
-\SetMargin*(cover,right)={29.0mm}
+\SetMargin*(cover,top)={24.4mm}
+\SetMargin*(cover,bottom)={31.2mm}
+\SetMargin*(cover,left)={18.55mm}
+\SetMargin*(cover,right)={18.5mm}
 
 
 %%=======================================================================
@@ -71,17 +97,21 @@
 \SetThesisCover*(1-1,image)={\COLOR/cover-1}
 \SetThesisCover*(2-1,image)={\COLOR/cover-2}
 \SetThesisCover*(N-2,image)={\COLOR/cover-N}
-
+\SetThesisCover(textfont)={\sffamily}
+\SetThesisCover(1-1,textcolor)={ntlightgray} % ntlightgray
+\SetThesisCover(2-1,textcolor)={ntmedgray} % ntlightgray
 
 %%=======================================================================
 %% SPINE
 %%=======================================================================
 \definecolor{ntgray}{HTML}{201E1D}
 \definecolor{ntred}{HTML}{D94329}
+\definecolor{ntlightgray}{HTML}{C6C6C6}
+\definecolor{ntmedgray}{HTML}{6C6866}
 
 \NewMemStore{NtCover}
 \SetNtCover(insignia,gray)={insignia-red}
-\SetNtCover(insignia,red)={insignia-red2}
+\SetNtCover(insignia,red)={insignia-red1}
 \SetNtCover(background,gray)={ntgray}
 \SetNtCover(background,red)={ntred}
 
@@ -94,3 +124,24 @@
   box/logo/len                = {1.3cm},
 }
 
+
+%%=======================================================================
+%% COVER 1 ELEMENTS
+%%=======================================================================
+
+% Logo
+\ntaddtocover[tikz]{1-1,2-1,N-2}{%
+  \edef\RM{\GetMargin(cover,right)}%
+  \edef\BM{\GetMargin(cover,bottom)}%
+  \node[inner sep=0pt, anchor=south east, text width=6.73cm] 
+    at ($(current page.south east) + (-\RM, \BM)$)
+    {
+        \sffamily%
+        \fontsize{10.5}{10.5}\selectfont%
+        \PrintDateISO*[~]{\GetDocDate(submission,year)-\GetDocDate(submission,month)}%
+        \hfill%
+        \fontsize{15}{15}\selectfont%
+        \textbf{\color{white}v\novathesisversion}%
+        \hspace{2mm}\null%
+    };
+}

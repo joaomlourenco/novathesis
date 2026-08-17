@@ -377,9 +377,21 @@
 % \PrintDateISO { 2022-12-25 } -> localized date, e.g., December 20, 2022; 20 de dezembro de 2022
 % \PrintDateISO { 2022-12 } -> e.g., December 20, 2022; Dezembro, 2022
 % \PrintDateISO { 2022 } -> e.g., 2022
-\NewDocumentCommand { \PrintDateISO } { m }
- { 
- \nt_print_iso_date:n { #1 }
+% \PrintDateISO*{ 2022-12 } -> e.g., DECEMBER, 2022 (starred = uppercase the month name)
+%
+% \nt_print_iso_date:nnn's own #2/#3 (separator/date string) are typeset
+% directly by a \cs_new_protected: function, so they're opaque to
+% \MakeUppercase -- \MakeUppercase{\PrintDateISO[~]{...}} silently does
+% nothing, since \MakeUppercase can only see through fully expandable macros,
+% and a protected function is deliberately immune to that kind of expansion.
+% Wrapping just the already-expanded month name (\l_tmpa_tl, plain text by
+% the time #1 is applied to it) from *inside* the protected function sidesteps
+% that entirely, so the starred form does the right thing directly.
+\NewDocumentCommand { \PrintDateISO } { s O{,~} m }
+ {
+ \IfBooleanTF { #1 }
+   { \nt_print_iso_date:nnn { \MakeUppercase } { #2 } { #3 } }
+   { \nt_print_iso_date:nnn { } { #2 } { #3 } }
  }
 
 % Sequential variables to store Y, M, D
@@ -387,33 +399,33 @@
 % Generate the 'Nne' variant (N = seq, n = delimiter, e = fully-expanded string)
 \cs_generate_variant:Nn \seq_set_split:Nnn { Nne }
 
-\cs_new_protected:Nn \nt_print_iso_date:n
- { 
- % Split the input string by the hyphen (-)
- \seq_set_split:Nne \l_nt_date_seq { - } { #1 }
- 
- \int_case:nn { \seq_count:N \l_nt_date_seq }
- { 
- % Case 1: Only Year (YYYY)
- { 1 } { \seq_item:Nn \l_nt_date_seq { 1 } }
- 
- % Case 2: Year and Month (YYYY-MM)
- { 2 } { 
- \tl_set:Ne \l_tmpa_tl { \babelmonthname { \seq_item:Nn \l_nt_date_seq { 2 } } }
- \nt_titlecase_first:N \l_tmpa_tl
- \tl_use:N \l_tmpa_tl
- ,~ % separator
- \seq_item:Nn \l_nt_date_seq { 1 } % year
- }
- 
- % Case 3: Full Date (YYYY-MM-DD)
- { 3 } { 
- \localedate { \seq_item:Nn \l_nt_date_seq { 1 } } 
- { \seq_item:Nn \l_nt_date_seq { 2 } } 
- { \seq_item:Nn \l_nt_date_seq { 3 } } 
- }
- }
- }
+\cs_new_protected:Nn \nt_print_iso_date:nnn
+   {
+     % Split the input string by the hyphen (-)
+     \seq_set_split:Nne \l_nt_date_seq { - } { #3 }
+
+     \int_case:nn { \seq_count:N \l_nt_date_seq }
+       {
+         % Case 1: Only Year (YYYY)
+         { 1 } { \seq_item:Nn \l_nt_date_seq { 1 } }
+
+         % Case 2: Year and Month (YYYY-MM)
+         { 2 } {
+                 \tl_set:Ne \l_tmpa_tl { \babelmonthname { \seq_item:Nn \l_nt_date_seq { 2 } } }
+                 \nt_titlecase_first:N \l_tmpa_tl
+                 #1 { \tl_use:N \l_tmpa_tl }
+                 #2 % separator
+                 \seq_item:Nn \l_nt_date_seq { 1 } % year
+         }
+
+         % Case 3: Full Date (YYYY-MM-DD)
+         { 3 } {
+                 \localedate { \seq_item:Nn \l_nt_date_seq { 1 } }
+                 { \seq_item:Nn \l_nt_date_seq { 2 } }
+                 { \seq_item:Nn \l_nt_date_seq { 3 } }
+         }
+       }
+   }
 
 
 % Define the command with an optional d() argument and a mandatory m argument

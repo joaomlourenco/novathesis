@@ -35,6 +35,16 @@
 \dim_new:N \l_nt_covers_right_dim
 \dim_new:N \l_nt_covers_width_dim
 \dim_new:N \l_nt_covers_height_dim
+\tl_new:N  \l_nt_covers_debuggrid_color_tl
+% Text-area edges, rounded outward to a whole mm (left/top down, right/bottom
+% up) so the fine 1mm grid -- which shares its origin with the coarse grid's
+% own (current page.north west) reference, per \debuggrid below -- always
+% lands exactly on a step and starts with a line, instead of sitting mid-cell
+% when a margin (e.g. 18.55mm) isn't already a round mm value.
+\dim_new:N \l_nt_covers_debuggrid_left_dim
+\dim_new:N \l_nt_covers_debuggrid_top_dim
+\dim_new:N \l_nt_covers_debuggrid_right_dim
+\dim_new:N \l_nt_covers_debuggrid_bottom_dim
 \tl_new:N  \l_nt_covers_tmp_tl
 \tl_new:N  \l_nt_covers_content_tl
 \tl_new:N  \g_nt_covers_tikz_overlay_tl
@@ -648,6 +658,13 @@
       % \NTRunHook{cover/#1-#2/text/post} % moved inside minipage (nt_covers_print_text:n)
       % \NTRunHook{cover/text/post}       % moved inside minipage (nt_covers_print_text:n)
 
+      % Documented (app-covers.tex) as automatic for every cover page when
+      % 'cover' is in \ntsetup{debug=...}; previously only wired up in
+      % uminho/spine.tex's own legacy spine code, so every other school's
+      % cover pages silently ignored it. Drawn last so the grid overlays
+      % on top of the rendered elements, matching a measurement aid's job.
+      \ifoptioncontains { /novathesis/debug } { cover } { \debuggrid } { }
+
       \NTRunHook { cover/#1-#2/post }
       \NTRunHook { cover/post }
     \group_end:
@@ -674,21 +691,75 @@
 \NewDocumentCommand { \ifcovernum } { m m }
   { \str_if_eq:VnT \@COVERNUM { #1 } { #2 } }
 
-\NewDocumentCommand { \debuggrid } { O { orange } }
+\NewDocumentCommand { \debuggrid } { o }
   {
+    % No default hardcoded in the argument spec: '#1' omitted (as happens
+    % on the automatic debug=cover call site above) falls back to the
+    % configurable \ntsetup{debug/color/grid=...} instead of a fixed
+    % color that may clash with the cover's own background (e.g. the
+    % original hardcoded "orange" against a red cover).
+    \IfNoValueTF { #1 }
+      { \edef \l_nt_covers_debuggrid_color_tl { \option{/novathesis/debug/color/grid} } }
+      { \tl_set:Nn \l_nt_covers_debuggrid_color_tl { #1 } }
+    % Round outward to the nearest whole mm: left/top down (never past the
+    % true margin, moving the near edge toward the page edge), right/bottom
+    % up (moving the far edge toward the page edge, since paperwidth/height
+    % minus the margin is itself the "distance from top-left" this box needs
+    % expressed in). Both ends of the box land on a 1mm step this way.
+    % floor()/ceil() are fp-expression functions, recognised inside an
+    % \fp_..:n argument (\fp_to_int:n, \fp_eval:n, ...) -- NOT by
+    % \dim_set:Nn's or \int_set:Nn's own expression grammars (confirmed by
+    % \typeout: each silently no-ops / leaks the literal "floor(...)" text
+    % instead of erroring). \fp_to_int:n{floor(...)} is the correct,
+    % self-contained call -- its own result is a plain integer.
+    % Separately, \dim_to_decimal_in_unit:nn's SECOND argument is a full
+    % dimension to measure in units of (e.g. "1mm"), not the bare unit name
+    % "mm" -- passing "mm" alone (not a valid dimension on its own) silently
+    % returned an empty result. And "<number> * 1mm" (multiplication) came
+    % out as "<number>.0pt" -- the unit silently dropped -- while a bare
+    % "<number>mm" (plain juxtaposition, no operator) is correctly read as a
+    % dimension (confirmed empirically); so the rounded integer is
+    % concatenated directly against the unit instead of multiplied by it.
+    \int_set:Nn \l_tmpa_int
+      { \fp_to_int:n { floor ( \dim_to_decimal_in_unit:nn { \l_nt_covers_left_dim } { 1mm } ) } }
+    \dim_set:Nn \l_nt_covers_debuggrid_left_dim { \int_use:N \l_tmpa_int mm }
+    \int_set:Nn \l_tmpa_int
+      { \fp_to_int:n { floor ( \dim_to_decimal_in_unit:nn { \l_nt_covers_top_dim } { 1mm } ) } }
+    \dim_set:Nn \l_nt_covers_debuggrid_top_dim { \int_use:N \l_tmpa_int mm }
+    \int_set:Nn \l_tmpa_int
+      { \fp_to_int:n { ceil ( \dim_to_decimal_in_unit:nn { \paperwidth - \l_nt_covers_right_dim } { 1mm } ) } }
+    \dim_set:Nn \l_nt_covers_debuggrid_right_dim { \int_use:N \l_tmpa_int mm }
+    \int_set:Nn \l_tmpa_int
+      { \fp_to_int:n { ceil ( \dim_to_decimal_in_unit:nn { \paperheight - \l_nt_covers_bottom_dim } { 1mm } ) } }
+    \dim_set:Nn \l_nt_covers_debuggrid_bottom_dim { \int_use:N \l_tmpa_int mm }
     \begin { tikzpicture }
       [ remember~picture, semitransparent, overlay,
         shift = ( current~page.north~west ) ]
-      \draw [ step = 1mm, line~width = 0.1mm, #1!30!white, yscale = -1 ]
-        ( \l_nt_covers_left_dim, \l_nt_covers_top_dim )
+      % Rounded-mm box, same (current page.north west) origin as the coarse
+      % grids below (yscale=-1 here only, matching how "down the page" =
+      % negative y in that shared, unflipped picture) -- so the fine grid
+      % is aligned with the coarse grid, not a separately-anchored box.
+      \draw [ step = 1mm, line~width = 0.1mm, \l_nt_covers_debuggrid_color_tl!30!white, yscale = -1 ]
+        ( \l_nt_covers_debuggrid_left_dim, \l_nt_covers_debuggrid_top_dim )
         grid
-        ( \paperwidth - \l_nt_covers_right_dim,
-          \paperheight - \l_nt_covers_bottom_dim ) ;
-      \draw [ step = 5mm, line~width = 0.2mm, #1!40!white ]
+        ( \l_nt_covers_debuggrid_right_dim, \l_nt_covers_debuggrid_bottom_dim ) ;
+      % The 'grid' path operator's own handling of its corners turned out too
+      % unreliable to depend on (an earlier attempt at compensating for a
+      % missing left/top line, by shifting the start corner one step out,
+      % did not actually fix what's visible -- confirmed by direct report).
+      % Draw the four true, already-rounded-to-mm edges explicitly instead,
+      % in the same faint tone as the fine grid itself: this guarantees a
+      % real line at all four limits regardless of whatever 'grid' does or
+      % doesn't draw at its own corners.
+      \draw [ line~width = 0.1mm, \l_nt_covers_debuggrid_color_tl!30!white, yscale = -1 ]
+        ( \l_nt_covers_debuggrid_left_dim, \l_nt_covers_debuggrid_top_dim )
+        rectangle
+        ( \l_nt_covers_debuggrid_right_dim, \l_nt_covers_debuggrid_bottom_dim ) ;
+      \draw [ step = 5mm, line~width = 0.2mm, \l_nt_covers_debuggrid_color_tl!40!white ]
         ( current~page.north~west ) grid ( current~page.south~east ) ;
-      \draw [ step = 1cm, line~width = 0.3mm, #1!90!white ]
+      \draw [ step = 1cm, line~width = 0.3mm, \l_nt_covers_debuggrid_color_tl!90!white ]
         ( current~page.north~west ) grid ( current~page.south~east ) ;
-      \draw [ step = 5cm, line~width = 0.5mm, #1!50!white ]
+      \draw [ step = 5cm, line~width = 0.5mm, \l_nt_covers_debuggrid_color_tl!50!white ]
         ( current~page.north~west ) grid ( current~page.south~east ) ;
     \end { tikzpicture }
   }
