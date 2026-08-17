@@ -12,10 +12,11 @@
 %% METADATA & GLOBAL PROPERTIES
 %%=======================================================================
 
-\options{/novathesis,
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{uporto/fcup}{pdf,lua,xe}
+
 % UPORTO/FC
-  uporto/fcup/classification/.new value = {},
-}
+\NTOptNewValue{uporto/fcup/classification}{}
 
 \ifdocfinal{\ntsetup{print/frontpage=true}}{}
 

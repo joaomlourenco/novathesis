@@ -56,14 +56,11 @@
   }
 \cs_new_protected:Npn \@nt@fixhyperref
   { \clist_map_inline:Nn \c_nt_hylang_data_clist { \HyLang@DeclareLang ##1 } }
-\ExplSyntaxOff
 
 
 %%=======================================================================
 %% AUTOREF CAPITALIZATION (\Autoref)
 %%=======================================================================
-
-\ExplSyntaxOn
 
 % Provide a local fallback if nt-core.sty is not loaded first.
 % (In a normal NOVAthesis build, nt-core.sty defines this function.)

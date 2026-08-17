@@ -52,7 +52,15 @@
 #   NT_COST_DEFAULT=N  assumed seconds for a variant with no recorded time
 #                  (default 60).  Matrix units are dispatched longest-first
 #                  (LPT) using measured times cached in .Build/.matrix-costs.tsv;
-#                  delete that file to reset to group-id order.
+#                  delete that file to reset to group-id order.  Each variant
+#                  keeps its last NT_COST_HISTORY runs (default 5, comma-list
+#                  in the tsv's 2nd column) and is scheduled on their average,
+#                  smoothing one-off outliers (e.g. a cold run, or a build that
+#                  happened to land on an efficiency core under heavy JOBS
+#                  contention) instead of just chasing the latest sample.
+#   NT_COST_HISTORY=N  how many recent timings to average per variant
+#                  (default 5); does not retroactively shrink/grow history
+#                  already on disk, only how many a future merge keeps.
 #-----------------------------------------------------------------------------
 set -euo pipefail
 
@@ -360,13 +368,21 @@ if [ "$ALL" = 1 ]; then
   printf '%s%s▶ Matrix: building %s variant(s)%s with %s job(s)%s\n' \
          "$C_BOLD" "$C_BLUE" "$total" "${FILTER:+ matching '$FILTER'}" "$JOBS" "$C_RESET" >&2
   printf '  output → %s\n' "$OUTDIR" >&2
-  # Dispatch longest-first (LPT): a unit's cost is the sum of its variants' last
-  # recorded build times (NT_COST_DEFAULT for unknowns).  An empty DB or ties
-  # fall back to group-id order.  This only changes WHEN units start, never the
-  # result.  FILENAME==db (not FNR==NR) is robust to an empty cost DB.
+  # Dispatch longest-first (LPT): a unit's cost is the sum of its variants'
+  # average of their last NT_COST_HISTORY recorded build times (a comma-list
+  # in the db's 2nd column; NT_COST_DEFAULT for variants with no history at
+  # all).  An empty DB or ties fall back to group-id order.  This only
+  # changes WHEN units start, never the result.  FILENAME==db (not FNR==NR)
+  # is robust to an empty cost DB.
   order_units() {
     awk -v def="${NT_COST_DEFAULT:-60}" -v db="$COSTDB" '
-      FILENAME == db { cost[$1] = $2; next }
+      FILENAME == db {
+        k = split($2, hist, ",")
+        sum = 0
+        for (i = 1; i <= k; i++) sum += hist[i]
+        cost[$1] = sum / k
+        next
+      }
       { id = $1; gsub(/\//, "-", id); id = id "-" $2 "-" $3 "-" $4
         tot[FILENAME] += (id in cost) ? cost[id] : def }
       END { for (p in tot) { n = split(p, x, "/"); printf "%d\t%s\n", tot[p], x[n] } }
@@ -374,13 +390,31 @@ if [ "$ALL" = 1 ]; then
   }
   rc=0
   order_units | xargs -P "$JOBS" -I{} "$0" -U "$UNITS/{}" || rc=$?
-  # Merge this run's times into the persistent cost DB (new values win).
+  # Merge this run's times into the persistent cost DB: append each variant's
+  # fresh timing to its existing comma-list history and keep only the last
+  # NT_COST_HISTORY entries (oldest dropped first), rather than replacing the
+  # single stored value outright. A variant with no prior history starts a
+  # fresh one-entry list.
   if [ "$DRYRUN" != 1 ] && ls "$NT_TIMINGS_DIR"/* >/dev/null 2>&1; then
     cat "$NT_TIMINGS_DIR"/* > "$NT_TIMINGS_DIR/.new"
-    awk -F'\t' 'FNR==NR { n[$1] = $2; next }
-                !($1 in n) { print }
-                END { for (k in n) print k "\t" n[k] }' \
-        "$NT_TIMINGS_DIR/.new" "$COSTDB" > "$COSTDB.tmp" && mv "$COSTDB.tmp" "$COSTDB"
+    awk -F'\t' -v keep="${NT_COST_HISTORY:-5}" '
+      FNR==NR { new[$1] = $2; next }
+      {
+        id = $1
+        if (id in new) {
+          full = $2 "," new[id]
+          cnt = split(full, arr, ",")
+          start = (cnt > keep) ? cnt - keep + 1 : 1
+          out = arr[start]
+          for (i = start + 1; i <= cnt; i++) out = out "," arr[i]
+          print id "\t" out
+          seen[id] = 1
+        } else {
+          print
+        }
+      }
+      END { for (id in new) if (!(id in seen)) print id "\t" new[id] }
+    ' "$NT_TIMINGS_DIR/.new" "$COSTDB" > "$COSTDB.tmp" && mv "$COSTDB.tmp" "$COSTDB"
   fi
   rm -rf "$UNITS" "$NT_TIMINGS_DIR"
   exit $rc

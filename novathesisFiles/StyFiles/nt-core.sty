@@ -148,6 +148,29 @@
     \prop_gput:Nnn \g_novathesis_proc_rules_prop { #1 } { #2 }
   }
 
+% Reusable engine-in-clist test used below by both \ValidateLtxProcessor
+% and \NTRequireEngine. \clist_if_in:N.../:n... comparisons against
+% \g_novathesis_current_engine_str (a str variable) do not work: str
+% variables store their content with every character forced to catcode 12
+% ("other"), and \clist_if_in's own comparison is catcode-sensitive, so it
+% never matches a clist built from ordinary document-mode text (normal
+% catcodes) even when the two are visibly the same string -- confirmed by
+% direct testing, including \tl_set:Ne-copying the str into a plain tl
+% first (still fails, since the catcode-12 tokens are what gets copied).
+% \str_if_eq:VnT IS str-aware (compares by character code, ignoring
+% catcode), so looping the clist and testing each item that way is what
+% actually works.
+\bool_new:N \l__nt_engineok_bool
+\cs_new_protected:Npn \__nt_check_engine_in_clist:N #1
+  {
+    \bool_set_false:N \l__nt_engineok_bool
+    \clist_map_inline:Nn #1
+      {
+        \str_if_eq:VnT \g_novathesis_current_engine_str { ##1 }
+          { \bool_set_true:N \l__nt_engineok_bool \clist_map_break: }
+      }
+  }
+
 % ---------------------------------------------------------
 % 3. The Main Validator
 % ---------------------------------------------------------
@@ -189,8 +212,17 @@
           \l_novathesis_found_rule_tl
           { \bool_set_true:N \l_novathesis_rule_found_bool }
           {
-            % 3. Check Univ
-            \prop_get:NnNTF \g_novathesis_proc_rules_prop { #1 }
+            % 3. Check Univ -- :NeNTF (expanding), NOT :NnNTF: #1 here is
+            % the literal token \@UNIV (macro arguments aren't expanded by
+            % default), and levels 1/2 above already correctly use the
+            % expanding "e" variant to turn it into e.g. "uminho" before
+            % searching the prop. Using the non-expanding "n" variant here
+            % searched for the key "\@UNIV" itself, which never matches
+            % anything \AddValidProcessor ever registers (plain, already-
+            % literal strings like "uminho") -- so any school relying on
+            % this fallback (Univ-only rule, no School/Degree-specific
+            % one) silently never got validated at all.
+            \prop_get:NeNTF \g_novathesis_proc_rules_prop { #1 }
               \l_novathesis_found_rule_tl
               { \bool_set_true:N \l_novathesis_rule_found_bool }
               {
@@ -206,8 +238,8 @@
     \bool_if:NT \l_novathesis_rule_found_bool
       {
         % Check if the current engine is in the allowed list
-        \clist_if_in:NVF \l_novathesis_found_rule_tl
-          \g_novathesis_current_engine_str
+        \__nt_check_engine_in_clist:N \l_novathesis_found_rule_tl
+        \bool_if:NF \l__nt_engineok_bool
           {
             % ERROR: Engine not found in allowed list
             \msg_error:nnxx { novathesis } { invalid-processor }
@@ -224,9 +256,44 @@
   {
     \str_case:Vn \g_novathesis_current_engine_str
       {
-        { pdf } { pdf(La)\TeX }
-        { lua } { lua(La)\TeX }
-        { xe }  { Xe(La)\TeX }
+        { pdf } { \hologo{pdfLaTeX} }
+        { lua } { \hologo{luaLaTeX} }
+        { xe }  { \hologo{XeLaTeX} }
+      }
+  }
+
+% ---------------------------------------------------------
+% 5. Engine requirement for individual FontStyles/*.sty files
+% ---------------------------------------------------------
+% \AddValidProcessor/\ValidateLtxProcessor above are keyed by
+% Univ/School/Degree and run ONCE, early, at school-selection time
+% (nt-setup.sty) -- before style/font is even resolved. They can't catch
+% a font-specific requirement: a school's bundled default font may need
+% XeTeX/LuaTeX even though the school itself has no such restriction (the
+% user may freely \ntsetup{style/font=...} to something pdfLaTeX-
+% compatible instead). Several FontStyles/*.sty files instead grew their
+% own ad hoc "\ifxeorlua{}{\ClassError{...}}" guard, each with different
+% wording, and four more (arial/calibri/futura/verdana) call fontspec
+% commands with no guard at all -- under pdfLaTeX, \setmainfont doesn't
+% even exist (fontspec isn't loaded), so the failure is a raw "Undefined
+% control sequence" instead of a clear message.
+%
+% \NTRequireEngine{<label>}{<comma-list-of-allowed-engines>}, called from
+% the font file itself at the point it actually needs XeTeX/LuaTeX, gives
+% every one of them the same clear, standardized message, reusing the
+% existing "invalid-processor" wording above and the same str-aware
+% engine check \ValidateLtxProcessor uses (see \__nt_check_engine_in_clist:N
+% above).
+\clist_new:N \l__nt_requireengine_clist
+\NewDocumentCommand { \NTRequireEngine } { m m }
+  {
+    \clist_set:Nn \l__nt_requireengine_clist {#2}
+    \__nt_check_engine_in_clist:N \l__nt_requireengine_clist
+    \bool_if:NF \l__nt_engineok_bool
+      {
+        \msg_error:nnxx { novathesis } { invalid-processor }
+          {#1}
+          { \clist_use:Nn \l__nt_requireengine_clist { ,~ } }
       }
   }
 
@@ -659,88 +726,121 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% TEMPLATE OPTIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Every option below is declared via the \NTOptNew* helpers in
+% nt-options.sty (an internal, l3keys-backed replacement for the external
+% `options` package -- see that file's header for the full rationale).
+% There is no more "/novathesis/.new family" root declaration: the old
+% package's family concept doesn't exist here, since every key lives
+% under a single flat l3keys module ("novathesis"); \NTOptNew* already
+% bakes the "/novathesis/" prefix into each option's \option{}-mirroring
+% csname, so declarations below use the SAME short, relative key names
+% the old file already used inside that family context (e.g. "doctype",
+% not "/novathesis/doctype").
+%
 % Shared allowed-language list for lang/all (a list) and lang/main,
 % lang/cover, lang/copyright (choices that must accept the same values).
-% Previously lang/main|cover|copyright used options-ext.sty's ".copy
-% choice" to copy lang/all's values; now all four just expand this same
-% macro via core options.sty's own ".expanded" modifier, which needs no
-% custom handler.
 \def\@nt@alllangs{cat,cz,de,dk,en,es,fr,gr,it,nl,pl,pt,sk,uk}
-\options{/novathesis/.new family,
-  % DOCUMENT
-  doctype/.new choice           = {phd, phdprop, phdplan, msc, mscplan, bsc, plain},
-  docstatus/.new choice         = {unset, working, provisional, final}, % in not defined by user, unset will be replaced  “working”
-  media/.new choice             = {screen, paper},
-  spine/layout/.new choice      = {unset, trim, false},
-  spine/width/.new length       = {0pt},
-  abstractorder/.new cmd        = {\@addtoabstractorder{#1}},%
-  abstract/title/.new choice    = {none, before, after}, % where to print the work title in abstracts
-  abstract/title                = none,
-  abstract/title/align/.new choice = {left, center, right}, % alignment of the default title block
-  abstract/title/align          = center,
-  schoolgiven/.new value        = {},
-  school/.new cmd               = {\optionsalso{/novathesis/schoolgiven=#1}%
-                                   \StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR
-                                   \IfStrEq{\@DEGREEACR}{}{\def\@DEGREEACR{\option{/novathesis/doctype}}}{}
-                                  },
-  school                        = nova/fct,
-  % STYLES
-  style/chapter/.new value      = bar,
-  style/font/.new value         = newpx,
-  style/font/attributes/.new value = {},
-  style/url/.new cmd            = {\AfterPreamble{\urlstyle{#1}}},
-  color/links/.new cmd          = {\@ifpackageloaded{hyperref}%
-                                            {\hypersetup{allcolors=#1}}%
-                                            {\PassOptionsToPackage{allcolors=#1}{hyperref}}},
-  color/glossaries/gls/.new cmd             = {\AtEndPreamble{%\textcolor{#1}{##1}
-                                      \IfStrEq{#1}{None}{%
-                                          \let\@glslink\glsplainhyperlink%
-                                      }{%
-                                          \renewcommand*{\glstextformat}[1]{\textcolor{#1}{##1}}%
-                                      }%
-                                   }},
-  % LANGUAGES
-  lang/extra/.new list          = {},
-  lang/all/.expanded/.new list           = {\@nt@alllangs},
-  lang/main/.expanded/.new choice        = {\@nt@alllangs},
-  lang/cover/.expanded/.new choice       = {\@nt@alllangs},
-  lang/copyright/.expanded/.new choice   = {\@nt@alllangs},
-  lang/.new cmd                 = {\optionsalso{/novathesis/lang/main=#1,
-                                                /novathesis/lang/cover=#1,
-                                                /novathesis/lang/copyright=#1}},
-  lang                          = en,
-  % PRINT ON/OFF
-  print/aidisclosure/.new value  = aidisclose, % use '7-aidisclose.tex' + 'aidisclose' package
-  print/committee/.new toggle   = false,
-  print/adviser/.new toggle     = true,    % fake option - adviser should always be printed
-  print/otherlists/.new value   = frontmatter,  % print other lists (lof, lof, lol, …) in the front matter
-  print/glossaries/.new value   = frontmatter,  % print glossaries in the front matter
-  print/frontpage/.new toggle   = false,
-  print/copyright/.new toggle   = true,
-  print/timestamp/.new toggle   = true,
-  print/index/.new toggle       = false,
-  print/colophon/.new toggle    = true,   % print a Colophon page in the back matter
-  print/webography/.new value   = {},      % empty means do not make a separate webography
-  print/statement/.new toggle   = false,
-  print/sdgs/list/.new list     = {},      % {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}
-  print/sdgs/type/.new choice   = {inverted=i, normal=n, mono=m},   % any measure
-  print/sdgs/size/.new dim      = {2cm},   % any measure
-  print/sdgs/hspace/.new dim    = {5mm},   % any measure
-  print/sdgs/vspace/.new dim    = {4mm},   % any measure
-  % CITING THE TEMPLATE
-  cite/template/.new toggle     = true,  % add 'novathesis-manual' to the bibliography
-  % MISC
-  glossaries/list/reverse/.new toggle    = true,
-  glossaries/layout/.new value  = {lX},
-  tocintoc/.new toggle          = true,
-  pdfa/.new toggle              = true,  % auto-enable PDF/A-2b when docstatus=final
-  % NUMBERING
-  numbering/floats/.new choice  = {chapter, sequential},
-  numbering/floats              = chapter,
-  % DEBUG
-  debug/.new list               = {},         % cover, index, spine
-  debug/color/grid/.new value   = {orange},   % \debuggrid's auto-triggered color (debug=cover)
-}
+
+% DOCUMENT
+\NTOptNewChoice{doctype}{phd, phdprop, phdplan, msc, mscplan, bsc, plain}{phd}
+\NTOptNewChoice{docstatus}{unset, working, provisional, final}{unset} % if not defined by user, unset will be replaced by "working"
+\NTOptNewChoice{media}{screen, paper}{screen}
+\NTOptNewChoice{spine/layout}{unset, trim, false}{unset}
+% Kept for source-compatibility with any \ntsetup{spine/width=...} still
+% out there (e.g. nova-fct-cbbi-defaults.clo), but this key is already
+% dead in practice: nothing reads \option{/novathesis/spine/width}
+% anywhere, since nt-spine.sty declares its OWN, independent l3keys key
+% also named "spine/width" (under the same "novathesis" module -- see
+% \NTSetup in nt-spine.sty), which is what actually drives spine
+% rendering and loads after this file, so it wins. Neither this file nor
+% the old options.sty-based one before it ever bridged the two.
+\NTOptNewLength{spine/width}{0pt}
+\NTOptNewCmd{abstractorder}{\@addtoabstractorder{#1}}
+\NTOptNewChoice{abstract/title}{none, before, after}{none} % where to print the work title in abstracts
+\NTOptNewChoice{abstract/title/align}{left, center, right}{center} % alignment of the default title block
+\NTOptNewValue{schoolgiven}{}
+\NTOptNewCmd{school}
+  {
+    \optionsalso{/novathesis/schoolgiven=#1}%
+    \StrCut{#1}{/}\@UNIV\@SCHL\StrCut{\@SCHL}{/}\@SCHL\@DEGREEACR
+    \IfStrEq{\@DEGREEACR}{}{\def\@DEGREEACR{\option{/novathesis/doctype}}}{}
+  }
+\ntsetup{school=nova/fct}
+% STYLES
+\NTOptNewValue{style/chapter}{bar}
+\NTOptNewValue{style/font}{newpx}
+\NTOptNewValue{style/font/attributes}{}
+\NTOptNewCmd{style/url}{\AfterPreamble{\urlstyle{#1}}}
+\NTOptNewCmd{color/links}
+  {
+    \@ifpackageloaded{hyperref}%
+      {\hypersetup{allcolors=#1}}%
+      {\PassOptionsToPackage{allcolors=#1}{hyperref}}%
+  }
+\NTOptNewCmd{color/glossaries/gls}
+  {
+    \AtEndPreamble{%
+      \IfStrEq{#1}{None}{%
+        \let\@glslink\glsplainhyperlink%
+      }{%
+        \renewcommand*{\glstextformat}[1]{\textcolor{#1}{##1}}%
+      }%
+    }%
+  }
+% LANGUAGES
+\NTOptNewList{lang/extra}{}
+\NTOptNewList{lang/all}{\@nt@alllangs}
+\NTOptNewChoice{lang/main}{\@nt@alllangs}{en}
+\NTOptNewChoice{lang/cover}{\@nt@alllangs}{en}
+\NTOptNewChoice{lang/copyright}{\@nt@alllangs}{en}
+\NTOptNewCmd{lang}
+  {
+    \optionsalso{/novathesis/lang/main=#1,
+                 /novathesis/lang/cover=#1,
+                 /novathesis/lang/copyright=#1}%
+  }
+\ntsetup{lang=en}
+% PRINT ON/OFF
+\NTOptNewValue{print/aidisclosure}{aidisclose} % use '7-aidisclose.tex' + 'aidisclose' package
+\NTOptNewToggle{print/committee}{false}
+\NTOptNewToggle{print/adviser}{true}    % fake option - adviser should always be printed
+\NTOptNewValue{print/otherlists}{frontmatter}  % print other lists (lof, lof, lol, …) in the front matter
+\NTOptNewValue{print/glossaries}{frontmatter}  % print glossaries in the front matter
+\NTOptNewToggle{print/frontpage}{false}
+\NTOptNewToggle{print/copyright}{true}
+\NTOptNewToggle{print/timestamp}{true}
+\NTOptNewToggle{print/index}{false}
+\NTOptNewToggle{print/colophon}{true}   % print a Colophon page in the back matter
+\NTOptNewValue{print/webography}{}      % empty means do not make a separate webography
+\NTOptNewToggle{print/statement}{false}
+\NTOptNewList{print/sdgs/list}{}      % {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}
+% The one choice in this codebase whose stored value differs from its
+% user-facing name -- see the comment on \NTOptNewChoice in nt-options.sty.
+\ExplSyntaxOn
+\keys_define:nn { novathesis }
+  {
+    print/sdgs/type .choice: ,
+    print/sdgs/type / inverted .code:n = { \cs_set:cpn { nt@opt@/novathesis/print/sdgs/type } {i} } ,
+    print/sdgs/type / normal   .code:n = { \cs_set:cpn { nt@opt@/novathesis/print/sdgs/type } {n} } ,
+    print/sdgs/type / mono     .code:n = { \cs_set:cpn { nt@opt@/novathesis/print/sdgs/type } {m} } ,
+    print/sdgs/type .initial:n = { inverted } ,
+  }
+\ExplSyntaxOff
+\NTOptNewDim{print/sdgs/size}{2cm}      % any measure
+\NTOptNewDim{print/sdgs/hspace}{5mm}    % any measure
+\NTOptNewDim{print/sdgs/vspace}{4mm}    % any measure
+% CITING THE TEMPLATE
+\NTOptNewToggle{cite/template}{true}  % add 'novathesis-manual' to the bibliography
+% MISC
+\NTOptNewToggle{glossaries/list/reverse}{true}
+\NTOptNewValue{glossaries/layout}{lX}
+\NTOptNewToggle{tocintoc}{true}
+\NTOptNewToggle{pdfa}{true}  % auto-enable PDF/A-2b when docstatus=final
+% NUMBERING
+\NTOptNewChoice{numbering/floats}{chapter, sequential}{chapter}
+% DEBUG
+\NTOptNewList{debug}{}         % cover, index, spine
+\NTOptNewValue{debug/color/grid}{orange}   % \debuggrid's auto-triggered color (debug=cover)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1691,26 +1791,32 @@
 
 % --------------------------------------------------------
 % PROCESSING CLASS OPTIONS
-\options@ProcessOptions{/novathesis}
+% Bridges \documentclass[key=value,...]{novathesis} into the option tree
+% -- documented syntax (see app-internals.tex), though no real school
+% config actually uses it (\documentclass{novathesis} is always called
+% bare everywhere in this repo).
+%
+% \@classoptionslist is the WRONG kernel variable to read here: it is
+% only ever populated by \ProcessOptions actually running, which
+% novathesis.cls never calls (confirmed by grep) -- reading it raised
+% "the key '\@classoptionslist' is unknown" instead of a comma-list. The
+% old options.sty-based \options@ProcessOptions{/novathesis} avoided this
+% because \option@ProcessClassOptions (see options.sty) reads a
+% DIFFERENT, more fundamental kernel variable instead: \opt@<name>.<ext>
+% (here, \opt@novathesis.cls), which \documentclass/\LoadClass populate
+% with the class's raw bracketed options REGARDLESS of whether
+% \ProcessOptions ever runs. Reusing that same variable here reproduces
+% the old behaviour correctly instead of dropping the feature.
+\ifcsvoid{opt@\@currname.\@currext}{}{%
+  \ExplSyntaxOn
+  \exp_args:Nne \keys_set:nn { novathesis } { \csname opt@\@currname.\@currext\endcsname }
+  \ExplSyntaxOff
+}%
 % --------------------------------------------------------
-% NTSETUP2
-\newcommand*{\ntsetup}[2][]{%
-  % 1. Set the search list for the /novathesis/ family.
-  % This tells the package: "If you don't find the key in the current 
-  % family, check these families in order."
-  \options{
-    /novathesis/.search also = {
-      /novathesis/\@UNIV/\@SCHL/#1/,
-      /novathesis/#1/,
-      /novathesis/\@UNIV/\@SCHL/,
-      /novathesis/\@UNIV/,
-      /novathesis/
-    }
-  }%
-  % 2. Execute the options within the /novathesis/ context.
-  % We use the slash prefix to indicate we are moving to the root-level family.
-  \options{/novathesis,#2}%
-}
+% \ntsetup itself is defined in nt-options.sty (loaded from
+% nt-packages.sty, before this file); the old hierarchical
+% ".search also" school/university fallback it used to set up here is
+% not replicated -- see that file's header for why.
 
 
 \newcommand{\SpineSetup}[2][]{%

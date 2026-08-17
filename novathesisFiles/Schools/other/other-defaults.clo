@@ -7,3 +7,6 @@
 
 \typeout{NT FILE other/univ-defaults.clo}%
 
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{other}{pdf,lua,xe}
+

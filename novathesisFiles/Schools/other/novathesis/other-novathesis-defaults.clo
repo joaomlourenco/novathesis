@@ -8,6 +8,10 @@
 \typeout{NT FILE other/novathesis/defaults.clo}%
 
 
+% Only XeLaTeX/LuaLaTeX are accepted (uses an OpenType-only font)
+\AddValidProcessor{other/novathesis}{lua,xe}
+
+
 %%=======================================================================
 %% METADATA & GLOBAL PROPERTIES
 %%=======================================================================

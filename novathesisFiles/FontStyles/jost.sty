@@ -13,11 +13,7 @@
 %% ENGINE CHECK
 %%=======================================================================
 
-\ifxeorlua{}{%
-  \ClassError{novathesis}
-             {Font~style~"jost"~is~not~compatible~with~pdfLaTeX.~Please~use~XeLaTeX~or~LuaLaTeX}
-             {Please~use~XeLaTeX~or~LuaLaTeX}%
-}
+\NTRequireEngine{style/font=jost}{lua,xe}
 
 
 %%=======================================================================

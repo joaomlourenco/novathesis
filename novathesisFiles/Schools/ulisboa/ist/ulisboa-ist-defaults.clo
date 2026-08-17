@@ -12,10 +12,11 @@
 %% METADATA & GLOBAL PROPERTIES
 %%=======================================================================
 
-\options{/novathesis,
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{ulisboa/ist}{pdf,lua,xe}
+
 % ULISBOA/IST
-  ulisboa/ist/classification/.new value = {},
-}
+\NTOptNewValue{ulisboa/ist/classification}{}
 
 \ifdocfinal{\ntsetup{print/frontpage=true}}{}
 

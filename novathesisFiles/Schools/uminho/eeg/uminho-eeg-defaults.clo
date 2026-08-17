@@ -13,6 +13,10 @@
 \typeout{NT FILE uminho/eeg/schl-defaults.clo}%
 
 
+% Only XeLaTeX/LuaLaTeX are accepted (uses an OpenType-only font)
+\AddValidProcessor{uminho/eeg}{lua,xe}
+
+
 %%=======================================================================
 %% STRINGS (UNIVERSITY & SCHOOL)
 %%=======================================================================

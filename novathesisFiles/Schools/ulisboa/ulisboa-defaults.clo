@@ -8,6 +8,10 @@
 \typeout{NT FILE ulisboa/univ-defaults.clo}%
 
 
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{ulisboa}{pdf,lua,xe}
+
+
 %%=======================================================================
 %% STRINGS (UNIVERSITY & SCHOOL)
 %%=======================================================================

@@ -13,6 +13,9 @@
 
 \typeout{NT FILE schools/nova/fct/nova-fct-brown-defaults.clo}%
 
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{nova/fct/brown}{pdf,lua,xe}
+
 \def\@novafctcovercolor{brown}
 
 \input{\DIRSCHOOLS/nova/fct/nova-fct-defaults.clo}

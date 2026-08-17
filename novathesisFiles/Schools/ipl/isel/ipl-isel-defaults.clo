@@ -18,6 +18,9 @@
 %% METADATA & GLOBAL PROPERTIES
 %%=======================================================================
 
+% Only XeLaTeX/LuaLaTeX are accepted (uses an OpenType-only font)
+\AddValidProcessor{ipl/isel}{lua,xe}
+
 % No PhD degree for ISEL
 \ifmscdoc{}{\ntsetup{doctype=msc}}
 

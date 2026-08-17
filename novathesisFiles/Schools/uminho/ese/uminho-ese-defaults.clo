@@ -13,6 +13,10 @@
 \typeout{NT FILE uminho/ese/schl-defaults.clo}%
 
 
+% Only XeLaTeX/LuaLaTeX are accepted (uses an OpenType-only font)
+\AddValidProcessor{uminho/ese}{lua,xe}
+
+
 %%=======================================================================
 %% STRINGS (UNIVERSITY & SCHOOL)
 %%=======================================================================

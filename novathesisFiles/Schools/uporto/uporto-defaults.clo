@@ -8,6 +8,10 @@
 \typeout{NT FILE uporto/univ-defaults.clo}%
 
 
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{uporto}{pdf,lua,xe}
+
+
 %%=======================================================================
 %% STRINGS (UNIVERSITY & SCHOOL)
 %%=======================================================================

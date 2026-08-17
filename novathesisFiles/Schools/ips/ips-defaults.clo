@@ -8,6 +8,10 @@
 \typeout{NT FILE ips/univ-defaults.clo}%
 
 
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{ips}{pdf,lua,xe}
+
+
 %%=======================================================================
 %% STRINGS (UNIVERSITY & SCHOOL)
 %%=======================================================================

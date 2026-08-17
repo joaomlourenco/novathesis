@@ -8,6 +8,10 @@
 \typeout{NT FILE iscte-iul/univ-defaults.clo}%
 
 
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{iscteiul}{pdf,lua,xe}
+
+
 %%=======================================================================
 %% STRINGS (UNIVERSITY & SCHOOL)
 %%=======================================================================

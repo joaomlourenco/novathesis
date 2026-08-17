@@ -18,6 +18,9 @@
 %% METADATA & GLOBAL PROPERTIES
 %%=======================================================================
 
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{nova/fct/di-adc}{pdf,lua,xe}
+
 \def\@novafctcovercolor{red}
 \input{\DIRSCHOOLS/nova/fct/nova-fct-red-defaults.clo}
 

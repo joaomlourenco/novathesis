@@ -10,6 +10,10 @@
 \typeout{NT FILE ulht-mge-defaults.clo}%
 
 
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{ulht/mge}{pdf,lua,xe}
+
+
 %%=======================================================================
 %% STRINGS (UNIVERSITY & SCHOOL)
 %%=======================================================================

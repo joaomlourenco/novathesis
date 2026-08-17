@@ -13,10 +13,11 @@
 
 \typeout{NT FILE nova/itqb-green-defaults.clo}%
 
-\options{/novathesis,
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{nova/itqb/green}{pdf,lua,xe}
+
 % NOVA/ITQB
-  nova/itqb/cover/color/.new choice = {gray, green},
-}
+\NTOptNewChoice{nova/itqb/cover/color}{gray, green}{gray}
 
 % ITQB-NOVA specific customization
 \ntsetup{nova/itqb/cover/color=green}

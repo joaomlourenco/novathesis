@@ -12,13 +12,14 @@
 %% METADATA & GLOBAL PROPERTIES
 %%=======================================================================
 
-\options{/novathesis,
+% Only XeLaTeX/LuaLaTeX are accepted (uses an OpenType-only font)
+\AddValidProcessor{ulisboa/fmv}{lua,xe}
+
 % ULISBOA/FMV
-  ulisboa/fmv/scientificarea/.new choice       = {C, MF, PASA, SA},
-  ulisboa/fmv/embargo/period/.new choice       = {I, 6, 12},
-  ulisboa/fmv/embargo/justification/.new value = {Justification for the temporary embargo.},
-  ulisboa/fmv/reproduction/.new choice         = {I, P, N},
-}
+\NTOptNewChoice{ulisboa/fmv/scientificarea}{C, MF, PASA, SA}{C}
+\NTOptNewChoice{ulisboa/fmv/embargo/period}{I, 6, 12}{I}
+\NTOptNewValue{ulisboa/fmv/embargo/justification}{Justification for the temporary embargo.}
+\NTOptNewChoice{ulisboa/fmv/reproduction}{I, P, N}{I}
 
 \ntsetup{style/font=calibri}
 \ntsetup{style/chapter=fmv}

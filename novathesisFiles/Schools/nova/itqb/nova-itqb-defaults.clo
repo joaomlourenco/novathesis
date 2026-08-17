@@ -18,11 +18,12 @@
 %% METADATA & GLOBAL PROPERTIES
 %%=======================================================================
 
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{nova/itqb}{pdf,lua,xe}
+
 \ifoptiondefined{/novathesis/nova/itqb/cover/color}{}{
-  \options{/novathesis,
   % NOVA/ITQB
-    nova/itqb/cover/color/.new choice = {gray, green},
-  }
+  \NTOptNewChoice{nova/itqb/cover/color}{gray, green}{gray}
 }
 
 % ITQB-NOVA specific customization
@@ -259,7 +260,7 @@
       % Dissertation string
       \node [inner sep=0pt,anchor=west, yshift={\GetRegion*(itqb,top)+28.75mm}]
                       {\fontsize{14}{14}\selectfont
-                       \GetDissertationString(\option{/@nt/document/docclass},%
+                       \GetDissertationString(\@DOCCLASS,%
                                               \@LANG@COVER)};
       % Major field
       \node [inner sep=0pt,anchor=west, yshift={\GetRegion*(itqb,top)+20.0mm}]

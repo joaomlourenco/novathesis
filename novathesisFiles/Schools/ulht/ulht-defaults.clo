@@ -14,6 +14,9 @@
 %% METADATA & GLOBAL PROPERTIES
 %%=======================================================================
 
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{ulht}{pdf,lua,xe}
+
 % Configure the font set to Times New Roman
 \ntsetup{style/font=newtx}
 \ntsetup{print/frontpage=true}

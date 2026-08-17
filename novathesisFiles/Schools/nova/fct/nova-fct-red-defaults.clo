@@ -13,6 +13,9 @@
 
 \typeout{NT FILE schools/nova/fct/nova-fct-red-defaults.clo}%
 
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{nova/fct/red}{pdf,lua,xe}
+
 \def\@novafctcovercolor{red}
 
 \input{\DIRSCHOOLS/nova/fct/nova-fct-defaults.clo}

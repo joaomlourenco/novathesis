@@ -8,6 +8,10 @@
 \typeout{NT FILE ipl/ipl-defaults.clo}%
 
 
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{ipl}{pdf,lua,xe}
+
+
 % University
 \SetUniversity*(pt)={Instituto Politécnico de Lisboa}
 \SetUniversity*(en)={Instituto Politécnico de Lisboa}

@@ -12,6 +12,9 @@
 %% METADATA & GLOBAL PROPERTIES
 %%=======================================================================
 
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{nova/fcsh}{pdf,lua,xe}
+
 \ntsetup{print/statement=true}
 \ntsetup{print/frontpage=false}
 \ntsetup{style/chapter=article}

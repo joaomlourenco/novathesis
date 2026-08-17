@@ -12,6 +12,9 @@
 %% METADATA & GLOBAL PROPERTIES
 %%=======================================================================
 
+% Only XeLaTeX/LuaLaTeX are accepted (uses an OpenType-only font)
+\AddValidProcessor{ipl/isel/meb}{lua,xe}
+
 \input{\DIRSCHOOLS/ipl/isel/ipl-isel-defaults.clo}
 
 \ntsetup{print/frontpage=true}
@@ -163,15 +166,25 @@ Master in Biomedical Engineering}
 }
 
 % Committee — only print the committee for the main classes
+% Note: the title is printed manually (underlined) above, then blanked so
+% \ntprintpersons' own table header does not print it a second time. This
+% \ntaddtocover block is re-executed once per cover id in {1-1,2-1}, but
+% \SetCommitteeTitleString stores globally (see memstore.sty), so blanking it
+% without restoring would leave it empty for the SECOND cover render (e.g. the
+% frontpage after the cover) -- hence the save/restore around the blanking.
 \ntaddtocover[vfill=1,status=final]{1-1,2-1}{%
   \ifmaindoc{%
     \fontsize{11}{11}\selectfont%
     \underline{\GetCommitteeTitleString(\@LANG@COVER)}\\[4pt]%
     \MemSet{persongrouppost}{}{\\[5pt]}
     \MemSet{personpost}{}{\\[-1pt]}
+    \edef\@nt@isel@savedcommitteetitle@pt{\GetCommitteeTitleString(pt)}%
+    \edef\@nt@isel@savedcommitteetitle@en{\GetCommitteeTitleString(en)}%
     \SetCommitteeTitleString*(pt)={}%
     \SetCommitteeTitleString*(en)={}%
     \ifdocfinal{\ntprintpersons[name]{1}[c]{2}{committee}{\GetCommitteeOrder()}\mbox{}}{\mbox{}}%
+    \SetCommitteeTitleString*(pt)={\@nt@isel@savedcommitteetitle@pt}%
+    \SetCommitteeTitleString*(en)={\@nt@isel@savedcommitteetitle@en}%
   }{\mbox{}}%
 }
 

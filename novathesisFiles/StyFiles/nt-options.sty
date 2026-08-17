@@ -1,0 +1,281 @@
+%!TEX root=template.tex
+
+%% ----------------------------------------------------------------------------
+%%  NOVATHESIS — nt-options.sty
+%% ----------------------------------------------------------------------------
+%%
+%% Version 8.1.0 (2026-08-16)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%% Departamento de Informática (www.di.fct.unl.pt)
+%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Universidade NOVA de Lisboa (www.unl.pt)
+%%
+%% Internal replacement for the external `options` package (Daan Leijen,
+%% CTAN), the last remaining hard dependency of the "drop-options-dependency"
+%% effort. Backed by l3keys (part of l3kernel, i.e. always available the
+%% moment expl3 is loaded -- no new external dependency) for key=value
+%% parsing/validation/defaults, and by etoolbox (an existing, unrelated
+%% NOVAthesis dependency) for the handful of conditionals and the list
+%% storage -- \ifcsdef, \ifcsvoid, \ifstrequal, \xifinlistcs, \listcsadd,
+%% \forlistcsloop, \newtoggle/\iftoggle -- that the old options.sty
+%% package was itself built on internally, so this file only has to wrap
+%% them under our own naming, not reimplement them. It also reprovides a
+%% couple of small utilities that have nothing to do with options at all
+%% (see the "GENERIC UTILITIES" section below) but that the old package
+%% happened to \provide as a side effect of its own internals, and that
+%% other parts of the codebase -- including school-specific front-matter
+%% content, not just novathesisFiles/ -- came to rely on independently.
+%% Removing \RequirePackage{options} silently broke them, since nothing
+%% else declares them.
+%%
+%% Every option's resolved value is mirrored into
+%% \csname nt@opt@<path>\endcsname (the exact same "path string used
+%% literally as a csname suffix" trick the old package used under
+%% "optk@<path>"), so \option{<path>} -- and every one of its ~150
+%% existing call sites across this codebase -- keeps working completely
+%% unchanged.
+%%
+%% \ntsetup{<key>=<value>,...} always operates under a single flat l3keys
+%% module, "novathesis" -- the SAME module nt-spine.sty's own \NTSetup /
+%% \keys_define:nn{novathesis}{...} already uses successfully for the
+%% spine subsystem, so this isn't a new pattern for the codebase, just the
+%% same one applied to the core option tree. The old package's
+%% hierarchical ".search also" school/university fallback chain (the
+%% optional \ntsetup[prefix]{...} form) is deliberately NOT replicated: a
+%% full-repository grep found it is never actually exercised anywhere
+%% (the only \ntsetup[...] hit is inside a comment) -- every real call
+%% already spells out each key's full path relative to /novathesis, e.g.
+%% \ntsetup{doctype=phd} or \ntsetup{nova/fct/company/logo=...}.
+%% ----------------------------------------------------------------------------
+\typeout{NT FILE StyFiles/nt-options.sty}%
+
+\ExplSyntaxOn
+
+%%=======================================================================
+%% GENERIC UTILITIES
+%%=======================================================================
+% Not option-system-specific at all, but the old options.sty package also
+% \provided these as a side effect of its own internals, and other parts
+% of the codebase -- some outside novathesisFiles/ entirely, in the
+% numbered content directories (1-FrontMatter/, etc.) that a school's own
+% statement.tex lives in -- came to depend on them completely
+% independently of anything option-related:
+%   \expandnext                 nt-render-persons.sty's two-column
+%                                person-list layout
+%   \ontoggle                   1-FrontMatter/uminho/uminho-statement.tex
+% (An initial sweep for these missed the content directories -- it only
+% checked novathesisFiles/ and 0-Config/ -- and so missed \ontoggle and
+% \ifoptionanyof below; both surfaced as real "make matrix" build
+% failures once every school's own front-matter content was exercised.
+% This is now a full-repository check.)
+\providecommand*{\@swaparg}[2]{#2{#1}}
+\providecommand*{\expandnext}[2]{\expandafter\@swaparg\expandafter{#2}{#1}}
+\providecommand*{\ontoggle}[2]{\iftoggle{#1}{#2}{}}
+
+%%=======================================================================
+%% GETTER + CONDITIONALS
+%%=======================================================================
+
+% \option{<path>} -- unchanged contract: an expandable getter, usable
+% inside \edef and friends, exactly like the old \csname optk@#1\endcsname.
+\newcommand*{\option}[1]{\csname nt@opt@#1\endcsname}
+
+% \ifoptiondefined{<path>}{<true>}{<false>}
+\newcommand*{\ifoptiondefined}[1]{\ifcsdef{nt@opt@#1}}
+
+% \ifoptionvoid{<path>}{<true>}{<false>} -- true if the path is either
+% undefined or expands to nothing, matching the old \ifcsvoid{optk@#1}
+% exactly (NOT just a "defined and blank" test).
+\newcommand*{\ifoptionvoid}[1]{\ifcsvoid{nt@opt@#1}}
+\let\ifoptionnil\ifoptionvoid
+
+% \ifoptionequal{<path>}{<string>}{<true>}{<false>}
+\tl_new:N \l_nt_opt_tmp_tl
+\newrobustcmd*{\ifoptionequal}[2]{%
+  \edef\l_nt_opt_tmp_tl{\option{#1}}%
+  \expandafter\ifstrequal\expandafter{\l_nt_opt_tmp_tl}{#2}%
+}
+
+% \ifoptionanyof{<path>}{<comma-list of candidates>}{<true>}{<false>} --
+% true if the option's current value equals ANY item in the comma-list
+% (used e.g. by ulisboa-fmv-statement-*.tex's \checkbox{key}{value} macro
+% to render a checked/unchecked box per candidate). \clist_if_in:neTF's
+% native "e" variant expands \option{#1} before the membership test, so
+% no separate temp-variable dance is needed here (unlike \ifoptionequal
+% above, since that predates realizing \clist_if_in:ne already exists).
+\NewDocumentCommand \ifoptionanyof { m m } { \clist_if_in:neTF {#2} { \option{#1} } }
+
+% \ifoptioncontains{<path>}{<item>}{<true>}{<false>} -- membership test
+% against the etoolbox list stored at <path> by \NTOptNewList below
+% (e.g. debug={cover,spine}).
+\newrobustcmd*{\ifoptioncontains}[2]{\xifinlistcs{#2}{nt@opt@#1}}
+
+% \optionlistdo{<path>}{<code, using ##1 for each item>} -- iterates the
+% list stored at <path> (see \NTOptNewList below for the storage format).
+% Kept verbatim from the old options.sty package's own implementation
+% (just "optk@" -> "nt@opt@"): \forlistcsloop already expects exactly the
+% etoolbox pipe-list format \NTOptNewList produces, and empirically (not
+% just per the etoolbox docs) this exact \def-based loop-body pattern
+% DOES correctly resolve a caller's "##1" written inside an enclosing
+% zero-argument \newcommand -- exactly how every real call site in this
+% codebase is written -- once actually tested nested that way; tested in
+% isolation (no enclosing macro) it looks broken, which is a testing
+% artifact, not a real one.
+\ExplSyntaxOff
+\newrobustcmd\optionlistdo[2]{\def\opt@@nt@opt@do##1{#2}\forlistcsloop{\opt@@nt@opt@do}{nt@opt@#1}}
+\ExplSyntaxOn
+
+
+%%=======================================================================
+%% DECLARATION HELPERS
+%%=======================================================================
+
+% \NTOptNewValue{<path>}{<default>} -- arbitrary, unvalidated text.
+% Also reused, unchanged, for the old "dim" and "length" types: neither
+% needs anything beyond literal storage in this codebase -- nothing
+% relies on the old package's \dimexpr evaluation for ".new dim", and the
+% sole real ".new length" (spine/width) is already dead code, superseded
+% by nt-spine.sty's own, independently-declared l3keys "spine/width" key
+% (see the comment at its migration site in nt-core.sty).
+\cs_new_protected:Npn \NTOptNewValue #1#2
+  {
+    \keys_define:nn { novathesis }
+      {
+        #1 .code:n = { \cs_set:cpn { nt@opt@/novathesis/ #1 } {##1} } ,
+        #1 .initial:n = {#2} ,
+      }
+  }
+\cs_new_eq:NN \NTOptNewDim    \NTOptNewValue
+\cs_new_eq:NN \NTOptNewLength \NTOptNewValue
+
+% \NTOptNewList{<path>}{<default comma-list>} -- unlike \NTOptNewValue,
+% this does NOT mirror the raw comma text: it re-stores each set value as
+% an etoolbox list (\listcsadd, i.e. pipe-separated, clearing first),
+% because that is what \ifoptioncontains (\xifinlistcs) and \optionlistdo
+% (\forlistcsloop) actually read -- confirmed by checking the old
+% options.sty package's own "list" handler, which itself builds on
+% \listcsadd via \option@push, not on a plain comma string.
+% The set value is fully expanded ("e") before being clist-split: the
+% sole default that needs it, lang/all (and, through it, lang/main/cover/
+% copyright's choices below), is given as the macro \@nt@alllangs rather
+% than a literal comma-list; expanding a plain literal list is a no-op,
+% so this is safe uniformly.
+\cs_new_protected:Npn \NTOptNewList #1#2
+  {
+    \keys_define:nn { novathesis }
+      {
+        #1 .code:n =
+          {
+            \cs_set:cpn { nt@opt@/novathesis/ #1 } {}
+            \exp_args:Ne \clist_map_inline:nn {##1}
+              { \listcsadd { nt@opt@/novathesis/ #1 } {####1} }
+          } ,
+        #1 .initial:n = {#2} ,
+      }
+  }
+
+% \NTOptNewChoice{<path>}{<comma-list of valid choices>}{<default choice>}
+% Validated choice; the matched choice name IS the stored value.
+%
+% Deliberately NOT built on l3keys' own ".choices:nn"/".choice:" property:
+% those create real sub-keys named "<path>/<choicename>" inside the same
+% module, which collides the moment any OTHER option's path happens to
+% extend a choice option's path -- exactly what happened with
+% abstract/title (a choice) and abstract/title/align (a separate key):
+% l3keys refused the second declaration with "Attempt to define
+% 'novathesis/abstract/title/align' as a nested choice key". The old
+% options.sty package's own hierarchical paths never had this restriction,
+% so this validates manually (\clist_if_in:nnTF) instead, keeping "/" a
+% plain, non-magical separator for every option, as every call site
+% already assumes.
+%
+% Uses \exp_args:Ne to expand the choices-list before testing/storing (the
+% same \@nt@alllangs reason as \NTOptNewList above -- lang/main/cover/
+% copyright's choice list is a macro reference, not a literal list). For
+% the one option in this codebase where the user-facing choice name and
+% the stored value differ (print/sdgs/type: inverted/normal/mono ->
+% i/n/m), see the hand-written ".choice:" block at its migration site
+% instead of this helper -- one remapped choice isn't worth a second
+% generic helper, and it has no colliding child keys anyway.
+\msg_new:nnn { novathesis } { invalid-choice-value }
+  { Invalid~value~'#1'~for~option~'#2':~expected~one~of~'#3'. }
+\cs_new_protected:Npn \NTOptNewChoice #1#2#3
+  {
+    \keys_define:nn { novathesis }
+      {
+        #1 .code:n =
+          {
+            \exp_args:Ne \clist_if_in:nnTF {#2} {##1}
+              { \cs_set:cpn { nt@opt@/novathesis/ #1 } {##1} }
+              { \msg_error:nnnnn { novathesis } { invalid-choice-value } {##1} {#1} {#2} }
+          } ,
+        #1 .initial:n = {#3} ,
+      }
+  }
+
+% \NTOptNewToggle{<path>}{<default true/false>}
+% Backed by a REAL etoolbox toggle at the exact same path (via
+% \newtoggle{<path>}, same permissive slash-containing-name trick as
+% \csname), so every existing \iftoggle{/novathesis/...} call site keeps
+% working completely unchanged.
+\msg_new:nnn { novathesis } { invalid-toggle-value }
+  { Invalid~toggle~value~'#1'~for~option~'#2':~expected~'true'~or~'false'. }
+\cs_new_protected:Npn \NTOptNewToggle #1#2
+  {
+    \newtoggle{/novathesis/#1}
+    \keys_define:nn { novathesis }
+      {
+        #1 .code:n =
+          {
+            \str_case:nnF {##1}
+              {
+                {true}  { \toggletrue{/novathesis/#1}  \cs_set:cpn { nt@opt@/novathesis/ #1 } {true} }
+                {false} { \togglefalse{/novathesis/#1} \cs_set:cpn { nt@opt@/novathesis/ #1 } {false} }
+              }
+              { \msg_error:nnnn { novathesis } { invalid-toggle-value } {##1} {#1} }
+          } ,
+        #1 .initial:n = {#2} ,
+      }
+  }
+
+% \NTOptNewCmd{<path>}{<code, using #1 for the value being set>}
+% Pure side-effect: runs <code> whenever the key is set. Has no
+% .initial:n of its own -- a cmd option that needs a default is given one
+% via an ordinary \keys_set:nn{novathesis}{<path>=<default>} call right
+% after its declaration, exactly like the old file did with a plain
+% "key = value" line after "key/.new cmd = {...}". Never mirrored into
+% \option{} -- confirmed by grep that none of the six old ".new cmd"
+% options (school, lang, style/url, color/links, color/glossaries/gls,
+% abstractorder) are ever read back that way.
+\cs_new_protected:Npn \NTOptNewCmd #1#2
+  {
+    \keys_define:nn { novathesis } { #1 .code:n = {#2} }
+  }
+
+
+%%=======================================================================
+%% USER-FACING ENTRY POINTS
+%%=======================================================================
+
+% \ntsetup([<unused>]){<key>=<value>,...} -- the "[...]" optional argument
+% is accepted for source compatibility with the old signature but is
+% otherwise unused; see the file header for why.
+\NewDocumentCommand \ntsetup { O{} m } { \keys_set:nn { novathesis } {#2} }
+
+% \optionsalso{<full /novathesis/... path>=<value>,...} -- used from
+% inside a key's own .code:n to cascade into OTHER options. Unlike
+% \ntsetup, the old package's \optionsalso always took the FULL absolute
+% path, "/novathesis/" prefix and all (e.g.
+% "\optionsalso{/novathesis/lang/main=#1}"), so that prefix is stripped
+% before dispatch -- safe because "/novathesis/" never legitimately
+% appears inside a value in this codebase's actual usage.
+\cs_generate_variant:Nn \keys_set:nn { nV }
+\tl_new:N \l_nt_opt_optionsalso_tl
+\NewDocumentCommand \optionsalso { m }
+  {
+    \tl_set:Ne \l_nt_opt_optionsalso_tl {#1}
+    \regex_replace_all:nnN { /novathesis/ } { } \l_nt_opt_optionsalso_tl
+    \keys_set:nV { novathesis } \l_nt_opt_optionsalso_tl
+  }
+
+\ExplSyntaxOff

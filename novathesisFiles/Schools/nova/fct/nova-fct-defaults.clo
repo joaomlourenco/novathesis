@@ -18,11 +18,12 @@
 %% METADATA & GLOBAL PROPERTIES
 %%=======================================================================
 
-\options{/novathesis,
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{nova/fct}{pdf,lua,xe}
+
 % NOVA/FCT
-  nova/fct/company/logo/.new value = {},
-  nova/fct/company/name/.new value = {},
-}
+\NTOptNewValue{nova/fct/company/logo}{}
+\NTOptNewValue{nova/fct/company/name}{}
 
 \ntsetup{print/frontpage=true}
 \openany

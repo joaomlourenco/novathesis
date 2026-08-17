@@ -12,6 +12,9 @@
 %% METADATA & GLOBAL PROPERTIES
 %%=======================================================================
 
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{nova/ensp}{pdf,lua,xe}
+
 \ntsetup{print/frontpage=true}
 
 

@@ -18,16 +18,16 @@
 %% METADATA & GLOBAL PROPERTIES
 %%=======================================================================
 
-\options{/novathesis,
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{nova/fct/cbbi}{pdf,lua,xe}
+
 % NOVA/FCT
-  nova/fct/company/logo/.new value = {},
-  nova/fct/company/name/.new value = {},
-}
+\NTOptNewValue{nova/fct/company/logo}{}
+\NTOptNewValue{nova/fct/company/name}{}
 
 % NOVA FCT specific customization
 \ntsetup{doctype=msc}
 \ntsetup{print/frontpage=true}
-\ntsetup{spine/width=3cm}     % Force the “book spine” width
 \openany
 
 
@@ -149,12 +149,12 @@
 
 \IfMemVoidT{Spine}{margin,right}{\MemSet{Spine}{margin,right}{0.0cm}}
 
-\SpineSetup[%
-]{%
+\SpineSetup[
+]{
+  width = 3cm,
   box/logo/bg/image = {\GetSchool(logo)},
   % debug,
 }
-
 
 %%=======================================================================
 %% COVER PAGE SETUP (BACKGROUNDS)

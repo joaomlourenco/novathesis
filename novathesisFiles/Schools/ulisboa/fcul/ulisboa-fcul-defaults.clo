@@ -12,6 +12,9 @@
 %% METADATA & GLOBAL PROPERTIES
 %%=======================================================================
 
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{ulisboa/fcul}{pdf,lua,xe}
+
 \ifdocfinal{\ntsetup{print/frontpage=true}}{}
 
 

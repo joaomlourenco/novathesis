@@ -113,3 +113,4 @@ Three real work items surfaced:
 **The open question is not technical:** every existing thesis needs `.tex`→`.bib` conversion, and every user needs a local JRE (Overleaf supports bib2gls; assorted student laptops are the risk). Also retires the `automake`/xindy shell-escape invocation — a bonus for §1.5.
 
 **Overall:** the codebase is in good shape for its size and history — the expl3 migration is well along, the school layering is clean, and the build system is modern. The items that genuinely need action soon are the five in §1 (CI checkout, hidden text, double hook, commit mislabel, shell-escape posture) and bugs 2.1–2.7, which have user-visible effects.
+    
